@@ -1,121 +1,92 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E044A1E0DB3
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 22:16:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FA1145348
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 22:22:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736201788; cv=none; b=nDDk6OZvruARxVDKgFAUIXhWIThLTveqcrfgTvbLyOOojpIjh4CNeOh+ahiUdLismqHX9fXF2eZWQ1imvwf+FPYXXf5/Wbvup+s61ZoUZRZrnCUvxgj/SpLOeiXymFt1ZTMeQ5dG9K5LyY49JTycVYzrkJ0Gt9C3fWmx3ABNrYM=
+	t=1736202142; cv=none; b=DU+I4E1kOvgPvuUxZyvYyejRAceu2n7efL39a20X+vQ21griuQzW/DTOaPKV9U0LKUQyW8R3E3UYL6Dbn5SHNmqHlfYZqULIGfVJJqULT/tvE/bYE2Mnr7q8MOlbnHKWg+0UyblJDY1Ctw5uxbmQctME054/OcSawkxJphnLOH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736201788; c=relaxed/simple;
-	bh=gTn7XWmih8IHhdSj8h5MfaqFYE04T/ORGg/+eujFEa0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YhHhWqh9SxCxCM+DFcMNJqhDQBaeN5a6VYCiSFY738ZP+drWFFTKGlkXFNmy5p8BNhS3IJdc9azBnNcdDTXuqAwX37Vp7s8xmEPv/RQad9QqGtUtl4081FG3flxcxF/EZtV731UtmzGjgRaq71hLYQH40gV09Jl/kDUZhQ0JwZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IiFjyxFR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y4c8Mz8H; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IiFjyxFR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y4c8Mz8H"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id A397E138016A;
-	Mon,  6 Jan 2025 17:16:24 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 06 Jan 2025 17:16:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736201784; x=1736288184; bh=PpaP4XLGJ7
-	KoAr3KgioYTbU+hr840M+hHVdop+FGa/s=; b=IiFjyxFRNUJCq8tbGNJygxb/4d
-	VDnUoOB+URBEG7HoWkXxJQMLb72YgpJQS1+QxvaN0i8I/QWtUVADR7D5WbkeEzr3
-	NSFNrOQjTc617eqdTX8+9WtklprboxgRZ1k/yiV9etZ5fyCmbxpN2r0MVAuD+2tu
-	ZUPoSJbHh8g5dZfuT95Hg79dWa1HJlWPWkPQqNwjJuzHbcwgruIUOpyx7z7lULEC
-	Toem23y9VYPUsGe6wWw/i6m2PNW/T5FjObijVG+IntcPPEX/+Fl63+DYouPhasDx
-	ddloSFMz8UhL+unNe/BazF0xpNBRoPShKCzKqLWFBiidtoooSksKgki6JFyw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736201784; x=1736288184; bh=PpaP4XLGJ7KoAr3KgioYTbU+hr840M+hHVd
-	op+FGa/s=; b=Y4c8Mz8HTmTKHNJixESk8vgfK3g/QtuFgbeh7Fu4f9j5PGrCcgI
-	TkPj0a4L87b6bn8ixNzBNbkviC2JjdESULkjFYBst6Ge0XGA+7MxoJcoO3iQxZgU
-	ij9X316s5dAiQtiO5PyYzs8O4ZsR9Og3UTphJLmxgR0YqRahvWBxcAniUa5rJzIs
-	lUMaKbUvF0L6kJMjXD3Q144YDx7emDzHC87O4lNII8ZE+VquU6I1lTzR6myFDsJd
-	N8fK84a5gyW9ng/kDSe0TcPtx7oxqrLZzzeaoSntshlh65J12FXjKK5XJqq8apCC
-	aLAZdDNl/OcMrANQgsXJqwq0AAL5bbgtDHw==
-X-ME-Sender: <xms:OFZ8Z9xJPq12ppOpI8NjdzO9i2L0RHJnhCSCPna2voUNp2wDXHoTCA>
-    <xme:OFZ8Z9Q2p-BpGAopZhN-7_ccAT6Smu05PFXX3WNO5dBjfyoHnzJBRdikugn2PVomf
-    YKh8rB0HdGRP20IFQ>
-X-ME-Received: <xmr:OFZ8Z3UoRT3NSGJ9vNuV6zeRJEtHjCKK_DbX98Cuq8Htw9pLWqlkjnOc80qelxm_WT1KAgTNGfTIQrOyMPE7embH0jGED1Sd4LmV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddgudehlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhirghluh
-    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehmhhgrghhgvghrsegrlhhumhdr
-    mhhithdrvgguuhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:OFZ8Z_jDij9jwEqrBRa9XwunL7ERjOGLerAMFZzrgT57SGfDRo0GZw>
-    <xmx:OFZ8Z_AECq_y2SXLSLsP1XFQUBttxrFxOyFyjo9uAluw33JC-lhvBQ>
-    <xmx:OFZ8Z4JW2rUE5oVDNg3tvbzzcTHbOf4I7ohBzogIOM8KP2tqz5eQAg>
-    <xmx:OFZ8Z-AyJYZrtLRzpU_XqKptWJzztdoh1uNYk3RWiiSojx7euLkkow>
-    <xmx:OFZ8Zx3egRwgEq8aJ-6fiSbrwWGmIcQ68nakTs6N0O49tLq4kGheOq1x>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jan 2025 17:16:23 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>,  Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 10/10] builtin/fsck: add `git refs verify` child process
-In-Reply-To: <Z3qOM5M1ioZ0Px4T@ArchLinux> (shejialuo@gmail.com's message of
-	"Sun, 5 Jan 2025 21:50:43 +0800")
-References: <Z3qNUizvHJLgMx1y@ArchLinux> <Z3qOM5M1ioZ0Px4T@ArchLinux>
-Date: Mon, 06 Jan 2025 14:16:22 -0800
-Message-ID: <xmqqv7urwpu1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1736202142; c=relaxed/simple;
+	bh=Tw7U3ZuI5wYLZ5RuybDj/dXoD016Z76GOk9hTG0NGgo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 Cc:Content-Type; b=BQ8VZ/7WD19cCiDjnuh26A3/PmjMc07w9bV55KXQEhY0XZyof8UNEUqgQjwnailLQSLByiGa4nHevnEn+gdZWWJouCzNvlR4r5EMudIwZQ2doIFny0BZvNg4P1oQHKrNQ5nlaEf9cT6cx9JBlEEfZaPkbwM6HomkxnockDR5FEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6d8eacc4194so15115526d6.2
+        for <git@vger.kernel.org>; Mon, 06 Jan 2025 14:22:18 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736202137; x=1736806937;
+        h=content-transfer-encoding:cc:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5+qfornjAVxFSk7rov63PJwjK3Y6K00q/IrrDvJWNyM=;
+        b=F8hkSg/PwdZxD82PoW7ZCSVIo7NadZlXw31Rjh2ZXi7CKbbkVsBmcyPVeyDpdrNxSs
+         J1vv7XCcJq5tqNOIUVARy2T4S/kk9KjaZrLXvHgFcwrduGbC/ofpQPd82ZyHuUwCzu2u
+         Zpy8kd63ryHgvTepvAnUJZ4AnTXoomeqpk6SflquVrEjzUiOV0VuTX7xyWm26m804EBK
+         Rmaxt5h2epm4Tykavw8I52B+35nMkCYczgYxPWiWcLkwuk9D4bwRjn8qmAG+jih8P09d
+         I720LRVzXKm9v/0fhgMYBqCrb5zQ21qFZDKIUxk+DWHeKQqf4fExBDpiTgCt4ClqSy9u
+         w4Og==
+X-Gm-Message-State: AOJu0YzdWdt7T8rBMw00FufBaeZDquD5lt1I0u7sGFA9u/pJmJSK/ceG
+	BaW/+7WfUXrX18ZEI+qFBoGf0ywcaFbT5MlMIUgF9kfLw1sIuLWTgwlEis0g+TayvZQlOTdh9nX
+	Z0l0cO7hVdPCrQ4peOpeyMezqpkxWoFOM
+X-Gm-Gg: ASbGncshXXtuyg+xSYW36fvesAm1NXAJbg2x2dyqSTR/1u/LI6c/XjE1SnkXzHCoLPd
+	LWe7OiSCwvWYcfYr81eO4C1oefBvbqOZLJnPSltWtGEQ7Zskn5KfI8DwvkZmZiARKHGUP/CU=
+X-Received: by 2002:a05:6214:3008:b0:6d8:a5b7:6581 with SMTP id
+ 6a1803df08f44-6dd2331b533mt340362266d6.3.1736202137622; Mon, 06 Jan 2025
+ 14:22:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250106190855.3098-1-soekkle@freenet.de> <20250106190855.3098-3-soekkle@freenet.de>
+In-Reply-To: <20250106190855.3098-3-soekkle@freenet.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 6 Jan 2025 17:22:06 -0500
+Message-ID: <CAPig+cR0GgZQ+XCyAh=xHRfjfsAdTzC2uyML1vnoM_fXv1Bxew@mail.gmail.com>
+Subject: Re: [PATCHv2 2/4] date.c: Fix type missmatch warings from msvc
+Cc: git@vger.kernel.org, gitster@pobox.com, phillip.wood123@gmail.com, 
+	ps@pks.im, =?UTF-8?Q?S=C3=B6ren_Krecker?= <soekkle@freenet.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-shejialuo <shejialuo@gmail.com> writes:
+On Mon, Jan 6, 2025 at 2:14=E2=80=AFPM S=C3=B6ren Krecker <soekkle@freenet.=
+de> wrote:
+> Fix compiler warings from msvc in date.c for value truncation from 64
+> bit to 32 bit integers.
 
->  builtin/fsck.c | 28 ++++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
+s/warings/warnings/
+
+> Also switch from int to size_t for all variables with result of strlen()
+> which cannot become negative.
 >
-> diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index 0196c54eb6..a10e52b601 100644
-> --- a/builtin/fsck.c
-> +++ b/builtin/fsck.c
-> @@ -902,6 +902,32 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
->  	return res;
->  }
->  
-> +static void fsck_refs(void)
-> +{
-> +	struct child_process refs_verify = CHILD_PROCESS_INIT;
-> +	struct progress *progress = NULL;
-> +
-> +	if (show_progress)
-> +		progress = start_progress(_("Checking ref database"), 1);
+> Signed-off-by: S=C3=B6ren Krecker <soekkle@freenet.de>
+> ---
+> diff --git a/date.c b/date.c
+> @@ -1270,7 +1270,7 @@ static const char *approxidate_alpha(const char *da=
+te, struct tm *tm, struct tm
+>         tl =3D typelen;
+>         while (tl->type) {
+> -               int len =3D strlen(tl->type);
+> +               size_t len =3D strlen(tl->type);
+>                 if (match_string(date, tl->type) >=3D len-1) {
 
-This had an obvious semantic conflicts with a topic in flight.
+This change looks scary and potentially wrong considering that the
+expression in the `if` statement subtracts 1 from `len`. If `len`
+happens to be zero, then `len-1` will wrap around to a very large
+number, thus potentially changing the meaning of the `if` condition.
 
-I've resolved it in the latest integration after pushing out the
-2.48-rc2 this morning, so there is no need to resend, but please
-remember that it would be a possibility to rebase on top of an
-updated 'master' *IF* the other topic graduates to 'master' a lot
-earlier than this topic hits 'next' (IOW, until that happens there
-is no need to rebase).
-
-Thanks.
+Now, admittedly, I haven't delved into this code or thought about it
+much, so I may be entirely wrong about this; perhaps it is impossible
+for `len` to ever be zero in this context or perhaps the meaning of
+the `if` condition doesn't change even if it wraps around. But if
+that's the case, you should use the commit message to explain to
+readers that you have audited the code and verified that `len` will
+never be zero or that the condition remains safe despite wraparound.
+Also, even if you verify that this change is perfectly safe, because
+it _appears_ to be a potentially behavior breaking change, you should
+isolate it in its own commit, separate from the other changes, to let
+reviewers know that it deserves special scrutiny.
