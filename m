@@ -1,90 +1,166 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CB829A5
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 04:40:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C89A9522A
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 06:48:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736138449; cv=none; b=tRnlm7cMDbkwhOBRbcc+9aXfBY6HPuG8OrzO7Yrr82CTGZJ9W21eITtVnC4fH+jFH2Zk1M0fMeVWOYTS1IfFrnqszZyGc9n/acSWkcCoKzldOO5VIQyWlWOZIODBRKsUtfw9mq2MHcy+8LaOXP5iKr0ULt4+gbEogcZufnWhKSQ=
+	t=1736146116; cv=none; b=jh4JyH6S16FE0olY4/OL2Z39Jwr/pI00yWY4MmMsKTNW+Pl7VjCITTut12m2sujo0TsK9DovnHW2x5O/Rl2nrj2yGpMYk7aH97CaeyjZV21hLFwUVQ18okUBPclBQLAsZd3H3N+ExGqcxkBEWzDivIi/XGaL6ovDYomZ9b6CAaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736138449; c=relaxed/simple;
-	bh=4bZMFflbgegczbfWQwJE05pAQIu9s19WACn3pVPkPZ4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=YlQVZhEGiEI/JKF96PtLCc3x/wpN2aFHepiwxyiTNoJ3KfpjRaZ3MeMNFDnMt3D8YlcpQf9ApVorJN6ApghNlnw0vZAaeGPCqP2lDcVLowkSbK8MCWeOIDywNYq62swG0hZFcwveySZTgyfx2mtmpKaxhx4XDVP2n8qZAXxVh+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mJ4QB33Y; arc=none smtp.client-ip=209.85.219.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736146116; c=relaxed/simple;
+	bh=9DWDJXtXhTBzKdLmMTwdVmelX0Q40eYfYvolzxfiecA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=M0jDWFqbiWRha+VZZe7IRIhyO1GztmfRQZqyA2pvvtklB846NUl+ZjNm9eXTVfm2jqMFvZgjzf+M8+Asszzk334pE0eYaDBAhjTOSt7U7kX7bShzkm7NB3ciux43JSWZteRHx41dxNwgpsD5sFWX1/dD7rB0MNL1L+vrwRocgqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oYFvbH1G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s82G/nYn; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mJ4QB33Y"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e39f43344c5so18025387276.1
-        for <git@vger.kernel.org>; Sun, 05 Jan 2025 20:40:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736138447; x=1736743247; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=wWc1GJkrsOG81ljkk8xRR8Gx2ovANHnPeckUjMsv0Rw=;
-        b=mJ4QB33YwM+ECVQQzvxmgS1P9GOjC1gZ9TkKozkkVsQqRXQHEM5X8ndJ9VhbB2QP7v
-         vuYj4KBKE7oWvI/vPhOUtLEYGzKloqEZM67XZ/7n+vYh+wJKzUPiVhm6PNd21SLW2jsP
-         fsGg/vfbNDRJJcjIVYEySXOrIdx3614sPnzKUAGhHnp4M+94ZQe+AeBfLJn4XOxfKVi0
-         sECUeQsqvvyYTGzv25WLWeL445IpxdFUABm3EUNkO1RH2VHSgwvz4Vw4POeFbKt+C1vN
-         pTm0lW++L76ZGixsTVlIJJ5wBCu6FLX28+IcT+c8mGsrWAzWGmisADAjp2+j76nXfVHt
-         L/rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736138447; x=1736743247;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wWc1GJkrsOG81ljkk8xRR8Gx2ovANHnPeckUjMsv0Rw=;
-        b=o051Oa2fsJZtj/73q60KNuy3dVX4Z5WVb2YRbVrojzV2YAiwZw/lcpfG0RNpLZ0XXw
-         57dnAyb00nsnhdrkQmu/FquEG7oDe4JowmT6SFdzt7KY4Oa/NMamEBagXz9/VWEPxnZt
-         AX20Z6c9M7w/BW7/7tT8Tfor0wy6i4UUJBS2C5D7gkjWPkJPWSrRb6HW8Oi9P1wEaIOp
-         6tGGPrFxlbFvYgnuHNoZFwcWwa1ZZ7DFbq2wSykiXbVBAHXwhML1vR/K8xjelfaVtDqt
-         RzQLwYRwhucSTxXX+ZtESDaJx8DRaP+yzyzxKHYzxAsepvq7BzGeUkk2FqJPyQHyehzj
-         IDvw==
-X-Gm-Message-State: AOJu0Ywq52ibyjteHfMyNFq+yZHjWepgwKY0mO99R0hnavBoEpRW459N
-	sJtDJXOOjuw7Wr4yTr0VfN5MunGwf3W1wLtdfXhLLxZYhzH11j+wkTKM9y23EQBoOEDP1dTEr38
-	4kQkNlqNlnJy4XLlQKvcxxsxPih/b/mt7
-X-Gm-Gg: ASbGnctnZES+PAfoTTfCFkE3egsjjzckVZeP0Biy2XuVh/4grgaaP4cd+KVtf6tyqQG
-	WbBIc0C9cSsU3KhwcpGj1pUkWXtbSndKvfbZk
-X-Google-Smtp-Source: AGHT+IHGjBU+SwRpowO3jXEV02o/Tno91V1nD2nwPVlGgHfq/YZkTSelii80gSdVS/vGha2ZWeVze5XIVGYt5wO4iNI=
-X-Received: by 2002:a05:690c:9985:b0:6ef:90a7:16ec with SMTP id
- 00721157ae682-6f3f8201285mr441019187b3.28.1736138446752; Sun, 05 Jan 2025
- 20:40:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oYFvbH1G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s82G/nYn"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A788211405D9;
+	Mon,  6 Jan 2025 01:48:32 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 06 Jan 2025 01:48:32 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736146112;
+	 x=1736232512; bh=N9x1dUnNpeflQVxdYcNdoCfQwUnX6mZktyBRmH/cX9A=; b=
+	oYFvbH1GnPHBHj3tB5bt3CABG5Hr7SPVVe0hxHbj0NfgNnVsCNC5MELNCSEMk1Nf
+	03x4IT2YIG22cLc+oGoDYdSwgwILHCMhTugYyhiNTJ4Z5yFdgEyn4kyIpn6dlSX5
+	Zc78IgerIkqgYC50dSO/dbIiDdCX62fsNjeAeVA2QPMRtBIBgHHHYInY6ZNGr94J
+	c55vmrrSJ1+/y+u7IuM8ZWpNfH9fAK+g0PBslINNM7ZToiV0i6IMg+UkHoJXryda
+	15nBbvIKR5Z4UrLjsoqG2Q6Cowp1O5tYQGZTLZAjRFixiFV19xdt8/5Yya6BUSpy
+	0duqH1O6fVnWwGcz9KMFig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736146112; x=
+	1736232512; bh=N9x1dUnNpeflQVxdYcNdoCfQwUnX6mZktyBRmH/cX9A=; b=s
+	82G/nYnnpbGrVN1txg9BrOTHxNQPrmYIWDg1nd6j4X5bUxVzVtI8sYUnjRy8qjI7
+	USuIsSeekrKlTEAotwzM1Np6R2RG6GFoN7gR6UIRbG5ynhkVfcj6zeFCKRX3/Cbg
+	t7tvIJtC09jlC3L0WFcUHuRoeGLUoaESYQ2Ng+IcW1zFFHSRihAkktRoGwo3oT8P
+	YXBIN0wLRjybJyCOCx3ArGZ3Z1l7a8cVHZvyU86UuOf3/k7xdUNkzQBmGuGsaAOY
+	P7yvCuEXJH3SgQpubd943KY2lFfFWuMrgVSXQY4FCPtbhdQYVVCT4VPzI0QP/hra
+	XdC9yWM/40bZfvt6oMLNA==
+X-ME-Sender: <xms:wHx7Z2VXL3cXuyf9cmgH6U9wVQDwznm1qnRRivKBIc1DGCVEOJDb8w>
+    <xme:wHx7ZykQv7YM6w1OBeSuFIXu2gdbBw2kim6bNOW1tOSGSXn9-hde8gcw_sj5-_w2S
+    ZOW5zrvT1VTUDGREg>
+X-ME-Received: <xmr:wHx7Z6YPC-PmOTRX3MBh5-_CQwtNc7oExOJejH7ERpKjQ80-LZ2YxKoMXaov56eH56GBPDV9ar02lycq-PFw_7BqERB2JUmHovsDYNwLFFwdoA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefledguddttdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
+    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
+    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehjnhdrrghvihhlrgesfhhrvggvrdhfrh
+X-ME-Proxy: <xmx:wHx7Z9U5sEGAfaFzkMb5sS3HNl46cs369pcdy-PPj-KTTz0b3nqKLQ>
+    <xmx:wHx7ZwnCnY6BSCpjVdupoCRDYXjv6F-ay2xHfVUcXxROQoZy0vQgtA>
+    <xmx:wHx7ZydQsqQ4DaqOHsIiX9Dah6uMlDEe7RO--rB3t6AMEQXl2IbRsw>
+    <xmx:wHx7ZyG8gHzglwJSGC_d1SHiZ7SnOpgrOlyAzvbe-aER4RLsKysw2A>
+    <xmx:wHx7Z6jzD69FIo8taRAn23xjUzxrM1vnmo_dECBlBGqeFuml8Bn1zRPv>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Jan 2025 01:48:31 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4c7858d7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 Jan 2025 06:48:28 +0000 (UTC)
+Date: Mon, 6 Jan 2025 07:48:27 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] doc: git-restore: migrate to new style format
+Message-ID: <Z3t8sjsCeiPmHffA@pks.im>
+References: <pull.1847.git.1735996601092.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Chris Packham <judge.packham@gmail.com>
-Date: Mon, 6 Jan 2025 17:40:36 +1300
-X-Gm-Features: AbW1kvZqg-EQlQVRnhnY_V_K3gefoVHuR1PjslFDTsvg9kno4Eh_wP013REBqtA
-Message-ID: <CAFOYHZDQs-mftqLQn5HiFgBWcFN6Z-WDscJt=zVLRyGTo36=HQ@mail.gmail.com>
-Subject: Testing for existence of a remote branch from a script
-To: GIT <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.1847.git.1735996601092.gitgitgadget@gmail.com>
 
-Hi,
+On Sat, Jan 04, 2025 at 01:16:40PM +0000, Jean-Noël Avila via GitGitGadget wrote:
+> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+> 
+> The git-restore manpage was converted to the new documentation
+> format:
 
-I look after some scripts we use at $dayjob for pushing changes though
-our review system.
+Commit messages should typically use imperative style, as if asking the
+code to change. For example:
 
-For some of our repositories we operate a triangular workflow where
-changes are fetched from one branch (e.g. 'foo') but are pushed to a
-different one ('foo_incoming'). Our CI system runs to test the changes
-and when they pass 'foo_incoming' is merged (fast-forward most of the
-time) into 'foo'.
+  Convert the git-restore(1) man page to our new documentation format.
+  This includes the following conversions:
 
-The problem I have is not all our projects use this workflow so I've
-tried to automate the detection of this. My script does something like
+    - Switch the synopsis to a 'synopsis' block, which will
+      automatically format placeholders in italics and keywords in
+      monospace.
 
-  br=$(git rev-parse --symbolic-full-name
-refs/remotes/origin/foo_incoming -- 2>/dev/null || echo
-refs/remotes/origin/foo)
+    - Use `_<placeholder>_` instead of `<placeholder>` in the
+      description.
 
-The '--' is necessary because if foo_incoming doesn't exist then there
-is extra output on stdout that puts off users. But when foo_incoming
-does exist then br gets set to `refs/remotes/origin/foo_incoming\n--`.
+    - Use backticks for keywords and more complex option descriptions.
+      The new rendering engine will apply synopsis rules to these spans.
 
-Is there a better way of checking for the existence of a remote branch?
+> diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.txt
+> index 975825b44aa..541a39b5d28 100644
+> --- a/Documentation/git-restore.txt
+> +++ b/Documentation/git-restore.txt
+> @@ -41,79 +41,79 @@ OPTIONS
+>  If not specified, the contents are restored from `HEAD` if `--staged` is
+>  given, otherwise from the index.
+>  +
+> -As a special case, you may use `"A...B"` as a shortcut for the
+> -merge base of `A` and `B` if there is exactly one merge base. You can
+> -leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
+> +As a special case, you may use `"<refA>...<refB>"` as a shortcut for the
+> +merge base of _<refA>_ and _<refB>_ if there is exactly one merge base. You can
+> +leave out at most one of _<refA>__ and _<refB>_, in which case it defaults to `HEAD`.
 
-Thanks,
-Chris
+This change is a bit surprising to me though. Why was this renamed from
+A and B to refA and refB, respectively? It should be possible for these
+to be object IDs and not refs.
+
+> @@ -122,30 +122,29 @@ in linkgit:git-checkout[1] for details.
+>  	not be updated. Just like linkgit:git-checkout[1], this will detach
+>  	`HEAD` of the submodule.
+>  
+> ---overlay::
+> ---no-overlay::
+> -	In overlay mode, the command never removes files when
+> -	restoring. In no-overlay mode, tracked files that do not
+> -	appear in the `--source` tree are removed, to make them match
+> -	`<tree>` exactly. The default is no-overlay mode.
+> -
+> ---pathspec-from-file=<file>::
+> -	Pathspec is passed in `<file>` instead of commandline args. If
+> -	`<file>` is exactly `-` then standard input is used. Pathspec
+> -	elements are separated by LF or CR/LF. Pathspec elements can be
+> +`--overlay`::
+> +`--no-overlay`::
+> +	In overlay mode, never remove files when restoring. In no-overlay mode,
+> +	remove tracked files that do not appear in the `--source` tree, to make
+> +	them match _<tree>_ exactly. The default is no-overlay mode.
+> +
+> +`--pathspec-from-file=<file>`::
+> +	Pathspec is passed in _<file>_ instead of commandline args. If
+> +	_<file>_ is exactly `-` then standard input is used. Pathspec
+> +	elements are separated by _LF_ or _CR_/_LF_. Pathspec elements can be
+
+The reflowing of these paragraphs makes it a bit hard to see what
+exactly is changing.
+
+Thanks!
+
+Patrick
