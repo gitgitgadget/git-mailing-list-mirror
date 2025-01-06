@@ -1,188 +1,148 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E241DFD84
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 23:05:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD5815DBA3
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 23:17:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736204761; cv=none; b=tXiGleEm+gvzXTAkPUb/e1ksLrMvZWROP/9nmdxej5bSZE5iG1xSmkfgbNLA1SwGhJo8mXz2cre210QUcwJar/UNwgR0u++4+VJnpH43hI/Sx2xygWh7TtmcQbbyWW7zsAcyVdVWmDILar3j7G3B+y8vV8SKZhCa8aW+M7uPVCA=
+	t=1736205451; cv=none; b=fHbOQty7CM2PRiME/S1yT6bzdGTbRc+WIjHiNbC6lSHvzLWOqlKFwnFmKJSFQ9I9S/PLdgQ5ZoAXmOKXF+7iRJ91nzFRQprcA+ndl8qXHL8b3tzDAiYCecG9NGdta2po72fc5RD7fvZ3356SEPc4CTGczdNKxnEWaABGAcsKISg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736204761; c=relaxed/simple;
-	bh=9PI4Xq8OOK333gu9FZJoiYZod1wr3loFvWPumFu74yY=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=rqjnSh7ouOeF+g+b+IPShqcuBG8ZAZkYhCy1nN2z4Hd40oXrbLb4xev2x+r2dIll7c4Yr17iHsoNJujjE7D36aHwOt9QCa8XVLMOOQHfPnVhGjB9hZgNQh3dJm2+D9kVVh2Sp3FKG1FwYc1mucbTxLQ4F/LLz40LflrEN5dHh+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DeJhKBVr; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1736205451; c=relaxed/simple;
+	bh=5dJvpGYfbreJJng3eqVhpS45K/yNzWfCBtS2QF3/7Uw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bhjkvNDoxf8lpNJ4iABNlxTUfpu606+8O4guQoYuXti3AqaGd3JRT4w10gYZ0O4BOu/6MKHmAkPhDj+epjcdQTG8rlrgNK1fGvYA95BS4M4O6ytadJlz1byjT1wGZXcrrMZT51q8KhoQQ+kTPcqqqh6wgKtlELMdnHwoLBsA6bM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DeJhKBVr"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43675b1155bso141794535e9.2
-        for <git@vger.kernel.org>; Mon, 06 Jan 2025 15:05:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736204757; x=1736809557; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JAuQ74v1nDuSm+nLxI9iTbmgsYcBSVHbsCchAh1txgY=;
-        b=DeJhKBVrQHFjmImGFhcvtF+MV41Hyhy0vljhlWLGzljE2ORwDTlUzJxUHiMv/unt5j
-         YuYmHCwitBtfZpuQ08N607Irf+XebgsC2+lnhjKrhTcHxNL7tuXtBRz0zpvFn4pRDZ16
-         /a3UafdsA/MfSzzeCzTE+GmyzDtYqvelDPktcNyZSpS6CqJYHx9yb87xgqLe/sCrwPuS
-         HwVeiU3ZHvFFpZg42dLpKONwlsVMQl+stZo3ZiQAWibG/xnuSMyHZEI/H5NIB6isUYTG
-         vBDveH+rMsPfe35AMpMo6CTTAzkwFnjgvqxuHaCQwFfmFAOGgxYEyAr7+aX+uWaiC9gQ
-         6Raw==
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7b854e69bdbso170414185a.3
+        for <git@vger.kernel.org>; Mon, 06 Jan 2025 15:17:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736204757; x=1736809557;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1736205447; x=1736810247;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JAuQ74v1nDuSm+nLxI9iTbmgsYcBSVHbsCchAh1txgY=;
-        b=Tse9aRDhIv6f19UIjpYGK5S9L31p6D+gpN7SNjmlVycK9RAmBGHLxLmRsyCJbkFmfM
-         dXG8q9yg5IJ1sKVhmaxSAXc8zPnE59PX33uv/2uQZZaaqV/AmVxzNJkuu5mEUMLiuXje
-         i33/7InhS3u74GcoYCXGnWQ/LRzR+MR+2E0G6GBGFlsIeG0/Zm36xxg8eiU+vXZ4qTQN
-         j8+oHf9MvW8axWAGPwMhZ+KHtJo33rrOsd8uuK3nMWI177Lep9XoWdrEl69ZpGtj5Qbp
-         0wxIdHXiPoyQQ3n3a69QoySdvMnycjCZlgL/csCnCJSYreUZaIP8PvyTI2n/BqEYioYF
-         nDmw==
-X-Gm-Message-State: AOJu0YzULOmmDBO53XUjiqJL5rtZZeH2+rN/UP+JfgqMVsdshtO2saJ3
-	xHkBL2zE6/ZTll7qOC7fM1Epb0y7Uqr1FfFDKtQk1fNvsaVyOyXcnO2YVA==
-X-Gm-Gg: ASbGnctJ4HJi5ZSMeOE21tPgSSQwvyW4+Z5Sp/3nr3gPiKaAopez+0I9IwBfq+GhjTM
-	kqe68Q6dlHwRm4dEpzggljPkb3cwlh7WF4I1DKZ39HqfVBtGdxgDuoC9gIHwVLzOExxOSrvVnNc
-	9FaLXPKegutuyIlun13YqJbipgOau10jvRwNm5VxzzlR+Dycq06BsbS3vlzx9eb2278chPLED5H
-	6Gn/ldxXi9aVANZpdXJVyPE9EYLTlJenXRRLlXHgDRPrSTKb+zN55BZgw==
-X-Google-Smtp-Source: AGHT+IEoone+tNzTe8EVMCgjX1vlOT6Ebml1pGfN3B0GeoSo1QYi82P8IhWujTp5ErYgeGBroW2piQ==
-X-Received: by 2002:a05:600c:35ca:b0:434:e9ee:c3d with SMTP id 5b1f17b1804b1-43668b7860fmr446350975e9.20.1736204757363;
-        Mon, 06 Jan 2025 15:05:57 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43661200abesm578204305e9.18.2025.01.06.15.05.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2025 15:05:56 -0800 (PST)
-Message-Id: <pull.1842.v3.git.1736204756030.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1842.v2.git.1736193131798.gitgitgadget@gmail.com>
-References: <pull.1842.v2.git.1736193131798.gitgitgadget@gmail.com>
-From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 06 Jan 2025 23:05:55 +0000
-Subject: [PATCH v3] credential-cache: respect request capabilities
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=DhUVo8Woq0QW35CFDm2rxEr8jq5P+xg2DwOiQ017/Sk=;
+        b=NSidehtn8j7MkwKgb8PadRdb8rpgKCeZGKD6JiGlKGD6wKx+qzaqFOpf8wqUYC6u7U
+         kgpsEV+UCWNfrG3Qd0LNsxKX+U8EYLAL2DLqQsEOxaiQQIFNOcmPt8yFPsHU5BCwrLL6
+         L9gSqvdKNDINWGkwPxb/vZDDniEFoDz2vfEQ4DCffgzVb1IZ/0L266Np98YZvGWvCbgw
+         J50DXR5zrvxVPFbq8HOrtP7HjvJRM2/TrFv2m2qyQIV7PWTTNP9NGUf/L4Jx/oLlh+Ym
+         rIbfSxf2Xe/cwqw5szyPfRUDvzvsaJqTv2ignUCS3lUrht4bUvdQuJoHpwstI90WMeUZ
+         fvSw==
+X-Gm-Message-State: AOJu0Yzh01CbTyTLHrlYzwPMypvcZtcq4dIQK5RwsNXjwxokEUWUHVEW
+	HxE+jBiqfxGFD0dQBDw/lvY5fQHPpqUTJJkEBJVkYi9faTTAHSt7lw3reIckCDAd5x83jNUoLNS
+	cxEKOXAxWIbzXkYKWB5OGyBBUI5A=
+X-Gm-Gg: ASbGncspU7iCTNRWt8PuoWGHx9rXHupG2MMwunR/vDdO8C0PqoQMDJuZzbtH9B5CrGc
+	B8ooOu3Ln5YGZt+zKCJDud0mUjUNIBYiAW5BDVy8YujIhR8czH/bsZw2zYkBhzOy4c91qd0g=
+X-Google-Smtp-Source: AGHT+IHIY+z0A2QqkFOsvYnrArDEgKr/25hxaR6ucnM7mmgFenQDGQPNDXKi9N+Gm18CK9dcvKwZ7YmeNdfclWYk68Y=
+X-Received: by 2002:a05:6214:3112:b0:6cc:12d3:b589 with SMTP id
+ 6a1803df08f44-6dd23335b8emr335835796d6.4.1736205447031; Mon, 06 Jan 2025
+ 15:17:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: sandals@crustytoothpaste.net,
-    M Hickford <mirth.hickford@gmail.com>,
-    M Hickford <mirth.hickford@gmail.com>
+References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com> <20250106103713.1452035-4-usmanakinyemi202@gmail.com>
+In-Reply-To: <20250106103713.1452035-4-usmanakinyemi202@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 6 Jan 2025 18:17:16 -0500
+Message-ID: <CAPig+cQJM1TOad=buG0h2-3OnxEH6SUBz23y+wYq9GeUzhMwaA@mail.gmail.com>
+Subject: Re: [PATCH 3/4] connect: advertise OS version
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com, 
+	ps@pks.im, johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
+	phillip.wood@dunelm.org.uk, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: M Hickford <mirth.hickford@gmail.com>
+On Mon, Jan 6, 2025 at 5:37=E2=80=AFAM Usman Akinyemi
+<usmanakinyemi202@gmail.com> wrote:
+> As some issues that can happen with a Git client can be operating system
+> specific, it can be useful for a server to know which OS a client is
+> using. In the same way it can be useful for a client to know which OS
+> a server is using.
+>
+> Let's introduce a new protocol (`os-version`) allowing Git clients and
+> servers to exchange operating system information. The protocol is
+> controlled by the new `transfer.advertiseOSVersion` config option.
+>
+> Add the `transfer.advertiseOSVersion` config option to address
+> privacy concerns issue. It defaults to `true` and can be changed to
+> `false`. When enabled, this option makes clients and servers send each
+> other the OS name (e.g., "Linux" or "Windows"). The information is
+> retrieved using the 'sysname' field of the `uname(2)` system call.
+>
+> However, there are differences between `uname(1)` (command-line utility)
+> and `uname(2)` (system call) outputs on Windows. These discrepancies
+> complicate testing on Windows platforms. For example:
+>   - `uname(1)` output: MINGW64_NT-10.0-20348.3.4.10-87d57229.x86_64\
+>   .2024-02-14.20:17.UTC.x86_64
+>   - `uname(2)` output: Windows.10.0.20348
+>
+> Until a good way to test the feature on Windows is found, the
+> transfer.advertiseOSVersion is set to false on Windows during testing.
 
-Previously, credential-cache populated authtype regardless of request.
+This is because the uname(2) you mention above is not actually
+system-supplied but is instead faked up Git itself for the Git for
+Windows port. See git/compat/mingw.c:uname().
 
-Signed-off-by: M Hickford <mirth.hickford@gmail.com>
----
-    credential-cache: respect request capabilities
+The typical way to work around this sort of issue is to ensure that
+you check Git against Git itself instead of checking Git against
+"system". To do so, you would implement a new "test-util" command, say
+`test-util uname`, in git/t/helpers/test-uname.c which internally
+calls the same uname() function that other parts of Git call. Doing so
+ensures consistency of output.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1842%2Fhickford%2Fcache-capability-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1842/hickford/cache-capability-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1842
+Whether or not it makes sense to go through that extra work for this
+particular case is a different question.
 
-Range-diff vs v2:
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+> ---
+> diff --git a/t/t5555-http-smart-common.sh b/t/t5555-http-smart-common.sh
+> @@ -123,9 +123,19 @@ test_expect_success 'git receive-pack --advertise-re=
+fs: v1' '
+>  test_expect_success 'git upload-pack --advertise-refs: v2' '
+> +       printf "agent=3DFAKE" >agent_and_os_name &&
+> +       if test_have_prereq WINDOWS
+> +       then
+> +               # We do not use test_config here so that any tests below =
+can reuse
+> +               # the "expect" file from this test
+> +               git config transfer.advertiseOSVersion false
 
- 1:  696780d4782 ! 1:  e9851c5c4ac credential-cache: respect request capabilities
-     @@ Metadata
-       ## Commit message ##
-          credential-cache: respect request capabilities
-      
-     -    Previously, credential-cache responded with capability[]=authtype
-     -    regardless of request.
-     -
-     -    The capabilities in a credential helper response should be a subset of
-     -    the capabilities in the request.
-     +    Previously, credential-cache populated authtype regardless of request.
-      
-          Signed-off-by: M Hickford <mirth.hickford@gmail.com>
-      
-       ## builtin/credential-cache--daemon.c ##
-      @@ builtin/credential-cache--daemon.c: static void serve_one_client(FILE *in, FILE *out)
-     - 	else if (!strcmp(action.buf, "get")) {
-     - 		struct credential_cache_entry *e = lookup_credential(&c);
-     - 		if (e) {
-     --			e->item.capa_authtype.request_initial = 1;
-     --			e->item.capa_authtype.request_helper = 1;
-     --
-     --			fprintf(out, "capability[]=authtype\n");
-     -+			if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_RESPONSE)) {
-     -+				fprintf(out, "capability[]=authtype\n");
-     -+			}
-     - 			if (e->item.username)
-       				fprintf(out, "username=%s\n", e->item.username);
-       			if (e->item.password)
-       				fprintf(out, "password=%s\n", e->item.password);
-     @@ t/lib-credential.sh: helper_test_authtype() {
-       		EOF
-       	'
-       
-     -+	test_expect_success "helper ($HELPER) get authtype only if request has authtype capability" '
-     ++	test_expect_success "helper ($HELPER) gets authtype and credential only if request has authtype capability" '
-      +		check fill $HELPER <<-\EOF
-      +		protocol=https
-      +		host=git.example.com
-      +		--
-     ++		capability[]=authtype
-      +		protocol=https
-      +		host=git.example.com
-      +		username=askpass-username
+Should this have a comment explaining why you're disabling
+transfer.advertiseOSVersion, in particular that you found uname() on
+Windows unreliable, thus need to disable the check for this case?
 
+The comment you did compose exposes a fragility of the tests: in
+particular that subsequent tests rely upon a side-effect of this test.
+The fact that you had to include a special comment explaining the
+problem argues for a cleaner solution, such as splitting out part of
+this code into a separate test which comes before this one:
+specifically, a "setup"-type test which creates the "expect" file
+which gets reused by multiple tests.
 
- builtin/credential-cache--daemon.c |  4 ++--
- t/lib-credential.sh                | 16 ++++++++++++++++
- 2 files changed, 18 insertions(+), 2 deletions(-)
+> +       else
+> +               printf "\nos-version=3D%s\n" $(uname -s | test_redact_non=
+_printables) >>agent_and_os_name
+> +       fi &&
+> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+> @@ -8,13 +8,23 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>  test_expect_success 'test capability advertisement' '
+> +       printf "agent=3Dgit/$(git version | cut -d" " -f3)" >agent_and_os=
+_name &&
+> +       if test_have_prereq WINDOWS
+> +       then
+> +               # We do not use test_config here so that tests below will=
+ be able to reuse
+> +               # the expect.base and expect.trailer files
+> +               git config transfer.advertiseOSVersion false
 
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index bc22f5c6d24..e707618e743 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -142,9 +142,9 @@ static void serve_one_client(FILE *in, FILE *out)
- 				fprintf(out, "username=%s\n", e->item.username);
- 			if (e->item.password)
- 				fprintf(out, "password=%s\n", e->item.password);
--			if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_HELPER) && e->item.authtype)
-+			if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_RESPONSE) && e->item.authtype)
- 				fprintf(out, "authtype=%s\n", e->item.authtype);
--			if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_HELPER) && e->item.credential)
-+			if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_RESPONSE) && e->item.credential)
- 				fprintf(out, "credential=%s\n", e->item.credential);
- 			if (e->item.password_expiry_utc != TIME_MAX)
- 				fprintf(out, "password_expiry_utc=%"PRItime"\n",
-diff --git a/t/lib-credential.sh b/t/lib-credential.sh
-index 58b9c740605..8da0afe9395 100644
---- a/t/lib-credential.sh
-+++ b/t/lib-credential.sh
-@@ -566,6 +566,22 @@ helper_test_authtype() {
- 		EOF
- 	'
- 
-+	test_expect_success "helper ($HELPER) gets authtype and credential only if request has authtype capability" '
-+		check fill $HELPER <<-\EOF
-+		protocol=https
-+		host=git.example.com
-+		--
-+		capability[]=authtype
-+		protocol=https
-+		host=git.example.com
-+		username=askpass-username
-+		password=askpass-password
-+		--
-+		askpass: Username for '\''https://git.example.com'\'':
-+		askpass: Password for '\''https://askpass-username@git.example.com'\'':
-+		EOF
-+	'
-+
- 	test_expect_success "helper ($HELPER) stores authtype and credential with username" '
- 		check approve $HELPER <<-\EOF
- 		capability[]=authtype
+Ditto.
 
-base-commit: 92999a42db1c5f43f330e4f2bca4026b5b81576f
--- 
-gitgitgadget
+> +       else
+> +               printf "\nos-version=3D%s\n" $(uname -s | test_redact_non=
+_printables) >>agent_and_os_name
+> +       fi &&
