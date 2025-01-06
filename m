@@ -1,92 +1,153 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FA1145348
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 22:22:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6CF1C3C07
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 22:25:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736202142; cv=none; b=DU+I4E1kOvgPvuUxZyvYyejRAceu2n7efL39a20X+vQ21griuQzW/DTOaPKV9U0LKUQyW8R3E3UYL6Dbn5SHNmqHlfYZqULIGfVJJqULT/tvE/bYE2Mnr7q8MOlbnHKWg+0UyblJDY1Ctw5uxbmQctME054/OcSawkxJphnLOH4=
+	t=1736202351; cv=none; b=ofhKCwq32mcmF6QNSeicNehXYQPfg2KRIn3zRHtkW4HRsb1LmEfUb3FsBGGudabnXHF9Jh/aWTN7rVqt3EhxITNk94ddcY4WDEHNPKKNbvcxW0dOBZEhC2h18Re9i82inSZzdqCckGDgLG3zpwJWvFchZJGAOtiQLdl2qz/WB88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736202142; c=relaxed/simple;
-	bh=Tw7U3ZuI5wYLZ5RuybDj/dXoD016Z76GOk9hTG0NGgo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 Cc:Content-Type; b=BQ8VZ/7WD19cCiDjnuh26A3/PmjMc07w9bV55KXQEhY0XZyof8UNEUqgQjwnailLQSLByiGa4nHevnEn+gdZWWJouCzNvlR4r5EMudIwZQ2doIFny0BZvNg4P1oQHKrNQ5nlaEf9cT6cx9JBlEEfZaPkbwM6HomkxnockDR5FEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6d8eacc4194so15115526d6.2
-        for <git@vger.kernel.org>; Mon, 06 Jan 2025 14:22:18 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736202137; x=1736806937;
-        h=content-transfer-encoding:cc:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5+qfornjAVxFSk7rov63PJwjK3Y6K00q/IrrDvJWNyM=;
-        b=F8hkSg/PwdZxD82PoW7ZCSVIo7NadZlXw31Rjh2ZXi7CKbbkVsBmcyPVeyDpdrNxSs
-         J1vv7XCcJq5tqNOIUVARy2T4S/kk9KjaZrLXvHgFcwrduGbC/ofpQPd82ZyHuUwCzu2u
-         Zpy8kd63ryHgvTepvAnUJZ4AnTXoomeqpk6SflquVrEjzUiOV0VuTX7xyWm26m804EBK
-         Rmaxt5h2epm4Tykavw8I52B+35nMkCYczgYxPWiWcLkwuk9D4bwRjn8qmAG+jih8P09d
-         I720LRVzXKm9v/0fhgMYBqCrb5zQ21qFZDKIUxk+DWHeKQqf4fExBDpiTgCt4ClqSy9u
-         w4Og==
-X-Gm-Message-State: AOJu0YzdWdt7T8rBMw00FufBaeZDquD5lt1I0u7sGFA9u/pJmJSK/ceG
-	BaW/+7WfUXrX18ZEI+qFBoGf0ywcaFbT5MlMIUgF9kfLw1sIuLWTgwlEis0g+TayvZQlOTdh9nX
-	Z0l0cO7hVdPCrQ4peOpeyMezqpkxWoFOM
-X-Gm-Gg: ASbGncshXXtuyg+xSYW36fvesAm1NXAJbg2x2dyqSTR/1u/LI6c/XjE1SnkXzHCoLPd
-	LWe7OiSCwvWYcfYr81eO4C1oefBvbqOZLJnPSltWtGEQ7Zskn5KfI8DwvkZmZiARKHGUP/CU=
-X-Received: by 2002:a05:6214:3008:b0:6d8:a5b7:6581 with SMTP id
- 6a1803df08f44-6dd2331b533mt340362266d6.3.1736202137622; Mon, 06 Jan 2025
- 14:22:17 -0800 (PST)
+	s=arc-20240116; t=1736202351; c=relaxed/simple;
+	bh=zMGZZqqwi0ztrHEOM+hWfRO5DnINTlIU4Ufq2RP3xJY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GbXP97jURAyx3bZq+YbLeig3MrdzkGRTguxsIRDvlx7fX5yDzYVzS2vyvQYvRUsVJc9U0B+InIiH8btoQu/fwOZi3Um9qdFK4iNiU8dPn3n+UfFJrxTodSlCHFT6KgZHA1bemhUotQiPWfN58rpzzq8v4BkLxFFSwx6BEhQYOPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=gX84wlcy; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="gX84wlcy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1736202340;
+	bh=zMGZZqqwi0ztrHEOM+hWfRO5DnINTlIU4Ufq2RP3xJY=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=gX84wlcy8g1YkvB3sbuzRKpXf3syyeeQn4AXNRizLPtt+I470gr3UJiDGJZDXSEr9
+	 aNGHxVcRshM5r07OZWOAbvUP7Fdj0pDgNij0UtSeeyuf6qKsUgDEeVs4yWVXzG2oyy
+	 iYEyhrv/wMNgZQQSXagU8PUoif3uA7yeKjSH65FUtL7tt+vKqQGAZZGYIqLoyf5aql
+	 u9NLXolIHcnDN2RmUhYC9Nf/viVV1fep6DUmgkqCWiC9s2613gdd+aWT5Jt8GitSoH
+	 Q29d5wPdC6l2onT2TyulffGYQcwlNFo/iN+yZUv42jtxeQzVY/0pBPhtEHbosfg4Qd
+	 kASScQcO3CNAEbnPVgxaLsnCDhA35aUu2wdoTbY8VAkIpFPN6D52DYnjM/r7iGrYXJ
+	 XlTw/B2jiv9Svt2ww141bh2zOtSxNNIpOT3ZsJJX/sfZc4qYn4n5J9W/7kA1MGA1Dg
+	 oO26DjjBvR5oJQj1LLrEcOFQJ22MfeZr5IMzAG0JmkfM+ftINQX
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C6D9120991;
+	Mon,  6 Jan 2025 22:25:40 +0000 (UTC)
+Date: Mon, 6 Jan 2025 22:25:39 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Matthias Braun <matze@braunis.de>
+Cc: git@vger.kernel.org
+Subject: Re: bug: Removing branch and creating branch-directory with same
+ name breaks
+Message-ID: <Z3xYY5A7BblBiYmG@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Matthias Braun <matze@braunis.de>, git@vger.kernel.org
+References: <25913110-E42E-4028-B39D-44045623FDC4@braunis.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250106190855.3098-1-soekkle@freenet.de> <20250106190855.3098-3-soekkle@freenet.de>
-In-Reply-To: <20250106190855.3098-3-soekkle@freenet.de>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 6 Jan 2025 17:22:06 -0500
-Message-ID: <CAPig+cR0GgZQ+XCyAh=xHRfjfsAdTzC2uyML1vnoM_fXv1Bxew@mail.gmail.com>
-Subject: Re: [PATCHv2 2/4] date.c: Fix type missmatch warings from msvc
-Cc: git@vger.kernel.org, gitster@pobox.com, phillip.wood123@gmail.com, 
-	ps@pks.im, =?UTF-8?Q?S=C3=B6ren_Krecker?= <soekkle@freenet.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Lpg/E20dFRqooBGr"
+Content-Disposition: inline
+In-Reply-To: <25913110-E42E-4028-B39D-44045623FDC4@braunis.de>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--Lpg/E20dFRqooBGr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 6, 2025 at 2:14=E2=80=AFPM S=C3=B6ren Krecker <soekkle@freenet.=
-de> wrote:
-> Fix compiler warings from msvc in date.c for value truncation from 64
-> bit to 32 bit integers.
+On 2025-01-06 at 19:07:01, Matthias Braun wrote:
+> (Note that I also tried this with latest git-2.47.1 after creating the re=
+pro script and it still fails there).
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> - Removed remote branch. Created new directory (for branch names)
+>   with same name directory name as the previously used branch name.
+>   After that `git fetch` fails.
+>=20
+> Reproduction script for your convenience:
 
-s/warings/warnings/
+Thanks for the reproduction steps.  This is expected, and I'll explain
+more below.
 
-> Also switch from int to size_t for all variables with result of strlen()
-> which cannot become negative.
->
-> Signed-off-by: S=C3=B6ren Krecker <soekkle@freenet.de>
-> ---
-> diff --git a/date.c b/date.c
-> @@ -1270,7 +1270,7 @@ static const char *approxidate_alpha(const char *da=
-te, struct tm *tm, struct tm
->         tl =3D typelen;
->         while (tl->type) {
-> -               int len =3D strlen(tl->type);
-> +               size_t len =3D strlen(tl->type);
->                 if (match_string(date, tl->type) >=3D len-1) {
+> ```
+> #!/bin/bash
+>=20
+> mkdir -p repro
+> git init repro/remote.git
+> git clone repro/remote.git repro/cloned
+> pushd repro/cloned
+> echo "hello" > hello.txt
+> git add hello.txt
+> git commit -m "test commit"
+> git branch mystuff
+> git push origin mystuff
+> popd
+>=20
+> git clone repro/remote.git repro/clone2
+>=20
+> pushd repro/cloned
+> git branch -D mystuff
+> git push -d origin mystuff
+> git branch mystuff/branch_in_subdir
+> git push origin mystuff/branch_in_subdir
+> popd
+>=20
+> pushd repro/clone2
+> git fetch    #  This fails as branch turned into directory
+> popd
+> ```
+>=20
+> What did you expect to happen? (Expected behavior)
+>=20
+> `git fetch` should work...
+>=20
+> What happened instead? (Actual behavior)
+>=20
+> `git fetch origin`
+> error: cannot lock ref 'refs/remotes/origin/mystuff/branch_in_subdir': 'r=
+efs/remotes/origin/mystuff' exists; cannot create 'refs/remotes/origin/myst=
+uff/branch_in_subdir'
 
-This change looks scary and potentially wrong considering that the
-expression in the `if` statement subtracts 1 from `len`. If `len`
-happens to be zero, then `len-1` will wrap around to a very large
-number, thus potentially changing the meaning of the `if` condition.
+git fetch does not by default delete remote tracking branches which no
+longer exist on the remote.  That's because sometimes you want to keep
+those around even though upstream does not.[0]
 
-Now, admittedly, I haven't delved into this code or thought about it
-much, so I may be entirely wrong about this; perhaps it is impossible
-for `len` to ever be zero in this context or perhaps the meaning of
-the `if` condition doesn't change even if it wraps around. But if
-that's the case, you should use the commit message to explain to
-readers that you have audited the code and verified that `len` will
-never be zero or that the condition remains safe despite wraparound.
-Also, even if you verify that this change is perfectly safe, because
-it _appears_ to be a potentially behavior breaking change, you should
-isolate it in its own commit, separate from the other changes, to let
-reviewers know that it deserves special scrutiny.
+In this case, or if you just don't want to keep them around, you can use
+`git fetch --prune origin` to prune those old branches when fetching, or
+`git remote prune origin` to just prune and not fetch (and, of course,
+these work with any remote, not just `origin`).  The `git fetch` manpage
+mentions the `fetch.prune` and `remote.<name>.prune` options for you to
+control this automatically as you see fit.
+
+[0] At a previous employer, large projects were squashed-and-merged, and
+I found keeping around the original history=E2=80=94and thus the original
+branches=E2=80=94was invaluable to understanding why a change was made or w=
+ho I
+should talk to about a particular change if I had questions.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--Lpg/E20dFRqooBGr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.45 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ3xYYwAKCRB8DEliiIei
+gbG8AP44ESWBe4wZbw3fUEWYKwObTYLYhHRHa/21tEvT5G343QD/Qblb7L4D5HzB
+RNwWGBS/LEeOtpc1fvgXg2RFlAmMJw0=
+=EZ/o
+-----END PGP SIGNATURE-----
+
+--Lpg/E20dFRqooBGr--
