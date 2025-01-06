@@ -1,88 +1,87 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECBC13DB9F
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 15:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B310C39FCE
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 15:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178673; cv=none; b=jAxhycPxCYJSG5DRAr6UUnQoBu4LSBke4MazQ25+raYXMkcZT8jxy0tvpMq7rJPb1bZaA1rlQTxVSvv29n9hBFDvgeWG/qnYELoRvgZ+mwfX9x07BJDURPLkv4a7kTFUyPrCG+YKiill+SDNWz/Ej3mRf0/f9yyn6lbWGc23GRM=
+	t=1736178831; cv=none; b=q/ZOxJ7swCfOID5PZADYEkfJsmx+dkdoajb4WzFeBID29XCJQWY1NT9jgSrU0K2te8ZO/cweH3FfADqO9eEignR0I2g4Ad3yUFFHACIei6hTtFvSQADOeNx5fnxhwLGr8i7KaxHzgJFsgRublF90P3Fj7wNjQ5DtcQ2KZGJJ1jU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178673; c=relaxed/simple;
-	bh=zoecONq8yPyuXmScnoCOFWGVEw8UYB7qXjHOhHCY6jM=;
+	s=arc-20240116; t=1736178831; c=relaxed/simple;
+	bh=SUiWgICWR2FHVt0190MGgY8SzbwbPEcfbVngg3hBmXE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hvUbcmPrbL+RsWkrVpdsu1Zmj68gl/03kinVDP8G1Fas5mCrAOhqseDcW2O3idPKZ0b1wNIW7td+ZnFPrONWJ0UVyUCJpnhTBMIGQ2kZw/hs0d0nnHuf/ZFUJZ1vyfLqg/EqMVPYRKkw7SdtUd5vmWVvrcKZluiydC1WaFYU6zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=t3BHfab+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HbVaZ82r; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=LTv2+DT2cEeME4sPcc8lOGdoxlXZ8HfEblSkhOP54gkVC3eY7cjmdw5EAOwJjDHSH67upbYKaeRSlADr60KzGQWXvAmkJZbKMD8kJ1xqp/EUvlvFavZHCF+gs+hxvyfI5Ewp9PlAJ18K73L40pBcJhLwmerFzyh0vEdt9ZetXXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K9hfNLig; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IhKmOaRo; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="t3BHfab+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HbVaZ82r"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id ECF9025401CC;
-	Mon,  6 Jan 2025 10:51:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 06 Jan 2025 10:51:10 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K9hfNLig";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IhKmOaRo"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CE84825400A3;
+	Mon,  6 Jan 2025 10:53:48 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 06 Jan 2025 10:53:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1736178669;
-	 x=1736265069; bh=7P1+OL9RufLp6QXu6VMuV8GrJP+6YiM4qgs/bxWygkY=; b=
-	t3BHfab+CyNWfdh+DV6aD6LYFDcwLtRFpNtGkwlNi/WtEhuVnsHmM38qZisHwJ+Z
-	gh+62ieUt6vGcaKmp6a2sQZRKmgYsRxXtakSOyNoriO6mlWIKbFCKV4458pn/qXU
-	8dUsj4O8Bk1onQhIm4MBuaMdgVaLSA5oGnAeTwJ0pzwP3iOxYxqoE3Mi2pcTs620
-	zm5OoOW6X69FtTiAYK7smnsggXpgLtf7qDG3iMzmk3+vqEao22Sq4DbgEL82Eerh
-	pSpDB+nFrWbCK7NzCygwV1pep+FcV5egiBMptIdYi+pamgw44idU++E3z4O3K28O
-	v5O0ECTTWU9LTKlw/qJpfg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736178828; x=1736265228; bh=UZrRj7CGmQ
+	Aa+adigCmiH5FBZV9X9FIbZVCgGcgq/rw=; b=K9hfNLigXbrBZCm6xl3UC/I/Ze
+	PFeX6cLaVJhupBS54cYYa+VG9Rpouo6zZ1Dynny/8SDx/3HuxQ3rPYJ8w/gBlh/a
+	Iqm7wn6HMIeC90qK8CWgT3GV0W0JGlMG4oBcHtJmfryVXnwvhc+VAbBq3wOhwunD
+	7/m5AD02e3k/92b2cXE/uaxxOKiHPFm0HZbW0DBXbNTyjnd8HE5vRjTvhZUVm8Uw
+	r7j8XHYAE3hP+6cFESd3o/+GxxCatSTDoSC54NNDXakKj4Kdry4DC2YQNbBdOuhc
+	SiRrzH39Mh9MDWJSWzyXA0hU8IdAVghEiTjqoND1fAaWrWzF05DpiXUrai5g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736178669; x=
-	1736265069; bh=7P1+OL9RufLp6QXu6VMuV8GrJP+6YiM4qgs/bxWygkY=; b=H
-	bVaZ82rIG28EHM4jWNlMMTARbqgpCmxMGUo7sB/Gu9Njbo8XgUaVg4Q96pBEzknh
-	I4PlONENEwQIq4CORiCkPGJC8KJGfS15FnB+yW8HYuw57y1KedOwwcy+G1CCL3dL
-	dT+/b5fLnd/AtxvAZU8UQD9mq1WNCC0WAnffBmeHlXikql9MA1Ss6YI2WUGDcHgY
-	BBcyxzwmmO3Su3YnSGtvk1mKU9shzfwn7FZH0B0FWt09jI/RCjss8+Rpl1+uX3fl
-	t1FlIlfHzdNao3NYaZBzr7BjfRlrPMTHW/dTt5Bxir2ZCDSURN42ik6oxvY/RR5Y
-	5FacftbP1v1OlKoLMrbNw==
-X-ME-Sender: <xms:7ft7Zxa5lS9fA7_ekaamTg81geoApTLU9WA92A1Rc8kcxTgsUXhtBg>
-    <xme:7ft7Z4auR8NI7fL8pwjY0i9Bf2QhhuaclKxNpLacoatcTPi8eTTXeQgSqqO7BbACY
-    b5B7XCpjbf7IqZeLw>
-X-ME-Received: <xmr:7ft7Zz8LOpv8VHA7ThwlC7Kq46m9b3KfcALd7gZxEJjdklez3IOdKcNioXCH8_sUmIqwT7RfcWge_fs3PEmlEKYtHXtRgwqARoTg>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736178828; x=1736265228; bh=UZrRj7CGmQAa+adigCmiH5FBZV9X9FIbZVC
+	gGcgq/rw=; b=IhKmOaRoW61AOFnW97NyNgdJ8tViSrW8d1bsjMsuDnDAbgggda/
+	eEn8S/G0DKV2DKnjnPF0c/6KtGHkKhJ6y7f8BDoaPDAI/23TgxldjAsF/jRFe9KY
+	dusrACnkKoa4Cn3zgUPx5ANc9z2jExmLmYKnaVdjj9aPV52J2Elw3F+IoKCZVPfk
+	3R6BJmeXM+synhnFfMKJCMybVuwlb03EMOfxMrrg1EpcZd9X+OBvkKkLcfy34Ow6
+	3NO8Y/5qGnwT2lj+FoQckQLb9w6zijWXSr+3xEiVZ+R1MnOCjcAkrisQEG3dbyQk
+	mh5yYtms3F9ZP2MB4t6tI+lrfsmESvo9+Xg==
+X-ME-Sender: <xms:jPx7Z6HOlYH2tgwrzuX8j3pAvwwVBrTuP9qkFheoTgYaqP6nSht4Tw>
+    <xme:jPx7Z7W8zybOuSOZjYzxtllNxWdCP5qPcJFaC4ByFNYfikFMoKIQCx3dsq_O1jPw2
+    nZEUtzRgh1ubXi9jw>
+X-ME-Received: <xmr:jPx7Z0JPOg5JcM_iAOltW-ZiHrZdrSDm5s3vEAJYMyEeJEuSNEk6ACaubgq7QlpVta5x6NfF0VEnv2kfuwGIsVo6Rwjd2tDPVGiw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddgkeduucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeef
-    heeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirg
-    hnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    gsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7ft7Z_rPyIKGTdAhAkffJ2b0uh3KnThQh40SXPpHtIFuWe8yzHmVzg>
-    <xmx:7ft7Z8rtFt0d1EEafCZAKgpkxMojZtbFOy8BW-rsE8vWtRJgKUPszg>
-    <xmx:7ft7Z1RXhZ8itYfQ_In5NCupYcrtpqAtXxPZfalzWMlCGy_1ObvDAQ>
-    <xmx:7ft7Z0o4SYRSKb7YBBxHrwUw_0ltjiyR3AmoaHfgVxZyhCeCpfLbaw>
-    <xmx:7ft7ZxBgslkXLhQUja4jaPT5801zGGLaYCx48olI9JqF59YbUbMtgtFj>
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnh
+    drtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsg
+    gvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:jPx7Z0F3xAOfcnTitR2ioTObaEevA8icy14IwARScSz5isnvfIasWg>
+    <xmx:jPx7ZwXx-qcqElpKzXQjHE-Sd97QYXgtXWIrvXskiOsOPgs3amIzOQ>
+    <xmx:jPx7Z3O55QHtl9J2R_PQtg-l0_hIUpQoV0wR1d9mXP2cTPAdRGSdIw>
+    <xmx:jPx7Z33ZDlaaLXT3uzME3mCxm3mcuv_YUs-Rl294HO6obal9eq5A6A>
+    <xmx:jPx7Z6cUT6Et8iKO5-BFldnvRBldHP2-6lC6RxCdo1zulpbTNXstBoAh>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jan 2025 10:51:09 -0500 (EST)
+ 6 Jan 2025 10:53:48 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  "D. Ben Knoble"
  <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2 2/5] ci: merge linux-gcc-default into linux-gcc
-In-Reply-To: <CAP8UFD1ALC2f9iQady35MCdm18V3u9+b0iRhgx2Zd_UTeCY8vA@mail.gmail.com>
-	(Christian Couder's message of "Mon, 6 Jan 2025 14:25:23 +0100")
+Subject: Re: [PATCH v2 5/5] remote: announce removal of "branches/" and
+ "remotes/"
+In-Reply-To: <CAP8UFD0Lzazxyq9nnT-vwN=MijKAsYySFC2dvDEj33cS7VB0kA@mail.gmail.com>
+	(Christian Couder's message of "Mon, 6 Jan 2025 14:24:30 +0100")
 References: <20250106-pks-remote-branches-deprecation-v2-0-2ce87c053536@pks.im>
-	<20250106-pks-remote-branches-deprecation-v2-2-2ce87c053536@pks.im>
-	<CAP8UFD1ALC2f9iQady35MCdm18V3u9+b0iRhgx2Zd_UTeCY8vA@mail.gmail.com>
-Date: Mon, 06 Jan 2025 07:51:08 -0800
-Message-ID: <xmqq7c780wlv.fsf@gitster.g>
+	<20250106-pks-remote-branches-deprecation-v2-5-2ce87c053536@pks.im>
+	<CAP8UFD0Lzazxyq9nnT-vwN=MijKAsYySFC2dvDEj33cS7VB0kA@mail.gmail.com>
+Date: Mon, 06 Jan 2025 07:53:46 -0800
+Message-ID: <xmqq34hw0whh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,42 +89,28 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
 Christian Couder <christian.couder@gmail.com> writes:
 
-> On Mon, Jan 6, 2025 at 8:51 AM Patrick Steinhardt <ps@pks.im> wrote:
->>
->> The "linux-gcc-default" job is mostly doing the same as the "linux-gcc"
->> job, except for a couple of minor differences:
->>
->>   - We use an explicit GCC version instead of the default version
->>     provided by the distribution. We have other jobs that test with
->>     "gcc-8", making this distinction pointless.
->>
->>   - We don't set up the Python version explicitly, and instead use the
->>     default Python version. Python 2 has been end-of-life for quite a
->>     while now though, making this distinction less interesting.
->>
->>   - We set up the default branch name to be "main" in "linux-gcc". We
->>     have other testcases that don't and also some that explicitly use
->>     "master".
->>
->> So overall, the job does not add much to our test coverage. Merge it
->> into our "linux-gcc" job to reduce our test matrix a bit.
+> What I like about the removal of git-pack-redundant(1) in the previous
+> patch is that we started to emit a user-visible warning in 2020 and
+> now users even have to pass an `--i-still-use-this` option to be able
+> to use the command. This really makes sure users cannot ignore the
+> fact that the command is deprecated.
 >
-> I understand that the subject uses "merge" as the space is limited
-> there, but it might be better to be a bit more explicit here about
-> what the patch is doing, which is:
->
->   - making the "linux-gcc" job use the default version of gcc provided
-> by the distribution (which is ubuntu-20.04) instead of "gcc-8",
->   - removing the "linux-gcc-default" job.
+> Accordingly I think it would be nice if we started to emit warnings
+> (that could possibly be disabled) when we find a repo still uses stuff
+> in "branches/" and "remotes/". These would be much more difficult to
+> miss or ignore than doc changes.
 
-unify?  deprecate (the 'default' one)?  
+That's an excellent suggestion.  Even though this topic is about
+introducing breaking changes, saying "we waited for long enough",
+making sure we have prepared the user base for such changes to
+lesson the impact of "breaking" changes is a very prudent thing to
+do.
 
-FWIW, I do not think of a better way to phrase what the patch is
-doing than "merge X into Y".
+I guess everything is contained within remote.c these days?
+Patches welcome ;-)
 
 Thanks.
