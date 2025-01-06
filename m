@@ -1,54 +1,54 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B310C39FCE
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 15:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A820A3594E
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 16:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736178831; cv=none; b=q/ZOxJ7swCfOID5PZADYEkfJsmx+dkdoajb4WzFeBID29XCJQWY1NT9jgSrU0K2te8ZO/cweH3FfADqO9eEignR0I2g4Ad3yUFFHACIei6hTtFvSQADOeNx5fnxhwLGr8i7KaxHzgJFsgRublF90P3Fj7wNjQ5DtcQ2KZGJJ1jU=
+	t=1736179500; cv=none; b=ODnygvTNqa6jeA1/mwVt0rPRvlqbR3ruXrsVQTgwWT41iAv16AMqtswWTbsqBqUpx9fv4Vuc5KE2N0xL02f/7+vadP02Wrb4bX1Jmgj8V4CFSWLxogH0EzeqQqHXIN7qWkMUSlOLWF13zVHl9bt5O8a9l1EwPuJ5FCvBNlnCkNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736178831; c=relaxed/simple;
-	bh=SUiWgICWR2FHVt0190MGgY8SzbwbPEcfbVngg3hBmXE=;
+	s=arc-20240116; t=1736179500; c=relaxed/simple;
+	bh=9PPpG3GRnxHUGSzGRIg4fn3BRsQ89TgOfhl4y3nBIyw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LTv2+DT2cEeME4sPcc8lOGdoxlXZ8HfEblSkhOP54gkVC3eY7cjmdw5EAOwJjDHSH67upbYKaeRSlADr60KzGQWXvAmkJZbKMD8kJ1xqp/EUvlvFavZHCF+gs+hxvyfI5Ewp9PlAJ18K73L40pBcJhLwmerFzyh0vEdt9ZetXXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K9hfNLig; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IhKmOaRo; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=dEqxGnmRxpfTd4LdihQrvHfpc6IytwCc29lRlfoizxbKsfGak0DMWnbdZTbTWAtGNILt9oLm+y4b5L86K/z8f8Ltw5Bn15Y1VundNCDcFH0znBfW9EJuEX4hygxQh2/zRtehTfNbsf/DMpCpohuu0Om9YuVOFpC9KWjt87yuxzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A8ZbkU+S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PGKgAevy; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K9hfNLig";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IhKmOaRo"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CE84825400A3;
-	Mon,  6 Jan 2025 10:53:48 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A8ZbkU+S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PGKgAevy"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 639821140148;
+	Mon,  6 Jan 2025 11:04:57 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 06 Jan 2025 10:53:48 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 06 Jan 2025 11:04:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736178828; x=1736265228; bh=UZrRj7CGmQ
-	Aa+adigCmiH5FBZV9X9FIbZVCgGcgq/rw=; b=K9hfNLigXbrBZCm6xl3UC/I/Ze
-	PFeX6cLaVJhupBS54cYYa+VG9Rpouo6zZ1Dynny/8SDx/3HuxQ3rPYJ8w/gBlh/a
-	Iqm7wn6HMIeC90qK8CWgT3GV0W0JGlMG4oBcHtJmfryVXnwvhc+VAbBq3wOhwunD
-	7/m5AD02e3k/92b2cXE/uaxxOKiHPFm0HZbW0DBXbNTyjnd8HE5vRjTvhZUVm8Uw
-	r7j8XHYAE3hP+6cFESd3o/+GxxCatSTDoSC54NNDXakKj4Kdry4DC2YQNbBdOuhc
-	SiRrzH39Mh9MDWJSWzyXA0hU8IdAVghEiTjqoND1fAaWrWzF05DpiXUrai5g==
+	:subject:to:to; s=fm1; t=1736179497; x=1736265897; bh=U25gbuOdBs
+	9Cace4gjFpwJ8MBB6QCZVA4PPlyndX9SE=; b=A8ZbkU+SDP9Z6x8eh0o1yYJHwp
+	IlNIWC75woiopfO46ShebIyeaRDBWghZs5ZKL+l4lxc+nErPVuf8f9IsU3J8jzFT
+	pQFhNrB0MV/l46YegX7HL5PhKroe0P7qQxLTNbYzFEi/xT4lRCbLi/D0pMYm1/hY
+	xf0ITnYr/UjH004EdPIemPa3A51evSHFqDeLPKAE9p/MVaqk0BHezuOuQ5zFks1T
+	UyyBnXReMUz+RO7cwfgHq5nzQiy7oyuINRw2Xx3/f1FwtR2Amj1oUyXIFGdxYBA8
+	r0F4aodq8vMXtKnToC5A8/mnNB6A3jkaGURwthJMrKIiVxXvg/lCywrtZ9tQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736178828; x=1736265228; bh=UZrRj7CGmQAa+adigCmiH5FBZV9X9FIbZVC
-	gGcgq/rw=; b=IhKmOaRoW61AOFnW97NyNgdJ8tViSrW8d1bsjMsuDnDAbgggda/
-	eEn8S/G0DKV2DKnjnPF0c/6KtGHkKhJ6y7f8BDoaPDAI/23TgxldjAsF/jRFe9KY
-	dusrACnkKoa4Cn3zgUPx5ANc9z2jExmLmYKnaVdjj9aPV52J2Elw3F+IoKCZVPfk
-	3R6BJmeXM+synhnFfMKJCMybVuwlb03EMOfxMrrg1EpcZd9X+OBvkKkLcfy34Ow6
-	3NO8Y/5qGnwT2lj+FoQckQLb9w6zijWXSr+3xEiVZ+R1MnOCjcAkrisQEG3dbyQk
-	mh5yYtms3F9ZP2MB4t6tI+lrfsmESvo9+Xg==
-X-ME-Sender: <xms:jPx7Z6HOlYH2tgwrzuX8j3pAvwwVBrTuP9qkFheoTgYaqP6nSht4Tw>
-    <xme:jPx7Z7W8zybOuSOZjYzxtllNxWdCP5qPcJFaC4ByFNYfikFMoKIQCx3dsq_O1jPw2
-    nZEUtzRgh1ubXi9jw>
-X-ME-Received: <xmr:jPx7Z0JPOg5JcM_iAOltW-ZiHrZdrSDm5s3vEAJYMyEeJEuSNEk6ACaubgq7QlpVta5x6NfF0VEnv2kfuwGIsVo6Rwjd2tDPVGiw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddgkeduucetufdoteggodetrfdotf
+	1736179497; x=1736265897; bh=U25gbuOdBs9Cace4gjFpwJ8MBB6QCZVA4PP
+	lyndX9SE=; b=PGKgAevyXb1WxT44ZWG0qEA8UK1d6djAovNnc895JZdy69RnUJR
+	rhZ1EuYPecI0SuEKLN4yQ4isD9nlsxcHoD5WMNGX4lcMCFcbO0zxgejSNNMLVyI1
+	xGaKv8D+mB5jv4sE/9s5cw9Wp/lIJi17rSNVlCZJf12EpVYqoaZZntFeFnFQk8yf
+	Nwjf0xihSgCiY5ay7rFezjexjsoKPsWOOKlnKTXQ0EVjup0nvbxYml3ygmLRqe0K
+	QsZK7OtU+vUSRnU4RMcnkA67XQTEKsSj+Vqia0p2/im3KLHe1yWgoDAPSiSwGKuE
+	SqaXNR5Y5e3ZCxUeVxk/0HyIIKgb1i4Ursw==
+X-ME-Sender: <xms:KP97Z8JuoJhmvUpVFdzID9YazAXbtUjSpqbEv4YcD-fZt4AReGCctg>
+    <xme:KP97Z8KQn75_sWhs2KTdEBg6q5HMAK9h_etRcvk4Fk2NrfFyqySDXm26IPgXbfsd7
+    t5f12fduWlXPx7hvQ>
+X-ME-Received: <xmr:KP97Z8tGNywi9NRf6GaAp-ot6wLkfVDM-QNmsKMC19nGxEbbTmM2vdqD9OLYYQmZRV7XEXkQoM4bdUx5EeJ7esaUW1FNqkTf3-FO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddgkeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -56,32 +56,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddgkeduucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtihgrnh
-    drtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsg
-    gvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:jPx7Z0F3xAOfcnTitR2ioTObaEevA8icy14IwARScSz5isnvfIasWg>
-    <xmx:jPx7ZwXx-qcqElpKzXQjHE-Sd97QYXgtXWIrvXskiOsOPgs3amIzOQ>
-    <xmx:jPx7Z3O55QHtl9J2R_PQtg-l0_hIUpQoV0wR1d9mXP2cTPAdRGSdIw>
-    <xmx:jPx7Z33ZDlaaLXT3uzME3mCxm3mcuv_YUs-Rl294HO6obal9eq5A6A>
-    <xmx:jPx7Z6cUT6Et8iKO5-BFldnvRBldHP2-6lC6RxCdo1zulpbTNXstBoAh>
+    thhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkih
+    hnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehj
+    ohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrd
+    hstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepmhgvsehtthgrhihlohhr
+    rhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorh
+    hgrdhukhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
+X-ME-Proxy: <xmx:KP97Z5byKg_pyhsBgoXXPlyWr5BGiz7sOFsR-0Cj55mbPQROp_IXeA>
+    <xmx:KP97ZzbSx_1Dm2hZGokdp5xhsJ5zg0Xp3JrTuw--6mFP6grQpj_CJQ>
+    <xmx:KP97Z1Chn7NsytImmqAzxX5i1pbqSAWWovdFEfkozP1IzIj247yI0w>
+    <xmx:KP97Z5YgQ27EurDz6rDp_DAxhlMqis64VJAjuuZ7HvmBcp6f8UNxOw>
+    <xmx:Kf97ZwRePxCkLfiYiIj0uw4E3v9ZFi7_kMwA6vvlLp1YmqWp35Hhs8jU>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jan 2025 10:53:48 -0500 (EST)
+ 6 Jan 2025 11:04:55 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  "D. Ben Knoble"
- <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2 5/5] remote: announce removal of "branches/" and
- "remotes/"
-In-Reply-To: <CAP8UFD0Lzazxyq9nnT-vwN=MijKAsYySFC2dvDEj33cS7VB0kA@mail.gmail.com>
-	(Christian Couder's message of "Mon, 6 Jan 2025 14:24:30 +0100")
-References: <20250106-pks-remote-branches-deprecation-v2-0-2ce87c053536@pks.im>
-	<20250106-pks-remote-branches-deprecation-v2-5-2ce87c053536@pks.im>
-	<CAP8UFD0Lzazxyq9nnT-vwN=MijKAsYySFC2dvDEj33cS7VB0kA@mail.gmail.com>
-Date: Mon, 06 Jan 2025 07:53:46 -0800
-Message-ID: <xmqq34hw0whh.fsf@gitster.g>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,
+  johncai86@gmail.com,  Johannes.Schindelin@gmx.de,  me@ttaylorr.com,
+  phillip.wood@dunelm.org.uk,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 2/4] version: refactor get_uname_info()
+In-Reply-To: <20250106103713.1452035-3-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Mon, 6 Jan 2025 16:00:50 +0530")
+References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
+	<20250106103713.1452035-3-usmanakinyemi202@gmail.com>
+Date: Mon, 06 Jan 2025 08:04:54 -0800
+Message-ID: <xmqqv7usylll.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,26 +93,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> What I like about the removal of git-pack-redundant(1) in the previous
-> patch is that we started to emit a user-visible warning in 2020 and
-> now users even have to pass an `--i-still-use-this` option to be able
-> to use the command. This really makes sure users cannot ignore the
-> fact that the command is deprecated.
+> Some code from "builtin/bugreport.c" uses uname(2) to get system
+> information.
 >
-> Accordingly I think it would be nice if we started to emit warnings
-> (that could possibly be disabled) when we find a repo still uses stuff
-> in "branches/" and "remotes/". These would be much more difficult to
-> miss or ignore than doc changes.
+> Let's refactor this code into a new get_uname_info() function, so
+> that we can reuse it in a following commit.
 
-That's an excellent suggestion.  Even though this topic is about
-introducing breaking changes, saying "we waited for long enough",
-making sure we have prepared the user base for such changes to
-lesson the impact of "breaking" changes is a very prudent thing to
-do.
+This does two things: refactor and enhancement.  Shouldn't it do
+pure refactoring in a single patch, with a follow-up patch that
+extends it to allow the caller to hide the system details?
 
-I guess everything is contained within remote.c these days?
-Patches welcome ;-)
-
-Thanks.
