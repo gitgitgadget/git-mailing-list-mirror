@@ -1,61 +1,61 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA2D19E7EB
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 10:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C9CD1DB92A
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 10:37:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736159854; cv=none; b=tRtudEgG/VgAxgStzk+sFXCDjm2rXFnHHF5QaaGSvCp4A3tdZj08s/wPUfheMQBXCIpyHWO9uORTyMIgrC3vn2s0xAXLSzZotHXVish7Ue7KSae85oOEWf+c7ES0cC3+qhDfCW9FqBu1G+PtIN2Y2sJ35YLlBlbT1oSfkOoWuhw=
+	t=1736159857; cv=none; b=Q/3gkUyKbLnCOVuesz+WX4XU1NFaxgFnDXfaYxX/JW56voFg0wFmlYhxPR78gBv/RCwqPKUrMEtO/arZ8Nh0MMZXgPmLQ/y/2aDyE2OxJDr85ah7wv441nUpVWgddvd8RWTn2fleh3Yq+uLo6hFEBWv+uPne51SCZW8/GB9lcdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736159854; c=relaxed/simple;
-	bh=YYFQTvpqSN7W/kRXejV0+UFuwkTyx1M9IOZUgZa70mA=;
+	s=arc-20240116; t=1736159857; c=relaxed/simple;
+	bh=8/PDchkR/KMRquoK5FityImFgPDfszfA29AUIdbJGKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BbJtUc/X0I8U7jz3Kn4hova6nnep4PFrBeyFwdJZIltzdoCzuhgRJF1Ftzr3mpr6CYNb1OV2X9xoSb/90beDmuViEjYtR/sUXSw66A1NG4El4/sONNJHMdXZtxoSdfT9wnNzW3boiUv2b2+rmpmwb8stFVEXdtsM/f0y25bL09Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JPo8ZfT5; arc=none smtp.client-ip=209.85.214.174
+	 MIME-Version; b=Zu2TaE6IFhQg3xZIbJZ3SliKUEJt3RvVsh+LpQF/ZUp7eubmR+1LYFctqU7XBZkMKbcco5CqhyhZCUEUzQvThTNMGXlh9UAOjQms/SAEbe+xerHkcDAAgf2HaoKTKoYN4lSjmAstyIYXYIcnqxZ/CAns0zu23TZ9pv258ih/j10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PpIkSsSN; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JPo8ZfT5"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2164b662090so177632055ad.1
-        for <git@vger.kernel.org>; Mon, 06 Jan 2025 02:37:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PpIkSsSN"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-21675fd60feso2463745ad.2
+        for <git@vger.kernel.org>; Mon, 06 Jan 2025 02:37:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736159850; x=1736764650; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1736159854; x=1736764654; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GE5ihcAJ+Kpt1lJIv9WzWk7McPwII/sW/F0fTCVn8IU=;
-        b=JPo8ZfT56gnepAnoOff/pz3n6qBSj7EUNPz+73AOXIp1JOJpdf1Ks82h2YDiKNQF3T
-         uSqtNP1C5Mx19aV9/zasoxteWiBM/71Ba2HVjjbZCGgPiPPfQQSwLYkj7nUDx4r87Sb8
-         z1XJARKbPMZWcYzMhZXIGPmd5FLqNPC0fYTUCifDBo5a4NQHMfFpy64wW0B4KixdQlrk
-         +iZSPeQxuUXMcBoSM6j0A4/bwrbCdlK1ybU89xoJ2kyne4A9fMuw6fWKH889TuuIso2i
-         thGefrfQ02ji64NCpGUFyLvBDAQMLyjEa5MS2iHk33xyntrKoz1md42Pi59IxeFA1HZ+
-         ujEA==
+        bh=2Ak2KvSyKXuyYal8G0OJ/TdfdcBHWAxOYRWEb3+u+sM=;
+        b=PpIkSsSNlWOsFpR2zCid7yNLFtPOz+Ni52Dv7gOmeJNuBxk5a/0qe6A1ijAVgIhPVI
+         CT2NJ4NqpsxLxVcTkSsO8Kma82dsFiKgIwODSa3sxTEIDevf+EqAF6Q2cTmv9mlH2V7I
+         11qDtwvAUFg7gae/B6s3xI8BiCeXFLlJC2kbjI56bwCQnOd7USf1V7fwrctD5n5c7ieY
+         eEG7HQq8m3Tasleceiqaue8DRyyQ70GrFCyK490JSC6sbN9h7AUIdK8yCcCu9iBH2FC7
+         /64kN8b58H0aFgpViJiHePKbTe5Fw88lS19Nk/z45O1I2URf7mw0i5SXmEaDIVHywRuy
+         PWMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736159850; x=1736764650;
+        d=1e100.net; s=20230601; t=1736159854; x=1736764654;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GE5ihcAJ+Kpt1lJIv9WzWk7McPwII/sW/F0fTCVn8IU=;
-        b=cChcUL7lNVj7Ojhyb+GRjN14mO+6qGagC2tjezyX0HCb5QPLfD3JSGjIleI3vG902s
-         kMSJwIALa+mp0JZLb5mcgMrzB/hsdT1aaMhztcAAmKX0otVDrn3CJ5++GbRg37CFW2Vm
-         DzLoLc0JS38b7LBt+Gz8LOH6Dq1sL36ZasnkMpRttR4jR+nNasgyv6DUuVowpOxcfvjH
-         lZp2oYq0T/U+dZvBPQA5XwP2R3yaNeg6B3B6HRqdB4rCx5acIOOa282X2bllWU+ArAOn
-         uj1ImpwUpakH+nGzNgAT9uFVBxUWAtf2gsnjm2lL6apu4xijTSu0izZoE0TMAU5Ket+n
-         dddg==
-X-Gm-Message-State: AOJu0YzWQuCUUNtAuT4/FR2LeeAAK+akX/a1Rm6aQNh2T+ffzaUmsYfy
-	0Fhle/jdVxXcF0yi5W6ou8cE4bjBta3Dgs3E4DjKDxqFv8cXOcnRQXBpA6wpwU4=
-X-Gm-Gg: ASbGncsyqkI152cRmbNx85tTSBxidaXhBVuLu8FjAvhGAnBC1BRsoRQF2yzcr4pAOCH
-	LYnvzwpYMja6zEwgzOenXbstoFPfc8k6EK56tBvDfE7/RfcgwWvNExEalFCitrI/qT8xJlXdjif
-	NCtEapsuKYjo/e/Bg2wUTbQzNG4ee7XE0Lk8NO/etggezKjyCFokRSJCG3mTp//49n+OqfGiS/Z
-	ufxs9N/H/E3fbt/zQIomgAknDgVOBNFB3QDbOpx4I+Ore+kYfO5viDw2PCgf/HRBbdWAJxeo9Dx
-	w+VspA==
-X-Google-Smtp-Source: AGHT+IFDY3mSKUo88TmmHq7DVjOJAQQ+Pkb6F6H6e9CZUEAELdTMHxVNDx6+u/Jr2VTjUDmqVrQRAw==
-X-Received: by 2002:a05:6a00:414a:b0:727:3fd5:b530 with SMTP id d2e1a72fcca58-72abde0f264mr73969785b3a.15.1736159850554;
-        Mon, 06 Jan 2025 02:37:30 -0800 (PST)
+        bh=2Ak2KvSyKXuyYal8G0OJ/TdfdcBHWAxOYRWEb3+u+sM=;
+        b=Aqx8hwU2Q25yncNRMKmNxRjQqyO7T8UfRdiNEyFbFmdF+dEVlqfEli2v8mWq48hskK
+         Qnh1DAFD67fj2CHDf+UtrLE0WE94kXDhfV75OP4hdGaE15HwaH5D5XzMPNHeVlFtj6zp
+         9GJggpNFidkXYvKhokORHyrnkTZMMRMAWkJlkHjmPs2brt4DQTNMg89tb8J8lMge2pV9
+         ComtoEM5h9q1h+upYeKMUTMFnb0tTWJQgg3ARWmNj/0PV9mRRnHXFcVs76Gu/jbs4FzK
+         XaT7W74d4/lD9cyCFw4SVmizO2zbt3o4fRWJyrCiiUW3no+tx34iJ5SeRz8x4wgQew40
+         eNdg==
+X-Gm-Message-State: AOJu0Yz9/ASvxhmCKQQWhPcSRZ9O5i9pNxKEdCcims59RUIChZnh/vH9
+	3sZ9HMsAHApyvK2ib/D+w1eRp96kWA2JmJwaHrNjZHFS2awIJ0TzjFmwDeDItTk=
+X-Gm-Gg: ASbGncvrq/ZAGJw+PNl3iPUt4AhIgSvxgOmwua48f0bsWaHQhaADbYplgzhsKCg5IrL
+	qoGqAteTRN/P7z9PPDb/WW+Qrb7cdf2BHJq9dRJNRFzhLoHhIuRZNHXRqeOkLvl8p44JvCvHamm
+	8PF59D4noZ6JszFqm1OcZCrde4vPzM2oHEdj0z9JJ4IVIQ4syHl/mfBDX4hM+FAzBxcO7r+99+T
+	Hgn+2FXIfKOFTRBbHiSVYLd7V2rGIT9s+8YWm6u/zYxf1YK7RXxi+WiNOIg4QFz2+Td7QsVUbbN
+	IMwa3g==
+X-Google-Smtp-Source: AGHT+IFV29saUT06l7D3q67/HDEzXAzR/BOryFAr/4e6v2s+ZexmOnkxS/i7Mauv/q6vLCD3H6jwpA==
+X-Received: by 2002:a17:902:e5c7:b0:215:3fb9:5201 with SMTP id d9443c01a7336-219e6f14834mr789772555ad.44.1736159854118;
+        Mon, 06 Jan 2025 02:37:34 -0800 (PST)
 Received: from archlinux.plaksha.edu.in ([202.164.41.66])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842b85f00f9sm28774281a12.43.2025.01.06.02.37.27
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842b85f00f9sm28774281a12.43.2025.01.06.02.37.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2025 02:37:30 -0800 (PST)
+        Mon, 06 Jan 2025 02:37:33 -0800 (PST)
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 To: git@vger.kernel.org,
 	christian.couder@gmail.com
@@ -66,9 +66,9 @@ Cc: gitster@pobox.com,
 	me@ttaylorr.com,
 	phillip.wood@dunelm.org.uk,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 3/4] connect: advertise OS version
-Date: Mon,  6 Jan 2025 16:00:51 +0530
-Message-ID: <20250106103713.1452035-4-usmanakinyemi202@gmail.com>
+Subject: [PATCH 4/4] version: introduce osversion.command config for os-version output
+Date: Mon,  6 Jan 2025 16:00:52 +0530
+Message-ID: <20250106103713.1452035-5-usmanakinyemi202@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
 References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
@@ -80,286 +80,232 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-As some issues that can happen with a Git client can be operating system
-specific, it can be useful for a server to know which OS a client is
-using. In the same way it can be useful for a client to know which OS
-a server is using.
+Currently by default, the new `os-version` capability only exchange the
+operating system name between servers and clients i.e "Linux" or
+"Windows".
 
-Let's introduce a new protocol (`os-version`) allowing Git clients and
-servers to exchange operating system information. The protocol is
-controlled by the new `transfer.advertiseOSVersion` config option.
-
-Add the `transfer.advertiseOSVersion` config option to address
-privacy concerns issue. It defaults to `true` and can be changed to
-`false`. When enabled, this option makes clients and servers send each
-other the OS name (e.g., "Linux" or "Windows"). The information is
-retrieved using the 'sysname' field of the `uname(2)` system call.
-
-However, there are differences between `uname(1)` (command-line utility)
-and `uname(2)` (system call) outputs on Windows. These discrepancies
-complicate testing on Windows platforms. For example:
-  - `uname(1)` output: MINGW64_NT-10.0-20348.3.4.10-87d57229.x86_64\
-  .2024-02-14.20:17.UTC.x86_64
-  - `uname(2)` output: Windows.10.0.20348
-
-Until a good way to test the feature on Windows is found, the
-transfer.advertiseOSVersion is set to false on Windows during testing.
+Let's introduce a new configuration option, `osversion.command`, to handle
+the string exchange between servers and clients. This option allows
+customization of the exchanged string by leveraging the output of the
+specified command. If this is not set, the `os-version` capability
+exchange just the operating system name.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 ---
- Documentation/config/transfer.txt |  7 ++++++
- Documentation/gitprotocol-v2.txt  | 20 +++++++++++++++
- connect.c                         |  3 +++
- serve.c                           | 14 +++++++++++
- t/t5555-http-smart-common.sh      | 12 ++++++++-
- t/t5701-git-serve.sh              | 12 ++++++++-
- t/test-lib-functions.sh           |  8 ++++++
- version.c                         | 42 +++++++++++++++++++++++++++++++
- version.h                         |  6 +++++
- 9 files changed, 122 insertions(+), 2 deletions(-)
+ Documentation/config/transfer.txt | 11 ++++++-
+ Documentation/gitprotocol-v2.txt  | 13 ++++----
+ t/t5555-http-smart-common.sh      | 29 ++++++++++++++++++
+ t/t5701-git-serve.sh              | 33 ++++++++++++++++++++
+ version.c                         | 51 ++++++++++++++++++++++++++++++-
+ 5 files changed, 129 insertions(+), 8 deletions(-)
 
 diff --git a/Documentation/config/transfer.txt b/Documentation/config/transfer.txt
-index f1ce50f4a6..e2d95d1ccd 100644
+index e2d95d1ccd..28a08f21fc 100644
 --- a/Documentation/config/transfer.txt
 +++ b/Documentation/config/transfer.txt
-@@ -125,3 +125,10 @@ transfer.bundleURI::
- transfer.advertiseObjectInfo::
- 	When `true`, the `object-info` capability is advertised by
- 	servers. Defaults to false.
+@@ -131,4 +131,13 @@ transfer.advertiseOSVersion::
+ 	servers. It makes clients and servers send to each other a string
+ 	representing the operating system name, like "Linux" or "Windows".
+ 	This string is retrieved from the 'sysname' field of the struct returned
+-	by the uname(2) system call. Defaults to true.
++	by the uname(2) system call. If the `osVersion.command` is set, the
++	output of the command specified will be the string exchanged by the clients
++	and the servers. Defaults to true.
 +
-+transfer.advertiseOSVersion::
-+	When `true`, the `os-version` capability is advertised by clients and
-+	servers. It makes clients and servers send to each other a string
-+	representing the operating system name, like "Linux" or "Windows".
-+	This string is retrieved from the 'sysname' field of the struct returned
-+	by the uname(2) system call. Defaults to true.
++osVersion.command::
++	If this variable is set, the specified command will be run and the output
++	will be used as the value `X` for `os-version` capability (in the form
++	`os-version=X`). `osVersion.command` is only used if `transfer.advertiseOSVersion`
++	is true. Refer to the linkgit:git-config[1] documentation to learn more about
++	`transfer.advertiseOSVersion` config option.
 diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotocol-v2.txt
-index 1652fef3ae..c28262c60b 100644
+index c28262c60b..53621c0bce 100644
 --- a/Documentation/gitprotocol-v2.txt
 +++ b/Documentation/gitprotocol-v2.txt
-@@ -190,6 +190,26 @@ printable ASCII characters except space (i.e., the byte range 32 < x <
- and debugging purposes, and MUST NOT be used to programmatically assume
- the presence or absence of particular features.
+@@ -203,12 +203,13 @@ in its request to the server (but it MUST NOT do so if the server did
+ not advertise the os-version capability). The `X` and `Y` strings may
+ contain any printable ASCII characters except space (i.e., the byte
+ range 32 < x < 127), and are typically made from the result of
+-`uname -s`(OS name e.g Linux). The os-version capability can be disabled
+-entirely by setting the `transfer.advertiseOSVersion` config option
+-to `false`. The `os-version` strings are purely informative for
+-statistics and debugging purposes, and MUST NOT be used to
+-programmatically assume the presence or absence of particular
+-features.
++`uname -s`(OS name e.g Linux).  If the `osVersion.command` is set,
++the `X` and `Y` are made from the ouput of the command specified.
++The os-version capability can be disabled entirely by setting the
++`transfer.advertiseOSVersion` config option to `false`. The `os-version`
++strings are purely informative for statistics and debugging purposes, and
++MUST NOT be used to programmatically assume the presence or absence of
++particular features.
  
-+os-version
-+~~~~~~~~~~
-+
-+In the same way as the `agent` capability above, the server can
-+advertise the `os-version` capability with a value `X` (in the form
-+`os-version=X`) to notify the client that the server is running an
-+operating system that can be identified by `X`. The client may
-+optionally send its own `os-version` string by including the
-+`os-version` capability with a value `Y` (in the form `os-version=Y`)
-+in its request to the server (but it MUST NOT do so if the server did
-+not advertise the os-version capability). The `X` and `Y` strings may
-+contain any printable ASCII characters except space (i.e., the byte
-+range 32 < x < 127), and are typically made from the result of
-+`uname -s`(OS name e.g Linux). The os-version capability can be disabled
-+entirely by setting the `transfer.advertiseOSVersion` config option
-+to `false`. The `os-version` strings are purely informative for
-+statistics and debugging purposes, and MUST NOT be used to
-+programmatically assume the presence or absence of particular
-+features.
-+
  ls-refs
  ~~~~~~~
- 
-diff --git a/connect.c b/connect.c
-index 10fad43e98..6d5792b63c 100644
---- a/connect.c
-+++ b/connect.c
-@@ -492,6 +492,9 @@ static void send_capabilities(int fd_out, struct packet_reader *reader)
- 	if (server_supports_v2("agent"))
- 		packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
- 
-+	if (server_supports_v2("os-version") && advertise_os_version(the_repository))
-+		packet_write_fmt(fd_out, "os-version=%s", os_version_sanitized());
-+
- 	if (server_feature_v2("object-format", &hash_name)) {
- 		int hash_algo = hash_algo_by_name(hash_name);
- 		if (hash_algo == GIT_HASH_UNKNOWN)
-diff --git a/serve.c b/serve.c
-index c8694e3751..5b0d54ae9a 100644
---- a/serve.c
-+++ b/serve.c
-@@ -31,6 +31,16 @@ static int agent_advertise(struct repository *r UNUSED,
- 	return 1;
- }
- 
-+static int os_version_advertise(struct repository *r,
-+			   struct strbuf *value)
-+{
-+	if (!advertise_os_version(r))
-+		return 0;
-+	if (value)
-+		strbuf_addstr(value, os_version_sanitized());
-+	return 1;
-+}
-+
- static int object_format_advertise(struct repository *r,
- 				   struct strbuf *value)
- {
-@@ -123,6 +133,10 @@ static struct protocol_capability capabilities[] = {
- 		.name = "agent",
- 		.advertise = agent_advertise,
- 	},
-+	{
-+		.name = "os-version",
-+		.advertise = os_version_advertise,
-+	},
- 	{
- 		.name = "ls-refs",
- 		.advertise = ls_refs_advertise,
 diff --git a/t/t5555-http-smart-common.sh b/t/t5555-http-smart-common.sh
-index e47ea1ad10..f9e2a66cba 100755
+index f9e2a66cba..8d5844eaf2 100755
 --- a/t/t5555-http-smart-common.sh
 +++ b/t/t5555-http-smart-common.sh
-@@ -123,9 +123,19 @@ test_expect_success 'git receive-pack --advertise-refs: v1' '
+@@ -152,6 +152,35 @@ test_expect_success 'git upload-pack --advertise-refs: v2' '
+ 	test_cmp actual expect
  '
  
- test_expect_success 'git upload-pack --advertise-refs: v2' '
-+	printf "agent=FAKE" >agent_and_os_name &&
-+	if test_have_prereq WINDOWS
++test_expect_success 'git upload-pack --advertise-refs: v2 with osVersion.command config set' '
++	# test_config is used here as we are not reusing any file output from here
++	test_config osVersion.command "uname -srvm" &&
++	printf "agent=FAKE" >agent_and_long_os_name &&
++
++	if test_have_prereq !WINDOWS
 +	then
-+		# We do not use test_config here so that any tests below can reuse
-+		# the "expect" file from this test
-+		git config transfer.advertiseOSVersion false
-+	else
-+		printf "\nos-version=%s\n" $(uname -s | test_redact_non_printables) >>agent_and_os_name
++		printf "\nos-version=%s\n" $(uname -srvm | test_redact_non_printables) >>agent_and_long_os_name
 +	fi &&
 +
++	cat >expect <<-EOF &&
++	version 2
++	$(cat agent_and_long_os_name)
++	ls-refs=unborn
++	fetch=shallow wait-for-done
++	server-option
++	object-format=$(test_oid algo)
++	0000
++	EOF
++
++	GIT_PROTOCOL=version=2 \
++	GIT_USER_AGENT=FAKE \
++	git upload-pack --advertise-refs . >out 2>err &&
++
++	test-tool pkt-line unpack <out >actual &&
++	test_must_be_empty err &&
++	test_cmp actual expect
++'
++
+ test_expect_success 'git receive-pack --advertise-refs: v2' '
+ 	# There is no v2 yet for receive-pack, implicit v0
  	cat >expect <<-EOF &&
- 	version 2
--	agent=FAKE
-+	$(cat agent_and_os_name)
- 	ls-refs=unborn
- 	fetch=shallow wait-for-done
- 	server-option
 diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-index de904c1655..f4668b7acd 100755
+index f4668b7acd..51d99cd62c 100755
 --- a/t/t5701-git-serve.sh
 +++ b/t/t5701-git-serve.sh
-@@ -8,13 +8,23 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./test-lib.sh
+@@ -41,6 +41,39 @@ test_expect_success 'test capability advertisement' '
+ 	test_cmp expect actual
+ '
  
- test_expect_success 'test capability advertisement' '
-+	printf "agent=git/$(git version | cut -d" " -f3)" >agent_and_os_name &&
-+	if test_have_prereq WINDOWS
++test_expect_success 'test capability advertisement with osVersion.command config set' '
++	# test_config is used here as we are not reusing any file output from here
++	test_config osVersion.command "uname -srvm" &&
++	printf "agent=git/$(git version | cut -d" " -f3)" >agent_and_long_os_name &&
++
++	if test_have_prereq !WINDOWS
 +	then
-+		# We do not use test_config here so that tests below will be able to reuse
-+		# the expect.base and expect.trailer files
-+		git config transfer.advertiseOSVersion false
-+	else
-+		printf "\nos-version=%s\n" $(uname -s | test_redact_non_printables) >>agent_and_os_name
++		printf "\nos-version=%s\n" $(uname -srvm | test_redact_non_printables) >>agent_and_long_os_name
 +	fi &&
 +
- 	test_oid_cache <<-EOF &&
- 	wrong_algo sha1:sha256
- 	wrong_algo sha256:sha1
- 	EOF
- 	cat >expect.base <<-EOF &&
- 	version 2
--	agent=git/$(git version | cut -d" " -f3)
-+	$(cat agent_and_os_name)
- 	ls-refs=unborn
- 	fetch=shallow wait-for-done
- 	server-option
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 78e054ab50..447c698d74 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -2007,3 +2007,11 @@ test_trailing_hash () {
- 		test-tool hexdump |
- 		sed "s/ //g"
- }
++	test_oid_cache <<-EOF &&
++	wrong_algo sha1:sha256
++	wrong_algo sha256:sha1
++	EOF
++	cat >expect.base_long <<-EOF &&
++	version 2
++	$(cat agent_and_long_os_name)
++	ls-refs=unborn
++	fetch=shallow wait-for-done
++	server-option
++	object-format=$(test_oid algo)
++	EOF
++	cat >expect.trailer_long <<-EOF &&
++	0000
++	EOF
++	cat expect.base_long expect.trailer_long >expect &&
 +
-+# Trim and replace each character with ascii code below 32 or above
-+# 127 (included) using a dot '.' character.
-+# Octal intervals \001-\040 and \177-\377
-+# corresponds to decimal intervals 1-32 and 127-255
-+test_redact_non_printables () {
-+    tr -d "\n" | tr "[\001-\040][\177-\377]" "."
-+}
++	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
++		--advertise-capabilities >out &&
++	test-tool pkt-line unpack <out >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'stateless-rpc flag does not list capabilities' '
+ 	# Empty request
+ 	test-tool pkt-line pack >in <<-EOF &&
 diff --git a/version.c b/version.c
-index 44ffc4dd57..8242baf41c 100644
+index 8242baf41c..b446232898 100644
 --- a/version.c
 +++ b/version.c
-@@ -3,6 +3,7 @@
+@@ -1,9 +1,13 @@
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "git-compat-util.h"
+ #include "version.h"
  #include "version-def.h"
  #include "strbuf.h"
  #include "gettext.h"
-+#include "config.h"
+ #include "config.h"
++#include "run-command.h"
++#include "alias.h"
  
  const char git_version_string[] = GIT_VERSION;
  const char git_built_from_commit_string[] = GIT_BUILT_FROM_COMMIT;
-@@ -70,3 +71,44 @@ int get_uname_info(struct strbuf *buf, unsigned int full)
- 		strbuf_addf(buf, "%s\n", uname_info.sysname);
+@@ -72,6 +76,50 @@ int get_uname_info(struct strbuf *buf, unsigned int full)
  	return 0;
  }
-+
-+const char *os_version(void)
+ 
++/*
++ * Return -1 if unable to retrieve the osversion.command config or
++ * if the command is malformed; otherwise, return 0 if successful.
++ */
++static int fill_os_version_command(struct child_process *cmd)
 +{
-+	static const char *os = NULL;
++	const char *os_version_command;
++	const char **argv;
++	char *os_version_copy;
++	int n;
 +
-+	if (!os) {
-+		struct strbuf buf = STRBUF_INIT;
++	if (git_config_get_string_tmp("osversion.command", &os_version_command))
++		return -1;
 +
-+		get_uname_info(&buf, 0);
-+		os = strbuf_detach(&buf, NULL);
++	os_version_copy = xstrdup(os_version_command);
++	n = split_cmdline(os_version_copy, &argv);
++
++	if (n < 0) {
++		warning(_("malformed osVersion.command config option: %s"),
++			_(split_cmdline_strerror(n)));
++		free(os_version_copy);
++		return -1;
 +	}
 +
-+	return os;
++	for (int i = 0; i < n; i++)
++		strvec_push(&cmd->args, argv[i]);
++	free(os_version_copy);
++	free(argv);
++
++	return 0;
 +}
 +
-+const char *os_version_sanitized(void)
++static int capture_os_version(struct strbuf *buf)
 +{
-+	static const char *os_sanitized = NULL;
++	struct child_process cmd = CHILD_PROCESS_INIT;
 +
-+	if (!os_sanitized) {
-+		struct strbuf buf = STRBUF_INIT;
++	if (fill_os_version_command(&cmd))
++		return -1;
++	if (capture_command(&cmd, buf, 0))
++		return -1;
 +
-+		strbuf_addstr(&buf, os_version());
-+		redact_non_printables(&buf);
-+		os_sanitized = strbuf_detach(&buf, NULL);
-+	}
-+
-+	return os_sanitized;
++	return 0;
 +}
 +
-+int advertise_os_version(struct repository *r)
-+{
-+	static int transfer_advertise_os_version = -1;
-+
-+	if (transfer_advertise_os_version == -1) {
-+		repo_config_get_bool(r, "transfer.advertiseosversion", &transfer_advertise_os_version);
-+		/* enabled by default */
-+		transfer_advertise_os_version = !!transfer_advertise_os_version;
-+	}
-+	return transfer_advertise_os_version;
-+}
-diff --git a/version.h b/version.h
-index 5eb586c0bd..8167ce956a 100644
---- a/version.h
-+++ b/version.h
-@@ -1,6 +1,8 @@
- #ifndef VERSION_H
- #define VERSION_H
+ const char *os_version(void)
+ {
+ 	static const char *os = NULL;
+@@ -79,7 +127,8 @@ const char *os_version(void)
+ 	if (!os) {
+ 		struct strbuf buf = STRBUF_INIT;
  
-+struct repository;
-+
- extern const char git_version_string[];
- extern const char git_built_from_commit_string[];
+-		get_uname_info(&buf, 0);
++		if (capture_os_version(&buf))
++			get_uname_info(&buf, 0);
+ 		os = strbuf_detach(&buf, NULL);
+ 	}
  
-@@ -14,4 +16,8 @@ const char *git_user_agent_sanitized(void);
- */
- int get_uname_info(struct strbuf *buf, unsigned int full);
- 
-+const char *os_version(void);
-+const char *os_version_sanitized(void);
-+int advertise_os_version(struct repository *r);
-+
- #endif /* VERSION_H */
 -- 
 2.47.1
 
