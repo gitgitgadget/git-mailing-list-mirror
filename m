@@ -1,127 +1,154 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E741553BB
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 18:44:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736189090; cv=none; b=mkGbSnk01pk+ssiTKFZSXMKyt6zMlJcSE2cfnl8wGTjZxMPEJmM9WM6hdKpsA7YnZ8jw3tGuXln8k45moiD2XKUY9DDNHKzXqWVMEdn6kVa2ZQ+qGbXQMYwXa5XqBW4dzPnc2rZwiQVyntldxnEhconQgpiHf0gYkFxdb/S90BA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736189090; c=relaxed/simple;
-	bh=ApJkFfO5R3Ot59Y60Ho6KxTzI7LV+uzzo+AvR1RlD1c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=d68WHvTrr72Ft6nrkyUOjMYbxdsVEjYZLaSLsTXbTDX6IDsmy1dNGWVSvYPDq8ryXyKNBDwk8zAEEANKopf8p+Nw9XiMDgok+1GtzP0SVlIPRlQw6rv9+CWNyh+c7cdb1/GlmmEvS7z2cNPog0Z0slsVoCjLwrddrGFJcVCffXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uE8fmNlz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W2pCuD0f; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE80F1DF961
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 19:10:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.21
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1736190628; cv=pass; b=RHUJwyQ5P8yshai9QJwD3Ecz34Xt4DWwBF84j/uJIhKyCUUL6nBd6LELvoaC3MZJo34gUj+QLx8SiXnC+BTte4VkSznmJXr2z8zraSM7z0HP0OrLMMUb8rs88Udac13ABY6MqZTsBH1W5G15RNxsiqIj3Uw3ZrWVaIcle03iOoc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1736190628; c=relaxed/simple;
+	bh=0ur6zZdJzJ7WQfsKIJLQiKdfeAuu4JS7Olfb9zRheEk=;
+	h=From:Content-Type:Mime-Version:Subject:Message-Id:Date:To; b=ll2N3eSGAymNGD39MdW1+HPVf8W4BFEg8vd7qmF1Chk2BBKK7/ttH0eBqnNIztbHZB43LYRxfGXk64QJXTYRe5E7s6iI1YbHlknp0+n6pgqDIr2VFg4+Cj88GSSKAPHOX78VpGnzyarMKejwe4nGAg1yaLtQdSev3RHKT6W84UY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=braunis.de; spf=none smtp.mailfrom=braunis.de; dkim=pass (2048-bit key) header.d=braunis.de header.i=@braunis.de header.b=stSCC4D1; dkim=permerror (0-bit key) header.d=braunis.de header.i=@braunis.de header.b=LWBb3cWq; arc=pass smtp.client-ip=85.215.255.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=braunis.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=braunis.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uE8fmNlz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W2pCuD0f"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3B87D11405B7;
-	Mon,  6 Jan 2025 13:44:47 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 06 Jan 2025 13:44:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736189087; x=1736275487; bh=f4Gqe4jKKz
-	RMva2po5VMSykRYblZWe/Ax91+FbSvrIM=; b=uE8fmNlz0gKCoPCxiD/rGulkEs
-	nQUUI+HBfZYsnPaBzfhCMmI0r26i9NqDPQLYAmQagxYSS0D77nLyL3ox8unj/9Z1
-	oRrzq1drqgHHs/5J3d1Yz5ohrEzYUmpQuKZf4dlv/pyQ64QXxUrp+pd4kqXkUK+j
-	GL4ANuJszy5/hvaqSPiy33Mq0iy5/ukBHqTKmnhQtEGOnSpUPxIJqS3r222JF7/B
-	knEqpxhUQydbAXFyArZ1K4FLmgI/Zd96h8Gd8WIcGLCp8aHf7GT7u5gmM8G7V1Nn
-	FlufqAJtcMCceWsVauOKd9/wZJOd2KakIXrs02PclpzB50oRMk7VYufti7oQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736189087; x=1736275487; bh=f4Gqe4jKKzRMva2po5VMSykRYblZWe/Ax91
-	+FbSvrIM=; b=W2pCuD0fujtP0NnEBa7EjVx2B9xDAOpotnnYnf2jeY1U433l8xU
-	vXW5Pm8jyB1os2IMzY9tnCW6mFHrH/83hoPJIxNoradUEP3zzshFfp258o+NU0AY
-	7RW5Ek2DMus8jQ2gp/Xxv05kgn7mJjyIFHPRs3aJOYhrSVxlbVoWYobd3v8rXdg3
-	xdJkzTeFDGId6OT9dIyc1udWcC/04ztMltA8IqsSuhd5GzVpZtjPezMSDge4tR0k
-	0V2WooRsqR8RxM8esAokd2a/hReSa7A7jTOYV37DvZwFZ9f5f40XM9RlCgDqpr/D
-	6iuDd6HZfU8T0W0BwcY5RXQQgK0TlgfN0zw==
-X-ME-Sender: <xms:nyR8Z1dUKOKXJp--sBNlCsF_J_sSsVjeeGwZSuCdWFS7Z5ZfgMPkfA>
-    <xme:nyR8ZzMvHAFYRp-CKaf9q2zCinb9TeDwWh2FshLBf9hWEG4SK42z4_QH5JjIrTvbL
-    ar3ngqT9aheeO6lkg>
-X-ME-Received: <xmr:nyR8Z-hCzH_nozz_vz3O_TapaZmm2konaZHSe4sYzHn3cXUrTVzxTCOlV2OP1wzT5VClkUmxYbKbh7Yp4lGyc9L0ZcoCGm6snMr5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddgudduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehthihtshhosehmih
-    htrdgvughupdhrtghpthhtohepthgsohgvghhiseifvggsrdguvgdprhgtphhtthhopehj
-    uhgughgvrdhprggtkhhhrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvrhhitgdrphgvihhjihgrnhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilh
-    ihrdhorhhgpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgvrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:nyR8Z-9Y2BB-o8-Lpb0wFAPQHGH_a3O_CT7bcHmeeNN8nXvf6ElXPg>
-    <xmx:nyR8ZxtcnAZiop9Pm0cco47oZTGAs0vvzdm4-b64bVinq9U66GXPEA>
-    <xmx:nyR8Z9EVHh9kX-QBXO077cNIJXbo6qDGQojkruxUkxU782iVeBNNDA>
-    <xmx:nyR8Z4OhshSMhdu0eNAGh_4Mb8v7scRsiSFDPSHbCcv-2M-2HOxZKg>
-    <xmx:nyR8Z3C1MZTRofYv1erJLCwJlz8dnp3qOUF4WDq7olr5t5XQ2tAGR06w>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jan 2025 13:44:46 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Theodore Ts'o" <tytso@mit.edu>
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-    Chris Packham <judge.packham@gmail.com>,
-    GIT <git@vger.kernel.org>,
-    Eric Ju <eric.peijian@gmail.com>,
-    Christian Couder <chriscool@tuxfamily.org>,
-    Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: Testing for existence of a remote branch from a script
-In-Reply-To: <20250106163636.GH1284777@mit.edu> (Theodore Ts'o's message of
-	"Mon, 6 Jan 2025 11:36:36 -0500")
-References: <CAFOYHZDQs-mftqLQn5HiFgBWcFN6Z-WDscJt=zVLRyGTo36=HQ@mail.gmail.com>
-	<20250106065121.GA8844@tb-raspi4> <xmqqsepw0xk7.fsf@gitster.g>
-	<20250106163636.GH1284777@mit.edu>
-Date: Mon, 06 Jan 2025 10:44:45 -0800
-Message-ID: <xmqqy0znye76.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=braunis.de header.i=@braunis.de header.b="stSCC4D1";
+	dkim=permerror (0-bit key) header.d=braunis.de header.i=@braunis.de header.b="LWBb3cWq"
+ARC-Seal: i=1; a=rsa-sha256; t=1736190434; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=Zl8IOoZJ/4ibINBqFNuENNA0SXskhijuxfm+JCXkr8/y59BeFeJKjXGdBfa9Qqom3K
+    dCUE7m3ms9oOzRyFsQhRvnG/5PD4CBX3uFihw6RQRvBV991qG3EjCGxfNJrw5nmuDyVd
+    p08oG6FEGBNd894/H/BRToYmWMzQMABgIigTwSqCoouXNisDNf/MFHG6Drd/KSQNejvL
+    nYoqlHwfKodvF9rPL/+gW5wXsUX+SPoSChNpgHEYVMR2gmvsMvMpujRDez60+vqapoHf
+    Psawhk/RSeNINh5GaLnZyAG/8M0UNfkKW77itLjvMtPSCqH0MgLcurLyUjretK80zAh5
+    fSGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1736190434;
+    s=strato-dkim-0002; d=strato.com;
+    h=To:Date:Message-Id:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=isvUYtdZzoydjJUmIF5Ac1QSrTB8zSUTz3TBdfC7VcU=;
+    b=YLSo7UEPLM2QJfT/YsyvnqlBOx3FRrJWQGxrxTslu0Es2y/Tpx1iEiObWB14tI6zTJ
+    abMkaHQFt1eIUKgDO/SG/sLVPtDpjRM6w50qWIQ36Tl415Z6SLoXiNhJKPW5CFDZzgwq
+    Fd0dyBGaMSCWT+KVSuyxtabEof1/zSV9HknSkJRzBgM8QqVgi+6tMQhkD0eK9+GJu6LN
+    TwlLjCnpSCoBqIVp5qeMg24d5e9H4WlPUSdut3AOIPq3f9ZEy9wADxM3JO2q4ZAQUirc
+    pTHqA55VXPHl1xxu5OIv2EtDeG5aFOiMXN+gFTrDut50pbGvZpY5hZkts/j1dfIUACkd
+    rxYA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1736190434;
+    s=strato-dkim-0002; d=braunis.de;
+    h=To:Date:Message-Id:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=isvUYtdZzoydjJUmIF5Ac1QSrTB8zSUTz3TBdfC7VcU=;
+    b=stSCC4D1DtFPMPPgcq++1Deomi+amS8dXWN2iD9Qjk1Jux4dJa1y+4wT7tOIZfT2sr
+    O1iTiR4UkAOh/9w7tBNlXKSQC2Jjo+2cS5kXvZU3MfcHZjzbhYcYmnB10FC/s0URYxj0
+    X2kHN6OatgKHLItcr4C/8jCLk8CwlRTgxUgGXaVQx0SLd4OMy0WlITEn89CFohhk/sKe
+    JaTFVOG9qVvSqgIdEjyX8QYny9JmFo6vhyTvwJ80ShD8ro6yhnJ+Vd60LMtm3rNt6dQv
+    jMUacSeaGZkvLX+KeQg8RgavFPUyDJxEVfcilfds8JEBAEGLhAEwvTiKvY567sQLTu76
+    2XDA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1736190434;
+    s=strato-dkim-0003; d=braunis.de;
+    h=To:Date:Message-Id:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=isvUYtdZzoydjJUmIF5Ac1QSrTB8zSUTz3TBdfC7VcU=;
+    b=LWBb3cWq4qENKolha6XGayl5y1tGNIs4Ufvkp4IJWBIw63uw2TOtjXs/3k983C6kTK
+    0Oxyy8ZIlNGNHaYLNpDQ==
+X-RZG-AUTH: ":IW0Qb0WIee3a21CBOtQF9AagGrTpdQbKPSX42fXTEDPuXTelIxqFqblING52fS3Uaw=="
+Received: from smtpclient.apple
+    by smtp.strato.de (RZmta 51.2.16 AUTH)
+    with ESMTPSA id K87de7106J7Deq2
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (curve X9_62_prime256v1 with 256 ECDH bits, eq. 3072 bits RSA))
+	(Client did not present a certificate)
+    for <git@vger.kernel.org>;
+    Mon, 6 Jan 2025 20:07:13 +0100 (CET)
+From: Matthias Braun <matze@braunis.de>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.200.121\))
+Subject: bug: Removing branch and creating branch-directory with same name
+ breaks
+Message-Id: <25913110-E42E-4028-B39D-44045623FDC4@braunis.de>
+Date: Mon, 6 Jan 2025 11:07:01 -0800
+To: git@vger.kernel.org
+X-Mailer: Apple Mail (2.3826.200.121)
 
-"Theodore Ts'o" <tytso@mit.edu> writes:
+(Note that I also tried this with latest git-2.47.1 after creating the =
+repro script and it still fails there).
 
-> So if enhancing the git server's functionality (either via git
-> ls-remotes or some other operation) is on the table, ...
+What did you do before the bug happened? (Steps to reproduce your issue)
+- Removed remote branch. Created new directory (for branch names)
+  with same name directory name as the previously used branch name.
+  After that `git fetch` fails.
 
-Enhancements that do not require breaking backward compatibility is
-always on the table ;-).
+Reproduction script for your convenience:
+```
+#!/bin/bash
 
-> one of the things
-> that I would really love is some way of asking the question is "git
-> commit <SHA hash>" in the remote repository reachable via some branch
-> or git tag?", and optionally, "which git branch/tag should be fetched
-> if the testing infrastructure wants to be able to test that specific
-> git commit ID?"
+mkdir -p repro
+git init repro/remote.git
+git clone repro/remote.git repro/cloned
+pushd repro/cloned
+echo "hello" > hello.txt
+git add hello.txt
+git commit -m "test commit"
+git branch mystuff
+git push origin mystuff
+popd
 
-Both sounds like a useful thing to do, but I wonder how generic
-these should be and at the same time how common a narrowed-down
-feature would suffice.  If we try to make it generally very useful,
-at some point, we'd cross the line where we'd be better off doing
-"run ssh and execute these Git commands" over the wire X-<.
+git clone repro/remote.git repro/clone2
 
-There are server-side-minded folks who are extending "cat-file --batch"
-to allow you to ask about objects you do not have but the other end
-has, if I am not mistaken,  by the "remote-object-info" feature?
+pushd repro/cloned
+git branch -D mystuff
+git push -d origin mystuff
+git branch mystuff/branch_in_subdir
+git push origin mystuff/branch_in_subdir
+popd
 
-I wonder if these more advanced "info" about objects you mentioned
-fit into the picture well as part of it.
+pushd repro/clone2
+git fetch    #  This fails as branch turned into directory
+popd
+```
 
-Thanks.
+What did you expect to happen? (Expected behavior)
+
+`git fetch` should work...
+
+What happened instead? (Actual behavior)
+
+`git fetch origin`
+error: cannot lock ref 'refs/remotes/origin/mystuff/branch_in_subdir': =
+'refs/remotes/origin/mystuff' exists; cannot create =
+'refs/remotes/origin/mystuff/branch_in_subdir'
+
+What's different between what you expected and what actually happened?
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.43.5
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.19.0-0_fbk12_hardened_11583_g0bef9520ca2b #1 SMP Fri Feb =
+2 17:56:12 PST 2024 x86_64
+compiler info: gnuc: 11.4
+libc info: glibc: 2.34
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show=
