@@ -1,180 +1,93 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234F31E511
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 07:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745422AEFE
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 07:49:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736149106; cv=none; b=IU+6bQCJRlocbhrVkw60czTDoGS8AD509V4kSEumTRCM+rwK9rAiR1EohpxjCMTGuPULOeVVNL0nyNPiV6+PlfLu64ABmKog34C8PF8R4BNNNUXJJt5QMv+MJUkUUg+e4MZ4936mpj9+PNZn5IYw5wA6/bOi8u+WTfifpIvaS6o=
+	t=1736149751; cv=none; b=OTo1Biizqjv8jIg+LeDbck93r7q1n0oj0bN43Lur4qshglGM/aVVMMkgBgUf152qjfnN3KGEea8ekKfGNxcqh1rWsH1vyXYHEHO8IBJ/27ZgYjfy8By6J71RIFpgrEnYH4r6G47E+RDkMm/5UbhvWeFO8Mh8jiUtqaxwaKqfLss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736149106; c=relaxed/simple;
-	bh=lm+KOtUaI5ibwXsJXVG5StGS8yvUjuifUSGWZWCcwSI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LtYcjgIRJcTI00guer2uZwWdQRtBkrhIvh2tZyY6dxf8CGF0U0xTm2EWAe87jjiAKYbOWIYkJEX28Dxk1+AV043+SWTfEKzRQSATXtfCLrKlj1oGegYqzZLXjv94BoiC75E2ySb80neZISFOqJQrR5vTlv0eyoyWPfJtzJVmGGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZKwasmql; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jvcIWKeW; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736149751; c=relaxed/simple;
+	bh=h4Zp+1x0Rrus+cVF7vls21aRG4pVPr5EdDT6jopBmjo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=qLT0jyyAhomPBKGHvAXJVIIRMHRVqmsAFsGIsoCM4kxx/RCn7IsbCiqYmV12n7ACmCTDahByb3dwL2r5llmL1LkGaYbXYX8/tcaLq8hLX0T3s+zd1h5pCaOsD20NPRZed9vJ3afIUrcF4BKbH2sfPnnKEhHICCkXbz8hXtdMbVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CZlJdXkQ; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZKwasmql";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jvcIWKeW"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 208581380949;
-	Mon,  6 Jan 2025 02:38:23 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 06 Jan 2025 02:38:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736149103;
-	 x=1736235503; bh=zR+0FhdSgNlytVF4B5Y1EcdifxWWznlm3Qn/FYiC6O4=; b=
-	ZKwasmqlL4kP4RGdqv/HkZAKBdrTXKDssHhkjUC1NNZw/0P828tI4CE2P3SKWgvn
-	p0OiTtfecHq/sG+xgN90aY39iLSrh4LP/E9uYnTdIAOAKHG6C26QTsVUFsClH2H+
-	qxO+kkCbjBDo43eY0HN7gsmBqJ4gIVIJS7ckHzUNwXZMu0tX0M0LFySr2gJFoE2o
-	Zwxju1rn2KPS79ip9dfnRQfpicfvqrEBREzFPYyX1zHVDhDm5L18NZJ88g0H2m3+
-	XTt6m7klF6QerQr0klA6TJJjNwRgtaR9E8RWUQTFxZYPF+O+aLlkYneXIMGIS6oO
-	Eahq/ZHRjMDKVEgkVQiNiA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736149103; x=
-	1736235503; bh=zR+0FhdSgNlytVF4B5Y1EcdifxWWznlm3Qn/FYiC6O4=; b=j
-	vcIWKeW53eBelc6fYy3/GsXMZEj30X2LKk5sra9ptJHOWN3dF5SnkhhLUpHiizUQ
-	yo4c4niE7jR2zS++1Lc7FTpJXdaiOW0RRp4ZyypY2SN4O2bpt2xA5KF1K5M+ufBC
-	t4htOvFun6mp0z6/aINdGBZkXs1FHhcIkW2ELWww70u2FrIOHEJzn0CK0ea01fxQ
-	d2OLESp2tXQ3PJ+P0DROinIFt3SbZ7a53wPSMPOwh+wJ+N/g6aYxB89eR/E2zhXD
-	sUbtkEQASGMKMX6lVTYUqQrNvgvkl9h+G27Ji6L53a5HtAmRrvhqnlT6VcJEIRhK
-	LbJXOWRmaG2rb2P1HLrlw==
-X-ME-Sender: <xms:boh7Zx2nvbtaqKvKY10RN7AVTYqaMZdGk784kJoLKgMs_9AFBgFcvA>
-    <xme:boh7Z4FRltDpyaA7lHnXQEIR4q5SCS6_fRACXImz1FHKBIeuUclp5pcDBUvRoaWb7
-    uEPHbYje-wbIeTjXA>
-X-ME-Received: <xmr:boh7Zx7yhtW9WZHxECBFt_qPLPlqIME9_DM4pxcLLnINzkjmIhjMwoxBOFtdV13cVUULQjlrIC5s_uV-ylaliLqliZtNF48mHXsnfgVaPmTPZw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefledguddutdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
-    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
-    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtg
-    hpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:b4h7Z-12h6SlwMo2-74fM8jqxSzFT-mnaQdAO4rWd4GUlmEmLtvJog>
-    <xmx:b4h7Z0FVRiecb30htnKf0j0je2hrSFKzp41RYfqm7UO0KoWeO0Io2g>
-    <xmx:b4h7Z_9OXWDgtu_t6CVDIA4gxc-RwXHSAy2OykfTpidjvlrBogr6Qg>
-    <xmx:b4h7ZxlOZURwrd9nC4f4OKxW4kSUV0yQ24kp_P5e1SMaOVk3Mlg6_g>
-    <xmx:b4h7Z4D1mhFUbPys3Ys-VBtJPpCB3z2IdMI8tPVMdEdAwM7dG0ldnK0U>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jan 2025 02:38:22 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 099836e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 Jan 2025 07:38:20 +0000 (UTC)
-Date: Mon, 6 Jan 2025 08:38:19 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH 1/3] doc: git-commit: apply new documentation guidelines
-Message-ID: <Z3uIZA0bIXzaUxlH@pks.im>
-References: <pull.1845.git.1735912046.gitgitgadget@gmail.com>
- <dfd907fc3147b438222bbfad9b0a7ca61df642a5.1735912046.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CZlJdXkQ"
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e3978c00a5aso18766242276.1
+        for <git@vger.kernel.org>; Sun, 05 Jan 2025 23:49:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736149749; x=1736754549; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/Hwe8ngaWJK3SHkuHO02Fy/wLPl17bVdhbxOe2WN1SE=;
+        b=CZlJdXkQshqiX5PcZD+RpLShLNLdPdC+GLkYBKYPz8zeHYD21uF9Q+OAXVj0z6zvdo
+         v0WjCp8SJiIfTUFsYmGCzFl5+1kEOfMgBbQgkSfvVc1iMaA5Ja8phBdfQYAmYA35LNVN
+         jodt4tOXiWA8b5W5Ypuvkn1gRVlXnHELlCeUruL7w4oyqVOSOAtQMIrrBj9TuKj6vpxc
+         W7ABT8Mwwn1UHNVG5pzGdAsgQflNvOlvS72NpaWxCEfWnD9v8cwRi+dfp0IVLah57mSp
+         +oSyxLMc62DAgtdS3x0X44Scs6wYYMLs9jttBTCvFIoua5ZhWfn9jhHIE2Y49Zb/q8/8
+         3DVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736149749; x=1736754549;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/Hwe8ngaWJK3SHkuHO02Fy/wLPl17bVdhbxOe2WN1SE=;
+        b=wTksqYqB91mEOslMCrS3Uvow3Dcxiao6otVtG/dQRAc61U7Uue2mupGGzxpitdJy6j
+         JHUVLHE6J/+PLjIw3zpppY/OGaqnq+gtSkb7z+SANWiLWMUvBjA63AuBJNoy1NvbF3Wy
+         MNdRcDRvFt9LsS/nfn1oAhdzfaSQIB9Aixp6rknHZCu/hPCoFWDE17AEZH/MWBVGghSR
+         Let0ZpwtoWPTtl1lrJ9O60ymEJ+JfySWe4BWpysoFtjQmZzk8oF8g12/AXemrMz3o3p3
+         Y3qC+35EDy35ChTyu/qvPGV/jl26BtvtrLszkRlUhoVYJJyv/8OavutZjLjnRsFkhxq6
+         M1Ig==
+X-Gm-Message-State: AOJu0Yw6dRR1i0xc85UMLRuUbaUDA8yqwCe9inocP6rDYxnGqmkpC2hW
+	trGVcp/0Sv/6UMAREaSRW8csqan4vHBrATz95MsjjIHo/URJoRtqQADYm1kPKo3tF/fq5YUCz3g
+	ctMRAXLibrgow9rzSNRM3zSkljpdk355f
+X-Gm-Gg: ASbGnctCzz0xNMp6QM8OBCwVltYbUclv6kYl6Wju+/qywAlMF8Z5N9vVH4lQjNOKAZE
+	SLJtgkkCTzoy+20OvulyPqIOLi3I1A192pd0+fuU=
+X-Google-Smtp-Source: AGHT+IFPi54BMKqNUAi2w02JgspxkWGnMFObzIfFnNaeFjAc7WPUbdur/L1j5nhjT8aUl76TFSZQu86vJBDe26CSqXw=
+X-Received: by 2002:a05:690c:d1f:b0:6ef:146a:aac3 with SMTP id
+ 00721157ae682-6f3f80d6139mr434262787b3.1.1736149749374; Sun, 05 Jan 2025
+ 23:49:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dfd907fc3147b438222bbfad9b0a7ca61df642a5.1735912046.git.gitgitgadget@gmail.com>
+References: <20241217020843.27943-1-worldhello.net@gmail.com>
+In-Reply-To: <20241217020843.27943-1-worldhello.net@gmail.com>
+From: Jiang Xin <worldhello.net@gmail.com>
+Date: Mon, 6 Jan 2025 15:48:58 +0800
+X-Gm-Features: AbW1kvZa9FKIl0jvhWz0nq2DFJ8LZWx0lATtEIVgWbixHQjwYGGuSdmkQbyOoGE
+Message-ID: <CANYiYbHBvmD=F72F7MYptSGYGR8rCht09zQD553PZmuyrk_o=Q@mail.gmail.com>
+Subject: Re: [L10N] Kickoff for Git 2.48.0
+To: Git List <git@vger.kernel.org>, 
+	Git l10n discussion group <git-l10n@googlegroups.com>, Alexander Shopov <ash@kambanaria.org>, 
+	Mikel Forcada <mikel.forcada@gmail.com>, Ralf Thielow <ralf.thielow@gmail.com>, 
+	=?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
+	Bagas Sanjaya <bagasdotme@gmail.com>, Dimitriy Ryazantcev <DJm00n@mail.ru>, 
+	Peter Krefting <peter@softwolves.pp.se>, Emir SARI <bitigchi@me.com>, Arkadii Yakovets <ark@cho.red>, 
+	=?UTF-8?B?VsWpIFRp4bq/biBIxrBuZw==?= <newcomerminecraft@gmail.com>, 
+	Teng Long <dyroneteng@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 03, 2025 at 01:47:24PM +0000, Jean-Noël Avila via GitGitGadget wrote:
-> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-> 
-> The documentation for git-commit has been updated to follow the new
-> documentation guidelines. The following changes have been applied to
-> the series of patches:
-> 
-> - switching the synopsis to a synopsis block which will automatically
->   format placeholders in italics and keywords in monospace
-> - use _<placeholder>_ instead of <placeholder> in the description
-> - use `backticks for keywords and more complex option
-> descriptions`. The new rendering engine will apply synopsis rules to
-> these spans.
-> 
-> Additionally, some option descriptions have been turned into
-> imperative mood to make them more consistent with the rest of the
-> documentation.
+On Tue, Dec 17, 2024 at 10:08=E2=80=AFAM Jiang Xin <worldhello.net@gmail.co=
+m> wrote:
+>
+> Hi,
+>
+> Git 2.48.0-rc0 has been released, and it's time to start a new round of
+> git l10n.  This time there are 36 updated messages need to be translated
+> since the last release. Please send your pull request to the l10n
+> coordinator's repository below before this update window closes on
+> Sun, 05 Jan 2025.
 
-Same comment here regarding the commit message as on the other two
-series. We should use imperative mood for it, as well :)
+Will wait for the release of 2.48.0-rc2 to see if it is necessary to
+start a new round of localization.
 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index c822113c111..b08a398e31d 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -58,139 +58,139 @@ summary of what is included by any of the above for the next
-> --z::
-> ---null::
-> +`-z`::
-> +`--null`::
->  	When showing `short` or `porcelain` status output, print the
-> -	filename verbatim and terminate the entries with NUL, instead of LF.
-> +	filename verbatim and terminate the entries with _NUL_, instead of _LF_.
->  	If no format is given, implies the `--porcelain` output format.
->  	Without the `-z` option, filenames with "unusual" characters are
->  	quoted as explained for the configuration variable `core.quotePath`
->  	(see linkgit:git-config[1]).
->  
-> --F <file>::
-> ---file=<file>::
-> -	Take the commit message from the given file.  Use '-' to
-> +`-F <file>`::
-> +`--file=<file>`::
-> +	Take the commit message from _<file>_.  Use `-` to
-
-I think it would make sense to move changes like this, where the actual
-wording changes, into a separate commit. That'd make it way easier to
-spot the non-mechanical changes from those that may require some
-discussion.
-
-> @@ -257,19 +256,18 @@ default::
->  The default can be changed by the `commit.cleanup` configuration
->  variable (see linkgit:git-config[1]).
->  
-> --e::
-> ---edit::
-> -	The message taken from file with `-F`, command line with
-> -	`-m`, and from commit object with `-C` are usually used as
-> -	the commit log message unmodified. This option lets you
-> -	further edit the message taken from these sources.
-> +`-e`::
-> +`--edit`::
-> +	Let the user further edit the message taken from  file
-
-There's a double space here. I was also wondering whether this should
-say _<file>_ here to further clarify that this refers to the same
-placeholder as the placeholder in `-F`. Might be confusing though, I
-dunno.
-
-> diff --git a/builtin/commit.c b/builtin/commit.c
-> index ef5e622c077..a7315ed67cc 100644
-> --- a/builtin/commit.c
-> +++ b/builtin/commit.c
-> @@ -44,7 +44,7 @@
->  #include "trailer.h"
->  
->  static const char * const builtin_commit_usage[] = {
-> -	N_("git commit [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]\n"
-> +	N_("git commit [-a | --interactive | --patch] [-s] [-v] [-u[<mode>]] [--amend]\n"
->  	   "           [--dry-run] [(-c | -C | --squash) <commit> | --fixup [(amend|reword):]<commit>]\n"
->  	   "           [-F <file> | -m <msg>] [--reset-author] [--allow-empty]\n"
->  	   "           [--allow-empty-message] [--no-verify] [-e] [--author=<author>]\n"
-
-I guess this change is required to make t0450 happy?
-
-Patrick
+--
+Jiang Xin
