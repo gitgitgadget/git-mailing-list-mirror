@@ -1,54 +1,54 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5D61DE8B4
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 17:29:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E741553BB
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 18:44:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736184565; cv=none; b=PIroWdp7+kPBdQXnDc+2rKQ4QXzQ0wxlM2K5sTeB6WvOvy8czJWTJfCFlvY4XvZoZK4sHrYVvbL1xEbvNTR3hrrLa/TS/FvsnVzgI1UrzbzPBpwvQRNtgvFAwhq6o2FSVjhQdN9SzrEcGS7aJaRZ5+/GQ3wQpUNAfMpAhzGCC2w=
+	t=1736189090; cv=none; b=mkGbSnk01pk+ssiTKFZSXMKyt6zMlJcSE2cfnl8wGTjZxMPEJmM9WM6hdKpsA7YnZ8jw3tGuXln8k45moiD2XKUY9DDNHKzXqWVMEdn6kVa2ZQ+qGbXQMYwXa5XqBW4dzPnc2rZwiQVyntldxnEhconQgpiHf0gYkFxdb/S90BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736184565; c=relaxed/simple;
-	bh=blyHKGldSL3GBKnWcT+ATDBcMNiSwG/GOxBZ1UNXvAs=;
+	s=arc-20240116; t=1736189090; c=relaxed/simple;
+	bh=ApJkFfO5R3Ot59Y60Ho6KxTzI7LV+uzzo+AvR1RlD1c=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ul40VbbMu46HNI+MPx145oDomQ9CPsF+XXI+jvW7oqe7zSFaQ1Czm6ATTZG7yXcR3gLDoIkwim0dewVeNCzMwmFutCLgeCeFiRtP4V0LJurXKyIx9aQ07iOBSm5LIEf3vkIhJa2hVDsuexPyvZYPbPN93vWpi/eTNNiY8ddHm78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rCnjbuiE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lNHPUStx; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=d68WHvTrr72Ft6nrkyUOjMYbxdsVEjYZLaSLsTXbTDX6IDsmy1dNGWVSvYPDq8ryXyKNBDwk8zAEEANKopf8p+Nw9XiMDgok+1GtzP0SVlIPRlQw6rv9+CWNyh+c7cdb1/GlmmEvS7z2cNPog0Z0slsVoCjLwrddrGFJcVCffXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uE8fmNlz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W2pCuD0f; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rCnjbuiE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lNHPUStx"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uE8fmNlz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W2pCuD0f"
 Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id B28C3114017D;
-	Mon,  6 Jan 2025 12:29:22 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 06 Jan 2025 12:29:22 -0500
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3B87D11405B7;
+	Mon,  6 Jan 2025 13:44:47 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Mon, 06 Jan 2025 13:44:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736184562; x=1736270962; bh=Np0wsbvmIE
-	nsX5oMhbdb/cv/2y+SYslwZXY8xe1Cx2s=; b=rCnjbuiEeYIm6UoVV1CCTgPCzt
-	90S7pLWuShCSeskynCDfa7fInLMJCxRvI41R79tsHiTNOUDftSYTWGJ3Ot7tRGrZ
-	exlAL8P39PsTD58fVATP8NNj13G+/oETO28aCCbkiC30YPfx8BD5yfx70qa+e3yC
-	yFAOUi8Qn6SKBqwDeOuKJ0fF8XGw5nErjsK0KAtRavvZojOKIAfOl7otMeH+hHnw
-	hNk187YQXz+2gD6X+vkG1ssnps4i/sWHIWFOI8LL7DMzXAYnkTn8UGdZjsjsM/EC
-	yecBnfLezGjdVVV1/EbV/FxW7JbUeOaQluFUs9rA2Gg/XrPaPU5ibKJGTPsw==
+	:subject:to:to; s=fm1; t=1736189087; x=1736275487; bh=f4Gqe4jKKz
+	RMva2po5VMSykRYblZWe/Ax91+FbSvrIM=; b=uE8fmNlz0gKCoPCxiD/rGulkEs
+	nQUUI+HBfZYsnPaBzfhCMmI0r26i9NqDPQLYAmQagxYSS0D77nLyL3ox8unj/9Z1
+	oRrzq1drqgHHs/5J3d1Yz5ohrEzYUmpQuKZf4dlv/pyQ64QXxUrp+pd4kqXkUK+j
+	GL4ANuJszy5/hvaqSPiy33Mq0iy5/ukBHqTKmnhQtEGOnSpUPxIJqS3r222JF7/B
+	knEqpxhUQydbAXFyArZ1K4FLmgI/Zd96h8Gd8WIcGLCp8aHf7GT7u5gmM8G7V1Nn
+	FlufqAJtcMCceWsVauOKd9/wZJOd2KakIXrs02PclpzB50oRMk7VYufti7oQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736184562; x=1736270962; bh=Np0wsbvmIEnsX5oMhbdb/cv/2y+SYslwZXY
-	8xe1Cx2s=; b=lNHPUStxNJ2vHADM/v01PvSk8lAZ8adBTQIhjAB88JVnt5SYmne
-	CP7V5U1Yl2RjPny2saq1WEDmnSB2kpcUTtqIfUsg3ZTVYks6HaVVLwxaeq7reVWe
-	JveRBS2ZjBklU6EWBnY243d1Ql55FA290sr9GAeRkLQOf1e1+7JdYxFAkBUyhDQ4
-	gK29Q2HBaELT0fNtij9ysraWSHDRf4vrQ7VkcqAWC6HQGczYMLWGzUBo36DgCjz2
-	5/t6gOOlb4oFqo2gGLAzvp4Dh1GiUbp1xoiJyEBXiCydkaTiqR6nhLDl2H1CXW84
-	W8Q7+I1eElAgvnN7ACKX8NW8jdy4Irh7eCA==
-X-ME-Sender: <xms:8hJ8Z6OmfNy04fA_dHdh_4qH7-lsBvjJdjyG3zRBJgEplIFz5m2TCQ>
-    <xme:8hJ8Z4-BAx8Chobpe2xFXtnfrde5n-4kGJLVrENW4o-tTP0P5gZZ_VGGtqw2v-X6O
-    twFDO6UpDodh4Y40A>
-X-ME-Received: <xmr:8hJ8ZxT8GMSdYUEC5CXhu3wL_4DXSeaC4yNKGq4Qd_0ZtD_EtLwc2zf3sf-Fj7Myy6zTygUDrXPbQPn5qRwXSXl_09rGIRAci5AW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddguddttdcutefuodetggdotefrod
+	1736189087; x=1736275487; bh=f4Gqe4jKKzRMva2po5VMSykRYblZWe/Ax91
+	+FbSvrIM=; b=W2pCuD0fujtP0NnEBa7EjVx2B9xDAOpotnnYnf2jeY1U433l8xU
+	vXW5Pm8jyB1os2IMzY9tnCW6mFHrH/83hoPJIxNoradUEP3zzshFfp258o+NU0AY
+	7RW5Ek2DMus8jQ2gp/Xxv05kgn7mJjyIFHPRs3aJOYhrSVxlbVoWYobd3v8rXdg3
+	xdJkzTeFDGId6OT9dIyc1udWcC/04ztMltA8IqsSuhd5GzVpZtjPezMSDge4tR0k
+	0V2WooRsqR8RxM8esAokd2a/hReSa7A7jTOYV37DvZwFZ9f5f40XM9RlCgDqpr/D
+	6iuDd6HZfU8T0W0BwcY5RXQQgK0TlgfN0zw==
+X-ME-Sender: <xms:nyR8Z1dUKOKXJp--sBNlCsF_J_sSsVjeeGwZSuCdWFS7Z5ZfgMPkfA>
+    <xme:nyR8ZzMvHAFYRp-CKaf9q2zCinb9TeDwWh2FshLBf9hWEG4SK42z4_QH5JjIrTvbL
+    ar3ngqT9aheeO6lkg>
+X-ME-Received: <xmr:nyR8Z-hCzH_nozz_vz3O_TapaZmm2konaZHSe4sYzHn3cXUrTVzxTCOlV2OP1wzT5VClkUmxYbKbh7Yp4lGyc9L0ZcoCGm6snMr5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddgudduhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,32 +56,37 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddguddttdcutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrh
-    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:8hJ8Z6u4cPB4J8LywqmZ-JWuDaa92QYEz3SfsPS89b76-DVO4LWI4A>
-    <xmx:8hJ8ZycH0Gmtb2Ht7hYaxUe2RjCMPAMR8pKd8jKOw3LMo4JBHD2OZA>
-    <xmx:8hJ8Z-2x2t64rkp4y8pH_8LU-eiK-tYswcOAy9UX-_CuuKipdIoC3Q>
-    <xmx:8hJ8Z29BEl7ond7UTIRDgr9CWG0R3Iq3_DTiZfeJ6uuKWyPVlGkZuQ>
-    <xmx:8hJ8Z_G5nWLvpLig1abczCA7ejajV3QYFDRw4by2AgcWt80C7CCEi1pk>
+    phhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehthihtshhosehmih
+    htrdgvughupdhrtghpthhtohepthgsohgvghhiseifvggsrdguvgdprhgtphhtthhopehj
+    uhgughgvrdhprggtkhhhrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvrhhitgdrphgvihhjihgrnhes
+    ghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilh
+    ihrdhorhhgpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhiesghhoohhglhgvrdgt
+    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:nyR8Z-9Y2BB-o8-Lpb0wFAPQHGH_a3O_CT7bcHmeeNN8nXvf6ElXPg>
+    <xmx:nyR8ZxtcnAZiop9Pm0cco47oZTGAs0vvzdm4-b64bVinq9U66GXPEA>
+    <xmx:nyR8Z9EVHh9kX-QBXO077cNIJXbo6qDGQojkruxUkxU782iVeBNNDA>
+    <xmx:nyR8Z4OhshSMhdu0eNAGh_4Mb8v7scRsiSFDPSHbCcv-2M-2HOxZKg>
+    <xmx:nyR8Z3C1MZTRofYv1erJLCwJlz8dnp3qOUF4WDq7olr5t5XQ2tAGR06w>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jan 2025 12:29:21 -0500 (EST)
+ 6 Jan 2025 13:44:46 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v2 0/2] object-name: fix resolution of object names
- containing curly braces
-In-Reply-To: <pull.1844.v2.git.1735949870.gitgitgadget@gmail.com> (Elijah
-	Newren via GitGitGadget's message of "Sat, 04 Jan 2025 00:17:48
-	+0000")
-References: <pull.1844.git.1735699989371.gitgitgadget@gmail.com>
-	<pull.1844.v2.git.1735949870.gitgitgadget@gmail.com>
-Date: Mon, 06 Jan 2025 09:29:20 -0800
-Message-ID: <xmqqbjwjzw9b.fsf@gitster.g>
+To: "Theodore Ts'o" <tytso@mit.edu>
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+    Chris Packham <judge.packham@gmail.com>,
+    GIT <git@vger.kernel.org>,
+    Eric Ju <eric.peijian@gmail.com>,
+    Christian Couder <chriscool@tuxfamily.org>,
+    Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: Testing for existence of a remote branch from a script
+In-Reply-To: <20250106163636.GH1284777@mit.edu> (Theodore Ts'o's message of
+	"Mon, 6 Jan 2025 11:36:36 -0500")
+References: <CAFOYHZDQs-mftqLQn5HiFgBWcFN6Z-WDscJt=zVLRyGTo36=HQ@mail.gmail.com>
+	<20250106065121.GA8844@tb-raspi4> <xmqqsepw0xk7.fsf@gitster.g>
+	<20250106163636.GH1284777@mit.edu>
+Date: Mon, 06 Jan 2025 10:44:45 -0800
+Message-ID: <xmqqy0znye76.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,23 +96,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Theodore Ts'o" <tytso@mit.edu> writes:
 
-> Maintainer note: these bugs both date back to 2006; neither is a regression
-> in this cycle.
+> So if enhancing the git server's functionality (either via git
+> ls-remotes or some other operation) is on the table, ...
 
-While I was preparing today's -rc2 release, I noticed that this
-change broke some of my release scripts with
+Enhancements that do not require breaking backward compatibility is
+always on the table ;-).
 
-    $ git rev-parse --verify v2.48.0-rc2-161-g6c2274cdbc^0
-    fatal: Needed a single revision
+> one of the things
+> that I would really love is some way of asking the question is "git
+> commit <SHA hash>" in the remote repository reachable via some branch
+> or git tag?", and optionally, "which git branch/tag should be fetched
+> if the testing infrastructure wants to be able to test that specific
+> git commit ID?"
 
-which is the construct that has been there almost forever.  Its
-expected output is
+Both sounds like a useful thing to do, but I wonder how generic
+these should be and at the same time how common a narrowed-down
+feature would suffice.  If we try to make it generally very useful,
+at some point, we'd cross the line where we'd be better off doing
+"run ssh and execute these Git commands" over the wire X-<.
 
-    $ git rev-parse --verify v2.48.0-rc2-161-g6c2274cdbc^0
-    6c2274cdbca14b7eb70fb182ffac80bf6950e137
+There are server-side-minded folks who are extending "cat-file --batch"
+to allow you to ask about objects you do not have but the other end
+has, if I am not mistaken,  by the "remote-object-info" feature?
 
-The series seems to need a bit more work.
+I wonder if these more advanced "info" about objects you mentioned
+fit into the picture well as part of it.
 
 Thanks.
