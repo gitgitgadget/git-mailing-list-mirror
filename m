@@ -1,123 +1,188 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7908E4207A
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 23:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E241DFD84
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 23:05:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736204717; cv=none; b=co4WQqq6ieMrXDhaapHIox10N4rYAaJ1XzmU++EEKMmSfxYneZJrw5v0SXnmZfDFQdey5UrxDtZvVfeFkQx3vMpQ8dU2Cb8oSmWcz3ykQaW1FRMvZEm0Cc7yflgFtvxr81JS/auhgSi6LMuy7uO9Mn5kT5H+vn5d2BFEGj/KBSQ=
+	t=1736204761; cv=none; b=tXiGleEm+gvzXTAkPUb/e1ksLrMvZWROP/9nmdxej5bSZE5iG1xSmkfgbNLA1SwGhJo8mXz2cre210QUcwJar/UNwgR0u++4+VJnpH43hI/Sx2xygWh7TtmcQbbyWW7zsAcyVdVWmDILar3j7G3B+y8vV8SKZhCa8aW+M7uPVCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736204717; c=relaxed/simple;
-	bh=nbSKvT0+TFePK6yCzdIl0LezO8Bj6a/GYUNOyYYm7MY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eH+Y9Ny2QZhX8JY8ydgjHc0eBMWmuqGRfOYXePzQqHC+k6/dazMSGrNhkxJNl1CTp59pcK1dQg1fDDAO31AQ40jSrVjujeDseidjx6cly7M8uAuiO10rulXTrbHFn9NMHW3NWOGQu9kHWeK0cZsPhcpqRzfV0P/TCmkgeOX1FqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=PQEtUaW+; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1736204761; c=relaxed/simple;
+	bh=9PI4Xq8OOK333gu9FZJoiYZod1wr3loFvWPumFu74yY=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=rqjnSh7ouOeF+g+b+IPShqcuBG8ZAZkYhCy1nN2z4Hd40oXrbLb4xev2x+r2dIll7c4Yr17iHsoNJujjE7D36aHwOt9QCa8XVLMOOQHfPnVhGjB9hZgNQh3dJm2+D9kVVh2Sp3FKG1FwYc1mucbTxLQ4F/LLz40LflrEN5dHh+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DeJhKBVr; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="PQEtUaW+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1736204713;
-	bh=nbSKvT0+TFePK6yCzdIl0LezO8Bj6a/GYUNOyYYm7MY=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=PQEtUaW+uLcwE8kwHPLPUTpJDWrcx6RSmMY/SopKWZGCh5FoifksdFTsPOH2odS7u
-	 D8hLoJVOpUpkHSiwKRK5at1Pxgnhf4lGwwjIwd+68ZtYHjXeZqU0HSofOunxjQ/NqS
-	 pQuvddkglb28an2ymNw0qr9vL6ecmpWIU4fnCRjmdDEvTraMlbALZAxVuKFO2GtI7P
-	 zGSTOW3jg2LhVaP+xTyXzaBk6DzCkxDQ6woI67nMV0fTBjoFUZD1sqXFFBk8QM8BiF
-	 8yyglcXiR6C13qkGYfJCE+HCQTKTVsSHGG8k92TM1oI+EgMd9HNNXnhq2ZZc6I17j2
-	 qsEIFstSefSECpDMpJmAOYlYpn+/4CkpeseBwxV91/A+MN5peM9gB8bjirTlQeLizH
-	 nS4aVOw2FJLEj1WwZNBEDlg0tSSfj9M8L4/AJuYHCCRrf5H+ubocLi5DDFZT64I3nI
-	 RTYK+kJCHq7ZQB1W80xUKPNa1bwqZM8lx4nVE9IJdavVH1F2lWD
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5697C20991;
-	Mon,  6 Jan 2025 23:05:13 +0000 (UTC)
-Date: Mon, 6 Jan 2025 23:05:12 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: M Hickford <mirth.hickford@gmail.com>
-Cc: M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v2] credential-cache: respect request capabilities
-Message-ID: <Z3xhqCf7Gr74BHO4@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	M Hickford <mirth.hickford@gmail.com>,
-	M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-References: <pull.1842.git.1734729534213.gitgitgadget@gmail.com>
- <pull.1842.v2.git.1736193131798.gitgitgadget@gmail.com>
- <Z3xaE_v45G447HQe@tapette.crustytoothpaste.net>
- <CAGJzqsn6kV4LeYKk=qWu3GvbtNrJ5LG9LvbDVMQoHqibR9ieSA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DeJhKBVr"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43675b1155bso141794535e9.2
+        for <git@vger.kernel.org>; Mon, 06 Jan 2025 15:05:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736204757; x=1736809557; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JAuQ74v1nDuSm+nLxI9iTbmgsYcBSVHbsCchAh1txgY=;
+        b=DeJhKBVrQHFjmImGFhcvtF+MV41Hyhy0vljhlWLGzljE2ORwDTlUzJxUHiMv/unt5j
+         YuYmHCwitBtfZpuQ08N607Irf+XebgsC2+lnhjKrhTcHxNL7tuXtBRz0zpvFn4pRDZ16
+         /a3UafdsA/MfSzzeCzTE+GmyzDtYqvelDPktcNyZSpS6CqJYHx9yb87xgqLe/sCrwPuS
+         HwVeiU3ZHvFFpZg42dLpKONwlsVMQl+stZo3ZiQAWibG/xnuSMyHZEI/H5NIB6isUYTG
+         vBDveH+rMsPfe35AMpMo6CTTAzkwFnjgvqxuHaCQwFfmFAOGgxYEyAr7+aX+uWaiC9gQ
+         6Raw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736204757; x=1736809557;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JAuQ74v1nDuSm+nLxI9iTbmgsYcBSVHbsCchAh1txgY=;
+        b=Tse9aRDhIv6f19UIjpYGK5S9L31p6D+gpN7SNjmlVycK9RAmBGHLxLmRsyCJbkFmfM
+         dXG8q9yg5IJ1sKVhmaxSAXc8zPnE59PX33uv/2uQZZaaqV/AmVxzNJkuu5mEUMLiuXje
+         i33/7InhS3u74GcoYCXGnWQ/LRzR+MR+2E0G6GBGFlsIeG0/Zm36xxg8eiU+vXZ4qTQN
+         j8+oHf9MvW8axWAGPwMhZ+KHtJo33rrOsd8uuK3nMWI177Lep9XoWdrEl69ZpGtj5Qbp
+         0wxIdHXiPoyQQ3n3a69QoySdvMnycjCZlgL/csCnCJSYreUZaIP8PvyTI2n/BqEYioYF
+         nDmw==
+X-Gm-Message-State: AOJu0YzULOmmDBO53XUjiqJL5rtZZeH2+rN/UP+JfgqMVsdshtO2saJ3
+	xHkBL2zE6/ZTll7qOC7fM1Epb0y7Uqr1FfFDKtQk1fNvsaVyOyXcnO2YVA==
+X-Gm-Gg: ASbGnctJ4HJi5ZSMeOE21tPgSSQwvyW4+Z5Sp/3nr3gPiKaAopez+0I9IwBfq+GhjTM
+	kqe68Q6dlHwRm4dEpzggljPkb3cwlh7WF4I1DKZ39HqfVBtGdxgDuoC9gIHwVLzOExxOSrvVnNc
+	9FaLXPKegutuyIlun13YqJbipgOau10jvRwNm5VxzzlR+Dycq06BsbS3vlzx9eb2278chPLED5H
+	6Gn/ldxXi9aVANZpdXJVyPE9EYLTlJenXRRLlXHgDRPrSTKb+zN55BZgw==
+X-Google-Smtp-Source: AGHT+IEoone+tNzTe8EVMCgjX1vlOT6Ebml1pGfN3B0GeoSo1QYi82P8IhWujTp5ErYgeGBroW2piQ==
+X-Received: by 2002:a05:600c:35ca:b0:434:e9ee:c3d with SMTP id 5b1f17b1804b1-43668b7860fmr446350975e9.20.1736204757363;
+        Mon, 06 Jan 2025 15:05:57 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43661200abesm578204305e9.18.2025.01.06.15.05.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jan 2025 15:05:56 -0800 (PST)
+Message-Id: <pull.1842.v3.git.1736204756030.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1842.v2.git.1736193131798.gitgitgadget@gmail.com>
+References: <pull.1842.v2.git.1736193131798.gitgitgadget@gmail.com>
+From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 06 Jan 2025 23:05:55 +0000
+Subject: [PATCH v3] credential-cache: respect request capabilities
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hkCdA9xRtJR2YZY3"
-Content-Disposition: inline
-In-Reply-To: <CAGJzqsn6kV4LeYKk=qWu3GvbtNrJ5LG9LvbDVMQoHqibR9ieSA@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+To: git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net,
+    M Hickford <mirth.hickford@gmail.com>,
+    M Hickford <mirth.hickford@gmail.com>
+
+From: M Hickford <mirth.hickford@gmail.com>
+
+Previously, credential-cache populated authtype regardless of request.
+
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    credential-cache: respect request capabilities
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1842%2Fhickford%2Fcache-capability-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1842/hickford/cache-capability-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1842
+
+Range-diff vs v2:
+
+ 1:  696780d4782 ! 1:  e9851c5c4ac credential-cache: respect request capabilities
+     @@ Metadata
+       ## Commit message ##
+          credential-cache: respect request capabilities
+      
+     -    Previously, credential-cache responded with capability[]=authtype
+     -    regardless of request.
+     -
+     -    The capabilities in a credential helper response should be a subset of
+     -    the capabilities in the request.
+     +    Previously, credential-cache populated authtype regardless of request.
+      
+          Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+      
+       ## builtin/credential-cache--daemon.c ##
+      @@ builtin/credential-cache--daemon.c: static void serve_one_client(FILE *in, FILE *out)
+     - 	else if (!strcmp(action.buf, "get")) {
+     - 		struct credential_cache_entry *e = lookup_credential(&c);
+     - 		if (e) {
+     --			e->item.capa_authtype.request_initial = 1;
+     --			e->item.capa_authtype.request_helper = 1;
+     --
+     --			fprintf(out, "capability[]=authtype\n");
+     -+			if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_RESPONSE)) {
+     -+				fprintf(out, "capability[]=authtype\n");
+     -+			}
+     - 			if (e->item.username)
+       				fprintf(out, "username=%s\n", e->item.username);
+       			if (e->item.password)
+       				fprintf(out, "password=%s\n", e->item.password);
+     @@ t/lib-credential.sh: helper_test_authtype() {
+       		EOF
+       	'
+       
+     -+	test_expect_success "helper ($HELPER) get authtype only if request has authtype capability" '
+     ++	test_expect_success "helper ($HELPER) gets authtype and credential only if request has authtype capability" '
+      +		check fill $HELPER <<-\EOF
+      +		protocol=https
+      +		host=git.example.com
+      +		--
+     ++		capability[]=authtype
+      +		protocol=https
+      +		host=git.example.com
+      +		username=askpass-username
 
 
---hkCdA9xRtJR2YZY3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ builtin/credential-cache--daemon.c |  4 ++--
+ t/lib-credential.sh                | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+), 2 deletions(-)
 
-On 2025-01-06 at 22:57:06, M Hickford wrote:
-> On Mon, 6 Jan 2025 at 22:32, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> >
-> > On 2025-01-06 at 19:52:11, M Hickford via GitGitGadget wrote:
-> > > From: M Hickford <mirth.hickford@gmail.com>
-> > > diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-=
-cache--daemon.c
-> > > index bc22f5c6d24..692216cf83c 100644
-> > > --- a/builtin/credential-cache--daemon.c
-> > > +++ b/builtin/credential-cache--daemon.c
-> > > @@ -134,17 +134,16 @@ static void serve_one_client(FILE *in, FILE *ou=
-t)
-> > >       else if (!strcmp(action.buf, "get")) {
-> > >               struct credential_cache_entry *e =3D lookup_credential(=
-&c);
-> > >               if (e) {
-> > > -                     e->item.capa_authtype.request_initial =3D 1;
-> > > -                     e->item.capa_authtype.request_helper =3D 1;
-> > > -
-> > > -                     fprintf(out, "capability[]=3Dauthtype\n");
-> > > +                     if (credential_has_capability(&c.capa_authtype,=
- CREDENTIAL_OP_RESPONSE)) {
-> > > +                             fprintf(out, "capability[]=3Dauthtype\n=
-");
-> > > +                     }
-> >
-> > This part is not correct.
->=20
-> Thanks for the review. I'll revert this part and amend the commit message.
+diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
+index bc22f5c6d24..e707618e743 100644
+--- a/builtin/credential-cache--daemon.c
++++ b/builtin/credential-cache--daemon.c
+@@ -142,9 +142,9 @@ static void serve_one_client(FILE *in, FILE *out)
+ 				fprintf(out, "username=%s\n", e->item.username);
+ 			if (e->item.password)
+ 				fprintf(out, "password=%s\n", e->item.password);
+-			if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_HELPER) && e->item.authtype)
++			if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_RESPONSE) && e->item.authtype)
+ 				fprintf(out, "authtype=%s\n", e->item.authtype);
+-			if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_HELPER) && e->item.credential)
++			if (credential_has_capability(&c.capa_authtype, CREDENTIAL_OP_RESPONSE) && e->item.credential)
+ 				fprintf(out, "credential=%s\n", e->item.credential);
+ 			if (e->item.password_expiry_utc != TIME_MAX)
+ 				fprintf(out, "password_expiry_utc=%"PRItime"\n",
+diff --git a/t/lib-credential.sh b/t/lib-credential.sh
+index 58b9c740605..8da0afe9395 100644
+--- a/t/lib-credential.sh
++++ b/t/lib-credential.sh
+@@ -566,6 +566,22 @@ helper_test_authtype() {
+ 		EOF
+ 	'
+ 
++	test_expect_success "helper ($HELPER) gets authtype and credential only if request has authtype capability" '
++		check fill $HELPER <<-\EOF
++		protocol=https
++		host=git.example.com
++		--
++		capability[]=authtype
++		protocol=https
++		host=git.example.com
++		username=askpass-username
++		password=askpass-password
++		--
++		askpass: Username for '\''https://git.example.com'\'':
++		askpass: Password for '\''https://askpass-username@git.example.com'\'':
++		EOF
++	'
++
+ 	test_expect_success "helper ($HELPER) stores authtype and credential with username" '
+ 		check approve $HELPER <<-\EOF
+ 		capability[]=authtype
 
-I applied this without that change and it does still pass the test,
-which I think is good and shows that can be omitted.  If I have some
-time, I may send a follow-up patch to add some additional tests.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---hkCdA9xRtJR2YZY3
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.45 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ3xhpwAKCRB8DEliiIei
-gTHKAP439+YWr7N4/c4utfhkYbi5t/uV8rLo0V2IMLTWgmVh6wD/SLG8KG5LMObD
-PX65j7puffusSEt8RHclgHGng+4C8gQ=
-=HHYM
------END PGP SIGNATURE-----
-
---hkCdA9xRtJR2YZY3--
+base-commit: 92999a42db1c5f43f330e4f2bca4026b5b81576f
+-- 
+gitgitgadget
