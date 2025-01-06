@@ -1,104 +1,160 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39C3522A
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 06:51:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6FD20326
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 07:00:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736146293; cv=none; b=ASlLh2J32fPOBkj4aKg20tlpu0oXJS9pI1bpJVZOcAoAYdAIdhxrJR7nck9yTOP2xvLg8rnltJGyvnV1rSIJovcBWgQDYqQv0ipKWSzmBdFZ5JupUfe7fbT9p9vPT1WuEaKnoUyXlWBcqa6t6OLoBA2CEZf2SNwYF2T6LJaN61U=
+	t=1736146811; cv=none; b=aHbl+aV9EfKkZPYOYXuyNlU7UFqXW+AI2pJQTWiOA0yrTQwnlUPowimhPVXHBN3kXCfp4Tq1CWDGdgUJ8ma0iZADKN40oCGvGybnnTU1eUBouWGM6n/+03Lyq+Q5PB8UDIoJcBCrSit0rS9ZnvpqMKo9LUg/wSGWtltkqupU3eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736146293; c=relaxed/simple;
-	bh=c1RCFBJ2UH2FM5x0TtKNJ/fUelwj2W0JqQY/x6mdGOY=;
+	s=arc-20240116; t=1736146811; c=relaxed/simple;
+	bh=9nC9VlNu38lnOt3Bu/3YDP35yY9C+EPtgAGzGYWhOQ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ANNJ4w9T4kQLuzU4sZTxMoRtlisqkHuP1utcbLLdb3Cc+jzMpDkkBdUOh4hCmSwfvFzYeDdTKU+5ZjnAUoxl2McE+7djumQGCuzBjgH5geJ/BpCZ8poilIcSL5J9LZEBPkyleC1dmWhYzef+K9cDzE5IjHMuauhQoLmpd/KCcqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=gcJ7z1kw; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	 Content-Type:Content-Disposition:In-Reply-To; b=jS83l/2JRD2A7XKyB0ZPSmmIPgzi6Dtah84L29fTduAS2scrcti8lS8FK1gbrCXDhyhVlk+iPj1uSi3J8SIQs3YPtFqnqImFGgks/nziVNallfWTJVuduNQcno2vLudAq10WUqSsOgCkQL9/3jkhay38dhDjsg5qPRml/xxeIiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jWSo34iA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QKje6shn; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="gcJ7z1kw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1736146282; x=1736751082; i=tboegi@web.de;
-	bh=zhyYUD8QTMX5gazgt+//vWuYHWgDf74j4p5N2QkvnTs=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=gcJ7z1kwfA+8V70RFZDWgxizDa77Uk7IuTPOnrjLKQCDmXt2PuWuSbFGBwiLs3vb
-	 qAmxmnuhvzMtKOfATOipctepm8EQT1JKQrXGP2GwIg/btSyfGbZ1FskrF2jUEZqxb
-	 n0X9n7VwWgkpfHEwrkx2AB0qS0r+ntdxkd7kW3Qhv8viS5HPxbsgD0dv2sctAotw+
-	 5ysx5dXBx+YrwAOiWAbqz378IvWGNAPTxZMYAw9N6SMGgVJDnQEwDKPTn6wQx3GNs
-	 fmNXLXY4fdcIti/obDZsoEDgeB5KkfWadi3BCeoLwP/ZaC+2vmtQp+0Z9RciSzMcl
-	 PA8W7KTuQ6uv8cgu3g==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MGgJM-1tGtRY1kEU-00Dmea; Mon, 06
- Jan 2025 07:51:22 +0100
-Date: Mon, 6 Jan 2025 07:51:21 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Chris Packham <judge.packham@gmail.com>
-Cc: GIT <git@vger.kernel.org>
-Subject: Re: Testing for existence of a remote branch from a script
-Message-ID: <20250106065121.GA8844@tb-raspi4>
-References: <CAFOYHZDQs-mftqLQn5HiFgBWcFN6Z-WDscJt=zVLRyGTo36=HQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jWSo34iA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QKje6shn"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 74B121380169;
+	Mon,  6 Jan 2025 02:00:05 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 06 Jan 2025 02:00:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736146805;
+	 x=1736233205; bh=gVCHPWi9lMN9B/Yu9eIH8mHh3fiNQqrEp7TcLAvy7MA=; b=
+	jWSo34iAJ5Q67HqrCOHTxQx4nUo5hdbwCDURC6+X6PKRVrwI8n4JZFwCDd4TahNS
+	MU+vMiX/pR0blqyXuKfC2EfIXigPPbMCzQHH7WaAwMPnFcehpKZJYtXe/KcJNvy9
+	Q7T+s4PBjF+Z5EJLvM8BadOheiJLf3kxC9jxjfGFJB8kvzSkWhsKWZmS3M+Ola2I
+	mq+fhI4K/1YEDNw2DlDqPWwCGeQUMndV9eZ8AftdnLGkJajrOdnaS1NycbrrAeWN
+	H8EHLuighJnQXpQcyrjjbw+7AEOiYRWuitIMEkMh7EX5wU7mN5HOu1RNEVby+dD3
+	mmMI2fdtYvMPTHkQ710EHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736146805; x=
+	1736233205; bh=gVCHPWi9lMN9B/Yu9eIH8mHh3fiNQqrEp7TcLAvy7MA=; b=Q
+	Kje6shnSTKXpBXjxXkhvrQ0vkI6qC3uFa2BRymfL8abLOi9BeXeSD/Ol/DiRJMF+
+	kwm0l90/l7EkJP6Ai8ohS+QOcTiLbrMgpBHYkuZH2Eu9DUOFKJu9WP/6i9rT/xyz
+	131sIj0ChXuDOLI2UZ+sDgtIOhhHaMQui+ZFbdpJZAnXjPWkErqy2eBuJMmhkVl+
+	0DaESA4fhJNo92WB7dy57eVCwuw7Ss9LVmoZSG+9DvIb3kvFS9S7ThDfGImrBsq9
+	BMHgakzeNqR85wdd8LU9RtOWHiO7m0r8qEasWDG0NSWayIf629QapzLjtX+7bC1K
+	97XW3wqSiuc2XCs81UNiQ==
+X-ME-Sender: <xms:dX97ZwXMzD3Ht7RD-NuN6ZCyj2oC7dYC3m8_ACxb7vKkkScaRFbnzg>
+    <xme:dX97Z0l4EQLf0RYEZUREUFFKxnN9LwCzrYln-7lMO6Nj69jda3Kjc-rgV2r129Sqt
+    Knl38wDOyE-agIX0g>
+X-ME-Received: <xmr:dX97Z0YlLryt3MsyO4tgY5aIEGGII0MtWutAetA4cpeI323aO5-JenCw60QspECjMdufTxvNHEuqu_PQos6X86AXgmJEh1HzfcNbxrwd19HPSA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudefledguddtvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
+    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
+    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtg
+    hpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:dX97Z_UujuqVQ_WyqNH4fjnttH6gc740lUPkR52Zqd1h7VvJEY1ZaQ>
+    <xmx:dX97Z6ng2Zi3XCYVXs7tyBbA0LLH3-oy9eyXO_hxUaIhDoaRK57Z6Q>
+    <xmx:dX97Z0caT__lRyJaRJOxWye65mHJrfbAABRvUvc5Cx8yNdC-bvMwig>
+    <xmx:dX97Z8GLWwTUeOHQs3cMfsw0-QssBMCJ903CXSCBJCRVe0y3QnDtvA>
+    <xmx:dX97Z8jhb9VMxdEFgjv2GsBxPm-elbylXeKP7GmTJKG5Lz0TNS7ethoz>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 6 Jan 2025 02:00:04 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 47676500 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 6 Jan 2025 07:00:02 +0000 (UTC)
+Date: Mon, 6 Jan 2025 08:00:01 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: =?utf-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] doc: git-notes.txt: migrate to new documentation format
+Message-ID: <Z3t_GvqfZL9y-_9p@pks.im>
+References: <pull.1846.git.1735924216993.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAFOYHZDQs-mftqLQn5HiFgBWcFN6Z-WDscJt=zVLRyGTo36=HQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:uubVuPtkNHKLxD0RguAgaVw5m1Nv2VhYtjySKz0RrSCf/PUnd5Q
- rHVUgrp96jRcCeY9nkDXcwPm7lVFcyKXumvx/VmuMbkwJEIp3FRIdGkCnopdGNhjOggGcOh
- ys7zIBeX6gFQiBtRS+wwlEOEujK5GEFijswWZH6ori3mJ4/ViK5hEBnL2+PMJ/onHCJ5Gmf
- SPsQDmPoKe4bMYVgLul7g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:mZempPOAKhs=;SjqM4EUBLo221RM3y1bpC35iStT
- RC7GeXpE0QtXnMTH5ermqws0qBiUjGBcBckblAp32owUU0/Dqt9Bh9KjDmmJ8gCENRdQKeWgm
- Jy3FfOoCsBlw/tZW8+vPqBekvAn95DZCJgdYMUV4/lLMLb8Iefa1nNAzpA29+jykmGdpiiNVG
- 1e0rakNGiBcVrzPCviK94qanDa0VRvKKogTQ6ZdktSKJzPUt8AXzwUtOh48uj8TGeF4sQSOJj
- MiJ6o5YxQ2Dd69TfieUdklUXyAHdBPuOdNTKeh8imcjtwfvt4TA/fwQ9baEvtbXZfVqh5tUSS
- y+Wk12p26RLtizdwUqvFD7mP6y5e8gKtOTK69BjxZCLrAq+ibhsCiW0VuPnmHqOGfVqOaDHb6
- 3ZygQqVesnsp9ss2+uQATi/O2OSHijX5laeyFO4OsB7jivwyJpTBHhNNGaQGGjVNzSmb3PVuD
- V/8pV6PVSVLRZdKx/2DdmpM0EGx+ayO6IbL84VC08OCR26QwgUfvZT0/Z1WWkYTePp91AXau3
- nuhvfWiuDZJJam2KFVgojxaaWnZVPTW2ZDKuaHQ2LvBX33tOaZjZYNFsrkuwkY24MdGF8p7pR
- x2N8vJ82wc9rVp33fmbifiImk6ZYtMLjpCOvLzv6HUGoOS0ftEe+LYXI8Jcr1kcBERxWQHVHD
- wo9/7kJxgRyLJ3dr+bFQkoT/zaZBslmlpcYcKslzRvYZPwtYmepEhV+zLgrCl3/ahvHsrYvQf
- NpNBkP68RUN8owWDUtTjgorR1hzwBb7UFXiQQOBq6ppak/BQIZFN6D5yegfziRPPlVfh9V585
- 8Mvu+W1Ym2KZ/vwvGu/Tmafin4GZjbjNj+l88tIqjxv3kUPo0KT8mR+Mz9IASyDTCZx4OyNNj
- jqlc2tS/5AAXnAz/YUHI2OGkS3UKRsmni0JoOBsl4Iz2aVLUJGj2abND1mSohRp4fveBqsmFd
- zwCLvJznOVRvkyU3oa+YGf3BC6FuIE50bzeJBV4YOp3qucbfy3H6Ke1E8S2Esce55x4XLXsMt
- t160K4L6s+7u7XlUtNr4CHezL+pdcIxPwUI9hvzFcaVzGdfnMceXXS42VUXvMIsaoYzvw3M20
- ZpxRUyvk0=
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <pull.1846.git.1735924216993.gitgitgadget@gmail.com>
 
-On Mon, Jan 06, 2025 at 05:40:36PM +1300, Chris Packham wrote:
-> Hi,
->
-> I look after some scripts we use at $dayjob for pushing changes though
-> our review system.
->
-> For some of our repositories we operate a triangular workflow where
-> changes are fetched from one branch (e.g. 'foo') but are pushed to a
-> different one ('foo_incoming'). Our CI system runs to test the changes
-> and when they pass 'foo_incoming' is merged (fast-forward most of the
-> time) into 'foo'.
->
-> The problem I have is not all our projects use this workflow so I've
-> tried to automate the detection of this. My script does something like
->
->   br=3D$(git rev-parse --symbolic-full-name
-> refs/remotes/origin/foo_incoming -- 2>/dev/null || echo
-> refs/remotes/origin/foo)
->
-> The '--' is necessary because if foo_incoming doesn't exist then there
-> is extra output on stdout that puts off users. But when foo_incoming
-> does exist then br gets set to `refs/remotes/origin/foo_incoming\n--`.
->
-> Is there a better way of checking for the existence of a remote branch?
+On Fri, Jan 03, 2025 at 05:10:16PM +0000, Jean-Noël Avila via GitGitGadget wrote:
+> From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+> 
+> The git-notes manpage files were converted to the new documentation
+> format:
+> 
+> - switching the synopsis to a synopsis block which will automatically
+>   format placeholders in italics and keywords in monospace
+> - use _<placeholder>_ instead of <placeholder> in the description
+> - use `backticks for keywords and more complex option
+> descriptions`. The new rendering engine will apply synopsis rules to
+> these spans.
 
-I may have missed something, would that work:
-git fetch -p
-git branch -r
+I think it might be a bit easier to send related changes like this and
+your changes to git-restore(1) in a single patch series going forward.
+It allows the reviewer to bundle related reviews together, which
+requires less context switching. It also allows them to more easily
+refer to similar review feedbacks sent for preceding patches.
+
+Other than that I've got the same comments here regarding the style of
+the commit message as with your git-restore(1) patch. Ah, I also noticed
+that the subject should probably be amended because we don't typically
+specify multiple subsystems with colons. For example:
+
+    Documentation: migrate git-restore(1) to new style format
+
+> diff --git a/Documentation/config/notes.txt b/Documentation/config/notes.txt
+> index 43db8e808d7..70859f5c574 100644
+> --- a/Documentation/config/notes.txt
+> +++ b/Documentation/config/notes.txt
+> @@ -26,27 +26,27 @@ globs.
+>  A warning will be issued for refs that do not exist,
+>  but a glob that does not match any refs is silently ignored.
+>  +
+> -This setting can be disabled by the `--no-notes` option to the 'git
+> -log' family of commands, or by the `--notes=<ref>` option accepted by
+> +This setting can be disabled by the `--no-notes` option to the `git
+> +log` family of commands, or by the `--notes=<ref>` option accepted by
+>  those commands.
+
+Should this rather use "to the linkgit:git-log[1] family of commands,
+..."?
+
+> diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+> index 84022f99d76..02a3495986a 100644
+> --- a/Documentation/git-notes.txt
+> +++ b/Documentation/git-notes.txt
+> @@ -33,34 +33,34 @@ ENVIRONMENT sections below.  If this ref does not exist, it will be
+>  quietly created when it is first needed to store a note.
+>  
+>  A typical use of notes is to supplement a commit message without
+> -changing the commit itself. Notes can be shown by 'git log' along with
+> +changing the commit itself. Notes can be shown by `git log` along with
+>  the original commit message. To distinguish these notes from the
+>  message stored in the commit object, the notes are indented like the
+> -message, after an unindented line saying "Notes (<refname>):" (or
+> -"Notes:" for `refs/notes/commits`).
+> +message, after an unindented line saying "`Notes (<refname>):`" (or
+> +"`Notes:`" for `refs/notes/commits`).
+
+Curious. I'm not familiar with the modern best practices around where to
+apply what kind of quoting, so why is it "`foo`" here and not `"foo"` or
+`foo:`?
+
+Thanks!
+
+Patrick
