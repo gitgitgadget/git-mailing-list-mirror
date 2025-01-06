@@ -1,61 +1,61 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BF619E7EB
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 10:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D1E1DB52D
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 10:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736159846; cv=none; b=WVh5WCmtxCU1DsIzeLWfLXMAZ6+biGR8GqIdXpiEfDPAb++1Bc1WxzVhwXkirQqhvRT0KGjMbdqLx0o+QGrh+K28ZBC/2kE+5cap+VREK8nEWUb+M3/YFxwsC+Q6WXUQui4Xt6I84/m98ck3kCYoFNDEgpszFQ/GUQJDZk2K1hI=
+	t=1736159851; cv=none; b=OUyFg5vZ0uvLiHKmDEQYi9guGHSxVVBlsle+67aPmUz2q+MTUyAvkdQURVUORnEx9HOLciGC3phLVsSBeg1k9BerppXjrQfhsWZeS/FeqzlVyy5m86mKBnO0GfXgtTYxDQgYyxC0NlDNJWXYcC6JF1a6JzFdkWEj3VBSQ2wmSH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736159846; c=relaxed/simple;
-	bh=4bfKYyQL8jq4bXVdyRKu2xS4lnHSDoau7SMTXmhJwu0=;
+	s=arc-20240116; t=1736159851; c=relaxed/simple;
+	bh=g40B3DR0M0J2sP/tV3hKBzYJ6uc9cHlZCoD+3TYH/uA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKExaMwqoveEqcFrbKxnc/9pfQJ4ppcAxTEvhQOy4xP9hV33nnT8SrFGiSuTORoXiU7nhDfSvKNCAX5wuxPr/i5wI/6LbsWVlrDPG6l0q41fTPkFVrRUbsLcQzGeeemRMzOh8ZD+vEfmyS7d0fY88OOdLg4yuCKFwT5iwEP+vFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SoFontv5; arc=none smtp.client-ip=209.85.214.177
+	 MIME-Version; b=qSWTzWrf4A0AkLKBgt0EWycOlLmzSpJGES6ZItZYDk4E7uPxWVgCzBwRGChmcZwrpzGo/QgxMPZl19OrDa8njaPE80E7VTC96Zr8xzg9kyCVQiKOHpfoZNHl+5VqZ0Licifrx4CG6RqvpT+EexR/MT1g+iXDTd9WZR9DpXGfR/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kAmvAqfZ; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SoFontv5"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2161eb94cceso142388885ad.2
-        for <git@vger.kernel.org>; Mon, 06 Jan 2025 02:37:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kAmvAqfZ"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2162c0f6a39so210229995ad.0
+        for <git@vger.kernel.org>; Mon, 06 Jan 2025 02:37:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736159844; x=1736764644; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1736159847; x=1736764647; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5FHbSicMzoJx/HMYCpf0z6A+uZyIiYcJHEkn48h7deo=;
-        b=SoFontv5D6rTEuzcOXQMQSXwSeY4UEjyy2G2jJHI+g7zxG1SbxpuP+SbOTKRxkAPc2
-         Of4ukmXjtDnJjCkYYmW12/8uqSHrDsGe4udGCB9rNY0VzhNri5HrpqrgI5QtubB0Me/E
-         0PSi3HVgVgJ1711H6kzNCYMdNF3JRBnvNbspNDEsJvY/umom4wNVCCKZK85/trcpcPah
-         sA+/m47RZqN/d70VgXqJ1Yz6kIlghU8wLE3y5SOBsFc4QVcZAURk8uR+W/5Rikh/Pw4h
-         hxQbDoZ9db2rXsltiYXAcvWd2RgCAGCUltupGreQ7J5l0Khqm2qFYga4V5KgZB/2NCoY
-         bJ6Q==
+        bh=Q9vbB+06M/1oU/3N4LcGfrVa7O23n4wo+0GDEC8nRgE=;
+        b=kAmvAqfZLipU8gcTD4pArRUD9ZpsYuEOYItYuJVRe02W/j4DlA5Hkyhihn01ie5JlL
+         +MgQ2fiPMEaVTrdVPVX8WsM/PRN3KUGlIomxrFJ2H7UV3iN0vWugmh7WBp/PJk0rA2pk
+         bJ5RTWWw2u+DrancpQ9ztRHesByDXfXE2aC6BjkqkbgvrH1zrAeCjgWe+kAROep+SDNr
+         tO6+Ys6r5H40zn/YO5zFC7kqyx1YLADnPmdWcy3M1rSqS9MiKB/YFZyjjuMmIw+nAwDk
+         JbX3agOlC8GKuE0up0ahyo3RpUvzz6obYwPdsNyUB3DWTI9Pfx/2VV7Lee3uFX91afph
+         aVQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736159844; x=1736764644;
+        d=1e100.net; s=20230601; t=1736159847; x=1736764647;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5FHbSicMzoJx/HMYCpf0z6A+uZyIiYcJHEkn48h7deo=;
-        b=LmMlcfrPvlrvex8Nt79/d4IOF94aSPiOuGB5negJK9B8FtvLQXJQgBtOgd1PmBNmgY
-         WxsamHPGQ6EeTJCTaX0+AVz6Cp3EvigCVA2YKn9zgQfgdRuWCX5jsicpPeRuMiuvo4my
-         Wb0m221zYRgRfo9EzrJJhRofpHtgAPUKLNUIbGW4xBBxN+sq4w0z0qo/1rgSyEzwa/Et
-         EZeVRCZdzzQxGMZn2XdYRcSAEH71VVFLFAw9Z+W36ilUo+dQxE9IqLX8WZGboml45pdJ
-         w/NVQ1XGIV/Ex2cu7BAM7u7Tw/mttptlRZp/pzA6P07gQ3MYS4LKmk6cQ0LZy584UP1T
-         P19w==
-X-Gm-Message-State: AOJu0Yw5QjpgY4Xg1CW4rbsezesZLloQrwcCRTqUI5Whtnhfb0j3iES9
-	TQkQW8VA660Uw50l4vbXJn2sPqGImLk3zfZegCFWUlVX1kw+DZsh2JeW8kRrwdg=
-X-Gm-Gg: ASbGnctJ8OkY4GZB/+j4xHW37hxn6EhZbt+X/Tl0N0pRseCEYkGhnOPwDu/7RkoeZtY
-	McK5NwFE9v1XICAf50qV5Cw0t0JdZH2aq4mZiyr73BGfj7pGzbLs9lEHDkAcL+s8oS5UnCb6xGs
-	WXdDfH5zuTOr+ogq5i5Ije+9BAFqwziHq16W0BVHonE6QVfTmqkwInXIjBXIPFpCNpboYKJbNe6
-	fLnxMoKAd1Zg854fmgI5TuXuTwIdwZO9RaNvtXcjMQaGqSiPqaIvswUShRfjqcplNj64GWN7e+8
-	i/d14g==
-X-Google-Smtp-Source: AGHT+IE/+KETGJTjEcn65cAgq3H7CQ/jTlbHG3fXeU0VrejXUkT+I9YVlRDubQlsnn5lwiZSziiSIA==
-X-Received: by 2002:a17:903:41c3:b0:216:69ca:773b with SMTP id d9443c01a7336-219e6e8c3d6mr871440215ad.5.1736159843678;
-        Mon, 06 Jan 2025 02:37:23 -0800 (PST)
+        bh=Q9vbB+06M/1oU/3N4LcGfrVa7O23n4wo+0GDEC8nRgE=;
+        b=t5xyKJYl0i7vfG/oJWeEpvVhdD291MZaj4eITezfe3nVJqBQp0Nys1yWZeIjWNdNrG
+         9lRIbveZaM7e8C6DJGFq/9IJ4Iwii5cnIr3vse66zxk9iUGDuIxGBss6u8q+LTvYqT+A
+         vL8p3nW9uOudFdUTI0vffyDbAM1yCKakvZzTkBQNsqHcD4DuI5Gv59EBBxq6jmmKOGxG
+         h5+538NAkyZo8KDphPqvfYUxkuwNLfvCSIhO8l3FFwY2+iS9fzQm3tyrZK3PkiM0HY98
+         CgcxbD+A/hlTl0uRsfBlIwjO1qZZyCUXfY6DQxu6xVqsMWveFEl9a64gJTsnOLeHLitP
+         Eftg==
+X-Gm-Message-State: AOJu0YyDlASt/Fd6gafaNxZ0wyqysHxk4cJf9iyHkd59G2Wfip21mamK
+	DkS461xZNkEJzP0A0AfVIMYCiaYga77vk+x3YXuYR0BqrdXNPcp7w/meSj0+v+k=
+X-Gm-Gg: ASbGncsZ4T5Mud5jjxiyk5sYc1akOvXU2FGpD0nrIa1Dbj7zQPSUpbsSJtfav3VtWSQ
+	tunt2K6zi0rhgIWx01BqcjcKEraS51qFXFqmQU1NqL7zMrQURmyaGQCHt3H1ai99uSiHUlmAu9b
+	JDwH47vNtXFvIBpo6gOKK7L18aB+b4kUuCb0JeMVazyI4roCC5rpJtmxJpPDi2FDKFehA8RvxyH
+	rS1UBmspPiTsCNrunPEf8Bs1EFjFVY31zR6TFtmcCIHbYL95DvLkqlFjFaiP/CIdOIxqK+XI2cx
+	D/Q3BA==
+X-Google-Smtp-Source: AGHT+IE/lJoc8y3ywZ9VuAqViR4+JULfiESbGeSOVFWDX+kXRop/KiGOhiiIHoP3/hIbUd7GI9HRjw==
+X-Received: by 2002:a05:6a20:3d86:b0:1e1:fbab:1f18 with SMTP id adf61e73a8af0-1e5c7002694mr97216553637.23.1736159847079;
+        Mon, 06 Jan 2025 02:37:27 -0800 (PST)
 Received: from archlinux.plaksha.edu.in ([202.164.41.66])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842b85f00f9sm28774281a12.43.2025.01.06.02.37.20
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842b85f00f9sm28774281a12.43.2025.01.06.02.37.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Jan 2025 02:37:23 -0800 (PST)
+        Mon, 06 Jan 2025 02:37:26 -0800 (PST)
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 To: git@vger.kernel.org,
 	christian.couder@gmail.com
@@ -66,9 +66,9 @@ Cc: gitster@pobox.com,
 	me@ttaylorr.com,
 	phillip.wood@dunelm.org.uk,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH 1/4] version: refactor redact_non_printables()
-Date: Mon,  6 Jan 2025 16:00:49 +0530
-Message-ID: <20250106103713.1452035-2-usmanakinyemi202@gmail.com>
+Subject: [PATCH 2/4] version: refactor get_uname_info()
+Date: Mon,  6 Jan 2025 16:00:50 +0530
+Message-ID: <20250106103713.1452035-3-usmanakinyemi202@gmail.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
 References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
@@ -80,68 +80,114 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The git_user_agent_sanitized() function performs some sanitizing to
-avoid special characters being sent over the line and possibly messing
-up with the protocol or with the parsing on the other side.
+Some code from "builtin/bugreport.c" uses uname(2) to get system
+information.
 
-Let's extract this sanitizing into a new redact_non_printables() function,
-as we will want to reuse it in a following patch.
+Let's refactor this code into a new get_uname_info() function, so
+that we can reuse it in a following commit.
 
-For now the new redact_non_printables() function is still static as
-it's only needed locally.
-
-While at it, let's also make a few small improvements:
-  - use 'size_t' for 'i' instead of 'int',
-  - move the declaration of 'i' inside the 'for ( ... )',
-  - use strbuf_detach() to explicitly detach the string contained by
-    the 'buf' strbuf.
+We may need to refactor this function in the future if an
+`osVersion.format` config option is added, but for now we only
+need it to accept a "full" flag that makes it switch between providing
+full OS information and providing only the OS name. The mode
+providing only the OS name is needed in a following commit.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 ---
- version.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ builtin/bugreport.c | 13 ++-----------
+ version.c           | 23 +++++++++++++++++++++++
+ version.h           |  7 +++++++
+ 3 files changed, 32 insertions(+), 11 deletions(-)
 
+diff --git a/builtin/bugreport.c b/builtin/bugreport.c
+index 7c2df035c9..e3288a86c8 100644
+--- a/builtin/bugreport.c
++++ b/builtin/bugreport.c
+@@ -12,10 +12,10 @@
+ #include "diagnose.h"
+ #include "object-file.h"
+ #include "setup.h"
++#include "version.h"
+ 
+ static void get_system_info(struct strbuf *sys_info)
+ {
+-	struct utsname uname_info;
+ 	char *shell = NULL;
+ 
+ 	/* get git version from native cmd */
+@@ -24,16 +24,7 @@ static void get_system_info(struct strbuf *sys_info)
+ 
+ 	/* system call for other version info */
+ 	strbuf_addstr(sys_info, "uname: ");
+-	if (uname(&uname_info))
+-		strbuf_addf(sys_info, _("uname() failed with error '%s' (%d)\n"),
+-			    strerror(errno),
+-			    errno);
+-	else
+-		strbuf_addf(sys_info, "%s %s %s %s\n",
+-			    uname_info.sysname,
+-			    uname_info.release,
+-			    uname_info.version,
+-			    uname_info.machine);
++	get_uname_info(sys_info, 1);
+ 
+ 	strbuf_addstr(sys_info, _("compiler info: "));
+ 	get_compiler_info(sys_info);
 diff --git a/version.c b/version.c
-index 4d763ab48d..78f025c808 100644
+index 78f025c808..44ffc4dd57 100644
 --- a/version.c
 +++ b/version.c
-@@ -6,6 +6,20 @@
+@@ -2,6 +2,7 @@
+ #include "version.h"
+ #include "version-def.h"
+ #include "strbuf.h"
++#include "gettext.h"
+ 
  const char git_version_string[] = GIT_VERSION;
  const char git_built_from_commit_string[] = GIT_BUILT_FROM_COMMIT;
- 
-+/*
-+ * Trim and replace each character with ascii code below 32 or above
-+ * 127 (included) using a dot '.' character.
-+ * TODO: ensure consecutive non-printable characters are only replaced once
-+*/
-+static void redact_non_printables(struct strbuf *buf)
-+{
-+	strbuf_trim(buf);
-+	for (size_t i = 0; i < buf->len; i++) {
-+		if (buf->buf[i] <= 32 || buf->buf[i] >= 127)
-+			buf->buf[i] = '.';
-+	}
-+}
-+
- const char *git_user_agent(void)
- {
- 	static const char *agent = NULL;
-@@ -27,12 +41,8 @@ const char *git_user_agent_sanitized(void)
- 		struct strbuf buf = STRBUF_INIT;
- 
- 		strbuf_addstr(&buf, git_user_agent());
--		strbuf_trim(&buf);
--		for (size_t i = 0; i < buf.len; i++) {
--			if (buf.buf[i] <= 32 || buf.buf[i] >= 127)
--				buf.buf[i] = '.';
--		}
--		agent = buf.buf;
-+		redact_non_printables(&buf);
-+		agent = strbuf_detach(&buf, NULL);
- 	}
+@@ -47,3 +48,25 @@ const char *git_user_agent_sanitized(void)
  
  	return agent;
+ }
++
++int get_uname_info(struct strbuf *buf, unsigned int full)
++{
++	struct utsname uname_info;
++
++	if (uname(&uname_info)) {
++		strbuf_addf(buf, _("uname() failed with error '%s' (%d)\n"),
++			    strerror(errno),
++			    errno);
++		return -1;
++	}
++
++	if (full)
++		strbuf_addf(buf, "%s %s %s %s\n",
++			    uname_info.sysname,
++			    uname_info.release,
++			    uname_info.version,
++			    uname_info.machine);
++	else
++		strbuf_addf(buf, "%s\n", uname_info.sysname);
++	return 0;
++}
+diff --git a/version.h b/version.h
+index 7c62e80577..5eb586c0bd 100644
+--- a/version.h
++++ b/version.h
+@@ -7,4 +7,11 @@ extern const char git_built_from_commit_string[];
+ const char *git_user_agent(void);
+ const char *git_user_agent_sanitized(void);
+ 
++/*
++  Try to get information about the system using uname(2).
++  Return -1 and put an error message into 'buf' in case of uname()
++  error. Return 0 and put uname info into 'buf' otherwise.
++*/
++int get_uname_info(struct strbuf *buf, unsigned int full);
++
+ #endif /* VERSION_H */
 -- 
 2.47.1
 
