@@ -1,237 +1,145 @@
-Received: from mout3.freenet.de (mout3.freenet.de [195.4.92.93])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550F41DFD86
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 19:14:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.4.92.93
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7F4BA34
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 19:18:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736190892; cv=none; b=Gme1IybTpLqvEeAzePpcVwEZMTmCnKQHR8jfTc/pe3J3rzi5QGIbKAOe0H3Pj0Lcl33XXDImKG89bd8bXvxV5PlkmzlopeDN9ycWbVk+WE6sRxj8PdUULOTnqk57OpfTOhbhA3rGCkW7uS9lO1nu7mZU7RTg91mXHgJTYWTC5n0=
+	t=1736191082; cv=none; b=ZB2l3lRt5UBLDHFqxIplTkXlHx3lZtIEjIGwbBCAa5zU/RXW1JiUxjckSTmONd9837IFvRiQHWGajxyC3aBRq8Qr3sYHA/AdycaTMtwB0bpN+La2Mmje2eSSh8Le0DBOe90sgM3Kig0uE31nPZ7Plr2WW70eeGAY4g1IzMh+ml8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736190892; c=relaxed/simple;
-	bh=Op9hqSTZZikKovPTRcylU82Ok8bO56jXbjMCDlBsbGY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=E6BwFMm+K3+uVRAGJtS4PysDDekKwgmp2Z5cFiktkrq1MlhRlOsIdvekI3+6s8DL4dInaK5CR09eG5nKHeKeTkBIrfyL0eSrCKuRDQaHIoxz7GrCyVgBrXSkHDjUmBuO3cKpBM7Bgk25h1SOuKUT2/h7zDBU68UNMcaiM+qvVWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de; spf=pass smtp.mailfrom=freenet.de; dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b=ZfpOskYB; arc=none smtp.client-ip=195.4.92.93
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
+	s=arc-20240116; t=1736191082; c=relaxed/simple;
+	bh=gEmthX74wcLo/n9U9B4ngejlmg2IAJQGbS4o6TDJHH8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mVNW/WMTm1U9e8M+7/rlfoDP2aPfs6gaFJk7Y6QpENGKFVxk6hjwVEckIvj4z8yXqmGhZmBSo5cP6Ty8G45njSrCVlwPKooLG8qSE/2fr8+dqzXErFxusIwHYUaQPg0/lTUiPSgNps05HjahON7dczeDJhfq7jQI9gxyltVrtDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=XRHKdC8d; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="ZfpOskYB"
-Received: from [195.4.92.126] (helo=sub7.freenet.de)
-	by mout3.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
-	id 1tUsTd-003JHf-C3; Mon, 06 Jan 2025 20:09:25 +0100
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
-	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
-	Reply-To:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=lPCNFJZgW0FH+3kf9a/EannA1s4Ditf/MyuSqODLip8=; b=ZfpOskYB1lsX8v3Xz9yecxI/SX
-	KcqT/v0ixD8/6mFeNStSK+K0XjIbgKijVQtsESgha2NPr5bsdnpHlI7PFu6S3BMle7HF1rsSEMLTs
-	G11UUr8t3fbfY2zrzH4FaiV/Cox577w77Su4UUdVSEF53Pla3XwfxpUtl2UtPK5LkJcDS9hKmr2oo
-	j0G5iD6TjnWPGQO/ChTy9xzrv4nu1eTAUeQv9XiPZVV0IoNrzAXaBNZRyR3EV7JeE6FW2ATkvUFGB
-	CJePco/NOcDLueXtXBIy4ZgfsbmNep9t0LtcfqkBcXAVbRe1ehjKzf1BA3X+5eWGqoaubVwk052Ow
-	2RbET9hw==;
-Received: from p200300e2e705fb00dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e705:fb00:dacb:8aff:fee0:ca63]:46380 helo=soren-pc.lan)
-	by sub7.freenet.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.94.2 #2)
-	id 1tUsTd-00Brik-0r; Mon, 06 Jan 2025 20:09:25 +0100
-From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	phillip.wood123@gmail.com,
-	ps@pks.im,
-	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
-Subject: [PATCHv2 3/4] apply.c : Fix type missmatch warings from msvc
-Date: Mon,  6 Jan 2025 20:08:54 +0100
-Message-Id: <20250106190855.3098-4-soekkle@freenet.de>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250106190855.3098-1-soekkle@freenet.de>
-References: <20250106190855.3098-1-soekkle@freenet.de>
-Reply-To: <xmqqfrm9t6up.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="XRHKdC8d"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e461015fbd4so14409864276.2
+        for <git@vger.kernel.org>; Mon, 06 Jan 2025 11:18:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1736191080; x=1736795880; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SqD3isIj04c1xUuNMd2Fp11payUkPZsBAzImsLB7NlA=;
+        b=XRHKdC8dqYtqGmQs7gUuznLLRA9lBNu+sO2AgBVS+DQRCKKgUCjWTvbYel6aFj5eyn
+         kW2uSCyXo6J/27OXuAFcSD6wl6DycZB64gbdgbIgbIpyobUHM9Oxe4fNe3mQQtTE9/lY
+         z6H9VKxuFoQa3umjnYG0ebJtgNfKgn6P7nhvfovvwNnBNBzrrFUaNexzvmhjVqinnDPH
+         uzy5x1jYnMJFA3IkvCEhYBcnxG492S7yO0lWy2RgyHLwGzBkBlPX4TLFD6jeQw48sTfj
+         /axJNq3vUuiwZomGPnJ0pAqg7PEAANvpDE+V2ws7QYhwtB32V+OfbujxLolMMjeNeaEw
+         BZHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736191080; x=1736795880;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SqD3isIj04c1xUuNMd2Fp11payUkPZsBAzImsLB7NlA=;
+        b=UEP0DiNJLTrMdoC8Vev/xYUQz4ZR57MobfpRPXx5PzVPVA83bPAmqociug86Sn5WWC
+         e/AgN3Au1iJqnvNUHyqwJMKEeR+3kJrfT8GUguGZWNjwr7lM8Qb0N8v9TQJhFvzRpsDp
+         4DCNkxD3LD3TGxYw7sA10e3PeTFXhRZ4tqGzHVaL/kpXKjs3WZSYIteIsjH8QwORr7Ig
+         kNsBX/VaqLfi1G11ilmkISgENyB14HS9l1knAV/SIrs0wFpl5ZrFmi8y3FKDMePWIP65
+         UnIi3bADREBlftT1chfdpikSImjf35ygYWRJ+VOKM/LbTUoE2Q5LRpMUBO5B3uoZMUgw
+         ePhg==
+X-Gm-Message-State: AOJu0YwUt6o3vygYLOj/ew/8xMbpXcL0n2/Zg/xC+j8L44PsRkcUDDnP
+	R5A/mo9uBNhzrBHqiIeJIGw3aLsEhBL9YwO2eNG2e3gcmroNwwD4EiU61hCUA54=
+X-Gm-Gg: ASbGnctasOO5NVkB+32CZYTZl1zMFij2NJTUWaQuB/yn4yNuvzCNjkl6deJUllFk8mg
+	f74P0KS1PuwQYAtXBTv9LAjttkTgWVRXqMW1BC91go36iE9CW9H7hlHsIb82lL83d/KkuBsFkUm
+	GSQQ87NDDSBrLG65pSEIFYfzRRnVxqmmKX1T0CUgUPOfN1IC1kw9LF0U0VXE3YsofKp3FF1qeXv
+	BbPhh9f7frvvzvSVpPe6wwbKxsS4oHMjc5jY6MuALANWZzmeQOB9kTn75m1BHLbhXVN3xbVrBpB
+	9aGC0Nug5Xa4Z6RQxTuv11f8l0ci
+X-Google-Smtp-Source: AGHT+IGbHEfiBZ5PY0HooyB0KGd2rJgEBp+C2HqMPhI6jq+u/jSH5QMsctJu7V20PLnpE8jKvje5DQ==
+X-Received: by 2002:a05:690c:9c0d:b0:6ef:81c0:5b61 with SMTP id 00721157ae682-6f3f8115166mr428992357b3.16.1736191079822;
+        Mon, 06 Jan 2025 11:17:59 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f3e743ff00sm85500947b3.32.2025.01.06.11.17.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jan 2025 11:17:59 -0800 (PST)
+Date: Mon, 6 Jan 2025 14:17:58 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 02/10] builtin/fast-import: fix segfault with unsafe SHA1
+Message-ID: <Z3wsZjAqbfI/EdVe@nand.local>
+References: <20241230-pks-meson-sha1-unsafe-v1-0-efb276e171f5@pks.im>
+ <20241230-pks-meson-sha1-unsafe-v1-2-efb276e171f5@pks.im>
+ <Z3LNVzw9UlS7SWqe@nand.local>
+ <Z3fhK1ACzJfVehM2@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-FN-MUUID: 1736190565C92DEE465CE7O
-X-Originated-At: 2003:e2:e705:fb00:dacb:8aff:fee0:ca63!46380
-X-Scan-TS: Mon, 06 Jan 2025 20:09:25 +0100
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z3fhK1ACzJfVehM2@pks.im>
 
-Fix compiler warings from msvc in date.c for value truncation from 64
-bit to 32 bit integers.
+On Fri, Jan 03, 2025 at 02:08:01PM +0100, Patrick Steinhardt wrote:
+> On Mon, Dec 30, 2024 at 12:22:34PM -0500, Taylor Blau wrote:
+> > On Mon, Dec 30, 2024 at 03:24:02PM +0100, Patrick Steinhardt wrote:
+> > > diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> > > index 1fa2929a01b7dfee52b653248bba802884f6be6a..0f86392761abbe6acb217fef7f4fe7c3ff5ac1fa 100644
+> > > --- a/builtin/fast-import.c
+> > > +++ b/builtin/fast-import.c
+> > > @@ -1106,7 +1106,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
+> > >  		|| (pack_size + PACK_SIZE_THRESHOLD + len) < pack_size)
+> > >  		cycle_packfile();
+> > >
+> > > -	the_hash_algo->init_fn(&checkpoint.ctx);
+> > > +	the_hash_algo->unsafe_init_fn(&checkpoint.ctx);
+> >
+> > This will obviously fix the issue at hand, but I don't think this is any
+> > less brittle than before. The hash function implementation here needs to
+> > agree with that used in the hashfile API. This change makes that
+> > happen, but only using side information that the hashfile API uses the
+> > unsafe variants.
+>
+> Yup, I only cared about fixing the segfault because we're close to the
+> v2.48 release. I agree that the overall state is still extremely brittle
+> right now.
+>
+> [snip]
+> > I think we should perhaps combine forces here. My ideal end-state is to
+> > have the unsafe_hash_algo() stuff land from my earlier series, then have
+> > these two fixes (adjusted to the new world order as above), and finally
+> > the Meson fixes after that.
+> >
+> > Does that seem like a plan to you? If so, I can put everything together
+> > and send it out (if you're OK with me forging your s-o-b).
+>
+> I think the ideal state would be if the hashing function used was stored
+> as part of `struct git_hash_ctx`. So the flow basically becomes for
+> example:
+>
+>     ```
+>     struct git_hash_ctx ctx;
+>     struct object_id oid;
+>
+>     git_hash_sha1_init(&ctx);
+>     git_hash_update(&ctx, data);
+>     git_hash_final_oid(&oid, &ctx);
+>     ```
+>
+> Note how the intermediate calls don't need to know which hash function
+> you used to initialize the `struct git_hash_ctx` -- the structure itself
+> should remember what it has been initilized with and do the right thing.
 
-Also switch from int to size_t for all variables with result of strlen()
-which cannot become negative.
+I'm not sure I'm following you here. In the stream_blob() function
+within fast-import, the problem isn't that we're switching hash
+functions mid-stream, but that we're initializing the hashfile_context
+structure with the wrong hash function to begin with.
 
-Signed-off-by: Sören Krecker <soekkle@freenet.de>
----
- apply.c | 37 +++++++++++++++++++------------------
- apply.h |  6 +++---
- 2 files changed, 22 insertions(+), 21 deletions(-)
+You snipped it out of your reply, but I think that my suggestion to do:
 
-diff --git a/apply.c b/apply.c
-index 4a7b6120ac..b896889505 100644
---- a/apply.c
-+++ b/apply.c
-@@ -414,9 +414,9 @@ static int read_patch_file(struct strbuf *sb, int fd)
- 	return 0;
- }
- 
--static unsigned long linelen(const char *buffer, unsigned long size)
-+static size_t linelen(const char *buffer, size_t size)
- {
--	unsigned long len = 0;
-+	size_t len = 0;
- 	while (size--) {
- 		len++;
- 		if (*buffer++ == '\n')
-@@ -688,7 +688,7 @@ static char *find_name_common(struct strbuf *root,
- 	 * or "file~").
- 	 */
- 	if (def) {
--		int deflen = strlen(def);
-+		size_t deflen = strlen(def);
- 		if (deflen < len && !strncmp(start, def, deflen))
- 			return squash_slash(xstrdup(def));
- 	}
-@@ -1088,7 +1088,7 @@ static int gitdiff_index(struct gitdiff_data *state,
- 	 */
- 	const char *ptr, *eol;
- 	int len;
--	const unsigned hexsz = the_hash_algo->hexsz;
-+	const size_t hexsz = the_hash_algo->hexsz;
- 
- 	ptr = strchr(line, '.');
- 	if (!ptr || ptr[1] != '.' || hexsz < ptr - line)
-@@ -1131,7 +1131,7 @@ static int gitdiff_unrecognized(struct gitdiff_data *state UNUSED,
-  */
- static const char *skip_tree_prefix(int p_value,
- 				    const char *line,
--				    int llen)
-+				    size_t llen)
- {
- 	int nslash;
- 	int i;
-@@ -1158,7 +1158,7 @@ static const char *skip_tree_prefix(int p_value,
-  */
- static char *git_header_name(int p_value,
- 			     const char *line,
--			     int llen)
-+			     ssize_t llen)
- {
- 	const char *name;
- 	const char *second = NULL;
-@@ -1313,15 +1313,15 @@ static int check_header_line(int linenr, struct patch *patch)
- 	return 0;
- }
- 
--int parse_git_diff_header(struct strbuf *root,
-+size_t parse_git_diff_header(struct strbuf *root,
- 			  int *linenr,
- 			  int p_value,
- 			  const char *line,
--			  int len,
--			  unsigned int size,
-+			  size_t len,
-+			  size_t size,
- 			  struct patch *patch)
- {
--	unsigned long offset;
-+	size_t offset;
- 	struct gitdiff_data parse_hdr_state;
- 
- 	/* A git diff has explicit new/delete information, so we don't guess */
-@@ -1378,7 +1378,7 @@ int parse_git_diff_header(struct strbuf *root,
- 			break;
- 		for (i = 0; i < ARRAY_SIZE(optable); i++) {
- 			const struct opentry *p = optable + i;
--			int oplen = strlen(p->str);
-+			size_t oplen = strlen(p->str);
- 			int res;
- 			if (len < oplen || memcmp(p->str, line, oplen))
- 				continue;
-@@ -1430,7 +1430,8 @@ static int parse_num(const char *line, unsigned long *p)
- static int parse_range(const char *line, int len, int offset, const char *expect,
- 		       unsigned long *p1, unsigned long *p2)
- {
--	int digits, ex;
-+	int digits;
-+	size_t ex;
- 
- 	if (offset < 0 || offset >= len)
- 		return -1;
-@@ -1465,7 +1466,7 @@ static int parse_range(const char *line, int len, int offset, const char *expect
- 	return offset + ex;
- }
- 
--static void recount_diff(const char *line, int size, struct fragment *fragment)
-+static void recount_diff(const char *line, size_t size, struct fragment *fragment)
- {
- 	int oldlines = 0, newlines = 0, ret = 0;
- 
-@@ -1475,7 +1476,7 @@ static void recount_diff(const char *line, int size, struct fragment *fragment)
- 	}
- 
- 	for (;;) {
--		int len = linelen(line, size);
-+		size_t len = linelen(line, size);
- 		size -= len;
- 		line += len;
- 
-@@ -1543,11 +1544,11 @@ static int parse_fragment_header(const char *line, int len, struct fragment *fra
-  */
- static int find_header(struct apply_state *state,
- 		       const char *line,
--		       unsigned long size,
-+		       size_t size,
- 		       int *hdrsize,
- 		       struct patch *patch)
- {
--	unsigned long offset, len;
-+	size_t offset, len;
- 
- 	patch->is_toplevel_relative = 0;
- 	patch->is_rename = patch->is_copy = 0;
-@@ -2132,7 +2133,7 @@ static int use_patch(struct apply_state *state, struct patch *p)
-  *   the number of bytes consumed otherwise,
-  *     so that the caller can call us again for the next patch.
-  */
--static int parse_chunk(struct apply_state *state, char *buffer, unsigned long size, struct patch *patch)
-+static int parse_chunk(struct apply_state *state, char *buffer, size_t size, struct patch *patch)
- {
- 	int hdrsize, patchsize;
- 	int offset = find_header(state, buffer, size, &hdrsize, patch);
-@@ -2491,7 +2492,7 @@ static int match_fragment(struct apply_state *state,
- 	struct strbuf fixed = STRBUF_INIT;
- 	char *fixed_buf;
- 	size_t fixed_len;
--	int preimage_limit;
-+	ssize_t preimage_limit;
- 	int ret;
- 
- 	if (preimage->line_nr + current_lno <= img->line_nr) {
-diff --git a/apply.h b/apply.h
-index 90e887ec0e..bb01ce7dbc 100644
---- a/apply.h
-+++ b/apply.h
-@@ -166,12 +166,12 @@ int check_apply_state(struct apply_state *state, int force_apply);
-  *
-  * Returns -1 on failure, the length of the parsed header otherwise.
-  */
--int parse_git_diff_header(struct strbuf *root,
-+size_t parse_git_diff_header(struct strbuf *root,
- 			  int *linenr,
- 			  int p_value,
- 			  const char *line,
--			  int len,
--			  unsigned int size,
-+			  size_t len,
-+			  size_t size,
- 			  struct patch *patch);
- 
- void release_patch(struct patch *patch);
--- 
-2.39.5
+    pack_file->algop->init_fn(&checkpoint.ctx);
 
+would harden us against the broken behavior we're seeing here.
+
+As a separate defense-in-depth measure, we could teach functions from
+the hashfile API which deal with hashfile_checkpoint structure to ensure
+that the hashfile and its checkpoint both use the same algorithm (by
+adding a hash_algo field to the hashfile_checkpoint structure).
+
+Thanks,
+Taylor
