@@ -1,189 +1,154 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211F91D90BE
-	for <git@vger.kernel.org>; Mon,  6 Jan 2025 09:24:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7AD1D7E4E
+	for <git@vger.kernel.org>; Mon,  6 Jan 2025 10:37:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736155477; cv=none; b=MNzvpE0ooK9w9VGcE7DkzSdddIgcfqFWGkUsm4SZmBvf4IkdtjJWoMe0Ma7JufXReGiOswXBHrluX+QJS8BFJGBMKjgSCaL8MDKIbHXFFsnN8YnzRY9vv+P6iU7hLZp6p9CGn6ZYcvR0c7CYbsVFJPyNMt8cmszswBE/3cq47b0=
+	t=1736159842; cv=none; b=mZndipeRvgCqpWhPgdtlCaEZsW/5L2M3FBc0plFBwmr//m1DaB+rIBdeN/6IIz8PhYe5/12i9QTByLHYII5bNXo7YFyesXsRG+hO5EpMQyUjQnX6uuPO5nbU9KD3SkjOJn+mUHQ5wINI7xA8vqbPmfEJjm+7GUs23ev3/7iP5U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736155477; c=relaxed/simple;
-	bh=Rk2OOghvesikhTatPL7PtzcW68K2fL2TN5eP2rIZy/s=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ltdMD/gV9thwlKcYQTgwQf8BGOhlPmLamGFlIDK7eWxR+fbe8sqC4gxX5EeogdTCl78kZTSPQFdH4tThuvRyn9F/4HGlYVdnuTK4rE6G+3Xj6T1Sy3LgJf9AWq24oh1a5pa7CwwSdclt1B6tS4neKCpBsXcNiU7fAOAS4zO22Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aQdU/Qmk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lOnwziNa; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736159842; c=relaxed/simple;
+	bh=ADQkEbt3IexvcxUoJzIysT6Te7T2IKkh/IHH64vU3tU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=dNFGQXm9KuDCr90rvSY9MJync7UOfgrIunCOnux4Fj6WiPRItPLJ+s/MXvUhqS8ttHI+9b1PVHbl4n94H18GitepaSW88IDcYQOeDfHGaQSmjEUdqCEVxIPFd1wVIpy9bCQa2SXTyClL6gSTACUHAwN1zNyJQb+IWOMWCruskSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i/CABpSp; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aQdU/Qmk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lOnwziNa"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id F03301380169;
-	Mon,  6 Jan 2025 04:24:33 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Mon, 06 Jan 2025 04:24:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736155473;
-	 x=1736241873; bh=N7KFPpnrFwKQWE6KRNGekgnx8PE2LUtmdvOwYkwnNJY=; b=
-	aQdU/QmkDh06mLEIuqJ84KfMFijfLYk/+ho/gKrB0NaX4UfyqLACBRnWq3ZdbPBh
-	W4tNR7QFnMtprP3lAuairdQx1++WUakcvqUA8yDi8r5bq1F3vYXZImM6FCQEwwqS
-	bHXnOQKXlELUAe+JReNTsL+/RZKu/xxnAlqccP+s8IE10q5sWC/4BOkkCoM62Pl6
-	A2ApdYRUlSqOW11y0snG7UzYIKuZqbLK1KtBnjJ8kaB4SMdd4pLdaPARFoY/GkXe
-	ObK2V9SraLmLBq9VtMbtafia+1wYWlVMoMMMg9bcFQB3pfvipGjU23E6Z5xJGulW
-	YoX27mOPuC/TqyaENz4ieg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736155473; x=
-	1736241873; bh=N7KFPpnrFwKQWE6KRNGekgnx8PE2LUtmdvOwYkwnNJY=; b=l
-	OnwziNaHPjBSWcS/o8pmJ9IFIq4LVLgw9QV/W9y8CkkWg37/l3AmysQfH01fJPwU
-	GUx9LgAqpl8wqrDU8XXHjvdRVGZmpwSNYD2iIcXlFuOHKSNaVEbnTZHAEkQORo8A
-	b0YwztleBUVsXsOY30z0DgF2o2c3WihZx/Rc0E6Z+OX88Z4EYxCSmwLbJ7uGhYyN
-	yFWVKxWLD7jRGGytOvEzaz5K37X8mH77XMAe9tBWZHx55Hzq/+bMTU3EoMbLAxFu
-	jTWfMfffDqASH/guhkGXgGHD0OeJUuTN9gNI6mKbkZkpB62I4OlQgoUk91Kky7+i
-	oBp3iOlOkbDowoLhFKqQQ==
-X-ME-Sender: <xms:UaF7Z7LMH8QRb2ahi96yIqHXQd-gYqkbm7TXpFxgfqcmZ_bgRAcA1A>
-    <xme:UaF7Z_IvgGvtWXRBKcduChY-LkirFXesFqT0d-e4AUito37k-_-REvKYT9laIekW_
-    xsUM2gIwtb8fw8I4A>
-X-ME-Received: <xmr:UaF7ZzsuIPepWgYys6qsdmkIO8aDbF7HIwXinCuUMJFpNg0rRN4KeeHkO0NYSE1diB15DyKdAXCsA6Rk290kMHAGdz967Foj9SYgvZ4A42j-Yg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegtddgtddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
-    gtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
-    dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:UaF7Z0YdhC-y6NV79OUmy_lHzqDZ4D2umDIUK39HOI5EPakYx7sz2Q>
-    <xmx:UaF7ZyYfWdpjp1shV4u0Hkef4sK-oyY69Uxx5nC37k7b8hR_V9MddA>
-    <xmx:UaF7Z4AD3TWeP_ZFWeTagXOYGKZprK_Mz6j5JvmC4EGr4GiYFOSmhA>
-    <xmx:UaF7ZwYP3Sy5hvZNlYKX9JqhPfaDA7vPJIabRzLX8t0VFpXADkMbSA>
-    <xmx:UaF7ZyFZ0h135zjkspTNcofNWUrpxz-AjTvlN6NAM29RNw3OS4BbkcdM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jan 2025 04:24:33 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c55cad0a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 6 Jan 2025 09:24:30 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 06 Jan 2025 10:24:27 +0100
-Subject: [PATCH v2 3/3] object-file: retry linking file into place when
- occluding file vanishes
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i/CABpSp"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2163dc5155fso198849215ad.0
+        for <git@vger.kernel.org>; Mon, 06 Jan 2025 02:37:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736159840; x=1736764640; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lM33Dncrfq9HXuu3cQn4eKnoLmh0+A5MlcXVQ7yzIMU=;
+        b=i/CABpSpW7gmhjgtQ87jmkopHxkYBt7LlxfUTy3BF5X5xH1QagdZTxYM7/De2RebDj
+         EArVbt5TTDkiLmu086FYtPUQRX8dj04pY73rk0ptbg7RNJ8wYezOuaaalYnuSm/6PG7g
+         MZUZ08Tf1FypjIbBZiDNUEdHeMu7dDRrLxZCLr1AKh9tg/ZNBRK16X2YT/A7dJJFMPwv
+         8GVaQtHG0mK0zH4wBBRn07cys7eIPMOweYRfOQHOutsV5zbG2REfxOe6Av68zHPbgLEn
+         6XcWl5O+HviI2b6GBKX4xfJw4FL6Zkkc0tudyqz8wBBeUC7Ua69YlK0zFbcdJJP38OLB
+         Mehw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736159840; x=1736764640;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lM33Dncrfq9HXuu3cQn4eKnoLmh0+A5MlcXVQ7yzIMU=;
+        b=RdFcpAjeuymdH9bBLFe4FzxnKgC9KG4dsdok/6uqPQ2mpI70I/tG+RoaKVGdgVqJOM
+         G8Pq8l9ICvs4wEoGyx+MgWzot7Z5g9Jve9v1pw7S75vwAG+6uo23Q9sr+XdnI2Et9ZWT
+         9qJE4MdCi9uHdiTGGup0lCqBeSCj4yVM8QbKWW+uU9o1GYFyExIi08b3BnC64DsWIKau
+         OvTlrvbP/TSBelyhpQeTrucTfhrwAPvwtg7Hn1yh2lpRMNz0I93QUOwcqHblilIny/w2
+         dYwDU3RGnuBOullth33bVfLBCawpBy0Qfo5MN8wQmnTZp0eBvPVK++ELnNTjgCWL4RI8
+         RAsw==
+X-Gm-Message-State: AOJu0YzxPNt/z8+hqmvOqMAgwmM6yJfKJEkzan3frdflTya56bNV7sNF
+	X1ad/AiTvmlRAew1AvM2fBc2dBcqIDjbsXID6MDALeYh3dTvAoK8S+ysGh13OIc=
+X-Gm-Gg: ASbGncuDSovUDZYzwan1KRMoH2tjXzkmBqTfKHBRlUIaX3jb0/vVpziVBOF+K16OLSk
+	OHPd/KBptHxt9orYpm/yGD5rDEgyDzdad2MZfG30+wvjHaOG46ebUNX93cmVYwv+3WS4ct7/Hxq
+	KdMSFp7ioAhbiwdq25q5h/MtzcwXv4FoKo/MO1u3zlhvnFxG5wG03MpOet22MYfI1SxP1dfUiZ1
+	IhhgIoo62Or9ikega5OolUnDDMP+vEuZyho9oeIG15bo+qm2R6Nrq5kOCkz57apakB4c7K1XCCm
+	+KI9PQ==
+X-Google-Smtp-Source: AGHT+IE1yA6JPRhcres8yC/Raldtj6ahY6KH4K07TPrV0GLDa+XIxRiI03gIA9fvf3+CC5HEIpTSRA==
+X-Received: by 2002:a05:6a00:a88:b0:72a:ae66:3040 with SMTP id d2e1a72fcca58-72abdd5ef82mr86469706b3a.4.1736159840010;
+        Mon, 06 Jan 2025 02:37:20 -0800 (PST)
+Received: from archlinux.plaksha.edu.in ([202.164.41.66])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-842b85f00f9sm28774281a12.43.2025.01.06.02.37.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Jan 2025 02:37:19 -0800 (PST)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: git@vger.kernel.org,
+	christian.couder@gmail.com
+Cc: gitster@pobox.com,
+	ps@pks.im,
+	johncai86@gmail.com,
+	Johannes.Schindelin@gmx.de,
+	me@ttaylorr.com,
+	phillip.wood@dunelm.org.uk
+Subject: [PATCH 0/4][Outreachy] Introduce os-version Capability with Configurable Options
+Date: Mon,  6 Jan 2025 16:00:48 +0530
+Message-ID: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250106-b4-pks-object-file-racy-collision-check-v2-3-8b3984ecbb18@pks.im>
-References: <20250106-b4-pks-object-file-racy-collision-check-v2-0-8b3984ecbb18@pks.im>
-In-Reply-To: <20250106-b4-pks-object-file-racy-collision-check-v2-0-8b3984ecbb18@pks.im>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+Content-Transfer-Encoding: 8bit
 
-Prior to 0ad3d65652 (object-file: fix race in object collision check,
-2024-12-30), callers could expect that a successful return from
-`finalize_object_file()` means that either the file was moved into
-place, or the identical bytes were already present. If neither of those
-happens, we'd return an error.
+For debugging, statistical analysis, and security purposes, it can
+be valuable for Git servers to know the operating system the clients
+are using.
 
-Since that commit, if the destination file disappears between our
-link(3p) call and the collision check, we'd return success without
-actually checking the contents, and without retrying the link. This
-solves the common case that the files were indeed the same, but it means
-that we may corrupt the repository if they weren't (this implies a hash
-collision, but the whole point of this function is protecting against
-hash collisions).
+For example:
+- A server noticing that a client is using an old Git version with
+security issues on one platform, like macOS, could verify if the
+user is indeed running macOS before sending a message to upgrade."
+- Similarly, a server identifying a client that could benefit from
+an upgrade (e.g., for performance reasons) could better customize the
+message it sends to nudge the client to upgrade.
 
-We can't be pessimistic and assume they're different; that hurts the
-common case that the mentioned commit was trying to fix. But after
-seeing that the destination file went away, we can retry linking again.
-Adapt the code to do so when we see that the destination file has racily
-vanished. This should generally succeed as we have just observed that
-the destination file does not exist anymore, except in the very unlikely
-event that it gets recreated by another concurrent process again.
+So let's add a new 'os-version' capability to the v2 protocol, in the
+same way as the existing 'agent' capability that lets clients and servers
+exchange the Git version they are running.
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- object-file.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+By default this sends similar info as `git bugreport` is already sending,
+which uses uname(2). The difference is that it is sanitized in the same
+way as the Git version sent by the 'agent' capability is sanitized
+(by replacing characters having an ascii code less than 32 or more
+than 127 with '.'). Also, it only sends the result of `uname -s` i.e
+just only the operating system name (e.g "Linux").
 
-diff --git a/object-file.c b/object-file.c
-index acfda5e303659195109c94f5b54b8a081fe92c59..aeca61b8ae3aadecef1ce11306b38e7368af829f 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1970,6 +1970,8 @@ static void write_object_file_prepare_literally(const struct git_hash_algo *algo
- 	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
- }
- 
-+#define CHECK_COLLISION_DEST_VANISHED -2
-+
- static int check_collision(const char *source, const char *dest)
- {
- 	char buf_source[4096], buf_dest[4096];
-@@ -1986,6 +1988,8 @@ static int check_collision(const char *source, const char *dest)
- 	if (fd_dest < 0) {
- 		if (errno != ENOENT)
- 			ret = error_errno(_("unable to open %s"), dest);
-+		else
-+			ret = CHECK_COLLISION_DEST_VANISHED;
- 		goto out;
- 	}
- 
-@@ -2033,8 +2037,11 @@ int finalize_object_file(const char *tmpfile, const char *filename)
- int finalize_object_file_flags(const char *tmpfile, const char *filename,
- 			       enum finalize_object_file_flags flags)
- {
--	struct stat st;
--	int ret = 0;
-+	unsigned retries = 0;
-+	int ret;
-+
-+retry:
-+	ret = 0;
- 
- 	if (object_creation_mode == OBJECT_CREATION_USES_RENAMES)
- 		goto try_rename;
-@@ -2055,6 +2062,8 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
- 	 * left to unlink.
- 	 */
- 	if (ret && ret != EEXIST) {
-+		struct stat st;
-+
- 	try_rename:
- 		if (!stat(filename, &st))
- 			ret = EEXIST;
-@@ -2070,9 +2079,17 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
- 			errno = saved_errno;
- 			return error_errno(_("unable to write file %s"), filename);
- 		}
--		if (!(flags & FOF_SKIP_COLLISION_CHECK) &&
--		    check_collision(tmpfile, filename))
-+		if (!(flags & FOF_SKIP_COLLISION_CHECK)) {
-+			ret = check_collision(tmpfile, filename);
-+			if (ret == CHECK_COLLISION_DEST_VANISHED) {
-+				if (retries++ > 5)
-+					return error(_("unable to write repeatedly vanishing file %s"),
-+						     filename);
-+				goto retry;
-+			}
-+			else if (ret)
- 				return -1;
-+		}
- 		unlink_or_warn(tmpfile);
- 	}
- 
+Due to privacy issues and concerns, let's add the `transfer.advertiseOSVersion`
+config option. This boolean option is enabled by default, but allows users to
+disable this feature completely by setting it to "false".
+
+To provide flexibility and customization, let also add the `osversion.command`
+config option. This allows users to specify a custom command whose output will
+be used as the string exchanged via the "os-version" capability. If this option
+is not set, the default behavior exchanges only the operating system name,
+such as "Linux" or "Windows".
+
+Planned Feature: osversion.format
+While the above configurations are already implemented, we will be introducing
+an additional config option, `osversion.format`. This option would allow users
+to fully customize the string sent to the other side using placeholders,
+similar to how git for-each-ref uses %() syntax.
+
+For example:
+Format: "OS: %(os_name), Distro: %(distro), Arch: %(arch)"
+Result: "OS: Linux, Distro: Fedora, Arch: x86_64"
+
+We are wondering if it's worth it for placeholders to use the %()
+syntax or if they could use another simpler syntax like $OS_NAME or
+just OS_NAME instead of %(os_name).
+
+Note that, due to differences between `uname(1)` (command-line
+utility) and `uname(2)` (system call) outputs on Windows,
+`transfer.advertiseOSVersion` is set to false on Windows during
+testing. See the message part of patch 3/4 for more details.
+
+My mentor, Christian Couder, sent a previous patch series about this
+before. You can find it here 
+https://lore.kernel.org/git/20240619125708.3719150-1-christian.couder@gmail.com/
+
+Usman Akinyemi (4):
+  version: refactor redact_non_printables()
+  version: refactor get_uname_info()
+  connect: advertise OS version
+  version: introduce osversion.command config for os-version output
+
+ Documentation/config/transfer.txt |  16 ++++
+ Documentation/gitprotocol-v2.txt  |  21 +++++
+ builtin/bugreport.c               |  13 +--
+ connect.c                         |   3 +
+ serve.c                           |  14 +++
+ t/t5555-http-smart-common.sh      |  41 ++++++++-
+ t/t5701-git-serve.sh              |  45 +++++++++-
+ t/test-lib-functions.sh           |   8 ++
+ version.c                         | 136 ++++++++++++++++++++++++++++--
+ version.h                         |  13 +++
+ 10 files changed, 291 insertions(+), 19 deletions(-)
 
 -- 
-2.48.0.rc1.245.gb3e6e7acbc.dirty
+2.47.1
 
