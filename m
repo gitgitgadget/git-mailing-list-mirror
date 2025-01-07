@@ -1,97 +1,117 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail4.tt-solutions.com (mail4.tt-solutions.com [83.229.82.191])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C8C273F9
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 23:36:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4216E1F75B3
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 23:50:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.229.82.191
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736293005; cv=none; b=SToSp2y8ty5A0M3wiwgzGARglJmh5pfEQthL/rKqUCDsJMnbT2KxwFzqvBuz//d7oMxFsUrYp6o4JbzsfAdjxySM5C/09t966KWj/gB9psGlHcL5a2asrru42vxDm1ayCflCOtOnybcJy7aw0tCKYpLrKf8sr4S7xsVS8jCEF1w=
+	t=1736293841; cv=none; b=YiQ1+wrj7hf6oy9mLrwxEccSVfFXB+Sakg3HID1WBVeQF/YHdMt04qsbOZYTHSc0Nl2e6HyNZ8ZLdxj91v8V4Hycp573h3tZ81CrRFxvygqdWhpNW6rshA4YqW3EHSHYhy5eXJpnD2dXLLny0DqXrABZp6orLPC7bb2w/9DWB5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736293005; c=relaxed/simple;
-	bh=8Yoo+FlJXrugVblIy3Hv+ysX5l5TbApGP2HAmMsCSbU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AsHiptQMibXN+U4TZiv5nl3psYyhXTv/iKOy8QsJkeoXZZq62XapC0Dy8JI6MgUhWa2wOObCsKS/3hD9SKhCWrhLNN3H3mfcidjSj/CZ49V6BEgYDCRXV2UAOA4ATvKYgiSF8h75CR2sxKvUzFSZo00gqHIbu4QY6eLgPKAgufM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vf+CMk6N; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736293841; c=relaxed/simple;
+	bh=qDbOOE26sIo3eXGOkoSwf22J4MFq91H3p7ZaSSuHe9o=;
+	h=Date:From:Subject:To:cc:Message-ID:MIME-Version:Content-Type:
+	 References:In-Reply-To; b=LDHJeMiu2UL9hvMQRbd4DjLB+UKjNl7//RHZInYQ60H84Y00cTJsB5fr1A+nhxsYnme7LYzQZJ2uwR3QspGUXRkTNB3g4ass37tETQ7C7D/L2/siQOxTtMxnQCplMPZKAGIRfBYmAQsahMihCKH/cUc/GfW5aPHJLc+jutTFPfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zeitlins.org; spf=pass smtp.mailfrom=zeitlins.org; dkim=pass (2048-bit key) header.d=zeitlins.org header.i=@zeitlins.org header.b=bBU8DMUz; arc=none smtp.client-ip=83.229.82.191
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zeitlins.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zeitlins.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vf+CMk6N"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-aa689a37dd4so425974766b.3
-        for <git@vger.kernel.org>; Tue, 07 Jan 2025 15:36:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736293002; x=1736897802; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8Yoo+FlJXrugVblIy3Hv+ysX5l5TbApGP2HAmMsCSbU=;
-        b=Vf+CMk6NC8Gplli+oBDOHyTdhpH433azD3omISDG/D+zlGto8rhtITts3gs1HKzhlI
-         2W+ZM5p2vRvoqGuklOS+4qUKfWLv9npNb6AjiLXPX4WT5BGC1vAj6YdmAU1PHNPrdtf6
-         Of6uSkaP78BH5Xq8h/b7rH7UWZtb6wwfZrWDdF1qjNgK9O8hOH3k/9CjkxTncgHfp7YM
-         b8MNL8Lr90mRjwU0VLJ5iwcAiKdnU6mplmxs08qlMYxxHoRQIjqm8RKPu0ExUq6oHpfo
-         gX9MLG+oUpXsXgYwH2mEso//WqAoJS45JnwscRWGRRHCMdh7ci1HZjAfuqi5h3ie5tu+
-         VJxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736293002; x=1736897802;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8Yoo+FlJXrugVblIy3Hv+ysX5l5TbApGP2HAmMsCSbU=;
-        b=ssm8WRVuG2aehob7IzchU6A0J+WAjCEDIpjmvg8ojyCdYx8j5DCAgSh2H7OlPhKVZ3
-         pfgbabUBaPDwb4VlDCQs7lCF/G0ENXurNRlFMpV4QHgCU1FZHVVZqbpM8OpvTvi+joqg
-         4Onw1lGRot2juqSapU1H0vxIOr+vBKgwNOb5luKWvV5SliHihB9xTv5t0l/g9IoQZZpx
-         wYaws/vze+2NmcOPvVRmWppqwiZfeK39pJbE0HfOzd5REjqAaBCQmZc9dZvBa0NIefDZ
-         LpB++nG1sFacCmEkrmGcJ1hIfiroJAve8ANIrIZ5qhdb7mje/EAohoCEy6XzaMXtD1MR
-         2e1A==
-X-Forwarded-Encrypted: i=1; AJvYcCWnBU8f6bF9thw4W4/PtGV+EVLFLmmHCapodDTC6ZqotN+4Ku4iTZBwU2ClcEOzNNxL45Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyjBdeDMIDkyCudmXS17rNbUgI0cf9gqy3YpvnWEa5/hsKkjL1j
-	okDwIZM0xtPbZMpk9yj2BR1nC+a7hjJsHge/1ufJB806v2zfVfhtPONSPSnfe0mBjWZ3iRSSh+T
-	fpYy7xOrb86ojq9QyCdANMCn+LMI=
-X-Gm-Gg: ASbGnct7yBfM55tClHkVdzsJ5FfwjiY4Efj7+V6+PICAGQl1+VCMb82v9ft8d4TgbzU
-	gyqM8v95KindwwOwyLcRmOS0JVNcLsq9C18gGPZNeN0eC4PdWRTo2JPVJZ1f9D3q/vl4b
-X-Google-Smtp-Source: AGHT+IHbln4ryNYpEpoGzZ8P51zx6rTZKoeFdBDeUXLdpIvwJvA3poSzc9DQyGff0miaoHFiy/mMyQ08klQkPtknisI=
-X-Received: by 2002:a17:907:7211:b0:aa6:7881:1e84 with SMTP id
- a640c23a62f3a-ab2ab6fdebfmr47243166b.15.1736293001454; Tue, 07 Jan 2025
- 15:36:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=zeitlins.org header.i=@zeitlins.org header.b="bBU8DMUz"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=zeitlins.org; s=mlr; h=In-Reply-To:References:Content-Type:MIME-Version:
+	Message-ID:cc:To:Subject:From:Date:Sender:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=+fTc60HIa0QEBuLY3cLHiWN+rnVZv95vqSZmXqqUUrk=; b=bBU8DMUzN2cSQfzpUmuGKS/u3X
+	/BMZe38obZkpS0i62VDUQT6VPA/yRHVUGnUHwY/FVjM27Jsbzz9AOEqxxbXCk/cRdb6dfFl3K8tuU
+	OS3uEeZl7V6bfPHuUEg/Vhr0JkAa2FYfIm+jdIO7oDPtx1i/xRc4vaKlaeXF7M+yAKkWSWWRadHk5
+	zFRfDosZachcyeBxy9Ci1PCUgNzaIJZZrNNKRQ48OTecpOhvIeeoonWL9wUpEj3PsFmmBfZP+zpaj
+	fSTlw7oU8quffoFFx5frle34YkluS2nHUzxGQsRQVHK9uUpZ8Xtw2MNe3xk9l43P8wBPOJdP7vTMw
+	5ZR65NYA==;
+Received: from [192.168.17.23] (helo=dark)
+	by smtp.tt-solutions.com with esmtp (Exim 4.96)
+	(envelope-from <vadim@zeitlins.org>)
+	id 1tVJLH-005rfO-2F;
+	Wed, 08 Jan 2025 00:50:35 +0100
+Date: Wed, 8 Jan 2025 00:50:35 +0100
+From: Vadim Zeitlin <vadim@zeitlins.org>
+Subject: Re[2]: Would it be possible to add an option to disable validating submodule paths?
+To: git@vger.kernel.org
+cc: Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>
+Message-ID: <Mahogany-0.68.0-2854301-20250108-005035.01@dark.tt-solutions.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250107071824.GA594237@coredump.intra.peff.net>
- <f3ab08db-5dff-4da3-a075-7e9b3eaf1f78@app.fastmail.com> <xmqq5xmqs95j.fsf@gitster.g>
-In-Reply-To: <xmqq5xmqs95j.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 7 Jan 2025 18:36:26 -0500
-X-Gm-Features: AbW1kvYPbblbQYn-RoMV8JzFyCbM1SvuxYk71Ww7s9jEcAZvAwfESc3KQ_2wmbo
-Message-ID: <CALnO6CAUZBB28vCjMF8HRxvdv=N6y6OVyXZF2Yh4rK8c-sQU1A@mail.gmail.com>
-Subject: Re: [PATCH] t7407: use test_grep
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Jeff King <peff@peff.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: MULTIPART/SIGNED; protocol="application/pgp-signature"; micalg=pgp-sha1; BOUNDARY="8323329-1101513929-1736293835=:2854301"
+References: <Mahogany-0.68.0-2854301-20250107-230058.01@dark.tt-solutions.com>
+    <Z320RGb0tqNyvvxt@tapette.crustytoothpaste.net>
+    <xmqq5xmqqk9j.fsf@gitster.g>
+In-Reply-To: <xmqq5xmqqk9j.fsf@gitster.g>
+X-Mailer: Mahogany 0.68.0 'Cynthia', compiled for Linux 6.1.0-10-amd64 x86_64
 
-On Tue, Jan 7, 2025 at 2:42=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->
-> > On Tue, Jan 7, 2025, at 08:18, Jeff King wrote:
-> >> get rid of them.
-> >>
-> >> (It is also curious to grep in the expected file in the first place, b=
-ut
-> >> that is because we are auto-generating the expectation from a Git
-> >> command. So this is double-checking it did what we wanted).
-> >
-> > Missing =E2=80=9Cthat=E2=80=9D? s/it did/that it did/
->
-> It is colloquially correct, isn't it?
->
->
+--8323329-1101513929-1736293835=:2854301
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Disposition: INLINE
 
-Reads fine to me.
+On Tue, 07 Jan 2025 15:25:28 -0800 Junio C Hamano <gitster@pobox.com> wrote:
 
+JCH> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+JCH> 
+JCH> > Since this is a defense-in-depth change and it seems to have broken a
+JCH> > reasonable workflow, I think adding a config option for this would be
+JCH> > reasonable.  We've recently had some discussions on trying to limit the
+JCH> > defense-in-depth measures we implement on the security list in the
+JCH> > interests of allowing better discussion and feedback on the main list
+JCH> > and avoiding regressions in people's workflows, and I think your email
+JCH> > lends support to that approach.
+JCH> 
+JCH> Thanks; I was writing my own response and said pretty much the same
+JCH> thing as above, before I saw this message.
 
---=20
-D. Ben Knoble
+ Thanks to both of you for your replies, I'll try to come up with a patch
+relatively soon.
+
+JCH> > I'm not presently planning to add such an option, but it shouldn't be
+JCH> > too hard to add a global variable for that (or maybe something under
+JCH> > struct repository) that's updated when parsing config, and then check it
+JCH> > in `validate_submodule_path`.  We'd need docs for that option as well,
+JCH> > but that would probably be it if someone wanted to do so.
+JCH> 
+JCH> Sounds reasonable, but I wonder how this would interact with
+JCH> bootstrapping.  Should it be configured in ~/.gitconfig, possibly
+JCH> with [includeIf] to specify the directory you'd store a bunch of
+JCH> repositories you clone from outside, or something?  I guess "git
+JCH> clone" without "--recurse-submodules" is simple enough to be used
+JCH> for bootstrapping, and then the configuration can be set at the
+JCH> top-level superproject after cloning but before "submodule init".
+
+ I might be missing something here, but if the question is about whether we
+need to have any special support for this in git-clone itself, then I don't
+think so, it's a rather special use case and running git-clone without
+--recurse-submodules and initializing (some) submodules later while
+symlinking some other ones is only a minor inconvenience, if that.
+
+ OTOH I've realized that I have no idea how the new option should be
+called. I had initially thought about "safe.submodules = bool", but I'm not
+sure if this is really consistent with the existing safe.xxx options which
+look and behave a bit differently. Should it be something like
+submodule.validate instead, perhaps? Please let me know if anybody has any
+better ideas.
+
+ Thanks,
+VZ
+
+--8323329-1101513929-1736293835=:2854301
+Content-Type: APPLICATION/PGP-SIGNATURE
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQQx+vLQdOwioQqkxtoG6kHeT2wehgUCZ329ywAKCRAG6kHeT2we
+hkvOAJ46a0n5jHBEQx6BZJX3jMj+ENbRMwCgjlACxkZlf+hn2JSnLq55nTFuRMY=
+=0fJm
+-----END PGP SIGNATURE-----
+
+--8323329-1101513929-1736293835=:2854301--
