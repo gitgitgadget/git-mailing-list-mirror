@@ -1,38 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF2DE573
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 02:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFAD61925A0
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 03:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736218196; cv=none; b=nBVU4F2wTZ0yLuLQqMhCJGXeFkdG3SGwQtKDGMTxN3f3vJYLrPmXPsoeY/nCGxvPpgPr35+qQumdaxed0Bt4v4yXnoTQ3W5Ct4XJ2xWgIktjDhP8vvLdOzrvW2vX2jk3+QfDEaJVWrJDkOJ8ZTAGgBZ6Q82PGZc+twgbeY5saDI=
+	t=1736218830; cv=none; b=mK+FEKD+OjXNgvdpC4UOBcWo1iEQ3AORq176jlu0G5zYYDSnqoyi9b9kVQEPCe623sq6CgigKSw1T2mIKaYpIVrByLG4233ycjoL06m6KRjp0xcYVZTEoVsIveWBFWJWHNE7cjluTvehSEbjD0dre/3Rbda9ysRGiLeBzbpl+AI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736218196; c=relaxed/simple;
-	bh=OqzG7EM0E4Vlfcf/GvxV0lN8QRNQjcxcZrYp21QgBYY=;
+	s=arc-20240116; t=1736218830; c=relaxed/simple;
+	bh=+hsdnZMHoaYDR6oqIyJ2ldA3RNspdroc845p4U/VArc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jD8U82esoyfGSy5neB/h89nHSoUHl80pq0UO4I7dVcGqyDyyCuDrmIEa7vT32LHwsXASrO3eI7SWWVzbhksy+z/1huu7KLglmR17Zhm6ezjYvkQ6c/yUCuRIK+wwbJvA8N++po9hgkYCirEiG8ug6Yrgl6rhHAEdReOAvpwSXV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=BYasvD3T; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=BUuvwsTuE10CdZ4YlgUOwBAq2eSlKDbDPlKvUMiqsj2b94K+9RIcXYsgiGrrOe1oBO24nf8ssvaYsxGrUybnLp8F2CsJHdzB9CqNLUK/y0pQHHXlgQXpOR68IDdZ7z6kqLnMMf12Pp255iqSdZCNV5HzIZODi59GHgm3fDOqlrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NPvS4dx0; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="BYasvD3T"
-Received: (qmail 26978 invoked by uid 109); 7 Jan 2025 02:49:52 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=OqzG7EM0E4Vlfcf/GvxV0lN8QRNQjcxcZrYp21QgBYY=; b=BYasvD3TJp6ebWNj5kXjdnYvWVl5eleun5uSUQmZI2UqHs5lpglV7ZlTSz61OySxW4+KGobocFAAEG4CyWR0SNFDBZhzq6ZWrHtIqFtirFDy8TiNjZSBLMG7UQ+pJcgnhzRiypkJtGtKSCgiX02gsKFz+b5wWuLq0F8RMiVO8eZHy8aOsCAEsrh+7uOFcfjecCp7QvKfw/wIYiw/mV8pHr2MTq+KaG036VGBQcHJ3yiAnnpd5MBO7tCkTnGRY/Abl50iktSMupT0uzvPhGQqc6nL0IvkxdQeFDoOfepyeQG3NTDq2zWLzMG8kyHgk/f8kLM87F2qDKXPLA6yS36LAw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NPvS4dx0"
+Received: (qmail 27008 invoked by uid 109); 7 Jan 2025 03:00:26 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=+hsdnZMHoaYDR6oqIyJ2ldA3RNspdroc845p4U/VArc=; b=NPvS4dx0nQRhA2Ok56tQpm7dHQmlkLtzBQxMcTfqzWr0vjaOSiY7R5xrFL91WHihVHshOQsEpCvvKwroMkTcXBGxMb6lhhPoRp2iaLw3oU94qSvNtDYBz6vZk829Wmt93ZRKsZVhBrbo1T6tZxxgvx7amIufKVfDYWM/yTz7Ihs4L3/qNjeKJiW1zK783sgMylmziOJnieMwU0rrLDDz10yAoMvcoHN20cYQ0NsmgGnwWA1S/lNr4Y38PxbKFqbicA0UpI99NqXgLEox0Gsm4smQlBweB/m+Vyl7TotiB6BGq47my+neaj6BtBAwqSyUs3zQvE9bbSpR/UWqmebQRA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jan 2025 02:49:52 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jan 2025 03:00:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19281 invoked by uid 111); 7 Jan 2025 02:49:52 -0000
+Received: (qmail 19382 invoked by uid 111); 7 Jan 2025 03:00:26 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 06 Jan 2025 21:49:52 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 06 Jan 2025 22:00:26 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 6 Jan 2025 21:49:51 -0500
+Date: Mon, 6 Jan 2025 22:00:25 -0500
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 02/10] t7422: fix flaky test caused by buffered stdout
-Message-ID: <20250107024951.GD2363@coredump.intra.peff.net>
-References: <20250106-b4-pks-ci-fixes-v2-0-06ae540771b7@pks.im>
- <20250106-b4-pks-ci-fixes-v2-2-06ae540771b7@pks.im>
+To: Carlos Maiolino <cem@kernel.org>
+Cc: git@vger.kernel.org
+Subject: Re: [Bug report] signingKey beying bypassed
+Message-ID: <20250107030025.GA21698@coredump.intra.peff.net>
+References: <hx6q4liyd7udyezlqy2fzanxlicu24imtdqielig622sdqz2wc@lxa4ybnzyjs5>
+ <20241216113543.GD2201417@coredump.intra.peff.net>
+ <cw6ggzhw4o5c5v5juh7sx2ubfaidnzugxx3ydgfvdlywqhndzf@6rfdfajvscif>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,37 +42,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250106-b4-pks-ci-fixes-v2-2-06ae540771b7@pks.im>
+In-Reply-To: <cw6ggzhw4o5c5v5juh7sx2ubfaidnzugxx3ydgfvdlywqhndzf@6rfdfajvscif>
 
-On Mon, Jan 06, 2025 at 12:16:51PM +0100, Patrick Steinhardt wrote:
+On Mon, Jan 06, 2025 at 03:55:32PM +0100, Carlos Maiolino wrote:
 
-> Fix the issue by making the writer fill the pipe buffer before we
-> execute git-submodule(1). Ideally, it would be git-submodule(1) itself
-> that does produce all that data, but it would require us to create a
-> large amount of submodules, which is inefficient. Instead, we use Perl
-> to print gibberish until the buffer is filled.
+> >      If git is passing the correct "-u" option to gpg, then the bug (or
+> >      misconfiguration) may be in gpg.
 > 
-> To verify that this works as expected one can apply the following patch
-> to the preimage of this commit, which used to reliably trigger the race:
-> 
->     diff --git a/t/t7422-submodule-output.sh b/t/t7422-submodule-output.sh
->     index f21e920367..9338c75626 100755
->     --- a/t/t7422-submodule-output.sh
->     +++ b/t/t7422-submodule-output.sh
->     @@ -168,7 +168,7 @@ done
-> 
->      test_expect_success !MINGW 'git submodule status --recursive propagates SIGPIPE' '
->             { git submodule status --recursive 2>err; echo $?>status; } |
->     -		grep -q X/S &&
->     +		{ sleep 1 && grep -q X/S; } &&
->             test_must_be_empty err &&
->             test_match_signal 13 "$(cat status)"
->      '
-> 
-> With the pipe-stuffing workaround the test runs successfully.
+> I particularly think git is the 'problem' here. After I tried GIT_TRACE, I decided
+> to run it without specifying the key on the CLI as I'd normally do, and it did
+> work normally, and I think I what happens is git defaults for another key, if
+> the specified key is not available.
 
-Sadly this isn't enough. The pipe-stuffing solves the race with grep
-_starting_ (and thus the extra "sleep"), but the fundamental race we've
-seen in practice still remains. See my reply the v1 thread for details.
+Git doesn't know anything about available keys, though. We just call
+"gpg" with the signing key configured in your .gitconfig and it tells us
+whether it worked or not.
+
+Are you saying that:
+
+  GIT_TRACE=1 git tag -sm foo foo
+
+shows git invoking gpg with the wrong key, but:
+
+  GIT_TRACE=1 git -c user.signingkey=$RIGHT_KEY -sm foo foo
+
+uses the right key? That implies something funny with the config
+reading. Or are there cases where GIT_TRACE shows us passing the right
+key to gpg, but the signature is made with the wrong key? Then that is
+not something git can control, and is a problem with gpg.
+
+Can you show us the exact commands you're running and their output?
+
+> As I mentioned earlier, the key configured on my .gitconfig, is inside a
+> smartcard.
+> I just tested creating a tag, without the smartcard connected, and git
+> ignored the signing key I passed, using another key.
+> 
+> I am not sure how right I am, so please correct me if I'm not, but I would
+> expect git tag to fail, or at least give me a big warning if for any reason it
+> could not sign the tag with the specified key.
+
+I'd expect it to produce a warning, too, but we can only do so if gpg
+tells us it failed. From Git's perspective, we are just passing along
+the key string from user.signingkey to gpg. We don't know what it means,
+and don't have any mechanism for using a different key.
 
 -Peff
