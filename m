@@ -1,84 +1,82 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1F617C9E8
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 07:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42D142A1C9
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 07:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736234382; cv=none; b=SGyMc1m84jItKnyzT0IRdz+zRn4vODWWw0ufdy0dHvCwUzUZUUWT7JqozG9rx0owzNj19bYimQh1Rdc/y70/tN+vFLlsNrGf8dvVP+bhcouT+VUDBMsoWamp5iKZ8+kroGP4E4N+9jEb+et/eFaLO3kMMyKN2P4IcsECoJVibHU=
+	t=1736235463; cv=none; b=SjHha2FPWmtdrlZ5s9Mo/qcVnVRiWikgTJobsVcM8V8vp3t969S3x9b5zGmRn82VaslQXMw7moHV5IJbp4eAx3bryQCNNteHIPJQV2LJbg4xdRcGj/bKZseAPgtWiAKZnC6CI8qhLH9EjgSluMCALqL2rag+wm5GjlxTzz+g1UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736234382; c=relaxed/simple;
-	bh=lUmf4j/UYhCYtIyUafaTnaQ/ol7Ghd5px/8jmmEy4gk=;
+	s=arc-20240116; t=1736235463; c=relaxed/simple;
+	bh=H1sOkhGRsTJ8cCtztgLCimw0uCo93O3homC9Q2+bAAw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EBheb2YGYj+P/XYxvKs2pvfjYzJTcTEH3wgW46LgYoimO2EalPf/vE8Xb+6O3+e5jkC4ltVR2JcY5AO9qxJqoLfewK+cqbDR8qioczTzR1TJekO1IyvTT9oCgSdJVs+kue30l8aKF41kHaiQYc10x0NOBGpmTviVSGZs68b77D8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L9Vd9O3i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eIkJDTdo; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gxqakj554+IMJXqoo9vnu0XLb8RP4m4V8hwV4RSyuYGd8utaR+Fw3pjsNUJTPHXmRDxQDW0ewbTcoPYz8jyvMI2n8jrPR7yDjP8d4V4s+azV6J+pAb33ieSz7Bix726GWAolnvBNPcPi7xFdPB+ndefK5S9YCy37keVvv1HJRoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QLs5iyNX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lBnVWsbm; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L9Vd9O3i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eIkJDTdo"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1C397138019B;
-	Tue,  7 Jan 2025 02:19:38 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 07 Jan 2025 02:19:38 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QLs5iyNX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lBnVWsbm"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 605C81380198;
+	Tue,  7 Jan 2025 02:37:39 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Tue, 07 Jan 2025 02:37:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736234378; x=1736320778; bh=3z0vfbhBBl
-	rapuwPXUEGtgiJlGd9nVFaJpRSEkG5UjM=; b=L9Vd9O3iYPmAJiD2uId5X1Ezy1
-	P0E4VvR1F4Tzezs4CPbcnokS0eYxjK3x0Ki7LitoGi5TUNxO5wMsKfgMvWbY0QgU
-	OgHPgZ9k+YiQMLYkmY5C+/Fu3nMMMuJ13CMxthfNdWDbUxN27frkXbjurAINB47a
-	sPiIAJYbmhpq1YBZfejOVTS1A+EFArWzWF/DYIdTlszs8/mQU7gdA2jLskziq7id
-	d1yfqlbm+lw01eWOyW9RhHBdqgCUMW7uoXrZxuUBtypvPO4kHRUoIozswAdOdag0
-	c5t7Nxww6KYyTY9+w6PHz7xwV+4XAl9IfkNMZPmN8sgkJ1WlCS7YLW5p/wpg==
+	:subject:to:to; s=fm2; t=1736235459; x=1736321859; bh=PyAUTXjVEP
+	Mc24sR1RBDDAeqiTfEMAycQOLqNME03HM=; b=QLs5iyNXbseDFfUQuAN6axrBC8
+	vuGQhFW9TDOIKBpI1yicNK1yulD6ungtwEAIZ1hOBhRNFkjDUTQ+w5x7yjL57x2B
+	j7CKVwpnKbqoKWltBTo32kGe4jRCl8z7li5gcEcvM8538TSQYh5EU2AKFxpetSxf
+	n19GuBP6hEZ/kskRnXUULqHKxdcL0b5AXDTXjZQOd47C/EiBqBEL6qmHtLrNhOmq
+	sapI7Z4g+DeAlloisDL7uSQ0bPgqAqBDFPdAKWRFEzmggNspnXcU+XLIr52h32WZ
+	UOHbOi8/mVVejdl0DBtS3JsKk219qkTfMDu1UR2u8xtM7zpBeGodFysT1TmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736234378; x=1736320778; bh=3z0vfbhBBlrapuwPXUEGtgiJlGd9nVFaJpR
-	SEkG5UjM=; b=eIkJDTdofWD4U3LFAV8mv0PP2kyhP9RIAPCwl8FGfzR4J2fCGOC
-	WKSpqyGHPJUhC7H2VKUm6OXTdHeN8m9cMqgKu+r6GwiyOfDK8r5SYHMlvppI+0px
-	vdOTDZhtJhnhJ5te5271eqDhn39PCeDHQSXJ2T6ZN4564c0n2I8s8pezrwVppfLY
-	ae8kp9tUZrpPtXLxdcg0VhxJM92l2IA6d+2VVsbook/w/fo03yizg/ahrKB/HJLI
-	FKG1hiLVlJsg3lJi3hr3gN/XJUjGikQEoEt6pFRjKRS4YV6JxQs5wVH5Jz7gMpBu
-	Tcn2if/wE66YTBQBq6VTV5xt57ROjUxWotQ==
-X-ME-Sender: <xms:idV8Z-90S_q-Ng-dXY1lvr0pj5o89TvJ9FNvzgIIaDXZEBOOAqhxSA>
-    <xme:idV8Z-ufebPK14jaGfp-wvu7AA7w66BFIUB8IojMM2v1EUWrsPHaH-IyOqpUBesCn
-    eSsifHGFDsB0breMQ>
-X-ME-Received: <xmr:idV8Z0CRet63cMsZbvTWmrbtaBwf2_uEZXBI_1wisoajanocUOf6KOVNzcHTEj_HZxXC8IgvWsvxuSjV_2QrD6XWRUdN3VwymKTO2MA6cbbBPg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeguddguddtkecutefuodetggdotefrod
+	1736235459; x=1736321859; bh=PyAUTXjVEPMc24sR1RBDDAeqiTfEMAycQOL
+	qNME03HM=; b=lBnVWsbmeXq2UOM9f1r4aeqYVHQaLEZIDPz4TllopN3UxN/fMqZ
+	2DDi2bUpGdmGfFIw1rTqi3LGXlQAtnFGjR31bQHvaDWt7gEkc0HjZp4pGhCD5dY6
+	YQWAfVUUWA8r9L63zNpvXJiHJE1MtRTVilU0MNQa5EDrU5n61VPornXjkaODlsy1
+	5ccBCeSuMUhPnQVCm4wYizTCUGVQFr+Jeg4JJi7tlmU6P1iGiOKow+2WfQSQ13wI
+	uAeepxvs5EoDSE9qBCtApX6rPXZ8yjYa1lMcuFYZmRQMoZkhhpe547q5cfpCAH3w
+	YGZpLMArsA06kQJeeYMQJH+zv/1fXDP5EzQ==
+X-ME-Sender: <xms:w9l8Z2zy-6-eVQxJs4H-Ft2wkzwvv8qSduWdCkgdLKCb0k6jrPstkg>
+    <xme:w9l8ZyRcmbULRc7f39N4SnCbVC62rWg-LxQ4V5PPx1yhqRrzESkTNglftiDHSBazb
+    cI0N5hfmrCBG4Q7Cg>
+X-ME-Received: <xmr:w9l8Z4XrpDvus1Px8SpgjQskyDr8fyavTbUgeol2vklQ3s_eUlp4CjSrr1goFVOSovH4RahlmBEZv97JfxXX4MMxmPoeo5xd39Aw80BgEw9NYQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeguddgudduvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:idV8Z2fEkoQaWfqpon87jdQhSUfk7rLX5SBeqk3_l2-6FbYNsyxHzw>
-    <xmx:idV8ZzPuKezFM--3ofikPoBwbbysJgxiZUyxhJrXv0_3hIfLGh72Cg>
-    <xmx:idV8Zwnaxouf0RcGlYTUxaP9RGCBqNAXCdVGQVNy5lDyIl880mSQMg>
-    <xmx:idV8Z1t9eGzOx2lNtSuSA3ic4ySjOSvq2a5MaO3CEGcBgGGiYgHB1g>
-    <xmx:itV8Z8oXA4a2WGeaccMEHlYb5uXtaH42_vVnlAF1jk-ThkVUaGZpY4OZ>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
+    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhf
+    sehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:w9l8Z8gxUUp29VrGYDUar7y8lxxCLt_mGPaB4tPzUq3unbvE0m7z9A>
+    <xmx:w9l8Z4Cm7yexLs4KEknqI4TTvr3ly5bZl0G47n3hJXD3i2NgcVMfqw>
+    <xmx:w9l8Z9KAh08eKLn-BTObH8L32tCkmgjAXjZNgOkRVFUk9EKcV54Eag>
+    <xmx:w9l8Z_AWpOpIzM36-ylG5Cfy0g5L_RZORIFMZEBGz2ag2CAdMHFOZw>
+    <xmx:w9l8Z7NufFtssOmVzgb2RwH6_fvcHZHkIgbqi8G7iffPafBvAX4O0tlT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jan 2025 02:19:36 -0500 (EST)
+ 7 Jan 2025 02:37:38 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6ffad199 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 Jan 2025 07:19:34 +0000 (UTC)
-Date: Tue, 7 Jan 2025 08:19:33 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id de1d1a36 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 Jan 2025 07:37:37 +0000 (UTC)
+Date: Tue, 7 Jan 2025 08:37:36 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 01/14] progress: stop using `the_repository`
-Message-ID: <Z3zVhZC437Kx60dm@pks.im>
-References: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
- <20241217-pks-use-the-repository-conversion-v1-1-0dba48bcc239@pks.im>
- <87v7urk6dl.fsf@iotcl.com>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/3] test-lib: add a few comments to LSan log checking
+Message-ID: <Z3zZwDFJ-FWYYIw4@pks.im>
+References: <20250107070409.GA584456@coredump.intra.peff.net>
+ <20250107070831.GC584668@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,42 +85,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87v7urk6dl.fsf@iotcl.com>
+In-Reply-To: <20250107070831.GC584668@coredump.intra.peff.net>
 
-On Mon, Jan 06, 2025 at 09:57:26PM +0100, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Jan 07, 2025 at 02:08:31AM -0500, Jeff King wrote:
+> Commit b119a687d4 (test-lib: ignore leaks in the sanitizer's thread
+> code, 2025-01-01) added code to suppress a false positive in the leak
+> checker. But if you're just reading the code, the obscure grep call is a
+> bit of a head-scratcher. Let's add a brief comment explaining what's
+> going on (and anybody digging further can find this commit or that one
+> for all the details).
 > 
-> > Stop using `the_repository` in the "progress" subsystem by passing in a
-> > repository when initializing `struct progress`. Furthermore, store a
-> > pointer to the repository in that struct so that we can pass it to the
-> > trace2 API when logging information.
-> >
-> > Adjust callers accordingly by using `the_repository`. While there may be
-> > some callers that have a repository available in their context, this
-> > trivial conversion allows for easier verification and bubbles up the use
-> > of `the_repository` by one level.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/test-lib.sh | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> I'm not sure I agree here. Below I've marked all places where I think we
-> are able to get the repo from somewhere else than `the_repository`. For
-> example, looking at diffcore-rename.c, the already present calls to
-> trace2_*() use `options->repo`, why shouldn't we do the same?
-> 
-> I understand what your angle is, you want to bubble up `the_repository`
-> and make the changes easier to reason about, but it feels to me we're
-> creating extra work. If most people disagree with me, I'm happy to take
-> your approach.
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 898c2267b8..9f27a49995 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1172,6 +1172,11 @@ test_atexit_handler () {
+>  check_test_results_san_file_has_entries_ () {
+>  	test -z "$TEST_RESULTS_SAN_FILE" && return 1
+>  
+> +	# Lines marked with DEDUP_TOKEN show unique leaks. We only care that we
+> +	# found at least one.
+> +	#
+> +	# But also suppress any false positives caused by bugs or races in the
+> +	# sanitizer itself.
+>  	grep -s ^DEDUP_TOKEN "$TEST_RESULTS_SAN_FILE".* |
+>  	grep -qv sanitizer::GetThreadStackTopAndBottom
+>  }
 
-The problem is that this could lead to a change in behaviour, as the repo
-we have available may or may not be the same as `the_repository`. So
-without auditing every single callsite I have no way of knowing, and
-that audit is quite involved when it touches a lot of subsystems at
-once.
-
-That's why I'm instead pushing it further down the road: we know that
-injecting `the_repository` will yield the exact same behaviour as
-before, and we only need to audit a single subsystem, namely the one
-that we're currently converting. So it's one more step overall, but by
-separating mechanical from non-mechanical changes it makes the steps
-simpler overall.
+Thanks for adding this comment!
 
 Patrick
