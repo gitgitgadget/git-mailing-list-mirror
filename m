@@ -1,81 +1,81 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754521E0DD1
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 12:30:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B141F03C7
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 12:30:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736253059; cv=none; b=JC0VtEVi5Irm32wCg87tYpX/KjRix2IfaHSw3hw9Bkja+kOzo8xEiwFhNU6cptDHzL4v1AFKbhWfBBAwnvPmCn2XDamQ7M0/GbOAjhJ2T+cBQOGLUr0/+30vjbTrAPajhcoicwkhuRnhCMtqFgozX+o1zpBBhRDt0q4YK5he4KM=
+	t=1736253059; cv=none; b=oHyZMpm19pNdxaPV0wjCJlNFHDsBNxwVUaadoDBd/+b/WD7er372vOhqovlCAgXIY4LCHYdE7/k4O0Ra0lRc9K5e+YgYg8ajF4bZVPmqe/bf8Eq3a4hvXolju83DWiLYzJ/T6WXHwvgSMtLEfYLum5ichpHxjw91R5Tgl5oLBew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1736253059; c=relaxed/simple;
-	bh=G1jPa7P7T6TB45XoieFsgxr0j8yLEOJJZo63ewbJ3M4=;
+	bh=9U5pSa1Ya/qFA16RVITh0ufhTFoyrRiuuHsuhrHW4xI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ONbqNPBbKvp1+vcRlOS4oz0y3A7AXdj81WamsEu+nV//wXUJJqUPoq1oWhPCCX5cI4h97vSbCcOLoeEM5BWg4RxqSsF4exOAdSkXyjaORtIB2GsbwQRYoRZZmglrT3DF1nrGQt0zIjw5R7ZLCGOMzi/6dVNgJipoSA6Ra0/Gv9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gPPIRGJz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X1xH1vqo; arc=none smtp.client-ip=103.168.172.148
+	 In-Reply-To:To:Cc; b=QDr2IiAouweKQlEJGIDBL/+9jTQhZsHrUJA14uUhaw9+C2qjGjxyU2gVJZwH5Swq0+Sdr2O3HMtYg/F+7Qsxvj4OQ8dMiv57CKvqxEMeKHZR+0aILa6skDQufC4VBSuu4UD64saA1O1PlaB0MLjFrDb1AXFiX26uuakBNxi22uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aOC7MjoC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J4fHypXq; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gPPIRGJz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X1xH1vqo"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4747113802B2;
-	Tue,  7 Jan 2025 07:30:54 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 07 Jan 2025 07:30:54 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aOC7MjoC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J4fHypXq"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 28B641140190;
+	Tue,  7 Jan 2025 07:30:53 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 07 Jan 2025 07:30:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736253054;
-	 x=1736339454; bh=KyOeinV6oJzx1SRviha9PF63/S2bm6rWc2/2k4n1LGg=; b=
-	gPPIRGJzFJLcDDIVuD+S/1W1frcN5zA8q45NMQA3ogMk4sWI9mIOs1SM9whndFIM
-	LjNB34/PUECUSJtthXKefnuP0o/AHnz7Yeyfhm27KpvO6sB3Y+W3rXJOKJUx5gtV
-	bEpzQz1JDCQTQE/sio2O+huvuc+QucU7W55r738H7VnqzrFDj2cmSDfoBl4OaQpq
-	ey5XXDT7c/zTkpSla6blxAL1xSPfBa8yJxqhlDmxiqNnf2ROGhFUyVfAaL7V8jd2
-	VLq2kxQvy32Bw2+VyF+hUFrpKvdZQ8VXbiktSswUBqsEQUJ0L3yFq/m03ffAG7rv
-	5rjyOnkUPGSYLOAiPhr+Xw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736253053;
+	 x=1736339453; bh=NHmCDjoh5XWaGXJRxFyoi47O19R/mtulCqgmb/hGRHg=; b=
+	aOC7MjoCgl/BUCa9vy1NRFNBcLDZthDIkvgzEJv6I6CjpGVWh578CiZCIW9utjmc
+	t+OSeQSlIPWTdAd88I4cxNGoIikRk/6W9OxoP8m8/3tgMfIDy3YQBi9+NISlruWx
+	8V8bYw/86mAB/UIVtcBjaI0KC2bfHeeL2auEDSchLfGE9NEblsm4I78kpcpWESWc
+	Mm2aUPHYZS4jkktaDdTv0RbywLYENW4XQWs2GleyKSmm4H8YQBWt48jgtqlPpCjA
+	+yEHUrCkUaZmR0FU0xUCsLMqZ0QjNzcgvfxJ9cZsMOS6typxBKe1TikMO1LGwwuE
+	jDhcpPVvZ1gPzwZZpYJ2gQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736253054; x=
-	1736339454; bh=KyOeinV6oJzx1SRviha9PF63/S2bm6rWc2/2k4n1LGg=; b=X
-	1xH1vqoiX69AJ1hfiUn+1Ol8oDv931q1HTxseI4pa5Z6TVzIQZz/WT8Dn0M8B63Y
-	/aG7n0qg/pvz2SRZSt7gUG+QO+XntIvBIJSulj9CCaTHFByYKxx1sn6i3u57hiEn
-	A5Q0+7rrEDlqzRaA8/UpOaF294GpA0BOm0IXhwNnkyRKMKbQUoCWXt6U7p231IM/
-	bVfaRpu9pteaP8CFCYleCo36xpR1mjzR+KOdboqiQmTvir3mGaQRFDIwAm+tiiTf
-	upRYZIy3FYgg/M65zbNKoyek89d14L1XyjBDOzIxiY9TxJRtP/Q4DZUwi+MG55Yg
-	VkpBeGf3iY0eVhpU+1jRg==
-X-ME-Sender: <xms:fh59Z3bu1rUbD1Z6oi0Ktr2ETrYunALrnTEL01T3DH4oqqw2cwYUkw>
-    <xme:fh59Z2aof_ctWBIik-KLG96i7MktgB4WhXzS68sRSNVATfRdGBtVAitdfJpDN05yT
-    ekJiLRjek0slGMGhA>
-X-ME-Received: <xmr:fh59Z5-vDrz6GDi5lmyYh4PkOSQwEPevdEfTpjHsKYlOde0PABOcOOcxglWdYzzDfkFo9ORyndizk5m44L360N_mLC1ok6fGnCZrM2UnyqPD6A>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736253053; x=
+	1736339453; bh=NHmCDjoh5XWaGXJRxFyoi47O19R/mtulCqgmb/hGRHg=; b=J
+	4fHypXq4loUzMC2vNPa/juqY/TNkP2wJzWKvCPG+9kIdLcGoYj0o5DrQVmop4Yjb
+	7GlaEBO5O76iw46ryoHJqWaZeM6vGq3/7NrtkZZsU069vYXIih0JUsV6cVWTQTWh
+	OlgE12pzZ+a+CW4PAmFAOxFuySF5a1rPwuqnqI3FYo1bLXXv+8SRocFnveIR8b6x
+	TN4G4c23PvACFVwtBEONqq37jWy3tGaoWB/pWyX92KGdrWkrWXd+WPcGRrCUQikz
+	EOr5PnY9Bm6KzbI2yjBVga7l7PfXZCIslGfGYTvX7Z1ljQFrqtGSIGqjBsqkWa0f
+	NyI7JB6ou/kGdNKnO2D6g==
+X-ME-Sender: <xms:fB59ZxT-PyIC3x6umgnZ7z6p81i5W_SKKdiHstUDZOEmAza7wqE6eA>
+    <xme:fB59Z6xC6-2gKi72tCdV2nSVsAQp25U7OygkKiRn_qvGc4tVCjZaEC-I73zDMlgU3
+    Oce6VX_cBUo9Jjh3w>
+X-ME-Received: <xmr:fB59Z21DAkGv020tw6NNG3jAsDRl-w7xyPjaO_Kx2NbZhMTDnCAWL7HYb5Fh7E3eQDW3q7v431MZV2KZB4P5WCX20sJDd4BzuHiE5tGG7k0f8A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegvddggedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmh
+    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvg
-    hlmhdrohhrghdruhhk
-X-ME-Proxy: <xmx:fh59Z9oMgVG9rXWPlYPVl3calXhVUQ0nNsg5u_hI_NxQTfg7h4y4Qw>
-    <xmx:fh59ZyoZusbGFhaOlVNiPU5ocY2_OieDYkgy9FyviT_yGAjGc9_Cqw>
-    <xmx:fh59ZzQPd--jdpb3S4WxuKZMVrKwy6lUf5mMi6AprgH6xZjMwnMYEg>
-    <xmx:fh59Z6rC53tdIcOHz3Ds6GQLSBfAlADbAyEHYCx1U6_f6hBAjwvBUA>
-    <xmx:fh59Z7k8S_gAmRL9wqJmgqzzEjLZJxiIG9DVjHQxRCmxfT2maMuZviuG>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdif
+    ohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:fB59Z5AP6qmO8LQ4gqzz9cJ0IEEmcSGudj99eqeft_OPKSM9p6Gymw>
+    <xmx:fB59Z6jEpxft1fnbK9Ybd5cXj5qNY9JJjv-tmVBCQifQRocpkwh6pw>
+    <xmx:fB59Z9pH5EjjrQfgQnSHK9dYUduIv3LZeBucHVIpLhvuqCoOVjD-YA>
+    <xmx:fB59Z1gFVt2urpcBgAp9EdX00HneFX3Wca-IMRM6VU_CB5V0i21EDQ>
+    <xmx:fR59ZyfnEbgA5X2YXNYHPd3sQ_MVRs1dGcAjZfRcfkrAAJWYHAf8kkw5>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jan 2025 07:30:53 -0500 (EST)
+ 7 Jan 2025 07:30:51 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bb06f7e1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 Jan 2025 12:30:52 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 46df0bc9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 7 Jan 2025 12:30:51 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 07 Jan 2025 13:30:51 +0100
-Subject: [PATCH v3 09/10] ci: use latest Ubuntu release
+Date: Tue, 07 Jan 2025 13:30:50 +0100
+Subject: [PATCH v3 08/10] ci: stop special-casing for Ubuntu 16.04
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250107-b4-pks-ci-fixes-v3-9-546a0ebc8481@pks.im>
+Message-Id: <20250107-b4-pks-ci-fixes-v3-8-546a0ebc8481@pks.im>
 References: <20250107-b4-pks-ci-fixes-v3-0-546a0ebc8481@pks.im>
 In-Reply-To: <20250107-b4-pks-ci-fixes-v3-0-546a0ebc8481@pks.im>
 To: git@vger.kernel.org
@@ -92,111 +92,36 @@ Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
  Phillip Wood <phillip.wood@dunelm.org.uk>
 X-Mailer: b4 0.14.2
 
-Both GitHub Actions and GitLab CI use the "ubuntu:latest" tag as the
-default image for most jobs. This tag is somewhat misleading though, as
-it does not refer to the latest release of Ubuntu, but to the latest LTS
-release thereof. But as we already have a couple of jobs exercising the
-oldest LTS release of Ubuntu that Git still supports, it would make more
-sense to test the oldest and youngest versions of Ubuntu.
-
-Adapt these jobs to instead use the "ubuntu:rolling" tag, which refers
-to the actual latest release, which currently is Ubuntu 24.10.
+With c85bcb5de1 (gitlab-ci: switch from Ubuntu 16.04 to 20.04,
+2024-10-31) we have adapted the last CI job to stop using Ubuntu 16.04
+in favor of Ubuntu 20.04. Remove the special-casing we still have in our
+CI scripts.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- .github/workflows/main.yml | 14 +++++++-------
- .gitlab-ci.yml             | 14 +++++++-------
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ ci/lib.sh | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index b54da639a650682495994e3c7b137eab4e6cb3bf..b90381ae015edf9db5aa4b8c0ace9bb5c549c37b 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -314,10 +314,10 @@ jobs:
-       matrix:
-         vector:
-         - jobname: linux-sha256
--          image: ubuntu:latest
-+          image: ubuntu:rolling
-           cc: clang
-         - jobname: linux-reftable
--          image: ubuntu:latest
-+          image: ubuntu:rolling
-           cc: clang
-         - jobname: linux-gcc
-           image: ubuntu:20.04
-@@ -328,19 +328,19 @@ jobs:
-           cc: gcc
-           cc_package: gcc-8
-         - jobname: linux-gcc-default
--          image: ubuntu:latest
-+          image: ubuntu:rolling
-           cc: gcc
-         - jobname: linux-leaks
--          image: ubuntu:latest
-+          image: ubuntu:rolling
-           cc: gcc
-         - jobname: linux-reftable-leaks
--          image: ubuntu:latest
-+          image: ubuntu:rolling
-           cc: gcc
-         - jobname: linux-asan-ubsan
--          image: ubuntu:latest
-+          image: ubuntu:rolling
-           cc: clang
-         - jobname: linux-meson
--          image: ubuntu:latest
-+          image: ubuntu:rolling
-           cc: gcc
-         - jobname: linux-musl
-           image: alpine:latest
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 29e9056dd5010f8843e42aeae8410973c825de54..8ed3ff5f0373d70b6f609dc5292dda2dd7fd8f88 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -37,10 +37,10 @@ test:linux:
-   parallel:
-     matrix:
-       - jobname: linux-sha256
--        image: ubuntu:latest
-+        image: ubuntu:rolling
-         CC: clang
-       - jobname: linux-reftable
--        image: ubuntu:latest
-+        image: ubuntu:rolling
-         CC: clang
-       - jobname: linux-gcc
-         image: ubuntu:20.04
-@@ -51,16 +51,16 @@ test:linux:
-         CC: gcc
-         CC_PACKAGE: gcc-8
-       - jobname: linux-gcc-default
--        image: ubuntu:latest
-+        image: ubuntu:rolling
-         CC: gcc
-       - jobname: linux-leaks
--        image: ubuntu:latest
-+        image: ubuntu:rolling
-         CC: gcc
-       - jobname: linux-reftable-leaks
--        image: ubuntu:latest
-+        image: ubuntu:rolling
-         CC: gcc
-       - jobname: linux-asan-ubsan
--        image: ubuntu:latest
-+        image: ubuntu:rolling
-         CC: clang
-       - jobname: pedantic
-         image: fedora:latest
-@@ -69,7 +69,7 @@ test:linux:
-       - jobname: linux32
-         image: i386/ubuntu:20.04
-       - jobname: linux-meson
--        image: ubuntu:latest
-+        image: ubuntu:rolling
-         CC: gcc
-   artifacts:
-     paths:
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 2293849ada3b45873f80e4392ab93c65657d0f13..77a4aabdb8fb416c1733f02d02145b6bc0849998 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -347,14 +347,7 @@ ubuntu-*)
+ 	fi
+ 	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/$PYTHON_PACKAGE"
+ 
+-	case "$distro" in
+-	ubuntu-16.04)
+-		# Apache is too old for HTTP/2.
+-		;;
+-	*)
+-		export GIT_TEST_HTTPD=true
+-		;;
+-	esac
++	export GIT_TEST_HTTPD=true
+ 
+ 	# The Linux build installs the defined dependency versions below.
+ 	# The OS X build installs much more recent versions, whichever
 
 -- 
 2.48.0.rc1.245.gb3e6e7acbc.dirty
