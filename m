@@ -1,116 +1,204 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A6811CAF
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 17:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576251F3D4F
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 17:29:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736270516; cv=none; b=KRjOXHexwEvq9jb3tIO9/Q8uL6DPTJaceJI1E3R5KqJLq1/QpFKLK+jwjj2oTLB73ZBGmtPyBODqYTsODLSDBmOjXa6VVD/UEFqZRlDN/QrwNEWOpoGURmk6nzE1ZZzr48fRmujFURCuhrKooafRDox2bm/AQXcdJyLCL5eIEBs=
+	t=1736270987; cv=none; b=B+R4WcUpn8ZnMvnuOYYF9t6kwtAGoZ6kI2DDkItH8IE0ZBF/5918RAm/cPdYBXSew5jtxPS8JogxoDDPSwK3WlvoUhMI/qQG++ld/Hmw/YV3/9AUUuuuzqyRd9YxVY2swn/qpqt9HEtWPbpSBtDPeYBzKW1whHseVMZJZH3Hd84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736270516; c=relaxed/simple;
-	bh=7cL/aIUVEdJY5utT+bjZt3cT2qvJ1WzjR5huWk27fNM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tRgC8eUojASMeXUufxIFq0Vx5wuiuvPKNWhM93rMzc8yReY1vjyQAGWp1U3J1J9H/MhUAmFd7ffUw/V6BAQML4CW5Twz1Fijr6XgfDmEDqtiNLB+Odr0E9quVC45kS43Q65SmarjxdefSYe2PXV/jIRKPrcjQJYzvNvjKVeoxmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=asWWmn0K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KSaE9eQA; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736270987; c=relaxed/simple;
+	bh=IMs0mAVFP9WDUi7Qy8SibK0DbHLPcsO3s886Jz1iz7I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BCKKJV6P8sJjDlTVylHDMPGaS+oVyfuu63Ij9gIA5n9e8sdxFH2koBUqa8I09yVx2DJeQTXhtyZ9LGBpnG+lcr+t132KnwuK9SLqDRFLEWcQJEtPcj5z85rhkSZNOAmxQP704QmEx8fwDl2lMnFudWoEXbxLsPp/vPIffCgkG6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EdnrF8Ox; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="asWWmn0K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KSaE9eQA"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0B64C2540143;
-	Tue,  7 Jan 2025 12:21:53 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Tue, 07 Jan 2025 12:21:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736270512; x=1736356912; bh=rnET2h/y4A
-	pAWSjwrmfwq508d6Stt8N2GNTZDjkljIU=; b=asWWmn0K7K7IiITTKqiL72W4p9
-	65OMC+ZUg7JyVARYwyy2QPofHi1iqzeHvEw1OBqbvB1r2JYUFAxOjpqkzhtCRWtH
-	w67pFmtii4HFjHPHWFO+8yrSh1MLmd+gLgyWWLxndrRRp00QXwsPbjoF0RPMfZ3P
-	sKVIbCBEavX3jFO+h60X446wYG5yQE7jwOAtGtYWzI3rh5UR/Yd0FF7okZO9kc35
-	KGrObu5H66yQWmvs5S/rMtISFvEty/E4SLCTsk5SLzdj4LhobycJPADRaQrMQMVQ
-	Y+fOlin5/IR90oaNc44iswjsxTxaET9ELqVwCeMpnY746lwzGZeexJ/n7ZCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736270512; x=1736356912; bh=rnET2h/y4ApAWSjwrmfwq508d6Stt8N2GNT
-	ZDjkljIU=; b=KSaE9eQA2+fkJGW67WcrPMSLAWdrJhVBAM8tvKqD+e3F4FlkEoq
-	3uT/yS2PbCJnRQbCM1MU6VcUyg0VbZQQuLkad3QOsBJFA8H5lXBSM8Wm5WsnBrAj
-	jnK/+Pc4QRv6e0C2Z3sfGnoZBvBYyLyrlaQmx8EbDv4zBV/4x/X0FYku33TdVVkU
-	JX3czS2UVgL91n0f5rNLS4Xyy7OenA152m4mkA+OPKvQF4kFK0+dKSOqyxMMCWIx
-	vqKhgZhGP1TwdN46dp/p8FsdM/8cMzxAC5aGuG1ipQMUE1RTD48cEiQlRmtiGIpi
-	Fv9pyS8AlRqL74Juh/jyAOF3kfkg+EHpSyQ==
-X-ME-Sender: <xms:sGJ9ZwztPDxsdJaD8K0oK9_qY0VXNqWOKsEhllp3GhOMD_Kup1o51A>
-    <xme:sGJ9Z0TS75lvyxZIGzuYqW7K8KRnzqnmiX3K7A0Tw-vm0-QLe8LfRBcyw_9StXJBm
-    IICse3yT6EBJfemZA>
-X-ME-Received: <xmr:sGJ9ZyX3Fcj5tm0HZ3-tISLK13LJ5EDc-lsCUj6mn9rAc4TlgOptT1I9wgkZ94XBpmD9Tx4NPinIm4ABuvwS6EFXusE8wYQSiUbM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegvddgleejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:sGJ9Z-jkZB5lMOx8uQQpfYayZgPHx9hGUnbuTErWS69cfd5mL-HKbw>
-    <xmx:sGJ9ZyCrwQjWW6mV_Ok7VI_1sxado6l4mCBeYCuWvHZPVHFqwON4gQ>
-    <xmx:sGJ9Z_I4m7w0KRM3vndH_fadpqoo9222FqoF65AxPA84EHWIfTwDLw>
-    <xmx:sGJ9Z5A89pATodbnsBtnzj1U9rPGINBLClq45kqpqFyZevefSC74BA>
-    <xmx:sGJ9Z9MKAyevuKaeHmcV0LRBZ1b5WO9aWOKj1bTvwEkv8fpOlpKMoF1H>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jan 2025 12:21:52 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] fsck: reject misconfigured fsck.skipList
-In-Reply-To: <20250107162914.3756968-2-jltobler@gmail.com> (Justin Tobler's
-	message of "Tue, 7 Jan 2025 10:29:15 -0600")
-References: <20250107162914.3756968-2-jltobler@gmail.com>
-Date: Tue, 07 Jan 2025 09:21:50 -0800
-Message-ID: <xmqqttaatu8h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EdnrF8Ox"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-21669fd5c7cso236856895ad.3
+        for <git@vger.kernel.org>; Tue, 07 Jan 2025 09:29:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736270983; x=1736875783; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yE63QbqFyox0ga6l3tO8y+7SMl0uSaLfOMIwRRdZTlc=;
+        b=EdnrF8OxAZ3qK7PBqi1V40Ibm55FY8gJJxwzmDMvOyzt/u8/yUJ7dUmW3KqLeFPOxL
+         ERizC/t2Nd3rD6zh49yElMvpB+3eKItIO2jho5zSyAZqnNqsp1yGwKE7SOQzwXM0idlF
+         YTzbStUeL0VD6aABWMm4FYiVHf9B3s6eYcRB3YPt4pH3a4k4AFpr22TJZmhtVV7Lq1CC
+         y/yJxMbmgRRL9aeSQAFp0amLb9YsyUHToL/dww4rR8pRweheG3IL37OQZRkUSx4FVqHn
+         PnHPDgXGPt1TZhGMvnQwmHyGF3nG/bJ5MAFB2is8DjAXjQMAwwAQjzNPcj8Rpd7atjcM
+         Tjpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736270983; x=1736875783;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yE63QbqFyox0ga6l3tO8y+7SMl0uSaLfOMIwRRdZTlc=;
+        b=GbUjFguVPks9SxsSEKMBzTM4MQkNnPiyUaAeCQaOLmQIhi51qQGMHaX0zM24OPvx8F
+         MH2jjO2w+RZvsMuHKKKvT4CJ2dgOCODLALOmnVShhf7DL5GMNDEYjlVy1ReyWe7QsY1Y
+         FOnBK3vxUvZbhuc6mrNDiMmrOZ4gOBJEwzMq+/lOyD+QZQEkaTA6poJrK6Z6SfZ1GvY9
+         G3WBSOOtf1kD0B2blKTm2COPT9HaDM0WFbX0K1HKQ2Eubp7dOtP+6gVBBvi4PhEL3PuY
+         fOVpOPLqkA8q0dsQO/vnaTFiMn+OeRrdxF3PeX+/djLLlCWTZu+J8ulpcYz1Yp3vU25K
+         ry9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCW4kzpt6JaVn70pbd5NR/UCbmJQznxn0XQWnPpGGXT86spTCOnBLY9nAYFdUaAeFSf37+M=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwtPDduxMPA67PGfDLYwPg1wc3+aR+9MjPaFvafbiHi/YyLgCKN
+	wx1gLoQdVq4z3rMa9wFNQcKLPM7dp65A+y2O9IKsgqYvs0JE9RSJ5iO9AEK7+6kBuSjdaUPi26y
+	B2glTpT+A4ICA6SaEQ5twH9vtbMg=
+X-Gm-Gg: ASbGnctBLSTf/ATR1jC8XUN9RP2q8vPnZuQ94lowwb5mdYSx+Zyn4Ht8lvEEQCY4ClU
+	12C7ybxICOZ5xtBBcpupZc6+MLSvegLWvpMKiCt8sTvu6AGOzctz+5dA=
+X-Google-Smtp-Source: AGHT+IFpLmU4/eiTwAUWmxkDVF0my0ZpNvJ87pjuW9dh2isuHAKWrHlJh34TI5azwk5FY8DefSNzEJbhGbuXdeL7zZE=
+X-Received: by 2002:a05:6a21:2d04:b0:1e1:b224:74c0 with SMTP id
+ adf61e73a8af0-1e5e0815ee4mr100859013637.38.1736270983514; Tue, 07 Jan 2025
+ 09:29:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1838.v2.git.1735380461980.gitgitgadget@gmail.com>
+ <pull.1838.v3.git.1735928035056.gitgitgadget@gmail.com> <xmqqbjwnra9u.fsf@gitster.g>
+ <CAG=Um+1ch1sKC0H8MJoFv=6iSK3pvA=03AKXmvhm5DG=H8T1rw@mail.gmail.com>
+In-Reply-To: <CAG=Um+1ch1sKC0H8MJoFv=6iSK3pvA=03AKXmvhm5DG=H8T1rw@mail.gmail.com>
+From: Shubham Kanodia <shubham.kanodia10@gmail.com>
+Date: Tue, 7 Jan 2025 22:59:07 +0530
+X-Gm-Features: AbW1kvZW_DWpKOiTMZ_1LpJxJm_QD2drEWQRFmI1-8CzGhdeQRQxZfgCaQESXdw
+Message-ID: <CAG=Um+1tD+taKyN35x6q8ynjgrp+nVPBbuff5FUm6HUp3qe+fw@mail.gmail.com>
+Subject: Re: [PATCH v3] maintenance: add prune-remote-refs task
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Shubham Kanodia via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Justin Tobler <jltobler@gmail.com> writes:
-
-> In Git, fsck operations can ignore known broken objects via the
-> `fsck.skipList` configuration. This option expects a path to a file with
-> the list of object names. When the configuration is specified without a
-> path, an error message is printed, but the command continues as if the
-> configuration was not set. Configuring `fsck.skipList` without a value
-> is a misconfiguration so config parsing should be more strict and reject
-> it.
+On Sat, Jan 4, 2025 at 1:23=E2=80=AFAM Shubham Kanodia
+<shubham.kanodia10@gmail.com> wrote:
 >
-> Update `git_fsck_config()` to no longer ignore misconfiguration of
-> `fsck.skipList`. The same behavior is also present for
-> `fetch.fsck.skipList` and `receive.fsck.skipList` so the configuration
-> parsers for these are updated to ensure the related operations remain
-> consistent.
+>
+>
+> On Sat, 4 Jan 2025 at 12:32=E2=80=AFAM, Junio C Hamano <gitster@pobox.com=
+> wrote:
+>>
+>> "Shubham Kanodia via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>> > From: Shubham Kanodia <shubham.kanodia10@gmail.com>
+>> >
+>> > Remote-tracking refs can accumulate in local repositories even as bran=
+ches
+>> > are deleted on remotes, impacting git performance negatively. Existing
+>> > alternatives to keep refs pruned have a few issues:
+>> >
+>> >   1. Running `git fetch` with either `--prune` or `fetch.prune=3Dtrue`
+>> >      set, with the default refspec to copy all their branches into
+>> >      our remote-tracking branches, will prune stale refs, but also
+>> >      pulls in new branches from remote.  That is undesirable if the
+>> >      user wants to only work with a selected few remote branches.
+>> >
+>> >   2. `git remote prune` cleans up refs without adding to the
+>> >      existing list but requires periodic user intervention.
+>> >
+>> > Add a new maintenance task 'prune-remote-refs' that runs 'git remote
+>> > prune' for each configured remote daily.  Leave the task disabled by
+>> > default, as it may be unexpected to see their remote-tracking
+>> > branches to disappear while they are not watching for unsuspecting
+>> > users.
+>>
+>> There is no description on how and why the prefetch job has been
+>> modified here.
+>>
+>> I haven't formed a strong opinion on the "should we keep going after
+>> the first failure?" question yet, and if this topic is modifying the
+>> way how the prefetch operates, the patch(es) should be CC'ed to the
+>> author of that feature (The author of 28cb5e66 (maintenance: add
+>> prefetch task, 2020-09-25) CC'ed).
+>>
+>> If it turns out to be a good idea to do so, I would expect the topic
+>> to consist of at least two patches:
+>>
+>>  - [PATCH 1/2] to argue that it is a bug that the prefetch job stops
+>>    at the first failed remote, and change its behaviour to prefetch
+>>    from all remotes and then report a failure if the prefetch failed
+>>    for any remote.  With some additional tests to check the updated
+>>    behaviour.
+>>
+>>  - [PATCH 2/2] to argue the need for periodic `remote prune`, and do
+>>    the part of this patch that relates to that new feature.
+>>
+>> > +struct remote_cb_data {
+>> > +     struct maintenance_run_opts *maintenance_opts;
+>> > +     struct string_list failed_remotes;
+>> > +};
+>> > +
+>> > +static void report_failed_remotes(struct string_list *failed_remotes,
+>> > +                               const char *action_name)
+>> > +{
+>> > +     if (failed_remotes->nr) {
+>> > +             int i;
+>> > +             struct strbuf msg =3D STRBUF_INIT;
+>> > +             strbuf_addf(&msg, _("failed to %s the following remotes:=
+ "),
+>> > +                         action_name);
+>> > +             for (i =3D 0; i < failed_remotes->nr; i++) {
+>> > +                     if (i)
+>> > +                             strbuf_addstr(&msg, ", ");
+>> > +                     strbuf_addstr(&msg, failed_remotes->items[i].str=
+ing);
+>> > +             }
+>> > +             error("%s", msg.buf);
+>> > +             strbuf_release(&msg);
+>> > +     }
+>> > +}
+>>
+>> A few comments:
+>>
+>>  - The message pretends to be _("localizable"), but the sentence
+>>    logo inserts action_name that is not translated.  If the
+>>    operation failed only for a single remote, "following remotes" is
+>>    grammatically incorrect.
+>>
+>>  - Would it be useful to force this message to a single line, with
+>>    multiple remote names concatenated with ","?  Computer output of
+>>    a listing often is more useful without "," if it is meant to be
+>>    consumable for cut-and-paste users.
+>>
+>> Overall, I am fairly negative on the report this helper tries to
+>> give the users.  Because we are going to do the operation on all
+>> remotes anyway, wouldn't we have let the underlying operations (like
+>> "git fetch" or "git remore prune") already issue error messages to
+>> the user?  Do we need this extra reporting on top at all?
+>>
+>> Thanks.
+>
+>
+>
+> If it=E2=80=99s fine, I=E2=80=99d like to discuss the change to process a=
+ll remotes separately from the initial change I submitted.
+>
+> I took an attempt at it in my last patch, but I don=E2=80=99t know if I=
+=E2=80=99m really going to have the time to iterate on it as it looks more =
+involved.
+>
+> In any case the implementation isn=E2=80=99t any worse off than the curre=
+nt maintenance command.
+>
+> Also, as a new contributor I=E2=80=99m unsure of recalling / patching a c=
+hange that=E2=80=99s already in seen at the moment unless it is an unworkab=
+le solution.
+>
+> Thanks again.
+> Shubham K
 
-If the value is missing, i.e.,
+Noticed an update on What's Cooking =E2=80=94
 
-	[fsck]
-		skipList
+> * sk/maintenance-remote-prune (2025-01-03) 1 commit
+> - maintenance: add prune-remote-refs task
+>  A new periodic maintenance task to run "git remote prune" has been
+ introduced.
+> Expecting a reroll.
 
-it is a very clear misconfiguration.  "We expect a path, but you
-gave me a valueless true".  Once a specified value gets to
-oidset_parse_file(), we would die when a specified path cannot be
-opened, so it is not like we want to deliberately tolerate
-misconfiguration (we also die if the value is given as "~t/sl" and
-user "t" does not exist on the system).
-
-Makes sense.
+Junio, what do you think about my previous suggestion =E2=80=94 do you thin=
+k
+that changing the remote behaviours is a blocker for this change to
+make its way to master?
