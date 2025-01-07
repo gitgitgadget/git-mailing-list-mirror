@@ -1,106 +1,75 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECAB2F46
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 01:23:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3670EE573
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 01:25:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736213041; cv=none; b=Bz+z7xuvnRET3/GT8/9elFriRJVlDNEBB8mERwXzBGsF+YGXE1M4EIruE2FjuvcCuKGWSAyp5e1R5nJx0JL0nN4gyqz4mP7TinHWgxaFKaN/s3bsT/XTOfS7dbixWxRqygE24xN1MULTK2rSexvloFg5Nn/zF7gdas31lohm8Xk=
+	t=1736213158; cv=none; b=EumwyUHtZHaVcGbb0+hscydLrIu3YWtip76ARomytEpxs8bmkCvrTT2lB4wPBnrDxM1r3GydORYf3WlWDQ4ylAtH6fkb9dV7eMd1MvGrfr+dmBDfI5BVqMdm0MFtOYLaiOU6LgyTy8EfMBU5xoddcKF+0zItbq1Pgh0iSrwW3fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736213041; c=relaxed/simple;
-	bh=BGb4NgLtHA5vF787sx+EgLO7WoAxdJKeSPeVWzcjCmk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=E2InKY9xhKsCF7XQPTNBLGOTWJSL7gG6lMgwwqt4lvvyWtZY4Jhd6gsKd9umeG7dbqMGIjPpGUWvqyaANhpMY4/CV9lRSR9YbAGcT3nIti7+Bf8Y/PssiiLe7h/9TO7DPgVhkiLh31ArPamZKfsx0Ljv5IQrt8f7OrakDaPFRlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CkhLaeaf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ENlXZ8eu; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736213158; c=relaxed/simple;
+	bh=Myi2E0MGi6a3buOh9IaJpVIUQVhYCpr3j/alf+UCmC8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sprdkGgIzORhSOclVF8F+pq27q3OjqhYVzQS2ugKezohM2+UvYT1FPTC8poLmXg/8yG8m0S1vF49nlMTAXUmzUSSdrT7gtxpA1EOyjxUoItkCO+ZZUFDpC0sIZ4L5YQCZ4jQsZZYE6sB5Iz5+CR/YuhHQ3Ugb9l3YI6Alkr/lCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Dr4xkQdO; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CkhLaeaf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ENlXZ8eu"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DAF4925401D0;
-	Mon,  6 Jan 2025 20:23:57 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 06 Jan 2025 20:23:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736213037; x=1736299437; bh=cj1yEcjrht
-	2vXFS1j9+K48OJrFI2/oFXAfI5TVuszRU=; b=CkhLaeafV7YtJUUe+TrcBVXz0M
-	eI5D5HKyhk1f85I80f7S9wlUusAmI6Rqcxm8rYdKTnSdciX8MYia1ZNDJeCEpXdQ
-	SBNmiYytjT3GEfFjfDPDKUN5F4i+ynU5LHRIxQi3KP1m+0Ytihlmw81A73qlqXry
-	n+HSl5SAnRW7325uDHo8GZLsAmbcv+bY7gidPOa3lbDSQatkI6ULEPtNEX9xmPCU
-	cwzhv6fBpnucPJeBupa2I8SP4q/a6owIq3+QnxU3u6GsdRs0Prb72Yup7MtsImYD
-	4FYmyjY2lIkQzG5bhorLqHrzIvRcjJxDv2TkGCQPCDwyqaEflxKq8qVm+mJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736213037; x=1736299437; bh=cj1yEcjrht2vXFS1j9+K48OJrFI2/oFXAfI
-	5TVuszRU=; b=ENlXZ8euSuZRWRNGxFYhXnwsWL0IOnvlQkwImhX0yyjNPB6oYjD
-	Go0J1xddGVTLqE3TS9N/GagkhYlfzETzcN8NeuZ7qlpq4ReXE6NIqUdeBfzRojqu
-	/NxBdJgDFe1swTf9MbEOJ4LDQWXKhzlDEJh/FWjhDyiEWXcg/DfXcIp2PV+41UJV
-	h/UASQu3jXoFfr7QGf5+CU5LEAYaRjIt8yyBlgG6AGlAqBrUHyP5AhV6Le/n0r8A
-	kunyn7TEKHuoPPmCRfOZsmgh7JmPBdgbjMPbZRxIRD6uFnrOANSq8tL+wv0WIYnU
-	Mlrcp5DbKOk+bi03aeVnxmh1s/QBlKQaO8w==
-X-ME-Sender: <xms:LYJ8Z2vkK8nRalVRqFkMMkrD_U07VFqL_jmeUy5EtlfxN7BiNg5mDA>
-    <xme:LYJ8Z7d_grvs_oVBqgQ2zBbiBsfZGJOzmoDUCcFK-B4hq58liD5HuPYFqcdVs6PYI
-    TNVhmCnDAuWvzeN_w>
-X-ME-Received: <xmr:LYJ8ZxwjY3uhrxgcm6UkCpZkb3pqcjqcac_sxdX3MQJx4eOZsldkG2v6PMLqJe0BNZuSx3vwKWTmVt3vMt_1X6ZCucGbYzcfGhDr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeguddgfeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
-    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehlvghvrhgrihhphhhilhhiphhpvggslhgrihhnsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:LYJ8ZxOHdIVbqj8xvcoQYWRtttenSbQnTpxp--unlJ_WcTqp8rRgYA>
-    <xmx:LYJ8Z29ZwL9qHWpt3LEJpGA0f8uOiPOTU9gHjQLmWpjQ1j5uj5BVfg>
-    <xmx:LYJ8Z5VqeqrzjVEKALiOXhbZqLEaHLqL2e4yDlXgWbxfjeHM0KpBwA>
-    <xmx:LYJ8Z_fQ2nvCtFB24BvSeWnu2o_6I2L7JYMWd2GtZoyEFVbZmmpPlQ>
-    <xmx:LYJ8Z9m7zOaQisn8rGMQgF5L4xWfaGl02mywJmoEF5t1_AU_KRsl4c4i>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 6 Jan 2025 20:23:57 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Philippe Blain <levraiphilippeblain@gmail.com>,
-  "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Subject: Re: [PATCH v3] completion: repair config completion for Zsh
-In-Reply-To: <pull.1860.v3.git.git.1736200026899.gitgitgadget@gmail.com>
-	(D. Ben Knoble via GitGitGadget's message of "Mon, 06 Jan 2025
-	21:47:06 +0000")
-References: <pull.1860.v2.git.git.1736002073641.gitgitgadget@gmail.com>
-	<pull.1860.v3.git.git.1736200026899.gitgitgadget@gmail.com>
-Date: Mon, 06 Jan 2025 17:23:55 -0800
-Message-ID: <xmqq4j2bwh5g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Dr4xkQdO"
+Received: (qmail 26712 invoked by uid 109); 7 Jan 2025 01:25:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Myi2E0MGi6a3buOh9IaJpVIUQVhYCpr3j/alf+UCmC8=; b=Dr4xkQdOGqTvH/w2/CdLrujPzeTq9Lq9Qf5M+O/MTLzWYDoSAmzG5P5gEO2a5GgrWJRz68DLQolpeS6WFbCDHjnExsrbA0F89rznyORPm3COTgvBkkenLWHXJgT1+dmjEo4ZtMxzzmTyXGjbU3PcAtOltCwqGyIybeS8jR4MF218iIhAEyspzN+JReZtz/ft3SSTkQ0MmZznGJ0st3bE0poxIbz7U+j6aWXosXfRCiGp0RlmT9i9s7D9dnyr64/Rp88RfK2D8ap3tCPvy9Laz/IL0EyBbpmYfw3B1l+S4bUWbBW2xSfRTM3r+HwmtFOoJb08PF7QxV6+pzb0hUsUQg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jan 2025 01:25:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18447 invoked by uid 111); 7 Jan 2025 01:25:47 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 06 Jan 2025 20:25:47 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 6 Jan 2025 20:25:47 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] object-file: retry linking file into place when
+ occluding file vanishes
+Message-ID: <20250107012547.GA2363@coredump.intra.peff.net>
+References: <20250103-b4-pks-object-file-racy-collision-check-v1-0-6ef9e2da1f87@pks.im>
+ <20250103-b4-pks-object-file-racy-collision-check-v1-2-6ef9e2da1f87@pks.im>
+ <20250103194058.GE3208749@coredump.intra.peff.net>
+ <20250103195942.GA3212696@coredump.intra.peff.net>
+ <Z3u6c1UVQyZuHLdk@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z3u6c1UVQyZuHLdk@pks.im>
 
-"D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Jan 06, 2025 at 12:11:47PM +0100, Patrick Steinhardt wrote:
 
-> From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
->
-> Commit 1e0ee4087e (completion: add and use
-> __git_compute_first_level_config_vars_for_section, 2024-02-10) uses an
-> indirect variable syntax that is only valid for Bash, but the Zsh
-> completion code relies on the Bash completion code to function. Zsh
-> ...
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> Acked-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> On Fri, Jan 03, 2025 at 02:59:42PM -0500, Jeff King wrote:
+> > On Fri, Jan 03, 2025 at 02:40:58PM -0500, Jeff King wrote:
+> > 
+> > > I suspect there's a way to write this as a loop that would be more
+> > > structured, but it would be a bigger refactor. Bonus points if it also
+> > > get rid of the try_rename goto, too. ;)
+> > > 
+> > > I'm OK punting on that, though.
+> > 
+> > For fun, here's a version without any goto's in it, that should behave
+> > the same. But it would be very easy to miss a case. So I don't know if
+> > it is worth the regression risk, and I don't blame you if you delete
+> > this message without looking carefully. ;)
+> > 
+> > Diff is kind of hard to read, so you may want to apply (on top of your
+> > patches) and just look at the post-image.
+> 
+> Thanks. For now though I think I prefer to go with the simpler diff that
+> uses goto, as it feels less risky close to v2.48. We can still refactor
+> this in the next release cycle.
 
-Thanks, both.  Will queue.
+Sounds good. I looked over your v2 and it seems fine to me.
 
+-Peff
