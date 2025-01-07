@@ -1,85 +1,88 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC0F1F2364
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 16:37:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6811817B50A
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 16:40:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736267825; cv=none; b=o051MQX46hWyCNfQqAljiKesA1N6/TKTj64GJOweKzpu4oUBAycRWEc02YF+mnrjZUK7XCK3lbYzB3FXdXSOwi60r8S6plPZBjh052Q/Brx/XSpeao1sxucb9quUqEg3f6wSQ3Jnf/t6Qmba14nqEXViDE5kamGgiPUjPY94DrM=
+	t=1736268060; cv=none; b=JE3rnIZpkQ6YTiUGEuLyLD6jjQzPg+6XnKGSnJscDdJ4iFJ6b7ra+KKFM9K6qLMacooMmo3m3JO+TeCXWUpvqxUN69bnJXcyAqzDjP1h0yBPpo1M/wm0RakAXlWXNYZHckYRWsw7a2Ue2TcT2+qLdDRFyiMDBhfSVePLnE45LJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736267825; c=relaxed/simple;
-	bh=1NEM51MT8P32MIebkNha5r9xDJashEZKFbw3E4jmHRE=;
+	s=arc-20240116; t=1736268060; c=relaxed/simple;
+	bh=ocNHSkZvLriHKujYzJ2qnk20KmPNEitDUebihK4BRpk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uqMm/a9dtd+5Xec7KJGIM/24afrz0DJVwfdCCb2sMdoPZ2ytPuLAxXTjr6bPA/d4XfVjYch81kZH8fI4oamW8e+0i+B6Ty02CDGr+QvBQewupNNHmYlB/Fq/LEh5v05XhjdBYHmQKdFsIXA+x7u5GtLX1w/45nGC3qC009gRcg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uQhJpU4r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=al/m/qBU; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=rQ5GfPLmDjoqcokefVeGPi0AU6yk98AiXZ1wcWWNMb/+0RTx2/O0B/v5wb4XvnyNT7FfLqM3/odKDE6iIqb4Fpu0PZKPfXNf2x5hXpXOC6khrPDA0qYtD48PVDIDQDc4ovBq7XYx6lKRtF9ejbp+jzSMIkl1OnW3biPln7LqEZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QVgBTTBi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sU86zH0u; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uQhJpU4r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="al/m/qBU"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A458825401C7;
-	Tue,  7 Jan 2025 11:37:01 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Tue, 07 Jan 2025 11:37:01 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QVgBTTBi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sU86zH0u"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 517CB114019E;
+	Tue,  7 Jan 2025 11:40:56 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 07 Jan 2025 11:40:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736267821; x=1736354221; bh=AfAkZVH1nX
-	wOtuIVffPJRQCYBAgIGw9iYZBsQVnbV8Y=; b=uQhJpU4rUK3Wkp/0E05Us43Oto
-	qjw16lhvkJ86UJyDeT3MKYYixmkt7gyKAr1PGGyCSuqpmXkaihA5qZ5ozwcWTW+1
-	GkSvj501UgI9pD7JMtXP8J4UHekOBBDjVgQaRCWeMUVoSY561Zir3ulCfzFVXnqB
-	9XUbrrC/uYfmece1LIYf/75qVEhb09porQmVSrwBQwUWywN6SE1NIFaXqvgELENC
-	SsMLo3aS4FtVulfBwUepya2rmmxnG1rGXQZO/ppDJxSBgrF400XNrcCut8z0ugxg
-	K9bhlLGP3n8b4CrMhd5GmGuus35ZK9kYKHRKYGrxvUhR7SyVGHbN9rvoxqyA==
+	:subject:to:to; s=fm1; t=1736268056; x=1736354456; bh=qhMUnnlr9/
+	6ay7N4biF556bL/2tibVG5vSQac0fC0xc=; b=QVgBTTBi+s36gYTjypRoT8uWiI
+	waydkMpupYVnqrrJEq/e9YKPHSUVc3j3lJSDal98xx6OCiwyscxG4n0EuepSSIyg
+	ndzp2XYdUVYzD05Dede1VkOxjuDSOZ/KDVmCINxVB7RRq6lUzgEI82VH3sC4evuo
+	jdFFXj3W0WlCofUR9WbNeKQrFYjJoIvfgqNwiCbKLrlD96X3sOFEQVH4aAaKe6UN
+	XfQ0q958itP+lWJ134gtIUnp2nezj6A2EfkKJlSZiqSaJtPEVOSawOe+cnzY5hp4
+	7N9GXEmHFzFtJiiWqJy4ptORfeyrqA09jjuXQI6SutUt27u7DduP/9R1ZfCQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736267821; x=1736354221; bh=AfAkZVH1nXwOtuIVffPJRQCYBAgIGw9iYZB
-	sQVnbV8Y=; b=al/m/qBUYiQTaM7cf16rpqxsKnwQtZxVEg7OjeCsV9TzbuhR/y2
-	AqqgQSEmUxWk1GtuqNWrxBsR4IIP963i8M9NLnzZr6chX04s3pKpePMBByDJT2z1
-	kc1yRapU0PLyHNy+T8EEVwop7HT4hYTeeRvjC103EaPnoLIY3GMmKWzvPSBlrpaV
-	Ja/O5yLLLLVdkpsitOcZazQWY6k01nkMG3gu9lUVE/y24wtk87Hflpex6gszXCNZ
-	gvy/Pz4s4f+AtpjCubM/16CHwj7V8CtVt3mMOBZ8sMjftJMylLd+iNgWdUd0SpKE
-	Q7PJUVKMeBC4yr2PB68kv9o/BNZ2CvTQ0ag==
-X-ME-Sender: <xms:LVh9ZyDfXu5bftm6tODt6u0r1mnWoB_DJpErb53zjZmo5cIwpjpDQw>
-    <xme:LVh9Z8jcUXQtMQrt02AuRGy3yRXVAvDhQ08d9dXXmcdD69gdYKfJaEKZ5T2XBwBbg
-    SsaxG0uuTRlObwUcw>
-X-ME-Received: <xmr:LVh9Z1kJ9wJMkchSiFppGJGZ4I_lNGOF6YwYzbXMtvLdX04ReT0vEF0clke8HFT8TnOfnsJGawERIPUaOOdOaymiSilbrhDXY-eh>
+	1736268056; x=1736354456; bh=qhMUnnlr9/6ay7N4biF556bL/2tibVG5vSQ
+	ac0fC0xc=; b=sU86zH0uJ+RT0Hrgaiq72yEALa7fp/BJFuPjJzLeIP1pO0xI5u7
+	XrjclQNhOwjJ9uy7Z9yK7ZRYTYgFEX7lYzQjqpGgDlDU/GxkbeC/5b9YhFjnYu46
+	yjRMdRUFpeu8Bzt93y4aZl7MKK/I8vo0NoSABtdl3e/aX+QCwZQzTTpOkKF6iHB7
+	G7e4koMzjeyoQMrMIiG674tUB9KwAP/bjkeKWOIkjCL+jhdLYKmh9VKitsPB1t00
+	9RtQJKrWCwpxj3cZbOKQQ8E5Epw19vGHmpRjLWEALyEfQ6oDTbzqfEe98c8a9ksd
+	kq/50CBSqcfY86eAGkfDr8MPJNQtwJPywRg==
+X-ME-Sender: <xms:GFl9Z7D6uPxjdF_E73HNPMFS-nsdrP1QA1-FbSwFPw88YDnIZWjrgg>
+    <xme:GFl9Zxj5Ms4-OtxV2Uz0c5sDieDo9c9v20vKjOgrAtnn8HLW7m-RuRPoHf0S63y7A
+    CLhtF3Bsrg8I_NMgQ>
+X-ME-Received: <xmr:GFl9Z2n3_wC07rHi0WQT4Ap5udidolEsVzuVfFeWKAGqdhVu4ji01RiDQIGIdkHR7YWKw7njij50wD4konNm-HrvypgmTakBbax3>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegvddgkeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
     ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
-    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    sggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:LVh9ZwxdhEZ6gAApVKsx_So6813qihYDesjTnsFRHHvLBjf-NDQRYg>
-    <xmx:LVh9Z3QqSF21Q40ZwfwB3jYBAU2Ia_lMV6ykn5Q3JU-kGjxjnA1ECQ>
-    <xmx:LVh9Z7bntMnUzxNzmKefVVXyB2v9yirlDe5C6dq5E8QA2iK0dcVcuA>
-    <xmx:LVh9ZwS-mUwUfcfd_gmP7zyScg4guoDhVuzWFnOZkWlQJCSLzjHshw>
-    <xmx:LVh9Z1OJW6QJ7hiolyu1Gr2AwsucwBL12wvoMUvSMsod5a12uH9iEKqC>
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsg
+    gvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:GFl9Z9wZ9MwKbl2cqhot0kpxU487L_7E0J8GfTp6QODxao1lTqnV-w>
+    <xmx:GFl9ZwRvPm56fnBO17Qf4xmsV7cTrKOUQhQR9R9G5okhTHuaP90PmQ>
+    <xmx:GFl9ZwZ56Vg21jdSWXf_AW9rp3cQDvvEDCnNlOv6XYmzgB9vBPzEFQ>
+    <xmx:GFl9ZxR9SdaVlLczGnIzZQz-ryPxQMFt0Vv4R_xXxlJjgyAraC7Msw>
+    <xmx:GFl9Z1Ikc1Egu4f7p4dd_d6Oa57TlL4pY7e_yhyWQZ5NyezOJE0fcpTy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jan 2025 11:37:00 -0500 (EST)
+ 7 Jan 2025 11:40:55 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2 0/5] remote: announce removal of "branches/" and
+Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
+  "D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v2 5/5] remote: announce removal of "branches/" and
  "remotes/"
-In-Reply-To: <Z30ik6NlYVMnNMpB@pks.im> (Patrick Steinhardt's message of "Tue,
-	7 Jan 2025 13:48:19 +0100")
-References: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
-	<20250106-pks-remote-branches-deprecation-v2-0-2ce87c053536@pks.im>
-	<xmqqbjwk0x0e.fsf@gitster.g> <Z30ik6NlYVMnNMpB@pks.im>
-Date: Tue, 07 Jan 2025 08:36:59 -0800
-Message-ID: <xmqqcygyvavo.fsf@gitster.g>
+In-Reply-To: <Z30hnx43mEwjWqzA@pks.im> (Patrick Steinhardt's message of "Tue,
+	7 Jan 2025 13:48:42 +0100")
+References: <20250106-pks-remote-branches-deprecation-v2-0-2ce87c053536@pks.im>
+	<20250106-pks-remote-branches-deprecation-v2-5-2ce87c053536@pks.im>
+	<CAP8UFD0Lzazxyq9nnT-vwN=MijKAsYySFC2dvDEj33cS7VB0kA@mail.gmail.com>
+	<xmqq34hw0whh.fsf@gitster.g> <Z30hnx43mEwjWqzA@pks.im>
+Date: Tue, 07 Jan 2025 08:40:54 -0800
+Message-ID: <xmqq8qrmvap5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,31 +94,46 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
->> Specifically the ".git/branches/name" mechanism was never removed as
->> it had one distinct advantage over all other mechanisms for users
->> who have to juggle tons of remotes that change either their URLs or
->> branch names or both not so infrequently.  Instead of having to edit
->> files in .git/remotes/*, being able to say
->> 
->> 	$ ls .git/branches/*partialname*
->> 	$ echo "$URL#$branch" >.git/branches/foo
->> 	$ rm .git/brnaches/foo
->> 
->> was powerful.  Offhand I do not know if "git remote" command
->> improved the usability aspect of newer mechanisms good enough
->> to allow us to start using the verb "replace" here.
->
-> I would claim the fact that nobody nowadays knows about either of the
-> old mechanisms is a good indicator that git-remote(1) has indeed
-> completely replaced them. I'm happy to slightly reword it though, even
-> if it doesn't ultimately end up in any of the commits anyway :)
+> Makes sense indeed. We can easily add for something like below diff.
+> I'll roll that into the next version, thanks!
 
-We can claim whatever, but scripts written in ancient days may still
-know about them and they do not care what we claim.  And that is the
-primary thing that makes me worried.
-
-As suggested elsewhere, I think it is prudent to add some checks
-when remote.c notices that we used the values that were read via
-these old mechanims and complain loudly.
+It is a good start, but is probably a bit too noisy.  Can we make
+them appear ONLY when the definitions read from these older sources
+are actually USED?
 
 Thanks.
+
+>
+> Patrick
+>
+> diff --git a/remote.c b/remote.c
+> index 55e91fab47..8c104c6ee1 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -309,6 +309,13 @@ static void read_remotes_file(struct remote_state *remote_state,
+>  
+>  	if (!f)
+>  		return;
+> +
+> +	warning(_("Reading remote from \"remotes/%s\", which is nominated\n"
+> +		  "for removal. If you still use the \"remotes/\" directory\n"
+> +		  "it is recommended to migrate to config-based remotes. If\n"
+> +		  "you cannot, please let us know you still use it by sending\n"
+> +		  "an e-mail to <git@vger.kernel.org>."), remote->name);
+> +
+>  	remote->configured_in_repo = 1;
+>  	remote->origin = REMOTE_REMOTES;
+>  	while (strbuf_getline(&buf, f) != EOF) {
+> @@ -338,6 +345,12 @@ static void read_branches_file(struct remote_state *remote_state,
+>  	if (!f)
+>  		return;
+>  
+> +	warning(_("Reading remote from \"branches/%s\", which is nominated\n"
+> +		  "for removal. If you still use the \"branches/\" directory\n"
+> +		  "it is recommended to migrate to config-based remotes. If\n"
+> +		  "you cannot, please let us know you still use it by sending\n"
+> +		  "an e-mail to <git@vger.kernel.org>."), remote->name);
+> +
+>  	strbuf_getline_lf(&buf, f);
+>  	fclose(f);
+>  	strbuf_trim(&buf);
