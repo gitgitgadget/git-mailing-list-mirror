@@ -1,145 +1,96 @@
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7082156968
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 21:23:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213F7156968
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 21:24:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736284984; cv=none; b=mNr3TdSTY10QCHwPHBzcoWrmXbvO+ioqZMC3gsiA8Xroj3zOdyiJdzbG1ZWXvro0io8M7/KUgfTiuok2kCwtMBYhSK/APQH6J6yMvjGHqLwclNyk+XhFl74/rqlFeZeC+m6c9vWsc55QApXRpxKK6jtr9cw+EEzN+uAedyJuha8=
+	t=1736285066; cv=none; b=P03UYh2LVk7cizETsdHDKlDkKuDoz+BGrRMuQ9hOQMu8lO6DHLVz0DJLdTfWnnxaGn+eVzkRqRIEetx2TbVF2kEYygo/JkgNsa/m6BkfyHr+E3MCeixdXvPYasupt+4uGkXvjRNmxnHtWMEzRZ8UOHofvbJGxF8HZeN5Gk+AFOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736284984; c=relaxed/simple;
-	bh=B7pQgoiaKq3nD5d0uNXeRu9M/QyKy6w9HYrNX/Cx29g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RyrXoU/PEJBVz6oLHGzjE4Xn1qrv4KD0RFdQur84uaUhLOQwNIMhKLvuGWd1brRXMleZoHwwHcpuZDNP6pBOMddQojxaz1LBUswgLTm+hPPoNq3qaVdL3USTPw9C138uUpZP90dDrnoTCv5525gaQOxb120RwmxzUf2CJA75hYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=qEmAaOV7; arc=none smtp.client-ip=212.27.42.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1736285066; c=relaxed/simple;
+	bh=QlhJ+9/eVE9GwT0kF7DJKlT/b3eb2DyMOJsoXKnSkXw=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=VCkiwazITzKI0047Hu+BjVZrBtUssxUliWtxmk7/E8LqCKOlo2ORLREHmYK3zeF3AGy2QmRtaasqhYp8NCTCiWlFO0YckPWtcNPNg0sFuE9JMdsH6B2Zu1pB8XP0tZcxomu+52coP/PhxNeDbz90R6bwu8sbvJB2SeLwBJ+EXeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhcFg/GC; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="qEmAaOV7"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:420b:f4aa:dd4f:83c9])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id EAE8E5FFA3;
-	Tue,  7 Jan 2025 22:22:57 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1736284980;
-	bh=B7pQgoiaKq3nD5d0uNXeRu9M/QyKy6w9HYrNX/Cx29g=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qEmAaOV7Gis1Qkiq/2PwdPs5olyzdNuL/0AfnCCSOadyjBdrbpXo10/2fEn/OWkzv
-	 4tSzTs/xtvuq8Xw3NKNlOc4qvI2TqS/xpISDlvbtuMNMexmrZqXYfn+vCLV2h3TuOa
-	 9PpJhl7t8+u9EPGeshkqhiDyIFOclusoOMNqKLBXCMQjROe2PYcomUaD1+AQDGNpfI
-	 Ar+HxaU3DMQeY1BokcuTqdwemFAWTUpyjM/25sixoQbeQDnLNudmcUXjnZON/9iQ2h
-	 wtezGpNXEzkfrgxlA4jMkJy/WG/HnHlLebeykEGkIX4EoICIx3YpQmV+iDNlDxV5UL
-	 QvCr+GQFKHohw==
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:
- =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] doc: git-notes.txt: migrate to new documentation format
-Date: Tue, 07 Jan 2025 22:22:57 +0100
-Message-ID: <3330199.aeNJFYEL58@cayenne>
-In-Reply-To: <Z3t_GvqfZL9y-_9p@pks.im>
-References:
- <pull.1846.git.1735924216993.gitgitgadget@gmail.com>
- <Z3t_GvqfZL9y-_9p@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhcFg/GC"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-436230de7a3so24648015e9.0
+        for <git@vger.kernel.org>; Tue, 07 Jan 2025 13:24:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736285063; x=1736889863; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JQFDv10KtG1boUe2H0y0/g9dnYoXzKa/vfNYX1yQgIw=;
+        b=MhcFg/GCyYaMOrOg3oNcgDx9rubLH30A9CX76EtOSMl9odIJsZchAF+oflF6Qds+y9
+         F9eE1qRci/V0C+mSlnFJ/GX/gXTSGw0VhiPMaxSI/+ig0F4ZsqvlNXb/EuJYoR8SeTnH
+         1Tp1R4BAAcwu33GitcM74rFUxtc8vT75rujWfVo6XDECZjlMOE0UsNiGc/ttStBZxB+K
+         h2L80JCCkwxyz3WYsTeLeyolz79tuj62JBwssfnpGexTaJa3ojq/N5IZNEfwoW2QBjWO
+         HdvQuJwX2M5aD+8VJzBhg7UAa8BS7llLVDr4nLFXncjWowdjukQWlpM60Ai5TzDpykfY
+         mZIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736285063; x=1736889863;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JQFDv10KtG1boUe2H0y0/g9dnYoXzKa/vfNYX1yQgIw=;
+        b=ly4wKWWo5hcyMcLvmHv4JjsO4Fypu9l0koyT5QylVVA0UF20L4oI5bw+8vfkdpWjeY
+         Gd7wxQMD1eIrxlRbHHyh0Ww42nG8b/7g7NC7m3srB82U2Rx28fA9hZjBY9yfTPnnOSLe
+         4oUqbArwRtaaMHoJITBGSeMzo2JmA2ecILuUedcnP1hx4c2UfHxUw3+i2eaVDocXGWyZ
+         kClHMQMi/QyBNmSvHos3qJlC8qblyf1yMS/eqotlvFnEKyTKQydtmkPHVr0k8/ZR1b+p
+         RadG8q0mzyOOudNCeD9m3hRHtwiXPX4M7PLHG3ObEOrdPZIIU/fIC++hWY7Aeyj7wmwW
+         ArcQ==
+X-Gm-Message-State: AOJu0YwNhA0RfM+CNIDZCm/mrkC/AGbDKN//xs+t38/JnQI6F6T3KcEY
+	2FJkG8jHe93sT51wHmuUpDJ3PDn0Hi7EXFyRTNNw7/KmVJSDhAyM/myMiWWKV18=
+X-Gm-Gg: ASbGncvyn5Ej5osEg8eGHZI2FayJM8f6ousGXdSIEfyzfsWoMJLgQh5P+7I9IKN96Gj
+	HKVVHI3zi46MAnGYb9LBpf/LYlXwHCgG/vAxDm7Wo/9Ttl41cxvN0cYyy6zWBMnI3mpHr2GMbPz
+	iIs0wxl96dZ/xGe3LVN2Cf9ybNifqNv6FCoFeEqp7lxsMl7kXbtykBf+K+9m+GIU5FDhpCsM9km
+	oPusxV3rgm4Im8ZSTnWKMSlOxxpFTQVmKOAwb4piPR14v1cyUBqAQjoJZJH
+X-Google-Smtp-Source: AGHT+IEigPz6K/MRQQScsMDGBIyw3AHX0gLPuEJnVkExTQMzwoEtH9Pid7wrUo8CRV5LKWhYf2qY0A==
+X-Received: by 2002:a05:600c:46c3:b0:434:f335:85c with SMTP id 5b1f17b1804b1-436e26f4258mr546295e9.6.1736285062974;
+        Tue, 07 Jan 2025 13:24:22 -0800 (PST)
+Received: from archP14s ([185.254.75.41])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436dcc8ddddsm21856085e9.0.2025.01.07.13.24.22
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Jan 2025 13:24:22 -0800 (PST)
+Date: Tue, 7 Jan 2025 21:24:21 +0000
+From: Matthew Hughes <matthewhughes934@gmail.com>
+To: git@vger.kernel.org
+Subject: [PATCH] docs: fix typesetting of merge driver placeholders
+Message-ID: <20250107212421.7yyvuzw4uqxnqv7t@archP14s>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On Monday, 6 January 2025 08:00:01 CET Patrick Steinhardt wrote:
-> On Fri, Jan 03, 2025 at 05:10:16PM +0000, Jean-No=EBl Avila via GitGitGad=
-get=20
-wrote:
-> > From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
-> >=20
-> > The git-notes manpage files were converted to the new documentation
-> > format:
-> >=20
-> > - switching the synopsis to a synopsis block which will automatically
-> >   format placeholders in italics and keywords in monospace
-> > - use _<placeholder>_ instead of <placeholder> in the description
-> > - use `backticks for keywords and more complex option
-> > descriptions`. The new rendering engine will apply synopsis rules to
-> > these spans.
->=20
-> I think it might be a bit easier to send related changes like this and
-> your changes to git-restore(1) in a single patch series going forward.
-> It allows the reviewer to bundle related reviews together, which
-> requires less context switching. It also allows them to more easily
-> refer to similar review feedbacks sent for preceding patches.
->=20
+Following the `CodingGuidlines`, since these placeholders are literal
+they should be typeset verbatim, so fix some that aren't.
 
-=46or simple manpages, I'll do this from now on.
+Signed-off-by: Matthew Hughes <matthewhughes934@gmail.com>
+---
+ Documentation/gitattributes.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> Other than that I've got the same comments here regarding the style of
-> the commit message as with your git-restore(1) patch. Ah, I also noticed
-> that the subject should probably be amended because we don't typically
-> specify multiple subsystems with colons. For example:
->=20
->     Documentation: migrate git-restore(1) to new style format
->=20
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index e6150595af..5d12b78549 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -1166,7 +1166,7 @@ internal merge and the final merge.
+ The merge driver can learn the pathname in which the merged result
+ will be stored via placeholder `%P`. The conflict labels to be used
+ for the common ancestor, local head and other head can be passed by
+-using '%S', '%X' and '%Y` respectively.
++using `%S`, `%X` and `%Y` respectively.
+ 
+ `conflict-marker-size`
+ ^^^^^^^^^^^^^^^^^^^^^^
 
-Will do.
-
-> > diff --git a/Documentation/config/notes.txt b/Documentation/config/note=
-s.txt
-> > index 43db8e808d7..70859f5c574 100644
-> > --- a/Documentation/config/notes.txt
-> > +++ b/Documentation/config/notes.txt
-> > @@ -26,27 +26,27 @@ globs.
-> >  A warning will be issued for refs that do not exist,
-> >  but a glob that does not match any refs is silently ignored.
-> >  +
-> > -This setting can be disabled by the `--no-notes` option to the 'git
-> > -log' family of commands, or by the `--notes=3D<ref>` option accepted by
-> > +This setting can be disabled by the `--no-notes` option to the `git
-> > +log` family of commands, or by the `--notes=3D<ref>` option accepted by
-> >  those commands.
->=20
-> Should this rather use "to the linkgit:git-log[1] family of commands,
-> ..."?
->=20
-
-Nice catch, although not really the primary aim of this patch. Will fix.
-
-> > diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-> > index 84022f99d76..02a3495986a 100644
-> > --- a/Documentation/git-notes.txt
-> > +++ b/Documentation/git-notes.txt
-> > @@ -33,34 +33,34 @@ ENVIRONMENT sections below.  If this ref does not=20
-exist, it will be
-> >  quietly created when it is first needed to store a note.
-> > =20
-> >  A typical use of notes is to supplement a commit message without
-> > -changing the commit itself. Notes can be shown by 'git log' along with
-> > +changing the commit itself. Notes can be shown by `git log` along with
-> >  the original commit message. To distinguish these notes from the
-> >  message stored in the commit object, the notes are indented like the
-> > -message, after an unindented line saying "Notes (<refname>):" (or
-> > -"Notes:" for `refs/notes/commits`).
-> > +message, after an unindented line saying "`Notes (<refname>):`" (or
-> > +"`Notes:`" for `refs/notes/commits`).
->=20
-> Curious. I'm not familiar with the modern best practices around where to
-> apply what kind of quoting, so why is it "`foo`" here and not `"foo"` or
-> `foo:`?
->=20
-
-Good question. I usually tend to remove double quotes and replace them by b=
-ack=20
-quotes when the words are keywords. Here this is a string citation, but I=20
-would still prefer to apply the synopsis formatting. Maybe, something light=
-er=20
-such as "Notes (_<refname>_):", which would just format the placeholder, wo=
-uld=20
-better fit.
-
-JN
-
-
+base-commit: 14650065b76b28d3cfa9453356ac5669b19e706e
+-- 
+2.47.1
 
