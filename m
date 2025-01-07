@@ -1,155 +1,95 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D43D1F0E3F
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 12:48:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C535C1E521
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 12:54:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736254127; cv=none; b=G4bS1sQWdV2Swoo5FGsaXDmdJoMUBFpa1b7dqvvLgHIO3AtHrYPhya6GEGI3GqybgOT10GwnA2yrFtDvAHZXCfTTeXzAdmWJW4a/aaUvYcVmeCkBR6OLpZMS3UnAAk/TP185pjNjBnyIESYx1QBqX/arg7c+ikCwtxXZsFBpXcw=
+	t=1736254495; cv=none; b=EhJ38LiGZcqH7GKO5vxttC/BsWwsohN3TGP5HLMf/StKNM6cPXxP7MXw0CaFpuTo0V5G8VW/1K2fplbgSYMOHmTBCEX0YX+GA2YTV5I8TtpMVGNrw11as5g5MPx4P6oM0iMy7d47HNcOm7ZVR4K619lWEU69eTjOt9e1ETkQeS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736254127; c=relaxed/simple;
-	bh=zVktgLgy43VFLMZPXg2kGThUwXZCEjcA08SAnmeEnQw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UuDn7+Xmym3BxiNtYqHvIjTEeS0yCighfFmb1AaIgEvXKGLDrGcyCBoIuhG5FjpNE/56hkUIpBKLnFBd5syB7pek80v8xnZGoXPfeo4MEaKk0mMab7Mr49J/hAHwQVkXRZTtf4OOm3qQFQNmTbhxhdxyk1KaCs95+BdJgvfYQOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VhmPMM04; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NqUo4ru7; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736254495; c=relaxed/simple;
+	bh=Ez99jm0/mTCY6JV3vf4dCkdTzQTS/tJdNFv3J5e73ks=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=JRHUtxamg+Ihvolw3yntKE2EUpwjSyPROz8JYI0LM3I8FJpYCzvvUO77M8UXmisqiBqNhsG6YULcBlH2q3WjvDavL0NZzkbjM3iMZPD4HjxFI3ggMf3Y18Wt3q8ZdkG5yMioRGx65NY5Elh4WkkGD3/ckG0cx6lkPkgmieH21As=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l9i5Witr; arc=none smtp.client-ip=209.85.208.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VhmPMM04";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NqUo4ru7"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 06C5F13800CB;
-	Tue,  7 Jan 2025 07:48:45 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 07 Jan 2025 07:48:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736254125; x=1736340525; bh=LLeUiVCduQ
-	cy2ic14imFDu4OG/Zk9M2ac9DjCvGcFZY=; b=VhmPMM04yEdqbhhDZ+1v+H2O+C
-	bulX6i6MGpmW/+OSNr5tRWIfNsFzyOlgc0bcajrXwsaqNsMJfaZ173he8edl2Uch
-	dDEO82dluwoDM+fRifDgdNiIPkcmWS1hOaBAbp/hQX8ZGv3Uz+z5UuonRHjufntK
-	cO4903ro9Z1OjC10v+CFY2hSkKQIaiRLyAwPJrB3POl9dJoeZ2mtRq6Ghg8kHMZy
-	noMW0Ko3TKUffMWBJiJo1hpRr1x7vOsv/VGljRTaFf/b+AkeeRoKbkG9wxxOSGRg
-	siRVwPV91c1/D1wYtM0Q8+nB0hYvLPbNPLjnIp18aloPdPDw2kANncnSi2gg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736254125; x=1736340525; bh=LLeUiVCduQcy2ic14imFDu4OG/Zk9M2ac9D
-	jCvGcFZY=; b=NqUo4ru7/MR9U2oDYVNpCJDmirX/K8abN/o3laN8G3uB6aZEpOS
-	oYAFau2KiU6xWcRkApNPwAnEB4zgQK1PAiCtluG8dpbr6ah2yv1lPAOuvvLGiVtK
-	WV/hMCBZOE6nGk6kaYvdfd+EwLmVkKeXs1sHl2IWfGQe9LOky9JeWRdAXAQVur8n
-	InISSdk+JU45CqQz2r9mdSYAB5BOae7XcNyBDrpCU3kLRGA0Yb7TC1wsq8upIdKl
-	dkDpciUqv7OS+SySKXSQScCC51zDCyqz5EFhaiaH/DsSGctdJT2pmeVaaKGw3Prh
-	X6i2Yr7+u0B8WbkLP7PUEjwnWmMlbj1cD6Q==
-X-ME-Sender: <xms:rCJ9Z6PnCV9_fpRF4JZdhX9QJbdT6C93qKl_s_mt_XCOKrZkmnNuNw>
-    <xme:rCJ9Z48ujolqphatbK-kofNz3pbeO5SewfjxV6DE3WtU96pGzSavbHaGSZkA44_Jn
-    LZ52YpM_EVm8rmBgw>
-X-ME-Received: <xmr:rCJ9ZxSlkjQhOa5DtSUjcjeSXHxIGjUquDkMUL2KCtcs4ug6KwunwCIXq5VhhWEhWTuV7gbg6DQq--2cFSOpyHy6vcr9zGS500m87dunPHbiEg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegvddggeefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtg
-    houhguvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:rCJ9Z6utE-5ynxSxmfoh_7wc3VpAdBu9dbmP1sPCVRNO1-WUf8IaRg>
-    <xmx:rCJ9ZydYUKzR14HIKYTP_GYzNQLuUnhj-vyH0qplU1z1_bm5aBmUsQ>
-    <xmx:rCJ9Z-0uQyTPMknLkyUEPyULm6LPiCGffSVJqkNKm6R2laqZVpk41Q>
-    <xmx:rCJ9Z2963QfalU7kqqDKKjrVetCGSpw80UxSuklahh_7Ki4ZhwEj2w>
-    <xmx:rSJ9Zx5IlIqtq8_vedVmyHz9Zu64YVzMpr2xtq5IHtgYfH7RiVawHBoM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jan 2025 07:48:43 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 371f12b7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 Jan 2025 12:48:43 +0000 (UTC)
-Date: Tue, 7 Jan 2025 13:48:42 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	"D. Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v2 5/5] remote: announce removal of "branches/" and
- "remotes/"
-Message-ID: <Z30hnx43mEwjWqzA@pks.im>
-References: <20250106-pks-remote-branches-deprecation-v2-0-2ce87c053536@pks.im>
- <20250106-pks-remote-branches-deprecation-v2-5-2ce87c053536@pks.im>
- <CAP8UFD0Lzazxyq9nnT-vwN=MijKAsYySFC2dvDEj33cS7VB0kA@mail.gmail.com>
- <xmqq34hw0whh.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l9i5Witr"
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-30039432861so171742441fa.2
+        for <git@vger.kernel.org>; Tue, 07 Jan 2025 04:54:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736254491; x=1736859291; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=FinsT7ulYuOlpCjnacZtyfataVmkw4WdkqP2Q0lMKDg=;
+        b=l9i5WitrkH5Rd0H0/+IMGWpETWEZptykjWDyqhiN5bZn+bv7GvjGU6/oBgWbU2+Bqi
+         w7rl471PAadTitFt6P+qevylJlVKVlS3+t/PRyHBS8Iaij/UHdqsKN1MBhP81OOlqmW2
+         YoUtUh8C2qj8g1tfjVjLC1RLByCBgQ6ymsi062qTXyRyd2ZHMMK/CHfbBYq7YBkKTUeC
+         ovkrFBJqXKNSGiBQp65CZ/6QjxCIGFSnnYjm/TkMKR0buVuI4TsZdKdDC2hpBW0GQM58
+         Xe87HNy+WvCvu6De8C/+Nk9PFDggVUo05hWjXa6BtlrQhlct/TPN5o3qw/qgFghQoahE
+         JMuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736254491; x=1736859291;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FinsT7ulYuOlpCjnacZtyfataVmkw4WdkqP2Q0lMKDg=;
+        b=VAP8I0IwWE8yyVyKzWY5qAYBLCBlhk/pLk9IHSrNJZq5WGLfPujmlR6KRVdNLRosP/
+         1Zuf8NQ08fMRTrBzyxjx+c3TCyrI2ZFmmepQc7at+nmfliTkRsTNmox2iRIlchtBmjuW
+         YbfdLUq8u+X8eP3uG0kc3em4MIG2tlgoOT6R0oJhmQnTuLXXcAwjROqrUSTdSnfcZTul
+         1PGLSLx4/Mmq41jg2ZlkMRXvh7M0RQm6EATGOi3r29SbF0+wBBO48sL28GX1bTo8pL4r
+         4QOl1h4gcl43k1obmjZzbvUzBaMzUDGUFLglJWx0jtUpdltydgvvwssWsffSBss7/JI9
+         ILYA==
+X-Gm-Message-State: AOJu0YzApE6dIoZ6kzxC0OUiaPqnmbp5ahSWGzTWd1AgK46LJS5FW4pn
+	gGWmjXxcbGLaSzE1dghi4Mh5SjeBs8PJbZQtDbKh/Ez+Y4MJ3s1R8YoyG5nsE2pq31RXJ2ja9HZ
+	Mw2roxy/VBMAZgpeXrWWNQp0N56Vs6NM=
+X-Gm-Gg: ASbGnculmfMpfRKJsOXkBT+Kstzgk/HFybmyUwoRccRwbcR46cNgKKO0S3CdLPHZSaR
+	UTjm8f+DjGW1+z/1wYaHIekYjYul3+uGF9kZrEA==
+X-Google-Smtp-Source: AGHT+IEEwCtNdpwztVvvSHi7NoGJ7sroWGM0fUcBP567F+vQ1XeGBrG7uTRJWSzwwBHBEvJjRTjC+N5ckOubYVUNIsg=
+X-Received: by 2002:a05:651c:4ca:b0:302:3355:f756 with SMTP id
+ 38308e7fff4ca-304685de7e4mr172889121fa.35.1736254491334; Tue, 07 Jan 2025
+ 04:54:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq34hw0whh.fsf@gitster.g>
+From: Giampaolo Bellini <iw2lsi@gmail.com>
+Date: Tue, 7 Jan 2025 13:54:40 +0100
+Message-ID: <CAHzTO8mwYp0nyhhNJUOLdarHAAjVCmuPgEfoQmRtL0-Uu1M8cg@mail.gmail.com>
+Subject: git status to show only ignored files
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Jan 06, 2025 at 07:53:46AM -0800, Junio C Hamano wrote:
-> Christian Couder <christian.couder@gmail.com> writes:
-> 
-> > What I like about the removal of git-pack-redundant(1) in the previous
-> > patch is that we started to emit a user-visible warning in 2020 and
-> > now users even have to pass an `--i-still-use-this` option to be able
-> > to use the command. This really makes sure users cannot ignore the
-> > fact that the command is deprecated.
-> >
-> > Accordingly I think it would be nice if we started to emit warnings
-> > (that could possibly be disabled) when we find a repo still uses stuff
-> > in "branches/" and "remotes/". These would be much more difficult to
-> > miss or ignore than doc changes.
-> 
-> That's an excellent suggestion.  Even though this topic is about
-> introducing breaking changes, saying "we waited for long enough",
-> making sure we have prepared the user base for such changes to
-> lesson the impact of "breaking" changes is a very prudent thing to
-> do.
-> 
-> I guess everything is contained within remote.c these days?
-> Patches welcome ;-)
+Hi all,
 
-Makes sense indeed. We can easily add for something like below diff.
-I'll roll that into the next version, thanks!
+   is there a way to set git-status to list only explicitally-ignored files ?
 
-Patrick
+So far I'm using:
 
-diff --git a/remote.c b/remote.c
-index 55e91fab47..8c104c6ee1 100644
---- a/remote.c
-+++ b/remote.c
-@@ -309,6 +309,13 @@ static void read_remotes_file(struct remote_state *remote_state,
- 
- 	if (!f)
- 		return;
-+
-+	warning(_("Reading remote from \"remotes/%s\", which is nominated\n"
-+		  "for removal. If you still use the \"remotes/\" directory\n"
-+		  "it is recommended to migrate to config-based remotes. If\n"
-+		  "you cannot, please let us know you still use it by sending\n"
-+		  "an e-mail to <git@vger.kernel.org>."), remote->name);
-+
- 	remote->configured_in_repo = 1;
- 	remote->origin = REMOTE_REMOTES;
- 	while (strbuf_getline(&buf, f) != EOF) {
-@@ -338,6 +345,12 @@ static void read_branches_file(struct remote_state *remote_state,
- 	if (!f)
- 		return;
- 
-+	warning(_("Reading remote from \"branches/%s\", which is nominated\n"
-+		  "for removal. If you still use the \"branches/\" directory\n"
-+		  "it is recommended to migrate to config-based remotes. If\n"
-+		  "you cannot, please let us know you still use it by sending\n"
-+		  "an e-mail to <git@vger.kernel.org>."), remote->name);
-+
- 	strbuf_getline_lf(&buf, f);
- 	fclose(f);
- 	strbuf_trim(&buf);
+    git status --porcelain=v2 --branch --show-stash --ignored=matching
+--untracked-files=normal
 
+but I'm getting also a list of untracked files and dirs (prefixed with
+the question mark sign)
+
+# branch.oid 7afefc0fc6542ea00e478eb61811d0830abb4134
+# branch.head TEST
+# branch.upstream origin/TEST
+# branch.ab +0 -0
+? .gitignore
+? Configs/
+? Logs/
+! Configs/non-tracciarmi.txt
+
+Note that:
+
+git status --porcelain=v2 --branch --show-stash --ignored=matching
+--untracked-files=no
+
+is not working and reporting "fatal: Unsupported combination of
+ignored and untracked-files arguments"
+
+   thanks a lot
+
+           Giampaolo
