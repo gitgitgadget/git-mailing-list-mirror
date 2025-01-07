@@ -1,207 +1,146 @@
-Received: from flow-b7-smtp.messagingengine.com (flow-b7-smtp.messagingengine.com [202.12.124.142])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4D21F3D29
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 20:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.142
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19EAA95C
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 20:56:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736281236; cv=none; b=ufAQbnuMOMNzeXZrlymE3QYhNVrkWAAGxKjk2MBVYmd0tKc3jQ0xcPwxrRCptj7z/jWqDFKxonwPkHbRhoCShAEvL+z0ecEIwkNQ0Ba+vnkYwEvltymoVFz6kc9NHKa5hY06MffrqQ++I5E2QD+TloTqRFUv2IFM2/hKg87TrYQ=
+	t=1736283387; cv=none; b=C8upkAwjvJyg0qwtmD4R72Pqd+QreGWbnXKJ81xoh5THPvrlK15CV2zh9h7GnFbNAV9RFPp5yp6S3GITDOVX3xEqzXoJuo1qCUs7DES4wPVzS5jmrEml4RXhSXSEcfnZglBUCP/LfSk0nE8anEIKZyZBPc3NmFYOh5JKRP52j7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736281236; c=relaxed/simple;
-	bh=b4dwMNDh+kg4GD4yYCpF1ez0b/UrMv0v37Qh39TpOiM=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=GMWPxGhG5teto/injmutexuXVpZQ291kIzn2ndIbCqird4XmXEtEP0T2oX8OmxERdJkwWZZJnLEFejh41z37fq7eP0c/4ioOqMhXQjlFVQje9pwAeERYWJOfFHvQeeZr23zDhO/BDd2KfeEwCz4GdJyK6IjR9iJ+XGAdvikkg7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu; spf=pass smtp.mailfrom=cepl.eu; dkim=pass (2048-bit key) header.d=cepl.eu header.i=@cepl.eu header.b=Bcu7pYgI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OdcQNBuZ; arc=none smtp.client-ip=202.12.124.142
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cepl.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cepl.eu
+	s=arc-20240116; t=1736283387; c=relaxed/simple;
+	bh=IRyA5w85casG6DTOdsiwTUJl9bVv+ivFV2ulAdbZ8KM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FaxVC92TBsupprLCtEKTUK5Sy4sZjoISLd5q//vWMmuMGQYx294Ubl48AF76lJkFymXx7Svxnsk8cC9SMcXxhyBFCH0VoeOcTEPonQSoXAR0yszvKJ7+T268Kgt9iVMUMst7CxvoHkNiTh71f+cVN+Tmz7TBATxdx216llzlenk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=6aP4GKyj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vKjSqgDE; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cepl.eu header.i=@cepl.eu header.b="Bcu7pYgI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OdcQNBuZ"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailflow.stl.internal (Postfix) with ESMTP id 399451D409D8;
-	Tue,  7 Jan 2025 15:20:30 -0500 (EST)
-Received: from phl-imap-02 ([10.202.2.81])
-  by phl-compute-01.internal (MEProxy); Tue, 07 Jan 2025 15:20:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cepl.eu; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="6aP4GKyj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vKjSqgDE"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 167011380173;
+	Tue,  7 Jan 2025 15:56:24 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 07 Jan 2025 15:56:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736281230; x=1736284830; bh=55UMkHESkl
-	wyAgnw0NZyU4sheub8itXKw3xVyoPzbM4=; b=Bcu7pYgIASKr9UNtCA+MQJAcgq
-	8calZ88Ya+URDdbbZeoRaQIIKt9ClaFHtoIvd8+BUaC5TKZnr+rKTlxYOBDoZhz+
-	UkxyedAqoco2bbVH1Eh+LnP1LIv00xeTRJd8Rd6u9/sGh8sW5KRxYubpBKzYVZC8
-	lJgQF9CJoAqmga2EH+720W8lihGYUAD2pbdbcEpqhRf5VNf88z1WeNvLOOKXrzNq
-	rDSf9B20l5qAMe56c4Uvy56NLFse9iu0kmb0Dqkcvl0XF9edKvMIq12qdwfTn2qM
-	sXBJcEZe+Cy/lF0+ppyScjBgIkrOCQrtPNmYNZvJfyzjGqrfpbPUiEqEMEzg==
+	:subject:to:to; s=fm1; t=1736283384; x=1736369784; bh=daurziU+1V
+	0V0Fu0jGsWf1q4XkqHo0HabkTAsfyvWlU=; b=6aP4GKyjLcQM+Zbm8yUsHXtUPR
+	6CPUHpvBZmtGE2WjsFKXfU9UFqMZaW5Bt6r8ZYpOLc1LKrq1rYtekggYvaAAvunj
+	sGCh2uDlGnRf9r67houDLfgUdEzOIzrDJ0URVnrSL/1klM2AiHt6AlPGkWhwqbxC
+	1jRNIcPVzKtAy2ZxgM8zizuQJRUq2Ih6cSkRMgOJr5O6Tky7l886N4NPesLVOr3Y
+	V50rG+nObx90f7T8O7rsepJkbg3GEgXdSHqCentrXJOA/5Y4eUDSdP4vqkoyyqrL
+	Iy2+7DnB2t090JOpTWphBVTnOX6Fut3wEgkaRWoxSn1rPyvjrL14OBNdIcuw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736281230; x=1736284830; bh=55UMkHESklwyAgnw0NZyU4sheub8itXKw3x
-	VyoPzbM4=; b=OdcQNBuZ1tvPhz3FzVgvc4qwcLAOwzKqmc+BceN/nyucMPG1YKf
-	KlP6ilHSeQTs+2eRI+bvRjrJ8p2zurCpZtjUNP3N1GnPn6eQYObls4J+b/VSLu0A
-	iYz5XSoyLY4XNxUjQLIKEXEJVXds/Uo6nP+30GjFmkoqKpbi3YuQW1JtfEyzC8CV
-	YUNn6gnqG/mz2RaxtevKa9eJGtzDNKH4qfvnF50t0Sti2NorZqTVeF1+TTav9J+x
-	btxVnUbjOlQDfQcYLxSXPW3PyT1UXfOx6e0FUSACT2Y+jJQpT+p+YsYoCDG1hEIt
-	QbG9hgeX/okX/CfDdXFBuod+Gfa0djSXVNA==
-X-ME-Sender: <xms:jYx9Zyytt3db6h98eYeKV0rKbb8D1BHCJZH3WF-EdC4EvsQD5Ohisg>
-    <xme:jYx9Z-RfUBOVaCkf_Jpac4XIEGXDCTlWRThIcU4xWCfIBYYkiuiSTLg5FtZSHVoyU
-    I4j0-_yrTlk6rSGwf4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegvddgudefhecutefuodetggdotefrod
+	1736283384; x=1736369784; bh=daurziU+1V0V0Fu0jGsWf1q4XkqHo0HabkT
+	AsfyvWlU=; b=vKjSqgDEQ/uZkOKsr+V6CtUbdKoJcX9LuGr9apIVceMwn+MzRMj
+	caUjbUC0hLmTIr/XL/mN68URHU6H+WT2ekYjdEuTu/KJhC0Ynad4SkC+vBwkwgqU
+	lo8gQ4TYQA/7UCPHlAhZ9OA4f/Zces+ZaaKBKn4HRBDq3Qi/nTUeoJxsOiD7bdzZ
+	C0GU0wIGXYlsWqPZkVLI7Oj4pvsPhC0ROzICRW93eoSWpTiNO2y3r+ic04nAufka
+	jOA+1sdTcW5Kn4bwEz/4dSK8est48jbwQeAS2ABDzSTXKzykYknOIuhtv5pZTrcq
+	up7yVS35gYv5J/EFttp8UiAWvL4nuMOo7hw==
+X-ME-Sender: <xms:95R9Z83Iz87CnO1uKVCtKUgAp-Mo47N_vHj6-raiufpdztSFd9fISA>
+    <xme:95R9Z3HJ0ufWNz1033D7wurUtCnm6ybhAzBTsBvr5rMu3V6govl2qJzp55K1lIJUq
+    S83XYhYWaG2KCP9_Q>
+X-ME-Received: <xmr:95R9Z06jR79w-7tKWUuqBzKSbD3Obj__7DVv-QskunjcqddMVZRYHgZFNgJSqUx-2GJr4jXMxLPI8TrjD8WJK_t8eqHM_vvzh8qJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegvddgudegvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggtg
-    ffkffhvfevuffofhgjsehgtderreertdejnecuhfhrohhmpeforghtvmhjucevvghplhcu
-    oehmtggvphhlsegtvghplhdrvghuqeenucggtffrrghtthgvrhhnpedvtdevffejgeehff
-    dvudduffelvefhgefhudelffejtdekgfeuudevudelfeevudenucffohhmrghinheptggv
-    phhlohhvihdrtgiinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepmhgtvghplhestggvphhlrdgvuhdpnhgspghrtghpthhtohepvddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:jYx9Z0UE8ITaqDwCCaPMkWRqeedcdB7W_vyj5_210a0ztOsXanF1gA>
-    <xmx:jYx9Z4g7h0gMNR6m_NjKOPe5HT-rkz1o9x5QkeYGh-qEJtm26WzxGw>
-    <xmx:jYx9Z0BNtG7f7701tihV9fZcay7nwLAx6sWooWiTuBGZji0Ou8CQvA>
-    <xmx:jYx9Z5IAE1jBP-Oniiyn-bqtxsA1RA6nkY5ZknFP-QZnQyZDReehmQ>
-    <xmx:jYx9Z3MR6Go2wfWEex87nrqjxoLtd72gLF9FCH9ph2pat8YU1S2_kWMR>
-Feedback-ID: i8c5e488c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3E699B00069; Tue,  7 Jan 2025 15:20:29 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehrrghnuggrlhhlrdgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtggrpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:95R9Z10IBEPpQB7XagUyM4qY0FUYoob4pnj1mUUAQkzNGEcaUQgtjg>
+    <xmx:95R9Z_HhOsC6oNshE313QoAg38FdXgFS5U-2D1sfnbF5VAu7dp4U9w>
+    <xmx:95R9Z-9VI4nV_RIqW6QLEZ4vzt62973Gep04QsMJFyNGgOPESNaPEQ>
+    <xmx:95R9Z0niMRCJxluT6WxAKi_MrxrUnKKnIA8GLUZFwTa8MMeiL0NGfQ>
+    <xmx:-JR9ZzgReHKQdPujhrDzpNhZFHd9THajYrQnzlywOYs362n5JrCiWx-I>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Jan 2025 15:56:23 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "Randall S. Becker" <randall.becker@nexbridge.ca>
+Subject: Re: [PATCH 2/2] reftable/stack: accept insecure random bytes
+In-Reply-To: <20250107-b4-pks-reftable-csprng-v1-2-6109a54a8756@pks.im>
+	(Patrick Steinhardt's message of "Tue, 07 Jan 2025 16:27:00 +0100")
+References: <20250107-b4-pks-reftable-csprng-v1-0-6109a54a8756@pks.im>
+	<20250107-b4-pks-reftable-csprng-v1-2-6109a54a8756@pks.im>
+Date: Tue, 07 Jan 2025 12:56:21 -0800
+Message-ID: <xmqqzfk2qr62.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Type: multipart/signed;
- boundary=1818fb6150fa4179bff11dc929ec68a722dbaa030281201945a194f7ac63;
- micalg=pgp-sha1; protocol="application/pgp-signature"
-Date: Tue, 07 Jan 2025 21:20:28 +0100
-Message-Id: <D6W4BSVAQ3VY.1GWVRAIDTBX3W@cepl.eu>
-From: =?utf-8?q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH] RFC: git-request-get maintainer receiving from
- git-request-pull
-X-Mailer: aerc 0.18.2
-References: <20250107185716.1562311-1-mcepl@cepl.eu>
- <xmqqcygys9e3.fsf@gitster.g>
-In-Reply-To: <xmqqcygys9e3.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain
 
---1818fb6150fa4179bff11dc929ec68a722dbaa030281201945a194f7ac63
-Content-Type: multipart/mixed;
- boundary=9a14944f76b850a4841d14d839e2be6d80a8453e52cece5afffe7eb7592e
+Patrick Steinhardt <ps@pks.im> writes:
 
---9a14944f76b850a4841d14d839e2be6d80a8453e52cece5afffe7eb7592e
-Content-Type: multipart/alternative;
- boundary=d56279cddc23dc616d4f3318d6f38969a28a092f7e8ca79757f373946b66
+> The report was for NonStop, which uses OpenSSL as the backend for
+> randomness. In the preceding commit we have adapted that backend to also
+> return randomness in case the entropy pool is empty and the caller
+> passes the `CSPRNG_BYTES_INSECURE` flag. Do so to fix the issue.
 
---d56279cddc23dc616d4f3318d6f38969a28a092f7e8ca79757f373946b66
-Content-Transfer-Encoding: quoted-printable
-Content-Disposition: inline
-Content-Type: text/plain; charset=UTF-8
+No kidding.
 
-On Tue Jan 7, 2025 at 8:37 PM CET, Junio C Hamano wrote:
-> There are a handful of scripts written in Perl still in our
-> codebase; study the way how their sources are written (e.g., notice
-> that they all end with ".perl") and are made into executables by
-> Makefile rules, and mimick them.
+This is calling rand(3).  The use of the resulting value is to fuzz
+the delay before retrying, which wants NO CRYPTOGRAPHIC randomness.
+This callsite does not require it, but rand(3) is perfect for ensuring
+predictability/repeatability as well (via srand(3)).
 
-OK, no shell scripts any more. Got it. I will have to rewrite the
-thing, and I will eventually try again.
+And it is not allowed to fail.
 
-> Also send the e-mailed patch to yourself, and then run "git am" to
-> make sure it applies cleanly.  It seems the patch is creating a new
-> Makefile, but our project already has one, so I do not see how this
-> patch would apply.
+Yet a platform replaces it with a function that returns an error or
+aborts?  What kind of nonsense is that?  Do we really need to cater
+to such an insanity?
 
-OK, no RFCs any more, just submission-ready contributions. Got it.
+Use of git_rand() here goes backwards against the more recent trend
+in reftable/ directory to wean the code off of the rest of Git by
+getting rid of unnecessary dependency, doesn't it?
 
-See you later!
+I think [PATCH 1/2] makes sense regardless, though.  But shouldn't
+we be pushing back this step, with "fix your rand(3)"?
 
-Mat=C4=9Bj
+Thanks.
 
---=20
-http://matej.ceplovi.cz/blog/, @mcepl@en.osm.town
-GPG Finger: 3C76 A027 CA45 AD70 98B5  BC1D 7920 5802 880B C9D8
-=20
-Opportunity is missed by most people because it is dressed in
-overalls and looks like work.
-  -- Thomas A. Edison
-
-
---d56279cddc23dc616d4f3318d6f38969a28a092f7e8ca79757f373946b66--
-
---9a14944f76b850a4841d14d839e2be6d80a8453e52cece5afffe7eb7592e
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename=E09FEF25D96484AC.asc
-Content-Type: application/pgp-keys; charset=UTF-8
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUdpQkQyZzVUMFJCQUNaZG5H
-LzlUNEpTMm1seHNIZUZiZXgxS1d3ZUtQdVlUcG5idThGZTdyTllNV1ovQUtjCjlWbStSdW9WRXJt
-NEhHc2IwcEw1WlBubmNBK204MFc4RXpRbTJyczhQRDJtSE5zVWhET0duayswZm0rMjVXU1UKNllM
-emQ4bHR0eFBpYTc1QTVPcUJFQW1KbHlKVVNtb1dLakFLL3ExVGo1SFczKy83WHFXWVlDSnpBd0Nn
-alIyRAppcnc4UVA4R0NvVVVYeGVOcElPVHF6TUQvajY2VlRsbityeFlUMTJVNGp4TGxzT3M1WTBM
-VlFmVWJwREZFWXk5Cm1rV1g4aU5UVVpzeCttNnVoeWxhbW0zRWtOL2RXMGIyc1E0RDNvY1pla3Jp
-TFBEUi9YMFAxWFBVZGN5MjhhNm8KV1pvVkFLTjI2WCtQd3hTcTNKQ2lRRUpnUEplS3hpTGlFeGgz
-bERpdE55QVMwV1VEL3hRT3FyeUVGYjlrc0d4TApSOVVDQS85V1VRTXdnUXZFVWh1VkI3cVNuUkVv
-MytrczM0S2x0cDcxdVVqdU1qTGszeWtTcHR5bjhvVitYWmd4CnJ4UEFEK1dPSm41MXlGeGJvK09Q
-TmRINndHMlphWEZqNDdyWDZHUTlXNndJN0swUWhkeVFUcHM4S05sc0p1RFEKcHo3WE1FOThvYjhT
-c3pzdmtQUG0vZ1gwb1dkT0lxSGlwSG5NbEw2ODRqUkhDV0hWanJRZFRXRjBaV29nUTJWdwpiQ0E4
-YldGMFpXcEFZMlZ3Ykc5MmFTNWplajZJWUFRVEVRSUFJQUllQVFJWGdBSVpBUVVDUlNvV0FnWUxD
-UWdICkF3SUVGUUlJQXdRV0FnTUJBQW9KRU9DZjd5WFpaSVNzcjVzQW9JQXFzTmNzMVNsOWpybXF2
-N3ZKekw0UUc2OFYKQUo5KzMwTm1CQ2xRd3BtcW5BMjZuQ2E0K1dTNWFiUWJUV0YwWldvZ1EyVndi
-Q0E4WTJWd2JDNXRRRzVsZFM1bApaSFUraUdBRUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dD
-d2tJQndNQ0JCVUNDQU1FRmdJREFRQUtDUkRnCm4rOGwyV1NFckFVTEFKb0M4eXJwdE9nb29KT3pM
-em1MeERjMW16ZUdEQUNkRkJ3Wmx2RmNqMVQyZG1DUk5kbjUKY0VyUnlCZTBHMDFoZE1TYmFpQkRa
-WEJzSUR4dFkyVndiRUJqWlhCc0xtVjFQb2hpQkJNUkFnQWlCUUpRaXhwdwpBaHNEQmdzSkNBY0RB
-Z1lWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFLQ1JEZ24rOGwyV1NFckJNWUFKOWVRRXBpCmJMNlZt
-N3NVT2h1cHhEL1VzSGlXbFFDZEhZaStVTnB6QzFtS1l0RFNXYTFvY2ZPMVE3NjBIRTFoZEdWcUlF
-TmwKY0d3Z1BHTmxjR3h0UUhObGVtNWhiUzVqZWo2SVlBUVRFUUlBSUFJYkF3SWVBUUlYZ0FVQ1JT
-b1dDUVlMQ1FnSApBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklTc1AxNEFuaTZVODdoU1VY
-RFUrM1pUYURSWEl3YXNUdHRsCkFKMFFXaGpTbWFKVGRra3BmcW1SQjliUmk5cEFRYlFmVFdGMHhK
-dHFJRU5sY0d3Z1BHTmxjR3hBYzNWeVptSmwKYzNRdWJtVjBQb2hnQkJNUkFnQWdBaHNEQWg0QkFo
-ZUFCUUpGS2hZSkJnc0pDQWNEQWdRVkFnZ0RCQllDQXdFQQpDZ2tRNEovdkpkbGtoS3dCQndDYkJP
-b1RZNTJoWWVLbkt1VS91UmpPVHNVTWczSUFualRUclhZSEQ0OXh5THM4ClQvVnBzdWs2WlAvaHRD
-Rk5ZWFJsYWlCRFpYQnNJRHh0WVhSbGFpNWpaWEJzUUdkdFlXbHNMbU52YlQ2SVlBUVQKRVFJQUlB
-SWJBd0llQVFJWGdBVUNSU29XQ1FZTENRZ0hBd0lFRlFJSUF3UVdBZ01CQUFvSkVPQ2Y3eVhaWklT
-cwpraTBBbjBHdzFNalpKQVR0VnExMVN1MG1qZDNyRFFDaEFKMGVlUEUwYW1Td1lWR1NwU05iMjY0
-K1hqVW90clFzClRXRjBaV29nUTJWd2JDQW9VbVZrU0dGMElFTjZaV05vS1NBOGJXTmxjR3hBY21W
-a2FHRjBMbU52YlQ2SVlBUVQKRVFJQUlBVUNSU3ljaXdJYkF3WUxDUWdIQXdJRUZRSUlBd1FXQWdN
-QkFoNEJBaGVBQUFvSkVPQ2Y3eVhaWklTcwpieVFBbmlxdzFQWDI0QmxiQkQyMnpOcVl3emZJUERo
-d0FKNG0vM3l0dUp6c2Z4ckVhYzF0U29FYjIrSDl2clE1ClRXRjBaV29nUTJWd2JDQThZMlZ3YkMx
-YVR6UkdNRXR1YlVORVNHc3hkVTFLVTBKclVXMVJRSEIxWW14cFl5NW4KYldGdVpTNXZjbWMraUdB
-RUV4RUNBQ0FDR3dNQ0hnRUNGNEFGQWtVcUZna0dDd2tJQndNQ0JCVUNDQU1FRmdJRApBUUFLQ1JE
-Z24rOGwyV1NFckFuOUFKOWJPME5VcUxuTURUQ2NjaHRWeks2eUVPTGtDZ0NmWHdrdHkxdUVBelFJ
-CjVrdDlHZWM4eVFweERsaTBHazFoZEdWcUlFTmxjR3dnUEcxalpYQnNRSE4xYzJVdVpHVStpR01F
-RXhFQ0FDTUYKQWxyNjVDc0NHd01IQ3drSUJ3TUNBUVlWQ0FJSkNnc0VGZ0lEQVFJZUFRSVhnQUFL
-Q1JEZ24rOGwyV1NFckhqTwpBSjQ3eUY5U1RYL0VzNHFzSlBqVzk2MUhlOUgzYmdDZEVzak9ndDdj
-ekU4N0d5MEQxS1hXV05UZFR0VzBHMDFoCmRHVnFJRU5sY0d3Z1BHMWpaWEJzUUhOMWMyVXVZMjl0
-UG9oakJCTVJBZ0FqQlFKYSt1US9BaHNEQndzSkNBY0QKQWdFR0ZRZ0NDUW9MQkJZQ0F3RUNIZ0VD
-RjRBQUNna1E0Si92SmRsa2hLd3NRUUNkR21HWFc3M082UTNUQjBWMAp4UDl5THdNakR0RUFuaktX
-RFc4UEtPOTBueDhJa1BvZHhyMW5DdkpidEJwTllYUmxhaUJEWlhCc0lEeHRZMlZ3CmJFQnpkWE5s
-TG1ONlBvaGpCQk1SQWdBakJRSmErdVJQQWhzREJ3c0pDQWNEQWdFR0ZRZ0NDUW9MQkJZQ0F3RUMK
-SGdFQ0Y0QUFDZ2tRNEovdkpkbGtoS3lLdFFDZEhEcG9sSGcvMXFEYXcvNENReVV6QWZOdkhrMEFu
-aUVZTDZCRgpyZHlvbmhnUWYvWlh6WGpuS3pTZXVRRU5CRDJnNVVFUUJBQ2Z4b3oybm16R0p6NnVl
-S0hrVGVYY1Fadks0V3pLClROL3VKSmhFbVN1UW1PS3ltYklrR0w2dkJRYitXNEt4dkxsMmxBYk5s
-ZklnTEdETENzMVlBd2ZTcEo0dlM0bXQKbGlQZ0EyT3RaNWoxV1NPcXB4ZWRRUEdWYmE1Z1ZvN0hO
-U09NVXRaS1R6N1ZzQ3ZSOTR2MDVjb21oTzFHb2s3NQpaeEh0WXlWSHVrNVY4d0FEQlFQL2Z0K1c0
-RjB0Y2N3c2x6ejhPL2M5L01qOEtaRFltZk15TmI3aWVsVDJXZVEzCmlGRjlBeE1UNk92T3hBUWJE
-SnZ1cmZLZVlseWRjWExzNmN5NGxLY2UxaEZhSjRpK01PRkxWVjFablpERENoUlAKcFE2S3JSQ0hM
-YittTFkrU1lEMzdPN3Awc3BRQSs5Z3NFRS90bW4rNXNXN0xFOGhxU09vUFZkZjdZNXlVRGo2SQpS
-Z1FZRVFJQUJnVUNQYURsUVFBS0NSRGduKzhsMldTRXJFVVNBSjQyVDFsLzJURnlrYlVMQnFxQXRu
-YkM2a1IwCnd3Q2RFblJsQ0dsdm5PNzhSMEZnS1hsdDNSeXpHdUU9Cj1zeG9XCi0tLS0tRU5EIFBH
-UCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
---9a14944f76b850a4841d14d839e2be6d80a8453e52cece5afffe7eb7592e--
-
---1818fb6150fa4179bff11dc929ec68a722dbaa030281201945a194f7ac63
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iGwEABECACwWIQSJ70vGKIq/QxurJcPgn+8l2WSErAUCZ32MjA4cbWNlcGxAY2Vw
-bC5ldQAKCRDgn+8l2WSErJ4vAJ4jbV8ZRYmOYbRri9G3p7hfaaov/ACeMwDdiFzj
-Ow/HP+Z08bvuRY5JmiY=
-=HQpb
------END PGP SIGNATURE-----
-
---1818fb6150fa4179bff11dc929ec68a722dbaa030281201945a194f7ac63--
+> Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  reftable/stack.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index 6d0aa774e7e29d5366ed55df19725944f8eef792..572a74e00f9ed6040534e060652e72c26641749d 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -493,7 +493,7 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
+>  		close(fd);
+>  		fd = -1;
+>  
+> -		delay = delay + (delay * rand()) / RAND_MAX + 1;
+> +		delay = delay + (delay * git_rand(CSPRNG_BYTES_INSECURE)) / UINT32_MAX + 1;
+>  		sleep_millisec(delay);
+>  	}
+>  
+> @@ -659,7 +659,7 @@ int reftable_stack_add(struct reftable_stack *st,
+>  static int format_name(struct reftable_buf *dest, uint64_t min, uint64_t max)
+>  {
+>  	char buf[100];
+> -	uint32_t rnd = (uint32_t)git_rand(0);
+> +	uint32_t rnd = git_rand(CSPRNG_BYTES_INSECURE);
+>  	snprintf(buf, sizeof(buf), "0x%012" PRIx64 "-0x%012" PRIx64 "-%08x",
+>  		 min, max, rnd);
+>  	reftable_buf_reset(dest);
