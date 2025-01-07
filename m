@@ -1,171 +1,98 @@
-Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+Received: from mail4.tt-solutions.com (mail4.tt-solutions.com [83.229.82.191])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCC256446
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 21:48:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.5
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747EF19D8A9
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 22:01:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.229.82.191
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736286507; cv=none; b=AXoVxS3KPdAc5COCdvKo1lAjtRU0TW3cZeAhJbHBY8Cvg03+1hLHkT2aFG4KRJcCrhm4Bp5E0X36hMPLFNVeOlFebK7i2YL0uqH3tqBqR9DLBNZduLqW1qicLI/u84AAB29LydsAIgUS4vorPLzyOJ6M1O/MuX78nr+ioG8z/Tw=
+	t=1736287322; cv=none; b=fwDR19w1JN/cvj+CyQcy89v8Ii5H0+nEKAUMiyHq0cfB4tZTYg+j/O1BwlRmzrepkLBfVHsahZ4z78IqLdc29bTgPkC2GOKtk3OqAM9ua5yFZUwBIHRKAJT9s+C5ID1fbxAkWNH9Pn1srVPSK/YGwuH/qUfLKDDU1mfAQ/GvxEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736286507; c=relaxed/simple;
-	bh=zpzHb1UhmTL1cy5hc4iUKwE23VYpLDHt1f7yb660J4s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=D0RUsMbhJ4khJ1s41caAiHn92iN7P5QAVH2YisPK6yBscNWy3W/lq003ZYC8xpnC4Hq6OoUTaGHLEnePCraTy5Hw2iSU9AguKXJVKxT5dWqJv1hwIPMIY25ehQEHZUOUyPJ8bJgO9Rg9lXWU9fI8Vva1b1uv+tgMGVkChuMnDNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=VScasSFA; arc=none smtp.client-ip=212.27.42.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1736287322; c=relaxed/simple;
+	bh=xusodHVYtrkeE6DAAQBRKKB8TP7Rm9j9PM8zE1Ca1Qk=;
+	h=Date:From:Subject:To:Message-ID:MIME-Version:Content-Type; b=C0CnpZvw1FATTDbYQ5a2sEzlsxHGD0xHwHH+/cDEo0HWR+Q6GgRuXAuVCodogtVQwOXsJqkrRH44YQjV0raJ5AVSevxokr0xRByzNoot87n4WDDZuKHhybXkS5htoAXlOES8MUUOtH5FjAlXhA9AdxdFmdFdHrvH20reZDiMxLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zeitlins.org; spf=pass smtp.mailfrom=zeitlins.org; dkim=pass (2048-bit key) header.d=zeitlins.org header.i=@zeitlins.org header.b=NAjEJfx3; arc=none smtp.client-ip=83.229.82.191
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zeitlins.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zeitlins.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="VScasSFA"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:420b:f4aa:dd4f:83c9])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp5-g21.free.fr (Postfix) with ESMTPSA id A7F5E5FFB1;
-	Tue,  7 Jan 2025 22:48:21 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1736286503;
-	bh=zpzHb1UhmTL1cy5hc4iUKwE23VYpLDHt1f7yb660J4s=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VScasSFAZ11DcBBE+7ZHAF30EFnuE8CYPjgE2tkktVa5GHa8jMCCM+vbuq9hJIPOk
-	 kwBa3hv31CvhtfrWwXkluV5bG/IZgCKxVqR5m1JDwpC7qU0pQeQPL15zwi3+ll+J9y
-	 Iub8KCpqHkhvEAqT77QKZ2TRgH61IM1aikMLBiX/yJB6sdoz5Y6M6uW6LT0gsybRme
-	 cr+sirPSm4va62EqZOfhjt6PB7z4JaUjWLrM017MW5t9Ik6LG8qY3gCskkY267vYuC
-	 kDu/Esm8c4KJ2F3RPQCM99Y8WrYgqWBb6gHP1am/et0YPjw+o9qusM62zVEPuw0bbq
-	 Gf9o+s0orsFQA==
-From: =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
-To:
- =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila via GitGitGadget
- <gitgitgadget@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] doc: git-restore: migrate to new style format
-Date: Tue, 07 Jan 2025 22:48:21 +0100
-Message-ID: <6011894.MhkbZ0Pkbq@cayenne>
-In-Reply-To: <Z3t8sjsCeiPmHffA@pks.im>
-References:
- <pull.1847.git.1735996601092.gitgitgadget@gmail.com>
- <Z3t8sjsCeiPmHffA@pks.im>
+	dkim=pass (2048-bit key) header.d=zeitlins.org header.i=@zeitlins.org header.b="NAjEJfx3"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=zeitlins.org; s=mlr; h=Content-Type:MIME-Version:Message-ID:To:Subject:From
+	:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=xusodHVYtrkeE6DAAQBRKKB8TP7Rm9j9PM8zE1Ca1Qk=; b=NAjEJfx3T5o1lTdJuaKFnMLu1M
+	R1o/OCDesWridRMVlqDxyabMBZ+78Op15YWZLQ9DR/mlf/ZEWkAeouzwKqbuYln+fcQc/dhHclYeM
+	uvuvPWo+r+6ltu0gJFmd1MOag8hu3aP8+PtaHc3RkLbV7ChAoaYvLl2Sntifwaz5fiuerKh2wcFnY
+	sSsjYKQdDXHdu/ffZC0OqsJtA3Z2I9tpTWvIW9Y0cnupvzkEjF5UYRh4LmvynD1yxKJABaXEBzavg
+	u8n0R11QUjkO5ZEn6NPVuBu06ByS3BBgWFGCMSIWVjI7wWvqyExfkxzFVIIdrPQ0/S79mgkJGt4K8
+	GSP1tv8Q==;
+Received: from [192.168.17.23] (helo=dark)
+	by smtp.tt-solutions.com with esmtp (Exim 4.96)
+	(envelope-from <vz-git@zeitlins.org>)
+	id 1tVHdC-005oI5-2q
+	for git@vger.kernel.org;
+	Tue, 07 Jan 2025 23:00:58 +0100
+Date: Tue, 7 Jan 2025 23:00:58 +0100
+From: Vadim Zeitlin <vz-git@zeitlins.org>
+Subject: Would it be possible to add an option to disable validating submodule paths?
+To: git@vger.kernel.org
+Message-ID: <Mahogany-0.68.0-2854301-20250107-230058.01@dark.tt-solutions.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: MULTIPART/SIGNED; protocol="application/pgp-signature"; micalg=pgp-sha1; BOUNDARY="8323329-468703135-1736287258=:2854301"
+X-Mailer: Mahogany 0.68.0 'Cynthia', compiled for Linux 6.1.0-10-amd64 x86_64
 
-On Monday, 6 January 2025 07:48:27 CET Patrick Steinhardt wrote:
-> On Sat, Jan 04, 2025 at 01:16:40PM +0000, Jean-No=EBl Avila via GitGitGad=
-get=20
-wrote:
-> > From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
-> >=20
-> > The git-restore manpage was converted to the new documentation
-> > format:
->=20
-> Commit messages should typically use imperative style, as if asking the
-> code to change. For example:
->=20
->   Convert the git-restore(1) man page to our new documentation format.
->   This includes the following conversions:
->=20
->     - Switch the synopsis to a 'synopsis' block, which will
->       automatically format placeholders in italics and keywords in
->       monospace.
->=20
->     - Use `_<placeholder>_` instead of `<placeholder>` in the
->       description.
->=20
->     - Use backticks for keywords and more complex option descriptions.
->       The new rendering engine will apply synopsis rules to these spans.
->=20
+--8323329-468703135-1736287258=:2854301
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Disposition: INLINE
 
-Will do.
+ Hello,
 
-> > diff --git a/Documentation/git-restore.txt b/Documentation/git-restore.=
-txt
-> > index 975825b44aa..541a39b5d28 100644
-> > --- a/Documentation/git-restore.txt
-> > +++ b/Documentation/git-restore.txt
-> > @@ -41,79 +41,79 @@ OPTIONS
-> >  If not specified, the contents are restored from `HEAD` if `--staged` =
-is
-> >  given, otherwise from the index.
-> >  +
-> > -As a special case, you may use `"A...B"` as a shortcut for the
-> > -merge base of `A` and `B` if there is exactly one merge base. You can
-> > -leave out at most one of `A` and `B`, in which case it defaults to=20
-`HEAD`.
-> > +As a special case, you may use `"<refA>...<refB>"` as a shortcut for t=
-he
-> > +merge base of _<refA>_ and _<refB>_ if there is exactly one merge base=
-=2E=20
-You can
-> > +leave out at most one of _<refA>__ and _<refB>_, in which case it=20
-defaults to `HEAD`.
->=20
-> This change is a bit surprising to me though. Why was this renamed from
-> A and B to refA and refB, respectively? It should be possible for these
-> to be object IDs and not refs.
+ In e8d0608944 (submodule: require the submodule path to contain
+directories only, 2024-03-26) a check that submodule paths don't contain
+symlinks was added to Git. I understand that this check is generally useful
+and helpful, but I'd really like to have some way of disabling it for some
+trusted repositories and _allow_ some of their submodules to be symlinks
+(see below for the rationale).
 
-Sorry for mixing things up revs with refs. The "A" and "B" are just=20
-placeholders for revisions, and their names need to be more informative.=20
+ Unfortunately, there doesn't seem to be any way to do it currently and I'd
+like to ask if I might, perhaps, be missing such a way or, if I don't,
+whether a patch adding an option to do it could be accepted?
 
-So, it should be <rev-A> and <rev-B> all along.
+ As to why I'd like to disable it, it's the usual story: this change broke
+my workflow (https://xkcd.com/1172/). I have a relatively big Git
+repository that I use as a submodule in many of the projects I'm working on
+and I used to just symlink the corresponding submodule directory to one,
+primary copy of this repository present on my system, instead of really
+initializing the submodule. This saved me many gigabytes of disk space and
+is also much faster than reinitializing the submodule every time I start a
+new project or, more frequently, create a new worktree for the existing
+one. And this worked just fine for many years but doesn't work any longer
+as any operation on the repository, even just "git status", now gives
 
->=20
-> > @@ -122,30 +122,29 @@ in linkgit:git-checkout[1] for details.
-> >  	not be updated. Just like linkgit:git-checkout[1], this will=20
-detach
-> >  	`HEAD` of the submodule.
-> > =20
-> > ---overlay::
-> > ---no-overlay::
-> > -	In overlay mode, the command never removes files when
-> > -	restoring. In no-overlay mode, tracked files that do not
-> > -	appear in the `--source` tree are removed, to make them match
-> > -	`<tree>` exactly. The default is no-overlay mode.
-> > -
-> > ---pathspec-from-file=3D<file>::
-> > -	Pathspec is passed in `<file>` instead of commandline args. If
-> > -	`<file>` is exactly `-` then standard input is used. Pathspec
-> > -	elements are separated by LF or CR/LF. Pathspec elements can be
-> > +`--overlay`::
-> > +`--no-overlay`::
-> > +	In overlay mode, never remove files when restoring. In no-overlay=20
-mode,
-> > +	remove tracked files that do not appear in the `--source` tree, to=20
-make
-> > +	them match _<tree>_ exactly. The default is no-overlay mode.
-> > +
-> > +`--pathspec-from-file=3D<file>`::
-> > +	Pathspec is passed in _<file>_ instead of commandline args. If
-> > +	_<file>_ is exactly `-` then standard input is used. Pathspec
-> > +	elements are separated by _LF_ or _CR_/_LF_. Pathspec elements can=20
-be
->=20
-> The reflowing of these paragraphs makes it a bit hard to see what
-> exactly is changing.
->=20
+error: expected submodule path 'submodule/path' not to be a symbolic link
 
-=46or the first set of options, there is a conversion to imperative mood, a=
-nd I=20
-triggered a reflow.
- For the second one, it just appears that all lines are slightly changed by=
-=20
-the new formatting.
+as soon as a symlink is detected. Under Linux I can use mount binds
+instead, but this is much less convenient for many reasons and I'd really
+prefer to just keep using symlinks. Would it be possible to (optionally)
+allow using them again?
 
-More generally, I kept reflowing the paragraphs to maintain the width, beca=
-use=20
-this was done everywhere before, but I would strongly prefer having each=20
-sentence on separate line, regardless of its length. For asciidoc texts, th=
-is=20
-policy has some advantages:
- * keep a lexical entity as a single line, and get rid messed up diffs due =
-to=20
-reflowing.
- * unfortunate automatic reflows can create errors, for instance when a par=
-t of=20
-text is sent to the beginning of line and is interpreted as a list item.
+ Thanks in advance,
+VZ
 
-JN
+--8323329-468703135-1736287258=:2854301
+Content-Type: APPLICATION/PGP-SIGNATURE
 
+-----BEGIN PGP SIGNATURE-----
 
+iF0EABECAB0WIQQx+vLQdOwioQqkxtoG6kHeT2wehgUCZ32kGgAKCRAG6kHeT2we
+hk4MAKCpdxkIfotyokBrqfMPDt6+au/eagCeOdt7GgBDVI4wJCoezBAjtcfO36M=
+=EEzp
+-----END PGP SIGNATURE-----
 
+--8323329-468703135-1736287258=:2854301--
