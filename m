@@ -1,483 +1,152 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFCA259498
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 01:42:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FF728691
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 02:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736214182; cv=none; b=XCb0sMu8SGY31OXGoHAdGSW1FEO7a6PB/bcLP4bUOmkoFL7XDMN8johIkTrZi71NgpCShYIQRjt87MucftECGjhNviHKEwCTX07HQ8zectBBHRNjTu7UrfJ+snnu8nvbH1Tgvxa06JxlCIHnube9pzkUHU7i9/U7TVhew5jbs2s=
+	t=1736217549; cv=none; b=cwupSxiWoXJ8EveG3M670WO3eF0yYBQEIXzgNyM/rUMSrSYzvaWhQ8hhsHTEmjQ5SrkM+0+y8seD6dyGNfNwwna96qFCKWrX0/YYxOpOhet2TbHqQpdhHWRXTpjz5XdXaUAAuLLPEewMvFHL+06CP+zvyjYHM+enuivv/d4fmac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736214182; c=relaxed/simple;
-	bh=3tnxEQyidpLUEywIu0sqdcjlTjqNoPR1/26ejkArl48=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=swiJB9yamLJ/QVL68WQhQ0uwM7QZYZ/QWd5qycN0BdQpUvVjj6YDoVz9POMVTOZ2zyvnAeCGwWhXBP9OFWOb0g/WRnuivaOhap9xQBZe5ULTYg/FFRYyXFUnQ7X9shCiEXCAomoCFxT/a4wT7pX1pvz+C3AxKIdSjx2djoQ302o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 5071guDh1383107
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Tue, 7 Jan 2025 01:42:57 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: <git@vger.kernel.org>
-Subject: [BUG] Git 2.48.0-rc2 - Test t0610.26 Fails
-Date: Mon, 6 Jan 2025 20:42:51 -0500
-Organization: Nexbridge Inc.
-Message-ID: <002c01db60a5$7a367060$6ea35120$@nexbridge.com>
+	s=arc-20240116; t=1736217549; c=relaxed/simple;
+	bh=5pgabxvilKyvT/4dF9F/ivmPy0DJhOQjjXTDQMpOajA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kBcfAYD6UaZ+H7LPTbzBsQBHoknvDTJ8+js8I81IBuezgtYiKQ+g1t8g+nsDF059JAzpY/rry/ovl7+VdLXqeKDVIUdRKzJgpM+2qM8+MZDCCdeAkNBPtW8FUD14/wExbLNl9i6LAp2YUfoHX+YbAODDxVwHxIWGe9G0R46fPPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FCLT/W/z; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FCLT/W/z"
+Received: (qmail 26944 invoked by uid 109); 7 Jan 2025 02:39:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=5pgabxvilKyvT/4dF9F/ivmPy0DJhOQjjXTDQMpOajA=; b=FCLT/W/zbtJKJXDth74weEjWQjfZJ/vaN5MFgbvcMgTVHIRZn1bNP4fM0rQ1n52K2e1j8keZ/gXwpJwOdvpWaeqE+8DxSL2GduSp8niK9geXwEW8gChTe4UmSwyxxZgcOvBZZWMhDeIKLBj4SMdwWWmCuseTEh7fkWWQPhfZUlMAbeHWaNK+ITFWo3/50CUUS6gOVTpKvmz9475GxAdqSi2NJQJeSuVhEdQinWkZBhd+9rDBXKNteBk0QI3pzS8vT+RkBrlb9DlYfq18+rrmTfUn+FhK/tl3PLXPEuZQaxboJdV4fFNM32Nq5kB99lw3KYJt25TC8bS0s9CDlO9wPQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jan 2025 02:39:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19162 invoked by uid 111); 7 Jan 2025 02:39:04 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 06 Jan 2025 21:39:04 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 6 Jan 2025 21:39:04 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/10] t7422: fix flaky test caused by buffered stdout
+Message-ID: <20250107023904.GB2363@coredump.intra.peff.net>
+References: <20250103-b4-pks-ci-fixes-v1-0-a9bb95dff833@pks.im>
+ <20250103-b4-pks-ci-fixes-v1-2-a9bb95dff833@pks.im>
+ <20250103181739.GA2527684@coredump.intra.peff.net>
+ <Z3u6lj_bpM7N93Fd@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: Adtgo17spf+lKBBxQ+it31JWUH61yg==
-Content-Language: en-ca
-X-Antivirus: Norton (VPS 250106-2, 1/6/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z3u6lj_bpM7N93Fd@pks.im>
 
-The following breaks at rc2. It worked correctly at rc1 on x86 but
-apparently not on ia64.
+On Mon, Jan 06, 2025 at 12:12:22PM +0100, Patrick Steinhardt wrote:
 
-The OpenSSL random generator on ia64 uses PRNGD. On x86, the hardware
-randomizer
-is used. Nonetheless, this is not working properly:
+> > isn't quite right. Even without input buffering on grep's part, it may
+> > be too slow to read the data. And adding a sleep as above shows that it
+> > still fails with your patch.
+> 
+> Great. I was hoping to nerd-snipe somebody into helping me out with the
+> last sentence in my above paragraph :) Happy to see that you bit.
 
-expecting success of 0610.47 'ref transaction: many concurrent writers':
-        test_when_finished "rm -rf repo" &&
-        git init repo &&
-        (
-                cd repo &&
-                # Set a high timeout. While a couple of seconds should be
-                # plenty, using the address sanitizer will significantly
-slow
-                # us down here. So we are aiming way higher than you would
-ever
-                # think is necessary just to keep us from flaking. We could
-                # also lock indefinitely by passing -1, but that could
-                # potentially block CI jobs indefinitely if there was a bug
-                # here.
-                git config set reftable.lockTimeout 300000 &&
-                test_commit --no-tag initial &&
+I think I am a sucker for SIGPIPE races.
 
-                head=$(git rev-parse HEAD) &&
-                for i in $(test_seq 100)
-                do
-                        printf "%s commit\trefs/heads/branch-%s\n" "$head"
-"$i" ||
-                        return 1
-                done >expect &&
-                printf "%s commit\trefs/heads/main\n" "$head" >>expect &&
+> >   - I swapped out "grep" for "head". What we are matching is not
+> >     relevant; the important thing is that the reader closes the pipe
+> >     immediately. So I guess in that sense we could probably even just
+> >     pipe to "true" or similar.
+> 
+> I think the grep(1) is relevant though. The test explicitly verifies
+> that `--recursive` propagates SIGPIPE, so we must make sure that we
+> trigger the SIGPIPE when the child process produces output, not when the
+> parent process produces it. That's why we grep for "X/S", where "X" is a
+> submodule -- it means that we know that it is currently the subprocess
+> doing its thing.
 
-                for i in $(test_seq 100)
-                do
-                        { git update-ref refs/heads/branch-$i HEAD& } ||
-                        return 1
-                done &&
+Hmm, I see what you mean. I don't think we can do that reliably, though,
+or that the perl byte-stuffing is actually helping.
 
-                wait &&
-                git for-each-ref --sort=v:refname >actual &&
-                test_cmp expect actual
-        )
+As I wrote it, perl always gets SIGPIPE first (because either "head"
+exits while it is writing, or it fills up the pipe buffer and blocks,
+waiting for head to exit, and then sees the pipe close).
 
-+ test_when_finished rm -rf repo
-+ git init repo
-Initialized empty Git repository in
-/home/ituglib/randall/jenkins/.jenkins/workspace/Git_Pipeline/t/trash
-directory.t0610-reftable-basics/repo/.git/
-+ cd repo
-+ git config set reftable.lockTimeout 300000
-+ test_commit --no-tag initial
-[main (root-commit) 68d032e] initial
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 initial.t
-+ + git rev-parse HEAD
-head=68d032e9edd3481ac96382786ececc37ec28709e
-+ 1> expect
-+ test_seq 100
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 1
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 2
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 3
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 4
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 5
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 6
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 7
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 8
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 9
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 10
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 11
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 12
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 13
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 14
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 15
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 16
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 17
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 18
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 19
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 20
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 21
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 22
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 23
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 24
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 25
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 26
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 27
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 28
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 29
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 30
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 31
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 32
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 33
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 34
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 35
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 36
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 37
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 38
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 39
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 40
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 41
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 42
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 43
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 44
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 45
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 46
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 47
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 48
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 49
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 50
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 51
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 52
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 53
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 54
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 55
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 56
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 57
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 58
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 59
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 60
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 61
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 62
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 63
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 64
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 65
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 66
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 67
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 68
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 69
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 70
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 71
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 72
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 73
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 74
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 75
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 76
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 77
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 78
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 79
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 80
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 81
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 82
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 83
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 84
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 85
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 86
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 87
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 88
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 89
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 90
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 91
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 92
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 93
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 94
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 95
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 96
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 97
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 98
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 99
-+ printf %s commit\trefs/heads/branch-%s\n
-68d032e9edd3481ac96382786ececc37ec28709e 100
-+ printf %s commit\trefs/heads/main\n
-68d032e9edd3481ac96382786ececc37ec28709e
-+ 1>> expect
-+ test_seq 100
-+ git update-ref refs/heads/branch-1 HEAD
-+ git update-ref refs/heads/branch-2 HEAD
-+ git update-ref refs/heads/branch-7 HEAD
-+ git update-ref refs/heads/branch-3 HEAD
-+ git update-ref refs/heads/branch-5 HEAD
-+ git update-ref refs/heads/branch-6 HEAD
-+ git update-ref refs/heads/branch-4 HEAD
-+ git update-ref refs/heads/branch-8 HEAD
-+ git update-ref refs/heads/branch-9 HEAD
-+ git update-ref refs/heads/branch-10 HEAD
-+ git update-ref refs/heads/branch-11 HEAD
-+ git update-ref refs/heads/branch-12 HEAD
-+ git update-ref refs/heads/branch-13 HEAD
-+ git update-ref refs/heads/branch-14 HEAD
-+ git update-ref refs/heads/branch-15 HEAD
-+ git update-ref refs/heads/branch-16 HEAD
-+ git update-ref refs/heads/branch-17 HEAD
-+ git update-ref refs/heads/branch-18 HEAD
-+ git update-ref refs/heads/branch-19 HEAD
-+ git update-ref refs/heads/branch-20 HEAD
-+ git update-ref refs/heads/branch-21 HEAD
-+ git update-ref refs/heads/branch-22 HEAD
-+ git update-ref refs/heads/branch-23 HEAD
-+ git update-ref refs/heads/branch-24 HEAD
-+ git update-ref refs/heads/branch-25 HEAD
-+ git update-ref refs/heads/branch-26 HEAD
-+ git update-ref refs/heads/branch-27 HEAD
-+ git update-ref refs/heads/branch-28 HEAD
-+ git update-ref refs/heads/branch-29 HEAD
-+ git update-ref refs/heads/branch-31 HEAD
-+ git update-ref refs/heads/branch-30 HEAD
-+ git update-ref refs/heads/branch-34 HEAD
-+ git update-ref refs/heads/branch-37 HEAD
-+ git update-ref refs/heads/branch-38 HEAD
-+ git update-ref refs/heads/branch-35 HEAD
-+ git update-ref refs/heads/branch-36 HEAD
-+ git update-ref refs/heads/branch-39 HEAD
-+ git update-ref refs/heads/branch-40 HEAD
-+ git update-ref refs/heads/branch-41 HEAD
-+ git update-ref refs/heads/branch-32 HEAD
-+ git update-ref refs/heads/branch-42 HEAD
-+ git update-ref refs/heads/branch-33 HEAD
-+ git update-ref refs/heads/branch-43 HEAD
-+ git update-ref refs/heads/branch-44 HEAD
-+ git update-ref refs/heads/branch-45 HEAD
-+ git update-ref refs/heads/branch-46 HEAD
-+ git update-ref refs/heads/branch-47 HEAD
-+ git update-ref refs/heads/branch-48 HEAD
-+ git update-ref refs/heads/branch-49 HEAD
-+ git update-ref refs/heads/branch-52 HEAD
-+ git update-ref refs/heads/branch-50 HEAD
-+ git update-ref refs/heads/branch-51 HEAD
-+ git update-ref refs/heads/branch-53 HEAD
-+ git update-ref refs/heads/branch-56 HEAD
-+ git update-ref refs/heads/branch-58 HEAD
-+ git update-ref refs/heads/branch-61 HEAD
-+ git update-ref refs/heads/branch-64 HEAD
-+ git update-ref refs/heads/branch-55 HEAD
-+ git update-ref refs/heads/branch-67 HEAD
-+ git update-ref refs/heads/branch-59 HEAD
-+ git update-ref refs/heads/branch-69 HEAD
-+ git update-ref refs/heads/branch-63 HEAD
-+ git update-ref refs/heads/branch-65 HEAD
-+ git update-ref refs/heads/branch-68 HEAD
-+ git update-ref refs/heads/branch-62 HEAD
-+ git update-ref refs/heads/branch-60 HEAD
-+ git update-ref refs/heads/branch-66 HEAD
-+ git update-ref refs/heads/branch-54 HEAD
-+ git update-ref refs/heads/branch-57 HEAD
-+ git update-ref refs/heads/branch-71 HEAD
-+ git update-ref refs/heads/branch-70 HEAD
-+ git update-ref refs/heads/branch-72 HEAD
-+ git update-ref refs/heads/branch-74 HEAD
-+ git update-ref refs/heads/branch-73 HEAD
-+ git update-ref refs/heads/branch-75 HEAD
-+ git update-ref refs/heads/branch-77 HEAD
-+ git update-ref refs/heads/branch-78 HEAD
-+ git update-ref refs/heads/branch-82 HEAD
-+ git update-ref refs/heads/branch-81 HEAD
-+ git update-ref refs/heads/branch-76 HEAD
-+ git update-ref refs/heads/branch-80 HEAD
-+ git update-ref refs/heads/branch-79 HEAD
-+ git update-ref refs/heads/branch-83 HEAD
-+ wait
-+ git update-ref refs/heads/branch-84 HEAD
-+ git update-ref refs/heads/branch-85 HEAD
-+ git update-ref refs/heads/branch-88 HEAD
-+ git update-ref refs/heads/branch-96 HEAD
-+ git update-ref refs/heads/branch-92 HEAD
-+ git update-ref refs/heads/branch-93 HEAD
-+ git update-ref refs/heads/branch-89 HEAD
-+ git update-ref refs/heads/branch-86 HEAD
-+ git update-ref refs/heads/branch-94 HEAD
-+ git update-ref refs/heads/branch-95 HEAD
-+ git update-ref refs/heads/branch-87 HEAD
-+ git update-ref refs/heads/branch-90 HEAD
-+ git update-ref refs/heads/branch-91 HEAD
-+ git update-ref refs/heads/branch-98 HEAD
-+ git update-ref refs/heads/branch-97 HEAD
-+ git update-ref refs/heads/branch-99 HEAD
-+ git update-ref refs/heads/branch-100 HEAD
-fatal: unable to get random bytes
-fatal: unable to get random bytes
-fatal: unable to get random bytes
-fatal: unable to get random bytes
-fatal: unable to get random bytes
-fatal: unable to get random bytes
-fatal: unable to get random bytes
-+ git for-each-ref --sort=v:refname
-+ 1> actual
-+ test_cmp expect actual
---- expect      2025-01-07 01:39:05 +0000
-+++ actual      2025-01-07 01:40:41 +0000
-@@ -37,14 +37,12 @@
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-37
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-38
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-39
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-40
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-41
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-42
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-43
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-44
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-45
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-46
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-47
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-48
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-49
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-50
-@@ -59,20 +57,16 @@
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-59
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-60
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-61
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-62
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-63
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-64
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-65
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-66
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-67
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-68
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-69
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-70
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-71
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-72
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-73
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-74
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-75
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-76
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-77
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-78
-@@ -80,21 +74,16 @@
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-80
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-81
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-82
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-83
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-84
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-85
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-86
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-87
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-88
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-89
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-90
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-91
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-92
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-93
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-94
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-95
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-96
--68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-97
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-98
- 68d032e9edd3481ac96382786ececc37ec28709e commit        refs/heads/branch-99
- 68d032e9edd3481ac96382786ececc37ec28709e commit
-refs/heads/branch-100
-error: last command exited with $?=1
-not ok 47 - ref transaction: many concurrent writers
+And thus when we run git-submodule, the pipe is reliably closed and
+we'll see SIGPIPE.
 
+But with grep, that does not happen. The grep will run through all of
+the data from perl (since it does not contain X/S), and there will not
+be anything left in the pipe buffer by the time git-submodule starts. So
+all of that data did nothing (though it fools the "sleep 1 && grep" from
+losing the race because perl will block until grep starts, after the
+sleep is finished).
 
+And so we're left with the same race as before. git-submodule writes the
+X/S line, grep reads it and then tries to exit while git-submodule is
+writing more. And either:
+
+  a. grep may exit immediately, before git-submodule writes any more
+     data. In which case git sees SIGPIPE, which is what we want.
+
+  a. git-submodule may write all of its data before grep exits. It will
+     not block, because all of the stuff perl put in the buffer is long
+     since gone, having been read by grep already. The data goes into
+     the pipe buffer, and git-submodule has no idea it is discarded when
+     grep exits. The test fails.
+
+It's hard to simulate this one with a sleep, because it requires either
+git-submodule to write quickly, or for grep to be slow after reading the
+matching line but before exiting.
+
+For the latter you can do:
+
+diff --git a/t/t7422-submodule-output.sh b/t/t7422-submodule-output.sh
+index 976f91b0eb..e2961e57dc 100755
+--- a/t/t7422-submodule-output.sh
++++ b/t/t7422-submodule-output.sh
+@@ -174,7 +174,7 @@ test_expect_success !MINGW 'git submodule status --recursive propagates SIGPIPE'
+ 		perl -le "print q{foo} for (1..33000)" &&
+ 		git submodule status --recursive 2>err
+ 		echo $?>status
+-	} | grep -q X/S &&
++	} | { grep -q X/S && sleep 1; } &&
+ 	test_must_be_empty err &&
+ 	test_match_signal 13 "$(cat status)"
+ '
+
+on top of your patch, which reliably fails the test. I know that looks
+kind of ridiculous and fake, but you can imagine it as that first grep
+just taking a long time to call exit() and close the pipe.
+
+It's hard to make git-submodule faster, because its output is really
+coming from recursive invocations of itself. But you could imagine a
+world where we do the submodule recursion in a single process, buffering
+it via stdio, and then write all of the lines at once. And then
+git-submodule always wins the race (it issues a single write() syscall
+and then exits), and the test fails.
+
+To make the test reliable, you'd need to pause or fill the pipe buffer
+_after_ writing X/S via git-submodule but before writing the rest of the
+data. Or to perhaps convince git-submodule only to write the recursive
+data, and then pre-stuff the pipe as I suggested earlier. But I'm not
+sure how to do the latter. Even if we ask for:
+
+  git submodule status --recursive -- X
+
+it will print out the status of "X" before recursing into it to show
+X/S, etc, which will give us SIGPIPE in the parent submodule process,
+not the recursive one.
+
+For the former, I guess you'd need some hook that runs when we recurse
+into the submodule and dumps a bunch of garbage into the pipe buffer.
+But I don't think there is any such hook that runs here. Unless perhaps
+you abused core.fsmonitor or something, but I don't think that's
+portable.
+
+So I don't really see a way to do this robustly.
+
+-Peff
