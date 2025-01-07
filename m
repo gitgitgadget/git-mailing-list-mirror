@@ -1,36 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B616E4879B
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 07:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BD41DE8A0
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 07:08:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736233677; cv=none; b=DpsEPjKApM89PeJUDUT1OafQ/q6G6ZVQh+ZzzAjvbCRrs1jiGHKhGIsGW7SRgLE7zEwiQM9g72E1lsx5359tN1IyJS/WVPMT6YaekzaQbZ4MbMZqWeBcneKr+PohYF5RvYpiLCNzI3yA/3o3OtSDmbbKbLOIZhQkLx1cnTMxDi0=
+	t=1736233716; cv=none; b=cdLMjX04nilrpNwb6JtW730R0/nJsujMycJVSHmTzDJJJ9OyNG+XPTQ+ysCvptfTxgpM23fbofrQqnIAqoFOdG/jZOnmIXZSCbqwzZQrTwYK1aG7UzDRciBmNimmrAsc3lbc6NG/gh8W104oadjlWBrJCKG80vAELhdSB7gDc+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736233677; c=relaxed/simple;
-	bh=GeseXBZPH5YTc0YcW5rn3dCN7Ys+1zwNCuLg9h6fsKs=;
+	s=arc-20240116; t=1736233716; c=relaxed/simple;
+	bh=Si4839AkEGty6cKC+BE+sP3DqvKT3S8sjN85asVmDEM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=exVpg+KfL9C1z0x/U4h1PJEuvvqCU7y7IscyMDcabpLkfi+IkmXOX34KvqtBbCYbYa1fGwKBCB1BZmpOY7n0VIIPYiVF/fOkFe2hZn+6t48mPCcJR7EdDIxWf3Dpeii1PS3ApFe0S3sB1LSnacnT1MvpJNUvjOiqUk1CBA6j1K0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CkxMVGAv; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=DwKvjxr20UFI6U9x+OrZskNEV7yYqWvDL39J1eCqJUk/TKm0e4se0IV3NyZ3Hl3DDqXho6RywsqyOs6Uu4uXE+Ou89JI8hfaevqSn/xRvXO3zjeeDEye6YNut6ZUedM6s2TOIl+pt13ejfQzU+ykW3P3TUnPcs8FIt9LQIAoy7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FbWnkAXt; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CkxMVGAv"
-Received: (qmail 29030 invoked by uid 109); 7 Jan 2025 07:07:53 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=GeseXBZPH5YTc0YcW5rn3dCN7Ys+1zwNCuLg9h6fsKs=; b=CkxMVGAv+f+y96Ctcm/y/iJubbfIfOA3EKOPBqhTvoXy37BIryyHjygFu5rV9bu6EZzY0LnqczHy7jQIuGAOeTfr+xvH6PtlPzxQtzJ1xJvgS29ppqwJn6BqEkiql+6KjiDLbKoH72bnd0NtSJAeubOWS+c9zODVpF7dB2XH1f2Y+R/mUMCFuDzxDjzGEU52PkV9Vhvz+pEj9ftcLmm/LVBCFY/InXKPZwa2VCg6azvndyjyXGJpufcnaLAdV7ylc0oXzrBGjmzO7YuOB85hlbA34zKbk4x6e1YhwH2qD7Y1WnJif6zeQgwniYl/Z9EEybA6N6jeRXVJNzkqmJ4xjA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FbWnkAXt"
+Received: (qmail 29050 invoked by uid 109); 7 Jan 2025 07:08:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Si4839AkEGty6cKC+BE+sP3DqvKT3S8sjN85asVmDEM=; b=FbWnkAXtpPeHnSF6oUe15oixN3kYPblJr7HsXroTaeCNjK+xxTJpO8arNOwuG94OvLroLzhughLK8Pturm24Tke1+IgB842sQN+PHd7fRDjGz9OraPcCCWtP8cwo27RRCSlbAw7K05KH4JM1qs9Xd5lXl5o4PBSROEt7GPPOGKCuKdhJZPh0gvGrIN4it9y0nmSOuuAUl0Cse0JgtbbD3COEH7lO3p1FiwV1cc/9bC4IC9PbVt3+ITwunjhbkBsr+8QHu9oytJlmNUAX2ASmPjXYnIrzVyOOMOsO007urb4bRiNsnx2GReiRisI5nMXonuebbZmMOap7c38pXFz5yw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jan 2025 07:07:53 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 07 Jan 2025 07:08:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21874 invoked by uid 111); 7 Jan 2025 07:07:53 -0000
+Received: (qmail 21879 invoked by uid 111); 7 Jan 2025 07:08:31 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jan 2025 02:07:53 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 07 Jan 2025 02:08:31 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 7 Jan 2025 02:07:52 -0500
+Date: Tue, 7 Jan 2025 02:08:31 -0500
 From: Jeff King <peff@peff.net>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: [PATCH 2/3] test-lib: simplify lsan results check
-Message-ID: <20250107070752.GB584668@coredump.intra.peff.net>
+Subject: [PATCH 3/3] test-lib: add a few comments to LSan log checking
+Message-ID: <20250107070831.GC584668@coredump.intra.peff.net>
 References: <20250107070409.GA584456@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -42,69 +42,33 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20250107070409.GA584456@coredump.intra.peff.net>
 
-We want to know if there are any leaks logged by LSan in the results
-directory, so we run "find" on the containing directory and pipe it to
-xargs. We can accomplish the same thing by just globbing in the shell
-and passing the result to grep, which has a few advantages:
-
-  - it's one fewer process to run
-
-  - we can glob on the TEST_RESULTS_SAN_FILE pattern, which is what we
-    checked at the beginning of the function, and is the same glob use
-    to show the logs in check_test_results_san_file_
-
-  - this correctly handles the case where TEST_OUTPUT_DIRECTORY has a
-    space in it. For example doing:
-
-       mkdir "/tmp/foo bar"
-       TEST_OUTPUT_DIRECTORY="/tmp/foo bar" make SANITIZE=leak test
-
-    would yield a lot of:
-
-      grep: /tmp/foo: No such file or directory
-      grep: bar/test-results/t0006-date.leak/trace.test-tool.582311: No such file or directory
-
-    when there are leaks. We could do the same thing with "xargs
-    --null", but that isn't portable.
-
-We are now subject to command-line length limits, but that is also true
-of the globbing cat used to show the logs themselves. This hasn't been a
-problem in practice.
-
-We do need to use "grep -s" for the case that the glob does not expand
-(i.e., there are not any log files at all). This option is in POSIX, and
-has been used in t7407 for several years without anybody complaining.
-This also also naturally handles the case where the surrounding
-directory has already been removed (in which case there are likewise no
-files!), dropping the need to comment about it.
+Commit b119a687d4 (test-lib: ignore leaks in the sanitizer's thread
+code, 2025-01-01) added code to suppress a false positive in the leak
+checker. But if you're just reading the code, the obscure grep call is a
+bit of a head-scratcher. Let's add a brief comment explaining what's
+going on (and anybody digging further can find this commit or that one
+for all the details).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I was surprised by the use of "grep -s" in t7407, since it is totally
-pointless there. But I think we can take its presence as a positive sign
-for portability.
-
- t/test-lib.sh | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ t/test-lib.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index be3553e40e..898c2267b8 100644
+index 898c2267b8..9f27a49995 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -1172,12 +1172,7 @@ test_atexit_handler () {
+@@ -1172,6 +1172,11 @@ test_atexit_handler () {
  check_test_results_san_file_has_entries_ () {
  	test -z "$TEST_RESULTS_SAN_FILE" && return 1
  
--	# stderr piped to /dev/null because the directory may have
--	# been "rmdir"'d already.
--	find "$TEST_RESULTS_SAN_DIR" \
--		-type f \
--		-name "$TEST_RESULTS_SAN_FILE_PFX.*" 2>/dev/null |
--	xargs grep ^DEDUP_TOKEN |
-+	grep -s ^DEDUP_TOKEN "$TEST_RESULTS_SAN_FILE".* |
++	# Lines marked with DEDUP_TOKEN show unique leaks. We only care that we
++	# found at least one.
++	#
++	# But also suppress any false positives caused by bugs or races in the
++	# sanitizer itself.
+ 	grep -s ^DEDUP_TOKEN "$TEST_RESULTS_SAN_FILE".* |
  	grep -qv sanitizer::GetThreadStackTopAndBottom
  }
- 
 -- 
 2.48.0.rc2.377.g0507c08f68
-
