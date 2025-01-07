@@ -1,174 +1,189 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449D314F70
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 07:37:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D95259498
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 08:02:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736235464; cv=none; b=XRfCm0E6jRhe3MU04bjI+nWNM0/C1Cyp5Q53LF3R4yoyVZ5oQD54J2xrp3Q1Mtu+w7XX5sp0IaRscItNY/yr61farK3z49zfg6IeLBb/F1qdvDf0rizD354kvmkZ7mKemAGmSvfv0x6DhmCtPZs4m3+RgjEKCALoGagQ+/X6omc=
+	t=1736236942; cv=none; b=ioJ3KCmaawtJoj9UoqojtrNn9u0DcaiBEWWV4kswJRHkEmUtX46zev/13w8A0fETVua6BFRux9WmlhNHnbMUmD15kHfz8ISUCc3uG4nGp97uGuMncRm6Ao5izdbFFn32UlOcBFSdhmJH2t08hvPyKO6a3WGCWKrdKJqYUp2hSmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736235464; c=relaxed/simple;
-	bh=qXl9n6e8HpK79mTTn5xRMc4KxvRttJwVe3Ncq7wFqNM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a0dQ9wL/TcQvkFsRc4DYRpCYDC+RRivCDuT/L+lph6OngUW0qY2k49mPt4yD4DbxAP0Gxb9p5ZnLPVDYyqbkZSJ3pkOuRawwrk4J2hiWRLJ4UJCa4nn4HHMMhi5/4/52IJx/dgNPyYiRLY0G5UNP7j1EOsvxkCth+XDYSH+8MS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=q2jdGocU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k3RQuGzw; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736236942; c=relaxed/simple;
+	bh=p+Aeg5k5iGsO7g88/YcEvbNikYNe8H2XkqEu0Gmi1AI=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=Feymh6kv0fD9gpywgccQm7zjWdA1veAOJm8f0FJt1EKyTldOWZrQPKVgXPKl6mA9GDntEqQWN/o2258+hRG7Fa0hao4WVowgYSBN7AdqBuMGiZZuM26/m/X4pIs56KStPsyYPki+cJHfaWJtSDcdtgxLxtSiZcMhcB3BIWJqlfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fYMfKcIA; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="q2jdGocU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k3RQuGzw"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3BD6C1380201;
-	Tue,  7 Jan 2025 02:37:38 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 07 Jan 2025 02:37:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736235458; x=1736321858; bh=r/41/wkJ+k
-	x7i5vDQfIV0Piw7qiIELO3kcxjVvko+pc=; b=q2jdGocU3qU3j4RUeIAVRCc8Ts
-	y/d+BaJyoDFzTUlBRW1j5g8PH2HPTic4VYhxU9xwUCswZ+LA+KZfx0DgcCDJghdj
-	5uJ682JUS29jP0ngjWtEeX+Rgp56H9Ele+E4w03jzo2f1AqfQFnD9ZyjSc3rSDPQ
-	yPCUeUlTxT+xj8IDWVIjLtl83a1pCRSYI1hpJIZVBxWypmhg8HKdO2xsvcRkL8Fv
-	BF+a921g+m80XALVRuDI3pmPS3TugkCObWan6cogeSFk7mHEJU0+9od6RJm1qasd
-	t1ux9MmGMFKv07QlzejN0m4YVfnK22OQe+IZO7fy9EXF947NnUXkhSbUMwjg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736235458; x=1736321858; bh=r/41/wkJ+kx7i5vDQfIV0Piw7qiIELO3kcx
-	jVvko+pc=; b=k3RQuGzwIhzcn1/d8PeBT8kulvE9fMYvxdshFZDbO9QQirF2Z3M
-	GPSug4LOYCx27hcf6vlJLRjtvm9GMkyV5fQ0qLO7K5UwBfoakrxyXbYdgzIEnAPN
-	O4GMZwDzNgverPM6TOzpfV4aqbvQ5IOUHV1NKHKz8WAIy26wdCVHs6Z+lkPWptpE
-	OqJQaJpkBQB/7udE6PO3d4wpVm0V61eIZJF6rt0h2Q13eDENbKGrS2jlpKZOxPAh
-	fNEvogn0rx88vWx6yOV2EjUo/ThSSqDx1aGrP9tCeleTZlXutdSx/rcMIWxC23Wc
-	0DTiZSMuw8jEkiWvglUsLVFaTRlIBV/BJOQ==
-X-ME-Sender: <xms:wtl8Z3oLgsb5M1-KMfDBlIsNnitQKedFum6ppqFObaRG-kyUW7DJYw>
-    <xme:wtl8ZxqbHARHSyeP1Lz47y7cZ0lMIUP_OnAXslEen26LuiC1cGcuj6bmg7OiHIe8H
-    MLYC2dEOK_osZZsqQ>
-X-ME-Received: <xmr:wtl8Z0O-3_JAdPJKlTAjElcy0v30E6N3IFBA1VLvWVkSkzCx7MvrGluAVdVwsvFnpHirnVMHag5W_cIMe87IIE8vIr59sd9kpLktA5nhEbt0Jw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeguddgudduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhf
-    sehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:wtl8Z66g2zI-E5I9tS5xFwXIleTLJK01cMzykBsqtQS1EurPW3Tk5A>
-    <xmx:wtl8Z26CizrlorGlkx4RRzNz0JAM3wwQ9lPXt3AcoHuwZSPwu_cnRg>
-    <xmx:wtl8Zyj542ZcV51Pwy9YFiFpR_eALB5rpomWWDYfZKfZXP2vBLwFEQ>
-    <xmx:wtl8Z46XaHT7lSasotDEX5_s0ySCdEjlGyqfjs5sO2Sdt42B3xjVrA>
-    <xmx:wtl8Z8lbk5uvHIajAIJJFY6vTv1Fts-JqpgHl6ic_M9NZe8FcuoGmRfP>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jan 2025 02:37:37 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 36480ede (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 7 Jan 2025 07:37:34 +0000 (UTC)
-Date: Tue, 7 Jan 2025 08:37:33 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/3] test-lib: simplify lsan results check
-Message-ID: <Z3zZt2OCjcDGvjBS@pks.im>
-References: <20250107070409.GA584456@coredump.intra.peff.net>
- <20250107070752.GB584668@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fYMfKcIA"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-21628b3fe7dso214987875ad.3
+        for <git@vger.kernel.org>; Tue, 07 Jan 2025 00:02:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736236938; x=1736841738; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AsW/RpAySinzW/fZsAg7AKWj7dsB3Q1DW0hJTMfvoLU=;
+        b=fYMfKcIAneKjK1USSzHLh0GUsKfubvbIRx2+PjFLBUvXsLvlMoy4plecTvIzSpDrIl
+         L+IEm+LhJstkLfn6vbhnGcd7B3rwOEOmJpazQzEANehm7cGYP5TtOocnkpIubTrG3tfM
+         onthyUR9eELjWFgJcRT7ZWWKUXEiGSyewueg3Nc8+qawcPCGNVO0rRo/b+Er8W28iIuJ
+         1wW6YWr7qi0ynblZv4WNdAgCJgCxS9VrKDzdIV5Fr1tSQP4WdDewoQTHb1IokcTh5pWV
+         AZh3B9ah2fhUUmaPrvH5MGMXJS2UDq9l10IJ8Kfp0jFd3st7qQCDvmxSjo8ATK29Qd9H
+         C8AQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736236938; x=1736841738;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AsW/RpAySinzW/fZsAg7AKWj7dsB3Q1DW0hJTMfvoLU=;
+        b=jTw586eZsu5RFrEh0exjO9/zybyce2wc6aj1i6411GGmmrnP0bsibfYKrezXUFjrsZ
+         LxHhx7fqdJFSdhTDyHYLWCkryoeOLCb/2RXjpxZprCQ5ICSvZb8m24XTaqIHQmwBQWxU
+         FcPF9IeJF6mzfGisW4N3GihpHwMnCigEiqOoZpydE7MqsjdwDQ/EWa75Cz1sAL0B6lwX
+         ehEQxiG7taziE3HwTnbDm3dKhMPtRIflZN75tOigC9xDTZAbOZLONkr2yXW1fetsmNZP
+         NPNaZUudJ1021UHOOsXjM1Fp8tVmqu8CUxf35FY+BQl8pTbU8aQo9az6qe9EM4Y+KP6R
+         NGCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWHxtiVuGs20U5Mh7nl6YBgylZpuO5mRPHlcXEfItDi+2NPBd2pST0kclLb6Ye/OXn2vEw=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyrje2bq9srLbyZ05yn7aLX6AHfmVD8p3d97MwjliHW0q3BX4fG
+	lmOHMtamVMFOe5oVfQD83QXdH/albzRC4EhniAcgiA9STi7Fw6Rt
+X-Gm-Gg: ASbGnctN6mIoHxt+HLM4MiDBIUgGhrZNCu0L7v0LtMDfRU43NVKbI+hcT3Xk2ZH+iSx
+	hpZt3E+ClQGvnkHMTBq/3aL4oGvhBQdjQ775BYYIx50TM/TCMGnrMbslmV9WJz5n/gjDmcDzt72
+	v9+rnZ43d+6MXqgj8T48D8OTyo9Mpm35iRMSKKlL9ENfKf8MpxuGja4vnaFa7Lsn7rWetMD9jBv
+	iW1YiUO9qMOBprQ7GSyaxURTaqITMB34lJfa8iXGVBus30YtkbGeQzOvRkEQ+Wpj+lylRr+Ezoi
+	l6m17PapaOGp+Fb34Y/5XTOwtTLMbbgBIENxtcHjXIPt15RG
+X-Google-Smtp-Source: AGHT+IF8AwwuZjT793IgzJMLpCOmHwjD+WNJ3XE5P87iiKRBNhvhKBSoxPBMuIhuQ7qoq02xLugXNw==
+X-Received: by 2002:a17:902:e84b:b0:216:6f1a:1c77 with SMTP id d9443c01a7336-219e6f105d3mr831482485ad.43.1736236938373;
+        Tue, 07 Jan 2025 00:02:18 -0800 (PST)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-219dc9cdd9bsm304113465ad.132.2025.01.07.00.02.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 07 Jan 2025 00:02:18 -0800 (PST)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git l10n discussion group <git-l10n@googlegroups.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Arkadii Yakovets <ark@cho.red>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Emir SARI <bitigchi@me.com>,
+	Emir SARI <emir_sari@icloud.com>,
+	Ethiraric <ethiraric@gmail.com>,
+	Fredrik <fredrik.oljemark@helsinki.fi>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Mikel Forcada <mikel.forcada@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Subject: [GIT PULL] l10n updates for 2.48.0 round 1
+Date: Tue,  7 Jan 2025 16:02:14 +0800
+Message-Id: <20250107080214.30978-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250107070752.GB584668@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jan 07, 2025 at 02:07:52AM -0500, Jeff King wrote:
-> We want to know if there are any leaks logged by LSan in the results
-> directory, so we run "find" on the containing directory and pipe it to
-> xargs. We can accomplish the same thing by just globbing in the shell
-> and passing the result to grep, which has a few advantages:
-> 
->   - it's one fewer process to run
-> 
->   - we can glob on the TEST_RESULTS_SAN_FILE pattern, which is what we
->     checked at the beginning of the function, and is the same glob use
+Hi Junio,
 
-s/use/used
+Please pull the following l10n updates for Git 2.48.0.
 
-I'm always a bit thrown off by your style of bulleted lists, where they
-feel like sentences but start with a lower-case letter, and sometimes
-they do and sometimes they don't end with punctuation. Maybe it's just
-me not being a native speaker and it's a natural thing to do in English.
-In any case, it's nothing that really matters in the end, but would be
-happy to learn if this is indeed something you tend to do in English.
+The following changes since commit b74ff38af58464688b211140b90ec90598d340c6:
 
->     to show the logs in check_test_results_san_file_
-> 
->   - this correctly handles the case where TEST_OUTPUT_DIRECTORY has a
->     space in it. For example doing:
-> 
->        mkdir "/tmp/foo bar"
->        TEST_OUTPUT_DIRECTORY="/tmp/foo bar" make SANITIZE=leak test
-> 
->     would yield a lot of:
-> 
->       grep: /tmp/foo: No such file or directory
->       grep: bar/test-results/t0006-date.leak/trace.test-tool.582311: No such file or directory
-> 
->     when there are leaks. We could do the same thing with "xargs
->     --null", but that isn't portable.
-> 
-> We are now subject to command-line length limits, but that is also true
-> of the globbing cat used to show the logs themselves. This hasn't been a
-> problem in practice.
+  Git 2.48-rc2 (2025-01-06 08:24:43 -0800)
 
-Yup, this also came to my mind immediately. But I agree that it
-shouldn't be an issue in general.
+are available in the Git repository at:
 
-> We do need to use "grep -s" for the case that the glob does not expand
-> (i.e., there are not any log files at all). This option is in POSIX, and
-> has been used in t7407 for several years without anybody complaining.
-> This also also naturally handles the case where the surrounding
-> directory has already been removed (in which case there are likewise no
-> files!), dropping the need to comment about it.
+  git@github.com:git-l10n/git-po.git tags/l10n-2.48.0-rnd1
 
-Okay. So in case there are no matching files we don't expand the
-globbing string, and "--no-messages" makes us ignore that case. A bit
-funny, but I don't see any issue with it.
+for you to fetch changes up to fc613c01d45b034290e7fb69977a2cc2715b1259:
 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I was surprised by the use of "grep -s" in t7407, since it is totally
-> pointless there. But I think we can take its presence as a positive sign
-> for portability.
+  Merge branch '2.48-uk-update' of github.com:arkid15r/git-ukrainian-l10n (2025-01-07 15:45:43 +0800)
 
-Good to know.
+----------------------------------------------------------------
+l10n-2.48.0-rnd1
+-----BEGIN PGP SIGNATURE-----
 
->  t/test-lib.sh | 7 +------
->  1 file changed, 1 insertion(+), 6 deletions(-)
-> 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index be3553e40e..898c2267b8 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1172,12 +1172,7 @@ test_atexit_handler () {
->  check_test_results_san_file_has_entries_ () {
->  	test -z "$TEST_RESULTS_SAN_FILE" && return 1
->  
-> -	# stderr piped to /dev/null because the directory may have
-> -	# been "rmdir"'d already.
-> -	find "$TEST_RESULTS_SAN_DIR" \
-> -		-type f \
-> -		-name "$TEST_RESULTS_SAN_FILE_PFX.*" 2>/dev/null |
-> -	xargs grep ^DEDUP_TOKEN |
-> +	grep -s ^DEDUP_TOKEN "$TEST_RESULTS_SAN_FILE".* |
->  	grep -qv sanitizer::GetThreadStackTopAndBottom
+iQIzBAABCAAdFiEE37vMEzKDqYvVxs51k24VDd1FMtUFAmd83TkACgkQk24VDd1F
+MtV+uQ//U8cszgueBJ7CGx97StifMEc7oJzOnxYT6X1B6zdwOXl7MOsUD5kvw2sI
+lO1tIMfpZavweJl5LcN5QJBPPpuFJkqmMrrFgCbDhjOyYkEcJmLsZA+WIH34aHWu
+uTJSnToxWsN/vr1eBNGQH5MxxHRMKIKQxz0+LgafGp9THlOxEsexfxPE64LnmAiQ
+gjETkMkiQnMp+Wn2n8uFarfpxw2ENbs2lAaWWxLh99RyHZt8UoEDvlXS1GFmVfnw
+tGRuBdjwftlieLagau2x78hrxZPO3AnbMf93FRdCB1w7E5+anoId3t9R9wuCqH6h
+xVlz9jG2VG9qYhkIlUe9qXriOVpmCO8llEQYOyBM0LX5fFE4Jos0hG3DEYB+ilEB
+iSoaNklQTYvn24ejxxyRKiYq85XoVw1bXskQsInQxoYOZZid/Kx4DbsWuVvYtqJG
+38aKu31BgN1HuGc5NLQX9KhT9cVgUAMAHdcYnwhm3GYFNjsnEV/8hPkNzCM9U4zf
+PP+Ns5snmkgXqP2baYDt/2j4CXdtwRTKgzh4BCeqsZqwliAvoYoPP3APFMzsx+uG
+UV0jj3IIUizJs6XFwIBzfjhnUTmKvh0XqFr8t5/LdSLFSoCihiOOsnR37qRkPILz
+vzh0/RicLxDXEsriCTcfdjaD4K5Sx9t707BjOa7pMvrMwFvxvR0=
+=WD1L
+-----END PGP SIGNATURE-----
 
-And this nicely simplifies things indeed.
+----------------------------------------------------------------
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (5804t)
 
-Patrick
+Arkadii Yakovets (1):
+      l10n: uk: v2.48 update
+
+Bagas Sanjaya (1):
+      l10n: po-id for 2.48
+
+Emir SARI (1):
+      l10n: tr: Update Turkish translations for 2.48
+
+Ethiraric (1):
+      l10n: fr.po: Minor improvements
+
+Fredrik (1):
+      l10n: sv.po, fixed swedish typos
+
+Jean-Noël Avila (1):
+      l10n: fr: v2.48.0
+
+Jiang Xin (10):
+      Merge branch 'l10n/zh-TW/2024-12-17' of github.com:l10n-tw/git-po
+      Merge branch 'master' of github.com:nafmo/git-l10n-sv
+      Merge branch 'tr-l10n' of github.com:bitigchi/git-po
+      Merge branch 'po-id' of github.com:bagasme/git-po
+      Merge branch 'master' of github.com:alshopov/git-po
+      Merge branch 'fr_v2.48.0' of github.com:jnavila/git
+      Merge branch 'tl/zh_CN_2.48.0_rnd' of github.com:dyrone/git
+      Merge branch 'l10n-de-2.48' of github.com:ralfth/git
+      Merge branch 'vi-2.48' of github.com:Nekosha/git-po
+      Merge branch '2.48-uk-update' of github.com:arkid15r/git-ukrainian-l10n
+
+Peter Krefting (1):
+      l10n: sv.po: Update Swedish translation
+
+Ralf Thielow (1):
+      l10n: Update German translation
+
+Teng Long (1):
+      l10n: zh_CN: updated translation for 2.48
+
+Vũ Tiến Hưng (1):
+      l10n: vi: Updated translation for 2.48
+
+Yi-Jyun Pan (2):
+      l10n: zh_TW: Git 2.48
+      l10n: zh_TW: Git 2.48 round 2
+
+ po/bg.po    | 357 ++++++++++++++++++++-------
+ po/de.po    | 304 +++++++++++++++++------
+ po/fr.po    | 785 ++++++++++++++++++++++++++++--------------------------------
+ po/id.po    | 338 ++++++++++++++++++++------
+ po/sv.po    | 413 ++++++++++++++++++++++----------
+ po/tr.po    | 293 +++++++++++++++++------
+ po/uk.po    | 599 ++++++++++++++++++++++++++++++++++------------
+ po/vi.po    | 336 ++++++++++++++++++--------
+ po/zh_CN.po | 301 ++++++++++++++++++-----
+ po/zh_TW.po | 667 +++++++++++++++++++++++++++++++++------------------
+ 10 files changed, 2981 insertions(+), 1412 deletions(-)
+
+--
+Jiang Xin
