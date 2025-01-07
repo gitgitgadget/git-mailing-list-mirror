@@ -1,97 +1,149 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C9C1A83E1
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 23:12:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E846D1E25FA
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 23:21:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736291552; cv=none; b=WbiRpRLYgPhk+hprqeCY+L8eVAq8su8O3L3tkTUUEsMZYdwcz5224nzxYN7iCXUAvMigrNN0pGS+GB2F5W6LQfH1iBmxoh1ArHZv2rXaIsp5UUhXtaikOSi1jNHi8IZWIaO19xK5PCoDRarlbp7h7jYx9/OPTPV26CbooYyGz+I=
+	t=1736292109; cv=none; b=KYznRCOPOb482rUN/4hA4mwmPPzOZBwHSkhZbbgwvwTQYjFHIcNqox3zfnciV+WGIHnvviJO2aAQpzh+tLB1RVU7uitwJe9vBEinMZ5D/RUxLdwLUA1vhP4MdSWSMX3xDA/LEiqmqXusyx43V09I5ZGcgiaB2vFeaTatVIrsTIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736291552; c=relaxed/simple;
-	bh=nS5VnIK8a1IiEQrJBjiXGobVv+eH4RufOnD+urkmSpc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=l4ozGIaoj9dxm0ymDxq4bfab+yGTi8XxEhNSpE2EG+LQL/w04FjqpaZmQylpFEfw/Kyf82iwyfqr3aZRQdUN5ZcV3T+vVNYzp4upczzMRD6mas+5bGwulHOFNFmYLN/istf/Ulcs5eLS9jXSPn9ezIRlMYeHdKZ2Dv4UD+Uv8/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Dqdidcgy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sycd/CTA; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736292109; c=relaxed/simple;
+	bh=94nsO94f392jU4Co/ptSv6X3lUPyrk1Qtscq+3i3Ze8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sJd5x2cvNPqQaPsoSYmgEEOB2LxYlLN4gAooz3eCTS+jDH8qXulpu3/kmqUbndcdk6U8gSOGUx97N4EVnc1BXFjfLkuOMYCTPLo9ZS18QTsZZI2PkSPtjAmkwAQFB84NvE4OFZU+X7LflArOyNNQ9l3ErJPvp0aeWjhaQkXfZ+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=FJ59EuPY; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Dqdidcgy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sycd/CTA"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5FD9B114015D;
-	Tue,  7 Jan 2025 18:12:29 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 07 Jan 2025 18:12:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736291549; x=1736377949; bh=qQaf2/kwxo
-	S9rnt8H6y+d26XgUXR1DwJo90hfHG0g5U=; b=Dqdidcgyr6kWyF3lE6DbW7kZSg
-	XwSYCKqpbGdcIhVlfRubmOf6RLw40LqBD0M+WiVw1ljV6QlTyfOfeBwk370nOn2K
-	YbofUm3HAhrB0GDItow5Y49i8vQiW+gJvkk/k62snGis8Ba3JLeQrJZlLEu6TBLJ
-	NvCGYoHUJrQEBpX4hxdhk5okWQ5S3zAn2fXd04z3HXPLtafijYdfnKzRbS9rXW8V
-	6vdHX6fqMCPCIoosH0ZvTdIUtJnm0Z6G+T4/yKFrLZBMPqZ3O3LeQhE6drMq6gcc
-	WZ4/PSilmYwU+EcfYdrGlKiFIvEs56WNSnenDxbBBXXQr+bRjB/ma2DoPZ7g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736291549; x=1736377949; bh=qQaf2/kwxoS9rnt8H6y+d26XgUXR1DwJo90
-	hfHG0g5U=; b=Sycd/CTAH2r/zsXTAqdheFmN6730xPxFld4Ded89HttBJFNx2LH
-	Ud+bxOvDsA3UGxH8rCypl/qNIhV9Q+b3M2xqnTfWi2PYu3w4+rsZ7xGDjh112PRf
-	SLW/QLR3fzT2MXzviTzg/jjGwxlUAZ9TGTFA6iqZ+6Zc/xhLM6WeNfwTABic0D3X
-	yY2N0sEs520IHFB5w7MzjUCN0cQyUR018vfrEKaI6e/59Rv5scz+u7kssl4TqgkN
-	zOacf+aORy7RsgkwyuJ/SlFOzxHPgJv3YxW4JYdIr4ApPaBs9b7lxL3n4E3vBZQr
-	l7M7z25yFHM7WW/JFHTrNdYU5WdpRGM6YAw==
-X-ME-Sender: <xms:3LR9Z1Dsah0PZbIFWqoS8nY5Ip0a-RXblpwDOxuRZS8ySwXZrrx3nQ>
-    <xme:3LR9ZziajBgtL_V4Jcd5ySMxDSAj2a2OdDftrSLUKtRxQX_N_SE_z3xhsRPTlA59D
-    XQBKQMbS6d_mDMc-A>
-X-ME-Received: <xmr:3LR9ZwlSbHn-RRVGC_TuC_ansjcQdzDNi6CFpjVWY1wDVd3wh5ughoQmEdaeCQhio5bYpob1wkCFxNsvUo0d2oninHlOLyvGvzJ5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegfedgtdeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttg
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:3LR9Z_xvArgm5DKb4phBiHmnuvWOO17pHwASiCJY817XvKC5LMBPVw>
-    <xmx:3LR9Z6TaOYqeT8qu963YzrVyeP4CJpp-CLQeVFEdirwfzwX73ZhUZw>
-    <xmx:3LR9ZyYMKB1WSeJeAOGJQ0vpGO3VEzsjjY_78gWxiMjSbtHgGycqAA>
-    <xmx:3LR9Z7ThnP7TKH9G75UIVKeFCHiJoGi6oqMQ0M-JISDw7Gn1XRM6Jw>
-    <xmx:3bR9Z4eQ2-KS5280Wn8tFO5uPcdJhkv_Hfku1FAXyVVH91li89wUJFuk>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Jan 2025 18:12:28 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2025, #02; Mon, 6)
-In-Reply-To: <87o70ijpgr.fsf@iotcl.com> (Toon Claes's message of "Tue, 07 Jan
-	2025 22:15:00 +0100")
-References: <xmqq5xmryalp.fsf@gitster.g> <87o70ijpgr.fsf@iotcl.com>
-Date: Tue, 07 Jan 2025 15:12:27 -0800
-Message-ID: <xmqqa5c2qkv8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="FJ59EuPY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1736292105;
+	bh=94nsO94f392jU4Co/ptSv6X3lUPyrk1Qtscq+3i3Ze8=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=FJ59EuPYxTGDFh6GELeGBRdfTQeDS111+jdTbLwe2iJdAF2PD1S6LLmLOCZVLyjFY
+	 uHnzMJGGu4YCw0oySNp6z3CCsc+Wdv2BKp+3JRTtmBrq4FX2yFNKHZ98qCK6sEuKWV
+	 Xpp7g1/+06IzgU9S7ZZcx3c5AHfKjL0scIoUJzuN+p97sXuM4IAoiC5a7pMK3ZSEYh
+	 BfU4ousrliPLfhBwjpsutINT/3GUXrhYXDtmxh9iKMAOBoG7WAVvXmT4hb5SiEYFVf
+	 mSMQJbq78FryeyYAAsP5Qpz8GBfMDrloV25pCNTY/cdV9NTL26VFtz+qHS621hwLG3
+	 /4qUOvSLfGrzwn93rQhWaOdHSlbZIPCaS1SflRjELCoyphD2v/NWIpR+8ek666MrXT
+	 /gJUY6nOAD6DZfqvldKOQdTfuHeuo8pkNalCyfhB9jzcTGMubTJJ4Slrjj2t3ulN01
+	 MudJMM2Sj1Vj/gi0lzTu5P0DCKENxuOvdd2dx5N/K5D6MNITFCG
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A9960209BF;
+	Tue,  7 Jan 2025 23:21:45 +0000 (UTC)
+Date: Tue, 7 Jan 2025 23:21:44 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, "Randall S. Becker" <randall.becker@nexbridge.ca>
+Subject: Re: [PATCH 0/2] reftable/stack: stop dying on exhausted entropy pool
+Message-ID: <Z323CLrRsnOko1gB@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	"Randall S. Becker" <randall.becker@nexbridge.ca>
+References: <20250107-b4-pks-reftable-csprng-v1-0-6109a54a8756@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="K8inMK79QvD7Cah4"
+Content-Disposition: inline
+In-Reply-To: <20250107-b4-pks-reftable-csprng-v1-0-6109a54a8756@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Toon Claes <toon@iotcl.com> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> * ps/the-repository (2024-12-18) 15 commits
->> ...
-> Reviewed by shejialuo, Karthik Nayak, and me.
+--K8inMK79QvD7Cah4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yeah, thanks, all.  Marked for 'next'.
+On 2025-01-07 at 15:26:58, Patrick Steinhardt wrote:
+> Hi,
+>=20
+> this small patch series fixes the issue reported by Randall [1], where
+> an exhausted entropy pool can cause us to die when writing a new table
+> to the reftable stack. I _think_ that this is only an issue with the
+> OpenSSL backend of `csprng_bytes()`:
+>=20
+>   - `arc4random_buf()` never returns an error.
+>=20
+>   - `getrandom()` pulls from "/dev/urandom" by default.
+>=20
+>   - `getentropy()` seems to block when there is not enough randomness
+>     available.
+>=20
+>   - `GtlGenRandom()` I cannot really tell.
+>=20
+>   - The fallback reads from "/dev/urandom", which also returns bytes in
+>     case the entropy pool is drained.
+>=20
+> So OpenSSL's `RAND_bytes()` seems to be the only one that returns an
+> error when the entropy pool is empty. I did wonder whether we even need
+> to introduce the new flag in the first place, or whether we cannot just
+> use `RAND_pseudo_bytes()` unconditionally. But I'm a bit uneasy about it
+> given that OpenSSL has this doc:
+>=20
+>     RAND_pseudo_bytes() puts num pseudo-random bytes into buf.
+>     Pseudo-random byte sequences generated by RAND_pseudo_bytes() will
+>     be unique if they are of sufficient length, but are not necessarily
+>     unpredictable. They can be used for non-cryptographic purposes and
+>     for certain purposes in cryptographic protocols, but usually not for
+>     key generation etc.
+>=20
+> It might be too easy to accidentally rely on `csprng_bytes()` where it
+> actually requires strong cryptographic data, so I was erring on the side
+> of caution.
 
+The reason I didn't use RAND_pseudo_bytes is because it's been
+deprecated since OpenSSL 1.1.0 and RAND_bytes uses a CSPRNG just like
+RAND_pseudo_bytes as of that version.  Once it's seeded, it should be
+able to generate plenty of bytes, because I believe it uses a CTR-DRBG,
+which only needs to be reseeded after 2^48 bytes (which is far more than
+we should be using).
+
+We can full well use RAND_pseudo_bytes, but all operating systems should
+provide an appropriate entropy source that can provide 256 bits of
+entropy on startup.  arc4random will just kill the process if it can't
+seed itself, so your changes won't actually prevent dying on a lack of
+entropy.
+
+I don't want an option that chooses "insecure" bytes.  My preference is
+that we require people use a different backend or an up-to-date OpenSSL
+version that shouldn't have this problem.  We can use RAND_pseudo_bytes
+if we really need to support older versions, but there are also no major
+operating systems which require that old of a version (CentOS 7, which
+is dead, used OpenSSL 1.0.2, and CentOS 8 uses 1.1.1k), so it's probably
+not within our support policy to do that.
+
+Note also that if OpenSSL is being used for TLS, a lack of entropy will
+result in TLS not working, which means that Git will be randomly broken
+on that system, which is not really an experience that we want to
+encourage, so that should be taken into account.
+
+Can we get some more information about what version of OpenSSL is being
+used and what the system entropy source is?
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--K8inMK79QvD7Cah4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.45 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ323CAAKCRB8DEliiIei
+gWoZAPsE9OpK6NWJKFQvOEZ+zgBp+EqZyVQlP49Dcp1poehD3AEAtCgmEXoaG71E
+qkkmZaEa1RNkZ5v/jB+k1ZyXuZ44uQ4=
+=ZAiQ
+-----END PGP SIGNATURE-----
+
+--K8inMK79QvD7Cah4--
