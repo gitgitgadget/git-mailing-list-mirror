@@ -1,228 +1,144 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736452594A9
-	for <git@vger.kernel.org>; Tue,  7 Jan 2025 18:31:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2921F427B
+	for <git@vger.kernel.org>; Tue,  7 Jan 2025 18:41:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736274716; cv=none; b=IWajsSmsBFQAxTdKuRreab+7iwPuzNpHHir26zn2PXl13O3fyRxhatJjXzjZ3OOh8zmK1B4NIrsihJvflo9zXjAxEBojhilh0D6wexYj8Stjfe21zMzQaf+UWzqK/hmS2IuFy9B/UqXuGEsq5I2SvGCGDULMx9YZGQfHdu6SgZ0=
+	t=1736275267; cv=none; b=leu5oyZ+GjZQcw3jy3TYyeCWgZ0RT62rdbkovc7MFYg8thsYmnSjLraCjwYnyPwfosMNt9Ft9VK1PEizoyoAMLUhFEUtjqQhbJGChuaQ8RgmDyAYwUN9g8Na3hpWcupS5eDCzJddFzsbgWIPeU4AcrLGTtoAaZieC/Xi0mtfZyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736274716; c=relaxed/simple;
-	bh=82qji59sENFfABvGghQdVX3s4dzGviUeB9w1CtKhD5Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OJBo8Tn8ghOrZ6RrzHy/jhPnnMn2zLtCDVH2HWLBiMGvnLUbqW14rVs3E1Zm5q1C2G/SUzrrEuXx27+l1hBWtaFNWiMKf/x8/iLW04bBoM+orgNBhBLevsLe2+TRdrKHWKstA7DHPl3tlWvWoC1VHiCjK/AaZDUwuIpGEsNyXhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=f+42wVVt; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1736275267; c=relaxed/simple;
+	bh=EtechFwDQ2vc/LfkHd0Lz+uhEdl5A4TR03CvGbm8TN0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uD0sPToNqLxr9Gs8Uf8B//KTje2gFKKbaOzJ0n18jFFAwl+E0gHGieD96HPsf/qFN7MpTAFL+UUkgIZSDvhRYHf46XFViujC5SNrYJIymlP32peXXEspeNZMt6qbi0a6vZAtALX0U3n8nakh32xrQ8CNVUTGksNK57PJwTMKW5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lXLNsIn0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o3RvL0tY; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="f+42wVVt"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5d442f9d285so661a12.1
-        for <git@vger.kernel.org>; Tue, 07 Jan 2025 10:31:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1736274712; x=1736879512; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w3J/o8kGviUGU1tpI+xShKt80TYn1lgtsFYA2E4BlxM=;
-        b=f+42wVVt7CkR2ziFGt9qgaY/bi3Zy6ywi8291eMUVtJXl6ttGhu8TEsY0UPppxHpub
-         ev7B3YJThVGXykeKaMQjp8rFaku4IbeTRSuYq3ObcPxH1NGax8LWprUkEZJDfmMRjfvG
-         c8RT7Ukrsr6ziNjLUqE1ejN1afklK8yigXpBWbXBbYYyFmjWj5GBA5B8x+7jqDWXaCz2
-         YdbyKTcW15xiC1/u04z9ykXIPTcWV06EhZliEbafixMLz4OS5UdoNsUDgHcoBCykG6d0
-         mphj3uJv5uvVRuHB6G5cgmJfs756RQAnGby6+4WPUdZbIP/GJjq+05OAthPCGdS873xo
-         dMjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736274712; x=1736879512;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=w3J/o8kGviUGU1tpI+xShKt80TYn1lgtsFYA2E4BlxM=;
-        b=lWYfn2qc2+T/xdSSXMXJrI/yRN3Q6Kur/jBrdxs5efTGo46U8ExpY3n7fBlCSD9NPw
-         C54qWVZ9Nj9YDjOFHVUF4w+iD+a8yKLdSxRQoSehNcbOC1Lz8wGi4c/ZIeIYbTBaoRtn
-         vUWhUQjav547B8+WWqZoUAoTNsXQTj7ff0NSFPdUePjmwlzDg8p66+L/qf8mKuyssHM9
-         P2R++tMWJ3pg5Gul660S8VwdIoTg6fZfIhcjeiB3qYpi1fjJ5ZosJNr1sZmjo4oMLvq1
-         I0kaxfVIkLhS/HT0xeQMr+8Qz9+foNqFcRlWfXivik3KZTHXTPF1nsa0xoyhETakxyjD
-         smvQ==
-X-Gm-Message-State: AOJu0YypHpJ5u9k5GqKMsbIJr+qef7oE9sXDlvKKoF9o/L3C00AIrSes
-	w0jXHTHBXR7ChGN4H7tgbEI8j3zrcHKp+MjXDwm25BjzoeL/nbN8wXzLkdZ93qfObbvbyHCnral
-	SyGFa67cLVtGDUxxZsdpYXwDmWvWhuZKwTV/O
-X-Gm-Gg: ASbGncv23wZ2FiQITKjg2ilf78ciFy14v0HrrvKlt61QMA9FuwRpLcG1nHZk70P7Nxm
-	p06owkMcw9pNVmObACkM3ncpo4sVyr7jt7y7UGlv0vCGPB6X30JktMMJITmfl3UkUbg==
-X-Google-Smtp-Source: AGHT+IFf229vE0wj5DMZytshIkxqy5YNCabBQNYFvAtfcl8+eQyxI4hVq3KwvnjIzec/CjZX445d2y9bNsj2P6D3o9E=
-X-Received: by 2002:a05:6402:278a:b0:5d9:693e:346 with SMTP id
- 4fb4d7f45d1cf-5d9693e096fmr133031a12.4.1736274711503; Tue, 07 Jan 2025
- 10:31:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lXLNsIn0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o3RvL0tY"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id A458F1380263;
+	Tue,  7 Jan 2025 13:41:03 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 07 Jan 2025 13:41:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736275263; x=1736361663; bh=Y8sEhzGkcZ
+	sM34zh53LkW7UU8CzW1IKAi2A1UzVNc/A=; b=lXLNsIn0iMGaHqMgjrFKwYmMV7
+	oNqq7ocJWHwyUjrWIj1nWWkOGtm2+IRJFxCsWWo5CJ2Rth3dN0mcun/lVgrOyCQO
+	+t5+Thm78B/00siYszdQ7enKdgtL5o5iMvlcetgZlu+NS3gXbpnqlAsTm7vpHyTh
+	0do4ifwMiwWe+9t6GxQEIZRBvKRA62WllqdwFKmJsGdeP6ArMH+0tPK6wvzl+rgq
+	JqjwYWUq+nVtZVkxfKX8pv1J4zj9ZnWhpC4gaDF7Hf0IKtLKsFks500hjh9EBbn3
+	V+8VtWnah0dBpl70MXkcuuKGaeO8B947qvzDsIvrJGbwM22zqSvtGf10PJWw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736275263; x=1736361663; bh=Y8sEhzGkcZsM34zh53LkW7UU8CzW1IKAi2A
+	1UzVNc/A=; b=o3RvL0tYkYWo9cVhA6co58Z7bRUyOS3/8zhgrw24QgRu4cz1gK/
+	kb5Ej+H8jppFg7Rvbtvf6Z2BQcct4Lci8VXQxyAiN4lqI0FxNV/zbnLSerGJEf7a
+	sTBmBlApWwr3sp9FzyeXjY1gDIzGCdQf1OwiALMcsYlMbE6ozEDh7aJaf2iBgcjJ
+	ekSRmvCa8E/WkTY+A7NmxAEd5zvauqLvA+FzDG2PUqRW5Oh0WPOBQiIWO4THX3MT
+	NIOgrCwWtcjwNGhJcfyNbFqwSFSiEIA60rPcp+luYWO7VauQpBMyLlm0vhye55EA
+	Q1DoVqEfPJ1L0BdMmdZe1Z4Qb4CXdi7F8ZQ==
+X-ME-Sender: <xms:PnV9Z_YDg9VeWmxb5vekDaBXm_n2npIBFYl0LsVzJ5MLQMczO4V8hQ>
+    <xme:PnV9Z-bPFeHFSHXTffLJjErdfJBCUsxhjP2rZgRCEyH4_P4edwLmQYMFZtzzoZx2A
+    niZrhKV-cZjVolI_g>
+X-ME-Received: <xmr:PnV9Zx-BeoLIFBojMnOyr2SGc5TA8pI-ZBy-TJsLEd4x8MWh2T7KL2ZXnQzygRDH2vIA5KmAROiujG84v8c1-Gf20uKPU7_XZnve>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegvddguddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkuhhfohhrihhjih
+    elkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:PnV9Z1pAos2Cz7kRc7uicOCtTXrnyBv9y6noc45tjoVZxw1qo9GvJw>
+    <xmx:PnV9Z6oGIu99C4TGQ2SQ3JaSDvBpiwTK0BJR20JB8aQUgezS-47zHw>
+    <xmx:PnV9Z7QuGHUnNSNmEWYzRNYcK_zwF0weVUtPN1XD-T04QefTTul1mg>
+    <xmx:PnV9Zyoszy0wi7qoRoJwBtw_3oC4L7CXwkVt1bBOsYHcfNyi2nyY-A>
+    <xmx:P3V9Z3Dinu3TzaCH-Yh0DeeUSdEyFMY7Vj5ciz2NBO66hI9ZigE6JpRs>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Jan 2025 13:41:02 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Seyi Kuforiji <kuforiji98@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] t/unit-tests: match functions signature with
+ trailing code
+In-Reply-To: <xmqq7c76trpa.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	07 Jan 2025 10:16:33 -0800")
+References: <20250107091932.126673-1-kuforiji98@gmail.com>
+	<20250107091932.126673-2-kuforiji98@gmail.com>
+	<xmqq7c76trpa.fsf@gitster.g>
+Date: Tue, 07 Jan 2025 10:41:00 -0800
+Message-ID: <xmqqv7uqsc03.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20241223232523.76236-1-eric.peijian@gmail.com> <20241223232523.76236-6-eric.peijian@gmail.com>
-In-Reply-To: <20241223232523.76236-6-eric.peijian@gmail.com>
-From: Calvin Wan <calvinwan@google.com>
-Date: Tue, 7 Jan 2025 10:31:40 -0800
-Message-ID: <CAFySSZAqh6J14+r9JLM3LmRmV02ZvPRf5dB3rWVnUZS_5XaHcQ@mail.gmail.com>
-Subject: Re: [PATCH v8 5/6] transport: add client support for object-info
-To: Eric Ju <eric.peijian@gmail.com>
-Cc: git@vger.kernel.org, jonathantanmy@google.com, chriscool@tuxfamily.org, 
-	karthik.188@gmail.com, toon@iotcl.com, jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Thanks for picking up this series btw!
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Mon, Dec 23, 2024 at 3:25=E2=80=AFPM Eric Ju <eric.peijian@gmail.com> wr=
-ote:
+> A quick peek at [PATCH 2/2] tells me that this is not even something
+> that would make it easier to port the existing tests by allowing
+> more straight line-by-line copies or something.  The patch splits
+> many in-line test pieces in the "main" into separate functions, and
+> it does so in a rather unusual format, e.g.,
 >
-> From: Calvin Wan <calvinwan@google.com>
+>   void test_hash__multi_character(void) TEST_HASH_STR("abc",
+>           "a9993e364706816aba3e25717850c26c9cd0d89d",
+>           "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
 >
-> Sometimes, it is beneficial to retrieve information about an object
-> without downloading it entirely. The server-side logic for this
-> functionality was implemented in commit "a2ba162cda (object-info:
-> support for retrieving object info, 2021-04-20)."
+> where TEST_HASH_STR() expands to the function body that starts with
+> a "{" and ends with a "}".  It can well be written more like
 >
-> This commit introduces client functions to interact with the server.
+>     void test_hash__multi_character(void)
+>     {
+> 	TEST_HASH_STR("abc",
+>         	"a9993e364706816aba3e25717850c26c9cd0d89d",
+> 		"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
+>     }
 >
-> Currently, the client supports requesting a list of object IDs with
-> the =E2=80=98size=E2=80=99 feature from a v2 server. If the server does n=
-ot advertise
-> this feature (i.e., transfer.advertiseobjectinfo is set to false),
-> the client will return an error and exit.
+> and we do not need this step at all if we did so.  Such a construct
+> would be a lot friendlier to the editors that auto-indent, too.
 >
-> Helped-by: Jonathan Tan <jonathantanmy@google.com>
-> Helped-by: Christian Couder <chriscool@tuxfamily.org>
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
-> ---
->  Makefile            |  1 +
->  fetch-object-info.c | 92 +++++++++++++++++++++++++++++++++++++++++++++
->  fetch-object-info.h | 18 +++++++++
->  fetch-pack.c        |  3 ++
->  fetch-pack.h        |  2 +
->  transport-helper.c  | 11 +++++-
->  transport.c         | 28 +++++++++++++-
->  transport.h         | 11 ++++++
->  8 files changed, 163 insertions(+), 3 deletions(-)
->  create mode 100644 fetch-object-info.c
->  create mode 100644 fetch-object-info.h
->
-> diff --git a/Makefile b/Makefile
-> index 3fa4bf0d06..70e9ec0464 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1020,6 +1020,7 @@ LIB_OBJS +=3D ewah/ewah_rlw.o
->  LIB_OBJS +=3D exec-cmd.o
->  LIB_OBJS +=3D fetch-negotiator.o
->  LIB_OBJS +=3D fetch-pack.o
-> +LIB_OBJS +=3D fetch-object-info.o
->  LIB_OBJS +=3D fmt-merge-msg.o
->  LIB_OBJS +=3D fsck.o
->  LIB_OBJS +=3D fsmonitor.o
-> diff --git a/fetch-object-info.c b/fetch-object-info.c
-> new file mode 100644
-> index 0000000000..2aa9f2b70d
-> --- /dev/null
-> +++ b/fetch-object-info.c
-> @@ -0,0 +1,92 @@
-> +#include "git-compat-util.h"
-> +#include "gettext.h"
-> +#include "hex.h"
-> +#include "pkt-line.h"
-> +#include "connect.h"
-> +#include "oid-array.h"
-> +#include "object-store-ll.h"
-> +#include "fetch-object-info.h"
-> +#include "string-list.h"
-> +
-> +/**
-> + * send_object_info_request sends git-cat-file object-info command and i=
-ts
-> + * arguments into the request buffer.
-> + */
-> +static void send_object_info_request(const int fd_out, struct object_inf=
-o_args *args)
-> +{
-> +       struct strbuf req_buf =3D STRBUF_INIT;
-> +
-> +       write_command_and_capabilities(&req_buf, "object-info", args->ser=
-ver_options);
-> +
-> +       if (unsorted_string_list_has_string(args->object_info_options, "s=
-ize"))
-> +               packet_buf_write(&req_buf, "size");
-> +
-> +       if (args->oids) {
-> +               for (size_t i =3D 0; i < args->oids->nr; i++)
-> +                       packet_buf_write(&req_buf, "oid %s", oid_to_hex(&=
-args->oids->oid[i]));
-> +       }
-> +
-> +       packet_buf_flush(&req_buf);
-> +       if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
-> +               die_errno(_("unable to write request to remote"));
-> +
-> +       strbuf_release(&req_buf);
-> +}
-> +
-> +/**
-> + * fetch_object_info sends git-cat-file object-info command into the req=
-uest buf
-> + * and read the results from packets.
-> + */
-> +int fetch_object_info(const enum protocol_version version, struct object=
-_info_args *args,
-> +                     struct packet_reader *reader, struct object_info *o=
-bject_info_data,
-> +                     const int stateless_rpc, const int fd_out)
-> +{
-> +       int size_index =3D -1;
-> +
-> +       switch (version) {
-> +       case protocol_v2:
-> +               if (!server_supports_v2("object-info"))
-> +                       die(_("object-info capability is not enabled on t=
-he server"));
-> +               send_object_info_request(fd_out, args);
-> +               break;
-> +       case protocol_v1:
-> +       case protocol_v0:
-> +               die(_("wrong protocol version. expected v2"));
+> So, I do not quite see much value in this particular change.
 
-s/wrong/unsupported
+Having said that, if this were more like that you write a series of
 
-> +       case protocol_unknown_version:
-> +               BUG("unknown protocol version");
-> +       }
-> +
-> +       for (size_t i =3D 0; i < args->object_info_options->nr; i++) {
-> +               if (packet_reader_read(reader) !=3D PACKET_READ_NORMAL) {
-> +                       check_stateless_delimiter(stateless_rpc, reader, =
-"stateless delimiter expected");
-> +                       return -1;
-> +               }
-> +               if (unsorted_string_list_has_string(args->object_info_opt=
-ions, reader->line)) {
-> +                       if (!strcmp(reader->line, "size")) {
-> +                               size_index =3D i;
-> +                               for (size_t j =3D 0; j < args->oids->nr; =
-j++)
-> +                                       object_info_data[j].sizep =3D xca=
-lloc(1, sizeof(long));
-> +                       }
-> +                       continue;
-> +               }
-> +               return -1;
-> +       }
+    DEF_HASH_TEST(multi_character, "abc", "a9993e...", "ba7816bf...")
 
-I think we can flatten this logic a bit more here to make it more intuitive=
-.
+and they expand to
 
-if (!unsorted_string_list_has_string(args->object_info_options, reader->lin=
-e))
-        return -1;
-if (!strcmp(reader->line, "size")) {
-        size_index =3D i;
-        for (size_t j =3D 0; j < args->oids->nr; j++)
-                object_info_data[j].sizep =3D xcalloc(1, sizeof(long));
-}
+    void test_hash__multi_character(void)
+    {
+	const char *expected[] = {"a9993e...", "ba7816bf..."};
+	check_hash_data("abc", strlen("abc"), expected);
+    }
+
+then a preparatory step like this patch _might_ be justifiable.  You
+may want to avoid having to write too many boilerplate, and a
+special rule to find "DEF_HASH_TEST(name, ...)" and it might make
+sense to add support to extract the name of the test function being
+defined by the macro automatically.
+
+Not that I think such a sequence of DEF_HASH_TEST(), one per line,
+is an improvement at all (it also is unfriendly to editors that
+auto-indent the same way as your original version).  I just wanted
+to say that a change to the pattern to pick up the function name may
+be justifiable if it were so.
+
+Thanks.
