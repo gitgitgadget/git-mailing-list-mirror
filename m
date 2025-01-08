@@ -1,174 +1,109 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788B119E992
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 15:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDFE19F133
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 15:27:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736349456; cv=none; b=RKiYr7VVrANhAyZ9FP5SZHbAbnPzIJmHTyJiqeG+nGaJeCUoIz4B/lteza2Drt0JxX2ap4jWbclTK40TyiQtR0WwnYKzzZhUVufnuKCNVQCG1LUBrcjVrN0qbzF2BBcDr0L0W+tc0SFNbiq5EA1iIJGXtCouHakkOKfpL7pMCRU=
+	t=1736350036; cv=none; b=bkXjJg9RcCq43TFXpjLe/6TsArstlJJschpjXfEUUMisstguFprcPq76je3NQBN/tReGgkS2pG90Y5cUUW6NYZO7UkRrmYWiCr175+xbPgisyId81ufddp0zmtrcREHZ4QJW7I2MByIdTru5MYdEvmuzzx6mQdysIMAp8WYI2/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736349456; c=relaxed/simple;
-	bh=K/RdlXwsKE0oX+iUEcro0kehv8bHbMLN4DiZyegP0wU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RfED/yX/40q+lx7Z1YJNh4bTYj3GjCNFgO4PnoscdyJuAbQ2B29Obq8x3LBolOB6fYQA6sJfOF78lpEPUOJK0A5IDtn/q0QQ1TK6M+C/fc186c18PfgEHrTBO0d3+Zv67vJVRxsvodZ48NL4IrAts8p6ywlTTu/C6CGG3ShVk+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xA/vSpXy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qWtrNBCY; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736350036; c=relaxed/simple;
+	bh=KAttN1eAtBhArQm4O3OSyWLKYZvaVLm/aIkUtdTpW3w=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Cc:Content-Type; b=P+0cvA2JfR/Uu5LyoZc+eRtIuvR6TGV5s5sbNWRdqJxusFJBRAfI0Regl2aZd1rO0pc+u9lNqLDiAnTmT9oQTZR51cj4TBlhUR1ywcvLaXoK8F/9W4G85JqgKkrG07ulPzYXi434U5JxF9IwCC3/Dw7zs2udlNp1UnFgakDQejM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=rGptvywf; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=kambanaria.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xA/vSpXy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qWtrNBCY"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 86BE11140183;
-	Wed,  8 Jan 2025 10:17:32 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 08 Jan 2025 10:17:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736349452; x=1736435852; bh=3fv8dVl7kn
-	DbFykdrCyxqBkPL4GX411cJOgr/fGDfuY=; b=xA/vSpXyXAhbVf6tSepgEno8V4
-	FFcPB7y3tMP8B7BBTPyO1E70wYosRqUO2jMJ8/TNiyvfptEJzJegxtCt80jItCEN
-	XSea3TRzTVVuz2bCDts1HX8q184T83hIleRoPQCZSTMqvGXitJdGaDfT4fAZFxib
-	7AT3fmPL8Z15EH2rL9e10VAncDXMFBd4O1TgHfq8lM/tBAlugWaV2C1cC/pbt3oq
-	sTcW1dp9XJoerSpb8ikscgx9/F6i/ne6yfFz1DveNQ36fUBF0B6XtD2B4L8ftAK8
-	TJahHrLoPZh3G5kZ/RKvuDO+/SukXjBZm1SCEvYnh3zrE2hcFIUyKEi7KH9g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736349452; x=1736435852; bh=3fv8dVl7knDbFykdrCyxqBkPL4GX411cJOg
-	r/fGDfuY=; b=qWtrNBCY2N18JFDIC1d9R2IF/Esv3ToAasr4Z4UM40VT9hx7hwZ
-	cQicGwaJR8WpEvWFlzFKf2fGTAb0zohtuBBE1LcZNovZ9/hgcYculL/dct5wKUS/
-	NemO0Xawfg4bXBmwBGdcbyvkI3Q6ZAJt8kwoBIKuKaWxMeixQ+p5J+2FEv8YZqe3
-	ewDYxWbNzAVwy5cixNsp/w+Ny9HFgzPVK6f7s9Rw/3F1fc1M8XcXw9CVv16nZUtK
-	nsdjRRgHhtzfI+cmZibo1JXSSnUD7BVsnGNuZ/V7KghK/c2arv430/ibFClECGmM
-	6DztrqB5Q8iZhBt+b3gLSn2w9tdyLoEIO7w==
-X-ME-Sender: <xms:DJd-Z_u-b3KqVBTB2SusOPfbMJGl8KmQKrdSn9HKQd9G-IMo7VH74Q>
-    <xme:DJd-ZwfvgyCjp0we3uIKcbhYuYlEuW_L92cWPO2huLjReqmYtwUXc4xYslxVIrTLX
-    LdL635562bm0h9Bfg>
-X-ME-Received: <xmr:DJd-ZyxowcSImaUAyigqxbRs70FUvQ0Kj61h7OU3-3jAXeJwD1Lvtmswi0p71FhtewbwfCWcSnXruuspL6MBf-tED9o-pX5msYE9>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggedgjeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:DJd-Z-NOZP89Zy660CZLUdS_orHfE8SUMc9u5BZ6hYE6QVY4Lgclew>
-    <xmx:DJd-Z_9MHayLeeV1w4HtwI67LsKrcykgvRvTIbhJqhvf5w0dRJ4iYA>
-    <xmx:DJd-Z-V-oTnbhutd5zJJWV6KS_ix4KrjMJL5hwQ6_uBRPaKmei26Jw>
-    <xmx:DJd-ZwdXfqXCIGOgnlw49t0G_OJXk4TOgTy0sS-A-VUA3blN78B0Ig>
-    <xmx:DJd-Z7YfSw-wk-Q6fyeqo4u7raZgDRDzlu4cXSbI0Y2nhJ2ry_LsN_ZT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jan 2025 10:17:31 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com
-Subject: Re: [PATCH] rev-list: print missing object type with
- --missing=print-type
-In-Reply-To: <20250108034012.211043-1-jltobler@gmail.com> (Justin Tobler's
-	message of "Tue, 7 Jan 2025 21:40:12 -0600")
-References: <20250108034012.211043-1-jltobler@gmail.com>
-Date: Wed, 08 Jan 2025 07:17:30 -0800
-Message-ID: <xmqqjzb5pc6t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="rGptvywf"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5d3e6274015so29807572a12.0
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 07:27:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1736350032; x=1736954832; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3aObokjKthcYS+qvP4wKFiU7Xm8qcBKHePJ9ILnMJvA=;
+        b=rGptvywfkohhF8HlaTUWAaVWANyJ6YYIdCNpoaWEB5FQQPv2BN4KopXJDnFvYHV8qv
+         mt0LWs0yUe7KBrfY+dK8xAIAoNcfw1SJqHDwYnd43vji+1ZRJKu1JdxnrdpxfThJLR44
+         74r6j71b5yPRAhqUZhvWmWTRqQbxaGh10DHcP7/lqCdkmkJ5LJhSk1vdY3Wr86z0Py3I
+         l/D8k5Y8IzuTr+geBFRJvm78zLpHePODXT7NYbVhfg90MPaLPOen2+maijTMmFUqmWAz
+         D701fU9AZlwkX/ZnJJB1hoQE4Ov0kIBdba3rM2MbUaKFh7OMtN5ASst7lJH+TCHlUVhU
+         I+xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736350032; x=1736954832;
+        h=content-transfer-encoding:cc:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3aObokjKthcYS+qvP4wKFiU7Xm8qcBKHePJ9ILnMJvA=;
+        b=iugEjiFoKfdkQUp8sigbfTD6IvXdL+kN2/qjPU9Gt33CXZ4IEZ6JV0PLcVWBZXP7h2
+         0WaGqZaOtMdiPPzPp3TNfC0KA84GucvX4ed3pmNbUF1A7n9HVwTPXC/R/bqPOvS6jKmT
+         CDvjDEovzKW8ZrgsJSjxV1/k5LZAbv6npTboX3P5bwoVqPTaE9eK+rNU1hN5hySmDAb3
+         xB8FoCrUREm5F9BX34/0OJasFNrCSM99FeUO5Asoetj3ClJ1OgQakCmrd2mB4tnPbICs
+         DIIHCtKRygLnkYlWYK7h7mb0nVDykZgIch3kNZ9EKOM2W4dTW9xw3M4GgUf9LsukQLYJ
+         6Wig==
+X-Gm-Message-State: AOJu0YxtZ8GvGnJS229xw62Oa6jcDcbDmafVny3woKFDFw49UJMqVrRU
+	1WzMYu6ESG6CQPeo8aRV4c9+0mzrNvpY7MobxbDZaP2YwET232BUWPxnh2amztjooo8Uk+2eKJZ
+	fQJE=
+X-Gm-Gg: ASbGncsCFzKdmAVvb+qQSV36mI/QhoWCAliiSm4knnIViU8+9M0GAlm12wsHv+SLttn
+	gWUbn6KT8jitl62l0yf52WpVcNbcMf++MCorDdA69SW/69N6Gk+jsQTFdtd3Ed59Yrlb4NQsu4z
+	D7h8362e0BN8RSesVCOPF6FEPZrk+wYXobUNxqKy8aqPHro684nT/s7w025cVTeHuv5DtA2pbOY
+	WO+gKLBjn4VzLceUbHt3ISACYQWXooN/+prFNK1ufcT3OBd+CM4JKg3P3Z8GnA9eHk6
+X-Google-Smtp-Source: AGHT+IGsEcKqr9ny5MxUqsalyvwdUTkyzKH3NxL4n+FFofZ02+5FW+UVj8R+GKK7yy87vkQRM7vzFA==
+X-Received: by 2002:a05:6402:270d:b0:5d2:728f:d5f8 with SMTP id 4fb4d7f45d1cf-5d972e4dcddmr2698670a12.27.1736350031811;
+        Wed, 08 Jan 2025 07:27:11 -0800 (PST)
+Received: from [100.64.0.1] ([147.161.132.184])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0f06ebf3sm2485594766b.196.2025.01.08.07.27.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Jan 2025 07:27:11 -0800 (PST)
+Message-ID: <c82d19d1-9b47-4881-b199-b00a9233f7ec@kambanaria.org>
+Date: Wed, 8 Jan 2025 16:27:10 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Content-Language: bg
+To: git@vger.kernel.org
+From: Alexander Shopov <ash@kambanaria.org>
+Subject: Intent to prepare the Linux FSMonitor patches for merging
+Cc: gitster@pobox.com, sunshine@sunshineco.com, edecosta@mathworks.com,
+ chooglen@google.com, Johannes.Schindelin@gmx.de, avarab@gmail.com,
+ me@ttaylorr.com, m.ispare63@gmail.com, ps@pks.im
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Justin Tobler <jltobler@gmail.com> writes:
+Hello,
 
-> Handling of missing objects encounted by git-rev-list(1) can be
-> configured with the `--missing=<action>` option and specifying the
-> desired action. Of the available missing actions, none provide a way to
-> print additional information about the missing object such as its type.
->
-> Add a new missing action called `print-type`. Similar to `print`, this
-> action prints a list of missing objects but also includes the object
-> type if available in the form: `?<oid> [type]`.
+I am gathering inititial feedback on continuing the work of merging the
 
-This part needs to explain where the type information comes from and
-what its significance is (see below for more details).
+fsmonitor: Implement fsmonitor for Linux implementation to git
 
-> diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-> index 459e5a02f5..277a0b645e 100644
-> --- a/Documentation/rev-list-options.txt
-> +++ b/Documentation/rev-list-options.txt
-> @@ -1024,6 +1024,9 @@ Unexpected missing objects will raise an error.
->  The form '--missing=print' is like 'allow-any', but will also print a
->  list of the missing objects.  Object IDs are prefixed with a ``?'' character.
->  +
-> +The form '--missing=print-type' is like 'print', but will also print the
-> +missing object type information if available in the form `?<oid> [type]`.
-> ++
 
-The users need to be told what this "type" information really means,
-as its meaning is quite different from what "git cat-file -t <oid>"
-would give them.  We do not have the object, so we are not learning
-its type from the object itself.  How much trust should the users
-put in this information, for example?
+This was previously discussed here:
 
-That comes back to the "where does it come from" that the future
-readers of "git log" and reviewers need to be told by the proposed
-log message.  Knowing the internals, I know you'd be getting it from
-the "containing" objects, e.g., an object name that was found on the
-"parent" object header field of another commit, which is _expected_
-to be a commit, or an object name that was found in a tree entry
-whose mode bits were 100644, which is _expected_ to be a blob, etc.
+https://lore.kernel.org/git/pull.1352.git.git.1665326258.gitgitgadget@gmail.com/
 
-There are other places that you _could_ glean information about
-(possibly missing) objects.  An object that is found during
-"rev-list --objects" traversal (which is the topic of this patch
-after all) but turned out to be missing may not just have an
-expected type (because it was found in a tree object that we
-successfully read) but also the full path to the object in the
-top-level tree, for example.
+(gitgadget) https://github.com/git/git/pull/1352
 
-In modern Git, there are even more places that you may be able to
-use, like commit-graph that not just hints the object itself is a
-commit, but what its parents are and when the commit was created.
 
-Note that I am not suggesting to implement more code to learn "type"
-information from more places than the current patch is doing.  At
-least not in this iteration of the patch.  What I am getting at is
-that it would help us to avoid unnecessarily limiting ourselves by
-stressing on "type" too much if we at least imagine what the
-possible sources of these extra pieces of information are and what
-they could provide.
+And then resurrected:
 
-As I suspect that we would want to leave the door open for us to
-extend this later, I would perhaps suggest an output format format
-like:
+https://lore.kernel.org/git/pull.1667.git.git.1707992978.gitgitgadget@gmail.com/
 
-    ?<object name> [<token>=<value>]...
+(gitgadget)  https://github.com/git/git/pull/1667
 
-where <token> tells what kind of extra information it is.  I expect
-that the initial implementation only knows about "type" as the
-<token>.  For future extensibility, we only need to say that under
-the syntax:
 
- (1) How multiple attributes are shown?
- (2) How would a <value> with SP or LF in it is represented?
+I will start by trying to rebase the patches and checking if there are 
+comments to previous patches that need addressing.
 
-My suggestion is to have multiple <token>=<value> on the same line,
-with a SP in between, and problematic bytes in <value> are quoted,
-using cquote(). i.e. a <token>=<value> whose <value> part does not
-begin with a double-quote ends at the first SP after it, otherwise
-<value> is taken as a C-quoted string inside a pair of double-quote.
+Still I am announcing this as things may have changed since last time. 
+AFAIK I have CC-ed all participants in previous discussions.
 
-If you are adventurous, I would not mind seeing "path" implemented
-as another token, since that would be fairly easily obtainable, but
-it does not have to be in the initial attempt.
 
-Thanks.
+Kind regards:
+
+al_shopov
+
+
