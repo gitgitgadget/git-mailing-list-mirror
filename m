@@ -1,109 +1,120 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EDFE19F133
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 15:27:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0291FCCEF
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 15:27:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736350036; cv=none; b=bkXjJg9RcCq43TFXpjLe/6TsArstlJJschpjXfEUUMisstguFprcPq76je3NQBN/tReGgkS2pG90Y5cUUW6NYZO7UkRrmYWiCr175+xbPgisyId81ufddp0zmtrcREHZ4QJW7I2MByIdTru5MYdEvmuzzx6mQdysIMAp8WYI2/M=
+	t=1736350063; cv=none; b=KcICwH5upYSW8M2cye/UeXYJXwxS6X/J2YPOji9szxEaIHimKO8WiajhdNqwUWi4+Htm9/JPJKIhzkINEleOcVY5d4tvwggxxiNikvOpLq7WEX7Xkz1pZv2yAUzgOZslqQ/COYY66POFGapBXyPGDeoBf+sWYGMMQXPkV0WObuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736350036; c=relaxed/simple;
-	bh=KAttN1eAtBhArQm4O3OSyWLKYZvaVLm/aIkUtdTpW3w=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Cc:Content-Type; b=P+0cvA2JfR/Uu5LyoZc+eRtIuvR6TGV5s5sbNWRdqJxusFJBRAfI0Regl2aZd1rO0pc+u9lNqLDiAnTmT9oQTZR51cj4TBlhUR1ywcvLaXoK8F/9W4G85JqgKkrG07ulPzYXi434U5JxF9IwCC3/Dw7zs2udlNp1UnFgakDQejM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=rGptvywf; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=kambanaria.org
+	s=arc-20240116; t=1736350063; c=relaxed/simple;
+	bh=rd7Zv6vTlo323tbCg1FHe4PcP5teX+DqAtAyrOpNUJk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mCgoww3Wc76mTGbYb/yuzKdyK08eonCYeY7tv1olXDZ8eMFiYmo7jMpE4mrOd5xFP1cjTRlPIP4B8g53PthkHF8v/jGSM4B19C1UZpzNuOFrmNQZu8+y9q1SFRhZqzKH94TlPf7RP11ecEc6+1YXiqkXod/nyOySTxsB029A3iU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=5ZpO/x4K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KXDDn/F2; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="rGptvywf"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5d3e6274015so29807572a12.0
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 07:27:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1736350032; x=1736954832; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3aObokjKthcYS+qvP4wKFiU7Xm8qcBKHePJ9ILnMJvA=;
-        b=rGptvywfkohhF8HlaTUWAaVWANyJ6YYIdCNpoaWEB5FQQPv2BN4KopXJDnFvYHV8qv
-         mt0LWs0yUe7KBrfY+dK8xAIAoNcfw1SJqHDwYnd43vji+1ZRJKu1JdxnrdpxfThJLR44
-         74r6j71b5yPRAhqUZhvWmWTRqQbxaGh10DHcP7/lqCdkmkJ5LJhSk1vdY3Wr86z0Py3I
-         l/D8k5Y8IzuTr+geBFRJvm78zLpHePODXT7NYbVhfg90MPaLPOen2+maijTMmFUqmWAz
-         D701fU9AZlwkX/ZnJJB1hoQE4Ov0kIBdba3rM2MbUaKFh7OMtN5ASst7lJH+TCHlUVhU
-         I+xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736350032; x=1736954832;
-        h=content-transfer-encoding:cc:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3aObokjKthcYS+qvP4wKFiU7Xm8qcBKHePJ9ILnMJvA=;
-        b=iugEjiFoKfdkQUp8sigbfTD6IvXdL+kN2/qjPU9Gt33CXZ4IEZ6JV0PLcVWBZXP7h2
-         0WaGqZaOtMdiPPzPp3TNfC0KA84GucvX4ed3pmNbUF1A7n9HVwTPXC/R/bqPOvS6jKmT
-         CDvjDEovzKW8ZrgsJSjxV1/k5LZAbv6npTboX3P5bwoVqPTaE9eK+rNU1hN5hySmDAb3
-         xB8FoCrUREm5F9BX34/0OJasFNrCSM99FeUO5Asoetj3ClJ1OgQakCmrd2mB4tnPbICs
-         DIIHCtKRygLnkYlWYK7h7mb0nVDykZgIch3kNZ9EKOM2W4dTW9xw3M4GgUf9LsukQLYJ
-         6Wig==
-X-Gm-Message-State: AOJu0YxtZ8GvGnJS229xw62Oa6jcDcbDmafVny3woKFDFw49UJMqVrRU
-	1WzMYu6ESG6CQPeo8aRV4c9+0mzrNvpY7MobxbDZaP2YwET232BUWPxnh2amztjooo8Uk+2eKJZ
-	fQJE=
-X-Gm-Gg: ASbGncsCFzKdmAVvb+qQSV36mI/QhoWCAliiSm4knnIViU8+9M0GAlm12wsHv+SLttn
-	gWUbn6KT8jitl62l0yf52WpVcNbcMf++MCorDdA69SW/69N6Gk+jsQTFdtd3Ed59Yrlb4NQsu4z
-	D7h8362e0BN8RSesVCOPF6FEPZrk+wYXobUNxqKy8aqPHro684nT/s7w025cVTeHuv5DtA2pbOY
-	WO+gKLBjn4VzLceUbHt3ISACYQWXooN/+prFNK1ufcT3OBd+CM4JKg3P3Z8GnA9eHk6
-X-Google-Smtp-Source: AGHT+IGsEcKqr9ny5MxUqsalyvwdUTkyzKH3NxL4n+FFofZ02+5FW+UVj8R+GKK7yy87vkQRM7vzFA==
-X-Received: by 2002:a05:6402:270d:b0:5d2:728f:d5f8 with SMTP id 4fb4d7f45d1cf-5d972e4dcddmr2698670a12.27.1736350031811;
-        Wed, 08 Jan 2025 07:27:11 -0800 (PST)
-Received: from [100.64.0.1] ([147.161.132.184])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aac0f06ebf3sm2485594766b.196.2025.01.08.07.27.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Jan 2025 07:27:11 -0800 (PST)
-Message-ID: <c82d19d1-9b47-4881-b199-b00a9233f7ec@kambanaria.org>
-Date: Wed, 8 Jan 2025 16:27:10 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="5ZpO/x4K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KXDDn/F2"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 00B3725400BD;
+	Wed,  8 Jan 2025 10:27:39 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 08 Jan 2025 10:27:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736350059; x=1736436459; bh=KroqpFI2jH
+	ghQqr1ME7b5++kQ9rO+6tF/sEM/aOde78=; b=5ZpO/x4Kg5HRftTzRPHKXUTcBl
+	SeKBYpiBjPbOj3GhoUnNonW29/7eHvKvCbLBm6qCJyAYF0zOCqf8/EKJOgLDYcWh
+	6DpeTOar4tvBj3Z1JdjtmYyJsTMv4PpbPsavfkS1P95xDwh3II3yiBS0TSZo3FwI
+	4mcm5qa7wBs58XBij5Wf6/XCOujo2agpubiM9aQrnCTLk/7Figfveu5umDhppED0
+	guGHkgOaGjwz8KOJdGuZH6XDiVAssiWNpo+n5EU4x8QMacpQ/z6+fbA1z33P4rfX
+	5BY145w75YvaP6ed9i8qGds9ck7CzAVGeb6Z424NDHZnzQQuXEN9moKZtotA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736350059; x=1736436459; bh=KroqpFI2jHghQqr1ME7b5++kQ9rO+6tF/sE
+	M/aOde78=; b=KXDDn/F2yes9ySnEsvgtOMK9se41Mkwxs92a+vRGm0ZrtZ4MWT6
+	GJ+5IarTz39/oz4Mre1upVrjXSu19Epm0VcolLJcyaVK8ezQwF6y4q5pdc/3vCo2
+	CWY3M4+7PGOgzpggbGofnNF0xEv1weXUI81dI0ti56xxP8/K0kD58TNllCkcPKhz
+	wJWXi02By+Zij73OV5mRC8BXbsSAUIfMQlObqG7TlXoQXU99VczuJBX5dHn4MjaS
+	UT+mZQacBOA3N/T+EwLF1c/pCaSMTFdrgDpzXVB8RlXFTTisOumNkjotYIvFX1sj
+	i0vLCsQlqwFErS2Vho6eHbUGBCpZctLEaZQ==
+X-ME-Sender: <xms:apl-Zzrtsc2PdztNoqBWcKT4554lLXg_rw-a8fIG0VtscW0TQ4Hs5Q>
+    <xme:apl-Z9o5UrUuYsAr6dDS5nLPhl4b2bTZAqOgH5PWtSxaOV30gL2X6NGiR-3y5nRBL
+    ijhOAE6zZ9mo8EjZQ>
+X-ME-Received: <xmr:apl-ZwPWVGwsgqyP_xs8XjWbClb9FutIpnnJs_k8yzsGqyX8-9RJrj0EXvDLo8Qu7Lg5o9ukd3ZZ-r5ttL6vBkucqlmPt5gD8Mze>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggedgjeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
+    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehkuhhfohhrihhjihelkeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:apl-Z249DYIvaxXNqclifpggLP6kEkoCEmz5tZ2YH0qOtgdxhLBgEQ>
+    <xmx:apl-Zy7Af4aoafLwlk0D0H-kaaK98dyeX6WkvWUDpt8CHovaT-zVGw>
+    <xmx:apl-Z-jDXJrTliSHzWZCxfSQ4YiZitr1-7Ds4MKBSDyANw_fqfJhfA>
+    <xmx:apl-Z05r_00fWA39V1q9pLcI42XgnK6D82xgzRxNuIeR4rnz6K4jWA>
+    <xmx:a5l-Z0STGSBRZhCQVwP6h-sXMUC3OTwP0pTy3JEKZaxrN7hsxf10jTxF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 8 Jan 2025 10:27:38 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Seyi Kuforiji <kuforiji98@gmail.com>,  git@vger.kernel.org,
+  phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] t/unit-tests: match functions signature with
+ trailing code
+In-Reply-To: <Z34XvPjhY15MFHrT@pks.im> (Patrick Steinhardt's message of "Wed,
+	8 Jan 2025 07:14:20 +0100")
+References: <20250107091932.126673-1-kuforiji98@gmail.com>
+	<20250107091932.126673-2-kuforiji98@gmail.com>
+	<xmqq7c76trpa.fsf@gitster.g> <Z34XvPjhY15MFHrT@pks.im>
+Date: Wed, 08 Jan 2025 07:27:37 -0800
+Message-ID: <xmqqcygxpbpy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: bg
-To: git@vger.kernel.org
-From: Alexander Shopov <ash@kambanaria.org>
-Subject: Intent to prepare the Linux FSMonitor patches for merging
-Cc: gitster@pobox.com, sunshine@sunshineco.com, edecosta@mathworks.com,
- chooglen@google.com, Johannes.Schindelin@gmx.de, avarab@gmail.com,
- me@ttaylorr.com, m.ispare63@gmail.com, ps@pks.im
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hello,
+Patrick Steinhardt <ps@pks.im> writes:
 
-I am gathering inititial feedback on continuing the work of merging the
+> So I agree with you, let's scrap the idea and have proper function
+> bodies instead.
 
-fsmonitor: Implement fsmonitor for Linux implementation to git
+Yup, sometimes, simple, stupid, and good enough is the way to go.
 
+We could do
 
-This was previously discussed here:
+-- >8 --
 
-https://lore.kernel.org/git/pull.1352.git.git.1665326258.gitgitgadget@gmail.com/
+#define T(testname, input, expect1, expect256) \
+	void test_hash__ ## testname(void) \
+	{ \
+		const char *expect[] = { expect1, expect256 }; \
+		check_hash_data(input, strlen(input), expect); \
+	} extern void test_hash__ ## testname()
 
-(gitgadget) https://github.com/git/git/pull/1352
+T(empty_string, "", "da39...", "e3b0c4...");
+T(single_character, "a", "86f7e4...", "ca97811...");
 
+-- 8< --
 
-And then resurrected:
+which may not upset syntax-aware editors too much.
 
-https://lore.kernel.org/git/pull.1667.git.git.1707992978.gitgitgadget@gmail.com/
-
-(gitgadget)  https://github.com/git/git/pull/1667
-
-
-I will start by trying to rebase the patches and checking if there are 
-comments to previous patches that need addressing.
-
-Still I am announcing this as things may have changed since last time. 
-AFAIK I have CC-ed all participants in previous discussions.
-
-
-Kind regards:
-
-al_shopov
-
-
+Unless there are more than several dozens of them, I do not think it
+is worth it, though ;-)
