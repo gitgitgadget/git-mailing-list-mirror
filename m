@@ -1,176 +1,175 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DE114A82
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 13:14:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E361FCF44
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 13:50:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736342099; cv=none; b=rToGXtHMpTimU+I66++0eHHUluwYPuVKuWusx4VPHXitNObowCS9zWaKC7WoUoFZfVGb90bVbMLLYjkQn4I5Ss0Wg1+KiaGOGT/TgF4NPKosCHI3p7JJRTl94eVFevARM6nPu/3BGjJp2yJhvKdPvqPPtKhMGyKjR9GAWy+6x6I=
+	t=1736344244; cv=none; b=p/nAF9JQl50Jx7Ai3POEG31Wb+DvikBUfT7xXQ3bM2DYlt+dkHrQzNv82fJcJP9za9Mjv0jmWZ8wjz3NwMZdagDUUu0H5mwWZK1LzrAjzXLric/7Z+r8TIfW7gSscf13UJvBNEuNaT1tF8xEptnIoBZCSQX1UpJH8JgpYVR3NJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736342099; c=relaxed/simple;
-	bh=h6kRVNcQTlp0ipUzNxQW0u3Yg9oaer+G0K0H5VSVBUI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BZXGX5RSbjLiBpdbX/MxDWyIcZLGhct9ZT0nq6/JIebwu9+ZuJLy8xtUL5HNHBl0emsN+tIKvUCpc5J4/At4YuGFvz4ijjLNb3r8lGAybnalpjudrLq98vuRRgNtolYP+zcbPUXatQWrgo1GmpK4zxTqV7dgZmG4eLoUY+ZfjP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CAMcqooO; arc=none smtp.client-ip=209.85.221.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CAMcqooO"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5188c6f260cso5380759e0c.1
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 05:14:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736342097; x=1736946897; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XK/08OxvhsckpOTRwD7Yn8GCrXm+KWOrO2OIeXCfqPU=;
-        b=CAMcqooORbnam7/jZ3l4xOsJqsW5lmDEWI/+NHys5bxrUHhW8Arj+UQG8rvM3kmXJU
-         HVnRhj3iiOEkCo8Vu19XJyZJ9eFtGbLKQIkvaxqnQTXphdZf0HmcqPo3TGqgKQnULQ04
-         nuWSeccmMkD6IL4KLi66EJ9v3MIo+15k8aVmvINhFotW1zbO+uAM/PEH7OtgPHUa+Lnp
-         nolGMlqpzAopHej5Exx3/VqY8dvi9F6y7m+r5Rib8vA3GI7FAYz4EmluvGaNa+ohB+NL
-         zDet7S503tSIIslm2SVQZxtC1NLqcIVBDB0LrUyvESIqlXR335NSaYw5KJ37jBF62g2V
-         /BiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736342097; x=1736946897;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XK/08OxvhsckpOTRwD7Yn8GCrXm+KWOrO2OIeXCfqPU=;
-        b=TYeyllFnfVOVJjAAqnLqnUBX5LcZcWyJtpos+ZJBGvrLRxBFmUrX4f41LPFgshGAY1
-         RbD8JDNvKu7XUbmzUa4DtKGBe3XwZ3VOZyU8v/0txTeLo9TagcouQaF6epWM4lbg0jxr
-         Ef17r6f92I2KXet2KEdEAn8bvZ57zDyo20BDCLcaB4jOu2Guqz5QAW5xC1/9cufNCqfR
-         rSRCnDu/apOj1cyBIUZ4y5BncmBjwXJylROBsYN/HzLBbFjBdncl8qbvgwV+zrkPLvOc
-         EXcRcQYAoXqtiFS8nmrGDIGREh3DdungOoFKjqac3Fhjrc18TPCN4SJNT2ULiIm6XxNI
-         ponA==
-X-Gm-Message-State: AOJu0YwHrl1fpLySTK7St6RsgHESYDTuBYjGwJMa1vObvL/91x3Kzggm
-	2YCyzoK1VIHj9CRuL4ZUK4Syv8PKwlkTQnls0TnkflVMKMbF9W4E+Pzad6kn9OnewoUwHiZzZwd
-	yBVZTLtxV9UD8wQAbhXVfFCqm/vo=
-X-Gm-Gg: ASbGnctLDg0SEE7dOUn0/w0PDdnWfTkt4z3lx3AsYlckajhV+cChzplqiMwQ8ATKJy6
-	QZYEDHc4dS4l7tmYj4czwqt6+FzaoEAD+nAj8FQ==
-X-Google-Smtp-Source: AGHT+IHk2YY7OhjPD0fj405oaPS3RkmPVLNlc+EdlZk2nwl6KxqpgBFo23fGCt9OLNfVVsd9nyqUNr50j9F/NRs59s4=
-X-Received: by 2002:a05:6122:50b:b0:518:81aa:899b with SMTP id
- 71dfb90a1353d-51c6c46b315mr1428318e0c.6.1736342097127; Wed, 08 Jan 2025
- 05:14:57 -0800 (PST)
+	s=arc-20240116; t=1736344244; c=relaxed/simple;
+	bh=U4iQXQstWO9n+yejjadLmiDpOiL2u0nnUhwe9y7bkWU=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jCaboYBmCJbOWRhXXOp5YNLkmzXqXDCAmipeAZ70terEBPc9o5Odv6rq9CRX5tFtT/MJWed58Ha70yA4AzEW8UVBwDuqhuLAVTOD6XaPrWiWTdU46IiztG4YpVSPx5dg0fhBhJD5lXaq5JeXO16+SuAf8GaiZOXBy9AjQHrtlFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 508DoURR1735410
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 8 Jan 2025 13:50:31 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Patrick Steinhardt'" <ps@pks.im>
+Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>, <git@vger.kernel.org>,
+        "'Randall S. Becker'" <randall.becker@nexbridge.ca>
+References: <20250107-b4-pks-reftable-csprng-v1-0-6109a54a8756@pks.im> <Z323CLrRsnOko1gB@tapette.crustytoothpaste.net> <00ac01db615f$70b72600$52257200$@nexbridge.com> <Z34m1HRLAeEszXDG@pks.im>
+In-Reply-To: <Z34m1HRLAeEszXDG@pks.im>
+Subject: RE: [PATCH 0/2] reftable/stack: stop dying on exhausted entropy pool
+Date: Wed, 8 Jan 2025 08:50:26 -0500
+Organization: Nexbridge Inc.
+Message-ID: <00dc01db61d4$48bba660$da32f320$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
- <20250106103713.1452035-4-usmanakinyemi202@gmail.com> <CAPig+cQJM1TOad=buG0h2-3OnxEH6SUBz23y+wYq9GeUzhMwaA@mail.gmail.com>
-In-Reply-To: <CAPig+cQJM1TOad=buG0h2-3OnxEH6SUBz23y+wYq9GeUzhMwaA@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 8 Jan 2025 18:44:46 +0530
-X-Gm-Features: AbW1kvYqN_E9eUutVdp8fBMIjUS0Ur-clDvxs8y-JTsC2BVSzEmA5nLppZaM4F8
-Message-ID: <CAPSxiM8_08xY5JSG2tU=1hLz3M+16i_jwgMXa48mvzbeYV1x-g@mail.gmail.com>
-Subject: Re: [PATCH 3/4] connect: advertise OS version
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com, 
-	ps@pks.im, johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
-	phillip.wood@dunelm.org.uk, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQKra1ik1fhxhiR8lx9L1yKHV+swtwK/d598AYnIMVEBrMhFi7E9IHZg
+Content-Language: en-ca
+X-Antivirus: Norton (VPS 250108-2, 1/8/2025), Outbound message
+X-Antivirus-Status: Clean
 
-On Tue, Jan 7, 2025 at 4:47=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
+On January 8, 2025 2:19 AM, Patrick Steinhardt wrote:
+>On Tue, Jan 07, 2025 at 06:54:02PM -0500, rsbecker@nexbridge.com wrote:
+>> On January 7, 2025 6:22 PM, brian m. carlson wrote:
+>> >On 2025-01-07 at 15:26:58, Patrick Steinhardt wrote:
+>> >> Hi,
+>> >>
+>> >> this small patch series fixes the issue reported by Randall [1],
+>> >> where an exhausted entropy pool can cause us to die when writing a
+>> >> new table to the reftable stack. I _think_ that this is only an
+>> >> issue with the OpenSSL backend of `csprng_bytes()`:
+>> >>
+>> >>   - `arc4random_buf()` never returns an error.
+>> >>
+>> >>   - `getrandom()` pulls from "/dev/urandom" by default.
+>> >>
+>> >>   - `getentropy()` seems to block when there is not enough randomness
+>> >>     available.
+>> >>
+>> >>   - `GtlGenRandom()` I cannot really tell.
+>> >>
+>> >>   - The fallback reads from "/dev/urandom", which also returns bytes
+in
+>> >>     case the entropy pool is drained.
+>> >>
+>> >> So OpenSSL's `RAND_bytes()` seems to be the only one that returns
+>> >> an error when the entropy pool is empty. I did wonder whether we
+>> >> even need to introduce the new flag in the first place, or whether
+>> >> we cannot just use `RAND_pseudo_bytes()` unconditionally. But I'm a
+>> >> bit uneasy about it given that OpenSSL has this doc:
+>> >>
+>> >>     RAND_pseudo_bytes() puts num pseudo-random bytes into buf.
+>> >>     Pseudo-random byte sequences generated by RAND_pseudo_bytes() will
+>> >>     be unique if they are of sufficient length, but are not
+necessarily
+>> >>     unpredictable. They can be used for non-cryptographic purposes and
+>> >>     for certain purposes in cryptographic protocols, but usually not
+for
+>> >>     key generation etc.
+>> >>
+>> >> It might be too easy to accidentally rely on `csprng_bytes()` where
+>> >> it actually requires strong cryptographic data, so I was erring on
+>> >> the side of caution.
+>> >
+>> >The reason I didn't use RAND_pseudo_bytes is because it's been
+>> >deprecated since OpenSSL 1.1.0 and RAND_bytes uses a CSPRNG just like
+>> >RAND_pseudo_bytes as of that version.  Once it's seeded, it should be
+>> >able to generate plenty of bytes, because I believe it uses a
+>> >CTR-DRBG, which only needs to be reseeded after 2^48 bytes (which is far
+more
+>than we should be using).
+>> >
+>> >We can full well use RAND_pseudo_bytes, but all operating systems
+>> >should provide an appropriate entropy source that can provide 256 bits
+of
+>entropy on startup.
+>> >arc4random will just kill the process if it can't seed itself, so
+>> >your changes won't actually prevent dying on a lack of entropy.
+>> >
+>> >I don't want an option that chooses "insecure" bytes.  My preference
+>> >is that we require people use a different backend or an up-to-date
+>> >OpenSSL version that shouldn't have this problem.  We can use
+>> >RAND_pseudo_bytes if we really need to support older versions, but
+>> >there are also no major operating systems which require that old of a
+>> >version (CentOS 7, which is dead, used OpenSSL 1.0.2, and CentOS 8 uses
+>1.1.1k), so it's probably not within our support policy to do that.
+>> >
+>> >Note also that if OpenSSL is being used for TLS, a lack of entropy
+>> >will result in TLS not working, which means that Git will be randomly
+>> >broken on that system, which is not really an experience that we want
+>> >to encourage, so that should be taken into account.
+>> >
+>> >Can we get some more information about what version of OpenSSL is
+>> >being used and what the system entropy source is?
+>>
+>> In my situation, OpenSSL 3.0.11 on ia64. 3.4.1 and 3.0.13 on x86 (x86
+>> works fine Because OpenSSL uses hardware. On ia64, we end up on PRNGD,
+>which does fail.
 >
-> On Mon, Jan 6, 2025 at 5:37=E2=80=AFAM Usman Akinyemi
-> <usmanakinyemi202@gmail.com> wrote:
-> > As some issues that can happen with a Git client can be operating syste=
-m
-> > specific, it can be useful for a server to know which OS a client is
-> > using. In the same way it can be useful for a client to know which OS
-> > a server is using.
-> >
-> > Let's introduce a new protocol (`os-version`) allowing Git clients and
-> > servers to exchange operating system information. The protocol is
-> > controlled by the new `transfer.advertiseOSVersion` config option.
-> >
-> > Add the `transfer.advertiseOSVersion` config option to address
-> > privacy concerns issue. It defaults to `true` and can be changed to
-> > `false`. When enabled, this option makes clients and servers send each
-> > other the OS name (e.g., "Linux" or "Windows"). The information is
-> > retrieved using the 'sysname' field of the `uname(2)` system call.
-> >
-> > However, there are differences between `uname(1)` (command-line utility=
-)
-> > and `uname(2)` (system call) outputs on Windows. These discrepancies
-> > complicate testing on Windows platforms. For example:
-> >   - `uname(1)` output: MINGW64_NT-10.0-20348.3.4.10-87d57229.x86_64\
-> >   .2024-02-14.20:17.UTC.x86_64
-> >   - `uname(2)` output: Windows.10.0.20348
-> >
-> > Until a good way to test the feature on Windows is found, the
-> > transfer.advertiseOSVersion is set to false on Windows during testing.
+>You reported in [1] that a couple more tests are indeed failing, not only
+t0610. That
+>changes things in my opinion as it shows that this is not a localized issue
+in the
+>reftable library, but likely in multiple callsites where we use randomness.
+So my
+>current patch series is not sufficient as it only fixes up the reftable
+codebase. But in
+>the case where it's a general issue I tend to agree with brian, because I
+don't want to
+>play whack-a-mole with all the callsites of `git_rand()` where we can
+indeed use
+>insecure bytes.
 >
-> This is because the uname(2) you mention above is not actually
-> system-supplied but is instead faked up Git itself for the Git for
-> Windows port. See git/compat/mingw.c:uname().
+>Honestly, this rather makes me want to remove the OpenSSL backend for our
+>CSRNG completely. NonStop is the only platform that uses it right now, and
+it seems
+>to be easy to misconfigure. All the other backends we have don't have the
+same
+>issue as explained further up in my message. So does NonStop support any of
+the
+>alternative backends that Git has, like `arc4random_buf()`, `getrandom()`,
+>`getentropy()` or reading from "/dev/urandom"?
 >
-> The typical way to work around this sort of issue is to ensure that
-> you check Git against Git itself instead of checking Git against
-> "system". To do so, you would implement a new "test-util" command, say
-> `test-util uname`, in git/t/helpers/test-uname.c which internally
-> calls the same uname() function that other parts of Git call. Doing so
-> ensures consistency of output.
+>Might be I'm coming to conclusions too fast, so if I'm missing obvious
+usecases then
+>please stop me :)
 >
-> Whether or not it makes sense to go through that extra work for this
-> particular case is a different question.
-Hi Eric,
+>Randall, you mentioned that your platform had a maintenance window right
+during
+>the release of v2.48.0-rc2 [2]. You never mentioned issues with randomness
+before
+>that maintenance window, and after it you hit them in many tests without
+any
+>changes to the CSPRNG between v2.48.0-rc1 and -rc2. Could it be that
+something
+>broke on your end?
 
-Thank you for the explanation. I will look into it.
->
-> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> > Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> > ---
-> > diff --git a/t/t5555-http-smart-common.sh b/t/t5555-http-smart-common.s=
-h
-> > @@ -123,9 +123,19 @@ test_expect_success 'git receive-pack --advertise-=
-refs: v1' '
-> >  test_expect_success 'git upload-pack --advertise-refs: v2' '
-> > +       printf "agent=3DFAKE" >agent_and_os_name &&
-> > +       if test_have_prereq WINDOWS
-> > +       then
-> > +               # We do not use test_config here so that any tests belo=
-w can reuse
-> > +               # the "expect" file from this test
-> > +               git config transfer.advertiseOSVersion false
->
-> Should this have a comment explaining why you're disabling
-> transfer.advertiseOSVersion, in particular that you found uname() on
-> Windows unreliable, thus need to disable the check for this case?
->
-> The comment you did compose exposes a fragility of the tests: in
-> particular that subsequent tests rely upon a side-effect of this test.
-> The fact that you had to include a special comment explaining the
-> problem argues for a cleaner solution, such as splitting out part of
-> this code into a separate test which comes before this one:
-> specifically, a "setup"-type test which creates the "expect" file
-> which gets reused by multiple tests.
-I will work on it and update it in the next iteration.
-Thank you very much.
-Usman.
->
-> > +       else
-> > +               printf "\nos-version=3D%s\n" $(uname -s | test_redact_n=
-on_printables) >>agent_and_os_name
-> > +       fi &&
-> > diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-> > @@ -8,13 +8,23 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> >  test_expect_success 'test capability advertisement' '
-> > +       printf "agent=3Dgit/$(git version | cut -d" " -f3)" >agent_and_=
-os_name &&
-> > +       if test_have_prereq WINDOWS
-> > +       then
-> > +               # We do not use test_config here so that tests below wi=
-ll be able to reuse
-> > +               # the expect.base and expect.trailer files
-> > +               git config transfer.advertiseOSVersion false
->
-> Ditto.
->
-> > +       else
-> > +               printf "\nos-version=3D%s\n" $(uname -s | test_redact_n=
-on_printables) >>agent_and_os_name
-> > +       fi &&
+Unfortunately, ia64 is not a great platform for randomness. There are no
+alternates
+available. We have a case open on PRNGD, but it is unlikely to be fixed any
+time soon.
+The ia64 platform goes off support at the end of 2025, so we will stop
+building git
+for that platform when that happens. If there is some stopgap solution we
+can use,
+even PRNGD, but warn about reducing randomness load, it might work. For x86,
+the hardware randomizer used in OpenSSL is fine.
+
