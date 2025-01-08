@@ -1,61 +1,61 @@
-Received: from mail-qk1-f173.google.com (mail-qk1-f173.google.com [209.85.222.173])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9073B2594BE
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 18:38:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF0E201259
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 18:38:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736361482; cv=none; b=slF11RIfYqOX61Nk3LnSPQKnMYgwTYF0MqKG/UzbFxUy2+u5/d8e7x01g5hRM0Z5atRP25YBn9DA4lQ90Sp2lzXJedCzO9bR+mDN7SstrjUwj1im/D5g4bF075FmGLuhltWupK0QtYxV92rYy/4HT3c+3h4y+lDIxMRFBhG5Ay4=
+	t=1736361483; cv=none; b=YsXJzJAsPPXgtdPXqKXxOqDXMfq+Hj4qfuI21hZ9ZfqgJQcYqoRBQzv+KV+yKwTD9Pp9p3N4f75NQFQn17f1FofaOFcy+wIcLoh8vmvFdhFykhSMPr0o9iay5J6c5k5NFDahNuG0VeXBe8/mQpyUmjJazdDkBTPPnwY3hAkpeQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736361482; c=relaxed/simple;
-	bh=xVmXQsTEZGelVYVwoQ0smDbmLEyqsmDsmPQVmVysR/A=;
+	s=arc-20240116; t=1736361483; c=relaxed/simple;
+	bh=015UkzzgBVeqRa8x5NRYEtBCc9wEI939Rdn0MoJ7X3Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Twvyr0dPog69+AKu7j2xjswWwm4g/0Sje74P9eqpNtmk9vGIwpbp7CTaC/7Ck+YZuWjDk6BhbQ3e5KoVqaACkuxLH7YTFd3XMDYEfQ/HYL/2OfdWWCpRcw/nODNDUJ9t3YptOdlW7TZ6Tg1jJ/rxRfdpHdRXh5r43z4Ec8nxiKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WpD9DSG/; arc=none smtp.client-ip=209.85.222.173
+	 MIME-Version; b=KgY9c3v0m6o4q2JmhNXo/r6k4M2IrIRRHTQHRl91mxdkwrOiTkLma+ag196edKble+BIvyUP9gqkvNqsdhpnImE3wCrbv+LZKHBaDQEhHwjc1cf2rKodqT/Sc1n81mjDNAlSHgSFlhb+jzlfpc5K6PqLI6R0i62NyaquzOBKGa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kRFarm/r; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WpD9DSG/"
-Received: by mail-qk1-f173.google.com with SMTP id af79cd13be357-7b6f7d7e128so103324985a.1
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 10:38:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kRFarm/r"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6dd43aa1558so1635646d6.0
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 10:38:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736361479; x=1736966279; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1736361480; x=1736966280; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JY57OZwsj0U2BlrFEaC+IbbqHQ5k77T5ok4hCgHPWH4=;
-        b=WpD9DSG/+I9avMlARSZJmSxC5wyUJ4TWtzLNiAVKfk6RgbXD2ISyegmDX/xmrUc8QN
-         QRhDS+VoVjd8wjBQAgL2No7zmySTCfHCSRKfp+ID5dVgqAYgYE2j8kpAFOBm0e+93Eor
-         xP+5O3TgHJfoVqNgGjpaL9p6Mz8Y+rilyc1LKaji2CZ9vnrXqwa2WALr+EDtYNmOw0ys
-         U2g7ziwhGTEl8kdTvLY473Yy8d65/9qeJddP5kR0ndFP8BUrkunfxGAEt9Ypnu9JNoys
-         E54s/RI+m65gd6rjAK+V3KCgrXYyNd0aHsuE381or2bkncDSGW8pbWEHU/ht8S1nRp5J
-         vHzw==
+        bh=DMSfX9lzqqlF66vCHXp6Kv9pQ2HeL1c1zZ7Uoud4Myo=;
+        b=kRFarm/rNUgsY2LvYUdPfYNmbYKyWtDLtvaqrJlbnmT9wn86JEl8C8gH1cLDQ9x8lK
+         /wRyVa1s77TYbZS+5om3+Zk9s09tk9s9nl0vfj6DToAYdhOhRNK3558Y2vXTX0yYn2W5
+         D2TNZ18aNPn21qVs9eGyp+Dy1RNo4JbcUjwLNBHZcCTfQNJzsYY2mqdX2N/nYINid4Ca
+         MSmmQI7f7KsrmTJgJKcbZ9DkcqefYQ5/c0hP1nCibVyK3bN4RHGtZmP+IdilYzs41H8y
+         z4XJGzmuPvQTulVBhT+ReAv9gaRMu5TzMVoIkIHymLQ2TdYZen/OWGDFroPlklSDbTLX
+         JnLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736361479; x=1736966279;
+        d=1e100.net; s=20230601; t=1736361480; x=1736966280;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JY57OZwsj0U2BlrFEaC+IbbqHQ5k77T5ok4hCgHPWH4=;
-        b=PmoO0swOxwzYbXAUC76eSRngZYn7YJ974HeGfoKl9UHprgJGt5bGAn7kf9z3fHC8N0
-         l4mlSPymWTMAxzj+x5+483CqM0ywjUOqNG7dmHGf3MapK/pDb8KyVomdMGnko0FwoSq+
-         kx3MzWtfSOQ6KIdfvmaFIdtqW9Zd/h67dU/QavG8B9FgUQAwn5Mx95eYLrBTahZO+WdN
-         NjGRLNfnnE0pd2AKDDUC3Ee73gyCWHWOvquQyAvHrkRIcES46E5NinlXq9nweqtlpyj8
-         vyiVTrhN1f1SL/s9zSecwHg1ydsq3Nqxcxt6ghL1EXyUjc4SiqwHFSQigZpjD1/8yMjX
-         RzKA==
-X-Gm-Message-State: AOJu0Yw1dTSgF1hMBAYCyXY6UKAt8zpTn96lQtQTbUn1zfyEyPad0Ckm
-	cL9mDGSMd8GjCWHO2e/d5YERQwQLBhYdz0YMybbUKRr2lbBDJBAdMBRtFhdRM6I=
-X-Gm-Gg: ASbGncsRFMCiXPlq/nSvPP2BSYr0klYlxW8nkOkLDDrBoCLj3+MwGwJohu/Gd6a0I/h
-	adeGGJm30bItOiJK5CyFzWEDPZvhWs0FG6ZmI3yPo6RP1+Uwo6wwMs/anhlL+i0D6QwyXmQ1CBo
-	O7lGw7AHI8sK9+6UhG4y8JL4ublnorGXalX8sxEZH8PGWU88Xv/5Argy8UiuJcbO6/8KhEKPgGI
-	Ws+E+6zmS6esBwQaRnqZT4yHflpGKqs5IBWf3kwOSMMdMP3fv3B9HEAzQnzgHOZ0V2Z5t5DrAHf
-	U1g32bMVRg==
-X-Google-Smtp-Source: AGHT+IFbxR5OXNc/uLIPFuRYBvkcxZDAolP6kWC4V+rOvZzlWznBowG3e1Gslm0UmXC7HMQ24W/g0w==
-X-Received: by 2002:a05:620a:2614:b0:7b6:dd22:31f0 with SMTP id af79cd13be357-7bce0f7c846mr79029185a.0.1736361479314;
-        Wed, 08 Jan 2025 10:37:59 -0800 (PST)
+        bh=DMSfX9lzqqlF66vCHXp6Kv9pQ2HeL1c1zZ7Uoud4Myo=;
+        b=RLDuTqXuz2JWGKCOb+nMIVQY3G4z/ARnFe9Nz7XQ9SN8L1/UwV+Z4E9No7UM/oLSNy
+         IvXs0wLHkMUNrEOU6mnQXdnXOChTUNS6s7KQ2FWl32MgxKS6f0OjiKXcnJRusHqcwjdQ
+         NF3HsOgOyYzqHot0ZUeL8y3YABJZ4KBPfvODIyIhXHBd1R3ByQJTXfZ4KynN6Dy6covC
+         7K4Llzt8cPnSgmz4z4lb2yDdLfg1VobT43XQns9fuJc+klbK7giezEolbZhA6zXI0wD5
+         /MGcUNGaslqbMrhQeNlkBO8+btCbYN3ZI4RFX2ZLkoj8R1hUjdlKjm8QpUmnO6UDJOxR
+         DLmA==
+X-Gm-Message-State: AOJu0YxFB6bfDivevfjZS4R1w/baTUJy2iAk0GY/ZygpUNJwOVMbcvTh
+	uDHlIW9g0Z2JwValhzv6GomVdlBgVatWMTieYHpeN8C3jAHiqDrIcedUjaNcso8=
+X-Gm-Gg: ASbGncvoX/Rs/Pc9j6YMDnHG86mZco2JGMqGh3bvEgt51wqoAObEictqrFUQhGBvgBo
+	xTcYBZ/U35GIhTgonpJxk5OVt6Oq9V96qK3361+Gc2r6h9D1vFOTEGg06NB5TUgaIowJWbFVctj
+	mm7UgXYRU2GAvYrpMb9O/Nw2aWr6E8tbPxrwvaN9uOlkDldoQkPoMm62aCabA/QHN+PVYy+PbT6
+	7dN3FPr6WCDzS+ts4r/31yh+uoBDORdHuDRljkTcRVSY8cDauacFjwFKmaWr8raH0rnJlgTziTn
+	gPpoWIwj2g==
+X-Google-Smtp-Source: AGHT+IFeSOjdFDTnnfwFg49RJCtSBq7De3q7H3HUnw65iZwZUrYZ/QGORZlb6+GW7z10c19VGBf5WA==
+X-Received: by 2002:a05:6214:dc4:b0:6d3:fa03:23f1 with SMTP id 6a1803df08f44-6df9b1ef368mr70147266d6.13.1736361480346;
+        Wed, 08 Jan 2025 10:38:00 -0800 (PST)
 Received: from localhost.localdomain ([184.148.194.219])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dd180ea74bsm193228036d6.25.2025.01.08.10.37.58
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dd180ea74bsm193228036d6.25.2025.01.08.10.37.59
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 08 Jan 2025 10:37:59 -0800 (PST)
+        Wed, 08 Jan 2025 10:38:00 -0800 (PST)
 From: Eric Ju <eric.peijian@gmail.com>
 To: git@vger.kernel.org
 Cc: calvinwan@google.com,
@@ -65,9 +65,9 @@ Cc: calvinwan@google.com,
 	karthik.188@gmail.com,
 	toon@iotcl.com,
 	jltobler@gmail.com
-Subject: [PATCH v9 2/8] cat-file: add declaration of variable i inside its for loop
-Date: Wed,  8 Jan 2025 13:37:33 -0500
-Message-ID: <20250108183740.67022-3-eric.peijian@gmail.com>
+Subject: [PATCH v9 3/8] cat-file: split test utility functions into a separate library file
+Date: Wed,  8 Jan 2025 13:37:34 -0500
+Message-ID: <20250108183740.67022-4-eric.peijian@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250108183740.67022-1-eric.peijian@gmail.com>
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
@@ -80,79 +80,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some code used in this series declares variable i and only uses it
-in a for loop, not in any other logic outside the loop.
-
-Change the declaration of i to be inside the for loop for readability.
-
-Helped-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Eric Ju <eric.peijian@gmail.com>
+This refactor extracts utility functions from the cat-file's test
+t1006-cat-file.sh into a dedicated library file. The goal is to improve
+code reuse and readability, enabling future tests to leverage these
+utilities without duplicating code
 ---
- builtin/cat-file.c | 11 +++--------
- fetch-pack.c       |  3 +--
- 2 files changed, 4 insertions(+), 10 deletions(-)
+ t/lib-cat-file.sh   | 16 ++++++++++++++++
+ t/t1006-cat-file.sh | 13 +------------
+ 2 files changed, 17 insertions(+), 12 deletions(-)
+ create mode 100644 t/lib-cat-file.sh
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index b13561cf73..69ea642dc6 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -676,12 +676,10 @@ static void dispatch_calls(struct batch_options *opt,
- 		struct queued_cmd *cmd,
- 		int nr)
- {
--	int i;
+diff --git a/t/lib-cat-file.sh b/t/lib-cat-file.sh
+new file mode 100644
+index 0000000000..9fb20be308
+--- /dev/null
++++ b/t/lib-cat-file.sh
+@@ -0,0 +1,16 @@
++# Library of git-cat-file related tests.
++
++# Print a string without a trailing newline
++echo_without_newline () {
++	printf '%s' "$*"
++}
++
++# Print a string without newlines and replaces them with a NULL character (\0).
++echo_without_newline_nul () {
++	echo_without_newline "$@" | tr '\n' '\0'
++}
++
++# Calculate the length of a string removing any leading spaces.
++strlen () {
++	echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
++}
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index ff9bf213aa..5c7d581ea2 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -3,6 +3,7 @@
+ test_description='git cat-file'
+ 
+ . ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-cat-file.sh
+ 
+ test_cmdmode_usage () {
+ 	test_expect_code 129 "$@" 2>err &&
+@@ -98,18 +99,6 @@ do
+ 	'
+ done
+ 
+-echo_without_newline () {
+-    printf '%s' "$*"
+-}
 -
- 	if (!opt->buffer_output)
- 		die(_("flush is only for --buffer mode"));
- 
--	for (i = 0; i < nr; i++)
-+	for (size_t i = 0; i < nr; i++)
- 		cmd[i].fn(opt, cmd[i].line, output, data);
- 
- 	fflush(stdout);
-@@ -689,9 +687,7 @@ static void dispatch_calls(struct batch_options *opt,
- 
- static void free_cmds(struct queued_cmd *cmd, size_t *nr)
- {
--	size_t i;
+-echo_without_newline_nul () {
+-	echo_without_newline "$@" | tr '\n' '\0'
+-}
 -
--	for (i = 0; i < *nr; i++)
-+	for (size_t i = 0; i < *nr; i++)
- 		FREE_AND_NULL(cmd[i].line);
- 
- 	*nr = 0;
-@@ -717,7 +713,6 @@ static void batch_objects_command(struct batch_options *opt,
- 	size_t alloc = 0, nr = 0;
- 
- 	while (strbuf_getdelim_strip_crlf(&input, stdin, opt->input_delim) != EOF) {
--		int i;
- 		const struct parse_cmd *cmd = NULL;
- 		const char *p = NULL, *cmd_end;
- 		struct queued_cmd call = {0};
-@@ -727,7 +722,7 @@ static void batch_objects_command(struct batch_options *opt,
- 		if (isspace(*input.buf))
- 			die(_("whitespace before command: '%s'"), input.buf);
- 
--		for (i = 0; i < ARRAY_SIZE(commands); i++) {
-+		for (size_t i = 0; i < ARRAY_SIZE(commands); i++) {
- 			if (!skip_prefix(input.buf, commands[i].name, &cmd_end))
- 				continue;
- 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 3a227721ed..f5a63f12cd 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1329,9 +1329,8 @@ static void write_fetch_command_and_capabilities(struct strbuf *req_buf,
- 	if (advertise_sid && server_supports_v2("session-id"))
- 		packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
- 	if (server_options && server_options->nr) {
--		int i;
- 		ensure_server_supports_v2("server-option");
--		for (i = 0; i < server_options->nr; i++)
-+		for (size_t i = 0; i < server_options->nr; i++)
- 			packet_buf_write(req_buf, "server-option=%s",
- 					 server_options->items[i].string);
- 	}
+-strlen () {
+-    echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
+-}
+-
+ run_tests () {
+     type=$1
+     oid=$2
 -- 
 2.47.0
 
