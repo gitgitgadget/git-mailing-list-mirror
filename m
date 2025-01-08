@@ -1,239 +1,169 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AE51F9439
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 15:55:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3DD1FECB3
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 16:00:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736351752; cv=none; b=SMpWvMt34ug+5XUkH0AIyKXUw0BA7Ho4O5vqITJujAAEEb32VbUFblikg1hVM4zuMdN/EtAjpr2Wngl5jRMy/CnsieiW/wmOnQnB/TygS1a7f4YFLbEUhiqnrDhlr/1klyO/xqtuQjN69/7tP9qXGa4P74Rb+AiHTVShqoOe1kY=
+	t=1736352013; cv=none; b=AbLUnmaeD4aKBFPnLmNAewuy8UnIybbf2mFfB+vf9qoeHKdIkSqJoc+sW+Ms2C8zyb9Q2s6JYSIPpOHtYc5OWAIfzxa1PJPFNq6uihPnyHPmwxQB6AuT83C0Zc7hlHm66wYcjxLDFf0M2yj1sM1PfQsIlY5pZHWSoTSJdWUXezc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736351752; c=relaxed/simple;
-	bh=0tCeKM+vzXxs6UQIseVZXRWAKs5x3KI0+eBifySzzwk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HVdZXbz5GzzmWKZy1wmdhoI+H7mF+ky1p2iKp+06bP7u26ldYIOpbXEDiMnUMKcs67uXIKiHuGEvOSy9kDBylc7LPJnGEoMaCXPTeoWr6sMzbptXy9kQAGCy2ZdskxTkDqUJD5Ly5bRxfTUnLGtGlV2cC8FECTYIYc2AiQB6Bho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=esrKlEze; arc=none smtp.client-ip=209.85.219.181
+	s=arc-20240116; t=1736352013; c=relaxed/simple;
+	bh=wphC88Whd9QzSQIyXXR5sj7vKdklWRV/sn8R1aKGRwU=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=TBGzQlNXBlkwzs6XfIu2mnBhlwhfXAwzaajO0jZlh2AqmfjLHxr/7E8tg3+pcyagzQNWX2dcE+WsjSV9H9PZDir4c1wav1a6tNXIRUQUKMIwr4XGkD9QL3HrBNxy2d+rpsT12CLZNBvNrBD7I02xWp4JJ0x6Kfl6KxyTYT7PoCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dJOOtJ68; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="esrKlEze"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e53a91756e5so24128453276.1
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 07:55:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dJOOtJ68"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-385e87b25f0so692358f8f.0
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 08:00:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736351749; x=1736956549; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zD4ag8eNjnQeSlIDTzz5Zqcrt2M56/8eSQz6YIsIe/I=;
-        b=esrKlEzeGEJ1EkrJeRn7Ek644IFGILALvfXRfw//tAlqpm057Y41QsHcV4Kv/ZSHeZ
-         ncaqIuV1+mJK+qoofmyuciSNyyRuxik2ejIAtWh25EszQ3vDFEnerArglZQfila9gcGM
-         hu0QbzGz3gMJAYxVoKap2vUEvi2AfoQHyAPler2QhgNQPM89+q6ZL1QRCC7jygVkzemw
-         70bz4r9P+XF9/F9ou8DajYuGKsGdh9kXGAlSuTs8JDhcUG7sxMGlI2i1CeKDneKT8Bm+
-         8iWKisGneE5UWEp2UdVXNlhkiA5yj0gcDoFEIO5uoB8ahF7H6QXdbTLR0WXZUAsKDCta
-         w38w==
+        d=gmail.com; s=20230601; t=1736352007; x=1736956807; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=azLy+ks6ALGTcCwRbfAwkWGaR5liZYva672VKsbTBa8=;
+        b=dJOOtJ680oEoZO5qfnVF1Ddgt8HMsc7uAZUNZpFNSu9vDc1E7ArzDQr9EqQsVFrBYI
+         u8U0x+QMEHWk3S0vtTkklDwhhlxKJdtTeAGSVEzDI8qxNDrk+QVZt1a4UHHA+eV/ygJa
+         yuOuf6F6Qu3o/iDU2NQFJxjagw2MalExMXt9/NDAX9K9LoR2QsNRoi63kHLJk6B5Y/+L
+         9WOTwOo/PtgRnpuaLVQ5ODmylJ9jtb1CqVCh1W+7alpWzlOnsE4/YHJQorE5Chrm0gDc
+         Cj/LsFHzr0P3rp55kX5Wo+kVqLZs1X2xEVc/BOa9BeWiYqaU2Ohu7TYMhd1tkmZD+Vdp
+         91GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736351749; x=1736956549;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zD4ag8eNjnQeSlIDTzz5Zqcrt2M56/8eSQz6YIsIe/I=;
-        b=bDOYpt0NYLV1/83rfQ6ahHbQF6EtbE75u8KEINL7TuNOuR2KG9QjcYqrHq2fNh6sgD
-         KzdZ/DJjDNT+Kwrni6oBR9AlxWlSqDvHlLaaG+AUeFUqdkRFrUjtTsIh53X7u0lBc/sE
-         JIHLSqJYtlbK1gxgVv0jL5DEKKJtvQVV0ef/NOfS9ZuGRntitrOtdFAICx+3Rv9WrNvc
-         wgXqBSm4faEDQu30akUCeYNOhI8EQqPXDMNq60x71vUgEbPG/wqQxMGLS0MQFK/YK0U3
-         nbnuf3dyjIN/Zk3EByVsgUYWc4L8Plg8PaAOcIFOJnXqfGeGc4CiziwbljoaXB1xRsMH
-         H7IA==
-X-Gm-Message-State: AOJu0YyegxSjMwOzUJdLlRwX8hiTqVvSMcr25DH48VHVqssTPSBydMSG
-	hz5Bhx5XU/xB+5jUWI22jWoKhTT2+SXOr7i6XcnDCVJR/WWyMQ63vmIj/Gz9JkFcPGZWZCtqXET
-	j6rp2no0NdTzNT/wJjPCyKAO4L/cIncw2
-X-Gm-Gg: ASbGncv2bptFA48e+irUaiH1X02OGke3hYzKonG/899vRaMsTGfN7Yc47/1RUP/8BTa
-	VMKin57WgJ29P5wPRszphBeQv7rY6Jbc0/Q81n+hV
-X-Google-Smtp-Source: AGHT+IHJtHnzrUetkw+Nj6ypXY6vsimvloo3pYek0TrbTFBtfCdwdC9WI7LvR0rUevHLlcJkeDA7C10uXh4kevI+Seg=
-X-Received: by 2002:a05:690c:c8c:b0:6ef:e390:95ee with SMTP id
- 00721157ae682-6f5311f82f7mr27789027b3.3.1736351749318; Wed, 08 Jan 2025
- 07:55:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736352007; x=1736956807;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=azLy+ks6ALGTcCwRbfAwkWGaR5liZYva672VKsbTBa8=;
+        b=KvAzsujBF8GEbJ47djorI1DOIQiq5bpeSIYvBGxaotNmEZ2u4S+zELNO9dVlsVP8HF
+         QwhRUYQlXVfCQjBW2srsNFZa9y9HO+Wnxdx9LLLL3XAFwEtDA7sYQ5dqq6r17bAfppsh
+         KJ9hQnjbytEPvheUMU7IRyc40GQbNNdhRQ7ejdis50zi4fQPxFXMSHrtt786WGFpJIQt
+         8Bs6AY47r1ECedJj3zH7i8BQjX1OdeRpDbo68ZvvGQZUM65so3F47kh7lUfHLYz2cbR1
+         QdQkinK5rHCK6HtpaGItezMqcLNBNrr2WV/sP/agCXBhxTlxUDY9fnWzJghoZhCMbftL
+         aPJA==
+X-Gm-Message-State: AOJu0YyHY9VUkMJZvWR7ilaSXq7pzw0JRVsday7a+zTW7ugVOqJLPwSh
+	g2xcFVZfAenIC0panqS8MZZwdl5dfZdtnqG8y7n2mGbM45vJKcWl5Ao6Tw==
+X-Gm-Gg: ASbGncvPZWr5KvJtRScdXysY0GT4f10gmbWdp+j9q3iD+Q5B/9bDaGloIFkGC7h9Jc4
+	dPpdKNIPvfrV7VlUAv0m6UJX3sg74OL6WWjJ9OWOoCEx5eS8SV4kTRLpP2h0j6a1QXwSJwvBf9D
+	AV3TN+XtQ/R0D5dJQtnCbqOjrmCSy9K1UoHsW+bqhLPlfFUTe2UrMFnBCamh6W6TcXSvTDEL9ZC
+	PesAXdiOLCi3bNmz88or/JPzBKOuRhPfndezTj4OSWyDFEXvL2mduIcmw==
+X-Google-Smtp-Source: AGHT+IFUd+Qi0GIFlDT0XMkJ8X5/SaRA6obuKZHjb6QRe4JUAsSD5lGz1ygwv+H9VDYnAuz6Gzb6mQ==
+X-Received: by 2002:a05:6000:1faf:b0:385:e8e7:d09a with SMTP id ffacd0b85a97d-38a85e1f0afmr3688566f8f.2.1736352007359;
+        Wed, 08 Jan 2025 08:00:07 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c8472casm54067945f8f.45.2025.01.08.08.00.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jan 2025 08:00:06 -0800 (PST)
+Message-Id: <pull.1848.git.1736352005578.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 08 Jan 2025 16:00:05 +0000
+Subject: [PATCH] t-reftable-basics: allow for `malloc` to be `#define`d
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20241223232523.76236-1-eric.peijian@gmail.com> <20241223232523.76236-6-eric.peijian@gmail.com>
- <CAFySSZAqh6J14+r9JLM3LmRmV02ZvPRf5dB3rWVnUZS_5XaHcQ@mail.gmail.com>
-In-Reply-To: <CAFySSZAqh6J14+r9JLM3LmRmV02ZvPRf5dB3rWVnUZS_5XaHcQ@mail.gmail.com>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Wed, 8 Jan 2025 10:55:38 -0500
-X-Gm-Features: AbW1kva5sbtHwxCYVDGo_2fv_7Q5oTrSlekVa4yEZrbkcqHQo08UuxE0RdqkLMw
-Message-ID: <CAN2LT1Af_uzcsJBdFFNoTrLOyQiY9Cbts2=RnPWMS41vQi3m4Q@mail.gmail.com>
-Subject: Re: [PATCH v8 5/6] transport: add client support for object-info
-To: Calvin Wan <calvinwan@google.com>
-Cc: git@vger.kernel.org, jonathantanmy@google.com, chriscool@tuxfamily.org, 
-	karthik.188@gmail.com, toon@iotcl.com, jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Tue, Jan 7, 2025 at 1:31=E2=80=AFPM Calvin Wan <calvinwan@google.com> wr=
-ote:
->
-> Thanks for picking up this series btw!
->
-> On Mon, Dec 23, 2024 at 3:25=E2=80=AFPM Eric Ju <eric.peijian@gmail.com> =
-wrote:
-> >
-> > From: Calvin Wan <calvinwan@google.com>
-> >
-> > Sometimes, it is beneficial to retrieve information about an object
-> > without downloading it entirely. The server-side logic for this
-> > functionality was implemented in commit "a2ba162cda (object-info:
-> > support for retrieving object info, 2021-04-20)."
-> >
-> > This commit introduces client functions to interact with the server.
-> >
-> > Currently, the client supports requesting a list of object IDs with
-> > the =E2=80=98size=E2=80=99 feature from a v2 server. If the server does=
- not advertise
-> > this feature (i.e., transfer.advertiseobjectinfo is set to false),
-> > the client will return an error and exit.
-> >
-> > Helped-by: Jonathan Tan <jonathantanmy@google.com>
-> > Helped-by: Christian Couder <chriscool@tuxfamily.org>
-> > Signed-off-by: Calvin Wan <calvinwan@google.com>
-> > Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
-> > ---
-> >  Makefile            |  1 +
-> >  fetch-object-info.c | 92 +++++++++++++++++++++++++++++++++++++++++++++
-> >  fetch-object-info.h | 18 +++++++++
-> >  fetch-pack.c        |  3 ++
-> >  fetch-pack.h        |  2 +
-> >  transport-helper.c  | 11 +++++-
-> >  transport.c         | 28 +++++++++++++-
-> >  transport.h         | 11 ++++++
-> >  8 files changed, 163 insertions(+), 3 deletions(-)
-> >  create mode 100644 fetch-object-info.c
-> >  create mode 100644 fetch-object-info.h
-> >
-> > diff --git a/Makefile b/Makefile
-> > index 3fa4bf0d06..70e9ec0464 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -1020,6 +1020,7 @@ LIB_OBJS +=3D ewah/ewah_rlw.o
-> >  LIB_OBJS +=3D exec-cmd.o
-> >  LIB_OBJS +=3D fetch-negotiator.o
-> >  LIB_OBJS +=3D fetch-pack.o
-> > +LIB_OBJS +=3D fetch-object-info.o
-> >  LIB_OBJS +=3D fmt-merge-msg.o
-> >  LIB_OBJS +=3D fsck.o
-> >  LIB_OBJS +=3D fsmonitor.o
-> > diff --git a/fetch-object-info.c b/fetch-object-info.c
-> > new file mode 100644
-> > index 0000000000..2aa9f2b70d
-> > --- /dev/null
-> > +++ b/fetch-object-info.c
-> > @@ -0,0 +1,92 @@
-> > +#include "git-compat-util.h"
-> > +#include "gettext.h"
-> > +#include "hex.h"
-> > +#include "pkt-line.h"
-> > +#include "connect.h"
-> > +#include "oid-array.h"
-> > +#include "object-store-ll.h"
-> > +#include "fetch-object-info.h"
-> > +#include "string-list.h"
-> > +
-> > +/**
-> > + * send_object_info_request sends git-cat-file object-info command and=
- its
-> > + * arguments into the request buffer.
-> > + */
-> > +static void send_object_info_request(const int fd_out, struct object_i=
-nfo_args *args)
-> > +{
-> > +       struct strbuf req_buf =3D STRBUF_INIT;
-> > +
-> > +       write_command_and_capabilities(&req_buf, "object-info", args->s=
-erver_options);
-> > +
-> > +       if (unsorted_string_list_has_string(args->object_info_options, =
-"size"))
-> > +               packet_buf_write(&req_buf, "size");
-> > +
-> > +       if (args->oids) {
-> > +               for (size_t i =3D 0; i < args->oids->nr; i++)
-> > +                       packet_buf_write(&req_buf, "oid %s", oid_to_hex=
-(&args->oids->oid[i]));
-> > +       }
-> > +
-> > +       packet_buf_flush(&req_buf);
-> > +       if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
-> > +               die_errno(_("unable to write request to remote"));
-> > +
-> > +       strbuf_release(&req_buf);
-> > +}
-> > +
-> > +/**
-> > + * fetch_object_info sends git-cat-file object-info command into the r=
-equest buf
-> > + * and read the results from packets.
-> > + */
-> > +int fetch_object_info(const enum protocol_version version, struct obje=
-ct_info_args *args,
-> > +                     struct packet_reader *reader, struct object_info =
-*object_info_data,
-> > +                     const int stateless_rpc, const int fd_out)
-> > +{
-> > +       int size_index =3D -1;
-> > +
-> > +       switch (version) {
-> > +       case protocol_v2:
-> > +               if (!server_supports_v2("object-info"))
-> > +                       die(_("object-info capability is not enabled on=
- the server"));
-> > +               send_object_info_request(fd_out, args);
-> > +               break;
-> > +       case protocol_v1:
-> > +       case protocol_v0:
-> > +               die(_("wrong protocol version. expected v2"));
->
-> s/wrong/unsupported
->
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Thank you. Fixing it in v9.
+As indicated by the `#undef malloc` line in `reftable/basics.h`, it is
+quite common to use allocators other than the default one by defining
+`malloc` constants and friends.
 
-> > +       case protocol_unknown_version:
-> > +               BUG("unknown protocol version");
-> > +       }
-> > +
-> > +       for (size_t i =3D 0; i < args->object_info_options->nr; i++) {
-> > +               if (packet_reader_read(reader) !=3D PACKET_READ_NORMAL)=
- {
-> > +                       check_stateless_delimiter(stateless_rpc, reader=
-, "stateless delimiter expected");
-> > +                       return -1;
-> > +               }
-> > +               if (unsorted_string_list_has_string(args->object_info_o=
-ptions, reader->line)) {
-> > +                       if (!strcmp(reader->line, "size")) {
-> > +                               size_index =3D i;
-> > +                               for (size_t j =3D 0; j < args->oids->nr=
-; j++)
-> > +                                       object_info_data[j].sizep =3D x=
-calloc(1, sizeof(long));
-> > +                       }
-> > +                       continue;
-> > +               }
-> > +               return -1;
-> > +       }
->
-> I think we can flatten this logic a bit more here to make it more intuiti=
-ve.
->
-> if (!unsorted_string_list_has_string(args->object_info_options, reader->l=
-ine))
->         return -1;
-> if (!strcmp(reader->line, "size")) {
->         size_index =3D i;
->         for (size_t j =3D 0; j < args->oids->nr; j++)
->                 object_info_data[j].sizep =3D xcalloc(1, sizeof(long));
-> }
+This pattern is used e.g. in Git for Windows, which uses the powerful
+and performant `mimalloc` allocator.
 
-Thank you. Revising it in v9.
+Furthermore, in `reftable/basics.c` this `#undef malloc` is
+_specifically_ disabled by virtue of defining the
+`REFTABLE_ALLOW_BANNED_ALLOCATORS` constant before including
+`reftable/basic.h`, to ensure that such a custom allocator is also used
+in the reftable code.
+
+However, in 8db127d43f5b (reftable: avoid leaks on realloc error,
+2024-12-28) and in 2cca185e8517 (reftable: fix allocation count on
+realloc error, 2024-12-28), `reftable_set_alloc()` function calls were
+introduced that pass `malloc`, `realloc` and `free` function pointers as
+parameters _after_ `reftable/basics.h` ensured that they were no longer
+`#define`d. This would override the custom allocator and re-set it to
+the default allocator provided by, say, libc or MSVCRT.
+
+This causes problems because those calls happen after the initial
+allocator has already been used to initialize an array, which is
+subsequently resized using the overridden default `realloc()` allocator.
+
+You cannot mix and match allocators like that, which leads to a
+`STATUS_HEAP_CORRUPTION` (C0000374) on Windows, and when running this
+unit test through shell and/or `prove` (which only support 7-bit status
+codes), it surfaces as exit code 127.
+
+It is actually unnecessary to use those function pointers to
+`malloc`/`realloc`/`free`, though: The `reftable` code goes out of its
+way to fall back to the initial allocator when passing `NULL` parameters
+instead. So let's do that instead of causing heap corruptions.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    t-reftable-basics: allow for malloc to be #defined
+    
+    This is a fix for one of the many issues that force me to delay Git for
+    Windows v2.48.0-rc2 until I can increase my confidence via thorough
+    testing.
+    
+    The patch is based on rs/reftable-realloc-errors. Sadly, the patch fails
+    the PR build
+    [https://github.com/gitgitgadget/git/actions/runs/12672507500/job/35316720255],
+    but then the base branch fails in the same way
+    [https://github.com/gitgitgadget/git/actions/runs/12533205564/job/34952668803].
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1848%2Fdscho%2Freftable-tests-should-allow-malloc-to-be-defined-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1848/dscho/reftable-tests-should-allow-malloc-to-be-defined-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1848
+
+ t/unit-tests/t-reftable-basics.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-basics.c
+index 990dc1a2445..1d640b280f9 100644
+--- a/t/unit-tests/t-reftable-basics.c
++++ b/t/unit-tests/t-reftable-basics.c
+@@ -157,13 +157,13 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+ 
+ 		old_alloc = alloc;
+ 		old_arr = arr;
+-		reftable_set_alloc(malloc, realloc_stub, free);
++		reftable_set_alloc(NULL, realloc_stub, NULL);
+ 		check(REFTABLE_ALLOC_GROW(arr, old_alloc + 1, alloc));
+ 		check(arr == old_arr);
+ 		check_uint(alloc, ==, old_alloc);
+ 
+ 		old_alloc = alloc;
+-		reftable_set_alloc(malloc, realloc, free);
++		reftable_set_alloc(NULL, NULL, NULL);
+ 		check(!REFTABLE_ALLOC_GROW(arr, old_alloc + 1, alloc));
+ 		check(arr != NULL);
+ 		check_uint(alloc, >, old_alloc);
+@@ -188,11 +188,11 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+ 		arr[alloc - 1] = 42;
+ 
+ 		old_alloc = alloc;
+-		reftable_set_alloc(malloc, realloc_stub, free);
++		reftable_set_alloc(NULL, realloc_stub, NULL);
+ 		REFTABLE_ALLOC_GROW_OR_NULL(arr, old_alloc + 1, alloc);
+ 		check(arr == NULL);
+ 		check_uint(alloc, ==, 0);
+-		reftable_set_alloc(malloc, realloc, free);
++		reftable_set_alloc(NULL, NULL, NULL);
+ 
+ 		reftable_free(arr);
+ 	}
+
+base-commit: 1e781209284eb5952e153339f45bf0c1555e78bb
+-- 
+gitgitgadget
