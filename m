@@ -1,56 +1,56 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BCEA1F8F14
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 12:59:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B178B1A00FE
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 13:06:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736341142; cv=none; b=GyP9q4HSi9wGkKBCwp6e+i55hjLMpSESZizdqWzmRv1d2KuzBYQxuzw7BP/FU3wXZDsWWbPVJUHN+sQHc6OOJuMa1UurSCAjiB+apJmuL6mdE6nryJYKHDATVhftsnQkMKIuAAgwUQfcTxe3dNd3gsl7x1N9rJKt+QfBLpUCncs=
+	t=1736341602; cv=none; b=OGEEmTDPOAv4smBMBwfekJHATG3JwIlClDDU5Ct95DPWLg5CIr4a++6TgLqqXMN7iWZPluf2drnan9S3PdLWIbyjRVm/h7I+JCVMApr6dVumIHMj3wNWvCiPwk8fVw+NjofrxTmXN8LgUF8osvBg/KiHXAUFG65Ec55wfEO4Fq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736341142; c=relaxed/simple;
-	bh=8P8+OR1MRfe+8tqZ3iPwMYocojl0xJO04eHnsFCPMhQ=;
+	s=arc-20240116; t=1736341602; c=relaxed/simple;
+	bh=CxvRBXMZfb2DGRi/34qw4OGxduy83v8Ilduwi/J6s7s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LqAdh6fPqWaAFIy/uG18wNFuVvTTpXyxH3IxIJzLNjACvunz7euRB8a8mzbMvxTulluFSlyhfnsjENgb8vkjsDrPRpaM6mJuv9bmpT7YaHp1xqcug/3riR/fI565w6OC0DYpbaqtMFz/BGZiRHA/VbF6DBIpD1IRn1nqqUvvclA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O5bV9mHS; arc=none smtp.client-ip=209.85.222.54
+	 To:Cc:Content-Type; b=We3FOlxeBKOzYvJ/hpNC9fVtQlAYWrp3/W8ISrJOQXTvkK/O/6cyFskQA2cK30qyTBftvkey/+spTOby+7BWditH+7vj8XcNTxsDkfA+/A+SM65+l5jZHP0s9nUyv8TmJZAMG2oKdtg2vyUyF9ut7yXdHl/ID1WsbTkV6auGORg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ObOyZ3PL; arc=none smtp.client-ip=209.85.160.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O5bV9mHS"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-85b92397fe2so2696153241.3
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 04:59:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ObOyZ3PL"
+Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4679eacf2c5so157026221cf.0
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 05:06:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736341139; x=1736945939; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1736341599; x=1736946399; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RNKZNG72IU9Y8j6mGKd8jyG0GGsB9rFCoccumPoGgGE=;
-        b=O5bV9mHSGF+SnNnWgloxi0cClHToeInDK959X4FXwf2ip2rk0+RgVLvGYf/renupjt
-         3oUOK2cDCXePvxvEW6h2rl+/+ejbWb+xjFR+V1IVL5u7DHEpqFrqRXJ4WBEk5DlhXZej
-         n8WMDJUrwAw5y1PfXiK4YCFlZLasPtU6o4C0PjCzKAUIQyFVck1hschmg+8IWejyIUaa
-         4sulb4Grym1AkpRuWtsfPo04CtKgPM+1RJS2WZbWwQ0klpU2f5iNO0fb4JATq/wgk7YL
-         0iJPEl+i+NdSYEuy8K4tgaXCk61g5AzrYw1CM2OdRHvz/+9EvoEsi9tWH8XdZDwSXYhR
-         4xzQ==
+        bh=hNnacAOV/C67++KNJf4IE74stX94Ov4IjKty+XaqfVA=;
+        b=ObOyZ3PLKjksBNPZPkCR1Vf5IHcs7ZXmOWnhrkQ0JRpsWeUU+bugd+hFFJVppcJjNB
+         SSAa/Vj9a/LF6Q1NZcjiJbg153yp36ru3xwtv4g81RZJsMN3rynVEZ8vwjE1BsEODqrc
+         YVCC7AP9oG5MW9UEVXhML8/bvqzJdDSLhPq9/MGLBbDbN+iTDTWBuLPPyIasmugeT8IM
+         K4/nh9LEKTh/63eYSE5ekucrkRA9Dw2szhYRipdTxp8q4dAxcSx6qoEntI/QU5iJIWuO
+         AeDj8mMx6dBfydReSXoAec9N5Bjj3qz+8jDqOy2uVPWQ7yVqfwwg5bL7um7+zULr58+j
+         v7HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736341139; x=1736945939;
+        d=1e100.net; s=20230601; t=1736341599; x=1736946399;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RNKZNG72IU9Y8j6mGKd8jyG0GGsB9rFCoccumPoGgGE=;
-        b=Hp03vmEOrOiMdMxPkBuYD++/T0ZvektBSWKFKsr86UoXvK6q6HNEtb8LpPXkqsS8wK
-         l9bR1iyLSpZ9WMX16Ioe1CHYfRB1lgyjEZNRaadM4UjqrMbggWt+t+jxjpBf+fxUI4sm
-         kJoSpxRO2x5EQJeQKgKPl8juhF2mAdP+vrELgTQUrObMaVTg12XNv4vdvSDnI+8Ya5CF
-         i+mRjCwnq7i4VheKDvqLVE5xzxz3ysAuzvtLO1RrvSbd2QPZQnrp+/9YaV8nAfCNv36b
-         zdikVf7iNdFpFvIm7HXznwhqBHktnD679xq1nWWojXqerb3fAjCfgmSp4msU05YXvGCA
-         ahqg==
-X-Gm-Message-State: AOJu0YzZ9NvEI9CinObzmczav0URENWoR1E2VVOhoe06aCbmyYAkIt4p
-	FjcUoYkBUD6rDoEcNcZDnXbx+TWG9gA4nXiHL5Jjbq5KVTdJ4AHzKqB67lQUnlX+W807Ua+6yYn
-	33uJqW6/GobhpKJFg6ELOq6z2Hz8=
-X-Gm-Gg: ASbGnctJ/9WWklDLWAvhrmksmkjTxgmZ0qX6KA4Iw1ew3AFbupZDtkC3FI/+EzzcW0R
-	+PlnWFbs+I+sH65/0+YWdQIqNiR+giMlYXTOFfw==
-X-Google-Smtp-Source: AGHT+IGYLdLXFTdnyFkm8TgZjyzn2xgRmjKOaqtEvfL4sYNXuSErG714F66MUs2QMD1+sXJTbYZ+OUP4K4w9MdhWPng=
-X-Received: by 2002:a05:6102:26c5:b0:4b2:5c0a:9afa with SMTP id
- ada2fe7eead31-4b3d0f66b7amr1530266137.4.1736341139124; Wed, 08 Jan 2025
- 04:58:59 -0800 (PST)
+        bh=hNnacAOV/C67++KNJf4IE74stX94Ov4IjKty+XaqfVA=;
+        b=u5492rn4N8HIj+QB/L8wrCAQC/zhZSZ1gmu67bqh0/hVGjLQloHL1aoSOae7NKZCDP
+         addO9mBS8ycE/6rlSw04WFF1EoVeBaG7/GliksLHbtruta0qgk8MxpO4Hs0tFiFMmCuF
+         RLKJMTnJksZ9sCppllj+vZjTwydt1ZUfS8GA86MHKBv8bpX8YJwjK17XZ8U1BK6B61Fc
+         XK5Eird7MAShlUTjNEG0QSsVOCej6Y6/jaYvZJbPeQaKLDnxFe6w5FqWum3c2EtJlcGe
+         ZJm6BJ04LhahdHLdVL336BVZ0ukQM8gjpyU95al/6Hw5AY0OU59Mbr6dvT1PkVi5e/3j
+         rGkA==
+X-Gm-Message-State: AOJu0YzZrdhzRFONpXZTLa/9lA5F+3qM0usHqzZdSenD5Q8+XVijUQfp
+	G8oEyYfgXJm69wRgX+jaM4diHZ3ygHwFvo8Pgfxt2WDoQehxftA2gKpP0fvqSgENUgpWBR/MB7a
+	B9/dr4lTGrrd9UTg1aImb6joJJ3AoizoSFfkNXA==
+X-Gm-Gg: ASbGnct9BBMLYmsrG6ryj133nGKAMGpTaUsXiz9BBNULyIiE0dQkUSfpAceuVLMMK/9
+	CC3Xegh6/2tEb3n6DpBv47GurHlAVyMtN8wikog==
+X-Google-Smtp-Source: AGHT+IHizzbKDiDNJ0vYBovRmmmsE+/8gaJeghrBKx4/RR+eHfibeTrLKkyNRVBwetYNRIHhOYpPBFAeqBI7g56tYos=
+X-Received: by 2002:ac8:58cf:0:b0:460:8f80:909a with SMTP id
+ d75a77b69052e-46c710314ccmr46369271cf.32.1736341599436; Wed, 08 Jan 2025
+ 05:06:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,78 +58,116 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
- <20250106103713.1452035-2-usmanakinyemi202@gmail.com> <CAPig+cQz+2Q7Z=uMYvKNrK2MACQC130u5iiMcsUPjNTifeWSbw@mail.gmail.com>
-In-Reply-To: <CAPig+cQz+2Q7Z=uMYvKNrK2MACQC130u5iiMcsUPjNTifeWSbw@mail.gmail.com>
+ <20250106103713.1452035-4-usmanakinyemi202@gmail.com> <xmqqfrlvzzcd.fsf@gitster.g>
+In-Reply-To: <xmqqfrlvzzcd.fsf@gitster.g>
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 8 Jan 2025 18:28:47 +0530
-X-Gm-Features: AbW1kvaQntQ-Fa6gkldlUq8HD4OIIKjabw30zGNFnkN7eHibB2-OTdm_sozVyJw
-Message-ID: <CAPSxiM9krVgyXwymQSg1Y8L5qsb_xpo_FGskFcmWWBC2_Dvs0Q@mail.gmail.com>
-Subject: Re: [PATCH 1/4] version: refactor redact_non_printables()
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com, 
-	ps@pks.im, johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
+Date: Wed, 8 Jan 2025 18:36:28 +0530
+X-Gm-Features: AbW1kva5wS3kGc4laEztlv4mqeVWULqwJmz8-0XX5lTgqpqsjgeCBxPShpZeVSI
+Message-ID: <CAPSxiM_0h7OyQO-Of8YhcOt4KbtuoKXe111ZCvsLf5y+OgCHaw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] connect: advertise OS version
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
+	johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
 	phillip.wood@dunelm.org.uk, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 7, 2025 at 4:05=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.c=
-om> wrote:
+On Mon, Jan 6, 2025 at 9:52=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> On Mon, Jan 6, 2025 at 5:37=E2=80=AFAM Usman Akinyemi
-> <usmanakinyemi202@gmail.com> wrote:
-> > The git_user_agent_sanitized() function performs some sanitizing to
-> > avoid special characters being sent over the line and possibly messing
-> > up with the protocol or with the parsing on the other side.
-> >
-> > Let's extract this sanitizing into a new redact_non_printables() functi=
-on,
-> > as we will want to reuse it in a following patch.
-> >
-> > For now the new redact_non_printables() function is still static as
-> > it's only needed locally.
-> >
-> > While at it, let's also make a few small improvements:
-> >   - use 'size_t' for 'i' instead of 'int',
-> >   - move the declaration of 'i' inside the 'for ( ... )',
+Hi Junio,
+> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 >
-> Regarding the above two items...
+> > +
+> > +transfer.advertiseOSVersion::
+> > +     When `true`, the `os-version` capability is advertised by clients=
+ and
+> > +     servers. It makes clients and servers send to each other a string
+> > +     representing the operating system name, like "Linux" or "Windows"=
+.
+> > +     This string is retrieved from the 'sysname' field of the struct r=
+eturned
+> > +     by the uname(2) system call. Defaults to true.
 >
-> >   - use strbuf_detach() to explicitly detach the string contained by
-> >     the 'buf' strbuf.
-> >
-> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-> > Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
-> > ---
-> > diff --git a/version.c b/version.c
-> > @@ -6,6 +6,20 @@
-> > +static void redact_non_printables(struct strbuf *buf)
-> > +{
-> > +       strbuf_trim(buf);
-> > +       for (size_t i =3D 0; i < buf->len; i++) {
-> > +               if (buf->buf[i] <=3D 32 || buf->buf[i] >=3D 127)
-> > +                       buf->buf[i] =3D '.';
-> > +       }
+> Shouldn't `sysname` be typeset as a literal, just like `true` and
+> `os-version`?
+I will do that in the next iteration. Thank you.
+>
+> > +os-version
+> > +~~~~~~~~~~
+> > +
+> > +In the same way as the `agent` capability above, the server can
+> > +advertise the `os-version` capability with a value `X` (in the form
+> > +`os-version=3DX`) to notify the client that the server is running an
+> > +operating system that can be identified by `X`. The client may
+>
+> Hmph.  I am not sure what's the value of mentioning 'X' here.  To me
+>
+>     ... can advertise the `os-version` capability to notify the kind
+>     of operating system it is running on.
+>
+> conveys the same thing with much fewer bytes.
+Yeah, it is better, I will use it in the next iteration.
+>
+> > +optionally send its own `os-version` string by including the
+> > +`os-version` capability with a value `Y` (in the form `os-version=3DY`=
+)
+> > +in its request to the server (but it MUST NOT do so if the server did
+> > +not advertise the os-version capability). The `X` and `Y` strings may
+> > +contain any printable ASCII characters except space (i.e., the byte
+>
+> This is misleading.  ASCII printable characters range from 33 to 126
+> (inclusive), but by saying "except space", the readers are led to
+> believe that the author of this documentation thinks ASCII 32 is
+> printable, too.
+Thanks for this, I will make changes in the next iteration.
+>
+> About 'X' and 'Y', we can just say "the value of this capability may
+> consist of ASCII printable characters (from 33 to 126 inclusive)" or
+> something.
+>
+Noted. Thank you.
+> Is there a need for a registry of canonical os-version strings?  One
+> reason why you would want this user-settable (as opposed to being
+> derived from "uname -s") is that a system that is presumably the
+> same in end-user perception can call itself in different names (your
+> Windows/MINGW64 example) and having the users set it to a string
+> chosen from a small repertoire, the other end would be able to
+> identify them more easily.  I do not think it is a necessarily a
+> good idea to limit what value the users can set to this
+> configuration variable, but at least with a published guideline on
+> calling various types of systems (and an explanation on the reason
+> why we publish such a guideline), users would make an informed
+> decision when picking what string to send.
+We plan to implement another config option `osVersion.format`, which
+allow users to fully customize the string sent to the other side using
+placeholders,
+similar to how git for-each-ref uses %() syntax. The user would be
+able to set it to
+the string they want i.e "Linux" or "Windows" (without any
+placeholder) and would be
+sent as-is. So, the `osVersion.format` should satisfy this need. I
+will ensure to document
+this option to tell that it can be used like this and will give a
+small list of `os-version` strings
+that can be used in this way.
+>
+> > +# Trim and replace each character with ascii code below 32 or above
+> > +# 127 (included) using a dot '.' character.
+> > +# Octal intervals \001-\040 and \177-\377
+> > +# corresponds to decimal intervals 1-32 and 127-255
+> > +test_redact_non_printables () {
+> > +    tr -d "\n" | tr "[\001-\040][\177-\377]" "."
 > > +}
-> > @@ -27,12 +41,8 @@ const char *git_user_agent_sanitized(void)
-> >                 strbuf_addstr(&buf, git_user_agent());
-> > -               strbuf_trim(&buf);
-> > -               for (size_t i =3D 0; i < buf.len; i++) {
 >
-> ... the original code appears to have already been using `size_t` and
-> declaring the loop variable inside the `for` statement, despite what
-> the commit message says. So, is the commit message out of date? Or are
-> the patches out of order? Or something else?
-I just investigated what happened. Another commit already added it and
-I did a rebase on top of the "master".
-I did not notice it at all. The commit message is out of date.
-
-I will update it in the next iteration.
-Thank you very much.
+> Just being curious.  Do we need to worry about carriage-returns not
+> just line-feeds, and if not why?
+The function `tr "[\001-\040][\177-\377]" "."` already replace the
+carriage-returns with "."
+the redact_non_printables() will also replace it with ".".
+Carriage-returns octal code is 015 and
+decimal code of 13. So, we do not need to worry about it.
+>
+> Thanks.
+Thank you.
 Usman.
->
-> > -                       if (buf.buf[i] <=3D 32 || buf.buf[i] >=3D 127)
-> > -                               buf.buf[i] =3D '.';
-> > -               }
-> > -               agent =3D buf.buf;
-> > +               redact_non_printables(&buf);
-> > +               agent =3D strbuf_detach(&buf, NULL);
