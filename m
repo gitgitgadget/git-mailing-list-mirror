@@ -1,61 +1,61 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE2F2036ED
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 18:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F87201256
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 18:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736361490; cv=none; b=o8CBj0ozMB8m4EYqveyCMsdGJ7V6eNQiJ+SC3Q4KdJoDMdBoYgBa4GyDybUUCYQGJX9VxLJFk2KN0CLJ7dBbAwRPeG/EEVjPWygA41gGfuLq4JGwzZKpvF/0gNs7gDqMIMrINUTt6CowVcs72te/HKSevE0hI/NetKc7M2X9k+Y=
+	t=1736361491; cv=none; b=uCtiZvxVWSKbIw+bGaQD/1Gqkz/ynA4yTeOCNf3aDwAm8hEXhlQJwn5AAS4+fQDY6jM//aeYfMWAZAfBKBaPbq0gK5wXHH3ZBAc137qJgTFsXnCXH0uM5fbeNH9RE2PZ6CD1ac7ImTj3DI69PbMfQG46BTGJbZ5WEx6HJTL6rPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736361490; c=relaxed/simple;
-	bh=IWyXelcEckC1DOmq0T819MfQ0FOT8ihTv77d7OjwHhU=;
+	s=arc-20240116; t=1736361491; c=relaxed/simple;
+	bh=TUSpBreY/FM34aVBg/BJzZ/wQknS1jnSV0Mll6MAKXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CM9bqgmVpM3tontEJD4uQvuORjT+O3OmQil4gBE/qdMU6hynnuDQ8/xkDNHGkDFbQnG358FVczO52MqisO8Pax07fwB95pZb9Xufcsg3xU8wD50uAH684fh9YLLmJILFi6RyGWd5fYy9mPZINy6x7M1Ln2BMGRpZlRWOvXpDdts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XPBu1HJe; arc=none smtp.client-ip=209.85.160.180
+	 MIME-Version; b=TH8uiCDqYFoBGnFfdC/9rgUBgj+o8yFxkwS6DbstukIGMWP+U5s/3eU2W5IQHhnsOFTVsjsDDcCMq9LtP51H18smotli5RPo1ss2ncxtKi3ZGax7ArVPUY5nVjHSgR0/xiQIYTfU4kYvl+8mAm5OQnIReHMoMepHbcqNXwcGFnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AYAgZhoQ; arc=none smtp.client-ip=209.85.219.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XPBu1HJe"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-46785fbb949so86641cf.3
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 10:38:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AYAgZhoQ"
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6dcc42b5e30so1870516d6.1
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 10:38:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736361486; x=1736966286; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1736361487; x=1736966287; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=32o2mCpyTFJSE1jfDUNvvNp78Xy4w0ZNmCe+x0QzmzI=;
-        b=XPBu1HJeZq7uJ8ZUI1FziTOIKrAoljCTJZWzML1aUP7eZUj552ZPRbzq/Nlo6DWIVf
-         pOgPmxNvXeZXW5gkdud1ckB9kQr4+zQSZbaRn8wf4uK0yD9T1aBn7bzMr6fsf7NtUgfv
-         ROK+bzoqX4UYeWaa9xjhmrSa1msHdhJA8wvwryLMiUQcxK/IUj+5Gx2ss3oT5dBHppuW
-         j0lTcnL5aLWh7XxzKQqycZK+mSC6qkM5hQvyiZ5AowRQWBlnZNKscNHi7osoO5vGq9TR
-         +uhtiKrnAlXDfPnV2O62C7BwCcgfs3/9vigy4ngK0upzpN7LJw2sUSDZUAyRhTHAVSiD
-         IfDg==
+        bh=bVPWpS8Bqn153DF9PaFCW9fQuwgXoHmbsRMFIz6Qn3g=;
+        b=AYAgZhoQ1tyPAHlGpDBW2DpiOr9mLX71Z/vxy/AwNwN7So+HzsyT9Ysw+VRYwKNJUw
+         g1FCu+AfXZFQBEQGF3lcpLfjD8UtBpQYaAEscoUySKONBjNvtKAYJh4/TNKkYAOdhIWh
+         NV2MnA5FYHiou/iB+h/k2q2HdpqSqDB2zujzbKq/n8GVjh1bLP6LUtkFPkSwfkKEE/e+
+         DKsK/Im8XUpikhpaNsEZLPMVpcuoE11sm2y1QQJfk4jFyUinvvFTmL9UNvlqvMBPB80b
+         ACLT0vm3HRCAHzIxjVtbqfKWDlVWH9VPbgHmbBV0D168ays0A7UT8NhYIFz36VRbkBsa
+         rRkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736361486; x=1736966286;
+        d=1e100.net; s=20230601; t=1736361487; x=1736966287;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=32o2mCpyTFJSE1jfDUNvvNp78Xy4w0ZNmCe+x0QzmzI=;
-        b=Bts8HtQAeA6UKNsdQo7XhX3i1AX1IYsqeaXu+RRABzC9+o1dGDcchPzkXg3aFF1Ud+
-         fshhMQzpnflPYYNJyHrBfL/eCRJNi1btNn9Fw0Pg44vjvUDP7SUlh+U4Mbvxr+vimgof
-         L678Xg4XauAfklnJzUxxGpQZgRqbQtBFFttOgaFLdx28cO7Ascx830rT5zpIY7cN3gZ1
-         L9xyn7fxcuZE4BjlRJGMxuk8O0eRS0rFZYpbuQO2YaGbV2qGmjxzNLuiDquY1d2cQcvw
-         H3kPpzOPYc6BrqlONGpS+8o9+p0tM8ch2qiO75dyXMrDn1J2vzuGIKdBIi3SjN64N3HV
-         ms6Q==
-X-Gm-Message-State: AOJu0YzngFEP17zp61zElzQwtjF1CPjVkEj//VD7qonIfvXW90V7C1LL
-	MeWDTB0FijYrRXT6d/S7JW8hfe/SQh/dpbyfRq0xKfCnNr3vfW0oTJUcog5vIsU=
-X-Gm-Gg: ASbGncspfqpVhlvgtXjZ91LEwM60Wbxn2BME0rbT74eytoRGRjwphwlF3rHpJcVkwzt
-	nu8H5unSN88KZWjsQ2FiexgLObwOAWV5OMICd2dzP4kEAfPU5GwyjRMzewDDeZBOnEs5Z8IONrO
-	eHwNxL1WUzdG+A6rOF6E3YicyxOAttEDadIEzc9hRLhNPDnHjr8ByM2MhYmCsaKCAdamlFspg/1
-	rVdNd5Vk4c4m4LXVgAi/g2HyckITvZgnqwKtEaeaVAMIiQDs937vd0z+vJwhpzX5fRWsvl1mvMf
-	D1iYFHPe3A==
-X-Google-Smtp-Source: AGHT+IGxyaXkbUtqVY7nQ91ifyMFlaILm/0xSX08r/RdGnh3NrXl4qmeINeE8CNPIEp0ixsj/QtkVw==
-X-Received: by 2002:a05:6214:495:b0:6d8:a76d:b66c with SMTP id 6a1803df08f44-6df9b2b33b0mr55480716d6.30.1736361485997;
-        Wed, 08 Jan 2025 10:38:05 -0800 (PST)
+        bh=bVPWpS8Bqn153DF9PaFCW9fQuwgXoHmbsRMFIz6Qn3g=;
+        b=nFEIsvgNKcz3ERHQSt2sEiBBO8wxkWkjq62tMEO3yxFMiSUzeeed7MZPx32RPcF5Q0
+         ZoLrSlmYHycQirpceDKkq1w/S7YvoAjWnQ7BTr7xr6s4zghFV7AKs0WDTGNM74bZxxrm
+         qAeMImNUyGpbJqnc5ElsdhFaYyVng8xzG1Sy3/D9+JobM/TK+gBMmTZY3Xf/NT1TyI6q
+         XQyUJtQDVPV7KVYNFy0PY2fcP37Ajzpnz958WnGVgtLn8QASvZRjBIriQkRJZmC07gpm
+         DOLPxhr/3+hZniVRzKl2ceFO7elYG/E0UNLSL/8rPJGPjQjg1W2MLN0HZQUSFEIKqZ7t
+         0Hpg==
+X-Gm-Message-State: AOJu0YxRCDC/G++XAjbLgsrOkwYHGiYkqpjA3q1jS36ofdmuuOvV7rVv
+	2V6ftl8/GOfdYsZHgpJ5I7DP2KtmlW2Vay1f2P5/pXoH0jTjBEmw+6yfq/xZyoA=
+X-Gm-Gg: ASbGncuqs4bCtTqwCA15ipcgAmjWONZN2/Sd+7Y1ERm7wnSJ0inIU9d/nbTHINZrMUI
+	sRRaUXUnXt8dL3SKsl+X9eKJZW1JiRGjBi587fzuQgasii1JpgXUhsteyKO45bRsoJq6O5kYvP5
+	3+JWBDHbvkhxvNQFvJkhm7J2lLZhehZO2fVMyPrCCLNM29ZU2IlapwJx+eh9s8CWeOhk8eO3aDY
+	3UeRrykSTlJj9pAaUBn4aYcoLIe3KMQVjRE6XhsnF2o1LfBGXPfTbpGu6jDjUm6XKBK0Z8ViP+n
+	QER5knN9XQ==
+X-Google-Smtp-Source: AGHT+IHhjlK4aP1YrGw7GcCRqW7j3/eolE5W+H3FKnjdaGUIaINKK4kd8gKk4W1Rypg1cFwBnCO/fQ==
+X-Received: by 2002:a05:6214:2428:b0:6d8:960e:5785 with SMTP id 6a1803df08f44-6df9b234c28mr64624596d6.13.1736361487303;
+        Wed, 08 Jan 2025 10:38:07 -0800 (PST)
 Received: from localhost.localdomain ([184.148.194.219])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dd180ea74bsm193228036d6.25.2025.01.08.10.38.04
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dd180ea74bsm193228036d6.25.2025.01.08.10.38.06
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 08 Jan 2025 10:38:05 -0800 (PST)
+        Wed, 08 Jan 2025 10:38:06 -0800 (PST)
 From: Eric Ju <eric.peijian@gmail.com>
 To: git@vger.kernel.org
 Cc: calvinwan@google.com,
@@ -65,9 +65,9 @@ Cc: calvinwan@google.com,
 	karthik.188@gmail.com,
 	toon@iotcl.com,
 	jltobler@gmail.com
-Subject: [PATCH v9 7/8] transport: add client support for object-info
-Date: Wed,  8 Jan 2025 13:37:38 -0500
-Message-ID: <20250108183740.67022-8-eric.peijian@gmail.com>
+Subject: [PATCH v9 8/8] cat-file: add remote-object-info to batch-command
+Date: Wed,  8 Jan 2025 13:37:39 -0500
+Message-ID: <20250108183740.67022-9-eric.peijian@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250108183740.67022-1-eric.peijian@gmail.com>
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
@@ -80,321 +80,993 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Calvin Wan <calvinwan@google.com>
+Since the `info` command in cat-file --batch-command prints object info
+for a given object, it is natural to add another command in cat-file
+--batch-command to print object info for a given object from a remote.
 
-Sometimes, it is beneficial to retrieve information about an object
-without downloading it entirely. The server-side logic for this
-functionality was implemented in commit "a2ba162cda (object-info:
-support for retrieving object info, 2021-04-20)." And the wire
-format is documented at
-https://git-scm.com/docs/protocol-v2#_object_info.
+Add `remote-object-info` to cat-file --batch-command.
 
-This commit introduces client functions to interact with the server.
+While `info` takes object ids one at a time, this creates
+overhead when making requests to a server.So `remote-object-info`
+instead can take multiple object ids at once.
 
-Currently, the client supports requesting a list of object IDs with
-the 'size' feature from a v2 server. If the server does not advertise
-this feature (i.e., transfer.advertiseobjectinfo is set to false),
-the client will return an error and exit.
+cat-file --batch-command is generally implemented in the following
+manner:
 
-Notice that the entire request is written into req_buf before being
-sent to the remote. This approach follows the pattern used in the
-`send_fetch_request()` logic within fetch-pack.c.
-Streaming the request is not addressed in this patch.
+ - Receive and parse input from user
+ - Call respective function attached to command
+ - Get object info, print object info
+
+In --buffer mode, this changes to:
+
+ - Receive and parse input from user
+ - Store respective function attached to command in a queue
+ - After flush, loop through commands in queue
+    - Call respective function attached to command
+    - Get object info, print object info
+
+Notice how the getting and printing of object info is accomplished one
+at a time. As described above, this creates a problem for making
+requests to a server. Therefore, `remote-object-info` is implemented in
+the following manner:
+
+ - Receive and parse input from user
+ If command is `remote-object-info`:
+    - Get object info from remote
+    - Loop through and print each object info
+ Else:
+    - Call respective function attached to command
+    - Parse input, get object info, print object info
+
+And finally for --buffer mode `remote-object-info`:
+ - Receive and parse input from user
+ - Store respective function attached to command in a queue
+ - After flush, loop through commands in queue:
+    If command is `remote-object-info`:
+        - Get object info from remote
+        - Loop through and print each object info
+    Else:
+        - Call respective function attached to command
+        - Get object info, print object info
+
+To summarize, `remote-object-info` gets object info from the remote and
+then loop through the object info passed in, printing the info.
+
+In order for remote-object-info to avoid remote communication overhead
+in the non-buffer mode, the objects are passed in as such:
+
+remote-object-info <remote> <oid> <oid> ... <oid>
+
+rather than
+
+remote-object-info <remote> <oid>
+remote-object-info <remote> <oid>
+...
+remote-object-info <remote> <oid>
 
 Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Helped-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
 ---
- Makefile            |  1 +
- fetch-object-info.c | 85 +++++++++++++++++++++++++++++++++++++++++++++
- fetch-object-info.h | 22 ++++++++++++
- fetch-pack.c        |  3 ++
- fetch-pack.h        |  2 ++
- transport-helper.c  | 11 ++++--
- transport.c         | 28 ++++++++++++++-
- transport.h         | 11 ++++++
- 8 files changed, 160 insertions(+), 3 deletions(-)
- create mode 100644 fetch-object-info.c
- create mode 100644 fetch-object-info.h
+ Documentation/git-cat-file.txt         |  24 +-
+ builtin/cat-file.c                     |  99 ++++
+ object-file.c                          |  11 +
+ object-store-ll.h                      |   3 +
+ t/t1017-cat-file-remote-object-info.sh | 664 +++++++++++++++++++++++++
+ 5 files changed, 797 insertions(+), 4 deletions(-)
+ create mode 100755 t/t1017-cat-file-remote-object-info.sh
 
-diff --git a/Makefile b/Makefile
-index 97e8385b66..e8c6702b32 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1020,6 +1020,7 @@ LIB_OBJS += ewah/ewah_rlw.o
- LIB_OBJS += exec-cmd.o
- LIB_OBJS += fetch-negotiator.o
- LIB_OBJS += fetch-pack.o
-+LIB_OBJS += fetch-object-info.o
- LIB_OBJS += fmt-merge-msg.o
- LIB_OBJS += fsck.o
- LIB_OBJS += fsmonitor.o
-diff --git a/fetch-object-info.c b/fetch-object-info.c
-new file mode 100644
-index 0000000000..b279e06dc8
---- /dev/null
-+++ b/fetch-object-info.c
-@@ -0,0 +1,85 @@
-+#include "git-compat-util.h"
-+#include "gettext.h"
-+#include "hex.h"
-+#include "pkt-line.h"
-+#include "connect.h"
-+#include "oid-array.h"
-+#include "object-store-ll.h"
-+#include "fetch-object-info.h"
-+#include "string-list.h"
-+
-+/* Sends git-cat-file object-info command and its arguments into the request buffer. */
-+static void send_object_info_request(const int fd_out, struct object_info_args *args)
-+{
-+	struct strbuf req_buf = STRBUF_INIT;
-+
-+	write_command_and_capabilities(&req_buf, "object-info", args->server_options);
-+
-+	if (unsorted_string_list_has_string(args->object_info_options, "size"))
-+		packet_buf_write(&req_buf, "size");
-+
-+	if (args->oids)
-+		for (size_t i = 0; i < args->oids->nr; i++)
-+			packet_buf_write(&req_buf, "oid %s", oid_to_hex(&args->oids->oid[i]));
-+
-+	packet_buf_flush(&req_buf);
-+	if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
-+		die_errno(_("unable to write request to remote"));
-+
-+	strbuf_release(&req_buf);
-+}
-+
-+int fetch_object_info(const enum protocol_version version, struct object_info_args *args,
-+		      struct packet_reader *reader, struct object_info *object_info_data,
-+		      const int stateless_rpc, const int fd_out)
-+{
-+	int size_index = -1;
-+
-+	switch (version) {
-+	case protocol_v2:
-+		if (!server_supports_v2("object-info"))
-+			die(_("object-info capability is not enabled on the server"));
-+		send_object_info_request(fd_out, args);
-+		break;
-+	case protocol_v1:
-+	case protocol_v0:
-+		die(_("unsupported protocol version. expected v2"));
-+	case protocol_unknown_version:
-+		BUG("unknown protocol version");
-+	}
-+
-+	for (size_t i = 0; i < args->object_info_options->nr; i++) {
-+		if (packet_reader_read(reader) != PACKET_READ_NORMAL) {
-+			check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter expected");
-+			return -1;
-+		}
-+		if (!string_list_has_string(args->object_info_options, reader->line))
-+			return -1;
-+		if (!strcmp(reader->line, "size")) {
-+			size_index = i;
-+			for (size_t j = 0; j < args->oids->nr; j++)
-+				object_info_data[j].sizep = xcalloc(1, sizeof(*object_info_data[j].sizep));
-+		}
-+	}
-+
-+	for (size_t i = 0; packet_reader_read(reader) == PACKET_READ_NORMAL && i < args->oids->nr; i++){
-+		struct string_list object_info_values = STRING_LIST_INIT_DUP;
-+
-+		string_list_split(&object_info_values, reader->line, ' ', -1);
-+		if (0 <= size_index) {
-+			if (!strcmp(object_info_values.items[1 + size_index].string, ""))
-+				die("object-info: not our ref %s",
-+					object_info_values.items[0].string);
-+
-+			if (strtoul_ul(object_info_values.items[1 + size_index].string, 10, object_info_data[i].sizep))
-+				die("object-info: ref %s has invalid size %s",
-+					object_info_values.items[0].string,
-+					object_info_values.items[1 + size_index].string);
-+		}
-+
-+		string_list_clear(&object_info_values, 0);
-+	}
-+	check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter expected");
-+
-+	return 0;
-+}
-diff --git a/fetch-object-info.h b/fetch-object-info.h
-new file mode 100644
-index 0000000000..6184d04d72
---- /dev/null
-+++ b/fetch-object-info.h
-@@ -0,0 +1,22 @@
-+#ifndef FETCH_OBJECT_INFO_H
-+#define FETCH_OBJECT_INFO_H
-+
-+#include "pkt-line.h"
-+#include "protocol.h"
-+#include "object-store-ll.h"
-+
-+struct object_info_args {
-+	struct string_list *object_info_options;
-+	const struct string_list *server_options;
-+	struct oid_array *oids;
-+};
-+
-+/*
-+ * Sends git-cat-file object-info command into the request buf and read the
-+ * results from packets.
-+ */
-+int fetch_object_info(enum protocol_version version, struct object_info_args *args,
-+		      struct packet_reader *reader, struct object_info *object_info_data,
-+		      int stateless_rpc, int fd_out);
-+
-+#endif /* FETCH_OBJECT_INFO_H */
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 51de82e414..704bc21b47 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1654,6 +1654,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 	if (args->depth > 0 || args->deepen_since || args->deepen_not)
- 		args->deepen = 1;
+diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+index d5890ae368..6a2f9fd752 100644
+--- a/Documentation/git-cat-file.txt
++++ b/Documentation/git-cat-file.txt
+@@ -149,6 +149,13 @@ info <object>::
+ 	Print object info for object reference `<object>`. This corresponds to the
+ 	output of `--batch-check`.
  
-+	if (args->object_info)
-+		state = FETCH_SEND_REQUEST;
++remote-object-info <remote> <object>...::
++	Print object info for object references `<object>` at specified
++	`<remote>` without downloading objects from the remote.
++	Error when the `object-info` capability is not supported by the server.
++	Error when no object references are provided.
++	This command may be combined with `--buffer`.
 +
- 	while (state != FETCH_DONE) {
- 		switch (state) {
- 		case FETCH_CHECK_LOCAL:
-diff --git a/fetch-pack.h b/fetch-pack.h
-index 9d3470366f..119d3369f1 100644
---- a/fetch-pack.h
-+++ b/fetch-pack.h
-@@ -16,6 +16,7 @@ struct fetch_pack_args {
- 	const struct string_list *deepen_not;
- 	struct list_objects_filter_options filter_options;
- 	const struct string_list *server_options;
-+	struct object_info *object_info_data;
+ flush::
+ 	Used with `--buffer` to execute all preceding commands that were issued
+ 	since the beginning or since the last flush was issued. When `--buffer`
+@@ -290,7 +297,8 @@ newline. The available atoms are:
+ 	The full hex representation of the object name.
  
- 	/*
- 	 * If not NULL, during packfile negotiation, fetch-pack will send "have"
-@@ -42,6 +43,7 @@ struct fetch_pack_args {
- 	unsigned reject_shallow_remote:1;
- 	unsigned deepen:1;
- 	unsigned refetch:1;
-+	unsigned object_info:1;
+ `objecttype`::
+-	The type of the object (the same as `cat-file -t` reports).
++	The type of the object (the same as `cat-file -t` reports). See
++	`CAVEATS` below. Not supported by `remote-object-info`.
  
- 	/*
- 	 * Indicate that the remote of this request is a promisor remote. The
-diff --git a/transport-helper.c b/transport-helper.c
-index d457b42550..9da1547b2c 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -710,8 +710,8 @@ static int fetch_refs(struct transport *transport,
+ `objectsize`::
+ 	The size, in bytes, of the object (the same as `cat-file -s`
+@@ -298,13 +306,14 @@ newline. The available atoms are:
  
- 	/*
- 	 * If we reach here, then the server, the client, and/or the transport
--	 * helper does not support protocol v2. --negotiate-only requires
--	 * protocol v2.
-+	 * helper does not support protocol v2. --negotiate-only and cat-file
-+	 * remote-object-info require protocol v2.
- 	 */
- 	if (data->transport_options.acked_commits) {
- 		warning(_("--negotiate-only requires protocol v2"));
-@@ -727,6 +727,13 @@ static int fetch_refs(struct transport *transport,
- 		free_refs(dummy);
- 	}
+ `objectsize:disk`::
+ 	The size, in bytes, that the object takes up on disk. See the
+-	note about on-disk sizes in the `CAVEATS` section below.
++	note about on-disk sizes in the `CAVEATS` section below. Not
++	supported by `remote-object-info`.
  
-+	/* fail the command explicitly to avoid further commands input. */
-+	if (transport->smart_options->object_info)
-+		die(_("remote-object-info requires protocol v2"));
-+
-+	if (!data->get_refs_list_called)
-+		get_refs_list_using_list(transport, 0);
-+
- 	count = 0;
- 	for (i = 0; i < nr_heads; i++)
- 		if (!(to_fetch[i]->status & REF_STATUS_UPTODATE))
-diff --git a/transport.c b/transport.c
-index 10d820c333..b6a2052908 100644
---- a/transport.c
-+++ b/transport.c
-@@ -9,6 +9,7 @@
- #include "hook.h"
- #include "pkt-line.h"
- #include "fetch-pack.h"
-+#include "fetch-object-info.h"
- #include "remote.h"
- #include "connect.h"
- #include "send-pack.h"
-@@ -464,8 +465,33 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	args.server_options = transport->server_options;
- 	args.negotiation_tips = data->options.negotiation_tips;
- 	args.reject_shallow_remote = transport->smart_options->reject_shallow;
-+	args.object_info = transport->smart_options->object_info;
-+
-+	if (transport->smart_options && transport->smart_options->object_info
-+	    && transport->smart_options->object_info_oids->nr > 0) {
-+		struct packet_reader reader;
-+		struct object_info_args obj_info_args = { 0 };
-+
-+		obj_info_args.server_options = transport->server_options;
-+		obj_info_args.oids = transport->smart_options->object_info_oids;
-+		obj_info_args.object_info_options = transport->smart_options->object_info_options;
-+		string_list_sort(obj_info_args.object_info_options);
-+
-+		connect_setup(transport, 0);
-+		packet_reader_init(&reader, data->fd[0], NULL, 0,
-+				PACKET_READ_CHOMP_NEWLINE |
-+				PACKET_READ_GENTLE_ON_EOF |
-+				PACKET_READ_DIE_ON_ERR_PACKET);
-+
-+		data->version = discover_version(&reader);
-+		transport->hash_algo = reader.hash_algo;
-+
-+		ret = fetch_object_info(data->version, &obj_info_args, &reader,
-+					data->options.object_info_data, transport->stateless_rpc,
-+					data->fd[1]);
-+		goto cleanup;
+ `deltabase`::
+ 	If the object is stored as a delta on-disk, this expands to the
+ 	full hex representation of the delta base object name.
+ 	Otherwise, expands to the null OID (all zeroes). See `CAVEATS`
+-	below.
++	below. Not supported by `remote-object-info`.
  
--	if (!data->finished_handshake) {
-+	} else if (!data->finished_handshake) {
- 		int i;
- 		int must_list_refs = 0;
- 		for (i = 0; i < nr_heads; i++) {
-diff --git a/transport.h b/transport.h
-index 44100fa9b7..e61e931863 100644
---- a/transport.h
-+++ b/transport.h
-@@ -5,6 +5,7 @@
- #include "remote.h"
- #include "list-objects-filter-options.h"
- #include "string-list.h"
-+#include "object-store.h"
+ `rest`::
+ 	If this atom is used in the output string, input lines are split
+@@ -314,7 +323,10 @@ newline. The available atoms are:
+ 	line) are output in place of the `%(rest)` atom.
  
- struct git_transport_options {
- 	unsigned thin : 1;
-@@ -30,6 +31,12 @@ struct git_transport_options {
- 	 */
- 	unsigned connectivity_checked:1;
+ If no format is specified, the default format is `%(objectname)
+-%(objecttype) %(objectsize)`.
++%(objecttype) %(objectsize)`, except for `remote-object-info` commands which use
++`%(objectname) %(objectsize)` for now because "%(objecttype)" is not supported yet.
++WARNING: When "%(objecttype)" is supported, the default format WILL be unified, so
++DO NOT RELY on the current the default format to stay the same!!!
  
-+	/*
-+	 * Transport will attempt to retrieve only object-info.
-+	 * If object-info is not supported, the operation will error and exit.
-+	 */
-+	unsigned object_info : 1;
+ If `--batch` is specified, or if `--batch-command` is used with the `contents`
+ command, the object information is followed by the object contents (consisting
+@@ -396,6 +408,10 @@ scripting purposes.
+ CAVEATS
+ -------
+ 
++Note that since %(objecttype), %(objectsize:disk) and %(deltabase) are
++currently not supported by the `remote-object-info` command, we will error
++and exit when they are in the format string.
 +
- 	int depth;
- 	const char *deepen_since;
- 	const struct string_list *deepen_not;
-@@ -53,6 +60,10 @@ struct git_transport_options {
- 	 * common commits to this oidset instead of fetching any packfiles.
- 	 */
- 	struct oidset *acked_commits;
-+
-+	struct oid_array *object_info_oids;
-+	struct object_info *object_info_data;
-+	struct string_list *object_info_options;
+ Note that the sizes of objects on disk are reported accurately, but care
+ should be taken in drawing conclusions about which refs or objects are
+ responsible for disk usage. The size of a packed non-delta object may be
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 69ea642dc6..5fb71aaf91 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -27,6 +27,9 @@
+ #include "promisor-remote.h"
+ #include "mailmap.h"
+ #include "write-or-die.h"
++#include "alias.h"
++#include "remote.h"
++#include "transport.h"
+ 
+ enum batch_mode {
+ 	BATCH_MODE_CONTENTS,
+@@ -45,9 +48,12 @@ struct batch_options {
+ 	char input_delim;
+ 	char output_delim;
+ 	const char *format;
++	int use_remote_info;
  };
  
- enum transport_family {
+ static const char *force_path;
++static struct object_info *remote_object_info;
++static struct oid_array object_info_oids = OID_ARRAY_INIT;
+ 
+ static struct string_list mailmap = STRING_LIST_INIT_NODUP;
+ static int use_mailmap;
+@@ -579,6 +585,61 @@ static void batch_one_object(const char *obj_name,
+ 	object_context_release(&ctx);
+ }
+ 
++static int get_remote_info(struct batch_options *opt, int argc, const char **argv)
++{
++	int retval = 0;
++	struct remote *remote = NULL;
++	struct object_id oid;
++	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
++	static struct transport *gtransport;
++
++	/*
++	 * Change the format to "%(objectname) %(objectsize)" when
++	 * remote-object-info command is used. Once we start supporting objecttype
++	 * the default format should change to DEFAULT_FORMAT
++	*/
++	if (!opt->format)
++		opt->format = "%(objectname) %(objectsize)";
++
++	remote = remote_get(argv[0]);
++	if (!remote)
++		die(_("must supply valid remote when using remote-object-info"));
++
++	oid_array_clear(&object_info_oids);
++	for (size_t i = 1; i < argc; i++) {
++		if (get_oid_hex(argv[i], &oid))
++			die(_("Not a valid object name %s"), argv[i]);
++		oid_array_append(&object_info_oids, &oid);
++	}
++	if (object_info_oids.nr == 0) {
++		die(_("remote-object-info requires objects"));
++	}
++	gtransport = transport_get(remote, NULL);
++	if (gtransport->smart_options) {
++		CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
++		gtransport->smart_options->object_info = 1;
++		gtransport->smart_options->object_info_oids = &object_info_oids;
++
++		/* 'objectsize' is the only option currently supported */
++		if (!strstr(opt->format, "%(objectsize)"))
++			die(_("%s is currently not supported with remote-object-info"), opt->format);
++
++		string_list_append(&object_info_options, "size");
++
++		if (object_info_options.nr > 0) {
++			gtransport->smart_options->object_info_options = &object_info_options;
++			gtransport->smart_options->object_info_data = remote_object_info;
++			retval = transport_fetch_refs(gtransport, NULL);
++		}
++	} else {
++		retval = -1;
++	}
++
++	string_list_clear(&object_info_options, 0);
++	transport_disconnect(gtransport);
++	return retval;
++}
++
+ struct object_cb_data {
+ 	struct batch_options *opt;
+ 	struct expand_data *expand;
+@@ -670,6 +731,43 @@ static void parse_cmd_info(struct batch_options *opt,
+ 	batch_one_object(line, output, opt, data);
+ }
+ 
++static void parse_cmd_remote_object_info(struct batch_options *opt,
++					 const char *line, struct strbuf *output,
++					 struct expand_data *data)
++{
++	int count;
++	const char **argv;
++
++	char *line_to_split = xstrdup_or_null(line);
++	count = split_cmdline(line_to_split, &argv);
++	if (get_remote_info(opt, count, argv))
++		goto cleanup;
++
++	opt->use_remote_info = 1;
++	data->skip_object_info = 1;
++	for (size_t i = 0; i < object_info_oids.nr; i++) {
++		data->oid = object_info_oids.oid[i];
++		if (remote_object_info[i].sizep) {
++			/*
++			 * When reaching here, it means remote-object-info can retrieve
++			 * information from server without downloading them.
++			 */
++			data->size = *remote_object_info[i].sizep;
++			opt->batch_mode = BATCH_MODE_INFO;
++			batch_object_write(argv[i+1], output, opt, data, NULL, 0);
++		}
++	}
++	opt->use_remote_info = 0;
++	data->skip_object_info = 0;
++
++cleanup:
++	for (size_t i = 0; i < object_info_oids.nr; i++)
++		free_object_info_contents(&remote_object_info[i]);
++	free(line_to_split);
++	free(argv);
++	free(remote_object_info);
++}
++
+ static void dispatch_calls(struct batch_options *opt,
+ 		struct strbuf *output,
+ 		struct expand_data *data,
+@@ -701,6 +799,7 @@ static const struct parse_cmd {
+ } commands[] = {
+ 	{ "contents", parse_cmd_contents, 1},
+ 	{ "info", parse_cmd_info, 1},
++	{ "remote-object-info", parse_cmd_remote_object_info, 1},
+ 	{ "flush", NULL, 0},
+ };
+ 
+diff --git a/object-file.c b/object-file.c
+index 5b792b3dd4..96f204c93a 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -3128,3 +3128,14 @@ int read_loose_object(const char *path,
+ 		munmap(map, mapsize);
+ 	return ret;
+ }
++
++void free_object_info_contents(struct object_info *object_info)
++{
++	if (!object_info)
++		return;
++	free(object_info->typep);
++	free(object_info->sizep);
++	free(object_info->disk_sizep);
++	free(object_info->delta_base_oid);
++	free(object_info->type_name);
++}
+diff --git a/object-store-ll.h b/object-store-ll.h
+index cd3bd5bd99..20208e1d4f 100644
+--- a/object-store-ll.h
++++ b/object-store-ll.h
+@@ -553,4 +553,7 @@ int for_each_object_in_pack(struct packed_git *p,
+ int for_each_packed_object(struct repository *repo, each_packed_object_fn cb,
+ 			   void *data, enum for_each_object_flags flags);
+ 
++/* Free pointers inside of object_info, but not object_info itself */
++void free_object_info_contents(struct object_info *object_info);
++
+ #endif /* OBJECT_STORE_LL_H */
+diff --git a/t/t1017-cat-file-remote-object-info.sh b/t/t1017-cat-file-remote-object-info.sh
+new file mode 100755
+index 0000000000..fd6c63cdb9
+--- /dev/null
++++ b/t/t1017-cat-file-remote-object-info.sh
+@@ -0,0 +1,664 @@
++#!/bin/sh
++
++test_description='git cat-file --batch-command with remote-object-info command'
++
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
++
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/lib-cat-file.sh
++
++hello_content="Hello World"
++hello_size=$(strlen "$hello_content")
++hello_oid=$(echo_without_newline "$hello_content" | git hash-object --stdin)
++
++# This is how we get 13:
++# 13 = <file mode> + <a_space> + <file name> + <a_null>, where
++# file mode is 100644, which is 6 characters;
++# file name is hello, which is 5 characters
++# a space is 1 character and a null is 1 character
++tree_size=$(($(test_oid rawsz) + 13))
++
++commit_message="Initial commit"
++
++# This is how we get 137:
++# 137 = <tree header> + <a_space> + <a newline> +
++# <Author line> + <a newline> +
++# <Committer line> + <a newline> +
++# <a newline> +
++# <commit message length>
++# An easier way to calculate is: 1. use `git cat-file commit <commit hash> | wc -c`,
++# to get 177, 2. then deduct 40 hex characters to get 137
++commit_size=$(($(test_oid hexsz) + 137))
++
++tag_header_without_oid="type blob
++tag hellotag
++tagger $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
++tag_header_without_timestamp="object $hello_oid
++$tag_header_without_oid"
++tag_description="This is a tag"
++tag_content="$tag_header_without_timestamp 0 +0000
++
++$tag_description"
++
++tag_oid=$(echo_without_newline "$tag_content" | git hash-object -t tag --stdin -w)
++tag_size=$(strlen "$tag_content")
++
++set_transport_variables () {
++	hello_oid=$(echo_without_newline "$hello_content" | git hash-object --stdin)
++	tree_oid=$(git -C "$1" write-tree)
++	commit_oid=$(echo_without_newline "$commit_message" | git -C "$1" commit-tree $tree_oid)
++	tag_oid=$(echo_without_newline "$tag_content" | git -C "$1" hash-object -t tag --stdin -w)
++	tag_size=$(strlen "$tag_content")
++}
++
++# This section tests --batch-command with remote-object-info command
++# Since "%(objecttype)" is currently not supported by the command remote-object-info ,
++# the filters are set to "%(objectname) %(objectsize)" in some test cases.
++
++# Test --batch-command remote-object-info with 'git://' transport with
++# transfer.advertiseobjectinfo set to true, i.e. server has object-info capability
++. "$TEST_DIRECTORY"/lib-git-daemon.sh
++start_git_daemon --export-all --enable=receive-pack
++daemon_parent=$GIT_DAEMON_DOCUMENT_ROOT_PATH/parent
++
++test_expect_success 'create repo to be served by git-daemon' '
++	git init "$daemon_parent" &&
++	echo_without_newline "$hello_content" > $daemon_parent/hello &&
++	git -C "$daemon_parent" update-index --add hello &&
++	git -C "$daemon_parent" config transfer.advertiseobjectinfo true &&
++	git clone "$GIT_DAEMON_URL/parent" -n "$daemon_parent/daemon_client_empty"
++'
++
++test_expect_success 'batch-command remote-object-info git://' '
++	(
++		set_transport_variables "$daemon_parent" &&
++		cd "$daemon_parent/daemon_client_empty" &&
++
++		# These results prove remote-object-info can get object info from the remote
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		# These results prove remote-object-info did not download objects from the remote
++		echo "$hello_oid missing" >>expect &&
++		echo "$tree_oid missing" >>expect &&
++		echo "$commit_oid missing" >>expect &&
++		echo "$tag_oid missing" >>expect &&
++
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "$GIT_DAEMON_URL/parent" $hello_oid
++		remote-object-info "$GIT_DAEMON_URL/parent" $tree_oid
++		remote-object-info "$GIT_DAEMON_URL/parent" $commit_oid
++		remote-object-info "$GIT_DAEMON_URL/parent" $tag_oid
++		info $hello_oid
++		info $tree_oid
++		info $commit_oid
++		info $tag_oid
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info git:// multiple sha1 per line' '
++	(
++		set_transport_variables "$daemon_parent" &&
++		cd "$daemon_parent/daemon_client_empty" &&
++
++		# These results prove remote-object-info can get object info from the remote
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		# These results prove remote-object-info did not download objects from the remote
++		echo "$hello_oid missing" >>expect &&
++		echo "$tree_oid missing" >>expect &&
++		echo "$commit_oid missing" >>expect &&
++		echo "$tag_oid missing" >>expect &&
++
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "$GIT_DAEMON_URL/parent" $hello_oid $tree_oid $commit_oid $tag_oid
++		info $hello_oid
++		info $tree_oid
++		info $commit_oid
++		info $tag_oid
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info git:// default filter' '
++	(
++		set_transport_variables "$daemon_parent" &&
++		cd "$daemon_parent/daemon_client_empty" &&
++
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++		GIT_TRACE_PACKET=1 git cat-file --batch-command >actual <<-EOF &&
++		remote-object-info "$GIT_DAEMON_URL/parent" $hello_oid $tree_oid
++		remote-object-info "$GIT_DAEMON_URL/parent" $commit_oid $tag_oid
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command --buffer remote-object-info git://' '
++	(
++		set_transport_variables "$daemon_parent" &&
++		cd "$daemon_parent/daemon_client_empty" &&
++
++		# These results prove remote-object-info can get object info from the remote
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		# These results prove remote-object-info did not download objects from the remote
++		echo "$hello_oid missing" >>expect &&
++		echo "$tree_oid missing" >>expect &&
++		echo "$commit_oid missing" >>expect &&
++		echo "$tag_oid missing" >>expect &&
++
++		git cat-file --batch-command="%(objectname) %(objectsize)" --buffer >actual <<-EOF &&
++		remote-object-info "$GIT_DAEMON_URL/parent" $hello_oid $tree_oid
++		remote-object-info "$GIT_DAEMON_URL/parent" $commit_oid $tag_oid
++		info $hello_oid
++		info $tree_oid
++		info $commit_oid
++		info $tag_oid
++		flush
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command -Z remote-object-info git:// default filter' '
++	(
++		set_transport_variables "$daemon_parent" &&
++		cd "$daemon_parent/daemon_client_empty" &&
++
++		printf "%s\0" "$hello_oid $hello_size" >expect &&
++		printf "%s\0" "$tree_oid $tree_size" >>expect &&
++		printf "%s\0" "$commit_oid $commit_size" >>expect &&
++		printf "%s\0" "$tag_oid $tag_size" >>expect &&
++
++		printf "%s\0" "$hello_oid missing" >>expect &&
++		printf "%s\0" "$tree_oid missing" >>expect &&
++		printf "%s\0" "$commit_oid missing" >>expect &&
++		printf "%s\0" "$tag_oid missing" >>expect &&
++
++		batch_input="remote-object-info $GIT_DAEMON_URL/parent $hello_oid $tree_oid
++remote-object-info $GIT_DAEMON_URL/parent $commit_oid $tag_oid
++info $hello_oid
++info $tree_oid
++info $commit_oid
++info $tag_oid
++" &&
++		echo_without_newline_nul "$batch_input" >commands_null_delimited &&
++
++		git cat-file --batch-command -Z < commands_null_delimited >actual &&
++		test_cmp expect actual
++	)
++'
++
++# Test --batch-command remote-object-info with 'git://' and
++# transfer.advertiseobjectinfo set to false, i.e. server does not have object-info capability
++test_expect_success 'batch-command remote-object-info git:// fails when transfer.advertiseobjectinfo=false' '
++	(
++		git -C "$daemon_parent" config transfer.advertiseobjectinfo false &&
++		set_transport_variables "$daemon_parent" &&
++
++		test_must_fail git cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
++		remote-object-info $GIT_DAEMON_URL/parent $hello_oid $tree_oid $commit_oid $tag_oid
++		EOF
++		test_grep "object-info capability is not enabled on the server" err &&
++
++		# revert server state back
++		git -C "$daemon_parent" config transfer.advertiseobjectinfo true
++
++	)
++'
++
++stop_git_daemon
++
++# Test --batch-command remote-object-info with 'file://' transport with
++# transfer.advertiseobjectinfo set to true, i.e. server has object-info capability
++# shellcheck disable=SC2016
++test_expect_success 'create repo to be served by file:// transport' '
++	git init server &&
++	git -C server config protocol.version 2 &&
++	git -C server config transfer.advertiseobjectinfo true &&
++	echo_without_newline "$hello_content" > server/hello &&
++	git -C server update-index --add hello &&
++	git clone -n "file://$(pwd)/server" file_client_empty
++'
++
++test_expect_success 'batch-command remote-object-info file://' '
++	(
++		set_transport_variables "server" &&
++		server_path="$(pwd)/server" &&
++		cd file_client_empty &&
++
++		# These results prove remote-object-info can get object info from the remote
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		# These results prove remote-object-info did not download objects from the remote
++		echo "$hello_oid missing" >>expect &&
++		echo "$tree_oid missing" >>expect &&
++		echo "$commit_oid missing" >>expect &&
++		echo "$tag_oid missing" >>expect &&
++
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "file://${server_path}" $hello_oid
++		remote-object-info "file://${server_path}" $tree_oid
++		remote-object-info "file://${server_path}" $commit_oid
++		remote-object-info "file://${server_path}" $tag_oid
++		info $hello_oid
++		info $tree_oid
++		info $commit_oid
++		info $tag_oid
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info file:// multiple sha1 per line' '
++	(
++		set_transport_variables "server" &&
++		server_path="$(pwd)/server" &&
++		cd file_client_empty &&
++
++		# These results prove remote-object-info can get object info from the remote
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		# These results prove remote-object-info did not download objects from the remote
++		echo "$hello_oid missing" >>expect &&
++		echo "$tree_oid missing" >>expect &&
++		echo "$commit_oid missing" >>expect &&
++		echo "$tag_oid missing" >>expect &&
++
++
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "file://${server_path}" $hello_oid $tree_oid $commit_oid $tag_oid
++		info $hello_oid
++		info $tree_oid
++		info $commit_oid
++		info $tag_oid
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command --buffer remote-object-info file://' '
++	(
++		set_transport_variables "server" &&
++		server_path="$(pwd)/server" &&
++		cd file_client_empty &&
++
++		# These results prove remote-object-info can get object info from the remote
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		# These results prove remote-object-info did not download objects from the remote
++		echo "$hello_oid missing" >>expect &&
++		echo "$tree_oid missing" >>expect &&
++		echo "$commit_oid missing" >>expect &&
++		echo "$tag_oid missing" >>expect &&
++
++		git cat-file --batch-command="%(objectname) %(objectsize)" --buffer >actual <<-EOF &&
++		remote-object-info "file://${server_path}" $hello_oid $tree_oid
++		remote-object-info "file://${server_path}" $commit_oid $tag_oid
++		info $hello_oid
++		info $tree_oid
++		info $commit_oid
++		info $tag_oid
++		flush
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info file:// default filter' '
++	(
++		set_transport_variables "server" &&
++		server_path="$(pwd)/server" &&
++		cd file_client_empty &&
++
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		git cat-file --batch-command >actual <<-EOF &&
++		remote-object-info "file://${server_path}" $hello_oid $tree_oid
++		remote-object-info "file://${server_path}" $commit_oid $tag_oid
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command -Z remote-object-info file:// default filter' '
++	(
++		set_transport_variables "server" &&
++		server_path="$(pwd)/server" &&
++		cd file_client_empty &&
++
++		printf "%s\0" "$hello_oid $hello_size" >expect &&
++		printf "%s\0" "$tree_oid $tree_size" >>expect &&
++		printf "%s\0" "$commit_oid $commit_size" >>expect &&
++		printf "%s\0" "$tag_oid $tag_size" >>expect &&
++
++		printf "%s\0" "$hello_oid missing" >>expect &&
++		printf "%s\0" "$tree_oid missing" >>expect &&
++		printf "%s\0" "$commit_oid missing" >>expect &&
++		printf "%s\0" "$tag_oid missing" >>expect &&
++
++		batch_input="remote-object-info \"file://${server_path}\" $hello_oid $tree_oid
++remote-object-info \"file://${server_path}\" $commit_oid $tag_oid
++info $hello_oid
++info $tree_oid
++info $commit_oid
++info $tag_oid
++" &&
++		echo_without_newline_nul "$batch_input" >commands_null_delimited &&
++
++		git cat-file --batch-command -Z < commands_null_delimited >actual &&
++		test_cmp expect actual
++	)
++'
++
++# Test --batch-command remote-object-info with 'file://' and
++# transfer.advertiseobjectinfo set to false, i.e. server does not have object-info capability
++test_expect_success 'batch-command remote-object-info file:// fails when transfer.advertiseobjectinfo=false' '
++	(
++		set_transport_variables "server" &&
++		server_path="$(pwd)/server" &&
++		git -C "${server_path}" config transfer.advertiseobjectinfo false &&
++
++		test_must_fail git cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
++		remote-object-info "file://${server_path}" $hello_oid $tree_oid $commit_oid $tag_oid
++		EOF
++		test_grep "object-info capability is not enabled on the server" err &&
++
++		# revert server state back
++		git -C "${server_path}" config transfer.advertiseobjectinfo true
++	)
++'
++
++# Test --batch-command remote-object-info with 'http://' transport with
++# transfer.advertiseobjectinfo set to true, i.e. server has object-info capability
++
++. "$TEST_DIRECTORY"/lib-httpd.sh
++start_httpd
++
++test_expect_success 'create repo to be served by http:// transport' '
++	git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config http.receivepack true &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config transfer.advertiseobjectinfo true &&
++	echo_without_newline "$hello_content" > $HTTPD_DOCUMENT_ROOT_PATH/http_parent/hello &&
++	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" update-index --add hello &&
++	git clone "$HTTPD_URL/smart/http_parent" -n "$HTTPD_DOCUMENT_ROOT_PATH/http_client_empty"
++'
++
++test_expect_success 'batch-command remote-object-info http://' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_client_empty" &&
++
++		# These results prove remote-object-info can get object info from the remote
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		# These results prove remote-object-info did not download objects from the remote
++		echo "$hello_oid missing" >>expect &&
++		echo "$tree_oid missing" >>expect &&
++		echo "$commit_oid missing" >>expect &&
++		echo "$tag_oid missing" >>expect &&
++
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid
++		remote-object-info "$HTTPD_URL/smart/http_parent" $tree_oid
++		remote-object-info "$HTTPD_URL/smart/http_parent" $commit_oid
++		remote-object-info "$HTTPD_URL/smart/http_parent" $tag_oid
++		info $hello_oid
++		info $tree_oid
++		info $commit_oid
++		info $tag_oid
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info http:// one line' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_client_empty" &&
++
++		# These results prove remote-object-info can get object info from the remote
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		# These results prove remote-object-info did not download objects from the remote
++		echo "$hello_oid missing" >>expect &&
++		echo "$tree_oid missing" >>expect &&
++		echo "$commit_oid missing" >>expect &&
++		echo "$tag_oid missing" >>expect &&
++
++		git cat-file --batch-command="%(objectname) %(objectsize)" >actual <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid $tree_oid $commit_oid $tag_oid
++		info $hello_oid
++		info $tree_oid
++		info $commit_oid
++		info $tag_oid
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command --buffer remote-object-info http://' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_client_empty" &&
++
++		# These results prove remote-object-info can get object info from the remote
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		# These results prove remote-object-info did not download objects from the remote
++		echo "$hello_oid missing" >>expect &&
++		echo "$tree_oid missing" >>expect &&
++		echo "$commit_oid missing" >>expect &&
++		echo "$tag_oid missing" >>expect &&
++
++		git cat-file --batch-command="%(objectname) %(objectsize)" --buffer >actual <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid $tree_oid
++		remote-object-info "$HTTPD_URL/smart/http_parent" $commit_oid $tag_oid
++		info $hello_oid
++		info $tree_oid
++		info $commit_oid
++		info $tag_oid
++		flush
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command remote-object-info http:// default filter' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_client_empty" &&
++
++		echo "$hello_oid $hello_size" >expect &&
++		echo "$tree_oid $tree_size" >>expect &&
++		echo "$commit_oid $commit_size" >>expect &&
++		echo "$tag_oid $tag_size" >>expect &&
++
++		git cat-file --batch-command >actual <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid $tree_oid
++		remote-object-info "$HTTPD_URL/smart/http_parent" $commit_oid $tag_oid
++		EOF
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'batch-command -Z remote-object-info http:// default filter' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_client_empty" &&
++
++		printf "%s\0" "$hello_oid $hello_size" >expect &&
++		printf "%s\0" "$tree_oid $tree_size" >>expect &&
++		printf "%s\0" "$commit_oid $commit_size" >>expect &&
++		printf "%s\0" "$tag_oid $tag_size" >>expect &&
++
++		batch_input="remote-object-info $HTTPD_URL/smart/http_parent $hello_oid $tree_oid
++remote-object-info $HTTPD_URL/smart/http_parent $commit_oid $tag_oid
++" &&
++		echo_without_newline_nul "$batch_input" >commands_null_delimited &&
++
++		git cat-file --batch-command -Z < commands_null_delimited >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'remote-object-info fails on unspported filter option (objectsize:disk)' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		test_must_fail git cat-file --batch-command="%(objectsize:disk)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid
++		EOF
++		test_grep "%(objectsize:disk) is currently not supported with remote-object-info" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on unspported filter option (deltabase)' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		test_must_fail git cat-file --batch-command="%(deltabase)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid
++		EOF
++		test_grep "%(deltabase) is currently not supported with remote-object-info" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on server with legacy protocol' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		test_must_fail git -c protocol.version=0 cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid
++		EOF
++		test_grep "remote-object-info requires protocol v2" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on server with legacy protocol with default filter' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		test_must_fail git -c protocol.version=0 cat-file --batch-command 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid
++		EOF
++		test_grep "remote-object-info requires protocol v2" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on malformed OID' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		malformed_object_id="this_id_is_not_valid" &&
++
++		test_must_fail git cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $malformed_object_id
++		EOF
++		test_grep "Not a valid object name '$malformed_object_id'" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on malformed OID with default filter' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		malformed_object_id="this_id_is_not_valid" &&
++
++		test_must_fail git cat-file --batch-command 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $malformed_object_id
++		EOF
++		test_grep "Not a valid object name '$malformed_object_id'" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on missing OID' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		git clone "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" missing_oid_repo &&
++		test_commit -C missing_oid_repo message1 c.txt &&
++		cd missing_oid_repo &&
++
++		object_id=$(git rev-parse message1:c.txt) &&
++		test_must_fail git cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $object_id
++		EOF
++		test_grep "object-info: not our ref $object_id" err
++	)
++'
++
++test_expect_success 'remote-object-info fails on not providing OID' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++
++		test_must_fail git cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent"
++		EOF
++		test_grep "remote-object-info requires objects" err
++	)
++'
++
++
++# Test --batch-command remote-object-info with 'http://' transport and
++# transfer.advertiseobjectinfo set to false, i.e. server does not have object-info capability
++test_expect_success 'batch-command remote-object-info http:// fails when transfer.advertiseobjectinfo=false ' '
++	(
++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
++		git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config transfer.advertiseobjectinfo false &&
++
++		test_must_fail git cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
++		remote-object-info "$HTTPD_URL/smart/http_parent" $hello_oid $tree_oid $commit_oid $tag_oid
++		EOF
++		test_grep "object-info capability is not enabled on the server" err &&
++
++		# revert server state back
++		git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" config transfer.advertiseobjectinfo true
++	)
++'
++
++# DO NOT add non-httpd-specific tests here, because the last part of this
++# test script is only executed when httpd is available and enabled.
++
++test_done
 -- 
 2.47.0
 
