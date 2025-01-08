@@ -1,170 +1,134 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24258202C40
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 19:17:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E395786333
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 19:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736363854; cv=none; b=fRQsLHuX5AJgNAooMHXA7zfTDTBe8hTuEBZsPNr/W7Mg8m8lGX1QUKesNRT0Ahr+kOBSx80/53JCMd0MFVMiCl2bxP6e3l7SgW0/vgGCd34P6+YU1JFzRG/Gxr+98u/Y5GvwhaZ4aHfDlDtGwkEGcEnpe9TNi9HBM5Da7ec4yAU=
+	t=1736364111; cv=none; b=PRgwlAUPbYNRlTxAOE4f4UvISzVYVoQrJFKF7iHC5GpBsn1NOv8Wn5Z5E3C7PmzeHH+eytTZ+E8Mb6tTROXAaZscfcIj3zQ1o3FJz67mhDWUkJgFSI1gC9Gh2cAp1XVclyp1uh9Awd2g7DgIMEKxr4NY1FahutewbVVgPN5yIu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736363854; c=relaxed/simple;
-	bh=QWurTCpUpsKjfx4/Pmz2fnaIGLsm4xRXyyUlMwQUIjI=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=aNfeZaXQB8fpt5apV2pILgH3XtbIigDkFsbR50xHffqM/bv7jDV44wmKMjb/RTDGJ7SmHHYHEdqbGyGVJeM2obsJVxyoghFbf2LsijZxwaOH5T+KEs0E7Lzgv0t07ZUbi9+SgatxmAKV/rc8MtRkmshwkxKBVeqLZR6raHl/09k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=plEGAmsF; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1736364111; c=relaxed/simple;
+	bh=9C1eZZGEcHJGxypReZDPkp3kojqv+3Vl6+RnqPyS8bY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uT14S7QH1NEr98qcTvp5pbiy6wca/OF1Qhb1ESZ7D1raGw27a4fvH+vCxdOq6teeoiWBRGpSSvdxj2cm01uSdLyQtNWBGEnHLVOuyc3GfqSEcu+JB8ViWvL2zXV/kjYtuEcn1IGEarTfEoPBQNC/p+NT2YGjq3u89JuBsA+MpW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=cM8rynNg; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="plEGAmsF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1736363844; x=1736968644;
-	i=johannes.schindelin@gmx.de;
-	bh=V1aX3OHQ2LmRK8QvJqFXMAWxm3vegzbTbuYaxE9KrLs=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=plEGAmsF+HkE0Aaqu55ZRnxsTAdO2fWJwLvbfLYpTxLzum2FQTu6QJCC0BBdSlYz
-	 3ppINBRUfEtDHP/Ws+apoOqj32z1Tm/Xs2rHF/d4tyUQtaHuaVXryNMQhDj1N3qsU
-	 7znKfJjPcp3g7fh6wVYSXPzxDdI5Zb3LDxG2D7NXKSv8NixYzqC0kJ3BJv8ppnpOo
-	 O1xHtQkgtMgtYXgZPmRPRcaevwa3CDD3seZEMBcTZBCrvVd9u71QE3VKYjwphqUTk
-	 vO+4Z10c/fxK18frASsnCALCOUc9sENyKXp29OJOLwo/X4JaLCZkObzdP5uqijHTZ
-	 /ovDnCWOlj8QgSY0Iw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.212.7]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUXpK-1t5Aii0dRw-00IfLW; Wed, 08
- Jan 2025 20:17:24 +0100
-Date: Wed, 8 Jan 2025 20:17:23 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="cM8rynNg"
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e5447fae695so117626276.2
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 11:21:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1736364109; x=1736968909; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bNgFgOzAhk9YNefuE0JrDgZMJ2qBgx1DY8lD7NogV+k=;
+        b=cM8rynNgAwuKLB0FStLf3W/RwuL0BfdXXZqi+wTuzvINEpqn3Xz8uZWUYm448GYWmI
+         gcSM9vQ0NaYyUwwJoH8m4XFG/hOPU7mrYb1izQzj1+whF7BXT8x7ZfUdiNDfeqeCVzCO
+         dif+iphF00LsaSk2s2DEk1ICCgCjMx+mKtwCT3EVQIKfg8MI0faL72OLzk5SYnq3yX+s
+         koabD8ehHrVCV/Od51PAyrxUfuWds8mU1uTjgFHCSpQvtVMA11tFq2byBMmz3EVUgLfJ
+         g7ayTj+gggPZqytl37+mE5Gv1WrDKCokspYff2yP0lnmdtC7aAA/3U2EuFqX5mtePDEB
+         dNrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736364109; x=1736968909;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bNgFgOzAhk9YNefuE0JrDgZMJ2qBgx1DY8lD7NogV+k=;
+        b=T+DXqkryrLNFQJ4rKEKPJ5mS1R2yfWzD+HXUvHdiDBE1DvbAi4C2Mz60YYTkj+esW4
+         tFYkjuKUkIWINsMFvKpepe2kenEf33+8TbdmZMSB7cdCR663ptwQtvWcRsX8zL7L6km3
+         CwebbPhFbEmNRVPFk3+3adY0GyuXP0e2nJaC0QZICf8tD3a38QKcl0GV7VzOeItZRtRE
+         l3339uJnBgMuBFkTMXmUsx0g99PmNNm3pHIiWgsNOyDP9j0JN+lpnHxjdw2+KNUtLuE9
+         NM65FmUCBKo6oT6uj7nlu+hLiMZ+AD65y7oUy0FTCKZFNH+CvvmIqHcKzcCSlK5uzaJt
+         /CZQ==
+X-Gm-Message-State: AOJu0YxEgDv81R7fOrsXNxGlDUXKLiTkCBib3FzKbsV4JQesA3dSIQRt
+	uHMnamyXK9XLk0PdBQaLTonW37MB4e5p4/qt8aG+0CwVR/VCkPXU67L0DZmr2jS3VwYE6TgQOhG
+	Jlso=
+X-Gm-Gg: ASbGncviaw8VQmqZ/YBb7M/bUHSRzJXuhDK1YguFrY3+IqMxon5m7SLnKx3LiGFrhFD
+	Nl3OD4dlcF43vPmZfM9cIy+JF9D44amM9wom54eTQcD6T7eE5A1ExOubC1/Gstwbzw/cCMTc5PT
+	1qwxL5fPzZectE4LgVbJhJZjZGoht9X/jXe0teb/1aQLl0FdvrolXg5O+ssjGzXKTgEkDrLbof1
+	99QKaN9EswO/vk12vIXBTMUNpQ6bgU9aSsKuhm6PKmzULWNhseTxw8jBPxF0fJSw2uWG1mmtoZG
+	ZeAPGj9M/SqV98NS4kFU1MlEyTD3
+X-Google-Smtp-Source: AGHT+IFzr39JyvTXB9I2aMdG5gmEBYKW/HxRDvwb9k8l4KLx6x+EV7c2JmMC3JGDZFvXl4R4fn618Q==
+X-Received: by 2002:a05:690c:9a86:b0:6ef:8177:c322 with SMTP id 00721157ae682-6f53121b2f7mr35003887b3.13.1736364108859;
+        Wed, 08 Jan 2025 11:21:48 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f3e7499c23sm93613817b3.70.2025.01.08.11.21.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jan 2025 11:21:48 -0800 (PST)
+Date: Wed, 8 Jan 2025 14:21:47 -0500
+From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
-cc: git@vger.kernel.org, shejialuo <shejialuo@gmail.com>, 
-    Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 13/16] builtin/blame: fix type of `length` variable
- when emitting object ID
-In-Reply-To: <20241206-pks-sign-compare-v4-13-0344c6dfb219@pks.im>
-Message-ID: <4d812802-afbc-4635-7a19-73896fcda625@gmx.de>
-References: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im> <20241206-pks-sign-compare-v4-13-0344c6dfb219@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 02/10] builtin/fast-import: fix segfault with unsafe SHA1
+Message-ID: <Z37QS/MnGUZ7zcrR@nand.local>
+References: <20241230-pks-meson-sha1-unsafe-v1-0-efb276e171f5@pks.im>
+ <20241230-pks-meson-sha1-unsafe-v1-2-efb276e171f5@pks.im>
+ <Z3LNVzw9UlS7SWqe@nand.local>
+ <Z3fhK1ACzJfVehM2@pks.im>
+ <Z3wsZjAqbfI/EdVe@nand.local>
+ <Z30YvHKjA_b6_xwt@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:7mEOudqZjj6hUQbNiADHGEC8QZUGWB+WkOmGbiE79bhIz5YKm7Z
- XcFD2LU1YnnA5/+jFQdApXf5gwpa7Hn1h7kq5LbjktSpudDUKzwpfcZhaFTbu55uHsIqg13
- 4aXloqUfwTBpv9yt7D0BRLyJCMLAbUb0SDNCwoOLCszGVnfvVlcrV1wEbWL/WbMst+XNeqZ
- EJ9o2YzAJPPGrCeW25lBg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:CY/axSDkjhc=;pxCuLD3zthueGRZURRbpD0MXx5m
- E+4vvDs+lmNr8ebqmk99cdZI5gRXWe6i98RhxY4+eKmucUaJCLFo1pA7bSSuSUmeWoqNbTPYA
- /ftm1zhrkJtujQSYl8FsNdf9xmx3hZBHkONTWAqcQx1UeK01k3DuZqTL/oB936VRmJOH05YYx
- n9a3vVaIxX8gFXngCHpQIlfmU9tzW/KhTdViDZg4iHAYyldOln5se0aJVnuyyIu52zNI4HiNm
- A8vjooaeCxY1ZmlIHVDdUzoyNoV3/bxDG1ysgy1uFarlkoTwYDn2agofdFtUgFSVsvPKFJMF9
- GA9fwmm+DkfdzbtrCJ6jrt3Nb3VdSJpNd4g1Lxn+7W1GD/lxiaWDPvPC9ujQ1v9Y8bcbbaQgw
- XwMbxaxdEo7V24qGDzqWs8AUoEKq8jV5ca1SPecZtm1tM97OhmDuQud4PrkHcl100AxOdFDAi
- 0ChJS5lrvKF4zr1FjrRSVhioS1qfVZkL0+CpAPaSoSuyN7pO/vKYuvdJZ+7zXi4no570H8pse
- ANglW/aFG8YNgb/crV8WFp2W3DA0V4AwFMEo0/W8xyMc19htMbPoz402jtASTToBqlg7hydzN
- zYflz6N+en6thHiXfXFsCcAK/FShrxnJbzeeGdeS64a14am5j+LjfxZUIzrEO4H966hz60MUh
- 9RfG62iPkjrKBb2hezii7b5fZz8aSxGyu5PWQkBmuXj+QAKSzmMZKMW/PL06UxvMPdYH1N4Hk
- Ie0yxkvJDmah7aCpsnfHE2bCUkwIZRPaE6wI6wGAIMeJ8rWsJhgCm3t9GHcr/eyHmnmvf/55i
- EZjSytO+NJhpCVNa0LuPmtTSO6b8dil0LgUekp7NrFqLZ2OXQbJv27vcbrbrCjRgi1GI7Haqb
- ZkW4INMT+kcCikNdZd0/7g6M5Cno9aaS76zR6YujuxTKG2cYfkE3yAhmTXQDBCoUcuM2Ld/V/
- 42o0VfPgB8anFVBzU2tsDG0SHH24f+HMkQOtn5f11FLKKXrBkcQs9/URsCflQoN3IgRCfbarf
- //0atLtkBwUI7QapOrsb5js8ddQ4I4ulKY4piJz0EBKpbWzDd1RwgxcNmHEQolpAnXCCAWBdt
- gUOA6pxxI=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z30YvHKjA_b6_xwt@pks.im>
 
-Hi Patrick,
+On Tue, Jan 07, 2025 at 01:06:20PM +0100, Patrick Steinhardt wrote:
+> > > > I think we should perhaps combine forces here. My ideal end-state is to
+> > > > have the unsafe_hash_algo() stuff land from my earlier series, then have
+> > > > these two fixes (adjusted to the new world order as above), and finally
+> > > > the Meson fixes after that.
+> > > >
+> > > > Does that seem like a plan to you? If so, I can put everything together
+> > > > and send it out (if you're OK with me forging your s-o-b).
+> > >
+> > > I think the ideal state would be if the hashing function used was stored
+> > > as part of `struct git_hash_ctx`. So the flow basically becomes for
+> > > example:
+> > >
+> > >     ```
+> > >     struct git_hash_ctx ctx;
+> > >     struct object_id oid;
+> > >
+> > >     git_hash_sha1_init(&ctx);
+> > >     git_hash_update(&ctx, data);
+> > >     git_hash_final_oid(&oid, &ctx);
+> > >     ```
+> > >
+> > > Note how the intermediate calls don't need to know which hash function
+> > > you used to initialize the `struct git_hash_ctx` -- the structure itself
+> > > should remember what it has been initilized with and do the right thing.
+> >
+> > I'm not sure I'm following you here. In the stream_blob() function
+> > within fast-import, the problem isn't that we're switching hash
+> > functions mid-stream, but that we're initializing the hashfile_context
+> > structure with the wrong hash function to begin with.
+>
+> True, but it would have been a non-issue if the hash context itself knew
+> which hash function to use for updates. Sure, we would've used the slow
+> variant of SHA1 instead of the fast-but-unsafe one. But that feels like
+> the lesser evil compared to crashing.
 
-On Fri, 6 Dec 2024, Patrick Steinhardt wrote:
+For posterity, Patrick and I used some of our monthly meeting this morning to
+spend some time together pairing on this idea.
 
-> The `length` variable is used to store how many bytes we wish to emit
-> from an object ID. This value will either be the full hash algorithm's
-> length, or the abbreviated hash that can be set via `--abbrev` or the
-> "core.abbrev" option. The former is of type `size_t`, whereas the latter
-> is of type `int`, which causes a warning with "-Wsign-compare".
->
-> The reason why `abbrev` is using a signed type is mostly that it is
-> initialized with `-1` to indicate that we have to compute the minimum
-> abbreviation length. This length is computed via `find_alignment()`,
-> which always gets called before `emit_other()`, and thus we can assume
-> that the value would never be negative in `emit_other()`.
->
-> In fact, we can even assume that the value will always be at least
-> `MINIMUM_ABBREV`, which is enforced by both `git_default_core_config()`
-> and `parse_opt_abbrev_cb()`. We implicitly rely on this by subtracting
-> up to 3 without checking for whether the value becomes negative. We then
-> pass the value to printf(3p) to print the prefix of our object's ID, so
-> if that assumption was violated we may end up with undefined behaviour.
->
-> Squelch the warning by asserting this invariant and casting the value of
-> `abbrev` to `size_t`. This allows us to store the whole length as an
-> unsigned integer, which we can then pass to `fwrite()`.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/blame.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
->
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index b33b44c89a431d45e05d9863f69c049ba5eec08c..867032e4c16878ffd56df8a7=
-3162b89ca4bd2694 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -6,7 +6,6 @@
->   */
->
->  #define USE_THE_REPOSITORY_VARIABLE
-> -#define DISABLE_SIGN_COMPARE_WARNINGS
->
->  #include "builtin.h"
->  #include "config.h"
-> @@ -468,9 +467,14 @@ static void emit_other(struct blame_scoreboard *sb,=
- struct blame_entry *ent, int
->  		reset =3D GIT_COLOR_RESET;
->  	}
->
-> +	if (abbrev < MINIMUM_ABBREV)
-> +		BUG("abbreviation is smaller than minimum length: %d < %d",
-> +		    abbrev, MINIMUM_ABBREV);
-> +
->  	for (cnt =3D 0; cnt < ent->num_lines; cnt++) {
->  		char ch;
-> -		int length =3D (opt & OUTPUT_LONG_OBJECT_NAME) ? the_hash_algo->hexsz=
- : abbrev;
-> +		size_t length =3D (opt & OUTPUT_LONG_OBJECT_NAME) ?
-> +			the_hash_algo->hexsz : (size_t) abbrev;
->
->  		if (opt & OUTPUT_COLOR_LINE) {
->  			if (cnt > 0) {
-> @@ -501,7 +505,7 @@ static void emit_other(struct blame_scoreboard *sb, =
-struct blame_entry *ent, int
->  			length--;
->  			putchar('?');
->  		}
-> -		printf("%.*s", length, hex);
-> +		fwrite(hex, 1, length, stdout);
+It ended up being a dead-end, since this approach only protects you
+against changing the hash function mid-stream, and not using the
+incorrect context type from the union.
 
-I just noticed this, and would like to point out a difference of behavior.
-Try this at home:
+That was along the lines of what I was originally thinking, and so I
+resurrected my series to introduce 'unsafe_hash_algo()' here:
 
-	git blame --abbrev=3D99999 git.c
+    https://lore.kernel.org/git/cover.1736363652.git.me@ttaylorr.com/
 
-The difference relative to the previous behavior that I am observing is
-that the `fwrite()` call does not stop at the NUL character and hence
-happily continues out-of-bounds. The `printf()` call would have stopped at
-the NUL character.
+I got the impression that Patrick and I are on the same page there as
+that being a good path forward, but I'll let him chime in in case I
+misunderstood anything.
 
-Ciao,
-Johannes
-
->  		if (opt & OUTPUT_ANNOTATE_COMPAT) {
->  			const char *name;
->  			if (opt & OUTPUT_SHOW_EMAIL)
->
-> --
-> 2.47.0.366.g5daf58cba8.dirty
->
->
->
+Thanks,
+Taylor
