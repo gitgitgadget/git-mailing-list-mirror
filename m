@@ -1,86 +1,86 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DD21FFC4F
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 17:14:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4583B1957FC
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 17:41:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736356471; cv=none; b=cMWUN2jdT7jeL3VezCCh08nzQaIuwcrUP1Kg4A5ie7VPBiMg28wWFW/TrcCCNvgB/v/dbrM3dh1KOmh315yRnS4B70oy7gka4OYUJfkxk3KjbG+LiwgSIPc5hFNgGkquiX3VYRoSWSu7YfiYkDjNgHsRQmbvdgYvt+h2Juw3jZ8=
+	t=1736358063; cv=none; b=ouUVvY7zjx685YykG9NxNfYKOQiOOPxrXydiTsBKxpdvnIvCgJoo5TafZd2LV0Y54IFpOP352pB/qrDcK2ipIMQGruSAZkTfqEMm08L5puaKLvddNhyZUoY8hXkYjWxVyr5zjTM9E/sRdFwXrqODny0zW2gFa1M+7rZgTe9AemA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736356471; c=relaxed/simple;
-	bh=e4UVlG8rF437yFMagxjGQadmxWnn66tui47E6/oXHP4=;
+	s=arc-20240116; t=1736358063; c=relaxed/simple;
+	bh=nEfkhvLruqXCgKP7ub8YcaUzUxlWkC90fllIdsYsWLo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YNBJfXAwr8CF/dHBpyvB6TMxxBYWXb8lnskFYfFfRI4wSs8SkRLo3yh9Us1DbjSftvsbtvim9cHuZCGLLav0XF6K4mpEJMDrqQuayYDrVRVaKnrxnrgUCHEK/z3LQ7WumOk05Pv2X0GtulxtcFA6ccaIB9HcO95WJtvNH8EufBE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=3cexjn2j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wylXNO7C; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=D3xnsXa7QaDyMB8ZdIS42qCDtNrCacWtyE1moEspbWQ72Th+JuS9MVndVpFKRIdkYpZuIH/7lNtOFPXtRFkPM8fKwKO7fATaT+FWI1RX+GAsgSzFc2c1AA8/3wlSn3+qjpR/93iCZMXIQYtKalpmvrxt33h+TNH+FtunRP9f7h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ME8LfL58; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d1pDFHPg; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="3cexjn2j";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wylXNO7C"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 84281114015B;
-	Wed,  8 Jan 2025 12:14:28 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ME8LfL58";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d1pDFHPg"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 511C311401AC;
+	Wed,  8 Jan 2025 12:41:00 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 08 Jan 2025 12:14:28 -0500
+  by phl-compute-01.internal (MEProxy); Wed, 08 Jan 2025 12:41:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736356468; x=1736442868; bh=seH+U5rSfG
-	TNZ+c8Yoo12eMdiSkgwdBCn5plu6CXoDo=; b=3cexjn2jUYl+3yCrligF2cxRrF
-	Xr2kE1W3KD5SkIMa0KsAEXcN5lMV+yeWs8SQ6pMthf3A9DNNvRCSVHmgOzioEqeI
-	1DQ38zE26g7xHpo/ClnixxUT3jG0bg4/SBtLBAytCg3/LKPfG+sL4wl45f699YWU
-	Ppieo66rIbrUcPy5BgM6T9EKlK5mE6VZJF5eeeRwkVihMl/OF/RlO/gV6UEc5A3c
-	+Sd6HnX0vmurqBTNuCMMSrwKa7tuzYcYYdxmi1h5uAQHRIrzkN4qsPvlrLWSWRuP
-	v83byVLBJpXPD1EkEfdDQIoMrBnIAwZlVtVUDoprBrjTP62Wl8OlvRvirARg==
+	:subject:to:to; s=fm1; t=1736358060; x=1736444460; bh=CQjKwxXAbg
+	y+h2Gv3mdsLvZzwmsZNdY/N19pHCnQNgw=; b=ME8LfL58f4VV4J+VrCpRIdxqPY
+	Kjx7HBNXlKyrsGmM4oen7j9gx4D/cOfAeR9qescgmDIsJmmityf7n7+utTdlM83O
+	NX6+ZCr15F+1Zen8SADQfLAXBLF+xVSRK/iAkCn1rBLl/dT5qs84p+GwCI7AJrok
+	leoAVqFmrAQ7Lp+wWy85uYFESl80+ZM8oRsII2eyJTK9yBHJpe2SIHpegBR9I5zm
+	L/HwMk6aX8/yqZqJ5UAuwpT/SC4xMvgbL75lSZm8TkDCX7cPL9SmVbYf+DJPIPUb
+	s9iGHsrFbUn+Ad5iTH27BvTvo/CJJeHvqFemCrhACrhoW5JazPvUh66OSYhA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736356468; x=1736442868; bh=seH+U5rSfGTNZ+c8Yoo12eMdiSkgwdBCn5p
-	lu6CXoDo=; b=wylXNO7CMRztinHaJwzi/Llwhpjqc44QyzZsqHcWNCyj1Ut0hf7
-	xJVP1TwvMSeDHH8Cu7KXkcJCM0IHTgfUI7mi+ojWC48js0YYDhT/qvlmCrymxzVf
-	gnwvQXyl09I9Jj5f3ejR/3HFUemyFNdyIO8/HosLCmDOa9mJOkC9qO7jlkKYkcNT
-	DoPUYhBXSu92rKMpoG2NpHG77gIE8S+dXYMWYJR5Ezvr0ojafeGouoIAYfyZQbtc
-	kdbrzcXmuvpM9NgqKiH8KFLJGCfFoh0sF6JSJx51mnhCey4H4NSRNKyT4ahxb4So
-	UQnOw4z7p4stzPFtM4/pbnDxHQZ2Xjbterg==
-X-ME-Sender: <xms:dLJ-Z09z1bsjkAAx8EcM3Gkh8zIGc_MyiYZr7JNFFJ7mnySMD42cZg>
-    <xme:dLJ-Z8suRdZeSNBhFnLi0bac35DeSlrVOmiQ8oH2AR9mhsShu2SKR-d5imd_lBgIg
-    bbepfBo3GOtCqaDWw>
-X-ME-Received: <xmr:dLJ-Z6CmA4heGQgtXs7VKnsObOLgPUkfFmmii5id-_I4yeqlS7QJ_l6b8VR4g6hhBaabSVKcWWbMblDpv6bKFy7doewQq19_KaUV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggedgleejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
-    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehjoh
-    hhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:dLJ-Z0cepdEB6ilvU8YTPQTdHpi0inOsz11SWp3puzn7R3GXmANabQ>
-    <xmx:dLJ-Z5NyOVQvkmC0oRV3SHrrJBDF0Agg2iXkY8Z1XMnSQv7Yb2hcYA>
-    <xmx:dLJ-Z-l20BPsgCgGg-vynVtty5mUJVG2XrSy2oT0kcNCcucQumScqA>
-    <xmx:dLJ-Z7uIAdrcRkjToUK3b_5JPMMrhUSpZv5RmYSnTP8W7xpQNDfh5w>
-    <xmx:dLJ-Z83sU2qMgXr8vD0qnM9tC_reoZxk8av-TIDp5rS08Ub8gOi_CnaX>
+	1736358060; x=1736444460; bh=CQjKwxXAbgy+h2Gv3mdsLvZzwmsZNdY/N19
+	pHCnQNgw=; b=d1pDFHPg6RCpQ22D7++G6LmwBRq411h9v8JTCOVpsaZZexaysIY
+	Pad+Y0ltvFhyK+eWB65c1oOfoN98cygSitEtoazzXdZuYNeZI37naVXrFSPzPSud
+	3dlaXp7bjhCGnusriUqo/UF65/ICaF/bx3zebhyG0HknXm/iBVBJVsCR9zkOiwIF
+	XRicuEoS9rcFSm9HCqyNhWvCfRPy9LAzZOUm/3SCibqua1A6zTETXG82CguH2l4R
+	EZvkeqPNxzfGvUpHOCZw7VBmYNvg8iDTLk1+y6uILBq7czMAL2sLOOGYhdP9ZULV
+	vwjaZK9QTGhcBuEq5PJ38hjghu6XUN2udyg==
+X-ME-Sender: <xms:q7h-Z4HEo6HBdt1XjJWQJ7shXV-Bw3kH6gA_Yqqj0_qDdhpr4OKicA>
+    <xme:q7h-ZxWtKELTxtrpqBv3h2xbKLSeGxE0SRGlgJqs_Ca5SUEtFKU5yYO1akMOGhK5_
+    EWez4Re9p4gwXo2mA>
+X-ME-Received: <xmr:q7h-ZyLojnNgXB1MQBq1L9Z68EnMECwGBOOLuw86N0y8ZkupTtcDjByaCXIvwRfaswJD8yyOwKcaKXv3ivX1_kdd6biOg2F-aOeI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggedguddtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeegiedtuedvgeffgefghffhvdfhhfeifefh
+    vddvgfelteehgfejtedugfefleehtdenucffohhmrghinheplhhishhtrdhnohifnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
+    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhgrnhgurghllhdrsggvtghkvghrsehnvg
+    igsghrihgughgvrdgtrgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:q7h-Z6HOoliA4gmS5e0-g185EiXv2tNnqtiXn0rf4BXUBoELBEv21w>
+    <xmx:q7h-Z-VkplmqZ3i2pNUapA5qXkRMCEfKOdJGU1Ff2Vz088wvcJsWiw>
+    <xmx:q7h-Z9NPgcR_Rm7E2gSVwNbO3QPVo0zZHIdvBGjRzZtEETvgb-omAQ>
+    <xmx:q7h-Z10g6NvNOtf2S-87-s3B6OEVzKJuM587jmOLHpfRlbsfcm-Nyw>
+    <xmx:rLh-Z8x9aEq4Di6nFRh55FHe78lb4kN-GZ2jC242OKNUFlNgOgbdpo02>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jan 2025 12:14:27 -0500 (EST)
+ 8 Jan 2025 12:40:59 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-  Johannes Schindelin
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] t-reftable-basics: allow for `malloc` to be `#define`d
-In-Reply-To: <pull.1848.git.1736352005578.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Wed, 08 Jan 2025 16:00:05
-	+0000")
-References: <pull.1848.git.1736352005578.gitgitgadget@gmail.com>
-Date: Wed, 08 Jan 2025 09:14:26 -0800
-Message-ID: <xmqqseptmdn1.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "Randall S. Becker" <randall.becker@nexbridge.ca>
+Subject: Re: [PATCH 2/2] reftable/stack: accept insecure random bytes
+In-Reply-To: <Z36l--QUjaYYb6Uf@pks.im> (Patrick Steinhardt's message of "Wed,
+	8 Jan 2025 17:21:15 +0100")
+References: <20250107-b4-pks-reftable-csprng-v1-0-6109a54a8756@pks.im>
+	<20250107-b4-pks-reftable-csprng-v1-2-6109a54a8756@pks.im>
+	<xmqqzfk2qr62.fsf@gitster.g> <xmqqv7uqqqu9.fsf@gitster.g>
+	<Z34gfa-_dSbWD19h@pks.im> <xmqqr05dnwli.fsf@gitster.g>
+	<Z36l--QUjaYYb6Uf@pks.im>
+Date: Wed, 08 Jan 2025 09:40:58 -0800
+Message-ID: <xmqqo70hmcet.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,16 +90,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> -		reftable_set_alloc(malloc, realloc_stub, free);
-> +		reftable_set_alloc(NULL, realloc_stub, NULL);
+> Hm. The problem is when Git dies in the middle of a transaction:
+>
+>   1. We write the temporary table.
+>   2. We compute the not-so-random suffix.
+>   3. We write the temporary "tables.list" file.
+>   4. We move the temporary table into place using the not-so-random
+>      suffix.
+>   5. Git dies before updating "tables.list".
+>
+> Now we have the temporary table moved into place, but "tables.list"
+> hasn't been updated yet. When the next Git process comes along and wants
+> to update the table it would result in an error if it computed the same
+> suffix.
 
-Nice.  By setting it to NULL, we force the use of whichever "malloc"
-is in effect, and thanks to the way reftable_malloc() is written, we
-do not even have to be able to take the address of "malloc" ;-)
+Here, I hear that we _do_ depend on the suffix being relatively
+unique.  Once our random number generator decides to give the same
+number twice to cause collision, the reftable data gets corrupt?
 
-Will fast-track down to 'master'.
+> The reftable library knows to clean up such stale tables when not
+> referenced by the "tables.list" file, but it doesn't do so on every
+> write. So this would likely still cause issues in practice.
+>
+> I already though about this scenario when writing my mail, but didn't
+> really think about it as "correctness". But I guess it is.
 
-Thanks.
+Hmph.  I am not sure how I should feel about this.  Our reliance on
+hash functions (which can be made to collide) not colliding is one
+thing, but is it sensibly safe to rely on a cryptographically
+unpredictable random generator not to yield the same suffix twice
+during the lifetime of an previous invocation for correctness?
