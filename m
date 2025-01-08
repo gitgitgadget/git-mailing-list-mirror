@@ -1,163 +1,170 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63959202C43
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 19:14:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24258202C40
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 19:17:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736363699; cv=none; b=uyJ4isC0RmfAJMNvOBSVb8xn9NW14vrBO/lkSW3XsnFoEwXiocK9Ucby93ijBZVIdzwWDZLpb5S/r2OCAC3JbnKj+krk2X35qx4GixQUCwzcDevtoev8YHXOP5xVU6wWbe903uR05soRDAS3O1EE4TL3+6XBOtQP2tBmou8SC7k=
+	t=1736363854; cv=none; b=fRQsLHuX5AJgNAooMHXA7zfTDTBe8hTuEBZsPNr/W7Mg8m8lGX1QUKesNRT0Ahr+kOBSx80/53JCMd0MFVMiCl2bxP6e3l7SgW0/vgGCd34P6+YU1JFzRG/Gxr+98u/Y5GvwhaZ4aHfDlDtGwkEGcEnpe9TNi9HBM5Da7ec4yAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736363699; c=relaxed/simple;
-	bh=0R8CMZ2t8B2qiNxcowckwjvrCL6YH9uzs7njIirFzNM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y0G6JJBJQ0BT81+EfPLPwUnvb+UAYHHlKCUtqPVSSKS8cTsw+wlRJznpuumSkIpjqJsunzH6QAdWkglemOt6AqA7kapSD1xpN4Hto0hPfkIWeSSDZs+Jzm0LgNzardDGZOMr3LvxipH66sqHMZzq9+OH7BUJZuYUv1gt0KjhRYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=cPFBAM9X; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1736363854; c=relaxed/simple;
+	bh=QWurTCpUpsKjfx4/Pmz2fnaIGLsm4xRXyyUlMwQUIjI=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=aNfeZaXQB8fpt5apV2pILgH3XtbIigDkFsbR50xHffqM/bv7jDV44wmKMjb/RTDGJ7SmHHYHEdqbGyGVJeM2obsJVxyoghFbf2LsijZxwaOH5T+KEs0E7Lzgv0t07ZUbi9+SgatxmAKV/rc8MtRkmshwkxKBVeqLZR6raHl/09k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=plEGAmsF; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="cPFBAM9X"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e4930eca0d4so73663276.3
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 11:14:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1736363696; x=1736968496; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NL2kpIkDtmrtdsHAuH7/yDLd5xKXPl1QWSgXxmyWk4w=;
-        b=cPFBAM9XhlQDne8M9bmlDVQqjU+T47A0DvsFDH06RIKf6iBFn7q7rHZrclsAsxTmeP
-         zNl3Cf5PmiLTYK1ghN0eDvNNfcJz28yPI6MAIEPCpbExJbdkp9ibUmRVUfo9PoKVWK3+
-         o/YgT3nEp3fUonk87aXRhLpt2AY+q5qym1dXhpkwD47BttUNdlgDOeVV1q6OCPeYA/gC
-         8Df2N+ruzBqMGjyAY93vdaRDonPUB3TzJmklMeGAaPdODHtgolSHrjmixoZVSfvKY9y+
-         OgCdS0Drng37bgxFgRi/yU7+vBwJZszHkDORMcg4VPKlT7t8XxCvan+gT8EJ/fTzb1L5
-         S24A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736363696; x=1736968496;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NL2kpIkDtmrtdsHAuH7/yDLd5xKXPl1QWSgXxmyWk4w=;
-        b=eVbmaHNlR93GIhKxJLX8UNq29Mi0L2xUhSDYooEjCrLE/E92w3Bsb6sgF3EOsry4gh
-         3pYF7lZ3tNwBur/KA1humX1p5CMMhw3pZ0fs9GHVBAi7xVy2DTlM8521DGx8ZOtnBUpX
-         bpDS8M6uayICRMY/yLANPdHGoAEWzuWzY2CzshLmdGpvwczBvuKs4IoYITtyj72p8MFw
-         tuuaJ2yMVhMhLyDdAQnDwq+D3z7MjRx3r+OvD1/4wqmZKKTo80i8G3TXNoq3QUqjhg5L
-         HscefnwWe0TREYcvoHyUzW1vEUMaJfETfxRivyDF0iHPaCwDsIl5JnvCggOc9i5JPKtp
-         Kwjg==
-X-Gm-Message-State: AOJu0YzS4w+t3oIVs0CXTF/uEtKlCw2lfSOdBmRdgUyIFkshs1bXJwtx
-	lERtTFidiDgp6XcZJe8zAQ5pDSO2VLbVSOQl5rTNHBgFf4ojBqwNP4llzoIAgV9W/1sBRC3VhPW
-	GLSU=
-X-Gm-Gg: ASbGncvI/A6N0NFpbfYRF+D7EZS0d5PDdvEyGLKo8Ua9a1sudSQgfjrenCuTLtCCqEB
-	LtNBBfi2oY/CSUDYKBL1WbxIwO1OqjVzCgNbxYzj4QE2o0FoHLpPk2bCr2TqK7eS4WIcJ56B/K3
-	RcQmCev/B+eoL2dnntY0NPiXxQZ3eON7ycyRV4URiT5EHHmfvHaDfh4dfD8hLACBplC3QJ7/D5y
-	qM4aOOHontGgto1CIAtQ1KzQ+FS66bkzF7CXpJdtrfWbnUWTOkCcJBxITfIHYPWs/Thq7bkl7wj
-	h1t9mGJiXv+Ms2eJl8aQ1oc6ihas
-X-Google-Smtp-Source: AGHT+IFoKNCv2VzIs032DzXn2deOaFDtYS1MenRmTCGBl8vPiKXXfiS/Fm4Rxea3NjNvnVwa+rTmEQ==
-X-Received: by 2002:a05:690c:b1d:b0:6ef:4b7a:eb07 with SMTP id 00721157ae682-6f5313254c8mr35721487b3.36.1736363696073;
-        Wed, 08 Jan 2025 11:14:56 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f3e73e8939sm95062557b3.19.2025.01.08.11.14.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2025 11:14:55 -0800 (PST)
-Date: Wed, 8 Jan 2025 14:14:54 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 8/8] hash.h: drop unsafe_ function variants
-Message-ID: <f5579883816b8b5ce68d8a8ff27da4f8bb84573b.1736363652.git.me@ttaylorr.com>
-References: <cover.1732130001.git.me@ttaylorr.com>
- <cover.1736363652.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="plEGAmsF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1736363844; x=1736968644;
+	i=johannes.schindelin@gmx.de;
+	bh=V1aX3OHQ2LmRK8QvJqFXMAWxm3vegzbTbuYaxE9KrLs=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=plEGAmsF+HkE0Aaqu55ZRnxsTAdO2fWJwLvbfLYpTxLzum2FQTu6QJCC0BBdSlYz
+	 3ppINBRUfEtDHP/Ws+apoOqj32z1Tm/Xs2rHF/d4tyUQtaHuaVXryNMQhDj1N3qsU
+	 7znKfJjPcp3g7fh6wVYSXPzxDdI5Zb3LDxG2D7NXKSv8NixYzqC0kJ3BJv8ppnpOo
+	 O1xHtQkgtMgtYXgZPmRPRcaevwa3CDD3seZEMBcTZBCrvVd9u71QE3VKYjwphqUTk
+	 vO+4Z10c/fxK18frASsnCALCOUc9sENyKXp29OJOLwo/X4JaLCZkObzdP5uqijHTZ
+	 /ovDnCWOlj8QgSY0Iw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.212.7]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUXpK-1t5Aii0dRw-00IfLW; Wed, 08
+ Jan 2025 20:17:24 +0100
+Date: Wed, 8 Jan 2025 20:17:23 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: git@vger.kernel.org, shejialuo <shejialuo@gmail.com>, 
+    Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 13/16] builtin/blame: fix type of `length` variable
+ when emitting object ID
+In-Reply-To: <20241206-pks-sign-compare-v4-13-0344c6dfb219@pks.im>
+Message-ID: <4d812802-afbc-4635-7a19-73896fcda625@gmx.de>
+References: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im> <20241206-pks-sign-compare-v4-13-0344c6dfb219@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1736363652.git.me@ttaylorr.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:7mEOudqZjj6hUQbNiADHGEC8QZUGWB+WkOmGbiE79bhIz5YKm7Z
+ XcFD2LU1YnnA5/+jFQdApXf5gwpa7Hn1h7kq5LbjktSpudDUKzwpfcZhaFTbu55uHsIqg13
+ 4aXloqUfwTBpv9yt7D0BRLyJCMLAbUb0SDNCwoOLCszGVnfvVlcrV1wEbWL/WbMst+XNeqZ
+ EJ9o2YzAJPPGrCeW25lBg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:CY/axSDkjhc=;pxCuLD3zthueGRZURRbpD0MXx5m
+ E+4vvDs+lmNr8ebqmk99cdZI5gRXWe6i98RhxY4+eKmucUaJCLFo1pA7bSSuSUmeWoqNbTPYA
+ /ftm1zhrkJtujQSYl8FsNdf9xmx3hZBHkONTWAqcQx1UeK01k3DuZqTL/oB936VRmJOH05YYx
+ n9a3vVaIxX8gFXngCHpQIlfmU9tzW/KhTdViDZg4iHAYyldOln5se0aJVnuyyIu52zNI4HiNm
+ A8vjooaeCxY1ZmlIHVDdUzoyNoV3/bxDG1ysgy1uFarlkoTwYDn2agofdFtUgFSVsvPKFJMF9
+ GA9fwmm+DkfdzbtrCJ6jrt3Nb3VdSJpNd4g1Lxn+7W1GD/lxiaWDPvPC9ujQ1v9Y8bcbbaQgw
+ XwMbxaxdEo7V24qGDzqWs8AUoEKq8jV5ca1SPecZtm1tM97OhmDuQud4PrkHcl100AxOdFDAi
+ 0ChJS5lrvKF4zr1FjrRSVhioS1qfVZkL0+CpAPaSoSuyN7pO/vKYuvdJZ+7zXi4no570H8pse
+ ANglW/aFG8YNgb/crV8WFp2W3DA0V4AwFMEo0/W8xyMc19htMbPoz402jtASTToBqlg7hydzN
+ zYflz6N+en6thHiXfXFsCcAK/FShrxnJbzeeGdeS64a14am5j+LjfxZUIzrEO4H966hz60MUh
+ 9RfG62iPkjrKBb2hezii7b5fZz8aSxGyu5PWQkBmuXj+QAKSzmMZKMW/PL06UxvMPdYH1N4Hk
+ Ie0yxkvJDmah7aCpsnfHE2bCUkwIZRPaE6wI6wGAIMeJ8rWsJhgCm3t9GHcr/eyHmnmvf/55i
+ EZjSytO+NJhpCVNa0LuPmtTSO6b8dil0LgUekp7NrFqLZ2OXQbJv27vcbrbrCjRgi1GI7Haqb
+ ZkW4INMT+kcCikNdZd0/7g6M5Cno9aaS76zR6YujuxTKG2cYfkE3yAhmTXQDBCoUcuM2Ld/V/
+ 42o0VfPgB8anFVBzU2tsDG0SHH24f+HMkQOtn5f11FLKKXrBkcQs9/URsCflQoN3IgRCfbarf
+ //0atLtkBwUI7QapOrsb5js8ddQ4I4ulKY4piJz0EBKpbWzDd1RwgxcNmHEQolpAnXCCAWBdt
+ gUOA6pxxI=
+Content-Transfer-Encoding: quoted-printable
 
-Now that all callers have been converted from:
+Hi Patrick,
 
-    the_hash_algo->unsafe_init_fn();
+On Fri, 6 Dec 2024, Patrick Steinhardt wrote:
 
-to
+> The `length` variable is used to store how many bytes we wish to emit
+> from an object ID. This value will either be the full hash algorithm's
+> length, or the abbreviated hash that can be set via `--abbrev` or the
+> "core.abbrev" option. The former is of type `size_t`, whereas the latter
+> is of type `int`, which causes a warning with "-Wsign-compare".
+>
+> The reason why `abbrev` is using a signed type is mostly that it is
+> initialized with `-1` to indicate that we have to compute the minimum
+> abbreviation length. This length is computed via `find_alignment()`,
+> which always gets called before `emit_other()`, and thus we can assume
+> that the value would never be negative in `emit_other()`.
+>
+> In fact, we can even assume that the value will always be at least
+> `MINIMUM_ABBREV`, which is enforced by both `git_default_core_config()`
+> and `parse_opt_abbrev_cb()`. We implicitly rely on this by subtracting
+> up to 3 without checking for whether the value becomes negative. We then
+> pass the value to printf(3p) to print the prefix of our object's ID, so
+> if that assumption was violated we may end up with undefined behaviour.
+>
+> Squelch the warning by asserting this invariant and casting the value of
+> `abbrev` to `size_t`. This allows us to store the whole length as an
+> unsigned integer, which we can then pass to `fwrite()`.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  builtin/blame.c | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/blame.c b/builtin/blame.c
+> index b33b44c89a431d45e05d9863f69c049ba5eec08c..867032e4c16878ffd56df8a7=
+3162b89ca4bd2694 100644
+> --- a/builtin/blame.c
+> +++ b/builtin/blame.c
+> @@ -6,7 +6,6 @@
+>   */
+>
+>  #define USE_THE_REPOSITORY_VARIABLE
+> -#define DISABLE_SIGN_COMPARE_WARNINGS
+>
+>  #include "builtin.h"
+>  #include "config.h"
+> @@ -468,9 +467,14 @@ static void emit_other(struct blame_scoreboard *sb,=
+ struct blame_entry *ent, int
+>  		reset =3D GIT_COLOR_RESET;
+>  	}
+>
+> +	if (abbrev < MINIMUM_ABBREV)
+> +		BUG("abbreviation is smaller than minimum length: %d < %d",
+> +		    abbrev, MINIMUM_ABBREV);
+> +
+>  	for (cnt =3D 0; cnt < ent->num_lines; cnt++) {
+>  		char ch;
+> -		int length =3D (opt & OUTPUT_LONG_OBJECT_NAME) ? the_hash_algo->hexsz=
+ : abbrev;
+> +		size_t length =3D (opt & OUTPUT_LONG_OBJECT_NAME) ?
+> +			the_hash_algo->hexsz : (size_t) abbrev;
+>
+>  		if (opt & OUTPUT_COLOR_LINE) {
+>  			if (cnt > 0) {
+> @@ -501,7 +505,7 @@ static void emit_other(struct blame_scoreboard *sb, =
+struct blame_entry *ent, int
+>  			length--;
+>  			putchar('?');
+>  		}
+> -		printf("%.*s", length, hex);
+> +		fwrite(hex, 1, length, stdout);
 
-    unsafe_hash_algo(the_hash_algo)->unsafe_init_fn();
+I just noticed this, and would like to point out a difference of behavior.
+Try this at home:
 
-and similar, we can remove the scaffolding for the unsafe_ function
-variants and force callers to use the new unsafe_hash_algo() mechanic
-instead.
+	git blame --abbrev=3D99999 git.c
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- hash.h        | 15 ---------------
- object-file.c | 15 ---------------
- 2 files changed, 30 deletions(-)
+The difference relative to the previous behavior that I am observing is
+that the `fwrite()` call does not stop at the NUL character and hence
+happily continues out-of-bounds. The `printf()` call would have stopped at
+the NUL character.
 
-diff --git a/hash.h b/hash.h
-index 23cf6876e50..6dcbf6ab835 100644
---- a/hash.h
-+++ b/hash.h
-@@ -282,21 +282,6 @@ struct git_hash_algo {
- 	/* The hash finalization function for object IDs. */
- 	git_hash_final_oid_fn final_oid_fn;
- 
--	/* The non-cryptographic hash initialization function. */
--	git_hash_init_fn unsafe_init_fn;
--
--	/* The non-cryptographic hash context cloning function. */
--	git_hash_clone_fn unsafe_clone_fn;
--
--	/* The non-cryptographic hash update function. */
--	git_hash_update_fn unsafe_update_fn;
--
--	/* The non-cryptographic hash finalization function. */
--	git_hash_final_fn unsafe_final_fn;
--
--	/* The non-cryptographic hash finalization function. */
--	git_hash_final_oid_fn unsafe_final_oid_fn;
--
- 	/* The OID of the empty tree. */
- 	const struct object_id *empty_tree;
- 
-diff --git a/object-file.c b/object-file.c
-index 43efa4ca361..c4b42dd4be9 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -230,11 +230,6 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		.update_fn = git_hash_unknown_update,
- 		.final_fn = git_hash_unknown_final,
- 		.final_oid_fn = git_hash_unknown_final_oid,
--		.unsafe_init_fn = git_hash_unknown_init,
--		.unsafe_clone_fn = git_hash_unknown_clone,
--		.unsafe_update_fn = git_hash_unknown_update,
--		.unsafe_final_fn = git_hash_unknown_final,
--		.unsafe_final_oid_fn = git_hash_unknown_final_oid,
- 		.empty_tree = NULL,
- 		.empty_blob = NULL,
- 		.null_oid = NULL,
-@@ -250,11 +245,6 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		.update_fn = git_hash_sha1_update,
- 		.final_fn = git_hash_sha1_final,
- 		.final_oid_fn = git_hash_sha1_final_oid,
--		.unsafe_init_fn = git_hash_sha1_init_unsafe,
--		.unsafe_clone_fn = git_hash_sha1_clone_unsafe,
--		.unsafe_update_fn = git_hash_sha1_update_unsafe,
--		.unsafe_final_fn = git_hash_sha1_final_unsafe,
--		.unsafe_final_oid_fn = git_hash_sha1_final_oid_unsafe,
- 		.unsafe = &sha1_unsafe_algo,
- 		.empty_tree = &empty_tree_oid,
- 		.empty_blob = &empty_blob_oid,
-@@ -271,11 +261,6 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		.update_fn = git_hash_sha256_update,
- 		.final_fn = git_hash_sha256_final,
- 		.final_oid_fn = git_hash_sha256_final_oid,
--		.unsafe_init_fn = git_hash_sha256_init,
--		.unsafe_clone_fn = git_hash_sha256_clone,
--		.unsafe_update_fn = git_hash_sha256_update,
--		.unsafe_final_fn = git_hash_sha256_final,
--		.unsafe_final_oid_fn = git_hash_sha256_final_oid,
- 		.empty_tree = &empty_tree_oid_sha256,
- 		.empty_blob = &empty_blob_oid_sha256,
- 		.null_oid = &null_oid_sha256,
--- 
-2.48.0.rc2.33.gaab3d23ed4c
+Ciao,
+Johannes
+
+>  		if (opt & OUTPUT_ANNOTATE_COMPAT) {
+>  			const char *name;
+>  			if (opt & OUTPUT_SHOW_EMAIL)
+>
+> --
+> 2.47.0.366.g5daf58cba8.dirty
+>
+>
+>
