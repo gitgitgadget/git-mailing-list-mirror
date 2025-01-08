@@ -1,131 +1,131 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A9C2046B9
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 22:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A05F22611
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 23:16:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736376301; cv=none; b=t2PLxS5YxQQ+F/qzno7h0GlMHEApu5Gs9mWzjeLv+0RsvsDE4JuKaCGnmcUKLGz4kxEkRc1OhfFkyar+9cIvJFna0uMuwoZiJuiyilFuOWpVNgVJNkP1qL74ySgf5m9Y+WG4VVZ/NIgljGczrTvhmeU5cUpaeMxhyUCzTZJZJlU=
+	t=1736378171; cv=none; b=Asn9ajigStLLa+Qq6vLAGRIB3O4G+Ks8gLdCVcVHhzFWC7uSsQstnV60R7BL0q/WDR9CfdEx1YCUX1XRSJI42wQX7Qu5BVt8Nq6Dd6RXJU6wEzSFxU09USU0nPKooZj/A37dV1cNsLkxgX4wJixXbVg3tjVg2aMtyIEagPYN6v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736376301; c=relaxed/simple;
-	bh=ewN0x4z5zkz8BLPDeGR38Sga4hmekiDC0OmlPTo/UaQ=;
+	s=arc-20240116; t=1736378171; c=relaxed/simple;
+	bh=WY4nhJAGJD+2WdM3uujiEN70vRLKY3UIlsMKYrwTJ08=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gCcl9clsK9cUmiVabX8E8WVTfRfLJ15oHCh2bDYsdddPJMKLzkY8HRLmRC+xWi5V2HfINXvdEP4T2G6PXmhTm1LDxB6NTEHkHuSZiscij4MwzDjdHIMlvU2sqoBGv1oIsK//9lsQu4LLwEWft6mT57Mwb/RR8N55mwN5BjpiTuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=DwSJUyh0; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=UZ/j1ZCxrb77RSrLSggzS8Q/AixjV8Lp3nkHG5SGKlj1BGA45BbH1k4F3MAtSxn9XvdsxpOs4t77J348Gc/GwpZqjrzxVBoeeAcF+Mb7yVFtBowG/0R3VTEWeZC3rnaJTQSZMMstZP1rFv1OaIh8k86cWu2ZrwiJSOJkZZlbpAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CN9X176+; arc=none smtp.client-ip=209.85.210.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DwSJUyh0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1736376293;
-	bh=ewN0x4z5zkz8BLPDeGR38Sga4hmekiDC0OmlPTo/UaQ=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=DwSJUyh0cbH7Qh0Lx4Y//G6dzNYllaQNpKdZyAIHRorHoDIQDNwM7T8v9WOQswk73
-	 tyNbUlshFkPfe+ZCopdw3vkk1/w1FFGQ7d847n5cVnvHfNefvT2/AMFqIbkezh3K/e
-	 qb5AAvPvWO3tv5bx1s1Rexr/IK5iqpLYer1xu6g1V1H6Eq/qASl6udmKe9gz1xAabc
-	 bGml42GWsIjbFr42ULJSyIO1fO+DHVyWMbbVZxMrxx0wA4lnrUq6Swc9Z/fovPHZaH
-	 nnxWbYYDxrJd0VRqiW+QHS8YY3FL5jVvT8xxApoD7mFj9JMXKTw6DDSsjoxN6OJdae
-	 Q3OFT4CIEgeDSQ1tIeORe4LzOi5GCwaHuclw8jjvgQdtiZe8+9s+MuWE0VU9IXIGSZ
-	 5jXayuJIdiHiINM93UN4axMqztZHrfsJ7uD+ejsVJWY3sLLCe/MWApxVDHilI14/qT
-	 4u6tKbwz/lOvuR/t8SrK+dCjrUU8JFkdbTHJI54V0U4qD8NOjqw
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id DEFAD2441B;
-	Wed,  8 Jan 2025 22:44:53 +0000 (UTC)
-Date: Wed, 8 Jan 2025 22:44:50 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: rsbecker@nexbridge.com, git@vger.kernel.org,
-	"'Randall S. Becker'" <randall.becker@nexbridge.ca>
-Subject: Re: [PATCH 0/2] reftable/stack: stop dying on exhausted entropy pool
-Message-ID: <Z37_4hoUgeVd3p9x@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, rsbecker@nexbridge.com,
-	git@vger.kernel.org,
-	"'Randall S. Becker'" <randall.becker@nexbridge.ca>
-References: <20250107-b4-pks-reftable-csprng-v1-0-6109a54a8756@pks.im>
- <Z323CLrRsnOko1gB@tapette.crustytoothpaste.net>
- <00ac01db615f$70b72600$52257200$@nexbridge.com>
- <Z34m1HRLAeEszXDG@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CN9X176+"
+Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-71e1e051e50so100318a34.0
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 15:16:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736378169; x=1736982969; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y4Hhr1YLFIr3NXkfiGvicno+TW5RslU3AwFZguhV9g8=;
+        b=CN9X176+fu5irWTdfQMUINHDoEnny3AaKERVHi+FosDQutVgJiGt8xTtonuW4OhAfm
+         mFJ1RH5Bz1LDTCbkMeVohcXkjvdkgZA22XNPlulOOCdKV3Jg045Ktkfga591dmnPmpiJ
+         n30hH6sQxzfUxP1IcqsujDRI2DWHN33WQYKS5CIVU8rxpiJc5TB8QjafNNE7IiqeiPwO
+         h4nY/5H36HRFZb27X0e/BNSxcwp4CQIdLOk7z9ORh0wEkmPa/iM9bKhJJxYnAJib6K/C
+         t8OOGMg7AVWNDw5bzX9XamDBOcBxMO5GB78gqjOvcZhl0FC6B2bgCz5ZiN4W45Z7CilN
+         qCNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736378169; x=1736982969;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Y4Hhr1YLFIr3NXkfiGvicno+TW5RslU3AwFZguhV9g8=;
+        b=E5W+Th1umlrlVJtOYHAt8dSGjEDCkabF6hqrVI66epYb+QT87Ml76uN0ELBz0Cd1lJ
+         BYChB3W4Q0Yuk3TbsWqf8Pcl9Zl7EQTc9PTCPMn6cA7S7sDNOaZ72Q0HYaJllegaWsdJ
+         MYzgm7lhbY2RcnHhjiOY6TmfJMjSyqYrJwxP2Jd6nwSB/2yypKRoNVQMR4z6q+OCxvw4
+         ZbKvNAOWDgmOySYqC/U68IS6RktgfA1eP3QmxKCUU/tgwJu2oTmjosnDucImcmNHyf/Y
+         6dxGO7Xg6NlHqBExPTAQBXGy+VeKpw89q/xdWgmL3SoPf/q9umvLrkiTDQlAyIX6+QIq
+         gHWw==
+X-Gm-Message-State: AOJu0YwfH23n5OvUVwwFevpc+y1pEq/XU2X+gYPsyl9luHJSqUetkE/6
+	KGtkbfvaREad/azNDbV9CASwXs6QIbh1kEl7Iachfkx6ropdBiHd
+X-Gm-Gg: ASbGncskNQkgfHF8/6wgK6WRN1ut22ci+yH+fNRMbVKolLkNrBQPhSou4r/TOUwrade
+	3BRsvWyzYD56TD7lW57+0f0JVX/XkQjE/Y3AcGvZLkalaFYgfr4VmmU5XgSAiTIjz5KrvMYw8Gp
+	EgZ1oQrghALxJIT2OtMYPSzfx8z80b68YDcDTgTWFVoB5qFk9muK6NU7r4gmelSetdWPpWPXYKk
+	a3PwpK+FYWOksQoH8E+jybGs8Au4oQnWLTULjfhtsJzNvWK/g==
+X-Google-Smtp-Source: AGHT+IFnM2PU46kqCOrNHOVVfxsaIxBPkGw++8tGjrkLc3DtEKxgrqddkbRvZfqC+qRnNS3Lagju1w==
+X-Received: by 2002:a05:6830:2643:b0:71d:4196:d92e with SMTP id 46e09a7af769-721e2e61f8dmr2391187a34.18.1736378169203;
+        Wed, 08 Jan 2025 15:16:09 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-72318575df9sm46341a34.43.2025.01.08.15.16.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jan 2025 15:16:08 -0800 (PST)
+Date: Wed, 8 Jan 2025 17:13:33 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
+Subject: Re: [PATCH] rev-list: print missing object type with
+ --missing=print-type
+Message-ID: <23akc5fftnnkzrrxb3oojlskmcxgiwfwqpkxgncaubzbmaurm5@uj5tgy5q4bji>
+References: <20250108034012.211043-1-jltobler@gmail.com>
+ <xmqqjzb5pc6t.fsf@gitster.g>
+ <onddu4fjgo2q7f6r7f6kgqctrbhshkll23z6ocsxiiqxbynap5@msq7qtj2un4w>
+ <xmqq8qrllydy.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Ls6WjfMk44fBTyLY"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z34m1HRLAeEszXDG@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+In-Reply-To: <xmqq8qrllydy.fsf@gitster.g>
 
+On 25/01/08 02:43PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> >> As I suspect that we would want to leave the door open for us to
+> >> extend this later, I would perhaps suggest an output format format
+> >> like:
+> >> 
+> >>     ?<object name> [<token>=<value>]...
+> >
+> > I think this is a great idea. To select which attributes get printed
+> > with the missing object we could add an option. Something like:
+> >
+> >   $ git rev-list --objects --missing=print \
+> >   --missing-attr=path --missing-attr=type
+> 
+> My knee-jerk reaction is that this is over-engineered; wouldn't it
+> be possible for us to simply dump everything we know about the
+> object, and let the receiving end pick and choose?
 
---Ls6WjfMk44fBTyLY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I think that should also be fine and much simpler. We may not want to
+effect the existing output of `--missing=print` though, so we could have
+a simple boolean option like `--missing-attr` or just add a new missing
+action type like `--missing=print-attr`. When enabled it would just
+print all the identified attributes.
 
-On 2025-01-08 at 07:18:52, Patrick Steinhardt wrote:
-> You reported in [1] that a couple more tests are indeed failing, not
-> only t0610. That changes things in my opinion as it shows that this is
-> not a localized issue in the reftable library, but likely in multiple
-> callsites where we use randomness. So my current patch series is not
-> sufficient as it only fixes up the reftable codebase. But in the case
-> where it's a general issue I tend to agree with brian, because I don't
-> want to play whack-a-mole with all the callsites of `git_rand()` where
-> we can indeed use insecure bytes.
->=20
-> Honestly, this rather makes me want to remove the OpenSSL backend for
-> our CSRNG completely. NonStop is the only platform that uses it right
-> now, and it seems to be easy to misconfigure. All the other backends we
-> have don't have the same issue as explained further up in my message. So
-> does NonStop support any of the alternative backends that Git has, like
-> `arc4random_buf()`, `getrandom()`, `getentropy()` or reading from
-> "/dev/urandom"?
+If we don't care though, we could keep it very simple and just add all
+the information whenever `--missing=print` is set. 
 
-OpenSSL's backend is only as good as the system entropy source, which,
-apparently in the case of PRNGD, is not very good.  The last release of
-PRNGD was in 2007 apparently, so I don't think we should hold our breath
-for a fix.
+> > I like the idea of also adding a path attribute, but this raises a
+> > couple of questions. The way `--missing=print` currently works is that
+> > it prints the unique set of missing object IDs. A missing object could
+> > possibly be referenced by multiple trees and thus have multiple valid
+> > paths.
+> 
+> That is not an issue at all, I think.  "rev-list --objects" that
+> shows objects that are not missing already has the same issue, and
+> the solution is "show the path when the object gets shown for the
+> first time".  Even when the same object is encountered during the
+> history-and-then-tree walk later, that object is simply not listed.
+> 
+> The code path that collects "I thought this blob should exist
+> because a tree wants to see it at this path, but the repository is
+> corrupt and I cannot see it there" into the missing object table
+> with attributes should do the same.  If the table does not yet have
+> the object, record the attributes (like "expected type", "path at
+> which the object was found") when inserting the object into the
+> table for the first time.  If you have a missing object and the
+> table already has it recorded there, don't do anything extra.
 
-Or, of course, it could be simply that prngd works just fine and there
-aren't enough sources for it.  If the machine has an analog microphone
-input that isn't plugged in, streaming some data from that might be a
-good source, since that will be noisy.  A second of recording signed
-16-bit PCM data as 48 kHz might provide at least 64 bits of entropy[0].
+Good to know! That makes things a bit simpler. I'll follow this approach
+and only add the missing object to the table if an object with the same
+OID is not already recorded.
 
-I will say that libbsd provides a fallback implementation for its
-getentropy code, which would allow the use of arc4random as a backend.
-I know there were some portability problems with getting that to run on
-NonStop, and of course I provide no guarantees about its suitability or
-security, but it does appear that there is some alternative if the
-porting problems can be overcome.  We explicitly have support for libbsd
-in the Makefile already.
-
-That doesn't avoid the problem of TLS and SSH not working, but it may
-get the tests passing.
-
-[0] That's 750 samples per bit of entropy, which I think should be
-reasonably conservative.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---Ls6WjfMk44fBTyLY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.45 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ37/4gAKCRB8DEliiIei
-gUG3AQCNWGQ4hjPRD/nmJWnv9h8aLjKGhAF/mfFjfgWTJ4I1QAEAorS8Et545Ngf
-MGW3oVgZs12XXS86uxo1YOUsxLManA8=
-=1yj7
------END PGP SIGNATURE-----
-
---Ls6WjfMk44fBTyLY--
+-Justin
