@@ -1,134 +1,140 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail4.tt-solutions.com (mail4.tt-solutions.com [83.229.82.191])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E395786333
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 19:21:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40547202C4D
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 19:30:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.229.82.191
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736364111; cv=none; b=PRgwlAUPbYNRlTxAOE4f4UvISzVYVoQrJFKF7iHC5GpBsn1NOv8Wn5Z5E3C7PmzeHH+eytTZ+E8Mb6tTROXAaZscfcIj3zQ1o3FJz67mhDWUkJgFSI1gC9Gh2cAp1XVclyp1uh9Awd2g7DgIMEKxr4NY1FahutewbVVgPN5yIu8=
+	t=1736364610; cv=none; b=cYuF46g1gVSb4j5y58WQsPMg6FpR12TNzw3dyh3KtOGIPA1H7G+E6fGIX8Ta4zoi10huZSo/eoF0i9HqSpUzDsSd0CvM7+BMJkY8WMoKB6O4ly7I00f9d7ChRU0KOMKdrIvKo+2LMA9yvlvnOwu9/dnAu0c6pUWTAvf5xQJdZ00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736364111; c=relaxed/simple;
-	bh=9C1eZZGEcHJGxypReZDPkp3kojqv+3Vl6+RnqPyS8bY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uT14S7QH1NEr98qcTvp5pbiy6wca/OF1Qhb1ESZ7D1raGw27a4fvH+vCxdOq6teeoiWBRGpSSvdxj2cm01uSdLyQtNWBGEnHLVOuyc3GfqSEcu+JB8ViWvL2zXV/kjYtuEcn1IGEarTfEoPBQNC/p+NT2YGjq3u89JuBsA+MpW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=cM8rynNg; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1736364610; c=relaxed/simple;
+	bh=b0RCE9qHe5d+xJq2JjjDI8RBcGmGTZyfIVUrOpWmv9s=;
+	h=Date:From:Subject:To:cc:Message-ID:MIME-Version:Content-Type:
+	 References:In-Reply-To; b=sfYjZWjliMTS0YvoG1h+G6Nrpm0g7CdgBzkMNSPpAk2MYMfdA/5dBrCtHV7JcgZ9TCuiom5+r+ws8MhWx9H58/5rhLzE5GhW/dbCrNQ2sd+wWH2bzG8ZzpPbVzBgwd+8RlXNa0owA6p09JoH8zviDV4dUsXGAglLX4aTIaQ63AU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zeitlins.org; spf=pass smtp.mailfrom=zeitlins.org; dkim=pass (2048-bit key) header.d=zeitlins.org header.i=@zeitlins.org header.b=bRzvGf2V; arc=none smtp.client-ip=83.229.82.191
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zeitlins.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zeitlins.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="cM8rynNg"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e5447fae695so117626276.2
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 11:21:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1736364109; x=1736968909; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bNgFgOzAhk9YNefuE0JrDgZMJ2qBgx1DY8lD7NogV+k=;
-        b=cM8rynNgAwuKLB0FStLf3W/RwuL0BfdXXZqi+wTuzvINEpqn3Xz8uZWUYm448GYWmI
-         gcSM9vQ0NaYyUwwJoH8m4XFG/hOPU7mrYb1izQzj1+whF7BXT8x7ZfUdiNDfeqeCVzCO
-         dif+iphF00LsaSk2s2DEk1ICCgCjMx+mKtwCT3EVQIKfg8MI0faL72OLzk5SYnq3yX+s
-         koabD8ehHrVCV/Od51PAyrxUfuWds8mU1uTjgFHCSpQvtVMA11tFq2byBMmz3EVUgLfJ
-         g7ayTj+gggPZqytl37+mE5Gv1WrDKCokspYff2yP0lnmdtC7aAA/3U2EuFqX5mtePDEB
-         dNrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736364109; x=1736968909;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bNgFgOzAhk9YNefuE0JrDgZMJ2qBgx1DY8lD7NogV+k=;
-        b=T+DXqkryrLNFQJ4rKEKPJ5mS1R2yfWzD+HXUvHdiDBE1DvbAi4C2Mz60YYTkj+esW4
-         tFYkjuKUkIWINsMFvKpepe2kenEf33+8TbdmZMSB7cdCR663ptwQtvWcRsX8zL7L6km3
-         CwebbPhFbEmNRVPFk3+3adY0GyuXP0e2nJaC0QZICf8tD3a38QKcl0GV7VzOeItZRtRE
-         l3339uJnBgMuBFkTMXmUsx0g99PmNNm3pHIiWgsNOyDP9j0JN+lpnHxjdw2+KNUtLuE9
-         NM65FmUCBKo6oT6uj7nlu+hLiMZ+AD65y7oUy0FTCKZFNH+CvvmIqHcKzcCSlK5uzaJt
-         /CZQ==
-X-Gm-Message-State: AOJu0YxEgDv81R7fOrsXNxGlDUXKLiTkCBib3FzKbsV4JQesA3dSIQRt
-	uHMnamyXK9XLk0PdBQaLTonW37MB4e5p4/qt8aG+0CwVR/VCkPXU67L0DZmr2jS3VwYE6TgQOhG
-	Jlso=
-X-Gm-Gg: ASbGncviaw8VQmqZ/YBb7M/bUHSRzJXuhDK1YguFrY3+IqMxon5m7SLnKx3LiGFrhFD
-	Nl3OD4dlcF43vPmZfM9cIy+JF9D44amM9wom54eTQcD6T7eE5A1ExOubC1/Gstwbzw/cCMTc5PT
-	1qwxL5fPzZectE4LgVbJhJZjZGoht9X/jXe0teb/1aQLl0FdvrolXg5O+ssjGzXKTgEkDrLbof1
-	99QKaN9EswO/vk12vIXBTMUNpQ6bgU9aSsKuhm6PKmzULWNhseTxw8jBPxF0fJSw2uWG1mmtoZG
-	ZeAPGj9M/SqV98NS4kFU1MlEyTD3
-X-Google-Smtp-Source: AGHT+IFzr39JyvTXB9I2aMdG5gmEBYKW/HxRDvwb9k8l4KLx6x+EV7c2JmMC3JGDZFvXl4R4fn618Q==
-X-Received: by 2002:a05:690c:9a86:b0:6ef:8177:c322 with SMTP id 00721157ae682-6f53121b2f7mr35003887b3.13.1736364108859;
-        Wed, 08 Jan 2025 11:21:48 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f3e7499c23sm93613817b3.70.2025.01.08.11.21.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2025 11:21:48 -0800 (PST)
-Date: Wed, 8 Jan 2025 14:21:47 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/10] builtin/fast-import: fix segfault with unsafe SHA1
-Message-ID: <Z37QS/MnGUZ7zcrR@nand.local>
-References: <20241230-pks-meson-sha1-unsafe-v1-0-efb276e171f5@pks.im>
- <20241230-pks-meson-sha1-unsafe-v1-2-efb276e171f5@pks.im>
- <Z3LNVzw9UlS7SWqe@nand.local>
- <Z3fhK1ACzJfVehM2@pks.im>
- <Z3wsZjAqbfI/EdVe@nand.local>
- <Z30YvHKjA_b6_xwt@pks.im>
+	dkim=pass (2048-bit key) header.d=zeitlins.org header.i=@zeitlins.org header.b="bRzvGf2V"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=zeitlins.org; s=mlr; h=In-Reply-To:References:Content-Type:MIME-Version:
+	Message-ID:cc:To:Subject:From:Date:Sender:Reply-To:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=gzRiNvAkTvYkbARUpvg2Yiia6C+BMAqYQz15N/CbYfw=; b=bRzvGf2V+Ddv4iqck4aQdBq/7q
+	oZPFXfCmB8rcX5E8JdBgX28JhkcWSGMj8Cql4BblavhSW1Atan43ThvIa+P9pxrPkjhwcyG62yPf9
+	axyohoUcxsaxiZ1SRKzOsOTrcCkFAwEV8mZMe0llf8xkQ6zbpua33YfHTDKAqP0KCl7CQlZol9bAs
+	meggR6G7n5TjpEYqDyZkMYBxPTHEV3PXzwLaDVC5Ng2B3vpnhX5fxlmVgFSxK2OMZZhaJ0Sb2w3k9
+	Pe+pP6A2yxjBGg0Ma6Hzb+cZsWJSMQhzs4lxqMnUd70/7VIGr1RYCaieDe4Zf6rdNnRcckx/qIh6F
+	xAAs1jOQ==;
+Received: from [192.168.17.23] (helo=dark)
+	by smtp.tt-solutions.com with esmtp (Exim 4.96)
+	(envelope-from <vadim@zeitlins.org>)
+	id 1tVbke-006R0G-21;
+	Wed, 08 Jan 2025 20:30:00 +0100
+Date: Wed, 8 Jan 2025 20:30:00 +0100
+From: Vadim Zeitlin <vadim@zeitlins.org>
+Subject: Re[2]: Would it be possible to add an option to disable validating submodule paths?
+To: Junio C Hamano <gitster@pobox.com>
+cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Message-ID: <Mahogany-0.68.0-2854301-20250108-203000.01@dark.tt-solutions.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z30YvHKjA_b6_xwt@pks.im>
+Content-Type: MULTIPART/SIGNED; protocol="application/pgp-signature"; micalg=pgp-sha1; BOUNDARY="8323329-628175011-1736364600=:2854301"
+References: <Mahogany-0.68.0-2854301-20250107-230058.01@dark.tt-solutions.com>
+    <Z320RGb0tqNyvvxt@tapette.crustytoothpaste.net>
+    <xmqq5xmqqk9j.fsf@gitster.g>
+    <Mahogany-0.68.0-2854301-20250108-005035.01@dark.tt-solutions.com>
+    <xmqqjzb5nvhd.fsf@gitster.g>
+In-Reply-To: <xmqqjzb5nvhd.fsf@gitster.g>
+X-Mailer: Mahogany 0.68.0 'Cynthia', compiled for Linux 6.1.0-10-amd64 x86_64
 
-On Tue, Jan 07, 2025 at 01:06:20PM +0100, Patrick Steinhardt wrote:
-> > > > I think we should perhaps combine forces here. My ideal end-state is to
-> > > > have the unsafe_hash_algo() stuff land from my earlier series, then have
-> > > > these two fixes (adjusted to the new world order as above), and finally
-> > > > the Meson fixes after that.
-> > > >
-> > > > Does that seem like a plan to you? If so, I can put everything together
-> > > > and send it out (if you're OK with me forging your s-o-b).
-> > >
-> > > I think the ideal state would be if the hashing function used was stored
-> > > as part of `struct git_hash_ctx`. So the flow basically becomes for
-> > > example:
-> > >
-> > >     ```
-> > >     struct git_hash_ctx ctx;
-> > >     struct object_id oid;
-> > >
-> > >     git_hash_sha1_init(&ctx);
-> > >     git_hash_update(&ctx, data);
-> > >     git_hash_final_oid(&oid, &ctx);
-> > >     ```
-> > >
-> > > Note how the intermediate calls don't need to know which hash function
-> > > you used to initialize the `struct git_hash_ctx` -- the structure itself
-> > > should remember what it has been initilized with and do the right thing.
-> >
-> > I'm not sure I'm following you here. In the stream_blob() function
-> > within fast-import, the problem isn't that we're switching hash
-> > functions mid-stream, but that we're initializing the hashfile_context
-> > structure with the wrong hash function to begin with.
->
-> True, but it would have been a non-issue if the hash context itself knew
-> which hash function to use for updates. Sure, we would've used the slow
-> variant of SHA1 instead of the fast-but-unsafe one. But that feels like
-> the lesser evil compared to crashing.
+--8323329-628175011-1736364600=:2854301
+Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
+Content-Disposition: INLINE
 
-For posterity, Patrick and I used some of our monthly meeting this morning to
-spend some time together pairing on this idea.
+On Wed, 08 Jan 2025 08:03:42 -0800 Junio C Hamano <gitster@pobox.com> wrote:
 
-It ended up being a dead-end, since this approach only protects you
-against changing the hash function mid-stream, and not using the
-incorrect context type from the union.
+JCH> Vadim Zeitlin <vadim@zeitlins.org> writes:
+JCH> 
+JCH> > JCH> Sounds reasonable, but I wonder how this would interact with
+JCH> > JCH> bootstrapping.  Should it be configured in ~/.gitconfig, possibly
+JCH> > JCH> with [includeIf] to specify the directory you'd store a bunch of
+JCH> > JCH> repositories you clone from outside, or something?  I guess "git
+JCH> > JCH> clone" without "--recurse-submodules" is simple enough to be used
+JCH> > JCH> for bootstrapping, and then the configuration can be set at the
+JCH> > JCH> top-level superproject after cloning but before "submodule init".
+JCH> >
+JCH> >  I might be missing something here, but if the question is about whether we
+JCH> > need to have any special support for this in git-clone itself, then I don't
+JCH> > think so, it's a rather special use case and running git-clone without
+JCH> > --recurse-submodules and initializing (some) submodules later while
+JCH> > symlinking some other ones is only a minor inconvenience, if that.
+JCH> 
+JCH> If you say so then I'd stop worrying about it ;-)  I am not a heavy
+JCH> submodule user myself.
 
-That was along the lines of what I was originally thinking, and so I
-resurrected my series to introduce 'unsafe_hash_algo()' here:
+ Well, let's just say that I'm not worried about it.
 
-    https://lore.kernel.org/git/cover.1736363652.git.me@ttaylorr.com/
+JCH> The worry came primarily from the fact that this was reported as a
+JCH> "we have been using submodules happily in this particular manner but
+JCH> with a new version of Git it stopped working" regression.  Your
+JCH> set-up was created with an older version of Git that did not have
+JCH> the problematic "defence in depth".  If you or somebody else wanted
+JCH> to recreate the same set-up from scratch, would "git clone" that is
+JCH> unmodified, other than conditionally disables the check introduced
+JCH> by the commit e8d06089 (submodule: require the submodule path to
+JCH> contain directories only, 2024-03-26), let you do so?  Or would it
+JCH> also need to honor the new configuration that conditionally disables
+JCH> the check, and if so, how would we make sure it is read during "git
+JCH> clone" (which has kind of special chicken-and-egg problem with
+JCH> respect to configuration settings).
 
-I got the impression that Patrick and I are on the same page there as
-that being a good path forward, but I'll let him chime in in case I
-misunderstood anything.
+ As I was trying to say above, I think it's unreasonable to expect "git
+clone --recurse-submodules" to do something extra smart when there is a
+simple (both to use and to discover) alternative of just running "git
+clone" without any extra options, and then initialize the submodules that
+you don't want to symlink manually and symlink the remaining ones.
 
-Thanks,
-Taylor
+JCH> > ... Should it be something like submodule.validate instead, perhaps?
+JCH> > Please let me know if anybody has any better ideas.
+JCH> 
+JCH> Is "it MUST NOT BE a symbolic link" the only thing the validation
+JCH> does?
+
+ Currently, yes.
+
+JCH> Would there be extra check on top of what is currently there
+JCH> that may turn out to be useful?
+
+ It's conceivable that there might be other checks in the future, e.g.
+maybe the ownership of the directories or even their permissions might be
+checked? Just to be clear, this is pure speculation on my part, i.e. I
+don't see any real need to do it, but I can't be certain that there are no
+scenarios in which this might be useful.
+
+JCH> If the answers are no and/or yes, "submodule.validate=no" sounds like
+JCH> a reasonable choice, but I am not good at naming, so we may want to
+JCH> hear ideas from others.
+
+ I'll wait for some time to hear if anybody else has any better suggestions.
+
+ Thanks in advance!
+VZ
+
+--8323329-628175011-1736364600=:2854301
+Content-Type: APPLICATION/PGP-SIGNATURE
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQQx+vLQdOwioQqkxtoG6kHeT2wehgUCZ37SOAAKCRAG6kHeT2we
+hlHTAJwN+HyPsUaAXaemWZYS8HtUB2tm1QCfeh+VSiSuXvbUEv/Qhez3FCwtxfQ=
+=9LQi
+-----END PGP SIGNATURE-----
+
+--8323329-628175011-1736364600=:2854301--
