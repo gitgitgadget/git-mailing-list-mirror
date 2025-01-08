@@ -1,105 +1,198 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495231FF1A5
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 17:41:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F1112DD8A
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 18:16:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736358097; cv=none; b=jDLAsPaeMhP5eEX2sNZYJd9wgsdXX4Ohnoe2iYYXol3Ac7JGQAj1JDKXksa146S/884wT4+YPpLXCCvipAqcYkMGOGMlZ4NnvzzcQ8JtTknzbi+Rqls68BUeDuAd0XsKU3Kgr6I4SGiG/L02uaWCA0aEIaCt06pHtdRBeMIsJtg=
+	t=1736360205; cv=none; b=oPIBKwNLqmEpG88L8BmqtRtoHfET/QIGXTBKOstB0LdUqoiByllTKFtNO4rj9EufVXXkcMZZXDRuocrjtp6iAhPU2BpEPPgi+uxtJZWhol4EOlboQEwQ/fiRSGvOR3i/djwpsru8RBmf6LnMz2IeLAq6FOTa9V/RPdxT9qHSqcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736358097; c=relaxed/simple;
-	bh=O9Sxy5NeJt9C/JJle1fvb3dYjfbPdjvC44mgNCczzQw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Wsae7pKe++YBdb9HZixA2Fi6igZmf3jv10MpP1+3otZ6frHgeIy8vxF7wIeF+bPgDpVCw2OYQj5fF1kAqaVqaq2VVC7ki9TMNl8MzavA2TaL9m7hZGcWHVDQ06/iRmAYAkqrTEtL4mrp87YaTk/5UFQg9g3Dmby8MUp7GPqOqJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=4YYGM0rc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vl8eAU0k; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736360205; c=relaxed/simple;
+	bh=SFr7mUKpmDZfPZ1PftaIqpGHFI5/Gz2GRmga+yQ8Egk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TWBlfenMTNiFQrOpdnHfPRN8Vboz1CIcebkEwIy6TIjTUuPLEKXcoR6IO7/agkmMGBFq0DWm/5seeoeKXmppNiIuQHDBw1s5UOOAwLxVuXfjZw0Pm60V/vqPdF3d447XdNCwxCnOfCRyI1tXceUZJYHNR5ijwclPOqE4+Iyv3rU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k6cMj/aF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qPdILPkj; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="4YYGM0rc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vl8eAU0k"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 35CDA11400A8;
-	Wed,  8 Jan 2025 12:41:34 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 08 Jan 2025 12:41:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1736358094;
-	 x=1736444494; bh=yT21XRFBgDKCO0QuowltFS6Y4Mr9jx2l0J9Qx5o4NcQ=; b=
-	4YYGM0rcVTZSgGGRkkageLQzBjpSPCpnkap9HP3IINF5baEneO8SjSlageCcVhCP
-	D50ABKcYO4wFgNEG0Dwbq9LRBULxKeS9UP6KNA2y9UYMvO2WoiLpPbX7wEz/Xfo3
-	JF4bKmxon3CZkqmXGkmKgrCQACBApGZpU29E99vK5eNpyFl33IWrfkeyIGxs5Qx4
-	zFhnKIERbTyEh8l6vQHDn7TGWLQ0clxaCUvfeNLF5vZ8VXD4tWuhxRQa0Cro5iT3
-	4xkDtqAAQrIBGZe6YDnELQ3B3GfjxwtTi3gAOpYZA+ElLcKx3xOPGhp6jAUrsXZY
-	eiyTEjT1Ustf2FYfq9tO9g==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k6cMj/aF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qPdILPkj"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 874D4114023E;
+	Wed,  8 Jan 2025 13:16:40 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Wed, 08 Jan 2025 13:16:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1736360200; x=1736446600; bh=6By0Sqkaw6
+	53arblBqKSG5mXBygfkZKbm97Zj8vmOQs=; b=k6cMj/aFIfWF+bJIuieZTscD0Z
+	7dB5H/Ul8lMGxgsyunGeglvgcNd7Dn+7PVuWCDSnPQyEzqC2m2Dpmksh9ACwof0Y
+	7H940HnlzTYHb8WrMk32+6CJ1kGS7Et7Dx6t1k3lTGqTKPrkvqLQbrqnYKkav60v
+	dH1bPE/MMA4cFcVWUYa2LKSpauaZ1pgNaLQ69k8EIhsli9MK3VKvb55ZqFF6KswV
+	OS4pIpOSjftcPPT5xLnDKK39UbkEh9lA7sfeaiJs0A8MYXQCYUvPLJB0isELBNks
+	XDrDkwEWd0iA38WKPJmGBQgSZtA4KdzH1fURkgX2tpVsay2uCBpJnnf7qkMg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736358094; x=
-	1736444494; bh=yT21XRFBgDKCO0QuowltFS6Y4Mr9jx2l0J9Qx5o4NcQ=; b=v
-	l8eAU0kmyPvjD/rVoL8DwmCc2+dJIYYLq54X5Nd9mbqSIvWVZ5q4lVigIhPLdTe/
-	eKooGyYXwA9opJIqVY4v/XEUdYbAtPwloR6YXvtpwlRIon5nSAlGunCD3Ulhzna0
-	1TFKK+FX8yiRzqw+/S9ZAlyMj3i+h/GA/GT/gCqtsPl6agcmwqvsYf8ysqIINC/V
-	sAKxozFw9Ex+RuRFVI6YuhDeb6PqsCWQI9s9cjudHTUpg4Goxj5pPkxar77oIYqU
-	u1tBNopF6Du2LVQf0zzANp/1qKhEKou2iWFAf+ZQ0sqBUNIdFaURVtIYkBO5N6V8
-	2+IrggB+opCNqcqlbJyQg==
-X-ME-Sender: <xms:zbh-Z4mofX79adNr9gN4MyC9FyLWIsTXpVoWtd_lndMxbXSzKwY7pA>
-    <xme:zbh-Z330LTU8oQ6dggSrrShj7vx1tcT2sIWu7xeD381XX2O7rM5Qs6etYuB5UNMJ1
-    6td3eR8Oh8YjqDfcg>
-X-ME-Received: <xmr:zbh-Z2q_1a4Elq2Rk5In8oek-LzYj1U4O-NIZDN3u99kj2gmMBefnheivvv0TGzci6ree1ay_waSqeyUh7_3zFEnib6pxwwlazUl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggedguddtvdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736360200; x=1736446600; bh=6By0Sqkaw653arblBqKSG5mXBygfkZKbm97
+	Zj8vmOQs=; b=qPdILPkj28WkbfMXOb3fMvNAzB4vUdXqVhKsqkTp+2efANogyBq
+	DRltTJu7Kv0VbN2WqrpiDs1HSg2HCiXYr2sQuOZLe02HuV+wGQFDiKYK+4omrvtF
+	L8V/+OAJ18fZeE86VrVnQWLHu5DwugsKPjYR814mpklDgxNn/W4mFYRdbYn6qTgQ
+	zUz6wIghpV37cuS70iBvlbO2nNL5mh3AxvJ8eBG8s3uZkxCsl9LNTZQmG2Vkila9
+	80jUTjsr5TWVfR3YFavwzJi4FNaGU+PCv/X++zjsLRgB57Lsa9h3rAbcngNYjI/f
+	QrN8l3cnOURNuC8GdIkAAHR2GzfriHqmAUA==
+X-ME-Sender: <xms:CMF-Z-mSKgkra_tuekUZP5vITk13Qz9qY9oxz6aPC2oAueiUpvJp_w>
+    <xme:CMF-Z13_3-vFWvfOYuYI8fR9sVn_NJFTj5wZhq_6AIC-sScdEhQlZWxOYxbRKzZRH
+    qwpSSsKQ21jgL6OMA>
+X-ME-Received: <xmr:CMF-Z8qg6bRcS-gYlKbsXDaEgaF3TkD29rLeXVE0QdBJBr3mWWdqnMMuAJeB1PY3Y3Mg4pR_LU5ymWnj2dvjlCNP6wNDdj9gwZQ-WG6sVI9I7g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggedguddtlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhdrshdrrhesfi
-    gvsgdruggvpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zbh-Z0kolyEZJpj73iRPklpjtQEave4nEx39XhM1CNZEewiBDxqRZg>
-    <xmx:zbh-Z22BHcnVcfSLdJLfJGgHZvL377L2NAH_Qr8Vy-FsEn6nAPl0cg>
-    <xmx:zbh-Z7ulOnu8-w0txsjT-DJfoCiQyOoVWoP6CARAos2mzM3uDUVcyA>
-    <xmx:zbh-ZyUk4I0olDH_zBzCSwukQxnApuvMSs4U2cC6R8NCeYWauAlGkQ>
-    <xmx:zrh-Zy93OQCN3w-ZGEcR0HdPyIvWi5bOt0PglGKGzghtn5S32GnVfcTU>
-Feedback-ID: if26b431b:Fastmail
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkefhteegffeikeejjeeiuefhueejffeuvddvleej
+    hfekheeugfffleeludekieenucffohhmrghinheplhhishhtrdhnohifnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
+    nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtoheprhgrnhgurghllhdrsggvtghkvghrsehnvgigsghrih
+    gughgvrdgtrg
+X-ME-Proxy: <xmx:CMF-ZyleCpnHRpQB3cSdLu-ZsaTiYeTzOeNNLF9B1k78Y4pgvGw3rA>
+    <xmx:CMF-Z82xEhLEA_EdQnUNIu0m4YWncKhpmag-33TPa34_DYMrQTqhfQ>
+    <xmx:CMF-Z5t-lq1XBksZ2s76ITSDMQFNKIGUz9QxBNe3S_fBQawec98vBQ>
+    <xmx:CMF-Z4W7VLKdx1b-uGlB9ZTqZSIHGONwOypri6_JmoCp_XKbTa_JFQ>
+    <xmx:CMF-Z5z8F1DjSWVcwu4kpUoja_RG0XB8qYt6J-UVd4FKsONpZGU5htX6>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jan 2025 12:41:33 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] t-reftable-basics: allow for `malloc` to be `#define`d
-In-Reply-To: <e842ea8c-4ead-49d0-a48b-0d5f8c4e7c0c@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Wed, 8 Jan 2025 17:36:34 +0100")
-References: <pull.1848.git.1736352005578.gitgitgadget@gmail.com>
-	<e842ea8c-4ead-49d0-a48b-0d5f8c4e7c0c@web.de>
-Date: Wed, 08 Jan 2025 09:41:32 -0800
-Message-ID: <xmqqjzb5mcdv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 8 Jan 2025 13:16:39 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id b1dc09ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 8 Jan 2025 18:16:36 +0000 (UTC)
+Date: Wed, 8 Jan 2025 19:16:35 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, "Randall S. Becker" <randall.becker@nexbridge.ca>
+Subject: Re: [PATCH 2/2] reftable/stack: accept insecure random bytes
+Message-ID: <Z37A_d9mAnKtGNcU@pks.im>
+References: <20250107-b4-pks-reftable-csprng-v1-0-6109a54a8756@pks.im>
+ <20250107-b4-pks-reftable-csprng-v1-2-6109a54a8756@pks.im>
+ <xmqqzfk2qr62.fsf@gitster.g>
+ <xmqqv7uqqqu9.fsf@gitster.g>
+ <Z34gfa-_dSbWD19h@pks.im>
+ <xmqqr05dnwli.fsf@gitster.g>
+ <Z36l--QUjaYYb6Uf@pks.im>
+ <xmqqo70hmcet.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo70hmcet.fsf@gitster.g>
 
-René Scharfe <l.s.r@web.de> writes:
+On Wed, Jan 08, 2025 at 09:40:58AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > Hm. The problem is when Git dies in the middle of a transaction:
+> >
+> >   1. We write the temporary table.
+> >   2. We compute the not-so-random suffix.
+> >   3. We write the temporary "tables.list" file.
+> >   4. We move the temporary table into place using the not-so-random
+> >      suffix.
+> >   5. Git dies before updating "tables.list".
+> >
+> > Now we have the temporary table moved into place, but "tables.list"
+> > hasn't been updated yet. When the next Git process comes along and wants
+> > to update the table it would result in an error if it computed the same
+> > suffix.
+> 
+> Here, I hear that we _do_ depend on the suffix being relatively
+> unique.  Once our random number generator decides to give the same
+> number twice to cause collision, the reftable data gets corrupt?
 
->> It is actually unnecessary to use those function pointers to
->> `malloc`/`realloc`/`free`, though: The `reftable` code goes out of its
->> way to fall back to the initial allocator when passing `NULL` parameters
->> instead. So let's do that instead of causing heap corruptions.
->
-> Ugh.  That makes a lot of sense.  Sorry for the trouble! :-/
+No, there is no corruption. We may fail to update the stack when there
+are colliding files, but that's it.
 
-Thanks for a quick Ack.
+> > The reftable library knows to clean up such stale tables when not
+> > referenced by the "tables.list" file, but it doesn't do so on every
+> > write. So this would likely still cause issues in practice.
+> >
+> > I already though about this scenario when writing my mail, but didn't
+> > really think about it as "correctness". But I guess it is.
+> 
+> Hmph.  I am not sure how I should feel about this.  Our reliance on
+> hash functions (which can be made to collide) not colliding is one
+> thing, but is it sensibly safe to rely on a cryptographically
+> unpredictable random generator not to yield the same suffix twice
+> during the lifetime of an previous invocation for correctness?
+
+This is why I've been hesistant to call it a "correctness" issue, as
+there is no corruption involved here. It's more of a denial of service
+as you may not be able to update the stack anymore until you remove the
+occluding file.
+
+But turns out I misremembered from 9abda98149 (reftable/stack: fix use
+of unseeded randomness, 2023-12-11): things indeed work alright. To
+demonstrate, let's update `format_name()` like this:
+
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 531660a49f..b7422679df 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -659,7 +659,7 @@ int reftable_stack_add(struct reftable_stack *st,
+ static int format_name(struct reftable_buf *dest, uint64_t min, uint64_t max)
+ {
+ 	char buf[100];
+-	uint32_t rnd = (uint32_t)git_rand();
++	uint32_t rnd = 123;
+ 	snprintf(buf, sizeof(buf), "0x%012" PRIx64 "-0x%012" PRIx64 "-%08x",
+ 		 min, max, rnd);
+ 	reftable_buf_reset(dest);
+
+And then we create an occluding file and try to update:
+
+    $ ~/Development/git/build/bin-wrappers/git init repo --ref-format=reftable
+    Initialized empty Git repository in /tmp/repo/.git/
+    $ cd repo/
+    $ ls .git/reftable/
+    0x000000000001-0x000000000001-0000007b.ref  tables.list
+    $ touch .git/reftable/0x000000000002-0x000000000002-0000007b.ref
+    $ ~/Development/git/build/git commit --allow-empty -mx
+    [main (root-commit) 08d02ef] x
+    $ ls .git/reftable/
+    0x000000000001-0x000000000002-0000007b.ref  tables.list
+    $ git show
+    commit 08d02efa88f085f02c31285bf909d8d3a25c70dd (HEAD -> main)
+    Author: Patrick Steinhardt <ps@pks.im>
+    Date:   Wed Jan 8 19:03:46 2025 +0100
+
+    x
+
+So the stack gets updated as expected, no corruption there.
+
+But this _can_ be a problem on Windows, where the file cannot be deleted
+in case it was still open. This is also documented as the reason in
+"Documentation/techincal/reftable.txt". That should've gotten better
+though now with the improvements I made to our rename-emulation, as it
+now uses POSIX semantics.
+
+That being said, I still don't think that swapping out `git_rand()` for
+`rand()` is the right thing to do. It does not solve the issue, but only
+a symptom thereof. Git can still die whenever the OpenSSL CSPRNG fails
+as there are other uses of `git_rand()` or `csprng_bytes()` in the
+codebase.
+
+So this change would regress something that works everywhere but on
+NonStop and make the suffixes predictable. The ia64 machine in question
+is being EOLd end of 2025. And the fact that this has never been a
+problem before v2.48.0-rc2, and that the machine was rebooted for
+maintenance immediately before running the tests, indicates to me that
+something fishy is going on on that platform.
+
+Patrick
