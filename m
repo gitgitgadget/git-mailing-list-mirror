@@ -1,140 +1,114 @@
-Received: from mail4.tt-solutions.com (mail4.tt-solutions.com [83.229.82.191])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40547202C4D
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 19:30:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=83.229.82.191
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FE5126BF1
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 19:31:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736364610; cv=none; b=cYuF46g1gVSb4j5y58WQsPMg6FpR12TNzw3dyh3KtOGIPA1H7G+E6fGIX8Ta4zoi10huZSo/eoF0i9HqSpUzDsSd0CvM7+BMJkY8WMoKB6O4ly7I00f9d7ChRU0KOMKdrIvKo+2LMA9yvlvnOwu9/dnAu0c6pUWTAvf5xQJdZ00=
+	t=1736364711; cv=none; b=aBasf4NYg+UoeDTj6Svl8x34Xg8r1R9G/4tV5JXj9FLVD/A9JloWtjobVOrP6DjmKu6T1eOWxJwQAYT3myLfnwn6Vd/RA3GdqYdIa737bEoWFfCEBf75EhYUGllTMl/XKlX4MnI5u5NUnrXohPsiZfWSLkzl9KuT9LA1DgpjYq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736364610; c=relaxed/simple;
-	bh=b0RCE9qHe5d+xJq2JjjDI8RBcGmGTZyfIVUrOpWmv9s=;
-	h=Date:From:Subject:To:cc:Message-ID:MIME-Version:Content-Type:
-	 References:In-Reply-To; b=sfYjZWjliMTS0YvoG1h+G6Nrpm0g7CdgBzkMNSPpAk2MYMfdA/5dBrCtHV7JcgZ9TCuiom5+r+ws8MhWx9H58/5rhLzE5GhW/dbCrNQ2sd+wWH2bzG8ZzpPbVzBgwd+8RlXNa0owA6p09JoH8zviDV4dUsXGAglLX4aTIaQ63AU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zeitlins.org; spf=pass smtp.mailfrom=zeitlins.org; dkim=pass (2048-bit key) header.d=zeitlins.org header.i=@zeitlins.org header.b=bRzvGf2V; arc=none smtp.client-ip=83.229.82.191
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zeitlins.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zeitlins.org
+	s=arc-20240116; t=1736364711; c=relaxed/simple;
+	bh=QpheFLJhQPqbAqoETj1/5bSDHXhhpsYSlqosoNnU8iE=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZWQKt5+53oIj3Ogwor3ExTH0c4RhWdCOvYuWc0RuoYY9iR8yGhM8KmJZ+XZzFvN7pAjVJ7qCWMDg6gLXntgVgjjqxwdEzVJwMrWdKL//GFvNMKhJZhM8lFsTpUL1va4tu8rzisph+xzAerHiaPR7PXq5rhMh2oub+w2B2+aVdME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=awK0n/UA; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zeitlins.org header.i=@zeitlins.org header.b="bRzvGf2V"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=zeitlins.org; s=mlr; h=In-Reply-To:References:Content-Type:MIME-Version:
-	Message-ID:cc:To:Subject:From:Date:Sender:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=gzRiNvAkTvYkbARUpvg2Yiia6C+BMAqYQz15N/CbYfw=; b=bRzvGf2V+Ddv4iqck4aQdBq/7q
-	oZPFXfCmB8rcX5E8JdBgX28JhkcWSGMj8Cql4BblavhSW1Atan43ThvIa+P9pxrPkjhwcyG62yPf9
-	axyohoUcxsaxiZ1SRKzOsOTrcCkFAwEV8mZMe0llf8xkQ6zbpua33YfHTDKAqP0KCl7CQlZol9bAs
-	meggR6G7n5TjpEYqDyZkMYBxPTHEV3PXzwLaDVC5Ng2B3vpnhX5fxlmVgFSxK2OMZZhaJ0Sb2w3k9
-	Pe+pP6A2yxjBGg0Ma6Hzb+cZsWJSMQhzs4lxqMnUd70/7VIGr1RYCaieDe4Zf6rdNnRcckx/qIh6F
-	xAAs1jOQ==;
-Received: from [192.168.17.23] (helo=dark)
-	by smtp.tt-solutions.com with esmtp (Exim 4.96)
-	(envelope-from <vadim@zeitlins.org>)
-	id 1tVbke-006R0G-21;
-	Wed, 08 Jan 2025 20:30:00 +0100
-Date: Wed, 8 Jan 2025 20:30:00 +0100
-From: Vadim Zeitlin <vadim@zeitlins.org>
-Subject: Re[2]: Would it be possible to add an option to disable validating submodule paths?
-To: Junio C Hamano <gitster@pobox.com>
-cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Message-ID: <Mahogany-0.68.0-2854301-20250108-203000.01@dark.tt-solutions.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="awK0n/UA"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-385de59c1a0so71422f8f.2
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 11:31:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736364708; x=1736969508; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2WZX6Q9x0kWTdAGRx/+GgN+LKXh7rUYR758h+Z3ISzg=;
+        b=awK0n/UAuksS4eBsZn4OHzcQWLfZ39NbAvVJy+hWPrhNd6+s64gmhauwpPqfQG6gEy
+         fFFZz2qX7Sqpj/IrsdDvjgba6YaLH1qx2uzWYG43+bIJnXjx5QVZqtG1RU39WsNg32r3
+         WTdIMkAthzss1VLmAKz5V92Yy9Mhgy2hQP2RBZgghajg6aP4SVrtl/3UPW36kl/hjdd6
+         G3a7Bkfu3F6WdOjFtYYvSbeKHwe5XcMeXSYEBpzoSmY1X+C7q6PqyUHtqgOZYuTyQw2o
+         x53nw2jkD5flY0/bmo/LZWTrnS1l977j2NxWZsZf2iktiTjPsVGveUPlZw7+bPb+2VYp
+         evcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736364708; x=1736969508;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2WZX6Q9x0kWTdAGRx/+GgN+LKXh7rUYR758h+Z3ISzg=;
+        b=pXLpodRtvVAO6TC1XZ1PrvI/x2REq+Iu0DfrNWv2MmWSOqRSdH80ElDKjEehrufTy9
+         NnRbWj/wJvIbapVmvg0tb2BNUB5kIjDxLqYXOUh9O6QHtU+ajdrz+esS0oBiBmjBm6oG
+         FDfB14tg4ZWYSJvtzv6ZNn4yw6hHe9fMTh3cWJ52clQjKf+3ZcN6ByXjLJo2bQYPkfmZ
+         JORDjMXdtlilQiNtO3QOCYWCboqikm+T6VrkzJ9YSTGqLzlgcN2HMcwljZPHZUiWuAZI
+         IERqlEfjP3xlHh1Sil7kURy8kSd8kPXub5uxQexzENMr7sIeKNZQOwsOu22mcoe0+Jcy
+         qLOw==
+X-Gm-Message-State: AOJu0Yw3ZTzRMRcpWvzu9hVA5SvueUZz07pCVtDy1zQ+VU/jgQ61s90v
+	iUNmG00Mmzgu8uPWFTfiwQNb7Nsjv/L3eSmEJ50c8chChQD1LxeOl/FCWA==
+X-Gm-Gg: ASbGnctdaCsBVFKF96fy4b6leAvq+KOZfGtxFlPuozrLkOedHtCrPYz2IYVgxGEbtHu
+	flT+c7GM/2oj3OPAt/CB7dXmYVTc/TxbDv9qr13QqP3RsPzizng2uvCBvUDwyI1R+sfAihGI+n+
+	xvEWBVPR7VUsHbzhz5tjTDkl96FpxL3PlzBt8g2P/7aKgB1yq8RIv/slOfwi8wNzPTBdajsIeRN
+	ORf3ZBGHm3Un9g1jOMgfIhf/c4sTj8jocEhIBVN0HW394ISMbGb+jIdXA==
+X-Google-Smtp-Source: AGHT+IE7w9DcAFaQ6llIKKV+U0IBgQquigNPgdN+t6KdpsbrjebJ5UjG7zp85uk86VwvI42EWPpb/w==
+X-Received: by 2002:a05:6000:1fa2:b0:38a:1b94:ecc1 with SMTP id ffacd0b85a97d-38a8730afbcmr2820537f8f.25.1736364708064;
+        Wed, 08 Jan 2025 11:31:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c8a6e19sm53379051f8f.100.2025.01.08.11.31.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jan 2025 11:31:47 -0800 (PST)
+Message-Id: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
+From: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 08 Jan 2025 19:31:46 +0000
+Subject: [PATCH] help: interpret help.autocorrect=1 as "immediate" rather than
+ 0.1s
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: MULTIPART/SIGNED; protocol="application/pgp-signature"; micalg=pgp-sha1; BOUNDARY="8323329-628175011-1736364600=:2854301"
-References: <Mahogany-0.68.0-2854301-20250107-230058.01@dark.tt-solutions.com>
-    <Z320RGb0tqNyvvxt@tapette.crustytoothpaste.net>
-    <xmqq5xmqqk9j.fsf@gitster.g>
-    <Mahogany-0.68.0-2854301-20250108-005035.01@dark.tt-solutions.com>
-    <xmqqjzb5nvhd.fsf@gitster.g>
-In-Reply-To: <xmqqjzb5nvhd.fsf@gitster.g>
-X-Mailer: Mahogany 0.68.0 'Cynthia', compiled for Linux 6.1.0-10-amd64 x86_64
+To: git@vger.kernel.org
+Cc: Scott Chacon <schacon@gmail.com>,
+    Scott Chacon <schacon@gmail.com>
 
---8323329-628175011-1736364600=:2854301
-Content-Type: TEXT/PLAIN; CHARSET=US-ASCII
-Content-Disposition: INLINE
+From: Scott Chacon <schacon@gmail.com>
 
-On Wed, 08 Jan 2025 08:03:42 -0800 Junio C Hamano <gitster@pobox.com> wrote:
+Many people confusingly set the "help.autocorrect" setting to 1 believing it
+to be a boolean that turns on the autocorrect feature rather than an integer
+value of deciseconds wait time. Since it's impossible for a human being to
+react this quickly, the help message stating that it's waiting for 0.1s
+before continuing becomes confusingly comical.
 
-JCH> Vadim Zeitlin <vadim@zeitlins.org> writes:
-JCH> 
-JCH> > JCH> Sounds reasonable, but I wonder how this would interact with
-JCH> > JCH> bootstrapping.  Should it be configured in ~/.gitconfig, possibly
-JCH> > JCH> with [includeIf] to specify the directory you'd store a bunch of
-JCH> > JCH> repositories you clone from outside, or something?  I guess "git
-JCH> > JCH> clone" without "--recurse-submodules" is simple enough to be used
-JCH> > JCH> for bootstrapping, and then the configuration can be set at the
-JCH> > JCH> top-level superproject after cloning but before "submodule init".
-JCH> >
-JCH> >  I might be missing something here, but if the question is about whether we
-JCH> > need to have any special support for this in git-clone itself, then I don't
-JCH> > think so, it's a rather special use case and running git-clone without
-JCH> > --recurse-submodules and initializing (some) submodules later while
-JCH> > symlinking some other ones is only a minor inconvenience, if that.
-JCH> 
-JCH> If you say so then I'd stop worrying about it ;-)  I am not a heavy
-JCH> submodule user myself.
+This patch simply interprets a "1" value as the same as the "immedate"
+autocorrect setting, which makes it skip the 0.1s and simply say that it's
+running the command, which is almost certainly what everyone setting it to
+that value is actually trying to do.
 
- Well, let's just say that I'm not worried about it.
+Signed-off-by: Scott Chacon <schacon@gmail.com>
+---
+    help: interpret help.autocorrect=1 as "immediate" rather than 0.1s
 
-JCH> The worry came primarily from the fact that this was reported as a
-JCH> "we have been using submodules happily in this particular manner but
-JCH> with a new version of Git it stopped working" regression.  Your
-JCH> set-up was created with an older version of Git that did not have
-JCH> the problematic "defence in depth".  If you or somebody else wanted
-JCH> to recreate the same set-up from scratch, would "git clone" that is
-JCH> unmodified, other than conditionally disables the check introduced
-JCH> by the commit e8d06089 (submodule: require the submodule path to
-JCH> contain directories only, 2024-03-26), let you do so?  Or would it
-JCH> also need to honor the new configuration that conditionally disables
-JCH> the check, and if so, how would we make sure it is read during "git
-JCH> clone" (which has kind of special chicken-and-egg problem with
-JCH> respect to configuration settings).
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1869%2Fschacon%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1869/schacon/master-v1
+Pull-Request: https://github.com/git/git/pull/1869
 
- As I was trying to say above, I think it's unreasonable to expect "git
-clone --recurse-submodules" to do something extra smart when there is a
-simple (both to use and to discover) alternative of just running "git
-clone" without any extra options, and then initialize the submodules that
-you don't want to symlink manually and symlink the remaining ones.
+ help.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-JCH> > ... Should it be something like submodule.validate instead, perhaps?
-JCH> > Please let me know if anybody has any better ideas.
-JCH> 
-JCH> Is "it MUST NOT BE a symbolic link" the only thing the validation
-JCH> does?
+diff --git a/help.c b/help.c
+index 5483ea8fd29..e6576644b99 100644
+--- a/help.c
++++ b/help.c
+@@ -568,7 +568,7 @@ static int git_unknown_cmd_config(const char *var, const char *value,
+ 			return config_error_nonbool(var);
+ 		if (!strcmp(value, "never")) {
+ 			cfg->autocorrect = AUTOCORRECT_NEVER;
+-		} else if (!strcmp(value, "immediate")) {
++		} else if (!strcmp(value, "immediate") || !strcmp(value, "1")) {
+ 			cfg->autocorrect = AUTOCORRECT_IMMEDIATELY;
+ 		} else if (!strcmp(value, "prompt")) {
+ 			cfg->autocorrect = AUTOCORRECT_PROMPT;
 
- Currently, yes.
-
-JCH> Would there be extra check on top of what is currently there
-JCH> that may turn out to be useful?
-
- It's conceivable that there might be other checks in the future, e.g.
-maybe the ownership of the directories or even their permissions might be
-checked? Just to be clear, this is pure speculation on my part, i.e. I
-don't see any real need to do it, but I can't be certain that there are no
-scenarios in which this might be useful.
-
-JCH> If the answers are no and/or yes, "submodule.validate=no" sounds like
-JCH> a reasonable choice, but I am not good at naming, so we may want to
-JCH> hear ideas from others.
-
- I'll wait for some time to hear if anybody else has any better suggestions.
-
- Thanks in advance!
-VZ
-
---8323329-628175011-1736364600=:2854301
-Content-Type: APPLICATION/PGP-SIGNATURE
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQQx+vLQdOwioQqkxtoG6kHeT2wehgUCZ37SOAAKCRAG6kHeT2we
-hlHTAJwN+HyPsUaAXaemWZYS8HtUB2tm1QCfeh+VSiSuXvbUEv/Qhez3FCwtxfQ=
-=9LQi
------END PGP SIGNATURE-----
-
---8323329-628175011-1736364600=:2854301--
+base-commit: 14650065b76b28d3cfa9453356ac5669b19e706e
+-- 
+gitgitgadget
