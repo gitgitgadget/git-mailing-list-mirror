@@ -1,198 +1,473 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F1112DD8A
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 18:16:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3AE919B586
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 18:37:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736360205; cv=none; b=oPIBKwNLqmEpG88L8BmqtRtoHfET/QIGXTBKOstB0LdUqoiByllTKFtNO4rj9EufVXXkcMZZXDRuocrjtp6iAhPU2BpEPPgi+uxtJZWhol4EOlboQEwQ/fiRSGvOR3i/djwpsru8RBmf6LnMz2IeLAq6FOTa9V/RPdxT9qHSqcU=
+	t=1736361480; cv=none; b=h44C1BUuO7v36kWaxjbYKe4tpTctWoxuaaIAM2+0KcG4/lpZxIypkIoA7oQMslmk526ejELMNkXvaVPW2f8JR7mdvH+0lOOrZQz6QWKBbj8drcyT0UVWMh+B1GP5DFvHGcrlGeokJ8DqSGmX3boweWLVLXt5QoxcyCfsGl2OMCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736360205; c=relaxed/simple;
-	bh=SFr7mUKpmDZfPZ1PftaIqpGHFI5/Gz2GRmga+yQ8Egk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TWBlfenMTNiFQrOpdnHfPRN8Vboz1CIcebkEwIy6TIjTUuPLEKXcoR6IO7/agkmMGBFq0DWm/5seeoeKXmppNiIuQHDBw1s5UOOAwLxVuXfjZw0Pm60V/vqPdF3d447XdNCwxCnOfCRyI1tXceUZJYHNR5ijwclPOqE4+Iyv3rU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k6cMj/aF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qPdILPkj; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736361480; c=relaxed/simple;
+	bh=EUtjkxccSNsYAs2Bd6cd4rSoTkDRU1atTnWDm5IQ+58=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=MELI2hQBb9gXEkeR0D+oFdanvrhRiaBPr6bboJinJR7lWaLYtj60x1CjKetuVzMidir/MZYUHuYGPZE/lqx08x09ao8i3A7WhJCu8xOUqAgWVujb0jdLFcj7sW63+BA/rDV5A8YpioIAgXKdYFfo+tI3Ox2X1FsWcRq222ughxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HOnDws06; arc=none smtp.client-ip=209.85.219.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k6cMj/aF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qPdILPkj"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 874D4114023E;
-	Wed,  8 Jan 2025 13:16:40 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Wed, 08 Jan 2025 13:16:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736360200; x=1736446600; bh=6By0Sqkaw6
-	53arblBqKSG5mXBygfkZKbm97Zj8vmOQs=; b=k6cMj/aFIfWF+bJIuieZTscD0Z
-	7dB5H/Ul8lMGxgsyunGeglvgcNd7Dn+7PVuWCDSnPQyEzqC2m2Dpmksh9ACwof0Y
-	7H940HnlzTYHb8WrMk32+6CJ1kGS7Et7Dx6t1k3lTGqTKPrkvqLQbrqnYKkav60v
-	dH1bPE/MMA4cFcVWUYa2LKSpauaZ1pgNaLQ69k8EIhsli9MK3VKvb55ZqFF6KswV
-	OS4pIpOSjftcPPT5xLnDKK39UbkEh9lA7sfeaiJs0A8MYXQCYUvPLJB0isELBNks
-	XDrDkwEWd0iA38WKPJmGBQgSZtA4KdzH1fURkgX2tpVsay2uCBpJnnf7qkMg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736360200; x=1736446600; bh=6By0Sqkaw653arblBqKSG5mXBygfkZKbm97
-	Zj8vmOQs=; b=qPdILPkj28WkbfMXOb3fMvNAzB4vUdXqVhKsqkTp+2efANogyBq
-	DRltTJu7Kv0VbN2WqrpiDs1HSg2HCiXYr2sQuOZLe02HuV+wGQFDiKYK+4omrvtF
-	L8V/+OAJ18fZeE86VrVnQWLHu5DwugsKPjYR814mpklDgxNn/W4mFYRdbYn6qTgQ
-	zUz6wIghpV37cuS70iBvlbO2nNL5mh3AxvJ8eBG8s3uZkxCsl9LNTZQmG2Vkila9
-	80jUTjsr5TWVfR3YFavwzJi4FNaGU+PCv/X++zjsLRgB57Lsa9h3rAbcngNYjI/f
-	QrN8l3cnOURNuC8GdIkAAHR2GzfriHqmAUA==
-X-ME-Sender: <xms:CMF-Z-mSKgkra_tuekUZP5vITk13Qz9qY9oxz6aPC2oAueiUpvJp_w>
-    <xme:CMF-Z13_3-vFWvfOYuYI8fR9sVn_NJFTj5wZhq_6AIC-sScdEhQlZWxOYxbRKzZRH
-    qwpSSsKQ21jgL6OMA>
-X-ME-Received: <xmr:CMF-Z8qg6bRcS-gYlKbsXDaEgaF3TkD29rLeXVE0QdBJBr3mWWdqnMMuAJeB1PY3Y3Mg4pR_LU5ymWnj2dvjlCNP6wNDdj9gwZQ-WG6sVI9I7g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggedguddtlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkefhteegffeikeejjeeiuefhueejffeuvddvleej
-    hfekheeugfffleeludekieenucffohhmrghinheplhhishhtrdhnohifnecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
-    nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtoheprhgrnhgurghllhdrsggvtghkvghrsehnvgigsghrih
-    gughgvrdgtrg
-X-ME-Proxy: <xmx:CMF-ZyleCpnHRpQB3cSdLu-ZsaTiYeTzOeNNLF9B1k78Y4pgvGw3rA>
-    <xmx:CMF-Z82xEhLEA_EdQnUNIu0m4YWncKhpmag-33TPa34_DYMrQTqhfQ>
-    <xmx:CMF-Z5t-lq1XBksZ2s76ITSDMQFNKIGUz9QxBNe3S_fBQawec98vBQ>
-    <xmx:CMF-Z4W7VLKdx1b-uGlB9ZTqZSIHGONwOypri6_JmoCp_XKbTa_JFQ>
-    <xmx:CMF-Z5z8F1DjSWVcwu4kpUoja_RG0XB8qYt6J-UVd4FKsONpZGU5htX6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jan 2025 13:16:39 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b1dc09ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 8 Jan 2025 18:16:36 +0000 (UTC)
-Date: Wed, 8 Jan 2025 19:16:35 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Randall S. Becker" <randall.becker@nexbridge.ca>
-Subject: Re: [PATCH 2/2] reftable/stack: accept insecure random bytes
-Message-ID: <Z37A_d9mAnKtGNcU@pks.im>
-References: <20250107-b4-pks-reftable-csprng-v1-0-6109a54a8756@pks.im>
- <20250107-b4-pks-reftable-csprng-v1-2-6109a54a8756@pks.im>
- <xmqqzfk2qr62.fsf@gitster.g>
- <xmqqv7uqqqu9.fsf@gitster.g>
- <Z34gfa-_dSbWD19h@pks.im>
- <xmqqr05dnwli.fsf@gitster.g>
- <Z36l--QUjaYYb6Uf@pks.im>
- <xmqqo70hmcet.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HOnDws06"
+Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6d8a3e99e32so1388566d6.2
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 10:37:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736361477; x=1736966277; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MS/hvL0txM5VNNlebJVUExcD4Ns/vp/IhXrC8aJXFEM=;
+        b=HOnDws06yTg6x/ckeDRU1Li2ZBVTQ1mA9DqQsaTCTK/LZ1jVBGJtaZJuDcsj4hCvyt
+         wmZOGGgqPi6ey9JJdzHeGU7g6QNVc75qX2u6lyMNetjYJHeVS34EXinAOj7ZSzgtwX5d
+         gHnBFOMDKObUiOXLrTzhP5xpStWb4qu5iMV6HThuo47UE3bXnIA2nEEsaDiA1uUFby98
+         b92SKw42DjMMlXxQyAOZOzP+FOjJTSmIMZkxBWuYIvJmcfMSJUjdumJqvA37Yo14hTtn
+         6h2WD4W6UMyEEPm+zuG9MLYQT6mOisykuMJCCKLidTQEHdhrAqIud0ihZJZJqU22dK6V
+         S2Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736361477; x=1736966277;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MS/hvL0txM5VNNlebJVUExcD4Ns/vp/IhXrC8aJXFEM=;
+        b=YCbHqEby9HK+hVJj9npW6JvmSPG1hNqLpbI6nstWL3c/B1rrWWTy6erGvbsMn84ii5
+         wrbxrIR/NtbemIP2K1ufDLrKPiAJYN2KPexla4FnD1ut0HPfEt97O6Tfp2JjonC0dd43
+         doPpIMf53NNKyDIgUXp/G0/3CHTbl5RXm1iMj4LqZwcQOVxr6yoKyEtfeyVXHcfzJ1BJ
+         jVpX2T5N6RmmbrtOrQneHKfHRDOq/Yft5d4EkZ+LXdYWYyTG19qZM0jqs+f0ZCEb0fen
+         YQqF75xZLpAnKVHKF1pmnNFx31fHQW2ez2qNx+lRLszsfN2G/m9jyLqJsCJsV9s7pi1B
+         N5sQ==
+X-Gm-Message-State: AOJu0Yy2iZOE2NY5vHecE/xD35j/JMDvrJ4/UXGp+lw6Xw0zgPtBdTID
+	X0fRguVEpPwgOfujDILfE9Pf+1Tb0RqLvJE5OYJ6aud9xiAF0bl81+6IXFw20U0=
+X-Gm-Gg: ASbGncs/GjteycVqjAta1T6E0gqZ4xrPQsY+JsoP1h3wVb33xV0tYGYeTTeOj5fAbn5
+	8BMJGSIZbf+Qt3QK+RGjYmr6dBiSJLSg4NRUOkIYKKa9EXkZkTmc5dPqIqKgZ0EWJs+OziLhF30
+	unSuPSYvYEG+vt1TeVZVktjmobmxYmGIYoRnKCNyP3tonwKQcaY5vtFgoemM9X7WY1V/vow4oSu
+	mT8efdASbP8TiKW1iaN5Nd2wkGV/kceXeDyGcQWL2EC+p8vN2nn2YnDfy+9GwA4jDzGDuck1NLY
+	8F9D5HCcMQ==
+X-Google-Smtp-Source: AGHT+IFmU0NCEYICKj6/Tsej42fww6uCr3z0aSTzPCqbBPTcpi1FA6uzOVaP+iZeV5kZ1WhXgAG/lA==
+X-Received: by 2002:a05:6214:4890:b0:6d8:9d56:2d10 with SMTP id 6a1803df08f44-6df9b1c4f47mr70300226d6.7.1736361477442;
+        Wed, 08 Jan 2025 10:37:57 -0800 (PST)
+Received: from localhost.localdomain ([184.148.194.219])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dd180ea74bsm193228036d6.25.2025.01.08.10.37.56
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Wed, 08 Jan 2025 10:37:57 -0800 (PST)
+From: Eric Ju <eric.peijian@gmail.com>
+To: git@vger.kernel.org
+Cc: calvinwan@google.com,
+	jonathantanmy@google.com,
+	chriscool@tuxfamily.org,
+	eric.peijian@gmail.com,
+	karthik.188@gmail.com,
+	toon@iotcl.com,
+	jltobler@gmail.com
+Subject: [PATCH v9 0/8] cat-file: add remote-object-info to batch-command
+Date: Wed,  8 Jan 2025 13:37:31 -0500
+Message-ID: <20250108183740.67022-1-eric.peijian@gmail.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20240628190503.67389-1-eric.peijian@gmail.com>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo70hmcet.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jan 08, 2025 at 09:40:58AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Hm. The problem is when Git dies in the middle of a transaction:
-> >
-> >   1. We write the temporary table.
-> >   2. We compute the not-so-random suffix.
-> >   3. We write the temporary "tables.list" file.
-> >   4. We move the temporary table into place using the not-so-random
-> >      suffix.
-> >   5. Git dies before updating "tables.list".
-> >
-> > Now we have the temporary table moved into place, but "tables.list"
-> > hasn't been updated yet. When the next Git process comes along and wants
-> > to update the table it would result in an error if it computed the same
-> > suffix.
-> 
-> Here, I hear that we _do_ depend on the suffix being relatively
-> unique.  Once our random number generator decides to give the same
-> number twice to cause collision, the reftable data gets corrupt?
+Because I mistakenly sent a wrong range-diff in v8, please consider this v9 as
+both an update addressing new comments from Calvin Wan at
+https://lore.kernel.org/git/CAFySSZAqh6J14+r9JLM3LmRmV02ZvPRf5dB3rWVnUZS_5XaHcQ@mail.gmail.com/
+and a resend of the corrected range-diff for v8.
 
-No, there is no corruption. We may fail to update the stack when there
-are colliding files, but that's it.
+This patch series is a continuation of Calvin Wan’s (calvinwan@google.com)
+patch series [PATCH v5 0/6] cat-file: add --batch-command remote-object-info
+command at [1].
 
-> > The reftable library knows to clean up such stale tables when not
-> > referenced by the "tables.list" file, but it doesn't do so on every
-> > write. So this would likely still cause issues in practice.
-> >
-> > I already though about this scenario when writing my mail, but didn't
-> > really think about it as "correctness". But I guess it is.
-> 
-> Hmph.  I am not sure how I should feel about this.  Our reliance on
-> hash functions (which can be made to collide) not colliding is one
-> thing, but is it sensibly safe to rely on a cryptographically
-> unpredictable random generator not to yield the same suffix twice
-> during the lifetime of an previous invocation for correctness?
+Sometimes it is beneficial to retrieve information about an object without
+having to download it completely. The server logic for retrieving size has
+already been implemented and merged in "a2ba162cda (object-info: support for
+retrieving object info, 2021-04-20)"[2]. This patch series implement the client
+option for it.
 
-This is why I've been hesistant to call it a "correctness" issue, as
-there is no corruption involved here. It's more of a denial of service
-as you may not be able to update the stack anymore until you remove the
-occluding file.
+This patch series add the `remote-object-info` command to
+`cat-file --batch-command`. This command allows the client to make an
+object-info command request to a server that supports protocol v2.
 
-But turns out I misremembered from 9abda98149 (reftable/stack: fix use
-of unseeded randomness, 2023-12-11): things indeed work alright. To
-demonstrate, let's update `format_name()` like this:
+If the server uses protocol v2 but does not support the object-info capability,
+`cat-file --batch-command` will die.
 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 531660a49f..b7422679df 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -659,7 +659,7 @@ int reftable_stack_add(struct reftable_stack *st,
- static int format_name(struct reftable_buf *dest, uint64_t min, uint64_t max)
- {
- 	char buf[100];
--	uint32_t rnd = (uint32_t)git_rand();
-+	uint32_t rnd = 123;
- 	snprintf(buf, sizeof(buf), "0x%012" PRIx64 "-0x%012" PRIx64 "-%08x",
- 		 min, max, rnd);
- 	reftable_buf_reset(dest);
+If a user attempts to use `remote-object-info` with protocol v1,,
+`cat-file --batch-command` will die.
 
-And then we create an occluding file and try to update:
+Currently, only the size (%(objectsize)) is supported in this implementation.
+The type (%(objecttype)) is not included in this patch series, as it is not yet
+supported on the server side either. The plan is to implement the necessary
+logic for both the server and client in a subsequent series.
 
-    $ ~/Development/git/build/bin-wrappers/git init repo --ref-format=reftable
-    Initialized empty Git repository in /tmp/repo/.git/
-    $ cd repo/
-    $ ls .git/reftable/
-    0x000000000001-0x000000000001-0000007b.ref  tables.list
-    $ touch .git/reftable/0x000000000002-0x000000000002-0000007b.ref
-    $ ~/Development/git/build/git commit --allow-empty -mx
-    [main (root-commit) 08d02ef] x
-    $ ls .git/reftable/
-    0x000000000001-0x000000000002-0000007b.ref  tables.list
-    $ git show
-    commit 08d02efa88f085f02c31285bf909d8d3a25c70dd (HEAD -> main)
-    Author: Patrick Steinhardt <ps@pks.im>
-    Date:   Wed Jan 8 19:03:46 2025 +0100
+The default format for remote-object-info is set to %(objectname) %(objectsize).
+Once %(objecttype) is supported, the default format will be unified accordingly.
 
-    x
+If the batch command format includes unsupported fields such as %(objecttype),
+%(objectsize:disk), or %(deltabase), the command will terminate with an error.
 
-So the stack gets updated as expected, no corruption there.
+Changes since V7 (v8 had an incorrect range-diff)
+================
+- Introduced strtoul_ul() in git-compat-util.h to ensure proper error handling
+  using strtoul from the standard library.
+- Separated the test library into its own commit for better clarity
+  and organization.
+- Use string_list_has_string() instead of unsorted_string_list_has_string() to
+  avoid quadratic runtime behaviour
+- Added a documentation link to the wire format in the commit message to
+  provide additional context.
+- New test case "remote-object-info fails on not providing OID"
+- Fixed typos and formatting issues for improved readability.
+- Flattened the memory allocation logic of sizep in object_info_data for better
+  intuitiveness and readability.
 
-But this _can_ be a problem on Windows, where the file cannot be deleted
-in case it was still open. This is also documented as the reason in
-"Documentation/techincal/reftable.txt". That should've gotten better
-though now with the improvements I made to our rename-emulation, as it
-now uses POSIX semantics.
+Calvin Wan (4):
+  fetch-pack: refactor packet writing
+  fetch-pack: move fetch initialization
+  serve: advertise object-info feature
+  transport: add client support for object-info
 
-That being said, I still don't think that swapping out `git_rand()` for
-`rand()` is the right thing to do. It does not solve the issue, but only
-a symptom thereof. Git can still die whenever the OpenSSL CSPRNG fails
-as there are other uses of `git_rand()` or `csprng_bytes()` in the
-codebase.
+Eric Ju (4):
+  git-compat-util: add strtoul_ul() with error handling
+  cat-file: add declaration of variable i inside its for loop
+  cat-file: split test utility functions into a separate library file
+  cat-file: add remote-object-info to batch-command
 
-So this change would regress something that works everywhere but on
-NonStop and make the suffixes predictable. The ia64 machine in question
-is being EOLd end of 2025. And the fact that this has never been a
-problem before v2.48.0-rc2, and that the machine was rebooted for
-maintenance immediately before running the tests, indicates to me that
-something fishy is going on on that platform.
+ Documentation/git-cat-file.txt         |  24 +-
+ Makefile                               |   1 +
+ builtin/cat-file.c                     | 110 +++-
+ connect.c                              |  34 ++
+ connect.h                              |   8 +
+ fetch-object-info.c                    |  85 ++++
+ fetch-object-info.h                    |  22 +
+ fetch-pack.c                           |  51 +-
+ fetch-pack.h                           |   2 +
+ git-compat-util.h                      |  18 +
+ object-file.c                          |  11 +
+ object-store-ll.h                      |   3 +
+ serve.c                                |   4 +-
+ t/lib-cat-file.sh                      |  16 +
+ t/t1006-cat-file.sh                    |  13 +-
+ t/t1017-cat-file-remote-object-info.sh | 664 +++++++++++++++++++++++++
+ transport-helper.c                     |  11 +-
+ transport.c                            |  28 +-
+ transport.h                            |  11 +
+ 19 files changed, 1048 insertions(+), 68 deletions(-)
+ create mode 100644 fetch-object-info.c
+ create mode 100644 fetch-object-info.h
+ create mode 100644 t/lib-cat-file.sh
+ create mode 100755 t/t1017-cat-file-remote-object-info.sh
 
-Patrick
+Range-diff against v7:
+-:  ---------- > 1:  63997081d1 git-compat-util: add strtoul_ul() with error handling
+1:  5181e849eb ! 2:  f188962f05 cat-file: add declaration of variable i inside its for loop
+    @@ fetch-pack.c: static void write_fetch_command_and_capabilities(struct strbuf *re
+     -		int i;
+      		ensure_server_supports_v2("server-option");
+     -		for (i = 0; i < server_options->nr; i++)
+    -+		for (int i = 0; i < server_options->nr; i++)
+    ++		for (size_t i = 0; i < server_options->nr; i++)
+      			packet_buf_write(req_buf, "server-option=%s",
+      					 server_options->items[i].string);
+      	}
+-:  ---------- > 3:  71250a03d2 cat-file: split test utility functions into a separate library file
+2:  0c6acf58c2 ! 4:  0ab26e6cd5 fetch-pack: refactor packet writing
+    @@ connect.c: int server_supports(const char *feature)
+     +		packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
+     +	if (server_options && server_options->nr) {
+     +		ensure_server_supports_v2("server-option");
+    -+		for (int i = 0; i < server_options->nr; i++)
+    ++		for (size_t i = 0; i < server_options->nr; i++)
+     +			packet_buf_write(req_buf, "server-option=%s",
+     +					 server_options->items[i].string);
+     +	}
+    @@ connect.c: int server_supports(const char *feature)
+      	PROTO_FILE,
+     
+      ## connect.h ##
+    -@@
+    - #ifndef CONNECT_H
+    - #define CONNECT_H
+    - 
+    -+#include "string-list.h"
+    - #include "protocol.h"
+    - 
+    - #define CONNECT_VERBOSE       (1u << 0)
+     @@ connect.h: void check_stateless_delimiter(int stateless_rpc,
+      			       struct packet_reader *reader,
+      			       const char *error);
+      
+    -+/**
+    -+ * write_command_and_capabilities writes a command along with the requested
+    ++/*
+    ++ * Writes a command along with the requested
+     + * server capabilities/features into a request buffer.
+     + */
+    ++struct string_list;
+     +void write_command_and_capabilities(struct strbuf *req_buf, const char *command,
+     +				    const struct string_list *server_options);
+     +
+    @@ fetch-pack.c: static int add_haves(struct fetch_negotiator *negotiator,
+     -		packet_buf_write(req_buf, "session-id=%s", trace2_session_id());
+     -	if (server_options && server_options->nr) {
+     -		ensure_server_supports_v2("server-option");
+    --		for (int i = 0; i < server_options->nr; i++)
+    +-		for (size_t i = 0; i < server_options->nr; i++)
+     -			packet_buf_write(req_buf, "server-option=%s",
+     -					 server_options->items[i].string);
+     -	}
+3:  28ef74980c = 5:  8b381b4bdc fetch-pack: move fetch initialization
+4:  cb5bf65b88 = 6:  a0a15e1e4f serve: advertise object-info feature
+5:  79eab87dd2 ! 7:  e1aad1ec30 transport: add client support for object-info
+    @@ Commit message
+         Sometimes, it is beneficial to retrieve information about an object
+         without downloading it entirely. The server-side logic for this
+         functionality was implemented in commit "a2ba162cda (object-info:
+    -    support for retrieving object info, 2021-04-20)."
+    +    support for retrieving object info, 2021-04-20)." And the wire
+    +    format is documented at
+    +    https://git-scm.com/docs/protocol-v2#_object_info.
+     
+         This commit introduces client functions to interact with the server.
+     
+         Currently, the client supports requesting a list of object IDs with
+    -    the ‘size’ feature from a v2 server. If the server does not advertise
+    +    the 'size' feature from a v2 server. If the server does not advertise
+         this feature (i.e., transfer.advertiseobjectinfo is set to false),
+         the client will return an error and exit.
+     
+    +    Notice that the entire request is written into req_buf before being
+    +    sent to the remote. This approach follows the pattern used in the
+    +    `send_fetch_request()` logic within fetch-pack.c.
+    +    Streaming the request is not addressed in this patch.
+    +
+         Helped-by: Jonathan Tan <jonathantanmy@google.com>
+         Helped-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Calvin Wan <calvinwan@google.com>
+    @@ fetch-object-info.c (new)
+     +#include "fetch-object-info.h"
+     +#include "string-list.h"
+     +
+    -+/**
+    -+ * send_object_info_request sends git-cat-file object-info command and its
+    -+ * arguments into the request buffer.
+    -+ */
+    ++/* Sends git-cat-file object-info command and its arguments into the request buffer. */
+     +static void send_object_info_request(const int fd_out, struct object_info_args *args)
+     +{
+     +	struct strbuf req_buf = STRBUF_INIT;
+    @@ fetch-object-info.c (new)
+     +	if (unsorted_string_list_has_string(args->object_info_options, "size"))
+     +		packet_buf_write(&req_buf, "size");
+     +
+    -+	if (args->oids) {
+    ++	if (args->oids)
+     +		for (size_t i = 0; i < args->oids->nr; i++)
+     +			packet_buf_write(&req_buf, "oid %s", oid_to_hex(&args->oids->oid[i]));
+    -+	}
+     +
+     +	packet_buf_flush(&req_buf);
+     +	if (write_in_full(fd_out, req_buf.buf, req_buf.len) < 0)
+    @@ fetch-object-info.c (new)
+     +	strbuf_release(&req_buf);
+     +}
+     +
+    -+/**
+    -+ * fetch_object_info sends git-cat-file object-info command into the request buf
+    -+ * and read the results from packets.
+    -+ */
+     +int fetch_object_info(const enum protocol_version version, struct object_info_args *args,
+     +		      struct packet_reader *reader, struct object_info *object_info_data,
+     +		      const int stateless_rpc, const int fd_out)
+    @@ fetch-object-info.c (new)
+     +		break;
+     +	case protocol_v1:
+     +	case protocol_v0:
+    -+		die(_("wrong protocol version. expected v2"));
+    ++		die(_("unsupported protocol version. expected v2"));
+     +	case protocol_unknown_version:
+     +		BUG("unknown protocol version");
+     +	}
+    @@ fetch-object-info.c (new)
+     +			check_stateless_delimiter(stateless_rpc, reader, "stateless delimiter expected");
+     +			return -1;
+     +		}
+    -+		if (unsorted_string_list_has_string(args->object_info_options, reader->line)) {
+    -+			if (!strcmp(reader->line, "size")) {
+    -+				size_index = i;
+    -+				for (size_t j = 0; j < args->oids->nr; j++)
+    -+					object_info_data[j].sizep = xcalloc(1, sizeof(long));
+    -+			}
+    -+			continue;
+    ++		if (!string_list_has_string(args->object_info_options, reader->line))
+    ++			return -1;
+    ++		if (!strcmp(reader->line, "size")) {
+    ++			size_index = i;
+    ++			for (size_t j = 0; j < args->oids->nr; j++)
+    ++				object_info_data[j].sizep = xcalloc(1, sizeof(*object_info_data[j].sizep));
+     +		}
+    -+		return -1;
+     +	}
+     +
+     +	for (size_t i = 0; packet_reader_read(reader) == PACKET_READ_NORMAL && i < args->oids->nr; i++){
+    @@ fetch-object-info.c (new)
+     +				die("object-info: not our ref %s",
+     +					object_info_values.items[0].string);
+     +
+    -+			*object_info_data[i].sizep = strtoul(object_info_values.items[1 + size_index].string, NULL, 10);
+    ++			if (strtoul_ul(object_info_values.items[1 + size_index].string, 10, object_info_data[i].sizep))
+    ++				die("object-info: ref %s has invalid size %s",
+    ++					object_info_values.items[0].string,
+    ++					object_info_values.items[1 + size_index].string);
+     +		}
+     +
+     +		string_list_clear(&object_info_values, 0);
+    @@ fetch-object-info.h (new)
+     +	struct oid_array *oids;
+     +};
+     +
+    ++/*
+    ++ * Sends git-cat-file object-info command into the request buf and read the
+    ++ * results from packets.
+    ++ */
+     +int fetch_object_info(enum protocol_version version, struct object_info_args *args,
+     +		      struct packet_reader *reader, struct object_info *object_info_data,
+     +		      int stateless_rpc, int fd_out);
+    @@ transport.c: static int fetch_refs_via_pack(struct transport *transport,
+      	args.reject_shallow_remote = transport->smart_options->reject_shallow;
+     +	args.object_info = transport->smart_options->object_info;
+     +
+    -+	if (transport->smart_options
+    -+		&& transport->smart_options->object_info
+    -+		&& transport->smart_options->object_info_oids->nr > 0) {
+    ++	if (transport->smart_options && transport->smart_options->object_info
+    ++	    && transport->smart_options->object_info_oids->nr > 0) {
+     +		struct packet_reader reader;
+     +		struct object_info_args obj_info_args = { 0 };
+     +
+     +		obj_info_args.server_options = transport->server_options;
+    -+		obj_info_args.object_info_options = transport->smart_options->object_info_options;
+     +		obj_info_args.oids = transport->smart_options->object_info_oids;
+    ++		obj_info_args.object_info_options = transport->smart_options->object_info_options;
+    ++		string_list_sort(obj_info_args.object_info_options);
+     +
+     +		connect_setup(transport, 0);
+     +		packet_reader_init(&reader, data->fd[0], NULL, 0,
+6:  b60863aa5b ! 8:  0795ad53fe cat-file: add remote-object-info to batch-command
+    @@ builtin/cat-file.c: static void batch_one_object(const char *obj_name,
+     +			die(_("Not a valid object name %s"), argv[i]);
+     +		oid_array_append(&object_info_oids, &oid);
+     +	}
+    -+
+    ++	if (object_info_oids.nr == 0) {
+    ++		die(_("remote-object-info requires objects"));
+    ++	}
+     +	gtransport = transport_get(remote, NULL);
+     +	if (gtransport->smart_options) {
+     +		CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
+    @@ builtin/cat-file.c: static void parse_cmd_info(struct batch_options *opt,
+     +	opt->use_remote_info = 1;
+     +	data->skip_object_info = 1;
+     +	for (size_t i = 0; i < object_info_oids.nr; i++) {
+    -+
+     +		data->oid = object_info_oids.oid[i];
+    -+
+     +		if (remote_object_info[i].sizep) {
+     +			/*
+     +			 * When reaching here, it means remote-object-info can retrieve
+    @@ object-store-ll.h: int for_each_object_in_pack(struct packed_git *p,
+     +
+      #endif /* OBJECT_STORE_LL_H */
+     
+    - ## t/lib-cat-file.sh (new) ##
+    -@@
+    -+# Library of git-cat-file related tests.
+    -+
+    -+# Print a string without a trailing newline
+    -+echo_without_newline () {
+    -+	printf '%s' "$*"
+    -+}
+    -+
+    -+# Print a string without newlines and replaces them with a NULL character (\0).
+    -+echo_without_newline_nul () {
+    -+	echo_without_newline "$@" | tr '\n' '\0'
+    -+}
+    -+
+    -+# Calculate the length of a string removing any leading spaces.
+    -+strlen () {
+    -+	echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
+    -+}
+    -
+    - ## t/t1006-cat-file.sh ##
+    -@@
+    - test_description='git cat-file'
+    - 
+    - . ./test-lib.sh
+    -+. "$TEST_DIRECTORY"/lib-cat-file.sh
+    - 
+    - test_cmdmode_usage () {
+    - 	test_expect_code 129 "$@" 2>err &&
+    -@@ t/t1006-cat-file.sh: do
+    - 	'
+    - done
+    - 
+    --echo_without_newline () {
+    --    printf '%s' "$*"
+    --}
+    --
+    --echo_without_newline_nul () {
+    --	echo_without_newline "$@" | tr '\n' '\0'
+    --}
+    --
+    --strlen () {
+    --    echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
+    --}
+    --
+    - run_tests () {
+    -     type=$1
+    -     oid=$2
+    -
+      ## t/t1017-cat-file-remote-object-info.sh (new) ##
+     @@
+     +#!/bin/sh
+    @@ t/t1017-cat-file-remote-object-info.sh (new)
+     +	)
+     +'
+     +
+    -+test_expect_success 'remote-object-info fails on server with legacy protocol' '
+    ++test_expect_success 'remote-object-info fails on server with legacy protocol with default filter' '
+     +	(
+     +		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+     +		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+    @@ t/t1017-cat-file-remote-object-info.sh (new)
+     +	)
+     +'
+     +
+    ++test_expect_success 'remote-object-info fails on not providing OID' '
+    ++	(
+    ++		set_transport_variables "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+    ++		cd "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
+    ++
+    ++		test_must_fail git cat-file --batch-command="%(objectname) %(objectsize)" 2>err <<-EOF &&
+    ++		remote-object-info "$HTTPD_URL/smart/http_parent"
+    ++		EOF
+    ++		test_grep "remote-object-info requires objects" err
+    ++	)
+    ++'
+    ++
+     +
+     +# Test --batch-command remote-object-info with 'http://' transport and
+     +# transfer.advertiseobjectinfo set to false, i.e. server does not have object-info capability
+-- 
+2.47.0
+
