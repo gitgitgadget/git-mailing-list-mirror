@@ -1,193 +1,149 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BA419DFA7
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 07:18:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026F213D539
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 08:31:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736320740; cv=none; b=ovaDGRPBLsJq7dMlK/AeTiDtLViWpo8H4wr3jSWQH2plw9isPNjT7WfjZIDogYGPJw/lHS7Wvo/gi/D3IuEi7Ur4gBrPth2CrbLQ1YS0esYtADrc/vecF7ytrPZJbN03IXRSW1f9uxFKtJ0kDB8mkEkSJSszuj42K0t+TMxm30g=
+	t=1736325077; cv=none; b=HC9OS0j7FmkCL00tm4ypEhONZv/QlfrkEEEhftdWkaV+Cx3SLpvYihpnz3HhCfRneUDGPLbXEpGWXpbh8iqSZZQDwrwIB4faIVDlrIlZeK65oFWKBovHG96/bxCG9jzybC3H2hwrWX1pzvm8k31T61PJGif1LZjw/cvKY/uExLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736320740; c=relaxed/simple;
-	bh=xJ0Q+lABFnD3eo5aBTVdZssrQQ/2zuLQ1kOe1UVbj54=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sQfMr5UtjfY3THEviLdUKhN2kGbRJJ7sMgpzVDWgxgd3a4XGhVWgYjI9LAOQsXVwKDZFDuWfzXoWD/HwWrze0qp4K06YJRc8yqJ2IkqLFBnOoMzS8n7UjvYDSbpBVlVk7o7slJU6+4VNIvvGMI/1ZznZhWDU6zjWaa1nZ14BNx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Xu66W9oS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=od0n/q2s; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736325077; c=relaxed/simple;
+	bh=lEJWxJ/r/qouGqlTPPEH0HfDIB4eBCpBQSxFmEXGN5U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=t8U5YNNHkpAdNN9B4MUwgRd2RrNn1Lllg5y1oCWZbyZOaQkjyeoVkO/NcfS3HAE1SdH/OqKXryPoJL7W9lwslQteV5hj9dfDsCIqLYVEQkHFrZC/V7qKt7ZGCdtHHF5XIS5QLgR/w5fgtOBKDTRZUp1QocYWlXZgNHJdJOvj8Iw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QDfDBojD; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Xu66W9oS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="od0n/q2s"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id B28671140187;
-	Wed,  8 Jan 2025 02:18:57 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 08 Jan 2025 02:18:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736320737; x=1736407137; bh=ORWJeL5jMk
-	NPkL2aVlY9sccQeIswi/1Sih309QvpotI=; b=Xu66W9oSZk/NDbRPIVQ3ihi8Sz
-	dFyUbl3OnkYHZ1yQ4FLQA4djfHVneonWlaFeyBiU3m/VHmNapm0agAHm8S+gC7l2
-	ykJKErRZukoXMvWZet2mWKCC5bAfINaaIn0Z2fGB1pIkn3zWVgzYkL7wOFcZPlP6
-	B/6d/hGx7yVlhYIpYsOTBLAGkNw9n4o9qeA+jbYUD4MEG1d89UzjEz0+DqnlpYtZ
-	J2XijdTqxH0L6KDfpSvWuuZFKipDLKDDMXvF+Td+qMBaIHdvXtxCdDoTWzrbuNeP
-	MPCJZvEXFmc+j2ITrTO0gzAxQiU0kJRFaH1A5I6Ez4Hp3r53TWOzF6VNV1/Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736320737; x=1736407137; bh=ORWJeL5jMkNPkL2aVlY9sccQeIswi/1Sih3
-	09QvpotI=; b=od0n/q2s9KUXQQhM49mxrNtT2C90CQn0RxS7KUhhPhP2eACHf6H
-	eAT2AkfuCT8LXnrnZnn0iaAEJuu0IJeOcBEPEsu/hm6V9Tf11lxB8gd2cuMYHArZ
-	rw7ZrST6DWidgfZO+uy0isvd9MVd6M1hy/dWRcn/mfNR1c5G69O7q3rfPZDU71nQ
-	Jd/zCSJGqZXtZQ1bPnaanqetytCR2EwpQ4SDe8uXPE72s1znjgw5LTw0JSrDZiLO
-	j0q0WOupwzeThTMJoHBAa8ET58FJMozmbup58oz0UVyac2waPf1FQITaa2Eo5h8k
-	9IlNDlP78dXR8ATEs1JlzE5FNV8Ii7wLG+Q==
-X-ME-Sender: <xms:4SZ-ZwXGwiyassYzgoM_U9TuD3dvTh8a9HY6hQNOA6VnmoS0oL9t9w>
-    <xme:4SZ-Z0nqaDfBrr8-MDljd82Z_qWBEv4glvF2bYBRmyTk8mTymOD5JcEeLmyGRPb75
-    vKWKrNRP6NqKTWvoQ>
-X-ME-Received: <xmr:4SZ-Z0av1Rr1MZ30mYeUV8LFj8xN0IAmzei5v_WAh-UfaVu1qKJaJAA7xafa0dlnVTTfF92eM3PR5kMGxhqFYaDhxLIFfJAAHVIhyEfNz-mPVw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegfedguddthecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeejvedugefgffffieegtefhgfeikeevfeefheevvdeg
-    ieetgeeujeeliefhiedtueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprh
-    hssggvtghkvghrsehnvgigsghrihgughgvrdgtohhmpdhrtghpthhtoheprhgrnhgurghl
-    lhdrsggvtghkvghrsehnvgigsghrihgughgvrdgtrgdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthih
-    thhoohhthhhprghsthgvrdhnvght
-X-ME-Proxy: <xmx:4SZ-Z_Xw3_WC4Y2yXB8W8n-1akkttWiJ5RXvTYlf8Aiw7vJvTJeTmg>
-    <xmx:4SZ-Z6l69bab1TOO-9fB29EXq-uAS_yhaveeBe3bJUdFW3bL3RMkpg>
-    <xmx:4SZ-Z0esa5UWhJ6zgUmF4TApricKwLhJK8FrL8dJpszYWL9Nl_hc-g>
-    <xmx:4SZ-Z8G1sTFitJC_n30lwbab9BlnfrRqYmau7ec7zIA_Xz9pqpy8fw>
-    <xmx:4SZ-Z7DboUAX0edhF1ZGH_VuDBAGGLZAAjoFOAmCaI_ttAeVp_zmayhV>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 8 Jan 2025 02:18:56 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id fabcccd5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 8 Jan 2025 07:18:53 +0000 (UTC)
-Date: Wed, 8 Jan 2025 08:18:52 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: rsbecker@nexbridge.com
-Cc: "'brian m. carlson'" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org,
-	"'Randall S. Becker'" <randall.becker@nexbridge.ca>
-Subject: Re: [PATCH 0/2] reftable/stack: stop dying on exhausted entropy pool
-Message-ID: <Z34m1HRLAeEszXDG@pks.im>
-References: <20250107-b4-pks-reftable-csprng-v1-0-6109a54a8756@pks.im>
- <Z323CLrRsnOko1gB@tapette.crustytoothpaste.net>
- <00ac01db615f$70b72600$52257200$@nexbridge.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QDfDBojD"
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e3c8ae3a3b2so19888357276.0
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 00:31:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736325075; x=1736929875; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=e1iPdwkDALcRSLzButcpECFL++xqaNVgN7fhFXbCntY=;
+        b=QDfDBojDDL0aJD2shYKbNarUS/m7F0TSkgMVXqZqA4kZx32cOLkZ5KEoyITn/SI5U5
+         fsPJi6Wr00SYq4R+I9FqtO4EvXsfK3ZBsUA+XHeyjRtDhfV1AEVlc+rnZVHW7w+n+5eF
+         M7/XW+CEGIYGcgQjVnEgO7qh4sVwQbPcozpmjcDe+cuqmZd4IKXo5aB1nl2I2kWSW/Bg
+         NIzaPqxmKjaJH5Asax+ShJRmKUakDA7dER6sI3p1OHEbzSgh7z45x4caCdhd5VvROipO
+         pU8p2KN43ZNzfBNqQRJyiotwzRHmaQnKlSjGwe1tzq4Y2NyaRD7JuzzkVMkKoDH2bs9R
+         bRbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736325075; x=1736929875;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=e1iPdwkDALcRSLzButcpECFL++xqaNVgN7fhFXbCntY=;
+        b=lPN0TCipCQts8Ask1rhXKOQZxoOL7vIHTeM2ZWcqKSnwIt2RJmBBgpYsYfRkS+jTS6
+         MvJpm+4NoGdPXUzfrfdF5UhbB+oaZGsVS4o3K6bbwRE4KdV2VRSjC9Vm67RtHANzwT8J
+         jYF7Kx1N9QGUszAl6VyG9ficJpVRPXkMDWj/+NZIweuiBYDorgF4RPVpazAr9HC6DBgc
+         bMFNiX0orU5nDF+bIvBkvvXf9QOcMiWVoUOz6uaBaZ3bHV8Ky0TXCUi5El31MmpZ8d5H
+         sn8NyxOz5gLHjHb2UVhgIZtI5NfiVLrcPVU2kvUZwJKPzOBbix6G5Y5LJwPoLUHG3tM6
+         KmjA==
+X-Forwarded-Encrypted: i=1; AJvYcCUJuHAH8V9K74uwzNCH/8MWlFkyCui1JGOkk7md+jVXxdANukuuYGlGSACFoUgSHiyTC3o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDXBwUKquTc+R/QaV47Ai3NHc/EMIknPHOsk3cVH3X7hEV19+s
+	iF56tApXPtytX3zFf7qqKtDAsXWwKs3FBB3q6WwwlGpOLAJazV6YydLLXYFdrSmaMOdok050/JY
+	0etnLdQyvoUU6dhCEZSfzMAdkVOpQ5yisoZIL2yzB
+X-Gm-Gg: ASbGncv1wizSrWbcRuVzGqZmiucK0vNueEFYAz8S+nn8YwOXx1GyyIqvTx+b2TKEyb/
+	vC35WKgIgwToDbf7F7CSUVbSnJeJx8uwkdU21
+X-Google-Smtp-Source: AGHT+IGrcyS9P9ixmvbty7u4JEEcSn9kP1sc/LX+3JgmcDR/aGFCwKobLasoxMsF0/c33Vq5HbLGxRs3fCzhuWDd86A=
+X-Received: by 2002:a25:1ec2:0:b0:e4a:c0bb:7b25 with SMTP id
+ 3f1490d57ef6-e54ee1daa87mr1025871276.41.1736325074965; Wed, 08 Jan 2025
+ 00:31:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <00ac01db615f$70b72600$52257200$@nexbridge.com>
+References: <20250107091932.126673-1-kuforiji98@gmail.com> <20250107091932.126673-2-kuforiji98@gmail.com>
+ <xmqq7c76trpa.fsf@gitster.g> <Z34XvPjhY15MFHrT@pks.im>
+In-Reply-To: <Z34XvPjhY15MFHrT@pks.im>
+From: Seyi Chamber <kuforiji98@gmail.com>
+Date: Wed, 8 Jan 2025 09:31:03 +0100
+X-Gm-Features: AbW1kvaE_uXjYi-vCjt849mzdQdJeJsxZ5QssMMpV2E2xv4JVL9-3YltJ8MGfo4
+Message-ID: <CAGedMtcNpYBRsr9b8-ftbs6JFdp58wNGyYssiF1s0MEmziDtxw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] t/unit-tests: match functions signature with trailing code
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, phillip.wood@dunelm.org.uk
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Jan 07, 2025 at 06:54:02PM -0500, rsbecker@nexbridge.com wrote:
-> On January 7, 2025 6:22 PM, brian m. carlson wrote:
-> >On 2025-01-07 at 15:26:58, Patrick Steinhardt wrote:
-> >> Hi,
-> >>
-> >> this small patch series fixes the issue reported by Randall [1], where
-> >> an exhausted entropy pool can cause us to die when writing a new table
-> >> to the reftable stack. I _think_ that this is only an issue with the
-> >> OpenSSL backend of `csprng_bytes()`:
-> >>
-> >>   - `arc4random_buf()` never returns an error.
-> >>
-> >>   - `getrandom()` pulls from "/dev/urandom" by default.
-> >>
-> >>   - `getentropy()` seems to block when there is not enough randomness
-> >>     available.
-> >>
-> >>   - `GtlGenRandom()` I cannot really tell.
-> >>
-> >>   - The fallback reads from "/dev/urandom", which also returns bytes in
-> >>     case the entropy pool is drained.
-> >>
-> >> So OpenSSL's `RAND_bytes()` seems to be the only one that returns an
-> >> error when the entropy pool is empty. I did wonder whether we even
-> >> need to introduce the new flag in the first place, or whether we
-> >> cannot just use `RAND_pseudo_bytes()` unconditionally. But I'm a bit
-> >> uneasy about it given that OpenSSL has this doc:
-> >>
-> >>     RAND_pseudo_bytes() puts num pseudo-random bytes into buf.
-> >>     Pseudo-random byte sequences generated by RAND_pseudo_bytes() will
-> >>     be unique if they are of sufficient length, but are not necessarily
-> >>     unpredictable. They can be used for non-cryptographic purposes and
-> >>     for certain purposes in cryptographic protocols, but usually not for
-> >>     key generation etc.
-> >>
-> >> It might be too easy to accidentally rely on `csprng_bytes()` where it
-> >> actually requires strong cryptographic data, so I was erring on the
-> >> side of caution.
+On Wed, 8 Jan 2025 at 07:14, Patrick Steinhardt <ps@pks.im> wrote:
+>
+> On Tue, Jan 07, 2025 at 10:16:33AM -0800, Junio C Hamano wrote:
+> > Seyi Kuforiji <kuforiji98@gmail.com> writes:
 > >
-> >The reason I didn't use RAND_pseudo_bytes is because it's been deprecated since
-> >OpenSSL 1.1.0 and RAND_bytes uses a CSPRNG just like RAND_pseudo_bytes as of
-> >that version.  Once it's seeded, it should be able to generate plenty of bytes,
-> >because I believe it uses a CTR-DRBG, which only needs to be reseeded after 2^48
-> >bytes (which is far more than we should be using).
+> > > The `generate-clar-decls.sh` script extracts signatures of test
+> > > functions from our unit tests, which will later get used by the clar to
+> > > automatically wire up tests. The sed command only matches lines that
+> > > ended immediately after `void)`, causing it to miss declarations with
+> > > additional content such as comments or annotations.
+> > >
+> > > Relax the regular expression by making it match lines with trailing data
+> > > after the function signature. This ensures that all valid function
+> > > declarations are captured and formatted as `extern` declarations
+> > > regardless of their formatting style, improving the robustness of the
+> > > script when parsing `$suite` files.
+> > >
+> > > This will be used in subsequent commits to match and capture the
+> > > function signature correctly, regardless of any trailing content.
 > >
-> >We can full well use RAND_pseudo_bytes, but all operating systems should provide
-> >an appropriate entropy source that can provide 256 bits of entropy on startup.
-> >arc4random will just kill the process if it can't seed itself, so your changes won't
-> >actually prevent dying on a lack of entropy.
+> > I am not sure if this is going in the right direction, though.
 > >
-> >I don't want an option that chooses "insecure" bytes.  My preference is that we
-> >require people use a different backend or an up-to-date OpenSSL version that
-> >shouldn't have this problem.  We can use RAND_pseudo_bytes if we really need to
-> >support older versions, but there are also no major operating systems which
-> >require that old of a version (CentOS 7, which is dead, used OpenSSL 1.0.2, and
-> >CentOS 8 uses 1.1.1k), so it's probably not within our support policy to do that.
+> > Especially for things like test suites that are looked at and worked
+> > on only by develoeprs *and* these tools, being uniform and consistent
+> > weighs more than being more flexible.
 > >
-> >Note also that if OpenSSL is being used for TLS, a lack of entropy will result in TLS
-> >not working, which means that Git will be randomly broken on that system, which is
-> >not really an experience that we want to encourage, so that should be taken into
-> >account.
+> > Let me state it in another way.  How many of the existing test
+> > pieces are picked up by the current pattern, and among them how many
+> > of them would see vast improvements if they are allowed to have
+> > arbitrary garbage after their "I do not take any arguments" function
+> > signature?  Are new tests you are migrating from outside the clar
+> > world lose a lot if they are no longer allowed to have comments
+> > there, or would it be suffice to have the comments before the
+> > functions (which many of our function definition do anyway)?
 > >
-> >Can we get some more information about what version of OpenSSL is being used
-> >and what the system entropy source is?
-> 
-> In my situation, OpenSSL 3.0.11 on ia64. 3.4.1 and 3.0.13 on x86 (x86 works fine
-> Because OpenSSL uses hardware. On ia64, we end up on PRNGD, which does fail.
+> > A quick peek at [PATCH 2/2] tells me that this is not even something
+> > that would make it easier to port the existing tests by allowing
+> > more straight line-by-line copies or something.  The patch splits
+> > many in-line test pieces in the "main" into separate functions, and
+> > it does so in a rather unusual format, e.g.,
+> >
+> >   void test_hash__multi_character(void) TEST_HASH_STR("abc",
+> >           "a9993e364706816aba3e25717850c26c9cd0d89d",
+> >           "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad")
+> >
+> > where TEST_HASH_STR() expands to the function body that starts with
+> > a "{" and ends with a "}".  It can well be written more like
+> >
+> >     void test_hash__multi_character(void)
+> >     {
+> >       TEST_HASH_STR("abc",
+> >               "a9993e364706816aba3e25717850c26c9cd0d89d",
+> >               "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
+> >     }
+> >
+> > and we do not need this step at all if we did so.  Such a construct
+> > would be a lot friendlier to the editors that auto-indent, too.
+> >
+> > So, I do not quite see much value in this particular change.
+>
+> Yeah. This was something I proposed, but I already mentioned to Seyi
+> that I'm not all that happy with the outcome as it has a couple of
+> downsides, for example broken syntax highlighting in lots of editors. I
+> said he can send that version to the mailing list anyway and get some
+> feedback on it to figure out whether my discomfort with my own idea is
+> warranted or not. And your comment here basically confirms that my idea
+> wasn't that great after all :)
+>
+> So I agree with you, let's scrap the idea and have proper function
+> bodies instead.
+>
+> Patrick
 
-You reported in [1] that a couple more tests are indeed failing, not
-only t0610. That changes things in my opinion as it shows that this is
-not a localized issue in the reftable library, but likely in multiple
-callsites where we use randomness. So my current patch series is not
-sufficient as it only fixes up the reftable codebase. But in the case
-where it's a general issue I tend to agree with brian, because I don't
-want to play whack-a-mole with all the callsites of `git_rand()` where
-we can indeed use insecure bytes.
+Thank you for the feedback and insights. I'll update the patch to use
+standard function bodies.
 
-Honestly, this rather makes me want to remove the OpenSSL backend for
-our CSRNG completely. NonStop is the only platform that uses it right
-now, and it seems to be easy to misconfigure. All the other backends we
-have don't have the same issue as explained further up in my message. So
-does NonStop support any of the alternative backends that Git has, like
-`arc4random_buf()`, `getrandom()`, `getentropy()` or reading from
-"/dev/urandom"?
-
-Might be I'm coming to conclusions too fast, so if I'm missing obvious
-usecases then please stop me :)
-
-Randall, you mentioned that your platform had a maintenance window right
-during the release of v2.48.0-rc2 [2]. You never mentioned issues with
-randomness before that maintenance window, and after it you hit them in
-many tests without any changes to the CSPRNG between v2.48.0-rc1 and
--rc2. Could it be that something broke on your end?
-
-Patrick
-
-[1]: https://lore.kernel.org/git/00ad01db615f$ce9b6740$6bd235c0$@nexbridge.com/
-[2]: https://lore.kernel.org/git/000501db607c$40c009a0$c2401ce0$@nexbridge.com/
+Thanks
+Seyi
