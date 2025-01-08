@@ -1,61 +1,61 @@
-Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42258202C50
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 18:38:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D2B202F8E
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 18:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736361485; cv=none; b=KxphfuK9H7gBCR0DUzKGknTvaYuCCvbaBPB6TgQiTTLt0IpWtQPw1Sml82fst2sY71tbh7926J13QrW51+dm4Ys9JWQAceIbBzF2cMjZe0PWXcY9kWeCQHHd5bJ1je51hwbBdfznNBPrZ0lQafNgoiwlINSf5pThVCHrywT8SgI=
+	t=1736361486; cv=none; b=F9xKYt6n5bxtlait4TP/2eIQ5h93jk47/x/ayks9EX60eTPoCUP7y+3DyEdL1IaGS4XwIoKPGUm1O8TGcSgHugITtNuvynkoj2mG2HPlljhVfr7WkfvipvTDzQsY4oSKByzgJweFLbSjhzjlZzrZBrU1rG9GSbMhTkhIgwhV1So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736361485; c=relaxed/simple;
-	bh=6v6kmj6IoJTTVenBvDN0ySpPKhvA1nmYwnT31qsuLH8=;
+	s=arc-20240116; t=1736361486; c=relaxed/simple;
+	bh=DgBA291+j6ejZVIrtQoPG7txaLVr23L8sLBk2ll5bUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AQCWWVOfLJNo426QgHSGrcoNorpYpRkvYsQJ7kDlEP015CLAg703eaEj9Z4LywCid9T3W63KfOoz1j9p3VAB6Z8RiAfLm82JligNIA6Xb1nOES+Zxg3m+odtLRlHC/ZVbm5XFM9v/D+T2Byy3RNykdhfPp4InhoVjhMkViOjTg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CiDTg47+; arc=none smtp.client-ip=209.85.219.50
+	 MIME-Version; b=euOuTabTd8GwoGTge1Va2qQ1YKmtY+GrfyM3wqL6prUC8KIj9zfrFO0F9qM0PQsERFhQyC/+9UFymna6t5LCmt6jKgb/d3gai+zO5mptTDlma/m7NfpDA5JYkUD15lA3UDuULhnevgJIzcYzideBiaPmL7o0oIQ6uZog8f1h9ZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IZRhzlQF; arc=none smtp.client-ip=209.85.219.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CiDTg47+"
-Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6d8f99cb0d9so1477216d6.0
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 10:38:03 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IZRhzlQF"
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6d8fd060e27so1239896d6.1
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 10:38:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736361482; x=1736966282; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1736361484; x=1736966284; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BuvuFUMBdM9FyTWZ9IdBTNsQLl3Xz4xTvWGs2nwwYrg=;
-        b=CiDTg47+/ZTE45GQiqrM8TB2I70gCl1AHLuc3E0IfjLtIu+F9HKAqXr8zsn7k4bILw
-         qBZLzfdlHW6BppCza80eYshDyGefQgMJqinE762cd3Kmk3OSvmZWiCeYUbAXbjcj4OA+
-         Xl6ijPd9On7Fn+4HypQmRf1ADZ3hSfpMRZMWieOVBUTwEkaE2sk/RmEDc7CUUQ2Ia//F
-         LfwJaWBLfQqTzF6Mf0adbxESDGJKqbcS63CUrnZ+3s8n3yMb57cDdKfpFLOg7eUg81ow
-         V1zxgOsMNDZv9FCrMrImf/aBdcr+hSpExoA2KGRzC9iPcGaJfux4mDVImY9k3w5TPLUx
-         tf1Q==
+        bh=nq2fqDypuUUjO63eoWLT+d8CeGIKnq0xPOyYXXa21L0=;
+        b=IZRhzlQFb7igf8z/Hi9lKWlU92kKlyGkQGp2tG8h+YlC/HLtkSckciOdGp8zLISfZ4
+         BANBeD6qBVpLztU+9K/UESUuiKHCTornRUfxq+V0ZThWrKl1aivjKETUlMqpMtLL9I7Q
+         8U7KCqAGJcNoKaCQKWpdMqGY7QVjpIEdOlq8YRCeME9EVgsU/w9U8aJDUfh5ONPel1zt
+         kNGFIILbwTO9PhoM2IM9AIrDchxBdLZCqxjBxaHZs3r2LchzpOFeUKCj88vFvdAx4MJq
+         v28JKaUYKgoVJ3kXD3mROy51atkudPg/5RCJy03KFVbBdnzex61nCMCHXftujdOjcmpj
+         DSMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736361482; x=1736966282;
+        d=1e100.net; s=20230601; t=1736361484; x=1736966284;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BuvuFUMBdM9FyTWZ9IdBTNsQLl3Xz4xTvWGs2nwwYrg=;
-        b=BEGsducB5eJnmM3g222eMBZBPLW7Qnk+MHQ298MCsj7RZyoXz3+E9DeVqiCQJFJufo
-         jeNwLVA++pi+oiNcDyc7cApUA/oHHWrmh3U9vgjgoSlmZPJLdDF8FmX0CMlEbs+5LMsl
-         E0z4q8kjn3fSdWOLanROJ0lTRJZfdS9nAVPhsddxkofKXRRdiLNyA6oDA3PGNaxNjnDd
-         JXWrow7uUawoivsyIa3cQIcJFg48Uwqzhh3ED2AhEj6WEe/gLUUlgstOPsx1hhfKsSob
-         GML7vDPgsrVmR2LIeTI7210BeAMunCFy0WQB+ZMHNPEhuDTDtszV5aefc95gKv2h/Bzj
-         EV0w==
-X-Gm-Message-State: AOJu0Yyj2irsxeAHey2JboKMeZhczHu0gvRWre6uJQwsjqyIzal/74jC
-	phT+RUspiAbBlUEPHx/QVOrS3UOEjVJ4ZSJUBktqo3CQD/vbCB6jCu9KmLfnqJk=
-X-Gm-Gg: ASbGncvo2UqvBGbySnqYDWuuYnKMJZ0l3qIj50DjcE9GsXhTLDJ7k9E16FNF+dTpICq
-	N2eQ5JCimals+CNb6RR8bfUxKXKdSEahnCeLTYI+p3j2MpHzsQ3e2093dVQtCCXeE1upZXmEsgc
-	UAprIdQCyjESz9GdAYfMq+ZX5ZbWGtHqQMjOLSgvGeesRA6tp1INd/wu0aZiihsF02JuF7Lo1sj
-	4uqvb1yX7JpMWtP8XLJaUiqwSYW1eQzsn+rC8ZZhoqk8SUEjohDO7T1EVP6UMKaX0tKJrAZYtJY
-	rwU0Pvj4jA==
-X-Google-Smtp-Source: AGHT+IG3TmdGZzGCuFHkQ7HzE6WQjyJsYG80HF4GGjKL1g8ImxxxjrQLu0KlTxRoFLJJPg2xh7TH/A==
-X-Received: by 2002:a05:6214:4903:b0:6d8:8e27:5a45 with SMTP id 6a1803df08f44-6df9b2ddc3cmr71416526d6.39.1736361482150;
-        Wed, 08 Jan 2025 10:38:02 -0800 (PST)
+        bh=nq2fqDypuUUjO63eoWLT+d8CeGIKnq0xPOyYXXa21L0=;
+        b=NPhS8tV9sN9bNoXYqQvG/YeTWrtn7rYcRyUr2C8hIgfpAo4HH3yl3D9dUxucjtHrZx
+         TlqnyuQn61A2iLjbxdExtwNJdbcHrxuqEufp05qQ89Ub9HRMoTdQtc2NZTpW55LdRuA9
+         3YVZnD3Yg5LbhLxk4w+XQMzQtnMEEKEEYPaO7Od8Hlkuio3UAo3W5IsD5jW7CcsGjWnt
+         5PC81ddvfWEU32kod22aCm62Izl2f+kXmFiOuvpP/JrnQjf523jqPuiNeLoc7mGa9GPG
+         ocgZYild3+mR6NfVihCJFKZ89TeIcbA5trwD4rsBBK2YCI3FhodZthP0v0GRPyvNgBEA
+         lWbg==
+X-Gm-Message-State: AOJu0YzZ1dEAgxJdHF6pQ1ZhoWZYFJwe372Z7bZpm+MVLwZR68CqpeFo
+	/ChcAhtm/zX4G08QN0J1H97D7u87Tk4ZHHPtn7cWpr3CckHLANJzBPWsznUHRpo=
+X-Gm-Gg: ASbGncu9VwiQUqhBstdzALbvdZJ8RnoZUrXpVTwlJ1BNFPhQuA8IvtoIxnba8eii9IS
+	OhkDrA9cfDw9NHxIcTuR8PqBXRpwLC1uSZU+MsLbBpbaFrpTPLznSmTiJ1iKOSRcPOXudE1/d8C
+	EJg1kSIGC83sjwFTsPPjI8F7SDJAuD9B7BmsESbDAaGykWtA9yeLfngSfCKMBJKMjpgrebHafdQ
+	2ro0iylwPR0pkgUDfBsE7B0rCRkslwrLNvOOflYHGi+LLwU9VQv7uNspnNk1DYCMgqj9e20N3I4
+	TUneRhwBOQ==
+X-Google-Smtp-Source: AGHT+IE+kkXqk1TgZL7iW6VajxLG3Exu6hKhellc/pBHXFm3Qa3JaCDt9KUvV0zZc699rdjU2oyhHQ==
+X-Received: by 2002:ad4:5747:0:b0:6d8:8fdd:9797 with SMTP id 6a1803df08f44-6df9b2b1a16mr66386626d6.36.1736361484137;
+        Wed, 08 Jan 2025 10:38:04 -0800 (PST)
 Received: from localhost.localdomain ([184.148.194.219])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dd180ea74bsm193228036d6.25.2025.01.08.10.38.01
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6dd180ea74bsm193228036d6.25.2025.01.08.10.38.02
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Wed, 08 Jan 2025 10:38:01 -0800 (PST)
+        Wed, 08 Jan 2025 10:38:03 -0800 (PST)
 From: Eric Ju <eric.peijian@gmail.com>
 To: git@vger.kernel.org
 Cc: calvinwan@google.com,
@@ -65,9 +65,9 @@ Cc: calvinwan@google.com,
 	karthik.188@gmail.com,
 	toon@iotcl.com,
 	jltobler@gmail.com
-Subject: [PATCH v9 5/8] fetch-pack: move fetch initialization
-Date: Wed,  8 Jan 2025 13:37:36 -0500
-Message-ID: <20250108183740.67022-6-eric.peijian@gmail.com>
+Subject: [PATCH v9 6/8] serve: advertise object-info feature
+Date: Wed,  8 Jan 2025 13:37:37 -0500
+Message-ID: <20250108183740.67022-7-eric.peijian@gmail.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20250108183740.67022-1-eric.peijian@gmail.com>
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
@@ -82,57 +82,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Calvin Wan <calvinwan@google.com>
 
-There are some variables initialized at the start of the
-do_fetch_pack_v2() state machine. Currently, they are initialized
-in FETCH_CHECK_LOCAL, which is the initial state set at the beginning
-of the function.
-
-However, a subsequent patch will allow for another initial state,
-while still requiring these initialized variables.
-Move the initialization to be before the state machine,
-so that they are set regardless of the initial state.
-
-Note that there is no change in behavior, because we're moving code
-from the beginning of the first state to just before the execution of
-the state machine.
+In order for a client to know what object-info components a server can
+provide, advertise supported object-info features. This will allow a
+client to decide whether to query the server for object-info or fetch
+as a fallback.
 
 Helped-by: Jonathan Tan <jonathantanmy@google.com>
 Helped-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Calvin Wan <calvinwan@google.com>
 Signed-off-by: Eric Ju  <eric.peijian@gmail.com>
 ---
- fetch-pack.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ serve.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 78e7d38c47..51de82e414 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1648,18 +1648,18 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 		reader.me = "fetch-pack";
+diff --git a/serve.c b/serve.c
+index c8694e3751..7a388d26d9 100644
+--- a/serve.c
++++ b/serve.c
+@@ -70,7 +70,7 @@ static void session_id_receive(struct repository *r UNUSED,
+ 	trace2_data_string("transfer", NULL, "client-sid", client_sid);
+ }
+ 
+-static int object_info_advertise(struct repository *r, struct strbuf *value UNUSED)
++static int object_info_advertise(struct repository *r, struct strbuf *value)
+ {
+ 	if (advertise_object_info == -1 &&
+ 	    repo_config_get_bool(r, "transfer.advertiseobjectinfo",
+@@ -78,6 +78,8 @@ static int object_info_advertise(struct repository *r, struct strbuf *value UNUS
+ 		/* disabled by default */
+ 		advertise_object_info = 0;
  	}
++	if (value && advertise_object_info)
++		strbuf_addstr(value, "size");
+ 	return advertise_object_info;
+ }
  
-+	/* v2 supports these by default */
-+	allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
-+	use_sideband = 2;
-+	if (args->depth > 0 || args->deepen_since || args->deepen_not)
-+		args->deepen = 1;
-+
- 	while (state != FETCH_DONE) {
- 		switch (state) {
- 		case FETCH_CHECK_LOCAL:
- 			sort_ref_list(&ref, ref_compare_name);
- 			QSORT(sought, nr_sought, cmp_ref_by_name);
- 
--			/* v2 supports these by default */
--			allow_unadvertised_object_request |= ALLOW_REACHABLE_SHA1;
--			use_sideband = 2;
--			if (args->depth > 0 || args->deepen_since || args->deepen_not)
--				args->deepen = 1;
--
- 			/* Filter 'ref' by 'sought' and those that aren't local */
- 			mark_complete_and_common_ref(negotiator, args, &ref);
- 			filter_refs(args, &ref, sought, nr_sought);
 -- 
 2.47.0
 
