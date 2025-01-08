@@ -1,144 +1,155 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029AF1B042D
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 20:40:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C4B202F97
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 21:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736368823; cv=none; b=rgRsC5Qf5t0EMX4fdDOIStTxNZpJCp5TRf47MBZA4AmLA6wf2176yfmyddoLllZY3UakddqgCfPYPRvJUjOz4xKuRXI3ooZmmiBKmw7Yq7ttkF8B6Sx3NzVKKxAGdSx/YqpyZD01gVH5gXZoydPzZJw5/kAcyJASgVqkmsdsH9k=
+	t=1736372552; cv=none; b=lugydIfUz93GCLpSl0UXy09dne4su1Cb1/xpIeJ7owjQQVE+PofRXv2kTfrF2sIAqVkeQClTFfx44lv9kBGc1rJ0+SqHSTnyCalsHAJ710NNB+vf/cAGrN2fa4rAUHinsBgHwuURfl0BSCdTZ2nTjV+70ejy1kkI3YlClBOzKaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736368823; c=relaxed/simple;
-	bh=xXFN0tfhRVnJpfc4LYu3R4JmEcIqgp58BQD5hv+DYTY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bg4cvlIYCKWE31dbwk6JmyJdVcbNsnWCJiopLRbIccPgNc7c1X204Jnn2kTZVqOFmo3bnnIsB0lxYsF5/0qKgTCmIalwYrlf78aWs6HC5zBNNqKL74HCWGya3+PQSjuu51507xHniqnFFzp7Opo9i5mVC/v1qHSAE28B0PljHjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=283tnZEh; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1736372552; c=relaxed/simple;
+	bh=8KBgZ0gG6bM/9MvypaxzXhGAzGWS++bKAol6F8iEEzI=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=rqUy/V9CuiKaLYtjyWdk3NWkEPdfQPtKEhFlCH9gGYcYCgYKjZuKZfscKnYB+OqFqnpWx6zeKgur5LycEqFog82IbW0wN106Zf7eV9Aw/AzYAapdRN1oOgg7S/2f02oIxlMSt2NnH0E3gsjAwgI/1Uz+0tRPoBYMdm4ZXX/sC8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=TASgLDWO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cZ43flVy; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="283tnZEh"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-467abce2ef9so49141cf.0
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 12:40:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1736368821; x=1736973621; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XWjV6nulo3iUqPy6ngOty53IXPP4bPf4rNKeEIYDamI=;
-        b=283tnZEhzBcYDL5WRI9huZgj3vJczSryS8W0wfJHl26q+GHnFtO2aWdzR6daE299+M
-         3pWJrjX48/phoZsDnemKsd3Wd8p/WuwrAn7fUQLvLZIrrEX55mwTYR3FSgrEYSynJzk9
-         MWHfKzlVmJJoOfko08kkjseNt0zJV4apVX9MdrOx0ygcLB9dHlsuzgg/QNVQbKe/jJtb
-         kWYJr6JDhVAzTsavAvKlD4+mgAuwESL/r0aRK1gfkIhF2VLmTrDv8E9aLFrReziV3tcu
-         PbnxvEazSgM2l4dwx6v4SYgH5TaSbWmHAPJd9mC/BO4dCjZvrZQxrmG9QFnD5v59HKr+
-         xe3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736368821; x=1736973621;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XWjV6nulo3iUqPy6ngOty53IXPP4bPf4rNKeEIYDamI=;
-        b=EIrm1YV2SgcCxf3Xe1BqRvB8DkqD1TFaqEle8Kmaj9cEu88l8TOxNK2hPUjhPVNIWZ
-         b8hbhR0PpB84vzmNMxYfvIc/MJiIFVpQGdoG8V+SuKIKepTuwYotlDpkWq/jupL7Vqji
-         9at9pMx+mifAKQ5fbJ9egVBMsqlqt9dbN7cZZc2ye1/vaFoJD8xOqCbLdE0AUSJA2muk
-         YraioDeHMfa3yY0koBB6CRGJdVpN4AI4BC33SFktmoGTD4mj/x+BcKRZvdrAqE+i4W9a
-         pgLDwunQeOWQImxLgprQ6Ao4WDdEUMvVh7jpOKbkeN07Z+coSHk+qSBRyMaLR+yfG19t
-         N47w==
-X-Gm-Message-State: AOJu0YywKbQJ797o/6yY6paESzGJg/InLqDTX3zRJ8clvhfBI8VNu7sk
-	gGMG1TPudNCrWAXBxqzRT0TxnS4eMMyoBIO/tGQUUgg2YrG4B90qiMBX0lIohzjgnTyQ5JAfqFJ
-	bM5y0DOWE3VanH35RW9WCsqDDHJt61l7GiNgo
-X-Gm-Gg: ASbGnctDwBsLQfrl7HX4PWtZBA0MzK6NvKzUpnCqbODEeNS+Ctykmx9hs3ftVZJBg4I
-	9oizAlBd4wmpF5mYnSTcjgrQ9xRdDmkjdbCLdKU3PrshDslC3/k7BlUWTn+2vSX7VRXmx
-X-Google-Smtp-Source: AGHT+IHDgkdVLg1kiGWFQa5KnT7aTv/tZp4oR2kwxRHgol7aXKQLeIPBSChDNjRDNug6e8cms3sQryr1z5qsf5ooVuY=
-X-Received: by 2002:a05:622a:13c6:b0:466:861a:f633 with SMTP id
- d75a77b69052e-46c7bf64e55mr456421cf.5.1736368820809; Wed, 08 Jan 2025
- 12:40:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="TASgLDWO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cZ43flVy"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 570132540168;
+	Wed,  8 Jan 2025 16:42:29 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 08 Jan 2025 16:42:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736372549;
+	 x=1736458949; bh=UKUHLTllcVMckRLmOPcA9IqiID/+P1GX6x1va/uTkWw=; b=
+	TASgLDWOyq9ShUIh9XhnAUWfrsFJweFExAl55rGdT7ue+WfoFm7u7RQa5S+Unt3x
+	OmdiQVU/5sQ1pkkB+JgF7obWn58Y69MELkRTV2e+/CqPMU38SxtaJcw2pxETS6yU
+	MducfCgwm3ID9/jm4ruNCMNtiZ9g5J/In1cwmdodATPcn+SBA3Zs8NHDu6738sdL
+	E3gLoopfDyx802Wyyn925fx0zoHF0IhZ5olxqDgs0P2bj+8v+KThJ0aELnihc1bS
+	+QAhNwyWE44+vw5ytU8FqDd4vI+XMBNhSfWnppyegHPhxZjjOTIaMTJUOq2ffHl0
+	oX+YO0IRJGsqxdOKKXMA8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736372549; x=
+	1736458949; bh=UKUHLTllcVMckRLmOPcA9IqiID/+P1GX6x1va/uTkWw=; b=c
+	Z43flVyZgxHc3We+QRH9YjLdSdx8CR3VHqrq+3bVfQZdDY4fMQVctNaJJuCmv8dy
+	M2Hbv6JPrx61siHcIW++KB4rjyGmXjuvyeZFBNOEhmUUULnSV7MjZifF2fbTNgPQ
+	YS5skAg6E0S64VGIwofgHZFmx+Rho8kiLHfklcbzXuXJs5AKN9X609isool5inY1
+	C92rsOfS3dX1zI5fC0u7MWDU2k/pwEUlxDQ9D/gFElJn8uocSFsZxn8mjyOYmpP/
+	Fy5ULUI6Z2DfGV105BZe7BWrR93VTEfp/hMVbTHcS5Cbo1zzplNb0c8CoQcnFe7H
+	Md6BXRPgFmuU43m/ns4iw==
+X-ME-Sender: <xms:RfF-Z8oUzpL46yh8dBBxXrjv4FSLsMKF2MQJIGkUNxTsI9rff6xhRZY>
+    <xme:RfF-ZypymkZpelZ0GFLy4-bASCC1CGBzkjjvW7uD0pn8iXE-eELF2wjpz-VWQVvnD
+    tF_qEXNkL8oVUVjeg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggedgudehudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
+    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
+    rghtthgvrhhnpeelfeejudejfffgleduheegheeufeeffedtgfeffeevudeuleffgeektd
+    elueekieenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihii
+    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgsh
+    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
+    homhdprhgtphhtthhopehstghhrggtohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:RfF-ZxOwbHT78kB2ubdu_AUIYWq8FiCV61x7IZVTwNch1C3_Oe18mA>
+    <xmx:RfF-Zz5230iuuAvroDrhBR_h0BKium5GZ4bIWxbdfv___YbN_sI1Ag>
+    <xmx:RfF-Z77QzMyC-9lIEIwzgom6H0xhRAuxRKA3e6zOMy77KeN9o8o0qQ>
+    <xmx:RfF-ZzgxzuoOdjPCkJ5W4HwmUJVJpUEXRkyGfR4DftDGznSiK8YPJg>
+    <xmx:RfF-Z7H3TYZ07uH_UlfJnr6MDuiDVNbUQllBNJRBoxeeeVIULKxUXj3Z>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id F348F780068; Wed,  8 Jan 2025 16:42:28 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1867.git.git.1736080517950.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1867.git.git.1736080517950.gitgitgadget@gmail.com>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Wed, 8 Jan 2025 12:40:09 -0800
-X-Gm-Features: AbW1kvbY9n6Cb3gUrAyly4Q_fhl4eTUXz2wdrZ2vkcrHzJTSQdJwMWujtN-f12s
-Message-ID: <CAJoAoZmzLOMNCNP-X-=QTSb=ed0GOkhx7w0PhVc2FmcbVL6jWQ@mail.gmail.com>
-Subject: Re: [PATCH] docs: update contributing guide to refer current bugs and
- feature requests
-To: Rhythm Narula via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Rhythm Narula <rhythm.narula26@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Date: Wed, 08 Jan 2025 22:42:07 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "Scott Chacon" <schacon@gmail.com>
+Message-Id: <52e414a5-e22f-4046-a321-ae9357ab43c3@app.fastmail.com>
+In-Reply-To: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
+References: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] help: interpret help.autocorrect=1 as "immediate" rather than 0.1s
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jan 5, 2025 at 4:35=E2=80=AFAM Rhythm Narula via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Wed, Jan 8, 2025, at 20:31, Scott Chacon via GitGitGadget wrote:
+> From: Scott Chacon <schacon@gmail.com>
 >
-> From: Rhythm-26 <rhythm.narula26@gmail.com>
+> Many people confusingly set the "help.autocorrect" setting to 1 believ=
+ing it
+> to be a boolean that turns on the autocorrect feature rather than an i=
+nteger
+> value of deciseconds wait time. Since it's impossible for a human bein=
+g to
+> react this quickly, the help message stating that it's waiting for 0.1s
+> before continuing becomes confusingly comical.
 >
-> The contributing guide is updated to include references to the current
-> open bugs and feature requests. This update aims to improve visibility
-> for contributors on where to find open issues and features that need
-> attention.
+> This patch simply interprets a "1" value as the same as the "immedate"
+> autocorrect setting, which makes it skip the 0.1s and simply say that =
+it's
+
+Maybe: s/This patch simply interprets a/Interpret a "1"/
+
+From =E2=80=9Cimperative-mood=E2=80=9D section in SubmittingPatches.
+
+Or: Interpret "1" as "immediate"
+
+Since the sentence is getting a bit complex with =E2=80=9Cas the same as=
+ the=E2=80=9D.
+
+> running the command, which is almost certainly what everyone setting i=
+t to
+> that value is actually trying to do.
+
+The section in `man git config` should get an update I think.
+
 >
-> CC: Johannes Schindelin <johannes.schindelin@gmx.de>
-> Signed-off-by: Rhythm-26 <rhythm.narula26@gmail.com>
+> Signed-off-by: Scott Chacon <schacon@gmail.com>
 > ---
->     docs: updates MyFirstContribution guide to refer current bugs and
->     feature requests
+>     help: interpret help.autocorrect=3D1 as "immediate" rather than 0.=
+1s
 >
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-186=
-7%2FRhythm-26%2FupdateContirbutingDocumentation-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1867/R=
-hythm-26/updateContirbutingDocumentation-v1
-> Pull-Request: https://github.com/git/git/pull/1867
+> Published-As:
+> https://github.com/gitgitgadget/git/releases/tag/pr-git-1869%2Fschacon=
+%2Fmaster-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
+> pr-git-1869/schacon/master-v1
+> Pull-Request: https://github.com/git/git/pull/1869
 >
->  Documentation/MyFirstContribution.txt | 8 ++++++++
->  1 file changed, 8 insertions(+)
+>  help.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirs=
-tContribution.txt
-> index e41654c00a6..3b26a5265b2 100644
-> --- a/Documentation/MyFirstContribution.txt
-> +++ b/Documentation/MyFirstContribution.txt
-> @@ -109,6 +109,14 @@ of invocation during users' typical daily workflow.
->  (We've seen some other effort in this space with the implementation of p=
-opular
->  commands such as `sl`.)
+> diff --git a/help.c b/help.c
+> index 5483ea8fd29..e6576644b99 100644
+> --- a/help.c
+> +++ b/help.c
+> @@ -568,7 +568,7 @@ static int git_unknown_cmd_config(const char *var,
+> const char *value,
+>  			return config_error_nonbool(var);
+>  		if (!strcmp(value, "never")) {
+>  			cfg->autocorrect =3D AUTOCORRECT_NEVER;
+> -		} else if (!strcmp(value, "immediate")) {
+> +		} else if (!strcmp(value, "immediate") || !strcmp(value, "1")) {
+>  			cfg->autocorrect =3D AUTOCORRECT_IMMEDIATELY;
+>  		} else if (!strcmp(value, "prompt")) {
+>  			cfg->autocorrect =3D AUTOCORRECT_PROMPT;
 >
-> +:mailinglist: git+subscribe@vger.kernel.org
-
-What's the purpose of adding this attribute? Did you mean to use it to
-linkify "mailing list" in the first bullet below? Note that the
-mailing list and how to subscribe to it is also described above under
-"Getting Help", maybe it makes more sense to refer back to that
-header...? Not sure.
-
-> +
-> +Here's where you can find bugs and feature requests existing in the syst=
-em:
-
-I like the placement. The patch context doesn't make it super clear,
-but this is sitting at the end of the "Identify a Problem to Solve"
-step, so it's handy if folks are still following along in this guide
-on their first couple of real patches until they build muscle memory
-:) Initially I had thought this might make more sense to sit at the
-end of the tutorial, as a sort of "what do I do next?", but I think
-this placement is very good too.
-
-> +
-> + - Git uses a mailing list for discussion on bugs, features and patches.=
- Search for relevant topics or tagged issues
-> +   like #leftoverbits in the archives: https://lore.kernel.org/git/
-> + - Unofficial bug trackers - https://github.com/gitgitgadget/git/issues,=
- https://git.issues.gerritcodereview.com/
-> +
-
-
-
-It could be nice to say something like "For next time, here's where
-you can find..." but I don't think it's necessary - my personal taste
-just thinks it could flow better.
-
-Nice idea, though. With a couple tweaks I'd like to see it land.
-Thanks for sending the patch.
- - Emily
+> base-commit: 14650065b76b28d3cfa9453356ac5669b19e706e
+> --
+> gitgitgadget
