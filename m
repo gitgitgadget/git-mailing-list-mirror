@@ -1,114 +1,144 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FE5126BF1
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 19:31:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029AF1B042D
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 20:40:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736364711; cv=none; b=aBasf4NYg+UoeDTj6Svl8x34Xg8r1R9G/4tV5JXj9FLVD/A9JloWtjobVOrP6DjmKu6T1eOWxJwQAYT3myLfnwn6Vd/RA3GdqYdIa737bEoWFfCEBf75EhYUGllTMl/XKlX4MnI5u5NUnrXohPsiZfWSLkzl9KuT9LA1DgpjYq0=
+	t=1736368823; cv=none; b=rgRsC5Qf5t0EMX4fdDOIStTxNZpJCp5TRf47MBZA4AmLA6wf2176yfmyddoLllZY3UakddqgCfPYPRvJUjOz4xKuRXI3ooZmmiBKmw7Yq7ttkF8B6Sx3NzVKKxAGdSx/YqpyZD01gVH5gXZoydPzZJw5/kAcyJASgVqkmsdsH9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736364711; c=relaxed/simple;
-	bh=QpheFLJhQPqbAqoETj1/5bSDHXhhpsYSlqosoNnU8iE=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZWQKt5+53oIj3Ogwor3ExTH0c4RhWdCOvYuWc0RuoYY9iR8yGhM8KmJZ+XZzFvN7pAjVJ7qCWMDg6gLXntgVgjjqxwdEzVJwMrWdKL//GFvNMKhJZhM8lFsTpUL1va4tu8rzisph+xzAerHiaPR7PXq5rhMh2oub+w2B2+aVdME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=awK0n/UA; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736368823; c=relaxed/simple;
+	bh=xXFN0tfhRVnJpfc4LYu3R4JmEcIqgp58BQD5hv+DYTY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bg4cvlIYCKWE31dbwk6JmyJdVcbNsnWCJiopLRbIccPgNc7c1X204Jnn2kTZVqOFmo3bnnIsB0lxYsF5/0qKgTCmIalwYrlf78aWs6HC5zBNNqKL74HCWGya3+PQSjuu51507xHniqnFFzp7Opo9i5mVC/v1qHSAE28B0PljHjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=283tnZEh; arc=none smtp.client-ip=209.85.160.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="awK0n/UA"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-385de59c1a0so71422f8f.2
-        for <git@vger.kernel.org>; Wed, 08 Jan 2025 11:31:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="283tnZEh"
+Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-467abce2ef9so49141cf.0
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 12:40:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736364708; x=1736969508; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2WZX6Q9x0kWTdAGRx/+GgN+LKXh7rUYR758h+Z3ISzg=;
-        b=awK0n/UAuksS4eBsZn4OHzcQWLfZ39NbAvVJy+hWPrhNd6+s64gmhauwpPqfQG6gEy
-         fFFZz2qX7Sqpj/IrsdDvjgba6YaLH1qx2uzWYG43+bIJnXjx5QVZqtG1RU39WsNg32r3
-         WTdIMkAthzss1VLmAKz5V92Yy9Mhgy2hQP2RBZgghajg6aP4SVrtl/3UPW36kl/hjdd6
-         G3a7Bkfu3F6WdOjFtYYvSbeKHwe5XcMeXSYEBpzoSmY1X+C7q6PqyUHtqgOZYuTyQw2o
-         x53nw2jkD5flY0/bmo/LZWTrnS1l977j2NxWZsZf2iktiTjPsVGveUPlZw7+bPb+2VYp
-         evcw==
+        d=google.com; s=20230601; t=1736368821; x=1736973621; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XWjV6nulo3iUqPy6ngOty53IXPP4bPf4rNKeEIYDamI=;
+        b=283tnZEhzBcYDL5WRI9huZgj3vJczSryS8W0wfJHl26q+GHnFtO2aWdzR6daE299+M
+         3pWJrjX48/phoZsDnemKsd3Wd8p/WuwrAn7fUQLvLZIrrEX55mwTYR3FSgrEYSynJzk9
+         MWHfKzlVmJJoOfko08kkjseNt0zJV4apVX9MdrOx0ygcLB9dHlsuzgg/QNVQbKe/jJtb
+         kWYJr6JDhVAzTsavAvKlD4+mgAuwESL/r0aRK1gfkIhF2VLmTrDv8E9aLFrReziV3tcu
+         PbnxvEazSgM2l4dwx6v4SYgH5TaSbWmHAPJd9mC/BO4dCjZvrZQxrmG9QFnD5v59HKr+
+         xe3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736364708; x=1736969508;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2WZX6Q9x0kWTdAGRx/+GgN+LKXh7rUYR758h+Z3ISzg=;
-        b=pXLpodRtvVAO6TC1XZ1PrvI/x2REq+Iu0DfrNWv2MmWSOqRSdH80ElDKjEehrufTy9
-         NnRbWj/wJvIbapVmvg0tb2BNUB5kIjDxLqYXOUh9O6QHtU+ajdrz+esS0oBiBmjBm6oG
-         FDfB14tg4ZWYSJvtzv6ZNn4yw6hHe9fMTh3cWJ52clQjKf+3ZcN6ByXjLJo2bQYPkfmZ
-         JORDjMXdtlilQiNtO3QOCYWCboqikm+T6VrkzJ9YSTGqLzlgcN2HMcwljZPHZUiWuAZI
-         IERqlEfjP3xlHh1Sil7kURy8kSd8kPXub5uxQexzENMr7sIeKNZQOwsOu22mcoe0+Jcy
-         qLOw==
-X-Gm-Message-State: AOJu0Yw3ZTzRMRcpWvzu9hVA5SvueUZz07pCVtDy1zQ+VU/jgQ61s90v
-	iUNmG00Mmzgu8uPWFTfiwQNb7Nsjv/L3eSmEJ50c8chChQD1LxeOl/FCWA==
-X-Gm-Gg: ASbGnctdaCsBVFKF96fy4b6leAvq+KOZfGtxFlPuozrLkOedHtCrPYz2IYVgxGEbtHu
-	flT+c7GM/2oj3OPAt/CB7dXmYVTc/TxbDv9qr13QqP3RsPzizng2uvCBvUDwyI1R+sfAihGI+n+
-	xvEWBVPR7VUsHbzhz5tjTDkl96FpxL3PlzBt8g2P/7aKgB1yq8RIv/slOfwi8wNzPTBdajsIeRN
-	ORf3ZBGHm3Un9g1jOMgfIhf/c4sTj8jocEhIBVN0HW394ISMbGb+jIdXA==
-X-Google-Smtp-Source: AGHT+IE7w9DcAFaQ6llIKKV+U0IBgQquigNPgdN+t6KdpsbrjebJ5UjG7zp85uk86VwvI42EWPpb/w==
-X-Received: by 2002:a05:6000:1fa2:b0:38a:1b94:ecc1 with SMTP id ffacd0b85a97d-38a8730afbcmr2820537f8f.25.1736364708064;
-        Wed, 08 Jan 2025 11:31:48 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a1c8a6e19sm53379051f8f.100.2025.01.08.11.31.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jan 2025 11:31:47 -0800 (PST)
-Message-Id: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
-From: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 08 Jan 2025 19:31:46 +0000
-Subject: [PATCH] help: interpret help.autocorrect=1 as "immediate" rather than
- 0.1s
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1736368821; x=1736973621;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XWjV6nulo3iUqPy6ngOty53IXPP4bPf4rNKeEIYDamI=;
+        b=EIrm1YV2SgcCxf3Xe1BqRvB8DkqD1TFaqEle8Kmaj9cEu88l8TOxNK2hPUjhPVNIWZ
+         b8hbhR0PpB84vzmNMxYfvIc/MJiIFVpQGdoG8V+SuKIKepTuwYotlDpkWq/jupL7Vqji
+         9at9pMx+mifAKQ5fbJ9egVBMsqlqt9dbN7cZZc2ye1/vaFoJD8xOqCbLdE0AUSJA2muk
+         YraioDeHMfa3yY0koBB6CRGJdVpN4AI4BC33SFktmoGTD4mj/x+BcKRZvdrAqE+i4W9a
+         pgLDwunQeOWQImxLgprQ6Ao4WDdEUMvVh7jpOKbkeN07Z+coSHk+qSBRyMaLR+yfG19t
+         N47w==
+X-Gm-Message-State: AOJu0YywKbQJ797o/6yY6paESzGJg/InLqDTX3zRJ8clvhfBI8VNu7sk
+	gGMG1TPudNCrWAXBxqzRT0TxnS4eMMyoBIO/tGQUUgg2YrG4B90qiMBX0lIohzjgnTyQ5JAfqFJ
+	bM5y0DOWE3VanH35RW9WCsqDDHJt61l7GiNgo
+X-Gm-Gg: ASbGnctDwBsLQfrl7HX4PWtZBA0MzK6NvKzUpnCqbODEeNS+Ctykmx9hs3ftVZJBg4I
+	9oizAlBd4wmpF5mYnSTcjgrQ9xRdDmkjdbCLdKU3PrshDslC3/k7BlUWTn+2vSX7VRXmx
+X-Google-Smtp-Source: AGHT+IHDgkdVLg1kiGWFQa5KnT7aTv/tZp4oR2kwxRHgol7aXKQLeIPBSChDNjRDNug6e8cms3sQryr1z5qsf5ooVuY=
+X-Received: by 2002:a05:622a:13c6:b0:466:861a:f633 with SMTP id
+ d75a77b69052e-46c7bf64e55mr456421cf.5.1736368820809; Wed, 08 Jan 2025
+ 12:40:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Scott Chacon <schacon@gmail.com>,
-    Scott Chacon <schacon@gmail.com>
+References: <pull.1867.git.git.1736080517950.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1867.git.git.1736080517950.gitgitgadget@gmail.com>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Wed, 8 Jan 2025 12:40:09 -0800
+X-Gm-Features: AbW1kvbY9n6Cb3gUrAyly4Q_fhl4eTUXz2wdrZ2vkcrHzJTSQdJwMWujtN-f12s
+Message-ID: <CAJoAoZmzLOMNCNP-X-=QTSb=ed0GOkhx7w0PhVc2FmcbVL6jWQ@mail.gmail.com>
+Subject: Re: [PATCH] docs: update contributing guide to refer current bugs and
+ feature requests
+To: Rhythm Narula via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Rhythm Narula <rhythm.narula26@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Scott Chacon <schacon@gmail.com>
+On Sun, Jan 5, 2025 at 4:35=E2=80=AFAM Rhythm Narula via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Rhythm-26 <rhythm.narula26@gmail.com>
+>
+> The contributing guide is updated to include references to the current
+> open bugs and feature requests. This update aims to improve visibility
+> for contributors on where to find open issues and features that need
+> attention.
+>
+> CC: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Rhythm-26 <rhythm.narula26@gmail.com>
+> ---
+>     docs: updates MyFirstContribution guide to refer current bugs and
+>     feature requests
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-186=
+7%2FRhythm-26%2FupdateContirbutingDocumentation-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1867/R=
+hythm-26/updateContirbutingDocumentation-v1
+> Pull-Request: https://github.com/git/git/pull/1867
+>
+>  Documentation/MyFirstContribution.txt | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirs=
+tContribution.txt
+> index e41654c00a6..3b26a5265b2 100644
+> --- a/Documentation/MyFirstContribution.txt
+> +++ b/Documentation/MyFirstContribution.txt
+> @@ -109,6 +109,14 @@ of invocation during users' typical daily workflow.
+>  (We've seen some other effort in this space with the implementation of p=
+opular
+>  commands such as `sl`.)
+>
+> +:mailinglist: git+subscribe@vger.kernel.org
 
-Many people confusingly set the "help.autocorrect" setting to 1 believing it
-to be a boolean that turns on the autocorrect feature rather than an integer
-value of deciseconds wait time. Since it's impossible for a human being to
-react this quickly, the help message stating that it's waiting for 0.1s
-before continuing becomes confusingly comical.
+What's the purpose of adding this attribute? Did you mean to use it to
+linkify "mailing list" in the first bullet below? Note that the
+mailing list and how to subscribe to it is also described above under
+"Getting Help", maybe it makes more sense to refer back to that
+header...? Not sure.
 
-This patch simply interprets a "1" value as the same as the "immedate"
-autocorrect setting, which makes it skip the 0.1s and simply say that it's
-running the command, which is almost certainly what everyone setting it to
-that value is actually trying to do.
+> +
+> +Here's where you can find bugs and feature requests existing in the syst=
+em:
 
-Signed-off-by: Scott Chacon <schacon@gmail.com>
----
-    help: interpret help.autocorrect=1 as "immediate" rather than 0.1s
+I like the placement. The patch context doesn't make it super clear,
+but this is sitting at the end of the "Identify a Problem to Solve"
+step, so it's handy if folks are still following along in this guide
+on their first couple of real patches until they build muscle memory
+:) Initially I had thought this might make more sense to sit at the
+end of the tutorial, as a sort of "what do I do next?", but I think
+this placement is very good too.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1869%2Fschacon%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1869/schacon/master-v1
-Pull-Request: https://github.com/git/git/pull/1869
+> +
+> + - Git uses a mailing list for discussion on bugs, features and patches.=
+ Search for relevant topics or tagged issues
+> +   like #leftoverbits in the archives: https://lore.kernel.org/git/
+> + - Unofficial bug trackers - https://github.com/gitgitgadget/git/issues,=
+ https://git.issues.gerritcodereview.com/
+> +
 
- help.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/help.c b/help.c
-index 5483ea8fd29..e6576644b99 100644
---- a/help.c
-+++ b/help.c
-@@ -568,7 +568,7 @@ static int git_unknown_cmd_config(const char *var, const char *value,
- 			return config_error_nonbool(var);
- 		if (!strcmp(value, "never")) {
- 			cfg->autocorrect = AUTOCORRECT_NEVER;
--		} else if (!strcmp(value, "immediate")) {
-+		} else if (!strcmp(value, "immediate") || !strcmp(value, "1")) {
- 			cfg->autocorrect = AUTOCORRECT_IMMEDIATELY;
- 		} else if (!strcmp(value, "prompt")) {
- 			cfg->autocorrect = AUTOCORRECT_PROMPT;
 
-base-commit: 14650065b76b28d3cfa9453356ac5669b19e706e
--- 
-gitgitgadget
+It could be nice to say something like "For next time, here's where
+you can find..." but I don't think it's necessary - my personal taste
+just thinks it could flow better.
+
+Nice idea, though. With a couple tweaks I'd like to see it land.
+Thanks for sending the patch.
+ - Emily
