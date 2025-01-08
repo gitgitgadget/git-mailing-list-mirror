@@ -1,155 +1,190 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C4B202F97
-	for <git@vger.kernel.org>; Wed,  8 Jan 2025 21:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9B6185B6D
+	for <git@vger.kernel.org>; Wed,  8 Jan 2025 22:21:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736372552; cv=none; b=lugydIfUz93GCLpSl0UXy09dne4su1Cb1/xpIeJ7owjQQVE+PofRXv2kTfrF2sIAqVkeQClTFfx44lv9kBGc1rJ0+SqHSTnyCalsHAJ710NNB+vf/cAGrN2fa4rAUHinsBgHwuURfl0BSCdTZ2nTjV+70ejy1kkI3YlClBOzKaY=
+	t=1736374874; cv=none; b=m0NBpgFg59ewORjVg/R6X7wFexvtEM/8VhHqAJixIN2wrao/+zsZHGhYq2JnyF61cse6aNxMmCbfdLCvAzQbQg9p3tIB0/YyGDEgIh/+mLq3XytNqan8VGQiPv9O7Y44nYMKFGRdUZrCZzzvl8rROZIrv4UO5mzfriGmDg98jIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736372552; c=relaxed/simple;
-	bh=8KBgZ0gG6bM/9MvypaxzXhGAzGWS++bKAol6F8iEEzI=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=rqUy/V9CuiKaLYtjyWdk3NWkEPdfQPtKEhFlCH9gGYcYCgYKjZuKZfscKnYB+OqFqnpWx6zeKgur5LycEqFog82IbW0wN106Zf7eV9Aw/AzYAapdRN1oOgg7S/2f02oIxlMSt2NnH0E3gsjAwgI/1Uz+0tRPoBYMdm4ZXX/sC8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=TASgLDWO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cZ43flVy; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1736374874; c=relaxed/simple;
+	bh=CxRiAEkMWB0qkC0d3QD0zKQbvZfZ354zogCsa2Aw0M8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WC6XKjsQ9VOjJSDLRQRb019wErTHxptl7h+T/Spt+A+NfOOvn3HpG5Dkjyi3v4xekRbPDKprUf2fAak3zDQW8i1c+vGS3BNQn5e9muOq6hmWCcO/hUWZP6/Kqc51HYcWT5x2Vkr5QWtcWh+gJMqA463tJ5Oq6jaX3Gb/GupJkLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CdIfkcBb; arc=none smtp.client-ip=209.85.210.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="TASgLDWO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cZ43flVy"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 570132540168;
-	Wed,  8 Jan 2025 16:42:29 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 08 Jan 2025 16:42:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736372549;
-	 x=1736458949; bh=UKUHLTllcVMckRLmOPcA9IqiID/+P1GX6x1va/uTkWw=; b=
-	TASgLDWOyq9ShUIh9XhnAUWfrsFJweFExAl55rGdT7ue+WfoFm7u7RQa5S+Unt3x
-	OmdiQVU/5sQ1pkkB+JgF7obWn58Y69MELkRTV2e+/CqPMU38SxtaJcw2pxETS6yU
-	MducfCgwm3ID9/jm4ruNCMNtiZ9g5J/In1cwmdodATPcn+SBA3Zs8NHDu6738sdL
-	E3gLoopfDyx802Wyyn925fx0zoHF0IhZ5olxqDgs0P2bj+8v+KThJ0aELnihc1bS
-	+QAhNwyWE44+vw5ytU8FqDd4vI+XMBNhSfWnppyegHPhxZjjOTIaMTJUOq2ffHl0
-	oX+YO0IRJGsqxdOKKXMA8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736372549; x=
-	1736458949; bh=UKUHLTllcVMckRLmOPcA9IqiID/+P1GX6x1va/uTkWw=; b=c
-	Z43flVyZgxHc3We+QRH9YjLdSdx8CR3VHqrq+3bVfQZdDY4fMQVctNaJJuCmv8dy
-	M2Hbv6JPrx61siHcIW++KB4rjyGmXjuvyeZFBNOEhmUUULnSV7MjZifF2fbTNgPQ
-	YS5skAg6E0S64VGIwofgHZFmx+Rho8kiLHfklcbzXuXJs5AKN9X609isool5inY1
-	C92rsOfS3dX1zI5fC0u7MWDU2k/pwEUlxDQ9D/gFElJn8uocSFsZxn8mjyOYmpP/
-	Fy5ULUI6Z2DfGV105BZe7BWrR93VTEfp/hMVbTHcS5Cbo1zzplNb0c8CoQcnFe7H
-	Md6BXRPgFmuU43m/ns4iw==
-X-ME-Sender: <xms:RfF-Z8oUzpL46yh8dBBxXrjv4FSLsMKF2MQJIGkUNxTsI9rff6xhRZY>
-    <xme:RfF-ZypymkZpelZ0GFLy4-bASCC1CGBzkjjvW7uD0pn8iXE-eELF2wjpz-VWQVvnD
-    tF_qEXNkL8oVUVjeg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeggedgudehudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
-    rghtthgvrhhnpeelfeejudejfffgleduheegheeufeeffedtgfeffeevudeuleffgeektd
-    elueekieenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihii
-    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgsh
-    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehstghhrggtohhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:RfF-ZxOwbHT78kB2ubdu_AUIYWq8FiCV61x7IZVTwNch1C3_Oe18mA>
-    <xmx:RfF-Zz5230iuuAvroDrhBR_h0BKium5GZ4bIWxbdfv___YbN_sI1Ag>
-    <xmx:RfF-Z77QzMyC-9lIEIwzgom6H0xhRAuxRKA3e6zOMy77KeN9o8o0qQ>
-    <xmx:RfF-ZzgxzuoOdjPCkJ5W4HwmUJVJpUEXRkyGfR4DftDGznSiK8YPJg>
-    <xmx:RfF-Z7H3TYZ07uH_UlfJnr6MDuiDVNbUQllBNJRBoxeeeVIULKxUXj3Z>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id F348F780068; Wed,  8 Jan 2025 16:42:28 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CdIfkcBb"
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-71e3167b90dso150743a34.0
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 14:21:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736374871; x=1736979671; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nhqn4dhRf+istBoTOi1GAhDv4EIpqNUFQ+xVrNJs15Y=;
+        b=CdIfkcBbdH/vBVkeKo6ywXtUgejCokutCVfcYcvfSRbs23MiiU4+tZrlRIpXJetk8y
+         akC3wv3t0FadMYGOh4y5LhI/ccc38leuTCkPg40v1q4JK5D1o+1A00ZOuelOa3bW1vSJ
+         x0DsQLGLwDAm+8Ygj7poiKsIlZB5COZbck84yE8ohxi8Q8I3XoFzNUnJUuqiW4Vot53Q
+         TVi+AnP0/JCJOP9q09/dQkrKUBZti1O/7tnPUH+gveOz9wi0mvLOw2S1xROjxJIcPIk2
+         AjmXZzqf89Brb50J/kl7ZuFjRjzk4XbMA12+0PSoj/yLN+qkZRoEdWUOupbAp7QOEdWR
+         Yx3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736374871; x=1736979671;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nhqn4dhRf+istBoTOi1GAhDv4EIpqNUFQ+xVrNJs15Y=;
+        b=Pjrdi5b0lvmhxy94/pNFQj3PtR4cbfzkPXT9Ar8dIuVbBWKvLQgIqU21WClGVsy6UI
+         mBJo1bylBvEWZLQW8LG4RNuqJYQ+iSxDdl+Updzdoeq9lM3rAlew4reJJ/kEhiV6sf3W
+         VIR4vwT0jd/oc70yJnqHDhSv8Oz/tvgtK+0RZnvtwq8r4+RgHLCBTHcRez6ZT0C2JFQm
+         XG0LcShnco3ZCBX9d5WwW9eEX7WiawLUZU1A6gZLBr4fwsRaDvi6ziI5l4OhUZjYoD7Q
+         7zZB9dhWqmNRAPMsjyTYjwm8+LGVaF4AK35z1pEPgfu6DZ1sRoJheMBTipc0yjfYedxU
+         VDvg==
+X-Gm-Message-State: AOJu0YxchnXnyP/ufIhP7D4XHKNx3k0zuBwYV7Pcv/sPRwYGEcYaK0wc
+	X6MPnLxNN0/ZrVW27tRiAqzMSxgZiLI35BYcjJp8lDjlbSL3vgQR7K1lEw==
+X-Gm-Gg: ASbGncs8sL6PuOuag980yItDQLxYVo0C2LyQ0TOK7wr+SzTBPzXcPq5X43XPNlouqIX
+	WPEwAdM0r/8y4U36K+n458JnNMsEebovNUGu8D3t6mUhtgjxGjVh8hRypkWpPSQDTvi3ei0oA4a
+	otHnzuysYBJFc4Oz+dfSMMYZ3d9Rb/24EDe4FPlndPQUbHSgQVi68J1UrtjR14JeYkS6nIDG4sA
+	LL+eaEriOh0tuR+ciMY1nZmN2B1HfgRQX1irTQ9UzTsucGVhQ==
+X-Google-Smtp-Source: AGHT+IHFQuT25JXTeuquSz9qH250g3i5Zl+f3VeTuoaeGspM03IX0T/FRErBAdiCazp4rmvYpXX5Cg==
+X-Received: by 2002:a05:6830:4410:b0:71d:4698:7b24 with SMTP id 46e09a7af769-721e2e7073emr3420437a34.16.1736374871235;
+        Wed, 08 Jan 2025 14:21:11 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7231862a215sm10138a34.66.2025.01.08.14.21.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jan 2025 14:21:10 -0800 (PST)
+Date: Wed, 8 Jan 2025 16:18:35 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
+Subject: Re: [PATCH] rev-list: print missing object type with
+ --missing=print-type
+Message-ID: <onddu4fjgo2q7f6r7f6kgqctrbhshkll23z6ocsxiiqxbynap5@msq7qtj2un4w>
+References: <20250108034012.211043-1-jltobler@gmail.com>
+ <xmqqjzb5pc6t.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 08 Jan 2025 22:42:07 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "Scott Chacon" <schacon@gmail.com>
-Message-Id: <52e414a5-e22f-4046-a321-ae9357ab43c3@app.fastmail.com>
-In-Reply-To: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
-References: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
-Subject: Re: [PATCH] help: interpret help.autocorrect=1 as "immediate" rather than 0.1s
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqjzb5pc6t.fsf@gitster.g>
 
-On Wed, Jan 8, 2025, at 20:31, Scott Chacon via GitGitGadget wrote:
-> From: Scott Chacon <schacon@gmail.com>
->
-> Many people confusingly set the "help.autocorrect" setting to 1 believ=
-ing it
-> to be a boolean that turns on the autocorrect feature rather than an i=
-nteger
-> value of deciseconds wait time. Since it's impossible for a human bein=
-g to
-> react this quickly, the help message stating that it's waiting for 0.1s
-> before continuing becomes confusingly comical.
->
-> This patch simply interprets a "1" value as the same as the "immedate"
-> autocorrect setting, which makes it skip the 0.1s and simply say that =
-it's
+On 25/01/08 07:17AM, Junio C Hamano wrote:
+> The users need to be told what this "type" information really means,
+> as its meaning is quite different from what "git cat-file -t <oid>"
+> would give them.  We do not have the object, so we are not learning
+> its type from the object itself.  How much trust should the users
+> put in this information, for example?
+> 
+> That comes back to the "where does it come from" that the future
+> readers of "git log" and reviewers need to be told by the proposed
+> log message.  Knowing the internals, I know you'd be getting it from
+> the "containing" objects, e.g., an object name that was found on the
+> "parent" object header field of another commit, which is _expected_
+> to be a commit, or an object name that was found in a tree entry
+> whose mode bits were 100644, which is _expected_ to be a blob, etc.
 
-Maybe: s/This patch simply interprets a/Interpret a "1"/
+I'll update the log message in the next version to explain how
+information about a missing object gets inferred. As you explained, this
+is relying on the containing object to figure this out. This is why for
+some missing objects it may not be possible to infer the type. For
+example, if a missing object is only reffered to by a reference, there
+is not a containing object that can be used.
 
-From =E2=80=9Cimperative-mood=E2=80=9D section in SubmittingPatches.
+> There are other places that you _could_ glean information about
+> (possibly missing) objects.  An object that is found during
+> "rev-list --objects" traversal (which is the topic of this patch
+> after all) but turned out to be missing may not just have an
+> expected type (because it was found in a tree object that we
+> successfully read) but also the full path to the object in the
+> top-level tree, for example.
+> 
+> In modern Git, there are even more places that you may be able to
+> use, like commit-graph that not just hints the object itself is a
+> commit, but what its parents are and when the commit was created.
+> 
+> Note that I am not suggesting to implement more code to learn "type"
+> information from more places than the current patch is doing.  At
+> least not in this iteration of the patch.  What I am getting at is
+> that it would help us to avoid unnecessarily limiting ourselves by
+> stressing on "type" too much if we at least imagine what the
+> possible sources of these extra pieces of information are and what
+> they could provide.
+> 
+> As I suspect that we would want to leave the door open for us to
+> extend this later, I would perhaps suggest an output format format
+> like:
+> 
+>     ?<object name> [<token>=<value>]...
 
-Or: Interpret "1" as "immediate"
+I think this is a great idea. To select which attributes get printed
+with the missing object we could add an option. Something like:
 
-Since the sentence is getting a bit complex with =E2=80=9Cas the same as=
- the=E2=80=9D.
+  $ git rev-list --objects --missing=print \
+  --missing-attr=path --missing-attr=type
 
-> running the command, which is almost certainly what everyone setting i=
-t to
-> that value is actually trying to do.
+I like the idea of also adding a path attribute, but this raises a
+couple of questions. The way `--missing=print` currently works is that
+it prints the unique set of missing object IDs. A missing object could
+possibly be referenced by multiple trees and thus have multiple valid
+paths. There are a couple of different ways this situation could be
+handled:
 
-The section in `man git config` should get an update I think.
+  - We could record each of the encounted paths for an object and print
+    out each. Something like: `?<oid> path=foo path=bar`
 
->
-> Signed-off-by: Scott Chacon <schacon@gmail.com>
-> ---
->     help: interpret help.autocorrect=3D1 as "immediate" rather than 0.=
-1s
->
-> Published-As:
-> https://github.com/gitgitgadget/git/releases/tag/pr-git-1869%2Fschacon=
-%2Fmaster-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git
-> pr-git-1869/schacon/master-v1
-> Pull-Request: https://github.com/git/git/pull/1869
->
->  help.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/help.c b/help.c
-> index 5483ea8fd29..e6576644b99 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -568,7 +568,7 @@ static int git_unknown_cmd_config(const char *var,
-> const char *value,
->  			return config_error_nonbool(var);
->  		if (!strcmp(value, "never")) {
->  			cfg->autocorrect =3D AUTOCORRECT_NEVER;
-> -		} else if (!strcmp(value, "immediate")) {
-> +		} else if (!strcmp(value, "immediate") || !strcmp(value, "1")) {
->  			cfg->autocorrect =3D AUTOCORRECT_IMMEDIATELY;
->  		} else if (!strcmp(value, "prompt")) {
->  			cfg->autocorrect =3D AUTOCORRECT_PROMPT;
->
-> base-commit: 14650065b76b28d3cfa9453356ac5669b19e706e
-> --
-> gitgitgadget
+  - Historically, `--missing=print` would only ever print a single
+    instance of the OID, but we could print a missing object with
+    multiple paths each on a separate line. Something like this:
+          
+      ?e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 path=foo
+      ?e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 path=bar
+
+  - We could keep it simple a just report a single path per missing
+    object. It doesn't capture the whole picture, but it does provide
+    some insight into the missing object.
+
+Since this missing object type is also inferred from the containing
+object, in theory different containing objects could indicate different
+types for the missing object. I'm not sure though if this is a scenario
+worth accounting for. Maybe it would be fine to rely on a single
+containing object to provide the type and assume it is consistent across
+the others.
+
+For paths, I'm currently leaning towards having each identified path
+printed out as a separate attribute on the same line. For types, I'm
+thinking we can just print a single type and assume it is consistent.
+I'm certainly open to suggestions though. :)
+
+> where <token> tells what kind of extra information it is.  I expect
+> that the initial implementation only knows about "type" as the
+> <token>.  For future extensibility, we only need to say that under
+> the syntax:
+> 
+>  (1) How multiple attributes are shown?
+>  (2) How would a <value> with SP or LF in it is represented?
+> 
+> My suggestion is to have multiple <token>=<value> on the same line,
+> with a SP in between, and problematic bytes in <value> are quoted,
+> using cquote(). i.e. a <token>=<value> whose <value> part does not
+> begin with a double-quote ends at the first SP after it, otherwise
+> <value> is taken as a C-quoted string inside a pair of double-quote.
+
+Ok, so using a path value as an example, if it contains a SP, or a
+special character that would be handled by `quote_c_style()` it should
+be wrapped in double-quotes to indicate that it is all part of the
+single attribute. That makes sense.
+
+> If you are adventurous, I would not mind seeing "path" implemented
+> as another token, since that would be fairly easily obtainable, but
+> it does not have to be in the initial attempt.
+
+Handling paths appears pretty straight-forward to add and seems like a
+good idea. In my next version I'll also add support for a path
+attribute. Thanks for the feedback.
+
+-Justin
