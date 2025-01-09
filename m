@@ -1,161 +1,223 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A2C21421B
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 06:21:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBBF37160
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 07:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736403697; cv=none; b=tCLEQn0O5z+vGmcD7Qp0YQHYQtJ6j2G6//5w2gaCGNUbu/YU13oJcwYMwlTl6Ka4/kqv7U+O2KO1ydudnNtI9Hlv26rUMXtqsMq1kK9W/P+e1pFNHJU8/JRGNqOffQFCOt9IOv65ae+PLWNJwbOgLjNrXxuTWzi315NZwhwpl+g=
+	t=1736406337; cv=none; b=dCo6BhQBjua1RXRNYBNHFu9ngwoKyWuW2mga8ZgD6ssdnSUjfKdKeh15+muTRmOFOCwuOIoAKUUbjcppp11xGdzppuhS9wfBiNC7PUtAHHcp49BmDWyWLFJtpuoRuBDitZ3opFneQPGGE5ALwkBeQsst9CmxzFRPXKmjGSazPbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736403697; c=relaxed/simple;
-	bh=5FZu4FuaGmo30dJ87I1a1J+X/OhCP8BTq96v5Oi5l+w=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=BfWHY8gePun00R4UIEKFl233bttIarVRBL+LEXAfqqp50Zx2BDMLbdhekCf1DFyJy78F+OWGKKvUO7p6AvGKsp9tbeVuj10YsKnHpGjKz+c4bDPUeYqyBXyiFdSrrmWPNToHJQoMJI89ENDpnXmWWo5Gt6jOGn9kbpaPtjHgafE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HCVYTr8F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K1Iw/Yto; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736406337; c=relaxed/simple;
+	bh=uBQ/Lu8zsCIOJXePavXot96nnpH/KeVmGV1ntq+eMnI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=g4l7OHsmB0o7PzkhB23VQgQPKst1cAdeVcfwGeqQSbuans1ScDXXOMQSGKItHLpT6VEwRfJEre4oayxJx6FQcSn+SZRJE0kwroxA5xdI3s4+5H9hxxABxTD7i5NwVaUX7r9CLEVqObR6ZMNY0rO9sS3POow6HbnP8friUdEpx7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=revi.email; spf=pass smtp.mailfrom=revi.email; dkim=pass (2048-bit key) header.d=revi.email header.i=@revi.email header.b=CjHnvEvU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E0ygczJy; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=revi.email
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=revi.email
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HCVYTr8F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K1Iw/Yto"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 809E22540183;
-	Thu,  9 Jan 2025 01:21:34 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 09 Jan 2025 01:21:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1736403694; x=1736490094; bh=Kj+bkp1hW2
-	wwz1Lk//jX4X5JAAYDg7R4iZThz0nd8D4=; b=HCVYTr8F5mskV0vf0X50Isw41L
-	AHOcTsZdLzjFcPZLSCC+TIFR+proHODCKrQUk5MmhqDNYXFDaP/+udwFEgdWfSmy
-	o53KJ1N9gdp4WClDPXf4k2ng+EZ2//gjb/2vBs9Q2CGbXgGJ5mquAD9VWaBdzv0I
-	lD2Vk94VIy5gRSdRg757tFlzpY63K57COuswwPUTa324gYAaW/ttU3cTdiV38Vds
-	54BS9rtEFn4SoK7oolLR641t5ZT/9Xc4N2Gq6LPznybjh26axOnpwpitJrKLywNB
-	+fXw2Xmlecwi3VQTdRnCUp5Py+5sHSoZgYvMoy4LYMpH83Xb4VZKvPaQNIHw==
+	dkim=pass (2048-bit key) header.d=revi.email header.i=@revi.email header.b="CjHnvEvU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E0ygczJy"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id EBD581140170;
+	Thu,  9 Jan 2025 02:05:32 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Thu, 09 Jan 2025 02:05:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=revi.email; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736406332; x=1736492732; bh=uBQ/Lu8zsC
+	IOJXePavXot96nnpH/KeVmGV1ntq+eMnI=; b=CjHnvEvUgbjGerPymL48oRq8+A
+	LcI4bK8habJKwA0ATq+diO7qOO0oziz1L8RNMIlnyA0BiQ2HW7tGdbdWZ2rkcqSU
+	jHliddyeEnYU44FI+Lgr4F+RWnFegHqzVHhDr2BNTB1p/NeGpivW69uGEkBiFFEi
+	SrdLFkX32MDBW6CMhGKs12mqQ1a5umpyHRaJYx/P0wDnMUgUbf7udTFn4XGyxYxz
+	8SgoCJPa2zPOLTC9qHcxvZ4T1bZk7U9SvMyO3C7RjBR99yTRsGkFJrfgQRykf/J0
+	HcwRNkIPrpaBtS5vxScasnPBPtV6XKYWFODos1TV7ol/YCeg+SQDZsF4i8rw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1736403694; x=1736490094; bh=Kj+bkp1hW2wwz1Lk//jX4X5JAAYD
-	g7R4iZThz0nd8D4=; b=K1Iw/Yto4MzefUyH0p909p0bXTpOuW/ceG8ezefoIfgU
-	jXqZmBwcyNxT/f1qWouFDzhehETEd498TwkuHdcR4wRoIUy0dR7RP6b9+aq2tEgD
-	JAZ9Fb4Uq99ChWbYqvEdUeJXBMM4NLPBNt/NRoEOiqTn7YFxFD+G8RxJOSPHpOiM
-	Cg2Pobo3OmtzrVLjD8Enzl9rBlWUQnh1AKX1tRGhJITTRLgH2851lbtn0YAu5eG2
-	9QdLpl9WjC1cFEssu0wsKIEmHHUBIqNCEaPHxI8qeU7NRA8DjPObJ96ZSgb+TUj7
-	qs9bURtC29GcooRbPK6zdaJccywnRKmh1DJeU/PlBg==
-X-ME-Sender: <xms:7mp_Z1Yyv8FraM_N0jXyijiuLnfogIRK6dExRwV6WBN3zjvmi0Nykw>
-    <xme:7mp_Z8bO34ijAQgUQ7wRAGW38n6iVPrXSu6JUSnz8mKFElDIG6r6O4OwnpQdfzz8u
-    rJQbn2IRngOI3FVig>
-X-ME-Received: <xmr:7mp_Z39G-aTgzKQfJUrdGT1Cz1vQ48T7pShpAjEWumWugELk0dKeQm3Iq5Gh6umhQGkwBn9jDGaIcVeP9JxpLN4vS3Wh7od9-OTjQjG2ioMAKayw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeghedgleegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephfffufggtgfgkffvvefosehtjeertdertdejnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeeigfeitdffffdvvdeuheehjeehheeludduhfehkeekgeeg
-    gfeuffehveegteejfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
-    igrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:7mp_ZzqKcJdHFIbAV8QWxS3lx7Fj7rsh1MB2ADLGzixTJqBb2RzFDA>
-    <xmx:7mp_Zwq71oxdkAetCUcxYASkxJH_rUEjVgHWktXHGfOiPUTOdhojCg>
-    <xmx:7mp_Z5Q7l331UYF9c5wO9XicgXgmtvBIq4W1it1c8hoF1SlC7qGBiw>
-    <xmx:7mp_Z4rn-A-NwqNfaqcoeUA3DfToDuPN_fFScKwTzHLfREgbEocx-g>
-    <xmx:7mp_Z31fFoGJZsGiDllzyg4B9wXA6Y4gvK-_biCByUHtspWdVU1FN4PE>
-Feedback-ID: i197146af:Fastmail
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736406332; x=1736492732; bh=uBQ/Lu8zsCIOJXePavXot96nnpH/KeVmGV1
+	ntq+eMnI=; b=E0ygczJyyM0F1uG+cB1oA2cU0k6vZJGEKYjqGfTfeXmxPVFnYhC
+	mPPckk60QsuI6OmWM3oztxgtIVIM7EzYw0eG9BrYZt/eKDMHtm0Y7GXFxIbjZSU1
+	xy6/Reqmk6y3hZkg9gqFRo9Dsrd0SUeXbDg8x8FWV/BsWXbS7/Ul6Ghgu03u5OgP
+	D5u7C8YdQlqbEvV25uPkKVjkvWj2BXQTFDpACKBM2XozEXnsAMBYi2nX20yQ6o2y
+	GxbnZEL6c6Cq0hSrwY2NtWtjo38FY7Gm80FG9YeECcAWNiPH77hNM9DaXoc/jPwN
+	0veOitLNcQk+K9QL4AsEYF+U3TRCKS/TRRQ==
+X-ME-Sender: <xms:PHV_Z5bm3i31DNUM1WfBddh65UHxX9c9uQlmyfYwdOyyIe0ro6q2aA>
+    <xme:PHV_ZwYOUbkVtJ5n6VIY6R4X1O-qYsWdBew-Cyljy5F20Oy5HQqHhzZHLj49vrwie
+    E1ysuptYlsOmpQMv0Q>
+X-ME-Received: <xmr:PHV_Z7-0BNP01al7tOP2ClBNxDR6C8ZVFIQ529kB1sjCPEchmWRRCMOrlnx6fNY_jEvKMQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeghedguddtgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenfghrlhcu
+    vffnffculddvfedmnecujfgurhepkfffgggfhffuvfevfhhojggtsehgtderredtvdejne
+    cuhfhrohhmpegjohhnghhmihhnuceohigvfihonhesrhgvvhhirdgvmhgrihhlqeenucgg
+    tffrrghtthgvrhhnpeduveeiueduuddvfeevudeufeettdehveekteetveefkeffgfehje
+    dufffhgeelgfenucffohhmrghinheprhgvvhhirdighiiipdhrvghvihdrkhhrnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhephigvfihonhesrh
+    gvvhhirdgvmhgrihhlpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgthhgrtgho
+    nhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:PHV_Z3r7W5o3m8tKoveWYeC-wkh67HA9nylEE9RYJJ1i5IK7ssYxGw>
+    <xmx:PHV_Z0pz1TlacnKfUcVqBUt-iGwEKuKMcrYqPkL9-VM6mzilWvFCZQ>
+    <xmx:PHV_Z9QulVoc_kIrtlGMjvb61ogbF-W5EFffZ1BfMU89ZkPbt8doUw>
+    <xmx:PHV_Z8r5pA_-TtYxoiDnakbpyeLAQrDnRa_CZpaeuGV4B16pUt0myA>
+    <xmx:PHV_Z_UanassRZw0hYxZv1P_8WuLZrnDNPVsTcHWBsiukLWorFTRT-P6>
+Feedback-ID: ie2a949ef:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jan 2025 01:21:33 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b941f593 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Jan 2025 06:21:32 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 09 Jan 2025 07:21:30 +0100
-Subject: [PATCH] builtin/blame: fix out-of-bounds read with excessive
- `--abbrev`
+ 9 Jan 2025 02:05:30 -0500 (EST)
+Message-ID: <09e516e7-37a5-4489-a30b-f26dd2462fc3@revi.email>
+Date: Thu, 9 Jan 2025 16:05:29 +0900
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250109-b4-pks-blame-truncate-hash-length-v1-1-9ad4bb09e059@pks.im>
-X-B4-Tracking: v=1; b=H4sIAOpqf2cC/x3NTQ6CQAxA4auQrm0yQ+RHr2JclFKYBhzJdDQmh
- Ls7Yflt3tvBJKkY3KsdknzV9B0L/KUCDhRnQR2LoXZ147y74XDFbTEcVnoJ5vSJTFkwkAVcJc4
- 5IPddw8RtO3YeSmdLMunvfDyex/EH6AX2v3MAAAA=
-X-Change-ID: 20250109-b4-pks-blame-truncate-hash-length-c875cac66d71
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Mailer: b4 0.14.2
+User-Agent: Mozilla Thunderbird
+From: Yongmin <yewon@revi.email>
+Subject: Re: [PATCH] help: interpret help.autocorrect=1 as "immediate" rather
+ than 0.1s
+To: GitGitGadget <gitgitgadget@gmail.com>,
+ "git.vger.kernel" <git@vger.kernel.org>
+Cc: Scott Chacon <schacon@gmail.com>
+References: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
+Content-Language: en-US
+Organization: Wikimedia
+In-Reply-To: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------qXQ2J0Y1MR9U9YonA51UB2ZD"
 
-In 6411a0a896 (builtin/blame: fix type of `length` variable when
-emitting object ID, 2024-12-06) we have fixed the type of the `length`
-variable. In order to avoid a cast from `size_t` to `int` in the call to
-printf(3p) with the "%.*s" formatter we have converted the code to
-instead use fwrite(3p), which accepts the length as a `size_t`.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------qXQ2J0Y1MR9U9YonA51UB2ZD
+Content-Type: multipart/mixed; boundary="------------r8yFXtod9xF4LibzaN4b6lHD";
+ protected-headers="v1"
+From: Yongmin <yewon@revi.email>
+To: GitGitGadget <gitgitgadget@gmail.com>,
+ "git.vger.kernel" <git@vger.kernel.org>
+Cc: Scott Chacon <schacon@gmail.com>
+Message-ID: <09e516e7-37a5-4489-a30b-f26dd2462fc3@revi.email>
+Subject: Re: [PATCH] help: interpret help.autocorrect=1 as "immediate" rather
+ than 0.1s
+References: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
 
-It was reported though that this makes us read over the end of the OID
-array when the provided `--abbrev=` length exceeds the length of the
-object ID. This is because fwrite(3p) of course doesn't stop when it
-sees a NUL byte, where as printf(3p) does.
+--------------r8yFXtod9xF4LibzaN4b6lHD
+Content-Type: multipart/mixed; boundary="------------6KjLVIqGiQNyKfkpZMkcYZ75"
 
-Fix the bug by reverting back to printf(3p) and culling the provided
-length to `GIT_MAX_HEXSZ` to keep it from overflowing when cast to an
-`int`.
+--------------6KjLVIqGiQNyKfkpZMkcYZ75
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-This fixes the issue reported in [1]. Thanks!
+T24gMjAyNS0wMS0wOSAoVGh1KSAwNDozMTo0NiswOTowMCwgU2NvdHQgQ2hhY29uIHZpYSBH
+aXRHaXRHYWRnZXQgDQo8Z2l0Z2l0Z2FkZ2V0QGdtYWlsLmNvbT4gd3JvdGU6DQo+IEZyb206
+IFNjb3R0IENoYWNvbiA8c2NoYWNvbkBnbWFpbC5jb20+DQo+DQo+IFtzbmlwXQ0KPg0KPiBU
+aGlzIHBhdGNoIHNpbXBseSBpbnRlcnByZXRzIGEgIjEiIHZhbHVlIGFzIHRoZSBzYW1lIGFz
+IHRoZSAiaW1tZWRhdGUiDQo+IGF1dG9jb3JyZWN0IHNldHRpbmcsIHdoaWNoIG1ha2VzIGl0
+IHNraXAgdGhlIDAuMXMgYW5kIHNpbXBseSBzYXkgdGhhdCBpdCdzDQo+IHJ1bm5pbmcgdGhl
+IGNvbW1hbmQsIHdoaWNoIGlzIGFsbW9zdCBjZXJ0YWlubHkgd2hhdCBldmVyeW9uZSBzZXR0
+aW5nIGl0IHRvDQo+IHRoYXQgdmFsdWUgaXMgYWN0dWFsbHkgdHJ5aW5nIHRvIGRvLg0KDQpJ
+IHRoaW5rIEtyaXN0b2ZmZXIgc29tZXdoYXQgbWVudGlvbmVkIHRoaXMgYnV04oCmDQoNCnMv
+aW1tZWRhdGUvaW1tZWRpYXRlLw0KDQotLSANCi0tLS0NCnJldmkgfCDroIjruYQgKElQQTog
+bMmbYmkpDQotIO2ZjeyaqeuvvA0KLSBodHRwczovL3JldmkueHl6DQotIGhlL2hpbSA8aHR0
+cHM6Ly9yZXZpLnh5ei9wcm9ub3VuLWlzLz4NCi0gV2hhdCB0aW1lIGlzIGl0IGluIG15IHRp
+bWV6b25lPyA8aHR0cHM6Ly9yZXZpLmtyL3RpbWU+DQotIE9wZW5QR1AgPGh0dHBzOi8vcmV2
+aS54eXovcGdwLz4NCi0gSW4gdGhpcyBLb3JlYW4gbmFtZSA8aHR0cHM6Ly9yZXZpLmtyL25n
+M3VsNTk+LCB0aGUgZmFtaWx5IG5hbWUgaXMgSG9uZyANCjxodHRwczovL3Jldmkua3IvNjE3
+WlRxYj4sDQogICB3aGljaCBtYWtlcyBteSBuYW1lIEhPTkcgWW9uZ21pbi4NCi0gSSByZXBs
+eSB3aGVuIG15IHRpbWUgcGVybWl0cy4gRG9uJ3QgZmVlbCBwcmVzc3VyZWQgdG8gcmVwbHkg
+QVNBUDsNCiAgIHRha2UgeW91ciB0aW1lIGFuZCByZXNwb25kIGF0IHlvdXIgc2NoZWR1bGUu
+DQo=
+--------------6KjLVIqGiQNyKfkpZMkcYZ75
+Content-Type: application/pgp-keys; name="OpenPGP_0x011E455250EEBEDA.asc"
+Content-Disposition: attachment; filename="OpenPGP_0x011E455250EEBEDA.asc"
+Content-Description: OpenPGP public key
+Content-Transfer-Encoding: quoted-printable
 
-Patrick
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 
-[1]: <4d812802-afbc-4635-7a19-73896fcda625@gmx.de>
----
- builtin/blame.c  | 4 +++-
- t/t8002-blame.sh | 4 ++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+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
+/McD
+=3DPORJ
+-----END PGP PUBLIC KEY BLOCK-----
 
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 867032e4c16878ffd56df8a73162b89ca4bd2694..ad91fe9e97f90625dd2708fbd44bf2dd24a337a6 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -475,6 +475,8 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 		char ch;
- 		size_t length = (opt & OUTPUT_LONG_OBJECT_NAME) ?
- 			the_hash_algo->hexsz : (size_t) abbrev;
-+		if (length > GIT_MAX_HEXSZ)
-+			length = GIT_MAX_HEXSZ;
- 
- 		if (opt & OUTPUT_COLOR_LINE) {
- 			if (cnt > 0) {
-@@ -505,7 +507,7 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 			length--;
- 			putchar('?');
- 		}
--		fwrite(hex, 1, length, stdout);
-+		printf("%.*s", (int)length, hex);
- 		if (opt & OUTPUT_ANNOTATE_COMPAT) {
- 			const char *name;
- 			if (opt & OUTPUT_SHOW_EMAIL)
-diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-index 0147de304b4d104cc7f05ea1f8d68f1a07ceb80d..fcaba8c11f7ede084e069eefd292f337e8396cb4 100755
---- a/t/t8002-blame.sh
-+++ b/t/t8002-blame.sh
-@@ -126,6 +126,10 @@ test_expect_success '--no-abbrev works like --abbrev with full length' '
- 	check_abbrev $hexsz --no-abbrev
- '
- 
-+test_expect_success 'blame --abbrev gets truncated' '
-+	check_abbrev 9000 --abbrev=$hexsz HEAD
-+'
-+
- test_expect_success '--exclude-promisor-objects does not BUG-crash' '
- 	test_must_fail git blame --exclude-promisor-objects one
- '
+--------------6KjLVIqGiQNyKfkpZMkcYZ75--
 
----
-base-commit: 14650065b76b28d3cfa9453356ac5669b19e706e
-change-id: 20250109-b4-pks-blame-truncate-hash-length-c875cac66d71
+--------------r8yFXtod9xF4LibzaN4b6lHD--
 
+--------------qXQ2J0Y1MR9U9YonA51UB2ZD
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQR6nowvPdI99GnCxH3fWe4Q/FmP5AUCZ391OQUDAAAAAAAKCRDfWe4Q/FmP5Pvf
+AQC2sf2CzAdbcQDvp8NYc8SMlR6vnCwb2baIsF8AkMnH+wEA+oynp+VMwGvN0J4ia56tTqR2SOO3
+jyCVsoSwE8A8twI=
+=mO4Y
+-----END PGP SIGNATURE-----
+
+--------------qXQ2J0Y1MR9U9YonA51UB2ZD--
