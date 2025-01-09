@@ -1,88 +1,87 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAD71FBEA6
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 05:58:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EFC1632E4
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 06:20:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736402289; cv=none; b=qK2hBCB+W1jM6EYQLwLR1FZI03GOkfMe83EQ14Jtz2sY1o9Dp24fWuzRI1IxnmZ//U2tMyjO013qvdDadbwNC6hb2UCGhwH1FhLD6dVveZQjZd4GN+ZHdkvTNCk88sEWPQDXgMgCQRxI1sxJoYZ2wY4LYILMs+TwmnLQfC8kwDA=
+	t=1736403655; cv=none; b=mAPgV9LaL0riygy3EBxGwF9jtvvW6qiZFlLmufOUpM8werzyxoLy1PDdTu2RVUgVdteDxxPn1FxCKXrLe14Xh64C2UTmdfOY6V/md+z1vizreBZX8eFrcSAzBeGyWUp1tFypJx6luvq0X296GhrFF0Y1Ryus1pPEQTVUg6+q0nA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736402289; c=relaxed/simple;
-	bh=wfdJ6gEqlQ8UidvSLLYU0goh8Rs15QJ3fmpRqe/JDIo=;
+	s=arc-20240116; t=1736403655; c=relaxed/simple;
+	bh=6J1qbX77BLx7TJ1NnZpxDnH9JXiZ+PQP2LfLdm//hzA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CdtvBK8PGT+LMLO0bNOtvdPeoMUWatw8YxvokYcyVmw1CLZ6IzEsKAPVdbQN+eTETBmEpHDixbZuN2nFXGNNYCiCO8DaDctgzxYfLFFU8hcQKcRK41P17iyliZ6ynXq6aoDm+/aMysp18NZG7u3fUuIqfePp/aKn6eTktz9L0co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e1S83YfS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nvnunzeA; arc=none smtp.client-ip=202.12.124.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=R+p8tEtZ1aYP5pGoBPkjJuPW95bb2mWId+d5kZgtT6AV13loQFHH3DZD8qNr722C3WOYDmny47zmAp1Ft5bj3vf/cJM2V+Rm8R6urHRDJNnSCktczf0MoVBPVL2lnPt2+bywjzpsYrXjNpLt7Yg3V+2FAQZEsgsdzzGCdvo3cPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aBMfGqN6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IRCssD+s; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e1S83YfS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nvnunzeA"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 94DC72540161;
-	Thu,  9 Jan 2025 00:58:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aBMfGqN6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IRCssD+s"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3653E1140159;
+	Thu,  9 Jan 2025 01:20:52 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Thu, 09 Jan 2025 00:58:04 -0500
+  by phl-compute-12.internal (MEProxy); Thu, 09 Jan 2025 01:20:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736402284; x=1736488684; bh=1CazECn/Qg
-	LLI/3i49afXAms9aEsFNVIfPugyMqKd4M=; b=e1S83YfSkFJgBRVmv0fbPwNEgN
-	8gb/b9yJBNIt484Hc0wp8mAobJo61kfHxCBJRdXT758QHVzmQNsrbBi4hIv5Iz5b
-	94TVt4dfFexbZw/lDCvIYy2hr8ohsZAqwwPwVMQgieVGyC368TEFTnMlIwIdSpsP
-	uzZbqNeWx5RexRdj1AOLyTqvkj6D1eq3cPTNhfsXd33x9wI07lTRGKTKUk/8+f9Q
-	pCw7o+8fcEH/frp9mUtGNBHXBS6yEOP3gRzIvXp/CvjwxkXmJF20++3VTlBF6enH
-	GKW1eb4smQg4TNhxnIuKZ02Kd71FI2V92Ho3/I6WudUmyR05Sg48UTD3pjhg==
+	:subject:to:to; s=fm2; t=1736403652; x=1736490052; bh=DgqaHrPmap
+	Mr1E9k34ub3CwcuaWMVdFCNbSP/m7HbMU=; b=aBMfGqN6CISo4X+SMpfeuEKeuZ
+	tkv+uBkA3xUGiZJbwicO4yRfhO0ShC3KsPMMw5Z2HyHKUPqJTRrKUgilXhutW8W8
+	wdCtP/RntXParNQ8i5tTwVTMDMlqYFfO1MDsU+3KBXE7lUO1haxlmG53ITe0Yy+V
+	ZYeZJPOcdwHS6DYT/WVt6mp2+cH19lhck/KKxSePCA1NIJXdHrpJ3I9Q00Hp3NSM
+	lY8MlrJyCnbBjSf/BdyrhTmYhunaVBHJedB7SO06e68mkj00smMoXNxwKCQfVEw+
+	+flUf7j/eBL48IH5SAJF/0NEVt/njpIxLhGzCt5YutbkA4s9NN0v7idHx9Sg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736402284; x=1736488684; bh=1CazECn/QgLLI/3i49afXAms9aEsFNVIfPu
-	gyMqKd4M=; b=nvnunzeAucX6TG7P0oMuwJLaEUwxVvkPeX44ApaVPboZs5mEGyY
-	1c5rUskkArzDqkwgDasxIsm+SPXPkFK2S7r+aiKs2C34gmlqLmJumIF3Oe8NTfBD
-	f80DCE3C6KVL650gfMMLXRyFFyxrMSH01cZhtVzf6wFnsA8J67cxAUXLo+bMbYWx
-	JY2cqbrSMjEsE3FkP3cDTbQBtsr91RGW5uuPml/hZpuYsG5acSV7xJ2GA/X0YLA9
-	9ohOG/iPeFnFvodprFUhow9lYGwHY59iNh4Ok6MrVS9zSkfn0aNziWv74VyK3c6T
-	mkAoPMm/QkT1sQpyXMmkEAdbDN6MCrk7BdA==
-X-ME-Sender: <xms:bGV_Z-k0YD50fItD63xaFsbLX2CkW--xZVtEkdzFiq21e4eVX5_B2A>
-    <xme:bGV_Z135QRu-MQ1xPZEiovdeZJn4gY2Tkl_1dkR9OYz9xES8rtqkitAZTvkjRCh3h
-    NcSvVSLx03DpogsSA>
-X-ME-Received: <xmr:bGV_Z8oSPWC66Om_6hI9bjRSC2EQvN4YgbF9uGatWFAyu7ePwl9HhyBX2IBri2DTa-VMbkTfz5pWYYxaDaCeukU2FeTCNM1J7j3REG6a7ravkrNQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeghedgkeelucetufdoteggodetrfdotf
+	1736403652; x=1736490052; bh=DgqaHrPmapMr1E9k34ub3CwcuaWMVdFCNbS
+	P/m7HbMU=; b=IRCssD+sLGO2Yi66+FGUtSXpfbmeKVfeWNp7VAgmf+QXQmuuUde
+	px5dwdVBnK4yCOXBolHZVJ2WldS5fr5/jxlJglIOKBlovVcAkY1TfonJwcpnymLI
+	EXUfjDcLaO6Jussx1pP2oQIbS9kY3lHnU5GMRIA4lE/lYBqOGTryq+uGsMfOnjQJ
+	yc6A9CRIVCeCtEiTUXGzbHp4D26uHpTw/0D9BP5jJ9FBTDKjmrIanXVf+SMKSk7s
+	pZVz8OhL4tyCWJ7v/c+0ccIQEdBZegxeLwA8/2HHOaXuPuLqR5kkdbpv/ofTWm3v
+	NUvsyibDuWw58KGbFDcEo84a6pE8TyJAJpw==
+X-ME-Sender: <xms:w2p_ZxN9Rs0xUoq68JdrNoyC0Mm3OEl1LtRsvFhLADNK7NJeL8D9ig>
+    <xme:w2p_Zz9v3MqMsxofwRrZfDs5_QuAyIWa9XNWHXOQ7pJ6RlJ9GcD-bW11aacQCeqXI
+    WbCubaHbVLnB5m4lA>
+X-ME-Received: <xmr:w2p_ZwRQQpP5bdywQkNoV3wHg9VXlnz1SpW2_x4zEAz66CLB8AFdfg86N2WNV8VzMSHUfsT_Fcm09Ayk2dgS5caiTXt8AXtiG2En7iNjCIm46reo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeghedgleefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeejvedugefgff
-    ffieegtefhgfeikeevfeefheevvdegieetgeeujeeliefhiedtueenucffohhmrghinhep
-    khgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:bGV_Zyno_Zt5RXuxJSA7JjV8VsPM76iXSNXqM6Sy1RQhOxEG_MJuaA>
-    <xmx:bGV_Z81zwFltoRpLxrcD--61izbRxXvimOSi92Z5_ZtdV66RDKPRbg>
-    <xmx:bGV_Z5sY3iY_TfGyp72SrDypBWkuwHeG8ANKtAnMzOE44QQbuzTp_w>
-    <xmx:bGV_Z4VNLaKN6VUGv_S76xfeBLZEb3H3CMcEPis2XI2ndgoSuaziiQ>
-    <xmx:bGV_Z5zW-KwYG9jXi8IMVugLclIkjHd_po1BxFWIqCqgrUk08aCvA-Z8>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgr
+    nhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepphgvfhhfse
+    hpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:w2p_Z9sVs8eacaFTSfn3srwewoV2NuAhG05k3_EtnA98IuN20lhkyA>
+    <xmx:w2p_Z5fUCjnvzSFHklCK41EN-x3v-Oi6herqgVz9vW7iQD6A2g3JMQ>
+    <xmx:w2p_Z53KtnIRqnoELvODOUxykpq7XOli3TIVMn39fADKGVtYPutWAg>
+    <xmx:w2p_Z1_kNnOmGXvrLTsh9fmb7xbuE596Z9EbK05K7z0Q0yb4eHvaZA>
+    <xmx:xGp_ZyGQiGQcxhABQxizLo_QzMF31AavEb7lx_uYkL-D3FEyGnggrUph>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jan 2025 00:58:03 -0500 (EST)
+ 9 Jan 2025 01:20:50 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a1c82d89 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 9 Jan 2025 05:58:00 +0000 (UTC)
-Date: Thu, 9 Jan 2025 06:57:59 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 026b5f3b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 9 Jan 2025 06:20:49 +0000 (UTC)
+Date: Thu, 9 Jan 2025 07:20:48 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 02/10] builtin/fast-import: fix segfault with unsafe SHA1
-Message-ID: <Z39lZ1E6zm88PgCf@pks.im>
-References: <20241230-pks-meson-sha1-unsafe-v1-0-efb276e171f5@pks.im>
- <20241230-pks-meson-sha1-unsafe-v1-2-efb276e171f5@pks.im>
- <Z3LNVzw9UlS7SWqe@nand.local>
- <Z3fhK1ACzJfVehM2@pks.im>
- <Z3wsZjAqbfI/EdVe@nand.local>
- <Z30YvHKjA_b6_xwt@pks.im>
- <Z37QS/MnGUZ7zcrR@nand.local>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org, shejialuo <shejialuo@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 13/16] builtin/blame: fix type of `length` variable
+ when emitting object ID
+Message-ID: <Z39quLJkI42TwuaW@pks.im>
+References: <20241206-pks-sign-compare-v4-0-0344c6dfb219@pks.im>
+ <20241206-pks-sign-compare-v4-13-0344c6dfb219@pks.im>
+ <4d812802-afbc-4635-7a19-73896fcda625@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,61 +90,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z37QS/MnGUZ7zcrR@nand.local>
+In-Reply-To: <4d812802-afbc-4635-7a19-73896fcda625@gmx.de>
 
-On Wed, Jan 08, 2025 at 02:21:47PM -0500, Taylor Blau wrote:
-> On Tue, Jan 07, 2025 at 01:06:20PM +0100, Patrick Steinhardt wrote:
-> > > > > I think we should perhaps combine forces here. My ideal end-state is to
-> > > > > have the unsafe_hash_algo() stuff land from my earlier series, then have
-> > > > > these two fixes (adjusted to the new world order as above), and finally
-> > > > > the Meson fixes after that.
-> > > > >
-> > > > > Does that seem like a plan to you? If so, I can put everything together
-> > > > > and send it out (if you're OK with me forging your s-o-b).
-> > > >
-> > > > I think the ideal state would be if the hashing function used was stored
-> > > > as part of `struct git_hash_ctx`. So the flow basically becomes for
-> > > > example:
-> > > >
-> > > >     ```
-> > > >     struct git_hash_ctx ctx;
-> > > >     struct object_id oid;
-> > > >
-> > > >     git_hash_sha1_init(&ctx);
-> > > >     git_hash_update(&ctx, data);
-> > > >     git_hash_final_oid(&oid, &ctx);
-> > > >     ```
-> > > >
-> > > > Note how the intermediate calls don't need to know which hash function
-> > > > you used to initialize the `struct git_hash_ctx` -- the structure itself
-> > > > should remember what it has been initilized with and do the right thing.
-> > >
-> > > I'm not sure I'm following you here. In the stream_blob() function
-> > > within fast-import, the problem isn't that we're switching hash
-> > > functions mid-stream, but that we're initializing the hashfile_context
-> > > structure with the wrong hash function to begin with.
-> >
-> > True, but it would have been a non-issue if the hash context itself knew
-> > which hash function to use for updates. Sure, we would've used the slow
-> > variant of SHA1 instead of the fast-but-unsafe one. But that feels like
-> > the lesser evil compared to crashing.
+On Wed, Jan 08, 2025 at 08:17:23PM +0100, Johannes Schindelin wrote:
+> On Fri, 6 Dec 2024, Patrick Steinhardt wrote:
+> > @@ -501,7 +505,7 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
+> >  			length--;
+> >  			putchar('?');
+> >  		}
+> > -		printf("%.*s", length, hex);
+> > +		fwrite(hex, 1, length, stdout);
 > 
-> For posterity, Patrick and I used some of our monthly meeting this morning to
-> spend some time together pairing on this idea.
+> I just noticed this, and would like to point out a difference of behavior.
+> Try this at home:
 > 
-> It ended up being a dead-end, since this approach only protects you
-> against changing the hash function mid-stream, and not using the
-> incorrect context type from the union.
+> 	git blame --abbrev=99999 git.c
 > 
-> That was along the lines of what I was originally thinking, and so I
-> resurrected my series to introduce 'unsafe_hash_algo()' here:
-> 
->     https://lore.kernel.org/git/cover.1736363652.git.me@ttaylorr.com/
-> 
-> I got the impression that Patrick and I are on the same page there as
-> that being a good path forward, but I'll let him chime in in case I
-> misunderstood anything.
+> The difference relative to the previous behavior that I am observing is
+> that the `fwrite()` call does not stop at the NUL character and hence
+> happily continues out-of-bounds. The `printf()` call would have stopped at
+> the NUL character.
 
-No misunderstanding, we're both on the same page. Thanks!
+Oof, of course, that's an embarassing one. I'll post a patch in a bit.
+Thanks!
 
 Patrick
