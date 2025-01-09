@@ -1,85 +1,87 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E2FC19F489
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 07:17:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E402F19F421
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 07:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736407039; cv=none; b=m6QiVe9Bkd9HlQtvs4rUpKbzlQTlh+EK0dZ79pCb3VXQw73va8xx+IHloFtDIp84A2SoIevds4fZ4R9X573jpOoiRyulsGD9tkP9jN2ALHld0QWit+SgyXHMnDD8TPtBcGqS6ufGOlFIs6DiXCgZ9o+lpPD1hEOv202w2Nn+G3g=
+	t=1736407327; cv=none; b=Zgld/bm/hSVSHakBiZINkQxd3dbbbLPVeiYCAW9KxUmQhKEomEU7a7NzC6QS6VhPEJPdMrhhY5J807Ar1kOYhnEzI7oKv9QjLE1Fj7i60emWt0fZIpb0InjgD/2cKk6ogL8uMewUEFxH56GvRYEdm7oRHmi/kSsInFp0t6dmvjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736407039; c=relaxed/simple;
-	bh=zBP5tTdICXPWjiEmLgM7LagSA4nx3DOFMDOpSNNJjA8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nN0EOASxGY86SCyZOLG0h5xlgsHJmoc+Ibe+ZBOBm98aQ2wWVWP0z70OHuzxLQrgkZK/wU81Vjr+H+fma4SBMwrSZlsXZzF/31wRN8+0FlXUQj62XS9ZAxCaGybtI6e9/8MgL8rUjDjHNfWiC7NC2VBzoyrbpe9VtVJwfsUonlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=A/koMvzk; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1736407327; c=relaxed/simple;
+	bh=7QAhNBF3qAVVG8didOgfqMDCEz5i4SU9BZ6UT1t7C6I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=byOo8Geam35wQuQN/9reoyXFfNhiAnXopyF9GP/2pNoaz84Q/w6dKoAaSmYAiMu1x03npNIFtbHkYlD2EOQlxl4Uot6vGp+7LfrpfDJWMC/59vOrXTyRCfF9c5lgh0bguTD5IeH3yXK3M93CghrSk1s6pC+8av+BN8sfAhwAEhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rej40VHU; arc=none smtp.client-ip=209.85.219.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="A/koMvzk"
-Received: (qmail 25022 invoked by uid 109); 9 Jan 2025 07:17:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=zBP5tTdICXPWjiEmLgM7LagSA4nx3DOFMDOpSNNJjA8=; b=A/koMvzkBTE3Eyziu9n4X7XqOKpX528vd5EC4WQLeefqGiV2N/vlX01kVCq2XNOY3URxPYiBTPOUTwKDTcEWiIkSh0fOcirdxM3PxB0sxaUOL4esbCB6n0K0EonMzz/3Su9G1bL02Bl4BOaHOHgAZQyJHhlgKiAzHaKX9sUj5T6SozwRE9V3tW7JCSUMHss0bieXusnOFaCbSGLzuyhBBQvTdcVxpFZSVggAHfTWTbk0eh63vb/kmnpj/zAiOZbo2X/G8tDRnrmNSEf3FoBgmaV3GnWuUs3y5HMBsi0PzJWXmIdqCs/yhTE2Q8UM/1Tm+fvRgIMTZbwlRjUy3tQtog==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Jan 2025 07:17:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19301 invoked by uid 111); 9 Jan 2025 07:17:08 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Jan 2025 02:17:07 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 9 Jan 2025 02:17:07 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 02/10] t7422: fix flaky test caused by buffered stdout
-Message-ID: <20250109071707.GA2735258@coredump.intra.peff.net>
-References: <20250103-b4-pks-ci-fixes-v1-0-a9bb95dff833@pks.im>
- <20250103-b4-pks-ci-fixes-v1-2-a9bb95dff833@pks.im>
- <20250103181739.GA2527684@coredump.intra.peff.net>
- <Z3u6lj_bpM7N93Fd@pks.im>
- <20250107023904.GB2363@coredump.intra.peff.net>
- <Z3zqKSx8NVK-QQNL@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rej40VHU"
+Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e46ac799015so739130276.0
+        for <git@vger.kernel.org>; Wed, 08 Jan 2025 23:22:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736407325; x=1737012125; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=7QAhNBF3qAVVG8didOgfqMDCEz5i4SU9BZ6UT1t7C6I=;
+        b=Rej40VHU9xR0GCapZhpbULbS2f8D3Z2a+rqiIXh75XTIyjKFdNmT6r8BQncnio1cCL
+         +IR/fvC3vJe+XC703PVG73pRoJWj4gk867taWVbp3oiuaVif0kqLNGyBXq1DnL+LonJ6
+         wVtWNm5jNUKCJ41kVzoKfw1X4EUkpT0QZyKPCJJUGcq+OiR6hbP/+LBVnYRcLqnuQvsM
+         UwBz0FaEGjYGjxH2xj1sq2qLybW4BRFjYNxxtWsAmMAcYFyZpDwDvvSu/DKtK5FUh6Vn
+         qDPkQrnikr2GXG/kW+WdkGI3xCibhw+dl+P9CY9P1U1BFwSl4P3OUi7S1e67GKIjPhE2
+         vU7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736407325; x=1737012125;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7QAhNBF3qAVVG8didOgfqMDCEz5i4SU9BZ6UT1t7C6I=;
+        b=BS4YsWEVLi7m9wuDVoQ/EViaSc7KQa1yt+aTDtcacMv3fiCmSOyI2R9i0h96AjM4dW
+         vX2hhiaNw8Z6qnVXYu4/lDgxfjSTNCpE8N2eV3/ug6j3ewP4W5Nr6yzJ4KUtkP1wkK2F
+         DwLgMN5j6yQbkka+rB6QtgAqCUPXJNWGWO5THC7ABDiVwuXRl5ZbKcFTGe38SlWuffbF
+         MxYcMIIiBxllD6oDW25lr6ZYSNnPoIKRXfhGfWYEP+im3TsGJ7XRKE6TIUiEvTKv2XBP
+         yf9n/0376UnDU+57e3z3yRdFirW55VfrD1rG9v9xZTMhUkY5Ckk3BJXuxCrOB+cnL05t
+         lnHg==
+X-Gm-Message-State: AOJu0YzdDCOW52xcEjbxp8MrxMicoZxh2qNT2WXz4iYiu+u5EgAoCN4c
+	5bP/yfnz+yar5X5Cqs66+Q0+MaFN9UKB3GGTZ0c8Lrf0bZ1VzxzgBEJipNoQjVSPlm3B+XBRpHX
+	20uewfYs9liw62BpdoiQvBzy2tn8=
+X-Gm-Gg: ASbGncusCZuuk2VKC/lNG2gpDhxkBSZ/Qw59oq0KOaCnldrNbWWZoTsDLelWYc3OZqx
+	uJW5eobuxTJc+apnpOY4+FS5WUh8FaGr8qXBt
+X-Google-Smtp-Source: AGHT+IH9K4bGCy5ckfMoeQnGj3zfSjHvrZ/CJtLvZxh3uzc0K72R96f3LBScZoKHbXjGftepzlLrTbFeaqX8wJHGRm8=
+X-Received: by 2002:a05:6902:983:b0:e4e:95b3:4fef with SMTP id
+ 3f1490d57ef6-e54edf2c899mr4666974276.16.1736407324877; Wed, 08 Jan 2025
+ 23:22:04 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z3zqKSx8NVK-QQNL@pks.im>
+References: <20250107091932.126673-1-kuforiji98@gmail.com> <20250108120339.225596-1-kuforiji98@gmail.com>
+ <xmqq8qrlpbnx.fsf@gitster.g>
+In-Reply-To: <xmqq8qrlpbnx.fsf@gitster.g>
+From: Seyi Chamber <kuforiji98@gmail.com>
+Date: Thu, 9 Jan 2025 08:21:50 +0100
+X-Gm-Features: AbW1kvYF7FD0fSFw-09U00nDQPIoY6sfXIf-rA7DyftTd8yQGWeVloRZcKrs1qQ
+Message-ID: <CAGedMtdJgM+vRryKLz5BKuQSBreHOc+q=rexciPB2WZ4aT3=YQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/1] t/unit-tests: convert hash to use clar test framework
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, phillip.wood@dunelm.org.uk
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Jan 07, 2025 at 09:47:43AM +0100, Patrick Steinhardt wrote:
+On Wed, 8 Jan 2025 at 16:28, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Seyi Kuforiji <kuforiji98@gmail.com> writes:
+>
+> > Hello,
+> >
+> > This small patch series transitions the existing unit test file t-hash.c
+> > to the Clar testing framework. This change is part of our ongoing effort
+> > to standardize our testing approach and enhance maintainability.
+>
+> Thanks; this is no longer a series but a single patch ;-)
 
-> On Mon, Jan 06, 2025 at 09:39:04PM -0500, Jeff King wrote:
-> > So I don't really see a way to do this robustly.
-> 
-> I think I found a way, which goes back to the inital idea of just
-> generating heaps of submodules. My current version generates a submodule
-> "A" with a couple of recursive submodules followed by 2.5k additional
-> submodules, which overall generates ~150kB of data. This can be done
-> somewhat efficiently via git-hash-object-object(1) and git-mktree(1),
-> and things work with a sleep before and after the call to grep(1).
+You're absolutely right.Thank you for pointing that out :), I'll make
+sure to update my phrasing in future submissions.
 
-Ah, of course. I was so lost in trying to find hacks that I forgot we
-could just actually convince it to send a lot of data. ;)
-
-Your solution looks nice. It's O(1) processes, since all of the heavy
-lifting is done by the long gitmodules file and tree.
-
-I was going to suggest that you could reduce the number of submodules by
-giving them large paths (or large checked-out branch names) to get more
-bytes of output per submodule. But there is not really much point. What
-you have should run quite quickly.
-
-> I'm a bit torn though. The required setup is quite complex, and I wonder
-> whether it is really worth it just to test this edge case. On the other
-> hand it is there to cover a recent fix in 082caf527e (submodule status:
-> propagate SIGPIPE, 2024-09-20), so losing the test coverage isn't all
-> that great, either. And keeping the race is not an option to me, either.
-> 
-> So I'm inclined to go with the below version. WDYT?
-
-Yeah, I was tempted after my last email to suggest just ditching the
-test, too. :) But I think what you've written here is a good approach.
-I'll look carefully over what you sent in the v3 series.
-
--Peff
+Thanks
+Seyi
