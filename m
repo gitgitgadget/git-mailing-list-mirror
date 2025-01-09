@@ -1,122 +1,133 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDF9202F9D
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 20:00:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929ED204C2C
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 21:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736452817; cv=none; b=h8usQ3OIHM+dep3LL+7aKh8OgVAGgLVNG/QAp5QdO3mfliFx7N2Qhoola9G+LfjXn3rZzeotUbvzz5UCLr3XgtEg5NKIgL7oz5n8R6iP9DvOaERgn2hch0iphe2l3ZmTubuSR+a8c0a0EE7Oxz1cPpuuzX+3whyfGmHRddB8ERk=
+	t=1736458025; cv=none; b=AcggoIVyxWzzb/X//UWIwFTEe+hjXH6pDxztSpTX+F+yxMOnsYsW2p4abXjjKm0ZW1s9l88p9D49Mi503kibAorooLN17TK1pq8CJO5J0M9DSkmnqmM+GUh6gbPQUF9DdwQMPLwFuKHXXPEnrzymr+RgCO+fDO3ZLxDpZnICots=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736452817; c=relaxed/simple;
-	bh=IgvbJa3Y59ucs9wGHcT19r2wky4OR/Hm9n3MR2lgudE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bgpTkipEVbD2ofiKyBBJo9wCPUxfvdB6crzkUK+yGBzHkWGUn89S+JsAk2dlBIiszHbr18JHz1opoFx4HU0EmdLMc6q+U05vjObZTSLiQYccx6ccHB96hidz4mVM4eVJHZlq4hrZY/BeXbC+WMztSQAzuqH+egxLDP2ZDKTdvpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KGDKN53D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iPkAPzS8; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736458025; c=relaxed/simple;
+	bh=aNbpcn4MiIZaczOY0gPK7cP2CjTknasw+eAUBlQD4hM=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=lnfyMxqp9wzh3FRuDfAPTIe746FkxRGRiPpCxwJD6w772MVWX3bGgJuZNyx/BvUeNSasMaa+jSclFRlVhtc8rv7CUIsYSKk3wLSRkGBl2lS9ehsMDrknF8ahYTrRo6tDf7XlSk08CAteZc1LZyVs+rs/OlGBhIQYT1ZsqGEaDqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eYRyoWt8; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KGDKN53D";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iPkAPzS8"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 602252540170;
-	Thu,  9 Jan 2025 15:00:13 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 09 Jan 2025 15:00:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1736452813;
-	 x=1736539213; bh=s89ZADaHewyHuRTrbswJAUspBadqig7TPzwPMvxSe+U=; b=
-	KGDKN53DA4JGU++UQTIYyURDNPaOSX7iq0+qvb1KHRIS2hHyHNG4HWu5rTQT/Dqo
-	6k7aGRI0mySa073HT+qFcZo6BIVT1tizwC7TpNBVfyyQ0+Y3s3CLUK0UX7Gq+lpg
-	eAYI2N1HsGBOg45M6Y6UPYGwKrB7VxffKJqrdK28d8i3eju6eAz98RJrf/lpluRI
-	4HyF99PtDFdBioFRXrc8E3hxn/6Qq/Fj2qStl+bdqvUgYJDcKW/2Okj+lOUuNnyU
-	5zRunz4s5MjlMoMH+4Fz8DLBLMH0siQTzDHHQM8llXVeJtaDvsLsZ/adQspQ40ip
-	jkX9/FJWWzzSmkZ5sCWHdg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736452813; x=
-	1736539213; bh=s89ZADaHewyHuRTrbswJAUspBadqig7TPzwPMvxSe+U=; b=i
-	PkAPzS8iYSTVQDETJRMN5rcyI8dyLC8TVvDvm3KoWbJS1jH5fuW3oKLPd+L+x1bG
-	zjo4cdTlTTfRe7bJXcuVBWs4/TP1f6cTMLIQwfeW4iHlf50z2UsMwe5yINXlbdue
-	JixQtfT0E6Vulw5BT5pYAq0oeubx4wUPDLAh3C/X0IfYglOnyJ4SU7L3TMWvw3FA
-	Wmf10ipdVIwUPkgHUnjAW0Pp4a3f04o1Ls2Q/YTFBYY6wf9afUgkXJi60N3oEYVr
-	Qww67brNgAffwP2tK8GFuQ01uF1ofBroMHyhrZlSDSQI0iQYhl75LelHn79T9sXJ
-	MwgFxll+bmKh6T44cPlWw==
-X-ME-Sender: <xms:zCqAZzlYD5oZLg5jFVYlfpTPr4phTDsDaCkkB8XGOn3MnlvrWsxcTQ>
-    <xme:zCqAZ23iTWxsQvRkzrQtnADvFUtrFOLNIAOmCSunAJdqWl8W9HnrnSBdak_cQr9Qj
-    EfRnZg46vgKcAeBHw>
-X-ME-Received: <xmr:zCqAZ5quc1BvQDs3iYtaRLpK_IMW1oi31J7Maspxd6Rb5Hm9fiFlVVmMApWy8yIaJdomS6cnyxZpzLgJTX3JeAz39B4KJLrwo_YX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegiedguddvkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhephfetvdejheduheegleehfeeivedtgeel
-    fedvffdtvedtudffieekieeijedvlefhnecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehmrghrthhinhdrrghgrhgvnhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhs
-    rdhimhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrd
-    guvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zCqAZ7kf-_YqjpPUoC4-ZqzlfEhX-UWfmR39hohMVlI4XZTHYWKkdQ>
-    <xmx:zCqAZx18PLDm-XPFtyBIz_58m8AKbPzXyqKS8yPOvF0brzgTvQo_4w>
-    <xmx:zCqAZ6uC5XLJA_HWpbXDvKxMBkciyObnwEQzJwcbk8BkAlaHSB_tuA>
-    <xmx:zCqAZ1XWX1FAhIiLxtcwwwulX9SKxCiFSJLPWCHTntiFuOqEQGd_YA>
-    <xmx:zSqAZ7o910GQ2g8cn2Yf2MFGbrp6R8_RcWvFHUMIKzc5mXJn87HMJoSE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jan 2025 15:00:12 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
- Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] GIT-VERSION-GEN: allow it to be run in parallel
-In-Reply-To: <CAN0heSo2pFmfx=zJgx2T6y+W1tG_PTXxf6uk2kBgi4c0kXz_oQ@mail.gmail.com>
-	("Martin =?utf-8?Q?=C3=85gren=22's?= message of "Thu, 9 Jan 2025 19:33:42
- +0100")
-References: <pull.1850.git.1736432663587.gitgitgadget@gmail.com>
-	<CAN0heSo2pFmfx=zJgx2T6y+W1tG_PTXxf6uk2kBgi4c0kXz_oQ@mail.gmail.com>
-Date: Thu, 09 Jan 2025 12:00:11 -0800
-Message-ID: <xmqq7c73iwqc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eYRyoWt8"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-38a88ba968aso1295229f8f.3
+        for <git@vger.kernel.org>; Thu, 09 Jan 2025 13:27:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736458021; x=1737062821; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hcpaYPcXWcOplCsIZCja6oTuWVd9I3iDWcA9nFtejAk=;
+        b=eYRyoWt8A0odROh78U0OJ57uj/OqPCGBP0mE+slMwPd4aX5DyCHp2FMIjZB4Sg31P4
+         Elw083fCZKlIhUniOR1gk29ouNR8wlYB12dZEt7QE+Bsfe8nkSmYaER47sdrFMTRXEPb
+         pd3HHGd6saZ+8ROoUUTJBuDjT1QaCCg7vy/kSq1hVgQwzFBy9maV3vtn1GAHjAOVxXKj
+         2bXtgwXhqyp1XYTADYuqths3uecCZaimMlFbYFD3AkuEW6t2/nAiwXGFHGpzT6COLZ/A
+         /E98l5gowpgH5hsxITAUSYkAD/kXwb0hGJt0W6jEGb17gTkGbeYs4DkgoSRwnTaeB/6P
+         SyRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736458021; x=1737062821;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hcpaYPcXWcOplCsIZCja6oTuWVd9I3iDWcA9nFtejAk=;
+        b=GqcVyL2G0TnNceOn1NUvFpVoxnZUte8GIh3vAWDDQRjwOMNFGUdOyCJUITwcHkJIku
+         69NnVVvNwoRgh+WwBrO1QoVrV8ETZmuk8tY6q7+hssFpTlMWk+Be0vN/3P9ozjey0Qda
+         AD0DB/koiYLsSYnh5qcU1eav3kUXda0AhzAoL7MlvGiAS5zPPR1Lnm3Ugav8SAcW5Ksd
+         lHNsKJbwT6sJKYvBa4Vda1ocL7/KjN05zwdPkL7exf5FeaA+YtgXlwBV4sBQK+q2HY2j
+         0J/EXK2iGCTvWJVnlqBcj4N/lq5BMnCH3BQnCjG4kWCagBLvqhly70tc1vk9FP9Fvb0c
+         m6+A==
+X-Gm-Message-State: AOJu0YwU4H2HIO90wZHOSAuiQ7PXCm4SJtlI8XFCSFp0dH39p8TVeSu7
+	Lqbon4t0WzcSil6IOF711Nz3XhRhCiF7yTeeVkhLcSycILPTnXzZR1fnLw==
+X-Gm-Gg: ASbGncuhEvtkg2FeKaS3bBiHm0/Py6GEEjRNrgiAAlp6wOVGIU7tk2vSUBnLLkVORec
+	U+Nn+IneuJgzrYeTC98M9pfqAl1N1Fl87Hj/lgBfKXgOsoTRD7v/dr/ib3toEySqchn0WaW8eah
+	UvqZ1NBbnKqxWX2ayPvIxCK/UDCZAmxaiPYdaxK94Rq/n1jmXkQ5E8/IuocC1Oft+ZdxWzYn72I
+	cAU5wYVybPOVJJimqbiPzrbC8jUOvKAmMfoY7UgR1dNBeddvp9RF5dZNw==
+X-Google-Smtp-Source: AGHT+IGiRqK7SHFd4Nlv56c3lxzLZDEHXqG9uVPK61hUOuib4XOtvmTCh4543YtKzFcDtOPWcKAwXA==
+X-Received: by 2002:a05:6000:4102:b0:38a:8afe:5836 with SMTP id ffacd0b85a97d-38a8afe5883mr4727430f8f.17.1736458021341;
+        Thu, 09 Jan 2025 13:27:01 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e38c6dbsm2814011f8f.55.2025.01.09.13.27.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jan 2025 13:27:00 -0800 (PST)
+Message-Id: <pull.1851.git.1736458019921.gitgitgadget@gmail.com>
+From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 09 Jan 2025 21:26:59 +0000
+Subject: [PATCH] docs: discuss caching personal access tokens
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: sandals@crustytoothpaste.net,
+    derrickstolee@github.com,
+    stolee@gmail.com,
+    Johannes.Schindelin@gmx.de,
+    peff@peff.net,
+    M Hickford <mirth.hickford@gmail.com>,
+    M Hickford <mirth.hickford@gmail.com>
 
-Martin Ågren <martin.agren@gmail.com> writes:
+From: M Hickford <mirth.hickford@gmail.com>
 
->> ... attempts to remedy this in git/git were unsuccessful, see e.g.
->> https://lore.kernel.org/git/pull.216.git.gitgitgadget@gmail.com/
-> ...
-> You could use "$OUTPUT"."$$"+ to restore this. That of course
-> invalidates your remark about "Incidentally, ..." above, but might give
-> this fix a tiny bit less chance of regressing something somewhere?
+Describe problems storing personal access tokens in git-credential-cache
+and suggest alternatives.
 
-Thanks for being careful.
+Research suggests that many users are confused about this:
 
-My reading of that old thread cited there tells me that the reason
-that previous one failed was mostly because it wasn't being self
-consistent and only touched the use of "+" in the Documentation
-directory but not what the top-level Makefile did, and also because
-it did not adjust .gitignore patterns, so it is good that somebody
-actually read the cited thread and made sure this time we do better.
+> the point of passwords is that (ideally) you memorise them [so]
+> they're never stored anywhere in plain text. Yet GitHub's personal
+> access token system seems to basically force you to store the token in
+> plain text?
 
-Again, I was not opposed to moving from "+" to something else that
-is equally short-and-sweet, and I still am not ("~" is a fine suffix
-for this kind of thing, for example).  But if we are aiming for a
-short-term fix, I think your ".$$+" may make the most sense.
+https://stackoverflow.com/questions/46645843/where-to-store-my-git-personal-access-token#comment89963004_46645843
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    docs: discuss caching personal access tokens
 
-Thanks.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1851%2Fhickford%2Fcache-pat-docs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1851/hickford/cache-pat-docs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1851
 
+ Documentation/git-credential-cache.txt | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/Documentation/git-credential-cache.txt b/Documentation/git-credential-cache.txt
+index 487cc557a87..18e9933674a 100644
+--- a/Documentation/git-credential-cache.txt
++++ b/Documentation/git-credential-cache.txt
+@@ -78,6 +78,23 @@ variable (this example increases the cache time to 1 hour):
+ $ git config credential.helper 'cache --timeout=3600'
+ -------------------------------------------------------
+ 
++PERSONAL ACCESS TOKENS
++----------------------
++
++Some remotes accept personal access tokens, which are randomly
++generated and hard to memorise. They typically have a lifetime of weeks
++or months.
++
++git-credential-cache is inherently unsuitable for persistent storage of
++personal access tokens. The credential will be forgotten after the cache
++timeout. Even if you configure a long timeout, credentials will be
++forgotten if the daemon dies.
++
++To avoid frequently regenerating personal access tokens, configure a
++credential helper with persistent storage. Alternatively, configure an
++OAuth credential helper to generate credentials automatically. See
++linkgit:gitcredentials[7].
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+
+base-commit: 14650065b76b28d3cfa9453356ac5669b19e706e
+-- 
+gitgitgadget
