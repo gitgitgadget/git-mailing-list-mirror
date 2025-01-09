@@ -1,142 +1,103 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A2C21B908
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 14:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A830F21D59D
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 15:10:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736434754; cv=none; b=a2W0eIWSWnHJRE3SWa09zmuLX5RA2GZmZsrU8vJzcOm2OWCYQ7/cuqvQnOPvE0LQ2j1mrqgj7pnXhXiFRyuqJgZG1EIwxJHh87m0oiGnX9fTmc0YNlZMnEwWxAZXt+v1UEI9k+xWMUy8Qg95ODtmib0keWdd9usU2v0GFgsceZ4=
+	t=1736435446; cv=none; b=WZvEHG79FJ6TVkEUqGBvn7yiaEi39rYY16imWSbO8FLHKm0tlIRqT2KWuyC6OtPKfdfDu815O/BFxGSdsQgcmOO6PuNAtEVHJMZr4ygj3veI51LJOKe4+j8+fIvn2E4CaaqwrRtSYqkShYXVNIuWD3YRgmyz2MzYpOYDty7y+S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736434754; c=relaxed/simple;
-	bh=ZHI7C89rGbopt/7+b3c+bg+elXrLcjM5qZpawIWj58M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=smykR5V42jKcBKxOt7Jw2AYDbc162RpBhzmIAwtNqTpwKIPnpwzNB3YPKIVVBMF2SPdspDFN2/lBG3Ibqu3jGH/cKsPWwgThe1B8nNyM1rwnXq7uAIIavup9dZZW/2FXztdwivKQq8n20UYvvtabxbqV7JNPHueCL7Vd0I7z6PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kHardW3Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=arqSbOON; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736435446; c=relaxed/simple;
+	bh=rAjAuUKGDQIyY8JhEOq+JgNntWhfWHyHzvJ/DWp/vHc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rHatVVablFl8As6iFYUwy21x3JGoWnQ7BtgnI5aLywJazmzpF865e5IF4BfoARtbxnSWlO8y0PcHv7cct79ja5jsv4wivOWRa5sKW/+PqKyhvQFZLhtciSJXELWr6Ioe79TWyoY63tRB7g9NJ6OTTKJ1UE2qeSjTsZIXY+9ffuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=V/+Tci0F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oAeBwzQP; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kHardW3Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="arqSbOON"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 597AD138012D;
-	Thu,  9 Jan 2025 09:59:11 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 09 Jan 2025 09:59:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="V/+Tci0F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oAeBwzQP"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9A4FB138017B;
+	Thu,  9 Jan 2025 10:10:43 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Thu, 09 Jan 2025 10:10:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736434751; x=1736521151; bh=y1LSiREyZA
-	fEkzsGexzoKSbA+xdskZ1+jmgsOVigjTY=; b=kHardW3YTVR9WlLAYKgYVXdOJf
-	qeEa5vo2wGTux0YztcVfRYhRk2wED60xhFPd5bMSEbGxvOdrTcoTOLenaBSVjz0E
-	iWkPU7KrmhhqFjWTnfGlckzvwzmJ4Wf4VN1uYKAAJJ8/J0a4SxvXhlxL73Fvt++D
-	HgxwV83xDcYXkyrD8aUSk7iqjobFtWGllCzgmyosMVN9l4f9U69lUiimSZQgKiqX
-	DIm1psdZ7IwLjpJhog2uRBEuWgu4orSPALgD7waZYQxvo6Z9isuE16wkCfsCMihV
-	M+BqAAhCYxiUsZ6px6gLZloQOSKRs1fLQv7MpmIPkFueF6HFBqMXCNpRMJ8A==
+	:subject:to:to; s=fm2; t=1736435443; x=1736521843; bh=yOCJng59QK
+	38Pg6up8v1WHSXDC4lKpj2nuWc/hnYmHw=; b=V/+Tci0F70WbCJ9OyH/tYkAhpy
+	RwlZu2YFmA/dLDEUKEmk4UhwBgPc6r4wNBkm/fhxPWIPHW7eKFtvAcgGJo8Ow1Xi
+	HCDFQ9rdNmJ7HEgL/rnwVAsppYcsCLGwCtC+Aldd0eNU+QomafjI08CfHTsaL5C/
+	O5t7TltjLuSpWEwSenMH75isLysWi9g0TKqXNEOuz2BkoYKz6CW8KPUyBUZKBUle
+	r6BPXjWQaqlu8zOEhChfSDSkrIhQJiJ0spvvnTUR0O61iFrJphn+ipL6RpLgXJSE
+	ikx/T+UO4cEYLffLjuZaEvh1x0TspPv9Z3Olfb0dKudeVXrKxrI8kR896hqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736434751; x=1736521151; bh=y1LSiREyZAfEkzsGexzoKSbA+xdskZ1+jmg
-	sOVigjTY=; b=arqSbOON1/OJvPGfT42f+/VrBnCOhwUi+prVB54llS1VblnCPE8
-	pgxh/lcVgcRsU+9QgfLXm7oVN+hy+yUD+8KZfbC885/z1TV+fFp9nOqqCQZUdPje
-	H7TRQBeYyzW9eiEPH6mXosEljiZn5laUSH41yWy1oqUmJB4LbbsKWVKyRQHgrrd3
-	qwg3XdfHFrU9W97Z7Qq9CMtzts+P/X9LmNpk1WbuZKONMqu78+XpQrVucAf01DEr
-	bR4hccH/6P+KfmVxGkWX+Tq2JURImf5k5smK0s6yGMKuEPjpSojF3+5uxXaNjvLM
-	Hbki9/ToYbWbVg736qqaZM9fPw8H6tIMlmA==
-X-ME-Sender: <xms:PuR_Z-90ogN9pK7nAc-VVp1NliV7ZEa2kJYT7Eevqe4OexsKtkh-Rg>
-    <xme:PuR_Z-ufhNcJIi35tkYhiuYLQ38cfAZKcRjj9pWuJt0XqDzKOdHaDiN7eJy-UPhqg
-    mt-dz6bjH6779Ga2Q>
-X-ME-Received: <xmr:PuR_Z0CRKRmkf5AmFlZ9hf11PkrXy17rPBHuj2MCPDYM5VphNPAnSeABzLemnC5RU8dmXCsPwN3c-zkslDVYbg_bLYK24X1es4o6>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegiedgieekucetufdoteggodetrfdotf
+	1736435443; x=1736521843; bh=yOCJng59QK38Pg6up8v1WHSXDC4lKpj2nuW
+	c/hnYmHw=; b=oAeBwzQPRa9dzqTfnmk/FJxoloERI3FyCJtFRboK+GdoINP6j5B
+	DKkktCPrUzIuR+yBgZZYiAlIKrcoYoOaVV53I+pYNOBIAPBZbEM/pu30Y5/DQ54I
+	+hI4xQPysSv0kssCKO9iIxI3pBfIgWRP0w7JkvUIfkQFjGXqal6cUe8HdzVUfUWB
+	ua+3Wy5r7LuQzozaCg/zl+Ps+GlgvANukubRsAfMQTtmZUng+wB9jXbEiMj8P5Qf
+	HxFKZSb4cJKPAS0mFfoClVNib8puZ5TUMB3BJJoLGfBq6DOVpUcyfc6vuMe21sb5
+	5d3SS9nBNWW7d35Dkco8ZBEryteVrxCtVOA==
+X-ME-Sender: <xms:8uZ_Z2CQRUbmUhDVHZ9TBLUdAX-o-D27Nz53E2v1L1hdA5LZSp9rgQ>
+    <xme:8uZ_ZwjVygtLBW5GV-HXzHZOnfn4KSeT9AaXMjXOBxWtRzwm78nNlb44I4NxqKVGL
+    -VmMJQEPXecZ0fTAA>
+X-ME-Received: <xmr:8uZ_Z5k8govb8zUVhq5-QBDr6U7Pfr1P1yaaTrR8nQhod7WYKSwnaR-skhNpev7ahjjhDvtn5CFnG4gLekPjXbE19eFA16kn_XKGv4cqyWyjgEou>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegiedgjedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepkh
-    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:PuR_Z2fEFbvyciGGWz08WShvPnK4kELvojZBVmerl6QHtWjpoTKXBw>
-    <xmx:PuR_ZzPu8NNOdsU4aHksx9kLyifz0m_vYiSpNA0Hvq8w6tY54Aw-ug>
-    <xmx:PuR_ZwnagQWY5HVUT05t7Q3j9t5dtDndQvOjAQVQzQpbUg4wfMKayQ>
-    <xmx:PuR_Z1t9F0OBnpk0zxqBCM_5rUpwPDfmRSVJmGDEx5dkPmQKXFsHMg>
-    <xmx:P-R_Z-243fYLNZ5Xas-7jLiMdqQO2t6JwcMP1l5iBesGLU3_ulbY4_V8>
-Feedback-ID: if26b431b:Fastmail
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhufhhorhhijhhileeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:8uZ_Z0yv1DgwxjK_UEfRUxeYy8571BDquofm49DODJFRShDiy1MibQ>
+    <xmx:8uZ_Z7SvYAaqluICRU4Oq1qhCLZfwp66pUMsnS8kEdDD6hmXrOle3A>
+    <xmx:8uZ_Z_Yj3Sf-o15a-gHTUbUqXRjSeWNNdbm3ttEhA0WOP1WrAw9kuQ>
+    <xmx:8uZ_Z0Tl3JT00KqAtM1D-14OfwHCPGDfggcrNkTEZAUpOhXBwL3dZQ>
+    <xmx:8-Z_Z5NYpBbTXztexVC27fOCdNbJNYFpPQ0dmxNdkCeS0YEsfZZ3c82q>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jan 2025 09:59:10 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2] builtin/blame: fix out-of-bounds read with excessive
- `--abbrev`
-In-Reply-To: <20250109-b4-pks-blame-truncate-hash-length-v2-1-589c81a6ddb0@pks.im>
-	(Patrick Steinhardt's message of "Thu, 09 Jan 2025 12:48:22 +0100")
-References: <20250109-b4-pks-blame-truncate-hash-length-v1-1-9ad4bb09e059@pks.im>
-	<20250109-b4-pks-blame-truncate-hash-length-v2-1-589c81a6ddb0@pks.im>
-Date: Thu, 09 Jan 2025 06:59:08 -0800
-Message-ID: <xmqqldvkkp8j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 9 Jan 2025 10:10:41 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6144a084 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 9 Jan 2025 15:10:38 +0000 (UTC)
+Date: Thu, 9 Jan 2025 16:10:37 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Seyi Kuforiji <kuforiji98@gmail.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk, gitster@pobox.com
+Subject: Re: [PATCH v3] t/unit-tests: convert hash to use clar test framework
+Message-ID: <Z3_m5uNhXjdFyGJK@pks.im>
+References: <20250108120339.225596-1-kuforiji98@gmail.com>
+ <20250109140952.5267-1-kuforiji98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250109140952.5267-1-kuforiji98@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Jan 09, 2025 at 03:09:52PM +0100, Seyi Kuforiji wrote:
+> Range-diff against v2:
+> -:  ---------- > 1:  fcc2a376a5 t/unit-tests: convert hash to use clar test framework
 
-> diff --git a/builtin/blame.c b/builtin/blame.c
-> index 867032e4c16878ffd56df8a73162b89ca4bd2694..f92e487bed22eec576a4716f2e654cb61efb9903 100644
-> --- a/builtin/blame.c
-> +++ b/builtin/blame.c
-> @@ -505,7 +505,10 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
+Hm. The range-diff is a bit funny -- I would have expected it to
+recognize that it's the same patch as not a lot of things have changed
+compared to v2. Did you maybe compare to v1 by accident?
 
-Mental note: the "hex" in question that is used later is defined as
+Anyway, this is of course no reason to send a revised version. The
+changes themselves look good to me, thanks!
 
-	char hex[GIT_MAX_HEXSZ + 1];
-
-at the top of this scope.
-
->  			length--;
->  			putchar('?');
->  		}
-> -		fwrite(hex, 1, length, stdout);
-> +
-> +		if (length > GIT_MAX_HEXSZ)
-> +			length = GIT_MAX_HEXSZ;
-> +		printf("%.*s", (int)length, hex);
-
-This is not wrong per-se, but leaves a funny aftertaste after
-reading it, especially if the reader knows the original *bug* was
-about showing past the end of the string in "hex".  The question is
-"what if the current hash function produces shorter than MAX_HEXSZ?"
-
-The updated code is correct only because it reinstates the use of
-printf() so the "length" being longer than the string itself no
-longer matters, and the only requirement on "length" is not to
-read beyond the end of hex[] array.  So feeding the length of the
-array as the limit is not wrong, even though it may be feeding a
-limit that is larger than the string stored in the array.
-
-An obvious alternative would have been to base the limit on the
-value of strlen(hex) and then we may even keep using fwrite(); then
-we do not have worry about "what if MAX_HEXSZ is larger than the
-current hash function?" and nonsense like that (I personally prefer
-what is being reviewed much better; please do not take this "obvious
-alternative" as a suggestion).
-
-Limiting the "length" here does improve the resulting code, relative
-to v1 iteration.  This printf is about showing the hexstring and we
-are making sure we do not read past the end of the array that holds
-the string, and doing it here means we do not have to worry about
-leading prefix characters about boundary etc.  Very good
-improvement.
-
-Thanks.
+Partick
