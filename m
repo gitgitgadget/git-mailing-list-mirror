@@ -1,117 +1,281 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704802153D6
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 13:49:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65ED221B909
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 14:10:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736430554; cv=none; b=LaPKqhE0K50KlRiKaD0pIMiFV3IcSYji89U51mYzPTVIX2XIyk9Cmc3NO5r1mkTu6NKH6qL2DlpoH34LVjeAmbz9V1zMNAMM/rKvF9Y5DX+rS06E5ViQwz5CPqpswnCFCo7sppQS1n8TbsimoycWBcMraXQJTRWq6JmdKxu7y2c=
+	t=1736431844; cv=none; b=LUC1yZy8m4H1yCbkCrbrgqv4mp6EEexRvCE7AdzW3kzF7gffbov+q1e58RccumeDHX9A2j6Ci9Yvdv4BpXLukeHufilpUCraj5s+5AX/2EmJ70nDiJvqgMvZN0zTbE+uaQz950x57i2fmlXfd2czzvsCWjq6PsPAu0Ig4VPuyng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736430554; c=relaxed/simple;
-	bh=Y/eHZbmaLjDwy7tyKQk5yBwjthyB3qTXECOnFzlLSDc=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=pVFC61P1dftg1jZGSV6KqOskV1WU+dhigPaCMtJ5Vulk62Vpj8/tOXF89fFfUVBrhw2FNCYdRhv3W6KPjIMXNXU629lOl98elFYP7vHAghcx2tuVwCYyDBKcvLaMQj50W48jEzJ+BtdbijeGVsYeBzDZCxd7fnvjnDmHFEn4E58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=DvnzzUxF; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1736431844; c=relaxed/simple;
+	bh=r11VFusVErmsOZSW4arU0d8CJmUe15Dw1VTWXdDvulE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DCLu1RwLzDDZZGOGqJaH0Wd53+T95wkCACIzgv9LdVvDWoToaL5dgRPI2WPJ6wiu7WO5pBi0SDS+L2jwVBOwymc/pwueIP1hgQidAwPV94pLpTYOZx1TNzJVw8Qab+CINSevsez7/Nj45x9hrp9tZ0cWE3UajxvvCRj6UsjmEfA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L/l2Jc1k; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="DvnzzUxF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1736430550; x=1737035350;
-	i=johannes.schindelin@gmx.de;
-	bh=YFiXjs3YEi9vsprha11GVMF0HiP9R1H9KuA5DfrGLgM=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=DvnzzUxFrExOTLTC+BgcTHNPPpFonOOtavoz47t6dYhWiQUIy+vTyHnv+CPgXSsu
-	 I1qt7CcJUWiiq20XhLr+0dxkMG3Vw7DbGUmj3bo2NwbiqZZOAFhqmLHr/hZVzuP7j
-	 ooTykxXb0n9pnKExXpmwewgu/I1T/cRLoQBjurS1Atp8tpFcxPDgiFRcnJV5ABc+t
-	 DHAo/gtrDyehFpn0eTTTU5LKrqG72nne2YDVaJTOpkQhArjS8tAWOUJINFuS2AWtt
-	 FrCLJ9m1TLwr6aa0aoShbG0uvwcvOPXSlNHlyjlGNQs/VMMENJZxCuuNUNyvWHFAK
-	 igFmMONHd63bqKI9jQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.212.7]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N6sit-1tVyn442P9-016xZq; Thu, 09
- Jan 2025 14:49:10 +0100
-Date: Thu, 9 Jan 2025 14:49:09 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: shejialuo <shejialuo@gmail.com>
-cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2] builtin/blame: fix out-of-bounds read with excessive
- `--abbrev`
-In-Reply-To: <Z3_Dt5SpG6qE5_9V@ArchLinux>
-Message-ID: <2db1688e-bf2b-8f53-82d0-11c453a64cd8@gmx.de>
-References: <20250109-b4-pks-blame-truncate-hash-length-v1-1-9ad4bb09e059@pks.im> <20250109-b4-pks-blame-truncate-hash-length-v2-1-589c81a6ddb0@pks.im> <Z3_Dt5SpG6qE5_9V@ArchLinux>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L/l2Jc1k"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5d88c355e0dso1519494a12.0
+        for <git@vger.kernel.org>; Thu, 09 Jan 2025 06:10:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736431840; x=1737036640; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GhC23wdEM98P9VKcs/8SD9VrLwd3BskQLMYuEzu/yIs=;
+        b=L/l2Jc1kejdDJl8neyCnap9nH9y2DWuHRup90C0D5fW34pOYpk9SS+U4gSGFbavM8A
+         7okp7vz3fCYigpXmh4L05f4Ba4jNshXKfuDXKLM6pOJcBFUJK1Bl+/hZpMdCQ6w2+PkJ
+         wNoisCHbPu3i99HdWp1HH2OdqcNpBAgY+/4CbOM/3zHhegtQZCmW5+Irni+Lbfgj9isP
+         gFwyW+PaV13DkVimOCk5jrsXAQHArWkCXRqVq1dq/TbjTC5z92/vH04oecrRAkqj/5m+
+         wJZCBWP9hjWlNph7em43swD57RfitSOTDAsiIb2MOqAF0vCtyWmKFoDaHMmHLBSUe0+X
+         dLsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736431840; x=1737036640;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GhC23wdEM98P9VKcs/8SD9VrLwd3BskQLMYuEzu/yIs=;
+        b=cy7zoBu5ZqkqM7m7bAvN/0yqn2qWI6bydb70qjsEJpZdzXwIZK0/pytszB3qfvfp9P
+         rHYbbE3sAB/XkKYpxlZl4B8fzxZ0q78zoqTIQE91Koc7t327O3fEMIHKal1UYXNOjds1
+         plBDlU23S3fK3DKce0mcGDwQUk51WNGdEQy3BP8mLRR7hFEA4Rhvqj3+8unBhHTaYsgD
+         Kw6LdSQi9a+dmzFj0H2K6mBAlj8wG47PlznlLxSWF9BCuvIMqurFqghMmFHm01NandJ2
+         r4CLIlW5hPDsqYkcvHusXmZvqDIjj3UpeGpGfJV2jyr2j7PAOHQKlP+/Nv3HLVzc1vA8
+         KN0g==
+X-Gm-Message-State: AOJu0YxLeb8jiwh8UB9V52zV7CbloOtKPhYebUcvUMO1Eoer7gw0caS0
+	8rgFhqW3zW+QR5wxjyogBSykE4/tQgGJ2WkWdUW+CgAW+gYcDQySBz9aYjg84a92RA==
+X-Gm-Gg: ASbGncuDXFWIbRtCv4K1iRZb4ET8DLA9mjwtItdiN6vGSfKApP1v6EtT3S50akXBlFE
+	3whg/XWr4u86VMcH/E54prrkesjjpRN2Ecw9pAa12NZUDVIIWdV9xiTJuzmjJTDYGzHXyRm1v0+
+	xsJOEKYtsNX/fwdVI5yT1MVo8Hke9ykRq4Na0JRkm+sz1GrYPJtzCso9GZAq4RF9ICm2HY9q5PK
+	Md/fCxBVbPro57BpmKj6bHk67odd1Rs4irDaOjFuhWF42FCse/Qqknm90NGaoxwslsEDQo=
+X-Google-Smtp-Source: AGHT+IGPnLRSKSmoyH9YCDLfdHfJNjt2ZOM+H5R88+8xxkOvVW+UEjtY6KjXHXfBmAD03NdMhH7NTg==
+X-Received: by 2002:a05:6402:5255:b0:5d9:b8b:e347 with SMTP id 4fb4d7f45d1cf-5d972e722e6mr6449079a12.32.1736431839850;
+        Thu, 09 Jan 2025 06:10:39 -0800 (PST)
+Received: from localhost.localdomain ([154.118.74.187])
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5d99008c37csm653558a12.6.2025.01.09.06.10.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Jan 2025 06:10:39 -0800 (PST)
+From: Seyi Kuforiji <kuforiji98@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	phillip.wood@dunelm.org.uk,
+	gitster@pobox.com,
+	Seyi Kuforiji <kuforiji98@gmail.com>
+Subject: [PATCH v3] t/unit-tests: convert hash to use clar test framework
+Date: Thu,  9 Jan 2025 15:09:52 +0100
+Message-ID: <20250109140952.5267-1-kuforiji98@gmail.com>
+X-Mailer: git-send-email 2.47.0.86.g15030f9556
+In-Reply-To: <20250108120339.225596-1-kuforiji98@gmail.com>
+References: <20250108120339.225596-1-kuforiji98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:AyhhX3H3y31N4g9r0oE9iNwnPsDd9VVhtzBp+OhNCwjHbbvOmhL
- 6eCgCVUjsi80nsgY4BbqNckvvdpMueCCtK7GUrYJb7S8gI5m7TjJupgdrlSdjFIP7ElM5j7
- T2jwXqo3g2nxmWoN3nPQoSed9krvQZvwjb77CVhTbxqAPtF8pG9m+H18Hko88PlF2vFoyQF
- VSRzl//Z5vbGsXPbl3x8A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:BmuH4uw/hqk=;n9Spe01ZZHPGqLvpBhGvMGyuSg5
- a+6/PnSujX0TA4KGyyeuwbIOqRFmYHLN1iT5vwjlxor+1WUpTnvAw4fPdrmJG/xNGjlEiCJ1b
- TxGbJKRLns6yyxxLBiZ9HY1v1hZaNyzW9m1XSrLG4CySIoVrrtYfiC8TRXLD50KZIelvMTx8D
- JWKEpDgew0ax7UX/dWGG1oi/O7exYAwjkLfb/HEI49S297Tgtl/oNfNWZ4TLtQb79+ieIueha
- X9xfZPsc2y6S1A/P8dsMH92fqUeywHDqdAerOagaaAfOgmlAuM5lNgnFQQbt5jEkUh2nLIsr5
- VC3CvY5M2TD09pGOMWdTVih4C3popJj6SkaxEd994m2YYgVqn/JeaOOV8RTOtudP5ndMxIrnc
- kfZbpOW3mrETokPddRetNJQHlIwpaDcRQA3RsK4JJ3RtFhlDPZjuIhY4jAbNDSidXGsKWHZNP
- zQdZrD2NqSVWjW82F9C9JZfoJNV96E9s9rx/NqF8p89EvKUOoOoooXDVLtjvfpgZ4r+IjsdyQ
- hPNzlbMz9p3lNXfz5s7eHysaCAkM7J5c5zoduXCw2oyEunnSdyEwUO2uHV0J6eGDUo953hCnr
- dPJ/Mr1G5WD5BtyVHmodLHsOXEgPxkkd+UcqlLhXCIBLu9UKjKX6TZFM2ItpRo6sUANZBIKa9
- qWlX/0VeJTDl2YDdxo81OzYIznPpaWitL+bht/Zku8B/5K0KauJ+7mskjwkHPtUZNjGwravKE
- 3IU6ralORDZ+BolS/qG7EMbnRCcG4973RzRj006U9E8g4GdwIuH75AQJVX3ElqSaMWkpTIksu
- vqU5Y0J+NlVG/DbWHGBWUm2rYgiwlZfG2LzE8iV/pQAhgG+pchHdHDxq6rYzI39yl3GWAlxAp
- gjCcPyBDtty+9inGMKaibj1te2LP3lv1tRykc6gq/2Mg2/GbExmnNUDMuDvyihfo/r9aVqmzK
- RNznDSjh9ivnQvOyqKW1Kq1cNlbBt8rtcO+ptztzh7wFXz1SzSGd/uEf6sJoiFWL8LrPBRSCw
- ALe+0ZdY/eWxuYMMzfeO9IJc5a+HeCRlH3X2SEMcW19djksx45iYSPCq5c6QZKa7J325KWIMu
- d+bmWdzzLBEVI2rEG6MHpbK3kixX9h
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Jialuo,
+Adapt the hash test functions to clar framework by using clar
+assertions where necessary. Following the consensus to convert
+the unit-tests scripts found in the t/unit-tests folder to clar driven by
+Patrick Steinhardt. Test functions are structured as a standalone to
+test individual hash string and literal case.
 
-On Thu, 9 Jan 2025, shejialuo wrote:
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
+---
+Changes relative to v2:
 
-> On Thu, Jan 09, 2025 at 12:48:22PM +0100, Patrick Steinhardt wrote:
->
-> > +		printf("%.*s", (int)length, hex);
-> >  		if (opt & OUTPUT_ANNOTATE_COMPAT) {
-> >  			const char *name;
-> >  			if (opt & OUTPUT_SHOW_EMAIL)
-> > diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-> > index 0147de304b4d104cc7f05ea1f8d68f1a07ceb80d..7cf6e0253a5bbd4d6e438e=
-627dc18b47eac4df66 100755
-> > --- a/t/t8002-blame.sh
-> > +++ b/t/t8002-blame.sh
-> > @@ -126,6 +126,10 @@ test_expect_success '--no-abbrev works like --abb=
-rev with full length' '
-> >  	check_abbrev $hexsz --no-abbrev
-> >  '
-> >
-> > +test_expect_success 'blame --abbrev gets truncated' '
-> > +	check_abbrev $hexsz --abbrev=3D9000 HEAD
-> > +'
-> > +
->
-> By the way, I feel this usage is a little strange as the user side. When
-> I received the report mail from Johannes today morning, I feel a little
-> funny that we allow the value of the `--abrrev` option exceeds the
-> `GIT_MAX_HEXSZ` in the first place.
+  - A couple of fixes to code formatting to match our standards 
 
-See the explanation I provided in
-https://lore.kernel.org/git/c439fcaf-11af-7862-9c3c-18dc0842b57d@gmx.de/:
-When calling `git blame --abbrev=3D40 HEAD.. -- <file>` (in a SHA-1-based
-repository), the OIDs are prefixed with a `^` and then the last hex digit
-will be cut. The reason? Git wants to align the text after the OID.
+Thanks
+Seyi
+---
+Range-diff against v2:
+-:  ---------- > 1:  fcc2a376a5 t/unit-tests: convert hash to use clar test framework
 
-When calling it with `--abbrev=3D41`, the full OID is shown.
+ Makefile                            |  2 +-
+ t/meson.build                       |  2 +-
+ t/unit-tests/{t-hash.c => u-hash.c} | 71 +++++++++++++++++++----------
+ 3 files changed, 50 insertions(+), 25 deletions(-)
+ rename t/unit-tests/{t-hash.c => u-hash.c} (80%)
 
-Ciao,
-Johannes
+diff --git a/Makefile b/Makefile
+index 97e8385b66..d3011e30f7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1338,6 +1338,7 @@ THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/%
+ THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/clar/%
+ 
+ CLAR_TEST_SUITES += u-ctype
++CLAR_TEST_SUITES += u-hash
+ CLAR_TEST_SUITES += u-strvec
+ CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
+ CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
+@@ -1345,7 +1346,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
+ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+ 
+ UNIT_TEST_PROGRAMS += t-example-decorate
+-UNIT_TEST_PROGRAMS += t-hash
+ UNIT_TEST_PROGRAMS += t-hashmap
+ UNIT_TEST_PROGRAMS += t-mem-pool
+ UNIT_TEST_PROGRAMS += t-oid-array
+diff --git a/t/meson.build b/t/meson.build
+index 602ebfe6a2..7b35eadbc8 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -1,5 +1,6 @@
+ clar_test_suites = [
+   'unit-tests/u-ctype.c',
++  'unit-tests/u-hash.c',
+   'unit-tests/u-strvec.c',
+ ]
+ 
+@@ -41,7 +42,6 @@ test('unit-tests', clar_unit_tests)
+ 
+ unit_test_programs = [
+   'unit-tests/t-example-decorate.c',
+-  'unit-tests/t-hash.c',
+   'unit-tests/t-hashmap.c',
+   'unit-tests/t-mem-pool.c',
+   'unit-tests/t-oid-array.c',
+diff --git a/t/unit-tests/t-hash.c b/t/unit-tests/u-hash.c
+similarity index 80%
+rename from t/unit-tests/t-hash.c
+rename to t/unit-tests/u-hash.c
+index e62647019b..a0320efe4b 100644
+--- a/t/unit-tests/t-hash.c
++++ b/t/unit-tests/u-hash.c
+@@ -1,14 +1,11 @@
+-#include "test-lib.h"
++#include "unit-test.h"
+ #include "hex.h"
+ #include "strbuf.h"
+ 
+ static void check_hash_data(const void *data, size_t data_length,
+ 			    const char *expected_hashes[])
+ {
+-	if (!check(data != NULL)) {
+-		test_msg("BUG: NULL data pointer provided");
+-		return;
+-	}
++	cl_assert(data != NULL);
+ 
+ 	for (size_t i = 1; i < ARRAY_SIZE(hash_algos); i++) {
+ 		git_hash_ctx ctx;
+@@ -19,66 +16,94 @@ static void check_hash_data(const void *data, size_t data_length,
+ 		algop->update_fn(&ctx, data, data_length);
+ 		algop->final_fn(hash, &ctx);
+ 
+-		if (!check_str(hash_to_hex_algop(hash, algop), expected_hashes[i - 1]))
+-			test_msg("result does not match with the expected for %s\n", hash_algos[i].name);
++		cl_assert_equal_s(hash_to_hex_algop(hash,algop), expected_hashes[i - 1]);
+ 	}
+ }
+ 
+ /* Works with a NUL terminated string. Doesn't work if it should contain a NUL character. */
+ #define TEST_HASH_STR(data, expected_sha1, expected_sha256) do { \
+ 		const char *expected_hashes[] = { expected_sha1, expected_sha256 }; \
+-		TEST(check_hash_data(data, strlen(data), expected_hashes), \
+-		     "SHA1 and SHA256 (%s) works", #data); \
++		check_hash_data(data, strlen(data), expected_hashes); \
+ 	} while (0)
+ 
+ /* Only works with a literal string, useful when it contains a NUL character. */
+ #define TEST_HASH_LITERAL(literal, expected_sha1, expected_sha256) do { \
+ 		const char *expected_hashes[] = { expected_sha1, expected_sha256 }; \
+-		TEST(check_hash_data(literal, (sizeof(literal) - 1), expected_hashes), \
+-		     "SHA1 and SHA256 (%s) works", #literal); \
++		check_hash_data(literal, (sizeof(literal) - 1), expected_hashes); \
+ 	} while (0)
+ 
+-int cmd_main(int argc UNUSED, const char **argv UNUSED)
++void test_hash__empty_string(void)
+ {
+-	struct strbuf aaaaaaaaaa_100000 = STRBUF_INIT;
+-	struct strbuf alphabet_100000 = STRBUF_INIT;
+-
+-	strbuf_addstrings(&aaaaaaaaaa_100000, "aaaaaaaaaa", 100000);
+-	strbuf_addstrings(&alphabet_100000, "abcdefghijklmnopqrstuvwxyz", 100000);
+-
+ 	TEST_HASH_STR("",
+ 		"da39a3ee5e6b4b0d3255bfef95601890afd80709",
+ 		"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
++}
++
++void test_hash__single_character(void)
++{
+ 	TEST_HASH_STR("a",
+ 		"86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",
+ 		"ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb");
++}
++
++void test_hash__multi_character(void)
++{
+ 	TEST_HASH_STR("abc",
+ 		"a9993e364706816aba3e25717850c26c9cd0d89d",
+ 		"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
++}
++
++void test_hash__message_digest(void)
++{
+ 	TEST_HASH_STR("message digest",
+ 		"c12252ceda8be8994d5fa0290a47231c1d16aae3",
+ 		"f7846f55cf23e14eebeab5b4e1550cad5b509e3348fbc4efa3a1413d393cb650");
++}
++
++void test_hash__alphabet(void)
++{
+ 	TEST_HASH_STR("abcdefghijklmnopqrstuvwxyz",
+ 		"32d10c7b8cf96570ca04ce37f2a19d84240d3a89",
+ 		"71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73");
++}
++
++void test_hash__aaaaaaaaaa_100000(void)
++{
++	struct strbuf aaaaaaaaaa_100000 = STRBUF_INIT;
++	strbuf_addstrings(&aaaaaaaaaa_100000, "aaaaaaaaaa", 100000);
+ 	TEST_HASH_STR(aaaaaaaaaa_100000.buf,
+ 		"34aa973cd4c4daa4f61eeb2bdbad27316534016f",
+ 		"cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0");
++	strbuf_release(&aaaaaaaaaa_100000);
++}
++
++void test_hash__alphabet_100000(void)
++{
++	struct strbuf alphabet_100000 = STRBUF_INIT;
++	strbuf_addstrings(&alphabet_100000, "abcdefghijklmnopqrstuvwxyz", 100000);
+ 	TEST_HASH_STR(alphabet_100000.buf,
+ 		"e7da7c55b3484fdf52aebec9cbe7b85a98f02fd4",
+ 		"e406ba321ca712ad35a698bf0af8d61fc4dc40eca6bdcea4697962724ccbde35");
++	strbuf_release(&alphabet_100000);
++}
++
++void test_hash__zero_blob_literal(void)
++{
+ 	TEST_HASH_LITERAL("blob 0\0",
+ 		"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+ 		"473a0f4c3be8a93681a267e3b1e9a7dcda1185436fe141f7749120a303721813");
++}
++
++void test_hash__three_blob_literal(void)
++{
+ 	TEST_HASH_LITERAL("blob 3\0abc",
+ 		"f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f",
+ 		"c1cf6e465077930e88dc5136641d402f72a229ddd996f627d60e9639eaba35a6");
++}
++
++void test_hash__zero_tree_literal(void)
++{
+ 	TEST_HASH_LITERAL("tree 0\0",
+ 		"4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+ 		"6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321");
+-
+-	strbuf_release(&aaaaaaaaaa_100000);
+-	strbuf_release(&alphabet_100000);
+-
+-	return test_done();
+ }
+-- 
+2.34.1
+
