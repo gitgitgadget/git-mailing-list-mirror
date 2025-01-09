@@ -1,210 +1,173 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4759320408E
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 08:57:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA6419E965
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 10:00:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736413024; cv=none; b=I22G0lR9vrREhljPtAQKNye2aY3MPIuGvfWchV/kmHkAz/h5uV5WHX9wqEVLNbYJmJ3nL3G8rRuSecsFb/vgaBDRdx78FGzwuJy0x2Hl6EYIGBoPUqiWDSA8jBYsMy6ourMu2IiK+PD6t48RB2DwlH9VuLd9rjDVvp6uEWALHG4=
+	t=1736416854; cv=none; b=tv7mrCqw9m2Fq5JUi+Swfwkhot7NH20+ebgNAKvUnLlF2FAGL72ru8L2NBzlbk8XbMHr++QWwagcvDi4NLLeYd6X4OMn4HWNbM6JUjhtyyXL0wlFEwa1jpc+VG8m/dZitgS+Y5Sv4iuSMJcYRh76PQTb7Z9jKRTtRJ3FrVYKKuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736413024; c=relaxed/simple;
-	bh=Fp0UMYc8ofYVdLUB0eqRm5Jh9tO3UM6bQZIkzm6khOw=;
+	s=arc-20240116; t=1736416854; c=relaxed/simple;
+	bh=waPk3hPpY2i2k7TE69eun6gG6ezz+Nn1wA7ZKFvqpbY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OqE6kA/zJ/kswEnoFBUi84WP41u/rD/m1UKrPcclcmRBiH0eS+fyNfJtSAR0t17CwJW7wXKggVkqzHhbdfRgWFxzpExMwOuzH2xbkBb6j4QKg1p3GyubuzKyi/SYjNR+dxiKytuX+/Rj6yUMszRK5ruF06GJWST8UP7wkuYQZ7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bhMypwqd; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=jYiF//JJ/Cldz9qG5exneeVs3wqKIZyRNp1Z0FAT4LtdcYZonVqM0c3mQVrkLEDmXCuOveYO69RusNDwZcawLmE6fbCLQR14jFSB2PndG2JX7j/ZuE7UDTAyDk7XxB2al30za6wXcSXlYmx1TETJdW6a259RV/ylU8UoZPL7jQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Gmbud3wu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mqUksrNk; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bhMypwqd"
-Received: (qmail 25794 invoked by uid 109); 9 Jan 2025 08:57:01 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=Fp0UMYc8ofYVdLUB0eqRm5Jh9tO3UM6bQZIkzm6khOw=; b=bhMypwqdvIsIZuXgULLm56EmnCwrYv0iQZOC5G8c9/atdF+Jvb/K4oWkR/3ZUl9wa7rou7ThY+w5Io7o+TPff85Wj5uc/GxwkzJyXkP0M9Sk/YDCF0i+71VQCYcpb2OBG2iPF1WPv2AUi+M7Fzp6BFRAgcBWbFtAQoR6JJcaMyX2NK1F5EzMGKqBuMlUbR3speHsxxRbbRCHoa+T50HGhSQwGbva7Y6kGMKyCM1EPgslYp1OE3ssjKRQWkXAWfFBSHKxO5DRq9AVh5EPO+AwFozLbrMg7NHVpFlhUCoCw8K4z8ZPdvZyY7V/z8YY39iPQKo7VKDYHWuCj6MC83Oq2A==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Jan 2025 08:57:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20498 invoked by uid 111); 9 Jan 2025 08:57:00 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Jan 2025 03:57:00 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 9 Jan 2025 03:57:00 -0500
-From: Jeff King <peff@peff.net>
-To: Git List <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Wink Saville <wink@saville.com>
-Subject: [PATCH 14/14] tree-diff: make list tail-passing more explicit
-Message-ID: <20250109085700.GN2748836@coredump.intra.peff.net>
-References: <20250109082723.GA2748497@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Gmbud3wu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mqUksrNk"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DA89325401DC;
+	Thu,  9 Jan 2025 05:00:49 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Thu, 09 Jan 2025 05:00:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1736416849; x=1736503249; bh=L5xo2w9g1L
+	+5qhtIA7CTHsbeIP+UqoWVujXEzuCAg4s=; b=Gmbud3wu5+sA93k6XkzFzFlg1+
+	9pDFV6JFNAPQb8ugsGiCloPQX//W51X5Gq5umbkQ/Iq12vKoZKEmzAXM6jp6Ic+F
+	XSp2qZuRTEBip8HV2ftsPkQsn42egq/BUuEe9u5B6LLRllvUMCwG8gExhJlPvDET
+	AdDaZdXoUDnOYTK7jZa63zwkT/IpJIcviqD2MFCehdPrq/vlQMDjt2v68wHek8f7
+	sYZy/WGwSwsPeZIqjtrzTv3Acy/vTrAOhepqU6UEXqkcVl1QA3C5AM3F7ieCSWk7
+	LLmZpbFyNPCUMYqyrohMqaVP+Ho+pA9TzX4DztYAskmV/hK/paFkujM79oFA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736416849; x=1736503249; bh=L5xo2w9g1L+5qhtIA7CTHsbeIP+UqoWVujX
+	EzuCAg4s=; b=mqUksrNkx1FC5PPXpRpZhxQNtU62ht6wLyDamu2T7O2H8BF1g3J
+	5e1EhJGRZt9CcxoXVJfdslLV6ZeuP0czof78kBsnZSuuZZiioH4VklBoVRr48I1U
+	hcMzB58WNnuqVNGIrYBj4E2QCK+lz0tur+YMWifeC4YiErlh7wn9rsTU67GAhR6a
+	iE48bWpS6LnoDP4wHQ/8K150W7TCyLhs+sVoOfHPqvAo7QSm8TO/pTPpGBRzM545
+	mxihJGrITlqdiWyW3UPaY0UeDChmiEDgax7CyWh2aMX7/t/9VZKsm4lf+JpLITkH
+	kruuoU/xPzLgnMcm1bt6uKVwYHTwjOmz/kg==
+X-ME-Sender: <xms:UZ5_Z4YkjyRXtRX4eUr8-ZPwS4AbYwzxeelinAPJO2ifLZ7dIATGPQ>
+    <xme:UZ5_ZzYNQVMM3b-oaEjh8BmoW51vAuh6F1lwbMkTdmVZBGlllv0gODuSYW9iCumPA
+    7QtXYpspZnrFGoSgw>
+X-ME-Received: <xmr:UZ5_Zy98ud0j95mF-oJNOoTiBn1b7oWjQ7EgnmYWszVkJpKlB2TSUJcrBqr3JSt2usAryke6CkBYIrKNisNFe2clvvFfYBVBdc6Pd4FhgKlruMjK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegiedgtdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
+    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:UZ5_ZyqGw4_hA8kKYvT5_ORbrZX_9xR14lg0uIwtGf-Zeamy0j1rrw>
+    <xmx:UZ5_ZzqgxTffCrLVjMcQRQDrUyb57mdGtTZEKrgKgtoYs13Xo4qnqg>
+    <xmx:UZ5_ZwTxd8__YZbxRyXWYOtDChClnmmJkOYT5qKbYDP8W0w5Ie7s2g>
+    <xmx:UZ5_ZzrI6DKs2sNg-vLYsHfjlWxt_AVczlPjR51ts8EpeI-vrnn9hg>
+    <xmx:UZ5_ZyXzY3TK1OK9cNbWKdfNtjUDuvWx6uoRcsztlbK3bltcT3C-VugU>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 9 Jan 2025 05:00:48 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id f628d7ae (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 9 Jan 2025 10:00:45 +0000 (UTC)
+Date: Thu, 9 Jan 2025 11:00:44 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/3] test-lib: simplify lsan results check
+Message-ID: <Z3-eTDsHQ9Nu1er9@pks.im>
+References: <20250107070409.GA584456@coredump.intra.peff.net>
+ <20250107070752.GB584668@coredump.intra.peff.net>
+ <Z3zZt2OCjcDGvjBS@pks.im>
+ <20250109075750.GC2735258@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250109082723.GA2748497@coredump.intra.peff.net>
+In-Reply-To: <20250109075750.GC2735258@coredump.intra.peff.net>
 
-The ll_diff_tree_paths() function and its helpers all take a pointer to
-a list tail, possibly add to it, and then return the new tail. This
-works but has two downsides:
+On Thu, Jan 09, 2025 at 02:57:50AM -0500, Jeff King wrote:
+> On Tue, Jan 07, 2025 at 08:37:33AM +0100, Patrick Steinhardt wrote:
+> 
+> > On Tue, Jan 07, 2025 at 02:07:52AM -0500, Jeff King wrote:
+> > > We want to know if there are any leaks logged by LSan in the results
+> > > directory, so we run "find" on the containing directory and pipe it to
+> > > xargs. We can accomplish the same thing by just globbing in the shell
+> > > and passing the result to grep, which has a few advantages:
+> > > 
+> > >   - it's one fewer process to run
+> > > 
+> > >   - we can glob on the TEST_RESULTS_SAN_FILE pattern, which is what we
+> > >     checked at the beginning of the function, and is the same glob use
+> > 
+> > s/use/used
+> > 
+> > I'm always a bit thrown off by your style of bulleted lists, where they
+> > feel like sentences but start with a lower-case letter, and sometimes
+> > they do and sometimes they don't end with punctuation. Maybe it's just
+> > me not being a native speaker and it's a natural thing to do in English.
+> > In any case, it's nothing that really matters in the end, but would be
+> > happy to learn if this is indeed something you tend to do in English.
+> 
+> Heh. Yeah, I've seen you mention them before and I've been tempted to
+> start a big discussion. But I never felt like it was worth it. But
+> tonight's your lucky night. ;)
+> 
+> In short: I think it's a style question. I perceive them as
+> continuations of the sentence that has the ":". Though admittedly I do
+> not always grammatically continue that sentence. So for example I could:
+> 
+>   - have one bullet item that completes the sentence.
+> 
+>   - and then another that likewise completes it.
+> 
+> ;) I think many style guides would frown on that. Especially with the
+> periods at the end (you might argue that they should be semicolons).
+> 
+> In the example you quoted above they don't grammatically continue the
+> sentence, so arguably what I'm saying doesn't even apply. But I also
+> kind of think of the list items as sentence fragments. That sometimes
+> happen to make a full sentence. Or need punctuation because that
+> fragments gets so long it contains multiple sentences.
+> 
+> I dunno. You asked if it is something you tend to do in English. It is
+> something _I_ tend to do in English, but I think most style guides would
+> suggest against it (but then, most also suggest against bulleted lists
+> in the first place). (They probably also suggest against lots of
+> parentheses).  So I wouldn't necessarily copy me.
+> 
+> My general feeling is that unless a commit message is inaccurate or hard
+> to understand, we should mostly let it pass (even typos). Yes, they are
+> an artifact that is enshrined in the history. But at some point they are
+> also just a written communication between developers, and we all have
+> our own voices and styles. And make mistakes. Polishing them is
+> something we _can_ do collaboratively, but there are diminishing
+> returns.
 
-  - The top-level caller (diff_tree_paths() in this case) has to make a
-    fake combine_diff_path struct to act as the list head. This is
-    especially weird here, as it's a flexible-sized struct which will
-    have an empty FLEX_ARRAY field. That used to be a portability
-    problem, though these days it is legal because our FLEX_ARRAY macro
-    over-allocates if necessary. It's still kind of ugly, though.
+Yup, agreed. It's a minor detail and I'm happy to gloss over it in the
+future.
 
-  - Besides the name "tail", it's not immediately obvious that the entry
-    we pass around will not be examined by each function. Using a
-    pointer-to-pointer or similar makes it more obvious we only care
-    about the pointer itself, not its contents.
+> In case it is not clear, I would not say the same for documentation,
+> error messages, etc. Those are artifacts that hits a wider audience, and
+> we have a tool for polishing them together: git.
+> 
+> And people should still proofread and correct their own messages before
+> sending. Believe it or not, I do always take a final pass when sending
+> out my commits and still manage to have errors. ;) A lot of times I end
+> up improving clarity and wording on the final pass, but end up
+> introducing a typo (I'm pretty sure that the use/used above was me
+> switching last-minute between "the same glob we use" and "the same glob
+> used").
+> 
+> Bringing it back to the example at hand, my assumption is that the
+> bullet list capitalization and punctuation is mostly a question of
+> style, and isn't making the result hard to understand. But if it is, I
+> can try to adjust. I actually wrote a bulleted list in a commit message
+> earlier today and capitalized it just for you. :)
 
-We can solve both by passing around a pointer to the tail instead. That
-gets rid of the return value entirely, though note that because of the
-recursion we actually need a three-star pointer for this to work.
+Thanks for explaining!
 
-The result is fairly readable, as we only need to dereference the tail
-in one spot. If we wanted to make it simpler we could wrap the tail in a
-struct, which we pass around.
-
-Another option is to convert combine_diff to use our generic list_head
-API. I tried that and found the result became much harder to read
-overall. It means that _all_ code that looks at combine_diff_path
-structs needs to be modified, since the "next" pointer is now inside a
-list_head which has to be dereferenced with list_entry(). And we lose
-some type safety, since we're just passing around a list_head struct
-everywhere, and everybody who looks at it has to specify the type to
-list_entry themselves.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- tree-diff.c | 47 +++++++++++++++++++++--------------------------
- 1 file changed, 21 insertions(+), 26 deletions(-)
-
-diff --git a/tree-diff.c b/tree-diff.c
-index f5ec19113c..60c558c2b5 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -48,8 +48,8 @@
- 		free((x)); \
- } while(0)
- 
--static struct combine_diff_path *ll_diff_tree_paths(
--	struct combine_diff_path *tail, const struct object_id *oid,
-+static void ll_diff_tree_paths(
-+	struct combine_diff_path ***tail, const struct object_id *oid,
- 	const struct object_id **parents_oid, int nparent,
- 	struct strbuf *base, struct diff_options *opt,
- 	int depth);
-@@ -134,10 +134,10 @@ static int emit_diff_first_parent_only(struct diff_options *opt, struct combine_
-  *	 t,  tp		-> path modified/added
-  *			   (M for tp[i]=tp[imin], A otherwise)
-  */
--static struct combine_diff_path *emit_path(struct combine_diff_path *tail,
--	struct strbuf *base, struct diff_options *opt, int nparent,
--	struct tree_desc *t, struct tree_desc *tp,
--	int imin, int depth)
-+static void emit_path(struct combine_diff_path ***tail,
-+		      struct strbuf *base, struct diff_options *opt,
-+		      int nparent, struct tree_desc *t, struct tree_desc *tp,
-+		      int imin, int depth)
- {
- 	unsigned short mode;
- 	const char *path;
-@@ -219,8 +219,8 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *tail,
- 			keep = opt->pathchange(opt, p);
- 
- 		if (keep) {
--			tail->next = p;
--			tail = p;
-+			**tail = p;
-+			*tail = &p->next;
- 		} else {
- 			free(p);
- 		}
-@@ -239,13 +239,12 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *tail,
- 
- 		strbuf_add(base, path, pathlen);
- 		strbuf_addch(base, '/');
--		tail = ll_diff_tree_paths(tail, oid, parents_oid, nparent, base, opt,
--					  depth + 1);
-+		ll_diff_tree_paths(tail, oid, parents_oid, nparent, base, opt,
-+				   depth + 1);
- 		FAST_ARRAY_FREE(parents_oid, nparent);
- 	}
- 
- 	strbuf_setlen(base, old_baselen);
--	return tail;
- }
- 
- static void skip_uninteresting(struct tree_desc *t, struct strbuf *base,
-@@ -358,8 +357,8 @@ static inline void update_tp_entries(struct tree_desc *tp, int nparent)
- 			update_tree_entry(&tp[i]);
- }
- 
--static struct combine_diff_path *ll_diff_tree_paths(
--	struct combine_diff_path *tail, const struct object_id *oid,
-+static void ll_diff_tree_paths(
-+	struct combine_diff_path ***tail, const struct object_id *oid,
- 	const struct object_id **parents_oid, int nparent,
- 	struct strbuf *base, struct diff_options *opt,
- 	int depth)
-@@ -463,8 +462,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
- 			}
- 
- 			/* D += {δ(t,pi) if pi=p[imin];  "+a" if pi > p[imin]} */
--			tail = emit_path(tail, base, opt, nparent,
--					 &t, tp, imin, depth);
-+			emit_path(tail, base, opt, nparent,
-+				  &t, tp, imin, depth);
- 
- 		skip_emit_t_tp:
- 			/* t↓,  ∀ pi=p[imin]  pi↓ */
-@@ -475,8 +474,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
- 		/* t < p[imin] */
- 		else if (cmp < 0) {
- 			/* D += "+t" */
--			tail = emit_path(tail, base, opt, nparent,
--					 &t, /*tp=*/NULL, -1, depth);
-+			emit_path(tail, base, opt, nparent,
-+				  &t, /*tp=*/NULL, -1, depth);
- 
- 			/* t↓ */
- 			update_tree_entry(&t);
-@@ -491,8 +490,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
- 						goto skip_emit_tp;
- 			}
- 
--			tail = emit_path(tail, base, opt, nparent,
--					 /*t=*/NULL, tp, imin, depth);
-+			emit_path(tail, base, opt, nparent,
-+				  /*t=*/NULL, tp, imin, depth);
- 
- 		skip_emit_tp:
- 			/* ∀ pi=p[imin]  pi↓ */
-@@ -505,20 +504,16 @@ static struct combine_diff_path *ll_diff_tree_paths(
- 		free(tptree[i]);
- 	FAST_ARRAY_FREE(tptree, nparent);
- 	FAST_ARRAY_FREE(tp, nparent);
--
--	return tail;
- }
- 
- struct combine_diff_path *diff_tree_paths(
- 	const struct object_id *oid,
- 	const struct object_id **parents_oid, int nparent,
- 	struct strbuf *base, struct diff_options *opt)
- {
--	struct combine_diff_path head, *p;
--	/* fake list head, so worker can assume it is non-NULL */
--	head.next = NULL;
--	p = ll_diff_tree_paths(&head, oid, parents_oid, nparent, base, opt, 0);
--	return p;
-+	struct combine_diff_path *head = NULL, **tail = &head;
-+	ll_diff_tree_paths(&tail, oid, parents_oid, nparent, base, opt, 0);
-+	return head;
- }
- 
- /*
--- 
-2.48.0.rc2.413.gc1c80375a3
+Patrick
