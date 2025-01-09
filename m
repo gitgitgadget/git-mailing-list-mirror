@@ -1,183 +1,144 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C2B219E8F
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 14:24:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CBCE219E8F
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 14:25:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736432669; cv=none; b=kNVFssRHsO6eu+VKvZ9rnJQueiuIlAc8orq80lWrhW/jpXmf2pnTSUGTHk4qGr3MGtBc7jolzm5Vr4rpJuGqxMIAj0I7+My8+cEfAu20g7LJK6KuqlS15ZPJjlYEfCodyZ0NIAQxRIlXKAFTjTkp4DrFHLznV8mY6To5idWaiEw=
+	t=1736432745; cv=none; b=a+5B9UIt5rSO8X0oZAIyjKcEqKpTUl8lTEVC6v+X0rdgnn2qchaG36hvN7mCNMNnPC9hfPo7bzjUoAnqwMaaf0Q41EJnxv6bJLHGjUc5OuTVFEgA3wTvWKkvAYlVM6xu+TXHRfCQmi/8kODujyZb8eyu49dyXkc+aVYknG3nJTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736432669; c=relaxed/simple;
-	bh=wQRJt+OXCAqOclCkg6KEZzYTJ9i44WoOx1oTpDLLcsE=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=GMguQXHKZhraeqmsqP6YDB4Ant0BUBXTWf72VBzvOaSLQjvtnG/csVavsgeZpUInQOqitwM75ryDQGTxPp/9m5uu7aiUe1LDjK3BmER5vUQGmEKwyQm1jrQd5H0ABgk4JXYKg7W15TdvGYsP1YE4jIEhF9GV671p9dA0CEKxha4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D9nUYuhH; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1736432745; c=relaxed/simple;
+	bh=5kVs0E3oqWOs3iPDCcKdpTXww4NT8sVdY/9dQH1sNNU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TWVLaUVim+1qPw1eIfXrYUGTNsybb4HthaDjeYaeRtMnMf60LkjqJjkJlxetf6s9NVczBOgJGw3gBJlvraSyCwpSdYp/7XdPYmKlgsJ/KvEOqGS8AIlL/spLq/wQlArbqpF1nlNruS1sp1ttmL2zR/+yc5USqV0dC6xZhR4U+tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fL6ndryI; arc=none smtp.client-ip=209.85.217.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D9nUYuhH"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-385ddcfc97bso876519f8f.1
-        for <git@vger.kernel.org>; Thu, 09 Jan 2025 06:24:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fL6ndryI"
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4afe70b41a8so376430137.3
+        for <git@vger.kernel.org>; Thu, 09 Jan 2025 06:25:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736432665; x=1737037465; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CpAKmSejArlIk0tymd2KyzGhD8Au1DOWGVaOh6L/GZU=;
-        b=D9nUYuhHoaAIAuojld0XePx68RzXWY4nPcKQCdLTUknZwSnwjpNK2qzN1ltYtRrQij
-         9jzxFkYZGQOO1BOq1KygxTNZNHN5PBOHYuPq2QcY7COEfHqfWIQBX0kkOj3MjDg0ZhlT
-         GJu8EOkBCHstQdu9Z4N19H8ZRHF80eBn/3mfByM7FjwOYF55o8qc1njLxKeIdYMKa4cN
-         OAyrNA5uX5Hh5BWQ+mUiYGXbFVA0ZAu5Hz6O1fEw+s0gVWYw2Q4jmE9pFdFIBdgP7Ug1
-         XMfhKkQa/I9nExsnQZB9eTVblyFzaGL7gBEz1d9Mos2bNT2Dc6ARgdY1jBZfAY8Flwm6
-         mUNA==
+        d=gmail.com; s=20230601; t=1736432743; x=1737037543; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Hn6H4pKsXZe57Ilr5kmfIKSdUg/U8Dxsii++vVY5LX8=;
+        b=fL6ndryICV4TbjgW6oOF1h9bARv5Gxx1D6XtaF6e8xCgj3PnqTBhX+O4BaW0LmYF2u
+         JFGxNMPI8JLeSefWpsU+LXnckhzyMV0vYcE/U/HuF7CvFE90etmTJFl6XCK2AkYsE7+R
+         /9DGrA46WIoagxWNzg2lv11AqgUEWq5u1luXwSZyEAlNR0wU+61FEr7VeSSujN/hmHhh
+         YagkFwQL/MWRbKL++c+XMB2LXfvSKi8iSdYCWwS+S6lCETNClTVDLfNF83Z79M6l4uLz
+         V7/+v3VFsnWTY1xQjZnouIf6Y2wSQ5fs7jj+haEHsbtJiLtSl9TZtpvcq9okMOl4FRiU
+         E1Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736432665; x=1737037465;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CpAKmSejArlIk0tymd2KyzGhD8Au1DOWGVaOh6L/GZU=;
-        b=gdRvEIXexSdotSLYHgz2kpKx76nJB/dTMK4d7wNE+PgAz8yCcul7XPBzDU0k0BxIm/
-         HOly+F2Ewinb1/OTNdGdw/TljuhuBDIafHP1tR9wqgaemOgNE8rkx6RSPo0hkImckoeH
-         0OH34mZMIRiiOrtu1ExWwOn6AMi5hffe6c5p1lRwdooi/x5SdvpnylYHwsl9vCnwEph2
-         Ks+QNKrR5//GrEUC8lMjsfKA4+WYKv2i2xTI30mVZQTVdgTsbkRaOKwY9B3nQ6N5cAz0
-         nvuPZcouu+QG4g4PYOlpZrnaNUxVxilQgdOtFm10f8XHPw0Ulrww99wjhs2T+SWIjA5m
-         QMyQ==
-X-Gm-Message-State: AOJu0Yy46Aqk1SWeKnwzqo0sjL8B8BvLHCPtlFdcHNWlocCFgnDBuRyp
-	P3UyEhyen8VPAvFKw7ecAwJR/tlDzSBqfiHCEkDB+L3wlpGNlKxEJuWJ6A==
-X-Gm-Gg: ASbGncsZrxb68huw4YmmObKDQqeD6EiEej4BXYUONNHtAV6Xyx+dvLykOiakNCoJv1W
-	ak/Tu9SAhEGfEeYd2n4BJwwbQBBwJ2CTYtZZw7U3+9fd9HAVdb+B/Rb8iySwaVsbrz2WrYTrfgY
-	eO8Da17kolAuOn42jevaSbidSM8hv4PdUPkBxIRiyNVUfC4ihAd35Vwv/cayzifWVZGaJ9XYDYJ
-	0fuWK9SPvQROcAntJTYvWK0qzHdqBlvr1aGlcxVXAAGetdVtwznQiU4ww==
-X-Google-Smtp-Source: AGHT+IGMXvUfPmT/JhnTtSoVwrvfk1rXQjb4rljp31G1+WVDpEEVlP1oal2oZgZ+dxe3u1Xvw5phAA==
-X-Received: by 2002:a5d:5f44:0:b0:385:fa33:29ed with SMTP id ffacd0b85a97d-38a8730fa63mr5472188f8f.47.1736432664488;
-        Thu, 09 Jan 2025 06:24:24 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e38c596sm1981868f8f.51.2025.01.09.06.24.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 06:24:24 -0800 (PST)
-Message-Id: <pull.1850.git.1736432663587.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Jan 2025 14:24:23 +0000
-Subject: [PATCH] GIT-VERSION-GEN: allow it to be run in parallel
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1736432743; x=1737037543;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Hn6H4pKsXZe57Ilr5kmfIKSdUg/U8Dxsii++vVY5LX8=;
+        b=ZBUITmCK6VKeQuC/5dMn1KLM6OdTPwhLE9Hrp9qQUFPuLAcysGvjpXmIMOH8bzpgOK
+         amC/uYoojE/3gMeJ8EesaKFWA5lpVzwLcvmWaQnXghUChR+6ZJ2iumKOSZlGdmG82mQz
+         4jeahp5ZBelRJzaluOEFpGo8CgniWuVQ3p0npK9cg7kQvjfeVVxK3Ax/e33rDpWecWCr
+         PGyF5O2jEwYOVkzWjtjwEFmkugBhpAPX5dAXTlAuI4Q9YWtJKgVyem1PO7j66nkrtVba
+         CX1GxnM1smYj5nCPcchwjII+5jAC6OAgP6hPmcGBCtCfixSkGd2vbv6AqdUPz3QHh1Bo
+         xLcA==
+X-Gm-Message-State: AOJu0YyGXwH2c3N9ADsIT6tNikNv2Njg82vKU//TTVjRWNuDAnQHnO8r
+	G6ajH6Vrp1G0ZYup6p7sQ9uAG32EgFtq5Rllrm3RjTCa0axP2nylXte2qomesNPpAoLH+97Bca0
+	L0Uct+2KbPeSFm/21KCqypnAiAd0=
+X-Gm-Gg: ASbGncvaDjPZUsppF168RF3Tf9bJsMhMHVk7UEMdl0JbGltA6kiHDbOouM7Fq4VwqUj
+	QZbsvJfwMmN3IffPxBLBXTTHq6A6khNOi/JN23A==
+X-Google-Smtp-Source: AGHT+IHWm/+7XdZfjWx3GIEdcJ8rwdovg+oQMrnSdzH5Vmyj2x08ccpvt9x5z8ltgwBasqSZFmLskllGHPWgayZwZNM=
+X-Received: by 2002:a05:6102:3591:b0:4af:98c6:bc97 with SMTP id
+ ada2fe7eead31-4b3d0e60973mr6059230137.19.1736432743234; Thu, 09 Jan 2025
+ 06:25:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
+ <20250106103713.1452035-4-usmanakinyemi202@gmail.com> <xmqqfrlvzzcd.fsf@gitster.g>
+ <CAPSxiM_0h7OyQO-Of8YhcOt4KbtuoKXe111ZCvsLf5y+OgCHaw@mail.gmail.com> <xmqq1pxdnuxo.fsf@gitster.g>
+In-Reply-To: <xmqq1pxdnuxo.fsf@gitster.g>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Thu, 9 Jan 2025 19:55:32 +0530
+X-Gm-Features: AbW1kvaAoutLK9KeNbpMvIc3L88ykofgW6gb6H_JTOMaXAMMHCqKtPRQCnzaxOE
+Message-ID: <CAPSxiM93qVjoDGBRaGAv1-o3oiKkEE0mtH9ERTN9dVxvZpCczw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] connect: advertise OS version
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
+	johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
+	phillip.wood@dunelm.org.uk, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Jan 8, 2025 at 9:45=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+>
+> >> Is there a need for a registry of canonical os-version strings?  One
+> >> reason why you would want this user-settable (as opposed to being
+> >> derived from "uname -s") is that a system that is presumably the
+> >> same in end-user perception can call itself in different names (your
+> >> Windows/MINGW64 example) and having the users set it to a string
+> >> chosen from a small repertoire, the other end would be able to
+> >> identify them more easily.  I do not think it is a necessarily a
+> >> good idea to limit what value the users can set to this
+> >> configuration variable, but at least with a published guideline on
+> >> calling various types of systems (and an explanation on the reason
+> >> why we publish such a guideline), users would make an informed
+> >> decision when picking what string to send.
+> >
+> > We plan to implement another config option `osVersion.format`, which
+> > allow users to fully customize the string sent to the other side using
+> > placeholders,
+>
+> Sorry, you lost me.
+>
+> I was wondering if we want to (informally at first) make it _less_
+> flexible, so that we can prevent people from being "creative" when
+> the value of being creative is negative.  Adding even more ways to
+> customize the string to subject the receiving/inspecting end to more
+> unnecessary variations to call the same thing in different names is
+> the last thing we want to see in that context, isn't it?
+>
+> If you have "any random string goes" configuration mechanism, it is
+> pretty much game over.  You do not need to add an elaborate .format
+> mechanism to let users throw random garbage at the other side of the
+> connection.
+Thanks for the explanation.
+Instead of having .format that will allow user to have multiple
+variation or different placeholder,
+we can allow it to take only specific values for examples:
+- "full" which would mean the same thing as  the result of `uname -srvm`,
+- "default" or "short" which would mean the same thing as  the result
+of `uname -s`,
+- "medium"  which would mean the same thing as  the result of `uname -sr`.
 
-"Why would one want to run it in parallel?" I hear you ask. I am glad
-you are curious, because a curious story is what it is, indeed.
+What is your thought about this ?
 
-The `GIT-VERSION-GEN` script is quite a pillar of Git's source code,
-with most lines being unchanged for the past 15 years. Until the v2.48.0
-release candidate cycle.
+Thank you.
+>
+> >> > +# Trim and replace each character with ascii code below 32 or above
+> >> > +# 127 (included) using a dot '.' character.
+> >> > +# Octal intervals \001-\040 and \177-\377
+> >> > +# corresponds to decimal intervals 1-32 and 127-255
+> >> > +test_redact_non_printables () {
+> >> > +    tr -d "\n" | tr "[\001-\040][\177-\377]" "."
+> >> > +}
+> >>
+> >> Just being curious.  Do we need to worry about carriage-returns not
+> >> just line-feeds, and if not why?
+> > The function `tr "[\001-\040][\177-\377]" "."` already replace the
+> > carriage-returns with "."
+>
+> That is exactly my point.  LF are stripped; I do not see a sensible
+> reason why shouldn't CR be removed the same way.
+Yeah, I will add that in the next iteration.
 
-Its original purpose was to generate the version string and store it in
-the `GIT-VERSION-FILE`.
-
-This paradigm changed quite dramatically when support for building with
-Meson was introduced. Most crucially, a38edab7c88b (Makefile: generate
-doc versions via GIT-VERSION-GEN, 2024-12-06) changed the way the
-documentation is built by using the `GIT-VERSION-GEN` file to write out
-the `asciidocor-extensions.rb` and `asciidoc.conf` files with now
-hard-coded version strings.
-
-Crucially, the Makefile rule to generate those files needs to be run in
-every build because `GIT_VERSION` could have been specified in the
-`make` command-line, which would require these files to be modified.
-
-This introduced a surprising race condition!
-
-And this is how that race surfaces: When calling `make -j2 html man`
-from the top-level directory (a variant of which is invoked in Git for
-Windows' release process), two sub-processes are spawned, a `make -C
-Documentation html` one and a `make -C Documentation man` one. Both run
-the rule to (re-)generate `asciidoctor-extensions.rb` or
-`asciidoc.conf`, invoking `GIT-VERSION-GEN` to do so. That script first
-generates a temporary file (appending the `+` character to the
-filename), then looks whether it contains something different than the
-already existing file (if it exists, that is), and either replaces it if
-needed, or removes the temporary file. If one of the two parallel
-invocations removes that temporary file before the other can compare it,
-or even worse: if one tries to replace the target file just after the
-other _started_ writing the temporary file (but did not finish writing
-it yet), that race condition now causes bad builds.
-
-This may sound highly theoretical, but due to the design of Git's build
-process, Git for Windows is forced to use a (slow) POSIX emulation layer
-to run that script and in the blink of an eye it becomes very much not
-theoretical at all. See Exhibit A: These GitHub workflow runs failed
-because one of the two competing `make` processes tried to remove the
-temporary file when the other process had already done so:
-
-https://github.com/git-for-windows/git-sdk-32/actions/runs/12663456654
-https://github.com/git-for-windows/git-sdk-32/actions/runs/12683174970
-https://github.com/git-for-windows/git-sdk-64/actions/runs/12649348496
-
-While it is undesirable to run this script over and over again,
-certainly when this involves above-mentioned slow POSIX emulation layer,
-the stage of the release cycle in which we are presently finding
-ourselves does not lend itself to a re-design where this script could be
-run once, and once only, but instead dictates that a quick and reliable
-work-around be implemented that prevents the race condition without
-changing the overall architecture of the build process.
-
-This patch does that: By using a filename suffix for the temporary file
-which is based on the currently-executing script's process ID, We
-guarantee that the two competing invocations cannot overwrite or remove
-each others' temporary files.
-
-Incidentally, this also fixes something else: The `+` character is
-not even a valid filename character on Windows. The only reason why Git
-for Windows did not need this is that above-mentioned POSIX emulation
-layer also plays a couple of tricks with filenames (tricks that are not
-interoperable with regular Windows programs, though), and previous
-attempts to remedy this in git/git were unsuccessful, see e.g.
-https://lore.kernel.org/git/pull.216.git.gitgitgadget@gmail.com/
-
-This commit fixes one of the issues that are currently delaying Git for
-Windows v2.48.0-rc2.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    GIT-VERSION-GEN: allow it to be run in parallel
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1850%2Fdscho%2Fasciidoctor-extensions-gen-race-work-around-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1850/dscho/asciidoctor-extensions-gen-race-work-around-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1850
-
- GIT-VERSION-GEN | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index 6d1cb66d69a..5b49e2d72fb 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -86,11 +86,11 @@ sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
- 	-e "s|@GIT_BUILT_FROM_COMMIT@|$GIT_BUILT_FROM_COMMIT|" \
- 	-e "s|@GIT_USER_AGENT@|$GIT_USER_AGENT|" \
- 	-e "s|@GIT_DATE@|$GIT_DATE|" \
--	"$INPUT" >"$OUTPUT"+
-+	"$INPUT" >"$OUTPUT".$$
- 
--if ! test -f "$OUTPUT" || ! cmp "$OUTPUT"+ "$OUTPUT" >/dev/null
-+if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$ "$OUTPUT" >/dev/null
- then
--	mv "$OUTPUT"+ "$OUTPUT"
-+	mv "$OUTPUT".$$ "$OUTPUT"
- else
--	rm "$OUTPUT"+
-+	rm "$OUTPUT".$$
- fi
-
-base-commit: a60673e9252b08d4eca90543b3729f4798b9aafd
--- 
-gitgitgadget
+Thank you.
+Usman.
+>
+> Thanks.
