@@ -1,42 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 478451474A9
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 08:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B621474A9
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 08:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736411248; cv=none; b=q4XMtbUY3NOIaZIj+8K9EuTUBQn/vvPFhvF5QQWumF3Uemh2AYgYcxvfn3qU8RBZLv6tuAuf3zJQF9ZHQg9f/S2oIdXzgf25ReJvaJqcc3RwIuggOPQ+l+bBNdBalK9SxjvdR+UnVDMohBPVthW1YwlG6uEHpOUXmQ1ElK+lYUs=
+	t=1736411302; cv=none; b=Jx4yobPVnDoN/9Ve78NbWWiMj9tasOwW7XZJCEwkL0icyRJdfQnwr+KkTrN9KrPovJ2EsdyhPVi682FAu8K84YpLl93fpKMeZrDKVxyZ1zsBmgnwYLNnwhUFrhorrNo2oS+5Navg2XP10m5yylyLBSnwdzvvc7tRva5dAdLkicU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736411248; c=relaxed/simple;
-	bh=Dvd1T+DqwFtNpSi6xZd2LrowijJULPSzw3DDEP5o1UE=;
+	s=arc-20240116; t=1736411302; c=relaxed/simple;
+	bh=cArmnpCmd6pAC8db4ltR9mcqlveZ7lJ53Ch2qLUrZ4s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EPpQVXGU6WQq7HUQ5csu1Z3S2IrCqteKDVjLjOzfHghVNhHZDMZPH/uF7145+FCtzo7rjssz30av+c6RpY/vmYwrAL6nA1MsiM2v7Sgl8TO5kJwxTjO0hK+MfeTf+Rra3XuVtViyL0GmdmhsnPeWHtDcq4koUFHj57XNfWYhqvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=R5YQpFyp; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gf/IlO6sneotueYpZknbuqDt6MX2CQ5fu8a3FL9877cBJRWnc6Y5Y8WCJxNbQ2duTv+IVasxOIGsPTkfWH3uwCaYhHyPnTtm2yBKw2jMCu3xtysBi1Ar90+wm7B4wzP3OoR6QSOXgjyExsuAv3YhMPS47KKYZzhSUowGypJoMlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=EGryqRnH; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="R5YQpFyp"
-Received: (qmail 25575 invoked by uid 109); 9 Jan 2025 08:27:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Dvd1T+DqwFtNpSi6xZd2LrowijJULPSzw3DDEP5o1UE=; b=R5YQpFyp2nM6jKNLC0Z/uY6X8P8TTbDUqbNpwRL4s38QvqFsburkGyeR+HVJxDO3MJQUAxPo+mvkblr82emDFinOZoytjppzCmuV5/ndgsg32ySGWyNxUeZ69y0uFq1GkPVIvhnuI8f5IuKcVy8+VysILwPzozHGZSlbO2NRiBSP+Eiy8TOFDcWaPpn82F0TzydKoET8jUSDstodZ1+n46I7/pjXXXrIes1jfTjd7D8k9EFFt2zpJ2Au9nsP0AY9oD/ZTeBikWTkMoCtKNZLxDV4TfX9rafKbYR485cCwFeg0+yo9AL1SYqkPTiXgO3vXaMIyemB5ocu3GGoGSJxuA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="EGryqRnH"
+Received: (qmail 25590 invoked by uid 109); 9 Jan 2025 08:28:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=cArmnpCmd6pAC8db4ltR9mcqlveZ7lJ53Ch2qLUrZ4s=; b=EGryqRnH49rIznR0rHuTHIRdIvMyo5HVv+L7y40yoHF9fuaIE6ahwaZzk0ZEhrNu+qCylZau0VQMLVzHj4UPQFWs0NHTl1iYYGMYfM1XKFJpoHpNF7WqsQ7HDfUV2UP8iG3E7eAs7u9p8YL9XAFnbGxCSyRf21VP10vazIlllp5fKypXltsQCF76xyQV3GrcTsr2+pS+SpcNMZ3QPtMV/7OSh6S1s6BQ/eL7+MPnJujLAIOprRfOpwCQbH0SCm1JKOlD2dQpa3bhCfSk0h9qh3BlavpTdyNBkbCP1mC9C1o8f+eRp15kB1SzCg1pmCqUbzhvn/J3LiCjBN96zB32zA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Jan 2025 08:27:24 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Jan 2025 08:28:19 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20044 invoked by uid 111); 9 Jan 2025 08:27:24 -0000
+Received: (qmail 20063 invoked by uid 111); 9 Jan 2025 08:28:19 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Jan 2025 03:27:24 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Jan 2025 03:28:19 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 9 Jan 2025 03:27:23 -0500
+Date: Thu, 9 Jan 2025 03:28:18 -0500
 From: Jeff King <peff@peff.net>
 To: Git List <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Wink Saville <wink@saville.com>
-Subject: [PATCH 0/14] combine-diff cleanups
-Message-ID: <20250109082723.GA2748497@coredump.intra.peff.net>
-References: <CAKk8isqpAXLoiXxOP3uAc00M+OM0FaU3Uhnt5R1FnFMD=xGARg@mail.gmail.com>
- <20250103204624.GE3212696@coredump.intra.peff.net>
- <CAKk8isrz1NQ=3=2aZ3tANymo0eSsCy=r6W5yKgn6gxmOom54CA@mail.gmail.com>
- <20250104003154.GB3244554@coredump.intra.peff.net>
- <xmqq4j2fnv8p.fsf@gitster.g>
- <20250104033210.GA892381@coredump.intra.peff.net>
+Subject: [PATCH 01/14] run_diff_files(): delay allocation of combine_diff_path
+Message-ID: <20250109082818.GA2748836@coredump.intra.peff.net>
+References: <20250109082723.GA2748497@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,58 +40,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250104033210.GA892381@coredump.intra.peff.net>
+In-Reply-To: <20250109082723.GA2748497@coredump.intra.peff.net>
 
-Since Wink successfully nerd-sniped me into digging into the
-combine-diff code, and since I had such a hard time figuring out some of
-its logic, I spent a little time trying to put that puzzling to good use
-to make it more readable.
+While looping over the index entries, when we see a higher level stage
+the first thing we do is allocate a combine_diff_path struct for it. But
+this can leak; if check_removed() returns an error, we'll continue to
+the next iteration of the loop without cleaning up.
 
-Aside from a minor leak fix in the first patch, I didn't find any bugs.
-So arguably this whole thing could be discarded as churn. But I hope at
-least some of it is worthwhile, and I tried to order it to keep the less
-controversial bits near the top.
+We can fix this by just delaying the allocation by a few lines.
 
-The series can be split into a few sections:
+I don't think this leak is triggered in the test suite, but it's pretty
+easy to see by inspection. My ulterior motive here is that the delayed
+allocation means we have all of the data needed to initialize "dpath" at
+the time of malloc, making it easier to factor out a constructor
+function.
 
-  [01/14]: run_diff_files(): delay allocation of combine_diff_path
-  [02/14]: combine-diff: add combine_diff_path_new()
-  [03/14]: tree-diff: clear parent array in path_appendnew()
-  [04/14]: combine-diff: use pointer for parent paths
-  [05/14]: diff: add a comment about combine_diff_path.parent.path
-  [06/14]: run_diff_files(): de-mystify the size of combine_diff_path struct
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ diff-lib.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-    These first six clean up most of the allocation and initialization
-    confusion that started this thread. They can't go all the way
-    because of the scariness in path_appendnew().
+diff --git a/diff-lib.c b/diff-lib.c
+index c6d3bc4d37..85b8f1fa59 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -156,18 +156,6 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
+ 			size_t path_len;
+ 			struct stat st;
+ 
+-			path_len = ce_namelen(ce);
+-
+-			dpath = xmalloc(combine_diff_path_size(5, path_len));
+-			dpath->path = (char *) &(dpath->parent[5]);
+-
+-			dpath->next = NULL;
+-			memcpy(dpath->path, ce->name, path_len);
+-			dpath->path[path_len] = '\0';
+-			oidclr(&dpath->oid, the_repository->hash_algo);
+-			memset(&(dpath->parent[0]), 0,
+-			       sizeof(struct combine_diff_parent)*5);
+-
+ 			changed = check_removed(ce, &st);
+ 			if (!changed)
+ 				wt_mode = ce_mode_from_stat(ce, st.st_mode);
+@@ -178,7 +166,19 @@ void run_diff_files(struct rev_info *revs, unsigned int option)
+ 				}
+ 				wt_mode = 0;
+ 			}
++
++			path_len = ce_namelen(ce);
++
++			dpath = xmalloc(combine_diff_path_size(5, path_len));
++			dpath->path = (char *) &(dpath->parent[5]);
++
++			dpath->next = NULL;
++			memcpy(dpath->path, ce->name, path_len);
++			dpath->path[path_len] = '\0';
++			oidclr(&dpath->oid, the_repository->hash_algo);
+ 			dpath->mode = wt_mode;
++			memset(&(dpath->parent[0]), 0,
++			       sizeof(struct combine_diff_parent)*5);
+ 
+ 			while (i < entries) {
+ 				struct cache_entry *nce = istate->cache[i];
+-- 
+2.48.0.rc2.413.gc1c80375a3
 
-  [07/14]: tree-diff: drop path_appendnew() alloc optimization
-  [08/14]: tree-diff: pass whole path string to path_appendnew()
-  [09/14]: tree-diff: inline path_appendnew()
-  [10/14]: combine-diff: drop public declaration of combine_diff_path_size()
-
-    And these ones take it further, but at the cost of losing an
-    optimization in patch 07. I don't think it was doing much (and I
-    gave some timings there). But it's a judgement call on whether the
-    cleaner code is worthwhile.
-
-  [11/14]: tree-diff: drop list-tail argument to diff_tree_paths()
-  [12/14]: tree-diff: use the name "tail" to refer to list tail
-  [13/14]: tree-diff: simplify emit_path() list management
-  [14/14]: tree-diff: make list tail-passing more explicit
-
-    And these last four fix some confusion I had while reading the
-    functions. I think they _could_ be done independent of 7-14,
-    but there'd be some kinks to work out in emit_path().
-
-    The final one is probably a matter of taste, and I'm not sure if
-    people find it easier to understand than the original or not. If
-    not, it can easily be dropped.
-
- combine-diff.c |  80 +++++++++++++-------------
- diff-lib.c     |  36 ++++--------
- diff.h         |  18 ++++--
- tree-diff.c    | 152 ++++++++++++-------------------------------------
- 4 files changed, 102 insertions(+), 184 deletions(-)
-
--Peff
