@@ -1,36 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F16F31AA781
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 08:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4759320408E
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 08:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736412848; cv=none; b=IrBE6jSuuxkmuJdtBMBYNSgPSwy8hBgMYe4zLWxNTw2E5fODZiRyymWNcCyXxgsko41yJ7dh6xBqLzf0jl0WLbsnc9q9pCB4fj8EltZkbhjTau28Rbsud6lhvzi5vOEkvbHnvlbuYBtba3rI2JODD+ZHLHvpX9PPLT7JB9iamUY=
+	t=1736413024; cv=none; b=I22G0lR9vrREhljPtAQKNye2aY3MPIuGvfWchV/kmHkAz/h5uV5WHX9wqEVLNbYJmJ3nL3G8rRuSecsFb/vgaBDRdx78FGzwuJy0x2Hl6EYIGBoPUqiWDSA8jBYsMy6ourMu2IiK+PD6t48RB2DwlH9VuLd9rjDVvp6uEWALHG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736412848; c=relaxed/simple;
-	bh=f9zfJVlcFITIzi5YsgeYJ6NO9Av9Ldj+N/k5qUJepcQ=;
+	s=arc-20240116; t=1736413024; c=relaxed/simple;
+	bh=Fp0UMYc8ofYVdLUB0eqRm5Jh9tO3UM6bQZIkzm6khOw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qNBTNF9tBkkSP+MxIfi+T12qbRh1LRBNW6Fwk97BUNZtX8pqyBpnMDJxiLCWxw20/v3ZtToyhZGefewU1pBwivM7nhfevbxeIEK9O+rhCueuSOoPXnhVqedDfCM2IHEbKNXgu9/G6ibBt74/r+/Hdv4SxJKsseTc2udBhbBcncg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=AiI46p4p; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=OqE6kA/zJ/kswEnoFBUi84WP41u/rD/m1UKrPcclcmRBiH0eS+fyNfJtSAR0t17CwJW7wXKggVkqzHhbdfRgWFxzpExMwOuzH2xbkBb6j4QKg1p3GyubuzKyi/SYjNR+dxiKytuX+/Rj6yUMszRK5ruF06GJWST8UP7wkuYQZ7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bhMypwqd; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="AiI46p4p"
-Received: (qmail 25772 invoked by uid 109); 9 Jan 2025 08:54:06 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=f9zfJVlcFITIzi5YsgeYJ6NO9Av9Ldj+N/k5qUJepcQ=; b=AiI46p4p7fM5wbYl/mcyNTJ9eqelCKRPtI1VV3oFZh8j+L9M7YQKtnmvcsw/8cKqMhHhUrKCfu8MweidmoB/LnCmGs89xNmdN2p/lrHPRA8BKxBXcxiCNXKA0TmRaXLbSxhE1BbUjnXn7/ODGpRI3vsd87/n+a5uVgo6CJoZzeF1vw+SIuEKO9F5VHjGzr+WTrAbj598MgnFcIes5KD9QwO0UZFgpQiO2qc2HyIsNtPTun9wF67Yzz53I0FDzQ4kseKdIGw9CZOx0FNQ7ltpvYQHYksatgo+LTAaS3ztl2xQ0CHWtpTDK5WOoOECiq5I+312+L8bdd5tzj2HT8wTpw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bhMypwqd"
+Received: (qmail 25794 invoked by uid 109); 9 Jan 2025 08:57:01 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=Fp0UMYc8ofYVdLUB0eqRm5Jh9tO3UM6bQZIkzm6khOw=; b=bhMypwqdvIsIZuXgULLm56EmnCwrYv0iQZOC5G8c9/atdF+Jvb/K4oWkR/3ZUl9wa7rou7ThY+w5Io7o+TPff85Wj5uc/GxwkzJyXkP0M9Sk/YDCF0i+71VQCYcpb2OBG2iPF1WPv2AUi+M7Fzp6BFRAgcBWbFtAQoR6JJcaMyX2NK1F5EzMGKqBuMlUbR3speHsxxRbbRCHoa+T50HGhSQwGbva7Y6kGMKyCM1EPgslYp1OE3ssjKRQWkXAWfFBSHKxO5DRq9AVh5EPO+AwFozLbrMg7NHVpFlhUCoCw8K4z8ZPdvZyY7V/z8YY39iPQKo7VKDYHWuCj6MC83Oq2A==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Jan 2025 08:54:06 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 09 Jan 2025 08:57:01 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20430 invoked by uid 111); 9 Jan 2025 08:54:05 -0000
+Received: (qmail 20498 invoked by uid 111); 9 Jan 2025 08:57:00 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Jan 2025 03:54:05 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 09 Jan 2025 03:57:00 -0500
 Authentication-Results: peff.net; auth=none
-Date: Thu, 9 Jan 2025 03:54:05 -0500
+Date: Thu, 9 Jan 2025 03:57:00 -0500
 From: Jeff King <peff@peff.net>
 To: Git List <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>, Wink Saville <wink@saville.com>
-Subject: [PATCH 13/14] tree-diff: simplify emit_path() list management
-Message-ID: <20250109085405.GM2748836@coredump.intra.peff.net>
+Subject: [PATCH 14/14] tree-diff: make list tail-passing more explicit
+Message-ID: <20250109085700.GN2748836@coredump.intra.peff.net>
 References: <20250109082723.GA2748497@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -40,61 +40,171 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <20250109082723.GA2748497@coredump.intra.peff.net>
 
-In emit_path() we may append a new combine_diff_path entry to our list,
-decide that we don't want it (because opt->pathchange() told us so) and
-then roll it back.
+The ll_diff_tree_paths() function and its helpers all take a pointer to
+a list tail, possibly add to it, and then return the new tail. This
+works but has two downsides:
 
-Between the addition and the rollback, it doesn't matter if it's in the
-list or not (no functions can even tell, since it's a singly-linked list
-and we pass around just the tail entry).
+  - The top-level caller (diff_tree_paths() in this case) has to make a
+    fake combine_diff_path struct to act as the list head. This is
+    especially weird here, as it's a flexible-sized struct which will
+    have an empty FLEX_ARRAY field. That used to be a portability
+    problem, though these days it is legal because our FLEX_ARRAY macro
+    over-allocates if necessary. It's still kind of ugly, though.
 
-So it's much simpler to just wait until opt->pathchange() tells us
-whether to keep it, and either attach it (or free it) then. We do still
-have to allocate it up front since it's that struct itself which is
-passed to the pathchange callback.
+  - Besides the name "tail", it's not immediately obvious that the entry
+    we pass around will not be examined by each function. Using a
+    pointer-to-pointer or similar makes it more obvious we only care
+    about the pointer itself, not its contents.
+
+We can solve both by passing around a pointer to the tail instead. That
+gets rid of the return value entirely, though note that because of the
+recursion we actually need a three-star pointer for this to work.
+
+The result is fairly readable, as we only need to dereference the tail
+in one spot. If we wanted to make it simpler we could wrap the tail in a
+struct, which we pass around.
+
+Another option is to convert combine_diff to use our generic list_head
+API. I tried that and found the result became much harder to read
+overall. It means that _all_ code that looks at combine_diff_path
+structs needs to be modified, since the "next" pointer is now inside a
+list_head which has to be dereferenced with list_entry(). And we lose
+some type safety, since we're just passing around a list_head struct
+everywhere, and everybody who looks at it has to specify the type to
+list_entry themselves.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- tree-diff.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ tree-diff.c | 47 +++++++++++++++++++++--------------------------
+ 1 file changed, 21 insertions(+), 26 deletions(-)
 
 diff --git a/tree-diff.c b/tree-diff.c
-index a1a611bef6..f5ec19113c 100644
+index f5ec19113c..60c558c2b5 100644
 --- a/tree-diff.c
 +++ b/tree-diff.c
-@@ -177,14 +177,12 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *tail,
+@@ -48,8 +48,8 @@
+ 		free((x)); \
+ } while(0)
  
- 	if (emitthis) {
- 		int keep;
--		struct combine_diff_path *pprev = tail, *p;
-+		struct combine_diff_path *p;
- 
- 		strbuf_add(base, path, pathlen);
- 		p = combine_diff_path_new(base->buf, base->len, mode,
- 					  oid ? oid : null_oid(),
- 					  nparent);
--		tail->next = p;
--		tail = p;
- 		strbuf_setlen(base, old_baselen);
- 
- 		for (i = 0; i < nparent; ++i) {
-@@ -220,10 +218,11 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *tail,
- 		if (opt->pathchange)
+-static struct combine_diff_path *ll_diff_tree_paths(
+-	struct combine_diff_path *tail, const struct object_id *oid,
++static void ll_diff_tree_paths(
++	struct combine_diff_path ***tail, const struct object_id *oid,
+ 	const struct object_id **parents_oid, int nparent,
+ 	struct strbuf *base, struct diff_options *opt,
+ 	int depth);
+@@ -134,10 +134,10 @@ static int emit_diff_first_parent_only(struct diff_options *opt, struct combine_
+  *	 t,  tp		-> path modified/added
+  *			   (M for tp[i]=tp[imin], A otherwise)
+  */
+-static struct combine_diff_path *emit_path(struct combine_diff_path *tail,
+-	struct strbuf *base, struct diff_options *opt, int nparent,
+-	struct tree_desc *t, struct tree_desc *tp,
+-	int imin, int depth)
++static void emit_path(struct combine_diff_path ***tail,
++		      struct strbuf *base, struct diff_options *opt,
++		      int nparent, struct tree_desc *t, struct tree_desc *tp,
++		      int imin, int depth)
+ {
+ 	unsigned short mode;
+ 	const char *path;
+@@ -219,8 +219,8 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *tail,
  			keep = opt->pathchange(opt, p);
  
--		if (!keep) {
-+		if (keep) {
-+			tail->next = p;
-+			tail = p;
-+		} else {
+ 		if (keep) {
+-			tail->next = p;
+-			tail = p;
++			**tail = p;
++			*tail = &p->next;
+ 		} else {
  			free(p);
--			pprev->next = NULL;
--			tail = pprev;
  		}
+@@ -239,13 +239,12 @@ static struct combine_diff_path *emit_path(struct combine_diff_path *tail,
+ 
+ 		strbuf_add(base, path, pathlen);
+ 		strbuf_addch(base, '/');
+-		tail = ll_diff_tree_paths(tail, oid, parents_oid, nparent, base, opt,
+-					  depth + 1);
++		ll_diff_tree_paths(tail, oid, parents_oid, nparent, base, opt,
++				   depth + 1);
+ 		FAST_ARRAY_FREE(parents_oid, nparent);
  	}
  
+ 	strbuf_setlen(base, old_baselen);
+-	return tail;
+ }
+ 
+ static void skip_uninteresting(struct tree_desc *t, struct strbuf *base,
+@@ -358,8 +357,8 @@ static inline void update_tp_entries(struct tree_desc *tp, int nparent)
+ 			update_tree_entry(&tp[i]);
+ }
+ 
+-static struct combine_diff_path *ll_diff_tree_paths(
+-	struct combine_diff_path *tail, const struct object_id *oid,
++static void ll_diff_tree_paths(
++	struct combine_diff_path ***tail, const struct object_id *oid,
+ 	const struct object_id **parents_oid, int nparent,
+ 	struct strbuf *base, struct diff_options *opt,
+ 	int depth)
+@@ -463,8 +462,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
+ 			}
+ 
+ 			/* D += {δ(t,pi) if pi=p[imin];  "+a" if pi > p[imin]} */
+-			tail = emit_path(tail, base, opt, nparent,
+-					 &t, tp, imin, depth);
++			emit_path(tail, base, opt, nparent,
++				  &t, tp, imin, depth);
+ 
+ 		skip_emit_t_tp:
+ 			/* t↓,  ∀ pi=p[imin]  pi↓ */
+@@ -475,8 +474,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
+ 		/* t < p[imin] */
+ 		else if (cmp < 0) {
+ 			/* D += "+t" */
+-			tail = emit_path(tail, base, opt, nparent,
+-					 &t, /*tp=*/NULL, -1, depth);
++			emit_path(tail, base, opt, nparent,
++				  &t, /*tp=*/NULL, -1, depth);
+ 
+ 			/* t↓ */
+ 			update_tree_entry(&t);
+@@ -491,8 +490,8 @@ static struct combine_diff_path *ll_diff_tree_paths(
+ 						goto skip_emit_tp;
+ 			}
+ 
+-			tail = emit_path(tail, base, opt, nparent,
+-					 /*t=*/NULL, tp, imin, depth);
++			emit_path(tail, base, opt, nparent,
++				  /*t=*/NULL, tp, imin, depth);
+ 
+ 		skip_emit_tp:
+ 			/* ∀ pi=p[imin]  pi↓ */
+@@ -505,20 +504,16 @@ static struct combine_diff_path *ll_diff_tree_paths(
+ 		free(tptree[i]);
+ 	FAST_ARRAY_FREE(tptree, nparent);
+ 	FAST_ARRAY_FREE(tp, nparent);
+-
+-	return tail;
+ }
+ 
+ struct combine_diff_path *diff_tree_paths(
+ 	const struct object_id *oid,
+ 	const struct object_id **parents_oid, int nparent,
+ 	struct strbuf *base, struct diff_options *opt)
+ {
+-	struct combine_diff_path head, *p;
+-	/* fake list head, so worker can assume it is non-NULL */
+-	head.next = NULL;
+-	p = ll_diff_tree_paths(&head, oid, parents_oid, nparent, base, opt, 0);
+-	return p;
++	struct combine_diff_path *head = NULL, **tail = &head;
++	ll_diff_tree_paths(&tail, oid, parents_oid, nparent, base, opt, 0);
++	return head;
+ }
+ 
+ /*
 -- 
 2.48.0.rc2.413.gc1c80375a3
-
