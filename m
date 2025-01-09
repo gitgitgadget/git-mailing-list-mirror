@@ -1,401 +1,224 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174CE2040BF
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 13:25:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CD6218AC3
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 13:41:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736429148; cv=none; b=dV76VMhorSxvQfOSmRKVAjNnrlr9y+LBo2QPmutzAlUR72gLGBljk43imZzgFllvRCqF2tVRpWouMkJqUekCL+yGzYTOa+hScLS5aG2zTJvn9RrHujlNTBB92derP7EHysYjTRho86yIx6A4wWxr6Y3EusyG3b/hMXc0w4lQXmA=
+	t=1736430083; cv=none; b=QVZmpIawcHHdrtozJ7C03I9KDl3ncCVvHlRLCDwrQsY+/vCVdnOAEIE2crxRZ34mhxHyhBPeXorR4RHOkPuOZB/LVdvrxVXXj+17SKf0F0rMHsGb/yEXNTWPluq6FcdUciS9aV0bsKUN3w2ng9jKnn/BOHYliyf36FynK9JbuK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736429148; c=relaxed/simple;
-	bh=l140nzpXCcNDDWyUPnkzbCcF1fwtpDfA5Jp9AXptb6k=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=MRqaBitBgLhBalu4js4eKqwY4s+t+I4hZmJ3154xEaBQtyTZLXH0/AzRiwtAPm9TgZplRa/e+FRuc6x4pHKPPFs7oJFRClQuwRx798eZxwBdvfpW37qPF5DFWAmVSs0N7xzGt3jm2DyD300aw7nz+vQRqD8+CXZhpH6j0ez3eNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ODBZNkBB; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736430083; c=relaxed/simple;
+	bh=YNqTkFCsihrJbxUdoTCF1X8Ur1RoZ862n4JrurvqRVI=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=JnrWVgbRKdGmFRrahHi6PvaSoBDQzCyIl2Temt6GbdoSD+kn14LKPs5vqYwbm8FDdLmGLjlDNO8MmlHnUog29FDcknTxGmL3kPpe0Y1crSdQUQfCw4omxlEi0d8GYyhhNH5xkjxDTG6dFnoKSeUWQuQ9XAHiGxgY7HgVW8lbURY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=LYJlR9x7; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ODBZNkBB"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5d3f57582a2so3872949a12.1
-        for <git@vger.kernel.org>; Thu, 09 Jan 2025 05:25:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736429144; x=1737033944; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8VPTal1tqQG9mr8AVLJjvkgNPkq73GzXcPk0ZvIWRdw=;
-        b=ODBZNkBBaWuvvd90ifRD6M/gLK7zhzswznh2Uvu6P7wyPb8XRNP4ZEVsq3VOUIHKa0
-         uWgdwYQZCLb2mKB4f6oLm9W+SbdGOyu+MLgVF2/jThUZY7x8k1kU/PSdlY99HdzkW4B3
-         bqkMs6aOQzyaO26nVP5NqgrrPF8zRD8U3AwWXH9NmMsjxMpGVLUpB3m25akncTU0P1lU
-         ToJNJEClHwQd8DqDzfVbJKdbM3WjDcbCJ11r2YSIKnXILtVntx9q4g9/AU2kFYVMbpqR
-         ehCHDO7yFY0kf5HMpdhBUhxm+ju4Oh8kJHD9R5c4mwHbJ+oME6nQZN/C0opvuCSKmGJ9
-         T0Ow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736429144; x=1737033944;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8VPTal1tqQG9mr8AVLJjvkgNPkq73GzXcPk0ZvIWRdw=;
-        b=wlyH+o8SMei6SLeEULJI4IZtnZS7OV8eSh/TZAucvL8eFvzt3eciNFrp2Sl31SPiiJ
-         IgskkU5rxTL7rhW1pHgF36wRl7c8XjDgKeFjSx4RulnGO92Usrm5B5IPucWqJw31WDl1
-         XRtAuK7zuzlKeQQO3eg2f+sIhcNZGJVbq+PCaaQQcCPmAjXev6yUMO/qllWYECIrXsog
-         9ZwYDAMI871lOJYa7BHkIQCIQcLB1MXDfSdGBDf/Y/25QUTH2HEcY78z7xsM1P0gr2FH
-         G5icPpkbZPsa6Vwxb1VPBBIot4FEfzDdiy/5mYVR3e4PbJafcr1P7Fv8nojWe73GoWSt
-         tUfg==
-X-Gm-Message-State: AOJu0Yxda1JQ79tTVTDZy2kQ5mXp4MHOI012MIh33nAH17EQoQksQfuY
-	KWXbQfcQcWqEhdPwhJ23pri4n3u3+D+MK8EvbpyjGqbg92wUaCFCTXmzfA==
-X-Gm-Gg: ASbGncsT3w0uBm8NcmlZjeir+HEM+GviONfoRUTpuffcMsxjgC15SAyxC/C9ML/T8fF
-	3iqYhta7modYcLi1ibeo1Q4H/iOAaJQau3fYWgKYlAniVBtF5Og4bZidYys9AAsySD0TMuQcw/c
-	KnmzZQuk4WiZZiFNhGkGrD5dFRb+NGqc7DtZfHwh0/rO2iC5DycTm60IdHHUAyvHVcmfJUGJxyt
-	3V7PT97GQm/cS6xyTKZ6jeU6xlceug3Wgd7w/u5gzb8TqKTesthvgij5w==
-X-Google-Smtp-Source: AGHT+IHEjBneTu6OmtcZkyw5PPY1hORA/CYT1OFcRUOcUHFM4lxciIuVizeKMGnfkRb5JuJrAyY3Mw==
-X-Received: by 2002:a17:907:d1c:b0:aa6:912f:7eb4 with SMTP id a640c23a62f3a-ab2c3c7e227mr296759666b.10.1736429143616;
-        Thu, 09 Jan 2025 05:25:43 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab2c9564873sm71425166b.111.2025.01.09.05.25.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 05:25:43 -0800 (PST)
-Message-Id: <pull.1871.git.git.1736429142334.gitgitgadget@gmail.com>
-From: "Julian Prein via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 09 Jan 2025 13:25:42 +0000
-Subject: [PATCH] config.txt: add trailer.* variables
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="LYJlR9x7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1736430077; x=1737034877;
+	i=johannes.schindelin@gmx.de;
+	bh=h0pUusZ58FawFnXPjzVnyUOA506kN9BQrYLY6JH0F7U=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=LYJlR9x7IZSX4R0lrVrsr7geo8/pLBwmTCBwqbDzjmi+GXb/lRVv7O+caOc5e59C
+	 60pnNlB8Voi2DX4irRaTgzx/LGZc83AMcF3FAuOJQTjfDa4lVWBzTUBrKm4K4M65x
+	 DSXJ+64f8POZ52sB6igL09Iq3S5G8XaKfXKg5ThS1sFaNz2YIPD2xlWuNF5EL4Mg4
+	 bx0ImYzuaFDgZf/6B31ySreI0g/XxQN89D2TT0azZYUVxwjFd8udf1YmALRsPN/CK
+	 QjzXj+k2xAqtEwFew+4Scp2cSrLyOka0VcrGR9bgECnxyj2RZOHdoKZ9XzbO0z81V
+	 566IbZb+lx14kXVZOw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.212.7]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJE6F-1tBCR40OGB-00Y0Oz; Thu, 09
+ Jan 2025 14:41:17 +0100
+Date: Thu, 9 Jan 2025 14:41:16 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: git@vger.kernel.org
+Subject: Re: [PATCH] builtin/blame: fix out-of-bounds read with excessive
+ `--abbrev`
+In-Reply-To: <Z3-vpLHvxoQCTjY1@pks.im>
+Message-ID: <02ab59c0-a495-9f96-6323-af73cb483f38@gmx.de>
+References: <20250109-b4-pks-blame-truncate-hash-length-v1-1-9ad4bb09e059@pks.im> <c439fcaf-11af-7862-9c3c-18dc0842b57d@gmx.de> <Z3-vpLHvxoQCTjY1@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Julian Prein <julian@druckdev.xyz>,
-    Julian Prein <julian@druckdev.xyz>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:01guhTJDrx3ivk4sYdE/6EIkxTsyuKVtQyKK1mZJXXEoQ9Idm3u
+ X/GmYK5O4BxlZLQUg/TjAl0/ROj9lXQWR8qA9vm8u//AppzNA+OOF7xrIs2U4VaA1iEthg9
+ 3qra4qzM8Gx4KfQv9QcjlTbZQRhpfur+0V0sxSY6fHImfK5tGJCa8q37xUPqiBzvTXFjeTJ
+ g9YzlOt68/Aytxx8kp4iQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:I/GDOUi38+s=;wGABU/+t+8va4f1axE5f9kTzjLM
+ 7GCqv/F3HWyVsKhHAvNDxopz3/mBuSF02Xm69T20CMHEgtRcHUlGRoKMqvEaVq/yfmDJZL5s4
+ vUsyspnzpyDwOY+UktOQCPfS+Q1b4AdCL3tD3pERaEIGByIwvavLk/WqmI96dCgb5Wu16ANVi
+ qI2Dn6b0pZQrZBcghE4gjWS6r0i317D4cU9I2MfUCqxc2+Xy2Un8SCeeVjQEfiV2ojqZNV1LZ
+ 10LLtJbnuUDAK+Y4ztnF8uxehBqM+Bv5P6Q4KNqW3stKtAPca4jJY0dxh1aL5a/Y5v4wfIYP/
+ ty45qUiSzrSIozWDplIAZPt9ohzy874j2wLgFOtguqHtF3UERyZC36MoOPJl1m0WzkoZyoTmq
+ LJ7ABXYDX/S2tuRIpNiLwjhP8n+8qQ6z12cCtSsamsvIACiizD21eT/BQETsQ5fsCCTkdwrJK
+ 5hEAf/WTQBs59pWILt3vUuSlkKYHZyfsc59k7jLyAgg56LR4Uh5UzE9dGJ4rc+ORUkWO/6aQz
+ X2oE1PsyQ6Z3IDUFRndQBfwatxeggKBGAJJi2+LiWI1hevbawb7qPBmz/tmUqnxQlSWK2j/kg
+ 5pZo9Vs1ChJ8wKPClmdOVoxC/UsUKJbhFCcKxmrVj39ogAnR9gJ53N77459/UXwuIzbd7RVcQ
+ 9fKrDAN7fr1nF9b+a9Edp1MSr7RwtNQotD8vztqBZZCTiT7RTv3KDT0cYQpbzU6cRONoFQghT
+ QJUZkMm/ZVXkic1ms0xy5+5pvMKtvrU92B09JJDk9ZQBGDM8JyPDsIW4uRRvsxklnlGHH0gYQ
+ orY2dtjce6XInnMNYAT/4Qu7M74eaMzL/QvyDuwW04yZgQyHpVjZzO4akWwkBQdxvta7/VANH
+ aI6qwI41OxifyZKTW2PoJPs2pF8PXaSFOmBPP62KskqCV7e9RCxbZ1Xf5zKueN7oL8dPgUMGj
+ u2hdg4XB8v7q/DTGkUX+O2JWn6YKCMwtOLUifSl0kn+NcsucyinaZaJzeygp9B2G0FtwUgXsB
+ N2jBEgdZTFvczevUHJIOfRS9FkQRJ/jrvgDvwiAi46rJTpfRTmziZgMvoYQBmxrTkU4FOI34r
+ evdbJJwcbZ1FforpDy+W5D3KATALAp
+Content-Transfer-Encoding: quoted-printable
 
-From: Julian Prein <julian@druckdev.xyz>
+Hi Patrick,
 
-The trailer.* configuration variables are currently only described in
-git-interpret-trailers(1) but affect git-commit and git-tag as well.
-Move that section into its own config/trailer.txt file and also include
-it in git-config(1).
+On Thu, 9 Jan 2025, Patrick Steinhardt wrote:
 
-Signed-off-by: Julian Prein <julian@druckdev.xyz>
----
-    config.txt: add trailer.* variables
+> On Thu, Jan 09, 2025 at 11:49:43AM +0100, Johannes Schindelin wrote:
+> > > diff --git a/builtin/blame.c b/builtin/blame.c
+> > > index 867032e4c16878ffd56df8a73162b89ca4bd2694..ad91fe9e97f90625dd27=
+08fbd44bf2dd24a337a6 100644
+> > > --- a/builtin/blame.c
+> > > +++ b/builtin/blame.c
+> > > @@ -475,6 +475,8 @@ static void emit_other(struct blame_scoreboard *=
+sb, struct blame_entry *ent, int
+> > >  		char ch;
+> > >  		size_t length =3D (opt & OUTPUT_LONG_OBJECT_NAME) ?
+> > >  			the_hash_algo->hexsz : (size_t) abbrev;
+> > > +		if (length > GIT_MAX_HEXSZ)
+> > > +			length =3D GIT_MAX_HEXSZ;
+> >
+> > This causes a subtle change of behavior because there are a couple of
+> > conditional code blocks between this change and the `printf()` call
+> > decrease `length`, i.e. specifying values larger than the maximal hex =
+size
+> > causes potentially-desirable, different behavior (and think about
+> > https://www.hyrumslaw.com/).
+>
+> Alternatively we can move this until after we have done the
+> subtractions. Then we don't have to do weird gymnastics.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1871%2Fdruckdev%2Ftrailer-config-vars-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1871/druckdev/trailer-config-vars-v1
-Pull-Request: https://github.com/git/git/pull/1871
+Or we can even avoid assiging a maximum altogether:
 
- Documentation/config.txt                 |   2 +
- Documentation/config/trailer.txt         | 136 ++++++++++++++++++++++
- Documentation/git-interpret-trailers.txt | 137 +----------------------
- 3 files changed, 140 insertions(+), 135 deletions(-)
- create mode 100644 Documentation/config/trailer.txt
+		if (length < GIT_MAX_HEXSZ)
+			printf("%.*s", (int)length, hex);
+		else
+			printf("%s", hex);
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 8c0b3ed8075..1b86323ca3f 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -540,6 +540,8 @@ include::config/tar.txt[]
- 
- include::config/trace2.txt[]
- 
-+include::config/trailer.txt[]
-+
- include::config/transfer.txt[]
- 
- include::config/uploadarchive.txt[]
-diff --git a/Documentation/config/trailer.txt b/Documentation/config/trailer.txt
-new file mode 100644
-index 00000000000..60bc221c88b
---- /dev/null
-+++ b/Documentation/config/trailer.txt
-@@ -0,0 +1,136 @@
-+trailer.separators::
-+	This option tells which characters are recognized as trailer
-+	separators. By default only ':' is recognized as a trailer
-+	separator, except that '=' is always accepted on the command
-+	line for compatibility with other git commands.
-++
-+The first character given by this option will be the default character
-+used when another separator is not specified in the config for this
-+trailer.
-++
-+For example, if the value for this option is "%=$", then only lines
-+using the format '<key><sep><value>' with <sep> containing '%', '='
-+or '$' and then spaces will be considered trailers. And '%' will be
-+the default separator used, so by default trailers will appear like:
-+'<key>% <value>' (one percent sign and one space will appear between
-+the key and the value).
-+
-+trailer.where::
-+	This option tells where a new trailer will be added.
-++
-+This can be `end`, which is the default, `start`, `after` or `before`.
-++
-+If it is `end`, then each new trailer will appear at the end of the
-+existing trailers.
-++
-+If it is `start`, then each new trailer will appear at the start,
-+instead of the end, of the existing trailers.
-++
-+If it is `after`, then each new trailer will appear just after the
-+last trailer with the same <key>.
-++
-+If it is `before`, then each new trailer will appear just before the
-+first trailer with the same <key>.
-+
-+trailer.ifexists::
-+	This option makes it possible to choose what action will be
-+	performed when there is already at least one trailer with the
-+	same <key> in the input.
-++
-+The valid values for this option are: `addIfDifferentNeighbor` (this
-+is the default), `addIfDifferent`, `add`, `replace` or `doNothing`.
-++
-+With `addIfDifferentNeighbor`, a new trailer will be added only if no
-+trailer with the same (<key>, <value>) pair is above or below the line
-+where the new trailer will be added.
-++
-+With `addIfDifferent`, a new trailer will be added only if no trailer
-+with the same (<key>, <value>) pair is already in the input.
-++
-+With `add`, a new trailer will be added, even if some trailers with
-+the same (<key>, <value>) pair are already in the input.
-++
-+With `replace`, an existing trailer with the same <key> will be
-+deleted and the new trailer will be added. The deleted trailer will be
-+the closest one (with the same <key>) to the place where the new one
-+will be added.
-++
-+With `doNothing`, nothing will be done; that is no new trailer will be
-+added if there is already one with the same <key> in the input.
-+
-+trailer.ifmissing::
-+	This option makes it possible to choose what action will be
-+	performed when there is not yet any trailer with the same
-+	<key> in the input.
-++
-+The valid values for this option are: `add` (this is the default) and
-+`doNothing`.
-++
-+With `add`, a new trailer will be added.
-++
-+With `doNothing`, nothing will be done.
-+
-+trailer.<keyAlias>.key::
-+	Defines a <keyAlias> for the <key>. The <keyAlias> must be a
-+	prefix (case does not matter) of the <key>. For example, in `git
-+	config trailer.ack.key "Acked-by"` the "Acked-by" is the <key> and
-+	the "ack" is the <keyAlias>. This configuration allows the shorter
-+	`--trailer "ack:..."` invocation on the command line using the "ack"
-+	<keyAlias> instead of the longer `--trailer "Acked-by:..."`.
-++
-+At the end of the <key>, a separator can appear and then some
-+space characters. By default the only valid separator is ':',
-+but this can be changed using the `trailer.separators` config
-+variable.
-++
-+If there is a separator in the key, then it overrides the default
-+separator when adding the trailer.
-+
-+trailer.<keyAlias>.where::
-+	This option takes the same values as the 'trailer.where'
-+	configuration variable and it overrides what is specified by
-+	that option for trailers with the specified <keyAlias>.
-+
-+trailer.<keyAlias>.ifexists::
-+	This option takes the same values as the 'trailer.ifexists'
-+	configuration variable and it overrides what is specified by
-+	that option for trailers with the specified <keyAlias>.
-+
-+trailer.<keyAlias>.ifmissing::
-+	This option takes the same values as the 'trailer.ifmissing'
-+	configuration variable and it overrides what is specified by
-+	that option for trailers with the specified <keyAlias>.
-+
-+trailer.<keyAlias>.command::
-+	Deprecated in favor of 'trailer.<keyAlias>.cmd'.
-+	This option behaves in the same way as 'trailer.<keyAlias>.cmd', except
-+	that it doesn't pass anything as argument to the specified command.
-+	Instead the first occurrence of substring $ARG is replaced by the
-+	<value> that would be passed as argument.
-++
-+Note that $ARG in the user's command is
-+only replaced once and that the original way of replacing $ARG is not safe.
-++
-+When both 'trailer.<keyAlias>.cmd' and 'trailer.<keyAlias>.command' are given
-+for the same <keyAlias>, 'trailer.<keyAlias>.cmd' is used and
-+'trailer.<keyAlias>.command' is ignored.
-+
-+trailer.<keyAlias>.cmd::
-+	This option can be used to specify a shell command that will be called
-+	once to automatically add a trailer with the specified <keyAlias>, and then
-+	called each time a '--trailer <keyAlias>=<value>' argument is specified to
-+	modify the <value> of the trailer that this option would produce.
-++
-+When the specified command is first called to add a trailer
-+with the specified <keyAlias>, the behavior is as if a special
-+'--trailer <keyAlias>=<value>' argument was added at the beginning
-+of the "git interpret-trailers" command, where <value>
-+is taken to be the standard output of the command with any
-+leading and trailing whitespace trimmed off.
-++
-+If some '--trailer <keyAlias>=<value>' arguments are also passed
-+on the command line, the command is called again once for each
-+of these arguments with the same <keyAlias>. And the <value> part
-+of these arguments, if any, will be passed to the command as its
-+first argument. This way the command can produce a <value> computed
-+from the <value> passed in the '--trailer <keyAlias>=<value>' argument.
-diff --git a/Documentation/git-interpret-trailers.txt b/Documentation/git-interpret-trailers.txt
-index d9dfb75fef5..c9435d549ad 100644
---- a/Documentation/git-interpret-trailers.txt
-+++ b/Documentation/git-interpret-trailers.txt
-@@ -186,142 +186,9 @@ OPTIONS
- CONFIGURATION VARIABLES
- -----------------------
- 
--trailer.separators::
--	This option tells which characters are recognized as trailer
--	separators. By default only ':' is recognized as a trailer
--	separator, except that '=' is always accepted on the command
--	line for compatibility with other git commands.
--+
--The first character given by this option will be the default character
--used when another separator is not specified in the config for this
--trailer.
--+
--For example, if the value for this option is "%=$", then only lines
--using the format '<key><sep><value>' with <sep> containing '%', '='
--or '$' and then spaces will be considered trailers. And '%' will be
--the default separator used, so by default trailers will appear like:
--'<key>% <value>' (one percent sign and one space will appear between
--the key and the value).
--
--trailer.where::
--	This option tells where a new trailer will be added.
--+
--This can be `end`, which is the default, `start`, `after` or `before`.
--+
--If it is `end`, then each new trailer will appear at the end of the
--existing trailers.
--+
--If it is `start`, then each new trailer will appear at the start,
--instead of the end, of the existing trailers.
--+
--If it is `after`, then each new trailer will appear just after the
--last trailer with the same <key>.
--+
--If it is `before`, then each new trailer will appear just before the
--first trailer with the same <key>.
-+include::includes/cmd-config-section-all.txt[]
- 
--trailer.ifexists::
--	This option makes it possible to choose what action will be
--	performed when there is already at least one trailer with the
--	same <key> in the input.
--+
--The valid values for this option are: `addIfDifferentNeighbor` (this
--is the default), `addIfDifferent`, `add`, `replace` or `doNothing`.
--+
--With `addIfDifferentNeighbor`, a new trailer will be added only if no
--trailer with the same (<key>, <value>) pair is above or below the line
--where the new trailer will be added.
--+
--With `addIfDifferent`, a new trailer will be added only if no trailer
--with the same (<key>, <value>) pair is already in the input.
--+
--With `add`, a new trailer will be added, even if some trailers with
--the same (<key>, <value>) pair are already in the input.
--+
--With `replace`, an existing trailer with the same <key> will be
--deleted and the new trailer will be added. The deleted trailer will be
--the closest one (with the same <key>) to the place where the new one
--will be added.
--+
--With `doNothing`, nothing will be done; that is no new trailer will be
--added if there is already one with the same <key> in the input.
--
--trailer.ifmissing::
--	This option makes it possible to choose what action will be
--	performed when there is not yet any trailer with the same
--	<key> in the input.
--+
--The valid values for this option are: `add` (this is the default) and
--`doNothing`.
--+
--With `add`, a new trailer will be added.
--+
--With `doNothing`, nothing will be done.
--
--trailer.<keyAlias>.key::
--	Defines a <keyAlias> for the <key>. The <keyAlias> must be a
--	prefix (case does not matter) of the <key>. For example, in `git
--	config trailer.ack.key "Acked-by"` the "Acked-by" is the <key> and
--	the "ack" is the <keyAlias>. This configuration allows the shorter
--	`--trailer "ack:..."` invocation on the command line using the "ack"
--	<keyAlias> instead of the longer `--trailer "Acked-by:..."`.
--+
--At the end of the <key>, a separator can appear and then some
--space characters. By default the only valid separator is ':',
--but this can be changed using the `trailer.separators` config
--variable.
--+
--If there is a separator in the key, then it overrides the default
--separator when adding the trailer.
--
--trailer.<keyAlias>.where::
--	This option takes the same values as the 'trailer.where'
--	configuration variable and it overrides what is specified by
--	that option for trailers with the specified <keyAlias>.
--
--trailer.<keyAlias>.ifexists::
--	This option takes the same values as the 'trailer.ifexists'
--	configuration variable and it overrides what is specified by
--	that option for trailers with the specified <keyAlias>.
--
--trailer.<keyAlias>.ifmissing::
--	This option takes the same values as the 'trailer.ifmissing'
--	configuration variable and it overrides what is specified by
--	that option for trailers with the specified <keyAlias>.
--
--trailer.<keyAlias>.command::
--	Deprecated in favor of 'trailer.<keyAlias>.cmd'.
--	This option behaves in the same way as 'trailer.<keyAlias>.cmd', except
--	that it doesn't pass anything as argument to the specified command.
--	Instead the first occurrence of substring $ARG is replaced by the
--	<value> that would be passed as argument.
--+
--Note that $ARG in the user's command is
--only replaced once and that the original way of replacing $ARG is not safe.
--+
--When both 'trailer.<keyAlias>.cmd' and 'trailer.<keyAlias>.command' are given
--for the same <keyAlias>, 'trailer.<keyAlias>.cmd' is used and
--'trailer.<keyAlias>.command' is ignored.
--
--trailer.<keyAlias>.cmd::
--	This option can be used to specify a shell command that will be called
--	once to automatically add a trailer with the specified <keyAlias>, and then
--	called each time a '--trailer <keyAlias>=<value>' argument is specified to
--	modify the <value> of the trailer that this option would produce.
--+
--When the specified command is first called to add a trailer
--with the specified <keyAlias>, the behavior is as if a special
--'--trailer <keyAlias>=<value>' argument was added at the beginning
--of the "git interpret-trailers" command, where <value>
--is taken to be the standard output of the command with any
--leading and trailing whitespace trimmed off.
--+
--If some '--trailer <keyAlias>=<value>' arguments are also passed
--on the command line, the command is called again once for each
--of these arguments with the same <keyAlias>. And the <value> part
--of these arguments, if any, will be passed to the command as its
--first argument. This way the command can produce a <value> computed
--from the <value> passed in the '--trailer <keyAlias>=<value>' argument.
-+include::config/trailer.txt[]
- 
- EXAMPLES
- --------
+Or be more consistent with Git's source code style which often prefers
+ternaries, favoring succinctness over readability:
 
-base-commit: a60673e9252b08d4eca90543b3729f4798b9aafd
--- 
-gitgitgadget
+		printf("%.*s", (int)(length < GIT_MAX_HEXSZ ? length : GIT_MAX_HEXSZ), h=
+ex);
+
+> > >  		if (opt & OUTPUT_COLOR_LINE) {
+> > >  			if (cnt > 0) {
+> > > @@ -505,7 +507,7 @@ static void emit_other(struct blame_scoreboard *=
+sb, struct blame_entry *ent, int
+> > >  			length--;
+> > >  			putchar('?');
+> > >  		}
+> > > -		fwrite(hex, 1, length, stdout);
+> > > +		printf("%.*s", (int)length, hex);
+> > >  		if (opt & OUTPUT_ANNOTATE_COMPAT) {
+> > >  			const char *name;
+> > >  			if (opt & OUTPUT_SHOW_EMAIL)
+> > > diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
+> > > index 0147de304b4d104cc7f05ea1f8d68f1a07ceb80d..fcaba8c11f7ede084e06=
+9eefd292f337e8396cb4 100755
+> > > --- a/t/t8002-blame.sh
+> > > +++ b/t/t8002-blame.sh
+> > > @@ -126,6 +126,10 @@ test_expect_success '--no-abbrev works like --a=
+bbrev with full length' '
+> > >  	check_abbrev $hexsz --no-abbrev
+> > >  '
+> > >
+> > > +test_expect_success 'blame --abbrev gets truncated' '
+> > > +	check_abbrev 9000 --abbrev=3D$hexsz HEAD
+> >
+> > This is actually incorrect: it passes `--abbrev=3D$hexsz` instead of a=
+ value
+> > that needs to be truncated.
+>
+> Oh dear. The test did manage to catch the bug, but thinking more about
+> it that was only because my initial fix was broken.
+>
+> > diff --git a/builtin/blame.c b/builtin/blame.c
+> > index ad91fe9e97f9..5b4976835066 100644
+> > --- a/builtin/blame.c
+> > +++ b/builtin/blame.c
+> > @@ -475,8 +475,13 @@ static void emit_other(struct blame_scoreboard *s=
+b, struct blame_entry *ent, int
+> >  		char ch;
+> >  		size_t length =3D (opt & OUTPUT_LONG_OBJECT_NAME) ?
+> >  			the_hash_algo->hexsz : (size_t) abbrev;
+> > -		if (length > GIT_MAX_HEXSZ)
+> > -			length =3D GIT_MAX_HEXSZ;
+> > +
+> > +		/*
+> > +		 * Leave enough space for ^, * and ? indicators (boundary,
+> > +		 * unblamable, ignored).
+> > +		 */
+> > +		if (length > GIT_MAX_HEXSZ + 3)
+> > +			length =3D GIT_MAX_HEXSZ + 3;
+> >
+> >  		if (opt & OUTPUT_COLOR_LINE) {
+> >  			if (cnt > 0) {
+>
+> How about this instead?
+>
+>     diff --git a/builtin/blame.c b/builtin/blame.c
+>     index ad91fe9e97..f92e487bed 100644
+>     --- a/builtin/blame.c
+>     +++ b/builtin/blame.c
+>     @@ -475,8 +475,6 @@ static void emit_other(struct blame_scoreboard *=
+sb, struct blame_entry *ent, int
+>             char ch;
+>             size_t length =3D (opt & OUTPUT_LONG_OBJECT_NAME) ?
+>                 the_hash_algo->hexsz : (size_t) abbrev;
+>     -		if (length > GIT_MAX_HEXSZ)
+>     -			length =3D GIT_MAX_HEXSZ;
+>
+>             if (opt & OUTPUT_COLOR_LINE) {
+>                 if (cnt > 0) {
+>     @@ -507,6 +505,9 @@ static void emit_other(struct blame_scoreboard *=
+sb, struct blame_entry *ent, int
+>                 length--;
+>                 putchar('?');
+>             }
+>     +
+>     +		if (length > GIT_MAX_HEXSZ)
+>     +			length =3D GIT_MAX_HEXSZ;
+>             printf("%.*s", (int)length, hex);
+>             if (opt & OUTPUT_ANNOTATE_COMPAT) {
+>                 const char *name;
+>
+> In that case there's no need to juggle with the magic indicators, which
+> makes it a bit easier to reason about.
+>
+> > diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
+> > index fcaba8c11f7e..71fa70a64679 100755
+> > --- a/t/t8002-blame.sh
+> > +++ b/t/t8002-blame.sh
+> > @@ -127,7 +127,7 @@ test_expect_success '--no-abbrev works like --abbr=
+ev with full length' '
+> >  '
+> >
+> >  test_expect_success 'blame --abbrev gets truncated' '
+> > -	check_abbrev 9000 --abbrev=3D$hexsz HEAD
+> > +	check_abbrev 9000 --abbrev=3D9000 HEAD..
+> >  '
+>
+> This should be `check_abbrev $hexsz --abbrev=3D9000`, shouldn't it?
+
+I kind of liked the idea to keep the same cut-off threshold for the
+validation. But I won't insist. The construct is obtuse in either case ;-)
+(Not your fault, of course, you merely imitated existing code, which is
+the correct thing to do).
+
+Ciao,
+Johannes
