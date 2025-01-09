@@ -1,281 +1,183 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65ED221B909
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 14:10:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7C2B219E8F
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 14:24:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736431844; cv=none; b=LUC1yZy8m4H1yCbkCrbrgqv4mp6EEexRvCE7AdzW3kzF7gffbov+q1e58RccumeDHX9A2j6Ci9Yvdv4BpXLukeHufilpUCraj5s+5AX/2EmJ70nDiJvqgMvZN0zTbE+uaQz950x57i2fmlXfd2czzvsCWjq6PsPAu0Ig4VPuyng=
+	t=1736432669; cv=none; b=kNVFssRHsO6eu+VKvZ9rnJQueiuIlAc8orq80lWrhW/jpXmf2pnTSUGTHk4qGr3MGtBc7jolzm5Vr4rpJuGqxMIAj0I7+My8+cEfAu20g7LJK6KuqlS15ZPJjlYEfCodyZ0NIAQxRIlXKAFTjTkp4DrFHLznV8mY6To5idWaiEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736431844; c=relaxed/simple;
-	bh=r11VFusVErmsOZSW4arU0d8CJmUe15Dw1VTWXdDvulE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DCLu1RwLzDDZZGOGqJaH0Wd53+T95wkCACIzgv9LdVvDWoToaL5dgRPI2WPJ6wiu7WO5pBi0SDS+L2jwVBOwymc/pwueIP1hgQidAwPV94pLpTYOZx1TNzJVw8Qab+CINSevsez7/Nj45x9hrp9tZ0cWE3UajxvvCRj6UsjmEfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L/l2Jc1k; arc=none smtp.client-ip=209.85.208.46
+	s=arc-20240116; t=1736432669; c=relaxed/simple;
+	bh=wQRJt+OXCAqOclCkg6KEZzYTJ9i44WoOx1oTpDLLcsE=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=GMguQXHKZhraeqmsqP6YDB4Ant0BUBXTWf72VBzvOaSLQjvtnG/csVavsgeZpUInQOqitwM75ryDQGTxPp/9m5uu7aiUe1LDjK3BmER5vUQGmEKwyQm1jrQd5H0ABgk4JXYKg7W15TdvGYsP1YE4jIEhF9GV671p9dA0CEKxha4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D9nUYuhH; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L/l2Jc1k"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5d88c355e0dso1519494a12.0
-        for <git@vger.kernel.org>; Thu, 09 Jan 2025 06:10:42 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D9nUYuhH"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-385ddcfc97bso876519f8f.1
+        for <git@vger.kernel.org>; Thu, 09 Jan 2025 06:24:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736431840; x=1737036640; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GhC23wdEM98P9VKcs/8SD9VrLwd3BskQLMYuEzu/yIs=;
-        b=L/l2Jc1kejdDJl8neyCnap9nH9y2DWuHRup90C0D5fW34pOYpk9SS+U4gSGFbavM8A
-         7okp7vz3fCYigpXmh4L05f4Ba4jNshXKfuDXKLM6pOJcBFUJK1Bl+/hZpMdCQ6w2+PkJ
-         wNoisCHbPu3i99HdWp1HH2OdqcNpBAgY+/4CbOM/3zHhegtQZCmW5+Irni+Lbfgj9isP
-         gFwyW+PaV13DkVimOCk5jrsXAQHArWkCXRqVq1dq/TbjTC5z92/vH04oecrRAkqj/5m+
-         wJZCBWP9hjWlNph7em43swD57RfitSOTDAsiIb2MOqAF0vCtyWmKFoDaHMmHLBSUe0+X
-         dLsA==
+        d=gmail.com; s=20230601; t=1736432665; x=1737037465; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CpAKmSejArlIk0tymd2KyzGhD8Au1DOWGVaOh6L/GZU=;
+        b=D9nUYuhHoaAIAuojld0XePx68RzXWY4nPcKQCdLTUknZwSnwjpNK2qzN1ltYtRrQij
+         9jzxFkYZGQOO1BOq1KygxTNZNHN5PBOHYuPq2QcY7COEfHqfWIQBX0kkOj3MjDg0ZhlT
+         GJu8EOkBCHstQdu9Z4N19H8ZRHF80eBn/3mfByM7FjwOYF55o8qc1njLxKeIdYMKa4cN
+         OAyrNA5uX5Hh5BWQ+mUiYGXbFVA0ZAu5Hz6O1fEw+s0gVWYw2Q4jmE9pFdFIBdgP7Ug1
+         XMfhKkQa/I9nExsnQZB9eTVblyFzaGL7gBEz1d9Mos2bNT2Dc6ARgdY1jBZfAY8Flwm6
+         mUNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736431840; x=1737036640;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GhC23wdEM98P9VKcs/8SD9VrLwd3BskQLMYuEzu/yIs=;
-        b=cy7zoBu5ZqkqM7m7bAvN/0yqn2qWI6bydb70qjsEJpZdzXwIZK0/pytszB3qfvfp9P
-         rHYbbE3sAB/XkKYpxlZl4B8fzxZ0q78zoqTIQE91Koc7t327O3fEMIHKal1UYXNOjds1
-         plBDlU23S3fK3DKce0mcGDwQUk51WNGdEQy3BP8mLRR7hFEA4Rhvqj3+8unBhHTaYsgD
-         Kw6LdSQi9a+dmzFj0H2K6mBAlj8wG47PlznlLxSWF9BCuvIMqurFqghMmFHm01NandJ2
-         r4CLIlW5hPDsqYkcvHusXmZvqDIjj3UpeGpGfJV2jyr2j7PAOHQKlP+/Nv3HLVzc1vA8
-         KN0g==
-X-Gm-Message-State: AOJu0YxLeb8jiwh8UB9V52zV7CbloOtKPhYebUcvUMO1Eoer7gw0caS0
-	8rgFhqW3zW+QR5wxjyogBSykE4/tQgGJ2WkWdUW+CgAW+gYcDQySBz9aYjg84a92RA==
-X-Gm-Gg: ASbGncuDXFWIbRtCv4K1iRZb4ET8DLA9mjwtItdiN6vGSfKApP1v6EtT3S50akXBlFE
-	3whg/XWr4u86VMcH/E54prrkesjjpRN2Ecw9pAa12NZUDVIIWdV9xiTJuzmjJTDYGzHXyRm1v0+
-	xsJOEKYtsNX/fwdVI5yT1MVo8Hke9ykRq4Na0JRkm+sz1GrYPJtzCso9GZAq4RF9ICm2HY9q5PK
-	Md/fCxBVbPro57BpmKj6bHk67odd1Rs4irDaOjFuhWF42FCse/Qqknm90NGaoxwslsEDQo=
-X-Google-Smtp-Source: AGHT+IGPnLRSKSmoyH9YCDLfdHfJNjt2ZOM+H5R88+8xxkOvVW+UEjtY6KjXHXfBmAD03NdMhH7NTg==
-X-Received: by 2002:a05:6402:5255:b0:5d9:b8b:e347 with SMTP id 4fb4d7f45d1cf-5d972e722e6mr6449079a12.32.1736431839850;
-        Thu, 09 Jan 2025 06:10:39 -0800 (PST)
-Received: from localhost.localdomain ([154.118.74.187])
-        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5d99008c37csm653558a12.6.2025.01.09.06.10.27
+        d=1e100.net; s=20230601; t=1736432665; x=1737037465;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CpAKmSejArlIk0tymd2KyzGhD8Au1DOWGVaOh6L/GZU=;
+        b=gdRvEIXexSdotSLYHgz2kpKx76nJB/dTMK4d7wNE+PgAz8yCcul7XPBzDU0k0BxIm/
+         HOly+F2Ewinb1/OTNdGdw/TljuhuBDIafHP1tR9wqgaemOgNE8rkx6RSPo0hkImckoeH
+         0OH34mZMIRiiOrtu1ExWwOn6AMi5hffe6c5p1lRwdooi/x5SdvpnylYHwsl9vCnwEph2
+         Ks+QNKrR5//GrEUC8lMjsfKA4+WYKv2i2xTI30mVZQTVdgTsbkRaOKwY9B3nQ6N5cAz0
+         nvuPZcouu+QG4g4PYOlpZrnaNUxVxilQgdOtFm10f8XHPw0Ulrww99wjhs2T+SWIjA5m
+         QMyQ==
+X-Gm-Message-State: AOJu0Yy46Aqk1SWeKnwzqo0sjL8B8BvLHCPtlFdcHNWlocCFgnDBuRyp
+	P3UyEhyen8VPAvFKw7ecAwJR/tlDzSBqfiHCEkDB+L3wlpGNlKxEJuWJ6A==
+X-Gm-Gg: ASbGncsZrxb68huw4YmmObKDQqeD6EiEej4BXYUONNHtAV6Xyx+dvLykOiakNCoJv1W
+	ak/Tu9SAhEGfEeYd2n4BJwwbQBBwJ2CTYtZZw7U3+9fd9HAVdb+B/Rb8iySwaVsbrz2WrYTrfgY
+	eO8Da17kolAuOn42jevaSbidSM8hv4PdUPkBxIRiyNVUfC4ihAd35Vwv/cayzifWVZGaJ9XYDYJ
+	0fuWK9SPvQROcAntJTYvWK0qzHdqBlvr1aGlcxVXAAGetdVtwznQiU4ww==
+X-Google-Smtp-Source: AGHT+IGMXvUfPmT/JhnTtSoVwrvfk1rXQjb4rljp31G1+WVDpEEVlP1oal2oZgZ+dxe3u1Xvw5phAA==
+X-Received: by 2002:a5d:5f44:0:b0:385:fa33:29ed with SMTP id ffacd0b85a97d-38a8730fa63mr5472188f8f.47.1736432664488;
+        Thu, 09 Jan 2025 06:24:24 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e38c596sm1981868f8f.51.2025.01.09.06.24.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 06:10:39 -0800 (PST)
-From: Seyi Kuforiji <kuforiji98@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	phillip.wood@dunelm.org.uk,
-	gitster@pobox.com,
-	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH v3] t/unit-tests: convert hash to use clar test framework
-Date: Thu,  9 Jan 2025 15:09:52 +0100
-Message-ID: <20250109140952.5267-1-kuforiji98@gmail.com>
-X-Mailer: git-send-email 2.47.0.86.g15030f9556
-In-Reply-To: <20250108120339.225596-1-kuforiji98@gmail.com>
-References: <20250108120339.225596-1-kuforiji98@gmail.com>
+        Thu, 09 Jan 2025 06:24:24 -0800 (PST)
+Message-Id: <pull.1850.git.1736432663587.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 09 Jan 2025 14:24:23 +0000
+Subject: [PATCH] GIT-VERSION-GEN: allow it to be run in parallel
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Adapt the hash test functions to clar framework by using clar
-assertions where necessary. Following the consensus to convert
-the unit-tests scripts found in the t/unit-tests folder to clar driven by
-Patrick Steinhardt. Test functions are structured as a standalone to
-test individual hash string and literal case.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
+"Why would one want to run it in parallel?" I hear you ask. I am glad
+you are curious, because a curious story is what it is, indeed.
+
+The `GIT-VERSION-GEN` script is quite a pillar of Git's source code,
+with most lines being unchanged for the past 15 years. Until the v2.48.0
+release candidate cycle.
+
+Its original purpose was to generate the version string and store it in
+the `GIT-VERSION-FILE`.
+
+This paradigm changed quite dramatically when support for building with
+Meson was introduced. Most crucially, a38edab7c88b (Makefile: generate
+doc versions via GIT-VERSION-GEN, 2024-12-06) changed the way the
+documentation is built by using the `GIT-VERSION-GEN` file to write out
+the `asciidocor-extensions.rb` and `asciidoc.conf` files with now
+hard-coded version strings.
+
+Crucially, the Makefile rule to generate those files needs to be run in
+every build because `GIT_VERSION` could have been specified in the
+`make` command-line, which would require these files to be modified.
+
+This introduced a surprising race condition!
+
+And this is how that race surfaces: When calling `make -j2 html man`
+from the top-level directory (a variant of which is invoked in Git for
+Windows' release process), two sub-processes are spawned, a `make -C
+Documentation html` one and a `make -C Documentation man` one. Both run
+the rule to (re-)generate `asciidoctor-extensions.rb` or
+`asciidoc.conf`, invoking `GIT-VERSION-GEN` to do so. That script first
+generates a temporary file (appending the `+` character to the
+filename), then looks whether it contains something different than the
+already existing file (if it exists, that is), and either replaces it if
+needed, or removes the temporary file. If one of the two parallel
+invocations removes that temporary file before the other can compare it,
+or even worse: if one tries to replace the target file just after the
+other _started_ writing the temporary file (but did not finish writing
+it yet), that race condition now causes bad builds.
+
+This may sound highly theoretical, but due to the design of Git's build
+process, Git for Windows is forced to use a (slow) POSIX emulation layer
+to run that script and in the blink of an eye it becomes very much not
+theoretical at all. See Exhibit A: These GitHub workflow runs failed
+because one of the two competing `make` processes tried to remove the
+temporary file when the other process had already done so:
+
+https://github.com/git-for-windows/git-sdk-32/actions/runs/12663456654
+https://github.com/git-for-windows/git-sdk-32/actions/runs/12683174970
+https://github.com/git-for-windows/git-sdk-64/actions/runs/12649348496
+
+While it is undesirable to run this script over and over again,
+certainly when this involves above-mentioned slow POSIX emulation layer,
+the stage of the release cycle in which we are presently finding
+ourselves does not lend itself to a re-design where this script could be
+run once, and once only, but instead dictates that a quick and reliable
+work-around be implemented that prevents the race condition without
+changing the overall architecture of the build process.
+
+This patch does that: By using a filename suffix for the temporary file
+which is based on the currently-executing script's process ID, We
+guarantee that the two competing invocations cannot overwrite or remove
+each others' temporary files.
+
+Incidentally, this also fixes something else: The `+` character is
+not even a valid filename character on Windows. The only reason why Git
+for Windows did not need this is that above-mentioned POSIX emulation
+layer also plays a couple of tricks with filenames (tricks that are not
+interoperable with regular Windows programs, though), and previous
+attempts to remedy this in git/git were unsuccessful, see e.g.
+https://lore.kernel.org/git/pull.216.git.gitgitgadget@gmail.com/
+
+This commit fixes one of the issues that are currently delaying Git for
+Windows v2.48.0-rc2.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-Changes relative to v2:
+    GIT-VERSION-GEN: allow it to be run in parallel
 
-  - A couple of fixes to code formatting to match our standards 
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1850%2Fdscho%2Fasciidoctor-extensions-gen-race-work-around-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1850/dscho/asciidoctor-extensions-gen-race-work-around-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1850
 
-Thanks
-Seyi
----
-Range-diff against v2:
--:  ---------- > 1:  fcc2a376a5 t/unit-tests: convert hash to use clar test framework
+ GIT-VERSION-GEN | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
- Makefile                            |  2 +-
- t/meson.build                       |  2 +-
- t/unit-tests/{t-hash.c => u-hash.c} | 71 +++++++++++++++++++----------
- 3 files changed, 50 insertions(+), 25 deletions(-)
- rename t/unit-tests/{t-hash.c => u-hash.c} (80%)
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index 6d1cb66d69a..5b49e2d72fb 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -86,11 +86,11 @@ sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
+ 	-e "s|@GIT_BUILT_FROM_COMMIT@|$GIT_BUILT_FROM_COMMIT|" \
+ 	-e "s|@GIT_USER_AGENT@|$GIT_USER_AGENT|" \
+ 	-e "s|@GIT_DATE@|$GIT_DATE|" \
+-	"$INPUT" >"$OUTPUT"+
++	"$INPUT" >"$OUTPUT".$$
+ 
+-if ! test -f "$OUTPUT" || ! cmp "$OUTPUT"+ "$OUTPUT" >/dev/null
++if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$ "$OUTPUT" >/dev/null
+ then
+-	mv "$OUTPUT"+ "$OUTPUT"
++	mv "$OUTPUT".$$ "$OUTPUT"
+ else
+-	rm "$OUTPUT"+
++	rm "$OUTPUT".$$
+ fi
 
-diff --git a/Makefile b/Makefile
-index 97e8385b66..d3011e30f7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1338,6 +1338,7 @@ THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/%
- THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/clar/%
- 
- CLAR_TEST_SUITES += u-ctype
-+CLAR_TEST_SUITES += u-hash
- CLAR_TEST_SUITES += u-strvec
- CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
- CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
-@@ -1345,7 +1346,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
- CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
- 
- UNIT_TEST_PROGRAMS += t-example-decorate
--UNIT_TEST_PROGRAMS += t-hash
- UNIT_TEST_PROGRAMS += t-hashmap
- UNIT_TEST_PROGRAMS += t-mem-pool
- UNIT_TEST_PROGRAMS += t-oid-array
-diff --git a/t/meson.build b/t/meson.build
-index 602ebfe6a2..7b35eadbc8 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -1,5 +1,6 @@
- clar_test_suites = [
-   'unit-tests/u-ctype.c',
-+  'unit-tests/u-hash.c',
-   'unit-tests/u-strvec.c',
- ]
- 
-@@ -41,7 +42,6 @@ test('unit-tests', clar_unit_tests)
- 
- unit_test_programs = [
-   'unit-tests/t-example-decorate.c',
--  'unit-tests/t-hash.c',
-   'unit-tests/t-hashmap.c',
-   'unit-tests/t-mem-pool.c',
-   'unit-tests/t-oid-array.c',
-diff --git a/t/unit-tests/t-hash.c b/t/unit-tests/u-hash.c
-similarity index 80%
-rename from t/unit-tests/t-hash.c
-rename to t/unit-tests/u-hash.c
-index e62647019b..a0320efe4b 100644
---- a/t/unit-tests/t-hash.c
-+++ b/t/unit-tests/u-hash.c
-@@ -1,14 +1,11 @@
--#include "test-lib.h"
-+#include "unit-test.h"
- #include "hex.h"
- #include "strbuf.h"
- 
- static void check_hash_data(const void *data, size_t data_length,
- 			    const char *expected_hashes[])
- {
--	if (!check(data != NULL)) {
--		test_msg("BUG: NULL data pointer provided");
--		return;
--	}
-+	cl_assert(data != NULL);
- 
- 	for (size_t i = 1; i < ARRAY_SIZE(hash_algos); i++) {
- 		git_hash_ctx ctx;
-@@ -19,66 +16,94 @@ static void check_hash_data(const void *data, size_t data_length,
- 		algop->update_fn(&ctx, data, data_length);
- 		algop->final_fn(hash, &ctx);
- 
--		if (!check_str(hash_to_hex_algop(hash, algop), expected_hashes[i - 1]))
--			test_msg("result does not match with the expected for %s\n", hash_algos[i].name);
-+		cl_assert_equal_s(hash_to_hex_algop(hash,algop), expected_hashes[i - 1]);
- 	}
- }
- 
- /* Works with a NUL terminated string. Doesn't work if it should contain a NUL character. */
- #define TEST_HASH_STR(data, expected_sha1, expected_sha256) do { \
- 		const char *expected_hashes[] = { expected_sha1, expected_sha256 }; \
--		TEST(check_hash_data(data, strlen(data), expected_hashes), \
--		     "SHA1 and SHA256 (%s) works", #data); \
-+		check_hash_data(data, strlen(data), expected_hashes); \
- 	} while (0)
- 
- /* Only works with a literal string, useful when it contains a NUL character. */
- #define TEST_HASH_LITERAL(literal, expected_sha1, expected_sha256) do { \
- 		const char *expected_hashes[] = { expected_sha1, expected_sha256 }; \
--		TEST(check_hash_data(literal, (sizeof(literal) - 1), expected_hashes), \
--		     "SHA1 and SHA256 (%s) works", #literal); \
-+		check_hash_data(literal, (sizeof(literal) - 1), expected_hashes); \
- 	} while (0)
- 
--int cmd_main(int argc UNUSED, const char **argv UNUSED)
-+void test_hash__empty_string(void)
- {
--	struct strbuf aaaaaaaaaa_100000 = STRBUF_INIT;
--	struct strbuf alphabet_100000 = STRBUF_INIT;
--
--	strbuf_addstrings(&aaaaaaaaaa_100000, "aaaaaaaaaa", 100000);
--	strbuf_addstrings(&alphabet_100000, "abcdefghijklmnopqrstuvwxyz", 100000);
--
- 	TEST_HASH_STR("",
- 		"da39a3ee5e6b4b0d3255bfef95601890afd80709",
- 		"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855");
-+}
-+
-+void test_hash__single_character(void)
-+{
- 	TEST_HASH_STR("a",
- 		"86f7e437faa5a7fce15d1ddcb9eaeaea377667b8",
- 		"ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb");
-+}
-+
-+void test_hash__multi_character(void)
-+{
- 	TEST_HASH_STR("abc",
- 		"a9993e364706816aba3e25717850c26c9cd0d89d",
- 		"ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
-+}
-+
-+void test_hash__message_digest(void)
-+{
- 	TEST_HASH_STR("message digest",
- 		"c12252ceda8be8994d5fa0290a47231c1d16aae3",
- 		"f7846f55cf23e14eebeab5b4e1550cad5b509e3348fbc4efa3a1413d393cb650");
-+}
-+
-+void test_hash__alphabet(void)
-+{
- 	TEST_HASH_STR("abcdefghijklmnopqrstuvwxyz",
- 		"32d10c7b8cf96570ca04ce37f2a19d84240d3a89",
- 		"71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73");
-+}
-+
-+void test_hash__aaaaaaaaaa_100000(void)
-+{
-+	struct strbuf aaaaaaaaaa_100000 = STRBUF_INIT;
-+	strbuf_addstrings(&aaaaaaaaaa_100000, "aaaaaaaaaa", 100000);
- 	TEST_HASH_STR(aaaaaaaaaa_100000.buf,
- 		"34aa973cd4c4daa4f61eeb2bdbad27316534016f",
- 		"cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0");
-+	strbuf_release(&aaaaaaaaaa_100000);
-+}
-+
-+void test_hash__alphabet_100000(void)
-+{
-+	struct strbuf alphabet_100000 = STRBUF_INIT;
-+	strbuf_addstrings(&alphabet_100000, "abcdefghijklmnopqrstuvwxyz", 100000);
- 	TEST_HASH_STR(alphabet_100000.buf,
- 		"e7da7c55b3484fdf52aebec9cbe7b85a98f02fd4",
- 		"e406ba321ca712ad35a698bf0af8d61fc4dc40eca6bdcea4697962724ccbde35");
-+	strbuf_release(&alphabet_100000);
-+}
-+
-+void test_hash__zero_blob_literal(void)
-+{
- 	TEST_HASH_LITERAL("blob 0\0",
- 		"e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
- 		"473a0f4c3be8a93681a267e3b1e9a7dcda1185436fe141f7749120a303721813");
-+}
-+
-+void test_hash__three_blob_literal(void)
-+{
- 	TEST_HASH_LITERAL("blob 3\0abc",
- 		"f2ba8f84ab5c1bce84a7b441cb1959cfc7093b7f",
- 		"c1cf6e465077930e88dc5136641d402f72a229ddd996f627d60e9639eaba35a6");
-+}
-+
-+void test_hash__zero_tree_literal(void)
-+{
- 	TEST_HASH_LITERAL("tree 0\0",
- 		"4b825dc642cb6eb9a060e54bf8d69288fbee4904",
- 		"6ef19b41225c5369f1c104d45d8d85efa9b057b53b14b4b9b939dd74decc5321");
--
--	strbuf_release(&aaaaaaaaaa_100000);
--	strbuf_release(&alphabet_100000);
--
--	return test_done();
- }
+base-commit: a60673e9252b08d4eca90543b3729f4798b9aafd
 -- 
-2.34.1
-
+gitgitgadget
