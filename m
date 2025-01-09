@@ -1,139 +1,115 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E19199FA2
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 18:28:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4412213B2B8
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 18:33:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736447291; cv=none; b=jXdnbqafPEqr4UOkHw6MTMPc5clQF03iROfLUtmLk1cqkuSaxW1q3nrEpLTeoQzIIUDjGNld4jI4mU40s7brmXv+bpawuiYdXC5vE9Am+jNV8XjuGh+d81/oZI+FgzOP+vQ0aQGarvhMO3buxvsGtltAs1uMeu06kEQ28BufNbo=
+	t=1736447636; cv=none; b=dmz4FK152c1xMFcvQ2cuWWTTurudpcp/X/Zyf2YJFWi/axeXB1RXRhpJrqEHT+qrm2s3GdlyuVGWyxcNK6CMT1jKlWY9OyeBEELE5XGPtHAFddyYuJvLSDnAUqJJaM8OgfcfsoY8kPtm/FFYU1x00Pmr21jhQcYdtIGOP48Lw1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736447291; c=relaxed/simple;
-	bh=jhNs0VqVYn6X0vtf/Fn597+7l/w6VgGQlfI7bEGo6z4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hvoFSxf/WSZ89zsCCvLVbA3aQ5yPRv0JhjNGKTKPn2PZtECkrevNSb7c1Cy9Pb5+oMHWOSJ7nrLyfUOeLLd2pofBRmFgZECHBHGhkUOXyp3JtgMgZoohU6i234on+V/SyDGv7RslcNvc7VTuU3S+QwdTNXQ6YHEiQ6HxmtfIB5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Xx1DsRNp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OSENWY+j; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736447636; c=relaxed/simple;
+	bh=dWhKCBXxKa18ugh4nV6cF0rPr5rsFoku0MHsnnAy71k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=R0r2Zijy5N9v72ZVpYQrrH9S9qPCDa9OXw/PSTBHoVVrSAZEc8+0htHCXZzovlAK6jaYl2GvxZUFyKov3CXGMyz+IY3G7wrsckVeX0cczlaXtUmu4D+2wJa/mnf/2heK5wZklpFCS7ZjLl1LJVYIisVkE6ZVwht9OKJqtWmmlDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hl0bvqgN; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Xx1DsRNp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OSENWY+j"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B1C2325401EC;
-	Thu,  9 Jan 2025 13:28:07 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 09 Jan 2025 13:28:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736447287; x=1736533687; bh=UJTWbz5MZ3
-	vJYTwt7MqYNj2Bz7MnSs+aZnZi8GwYlZ0=; b=Xx1DsRNpT5BhNw9awNS4gu1wGN
-	MgtG/D54IsCFNwcTy6Kql1PiaeUbRgl8GEPSgJ8CI/toY8rf53CbCSYlhUwFyIuF
-	3Gsti8fwJ3oFOX5+TEFEz0gLJsK01mbOyV5eKt8L7kobdl9zJk17/ECawH1lYntU
-	Q5TK8qkf6vfNU4HxLUlR18RsyfTZqCLQ6e3pxGbBJfdB9dEXdX28v1u8owkTsO0V
-	ptyVIFRB4WCyMXwcSF2DWFMvqTn7RR5gwORFd90K13o+3sQcSa+gTdZ+eeyMHllM
-	F5/vjtxbUThtGn8Q0tGzbgqvgDnJeTeLM5FJjWjfgsxEAcKgxmWpjJZa7HpQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736447287; x=1736533687; bh=UJTWbz5MZ3vJYTwt7MqYNj2Bz7MnSs+aZnZ
-	i8GwYlZ0=; b=OSENWY+jpbLLzW2bpPJSsbIDzs9uTQswWmfwjQRZgDwfYXImJNm
-	zNSzF7gEF9GpGt0rnPVTNYgveEYVl2kaIEBE9bIW4vODnjs8Ua/so1CcaYtgSmCm
-	3FDNk9s14cBT+HBM2+yOyX/2+QTJ03dzYLBKjBUnacXQkXvd75LICZomAOC1T1XP
-	FxiBYWLkgiT3TVYJHy1LYcpcT9hcZjsyE8JHy7iurUAYVU3i6ti/SKCKVZy4umLi
-	skXqjJBG6eI2JrjVkDzQHuIDVXXl24J6IbjyUdj3tVc4Xdjar6OhUCX7y8mgKZ+b
-	GZj7+Qi3UOYO49zmxpN9Jd63zzMSKqdEGGA==
-X-ME-Sender: <xms:NxWAZ2WUW4jdUx4mlMG1MVSBJuP8qAYBbzKn9_AeW7Uj4J-MzSD0HQ>
-    <xme:NxWAZykJYwGf248uGFc25b2esl_yNzJdZ_r2BGt2ewB3f9PYNF2M0kER31-k5rtx1
-    wky-g7NYKaVgriPtg>
-X-ME-Received: <xmr:NxWAZ6YUkoji9V9T0VZkY4PjOEkRqt2Gjue9B909YW1Ell-gNGtK-ojO2_xOPZQVdMT2yf00JZXShzgAAN1R41Dc5k0cWVZbUbLj>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegiedgudduudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopeifihhnkhesshgrvhhilhhlvgdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:NxWAZ9Vaq6bDJcTg2NjKQyg3ikadlrzyhoWFEWe4vZOjqsqA39vm2w>
-    <xmx:NxWAZwnPMJl91wNOQ_jLALgvFoE44v-5-t03UTN87NW28eZ-SlYWvg>
-    <xmx:NxWAZyfZ_D6iCL6eYak_OW8QCza1sOIObjuM73D-sfS2eCJ4FBYh8w>
-    <xmx:NxWAZyERU3HA0Li4WvASW8asQHM8xFq9nb4HaYOf8noNIAD7iqSxgg>
-    <xmx:NxWAZxBDD4FFUo-d2kkwM9r5JIaki2qmmKl6Zwm2VRQt104De9RIrJ4k>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jan 2025 13:28:06 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Git List <git@vger.kernel.org>,  Wink Saville <wink@saville.com>
-Subject: Re: [PATCH 03/14] tree-diff: clear parent array in path_appendnew()
-In-Reply-To: <20250109083310.GC2748836@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 9 Jan 2025 03:33:10 -0500")
-References: <20250109082723.GA2748497@coredump.intra.peff.net>
-	<20250109083310.GC2748836@coredump.intra.peff.net>
-Date: Thu, 09 Jan 2025 10:28:05 -0800
-Message-ID: <xmqqo70fj0zu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hl0bvqgN"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43634b570c1so10015075e9.0
+        for <git@vger.kernel.org>; Thu, 09 Jan 2025 10:33:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736447633; x=1737052433; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qo3T3QS1qBKofFM0GHRlu2kjbgfGu/Ec83ECR3QvvD4=;
+        b=hl0bvqgNKg6Fo74oIaIz3MFfidEcJwNiAXGHjRTEKjyn2lF6RjEWKpColtOiqtsCwo
+         6UnTVCHEKBWqQsNXGBRqS96i8TpaPisiGeohuzQJrFSv2Bf0PzOO9ztY0C/x76hyOEx/
+         aWDhzfLq1MvvULgfAXjR22AlTt/Tk2pLUR/V6CDt1tya34OtPj3UtgQOo573UzsLfPgx
+         YkJVpMucJiBFUhovesnYXGOkFVj1YvgbbWuilT1VuZbYGvO8dSllO/9RHBhjIhLjkXxL
+         QYYRMBNVmxzTyFNYoALgIUs+4r6P1lgLUIBbeTcU2hpEM+LFQkoeDu06NQVTtWusV6tZ
+         +Z+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736447633; x=1737052433;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qo3T3QS1qBKofFM0GHRlu2kjbgfGu/Ec83ECR3QvvD4=;
+        b=OVEulB1MDfoyE4UWhHgw+NesWWqojMToN36NBTtcq8zGHXypO6PZHBZvV6SE3DS346
+         w0yzhtsOFoqbMFvFql47cVXQwPVtvS7+qYRDAmAGD63C5BMsiN+Ppjg+Zp3zN9d9rHu1
+         iLCBFtKzqEaDIE3F0WgJICSVClrOB9SyDAoijPybWvlRyIDGIm17ZBh8XnPDK5H76cv8
+         9NEpo1d+cNjvkRYSmQm0q0Q7+W2W70cSViow845hPf/VcatGhWjCWgXj9MMN9sAAdBkS
+         xKHjNGtxGC/dnOG8xIORxvokoTxMD43dd7K8OisGHuS4RdRK76+/XxV5UQavn7Ai8Adt
+         ZYZg==
+X-Gm-Message-State: AOJu0YwyFltQJ2JAfLJ6IFl5Mpg9hmeLgKqPTMrb3XMUJY2C5NkI4zLE
+	qSZRt2xCOPwa5PrOlkTpFmWxiGxedIjlNhvccdJ8CmYzS65WrRm7L5oxFoYhK++S9OXG7hXUves
+	ie1voRf3ZSkqf6+teHMH5cD71kng=
+X-Gm-Gg: ASbGncsWr3rij/TKiQ4DPvBm7eOSYTykSjEWl7pGq4H6y2fguq6i7Ew7YM7Z1Luanrq
+	+wvgFIbOdiQtqlCZgQ+pGyd5k7mkr3mJbWYNdYg==
+X-Google-Smtp-Source: AGHT+IGxFBt4PXIns47gTxKuVdeX4EKsB/XVKufeBXeTunfhzReEtlww/Ujp8CQvJ3wqEzPi6P03mCAQHr6OVCbNLKM=
+X-Received: by 2002:adf:ab0c:0:b0:38a:8888:c0ef with SMTP id
+ ffacd0b85a97d-38a8888c2eemr4951799f8f.52.1736447633400; Thu, 09 Jan 2025
+ 10:33:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1850.git.1736432663587.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1850.git.1736432663587.gitgitgadget@gmail.com>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Thu, 9 Jan 2025 19:33:42 +0100
+X-Gm-Features: AbW1kvYONTpzyxk60IuDIbHOM3I6P5LShCYIistzIbhv9ViI0zHaw7VNOkVmW_Q
+Message-ID: <CAN0heSo2pFmfx=zJgx2T6y+W1tG_PTXxf6uk2kBgi4c0kXz_oQ@mail.gmail.com>
+Subject: Re: [PATCH] GIT-VERSION-GEN: allow it to be run in parallel
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+On Thu, 9 Jan 2025 at 15:24, Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> And this is how that race surfaces: When calling `make -j2 html man`
+> from the top-level directory (a variant of which is invoked in Git for
+> Windows' release process), two sub-processes are spawned, a `make -C
+> Documentation html` one and a `make -C Documentation man` one. Both run
+> the rule to (re-)generate `asciidoctor-extensions.rb` or
+> `asciidoc.conf`, invoking `GIT-VERSION-GEN` to do so.
 
-> All of the other functions which allocate a combine_diff_path struct
-> zero out the parent array, but this code path does not. There's no bug,
-> since our caller will fill in most of the fields. But leaving the unused
-> fields (like combine_diff_parent.path) uninitialized makes working with
-> the struct more error-prone than it needs to be.
+Nicely described. Indeed, there's a reason recursive make is considered
+harmful. This is of course not the time or place for addressing that.
 
-OK.  We however will still not use the array at all when we do not
-need it, so it would be between accessing uninitialized bytes vs
-accessing 0-bytes by mistake?  With my devil's advocate hat on, I
-wonder if this would lead to more sloppy users saying "I am not
-following the pointer; I am merely stopping when I see a NULL
-pointer at the end of the array" or something silly like that
-without checking the validity of the array itself (which presumably
-can be inferred by inspecting some other member in the containing
-struct, right?)".
+> Incidentally, this also fixes something else: The `+` character is
+> not even a valid filename character on Windows. The only reason why Git
+> for Windows did not need this is that above-mentioned POSIX emulation
+> layer also plays a couple of tricks with filenames (tricks that are not
+> interoperable with regular Windows programs, though), and previous
+> attempts to remedy this in git/git were unsuccessful, see e.g.
+> https://lore.kernel.org/git/pull.216.git.gitgitgadget@gmail.com/
 
-> Let's just zero the parent field to be consistent with the
-> combine_diff_path_new() allocator.
-
-But I like the "let's be consistent" reasoning, so I wouldn't
-complain ;-)
-
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  tree-diff.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> -       "$INPUT" >"$OUTPUT"+
+> +       "$INPUT" >"$OUTPUT".$$
 >
-> diff --git a/tree-diff.c b/tree-diff.c
-> index d9237ffd9b..24f7b5912c 100644
-> --- a/tree-diff.c
-> +++ b/tree-diff.c
-> @@ -151,8 +151,6 @@ static int emit_diff_first_parent_only(struct diff_options *opt, struct combine_
->   *	process(p);
->   *	p = pprev;
->   *	; don't forget to free tail->next in the end
-> - *
-> - * p->parent[] remains uninitialized.
->   */
->  static struct combine_diff_path *path_appendnew(struct combine_diff_path *last,
->  	int nparent, const struct strbuf *base, const char *path, int pathlen,
-> @@ -187,6 +185,8 @@ static struct combine_diff_path *path_appendnew(struct combine_diff_path *last,
->  	p->mode = mode;
->  	oidcpy(&p->oid, oid ? oid : null_oid());
->  
-> +	memset(p->parent, 0, sizeof(p->parent[0]) * nparent);
-> +
->  	return p;
->  }
+> -if ! test -f "$OUTPUT" || ! cmp "$OUTPUT"+ "$OUTPUT" >/dev/null
+> +if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$ "$OUTPUT" >/dev/null
+>  then
+> -       mv "$OUTPUT"+ "$OUTPUT"
+> +       mv "$OUTPUT".$$ "$OUTPUT"
+>  else
+> -       rm "$OUTPUT"+
+> +       rm "$OUTPUT".$$
+>  fi
+
+Our `.gitignore` contains an entry "*+" to ignore this sort of temporary
+files. Yes, they're supposed to disappear within a second or so, but
+according to f9bbaa384e (Add intermediate build products to .gitignore,
+2009-11-08), they can linger after interrupted builds. Maybe separate
+tooling built around git could pick up these as untracked files for a
+second, causing them to come and go in whatever GUI.
+
+You could use "$OUTPUT"."$$"+ to restore this. That of course
+invalidates your remark about "Incidentally, ..." above, but might give
+this fix a tiny bit less chance of regressing something somewhere?
+
+Martin
