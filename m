@@ -1,141 +1,117 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3996143759
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 16:46:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C242B9BF
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 17:56:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736441198; cv=none; b=U/l6Op84Jx8K2BtrA6O/GSho7ejxD2H7ye4BXtyp3+zr0yjft9rmnMNyoaiD3O26n3pk92DHLMjJ2JDVq8J8Eiz/mb2YF44GmfW4lkBvxabgq7L5bziTOk8m3BImnJJTXJAYtlgJ0UZGJDS2vLmjqVtSG0tha8h7vGVZFFoWBXU=
+	t=1736445372; cv=none; b=dxKXrXapPk0chKaKgJousibYmXmXypYkEFNVFSvhxKF/YczW/RcGVtFLrafhlkDz/4txbl4IoGFOWrS+8o6GG/JqEXfeDPWjtXlLueSIufITWmUfXLMxqKjvwp8d2Z8q4jP9uHhTw6W/xn/UKeGNOkt6/llm/12icqLR1lbx8As=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736441198; c=relaxed/simple;
-	bh=oFignV6NXhEI+ctvU12uxC3/39h9i9+DCJKkoopb7xg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ul798yxulxIFeQw3wXlQYenVSUmIvG3Jt/cgyvHP0pbPEAJPzysACXlmhQlSyRNQ7h3k8hg8D9XrNW5ddq04ph//oc1JwgRNo9MPbSpJ5Hhy+WvPBbsm2ZwYUsLEB+FTwJpq8VyW4x6eYonJiHo1WcNzu7p0tpKZroqvpQV5XnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KTAqq+IM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Soc2lM8I; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736445372; c=relaxed/simple;
+	bh=Aq9mwaNusGELIFwCf3qAdzk7N368vWw9kXGd/gBpnK0=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=LZswDYj1Xr8YXTrvw8ZzfMLJqmw8o70M0hJ95cqZ4A8eoM88fIQuB8/Rto2jH5NzCZ+Sv33gXqfdwEsTtLN9hyQeZfwEJQTftav0OOROcts5usR3wmO51x+WM4Y4gJDOaOTep7XH2PF3bKG/cnWc789cabU2PmyuO9O/fCpSxb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=av0DkOa0; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KTAqq+IM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Soc2lM8I"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 06B1D11400C9;
-	Thu,  9 Jan 2025 11:46:36 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 09 Jan 2025 11:46:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736441196; x=1736527596; bh=zLQjzc5Xar
-	CPlVrnwlDU4XFTs0ShPdC6rulxWkv+IXY=; b=KTAqq+IMlK6X86xVotsC1cEVjs
-	WXySm9Y4q26eGxYuUMpXOZHnd1y7Z5frW7RHcPJtJPOyHN7QeGiKXAvmfUlLiUgn
-	tC5HEsQf74GZc0qqNWNSKnAR/GT/ItYXn8K6Nd+o1rFfN/8qjvw3R3zKGfF/M+qy
-	MMpxrMTOHW6VEZsUuF9Xts2l8CQ5Sj0LdNJFr8Xu9DDdUB73xbidlcXWUiRbjkDu
-	xr9DsJ40T2kTb6aDR5EOR+IH68fVuPJXRAXk8Xh4eq3QNggBum48XryNIUSLiTXm
-	tMVYqEf9cj9AEpjRdAn1SkF44A/7Ybc701N7ocKrYTx2SCXi4QU96UqKB9bw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736441196; x=1736527596; bh=zLQjzc5XarCPlVrnwlDU4XFTs0ShPdC6rul
-	xWkv+IXY=; b=Soc2lM8IYgqVj4Voz3bheawrA4JWJjsrdaKYC2RgNvAKn9/OxbJ
-	Pb9g7yR9DREdxzMe5bpUU/wTpN2HvFGv74UvTiEUuskHMAGNBor4wVSLdKjTFL2e
-	BDgIS9dHJWXAz0ipcYCmnH0CDwxK6wkYeKjTbyKvD0guqgtBc6DxSsUp8w2OYUUT
-	/aQIUsQuwje2dqbwQ9QQAQ90HrbDWU+V2Y+2kZYRsdhuOjFSu0tJW5G+zRn3ETI1
-	C5m5KGxs+JXI50MpUd2BeRnYvcAzOpyT1A/Xrd2uHdxbkLWt6vk7jouqq5F98FsY
-	BJ8Agpr9PJ6mskghEQLor8BTwb7H7ZBQs8A==
-X-ME-Sender: <xms:a_1_Z5YHvN9CPj0zCI_xAAHCDyQSNLfhrMCTGu6UvJlxcbL1xCUUuw>
-    <xme:a_1_ZwYbHoyKfzb5No_pVwpjvcQ65D2G6lC1KSUzR422bGFii0lODbt7k7al_zpbJ
-    2Favsq-l7N2wlvU7w>
-X-ME-Received: <xmr:a_1_Z789AcqetUT93BZsk1rNmJHTBpcX5icG-he6Kd5lWRUtCPpLWvM6D3Aulz_jYrV_l_RNc5xBvTLMpp28UDsqUZrake9AZ2Ez>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegiedgledtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
-    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtth
-    hopehmrghthhgvuhhsrdgsvghrnhgrrhguihhnohesuhhsphdrsghrpdhrtghpthhtohep
-    mhgvsegruggrmhhjrdgvuhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:a_1_Z3pQ-PKB4UPzMBoYo9hRFw5AyGT0rNfz8BMw3EOYBA4K1fVOLg>
-    <xmx:a_1_Z0qkw8QwtelHOwX3v8E4DhJLHNezssN5785QvcOQA2-J4PrpkQ>
-    <xmx:a_1_Z9QLBq5t7bF1dyzpw_09iFttr5f70kY7hBHSMhu4gqS8YZbg5w>
-    <xmx:a_1_Z8oSQbl_jKZ2-KbAncOcdFRCAcTxqV2p9ooqWUqYEwj5lfssXg>
-    <xmx:a_1_Z1d-MqKTAGDZwGHuziwF7ySjyKTIoQjUvNxR-VDvUUcwgR7K3x53>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 9 Jan 2025 11:46:35 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Adam Johnson via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>,
-  Matheus Tavares <matheus.bernardino@usp.br>,  Adam Johnson <me@adamj.eu>
-Subject: Re: [PATCH] difftool docs: restore correct position of tool list
-In-Reply-To: <pull.1849.git.1736379323427.gitgitgadget@gmail.com> (Adam
-	Johnson via GitGitGadget's message of "Wed, 08 Jan 2025 23:35:23
-	+0000")
-References: <pull.1849.git.1736379323427.gitgitgadget@gmail.com>
-Date: Thu, 09 Jan 2025 08:46:33 -0800
-Message-ID: <xmqq1pxcj5p2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="av0DkOa0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1736445367; x=1737050167;
+	i=johannes.schindelin@gmx.de;
+	bh=rrBidfyMK4OZ9vWyQ6T2haX2wWR/GJVUNOhyp9L9GNk=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=av0DkOa0oIZXfNdvIC3oM6QanSviyO2IkN7kx4Ntde4OQX5V+ud4f0ohuKBywnY4
+	 AjDvWgAac991OI7wZcJcGSqGdXK2n1sdNvKBtIIvlgVzuhWJxbQHinf/gZgvt2HYD
+	 53QIYB9nGIquqgai7uaYQfAsvZwAIiarrOJcd/IXGB7SD5r8bBZpKaYfS0t3NZocK
+	 D62Q6SzwspIYtV6WEXY9ezKe3XaV5dFfQe+lVFnSedho0iUKTnd9iLnniJ0a8ZlyO
+	 xcaqZuYbmXOV8pJtunDp24ZSIxazFunNtzysGPaEedRTOjKJ9KboKM9Tq++3Ax8D/
+	 ENpc+c0B5sG9EHpu7A==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.212.7]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MatVb-1szu4C1kvD-00pXG8; Thu, 09
+ Jan 2025 18:56:07 +0100
+Date: Thu, 9 Jan 2025 18:56:07 +0100 (CET)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git-for-windows@googlegroups.com, git@vger.kernel.org, 
+    git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.48.0-rc2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Message-ID: <1MrQJ5-1tC3fM1wr1-00bDOC@mail.gmx.net>
+X-Provags-ID: V03:K1:IAR/blIfHwLJHgaiUofuYyHjtqPD0fTZ3Hynksz+gytvU7zbxJk
+ x2KfeP6c1JNlw/M83iHQnu/n1ON1mqOrp/3kFTDFM4NWnYTAMrWhp55aOE0mgSkmVG90u/F
+ orYSSF6wzpUUSyqM560Kt1Jx3xTyve+3YhdnrlqqRd4nUrLmUxWYPeUYFK2a7Dh1X4QzRzN
+ YEmgqajlovRZao1iCIGQQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:meUPUrDrmXY=;I+VwHIofiONpPnNwYiC/EVm1+dK
+ bVcO4CpurGP9VlAxV4EO/imQekb0nQ13wZmkHEOqTeWi9ebNN67BFg5S84MNJ7+RV/CYPTBGH
+ hJK/gh4S1yJOFOnztQeKP3sD4Cio1INs333c9jgixZSJvXjKH4spDBHaXnUasP9rgIb+RtzNm
+ QVYVgDVuwyFlx++fM2rb3RmDN9nJO8i76qE8FRtyplsE7sj1CN3C5TgZtdMBzyf37E1fJH/sB
+ SzdC6dx0jFWkgOq8NLejM8XHKj/N9Dk4TKK9Zki90BVbmWBJF5O5afX1Chk4Tz0JDk+BYYoQ3
+ +RkSP6an3hxuacan0LW2SYRReiwHyT4PLrPqE5sUiZyBhPOisBu82XwURbsWUYiflZBfnFfeX
+ QvC3KDvzrOElG5Oldt358td0R5Ki3npD3tGzNv7DFVlRQVb+sKeaQ4wTS4j0CoVQr2sRAWjex
+ kP9qoJo4J6t9d4Z5cDOvsLnSVoW28/XSK5UrlA1XawjMEcFFM5brXAhE51TvthbfhFBZzzQbB
+ F4yLMrbW8UHMDaz6gvWoKxTauf4VvuKNd9WHlnL3qv6G82EpUAv6+ESqSYrDUFbH/ygC9r05F
+ sdoRcTURFUjg8DR8xDVZEGErGp25qY38pkfC4kvnWh9S967It2i6r/ALgP5nKpGo6dkU9LPdO
+ +UBNvhDFaulZh16IiEeg6Xwmdd+9bcT4sb5upe11qQlHk9PMNZfkkvTIhnuGSV26J2nQjtRov
+ D/9RMfvEmDZnMe51JoczJSOR3ilu0B7OkuSlpWdHJfdjmiSuHmZ5GUNST5CRwmSyfibkZ4O0R
+ yl7FOrU7ydFMI77kT4wh5J3T+C4i35YVzdv1LjGQ3xEgkXRRiNoeEB+RUYrg1TW/IBjUxLzf4
+ 9bCh7q4WcHMOogpDzOIl0pzNYeZMGZA3e52Npi7oUPcQgC73fUaFMwKi3EuRXrpWpEAaG4OoV
+ nGwsYWPgwyCa42OqNPT1nVLNHM9Ov+/SIKOaQcMPtsgHDYhz1aRK7OgfcJprztcoe4eMbEB95
+ nLnso2F4dLH9ayekDFEdEzLTVH0PlbZSsKT9X4vcogvNBm6tgYqcKlpX7GvcBiGwov00X1LaY
+ XlxBtegVz0rZ+eZi9iervTceq7bXjJYVe9NXASRDmokm1hPO4gpdY7Dd/RN7H8FY4YJ1Z34Is
+ =
 
-"Adam Johnson via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Dear Git users,
 
-> From: Adam Johnson <me@adamj.eu>
->
-> 2a9dfdf260 (difftool docs: de-duplicate configuration sections, 2022-09-07)
-> moved the difftool documentation, but missed moving this "include" line that
-> includes the generated list of diff tools, as referenced in the moved text.
+after addressing many issues that have cropped up over the holidays, here
+is Git for Windows 2.48.0-rc2:
 
-Thanks for a very clearly written problem description.
+    https://github.com/git-for-windows/git/releases/tag/v2.48.0-rc2.windows.1
 
-> diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.txt
-> index fdae13a2122..1135a62a0ad 100644
-> --- a/Documentation/config/diff.txt
-> +++ b/Documentation/config/diff.txt
-> @@ -218,8 +218,6 @@ endif::git-diff[]
->  	Set this option to `true` to make the diff driver cache the text
->  	conversion outputs.  See linkgit:gitattributes[5] for details.
->  
-> -include::{build_dir}/mergetools-diff.txt[]
-> -
+Due to the amount of work that was necessary to get it this far, I ask
+everybody who can test to do so.
 
-Above this include, there was an entry for diff.guitool, and this
-generated file was to enumerate possible values for the
-configuration.
+Changes since Git for Windows v2.47.1 (November 25th 2024)
 
->  `diff.indentHeuristic`::
->  	Set this option to `false` to disable the default heuristics
->  	that shift diff hunk boundaries to make patches easier to read.
-> diff --git a/Documentation/config/difftool.txt b/Documentation/config/difftool.txt
-> index 447c40d85a2..6cd47331a91 100644
-> --- a/Documentation/config/difftool.txt
-> +++ b/Documentation/config/difftool.txt
-> @@ -13,6 +13,8 @@ diff.guitool::
->  	and requires that a corresponding difftool.<guitool>.cmd variable
->  	is defined.
->  
-> +include::{build_dir}/mergetools-diff.txt[]
-> +
+New Features
 
-And the list now sits at the right place.
+  * Comes with Git v2.48.0-rc2.
+  * Comes with cURL v8.11.1.
+  * Comes with MinTTY v3.7.7.
+  * New Git for Windows installation now default to the Windows-native
+    HTTPS transport backend.
 
-Will queue.  Thanks.
+Bug Fixes
 
->  difftool.<tool>.cmd::
->  	Specify the command to invoke the specified diff tool.
->  	The specified command is evaluated in shell with the following
->
-> base-commit: a60673e9252b08d4eca90543b3729f4798b9aafd
+  * The installer now correctly blocks the installation on Windows 7
+    and Windows 8 as these versions of Windows are no longer supported
+    since Git for Windows v2.47.0
+  * When using the cache credential helper, it could error out with
+    "fatal: unable to connect to cache daemon: Unknown error" under
+    certain circumstances; This was fixed.
+
+Git-2.48.0-rc2-64-bit.exe | 2d7067c84c57e075f2599734cf38a1498aa58cd0ed871141f6062aed97abc150
+Git-2.48.0-rc2-arm64.exe | 712739bb49832d571732e3e74b111d7cb4a63cd622ef3e87d01efe35046d9a4f
+Git-2.48.0-rc2-32-bit.exe | 741ceb11c0a66ce1c440ce0a60b88b0d461e786e5eea29a9d622d3553fc2ba1e
+PortableGit-2.48.0-rc2-64-bit.7z.exe | 6f36815609b831e1596b496fac87861fde39f0d55a7a6086ca40b4d7340834f5
+PortableGit-2.48.0-rc2-arm64.7z.exe | c88a264f1e2a56a89bd5f6ba7b5bd0ff96f2b886c7d1099f22780239c84b249a
+PortableGit-2.48.0-rc2-32-bit.7z.exe | ad0052b327287e77cbc16e9ada38be899df505c80133882f7c14c3bb3da584e7
+MinGit-2.48.0-rc2-64-bit.zip | dc0c8dfe397d29a1541f5dcc05fb8d843f1ffce0ca4dbc109ded9c447c567cb0
+MinGit-2.48.0-rc2-arm64.zip | 11c17fa4df1398440400dab9eece1e250b759ecc0ffae2bc284b348bbb746f9e
+MinGit-2.48.0-rc2-32-bit.zip | 0a3501081f99ff6ace63e7bfae6340525152fbc148555873fe47a6660f216eca
+MinGit-2.48.0-rc2-busybox-64-bit.zip | 686efeccfdb7aa0d27eb7623a29f59418b393b526300817410f0a52552f5a540
+MinGit-2.48.0-rc2-busybox-32-bit.zip | 00b8a353fa2713bfc7de81c93d3012bad351cb8180adbd7916103c7e0d66e610
+Git-2.48.0-rc2-64-bit.tar.bz2 | 62308faa458047cca64517e46440112738c8b630a666a296dd0ce415a4e0f354
+Git-2.48.0-rc2-arm64.tar.bz2 | dbb82b4101821d9515cd98e83f09819a3e91091d6af154ffb44d89434e22191b
+Git-2.48.0-rc2-32-bit.tar.bz2 | ae1c21237a6e062a504c26b3ff579ddf5558aff622feb7aebffcd8864e46ed91
+
+Ciao,
+Johannes
