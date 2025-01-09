@@ -1,115 +1,108 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4412213B2B8
-	for <git@vger.kernel.org>; Thu,  9 Jan 2025 18:33:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13794BA2D
+	for <git@vger.kernel.org>; Thu,  9 Jan 2025 18:49:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736447636; cv=none; b=dmz4FK152c1xMFcvQ2cuWWTTurudpcp/X/Zyf2YJFWi/axeXB1RXRhpJrqEHT+qrm2s3GdlyuVGWyxcNK6CMT1jKlWY9OyeBEELE5XGPtHAFddyYuJvLSDnAUqJJaM8OgfcfsoY8kPtm/FFYU1x00Pmr21jhQcYdtIGOP48Lw1o=
+	t=1736448589; cv=none; b=PNMvjuvJwzsKjEJArHr6LEQa/XmR8M0DptIWn4e499OeP2glAGvfgo6ubPnRkQq1IgBYibMKtFKRsn9xsJVzECKSi4QYU0WAa7VcsSGx8qAJqtv/LdfseZpYX7oenONeLAQXAwBpNkW+CWxeVY8BU7XHtBjXNM2+lkonKh6dycY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736447636; c=relaxed/simple;
-	bh=dWhKCBXxKa18ugh4nV6cF0rPr5rsFoku0MHsnnAy71k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=R0r2Zijy5N9v72ZVpYQrrH9S9qPCDa9OXw/PSTBHoVVrSAZEc8+0htHCXZzovlAK6jaYl2GvxZUFyKov3CXGMyz+IY3G7wrsckVeX0cczlaXtUmu4D+2wJa/mnf/2heK5wZklpFCS7ZjLl1LJVYIisVkE6ZVwht9OKJqtWmmlDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hl0bvqgN; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736448589; c=relaxed/simple;
+	bh=MHRONqPE2qXnFlay6K38iAZmUj0m05fw+nC8+PvHjE8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=poy92KI4uMe9joi9a19Xs+fEbhBS0GlxGh8hKnopbqh6x13T2zFUv5MMutjAzeqMsLzI6i69uzbPGqyI2ph65aFwreI462iUh2Q1KRuAAgDS3DNWkpNcOpk3oPZmxW3RkFm4bCknsr9lJf9vjAOKPUeZTKH0Qik77is75NvEHEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vll8LWSd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y9uaOsqI; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hl0bvqgN"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43634b570c1so10015075e9.0
-        for <git@vger.kernel.org>; Thu, 09 Jan 2025 10:33:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736447633; x=1737052433; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qo3T3QS1qBKofFM0GHRlu2kjbgfGu/Ec83ECR3QvvD4=;
-        b=hl0bvqgNKg6Fo74oIaIz3MFfidEcJwNiAXGHjRTEKjyn2lF6RjEWKpColtOiqtsCwo
-         6UnTVCHEKBWqQsNXGBRqS96i8TpaPisiGeohuzQJrFSv2Bf0PzOO9ztY0C/x76hyOEx/
-         aWDhzfLq1MvvULgfAXjR22AlTt/Tk2pLUR/V6CDt1tya34OtPj3UtgQOo573UzsLfPgx
-         YkJVpMucJiBFUhovesnYXGOkFVj1YvgbbWuilT1VuZbYGvO8dSllO/9RHBhjIhLjkXxL
-         QYYRMBNVmxzTyFNYoALgIUs+4r6P1lgLUIBbeTcU2hpEM+LFQkoeDu06NQVTtWusV6tZ
-         +Z+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736447633; x=1737052433;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qo3T3QS1qBKofFM0GHRlu2kjbgfGu/Ec83ECR3QvvD4=;
-        b=OVEulB1MDfoyE4UWhHgw+NesWWqojMToN36NBTtcq8zGHXypO6PZHBZvV6SE3DS346
-         w0yzhtsOFoqbMFvFql47cVXQwPVtvS7+qYRDAmAGD63C5BMsiN+Ppjg+Zp3zN9d9rHu1
-         iLCBFtKzqEaDIE3F0WgJICSVClrOB9SyDAoijPybWvlRyIDGIm17ZBh8XnPDK5H76cv8
-         9NEpo1d+cNjvkRYSmQm0q0Q7+W2W70cSViow845hPf/VcatGhWjCWgXj9MMN9sAAdBkS
-         xKHjNGtxGC/dnOG8xIORxvokoTxMD43dd7K8OisGHuS4RdRK76+/XxV5UQavn7Ai8Adt
-         ZYZg==
-X-Gm-Message-State: AOJu0YwyFltQJ2JAfLJ6IFl5Mpg9hmeLgKqPTMrb3XMUJY2C5NkI4zLE
-	qSZRt2xCOPwa5PrOlkTpFmWxiGxedIjlNhvccdJ8CmYzS65WrRm7L5oxFoYhK++S9OXG7hXUves
-	ie1voRf3ZSkqf6+teHMH5cD71kng=
-X-Gm-Gg: ASbGncsWr3rij/TKiQ4DPvBm7eOSYTykSjEWl7pGq4H6y2fguq6i7Ew7YM7Z1Luanrq
-	+wvgFIbOdiQtqlCZgQ+pGyd5k7mkr3mJbWYNdYg==
-X-Google-Smtp-Source: AGHT+IGxFBt4PXIns47gTxKuVdeX4EKsB/XVKufeBXeTunfhzReEtlww/Ujp8CQvJ3wqEzPi6P03mCAQHr6OVCbNLKM=
-X-Received: by 2002:adf:ab0c:0:b0:38a:8888:c0ef with SMTP id
- ffacd0b85a97d-38a8888c2eemr4951799f8f.52.1736447633400; Thu, 09 Jan 2025
- 10:33:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vll8LWSd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y9uaOsqI"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 09C6425401D4;
+	Thu,  9 Jan 2025 13:49:47 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 09 Jan 2025 13:49:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736448586; x=1736534986; bh=alReDiOaJ5
+	OPgbgoILbaWnba6/WC16BFXhAIWQNkryo=; b=vll8LWSdq3WCFtNPZL4z1KIBVK
+	gJ7I3FBtTE0FunfKb9bxireZZsGLq8LwWZJMVLFoXOqcXvobnTQ2nUpmNft5M4LW
+	7d4vrx8XSnqwdpxMDaNb1WuSn2xRzoT1og2SSrUzCHmZUEQrRTULE2PE0yE4O2ux
+	c+KtRvydnjKUd+HA5KU7v2WXzPd109lnuhUASZkiYTMQ2B4FvpQUxvz5BAxfM94w
+	EyoK1mKcyKEJXYtdLebvlns+qkSHhld1+Avw5lqzEG83c/kLquEm7QaksTTrNla7
+	6zMh7LrIfk9PnzD0v6zwMqeketZf404UjqA63sCGeMJDBClwJR4Vo6fb6j3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736448586; x=1736534986; bh=alReDiOaJ5OPgbgoILbaWnba6/WC16BFXhA
+	IWQNkryo=; b=Y9uaOsqI8wBDI+vPoN2gqI9p08fFwXiF8xq0ok2JxqRWYH5cI72
+	m7KTIy/+6mGeT0pZrOBic1hM7WPUOWvynwjM4qL6Zy4ZUEQrBtZp4ZMCwTm5Yirw
+	KIhzhfYMiVZV109SzSwLkg35fvYeCe6waqdRlM1biPoGpLFkP1F/x6RJhssC1GFh
+	MXhiYepjhBnvDbrh33SBEZSWhInuiBYnq2+6X2Y63vd5axTy3E+D/vrKNMrM1Jfa
+	0gU4LtDlBPw6EZD3aUoGYA3AA8Rx4eaTrj0SzF/hPOrFmpdZ6Koh7b6m8qgYAFE4
+	Ln3uOFb/nYbLJDUQpCQxdo56V/T4Nm6Om7w==
+X-ME-Sender: <xms:ShqAZ-H-KoCAhkTIzIFlewgVhqk3kRTPFEFpKJK3FO3a8ZYulqOWnw>
+    <xme:ShqAZ_XHrpC-VyukAjoTdBthBhVuQlLDb91XdrWKjxerv6FNxbQhy_rzBU7MTLdlB
+    ZQ6uF2H7eSmcBBCXg>
+X-ME-Received: <xmr:ShqAZ4KZTWW8LiDA3nsuUKs_jPE_XvJXWP9uZoD3OAYsESbO5kzxfc5eZhVUVgXi7pDVSsP4xUcP4N5Z4HshlHOT4dhrRBwu2Hc1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegiedguddugecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
+    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
+    hfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopeifihhnkhesshgrvhhilhhlvgdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ShqAZ4GUsF5m2mmM0e1UD4ADwNvQXQJKBCqdJCLSGUxGPuLAO85WfQ>
+    <xmx:ShqAZ0XlyvfljHhNY4a6Cv3edpLc2yrtL0IcukceZBfAnMAc-s_GuA>
+    <xmx:ShqAZ7M44n3p1RPgiM-Ivvlq0_POPuQQwFcG0UCkbKbFDQlhTp4B1w>
+    <xmx:ShqAZ72H5MkCRF-bGMwVqI1CAA8UNono47ms2TBHoqmbHzX9fPXXWQ>
+    <xmx:ShqAZyxxBk11usvZxQ86O-x_F67IA-rV3v38vpeAGOvzuv9_GGrkcUr9>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 9 Jan 2025 13:49:46 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Git List <git@vger.kernel.org>,  Wink Saville <wink@saville.com>
+Subject: Re: [PATCH 04/14] combine-diff: use pointer for parent paths
+In-Reply-To: <20250109084229.GD2748836@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 9 Jan 2025 03:42:29 -0500")
+References: <20250109082723.GA2748497@coredump.intra.peff.net>
+	<20250109084229.GD2748836@coredump.intra.peff.net>
+Date: Thu, 09 Jan 2025 10:49:45 -0800
+Message-ID: <xmqqikqnizzq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1850.git.1736432663587.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1850.git.1736432663587.gitgitgadget@gmail.com>
-From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date: Thu, 9 Jan 2025 19:33:42 +0100
-X-Gm-Features: AbW1kvYONTpzyxk60IuDIbHOM3I6P5LShCYIistzIbhv9ViI0zHaw7VNOkVmW_Q
-Message-ID: <CAN0heSo2pFmfx=zJgx2T6y+W1tG_PTXxf6uk2kBgi4c0kXz_oQ@mail.gmail.com>
-Subject: Re: [PATCH] GIT-VERSION-GEN: allow it to be run in parallel
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-On Thu, 9 Jan 2025 at 15:24, Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> And this is how that race surfaces: When calling `make -j2 html man`
-> from the top-level directory (a variant of which is invoked in Git for
-> Windows' release process), two sub-processes are spawned, a `make -C
-> Documentation html` one and a `make -C Documentation man` one. Both run
-> the rule to (re-)generate `asciidoctor-extensions.rb` or
-> `asciidoc.conf`, invoking `GIT-VERSION-GEN` to do so.
+Jeff King <peff@peff.net> writes:
 
-Nicely described. Indeed, there's a reason recursive make is considered
-harmful. This is of course not the time or place for addressing that.
-
-> Incidentally, this also fixes something else: The `+` character is
-> not even a valid filename character on Windows. The only reason why Git
-> for Windows did not need this is that above-mentioned POSIX emulation
-> layer also plays a couple of tricks with filenames (tricks that are not
-> interoperable with regular Windows programs, though), and previous
-> attempts to remedy this in git/git were unsuccessful, see e.g.
-> https://lore.kernel.org/git/pull.216.git.gitgitgadget@gmail.com/
-
-> -       "$INPUT" >"$OUTPUT"+
-> +       "$INPUT" >"$OUTPUT".$$
+> Commit d76ce4f734 (log,diff-tree: add --combined-all-paths option,
+> 2019-02-07) added a "path" field to each combine_diff_parent struct.
+> It's defined as a strbuf, but this is overkill. We never manipulate the
+> buffer beyond inserting a single string into it.
 >
-> -if ! test -f "$OUTPUT" || ! cmp "$OUTPUT"+ "$OUTPUT" >/dev/null
-> +if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$ "$OUTPUT" >/dev/null
->  then
-> -       mv "$OUTPUT"+ "$OUTPUT"
-> +       mv "$OUTPUT".$$ "$OUTPUT"
->  else
-> -       rm "$OUTPUT"+
-> +       rm "$OUTPUT".$$
->  fi
+> And in fact there's a small bug: we zero the parent structs, including
+> the path strbufs. For the 0th parent, we strbuf_init() the strbuf before
+> adding to it. But for subsequent parents, we never do the init. This is
+> technically violating the strbuf API, though the code there is resilient
+> enough to handle this zero'd state.
+>
+> This patch switches us to just store an allocated string pointer.
+> Zeroing it is enough to properly initialize it there (modulo the usual
+> assumption we make that a NULL pointer is all-zeroes).
 
-Our `.gitignore` contains an entry "*+" to ignore this sort of temporary
-files. Yes, they're supposed to disappear within a second or so, but
-according to f9bbaa384e (Add intermediate build products to .gitignore,
-2009-11-08), they can linger after interrupted builds. Maybe separate
-tooling built around git could pick up these as untracked files for a
-second, causing them to come and go in whatever GUI.
-
-You could use "$OUTPUT"."$$"+ to restore this. That of course
-invalidates your remark about "Incidentally, ..." above, but might give
-this fix a tiny bit less chance of regressing something somewhere?
-
-Martin
+Yay!  Every time I see an array of strbufs, my skin tingles.  Thanks
+for cleaning this up.
