@@ -1,109 +1,207 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6E89207A33
-	for <git@vger.kernel.org>; Fri, 10 Jan 2025 10:54:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D05D209F5E
+	for <git@vger.kernel.org>; Fri, 10 Jan 2025 11:21:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736506469; cv=none; b=R3ou1QrC+EDfK0O51eV7wFOjNoOG0oWkJn2lvXxgtP2K/2Z6oaWxOEuIgyOr9At0A+8r8nr9NVbyj757RP9QtHr5Uu8DC4JlEBmIjfI0kMYTUsay3uSvsIxrk8WA5J7MB+Pzvb+pmefqJBgmfuOnSeeoTNo6xlYlIm81vTCnbSs=
+	t=1736508073; cv=none; b=DBCS3JaOu4t3HwRsjpueIUq+E5L+X6raZYIXszP+f5r7qGuUZY+4iXsZ4CT366yA/fMUTHEDwT/XAuM5CCFnB1+DUABgrYyxiNtibLriT2s+uhtFV2b1ppEN3LDUvBEnDOL/KKc0pzSEr2MH+zfoBaEs9UaXam+zlhlWdgvcUEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736506469; c=relaxed/simple;
-	bh=gN+3DBcHdzdLxTia7uxuenS+pM6ICpGtht6zYrJM7AA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CDCb40psUmWxR3xpuyz36CccUtlYE3JlfC5Vq5MG29o9SpKtRxH90btMzF9t4cSCfi+eYeVfkMM2P7k+a3ssdOD8oTUazAUF1OvtVCNGVQR2lOH3q/NuQxlfBUa4zsdXzTszfUuubibi5hCRpq8LryAKnwi/m1AAHy/Tkd/igvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eX125C03; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1736508073; c=relaxed/simple;
+	bh=vQLmhOLVXFNQfPG9pJzKgAxhz8lXWBbzS3o7ql+gAV0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c7WuEiBb7ocqQ14LvC+6Qld1Jv1Qe6V1ddB5mMBwgprdN4CzHj212+lXYoUsoWbB1gToTD9oNDT/SCzo+tKYK892/x9jTjdJ4EtVv0pSTUzpSPJg7O/NGDOOwpfPRYcU/zaQNYMLOmvGITqVgCOs4Flj3UgioYwfa7vGEuVHY4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XyHmq2uR; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eX125C03"
-Received: (qmail 3900 invoked by uid 109); 10 Jan 2025 10:54:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=gN+3DBcHdzdLxTia7uxuenS+pM6ICpGtht6zYrJM7AA=; b=eX125C03vVihCiJ82cri7y8+ouQ5lExtpfWvu1ULdkEYaBQN0BhGFUGuGi66uN9ySZiiipCX6mXh9NrC31EF57tvlIKtsSfKfMhSdETkDkxITF42SMh/9iiDIU3o6WKo9WVveaBHq8T4coMbyV/A1035Jr+sD19MJQrmo4Wi73ZIiv/CSJHPQQpVRPPe5fQKroarpf0UNsLWMqlL8CoRwNTl1Bhyn2XI6I2b/Hue4YUNck19MY9FlgII1jodnkKMMZUJm4RhPz0V8vjz57UDdbRt6IgRFNuz9ELDoB4Rc8J5fl/VC/9pOa+k6IN0KNKdCwiqzZtR1yXRSqKhNCszDA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 Jan 2025 10:54:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4177 invoked by uid 111); 10 Jan 2025 10:54:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Jan 2025 05:54:25 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 10 Jan 2025 05:54:24 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>, Wink Saville <wink@saville.com>
-Subject: Re: [PATCH 03/14] tree-diff: clear parent array in path_appendnew()
-Message-ID: <20250110105424.GA1014503@coredump.intra.peff.net>
-References: <20250109082723.GA2748497@coredump.intra.peff.net>
- <20250109083310.GC2748836@coredump.intra.peff.net>
- <xmqqo70fj0zu.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XyHmq2uR"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-aa6b4cc7270so298918266b.0
+        for <git@vger.kernel.org>; Fri, 10 Jan 2025 03:21:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736508068; x=1737112868; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BYhNAMozNqoWfCVpAZRTjcJhOcBCMq743NR9omU6jR4=;
+        b=XyHmq2uRG7a2khiOC2K+jNZim+r742Xw52042hPo1U+VpDUZxS686r+uXjYdrp/jrC
+         V0HwjQ3HCa9uyKf5CVl5lZQzLk1xjghiEw78PshRbtW+8VuhcuuCW/f1QuIa6H5Z+qgg
+         sjciTKA7RgZ5PF6u8kZVxaCSlb7YzgNWyiK+DaEizzG3s4dbEMbw5tYebiuqLpz0tcXh
+         +y46ivtiuGW7pvivQoc9XKZGz/rdgqVtsmZ4sHQmrClF4iGJaa8G/FyJJ33nMDaZQDOO
+         ucXQMocGf+yXagkBl/0CYuUz/MXZWjMtPecL3IndXNTya5WDlbYh/sIJsfniEDQ+eV2S
+         pTbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736508068; x=1737112868;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BYhNAMozNqoWfCVpAZRTjcJhOcBCMq743NR9omU6jR4=;
+        b=lJMc/RA6hjK4yL6A7mbFO/p3/83vE8ID1zEBmM/NfjUfmRabCA5wnURbfkeCuPaHDm
+         E35i/kFs1zPMMufK0A3+plTrD5GW6JiLY2UDZihM+Tsp23wXtRL8BJXlgeSbujQITWB3
+         KPzvfb+lSF2jTTVefEsti1I3XmuHzFVRPBoIsMBoByG4EbmHfQS/x4kvZ92sqwvEFTWv
+         t4m1uV+0rJ060c7JjPHXdBoksnntKCAFT+KcROiGLWO4muhFFAdxB+TNzbulE1Z+sTuv
+         WPZBGR8yZhc22F1gkVuEIlL7ehC79KHQbZbhRf3uiYFGFkVBtljnkyBstiDRgYUJl13t
+         ttwQ==
+X-Gm-Message-State: AOJu0YzDkHmO2mHGHoTQpzlDbyI+hAco7mEq0lUvo8dBKASIG0x+u+57
+	GZYFb2CKGNGH3Fc96ffb5DBKci7mv8NApzaIoMb50ubxWkE55Z/lM9ni/2Hl1IG7gwH5QS4P/DV
+	hYjiozeUXghAGa5feT7wqUvydBbqj2kyC
+X-Gm-Gg: ASbGncuIv1WrSHeLwTzsMwZ5aQjcrDKJxE16vNQKVOYeWq/ZWKGBfHY4rIsOx4bH4Be
+	tnH0t/9wGKJbXv9LWvFbcSFx37hx4NPyudb6aIT9Q
+X-Google-Smtp-Source: AGHT+IFWS46b+0CF7fBakCMCZBx9RX7I7Sb7u56Cxyl0BzPdvD4b5JkgYGFmy/InzPNRwROKAbzoqN9EQ5/CQd9FUvA=
+X-Received: by 2002:a05:6402:35ca:b0:5d0:d818:559d with SMTP id
+ 4fb4d7f45d1cf-5d972e0b954mr25031343a12.11.1736508068057; Fri, 10 Jan 2025
+ 03:21:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqo70fj0zu.fsf@gitster.g>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20250108183740.67022-1-eric.peijian@gmail.com> <20250108183740.67022-9-eric.peijian@gmail.com>
+In-Reply-To: <20250108183740.67022-9-eric.peijian@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 10 Jan 2025 12:20:55 +0100
+X-Gm-Features: AbW1kvbFgeA6TCT659TIKchccNWconyTvv1gXv-5NZK18nc6jor0qczLA7Y8gF0
+Message-ID: <CAP8UFD0TBYi0CGOfNYH9FtL3odrqaxz0w1q36RK3gS-Z3pJAmw@mail.gmail.com>
+Subject: Re: [PATCH v9 8/8] cat-file: add remote-object-info to batch-command
+To: Eric Ju <eric.peijian@gmail.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
+	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
+	jltobler@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 09, 2025 at 10:28:05AM -0800, Junio C Hamano wrote:
+On Wed, Jan 8, 2025 at 7:39=E2=80=AFPM Eric Ju <eric.peijian@gmail.com> wro=
+te:
+>
+> Since the `info` command in cat-file --batch-command prints object info
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > All of the other functions which allocate a combine_diff_path struct
-> > zero out the parent array, but this code path does not. There's no bug,
-> > since our caller will fill in most of the fields. But leaving the unused
-> > fields (like combine_diff_parent.path) uninitialized makes working with
-> > the struct more error-prone than it needs to be.
-> 
-> OK.  We however will still not use the array at all when we do not
-> need it, so it would be between accessing uninitialized bytes vs
-> accessing 0-bytes by mistake?  With my devil's advocate hat on, I
-> wonder if this would lead to more sloppy users saying "I am not
-> following the pointer; I am merely stopping when I see a NULL
-> pointer at the end of the array" or something silly like that
-> without checking the validity of the array itself (which presumably
-> can be inferred by inspecting some other member in the containing
-> struct, right?)".
+Nit: Everywhere in this commit message, it would be a bit clearer and
+easier to read with:
 
-Yes, code may be equally wrong to look at uninitialized versus zero
-bytes, depending on what it's doing. I don't think "stop when you see
-NULL" is a danger here; this is an array of structs, one of which now
-happens to be NULL (rather than an array of char pointers, which might
-imply that NULL is the end).
+s/cat-file --batch-command/`cat-file --batch-command`/
 
-Some of that sloppiness already exists. For instance, before my series,
-check out intersect_paths(). If we are removing an element from the
-list, we clean it up like this:
+> for a given object, it is natural to add another command in cat-file
+> --batch-command to print object info for a given object from a remote.
+>
+> Add `remote-object-info` to cat-file --batch-command.
 
-	for (j = 0; j < num_parent; j++)
-		if (combined_all_paths &&
-		    filename_changed(p->parent[j].status))
-		strbuf_release(&p->parent[j].path);
+s/`remote-object-info`/a new `remote-object-info` command/
 
-but if we allocated for 3 parents and have only gotten to the second
-pass, all of parent[2] will never have been filled in. We zero
-initialize the parents in that function, so there's no memory error. But
-it is relying on the fact that filename_changed() will reject a zero
-status to avoid calling strbuf_release() on a zero'd strbuf (which
-incidentally also works, but violates the strbuf API).
+[...]
 
-Now in that case we are zero-ing, so it is not one of the uninitialized
-cases that Wink ran into. But even if he had tried to be careful with:
+> To summarize, `remote-object-info` gets object info from the remote and
+> then loop through the object info passed in, printing the info.
 
-  if (filename_changed(p->parent[i].status))
-	/* ok to look at p->parent[i].path */
+s/loop/loops/
 
-it would not have worked, because that status would have been
-uninitialized, too.
+> +remote-object-info <remote> <object>...::
+> +       Print object info for object references `<object>` at specified
+> +       `<remote>` without downloading objects from the remote.
+> +       Error when the `object-info` capability is not supported by the s=
+erver.
 
-> > Let's just zero the parent field to be consistent with the
-> > combine_diff_path_new() allocator.
-> 
-> But I like the "let's be consistent" reasoning, so I wouldn't
-> complain ;-)
+I think it's more grammatically correct to use "Error out when..." or
+"Raise an error when..." than just "Error when..."
 
-So yeah. This is the part that I think is really helping new code.
-Changing the strbuf to a pointer makes it even simpler (you do not even
-have to check the status at all), but this is the commit that is
-preventing undefined behavior. ;)
+Also maybe: s/server/remote/
 
--Peff
+> +       Error when no object references are provided.
+
+Here also "Error out when..." or "Raise an error when..."
+
+> +       This command may be combined with `--buffer`.
+
+[...]
+
+>  If no format is specified, the default format is `%(objectname)
+> -%(objecttype) %(objectsize)`.
+> +%(objecttype) %(objectsize)`, except for `remote-object-info` commands w=
+hich use
+> +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not sup=
+ported yet.
+> +WARNING: When "%(objecttype)" is supported, the default format WILL be u=
+nified, so
+> +DO NOT RELY on the current the default format to stay the same!!!
+
+s/current the default/current default/
+
+>  CAVEATS
+>  -------
+>
+> +Note that since %(objecttype), %(objectsize:disk) and %(deltabase) are
+> +currently not supported by the `remote-object-info` command, we will err=
+or
+
+s/error/raise an error/
+
+or maybe:
+
+s/error and exit/error out/
+
+> +and exit when they are in the format string.
+
+s/are/appear/
+
+> @@ -45,9 +48,12 @@ struct batch_options {
+>         char input_delim;
+>         char output_delim;
+>         const char *format;
+> +       int use_remote_info;
+
+"unsigned int" might be a bit better for bool fields like this.
+
+Actually it seems to me that this field is set to 0 and 1 in some
+places but we never read it, so I wonder if it's actually useful.
+
+>  };
+
+> @@ -579,6 +585,61 @@ static void batch_one_object(const char *obj_name,
+>         object_context_release(&ctx);
+>  }
+>
+> +static int get_remote_info(struct batch_options *opt, int argc, const ch=
+ar **argv)
+> +{
+> +       int retval =3D 0;
+> +       struct remote *remote =3D NULL;
+> +       struct object_id oid;
+> +       struct string_list object_info_options =3D STRING_LIST_INIT_NODUP=
+;
+> +       static struct transport *gtransport;
+> +
+> +       /*
+> +        * Change the format to "%(objectname) %(objectsize)" when
+> +        * remote-object-info command is used. Once we start supporting o=
+bjecttype
+> +        * the default format should change to DEFAULT_FORMAT
+
+s/DEFAULT_FORMAT/DEFAULT_FORMAT./
+
+> +       */
+> +       if (!opt->format)
+> +               opt->format =3D "%(objectname) %(objectsize)";
+> +
+> +       remote =3D remote_get(argv[0]);
+> +       if (!remote)
+> +               die(_("must supply valid remote when using remote-object-=
+info"));
+> +
+> +       oid_array_clear(&object_info_oids);
+> +       for (size_t i =3D 1; i < argc; i++) {
+> +               if (get_oid_hex(argv[i], &oid))
+> +                       die(_("Not a valid object name %s"), argv[i]);
+> +               oid_array_append(&object_info_oids, &oid);
+> +       }
+> +       if (object_info_oids.nr =3D=3D 0) {
+> +               die(_("remote-object-info requires objects"));
+> +       }
+
+We prefer to drop '{' and '}' and use "!X" instead of "X =3D=3D 0" when
+possible, so:
+
+       if (!object_info_oids.nr)
+               die(_("remote-object-info requires objects"));
+
+Thanks.
