@@ -1,235 +1,86 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4FB20A5D0
-	for <git@vger.kernel.org>; Fri, 10 Jan 2025 11:48:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051DA19ABDE
+	for <git@vger.kernel.org>; Fri, 10 Jan 2025 12:02:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736509722; cv=none; b=LV0o5XuzmRG/rnzkT/OwsLZwmvfDNbhxfl3uDOmY/vFJbYTf6Ba7if2xTRIsLIabwP4WcMcOhlDnAvLBJBKi2kKk6etR7pCwILbBrmhSQucFxwC7u6ZQfGIKLSx+xBB8WUFS/2K773tvWQ4p8wJYERfHzqaGqII2APn/ARA4XyY=
+	t=1736510546; cv=none; b=P5gs1+/xBG/CeMox9B1NeAuCO74qor5GfrnHFksqiTP5W7QdH3SBiSip83p61RMUctkxO/GzHc6HyVbXnzbfuAye/2N9ZQbSc7Ge91O6ZIhFuqGE+T6+IFDGGMqaszjNQnkQkp25wev6wOUtxMUbohEeOorHEgzmQSbyVwS9khQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736509722; c=relaxed/simple;
-	bh=565ZdZR1x9heOOAOVTDTRpG/e5RLzhIhGIkrSfv5VR8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=JM70/to4YYljyraEqQQ+nKz/tfZ7MsqatbZczsyzqIjMk0iaBAnmbsDgrgOcPuVUWqX9asjQJw45ckjkX7cU45CuyqIIeIY/i4yjQZweuHIo1FUAOmsXhwO5kPLS3p7gCDgWnAJUJeQszEDrcD7dbrX/vjBDs8RjHoHIFh7BFL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O/6Nc0Ay; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736510546; c=relaxed/simple;
+	bh=DZ58T8yARp549GwKwWWwtuJf0hxz/5YIjUozHJwVzL8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LgO1GEAVMix848aJ6bgPXVQjWlV77sIF5CEUlwB3t8+LaZgk0mXt4F58wbk2Oy66whh4gmK8tLXO7yCD0X+AUCgEcwa2hvBM2a99cX5nBgsmjRtqLUQhE5sZ4A5MVtyx6fU1/uwyXTR/9AokJuLENQjb+YOWQKPnN7dttVqWDos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VNHdc46m; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O/6Nc0Ay"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4361f664af5so22824425e9.1
-        for <git@vger.kernel.org>; Fri, 10 Jan 2025 03:48:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736509719; x=1737114519; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=edajGr2NvW41lj07QSpnZ7vKpPHBErjn6/MSHF0iXRc=;
-        b=O/6Nc0AyXxeFjZVs32Sb7aKlBjc6hrY+5hu5TxwTarke9xQZUyqemjWFbTdAuVaF5R
-         uN5oFPiveAaLXds89MDdvG/HlCZem87xpShg7aWmESySOSPR0VDKKPsZ2WIJ1J2M/rOf
-         w9I9k3ImnrnDc2XqEeB6zTVV618Rv4DRvbSu4pnjui3otC/+nXXlH5R8r2KcMC4rpl/u
-         anwoKi2K/jHgTF5tKivWVlP9F4emEhBVNWX85RuipykpNvlaQ+dKVS+my3XEZ2o+hDK/
-         hUis36U98FyWWFf9cbfKpXDVLX+swrHQCn3xplDQZUdATSTmD/kXagNt8GbbvWmmdSWj
-         oQEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736509719; x=1737114519;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=edajGr2NvW41lj07QSpnZ7vKpPHBErjn6/MSHF0iXRc=;
-        b=s5/72H5BXBKwWx7Mks4F/3VuUf0T2UIJeV6ZvWWgxGMR26AWn7c/EOcVfRFQCfIyIF
-         44gSzRuXqWdawhDY8hry/fsoeOLtHdWnPqNvHhL5hkCwgIqJPkGYMXqxAeO+D9p/zT9H
-         2tfSN35xRiJR1+u+I1AWprRlR/s1sBbFiXprKw1jUdBbgf+bnJ9YkJd6o2sniWPbbwSH
-         Sa/Q2Y8negtSblpl+N2C1GZ5v2nmoLYKi/hLw1uSP276XnLwT+Brhmo2EhVe4TAIK5Uj
-         8UdrFfBkajD0eP5kd/aud+w3Nj4LgbK+zj+g+s6no5F6nihppOTTltp32JPx+d7Z1F9w
-         eCLA==
-X-Gm-Message-State: AOJu0YwGlhQOj5rV+IpegChdC0ISX29qaAlr+KBFPjX3x7+OU0nq1moa
-	lngTgX5j7UfXN9seF7KhNVP1+sFgLsbj0UiOBwZ7zlY+Tcqn+iWSGdxkYA==
-X-Gm-Gg: ASbGncvVK5GLywr7VnoTyKiRyllhm8WlPwhAPew525d3iU7pLcZH94MwE07S0zt/BBW
-	Zhq4SAc6vKBDx2tIKP6eYuCWLapC0lxB/WdikkniK4s1QWTAwAf6IZfp/zNzKwPbhZw5r9QnKdI
-	GrMhWjboNCoC+MfTC92N3Ev4RrsLbnbwAbhoAWQlcpumOyi6ihd/tlKCQdLc2k2JcWt0qjpB5bx
-	ff/vVlhn8YSZiGIWtleF1PCZCkglvYm/5Fy1usoev5SwNQJaS2xer8tPA==
-X-Google-Smtp-Source: AGHT+IGltAi/S1gyC0wIv/JWbxikPAyNnmLMlv071CiBgw8r++fVYU1G4Q4hlNa43wHt+eRl9QU5uQ==
-X-Received: by 2002:a05:600c:1ca5:b0:436:1971:2a4 with SMTP id 5b1f17b1804b1-436e26c3efamr103105685e9.17.1736509718710;
-        Fri, 10 Jan 2025 03:48:38 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e9e37d74sm49782045e9.29.2025.01.10.03.48.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jan 2025 03:48:38 -0800 (PST)
-Message-Id: <pull.1850.v2.git.1736509717426.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1850.git.1736432663587.gitgitgadget@gmail.com>
-References: <pull.1850.git.1736432663587.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 10 Jan 2025 11:48:37 +0000
-Subject: [PATCH v2] GIT-VERSION-GEN: allow it to be run in parallel
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VNHdc46m"
+Received: (qmail 4534 invoked by uid 109); 10 Jan 2025 12:02:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=DZ58T8yARp549GwKwWWwtuJf0hxz/5YIjUozHJwVzL8=; b=VNHdc46moeRswzms/JVSRsFpr01I8qrp20BfkmE/Y4nYKOkVsX+7/PRmjl+hfsi00IXqORAb2L2uHvirsl8uhgue9O3NaAG77aHMHuQOkqlzrDmL96K5QdcN2wAfTCaIoB75C9n4co2EKAJid4J7F2HTfyIs+tb4J0WDsjtIwAvm/EskH3tWmTA3U/0CjWVyBN7Q2vO2nkHVEfJdLPsMl8EFTXvWFVixILjCWnHNH0GsuOkUiEeJjTlToDwZMaRhiab6I2BvAzQp0Nd9KEfqw3hzhImqbvC8NsB6I77aeI2RrLT3PQFWEJTjLHuBjfnvguWjaJd0dZ1ieYpdXgdVxw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 Jan 2025 12:02:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5361 invoked by uid 111); 10 Jan 2025 12:02:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Jan 2025 07:02:23 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 10 Jan 2025 07:02:23 -0500
+From: Jeff King <peff@peff.net>
+To: Olly Betts <olly@survex.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: git grep: ^$ false match at end of file
+Message-ID: <20250110120223.GC1014503@coredump.intra.peff.net>
+References: <20250109235255.GA3418@survex.com>
+ <20250110114308.GB1014503@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Martin =?UTF-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250110114308.GB1014503@coredump.intra.peff.net>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Fri, Jan 10, 2025 at 06:43:08AM -0500, Jeff King wrote:
 
-"Why would one want to run it in parallel?" I hear you ask. I am glad
-you are curious, because a curious story is what it is, indeed.
+> I'll stop digging on it for now (but adding Junio to the cc as the
+> author there). Probably it would have been faster just to start with a
+> debugger than to look through the history. ;)
 
-The `GIT-VERSION-GEN` script is quite a pillar of Git's source code,
-with most lines being unchanged for the past 15 years. Until the v2.48.0
-release candidate cycle.
+OK, my curiosity got the better of me. This fixes it:
 
-Its original purpose was to generate the version string and store it in
-the `GIT-VERSION-FILE`.
-
-This paradigm changed quite dramatically when support for building with
-Meson was introduced. Most crucially, a38edab7c88b (Makefile: generate
-doc versions via GIT-VERSION-GEN, 2024-12-06) changed the way the
-documentation is built by using the `GIT-VERSION-GEN` file to write out
-the `asciidocor-extensions.rb` and `asciidoc.conf` files with now
-hard-coded version strings.
-
-Crucially, the Makefile rule to generate those files needs to be run in
-every build because `GIT_VERSION` could have been specified in the
-`make` command-line, which would require these files to be modified.
-
-This introduced a surprising race condition!
-
-And this is how that race surfaces: When calling `make -j2 html man`
-from the top-level directory (a variant of which is invoked in Git for
-Windows' release process), two sub-processes are spawned, a `make -C
-Documentation html` one and a `make -C Documentation man` one. Both run
-the rule to (re-)generate `asciidoctor-extensions.rb` or
-`asciidoc.conf`, invoking `GIT-VERSION-GEN` to do so. That script first
-generates a temporary file (appending the `+` character to the
-filename), then looks whether it contains something different than the
-already existing file (if it exists, that is), and either replaces it if
-needed, or removes the temporary file. If one of the two parallel
-invocations removes that temporary file before the other can compare it,
-or even worse: if one tries to replace the target file just after the
-other _started_ writing the temporary file (but did not finish writing
-it yet), that race condition now causes bad builds.
-
-This may sound highly theoretical, but due to the design of Git's build
-process, Git for Windows is forced to use a (slow) POSIX emulation layer
-to run that script and in the blink of an eye it becomes very much not
-theoretical at all. See Exhibit A: These GitHub workflow runs failed
-because one of the two competing `make` processes tried to remove the
-temporary file when the other process had already done so:
-
-https://github.com/git-for-windows/git-sdk-32/actions/runs/12663456654
-https://github.com/git-for-windows/git-sdk-32/actions/runs/12683174970
-https://github.com/git-for-windows/git-sdk-64/actions/runs/12649348496
-
-While it is undesirable to run this script over and over again,
-certainly when this involves above-mentioned slow POSIX emulation layer,
-the stage of the release cycle in which we are presently finding
-ourselves does not lend itself to a re-design where this script could be
-run once, and once only, but instead dictates that a quick and reliable
-work-around be implemented that prevents the race condition without
-changing the overall architecture of the build process.
-
-This patch does that: By using a filename suffix for the temporary file
-which is based on the currently-executing script's process ID, We
-guarantee that the two competing invocations cannot overwrite or remove
-each others' temporary files.
-
-The filename suffix still ends in `+` to ensure that the temporary
-artifacts are matched by the `*+` pattern in `.gitignore` that was added
-in f9bbaa384ef (Add intermediate build products to .gitignore,
-2009-11-08).
-
-Helped-by: Martin Ågren <martin.agren@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    GIT-VERSION-GEN: allow it to be run in parallel
-    
-    Changes since v1:
-    
-     * Appended + again, to get the benefit of the .gitignore pattern that
-       prevents the temporary files from being committed.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1850%2Fdscho%2Fasciidoctor-extensions-gen-race-work-around-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1850/dscho/asciidoctor-extensions-gen-race-work-around-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1850
-
-Range-diff vs v1:
-
- 1:  7a1c39b9075 ! 1:  4057596dc16 GIT-VERSION-GEN: allow it to be run in parallel
-     @@ Commit message
-          guarantee that the two competing invocations cannot overwrite or remove
-          each others' temporary files.
-      
-     -    Incidentally, this also fixes something else: The `+` character is
-     -    not even a valid filename character on Windows. The only reason why Git
-     -    for Windows did not need this is that above-mentioned POSIX emulation
-     -    layer also plays a couple of tricks with filenames (tricks that are not
-     -    interoperable with regular Windows programs, though), and previous
-     -    attempts to remedy this in git/git were unsuccessful, see e.g.
-     -    https://lore.kernel.org/git/pull.216.git.gitgitgadget@gmail.com/
-     -
-     -    This commit fixes one of the issues that are currently delaying Git for
-     -    Windows v2.48.0-rc2.
-     +    The filename suffix still ends in `+` to ensure that the temporary
-     +    artifacts are matched by the `*+` pattern in `.gitignore` that was added
-     +    in f9bbaa384ef (Add intermediate build products to .gitignore,
-     +    2009-11-08).
-      
-     +    Helped-by: Martin Ågren <martin.agren@gmail.com>
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-       ## GIT-VERSION-GEN ##
-     @@ GIT-VERSION-GEN: sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
-       	-e "s|@GIT_USER_AGENT@|$GIT_USER_AGENT|" \
-       	-e "s|@GIT_DATE@|$GIT_DATE|" \
-      -	"$INPUT" >"$OUTPUT"+
-     -+	"$INPUT" >"$OUTPUT".$$
-     ++	"$INPUT" >"$OUTPUT".$$+
-       
-      -if ! test -f "$OUTPUT" || ! cmp "$OUTPUT"+ "$OUTPUT" >/dev/null
-     -+if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$ "$OUTPUT" >/dev/null
-     ++if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$+ "$OUTPUT" >/dev/null
-       then
-      -	mv "$OUTPUT"+ "$OUTPUT"
-     -+	mv "$OUTPUT".$$ "$OUTPUT"
-     ++	mv "$OUTPUT".$$+ "$OUTPUT"
-       else
-      -	rm "$OUTPUT"+
-     -+	rm "$OUTPUT".$$
-     ++	rm "$OUTPUT".$$+
-       fi
-
-
- GIT-VERSION-GEN | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index 6d1cb66d69a..2e2d0811581 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -86,11 +86,11 @@ sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
- 	-e "s|@GIT_BUILT_FROM_COMMIT@|$GIT_BUILT_FROM_COMMIT|" \
- 	-e "s|@GIT_USER_AGENT@|$GIT_USER_AGENT|" \
- 	-e "s|@GIT_DATE@|$GIT_DATE|" \
--	"$INPUT" >"$OUTPUT"+
-+	"$INPUT" >"$OUTPUT".$$+
+diff --git a/grep.c b/grep.c
+index 4e155ee9e6..9eac3dd95d 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1470,10 +1470,12 @@ static int look_ahead(struct grep_opt *opt,
+ 		hit = patmatch(p, bol, bol + *left_p, &m, 0);
+ 		if (hit < 0)
+ 			return -1;
+ 		if (!hit || m.rm_so < 0 || m.rm_eo < 0)
+ 			continue;
++		if (m.rm_so == *left_p)
++			continue; /* don't match nothing */
+ 		if (earliest < 0 || m.rm_so < earliest)
+ 			earliest = m.rm_so;
+ 	}
  
--if ! test -f "$OUTPUT" || ! cmp "$OUTPUT"+ "$OUTPUT" >/dev/null
-+if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$+ "$OUTPUT" >/dev/null
- then
--	mv "$OUTPUT"+ "$OUTPUT"
-+	mv "$OUTPUT".$$+ "$OUTPUT"
- else
--	rm "$OUTPUT"+
-+	rm "$OUTPUT".$$+
- fi
+ 	if (earliest < 0) {
 
-base-commit: a60673e9252b08d4eca90543b3729f4798b9aafd
--- 
-gitgitgadget
+but it is weird to me that patmatch() will match "^$" to the end of the
+buffer at all. It is just calling regexec_buf() behind the scenes, so I
+guess this is just a weird special case there, and may even depend on
+the regex implementation. If I pass "-P" to use pcre instead, the
+problem goes away even without my patch.
+
+If we skip look-ahead the problem also goes away. I'd have thought
+match_line() would have the same problem, but there we process line by
+line, and regexec_buf() never even sees the newline.
+
+So I guess the rationale is: some regexec implementations are weird
+about this special regex, and we should not trust their result with it
+on a whole buffer with newlines.
+
+-Peff
