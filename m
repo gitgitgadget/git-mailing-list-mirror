@@ -1,97 +1,103 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2AD20A5FE
-	for <git@vger.kernel.org>; Fri, 10 Jan 2025 10:13:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182F218FC80
+	for <git@vger.kernel.org>; Fri, 10 Jan 2025 10:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736504036; cv=none; b=tfhsc09M5tQg7Fr7qd8YTcZVbVNTlKoVjqEChiq4abHcRk7/kNFdnbengeHa48nF3dL/TZhFDctVEPReTiXpoGvVAfXWD3M7Sl65kt2ZGtBWkOc+yOKV+FyYvqc9E84hwcsHIy1du09icxFRyZJN93g72Fq3k+q5YyhWY/DnsRc=
+	t=1736505488; cv=none; b=T1uDY1PluvvlVX+i5d5KBxGXp8UQ4T523Omkp9kqSYS4jB6WXbFQujzwolS55QIERVNDMsMT/o11gIZubrEVG1uLq4dS9b7FDN8vADjR/4qpMHxqsuMQa6VNwJ5x3oHH/QZurWQkzNtRIM9QRRUCbA9ZUP/AsW2DufC/dANpmAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736504036; c=relaxed/simple;
-	bh=7amw9nj9NJ1j/3kBtBdHqY3ID1VPpy7+TJ/UPPWXXRs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=nFrxg5Uw+6F6FJmnFPouK/xedikBG65XjA3+EuD2I+fiEVBZjAISoLH6DIT6fnMMEIqOWUQYg0nIKiVVg5YRJnstw9Qg3UHE0/1fxacuov83vRSLwZlPHRHhJsEbE3JVeUUmkaJ4Ap2qAsKEjJ8sE93CBwyY4QmXpfYbJgSgNeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SGDME+zZ; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736505488; c=relaxed/simple;
+	bh=AemW2tGbPa52KWEr4A/um1p2c3YgNhyoYCMVnoeisfI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ejiI/gTrDh2wkE3GQQZTUsL2kwNishJO0xErhRuTl9KUzCa80yoNB7Y1ytUlvsUWJyevT4IGieUIUsik7aNRAx/ORQOLQlWsBKPSIgBoJYriZq4/30Z5lP/2Hr1B8NWntZq507mLAfDz3ECj3p2JMkF1OSrNyCZ7vxEYlozjqaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Z9djMkEV; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SGDME+zZ"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2eec9b3a1bbso2575375a91.3
-        for <git@vger.kernel.org>; Fri, 10 Jan 2025 02:13:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736504034; x=1737108834; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5FRGKAaH/Ep9wiQvSqtJye4MJ3Cuz+uaxnWS1XrQQaw=;
-        b=SGDME+zZ47ZoBnjNfQgY/tM0qEPizovFK0SGP0YCvDZvEqZUzuXMTydo4JZjPr/45X
-         h1hsNzL5d82V9YLWf7RMICmh1kvIZcQ31BpxFZRlXD40Q5P1eod+wx5NIuGo5JU2FZGy
-         W+XhiOApyBzMuliVdQ8JckRwwF5p5ZKT3lprvWRrm8UTdUCzKhqxx80UydkPUAchRBvv
-         qBYcTG0cTv+t+MZGnJedYO+V6MY7nnRMFYok5RctqPSRDs3Zxv5YRqQI/ujnt+U5LtBK
-         L2ohUA90kjMk4GgKzIpGVlnRMho3mOZJ8eak+uNO0/A0nRFCAF1FjrbGqWW2RFcnCjZC
-         P2Lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736504034; x=1737108834;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5FRGKAaH/Ep9wiQvSqtJye4MJ3Cuz+uaxnWS1XrQQaw=;
-        b=vIX8RFSO7cTac62sZ01AVZae3jSOZUZJG51/5hy/+4F7tCG2MUzmC5vkPOeyUYCbi2
-         4ZT9Sv7H8Fu/QSWY/c2q84RktqL5lzm6glH4OLmDpM1FXB7jbGuzscUjrgpMvbNg6eO0
-         oYDLW2JWDwvIVBYOrjzIp84ad8nyroW5WPUh4FbqPz9PpOAQ/J8uKxkzJmYiUvVQ7lU+
-         8t3XerXMu3ONCRM4koV3NeD4eNUZ5b5VD7Rmul9xQS/TI9gA5tfJgtlVHtDEiSTLVXGu
-         AJuvwBRi0rDdD+DIa9q1D57fDCOkSjKWD5QEkLbtBMIkq6KeYKZPlneMIcITI8sYdt9g
-         dL8Q==
-X-Gm-Message-State: AOJu0YwgHu1JuzNAWkqhpT6W1DRL9VPYnnN49jmOEIl4HFmgff2t0D8t
-	ZS6SPcZVlF2jjzEJv/vI/VArtFBrMGZvmGYVSFufcsdHxfJh6zl3yBUa4s+5GeOOvg==
-X-Gm-Gg: ASbGncuzfHnK10jBMS7tN57AnSlsVU3gTLGsveBN7tSXKR1G2Dq3mPHpMsrLUcKicok
-	dWMSyKRvhL+BEuZKHOT8SY1ElmtD8CvyZuOfYy2QhRxKraavY2JK5JWM3YwoQoy2EvOA8u0H+qo
-	5gSGRGx1B4RppGQ7uJG6g4Y3hfHgzgoWCQKiMUdwT0fbD2y/eI/LcuF6xRS/yfgRmkbOa3w5yXu
-	wFb/B7Pp/r9kQoU3xAoMNasC7bTkUidCnTJtdSaB/TEl756PJq0F3aBAkSiwh/v
-X-Google-Smtp-Source: AGHT+IFtlI4SZcRz2PXc/uvASHO1sTxIGPmnu+IMAkaLLxksUtG1ZwA0FM9AfVm0zVgeQT3MY2lExQ==
-X-Received: by 2002:a17:90b:2e0b:b0:2ee:ab29:1a57 with SMTP id 98e67ed59e1d1-2f548e9a5b7mr15518956a91.2.1736504033974;
-        Fri, 10 Jan 2025 02:13:53 -0800 (PST)
-Received: from localhost.localdomain ([95.174.71.28])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f5593fed9bsm2971849a91.18.2025.01.10.02.13.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jan 2025 02:13:53 -0800 (PST)
-From: Alecs King <alecsk@gmail.com>
-To: git@vger.kernel.org
-Cc: Arti Zirk <arti.zirk@gmail.com>
-Subject: [PATCH] instaweb: fix ip binding for the python http.server
-Date: Fri, 10 Jan 2025 18:13:46 +0800
-Message-ID: <20250110101346.30416-1-alecsk@gmail.com>
-X-Mailer: git-send-email 2.47.1
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Z9djMkEV"
+Received: (qmail 3651 invoked by uid 109); 10 Jan 2025 10:37:59 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=AemW2tGbPa52KWEr4A/um1p2c3YgNhyoYCMVnoeisfI=; b=Z9djMkEVNQef+YK5B756ouZuSA07D7AomosLiHpPh/1xxce8jV65yxwdbRHTH0za5ULN60BOfV54ZCVc9a1oZfLqm0WVUOSoaM+ABEHWXv5P90PFpdS0EPQD81G6UF0A3Zx14+n3chiFqYa4IAGoVRogcFnvVRBaQNMTHld3ARTyM+xUB2LMWb50/ZJSWDI0DPf46w4R+0ak+pkwbnPbR1I5zto9w6mpmvZI+yVbr86LH56vcci2tN7qX7zs2c0NWJzHx1c+0HgW+fxCDMrWtnQHURN91rTdvmhC2x9+azDQulubuo3JPMxb25bOOMRoi/kA+9SyInj1Qq8BViETYQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 10 Jan 2025 10:37:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3918 invoked by uid 111); 10 Jan 2025 10:37:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 10 Jan 2025 05:37:57 -0500
+Authentication-Results: peff.net; auth=none
+Date: Fri, 10 Jan 2025 05:37:56 -0500
+From: Jeff King <peff@peff.net>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 7/8] csum-file: introduce hashfile_checkpoint_init()
+Message-ID: <20250110103756.GA1014709@coredump.intra.peff.net>
+References: <cover.1732130001.git.me@ttaylorr.com>
+ <cover.1736363652.git.me@ttaylorr.com>
+ <94c07fd8a557c569fdc83015d5f3902094f21994.1736363652.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <94c07fd8a557c569fdc83015d5f3902094f21994.1736363652.git.me@ttaylorr.com>
 
-`git instaweb -d python` should bind the server to 0.0.0.0
-`git instaweb -d python -l` should bind the server to 127.0.0.1
+On Wed, Jan 08, 2025 at 02:14:51PM -0500, Taylor Blau wrote:
 
-Signed-off-by: Alecs King <alecsk@gmail.com>
----
- git-instaweb.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> Introduce and use a new function which ensures that both parts of a
+> hashfile and hashfile_checkpoint pair use the same hash function
+> implementation to avoid such crashes.
 
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 5ad50160bb..7b44f70789 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -694,9 +694,9 @@ class GitWebRequestHandler(CGIHTTPRequestHandler):
- 		return result
- 
- 
--bind = "127.0.0.1"
-+bind = "0.0.0.0"
- if "$local" == "true":
--	bind = "0.0.0.0"
-+	bind = "127.0.0.1"
- 
- # Set our http root directory
- # This is a work around for a missing directory argument in older Python versions
--- 
-2.47.1
+That makes sense. This should have been encapsulated all along, just
+like the actual hash initialization happens inside hashfile_init().
 
+A hashfile_checkpoint is sort of inherently tied to a hashfile, right? I
+mean, it is recording an offset that only makes sense in the context of
+the parent hashfile.
+
+And that is only more true after the unsafe-hash patches, because now it
+needs to use the "algop" pointer from the parent hashfile (though for
+now we expect all hashfiles to use the same unsafe-algop, in theory we
+could use different checksums for each file).
+
+So in the new constructor:
+
+> +void hashfile_checkpoint_init(struct hashfile *f,
+> +			      struct hashfile_checkpoint *checkpoint)
+> +{
+> +	memset(checkpoint, 0, sizeof(*checkpoint));
+> +	f->algop->init_fn(&checkpoint->ctx);
+> +}
+
+...should we actually record "f" itself? And then in the existing
+functions:
+
+>  void hashfile_checkpoint(struct hashfile *f, struct hashfile_checkpoint *checkpoint)
+
+...they'd no longer need to take the extra parameter.
+
+It creates a lifetime dependency of the checkpoint struct on the "f" it
+is checkpointing, but I think that is naturally modeling the domain.
+
+A semi-related thing I wondered about: do we need a destructor/release
+function of some kind? Long ago when this checkpoint code was added, a
+memcpy() of the sha_ctx struct was sufficient. But these days we use
+clone_fn(), which may call openssl_SHA1_Clone(), which does
+EVP_MD_CTX_copy_ex() under the hood. Do we have any promise that this
+doesn't allocate any resources that might need a call to _Final() to
+release (or I guess the more efficient way is directly EVP_MD_CTX_free()
+under the hood).
+
+My reading of the openssl manpages suggests that we should be doing
+that, or we may see leaks. But it may also be the case that it doesn't
+happen to trigger for their implementation.
+
+At any rate, we do not seem to have such a cleanup function. So it is
+certainly an orthogonal issue to your series. I wondered about it here
+because if we did have one, it would be necessary to clean up checkpoint
+before the hashfile due to the lifetime dependency I mentioned above.
+
+-Peff
