@@ -1,266 +1,160 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBACB14F135
-	for <git@vger.kernel.org>; Fri, 10 Jan 2025 07:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339A3207A05
+	for <git@vger.kernel.org>; Fri, 10 Jan 2025 07:43:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736494106; cv=none; b=S/49uHoAQ3antrfjhpF/8nO96/LEPuQLFfdtq+bnl3Ift+8CIP4+dLyS+OKMr4JzhToqA9SSs4BlUq2w2yAMzJsmwLUrgypZPMyd5zEmsOWcYi+5U7mxf+bYcMbFfo01KJrxcRL7yLyVyxp8bKxZg3cCAhyDRVq0H9GAjzHz14Q=
+	t=1736495013; cv=none; b=XhorIgCAAF+5RNd5YppYzcyG3ORgKgGBJWZM7iHC/xMTRP+op3fkGEdVm/432fHizZ2jHT3II0L7EqgSxwIm4E798XgdPTOz3hThG6UI6l1WI2v26+dZCfEu/yAo8fIfxLoWb6CYlzWqusCvuTSYhCqiZm+pNgyxfVjHhqgYo2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736494106; c=relaxed/simple;
-	bh=bo9YJfl4rKUuqe3j42oKJRPDoqm+hkup0j2jddMV13s=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=u00DoOmH4JZSkW0gwuRwxJXbKCRptdmHrDVZUcMtsJsDV6aJUWxP1UzA3MjtY7h9cSnNGyLsUUeM8c7VDcyqdnB87C7w3MENb4KcDx8Z9ZW4MtiKZ430OYHFOK1joQR33/IqG6gQSm1sfP9ZSzSSfcCDpruBnEq659NfKQJTvpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hGG6TVrj; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1736495013; c=relaxed/simple;
+	bh=yWN9e7h/1sX3p4bpdeu5Pgl6WeNBr5S/8pOwS0ZnkRA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dlh8fqMeWhv3Ak1ENZH8J3HwK/0DVSOA45YGNXMD1pWMIYpoglELVUULYxy02bGAYKyvQlsPBmRg7XqDJxaYmMYr78LnFboXWrpB8juUum5eNYfQcTh6RniuIuI8+qKiEkcMYCBzu3fZhj/o/uT336hnXsrKEAjdcgICq6kERB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NxKNczZ8; arc=none smtp.client-ip=209.85.167.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hGG6TVrj"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-4361dc6322fso12429625e9.3
-        for <git@vger.kernel.org>; Thu, 09 Jan 2025 23:28:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NxKNczZ8"
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-540218726d5so1761813e87.2
+        for <git@vger.kernel.org>; Thu, 09 Jan 2025 23:43:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736494102; x=1737098902; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1736495009; x=1737099809; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y7e0dalqjep/Pg5h2IIBKq12oVqbWhDCULIi1W/4XYc=;
-        b=hGG6TVrjAdN8ftS4GHha9b6KLuuXKX65gpI1NER4n7nO8Uy7fgU2jbq8ctiA5oJbos
-         QCHU653aCDdyeJJwBkbKitydGiiVgk2Wu/XhaTUxWWprQteew5YDOhzs38RgTo7d4hB1
-         Cwp/jh1E9cu24ZVFlB/IbcfLU3m928MGskEkE4lGOKary9IS4aODDk9gQJGys176NUwa
-         fTERt72OVDz1rdYiVqAtRU5BlDYjQX0DOny5NhM1OneibFeS/RKrA8GavsgX4cGdjw8y
-         d+XEiVDca0UQ6J3oErP01/jQ3L0xOdOvcPSXqoY+A49fBMZv7dm2V3gs/9nUogGPJLqW
-         bT1w==
+        bh=N4uQ9Q39Lw8AEQaqoQe7+/zaBcOehMvQhdOzpBwatAs=;
+        b=NxKNczZ8T4oyjvD9+mxiEAPdHrRatj08ojfuW5lsifmzKGdxHUtG+Ly3MnHDiUs2Vx
+         j/w5yO+d/E5+6lEIpEf5oTzTUEOBNQS8P3zrznK70PnaGha2K7ANN5VLkZsZCrMcWo9r
+         SRZGmdzOIVAZiSLk83d72KY2+keh4lKHWE8/WMGBMYkBYZad5Q6so31YcIqjKXtorSAr
+         hNgOfqwmNeZxlTraJJ2boiRiprozHKQNV2GrNgKHnSCKJBulbjcBNx+6Wjp+LrB1OlVM
+         vFg5t0Y1S5aNtulNb+K/Z4ca2MmdoYLoEtz+kVcnHM8RTfxLAkRLWRxpTZmueFlguY39
+         FikQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736494102; x=1737098902;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1736495009; x=1737099809;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Y7e0dalqjep/Pg5h2IIBKq12oVqbWhDCULIi1W/4XYc=;
-        b=SHUvZu9tePxPsiUR0ZR4AmWbjCIEPhjvgPY5CliDCvMcAuXp/2pbRL2R0DWLV23Mja
-         LNp7dHOkPBm7uTW/5zTi+XZrfZQqCQya6ksJb0xvEio/TwykoDdOvEEg/HK1kl7N3aTa
-         dxh5y2aslWhWmmaQQqHknepD5VWOcGyUfx0dSTA9nt6+8zlp4Jy+MkNU9urKfxqjLvcg
-         8Om9DlK1nl16jwXZRG323tDEXOis5w+GwWQETKFo+asIVVJ0qLDLptI62seBzC8rpdHb
-         4K50qk8iSElfxdrEehfJJVsMnmcSgM+oCKT4GPSjceZAW+NOMYunvWCOhUqcuabBWcgh
-         nCWw==
-X-Gm-Message-State: AOJu0YzwSLmsAmg4aGs6Bg3UATac3NN56bUmBO2nvJXBwmLZ/Iq+FEA1
-	sRHfFcnhwIkTAg49yRI54DPouH0wPtJZ4go8DPtE744mRY1sLQ7j2Usq1g==
-X-Gm-Gg: ASbGncvhLC1UF6fKFouB3RhuTYX1JgWrm5ogSguzFMQvJ5tmVREX914y6b5VEnYft3f
-	scnYP+CyTp0/hskEZxyAGiPK5W33zbUr8S9aC55+tRhG1ZnJdx0wVU8Iy95RBho0YpN1JGPX8WW
-	IixHMv1RnDBfV21A15aZuyEeyHXd23FD6NPg9+eP/KHKTql4AXjj/GC5JBBRctGkP5XcPkhtyPO
-	/mL4DG29GtyL6p8TJA9ARwGU3chQ1kPjLLeF5pM3zrmIHxRTlvSoEjkhw==
-X-Google-Smtp-Source: AGHT+IFGRIsqFxJAiviAh2vL7lsWl0Kuq+Z5DSVQt4voCs6riJfTQxbFxTalPaX28PP8zp1z5V9U2A==
-X-Received: by 2002:a05:600c:1c14:b0:436:1ac2:1ad2 with SMTP id 5b1f17b1804b1-436e26c0400mr84593405e9.19.1736494102080;
-        Thu, 09 Jan 2025 23:28:22 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-436e2dc0babsm77659575e9.14.2025.01.09.23.28.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Jan 2025 23:28:21 -0800 (PST)
-Message-Id: <pull.1814.v2.git.1736494100622.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1814.git.1730937889182.gitgitgadget@gmail.com>
-References: <pull.1814.git.1730937889182.gitgitgadget@gmail.com>
-From: "Adam Murray via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 10 Jan 2025 07:28:20 +0000
-Subject: [PATCH v2] trace2: prevent segfault on config collection where no
- value specified
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=N4uQ9Q39Lw8AEQaqoQe7+/zaBcOehMvQhdOzpBwatAs=;
+        b=gbUb+YcIPwzbHn6xmHHS5DzT+gdpgnYAIJ3numx1soBdCz+7yB/JpQDD8nwPqUrxYN
+         fDHiwiQ/4pPamwjFOwHsVLlatebAiet4GwZdYRahhdqfPgyR1PyEmECBcyfMuhAQ+kk9
+         YgeGDsNu4OogV54Ew++KXWV0Oki60L0FeGU2Zv0jvC15gLfcnb3IaWhSuCw/BffHGvbq
+         7fIFfpZOm/b+YrG26DJcGcd6iYjw98b3iCLkc4BmXbmcI9rKMjgk7IhaVLdLK/p2ePXn
+         xN68vi5fNvRT0nkFPNj9WIHYP+Yn6eHLj8hE49xJKZjUOXR5S6C+LwTB+jtLDt1pk754
+         Bpdg==
+X-Forwarded-Encrypted: i=1; AJvYcCXvQciJCtP/w/92yN8aEy4g8tlwPOPMcsJ/4uCcN+WB99sM3DdQ1J28ImP6cnI+H2QQpdc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw89oKORSKHQeldB38CgUVOBzAOwlqmqRYL/THZbNfvsvsPY8Yh
+	r9DTUkNF291f5nR6JY4IB+YXlj/jGit3OsSXwBdjRsb0r8Twc9wi1nNi/MGeD9+aVfMeZMlfjDY
+	H9YuFqQSAnMLteO1gfeEPbsmElVk=
+X-Gm-Gg: ASbGnctl+Oph0kHZl7P2YYjN83PEBhl2y726xyfQZrOJODwlsdH67CjbVvZObeaee9W
+	YGFKiVFYo80DE2+05srpY5iX5wX96VApMz0t6RUAChU71z/TlDl6P/XR69lS7wPxI9ekXvPs=
+X-Google-Smtp-Source: AGHT+IFEAEk6japN3qkIZoyTLy7goh7pKLEXB+dsUQIopHpu2wIUUnr1Fio/H86Gq2KI1tXCeCwatPJ/WzBQAuV+xgA=
+X-Received: by 2002:a05:6512:10cc:b0:53e:3729:eaf6 with SMTP id
+ 2adb3069b0e04-542845d1cf0mr2939684e87.27.1736495008864; Thu, 09 Jan 2025
+ 23:43:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Adam Murray <ad@canva.com>,
-    Adam Murray <ad@canva.com>
+References: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
+ <pull.1869.v2.git.git.1736419777235.gitgitgadget@gmail.com> <xmqq5xmoj6cz.fsf@gitster.g>
+In-Reply-To: <xmqq5xmoj6cz.fsf@gitster.g>
+From: Scott Chacon <schacon@gmail.com>
+Date: Fri, 10 Jan 2025 08:43:17 +0100
+X-Gm-Features: AbW1kvZgQNTa2FYSq21pQwpcAsN8hnHjw8-n5eAH2c2EUtIbWxMECMHx5dS2kAw
+Message-ID: <CAP2yMaJzHM+AyDwjfVNJrDeJt0iip5h_ZxgNJL3V-gVSOjoBWQ@mail.gmail.com>
+Subject: Re: [PATCH v2] help: interpret boolean string values for help.autocorrect
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Yongmin <yewon@revi.email>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Adam Murray <ad@canva.com>
+Hey,
 
-When TRACE2 analytics is enabled, a git config option that has no value
-causes a segfault.
+On Thu, Jan 9, 2025 at 5:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+> The flow looks nice, but the pre-context of this hunk starts like
+> this:
+>
+>                 if (!value)
+>                         return config_error_nonbool(var);
+>                 if (!strcmp(value, "never")) {
+>                         cfg->autocorrect =3D AUTOCORRECT_NEVER;
+>                 } else if (!strcmp(value, "immediate")) {
+>                         cfg->autocorrect =3D AUTOCORRECT_IMMEDIATELY;
+>                 } else if (!strcmp(value, "prompt")) {
+>
+> IOW, the new code added at the end of the if/else if/ cascade is way
+> too late.
+>
+>         "[help] autocorrect"
+>
+> that specifies "true" has already been rejected as an error, with a
+> now-stale error message saying that the variable is not a Boolean.
 
-Steps to Reproduce
-GIT_TRACE2=true GIT_TRACE2_CONFIG_PARAMS=status.*
-git -c status.relativePaths version
-Expected Result
-git version 2.46.0
-Actual Result
-zsh: segmentation fault GIT_TRACE2=true
+I'm not super familiar with this codebase, honestly, but ifaict this
+is not what this does. That top block makes sure that value isn't
+null, which I can't figure out how it would ever be - I've tried a
+bunch of different config values, but I'm not sure it's possible to do
+- and if so it just prints "missing value for help.autocorrect" (the
+nonbool part of that function is something of a misnomer, it appears).
+But again, I can't see how those two lines aren't essentially a no-op.
 
-This adds checks to prevent the segfault and instead return
-an empty value.
+> We may probably want to use git_parse_maybe_bool_text() upfront,
+> like
+>
+>         static int parse_autocorrect(const char *value)
+>         {
+>                 switch (git_parse_maybe_bool_text(value)) {
+>                 case 1:
+>                         return AUTOCORRECT_IMMEDIATELY;
+>                 case 0:
+>                         return AUTOCORRECT_NEVER;
+>                 default: /* other random text */
+>                         break;
+>                 }
+>                 if (!strcmp(value, "prompt"))
+>                         return AUTOCORRECT_PROMPT;
+>                 ...
+>                 if (!strcmp(value, "prompt"))
+>                         return AUTOCORRECT_PROMPT;
+>
+>                 return 0;
+>         }
+>
+> and then in git_unknown_cmd_config(), do something like
+>
+>         if (!strcmp(var, "help.autocorrect")) {
+>                 int v =3D parse_autocorrect(value);
+>
+>                 if (!v) {
+>                         v =3D git_config_int(var, value, ctx->kvi);
+>                         if (v < 0)
+>                                 v =3D AUTOCORRECT_IMMEDIATELY;
+>                 }
+>                 cfg->autocorrect =3D v;
+>         }
 
-Signed-off-by: Adam Murray <ad@canva.com>
----
-    trace2: prevent segfault on config collection where no value specified
-    
-    cc: Jeff King peff@peff.net
+I _can_ do this, but it seems somewhat more complicated and I believe
+it would have the same end result, no?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1814%2Fad-murray%2Ffix-trace2-segfault-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1814/ad-murray/fix-trace2-segfault-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1814
+Also, in thinking about this a bit more, while I updated the patch
+with the suggestion to make it accept all boolean text values rather
+than the "1" hack, it should be kept in mind that if someone does do
+this, that config setting will be backwards incompatible with previous
+Git versions in a way that will have a fatal error if it encounters a
+string boolean value when a command is mistyped. Maybe that's not
+super horrible, but I'm honestly not sure that accepting more boolean
+string values is helpful - it's been 17 years of this feature and I
+doubt that many people have tried to set it to 'on' or probably would
+in the future.
 
-Range-diff vs v1:
+Anyhow, I'm happy to redo this patch in the manner suggested, but
+personally I think the first simple DWIM hack is a realistically
+better solution.
 
- 1:  24ba9db7aa1 ! 1:  fd7bed52dda trace2: prevent segfault on config collection where no value specified
-     @@ Commit message
-          Actual Result
-          zsh: segmentation fault GIT_TRACE2=true
-      
-     -    This adds a null check to prevent the segfault and instead return
-     -    the "empty config value" error.
-     +    This adds checks to prevent the segfault and instead return
-     +    an empty value.
-      
-          Signed-off-by: Adam Murray <ad@canva.com>
-      
-     @@ t/t0210-trace2-normal.sh: test_expect_success 'bug messages followed by BUG() ar
-      
-       ## trace2.c ##
-      @@ trace2.c: void trace2_def_param_fl(const char *file, int line, const char *param,
-     - 	int j;
-     - 	const char *redacted;
-     - 
-     --	if (!trace2_enabled)
-     -+	if (!trace2_enabled || !value)
-     + 	if (!trace2_enabled)
-       		return;
-       
-     - 	redacted = redact_arg(value);
-     +-	redacted = redact_arg(value);
-     ++	redacted = value ? redact_arg(value): NULL;
-     + 
-     + 	for_each_wanted_builtin (j, tgt_j)
-     + 		if (tgt_j->pfn_param_fl)
-     +
-     + ## trace2/tr2_tgt_event.c ##
-     +@@ trace2/tr2_tgt_event.c: static void fn_param_fl(const char *file, int line, const char *param,
-     + 	event_fmt_prepare(event_name, file, line, NULL, &jw);
-     + 	jw_object_string(&jw, "scope", scope_name);
-     + 	jw_object_string(&jw, "param", param);
-     +-	jw_object_string(&jw, "value", value);
-     ++	if (value)
-     ++		jw_object_string(&jw, "value", value);
-     + 	jw_end(&jw);
-     + 
-     + 	tr2_dst_write_line(&tr2dst_event, &jw.json);
-     +
-     + ## trace2/tr2_tgt_normal.c ##
-     +@@ trace2/tr2_tgt_normal.c: static void fn_param_fl(const char *file, int line, const char *param,
-     + 	enum config_scope scope = kvi->scope;
-     + 	const char *scope_name = config_scope_name(scope);
-     + 
-     +-	strbuf_addf(&buf_payload, "def_param scope:%s %s=%s", scope_name, param,
-     +-		    value);
-     ++	strbuf_addf(&buf_payload, "def_param scope:%s %s", scope_name, param);
-     ++	if (value)
-     ++		strbuf_addf(&buf_payload, "=%s", value);
-     + 	normal_io_write_fl(file, line, &buf_payload);
-     + 	strbuf_release(&buf_payload);
-     + }
-     +
-     + ## trace2/tr2_tgt_perf.c ##
-     +@@ trace2/tr2_tgt_perf.c: static void fn_param_fl(const char *file, int line, const char *param,
-     + 	struct strbuf scope_payload = STRBUF_INIT;
-     + 	enum config_scope scope = kvi->scope;
-     + 	const char *scope_name = config_scope_name(scope);
-     +-
-     +-	strbuf_addf(&buf_payload, "%s:%s", param, value);
-     ++	strbuf_addstr(&buf_payload, param);
-     ++	if (value)
-     ++		strbuf_addf(&buf_payload, ":%s", value);
-     + 	strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
-     + 
-     + 	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
-
-
- t/t0210-trace2-normal.sh | 8 ++++++++
- trace2.c                 | 2 +-
- trace2/tr2_tgt_event.c   | 3 ++-
- trace2/tr2_tgt_normal.c  | 5 +++--
- trace2/tr2_tgt_perf.c    | 5 +++--
- 5 files changed, 17 insertions(+), 6 deletions(-)
-
-diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-index b9adc94aab4..4047ab562a4 100755
---- a/t/t0210-trace2-normal.sh
-+++ b/t/t0210-trace2-normal.sh
-@@ -244,6 +244,14 @@ test_expect_success 'bug messages followed by BUG() are written to trace2' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'empty configuration values are handled' '
-+  test_when_finished "rm trace2.normal actual expect" &&
-+  echo >expect &&
-+  GIT_TRACE2="$(pwd)/trace2.normal"  GIT_TRACE2_CONFIG_PARAMS=foo.empty \
-+	  git -c foo.empty config foo.empty >actual &&
-+	test_cmp expect actual
-+'
-+
- sane_unset GIT_TRACE2_BRIEF
- 
- # Now test without environment variables and get all Trace2 settings
-diff --git a/trace2.c b/trace2.c
-index f894532d053..49e7d1db88f 100644
---- a/trace2.c
-+++ b/trace2.c
-@@ -762,7 +762,7 @@ void trace2_def_param_fl(const char *file, int line, const char *param,
- 	if (!trace2_enabled)
- 		return;
- 
--	redacted = redact_arg(value);
-+	redacted = value ? redact_arg(value): NULL;
- 
- 	for_each_wanted_builtin (j, tgt_j)
- 		if (tgt_j->pfn_param_fl)
-diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-index 45b0850a5ec..8e09485c83c 100644
---- a/trace2/tr2_tgt_event.c
-+++ b/trace2/tr2_tgt_event.c
-@@ -491,7 +491,8 @@ static void fn_param_fl(const char *file, int line, const char *param,
- 	event_fmt_prepare(event_name, file, line, NULL, &jw);
- 	jw_object_string(&jw, "scope", scope_name);
- 	jw_object_string(&jw, "param", param);
--	jw_object_string(&jw, "value", value);
-+	if (value)
-+		jw_object_string(&jw, "value", value);
- 	jw_end(&jw);
- 
- 	tr2_dst_write_line(&tr2dst_event, &jw.json);
-diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-index baef48aa698..924736ab360 100644
---- a/trace2/tr2_tgt_normal.c
-+++ b/trace2/tr2_tgt_normal.c
-@@ -307,8 +307,9 @@ static void fn_param_fl(const char *file, int line, const char *param,
- 	enum config_scope scope = kvi->scope;
- 	const char *scope_name = config_scope_name(scope);
- 
--	strbuf_addf(&buf_payload, "def_param scope:%s %s=%s", scope_name, param,
--		    value);
-+	strbuf_addf(&buf_payload, "def_param scope:%s %s", scope_name, param);
-+	if (value)
-+		strbuf_addf(&buf_payload, "=%s", value);
- 	normal_io_write_fl(file, line, &buf_payload);
- 	strbuf_release(&buf_payload);
- }
-diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index a6f9a8a193e..19ae7433ef8 100644
---- a/trace2/tr2_tgt_perf.c
-+++ b/trace2/tr2_tgt_perf.c
-@@ -446,8 +446,9 @@ static void fn_param_fl(const char *file, int line, const char *param,
- 	struct strbuf scope_payload = STRBUF_INIT;
- 	enum config_scope scope = kvi->scope;
- 	const char *scope_name = config_scope_name(scope);
--
--	strbuf_addf(&buf_payload, "%s:%s", param, value);
-+	strbuf_addstr(&buf_payload, param);
-+	if (value)
-+		strbuf_addf(&buf_payload, ":%s", value);
- 	strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
- 
- 	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
-
-base-commit: 8f8d6eee531b3fa1a8ef14f169b0cb5035f7a772
--- 
-gitgitgadget
+Scott
