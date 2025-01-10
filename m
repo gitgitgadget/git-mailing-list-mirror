@@ -1,122 +1,132 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EBB20D513
-	for <git@vger.kernel.org>; Fri, 10 Jan 2025 14:21:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD9520C017
+	for <git@vger.kernel.org>; Fri, 10 Jan 2025 14:26:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736518922; cv=none; b=kGAx31olrTmUtfcBWW65dSzOxn+ZWwgRxcPlEPD7ZDKDWezjm8UjrTp7gBvUTJQ4i3RjID2JA99Z7jJxi1UEmHpu0A+O0F0Tlo42A4XW15/34BLpB8qQ8Qzclta+765ga221WPbYP6A1mtx/kcmCS2MtPoXBGeNm4ybf2CyJQGg=
+	t=1736519217; cv=none; b=izkaf3mvRCPtmYBXHfiiOHRrhVrYYbXsHK+6JVE4bH9gYSPDK6xYUbNn00sEKjp5L4nMSrKuQHKqKXleR3N+LNJCq/QgosmuYMxVKNFdo2YyhlEjEdF+WqpTK36rhNt2ywKUvSWwTCpmJoFQYyK7+M6mrvmZg+BYtnnEdi99qHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736518922; c=relaxed/simple;
-	bh=PQl7P1xCPfwhQtuh0u+QobDCQSu/3hv8e3xpcTZVt+A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bC6yAzIEbIaPy212WjkyUnPk29jILfXWkg176rit/pYw2sZP/wrur3ja9pDPwJX478WDVEzlajH3BthAmgz+5reUvmLatgrGmMeNTv8QmgQjJls1Fquav74unaPxGmT9KfD5gOt+/H5Xf+VUje1AIp2zVbGC7FeB+oOw+ruGUpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=1tvqVT5J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wl7w4Szj; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736519217; c=relaxed/simple;
+	bh=SrrOOb+prrArHSKKnKUJFBcYLDHeBVqisBRsgoygquc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pB4yx4jiOYj1RP/GL0L2tGW1bet8rFbM87lEu8Tfuo+sB01pb+yfaHxiONfSgFOl5dJ5Mt0g5IaAiSvJ2+7v6/RFYOVK80Afcnw53//LTeD7l40KGwTt+XSNMDKo/DbmFvF3FpVAvI5SO9V8fsbrWQvhwlPR3tt5ciMsaJKT3eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DkoUO+c1; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="1tvqVT5J";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wl7w4Szj"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id E20541140130;
-	Fri, 10 Jan 2025 09:21:58 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 10 Jan 2025 09:21:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736518918; x=1736605318; bh=g3ZgieqJQo
-	RxNuV6ljxZQnzoPq/ABcQZd8xMEjoG2hs=; b=1tvqVT5J6SaWWE7yrqbZ8x0UHL
-	WnrWHK8yXrpPY6hwHY/0EtVOtXyAVvlahslhIkwyQ8wS2vnGjd8md4kIIihrdrFE
-	+aCn9wfuCLyFmL9kWJe3W4wKU877ed1afw3PZI+8/h42UlytvmvEeDsYV4XQBniA
-	Y7tKoqUR1g4Ua0qqPmI/qDYDrQwKh0S8X2l7n2u4YYNKjdp+IVVo3Ed3JStJmOWs
-	mYwaks4nF43JJMb8CB0OJpKB16U4OgXzWmsgNHUY/LBDiqjwnE/bVv8ZUFu6pZ4E
-	gWAUGH2YVf4YdOAIVmC9hzVgKEGvZWW/A9aRRUedJcKZEEwcCNpms5Vu+dXg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736518918; x=1736605318; bh=g3ZgieqJQoRxNuV6ljxZQnzoPq/ABcQZd8x
-	MEjoG2hs=; b=Wl7w4SzjB9FhGgBmHsHU8m4AndrtJVWfjmfxq6NYG1fTWC9WhW7
-	wKJcWEC4CNNGI8spnS3cgj1W+7hBee9W14kXpofqqfncB7Nkc6WeY+WJH30gVW3C
-	r/V6Wnx6GqqPzBdpWs3oWx71Eiliyl8yn0bAyDRJ7qG1fhSyidTu5ctUPFY0rigD
-	vsdLSoVyXlDQNlZ3uv4SjNJH2W0YWZj3fKwS1AQ0+xNEQfHf4WPwuaY/I3PLNvLT
-	hFhi4KtMHos+9XT5nZc2I4XY1iT+ldeZvWSM/Ewj3vHcLm4d5UzWIw9F4lH+ktzp
-	dVA+8kS6i/mS+E9/wOC2dsFvIrRz/tNGXsA==
-X-ME-Sender: <xms:Bi2BZ-d427DRtJyWRCVGb2Tfe6avnTrX_PBmhsKRAogy__Y5soI3cA>
-    <xme:Bi2BZ4Mg_IpEGc0-wHSR_4stRaVuvtCTkWQfLuADsTtMMGuYXJXZGU_6WKfk9Gde4
-    MWtbuBVDmp8mNqqag>
-X-ME-Received: <xmr:Bi2BZ_jhszwSaZbN82E7_iwgJcAIpicfmUxmpsrzARdj5jadTBha5DUwq4hUkFM0AdlEvBs3v3iee3ovQFITn-GkZ0gepYoild8E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegkedgieefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvghsrd
-    hstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepphhssehpkhhsrdhimhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkh
-    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Bi2BZ79yHxubADMFdpmHXZp8IgNSQYbHCOmZlpeEhHnETgN3zf4BJg>
-    <xmx:Bi2BZ6s503PbfwGzbCIMjRdIoj9aJDat63eNd_647ZeKKVlfgc2Trw>
-    <xmx:Bi2BZyHMSQuIyxYersyndQ7eV-QXgDk_-3-42XaWG-ttVfVFzhqu2g>
-    <xmx:Bi2BZ5Mh21rCFTq2L4iqb2lneQsWrOjmZQhpMOMANcROJ2JFz-DVcQ>
-    <xmx:Bi2BZ8WXn5msbYn36HUJP7DBU0jQ8zx5xcneiP-4Gop5O6Yg7mTdxmc_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Jan 2025 09:21:58 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 2/2] builtin/blame: fix out-of-bounds write with
- blank boundary commits
-In-Reply-To: <992502eb-5131-228e-1915-a35038211f4b@gmx.de> (Johannes
-	Schindelin's message of "Fri, 10 Jan 2025 14:00:41 +0100 (CET)")
-References: <20250110-b4-pks-blame-truncate-hash-length-v3-0-e61f25b68f30@pks.im>
-	<20250110-b4-pks-blame-truncate-hash-length-v3-2-e61f25b68f30@pks.im>
-	<992502eb-5131-228e-1915-a35038211f4b@gmx.de>
-Date: Fri, 10 Jan 2025 06:21:56 -0800
-Message-ID: <xmqq5xmmagvv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DkoUO+c1"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-aa6b4cc7270so322314966b.0
+        for <git@vger.kernel.org>; Fri, 10 Jan 2025 06:26:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736519214; x=1737124014; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fbWFlBMgO79luOLA/Hrdr2l6+F5xJQP6Yc2Hmf0ztO8=;
+        b=DkoUO+c1/KDB5Fl7bJwthbyTsr9i5Lhx3Sz6fx79TwDFFtnxS7IWvlpSJ5Nxbc96hV
+         5Pf4zxTT1RucO4jciqBIRhZl/9NVgi5MQqyNqzc6738yQNofUd8vYi4a41buy6BLKEN+
+         1qZj48dO2JtpLEeOmnRh3fIrQ9J8IMGT1yHfOLZkiNX5YN7Vtx2rrqJg8DWKA6A3fjnu
+         yYfg2crP9W7EoyqbwTIKzb3m9JJI23A53DpaRbVj5a3Tc9ehdbDSFZ5Ad75FtRPZTrSB
+         bFe30GbHWlM6ZxpcMDKbWnbGw+gQaIfa8LQmK3fGGD1w7AZ/4D3cZNbuOlD8q1q8Erdo
+         qcNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736519214; x=1737124014;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fbWFlBMgO79luOLA/Hrdr2l6+F5xJQP6Yc2Hmf0ztO8=;
+        b=TgIwAFu4fW2ugKjgnclbLtYTc4b7mT1JV/dOswWOeLfYHUq0sWHoH4qlMpThhvOUfJ
+         8DF7huiQYk7AhKY3YnynDIpTfRlFJyGOJeR6em6ELfam+adthzy6BbWJT7QZycCu6+Y0
+         Zq4yjSUG/wKVjeqOUFpjcfLoxjRp3ha6xkV6BfQTyXPvN+u5ZxxpKB6B+35yab8sHUa5
+         43zbf3rx2SIBphdmGlUHAdHlVAT3IhkUCadmmE62f9KspSoFyF311+C0CK5Yt7rpOT3P
+         al/uqvl0TtKgXX5xaCbuOAakO0i5YVdD78hpGw3nfeTVhygxdnd3MEz1VXFjgMQdYXc4
+         42Ew==
+X-Gm-Message-State: AOJu0YwfbxYwZLNApTVOkoOS1GTBWmrk07PtfdQkmLiVuVjYGMre0uN1
+	nh8pghzded5Jiyutz5kdIZ+ijefiYAnIsp0JnqejmzOi9vsJv41XDv0psyfyS4HWT7Z0VwPejdU
+	oeHM5HFtjZDsg55Yubm7vU2MEbDFekrSc
+X-Gm-Gg: ASbGncslWO2r8gP4NrVm5PVL9/oNyqVOZzyZrEeyVghT5QePVjAw/oohgWgXUviWC+4
+	UGpwpoe9wRkf+qMDQzB2lf1wAwRbxHgK5KbYiUPgY
+X-Google-Smtp-Source: AGHT+IHOtv/acBYyYSRysxbepMUf0y316aRV8haLySOXFzVAiVcmSRmnMazX2xaYh7QfghtTqPVh26Quh06TTf5n/Oc=
+X-Received: by 2002:a05:6402:4405:b0:5d4:35c7:cd7a with SMTP id
+ 4fb4d7f45d1cf-5d972e0b20cmr25107342a12.10.1736519213717; Fri, 10 Jan 2025
+ 06:26:53 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20250108183740.67022-1-eric.peijian@gmail.com> <20250108183740.67022-4-eric.peijian@gmail.com>
+In-Reply-To: <20250108183740.67022-4-eric.peijian@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 10 Jan 2025 15:26:41 +0100
+X-Gm-Features: AbW1kvawweqneLzLJFco10YqUaXp4y_MSZQTayoabPlCzrPF5xgv7allo9nrXmQ
+Message-ID: <CAP8UFD1U3P6ef9x58MBvrhDhdMn_3qe+Pjmf1L=Mi8Q5Ge0EPg@mail.gmail.com>
+Subject: Re: [PATCH v9 3/8] cat-file: split test utility functions into a
+ separate library file
+To: Eric Ju <eric.peijian@gmail.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
+	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
+	jltobler@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+About the commit subject, maybe something like the following would be
+a bit shorter:
 
-> On Fri, 10 Jan 2025, Patrick Steinhardt wrote:
+t1006: split test utility functions into new "lib-cat-file.sh"
+
+On Wed, Jan 8, 2025 at 7:38=E2=80=AFPM Eric Ju <eric.peijian@gmail.com> wro=
+te:
 >
->> diff --git a/builtin/blame.c b/builtin/blame.c
->> index d7630ac89cb7bd6e9ce5d72c6a98aa433b3b12da..7555c445abe7ca2fa54670ac8fee1d95a6dbafe3 100644
->> --- a/builtin/blame.c
->> +++ b/builtin/blame.c
->> @@ -489,9 +489,9 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
->>  			fputs(color, stdout);
->>
->>  		if (suspect->commit->object.flags & UNINTERESTING) {
->> -			if (blank_boundary)
->> -				memset(hex, ' ', length);
->> -			else if (!(opt & OUTPUT_ANNOTATE_COMPAT)) {
->> +			if (blank_boundary) {
->> +				memset(hex, ' ', strlen(hex));
->
-> Using `strlen()` is a neat trick.
->
-> I could have done without slipping in a style change (introducing
-> curlies), but the most important thing is that it fixes the bug.
+> This refactor extracts utility functions from the cat-file's test
 
-Thank both of you for these last-minute fixes.  Hopefully we can
-have them in today's release, and we didn't miss unexpected side
-effects in them, I hope ;-).
+s/test/test script/
 
+> t1006-cat-file.sh into a dedicated library file. The goal is to improve
 
+s/a dedicated library file/a new "lib-cat-file.sh" dedicated library file/
 
+> code reuse and readability, enabling future tests to leverage these
+> utilities without duplicating code
+
+s/code/code./
+
+> diff --git a/t/lib-cat-file.sh b/t/lib-cat-file.sh
+> new file mode 100644
+> index 0000000000..9fb20be308
+> --- /dev/null
+> +++ b/t/lib-cat-file.sh
+> @@ -0,0 +1,16 @@
+> +# Library of git-cat-file related tests.
+
+s/tests/test functions/
+
+> +
+> +# Print a string without a trailing newline
+
+s/newline/newline./
+
+> +echo_without_newline () {
+> +       printf '%s' "$*"
+> +}
+> +
+> +# Print a string without newlines and replaces them with a NULL characte=
+r (\0).
+
+s/replaces/replace/
+
+> +echo_without_newline_nul () {
+> +       echo_without_newline "$@" | tr '\n' '\0'
+> +}
+> +
+> +# Calculate the length of a string removing any leading spaces.
+
+This might be a bit misleading as leading spaces are removed from the
+output from `wc -c`, not from the string.
+
+> +strlen () {
+> +       echo_without_newline "$1" | wc -c | sed -e 's/^ *//'
+> +}
