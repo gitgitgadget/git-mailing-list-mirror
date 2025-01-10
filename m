@@ -1,207 +1,165 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D05D209F5E
-	for <git@vger.kernel.org>; Fri, 10 Jan 2025 11:21:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B50220B1F1
+	for <git@vger.kernel.org>; Fri, 10 Jan 2025 11:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736508073; cv=none; b=DBCS3JaOu4t3HwRsjpueIUq+E5L+X6raZYIXszP+f5r7qGuUZY+4iXsZ4CT366yA/fMUTHEDwT/XAuM5CCFnB1+DUABgrYyxiNtibLriT2s+uhtFV2b1ppEN3LDUvBEnDOL/KKc0pzSEr2MH+zfoBaEs9UaXam+zlhlWdgvcUEE=
+	t=1736508388; cv=none; b=VTAcxiU7i7KlEgn5S43UMe86oHfjXPSb0gaO6lxJPgw44adLOQFcXYPVM0rX/N5dtJ694d7f/HUVipEW+w2UzDaz1cakiZ+Hpprfuob/8axDSbwXOEWaV2iLt3asnXTe6EuGmfOZI7L9Rf86U9oSLAKthuC65suEFGjMhJjmOOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736508073; c=relaxed/simple;
-	bh=vQLmhOLVXFNQfPG9pJzKgAxhz8lXWBbzS3o7ql+gAV0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=c7WuEiBb7ocqQ14LvC+6Qld1Jv1Qe6V1ddB5mMBwgprdN4CzHj212+lXYoUsoWbB1gToTD9oNDT/SCzo+tKYK892/x9jTjdJ4EtVv0pSTUzpSPJg7O/NGDOOwpfPRYcU/zaQNYMLOmvGITqVgCOs4Flj3UgioYwfa7vGEuVHY4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XyHmq2uR; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736508388; c=relaxed/simple;
+	bh=9Qv9F4qiPOvPTXUsFRFBmGJWID0W//7vRrtWgG2USFo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=r5khrfB59I2ztvj4wmStaiFhWBcj3BpC2E1PIsRhBeyfrZ6kOQiDMQ64uvp/As8ei2MaZ53Raqziep2EUOH8uxFp0lMEVjC3onSmsh72i/aYitQeghGwlqlu1i5BMAoYfWGoTifZz/R6xYebXir2L3tbW6pwIeXLAeWNBAHDgME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=n1sfF8ws; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qY+/lB3G; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XyHmq2uR"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-aa6b4cc7270so298918266b.0
-        for <git@vger.kernel.org>; Fri, 10 Jan 2025 03:21:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736508068; x=1737112868; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BYhNAMozNqoWfCVpAZRTjcJhOcBCMq743NR9omU6jR4=;
-        b=XyHmq2uRG7a2khiOC2K+jNZim+r742Xw52042hPo1U+VpDUZxS686r+uXjYdrp/jrC
-         V0HwjQ3HCa9uyKf5CVl5lZQzLk1xjghiEw78PshRbtW+8VuhcuuCW/f1QuIa6H5Z+qgg
-         sjciTKA7RgZ5PF6u8kZVxaCSlb7YzgNWyiK+DaEizzG3s4dbEMbw5tYebiuqLpz0tcXh
-         +y46ivtiuGW7pvivQoc9XKZGz/rdgqVtsmZ4sHQmrClF4iGJaa8G/FyJJ33nMDaZQDOO
-         ucXQMocGf+yXagkBl/0CYuUz/MXZWjMtPecL3IndXNTya5WDlbYh/sIJsfniEDQ+eV2S
-         pTbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736508068; x=1737112868;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BYhNAMozNqoWfCVpAZRTjcJhOcBCMq743NR9omU6jR4=;
-        b=lJMc/RA6hjK4yL6A7mbFO/p3/83vE8ID1zEBmM/NfjUfmRabCA5wnURbfkeCuPaHDm
-         E35i/kFs1zPMMufK0A3+plTrD5GW6JiLY2UDZihM+Tsp23wXtRL8BJXlgeSbujQITWB3
-         KPzvfb+lSF2jTTVefEsti1I3XmuHzFVRPBoIsMBoByG4EbmHfQS/x4kvZ92sqwvEFTWv
-         t4m1uV+0rJ060c7JjPHXdBoksnntKCAFT+KcROiGLWO4muhFFAdxB+TNzbulE1Z+sTuv
-         WPZBGR8yZhc22F1gkVuEIlL7ehC79KHQbZbhRf3uiYFGFkVBtljnkyBstiDRgYUJl13t
-         ttwQ==
-X-Gm-Message-State: AOJu0YzDkHmO2mHGHoTQpzlDbyI+hAco7mEq0lUvo8dBKASIG0x+u+57
-	GZYFb2CKGNGH3Fc96ffb5DBKci7mv8NApzaIoMb50ubxWkE55Z/lM9ni/2Hl1IG7gwH5QS4P/DV
-	hYjiozeUXghAGa5feT7wqUvydBbqj2kyC
-X-Gm-Gg: ASbGncuIv1WrSHeLwTzsMwZ5aQjcrDKJxE16vNQKVOYeWq/ZWKGBfHY4rIsOx4bH4Be
-	tnH0t/9wGKJbXv9LWvFbcSFx37hx4NPyudb6aIT9Q
-X-Google-Smtp-Source: AGHT+IFWS46b+0CF7fBakCMCZBx9RX7I7Sb7u56Cxyl0BzPdvD4b5JkgYGFmy/InzPNRwROKAbzoqN9EQ5/CQd9FUvA=
-X-Received: by 2002:a05:6402:35ca:b0:5d0:d818:559d with SMTP id
- 4fb4d7f45d1cf-5d972e0b954mr25031343a12.11.1736508068057; Fri, 10 Jan 2025
- 03:21:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="n1sfF8ws";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qY+/lB3G"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5A0DF1380BD0;
+	Fri, 10 Jan 2025 06:26:25 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 10 Jan 2025 06:26:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736508385;
+	 x=1736594785; bh=cxKXDjrTIsAIqkYLotjFaJ3ksS+WHoQ7qvP20IqLnSY=; b=
+	n1sfF8ws5na6vPaBauxwivOyF+0qdTrKIK3Lib0d8N+I6+QCaZ0gv4tALuCY83gb
+	BNyhat+sOb6M+GLYmuPaVGpfDO7gexLboiydxEunGVPqGlSkQzc15fa5/wIxRU1D
+	ydVs6V49dDJbeIwq3DXZDELwfcnb510+eKb1DxcVC0YBWPuKI4qYp6WqiB2J7txj
+	OIlCrz52Wj8/yiQZupQ0+IOdF417G1Q5uEaiLoScMo53R4nmXs+BqdU7S4D5Sy3s
+	crhOS0kixNc9ydIZ5CSFMqUhR++qhu9mRecdhNrweknB2KgARaKIgwgJRqTy1KN4
+	lKD3a66BdtwIgoUmYGFrxA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736508385; x=
+	1736594785; bh=cxKXDjrTIsAIqkYLotjFaJ3ksS+WHoQ7qvP20IqLnSY=; b=q
+	Y+/lB3GN1CdJwyM8vFCcVLHZbISVXv3073eFpEm23mWSsWv7bQYxt+c73tCjlhwb
+	HVNNJVb6vmT14SZ0CqnLzhkG/FsDLmMzkKAULwhsK1k2Tj/wjReWhYLnhVEw8KSR
+	96mAsPr2+CbPl7HAEj/xcZSVWrwS4sLZ7ZoSYJbGQc/ydaJEj+tJn+fSoccWCfHg
+	BKtaVO0yBkOj6MhI6onuibRcIlkPDqV1UNrs+lsNMejTEuOJGii8KWcTc3mFhsEk
+	BTcfXvxRNiEBkEIVCnw6gV2jSHP7JqjLuzEh7XXgun1qoKg6K/lnJmM6veslwCpV
+	0JJGEMdstyzaSRKrutrPg==
+X-ME-Sender: <xms:4QOBZzcWEgN_E-GmiilFffmgLZ2-MFvEV7BhYfSYw6maYSmXGkZhSg>
+    <xme:4QOBZ5P7UgNOZDcTM3zTBPFJJfiUtXkjxcpFgVWVlNQHE734F59JIjbbX4q8SpGhm
+    D2ODfzI2WfCQsCxFA>
+X-ME-Received: <xmr:4QOBZ8iHP1XEnO2mFqDIQqvzD3P7bMEpxXAPMSrUWOoWpULnNMdI4hFRv3hJjS1_vHVYt9cbSGpXmBvWudvmMLttANHy416t6YI--l2fY5ShIQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegkedgvdekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffufffkgggtgfgjfhfvvefosehtjeertdertdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedtheef
+    hfegffevgeegtdfhheeuvdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
+    mhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhh
+    rghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhn
+    uggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:4QOBZ0_sTUFGPZVlXjVE46UqNLoRNVSyZFgArkngr5ZuGQkURxzS6Q>
+    <xmx:4QOBZ_tblGfnW4JXXYVdSxpf9ICnjtWLvfmhrOkonYZ8TAWo2Cb3qg>
+    <xmx:4QOBZzFIGVteDdBtm_CDOe72l06iCSUb2pZlI6kqK1mWgXi3iwX_kw>
+    <xmx:4QOBZ2NUaf6dJsjz7Vf3xVjSm7sNs2W3kQRDzqcX1_Ex2G7-8A9vRA>
+    <xmx:4QOBZ5LsPTsRiMhnNxJ5O0dJL7AJHc05ErRLmThLA_9EHl5cG3RteDTr>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Jan 2025 06:26:24 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 926c24fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 10 Jan 2025 11:26:20 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 0/2] builtin/blame: fix out-of-bounds reads and writes
+Date: Fri, 10 Jan 2025 12:26:16 +0100
+Message-Id: <20250110-b4-pks-blame-truncate-hash-length-v3-0-e61f25b68f30@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20250108183740.67022-1-eric.peijian@gmail.com> <20250108183740.67022-9-eric.peijian@gmail.com>
-In-Reply-To: <20250108183740.67022-9-eric.peijian@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 10 Jan 2025 12:20:55 +0100
-X-Gm-Features: AbW1kvbFgeA6TCT659TIKchccNWconyTvv1gXv-5NZK18nc6jor0qczLA7Y8gF0
-Message-ID: <CAP8UFD0TBYi0CGOfNYH9FtL3odrqaxz0w1q36RK3gS-Z3pJAmw@mail.gmail.com>
-Subject: Re: [PATCH v9 8/8] cat-file: add remote-object-info to batch-command
-To: Eric Ju <eric.peijian@gmail.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
-	jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANgDgWcC/5XNTQ6CMBCG4auQrh3TIgXqynsYF/0ZaSMU0mKjI
+ dzdwsI9y3eSeb6FRAwOI7kWCwmYXHSjz3E5FURb6TsEZ3KTkpacMipAVTC9IqheDghzeHstZwQ
+ ro4UefTdb0G3DtdR1bRpGsjMFfLrPvnF/5LYuzmP47pOJbdcjemLAQEhTKUUFUi5u+eHsBrLRq
+ TzMlZnjrdAtk7Uxiv65dV1/eP7k5B4BAAA=
+X-Change-ID: 20250109-b4-pks-blame-truncate-hash-length-c875cac66d71
+In-Reply-To: <20250109-b4-pks-blame-truncate-hash-length-v1-1-9ad4bb09e059@pks.im>
+References: <20250109-b4-pks-blame-truncate-hash-length-v1-1-9ad4bb09e059@pks.im>
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+ Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.2
 
-On Wed, Jan 8, 2025 at 7:39=E2=80=AFPM Eric Ju <eric.peijian@gmail.com> wro=
-te:
->
-> Since the `info` command in cat-file --batch-command prints object info
+Hi,
 
-Nit: Everywhere in this commit message, it would be a bit clearer and
-easier to read with:
+This fixes the issues reported in [1] and [2]. Thanks!
 
-s/cat-file --batch-command/`cat-file --batch-command`/
+Changes in v2:
 
-> for a given object, it is natural to add another command in cat-file
-> --batch-command to print object info for a given object from a remote.
->
-> Add `remote-object-info` to cat-file --batch-command.
+  - Take into account that we may strip ^, * and ? indicators by moving
+    around the check.
+  - Fix the testcase so that it actually fails without the fix.
+  - Link to v1: https://lore.kernel.org/r/20250109-b4-pks-blame-truncate-hash-length-v1-1-9ad4bb09e059@pks.im
 
-s/`remote-object-info`/a new `remote-object-info` command/
+Changes in v3:
 
-[...]
+  - Add another testcase for boundary commits.
+  - Fix another out-of-bound write noticed by Coverity. This bug is not
+    a regression in v2.48.0, but is a preexisting error.
+  - Simplify the printf statement a bit by using a ternary statement.
+  - Link to v2: https://lore.kernel.org/r/20250109-b4-pks-blame-truncate-hash-length-v2-1-589c81a6ddb0@pks.im
 
-> To summarize, `remote-object-info` gets object info from the remote and
-> then loop through the object info passed in, printing the info.
+Patrick
 
-s/loop/loops/
+[1]: <4d812802-afbc-4635-7a19-73896fcda625@gmx.de>
+[2]: <48ca0114-124b-e3f5-af80-1e302bf9ce52@gmx.de>
 
-> +remote-object-info <remote> <object>...::
-> +       Print object info for object references `<object>` at specified
-> +       `<remote>` without downloading objects from the remote.
-> +       Error when the `object-info` capability is not supported by the s=
-erver.
+---
+Patrick Steinhardt (2):
+      builtin/blame: fix out-of-bounds read with excessive `--abbrev`
+      builtin/blame: fix out-of-bounds write with blank boundary commits
 
-I think it's more grammatically correct to use "Error out when..." or
-"Raise an error when..." than just "Error when..."
+ builtin/blame.c  |  9 +++++----
+ t/t8002-blame.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 4 deletions(-)
 
-Also maybe: s/server/remote/
+Range-diff versus v2:
 
-> +       Error when no object references are provided.
+1:  7065637d8e ! 1:  3865bfe643 builtin/blame: fix out-of-bounds read with excessive `--abbrev`
+    @@ builtin/blame.c: static void emit_other(struct blame_scoreboard *sb, struct blam
+      		}
+     -		fwrite(hex, 1, length, stdout);
+     +
+    -+		if (length > GIT_MAX_HEXSZ)
+    -+			length = GIT_MAX_HEXSZ;
+    -+		printf("%.*s", (int)length, hex);
+    ++		printf("%.*s", (int)(length < GIT_MAX_HEXSZ ? length : GIT_MAX_HEXSZ), hex);
+      		if (opt & OUTPUT_ANNOTATE_COMPAT) {
+      			const char *name;
+      			if (opt & OUTPUT_SHOW_EMAIL)
+    @@ t/t8002-blame.sh: test_expect_success '--no-abbrev works like --abbrev with full
+     +test_expect_success 'blame --abbrev gets truncated' '
+     +	check_abbrev $hexsz --abbrev=9000 HEAD
+     +'
+    ++
+    ++test_expect_success 'blame --abbrev gets truncated with boundary commit' '
+    ++	check_abbrev $hexsz --abbrev=9000 ^HEAD
+    ++'
+     +
+      test_expect_success '--exclude-promisor-objects does not BUG-crash' '
+      	test_must_fail git blame --exclude-promisor-objects one
+-:  ---------- > 2:  af0af67a8a builtin/blame: fix out-of-bounds write with blank boundary commits
 
-Here also "Error out when..." or "Raise an error when..."
+---
+base-commit: 14650065b76b28d3cfa9453356ac5669b19e706e
+change-id: 20250109-b4-pks-blame-truncate-hash-length-c875cac66d71
 
-> +       This command may be combined with `--buffer`.
-
-[...]
-
->  If no format is specified, the default format is `%(objectname)
-> -%(objecttype) %(objectsize)`.
-> +%(objecttype) %(objectsize)`, except for `remote-object-info` commands w=
-hich use
-> +`%(objectname) %(objectsize)` for now because "%(objecttype)" is not sup=
-ported yet.
-> +WARNING: When "%(objecttype)" is supported, the default format WILL be u=
-nified, so
-> +DO NOT RELY on the current the default format to stay the same!!!
-
-s/current the default/current default/
-
->  CAVEATS
->  -------
->
-> +Note that since %(objecttype), %(objectsize:disk) and %(deltabase) are
-> +currently not supported by the `remote-object-info` command, we will err=
-or
-
-s/error/raise an error/
-
-or maybe:
-
-s/error and exit/error out/
-
-> +and exit when they are in the format string.
-
-s/are/appear/
-
-> @@ -45,9 +48,12 @@ struct batch_options {
->         char input_delim;
->         char output_delim;
->         const char *format;
-> +       int use_remote_info;
-
-"unsigned int" might be a bit better for bool fields like this.
-
-Actually it seems to me that this field is set to 0 and 1 in some
-places but we never read it, so I wonder if it's actually useful.
-
->  };
-
-> @@ -579,6 +585,61 @@ static void batch_one_object(const char *obj_name,
->         object_context_release(&ctx);
->  }
->
-> +static int get_remote_info(struct batch_options *opt, int argc, const ch=
-ar **argv)
-> +{
-> +       int retval =3D 0;
-> +       struct remote *remote =3D NULL;
-> +       struct object_id oid;
-> +       struct string_list object_info_options =3D STRING_LIST_INIT_NODUP=
-;
-> +       static struct transport *gtransport;
-> +
-> +       /*
-> +        * Change the format to "%(objectname) %(objectsize)" when
-> +        * remote-object-info command is used. Once we start supporting o=
-bjecttype
-> +        * the default format should change to DEFAULT_FORMAT
-
-s/DEFAULT_FORMAT/DEFAULT_FORMAT./
-
-> +       */
-> +       if (!opt->format)
-> +               opt->format =3D "%(objectname) %(objectsize)";
-> +
-> +       remote =3D remote_get(argv[0]);
-> +       if (!remote)
-> +               die(_("must supply valid remote when using remote-object-=
-info"));
-> +
-> +       oid_array_clear(&object_info_oids);
-> +       for (size_t i =3D 1; i < argc; i++) {
-> +               if (get_oid_hex(argv[i], &oid))
-> +                       die(_("Not a valid object name %s"), argv[i]);
-> +               oid_array_append(&object_info_oids, &oid);
-> +       }
-> +       if (object_info_oids.nr =3D=3D 0) {
-> +               die(_("remote-object-info requires objects"));
-> +       }
-
-We prefer to drop '{' and '}' and use "!X" instead of "X =3D=3D 0" when
-possible, so:
-
-       if (!object_info_oids.nr)
-               die(_("remote-object-info requires objects"));
-
-Thanks.
