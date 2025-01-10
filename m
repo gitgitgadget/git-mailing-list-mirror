@@ -1,160 +1,164 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339A3207A05
-	for <git@vger.kernel.org>; Fri, 10 Jan 2025 07:43:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C925116DEA9
+	for <git@vger.kernel.org>; Fri, 10 Jan 2025 08:47:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736495013; cv=none; b=XhorIgCAAF+5RNd5YppYzcyG3ORgKgGBJWZM7iHC/xMTRP+op3fkGEdVm/432fHizZ2jHT3II0L7EqgSxwIm4E798XgdPTOz3hThG6UI6l1WI2v26+dZCfEu/yAo8fIfxLoWb6CYlzWqusCvuTSYhCqiZm+pNgyxfVjHhqgYo2U=
+	t=1736498844; cv=none; b=kDaBD2lS7xS2K2YwoR7iTg+ym73cWnka7oTcIJk29E6YFWN6IW/VnH3l0r15NwRo2oyDQpu3ZgVZYIppMWjd+U4vehtsB6TdCoCmEgoyDY0LDOrihEmce0uFwP1Zrafty4/CmFF9JnMhPobQQ+HYByTVRsYHkK1UHxTMB/Q87Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736495013; c=relaxed/simple;
-	bh=yWN9e7h/1sX3p4bpdeu5Pgl6WeNBr5S/8pOwS0ZnkRA=;
+	s=arc-20240116; t=1736498844; c=relaxed/simple;
+	bh=WM6e7EMw6au24pt0Jy5gXylw9a+iT3+VSZvBECZSkgc=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dlh8fqMeWhv3Ak1ENZH8J3HwK/0DVSOA45YGNXMD1pWMIYpoglELVUULYxy02bGAYKyvQlsPBmRg7XqDJxaYmMYr78LnFboXWrpB8juUum5eNYfQcTh6RniuIuI8+qKiEkcMYCBzu3fZhj/o/uT336hnXsrKEAjdcgICq6kERB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NxKNczZ8; arc=none smtp.client-ip=209.85.167.46
+	 To:Cc:Content-Type; b=BsnBSa019j0jJj0+qmkbYdIVU6SVv/l1BHf4o8axVaC4Xvj33PcvsFIudFfgbH1/UhW0fW2byQNUZG2HJhq/sdWEvfgmFCt0PWCrlfzDngzzQsXkBZJ8Mt3SbPU2kLi9rU+Hz8h17jKB0VWphQJAZ2+gyLdAROouXTWiASHXOEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hDZ8qVq+; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NxKNczZ8"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-540218726d5so1761813e87.2
-        for <git@vger.kernel.org>; Thu, 09 Jan 2025 23:43:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hDZ8qVq+"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-a9e44654ae3so279435066b.1
+        for <git@vger.kernel.org>; Fri, 10 Jan 2025 00:47:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736495009; x=1737099809; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1736498841; x=1737103641; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=N4uQ9Q39Lw8AEQaqoQe7+/zaBcOehMvQhdOzpBwatAs=;
-        b=NxKNczZ8T4oyjvD9+mxiEAPdHrRatj08ojfuW5lsifmzKGdxHUtG+Ly3MnHDiUs2Vx
-         j/w5yO+d/E5+6lEIpEf5oTzTUEOBNQS8P3zrznK70PnaGha2K7ANN5VLkZsZCrMcWo9r
-         SRZGmdzOIVAZiSLk83d72KY2+keh4lKHWE8/WMGBMYkBYZad5Q6so31YcIqjKXtorSAr
-         hNgOfqwmNeZxlTraJJ2boiRiprozHKQNV2GrNgKHnSCKJBulbjcBNx+6Wjp+LrB1OlVM
-         vFg5t0Y1S5aNtulNb+K/Z4ca2MmdoYLoEtz+kVcnHM8RTfxLAkRLWRxpTZmueFlguY39
-         FikQ==
+        bh=VWfhf4ZU/LLMozF/HEEOg+208zmx/8WBcSp0EhWFN9A=;
+        b=hDZ8qVq+PY1eOCFV/wjrFZRc4g4J1cqs6KU5JQvYTt6iH4qeUXGjRNUue4yFwIP8U+
+         0WFIs+QZdaWb0VHTdqSzt55L/0hFH/mTbxZXqHnaEyvrHfWk3YLBx7AVCKTtaRtQknM7
+         07KPZOAQOfhQ6bEqZxkk7RZlWIXFSZ1FDj1qb9u5G2IPzip8pCKcvlZWB48HGdTX7myI
+         WmmJDf9sfeJbNDLWzo85z1PyfAcNJHn/gcKsCca9PSD9bShWJjDBroKHKFgWRC1eNplk
+         VnsGNGHgo3ItuVwg01CscagBGWdGCymc24wVSMu82CGZ7ogbS5lfltXKXpCYIYMyx1JM
+         tl3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736495009; x=1737099809;
+        d=1e100.net; s=20230601; t=1736498841; x=1737103641;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=N4uQ9Q39Lw8AEQaqoQe7+/zaBcOehMvQhdOzpBwatAs=;
-        b=gbUb+YcIPwzbHn6xmHHS5DzT+gdpgnYAIJ3numx1soBdCz+7yB/JpQDD8nwPqUrxYN
-         fDHiwiQ/4pPamwjFOwHsVLlatebAiet4GwZdYRahhdqfPgyR1PyEmECBcyfMuhAQ+kk9
-         YgeGDsNu4OogV54Ew++KXWV0Oki60L0FeGU2Zv0jvC15gLfcnb3IaWhSuCw/BffHGvbq
-         7fIFfpZOm/b+YrG26DJcGcd6iYjw98b3iCLkc4BmXbmcI9rKMjgk7IhaVLdLK/p2ePXn
-         xN68vi5fNvRT0nkFPNj9WIHYP+Yn6eHLj8hE49xJKZjUOXR5S6C+LwTB+jtLDt1pk754
-         Bpdg==
-X-Forwarded-Encrypted: i=1; AJvYcCXvQciJCtP/w/92yN8aEy4g8tlwPOPMcsJ/4uCcN+WB99sM3DdQ1J28ImP6cnI+H2QQpdc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw89oKORSKHQeldB38CgUVOBzAOwlqmqRYL/THZbNfvsvsPY8Yh
-	r9DTUkNF291f5nR6JY4IB+YXlj/jGit3OsSXwBdjRsb0r8Twc9wi1nNi/MGeD9+aVfMeZMlfjDY
-	H9YuFqQSAnMLteO1gfeEPbsmElVk=
-X-Gm-Gg: ASbGnctl+Oph0kHZl7P2YYjN83PEBhl2y726xyfQZrOJODwlsdH67CjbVvZObeaee9W
-	YGFKiVFYo80DE2+05srpY5iX5wX96VApMz0t6RUAChU71z/TlDl6P/XR69lS7wPxI9ekXvPs=
-X-Google-Smtp-Source: AGHT+IFEAEk6japN3qkIZoyTLy7goh7pKLEXB+dsUQIopHpu2wIUUnr1Fio/H86Gq2KI1tXCeCwatPJ/WzBQAuV+xgA=
-X-Received: by 2002:a05:6512:10cc:b0:53e:3729:eaf6 with SMTP id
- 2adb3069b0e04-542845d1cf0mr2939684e87.27.1736495008864; Thu, 09 Jan 2025
- 23:43:28 -0800 (PST)
+        bh=VWfhf4ZU/LLMozF/HEEOg+208zmx/8WBcSp0EhWFN9A=;
+        b=Qn+x6D6TxPprPdNeJdTiPYNMa5BzbGlPyWnAkh2MdDHtUmON5uA0FLb/4uMxm1aZXZ
+         daLueeXhUnLxpTnvEhpRyL8fClbkOY4ObOxHBrS2W8IlXs2pGWcdOcyvlyAVCx0U6diV
+         OIyOgKoQdlv872xIt9MstKT33mzUGeSMqkXz/td7Q1nz2X9SlTTtnCiGejlNjJekIPpk
+         +bi2PJe6whWwmtQMVCRlaDwZu4NlHHFa0kjM+oUKVnsbJuzAy8lE55hXVnO/A4KR5e4e
+         J4s57mtLwatMyZ9ztjVGCCTEkKbCg1FHfvl3BgOSFbqvx9UrplA2dEqIwPDefk4BNlBU
+         DDnA==
+X-Gm-Message-State: AOJu0Yz04fEzQMWi6vHPftqbSOP+4iXPEns3CuUHr9DXGOxQVPLbbAfC
+	75LdLggPbIyeJ4YPbaUzETYfA5P+cotKGUq6CHdO8zR77M9rtxkMJgNxiZS2vEKDIkPj00DMKV2
+	UNme92TCkm2D+hZHNTSHSU82I6a+SELzq
+X-Gm-Gg: ASbGncv7TjhXTdvZk/LJh48lsVu38g1UBPyPtSykUPds5ADSIqgNvo4+9ZbTdnBw6DH
+	ootOCjGfENEH9nkqNGxmZV+umcxuSTwEiFDznp47G
+X-Google-Smtp-Source: AGHT+IF0IkJmsaEJexJ9902Ilv7FtSbyBTyWjxruYfwNl6d5O2j0E/zrO05Q0AewoVDwRDidYgboWIu02iRtsvd8nPw=
+X-Received: by 2002:a17:907:7b89:b0:aae:ec9d:5fdb with SMTP id
+ a640c23a62f3a-ab2ab748b8emr813772166b.28.1736498840677; Fri, 10 Jan 2025
+ 00:47:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
- <pull.1869.v2.git.git.1736419777235.gitgitgadget@gmail.com> <xmqq5xmoj6cz.fsf@gitster.g>
-In-Reply-To: <xmqq5xmoj6cz.fsf@gitster.g>
-From: Scott Chacon <schacon@gmail.com>
-Date: Fri, 10 Jan 2025 08:43:17 +0100
-X-Gm-Features: AbW1kvZgQNTa2FYSq21pQwpcAsN8hnHjw8-n5eAH2c2EUtIbWxMECMHx5dS2kAw
-Message-ID: <CAP2yMaJzHM+AyDwjfVNJrDeJt0iip5h_ZxgNJL3V-gVSOjoBWQ@mail.gmail.com>
-Subject: Re: [PATCH v2] help: interpret boolean string values for help.autocorrect
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Yongmin <yewon@revi.email>
+References: <20250108034012.211043-1-jltobler@gmail.com> <20250110053417.2602109-3-jltobler@gmail.com>
+In-Reply-To: <20250110053417.2602109-3-jltobler@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 10 Jan 2025 09:47:08 +0100
+X-Gm-Features: AbW1kvaLWMIFFAOx_GdCa3f8uqZ1v-WaFZQd_VW7L4CTIxrb82bqsLPkhhrjjRo
+Message-ID: <CAP8UFD2Cfriv4puPe8agaTZOpLHr-=4CkK-yrzw8fH-k5mPkAA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] rev-list: add --missing-info to print missing
+ object path
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hey,
+On Fri, Jan 10, 2025 at 6:38=E2=80=AFAM Justin Tobler <jltobler@gmail.com> =
+wrote:
 
-On Thu, Jan 9, 2025 at 5:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> The flow looks nice, but the pre-context of this hunk starts like
-> this:
->
->                 if (!value)
->                         return config_error_nonbool(var);
->                 if (!strcmp(value, "never")) {
->                         cfg->autocorrect =3D AUTOCORRECT_NEVER;
->                 } else if (!strcmp(value, "immediate")) {
->                         cfg->autocorrect =3D AUTOCORRECT_IMMEDIATELY;
->                 } else if (!strcmp(value, "prompt")) {
->
-> IOW, the new code added at the end of the if/else if/ cascade is way
-> too late.
->
->         "[help] autocorrect"
->
-> that specifies "true" has already been rejected as an error, with a
-> now-stale error message saying that the variable is not a Boolean.
+> +--missing-info::
+> +       Only useful with `--missing=3Dprint`; prints any additional infor=
+mation
+> +       about the missing object inferred from its containing object. The
+> +       information is all printed on the same line with the missing obje=
+ct ID
+> +       in the form: `?<oid> [<token>=3D<value>]...`. Additional attribut=
+es are
+> +       each separated by a SP.
 
-I'm not super familiar with this codebase, honestly, but ifaict this
-is not what this does. That top block makes sure that value isn't
-null, which I can't figure out how it would ever be - I've tried a
-bunch of different config values, but I'm not sure it's possible to do
-- and if so it just prints "missing value for help.autocorrect" (the
-nonbool part of that function is something of a misnomer, it appears).
-But again, I can't see how those two lines aren't essentially a no-op.
+Nit: I'd rather say "The `<token>=3D<value>` pairs containing additional
+information are separated from each other by a SP." to avoid
+introducing "attributes" which might not be very clear.
 
-> We may probably want to use git_parse_maybe_bool_text() upfront,
-> like
->
->         static int parse_autocorrect(const char *value)
->         {
->                 switch (git_parse_maybe_bool_text(value)) {
->                 case 1:
->                         return AUTOCORRECT_IMMEDIATELY;
->                 case 0:
->                         return AUTOCORRECT_NEVER;
->                 default: /* other random text */
->                         break;
->                 }
->                 if (!strcmp(value, "prompt"))
->                         return AUTOCORRECT_PROMPT;
->                 ...
->                 if (!strcmp(value, "prompt"))
->                         return AUTOCORRECT_PROMPT;
->
->                 return 0;
->         }
->
-> and then in git_unknown_cmd_config(), do something like
->
->         if (!strcmp(var, "help.autocorrect")) {
->                 int v =3D parse_autocorrect(value);
->
->                 if (!v) {
->                         v =3D git_config_int(var, value, ctx->kvi);
->                         if (v < 0)
->                                 v =3D AUTOCORRECT_IMMEDIATELY;
->                 }
->                 cfg->autocorrect =3D v;
->         }
+> Any value containing a SP or special character
+> +       is enclosed in double-quotes in the C style as needed. Each
+> +       `<token>=3D<value>` may be one of the following:
 
-I _can_ do this, but it seems somewhat more complicated and I believe
-it would have the same end result, no?
+It might be a bit better to decide for each token-value pair how the
+value is encoded, instead of deciding in advance for all of them.
 
-Also, in thinking about this a bit more, while I updated the patch
-with the suggestion to make it accept all boolean text values rather
-than the "1" hack, it should be kept in mind that if someone does do
-this, that config setting will be backwards incompatible with previous
-Git versions in a way that will have a fatal error if it encounters a
-string boolean value when a command is mistyped. Maybe that's not
-super horrible, but I'm honestly not sure that accepting more boolean
-string values is helpful - it's been 17 years of this feature and I
-doubt that many people have tried to set it to 'on' or probably would
-in the future.
+> ++
+> +The `path=3D<path>` shows the path of the missing object inferred from a
+> +containing object.
 
-Anyhow, I'm happy to redo this patch in the manner suggested, but
-personally I think the first simple DWIM hack is a realistically
-better solution.
+For example for the path, I think it might be easier to always enclose
+it in double-quotes in the C style rather than checking first if it
+contains spaces or other special characters, see below.
 
-Scott
+> +static void print_missing_object(struct missing_objects_map_entry *entry=
+,
+> +                                int print_missing_info)
+> +{
+> +       struct strbuf sb;
+> +
+> +       if (!print_missing_info) {
+> +               printf("?%s\n", oid_to_hex(&entry->entry.oid));
+> +               return;
+> +       }
+> +
+> +       strbuf_init(&sb, 0);
+
+I am not sure it's worth initializing the sb separately from its
+declaration above. Using "struct strbuf sb =3D STRBUF_INIT;" is more
+standard in the code base and I think most compilers these days are
+likely to be able to optimize away the initialization in the
+"!print_missing_info" case.
+
+> +       if (entry->path && *entry->path) {
+> +               strbuf_addstr(&sb, " path=3D");
+> +
+> +               if (quote_c_style(entry->path, NULL, NULL, 0))
+> +                       quote_c_style(entry->path, &sb, NULL, 0);
+> +               else if (strchr(entry->path, ' '))
+> +                       strbuf_addf(&sb, "\"%s\"", entry->path);
+> +               else
+> +                       strbuf_addstr(&sb, entry->path);
+
+I think the above code paragraph could be simplified to just:
+
+            quote_c_style(entry->path, &sb, NULL, 0);
+
+if we decided to always quote the path. The decoding part would likely
+be simplified too.
+
+> +       }
+> +
+> +       printf("?%s%s\n", oid_to_hex(&entry->entry.oid), sb.buf);
+> +       strbuf_release(&sb);
+> +}
+
+> @@ -656,6 +703,15 @@ int cmd_rev_list(int argc,
+>                 if (skip_prefix(arg, "--missing=3D", &arg))
+>                         continue; /* already handled above */
+>
+> +               if (!strcmp(arg, "--missing-info")) {
+> +                       if (arg_missing_action !=3D MA_PRINT)
+> +                               die(_("the option '%s' requires '%s'"),
+> +                                   "--missing-info", "--missing=3Dprint"=
+);
+
+It seems to me that this check should be performed outside the arg
+parsing loop so that this check passes if the user passes
+"--missing-info" before "--missing=3Dprint" on the command line.
+
+> +                       print_missing_info =3D 1;
+> +                       continue;
+> +               }
+> +
