@@ -1,127 +1,121 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f181.google.com (mail-lj1-f181.google.com [209.85.208.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F72620C468
-	for <git@vger.kernel.org>; Fri, 10 Jan 2025 09:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E4B20B1FC
+	for <git@vger.kernel.org>; Fri, 10 Jan 2025 09:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736501252; cv=none; b=RJbyqPwiaauOtOFYDgc+3hAmfWmWNFpAixdvjlvyEJD9i7tAHxSDgLCd46KTgOou0iGpiHh5LA6DBueCHqm9yGKtdNuhCcm87P+sm84yRR+GQIIEV5ZKKWKb1WoXMWslkbpQzj9lTHlvAuh3WyaVu5PKCMlthFY+yj5b1rfsysM=
+	t=1736501427; cv=none; b=TzniPQCzTY+7p3eDJQcalpkZx37VzCqberlnEJ+VPT8sc8czRUq7lXSWbAxrVO64HfKJYdWO4f1KLzVQHujQKh01J21Bz3ozGJzBDhQD9mn4H6VldUkwHyiHoD+GwqlceWWbBI3T4L6e+dZoQenowTWhm2FTRG1o0WSdAvveASI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736501252; c=relaxed/simple;
-	bh=AAj8o6Y2TShUgr8NyTMzT3xR8BLc5OlNjxZcLvCK8WM=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=IoJfhw5MeK17JZdVA7tqbPxwYVI37HUPFVtdtnZvzqaDmCgfkH1/A4vCnzciNxSLNOJZ0GCJEzG72IgKiQM9k2K/uZHDZVSoViU+4V6L63b29kq7GQjXg2OzXyWzQF7Ebj8j8DYrPsoKXca0bgYf7XWm/h9FPpfzKvVRIBpioJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=HzJoRWa+; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1736501427; c=relaxed/simple;
+	bh=8XseCAl8/0upJTmqA70jdp2kjsVmOj7Peot2PPXo/cY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=MTiUnSbtdhHEA0HFP2TtfpvOUIIiX3Ckm+In90PelUnmttei8usLk+meNgROlfNLiBQZd73wVfxXNkgYvNRnO9T3PBs45QOzxvOjM2hSpVqZyc0DbazXciEJ6rbGYDjCsI9uqDg4L8Vn603o1xB8SCgovbEFJH3+RH2CT0wqaNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j7NeutPX; arc=none smtp.client-ip=209.85.208.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="HzJoRWa+"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1736501247; x=1737106047;
-	i=johannes.schindelin@gmx.de;
-	bh=r4SfYAkMaWrhk4mDHs+6DVsymDQYk2Jv6lx8/AYUgX0=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=HzJoRWa++xSThktfFRGgJiLgM9pIFZb3URJS18LUIThraLvTxk2rH7qd1LFs5x+t
-	 1yl+CET/1m9dAD0S8GbM+a6HV67mKTnYq0xyEFkJdSeCERzYacs4XhLyqvA6pRPfa
-	 zzWfTexOCBvFU0ypsBYTJu9oHxd7mYNsJdYq2JVBdlUOSYodf5+CFoAM/JGv+NRqz
-	 ki/qRzUDHsNQR4wMPdpJjZfFJ52i+wo9r6IXhFRZpjvtr9aHAhqWfD29ZD852VRw1
-	 uFzCMjwKwfg9Zm430xb7XkOMh5Ji3WSJQkDaiMii3RigwHsZEQbwFUby1NMlrWmoA
-	 bulazd+7xpz024EUkA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.189]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MRmjq-1tzESf2A9a-00Uch9; Fri, 10
- Jan 2025 10:27:23 +0100
-Date: Fri, 10 Jan 2025 10:27:23 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: git@vger.kernel.org
-Subject: Re: [PATCH] builtin/blame: fix out-of-bounds read with excessive
- `--abbrev`
-In-Reply-To: <02ab59c0-a495-9f96-6323-af73cb483f38@gmx.de>
-Message-ID: <48ca0114-124b-e3f5-af80-1e302bf9ce52@gmx.de>
-References: <20250109-b4-pks-blame-truncate-hash-length-v1-1-9ad4bb09e059@pks.im> <c439fcaf-11af-7862-9c3c-18dc0842b57d@gmx.de> <Z3-vpLHvxoQCTjY1@pks.im> <02ab59c0-a495-9f96-6323-af73cb483f38@gmx.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j7NeutPX"
+Received: by mail-lj1-f181.google.com with SMTP id 38308e7fff4ca-30039432861so17118111fa.2
+        for <git@vger.kernel.org>; Fri, 10 Jan 2025 01:30:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736501423; x=1737106223; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5895NvAlAcdZtJcQlPf541nXlilG9LT10ypFAdCFNPw=;
+        b=j7NeutPXDu6dGVPpCSJGcO4UkVOSVBMDDWb8hy9TQz1VGVd0bYZh0V9j3ptw1nHQHc
+         pLRs1mLzip2G4ejrxSuz8YMJ81ocbkIpbk3bYEQLFqfMxdHHPQvi5Po0LL8MfXYo7TU9
+         /s0ymZGvg3Zo4uA/pwDKHK199nLHFu+8ZLb1YBN90ZznZFRvoGAq+HFGNC7ZTNy9zas3
+         eaKYcMPfg2zfM9nfytO4tWT5kvyH81UHr9LnLtVOVWSjZqdhX6vfg96kVgTA3sN/HSdh
+         lH8dtSzKTReHRH5HK+gGKIPLQlaVy420alvFuC9pzx//JCFB3j2qnyX7Xh9TcrWg3Vwe
+         kLHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736501423; x=1737106223;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5895NvAlAcdZtJcQlPf541nXlilG9LT10ypFAdCFNPw=;
+        b=v8qor1uSR8YqrUGTFdbrworzYubnOJisHghNmzz9kagJHErslgqi0o1urFRisbPyjr
+         K/wNanLBHkQGwUCFT2zDy1fV1KdUSSbQq7bjRElzS7cVGOBRkwi9TP4n2O0IvQFe95JY
+         wbA2/vLq523U0Xhm4SSjQm9oJ+GNlsabt1rwrIJ17FI0WuB/GTu/gyZ+SFVlr5UHZpKB
+         q89lpFpuMzNyGuHRwofLETKUHktvngKwE5MMpwAQcxCNypBKp9TnSd3IwyuF04zCG+IT
+         L2jV08N+E+NEpq6lJQjSvh1LXc0Am9pgX6n4JF6huKlcBTLwloRD/wlKQNXd9/5tIkyd
+         DLsA==
+X-Forwarded-Encrypted: i=1; AJvYcCXZDl1gSeyoURdYTHwIQfUOy/gXH8g71ZnGVlgU51IUknkb6ews+fkT9j3czqRFPw+qk00=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3c4+oWYjjsrKBVWUcY+fdWOIG2brRG10MMjmP/i7yc/M8oTni
+	+i1Po3mUbeMcruXelddq8uRIvU5pT5r+pX8Sa/gwr3N5QE1tZRnDjwZaCpKiTvYebp+gYyP+FCn
+	8hyJxsFhsFuQnRbxS7jPNMGMLMmvV2tdg
+X-Gm-Gg: ASbGncvvh+/nxHyNpxs36ceTYB+jgwN1p+PhPdzWGqwvsaQGJWXCVpVJnjKcGq6TgTd
+	4ldKWhGDFSbhAuBTwQaU12rq7YnIA3Cg2proGUY1asMgkgpvj34/78cKZ5F9Z2xDMUyg+vA==
+X-Google-Smtp-Source: AGHT+IF+Wj8sIMDYhZU8tBIuS+mqcDMAr732laXeYUCPfil/+ELYBjoIrOF+fEf68zlR+rzit3SsI41Ysy+BvSIO4Tc=
+X-Received: by 2002:a05:6512:128a:b0:540:2122:fae9 with SMTP id
+ 2adb3069b0e04-542845b95d2mr2872714e87.46.1736501423184; Fri, 10 Jan 2025
+ 01:30:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:cZWkQKYRqs7OxlLCYe7SHz6/OTienaGjuk9LS2wj1YkvgliyZm+
- M4nw70DJgkcVWvZqJbY0O6E+lTnaMmSSfOyz/HvC35ocp4FCBV2SkMpMbrhvwQbozZjGeQf
- 3zrAAGt3bZtdmj34sbIgA2u7pOGh4q0tBb7hNDcYZMxnUNHAefjXndGYuvnlVlAwsZ0++Im
- MoeLbokPDYf868PjZKStA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Xgw8j6lylrs=;RoLWHMuiNpZvmZ5T0iLu8YThLFk
- uLuPuNCWzWoWWqHDtZZA7pxg2ZNvBDz8YVaHBA7jNokfv4emqCUIF/VYyeXXV16dfbIw5ilZk
- thYUVcUtYqnOsm7jshnaLTJFbLf3VNrNeW+9UZYiblZ2gM05soGQv0Vf1eFluBHE15B0fOF0j
- G8jt/GLQoh9KOyFBS88Z2DilwtXnC98uC6EYJXVXk9li5OCLZFR6LSOrmLBD46KdbApR+sa/+
- S5IN27s4Jzmb1cRH15JL3aCM0i6huTrFsM0ZoQInzUfypi+3J6zxTYfBq13Bu9zu85a30naJh
- 80bHTRuwsGMGL5v/KvD0PRy3GWg0pVMRSioYS68u9i3BBLYhyfKMIFiOya5tWNkF/DUEYj2Wb
- Duppo/qnqK3VxRMryTD8LnLIQEke2buKxVDtthLB1KpyBPuBJn17WMcBi2HsmltM7PqeS6LrA
- x3NgCOpN9U850IQXb2kinw5DeqaI/sOripV3DyB3iP9mpzdFQRxuyyxSIsO2lrsH+XoHIgo2Q
- YvXOccIyCq9axFlMC/5f+37GyDp46/3h8f4oMksPNVsYG8FkV1jKqUjiMwfqBGHZVAxLXg+uL
- TxCQJH+DxibLQLrUlkG8NdSo4jEvCGMlQ2KZRptNBhQRnmGGNDgxWoksuwiQbTcRR0FPF/c/w
- 4wjeQ5YeHSmphm2Ebvu9zZqmE/ETTdstGEgVbA8MM9bhJ6V7qktVSNlbv0pJQ+7HKyHZqS/mB
- av1UGhw98Hye5uYZEFcvco0s0vI8R+FL6ya2YurtBcGa3AEpa0yI1GxtDk1XEfPKyzZ4Y7cvh
- +lWcJY177f2F7mxxw/So4es8gsOgpr6MPLvgu4DCduphN+5TZgbvXfoknj5FjfDcxWmoNY6CC
- xSrCT604Tkt7gUS1bdB5qcvWcsc3zOED8rRySLOiPETYEQ/b2qIQB+30N
+References: <pull.1869.git.git.1736364707068.gitgitgadget@gmail.com>
+ <pull.1869.v2.git.git.1736419777235.gitgitgadget@gmail.com>
+ <xmqq5xmoj6cz.fsf@gitster.g> <CAP2yMaJzHM+AyDwjfVNJrDeJt0iip5h_ZxgNJL3V-gVSOjoBWQ@mail.gmail.com>
+In-Reply-To: <CAP2yMaJzHM+AyDwjfVNJrDeJt0iip5h_ZxgNJL3V-gVSOjoBWQ@mail.gmail.com>
+From: Scott Chacon <schacon@gmail.com>
+Date: Fri, 10 Jan 2025 10:30:12 +0100
+X-Gm-Features: AbW1kvYiSxCKRMzBwdM5GbQwAYPxfQVE9Yh6U3WhbMsLjTbi6p_1yUaob3Le3xs
+Message-ID: <CAP2yMa+5ca22tNMc4qu=yBVd9t74uNnLFbKE3_=EcA5_goM6zw@mail.gmail.com>
+Subject: Re: [PATCH v2] help: interpret boolean string values for help.autocorrect
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Yongmin <yewon@revi.email>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Patrick,
-
-On Thu, 9 Jan 2025, Johannes Schindelin wrote:
-
-> On Thu, 9 Jan 2025, Patrick Steinhardt wrote:
+On Fri, Jan 10, 2025 at 8:43=E2=80=AFAM Scott Chacon <schacon@gmail.com> wr=
+ote:
 >
-> > On Thu, Jan 09, 2025 at 11:49:43AM +0100, Johannes Schindelin wrote:
-> > > > diff --git a/builtin/blame.c b/builtin/blame.c
-> > > > index 867032e4c16878ffd56df8a73162b89ca4bd2694..ad91fe9e97f90625dd=
-2708fbd44bf2dd24a337a6 100644
-> > > > --- a/builtin/blame.c
-> > > > +++ b/builtin/blame.c
-> > > > @@ -475,6 +475,8 @@ static void emit_other(struct blame_scoreboard=
- *sb, struct blame_entry *ent, int
-> > > >  		char ch;
-> > > >  		size_t length =3D (opt & OUTPUT_LONG_OBJECT_NAME) ?
-> > > >  			the_hash_algo->hexsz : (size_t) abbrev;
-> > > > +		if (length > GIT_MAX_HEXSZ)
-> > > > +			length =3D GIT_MAX_HEXSZ;
-> > >
-> > > This causes a subtle change of behavior because there are a couple o=
-f
-> > > conditional code blocks between this change and the `printf()` call
-> > > decrease `length`, i.e. specifying values larger than the maximal he=
-x size
-> > > causes potentially-desirable, different behavior (and think about
-> > > https://www.hyrumslaw.com/).
+> Hey,
+>
+> On Thu, Jan 9, 2025 at 5:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+> > The flow looks nice, but the pre-context of this hunk starts like
+> > this:
 > >
-> > Alternatively we can move this until after we have done the
-> > subtractions. Then we don't have to do weird gymnastics.
+> >                 if (!value)
+> >                         return config_error_nonbool(var);
+> >                 if (!strcmp(value, "never")) {
+> >                         cfg->autocorrect =3D AUTOCORRECT_NEVER;
+> >                 } else if (!strcmp(value, "immediate")) {
+> >                         cfg->autocorrect =3D AUTOCORRECT_IMMEDIATELY;
+> >                 } else if (!strcmp(value, "prompt")) {
+> >
+> > IOW, the new code added at the end of the if/else if/ cascade is way
+> > too late.
+> >
+> >         "[help] autocorrect"
+> >
+> > that specifies "true" has already been rejected as an error, with a
+> > now-stale error message saying that the variable is not a Boolean.
 >
-> Or we can even avoid assiging a maximum altogether:
->
-> 		if (length < GIT_MAX_HEXSZ)
-> 			printf("%.*s", (int)length, hex);
-> 		else
-> 			printf("%s", hex);
->
-> Or be more consistent with Git's source code style which often prefers
-> ternaries, favoring succinctness over readability:
->
-> 		printf("%.*s", (int)(length < GIT_MAX_HEXSZ ? length : GIT_MAX_HEXSZ),=
- hex);
+> I'm not super familiar with this codebase, honestly, but ifaict this
+> is not what this does. That top block makes sure that value isn't
+> null, which I can't figure out how it would ever be - I've tried a
+> bunch of different config values, but I'm not sure it's possible to do
+> - and if so it just prints "missing value for help.autocorrect" (the
+> nonbool part of that function is something of a misnomer, it appears).
+> But again, I can't see how those two lines aren't essentially a no-op.
 
-Coverity noticed a problem with this approach, looking at
-https://github.com/git/git/blob/v2.48.0-rc2/builtin/blame.c#L493:
+Ah, I see. You can leave off the `=3D` and that will trigger this error.
+Though it seems to simultaneously be seen as a configuration error.
 
-				memset(hex, ' ', length);
+  =E2=9D=AF ./git test
+  error: missing value for 'help.autocorrect'
+  fatal: bad config line 19 in file .git/config
 
-If the `GIT_MAX_HEXSZ` guard is moved after this statement, then we can
-easily overrun the `hex` buffer.
+But if that's the only way it seems to trigger this code path, to
+essentially have a corrupted config file, does it matter?
 
-Ciao,
-Johannes
+Scott
