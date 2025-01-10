@@ -1,126 +1,154 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D4B24B254
-	for <git@vger.kernel.org>; Fri, 10 Jan 2025 21:50:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DCB24B254
+	for <git@vger.kernel.org>; Fri, 10 Jan 2025 22:06:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736545830; cv=none; b=grcqGsI2oOAgMlv4g4pkNcxTlgMgSapAnejzrIESmRrIYUnvctLJHuAAVsLRXGH/sj9gqJZKgTz15TKAqHWwHCtzm8bUvpCTcWhkaYqwfm9BAPLcJffh7IAOn/K7z9IpLcyYXeZ6vZ1SobcW0cRYZ9MTJNMQuMDrNnYA/BRG8xw=
+	t=1736546784; cv=none; b=QW/XanA+7kv6dHg4cclo05ZPbirSrcbSxb8IdhNuWsns/Ji7edkVvtxycEyxxTDAw8IymMJdC/SuxVEOd9TLFsV9I/HWyy/qfAcjvZHp2dxyjIUsoxzeO7zLrWrbM8qXC+JGmC7ThDiTnd3Ghe2VIE94aNwr/uOBHS12UKkT1lw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736545830; c=relaxed/simple;
-	bh=+Ut8XOWSxW95tMqtCUgOr8yay3ALevIOKW9ZXq7B2ro=;
+	s=arc-20240116; t=1736546784; c=relaxed/simple;
+	bh=2UWh3/xwGiYH1FikEZDgrNfy9GwH9MPWMqbJwpywaWA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WxgKDBx/JLmtSplqahiLtIAx7U/zregD/eOuh0ZRNNIUekQFJndg1UJCihKTxHzTxiE86uyRg8pygxyIMvLYV8dQOwBqBDwUanz2vtzz2f8ijMt/J4L5kgFfNwULBdOIu7OghFkp69qtpQyhbmZCkOqgHUrogTnOluD8zNnAZhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=x3UxWWlF; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=dC/dpTUMprtwBr1nF+6uiMKHbMfz57WWd4oPGt2el2v2nKzzyNg2grmfSxc1ViPDm8E7FmHnKhMkvTwudXlu3BLQjMJbkV6UQijcsY8Fzb6xhTRVwg3t5Mz92XtGaW5RPLe4nLVfiRCBSCGlPNr5wViI+DISZhGgCjz8luZRCt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=p8SoXP97; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="x3UxWWlF"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e46ebe19368so3849186276.0
-        for <git@vger.kernel.org>; Fri, 10 Jan 2025 13:50:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1736545828; x=1737150628; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qVZiZ5YuvW0A8wEPln/VN7cB3fj3lbbV3UFLnahH0M4=;
-        b=x3UxWWlFcwyS4lWA0MQ51s2KrTvE6AHA2E+mRSMh41aFk162g5318rqT3hRHCrOxsI
-         jW8b28GNPaiSmFRtRqqiMyPpN6SHiaP5SPQRRCLdFLVgy5hw54vL38N+hAEPB4MwHIsE
-         uts0n2Z3BVb1krq18nAFVsYm5dabdniI8t/hk/gBYVGJ94d5THkzgeL4aDhacA6/hKdP
-         E/DsZPkb0Nv/F4OGr0ZMjaKzrZaVBnnqDk5bNFfoeei/nvgYUlsd2OjJ3hz6BKjBjzvh
-         gbS7N0BOPJryZwr9gViaNLhQGNc/VcjGP2+We8huL1MytMSxgJ3nKb1r8zlmnCOl9wjJ
-         sp+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736545828; x=1737150628;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qVZiZ5YuvW0A8wEPln/VN7cB3fj3lbbV3UFLnahH0M4=;
-        b=Iw7RWHvld3y77L4jMcY2N6maqBqotN6Dl+fLciuL6EueAVXDYGxpRz8moUhn/HgICf
-         xEhyCuWi19fx6XA4I1gsP4SQLmh0CsKliiFg8uy2AXINAuZUUUriZiDk9cIbI8A4GK9q
-         8eAydbUpRL7osqGlslgjQXketUhlj8MieqB/JuMErfQAVJ8k7ci54P4gfT1BYElJOIy+
-         UCxCsqn9wWE8FL3qzMrZQeOXGR2mWuRPxAiYlsJ8VGnMPBZY1CCoJVWkoHqv0/5RDNrd
-         8NtFt1G/G01O9lgiYNXOBbnCCTA60ynfpNRqHmcU8epps3XQ3ZDX+K150Zallux2RO2V
-         AeZg==
-X-Gm-Message-State: AOJu0YwD2cRiDzo5E8lcYGf1h9qs27MJYTMEjJLQXU5Ere/lswXkT1Ad
-	JYRu2Fmq8yzEl9PqZWuHfoRTy/T0hlos7Mixvun2Yr+LoLFLxRKipRp2xYBXtv0=
-X-Gm-Gg: ASbGncsv+QumbjPFA8mB0SWFSNiaWQoDRyAJsdivxeUIfy2ortxTUNMwAkfx17IUG85
-	0mkwAuGmA/oLbQoIdC/kAEsv/bMB4GMD64W6tswh5c2GSk8e3FmUXMDTICFsXyq4/m194uEuhc0
-	7wIJ4KfxuW3UzNZbsyy6s4yCb6McV+i6/xhB9dvfuY92hR5HC7yYdmjuYZfUn7yJu8l5p1HcMwm
-	2FHGwwM1k/Yz4vogB4nHa1jz2oHRLmHz7zSyQefAkIommNqtnBAOD4xrhtpoChU70BpPT1MKNCh
-	kop8QJ/7KZstGoEqf7o6ODU/B+yw
-X-Google-Smtp-Source: AGHT+IEflAFtJrbcDgYNXbdH72awKPAEjBUJo6Nr6Hoc2KGcN5fGVaGwZ1mzad42uOCARq1v2mOADQ==
-X-Received: by 2002:a25:58c5:0:b0:e47:f4e3:87ff with SMTP id 3f1490d57ef6-e54edf22236mr6669768276.7.1736545827477;
-        Fri, 10 Jan 2025 13:50:27 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e55a595dc38sm490932276.19.2025.01.10.13.50.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jan 2025 13:50:27 -0800 (PST)
-Date: Fri, 10 Jan 2025 16:50:25 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 7/8] csum-file: introduce hashfile_checkpoint_init()
-Message-ID: <Z4GWIZkJOUa278VA@nand.local>
-References: <cover.1732130001.git.me@ttaylorr.com>
- <cover.1736363652.git.me@ttaylorr.com>
- <94c07fd8a557c569fdc83015d5f3902094f21994.1736363652.git.me@ttaylorr.com>
- <20250110103756.GA1014709@coredump.intra.peff.net>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="p8SoXP97"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1736546772;
+	bh=2UWh3/xwGiYH1FikEZDgrNfy9GwH9MPWMqbJwpywaWA=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=p8SoXP97tXMYkQ/wI4rmmhUiHHbCGA4t1KTa1v41CCxKCX5UEgRTJRBpzKXuG5FcR
+	 Y3p2R+9ssSSqgtS9N2srcIr8Aa5Jjin5CEheyku6SkTlhOWa6fs+g50WWNACaLBD+l
+	 0YnYsGoWUfTgKk0GMA+ru6d9vh6euNY4BZRsKmHSfCrL9CXnqTsFs4M8iA4lbJCPuk
+	 +d9Q4LgYPpQ6DEodqLw9uR2jlWyvWWorUkkpfPt5FlgH1b7OJuFMupxPKfJ/1qgqFl
+	 to2HL7VFin3zo9jjCZ4w/7cFJhGdmVExKciDr3xOYgGZ/ipq3sAwgq8bwXtNV1yNfj
+	 F7W78mSCkB1EOGmtm7R2KN3U5SDCn63RBGIv2zA+FEyqmfHioGarAEBoao8PsoXxw8
+	 Knv8tCwsOycdZvszNCIaAIVYjRHtnwWJlEljBk2bsV1TxeeMa81OiMTyyJgagWYUb9
+	 kyYmPGkuo+jsMIxrRYJOG/nbgYPdruCSrvVdbKNbpnpJcYnoZR3
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7E21F20008;
+	Fri, 10 Jan 2025 22:06:12 +0000 (UTC)
+Date: Fri, 10 Jan 2025 22:06:10 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
+	derrickstolee@github.com, stolee@gmail.com
+Subject: Re: transfer.credentialsInUrl should warn about personal access
+ tokens in user field #leftoverbits
+Message-ID: <Z4GZ0oiZCC2Wl3bN@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
+	derrickstolee@github.com, stolee@gmail.com
+References: <20250110210500.675629-1-mirth.hickford@gmail.com>
+ <xmqqh6665p8j.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Yki5U/n4PWHXKr8A"
+Content-Disposition: inline
+In-Reply-To: <xmqqh6665p8j.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--Yki5U/n4PWHXKr8A
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250110103756.GA1014709@coredump.intra.peff.net>
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 10, 2025 at 05:37:56AM -0500, Jeff King wrote:
-> So in the new constructor:
->
-> > +void hashfile_checkpoint_init(struct hashfile *f,
-> > +			      struct hashfile_checkpoint *checkpoint)
-> > +{
-> > +	memset(checkpoint, 0, sizeof(*checkpoint));
-> > +	f->algop->init_fn(&checkpoint->ctx);
-> > +}
->
-> ...should we actually record "f" itself? And then in the existing
-> functions:
->
-> >  void hashfile_checkpoint(struct hashfile *f, struct hashfile_checkpoint *checkpoint)
->
-> ...they'd no longer need to take the extra parameter.
->
-> It creates a lifetime dependency of the checkpoint struct on the "f" it
-> is checkpointing, but I think that is naturally modeling the domain.
+On 2025-01-10 at 21:32:44, Junio C Hamano wrote:
+> M Hickford <mirth.hickford@gmail.com> writes:
+>=20
+> > It would be neat to warn similarly if the user includes a personal acce=
+ss token in the *user* field of the remote URL:
+> >
+> >     git clone https://<pat>@github.com/...
+> >
+> > This is a popular practice according to StackOverflow
+> > https://stackoverflow.com/a/70320541/284795 (800k views).
+> >
+> > GitHub personal access tokens are easily recognised by their
+> > prefixes "ghp_" and "github_pat_"
 
-Thanks, I really like these suggestions. I adjusted the series
-accordingly to do this cleanup in two patches (one for
-hashfile_checkpoint(), another for hashfile_truncate()) after the patch
-introducing hashfile_checkpoint_init().
+There are also other prefixes as well.
 
-> A semi-related thing I wondered about: do we need a destructor/release
-> function of some kind? Long ago when this checkpoint code was added, a
-> memcpy() of the sha_ctx struct was sufficient. But these days we use
-> clone_fn(), which may call openssl_SHA1_Clone(), which does
-> EVP_MD_CTX_copy_ex() under the hood. Do we have any promise that this
-> doesn't allocate any resources that might need a call to _Final() to
-> release (or I guess the more efficient way is directly EVP_MD_CTX_free()
-> under the hood).
->
-> My reading of the openssl manpages suggests that we should be doing
-> that, or we may see leaks. But it may also be the case that it doesn't
-> happen to trigger for their implementation.
->
-> At any rate, we do not seem to have such a cleanup function. So it is
-> certainly an orthogonal issue to your series. I wondered about it here
-> because if we did have one, it would be necessary to clean up checkpoint
-> before the hashfile due to the lifetime dependency I mentioned above.
+> Curious.  I do not think we have *any* code to special case such a
+> "token", so to Git itself, https://<pat>@github.com/... should look
+> as it (assuming <pat> does not have any colon in it) is trying to
+> access the site with <pat> as the username.
 
-I like the idea of a cleanup function, but let's do so in a separate
-series.
+That is accurate.  GitHub has accepted a token in the username for some
+time (at least since 2019, and probably longer) for reasons which are
+unknown to me.  From a security perspective, I would recommend users not
+do so, since many tools log the username and not the password[0], but
+it's almost certainly too late to change it now.  I can mention it, but
+even if there was a decision to drop that, it would require a long
+deprecation period.
 
-Thanks,
-Taylor
+> How do we _know_ that this request with <pat> do not need a
+> password?  I ask because I'd prefer not to see us hardcoding any
+> hosting-site specific heuristics in the code, and these users
+> apparently are doing fine without any such hardcoding.  If we can
+> reuse the mechanism that is letting them do so when deciding if we
+> should warn, it would be great.
+
+I don't think in general we can know whether a credential is just a
+plain username or a token without trying to guess based on the content.
+For instance, before `http.emptyAuth`, it was common if one was using
+Kerberos to put one's username in the URL because that triggered libcurl
+to do authentication, whereas it would not if no credentials were
+specified.  I still have that configured, and I bet a lot of others do
+as well.
+
+It's also common for people with both work and personal accounts on a
+site to put the username in the URL so that the correct credentials are
+looked up in the credential helper.  And all of that is fine and secure
+since there are no actual secrets in the username in those cases.
+
+So there are lots of legitimate reasons to place only a username there,
+and we'd only be able to know if it's actually a token by hard-coding
+patterns.  I would recommend that we not do that, since I can't
+guarantee that the list of patterns won't expand in the future (it
+already has before), and there are still some older hex-only patterns
+which may be in use and which are much less obvious.
+
+> Are users expected to configure their credential helpers know that
+> it is a <pat> (perhaps with authtype=3DBearer)?
+
+No, this is Basic auth.  It's just that GitHub will look at either the
+username or password field for the token.
+
+[0] The two systems at GitHub which handle these credentials (the Git
+service and the Git auth service) are designed to recognize tokens in
+the username and obscure them instead of logging them.  Pretty much no
+other tools on the Internet do that, though.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--Yki5U/n4PWHXKr8A
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ4GZ0gAKCRB8DEliiIei
+gTwKAQCF+ZDK+A1ejCvPatRip8r4//X19yA4nx/dxByzEQX5jQEArXY0JoH7DZcv
+lVWzCkO1wcFj8D74cyF5wYCwyCJ6KA4=
+=o9W0
+-----END PGP SIGNATURE-----
+
+--Yki5U/n4PWHXKr8A--
