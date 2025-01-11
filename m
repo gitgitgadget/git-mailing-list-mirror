@@ -1,134 +1,128 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49DC20A5D5
-	for <git@vger.kernel.org>; Fri, 10 Jan 2025 23:44:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AB533E7
+	for <git@vger.kernel.org>; Sat, 11 Jan 2025 00:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736552652; cv=none; b=kUgpfgqIGuy9BQXm0VhZDg4gVNZN/8pKQ8PANAHhWxRdGliP834HyaY6FulJXVkdnGjtQM1V8l1NB2ekWN81CSwG8NFj3s1wVTbglcnFHU293/KJ4lqS2BqJPf3K0x9j5Uu8MOLsQhIrYCq77rO5S80VevwAG8lPT3mpbfXJLFc=
+	t=1736554090; cv=none; b=me+BlWhlzyCpmVMo9F6OCwhwZYOg4IZIBd5KwyJylFfBiCrp7QnWqI2UACfDzMUsLYSCQ5O26WSsxhdQm0v1pgAM+KHlaQNBKQTj7TVGl6He60dnx428huoaXQ2YKX5elvpuFh7MbpOfB9gj2BT3X1yHxMju/6+7dP/1RAkNrps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736552652; c=relaxed/simple;
-	bh=yJPrWz6E1kbNgmHvcAm8a/K1iJOqW7BKIGziXRnzanc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ftOR5UWKzF3FUq5RCVWHK71TDkRpVOAPW5BoQJXWmaw3Y7g7///F2rTFdSqUnwSJuF8318rd8ID8a9NvYgrShdfhZaG1V55KPJ0C8CksMoRWACDI2WeD+MsIyaIyVlCu4EJqNmvEzvjoG70jP2jUt28prg1J2JdtUpMYtkg1H7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rBlG3DAs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tQxSbc1O; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736554090; c=relaxed/simple;
+	bh=Ip9Tzju63qrXKHmQJD3tfmxuXzlDialV25mwOOAcQqU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eW9WLU96Nb9vZZlI72C0MCF5FoqJDkuEU79iLr0P0Rk1Va51jZ0s3G926kvX1trGpj7VAMxRRaAWi0IMpUZufjTb5jF11ZSmIsXS9CmjREYjw8UUEH8KamrARt8vw0OY8+KFUnt0ZtCJ8wRtaTwwxqqrXXu+Qr5+Yba2CVfFBPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=KgI5aWta; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rBlG3DAs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tQxSbc1O"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id A28C1114015D;
-	Fri, 10 Jan 2025 18:44:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 10 Jan 2025 18:44:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1736552649;
-	 x=1736639049; bh=ZKCE+oUYf5cSqy4UQXdyaYg4t4pNeXGLRtLwVRhhKQE=; b=
-	rBlG3DAsATxgzFZV14Em5qSkNtn+c7p2rmIPhP2j5gt3oEHzQ4AM/IbVesW1e1dt
-	gbqaM3w6cshLVeImeBBKXV06JBIw0quUzpZ1oL5GqHLlCdyGlcnGQgtY21CKZtp6
-	0arYotA3Z874+LSoMRAcGp59QnKarDr0k44grUwfFH6OYBUvSSQpHYFMzVTTiLCT
-	yYUFuohr0x2YWgb3m6bF+ris/eECY32D3zvOrcPw9B9wgyoJHgXoKOzxW+UHKv4K
-	f/AGEGHOv3/MRbuKL84WNjHW7GYTDLLlw74SKa8t/zjqQofXk2udxegE+J5iORmU
-	DKi2WpjV6fu2hJWuMpqN+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736552649; x=
-	1736639049; bh=ZKCE+oUYf5cSqy4UQXdyaYg4t4pNeXGLRtLwVRhhKQE=; b=t
-	QxSbc1O84RCA2LIJ7lJOn30NyaCAhtGlRmpta8xXT1TzzRv1zXeIAR6IY6z9VA1K
-	QqCrKz6eTuCtGs8Rqv4r0IcitpCzMAwY//tO/5MQuRH5knROkE+EYqx7Uv9kuLBE
-	Oj3Z1GzTvoZrs6GQsE0rR9BfG6J/K6aIq/dsBWnQQw1jP2iPdVSueEzjpErypv48
-	e6GXaSc+EPfHyL+e6uNzV8OBVL31qOm1YNl/PS5fhwUN13s6sFZ+n3lz6z+cTEwY
-	3sWEntfN/z090s6n7MtLfnfchxwdyWkSQRrjJbCg17ZguksydBvStHI8Simsv+lS
-	bWkmif1HJqIjxM1wW6RVw==
-X-ME-Sender: <xms:ybCBZ_sJRZ8jlY0nfLhcE27ZmYtWmQHZr801lR_79vIVHMGjbrgmrw>
-    <xme:ybCBZwfetvzFiqxqtXS_a6D39Wjyu78gzeCq2VEheJM7dIMR6oXv9fZA1s1YTZROF
-    ovFcoEnvnZ9-XD0lg>
-X-ME-Received: <xmr:ybCBZywrK51WtAEoLsuBFF5wGKp2WakYNnpfhXGy0Dhx33qa7CKF8LSHm9JEdf9nMb8RLRHY4Oh4cFTyhb-q9oD6N_Yig81KJnX4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudegledgudefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnegfrhhlucfvnfffucdliedmnecujfgurhephffvvefujghffffk
-    fgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteeg
-    vddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehrrghnuggrlhhlrdgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtggrpdhrtghp
-    thhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvges
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ybCBZ-NVnu227U42Rh6NUwrXTtw80aREn2Na9L6jQOAC5Xa-Yt7JWg>
-    <xmx:ybCBZ_9HHLHrNxtJteDPNRk7xzHG1HWUwH9-4mOMmxzhVG7hnr-HBA>
-    <xmx:ybCBZ-VdtNPvEpkpaBGae41RbLDKFyroDZ_XaqcavwTQkl8DN-33RA>
-    <xmx:ybCBZwdK4ce-e2_S9t8tS0QANCOMbn4EPcxImfz77EgeQPtZSFmfzA>
-    <xmx:ybCBZ6lRVoylK14uJ2wxrkTWPrUwV_kT_3CuBoI37BUXaXAuG3CROiN_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Jan 2025 18:44:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Randall Becker <randall.becker@nexbridge.ca>
-Cc: M Hickford <mirth.hickford@gmail.com>,  "git@vger.kernel.org"
- <git@vger.kernel.org>,
-  "stolee@gmail.com" <stolee@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KgI5aWta"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1736554086;
+	bh=Ip9Tzju63qrXKHmQJD3tfmxuXzlDialV25mwOOAcQqU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=KgI5aWtaz6PlRl9Y2TbAXYOwcNwgo1hHDo6MU+jyW3uPGNyuJglCcmlxqyaTJNcdO
+	 36aUapbNQSnKMPBa4wMbfoXS9Ojrly5H+y6c/dK36pt9qDSXMp09UZBkyAoGPhET52
+	 fVxRbWY8Q9pcYw7T/i1uFTkFR39f55nrERVPh/Ea8iHaKBYEW+qVNB/IW8yvOfr4Cz
+	 zv4bhYn+/LQXtb1Xy5iKjmDW3Kbu9Xw/v7k6ty86eX1mmHR853hfwJ7F0cMmBKmIkN
+	 NFtBe6rjkFrRbneZzXBhvwbFQTXcJpQmfUDWPNuG+04KTbdrbzizwTkWXd30MpgHg8
+	 LtLNHUH0B5g9FKeJP6xPcnRbA4bGNdiPjyJFqTHW0vJWn8bKNJhuIQ54Kr0UxHlU3B
+	 JzEC2HIlye/JDacI/aUnADW+H6YvMaXcxvky7437QXuIEFHmxadZlPIj5HRGHJpT87
+	 vlvH3U8ydigrqZWbRBrKZ+ok4wuC/uYQ0xnswW5j+Xf7d+UjrK1
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9F78D209C3;
+	Sat, 11 Jan 2025 00:08:06 +0000 (UTC)
+Date: Sat, 11 Jan 2025 00:08:05 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
+	derrickstolee@github.com, stolee@gmail.com
 Subject: Re: transfer.credentialsInUrl should warn about personal access
  tokens in user field #leftoverbits
-In-Reply-To: <BL3PR17MB60207281A26259F5D577B2B9F41C2@BL3PR17MB6020.namprd17.prod.outlook.com>
-	(Randall Becker's message of "Fri, 10 Jan 2025 23:36:37 +0000")
+Message-ID: <Z4G2Ze8S5PKfKjmI@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
+	derrickstolee@github.com, stolee@gmail.com
 References: <20250110210500.675629-1-mirth.hickford@gmail.com>
-	<xmqqh6665p8j.fsf@gitster.g>
-	<BL3PR17MB60207281A26259F5D577B2B9F41C2@BL3PR17MB6020.namprd17.prod.outlook.com>
-Date: Fri, 10 Jan 2025 15:44:07 -0800
-Message-ID: <xmqq1pxa5j5k.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <xmqqh6665p8j.fsf@gitster.g>
+ <Z4GZ0oiZCC2Wl3bN@tapette.crustytoothpaste.net>
+ <xmqqa5by5lm2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Hq8qIOvQOxJVQ0zN"
+Content-Disposition: inline
+In-Reply-To: <xmqqa5by5lm2.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--Hq8qIOvQOxJVQ0zN
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Randall Becker <randall.becker@nexbridge.ca> writes:
+On 2025-01-10 at 22:51:01, Junio C Hamano wrote:
+> Yes, I do strongly object us to keep a hardcoded list that can go
+> stale (or be stale from the beginning).
+>=20
+> What I was wondering is that because we are in control of the Git
+> end of the credential subsystem (even if the user may be using a
+> third-party credential helper), we
+>=20
+>  - can notice that the URL has embedded single thing (which could be
+>    username, but which could be a token);
+>=20
+>  - can also notice that we asked the credential-helper, or
+>    keyboard-interactive, and obtained a password (or not).
+>=20
+> When the former is true and the latter is false, it is an indication
+> that for that site with the username-or-token, there wasn't anything
+> necessary to authenticate and the access was authorized.  Which is
+> what the original poster wants us to warn against.
 
-> My email rsbecker@nexbridge.com is being blocked by gmail, so I cannot get to Derek.
-> Anyone know why? Have I been a bad boy somehow? Resending via another account.
+No, I don't think that will work in the general case.  Here's why.  If I
+do `git push https://bmc@git.crustytoothpaste.net/git/bmc/xyzzy.git`,
+that uses Kerberos (Negotiate).  There's a username there to make
+libcurl enable auth, but it's never used and a credential helper is
+never invoked, so case 1 is true and case 2 is false.
 
-It is not you, but him.
+Now, we _could_ do that only for Basic auth, which would catch the
+GitHub case.  However, it's _also_ possible to use TLS client
+certificate auth (and I think Bitbucket does support that) and use the
+username only for choosing the account (because, say, your work account
+uses a client certificate and your personal account uses something
+else).  There might be Basic auth sent (say, if you'd set
+`http.proactiveAuth`), but the server would ignore it since you were
+already authenticated via the TLS cert.  That would also make case 1 be
+true and case 2 be false.
 
-commit 6e5457d8c7332c279e1482c442922f954af5f8f2
-Author: Derrick Stolee <stolee@gmail.com>
-Date:   Thu Oct 12 17:30:33 2023 +0000
+Perhaps that latter case is not worth worrying about, but it is a
+possibility and I'm sure some people will hit it.  Maybe with a config
+option for the advice that's okay, though.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-    mailmap: change primary address for Derrick Stolee
-    
-    The previous primary address is no longer valid.
-    
-    Signed-off-by: Derrick Stolee <stolee@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+--Hq8qIOvQOxJVQ0zN
+Content-Type: application/pgp-signature; name="signature.asc"
 
-diff --git a/.mailmap b/.mailmap
-index dc31d70b8c..82129be449 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -59,9 +59,9 @@ David Reiss <dreiss@facebook.com> <dreiss@dreiss-vmware.(none)>
- David S. Miller <davem@davemloft.net>
- David Turner <novalis@novalis.org> <dturner@twopensource.com>
- David Turner <novalis@novalis.org> <dturner@twosigma.com>
--Derrick Stolee <derrickstolee@github.com> <stolee@gmail.com>
--Derrick Stolee <derrickstolee@github.com> Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
--Derrick Stolee <derrickstolee@github.com> <dstolee@microsoft.com>
-+Derrick Stolee <stolee@gmail.com> <derrickstolee@github.com>
-+Derrick Stolee <stolee@gmail.com> Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-+Derrick Stolee <stolee@gmail.com> <dstolee@microsoft.com>
- Deskin Miller <deskinm@umich.edu>
- Đoàn Trần Công Danh <congdanhqx@gmail.com> Doan Tran Cong Danh
- Dirk Süsserott <newsletter@dirk.my1.cc>
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ4G2ZQAKCRB8DEliiIei
+ge36AP0Tbxjcj6xT72JxrOGc4PaHYaxyZm7cHbBDg9eG3x5uWgEA4zj6kZr/UcOL
+evDe5mlBUWQR28hXguEUhbILTuSd0AQ=
+=Ht6s
+-----END PGP SIGNATURE-----
 
+--Hq8qIOvQOxJVQ0zN--
