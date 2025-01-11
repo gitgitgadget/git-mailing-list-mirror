@@ -1,92 +1,75 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8E218C018
-	for <git@vger.kernel.org>; Sat, 11 Jan 2025 07:15:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AF8A10E9
+	for <git@vger.kernel.org>; Sat, 11 Jan 2025 08:30:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736579706; cv=none; b=cB1pJFZuq6cGBAtbVFyWu7nqLEfhW/6rLxqiVnBa4bnTulgbOe+WOQKGgSEIqcXxG4wsTduDmU9aaKZLqM1HGxNlPLKzhWzcA+0DhduyX4K2dVErJpeMYER+P3jlQSByo8bqM622mfeqDPX2XkGsfPXL7NQfPNXmtiR9zAFRahc=
+	t=1736584230; cv=none; b=eK0L5SJjzJj4wd+mpHJv2k+YgOGj/tG1OzX8zgvA+rccudSmC7amf1B95flwhQC2LEESwTzPfrAPK/LSPN+yj2oLCrjavjIqNwZCb5qomjI5LN7layeuzEnGeHKmYgj8t50+NNLo10Xc5a1YUMKNzfKxos+w/9VGDo3mlmje6d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736579706; c=relaxed/simple;
-	bh=eAlHIaNP6GJdjmR0Cz86eEd7/cRXPGL8hMrUoQo3r+Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ll1zUkm0HDYzXjvGH23HqEhs+VpYHzUKnafCOguCmyw0GNoT205Xrej+lyzCnmFZP4fPtJ/oMognhGKYDCvbjzo847XNpkBRRiGu3oqiiSKPzAQLrnfkuVDzF5pzBx6B58uNMlzAlxgbeMjKdKQc4xXgKW9VGsxYP8bXFSWYveU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RaxfE3Sx; arc=none smtp.client-ip=209.85.218.50
+	s=arc-20240116; t=1736584230; c=relaxed/simple;
+	bh=sdyUc0iG5oTTcvj7oer51bC7JAj3Jcd2FEkFHa7fES4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=l6EvjL9kxkruKHqfPTDz55cT/TWhs3YbTKtIUpVNl2gkZFUlaUwrsln/fYgfnapOnD54q11RpLXXOFSc73EiljXaMD9okvqBNWKZNYWcT3ixvrE89ta98xDbMKMSk2Ed/nJXhOt51BG9bL4ry6YJE7Ue1WHhFKXepaBRNnNhirU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OVdlAOM5; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RaxfE3Sx"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-aa68b513abcso482318766b.0
-        for <git@vger.kernel.org>; Fri, 10 Jan 2025 23:15:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OVdlAOM5"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e3a0acba5feso3642180276.2
+        for <git@vger.kernel.org>; Sat, 11 Jan 2025 00:30:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736579703; x=1737184503; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=O7HUSnofDg3B0fibMTLbUOdzuyL2oU5UJYq5yLEQVvs=;
-        b=RaxfE3SxOILi7kzN0FDRIZB8UbKS9oNy2pTCWeuCdZaszWgjKKuMF60smWrECdm9/u
-         b+TfQYI23Qbjleguu/+D/qeUpq/ZeH32I/uM7C5IGkVWOiAmLNfS28mMUTlp1tx4987O
-         F7Swnrn/XWT5yL1Jwk9PsQNoLpbR9O5tml6HXyBjf0tXCs8nGVmCU+ZOuyDdFNu9mcRW
-         PT01XTq8ZlgfzEUhnlrEaXY7z3YPBGrnrj7Jj6JFzM3gjxoLR4YRLyLfXQQZkV7trxOg
-         8fVrFPKeTVWEqYVN911Rzl1GxkSjsaidPjZsNCVZOD+rCz+Oqgn/207EfCmYeGt67Zwq
-         BXXw==
+        d=gmail.com; s=20230601; t=1736584228; x=1737189028; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5RHbmwCmfSajkrccMbUp0fzoakPhJVYX3LMOcYMHzbg=;
+        b=OVdlAOM5iVRDa/f4yoTSTtPePETw2jhaizDq9Lf7cN2BBTWd4h2TA2Q3wlXJVeHG9L
+         iH+EwEY5kJhkbw9tH8HVqPH64TSi2x3n+g7b2BgBq8RVxO0CIJBWTagUzxqfDNUfrU8M
+         /oOYTbOp0cM+ibx15Lq85OE4yRuDt29nSbagWPT6qtW4F8u3Be1K1ruTpo3bUhvLm3f4
+         SgWi5R+t6ESFXhysKJh0SLTV/RLFGE7DkBsbzL1ubyhMAHX3X4n+joOe/lI3ejer8GY7
+         +g9gSO+Xn1yyZ+rZRCQRO18iHZN9z4NPf+pHIuMffb8Vo8OmyKCVk13BuSswUdgYEO7Z
+         bWVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736579703; x=1737184503;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1736584228; x=1737189028;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=O7HUSnofDg3B0fibMTLbUOdzuyL2oU5UJYq5yLEQVvs=;
-        b=uDVx4ISKFKTdZSn6y6cWmhX7XVfZ/DSUcKzRUkTL9zpDV8IlRPaW/yxYCwkoGxHdAK
-         eBPMZbNyaPJBUFL4bXbiLRe0vdXRGaImW7wrYa0ZEb4hCDVvUw0oSgHSESCtcElOEE1a
-         z+NBwAWkUjaIjSYJy1tx0XqxEvaQu49EP/AR2ffwCSrwSKaabkbGYT8nynLKcrx0cT9c
-         h2v30XG/92c98P3Ygju8w+8Vodm9NjxF7T2gk2MrVZi5NkS2ITchgCNLPu+2/UIkQzJp
-         XtCmrQrDqYXptckQGkCAFgBo/miknIMaFRLDSulKuV5VtNIRZFsKSqRY+gQls+1Sib+V
-         oNBQ==
-X-Gm-Message-State: AOJu0Yx29SNmVYrH34fTDjRo73xjhC4uKsYvOWN14wj0ceZyJagYLnJj
-	osMpyGEVcXmzFitCgWWEaD8YY2zo7oaSrQeC+VWpHLMUVPOTviNGakymB3wr
-X-Gm-Gg: ASbGnctW70FV4o8wo/wA6lcst3HmxsRvrAzXquxUkZ0xsrmAd9j1vCZyKL9My/pgsiW
-	FMtEzgXM1ieLjYAlB2gBte3cLglbeod8nj7OwhrEgqX93rG/2GNjG/D0mWXEbbQNIpgab3davXd
-	xu1HBUqrNWLjduCoqlPYJgK/BLgnAVqglOezc2nRqE3+nyNoW0Ps7yN3yEfu9EZgCgl30Ml3629
-	Ja3v4fE3bSBvqpLN6SgLfpLhlJKpadEORsX8zVlU5E6O+8Muk3/3FBbuqKWBw==
-X-Google-Smtp-Source: AGHT+IFQf9O2UC8sVIrAzbZ10cr3cndiJXI5/UfI300CyiaKU54nYmyTuubRyVtADOLjGQ+l3FRLyA==
-X-Received: by 2002:a17:907:9814:b0:aab:f11f:f360 with SMTP id a640c23a62f3a-ab2ab6a759dmr1175929866b.2.1736579702727;
-        Fri, 10 Jan 2025 23:15:02 -0800 (PST)
-Received: from localhost ([217.156.233.154])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab2c913430esm242564666b.88.2025.01.10.23.15.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jan 2025 23:15:01 -0800 (PST)
-From: M Hickford <mirth.hickford@gmail.com>
-To: 
-Cc: git@vger.kernel.org,
-	sandals@crustytoothpaste.net,
-	derrickstolee@github.com,
-	stolee@gmail.com,
-	avarab@gmail.com,
-	Johannes.Schindelin@gmx.de,
-	peff@peff.net
-Subject: Changing transfer.credentialsInUrl to default to "warn" 
-Date: Sat, 11 Jan 2025 07:15:00 +0000
-Message-ID: <20250111071500.710169-1-mirth.hickford@gmail.com>
-X-Mailer: git-send-email 2.48.0.rc2.32.g01723adee1
+        bh=5RHbmwCmfSajkrccMbUp0fzoakPhJVYX3LMOcYMHzbg=;
+        b=wN5zyD+xRw9ExXrE0nhOEAGBeGs9LvcJbTy5PsYE7yAaHsYJLbkox4VmVTwe+7DE7P
+         KG0d6BKLKxfyGqa62yHpogdJtyRy9IygbKx7gWgvYUOWdeVC/VjhuB7iIEqN7rPFbhba
+         UkjqBT7l1aGkRrirxiAF5I2K2cAjEr5259RHzi4IxYP0r30MiYdKUzME05+WNd8dDHLx
+         wrCkSfA4R6pJP4E/QGKintyF9NYdT3ahB6PKipWubNCcOiflAXipODxX3uvg4W1gAh4Y
+         qujjguMyV0PjKeChKq/+LlXW6YkUBdVV8s3UuIUb4Hqp8vNE6Hve10fu05SY4biM6WXq
+         EoAQ==
+X-Gm-Message-State: AOJu0Yw++S3uhkp24cEERflAExugq4k/5MqvPi9jVGsiampW4TylWkm/
+	lmkQbb4DCRh96qGp7G0+XMNQOU30hvdSee1Glec3khC5RiS8VjXGiwzUTpmzs2SDuIpfS2p4f/R
+	UzgtLq/u0e7ko0J9VWFLZNvZTHSkQmh058DLM+Q==
+X-Gm-Gg: ASbGncvVQ826/lOoPXCmqWnc7pHmm3efkeBbWMEyc+KNWr1cbBoO6CYo6tbo+gq22BN
+	tmPZbPbYaxgU1oGskCGxQjxBUGZ5otUHKa6K3lw==
+X-Google-Smtp-Source: AGHT+IFCv3ZyAppTthlez3HfeaL8Isdyb0t5UbqMp7o79xjXTcYz+yY2cCCICDdiXjfZsHTmmg36XBsmw5Mdcgw+WyY=
+X-Received: by 2002:a05:690c:6b82:b0:6ef:96f9:2f48 with SMTP id
+ 00721157ae682-6f53130d51dmr114991887b3.37.1736584228016; Sat, 11 Jan 2025
+ 00:30:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAGedMtcSSkmQ2u9yYvKMiWnprWR2VZrbuoT9EX+U6nuxOWiEHw@mail.gmail.com>
+ <CAGedMtd0-m54075w97Z4pQ0wqAjgPRA8+HX5iar0POyuC6-GCA@mail.gmail.com>
+In-Reply-To: <CAGedMtd0-m54075w97Z4pQ0wqAjgPRA8+HX5iar0POyuC6-GCA@mail.gmail.com>
+From: Seyi Chamber <kuforiji98@gmail.com>
+Date: Sat, 11 Jan 2025 09:30:14 +0100
+X-Gm-Features: AbW1kvbw0CpAy3UzteFLhFz0_k667jyfFDmQS3HleHTXfGCBzyWfh0V7IXzZW4s
+Message-ID: <CAGedMteK9=wYwCoPMGZ5t+FN_ZHOcSGxDenq8fkVM64oGpc4sQ@mail.gmail.com>
+Subject: Re: [Outreachy] Blog: Introducing myself as an intern working to
+ convert unit test to use clar
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 
-Including plaintext credentials in the remote URL risks inadvertent credentials exposure, as explained in docs https://git-scm.com/docs/git-config#Documentation/git-config.txt-transfercredentialsInUrl
-
-Config key transfer.credentialsInUrl defaults to "allow", but if set to "warn", Git warns the user about plaintext credentials in the remote URL.
-
-    $ git clone https://tim:hunter2@example.com/example.git
-    warning: URL 'https://tim:<redacted>@example.com/example.git' uses plaintext credentials
-
-In order to nudge users towards more secure practices (namely, using a credential helper), would anyone else be in favour of changing transfer.credentialsInUrl to default to "warn"? 
-
-https://github.com/git/git/commit/6dcbdc0d6616d7fbd2445aa2237b22e3c172ea85
-
-> This change currently defaults the behavior to "allow" which does 
-> nothing with these URLs. We can consider changing this behavior to
-> "warn" by default if we wish. At that time, we may want to add some
-> advice about setting fetch.credentialsInUrl=ignore for users who still
-> want to follow this pattern (and not receive the warning).
+Hello everyone, I published a new blog post on my experience
+converting the t-hash.c test script to use clar. I would love for you
+to check it out and share your thoughts!  Find the link here:
+https://seyi-kuforiji-902b48.gitlab.io/posts/first-round-of-unit-tests-conversions-to-clar
