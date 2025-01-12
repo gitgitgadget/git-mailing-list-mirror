@@ -1,96 +1,131 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB091B0F27
-	for <git@vger.kernel.org>; Sun, 12 Jan 2025 12:30:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8517629CA
+	for <git@vger.kernel.org>; Sun, 12 Jan 2025 14:18:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736685053; cv=none; b=a4r2ydQuaYUW+r4iu/3p1rx2JwPkDEUGWYvs1qHb5Q08Z6vCP+5qrWdl7k0DSLk34ObEOTlDjoSjIuqgnseWKBq4c+Aow+l5yxTXmYxrwGj7tO86SGAdJqICftFp8OUQeYZC6nLopCdKxrW2aTeNzZZ4IZnXeaLcXFVYLbBFfTU=
+	t=1736691483; cv=none; b=TCHtnvsVSaYFrDOA1AkWFV0+j23HizxfJxywXn7KJTbmoWRz2/uMKILEjZqRVgwrH0PbZr17SD0mYtJKtq63p3O2/BVX/a7o8PWoD0UQJrPf/yz4dBVUSlM9BVn42OnPYjF6FMuFvZVBhih1dJHA+//9TxLne2kIFpdCnVQXVXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736685053; c=relaxed/simple;
-	bh=s5qc+bfCLS3rfhb3yuYkHv8dMVSQrDXwyOddKudJ4tI=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=JWD1cTLG5C63fiQFYNBTsEDQUiYw7/9cXtgY5Rd/svPZ7Yy8rnu1lH8TlA/Nrlphz7tW8ryZFNJQtn5sD+dEk4uzOn79Sw0RVNMz/g5pH44OddD6a3ItFxpt+hnv13MpSIGSZiK4NLFgKLv8PGb9ZBU3EEn0pxjmtc59o2chdYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=Nj73eujN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tII/Nowk; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1736691483; c=relaxed/simple;
+	bh=m2DRmu+EPr8gUfJYYpx6HuPkFCkJc7WH5ppoZlEctVc=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=IF3CCZfzITYqqxduj2YGlF1tq7GsR/QOHl3mpaw9GIewcUdKotAx3qFlIVV392qB8nODoayrhntwNUYjwYpQmPVOz+BFL8MCUfkgSYU+N6EZBPIs9XP0S3nCfqPmnokm4Ti4DagpZs1MvA5eO/cT3ydns4ObjnTDikZf8cRjM+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=C/UXifmv; arc=none smtp.client-ip=192.29.178.127
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Nj73eujN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tII/Nowk"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1B2A81140100;
-	Sun, 12 Jan 2025 07:30:50 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Sun, 12 Jan 2025 07:30:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1736685049;
-	 x=1736771449; bh=o/9Fxfc8q9dA2XmwT3WCyoiFdf4BconQfImGYYige90=; b=
-	Nj73eujNqxddtFoiZn0INkXHfyiO9uyBf0Lwcc87Vo176molROcNlVvxc+aAjy6m
-	wsvP0GIJ9P4foquVMSS8cSNuS7rpizrPyU0yAEV8dV5ox8ayl8RPLhDZEMJUe7LL
-	h2O4fdPVNovh63B4RMhZZEurBD9WAcuUx50honXL4g7jc4n+T8AACCSiPjaFP5D0
-	IQ03kDfaCmlzlooguDL+gRcJX3KU8X8z9tCaxHofzKYFr/1ybQJiwi1hA/SfO/9c
-	lor0aIOWRi9K0jZ4BFbOemzubydlVh/+eFDC1eWtKeXg8RRzHgcEYKfHMOcQM5ct
-	IxdYGn+Y2PSY/2VHxLTP4w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1736685049; x=1736771449; bh=o
-	/9Fxfc8q9dA2XmwT3WCyoiFdf4BconQfImGYYige90=; b=tII/NowkTb6AkE4Lq
-	pc/buHTh851U3uNOYvygY9rnN3cVq9KAaUTtxxQCpEJNLikmZhdTc4PlV5nj4PxS
-	hImw3KVycg2G1yC8tAUWNQnZHT9altKVr2xRf3pVqW1/8pVp5GEliU+3w6DYCg5g
-	aHZ4ocnbDfATixk4mIXVz/Jp1RfaAv/NWoV0TdQ4kD6UQhzVvV5M4Lxpv7VfSpWf
-	vSg8Oyq0uhLtHKxVQDkVslEg8pkvOfpNR83Vfvi7vUaba7+abA+yf8y60Wc1+sk5
-	56r+2Sbd4KWeea31HGjGoZsriznQx6F+e9kgAB+qhn0jvAF6+a4+zvC4fxoP0f7F
-	FxWVw==
-X-ME-Sender: <xms:-bWDZ1P5MxB4a0qAA13yqqLWpnyonCPjiY5nMUXtfwjF0l4kV5x_ycU>
-    <xme:-bWDZ3_Wm7JI7I-yllNjn66YymJEoYhYuOz4jsl9A-jsoUaI-M9wTSJnCiw5Orefj
-    nqRCOJ052I5OWy0XQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehvddggeduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
-    fvkfgjfhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfj
-    rghughhssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecugg
-    ftrfgrthhtvghrnhepueffheetfeelgefgfeehkeejkeevtdevueelhfeuteejteejheek
-    tdefgfeigefhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
-    homheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopedv
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghugh
-    hssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:-bWDZ0TGhOVI2Xdv1VEZsgU1EOmF5VWvqNjAnYDVtrvwPFhpTrT6_Q>
-    <xmx:-bWDZxvvPAeDiNKni__NrtglEOUMHrFMoNAGMLaWToe2iKoh4lUhlA>
-    <xmx:-bWDZ9fU6-ZYqHXo7hebDKM6iEnmRWSHEo7CgZljr6YrkmBIS14hXg>
-    <xmx:-bWDZ91lvVwgVo_zXuuRXlXkpatM1EaYeKMMfGQASJI8Ou9LQYsKDA>
-    <xmx:-bWDZ9GimjZ_j51lUJgx7uXdfbEOmNcryzwIpqEtj1LSS69pitFbUMMD>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 9AE2A780068; Sun, 12 Jan 2025 07:30:49 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="C/UXifmv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=w4fFoDn7Jx2L93/1wJey59cT+f3gmS659FJU7nUU+qk=;
+ b=C/UXifmvw55VuPsLkPaJvjEm0G5fhe75IL2AkFUSkA93U7qbFx1asVa4/4VPR+65ZTnmnw+G1DTY
+   7lmhFKfsXcD6EYeykVWGm+QhrGJKdobY3/EOwzWRO+QFT2NOcXxciCYxJQmf6bpU+/IB02nyyyO+
+   HDrIMyQAFWU2xYwgfoa/xErroQ9ZhMuS6dDeFNf72FuhkzBAVoZb124qgvxfcBck/6+PIFv1pghU
+   4Sd/4v4mSBz33ykxY/C4U9CtVpPipMLEhykTG53AdjaY2zNvTmF4LxRLX7E/jUsZ+VtxinvJVGHz
+   NjVLHmpMXViIvx3wtJT2KkEsFAIdBXR1uxi20Q==
+Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
+ 2024))
+ with ESMTPS id <0SPZ00C68BPUVEB0@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sun, 12 Jan 2025 14:17:54 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Sun, 12 Jan 2025 13:30:28 +0100
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-Message-Id: <64913dd3-f336-4e65-8694-2392fa7a049c@app.fastmail.com>
-In-Reply-To: 
- <e5b20f9ceb437a82c422136cb81b05a0521cab07.1736682716.git.code@khaugsbakk.name>
-References: 
- <e5b20f9ceb437a82c422136cb81b05a0521cab07.1736682716.git.code@khaugsbakk.name>
-Subject: Re: [PATCH v2] Revert "doc: move git-cherry to plumbing"
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Sun, 12 Jan 2025 15:17:36 +0100
+Message-id: <D705QOX6EFH7.14GKFWVVUQWH7@ferdinandy.com>
+Subject: Re: fatal: Not a valid object name HEAD
+Cc: "Christian Hesse" <mail@eworm.de>
+To: "Christian Hesse" <list@eworm.de>, "Git Mailing List" <git@vger.kernel.org>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <20250111202628.0e5894e4@leda.eworm.net>
+In-reply-to: <20250111202628.0e5894e4@leda.eworm.net>
+Reporting-Meta:
+ AAFKQrak6u7V/Jjfu3k7WGOz2091igkyRq8DnQFZtQgqT8wxlZLldG5f46LygjOa
+ yh7YmyOwxgPyyrs+p053bJgJNwAECDvQjxqJgSGP7nu4DuXG2T9SW9Ilv3YlgGWZ
+ WYCJMQqWvOl9y7IfL8jWMkLaKWfAIiVLlZK9w4GDIj0BlgSuel+7C0fWvq+5nq8W
+ dp2ZJEio+9iFC96LN3buRoZIRI9YygVVnq2+/2g0/X3O0/ak6FmyD6bWgt2uoeRe
+ oRYAeBSJdRY+VVH9CmTXR5wjhnCrG6/pgCaobCbKbQIb/KieHqgSBDLddMbjg4WS
+ Usxi9RkhIOj2sxQ77Lore/PwNlf2GFJTSRWagSWOaF1Fj2Kdi8raP5maR9WnMaYQ
+ RyqNrJVCAQ1foVm00Ch0qCOcLEAOMKvMknqyG5x+Y2HZmyo25lTC3P58vTEfBGcd
+ NSdZEyZJpD8mrQ9EMs6xKn7oDnxVDo8b7eJqpkfndlvUEV3bYQ2fgEI=
 
-I forgot in-reply-to:
 
-<e5b20f9ceb437a82c422136cb81b05a0521cab07.1732973210.git.code@khaugsbakk.name>
+On Sat Jan 11, 2025 at 20:26, Christian Hesse <list@eworm.de> wrote:
+> Hello everybody,
+>
+> starting with Git 2.48.0 I see some trouble with some mirrored bare
+> repositories. Try this:
+>
+> box ~ % git clone --mirror https://github.com/codership/galera.git
+> Cloning into bare repository 'galera.git'...
+> remote: Enumerating objects: 49768, done.
+> remote: Counting objects: 100% (2251/2251), done.
+> remote: Compressing objects: 100% (553/553), done.
+> remote: Total 49768 (delta 1986), reused 1716 (delta 1698), pack-reused 4=
+7517 (from 3)
+> Receiving objects: 100% (49768/49768), 25.20 MiB | 4.92 MiB/s, done.
+> Resolving deltas: 100% (37386/37386), done.
+> box ~ % cd galera.git=20
+> box ~/galera.git (git)-[4.x] % git describe=20
+> release_26.4.5-345-gd811a577
+> box ~/galera.git (git)-[4.x] % git remote add mariadb https://github.com/=
+MariaDB/galera.git
+> box ~/galera.git (git)-[4.x] % git fetch --all
+> Fetching origin
+> Fetching mariadb
+> remote: Enumerating objects: 638, done.
+> remote: Counting objects: 100% (517/517), done.
+> remote: Compressing objects: 100% (125/125), done.
+> remote: Total 638 (delta 415), reused 454 (delta 392), pack-reused 121 (f=
+rom 3)
+> Receiving objects: 100% (638/638), 386.30 KiB | 5.08 MiB/s, done.
+> Resolving deltas: 100% (440/440), completed with 105 local objects.
+> From https://github.com/MariaDB/galera
+>  * [new branch]        0.6 -> mariadb/0.6
+> [ snipped some more branches and tags ]
+> box ~/galera.git (git)-[mariadb-4.x] % git describe                      =
+                         =20
+> fatal: Not a valid object name HEAD
+>
+> Guess that's not expected... Why does that happen?
+>
+> Possibly fallout caused by https://github.com/git/git/commit/5f212684abb6=
+6c9604e745a2296af8c4bb99961c
 
--- 
-Kristoffer
+More specifically: https://github.com/git/git/commit/b1b713f722894d7f66e9ec=
+64bc934ca32004d3d1
+
+So what happened before the series is that HEAD was set on cloning to=20
+
+	ref: refs/heads/4.x=20
+
+and the adding the new remote did not change this. After the series fetchin=
+g
+the new remote will overwrite HEAD to=20
+
+	ref: refs/heads/mariadb-4.x=20
+
+which does not exist in the repository. Note that the older version does no=
+t
+set up `refs/remotes/mariadb/HEAD` which is interesting?
+
+I think the correct way to handle this would be to check if the remote has
+`mirror=3Dtrue` set, and if we're running in a bare repository we should ov=
+erwrite
+HEAD and if it's not a mirror we should instead set up
+`refs/remotes/nonmirrorremote/HEAD`. (I think a remote can be a mirror with=
+out
+the repository being bare, I'm not sure.)
+
+I can probably send a patch late next week to fix this.
+
+Best,
+Bence
