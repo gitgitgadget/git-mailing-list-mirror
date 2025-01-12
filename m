@@ -1,35 +1,35 @@
-Received: from aib29agh126.zrh1.oracleemaildelivery.com (aib29agh126.zrh1.oracleemaildelivery.com [192.29.178.126])
+Received: from aib29agh123.zrh1.oracleemaildelivery.com (aib29agh123.zrh1.oracleemaildelivery.com [192.29.178.123])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADBF1154456
-	for <git@vger.kernel.org>; Sun, 12 Jan 2025 08:13:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.126
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46652A8C1
+	for <git@vger.kernel.org>; Sun, 12 Jan 2025 08:25:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.123
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736669633; cv=none; b=rHR8g3QVgRuQwFY09rM+0eX/fx8LkDMGQGyvH8Y5caWDi+4taHOECN7S6C/6AzV4MX4LUUI5yCFpzP3CmhRG6CLco5O7Ngm8Yq4RKB1HdfsTIcpNFZaPVNfoJuweUwot/EFk72vUvNcQiZmsC2ZKsemNT/aCwiLxQH7pa9NP/zU=
+	t=1736670316; cv=none; b=mJV7eV8VM4PtQrvDtYk7SpCzRxdstFyoSAjS4w64pGlhwiN+I2kAhcBjRtET/3eZmdJrZLvAoA0frWB1if3PmR50fx7L8pxigC/ZFMujOfTi3qlNFzJOozmWUjAQ4BY1EvPaQIs3ccFC6xKXVREQzBW+eumALJe/Mkmc1oI24Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736669633; c=relaxed/simple;
-	bh=XxmbqBIxaNSqYdOBzV24MpY6UHO0V+V1FvsXX1dDFAI=;
-	h=MIME-version:Content-type:Date:Message-id:From:Subject:To:
-	 References:In-reply-to; b=nKqSo1aMG3z+79fhdSsdB0ohhwj0VKi+K+gK2JmlqKjf2ycxWucRxIv2AV4KBQ89GiTlRHSZt4TTLbHJ2UCfTRTCQG2GM7mdDadSWSowgWUk10xwJCTiUpIUciJI0/2QMMNrsXIf2vh4elhJ3flutqmjUqiIhzFKkOMs3Xatws8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=DcqQS5wa; arc=none smtp.client-ip=192.29.178.126
+	s=arc-20240116; t=1736670316; c=relaxed/simple;
+	bh=H0vwYYhvb2Da+3XytQaHSyiTTiZtGi1DpbKSdwfzxTc=;
+	h=MIME-version:Content-type:Date:Message-id:Cc:To:From:Subject:
+	 References:In-reply-to; b=YUECWGJmcZKvSDy0dMzsNHHDG8Zruv+RbvCE9G0DVxEhPN4I989WMxVnmNMKkduEq4ra2z4u1Lpk5Jr7aRoQOIfzUwHetaqQIpik0+XF5mozsrQgVVvXQhDP+86RmIsh57I28BHpCrvj/zbjEGhEFEuIATF+oVR2ZhvlYyhz6dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=bRm3IzL3; arc=none smtp.client-ip=192.29.178.123
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="DcqQS5wa"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="bRm3IzL3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=T8mmwZq/xIHNv+vyWK8GWKda0vxWYyIidq8we4jEcA4=;
- b=DcqQS5waHOotKYOdB75k7FNEn9FAWqfKt07j2jJoGvXfmnxIL1VQqvCKhA4/IDTf1YhStFHm56co
-   d37pKA9mg3FBOcTp8TYQGoCPzIb41T1nMI+YavsF4CtCCTHLw/unE+lv6WIku3NWQoxkpNPidBy0
-   35p5PDR1eBvZEleryKi4wTHvVtho94RHtsPtKcJ73zlAkNxK8lzPMBwLv5FUAUk3mjYLfKjHYLH+
-   1SUtswDukOU+HYYNa+Ufu5Hcy8dkA4vi6YOwa1Zl7r2tsbx0h1KmWTPnDbTbK0NOOcCdkPBpCytb
-   aiMEskdIJCN1FH8Q54CR8AYStBQGxdZfOYsQ4g==
-Received: by omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ bh=7USyrA/aNiCiKNUgEs5l7dKq3pChR3JJGb20A0oCLR4=;
+ b=bRm3IzL3AzVRoWRZKiJljEDp/HX9Q4tmkDOkCXFdUg4f7x4x7aa+DCMITeJ8fGk8VlqIPfOCdJ5A
+   umVC/DaT7pu4O9uB37d+skkpqbrQDSvCDG9NhbqqRea2mip7dfIWcIdbhliyu73L18CKh6UyuAPw
+   YZGSDhFjst+22BUmr+FhVyRqbI3mQPAB5jtIc2WSojdoNYGUUueBE2nR1QkVVslOrPbHfP04Y0us
+   lCWHLz/ULIqZ8xB1W3c4zzpAOIn3JN550xSFWamFz8m8NGwn8NCA1wmFxn/HkSkOuQqRZe/XG8py
+   GNnoPnusqsmoHfpbuH6KCOXC5FiOJlj+cPOYyg==
+Received: by omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
  2024))
- with ESMTPS id <0SPY00BDKUMI1B50@omta-ad1-fd3-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sun, 12 Jan 2025 08:08:42 +0000 (GMT)
+ with ESMTPS id <0SPY00CQZV5FEO00@omta-ad1-fd1-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sun, 12 Jan 2025 08:20:03 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -39,79 +39,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
 Content-transfer-encoding: quoted-printable
 Content-type: text/plain; charset=UTF-8
-Date: Sun, 12 Jan 2025 09:07:45 +0100
-Message-id: <D6ZXVILR1D36.3W0QVQCVE1P2J@ferdinandy.com>
+Date: Sun, 12 Jan 2025 09:19:39 +0100
+Message-id: <D6ZY4MU53E2I.3LWESUZX6TR5A@ferdinandy.com>
+Cc: "Jeff King" <peff@peff.net>, <git@vger.kernel.org>
+To: "Caleb Cushing" <xenoterracide@gmail.com>
 From: "Bence Ferdinandy" <bence@ferdinandy.com>
-Subject: Re: Git 2.48. Changed behavior of the git fetch
-To: "Danila Manturov" <danila.manturov@jetbrains.com>, <git@vger.kernel.org>
-References: <CAM6buW5KSDGHD7txroqVa0TN_Ou_eV-LocMy06cPy0ZGDQmY9A@mail.gmail.com>
+Subject: Re: git remote set-head automatically
+References:
+ <CAAHKNRGv19rhnqCkJMpE2FomNQBHvSS36aC=fh0UwO+9-6RRfA@mail.gmail.com>
+ <20241116033616.GB1782794@coredump.intra.peff.net>
+ <D5NOZMMISX44.2PTTMY57J5EM6@ferdinandy.com>
+ <CAAHKNRF8JDUTH-QzPG1b4-wafzU+MXaMNinfBRu3JfCssfwGUw@mail.gmail.com>
 In-reply-to:
- <CAM6buW5KSDGHD7txroqVa0TN_Ou_eV-LocMy06cPy0ZGDQmY9A@mail.gmail.com>
+ <CAAHKNRF8JDUTH-QzPG1b4-wafzU+MXaMNinfBRu3JfCssfwGUw@mail.gmail.com>
 Reporting-Meta:
- AAFOaSMv0RCnYaH7rh4YpcjE++qYPX1K3xHlswdh9z4srQekjHcibjeeBgCGhrFx
- WAS4ZCRi5Gbk85zZvfe8cWtbagwZ6bI5tOyVwigHggChDELk7rzXDp7pp5PZCt6G
- PpTA16A52q2y8/AvjipEbgPeEDs2M2FTckcLEVDQZOhTYNyhtO1parjbDB+EhNN6
- tNgCr2bBJ+tberdQ37pTJ/Paikwffb+0II04oor+zJ9+QGv0vbJsPTlcXtIO69Js
- Qahme0KrCH+3mbO+byMysIbMbRFiSrE2viajIBtVZGl74b2Dbi4LgqZjvMeGGC75
- KRB8ZEF5TcpNfGlQaLnUFQsPkiBYmOJ+ikJ0KtXUFRMvDsQhSWF7z2mDeTqZPobE
- 8MKdmnnV7yjFh0PyO5IKAeD49JJRbXqOv0Pdp3gKGOsplZIfSMmaudMYNsFy79Uf
- +oSNYH71MJmAba2cvnxHwQBBBV2Gj5vLUSmSAeL9u6FwCagq+pB/DTU=
+ AAF62PhZqJDlvC+yRQP3/8oM/CcrCO0/J3Kc0XhZNbt+2CBm3tyoLuHUzd5LX8h1
+ gLAWljDco5X9jZpC3R1UZ7o3WG6mAx6zwN/VZ77S3BRIGpiQIbEBQT8pBMMHGUE0
+ 8M++sVej6ZFTkKGRKRO0esl51KtPaAW+OoZio68wRj5/QXnYkcVKIVqyNXkVejTq
+ cvYY3mf61JHO2qsePu/NvQiMvzbwLBqUdG+O8fb1ZHfM7dXXwRuUWfUR5lgOawEC
+ u+3IeVxV5sMpRU2bhaKj3Kw7g0ww2W6r9ssSZGfSixIILY3Et8AcMKa7aonxSwul
+ M1a83YK3uy3SBaf083pg/y9pKjwO9zPhQeHrizSarNd8atf+qMn80JbioBM7dvi8
+ 6MUK+4k8MLlFzsTg6AfgjPKCzqdj6BJW4NfyXIBV2t9zKEwIycyu/ifkWLRntd2Q
+ v3OIBigNKYmFKQnVy8Bzqxsgo1VTJaM9lGQcw0V+8d6yuFcNNadaJLs=
 
 
-On Thu Jan 09, 2025 at 12:49, Danila Manturov <danila.manturov@jetbrains.co=
-m> wrote:
-> Hello. I work in TeamCity and we have tests of our git integration
-> running with the latest master of the git repository. Some tests
-> started to fail since
-> https://github.com/git/git/commit/5f212684abb66c9604e745a2296af8c4bb99961=
-c
-> I noticed that tags are not fetched with shallow clones. I published
-> the test repository to GitHub and reproduced it with commands, the
-> result is different for 2.47.1 and 2.48.rc0
+On Tue Nov 19, 2024 at 16:40, Caleb Cushing <xenoterracide@gmail.com> wrote=
+:
+> sounds great. I think I realized why I didn't have it. It's not done
+> by `git remote add <origin> https://...`  my experiment was `git
+> remote rm origin` and then `git remote add origin ... ; git fetch
+> --all --prune` I think I also tried without the prune option. git
+> version 2.46.1
 >
-> git init
-> git remote add origin git@github.com:manturovDan/repo_for_shallow_fetch.g=
-it
-> git fetch --progress --depth=3D1 --recurse-submodules=3Dno origin
-> +fd1eb9776b5fad5cc433586f7933811c6853917d:refs/remotes/origin/main
-> git tag | cat
+> What I want mostly is for that HEAD ref to always exist. As far as
+> there being ways to configure it, that's all good but I don't want to
+> explain doing that to consumers of my code. I'd rather it just work
+> for them, on clones, and add remotes or fetch if it's missing.
 >
-> RESULT:
-> tag1 (git version 2.47.1)
-> <empty> (git version 2.48.0.rc0.38.gff795a5c5e)
+> I'm not super worried about it being updated as I feel like if that
+> ever happens it's something loudly communicated, and I'm more willing
+> to find it ok to make that an FAQ, if this breaks because that changed
+> you can manually update that. Mostly I'm of the opinion that what I'm
+> doing needs to work in various CI environments out of the box.
 >
-> the repository log:
-> * commit fd1eb9776b5fad5cc433586f7933811c6853917d (tag: tag1, main)
-> | Author: Victory Petrenko <vbedrosova@gmail.com>
-> | Date:   Wed Feb 3 13:05:03 2021 +0100
-> |
-> |     recent commit
-> |
-> * commit 64195c330d99c467a142f682bc23d4de3a68551d
-> | Author: Victory Petrenko <vbedrosova@gmail.com>
-> | Date:   Wed Feb 3 13:04:44 2021 +0100
-> |
-> |     change
-> |
-> * commit a1d6299597f8d6f6d8316577c46cc8fffd657d5e (tag: tag2)
->   Author: Victory Petrenko <vbedrosova@gmail.com>
->   Date:   Wed Feb 3 13:04:17 2021 +0100
->
->       initial commit
+> Thanks for the info, hopefully soon (tm).
 
-This should already be fixed by
+It's in the new release now, it also got some configuration options, but th=
+e
+default should be what you want
 
-6c915c3f85 (fetch: do not ask for HEAD unnecessarily, 2024-12-06)
-
-	[snip]
-    Incidentally, because the unconditional request to list "HEAD"
-    affected the number of ref-prefixes requested in the ls-remote
-    request, this affected how the requests for tags are added to the
-    same ls-remote request, breaking "git fetch --tags $URL" performed
-    against a URL that is not configured as a remote.
-
-so using 2.48 should be ok.
+https://git-scm.com/docs/git-config#Documentation/git-config.txt-remoteltna=
+megtfollowRemoteHEAD
 
 Best,
 Bence
-
