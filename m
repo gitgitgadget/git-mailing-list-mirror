@@ -1,318 +1,188 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADC21B4236
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 06:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21AE231C9C
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 07:12:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736750267; cv=none; b=DXdAv4xgGujMLzILdl1jeogre5AsiJzq8ZWsr5ZQImvfryg2gdknNdL67Qvtfq2m3vBK+DfCrbxBWz3JwIdKcAKrN8As7x0XKmF+kgR42HAKdU/10jXBGY+1IcdhxOtMLsEJPLXOV6AeO9L6PIv3KGdkETqnQ6eNbV4OIvIPLus=
+	t=1736752337; cv=none; b=jy1t1wdCf51ffQNC54hkWhkYINnQ3ftcPqt4R12ZUVkuBJrim31GtH0LDzf+Yy+UDj+sSQmx1TTM333ZQyLMPMAealGUZ0wpPqoSuyg5Yx36BrdTKP4FbGXH7XTR3x8wItWXfsnAHjwaY8aW+ZJeEnikypRN3kWCg89jUy/GGUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736750267; c=relaxed/simple;
-	bh=UeVpBWE3PFNpNAwqAgXiWyO7VOKjcH8ntKoqg5GKqCA=;
+	s=arc-20240116; t=1736752337; c=relaxed/simple;
+	bh=pEmCKzmRitZQuYcoe6C0TPWVGaDf2IW4g8IgHwtpHoA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aKJR7rz0scCNe4q4g/G/sSwPVIv4DsK61sIdLxbURqsWWE1r/u1Q36zvnQpZTYYW0ev2cnZZTNwF3yTd6hkAyC+Ju9zXxfYhJrWPPVxzUmais8CmFFLjpdwx5oKYpfyYN46Od11z9MFHZ3IUXXYfclq3QpNAuU4A2CxKAL3Kfb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hko7fFha; arc=none smtp.client-ip=209.85.166.179
+	 To:Cc:Content-Type; b=Vh+vzrjPbMCie8nv3eVTeU59a0bzOPnwzfaTHzurBNo7uQKtABF0hxneq2oAgCqXLWzzDkVsJoEGrWqtzTVJr0cAVINSxvpGsM0dLZ+dQtv6BpAqznvMru/tEXgPXuUxHi/EuCRCmDri/NI93tuCxgEnXKDqaHJY1hQWajmLACM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KIxdewvT; arc=none smtp.client-ip=209.85.208.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hko7fFha"
-Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-3a78b39034dso12248515ab.3
-        for <git@vger.kernel.org>; Sun, 12 Jan 2025 22:37:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KIxdewvT"
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5d122cf8dd1so6621411a12.2
+        for <git@vger.kernel.org>; Sun, 12 Jan 2025 23:12:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736750264; x=1737355064; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1736752333; x=1737357133; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lwSxWwpYA/z04kxwH1EN/UB3/BbH8oSzmD+gHMhpnoA=;
-        b=Hko7fFhazREbltJDAUVOrj5Ek0r4RJaDnTM/S6BLc31x3cxrzLJtyLPpaxNeSeoAZ1
-         7NXM8jsLgfOz9+pUIzB7GdRFNPm/0aFxe1lERjQJXSoyM0wLcYshSfB4JW8KcRz13x4H
-         feVNnMSNj2VNpOznVRSitxoZnsi/rWCX3iUz/VyoXmOwVEg+OznN7RIU/HGVQYyjLaFz
-         LrcWny7gxhVbAvDIJte5SJ3C8dwRUb0T5syezP6JkViNUXwofXh2PP4mwHRU/K0AEBwx
-         edxDkpMFYlyYw7VzcFjnplRMQ2SUw/GVR5MnA4AawBMhY5w50FolDxArH5WZVEnhZUYq
-         bPrw==
+        bh=pTnjOYiUelrgtEG/DzDjrjKjWQd/b0zO1DXVd2NM6fM=;
+        b=KIxdewvT7Qmc8bDmlX4mofQ5H2kMrwbOIoYDI5UyNiT0rLA7E6f4Wj3+YnuYLs3Pqi
+         /Jxe21rEK/rmz8iBadzHx2iVASSkAM9x0pbuLNjIzQH0ji2nMyTmQTVmGUEJD9RNU/o3
+         9WQKm11aR2y0x5XYC+bPWN6MmMuKzHiUeB4QBSR854cCD1/tt6p8ru3QMAwvtvRWPaPF
+         IwHS5uk9paQAPW2u7nOPAKVyzWGMoYKKBXQli+TW2jKe63c2HYUUOgWbxVQWDH11TE0z
+         +ojXzwfXa3FimjF8EEbPk7UC35EEVR9UsLFuQg0Hzk4OkHtFjww6BTEbPilhgdVS0ovx
+         P/cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736750264; x=1737355064;
+        d=1e100.net; s=20230601; t=1736752333; x=1737357133;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lwSxWwpYA/z04kxwH1EN/UB3/BbH8oSzmD+gHMhpnoA=;
-        b=b96Nhi8osqpAyY33DkgYtJnYKwXwydqwt+S4NG6qMGJ/rxqmLBLqyqarzqSHDbG8/q
-         Vj5SKxi1xh0x/4FTFQqYqGQbcxInt+9W1QKOvGo85k7WKibAm2ZZuYXTK5txrbAfLkkH
-         meM2ROLIke2kYoWlM3+4SmVb1rRgnlpa1kBIBN5t3oYvuiCAfXIjTGJpjLDG+H7lZM43
-         l0wBVvX8Qyf/NYPxl/GSDj6lVoBtrc9YYjlgLoa9Z+EzWR0LwQSIsxCLG+r1aN+0UUtG
-         d/AZoeZJs2KqiQvIcKYaUad3yN1eWgL5s95iy2EN2ArgWsbRnsJ+wrn1hHE8ajgZc2kD
-         xBFA==
-X-Gm-Message-State: AOJu0YzqlQ8s05rcc+3jduSU25XKK+y1nrowu62VBnHCvhHVuKEU3Q+7
-	ruyqQt3pkjoT7aYRZgv+VbGypf+6NSTiUJou9boeFZRZ9/eSYQ8DJQOUc+pkvKuW1+ottLM6Eid
-	eNeRVnVUFmLJLsovYHzAPkvaElyDZTk6r08A=
-X-Gm-Gg: ASbGnctow+dT2Z1x7lQJGZgNLuBTIV9mTg+TVItn/ZfwAf5NRcf6N0JuDvryymv5ByE
-	sbnfwc6hwnxFrcd1FBwP7LZ3ytEQxGCN70zbC/MU=
-X-Google-Smtp-Source: AGHT+IFSGR+fzxAghFcrpS5luk7+i+1hfW/ejO1o9GvKyWAcmbY6qGJueg8nL7W59Wg8Zsn0bLsQAkmKzuudtyWE5DI=
-X-Received: by 2002:a05:6e02:1747:b0:3a7:e8e1:cbcd with SMTP id
- e9e14a558f8ab-3ce3aa75f60mr151840635ab.22.1736750263921; Sun, 12 Jan 2025
- 22:37:43 -0800 (PST)
+        bh=pTnjOYiUelrgtEG/DzDjrjKjWQd/b0zO1DXVd2NM6fM=;
+        b=nzC5iAuBCSn8rY7VriIpnasU1hfbBXblPULPgYjmWJsNJHxUSxWjKWqO9R1XLhnYaA
+         RCqLmRveCCH4F5iSbtJWe3K0RfFNHeSiIu45JDbk4Cpv0E4iDLHKsJmhhmQ2vimUXgir
+         HsDOaoOig35g1OHo3To/FtiJims/+HmFXnYzYowMLj5hYv7lI1BO7zrgrFdwLTrvkmzz
+         vbLoOburOubLlsQGR6C+XJxzNfarNOOtSTT3kqTOHkaQCI1w/gp9UckqEEFzl91+zN2e
+         pKnJb2tkKclN4hR97xlMRx3gEQ0js93d1mOk6X/fVfwUKJ05IwpQNQuMX0yJw//phqsL
+         cYxA==
+X-Gm-Message-State: AOJu0Yx3lPoq9iNcbev7iJVnxrMIILl1WJKOkPKx5nXLTJRJO4nGp0wU
+	KL0zFWGnRVpMrH13PzPOwFSJ6/Vxiu4n1CEXlQ6xjdO8KDoD6T2kttxZs55AJojDvD83VVH9cly
+	baw9EC2BcDO0ct7j981lGVlx4VT5F/waLIpfTUw==
+X-Gm-Gg: ASbGncuYJa9cqrdzoKi6c/i5ZqHnxr1/Iqq3CHIOIcxQtQeukNU/HODsOSE7y5tibNh
+	xl5fmELiBsLtES6Bsk9zAzN+OF7VQxsLipd8VD+k=
+X-Google-Smtp-Source: AGHT+IHyhVk6z0C98UTRfXblFq6uR0pu8L+/li+BiVhqI6qeK0fZlW748B5sTIHwoxjkcZttbJT/OAEyZEsT8M9v/RU=
+X-Received: by 2002:a05:6402:4407:b0:5d3:d733:7ad4 with SMTP id
+ 4fb4d7f45d1cf-5d972dfe6abmr18793375a12.3.1736752333361; Sun, 12 Jan 2025
+ 23:12:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAMmT1pKVMB6ZUbsEdB0RqbWERauGVqgo_RbXj4j9+csXLHCStw@mail.gmail.com>
- <CAMmT1pJnZxxD3wFikiDRCqZZMxO8P6EgVHe9mJEsfA8PK4-OfA@mail.gmail.com>
- <CAMmT1pJ0ReaX+g2_gFQ2oLUrzhR5wCXGvCj_WwDMXcfG2DNG_g@mail.gmail.com>
- <000a01db5546$f034b7a0$d09e26e0$@nexbridge.com> <CAMmT1pLszvmQN06eUdnhZHpqDLrF2aaXFxdniumLt1x9MSdKfQ@mail.gmail.com>
- <CAMmT1pJpKct+zV_WV_QXKCL_A0cGURNbKZDKGzbATCDN3cQDsw@mail.gmail.com>
-In-Reply-To: <CAMmT1pJpKct+zV_WV_QXKCL_A0cGURNbKZDKGzbATCDN3cQDsw@mail.gmail.com>
-From: Krishnamurthy Ganesh B <ganeshsurfs@gmail.com>
-Date: Mon, 13 Jan 2025 12:07:36 +0530
-X-Gm-Features: AbW1kvZOTvoAK_ZpxmmCmhKtoggSgKKRgcPerCEq4SWJ2mrz8yzObVYaRXt1CqY
-Message-ID: <CAMmT1pJO7t2vyanDko_0ed1VZOP_TOfpJe1JNjN5EpoRbRVByQ@mail.gmail.com>
-Subject: Re: [bug] encryption of metadata in .git metadata file inside .git folder
-To: git-security@googlegroups.com
-Cc: git@vger.kernel.org
+References: <pull.1843.git.1735041177817.gitgitgadget@gmail.com>
+ <pull.1843.v2.git.1735611513.gitgitgadget@gmail.com> <14e94bf04e5ae3895eb61253be9c6d0a0fe56328.1735611513.git.gitgitgadget@gmail.com>
+In-Reply-To: <14e94bf04e5ae3895eb61253be9c6d0a0fe56328.1735611513.git.gitgitgadget@gmail.com>
+From: ZheNing Hu <adlternative@gmail.com>
+Date: Mon, 13 Jan 2025 15:12:01 +0800
+X-Gm-Features: AbW1kvY0eOLinryI5QkM6KGCWvQvE8B6TQkg3TH2uZsWpU1kjfo5ybIN2v-q5hU
+Message-ID: <CAOLTT8Qj=mA6j55HOShobQSkCn-VCbPoMChE_y1xBo=O4dyFxw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] gc: add `--expire-to` option
+To: Git List <git@vger.kernel.org>
+Cc: gitster@pobox.com, me@ttaylorr.com, Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-hello,
+This patch has been sitting for weeks with no review. Does anyone want
+to help take a look?
 
-@randall: adding a point: While I understand your objective to
-"encrypt anything that might have data in it", there are solutions
-independent of git what would cover most use cases.
-
-- encrypting everything or all data on .git metadata folder may not be
-the point you wish to address in the point along with the export
-solutions. the data of the git repository is not being addressed here.
-we are discussing the .git metadata folder not the repository here.
-- there are no solutions in the market that encrypts all data within
-the .git metadata folder. again,  the data of the git repository is
-not being addressed here. we are discussing the .git metadata folder.
--  "opens git up to export limitations" is not needed for .git
-metadata folder. a few milliseconds of speed into cache with caching
-read-write speeding options
-
-ps: .git folder being referred to for the .git metadata folder (not
-referring to git repository but hidden .git metadata folder)
-
-[apologies, not sure why my emails are bouncing due to the html
-version even when sent as text].
-
-@randall (i am sure we may have interacted before or probably same
-name someone else): my answers for your quote below:
-
-- disk encryption has nothing to do with .git storage. local access by
-access provided users will always be there.
-- disk encryption solves the challenge of modification access in the
-server by devops professionals not manipulation intent
-- disk encryption solves the challenge of modification access in the
-server by devops professionals not any code injection and remote
-incorrectly executed issues
-- disk encryption solves the challenge of modification access in the
-server by devops professionals not any code injection and automated
-code drive incorrectly executed issues and access to memory and or
-.git folder when appropriate chmod rights are provided
-- "opens git up to export limitations" may not be a great reason to
-avoid for the same. the object folder inside .git seems encoded if not
-a binary store and can be reverse engineered via code
-- "opens git up to export limitations" may not be a great reason to
-avoid the same. load issues for speed are not that great reason when
-tmp cache options can be a viable option. probably, you can work with
-optionally encrypt the .git folder option.
-- "opens git up to export limitations" may not be a great reason to
-avoid the same. what other export limitations and CVEs are limiting
-the need?
-- symmetrical encryption: i am recommending a personal user provided
-or default salt or key based based encryption for the .git folder
-- you may wish to take feedback for the organization using git-scm in
-their organizations. a bug bounty has been raised for gitlab, github,
-and atlassian that are the most rigorous for the number of users in
-the domain. i can also raise a bug bounty to azure, aws, google,
-oracle, and other networked providers if needed shamelessly to get
-this feature enabled (probably using an option to encrypt .git folder
-while creating a repository)
-
-"Have you explored using disk-level encryption to solve this?  While I
-understand your objective to "encrypt anything that might have data in
-it", there are solutions independent of git what would cover most use
-cases. The problem with adding symmetrical encryption to git is that
-it opens git up to export limitations and related CVEs. It would also
-cause adoption issues with many organizations who may have
-restrictions on whatever techniques git adopts to solve this.
-
-My preferential solution is using COTS hardware encryption to solve
-protecting data-at-rest content.
-
-Regards,
-Ganesh B
-
-On Wed, Dec 25, 2024 at 12:04=E2=80=AFPM Krishnamurthy Ganesh B
-<ganeshsurfs@gmail.com> wrote:
+ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com> =E4=BA=8E2024=E5=B9=B4=
+12=E6=9C=8831=E6=97=A5=E5=91=A8=E4=BA=8C 10:18=E5=86=99=E9=81=93=EF=BC=9A
 >
-> hello,
+> From: ZheNing Hu <adlternative@gmail.com>
 >
-> [apologies, not sure why my emails are bouncing due to the html
-> version even when sent as text].
+> This commit extends the functionality of `git gc`
+> by adding a new option, `--expire-to=3D<dir>`. Previously,
+> this feature was implemented in `git repack` (see 91badeb),
+> allowing users to specify a directory where unreachable and
+> expired cruft packs are stored during garbage collection.
+> However, users had to run `git repack --cruft --expire-to=3D<dir>`
+> followed by `git prune` to achieve similar results within `git gc`.
 >
-> @randall (i am sure we may have interacted before or probably same
-> name someone else): my answers for your quote below:
+> By introducing `--expire-to=3D<dir>` directly into `git gc`,
+> we simplify the process for users who wish to manage their
+> repository's cleanup more efficiently. This change involves
+> passing the `--expire-to=3D<dir>` parameter through to `git repack`,
+> making it easier for users to set up a backup location for cruft
+> packs that will be pruned.
 >
-> - disk encryption has nothing to do with .git storage. local access by
-> access provided users will always be there.
-> - disk encryption solves the challenge of modification access in the
-> server by devops professionals not manipulation intent
-> - disk encryption solves the challenge of modification access in the
-> server by devops professionals not any code injection and remote
-> incorrectly executed issues
-> - disk encryption solves the challenge of modification access in the
-> server by devops professionals not any code injection and automated
-> code drive incorrectly executed issues and access to memory and or
-> .git folder when appropriate chmod rights are provided
-> - "opens git up to export limitations" may not be a great reason to
-> avoid for the same. the object folder inside .git seems encoded if not
-> a binary store and can be reverse engineered via code
-> - "opens git up to export limitations" may not be a great reason to
-> avoid the same. load issues for speed are not that great reason when
-> tmp cache options can be a viable option. probably, you can work with
-> optionally encrypt the .git folder option.
-> - "opens git up to export limitations" may not be a great reason to
-> avoid the same. what other export limitations and CVEs are limiting
-> the need?
-> - symmetrical encryption: i am recommending a personal user provided
-> or default salt or key based based encryption for the .git folder
-> - you may wish to take feedback for the organization using git-scm in
-> their organizations. a bug bounty has been raised for gitlab, github,
-> and atlassian that are the most rigorous for the number of users in
-> the domain. i can also raise a bug bounty to azure, aws, google,
-> oracle, and other networked providers if needed shamelessly to get
-> this feature enabled (probably using an option to encrypt .git folder
-> while creating a repository)
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+> ---
+>  Documentation/git-gc.txt | 6 ++++++
+>  builtin/gc.c             | 6 +++++-
+>  t/t6500-gc.sh            | 6 ++++++
+>  3 files changed, 17 insertions(+), 1 deletion(-)
 >
-> "Have you explored using disk-level encryption to solve this?  While I
-> understand your
-> objective to "encrypt anything that might have data in it", there are sol=
-utions
-> independent of git what would cover most use cases. The problem with addi=
-ng
-> symmetrical encryption to git is that it opens git up to export limitatio=
-ns and
-> related CVEs. It would also cause adoption issues with many organizations
-> who may have restrictions on whatever techniques git adopts to solve this=
-.
-> My preferential solution is using COTS hardware encryption to solve prote=
-cting
-> data-at-rest content.
+> diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+> index 370e22faaeb..b4c0cf02972 100644
+> --- a/Documentation/git-gc.txt
+> +++ b/Documentation/git-gc.txt
+> @@ -69,6 +69,12 @@ be performed as well.
+>         the `--max-cruft-size` option of linkgit:git-repack[1] for
+>         more.
 >
-> Regards,
-> Ganesh
+> +--expire-to=3D<dir>::
+> +       When packing unreachable objects into a cruft pack, write a cruft
+> +       pack containing pruned objects (if any) to the directory `<dir>`.
+> +       See the `--expire-to` option of linkgit:git-repack[1] for
+> +       more.
+> +
+>  --prune=3D<date>::
+>         Prune loose objects older than date (default is 2 weeks ago,
+>         overridable by the config variable `gc.pruneExpire`).
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index d52735354c9..77904694c9f 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -136,6 +136,7 @@ struct gc_config {
+>         char *prune_worktrees_expire;
+>         char *repack_filter;
+>         char *repack_filter_to;
+> +       char *repack_expire_to;
+>         unsigned long big_pack_threshold;
+>         unsigned long max_delta_cache_size;
+>  };
+> @@ -441,6 +442,8 @@ static void add_repack_all_option(struct gc_config *c=
+fg,
+>                 if (cfg->max_cruft_size)
+>                         strvec_pushf(&repack, "--max-cruft-size=3D%lu",
+>                                      cfg->max_cruft_size);
+> +               if (cfg->repack_expire_to)
+> +                       strvec_pushf(&repack, "--expire-to=3D%s", cfg->re=
+pack_expire_to);
+>         } else {
+>                 strvec_push(&repack, "-A");
+>                 if (cfg->prune_expire)
+> @@ -675,7 +678,6 @@ struct repository *repo UNUSED)
+>         const char *prune_expire_sentinel =3D "sentinel";
+>         const char *prune_expire_arg =3D prune_expire_sentinel;
+>         int ret;
+> -
+>         struct option builtin_gc_options[] =3D {
+>                 OPT__QUIET(&quiet, N_("suppress progress reporting")),
+>                 { OPTION_STRING, 0, "prune", &prune_expire_arg, N_("date"=
+),
+> @@ -694,6 +696,8 @@ struct repository *repo UNUSED)
+>                            PARSE_OPT_NOCOMPLETE),
+>                 OPT_BOOL(0, "keep-largest-pack", &keep_largest_pack,
+>                          N_("repack all other packs except the largest pa=
+ck")),
+> +               OPT_STRING(0, "expire-to", &cfg.repack_expire_to, N_("dir=
+"),
+> +                          N_("pack prefix to store a pack containing pru=
+ned objects")),
+>                 OPT_END()
+>         };
 >
-> On Wed, Dec 25, 2024 at 12:01=E2=80=AFPM Krishnamurthy Ganesh B
-> <ganeshsurfs@gmail.com> wrote:
-> >
-> > hello,
-> >
-> > [apologies, not sure why my emails are bouncing due to the html version=
- even when sent as text].
-> >
-> > @randall (i am sure we may have interacted before or probably same name=
- someone else): my answers for your quote below:
-> >
-> > - disk encryption has nothing to do with .git storage. local access by =
-access provided users will always be there.
-> > - disk encryption solves the challenge of modification access in the se=
-rver by devops professionals not manipulation intent
-> > - disk encryption solves the challenge of modification access in the se=
-rver by devops professionals not any code injection and remote incorrectly =
-executed issues
-> > - disk encryption solves the challenge of modification access in the se=
-rver by devops professionals not any code injection and automated code driv=
-e incorrectly executed issues and access to memory and or .git folder when =
-appropriate chmod rights are provided
-> > - "opens git up to export limitations" may not be a great reason to avo=
-id for the same. the object folder inside .git seems encoded if not a binar=
-y store and can be reverse engineered via code
-> > - "opens git up to export limitations" may not be a great reason to avo=
-id the same. load issues for speed are not that great reason when tmp cache=
- options can be a viable option. probably, you can work with optionally enc=
-rypt the .git folder option.
-> > - "opens git up to export limitations" may not be a great reason to avo=
-id the same. what other export limitations and CVEs are limiting the need?
-> > - symmetrical encryption: i am recommending a personal user provided or=
- default salt or key based based encryption for the .git folder
-> > - you may wish to take feedback for the organization using git-scm in t=
-heir organizations. a bug bounty has been raised for gitlab, github, and at=
-lassian that are the most rigorous for the number of users in the domain. i=
- can also raise a bug bounty to azure, aws, google, oracle, and other netwo=
-rked providers if needed shamelessly to get this feature enabled (probably =
-using an option to encrypt .git folder while creating a repository)
-> >
-> > "Have you explored using disk-level encryption to solve this?  While I =
-understand your
-> > objective to "encrypt anything that might have data in it", there are s=
-olutions
-> > independent of git what would cover most use cases. The problem with ad=
-ding
-> > symmetrical encryption to git is that it opens git up to export limitat=
-ions and
-> > related CVEs. It would also cause adoption issues with many organizatio=
-ns
-> > who may have restrictions on whatever techniques git adopts to solve th=
-is.
-> > My preferential solution is using COTS hardware encryption to solve pro=
-tecting
-> > data-at-rest content.
-> >
-> > Regards,
-> > Ganesh
-> >
-> >
-> > On Mon, Dec 23, 2024 at 7:58=E2=80=AFPM <rsbecker@nexbridge.com> wrote:
-> > >
-> > > On December 23, 2024 7:04 AM, Krishnamurthy Ganesh B wrote:
-> > > >i am raising a git security red flag on the.git metadata files stori=
-ng git logs, commits,
-> > > >and other metadata inside .git folder not encrypted using a two way =
-salt or some
-> > > >other way like using a key for a two way encryption or some method o=
-f software
-> > > >encryption internally if / because the .git folder metadata is not e=
-ncrypted.
-> > > >
-> > > >this has been raised to github before but will be raised again via h=
-ackerone security
-> > > >bug and to gitlab and altassian and other git repository source user=
-s if they are
-> > > >using their own internal modified sources.
-> > > >
-> > > >most of the errors like these will be directly closed.
-> > > >
-> > > >https://kondukto.io/blog/git-scm-affected-by-cve-2024-32002
-> > > >
-> > > >https://socradar.io/critical-security-updates-for-git-scm-cve-2024-3=
-2002-cve-
-> > > >2024-32004-lead-to-rce/
-> > > >
-> > > >https://stackoverflow.com/questions/45578579/what-file-metadata-is-
-> > > >preserved-by-git
-> > > >
-> > > >even packages like git-crypt do not encrypt metadata.
-> > > >https://github.com/AGWA/git-crypt
-> > >
-> > > Have you explored using disk-level encryption to solve this?  While I=
- understand your
-> > > objective to "encrypt anything that might have data in it", there are=
- solutions
-> > > independent of git what would cover most use cases. The problem with =
-adding
-> > > symmetrical encryption to git is that it opens git up to export limit=
-ations and
-> > > related CVEs. It would also cause adoption issues with many organizat=
-ions
-> > > who may have restrictions on whatever techniques git adopts to solve =
-this.
-> > > My preferential solution is using COTS hardware encryption to solve p=
-rotecting
-> > > data-at-rest content.
-> > >
-> > > --Randall
-> > >
-> >
-> >
+> diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+> index ee074b99b70..d4b0653a9b7 100755
+> --- a/t/t6500-gc.sh
+> +++ b/t/t6500-gc.sh
+> @@ -339,6 +339,12 @@ test_expect_success 'gc.maxCruftSize sets appropriat=
+e repack options' '
+>         test_subcommand $cruft_max_size_opts --max-cruft-size=3D3145728 <=
+trace2.txt
+>  '
+>
+> +test_expect_success '--expire-to sets appropriate repack options' '
+> +       mkdir expired &&
+> +       GIT_TRACE2_EVENT=3D$(pwd)/trace2.txt git -C cruft--max-size gc --=
+cruft --expire-to=3D./expired/pack &&
+> +       test_subcommand $cruft_max_size_opts --expire-to=3D./expired/pack=
+ <trace2.txt
+> +'
+> +
+>  run_and_wait_for_gc () {
+>         # We read stdout from gc for the side effect of waiting until the
+>         # background gc process exits, closing its fd 9.  Furthermore, th=
+e
+> --
+> gitgitgadget
+>
