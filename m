@@ -1,142 +1,96 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from sonic317-20.consmr.mail.gq1.yahoo.com (sonic317-20.consmr.mail.gq1.yahoo.com [98.137.66.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E549A1CAA87
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 13:56:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FA32E3EB
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 14:06:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=98.137.66.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736776604; cv=none; b=CigRd9nZcCfEdmClBlaf1aTGPw2EsWp1NGknL4Wzj/rFwRvh81/KpnXX36Ah0hFFhvu6+U9zXBSv2H37oNEgk+m4aR2QWRPSoQzY3oxNXwx2VMGHd+zFpcOcvs4glFE6WiZBKe9/4JXzMmVfD85fBIU/U83EKHOD5WOP66RTCOk=
+	t=1736777217; cv=none; b=LgUPkBTftRpEVwE444TXY+t9TTx0wkCjDAGucy2esylN0C45Xnusig7/qCi53jaYhv1DZVq1eQBUuJrlUB8ps50OVuVJmnSOjw1/1jHZpr6ztVVb/6zZIOpfv89iMSU7aT0BvdF2su2RtPRaiI/exwHu2zBot3DT3KdbclNFpB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736776604; c=relaxed/simple;
-	bh=cNtX7zR2llR6EDkdWKUU89eaWV1oyZEZxaYQ7yPlpCM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=sHL6sYkRYLVz4XmHtUorrPhkfKX1BfJJTHt4dMPWW2PsdVXBlXent5XkWjpWEZs+hrZzINiMSOBW9BOPRtbQCIXJ4tOpF6ojaPGMdn/eRTWcDp994L3+Y97dFjYgS/Jzt9wlrT2OOeZg44Mm8GeoSRDgplIa8GOoCxXvmmzVhU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ESgc/qTo; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1736777217; c=relaxed/simple;
+	bh=CE4Sh7iOWg8zkqL5NL/fANNotoWlaJMEcKqGFZ7o4/U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:References; b=saIl+T55LW60/b9xIrkDzYaoygsAdIM3rkW5zjB4Ydc/C9e7wevmaeRwoOhStA/tVDICJ7QMwhSTPztN1GWUdhDJPaEvRS8CcC9/tz/9tXumUvgZGwPtHFgVwhepD2NjOeRTB9ZWUaZh4kV4snichqYeAYBK3npwBp/IgRRLWYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.ca; spf=pass smtp.mailfrom=yahoo.ca; dkim=pass (2048-bit key) header.d=yahoo.ca header.i=@yahoo.ca header.b=O2yMXVjz; arc=none smtp.client-ip=98.137.66.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=yahoo.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yahoo.ca
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ESgc/qTo"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1736776594;
-	bh=cNtX7zR2llR6EDkdWKUU89eaWV1oyZEZxaYQ7yPlpCM=;
-	h=Date:From:To:Cc:Subject:Content-Type:Content-Disposition:From:
-	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-	b=ESgc/qToaM/v2TXsmja9aLWoRjXei43tLrM4frIwsQcC8r4lK08DuhKT0bZoiK8jd
-	 /QikbD9XxXITvpgft11YEDbRTSclioXkQ3qJOYtgeo3gYDFzWBwuOqImmGsXMxurXH
-	 dIwra0Dgc0wPZAYFrF9hLKiXkfvuSQ2z3TW1GVhyIEFrbpecIr+9mUpFuKSupbN4Rk
-	 PQRmiPRH/d2QZ6mtsp4yQFPjfUFTa87ymGbCNHRbMeXdkQhwN1swDY6fCgRayJEtlC
-	 hKK7Kkq/W6kSdiSRqjMPsZgHrLOMYmjLwhdsIj5A+TNgaoRha4mJPUahYLDaynTNyQ
-	 I3oac7gC5YmvM3yJE4EKzwWmXeBLTZ69zTOEerTh7iEd340nAYXgNiD8r1WpahOzwA
-	 6BWp2Zwt0OfL3AWqZF/FwAvATyL9BVRcm/1k2VjXwuso/fN6f8W2WtqTXXTEtZIG2x
-	 bnH7ai5g5f5XauZpem8/Kjuc5C7H7E3hG6LHymoobjfYI1ZjMul
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:fba1:9a5e:92fc:edf2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B978A20008;
-	Mon, 13 Jan 2025 13:56:34 +0000 (UTC)
-Date: Mon, 13 Jan 2025 13:56:33 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: Bug in 2.48 with `git refs migrate`
-Message-ID: <Z4UbkcmJAU1MT-Rs@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=yahoo.ca header.i=@yahoo.ca header.b="O2yMXVjz"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.ca; s=s2048; t=1736777215; bh=16oECwCDVq33A9SvNLld8Ha7KlTIrTn1AzZAPQ19Ihs=; h=From:To:Cc:Subject:Date:References:From:Subject:Reply-To; b=O2yMXVjzL3TcXM0egZychmiUOIbLB8yd49jVcbTNdWg8dSeklfgI1AXeegrRjmWtuP2DY7iQz29zZ+OeM4TrHn41L40B9zKA98IuszxEI4ypZ636UNVVLWROu8iLnY3RoBDy+Qs5CwZ1f1wuxYdFpMliQLtcxjNROLiRWjqaO7iJCTQ/yUnk/OmE7XWV6VtLPfK7dUNohDkH+tdU+HR5B513RYOIXlObRnxqXhJWFjHMbpK+dYl1nM2rIx6DO7huXZddJ9huOnkwpq0/V5eWL2McJYMruuDQp3sVn3MD+l7Rg4yAiOPu79TNDHO434m193LvtCBUww9srBB3SQEtbQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1736777215; bh=KH2iABcigLQMzwsdh9b4BZWQ+JrpvGOLnAJEIbj2Zs4=; h=X-Sonic-MF:From:To:Subject:Date:From:Subject; b=qx5rjj+WNZSflWaxRs/rl6vFX8xKbJ6Pan6f7HI7x5UwPcNR4k9SFuxZnb2EZ4ZGan+vhboQr9cn2BBELZHu96rEMgkB29+6RNoBH3OKUMZUyT1Sd3QxKiuyjYG6HRfTMx9hOoA7dip5xmqwdF+TpZ4FmKt+YORtXdASQGiNaV/E/wWBHZi/KqESHAKoSkmRcGTcyKbaZyXtyGYcXdNNEktzYwPoThQnDNrzcmS3ZWJkr4K7bwAOgbUmpQsKzCGwyTYay1CeV+jIh6hQuZc5mc57yepjVxgxmUTd4AQIENnjsedgOreO60lK8IsnnSUhamzO72aSRa87OpfwgHWkPw==
+X-YMail-OSG: EHVnlzAVM1n1PEaCLNrIPHG9Jq462Wc_NYUFMaSh2UYPgN8xEZD_DbPGZBNC04n
+ dRR6guVBTig048Snq48Xyl3VEVdHENIMeYP_QF1K85hxt0ItPHgltFQO4XEQx5Jl8b1ct7jWZ.rA
+ RDSMS_B4qlkyhorcT4vmLS8Lg.8LiJfLZaUChfusgOiH0uILcQMBzn8JBclvz6CYIM0Oiyk8rJj5
+ BAoFa9unHTYjhC80nvfKD2Xrv0Gy.0CWetY_WrPht82VsbrdiJ1XoOZzrNeFgPqpGX1jaje2HYIx
+ xdKuWMbG0ekGvZuA7JKK63SpdwDR_j5QRkrbtn.ongtZcIxcfPHw_.sggwhHsYUuEAVxQTwLT7UO
+ isnbzLPwW6QpEEIhpkOwcAl3RCutOKXBYW4HPw0goDXd6vbcfpa.QWxhVA3YAcyHToejWiBhAQHC
+ mrjUaMfE_sN1m2a4ZHBMd0f2yy2DejfPeP.Ge2_tMuZM0GTfx4aolbr7tOo.gxJ7iYxz1znqQGt9
+ 96pJU9Yr9W1qtnE8y_GxNRKkxve5BktNtJivBT4IanIZx.c1lVuJlFOldmPTanHSerC63AW1Riub
+ ng4DqCJcPUaiGq49xBO4.sLiNu1PscemGEDohVuRQjYrkBr86IzllG0ZK9RUvndER1TwcVRKZcY_
+ UvAVkN_nigQKwQR4GPRC7qWfqf9QRv1CLS30iNs.34d3HOTLdAJth.uJMG3h03XcBTH3ZpjHj.4P
+ cpiPgwBNf.qyA0FP6zg9_jNpOLomFFoHKHv_dc0jm2UuvN7.vRgece.m5Ys7shW495Q5TFLEwcOf
+ tL2lyaWji8WqDbhx5aJPEE_6vciTcnOg13BQV792ldcc8BxWLOftFEOrpEoY7s7suVfc9LdBIvda
+ ve1POLbwolhLYMrB6iiiW0qe93AFQ0S4c5dGw0QPI_HA1R6RfmpEl9JbUJNadCdSqOqUXjRq07dP
+ .Ori_HmCm_0H3r1iN96Dxt18E1SutmlHEUfsCX5Du1Djjg6pcVzp55hRZt943G1A91qadV6TsInm
+ XtBibOIWkTtspR6YQhdVjQNTjrxOFpxdVcM3qXu9Ve7YGIbQXBjxjdVs4BavkzSxDKs.8SfKGw5w
+ zLSci0B5tOIVwoWKY9ph3639q1bFAY2E7S9duKRZjT8gvLpjT8jNzzqN5lGgbrVgsvcu.6d4FHox
+ AiXW9EUeCl.si8Cg5gkUTQYwpIImrTBZt2RQ0h66IKanylQmg4Ab7CvoIHECQa7dihRwbGOZHXGb
+ 7XHHfPnfDUNzv9thI1Urb0xtS90_gNjQuK7TYVy3DTh9X9l_5F4rgG1cxC034IEtk8.MlRis4ekr
+ eAOTyg._sHalPkx8MDhMd9BMW3FU0VSUQFk5YCszNRtEWiQxs.pqArLfqzEYwb1CL_oTBYESmUCi
+ PeInUQojOMcEs43EO6cpvAv9fT.8w2c7XLzeqHb7mTZy4pweHZQZUgixaxMSbbmMqKy.IqgMAgJw
+ _xygDoK0VOR0bG.js4fNg6L1oys_nyjT5E5WgP7axpIX6HlI0aOhCeadblBuTvnjUsaLYnJT6rcz
+ zQVriWbX_VeEAJMivhjajAo7w1.ETYrHgzEM11pbIeNpwrfZ1V51oNijZi2AcWzwpxrJMFRKOWAS
+ PrfBjeiQxeF_lprl_5eJ.46bE7_lVXuJS2DK8Ef5Pkv.IGGUQ2GQHPizRefmLIb0kqHdTovSJnU6
+ F73fBa24ugZ4FEBGvklPOIKcfaLlbGIdoDlPvb_E2K63UbVgddTxPiM4vKRqnfQPqF3OtUqBXlXP
+ jAX1sJdPZrsv0q.5_Tj427KWSkTgzdqel6eVbk2KPGytbdxcLsdsrebmmFYzluNTF9k.83e8olgF
+ xvAE28qDMIR1wGqBzVVCuH4L4mQ9e3gbGfZVMHcLxs8uXV9V6nzTiwZXBmGu6ARe0cZz0Xn15AKa
+ kBBCOGzbNS9yuffgnGtuPkIHtkdWx26LQ.LLUCzDimRXZEnwDHn8xYwcvJUdln.3ajA15n9HBiJj
+ 7lY7wN7f.0u.IHpxOclcXzS.zGBXsFdqRv3uO8.rxHJe_z_ZmhXJRqHWtWFUwkgxpfex8mrGi_3a
+ 8jxrN0OPIHrLMwsf7fvdF2YNwqo3QJNRNfzEJXnF0U4MMfLfpz8wjF02TfJZKqU5E4LgCgcx_s2t
+ WIvtmcl2WqZ.Czhjsdpp1ThK9bM8C2RSt1PmhoiTHxJVZ4BRjJiWjGgdzEgRexpgx2wc_rT5afeQ
+ LYFcUHKW._NRxFc_8k1FbY58-
+X-Sonic-MF: <alex_y_xu@yahoo.ca>
+X-Sonic-ID: 21b01c4e-a00f-473a-a57b-318c9480c594
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic317.consmr.mail.gq1.yahoo.com with HTTP; Mon, 13 Jan 2025 14:06:55 +0000
+Received: by hermes--production-bf1-66bb576cbb-q5j52 (Yahoo Inc. Hermes SMTP Server) with ESMTPA ID ca96bf2141a3e2901560bf369ad7d6ed;
+          Mon, 13 Jan 2025 13:46:39 +0000 (UTC)
+From: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+To: git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Cc: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>
+Subject: [PATCH] meson: move config-list from libgit to builtin
+Date: Mon, 13 Jan 2025 08:46:32 -0500
+Message-ID: <20250113134632.21592-1-alex_y_xu@yahoo.ca>
+X-Mailer: git-send-email 2.47.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="NWLNA4LoaZILOFDG"
-Content-Disposition: inline
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
+References: <20250113134632.21592-1-alex_y_xu.ref@yahoo.ca>
 
+config-list is used by builtin/help.c, not libgit. this matches Makefile
+dependencies
 
---NWLNA4LoaZILOFDG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Alex Xu (Hello71) <alex_y_xu@yahoo.ca>
+---
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Hi,
+diff --git a/meson.build b/meson.build
+index 0064eb64f5..ef3604a17f 100644
+--- a/meson.build
++++ b/meson.build
+@@ -614,7 +614,7 @@ libgit_sources += custom_target(
+   env: script_environment,
+ )
+ 
+-libgit_sources += custom_target(
++builtin_sources += custom_target(
+   output: 'config-list.h',
+   command: [
+     shell,
+-- 
+2.47.1
 
-I noticed that Git 2.48 has support for migrating refs when there are
-reflogs and, as promised at Git Merge, I decided to try it out.
-Unfortunately, I got an error:
-
-----
-% git refs migrate --ref-format=3Dreftable --dry-run
-error: reftable: transaction failure: corrupt reftable file
-----
-
-Here's a small reproduction case:
-
-----
-#!/bin/sh
-
-rm -fr test-repo
-git init -b dev test-repo
-cd test-repo
-
-# start first block
-touch foo.txt
-git add foo.txt
-git commit -m +
-
-head=3D$(git rev-parse HEAD)
-seq 5000 | sed -Ee "s!^(.*)\$!create refs/heads/ref-\1 $head!" | git update=
--ref --stdin
-# end first block
-
-# start second block
-echo abc >bar.txt
-git add bar.txt
-git commit -m +
-head=3D$(git rev-parse HEAD)
-seq 3000 | sed -Ee "s!^(.*)\$!update refs/heads/ref-\1 $head!" | git update=
--ref --stdin
-# end second block
-
-git refs migrate --ref-format=3Dreftable
-----
-
-I can also reproduce this on the latest master.
-
-If you remove the second block, it does not appear to reproduce.  Some
-investigation led me to the conclusion that the difference is when
-max_update_index is not 1, the header has the value 1 for it but the
-trailer has the correct value, and so we flag the header and trailer as
-mismatching and therefore it gets marked as corrupt.  I believe the
-reason things work when removing the second block is because that value
-remains 1, and so it works.
-
-I haven't done anything else to investigate here, for which I apologize,
-but I just wanted to mention it while it was fresh on my mind.
-
-In case this is helpful, I did see this when attempting to migrate two
-work repositories with lots of reflogs and many refs (the smaller has
-2983 and the larger, 44832).  I obviously cannot send you these
-repositories or things in them, but I'm happy to test patches against
-them.
-
-Please let me know if I can provide more useful information.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---NWLNA4LoaZILOFDG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ4UbkQAKCRB8DEliiIei
-gdDTAPsF3SjyD7N1l9lLr9++B+t1DVCVJpZoXZSE1Vd7lBsfcQD/XDNnYEnXAhFp
-q6o43a25rm6ly2nW9r+gLJAZbU8ERwM=
-=sb5c
------END PGP SIGNATURE-----
-
---NWLNA4LoaZILOFDG--
