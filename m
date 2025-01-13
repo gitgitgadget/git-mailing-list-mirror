@@ -1,114 +1,102 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from sender4-pp-o95.zoho.com (sender4-pp-o95.zoho.com [136.143.188.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A441DAC90
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 21:55:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736805303; cv=none; b=KqOWsEYFg7OAfmKtJChvpg8qb8unZehmHEP5X4sb2wYx/mfz6go2WCqwqkxVRzc4GVmPBBe1mZyNO7MMvuukSjN+DLE+MRoU8zgxIbmv9ikJG7Zs8N9hNq22HCZTfAXxa0O9cLNhjiyLbox2Xuj8K/7uJIQgleAHUZXkI7dHULM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736805303; c=relaxed/simple;
-	bh=EluFn5lunVwccnHvcrIafrCOa18UTzhKBl3f7lEf4QY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BY4UcYvG2lSUhOhwdRmuHc+9RThjN3jz02dmE7YSU88+ZFFeqls2N9dW3HeCX1F+Fs9cEhMFcrVx80ZT3ctbVYFlULQdd7zleCCHRopUaOgRRPFSWuX5PrNdMMcFizTOFYpIZJAXpxfEEXUEHu/gyruEjVt/k62WxTIoQHn6hFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=FPrawyA9; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8101C3C0D
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 22:11:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.95
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1736806273; cv=pass; b=Rm7SUpU75EBTfQn2yx+52KFWCWOBGSPb8EhNuDasaMPSG8vNhbHCuiuXHtCONlLTsK6dC4j1JCtEu8BNnU5u5z3CmMxQCqsTnYT3cZv+DC3qhSqR/9ZC+VfxEDxVxTFQPZWAUbqlZWSAVnE/ia/v8I5wKkYz6A6RQX+Hx+xymoA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1736806273; c=relaxed/simple;
+	bh=kV7RkbnEe4t4EP/5LYzvs84HAs13Pg7jknm5pC6oBJ4=;
+	h=Date:From:To:Message-ID:In-Reply-To:Subject:MIME-Version:
+	 Content-Type; b=ZsE/BHguSmTVhhlu3pY22M0XD5MUtSDQH6Q9CPOkYtKi5tbfoHtWMzv5FTqQNJRM6CtQvRHtlK5PhH2fdJaczmJjUZThbSVDicNSjy12zW3rtKiE9OzJIFa3TUcjz36TH38MW247j2hwGgtY9vpWF/0Fa6F6fgQuiY1ouJBqGZg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b=e6UJx5bm; arc=pass smtp.client-ip=136.143.188.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="FPrawyA9"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1736805299;
-	bh=EluFn5lunVwccnHvcrIafrCOa18UTzhKBl3f7lEf4QY=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=FPrawyA9AN/M9DWd2nvB2vOinCJH2wGJt5OQ+CxF3nTpHWXHu8eaUIq0BK7dDGNlm
-	 BOuvKyj3ZQn7UUXOdnw4QFMZ2MHzdI3J++K1353JpGDseTriFYY//d1x2yTTD6m51B
-	 1unb2A+2uhgdTWkM4BYjiHB9X7dR/0+GLGgvqdqWye0fbI8pwOR9iTNljkkK/fmyLI
-	 fHSk4amFiQcGupU3V6StWKc37xYmAPlAaVSDHvV0WMAMvyW7ZLQmY/+4Dvg0J0gY4G
-	 G20fRBdsS4PKQIigvbZX4RcS/OC1AKzolLFaAb0Vwf7wZaDc5imu4PlQqgeyvkbO0j
-	 QnK6O49UewxLopXM/wTZao3RO873lBJoVDOghL4qrEno2UAuS9gVVRZhMGXA9XbThS
-	 HdranyZapQtNKZ1t5X+NhIwOkdvWml/iPMLXUip6oT2OH3aqSIMihfwvZe+EWGpRZX
-	 3n+hEDwqV0oQUpZeP9kELN1m00lhOxpsj70SLAESvGpHHEeVHIz
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5F51320008;
-	Mon, 13 Jan 2025 21:54:59 +0000 (UTC)
-Date: Mon, 13 Jan 2025 21:54:58 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
-	stolee@gmail.com, avarab@gmail.com, Johannes.Schindelin@gmx.de,
-	peff@peff.net
-Subject: Re: Changing transfer.credentialsInUrl to default to "warn"
-Message-ID: <Z4WLsmq4rPEMnUXK@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
-	stolee@gmail.com, avarab@gmail.com, Johannes.Schindelin@gmx.de,
-	peff@peff.net
-References: <20250111071500.710169-1-mirth.hickford@gmail.com>
- <xmqq1px6br7p.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b="e6UJx5bm"
+ARC-Seal: i=1; a=rsa-sha256; t=1736806269; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=AZ/UYe4tmtqxTVIoaO3sYGVRjsc5FnZug7cP8SI19Dbdh8I/A+1HXXGLBG85R3P1eDCpA/hPG5xW0J8Oo1RWwoj3cUv/3V0plSDCs/lPv3RcSgK+kvgAQ1FLMILnbDq8AoQN6bbBiLZqX8qovTdytKZ1ufrgIfCGVmVzLCM+BO4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1736806269; h=Content-Type:Content-Transfer-Encoding:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To:Cc; 
+	bh=kV7RkbnEe4t4EP/5LYzvs84HAs13Pg7jknm5pC6oBJ4=; 
+	b=ZUC9FprDNITK8pO4dKk4QfX35lyqnddkYNiw/a9UaukxoCFYeXo4yksYO9JeKuc8kXIRR+u9hMW0J99DPbpc47uGOf9DHU+Wji406LY/EzTc2qf92pC6ubYO/YGtFYsCO+PcHq06TjG0wlfqJ30DLW/lhWOp8rMqo/6JZnveHgg=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zohomail.com;
+	spf=pass  smtp.mailfrom=safinaskar@zohomail.com;
+	dmarc=pass header.from=<safinaskar@zohomail.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1736806269;
+	s=zm2022; d=zohomail.com; i=safinaskar@zohomail.com;
+	h=Date:Date:From:From:To:To:Message-ID:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To:Cc;
+	bh=kV7RkbnEe4t4EP/5LYzvs84HAs13Pg7jknm5pC6oBJ4=;
+	b=e6UJx5bmtu/Ga95ZsvTejAmdo1jheX/89NQqLiwTrgH+YJkcWgH6JhtTd77Qr45F
+	UmMKwTk91ZzG3UcRoIxspoZL/5zuNt7EAVd28EyTpJNWWdPf5zNN4Bk5YPUoaUhHa/c
+	0a9p7FixRY2EE/g1lwNfCNdKeCHXfShN8kjdYLVs=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1736806267541478.8577210426221; Mon, 13 Jan 2025 14:11:07 -0800 (PST)
+Received: from  [212.73.77.104] by mail.zoho.com
+	with HTTP;Mon, 13 Jan 2025 14:11:07 -0800 (PST)
+Date: Tue, 14 Jan 2025 02:11:07 +0400
+From: Askar Safin <safinaskar@zohomail.com>
+To: "git" <git@vger.kernel.org>
+Message-ID: <19461b87a5c.5a2ea74016716.8214238482389812984@zohomail.com>
+In-Reply-To: 
+Subject: [bug] "git bisect old v3.0" takes 21 mins on Linux repo
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="MWCKGtbIZOkfFtiu"
-Content-Disposition: inline
-In-Reply-To: <xmqq1px6br7p.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Feedback-ID: rr080112274d1b6da2582a90b054c0393a0000a31b706075736a67b3f1b703e7357953eb40a0db58eaeb19c6:zu08011227c66071b972718f23813f60e00000b6f941d91cb3b5e48fdbbfed9a09b20a9e1acc77b561573f23:rf0801122b4a9d59bcd1c2f24cb056eae80000a52287da12e0a0bceac1faa8f7d67d7622c12bff86a63f8c819dd2dbb9:ZohoMail
 
+Hi. This is bug report. "git bisect" is unacceptable slow on Linux repo.
 
---MWCKGtbIZOkfFtiu
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Steps to reproduce:
 
-On 2025-01-13 at 16:42:34, Junio C Hamano wrote:
-> M Hickford <mirth.hickford@gmail.com> writes:
->=20
-> > In order to nudge users towards more secure practices (namely,
-> > using a credential helper), would anyone else be in favour of
-> > changing transfer.credentialsInUrl to default to "warn"?
->=20
-> I personally do not have a problem with the proposal, but it is
-> curious that it is documented as inspecting only .URL and .pushURL
-> is not checked.  So, in addition to "once we start warning by
-> default, we'd need an advice message to tell the users how to turn
-> it off" Derrick says in the commit log message, we would probably
-> want to see if we should/can cover .pushURL and need necessary updates
-> before it happens.
+===
+d-user@comp:/tmp/t$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
+Cloning into 'linux'...
+remote: Enumerating objects: 13079335, done.
+remote: Counting objects: 100% (153/153), done.
+remote: Compressing objects: 100% (108/108), done.
+remote: Total 13079335 (delta 84), reused 70 (delta 45), pack-reused 13079182
+Receiving objects: 100% (13079335/13079335), 5.18 GiB | 13.72 MiB/s, done.
+Resolving deltas: 100% (10454171/10454171), done.
+Updating files: 100% (87234/87234), done.
+d-user@comp:/tmp/t$ cd linux
+d-user@comp:/tmp/t/linux$ git bisect start
+status: waiting for both good and bad commits
+d-user@comp:/tmp/t/linux$ git bisect new v6.13-rc7
+status: waiting for good commit(s), bad commit known
+d-user@comp:/tmp/t/linux$ time -p git bisect old v3.0
+Bisecting: 535608 revisions left to test after this (roughly 19 steps)
+[62606c224d72a98c35d21a849f95cccf95b0a252] Merge branch 'linus' of git://git.kernel.org/pub/scm/linux/kernel/git/herbert/crypto-2.6
+real 1293.32
+user 1291.70
+sys 1.41
+===
 
-I agree.
+1293.32 s (21 mins) is unacceptably slow. During "git bisect" execution process "git bisect--helper" occupies 100 % of CPU in "htop" output. (This means that "git bisect--helper" is not parallel program, overwise it would occupy significantly more than 100 %).
 
-It's not clear to me from the documentation if this only warns if
-there's a password in the URL or also if there's just a username.  (To
-me, the word "credentials" doesn't seem to explain that very well.)  The
-former I think is fine, the latter is not.  Looking at the code, it
-appears it is the former, so that's good.
+So, please, make "git bisect" faster. (Maybe it makes sence to make it parallel?)
 
-Perhaps we should also clarify the documentation so that users can make
-an educated decision.  I'll send a patch.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+My OS is Debian 12 Bookworm. Output of "uname -a" is "Linux comp 6.1.0-28-amd64 #1 SMP PREEMPT_DYNAMIC Debian 6.1.119-1 (2024-11-22) x86_64 GNU/Linux".
 
---MWCKGtbIZOkfFtiu
-Content-Type: application/pgp-signature; name="signature.asc"
+My git version is 2.39.5.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
+The above test was performed on tmpfs on real hardware without any kind of virtualization.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ4WLsQAKCRB8DEliiIei
-gT+NAQDQutN6gsREta1SI/XlFqmzV72RG0nygZbs8kuJouxW0QD/YtxKHQ5x/U/k
-peDCDzKoaXGqIEZGm7g9zWKmoS6cHQM=
-=z8cI
------END PGP SIGNATURE-----
+I will try to perform the same test with latest git version and will report my findings in the next mail (hopefully today).
 
---MWCKGtbIZOkfFtiu--
+--
+Askar Safin
+https://types.pl/@safinaskar
+
