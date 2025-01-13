@@ -1,113 +1,139 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FAA24023A
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 16:51:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72E914F9F4
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 16:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736787076; cv=none; b=T8BKZx1hZOmWBJmDht3Zz0Kp5A7/6zXPu/tSjfAmdEVyqlYHS4h80nBpSGyCS4wSqqq9jGXvpPAiwBX6XUOzSycYJWivQ6FxuXpF+ejVs8bw9c8SPMoOFza6yIfx9PvxkSyiwK8dd6wi6klZsEyLdt5V+K18QTXD+4xK0EorHEA=
+	t=1736787374; cv=none; b=XcpUIdrJs55j6BcLSrUb2a/g6ZtEbdWXdq5KIkFf6TQanE7KYmhzE2/FQI8VetqzIk4JcfDxj3d91DkqBgpHL5zJ+oRUCxRjyUflDQQ8Xj+b14KVd6m4AFn2noBtB8UBDzZTbrnp4G7sEknt1eOP5F1xuHnW/L/QH8cAwelsEao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736787076; c=relaxed/simple;
-	bh=ru7Kz13SD+qNuJ2rGfbm9G0RQ2hkVDMVqav2GFrGz+U=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=W+iuSp/wJOYvWXsy5Hk5jACYiMZKBFhxktQKvpZKnasPIpkHsUy9zitgWsHZ2cm9Y5f9sGKS3ngA4VieyfwwYjnBVNHosrqO32gBXDLBnW8ln7uFwqOCDWDy36AaUkB7woxQDfk71+afA91fh/xuyvtXBdTt1g8PPBAIGIHyuW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=me3iphS3; arc=none smtp.client-ip=209.85.161.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736787374; c=relaxed/simple;
+	bh=WRwScYYRBN+RyAlrH7AzLCLIZEfqgf91tN/fuSbzeIQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GQWCG45I5LMXYH0EQSMwCIR4ycH3hPfPdroUEWjaFuL2IIms/SilOwECmbvOr4DVsZVQtDY4I9qoCdkpqNCVdJ5yYhqLFZ3zpUAy0gs8AWObq9odCkCsD1m1h5lW9W77tYGSwwWIvVkrPzG3v6bTzSy2IiCqVrZBz4X99YKmQYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tjGSwt4a; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tYE9bJqz; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="me3iphS3"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5f321876499so2207727eaf.1
-        for <git@vger.kernel.org>; Mon, 13 Jan 2025 08:51:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736787074; x=1737391874; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DNCytGlNFHLr9ys/fFeVsy42x3gAMQXob2gTcWtT1IY=;
-        b=me3iphS3bQQoAvbjgt8hSV7Q8nro6+qPZR5eSVxe2viDltnhRz1sb73Gd9+19qIEwH
-         37eGj3kappMpN9zyxofeJu5/Edt4BN487K9vchBHHNHlCmSA+jWdtXhovh3CNJG/NrQ7
-         0zAYpwl9lLhnb+IWXHFtZkO5sQeOoiG0daDk3Jhf7PD0xhF3Z3fjH9Vu5JGyEEB3o6mw
-         Wwu5LGjm/TxmtyXgv0ompLuvXd0amxl31tvW7XrhIIbQNFOq7WfSHdMWkgiq14N6+QL7
-         JCxDP3dfEs7bVlEtr9MHo9ASCLecsaKV3F7eticQwO7pAA69ALhsdTIwFGpshT0WKdh2
-         k0ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736787074; x=1737391874;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DNCytGlNFHLr9ys/fFeVsy42x3gAMQXob2gTcWtT1IY=;
-        b=TgFLL/LaXMMRHdemtGiYzymJYWkvXSfEYZmaUHZqT0/vb9zHDbV9uwtbC5yTDL3njN
-         Ygwy8J2xWBc7Ic4XkcEUtAccNxlbwOM5GWxDa7gwHWrVrcfXH9F3r7KRpNKgWYIWZwue
-         v8O9Qz797L66++pVosJeyprrreESkQG6RhJHxI6OstMlCm2eC6Fdmn5rvpwJHArjA/CP
-         dHV+gNG0Ju7+l8f8d22/1VIY5VcMYddB7PMRjPSzYptoK4RBbr54aU8fh6qUWInsHJn3
-         9Rx0VZxco9+2uby0Psug96mrRpnhj8wKbRQ1Yjx7FtqJVCaBinlZabsu1pDwTkd6bhcI
-         IHfQ==
-X-Gm-Message-State: AOJu0YxAjRRkLlSPP9F87tZAZsM54fec7tEnPK+F2yXjTIEUV/AsYWol
-	xX36+ZY+yAXEj0IlwlaaPid52lKbRFk7jsQ/3W1mqMA6qXINxJqHehBYIg==
-X-Gm-Gg: ASbGncsGlJq31648caHvCzqWTacbNqfpC21knWC6Ol8GcgALzmnundrd3ZBnFZQdjTV
-	HpgUXHAcfmAJPerEG7u5GC61iTPTT5SDrEn7mrkmSMN+RXrVdg4XAgfcG4Y//xsvTGX1zIZygCv
-	oHV/Dp+WsTygoWUteKvI77I3tkWLfuuxJh53jsO+pbGkhAkNhl7Si36nw9Aa0P6ns/JCt14sgpY
-	ObN/NRqSjCnK0JswUSn4QDxcx16J1mQ5rowOInPZ9IJ2yDe6i6t8Y7eyrRINmGSorqhb4GXlTAJ
-	YHTk
-X-Google-Smtp-Source: AGHT+IFq0cDcse+LW/42hhW4Yb25Ha1t46hlrpNMVN9RNDc+FSRMgv6FjHIf2nD1KrABZ2kVPbrC6Q==
-X-Received: by 2002:a4a:e842:0:b0:5f2:b632:7e83 with SMTP id 006d021491bc7-5f880d1d425mr11462870eaf.2.1736787073992;
-        Mon, 13 Jan 2025 08:51:13 -0800 (PST)
-Received: from smtpclient.apple ([189.122.187.57])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7231861c038sm3672392a34.58.2025.01.13.08.51.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 13 Jan 2025 08:51:13 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tjGSwt4a";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tYE9bJqz"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id C54661140176;
+	Mon, 13 Jan 2025 11:56:11 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 13 Jan 2025 11:56:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1736787371;
+	 x=1736873771; bh=n/r7LiNM2ndUY3DAZSDDt7FYnnbcyyvrpUmQKzdJt6E=; b=
+	tjGSwt4a4cA+1ttBnMEl7zodeEfgc92V7NTOdzzRti6LaMiFXpwJnYqzrYF9zM9g
+	gNofGqfGnlc7EHRDhP0WRaT+Wmus1CJfUm3Qn1U/YADy1doyehGgSvgMO90Ritf2
+	5Bl8BCShSKRPBROIYsjaFyDb7atv8Lo+x0TaVL+gnQVACeMKtqpRXMv0ywn2tgbE
+	Nthwvee8aYdi+hQajW5tXyYCuAMuTsq/pM2RaX2lE9vTFu698jZ156Dj95pOMvK0
+	pQimK7ELjZc7B4C1Ksb+DCtfH6ChaeiahecG+qfNa/AFYxvW7AyLDzvvJe2pg13c
+	o/m0AByOWTRVHOPCBKdk1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736787371; x=
+	1736873771; bh=n/r7LiNM2ndUY3DAZSDDt7FYnnbcyyvrpUmQKzdJt6E=; b=t
+	YE9bJqzjVZNA6tAzYsvG7hXyk9n0TqbZnh96hy1KEdbh2dLwA9qJZf9Siq14LW9a
+	vCrRvgweIdMbWE4sMjiDOQAgvFPfV2P0LQQfq0s4f1V6rP+BtssIfOO7KF6Xd1ss
+	S2Y0wemAoi8QZxTLdEIc8LFUE4GTJp6yOwRne1pXLBZQo/yQ34k+F+cktYCrICx6
+	D9u2gXRYq9v3yxKR5y+ogTkGDPC6Uv+9qUvQ7CYGVsaOkK+fz8RUy1r74KsFClYm
+	rQ6CeuGM7BWK6AAkIx3zCISZsr5xw7k7Z6cdhAA6mAS+i57PHoLtwnD4Fh2wiNpb
+	lIUpFL9955okX6hKihsCQ==
+X-ME-Sender: <xms:q0WFZ2blWIl2oGVb8kk_hQXITo-L4qSeA1LCUN6UzQezPQIyGQAqIg>
+    <xme:q0WFZ5Zs8Y7yAMNu3x8altY3_0zsR4CLI1DXZIWIo5WiCCCjySapJKCII6oUXp-HC
+    SAsn1q_Y_g3HThDVw>
+X-ME-Received: <xmr:q0WFZw9YAuq3QP-lD7DIBikyz-epWtOVsqLubaA0zaktrshyKPf9p_QPstxYbH4oy6GYIiMBN0oRL1SmKMQkZ3UvW_1aOpRj7VeL>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgleefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    gjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
+    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptd
+    ffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveeftdehnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:q0WFZ4pk1DKT924ZwWk7l9AV8BrouV-9WyYLHKoQnFpMJc_S6ECItA>
+    <xmx:q0WFZxqPPg4v9AR7g1olOwuYNwbixV7Zv721VDDHW7YeZok8Sl80jw>
+    <xmx:q0WFZ2TmEj4BqVA2ll_LX3MZegH9RSgOJhFdMJBO5vrXfUj1lrisAA>
+    <xmx:q0WFZxqC1_ctYzNFIHw9aeb5gXn5crKupC6QGdhRFa2w6nacOrpQRg>
+    <xmx:q0WFZyl6SRU-7y9PSvQzn1v3a1o9gfTjMFgBkp1T71OWsN2kzKz9oL_1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Jan 2025 11:56:11 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH v2] Revert "doc: move git-cherry to plumbing"
+In-Reply-To: <e5b20f9ceb437a82c422136cb81b05a0521cab07.1736682716.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Sun, 12 Jan 2025
+	12:54:28 +0100")
+References: <e5b20f9ceb437a82c422136cb81b05a0521cab07.1736682716.git.code@khaugsbakk.name>
+Date: Mon, 13 Jan 2025 08:56:09 -0800
+Message-ID: <xmqqv7uiac0m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.300.87.4.3\))
-Subject: Re: Bug report - Apple git
-From: =?utf-8?Q?Andr=C3=A9_de_Castro?= <aramosdecastro@gmail.com>
-In-Reply-To: <B50229FA-0C33-4DFD-B8D9-79F30D616F86@gmail.com>
-Date: Mon, 13 Jan 2025 13:50:59 -0300
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4B31DB8A-E74B-41FF-9C53-7A877D135489@gmail.com>
-References: <C2871318-4745-4481-9199-72D4544ECD5C@gmail.com>
- <5aae11ba-b283-4d04-9336-31d02ff41c93@app.fastmail.com>
- <B50229FA-0C33-4DFD-B8D9-79F30D616F86@gmail.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-X-Mailer: Apple Mail (2.3826.300.87.4.3)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
+kristofferhaugsbakk@fastmail.com writes:
 
-> This works for me on version 2.48.0.  It seems to have been fixed in
-> 2.43.0.  You would have to update to a newer version.
->=20
-> It looks like it was fixed in 4adceb5a299 (diff: fix --merge-base with
-> annotated tags, 2023-10-01).[1]  The intent of the error message was =
-to
-> disallow non-commit-ish like trees:
->=20
->    v2.48.0^{tree}
->=20
-> But it also rejected annotated tags instead of peeling them.
->=20
-> =F0=9F=94=97 1: =
-https://lore.kernel.org/git/20231001151845.3621551-1-hi@alyssa.is/
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> This reverts commit 61018fe9e005a54e18184481927519d64035220a.
+>
+> git-cherry(1) is a high level command for checking what commits have and
+> have not been applied to some other branch.  Or at least as high level
+> as the git(1) suite offers.  In other words:
+>
+> • it is a useful interrogator for a particular workflow; and
+> • there are no higher level commands on offer.
+>
+> By contrast its use for scripting is somewhat narrow since it only
+> prints the patch application status and the hashes of the downstream
+> branch (not also the upstream branch equivalents).  git-patch-id(1)
+> gives a fuller picture by printing each hash and its corresponding
+> patch id.
+>
+> Now this command is not nearly as convenient for the purpose of deleting
+> a *merged* branch as:
+>
+>     git branch -d <branch>
+>
+> Since that command will refuse to delete the branch if the commits are
+> not in the configured upstream ref.  But again it is the most convenient
+> command for the patch workflow.
+>
+> This command might only be considered plumbing by way of the plumbing
+> contract that says that plumbing commands have stable output.  But
+> hopefully listing this command as Porcelain does not give the impression
+> that the output is not stable.  Output stability was in any case not the
+> motivation for moving this command to plumbing.
 
+I do not follow the above reasoning at all.
 
-Indeed it works here with the homebrew version (2.48.0).
+It is not like it is a crime to intarctively make use of a plumbing
+command, or we intentionally try to hide plumbing command from them
+by making it deliberately less accessible.  "git cat-file commit X"
+may be handier than "git show -s X" for some people and that is not
+to be frowned upon.
 
-Thank you for the quick reply.
-
-> Hm, I don't think that this group/mailing list takes responsibility
-> for binaries shipped by companies.
->=20
-> If you want, you can compile Git yourself to be "on par" with
-> what you find under other OS.
-> That is the good thing with open source - please let us know,
-> if help is needed.
-
-
-I was unsure whether this was the right place to post. Thanks for the =
-tip.
-
-Andr=C3=A9 de Castro=
+And what you call "might only be" is really the crucial thing to
+consider.  If we want to keep a tool's output stable and machine
+readable, we need to mark it as "meant for Porcelain writers", and
+classifying the tool as plumbing is a pretty much established way to
+do so.
