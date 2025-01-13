@@ -1,84 +1,85 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D3C1C5D4C
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 15:40:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BAB20AF61
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 15:42:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736782833; cv=none; b=NMW+GVnFlCacUC+KmUHGad5EaopG/2nHdiG0vzNvFW7x7MsjlYqP+DHlV78ipICC5olyTQcDyBMekB18kfZTYzl9PQSWf83oKyrN81VA8llAT1PJkpUSZitZpxvqq1a+C5F68cZFW5BH9W2jpKCbV2RkuCz3WBIE4FoeRky7rJ4=
+	t=1736782948; cv=none; b=IRND9TXPzLV8mxLdhXRaBf/ig5gWQt3hfvCxGZBT7f2FaoHYH47lGLSBf7T1xeoT8UgGICFTESkK8JDtTw9o4XI2M4QIkgmvmHqdvusDAfvIjynO6MspSz7dP81fRzT1Gg48h2uesV5TEzfYRKMqplSYgUH+vgFlp0gL13bRz7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736782833; c=relaxed/simple;
-	bh=DSiNpLtjkbh9aHFgcWsAC07n5NyLJGvHUxSXFBtAsHA=;
+	s=arc-20240116; t=1736782948; c=relaxed/simple;
+	bh=SmAS1slvaK7HGDeeHChK/ymYsv64SL10Hl9Jafbb7ho=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rremjTDm8oQ3YP4m9pVdemQMbm0FUY5Lwu0QGPv0FYzSj+1DiOSFEsxIQtKUKLIHh7Lg1raSogDs9ydYomNrQ3ooliK7pN13GbjRzBVfj2yJbXcZbCpKjYKW400hV+CYLDl1H3PPTpEFpviD3VTzUif0tbnBb+UHct/F8HU8iGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kTPIOXaE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bZ8FpQa1; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=asVQn6hCmNet5RBYnTCO2N2G/WAWKbXB6o+rwcukvEo9vgQ5Ttv9FLt2g6mW5bQIgCnsOfJ5pzawUZKQkPLHwPQ3qpZsb8Sb33yZeyyMqGoszSqvVtagm9n8IfsmJMs5ujOA+hHiVH9CtZvzOEB++H4fx7xb45AaGr3cHhhZ6M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fu1W2Khv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Li5t7N+p; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kTPIOXaE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bZ8FpQa1"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 156C51380833;
-	Mon, 13 Jan 2025 10:40:31 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 13 Jan 2025 10:40:31 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fu1W2Khv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Li5t7N+p"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E771E1140133;
+	Mon, 13 Jan 2025 10:42:24 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Mon, 13 Jan 2025 10:42:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736782831; x=1736869231; bh=DSiNpLtjkb
-	h9aHFgcWsAC07n5NyLJGvHUxSXFBtAsHA=; b=kTPIOXaExQ+CDTmt2L8ebqIV0H
-	Ig+TbMYGfqnv4Kqp1TDpQf3m5oFOT6LtwftHkHhhqlMS0mS2NQW/68hADWI9Bt5C
-	dwisZqs4sNmXXLsmIQb1/sPSF5t8pzYIiKpDKcX6vQxX9UzeaLsQPuTT1ehJ6TUn
-	n3dB0a2CKvLOaB73rNUkL2SDj1r8CvCTqSRyCtDpIapjhwzHjpuM09NyNpm1GuH7
-	GB95KuJciapLdtEV+QxTR7zA+Tb1RUHycVJbc4l5CHKu8PJPVkzymlSsXxc5Da7J
-	dZGgoFqmdaOTGxsQFlhOnJuMG50eLL9+y+AzmS+sa5PzSXg+PVBZex6UuP1w==
+	:subject:to:to; s=fm2; t=1736782944; x=1736869344; bh=K5M3LxneTy
+	bXGmcHNNwBPuD4NNAJKhXUVY1GvChjppE=; b=fu1W2KhvS3OViiq6s9SBV/6zF/
+	Pjkdt5MoYDyuR7OHh68w7JLtokPS5E+Xn+BhtHeeo9U02CMYOSqr5SYWAlhFrTeF
+	fXDoBwPHeiQWbnf03f30dHEhnnuksh0v7HtM332kwWrg0u4Q/uz0dg4xPPoidcbs
+	WEgsgyyEyKUySgjGrc35I1ShKVmurgMf6m/snoIIIzsn4BC7B3wDu9L7DxnXd/wa
+	Tqx9AZZ7ctLcJocp9nXzFfkuMqMY/OkZZnkELhfgHxqq7wFGyL4cZ1M3l+7hCzmA
+	j35EmY9M6+5uCY3W4tNTNfMMw5Otcunq6Wa6XrFRyzs4fERkLftBmb0HGyzA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736782831; x=1736869231; bh=DSiNpLtjkbh9aHFgcWsAC07n5NyLJGvHUxS
-	XFBtAsHA=; b=bZ8FpQa1STv3rgt6VxQf63sh5Ajieu/HLVcx/7QLFRytRGb9iUU
-	NOjT4pQuyis3O6dpQHGSpbsY0J5A0+F8p2lkzrsj14vijYdlQ50aDHEHLRbbt6vt
-	eXSHYWgMLj0Nf/PSY1Kop6fhF6j+qkdei13rwRjVSQYVuBSx/8N/x5o3og7tGVos
-	ddHdQO/CzbmQennZfZu33L7CdOX1IwGXweLLBbkDGtQnhClXREV7L1dcM9sDOXuV
-	d/+bbg6kK0fMRIPclyOzwKo5zJh2ibnhPlz3smKclnZBla6zEapv050emuE7QECj
-	TKSDOhbnkJIQfxDgjNn9HT3fKxzTczHq/eg==
-X-ME-Sender: <xms:7jOFZz0HLA7RUBLOkWiFxd0EAJGola3nJp4gWScOOf7MFSYRRzvA_Q>
-    <xme:7jOFZyH_cXGVrLi6-uFDtdXo6iCsNJyy9c6ykhknx0vbAX5uAnieB5OCcO01zT7Yo
-    8kQij2V2hsC4mUBlQ>
-X-ME-Received: <xmr:7jOFZz6fjYDlP__acIpVgojkHc9XsgagxNdQ67h8i2nTi_udpVQ8JQs-KjRzrb753NV4w3Bl_9AznZeJozWDPIzTGRViA_6RkJcpqxXCCDJSxlIU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgjeelucetufdoteggodetrfdotf
+	1736782944; x=1736869344; bh=K5M3LxneTybXGmcHNNwBPuD4NNAJKhXUVY1
+	GvChjppE=; b=Li5t7N+pyZHr7zyLIIq9q+Pm7gG1yRo2bATAJbgnW5Ts9laV2QM
+	uXuOKzdw+NRWWYsufyedG/z+Y6Dj6mYZ2dBAd94DvcdzV3qT1MpXybmXSCvJnQxI
+	rvgiSlnAZSlVLNsogGrTRysd76dOAWfQnhZl+vakCcszju3j0Iwv4Hc09hqc5+J7
+	4gdCyHdFcwJ/xEFbrqOoF2NukQNTpn0lMlVcqMHAS+EwlhaE20zMKw363ebr1T9w
+	K5bD9qzRw8sxIiLkpNPw3iE3h2LlwFr+WG7xdMLkbp0kwHZnKMr9uuTFP9ss3Vna
+	E78rSj5erVIAAhDNkj0WDb7QVNiCeJ0Kzog==
+X-ME-Sender: <xms:YDSFZ4ur3x08ojsJ_vRJus-BlKFTB3rVmqm7g6BhgeRVd8yLM2RYHw>
+    <xme:YDSFZ1cIdaKQvAFjUyLceUiK5ixVI7XcQDNb3mc9bb8YFqwLX6y8BPBAAN6DlyNcd
+    rAnviFqqAHMDs10Rw>
+X-ME-Received: <xmr:YDSFZzwP52oiAVwHYG5OnocfdBCTLbYFoWcGqhgst3cTKXtW-rduIiIKBqhdbbaiQRbvl-FUPF26uyxtnjzw2oGs31-3G5nCm1s-yJWoDkOfSU8B>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgjeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopeifihhnkhesshgrvhhilhhlvgdrtghomhdprhgtphhtthhopehpvghffhesphgv
-    fhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:7jOFZ43tac-cbC-OlrROgL4ZHF2SzXlmiFMuMkrijy73vuwLoxh83A>
-    <xmx:7jOFZ2GXxvvoTD2jAjMn15DUf6fbMuugWNQ8I5SOVN1nIXkV_g2qcw>
-    <xmx:7jOFZ5824svNRzAvg9fkWxKKr60HVtkZ08-UFIREm69xn5c3G3XzaA>
-    <xmx:7jOFZzmtlbvqm5vQeErjeQFp7uLM6BTZ_UeMDvrDbpFsf76O66yY1g>
-    <xmx:7zOFZyhKEOp6d6_a5wYbfjOHmAf_79p-f3MgC0aPIKs1PY8CIdsz5xoP>
+    eqnecuggftrfgrthhtvghrnhepjeevudeggfffffeigeethffgieekveeffeehvedvgeei
+    teegueejleeihfeitdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrlh
+    gvgigphigpgihuseihrghhohhordgtrgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkh
+    esfhgrshhtmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:YDSFZ7PQRHQ1ADawi9VPE-ho343eVRGB16nLr2upGU4oCV-D2WpgGw>
+    <xmx:YDSFZ49yFTAJQd4MZkW3_xaJdWBNg3q-jOAy2FsH_wIX8c5ZVpjMwg>
+    <xmx:YDSFZzXdyNw4-wPHyRIq6AyiAZKdyartm5oCJbQpafifOlSUWvSeVw>
+    <xmx:YDSFZxdfvc0G1nftnHBI8h4lTVz3An9R5zLON9TeUPzGZaZTVntt6A>
+    <xmx:YDSFZ3bUmQCxIAJ0hzoMzYyx1eVsYUDAS6K-yAF3jeIY4z03xdpF_NEC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 10:40:29 -0500 (EST)
+ 13 Jan 2025 10:42:23 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3be974a7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jan 2025 15:40:29 +0000 (UTC)
-Date: Mon, 13 Jan 2025 16:40:28 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b80eb9d5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jan 2025 15:42:22 +0000 (UTC)
+Date: Mon, 13 Jan 2025 16:42:21 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Wink Saville <wink@saville.com>
-Subject: Re: [PATCH 07/14] tree-diff: drop path_appendnew() alloc optimization
-Message-ID: <Z4Uz7B4J89NphNF6@pks.im>
-References: <20250109082723.GA2748497@coredump.intra.peff.net>
- <20250109084649.GG2748836@coredump.intra.peff.net>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>, git@vger.kernel.org
+Subject: Re: [PATCH] meson: move config-list from libgit to builtin
+Message-ID: <Z4U0XengqX_a7ywU@pks.im>
+References: <20250113134632.21592-1-alex_y_xu.ref@yahoo.ca>
+ <20250113134632.21592-1-alex_y_xu@yahoo.ca>
+ <efb8b6d1-c06a-4f73-89bb-6d164ab03cfa@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,27 +88,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250109084649.GG2748836@coredump.intra.peff.net>
+In-Reply-To: <efb8b6d1-c06a-4f73-89bb-6d164ab03cfa@app.fastmail.com>
 
-On Thu, Jan 09, 2025 at 03:46:49AM -0500, Jeff King wrote:
-> So my conclusion is that it probably does help a little, but it's mostly
-> lost in the noise. I could see an argument for keeping it, as the
-> complexity is hidden away in functions that do not often need to be
-> touched. But it does make them more confusing than necessary (despite
-> some detailed explanations from the author of that commit; it just took
-> me a while to wrap my head around what was going on) and prevents
-> further refactoring of the combine_diff_path struct. So let's drop it.
+On Mon, Jan 13, 2025 at 03:17:08PM +0100, Kristoffer Haugsbakk wrote:
+> On Mon, Jan 13, 2025, at 14:46, Alex Xu (Hello71) wrote:
+> > config-list is used by builtin/help.c, not libgit. this matches Makefile
+> > dependencies
+> >
+> > Signed-off-by: Alex Xu (Hello71) <alex_y_xu@yahoo.ca>
+> > ---
+> >  meson.build | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/meson.build b/meson.build
+> > index 0064eb64f5..ef3604a17f 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -614,7 +614,7 @@ libgit_sources += custom_target(
+> >    env: script_environment,
+> >  )
+> > 
+> > -libgit_sources += custom_target(
+> > +builtin_sources += custom_target(
+> 
+> Looks like the same change is in another patch from today
+> 
+> https://lore.kernel.org/git/20250113-b4-pks-meson-additions-v1-3-97f6a93f691d@pks.im/
 
-A 1% performance speedup does not feel like a good argument to me, so
-I'm perfectly fine with dropping the code, even if most of it is
-actually in the form of comments. But that already shows that it needs
-quite a bit of explanation.
+Yup, indeed :) I'd prefer to go with my series as it also contains a
+couple more additions, and because it also fixes the same issue for
+"hook-list.h".
 
-I wonder though: did you also use e.g. Valgrind to compare the number of
-allocations? glibc tends to be heavily optimized with regards to small
-allocations, so you typically don't notice the performance impact caused
-by them even when the number of saved allocations is significant. So the
-effect might be more pronounced with other libcs that aren't optimized
-for such usecases, like e.g. musl libc.
+Thanks for your contribution!
 
 Patrick
