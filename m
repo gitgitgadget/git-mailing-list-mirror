@@ -1,37 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2292F20EB
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 06:01:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1180230D2D
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 06:26:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736748102; cv=none; b=bUQDdjle1/8Lxpk/7OpAJlCuSiBXVlk9puEC7tv1DV1vG/yAmGowetLFaJHTnCQQUlSyv4MCCEjhIi73A//AWigytFP+cUuv0RBVoa2LfI8Ek/LjPWqFxZYaLhpYw/P36sfBfCJmqtbrFs5/2Kjgdofwz+e7JCfTt2s6Fww8ix4=
+	t=1736749569; cv=none; b=kYOK4+run42MmsgkSz0y/gg/Nz2pcVVyctVJ6tktw6osmmSKnsqJEaom8mOZq1JL/1VCsuFY+wOJnOL/MhIrtZ5mvO6OzVtV01dzWPrQCzvvCOLhnjklRe85I2Ykn8SXzTwxOW2ciBJ7WAFl1qaU+mDklrq6GpFIRZZqH3AJ2LI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736748102; c=relaxed/simple;
-	bh=2PZCn2b2XY/MMP2UqcSe3pCcghanho3aIXJDrNxnlcU=;
+	s=arc-20240116; t=1736749569; c=relaxed/simple;
+	bh=/eMfKcdV3N5mCBXO/gcAl4U856K0Md+sTEOFIy5KHfM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KQyusqvtA1KWRaJL2cWg8wLG/iQyPGRPaDWp6K6U/VOap0jsnmSaacLNKRTG/nrMa7rxiHMC0947+kZHfq+gL3YD+W23Sbea1cwJjnY7+Iz/8lR8tKKvyfS4JTxWHAv21jevEiXVktyY96wp2IWFgyRrLVrvfYXYanyfQ6Z46k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=X8pwkT4l; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=kkEKgkMwgHGyZLTYA6tMzkaS9ovxN3shdmxz/1gkWIa/Iwm3XrR8niKdVSG00MwFn1c8vm1+uBUmxaHimj0UJSbr7Kjy+I0QQrRESXrQ5X+LhMolqorI7vUVtMp8x3KSRUclJ2/MkSXwe96Z/z/lnKfcwwNUwJORLfJpWRrgR/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KGu/zKEW; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="X8pwkT4l"
-Received: (qmail 11868 invoked by uid 109); 13 Jan 2025 06:01:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=2PZCn2b2XY/MMP2UqcSe3pCcghanho3aIXJDrNxnlcU=; b=X8pwkT4l6q8hlj9todMG4nnT43QcxG3km6gwe1jlG3MduxDBgvEIXzgTL5L989BTRkyx8zVMDaNsWw2Czd0nzip49Kqx4xCOnQL3eJKQ5Bq3aecEejV/oOmqpUUEfwQFcuGpy6R954joX9xHkZF46HePJP7fcMlOgGfZjo9EKGy+b1hjXoXhI9SiyZ+/hqHvQML3dr4SQyb4iEwXwFZtF5qPQdSU2sjS/n3Qr9ifrJg1/TQkWO0L3CpcIQMsfpS3D2Lvjwc0u+mTEMLX4fa1YDnkMpUP3u9B8KL1L7DvHE9sBjjv88uHm2qVsuxoM17rfN6KW0y/br2OI6LC0FnHOQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KGu/zKEW"
+Received: (qmail 11976 invoked by uid 109); 13 Jan 2025 06:26:03 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/eMfKcdV3N5mCBXO/gcAl4U856K0Md+sTEOFIy5KHfM=; b=KGu/zKEWuVF2p+uSScM2vMLo4W6k2V7hKHuidQeMAC2bgo13XCf2gQMf4CdP2idMd9H5Ly8razaIpawpH9PP15n3hZkwj70MECBrid/cMcrezyUvRX/zKJ6voH4CEQ02V7f2OEoSgw+c6ckwvno8y77pwD1a6Sm0keVHkxtDPlEsdYHqQKxGOCrJ3eQ2N9kTlThe/7ZqtC6pCdxKrUKjOkC9w/BE+Mm4rEmBBAXKUGWVuaVB5l+o++XZYzqFLBElEHWYiFj4N7W6NALRNce9M7xcYLU7yWXTlN6urARViKiApRN6Fa+6b5LRwx2CVwACOsNYnCf1Fm1yxSgHnTWs3g==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 13 Jan 2025 06:01:39 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 13 Jan 2025 06:26:03 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17329 invoked by uid 111); 13 Jan 2025 06:01:43 -0000
+Received: (qmail 17576 invoked by uid 111); 13 Jan 2025 06:26:06 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 13 Jan 2025 01:01:43 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 13 Jan 2025 01:26:06 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 13 Jan 2025 01:01:38 -0500
+Date: Mon, 13 Jan 2025 01:26:01 -0500
 From: Jeff King <peff@peff.net>
-To: rsbecker@nexbridge.com
-Cc: git@vger.kernel.org
-Subject: Re: [Question] etc/gitconfig and .gitconfig missing errors
-Message-ID: <20250113060138.GC767856@coredump.intra.peff.net>
-References: <021501db643a$9c5357b0$d4fa0710$@nexbridge.com>
+To: Andreas Schwab <schwab@linux-m68k.org>
+Cc: Olly Betts <olly@survex.com>, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+Subject: Re: git grep: ^$ false match at end of file
+Message-ID: <20250113062601.GD767856@coredump.intra.peff.net>
+References: <20250109235255.GA3418@survex.com>
+ <20250110114308.GB1014503@coredump.intra.peff.net>
+ <20250110120223.GC1014503@coredump.intra.peff.net>
+ <87r05ahljt.fsf@igel.home>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -40,84 +44,102 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <021501db643a$9c5357b0$d4fa0710$@nexbridge.com>
+In-Reply-To: <87r05ahljt.fsf@igel.home>
 
-On Sat, Jan 11, 2025 at 10:07:57AM -0500, rsbecker@nexbridge.com wrote:
+On Fri, Jan 10, 2025 at 01:59:18PM +0100, Andreas Schwab wrote:
 
-> Question from my community. The standard git install does not
-> automatically create the /usr/local/etc directory if it does not
-> exist, so the git config --system fails.  If etc/gitconfig is missing,
-> the command also fails. Similarly, if ~/.gitconfig is missing, git
-> config -global fails.
+> On Jan 10 2025, Jeff King wrote:
+> 
+> > but it is weird to me that patmatch() will match "^$" to the end of the
+> > buffer at all. It is just calling regexec_buf() behind the scenes, so I
+> > guess this is just a weird special case there, and may even depend on
+> > the regex implementation.
+> 
+> Shouldn't the matcher be called with REG_NOTEOL in that case?
 
-It's not the missing file that is the problem, but the containing
-directory, right? I.e.:
+Perhaps. If regexec_buf() is assuming we are feeding lines, then without
+REG_NOTEOL it thinks the end of the buffer is the end of a line. Which
+makes sense, but trips up this case because we are not feeding lines,
+but rather a whole buffer. So the final newline is not the start of an
+empty line, but the true end of the buffer.
 
-  $ make ETC_GITCONFIG=/tmp/foo/bar
+But what if the buffer doesn't end in a newline? In the example, the
+file is something like "content\n".  But what if it was just "content"?
+Then the end of the buffer really is the end of a line, isn't it? And
+REG_NOTEOL would not be appropriate.
 
-  [reading returns an error, but that is natural because we did not
-   find the config key in question]
-  $ ./git config --system foo.bar; echo $?
+So without REG_NOTEOL:
+
+  [this is wrong, per the report]
+  $ echo content >file.txt
+  $ git grep --no-index -n '^$' file.txt
+  file.txt:2:
+
+  [this is right]
+  $ printf content >file.txt
+  $ git grep --no-index -n '^$' file.txt
+  $ echo $?
   1
 
-  [but writing will fail to create the lock file]
-  $ ./git config --system foo.bar baz
-  error: could not lock config file /tmp/foo/bar: No such file or directory
+and with it, like this patch:
 
-> Is this intended? I have been telling my people that they should
-> pre-create those files with appropriate security. I have mused that
-> having git auto-create this file may introduce potential CVEs,
-> explaining the situation. Is this assumption correct?
+diff --git a/grep.c b/grep.c
+index 4e155ee9e6..7e3b6d9474 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1467,7 +1467,7 @@ static int look_ahead(struct grep_opt *opt,
+ 		int hit;
+ 		regmatch_t m;
+ 
+-		hit = patmatch(p, bol, bol + *left_p, &m, 0);
++		hit = patmatch(p, bol, bol + *left_p, &m, REG_NOTEOL);
+ 		if (hit < 0)
+ 			return -1;
+ 		if (!hit || m.rm_so < 0 || m.rm_eo < 0)
 
-This is what I'd expect. We do often automatically create leading
-directories as necessary within the repository, but it gets weird
-outside of that (and you probably wouldn't have permissions anyway).
+we get:
 
-It's less weird perhaps as part of "make install", but it still feels
-like it is outside of Git's scope, and is more of a packaging issue. If
-you're feeding /usr/local/etc to Git's build knobs, then you probably
-should be the one making sure it exists.
+  [this is now right]
+  $ git grep --no-index -n '^$' file.txt
+  $ echo $?
+  1
 
-All of this applies doubly so for ~/.gitconfig. We cannot do it at "make
-install" time, since there may be many users. We could auto-create it at
-run-time, but if the user's home directory does not exist that is likely
-either a sign that something is terrible misconfigured, or the user in
-question is not meant to have a home directory (daemon user ids, etc).
-So creating it would probably be surprising.
+  [and this stays right]
+  $ printf content >file.txt
+  $ git grep --no-index -n '^$' file.txt
+  $ echo $?
+  1
 
-I do think the error message could be a little more friendly; the
-problem is not that /tmp/foo/bar does not exist, but that some leading
-directory does not. But that is the nature of ENOENT.
+but:
 
-We don't even get to see the actual lock filename fed to open(), since
-it is done behind the scenes in hold_lock_file_for_update(). Possibly we
-should be using unable_to_lock_message(). Or hmm, looks like we can feed
-a flag to do it for us, like:
+  [without REG_NOTEOL, this matches]
+  $ printf content >file.txt
+  $ git grep --no-index -n 't$' file.txt
+  file.txt:1:content
 
-diff --git a/config.c b/config.c
-index 50f2d17b39..5f8e0c667a 100644
---- a/config.c
-+++ b/config.c
-@@ -3206,9 +3206,9 @@ int repo_config_set_multivar_in_file_gently(struct repository *r,
- 	 * The lock serves a purpose in addition to locking: the new
- 	 * contents of .git/config will be written into it.
- 	 */
--	fd = hold_lock_file_for_update(&lock, config_filename, 0);
-+	fd = hold_lock_file_for_update(&lock, config_filename,
-+				       LOCK_REPORT_ON_ERROR);
- 	if (fd < 0) {
--		error_errno(_("could not lock config file %s"), config_filename);
- 		ret = CONFIG_NO_LOCK;
- 		goto out_free;
- 	}
+  [but with that flag, it no longer does]
+  $ printf content >file.txt
+  $ git grep --no-index -n 't$' file.txt
+  $ echo $?
+  1
 
-That is only marginally better, though:
+So I do think "\n" at the end of the buffer is a special case. Perhaps
+we should always omit it, and then leave REG_NOTEOL unset, making the
+end of the buffer consistently the end of the final line. Like this,
+which no longer matches "^$" but does match "t$":
 
-  $ ./git config --system foo.bar baz
-  error: Unable to create '/tmp/foo/bar.lock': No such file or directory
-
-It does diagnose other problems like EEXIST, and IMHO it would not be
-unreasonable for it to recognize ENOENT and see if we can even stat()
-the surrounding directory.
+diff --git a/grep.c b/grep.c
+index 4e155ee9e6..c4bb9f1081 100644
+--- a/grep.c
++++ b/grep.c
+@@ -1646,6 +1646,8 @@ static int grep_source_1(struct grep_opt *opt, struct grep_source *gs, int colle
+ 
+ 	bol = gs->buf;
+ 	left = gs->size;
++	if (left && gs->buf[left-1] == '\n')
++		left--;
+ 	while (left) {
+ 		const char *eol;
+ 		int hit;
 
 -Peff
