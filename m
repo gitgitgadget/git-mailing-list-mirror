@@ -1,66 +1,68 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBA922980E
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 17:13:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A10240243
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 17:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736788423; cv=none; b=tccjYUWr+xclAgNOdNCpTGxXr4DhiF/3B3RGDb2mLLmFD/OHCQLIoVWEsnLCuPCavADmNRHAnQouNJE+o3xoE5z1frgZFoWfJUmA+2NErSQGN9swZRPlWsOxJ87/xI93pyuaJgpF3fPoQmYQuDNObIiHUUywv0lBY8pbt6cGWTU=
+	t=1736788423; cv=none; b=NIeK1vTGPLeNNxtVZPoN88SPQlaoE4SG8rXoNTeuhn5W+9qomZssQnFbRlzjt9MDvAvkMUwLgNfuPzmFwEKsxaAMrNbJ4b1dOMrEChvYg+Fde+MUFkkfBvLZvMJr6rvjRCSDUQJONqsE/4/oiVrNjJdTogItYG+B3jW5eaTvpEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1736788423; c=relaxed/simple;
-	bh=ZNhduBEMBHGpmsnR7ir6HjPBFgVM6eCzACiEEOcxRjg=;
+	bh=Nf+y0jysNc7SZiZne1uYZl4QV6UNjercuU+YKv1FONY=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=M3v/bpPaVflA7/hV7Djv0fhU3XTCQq/qGW7o0GpCuVqd8OS3Ctryt7kQQA1tZX9dSLdRIpy84tIXW1KaRsnfWhCy1cOXIB2mWZ8bZtP/LF0HUdxH9tvmZkmTt3MErAL8rTatyqhy9IgGVEQgWysuY6VjQisp0w2k5gVxics3MV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dvULFQFe; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version:To:Cc; b=qKcZOmwOlMfxWVxgAo69Jeash3hbNtaz4weeAqJIYX0aMp23PyyJK5wG/uizdriH8oxbhjkG4W3BxfF9BL4cXOgihO8/b39rydrRzGThN1GFskZjVxMfDDRdTfIGVI39Pqgucl3VdtyqoytI+6w2iibWIIqHB2wiV3xBhUG2AHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dZVd99qg; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dvULFQFe"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43635796b48so28429995e9.0
-        for <git@vger.kernel.org>; Mon, 13 Jan 2025 09:13:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dZVd99qg"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-38637614567so2220271f8f.3
+        for <git@vger.kernel.org>; Mon, 13 Jan 2025 09:13:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736788419; x=1737393219; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1736788420; x=1737393220; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+i6lJmmkVFhs3YDmBn695a4u3mL3QE2Hl01E3yV3wL8=;
-        b=dvULFQFeEUEpJhMHj8UO2XqQSk93izI8Z6sLjm6A9bbCty2xLrgjd2HtC8nWo/wnf6
-         Xz5iF5a2lmkOv3HzvmXQfWTCEpL1dA3xAxrsDug1yPDKLVLcaHydv+ncHBkwbmGLkVJ+
-         PR0I+Qi27qGuORsM9glyFHbjhTxsR8u8SSinEMrk5mE6A8WDWlKmBTAivT7SbY8b3m5M
-         lzc6WVDbI53QR/6gFmMKlikyFsCZ496r20NTWLd3AP2BoqHnmBYZ4jTgskoZ2pDBPRm9
-         fCCn3vEsfipRYkzsexft64hnl3dEeaKwmETRkKOIgkUsTkGbzDNGO3hV4IU0bQvGr7/x
-         lpVA==
+        bh=FdEik/2t9FXSgFP1+1QHoKJBfUxKQXq2OC/jzIO+Vjg=;
+        b=dZVd99qgpxOvB1n3F7zFAR0CK/3IMyrUyHxGArdqXg4HY4y1aRQyeg5shpm5xszf9w
+         v6OTzcbK3IZyQmP2ug9EFDmzP1NqZPxiYiuv/qpYn00b80IPCzjGSoMNTxupBkeni0a5
+         Ouss8jI5QnXBZfJL4ONQNtr9pMPKMQi5fFRT1ro8E6jBzB9aBdZLgYvPD55ZTIqGvHup
+         tN2Uxoxopu/x0p05IXHqJPg0txdzFWZCnIYE7P0BOXOKDJum2CJpjRFjp1SbNffeSIIY
+         StU9qNq5BLIO/FHPWf6fU5SUxsa28vhe+PQ5dMrWW3D1bLAvctUXXJeVfEcembwhji2A
+         VqcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736788419; x=1737393219;
+        d=1e100.net; s=20230601; t=1736788420; x=1737393220;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+i6lJmmkVFhs3YDmBn695a4u3mL3QE2Hl01E3yV3wL8=;
-        b=azz4hTGmJbvxXhIptHxgqjb0u++ys/Vr159ghf8k18G6dSSTM8pVJ4FBl1bBCoKZ5h
-         HuTtlRZebOz/a7/EQybVxBTDk1QUJU+VUiiMuTY5IeVyWBjeMnCbrsw55OeG2MngLjHX
-         bDqWbfa1ztqbzIEKuUjDn/pLlY2S2jcBvtKIbNGDYzf9gnFxpgGxnBwG1jIVHxk0LyGv
-         OnMCYDbYluxH9STQ8qk2tcXOop+4RdFhnHq0af9LIqpxjl0u74qlRWl/r5EjDmp/V1Lb
-         bUvv9UUVm6QvN62qqhCkEkzVvfrjF9fP6PiXidHMRiY3ZXO3uK3PWYf3VJt9HtWSHkrR
-         lvFA==
-X-Gm-Message-State: AOJu0YwWI37T00CrDZiLuffS6vtgohGwmuZgOuwOYLOxkR8j73jsXywz
-	u3Bp8AqGFJsWUhaqznVkehCobA3+u5w+7mDdbftB3jczAXiW0l9o8hN+5Q==
-X-Gm-Gg: ASbGncuV+bhGwdfw1j1g2JeQfH+Plfn0R5o694RYvqJkWcqLAeVtWbKpVFNE6Ls7Ysq
-	hpXRqn46tIU9ChJrgeRsxpE6G23ET33Hz4qoEqjxPT2L8yrp2O05ao/n53cx83yZCioNtRXIL05
-	Dtql8NeFYmakgsDumWnIlyr9GkYG0v1AYPDtQ2tPmGghgT7sZqW+b5zgY1LmB/PMUL7wmDPwiPk
-	mYeXgjVU2NzQZ10XADI7Qt6Qwq0WkP+kFtCYu/q1wdwNytvKrzCms6eQQ==
-X-Google-Smtp-Source: AGHT+IErXf248BkjDQ6KhWGV8IpQlIGE+ptglNb/vvZSV2KX7QNWZQVdTIJ9AEeW7iOmt7XQ7pO4VQ==
-X-Received: by 2002:a05:600c:1827:b0:436:199e:8458 with SMTP id 5b1f17b1804b1-436e8849de0mr150963085e9.14.1736788418539;
-        Mon, 13 Jan 2025 09:13:38 -0800 (PST)
+        bh=FdEik/2t9FXSgFP1+1QHoKJBfUxKQXq2OC/jzIO+Vjg=;
+        b=pBdkoE6nPoN8XCgkHCkEWyXcNLJCgWGvIsbjWbJieazI5ZeyQhkgTRIPjeJSZZvVv8
+         nSoWaaOmdbasUWaRDAStbJZSpmoQVxbE/Q90fbuwaJDu/CG9KAQPqKSNzSKamKs2ByT8
+         TZKPn82Fy101I/aIYLf7VLo6onA3ig1e8m3Nnif9a9AonPttyFQd6GmOK7YDwND/iAIl
+         zyM+Q5/pPUTHCpFjSQKf4Lv7mdn2EZ62ymFsOEWdmHjv2CD77JDUC2J0tcyWGd1bVCMV
+         KOzy29xBFdIW2BHQfWCFviEtvsK/mxHHRYoaNa8y+LNsi4LL2Ys8CtgUgx4m6LQ5915w
+         0khg==
+X-Gm-Message-State: AOJu0YwWCVIO6bHjtpdabcYcFNzUlND3T+cXAXWuSCE5inV2hYVs/yrT
+	fA4WSyRMs8YuQe1yda0oiaIuy2kGwO0wwEJrlOI2KHESpow1Swv1X3q6UQ==
+X-Gm-Gg: ASbGncudzWo2jkkyd9AS/tQeG2NszUgYXmVfpU+J1/izWSiZT2Cfc5JuhAQ7dJ+bV5h
+	ZG3p+8FlNRwp9cbDEIJtet2Y9cfjfqtoXaAcK+lvAnrnV2fYIzFCfpOA6Yam52Y9o1uZJJpkxqk
+	sKGbupUcMplNFIau7Nj5N3FcBGMbgAg189F83oZ48H0BfnQQOjlFeeGDo4uv2xvdr2l+pSC02zo
+	3TpZIp58sSZFxgHiDXDGQkC69pxxiq6tSnBuWrvF9QW3ZWuLI7ajCZDrA==
+X-Google-Smtp-Source: AGHT+IH93wdAdKDqS52+zoZaSHnSnt9Fj7XMLVArlgezEWKeA/C/338kQPsvcBSvCgCSF7shFATlZA==
+X-Received: by 2002:a05:6000:18ac:b0:385:ef39:6cd5 with SMTP id ffacd0b85a97d-38a872f6ed6mr4395614f8f.1.1736788419438;
+        Mon, 13 Jan 2025 09:13:39 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e4b82a4sm12800841f8f.72.2025.01.13.09.13.38
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e384f2bsm12583226f8f.41.2025.01.13.09.13.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 13 Jan 2025 09:13:38 -0800 (PST)
-Message-Id: <pull.1844.v3.git.1736788417.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1844.v2.git.1735949870.gitgitgadget@gmail.com>
+Message-Id: <b21b8fc555414789d835f454a0dce3bf685fdb4c.1736788417.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1844.v3.git.1736788417.gitgitgadget@gmail.com>
 References: <pull.1844.v2.git.1735949870.gitgitgadget@gmail.com>
+	<pull.1844.v3.git.1736788417.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 13 Jan 2025 17:13:35 +0000
-Subject: [PATCH v3 0/2] object-name: fix a pair of object name resolution issues
+Date: Mon, 13 Jan 2025 17:13:36 +0000
+Subject: [PATCH v3 1/2] object-name: fix resolution of object names containing
+ curly braces
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,152 +75,118 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
     Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>,
     Elijah Newren <newren@gmail.com>
 
-Changes since v2:
+From: Elijah Newren <newren@gmail.com>
 
- * Readability improvement to the first patch, which fixes object name
-   resolution with refs containing a curly brace
- * Fixed the second patch for cases like OBJ-COUNT-gHASH~13 and added a
-   couple test cases for that. Also, extended the commit message a bit to
-   discuss the cases brought up on the list.
+Given a branch name of 'foo{bar', commands like
 
-For the second patch, if folks want some open source examples where it could
-be triggered, I found two examples:
+    git cat-file -p foo{bar:README.md
 
- * lore.git: git cat-file -t master:random/path/major-gaffed
- * git.git: git cat-file -t super-invalid~///\\.....@.lock-gfd0bba94e
+should succeed (assuming that branch had a README.md file, of course).
+However, the change in cce91a2caef9 (Change 'master@noon' syntax to
+'master@{noon}'., 2006-05-19) presumed that curly braces would always
+come after an '@' or '^' and be paired, causing e.g. 'foo{bar:README.md'
+to entirely miss the ':' and assume there's no object being referenced.
+In short, git would report:
 
-Elijah Newren (2):
-  object-name: fix resolution of object names containing curly braces
-  object-name: be more strict in parsing describe-like output
+    fatal: Not a valid object name foo{bar:README.md
 
- object-name.c       | 63 ++++++++++++++++++++++++++++++++++++++++++---
- t/t1006-cat-file.sh | 31 +++++++++++++++++++++-
- t/t6120-describe.sh | 24 +++++++++++++++++
- 3 files changed, 113 insertions(+), 5 deletions(-)
+Change the parsing to only make the assumption of paired curly braces
+immediately after either a '@' or '^' character appears.
 
+Add tests for this, as well as for a few other test cases that initial
+versions of this patch broke:
+  * 'foo@@{...}'
+  * 'foo^{/${SEARCH_TEXT_WITH_COLON}}:${PATH}'
 
-base-commit: 063bcebf0c917140ca0e705cbe0fdea127e90086
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1844%2Fnewren%2Fobject-name-fix-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1844/newren/object-name-fix-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1844
+Note that we'd prefer duplicating the special logic for "@^" characters
+here, because if get_oid_basic() or interpret_nth_prior_checkout() or
+get_oid_basic() or similar gain extra methods of using curly braces,
+then the logic in get_oid_with_context_1() would need to be updated as
+well.  But it's not clear how to refactor all of these to have a simple
+common callpoint with the specialized logic.
 
-Range-diff vs v2:
+Reported-by: Gabriel Amaral <gabriel-amaral@github.com>
+Helped-by: Michael Haggerty <mhagger@github.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ object-name.c       |  8 +++++---
+ t/t1006-cat-file.sh | 31 ++++++++++++++++++++++++++++++-
+ 2 files changed, 35 insertions(+), 4 deletions(-)
 
- 1:  13f68bebe90 ! 1:  b21b8fc5554 object-name: fix resolution of object names containing curly braces
-     @@ Commit message
-            * 'foo@@{...}'
-            * 'foo^{/${SEARCH_TEXT_WITH_COLON}}:${PATH}'
-      
-     +    Note that we'd prefer duplicating the special logic for "@^" characters
-     +    here, because if get_oid_basic() or interpret_nth_prior_checkout() or
-     +    get_oid_basic() or similar gain extra methods of using curly braces,
-     +    then the logic in get_oid_with_context_1() would need to be updated as
-     +    well.  But it's not clear how to refactor all of these to have a simple
-     +    common callpoint with the specialized logic.
-     +
-          Reported-by: Gabriel Amaral <gabriel-amaral@github.com>
-          Helped-by: Michael Haggerty <mhagger@github.com>
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-     @@ object-name.c: static enum get_oid_result get_oid_with_context_1(struct reposito
-       	}
-       	for (cp = name, bracket_depth = 0; *cp; cp++) {
-      -		if (*cp == '{')
-     -+		if (*(cp+1) == '{' && (*cp == '@' || *cp == '^')) {
-     ++		if (strchr("@^", *cp) && cp[1] == '{') {
-      +			cp++;
-       			bracket_depth++;
-      -		else if (bracket_depth && *cp == '}')
- 2:  31f1c37b31a ! 2:  19f84dfc9cc object-name: be more strict in parsing describe-like output
-     @@ Commit message
-                'g', and an abbreviated object name.
-          which means that output of the format
-              ${REFNAME}-${INTEGER}-g${HASH}
-     -    should parse to fully expand ${HASH}.  This is fine.  However, we
-     +    should parse to fully expanded ${HASH}.  This is fine.  However, we
-          currently don't validate any of ${REFNAME}-${INTEGER}, we only parse
-          -g${HASH} and assume the rest is valid.  That is problematic, since it
-          breaks things like
-      
-              git cat-file -p branchname:path/to/file/named/i-gaffed
-      
-     -    which, when commit affed exists, will not return us information about a
-     -    file we are looking for but will instead tell us about commit affed.
-     +    which, when commit (or tree or blob) affed exists, will not return us
-     +    information about the file we are looking for but will instead
-     +    erroneously tell us about object affed.
-      
-     -    Similarly, we should probably not treat
-     -        refs/tags/invalid/./../...../// ~^:/?*\\&[}/busted.lock-g049e0ef6
-     -    as a request for commit 050e0ef6 either.
-     +    A few additional notes:
-     +      - This is a slight backward incompatibility break, because we used
-     +        to allow ${GARBAGE}-g${HASH} as a way to spell ${HASH}.  However,
-     +        a backward incompatible break is necessary, because there is no
-     +        other way for someone to be more specific and disambiguate that they
-     +        want the blob master:path/to/who-gabbed instead of the object abbed.
-     +      - There is a possibility that check_refname_format() rules change in
-     +        the future.  However, we can only realistically loosen the rules
-     +        for what that function accepts rather than tighten.  If we were to
-     +        tighten the rules, some real world repositories may already have
-     +        refnames that suddenly become unacceptable and we break those
-     +        repositories.  As such, any describe-like syntax of the form
-     +        ${VALID_FOR_A_REFNAME}-${INTEGER}-g${HASH} that is valid with the
-     +        changes in this commit will remain valid in the future.
-     +      - The fact that check_refname_format() rules could loosen in the
-     +        future is probably also an important reason to make this change.  If
-     +        the rules loosen, there might be additional cases within
-     +        ${GARBAGE}-g${HASH} that become ambiguous in the future.  While
-     +        abbreviated hashes can be disambiguated by abbreviating less, it may
-     +        well be that these alternative object names have no way of being
-     +        disambiguated (much like pathnames cannot be).  Accepting all random
-     +        ${GARBAGE} thus makes it difficult for us to allow future
-     +        extensions to object naming.
-      
-     -    Tighten up the parsing to make sure ${REFNAME} and ${INTEGER} are
-     -    present and valid.
-     +    So, tighten up the parsing to make sure ${REFNAME} and ${INTEGER} are
-     +    present in the string, and would be considered a valid ref and
-     +    non-negative integer.
-     +
-     +    Also, add a few tests for git describe using object names of the form
-     +        ${REVISION_NAME}${MODIFIERS}
-     +    since an early version of this patch failed on constructs like
-     +        git describe v2.48.0-rc2-161-g6c2274cdbc^0
-      
-          Reported-by: Gabriel Amaral <gabriel-amaral@github.com>
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-     @@ object-name.c: static int peel_onion(struct repository *r, const char *name, int
-      +	len = cp - name;
-      +	strbuf_init(&sb, len);
-      +	strbuf_add(&sb, name, len);
-     -+	ret = !check_refname_format(name, flags);
-     ++	ret = !check_refname_format(sb.buf, flags);
-      +	strbuf_release(&sb);
-      +	return ret;
-      +}
-     @@ object-name.c: static int get_describe_name(struct repository *r,
-       				return get_short_oid(r,
-      
-       ## t/t6120-describe.sh ##
-     +@@ t/t6120-describe.sh: check_describe R-2-gHASH HEAD^^
-     + check_describe A-3-gHASH HEAD^^2
-     + check_describe B HEAD^^2^
-     + check_describe R-1-gHASH HEAD^^^
-     ++check_describe R-1-gHASH R-1-g$(git rev-parse --short HEAD^^)~1
-     + 
-     + check_describe c-7-gHASH --tags HEAD
-     + check_describe c-6-gHASH --tags HEAD^
-     + check_describe e-1-gHASH --tags HEAD^^
-     + check_describe c-2-gHASH --tags HEAD^^2
-     ++check_describe c-2-gHASH --tags c-2-g$(git rev-parse --short HEAD^^2)^0
-     + check_describe B --tags HEAD^^2^
-     + check_describe e --tags HEAD^^^
-     + check_describe e --tags --exact-match HEAD^^^
-      @@ t/t6120-describe.sh: test_expect_success '--exact-match does not show --always fallback' '
-       	test_must_fail git describe --exact-match --always
-       '
-
+diff --git a/object-name.c b/object-name.c
+index a563635a8cb..8e80841acd3 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -2051,12 +2051,14 @@ static enum get_oid_result get_oid_with_context_1(struct repository *repo,
+ 		return -1;
+ 	}
+ 	for (cp = name, bracket_depth = 0; *cp; cp++) {
+-		if (*cp == '{')
++		if (strchr("@^", *cp) && cp[1] == '{') {
++			cp++;
+ 			bracket_depth++;
+-		else if (bracket_depth && *cp == '}')
++		} else if (bracket_depth && *cp == '}') {
+ 			bracket_depth--;
+-		else if (!bracket_depth && *cp == ':')
++		} else if (!bracket_depth && *cp == ':') {
+ 			break;
++		}
+ 	}
+ 	if (*cp == ':') {
+ 		struct object_id tree_oid;
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index ff9bf213aa2..398865d6ebe 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -240,7 +240,8 @@ test_expect_success "setup" '
+ 	git config extensions.objectformat $test_hash_algo &&
+ 	git config extensions.compatobjectformat $test_compat_hash_algo &&
+ 	echo_without_newline "$hello_content" > hello &&
+-	git update-index --add hello
++	git update-index --add hello &&
++	git commit -m "add hello file"
+ '
+ 
+ run_blob_tests () {
+@@ -602,6 +603,34 @@ test_expect_success FUNNYNAMES '--batch-check, -Z with newline in input' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'setup with curly braches in input' '
++	git branch "foo{bar" HEAD &&
++	git branch "foo@" HEAD
++'
++
++test_expect_success 'object reference with curly brace' '
++	git cat-file -p "foo{bar:hello" >actual &&
++	git cat-file -p HEAD:hello >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'object reference with at-sign' '
++	git cat-file -p "foo@@{0}:hello" >actual &&
++	git cat-file -p HEAD:hello >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'setup with commit with colon' '
++	git commit-tree -m "testing: just a bunch of junk" HEAD^{tree} >out &&
++	git branch other $(cat out)
++'
++
++test_expect_success 'object reference via commit text search' '
++	git cat-file -p "other^{/testing:}:hello" >actual &&
++	git cat-file -p HEAD:hello >expect &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'setup blobs which are likely to delta' '
+ 	test-tool genrandom foo 10240 >foo &&
+ 	{ cat foo && echo plus; } >foo-plus &&
 -- 
 gitgitgadget
+
