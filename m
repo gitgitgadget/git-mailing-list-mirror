@@ -1,122 +1,120 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7A11C1F15
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 21:33:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2A31F9A99
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 21:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736804040; cv=none; b=XubVUzjU12EZIJpbgqlqVD5rPziIW98YLaq6+UUyANRMyOmwCvjYFfXXaNpC7hcTFFfToyUeYLSJq/STiq/FiuMX8jDT7IGKsMo1sC4zyFcWAtBBqgBNiIcWZIOtbgjLIX3bzBV2fHnOjwZP5Qry5t2YrkUdA9d7yJq7BIqgGrE=
+	t=1736805232; cv=none; b=S6cmVJ4RekwWjq2G17qWlBakp5QR5Ml3PXL6uEL+PIGHchgXTxIdbkiFslz2xDbauQDdySSaHjJ7ym90i8Si4GjQ2h//qPhFRo5XRnS2gTPi6TXhcAFdZ0NZqFEZk/3JrxRbpPDdpCcFDsovgNy5zOyLY+w3OmyoP6KpyXAV3bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736804040; c=relaxed/simple;
-	bh=UJRjSiEegXRqyr+c0MGlm8rvMlCxJZSlwF8ApyBktNo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NQj7hgR7Aqjvd34e8/YbBxiL7AiXKlZSz3DV0RyKW+XHgDB0qNgJ5vLmgJ2K7IeMKnlSFdKd4xhUHgp30B3ftRZl2FUjgz83ZwXDyG4mUGLATt81Msu5CtGUs/fdeM6h83J21fvXxQCYaBP4k+Ddwxf6Coyl3crksqhupHFDOQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hih4EoBZ; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1736805232; c=relaxed/simple;
+	bh=/Wyv5bSKCZXubGuNmlVWYYeIPdRdZkUIpaudFHxm3hE=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=QJy5MzhjtJNd8AxACv98o4E1JWC1/2Uc4OhcpLVOSedf9LAj1aK+7MvPFlOOEBmeGjc9N4rRNeDXacXKF6kyz6ml6ECHCRJ5JbQ/OUrOmaSACmE3wNGHlkWyM/GHCoXU5n9vx3HR3/+CFG4Vocs4nX3d7nmHwZndgoHcWJYAsn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=mmZi5Yhd; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hih4EoBZ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1736804035;
-	bh=UJRjSiEegXRqyr+c0MGlm8rvMlCxJZSlwF8ApyBktNo=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=hih4EoBZ9pdZJTaiLvFyp/XiBmAzUi/rGCUtH0gFuHEko/2/vRxc+T9kVCXce9jMB
-	 uBTbLRydF0LUw2Y3UHGy45H9mtMy7vwWvi2mMA1YNYt5p74M0dF8aJY/pLDs1W/67E
-	 b71r6FlXhouRBDSrKfbuGLWCarSGVKo/Nwyrb+Rr+xWs9eh7LqLU2zf48h5SmowAMO
-	 Or6hJ7CUZ5XMtxp2tDOSW4Ne7/1FgXDklVn3GJiCh3EPTNCtT6RZQyC/DSgRY7lgcL
-	 uccUxuJnCfoI+hrXMDAWe8brujbRTS7taHPwyC9QpLT75lBZJUJt1eHfEl1FHx9qDD
-	 ARuzcpSg0jM8KBSyZz9OYCPN5R1Sm3LDoCLn1IYeVXnWnGFJyb5xM4Jdr0cICQLhhb
-	 E1n0GQfj48K/rJZto4W+LVhfWcXERniVawEMtz4yWJ5VUV/1EACpJExETSkjGxqgCh
-	 pzLt6rbWA3m3r15F7ik3CBDXdlfhDq6cEBsib8eSee0PTUi0qnm
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 50A8220008;
-	Mon, 13 Jan 2025 21:33:55 +0000 (UTC)
-Date: Mon, 13 Jan 2025 21:33:52 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: M Hickford via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
-Subject: Re: [PATCH] docs: add vim syntax modeline [RFC]
-Message-ID: <Z4WGwCwnNj_XeHiI@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
-References: <pull.1874.git.git.1736802194760.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="mmZi5Yhd"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1736805227; x=1737410027;
+	i=johannes.schindelin@gmx.de;
+	bh=/vwEGGuC25kyVS8kALnZnyHvdUy+QBQb24DPmfNLat4=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=mmZi5YhdqEVB+BbH2y8d5NblgWDJP7CI6bYNN83Y9K8Fj9+l6VCk+1b+fDLsXLGr
+	 pagSJCMIC1fb3Rg14WH3oJtpu641zt23TvFERaoDgJH+cgZhUjtED7/w2mJbAAWGa
+	 1KAFR7qLf00yNXxhBzVpsbl0wPYIr4YsOVKBqExSigz5p/wvg3QbQ1MLB712a2smo
+	 X58rtbaNGDwWMcYyRWPOzLCroCtWdcgmc7NXHXisJ1ue0Xbm/3oLaFadNrSRNyZFs
+	 7RGku8rayk1DnWZHGtqWFTUnZu1e8I0lTwzqBuQPzmQry/fbzUAk/8WkwhAyL4qxr
+	 AqFVQgwjnPtl5MqzGw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.213.189]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MSt8Q-1tzbKn2tdm-00Q2Zc; Mon, 13
+ Jan 2025 22:53:47 +0100
+Date: Mon, 13 Jan 2025 22:53:46 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+cc: M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org, 
+    sandals@crustytoothpaste.net, stolee@gmail.com, avarab@gmail.com, 
+    peff@peff.net
+Subject: Re: Changing transfer.credentialsInUrl to default to "warn"
+In-Reply-To: <xmqq1px6br7p.fsf@gitster.g>
+Message-ID: <7a60c9ec-8f98-73d3-4539-d96b63a4f442@gmx.de>
+References: <20250111071500.710169-1-mirth.hickford@gmail.com> <xmqq1px6br7p.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="udisH1diOUXcTylz"
-Content-Disposition: inline
-In-Reply-To: <pull.1874.git.git.1736802194760.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---udisH1diOUXcTylz
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:gMwJbbAkdNYLnCLgs/QUKSV6HjnjB4zOm8vpjZjqjZ8FMo+CPT6
+ +bo1w4Kzw4uRwFLQUaQL3FVXywtLBFGL9EmDFHUxLPP0Bpt88hl2CIAAH7HTn/IUKEN/DSc
+ lMUVuRDKYMdfSy/DcZB2smvfVSlzHpaJgKOkv/Pz3me8S3s90u8gAwuZzb/cwrIc2zNfq2H
+ uUCGCjRlU8AnXCqCdecVg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:SxPxAisfpOk=;O2/YnDcHVCEXKWeq7f6dzjebXdJ
+ f6GVzaZs/HkcMCBQlFuAqpFtdgQEQWFpU2g2KsBPJoTugbnxaG3qCwcQt8YvoKHojRqru6PVS
+ uk1euvw9LU+a5jlqhPk0N060oYAaFd50jMW9iwsM2tNuqmQO6uyELF67qRyifyqP6d6hsYpuz
+ zABhU6ylYoT1SqlNnqjRUUSwou7fXEr3htWHyP/qWROSdyoukbsHc6ZbYaInlPF5qiyiWA+eC
+ 0SPMr3q1DwuhWdb2P2B+S9806a6EJ+i9lskgv2+2wYSCIFWikUBhsub7W9Cq5lcNABG6IE+qV
+ txT7UR98Nbdb7ZLtaQNPf7gwcOW2GUCoxYoYphrfsKdcfPOnS31BfTZ+uTQTWfsZLSchip5c8
+ l6wMQUZQqDnXlEQo14e1UTd6a4/43zrk9R1LhhsHHhiwhCK3hNzaBatSmXLBjXUpPhaqFOGIt
+ iwseglC+2TESt/T+bcrkInpkvnM6DWsqvciWUTxVbf4zeHxqWG6VzTspONj43ZnlQuAgciszL
+ W9WcDIMyEvuM921v1ZK1qB407vkRGnTLS0p3vGFWBcHXYX26Dp4l9Ko6AA7BXV9uAegl4Sw8Y
+ 5kDXo0MVq9kNikp8TNuUx6+r4ZIMLUgOFlQD/kaNdcv9XfVgaElfqLffX/qmSBDeyOaUg2iOl
+ cuQXFxXcp6QiWns5Adks4YzY6l+2HXANL8uItGNno4PAyCPoJZd5syQAoj3/I1QIGYHeqDiIZ
+ ub8h557pZK6GsYUWvpuOFgxVAvp70zL8KysSmpB0M+Zp+Ox+tjXFRNDTpCBYObXqoGA9k1UEL
+ rpnMhf+JPhvIynxUw3iQIBGXuf1Bibx6D6vHEjPi/1P4S7r6RBf4JBT6ABXJMibUpzZzQRlXV
+ PmQeIM1AkU3EpYJrXNZsQmAieqh8wqFtLdbJ7SK0z8QZfb7wFOz8kD1ZG4LSDj8j7mL2SB2H4
+ Z4NWQHT5FgTm3KfZnLzetcPg4+0YsBicxivr+yDMHI6u6c3YGweil/v6EY9v5bzoYyTWhstEx
+ 1mwn1J5nnf8jZhrY7aeR0nx1Oyb1LnMOJBHMhCI0B9rqjVF3DnVp/XynaMicAqt7Ug22+YRFT
+ lpjKWMRNAE1+R4D+WOVzxOleRCTrlb
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-01-13 at 21:03:14, M Hickford via GitGitGadget wrote:
-> From: M Hickford <mirth.hickford@gmail.com>
->=20
-> Git documentation is written in AsciiDoc. This format is easily
-> mistaken for the pervasive Markdown.
->=20
-> Add a vim modeline to help editors identify the format and provide
-> syntax highlighting, rendering and autocomplete.
+Hi M & Junio,
 
-I don't think this is a good idea.  To be clear, I use Vim and Neovim
-(mostly the latter), but I just don't think we should litter our project
-with editor-specific contents.  I know Junio uses Emacs, and other
-contributors use other things, and there's no uniform syntax that works
-everywhere.  (Nor could there be, because different editors have
-different names for different languages.)
+On Mon, 13 Jan 2025, Junio C Hamano wrote:
 
-We also don't set editor-specific ignore files in our `.gitignore`.
-Emacs users are responsible for ignoring backup files in the global
-(per-user) config, Vim users for swap files, and so on.
+> M Hickford <mirth.hickford@gmail.com> writes:
+>
+> > In order to nudge users towards more secure practices (namely, using a
+> > credential helper), would anyone else be in favour of changing
+> > transfer.credentialsInUrl to default to "warn"?
 
-> This makes editing the documentation easier for prospective
-> contributors. This is particularly important because new contributors
-> often start with documentation changes.
+IIRC that was the plan all along, and if the original Git Fundamentals
+team (of which both Stolee and myself were members, and from which this
+patch originated) still existed, I believe that plan would have been
+turned into reality already.
 
-I suspect prospective contributors who are moderately proficient with
-Vim and its descendants know how to do `:setf asciidoc`.  If this were a
-different editor that were easier to start with (say, one that didn't
-have tons of Internet posts asking how to quit it), such as VS Code or
-even Emacs, then I would be more convinced by this argument.
+Or more clearly: Yes, this is a good idea.
 
-> A simpler alternative could be to rename files *.adoc. This would have
-> the advantage of being recognised by even more tools.
+> I personally do not have a problem with the proposal, but it is curious
+> that it is documented as inspecting only .URL and .pushURL is not
+> checked.  So, in addition to "once we start warning by default, we'd
+> need an advice message to tell the users how to turn it off" Derrick
+> says in the commit log message, we would probably want to see if we
+> should/can cover .pushURL and need necessary updates before it happens.
 
-This I would be in favour of.  I use this extension on my personal
-AsciiDoc files and already have appropriate configuration set up.  In
-conjunction with appropriate settings in our `.editorconfig` file (to
-configure indents properly), I think this would be valuable indeed, and,
-importantly, helpful to users of all editors.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+The reason why `.pushURL` was not handled as well is that it is way too
+common for Git users to call `git clone https://<user>:<password>@<host>`
+(heck, I am privy to documentation that explicitly calls for this) and
+those users typically do not realize that the credentials are then stored
+as plain text in their Git config (and prior to b7d49ac1ecd (trace2:
+redact passwords from https:// URLs by default, 2023-11-22) would even be
+logged via Trace2).
 
---udisH1diOUXcTylz
-Content-Type: application/pgp-signature; name="signature.asc"
+There is no similar indirect way to leak credentials into `pushURL`; You
+really have to set that config setting explicitly (or call something like
+`git remote set-url --push [...]`). It is much more obvious in those
+instances that the verbatim credentials will be leaked into the config.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
+Having said that, I would be in favor of letting
+`transfer.credentialsInURL` treat `remote.*.pushURL` in the same manner as
+`remote.*.url`.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ4WGwAAKCRB8DEliiIei
-gRgSAQD/7+06IDw8tPEOD2s2jWADL1uevB20GyVRjWv7N4nRmQD/WBTfQl0R6eJ4
-A3ZgL0fSS3nIAUKhALt1+jAv4/UeGg8=
-=P0Fu
------END PGP SIGNATURE-----
-
---udisH1diOUXcTylz--
+Ciao,
+Johannes
