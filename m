@@ -1,128 +1,101 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6CF24025F
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 18:15:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA26C1C242C
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 18:26:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736792146; cv=none; b=FZV9EK0TJ9hbJJLwx+rE+qKZC/PD/uftNT6eD1y2qZ7c4+xJzTdyzPqchWAlHFhOBCBgLUbfgCZd2PZ1GdmRWb80QmiYlXObha0dgMGTkP7XIvjL8yN1mVUwbIbOZo5IqgqNzbHoKVOUPTdyByKG1RIWwMAK437H02xi/ZhABDg=
+	t=1736792803; cv=none; b=dWoGFuHTfxMl9ndn+W+hevykW9CUjTQUTE1v5ZS5YH8aC+sqnFwhVmeccpLu8j+0ZErNA0IMErZ8SAnWACYdSaOnX/W0RMkjr8qYZYFzqNZtS1SI5BpE1eELsgbWtVzTn4HMYrwfqo2m9YDZ29TFOFgJx9zUBD714tlw0jsYUKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736792146; c=relaxed/simple;
-	bh=z0nR7j21GZbQuejbiOAYNsRuFhJUQyHdQiURi6UhOr4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RWzB0FIbgdHK1Z57NoJDKT++FGKdZbWIOBZv19b9LxJFZg7TnZnxoej3Zq2p32TKGVBuFq1Oo5/5gyGkCLi0BfAN00Z5l3kNyftaBAR6W0lTDmVOVnXJIx1Ix0eLkKp32XVTtVZBMF0PaM/FcNTLn4bNfco/ErkQ3PVnCCcYaW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MwwsVK09; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XC3vaP8y; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736792803; c=relaxed/simple;
+	bh=cipAfFyWnPBT3ailCaqkqpQeuwCx+jcwy6r8uhFzPVU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JfQr30fLuH8pmGn0z7eVRWXU2aKWvfwDnZq31yEwjVlSacAK7MiHl0vU1vsmK50modW653TxdLxrr5KkFEt4WCGknZE/+i1GnMgzujbKEZJe/D6l3leF18Lnd8hlnUt1ZZCz/koElUNg7sB53cDDvRgWdsET1v2FTt/doHXS3Qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=csXcLuKW; arc=none smtp.client-ip=209.85.217.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MwwsVK09";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XC3vaP8y"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6FEB5254021E;
-	Mon, 13 Jan 2025 13:15:43 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 13 Jan 2025 13:15:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736792143; x=1736878543; bh=tYBTvMLWvx
-	vz8jFPDZpmjV3jvaXtOKNTsiCUGND9hdw=; b=MwwsVK09jjuPRRLGfzzBGf5RXv
-	Ja9xsGMF64i7e3rpy6x+PIbKrQHg3euEI5QoMj4irvJSfQ3MgcQmzZx0mgI0Qgii
-	aaY96G79JBr7NOsdheSHW7sLYciBoilz1QQWai72r6NOCLyd5I3sK993HG/8h7v/
-	41Pe9y6RDmmu4VIUpVATnNTrz5HPhhNMS03zkJUKwOkDyWN14+7e2vgUMJbhMP8a
-	taBNGLOPY9oEWS9iOvNTq1/RCjaZLChb/m4QtyZzd82VMUFTaVWtCpmp9p+tgqEJ
-	Gs3aki6trr1lfNUVvUuSw/dy6ttJZjCvQ8Z8IvvCK1d1mI9nB7qE3W4N0U8g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736792143; x=1736878543; bh=tYBTvMLWvxvz8jFPDZpmjV3jvaXtOKNTsiC
-	UGND9hdw=; b=XC3vaP8yBhfHyuWDiXZ4W9M/AHymqKllAGf9+lLPBjPG8K3aWUO
-	/aFeZ/arWk9L6scksBTmh/ngRHI8w0tVgHDuJyaCUX1oaq06yu4Q4cpntr7Zg8CR
-	rozrl813b/NGsyc5wM13OHYMVGfvG7JSOWWiyZ/z7TD7xDuTwMiXA+ldaZY/lfrU
-	DBJoMpwJ6yhkG1pABnapKotIksKxuEXPnSwR0QxuOozGAv9pnBE+Ab1Lvmx8eIDq
-	D+vl7nd68Og3OchykYV+YVtFxy2QSJV1jupMwAiRj7FLgFmjCzuD54kMaEVQCjdi
-	vnGHjWQz/FouTFD4IYJDVvjER+2yQgsBD4Q==
-X-ME-Sender: <xms:T1iFZ4xxmQ6xk7tRBKhBDJ3zg3ID4Fm5kl9ztBDh9nJcRvdFfMcLSQ>
-    <xme:T1iFZ8Q8X3AFiFVuxMDLdc9KnnMw1ToGoN2dxhuyoXRHrbUfLaPHoUdgDN4aN9OA_
-    DEacfb7W8qlpd6aWg>
-X-ME-Received: <xmr:T1iFZ6VPNV3lPxhvnEC7rGm2tumM1Hi7SqS2yQrdeUP6CXyFVbnEu2UuJ97Abfdtq2o4yn4iqtib2D0TvUsftIIZPM8RLHE3VIeZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedguddtlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrh
-    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:T1iFZ2iTQFwyz5Xv16tPu_QsKH2ssh6SM66kQxb-jIbZ2IQ34Vk3kA>
-    <xmx:T1iFZ6D3EZxgYZDVAS2u0gQYm2xYEcWSMO24DbEZ89yLW4ViFP8ziQ>
-    <xmx:T1iFZ3LLhiA5iLG4FxlCCMDg4AjMWpwNKz_4HlET3YhSx8XEwzFHqQ>
-    <xmx:T1iFZxCd4s-q-2Uz5U6It30tFLMvr-jdzUgg6C64YUro_1twPZz4hw>
-    <xmx:T1iFZx4oeBiP35-DnJYVu6ZszFwGTPXeIbywzalBWtHI7X9Qy6YmRrSz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 13:15:42 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>
-Subject: Re: [PATCH v3 0/2] object-name: fix a pair of object name
- resolution issues
-In-Reply-To: <pull.1844.v3.git.1736788417.gitgitgadget@gmail.com> (Elijah
-	Newren via GitGitGadget's message of "Mon, 13 Jan 2025 17:13:35
-	+0000")
-References: <pull.1844.v2.git.1735949870.gitgitgadget@gmail.com>
-	<pull.1844.v3.git.1736788417.gitgitgadget@gmail.com>
-Date: Mon, 13 Jan 2025 10:15:41 -0800
-Message-ID: <xmqqjzay8trm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="csXcLuKW"
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-4b24bc0cc65so2932540137.2
+        for <git@vger.kernel.org>; Mon, 13 Jan 2025 10:26:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736792800; x=1737397600; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=A60UxtKgDfY/1rALVOQO19vg9z91FtnzTwNnTW9I0dQ=;
+        b=csXcLuKW5q38N15oQenUGONPtuIbSWJdVZOWjcB65Oty/t/fcl4SB91KY7jLlBlxIZ
+         qKP9leuNyrW5q/idnRM+utu966WygXE6AB00EtjF0s8sxMWHGzQJ+izl3uvBAfh9J93b
+         EoFJOFV8DCB8a34S7rscGc5OvcLpvDUDq/1lEFSDZT3PljZ95DL/b/Ty2XA9xKkBP239
+         SYxF7iiIT1IRMIYXtnAVAMGOrUpGM++LIClTZuQ2KYStaC1MSKN0CokWU9g+aTBBm8qC
+         0BDnbd5HAXtUXKPcfUklcJk+FHVl4sxz9aoKcLd1QzUjzcnuomNDquYGFQPCV2oXcshI
+         niCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736792800; x=1737397600;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=A60UxtKgDfY/1rALVOQO19vg9z91FtnzTwNnTW9I0dQ=;
+        b=ptQDnIEsLI7ODWSwLGFHFJftj1X3c0Fvu9RYjDKnDu4bhei1FnZDOQk75ngm4iDIpo
+         BgZSVGa4OT+6H+4aWDiwZPJo1DolEn4g8kmVLOX1QNmSF9xzHiIIHyrJJ7tS/y+bvgcv
+         6lBmgon6dna2zEt+7ckk9aYfEddGth9h9i1KOKh+fEj1FAhvopnWSiGvyogCkPYHgPds
+         3Owhsz4yOBQ6kkvclVeMZWHwLUqdF4AHBDfHZokFAajb21a0v+YWmThdmrHg9Cne+jU5
+         w9M+Zv88TqlRqu1ClXDlD/uVWnAY2zOyyAKXr7SrFnbmelITKtnjqZPVCyI1vLuQGP6n
+         0kwg==
+X-Gm-Message-State: AOJu0Yx3U6E07XRpO7Dnz6EavqsQmVyvdujZRNLj8trglVFN0jdSd8Dy
+	57b7BAI7eiuPdcOtczpjoOk+cBywUC6wxOc7WES1i1mA0Q6eWRXKaaAc0Darw+QONjEeM+n6bSl
+	lEFDlQqjSoTgID+lnmt/KQ3B7RpI=
+X-Gm-Gg: ASbGncuSZj4h7ge6KmR6FQAwy9k6stWHglUPoFVKjWuif2WoNxfHxT2hmlF/JKMnKw5
+	hwg3Deejv7KthrcyP8SKtpQN900IeydXvHoKtqw==
+X-Google-Smtp-Source: AGHT+IHLhJRCHv6vWba29ymBrj47RQS4r2iFdm5enHYhHnb/u0Q2RGVX9HxdGAtR4w40d2q6+L0rZyHmYpZMpMS13fw=
+X-Received: by 2002:a05:6102:3a0d:b0:4b1:102a:5834 with SMTP id
+ ada2fe7eead31-4b3d0e650bemr18584173137.21.1736792800454; Mon, 13 Jan 2025
+ 10:26:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
+ <20250106103713.1452035-4-usmanakinyemi202@gmail.com> <xmqqfrlvzzcd.fsf@gitster.g>
+ <CAPSxiM_0h7OyQO-Of8YhcOt4KbtuoKXe111ZCvsLf5y+OgCHaw@mail.gmail.com>
+ <xmqq1pxdnuxo.fsf@gitster.g> <CAPSxiM93qVjoDGBRaGAv1-o3oiKkEE0mtH9ERTN9dVxvZpCczw@mail.gmail.com>
+ <xmqq5xmokn0z.fsf@gitster.g> <CAPSxiM8KYpmoSYaWciF_KrtHhUTPj543q9mgio+qdeB-FHeDUQ@mail.gmail.com>
+ <xmqqldvi5v5v.fsf@gitster.g> <CAPSxiM8kWoAXEvAVtp0C9NUQaas3KN=TMBA-p9o6+8KDQbmBUA@mail.gmail.com>
+ <xmqqmsfubtt8.fsf@gitster.g>
+In-Reply-To: <xmqqmsfubtt8.fsf@gitster.g>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Mon, 13 Jan 2025 23:56:29 +0530
+X-Gm-Features: AbW1kvZ1DGkSfTjt_JfBkfA1iPQUphiV5CNXMv0mZtZtXzUjkXDwzLtgNiaHgIw
+Message-ID: <CAPSxiM93asot47GgfK3ExNWd9M-4fjbWzRWQ=koCFdA8rNwD7g@mail.gmail.com>
+Subject: Re: [PATCH 3/4] connect: advertise OS version
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
+	johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
+	phillip.wood@dunelm.org.uk, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Jan 13, 2025 at 9:16=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+>
+> > Actually, in this patch series, there is a config option called
+> > `osVersion.command`
+> > The specified command will be run and the output will be used as the
+> > value for `os-version`
+> > capability.
+>
+> That is essentially a "you can throw at us any arbitrary string".
+> So my recommendation would not change.  .format would not give us
+> much _additional_ value in such a case.
+Hi Junio,
 
-> Changes since v2:
->
->  * Readability improvement to the first patch, which fixes object name
->    resolution with refs containing a curly brace
->  * Fixed the second patch for cases like OBJ-COUNT-gHASH~13 and added a
->    couple test cases for that. Also, extended the commit message a bit to
->    discuss the cases brought up on the list.
->
-> For the second patch, if folks want some open source examples where it could
-> be triggered, I found two examples:
->
->  * lore.git: git cat-file -t master:random/path/major-gaffed
->  * git.git: git cat-file -t super-invalid~///\\.....@.lock-gfd0bba94e
->
-> Elijah Newren (2):
->   object-name: fix resolution of object names containing curly braces
->   object-name: be more strict in parsing describe-like output
->
->  object-name.c       | 63 ++++++++++++++++++++++++++++++++++++++++++---
->  t/t1006-cat-file.sh | 31 +++++++++++++++++++++-
->  t/t6120-describe.sh | 24 +++++++++++++++++
->  3 files changed, 113 insertions(+), 5 deletions(-)
->
+Thanks for this.  So, from what I understand, the feature and config
+option introduced by
+this patch series is enough, no need to introduce another .format
+config. Right ?
 
-Although ...
-
->      +    Note that we'd prefer duplicating the special logic for "@^" characters
->      +    here, because if get_oid_basic() or interpret_nth_prior_checkout() or
-
-... I suspect that you meant "we'd prefer not duplicating" here,
-both patches look very good to me.
-
-Thanks, will replace.
+Thanks.
