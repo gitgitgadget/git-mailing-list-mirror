@@ -1,130 +1,120 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CE43C1F
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 08:05:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35088233153
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 08:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736755508; cv=none; b=LJ9Ch0j6pbM8vjj6HC8cQimSDxdwITOqMBy5/77UCrJdqlKMz2k1EcgUW+6YYFcakBgB50HpylE7DNnYFVW02Miaqx4KVop7Zu+W0sffXqXPUNb9CgLZLNCjA0bk1sKi426iv6PH061MQJ8RHtFjQwcZcFwP5j83xJ/mDmN5fY0=
+	t=1736756826; cv=none; b=aDHQJmd/OpsA4kW4ZS8kaUC6gL/SzGaclRf77xhOomAoykso5ICw5qg5CYjc84rN/Dpn56vKUaS67iJ04Z+6Reb6XcNIf66sQE0WWHMLO653kmIBEV6FUWMg3t1xGhXD38x8BKvbg9x1WPLnvSjwhUs1vzgyPUPnuyNkn9UvzEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736755508; c=relaxed/simple;
-	bh=xnWPffwCPuIHv/SluB8bC4xXtgRqimXECtctcVQDFvU=;
+	s=arc-20240116; t=1736756826; c=relaxed/simple;
+	bh=i6OC2e5IbfjD/rueNiteIZNj0FOaf7Y9Tobhrp89Gwk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YCL1m3dVKLzsT5cKVQd2A+VfReupuBXT5rNTjZT6uXdl38anDg4HivPEGzOwiq+eWPEAGmOEwJ81kttWnOZek29tAr+5pUIypSCbO2MztQ4ZCYht7YD5reVTVMtzajs56DSL3YW2hEcAVEroUiSmktErP/fCpLVZ3Kl5GUXqHks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vB3vHmV0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WbkKgruo; arc=none smtp.client-ip=202.12.124.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=gi0lG+BIV+ujlhkznn3CEkHJkSjbEeAYMVJ10kilndVIZkWIIXveVgZ3EN1Zp/aSLvn9nflAIB3OfISNEauRHEzDuVHFP7WiXwjmHuoQj3eS4+mnsYdhghPUYHotzjJMYUe6mLGa9eGxrF3MF+fu3KcA5aC3k7qsbEV5SxaT7qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VQ8vnSPT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xor5d99/; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vB3vHmV0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WbkKgruo"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id BB5C111400F8;
-	Mon, 13 Jan 2025 03:05:04 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 13 Jan 2025 03:05:04 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VQ8vnSPT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xor5d99/"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 514E32540168;
+	Mon, 13 Jan 2025 03:27:03 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Mon, 13 Jan 2025 03:27:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736755504;
-	 x=1736841904; bh=gFLIpWWMs1m+j23xn4jVR53/xhX3lAsjihyBu6Mmzfc=; b=
-	vB3vHmV0uoqYbgA6ddy8Q0D0nnCNkJoRl38z7wI1tGDrmggTGsSz193W+fRkGs/H
-	2FO0mFr+bG+12tjanBiP0db/QAiUakz/OjyFT56wZc5A/UC6q8x51ecaGUnNYAM8
-	yuXIUUKPgTA6Z4YVT65j6zzwHHk94CekZSmdRV2yyA2VOa4CXUZD7ToGnJqny8KC
-	7pSOg9vbf/kEHm4GcbcHaR2L3CBM/lEKbmbz1vks63XHyuJcJkeG8x+pveMxm/lR
-	B7lU5kwdetuLbUdktTkthfxpgJzjeDwxKLQusOcjbNdYVp9H16kgYxiUFwritOTV
-	ujHtBkxVvngFwarEOFuBnQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1736756823; x=1736843223; bh=43sAyfBKpn
+	X9CLbwQGNcfekNLG8lBQ+lQDarsV88oPI=; b=VQ8vnSPT7wJyaADeEr7AfQO58i
+	LSqSYRR2bLUg437dfywPYem5jmsBXFcFlldPzNyIzRAYXLLlyV6cn/01xdGDtt6j
+	O/KRDFieUhWpEs8LmTq9JIBlmgyW6hclynGKi7yVaFOvRiI+0QL2k9dUk0j3HVmh
+	hKLX1FUdcMPk6Fqv0wXnqy3ptcL72DV4WnS/D5sCGgPrrCcgwvGHTd/mr8rnCjHU
+	NbIAs2UByk6eA61P2K8aoGTga4bfhfK1U5P15vNAl0tCyRBgfQj4+XkgVbNHyHSV
+	hS8r6yhqUqCHWd7mIe6N75uI+JD4WT/Mug23ZOaAl0Y1PG4pajPfVLoRNsgQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736755504; x=
-	1736841904; bh=gFLIpWWMs1m+j23xn4jVR53/xhX3lAsjihyBu6Mmzfc=; b=W
-	bkKgruoEGMklSSJFXl8tY0v7oFt5MIlp//etULeFWZhN2cxhs5T5KGYp8dbjWe0S
-	L80tfjpUTe98GmOQANfGsw1OLcAeckj6Wkaa0iZ4iMYDhX6OpH+j/w3awTQ4dsFy
-	iJr/bfGPKhlmb5fmSn7/FoPdHNupR40lNCTjo86ZHMJ3IzdNwUv4fGYZDGoDFb7F
-	1xcx5c08+/MLi763k2tjurOpK6UtE2/jT8eKLtDDwYdhHbkYpOH7MOl1JLsm4MUS
-	19HQny/qhF0Q4bOeoT8JktZhsZaLKgizzXIj7RFSkp+099yps7FJbdG/8Du6RWad
-	JoCBSKha4/Nrwmopa/AtA==
-X-ME-Sender: <xms:MMmEZ7_4vOFsMcxQwW7cZjna5MN44IvVTgEdSQXqtkmfYlGTzrHZpQ>
-    <xme:MMmEZ3uf-x7Us_2HOteW4uedMqFs3n5rz7FkFyAuhVAzsw19OuavOU-GeiXSLIxb5
-    U0kX1y-pj5zwHzElg>
-X-ME-Received: <xmr:MMmEZ5DBL-ntJm2f7A03I4E7T_62BwfoXY5RIrvR4_sxqNjRp9HNEPuLpqkL7kgHAguarFKr9KG8ViwtBWBN21nSvLgRf5iDGXN_Q4seomCu0xqb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehfedguddufecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736756823; x=1736843223; bh=43sAyfBKpnX9CLbwQGNcfekNLG8lBQ+lQDa
+	rsV88oPI=; b=Xor5d99/wPqyJAB0Br61aFo7f6TJo2YvkhcECiCwnp9J3krToYS
+	yzkUPrAdxvi7hMdAiw42gkGYf+5uBrJFOX41EuCz/mBSg2l922AGQiIx8DVO9Mn0
+	vyhsEOkjKO38MsLoTZv+KZ/vc3MuoBVm0niD3YKxVmJFXJgItexSia2rO6ivIPfr
+	fxNp0E6Q5FgQJd7Wh9HdFmxMozUDt4ZGKLLoNX9U6mf4Jif1Qre2teR0Ty5751nE
+	d3I3bZNbD50wgNvyvn6wnXrQ8oevspobBbv7TwXZHsSPuEBZM54r/zCf0S4IdMYI
+	6y8P3ccUW2GIkcdMdjzbiJYcTZ2fx8+K9/A==
+X-ME-Sender: <xms:Vs6EZ249FuDnlWHPi6hYwdvEhWcYJi1sDBeJR1ISkDyNEtB3CtJUdg>
+    <xme:Vs6EZ_4XB7KkKnJ6HR_8Ss8WxAjDjTwBUal86vKRK20R-Vtmec0iAEvnShJy4O1xd
+    Uf7_e-5kghTRaydaQ>
+X-ME-Received: <xmr:Vs6EZ1fDG4bG_6wNEH-rsqDt8smkmg7g_WxCXUaMqNRMJwzCksfpBKlvlYb8Dj3908eCXdQ_8iIqPeTI6qllXN1F39uNIVo7XqWGeb6672IHP5aO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehfedguddukecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
-    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
-    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepnhhosghoiihosehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:MMmEZ3c24MYv4BZaIcn9EA5fYI7Q__UTcYaDY1IhKr3Q5QmUCk3Iyg>
-    <xmx:MMmEZwPfXcKrfeH6w3_DuK0X-A8oIQE-UgA61PT4Vl41dlT4q2dQRw>
-    <xmx:MMmEZ5lC_8kUP4e7_OGiz-z6igY3fu00MP5eLntcOwoe5nxMZQ1EzA>
-    <xmx:MMmEZ6tiLt3I3oHHkPNiApRSpa3kIsq0ad8DsujILR7k3uiFalOgcg>
-    <xmx:MMmEZ1oCCiE3lhF8oGcXpXLTGEsjxQMZqBdAWlqYRbRzvDYb8Z7R4SF->
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehsrghmsehgvghnthhoohdrohhrghdprhgtphhtth
+    hopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Vs6EZzLCadZe1glTQWL0MKUURi5Sci_VkyzW_dTrDCeu3PeawgJJxw>
+    <xmx:Vs6EZ6Jf3O1FeMGT1FHXGz2lyrji0KgByQXmyPWKE2hCN2vi2GaLhg>
+    <xmx:Vs6EZ0zg_mr9k0wDUUcShyA4Om-ia2-Tpq-ot8rHoZllNOBxwVGSnw>
+    <xmx:Vs6EZ-JZt6xXyzJjCocjGMetyoy8bSck5VTYQ7J135VxkhI_B48MtQ>
+    <xmx:V86EZ22DzpxnkIwpsXxJ4DKVbJa5tUJ_m4OZRSyeUW25VeA4abypGbW->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 03:05:03 -0500 (EST)
+ 13 Jan 2025 03:27:02 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6c2ce5e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jan 2025 08:05:00 +0000 (UTC)
-Date: Mon, 13 Jan 2025 09:04:59 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id c8dcd1de (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jan 2025 08:27:00 +0000 (UTC)
+Date: Mon, 13 Jan 2025 09:26:59 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Jon Forrest <nobozo@gmail.com>, git@vger.kernel.org
-Subject: Re: Using Visual Studio Code to Debug/Trace Git?
-Message-ID: <Z4TJIzVc4Ib2QyPV@pks.im>
-References: <vlrkbd$a0r$1@ciao.gmane.io>
- <A53D82B2-4F5F-4BCA-9C85-88B2A89139DC@gmail.com>
+To: Sam James <sam@gentoo.org>
+Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>
+Subject: Re: [PATCH] meson: fix perl dependencies for Documentation
+Message-ID: <Z4TOTVZbDlxh4Uuy@pks.im>
+References: <79de1bcf31f708960a889066ce3d986e55155ad8.1736577530.git.sam@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <A53D82B2-4F5F-4BCA-9C85-88B2A89139DC@gmail.com>
+In-Reply-To: <79de1bcf31f708960a889066ce3d986e55155ad8.1736577530.git.sam@gentoo.org>
 
-On Fri, Jan 10, 2025 at 03:38:51PM -0500, Ben Knoble wrote:
-> 
-> > 
-> > Le 10 janv. 2025 à 12:16, Jon Forrest <nobozo@gmail.com> a écrit :
-> > 
-> > ﻿I'm interested in using Visual Studio Code to help understand
-> > how git works. I'm thinking it would make it easy to see what
-> > actually happens when git commands are run.
-> > 
-> > What I don't know is how to integrate git's build system into
-> > Visual Studio Code. Has anybody tried this? If not, what tools
-> > do you use to debug git?
-> 
-> AFAIK, it’s make (with some autoconf stuff) and C debuggers like
-> gdb/lldb. But maybe someone has a better answer. I’d expect VS Code to
-> support this pretty easily.
+On Sat, Jan 11, 2025 at 06:38:50AM +0000, Sam James wrote:
+> diff --git a/Documentation/technical/meson.build b/Documentation/technical/meson.build
+> index 21dfb8b5c9..8c93da3566 100644
+> --- a/Documentation/technical/meson.build
+> +++ b/Documentation/technical/meson.build
+> @@ -42,6 +42,7 @@ api_index = custom_target(
+>      '@OUTPUT@',
+>    ],
+>    env: script_environment,
+> +  depends: documentation_deps,
+>    input: api_docs,
+>    output: 'api-index.txt',
+>  )
 
-There are two ways to realize what you want right now:
+Wait, this doesn't make a lot of sense to me. "api-index.sh" does not
+care about "asciidoc.conf" at all, so why is this dependency needed?
 
-  - Import the CMake build instructions that we have in
-    "contrib/buildsystems". It has existed for a rather long time, but
-    is not an officially supported way to build Git. It's also lacking a
-    couple of features that you can expect from our Makefile, like
-    building docs. It may be good enough though.
+> @@ -60,6 +61,7 @@ foreach article : api_docs + articles
+>      command: asciidoc_html_options,
+>      input: article,
+>      output: fs.stem(article) + '.html',
+> +    depends: documentation_deps,
+>      install: true,
+>      install_dir: get_option('datadir') / 'doc/git-doc/technical',
+>    )
 
-  - Generate a Visual Studio solution via Meson by installing Meson and
-    then running `meson setup --backend=vs2022 build-msvc`. This has
-    only landed in Git v2.48 and is thus really new. As such it is still
-    marked experimental, but will become an official way to build Git
-    and is more feature complete.
+This one looks as expected, though.
 
-I'm aware of an issue with Visual Studio right now though when using it
-with Meson that keeps it from working -- I'll send a patch series later
-today to fix that issue, and then it should be a good way to build Git
-on Windows via MSVC.
+Thanks!
 
 Patrick
