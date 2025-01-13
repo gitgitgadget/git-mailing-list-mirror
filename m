@@ -1,139 +1,109 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9792E1C5D6F
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 16:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D63324024E
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 16:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736786153; cv=none; b=qjBuD9TAA3RUEXallOVwcH2anv/FaR+MrtBUTvCcxan4CS0+dJ+NQA28Qja+GuM8YVdDjxAy7IITQtlmSxLPAOKswUgtzWZ7hLYxmlonXYglxVIFYzlBPuPKm4FHmfdSJN/KNGVk33RS9ZMWMIeah8aVvOI6e8p1GFhfqBNc/pc=
+	t=1736786559; cv=none; b=qCoDdyGfR69g2R8oDhh/EA7zNd9YQBNh3aIP4BkhkO6JnqRDob4coKx8k3n3UR7/shlk2BvQmywLzsq2m6W9vtVA7kfTlrpQVJyIv1SCol16GAML4owBSh2rmpSL9TbKiYtzICz63LiyIKTQM0/xA+Qsz7Qo2GR4XLhncMDSkDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736786153; c=relaxed/simple;
-	bh=gY/DBfE72DdAV6LJFEDHwHhZMTA0NXE6+00TCTmssg4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=F3sy0NncEWBZCRV2HCbns7hdPEMwY2E8P6xKgGoTGYhvfYVpYJ8VMND9LPSZBtmRnhNSiOKfgh2DQeCRThmGUPtMlh82z/tdHX3A9kWLIAvDKMkT0HtLg64FayjM8dOPKqzht04buFOVs4QAKe+sY+ebWcUs4RS+Gjm2y6sVoIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=fNliRsPw; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1736786559; c=relaxed/simple;
+	bh=DSsWzpit5L9c/EUThbbDuyArkKLpIeIpAgo3SRS2qls=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nXIf+9BHR6TnrxkJJ/dy8hOxBs3C4eNv9dx9Aqwc37yQXjjeM5LIuzJVQEg3GUqo2UeCgPjI1//3Lcd79xDpCwKMjV92US2yvgz79QfOHu3OQtn75AZE7q8KDQfcxr0eF+9OWNPoutB8AkkTxQkvKRUCuDILWDaAAAd0983z+dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=31ZHrnga; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Za355Zxy; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="fNliRsPw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1736786147; x=1737390947; i=tboegi@web.de;
-	bh=PyYR0HFVELb3NYJu/I7RO/K3S6ocFwCfM8pCuyVgpO0=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=fNliRsPwwv9oGmPIn5/kxHd52Nz03aPJeBwCc2gUszjDkFKZ1P8nv0VSFTI9xTWn
-	 XAz9oEwKuTYEf2nZTxOZtdLADrP0tcHrO4VYuLzwH1ZAH2PSlCkKGyeZAaxME8x4S
-	 Nbcb1f4xAEZt9Yj6Ed2WpdSnGtTE25dq/BpN/ctcs2HkFxL5TPqq5GmSHw/2udAz4
-	 6NWtDxTh4wL0XVSeqs9DdPPaNQETdyybzgRdxMP6fEVe+M6WpCmY5k+wm6jvqz7AL
-	 j8ihV3AXHfG1cJSAPADayFiPmGXgEb9zdgYAIjQ2cLp3zk9mUsSWreL5WpoUzYyd3
-	 GHC3shx5tmjICuzBsw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.209.87] ([81.231.143.213]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Ma0Pm-1u13sV1VbA-00Uyoz; Mon, 13
- Jan 2025 17:35:47 +0100
-Message-ID: <136f18cc-7b6a-4427-a4a7-96ef073ada49@web.de>
-Date: Mon, 13 Jan 2025 17:35:41 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="31ZHrnga";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Za355Zxy"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 933D911400D1;
+	Mon, 13 Jan 2025 11:42:36 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 13 Jan 2025 11:42:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736786556; x=1736872956; bh=sE4zEm05U6
+	ZSkp5KZjhl31RfMNyaEP8BrYWZyvD6WUU=; b=31ZHrngaKh6t+SuNJzadVj21tB
+	3c2LuaX4Ub5Jf3wuu5rkomCoGnm5tjx3+PiWcCLq5w3HQFicn7xogPpvLsgQuuYO
+	vIH4WPig0KZX2RAe5V1Tp6590IIVfSWC/dr6TVoV7l0db+QSESVCyNy9uvsLrHp/
+	DC6hDpwrWihNZGeKSZcMEfcBWO/uQMezo/iMIxroiX/dsBDhXv9jrdDNi/H7jYfW
+	ECYEPoBdF0g/vlR+4kdeLXr9XIEypElt9sZW0VqAJ0SdRQLPgJSleZUSCTA1XAEG
+	bQq7+BURJptCvhxteDimux6MRZEY3V71IH7PinkQAH2nmsulWpoL6A+uX6ig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736786556; x=1736872956; bh=sE4zEm05U6ZSkp5KZjhl31RfMNyaEP8BrYW
+	ZyvD6WUU=; b=Za355ZxyabHpHtUzKdDd4bQjMwebHfIWdohIVBsR7H2tmCenzK/
+	zABvW6hws0FcCAnndskBc/cZYAUy0yIvfc+f7E40G37XORLpjFGWyQsG5wWpYhS/
+	alp6ylGMSk3hd/DYKVUWrEl6k/1F2CS/EO0Rt+Eyw+JQYyB02VFHynGDv8hZvSXG
+	TCFu03LZj1MQ2rNryZaKs2HBynA/78+6qakXotFJwiUbbXsGSSPAR5RV2mWMc4Xu
+	cFVpOakgqjl4mGkI2QULVtMiSUIXRTa2tQ8LRz2ZVnyaWopZRxRcZQpmXgv/iG7G
+	ZdRhnR6IubZ7PDQWIXD+PXSdAHKGv/EG4bA==
+X-ME-Sender: <xms:fEKFZzBCC-1sAqovtS8IgCodIYI1BnayCY2R2NfCcN6NAr12nowGTw>
+    <xme:fEKFZ5hqePffcapMLQE8hV-CjwqhOiecFiOFn8uW0HhzeqW3T2B6prPASGNdPLpRd
+    OgMdCXZQzWyA-KAWg>
+X-ME-Received: <xmr:fEKFZ-lKipktC51codSW4LjV744J4Qe2OWMxis_sQdjGNbALPnQz1NDB91R6xzX9KOK41s1FTsBLDZ2VC5X1GL6ZMqpUAUETa3BH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgleduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhhirhhthhdrhhhitg
+    hkfhhorhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhph
+    grshhtvgdrnhgvthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgt
+    phhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnh
+    gvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehpvghffhesphgv
+    fhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:fEKFZ1yn3gBcJy9n7JZtdZUjU1tjMUUsEqCnJX1cN3L3MyX-_9mYdA>
+    <xmx:fEKFZ4SuPbYopOf8y8pg89iH4St7PYf4YDZmAZdwmzOLfpzTYeZsTg>
+    <xmx:fEKFZ4aCpN1cEVJkIg2XUExWxvSCU6yhOXgotgwEzLb8x2hrAXTllg>
+    <xmx:fEKFZ5SIdSY-aRpBvuUAS1RTsQwYSYFZQxHRqsWjM5T7Qs7WTkh7eg>
+    <xmx:fEKFZ7G_9ZnzBgMtbW8D9uQS3n25J4dt2H6FdfCnkZimDd-cAU6tVknj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Jan 2025 11:42:35 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: M Hickford <mirth.hickford@gmail.com>
+Cc: git@vger.kernel.org,  sandals@crustytoothpaste.net,  stolee@gmail.com,
+  avarab@gmail.com,  Johannes.Schindelin@gmx.de,  peff@peff.net
+Subject: Re: Changing transfer.credentialsInUrl to default to "warn"
+In-Reply-To: <20250111071500.710169-1-mirth.hickford@gmail.com> (M. Hickford's
+	message of "Sat, 11 Jan 2025 07:15:00 +0000")
+References: <20250111071500.710169-1-mirth.hickford@gmail.com>
+Date: Mon, 13 Jan 2025 08:42:34 -0800
+Message-ID: <xmqq1px6br7p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Bug report - Apple git
-To: =?UTF-8?Q?Andr=C3=A9_de_Castro?= <aramosdecastro@gmail.com>,
- git@vger.kernel.org
-References: <C2871318-4745-4481-9199-72D4544ECD5C@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-In-Reply-To: <C2871318-4745-4481-9199-72D4544ECD5C@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:zGEN3X6FfmwZX3hED2lbwrzMxQQXJrCjT70by+F6v54VZu7MCwI
- cfPv9u/7R29zFPo6QPhhHJadX4HOPn+9LcbSr/KV8hLtK6/aQEw0O/vwFBCSwuEVd4dP7ES
- PVO0ZKAE6eCeuVHrc/PQmvXEHZX2JmOYZsPH/dElsTMyaqe96OYpvuah8yUmcHLwBIpvu9N
- yJKQD/toC9JStKaGlJ3Pw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:kaOhUmZda7I=;TSGtF1UlzFDcBVf7+Cpicf0e8tP
- o5mI9V5tiihubgMYgDNyIORZTQs9RUSpO89+PQSxRtrvt314hQvkESRjorjtpElvE3/yZ62vY
- n2XOJbdGpMJLQ2iBDYdkQRW62eNcudvNAByzHUS1bVX+4cuW7S5FQdKLwg1k66+sTvfPw6apu
- giN7rA8m6sF9S1rjhlpGs9WZQ2Wqso+G+Yv+zpW5w9Bukkt2/ney07OUa8ojnbpgAu1pUx4ot
- ut7kEkXNIv7FW4HNFinqCByr5WdSNDBQlC28mpQ/dTJftY1pwIw6vOEXE92/qdICm62jH/GT2
- HYaJfygQMD6FtajDERXOACT77k4AptUCD+ruokhrullb/Di6leUIvd97kjwes8IbYmIZJ+48v
- 2Ki+RtWqRBEdoDzkpWvQdP2ndDUJtKFkx0R3tCigw6pdAI4a26Nv2AZ3/PX/Vh9V0u6i910DV
- D4Q5mF6J1wzNASwESnnxN7n9/pgU0xWkfx6nZUsE6yqxQ33OdIFAAzGoQjR9asE2C6VQcn7Ym
- S0/HQAagGksjbgetPa2WyzLm4O7/ZTNZWM9pEns7+26IDbB9BdhWmaY4lbIWOJ0D7JAj4iNng
- eUJ2ZwMd0izyzggrvwdX8hkbHENmnQvhPxABbyiUDmnkl5yHo2G9BfATOMemf1M78LjlfDAQT
- /kYXTp9B6gQGtnzM0Pxv/aTl5989GgINc9ywvjFU33EzgZQkmwnxKa6x/5J5qa5B20pHxwyUq
- z7ixWNAbAgIauBQaJtKdv3xm9dt97yBaE5GrzVdtSVEDH1MBlP674m+1MbmcGWC7Mf1cstzFI
- wKvLkD75xuPqBEonZiJt0I6FdGJdUytv9ui1jkvSKQ1CvOYwR5W5FBaLNE69z23tPYliv/koN
- nLpDcHk0KhGY7q0DjzJUUR6XbJw+nxi7tVlLM1H/F3KraiKFuANTJNdC0tnJKEZdBN3uO8iDB
- 9bJW/ud5rYfXbpkhpg9tmgi65zHfOcrpmdlNudhcgyTDbcnCCtCi7JKe48e8cL6MFaa5Ql+Jp
- Hanso3fRY3Vooh3CabaeGUuaQGBXt+2AH4EZcmr1FdLq5fw+T+q/1pKl0rk7qE+NQYCBjTxIs
- buORyUAIk=
+Content-Type: text/plain
 
-(Please no top-posting here)
+M Hickford <mirth.hickford@gmail.com> writes:
 
-On 2025-01-13 15:23, Andr=C3=A9 de Castro wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> Checked out a branch, ran "git diff --merge-base <some-annotated-tag> HE=
-AD".
->
-> What did you expect to happen? (Expected behavior)
-> To see a normal git diff output.
->
-> What happened instead? (Actual behavior)
-> Didn't get a diff output. Got the following error instead:
-> "fatal: --merge-base only works with commits"
->
-> What's different between what you expected and what actually happened?
-> I didn't get the expected diff output and got an error message instead.
->
-> Anything else you want to add:
-> Seems it happens when I use a tag as one of the commits for git diff
-> --merge-base. This is on a macOS, with apple git.
-> On Windows, with Git Bash, it works as expected.
->
-> I can get this to work with "git diff --merge-base $(git rev-list -n 1
-> <some-annotated-tag>) HEAD".
->
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
->
->
-> [System Info]
-> git version:
-> git version 2.39.5 (Apple Git-154)
-> cpu: arm64
-> no commit associated with this build
-> sizeof-long: 8
-> sizeof-size_t: 8
-> shell-path: /bin/sh
-> feature: fsmonitor--daemon
-> uname: Darwin 24.2.0 Darwin Kernel Version 24.2.0: Fri Dec  6 18:56:34 P=
-ST 2024; root:xnu-11215.61.5~2/RELEASE_ARM64_T6020 arm64
-> compiler info: clang: 16.0.0 (clang-1600.0.26.6)
-> libc info: no libc information available
-> $SHELL (typically, interactive shell): /bin/zsh
->
->
-> [Enabled Hooks]
-> pre-push
->
+> In order to nudge users towards more secure practices (namely,
+> using a credential helper), would anyone else be in favour of
+> changing transfer.credentialsInUrl to default to "warn"?
 
-Hm, I don't think that this group/mailing list takes responsibility
-for binaries shipped by companies.
+I personally do not have a problem with the proposal, but it is
+curious that it is documented as inspecting only .URL and .pushURL
+is not checked.  So, in addition to "once we start warning by
+default, we'd need an advice message to tell the users how to turn
+it off" Derrick says in the commit log message, we would probably
+want to see if we should/can cover .pushURL and need necessary updates
+before it happens.
 
-If you want, you can compile Git yourself to be "on par" with
-what you find under other OS.
-That is the good thing with open source - please let us know,
-if help is needed.
-
+Thanks.
 
 
