@@ -1,120 +1,114 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2A31F9A99
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 21:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A441DAC90
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 21:55:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736805232; cv=none; b=S6cmVJ4RekwWjq2G17qWlBakp5QR5Ml3PXL6uEL+PIGHchgXTxIdbkiFslz2xDbauQDdySSaHjJ7ym90i8Si4GjQ2h//qPhFRo5XRnS2gTPi6TXhcAFdZ0NZqFEZk/3JrxRbpPDdpCcFDsovgNy5zOyLY+w3OmyoP6KpyXAV3bY=
+	t=1736805303; cv=none; b=KqOWsEYFg7OAfmKtJChvpg8qb8unZehmHEP5X4sb2wYx/mfz6go2WCqwqkxVRzc4GVmPBBe1mZyNO7MMvuukSjN+DLE+MRoU8zgxIbmv9ikJG7Zs8N9hNq22HCZTfAXxa0O9cLNhjiyLbox2Xuj8K/7uJIQgleAHUZXkI7dHULM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736805232; c=relaxed/simple;
-	bh=/Wyv5bSKCZXubGuNmlVWYYeIPdRdZkUIpaudFHxm3hE=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=QJy5MzhjtJNd8AxACv98o4E1JWC1/2Uc4OhcpLVOSedf9LAj1aK+7MvPFlOOEBmeGjc9N4rRNeDXacXKF6kyz6ml6ECHCRJ5JbQ/OUrOmaSACmE3wNGHlkWyM/GHCoXU5n9vx3HR3/+CFG4Vocs4nX3d7nmHwZndgoHcWJYAsn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=mmZi5Yhd; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1736805303; c=relaxed/simple;
+	bh=EluFn5lunVwccnHvcrIafrCOa18UTzhKBl3f7lEf4QY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BY4UcYvG2lSUhOhwdRmuHc+9RThjN3jz02dmE7YSU88+ZFFeqls2N9dW3HeCX1F+Fs9cEhMFcrVx80ZT3ctbVYFlULQdd7zleCCHRopUaOgRRPFSWuX5PrNdMMcFizTOFYpIZJAXpxfEEXUEHu/gyruEjVt/k62WxTIoQHn6hFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=FPrawyA9; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="mmZi5Yhd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1736805227; x=1737410027;
-	i=johannes.schindelin@gmx.de;
-	bh=/vwEGGuC25kyVS8kALnZnyHvdUy+QBQb24DPmfNLat4=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=mmZi5YhdqEVB+BbH2y8d5NblgWDJP7CI6bYNN83Y9K8Fj9+l6VCk+1b+fDLsXLGr
-	 pagSJCMIC1fb3Rg14WH3oJtpu641zt23TvFERaoDgJH+cgZhUjtED7/w2mJbAAWGa
-	 1KAFR7qLf00yNXxhBzVpsbl0wPYIr4YsOVKBqExSigz5p/wvg3QbQ1MLB712a2smo
-	 X58rtbaNGDwWMcYyRWPOzLCroCtWdcgmc7NXHXisJ1ue0Xbm/3oLaFadNrSRNyZFs
-	 7RGku8rayk1DnWZHGtqWFTUnZu1e8I0lTwzqBuQPzmQry/fbzUAk/8WkwhAyL4qxr
-	 AqFVQgwjnPtl5MqzGw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.189]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MSt8Q-1tzbKn2tdm-00Q2Zc; Mon, 13
- Jan 2025 22:53:47 +0100
-Date: Mon, 13 Jan 2025 22:53:46 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="FPrawyA9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1736805299;
+	bh=EluFn5lunVwccnHvcrIafrCOa18UTzhKBl3f7lEf4QY=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=FPrawyA9AN/M9DWd2nvB2vOinCJH2wGJt5OQ+CxF3nTpHWXHu8eaUIq0BK7dDGNlm
+	 BOuvKyj3ZQn7UUXOdnw4QFMZ2MHzdI3J++K1353JpGDseTriFYY//d1x2yTTD6m51B
+	 1unb2A+2uhgdTWkM4BYjiHB9X7dR/0+GLGgvqdqWye0fbI8pwOR9iTNljkkK/fmyLI
+	 fHSk4amFiQcGupU3V6StWKc37xYmAPlAaVSDHvV0WMAMvyW7ZLQmY/+4Dvg0J0gY4G
+	 G20fRBdsS4PKQIigvbZX4RcS/OC1AKzolLFaAb0Vwf7wZaDc5imu4PlQqgeyvkbO0j
+	 QnK6O49UewxLopXM/wTZao3RO873lBJoVDOghL4qrEno2UAuS9gVVRZhMGXA9XbThS
+	 HdranyZapQtNKZ1t5X+NhIwOkdvWml/iPMLXUip6oT2OH3aqSIMihfwvZe+EWGpRZX
+	 3n+hEDwqV0oQUpZeP9kELN1m00lhOxpsj70SLAESvGpHHEeVHIz
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5F51320008;
+	Mon, 13 Jan 2025 21:54:59 +0000 (UTC)
+Date: Mon, 13 Jan 2025 21:54:58 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: Junio C Hamano <gitster@pobox.com>
-cc: M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org, 
-    sandals@crustytoothpaste.net, stolee@gmail.com, avarab@gmail.com, 
-    peff@peff.net
+Cc: M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
+	stolee@gmail.com, avarab@gmail.com, Johannes.Schindelin@gmx.de,
+	peff@peff.net
 Subject: Re: Changing transfer.credentialsInUrl to default to "warn"
-In-Reply-To: <xmqq1px6br7p.fsf@gitster.g>
-Message-ID: <7a60c9ec-8f98-73d3-4539-d96b63a4f442@gmx.de>
-References: <20250111071500.710169-1-mirth.hickford@gmail.com> <xmqq1px6br7p.fsf@gitster.g>
+Message-ID: <Z4WLsmq4rPEMnUXK@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
+	stolee@gmail.com, avarab@gmail.com, Johannes.Schindelin@gmx.de,
+	peff@peff.net
+References: <20250111071500.710169-1-mirth.hickford@gmail.com>
+ <xmqq1px6br7p.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gMwJbbAkdNYLnCLgs/QUKSV6HjnjB4zOm8vpjZjqjZ8FMo+CPT6
- +bo1w4Kzw4uRwFLQUaQL3FVXywtLBFGL9EmDFHUxLPP0Bpt88hl2CIAAH7HTn/IUKEN/DSc
- lMUVuRDKYMdfSy/DcZB2smvfVSlzHpaJgKOkv/Pz3me8S3s90u8gAwuZzb/cwrIc2zNfq2H
- uUCGCjRlU8AnXCqCdecVg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:SxPxAisfpOk=;O2/YnDcHVCEXKWeq7f6dzjebXdJ
- f6GVzaZs/HkcMCBQlFuAqpFtdgQEQWFpU2g2KsBPJoTugbnxaG3qCwcQt8YvoKHojRqru6PVS
- uk1euvw9LU+a5jlqhPk0N060oYAaFd50jMW9iwsM2tNuqmQO6uyELF67qRyifyqP6d6hsYpuz
- zABhU6ylYoT1SqlNnqjRUUSwou7fXEr3htWHyP/qWROSdyoukbsHc6ZbYaInlPF5qiyiWA+eC
- 0SPMr3q1DwuhWdb2P2B+S9806a6EJ+i9lskgv2+2wYSCIFWikUBhsub7W9Cq5lcNABG6IE+qV
- txT7UR98Nbdb7ZLtaQNPf7gwcOW2GUCoxYoYphrfsKdcfPOnS31BfTZ+uTQTWfsZLSchip5c8
- l6wMQUZQqDnXlEQo14e1UTd6a4/43zrk9R1LhhsHHhiwhCK3hNzaBatSmXLBjXUpPhaqFOGIt
- iwseglC+2TESt/T+bcrkInpkvnM6DWsqvciWUTxVbf4zeHxqWG6VzTspONj43ZnlQuAgciszL
- W9WcDIMyEvuM921v1ZK1qB407vkRGnTLS0p3vGFWBcHXYX26Dp4l9Ko6AA7BXV9uAegl4Sw8Y
- 5kDXo0MVq9kNikp8TNuUx6+r4ZIMLUgOFlQD/kaNdcv9XfVgaElfqLffX/qmSBDeyOaUg2iOl
- cuQXFxXcp6QiWns5Adks4YzY6l+2HXANL8uItGNno4PAyCPoJZd5syQAoj3/I1QIGYHeqDiIZ
- ub8h557pZK6GsYUWvpuOFgxVAvp70zL8KysSmpB0M+Zp+Ox+tjXFRNDTpCBYObXqoGA9k1UEL
- rpnMhf+JPhvIynxUw3iQIBGXuf1Bibx6D6vHEjPi/1P4S7r6RBf4JBT6ABXJMibUpzZzQRlXV
- PmQeIM1AkU3EpYJrXNZsQmAieqh8wqFtLdbJ7SK0z8QZfb7wFOz8kD1ZG4LSDj8j7mL2SB2H4
- Z4NWQHT5FgTm3KfZnLzetcPg4+0YsBicxivr+yDMHI6u6c3YGweil/v6EY9v5bzoYyTWhstEx
- 1mwn1J5nnf8jZhrY7aeR0nx1Oyb1LnMOJBHMhCI0B9rqjVF3DnVp/XynaMicAqt7Ug22+YRFT
- lpjKWMRNAE1+R4D+WOVzxOleRCTrlb
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="MWCKGtbIZOkfFtiu"
+Content-Disposition: inline
+In-Reply-To: <xmqq1px6br7p.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--MWCKGtbIZOkfFtiu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi M & Junio,
-
-On Mon, 13 Jan 2025, Junio C Hamano wrote:
-
+On 2025-01-13 at 16:42:34, Junio C Hamano wrote:
 > M Hickford <mirth.hickford@gmail.com> writes:
->
-> > In order to nudge users towards more secure practices (namely, using a
-> > credential helper), would anyone else be in favour of changing
-> > transfer.credentialsInUrl to default to "warn"?
+>=20
+> > In order to nudge users towards more secure practices (namely,
+> > using a credential helper), would anyone else be in favour of
+> > changing transfer.credentialsInUrl to default to "warn"?
+>=20
+> I personally do not have a problem with the proposal, but it is
+> curious that it is documented as inspecting only .URL and .pushURL
+> is not checked.  So, in addition to "once we start warning by
+> default, we'd need an advice message to tell the users how to turn
+> it off" Derrick says in the commit log message, we would probably
+> want to see if we should/can cover .pushURL and need necessary updates
+> before it happens.
 
-IIRC that was the plan all along, and if the original Git Fundamentals
-team (of which both Stolee and myself were members, and from which this
-patch originated) still existed, I believe that plan would have been
-turned into reality already.
+I agree.
 
-Or more clearly: Yes, this is a good idea.
+It's not clear to me from the documentation if this only warns if
+there's a password in the URL or also if there's just a username.  (To
+me, the word "credentials" doesn't seem to explain that very well.)  The
+former I think is fine, the latter is not.  Looking at the code, it
+appears it is the former, so that's good.
 
-> I personally do not have a problem with the proposal, but it is curious
-> that it is documented as inspecting only .URL and .pushURL is not
-> checked.  So, in addition to "once we start warning by default, we'd
-> need an advice message to tell the users how to turn it off" Derrick
-> says in the commit log message, we would probably want to see if we
-> should/can cover .pushURL and need necessary updates before it happens.
+Perhaps we should also clarify the documentation so that users can make
+an educated decision.  I'll send a patch.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-The reason why `.pushURL` was not handled as well is that it is way too
-common for Git users to call `git clone https://<user>:<password>@<host>`
-(heck, I am privy to documentation that explicitly calls for this) and
-those users typically do not realize that the credentials are then stored
-as plain text in their Git config (and prior to b7d49ac1ecd (trace2:
-redact passwords from https:// URLs by default, 2023-11-22) would even be
-logged via Trace2).
+--MWCKGtbIZOkfFtiu
+Content-Type: application/pgp-signature; name="signature.asc"
 
-There is no similar indirect way to leak credentials into `pushURL`; You
-really have to set that config setting explicitly (or call something like
-`git remote set-url --push [...]`). It is much more obvious in those
-instances that the verbatim credentials will be leaked into the config.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
 
-Having said that, I would be in favor of letting
-`transfer.credentialsInURL` treat `remote.*.pushURL` in the same manner as
-`remote.*.url`.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ4WLsQAKCRB8DEliiIei
+gT+NAQDQutN6gsREta1SI/XlFqmzV72RG0nygZbs8kuJouxW0QD/YtxKHQ5x/U/k
+peDCDzKoaXGqIEZGm7g9zWKmoS6cHQM=
+=z8cI
+-----END PGP SIGNATURE-----
 
-Ciao,
-Johannes
+--MWCKGtbIZOkfFtiu--
