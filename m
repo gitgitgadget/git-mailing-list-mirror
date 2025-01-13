@@ -1,85 +1,84 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99D81C5D74
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 15:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D3C1C5D4C
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 15:40:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736782828; cv=none; b=p0IjAQdOZ3Ly4eEV5txHv3R9WIT09m6GL374iU7UOjP2fqd3gdiT7p3I3QqXCNkHR20qZC/VPBfzx18xA9k/TmqMroj37H8A/F4kiSx0YTwe2wD1t1v8eR1kcOVgokmKInGS0J7QslWrut2QT5bvOn7s223ByHeJ6gD7ZVnhue8=
+	t=1736782833; cv=none; b=NMW+GVnFlCacUC+KmUHGad5EaopG/2nHdiG0vzNvFW7x7MsjlYqP+DHlV78ipICC5olyTQcDyBMekB18kfZTYzl9PQSWf83oKyrN81VA8llAT1PJkpUSZitZpxvqq1a+C5F68cZFW5BH9W2jpKCbV2RkuCz3WBIE4FoeRky7rJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736782828; c=relaxed/simple;
-	bh=kXhJJoFXnkjOa8cySw2gVEiZUe2xmps81d1A+vBvSo8=;
+	s=arc-20240116; t=1736782833; c=relaxed/simple;
+	bh=DSiNpLtjkbh9aHFgcWsAC07n5NyLJGvHUxSXFBtAsHA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ESmFURPZULI+8zSrewCMZAXleR5horIM+bvAaIGtGDlhlYt+drbgQ7jiN/cn/fRXo3Lvmiu5pdZQu/J28PyJJXoMTQ8qN6tUAo/4uG2RAW1fvgq4Rf+pVDRsm72sMj3bPuOAM1hcHYOO0GYVfVls2h1REuOXO1x3sc2qI+ycpLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LwnEWTyf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xV4YXg4g; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=rremjTDm8oQ3YP4m9pVdemQMbm0FUY5Lwu0QGPv0FYzSj+1DiOSFEsxIQtKUKLIHh7Lg1raSogDs9ydYomNrQ3ooliK7pN13GbjRzBVfj2yJbXcZbCpKjYKW400hV+CYLDl1H3PPTpEFpviD3VTzUif0tbnBb+UHct/F8HU8iGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kTPIOXaE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bZ8FpQa1; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LwnEWTyf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xV4YXg4g"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id C35B61380833;
-	Mon, 13 Jan 2025 10:40:25 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kTPIOXaE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bZ8FpQa1"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 156C51380833;
+	Mon, 13 Jan 2025 10:40:31 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 13 Jan 2025 10:40:25 -0500
+  by phl-compute-04.internal (MEProxy); Mon, 13 Jan 2025 10:40:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736782825; x=1736869225; bh=6pvZsRxy3m
-	OjLCU2rQKVSmHmEeuZPMzlCsqXVvLsH1Q=; b=LwnEWTyfVDYw1bboVmsZlTq+1D
-	VIs2tVm9C5oN7TYtf2iS+I8P0gSxqsX7bG3+3LcuULOI09NyW30NNIaETLJrKobK
-	k20ovrQ1iJ5MEcGpecBJe+Knre/Hn0CpsV1sfxBd3no1kLV0fujRVue/dFpTxmEW
-	qzjARNW0JJExVFbHAJfmL7PirzLeqgry+SQRwwEK02omovhhRGWPPVq/a5dncA4F
-	K6fWr37m4UzWiRNXtHjut5q3u5Agi1wgzwEtszyxLTOe2V+SAiNf59ZLxFFJOSkx
-	4ZnfLx/sUSsNAcdNnbi/ERb69OLBIbLMKEFnW1au/T0aaavRGuLM1zcyYjTw==
+	:subject:to:to; s=fm2; t=1736782831; x=1736869231; bh=DSiNpLtjkb
+	h9aHFgcWsAC07n5NyLJGvHUxSXFBtAsHA=; b=kTPIOXaExQ+CDTmt2L8ebqIV0H
+	Ig+TbMYGfqnv4Kqp1TDpQf3m5oFOT6LtwftHkHhhqlMS0mS2NQW/68hADWI9Bt5C
+	dwisZqs4sNmXXLsmIQb1/sPSF5t8pzYIiKpDKcX6vQxX9UzeaLsQPuTT1ehJ6TUn
+	n3dB0a2CKvLOaB73rNUkL2SDj1r8CvCTqSRyCtDpIapjhwzHjpuM09NyNpm1GuH7
+	GB95KuJciapLdtEV+QxTR7zA+Tb1RUHycVJbc4l5CHKu8PJPVkzymlSsXxc5Da7J
+	dZGgoFqmdaOTGxsQFlhOnJuMG50eLL9+y+AzmS+sa5PzSXg+PVBZex6UuP1w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736782825; x=1736869225; bh=6pvZsRxy3mOjLCU2rQKVSmHmEeuZPMzlCsq
-	XVvLsH1Q=; b=xV4YXg4gBLLcHSaP/qda3pnUBW6FS/lu6uPHBcynuj4/6JOEqFl
-	R8HV/JWzC1V3IAZiY4zExp2qkWDuv9qgh/8dEkQZxWuTgj7NplTZrm0XWBUTPz6Y
-	WFHSALxuvly0Ux4VwvHP4GJmYISmL7RLPlzMoWJJ/yUp0V+kOMtbivF+6d/nbYlE
-	PI6xJeAquJrCZ4aQUcSn1VNssUSgGpuFwBg2GLQDOUvGDA8VbgVjkau7xCSKq/nN
-	XrdGvFwE3xBFkG3QqjloI7E8W7q8eE4Rp6tcm5nwRT90FTImTSlFXxGrNQsd1nxQ
-	YY+SmSED80dCc9BpNyo5bBwA9oUkV/aa9oA==
-X-ME-Sender: <xms:6TOFZ7i3MHP3YMqM-NaNwVBp2OzuFJNonpeuCOsDe_1b_NtLkhghTA>
-    <xme:6TOFZ4ClYwZkhqZQ50KSmq2GCTaGoEqkmE4zW1xCrXox7YSoyZHBBoK2Z43po4UzL
-    hNDwAJR3-ZtWs3qzQ>
-X-ME-Received: <xmr:6TOFZ7HPfsh9aPspVy-2UtciQrxH7HFXzQiwJkw-KBlkASVCcxPU5yt7Obmo8QJYgf9lZb3yOuLDLfwy6FNQiyzDJ-lYnFzKepUJbHIhD90wOCwI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgjeekucetufdoteggodetrfdotf
+	1736782831; x=1736869231; bh=DSiNpLtjkbh9aHFgcWsAC07n5NyLJGvHUxS
+	XFBtAsHA=; b=bZ8FpQa1STv3rgt6VxQf63sh5Ajieu/HLVcx/7QLFRytRGb9iUU
+	NOjT4pQuyis3O6dpQHGSpbsY0J5A0+F8p2lkzrsj14vijYdlQ50aDHEHLRbbt6vt
+	eXSHYWgMLj0Nf/PSY1Kop6fhF6j+qkdei13rwRjVSQYVuBSx/8N/x5o3og7tGVos
+	ddHdQO/CzbmQennZfZu33L7CdOX1IwGXweLLBbkDGtQnhClXREV7L1dcM9sDOXuV
+	d/+bbg6kK0fMRIPclyOzwKo5zJh2ibnhPlz3smKclnZBla6zEapv050emuE7QECj
+	TKSDOhbnkJIQfxDgjNn9HT3fKxzTczHq/eg==
+X-ME-Sender: <xms:7jOFZz0HLA7RUBLOkWiFxd0EAJGola3nJp4gWScOOf7MFSYRRzvA_Q>
+    <xme:7jOFZyH_cXGVrLi6-uFDtdXo6iCsNJyy9c6ykhknx0vbAX5uAnieB5OCcO01zT7Yo
+    8kQij2V2hsC4mUBlQ>
+X-ME-Received: <xmr:7jOFZz6fjYDlP__acIpVgojkHc9XsgagxNdQ67h8i2nTi_udpVQ8JQs-KjRzrb753NV4w3Bl_9AznZeJozWDPIzTGRViA_6RkJcpqxXCCDJSxlIU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgjeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    ifihhnkhesshgrvhhilhhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:6TOFZ4TgpoaNYtj7hQDQggAkupG4uu7B0ppcUAtnLi22cES5Ge_qgA>
-    <xmx:6TOFZ4z0t_CXzocARc2tbP4r2uZeihCXUj-i7ST3yl8jmgd-W9zS0w>
-    <xmx:6TOFZ-6D_x0BKqCrZJIwSJXiP41UPgkVAXhAVzK2FfDpiS-CaeREFQ>
-    <xmx:6TOFZ9yRWMwnGPmfTY9UmEE9sZ82c5cZId0LKBfNPrcOF6VKIHqcHQ>
-    <xmx:6TOFZysAwGcL8EL9xMs0bkIYX9_AWblCeM9fgttHG1160Bx5AjygeTxu>
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopeifihhnkhesshgrvhhilhhlvgdrtghomhdprhgtphhtthhopehpvghffhesphgv
+    fhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:7jOFZ43tac-cbC-OlrROgL4ZHF2SzXlmiFMuMkrijy73vuwLoxh83A>
+    <xmx:7jOFZ2GXxvvoTD2jAjMn15DUf6fbMuugWNQ8I5SOVN1nIXkV_g2qcw>
+    <xmx:7jOFZ5824svNRzAvg9fkWxKKr60HVtkZ08-UFIREm69xn5c3G3XzaA>
+    <xmx:7jOFZzmtlbvqm5vQeErjeQFp7uLM6BTZ_UeMDvrDbpFsf76O66yY1g>
+    <xmx:7zOFZyhKEOp6d6_a5wYbfjOHmAf_79p-f3MgC0aPIKs1PY8CIdsz5xoP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 10:40:24 -0500 (EST)
+ 13 Jan 2025 10:40:29 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d1c01c83 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jan 2025 15:40:24 +0000 (UTC)
-Date: Mon, 13 Jan 2025 16:40:23 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3be974a7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jan 2025 15:40:29 +0000 (UTC)
+Date: Mon, 13 Jan 2025 16:40:28 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Wink Saville <wink@saville.com>
-Subject: Re: [PATCH 05/14] diff: add a comment about
- combine_diff_path.parent.path
-Message-ID: <Z4Uz56BZG19rOnRA@pks.im>
+Subject: Re: [PATCH 07/14] tree-diff: drop path_appendnew() alloc optimization
+Message-ID: <Z4Uz7B4J89NphNF6@pks.im>
 References: <20250109082723.GA2748497@coredump.intra.peff.net>
- <20250109084248.GE2748836@coredump.intra.peff.net>
+ <20250109084649.GG2748836@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,38 +87,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250109084248.GE2748836@coredump.intra.peff.net>
+In-Reply-To: <20250109084649.GG2748836@coredump.intra.peff.net>
 
-On Thu, Jan 09, 2025 at 03:42:48AM -0500, Jeff King wrote:
-> We only fill in the per-parent "path" field when it differs from what's
-> in combine_diff_path.path (and even then only when the option is
-> appropriate). Let's document that.
-> 
-> Suggested-by: Wink Saville <wink@saville.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  diff.h | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/diff.h b/diff.h
-> index f5f6ea00fb..60e7db4ad6 100644
-> --- a/diff.h
-> +++ b/diff.h
-> @@ -480,6 +480,12 @@ struct combine_diff_path {
->  		char status;
->  		unsigned int mode;
->  		struct object_id oid;
-> +		/*
-> +		 * This per-parent path is filled only when doing a combined
-> +		 * diff with revs.combined_all_paths set, and only if the path
-> +		 * differs from the post-image (e.g., a rename or copy).
-> +		 * Otherwise it is left NULL.
-> +		 */
->  		char *path;
->  	} parent[FLEX_ARRAY];
->  };
+On Thu, Jan 09, 2025 at 03:46:49AM -0500, Jeff King wrote:
+> So my conclusion is that it probably does help a little, but it's mostly
+> lost in the noise. I could see an argument for keeping it, as the
+> complexity is hidden away in functions that do not often need to be
+> touched. But it does make them more confusing than necessary (despite
+> some detailed explanations from the author of that commit; it just took
+> me a while to wrap my head around what was going on) and prevents
+> further refactoring of the combine_diff_path struct. So let's drop it.
 
-I feel like this change would've neatly fit into the preceding commit,
-but don't mind it much either way.
+A 1% performance speedup does not feel like a good argument to me, so
+I'm perfectly fine with dropping the code, even if most of it is
+actually in the form of comments. But that already shows that it needs
+quite a bit of explanation.
+
+I wonder though: did you also use e.g. Valgrind to compare the number of
+allocations? glibc tends to be heavily optimized with regards to small
+allocations, so you typically don't notice the performance impact caused
+by them even when the number of saved allocations is significant. So the
+effect might be more pronounced with other libcs that aren't optimized
+for such usecases, like e.g. musl libc.
 
 Patrick
