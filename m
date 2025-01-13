@@ -1,85 +1,82 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BAB20AF61
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 15:42:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938ED1C5D4F
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 15:45:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736782948; cv=none; b=IRND9TXPzLV8mxLdhXRaBf/ig5gWQt3hfvCxGZBT7f2FaoHYH47lGLSBf7T1xeoT8UgGICFTESkK8JDtTw9o4XI2M4QIkgmvmHqdvusDAfvIjynO6MspSz7dP81fRzT1Gg48h2uesV5TEzfYRKMqplSYgUH+vgFlp0gL13bRz7I=
+	t=1736783142; cv=none; b=Aqb1D5LIQQV54lEmVRLQwPl6ORGfbNRSNx4Wi7IJ8GVLyNNvpFn5oBXFMQnWA0PXMt/Ph/sb1c+mhw86Z2lR62AyIbuQQ4eZneFm7zhqAflWVS6NVuc10BpLgP1AjBdM+od+EWivC7vz5g0hPAhoRInuk10xq1xsVkzetKFxyR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736782948; c=relaxed/simple;
-	bh=SmAS1slvaK7HGDeeHChK/ymYsv64SL10Hl9Jafbb7ho=;
+	s=arc-20240116; t=1736783142; c=relaxed/simple;
+	bh=InHDxHpsFq7sE0N2HLGHO7P2PwYKPpzCdmoZBaKLgYc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=asVQn6hCmNet5RBYnTCO2N2G/WAWKbXB6o+rwcukvEo9vgQ5Ttv9FLt2g6mW5bQIgCnsOfJ5pzawUZKQkPLHwPQ3qpZsb8Sb33yZeyyMqGoszSqvVtagm9n8IfsmJMs5ujOA+hHiVH9CtZvzOEB++H4fx7xb45AaGr3cHhhZ6M4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fu1W2Khv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Li5t7N+p; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=eceDeohqg6LIoPxe1tdngTsgcLjd/n5Lj/JiF9gtYp/8C6om7CU3q9swFH7C9G5K+iqwWxkoj3jKtYAZNuDtkRlXDXmkny83di7opZPsQprTYpXZx0QwS/GDYTv3gTDp0RHFBFUQWKUh7JCkBrZBAA2DYk5eT5vL8NlbuvBkEZk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Aecww/rZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i003pnCJ; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fu1W2Khv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Li5t7N+p"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E771E1140133;
-	Mon, 13 Jan 2025 10:42:24 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Aecww/rZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i003pnCJ"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id AB1B613801D4;
+	Mon, 13 Jan 2025 10:45:39 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Mon, 13 Jan 2025 10:42:24 -0500
+  by phl-compute-01.internal (MEProxy); Mon, 13 Jan 2025 10:45:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736782944; x=1736869344; bh=K5M3LxneTy
-	bXGmcHNNwBPuD4NNAJKhXUVY1GvChjppE=; b=fu1W2KhvS3OViiq6s9SBV/6zF/
-	Pjkdt5MoYDyuR7OHh68w7JLtokPS5E+Xn+BhtHeeo9U02CMYOSqr5SYWAlhFrTeF
-	fXDoBwPHeiQWbnf03f30dHEhnnuksh0v7HtM332kwWrg0u4Q/uz0dg4xPPoidcbs
-	WEgsgyyEyKUySgjGrc35I1ShKVmurgMf6m/snoIIIzsn4BC7B3wDu9L7DxnXd/wa
-	Tqx9AZZ7ctLcJocp9nXzFfkuMqMY/OkZZnkELhfgHxqq7wFGyL4cZ1M3l+7hCzmA
-	j35EmY9M6+5uCY3W4tNTNfMMw5Otcunq6Wa6XrFRyzs4fERkLftBmb0HGyzA==
+	:subject:to:to; s=fm2; t=1736783139; x=1736869539; bh=HkosegdZ4j
+	tuZDw38lHPIxk6YykTzoH17/3TSGZ16wI=; b=Aecww/rZPWSBh7jz97hIRpj4K1
+	bwLBtLdEkxcMXiuypL5m8VcooObga8c7Mpix6s5KP3PrA407mVWxLOSmSWgHcI3H
+	3385uDQHRMstu3yd0aoAPu6T0muDrEzqFwaiTxl/Ha4kiZD4lBR29oSLug0dBKiF
+	LNxag2xJeAu2psV6TdxkLGPUGCuTSc0lp+g1HnuKfVsTN0J5aErW2d6sB7NlRbyj
+	n//5T7kULx/UvmiJkm9JfC4qhLpEgW/FaH1GwzKSQ8jQi45Dz7B7HCTrH01ut086
+	3F90OUmcJ5xvftqvrApbszpNskf1YQGRpXy1jYggtHRub1jvONaG5FMYdFUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736782944; x=1736869344; bh=K5M3LxneTybXGmcHNNwBPuD4NNAJKhXUVY1
-	GvChjppE=; b=Li5t7N+pyZHr7zyLIIq9q+Pm7gG1yRo2bATAJbgnW5Ts9laV2QM
-	uXuOKzdw+NRWWYsufyedG/z+Y6Dj6mYZ2dBAd94DvcdzV3qT1MpXybmXSCvJnQxI
-	rvgiSlnAZSlVLNsogGrTRysd76dOAWfQnhZl+vakCcszju3j0Iwv4Hc09hqc5+J7
-	4gdCyHdFcwJ/xEFbrqOoF2NukQNTpn0lMlVcqMHAS+EwlhaE20zMKw363ebr1T9w
-	K5bD9qzRw8sxIiLkpNPw3iE3h2LlwFr+WG7xdMLkbp0kwHZnKMr9uuTFP9ss3Vna
-	E78rSj5erVIAAhDNkj0WDb7QVNiCeJ0Kzog==
-X-ME-Sender: <xms:YDSFZ4ur3x08ojsJ_vRJus-BlKFTB3rVmqm7g6BhgeRVd8yLM2RYHw>
-    <xme:YDSFZ1cIdaKQvAFjUyLceUiK5ixVI7XcQDNb3mc9bb8YFqwLX6y8BPBAAN6DlyNcd
-    rAnviFqqAHMDs10Rw>
-X-ME-Received: <xmr:YDSFZzwP52oiAVwHYG5OnocfdBCTLbYFoWcGqhgst3cTKXtW-rduIiIKBqhdbbaiQRbvl-FUPF26uyxtnjzw2oGs31-3G5nCm1s-yJWoDkOfSU8B>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgjeekucetufdoteggodetrfdotf
+	1736783139; x=1736869539; bh=HkosegdZ4jtuZDw38lHPIxk6YykTzoH17/3
+	TSGZ16wI=; b=i003pnCJautg7P2c3KHkqwhz1wuYaMAO/9qxF0b7Q4GYyRfSN4x
+	c7ACpJZ88EViWuYgF6WhhuSWe93yGFWb4b2SIZ2Gsk1+2qFqei4wqAfyvVTlO87e
+	4kCviJWeVdQw+PBJ8edTG6FLX58gDNwC0sKBNW5Tjq99gJUJla2S5aVutxknZ8Vy
+	QIQAKPoNkXcXHBlE/UzFyvM2PVYA2jW0DGhkwkJQl1oCV7qa2m1yKAAno2vSciGx
+	v5q2zNqlkwJp22XzFWQvleOg0OK+PaaD2YqksI4Fef3drJZXF/jDCRO7+49zKfDz
+	9cmcxgUaL1jHzMLkTmDrbTBFRzljy9+Zayg==
+X-ME-Sender: <xms:IzWFZ40UpiNHy-YtFimPUfVScmrbFJlnX6HFUYMIvDZtwS7W2B5U_A>
+    <xme:IzWFZzGKH-ROWVFdI_StD-q0aRv8rPLk5FJpY31rOfLNxBJ04DqzFJz4lgmy0RKTO
+    anJas4oPoWOg6ApSg>
+X-ME-Received: <xmr:IzWFZw41IlJfKNcDMUC4QW1KuQ_bUTJcy0xfjTjdLOUHh2hpPzkS5n5NZkOV6e9IWjCPoBPAaNDaoq8B4lURcTTntSUi-OAMvbj5UBnmGSBisZVp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgkedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepjeevudeggfffffeigeethffgieekveeffeehvedvgeei
-    teegueejleeihfeitdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
-    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-    pdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrlh
-    gvgigphigpgihuseihrghhohhordgtrgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkh
-    esfhgrshhtmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:YDSFZ7PQRHQ1ADawi9VPE-ho343eVRGB16nLr2upGU4oCV-D2WpgGw>
-    <xmx:YDSFZ49yFTAJQd4MZkW3_xaJdWBNg3q-jOAy2FsH_wIX8c5ZVpjMwg>
-    <xmx:YDSFZzXdyNw4-wPHyRIq6AyiAZKdyartm5oCJbQpafifOlSUWvSeVw>
-    <xmx:YDSFZxdfvc0G1nftnHBI8h4lTVz3An9R5zLON9TeUPzGZaZTVntt6A>
-    <xmx:YDSFZ3bUmQCxIAJ0hzoMzYyx1eVsYUDAS6K-yAF3jeIY4z03xdpF_NEC>
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
+    hsthgvrdhnvghtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:IzWFZx2XBgamjO0T-x4wu314tGrnk5CoHgW8nHY_K43HsjlWH6RI3w>
+    <xmx:IzWFZ7Epki2iyUC5xZabc1PUv9mZJzrRjhMNbNWM_GCqECCDcWEl9Q>
+    <xmx:IzWFZ69iwyY81_hVviDh-marFagbMpj8-2TaEDd7546LxV6ki4eIRQ>
+    <xmx:IzWFZwnQyzkBdkGEuhvn-jqQdA-U6lh7yIgLbtJu25WjUNpF0bM0Pw>
+    <xmx:IzWFZzDPbTO-C8G-_b6X0FMXW5ItNjzCWEkBWtzoIU6lQum4v_4TtU3n>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 10:42:23 -0500 (EST)
+ 13 Jan 2025 10:45:38 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b80eb9d5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jan 2025 15:42:22 +0000 (UTC)
-Date: Mon, 13 Jan 2025 16:42:21 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id c92ca11d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jan 2025 15:45:36 +0000 (UTC)
+Date: Mon, 13 Jan 2025 16:45:35 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: "Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>, git@vger.kernel.org
-Subject: Re: [PATCH] meson: move config-list from libgit to builtin
-Message-ID: <Z4U0XengqX_a7ywU@pks.im>
-References: <20250113134632.21592-1-alex_y_xu.ref@yahoo.ca>
- <20250113134632.21592-1-alex_y_xu@yahoo.ca>
- <efb8b6d1-c06a-4f73-89bb-6d164ab03cfa@app.fastmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: Bug in 2.48 with `git refs migrate`
+Message-ID: <Z4U1H6pe0NL0cOBh@pks.im>
+References: <Z4UbkcmJAU1MT-Rs@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,37 +85,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <efb8b6d1-c06a-4f73-89bb-6d164ab03cfa@app.fastmail.com>
+In-Reply-To: <Z4UbkcmJAU1MT-Rs@tapette.crustytoothpaste.net>
 
-On Mon, Jan 13, 2025 at 03:17:08PM +0100, Kristoffer Haugsbakk wrote:
-> On Mon, Jan 13, 2025, at 14:46, Alex Xu (Hello71) wrote:
-> > config-list is used by builtin/help.c, not libgit. this matches Makefile
-> > dependencies
-> >
-> > Signed-off-by: Alex Xu (Hello71) <alex_y_xu@yahoo.ca>
-> > ---
-> >  meson.build | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/meson.build b/meson.build
-> > index 0064eb64f5..ef3604a17f 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -614,7 +614,7 @@ libgit_sources += custom_target(
-> >    env: script_environment,
-> >  )
-> > 
-> > -libgit_sources += custom_target(
-> > +builtin_sources += custom_target(
+On Mon, Jan 13, 2025 at 01:56:33PM +0000, brian m. carlson wrote:
+> If you remove the second block, it does not appear to reproduce.  Some
+> investigation led me to the conclusion that the difference is when
+> max_update_index is not 1, the header has the value 1 for it but the
+> trailer has the correct value, and so we flag the header and trailer as
+> mismatching and therefore it gets marked as corrupt.  I believe the
+> reason things work when removing the second block is because that value
+> remains 1, and so it works.
+
+Hm. Makes me wonder whether this is caused by the newly added code to
+also migrate reflog entries, as we'd play around with the update index
+only when migrating those. Cc'ing Karthik so he can have a look.
+
+> I haven't done anything else to investigate here, for which I apologize,
+> but I just wanted to mention it while it was fresh on my mind.
 > 
-> Looks like the same change is in another patch from today
+> In case this is helpful, I did see this when attempting to migrate two
+> work repositories with lots of reflogs and many refs (the smaller has
+> 2983 and the larger, 44832).  I obviously cannot send you these
+> repositories or things in them, but I'm happy to test patches against
+> them.
 > 
-> https://lore.kernel.org/git/20250113-b4-pks-meson-additions-v1-3-97f6a93f691d@pks.im/
+> Please let me know if I can provide more useful information.
 
-Yup, indeed :) I'd prefer to go with my series as it also contains a
-couple more additions, and because it also fixes the same issue for
-"hook-list.h".
-
-Thanks for your contribution!
+Thanks for your report!
 
 Patrick
