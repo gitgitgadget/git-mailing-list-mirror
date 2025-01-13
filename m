@@ -1,88 +1,86 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA94190692
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 17:25:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161BF1B87F1
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 17:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736789114; cv=none; b=piQA6o+AQGIAhIftR8JKWrdGSR94BvsuAg7xvn76pFdYfaOzVRUJ+vIa5TsNZ2ghC1DLOq13AfILT7w3QNBl8UtQxU0ZjhGSfNOsA7wyeGm+w8+W7qVXgjHqOiVPIngGKTB1C74cOI9oOqDeNUKlO30FgXDUPA8ox5JVCyL9tHs=
+	t=1736790134; cv=none; b=daL7NsMwy9wON3wL6/2tGFQIyFhD3xPUeBrUeOsvhV3LxMOmPevOIkcAHfryiHBRZxlCdObF5XP8RC6CLuzhOfI31u0EVfVsNy6CsmaCdfKQ3WosNazDV0f1PDR2rpsxz+HD4TuWy7ors2UGdquwfg/UH3RTPT7aQTUtoSWu3fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736789114; c=relaxed/simple;
-	bh=jFnVSpgCX4mxcd/rgWKvs+Cil/C5i3D7AJS7hNcdCd8=;
+	s=arc-20240116; t=1736790134; c=relaxed/simple;
+	bh=tdTAjRSDQapdElzqlTrjACITVs0uCD8YXHlqP3K5yWo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=toePXpOUZyQJSzbiGVGrIP+vt/f1dGbm+oyQM9atdNTgixzXZAHKFd436pSH87p27lJdsvKAG35islsyQxJwCFeDI1eZFPo2oVP9JwqEY/URfjn7Fw+flFnGyWjKkcQBaC4w8wlC1Un9xffMdHP/Cdb8xJyTG4Y4+qjQcD8XlR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cJqJurRy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j6qF9sOm; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=p51kijnH56Waulz90rRIDOh/R0O3ASIw/f53gyDvyvg2yn8PpgxeGf9xPesuaJvQg1DJfDDM+Gky9RkgfzSZE703qRBrNxL3fw0Me627jyh4M5GaF4jE6o9AsGEqXIi+NY4XJhHGF0gsn6BpmelsfxBBDGnD1RbKgPYvfhuB76I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EeLw/TXi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Oh9Z8dLg; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cJqJurRy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j6qF9sOm"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B549925401A5;
-	Mon, 13 Jan 2025 12:25:11 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 13 Jan 2025 12:25:11 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EeLw/TXi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Oh9Z8dLg"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1E3EA254019E;
+	Mon, 13 Jan 2025 12:42:12 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Mon, 13 Jan 2025 12:42:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736789111; x=1736875511; bh=sBNZGuejGe
-	P4ZUkvpH4eEvUA7QKwoBHtlCaUAJZm8yE=; b=cJqJurRyP6GHI3etfhYgVI8BRo
-	FX4kdj62RFT4xuDyXuZwIIO4sSzqGS11xfZbWKEndzAc6V43JHqniUkj+OF44CZ8
-	gESr0wlE5KUTtP5UwnED0D+JUM902+jZRYiF6QxEqRM/lMHzt2kEVEjDiRQcMhmY
-	kvXn3vaRUH7mVCQMJLLRCbRnHk4CdspWpjjA6dUDJgSwNH3cxOuRxAMOrwbh1LCU
-	Uck2UGPaEp/Lcp1gmoEkAJsVO6rGaASBHf4EitKn8IeKtb/8iCko6A25VwBbX8Cf
-	J+zwZHy+FJMR9AzCn10GKg+fkC2XTOhbRxk8a7v1HkU0wNgCDdNsfxsEXt0g==
+	:subject:to:to; s=fm1; t=1736790131; x=1736876531; bh=p1g9bB/wKS
+	89JRY48cVwi6pFfvMfa8l4dwmo1wwk/wc=; b=EeLw/TXiNOcJK7y69pgbZnHQyt
+	mT0w9vyyqNxhH7tT0WeSBi0w6Do0E3CdaebESoC7qo5DxjRrbX4jOjxrZSFlFc72
+	Uqer88TmnTZJDFfqrGuoZqI7FUNcko2mxc5Tnpd9keWIrIi/monhswxAH3wzdQ6G
+	Kmou7Onq2eAsxLX9dGZIuS/jqnxSle1PV4FiIvR+lpAJMm3XprekcxacLQGEeIlJ
+	uvrhE/hNmp82G5CcYJnBqn5ImH5NSxzv8mLaayrxXWmurDt2eOsQpASyFRC678L/
+	xrPr5jNrRsG1wQZkCQvF8qrytsTwBXIeEIG0kJOrH1qoJawoWyhH2gUQuJcg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736789111; x=1736875511; bh=sBNZGuejGeP4ZUkvpH4eEvUA7QKwoBHtlCa
-	UAJZm8yE=; b=j6qF9sOmJyZKNBh3ukieSDKYrICxV4+2I6VGWy5mPeSNZL2opZd
-	ktkM8MppWDTRtuzIZHEOBpPj+UleerBy0MmeANs0ahq7rNM1hiASsGA1mIhhjlXy
-	jt/WSRXWCdwfv7eMj7zg4Au/4ZHnD8QKOZsQQVFKpaS57fF+a2XS3HjjhD/CLcH4
-	7F8L42IfMLa01jRvSo5hjsey4MM8L+aqNG6FeEQS2lCVLw8ZdsBsge1V7GA80wJo
-	hlWzDeC0WLTSHcCCAda9BiGoy19jN+LtZ5eYEZSO3feZ3kSlTCL5Q4rwVI5yEtNw
-	1jorAA2LAyHVr8AN6UU3jVGTW7kLBmDm5Zg==
-X-ME-Sender: <xms:d0yFZ-tYhlDaQMgpLJS_acd_NZos7VJZeTAYmtyCWLSdbikbj8CR9w>
-    <xme:d0yFZzcasQfZpfXk47PJYKgIrCNUZE9o52D_49-KVZCtdl4AF22gbO72SwGj0BjUq
-    Lwo2B_DmGr9IU4faA>
-X-ME-Received: <xmr:d0yFZ5zrCTj2HHJ4cote-ip_EWCNRLpzuyDzG6ME0kagsBgYkcc0G7k13laOBFTByApLafQ82IAcVK9h_3WXeO69iq1RUFQnfKB_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgleelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
-    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehrohhs
-    shdrghholhgusggvrhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:d0yFZ5PlmoYgdVWoplt9cUDnaJ_SLIh8dQT3PKKqYhBsW-OksVaAmg>
-    <xmx:d0yFZ--V_dNEvi2eMiqNf9Nhi31hxtFabmcddrRUmKiMDqktQcS52Q>
-    <xmx:d0yFZxUt6BILUmIiwDPkwFHQGm0BSEdjT8LoikvG4CdgrX1qcHx96w>
-    <xmx:d0yFZ3ehVd0UZF53_eEjqkZUDgODUZlVzDhTnLX0UOthV_5eOjcOfw>
-    <xmx:d0yFZ-zOt5RfFA8jy2aA4F2V_GfVCLHTzSbakXrzOSV2qf3sVDLaH9uQ>
+	1736790131; x=1736876531; bh=p1g9bB/wKS89JRY48cVwi6pFfvMfa8l4dwm
+	o1wwk/wc=; b=Oh9Z8dLgO5cvN1lqrYOBbEndZY2IWE0WETIKEs08h7yK3141Aia
+	b4MzTN26urHEy8qnojnetpzyIQ6yPUne4TIB6NP+Pjph6YBUnFyLfBkv5BDzpsm6
+	Thr2YR9de1AhkrtHPTjj5uahdH60/K2fWQtjSnk6jMPKg5/daOfvQ8KQ07mJ0xhb
+	LR5YiWkrHogfpv0bYyHJVmL0P6FuPNs6m0e+3KIhjrRAGFgKpia74zN0pkdaOA99
+	Nelb3GbRgwqE0ZVzz/ul2spMBvzhDoczVdDYmodYH5m4Lp/rPN0cPpB/rn2zP4qk
+	dBFAibDqpNuEIiyRuAYOsi4sMszPcVkeSHQ==
+X-ME-Sender: <xms:c1CFZ9ae-fGPEvSJoq8IaLuKj43M1EcD_Boztu4TcHDL3HBRS_zG4g>
+    <xme:c1CFZ0YBO5XDLnzPTio_wjfO537stoPaSO7gpDKBIMGjz_kP2L99fGAw2OdTcB8u3
+    4xFbzDzfPAkILmc_w>
+X-ME-Received: <xmr:c1CFZ__GLGUyc5B5-dlZbEgMc5Ff7zaSUBFgtmfBlc_GIRMwPHA-2cQWCWSSO_D57yeUbJNGbhKgdIAnaQkEJL9ABqLkPqZ3wu7b>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedguddtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegvvhgrnhdrmhgrrhhtihhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfi
+    grrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:c1CFZ7pA0ShL_lLtioPI05KBpbVUCFUQm1GfJue5OIrR6E8xIkzxuQ>
+    <xmx:c1CFZ4pv-5SIFDAqEsDctqBeV5HCfRLYnkGpbJi1SFzyr0miFB_SwA>
+    <xmx:c1CFZxQWY1UoC43eb2H8yu6wStgTTFS_hmmQ74cDXVzW2dyZwFVxsg>
+    <xmx:c1CFZwrwE4bm1jiCNbPVfzb_2xhvZgKl_457JPqD7wxJ765PEzYFsg>
+    <xmx:c1CFZ9D066b4uyYaK6L7xPE8c5tJPfqGs4t3UqOHjUak-7PH_dfP8Wv1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 12:25:10 -0500 (EST)
+ 13 Jan 2025 12:42:11 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Ross Goldberg
- <ross.goldberg@gmail.com>,
-  git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] ref-filter: share bases and is_base_tips between
- formatting and sorting
-In-Reply-To: <20250113051700.GA767856@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 13 Jan 2025 00:17:00 -0500")
-References: <CAAEcvMovcZucuq4H70ouQzKS=_wHnBi1DqJ-4MMFVXX9XLEciw@mail.gmail.com>
-	<6b824f05-6f16-4cd9-85b7-3b8b236158b4@web.de>
-	<20250113051700.GA767856@coredump.intra.peff.net>
-Date: Mon, 13 Jan 2025 09:25:09 -0800
-Message-ID: <xmqqfrlmaaoa.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Evan Martin <evan.martin@gmail.com>,  Eli Schwartz
+ <eschwartz@gentoo.org>
+Subject: Re: [PATCH 2/9] GIT-VERSION-GEN: move default version into a
+ separate file
+In-Reply-To: <20250113-b4-pks-meson-additions-v1-2-97f6a93f691d@pks.im>
+	(Patrick Steinhardt's message of "Mon, 13 Jan 2025 09:33:35 +0100")
+References: <20250113-b4-pks-meson-additions-v1-0-97f6a93f691d@pks.im>
+	<20250113-b4-pks-meson-additions-v1-2-97f6a93f691d@pks.im>
+Date: Mon, 13 Jan 2025 09:42:09 -0800
+Message-ID: <xmqqa5bua9vy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,178 +90,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> For now there is no program that uses more than one ref-filter format.
-> But it seems like an obvious interface that would want to be lib-ified
-> eventually. We are not there yet because of the static global used_atoms
-> array. But the obvious path forward is to have a context struct
-> representing one ref-filter iteration.
+>   - We can pull the default version out of GIT-VERSION-GEN and move it
+>     into its own file. This likely requires some adjustments for scripts
+>     that bump the version, but allows Meson to read the version from
+>     that file trivially.
 >
-> I think the intent was that ref_format would be that context struct,
-> though arguably it is a little funny since it forces the sorting and
-> formatting to be joined (OTOH, that is very much how the code works,
-> since it wants to share results between the two for efficiency).
->
-> So one solution would be to make the use of that context struct more
-> explicit, and require ref_sorting callers to provide a format struct.
-> Like the patch below, which also passes your tests.
->
-> I dunno. Your patch is deleting more code, which is nice. But I think in
-> the long run we'd end up replacing it. But maybe making a clean slate
-> now would make that easier? I could go either way.
+> The last option is a proper solution and quite trivial to implement, and
+> adapting scripts should be a one-time event. Refactor GIT-VERSION-GEN
+> accordingly.
 
-I agree with you that libification effort would want to move more
-static variables to members in a context structure.  I initially
-suspected that would be more or less orthogonal, because it is not
-like we are adding a static or two to a code path that already holds
-everything else in a context structure, and would be a lot more
-work, but now you have a patch that makes the first step in that
-direction and it does not look too bad at all, so ...
+It is not clear what "proper" is.  It smells like we are bending an
+established work flow element to placate a tool that is not willing
+to cooperate, which is very much unwelcome.
 
-Thanks.
-
-> ---
->  builtin/branch.c       |  2 +-
->  builtin/for-each-ref.c |  2 +-
->  builtin/ls-remote.c    |  4 +++-
->  builtin/tag.c          |  2 +-
->  ref-filter.c           | 19 ++++++++-----------
->  ref-filter.h           |  2 +-
->  6 files changed, 15 insertions(+), 16 deletions(-)
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 6e7b0cfddb..0c3f35cd0a 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -875,7 +875,7 @@ int cmd_branch(int argc,
->  		 * local branches 'refs/heads/...' and finally remote-tracking
->  		 * branches 'refs/remotes/...'.
->  		 */
-> -		sorting = ref_sorting_options(&sorting_options);
-> +		sorting = ref_sorting_options(&sorting_options, &format);
->  		ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
->  		ref_sorting_set_sort_flags_all(
->  			sorting, REF_SORTING_DETACHED_HEAD_FIRST, 1);
-> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> index 715745a262..4f247efe57 100644
-> --- a/builtin/for-each-ref.c
-> +++ b/builtin/for-each-ref.c
-> @@ -80,7 +80,7 @@ int cmd_for_each_ref(int argc,
->  	if (verify_ref_format(&format))
->  		usage_with_options(for_each_ref_usage, opts);
->  
-> -	sorting = ref_sorting_options(&sorting_options);
-> +	sorting = ref_sorting_options(&sorting_options, &format);
->  	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
->  	filter.ignore_case = icase;
->  
-> diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-> index 42f34e1236..ed38b82346 100644
-> --- a/builtin/ls-remote.c
-> +++ b/builtin/ls-remote.c
-> @@ -61,6 +61,7 @@ int cmd_ls_remote(int argc,
->  	const struct ref *ref;
->  	struct ref_array ref_array;
->  	struct ref_sorting *sorting;
-> +	struct ref_format format = REF_FORMAT_INIT;
->  	struct string_list sorting_options = STRING_LIST_INIT_DUP;
->  
->  	struct option options[] = {
-> @@ -155,7 +156,7 @@ int cmd_ls_remote(int argc,
->  		item->symref = xstrdup_or_null(ref->symref);
->  	}
->  
-> -	sorting = ref_sorting_options(&sorting_options);
-> +	sorting = ref_sorting_options(&sorting_options, &format);
->  	ref_array_sort(sorting, &ref_array);
->  
->  	for (i = 0; i < ref_array.nr; i++) {
-> @@ -173,6 +174,7 @@ int cmd_ls_remote(int argc,
->  		status = 1;
->  	transport_ls_refs_options_release(&transport_options);
->  
-> +	ref_format_clear(&format);
->  	strvec_clear(&pattern);
->  	string_list_clear(&server_options, 0);
->  	return status;
-> diff --git a/builtin/tag.c b/builtin/tag.c
-> index c4bd145831..a5240f66e2 100644
-> --- a/builtin/tag.c
-> +++ b/builtin/tag.c
-> @@ -574,7 +574,7 @@ int cmd_tag(int argc,
->  			die(_("options '%s' and '%s' cannot be used together"), "--column", "-n");
->  		colopts = 0;
->  	}
-> -	sorting = ref_sorting_options(&sorting_options);
-> +	sorting = ref_sorting_options(&sorting_options, &format);
->  	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
->  	filter.ignore_case = icase;
->  	if (cmdmode == 'l') {
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 23054694c2..f5d0c448ed 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -3536,23 +3536,19 @@ void pretty_print_ref(const char *name, const struct object_id *oid,
->  	free_array_item(ref_item);
->  }
->  
-> -static int parse_sorting_atom(const char *atom)
-> +static int parse_sorting_atom(struct ref_format *format, const char *atom)
->  {
-> -	/*
-> -	 * This parses an atom using a dummy ref_format, since we don't
-> -	 * actually care about the formatting details.
-> -	 */
-> -	struct ref_format dummy = REF_FORMAT_INIT;
->  	const char *end = atom + strlen(atom);
->  	struct strbuf err = STRBUF_INIT;
-> -	int res = parse_ref_filter_atom(&dummy, atom, end, &err);
-> +	int res = parse_ref_filter_atom(format, atom, end, &err);
->  	if (res < 0)
->  		die("%s", err.buf);
->  	strbuf_release(&err);
->  	return res;
->  }
->  
-> -static void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *arg)
-> +static void parse_ref_sorting(struct ref_format *format,
-> +			      struct ref_sorting **sorting_tail, const char *arg)
->  {
->  	struct ref_sorting *s;
->  
-> @@ -3567,17 +3563,18 @@ static void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *arg
->  	if (skip_prefix(arg, "version:", &arg) ||
->  	    skip_prefix(arg, "v:", &arg))
->  		s->sort_flags |= REF_SORTING_VERSION;
-> -	s->atom = parse_sorting_atom(arg);
-> +	s->atom = parse_sorting_atom(format, arg);
->  }
->  
-> -struct ref_sorting *ref_sorting_options(struct string_list *options)
-> +struct ref_sorting *ref_sorting_options(struct string_list *options,
-> +					struct ref_format *format)
->  {
->  	struct string_list_item *item;
->  	struct ref_sorting *sorting = NULL, **tail = &sorting;
->  
->  	if (options->nr) {
->  		for_each_string_list_item(item, options)
-> -			parse_ref_sorting(tail, item->string);
-> +			parse_ref_sorting(format, tail, item->string);
->  	}
->  
->  	/*
-> diff --git a/ref-filter.h b/ref-filter.h
-> index 754038ab07..1531bf1762 100644
-> --- a/ref-filter.h
-> +++ b/ref-filter.h
-> @@ -168,7 +168,7 @@ int format_ref_array_item(struct ref_array_item *info,
->  /* Release a "struct ref_sorting" */
->  void ref_sorting_release(struct ref_sorting *);
->  /*  Convert list of sort options into ref_sorting */
-> -struct ref_sorting *ref_sorting_options(struct string_list *);
-> +struct ref_sorting *ref_sorting_options(struct string_list *, struct ref_format *);
->  /*  Function to parse --merged and --no-merged options */
->  int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
->  /*  Get the current HEAD's description */
+Compared to that, grepping for "^DEF_VER=" in the file may be less
+yucky.
