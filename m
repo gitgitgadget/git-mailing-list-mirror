@@ -1,54 +1,54 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BA5240242
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 15:40:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99D81C5D74
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 15:40:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736782825; cv=none; b=qYwCVAKS39URgXFFdd6l+f0fmVwKtAp2IczvDHzrgoHspldgNxbieP9x+tT6GnUxf21pW15FnqXBp9gii2uGAwp9BVN525rW0jNm2U8MJF79gA7n41pPXLgItzStrxHxSHkMlGwViEr0NmquZEReOLohtQaECvavCi11isOY1B4=
+	t=1736782828; cv=none; b=p0IjAQdOZ3Ly4eEV5txHv3R9WIT09m6GL374iU7UOjP2fqd3gdiT7p3I3QqXCNkHR20qZC/VPBfzx18xA9k/TmqMroj37H8A/F4kiSx0YTwe2wD1t1v8eR1kcOVgokmKInGS0J7QslWrut2QT5bvOn7s223ByHeJ6gD7ZVnhue8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736782825; c=relaxed/simple;
-	bh=3OFkzU7cy1qatsvgYv71lWOIC8Hlz/NXlcJ1N3Gp7hk=;
+	s=arc-20240116; t=1736782828; c=relaxed/simple;
+	bh=kXhJJoFXnkjOa8cySw2gVEiZUe2xmps81d1A+vBvSo8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OYGd3CaZQ6GaGfWIpdsQADkbYvttBmRHkO9TLRCYpeGKy6ngkHFM8L4p7Q5YcvVc6PjO7a86GPjs0s00cnQW6W0y99ZnrR1zc6naECh+d2mb8F5mNriC1WrFg50w/IJ5wa9zBOTV/llTe6p54z5WEiFGfrJyYUgXyows8ANTt1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dASkcPLa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tSkbS8os; arc=none smtp.client-ip=103.168.172.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=ESmFURPZULI+8zSrewCMZAXleR5horIM+bvAaIGtGDlhlYt+drbgQ7jiN/cn/fRXo3Lvmiu5pdZQu/J28PyJJXoMTQ8qN6tUAo/4uG2RAW1fvgq4Rf+pVDRsm72sMj3bPuOAM1hcHYOO0GYVfVls2h1REuOXO1x3sc2qI+ycpLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LwnEWTyf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xV4YXg4g; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dASkcPLa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tSkbS8os"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 70ADD1380836;
-	Mon, 13 Jan 2025 10:40:22 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LwnEWTyf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xV4YXg4g"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id C35B61380833;
+	Mon, 13 Jan 2025 10:40:25 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 13 Jan 2025 10:40:22 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 13 Jan 2025 10:40:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736782822; x=1736869222; bh=2t21YHEaX/
-	PiUnQOJuLYOcx+YdATBIGd8Vsl0SV3mOA=; b=dASkcPLab0GKPmV3AnHZmRyOpO
-	RbSNV/V0DYuQt61955Qf9DoQ+XuNxPk7SnrPdbqKU6lEhRyVqETH9Sysd1jJB/Ef
-	9ExWx7uRYbj07zEuhl2ws7yBqoWRLuFoPgPBiT2+zIw0EJTnGj3wit7hYqiyEcAo
-	V91WwWVFZVYWUGFbHxoNZ1MAVxGfOp68zEva38oyxtrXHEeJpeBsmRykzJWPTYk1
-	GwykI6k9+xa2md8PTw8J55/5+i/IOEd4yMN5MRHEeqlIZupXIEnJqhWVg0eTHs8Z
-	4xmbv0vIjTHx3NsBNzzc9cdXKjhI6F8Kt2L0wDV7WFdAVnev1NeKQ7QCfXjg==
+	:subject:to:to; s=fm2; t=1736782825; x=1736869225; bh=6pvZsRxy3m
+	OjLCU2rQKVSmHmEeuZPMzlCsqXVvLsH1Q=; b=LwnEWTyfVDYw1bboVmsZlTq+1D
+	VIs2tVm9C5oN7TYtf2iS+I8P0gSxqsX7bG3+3LcuULOI09NyW30NNIaETLJrKobK
+	k20ovrQ1iJ5MEcGpecBJe+Knre/Hn0CpsV1sfxBd3no1kLV0fujRVue/dFpTxmEW
+	qzjARNW0JJExVFbHAJfmL7PirzLeqgry+SQRwwEK02omovhhRGWPPVq/a5dncA4F
+	K6fWr37m4UzWiRNXtHjut5q3u5Agi1wgzwEtszyxLTOe2V+SAiNf59ZLxFFJOSkx
+	4ZnfLx/sUSsNAcdNnbi/ERb69OLBIbLMKEFnW1au/T0aaavRGuLM1zcyYjTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736782822; x=1736869222; bh=2t21YHEaX/PiUnQOJuLYOcx+YdATBIGd8Vs
-	l0SV3mOA=; b=tSkbS8ossML9LDjcM29ko379y7Nacl4d+NMAxlQYUe9c4pRWlV0
-	4sF5MA16Qdib2Y1fDuaWl55wtFyQajWjnr+kEGPAilfOqcCDbTem7P05Z5iqfmyR
-	tOAGBKQB2UNGq9l+iidegI4iXT5QnNd7t60irvSAAE78yMay5q1B1/gPqFUjKCFy
-	rQ8c+05HEnC+ypPmiszGTKb6f3aPFGv2x+yj8q6pY2rf6JXzHxvT1j7tgVbOLMdK
-	TGN2GRF4F0G5PWr39C++G/MXcoTZ7khn+zdVHfwdFm1Itzud9WVIMc5S2bjaD6jq
-	QOpuW8p1ygY3V7KKlEXku9L96kv9XPN2sBA==
-X-ME-Sender: <xms:5jOFZ-P-ri7eS6yjN10pEFVhjXpihzYaoakoiYAY4d0mr1_FAexv6w>
-    <xme:5jOFZ8-UvDQMLDF1Ym_oQqgGtlCR0qSr_CY6ZQ0A4CZiA8ViCevQhzwCzxNgv87FS
-    cWq7I2JaJdX-ehuiQ>
-X-ME-Received: <xmr:5jOFZ1SuMYoegO3d7vi_aWofKqo0fBK9Q9-bjj-1vHiKQMAsQZMp3acEujGSndf-rmQvHOUTqtYCWkaNsx43xQ-rDcRjjYkh_3VNo-souKResdhQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgjeelucetufdoteggodetrfdotf
+	1736782825; x=1736869225; bh=6pvZsRxy3mOjLCU2rQKVSmHmEeuZPMzlCsq
+	XVvLsH1Q=; b=xV4YXg4gBLLcHSaP/qda3pnUBW6FS/lu6uPHBcynuj4/6JOEqFl
+	R8HV/JWzC1V3IAZiY4zExp2qkWDuv9qgh/8dEkQZxWuTgj7NplTZrm0XWBUTPz6Y
+	WFHSALxuvly0Ux4VwvHP4GJmYISmL7RLPlzMoWJJ/yUp0V+kOMtbivF+6d/nbYlE
+	PI6xJeAquJrCZ4aQUcSn1VNssUSgGpuFwBg2GLQDOUvGDA8VbgVjkau7xCSKq/nN
+	XrdGvFwE3xBFkG3QqjloI7E8W7q8eE4Rp6tcm5nwRT90FTImTSlFXxGrNQsd1nxQ
+	YY+SmSED80dCc9BpNyo5bBwA9oUkV/aa9oA==
+X-ME-Sender: <xms:6TOFZ7i3MHP3YMqM-NaNwVBp2OzuFJNonpeuCOsDe_1b_NtLkhghTA>
+    <xme:6TOFZ4ClYwZkhqZQ50KSmq2GCTaGoEqkmE4zW1xCrXox7YSoyZHBBoK2Z43po4UzL
+    hNDwAJR3-ZtWs3qzQ>
+X-ME-Received: <xmr:6TOFZ7HPfsh9aPspVy-2UtciQrxH7HFXzQiwJkw-KBlkASVCcxPU5yt7Obmo8QJYgf9lZb3yOuLDLfwy6FNQiyzDJ-lYnFzKepUJbHIhD90wOCwI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgjeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
@@ -57,28 +57,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgjeelucetufdoteggod
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepfihinhhksehsrghv
-    ihhllhgvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:5jOFZ-sdGkyGP25skGNsGKRTu8LljxwW5AJusZOknrt_skjVVFPudQ>
-    <xmx:5jOFZ2ej53ghxb5uSjrMpkjIUxXK4LajP43yoq7e3QbBJWsHEdxn4A>
-    <xmx:5jOFZy25SQ2kxON_FSPgzS4oPBPlj7ewwyIUdcpgSDsRMkMmSuYfag>
-    <xmx:5jOFZ6_X2xK5xW3PgFjyvWB6r8S-K8_V6vzWMN12lrCLLBaxcSVJrg>
-    <xmx:5jOFZ14NiStIhXCUrZUFj4ilHrEIuJfk947egzsiwmdlYTalKjRsJTMT>
+    ifihhnkhesshgrvhhilhhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:6TOFZ4TgpoaNYtj7hQDQggAkupG4uu7B0ppcUAtnLi22cES5Ge_qgA>
+    <xmx:6TOFZ4z0t_CXzocARc2tbP4r2uZeihCXUj-i7ST3yl8jmgd-W9zS0w>
+    <xmx:6TOFZ-6D_x0BKqCrZJIwSJXiP41UPgkVAXhAVzK2FfDpiS-CaeREFQ>
+    <xmx:6TOFZ9yRWMwnGPmfTY9UmEE9sZ82c5cZId0LKBfNPrcOF6VKIHqcHQ>
+    <xmx:6TOFZysAwGcL8EL9xMs0bkIYX9_AWblCeM9fgttHG1160Bx5AjygeTxu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 10:40:21 -0500 (EST)
+ 13 Jan 2025 10:40:24 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0a2adec7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jan 2025 15:40:20 +0000 (UTC)
-Date: Mon, 13 Jan 2025 16:40:19 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id d1c01c83 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jan 2025 15:40:24 +0000 (UTC)
+Date: Mon, 13 Jan 2025 16:40:23 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
 Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
 	Wink Saville <wink@saville.com>
-Subject: Re: [PATCH 02/14] combine-diff: add combine_diff_path_new()
-Message-ID: <Z4Uz43eByZHqW8UK@pks.im>
+Subject: Re: [PATCH 05/14] diff: add a comment about
+ combine_diff_path.parent.path
+Message-ID: <Z4Uz56BZG19rOnRA@pks.im>
 References: <20250109082723.GA2748497@coredump.intra.peff.net>
- <20250109083236.GB2748836@coredump.intra.peff.net>
+ <20250109084248.GE2748836@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,100 +88,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250109083236.GB2748836@coredump.intra.peff.net>
+In-Reply-To: <20250109084248.GE2748836@coredump.intra.peff.net>
 
-On Thu, Jan 09, 2025 at 03:32:36AM -0500, Jeff King wrote:
-> The combine_diff_path struct has variable size, since it embeds both the
-> memory allocation for the path field as well as a variable-sized parent
-> array. This makes allocating one a bit tricky.
+On Thu, Jan 09, 2025 at 03:42:48AM -0500, Jeff King wrote:
+> We only fill in the per-parent "path" field when it differs from what's
+> in combine_diff_path.path (and even then only when the option is
+> appropriate). Let's document that.
 > 
-> We have a helper to compute the required size, but it's up to individual
-> sites to actually initialize all of the fields. Let's provide a
-> constructor function to make that a little nicer. Besides being shorter,
-> it also hides away tricky bits like the computation of the "path"
-> pointer (which is right after the "parent" flex array).
+> Suggested-by: Wink Saville <wink@saville.com>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  diff.h | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> As a bonus, using the same constructor everywhere means that we'll
-> consistently initialize all parts of the struct. A few code paths left
-> the parent array unitialized. This didn't cause any bugs, but we'll be
-> able to simplify some code in the next few patches knowing that the
-> parent fields have all been zero'd.
-> 
-> This also gets rid of some questionable uses of "int" to store buffer
-> lengths. Though we do use them to allocate, I don't think there are any
-> integer overflow vulnerabilities here (the allocation helper promotes
-> them to size_t and checks arithmetic for overflow, and the actual memcpy
-> of the bytes is done using the possibly-truncated "int" value).
-> 
-> Sadly we can't use the FLEX_* macros to simplify the allocation here,
-> because there are two variable-sized parts to the struct (and those
-> macros only handle one).
-> 
-> Nor can we get stop publicly declaring combine_diff_path_size(). This
+> diff --git a/diff.h b/diff.h
+> index f5f6ea00fb..60e7db4ad6 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -480,6 +480,12 @@ struct combine_diff_path {
+>  		char status;
+>  		unsigned int mode;
+>  		struct object_id oid;
+> +		/*
+> +		 * This per-parent path is filled only when doing a combined
+> +		 * diff with revs.combined_all_paths set, and only if the path
+> +		 * differs from the post-image (e.g., a rename or copy).
+> +		 * Otherwise it is left NULL.
+> +		 */
+>  		char *path;
+>  	} parent[FLEX_ARRAY];
+>  };
 
-s/we get stop/we stop/
-
-> diff --git a/combine-diff.c b/combine-diff.c
-> index 641bc92dbd..45548fd438 100644
-> --- a/combine-diff.c
-> +++ b/combine-diff.c
-> @@ -47,22 +47,13 @@ static struct combine_diff_path *intersect_paths(
->  
->  	if (!n) {
->  		for (i = 0; i < q->nr; i++) {
-> -			int len;
-> -			const char *path;
->  			if (diff_unmodified_pair(q->queue[i]))
->  				continue;
-> -			path = q->queue[i]->two->path;
-> -			len = strlen(path);
-> -			p = xmalloc(combine_diff_path_size(num_parent, len));
-> -			p->path = (char *) &(p->parent[num_parent]);
-> -			memcpy(p->path, path, len);
-> -			p->path[len] = 0;
-> -			p->next = NULL;
-> -			memset(p->parent, 0,
-> -			       sizeof(p->parent[0]) * num_parent);
-> -
-> -			oidcpy(&p->oid, &q->queue[i]->two->oid);
-> -			p->mode = q->queue[i]->two->mode;
-> +			p = combine_diff_path_new(q->queue[i]->two->path,
-> +						  strlen(q->queue[i]->two->path),
-> +						  q->queue[i]->two->mode,
-> +						  &q->queue[i]->two->oid,
-> +						  num_parent);
->  			oidcpy(&p->parent[n].oid, &q->queue[i]->one->oid);
->  			p->parent[n].mode = q->queue[i]->one->mode;
->  			p->parent[n].status = q->queue[i]->status;
-> @@ -1667,3 +1658,24 @@ void diff_tree_combined_merge(const struct commit *commit,
->  	diff_tree_combined(&commit->object.oid, &parents, rev);
->  	oid_array_clear(&parents);
->  }
-> +
-> +struct combine_diff_path *combine_diff_path_new(const char *path,
-> +						size_t path_len,
-> +						unsigned int mode,
-> +						const struct object_id *oid,
-> +						size_t num_parents)
-> +{
-> +	struct combine_diff_path *p;
-> +
-> +	p = xmalloc(combine_diff_path_size(num_parents, path_len));
-> +	p->path = (char *)&(p->parent[num_parents]);
-> +	memcpy(p->path, path, path_len);
-> +	p->path[path_len] = 0;
-> +	p->next = NULL;
-> +	p->mode = mode;
-> +	oidcpy(&p->oid, oid);
-> +
-> +	memset(p->parent, 0, sizeof(p->parent[0]) * num_parents);
-> +
-> +	return p;
-> +}
-
-If I were to write this anew I'd probably use `xcalloc()` instead of
-manually `memset()`ing parts of it to zero. But it's a faithful
-transplant of the code from `intersect_paths()`, so that's probably
-okay.
+I feel like this change would've neatly fit into the preceding commit,
+but don't mind it much either way.
 
 Patrick
