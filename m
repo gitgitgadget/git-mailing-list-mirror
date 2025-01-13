@@ -1,227 +1,100 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2085C235C07
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 09:33:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA6D187554
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 10:29:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736760830; cv=none; b=YWcH5KhX2eJcMqbsMR/+e2dEF4pdlI5UAK3ve/mMhj8qtsZFRrec6N7vdbdN7iLs4JHxFYFgwCjFFy0bSiZQv1I4IroKudWDM00ygFDUdtu55z5Gs08fJ/ICvcjEkiG3/GQ+N2gVa58wN/6WtiHBbseoSrSGRHLYVuoIFpmS8YY=
+	t=1736764151; cv=none; b=Z5RsUXw7wvyjUuM55Ip7BVSpMorma3VnUMDroLJAXiSmVcYGcnugEfcft4jckt4ELhzLBTGJZGIlHaOpnGzfFpJW4dQTlHAo/lkqq7jEU5ETWMvwf7d9MdY/MO5QO5rfhl3dWsYG2tNlGKMHrKjZD8r6qTLxO9DjlaKnvgFDF7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736760830; c=relaxed/simple;
-	bh=F3+1s17x5rLi5kRJJCS6bJpdGh67ebMWLGD5WsIhaKU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=FCYObsDy0NwztMLve+krSp5ZeViDu/3IAOem1END7sp2zj5Q0Dhcv21Ms7IqhXccCbwBlpKw/Ead+bHd8WwmDo3AWyXH+QDt638Ls8KnHSxsvW/FTj3z6Wgmr6xJ3rEomGT2lEl8h7FwDxmt1bHDXb/XCJ1ZoJd8LH26LGflz5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KJXCbXVA; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736764151; c=relaxed/simple;
+	bh=8fXTx39+Id2WmAukuX0HFvoimhpw62LDGlvbd6MckeU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=suldDs9w2wotKB/bmkeLsK87pmtDLPbB/CM2b2EnHgGZd9aPp4lD6zD4OvyroaiYGiC4HeAZcJc+AywsvkVHKOCr25z5j/RwMNasNqt6sqsfXlF8PhdR0EjHKq0BSVhCs4qyD3fn3jTkyoqUzRPzWY/bRI4V/PZx3oXMeI/d1Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=pJy/8P2I; arc=none smtp.client-ip=91.218.175.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KJXCbXVA"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43623f0c574so28484395e9.2
-        for <git@vger.kernel.org>; Mon, 13 Jan 2025 01:33:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736760826; x=1737365626; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WxiKSTL8vv6VzI54RqShrSMbJT/75SJ/YTTVPJb4qh4=;
-        b=KJXCbXVAFMQSLpk3iApQx38t+LkxxljcLtJfBf+N54pTnePxCUfHRdV4pj/4Wx2iLP
-         Zm6FVUp+kq9eQvJESvFtq2gMhgT9n2UCKPqhmttBwM5qduVtsvp6WGBt3qMpsvAUhJSH
-         rRY2x1uEp3OxDNu6yQi6KkqpynydgysUfHepIiK4XKrPEWmRbBO0mNi1zlKLcXFgp+0v
-         VeJmw+DOWWXIRDavgMTclzQVk2MnCzLdLyzRlcy+J7b2OHqAkBYAEmDxkTDC/ptik9vE
-         e7Bb8Ib4C0lUo5ZdaZyi/PRTZ6MWoSC06g7yLbtGycLzBj/O5nYNeAU/14avMgiOC97c
-         /Sjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736760826; x=1737365626;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WxiKSTL8vv6VzI54RqShrSMbJT/75SJ/YTTVPJb4qh4=;
-        b=L82YJAvFtTgyhJaBf5ouKc2LuygjSTt8gXn0ckzSRumejz7vv7fLb//NMAcGz7Mq1x
-         vjKzQ8gE6MmG6zw0zaBu2sL+lkJPengtFW8FGC4nU0xQJR9Gu1N5kcCg9smnInDgEEIi
-         F4tjXtd3ZFqW6DjlBBHiTiFF+1Zch5t3TfZKxBB0KY/PBhPyXLAGWoeYQ2sE44oug8a2
-         q+Rh48gcIuI6XUdVVPt/81OL2d+oZMQTf+nfS2cqwaoq+5ZGtIcwsq5M2maslSWNba4r
-         kcj6YEbuQ+pBhXm12c8r8Dl3cdWMMJRvbl8b3tD7bMQCy47Mu3xI33aSTmJtJ7GC+pHS
-         c6Ng==
-X-Gm-Message-State: AOJu0YxPbVcZ/8EFGI+TUUQvOX7R7jg915xKLNJJ1DbH8Fq+F8TfbgxI
-	8v/VVohSDh3yeJjIb7hKjoeitYG8wspus6/dC4oZXL13/p2n/aGe4DSNvg==
-X-Gm-Gg: ASbGncv2xXYWIU1uhQ6c79kSsD6GnCfTfRm7TsIkerEsjvBFFxU5RAt1JTi6QbkEJh5
-	Q1+PLmBIQWnmG9bpOKZJ5LJETgWmAfMmiIIifo/6qK6wtVep8xkvcl6xvNyVd4Qo9aP2DCreEKh
-	IcXhyIefP9HXbxtsaAt1WRivE7eckBV+y/3m6k4SjujzLS35tM08BvHDnPHr7kMgKbHZ7+xjYzs
-	2wQIsEQOa8idIJey1g/yKhgAsXS0Cfap0WfG44DkpG/PxC3DUjsFL5PDA==
-X-Google-Smtp-Source: AGHT+IGGB1A3T/2JAUClk9IRI8X0hDU3H3s6+0CRh0oB5q/jAZQulMGz4Jcg1gfZIEb93CvqMecQHA==
-X-Received: by 2002:a05:6000:4011:b0:385:f47b:1501 with SMTP id ffacd0b85a97d-38a87312d58mr15927963f8f.32.1736760825633;
-        Mon, 13 Jan 2025 01:33:45 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e37d111sm11963324f8f.18.2025.01.13.01.33.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Jan 2025 01:33:45 -0800 (PST)
-Message-Id: <pull.1869.v4.git.git.1736760824201.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1869.v3.git.git.1736594839527.gitgitgadget@gmail.com>
-References: <pull.1869.v3.git.git.1736594839527.gitgitgadget@gmail.com>
-From: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 13 Jan 2025 09:33:44 +0000
-Subject: [PATCH v4] help: interpret boolean string values for help.autocorrect
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="pJy/8P2I"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1736764139;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=RdHR2Ac0iKo6WeZ2kmSyW/ccG6Q9UyU6AIwQA4KPGBs=;
+	b=pJy/8P2Ijmm6oUAqlTB0WX/u7zgImtA0yZl8wDhna166Lb9Bqy763rWdrG30CeTe0Q71B0
+	FwZJTOe/eq92/RdxnW+MmV84toK4pDgESN5nc5PeJjhqcsiQR4TlH4f8E7ygS+dpYqf/4D
+	0lQRRx9Xc4qOBo37MVt8AEux6UwpL2M=
+From: Toon Claes <toon@iotcl.com>
+Date: Mon, 13 Jan 2025 11:28:04 +0100
+Subject: [PATCH] meson: ensure correct version-def.h is used
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250113-toon-fix-meson-version-v1-1-9637e2be32e3@iotcl.com>
+X-B4-Tracking: v=1; b=H4sIALPqhGcC/x2MQQqAMAwEvyI5G2iNXvyKeKg2ag620ooIxb8bv
+ e3AzhTInIQz9FWBxJdkiUHB1hXMmwsro3hlaEzTGWsJzxgDLnLjzlnXxelTkHzriRbvJiZQ+Ui
+ spz88jM/zAgHXh1loAAAA
+X-Change-ID: 20250113-toon-fix-meson-version-3d4d33fdabe3
 To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-    Yongmin <yewon@revi.email>,
-    Jeff King <peff@peff.net>,
-    Scott Chacon <schacon@gmail.com>,
-    Scott Chacon <schacon@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-From: Scott Chacon <schacon@gmail.com>
+To build the libgit-version library, Meson first generates
+`version-def.h` in the build directory. Then it compiles `version.c`
+into a library. During compilation, Meson tells to include both the
+build directory and the project root directory.
 
-A help.autocorrect value of 1 is currently interpreted as "wait 1
-decisecond", which can be confusing to users who believe they are setting a
-boolean value to turn the autocorrect feature on.
+However, when the user previously has compiled Git using Make, they will
+have a `version-def.h` file in project root directory as well. Because
+`version-def.h` is included in `version.c` using the #include directive
+with double quotes, some compilers will look for the header file in the
+same directory as the source file. This will cause compilation of
+`version.c` ran by Meson to include `version-def.h` previously made by
+Make, which might be out of date.
 
-Interpret the value of help.autocorrect as either one of the accepted list
-of special values ("never", "immediate", ...), a boolean or an integer. If
-the value is 1, it is no longer interpreted as a decisecond value of 0.1s
-but as a true boolean, the equivalent of "immediate". If the value is 2 or
-more, continue treating it as a decisecond wait time.
+Copy `version.c` to the build directory before compiling it to ensure
+`version-def.h` from the build directory is used.
 
-False boolean string values ("off", "false", "no") are now equivalent to
-"never", meaning that guessed values are still shown but nothing is
-executed. True boolean string values are interpreted as "immediate".
-
-Signed-off-by: Scott Chacon <schacon@gmail.com>
+Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
-    help: interpret boolean string values for help.autocorrect
-    
-    Just updating the docs with Peff's suggestion.
-    
-    Changes since v3:
-    
-     * docs update to group "immediate" in with the true bools
+---
+ meson.build | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1869%2Fschacon%2Fmaster-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1869/schacon/master-v4
-Pull-Request: https://github.com/git/git/pull/1869
-
-Range-diff vs v3:
-
- 1:  4ce7652d19e ! 1:  64482b5249b help: interpret boolean string values for help.autocorrect
-     @@ Documentation/config/help.txt: help.autoCorrect::
-      -	 - 0 (default): show the suggested command.
-      -	 - positive number: run the suggested command after specified
-      +	 - 0: show the suggested command (default).
-     -+	 - 1, "true", "on", "yes": run the suggested command immediately.
-     ++	 - 1, "true", "on", "yes", "immediate": run the suggested command
-     ++immediately.
-      +	 - positive number > 1: run the suggested command after specified
-       deciseconds (0.1 sec).
-     - 	 - "immediate": run the suggested command immediately.
-     +-	 - "immediate": run the suggested command immediately.
-     ++	 - "false", "off", "no", "never": don't run or show any suggested command.
-       	 - "prompt": show the suggestion and prompt for confirmation to run
-       the command.
-      -	 - "never": don't run or show any suggested command.
-     -+	 - "false", "off", "no", "never": don't run or show any suggested command.
-       
-       help.htmlPath::
-       	Specify the path where the HTML documentation resides. File system paths
-
-
- Documentation/config/help.txt |  9 ++++----
- help.c                        | 42 +++++++++++++++++++++++++----------
- 2 files changed, 35 insertions(+), 16 deletions(-)
-
-diff --git a/Documentation/config/help.txt b/Documentation/config/help.txt
-index 610701f9a37..a4c6079af81 100644
---- a/Documentation/config/help.txt
-+++ b/Documentation/config/help.txt
-@@ -11,13 +11,14 @@ help.autoCorrect::
- 	If git detects typos and can identify exactly one valid command similar
- 	to the error, git will try to suggest the correct command or even
- 	run the suggestion automatically. Possible config values are:
--	 - 0 (default): show the suggested command.
--	 - positive number: run the suggested command after specified
-+	 - 0: show the suggested command (default).
-+	 - 1, "true", "on", "yes", "immediate": run the suggested command
-+immediately.
-+	 - positive number > 1: run the suggested command after specified
- deciseconds (0.1 sec).
--	 - "immediate": run the suggested command immediately.
-+	 - "false", "off", "no", "never": don't run or show any suggested command.
- 	 - "prompt": show the suggestion and prompt for confirmation to run
- the command.
--	 - "never": don't run or show any suggested command.
+diff --git a/meson.build b/meson.build
+index 0064eb64f546a6349a8694ce251bd352febda6fe..8ecb22c80e4fc3f194e97c14dbf83f541d72b25b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1486,11 +1486,15 @@ version_def_h = custom_target(
+   env: version_gen_environment,
+ )
  
- help.htmlPath::
- 	Specify the path where the HTML documentation resides. File system paths
-diff --git a/help.c b/help.c
-index 5483ea8fd29..7148963e468 100644
---- a/help.c
-+++ b/help.c
-@@ -556,6 +556,27 @@ struct help_unknown_cmd_config {
- #define AUTOCORRECT_NEVER (-2)
- #define AUTOCORRECT_IMMEDIATELY (-1)
- 
-+static int parse_autocorrect(const char *value)
-+{
-+	switch (git_parse_maybe_bool_text(value)) {
-+		case 1:
-+			return AUTOCORRECT_IMMEDIATELY;
-+		case 0:
-+			return AUTOCORRECT_NEVER;
-+		default: /* other random text */
-+			break;
-+	}
++# Because most compilers prefer header files in the same directory as the source
++# file, copy version.c to the build directory.
++version_c = fs.copyfile(meson.current_source_dir() / 'version.c', 'version.c')
 +
-+	if (!strcmp(value, "prompt"))
-+		return AUTOCORRECT_PROMPT;
-+	if (!strcmp(value, "never"))
-+		return AUTOCORRECT_NEVER;
-+	if (!strcmp(value, "immediate"))
-+		return AUTOCORRECT_IMMEDIATELY;
-+
-+	return 0;
-+}
-+
- static int git_unknown_cmd_config(const char *var, const char *value,
- 				  const struct config_context *ctx,
- 				  void *cb)
-@@ -564,20 +585,17 @@ static int git_unknown_cmd_config(const char *var, const char *value,
- 	const char *p;
- 
- 	if (!strcmp(var, "help.autocorrect")) {
--		if (!value)
--			return config_error_nonbool(var);
--		if (!strcmp(value, "never")) {
--			cfg->autocorrect = AUTOCORRECT_NEVER;
--		} else if (!strcmp(value, "immediate")) {
--			cfg->autocorrect = AUTOCORRECT_IMMEDIATELY;
--		} else if (!strcmp(value, "prompt")) {
--			cfg->autocorrect = AUTOCORRECT_PROMPT;
--		} else {
--			int v = git_config_int(var, value, ctx->kvi);
--			cfg->autocorrect = (v < 0)
--				? AUTOCORRECT_IMMEDIATELY : v;
-+		int v = parse_autocorrect(value);
-+
-+		if (!v) {
-+			v = git_config_int(var, value, ctx->kvi);
-+			if (v < 0 || v == 1)
-+				v = AUTOCORRECT_IMMEDIATELY;
- 		}
-+
-+		cfg->autocorrect = v;
- 	}
-+
- 	/* Also use aliases for command lookup */
- 	if (skip_prefix(var, "alias.", &p))
- 		add_cmdname(&cfg->aliases, p, strlen(p));
+ # Build a separate library for "version.c" so that we do not have to rebuild
+ # everything when the current Git commit changes.
+ libgit_version_library = static_library('git-version',
+   sources: [
+-    'version.c',
++    version_c,
+     version_def_h,
+   ],
+   c_args: libgit_c_args,
+
+---
 
 base-commit: fbe8d3079d4a96aeb4e4529cc93cc0043b759a05
--- 
-gitgitgadget
+change-id: 20250113-toon-fix-meson-version-3d4d33fdabe3
+
+Thanks
+--
+Toon
+
