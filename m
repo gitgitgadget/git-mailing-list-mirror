@@ -1,85 +1,82 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72E914F9F4
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 16:56:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6BF4D8CE
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 17:01:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736787374; cv=none; b=XcpUIdrJs55j6BcLSrUb2a/g6ZtEbdWXdq5KIkFf6TQanE7KYmhzE2/FQI8VetqzIk4JcfDxj3d91DkqBgpHL5zJ+oRUCxRjyUflDQQ8Xj+b14KVd6m4AFn2noBtB8UBDzZTbrnp4G7sEknt1eOP5F1xuHnW/L/QH8cAwelsEao=
+	t=1736787686; cv=none; b=g6kmxNjIFgzgPxuuIljmA+zGLlCgWQZFOG1KhqRxakJzKayjfUTbLoBl2ir1Yoz3pQCBMPWIqHkOvNPrgtJaErjjWNAflOVsemZ7SXDEMaYy2kp/dvJ2mWaZA3Eo1EkVYcAOHM85ZJnDBW1pdR1/SNXICJ9IunbFQoAFHo/C9EU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736787374; c=relaxed/simple;
-	bh=WRwScYYRBN+RyAlrH7AzLCLIZEfqgf91tN/fuSbzeIQ=;
+	s=arc-20240116; t=1736787686; c=relaxed/simple;
+	bh=5N0XhyusXDJibir+dfg9GOWo4Ai8QRijIxDb4MFFU4E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GQWCG45I5LMXYH0EQSMwCIR4ycH3hPfPdroUEWjaFuL2IIms/SilOwECmbvOr4DVsZVQtDY4I9qoCdkpqNCVdJ5yYhqLFZ3zpUAy0gs8AWObq9odCkCsD1m1h5lW9W77tYGSwwWIvVkrPzG3v6bTzSy2IiCqVrZBz4X99YKmQYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tjGSwt4a; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tYE9bJqz; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=mL3RGix58AwIaV1uazb3Q/FHu34albJzhG3DY6y70id6wPz59/gtXCE5/8oW1l+IOEyZXfbz5n4lQ7LUv9vCpdJNio0OmPYqQPI7ycQudNNMTOIe5qa1nw7uz8TAIf0kEL1EIJ9BTbtWzshKDWzrCuICYN1iUeKwZSSXkjGWmhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mEozWmV5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ySUKtg7a; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tjGSwt4a";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tYE9bJqz"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id C54661140176;
-	Mon, 13 Jan 2025 11:56:11 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mEozWmV5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ySUKtg7a"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C145625400DE;
+	Mon, 13 Jan 2025 12:01:23 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Mon, 13 Jan 2025 11:56:11 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 13 Jan 2025 12:01:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1736787371;
-	 x=1736873771; bh=n/r7LiNM2ndUY3DAZSDDt7FYnnbcyyvrpUmQKzdJt6E=; b=
-	tjGSwt4a4cA+1ttBnMEl7zodeEfgc92V7NTOdzzRti6LaMiFXpwJnYqzrYF9zM9g
-	gNofGqfGnlc7EHRDhP0WRaT+Wmus1CJfUm3Qn1U/YADy1doyehGgSvgMO90Ritf2
-	5Bl8BCShSKRPBROIYsjaFyDb7atv8Lo+x0TaVL+gnQVACeMKtqpRXMv0ywn2tgbE
-	Nthwvee8aYdi+hQajW5tXyYCuAMuTsq/pM2RaX2lE9vTFu698jZ156Dj95pOMvK0
-	pQimK7ELjZc7B4C1Ksb+DCtfH6ChaeiahecG+qfNa/AFYxvW7AyLDzvvJe2pg13c
-	o/m0AByOWTRVHOPCBKdk1A==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736787683; x=1736874083; bh=G8n10i69t9
+	rZ0Mvmnzqe+pCnSZ0ZtWErsMgZlspfbPU=; b=mEozWmV5JDy3Xzcd+ircv3jqdT
+	j/6aeyMW0kRU4nm9E0qWVn5C6G5+0/GsXktMZ47fBK9xgkSTSwdLCs7ob5hKm7lo
+	OZxzlI822MNXgQ3uo5FIYnEd14JqGnBHyWxnfVU8aqJq++8T86hOMXnEzfZSMkve
+	X44B9fq32D9FlI8Dv5+JbUebs8NtH3QDzBXYqcYQtT2hJTtLORhs3Bs+BXLeXHSg
+	wcGPFoYiUAwDcOaoA4fpo1kG1kbYeo9E5gqtvh9aq22hz0Rv0/JTzLeC02kSVXsb
+	38SzWPd4ylDCaTdYKhlBMH6Gmbzat2TTKrCxtDOMIhbZk4Fbacre+XP7tx1g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736787371; x=
-	1736873771; bh=n/r7LiNM2ndUY3DAZSDDt7FYnnbcyyvrpUmQKzdJt6E=; b=t
-	YE9bJqzjVZNA6tAzYsvG7hXyk9n0TqbZnh96hy1KEdbh2dLwA9qJZf9Siq14LW9a
-	vCrRvgweIdMbWE4sMjiDOQAgvFPfV2P0LQQfq0s4f1V6rP+BtssIfOO7KF6Xd1ss
-	S2Y0wemAoi8QZxTLdEIc8LFUE4GTJp6yOwRne1pXLBZQo/yQ34k+F+cktYCrICx6
-	D9u2gXRYq9v3yxKR5y+ogTkGDPC6Uv+9qUvQ7CYGVsaOkK+fz8RUy1r74KsFClYm
-	rQ6CeuGM7BWK6AAkIx3zCISZsr5xw7k7Z6cdhAA6mAS+i57PHoLtwnD4Fh2wiNpb
-	lIUpFL9955okX6hKihsCQ==
-X-ME-Sender: <xms:q0WFZ2blWIl2oGVb8kk_hQXITo-L4qSeA1LCUN6UzQezPQIyGQAqIg>
-    <xme:q0WFZ5Zs8Y7yAMNu3x8altY3_0zsR4CLI1DXZIWIo5WiCCCjySapJKCII6oUXp-HC
-    SAsn1q_Y_g3HThDVw>
-X-ME-Received: <xmr:q0WFZw9YAuq3QP-lD7DIBikyz-epWtOVsqLubaA0zaktrshyKPf9p_QPstxYbH4oy6GYIiMBN0oRL1SmKMQkZ3UvW_1aOpRj7VeL>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgleefucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736787683; x=1736874083; bh=G8n10i69t9rZ0Mvmnzqe+pCnSZ0ZtWErsMg
+	ZlspfbPU=; b=ySUKtg7aG7+ac9We2TFW1KjKvo7yOxhiznIZos/k9GGoBGVUewp
+	H7q1CK7lyXRPEgu+3bDdyGHH83RMXxvOFMqlwWIZwrmMudcpuqX9/xePRp65amFY
+	LEsiDiyjDSyHqXoZ9lKC9IbTAJOojLaJ0K5s6sLtausA3hJR+yPZnQO7apsAWGnJ
+	b7adWuEGREirBdn2tkjmh6E+p3Hh5oxqBTBpoK1nIIEGiAMeBaRkt3H+OFu3OYaT
+	1QKg99yJcRYjvpw92xdtEz+15J4swySf51Frvsa5QEXBagAcMqI/HHNiGIExcFsa
+	AMHp4zkm904KLoESP05nF8/VnM7Ly3muOkQ==
+X-ME-Sender: <xms:40aFZ2lXAwM_NPbFZRtyOLtFBkaLAknIPxfQIh91ggLTt1C_MzXJmA>
+    <xme:40aFZ92ptjMc-aXlRT117npgpapUiGlXUNZKDYfkk1pdABw73jT7qwOuaduioCp0g
+    MoNqlIeFIVTvEuJBg>
+X-ME-Received: <xmr:40aFZ0o5f1b1b-8NdRKNc-5iIgNM1y4IY13EgDtVuB3hy3DPqYsVamL6PlT0FIO6kfLSr9R6ytw4_ZQVXTz09WaUdrSAgPyqH2Up>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptd
-    ffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveeftdehnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrih
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttg
     hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:q0WFZ4pk1DKT924ZwWk7l9AV8BrouV-9WyYLHKoQnFpMJc_S6ECItA>
-    <xmx:q0WFZxqPPg4v9AR7g1olOwuYNwbixV7Zv721VDDHW7YeZok8Sl80jw>
-    <xmx:q0WFZ2TmEj4BqVA2ll_LX3MZegH9RSgOJhFdMJBO5vrXfUj1lrisAA>
-    <xmx:q0WFZxqC1_ctYzNFIHw9aeb5gXn5crKupC6QGdhRFa2w6nacOrpQRg>
-    <xmx:q0WFZyl6SRU-7y9PSvQzn1v3a1o9gfTjMFgBkp1T71OWsN2kzKz9oL_1>
+    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:40aFZ6lMv2Kn_7bhHnOO8_0p1UoUtSlNeoTrM7Wq-JDW3GDKqozjYg>
+    <xmx:40aFZ00-Y2CilIOKqQQoUMQAs5UwC4ocj426PqENSsVLAPOTsDkqEQ>
+    <xmx:40aFZxtRHer0MBFUoMTQaihyPoATkOPi5Afz3fg66tOkgl7Fb_Zt1Q>
+    <xmx:40aFZwVc26afZ47C0FHK-2pUiAIv5Nqr0AxX0K7L9t4Kr2IUAiz9Dw>
+    <xmx:40aFZ3SGGH0Ka5ERHrgiaCeaSHjx24uiLm0V8GDLH3SsdZfEDcovJj9Q>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 11:56:11 -0500 (EST)
+ 13 Jan 2025 12:01:22 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: [PATCH v2] Revert "doc: move git-cherry to plumbing"
-In-Reply-To: <e5b20f9ceb437a82c422136cb81b05a0521cab07.1736682716.git.code@khaugsbakk.name>
-	(kristofferhaugsbakk@fastmail.com's message of "Sun, 12 Jan 2025
-	12:54:28 +0100")
-References: <e5b20f9ceb437a82c422136cb81b05a0521cab07.1736682716.git.code@khaugsbakk.name>
-Date: Mon, 13 Jan 2025 08:56:09 -0800
-Message-ID: <xmqqv7uiac0m.fsf@gitster.g>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] meson: ensure correct version-def.h is used
+In-Reply-To: <20250113-toon-fix-meson-version-v1-1-9637e2be32e3@iotcl.com>
+	(Toon Claes's message of "Mon, 13 Jan 2025 11:28:04 +0100")
+References: <20250113-toon-fix-meson-version-v1-1-9637e2be32e3@iotcl.com>
+Date: Mon, 13 Jan 2025 09:01:21 -0800
+Message-ID: <xmqqr056abry.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,53 +84,19 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-kristofferhaugsbakk@fastmail.com writes:
+Toon Claes <toon@iotcl.com> writes:
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> This reverts commit 61018fe9e005a54e18184481927519d64035220a.
->
-> git-cherry(1) is a high level command for checking what commits have and
-> have not been applied to some other branch.  Or at least as high level
-> as the git(1) suite offers.  In other words:
->
-> • it is a useful interrogator for a particular workflow; and
-> • there are no higher level commands on offer.
->
-> By contrast its use for scripting is somewhat narrow since it only
-> prints the patch application status and the hashes of the downstream
-> branch (not also the upstream branch equivalents).  git-patch-id(1)
-> gives a fuller picture by printing each hash and its corresponding
-> patch id.
->
-> Now this command is not nearly as convenient for the purpose of deleting
-> a *merged* branch as:
->
->     git branch -d <branch>
->
-> Since that command will refuse to delete the branch if the commits are
-> not in the configured upstream ref.  But again it is the most convenient
-> command for the patch workflow.
->
-> This command might only be considered plumbing by way of the plumbing
-> contract that says that plumbing commands have stable output.  But
-> hopefully listing this command as Porcelain does not give the impression
-> that the output is not stable.  Output stability was in any case not the
-> motivation for moving this command to plumbing.
+> have a `version-def.h` file in project root directory as well. Because
+> `version-def.h` is included in `version.c` using the #include directive
+> with double quotes, some compilers will look for the header file in the
+> same directory as the source file.
 
-I do not follow the above reasoning at all.
+What happens if we use <version-def.h> to include (which is how C
+standard tells us to do), with an explicit include path specified
+with -I<directory>?  If it solves the issue, that may be a better
+approach.
 
-It is not like it is a crime to intarctively make use of a plumbing
-command, or we intentionally try to hide plumbing command from them
-by making it deliberately less accessible.  "git cat-file commit X"
-may be handier than "git show -s X" for some people and that is not
-to be frowned upon.
+Thanks.
 
-And what you call "might only be" is really the crucial thing to
-consider.  If we want to keep a tool's output stable and machine
-readable, we need to mark it as "meant for Porcelain writers", and
-classifying the tool as plumbing is a pretty much established way to
-do so.
