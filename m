@@ -1,82 +1,41 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5D423315A
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 08:42:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665991C232B
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 09:05:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736757750; cv=none; b=qohCDgYg+w3jViX6e2H2ecHVOKdgTZA/p1ijokXrAdGuhfQ+rng8zONZ9eN7Zwo5iZf6mOu/vuF5H+Op2cF8TbnPbJZbVtySn0jUEqigt1mHKa3fQa5xbq7ft1SxZVGHbW4Q1KBdKH+qcsHDfUtKj6p+gB+F6nc+fSG/zpWn+2o=
+	t=1736759151; cv=none; b=XXhIpmCvZu6YE1ugoKanyhiJRRSsZFvHOaA5z4tN3AVHLKr88yIXpHfl+ZmX7UUUYh7G2tewbPHz/YI1P+BcCSrvkJ1QfqKrerDl4iHManjpvvHpfyknYP9kX6Oo3X/ml6W0rtsbgGWEUsWhdi/cTYJUyQeX1PTRxFGNPmsyZfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736757750; c=relaxed/simple;
-	bh=MyEp+X4qXI2W2tSm8DDp784vCoqOa6N7BqUSruDYES8=;
+	s=arc-20240116; t=1736759151; c=relaxed/simple;
+	bh=fyGAwTFUc5iqz0h7bBJaNM5AknSS2e/+zrpcK+HCftg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tNgk8Ojm19uNG6IOX1MRyFeCXEeoo3SoBmQ6Xf+dekH8jVbO2oIyh+7AzecS6BFKl6gS7E0IGLtYKJJ/Svyl0KlU92crqdObfMuy8M+Hiz4VGsb/8KUfQCD0d+ZHPp1RXWOKgaCJWATt1dHbLqnmZ9CKIqP7+r4Q/MIDCrz3bO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hWsJ5aaA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sVCX8JyX; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=QaE5EcGzE4KVk+z70nKMXJ6tlXauJ5nfTMhjkK4zUlghl+6VzlSlMgZHTeQ9pYEcdcOfQREl9iQ5qKzlqAAV1E3HepSL8Xwb5TPr4QIt1EJ73jPsR6TUPOBil2Nkwt90d15GbBoNLvmUC5ydWtXHyFTsKpoW99GqKkS2kauWF1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=saVMIRri; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hWsJ5aaA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sVCX8JyX"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 053D21140091;
-	Mon, 13 Jan 2025 03:42:27 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 13 Jan 2025 03:42:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736757747; x=1736844147; bh=o2T6d0DyP0
-	blRel2W+iEKtSNxLQCo6qC9N1JSAbHekg=; b=hWsJ5aaAbFHPAij5NV/Vy73xer
-	ebFcP3j9SXBOaNWcMBVmcxHJMu0q6oBhpyktjz0G/XQPETui0gmedd9z9MdFIoN/
-	vI/wf6SWK98OHe1fULXmOSonBHUeBDNTGEnbVDbuLZqXwJN0b9M6nEWvVmtJyJea
-	zuw2kAtfkeIOd2oa5J/srk/oeBVoLnAtpdTB8PqprBXZk6e27Ae/RN4jKitOczAJ
-	7BFa48PmTSYk1g1Zvc7vHFl6lJbKINa+1Ed5zPTNcsSuw8w6ztHwf4GPfokXWIJY
-	VA3l3s4fBsoj+sHJdkAqbCJKxi6TLTYRpFslrBvHXNMDQZVCihZ6uDfOvZ0A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736757747; x=1736844147; bh=o2T6d0DyP0blRel2W+iEKtSNxLQCo6qC9N1
-	JSAbHekg=; b=sVCX8JyX8Cb4KdCPQdWQmRo3vbuikzxxnrmflJ/FSyGzIT/GRhF
-	dIirqsDSWvfVcfICrH3VO0B4+EVLPzT9iXx3awxxN/2BEhEGRfgs29rodzGVVelm
-	q1Gmo9YsIcyO557gkr9TY1FCiTXeF8vlpHVDBApMG5wdpRWFbILDhvkDMUuVQ5RP
-	w2lMy0rx4p6GELRVLm/zsWqtd/P33fRGtRi7FOHsJl/u9Ev7xsTo4OYbwUigFD7/
-	ed/s7zTkdsDMTZM1zx9YesNNLX5kwFneuQOcqIX32+aWDa6Ry6hhdx0ftrH/Lscy
-	MvG1gVDtr8a1B8exk8grzD6wJTU8WCByV5w==
-X-ME-Sender: <xms:89GEZ0CtnWulInNWMNYH9-LHKV9i0KF1H8i9q9TlJmjEyAIw7F-W4g>
-    <xme:89GEZ2hgwPrJrixaEkXbcKW__sePQvMO7y-ZS3Xw8b9hM6jkSfkTHvc73z8Q3MQaO
-    s65KJupFnpFGYI0jA>
-X-ME-Received: <xmr:89GEZ3nUxqE3FPTSV2-JQoxUNSJXo3_J_82dp9OibJ3iR347_Dr8wgN46rvEIB_tZhGo_cEo8ERu0-4JGg-sVNhrPqdGvfy9xXTjQ5WvPn3qofk_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehfedguddvudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrd
-    gtohhm
-X-ME-Proxy: <xmx:89GEZ6yZ_JZckKD0kuxEqRs8LplPNhSN7vQAfPWrHbwuQJ5TkxYhUw>
-    <xmx:89GEZ5S6cUrgScvti5S6xNj8YOYDa8JwPwtGlPA2FmfQUGcG45D2ZQ>
-    <xmx:89GEZ1YFZLlo2vDheU9SA8SFh2KliXYklt23phjA8hx6NHiSOdN2tQ>
-    <xmx:89GEZyQbR74hTWCc6pJedwhzeDmA3qAa6lAZfq_Ro4g-iS8xUTkULg>
-    <xmx:89GEZ0cGutteWq0Nb-yS21lMugmI8gG4jDBJgChNspVuIFIk6IMd8Oon>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 03:42:26 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f9ab25e4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jan 2025 08:42:24 +0000 (UTC)
-Date: Mon, 13 Jan 2025 09:42:23 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="saVMIRri"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6C5C4CED6;
+	Mon, 13 Jan 2025 09:05:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1736759150;
+	bh=fyGAwTFUc5iqz0h7bBJaNM5AknSS2e/+zrpcK+HCftg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=saVMIRrimo6A8CM5t4aC4jcWQkC6OXpP9lpI4Y2mK4WM4ScbN8Huee62pKAROWc8+
+	 eI9QjpdcGpF+cHaO257yJ0OKDcEvxY45UCzZPztga8MNaAJ09Ln0JH01mY2+zwLjzS
+	 mXxx9gyYUx5Ov9ZfAUNi79UNZzd3i5dk0dHYeunChJcJgdxM36UuPF7G8qtWhfdpdW
+	 OAkU6F0iU+MGrkII7K9O3IQJbv55+cj7s0mr8NuByhBYIuiYtksGdinJNsZTmAna9K
+	 uhY1qZLpAR2GZRRcGk+ybCu8WIXaME8bRQ2CVoCatdDq+3iOsv+sKFS74/NUtDooLE
+	 EVWloEYcMXHlw==
+Date: Mon, 13 Jan 2025 10:05:46 +0100
+From: Carlos Maiolino <cem@kernel.org>
+To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/8] compat/zlib: allow use of zlib-ng as backend
-Message-ID: <Z4TR72Ee6gzhhYwX@pks.im>
-References: <20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im>
- <Z4FBtuktzcayrb5T@nand.local>
+Subject: Re: [Bug report] signingKey beying bypassed
+Message-ID: <47yfez6r4f4jitps3re23q5vp6vzjas5624f2mp3looocc2myg@vineab4jdxdl>
+References: <hx6q4liyd7udyezlqy2fzanxlicu24imtdqielig622sdqz2wc@lxa4ybnzyjs5>
+ <20241216113543.GD2201417@coredump.intra.peff.net>
+ <cw6ggzhw4o5c5v5juh7sx2ubfaidnzugxx3ydgfvdlywqhndzf@6rfdfajvscif>
+ <20250107030025.GA21698@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,35 +44,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z4FBtuktzcayrb5T@nand.local>
+In-Reply-To: <20250107030025.GA21698@coredump.intra.peff.net>
 
-On Fri, Jan 10, 2025 at 10:50:14AM -0500, Taylor Blau wrote:
-> On Fri, Jan 10, 2025 at 01:55:27PM +0100, Patrick Steinhardt wrote:
-> > This patch series refactors how we wire up zlib in our project by
-> > introducing a new "compat/zlib.h" header function. This header is then
-> > later extended to patch over the differences between zlib and zlib-ng,
-> > which is mostly just that zlib-ng has a `zng_` prefix for each of its
-> > symbols. Like this, we can support both libraries directly, and a new
-> > Meson build options allows users to pick whichever backend they like.
+Hi Jeff, sorry the delayed reply.
+
+On Mon, Jan 06, 2025 at 10:00:25PM -0500, Jeff King wrote:
+> On Mon, Jan 06, 2025 at 03:55:32PM +0100, Carlos Maiolino wrote:
 > 
-> I'm very excited about the possibility of supporting zlib-ng. You
-> mention that there are new Meson build options here, but I don't see any
-> changes to the Makefile.
+> > >      If git is passing the correct "-u" option to gpg, then the bug (or
+> > >      misconfiguration) may be in gpg.
+> > 
+> > I particularly think git is the 'problem' here. After I tried GIT_TRACE, I decided
+> > to run it without specifying the key on the CLI as I'd normally do, and it did
+> > work normally, and I think I what happens is git defaults for another key, if
+> > the specified key is not available.
 > 
-> Can we build Git against zlib-ng out of the box with the Makefile? If
-> so, that is great, and we should document how to build it with zlib
-> versus zlib-ng when using the Makefile. If not, I am somewhat
-> uncomfortable about exposing new build options and the features that
-> they enable behind the new build system.
+> Git doesn't know anything about available keys, though. We just call
+> "gpg" with the signing key configured in your .gitconfig and it tells us
+> whether it worked or not.
+> 
+> Are you saying that:
+> 
+>   GIT_TRACE=1 git tag -sm foo foo
+> 
+> shows git invoking gpg with the wrong key, but:
+> 
+>   GIT_TRACE=1 git -c user.signingkey=$RIGHT_KEY -sm foo foo
+> 
+> uses the right key? That implies something funny with the config
+> reading. Or are there cases where GIT_TRACE shows us passing the right
+> key to gpg, but the signature is made with the wrong key? Then that is
+> not something git can control, and is a problem with gpg.
+> 
+> Can you show us the exact commands you're running and their output?
+> 
+> > As I mentioned earlier, the key configured on my .gitconfig, is inside a
+> > smartcard.
+> > I just tested creating a tag, without the smartcard connected, and git
+> > ignored the signing key I passed, using another key.
+> > 
+> > I am not sure how right I am, so please correct me if I'm not, but I would
+> > expect git tag to fail, or at least give me a big warning if for any reason it
+> > could not sign the tag with the specified key.
+> 
+> I'd expect it to produce a warning, too, but we can only do so if gpg
+> tells us it failed. From Git's perspective, we are just passing along
+> the key string from user.signingkey to gpg. We don't know what it means,
+> and don't have any mechanism for using a different key.
 
-No, it doesn't work out of the box.
+First, I'd like to apologize because I'm not exactly sure if what I'm doing is
+correct, and exploring it a bit, I do agree with you this smells more a gnupg
+problem after the information you provided.
 
-> I think that we should continue to evolve the two more or less in
-> lockstep if/until we are ready to deprecate the Makefile.
+I was just playing around with it a bit. And I can't really understand gpg's
+behavior here. As you asked, here is what I'm doing now:
 
-Yeah, you're probably right. I was a bit annoyed when trying to figure
-out how to name and document things in the Makefile, but that's not
-really a good reason to punt on it. Doubly so because it's ultimately
-quite easy to wire up.
+- I commented out the user.signingkey in my .config file, and I'm specifying it
+  on the CLI as you suggested.
 
-Patrick
+I have a subkey stored locally (besides the one in my smartcard). So, I tried to
+use the locally stored key to create a new signed tag, in a random repo, with
+this command:
+
+$GIT_TRACE=1 git -c user.signingkey=A6... tag -s foo -m "bar"
+
+First thing gnupg does is ask me to provide my smartcard passphrase, even tough
+my smartcard is not even connected :)
+
+After I cancel the password request (I use pinentry, so it moves to the pwd
+prompt), I can see the trace:
+
+09:29:49.780058 git.c:479               trace: built-in: git tag -s foo -m bar
+09:29:49.781317 run-command.c:666       trace: run_command: gpg --status-fd=2 -bsau A6...
+09:29:49.781361 run-command.c:758       trace: start_command: /usr/bin/gpg --status-fd=2 -bsau A6...
+error: gpg failed to sign the data:
+[GNUPG:] KEY_CONSIDERED 40... 0
+[GNUPG:] BEGIN_SIGNING H9
+[GNUPG:] PINENTRY_LAUNCHED 5587 curses 1.3.1-unknown /dev/pts/5 xterm-256color :0 20620/1000/5 1000/1000 0
+gpg: signing failed: Operation cancelled
+[GNUPG:] FAILURE sign 83886179
+gpg: signing failed: Operation cancelled
+
+So, from my POV, git is passing the correct key to the gpg commandline, but for
+whatever reason gpg is ignoring it.
+
+The key it defaults to, is the one in my smartcard. I'm not sure why it is using
+it as the default, I don't have any default key configured in my gpg.
+
+When I cancel the pwd request for the key, gpg emits the KEY_CONSIDERED message,
+with yet a different key, and fails the operation.
+
+Well, anyway, thanks for the help, but I do think now git is only a victim here
+of some weird behavior from gpg.
+I'll try to find out more information about this.
+
+
+> -Peff
