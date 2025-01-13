@@ -1,188 +1,130 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F21AE231C9C
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 07:12:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5CE43C1F
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 08:05:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736752337; cv=none; b=jy1t1wdCf51ffQNC54hkWhkYINnQ3ftcPqt4R12ZUVkuBJrim31GtH0LDzf+Yy+UDj+sSQmx1TTM333ZQyLMPMAealGUZ0wpPqoSuyg5Yx36BrdTKP4FbGXH7XTR3x8wItWXfsnAHjwaY8aW+ZJeEnikypRN3kWCg89jUy/GGUY=
+	t=1736755508; cv=none; b=LJ9Ch0j6pbM8vjj6HC8cQimSDxdwITOqMBy5/77UCrJdqlKMz2k1EcgUW+6YYFcakBgB50HpylE7DNnYFVW02Miaqx4KVop7Zu+W0sffXqXPUNb9CgLZLNCjA0bk1sKi426iv6PH061MQJ8RHtFjQwcZcFwP5j83xJ/mDmN5fY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736752337; c=relaxed/simple;
-	bh=pEmCKzmRitZQuYcoe6C0TPWVGaDf2IW4g8IgHwtpHoA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Vh+vzrjPbMCie8nv3eVTeU59a0bzOPnwzfaTHzurBNo7uQKtABF0hxneq2oAgCqXLWzzDkVsJoEGrWqtzTVJr0cAVINSxvpGsM0dLZ+dQtv6BpAqznvMru/tEXgPXuUxHi/EuCRCmDri/NI93tuCxgEnXKDqaHJY1hQWajmLACM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KIxdewvT; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736755508; c=relaxed/simple;
+	bh=xnWPffwCPuIHv/SluB8bC4xXtgRqimXECtctcVQDFvU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YCL1m3dVKLzsT5cKVQd2A+VfReupuBXT5rNTjZT6uXdl38anDg4HivPEGzOwiq+eWPEAGmOEwJ81kttWnOZek29tAr+5pUIypSCbO2MztQ4ZCYht7YD5reVTVMtzajs56DSL3YW2hEcAVEroUiSmktErP/fCpLVZ3Kl5GUXqHks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vB3vHmV0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WbkKgruo; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KIxdewvT"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5d122cf8dd1so6621411a12.2
-        for <git@vger.kernel.org>; Sun, 12 Jan 2025 23:12:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736752333; x=1737357133; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pTnjOYiUelrgtEG/DzDjrjKjWQd/b0zO1DXVd2NM6fM=;
-        b=KIxdewvT7Qmc8bDmlX4mofQ5H2kMrwbOIoYDI5UyNiT0rLA7E6f4Wj3+YnuYLs3Pqi
-         /Jxe21rEK/rmz8iBadzHx2iVASSkAM9x0pbuLNjIzQH0ji2nMyTmQTVmGUEJD9RNU/o3
-         9WQKm11aR2y0x5XYC+bPWN6MmMuKzHiUeB4QBSR854cCD1/tt6p8ru3QMAwvtvRWPaPF
-         IwHS5uk9paQAPW2u7nOPAKVyzWGMoYKKBXQli+TW2jKe63c2HYUUOgWbxVQWDH11TE0z
-         +ojXzwfXa3FimjF8EEbPk7UC35EEVR9UsLFuQg0Hzk4OkHtFjww6BTEbPilhgdVS0ovx
-         P/cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736752333; x=1737357133;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pTnjOYiUelrgtEG/DzDjrjKjWQd/b0zO1DXVd2NM6fM=;
-        b=nzC5iAuBCSn8rY7VriIpnasU1hfbBXblPULPgYjmWJsNJHxUSxWjKWqO9R1XLhnYaA
-         RCqLmRveCCH4F5iSbtJWe3K0RfFNHeSiIu45JDbk4Cpv0E4iDLHKsJmhhmQ2vimUXgir
-         HsDOaoOig35g1OHo3To/FtiJims/+HmFXnYzYowMLj5hYv7lI1BO7zrgrFdwLTrvkmzz
-         vbLoOburOubLlsQGR6C+XJxzNfarNOOtSTT3kqTOHkaQCI1w/gp9UckqEEFzl91+zN2e
-         pKnJb2tkKclN4hR97xlMRx3gEQ0js93d1mOk6X/fVfwUKJ05IwpQNQuMX0yJw//phqsL
-         cYxA==
-X-Gm-Message-State: AOJu0Yx3lPoq9iNcbev7iJVnxrMIILl1WJKOkPKx5nXLTJRJO4nGp0wU
-	KL0zFWGnRVpMrH13PzPOwFSJ6/Vxiu4n1CEXlQ6xjdO8KDoD6T2kttxZs55AJojDvD83VVH9cly
-	baw9EC2BcDO0ct7j981lGVlx4VT5F/waLIpfTUw==
-X-Gm-Gg: ASbGncuYJa9cqrdzoKi6c/i5ZqHnxr1/Iqq3CHIOIcxQtQeukNU/HODsOSE7y5tibNh
-	xl5fmELiBsLtES6Bsk9zAzN+OF7VQxsLipd8VD+k=
-X-Google-Smtp-Source: AGHT+IHyhVk6z0C98UTRfXblFq6uR0pu8L+/li+BiVhqI6qeK0fZlW748B5sTIHwoxjkcZttbJT/OAEyZEsT8M9v/RU=
-X-Received: by 2002:a05:6402:4407:b0:5d3:d733:7ad4 with SMTP id
- 4fb4d7f45d1cf-5d972dfe6abmr18793375a12.3.1736752333361; Sun, 12 Jan 2025
- 23:12:13 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vB3vHmV0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WbkKgruo"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id BB5C111400F8;
+	Mon, 13 Jan 2025 03:05:04 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Mon, 13 Jan 2025 03:05:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736755504;
+	 x=1736841904; bh=gFLIpWWMs1m+j23xn4jVR53/xhX3lAsjihyBu6Mmzfc=; b=
+	vB3vHmV0uoqYbgA6ddy8Q0D0nnCNkJoRl38z7wI1tGDrmggTGsSz193W+fRkGs/H
+	2FO0mFr+bG+12tjanBiP0db/QAiUakz/OjyFT56wZc5A/UC6q8x51ecaGUnNYAM8
+	yuXIUUKPgTA6Z4YVT65j6zzwHHk94CekZSmdRV2yyA2VOa4CXUZD7ToGnJqny8KC
+	7pSOg9vbf/kEHm4GcbcHaR2L3CBM/lEKbmbz1vks63XHyuJcJkeG8x+pveMxm/lR
+	B7lU5kwdetuLbUdktTkthfxpgJzjeDwxKLQusOcjbNdYVp9H16kgYxiUFwritOTV
+	ujHtBkxVvngFwarEOFuBnQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736755504; x=
+	1736841904; bh=gFLIpWWMs1m+j23xn4jVR53/xhX3lAsjihyBu6Mmzfc=; b=W
+	bkKgruoEGMklSSJFXl8tY0v7oFt5MIlp//etULeFWZhN2cxhs5T5KGYp8dbjWe0S
+	L80tfjpUTe98GmOQANfGsw1OLcAeckj6Wkaa0iZ4iMYDhX6OpH+j/w3awTQ4dsFy
+	iJr/bfGPKhlmb5fmSn7/FoPdHNupR40lNCTjo86ZHMJ3IzdNwUv4fGYZDGoDFb7F
+	1xcx5c08+/MLi763k2tjurOpK6UtE2/jT8eKLtDDwYdhHbkYpOH7MOl1JLsm4MUS
+	19HQny/qhF0Q4bOeoT8JktZhsZaLKgizzXIj7RFSkp+099yps7FJbdG/8Du6RWad
+	JoCBSKha4/Nrwmopa/AtA==
+X-ME-Sender: <xms:MMmEZ7_4vOFsMcxQwW7cZjna5MN44IvVTgEdSQXqtkmfYlGTzrHZpQ>
+    <xme:MMmEZ3uf-x7Us_2HOteW4uedMqFs3n5rz7FkFyAuhVAzsw19OuavOU-GeiXSLIxb5
+    U0kX1y-pj5zwHzElg>
+X-ME-Received: <xmr:MMmEZ5DBL-ntJm2f7A03I4E7T_62BwfoXY5RIrvR4_sxqNjRp9HNEPuLpqkL7kgHAguarFKr9KG8ViwtBWBN21nSvLgRf5iDGXN_Q4seomCu0xqb>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehfedguddufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
+    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
+    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepnhhosghoiihosehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:MMmEZ3c24MYv4BZaIcn9EA5fYI7Q__UTcYaDY1IhKr3Q5QmUCk3Iyg>
+    <xmx:MMmEZwPfXcKrfeH6w3_DuK0X-A8oIQE-UgA61PT4Vl41dlT4q2dQRw>
+    <xmx:MMmEZ5lC_8kUP4e7_OGiz-z6igY3fu00MP5eLntcOwoe5nxMZQ1EzA>
+    <xmx:MMmEZ6tiLt3I3oHHkPNiApRSpa3kIsq0ad8DsujILR7k3uiFalOgcg>
+    <xmx:MMmEZ1oCCiE3lhF8oGcXpXLTGEsjxQMZqBdAWlqYRbRzvDYb8Z7R4SF->
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Jan 2025 03:05:03 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6c2ce5e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jan 2025 08:05:00 +0000 (UTC)
+Date: Mon, 13 Jan 2025 09:04:59 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Jon Forrest <nobozo@gmail.com>, git@vger.kernel.org
+Subject: Re: Using Visual Studio Code to Debug/Trace Git?
+Message-ID: <Z4TJIzVc4Ib2QyPV@pks.im>
+References: <vlrkbd$a0r$1@ciao.gmane.io>
+ <A53D82B2-4F5F-4BCA-9C85-88B2A89139DC@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1843.git.1735041177817.gitgitgadget@gmail.com>
- <pull.1843.v2.git.1735611513.gitgitgadget@gmail.com> <14e94bf04e5ae3895eb61253be9c6d0a0fe56328.1735611513.git.gitgitgadget@gmail.com>
-In-Reply-To: <14e94bf04e5ae3895eb61253be9c6d0a0fe56328.1735611513.git.gitgitgadget@gmail.com>
-From: ZheNing Hu <adlternative@gmail.com>
-Date: Mon, 13 Jan 2025 15:12:01 +0800
-X-Gm-Features: AbW1kvY0eOLinryI5QkM6KGCWvQvE8B6TQkg3TH2uZsWpU1kjfo5ybIN2v-q5hU
-Message-ID: <CAOLTT8Qj=mA6j55HOShobQSkCn-VCbPoMChE_y1xBo=O4dyFxw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] gc: add `--expire-to` option
-To: Git List <git@vger.kernel.org>
-Cc: gitster@pobox.com, me@ttaylorr.com, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <A53D82B2-4F5F-4BCA-9C85-88B2A89139DC@gmail.com>
 
-This patch has been sitting for weeks with no review. Does anyone want
-to help take a look?
+On Fri, Jan 10, 2025 at 03:38:51PM -0500, Ben Knoble wrote:
+> 
+> > 
+> > Le 10 janv. 2025 à 12:16, Jon Forrest <nobozo@gmail.com> a écrit :
+> > 
+> > ﻿I'm interested in using Visual Studio Code to help understand
+> > how git works. I'm thinking it would make it easy to see what
+> > actually happens when git commands are run.
+> > 
+> > What I don't know is how to integrate git's build system into
+> > Visual Studio Code. Has anybody tried this? If not, what tools
+> > do you use to debug git?
+> 
+> AFAIK, it’s make (with some autoconf stuff) and C debuggers like
+> gdb/lldb. But maybe someone has a better answer. I’d expect VS Code to
+> support this pretty easily.
 
-ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com> =E4=BA=8E2024=E5=B9=B4=
-12=E6=9C=8831=E6=97=A5=E5=91=A8=E4=BA=8C 10:18=E5=86=99=E9=81=93=EF=BC=9A
->
-> From: ZheNing Hu <adlternative@gmail.com>
->
-> This commit extends the functionality of `git gc`
-> by adding a new option, `--expire-to=3D<dir>`. Previously,
-> this feature was implemented in `git repack` (see 91badeb),
-> allowing users to specify a directory where unreachable and
-> expired cruft packs are stored during garbage collection.
-> However, users had to run `git repack --cruft --expire-to=3D<dir>`
-> followed by `git prune` to achieve similar results within `git gc`.
->
-> By introducing `--expire-to=3D<dir>` directly into `git gc`,
-> we simplify the process for users who wish to manage their
-> repository's cleanup more efficiently. This change involves
-> passing the `--expire-to=3D<dir>` parameter through to `git repack`,
-> making it easier for users to set up a backup location for cruft
-> packs that will be pruned.
->
-> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> ---
->  Documentation/git-gc.txt | 6 ++++++
->  builtin/gc.c             | 6 +++++-
->  t/t6500-gc.sh            | 6 ++++++
->  3 files changed, 17 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-> index 370e22faaeb..b4c0cf02972 100644
-> --- a/Documentation/git-gc.txt
-> +++ b/Documentation/git-gc.txt
-> @@ -69,6 +69,12 @@ be performed as well.
->         the `--max-cruft-size` option of linkgit:git-repack[1] for
->         more.
->
-> +--expire-to=3D<dir>::
-> +       When packing unreachable objects into a cruft pack, write a cruft
-> +       pack containing pruned objects (if any) to the directory `<dir>`.
-> +       See the `--expire-to` option of linkgit:git-repack[1] for
-> +       more.
-> +
->  --prune=3D<date>::
->         Prune loose objects older than date (default is 2 weeks ago,
->         overridable by the config variable `gc.pruneExpire`).
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index d52735354c9..77904694c9f 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -136,6 +136,7 @@ struct gc_config {
->         char *prune_worktrees_expire;
->         char *repack_filter;
->         char *repack_filter_to;
-> +       char *repack_expire_to;
->         unsigned long big_pack_threshold;
->         unsigned long max_delta_cache_size;
->  };
-> @@ -441,6 +442,8 @@ static void add_repack_all_option(struct gc_config *c=
-fg,
->                 if (cfg->max_cruft_size)
->                         strvec_pushf(&repack, "--max-cruft-size=3D%lu",
->                                      cfg->max_cruft_size);
-> +               if (cfg->repack_expire_to)
-> +                       strvec_pushf(&repack, "--expire-to=3D%s", cfg->re=
-pack_expire_to);
->         } else {
->                 strvec_push(&repack, "-A");
->                 if (cfg->prune_expire)
-> @@ -675,7 +678,6 @@ struct repository *repo UNUSED)
->         const char *prune_expire_sentinel =3D "sentinel";
->         const char *prune_expire_arg =3D prune_expire_sentinel;
->         int ret;
-> -
->         struct option builtin_gc_options[] =3D {
->                 OPT__QUIET(&quiet, N_("suppress progress reporting")),
->                 { OPTION_STRING, 0, "prune", &prune_expire_arg, N_("date"=
-),
-> @@ -694,6 +696,8 @@ struct repository *repo UNUSED)
->                            PARSE_OPT_NOCOMPLETE),
->                 OPT_BOOL(0, "keep-largest-pack", &keep_largest_pack,
->                          N_("repack all other packs except the largest pa=
-ck")),
-> +               OPT_STRING(0, "expire-to", &cfg.repack_expire_to, N_("dir=
-"),
-> +                          N_("pack prefix to store a pack containing pru=
-ned objects")),
->                 OPT_END()
->         };
->
-> diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-> index ee074b99b70..d4b0653a9b7 100755
-> --- a/t/t6500-gc.sh
-> +++ b/t/t6500-gc.sh
-> @@ -339,6 +339,12 @@ test_expect_success 'gc.maxCruftSize sets appropriat=
-e repack options' '
->         test_subcommand $cruft_max_size_opts --max-cruft-size=3D3145728 <=
-trace2.txt
->  '
->
-> +test_expect_success '--expire-to sets appropriate repack options' '
-> +       mkdir expired &&
-> +       GIT_TRACE2_EVENT=3D$(pwd)/trace2.txt git -C cruft--max-size gc --=
-cruft --expire-to=3D./expired/pack &&
-> +       test_subcommand $cruft_max_size_opts --expire-to=3D./expired/pack=
- <trace2.txt
-> +'
-> +
->  run_and_wait_for_gc () {
->         # We read stdout from gc for the side effect of waiting until the
->         # background gc process exits, closing its fd 9.  Furthermore, th=
-e
-> --
-> gitgitgadget
->
+There are two ways to realize what you want right now:
+
+  - Import the CMake build instructions that we have in
+    "contrib/buildsystems". It has existed for a rather long time, but
+    is not an officially supported way to build Git. It's also lacking a
+    couple of features that you can expect from our Makefile, like
+    building docs. It may be good enough though.
+
+  - Generate a Visual Studio solution via Meson by installing Meson and
+    then running `meson setup --backend=vs2022 build-msvc`. This has
+    only landed in Git v2.48 and is thus really new. As such it is still
+    marked experimental, but will become an official way to build Git
+    and is more feature complete.
+
+I'm aware of an issue with Visual Studio right now though when using it
+with Meson that keeps it from working -- I'll send a patch series later
+today to fix that issue, and then it should be a good way to build Git
+on Windows via MSVC.
+
+Patrick
