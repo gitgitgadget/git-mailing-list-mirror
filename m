@@ -1,120 +1,138 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35088233153
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 08:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152D78F49
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 08:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736756826; cv=none; b=aDHQJmd/OpsA4kW4ZS8kaUC6gL/SzGaclRf77xhOomAoykso5ICw5qg5CYjc84rN/Dpn56vKUaS67iJ04Z+6Reb6XcNIf66sQE0WWHMLO653kmIBEV6FUWMg3t1xGhXD38x8BKvbg9x1WPLnvSjwhUs1vzgyPUPnuyNkn9UvzEw=
+	t=1736757242; cv=none; b=RBuZJ88Yw1136MgdTrlh/2jx1cM2Y5DQ/QK27NlQTdbUSoUOksY4We2dK31BE9fERV4KaOtRP1IkDfJr87RgO07+bZWWPLQ1idPTIMpNKDANtP0M16vm1HhzxQuxwq57Legds26p4E1jJxAxbEAzMqIQuGVtbGeKEri3SzYDlUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736756826; c=relaxed/simple;
-	bh=i6OC2e5IbfjD/rueNiteIZNj0FOaf7Y9Tobhrp89Gwk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gi0lG+BIV+ujlhkznn3CEkHJkSjbEeAYMVJ10kilndVIZkWIIXveVgZ3EN1Zp/aSLvn9nflAIB3OfISNEauRHEzDuVHFP7WiXwjmHuoQj3eS4+mnsYdhghPUYHotzjJMYUe6mLGa9eGxrF3MF+fu3KcA5aC3k7qsbEV5SxaT7qE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VQ8vnSPT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xor5d99/; arc=none smtp.client-ip=202.12.124.158
+	s=arc-20240116; t=1736757242; c=relaxed/simple;
+	bh=2q/1fH2VQscPzbtRosxbEFpkgkJFZnhdWW/B2a2bMCg=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=u/sbUAkl2i6+Wa1Wo/4lKi5MC9JVuju8eGOD7PlYxwCQqSk3L7CA0jwmvMSdBJJeSn1Sh61Mnl9qmGhlDw1TjCf7drzfg4fmRAb2JS8l9IorRBlq14rA0qRR9QocHD88gcJ7GzSGxvFPPy4t9HwTdhONqsTFdHXEx0oFVOEZUgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Xs/68HAE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fnc8er7d; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VQ8vnSPT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xor5d99/"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 514E32540168;
-	Mon, 13 Jan 2025 03:27:03 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Xs/68HAE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fnc8er7d"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 082332540184;
+	Mon, 13 Jan 2025 03:34:00 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Mon, 13 Jan 2025 03:27:03 -0500
+  by phl-compute-01.internal (MEProxy); Mon, 13 Jan 2025 03:34:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736756823; x=1736843223; bh=43sAyfBKpn
-	X9CLbwQGNcfekNLG8lBQ+lQDarsV88oPI=; b=VQ8vnSPT7wJyaADeEr7AfQO58i
-	LSqSYRR2bLUg437dfywPYem5jmsBXFcFlldPzNyIzRAYXLLlyV6cn/01xdGDtt6j
-	O/KRDFieUhWpEs8LmTq9JIBlmgyW6hclynGKi7yVaFOvRiI+0QL2k9dUk0j3HVmh
-	hKLX1FUdcMPk6Fqv0wXnqy3ptcL72DV4WnS/D5sCGgPrrCcgwvGHTd/mr8rnCjHU
-	NbIAs2UByk6eA61P2K8aoGTga4bfhfK1U5P15vNAl0tCyRBgfQj4+XkgVbNHyHSV
-	hS8r6yhqUqCHWd7mIe6N75uI+JD4WT/Mug23ZOaAl0Y1PG4pajPfVLoRNsgQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1736757239; x=1736843639; bh=R42nAkDJDo
+	U9dGIAS1y+WwwhVMvTnRjGYsZV90wz9JE=; b=Xs/68HAEHYvXP8rP5mNfZR9gpN
+	qXxZIl1v8CkHphex3wp8p1xSw69US5D+927t0SbniRlLBv7b6Ihp6mpNvU88W2iu
+	dpv9VqFNLjBnv6JJR+WujQJ8XB/1qXcC+PIo+8fc8pZiqJR9yBbqE18ofb6r2Rbw
+	WSZoQTkrSrawIBVMVeBSwr9MTqTR2edTFKhRnFYbbO/kCAvbpnjHq4Jnvki4YCeG
+	iJxj4H1KW9YgnZgTjvBJl7NBgjvpJFtQPkCnDszFboAgCuhOxpZst/qtLbW6CD5j
+	wSgSlbPMseizC1sGBTE7BmJLSwCRA0SnrIZqgan3FUf8TZJzUaEfaWaVyeUg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736756823; x=1736843223; bh=43sAyfBKpnX9CLbwQGNcfekNLG8lBQ+lQDa
-	rsV88oPI=; b=Xor5d99/wPqyJAB0Br61aFo7f6TJo2YvkhcECiCwnp9J3krToYS
-	yzkUPrAdxvi7hMdAiw42gkGYf+5uBrJFOX41EuCz/mBSg2l922AGQiIx8DVO9Mn0
-	vyhsEOkjKO38MsLoTZv+KZ/vc3MuoBVm0niD3YKxVmJFXJgItexSia2rO6ivIPfr
-	fxNp0E6Q5FgQJd7Wh9HdFmxMozUDt4ZGKLLoNX9U6mf4Jif1Qre2teR0Ty5751nE
-	d3I3bZNbD50wgNvyvn6wnXrQ8oevspobBbv7TwXZHsSPuEBZM54r/zCf0S4IdMYI
-	6y8P3ccUW2GIkcdMdjzbiJYcTZ2fx8+K9/A==
-X-ME-Sender: <xms:Vs6EZ249FuDnlWHPi6hYwdvEhWcYJi1sDBeJR1ISkDyNEtB3CtJUdg>
-    <xme:Vs6EZ_4XB7KkKnJ6HR_8Ss8WxAjDjTwBUal86vKRK20R-Vtmec0iAEvnShJy4O1xd
-    Uf7_e-5kghTRaydaQ>
-X-ME-Received: <xmr:Vs6EZ1fDG4bG_6wNEH-rsqDt8smkmg7g_WxCXUaMqNRMJwzCksfpBKlvlYb8Dj3908eCXdQ_8iIqPeTI6qllXN1F39uNIVo7XqWGeb6672IHP5aO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehfedguddukecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1736757239; x=1736843639; bh=R42nAkDJDoU9dGIAS1y+WwwhVMvT
+	nRjGYsZV90wz9JE=; b=Fnc8er7d17gCJbi47d/LNZ/glrrIEuhl44Y9UB+RZwXn
+	kYGDB6hK6h2n4tpgL4VhQrWj8qKq1emut2UiYaKmte7mGVK1PBOsricU0bdqJAUi
+	F6gBYmC+cifqjbN3pXWdr4OwBFZuEE/Agk9kktH14Or/OmS96ZU7IG8pdHvV+e1+
+	crgHziUtKD123XPFYu/ijQJC1I381Fm1lOHwtSR6ZqELXpLEVIXWTVoGX5hANmKK
+	YWTMYxWDt/ouxMKuK7yXBYhUrFbdt/NsEtM3PSHQF6Xw+b/zAee+VtfYB91LpfPD
+	IMcPQQOrdTPJGPGIrbIpn1ZYUb9qZje2hq3Ko25MmA==
+X-ME-Sender: <xms:98-EZ3uqYjC7ZcC-4yWpbvcopn8xomwwrw5RZkIe4_GbqgLv1SJaww>
+    <xme:98-EZ4c0h1p5RwcC0bK15mCZVeNB3Y5DuvYs8B7sqKTp-y4b546LwQGuXjnDxxW2q
+    LIm5EsOTB4ZXB8laQ>
+X-ME-Received: <xmr:98-EZ6z_lno5g_SZmW-6f1regcqyncE7-OpT9C3rDwhyGCbo3L4kKeDeqTqVh0eeUDbqITEzpm-BG-wQVvYyfl7HBSYbNtvrP9zTHJGT6o2Dw3aA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehfedguddulecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehsrghmsehgvghnthhoohdrohhrghdprhgtphhtth
-    hopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Vs6EZzLCadZe1glTQWL0MKUURi5Sci_VkyzW_dTrDCeu3PeawgJJxw>
-    <xmx:Vs6EZ6Jf3O1FeMGT1FHXGz2lyrji0KgByQXmyPWKE2hCN2vi2GaLhg>
-    <xmx:Vs6EZ0zg_mr9k0wDUUcShyA4Om-ia2-Tpq-ot8rHoZllNOBxwVGSnw>
-    <xmx:Vs6EZ-JZt6xXyzJjCocjGMetyoy8bSck5VTYQ7J135VxkhI_B48MtQ>
-    <xmx:V86EZ22DzpxnkIwpsXxJ4DKVbJa5tUJ_m4OZRSyeUW25VeA4abypGbW->
+    hnthhsucdlqddutddtmdenucfjughrpefhufffkfggtgfgvfevofesthejredtredtjeen
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnheplefggedvleeggfethfeuiedvhfeugfetffevieehteeu
+    tedtjeejiefhuedtieeunecuffhomhgrihhnpehgihhtlhgrsgdrtghomhdpghhithhhuh
+    gsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
+    mhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthht
+    ohepvghvrghnrdhmrghrthhinhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:98-EZ2PQcvuYDZP1IuP7Tw2FTOmoHLdBZgN2JHsv4eRlX8OOUW-CLA>
+    <xmx:98-EZ39wo2ibaobxiT2wK5Z5Ka6yng1yX_anwi7cWXLThJ2Kswgh2Q>
+    <xmx:98-EZ2Wco7xDN_jgWzEG2BNZJluytUcw23rGx2P8tDoS2zhwhZbGmA>
+    <xmx:98-EZ4fm5YXTPz6hdYd_bEldbjhilGQCGkBFL-vUX3f14hgvRM9m-g>
+    <xmx:98-EZ6ZJeyp2A6yUvDtXC50pI0-olfSDhfcWBcb1I4g8jlvb0K1PELkP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 03:27:02 -0500 (EST)
+ 13 Jan 2025 03:33:58 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c8dcd1de (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 13 Jan 2025 08:27:00 +0000 (UTC)
-Date: Mon, 13 Jan 2025 09:26:59 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id f00de7f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 13 Jan 2025 08:33:56 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Sam James <sam@gentoo.org>
-Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>
-Subject: Re: [PATCH] meson: fix perl dependencies for Documentation
-Message-ID: <Z4TOTVZbDlxh4Uuy@pks.im>
-References: <79de1bcf31f708960a889066ce3d986e55155ad8.1736577530.git.sam@gentoo.org>
+Subject: [PATCH 0/9] meson: a couple of additions
+Date: Mon, 13 Jan 2025 09:33:33 +0100
+Message-Id: <20250113-b4-pks-meson-additions-v1-0-97f6a93f691d@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <79de1bcf31f708960a889066ce3d986e55155ad8.1736577530.git.sam@gentoo.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAN3PhGcC/x3MwQoCIRCA4VeROTcw2lrQq0SHVWdriFSciEB89
+ 5U9/ofv76DchBVupkPjn6iUPMOeDMTXmp+MkmaDI+fJ0hXDgvWt+GEtGdeU5DuFInkf7SWcybs
+ AE9fGm/yP8f0xxg6jyCL/aAAAAA==
+X-Change-ID: 20250107-b4-pks-meson-additions-055c16b3052b
+To: git@vger.kernel.org
+Cc: Evan Martin <evan.martin@gmail.com>, 
+ Eli Schwartz <eschwartz@gentoo.org>
+X-Mailer: b4 0.14.2
 
-On Sat, Jan 11, 2025 at 06:38:50AM +0000, Sam James wrote:
-> diff --git a/Documentation/technical/meson.build b/Documentation/technical/meson.build
-> index 21dfb8b5c9..8c93da3566 100644
-> --- a/Documentation/technical/meson.build
-> +++ b/Documentation/technical/meson.build
-> @@ -42,6 +42,7 @@ api_index = custom_target(
->      '@OUTPUT@',
->    ],
->    env: script_environment,
-> +  depends: documentation_deps,
->    input: api_docs,
->    output: 'api-index.txt',
->  )
+Hi,
 
-Wait, this doesn't make a lot of sense to me. "api-index.sh" does not
-care about "asciidoc.conf" at all, so why is this dependency needed?
+this small patch series backfills in a couple of missing features into
+Meson. It also improves test coverage of our Meson-based CI jobs so that
+we compile with Meson with Visual Studio and compile fuzzers. CI runs
+for GitLab and GitHub can be found at [1] and [2], respectively.
 
-> @@ -60,6 +61,7 @@ foreach article : api_docs + articles
->      command: asciidoc_html_options,
->      input: article,
->      output: fs.stem(article) + '.html',
-> +    depends: documentation_deps,
->      install: true,
->      install_dir: get_option('datadir') / 'doc/git-doc/technical',
->    )
-
-This one looks as expected, though.
+The series is built on top of fbe8d3079d (Git 2.48, 2025-01-10) with
+ps/meson-weak-sha1-build at 6a0ee54f9a (meson: provide a summary of
+configured backends, 2024-12-30) merged into it.
 
 Thanks!
 
 Patrick
+
+[1]: https://gitlab.com/gitlab-org/git/-/merge_requests/280
+[2]: https://github.com/git/git/pull/1870
+
+---
+Patrick Steinhardt (9):
+      GIT-VERSION-GEN: simplify computing the dirty marker
+      GIT-VERSION-GEN: move default version into a separate file
+      meson: fix dependencies for generated headers
+      meson: wire up development environments
+      meson: wire up generation of distribution archive
+      meson: wire up fuzzers
+      meson: make the CSPRNG backend configurable
+      meson: fix compilation with Visual Studio
+      ci: wire up Visual Studio build with Meson
+
+ .github/workflows/main.yml | 52 +++++++++++++++++++++++++++++++
+ .gitlab-ci.yml             | 38 ++++++++++++++++++++++
+ GIT-VERSION                |  1 +
+ GIT-VERSION-GEN            | 17 +++++-----
+ ci/run-build-and-tests.sh  |  3 +-
+ meson.build                | 78 ++++++++++++++++++++++++++++++++++++----------
+ meson_options.txt          |  4 +++
+ oss-fuzz/meson.build       | 20 ++++++++++++
+ 8 files changed, 187 insertions(+), 26 deletions(-)
+
+
+---
+base-commit: 35a417ddf0eab983e4d5eb69e628aa198114bb05
+change-id: 20250107-b4-pks-meson-additions-055c16b3052b
+
