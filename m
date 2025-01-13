@@ -1,117 +1,123 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF620240223
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 22:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9838C1CEEB4
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 22:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736807242; cv=none; b=Adm7oqiill8uddROZEv0yVwerpwA62+4BIIZ+AJWD6Ab1CToG12/6MavhtyTkjMNZBMuExma1BV4+BUCzRwZMYPKxx7DBXKikBaRjBeJdF8Fbz9dTrgx45YthYymRTSZ3vSjOnqllRbi3pBVxmpufTcXwCRixMPq9ylwnK9cn90=
+	t=1736807890; cv=none; b=US61nYwgdF3/rYcto+b1tCvZ4Iz/x7jA5B0ocw/ayAaNWGpkqxAD0f7NZ8uykvI0nGFkdBCVmH3AHfDPQgGmMn6S4BlQKGLgXrROIHwQLLYDFIZXh6KbBLerkcUfqUduXMD2zck0+XrIUWR61ozjgqxZRLevsk6ZlXFvxAVOpRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736807242; c=relaxed/simple;
-	bh=qVzvEJU5y6lboJeGoUwVRHfCt4JMCfMdX0kxGU48Om8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Zh5SuOTv34SF6yCtfnsvkWX2ifdB4+xWy/Mp1fPTZAludWLSKnXvzC4/Igzo++pOtraU7Xj/EacdBLGSJb8ZLBI1VoRoxtgVhrLhCKx2o78yNbcGOmtHoyKraWhj8yORBgxm7REqIgkXG0ycDhZMhWg8/zmsOZjgNfXaFtdHpvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eX0Ggjcs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rQ+MgVkL; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736807890; c=relaxed/simple;
+	bh=EyjucFl+LommO5XMCw7LK2VMZNKdrRSEqWg2CuLzTwc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GlrbTa8efZ6s/WiQLHTkNR/fn2Ue/snKAXJNdrMreiw9KPSCmOH8kc0NNTKVzZrD1VmRGUUhwTpt1CSR0VBFBc+PrqnZpCQPlBHdaiBF4zDq8xLRA3L2PJun49c5Gh4PZ5QMzv9eb6h3RNx9+G2ful9nP9MHitJqadLwlVHJsmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EC7rYR4J; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eX0Ggjcs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rQ+MgVkL"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9EF711140171;
-	Mon, 13 Jan 2025 17:27:18 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Mon, 13 Jan 2025 17:27:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736807238; x=1736893638; bh=etu7CnkSwB
-	zfzz+jGBVDviu5z0xpQzGtzP1O2p7D2Yg=; b=eX0Ggjcs5ZOni10kinUWm0v5gZ
-	wT4nvvCQd8tr4lFNr7tzpTRC2bANIZsjE3bGSbiVe207dB5LWrU9m0jxMniZI/r+
-	2j1w8/W1+/9GuuDTEG3wtmqUQBpq+KlVb3Ijtbh+RuFP58bSvJ1IxP41GX3Nq2v3
-	0qU4c1VMrVcVRJX7qxB/a68nzZdRdDc9TvEhqxdfFyMUAq8ucQObGFOHfIkfyvHQ
-	fJV5mjjCFX7HPUIPpaounhY95dwJEjUOXeQrfFLVlA5BF/53W3AjhawvwbdliMyt
-	aoL+HyF8T4JKMFdEW95SbAdpjj7r054UfCrIfDdElK6O4oTSc5lG9bboB+mg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736807238; x=1736893638; bh=etu7CnkSwBzfzz+jGBVDviu5z0xpQzGtzP1
-	O2p7D2Yg=; b=rQ+MgVkLVmnTH4crZJoSPeA+7wAeA8c0dyeEpeEPupc+a32dKiE
-	V1Feampbw3UaLZmTu9WcOELY8x4lvtzhnxKcYPLjP0egT4HO0u5+iq39LzjGlKLX
-	Y1a9I9sOW0Ha/XEvFqS3C55x5uXtDcVOQoDFx5KFmF64DESE/JCK3sBj1Os1Gcjr
-	RvtHrZLsPYLQIjyP69IE9MwUIcVac4KLz9U7PQKj+qqkp7rudRNJ2wuvcx6goDFU
-	xq9W5FLdjvlro6gsuKArwgqxNOHCvltuq1rcW+5OXjXwUiKij8r6+ai8GiMTO8Ni
-	J6rYyL9Xdl/B7OygAQ+4LXREI1QphNc3ILA==
-X-ME-Sender: <xms:RpOFZw7mYrT3FD414FT5YVioiTbdhq-uwH2ccnhHG7in8WTy9cByBA>
-    <xme:RpOFZx6kqin05isiEhigZh8UjoP8YzjDtOC3A80iUApuapu_pSgCFP8PbEGDOc7-k
-    c4_biUjLbl757RumQ>
-X-ME-Received: <xmr:RpOFZ_csI1SHtXKUdpeeiimu9BRRNQF_Rht4_b-I1RlMDEfAlJYOEuE16HCwadLH9OUAkGn_Uh3crgr7f99Wzv__8kyKXlb0l1HN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehgedgudehlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvsh
-    drshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehmihhrthhhrdhhihgt
-    khhfohhrugesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhp
-    rghsthgvrdhnvghtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:RpOFZ1J791d5exX83kD85yKtaM7VNUaxNU9At2Q96o1x_7t9EKoHNQ>
-    <xmx:RpOFZ0LyBtWT-B0_5TomQzBoTsC7HFpNtY6akogM9mUy7SCzllabog>
-    <xmx:RpOFZ2wOWwN6TsZFznrK-azZy9N8nON2BadPSPXU0svibgu7RGGYRQ>
-    <xmx:RpOFZ4K956LbRWHnkmh4ZsmR5QKiwIjwkaAgkIGF1JM-y2pebfffPg>
-    <xmx:RpOFZz9B49q1PXq1DNSQNst6R99LzWAg28a7z6c-f9q8vR6B0W4q2puo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 17:27:17 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: M Hickford <mirth.hickford@gmail.com>,  git@vger.kernel.org,
-  sandals@crustytoothpaste.net,  stolee@gmail.com,  avarab@gmail.com,
-  peff@peff.net
-Subject: Re: Changing transfer.credentialsInUrl to default to "warn"
-In-Reply-To: <7a60c9ec-8f98-73d3-4539-d96b63a4f442@gmx.de> (Johannes
-	Schindelin's message of "Mon, 13 Jan 2025 22:53:46 +0100 (CET)")
-References: <20250111071500.710169-1-mirth.hickford@gmail.com>
-	<xmqq1px6br7p.fsf@gitster.g>
-	<7a60c9ec-8f98-73d3-4539-d96b63a4f442@gmx.de>
-Date: Mon, 13 Jan 2025 14:27:16 -0800
-Message-ID: <xmqq34hm8i4b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EC7rYR4J"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ab2b29dfc65so747618466b.1
+        for <git@vger.kernel.org>; Mon, 13 Jan 2025 14:38:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736807887; x=1737412687; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oP5PbdVua/VMOTq7eZ2zOUcCjsqsNq9vW0sSqPVe3NU=;
+        b=EC7rYR4JF4SKWcBYuoD6wEFZcWKEYJT+bvv40QOQdFfETcZsFoNWBhXBMwG0RV8n9J
+         wWuFJmtkUiUNWPq7QeXZB1oh+Wm6BSpSxcnL6Fqn1QQO5/8kxkmXIjaZRLpmW3bSFFuw
+         RkNfTrhVNcDfP3e6H1yReYWnUnHfXrtlVlxO8GlUwerxqO0kYlP1M745H9pzyyxShbUt
+         JX6nR39OMr/p1zpp1m7M4mPvGvcgNxjdT79tB4TBryvmFXhJKurRUHTJuMyc1vHmKjIe
+         cxjIRX2bvCKfYU1DiJ2kVgdZKf4ZJPAzFLNciv57nXGhv4X3OlZbNig2LMPI/9ZhwjSh
+         Xz+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736807887; x=1737412687;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oP5PbdVua/VMOTq7eZ2zOUcCjsqsNq9vW0sSqPVe3NU=;
+        b=Da7Lsy0kQbJ6hohHNW6zzQrhXoeXQi1IEcpUq/VSiiVhb+pPpJQLdoBSs0MAMoRM92
+         l/DUA9V//7dmwsNLA4yZl2ZS4/d+EEG/y3+2gO5UQ8gMJ6p/nLrQt2HWWL7hvt6x9WZd
+         2LA4q9ekUMfBV3qpMU7OfNnLA/tTuXyW2ZHJQ14zPRTuzMUHhXwBRAhOJaNtleZcpisB
+         Yh1jBGVYZuxdwYwgqhlEOTc4Q/muFVAyPqcqUI01vYFxXiF0QfRb43RrJ1eSbyztv3Ne
+         FXswN+4We8Jgwh+SJZHzroqO5Gqb46SUlPnR1yHMOFx1AkmQXUnQ25dQSbsV7RF+wuEQ
+         Gb3w==
+X-Gm-Message-State: AOJu0YxP6GdD4GkxNyAuIAhlUwVdu4p3gUhSAZ/ddc6WrO3NFwGHeKwy
+	C7k2bW36sFS5ubvUBBWNsjkiPPXpOCR4bKCX2hURxlTKw8k15Ehqmo9U6+yUKQc5Rm50v68820z
+	eFeirpcvKefdW2UOlTW8K1MhmafehcNRR
+X-Gm-Gg: ASbGnctmiFgcISvVtWBEw8YQBHAAkNftkOyV19VfRU2rXaCvoCFmt89ACiTwAuDhlhf
+	lPWvOCJVH3e6swldK0g7zMAcOuisJ0NBJS7NuMZ3PYCKv3cJ86VqMgEdc8xmD4jIuaEG+Qg==
+X-Google-Smtp-Source: AGHT+IEHPGNPEEsUXoHqYiIcvV7/pp8584wkRJb6Spv1JLtu7LIwweg4ZbTZ/m+OX58RCFEh+fFlQUeyVDhAl5gtRS4=
+X-Received: by 2002:a17:907:7e81:b0:aac:4324:977e with SMTP id
+ a640c23a62f3a-ab2ab73b67dmr1917585466b.27.1736807886806; Mon, 13 Jan 2025
+ 14:38:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1874.git.git.1736802194760.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1874.git.git.1736802194760.gitgitgadget@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 13 Jan 2025 17:37:55 -0500
+X-Gm-Features: AbW1kvYhUeFTJ0rfFighnu56w4L77vRW3VknRY3DUWC-dMJ2YhG8jZdHFd9htek
+Message-ID: <CALnO6CCLhsQbkC6nsaeiFDksbh_UAxC9igFD3r5V1Bz+YLyWaw@mail.gmail.com>
+Subject: Re: [PATCH] docs: add vim syntax modeline [RFC]
+To: M Hickford via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>, 
+	"brian m . carlson" <sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On Mon, Jan 13, 2025 at 4:05=E2=80=AFPM M Hickford via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: M Hickford <mirth.hickford@gmail.com>
+>
+> Git documentation is written in AsciiDoc. This format is easily
+> mistaken for the pervasive Markdown.
+>
+> Add a vim modeline to help editors identify the format and provide
+> syntax highlighting, rendering and autocomplete.
 
-> The reason why `.pushURL` was not handled as well is that it is way too
-> common for Git users to call `git clone https://<user>:<password>@<host>`
-> ...
-> There is no similar indirect way to leak credentials into `pushURL`
+FWIW, Vim by default only has a single autocommand for *.txt files,
+and it's to see if they are help files.
 
-Ah, so it is not primarily between .URL vs .pushURL, but the
-difference is between "clone" that leaves the URL used on the
-command line in the configuraiton, vs "push" that does not.
+Now, there is a fallback $VIMRUNTIME/scripts.vim mechanism that
+performs various "heuristic" checks, but I can't find a reference to
+markdown in it either. So stock Vim treats them as "filetype=3Dtext."
 
-And because .pushURL has to be explicitly configured by the
-end-user, there is much less need to remind that they are _storing_
-credential material in the configuration files.
+>
+> This makes editing the documentation easier for prospective
+> contributors. This is particularly important because new contributors
+> often start with documentation changes.
+>
+> An alternative could be to move the modeline up or down the file (the
+> location is not important).
 
-The reasoning does make sense.
+Not quite. :help modeline says
 
-> Having said that, I would be in favor of letting
-> `transfer.credentialsInURL` treat `remote.*.pushURL` in the same manner as
-> `remote.*.url`.
+    The number of lines that are checked can be set with the 'modelines' op=
+tion.
+    If 'modeline' is off or 'modelines' is 0 no lines are checked.
 
-Amen to that.  Thanks.
+and the default value of 'modelines' is 5.
+
+>
+> A simpler alternative could be to rename files *.adoc. This would have
+> the advantage of being recognised by even more tools.
+
+Indeed, Vim knows that *.adoc and *.asciidoc are "filetype=3Dasciidoc".
+
+You could also see about submitting a patch to Vim to check *.txt
+files for asciidoc syntax, or add your own ftdetect rules [1] that say
+that files with %:p matching "git.*/Documentation" (for example) get
+the filetype asciidoc.
+
+[1]: https://vi.stackexchange.com/a/23251/10604,
+https://vi.stackexchange.com/a/18493/10604,
+https://vi.stackexchange.com/a/28109/10604, etc.
+
+--=20
+D. Ben Knoble
