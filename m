@@ -1,173 +1,263 @@
-Received: from aib29agh125.zrh1.oracleemaildelivery.com (aib29agh125.zrh1.oracleemaildelivery.com [192.29.178.125])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DD3157469
-	for <git@vger.kernel.org>; Sun, 12 Jan 2025 16:51:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.125
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2162A1487FE
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 05:17:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736700716; cv=none; b=TxAjY7JxNjcbPIb5Lbza4lcXkqyzQjn0VeMxV3Hn9E1rkxv6OMdoINDAaIwXN550NZIYUMrp+c7ENFEwdaqzxW1Cki2aY6JCJFoF/KeEVVLLchFY6cXk3XLEIxZ6DutnX01UCoP5SWNuqP1t1wqcHIarhwKHtjiHLlEThoO1wp0=
+	t=1736745432; cv=none; b=k+XkeAIyVJpM0tiyFvxGILgADFTXXw63t/HVXnoxG4LRFCEzpEmGYD0TK597K9zVBleSvb8ICA8SGyoocIPQVISI9dhwy+t8+4B9+mLMTZ8YWJTuJMqDWZeUCrKKMiI6hj+wTEAH92UqA/lWkTJnUHG6svuTjIpR8RYPSFqHDRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736700716; c=relaxed/simple;
-	bh=QpUKR3tY/2ZmCtqXo8y7/PVGH54cQQn4wjUiHbdSo/o=;
-	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
-	 MIME-version; b=sS6xYBNUOhHDB70/7GFLQ6I2a+reucVjwVZqWRV2mchrq+tKiJEmWQVU1CAumM/4gpR/aPj2YB3iNfma1wT4H6yyxe18Ax9nfFJuM/udbRpUNPE+vxeGLdG1s7RvKahc//gATzP/EkYiF/rDD8WfqPVHWqa5J4KLHZi4XGDy6d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=mGbl0dIY; arc=none smtp.client-ip=192.29.178.125
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
+	s=arc-20240116; t=1736745432; c=relaxed/simple;
+	bh=qVOKzAvUHuOnvxZ5lZunWQhqHFYNzil1ndpExyDH7+s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CjZWiwNKmr8PlLw+IcCJgmb4zg4yxR9sCBFDGsz9kWf9NgwVrtWDhG5yM2tkzk22/mg2zYxVkj9evQ0J0nCMcIoA0SCxkHX5lSYrlYd7hlwjUZ+rqAw2Iyr9vUJjuORX+yv1/3TNdP0N/8wIFBaqmp55MOVmnUfTwWljm40L/ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Rph7xPAx; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="mGbl0dIY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
- d=zrh1.rp.oracleemaildelivery.com;
- h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=Xtl/VL58QbfSY5JnFZwd9u3MhUQKerglmoScV0xl9+4=;
- b=mGbl0dIYN1MKNFmlPALY1Op0mW+WTHCX0Wd5u20/EE4V0qzCHLEOgI9jY1dhn4AW3vfNiRkcVf7E
-   EPnt8aUj8D5Fd58j40P9bMSMZZZkX3a1IFwDJuXQ64CsqKxxOzkXmOEGwspYSvp3TXlLpebXWJGG
-   HSBTBMoyMOjebFqR4OG4xRb92RCktyY1m0SeWfIneQTOa78UqnhWhSk7VG96trBrwDckWNyJq63U
-   3b/NRSrFszZHkSPYzcUdGjrkOD4grQ3+ESW5qdY1xLiAj+QTfE72g/GP6m4Paol6fA0xUbsOQD6a
-   mRTvA3zvoT/nhrXSpc9Ryb+s4HvTzNZrnmUfpg==
-Received: by omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
- (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
- 2024))
- with ESMTPS id <0SPZ00028IUBF210@omta-ad1-fd2-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sun, 12 Jan 2025 16:51:47 +0000 (GMT)
-List-Unsubscribe-Post: List-Unsubscribe=One-Click
-From: Bence Ferdinandy <bence@ferdinandy.com>
-To: git@vger.kernel.org
-Cc: Christian Hesse <mail@eworm.de>,	"Christian Hesse" <list@eworm.de>,
-	Bence Ferdinandy <bence@ferdinandy.com>
-Subject: [PATCH] fetch set_head: fix non-mirror remotes in bare repositories
-Date: Sun, 12 Jan 2025 17:51:22 +0100
-Message-id: <20250112165125.130400-1-bence@ferdinandy.com>
-In-reply-to: <20250111202628.0e5894e4@leda.eworm.net>
-References: <20250111202628.0e5894e4@leda.eworm.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Rph7xPAx"
+Received: (qmail 11452 invoked by uid 109); 13 Jan 2025 05:17:04 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=qVOKzAvUHuOnvxZ5lZunWQhqHFYNzil1ndpExyDH7+s=; b=Rph7xPAxe3vyEbpbC4a79ZGmIUh3BGBZe9DsoyruC9sejyZedtQ9tq2KDEN7RNDKfHQKdIFMJRhF+f5Wi8MLo4cZ4TzYXv1bIXaRsWlL+IZAsj8HqB7IrS2cYkEcLmiceyCwnZbfnDFG5pvpw0+58Wd2vSLKGP1fWlwM/dh6COmcCTDDPeVWODilIbrb23zzZnu3Mmaq9g/mM5i0R4ixskRpMsuGBqY5S98iE0l+TR2j42jiFSbX9/LaSR0HTssEcFoAW+vF4Epx+/S0tBxjj1Zor33YLAQkw4pMlbchs1p/ailBxz9rHxB7t9HJ0NEAwAnENA+1lpuvpNZ9w+HMEw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 13 Jan 2025 05:17:03 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16813 invoked by uid 111); 13 Jan 2025 05:17:05 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 13 Jan 2025 00:17:05 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 13 Jan 2025 00:17:00 -0500
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Ross Goldberg <ross.goldberg@gmail.com>, git@vger.kernel.org,
+	Derrick Stolee <stolee@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] ref-filter: share bases and is_base_tips between
+ formatting and sorting
+Message-ID: <20250113051700.GA767856@coredump.intra.peff.net>
+References: <CAAEcvMovcZucuq4H70ouQzKS=_wHnBi1DqJ-4MMFVXX9XLEciw@mail.gmail.com>
+ <6b824f05-6f16-4cd9-85b7-3b8b236158b4@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-version: 1.0
-Content-transfer-encoding: 8bit
-Reporting-Meta:
- AAFtwRKOns+Xrfavafhn3a2SLgglv8kgn/6JQPe1cXoRt8hKjTVfxJ1eHKE/wVeo
- /XQiDPwBgwPfo2c9mcK9yqqRtN58PmN63Y3U7zoL0HbxJdbp0aFb/G2/sTjfS7ZS
- l/MN9+3pI7k+dWQaZHogtX5aJRlsYSZBruG5XpnkE7IN9+ciNcKVP+Hcb4r2rZVA
- FESCL0yu8kYUQ5SKDTfgN7k5hH9LSMQQQUcdoXA+uRRZbvf+h1wfZ2j5TSdfmFRT
- pHll0hWPbCkp5hrp8VIrDPPYTHuLMf7x3mbmFkctGAx0CsC44reW28aLpY7GC839
- 0CYzD2fy5lQL2MAq9olsjlyEo/CJ1Kn2vvjObLJ0R0i6ksXtP2IaGayrQCo0hjDs
- V4ZJU06Sxq4HGJKcKWM0FzeHLn8ORNDTX22TQmeT2RTx7FXStj8pi0TdvAK8e3Y4
- rjqpDEBRm8E6npfUSZe9VHKMODjIO7XMVpRyBSbwHVMQJukz0y57QAxR
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6b824f05-6f16-4cd9-85b7-3b8b236158b4@web.de>
 
-In b1b713f722 (fetch set_head: handle mirrored bare repositories,
-2024-11-22) it was implicitly assumed that all remotes will be mirrors
-in a bare repository, thus fetching a non-mirrored remote could lead to
-HEAD pointing to a non-existent reference. Make sure we only overwrite
-HEAD if we are in a bare repository and fetching from a mirror.
-Otherwise, proceed as normally, and create
-refs/remotes/<nonmirrorremote>/HEAD instead.
+On Sun, Jan 12, 2025 at 11:01:52AM +0100, René Scharfe wrote:
 
-Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
-Reported-by: Christian Hesse <list@eworm.de>
+> verify_ref_format() parses a ref-filter format string and stores
+> recognized items in the static array "used_atom".  For
+> "ahead-behind:<committish>" and "is-base:<committish>" it stores the
+> committish part in string_lists that are part of struct ref_format.
+> 
+> ref_sorting_options() also parses bare ref-filter format items and also
+> stores recognized ones in "used_atom".  The committish parts go to a
+> dummy struct ref_format in parse_sorting_atom(), though, and are leaked
+> and forgotten.
+>
+> If verify_ref_format() is called before ref_sorting_options(), like in
+> git for-each-ref, then all works well if the sort key is included in the
+> format string.  If it isn't then sorting cannot work as the committishes
+> are missing.
+>
+> If ref_sorting_options() is called first, like in git branch, then we
+> have the additional issue that if the sort key is included in the format
+> string then filter_ahead_behind() and filter_is_base() can't see their
+> committishes, will not generate any results for them and thus they will
+> for expanded to empty strings.
+
+Good analysis. The sorting and formatting are definitely tied in subtle
+ways, and not all code takes that into account.
+
+The dummy ref_format here is one such problem. Another is that we don't
+do the equivalent of verify_ref_format() on the sorting fields. Most of
+what it does is probably superfluous, but for example it's supposed to
+reject some atoms that have parsers. So:
+
+  $ git for-each-ref --format='%(rest)'
+  fatal: this command reject atom %(rest)
+
+but:
+
+  $ git for-each-ref --sort=rest
+  [...no error...]
+
+That's somewhat orthogonal, but it may influence the direction of our
+solution.
+
+> Fix those issues by making the string_lists static, like their sibling
+> "used_atom".  This way they can all be shared for handling both
+> ref-filter format strings and sorting options in the same command.
+> And since struct ref_format no longer contains any allocated members,
+> remove the now unnecessary ref_format_init() and ref_format_clear().
+
+Hmm. So this certainly fixes the problem. But is it where we want to go
+in the long run?
+
+For now there is no program that uses more than one ref-filter format.
+But it seems like an obvious interface that would want to be lib-ified
+eventually. We are not there yet because of the static global used_atoms
+array. But the obvious path forward is to have a context struct
+representing one ref-filter iteration.
+
+I think the intent was that ref_format would be that context struct,
+though arguably it is a little funny since it forces the sorting and
+formatting to be joined (OTOH, that is very much how the code works,
+since it wants to share results between the two for efficiency).
+
+So one solution would be to make the use of that context struct more
+explicit, and require ref_sorting callers to provide a format struct.
+Like the patch below, which also passes your tests.
+
+I dunno. Your patch is deleting more code, which is nice. But I think in
+the long run we'd end up replacing it. But maybe making a clean slate
+now would make that easier? I could go either way.
+
 ---
- builtin/fetch.c   | 15 ++++++++-------
- t/t5505-remote.sh | 10 ++++++++++
- t/t5510-fetch.sh  | 13 +++++++++++++
- 3 files changed, 31 insertions(+), 7 deletions(-)
+ builtin/branch.c       |  2 +-
+ builtin/for-each-ref.c |  2 +-
+ builtin/ls-remote.c    |  4 +++-
+ builtin/tag.c          |  2 +-
+ ref-filter.c           | 19 ++++++++-----------
+ ref-filter.h           |  2 +-
+ 6 files changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index fe2b26c74a..625d45be8b 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1618,9 +1618,9 @@ static void report_set_head(const char *remote, const char *head_name,
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 6e7b0cfddb..0c3f35cd0a 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -875,7 +875,7 @@ int cmd_branch(int argc,
+ 		 * local branches 'refs/heads/...' and finally remote-tracking
+ 		 * branches 'refs/remotes/...'.
+ 		 */
+-		sorting = ref_sorting_options(&sorting_options);
++		sorting = ref_sorting_options(&sorting_options, &format);
+ 		ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+ 		ref_sorting_set_sort_flags_all(
+ 			sorting, REF_SORTING_DETACHED_HEAD_FIRST, 1);
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 715745a262..4f247efe57 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -80,7 +80,7 @@ int cmd_for_each_ref(int argc,
+ 	if (verify_ref_format(&format))
+ 		usage_with_options(for_each_ref_usage, opts);
+ 
+-	sorting = ref_sorting_options(&sorting_options);
++	sorting = ref_sorting_options(&sorting_options, &format);
+ 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+ 	filter.ignore_case = icase;
+ 
+diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
+index 42f34e1236..ed38b82346 100644
+--- a/builtin/ls-remote.c
++++ b/builtin/ls-remote.c
+@@ -61,6 +61,7 @@ int cmd_ls_remote(int argc,
+ 	const struct ref *ref;
+ 	struct ref_array ref_array;
+ 	struct ref_sorting *sorting;
++	struct ref_format format = REF_FORMAT_INIT;
+ 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
+ 
+ 	struct option options[] = {
+@@ -155,7 +156,7 @@ int cmd_ls_remote(int argc,
+ 		item->symref = xstrdup_or_null(ref->symref);
+ 	}
+ 
+-	sorting = ref_sorting_options(&sorting_options);
++	sorting = ref_sorting_options(&sorting_options, &format);
+ 	ref_array_sort(sorting, &ref_array);
+ 
+ 	for (i = 0; i < ref_array.nr; i++) {
+@@ -173,6 +174,7 @@ int cmd_ls_remote(int argc,
+ 		status = 1;
+ 	transport_ls_refs_options_release(&transport_options);
+ 
++	ref_format_clear(&format);
+ 	strvec_clear(&pattern);
+ 	string_list_clear(&server_options, 0);
+ 	return status;
+diff --git a/builtin/tag.c b/builtin/tag.c
+index c4bd145831..a5240f66e2 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -574,7 +574,7 @@ int cmd_tag(int argc,
+ 			die(_("options '%s' and '%s' cannot be used together"), "--column", "-n");
+ 		colopts = 0;
+ 	}
+-	sorting = ref_sorting_options(&sorting_options);
++	sorting = ref_sorting_options(&sorting_options, &format);
+ 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+ 	filter.ignore_case = icase;
+ 	if (cmdmode == 'l') {
+diff --git a/ref-filter.c b/ref-filter.c
+index 23054694c2..f5d0c448ed 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -3536,23 +3536,19 @@ void pretty_print_ref(const char *name, const struct object_id *oid,
+ 	free_array_item(ref_item);
  }
  
- static int set_head(const struct ref *remote_refs, int follow_remote_head,
--		const char *no_warn_branch)
-+		const char *no_warn_branch, int mirror)
+-static int parse_sorting_atom(const char *atom)
++static int parse_sorting_atom(struct ref_format *format, const char *atom)
  {
--	int result = 0, create_only, is_bare, was_detached;
-+	int result = 0, create_only, baremirror, was_detached;
- 	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT,
- 		      b_local_head = STRBUF_INIT;
- 	const char *remote = gtransport->remote->name;
-@@ -1655,9 +1655,9 @@ static int set_head(const struct ref *remote_refs, int follow_remote_head,
+-	/*
+-	 * This parses an atom using a dummy ref_format, since we don't
+-	 * actually care about the formatting details.
+-	 */
+-	struct ref_format dummy = REF_FORMAT_INIT;
+ 	const char *end = atom + strlen(atom);
+ 	struct strbuf err = STRBUF_INIT;
+-	int res = parse_ref_filter_atom(&dummy, atom, end, &err);
++	int res = parse_ref_filter_atom(format, atom, end, &err);
+ 	if (res < 0)
+ 		die("%s", err.buf);
+ 	strbuf_release(&err);
+ 	return res;
+ }
  
- 	if (!head_name)
- 		goto cleanup;
--	is_bare = is_bare_repository();
--	create_only = follow_remote_head == FOLLOW_REMOTE_ALWAYS ? 0 : !is_bare;
--	if (is_bare) {
-+	baremirror = is_bare_repository() && mirror;
-+	create_only = follow_remote_head == FOLLOW_REMOTE_ALWAYS ? 0 : !baremirror;
-+	if (baremirror) {
- 		strbuf_addstr(&b_head, "HEAD");
- 		strbuf_addf(&b_remote_head, "refs/heads/%s", head_name);
- 	} else {
-@@ -1665,7 +1665,7 @@ static int set_head(const struct ref *remote_refs, int follow_remote_head,
- 		strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", remote, head_name);
- 	}
- 		/* make sure it's valid */
--	if (!is_bare && !refs_ref_exists(refs, b_remote_head.buf)) {
-+	if (!baremirror && !refs_ref_exists(refs, b_remote_head.buf)) {
- 		result = 1;
- 		goto cleanup;
- 	}
-@@ -1925,7 +1925,8 @@ static int do_fetch(struct transport *transport,
- 		}
- 	}
- 	if (set_head(remote_refs, transport->remote->follow_remote_head,
--		transport->remote->no_warn_branch))
-+		transport->remote->no_warn_branch,
-+		transport->remote->mirror))
- 		;
- 		/*
- 		 * Way too many cases where this can go wrong
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 519f7973e3..c75cfe968f 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -589,6 +589,16 @@ test_expect_success 'add --mirror setting HEAD' '
- 	)
- '
+-static void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *arg)
++static void parse_ref_sorting(struct ref_format *format,
++			      struct ref_sorting **sorting_tail, const char *arg)
+ {
+ 	struct ref_sorting *s;
  
-+test_expect_success 'non-mirror fetch does not interfere with mirror' '
-+	mkdir headnotmain &&
-+	(
-+		cd headnotmain &&
-+		git init --bare -b notmain &&
-+		git remote add -f other ../two &&
-+		test "$(git symbolic-ref HEAD)" = "refs/heads/notmain"
-+	)
-+'
-+
- test_expect_success 'add --mirror=fetch' '
- 	mkdir mirror-fetch &&
- 	git init -b main mirror-fetch/parent &&
-diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
-index 2d9587059f..cfa63ae086 100755
---- a/t/t5510-fetch.sh
-+++ b/t/t5510-fetch.sh
-@@ -84,6 +84,19 @@ test_expect_success "fetch test remote HEAD" '
- 	branch=$(git rev-parse refs/remotes/origin/main) &&
- 	test "z$head" = "z$branch"'
+@@ -3567,17 +3563,18 @@ static void parse_ref_sorting(struct ref_sorting **sorting_tail, const char *arg
+ 	if (skip_prefix(arg, "version:", &arg) ||
+ 	    skip_prefix(arg, "v:", &arg))
+ 		s->sort_flags |= REF_SORTING_VERSION;
+-	s->atom = parse_sorting_atom(arg);
++	s->atom = parse_sorting_atom(format, arg);
+ }
  
-+test_expect_success "fetch test remote HEAD in bare repository" '
-+	cd "$D" &&
-+	git init --bare barerepo &&
-+	cd barerepo &&
-+	git remote add upstream ../two &&
-+	git fetch upstream &&
-+	git rev-parse --verify refs/remotes/upstream/HEAD &&
-+	git rev-parse --verify refs/remotes/upstream/main &&
-+	head=$(git rev-parse refs/remotes/upstream/HEAD) &&
-+	branch=$(git rev-parse refs/remotes/upstream/main) &&
-+	test "z$head" = "z$branch"'
-+
-+
- test_expect_success "fetch test remote HEAD change" '
- 	cd "$D" &&
- 	cd two &&
-
-base-commit: fbe8d3079d4a96aeb4e4529cc93cc0043b759a05
--- 
-2.48.0.1.g32c193c8ca
-
+-struct ref_sorting *ref_sorting_options(struct string_list *options)
++struct ref_sorting *ref_sorting_options(struct string_list *options,
++					struct ref_format *format)
+ {
+ 	struct string_list_item *item;
+ 	struct ref_sorting *sorting = NULL, **tail = &sorting;
+ 
+ 	if (options->nr) {
+ 		for_each_string_list_item(item, options)
+-			parse_ref_sorting(tail, item->string);
++			parse_ref_sorting(format, tail, item->string);
+ 	}
+ 
+ 	/*
+diff --git a/ref-filter.h b/ref-filter.h
+index 754038ab07..1531bf1762 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -168,7 +168,7 @@ int format_ref_array_item(struct ref_array_item *info,
+ /* Release a "struct ref_sorting" */
+ void ref_sorting_release(struct ref_sorting *);
+ /*  Convert list of sort options into ref_sorting */
+-struct ref_sorting *ref_sorting_options(struct string_list *);
++struct ref_sorting *ref_sorting_options(struct string_list *, struct ref_format *);
+ /*  Function to parse --merged and --no-merged options */
+ int parse_opt_merge_filter(const struct option *opt, const char *arg, int unset);
+ /*  Get the current HEAD's description */
