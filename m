@@ -1,130 +1,101 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2931BFE05
-	for <git@vger.kernel.org>; Mon, 13 Jan 2025 22:51:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E86524025B
+	for <git@vger.kernel.org>; Mon, 13 Jan 2025 22:52:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736808665; cv=none; b=nnxy9eHb15ktHrJft0V16DT6QuOzE76H6mZZtYIWXHsXdpV+w9dEKcHpT49JrxXZmDzqsyo/xOai7CgAgv7veQ9Du/KpHHZ8/fFOZubxxIGcfSmL2kipQRpbHlfKSiAVDimfY/PoyVrJiI94annH0v4F/G9wdCIiCoMhkUDMbDI=
+	t=1736808744; cv=none; b=AYiDFhscMz8rW98L/rP8++lBvn46c8Vot+5UQZ9CUyOhxgrJoVv4fLH7Igwj8/WrE7lt/rdF+eiV+LBSxqKOqB5Ukx8dhwEf0hPZtI1XQtAmmQKSinlqOay/RMMnBuLkfaI/G4xZ/oZGG2GxTCAP+Su2ImQW1qzpOD8VxWfzXHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736808665; c=relaxed/simple;
-	bh=uR9TWNxUQ7oucQkpOwTvrUywtmAi5NqsBtVZdSkYZrc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Dyu+GK09xSupcwlLo0IPeRPVsXCVGih1vzjH548hWTrOlLaNH07MKP0vTLOghdmoQZcgoR/Cyim4TAK/xjVkgFw6NXCgyB8qr/tlW0cqduKul9OGJnSGFKNQNQetUMlLGMTzwoC9/PA52NJLlRMHWr6CAmTQPe6ql/V+tiK1WcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=INi548H1; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736808744; c=relaxed/simple;
+	bh=yHURe0PYzNxWb7eKrnZw/4zAmcfKNJ4zAuG5BGq0x3A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eYcELi777iiNzeDM74XHsG+Ac5eCkaGSeOZmR5ASgh0KrKfsAXuLK7rU3s+lpYntiZ7ZQFanG0NqcXwLYvQFcnVxWYGc/eDf8ruz/qHCME0+H7zABTg7h1p0hDLbCCIH1BqoOn/XWxMrCjlSVT7GMmVMluNn22YfYQbpTQnzA80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ljnnq0v6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SwQhnaBe; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="INi548H1"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-385df53e559so3888717f8f.3
-        for <git@vger.kernel.org>; Mon, 13 Jan 2025 14:51:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736808662; x=1737413462; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=cixb4Y39Zru+UTE7GdHbXxiOTHEotTkupoc2vloyegc=;
-        b=INi548H17KFYuvvO8yQqIBM6IM6WitAyrRzx7EK2i8YdhE4Y/o7J0VztEzxx4S2opv
-         BhZ/nBpkEyd0wOvP/i06NGLolK4/r8Sno0XO7LllwRcBYk+RNPbO1p0Hs0+RT7Dq7YBQ
-         IfTFA0X8FfQhKICEe9+Nj61WTB/aV3Mh4JSms0WRNffrotwZGfD1JHILC7ISzuNDaADU
-         VjE4oEkxQd/jyH2K9pu5LzXzkGRfyrmJp5bYh84XV/CW1p1MVAVz2u/x1Wi/fRY9wnMW
-         76CyK/pWj29T6sZHX2fn/ZS7edrf1TCZVCGpR/LSL0IIEHTg5fXaRB/awrwuAjuqDV2f
-         Bx8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736808662; x=1737413462;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cixb4Y39Zru+UTE7GdHbXxiOTHEotTkupoc2vloyegc=;
-        b=ZuuqfAJV1UhR2Ejco8/GQQQ/RG2j0iMTE3F+DJrgsk0QRZRh+5P4lDpR70inZvY0oB
-         jTLuo9c2WUD59c178UzESWl8ns0Yw2jrJ8Hs98Y7CT6CI1/e0TYEOxu+xNhtzWbORcWm
-         WZ1kkKV3O1l7TJ7G2M6M8+H/SW/snyFsNwkyJCerkT1eFEyfICgvAdqFye4EAsLhn+IC
-         Vrs2ZBfhgG+sj/8Z8nqCbxZvgZ2EBorQ5iG0g8n7NiU80t5AdorNDd3/U20l4AnwBhpk
-         97UE+urhOPV83LhyJFCm4eHvrQHQaKeMULcyRo3uFZ+M/P8GOJn1hIDqbUvl1ZEUOx8H
-         nUkQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUINSIOK0AAPP5LsSFAi+HDpMtGe2LYbw93PsaV7sFFjwkxzudTnZtHaHbb3uz1hBMOppw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzFir8DSm3va+1cR/qhEh52yxo9F0U8DliGTB46rALyqed1lPZP
-	FZopgrERZB4WDtRWPqwgv/rjyIH6Q4bkqTbqYm0InF0CSLBawRNv
-X-Gm-Gg: ASbGncsU6EGkTt4emfA07NkbVZw1EFfU5Wh3zp5sHEpg8Z+nCh3xjCvco/u0UgEOIxP
-	Av/q6AFj8EharHQQZuQLHPkmLmunAqfBEhoc3Zsfw0nmcMBecX8TYrVQlmHhv/fTCU1wESFgxd9
-	Ds+pj0Jds/hUPmqui+R2Tzte9ohiKsCMfYy4vkK1Bd7eNRw/mIhwc7SX+i9yTWj9ee6CwBPywu8
-	SkBIPKpKpqlwYM3DuvId1mfyLtejFFko2mz6axObOnocpI938dbH+KaanTjHqk1vyzdKL/9APqA
-	2SaA
-X-Google-Smtp-Source: AGHT+IGz0w9XEzKMwdSZ+huKMzF5vuNB5fvWEhl2gmZEELY67RT3Thva41t3/+9ndYilW8fau7sBSw==
-X-Received: by 2002:adf:8b8d:0:b0:38a:5df9:f86a with SMTP id ffacd0b85a97d-38a872eb1demr15201647f8f.26.1736808661972;
-        Mon, 13 Jan 2025 14:51:01 -0800 (PST)
-Received: from [192.168.1.186] ([2.26.170.204])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e4b8124sm13075737f8f.81.2025.01.13.14.51.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Jan 2025 14:51:01 -0800 (PST)
-Message-ID: <2c43a19c-91b7-45d4-bf95-3157ddfe81d0@gmail.com>
-Date: Mon, 13 Jan 2025 22:50:52 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ljnnq0v6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SwQhnaBe"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 89A38114014B;
+	Mon, 13 Jan 2025 17:52:21 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Mon, 13 Jan 2025 17:52:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736808741; x=1736895141; bh=yHURe0PYzN
+	xWb7eKrnZw/4zAmcfKNJ4zAuG5BGq0x3A=; b=ljnnq0v6KvG07Wcq0zcHsu9q+x
+	sRDeN1ySBKxtxa625CFVZuxaQ393vOxvmR55umLL9u5dRRpMxrAomOywhJSYyVB0
+	Fm/XcYgyFfi05jCXTf/Euq0Ccj3T8NSFlxAULXMoZxCPysXAKx1u06himmJPFmxq
+	5nzlt9lN3p8pCAwVIlwLbCjQOjIWD3lh1U/JZaGN4af7n/fs70lCs4CxNN3OyN0m
+	xvE0dpCQB1yI5uNYkY7ONyz1rxYugFKBKVXC7rFRYKOv4O7gunM8D5oXuKJrcakd
+	725bNWV/8B5p0P0prfwnkky+LnBE3GPfrLyfGTeaRNRQ9k58cwZxIJmMy2zw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736808741; x=1736895141; bh=yHURe0PYzNxWb7eKrnZw/4zAmcfKNJ4zAuG
+	5BGq0x3A=; b=SwQhnaBeT2fvPHX8O/c+iarfybLopNw8rsgrv0lik/tHACEFWXd
+	W2nBUvq5rHrG2kmPsS0siJlRLo56RPsJ/db7eiJN0Eau5VSPvhoJuhTZqAWdxwAi
+	70nnio1nUgixOmkRSwF7QCbDottsXuDkmvE3kAlZSEDuw6ti34cAjxzZe570vsPy
+	aap3QOpIA+tJPFUOjGkN4SphAaLXk/8r/dJ1UCBTJzNm7G2ntQIGzBDa729OnipS
+	9MOR9/vBpVHDCWg0jN0JlsyQ4BeHc5VorFxVWLKj3uQOrduepS2xXOmKABMQLQsk
+	xE8TFGDqvbxLbLQtO1dIhu+rUyYu4TZ41WA==
+X-ME-Sender: <xms:JZmFZ2_hsS7BCRA35uvb70OXclDjGd7fOUh0-kuv3GnYoQk6ATjYwg>
+    <xme:JZmFZ2vSkA7UKlM5c6SkLJOniWLMJ58R24CRIJT06O42pfozG90XVtoSB5rGie7y4
+    7mC4Gpo0XdyxQ2QCA>
+X-ME-Received: <xmr:JZmFZ8ARugxGi49ofdRN0d3WvZMwayKI8xGAtFbmazERfUvwcinMe86L0i9pXLD5Ad3fiVI2hkqKE1nKrgJhLWfTyMeYHvH0KT9W>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehhedgtdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestg
+    hruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhgihhtghgr
+    ughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehmihhrthhhrdhhihgtkhhfohhrugesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:JZmFZ-d6D7nOqGOAwISdjyQUv5MC3k00av3hsMfUrbS3LrjPXi71Vg>
+    <xmx:JZmFZ7OiOo-UiqbDDe8a9kgH6bVJlOVRYl8WMsNYGOsMOsjka2g69w>
+    <xmx:JZmFZ4m0DmKgkG77utkbOnddcR4kWx_NKCXyhEwDbssHz6RNxoQ0PA>
+    <xmx:JZmFZ9uFX6W38g2cr5QNMdb8Ve68KlxRRx0NLJlpp4uv86asAnQ1Yg>
+    <xmx:JZmFZ22n8WPaGVkS6hxPf-9z-nWa5YzrC1zxHpcltpKl6fPqhxJtwFap>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 13 Jan 2025 17:52:20 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH] docs: add vim syntax modeline [RFC]
+In-Reply-To: <Z4WGwCwnNj_XeHiI@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Mon, 13 Jan 2025 21:33:52 +0000")
+References: <pull.1874.git.git.1736802194760.gitgitgadget@gmail.com>
+	<Z4WGwCwnNj_XeHiI@tapette.crustytoothpaste.net>
+Date: Mon, 13 Jan 2025 14:52:19 -0800
+Message-ID: <xmqqv7ui72e4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: add vim syntax modeline [RFC]
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- M Hickford via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-References: <pull.1874.git.git.1736802194760.gitgitgadget@gmail.com>
- <Z4WGwCwnNj_XeHiI@tapette.crustytoothpaste.net>
-Content-Language: en-GB
-From: M Hickford <mirth.hickford@gmail.com>
-In-Reply-To: <Z4WGwCwnNj_XeHiI@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 2025-01-13 21:33, brian m. carlson wrote:
-> On 2025-01-13 at 21:03:14, M Hickford via GitGitGadget wrote:
->> From: M Hickford <mirth.hickford@gmail.com>
->>
->> Git documentation is written in AsciiDoc. This format is easily
->> mistaken for the pervasive Markdown.
->>
->> Add a vim modeline to help editors identify the format and provide
->> syntax highlighting, rendering and autocomplete.
-> 
-> I don't think this is a good idea.  To be clear, I use Vim and Neovim
-> (mostly the latter), but I just don't think we should litter our project
-> with editor-specific contents.  I know Junio uses Emacs, and other
-> contributors use other things, and there's no uniform syntax that works
-> everywhere.  (Nor could there be, because different editors have
-> different names for different languages.)
-> 
-> We also don't set editor-specific ignore files in our `.gitignore`.
-> Emacs users are responsible for ignoring backup files in the global
-> (per-user) config, Vim users for swap files, and so on.
-> 
->> This makes editing the documentation easier for prospective
->> contributors. This is particularly important because new contributors
->> often start with documentation changes.
-> 
-> I suspect prospective contributors who are moderately proficient with
-> Vim and its descendants know how to do `:setf asciidoc`.  If this were a
-> different editor that were easier to start with (say, one that didn't
-> have tons of Internet posts asking how to quit it), such as VS Code or
-> even Emacs, then I would be more convinced by this argument.
-> 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
 >> A simpler alternative could be to rename files *.adoc. This would have
 >> the advantage of being recognised by even more tools.
-> 
-> This I would be in favour of.  I use this extension on my personal
-> AsciiDoc files and already have appropriate configuration set up.  In
-> conjunction with appropriate settings in our `.editorconfig` file (to
-> configure indents properly), I think this would be valuable indeed, and,
-> importantly, helpful to users of all editors.
+>
+> This I would be in favour of.
 
-The more I think about it, I prefer renaming to *.adoc too. It's easy to 
-identify and obviously distinct from Markdown. GitHub and GitLab render 
-adoc files beautifully [1][2]. Visual Studio Code offers to install an 
-extension with syntax highlighting and previewing.
+Sounds quite sensible.
 
-The vim modeline had no effect in Visual Studio Code. It could also be 
-intimidating.
-
-[1] 
-https://github.com/couchbase-guides/how-to-write-a-guide/blob/master/README.adoc
-[2] https://docs.gitlab.com/ee/user/asciidoc.html
+Thanks.
