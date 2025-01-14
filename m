@@ -1,133 +1,109 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21A81ADC98
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 11:03:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A4120F97E
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 11:14:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736852607; cv=none; b=PbScxIRsOb+V+w8zrJZW6415CY9YXClnAe+v4OHTJ8DBVeX8i3+seAH1e9Q97r9Lh1xfgqtcsOFZCT0Bf6/YrYCvff91KqiQr5CnAg7D8Fucn8M3BV++F720wII2JsE0uSBR+tQF4X8ii2RaJNv84PDhXzdCo1QAQGGSQgLt6ag=
+	t=1736853275; cv=none; b=mFrpifeoPZ5mTU6hgMsIU2c2ptBx1/xk/la+sxmd1NaSE3ZH/QrxxWZ3g0H1emR2qi9S6gilCWBOAm+D27aaKZAvH9RV4XDax7wZwuFg0i6dlccgXqxCfzwJz2DjisBTdTxO1lmQARdzyc3OrfkGUjPQlwyaStY0+kLbsf+V1Fk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736852607; c=relaxed/simple;
-	bh=naUb+zT3IEIu/yI51OryUG/CCqZiOsgaNuzPs9nkzdE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pysCyWnubb7Tcjn1eprIN4420cL3SENJAcZgb+FvcYGcXlksmqWtU0iGtHzGm/Xbb7PL3Bv3VIOxDnMJQ9Q18Zxa3ehkOrEKi7hIR+m1BnRk/V3tvL9PEQwQ9NzSZfIyjze77vq9RZmK8MU6yRcXE5toqJ+14zC3ntLkb5wvS7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VrWGdNtJ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1736853275; c=relaxed/simple;
+	bh=zsphjrcHp/sEQ9XIGG/l6k2WQO/28GdZ82jzRb+s23U=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=NbHzlGKLLQ+qe0OpKZ7hCNt5qRPDCIsy97bMMaOpk1QUlwN4HZjJUnM2HsE5M6TcBYVIzEnfkZZOZyMb6YOS0Mlu+44rMDMaX+fAl7q0zXrukW2MrXhsL77TDYSNZ91FNwJr1ZpHmHdyotyEVDvLyaKBuEfIXKJ1BznC8VdBppQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=SNXsMvgf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XNc2Vtyf; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VrWGdNtJ"
-Received: (qmail 27844 invoked by uid 109); 14 Jan 2025 11:03:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=naUb+zT3IEIu/yI51OryUG/CCqZiOsgaNuzPs9nkzdE=; b=VrWGdNtJiSK9n/TWhXLLbkHahUPHq4g9p13u9bRwX/m+aj+MOE5hG6/NOFFdj/+cKCuQ9QLdaaFdwjUWws/selShZEjn9oOX82BGrijANKSAW7tnOU+/eH2rFfA9bIdnjESX1q2r4A6NRHNMoSH+rYCb7TIp7kO2459jkGaochy8Do2LnXBhTfwEGDqxF4jiKUd92GtX05ODgLytcetXN9dMjRORCkO//CwVXb524lomzJqxV2W5KIXZqayZ6xuUVNWtEVoeHLrEan2s0i0jzV2WunFthXv7PKMR5Why46AK6e6Jn7unvWHPE/1po2ZNBaFSn10wqRu6VScPSU63qw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 14 Jan 2025 11:03:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5622 invoked by uid 111); 14 Jan 2025 11:03:29 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 14 Jan 2025 06:03:29 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 14 Jan 2025 06:03:23 -0500
-From: Jeff King <peff@peff.net>
-To: Josh Steadmon <steadmon@google.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	James Mills <prologic@shortcircuit.net.au>
-Subject: Re: Git v2.46.0 and --allow-multiple-definition linker flag
-Message-ID: <20250114110323.GD882468@coredump.intra.peff.net>
-References: <CALGqR9+bH3nMrGqPQ18aqs-epSHRFQOtnd6Da55=KrtSu+Jrkg@mail.gmail.com>
- <xmqqbjx4bgae.fsf@gitster.g>
- <xmqq7c7sbfhi.fsf@gitster.g>
- <egtxf4f3dufiz56g276lt4qtediarj5kkuqbv222edrwcgf5dk@ocnbky74w3tv>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="SNXsMvgf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XNc2Vtyf"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id D3B6A13801EA;
+	Tue, 14 Jan 2025 06:14:31 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Tue, 14 Jan 2025 06:14:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736853271;
+	 x=1736939671; bh=zsphjrcHp/sEQ9XIGG/l6k2WQO/28GdZ82jzRb+s23U=; b=
+	SNXsMvgfQZPpmD93HSTNywqvdR4nT/fOyXlxgLshszIrgb5gwxDPXp9zQ8Z/86ao
+	0A0HHMtecBwwsAUpu83JLer2LsL0F5ILK57Wu3jd+SOAb38KQCCXcFzaJrX3/RKP
+	PNNOdECz8FahR1xN06mSXFfLn8RQyDV+7w1mhHOuNgmZSymWxUirnMlDcS1XmRGg
+	zxCWL6gaKy498GSl1Wx50YpWPcyr8pq77hcmkuxwY82EEwtCGQ3Rj+GgCMkmBn3B
+	KAhW71IYJg3142cWKV0HJDvzTYvxHbTQxB6x1lZkV2RmVuPH5u6mq4fgE9v/UMoa
+	hC2RzlhCJ7yYouvtxHq3nQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1736853271; x=1736939671; bh=z
+	sphjrcHp/sEQ9XIGG/l6k2WQO/28GdZ82jzRb+s23U=; b=XNc2Vtyf9JzIU2uVQ
+	wcZ7huKPQYzNaFzIl0dZnUvq2zJsrJel9DeLD64rtDLid2/5BtTuQEI+lnyh3Jjx
+	6sy7LryzZvxj7ngnuR4cKqXxLEHXxJRGiSfCKxFCSNXEjd2I+gNkr0Koc0DJ3qDB
+	c9zk53Mr2iE9dlv0l7ttakuuxG/8q24IpjDCXxRiPKaUdCsWGFX1wDfCI32LNUyv
+	x4sOJMM60BEjeYuRaBA29UX7cIzste7Y/0EYLB3lPP3mUKRxhoOddum1fgBvw4n5
+	fbRsmiCiZ8Ny33CJOmWgQJOzR+HGJYCCIjX+xCpR1Lix4ofHpPBc5aCMhymB8oR+
+	9R1LQ==
+X-ME-Sender: <xms:F0eGZ8rTr_hgthZpr17z1dF2maRL-t5rk5KdP5uFnmG1Tvf-7evCX04>
+    <xme:F0eGZyrFUo2NzNvQYUyRAlX-n751PUnAfBslTihuIRPp8_QrH4xrN05XCj4OBq-QB
+    _pY7uUBgNQ2BCfiHA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgvdehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefoggffhf
+    fvkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfj
+    rghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomheqnecuggftrfgrthhtvghrnhepffeifeetgfehkeegieetudejgfev
+    hedvveeileefieeitdettdfgudfhjeeigffgnecuffhomhgrihhnpehkvghrnhgvlhdroh
+    hrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspg
+    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhhvggsohho
+    khhofhhunhhknhhofigrsghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:F0eGZxMHeq8GAK0VE5_Z0wuikOugaxnydnu1cVGTBMYOIVsBCbcz3Q>
+    <xmx:F0eGZz6Bt50msOPiGiJtDeW15FHRRtsfPfsCnxUNv_eiF1tMP61gXQ>
+    <xmx:F0eGZ75_qyq4ogZOJKyjoUSaN5Pg1EFaFIuOi0Uic1Sc5atZg3NTYQ>
+    <xmx:F0eGZzi02Ed58YigPbY2T-m9_oJYE-w9vlN17kz5wdflbAIPTSVqQw>
+    <xmx:F0eGZ1Q2OpkJgE2trQbvUBxZ_FPP83dAVurJ_OcAAYqZep5oMAAbyP51>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 930FE78006F; Tue, 14 Jan 2025 06:14:31 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Date: Tue, 14 Jan 2025 12:14:11 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "tao lv" <thebookofunknowable@gmail.com>, git@vger.kernel.org
+Message-Id: <85491d3b-336c-4b48-b16e-962012b4f5f7@app.fastmail.com>
+In-Reply-To: 
+ <CAFePT4w4hHZnS0TXGA6-_sA-Vp4f3H_sY2Ue1XreFM3SEM8i2g@mail.gmail.com>
+References: 
+ <CAFePT4w4hHZnS0TXGA6-_sA-Vp4f3H_sY2Ue1XreFM3SEM8i2g@mail.gmail.com>
+Subject: Re: Feature Request: Allow `-` as a Shortcut for `@{-1}` in `git diff`
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <egtxf4f3dufiz56g276lt4qtediarj5kkuqbv222edrwcgf5dk@ocnbky74w3tv>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 13, 2025 at 09:54:07AM -0800, Josh Steadmon wrote:
+On Tue, Jan 14, 2025, at 12:01, tao lv wrote:
+> Hi,
+>
+> I would like to request a feature for `git diff`: to allow the use of
+> `-` as a shortcut for `@{-1}`. Currently, `git merge` and `git
+> checkout` both support using `-` as a shortcut for `@{-1}`, and I hope
+> this functionality can be extended to `git diff` as well.
+>
+> Thank you for considering this request.
+>
+> Best regards
 
-> As Junio says, a short term fix would be to build with
-> LINK_FUZZ_PROGRAMS="". A better solution would be to make
-> config.mak.uname smarter about whether to enable this by default. I see
-> that we use "detect-compiler" in config.mak.dev, would it make sense to
-> check this in config.mak.uname as well?
+For what it=E2=80=99s worth: a patch to add this for git-branch(1) was r=
+ejected in 2022:
 
-It feels like the original sin here is defining main() in our library in
-the first place, if there are programs that may not want it. But we
-don't actually put it into libgit.a; the object file is just mentioned
-in the $(GITLIBS) variable of the Makefile.
+https://lore.kernel.org/git/xmqqedwgfpkr.fsf@gitster.g/
 
-We could split that out like this:
-
-diff --git a/Makefile b/Makefile
-index 97e8385b66..f098ca5a5c 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1371,7 +1371,8 @@ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
- 
- # xdiff and reftable libs may in turn depend on what is in libgit.a
--GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
-+GITLIBS = $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
-+PROGRAM_GITLIBS = common-main.o $(GITLIBS)
- EXTLIBS =
- 
- GIT_USER_AGENT = git/$(GIT_VERSION)
-
-and then depend on $(PROGRAM_GITLIBS) as appropriate. Or if oss-fuzz is
-the only special case here, then perhaps we could just teach it to
-suppress the extra main:
-
-diff --git a/Makefile b/Makefile
-index 97e8385b66..06431170de 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3852,9 +3852,8 @@ FUZZ_CXXFLAGS ?= $(ALL_CFLAGS)
- .PHONY: fuzz-all
- fuzz-all: $(FUZZ_PROGRAMS)
- 
--$(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-LDFLAGS
-+$(FUZZ_PROGRAMS): %: %.o $(filter-out common-main.o,$(GITLIBS)) GIT-LDFLAGS
- 	$(QUIET_LINK)$(FUZZ_CXX) $(FUZZ_CXXFLAGS) -o $@ $(ALL_LDFLAGS) \
--		-Wl,--allow-multiple-definition \
- 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
- 
- $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_OBJS) \
-
-You'd need two fixes to go with that:
-
-  1. common-main was originally supposed to just be about overriding
-     main(). But it has since grown common_exit(), which does not have
-     the same linking properties (we override exit() calls at the macro
-     layer instead). That should be defined in libgit.a somewhere.
-
-  2. When building the test-compile fuzzers, now you'll need to
-     provide an actual main() function. I guess we can determine that by
-     the presence of LIB_FUZZING_ENGINE? So maybe:
-
-diff --git a/Makefile b/Makefile
-index 97e8385b66..ba3faf9b9e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3852,9 +3852,15 @@ FUZZ_CXXFLAGS ?= $(ALL_CFLAGS)
- .PHONY: fuzz-all
- fuzz-all: $(FUZZ_PROGRAMS)
- 
--$(FUZZ_PROGRAMS): %: %.o oss-fuzz/dummy-cmd-main.o $(GITLIBS) GIT-LDFLAGS
-+ifdef LIB_FUZZING_ENGINE
-+# assume the fuzzing engine supplies main()
-+FUZZ_GITLIBS = $(filter-out common-main.o, $(GITLIBS))
-+else
-+FUZZ_GITLIBS = oss-fuzz/dummy-cmd-main.o $(GITLIBS)
-+endif
-+
-+$(FUZZ_PROGRAMS): %: %.o $(FUZZ_GITLIBS) GIT-LDFLAGS
- 	$(QUIET_LINK)$(FUZZ_CXX) $(FUZZ_CXXFLAGS) -o $@ $(ALL_LDFLAGS) \
--		-Wl,--allow-multiple-definition \
- 		$(filter %.o,$^) $(filter %.a,$^) $(LIBS) $(LIB_FUZZING_ENGINE)
- 
- $(UNIT_TEST_PROGS): $(UNIT_TEST_BIN)/%$X: $(UNIT_TEST_DIR)/%.o $(UNIT_TEST_OBJS) \
-
--Peff
+--=20
+Kristoffer Haugsbakk
