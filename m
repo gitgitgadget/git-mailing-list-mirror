@@ -1,130 +1,150 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCFF19007E
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 22:21:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FDC26AC3
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 22:40:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736893295; cv=none; b=m4kf3rVF2UJMI7sayUD5deY5UdJyV6eGJVlocQCB1I8VUcMZS+rODeWJZCogHF56R0VJBDCy8kyirqean7iKa3Eg3g9C+efADT9QfFj0YSEpGiqXZgNT1hKrrspfrv+GKO3NhrMJ7bvtHVMLpan6SWiQxnebqm7bGql4Ssro6zk=
+	t=1736894433; cv=none; b=qqEZhPP9e2uKpUxNsSfduw6w6nrJ9rUCyxj3Lr7SAHyytC1yYp9+OZLoeH/AHgF6dTfDTroOo8OSIgIisSrDb2Fb3dYcM773a3F/hBMa1gwgmqcU0Lktj0u6V9v+CXJpWP9tOHrrkKQdHtz/Qo3NY/2BzkMRre0254T+lft8eOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736893295; c=relaxed/simple;
-	bh=zVE7tqDUDHUcJRZpfWd51VxhQ5PCh3aZLJKonBDOvRU=;
+	s=arc-20240116; t=1736894433; c=relaxed/simple;
+	bh=ssSrwb+n/Y9B/dGjKoddFAzDzLr1UoSXUxovzOS6TH8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OhHLSHjyuD8HYXYhzybShWJyxdKHUHIbvF3mXUli3F/dKzKZqVuYfJvTMNzXBSYkWhfRe0/bSxvnj/3x7DlzH9ZN1ccy1r3vmKuwYI+EVqQ8EPzoW0dWSBzg9AEjfs/iBvymzDZBG0dP8oU/AYXxz7QVblwgAb1wLAHyF5En40c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E8qRB14/; arc=none smtp.client-ip=209.85.218.53
+	 To:Cc:Content-Type; b=kbzFNMXYNG9RBX8jXl9Ri0ce1m2xGdbnsEXnTC7BMlSj53gdRm71QNTkZ0hr+o5tRR5mN0KawwK7tB5F2B2kVlVbA4ZQhLZH+7zYXR6yzBLB8P9qVn1BAfHocrK4tECFVfcCfzHz4xSH1lQMDka3dHqk4rvZcxQN6f5T+lGj80w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MxXFjOAL; arc=none smtp.client-ip=209.85.219.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E8qRB14/"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-aa684b6d9c7so1056702566b.2
-        for <git@vger.kernel.org>; Tue, 14 Jan 2025 14:21:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MxXFjOAL"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e46c6547266so9098472276.3
+        for <git@vger.kernel.org>; Tue, 14 Jan 2025 14:40:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736893291; x=1737498091; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=h55MuiUZTr1nFkeWKNoM6IrM0Z1rB7cekyeGnbAORIY=;
-        b=E8qRB14/SBbfCNSODLHyfJ58y9zF5n8pcNlcypI3hJACjEPl+Dv+AhNdURpMzxKSgQ
-         uCGbXHaTT8IaykNVLyKE4j8sydnh+PqztGddP6LCvn53tS2Ty6xlSDox6MuQSXsm5Hxq
-         TUO7dTZoqH+y0BP2yxu+sZ+E50i31ZkC2jbMJUPsAipT9sfxq/yBwGxNvpY3vQlh7EeA
-         TlqTFAmWbOWYI/Na0DLE4hn6as0IKBBR+zm+J3ks6gmUjESdOLHJTt/NJ9LTEuncwJPJ
-         jMkM7VdL4+p/sz3zE5OrlQNEpyF1DjhOwl0gUOlzqdzGQ/0F2VQobV65YJHT+BWcvg7c
-         yPNQ==
+        d=gmail.com; s=20230601; t=1736894431; x=1737499231; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=r6yDmAcfiTCpeWIB/r59vL10lL6xjOABuVj4sKeN2GM=;
+        b=MxXFjOALbrZbpOO/kodfIeuPsbhFMOkagmycRVeeEL3VmsvV+1H15NRCV2kHiAMq8Z
+         86Fs1OVe1VnBnlJ8sUA49h2NVppTDTdiXGgwxchjnSjEg3xKnoeGAoVgtqdd2ojQXq3W
+         MUv7yiuwC3ppBXJTTlUs7M8EokZ3eb5YXgUbJ0eVBwbuGg2dZu5bC/w7rK61yneQx//S
+         p25kbY6iGRNqPoDd3/tQ8b+++pQ+EHtot8qSIR8+h2om9GfUyfDhEPosa2Hb592cO7+q
+         b1j8R7E2Ou7GaFNOAWRTMv94JRtPSnxkY4IUKjUTYD6+CLYQ70d85CzV2dLZ3Il6eDli
+         Hq3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736893291; x=1737498091;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=h55MuiUZTr1nFkeWKNoM6IrM0Z1rB7cekyeGnbAORIY=;
-        b=uEwzeXEGiXUfGE9pBVIJJ2yWKP8kCo3MbLxtZWC8VZAzMPn2xHyFb5pSZo7rUWZ/CQ
-         QyZIvvvnLhOXbzqmtwW+bxELLHo7QuSJqKFIi11YhmqaTGLn/DpieCzxvmzMih38ESGb
-         6urRS3jn0jC2Y6BKAygfhx6p6cFY3evqGbBE523WhHxsJobHh8D9gHTZ6ktdrz/bOjjG
-         7whGGW9Af5KH2hKUFOTzgon8r/2plcjCqk5gc6ZC3zqLKWeAHW2jt2SMKiLn2+pl+ZjA
-         VEfpww6lt8T/EtZB9E5D3QrGA4mnokoCYfkKEH7KSxG5PHzfdI+hKDVIC8LeELIhWVaf
-         d8oQ==
-X-Gm-Message-State: AOJu0YzEsfw77nfQX97ruh/Na9TLpkWFp/bFScmIWFusyrpoDAZQuB8O
-	rHY46wHOgH/eJY7h6yiJoWnabvfLiAsBcKPXDpZ7S74DBxRtb+1C5xBx8tACTX5vFo5ISChg+8x
-	OZO3j0it7WcBw8g2h70AZdVc2PSJ1028blus=
-X-Gm-Gg: ASbGncs3mwlMsSTzZdSk6p3BRVrupHTNWwuS9xUbNR37qGUXVgSNBIVf/Q+jq8aP1PM
-	AtEvTNwOjFiEqLqUiokqRVUK8+54isMhjhRznkUCaC6IAsESfFNDvMxDrkZE/nVGPAkhntg==
-X-Google-Smtp-Source: AGHT+IFVzqgscXTSAiWuzWEG3wtyPGzrQE3OoCsJZ/28vY+s5P2YAoIxJzCH4ObrAcEg3iWlV9J7ENRtg3lealcNefo=
-X-Received: by 2002:a17:907:7e83:b0:aa6:9eac:4b8e with SMTP id
- a640c23a62f3a-ab2abc6de91mr3037778966b.41.1736893291384; Tue, 14 Jan 2025
- 14:21:31 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736894431; x=1737499231;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=r6yDmAcfiTCpeWIB/r59vL10lL6xjOABuVj4sKeN2GM=;
+        b=Y6IvEqjtBR3jemzgWAf/jTxvSsrkTV5W3OQZT9rAGLOVUe39lnLxPU1Fx0RRkVcgpF
+         9KzE7d7Ku/5+jrZhRbCsyIsLkb/W6PwtvO627+pt4fVf8tm1FYfksGfW4l3jxx0urazJ
+         8kO4LK9ufsXyFHDefbhea+gwOOIsbe078VTnm5yfvwhOAnhWJ5HOomQmfJQ0nkobc5IJ
+         +jMOLAABMIc0H4qItd9FmFKbyxR7WWO5kbZ49sRKkJOhnoUZvk2aW+U1PyBTexkCELq8
+         +89XopJqOgQlZSYmXekstnchOevl72MympLKT9c6wa/MysWF2XyKsMgO//oMBddugMlA
+         aAGA==
+X-Gm-Message-State: AOJu0YxKqxhpb4kaxl+UbyYpQSMbJbg9qd3jhHdvA0KQi68e9iAqx+p5
+	3qz+eZxort7iRHOClCAcFWeC7a1eeJ3c2JAClHMPvUQZgkAqfQuQit5FUeEKuOB0vbyjLdnzd2X
+	QbuYdZsnAZG7fjP+qsvWxvmtmslQgEazA
+X-Gm-Gg: ASbGncuo2GpqGzVxUV+wLF9PAtdKqd2wESLQCph93g4t2IsQsUbkKwPTYlXzuIcswAY
+	fsmd9cB6wIJVaMrWTpiyI1cWvreo28RO5kbdzhIVGNv9KW22Qb+Bbzx+Mba82BT8ST1HwDA==
+X-Google-Smtp-Source: AGHT+IFJm1dTHwoDL5uhSU6nAuZVNiMAedjxuJD0uvonPIYVR6VzbNuMJ6ogJS2JZ+WpZRypSPB6G2AAOBe1UsZIa2o=
+X-Received: by 2002:a05:690c:4d06:b0:6ef:a5bf:510b with SMTP id
+ 00721157ae682-6f5311f87bemr215731537b3.1.1736894431026; Tue, 14 Jan 2025
+ 14:40:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <19461b87a5c.5a2ea74016716.8214238482389812984@zohomail.com>
-In-Reply-To: <19461b87a5c.5a2ea74016716.8214238482389812984@zohomail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 14 Jan 2025 17:21:20 -0500
-X-Gm-Features: AbW1kvYR-Q1YoC9qAcxDmlNsbM250lxKXz_lgUlqngrSJu0uvrRa1mJG6jPu1l0
-Message-ID: <CALnO6CAzN1oeT4tMjJ1Qm4dW0xdVkVKHJ39oJTX8R8E614FH6g@mail.gmail.com>
-Subject: Re: [bug] "git bisect old v3.0" takes 21 mins on Linux repo
-To: Askar Safin <safinaskar@zohomail.com>
-Cc: git <git@vger.kernel.org>
+References: <CAFAcib9rWO8WFmaAwf+1Ng85+N7O3Y=QM6wG5xEz0r4tGXJ8TQ@mail.gmail.com>
+ <CAP8UFD206mL+CYxOUKOPWFj7tX1Y79Moc7UjvH4BsLVLbAk-JA@mail.gmail.com>
+In-Reply-To: <CAP8UFD206mL+CYxOUKOPWFj7tX1Y79Moc7UjvH4BsLVLbAk-JA@mail.gmail.com>
+From: Josh Bleecher Snyder <josharian@gmail.com>
+Date: Tue, 14 Jan 2025 14:39:55 -0800
+X-Gm-Features: AbW1kvaKVsMaEc1-jZD5fYZDTrBqEZv7CDCTKNJqvpByNeC3UYb6N_vX_3Hw79Q
+Message-ID: <CAFAcib9cJOp26J=PxU3XwmLT0hQVqCb8vcS7MdGpFd5TNVfDzw@mail.gmail.com>
+Subject: Re: Should 'git replace' respect GIT_NAMESPACE?
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 13, 2025 at 5:11=E2=80=AFPM Askar Safin <safinaskar@zohomail.co=
-m> wrote:
+> > I was hoping it would, so I could have different replacements in
+> > different namespaces, but it doesn't look like it does as of ~now:
 >
-> Hi. This is bug report. "git bisect" is unacceptable slow on Linux repo.
-
-That may be a bit inflammatory ;)
-
+> It might be interesting to know what you wanted to do with different
+> replacements in different namespaces.
 >
-> Steps to reproduce:
+> When replace refs were introduced, there were discussions about
+> extending replace refs to be able to have different sets of replace
+> refs used at different times, so that it would be possible to have
+> different "views" of a repository. For example there could be the
+> following views:
 >
-> =3D=3D=3D
-> d-user@comp:/tmp/t$ git clone git://git.kernel.org/pub/scm/linux/kernel/g=
-it/stable/linux.git
-> Cloning into 'linux'...
-> remote: Enumerating objects: 13079335, done.
-> remote: Counting objects: 100% (153/153), done.
-> remote: Compressing objects: 100% (108/108), done.
-> remote: Total 13079335 (delta 84), reused 70 (delta 45), pack-reused 1307=
-9182
-> Receiving objects: 100% (13079335/13079335), 5.18 GiB | 13.72 MiB/s, done=
-.
-> Resolving deltas: 100% (10454171/10454171), done.
-> Updating files: 100% (87234/87234), done.
-> d-user@comp:/tmp/t$ cd linux
-> d-user@comp:/tmp/t/linux$ git bisect start
-> status: waiting for both good and bad commits
-> d-user@comp:/tmp/t/linux$ git bisect new v6.13-rc7
-> status: waiting for good commit(s), bad commit known
-> d-user@comp:/tmp/t/linux$ time -p git bisect old v3.0
-> Bisecting: 535608 revisions left to test after this (roughly 19 steps)
-> [62606c224d72a98c35d21a849f95cccf95b0a252] Merge branch 'linus' of git://=
-git.kernel.org/pub/scm/linux/kernel/git/herbert/crypto-2.6
-> real 1293.32
-> user 1291.70
-> sys 1.41
-> =3D=3D=3D
+>   - the "default" or "canonical" view where no replace refs are used,
+>   - the "timestamp fixed" view where some replace refs to fix
+> timestamp issues are used,
+>   - the "authorship fixed" view where some replace refs to fix
+> authorship and committership issues are used,
+>   - the "build fixed" view where some replace refs are used so that
+> the build work on all commits (which should help with bisecting),
+>   - the "old history" view where some old history of the code (that
+> was not imported when Git started to be used) is linked by some
+> replace refs,
+> etc.
 
-FWIW:
+That is indeed roughly what I had in mind: a bunch of different views
+of the repo.
 
-$ time git rev-list --count v3.0...v6.13-rc7
-1070175
-git rev-list --count v3.0...v6.13-rc7  13,57s user 1,41s system 96%
-cpu 15,466 total
 
-That's a large number of revisions to bisect. Further,
+> > $ git version
+> > git version 2.47.1
+> >
+> > $ GIT_NAMESPACE=foo git replace
+> > 751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> > a9dfd084086ee4d6bf00a33b0976f28c0997457e
+> >
+> > $ git rev-parse refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> > a9dfd084086ee4d6bf00a33b0976f28c0997457e
+> >
+> > $ git rev-parse
+> > refs/namespaces/foo/refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> > refs/namespaces/foo/refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> > fatal: ambiguous argument
+> > 'refs/namespaces/foo/refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f819':
+> > unknown revision or path not in the working tree.
+> >
+> > $ git log -n 1 --oneline 751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> > 751eeb3 (replaced) add go.mod
+> >
+> > $ GIT_NAMESPACE=foo git log -n 1 --oneline
+> > 751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> > 751eeb3 (replaced) add go.mod
+> >
+> > Is this a bug in which case I might hope for a fix, or is it working
+> > as intended?
+>
+> I don't think anyone mentioned using both namespaces and replace refs
+> together before, so it's hard to say.
+>
+> I think namespaces are considered a server side thing to avoid
+> duplicating objects in the common case where different users have
+> different forks of the same original repo. And namespaces might not
+> even be used much on the server side as there is the "alternates"
+> mechanism that can be used for the same purpose. Also on the server
+> side, you generally want to disable ref replacement entirely as it's
+> just simpler, and most often what users want, to use the default view
+> without any replacement. So it might just happen very rarely that
+> people want to use both namespaces and replace refs together.
 
-# --force needed because my filesystem is case-insensitive :eyeroll:
-$ time git checkout [--force] 62606c224d72a98c35d21a849f95cccf95b0a252
-git checkout --force 62606c224d72a98c35d21a849f95cccf95b0a252  7,94s
-user 18,54s system 96% cpu 27,360 total
+Got it. Thanks.
 
-Using pathspecs or a smaller commit range should help speed up the
-start. (On a recent git, the helper is gone, so I'm not sure where the
-time is spent=E2=80=94but I do notice that `git bisect start v6.13-rc7 v3.0=
-`
-is slow enough that I've killed it rather than wait.)
+Do you have suggestions for alternative mechanisms I might use?
 
---=20
-D. Ben Knoble
+I want to be able to easily enable/disable a set of replace directives
+for the purposes of running other git commands, without globally
+altering the repository. Otherwise I have to worry about locking,
+cleanup when something goes wrong, and state visibility and
+management. All possible to fix, but messy compared with something
+like namespaces.
+
+-josh
