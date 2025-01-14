@@ -1,123 +1,139 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A05720C48B
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 18:15:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E96D232458
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 18:19:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736878512; cv=none; b=nPdRxPUOI6JEqDh/g5V85Z4KPFYBKk/8U0K19jgIIbBS5TT8mGY7nvUzwzFI+jW82AXf+BmA7BlmdNbdkGNXPUv49zKviRUmwbDJ8Pjj/87cE+atEC841mNdQw8LrtCTb58BrNKvq64HEn15EF6dRJ+wTbeNYj+wLPwByXQa1kw=
+	t=1736878777; cv=none; b=CA8UOwhwPa6Q5a15y0Oug0H/7ToXv42IN8/ke1vbgvDzRqPxuiI0D0g4w/hJlIdOLwle6jHXHUrxVqaE1nmXo4JLEoMznLtC+UWGi2fxjFIvbSNpSPJwv0wrA5zYywT1cwZISI1yB3zuOvq+qfgpxDdxBtYIbYkb+YGMR8764s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736878512; c=relaxed/simple;
-	bh=ny3R0XQwBlzui/VTTBc8npBUM+qMOfzGxlIiyZs/V/k=;
-	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=HGom9fdG7yp6kw4apzvyE3BRzeC8bR4yY1aRLl8nAT0j1R2Z67pqWbH9nJrXgQU8wl8Dk2Bf36rhXcw4ROXRTyFMZfWkIZMNJ0kzfVXFKz6mKS4e5n1BD/3x3shuJ1X21m9aqeypTA9IDwOhv1gtkVfKxQGWSVsuP94Q4n2TaVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=L8igp2tw; arc=none smtp.client-ip=212.227.15.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1736878777; c=relaxed/simple;
+	bh=GPm1WQr1tFPfrQKjOmsHg/LHLez+DPEGKOxLPlB4h+Q=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=lIvwavyRKldv24SYLo4kuVXofnejwp4hS27IDHBIjTA+sRl4yFzpA/xdnLITFwYZJ4RzIarjLRLnDnp4CxRcKQg3n21zVBDAD7UdoGH2UNYYaTdK5n1GBNDWeQ4Uej9T28IQKiN0p2rT0En4+grbfPVzBb9KqmJvcjEJCv7Sq2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gtwP/eWu; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="L8igp2tw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1736878507; x=1737483307;
-	i=johannes.schindelin@gmx.de;
-	bh=MAcKJcP8gKD8kzILLJREdRIsacTcMKo1ojTnolCdA2c=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
-	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
-	 message-id:mime-version:reply-to:subject:to;
-	b=L8igp2twekqG9hL2cctCnbcayeAzagrK6ObcZpYdBeKz9xc7cPdGSBV6CZgOR+ZI
-	 lggvpqu9vWINCSBWULzDg29zEHgcWi/qmov4HWBbnes0pAsHDqEYymJB44preIlBN
-	 hqTLdLKbVYa1bCWQ+FpJiVAtlf1n3LDZhSDe+8x7KzLTFl/mTSkUg5d5V+N2skF9L
-	 2AGwBT/8kxjiwqy+vDa9O5+O6pARPTMoFfz1dTpLE9Hum3jSJCYjtINUYr1Euv5EO
-	 e/dvFQA3RmZGMKMidaGh8BQJPZZBihyxab32Fp1u+WR1YHSNDcU7d0NWix3rQl/du
-	 suJfWQ9dmdN4pCGlhA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.189]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MEUzA-1tmabx1mMk-0074ao; Tue, 14
- Jan 2025 19:15:07 +0100
-Date: Tue, 14 Jan 2025 19:15:07 +0100 (CET)
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com, git@vger.kernel.org, 
-    git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.47.1(2) (security release)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gtwP/eWu"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3863c36a731so4300679f8f.1
+        for <git@vger.kernel.org>; Tue, 14 Jan 2025 10:19:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736878774; x=1737483574; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yHVxZps+7w2UZ7B5Q2wGTjbrKeE24cfeetz/UW/pcdA=;
+        b=gtwP/eWuz81xil5o9NC/rz1bq0xIdleXSSxLwduz2W3TTxGNiGWis2rOOLzeOsuB/k
+         pxSr+LrBZaH+rMK1lh0bJ0AgzA0yLF4VUdyPvLHpHr8gp3HhtAn5/41IXg/uenlchi3+
+         TA8htoHHc7B17bY7FYK4Jiinuu6zvoSsQkXwCfl4UEHIRFXEQMcQxkura2znM9G5p/Cf
+         gYdE45YeZ8kYSX4ulZf/H6uXICU0kDyxpcLrkCOawAXjeb0cALjDpH6uBbZvYh4NeOzn
+         G0xxE9o1PUEimlao+qoXtNFLek6qgmL+/XfTc0TyYkJ4s6xkXwqFTJXi31dXW0oO+qan
+         j2lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736878774; x=1737483574;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yHVxZps+7w2UZ7B5Q2wGTjbrKeE24cfeetz/UW/pcdA=;
+        b=qhkgKBGdAvNOmi8wCwhpGfBXmLyLeziemI2yQ4y8n2IcLQyfjWqXgvKo4M0jwvdEki
+         YSLPEX05eDNlF5XgUDjLbnsOIsB0aCm9HK70nGs+5uMoEbT/zcnPb/kmiPYR9OLokZjM
+         /ifU7noGpmGHpHm8MmOM2VTQz60D5XanSKdzqLmsFVfHjLLwa4yzgL8sinYig9nfZakn
+         Zp3coBhnSW47I5kBOtLnoak8Yj5SBqHfynTD3mWFjfdIYcMo/0qWOqZDuO3P0I19Dg2R
+         RMimhHudWqjc5Rn88ij2kfWFLOXHGeDL7eQ7koVqz56hq+Fw61fmdWoXtutnUQKScIVz
+         yxqg==
+X-Gm-Message-State: AOJu0Yye0BdHkJp4bWT03R7VV5MllEJmcJ3iNPqg4y/rVz77GZCihM4Y
+	eAUQN23T2LxTLt+vyV4SXoIUkb5i2QPF0ine5QFwCYP1acRpCZbGE0YQuA==
+X-Gm-Gg: ASbGncuNsWNlLvU5EZp7tPEZ+NBPYu7b3A/znzigQAJ92Zo7jkzN093aQ8/zntbbicB
+	JOejIh0RWT/SDS/VfwXGOE8Uo2FsNl5varoyh6+1r4PXHfYFi3sZ4fqCo6Jvpifm3QTB/6vTkcf
+	8XrWcbuwKrug4pcDt0W6SD+l3Pb9YZDs34/IbgHYxlinaRYjWw5QYRGx8OlZlQCPG+zzPyIqtJS
+	n0NALd6szVHRjTfXfl2m3JCHGHUbSJ2W1+eIk8X9dQuBOAWyjXfDqKo0Q==
+X-Google-Smtp-Source: AGHT+IHkEom8Dv3ld+acdHR9NmqOOSDeAQub78ICOeMl3KZD+znKFVnfDkPMUeCqIKvr86mVGuJX3A==
+X-Received: by 2002:a5d:6d84:0:b0:385:ecdf:a30a with SMTP id ffacd0b85a97d-38a873140f6mr24148214f8f.33.1736878773751;
+        Tue, 14 Jan 2025 10:19:33 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e3834a6sm15404927f8f.28.2025.01.14.10.19.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jan 2025 10:19:33 -0800 (PST)
+Message-Id: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 14 Jan 2025 18:19:29 +0000
+Subject: [PATCH 0/3] Sanitize sideband channel messages
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Message-ID: <1M9FnZ-1taoNo1wwh-00ESSd@mail.gmx.net>
-X-Provags-ID: V03:K1:gH4WM3ctnIrgkFMICgfl4sDm5z9tywsorRN0QN4ORcVKsAyut8u
- tXsMkEWsVc71evz/Qbvt/gQzeuAaseVEpNeNwmkT3I2somm6pHQgCIGyYd5mifec+lFN+9R
- epyxVqQfgSOVuz7umnu4zkB/vOggBeKLL9qSCV2KA/oXOJkXQTm2+5vb+BmFcTD1M/o2zWc
- NQNnEQPx54guQ8V/2YHoQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:gcsPCCUJLLI=;A1iE+aywCR9pP1+axsJXv4taT18
- JVpPfoHThfRzPmBnAtuc8nMF9T9/2NOizASt2lNK5gW88tFNnWaWICq2Ad6LqUDmwICCpHGvh
- 5hjpkArXZHyp/DaH5YDidRqE+BUxn944KWsSyuk21sy2IeQ4lFqxgCs2LTMF8p1519Wl/IJ0F
- lszK+csXC2oPuJHNUCd9LVREcu/06gEVOS+pvtDgu0ZTt1ofIQdytKyEhP/6+C5ZtoxXw4hrW
- G0kD781S5RXfpmwu9SRxYp+efQjGXR1n7xgZ6q+TGQdjove5LVizl55UBWitI/U80DDMY+9OZ
- KjHFIA18R0QP9bmQWU0jkVrMzJmsBY5JQql+f2jf/HE6Dqip3zxiR7N6n4pjfOO7QQ/PWaw4R
- OFdTEFcHp21nxtJ8q8r2Lnevtp2OI4xcr13rGkYAnXwZTJmIeyTH1rVhgnyzVtQ9Efb67muYb
- GxOB3GggEoCZk+yCixRCs2ZbP9ZXQsfJzYtIHMwKcJTrnh4UmfBRHwtePMbxhbXnXlaRo2vcL
- KG24xByQiGtYD1fs00Bu0Ka5VKxVeGy1/NOKz7u3W1DmGTAR9N6s/xmBitOfUnMlfviDO8qwG
- eA9kD9hOZdatQErAgDQXg3q3UaiVkMnNa7NHv8DiooRaigRhV6b8P4iddy0vpcJkSDlNKaErQ
- J9F4rXqYvesaiTb6Lfau+UokM5Y7dJaDGFeX4QR4MA4i4/o0deXbm+O9POoiZYlZVKsEw+mf8
- 1LRBw1WDW2xDnQZcskRzfgfbb8KtWKVKbeM7lpkBMGrmdbUfVbzdXCywMH1RcFHQBnTo0Qtu1
- +TZJGc8uq++dWFyMt87LK65AttgFBOu3SYOggRfo3uWnTdFQex4tx1Q6ICjbEwSD2w/Zbwg7V
- ZjB7J8X1aP9k/xIpaXE/GUMpYqAqjBBJNXzn5FRt5H9ZKLC+kSVTpLxMnezhCJ6S7X7fzwUZs
- ENhj0l1TySSY5oFaIVQq5FRUXmfNfS+ZB2p7ffey7i8Q0fkW8d3hMdj4cF3SQnw3lTk/12JF0
- u0mHK1tIP3B7FXzVmnq5dbNuImRD6HfGGaQNUkpWvUuda0ErBtsb+xCUxrUPn/uZAnxQnZd04
- vmo/ZoVb4vthU3+gNV3BBfPbmD32Fubs2cFefOD9yUBTvf49F/PixjGMpCPyYOCl1w17pGFck
- =
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Dear Git users,
+When a clone fails, users naturally turn to the output of the git
+clone command. To assist in such scenarios, the output includes the messages
+from the remote git pack-objects process, delivered via what Git calls the
+"sideband channel."
 
-I hereby announce that Git for Windows 2.47.1(2), a security release, is
-available from:
+Given that the remote server is, by nature, remote, there is no guarantee
+that it runs an unmodified Git version. This exposes Git to ANSI escape
+sequence injection (see
+CWE-150, https://cwe.mitre.org/data/definitions/150.html), which can corrupt
+terminal state, hide information, and even insert characters into the input
+buffer (as if the user had typed those characters).
 
-    https://github.com/git-for-windows/git/releases/tag/v2.47.1.windows.2
+This patch series addresses this vulnerability by sanitizing the sideband
+channel.
 
-Changes since Git for Windows v2.47.1 (November 25th 2024)
+It is important to note that the lack of sanitization in the sideband
+channel is already "exploited" by the Git user community, albeit in
+well-intentioned ways. For instance, certain server-side hooks use ANSI
+color sequences in error messages to make them more noticeable during
+intentional failed fetches, e.g. as seen at
+https://github.com/kikeonline/githook-explode and
+https://github.com/arosien/bart/blob/HEAD/hooks/post-receive.php
 
-New Features
+To accommodate such use cases, Git will allow ANSI color sequences to pass
+through by default, while presenting all other ASCII control characters in a
+common form (e.g., presenting the ESC character as ^[).
 
-- Comes with Git Credential Manager v2.6.1, addressing CVE-2024-50338.
+This vulnerability was reported to the Git security mailing list in early
+November, along with these fixes, as part of an iteration of the patches
+that led to the coordinated security release on Tuesday, January 14th, 2025.
 
-- Comes with Git LFS v3.6.1, addressing CVE-2024-53263.
+While Git for Windows included these fixes in v2.47.1(2), the consensus,
+apart from one reviewer, was not to include them in Git's embargoed
+versions. The risk was considered too high to disrupt existing scenarios
+that depend on control characters received via the sideband channel being
+sent verbatim to the user's terminal emulator.
 
-Bug Fixes
+Several reviewers suggested advising terminal emulator writers about these
+"quality of implementation issues" instead. I was quite surprised by this
+approach, as it seems overly optimistic to assume that terminal emulators
+could distinguish between control characters intentionally sent by Git and
+those unintentionally relayed from the remote server.
 
-- CVE-2024-50338: Git Credential Manager can be tricked to exfiltrate
-  credentials for a trusted site to an untrusted site. Since the URLs needed
-  for such an attack look suspicious, this usually requires a recursive clone
-  or fetch.
+Please note that this patch series applies cleanly on top of v2.47.2. To
+apply it cleanly on top of v2.40.4 (the oldest of the most recently serviced
+security releases), the calls to test_grep need to be replaced with calls
+to test_i18ngrep, and the calls to git_config_get_string_tmp() need to be
+replaced with calls to git_config_get_string().
 
-- CVE-2024-53263: In conjunction with CVE-2024-52006, Git LFS can be tricked to
-  exfiltrate credentials for a trusted site to an untrusted site.
+Johannes Schindelin (3):
+  sideband: mask control characters
+  sideband: introduce an "escape hatch" to allow control characters
+  sideband: do allow ANSI color sequences by default
 
-- CVE-2024-50349: When prompting the user for a password in the terminal, Git
-  does not neutralize control characters.
+ Documentation/config.txt            |  2 +
+ Documentation/config/sideband.txt   | 16 ++++++
+ sideband.c                          | 78 ++++++++++++++++++++++++++++-
+ t/t5409-colorize-remote-messages.sh | 30 +++++++++++
+ 4 files changed, 124 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/config/sideband.txt
 
-- CVE-2024-52005: The sideband channel does not neutralize control characters.
 
-- CVE-2024-52006: Similar to CVE-2020-5260, affecting credential helpers that
-  interpret Carriage Returns as newlines.
-
-Filename | SHA-256
--------- | -------
-Git-2.47.1.2-64-bit.exe | 5f2350757f9781125cd660478b31c37698d9662aed25b4b02e92da393289564c
-Git-2.47.1.2-32-bit.exe | 4e6d9f309f4f877a779aee9e80fc1ef5d6f03aa79d5eb4cac103d39f02ece1e9
-PortableGit-2.47.1.2-64-bit.7z.exe | d73f0c1a42afbabe43862bd5abf5a646798125bc33cc02b7da7bbaeddae948f0
-PortableGit-2.47.1.2-32-bit.7z.exe | b1b1715676b1aaf0cdffe7287c70c37a94408fd872d538f4b00834d278a9e02f
-MinGit-2.47.1.2-64-bit.zip | 5bafb35dfb249b89d726b37824eeb5022379f0e51f5fbf9c29f49bef57e85b42
-MinGit-2.47.1.2-32-bit.zip | adae5363e224be913af65b3b8c454463e220dd12c811bf5f298952ba4106589a
-MinGit-2.47.1.2-busybox-64-bit.zip | e27f8fda56942a1c57911dfb2ad71ca7a6d227db733c921216402eb5d10da41d
-MinGit-2.47.1.2-busybox-32-bit.zip | 00269b04f0b61572b2fc4e20220ff74496b44c5ec23f2753ac7de0867419fdb8
-Git-2.47.1.2-64-bit.tar.bz2 | ee718e13e1f6c772ab918c0c8897c4d73c792d00bc6e3de3cf1092504b737b7d
-Git-2.47.1.2-32-bit.tar.bz2 | 7ad65961762bf328574ab73d5b0442beb1e9bee81d73cfed6429ff927057e27c
-Git-2.47.1.2-arm64.tar.bz2 | 8b3c4548346d7af2ee9e4e835e8baaea2bde2bca3d2df123a69e7b76ae7b8483
-Git-2.47.1.2-arm64.exe | a6f68a3e74349e71ed0030fad7bad87806093a4063b3b1fe2a2c0be233201ce4
-MinGit-2.47.1.2-arm64.zip | c74dd8e25b2337bbef059440966ba7bf96da4b4a8bc9bf9c759a2bc5a868da2b
-PortableGit-2.47.1.2-arm64.7z.exe | 6f554b6f0fb9e76448f42c2b0dd9c4c59f0a1d0df0c38c1a9029ebd9c49532b5
-
-Ciao,
-Johannes
+base-commit: e1fbebe347426ef7974dc2198f8a277b7c31c8fe
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1853%2Fdscho%2Fsanitize-sideband-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1853/dscho/sanitize-sideband-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1853
+-- 
+gitgitgadget
