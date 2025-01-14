@@ -1,56 +1,56 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FD2224B15
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 01:36:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E740D212D70
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 01:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736818605; cv=none; b=BBFUS0qCI1uY9VctlaM40TZrBEt9cJoNROf5gV57BwLv/aeDJVbj90srkfqCLSfOfjs/vI/D5vYgp5WiUDWoD+1GVIck2TjdtA++9Srt5m4aylMPUVtY+N9j5iMOnYfduQ77ZCIB2rN7N3C5uUFeU23ak7WGIosUvybrSRRLfCA=
+	t=1736818760; cv=none; b=GeDjlGscpmg29v3a43C8Mxii9uviQHuB/Gz+CaQNSUX/a7DPYa/9Pif0cKTSxWsqYm+80pYh6zOgxs5nCjfdQJR/f6InJgcDfAMzkN9jXPaeEsgDRmezgMbp8hNtxu55yr6gipRCWEFYBMLtpq6DmaRF49LEW2IsImGQROdoqfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736818605; c=relaxed/simple;
-	bh=/BpOlW620AdrMtqu1s9NIJrLjyrXy6hLhaiRHyal+nw=;
+	s=arc-20240116; t=1736818760; c=relaxed/simple;
+	bh=cqMpfrf74rQ7rPwFAFF4ggvIs6t/GQUD8sc5P3107bM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Knf8Ns1gTTc99np92lDFVJdSoEXR9AKIh9IQen5EfRb9Vj47EtrjASuh0PQ1pNFS1MP5u3vaoBmXwQFXmd67SPZ+pg+MMb4Gdd8SosV0golEKEKoqum08jaYlByWPxtXAiuYeZuXh5nq++/B+8hOIZlAXOJeR2Mq6bsmIJHkVUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D5pbaCPn; arc=none smtp.client-ip=209.85.219.181
+	 To:Cc:Content-Type; b=XkmHMmOl2T21tnIWYxVovzX/4pi/R/T59tnQtEeHcX+BDyiHUtRU1j6rigbL9nu+Ci26KYbrrMi1j8qHRByWuaZw6NM2ufCUlaaSjNzd8fJ/IfUBwwp7t+VuWqsrkpYGQXzNqz5GIh2amRawc+4Qcj14hPj/lT1iPd0UOQzxqUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ioF6QzSE; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D5pbaCPn"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e53ef7462b6so8379161276.3
-        for <git@vger.kernel.org>; Mon, 13 Jan 2025 17:36:43 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ioF6QzSE"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e3a0acba5feso6672135276.2
+        for <git@vger.kernel.org>; Mon, 13 Jan 2025 17:39:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736818603; x=1737423403; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1736818758; x=1737423558; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/BpOlW620AdrMtqu1s9NIJrLjyrXy6hLhaiRHyal+nw=;
-        b=D5pbaCPnlcoubdgbqzddvaNNkOu7r47VGRe9A6z62aNx2N9FocNuOqD5Jan0nktsAo
-         qWtvWX4rbwuLdNQTj2ndENdO94V46BZDb6G5OJ2zNlNauqXJ8BtuP3jwhUjdTiDntAGK
-         rX7KBik5R7kzZcgd+381nnpn6+zOxDSq4QH+4P7MwLlFazkbvNT7t5JoXhJH/4oVDl8G
-         fhCy5ELAlMDUIikqw8vr4FT4Af/QjrAcoT7n8MXIZzAFFmieN/omYqzAz4axfKv6vJY6
-         NsKf1rQ/K97XWVOWbRZTMDxvrDdvPUFMnTUfugEIKbvGGQpg3kxdnwICydhRa+MooTlW
-         y44g==
+        bh=tWiifOHs3F19vVOTu8R5UXvr1gnJiEQ13yXN10Z/xlg=;
+        b=ioF6QzSE2IzgQt7lRyNG1o898gUshxzuAwIwVsk3h3Q0ZyNOFs1wHktp4qq7eMV/Ja
+         QoZdaHPL7RQsIVolx7kl6id5FyC84f6P56pUKgJBuzcIqhNl7hxp2FsS0oEzKDf8Rt8f
+         MLdnzugwLlJMQJvZWv4RFiezv4qn54ZN7JrdgsSicE+sdazF20NIAGyMfIQqpYt+9L7I
+         7+h+NZhPkfB9f16IbzV8CvWQiGJnJltVZ7U3QSrCVkYot1CkQGGZP8w8b/Yo+VJBjKi8
+         lIpyz+446O8STljxNmNzxZw3Lz1UP7GFGq75LbJbUCIi5OEU79gYf25CkCQU5Vrsffuo
+         vrJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736818603; x=1737423403;
+        d=1e100.net; s=20230601; t=1736818758; x=1737423558;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/BpOlW620AdrMtqu1s9NIJrLjyrXy6hLhaiRHyal+nw=;
-        b=d2K4qTZAPKaIjw2BNeItOJyn0wGm9kj/Xde4d94Cn0VeYlgX9w2ssIan17zFsd7Muj
-         0zsSCaqEHqwcb//nGeUB8QXD8fcmU3OrtsyUQUjCG9lWMszQHi8/zIxyhXXOYfu+PqHm
-         Rl5ORh5zlhq5/bolygfjhEHDTdMImH/9OL/iC/92zi/vCPGxP2ljndZ1CnxGL6T2FAby
-         xHLTotiGzRjjakwRk36FXj1C0eTxSwxOaICzti6N+uv3yyQj3+OveeuYBEzpwaP+5XIc
-         1F9albEnzowzDiQW5bZ62HxBTLg1ibDpAybtNjZRZkN8DzPx93XyCFrV+in5t0vXIpUD
-         vvDA==
-X-Gm-Message-State: AOJu0Ywh1CSr6xcCJlNN+bJwpQwnU0/zg1ewbkkBykDbEtmpwkD56Bq6
-	D0dsl9CcxMehyLK/yxl2r3QzHPD7vKbu6ZmdVbBdUaPJgRqEe0Xg6l1RJ9fy1vd0AfPHLfaOjD4
-	yi01nEP0AdfGvVzwmqr9Wsiuiam0Ns4f+
-X-Gm-Gg: ASbGncv8WGpkyr+24AV9MM5JIvMKRAKXZwOMmhDj/drWxeJQbjv0CeYcmZxxBQHPEsh
-	AavIBwAy/GFnkdAVwYNeZGqTHucDgxa3eHYV/8A==
-X-Google-Smtp-Source: AGHT+IGO+YM5bV7LHA3G9l29lDuU709uUEpCIj7C8iqdd5tpB3SuXal0mALmL65ESlnga5Zk6wKFeTNUsWiyoZ563qs=
-X-Received: by 2002:a05:6902:2b11:b0:e57:4226:8ae0 with SMTP id
- 3f1490d57ef6-e5742268c19mr6464620276.18.1736818602909; Mon, 13 Jan 2025
- 17:36:42 -0800 (PST)
+        bh=tWiifOHs3F19vVOTu8R5UXvr1gnJiEQ13yXN10Z/xlg=;
+        b=fTiR8G8kBMRSWfjpKdG1xBFjm1cOI9knuublGVDbR53WI5DlbB+WNOM1N9vf/a8wXK
+         b6QWow1XCq7M3pSbwhtvd1eVhD3RcfkL7HuFv0T66mqt2Cm+wVHvWNWQJAjtkPQKgc6u
+         oNers4MysoPu/e6R5O+ShKwcOFMwYM7gJMR4al2haFGaLnYXCuLzgPNwJ0Pz/8b5+mbr
+         648Bq4REugyVfFga6SRwxk2uaigveVdiYprQyMVfV1WpFKiqV+xR502TM1E1DhafOSg9
+         YSzXCen6QJr/V8DeIbPwHQWylaiwA5VCbnRTF9XIYvudq/L3MuspNs0cvK7Qmp451FoU
+         0FZQ==
+X-Gm-Message-State: AOJu0YxUepHS2GqNVARlJmvXNzXt/vOBnmE3ivOZBKrG6aowrOWXbXme
+	k0x+ctAl+Jycwr7QtchuI8FSEdGJ5dPpliNYyCpO/ii0GysY/bqwQO8lfFQjvHVEJyjnU271KX4
+	eZXWcJEs8bUQk5YLrg++3UDKUiik=
+X-Gm-Gg: ASbGncs/l6rSylBUWGg4Wcut+jee4vCMVao0dyJ1jvEiWB8SQYjjpKEHd5AIw/dQX4h
+	YsrQtIDh1X/DoLRCSP1AghoCz4dWmUldF7iu3/Q==
+X-Google-Smtp-Source: AGHT+IFRlhICA7izJpiHwEo39eUnxggkHCTDj8GEqFiM3rGPVQY5gswB+xVFTigR3Z4QvRMVupuD8WfefeZrGr5GyV8=
+X-Received: by 2002:a25:58c3:0:b0:e53:d870:76f6 with SMTP id
+ 3f1490d57ef6-e54ee212c3dmr12288018276.43.1736818757935; Mon, 13 Jan 2025
+ 17:39:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -58,15 +58,14 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20250108183740.67022-1-eric.peijian@gmail.com> <20250108183740.67022-3-eric.peijian@gmail.com>
- <CAP8UFD2uVD4S8pWpg-oOdhNi_0m0ZTGOvaJX8MpZGFU9yAbV7w@mail.gmail.com>
-In-Reply-To: <CAP8UFD2uVD4S8pWpg-oOdhNi_0m0ZTGOvaJX8MpZGFU9yAbV7w@mail.gmail.com>
+ <20250108183740.67022-1-eric.peijian@gmail.com> <20250108183740.67022-2-eric.peijian@gmail.com>
+ <CAP8UFD1CoaEzqoCN+_6_qPk_5scf3mhvpCRrsuxc1K=ZObUgiA@mail.gmail.com>
+In-Reply-To: <CAP8UFD1CoaEzqoCN+_6_qPk_5scf3mhvpCRrsuxc1K=ZObUgiA@mail.gmail.com>
 From: Peijian Ju <eric.peijian@gmail.com>
-Date: Mon, 13 Jan 2025 20:36:32 -0500
-X-Gm-Features: AbW1kva_tuIulEhA8zyNo6qxE_qoYkNNZJu6KZcgOsofyeqJr_ESn6IunX_sXb4
-Message-ID: <CAN2LT1B6xCvR2+Fkj3nvz28P1csAAw7Ukd1YMXw8tZZQO16UCQ@mail.gmail.com>
-Subject: Re: [PATCH v9 2/8] cat-file: add declaration of variable i inside its
- for loop
+Date: Mon, 13 Jan 2025 20:39:07 -0500
+X-Gm-Features: AbW1kvbNqNTGMPoBGz0YLSZ8u6Yh5BFUSE2stI6qaCRXJR9SY-ptus_4SN9D8G8
+Message-ID: <CAN2LT1CSbdptV_y7iyWeWrBRNM-ToDm=aHDha1Hc7FHa12bSZg@mail.gmail.com>
+Subject: Re: [PATCH v9 1/8] git-compat-util: add strtoul_ul() with error handling
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
 	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
@@ -74,18 +73,26 @@ Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Thank you. Add that in the commit message.
+Thank you. Fixed in v10.
 
-On Fri, Jan 10, 2025 at 6:39=E2=80=AFAM Christian Couder
+On Fri, Jan 10, 2025 at 6:33=E2=80=AFAM Christian Couder
 <christian.couder@gmail.com> wrote:
 >
 > On Wed, Jan 8, 2025 at 7:38=E2=80=AFPM Eric Ju <eric.peijian@gmail.com> w=
 rote:
-> >
-> > Some code used in this series declares variable i and only uses it
-> > in a for loop, not in any other logic outside the loop.
-> >
-> > Change the declaration of i to be inside the for loop for readability.
 >
-> It might be nice to say that, while at it, we also change the type
-> from "int" to "size_t" where the latter makes more sense.
+> > +// Converts a string to an unsigned long using the standard library's =
+strtoul,
+> > +// with additional error handling to ensure robustness.
+>
+> We use comments like this:
+>
+> /*
+>  * Converts a string to an unsigned long using the standard library's str=
+toul,
+>  * with additional error handling to ensure robustness.
+>  */
+>
+> Also we use the imperative mood in comments before a function, so:
+>
+> s/Converts/Convert/
