@@ -1,82 +1,83 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7C628EC91
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C827D3DABE3
 	for <git@vger.kernel.org>; Tue, 14 Jan 2025 11:56:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736855785; cv=none; b=tIfuGu397mei3DzMI1OIkfzsFxaw2W1rsBKnO6UKruWKYtoD08pRo5qKKm80gcv8cr2MQ/NrvaZ6bwStxzdQRWre+E5gFO66Uwk+QrVSn7z15vwk4ffZ9IrMr13CTOkJikBAu6vZa0JBsscMlEpUqbE1+mATT4gdWhWR/A60W+Q=
+	t=1736855786; cv=none; b=HL9VSXPPnolvYlx8oyDwON+D4Dj5tfSJ+Zf4jgZGG1T7uckhoCaF9tNLc3iPW2lsnCUMZ8XLGGVEZFqoQs6eRtJPoekjXHlDG9llaLuJkZmGEkJWNkf06AvD3+dlmiJ31FBWuBIriYaPAKsXC+QN8qh8QoyNBgnAAvIqzYSyyjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736855785; c=relaxed/simple;
-	bh=UM2eqku/ZOVM12Xp8OXQTv3skvz3RQUKKnUxKPH6GLg=;
+	s=arc-20240116; t=1736855786; c=relaxed/simple;
+	bh=pXZDLhfIsFDW4HiVgYHFY60hbxELcc7n7gejKucS+yA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=N2c34Te3LPHJvWO9lKtIQxCMns/TDIsNpDjcGmzNnFVBZrpq+2OdgDzK78hsoZHJmi2hb3F9Uuzze8U/rOD0c5LoI7P8WFemX3qdtZX1QZcyYz6MPS0v7N5GKaphWlyX5ifKgjBaA4FrCcSD2ZdzI+/stE/UoJiNc8CnUDfTZVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bf/52B8z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IUEhe0Ng; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=DseV3YvkZzfqARMeXgMa7zhdY4ZVjZ7ZKtQHwIvSd89N5mPZ790oEhk+H0eMBnJsYwZ92aSU9DVcYgs2jh4YssL0y5TlJfjPw7l304w3u8aNGPh5TGp3oGBIpMRnzk477F3+EFRIK3k0ckJ8TsQ4TtcugXg/0DOGDdVhJvdn2BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Hhfe80k2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EfIoNaLs; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bf/52B8z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IUEhe0Ng"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5B9F7114015B;
-	Tue, 14 Jan 2025 06:56:23 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Hhfe80k2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EfIoNaLs"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 305BA13802FB;
+	Tue, 14 Jan 2025 06:56:24 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 14 Jan 2025 06:56:23 -0500
+  by phl-compute-04.internal (MEProxy); Tue, 14 Jan 2025 06:56:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736855783;
-	 x=1736942183; bh=pco7noKo0yiW6uDdt3Ue0s3iDrCPIIm2ghhYXyasGkA=; b=
-	Bf/52B8zR42SXmHBezX3mbqS3g7pfaFjOve0eGaOQTxyjA/RoJtihPqXSuLBMWnq
-	HY+qYBmAUF0z1IUsNk0UPxPgaKuRzYgHoMwhJo4d+jmgWFwuspLxqP2DE4fN+kDC
-	bhsmCkBph2Ume+oCFnHqlVeemMvbMxVZXMsNeQHs0TnnihKQ4Rm8pMgKiBF19O4m
-	V8Y46EyRTc8M+wwiXuxVYq1a2u+hg8D0kB9KXs0G2WXbFbtJUvgFzmYrjjxDetS6
-	46UgkJpqxd9gSSXdvgMKn0fJQDklcsUkzGCvoQXXPuLp9DdtRKhbs8iiFWOzfoou
-	Pep93zxUsy2Jx8IwfJf/yg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736855784;
+	 x=1736942184; bh=GASN2Fh+DLEt2B1IRqXmBDtWc3S5ohSffczj+TY7KKA=; b=
+	Hhfe80k23XwzduXoPfjhY2bbmNVtGHL1rM+HPdFsp/a71vE1aTRCVgCWNTfIy96p
+	q3AWjHYsqsK7E2xhlPSWxoBC9tgJisKyBgZHG5Z2eMFVNjqXWiGs8DTz+sIPLYsH
+	m7YbNIVQB3BQ/AgAf1bubY175sVHprxJmwZd+pYo1LL2oHtb7w2qRlk+SHz3RDI4
+	8pXc+gSMW+JR1OnOmihxg2bvw9iLCF8LDdxs/ZfhsFt90a+J3dJhgIBlPqC5egOy
+	siDi+wk0fDGghlWE+pbORh3NLDnibRJ4QCiwLGZHH+Yd9uRvMF89hV3AyAMu+1jA
+	pXHfuNCNNRcKHJqS7mtCiQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736855783; x=
-	1736942183; bh=pco7noKo0yiW6uDdt3Ue0s3iDrCPIIm2ghhYXyasGkA=; b=I
-	UEhe0NgncTjbdOf2PbIXrz+UE2yoDnF+3X/VN035t4WgrLgSeWj6yhG74FNeiO4c
-	kLGpQO1F8zK+T+Tpip1xX6f3AFMI4w9MKKyH6pkrV6EV+KcS0UUhL2eGKI3qRyVm
-	JVSueJbbk+4pjc2siiBGkFA9Cd2gHJQWzhS20UGVOqseHXsmS9ZJt6bHZyZ7aLN6
-	Bpim7SNraTOXeBwZ80CI6c39sRa12PnevOe7tQJNBXeQvzTLafDlgeoPrRCPae0a
-	2JCau+YGhOkiW4FkoGj/IOOW6GxRdx4eatnzMNPX2bfP/6EmkYR+ZD1WMMetld2F
-	J6xGW9yviAG9D7/fb4Mow==
-X-ME-Sender: <xms:51CGZ6ActQfLn00Ptr-g_gcpy-ZpMpxg_jsCPsKzYypbW_aywTyzCA>
-    <xme:51CGZ0gMS2taVjeDrKFvyIeiSDsNzFd59P11f-cUG91iUXybclDP5Sk-Il69SUIWV
-    cxoEsAkv9jsodByNw>
-X-ME-Received: <xmr:51CGZ9lCvdUUQ5cBSRAzSQF_90kWMq-S8Fsq_rpRXe3IXk0DdY0nFIXx669pZjErjWVN4rTxbVqOmI8vH0GTME8afnm1vBo3NNcu-1uv8jRtLQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgfeegucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736855784; x=
+	1736942184; bh=GASN2Fh+DLEt2B1IRqXmBDtWc3S5ohSffczj+TY7KKA=; b=E
+	fIoNaLssjZjbEQGlQzie+I48M7fxep0BtYtNTp5TIIZWMvfuwzSfs+C6tj4vqfc/
+	1/3QhvP+gQAnmL1IkZwXONyR4KbSmWkVM7hKPgE7R69ghIbMFsLeRKhxPr9rHJZp
+	XeYWuiEQNsNEiKrS3Iq0M+qlicdZeFAiVkv/vm3E9vVKM1QAlOQHU8iBy15MOzBj
+	BDJiva4YNmLbtd0WI5lWBnm8DC1P+6XfwbvPSclLvQ9/06yNl2D0ZCRbMdn8DQ54
+	PJ3xCLr83nm8uY3mpkeY4Lpt/YCMny29jZlrWvnOvQUDtm4gIPx9ryk3ftuvMck9
+	KSwoHSmNRwKhT0zFVd28A==
+X-ME-Sender: <xms:6FCGZ3uaMICS5c--0orZFMMIYccl8BBa-eDZvIlTryTQECcYXMV9yw>
+    <xme:6FCGZ4dk1ppjAmIIQkGgWu2ATxJKQZh6n6eKc0AHoeWqyTnwYd9mEWWqBBuWFYTmx
+    tPAF2K25ggCtE_lrQ>
+X-ME-Received: <xmr:6FCGZ6xvbkHxN9f_yrDSqZ_AQYiy3OF4W64E_l08u0wDieDJ9Uz69Xw3zcq2dN2D_ZAaEnkUEz2ZLHHuyhZqzVxU8tqC5BBv0qVV6qoFZFmJnA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgfeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmihhr
-    thhhrdhhihgtkhhfohhrugesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrg
-    hrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegvvhgrnhdrmhgrrhhtihhnsehg
-    mhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:51CGZ4zYkx59vZycHyv1a-mXRNkJ2aLAhwNg9P8fHxoVv2DnOtu1vA>
-    <xmx:51CGZ_S_1B7mrS7X1y5HhUuwWumC7h9HlYCEjeEWDjiOO74ZYoVYvg>
-    <xmx:51CGZzaP4VJLbDJXKW8ADpbRT-gTuZs-DiUXqaw40KtaK-3TB0BhBQ>
-    <xmx:51CGZ4QPGj24qzaz-8z4S0Lhwu1IwPLXTL0pdAxgiXZfDAVgb12k2g>
-    <xmx:51CGZwKkdfKg7o3UBCfVMGHYThWCfBINhiorKhrmDt_QddRPJseQGo5W>
+    hmqeenucggtffrrghtthgvrhhnpeevlefgtddttddvtdduieelvefhkeeuhedvtdegiedt
+    leekffeiffeljedvgfeuieenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhphihthh
+    honhdrohhrghdphhgrgiigrdhsvgenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
+    hmihhrthhhrdhhihgtkhhfohhrugesghhmrghilhdrtghomhdprhgtphhtthhopegvshgt
+    hhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegvvhgrnhdrmhgrrhhtih
+    hnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:6FCGZ2OAzXNWIDW8a7sPIutsMUAtXukOxix6NUSMrCXg64tjH07uHw>
+    <xmx:6FCGZ39gYGGnkPnZnRoGjSzkafscd6OJ2GSfo_RsPMr3XAeX7V65KQ>
+    <xmx:6FCGZ2XMtaRC8iU47SJNDaeUTCHeN56m_thWXG1pZkj-yAIpwT37Ng>
+    <xmx:6FCGZ4dWxOxpN4nWisWhOrFbkCaCrqjJw-YpLKJuTZJWdFRn3AmdBg>
+    <xmx:6FCGZyl05dlG_4SY-_JkXw-2cLMwH-3Ihm3EHoWFNFSzylpmqW35W6RC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
  14 Jan 2025 06:56:22 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 52e9405e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	by vm-mail (OpenSMTPD) with ESMTPSA id ac473ee3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
 	Tue, 14 Jan 2025 11:56:22 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 14 Jan 2025 12:56:20 +0100
-Subject: [PATCH v2 10/11] ci: raise error when Meson generates warnings
+Date: Tue, 14 Jan 2025 12:56:21 +0100
+Subject: [PATCH v2 11/11] ci: wire up Visual Studio build with Meson
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250114-b4-pks-meson-additions-v2-10-8d7ec676cfd9@pks.im>
+Message-Id: <20250114-b4-pks-meson-additions-v2-11-8d7ec676cfd9@pks.im>
 References: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
 In-Reply-To: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
 To: git@vger.kernel.org
@@ -94,32 +95,159 @@ Cc: Evan Martin <evan.martin@gmail.com>,
  M Hickford <mirth.hickford@gmail.com>
 X-Mailer: b4 0.14.2
 
-Meson prints warnings in several cases, like for example when using a
-feature supported by the current version of Meson, but not yet supported
-by the minimum required version as declared by the project. These
-warnings will not cause the setup to fail by default, which makes it
-quite easy to miss them.
+Add a new job to GitHub Actions and GitLab CI that builds and tests
+Meson-based builds with Visual Studio.
 
-Improve this by passing `--fatal-meson-warnings` to `meson setup` so
-that our CI jobs will fail on warnings.
+A couple notes:
+
+  - While the build job is mandatory, the test job is marked as "manual"
+    on GitLab so that it doesn't run by default. We already have a bunch
+    of Windows-based jobs, and the computational overhead that these
+    cause is simply out of proportion to run the test suite twice.
+
+    The same isn't true for GitHub as I could not find a way to make a
+    subset of jobs manually triggered.
+
+  - We disable Perl. This is because we pick up Perl from Git for
+    Windows, which outputs different paths ("/c/" instead of "C:\") than
+    what we expect in our tests.
+
+  - We don't use the Git for Windows SDK. Instead, the build only
+    depends on Visual Studio, Meson and Git for Windows. All the other
+    dependencies like curl, pcre2 and zlib get pulled in and compiled
+    automatically by Meson and thus do not have to be provided by the
+    system.
+
+  - We open-code "ci/run-test-slice.sh". This is because we only have
+    direct access to PowerShell, so we manually implement the logic.
+    There is an upstream pull request for the Meson build system [1] to
+    implement test slicing in Meson directly.
+
+  - We don't process test artifacts for failed CI jobs. This is done to
+    keep down prerequisites to a minimum.
+
+All tests are passing.
+
+[1]: https://github.com/mesonbuild/meson/pull/14092
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- ci/run-build-and-tests.sh | 1 +
- 1 file changed, 1 insertion(+)
+ .github/workflows/main.yml | 52 ++++++++++++++++++++++++++++++++++++++++++++++
+ .gitlab-ci.yml             | 38 +++++++++++++++++++++++++++++++++
+ 2 files changed, 90 insertions(+)
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 6c828c3b755153dab179f73346e7124bda49c90e..964322055f5db0eae0c794b543664e24ae4249f7 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -52,6 +52,7 @@ esac
- case "$jobname" in
- *-meson)
- 	group "Configure" meson setup build . \
-+		--fatal-meson-warnings \
- 		--warnlevel 2 --werror \
- 		--wrap-mode nofallback \
- 		-Dfuzzers=true
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 900be9957a23fcaa64e1aefd0c8638c5f84b7997..7f55f8b3a91d6caf95934af308a2bd35a19a62f1 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -248,6 +248,58 @@ jobs:
+       with:
+         name: failed-tests-windows-vs-${{ matrix.nr }}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
++
++  windows-meson-build:
++    name: win+Meson build
++    needs: ci-config
++    if: needs.ci-config.outputs.enabled == 'yes'
++    runs-on: windows-latest
++    concurrency:
++      group: windows-meson-build-${{ github.ref }}
++      cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
++    steps:
++    - uses: actions/checkout@v4
++    - uses: actions/setup-python@v5
++    - name: Set up dependencies
++      shell: pwsh
++      run: pip install meson ninja
++    - name: Setup
++      shell: pwsh
++      run: meson setup build -Dperl=disabled
++    - name: Compile
++      shell: pwsh
++      run: meson compile -C build
++    - name: Upload build artifacts
++      uses: actions/upload-artifact@v4
++      with:
++        name: windows-meson-artifacts
++        path: build
++  windows-meson-test:
++    name: win+Meson test
++    runs-on: windows-latest
++    needs: [ci-config, windows-meson-build]
++    strategy:
++      fail-fast: false
++      matrix:
++        nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
++    concurrency:
++      group: windows-meson-test-${{ matrix.nr }}-${{ github.ref }}
++      cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
++    steps:
++    - uses: actions/checkout@v4
++    - uses: actions/setup-python@v5
++    - name: Set up dependencies
++      shell: pwsh
++      run: pip install meson ninja
++    - name: Download build artifacts
++      uses: actions/download-artifact@v4
++      with:
++        name: windows-meson-artifacts
++        path: build
++    - name: Test
++      shell: pwsh
++      run: meson test -C build --list | Select-Object -Skip 1 | Select-String .* | Group-Object -Property { $_.LineNumber % 10 } | Where-Object Name -EQ ${{ matrix.nr }} | ForEach-Object { meson test -C build --no-rebuild --print-errorlogs $_.Group }
++
+   regular:
+     name: ${{matrix.vector.jobname}} (${{matrix.vector.pool}})
+     needs: ci-config
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index 9254e01583306e67dc12b6b9e0015183e1108655..4976e18a0503298f38230f5ba7348675baf48664 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -149,6 +149,44 @@ test:mingw64:
+     - git-sdk/usr/bin/bash.exe -l -c 'ci/print-test-failures.sh'
+   parallel: 10
+ 
++.msvc-meson:
++  tags:
++    - saas-windows-medium-amd64
++  before_script:
++    - choco install -y git meson ninja openssl
++    - Import-Module $env:ChocolateyInstall\helpers\chocolateyProfile.psm1
++    - refreshenv
++    # The certificate store for Python on Windows is broken and fails to fetch
++    # certificates, see https://bugs.python.org/issue36011. This seems to
++    # mostly be an issue with how the GitLab image is set up as it is a
++    # non-issue on GitHub Actions. Work around the issue by importing
++    # cetrificates manually.
++    - Invoke-WebRequest https://curl.haxx.se/ca/cacert.pem -OutFile cacert.pem
++    - openssl pkcs12 -export -nokeys -in cacert.pem -out certs.pfx -passout "pass:"
++    - Import-PfxCertificate -CertStoreLocation Cert:\LocalMachine\Root -FilePath certs.pfx
++
++build:msvc-meson:
++  extends: .msvc-meson
++  stage: build
++  script:
++    - meson setup build -Dperl=disabled
++    - meson compile -C build
++  artifacts:
++    paths:
++      - build
++
++test:msvc-meson:
++  extends: .msvc-meson
++  stage: test
++  when: manual
++  timeout: 6h
++  needs:
++    - job: "build:msvc-meson"
++      artifacts: true
++  script:
++    - meson test -C build --list | Select-Object -Skip 1 | Select-String .* | Group-Object -Property { $_.LineNumber % $Env:CI_NODE_TOTAL + 1 } | Where-Object Name -EQ $Env:CI_NODE_INDEX | ForEach-Object { meson test -C build --no-rebuild --print-errorlogs $_.Group }
++  parallel: 10
++
+ test:fuzz-smoke-tests:
+   image: ubuntu:latest
+   stage: test
 
 -- 
 2.48.0.257.gd3603152ad.dirty
