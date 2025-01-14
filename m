@@ -1,138 +1,162 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C431CEACD
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 08:36:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79AC38FA3
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 08:49:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736843814; cv=none; b=Y4XL5ZGoDFMbGB1HX8uN7sQJqgC6VL6ZCs+oRjbYhY3vj/Ke2K/tmEVtt/4haXKTokbwjlNQm20YjKm1OPDIRvJwDJKsZhPTGp64AZSbf9diEPah44fszhBUjlGDOvNSNlFdJ7j3G6dLHNL+IGJSueCfx9TwkdiFbGULrfcBhqw=
+	t=1736844543; cv=none; b=WuAxDTSN0CIzeDo82nd4zGcgCYP9y4dhuylrRNqwzJ1Xg8U2aFSzlt3pH1LCMta/u/URCKwgaHyI2SGevAB2JxJ8znsBbREQLl07FwHRQbXorxB1XVv/oOU3fK9njZK8stuURDRtLwIVmHFgm7ekipLXQpHlfX3BjGuQ+sXEftA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736843814; c=relaxed/simple;
-	bh=jf2BavUEQpkSfjFw6jAw24lXJMzFImRzKReJVnalxC4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aDFls16rFGIwUepDFWBYXbaVzs85PWXibtzoFpymLOMmCSfZicna7zIS7I4DP6eB9/ji2SUNShx/JASNx7LdxgkJkALzj/dYBei0VFKP5K4hVq3d7wM5HSqT+ygND0gS+p4J4GXYiAkzRKaUVAlk791CbDRmP6th8DV6ls71N24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mdb+muyz; arc=none smtp.client-ip=209.85.218.42
+	s=arc-20240116; t=1736844543; c=relaxed/simple;
+	bh=ow04+7WY6wXUboZvFr6YH5SHFdyWt/JdS2ls6uNG3vc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=QzgPTZ28TZxjzNfdkccEg9ck7VQ6QTdmPZEfz/2zz2aPVySa1I5W862tZm6xmkWmcYnIBiqXdSyOjDzZLMgxbmr1cngFhkkmuXj9+rK6YTMNof2UX0hzVAkoNLE5+PsYW9+abNRHvwuLpf+xY8jamfJ7exUdvR38vgsUYn8BA0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kMZW0Gpb; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mdb+muyz"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-aa689a37dd4so992901166b.3
-        for <git@vger.kernel.org>; Tue, 14 Jan 2025 00:36:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kMZW0Gpb"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4361e89b6daso36998175e9.3
+        for <git@vger.kernel.org>; Tue, 14 Jan 2025 00:49:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736843811; x=1737448611; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1736844540; x=1737449340; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JmgBpnxb3P1tYPXZudHATwX0nJSqM5KZpEdYIVZdFsQ=;
-        b=mdb+muyzW3MQWgreT/Z0WaY2t7EC8O1TH6kPYmrc7M+Dz1Xxf/fcp/IcLpMfUsPSiD
-         /LGm2kwK4qCqvr26E+/B55uVWsQhlv9Tuyp5Aiyeobt45wCGdsqOfaY6HhUTHLu4RZgz
-         Y5TPUM+tZYM88glwiYW28g2CfMwZe856KIcTOy8Fafg5znYpE910irXrnmPPFeEZzmmp
-         upH4f9QQAAezkV5NoLkRnH17pM+M0O/OEoaZdUiLwMMPjT3tSJJlWrxY5cl33mh9Obd1
-         dUMlC+6ISwbfbfh22I/g8jr5BnZjURAsgDF+Sl+OOI8C2XzNClipKHxxW5rz2fVu7LX6
-         fGrw==
+        bh=l+OePUGJVl4HgumSMIUs3i4Z5DTaCAEFLmhjdtUZGik=;
+        b=kMZW0Gpbzp/maHktcUT5lJjRub+NeAxbzEOk732VKGOecS4+twEXsR7am+rzWUwG2q
+         mIHwVuQkmm+u2ZzuJXWE2CJ2riAQXDmVsbEycPA546QjB/VooZNVDiUfLD8+zpXYDgOm
+         dr61zG3aLpr6Mm6o5KhQlJgrYkvBfqsDpC97BCIRWJsq0MA8OgiMjaovB7eNH5uuNoXG
+         9uPT9Um6rcjfroNkcGLcXQuCFJw5Za77D9ouiG56elzncBX6NOEQ1F9Y3svCkjMg4R+9
+         7WqvbixMTWfn1+S9luPGmcQxdIqsvCRNOWBhwn6JYHG84s1AMuBzB1zC9NSEEgExY7VZ
+         UGsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736843811; x=1737448611;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1736844540; x=1737449340;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JmgBpnxb3P1tYPXZudHATwX0nJSqM5KZpEdYIVZdFsQ=;
-        b=g5T0wGK8qR/HtFcaeWRp13F7Ij+XGqSUR028bdCXQhc1pYXP5A7TsBNYVvabiINTY+
-         aZSAtFUJapYPa0DbMpo0LK9J60FtZKaaujPGm/ozFqI+fcfe4DTa7i7ElmuPOcKe5YKX
-         pCkXZdB1jV8J+9Aa06/Y7bGLTVJ3gaHJotiNRRubnGwmrco7mBoqahHrCW+hsQmlHVth
-         uG/PeI5cTO2cIRIDYaoEJHoQ1U7tkmmiXEeQMeD2vE7s6LMJCMgV06NaBksUewtzVTKg
-         LH+OWufexR9S5IAFdMGTvACfIf/79VXM5k8OOAMVBSC5w1F/fd03PAxDjqh+6hO08/6U
-         0lag==
-X-Gm-Message-State: AOJu0YzJHCH+zihl9cJsZP1R51Ol70YcpNRvEe1eKYR/CM+A3FeVyAif
-	bUtCqTKDmCwr+BJh2lYxVRL8K2e3Kp/JDxIdlaJwLdc7Jvpf5HPyYR4od98J/9er2E6pYdRWSe7
-	vhEZHc3/bvacy3UgedH8z+Alow9GjPls9
-X-Gm-Gg: ASbGncu1+MCG/zE4n6FdWnB4mjhgaApKECUptvi/2fFgoAd11YdBAyVQczDrw1apu43
-	dTeUjhNSVlwPnqaXKKFRKx8VUCjkSoOuBAKkmDCos
-X-Google-Smtp-Source: AGHT+IFebT8N+oxax+yI5d8+WSW3F4oQpA8FKrt/9rNo8vpaYlVIDK7M71NCvbmt+dTqFSgLwho6X7+msjENgh3rQnw=
-X-Received: by 2002:a17:907:60cf:b0:aa6:8b38:52a3 with SMTP id
- a640c23a62f3a-ab2abcb07e9mr2459270266b.50.1736843810585; Tue, 14 Jan 2025
- 00:36:50 -0800 (PST)
+        bh=l+OePUGJVl4HgumSMIUs3i4Z5DTaCAEFLmhjdtUZGik=;
+        b=ZA24ZLLCvBN8fhCfYk+dgW+30iydKC23JUka83wJ4igwNgFdA3gw8MxUL/pr8c/lE2
+         dz7QaL6mTRZh/Ldu6NkHIjFTB+8ZTZ2/EFyRC+v2e8ktyjt603hrVrhnGx6gYkxzpWWu
+         yp3ytjATmiE4YptBiydn+2I7fEcf1N3ht9Lvru8t8xp0j+s07BlmTHyNl2tEy7ZsV82m
+         UdtA2xbt02jF900lcqoxAKwwGT+c8JL4xVCltRpgv7v5H8MdhQStzzb5IjSjye6XOcYG
+         T7JhyxWlercQ2sQFSXYsFBCRj7M400gxrAp5WCZKZjssMeeGFXgZBnWGtXItOLVG2NwO
+         TeVA==
+X-Gm-Message-State: AOJu0Yxv403zurkgeWlR/xrZDr7MeO3g8pH/s75ym9/bGl9B2It7K6fm
+	jUDQsYGIadYwoIZciN3zW8rEdk37s9Vu/8LnhyQlOZswKog3sZr3C9FPPA==
+X-Gm-Gg: ASbGnctJT5VBbV2ZupZ0xImBX79mpCjDwYXJC4UTgUyUguvzI3Dgyxac0Uc2cTyo9v0
+	UGYdImzD3GAQ4x4Ka6D8d1bP4IqSinguaMfK2KnTWDRlOEd2j5vwXO5huULUetvE/FR+Ho93yo4
+	pEnNdQG7nHdypPRW62Bu5qj9w1MzwY/SgH+osZTUTD4ZsSbLJCPAXdbrvXEACIAWj4lsqwhYC03
+	o1necmfyiixKwsVJaspTLe6uwrpYX4S7vKUX3RzLBQGl3qiPJx0O73UiA==
+X-Google-Smtp-Source: AGHT+IEzNMbnXBUb0pj5w5/xRXaRIx45iy26cf604jhbnuY7umKCVKlD9f1wXLBF0H2f8A9fpYtDDQ==
+X-Received: by 2002:a05:600c:a01:b0:434:9c1b:b36a with SMTP id 5b1f17b1804b1-436e269715amr208244525e9.13.1736844539315;
+        Tue, 14 Jan 2025 00:48:59 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e4b8214sm14135992f8f.78.2025.01.14.00.48.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Jan 2025 00:48:58 -0800 (PST)
+Message-Id: <pull.1867.v2.git.git.1736844538005.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1867.git.git.1736080517950.gitgitgadget@gmail.com>
+References: <pull.1867.git.git.1736080517950.gitgitgadget@gmail.com>
+From: "Rhythm Narula via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 14 Jan 2025 08:48:57 +0000
+Subject: [PATCH v2] docs: mention source of tasks in MyFirstContribution
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFAcib9rWO8WFmaAwf+1Ng85+N7O3Y=QM6wG5xEz0r4tGXJ8TQ@mail.gmail.com>
-In-Reply-To: <CAFAcib9rWO8WFmaAwf+1Ng85+N7O3Y=QM6wG5xEz0r4tGXJ8TQ@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 14 Jan 2025 09:36:38 +0100
-X-Gm-Features: AbW1kvYfvkKoiFgxx90RegIMGy_-Kd4cLBPNq3llAilF2Sd8ipAQCc9xhpfr0VA
-Message-ID: <CAP8UFD206mL+CYxOUKOPWFj7tX1Y79Moc7UjvH4BsLVLbAk-JA@mail.gmail.com>
-Subject: Re: Should 'git replace' respect GIT_NAMESPACE?
-To: Josh Bleecher Snyder <josharian@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Rhythm Narula <rhythm.narula26@gmail.com>,
+    Rhythm-26 <rhythm.narula26@gmail.com>
 
-On Tue, Jan 14, 2025 at 6:17=E2=80=AFAM Josh Bleecher Snyder
-<josharian@gmail.com> wrote:
->
-> I was hoping it would, so I could have different replacements in
-> different namespaces, but it doesn't look like it does as of ~now:
+From: Rhythm-26 <rhythm.narula26@gmail.com>
 
-It might be interesting to know what you wanted to do with different
-replacements in different namespaces.
+MyFirstContribution guide lacks clear guidance on where to access
+list of bugs or feature requests. Improve visibility for contributors
+on where to find open issues and features that need attention.
 
-When replace refs were introduced, there were discussions about
-extending replace refs to be able to have different sets of replace
-refs used at different times, so that it would be possible to have
-different "views" of a repository. For example there could be the
-following views:
+CC: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Rhythm-26 <rhythm.narula26@gmail.com>
+---
+    docs: updates MyFirstContribution guide to refer current bugs and
+    feature requests
+    
+    cc: Carlo Marcelo Arenas Belón carenas@gmail.com cc: Emily Shaffer
+    nasamuffin@google.com
 
-  - the "default" or "canonical" view where no replace refs are used,
-  - the "timestamp fixed" view where some replace refs to fix
-timestamp issues are used,
-  - the "authorship fixed" view where some replace refs to fix
-authorship and committership issues are used,
-  - the "build fixed" view where some replace refs are used so that
-the build work on all commits (which should help with bisecting),
-  - the "old history" view where some old history of the code (that
-was not imported when Git started to be used) is linked by some
-replace refs,
-etc.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1867%2FRhythm-26%2FupdateContirbutingDocumentation-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1867/Rhythm-26/updateContirbutingDocumentation-v2
+Pull-Request: https://github.com/git/git/pull/1867
 
-> $ git version
-> git version 2.47.1
->
-> $ GIT_NAMESPACE=3Dfoo git replace
-> 751eeb3b4d23c7fbde919aedde8c091f04f4f819
-> a9dfd084086ee4d6bf00a33b0976f28c0997457e
->
-> $ git rev-parse refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f819
-> a9dfd084086ee4d6bf00a33b0976f28c0997457e
->
-> $ git rev-parse
-> refs/namespaces/foo/refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f819
-> refs/namespaces/foo/refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f819
-> fatal: ambiguous argument
-> 'refs/namespaces/foo/refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f81=
-9':
-> unknown revision or path not in the working tree.
->
-> $ git log -n 1 --oneline 751eeb3b4d23c7fbde919aedde8c091f04f4f819
-> 751eeb3 (replaced) add go.mod
->
-> $ GIT_NAMESPACE=3Dfoo git log -n 1 --oneline
-> 751eeb3b4d23c7fbde919aedde8c091f04f4f819
-> 751eeb3 (replaced) add go.mod
->
-> Is this a bug in which case I might hope for a fix, or is it working
-> as intended?
+Range-diff vs v1:
 
-I don't think anyone mentioned using both namespaces and replace refs
-together before, so it's hard to say.
+ 1:  d3e264b1cc5 ! 1:  d1e83439133 docs: update contributing guide to refer current bugs and feature requests
+     @@ Metadata
+      Author: Rhythm-26 <rhythm.narula26@gmail.com>
+      
+       ## Commit message ##
+     -    docs: update contributing guide to refer current bugs and feature requests
+     +    docs: mention source of tasks in MyFirstContribution
+      
+     -    The contributing guide is updated to include references to the current
+     -    open bugs and feature requests. This update aims to improve visibility
+     -    for contributors on where to find open issues and features that need
+     -    attention.
+     +    MyFirstContribution guide lacks clear guidance on where to access
+     +    list of bugs or feature requests. Improve visibility for contributors
+     +    on where to find open issues and features that need attention.
+      
+          CC: Johannes Schindelin <johannes.schindelin@gmx.de>
+          Signed-off-by: Rhythm-26 <rhythm.narula26@gmail.com>
+     @@ Documentation/MyFirstContribution.txt: of invocation during users' typical daily
+       
+      +:mailinglist: git+subscribe@vger.kernel.org
+      +
+     -+Here's where you can find bugs and feature requests existing in the system:
+     ++For future reference, here's where you can find bugs and feature requests existing in the system:
+      +
+      + - Git uses a mailing list for discussion on bugs, features and patches. Search for relevant topics or tagged issues
+     -+   like #leftoverbits in the archives: https://lore.kernel.org/git/
+     -+ - Unofficial bug trackers - https://github.com/gitgitgadget/git/issues, https://git.issues.gerritcodereview.com/
+     ++   like #leftoverbits in the archives: https://lore.kernel.org/git/. If you encounter a bug, have a feature request,
+     ++   or wish to discuss or share suggestions, please use the mailing list. You can find more details in the <<getting-help>> section.
+     ++ - Unofficial bug trackers - https://github.com/gitgitgadget/git/issues [NOTE: This is for feature requests only],
+     ++   https://git.issues.gerritcodereview.com/
+      +
+       [[setup-workspace]]
+       === Set Up Your Workspace
 
-I think namespaces are considered a server side thing to avoid
-duplicating objects in the common case where different users have
-different forks of the same original repo. And namespaces might not
-even be used much on the server side as there is the "alternates"
-mechanism that can be used for the same purpose. Also on the server
-side, you generally want to disable ref replacement entirely as it's
-just simpler, and most often what users want, to use the default view
-without any replacement. So it might just happen very rarely that
-people want to use both namespaces and replace refs together.
+
+ Documentation/MyFirstContribution.txt | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/Documentation/MyFirstContribution.txt b/Documentation/MyFirstContribution.txt
+index e41654c00a6..630a68b650c 100644
+--- a/Documentation/MyFirstContribution.txt
++++ b/Documentation/MyFirstContribution.txt
+@@ -109,6 +109,16 @@ of invocation during users' typical daily workflow.
+ (We've seen some other effort in this space with the implementation of popular
+ commands such as `sl`.)
+ 
++:mailinglist: git+subscribe@vger.kernel.org
++
++For future reference, here's where you can find bugs and feature requests existing in the system:
++
++ - Git uses a mailing list for discussion on bugs, features and patches. Search for relevant topics or tagged issues
++   like #leftoverbits in the archives: https://lore.kernel.org/git/. If you encounter a bug, have a feature request,
++   or wish to discuss or share suggestions, please use the mailing list. You can find more details in the <<getting-help>> section.
++ - Unofficial bug trackers - https://github.com/gitgitgadget/git/issues [NOTE: This is for feature requests only],
++   https://git.issues.gerritcodereview.com/
++
+ [[setup-workspace]]
+ === Set Up Your Workspace
+ 
+
+base-commit: 1b4e9a5f8b5f048972c21fe8acafe0404096f694
+-- 
+gitgitgadget
