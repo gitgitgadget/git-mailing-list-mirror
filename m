@@ -1,121 +1,125 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358B054918
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 01:50:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E77835966
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 02:15:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736819404; cv=none; b=qx0UsVbi+59hqDCT4aqNDZNlIh3F6gPFi81c2WDeU1hHt4/kX+YgRR7p42D1ZQa8bOFg0SN3rjrpyWhPdfYWF7fV0Ug+rc1zd7CFLD/C0n3neW/70qGMkwf8JxHo9o/BBZ4DKCylg+lBEkKkOH1/3URkDT6JAi0CDgsI2qxEDdU=
+	t=1736820930; cv=none; b=a3Tp0iMAxF7ZAmeuRsOc6hvmligYUT/chVYAlw8l8Nvo7WIB9vtJDXw+dyy825oKL1xYt3TclONaG956jS6zqhBUyr3ERu084+z0BwYSBI8TpL78jtoIwoR0SHfJsJ3Io6QPni7fBWiQJ1NbEqQZIVM+tcl1wBzzK5jgLlTNt8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736819404; c=relaxed/simple;
-	bh=u3v3pay5+12bYsKBjd5INco2Sh4vQN9tnjCOHlnYwR4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kkZbbB5T9VbIuYHX1W6zhIsiYtnbQt7HtEK+1D5VE48Ag+szPigwNTdTHY7YnSlCDS6J615tDsWwwTwHvl/+MpHm6EPeT6URQ9jchW58vuHjg48GseYbzqUeLh0ZN6oDxWp5qXiAL6YctH+JnUw2rKOoiHFaj1/aPpyWFzjiQ0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PlNE+vrz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wllXcNBP; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736820930; c=relaxed/simple;
+	bh=vexqpV1O36b32132VNXXq4Btme9tIKTgwV8rFnr3hE8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jWFPdLF9Hs3cc05mQGWw9Q+jm3W+yTIzESD8up4nsekaJqFZzGwbh4t9kAfKC1ifM0DtQMnOSaFEozjlnhkd+4oJBKhyx+xvVC2J0Ns2QlVJg+8ysiBOSMGJjhhAejHz2W8cbzRanhae4VIdUHEseusgeqIW/wKyh4fFSpT/K60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KxZMKsDR; arc=none smtp.client-ip=209.85.160.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PlNE+vrz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wllXcNBP"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 35570254019E;
-	Mon, 13 Jan 2025 20:50:01 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 13 Jan 2025 20:50:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736819401; x=1736905801; bh=FJK/y5g/qU
-	rHBoCpOKqO4ht65ijAoSxnRyDr2Y0btZA=; b=PlNE+vrzQSW4jr4yz3aOonTcPn
-	rkx35xv4fzULyiLLEmSfFoLOLaJM0pZCzfdwcasWIMNR8zzH+IbPOw1mPvDiMkgq
-	sPm0JJMHWuP/e3kt7Cil71+Gc2CYlzvvac2Tbou2JYuNqOjxJKYV0M8YFRSvDoWg
-	7fjqw5JHXrIUHeXobPcHErjv89OLHzT1Fddwz94+54dqBDBXDvAMeJAaekSLPcKB
-	77SHlFuLnuqpzC9HGumjb5SpJZo/IetHL5wYpWafGFTmBMdfTPBn2MmqIykqZCKe
-	ntMX+mGSMAzIi+0E09SJyyjn9hFmcgrHoIDlrPfGtYXWwtwx+3Uhj7wFrVGQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736819401; x=1736905801; bh=FJK/y5g/qUrHBoCpOKqO4ht65ijAoSxnRyD
-	r2Y0btZA=; b=wllXcNBPHaSR/X3T4jmzX+qNu0ryWlOyYQ/mU27KpNoI2zvaW2f
-	votw1iOKii5XnZ6L9F5Z6bi25ahmt7tNYg9mIehCr9PAdTNNZXzlQWVnmfv0TP2f
-	IwZeGpPSjw3hZ/PzxS7S4POcv4z2LIjnyEJhU30jqv/EoccspQbr37gYEWQ1uyuw
-	ONCtHvyrjYdT8KlFTojf/ennQ6IDmRvGxC7HhIGPFCFzQhdZuwCBWXbFVsthCx3U
-	nmSveHtw+cXwBH8G4N358NXkG94sFXprgwPvWXW7VR/E/R+oc6DHy+uB4BE1eL2l
-	NaDiAxYP8b5JhTvG0KsqMpFVDzTJKIwPbIQ==
-X-ME-Sender: <xms:yMKFZ9Am9es-crgzaelp5KnOpKuopAkvvfI9uR4pUqKxbIUX76HpbA>
-    <xme:yMKFZ7iC9idnGTYZZ4k6_zAQA7WfBqn-K1G20wd1ZvVg0zs3AKdsSJ9CcGCr8eU4D
-    qY19S_lJMFah0WFzw>
-X-ME-Received: <xmr:yMKFZ4lQZ4Yv--TtzNSQlXxpcgmhA-LQeKbrnNpHuSOUcKN0bkfiGcb2f7eOEdfPu9fcVkElG_CFKLpCHiB7PfjYpjFgh2lXytZ0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehhedgfeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrg
-    hmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehpshesphhkshdrihhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:yMKFZ3zMh10UPMVERH2XTv_WbCsXPazjdvzvUdnigUrxMsLfxLI8IQ>
-    <xmx:yMKFZyQ9HRuT3PaH3FhM2X_1YQVS39m_osA7afCJk5Ef9DdjmqNftw>
-    <xmx:yMKFZ6b8d-YKd0wPgLCX0FWY3pd2qvDqCdWbG81SZR5AzAEvoGpFwg>
-    <xmx:yMKFZzRIuT3pKDs9kPNtydtskapkoYZ6cGUydd3Oex5vThvqcpKhMg>
-    <xmx:ycKFZ4MpMBkUdFWsyXvj0XO9jwfDZpEFEIITZ-zetdztrtOkLY91xQ8Z>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 13 Jan 2025 20:50:00 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: 'seen' branch identifies as v2.48.0
-In-Reply-To: <6c5d0f90-79f0-4fba-8edb-f80d0665873b@ramsayjones.plus.com>
-	(Ramsay Jones's message of "Tue, 14 Jan 2025 01:16:01 +0000")
-References: <6c5d0f90-79f0-4fba-8edb-f80d0665873b@ramsayjones.plus.com>
-Date: Mon, 13 Jan 2025 17:49:59 -0800
-Message-ID: <xmqqr0566u60.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KxZMKsDR"
+Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-46792996074so51637771cf.0
+        for <git@vger.kernel.org>; Mon, 13 Jan 2025 18:15:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736820927; x=1737425727; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G9/aqIKfmSkyzqieNEKLl1J4fF5JOznvTgU531dvcs4=;
+        b=KxZMKsDRv13s+OunrWlncWFjUEfUsUHnATzcgrAErhqZujHI4Kb8mL6W0NK+3gdAtM
+         g+pbyXhgczuArBJEo/VotTVcscrBDvdtWMqZXXo9irZRrGLpzDXEOMFS4f8HrfxsuGgK
+         eZou51v2G4IwLjijPGsGSKCcl7Ar3oohhIdQ3kR3CQRbUNdMwewcWqkdAVTgc2Q+obra
+         nhjO6L+ZBa0e18XbB/mqFWy7jXx31U81d9dVs4wpAqdwm8phEOhVDDhN31NFm1RRXtRh
+         oLIQUto7L7g8TZi2tO9oavy4CGgF98GVGdKPgZ9sm3cT4WN7zA6XO+9b3ch5zP7suwmx
+         TwRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736820927; x=1737425727;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=G9/aqIKfmSkyzqieNEKLl1J4fF5JOznvTgU531dvcs4=;
+        b=wqnHw3x/sSTurAVmFr1LaMEb9WIR6csYSWfL3X9iIjfgoeGfgqxpxm1xfbwC0ujL9c
+         1or8LgOx0dEnZbWcT0l3lPfzEhzDsa1q+QfyD4Xa8i3COkE+gnKlVAZpXJRYk0Pqn1zG
+         9FII7pB8tbanHJvVEaMXoW8QA6IzXG9/yyO7tHh+TQDCzVEDKjl+hx5NcUBYA68k0NRF
+         wi4d17GECX9qimJFoMw5NOjMnarE8SW05XCEprZXSUR2d7V8jaAcMkoUV0NE/QBfxTlJ
+         749l8TQq+mAjYLVRb5CKZQfSozKfpONExOO3Ai03yyl+C+jv1nBg7co/swCCjfkZJbFV
+         8SRw==
+X-Gm-Message-State: AOJu0Yx56wXHpIPhOgL1auYTUG6HtiRlTd1xDF5w0WzPgAapHDkmyHk6
+	/D5UIUOLS7fFqHiTFa52oIG+OOE1gFrV6H4UWjkxukPwp766lwO+somwjancvY0=
+X-Gm-Gg: ASbGnct7PHZgPeiAq6h8tA/m1mO2JYL6dxPu2Wfgp4dPgY4AsM2NCSyDlVeMbKvPB8T
+	rl+5BYEWqKA01PTCyoO0w2T8LQrDCeXlm9CIWNlYBx4N24SVMqWpQ7xO+cjvV2H3TGgrR4puIBT
+	uOD0qQWu+OK708/dd6CXnX9F7k1uA4w/NErXoeF24uF+ixs+Gwux8tPpuNs24JiVL+OEvvxVNN+
+	hqeEg+/rEVKkzN75hvepxiFX2x3cbjTgmlojCWlzpJV0Ke/8sHxAQnGoViWZrS8dPtXj/wgWM4W
+	LPK+Icw=
+X-Google-Smtp-Source: AGHT+IHMa7LI4WGSLGkvv9C41mraaGs2HEssH3thQcPu9mBPeu8zZOetjC39qLEiF1U3WgfAIKAHHQ==
+X-Received: by 2002:a05:622a:99a:b0:46c:a0dc:efb1 with SMTP id d75a77b69052e-46ca0dceff0mr162749481cf.34.1736820926837;
+        Mon, 13 Jan 2025 18:15:26 -0800 (PST)
+Received: from localhost.localdomain ([70.49.151.101])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-46c8734072bsm47572221cf.33.2025.01.13.18.15.25
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 13 Jan 2025 18:15:26 -0800 (PST)
+From: Eric Ju <eric.peijian@gmail.com>
+To: git@vger.kernel.org
+Cc: calvinwan@google.com,
+	jonathantanmy@google.com,
+	chriscool@tuxfamily.org,
+	eric.peijian@gmail.com,
+	karthik.188@gmail.com,
+	toon@iotcl.com,
+	jltobler@gmail.com
+Subject: [PATCH v10 1/8] git-compat-util: add strtoul_ul() with error handling
+Date: Mon, 13 Jan 2025 21:14:53 -0500
+Message-ID: <20250114021502.41499-2-eric.peijian@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20250114021502.41499-1-eric.peijian@gmail.com>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
+ <20250114021502.41499-1-eric.peijian@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+We already have strtoul_ui() and similar functions that provide proper
+error handling using strtoul from the standard library. However,
+there isn't currently a variant that returns an unsigned long.
+This commit introduces strtoul_ul() to address this gap, enabling the
+return of an unsigned long with proper error handling.
+---
+ git-compat-util.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
->   $ cat GIT-VERSION
->   v2.48.0
->   $ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index e283c46c6f..f2935750bf 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -1351,6 +1351,26 @@ static inline int strtoul_ui(char const *s, int base, unsigned int *result)
+ 	return 0;
+ }
+ 
++/*
++ * Convert a string to an unsigned long using the standard library's strtoul,
++ * with additional error handling to ensure robustness.
++ */
++static inline int strtoul_ul(char const *s, int base, unsigned long *result)
++{
++	unsigned long ul;
++	char *p;
++
++	errno = 0;
++	/* negative values would be accepted by strtoul */
++	if (strchr(s, '-'))
++		return -1;
++	ul = strtoul(s, &p, base);
++	if (errno || *p || p == s )
++		return -1;
++	*result = ul;
++	return 0;
++}
++
+ static inline int strtol_i(char const *s, int base, int *result)
+ {
+ 	long ul;
+-- 
+2.47.1
 
-This came from semantic mismerge with Patrick's latest round of
-build updates.  Usually I try to review very critically parts of a
-series that can negatively affect those users who do *not* use a new
-feature each topic tries to add or improve, and it means for this
-topic, if it breaks builds that do not involve meson, it would
-automatically qualify the topic to be ejected from the tree (side
-note: if a breakage is for those who use meson, as long as it is not
-as grave as running an equivalent of "sudo rm -fr /", I'll let it
-through), but this time because there was no textual conflict, the
-hardcoded GIT-VERSION unfortunately went through.
-
-I however somehow thought that those who are building from a
-repository should get "git describe" name instead of the hardcoded
-fallback name in GIT-VERSION.  At least, it is my understanding that
-is the intent of that series.  Or are you building from a tarball
-extract?
-
-> I normally like to find solutions before posting problems to the list, but
-> unfortunately I don't have time to look into this at the moment. Sorry!
->
-> Just a heads up.
-
-I'd throw it back at Patrick, at least for tonight; the topic is
-more or less hot off the press and it should not be surprising it it
-needed immediate fix-up and reroll.
-
-Thanks.
