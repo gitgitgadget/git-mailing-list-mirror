@@ -1,82 +1,82 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66AA20F999
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E14229611
 	for <git@vger.kernel.org>; Tue, 14 Jan 2025 11:56:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736855783; cv=none; b=OlaCqCb9SNozwBgvJ8REglMy6nSUqPnaf+eKLsn4nFo3ZR9QCkpHHPRL9c1a3IedHZhR8V7COOcuOjlUpPy9LDDQiMlbywp1GPRYVsibBYOw7dwr7z0LiTzQnRHC2B/xTbzgith8GvjdPnq+z3vSVYL+p0j8lB3Yi/APGNSxtd8=
+	t=1736855783; cv=none; b=rLOjF2tjhUzpHITMJOMNbq4ShQsYQm67oiL9o/IS6b6FQYoXCRqkF/SN5PurUzrGWr8RJm9KEK+v4sh6YGuM8klfJdOFP9FFBvc3P23Qv+4IUms590EorPv3zhdHhshZ3hXdo5xr/A/zG5/xTlWp6kTnDeTTtuQXAqFdsqjLP0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1736855783; c=relaxed/simple;
-	bh=ZM+WzAGpkE0oovaS89+C4vmVLlw1GZudC7zMuujq1vQ=;
+	bh=DVYLCjbCn53dNvrs6odJ8XPipiNq9HJEYlHN8wQNK3k=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=j/rErDyeJg89aSh6hr7m6fWC+enPh/q9H3/hBoZiKPxTeXYg3NwIPeAMt/ISCksCxBCKYwom0CBehhUx3PHynxG4S6kqyWCrXwxk7sHpD8QO4LgJfoQsKQObFsLR/N5q+sNs7CbGlUuBO26DrZ1AaKjwH/QDGNdtmH2hcl2Jor0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jHoaKwTZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vf25u4to; arc=none smtp.client-ip=103.168.172.147
+	 In-Reply-To:To:Cc; b=KTSMNCTQnO1XhNT3vLvrSxBdJoPOCZOD0l7E3qrrc/31Ve4/Blm0xpn9/4EcINp71J1myneLFOKiX8K8rjlB87KKEV4nW/bPghSnLmRzPmgMJwFFOTcFWQAP4fAnNMjWWqjs0MYIDIFRz9PJeJ2XxjjP2U+b4cj1WUTD2HV7nWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SRoapL4r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XBwfBHPg; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jHoaKwTZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vf25u4to"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id A941813801BC;
-	Tue, 14 Jan 2025 06:56:20 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 14 Jan 2025 06:56:20 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SRoapL4r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XBwfBHPg"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 098381140169;
+	Tue, 14 Jan 2025 06:56:21 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Tue, 14 Jan 2025 06:56:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736855780;
-	 x=1736942180; bh=TgWqotxr6U9LactNVCZwwk7xHzcbzpMddPUeaMWcDjU=; b=
-	jHoaKwTZbTc6LJvmRll5AIM0UIZFpdbSQYe8hNNeEPPTxYaL4u9pXUl5Cq9YRmla
-	7YEEaFPSiNf0JM4F1HViLUwbj5RCShza7/bCfo9AeNDT2SfK5qskQ9+jsgooJCKx
-	5PVYtap9GfltZFzunDbvhz73ab4YXx4U9dl9GQhMYqTeSZs/Onfwn66LBADPcE0Z
-	n621U7fHDd+aREuItERAFJcCh09s9G7NZbx44o8W3WnRcOCGyR4KzAeTEzVRYNQO
-	bTbVWLRLg13iQIVHMXw+x4tsj5EEHtUl5CjAshlLZVoxZkopPxGhNACGvJ3STPkr
-	2Q0cSniLMyfdp1LPhhRb2w==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736855781;
+	 x=1736942181; bh=pSwOC7avqCxD9R2LOJxx8WX9Xynae/2LDs9vdLOsp1w=; b=
+	SRoapL4r5h2SaspHmoyaOIz/m0cawsu7LhXYkvYhTgwFUfopOTodnRApa5vPxbBq
+	VQ/wmNZsicEdeV+7HHTIWCr6atBCiNXtDWFy0WjptCj37EhL7rI3LVYiPNlKw22X
+	mhPjP8vtn/ZbZYMMGHws6ZTsxAwbBL0Fxqn5nOEqH09HH8xYHXoQsysIpqzT4t5j
+	9is92cYFSs8ky5hlcD02lqgwHdzMzZfRJxHzaM08XXvAhGaMD68AtdKB4QQz66vi
+	iRjw7S8b81lkZlQOldCasoECW81R0R8S/cQ1C8jsEtF9H9dAXRYC11arn+Xoy2lj
+	1xOF+RJprAftOGkdY5LWPQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736855780; x=
-	1736942180; bh=TgWqotxr6U9LactNVCZwwk7xHzcbzpMddPUeaMWcDjU=; b=V
-	f25u4tozTjoRT0X3nJLvyOiZXKxarA5OBHvPWIp+tP91leHd0w6lXT/JOnLP97Lq
-	2lOzNpuuLgUx9BBSbVaDt2O/kWZGh/+WT5ePp4nrGyTV4ShxWzzpWuSarNKCvGCx
-	z/ICMlfQUtyFD5sFRIUotaQVWk1TLbYGblh6QMqvKpgLZCz0I31zWaAnDgPV0StV
-	+2BkJeStciFIhN0f/NkZv6rRbIV6yL5pKexh3mOsytyBLLVlIBATWk283ndm1CyQ
-	kGT8pWnHKD6Dk9jBnFn1E8NBnaHmejRTIkreCZ/uVknCVYL1vDk8puI699WlFA0g
-	YZsB90+9yUgoTTe7fGh4g==
-X-ME-Sender: <xms:5FCGZykdn48zEIpH3t8jUZrBuJ4-DmDmD3Y_xsZYfq0ua1Iz0kZAdg>
-    <xme:5FCGZ51ctNIKl8UG-xIRjTjyFX1aBCllg5lSbvDiGTmgQYxwB6T_fzaZ0UG9ubEBN
-    Q16yXwKD843skyCgQ>
-X-ME-Received: <xmr:5FCGZwrVHEDwPkonIXH24wsoEizjbbWGGny5H4nlVq7dpU10XFar_R8Ebzm0jM-E4rHRNS25FRkjAMz4ZLmznkRIqN-eARLcR4Cbg5DEAhnKmA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736855781; x=
+	1736942181; bh=pSwOC7avqCxD9R2LOJxx8WX9Xynae/2LDs9vdLOsp1w=; b=X
+	BwfBHPgqt3hm98JhQ3rNPJHUgQYtJseokkaa0/H4aEQlvQDVfTfZl2cfLEyZiOdd
+	aqM5w1toYWwnbcqXfLz/KxSkpLKe0sR1WnOX118PcgmpHiEFP2AmLbnWV3Lb4fwJ
+	DP10varhzYM52Ng4Z9HqlI1SiHnG4ObU9sZXwcUvsXfDsYe543Xc9SrkLjTzyx4c
+	/e3WJCWSba4m/FVeyA24nTfm0/HrKP6xW7xDwBLt7bTvFsCA4rWiyRcXy7Cq4OwG
+	4DnI2aipIsZv21Ym0ueAPnCGQWjNN9LvFqZqxGQiMb1mFD6Oyo4oRyy8hDGR8CHM
+	Jl/NyxgRs16bjjSN9Mz4Q==
+X-ME-Sender: <xms:5FCGZ4JZRCFwkgS0EvOyh3z5OKbadcGad7mKct_yQ2Z1g0_smkCc9Q>
+    <xme:5FCGZ4IEUxoC3db-8KWGM-OSzi74mWNMy8TIad1cOPAC9kS4aVnbSVm9Rrb7gi0lo
+    hwYn-gu2YHIT24Vqg>
+X-ME-Received: <xmr:5FCGZ4sPnqZ3JCCwMUhdb9aMeumwZr_ZhsEA9JANju1pxfAxcvtQbrGocGbbUQ8V4t-Wwz0xkRYrLFsxBcYjmx9PLhjxJhzr-1nhDkw18JZQGQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgfeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
+    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
     shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohep
-    vghvrghnrdhmrghrthhinhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehg
+    hrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegvshgthhifrg
+    hrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegvvhgrnhdrmhgrrhhtihhnsehg
     mhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:5FCGZ2kdyYl4kpnhHzELFWjF83PXgXc2jKOYkHX-4sW-7lX4fueaMA>
-    <xmx:5FCGZw2gHcKmIf3ihtwVBqyc3Hg07tYyueAGukFOPEqkqVVZx4uvTA>
-    <xmx:5FCGZ9tvS5fYeVQO-hizvV1af7JfZyDzoiBTYD7a7X2visZ8LK6Ncw>
-    <xmx:5FCGZ8XzHqxfARrnOHrVYzykkKM5FthMXfd_4S4STZZ-P-F_BCr49w>
-    <xmx:5FCGZ09i8yfQkHOHUz9DAE6a49-5cHB2V4Qco0YoyGBMHkskuTr8rHoy>
+X-ME-Proxy: <xmx:5FCGZ1bsShaMDqmnE2s8EEN2Pe5wuiwlwXoBojztLU5hDIhuVEY14Q>
+    <xmx:5FCGZ_aox307gi_F4Te1ivH9QDUEFR1fiq-73EOlD77YrpEXZ9vq1g>
+    <xmx:5FCGZxCRfoeLJJlCApMzkguDAL2xjXv0AAaaHPEbuEjqwjdBisJZow>
+    <xmx:5FCGZ1a1lXR5GOhldQy15jMM_8IN_-uA7m1fTmdwyneXq7v8OUYauQ>
+    <xmx:5VCGZ6yNxKC1BDaEm9PM8VKxH3bDFUD83hJaCyGab55oO83T5RSVA4Xn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
  14 Jan 2025 06:56:19 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c85c0d0f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 Jan 2025 11:56:16 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 94011171 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 14 Jan 2025 11:56:17 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 14 Jan 2025 12:56:14 +0100
-Subject: [PATCH v2 04/11] meson: fix dependencies for generated headers
+Date: Tue, 14 Jan 2025 12:56:15 +0100
+Subject: [PATCH v2 05/11] meson: wire up development environments
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250114-b4-pks-meson-additions-v2-4-8d7ec676cfd9@pks.im>
+Message-Id: <20250114-b4-pks-meson-additions-v2-5-8d7ec676cfd9@pks.im>
 References: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
 In-Reply-To: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
 To: git@vger.kernel.org
@@ -94,65 +94,44 @@ Cc: Evan Martin <evan.martin@gmail.com>,
  M Hickford <mirth.hickford@gmail.com>
 X-Mailer: b4 0.14.2
 
-We generate a couple of headers from our documentation. These headers
-are added to the libgit sources, but two of them aren't used by the
-library, but instead by our builtins. This can cause parallel builds to
-fail because the builtin object may be compiled before the header was
-generated.
+The Meson build system is able to wire up development environments. The
+intent is to make build artifacts of the project available. This is
+typically used to export e.g. paths to linkable libraries, which isn't
+all that interesting in our context given that we don't have an official
+library interface.
 
-Fix the issue by adding both "config-list.h" and "hook-list.h" to the
-list of builtin sources. While "command-list.h" is generated similarly,
-it is used by "help.c" and thus part of the libgit sources indeed.
+But what we can use this mechanism for is to expose the built Git
+executables as well as the build directory. This allows users to play
+around with the built Git version in the devenv, and allows them to
+execute our test scripts directly with the built distribution.
 
-Reported-by: Evan Martin <evan.martin@gmail.com>
+Wire up this feature, which can then be used via `meson devenv` in the
+build directory.
+
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- meson.build | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ meson.build | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/meson.build b/meson.build
-index 213998986e8942cee080fc5b9b675860cf429ecc..4053024dadeb0aafc067784b976ed3bd96171181 100644
+index 4053024dadeb0aafc067784b976ed3bd96171181..ab4f229436d3070de692a24c3a196a79d214b46f 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -487,6 +487,13 @@ libgit_sources = [
-   'xdiff/xutils.c',
- ]
- 
-+libgit_sources += custom_target(
-+  input: 'command-list.txt',
-+  output: 'command-list.h',
-+  command: [shell, meson.current_source_dir() + '/generate-cmdlist.sh', meson.current_source_dir(), '@OUTPUT@'],
-+  env: script_environment,
-+)
-+
- builtin_sources = [
-   'builtin/add.c',
-   'builtin/am.c',
-@@ -614,14 +621,7 @@ builtin_sources = [
-   'builtin/write-tree.c',
- ]
- 
--libgit_sources += custom_target(
--  input: 'command-list.txt',
--  output: 'command-list.h',
--  command: [shell, meson.current_source_dir() + '/generate-cmdlist.sh', meson.current_source_dir(), '@OUTPUT@'],
--  env: script_environment,
--)
--
--libgit_sources += custom_target(
-+builtin_sources += custom_target(
-   output: 'config-list.h',
-   command: [
-     shell,
-@@ -632,7 +632,7 @@ libgit_sources += custom_target(
-   env: script_environment,
+@@ -1939,6 +1939,14 @@ configure_file(
+   configuration: build_options_config,
  )
  
--libgit_sources += custom_target(
-+builtin_sources += custom_target(
-   input: 'Documentation/githooks.txt',
-   output: 'hook-list.h',
-   command: [
++# Development environments can be used via `meson devenv -C <builddir>`. This
++# allows you to execute test scripts directly with the built Git version and
++# puts the built version of Git in your PATH.
++devenv = environment()
++devenv.set('GIT_BUILD_DIR', meson.current_build_dir())
++devenv.prepend('PATH', meson.current_build_dir() / 'bin-wrappers')
++meson.add_devenv(devenv)
++
+ summary({
+   'curl': curl.found(),
+   'expat': expat.found(),
 
 -- 
 2.48.0.257.gd3603152ad.dirty
