@@ -1,35 +1,83 @@
-Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C2020F960
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 11:15:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA78234D00
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 11:56:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736853348; cv=none; b=oEt1zw/RCwtfZ6zw+Q6bMzVPmE9XAsqMkMl1FQTY4Lqd7unsjd9azDHNvHztwrVYdLTglZ0sJL8a186j1Xa+/7i0oUm45uE4+9IjXUZeqF+Kgq2KiGPdRhdPH0c5czEOwC+wzFpfRz+ityCQiLNS60S5iL8V/Is2Y9WEyBVaH34=
+	t=1736855781; cv=none; b=bUS/7J/cGfR/qaj5XURl+oNH+4/qLQaUQEWkRX8HD2nvFIWpnLRbHA4qnHZSb7iskpKQCAwpZjSBmI9YpV3ILb+VGdeyQ3HtwpyELlAP6ZrxKC7vCWE/n1l/yhZZY7tcuP43dWgWhvCOMz8MC9W1SE4h284UPiu2OxFKIwHSIt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736853348; c=relaxed/simple;
-	bh=53fOaEUPKt3KbRmbAF56TL3tF7G2qE24X6ow4c7/0t4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
-	 In-Reply-To:References:To:Cc; b=kZXRy0hboV/i9pHDdwOwY4CSAb7aYtClL1cKuDTuGRslqEhBJpooVVG8eGLzOHH/uBZe1nkh4eiD7HWu2E2MXVRfgBxIAQ84WpX8ob1csg9KwSBkDfkMWkndkx3/qsKGhz9MpC1mhsNqTuECiNNjDHMirYB6DpAXa27GTzxiAAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=gNk1UZuj; arc=none smtp.client-ip=91.218.175.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1736855781; c=relaxed/simple;
+	bh=smEKV+80UqMktGJ8Vj7dFDn1BQpdk1zpHk/bwpEY9PU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=OsoBawDK0qB0Wsq7ux2zhjGT53fWGO9ZQFzLqQOLjjar812SLRYGlBSIUyec7OhCdp1bGG8RooBEHC/6/3GYyJeq6aVcRmmVABtnyPnP/R9qn5UJ1n9XlHsRVj33Z6vH1maZPprdIT2c2Xxk8PxUuzqEoMoBmgZlAVg0947sQzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tFy8PIEI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=refk10+n; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="gNk1UZuj"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1736853336;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9DHxK6PGZwxhMl3kYoXvcQw24WwAu0IFdA7DfESXK5A=;
-	b=gNk1UZujZ3mMZK6hNAiilYYZXuT/Xc2dlwzNvHlQ66pRG8sXykFGOsM7PNtcNRjvnKl4g/
-	62eecv+IZntQt6zgZclkfoRE+OcUrgLLF2sp8MSXOdd+HQYDlLQq6v/3CYMfJOMuljcKke
-	kC7Bp9dATrTBM6VAZWMlRN+mYIR/RLw=
-From: Toon Claes <toon@iotcl.com>
-Date: Tue, 14 Jan 2025 12:15:23 +0100
-Subject: [PATCH v2] meson: ensure correct version-def.h is used
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tFy8PIEI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="refk10+n"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4A6781140141;
+	Tue, 14 Jan 2025 06:56:18 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Tue, 14 Jan 2025 06:56:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736855778;
+	 x=1736942178; bh=Viu82sTd4p0DFlv0KxwzpmjV4EFP0erMsCJ/VOgSuD8=; b=
+	tFy8PIEIWbLJSAyuXux7QQ1aM5P91etLuRL4u+8JflZfirnHg+fxJb1Adz7xHxz0
+	OpV/kIcHlz7N7mI5ghI2yWxgBPLEZsvheTGxd3NHRV4UB1z72YzMXZqyAy+RybfF
+	xiFTsQoePZbXTXOgHBPg3ayt04uh+zJSP0FPBnr8DXORKOCU0el91Ejp+Jj5kma2
+	J7ZtwhqIl3neG8W0glXB6Krqsfpf4XZpEzMM7fWyXLNpUUJ8UCP3B68prMv8acYM
+	aXbvMSPjgcMd18TzA1eQTOV7ImauKjWzLV2/LgkilUKqMI1fV+EqziEtr7OjxV8K
+	K2NwB+dl8dABqIbu+qCaCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736855778; x=
+	1736942178; bh=Viu82sTd4p0DFlv0KxwzpmjV4EFP0erMsCJ/VOgSuD8=; b=r
+	efk10+nIAFnb12QYTX753NZAKGPKHA1Z5f0T8HgRUBTdIrgZ6y0uiV+z+x/wqz+W
+	WHdoaGM7mx7CLDfa4EUaIs2WxmSF3k4ehoZcvvqapsZkJau+NhkAUxmI/A2YWiyE
+	kvszBPt006Lfg74j9kh2vvEtBeviVkyLSNUPXhoRY1iYEF4ebGVTdXfsQ6tEgUKi
+	upM4jGDYAqG/OigXO1fxxpo49YEbwzx7ME2+lkiR4W8bQXuSWSXH/lYi8Q9VknBU
+	5Iyaa17Bc78X/Bm6ZIO0yS7NROh+llv/iBEILtDlZ12+SuJ3Vxix2dZQzSZrjUxX
+	EkqJfGc/o3ei5vPM84r8w==
+X-ME-Sender: <xms:4lCGZ2EFbmJTeQwTGdoxILB1xoWflreVWy6gc_D_Y23RvNf-cGae4A>
+    <xme:4lCGZ3WMDx2dCI1ha3fRZwRmusQ8KVSy166xhM3Sdzk9P3cdpispUYyawSpICqjOH
+    RxtXpT_bWzEPLORdQ>
+X-ME-Received: <xmr:4lCGZwJEDEEutQQj03_K3_qyv3Pv8RFLfm4PrVbIuSCELqzPGvOkC0X6lUd7WDjAnzoQs43HDLCBMLXgKNnaI98fzs_bBoFw8isZBNlvHSn4BA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgfeegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtkeertdertdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeefhfeugeelheefjeektdffhedvhfdvteefgfdtudff
+    udevveetgeeuuedtkefhgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopegvvhgrnhdrmhgrrhhtihhnsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehm
+    ihhrthhhrdhhihgtkhhfohhrugesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthh
+    ifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:4lCGZwEtDmrdn8tH-qbRVGJD2vJuTPUFjJ3DSVJZzU_4m6CPQM6p5g>
+    <xmx:4lCGZ8XTp3tcrPRuHm7j09ogcur51DyZYG-2QiUivVFnLn7mGL85NA>
+    <xmx:4lCGZzPFOv89fATZByFLJn3LPSSGYPxoH8aeQFulK_v-nlDwldfwIg>
+    <xmx:4lCGZz1a0_AdU4BTiaaCGBmgiACTQYcXAEpUq9WW0rAc7t1FvYfk8A>
+    <xmx:4lCGZ2feFtt97q7OhGWMYFlAUN6-QlDBbzEkv40-nu-ZK5Y4YWDvRjEv>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 14 Jan 2025 06:56:17 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5d1a9bbd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 14 Jan 2025 11:56:14 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Tue, 14 Jan 2025 12:56:11 +0100
+Subject: [PATCH v2 01/11] GIT-VERSION-GEN: simplify computing the dirty
+ marker
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -37,163 +85,73 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250114-toon-fix-meson-version-v2-1-66ddb1a82c28@iotcl.com>
-X-B4-Tracking: v=1; b=H4sIAEpHhmcC/4WNSw7CMAxEr1J5jVET8xGsuAfqoiQutUQblEQRq
- MrdcXsBdn6jmecFEkfhBNdmgchFkoRZwe4acGM/PxnFK4Nt7bE1hjCHMOMgH5w46VU4rhMkf/B
- Eg+8fTKDjd2QtbeJ7pzxKyiF+tz/FrOlfZTFo8HKiM1uVWqabhOxeexcm6GqtP+8RQqC8AAAA
-X-Change-ID: 20250113-toon-fix-meson-version-3d4d33fdabe3
-In-Reply-To: <20250113-toon-fix-meson-version-v1-1-9637e2be32e3@iotcl.com>
-References: <20250113-toon-fix-meson-version-v1-1-9637e2be32e3@iotcl.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20250114-b4-pks-meson-additions-v2-1-8d7ec676cfd9@pks.im>
+References: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
+In-Reply-To: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
 To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
- Toon Claes <toon@iotcl.com>
-X-Migadu-Flow: FLOW_OUT
+Cc: Evan Martin <evan.martin@gmail.com>, 
+ Eli Schwartz <eschwartz@gentoo.org>, Junio C Hamano <gitster@pobox.com>, 
+ M Hickford <mirth.hickford@gmail.com>
+X-Mailer: b4 0.14.2
 
-To build the libgit-version library, Meson first generates
-`version-def.h` in the build directory. Then it compiles `version.c`
-into a library. During compilation, Meson tells to include both the
-build directory and the project root directory.
+The GIT-VERSION-GEN script computes the version that Git is being built
+from. When building from a commit with an unclean worktree it knows to
+append "-dirty" to that version to indicate that there were custom
+changes applied and that it isn't the exact same as that commit.
 
-However, when the user previously has compiled Git using Make, they will
-have a `version-def.h` file in project root directory as well. Because
-`version-def.h` is included in `version.c` using the #include directive
-with double quotes, some preprocessors will look for the header file in
-the same directory as the source file. This will cause compilation of
-`version.c` ran by Meson to include `version-def.h` previously made by
-Make, which might be out of date.
+The dirtiness check is done manually via git-diff-index(1), which is
+somewhat puzzling though: we already use git-describe(1) to compute the
+version, which also knows to compute dirtiness via the "--dirty" flag.
+But digging back in history explains why: the "-dirty" suffix was added
+in 31e0b2ca81 (GIT 1.5.4.3, 2008-02-23), and git-describe(1) didn't yet
+have support for "--dirty" back then.
 
-To explicitly tell the preprocessor which `version-def.h` to use, pass
-the absolute path of this file as macro GIT_VERSION_H to the
-preprocessor using option `-D` and have `version.c` `#include
-GIT_VERSION_H`. To remain working with other build systems than Meson,
-include "version-def.h" if that macro is not defined.
+Refactor the script to use git-describe(1). Despite being simpler, it
+also results in a small speedup:
 
-Co-authored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Toon Claes <toon@iotcl.com>
+    Benchmark 1: git describe --dirty --match "v[0-9]*"
+      Time (mean ± σ):      12.5 ms ±   0.3 ms    [User: 6.3 ms, System: 8.8 ms]
+      Range (min … max):    12.0 ms …  13.5 ms    200 runs
+
+    Benchmark 2: git describe --match "v[0-9]*" HEAD && git update-index -q --refresh && git diff-index --name-only HEAD --
+      Time (mean ± σ):      17.9 ms ±   1.1 ms    [User: 8.8 ms, System: 14.4 ms]
+      Range (min … max):    17.0 ms …  30.6 ms    148 runs
+
+    Summary
+      git describe --dirty --match "v[0-9]*" ran
+        1.43 ± 0.09 times faster than git describe --match "v[0-9]*" && git update-index -q --refresh && git diff-index --name-only HEAD --
+
+While the speedup doesn't really matter on Unix-based systems, where
+filesystem operations are typically fast, they do matter on Windows
+where the commands take a couple hundred milliseconds. A quick and dirty
+check on that system shows a speedup from ~800ms to ~400ms.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-This is version 2 of the patch trying to ensure the Meson build does not
-include `version-def.h` created by Make.
----
-Changes in v2:
-- Instead of copying `version.c` to the Meson build directory, define a
-  macro with the absolute path of `version-def.h` to include.
-- Link to v1: https://lore.kernel.org/r/20250113-toon-fix-meson-version-v1-1-9637e2be32e3@iotcl.com
----
-Range-diff versus v1:
+ GIT-VERSION-GEN | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-1:  fad8163ff8 ! 1:  c1ca203451 meson: ensure correct version-def.h is used
-    @@ Commit message
-         However, when the user previously has compiled Git using Make, they will
-         have a `version-def.h` file in project root directory as well. Because
-         `version-def.h` is included in `version.c` using the #include directive
-    -    with double quotes, some compilers will look for the header file in the
-    -    same directory as the source file. This will cause compilation of
-    +    with double quotes, some preprocessors will look for the header file in
-    +    the same directory as the source file. This will cause compilation of
-         `version.c` ran by Meson to include `version-def.h` previously made by
-         Make, which might be out of date.
-     
-    -    Copy `version.c` to the build directory before compiling it to ensure
-    -    `version-def.h` from the build directory is used.
-    +    To explicitly tell the preprocessor which `version-def.h` to use, pass
-    +    the absolute path of this file as macro GIT_VERSION_H to the
-    +    preprocessor using option `-D` and have `version.c` `#include
-    +    GIT_VERSION_H`. To remain working with other build systems than Meson,
-    +    include "version-def.h" if that macro is not defined.
-     
-    +    Co-authored-by: Patrick Steinhardt <ps@pks.im>
-         Signed-off-by: Toon Claes <toon@iotcl.com>
-     
-      ## meson.build ##
-    -@@ meson.build: version_def_h = custom_target(
-    -   env: version_gen_environment,
-    +@@ meson.build: libgit_version_library = static_library('git-version',
-    +     'version.c',
-    +     version_def_h,
-    +   ],
-    +-  c_args: libgit_c_args,
-    ++  c_args: libgit_c_args + [
-    ++    '-DGIT_VERSION_H="' + version_def_h.full_path() + '"',
-    ++  ],
-    +   dependencies: libgit_dependencies,
-    +   include_directories: libgit_include_directories,
-      )
-    +
-    + ## version.c ##
-    +@@
-    + #include "git-compat-util.h"
-    + #include "version.h"
-    +-#include "version-def.h"
-    + #include "strbuf.h"
-      
-    -+# Because most compilers prefer header files in the same directory as the source
-    -+# file, copy version.c to the build directory.
-    -+version_c = fs.copyfile(meson.current_source_dir() / 'version.c', 'version.c')
-    ++#ifndef GIT_VERSION_H
-    ++# include "version-def.h"
-    ++#else
-    ++# include GIT_VERSION_H
-    ++#endif
-     +
-    - # Build a separate library for "version.c" so that we do not have to rebuild
-    - # everything when the current Git commit changes.
-    - libgit_version_library = static_library('git-version',
-    -   sources: [
-    --    'version.c',
-    -+    version_c,
-    -     version_def_h,
-    -   ],
-    -   c_args: libgit_c_args,
-    + const char git_version_string[] = GIT_VERSION;
-    + const char git_built_from_commit_string[] = GIT_BUILT_FROM_COMMIT;
-    + 
----
- meson.build | 4 +++-
- version.c   | 7 ++++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index f2af817feaeb384dee0ffd197f02a31cf2d31f87..b8b683b9337e5771e14a2cfb84022a11489bb432 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -39,13 +39,9 @@ then
+ 			test -d "${GIT_DIR:-.git}" ||
+ 			test -f "$SOURCE_DIR"/.git;
+ 		} &&
+-		VN=$(git -C "$SOURCE_DIR" describe --match "v[0-9]*" HEAD 2>/dev/null) &&
++		VN=$(git -C "$SOURCE_DIR" describe --dirty --match="v[0-9]*" 2>/dev/null) &&
+ 		case "$VN" in
+ 		*$LF*) (exit 1) ;;
+-		v[0-9]*)
+-			git -C "$SOURCE_DIR" update-index -q --refresh
+-			test -z "$(git -C "$SOURCE_DIR" diff-index --name-only HEAD --)" ||
+-			VN="$VN-dirty" ;;
+ 		esac
+ 	then
+ 		VN=$(echo "$VN" | sed -e 's/-/./g');
 
-diff --git a/meson.build b/meson.build
-index 0064eb64f546a6349a8694ce251bd352febda6fe..db27afa99986598aab22ada718f76a7a49238f24 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1493,7 +1493,9 @@ libgit_version_library = static_library('git-version',
-     'version.c',
-     version_def_h,
-   ],
--  c_args: libgit_c_args,
-+  c_args: libgit_c_args + [
-+    '-DGIT_VERSION_H="' + version_def_h.full_path() + '"',
-+  ],
-   dependencies: libgit_dependencies,
-   include_directories: libgit_include_directories,
- )
-diff --git a/version.c b/version.c
-index 4d763ab48dd76c0445e5ea390ff4c1f35c1a4b12..4786c4e0a54093ca947da27f8b712bd1ea351203 100644
---- a/version.c
-+++ b/version.c
-@@ -1,8 +1,13 @@
- #include "git-compat-util.h"
- #include "version.h"
--#include "version-def.h"
- #include "strbuf.h"
- 
-+#ifndef GIT_VERSION_H
-+# include "version-def.h"
-+#else
-+# include GIT_VERSION_H
-+#endif
-+
- const char git_version_string[] = GIT_VERSION;
- const char git_built_from_commit_string[] = GIT_BUILT_FROM_COMMIT;
- 
-
----
-
-base-commit: fbe8d3079d4a96aeb4e4529cc93cc0043b759a05
-change-id: 20250113-toon-fix-meson-version-3d4d33fdabe3
-
-Thanks
---
-Toon
+-- 
+2.48.0.257.gd3603152ad.dirty
 
