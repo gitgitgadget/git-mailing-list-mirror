@@ -1,106 +1,138 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE651C3C1D
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 07:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C431CEACD
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 08:36:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736841107; cv=none; b=kT6vr60NpwEPJF3dNMYw4FWFAxKpu9RHDtMibZxSDgOtZP+jVFVGrXi0vyFzkyJNIf1p7F9+YxNJKG44v9BraBdZLcv4hT/hF3pzH+Ra1697cJtJinLOQyqxNJEws4rHDTPvMo06UgSvnw06O/XGxVsFZtwMKUs9te3/cPcXoP4=
+	t=1736843814; cv=none; b=Y4XL5ZGoDFMbGB1HX8uN7sQJqgC6VL6ZCs+oRjbYhY3vj/Ke2K/tmEVtt/4haXKTokbwjlNQm20YjKm1OPDIRvJwDJKsZhPTGp64AZSbf9diEPah44fszhBUjlGDOvNSNlFdJ7j3G6dLHNL+IGJSueCfx9TwkdiFbGULrfcBhqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736841107; c=relaxed/simple;
-	bh=OK338G2QW4ErwsnvuDpD+B4FxL5DKReC7cK2XxOoSUg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=B9GOqoBMpTcFESkwXiJctyeIaLxRPycMBVxUNz9hYjXTNn5wLr7qaE/7EUigTazHIbYsev5hgN9tuNF/06E/V5Cc+wiFCnXjna1Kf5BFBaZ2DaeT4TrvzQEgw1RCyA8nZaFyKw805SY2zp/d2WdTkQO2OpVYtihf8qiZho7CxNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bAtFsf7x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=APlzLxFN; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736843814; c=relaxed/simple;
+	bh=jf2BavUEQpkSfjFw6jAw24lXJMzFImRzKReJVnalxC4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aDFls16rFGIwUepDFWBYXbaVzs85PWXibtzoFpymLOMmCSfZicna7zIS7I4DP6eB9/ji2SUNShx/JASNx7LdxgkJkALzj/dYBei0VFKP5K4hVq3d7wM5HSqT+ygND0gS+p4J4GXYiAkzRKaUVAlk791CbDRmP6th8DV6ls71N24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mdb+muyz; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bAtFsf7x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="APlzLxFN"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 40CE61380285;
-	Tue, 14 Jan 2025 02:51:44 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 14 Jan 2025 02:51:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736841104; x=1736927504; bh=ynXYmm3/m/
-	3cB1D6VVhDWDgr8xC88ClF1bCqFDyUtsA=; b=bAtFsf7xvP/wsgaldJ0nBtd8XX
-	vP4Hifn/FZtPhxRvn/p6JVAebO/D0Ek48Zu8CxXB9Tad/KkxBVdjtJI/VVLQksms
-	u/Y4b0pmuQ2EWeVrnafvOcS44DwDzlpgYL6J2n+RJI6CYQrGGom4Cb1/S4dnm+g5
-	UEue1pHOijus+I4Vp/0Nql5gBCfoF0L9MBmE3h55uuUmJN91XNl4ov7wQWogilk4
-	mRGp1PMnHBNTKQIyI8k/iKLQBmK9jhltdPzmnc37RSpgzID1RtnH/a8x6DOIcbZJ
-	+CDqut6bMAnDbfHkc3PePvVNbeQ74gQYAeacI3nsiuvkeBTQ/fuVL45hiQ8w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736841104; x=1736927504; bh=ynXYmm3/m/3cB1D6VVhDWDgr8xC88ClF1bC
-	qFDyUtsA=; b=APlzLxFNZ1xqVNXldvZStA73AqwRpaL6WFZQksd93doo+ugG6H+
-	vKwSwiBMu2NkxJ8lE0hYq+enVeB8QZ+z2X+Fg0NVKSTNhAEUp7Hasb4Cbznu5vxL
-	LUeK2Tg8VUqomLyzkwRgfwb2PnAESmqmPjPoY2TM34veXYzlR5rvK1RJEWcuYCfI
-	UWy8Py8ssREBQmPgCxCD28ivDWoQpwMXgOH1BjXd1yVnOlntn4RU1gcGgKhh+x9Z
-	NV0nZ0fv5qs3sV0qqZqgBMDP4MiKxMNAZkKUfCKr9g/QwfDWCQamTgT6LA0O/c6W
-	RnLKVoO2xxcDCGmx+Nan+Ucu3tsUsBhqZtA==
-X-ME-Sender: <xms:jxeGZ1wF-s1rRrQXTpFZz0D9WlfkJx1YJF9e5KsLo0RJ7UDBfaIMdA>
-    <xme:jxeGZ1QMC1W7z4LU2lRfFuEXUiscYlv_YRbnZUVCQascpBVQ3R7cVp_u3UUDlV6Ch
-    Ee7142RFqLv-qVsHg>
-X-ME-Received: <xmr:jxeGZ_UPmE9RBlb1ZCdlPCZs48-KtBT3IbTyNmZE5iy30weehUUd24FN8asOP4rJWKj9FvFuFTcjhOOqzAZIhogqj6eswEKHVIbRrI3zQr-X3w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehhedgudduudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehrrghm
-    shgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhm
-X-ME-Proxy: <xmx:jxeGZ3hV1PJmyAYbyZOfsJ4QY1QbT5JT44y7UgrPKqcSpGRrTjAzQg>
-    <xmx:jxeGZ3D4FUBDO-KU3fbVgoSAL6fUhfMel19u63RUj0Tg_M0CMrH0zQ>
-    <xmx:jxeGZwIEtq5dtKvJ7MgXV3nqhYKKvc-pFTIxfosX16RcXsRKAdSACw>
-    <xmx:jxeGZ2ASj8s1Z5Y9CQlO1n8rt2kwzk7fSeCyWqr0i33ArRsnv43oFw>
-    <xmx:kBeGZ-Mn5knwefVVr7k3wbxMM1iwp5peT_hrdxDYnIoSBzpiD0lRqZak>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Jan 2025 02:51:42 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 06eb68db (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 Jan 2025 07:51:41 +0000 (UTC)
-Date: Tue, 14 Jan 2025 08:51:40 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: 'seen' branch identifies as v2.48.0
-Message-ID: <Z4YXjCrtjCUjkEql@pks.im>
-References: <6c5d0f90-79f0-4fba-8edb-f80d0665873b@ramsayjones.plus.com>
- <xmqqr0566u60.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mdb+muyz"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-aa689a37dd4so992901166b.3
+        for <git@vger.kernel.org>; Tue, 14 Jan 2025 00:36:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736843811; x=1737448611; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JmgBpnxb3P1tYPXZudHATwX0nJSqM5KZpEdYIVZdFsQ=;
+        b=mdb+muyzW3MQWgreT/Z0WaY2t7EC8O1TH6kPYmrc7M+Dz1Xxf/fcp/IcLpMfUsPSiD
+         /LGm2kwK4qCqvr26E+/B55uVWsQhlv9Tuyp5Aiyeobt45wCGdsqOfaY6HhUTHLu4RZgz
+         Y5TPUM+tZYM88glwiYW28g2CfMwZe856KIcTOy8Fafg5znYpE910irXrnmPPFeEZzmmp
+         upH4f9QQAAezkV5NoLkRnH17pM+M0O/OEoaZdUiLwMMPjT3tSJJlWrxY5cl33mh9Obd1
+         dUMlC+6ISwbfbfh22I/g8jr5BnZjURAsgDF+Sl+OOI8C2XzNClipKHxxW5rz2fVu7LX6
+         fGrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736843811; x=1737448611;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JmgBpnxb3P1tYPXZudHATwX0nJSqM5KZpEdYIVZdFsQ=;
+        b=g5T0wGK8qR/HtFcaeWRp13F7Ij+XGqSUR028bdCXQhc1pYXP5A7TsBNYVvabiINTY+
+         aZSAtFUJapYPa0DbMpo0LK9J60FtZKaaujPGm/ozFqI+fcfe4DTa7i7ElmuPOcKe5YKX
+         pCkXZdB1jV8J+9Aa06/Y7bGLTVJ3gaHJotiNRRubnGwmrco7mBoqahHrCW+hsQmlHVth
+         uG/PeI5cTO2cIRIDYaoEJHoQ1U7tkmmiXEeQMeD2vE7s6LMJCMgV06NaBksUewtzVTKg
+         LH+OWufexR9S5IAFdMGTvACfIf/79VXM5k8OOAMVBSC5w1F/fd03PAxDjqh+6hO08/6U
+         0lag==
+X-Gm-Message-State: AOJu0YzJHCH+zihl9cJsZP1R51Ol70YcpNRvEe1eKYR/CM+A3FeVyAif
+	bUtCqTKDmCwr+BJh2lYxVRL8K2e3Kp/JDxIdlaJwLdc7Jvpf5HPyYR4od98J/9er2E6pYdRWSe7
+	vhEZHc3/bvacy3UgedH8z+Alow9GjPls9
+X-Gm-Gg: ASbGncu1+MCG/zE4n6FdWnB4mjhgaApKECUptvi/2fFgoAd11YdBAyVQczDrw1apu43
+	dTeUjhNSVlwPnqaXKKFRKx8VUCjkSoOuBAKkmDCos
+X-Google-Smtp-Source: AGHT+IFebT8N+oxax+yI5d8+WSW3F4oQpA8FKrt/9rNo8vpaYlVIDK7M71NCvbmt+dTqFSgLwho6X7+msjENgh3rQnw=
+X-Received: by 2002:a17:907:60cf:b0:aa6:8b38:52a3 with SMTP id
+ a640c23a62f3a-ab2abcb07e9mr2459270266b.50.1736843810585; Tue, 14 Jan 2025
+ 00:36:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr0566u60.fsf@gitster.g>
+References: <CAFAcib9rWO8WFmaAwf+1Ng85+N7O3Y=QM6wG5xEz0r4tGXJ8TQ@mail.gmail.com>
+In-Reply-To: <CAFAcib9rWO8WFmaAwf+1Ng85+N7O3Y=QM6wG5xEz0r4tGXJ8TQ@mail.gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 14 Jan 2025 09:36:38 +0100
+X-Gm-Features: AbW1kvYfvkKoiFgxx90RegIMGy_-Kd4cLBPNq3llAilF2Sd8ipAQCc9xhpfr0VA
+Message-ID: <CAP8UFD206mL+CYxOUKOPWFj7tX1Y79Moc7UjvH4BsLVLbAk-JA@mail.gmail.com>
+Subject: Re: Should 'git replace' respect GIT_NAMESPACE?
+To: Josh Bleecher Snyder <josharian@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 13, 2025 at 05:49:59PM -0800, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> > I normally like to find solutions before posting problems to the list, but
-> > unfortunately I don't have time to look into this at the moment. Sorry!
-> >
-> > Just a heads up.
-> 
-> I'd throw it back at Patrick, at least for tonight; the topic is
-> more or less hot off the press and it should not be surprising it it
-> needed immediate fix-up and reroll.
+On Tue, Jan 14, 2025 at 6:17=E2=80=AFAM Josh Bleecher Snyder
+<josharian@gmail.com> wrote:
+>
+> I was hoping it would, so I could have different replacements in
+> different namespaces, but it doesn't look like it does as of ~now:
 
-Yup, found the issue. The next version of the Meson series will have it
-fixed. Thanks for the report!
+It might be interesting to know what you wanted to do with different
+replacements in different namespaces.
 
-Patrick
+When replace refs were introduced, there were discussions about
+extending replace refs to be able to have different sets of replace
+refs used at different times, so that it would be possible to have
+different "views" of a repository. For example there could be the
+following views:
+
+  - the "default" or "canonical" view where no replace refs are used,
+  - the "timestamp fixed" view where some replace refs to fix
+timestamp issues are used,
+  - the "authorship fixed" view where some replace refs to fix
+authorship and committership issues are used,
+  - the "build fixed" view where some replace refs are used so that
+the build work on all commits (which should help with bisecting),
+  - the "old history" view where some old history of the code (that
+was not imported when Git started to be used) is linked by some
+replace refs,
+etc.
+
+> $ git version
+> git version 2.47.1
+>
+> $ GIT_NAMESPACE=3Dfoo git replace
+> 751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> a9dfd084086ee4d6bf00a33b0976f28c0997457e
+>
+> $ git rev-parse refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> a9dfd084086ee4d6bf00a33b0976f28c0997457e
+>
+> $ git rev-parse
+> refs/namespaces/foo/refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> refs/namespaces/foo/refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> fatal: ambiguous argument
+> 'refs/namespaces/foo/refs/replace/751eeb3b4d23c7fbde919aedde8c091f04f4f81=
+9':
+> unknown revision or path not in the working tree.
+>
+> $ git log -n 1 --oneline 751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> 751eeb3 (replaced) add go.mod
+>
+> $ GIT_NAMESPACE=3Dfoo git log -n 1 --oneline
+> 751eeb3b4d23c7fbde919aedde8c091f04f4f819
+> 751eeb3 (replaced) add go.mod
+>
+> Is this a bug in which case I might hope for a fix, or is it working
+> as intended?
+
+I don't think anyone mentioned using both namespaces and replace refs
+together before, so it's hard to say.
+
+I think namespaces are considered a server side thing to avoid
+duplicating objects in the common case where different users have
+different forks of the same original repo. And namespaces might not
+even be used much on the server side as there is the "alternates"
+mechanism that can be used for the same purpose. Also on the server
+side, you generally want to disable ref replacement entirely as it's
+just simpler, and most often what users want, to use the default view
+without any replacement. So it might just happen very rarely that
+people want to use both namespaces and replace refs together.
