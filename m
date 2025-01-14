@@ -1,82 +1,82 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD43928EC68
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 11:56:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7C628EC91
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 11:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736855785; cv=none; b=sI1zPSa7HJxHtA7QcOB0PikcrvTpJvt+872Mob4gqp68knIIk6j2CvnOartUk3F64QpiYn7w+OtZluUd69M0ArX/PLq9e4oldjKnR5BeAJUUkAwxnJpR7uqIfzDYgRbZb0XnXRPT5Jg+V5if3f3l5uwx/ovqancvXMqiW/6ggi4=
+	t=1736855785; cv=none; b=tIfuGu397mei3DzMI1OIkfzsFxaw2W1rsBKnO6UKruWKYtoD08pRo5qKKm80gcv8cr2MQ/NrvaZ6bwStxzdQRWre+E5gFO66Uwk+QrVSn7z15vwk4ffZ9IrMr13CTOkJikBAu6vZa0JBsscMlEpUqbE1+mATT4gdWhWR/A60W+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1736855785; c=relaxed/simple;
-	bh=gSXySZCGfIUynZg8Ht3OzPKekirWtkNlLj8WG+FowHQ=;
+	bh=UM2eqku/ZOVM12Xp8OXQTv3skvz3RQUKKnUxKPH6GLg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RMy+5YQvxBsPuHK/vfbV2C5bdGveuXyjs5spEXIHvoO/FOUXeW47qp4z9+2zSqk1Ga7MVh7Ot5FH8LWYlYzMDD8wW6hvWAQV095k2W+F4oBz9fnp1xhJrb7rpJ9QKGBCQ6hPMoo7YQNqjdasPWNPCmizMx3kyjjSeKSnI+mscyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H7rSwgZR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BnVNM5SY; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=N2c34Te3LPHJvWO9lKtIQxCMns/TDIsNpDjcGmzNnFVBZrpq+2OdgDzK78hsoZHJmi2hb3F9Uuzze8U/rOD0c5LoI7P8WFemX3qdtZX1QZcyYz6MPS0v7N5GKaphWlyX5ifKgjBaA4FrCcSD2ZdzI+/stE/UoJiNc8CnUDfTZVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bf/52B8z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IUEhe0Ng; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H7rSwgZR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BnVNM5SY"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D5533114012E;
-	Tue, 14 Jan 2025 06:56:22 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bf/52B8z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IUEhe0Ng"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5B9F7114015B;
+	Tue, 14 Jan 2025 06:56:23 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 14 Jan 2025 06:56:22 -0500
+  by phl-compute-01.internal (MEProxy); Tue, 14 Jan 2025 06:56:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736855782;
-	 x=1736942182; bh=uqIbFGoX0ckU+WgLwVHZdvC+uiC4WT9vjcxZAJoo4qk=; b=
-	H7rSwgZR+RRtz4ZCKdtvX7NWWm7pREXqKXMv7/0oKoV8s2eq7S3KiP7ROzG80WB0
-	g916fgopY4mT+/DlMUfYMhTLW6quDRINGaZmzX+CvQ+Nyb1Vk+oRkYfpljr69fJB
-	JEymERgX+JyYnYalqy6LwJklzwLAnKufBakGtcq9nLFmh8IR+Z/mXkiiHt0W51AG
-	hEK0rxnkfXUNr1ZhmOswsq9Sivtqcn25ukaNy67AY6sWQmu5midmC5MqLwSwC4Xu
-	tGXoqnBh5QTMXOz9gjXNufTnUsCZfVQmZ/bjx3xjN/wDj4bzYy/1BzwowmygOBR9
-	w5ManxoUhgWu3n4krJjUZg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736855783;
+	 x=1736942183; bh=pco7noKo0yiW6uDdt3Ue0s3iDrCPIIm2ghhYXyasGkA=; b=
+	Bf/52B8zR42SXmHBezX3mbqS3g7pfaFjOve0eGaOQTxyjA/RoJtihPqXSuLBMWnq
+	HY+qYBmAUF0z1IUsNk0UPxPgaKuRzYgHoMwhJo4d+jmgWFwuspLxqP2DE4fN+kDC
+	bhsmCkBph2Ume+oCFnHqlVeemMvbMxVZXMsNeQHs0TnnihKQ4Rm8pMgKiBF19O4m
+	V8Y46EyRTc8M+wwiXuxVYq1a2u+hg8D0kB9KXs0G2WXbFbtJUvgFzmYrjjxDetS6
+	46UgkJpqxd9gSSXdvgMKn0fJQDklcsUkzGCvoQXXPuLp9DdtRKhbs8iiFWOzfoou
+	Pep93zxUsy2Jx8IwfJf/yg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736855782; x=
-	1736942182; bh=uqIbFGoX0ckU+WgLwVHZdvC+uiC4WT9vjcxZAJoo4qk=; b=B
-	nVNM5SYKqnE4l3GJHvMsxB/03vZjSD/nP82rc8lskNCJpF1h3wnrPtoHBJcJuOrE
-	/QJzvjMsQfzherio/rRWNpqV7mqfS8VmXPCGfkIf4bH6sDLbdK0knuLC4jUvDgn3
-	2Fcgh1+f9UQSqznCusGP3ChjoI+ULnErhtTPokVn2J3Me7TbBwnIUFMYxzeX2Uhh
-	0bwqJPRZjw7TXom+VcpFiaAQh1BXdeK1jScG4r+21GKUN6YQSh40W6SYnN1LIaIp
-	1ESuwd+dUmqixkw+4ljgX33edf/Bdxv8U4pLJ7MbcquUAxa1UL2u1ABNkcHMIrum
-	H9nTzvZ3Ew9yXQdDlmlMQ==
-X-ME-Sender: <xms:5lCGZ4ztC04wTk8PH1vUV2spGPwyiry2MeYX90q768fMEHvaiF6-Kg>
-    <xme:5lCGZ8QIhp86LaQ1GAoaLC4AzY0weISxlTMy4nu5Tw38-Z8m8Au6k3M_CqPWhvhhw
-    wWqVYBri_9Zc2GLTQ>
-X-ME-Received: <xmr:5lCGZ6UrAlzwGsadejK9_VHh18WS58GOPpfKQZgr3r1LkwSPQbM-EKETmHP1AQ8ongGX0y55_XmpPDemlLTAEL8a_Dp3PASDzvTDKhF90K1ZvA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736855783; x=
+	1736942183; bh=pco7noKo0yiW6uDdt3Ue0s3iDrCPIIm2ghhYXyasGkA=; b=I
+	UEhe0NgncTjbdOf2PbIXrz+UE2yoDnF+3X/VN035t4WgrLgSeWj6yhG74FNeiO4c
+	kLGpQO1F8zK+T+Tpip1xX6f3AFMI4w9MKKyH6pkrV6EV+KcS0UUhL2eGKI3qRyVm
+	JVSueJbbk+4pjc2siiBGkFA9Cd2gHJQWzhS20UGVOqseHXsmS9ZJt6bHZyZ7aLN6
+	Bpim7SNraTOXeBwZ80CI6c39sRa12PnevOe7tQJNBXeQvzTLafDlgeoPrRCPae0a
+	2JCau+YGhOkiW4FkoGj/IOOW6GxRdx4eatnzMNPX2bfP/6EmkYR+ZD1WMMetld2F
+	J6xGW9yviAG9D7/fb4Mow==
+X-ME-Sender: <xms:51CGZ6ActQfLn00Ptr-g_gcpy-ZpMpxg_jsCPsKzYypbW_aywTyzCA>
+    <xme:51CGZ0gMS2taVjeDrKFvyIeiSDsNzFd59P11f-cUG91iUXybclDP5Sk-Il69SUIWV
+    cxoEsAkv9jsodByNw>
+X-ME-Received: <xmr:51CGZ9lCvdUUQ5cBSRAzSQF_90kWMq-S8Fsq_rpRXe3IXk0DdY0nFIXx669pZjErjWVN4rTxbVqOmI8vH0GTME8afnm1vBo3NNcu-1uv8jRtLQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgfeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
     shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
     hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmihhr
-    thhhrdhhihgtkhhfohhrugesghhmrghilhdrtghomhdprhgtphhtthhopegvvhgrnhdrmh
-    grrhhtihhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgv
-    nhhtohhordhorhhg
-X-ME-Proxy: <xmx:5lCGZ2g_Irewp43D5Zav-yedu0nWIwhiJsXnLQeREL49gm2SNwc-VA>
-    <xmx:5lCGZ6AzsJ4nYaqCWs_LS4DqJHvfRzGEfANLgQoM8dqXyA4eSFZyHA>
-    <xmx:5lCGZ3JXzre_j0FyCqBhaZjqeOcEk6h9asp-C1GFpICE27wqQVGcFQ>
-    <xmx:5lCGZxA5IZF7869LH-bz_MxA2B6BEs3gAysZag0305GiV9eS9_BeyQ>
-    <xmx:5lCGZx4Uann3ztIw0WBlWB4nwBOY1tQciZcGYGT7oQjeH_o-NFBHBY_3>
+    thhhrdhhihgtkhhfohhrugesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrg
+    hrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegvvhgrnhdrmhgrrhhtihhnsehg
+    mhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:51CGZ4zYkx59vZycHyv1a-mXRNkJ2aLAhwNg9P8fHxoVv2DnOtu1vA>
+    <xmx:51CGZ_S_1B7mrS7X1y5HhUuwWumC7h9HlYCEjeEWDjiOO74ZYoVYvg>
+    <xmx:51CGZzaP4VJLbDJXKW8ADpbRT-gTuZs-DiUXqaw40KtaK-3TB0BhBQ>
+    <xmx:51CGZ4QPGj24qzaz-8z4S0Lhwu1IwPLXTL0pdAxgiXZfDAVgb12k2g>
+    <xmx:51CGZwKkdfKg7o3UBCfVMGHYThWCfBINhiorKhrmDt_QddRPJseQGo5W>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Jan 2025 06:56:21 -0500 (EST)
+ 14 Jan 2025 06:56:22 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 74a7b537 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 Jan 2025 11:56:21 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 52e9405e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 14 Jan 2025 11:56:22 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 14 Jan 2025 12:56:19 +0100
-Subject: [PATCH v2 09/11] meson: fix compilation with Visual Studio
+Date: Tue, 14 Jan 2025 12:56:20 +0100
+Subject: [PATCH v2 10/11] ci: raise error when Meson generates warnings
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250114-b4-pks-meson-additions-v2-9-8d7ec676cfd9@pks.im>
+Message-Id: <20250114-b4-pks-meson-additions-v2-10-8d7ec676cfd9@pks.im>
 References: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
 In-Reply-To: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
 To: git@vger.kernel.org
@@ -94,56 +94,32 @@ Cc: Evan Martin <evan.martin@gmail.com>,
  M Hickford <mirth.hickford@gmail.com>
 X-Mailer: b4 0.14.2
 
-The Visual Studio compiler defaults to C89 unless explicitly asked to
-use a different version of the C standard. We don't specify any C
-standard at all though in our Meson build, and consequently compiling
-Git fails:
+Meson prints warnings in several cases, like for example when using a
+feature supported by the current version of Meson, but not yet supported
+by the minimum required version as declared by the project. These
+warnings will not cause the setup to fail by default, which makes it
+quite easy to miss them.
 
-    ...\git\git-compat-util.h(14): fatal error C1189: #error:  "Required C99 support is in a test phase.  Please see git-compat-util.h for more details."
+Improve this by passing `--fatal-meson-warnings` to `meson setup` so
+that our CI jobs will fail on warnings.
 
-Fix the issue by specifying the project's C standard. Funny enough,
-specifying C99 does not work because apparently, `__STDC_VERSION__` is
-not getting defined in that version at all. Instead, we have to specify
-C11 as the project's C standard, which is also done in our CMake build
-instructions.
-
-We don't want to generally enforce C11 though, as our requiremets only
-state that a C99 compiler is required. In fact, we don't even require
-plain C99, but rather the GNU variant thereof.
-
-Meson allows us to handle this case rather easily by specifying
-"gnu99,c11", which will cause it to fall back to C11 in case GNU C99 is
-unsupported. This feature has only been introduced with Meson 1.3.0
-though, and we support 0.61.0 and newer. In case we use such an oldish
-version though we fall back to requiring GNU99 unconditionally. This
-means that Windows essentially requires Meson 1.3.0 and newer when using
-Visual Studio, but I doubt that this is ever going to be a real problem.
-
-Tested-by: M Hickford <mirth.hickford@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- meson.build | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ ci/run-build-and-tests.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/meson.build b/meson.build
-index e50ccac5c9f6d310d8c9f83d893ea802b5827252..30d7a894904dfe86bedb2a7a8de25529502403e5 100644
---- a/meson.build
-+++ b/meson.build
-@@ -178,6 +178,14 @@ project('git', 'c',
-     capture: true,
-     check: true,
-   ).stdout().strip() : 'unknown',
-+  default_options: [
-+    # Git requires C99 with GNU extensions, which of course isn't supported by
-+    # MSVC. Funny enough, C99 doesn't work with MSVC either, as it has only
-+    # learned to define __STDC_VERSION__ with C11 and later. We thus require
-+    # GNU C99 and fall back to C11. Meson only learned to handle the fallback
-+    # with version 1.3.0, so on older versions we use GNU C99 unconditionally.
-+    'c_std=' + (meson.version().version_compare('>=1.3.0') ? 'gnu99,c11' : 'gnu99'),
-+  ],
- )
- 
- fs = import('fs')
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 6c828c3b755153dab179f73346e7124bda49c90e..964322055f5db0eae0c794b543664e24ae4249f7 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -52,6 +52,7 @@ esac
+ case "$jobname" in
+ *-meson)
+ 	group "Configure" meson setup build . \
++		--fatal-meson-warnings \
+ 		--warnlevel 2 --werror \
+ 		--wrap-mode nofallback \
+ 		-Dfuzzers=true
 
 -- 
 2.48.0.257.gd3603152ad.dirty
