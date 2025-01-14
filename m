@@ -1,111 +1,122 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28E31FBCAA
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 19:34:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008848493
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 21:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736883275; cv=none; b=tRLNydgF5fQ6Du5ugUSWr/icQ7zfmi8ixUvpgbOAi1+PNcxTmPgczEboxb41n55Nq7ZLuVi79zbcNFW1mUXSvjpBjnyS4J9viFlsOybVW4vd2MYdI0/PP75JuD7r/R+6GWA/Ok19R1xuTizJLZ77ZocWNtc0UjdX5NFE77s6nDQ=
+	t=1736888740; cv=none; b=JAVXdyXSnn3pljbN1HcweFn73+qypuSKAl4fuDb4hlBH+GAbG0iDxysM93ihlFW01u7azlIjxn3gfo0zrj4oDtfy+NT2hynV/VNmZpCDRzS1Kt5q05k1xGj6Xh9D4I0ldxPLsVz8ENXbkmm1A7tx07uBJO70zowv1FnF18d+DBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736883275; c=relaxed/simple;
-	bh=mwCcenjG1X0j1ftUqJnUzcMJeAYUUdtHGWW/jOhtvY4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f6ft/xGwMWeu08Erf0TahMl+5nFheq24ErfRLBTbGvGn2P2E6/6ZgmNzx0S9Sw/lFh+fcCa3T2qTxZKc/fBMPwxEbjrT6Y0V0o7+PulzMPCiwWJx3sNKbtdUIDqZcmyoBa5LoWI7UxCN3s4KNFQ7vIbg5vI3wJtkDANSSvE/Fvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=H6AMbB8g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m1moqde9; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736888740; c=relaxed/simple;
+	bh=qB0t0a63OnEFP5yrS/tgOD3cT1hlxCqeqNEXHbeWmBE=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=Ik8ktFv8KNZaA0bWDfZQvGHYUbBhGahGHn1WjEVqWsjrd89tJLNcpsg9iV7HAWlPeOGpi6/oSRNEqBgui3X5hyB0f94TktT9sCyzPb3PCAj7xb+/UUfjNm8JPrM28vD2bEHREcc0lGrse+UE275JGE6Q9v42tdpFtPw3SCzsdCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=RS4Ev61j; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="H6AMbB8g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m1moqde9"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E917E1140219;
-	Tue, 14 Jan 2025 14:34:32 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 14 Jan 2025 14:34:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736883272; x=1736969672; bh=1QX+b9mSK5
-	GIz/r0hHmrb23mO6XkuL1glDFds4ohnqs=; b=H6AMbB8g58mG4mwPjV44cX/qJI
-	zNTtU9PlBe2jtOe29OLtPwZc8qmmR5oiHg1mNs5KjmUTzb/CfW8ONm21NgQZmOcj
-	cfWCWtqoFywJomvsd4RjA3vRFxc4EP1Y8xiV/NQ2lZeOwpdmHy0GrtCwbZcuDgGk
-	v1r7ngJmX2O+o/R9cbMXebcZUwrk8gUtqvN7R/myqWB174OPfxJIfrSHKu9zFikM
-	67r7/pz6pAkYmmlnRDu5wy705xFMkAq5RBqRM1tJvj8HzH2qPv7i6oGiVbrMEt69
-	uBrF8o6PURn6ctBVDOvX4Yo6cxOpbwo17eJhR8wQaEvE9xtEzyzDX4slMAkQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736883272; x=1736969672; bh=1QX+b9mSK5GIz/r0hHmrb23mO6XkuL1glDF
-	ds4ohnqs=; b=m1moqde9B/PfPwfkDxsrYNzyoQ5hiEUBc7PlWOwZWA70eguCOsB
-	7H/DGIY5rjMVcYagY+m/EMymgjO0CpvpSYXKV8v0eTvXc+sUyCwY3CPjB6psdFC4
-	AldThuiCIJR0i5Wn6w8n5pOl75/VhjN/P6vFPZAptsiDCYXEEKNcv93HBvnWnVbu
-	nUnj2oMLV0ZA6sgzv21mkklqrv+j8U/1sn1zDbdyvlf78/eHVEJfQNsiCq0b51AF
-	QUYVbzUBjyQr5NYypMxbAghQkrVgn5zT6WZLM2t6WlvqLsThZhTG3D4yyc04+yJH
-	FTE+vGfotwEovT3N2AJD8fUATH7S7WjOgjA==
-X-ME-Sender: <xms:SLyGZ2UojGfBL0eJum8lPgxSvK-9UqGbI-D4e3nJK5fkEMElyRcDAA>
-    <xme:SLyGZykNCh7OJaJEsqVNYsW5g983AGHLHencc6sq8b1jl5OZxOJnwZOI_5X-pL9DB
-    1lf9UUQUzFegDuJwQ>
-X-ME-Received: <xmr:SLyGZ6bIRnnbst0QinrjYKoUkPAVI5QB5Mlku18CqEpQiXQ20ypk0L6m8N1LcUzW0stVIfLYxg46peTUVTfBoox95OnLRL_3kITf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedguddvhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
-    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
-    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:SLyGZ9X-U22xN-lzcWD-stlaQeCw2L8mh2ZR-Fe740bX_4dYpSLYyA>
-    <xmx:SLyGZwmjVuJyHKMSwRxhgQCzKwMW27sFusREZcTJU4o3yohC3uJkqA>
-    <xmx:SLyGZycdkNBB4wjRvOyfT6N-v6iEi63A9Aes_ipbCxAdRGM6BlWWEA>
-    <xmx:SLyGZyEFH2zM5LG_ZYTaMm2g2QEH6sVpfkc5RQx8YkdWxmwna4JAQw>
-    <xmx:SLyGZxC35cUhxZ8ErmrOVSICGx0-H6WZuEWv-3P-GNICB7ZBNXZEZDOQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Jan 2025 14:34:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 00/10] compat/zlib: allow use of zlib-ng as backend
-In-Reply-To: <20250114-b4-pks-compat-drop-uncompress2-v2-0-614a2158e34e@pks.im>
-	(Patrick Steinhardt's message of "Tue, 14 Jan 2025 12:57:41 +0100")
-References: <20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im>
-	<20250114-b4-pks-compat-drop-uncompress2-v2-0-614a2158e34e@pks.im>
-Date: Tue, 14 Jan 2025 11:34:31 -0800
-Message-ID: <xmqqjzax2nqw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="RS4Ev61j"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1736888724; x=1737493524;
+	i=johannes.schindelin@gmx.de;
+	bh=qB0t0a63OnEFP5yrS/tgOD3cT1hlxCqeqNEXHbeWmBE=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=RS4Ev61jCqqTK2huryxFndj6OnufqfP73WgdbusiFjpLvgDSd2l3s21sqrMMEniF
+	 fl4Q74dmC8R+NgPNsc2JNrRaTfDnm2w7Rgt7ga6wYiOGnRnFfUoWjL6O7iqXmxYNf
+	 1awGZeWiRLBOC0UJRcr/lPYt5dIc2kqjIU7eAyt86cCOuSvOyXcCpVGnmuDzKcwM2
+	 KlOUQNUGawoZN4IvQszws1vj/M9MSgDwZBR7Dr2efTqDL62bI29IGB4EcfL32yLU+
+	 ZYxsTuPyEALQTfbq87V44umE1yphFjxRaaNUYbc4Hz0Y5Jq+2UQ5wPL020PSSWkio
+	 yzKjy/Cnyup1hqYaew==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.213.189]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5mGB-1tV9Wp283n-0183lJ; Tue, 14
+ Jan 2025 22:05:24 +0100
+Date: Tue, 14 Jan 2025 22:05:23 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: rsbecker@nexbridge.com
+cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org, 
+    git-packagers@googlegroups.com
+Subject: RE: [ANNOUNCE] Git v2.48.1 and friends
+In-Reply-To: <041901db66b7$c0c759a0$42560ce0$@nexbridge.com>
+Message-ID: <41d5de4e-c4b5-9564-6210-d9b8efddacb7@gmx.de>
+References: <xmqq5xmh46oc.fsf@gitster.g> <4a3c949a-416f-734d-f63b-cb1b7f9b362f@gmx.de> <041901db66b7$c0c759a0$42560ce0$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:1thYhK/iOI8hP9qLZLZycQMSy4g1fUZNgLC6Xn1xC90b1GwNBhH
+ UoY7zbXs1ZPEVLrMLNphTk1isYOMDURziPRsZktM2W2cmbXAVM4qlcRM8lkWmsW/g6Igxxp
+ pIM7qBTfATOGau2Pm7F0cW69p2FxMQTSpyrAypSsODUlEXDAmwcAneMmjyRqQuzgzPlf9l0
+ PcuP0I6AZkcPC7B0SoC8g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:sT9x2HKSbuY=;nRNy3/mqsiXhq1lngQVgKB6P1f+
+ /UTE4M8+wLYPSCzU/tOivJjeqtwmNRgOq7nzM9TcMTsHGKckAPFl+QP+PizSR12JNG3ogqTxG
+ bC3yORyumexNKK6zVEtZRDo8X84xs0X973cQfCMR4aqUj3B180osUMyEedwJhHSaOArIgXEiz
+ Jkj0QwljAOfzYDU3j2UQ0QFeWPGn876HH69mvduo7NEpDxPmLKma9JzKWfaMI0ePr6qNPK3jB
+ 793yMwJeY20Dae38nmFjgLDDhelvfqpNAqucO5yCTLSS72vT44BTmDv3CEa4OlipWz6XMVjBL
+ fsG7XjcfDCf3NDRF+9hlxdz5+gghoEIMFunDBXH4uY74SmQCDY4Nn/XDIWIOzw5Sw24Nwwcvy
+ s1SGoI0l++m62kAWkg8vRJT+qJl+TjgrQ1nJM929XMZpZPXwZBgYGNSe4j5uR7uD+sPpi3hMU
+ KiLbFybdUjQHysJVnID48CxfCXs0mawROl2wYA0vkNjsauoJbNyVF4Qxa+sYTovFHrZEBOdnx
+ EqHBefTiWhkdeHQq3AcM3eHfFBUD94SEmTV7XgCs5C6UqbLOIeii4a/oFGxtQqXBmNUTNlhpC
+ dX6NVdNSmrEA8bZSnjCOmDhIZNlWP7cW8GF16smHx1Fv8AeRSCCdeduXM5sE17I6Yg2RKsKF9
+ YFAWc0WyN+6jjz0yCgW+4xD1AOGiVj6JxhGcXrLlM7/0pMWkJIMAa82IAJyizY9ixU3FnJZtU
+ sHVDHmAy3xtWQres1whJj7NOgulvGAqIdHeuWIbzVe4XKerO/CHUtHMbeyqYQA2Nk1DncPr6Y
+ qKt6g/byNX/XKCmxbfTprPGfwjaMjsBd3SnO9hm1ST8ITwGsi0HSPO3qC09+zxE6PzvATzU++
+ auOmECeqnSaBill+B6iTYZZPLo9MK2F18dTK57l2DgJqPQ8/ivIMiPLuuNZ1YPdPxPIYmad70
+ IS96CZsb8zHZnS3ay1Q3YdWto+e2AeW1z8CZ9s4m5hEVxNIQG4I5gFgxkr8hVayiJpnTib5VS
+ GdZg806aOe3Tw6wiQLNIT+A0X0eC0kicE+QbgNuihaxEgjca4kuf6gp/Ulie7iXsQ2SSpDGKO
+ mq3JgE2sixFWHY5wVixV+f/6msryRYlr5UBlsAutjeItV6zRZWJMAG6HPq6UhXrqNqMrh2R6H
+ OokPmlPOPwD7BCaIrINkkTDYXFgoEvzt+mLpdVWWwFclLQhqmqVK86pdkaY1FjKdFtB+KRnIk
+ 21Ix1Eu1a0W7KtetLlqQuaUFDT2vvJ9ACw==
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Randall,
 
-> Changes in v2:
->   - Wire up zlib-ng in our Makefile.
->   - Exercise zlib-ng via CI by adapting our "linux-musl" job to use
->     Meson and installing zlib-ng.
->   - Link to v1: https://lore.kernel.org/r/20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im
+On Tue, 14 Jan 2025, rsbecker@nexbridge.com wrote:
+
+> On January 14, 2025 1:44 PM, Johannes Schindelin wrote:
 >
-> The series is built on top of fbe8d3079d (Git 2.48, 2025-01-10) with
-> ps/meson-weak-sha1-build at 6a0ee54f9a (meson: provide a summary of
-> configured backends, 2024-12-30) merged into it.
+> > my apologies, I only realized _now_ that I had forgotten to update
+> > `GIT-VERSION-GEN` in v2.47.2, it still has `DEF_VER=v2.47.1` (but all
+> > other mentioned tagged versions have a correct `GIT-VERSION-GEN`). I
+> > am very sorry about that.
 
-I think you are now also textually depending on the fuzzer thing due
-to touching meson_options.txt and ci/run-build-and-tests.sh with a
-later step.
+[I fixed the formatting, not sure how it got screwed up, it had verbatim
+mbox headers and inconsistent `>` prefixes in the quoted lines.]
 
->  -:  ---------- >  9:  7ae8f413d4 ci: switch linux-musl to use Meson
->  -:  ---------- > 10:  2dd1b49e4f ci: make "linux-musl" job use zlib-ng
+> Oh gosh. Glad I did not hit the "build" button.
 
-I will see what other things I can find.
+Well, depending what that "build" button does when you hit it, it might
+not even affect you, have you tried it or at least looked at what
+`GIT-VERSION-GEN` does? `DEF_VER` only sets the default version when
+building e.g. from a tarball.
 
-Thanks.
+When building from a Git checkout, though, it uses the tag and everything
+is fine, the output of `git version` will say that this is 2.47.2:
+https://github.com/git/git/blob/v2.47.2/GIT-VERSION-GEN#L15
+
+Also, you can always hard-code the version by writing it to a file
+called... wait for it... `version`, before calling `make`.
+
+> I will hold off packaging that version until this is resolved. It is
+> definitely needed by the NonStop community.
+
+I'm not sure what you're implying by "until this is resolved". I hope that
+you don't intend to suggest to re-tag and force-push v2.47.2 because
+that's kind of a serious no-go, those tags have been relayed to quite a
+few people well in advance of today during the carefully-orchestrated
+coordination of the embargoed release process. You cannot pull that
+v2.47.2 tag.
+
+In any case, if you don't want to build v2.48.1 instead, and if you cannot
+build v2.47.2 from a Git checkout, at least that `version` file method
+should work for you and you don't need to put pressure on anybody else to
+get the version that is so definitely needed out to the NonStop community.
+
+Ciao,
+Johannes
