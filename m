@@ -1,116 +1,74 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A35922960F
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 10:31:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5032C20F996
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 11:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736850682; cv=none; b=LjAwE7cS4qHM5B1Goet4pGcCEAsVhzy4uiWVrNI1o/eBXOKhTFcpxyv+HiHTwctOeCMWGo2lDXVNWDxKwlkUP4qJXfaj0mlO4/ygtS5eeYF44qvwDzFYXwUzFuDq3ytZpx+DGsmEw1mSIjn/UGEG8dFHk5S58vPenZKxHr7dyGs=
+	t=1736852507; cv=none; b=kMKO7Xt9nPJcUaiCbnbvUmBR+nuYaXopN3BlfHnF797cPDun0CUlz0+tEJ8r8a/u8/eMXvTmlGLjO9+J4Aw7Z+5gfW24fFxRikX5xorxBtepK8viLYenrHuE/kQXTfeELJjAzlHsvwZcoHtjjaixKqXBn0ovOTo3upG6t9DX/XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736850682; c=relaxed/simple;
-	bh=bSwBC+ks2CYn8kGt9oymImeme5LhtxovGN+JsUOXViU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hjW48tEF2ObvF2xKaB1PneE/QG7ac1L/3umKnuMi0+Pq/nXnJrlbP7pputLbSUFsM6ZeO3HCYbfLyRLPFn88UT77kCa5Y1IBJArMiOnDe0iDrlu5BXbEBV8U32KH8B2ztFtWbzhANCSzeJ9I6+FEMdjJ7VIZR+XKMXxL+HOA5+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dFj7kxqB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QmKfNotr; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736852507; c=relaxed/simple;
+	bh=GxhKjA38fxBNFvtC2rq6pw65YvM27ds49dF0VnPuNQo=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=sxgLLigiRIH8ntEtjcvEc6FYmeJzxwkKWOXH7DMBFKDrw8sU27wH2KPpyW3MuqL4ua7rvOaStDcHVJyVOp05PibWhpuB9ZD+1jqwIT20Z2mx6KIGeuk5gnLOWhJp7ruf7N/97XxW46Onqr3Ox4ycYaQxArjLYIFyYHDWJ5YT4cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j3DOg2ZE; arc=none smtp.client-ip=209.85.221.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dFj7kxqB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QmKfNotr"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7941011400DA;
-	Tue, 14 Jan 2025 05:31:18 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 14 Jan 2025 05:31:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736850678; x=1736937078; bh=CVhOhLnABK
-	85Z+R1ULiaqfdSv2nGBnbBgV+4BsdakrI=; b=dFj7kxqBckelks0KPiiy4b9pa5
-	Pt0PxTU3Cqk78N8DKzhYImz8UmsJwfy8mLOKYbZzIvF/vqrsjEG0vn6YO+0gyKdA
-	AHBYZgT0kP7oI2OGM9MzOVIElYezta/r12QSmEyyM6CYRNFhbJiDwwVQIuCz0foa
-	qWYcEtigQ9pj3Zda2FmeNYL+BJO7bI9LgwWSSCnQVdV3nC4bmC5R8BuqHyhxQ/mA
-	rCtd8EUEgQxI+WwaC0UQjuwcBtkfObZPFUBO8dYMjohqDhTMXXfMX92R7Ufqc+LD
-	xRFg1mQdRAUs5CeZCP0JjG/SN6/4YnFsLJIEvjQgUleYzBj42m71jtg5NC3Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736850678; x=1736937078; bh=CVhOhLnABK85Z+R1ULiaqfdSv2nGBnbBgV+
-	4BsdakrI=; b=QmKfNotrM+ZVTo+hNGoM3uSGeEWCb/nVRr4BBQXbOrTZExWDLcc
-	UXHSblJGBUTjzh57vq9vCr8go9EAwjQ4/UEXeiha/M57Rd/vX1asUUUEN2dpBnq1
-	f4HAEn/BFzxEtF4jRGh/rwsbMLyy9LkGEzDbhaKl8oys8RICx8of813+Evx8RecE
-	NgOoXFoaiA9xrXXzdnfiJgBR3gewsr8+ZJxDoo6Ni34fVQP6kpgVbbWzOST9Pmgc
-	LJlYgcd5Ax7MeaCk93TfUFd5ifMNEQdQE80c3ixUjLSfg34M+War1dRSxEtL78BX
-	8NcUxRzeRlIkvJRt3BtTkEKVPoYOpIQcDNQ==
-X-ME-Sender: <xms:9jyGZxzWlHW3JTsBNv3MFk30iOF40g_kmqm0zNPlMxOdkV6acS9lxA>
-    <xme:9jyGZxRugroOO2SHs38iLFnDyO3Q-RKno1G7LVJdDJZO3eEfsldbD_z6MnIJJlR0K
-    S4cWN8LrI0gA8-f3A>
-X-ME-Received: <xmr:9jyGZ7UuP2KDKnEqGQ6mg06EAYJKkjZQRRCHX4xTs3jV5YvE7eUHTWCFNUCGX3xZfBBPuUmRkb3woqM0Dyy1_C8RQF6BBRabOV-ujDotiCOjMg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgudejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepvghvrghnrdhmrghrthhinhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    jheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrgh
-X-ME-Proxy: <xmx:9jyGZzjtnOJA1AMYxSGPiKKykggB3Rs8dIksr3e5uhM5Ez4LuhV7yA>
-    <xmx:9jyGZzAV1fUSDPz72yAriEAtcXGcFdsPAUUkDY0xendSAxEAf-U5Mw>
-    <xmx:9jyGZ8LB6cXlK9ktEfkGhGTPpf24ObGMm2mKvODlLWs75YMkSQYVYQ>
-    <xmx:9jyGZyBdEZaA88h8UPjO_vMc_jx945SQj80Bc-SGz8icqqKxXWgPzQ>
-    <xmx:9jyGZ-5Ynv6C5bBgnxhloPTnz6RhkVAA14K8QsM7xWGeAqFUeu06BXb3>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 14 Jan 2025 05:31:16 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2919a95c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 14 Jan 2025 10:31:14 +0000 (UTC)
-Date: Tue, 14 Jan 2025 11:31:13 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Evan Martin <evan.martin@gmail.com>,
-	Eli Schwartz <eschwartz@gentoo.org>, Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 6/9] meson: wire up fuzzers
-Message-ID: <Z4Y88UW7j_GRvbta@pks.im>
-References: <20250113-b4-pks-meson-additions-v1-0-97f6a93f691d@pks.im>
- <20250113-b4-pks-meson-additions-v1-6-97f6a93f691d@pks.im>
- <xmqq5xmia9m0.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j3DOg2ZE"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-5162571e761so1827806e0c.2
+        for <git@vger.kernel.org>; Tue, 14 Jan 2025 03:01:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736852505; x=1737457305; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=GxhKjA38fxBNFvtC2rq6pw65YvM27ds49dF0VnPuNQo=;
+        b=j3DOg2ZELUqzZe+WiBw15f76e6MkqZsSplGKeaVZ1MJ4ihf+RleMnB745ypJltk8Aw
+         qfjLabScbPv2xNOoXlnvKKt3qr66BN9wQzQU/TISbf+SW1VgggweucTXa5gZoFo//DCX
+         rza3wBPGmstXX2l6Gt/wL54b4vTaxkhYpmJBq1R1VAjzlUKxlHdl3gUIb7qdNnCrQuaD
+         WkcIV6P0FT/mQZ+d3nc7e4KeKMSY72iL8eIX9PWH1FGCO4Y/qexQsfUISa8AMQ/novWH
+         sUp8q+lKDm3CKstTipmwfSHDFgb3Dv48PaXWMg0tlTWy5Ak6CrcyMhfLdFEP/iNiy2qT
+         03kg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736852505; x=1737457305;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GxhKjA38fxBNFvtC2rq6pw65YvM27ds49dF0VnPuNQo=;
+        b=OK23DuImlRTS/g/ng7Kfl8dlnJUt1wUVrS2WLgKsmcd1xrq88IiLAATvuyQROlI9rv
+         cTagAtXAWkiXuJM4lq/QT5OmhzgOj8bdeB1Mjt54MARVbICR8mWVQxVe7SDEMEvUjd6X
+         ONFT96vcHwKCFAOA0HXXNVXLRAD6t2u/mcuoyEr0fzw5M3MgeZxCQ8jgDpne+Prg8NuV
+         o4fcjUvBVUbSqQyvWleSf3OnRX6RpchHm+jbrQjFhCEYTA4zX8laFW61g7IcED7jz9gX
+         pfyA/tB2CGwhn9TEFLJdr5FmQKYNhATb7A4wIlgM6G8Uc7J0WRnKiu9zsYQ9xaKSeSGo
+         t8YQ==
+X-Gm-Message-State: AOJu0YyrfBO2W7jT+LMUgwe2vKP1hU81Qz4+6fPCCGG4Pujfzx66luIk
+	BfUoKuMlRr3zcDtDYAYZarh59HdGMbBVbsBpj2/v/+XB24+0Vi42TAWBojD1bRmAuCpgXuAp+NU
+	HVmh0reCWjD3qCGlMUuaPpinXo7UYQg==
+X-Gm-Gg: ASbGncuxTrTrEjOy/eSHfmjnMBGf0vXC+YNArdAl2fj0tR+tl2Gs7bfI4sLDVCFvriA
+	MpgnRZdnrDOy0x8KR1ln5vLDb9a0oP7rrTKsrlQ==
+X-Google-Smtp-Source: AGHT+IE5+QKZtsaUoOhsDJxMNUKDPze8RU2pr2udU/k7+fVOxhuJX1y/hd9xpR0dAmIvFjS71w6Cz+MH9UOen0UbxO8=
+X-Received: by 2002:a05:6122:1796:b0:50f:f21c:4fd0 with SMTP id
+ 71dfb90a1353d-51c6c522a97mr19445992e0c.8.1736852504824; Tue, 14 Jan 2025
+ 03:01:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5xmia9m0.fsf@gitster.g>
+From: tao lv <thebookofunknowable@gmail.com>
+Date: Tue, 14 Jan 2025 19:01:34 +0800
+X-Gm-Features: AbW1kvZ0w9nfWeNitOmvL5O-9RHtmgUGUB5cAxqkof873TdJNKTU3Ai2DUu-HAU
+Message-ID: <CAFePT4w4hHZnS0TXGA6-_sA-Vp4f3H_sY2Ue1XreFM3SEM8i2g@mail.gmail.com>
+Subject: Feature Request: Allow `-` as a Shortcut for `@{-1}` in `git diff`
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Jan 13, 2025 at 09:48:07AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Meson does not yet know to build our fuzzers. Introduce a new build
-> > option "fuzzers" and wire up the fuzzers in case it is enabled. Adapt
-> > our CI jobs so that they build the fuzzers by default.
-> 
-> Nice.  We have shipped a feature release with bunch of meson.build
-> files, but it has known holes we need to fill, and this is one of
-> the missing things.  Let's make it a goal to achieve feature parity
-> within two releases---if we can do so in one release cycle, that
-> would be great ;-)
+Hi,
 
-Yeah, I already had a couple of features planned for this release cycle
-anyway, most importantly static analysis. I'll have to take a look at
-which other features are still missing -- hints are welcome.
+I would like to request a feature for `git diff`: to allow the use of
+`-` as a shortcut for `@{-1}`. Currently, `git merge` and `git
+checkout` both support using `-` as a shortcut for `@{-1}`, and I hope
+this functionality can be extended to `git diff` as well.
 
-One of the known omissions is most of "contrib/" and "gitk/". I'm not
-sure whether these should be included or not. For the former I'm leaning
-into the direction of not doing it, but can do so if others disagree
-with me. For the latter I'd leave it up to Johannes to decide (cc'd).
+Thank you for considering this request.
 
-Patrick
+Best regards
