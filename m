@@ -1,56 +1,56 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520D0234CF3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928DD234D06
 	for <git@vger.kernel.org>; Tue, 14 Jan 2025 11:56:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736855782; cv=none; b=TuEhulz68UAS+Y7JkGG0z4E8IiJ9mA61kuRedInoQqE9XPu/uDcSVBHKsq1cyQICNUDDB8U0O26WRq9HFK/nMslY6x6qF6SXqAwX8xWwbi+24ycHcARCOo3EwceHamisMUP9rsVFNbtn3wzkyceYBgZJhuD5L6JnzfL+ZtCVMsY=
+	t=1736855782; cv=none; b=reTbs/vZCY2pkHVq68WLOrawdGpvY4ShL+DCvkQi8ZJP0/fgRIDB11Az4BI1ziwndCnMiQnVOBiS0nqyUSYmIWdlW2Y9Id3pZnHv62CjolGMEkoE3L4EBrnc9Kq8RIcUxT4hA6Q4vg+aoknbJlaioLymOkhVTCqKWchuYaCd5HY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1736855782; c=relaxed/simple;
-	bh=eNmMP7xiuRZzPfxvWj0JrXYlRpEoBdJJmLY4EnD7vAE=;
+	bh=RD6bTeRH5E3wcZBW8RgUXCoeI6kiPL96q6m7+XSF6gI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=dBU3pHEmegjXOIs8vMC5pbHca1BWbSE8mTIjo+YRJcv3MWe8cUkSZWlEJhItq/Alp33voL7eNt+xjadfAFGLoGSNQyLm4zPWTk+x7iI3SFVOUilx5lqnCO7/MJcUH06NjkNhAlc/IWiX6lj4nbMWCuriaaV2PjugevXslUQrU1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Z5JEbkMo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eAmNyKNW; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=YAKVRXw9KQDK4PU6gpcJAvj245GRdpy5bm9ra7qplbFNNW18HHx3u8yPdlCr4ARsz2METgNgQjvA9tbXFZ4vm6xQ95VFnn7PISum/BnUbeU8jejgJ0EjXkBxeBYMBTEra545nAZ9eI1b5kxNe8Hgv1CoDW3XF0gqnBkBy+B3TvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZtOR58+I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WTsT4gF7; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Z5JEbkMo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eAmNyKNW"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 528371140161;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZtOR58+I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WTsT4gF7"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id AC93713801E6;
 	Tue, 14 Jan 2025 06:56:19 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 14 Jan 2025 06:56:19 -0500
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 14 Jan 2025 06:56:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm2; t=1736855779;
-	 x=1736942179; bh=hPMlmK8xuzjkpL6Z16LUUBfypbQatgwbb69UZoqwT3o=; b=
-	Z5JEbkMo3AI/orW5Y3kzafKpl9gBZ59Xyxj3yqXokGv4zCs6j9YIe9cB1CPz/YzE
-	VQm8G0Rk6s3wfS6GlnsTz+MnWHUxgMjNNvcpRp+G50x6fi4ApjgZwt2I/pPE/lwj
-	4SR1tAxQVlPLLIIlZlqxRt3lYZZwNLHOvi7UJjkI6sOfbxKTdsLoSZTzCZK71Vee
-	ZlFLR7zuUgKXvcU9CoJmPuYuMoaA+yUJfB04WEum2C5ZE7pxAoM6moO/5A5FdYH9
-	f8vWfz/evlrTuCJ2qz79ePG5pZxBFP8W2iVS4NHjq3LRf7++NjdkgURjCRGnj8vA
-	vDUKBOihjvNrRo7jpOrllw==
+	 x=1736942179; bh=nD6R+tffNb7lmYo3DhjiI2mOrsxqwiBgIyG2+6zR69E=; b=
+	ZtOR58+IMxqa+HoRM1C0ysBriwaULT7K9ipa6RF0cTJ3A8R+8MVPwpv+59+IKJkK
+	VnuuXeYH7WYy87RnuIv3QheHaygwsqgqk9KQGvnezpWU5t1klQdrkQS8AvauNaiR
+	S4qhpLoaVH7oFBCPOb7VZEGcSrDEMq3RWnbsCtt2Od16lfG4ZCf53hPYkZ6PQl0s
+	dksUyHiq8rFkUlo7/1soWhaIt1mQyiEspCvJbowgoq/8CrxqbaOAMpBEOeBvHRyu
+	AQ1qU9UBL3qAQd6X254f1GVj2lmTokmOKBPZM0dc7tOdV5eqGHefhQybDjSjytC5
+	kPsG5oKMvlKvobw0dL04hw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736855779; x=
-	1736942179; bh=hPMlmK8xuzjkpL6Z16LUUBfypbQatgwbb69UZoqwT3o=; b=e
-	AmNyKNWDW0tVSjIqvhpySzAgY7RbLwQcKVJ9a9GGkHE2Pd90NQ1YLKZggeNmP0ZI
-	k1ns+B09+yUYv9hAor8DHejMzm7Ytmsk+v5VERXm0HNUP2NHAlXiOecoW0PHroBy
-	uRWy79IWpKAjbrjIDWpU91PbgoEIQu9ApYF2wmGbEeAee5XB/+h7ALj6CaAU6v84
-	zsSq8s2BlR6O/tGGZw8ws/lF0rBQYjTe7kjf4mBPyRchb68cWcnPx3KwFS2s5bX0
-	KR6FoENnl69XNnX7y+hAbF+cSMiGR7K1pBtQi6rd6Gk9e0uBPBqSI3Empvph7Qlf
-	9apeFswz3hKROxpDFA0Fw==
-X-ME-Sender: <xms:41CGZ93gwEb-ajbFrADgydnpJdf-x7dwaB_4JiYr5w8nK013ZPHWfg>
-    <xme:41CGZ0Fo2KO-VNGkN2R0oji0VbjyXnxeTUhnAMYBT-K9UdPbbUD3bWzK35B_tgJRb
-    btiq1v2lCpoFHuDvQ>
-X-ME-Received: <xmr:41CGZ94hG6IrGvh4-qwupAq6hzjFT3fke3duPSbCo9c90T-0n1PSbzcIG6lyYV43dcM6oFg2OteHJN07Tdx0Ba0Jvspp91GGpPCIAuXgr7Smcw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgfeegucetufdoteggodetrfdotf
+	1736942179; bh=nD6R+tffNb7lmYo3DhjiI2mOrsxqwiBgIyG2+6zR69E=; b=W
+	TsT4gF7GNXE9Q02yGh2iPEiJDyiGIfgSYm7rjWN84+aQdtgaiKeSZexLDpDJc/Z0
+	SehkRXy7bqoSOth5vOl9ZrZE5ixAd21eZhiuBum9+B9G9KLNDnmbOuaB1MooDGMq
+	wA1IxRKl1pJUTmgEHKiXPF4NxDntUDnaBHB2pyVz9NmZfGD1lys7UKBbsXOcgRrC
+	1szTpLKt9Z7l2uuUUXlVkeB7FPqlM+B6G0CM7Pa+eAvT/UXpm7RuuZqLHE7c+Nx2
+	x7Y7dzaBDIAR7+Ft4Gr+1TsqkGiDyE7nVxkL3PwoVYSYVllwJ9IXhtIhsAySRGgL
+	emmq6V+8yOsyG1I7laJ6g==
+X-ME-Sender: <xms:41CGZxhhZjJoifmV1fwGjng8q5wqN0iaSLicgxvvaCXmxPI1_R3lMg>
+    <xme:41CGZ2AD6QpOoCdHgGttPjM7crtQoi6hyW-YMRDKXx_pALVsU5t1iULr0_-5Gre3y
+    Fmg2qmeBllp9nEPdA>
+X-ME-Received: <xmr:41CGZxEIH1JdpujrpB-9p2wxSeHqLKPE1WyEGBNN5dtLmaeQKVL3o9TA7g4nX8JLx3nGU5ejx8r42TkBCpBZhC_AGAnT-prmE4YNhyvb6JPUZw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgfeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
@@ -58,26 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgfeegucetufdoteggod
     hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
     jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrgh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    mhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghvrg
-    hnrdhmrghrthhinhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:41CGZ61Lhmc4qLUoUNgFnS-8u5MP3TIWclWpv1BOxYflA0gt-ePiWA>
-    <xmx:41CGZwFr68EgJqb5ofWIOZhwpCegwlB-RpH6LGueFydl5L-4sAXJ8g>
-    <xmx:41CGZ78RMhfFEQQ7DwiMSRNyl6oo2ybxOYsg1K2WmmHjS2JLFWfLAg>
-    <xmx:41CGZ9m59EwJF_IzLBlEzTgFXgsR8SSGh3Nf1lzJzrTLbmvzB1Dz0A>
-    <xmx:41CGZ1N9oE1EyCPdDkxtCw1N3hNwHkyCkSDDHbpSY2QIS0sfAp-TP1iE>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgt
+    hhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegvvhgrnhdrmhgrrhhtih
+    hnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehg
+    mhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:41CGZ2QhBUuDkM1T0c95-NISWZgUX_J05oFSE14SpkFEqSVwKBvRqw>
+    <xmx:41CGZ-zTokngVUrK1jzcKTmT6T1oL8HsFiuy90Ze7cVc_MqUGs-97A>
+    <xmx:41CGZ87fMCvIhw7QPGQeU4K3I65JnyZbA6isM56BaFFUSfhYajv2wg>
+    <xmx:41CGZzzwZ7U0ET-j5hh1gwuPT1rOTdIoy9SRv1Qr2J71gCVNiQ1VXw>
+    <xmx:41CGZ1oVlK4D-AXqSiecXFLpPmZAmD8lGLslAXn2MSckyhLCxPyNJ6kc>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
  14 Jan 2025 06:56:18 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 64589ae3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	by vm-mail (OpenSMTPD) with ESMTPSA id fb714708 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
 	Tue, 14 Jan 2025 11:56:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 14 Jan 2025 12:56:12 +0100
-Subject: [PATCH v2 02/11] GIT-VERSION-GEN: allow running without input and
- output files
+Date: Tue, 14 Jan 2025 12:56:13 +0100
+Subject: [PATCH v2 03/11] meson: populate project version via
+ GIT-VERSION-GEN
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250114-b4-pks-meson-additions-v2-2-8d7ec676cfd9@pks.im>
+Message-Id: <20250114-b4-pks-meson-additions-v2-3-8d7ec676cfd9@pks.im>
 References: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
 In-Reply-To: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
 To: git@vger.kernel.org
@@ -95,104 +95,62 @@ Cc: Evan Martin <evan.martin@gmail.com>,
  M Hickford <mirth.hickford@gmail.com>
 X-Mailer: b4 0.14.2
 
-The GIT-VERSION-GEN script requires an input file containing formatting
-directives to be replaced as well as an output file that will get
-overwritten in case the file contents have changed. When computing the
-project version for Meson we don't want to have either though:
+The Git version for Meson is currently wired up manually. It can thus
+grow (and alread has grown) stale quite easily, as having multiple
+sources of truth is never a good idea. This issue is mostly of cosmetic
+nature as we don't use the project version anywhere, and instead use the
+GIT-VERSION-GEN script to propagate the correct version into our build.
+But it is somewhat puzzling when `meson setup` announces to build an old
+Git release.
 
-  - We only want to compute the version without anything else, but don't
-    have an input file that would match that exact format. While we
-    could of course introduce a new file just for that usecase, it feels
-    suboptimal to add another file every time we want to have a slightly
-    different format for versioned data.
+There are a couple of alternatives for how to solve this:
 
-  - The computed version needs to be read from stdout so that Meson can
-    wire it up for the project.
+  - We can keep the version undefined, but this makes Meson output
+    "undefined" for the version, as well.
 
-Extend the script to handle both usecases by recognizing `--format=` as
-alternative to providing an input path and by writing to stdout in case
-no output file was given.
+  - We can use GIT-VERSION-GEN to generate the version for us. At the
+    point of configuring the project we haven't yet figured out host
+    details though, and thus we didn't yet set up the shell environment.
+    While not an issue for Unix-based systems, this would be an issue in
+    Windows, where the shell typically gets provided via Git for Windows
+    and thus requires some special setup.
+
+  - We can pull the default version out of GIT-VERSION-GEN and move it
+    into its own file. This likely requires some adjustments for scripts
+    that bump the version, but allows Meson to read the version from
+    that file trivially.
+
+Pick the second option and use GIT-VERSION-GEN as it gives us the most
+accurate version. In order to fix the bootstrapping issue on Windows
+systems we simply set the version to 'unknown' in case no shell was
+found. As the version is only of cosmetic value this isn't really much
+of an issue.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- GIT-VERSION-GEN | 44 +++++++++++++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 15 deletions(-)
+ meson.build | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index b8b683b9337e5771e14a2cfb84022a11489bb432..9d201a98fd2766911544225c62159cbfe8dff5fe 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -5,21 +5,29 @@ DEF_VER=v2.48.0
- LF='
- '
+diff --git a/meson.build b/meson.build
+index 7361eb2eaad422e7a6c6ed95d275615836c21cdb..213998986e8942cee080fc5b9b675860cf429ecc 100644
+--- a/meson.build
++++ b/meson.build
+@@ -170,7 +170,14 @@
  
--if test "$#" -ne 3
-+if test "$#" -lt 2 || test "$#" -gt 3
- then
--    echo >&2 "USAGE: $0 <SOURCE_DIR> <INPUT> <OUTPUT>"
-+    echo >&2 "USAGE: $0 <SOURCE_DIR> (--format=<STRING>|<INPUT>) [<OUTPUT>]"
-     exit 1
- fi
+ project('git', 'c',
+   meson_version: '>=0.61.0',
+-  version: 'v2.47.GIT',
++  # The version is only of cosmetic nature, so if we cannot find a shell yet we
++  # simply don't set up a version at all. This may be the case for example on
++  # Windows systems, where we first have to bootstrap the host environment.
++  version: find_program('sh', required: false).found() ? run_command(
++    'GIT-VERSION-GEN', meson.current_source_dir(), '--format=@GIT_VERSION@',
++    capture: true,
++    check: true,
++  ).stdout().strip() : 'unknown',
+ )
  
- SOURCE_DIR="$1"
--INPUT="$2"
--OUTPUT="$3"
- 
--if ! test -f "$INPUT"
--then
--	echo >&2 "Input is not a file: $INPUT"
--	exit 1
--fi
-+case "$2" in
-+--format=*)
-+	INPUT="${2#--format=}"
-+	;;
-+*)
-+	if ! test -f "$2"
-+	then
-+		echo >&2 "Input is not a file: $2"
-+		exit 1
-+	fi
-+	INPUT=$(cat "$2")
-+	;;
-+esac
-+
-+OUTPUT="$3"
- 
- # Protect us from reading Git version information outside of the Git directory
- # in case it is not a repository itself, but embedded in an unrelated
-@@ -74,19 +82,25 @@ read GIT_MAJOR_VERSION GIT_MINOR_VERSION GIT_MICRO_VERSION GIT_PATCH_LEVEL trail
- $(echo "$GIT_VERSION" 0 0 0 0 | tr '.a-zA-Z-' ' ')
- EOF
- 
--sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
-+REPLACED=$(printf "%s" "$INPUT" | sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
- 	-e "s|@GIT_MAJOR_VERSION@|$GIT_MAJOR_VERSION|" \
- 	-e "s|@GIT_MINOR_VERSION@|$GIT_MINOR_VERSION|" \
- 	-e "s|@GIT_MICRO_VERSION@|$GIT_MICRO_VERSION|" \
- 	-e "s|@GIT_PATCH_LEVEL@|$GIT_PATCH_LEVEL|" \
- 	-e "s|@GIT_BUILT_FROM_COMMIT@|$GIT_BUILT_FROM_COMMIT|" \
- 	-e "s|@GIT_USER_AGENT@|$GIT_USER_AGENT|" \
--	-e "s|@GIT_DATE@|$GIT_DATE|" \
--	"$INPUT" >"$OUTPUT".$$+
-+	-e "s|@GIT_DATE@|$GIT_DATE|"
-+)
- 
--if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$+ "$OUTPUT" >/dev/null
-+if test -z "$OUTPUT"
- then
--	mv "$OUTPUT".$$+ "$OUTPUT"
-+	printf "%s\n" "$REPLACED"
- else
--	rm "$OUTPUT".$$+
-+	printf "%s\n" "$REPLACED" >"$OUTPUT".$$+
-+	if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$+ "$OUTPUT" >/dev/null
-+	then
-+		mv "$OUTPUT".$$+ "$OUTPUT"
-+	else
-+		rm "$OUTPUT".$$+
-+	fi
- fi
+ fs = import('fs')
 
 -- 
 2.48.0.257.gd3603152ad.dirty
