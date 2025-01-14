@@ -1,122 +1,146 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 008848493
-	for <git@vger.kernel.org>; Tue, 14 Jan 2025 21:05:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DD68493
+	for <git@vger.kernel.org>; Tue, 14 Jan 2025 21:09:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736888740; cv=none; b=JAVXdyXSnn3pljbN1HcweFn73+qypuSKAl4fuDb4hlBH+GAbG0iDxysM93ihlFW01u7azlIjxn3gfo0zrj4oDtfy+NT2hynV/VNmZpCDRzS1Kt5q05k1xGj6Xh9D4I0ldxPLsVz8ENXbkmm1A7tx07uBJO70zowv1FnF18d+DBw=
+	t=1736888989; cv=none; b=uBLk8ISWXRMpBv6FB3gFthzU3QiQX9wyqIB6uV8KQZRAztF2PYEL8PPaElIoccf5Cu8/0bV0AfLXbDPe34qCzqdaAnbxvt6GENFdbwAlosTkTfeTajkIqQ5Q+CCf0PuIm+zImtlDzRIfXO64YGTivUytPScGt23FxZ2RE5Zye0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736888740; c=relaxed/simple;
-	bh=qB0t0a63OnEFP5yrS/tgOD3cT1hlxCqeqNEXHbeWmBE=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Ik8ktFv8KNZaA0bWDfZQvGHYUbBhGahGHn1WjEVqWsjrd89tJLNcpsg9iV7HAWlPeOGpi6/oSRNEqBgui3X5hyB0f94TktT9sCyzPb3PCAj7xb+/UUfjNm8JPrM28vD2bEHREcc0lGrse+UE275JGE6Q9v42tdpFtPw3SCzsdCI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=RS4Ev61j; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1736888989; c=relaxed/simple;
+	bh=cZYHBdhwcEtAqfUO9nL0dC9WG9fHgAtJlebteeO8VU8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=upAW8fUDqgv9jvx0ICV8wI75b0SS9GB4JbCSMuVIilejqGDHhffLUfeKmsLqg+a955i7cQV+usKkbIJQUcFyhgO681UAe0ZeYeDB6bGl6n7ogDJc806VKsAfHHXnjBBc8f/HajC3JxZ2MHdEJtWYZEpzaT61cVUgzPg54L68TjI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nxl8WWhU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V0dS++wG; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="RS4Ev61j"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1736888724; x=1737493524;
-	i=johannes.schindelin@gmx.de;
-	bh=qB0t0a63OnEFP5yrS/tgOD3cT1hlxCqeqNEXHbeWmBE=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=RS4Ev61jCqqTK2huryxFndj6OnufqfP73WgdbusiFjpLvgDSd2l3s21sqrMMEniF
-	 fl4Q74dmC8R+NgPNsc2JNrRaTfDnm2w7Rgt7ga6wYiOGnRnFfUoWjL6O7iqXmxYNf
-	 1awGZeWiRLBOC0UJRcr/lPYt5dIc2kqjIU7eAyt86cCOuSvOyXcCpVGnmuDzKcwM2
-	 KlOUQNUGawoZN4IvQszws1vj/M9MSgDwZBR7Dr2efTqDL62bI29IGB4EcfL32yLU+
-	 ZYxsTuPyEALQTfbq87V44umE1yphFjxRaaNUYbc4Hz0Y5Jq+2UQ5wPL020PSSWkio
-	 yzKjy/Cnyup1hqYaew==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.189]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N5mGB-1tV9Wp283n-0183lJ; Tue, 14
- Jan 2025 22:05:24 +0100
-Date: Tue, 14 Jan 2025 22:05:23 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: rsbecker@nexbridge.com
-cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org, 
-    git-packagers@googlegroups.com
-Subject: RE: [ANNOUNCE] Git v2.48.1 and friends
-In-Reply-To: <041901db66b7$c0c759a0$42560ce0$@nexbridge.com>
-Message-ID: <41d5de4e-c4b5-9564-6210-d9b8efddacb7@gmx.de>
-References: <xmqq5xmh46oc.fsf@gitster.g> <4a3c949a-416f-734d-f63b-cb1b7f9b362f@gmx.de> <041901db66b7$c0c759a0$42560ce0$@nexbridge.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nxl8WWhU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V0dS++wG"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id BED0E1380831;
+	Tue, 14 Jan 2025 16:09:45 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 14 Jan 2025 16:09:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736888985; x=1736975385; bh=KdZQmxGQPv
+	cas4WhoXt+wk59JB3YpmhVQvVq4muZTU8=; b=Nxl8WWhU/JOhjgv1RWdUPcDo0u
+	XHNvbUtfbAmSrJ878eYO84vqyazS6OVweZD39aQT6s+6iTTwyl0t0vKYxEpH5SCh
+	jvWNkce5qnIvVJevvYvgVFn0Mbs7XvPQPSxAWyKrSTporf6geCyF1p79a+lBUAu1
+	7jNqEXhhWo7OAvoEECBA8C3+libKqCtTiy7hZrPhOs1rgZXe4atHu3MhqTBoujzP
+	oREflQZd/TIIRfWCx/WvtayoKKgVWnuuE+jXLuANlAYE5RyCoFDxtVnW8r0pmQpP
+	38hlJn+9WmdBq4+ep/biN5iuf7uCC/1VHXMiH0qVE6VpxKrrngxzRElulVkg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736888985; x=1736975385; bh=KdZQmxGQPvcas4WhoXt+wk59JB3YpmhVQvV
+	q4muZTU8=; b=V0dS++wGZPiQNJY80zLYjr+rt4RcWdArSCIaRX9vEikxw3uWnPo
+	bfCcm3Tnc5re8VjbHxJO/WN9N6hCxFvSQAFJWQAe8qCISyJDYCTBcJk6xcFmMv0L
+	4uCmeZOw7tKl/fLk4m+S9DEs6axCsKW/tSgD6YeGpHKenk6KUmPASJZnFR/ICMYT
+	TjXxqRWXoMmwezjk8a3F05yUETiAyqPDZuNiXPC4fUEo+TQlxzo/QEm1AvJtGvGX
+	CFonjhoiTGcy9fJtjaXfPFzE67Yt75zAzuK4KW9JashJLdCwlOgL1Nw6XTYX/U/F
+	48VfPX1aJAmfqmTyzcS5s721Osq2U7+h94Q==
+X-ME-Sender: <xms:mdKGZx5KwwantlsnbA_fbnnidfiwqGN64S4ODCrp5rtdu7Xh0XD3IA>
+    <xme:mdKGZ-6eW_Vjojyj2bygX9RRBh8-jCOySQWw2NAToPJJJ-w0rvzWI89xN-veEroDp
+    i2AaQV6oqrWkkV3lg>
+X-ME-Received: <xmr:mdKGZ4fXlKc96QsD2xwADe-_TK93rNVrRUht8ASbOv7oo85Ph8PwkuqmP_Q_e5_wZLKlZmJa0aY1Yl5Z51rAfpVZ0SchAGHlNwcr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehiedgudeggecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
+    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
+    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:mdKGZ6J6Wht1Rps2ajk76Qx6HtnhYX-LyJNdz3iy0fuWs_vPraxIwQ>
+    <xmx:mdKGZ1KHT7UBIJJXaHdDjoIyjklss2rqlbBJrDDfoHIqYLCtKu-ByQ>
+    <xmx:mdKGZzzm7gLmsCZaB4Az4hboANxk9Lxk2MPWHfkUdl7AElv4qewd1g>
+    <xmx:mdKGZxKBf5xjsBe8JShjRElHGgM9xakSe7uN8q3P6VMZhM6f4ilOyA>
+    <xmx:mdKGZyFgJYjUYhAcB3wK1gNv4C8z87mcEkLtGQnJhUOBeLtyquHhhY8h>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 14 Jan 2025 16:09:45 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 00/10] compat/zlib: allow use of zlib-ng as backend
+In-Reply-To: <xmqqjzax2nqw.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
+	14 Jan 2025 11:34:31 -0800")
+References: <20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im>
+	<20250114-b4-pks-compat-drop-uncompress2-v2-0-614a2158e34e@pks.im>
+	<xmqqjzax2nqw.fsf@gitster.g>
+Date: Tue, 14 Jan 2025 13:09:43 -0800
+Message-ID: <xmqqa5bt2jc8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:1thYhK/iOI8hP9qLZLZycQMSy4g1fUZNgLC6Xn1xC90b1GwNBhH
- UoY7zbXs1ZPEVLrMLNphTk1isYOMDURziPRsZktM2W2cmbXAVM4qlcRM8lkWmsW/g6Igxxp
- pIM7qBTfATOGau2Pm7F0cW69p2FxMQTSpyrAypSsODUlEXDAmwcAneMmjyRqQuzgzPlf9l0
- PcuP0I6AZkcPC7B0SoC8g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:sT9x2HKSbuY=;nRNy3/mqsiXhq1lngQVgKB6P1f+
- /UTE4M8+wLYPSCzU/tOivJjeqtwmNRgOq7nzM9TcMTsHGKckAPFl+QP+PizSR12JNG3ogqTxG
- bC3yORyumexNKK6zVEtZRDo8X84xs0X973cQfCMR4aqUj3B180osUMyEedwJhHSaOArIgXEiz
- Jkj0QwljAOfzYDU3j2UQ0QFeWPGn876HH69mvduo7NEpDxPmLKma9JzKWfaMI0ePr6qNPK3jB
- 793yMwJeY20Dae38nmFjgLDDhelvfqpNAqucO5yCTLSS72vT44BTmDv3CEa4OlipWz6XMVjBL
- fsG7XjcfDCf3NDRF+9hlxdz5+gghoEIMFunDBXH4uY74SmQCDY4Nn/XDIWIOzw5Sw24Nwwcvy
- s1SGoI0l++m62kAWkg8vRJT+qJl+TjgrQ1nJM929XMZpZPXwZBgYGNSe4j5uR7uD+sPpi3hMU
- KiLbFybdUjQHysJVnID48CxfCXs0mawROl2wYA0vkNjsauoJbNyVF4Qxa+sYTovFHrZEBOdnx
- EqHBefTiWhkdeHQq3AcM3eHfFBUD94SEmTV7XgCs5C6UqbLOIeii4a/oFGxtQqXBmNUTNlhpC
- dX6NVdNSmrEA8bZSnjCOmDhIZNlWP7cW8GF16smHx1Fv8AeRSCCdeduXM5sE17I6Yg2RKsKF9
- YFAWc0WyN+6jjz0yCgW+4xD1AOGiVj6JxhGcXrLlM7/0pMWkJIMAa82IAJyizY9ixU3FnJZtU
- sHVDHmAy3xtWQres1whJj7NOgulvGAqIdHeuWIbzVe4XKerO/CHUtHMbeyqYQA2Nk1DncPr6Y
- qKt6g/byNX/XKCmxbfTprPGfwjaMjsBd3SnO9hm1ST8ITwGsi0HSPO3qC09+zxE6PzvATzU++
- auOmECeqnSaBill+B6iTYZZPLo9MK2F18dTK57l2DgJqPQ8/ivIMiPLuuNZ1YPdPxPIYmad70
- IS96CZsb8zHZnS3ay1Q3YdWto+e2AeW1z8CZ9s4m5hEVxNIQG4I5gFgxkr8hVayiJpnTib5VS
- GdZg806aOe3Tw6wiQLNIT+A0X0eC0kicE+QbgNuihaxEgjca4kuf6gp/Ulie7iXsQ2SSpDGKO
- mq3JgE2sixFWHY5wVixV+f/6msryRYlr5UBlsAutjeItV6zRZWJMAG6HPq6UhXrqNqMrh2R6H
- OokPmlPOPwD7BCaIrINkkTDYXFgoEvzt+mLpdVWWwFclLQhqmqVK86pdkaY1FjKdFtB+KRnIk
- 21Ix1Eu1a0W7KtetLlqQuaUFDT2vvJ9ACw==
+Content-Type: text/plain
 
-Hi Randall,
+Junio C Hamano <gitster@pobox.com> writes:
 
-On Tue, 14 Jan 2025, rsbecker@nexbridge.com wrote:
-
-> On January 14, 2025 1:44 PM, Johannes Schindelin wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> > my apologies, I only realized _now_ that I had forgotten to update
-> > `GIT-VERSION-GEN` in v2.47.2, it still has `DEF_VER=v2.47.1` (but all
-> > other mentioned tagged versions have a correct `GIT-VERSION-GEN`). I
-> > am very sorry about that.
+>> Changes in v2:
+>>   - Wire up zlib-ng in our Makefile.
+>>   - Exercise zlib-ng via CI by adapting our "linux-musl" job to use
+>>     Meson and installing zlib-ng.
+>>   - Link to v1: https://lore.kernel.org/r/20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im
+>>
+>> The series is built on top of fbe8d3079d (Git 2.48, 2025-01-10) with
+>> ps/meson-weak-sha1-build at 6a0ee54f9a (meson: provide a summary of
+>> configured backends, 2024-12-30) merged into it.
+>
+> I think you are now also textually depending on the fuzzer thing due
+> to touching meson_options.txt and ci/run-build-and-tests.sh with a
+> later step.
+>
+>>  -:  ---------- >  9:  7ae8f413d4 ci: switch linux-musl to use Meson
+>>  -:  ---------- > 10:  2dd1b49e4f ci: make "linux-musl" job use zlib-ng
+>
+> I will see what other things I can find.
 
-[I fixed the formatting, not sure how it got screwed up, it had verbatim
-mbox headers and inconsistent `>` prefixes in the quoted lines.]
+Yup.  The patch series for some reason still does not seem to apply
+cleanly ([09/10] ci/run-build-and-tests.sh somehow seems to be
+troublesome), but it was easy to wiggle it in when the base was
+prepared with these two topics merged on top of 'master':
 
-> Oh gosh. Glad I did not hit the "build" button.
+    4610af08e7 ci: make "linux-musl" job use zlib-ng
+    b2ddd0b33e ci: switch linux-musl to use Meson
+    5118183ef4 compat/zlib: allow use of zlib-ng as backend
+    08bf6b2062 git-zlib: cast away potential constness of `next_in` pointer
+    ebf98412e3 compat/zlib: provide stubs for `deflateSetHeader()`
+    29829e5714 compat/zlib: provide `deflateBound()` shim centrally
+    8f19b26bbe git-compat-util: move include of "compat/zlib.h" into "git-zlib.h"
+    8aab230253 compat: introduce new "zlib.h" header
+    1ce001beaa git-compat-util: drop `z_const` define
+    b9d4bd5467 compat: drop `uncompress2()` compatibility shim
+    db620fad21 Merge branch 'ps/build-meson-fixes' into ps/zlib-ng
+    64156589d9 Merge branch 'ps/meson-weak-sha1-build' into ps/zlib-ng
 
-Well, depending what that "build" button does when you hit it, it might
-not even affect you, have you tried it or at least looked at what
-`GIT-VERSION-GEN` does? `DEF_VER` only sets the default version when
-building e.g. from a tarball.
+I think the reason is because the other topic that touches the fuzz
+thing we see in the context of [09/10] is not ps/build-meson-fixes
+but something else that is before "--fatal-meson-warnings" was
+added.
 
-When building from a Git checkout, though, it uses the tag and everything
-is fine, the output of `git version` will say that this is 2.47.2:
-https://github.com/git/git/blob/v2.47.2/GIT-VERSION-GEN#L15
+One request.  You seem to have started using --full-index when
+generating the patches.  It is extremely annoying when a patch needs
+to be mucked with an editor to inspect why it does not apply and to
+tweak it to make it apply.  40-hex does not help at all if the base
+commit is not conveyed correctly, as the recipient will not have the
+necessary blob objects _anyway_.  And 40-hex is unnecessarily long
+in order to protect the recipient who uses "--3way" from using a
+wrong blob in a fake ancestor tree.  Please stop.
 
-Also, you can always hard-code the version by writing it to a file
-called... wait for it... `version`, before calling `make`.
-
-> I will hold off packaging that version until this is resolved. It is
-> definitely needed by the NonStop community.
-
-I'm not sure what you're implying by "until this is resolved". I hope that
-you don't intend to suggest to re-tag and force-push v2.47.2 because
-that's kind of a serious no-go, those tags have been relayed to quite a
-few people well in advance of today during the carefully-orchestrated
-coordination of the embargoed release process. You cannot pull that
-v2.47.2 tag.
-
-In any case, if you don't want to build v2.48.1 instead, and if you cannot
-build v2.47.2 from a Git checkout, at least that `version` file method
-should work for you and you don't need to put pressure on anybody else to
-get the version that is so definitely needed out to the NonStop community.
-
-Ciao,
-Johannes
+Thanks.
