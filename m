@@ -1,80 +1,129 @@
-Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61BA29CE6
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 03:26:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAFA3BB54
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 05:27:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736911604; cv=none; b=rd95dr9RY2m90R7k+ZTKznRASQ0zAynqI37Ux0nsX89MopH8gqIOS9UydCIQ72joAQkW9B/ha1c+t54MdP+18y0MHoLR1gW1uoplnNn5b3xXl3v1+Hk1NWwqE7GODX6ZNEQUbNvxKaayfTUZvu4x2Qcgg/gkx0pjThKp6/SqG8I=
+	t=1736918847; cv=none; b=dZuY4ww4A2AIYBfNsm2/wUKCyHx5Hyr/XwivQ2RFV3xVZg0Lxv+xYgNNlM10Pq/PQzR0xlOZyq+pAcc6SYkGvK9ipp2el2kVDdhRUhfM2Ufk4I+eTlctz0E6xjnyd9FQhQJFg0VYrhDvJlRGPE+asIqDnR4SYBKt/0scP8tfW68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736911604; c=relaxed/simple;
-	bh=xa172ZBvGvmQeHY40XK9vWDigaXBB5A9IFxwTcp7F6Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CutqlZadXZCBALqyh2ZJAxNFxa4wpldhu0nEVt6ncmCL0GFhq8zinrYgWyHfNWhzwCA8UJucN4yaL4mwWLlEbo9f5sFZM1oEoPcFEDII0O+HHrKKK0W9QMonziKO5cYMCY9R4d6CwJuNMl0SpBPzkD2kZTVjs3UIdIFy8z5V0G0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=GB6dro8l; arc=none smtp.client-ip=212.159.14.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1736918847; c=relaxed/simple;
+	bh=RH3Rl+2hRjauVGHgAfBIYgcwzlWpzY6qLbXtwDiYdF4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Za9O3+wIS6JXc/kLcuVlxRPRWOJZ+MZOU00MUvstdk9ffUkOyXfG0+Qcwg051OfNnsx9vg2MMmBd4XaSvg9AwARzcb+a32fcjR7eD/qd2NOml3tsJKYG0zKcETibu9YPxr73CDaLZofqMXH73LG7XRZYapTAMrSKcx2cXf2FWYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V1EhVqtV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v7jiGqMM; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="GB6dro8l"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id Xu35txjlZQyRxXu36tkNCS; Wed, 15 Jan 2025 03:26:33 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1736911593; bh=xa172ZBvGvmQeHY40XK9vWDigaXBB5A9IFxwTcp7F6Q=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=GB6dro8lDAFRc4LX9xNv4o090uGrRsgqvie4HrGX7sN9rq8YYehKQjk5DITXs8nls
-	 SCBikOtZ37sq3+rYQNlRI1eEzFHrJBXHMbtNBE7ATIseirg9XfLC7bCYSkfcx7p+id
-	 5JnvvIsWsU+6tNpQCxgUw5HAYFxXS4K02ER1ev0Z1emHHO9Jl/rzksdKshYS/yt3lX
-	 wN3ghXhmFj0D1jX6IJx2k8JMrvPvy8qfynD5+PZFKNyBcNfiTEDlVY12dgrBcvXqW1
-	 8wmvcFkx+8JTroBH5l/YKfTXhuiZBbiNjaBSXROgzopHMiH9sERAr/S+7WABTBa/uh
-	 Xe/NtmagPvjJQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=XaAqz555 c=1 sm=1 tr=0 ts=67872ae9
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=NahVeR8y-pBmaMAARm4A:9 a=QEXdDO2ut3YA:10
- a=zZCYzV9kfG8A:10 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <8c3ae215-5d78-4ad6-a068-701499646580@ramsayjones.plus.com>
-Date: Wed, 15 Jan 2025 03:26:31 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V1EhVqtV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v7jiGqMM"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1F15B25401CD;
+	Wed, 15 Jan 2025 00:27:23 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Wed, 15 Jan 2025 00:27:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736918842; x=1737005242; bh=Ep/zzAcs6B
+	AfMltGYvpflJD7wvXaKr3SRmTD+XfEkfA=; b=V1EhVqtV51FIgIjg6JowuvPYHe
+	Eni/T4PmgtLkpRHDosgXb5GUxGiugGmAI0NNDBI1jk/VXugUXpy1nuZ+aCLGb1Vw
+	ez011yJQTXIFjyQ8hxaWhv7tUOKiS3RYqsHe6zVQN69+ceBSC7f/oDgE+BWJTekb
+	Nxi7XCxho6KZieNsfQtRP7rXXjTqFjWRS2JjTS/xI4oV5ERVaxGoLmJxbIQ6KHfR
+	W5KB593zifnRw6TUKLItLeMJQVg5loK4YIjRrxBn+zd55P5YefviBrm/r+CXlzNq
+	B+OFAwE99z8+5xg0VmHyZuePG1PAloX7Xm6/FmMH5nJQDIId8OWBFXizXiLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736918842; x=1737005242; bh=Ep/zzAcs6BAfMltGYvpflJD7wvXaKr3SRmT
+	D+XfEkfA=; b=v7jiGqMM+/YXTx0Ro7fR5CPnya3gp51N12qOBx/tAli63K6jndF
+	pxMJJrpy9lEbKfzE1/re/UelM7YsJrhmEK025klqbjWLXRAtkRl0ctl51Y98X1nh
+	LkUDRqLv1bHfI83F13z6N5iU0Nsfpbpe5y1RXUnQqObGA5/wf0g4Kcv6cYzgrl8W
+	ck9r8uqjozZYDhQJEcAhbIgLBv+jUrypOgIVCGk/NZmFMXxUjBMFTFY0jXSj647N
+	bggzq/lOEExmDIm2DfhpcotET5AzYHcVeG912rZKi7duYHZlUnTxb5jZ00KUaW3k
+	M2QIY4xVTklqKEhjlJsmW9elJQZgdjpFn9w==
+X-ME-Sender: <xms:OkeHZwQqjeHMwmFmw0XFr5lX3cY8zs8c8YnBceOdnaGldbuBIQordw>
+    <xme:OkeHZ9yXgFhzlMFdPvX8skG5ObSOBJT_RYf7NTXj3nGfRI9pDknjx5nzAsDFJxFmA
+    o-ocMOorEKPi9Acdg>
+X-ME-Received: <xmr:OkeHZ92oYPW0LgKcaamLV6XoyTv3IPQkWzWqne_E-kjQIvlFwY3luyXPtjJBpCtbWdbkJWVzcfIgpIgFqN3HYPYYzrs_l1w_CrKn>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehjedgkedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhssggvtghkvghrse
+    hnvgigsghrihgughgvrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhn
+    uggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehgihhtqdhprggtkhgrghgvrhhssehgohhoghhlvghgrhho
+    uhhpshdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:OkeHZ0Dgfehy2robjB7drCX9qVn4rjMPPA3vkEa5zpbytBZg9pM6Wg>
+    <xmx:OkeHZ5i_VYzRdtogI74AIG6On5eJ42n_KH1_IVzTTHOedlRUgCYMkA>
+    <xmx:OkeHZwrAq7tgm4VQgWDDhXinbDnwXjrdaHmBnWBHGI3vFkg6Fyf12Q>
+    <xmx:OkeHZ8hRf14QKVj_0mfHdAMlj-_ENCoNW1DDwJom0ie6y1mCiyCOrw>
+    <xmx:OkeHZ3Zd480sjDKBymE-v77XEjP6jcwFOf3ufUpKXyyEQoaWqqjJOXdx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Jan 2025 00:27:22 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: <rsbecker@nexbridge.com>
+Cc: "'Johannes Schindelin'" <Johannes.Schindelin@gmx.de>,
+  <git@vger.kernel.org>,  <git-packagers@googlegroups.com>
+Subject: Re: [ANNOUNCE] Git v2.48.1 and friends
+In-Reply-To: <047401db66f1$f4ba6790$de2f36b0$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Tue, 14 Jan 2025 21:05:25
+	-0500")
+References: <xmqq5xmh46oc.fsf@gitster.g>
+	<4a3c949a-416f-734d-f63b-cb1b7f9b362f@gmx.de>
+	<041901db66b7$c0c759a0$42560ce0$@nexbridge.com>
+	<41d5de4e-c4b5-9564-6210-d9b8efddacb7@gmx.de>
+	<045701db66da$36a358a0$a3ea09e0$@nexbridge.com>
+	<xmqqo70827df.fsf@gitster.g>
+	<047401db66f1$f4ba6790$de2f36b0$@nexbridge.com>
+Date: Tue, 14 Jan 2025 21:27:20 -0800
+Message-ID: <xmqqikqg1wav.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: 'seen' branch identifies as v2.48.0
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>
-References: <6c5d0f90-79f0-4fba-8edb-f80d0665873b@ramsayjones.plus.com>
- <xmqqr0566u60.fsf@gitster.g> <Z4YXjCrtjCUjkEql@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <Z4YXjCrtjCUjkEql@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfNKf5MhHJLpG6dEbguz9xJir8yL5rbZmXGg3jElC3enh9yx+FEtHhmK/3CQir0I+i1JFD38f3H+4TAIZpGj0jhXnW7l6mbTRydOoMw5C/spTH52iFIMp
- SnOpb/vQ4GV+3TY7C0XPQ+9NFKkN3baZJF+KWnKRKPc8i5VngVLLcnePJ4HeCLVei86x1ZZLz6U/M4H1cqZVc3QjNoMPtuA7AVQ=
+Content-Type: text/plain
 
-Hi Patrick, Junio,
+<rsbecker@nexbridge.com> writes:
 
-On 14/01/2025 07:51, Patrick Steinhardt wrote:
-> On Mon, Jan 13, 2025 at 05:49:59PM -0800, Junio C Hamano wrote:
->> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-[snip]
+> On January 14, 2025 8:28 PM, Junio C Hamano wrote:
+> ...
+>>Will it be the resulting checkout of "git clone --single" of that tag?
+> Then you can go
+>>there and say "make", and as Dscho explained, what Dscho wrote in DEF_VER
+> does
+>>not matter.  The tag that points at that checked out commit is v2.47.2 and
+> that is
+>>what resulting "git version" would say.
+>> ...
+> In order to accept our builds, the NonStop community needs to be able to
+> correlate what we build to a real commit from the git git repository. We
+> cannot
+> build from tarballs, as this cannot be certified by the community users.
 
-> Yup, found the issue. The next version of the Meson series will have it
-> fixed. Thanks for the report!
+So you are going to build by having a clone of my repository that is
+updated via "git fetch" to have these latest tags, and you will
+check out the v2.47.2 tag or the "maint-2.47" branch whose tip
+happens to be at that tag.  And say "make" in there.  We may have a
+wrong string in DEF_VAR in its GIT-VERSION-GEN file, but as you read
+already in the above, it does not matter.  Saying "make" would run
+GIT-VERSION-GEN script, which notices that you are in a Git
+repository and not in a tarball extract, and runs "git describe" on
+the commit you are building from, instead of blindly relying on the
+value in DEF_VAR.
 
-I suspect you already know, but I can confirm that tonight's 'seen' branch
-builds fine (Linux and Cygwin).
+Which means your build will result in a version of git that says
+"2.47.2" when "git version" is run.
 
-[Sorry for being so late, but I had to wait for about 3 hours for windoze
-update to stop making my laptop *totally* unusable! :( ]
-
-Thanks!
-
-ATB,
-Ramsay Jones
-
+So is there still a problem?  I am puzzled.
