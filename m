@@ -1,161 +1,80 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A491D5CD9
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 17:56:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA8D199244
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 18:24:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736963789; cv=none; b=B99VBwqnXioiQKhB8yFkKAv0efFad7AEsG81eEvbTDjcRhexIY16F/UK8D9i3osh/YozoV5HgJVtfCe2v/JKfM8PAuUfe3iTxcyVg3JCdHrCYBYVcuVhLgNgYY6qEw8dauLobEcI+yQOPEp5qsCvrN2Ab9jGs5Jl0kb0tPHfkP8=
+	t=1736965463; cv=none; b=VlRfdVW2efvq8rKZ/tn0u8RS701cDOwMuh7Ij1nxr7tyhYxpyZ+Qq2qnYHrzM0eANDRwJvCI4kp4lZNmdO+urbSFZMvNNLwpGoVpy7RSp2zCSXi4vs+8mbszSChrWituNj8Nl1ks+RkIf+gs4e518jhn3gQmqTn0xx+2xXO3QDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736963789; c=relaxed/simple;
-	bh=aVmFP8VWEHCNkV8VEC6eWa9VVO+Yj7r9TE2NU9ByX6o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FsEPmelp2uJX6ItKud/xsrcNaovoAU07zF46C3IJqMCmwZJtc7RN6Me/YjJ41eKuuYYkxJPP3souhQ/d/6a7SeZk9YcpoKlonunw+SsgjHHAP5FueFhqRyz3eINO0D7X+6ApHi8vpgfn8oM6BLahmK9mkoedJ6UxB9MueG+UgMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ng5o0wqJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WgVOOx7F; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736965463; c=relaxed/simple;
+	bh=AuYt+TyJPhFJNQMuEOBD0s35vUzdBTYN6Q4LZP0n+qc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NFmlfb8QWWBUodzw9Hw8ErAfXhg2O4/eWfBylD3j2NTlttRf5SGDjz/GDdMoMGCX/jjyJeS0HpOVLNkegcNutvmslie4FEz/buPfFCjJ7TsqI7mELOuJq+y/jgz3oudpwPpJTQL9izskpIYKDIgDaoOZ3eKp5CoY1+LBhpgFHBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DNMb1FyG; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ng5o0wqJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WgVOOx7F"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id D8A021140051;
-	Wed, 15 Jan 2025 12:56:24 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Wed, 15 Jan 2025 12:56:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736963784; x=1737050184; bh=A3B/0nOxc9
-	wrihZ0Tui+kTZQ+HKzYXveDdgxOTEzuRA=; b=Ng5o0wqJIlCNsQYY9U0kXAFBIC
-	DigGxBo1tMvG5buwZ+0qWpHI0vZZbka+k3M+yPvXS+FqgViP1sdoP28vPnkGhIAb
-	b1+gx76lxKBKeCP8w6qN9jZdRLr1in6HcYptFwbDDvLPIN9ADRON9qYzlJ0QP0BF
-	cHpKAKk1gOIOzkInCVStLhV156ZBGHMlwDhCdrbpy3gEmlOYaGro3bYxgKJx0j8U
-	cOD+10HidlYRttOdLWRSGZK7TwvmJkiCjaHBCXej40AIciLlOfJkTV5Adn8kLiAE
-	kdQy4+WJJyloEUzBTkRFZs3IZhmsaHWYeY4NJZSnpK37amQ06MSWYwXYknVQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736963784; x=1737050184; bh=A3B/0nOxc9wrihZ0Tui+kTZQ+HKzYXveDdg
-	xOTEzuRA=; b=WgVOOx7F3Xrb+LYvoaiSLNlQbtAsOLLf1nJu3Ybvah+xTlUDLSv
-	tmdk9ssZMraTwaiqdAYr/MMRtcVgSB4buI/DOcpwlwvDtLfdCGgBPLx+ASJ57k2r
-	wLwPMfrGLusA8EsywwxLDqLWndWQ743P7yNNeVGtuzkP5snZmdLU4CuupaFTWkki
-	5ojBGR4tHuzOdloHYfqVJPyV6ZiwByTn2U2SxOmExoYSLin/XnBoR1H9/fgq/6VM
-	IsVpeLK/vImOmvmo48NmP1yga1GkOvKOhm2rEUddfFfqsrK8chePbnycIjJ0Nlfl
-	71AeP9m3l1X+W4MtNKvXpjz22q9OkJUGR/w==
-X-ME-Sender: <xms:yPaHZ6a4bNk3nMmfIBuNnzxUeAG4wOfPJyAHOidfcaYfFFpR2Cr6tQ>
-    <xme:yPaHZ9beLbYGx9hc1KypMxnab-xh7SMB7FBgL3SeEglrNF80RrpPiF2gcWKKjRsFK
-    jT-Pp1B3xNmoPymSQ>
-X-ME-Received: <xmr:yPaHZ099ZMC9N6pGXkN9EKVe6DJfEC8MegnmZJsPO81VHjDlNB3OCZjecW3nC_369_sX_kZY43OeKz40tfiumPgJsbzh7HoTXgWO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledgkedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepteefvdeihfdvudekgeetleetgfeileejhfev
-    gefhfeduudetkeegieegheeuhfevnecuffhomhgrihhnpehprghrshgvqdhophhtihhonh
-    hsrdgtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
-    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
-    hrtghpthhtohepmhgtvghplhestggvphhlrdgvuhdprhgtphhtthhopehjohhnrghsrdhk
-    ohhnrhgrugesuhhnihdqmhhuvghnshhtvghrrdguvgdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:yPaHZ8rAFX9CA7xJYBLAKd3PIETVpjAAuVfEl0U6EvdYGBd1-vy6gA>
-    <xmx:yPaHZ1pW9MkdWEx4jsLSonj1u8Dtxxzp_Airz5PgTIhwq-EzrAaELg>
-    <xmx:yPaHZ6Q8fKosm1QNvkMDpF4pnzmtIypV-SXngIjcaW10T09_a-zk-Q>
-    <xmx:yPaHZ1q7LscLt4a-Ix2uxTpThDZIXGs4yLbO22fibu_VUL1wRGAcNQ>
-    <xmx:yPaHZ2eTsaSbrngLMGQG_UWdAwFSb2qJpoWtepxcFpZeHwifC_V1SfIU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jan 2025 12:56:24 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  =?utf-8?Q?Ma?=
- =?utf-8?Q?t=C4=9Bj?= Cepl
- <mcepl@cepl.eu>,  Jonas Konrad <jonas.konrad@uni-muenster.de>,
-  git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DNMb1FyG"
+Received: (qmail 6226 invoked by uid 109); 15 Jan 2025 18:24:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=AuYt+TyJPhFJNQMuEOBD0s35vUzdBTYN6Q4LZP0n+qc=; b=DNMb1FyGyIkSgGktJUxRjWJtHE9/Am4LBkElxWqR8oRrCPpWSC4tl9Ur5Xb9dfTT/Df7n7tQ8r95urbxbVG/imOzv8IOXJsMOXc6hacFauKIoPSluSgOfyOcTe85xgQETlb3GYmXUS4btxHu94MIrblaJUPr62Zu6DQpjcTqGi5oJ6WG8soLEEHcTriIgH4pEJKxLUubi6E/dVylkgG74TYMWntReCzuj+3iMcliSh56BvlLg2nOFkErktU3U+8r8DDcA48W75p6BQKUnw317gKN6Q0eWh/KwmIZtMsz4DLnZd/syoGfWgnHlnJfU3bqIdW7aZwYUfTmf9c5arPL/g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Jan 2025 18:24:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12297 invoked by uid 111); 15 Jan 2025 18:24:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Jan 2025 13:24:21 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 15 Jan 2025 13:24:19 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	=?utf-8?B?TWF0xJtq?= Cepl <mcepl@cepl.eu>,
+	Jonas Konrad <jonas.konrad@uni-muenster.de>, git@vger.kernel.org
 Subject: Re: Git branch outputs usage message on stderr
-In-Reply-To: <20250115171423.GB57018@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 15 Jan 2025 12:14:23 -0500")
+Message-ID: <20250115182419.GA86610@coredump.intra.peff.net>
 References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
-	<D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu> <xmqqed1414gt.fsf@gitster.g>
-	<c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
-	<20250115171423.GB57018@coredump.intra.peff.net>
-Date: Wed, 15 Jan 2025 09:56:23 -0800
-Message-ID: <xmqqmsfsx8oo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu>
+ <xmqqed1414gt.fsf@gitster.g>
+ <c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
+ <20250115171423.GB57018@coredump.intra.peff.net>
+ <xmqqmsfsx8oo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqmsfsx8oo.fsf@gitster.g>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jan 15, 2025 at 09:56:23AM -0800, Junio C Hamano wrote:
 
-> use that everywhere. Possibly it could even do the argc/argv check, too,
-> since every call site is going to be doing that itself.
+> Jeff King <peff@peff.net> writes:
+> 
+> > use that everywhere. Possibly it could even do the argc/argv check, too,
+> > since every call site is going to be doing that itself.
+> 
+> It would look something like this; I am not sure if I like the "this
+> may show help and exit if the user requested, but otherwise it is a
+> no-op" semantics, though.
 
-It would look something like this; I am not sure if I like the "this
-may show help and exit if the user requested, but otherwise it is a
-no-op" semantics, though.
+Yeah, I agree it is funny to have a "maybe noop, maybe exit" function.
+Perhaps a different name would help? I'd expect show_usage_help() to
+always do what the name says. Maybe check_help_option() or something?
 
- builtin/am.c    |  3 +--
- parse-options.c | 10 ++++++++++
- parse-options.h |  4 ++++
- 3 files changed, 15 insertions(+), 2 deletions(-)
+> +void show_usage_help(int ac, const char **av,
+> +		     const char * const *usagestr,
+> +		     const struct option *opts)
+> +{
+> +	if (ac == 2 && !strcmp(av[1], "-h")) {
+> +		usage_with_options_internal(NULL, usagestr, opts, 0, 0);
+> +		exit(0);
+> +	}
+> +}
 
-diff --git c/builtin/am.c w/builtin/am.c
-index 370f5593f2..c9571f605a 100644
---- c/builtin/am.c
-+++ w/builtin/am.c
-@@ -2417,8 +2417,7 @@ int cmd_am(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
- 
--	if (argc == 2 && !strcmp(argv[1], "-h"))
--		usage_with_options(usage, options);
-+	show_usage_help(argc, argv, usage, options);
- 
- 	git_config(git_default_config, NULL);
- 
-diff --git c/parse-options.c w/parse-options.c
-index 30b9e68f8a..9419b174de 100644
---- c/parse-options.c
-+++ w/parse-options.c
-@@ -1276,6 +1276,16 @@ void NORETURN usage_with_options(const char * const *usagestr,
- 	exit(129);
- }
- 
-+void show_usage_help(int ac, const char **av,
-+		     const char * const *usagestr,
-+		     const struct option *opts)
-+{
-+	if (ac == 2 && !strcmp(av[1], "-h")) {
-+		usage_with_options_internal(NULL, usagestr, opts, 0, 0);
-+		exit(0);
-+	}
-+}
-+
- void NORETURN usage_msg_opt(const char *msg,
- 		   const char * const *usagestr,
- 		   const struct option *options)
-diff --git c/parse-options.h w/parse-options.h
-index ae15342390..75a7493350 100644
---- c/parse-options.h
-+++ w/parse-options.h
-@@ -388,6 +388,10 @@ int parse_options(int argc, const char **argv, const char *prefix,
- NORETURN void usage_with_options(const char * const *usagestr,
- 				 const struct option *options);
- 
-+void show_usage_help(int, const char **,
-+		     const char * const *usagestr,
-+		     const struct option *options);
-+
- NORETURN void usage_msg_opt(const char *msg,
- 			    const char * const *usagestr,
- 			    const struct option *options);
+I think parse-options will exit(129) in this case, and that's what t0012
+insists upon.
+
+-Peff
