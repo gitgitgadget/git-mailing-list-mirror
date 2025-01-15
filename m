@@ -1,157 +1,238 @@
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from UDCM-WWU1.UNI-MUENSTER.DE (udcm-wwu1.uni-muenster.de [128.176.118.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F119134B0
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 14:00:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C3924A7C5
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 14:48:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.176.118.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736949619; cv=none; b=VJM3HFoy8Pjas8pikl6b0kZmgAYg6gIYnfGSGWfx5t2JCdKL7abXLJ1OOASljNZeLKl/H+uAXqZCN8+maZOCsDqTYLduA2RDbSYAayym3p59IF2ZMZlE6cUBR4QGLMSWcWDqxMbfZsUSAzpXdFGSQ91dR0FhXt4Fb37sO/yHPFU=
+	t=1736952485; cv=none; b=LING1Kp6s7wkN++T7Q+L/lb1LrNwzQmSwwibigW6sjHaJEOVq8BobMp3ZmHh85aOjqzBc0N6/Lp+7YsbrwuRe9Ne/hDdWM1CVslXmw7VBAurGLRyrVLK8Y2MyCT0VxP/dtzWCPWOh05kWGZEhu303AatU66BxlGhr0R0aue4XEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736949619; c=relaxed/simple;
-	bh=E0KsYZzGfYP2Ae4Si6CBTr2OLZjQVMjSpvIiKwk45K0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KWxF44At9g0yt6XQxhZ7KIX2PdBNIAirwsUff3irYPmEjN3FE8xx+qml6fJTc7Qm3YNb+tpow3WG1DZRcZpXUlpMImZShpT/g7mnZ2wrIUC8q4f2RkAiE4B0AmLV1mNx/4Wc+8CIKxtpqPkbr87VWRS9t/ujt8bjd9os1OFynLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SP64SuSp; arc=none smtp.client-ip=209.85.221.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1736952485; c=relaxed/simple;
+	bh=f7TnkBaB/xCVfHz7tVg8CwoR1ojNoP2/wZioKrAf2AY=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
+	 In-Reply-To:Content-Type; b=EP+pc8SNhOvpvhtK6ftYcmJVMK9aiT63lIJQnHD26/VZKwImCnwEseQdQaD7KHwdDztnVPgDh5FgBCQLGz7Oge5T8VKeiuOf45HL7tj1WTXgpBmEe98EfdQMEDC3a/gfqsfA/JGxc4hQE4VwsGHFg9F1Auih2G/PFQEOFAJNQBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uni-muenster.de; spf=pass smtp.mailfrom=uni-muenster.de; dkim=pass (2048-bit key) header.d=uni-muenster.de header.i=@uni-muenster.de header.b=gAu1gv5I; arc=none smtp.client-ip=128.176.118.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uni-muenster.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uni-muenster.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SP64SuSp"
-Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-518a52c8b5aso2111834e0c.2
-        for <git@vger.kernel.org>; Wed, 15 Jan 2025 06:00:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=uni-muenster.de header.i=@uni-muenster.de header.b="gAu1gv5I"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736949616; x=1737554416; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cRkqb1uqEZ/s/d45M6A9z0Ki5+GFyJqkiPDTIlaKb0g=;
-        b=SP64SuSpPKl2qBdaaMHHDmeykZ0g7lfqyKzZx9sxCFz72exzAE7rF/ee7+rA+XJX/N
-         Zu3aeBGzWMoz3pSlsl7Ly1Cwwna0fc7ewdNalUjpYpIZ9sXZxcg0VZSpmwnOS72ugLjU
-         sLDtNKCZB2vMaXutJfcwgGROMqyans9Ac3jZnNHvJRzkeNJ6JBARKutR2Kct0i2S85UR
-         lKEEV57kUf+Fr52aX9WVgFj9+xySni4eHykgeqx0SXYzKcuL840bxJg/8+B9sCmEMjZi
-         S2D7KJu7tF09psUSDu7D2AxwwLD+tbjfo93XhMtrzHObyjlYbd4YpmD4ZlckNDplaCLO
-         R9XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736949616; x=1737554416;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cRkqb1uqEZ/s/d45M6A9z0Ki5+GFyJqkiPDTIlaKb0g=;
-        b=npOwYjgOXuwRPnnrzUwc5YmrrX8RrjbSvvIU2lVjEflScEkTHh0eaEX0iOUhHn4gfX
-         28R5ZhpugJoH1aunoCe5YKg1WEvUy7VxLSPfaNXShU+V9UO0mKLyfxB/vM2nU/cM6VpT
-         dplE9xgFIhvht5+9g31yu8rpc7mCZDfoK6iIplH2Q9aSn5REkCvL0yvSKFVKCMdFag6M
-         vXB5+yij7SikELAzBXjgJ22pY8jzuPNvYb8eooPaf1v6XLPM/KW25zMdXrMHkWJmTlq2
-         gInFmlOnCzv9A5nTyEC1RvNqjLiX0z8Pmc5EuOrTz3QE/p7s079t+Di9KFFQmu33tqC+
-         ln8g==
-X-Forwarded-Encrypted: i=1; AJvYcCU6NQgRw1SWWn5UXpL3xq12WWcDEcsqYRTPnkEFiwJlXMapkvWbGpzFrUqUNW93II32bRQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzdeIsdroCuy9W1rIjEULfwDRUAt8nyJLsWtWCNsH8yVHMe5tBY
-	ACh+eb4e+p5mGfngcR+hZ/6f6LrGQK/tpV6YyQQf+aXtbH3waZOueUP3KlW14QfLEH5HqOOLBk4
-	agn2gKPZ4yActcDYMaH8QMgX+2suZCNjn
-X-Gm-Gg: ASbGncv5vCQGG4AfgC7s2iTCnuaidGsQd0luFuYvWwywoCsB7fIrLSpM+emn4Esf376
-	GCD7x2MVvIvQNPtjgaEbjP3sJSxfnjjKuEDTa6RM=
-X-Google-Smtp-Source: AGHT+IG0i/3lV9RUF1mMDn5qJVYoMhADE46ipQMtQFSXy53gNIxv7Am5ZC5VPsGh9d8VCvR97GIogPqSJFblWzL+ryE=
-X-Received: by 2002:a05:6122:2090:b0:50a:b728:5199 with SMTP id
- 71dfb90a1353d-51c6c50fa92mr24356667e0c.7.1736949616277; Wed, 15 Jan 2025
- 06:00:16 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 15 Jan 2025 14:00:15 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250114-b4-pks-compat-drop-uncompress2-v2-3-614a2158e34e@pks.im>
-References: <20250114-b4-pks-compat-drop-uncompress2-v2-0-614a2158e34e@pks.im> <20250114-b4-pks-compat-drop-uncompress2-v2-3-614a2158e34e@pks.im>
+  d=uni-muenster.de; i=@uni-muenster.de; q=dns/txt;
+  s=uniout; t=1736952482; x=1768488482;
+  h=message-id:date:mime-version:from:subject:to:references:
+   in-reply-to;
+  bh=f7TnkBaB/xCVfHz7tVg8CwoR1ojNoP2/wZioKrAf2AY=;
+  b=gAu1gv5IdJvhW1EXT8MGaoUbWjDhOnT35PAwRLHj5FqOHRTrsnwQ3SzZ
+   q1xi85rnt5kvdQjRZAl8gCenzB9AEC3PHvXj6NK8n0sencML4Xn0m3eWh
+   50VqS5sF4SJeYcB/VpEfFFZ8xu5y5x5FRvQ55KQGrcS6NJh+2mEf3gfTq
+   hYu2o9JOY0FK0rX6zXsaMkpp95lQrHsvKDEzY/5rltS8f+MWR7qgWK71s
+   q12/qyEC9qN5Pv1pWi6oqzhs8njMev3dQGnk3ftA70lneROKiaw1F0Nv2
+   x7XE5bv85oaOtujRzqlfWXStmjbI1MOl/0pvNcRrWVvESGOV5VTGtRLEK
+   Q==;
+X-CSE-ConnectionGUID: hklp2Hn9QWS/ElMa7sJnNQ==
+X-CSE-MsgGUID: gLaY8u1aQ1aO8L5KpT375w==
+X-IronPort-AV: E=Sophos;i="6.13,206,1732575600"; 
+   d="p7s'346?scan'346,208,346";a="353083442"
+Received: from secmail.uni-muenster.de ([128.176.118.4])
+  by UDCM-RELAY1.UNI-MUENSTER.DE with ESMTP; 15 Jan 2025 15:47:57 +0100
+Received: from [10.6.11.4] (jeannedarc.uni-muenster.de [10.6.11.4])
+	by SECMAIL.UNI-MUENSTER.DE (Postfix) with ESMTPSA id 45D6C20ADF12;
+	Wed, 15 Jan 2025 15:47:57 +0100 (CET)
+Message-ID: <17c78893-d200-4646-a81b-28f32bcf958e@uni-muenster.de>
+Date: Wed, 15 Jan 2025 15:47:56 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 15 Jan 2025 14:00:15 +0000
-X-Gm-Features: AbW1kvaXLPBddnFQTMqB9wYM-4ABdbX9h9-S5ZRNfZKBB0Jh7MU0pBpnI-jRJ7Y
-Message-ID: <CAOLa=ZTvW2T3rds3YN0m9iWQC+sAaSCsiRw+fo57FqqF24pMaQ@mail.gmail.com>
-Subject: Re: [PATCH v2 03/10] compat: introduce new "zlib.h" header
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>
-Content-Type: multipart/mixed; boundary="000000000000df1efb062bbf1880"
+User-Agent: Mozilla Thunderbird
+From: Jonas Konrad <jonas.konrad@uni-muenster.de>
+Subject: Re: Git branch outputs usage message on stderr
+To: =?UTF-8?Q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>, git@vger.kernel.org
+References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
+ <D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu>
+Content-Language: en-US, de-DE
+Organization: =?UTF-8?Q?University_M=C3=BCnster?=
+In-Reply-To: <D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-512; boundary="------------ms040404060704030005030503"
 
---000000000000df1efb062bbf1880
-Content-Type: text/plain; charset="UTF-8"
+This is a cryptographically signed message in MIME format.
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> Introduce a new "compat/zlib-compat.h" header that we include instead of
-> including <zlib.h> directly. This will allow us to wire up zlib-ng as an
-> alternative backend for zlib compression in a subsequent commit.
->
-> Note that we cannot just call the file "compat/zlib.h", as that may
-> otherwise cause us to include that file instead of <zlib.h>.
->
-
-TIL. This would be an issue if we added "compat/" to the list of paths
-the compiler checks for headers no? I couldn't find anything in our
-Makefile doing this, or did I miss it?
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  compat/zlib-compat.h | 6 ++++++
->  git-compat-util.h    | 2 +-
->  reftable/block.c     | 2 +-
->  3 files changed, 8 insertions(+), 2 deletions(-)
->
-> diff --git a/compat/zlib-compat.h b/compat/zlib-compat.h
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..bc20b884efab72028d5f696923e9800e39b08ce3
-> --- /dev/null
-> +++ b/compat/zlib-compat.h
-> @@ -0,0 +1,6 @@
-> +#ifndef COMPAT_ZLIB_H
-> +#define COMPAT_ZLIB_H
-> +
-> +#include <zlib.h>
-> +
-> +#endif /* COMPAT_ZLIB_H */
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index c4b4b372b473ca0af2a4f5f60554f6d3df74f112..1ca26713221ba0270818ac61b6940f03cdf8b460 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -1537,7 +1537,7 @@ int cmd_main(int, const char **);
->  int common_exit(const char *file, int line, int code);
->  #define exit(code) exit(common_exit(__FILE__, __LINE__, (code)))
->
-> -#include <zlib.h>
-> +#include "compat/zlib-compat.h"
->
->  /*
->   * This include must come after system headers, since it introduces macros that
-> diff --git a/reftable/block.c b/reftable/block.c
-> index 9858bbc7c5f7aa63fbcaf1acf9f4b5738e0b6d27..bc9b07963448e613ae14d2c4194b48764718290d 100644
-> --- a/reftable/block.c
-> +++ b/reftable/block.c
-> @@ -13,7 +13,7 @@ license that can be found in the LICENSE file or at
->  #include "record.h"
->  #include "reftable-error.h"
->  #include "system.h"
-> -#include <zlib.h>
-> +#include "compat/zlib-compat.h"
->
->  int header_size(int version)
->  {
->
-> --
-> 2.48.0.257.gd3603152ad.dirty
-
---000000000000df1efb062bbf1880
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
+--------------ms040404060704030005030503
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 11301f53e37f49b0_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lSHYyd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md1pPQy85NnZSeThHeWliRzZ1ZFdERzFhTTVsWTJRTAowL0g1ZXl1emYw
-aFhBN3IzRExDTVFMaUwwVTBGUFB3bmdkd2RHamJkUFF3ZU9ZbUZWcXVkbXMzVEdTdThHL1grCno2
-dkUvY3RFaFg5QmIvaGxKbkljKzNmZHJyV1VXRWVEWWIyQzNHWEgxZWdmUE5oOEQ3U09IZGIrU1Iv
-cVBMd1MKb01kNldId2ZEVG81ejByU0FzTDVuL0wvYStqcmYrVzJkL1BFeDNvZ1hRQ0owNVhPeDBT
-eVpwRTNGK2Q2UGlzVgpOMUFidHZKZUE1Z0NiazV6bGhvOC9iUnh5aHp2a3IvcElLdEcvOUYxeGc0
-K014UWFoRUpXYTdpaEVpQWFHTmJpCjRuNlhvWk9FcHI2dllOdVFkUTdyOWRsc1VoYUwzeWFYWWxL
-Z05SOS9NM1g2MThVa2J1OTRCOGxhdWtITnB0SXoKNmFmeWd2QjdzZnBUbkQ0R1RkWEExKytQbWF4
-M1d6MHdKS3VocGJnbzVNVW84djRzTGI1VWJYZGk0NGkwNk1xcgpTV29POU1UMlBxTndacTJOVzMw
-TEw0bGpjODI1MG1BK1BlT0p4SzNOcUd3WTBvYmpNT2xaNFNUSkxIcGdkTDVICjdNS2NzOXZyRTB3
-NXQ5YkIzU1FjTmFVQjFlUmpjSXU0VmJPaWFVMD0KPUVibm8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000df1efb062bbf1880--
+V2VsbCwgbGV0IG1lIGFkZCB0aGF0IG9uZSBkZXRhaWw6IEkgY291bGQgbm90IGZpbmQgYW55
+IG90aGVyIGdpdCBzdWIgDQpjb21tYW5kIHdoaWNoIGJlaGF2ZXMgdGhlIHNhbWUgKGFkbWl0
+dGVkbHkgaGF2ZW4ndCB0cmllZCBhbGwpLiBJbnN0ZWFkLCANCnRoZSBvbmVzIEkgaGF2ZSB0
+cmllZCBnaXZlIHRoZWlyIGhlbHAgb3V0cHV0IHVzdWFsbHkgb24gc3Rkb3V0LiBUcnkgDQp5
+b3Vyc2VsZiB3aXRoIGBnaXQgLWhgLiBJdCBwZXJmZWN0bHkgYWN0cyBhY2NvcmRpbmcgdG8g
+d2hhdCBJJ2QgZXhwZWN0IA0KKGV4aXQgc3RhdHVzIDApLiBXaGVyZSBhcyBgZ2l0IHJlZmxv
+ZyAtaGBvdXRwdXRzIHRvIHN0ZG91dCBidXQgc3RpbGwgDQpleGl0IHdpdGggbm9uLXplcm8g
+c3RhdHVzICh3aGljaCBzZWVtcyBva2F5KS4gYGdpdCBicmFuY2ggLWhgIGFkZHMgYSANCnRo
+aXJkIHdheSwgYXMgZGVzY3JpYmVkLiBJIGFyZ3VlOiBUaGF0IGRpdmVyZ2luZyBiZWhhdmlv
+ciBpcyBjb25mdXNpbmcgDQp0byB0aGUgdXNlci4NCg0KSWYgeW91ciBjbGFpbSB3YXMgcmln
+aHQsIHRoaXMgYnVnIHJlcG9ydCBnb3QgZXZlbiBiaWdnZXIgYXMgYSBsb3Qgb2YgDQpiZWhh
+dmlvciBmcm9tIG90aGVyIHN1YmNvbW1hbmRzIHdvdWxkIGhhdmUgdG8gYmUgY2hhbmdlZC4g
+SW4gZmFjdCwgd2hhdCANCiJzdWJzdGFudGlhbCBtYXRlcmlhbCIgaXMsIGhhcyB0byBiZSBk
+ZWZpbmVkIGZvciBldmVyeSBwaWVjZSBvZiBzb2Z0d2FyZSANCnJlZ2FyZGluZyBlYWNoIG91
+dHB1dC4gSG93ZXZlciwgSSBjYW5ub3Qgc2VlIGhvdyBvbmUgc3ViY29tbWFuZCdzIHVzYWdl
+IA0KbWVzc2FnZSBpcyBjb25zaWRlcmVkICJzdWJzdGFudGlhbCIgd2hlcmVhcyBhbm90aGVy
+IHN1YmNvbW1hbmQncyB1c2FnZSANCm1lc3NhZ2UgaXMgbm90IChiZXNpZGVzLCBJIGd1ZXNz
+LCBgZ2l0IGJyYW5jaGAgaXMgbW9yZSBmcmVxdWVudGx5IHVzZWQgDQp0aGFuIGBnaXQgcmVm
+bG9nYCkuDQoNCg0KQmVzdCwNCkpvbmFzDQoNCk9uIDE1LjAxLjI1IDEyOjM2LCBNYXTEm2og
+Q2VwbCB3cm90ZToNCj4gT24gV2VkIEphbiAxNSwgMjAyNSBhdCAxMjoyMiBQTSBDRVQsIEpv
+bmFzIEtvbnJhZCB3cm90ZToNCj4+IFdoYXQgZGlkIHlvdSBkbyBiZWZvcmUgdGhlIGJ1ZyBo
+YXBwZW5lZD8gKFN0ZXBzIHRvIHJlcHJvZHVjZSB5b3VyIGlzc3VlKQ0KPj4gSSBvcGVuZWQg
+YSB0ZXJtaW5hbCBvbiBBcmNoIExpbnV4IHdpdGggYSBiYXNoIHNoZWxsIGFuZCBjYWxsZWQg
+YGdpdA0KPj4gYnJhbmNoIC1oYCB0byBnZXQgYSB1c2FnZSBvdmVydmlldyBvZiBnaXQncyBg
+YnJhbmNoYCBjb21tYW5kLiBJIHRoZW4NCj4+IHRyaWVkIHByb2Nlc3NpbmcgdGhlIG91dHB1
+dCB3aXRoIGBncmVwYCBieSBgZ2l0IGJyYW5jaCAtaCB8IGdyZXAgbGlzdGANCj4+IHdoaWNo
+IGdhdmUgdGhlIHdob2xlICh1bmZpbHRlcmVkKSBvdXRwdXQsIGkuZS4sIHRoZSBkaXNwbGF5
+ZWQgbWVzc2FnZQ0KPj4gd2FzIG5vdCBwcm9jZXNzZWQgYnkgYGdyZXBgLg0KPiBBbmQgdGhh
+dCBpcyBleGFjdGx5IHRoZSBjb3JyZWN0IGJlaGF2aW91ci4gSW4gdGhlIHdvcmxkIG9mIFVO
+SVgsDQo+IHdoZXJlIHBpcGVzIGFyZSBub3JtYWwsIHV0aWxpdGllcyBzaG91bGQgc2VuZCB0
+byB0aGUgc3Rkb3V0DQo+IG9ubHkgc3Vic3RhbnRpYWwgbWF0ZXJpYWwsIHdoaWNoIGNvdWxk
+IGJlIHByb2Nlc3NlZCBkb3duIHRoZQ0KPiBwaXBlbGluZS4gRXJyb3IgbWVzc2FnZXMsIGhl
+bHAsIGFuZCBzaW1pbGFyIGRpYWdub3N0aWNzLCBzaG91bGQNCj4gZ28gdG8gc3RkZXJyLiBB
+bHNvLCB5b3Uga25vdyBhYm91dCBgfCZgLCByaWdodD8NCj4NCj4gQmVzdCwNCj4NCj4gTWF0
+xJtqDQo+DQo=
+
+--------------ms040404060704030005030503
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG9w0BBwEAAKCC
+FcUwggbmMIIEzqADAgECAhAxAnDUNb6bJJr4VtDh4oVJMA0GCSqGSIb3DQEBDAUAMIGIMQsw
+CQYDVQQGEwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkx
+HjAcBgNVBAoTFVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJT
+QSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eTAeFw0yMDAyMTgwMDAwMDBaFw0zMzA1MDEyMzU5
+NTlaMEYxCzAJBgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQD
+ExNHRUFOVCBQZXJzb25hbCBDQSA0MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA
+s0riIl4nW+kEWxQENTIgFK600jFAxs1QwB6hRMqvnkphfy2Q3mKbM2otpELKlgE8/3AQPYBo
+7p7yeORuPMnAuA+oMGRb2wbeSaLcZbpwXgfCvnKxmq97/kQkOFX706F9O7/h0yehHhDjUdyM
+yT0zMs4AMBDRrAFn/b2vR3j0BSYgoQs16oSqadM3p+d0vvH/YrRMtOhkvGpLuzL8m+LTAQWv
+QJ92NwCyKiHspoP4mLPJvVpEpDMnpDbRUQdftSpZzVKTNORvPrGPRLnJ0EEVCHR82LL6oz91
+5WkrgeCY9ImuulBn4uVsd9ZpubCgM/EXvVBlViKqusChSsZEn7juIsGIiDyaIhhLsd3amm8B
+S3bgK6AxdSMROND6hiHT182Lmf8C+gRHxQG9McvG35uUvRu8v7bPZiJRaT7ZC2f50P4lTlnb
+LvWpXv5yv7hheO8bMXltiyLweLB+VNvg+GnfL6TW3Aq1yF1yrZAZzR4MbpjTWdEdSLKvz8+0
+wCwscQ81nbDOwDt9vyZ+0eJXbRkWZiqScnwAg5/B1NUD4TrYlrI4n6zFp2pyYUOiuzP+as/A
+Znz63GvjFK69WODR2W/TK4D7VikEMhg18vhuRf4hxnWZOy0vhfDR/g3aJbdsGac+diahjEwz
+yB+UKJOCyzvecG8bZ/u/U8PsEMZg07iIPi8CAwEAAaOCAYswggGHMB8GA1UdIwQYMBaAFFN5
+v1qqK0rPVIDh2JvAnfKyA2bLMB0GA1UdDgQWBBRpAKHHIVj44MUbILAK3adRvxPZ5DAOBgNV
+HQ8BAf8EBAMCAYYwEgYDVR0TAQH/BAgwBgEB/wIBADAdBgNVHSUEFjAUBggrBgEFBQcDAgYI
+KwYBBQUHAwQwOAYDVR0gBDEwLzAtBgRVHSAAMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2Vj
+dGlnby5jb20vQ1BTMFAGA1UdHwRJMEcwRaBDoEGGP2h0dHA6Ly9jcmwudXNlcnRydXN0LmNv
+bS9VU0VSVHJ1c3RSU0FDZXJ0aWZpY2F0aW9uQXV0aG9yaXR5LmNybDB2BggrBgEFBQcBAQRq
+MGgwPwYIKwYBBQUHMAKGM2h0dHA6Ly9jcnQudXNlcnRydXN0LmNvbS9VU0VSVHJ1c3RSU0FB
+ZGRUcnVzdENBLmNydDAlBggrBgEFBQcwAYYZaHR0cDovL29jc3AudXNlcnRydXN0LmNvbTAN
+BgkqhkiG9w0BAQwFAAOCAgEACgVOew2PHxM5AP1v7GLGw+3tF6rjAcx43D9Hl110Q+BABABg
+lkrPkES/VyMZsfuds8fcDGvGE3o5UfjSno4sij0xdKut8zMazv8/4VMKPCA3EUS0tDUoL01u
+gDdqwlyXuYizeXyH2ICAQfXMtS+raz7mf741CZvO50OxMUMxqljeRfVPDJQJNHOYi2pxuxgj
+KDYx4hdZ9G2o+oLlHhu5+anMDkE8g0tffjRKn8I1D1BmrDdWR/IdbBOj6870abYvqys1qYlP
+otv5N5dm+XxQ8vlrvY7+kfQaAYeO3rP1DM8BGdpEqyFVa+I0rpJPhaZkeWW7cImDQFerHW9b
+KzBrCC815a3WrEhNpxh72ZJZNs1HYJ+29NTB6uu4NJjaMxpk+g2puNSm4b9uVjBbPO9V6sFS
+G+IBqE9ckX/1XjzJtY8Grqoo4SiRb6zcHhp3mxj3oqWi8SKNohAOKnUc7RIP6ss1hqIFyv0x
+XZor4N9tnzD0Fo0JDIURjDPEgo5WTdti/MdGTmKFQNqxyZuT9uSI2Xvhz8p+4pCYkiZqpahZ
+lHqMFxdw9XRZQgrP+cgtOkWEaiNkRBbvtvLdp7MCL2OsQhQEdEbUvDM9slzZXdI7NjJokVBq
+3O4pls3VD2z3L/bHVBe0rBERjyM2C/HSIh84rfmAqBgklzIOqXhd+4RzadUwggdpMIIFUaAD
+AgECAhAeKH2HETj0tZALXaFejQbDMA0GCSqGSIb3DQEBDAUAMEYxCzAJBgNVBAYTAk5MMRkw
+FwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQZXJzb25hbCBDQSA0
+MB4XDTI0MDQxNTAwMDAwMFoXDTI2MDQxNTIzNTk1OVowgYsxCzAJBgNVBAYTAkRFMRwwGgYD
+VQQIExNOb3JkcmhlaW4tV2VzdGZhbGVuMR4wHAYDVQQKDBVVbml2ZXJzaXTDpHQgTcO8bnN0
+ZXIxETAPBgNVBGETCEdPVkRFK05XMSswKQYJKoZIhvcNAQkBFhxqb25hcy5rb25yYWRAdW5p
+LW11ZW5zdGVyLmRlMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA64yTbhY0gfKy
+IJb2gEh4HKXbjAbpOOoSFqgqVHb2tNtjXE8JjS7nWuJ/EW4Tn0WeGx83PaYHGwou6uz+I4OO
+oQkxo9OF6s9nGPjMe9VaDyzDaseTG+HhYFhcC4KI83+LkJXajWPD9XmTnQEDedy6LVC/uPb8
+98fZ+6OySD111BqtUMHL+9DRhbxtRSN1XTQHdlE99iLpKfzabUYKH+c9Y6cSNDHsmZ9PosIi
+EauWlQO3glMLYBe7MO8sDo0oGBzPekD0ectF2wvCB/mZ+B+4RD2Zxhlwn5NgtEjTqCJKoOBz
+fSDQ0kSD/QcF5JlaVLuQtrFu+39p3zHSqeM7bGzZ9WoHHn0d0oICalwMjoc2qBUwmZh2mUIp
+iJ5+ZwkJjYRgtUCvMa90zcJZRl1IrANiqTFNqxS4kNy4i4h0niFEuKZm2q0gDSodSF3xNfWm
+z+NMr6DroZveVJo9gvXZJ3oUGc0uOnyPqljXpnGkFP1BjrHvllKmsLxOk89zbvVY+3cjc9RP
++uhHBLLxzmiUPihH3JGooEekimwC4aUiGijj6KydfjLfaFXWGQF2nKx8uvmwsEv7kcpCAejq
+InyIakZ1hYVzKz1y9X6GI+Yt0/diyyZGdkYJGzjdAE2f/qq4I1fZMLNcn73IpBfu4wjsz0NF
+7e9vP3dy7JsD0d44reCLqLkCAwEAAaOCAgswggIHMB8GA1UdIwQYMBaAFGkAocchWPjgxRsg
+sArdp1G/E9nkMB0GA1UdDgQWBBS6SL7FpoxaCh8sXMiOPoWWGKUk3TAOBgNVHQ8BAf8EBAMC
+BaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIwUAYDVR0g
+BEkwRzA6BgwrBgEEAbIxAQIBCgMwKjAoBggrBgEFBQcCARYcaHR0cHM6Ly9zZWN0aWdvLmNv
+bS9TTUlNRUNQUzAJBgdngQwBBQICMEIGA1UdHwQ7MDkwN6A1oDOGMWh0dHA6Ly9HRUFOVC5j
+cmwuc2VjdGlnby5jb20vR0VBTlRQZXJzb25hbENBNC5jcmwweAYIKwYBBQUHAQEEbDBqMD0G
+CCsGAQUFBzAChjFodHRwOi8vR0VBTlQuY3J0LnNlY3RpZ28uY29tL0dFQU5UUGVyc29uYWxD
+QTQuY3J0MCkGCCsGAQUFBzABhh1odHRwOi8vR0VBTlQub2NzcC5zZWN0aWdvLmNvbTB4BgNV
+HREEcTBvgRhqLmtvbnJhZEB1bmktbXVlbnN0ZXIuZGWBHGprb25yYWQre0lEfUB1bmktbXVl
+bnN0ZXIuZGWBF2prb25yYWRAdW5pLW11ZW5zdGVyLmRlgRxqb25hcy5rb25yYWRAdW5pLW11
+ZW5zdGVyLmRlMA0GCSqGSIb3DQEBDAUAA4ICAQCnxbYL1kNm9x3nrVeXCuURcJE3NA4GUSDt
+m74UPHhfHD8vRmuVZa+1i/m0CEMLgmQjPpf3FcOTTAc7NX+7pSIP+fkayIr/LRKPJkvlBY+Q
+1L2Dns4CSdV6VJXJNrup5CEhXLWyy1G/SCFb0YknNqWQnqdEyPOYjLxnYLnCgwPBg0jM1yPA
+pI5xJom+/W/2djzg6FsxrWEBJnRkF3463a43YY6TI1H90WsyHb0ebVt2qSL+g5RusQXjPb47
+7w3GS07bNRvkvL+Oe/iNQubs9hy/pyrQeyZmsobp3FembLApDToqYJT4aMLyCdZsGe80lg+z
+tJlAygCzWRoxW1Uf758u9Voj5HWca2x4NrruA/UbwJ7Z+scdq2DOdHB4cWGmVTUXG87hL9Zh
+yKGt8NLBJ5R2LSpGNhZHw1H2X2kbzSCsRkd0oBYh06J9aA1FEa6EdYfV1zWSNB2bWRY9FWrM
+GRdEle6zAObiJt0vHcZHHFqknVGpgYXA7O3tEhd79HBYU6JOLgSbiIXmQzGmsLRz6+/N/Hwh
+Jqd8CxWpb3WjWo3fGZEw+jRiz651oTREwUp5Hb+rtvDIf7h3g3442SIekaaJupCKa88e/zkD
+wkd73Q96UmLXD8Cug6qIHgdxd75pIeInQ+13BRH08cS98BgwwapmGoGLvqvuYZqH22+WiinG
+tDCCB2owggVSoAMCAQICEQDu52Czgt0n4YtdGyqI6vj6MA0GCSqGSIb3DQEBDAUAMEYxCzAJ
+BgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQ
+ZXJzb25hbCBDQSA0MB4XDTI0MDQxNTAwMDAwMFoXDTI2MDQxNTIzNTk1OVowgYsxCzAJBgNV
+BAYTAkRFMRwwGgYDVQQIExNOb3JkcmhlaW4tV2VzdGZhbGVuMR4wHAYDVQQKDBVVbml2ZXJz
+aXTDpHQgTcO8bnN0ZXIxETAPBgNVBGETCEdPVkRFK05XMSswKQYJKoZIhvcNAQkBFhxqb25h
+cy5rb25yYWRAdW5pLW11ZW5zdGVyLmRlMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKC
+AgEAoOVpuYgA4+/PNrMYc8OcHUhlwTBrzi4QAOZHmuS8K1P6D4vBMKrRa/ujMiB+TFOOX3/2
+j6KDXgP8+lzuA0sBtMx4WZR0kPUcIv31fHkE7BkYBOc4RNVxXKVas0OL6ziVkFmsRy8+iKLI
+Pk9HcmnewBQRnJfvMkfM6qYkZuQtdICXm+iF6RhSNcgBFmRYPfJOR2z3G8in6Vfkq5j6ifkO
+rFZwL3CMbvA5qjfPBYzjRa36jI6iKAa07N0Zot2mLUletOrLG+QqdXHjJZGVQvir/1LKuC5e
+Y4ynegAafPtJ+shVfawn5hzKctVUd5uZN9oCL+E7DYY0HEoRwz0fwTlFSjAgb928nbjmln/+
+AatIfHtKsxcFht1ds0d0nozNt4fNepVx91ZhUJ+f2+2aLLlMJ/jpl1M/M32dHNRTZ1G8iQpT
+VFmhu8a7MbSVeXgOh2MB7CjaskzcBCFFMa7WW7xNvHWOVLLWCfjZA5EGvIttBNp63o5ALMv6
+ASbjYKMjqIZBQIHNH814UuLUpM0vWLHYynOE874jXLHPBj5VTng52INpqINNy75SyXmfuMH9
+D/QraGzJJ6FcPc34lMP5DIUoVS3TOPbqqIxvvVQ/6IrpCH7i/6e6kxB1GqtxUUvFB/3n87WP
+luczmF7N5YcwR7FLAlejrJaX+h89Gc9GSANtI8sCAwEAAaOCAgswggIHMB8GA1UdIwQYMBaA
+FGkAocchWPjgxRsgsArdp1G/E9nkMB0GA1UdDgQWBBQhnA6L7qkHtBmGTJGLOAeMy61c4TAO
+BgNVHQ8BAf8EBAMCBaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYB
+BQUHAwIwUAYDVR0gBEkwRzA6BgwrBgEEAbIxAQIBCgMwKjAoBggrBgEFBQcCARYcaHR0cHM6
+Ly9zZWN0aWdvLmNvbS9TTUlNRUNQUzAJBgdngQwBBQICMEIGA1UdHwQ7MDkwN6A1oDOGMWh0
+dHA6Ly9HRUFOVC5jcmwuc2VjdGlnby5jb20vR0VBTlRQZXJzb25hbENBNC5jcmwweAYIKwYB
+BQUHAQEEbDBqMD0GCCsGAQUFBzAChjFodHRwOi8vR0VBTlQuY3J0LnNlY3RpZ28uY29tL0dF
+QU5UUGVyc29uYWxDQTQuY3J0MCkGCCsGAQUFBzABhh1odHRwOi8vR0VBTlQub2NzcC5zZWN0
+aWdvLmNvbTB4BgNVHREEcTBvgRhqLmtvbnJhZEB1bmktbXVlbnN0ZXIuZGWBHGprb25yYWQr
+e0lEfUB1bmktbXVlbnN0ZXIuZGWBF2prb25yYWRAdW5pLW11ZW5zdGVyLmRlgRxqb25hcy5r
+b25yYWRAdW5pLW11ZW5zdGVyLmRlMA0GCSqGSIb3DQEBDAUAA4ICAQBGZEAPaT6eC+FNS0b2
+YhSzKEnSO4n5ZLL8LpS+toLn9++rI6mHsyp6HCcenRIvpQYVXfjWziL3P158XQWk0JpTGKZ+
+6Cxk1ycvQUpGjxjk+VGC/EZ+jvuWuxgEmS766mupjJDWyPZujK/5BJuyzkaJYU0K9rLDbEe5
+TDflr1wevLgxDh0Y5jmbm0xQ6eMMLgLGOmlEh41uoHo6ZF53lZKalkhGXL9Tk0UXVPJdIK5Y
+RzPUU6yqgLux3IT9M6P37WmzNQ9PtSeGPBoAJJCxFqbXCdqH61xWDhOOIk3o92EqOBNQGLAc
+QDVscB0TIweY7HkW2q5CzyMRJEns91WZ3vqhED58U0/ZtCwqlgSOZL61jYaMY5UNaOHN7Ma7
+Rhf651F/Hafr1qmmbdDZL9GH6A96L2wNPzBAwrKEVpVDbSm4ZLElfrR4Ay4wU/zYUpHJsWne
+B9NZemwUwbHK8LRBcWxmMUDlJkjngPMEYZD/fAh9Zo36EWHT7Mdej08cFplYFLls3P2FKo93
+arnt/EOkPnQdwzZnfGDcnRlIYZn4X5vyIAQC8zksaopvVDv5tzqZNaqS0CylJLkSXLP/AJid
+yPTBYNtqV6pzpq05R364xTiXb7xYOdu02kV7fHeTIWVPD3lmqc06lrSTfVzSzCZ+hQ/q1++w
+uu/jHKSloxZ90YmfyjGCBUcwggVDAgEBMFowRjELMAkGA1UEBhMCTkwxGTAXBgNVBAoTEEdF
+QU5UIFZlcmVuaWdpbmcxHDAaBgNVBAMTE0dFQU5UIFBlcnNvbmFsIENBIDQCEB4ofYcROPS1
+kAtdoV6NBsMwDQYJYIZIAWUDBAIDBQCgggK+MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
+HAYJKoZIhvcNAQkFMQ8XDTI1MDExNTE0NDcyMFowTwYJKoZIhvcNAQkEMUIEQKQeIFCcvS80
+/kzQvnJHJ+yZ/GGwB22jL4OLfIVeYNO2q34FC5l+wbmnnQTaKayvt0sqDNUE8tb39S6A5Pn5
+rwYwagYJKwYBBAGCNxAEMV0wWzBGMQswCQYDVQQGEwJOTDEZMBcGA1UEChMQR0VBTlQgVmVy
+ZW5pZ2luZzEcMBoGA1UEAxMTR0VBTlQgUGVyc29uYWwgQ0EgNAIRAO7nYLOC3Sfhi10bKojq
++PowbAYLKoZIhvcNAQkQAgsxXaBbMEYxCzAJBgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBW
+ZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQZXJzb25hbCBDQSA0AhEA7udgs4LdJ+GLXRsq
+iOr4+jCCAVcGCSqGSIb3DQEJDzGCAUgwggFEMAsGCWCGSAFlAwQBKjALBglghkgBZQMEAQIw
+CgYIKoZIhvcNAwcwDQYIKoZIhvcNAwICAQUwDQYIKoZIhvcNAwICAQUwBwYFKw4DAgcwDQYI
+KoZIhvcNAwICAQUwBwYFKw4DAhowCwYJYIZIAWUDBAIBMAsGCWCGSAFlAwQCAjALBglghkgB
+ZQMEAgMwCwYJYIZIAWUDBAIEMAsGCWCGSAFlAwQCBzALBglghkgBZQMEAggwCwYJYIZIAWUD
+BAIJMAsGCWCGSAFlAwQCCjALBgkqhkiG9w0BAQEwCwYJK4EFEIZIPwACMAgGBiuBBAELADAI
+BgYrgQQBCwEwCAYGK4EEAQsCMAgGBiuBBAELAzALBgkrgQUQhkg/AAMwCAYGK4EEAQ4AMAgG
+BiuBBAEOATAIBgYrgQQBDgIwCAYGK4EEAQ4DMA0GCSqGSIb3DQEBAQUABIICALdIooTIh6pD
+1ei0XDuywANbn5oe5mtPefLSjwn7A61nLnIA9KVjYNeqeL94g5MsC6lWGqfB1pVpFEQtQv5u
+CVONIQ8/mkPKCZMFX60z24WuLx69R+wrYxBzwkutrPuEIj/lgWQiloY5+2Sqog1L2DXDeHY1
+pMMz9/+FQRcPCoUiHRHdytVpQa7sok8JJ6MIbQYPCgix/mTqi1wB1okJp63dJUr8rzlzZUOf
+rL/eK86K7QB6uZEiPwCcK80pGdjQ/KBMb1Bg7y4Rudjm2ptMjM60wd+ybn4Q0f/MuMLkKJLI
+VVGHpqmdaPAxJamYhpKYGkYbVgtJfgmLrZPU4ytY2+dXKMznScNtY7eluOKOdNjhVqk5IG5T
+hxeN24zy03PbYDWGKOztEQjBCVEFaYqjmokCF0baqgLCmC8B6y90IPsa4SijQjLIl8zpjpwY
+NC3wQ0EsoBnjHfwuJEgScF+CfMO0e+o6BsTS8gbEHfOcKcyhn1UnUd/hfTlgP6uxr7sBkkOd
+33OuHUWT85FLXEcR4uuXWJwsTp9m+A4FQ+6raIYG8RYzb2e3bI79zuv0xZQTUhsAJtY/+Jav
+ZGYw0034gAryCxuJmEGL2eeo/5V2k6sxUsObSqbvCra0y5zwWxbzLDMJcclnLcP3Uu7uy4vN
+ZSwfkoeZcICKB69gJC6e/Ga7AAAAAAAA
+--------------ms040404060704030005030503--
