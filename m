@@ -1,54 +1,54 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99F41CAA72
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 21:56:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFA614F12D
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 22:11:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736978198; cv=none; b=ULA1dhW6NoJMdbW9LIfTrH854k8bBb8Nq2OThs8hK58/t3WuQiuR9umGxhyJYm7zJ4OA0Nbb/4NIJdf7dA3ifa5E1X4BkIiQ4wZY+JQVObrLkMoGdMtCEEsr2obQq6tKzrxb5KZSgvdYn6EWXPEr+IYHwZMbeAJ8JXXGIKuFm/0=
+	t=1736979121; cv=none; b=sV4eRjr0NCJ/W3qHV4xE9oaEKPjeqxM/4sUrAw6UTW8PMK6jVYY3wfBGdSlbObe6mzYQSjt39q0qS4CRyNGXDq92LC7+2LDlShuMC554hTMYy6waa0b9aD5mYhgtAJ2eNpH9ll0r4RyGam7YuDhckiwM6cV6kULu9LO3/qJ0mWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736978198; c=relaxed/simple;
-	bh=l4z258nIq7zCjI9avsJ1OHMMV1T9MjbUaubnNCeRekI=;
+	s=arc-20240116; t=1736979121; c=relaxed/simple;
+	bh=c1dYXEuCYpNZuRo5nmu1pw4hR0aJshb6fU4tB591+WA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZovriFoRKN/3QiekqV/FDwAS3xpXtvTlqqR6Yxa44SvsIpWAPOql/FbuMxlULSdQQavOX92//mqCS7FrkJJlTxuz6ZLAkyevCR1rbkaxcnt7/N2OVW+sv4f+Q/dHUYc+XS7OuHzaWqUQvhDP0QpRpUun/7AMIEqu2z3S/zwk7Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Wf07pR7h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SdzqywuH; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=IK19W8Z244xGeosmb6WcVMZLcW6H1Z0ryNFQ9qMHPhXo0TmvNL8JkXgJHjhWLM43unK1MfPLv5MnAuHpHLaQwQ5S/kx/pQRNYHsu7pzUctEFX/7cIobA3cdagQEoex6hExl7IqFEevwW6qaJJcadEpi5i9wvkI9DKnKC83OM7Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=l5Yb2J+C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yPK+qo5F; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wf07pR7h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SdzqywuH"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id D6BD611401AF;
-	Wed, 15 Jan 2025 16:56:33 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="l5Yb2J+C";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yPK+qo5F"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D09E52540112;
+	Wed, 15 Jan 2025 17:11:58 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 15 Jan 2025 16:56:34 -0500
+  by phl-compute-04.internal (MEProxy); Wed, 15 Jan 2025 17:11:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736978193; x=1737064593; bh=geFieNRqxx
-	PvsXm2VQ0+pFq1ArHPJXwbKik2RHp2+e8=; b=Wf07pR7hv+8Womxrwpr7NBzrcF
-	+wdYuvf9f1muzoTYq7lMaoPTzw5A4VeqDgcopeAQY9gEvBfvkhBLMK/pmcjHSa/K
-	Q5ugMWtDMjAgVit4kc3pLXvx4iV7kKfh9FQjEKKFn/QpygxOkXYAnYGqarPrIJzD
-	nsOvzkhppt1Fj+Xe1rhs2md+bXHDJy3aBZwwveh7rQr+7h5scZlUTpPM9MXN9Tfh
-	JcjPINFJFYGMsISzT2Ee3j1xs222dECgNezqpP/nWrzLxtpnBF8qRXxx6Wp6kTML
-	oiHKNNtH9DfOJ+FKzPjaDPNVREU2frClkq8hZh/0taLVZn0lRRNmbblIFGcQ==
+	:subject:to:to; s=fm1; t=1736979118; x=1737065518; bh=Y+MQN9Lhhk
+	mmo/LAQgNl6CSLG01JCVMilR0ivvTnzPQ=; b=l5Yb2J+CBhy+kFM0GwTvqjK9Nv
+	V6M49yGWZB6jYuN3e9uo1uOZJJjuFmKQSDoObNluN/15G0qRxpPbbJd8ZBj5eJAn
+	NZUfzYWndeBYLcnDhTxUsP5avM4vJkb2IYBjeoQqW2JovdKddpEzDP2sN5oHFNiq
+	uhWZJacCVMcXXjonVN6Ka8kheUHYKuRAMQxw9sIwac/xJzVAsOsfyKx1hTPDuvl2
+	JOJ9aHug98ybGCv7R67R2xH4mxTTQz03RihAqqgJpLVPu2q+36fr/qc4Dv72CnAS
+	t1PZcUSMkkTRltWv5pBa8o2tw29gPundRmAkymtID+tAjgMy4X6hbgSSkZpQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736978193; x=1737064593; bh=geFieNRqxxPvsXm2VQ0+pFq1ArHPJXwbKik
-	2RHp2+e8=; b=SdzqywuHdFbtMmxyfPpCYHom+7w52iV3gQGeeR2iLLcUSN8fEgh
-	51iuJhot3BVCJjRurUVp3j85YoTdgPFZr5pR4YzODPYe616iFGdEnRW4SHhmRxdK
-	Qfca0dur3Xgad5oo0wHLl+ldTEAlcxfjs964lwyCtjBDIJ9y/2Q6ai/5nPS0V4fY
-	HoGSx+x5am2HMrqY8IDzM9ow1SSjEy2GXucOdlKGxZQIOj51EwVL2vi0h5Cx+vQ3
-	H87X60l8O1UVfD7lkg7l4/zMYjRNzRwWd9DoE5mgvntxzAesQIgkXl4CkGKN8Z/1
-	qBvFcWA9C2ItOBj+30vGr/jK71nqsxVA05A==
-X-ME-Sender: <xms:ES-IZ1_6u51dyR8vDu54LjFueuXj-XW82QQCbOfH44Th-X7WaeYDOg>
-    <xme:ES-IZ5sQhYWfz5MWoWTnNIjuPkwKZu3y8ZmpNWlBPOzE49MLgizEriwsg5kUKPK9a
-    JXziKg1blBOAOGkzQ>
-X-ME-Received: <xmr:ES-IZzCs1xY2VkDkmUzQDS9X-oxEMDtxMEXXPTAC5Mi3sC8KAXJCDpi2LhGW0YTztDMGGOqaKpmexv4E_opndZBpEugHfOpnxzNA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledguddvjecutefuodetggdotefrod
+	1736979118; x=1737065518; bh=Y+MQN9Lhhkmmo/LAQgNl6CSLG01JCVMilR0
+	ivvTnzPQ=; b=yPK+qo5FlTBZ97SFq2zn1JAifOMYX3cMjaMCZvi3vVTq2JKGaDa
+	XT6kyTyIxe9H7Ztwhk+fdWZn8dBWckB4cWbQ4hU9exRHddN9MO5ksz8KKCSNOllp
+	FB7mh4V7WAmFIikqZCxeUfBfkaH7iKFM25sw9rKYxqjOza/2R1+q6xphK11kiDMp
+	7cAKBQir5PQ8vYMQ3AWieUg3bLS9LA9caxRBOD//i49RF+ISa3724D8gQckA868/
+	JQpUpPVBLhsVOwA2KyUA19hfpPx/wGeL+EjjT0Gx38uTfQkcIfnX75EhaWN3zUZh
+	lXnEYMGqZDUqYKNEiDdW+fNUf4zqaT+jX9A==
+X-ME-Sender: <xms:rjKIZ-L4bJUu-f9VMqhtH_T6P2IykSY11N3JY1mInRWRGf2aGvQ66w>
+    <xme:rjKIZ2IgTzvGL4sg1RTpZnUCOGC9p9KEav9szQmtDQsi8ubn3NizzEp5sp7Pt5RQi
+    TkwbAXKZsQ5U4Rkjw>
+X-ME-Received: <xmr:rjKIZ-stgSW9MwX4BqP2-B4bAjJKtZDI3KCE8hCHMwTfZ-00xRuZ4eivvgftVuirXXfBzy0NufsR5PjoAgSz3ESUMZCGZoRCwhGF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledgudeftdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -62,14 +62,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledguddvjecutefuodetgg
     htthhopehjohhnrghsrdhkohhnrhgrugesuhhnihdqmhhuvghnshhtvghrrdguvgdprhgt
     phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
     hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ES-IZ5fcqh8936xYyXFhCLp2fXvNV4sc0GaulQGidspTTDXrstq-yw>
-    <xmx:ES-IZ6NaZ4e98dIjXQKxZ1iNT-xpFHrh3KpBi_vyMaYqlWI-bMwswg>
-    <xmx:ES-IZ7mlmusWspH-eG4Cjf09lr1lBHRpkgBFU-W5k6Fc__3_kN7o0w>
-    <xmx:ES-IZ0tX5uj8BvdYBe49-EWig9PM4Y1XFO__MxwBLNSxSg38pPCJLg>
-    <xmx:ES-IZ2C1KEMNyJDtqlmqmmZG0hY_cpXJ_V7TZh5jeW2Wl36eccPWamIC>
+X-ME-Proxy: <xmx:rjKIZzYbyWrZMlYLDJCyJ1vdF9ZymcgB6xHiNrJSXr6lIotO68zuNg>
+    <xmx:rjKIZ1beHkxoz1H2JHNFyUAkvjMP6sYAT6O4TygXnwaOA5iuLQO5IQ>
+    <xmx:rjKIZ_CKFDFdmhy-yB5fxEo0oFwpYKrLcY4Xx1G4oj67l4hQuFGAww>
+    <xmx:rjKIZ7ZZcALkIyuNXHUKg1C9-gnJcbpf4yNgAa-MqwMAqFghIntfGQ>
+    <xmx:rjKIZ6Nacvzlv8skNYSnhqkZr34KpV-YswzHMCGPQ4o0v08-_MLy5WMt>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jan 2025 16:56:32 -0500 (EST)
+ 15 Jan 2025 17:11:57 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
 Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  =?utf-8?Q?Ma?=
@@ -87,8 +87,8 @@ References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
 	<20250115182419.GA86610@coredump.intra.peff.net>
 	<xmqqa5brydz1.fsf@gitster.g>
 	<20250115212952.GA96537@coredump.intra.peff.net>
-Date: Wed, 15 Jan 2025 13:56:31 -0800
-Message-ID: <xmqq5xmfyc4w.fsf@gitster.g>
+Date: Wed, 15 Jan 2025 14:11:56 -0800
+Message-ID: <xmqq1px3ybf7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -100,11 +100,6 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> I certainly see an argument for exit(0), but whatever we do should be
-> consistent with how parse-options handles it (since whether we use this
-> or leave it to parse-options is purely an implementation detail that the
-> user should not need to be aware of).
->
 > And it uses code 129, even for "-h". I don't see any explicit rationale
 > for that in the history; I think it goes back to the beginning of
 > parse-options. It happens via the PARSE_OPT_HELP flag, but curiously we
@@ -112,81 +107,9 @@ Jeff King <peff@peff.net> writes:
 > That might be a bug-in-waiting if we start handling PARSE_OPT_HELP
 > differently.
 
-Here is what I have as v2; there will be patches that touch
-builtin/*.c in between and I expect that the last patch to conclude
-the series will end with an update to parse-options.c (to exit with
-0 when asked to give a help) and t0012 (to stop expecting 129).
-
---- >8 ---
-Subject: [PATCH v2] parse-options: add show_usage_help_and_exit_if_asked()
-
-Many commands call usage_with_options() when they are asked to give
-the help message, but it incorrectly sends the help text to the
-standard error stream.  When the user asked for it with "git cmd -h",
-the help message is the primary output from the command, hence we
-should send it to the standard output stream.
-
-Introduce a helper function that captures the common pattern
-
-	if (argc == 2 && !strcmp(argv[1], "-h"))
-		usage_with_options(usage, options);
-
-and replaces it with
-
-	show_usage_help_and_exit_if_asked(argc, argv, usage, options);
-
-to help correct code paths (there are 40 or so of them).
-
-Note that this helper function still exits with status 129, and
-t0012 insists on it.  After converting all the mistaken callers of
-usage_with_options() to call this new helper, we may want to address
-it---the end user is asking us to give the help text, and we are
-doing exactly as asked, so there is no reason to exit with non-zero
-status.
-
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- parse-options.c | 10 ++++++++++
- parse-options.h |  4 ++++
- 2 files changed, 14 insertions(+)
-
-diff --git a/parse-options.c b/parse-options.c
-index 33bfba0ed4..8a8b934e67 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -1282,6 +1282,16 @@ void NORETURN usage_with_options(const char * const *usagestr,
- 	exit(129);
- }
- 
-+void show_usage_help_and_exit_if_asked(int ac, const char **av,
-+				       const char * const *usagestr,
-+				       const struct option *opts)
-+{
-+	if (ac == 2 && !strcmp(av[1], "-h")) {
-+		usage_with_options_internal(NULL, usagestr, opts, 0, 0);
-+		exit(129);
-+	}
-+}
-+
- void NORETURN usage_msg_opt(const char *msg,
- 		   const char * const *usagestr,
- 		   const struct option *options)
-diff --git a/parse-options.h b/parse-options.h
-index d01361ca97..6af4ee148a 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -402,6 +402,10 @@ int parse_options(int argc, const char **argv, const char *prefix,
- NORETURN void usage_with_options(const char * const *usagestr,
- 				 const struct option *options);
- 
-+void show_usage_help_and_exit_if_asked(int ac, const char **av,
-+				      const char * const *usage,
-+				      const struct option *options);
-+
- NORETURN void usage_msg_opt(const char *msg,
- 			    const char * const *usagestr,
- 			    const struct option *options);
--- 
-2.48.1-187-gd93ffc6ef3
+There is another class of callers that are protected by the same
+"argc == 2 && !strcmp(argv[1], "-h")" condition, and they call
+usage.c:usage(), instead of calling usage_with_options().  These
+calls (but not all calls to usage()) need to be updated to use a
+similar helper, say, show_usage_and_exit_if_asked().  Sigh...
 
