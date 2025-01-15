@@ -1,54 +1,54 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777E48F77
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 23:13:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19A324A7CC
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 23:32:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736982831; cv=none; b=bEtbuPYTjhMJAOXOF/sTCzY1dk8WCFsi1jLFv96RZhYXO6+7dmrZFyJwt3RFR6bLSNszuaHAkiLYHqkmYnv2VDQt0xEACr8zX4Sh0HGscDIXE7heXSNMBrCws+4Ba4xiZGomu5N3H9hV2ifhunhj69xa61Olau9WOUsk7w2e1f0=
+	t=1736983955; cv=none; b=jujl37jnk/PvSnou9hAumulzM8NfAca4KIWsOAgOX9zq9+ZFHrD7uVpd6qlx2ASNTjyA9v2URlnjv9kLAnon3lnltwRrBl5aqWmSJfmuzDVHRtrNxahz8MK7SHiMJRP+rf3EeylvyvPy0+Ja4YMci7kY/+zrtACP293cdNNwmeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736982831; c=relaxed/simple;
-	bh=dZFNYhffa3U1s0IjyQmwaUgRZqaf4DnUErUOy4Bwdrc=;
+	s=arc-20240116; t=1736983955; c=relaxed/simple;
+	bh=WdckA3uLi6MAibzWdajthbBzP879P1MWEHIjOnua9bg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pGy0Xb6fMVXqTj3e4MHS8RfPSM0v2iFeNKxsHJO6I1U4N77Mx5E0EabTKvwohDf4EzLCIqzfOio9rxDhn0qEmunRpe4k4lh1VsfVWZ5eUxQFISINbY5dC+WdcwPDaSf2spuVpR5bqO3xFXZXeZLxnMfiaQxgGrqPtyj70Ye46u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fcHl+D8M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rrnw8EgQ; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=Im1zYeke4rl9ofdCcRqR8YNf7FVKOT2vEW4S8psJCKX2kk8zGgTm4vUTWrZdF4NsD9Bdx+t5KkzoYn29xznSlqKd3S8Xv32I2ItvG5/+zGDC4sPK7nzrgXiTdKYoEnzOrnd9PSG0MtCI3DYcpZ4LGPCsootb66H14Qfo7KwzEJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=3IC3AN7g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dwebgslt; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fcHl+D8M";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rrnw8EgQ"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4DCEE25401B3;
-	Wed, 15 Jan 2025 18:13:48 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="3IC3AN7g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dwebgslt"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id D5190114010C;
+	Wed, 15 Jan 2025 18:32:31 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Wed, 15 Jan 2025 18:13:48 -0500
+  by phl-compute-02.internal (MEProxy); Wed, 15 Jan 2025 18:32:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736982828; x=1737069228; bh=zp2KzmzPIB
-	1L9Rck2y1TM7ozOM+NEOeP6b3fI2OpkBw=; b=fcHl+D8M/lcTopsv8LIbZGiLIc
-	anHcAfECAvrHN1/3fVipEsRti/fNov19TZjy5HGjrDlkzfqrmlkYRcphP4K/4pA6
-	3TfLv+/UqqGugSBBTu06rVRRTqDLvUjW3vMN7gm3ACmpKsH8Q/JNyStZB7XAThdb
-	4Rcr7wIqIJ3EnlTMC9wdzW4zUf35knxfN0yFnezeA58i+07G2pXTpG91fayNx5zy
-	0PBbhh1+YEPU86BmvJ2It6xamNW/CSTIvNkNb19xsWqONq/hnhO44rUXdKKQXdgD
-	Jv39RYqF5wa9j8Kl4x21Hzg2s/dOFjvX9wvM4xneHOpoEACFyj7jHL65uZ2Q==
+	:subject:to:to; s=fm1; t=1736983951; x=1737070351; bh=lSYUlug8kC
+	E32NCkupD8LobtI5sRFDLkdKOpWtd5JeE=; b=3IC3AN7gBJIgwPvTlx8PSAPCaE
+	LSJ9Cm6s80+uuAFFQxKuhWIKAqJHrx8UuU7l97luXhJ+q9+O1sLs6fMhG+53CiOs
+	Bt5QJCbFnq/CVw6ptWNuWYFamU5JdixeKWsugiPzbi6bqZiSxM3fi52qbMIKio/p
+	w5OilJ7V8aNxD8Z/35HVuJXIsPbuX9cyjNwk83IO8pgzTt6yw+zy/SozJaA92l8y
+	FBj13Yv6G63uzRie2TuP9KH5SyUsO0kIpWlxLq3hm9nAcFVvENbFGdTHnM0cNjZr
+	9eoUBp29wewsIcPogFu0Yn2mDLZH5HkQtCN5FmJBecJOwxC18Q/fICiU86aA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736982828; x=1737069228; bh=zp2KzmzPIB1L9Rck2y1TM7ozOM+NEOeP6b3
-	fI2OpkBw=; b=Rrnw8EgQeWwzd7HaQA3ZzhdhUqSaf0U/Lb5MyjFIXBzKNBqm3nP
-	esN3HJLGfRHCv/qbqJNDfbP9trt0hZkQ4vODELKtWOUiheys9hhi2SLA8Q8OSKB3
-	4ieEwg3vRmDKQVSw4DayNK74miFbKgHEaixqgc4fB1RvUyrApbXw7gR6pWGCzC2w
-	NDL6+uCOu+U5p4Yi4AdfUAZyeKOGibPiOKMctm927gdEK3BQ/BMLfDeF5lG5/xbO
-	8pMaMBMCPwAswAlN+2sTbxt4896tBBo3fFoCzM6AIPQDkChWcW+knrhHMhM6YQ8N
-	9VQeBsgYWLuhLUVoFnIIx7724PKThrxZX3Q==
-X-ME-Sender: <xms:K0GIZxbIhyT25mgdC1-9FnZoNXTSDHQuUP0lY-h7pgq15658JVVB7g>
-    <xme:K0GIZ4YR0lstyruUT8DQUOk2ZD0XdLMwrHYH-orL8XJyXuXNtDCF8y67-CbT4yFNM
-    pos9fNG-AvBMIEDgA>
-X-ME-Received: <xmr:K0GIZz8yGCcupCflb20OGKz6rkzFDZzyFP5UDYHJAoRA1ev4A4Ni0nAQjnhaxnqsdyxdFX2gYzZOm98TPk2ro6A9Y8RzNWzF7iuX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeitddgtdejucetufdoteggodetrfdotf
+	1736983951; x=1737070351; bh=lSYUlug8kCE32NCkupD8LobtI5sRFDLkdKO
+	pWtd5JeE=; b=DwebgsltaVkgPVQXizha+hIQnAYq95knaC17IaYJhJt0TpktwJv
+	3YylROIq2hv+6enukikgIQAPRMC9710gEROtz4ijZ2dxKpqaVdFd3mrjSzD6jB6B
+	2iMmqhutmIbGBjSNwVEkYot3S+Tv74Cm0Sjevk7gKUPw9OUb24cj3vwKkV1JyLv3
+	Rfe3IKgrUNXnznXlP3gcWj/h1YnjtL4GlNl+D8Tf0b/iACTqr5k4zmfmZnKNhs/E
+	aRoaOZ7YE8TE9++N2oDnHvhiTa52oOMirTcnPMBltuxFA8cDafSMfEcrpDC+asOb
+	jr8tFlDM3B5qG1Q8CS0L1JbWmkdR+3s8JTQ==
+X-ME-Sender: <xms:j0WIZyVgvju1F-zMN7N3Zugv_xglM46qWAgwgXjfBUlONCekM-TzcA>
+    <xme:j0WIZ-lJgnqgaW4emU4Iz-Mon_H_2MoFLaTEtXIZeLu2PO56tdsvt-49Cr0Nny8wJ
+    tKz0WvOjdK2QCuCLg>
+X-ME-Received: <xmr:j0WIZ2YmDWANnQuTbZSOmRNY4gtU9Lj7NKNPMUcQMRly5D8Rj9n8tHDNw0wlbTH183DPz1zs-K4cSTpsIPEv4fjyFAzIF6oofMMh>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeitddguddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -56,36 +56,41 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeitddgtdejucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepuddvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsthgvrggumhhonh
-    esghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtghomhdprhgtph
-    htthhopehnrghsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepvghm
-    rhgrshhssehgohhoghhlvgdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhush
-    hthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehmhhesghhlrghnughiuhhm
-    rdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsuhhnshhhih
-    hnvgesshhunhhshhhinhgvtghordgtohhm
-X-ME-Proxy: <xmx:K0GIZ_pqaZsQJ5qopUkWcqkBaM7FSuRz8Ny8UPsEDmFis5hK9c7_Fw>
-    <xmx:K0GIZ8rsuojVuLPXubL7wggKOjFtNeniP0WmMJmVi_n6Bu6N1zDfvA>
-    <xmx:K0GIZ1Tqch8Bddu1qO6H1Jbh0irxJ8Kh-ERdYnAFyOsuI-9NOWd0ig>
-    <xmx:K0GIZ0rPgvKFEESU87YjHGz4DKejgyegfmyhB7MrUZHVCjxd7AtyXQ>
-    <xmx:LEGIZyg2Ce0eWyCKPslVZ8b89vB4Sr_0QeYgs-i6B86rwdACSuhK6_gK>
+    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
+    drnhgvthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
+    thhmrghilhdrtghomhdprhgtphhtthhopehmtggvphhlsegtvghplhdrvghupdhrtghpth
+    htohepjhhonhgrshdrkhhonhhrrggusehunhhiqdhmuhgvnhhsthgvrhdruggvpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:j0WIZ5VpBNW7qkqJou2saomLR0AktlQzqIgjq3SVkpO8LbnLX1AESw>
+    <xmx:j0WIZ8mWXHGFqLBElULlWVn9G_OtA2hbTjPk282c_AUXqNTUBI61fQ>
+    <xmx:j0WIZ-dlF0RxiUZ76hTEwwyRC6O6-s8lYyl8tfi3x-5pYi0bmCzqKQ>
+    <xmx:j0WIZ-F-FblWf4ENuhnQCp-qFYX8EFrQTzQ87vVlMVrn7VX4xt1znw>
+    <xmx:j0WIZ6YYSMSv1svAVdhulb0qqEtJhYe89B3gnQ1s8UQaRnDegsVm7kbE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jan 2025 18:13:47 -0500 (EST)
+ 15 Jan 2025 18:32:30 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org,  calvinwan@google.com,  nasamuffin@google.com,
-  emrass@google.com,  sandals@crustytoothpaste.net,  mh@glandium.org,
-  ps@pks.im,  sunshine@sunshineco.com,  phillip.wood123@gmail.com,
-  allred.sean@gmail.com
-Subject: Re: [PATCH v6 2/5] libgit-sys: introduce Rust wrapper for libgit.a
-In-Reply-To: <5fc66cdb1628e0c9e420f3f0455779d7471f46ee.1736971328.git.steadmon@google.com>
-	(Josh Steadmon's message of "Wed, 15 Jan 2025 12:05:41 -0800")
-References: <cover.1723054623.git.steadmon@google.com>
-	<cover.1736971328.git.steadmon@google.com>
-	<5fc66cdb1628e0c9e420f3f0455779d7471f46ee.1736971328.git.steadmon@google.com>
-Date: Wed, 15 Jan 2025 15:13:45 -0800
-Message-ID: <xmqqa5brwtzq.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  =?utf-8?Q?Ma?=
+ =?utf-8?Q?t=C4=9Bj?= Cepl
+ <mcepl@cepl.eu>,  Jonas Konrad <jonas.konrad@uni-muenster.de>,
+  git@vger.kernel.org
+Subject: Re: Git branch outputs usage message on stderr
+In-Reply-To: <20250115222728.GA132248@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 15 Jan 2025 17:27:28 -0500")
+References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
+	<D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu> <xmqqed1414gt.fsf@gitster.g>
+	<c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
+	<20250115171423.GB57018@coredump.intra.peff.net>
+	<xmqqmsfsx8oo.fsf@gitster.g>
+	<20250115182419.GA86610@coredump.intra.peff.net>
+	<xmqqa5brydz1.fsf@gitster.g>
+	<20250115212952.GA96537@coredump.intra.peff.net>
+	<xmqq5xmfyc4w.fsf@gitster.g>
+	<20250115222728.GA132248@coredump.intra.peff.net>
+Date: Wed, 15 Jan 2025 15:32:29 -0800
+Message-ID: <xmqqplknvek2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,141 +100,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Josh Steadmon <steadmon@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> diff --git a/Makefile b/Makefile
-> index 27e68ac039..47e864a861 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -657,6 +657,8 @@ CURL_CONFIG = curl-config
->  GCOV = gcov
->  STRIP = strip
->  SPATCH = spatch
-> +LD = ld
-> +OBJCOPY = objcopy
+> I don't know if we'd want something like this on top. If somebody is
+> interested in just doing all the conversions in the near-term, we could
+> do without the optional flag.
 
-This assumes GNU binutils is available.  As long as our intention is
-to start the Rust support as an optional feature, that is OK.
-Hopefully the piece that requires $(OBJCOPY) is arranged to be
-easily opted out.  Let's keep reading.
+Ah, you are much more practical than I am ;-)  I was wondering if we
+want a list of "these commands have already been updated" and behave
+differently.
 
-> @@ -2731,6 +2733,7 @@ OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
->  OBJECTS += $(UNIT_TEST_OBJS)
->  OBJECTS += $(CLAR_TEST_OBJS)
->  OBJECTS += $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
-> +OBJECTS += contrib/libgit-sys/public_symbol_export.o
+> Currently t0012 is permissive and allows either behavior. We'd like it
+> to eventually enforce that help goes to stdout, and teaching it to do so
+> identifies the commands that need to be changed. But during the
+> transition period, we don't want to enforce that for most test runs.
 
-This is compiled for everybody, even for those whose platform cannot
-support Rust interface (or those who choose not to build it).  As
-long as what is in the file is written portably, it is fine to have
-stubs and entry points that their build will not use.
+Yeah, that is why the "git branch -h" thing has been left broken for
+such a long time.
 
->  ifndef NO_CURL
->  	OBJECTS += http.o http-walker.o remote-curl.o
-> @@ -3726,6 +3729,10 @@ clean: profile-clean coverage-clean cocciclean
->  	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
->  	$(MAKE) -C Documentation/ clean
->  	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
-> +	$(RM) -r contrib/libgit-sys/target
-> +	$(RM) -r contrib/libgit-sys/partial_symbol_export.o
-> +	$(RM) -r contrib/libgit-sys/hidden_symbol_export.o
-> +	$(RM) -r contrib/libgit-sys/libgitpub.a
+> So let's introduce a flag that will let most test runs use the
+> permissive behavior, and people interested in converting commands can
+> run:
+>
+>   GIT_TEST_HELP_MUST_BE_STDOUT=1 ./t0012-help.sh
+>
+> to see the failures. Eventually (when all builtins have been converted)
+> we'll remove this flag entirely and always check the strict behavior.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/t0012-help.sh | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
 
-Which one of the above is a directory?  The latter three smells like
-a regular file, so we shouldn't say "-r" there.
+Nice.
 
-> @@ -3887,3 +3894,12 @@ $(CLAR_TEST_PROG): $(UNIT_TEST_DIR)/clar.suite $(CLAR_TEST_OBJS) $(GITLIBS) GIT-
->  build-unit-tests: $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG)
->  unit-tests: $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG) t/helper/test-tool$X
->  	$(MAKE) -C t/ unit-tests
-> +
-> +contrib/libgit-sys/partial_symbol_export.o: contrib/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
-> +	$(LD) -r $^ -o $@
+It is a tangent, but I wonder how many among the 40 really needed to
+use usage_with_options() to react to "-h" in the first place.  In
+other words, these manual checks for "-h" are done only because the
+code _wants_ to react to "-h" before it calls parse_options(), but
+does everybody who _wants_ to do so really _needs_ to do so?  You
+already have shown that "gir branch" did not have to, and to me, 40
+among 100+ felt way too many.
 
-OK.  We build a "relocatable" object, which is unconditionally made
-as part of $(OBJECTS) above.  Even without GNU binutils "ld", people
-hopefully can convince their linker to do the equivalent.  I am not
-sure if it is healthy to assume that such a linker also uses "-r"
-for the feature, so we may have to make this rule more customizable,
-or make partial_symbol_export.o only conditionally part of $(OBJECTS)
-to allow them to opt out.
+> diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+> index 1d273d91c2..9c7ae9fd36 100755
+> --- a/t/t0012-help.sh
+> +++ b/t/t0012-help.sh
+> @@ -255,9 +255,16 @@ do
+>  		(
+>  			GIT_CEILING_DIRECTORIES=$(pwd) &&
+>  			export GIT_CEILING_DIRECTORIES &&
+> -			test_expect_code 129 git -C sub $builtin -h >output 2>&1
+> +			test_expect_code 129 git -C sub $builtin -h >output 2>err
+>  		) &&
+> -		test_grep usage output
+> +		if test -n "$GIT_TEST_HELP_MUST_BE_STDOUT"
+> +		then
+> +			test_must_be_empty err &&
 
-> +contrib/libgit-sys/hidden_symbol_export.o: contrib/libgit-sys/partial_symbol_export.o
-> +	$(OBJCOPY) --localize-hidden $^ $@
+This may be a bit stricter than needed (things other than usage may
+need to be spitted out), but it is sufficent to declare that we will
+deal with any potential fallout only after it becomes necessary ;-).
 
-Unlike the "public" thing, hidden_symbol_export.o was not made part
-of $(OBJECTS), so this part is arranged to allow people without
-$(OBJCOPY) to easily opt out of this part of the system, which is
-good.
+> +			test_grep usage output
+> +		else
+> +			test_grep usage output ||
+> +			test_grep usage err
+> +		fi
+>  	'
+>  done <builtins
 
-> +contrib/libgit-sys/libgitpub.a: contrib/libgit-sys/hidden_symbol_export.o
-> +	$(AR) $(ARFLAGS) $@ $^
-
-Likewise, people can easily opt out of building "libgitpub.a", which
-is good (these targets are triggered only from build.rs).
-
-> diff --git a/contrib/libgit-sys/README.md b/contrib/libgit-sys/README.md
-> new file mode 100644
-> index 0000000000..c061cfcaf5
-> --- /dev/null
-> +++ b/contrib/libgit-sys/README.md
-> @@ -0,0 +1,4 @@
-> +# libgit-sys
-> +
-> +A small proof-of-concept crate showing how to provide a Rust FFI to Git
-> +internals.
-
-OK.
-
-> diff --git a/contrib/libgit-sys/public_symbol_export.c b/contrib/libgit-sys/public_symbol_export.c
-> new file mode 100644
-> index 0000000000..7cd5007902
-> --- /dev/null
-> +++ b/contrib/libgit-sys/public_symbol_export.c
-> @@ -0,0 +1,21 @@
-> +// Shim to publicly export Git symbols. These must be renamed so that the
-> +// original symbols can be hidden. Renaming these with a "libgit_" prefix also
-> +// avoids conflicts with other libraries such as libgit2.
-
-Style.
-
-> +#include "git-compat-util.h"
-> +#include "contrib/libgit-sys/public_symbol_export.h"
-> +#include "version.h"
-> +
-> +#pragma GCC visibility push(default)
-> +
-> +const char *libgit_user_agent(void)
-> +{
-> +	return git_user_agent();
-> +}
-> +
-> +const char *libgit_user_agent_sanitized(void)
-> +{
-> +	return git_user_agent_sanitized();
-> +}
-> +
-> +#pragma GCC visibility pop
-
-I do not think we would mind not having Rust binding support on
-platforms without GCC (and clang---I assume it would be aware of and
-react to that #pragma GCC the same way?).  But do we allow this file
-to be left uncompiled when the build wants to opt out of Rust
-support?
-
-> diff --git a/contrib/libgit-sys/public_symbol_export.h b/contrib/libgit-sys/public_symbol_export.h
-> new file mode 100644
-> index 0000000000..a3372f93fa
-> --- /dev/null
-> +++ b/contrib/libgit-sys/public_symbol_export.h
-> @@ -0,0 +1,8 @@
-> +#ifndef PUBLIC_SYMBOL_EXPORT_H
-> +#define PUBLIC_SYMBOL_EXPORT_H
-> +
-> +const char *libgit_user_agent(void);
-> +
-> +const char *libgit_user_agent_sanitized(void);
-> +
-> +#endif /* PUBLIC_SYMBOL_EXPORT_H */
-
-OK.
+Will queue.  Thanks.
