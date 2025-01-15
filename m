@@ -1,144 +1,230 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from UDCM-WWU1.UNI-MUENSTER.DE (udcm-wwu1.uni-muenster.de [128.176.118.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284C7194A54
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 17:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AEC19C569
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 17:14:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.176.118.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736961273; cv=none; b=lPCLqPef3vC9rF/GtgIRoAWeaGvxIzJgtpKkHs1/teqo8Fp89Kvppk92eIZrpD1vBxvitJHPNpc7EASaHr35rLEt2BIES0eppGhkIcWtBrdnW46hbpvUsD/ySsqToGw09IgZhszIIqHLEpyUmchPMAZp6L4Yk/gy9wN3psAQnhA=
+	t=1736961285; cv=none; b=RBGmbT/moiCFTjgT+8/aaF49CDBqKzxQi+anq3PFI3Xl8KtsT5KMcLqq2/CvcGvsTraefD1HYLr0tnGVrVxCDcFH72iVVPN3+xBD4AO1Cp7k+lFCEhdYJkrTVVN6hhnM+fLuEplGT9w4AXIyQek8rLqBc4wJJDKAvSXtA+IE5Wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736961273; c=relaxed/simple;
-	bh=+uHGPu11WRrofkKi7WOBxfDv8h8CXFdoEqCt/hu/0zo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WI0JQMdHrarKkGWNvmHVqYdYDSuWJjrVN3zSTqc9m+EFUCepyo61usX84kBjw/fLSbDz1AHwiJnWNqoDw1C+P1Xq5rjpdQaxQYFv7ln82brW3XcEDALB8I9vQmbqjLt1JGY0ghK2ETRVEGlaDPyEVaAhag9QQG948BI73VL0SDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KzjOH6/1; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1736961285; c=relaxed/simple;
+	bh=rRhTALXhQXYycZ30pZeTH3eYTdpOOpYg7hCIZlTzuLY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SLKDN+PKB/fATU6/Xnw7CrgLG62JJ0HLxemiSo9ZKmBWZGuUnwCPWMw1hT3Wa3nsAycPKEO2YCrPSnkOKnbpHnHyteA3KkSG0RlOcvI0XI/n7txndzeOoIXepo5OaETNK6mqupfq5Vzeu8GxFizzPjoeHAe/mri1OJos+j7sblE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uni-muenster.de; spf=pass smtp.mailfrom=uni-muenster.de; dkim=pass (2048-bit key) header.d=uni-muenster.de header.i=@uni-muenster.de header.b=LlVqfSud; arc=none smtp.client-ip=128.176.118.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uni-muenster.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uni-muenster.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KzjOH6/1"
-Received: (qmail 5218 invoked by uid 109); 15 Jan 2025 17:14:24 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=+uHGPu11WRrofkKi7WOBxfDv8h8CXFdoEqCt/hu/0zo=; b=KzjOH6/1/8S6QLkC+VIStFI9PLM9/QhXiBBe4cFvhSafnaNOQgpmiVksQ3fuYChUgUTg56laePFr42WSKYCAaPHkoboOumZ7pKgfLfxDpd8xgin2PTppeqr6KRFqGYwzoGrmJeKNpB6+WZSgNf6KS7eU8PGajcl2MSa/eZ8bl3KRmZJ0wGTpkwSJ///yAef3Dm/o2OBKEqPPDUPvk08zmdvYsNAKSwGPKvXR6dZb4slN0kJKCfgR8ZJkD7G2rYjEg5ydafC42lBpehVbvGSx/obQmAZKym/5i8EfccwhHv6qWbuMDFZl6S69SvHEHEmtXOfVz9hlOwRZnM3iMP8YGw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Jan 2025 17:14:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11050 invoked by uid 111); 15 Jan 2025 17:14:24 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Jan 2025 12:14:24 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 15 Jan 2025 12:14:23 -0500
-From: Jeff King <peff@peff.net>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?TWF0xJtq?= Cepl <mcepl@cepl.eu>,
-	Jonas Konrad <jonas.konrad@uni-muenster.de>, git@vger.kernel.org
-Subject: Re: Git branch outputs usage message on stderr
-Message-ID: <20250115171423.GB57018@coredump.intra.peff.net>
-References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
- <D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu>
- <xmqqed1414gt.fsf@gitster.g>
- <c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
+	dkim=pass (2048-bit key) header.d=uni-muenster.de header.i=@uni-muenster.de header.b="LlVqfSud"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=uni-muenster.de; i=@uni-muenster.de; q=dns/txt;
+  s=uniout; t=1736961281; x=1768497281;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to;
+  bh=rRhTALXhQXYycZ30pZeTH3eYTdpOOpYg7hCIZlTzuLY=;
+  b=LlVqfSudUrMXK6Y5uZ2ozdu0I+SbioHmBq6DtmoimL0yPMqiqjq/EHQx
+   CWLn6q+EVgANL6lBBrJuCH8556eKM+g9yhl0RnGUMbydgIFg9v7bUb6sL
+   vSKXtl8xWuzgZVBgCnsXeYXRKY+Qf2jxt2LCCqv7sHOwA+hTA2x0sMKFH
+   oCsHFvFJHUpXLKqVR0PwRNCLDR8SuSNd3cabHw34c6EnK8Ee/rVZR/iF3
+   eY/Pv23rJf9GpVQLrlEt9e6kp5b/Y2i+WR70BZwPtmsJvZEeO68MjzprF
+   FKTl4GXKUwkpAF0+U5yYYRlje65p3BWjjr+JUH7PchgAcbqTNzFxR2jeV
+   Q==;
+X-CSE-ConnectionGUID: A+gakIClSt2WoS+Q5579dg==
+X-CSE-MsgGUID: hOmkYR9nSjyu4YgqiJVeCw==
+X-IronPort-AV: E=Sophos;i="6.13,206,1732575600"; 
+   d="p7s'346?scan'346,208,346";a="353096849"
+Received: from secmail.uni-muenster.de ([128.176.118.4])
+  by UDCM-RELAY1.UNI-MUENSTER.DE with ESMTP; 15 Jan 2025 18:14:38 +0100
+Received: from [10.6.11.4] (jeannedarc.uni-muenster.de [10.6.11.4])
+	by SECMAIL.UNI-MUENSTER.DE (Postfix) with ESMTPSA id A999B20ADF12;
+	Wed, 15 Jan 2025 18:14:37 +0100 (CET)
+Message-ID: <c8365a5f-bcda-40c5-bcf5-ebfd9a04ae64@uni-muenster.de>
+Date: Wed, 15 Jan 2025 18:14:36 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git branch outputs usage message on stderr
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Mat=C4=9Bj_Cepl?=
+ <mcepl@cepl.eu>
+Cc: git@vger.kernel.org
+References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
+ <D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu> <xmqqed1414gt.fsf@gitster.g>
+ <c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
+From: Jonas Konrad <jonas.konrad@uni-muenster.de>
+Content-Language: en-US, de-DE
+Organization: =?UTF-8?Q?University_M=C3=BCnster?=
 In-Reply-To: <c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-512; boundary="------------ms060200000201030804030705"
 
-On Wed, Jan 15, 2025 at 05:55:19PM +0100, Kristoffer Haugsbakk wrote:
+This is a cryptographically signed message in MIME format.
 
-> On Wed, Jan 15, 2025, at 16:28, Junio C Hamano wrote:
-> > Somebody may want to go over "git help --all" and for each of them
-> > try "git $cmd -h >/dev/null" to find those that give the help output
-> > to their standard error stream.
-> 
->     #!/bin/sh
-> 
->     for cmd in $(git --list-cmds=builtins); do
->         git $cmd -h >/dev/null
->     done 2>&1 | grep '^usage: ' \
->         | perl -pe 's/^usage:\s*(\(EXPERIMENTAL!\)\s*)?//; s/^(git\s+[a-zA-Z0-9-]+).*/\1/'
-> [...]
+--------------ms060200000201030804030705
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-We may want:
+T24gMTUuMDEuMjUgMTc6NTUsIEtyaXN0b2ZmZXIgSGF1Z3NiYWtrIHdyb3RlOg0KPiBPbiBX
+ZWQsIEphbiAxNSwgMjAyNSwgYXQgMTY6MjgsIEp1bmlvIEMgSGFtYW5vIHdyb3RlOg0KPj4g
+U29tZWJvZHkgbWF5IHdhbnQgdG8gZ28gb3ZlciAiZ2l0IGhlbHAgLS1hbGwiIGFuZCBmb3Ig
+ZWFjaCBvZiB0aGVtDQo+PiB0cnkgImdpdCAkY21kIC1oID4vZGV2L251bGwiIHRvIGZpbmQg
+dGhvc2UgdGhhdCBnaXZlIHRoZSBoZWxwIG91dHB1dA0KPj4gdG8gdGhlaXIgc3RhbmRhcmQg
+ZXJyb3Igc3RyZWFtLg0KPiAgICAgICMhL2Jpbi9zaA0KPg0KPiAgICAgIGZvciBjbWQgaW4g
+JChnaXQgLS1saXN0LWNtZHM9YnVpbHRpbnMpOyBkbw0KPiAgICAgICAgICBnaXQgJGNtZCAt
+aCA+L2Rldi9udWxsDQo+ICAgICAgZG9uZSAyPiYxIHwgZ3JlcCAnXnVzYWdlOiAnIFwNCj4g
+ICAgICAgICAgfCBwZXJsIC1wZSAncy9edXNhZ2U6XHMqKFwoRVhQRVJJTUVOVEFMIVwpXHMq
+KT8vLzsgcy9eKGdpdFxzK1thLXpBLVowLTktXSspLiovXDEvJw0KPg0KPiBHaXZlcw0KPg0K
+PiAgICAgIGdpdCBhbQ0KPiAgICAgIFsuLi5dDQo+IEZvcg0KPg0KPiAgICAgICQgZ2l0IHZl
+cnNpb24NCj4gICAgICBnaXQgdmVyc2lvbiAyLjQ4LjANCg0KV2FzIGp1c3QgYWJvdXQgdG8g
+c2hhcmUgdGhlIHZlcnkgc2FtZSByZXN1bHRzLCBsZWFkaW5nIHRvIDQwIGNvbW1hbmRzIA0K
+b3V0IG9mIDE0MiBidWlsdC1pbnMgb3V0cHV0dGluZyB0aGVpciB1c2FnZSBpbmZvIHRvIHN0
+ZGVyci4gU29tZSANCmFkZGl0aW9ucyBvbiBub24tYnVpbHRpbnM6IGdpdC1zY2FsYXIgYWxz
+byBvdXRwdXRzIGl0cyB1c2FnZSBpbmZvIHRvIA0Kc3RkZXJyLiBnaXQtbGZzIGRvZXMgbm90
+IGhhdmUgInVzYWdlIHRleHQgZm9yIC1oIi4gSSBoYXZlIG5vdCB0ZXN0ZWQgDQpnaXQtc3Zu
+IGFuZCBnaXQtY3Zzc2VydmVyIHByb3Blcmx5IChkbyBub3QgaGF2ZSBpbnN0YWxsZWQgdGhl
+IHJlc3BlY3RpdmUgDQptb2R1bGVzKS4gT24gYW5vdGhlciBub3RlLCBnaXQtcDQgZG9lcyBu
+b3Qga25vdyAiLWgiLCBidXQgdGhlbiBnaXZlcyANCnVzYWdlIGluZm8gLSB0byBzdGRvdXQo
+ISkpLiBMYXN0bHksIGlmIHlvdSBzdGlsbCByZWFkLCB0ZXN0IA0KZ2l0LWh0dHAtYmFja2Vu
+ZCBhbmQgZ2l0LWZpbHRlci1icmFuY2gsIGFzIHRoZXkgc2hvdyBzcGVjaWFsIGJlaGF2aW9y
+Lg0KDQo=
 
-diff --git a/t/t0012-help.sh b/t/t0012-help.sh
-index 1d273d91c2..469cb12eb2 100755
---- a/t/t0012-help.sh
-+++ b/t/t0012-help.sh
-@@ -255,7 +255,8 @@ do
- 		(
- 			GIT_CEILING_DIRECTORIES=$(pwd) &&
- 			export GIT_CEILING_DIRECTORIES &&
--			test_expect_code 129 git -C sub $builtin -h >output 2>&1
-+			test_expect_code 129 git -C sub $builtin -h >output 2>err &&
-+			test_must_be_empty err
- 		) &&
- 		test_grep usage output
- 	'
+--------------ms060200000201030804030705
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
-which produces a similar list. In the case of git-branch, it is due to
-1dacfbcf13 (branch -h: show usage even in an invalid repository,
-2010-10-22). Instead of letting parse-options handle it (which then goes
-to stdout), we call usage_with_options(), which is usually for
-complaining about a broken option, not showing "-h".
-
-The reason there is that some of the pre-parse_options() setup accesses
-the ref store (causing a BUG() if you run "branch -h" outside of a
-repository). In this case, I think it can simply be reordered like:
-
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 6e7b0cfddb..4617e32fff 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -784,31 +784,28 @@ int cmd_branch(int argc,
- 	filter.kind = FILTER_REFS_BRANCHES;
- 	filter.abbrev = -1;
- 
--	if (argc == 2 && !strcmp(argv[1], "-h"))
--		usage_with_options(builtin_branch_usage, options);
--
- 	/*
- 	 * Try to set sort keys from config. If config does not set any,
- 	 * fall back on default (refname) sorting.
- 	 */
- 	git_config(git_branch_config, &sorting_options);
- 	if (!sorting_options.nr)
- 		string_list_append(&sorting_options, "refname");
- 
- 	track = git_branch_track;
- 
-+	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
-+			     0);
-+
- 	head = refs_resolve_refdup(get_main_ref_store(the_repository), "HEAD",
- 				   0, &head_oid, NULL);
- 	if (!head)
- 		die(_("failed to resolve HEAD as a valid ref"));
- 	if (!strcmp(head, "HEAD"))
- 		filter.detached = 1;
- 	else if (!skip_prefix(head, "refs/heads/", &head))
- 		die(_("HEAD not found below refs/heads!"));
- 
--	argc = parse_options(argc, argv, prefix, options, builtin_branch_usage,
--			     0);
--
- 	if (!delete && !rename && !copy && !edit_description && !new_upstream &&
- 	    !show_current && !unset_upstream && argc == 0)
- 		list = 1;
-
-Knowing that is safe means confirming manually that setup code is not
-needed by parse_options(). E.g., if it were setting defaults the user
-could overwrite with an option. In this case neither "head" nor
-"filter.detached" is touched by any of the options.
-
-But there are a ton of commands, as you saw, and handling each one would
-be a pain. So it would probably be easier to just introduce a variant of
-usage_with_options() that writes to stdout (the underlying _internal
-function already does so, we'd just need a one-liner wrapper). And then
-use that everywhere. Possibly it could even do the argc/argv check, too,
-since every call site is going to be doing that itself.
-
--Peff
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG9w0BBwEAAKCC
+FcUwggbmMIIEzqADAgECAhAxAnDUNb6bJJr4VtDh4oVJMA0GCSqGSIb3DQEBDAUAMIGIMQsw
+CQYDVQQGEwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkx
+HjAcBgNVBAoTFVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJT
+QSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eTAeFw0yMDAyMTgwMDAwMDBaFw0zMzA1MDEyMzU5
+NTlaMEYxCzAJBgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQD
+ExNHRUFOVCBQZXJzb25hbCBDQSA0MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA
+s0riIl4nW+kEWxQENTIgFK600jFAxs1QwB6hRMqvnkphfy2Q3mKbM2otpELKlgE8/3AQPYBo
+7p7yeORuPMnAuA+oMGRb2wbeSaLcZbpwXgfCvnKxmq97/kQkOFX706F9O7/h0yehHhDjUdyM
+yT0zMs4AMBDRrAFn/b2vR3j0BSYgoQs16oSqadM3p+d0vvH/YrRMtOhkvGpLuzL8m+LTAQWv
+QJ92NwCyKiHspoP4mLPJvVpEpDMnpDbRUQdftSpZzVKTNORvPrGPRLnJ0EEVCHR82LL6oz91
+5WkrgeCY9ImuulBn4uVsd9ZpubCgM/EXvVBlViKqusChSsZEn7juIsGIiDyaIhhLsd3amm8B
+S3bgK6AxdSMROND6hiHT182Lmf8C+gRHxQG9McvG35uUvRu8v7bPZiJRaT7ZC2f50P4lTlnb
+LvWpXv5yv7hheO8bMXltiyLweLB+VNvg+GnfL6TW3Aq1yF1yrZAZzR4MbpjTWdEdSLKvz8+0
+wCwscQ81nbDOwDt9vyZ+0eJXbRkWZiqScnwAg5/B1NUD4TrYlrI4n6zFp2pyYUOiuzP+as/A
+Znz63GvjFK69WODR2W/TK4D7VikEMhg18vhuRf4hxnWZOy0vhfDR/g3aJbdsGac+diahjEwz
+yB+UKJOCyzvecG8bZ/u/U8PsEMZg07iIPi8CAwEAAaOCAYswggGHMB8GA1UdIwQYMBaAFFN5
+v1qqK0rPVIDh2JvAnfKyA2bLMB0GA1UdDgQWBBRpAKHHIVj44MUbILAK3adRvxPZ5DAOBgNV
+HQ8BAf8EBAMCAYYwEgYDVR0TAQH/BAgwBgEB/wIBADAdBgNVHSUEFjAUBggrBgEFBQcDAgYI
+KwYBBQUHAwQwOAYDVR0gBDEwLzAtBgRVHSAAMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2Vj
+dGlnby5jb20vQ1BTMFAGA1UdHwRJMEcwRaBDoEGGP2h0dHA6Ly9jcmwudXNlcnRydXN0LmNv
+bS9VU0VSVHJ1c3RSU0FDZXJ0aWZpY2F0aW9uQXV0aG9yaXR5LmNybDB2BggrBgEFBQcBAQRq
+MGgwPwYIKwYBBQUHMAKGM2h0dHA6Ly9jcnQudXNlcnRydXN0LmNvbS9VU0VSVHJ1c3RSU0FB
+ZGRUcnVzdENBLmNydDAlBggrBgEFBQcwAYYZaHR0cDovL29jc3AudXNlcnRydXN0LmNvbTAN
+BgkqhkiG9w0BAQwFAAOCAgEACgVOew2PHxM5AP1v7GLGw+3tF6rjAcx43D9Hl110Q+BABABg
+lkrPkES/VyMZsfuds8fcDGvGE3o5UfjSno4sij0xdKut8zMazv8/4VMKPCA3EUS0tDUoL01u
+gDdqwlyXuYizeXyH2ICAQfXMtS+raz7mf741CZvO50OxMUMxqljeRfVPDJQJNHOYi2pxuxgj
+KDYx4hdZ9G2o+oLlHhu5+anMDkE8g0tffjRKn8I1D1BmrDdWR/IdbBOj6870abYvqys1qYlP
+otv5N5dm+XxQ8vlrvY7+kfQaAYeO3rP1DM8BGdpEqyFVa+I0rpJPhaZkeWW7cImDQFerHW9b
+KzBrCC815a3WrEhNpxh72ZJZNs1HYJ+29NTB6uu4NJjaMxpk+g2puNSm4b9uVjBbPO9V6sFS
+G+IBqE9ckX/1XjzJtY8Grqoo4SiRb6zcHhp3mxj3oqWi8SKNohAOKnUc7RIP6ss1hqIFyv0x
+XZor4N9tnzD0Fo0JDIURjDPEgo5WTdti/MdGTmKFQNqxyZuT9uSI2Xvhz8p+4pCYkiZqpahZ
+lHqMFxdw9XRZQgrP+cgtOkWEaiNkRBbvtvLdp7MCL2OsQhQEdEbUvDM9slzZXdI7NjJokVBq
+3O4pls3VD2z3L/bHVBe0rBERjyM2C/HSIh84rfmAqBgklzIOqXhd+4RzadUwggdpMIIFUaAD
+AgECAhAeKH2HETj0tZALXaFejQbDMA0GCSqGSIb3DQEBDAUAMEYxCzAJBgNVBAYTAk5MMRkw
+FwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQZXJzb25hbCBDQSA0
+MB4XDTI0MDQxNTAwMDAwMFoXDTI2MDQxNTIzNTk1OVowgYsxCzAJBgNVBAYTAkRFMRwwGgYD
+VQQIExNOb3JkcmhlaW4tV2VzdGZhbGVuMR4wHAYDVQQKDBVVbml2ZXJzaXTDpHQgTcO8bnN0
+ZXIxETAPBgNVBGETCEdPVkRFK05XMSswKQYJKoZIhvcNAQkBFhxqb25hcy5rb25yYWRAdW5p
+LW11ZW5zdGVyLmRlMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA64yTbhY0gfKy
+IJb2gEh4HKXbjAbpOOoSFqgqVHb2tNtjXE8JjS7nWuJ/EW4Tn0WeGx83PaYHGwou6uz+I4OO
+oQkxo9OF6s9nGPjMe9VaDyzDaseTG+HhYFhcC4KI83+LkJXajWPD9XmTnQEDedy6LVC/uPb8
+98fZ+6OySD111BqtUMHL+9DRhbxtRSN1XTQHdlE99iLpKfzabUYKH+c9Y6cSNDHsmZ9PosIi
+EauWlQO3glMLYBe7MO8sDo0oGBzPekD0ectF2wvCB/mZ+B+4RD2Zxhlwn5NgtEjTqCJKoOBz
+fSDQ0kSD/QcF5JlaVLuQtrFu+39p3zHSqeM7bGzZ9WoHHn0d0oICalwMjoc2qBUwmZh2mUIp
+iJ5+ZwkJjYRgtUCvMa90zcJZRl1IrANiqTFNqxS4kNy4i4h0niFEuKZm2q0gDSodSF3xNfWm
+z+NMr6DroZveVJo9gvXZJ3oUGc0uOnyPqljXpnGkFP1BjrHvllKmsLxOk89zbvVY+3cjc9RP
++uhHBLLxzmiUPihH3JGooEekimwC4aUiGijj6KydfjLfaFXWGQF2nKx8uvmwsEv7kcpCAejq
+InyIakZ1hYVzKz1y9X6GI+Yt0/diyyZGdkYJGzjdAE2f/qq4I1fZMLNcn73IpBfu4wjsz0NF
+7e9vP3dy7JsD0d44reCLqLkCAwEAAaOCAgswggIHMB8GA1UdIwQYMBaAFGkAocchWPjgxRsg
+sArdp1G/E9nkMB0GA1UdDgQWBBS6SL7FpoxaCh8sXMiOPoWWGKUk3TAOBgNVHQ8BAf8EBAMC
+BaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIwUAYDVR0g
+BEkwRzA6BgwrBgEEAbIxAQIBCgMwKjAoBggrBgEFBQcCARYcaHR0cHM6Ly9zZWN0aWdvLmNv
+bS9TTUlNRUNQUzAJBgdngQwBBQICMEIGA1UdHwQ7MDkwN6A1oDOGMWh0dHA6Ly9HRUFOVC5j
+cmwuc2VjdGlnby5jb20vR0VBTlRQZXJzb25hbENBNC5jcmwweAYIKwYBBQUHAQEEbDBqMD0G
+CCsGAQUFBzAChjFodHRwOi8vR0VBTlQuY3J0LnNlY3RpZ28uY29tL0dFQU5UUGVyc29uYWxD
+QTQuY3J0MCkGCCsGAQUFBzABhh1odHRwOi8vR0VBTlQub2NzcC5zZWN0aWdvLmNvbTB4BgNV
+HREEcTBvgRhqLmtvbnJhZEB1bmktbXVlbnN0ZXIuZGWBHGprb25yYWQre0lEfUB1bmktbXVl
+bnN0ZXIuZGWBF2prb25yYWRAdW5pLW11ZW5zdGVyLmRlgRxqb25hcy5rb25yYWRAdW5pLW11
+ZW5zdGVyLmRlMA0GCSqGSIb3DQEBDAUAA4ICAQCnxbYL1kNm9x3nrVeXCuURcJE3NA4GUSDt
+m74UPHhfHD8vRmuVZa+1i/m0CEMLgmQjPpf3FcOTTAc7NX+7pSIP+fkayIr/LRKPJkvlBY+Q
+1L2Dns4CSdV6VJXJNrup5CEhXLWyy1G/SCFb0YknNqWQnqdEyPOYjLxnYLnCgwPBg0jM1yPA
+pI5xJom+/W/2djzg6FsxrWEBJnRkF3463a43YY6TI1H90WsyHb0ebVt2qSL+g5RusQXjPb47
+7w3GS07bNRvkvL+Oe/iNQubs9hy/pyrQeyZmsobp3FembLApDToqYJT4aMLyCdZsGe80lg+z
+tJlAygCzWRoxW1Uf758u9Voj5HWca2x4NrruA/UbwJ7Z+scdq2DOdHB4cWGmVTUXG87hL9Zh
+yKGt8NLBJ5R2LSpGNhZHw1H2X2kbzSCsRkd0oBYh06J9aA1FEa6EdYfV1zWSNB2bWRY9FWrM
+GRdEle6zAObiJt0vHcZHHFqknVGpgYXA7O3tEhd79HBYU6JOLgSbiIXmQzGmsLRz6+/N/Hwh
+Jqd8CxWpb3WjWo3fGZEw+jRiz651oTREwUp5Hb+rtvDIf7h3g3442SIekaaJupCKa88e/zkD
+wkd73Q96UmLXD8Cug6qIHgdxd75pIeInQ+13BRH08cS98BgwwapmGoGLvqvuYZqH22+WiinG
+tDCCB2owggVSoAMCAQICEQDu52Czgt0n4YtdGyqI6vj6MA0GCSqGSIb3DQEBDAUAMEYxCzAJ
+BgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQ
+ZXJzb25hbCBDQSA0MB4XDTI0MDQxNTAwMDAwMFoXDTI2MDQxNTIzNTk1OVowgYsxCzAJBgNV
+BAYTAkRFMRwwGgYDVQQIExNOb3JkcmhlaW4tV2VzdGZhbGVuMR4wHAYDVQQKDBVVbml2ZXJz
+aXTDpHQgTcO8bnN0ZXIxETAPBgNVBGETCEdPVkRFK05XMSswKQYJKoZIhvcNAQkBFhxqb25h
+cy5rb25yYWRAdW5pLW11ZW5zdGVyLmRlMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKC
+AgEAoOVpuYgA4+/PNrMYc8OcHUhlwTBrzi4QAOZHmuS8K1P6D4vBMKrRa/ujMiB+TFOOX3/2
+j6KDXgP8+lzuA0sBtMx4WZR0kPUcIv31fHkE7BkYBOc4RNVxXKVas0OL6ziVkFmsRy8+iKLI
+Pk9HcmnewBQRnJfvMkfM6qYkZuQtdICXm+iF6RhSNcgBFmRYPfJOR2z3G8in6Vfkq5j6ifkO
+rFZwL3CMbvA5qjfPBYzjRa36jI6iKAa07N0Zot2mLUletOrLG+QqdXHjJZGVQvir/1LKuC5e
+Y4ynegAafPtJ+shVfawn5hzKctVUd5uZN9oCL+E7DYY0HEoRwz0fwTlFSjAgb928nbjmln/+
+AatIfHtKsxcFht1ds0d0nozNt4fNepVx91ZhUJ+f2+2aLLlMJ/jpl1M/M32dHNRTZ1G8iQpT
+VFmhu8a7MbSVeXgOh2MB7CjaskzcBCFFMa7WW7xNvHWOVLLWCfjZA5EGvIttBNp63o5ALMv6
+ASbjYKMjqIZBQIHNH814UuLUpM0vWLHYynOE874jXLHPBj5VTng52INpqINNy75SyXmfuMH9
+D/QraGzJJ6FcPc34lMP5DIUoVS3TOPbqqIxvvVQ/6IrpCH7i/6e6kxB1GqtxUUvFB/3n87WP
+luczmF7N5YcwR7FLAlejrJaX+h89Gc9GSANtI8sCAwEAAaOCAgswggIHMB8GA1UdIwQYMBaA
+FGkAocchWPjgxRsgsArdp1G/E9nkMB0GA1UdDgQWBBQhnA6L7qkHtBmGTJGLOAeMy61c4TAO
+BgNVHQ8BAf8EBAMCBaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYB
+BQUHAwIwUAYDVR0gBEkwRzA6BgwrBgEEAbIxAQIBCgMwKjAoBggrBgEFBQcCARYcaHR0cHM6
+Ly9zZWN0aWdvLmNvbS9TTUlNRUNQUzAJBgdngQwBBQICMEIGA1UdHwQ7MDkwN6A1oDOGMWh0
+dHA6Ly9HRUFOVC5jcmwuc2VjdGlnby5jb20vR0VBTlRQZXJzb25hbENBNC5jcmwweAYIKwYB
+BQUHAQEEbDBqMD0GCCsGAQUFBzAChjFodHRwOi8vR0VBTlQuY3J0LnNlY3RpZ28uY29tL0dF
+QU5UUGVyc29uYWxDQTQuY3J0MCkGCCsGAQUFBzABhh1odHRwOi8vR0VBTlQub2NzcC5zZWN0
+aWdvLmNvbTB4BgNVHREEcTBvgRhqLmtvbnJhZEB1bmktbXVlbnN0ZXIuZGWBHGprb25yYWQr
+e0lEfUB1bmktbXVlbnN0ZXIuZGWBF2prb25yYWRAdW5pLW11ZW5zdGVyLmRlgRxqb25hcy5r
+b25yYWRAdW5pLW11ZW5zdGVyLmRlMA0GCSqGSIb3DQEBDAUAA4ICAQBGZEAPaT6eC+FNS0b2
+YhSzKEnSO4n5ZLL8LpS+toLn9++rI6mHsyp6HCcenRIvpQYVXfjWziL3P158XQWk0JpTGKZ+
+6Cxk1ycvQUpGjxjk+VGC/EZ+jvuWuxgEmS766mupjJDWyPZujK/5BJuyzkaJYU0K9rLDbEe5
+TDflr1wevLgxDh0Y5jmbm0xQ6eMMLgLGOmlEh41uoHo6ZF53lZKalkhGXL9Tk0UXVPJdIK5Y
+RzPUU6yqgLux3IT9M6P37WmzNQ9PtSeGPBoAJJCxFqbXCdqH61xWDhOOIk3o92EqOBNQGLAc
+QDVscB0TIweY7HkW2q5CzyMRJEns91WZ3vqhED58U0/ZtCwqlgSOZL61jYaMY5UNaOHN7Ma7
+Rhf651F/Hafr1qmmbdDZL9GH6A96L2wNPzBAwrKEVpVDbSm4ZLElfrR4Ay4wU/zYUpHJsWne
+B9NZemwUwbHK8LRBcWxmMUDlJkjngPMEYZD/fAh9Zo36EWHT7Mdej08cFplYFLls3P2FKo93
+arnt/EOkPnQdwzZnfGDcnRlIYZn4X5vyIAQC8zksaopvVDv5tzqZNaqS0CylJLkSXLP/AJid
+yPTBYNtqV6pzpq05R364xTiXb7xYOdu02kV7fHeTIWVPD3lmqc06lrSTfVzSzCZ+hQ/q1++w
+uu/jHKSloxZ90YmfyjGCBUcwggVDAgEBMFowRjELMAkGA1UEBhMCTkwxGTAXBgNVBAoTEEdF
+QU5UIFZlcmVuaWdpbmcxHDAaBgNVBAMTE0dFQU5UIFBlcnNvbmFsIENBIDQCEB4ofYcROPS1
+kAtdoV6NBsMwDQYJYIZIAWUDBAIDBQCgggK+MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
+HAYJKoZIhvcNAQkFMQ8XDTI1MDExNTE3MTM0OFowTwYJKoZIhvcNAQkEMUIEQIubx86moV9h
+VkIcDktlAWBjX/sHcS1wIf39kURVaxcQPk2+lP67pdrF4saWNW292L/g+92l57qPg0FKtAIm
+gBgwagYJKwYBBAGCNxAEMV0wWzBGMQswCQYDVQQGEwJOTDEZMBcGA1UEChMQR0VBTlQgVmVy
+ZW5pZ2luZzEcMBoGA1UEAxMTR0VBTlQgUGVyc29uYWwgQ0EgNAIRAO7nYLOC3Sfhi10bKojq
++PowbAYLKoZIhvcNAQkQAgsxXaBbMEYxCzAJBgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBW
+ZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQZXJzb25hbCBDQSA0AhEA7udgs4LdJ+GLXRsq
+iOr4+jCCAVcGCSqGSIb3DQEJDzGCAUgwggFEMAsGCWCGSAFlAwQBKjALBglghkgBZQMEAQIw
+CgYIKoZIhvcNAwcwDQYIKoZIhvcNAwICAQUwDQYIKoZIhvcNAwICAQUwBwYFKw4DAgcwDQYI
+KoZIhvcNAwICAQUwBwYFKw4DAhowCwYJYIZIAWUDBAIBMAsGCWCGSAFlAwQCAjALBglghkgB
+ZQMEAgMwCwYJYIZIAWUDBAIEMAsGCWCGSAFlAwQCBzALBglghkgBZQMEAggwCwYJYIZIAWUD
+BAIJMAsGCWCGSAFlAwQCCjALBgkqhkiG9w0BAQEwCwYJK4EFEIZIPwACMAgGBiuBBAELADAI
+BgYrgQQBCwEwCAYGK4EEAQsCMAgGBiuBBAELAzALBgkrgQUQhkg/AAMwCAYGK4EEAQ4AMAgG
+BiuBBAEOATAIBgYrgQQBDgIwCAYGK4EEAQ4DMA0GCSqGSIb3DQEBAQUABIICAHNq0oleLno+
+EUSWfLnWph5hdLByXXrTAiEpWQcCgCGidwZRekm+1tUZR1X5MxZrCiLf6M0FaUZbW64XGq3O
+Y0xs27RMu7/CqBwsrZCKLETc7WFI3caXnIKUg9j02J31kxAgf7NgOBjWsikf4j+6zCdTv74h
+Uk+Tac3DIAcEXkY+iqq3JB+A2Ub21UYuM5DA5HXs+PBDq72hFaWHwDUz1rAJy1Cs09UKBJCw
+xCKhdzdDmNOVGRBRa7bwqtizCQgyfuE1VIumZ2bjJS6eaGq6W6CVeoRc4GAacmAw1G8aniPK
+tskGD8mrtR8nQUwhPHO+JiEZpyJxLSRf783hmZIj8PkrbVomWJKYnYWXPEtqq8BYRbnLRQ28
+7B4SLJW/yrMoxTuoWh4GB6tw/du/r9EKO6VXPxTQB/Z0Ou0vl+wRxDaOAfXc89ALh5PDDfHh
+2urnduNDrk38/irW98KxOXFRuvOjpetRQfbU0YibcGhIg+fZUSVxrPHlu+EzDB+4RcB0PHch
+HfLPeXu2u3ZgwFjVf2s8y1I1KwbXiERlME4il2i0bkNBjMScJE8Amo7+mD1CL+gMHtbjxvjd
+B2FTNJZuxlCgnARu2MDUzRlOv8WXgI/VLi/NEqqHLujvyO1jWkTIu0P9dDITZKK9C9mP56fR
+E9zP4+LfuuLUFt7YFHM47pKuAAAAAAAA
+--------------ms060200000201030804030705--
