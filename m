@@ -1,154 +1,106 @@
-Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54471DB123
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 07:56:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91AE22F83F
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 08:09:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736927794; cv=none; b=rFkBkQVOj/2qtWXKNVQpblrEyU7i5HGmO9lN1zXJHiZVl42FMkJYOIoZUL/L+fgIV/pYnk2/Tbm9T0uIltJhbBdBRDcicYfg7dwFrQnvBDL9EepVH+QjpqiyTSAANPLvbr9xuU3BywTcZ+YgOBBr74X3VLFljYYTwCVKb81IlQU=
+	t=1736928549; cv=none; b=Jm6OqCcIshW4pdDpqWS/1l7C6oMpomjK4dyIW4ZF/U5kVG4uSq8JwDICM4GJhzSc0SmsLPTMIEK/fZi2ftI4MI2+9fpewW8d1fi+u3aXF/3XhNyTQWdxwFQJYew140liBawhFeKd1lE0Vc9KU5Mh7DRG60dHc0w9M7P/6N998yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736927794; c=relaxed/simple;
-	bh=F3qszXnlXUsAXMZi/2v9j0Q8DXFOjoV1J2J6HSLZinQ=;
+	s=arc-20240116; t=1736928549; c=relaxed/simple;
+	bh=gGbaXQb9SNWaLLvwvtlTKEVg+JkzmW/HhFLwbcD8D2M=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AS1uS8CJ0g2i1oTvdzGX+nPeOqhu+bDJYv1DGeM4oR3y2NKMpQSUvlrlhs55VusVfJwnmN/dHOyux2bT9NwYx2L3+QT4enxM3HNJ7OestAtPEaXhoXDJREDhp8c2PhBbhFOMaKwEos7MPAZ/ohmIgUL4b9tHX0EqL0E9xbOtOgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WvtPjHSK; arc=none smtp.client-ip=209.85.208.41
+	 To:Cc:Content-Type; b=OKSqe31F2n/nuEehthzvD680Sf7W1SdeTYmqpt9oG+zO6UTYPrPhQFCLNjiLXceTJChvdqxHnE51e7Q+JLTJF3oHX//XLz1rHWo0PLm4G0ExsK8ispQ1m17yPNoeJluMi6j/xGnrIM1RCtKQ1Vd7jdc4oTwCfp8FsZR+6MW1apM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CxgRDyEd; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WvtPjHSK"
-Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5d3ecae02beso8136615a12.0
-        for <git@vger.kernel.org>; Tue, 14 Jan 2025 23:56:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CxgRDyEd"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5d7e3f1fdafso12959250a12.0
+        for <git@vger.kernel.org>; Wed, 15 Jan 2025 00:09:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736927791; x=1737532591; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KluS3tu2mNng1HVP6BP86W5+87kQUhEdqpgB5rxu0hY=;
-        b=WvtPjHSKAZFiWcPtQOgIAdJgeX+DthS7FHTCZbGqaIY2AMKuAZ/lfFBQZUegqZQ8WW
-         FaVqrP7n6xFL6DFjn8iarFNB65Y88AXtdM11gC6LC3NIdumI9I8xbc7vwuI+tjcE7MMW
-         KvgrbDiw8NdDe1NSW5aUn+JasJ7HzQ5IwY9F+sEWm5DHrAneJGGNkUbtXu6B2T8Xma+L
-         fZ1PU4f8TSeTVMk3ZyOzYoXakhKG68NEgjWMqOYg8c7tXwV1K7L064Ea4zO4tLDMCcqU
-         GsR0pedd/dXJoie6Ud0ZJfDvgezYn0lzK2//KNKbAeQ0IiN3XCSG8smfGgii092RbZOD
-         LdEA==
+        d=gmail.com; s=20230601; t=1736928546; x=1737533346; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ADhts+nHDH5aT7PFzKZ2oVxNr33FvVbqsPlFB3Pr+rM=;
+        b=CxgRDyEdz/UasH7STr7BLlWd19A3uYjs7yxYbq9Xcd/yd4NoC5idLBz1asvRqjiEyV
+         eht16xlPfk6xdNShCM/DKTm7DEtAJ+4G2kSzk9y4QnbbJd040he//5RqBkJQLDO81pnf
+         qooeKOl4HJXCvx744b1DO1YQpG8pJnw73JJEl1U1lxPcqajb0N4ZZz8z0OlqSM2HpyTE
+         gU69W98IJcgZ1hBI9ROWZNXP9ttqGfthXFDz5oynj9u/jlw8wPMljG9rAwNQIQlo7IPb
+         Mz7MxPG4Z/zcTFqZofMbie6ExfaAxLMQP1RflTzxWmdotD3ZBBiIo6iMTqG7b1gcsqk4
+         Se8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736927791; x=1737532591;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KluS3tu2mNng1HVP6BP86W5+87kQUhEdqpgB5rxu0hY=;
-        b=ljH/AzLmGIiGjCv0lKwsXjSLkNAqewDbeOeiQhm3rNQa9ZFR6W0zM+0pkoOEbwCDKY
-         w37MoMhuzH2Yn/5P8ikIMHDK9MkbHTxs23enolpZGl8N/6Xi5e9VxiTn7tFs1iiM13sR
-         3cVMHhVK/PVX3vR+E517L68HqsvEuoNKnoV2XJFTgRC3LvpEl7st7LVuUuLx+uzMLRL6
-         RbYNiyqQJ34tUhDmKeNB34HBRA14hLCBMjskP5mxb4ZbKGSsC+UvdKlgELkgkL+6oNDF
-         rlfFgM+siklSW/5Co4C04J3+SrkOK+c/Qlnptr60PHv/ycthO5qBAIb5mE2IwxqqRAZ2
-         NP2A==
-X-Forwarded-Encrypted: i=1; AJvYcCUsrXBHBG+jxCSG18NjrxDY6lx2s4p8VF9i0oBSYR8+/jpY++Y0+EYGrjYrzN8lmIohiAM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YymfYqCYfWo9lljseGkBvY0WDoRf4cbgy0xqRYTztUI/Ku+dh1W
-	i1tguAF5Gr1QxjdOstgF7txqQtzIYI9Pbq+6154LLbwJQVcoklxryGWKZkSid5OU2PttH0nQHGL
-	2OHMpLapIJ8Mp+HsPhvGiKCA+rLk=
-X-Gm-Gg: ASbGnctNCe39PvsQb8AOLTMbMi1/XXYz7giTFgA3jhf6GZHntptZhtVFNsom+5WVrJ/
-	IdFw6woCdi9ttAzRmMewd08BkTCkyn6KFg8pgfw==
-X-Google-Smtp-Source: AGHT+IHW7esOc152jsw4ou8mWl9fHLDa4oapGVUR7wI0ouWg0ziCdUdopMnjj55SnKrf+zKIS50LHhOrbi7KBKWj2o0=
-X-Received: by 2002:a05:6402:2347:b0:5d2:729f:995f with SMTP id
- 4fb4d7f45d1cf-5d972e6f957mr25159970a12.29.1736927790630; Tue, 14 Jan 2025
- 23:56:30 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736928546; x=1737533346;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ADhts+nHDH5aT7PFzKZ2oVxNr33FvVbqsPlFB3Pr+rM=;
+        b=AtZ/o2HILVEImRGmjyuqJJzekkpX3HGCPZRK+pbpGhaxd/RwSxfga7K8pD/2FyqzON
+         wni3cF4YvtaPlO9J4YbhNSXqfa7iTkah4MhDrBhFAf6tgHjqXaL4muWGedtvHd6d2qUV
+         yrPkvjbVKsLEi7ZmKEJ59ia9NJw23bh7CJhFA5805VpQkDRA1Sblv8dQ5vEnNKuF1lAb
+         2jPnX9bfRhGThdhu9hN5430tQBJQMHqPUrIEwnPURgVvZl0B5HXsP4LKa6TlYtsxiS9R
+         NOn3H9rGmB+r+M5jNjw8J7nHsjgQTcChrMypVnT17naKBpTlWLSJFQVqi9oJNlOssl5u
+         kzDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVqIAw323aVMPbTnWd4hRd5MRelb+bLPkSx3jKuVY3WhCQy0vuWHbnLqVCX3JOhx1omTsU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNkTBmQJghesQ6osXJu9G9aSk+NNV6mDLMrhREisk2AlgfLP4f
+	X0OdNcr0GlZWoQ6z5W8W1hmk42wXGnOsXM7KNF1hjdDu60GOm5FFcTt7AxW0JB7QSHY4K15OoUB
+	PntnUvuWjbQv6JwH9gUle8Hc4LwI=
+X-Gm-Gg: ASbGncuhSNqjPLtg6MNsbJe8592ApUX+2VrAvTF2eYF6vm3XZDsyz8ztVC5KA6PXzy5
+	6h3QVeRA3vfyVoSgySvcsrTf4zfgDtjVuFvlyKw==
+X-Google-Smtp-Source: AGHT+IF3SGTK5M8L7sbet9jkdYQ6bw8Th/FnEs5Qf5xE6iOM4IBVkyXZniSQMmYydoSgto+do/b5Q02VfYISdp3VAGE=
+X-Received: by 2002:a05:6402:194c:b0:5d4:3105:c929 with SMTP id
+ 4fb4d7f45d1cf-5d972e4786fmr23931425a12.23.1736928545702; Wed, 15 Jan 2025
+ 00:09:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1843.git.1735041177817.gitgitgadget@gmail.com>
- <pull.1843.v2.git.1735611513.gitgitgadget@gmail.com> <579757957d21faaa8dd9228a191d82f663e93c03.1735611513.git.gitgitgadget@gmail.com>
- <20250113091750.GA794747@coredump.intra.peff.net>
-In-Reply-To: <20250113091750.GA794747@coredump.intra.peff.net>
+References: <48438876fb42a889110e100a6c42ca84e93aac49.1733011259.git.me@ttaylorr.com>
+ <20241201213439.GA145938@coredump.intra.peff.net>
+In-Reply-To: <20241201213439.GA145938@coredump.intra.peff.net>
 From: ZheNing Hu <adlternative@gmail.com>
-Date: Wed, 15 Jan 2025 15:56:18 +0800
-X-Gm-Features: AbW1kvaMINsxBWqIr8NLgxDELt5ySKLJFxsVi3mQDtOBSxfhNwnFqoX3qyuXfdM
-Message-ID: <CAOLTT8TaDBtpgXRAj9yjiJB-h8vGjd6bEg29gOiOUwvQXbzZ3g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] fix(gc): make --prune=now compatible with --expire-to
+Date: Wed, 15 Jan 2025 16:08:54 +0800
+X-Gm-Features: AbW1kvbGcmH6C5Y3PVC2dueW8AUYRFEr4cstGz-296RHTxFULcLzTdTJeoSXuHY
+Message-ID: <CAOLTT8R3UULA9xrv8FZcTsTE1qvsToU=WgOEWMfuO0vq5ztUAw@mail.gmail.com>
+Subject: Re: [PATCH] builtin/repack.c: prune unreachable objects with `--expire-to`
 To: Jeff King <peff@peff.net>
-Cc: ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, gitster@pobox.com, 
-	me@ttaylorr.com
+Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> =E4=BA=8E2025=E5=B9=B41=E6=9C=8813=E6=97=A5=E5=91=
-=A8=E4=B8=80 17:17=E5=86=99=E9=81=93=EF=BC=9A
+> OK, so we are adding the containing directory as an alternate. That
+> gives me two concerns:
 >
-> On Tue, Dec 31, 2024 at 02:18:33AM +0000, ZheNing Hu via GitGitGadget wro=
-te:
+>   1. The expire-to string is something like "path/to/objects/pack/pack",
+>      and we'll have created "path/to/objects/pack/pack-<hash>.pack"
+>      Using dirname() strips that down to "path/to/objects/pack". OK. And
+>      then we manually strip "pack/" off the end, which we have to do to
+>      get the "base" objects/ directory.
 >
-> > diff --git a/builtin/gc.c b/builtin/gc.c
-> > index 77904694c9f..8656e1caff0 100644
-> > --- a/builtin/gc.c
-> > +++ b/builtin/gc.c
-> > @@ -433,7 +433,8 @@ static int keep_one_pack(struct string_list_item *i=
-tem, void *data UNUSED)
-> >  static void add_repack_all_option(struct gc_config *cfg,
-> >                                 struct string_list *keep_pack)
-> >  {
-> > -     if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now"))
-> > +     if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now")
-> > +             && !(cfg->cruft_packs && cfg->repack_expire_to))
-> >               strvec_push(&repack, "-a");
+>      But what if the path given by the user via --expire-to doesn't look
+>      like an object directory? I.e., does not end in "pack/"? Then this
+>      feature would not work at all.
 >
-> I expected to see a mention of repack_expire_to here, but not
-> cfg->cruft_packs. These two are AND-ed together so we are only disabling
-> "repack -a" when both options ("--expire-to" and "--cruft") are passed.
-> Can we --expire-to without cruft? I.e., what should happen with:
+>      Should we be mentioning this in the git-repack docs?
 >
->   git gc --expire-to=3Dsome-path --prune=3Dnow --no-cruft
+>      As an aside, I think the current --expire-to docs are misleading.
+>      They say:
 >
-> Looking at the underlying git-repack, it seems that we only respect
-> --expire-to at all when used with "--cruft", and don't otherwise
-> consider it. Which is what the manpage says ("Only useful with --cruft
-> -d").
+>        --expire-to=<dir>
+>            Write a cruft pack containing pruned objects (if any) to the
+>            directory <dir>. [...]
+>
+>      But that isn't right. It is not a <dir> but a <base-name> similar
+>      to the one that pack-objects takes. If you do --expire-to=some/dir,
+>      then you'll get some/dir-<hash>.pack.
 >
 
-Yes, this is the current state of git-repack. The --expire-to option can
-only be used with --cruft, which is why I use cruft_packs && repack_expire_=
-to
-as a double safeguard.
+I agree. The `--expire-to=<dir>` option can easily cause confusion for users.
+For example, using `--expire-to=xxx.git/objects/pack` will actually generate
+files like xxx.git/objects/pack-*.{mtimes,idx,pack} instead of placing them
+in xxx.git/objects/pack/pack-*.{mtimes,idx,pack}.
 
-When using --no-cruft, the option --expire-to becomes irrelevant.
-So leaving `git gc --prune=3Dnow` as is at this point: passing -a as a
-parameter to repack seems reasonable.
-
-> But if we look at this proposed patch for example:
->
->   https://lore.kernel.org/git/48438876fb42a889110e100a6c42ca84e93aac49.17=
-33011259.git.me@ttaylorr.com/
->
-> then it is expanding how --expire-to is used during the pruning step.
-> OTOH, I think the way your patch 1 is structured means that we'd always
-> pass --expire-to to git-repack anyway, and I _think_ even with the patch
-> linked above that "repack -a -d --expire-to=3Dwhatever" would do the righ=
-t
-> thing.
->
-
-I've taken a look at the patch, and I believe Taylor's changes are primaril=
-y
-aimed at extending the --expire-to functionality within the --cruft feature=
-,
-rather than expecting --expire-to to be used on its own.
-
-> In which case the problem really is the combination of cruft packs and
-> expire-to. Just cruft packs by themselves do not need to override using
-> "-a" for "--prune=3Dnow" because we know that any such cruft pack would b=
-e
-> empty.
->
-> So I think this logic is correct. Taylor might have more thoughts,
-> though (and ideas on whether he intends to revisit that earlier patch).
->
-> I do think this change should probably be done as part of patch 1,
-> rather than introducing a buggy state and then fixing it in patch 2.
->
-
-Yes, I agree with that, and perhaps a single patch will suffice.
-
-> -Peff
-
-- ZheNing Hu
+--
+ZheNing Hu
