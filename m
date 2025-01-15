@@ -1,122 +1,121 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAFC4D599
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 16:24:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4393914A60C
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 16:25:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736958262; cv=none; b=XrzW1OfhlD1E/t3516wdze/Mjj6CWRzeRHV3p6O6Z9Qmuzj7NiI0HBxyV8TrLWGvtXFwPI/1SE4cAbYK302ccG6+jql/O43OzwDrAssvxCz/zGQ9BoYYktG46TMB5XW4KvmyZWZ7C8s1mH8dy0RgYZ39XQuUBaniB0l2XpvXplQ=
+	t=1736958336; cv=none; b=fOW5xy1BMKjC48S7DBiJBEf9+VEV6i3eoFGLlt8gLUFOY/UjGyZ/sb6th4dv9Hfeof4QA094f6oIrfgXqBGyDMkRYVzIr204y+PPSf4cRt/BucNlCbm4SK0c1ELnGYUmFmlcAVCJW2mnmusBV9dQOLNAn0SnDZstX0AuW+k4wiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736958262; c=relaxed/simple;
-	bh=MzfByMw7rOmcBfjKVtHW8anczDYnorgElAoDcdzfFhs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iHGTxIcKM6yMXblLxgq2SCxC0ht1CE94j9Qc4cA/MC687owPv+sLWO1I3R87QUkRerE/faEqYWctvDWSztCn2SA8B1avwBYTJqFbqaWfi3zmj7nevIdYK0vT819fSKISP6ZYKm/3HC6jNw4tJiLRG1aLs4UOFu7IE/gw5G1sgEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pW9WrRhh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o/1wT97o; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736958336; c=relaxed/simple;
+	bh=k1DNyJ24WuUSvttXEUcVw8WOWtGz9WemHlLkQSis0OI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BnGuHgX6P7Ffcl7kYi5Y+7u+bm6hlpOhXwt0sjwe5FVlPOK3XVraQJY0/wF9YIbY6Q1EXjWbwXElZCIX5+iTTNs6rWgzlrXbf/k8X9vAgQRULW4uAKROpyieYeFg0VvZ9HO/DwDoEUU7VWG/u3OUKjwdJkH0ofGcnpPhTUQQtIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iQXqX6iS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ht/01aFt; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pW9WrRhh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o/1wT97o"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iQXqX6iS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ht/01aFt"
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BBB4325401A1;
-	Wed, 15 Jan 2025 11:24:19 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 15 Jan 2025 11:24:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 201D31140169;
+	Wed, 15 Jan 2025 11:25:33 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Wed, 15 Jan 2025 11:25:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736958259; x=1737044659; bh=rOzzPbThCM
-	F/GRl7nxRsfaLMr9O9ZMU9uSv6ogJluhA=; b=pW9WrRhh4iuPg6FWDSEc83t9qX
-	6axM+k59pLUHZLBz08SLLNtaoiNBkcXgmDKPpZAWr5g0ppoA0gP2IAMl+q9tSG+G
-	AClBLXldGJ16m2zWvOkeS8O/AM+8Xc1BHZ96MueY0x+jWp1dP/CxuufSO+BTmulG
-	xuv0Kja/mfHTiWaB7gI2S0ZNJhWTYMhyu7PwnP4W1G6us0WMRiWFFMbYIvdb0q3+
-	0tv1SQXyveVIoOcnZswzF/+197jf5L9oLP3pP96e2BdnrhCNLUTDuS9EwMuFUsDj
-	2A/RKm5hvqK/aAAVCYf/RIbpjteLpO6fHT/AZTZSXS7BGZPYmGGtXMgO3org==
+	:subject:to:to; s=fm2; t=1736958333; x=1737044733; bh=FyhdzcndW+
+	qjCfxG1HW4fb75SUCLqBXUkgZoYyEo6D4=; b=iQXqX6iSLKJ/ne1pJtCCI1y+ci
+	ty7kHXIq/8NN/ynP6yKgkywjoRSW3bceQu/0GTy3Ej26U9qkip0Bg+HhU0dz3M3o
+	crqsCdFBFBku7emRQgbKKsQ6OHLwPcHysWhwAiRmY5yHe/sS9u6AV0UsUPzpDfjw
+	gdkaZm7vjKYjt1eh2liXPzIYouayXM8IietYERku6ca8sVdkjPGdaH3UnxsiBBO4
+	LJ3WodlPkysI4LPOeIiWbAsTDTA0nqhd8BmKlrnhgUwBYQfalnnfYaFe0PxE7PzH
+	th+Gh0AvTgoAso6mUfiidJnt/nd9aFPOVP0rf2FrX3F2Kewh12SW+sVyicSQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736958259; x=1737044659; bh=rOzzPbThCMF/GRl7nxRsfaLMr9O9ZMU9uSv
-	6ogJluhA=; b=o/1wT97o3RFvhXwnN56JEyFhHN4wVnHPe8HK7u+nvqLAZzNMowe
-	C51Qq9lAb+k18Svv5WBBFX5zNiA6yNwHjLgapw+ioQ5xVP/YzMSYxaO+yuFDAsUm
-	wqtYakSbEgb2th4ADso0OHPbtQK6aWayDS7TbgFM1JkyroZuxwE05iMXYJ0Tzcue
-	8cV+YY2t3O+sDPaK0NA13aOcd4IXqqbrM3twLiPNMiZ5J1oXhdTSVE2YBvzJkejI
-	Hxa160sAVsBefUmmLSjeRP29+nFaGm3JnubnU+vZhSqK/KAEokKbKpFLnFuKjjwA
-	844PwP8OAVXsshr1xq6eQ8yoyoIz3JUhSbw==
-X-ME-Sender: <xms:M-GHZymSJwFqFjhDGD_wpFiwwGq1pXPVRTh3Em8iwmGF30XbSb8TGg>
-    <xme:M-GHZ50t7J6oROh93MRHVBin_-KW2Pfy9h42DCRkLb0BLPw1gvAr-PPREdUg1APRW
-    i1RQJg6z1bfhAeoZA>
-X-ME-Received: <xmr:M-GHZwrSpgWb1aA4KEz1yFsJkxLRz7iQvLagnm_eqC66YYlaM6U9Z0DBACIRU12WkVE_JNynLBzxWWk20qZ2WD7LfQaZaLc3COeW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledgieduucetufdoteggodetrfdotf
+	1736958333; x=1737044733; bh=FyhdzcndW+qjCfxG1HW4fb75SUCLqBXUkgZ
+	oYyEo6D4=; b=ht/01aFtOD+lq3DG1vRhRt/WhthAHQXHUIGV7pImV591SOrVYPD
+	4263cQjPpXqRS+gUKTWMWIlz65M4WUCu2hjuon8u5jiXKRYSl7oNGcCPwOOYfK40
+	+a+wnPe6igjm5/d3gO6s/R310GROD05RrpOv8dxalI3kXx63so4KtnpEbh1aFWmP
+	UzbX01HMMEWMWoNWOhn4T+RC78MLk/WGgxjIvJofhvSS/lXvM2DpuUXnVC6ffblj
+	zKvMfxcWOFi8rEf0Sr9VapZRuB+S0BNJJ7ONl1y3a9+F+dIOSVpGar3iesoW5Vre
+	LH0zsJKrXjuQZgJHdRD3V91lcpqt1hhq96w==
+X-ME-Sender: <xms:fOGHZ7ux_q3GBYi25sFsB-9fmu5Xq2BI0RBN20yBYQyIlcKEEL3Efw>
+    <xme:fOGHZ8fKeTPTwbeRHpXaGmTVBDS5owIBxTmQyvTmkO1aE8LgI-uADft-XRP9F1d_H
+    Q50GRlDuGP8-dwRJg>
+X-ME-Received: <xmr:fOGHZ-x43s9mMQMckmmLmd32h_CCSsp50z8CmmPBa5lj_H7h6oVg4OIrYxUpfQj9n7ktuEdrLeAXK1IHYQV6VIyHh1pH1kf1IdEufAwME-hoaGI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledgiedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgthhifrggssehlih
-    hnuhigqdhmieekkhdrohhrghdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:M-GHZ2nW19o6ava0AiRTV82R-XLnVNuHKs7aksZwwSLwcjtt9FVrIQ>
-    <xmx:M-GHZw1lmAsxEmpvto9b_eMK9m6MHJj1cLQneyTsNSbqCt3zBFKmKw>
-    <xmx:M-GHZ9tQj8nfvHCy9tOT_-0HP3585uRChb4ic1uK0y4gtnb-7g8PwA>
-    <xmx:M-GHZ8XAK3t3w0H99XLdfdZPR-eK3b0tlqlefwXme19jboHk9R9smg>
-    <xmx:M-GHZ0_LFBrPj6lgnpIlg6HoLPGg0Q9th8yyiXMinW3llkPSJNRQNvJ2>
-Feedback-ID: if26b431b:Fastmail
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepjeevudeggfffffeigeethffgieekveeffeehvedvgeei
+    teegueejleeihfeitdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkoh
+    hnshhtrghnthhinheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhi
+    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:fOGHZ6Pw0MgP6O-oO9j1bguyQDDDjCRLjIYPjTNSpEi2SlH8P-ToWg>
+    <xmx:fOGHZ7-rsKXIU5xnsSQSPs0zXr7YB0f9G19QUYqn_QDVnjP1nIuMuA>
+    <xmx:fOGHZ6VWgb2onKDkuXwvcNgL8AWYSVDDtZZPn2p_9M00sL_umycwLg>
+    <xmx:fOGHZ8ezo0xwFK4n5TX4z8_M4ITCbG3D3TEaonluLIAhbgf7IH0FMA>
+    <xmx:feGHZ3ZUd3d1JL9sSDh3D9kZM9Lpmg6jc_0MprKJRaKI_Z0yS2ZzIShj>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jan 2025 11:24:18 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-Cc: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/3] sideband: mask control characters
-In-Reply-To: <87sepk14yk.fsf@igel.home> (Andreas Schwab's message of "Wed, 15
-	Jan 2025 16:17:55 +0100")
-References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
-	<f7fb7a38333cf6527345e3dbefaeb2cd8ade6429.1736878772.git.gitgitgadget@gmail.com>
-	<87sepk14yk.fsf@igel.home>
-Date: Wed, 15 Jan 2025 08:24:17 -0800
-Message-ID: <xmqqo708yrim.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 15 Jan 2025 11:25:31 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 91bf0916 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 15 Jan 2025 16:25:28 +0000 (UTC)
+Date: Wed, 15 Jan 2025 17:25:27 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 00/10] compat/zlib: allow use of zlib-ng as backend
+Message-ID: <Z4fhd9UpI76vb6oB@pks.im>
+References: <20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im>
+ <20250114-b4-pks-compat-drop-uncompress2-v2-0-614a2158e34e@pks.im>
+ <xmqqjzax2nqw.fsf@gitster.g>
+ <xmqqa5bt2jc8.fsf@gitster.g>
+ <Z4dLeyF8N8PhYAZq@pks.im>
+ <20250115-eccentric-zebra-of-hail-c22ba0@lemur>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250115-eccentric-zebra-of-hail-c22ba0@lemur>
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+On Wed, Jan 15, 2025 at 10:50:36AM -0500, Konstantin Ryabitsev wrote:
+> On Wed, Jan 15, 2025 at 06:45:31AM +0100, Patrick Steinhardt wrote:
+> > I have in fact started using b4, as it makes most of the tedious
+> > housekeeping around patch series go away, and it indeed uses
+> > `--full-index` to generate patches. There isn't any way to change that,
+> > but I'll send a patch upstream that gives us an option to do so.
+> 
+> This was done as part of this change:
+> https://git.kernel.org/pub/scm/utils/b4/b4.git/commit/?id=23a9ddba10a057bfa9c438c0b50ac36d278ae022
+> 
+> I'm not sure why --full-index was added there -- I don't think it's needed for
+> --binary? Please feel free to send a fix for that.
 
-> On Jan 14 2025, Johannes Schindelin via GitGitGadget wrote:
->
->> diff --git a/sideband.c b/sideband.c
->> index 02805573fab..c0b1cb044a3 100644
->> --- a/sideband.c
->> +++ b/sideband.c
->> @@ -65,6 +65,19 @@ void list_config_color_sideband_slots(struct string_list *list, const char *pref
->>  		list_config_item(list, prefix, keywords[i].keyword);
->>  }
->>  
->> +static void strbuf_add_sanitized(struct strbuf *dest, const char *src, int n)
->> +{
->> +	strbuf_grow(dest, n);
->> +	for (; n && *src; src++, n--) {
->> +		if (!iscntrl(*src) || *src == '\t' || *src == '\n')
->
-> The argument of iscntrl needs to be converted to unsigned char.
+No, it shouldn't be needed. `--binary` implies `--full-index` for that
+particular binary diff anyway. I'll send a patch.
 
-If this were system-provided one, you are absolutely correct.
+> > My last patches haven't gotten any feedback though, so let's see how it
+> > goes.
+> 
+> I had to focus on infrastructure needs over the past few months, but I'm
+> starting on my b4 backlog soon.
 
-But I think this comes from 
+Fair enough, thanks!
 
-sane-ctype.h:15:#undef iscntrl
-sane-ctype.h:40:#define iscntrl(x) (sane_istest(x,GIT_CNTRL))
-
-and sane_istest() does the casting to uchar for us, so this may be
-OK (even if it may be a bit misleading).
-
+Patrick
