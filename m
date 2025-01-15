@@ -1,125 +1,120 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4DE1D5143
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 09:51:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B5422F3A4
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 10:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736934718; cv=none; b=GUWo6Zhtq+MLlZo7l7RZk0zkndP8IuPwPvQQjNDlZNXvUcLW1YJrnkqG6COfpUtGcV+Y/W4LYmNIykkT6uKFHVqug+DTAWvFqX8keq56vW68krf2fuAm8sf8G/071Gv4eobo5RYSBaWA+Jf0YAPmkrQQ332sC/DHLdbRksTZk1I=
+	t=1736936511; cv=none; b=EmsJWqNNF6jqe1Ap9xqEpba0lz5RbROlRVui1QsaVt2Zk7UdUEALTZ/ACKHx4hs6lZ5hfLKPr2YjDZAEs/AQt6q2jYGEjodt2vSexiz72vCDpV4HsPBbItmgBROdvhubOJQC+hXUIvjPp8wucz8OBjTWEA343NK8jyECSuSDFVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736934718; c=relaxed/simple;
-	bh=zf17f0QOQ427GXdtIkWJniYn8GTjqnRIi+8Fm4jV2yE=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=NLvjVU8M9bwBJEEqzp9nIO6axwaCJvABPitfvAcqvLE6mj4A4xu0jyGgBbipV3KVVPYVDZ6G3hNQ4M27z0LyzbKqb/xbKNeKrV5KJ5GaniSqU9Rm0iF0gQSIN5CimEccmXoYOzIbJO4f+PwWxjGwCY1pFHpqEohO5eA5Z1YLTLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=aV+vxDrl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fl+7I2+T; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1736936511; c=relaxed/simple;
+	bh=03/iBnETHqKNIYo9SavHPo92ZmbIVDv4n7xWWH3oUXg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZmunquHfXdehXk/Sk7BfX438pFg88Z2o5SBnS6RbEn8y6njtp1xy+FB3EpwNqHpcOFtU7AquIrz9ySCqA73YaFwpCAzlvW8ylGl2hmbVWauM4yNYjiGidLmR6EFOgOQSnT4yzVW+umB0tw8ldUG3rAK2PmTVhTLGLjYICLLh7ck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AVlFRtUk; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="aV+vxDrl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fl+7I2+T"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 14B4013801C6;
-	Wed, 15 Jan 2025 04:51:55 -0500 (EST)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 15 Jan 2025 04:51:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736934715;
-	 x=1737021115; bh=60L3qMF7mRVStNIiTjKKNkeTM5dUyeV/hTLtvnV8z08=; b=
-	aV+vxDrlmrOPxFhxS1BeF6STbhTVAl8KIRiWQQW95QmBvvjkukgTnMe9IaDuNo4f
-	CryhEOVYrY4KI71N5UDag6EgLxUZ+gRlvtT8I1YpVkbfplof1noVNDBXn/e/kIf/
-	5O70CzQBkq6SfQQRmzQugY8354tTDfc+oe333otGj89gAVMuDn80z2nyEgYH4vkd
-	HAnWweZd9lMoYXoIK07CoeUCcLTh6V0mJtkwDo1SLtsfdm6rMr9fCstU5bfys3DH
-	EboXqXUxDg4SpVxBWyP3ZFa62mWLElXaa+F+yXbU1oXYWV+szjoji9Kzh71Iaq6x
-	3GrJKFKZSaUAf0QTJsvVDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736934715; x=
-	1737021115; bh=60L3qMF7mRVStNIiTjKKNkeTM5dUyeV/hTLtvnV8z08=; b=F
-	l+7I2+TEQOB3ctir5KQnq3fdIoLgymXFxgjgWvQoYn199RdMiGMEFy4EB4dPJ2+G
-	caz4EEb3up8lAIzDMzwUAVmuLmQt6C0Fdwvv80b0IRhBaGWBPty1xvkckP4BTK+O
-	+bvbxW6mb0Q/ymuxHjjwW0Ji4R3GzubnEuQOrb/RQIpdI8X4qPgHZDKS3KFANubQ
-	P8/Ejma9P0sVRsqw6nTEhXUTH/XIpQBUiH82ERC9NCQGfLCVQwx4YpLMd0N2pXTt
-	mzL1F5PQvWp9Vl3+JyoFiGQ9Roi9Icn+KzwEq2pTNJ+gt3U5HFJNiMWmosbSvZX9
-	U3irUxGCtu1AmtY4NvGJw==
-X-ME-Sender: <xms:OoWHZ_xXibZDot9LmWI0gB1kZKdX3hDQqQF0DdxxPzZYqlDAEgC9DSY>
-    <xme:OoWHZ3T6zAm1umkSqN5qigea0sZ03YOABm6fMCHVWHkBkzOT-1jOuim7d8n_xXcgp
-    lUNyXB8kXLw5yyM3Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehkedgtdelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
-    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
-    thhtvghrnhephedugfevgfefgfffvdfhffdvveevgeehhedutedvgfeuffejveejudegve
-    efvdefnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigv
-    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptghhohiflhgvthhttdelsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:OoWHZ5Uzm8fmqPxcze4PHxr8KqSBmhjEbrNVKWp3oD-diqWylvXP6Q>
-    <xmx:OoWHZ5hArHUrenSzdEg4GnBT3whLUeJT9g5Z_SK_jhYOjoJXgOo5WQ>
-    <xmx:OoWHZxDVw3SRSyQgJNDg0TIcTYA_Tc75UgnaVTWJbc2pOrKq29qlJg>
-    <xmx:OoWHZyK0dHQbYLlaI0dMEQbB10zI-vQpoxLiLcgJL37QtxtrN6G__A>
-    <xmx:O4WHZ0N0riaEJCbIstfpTu3B0EycNteyFKk6xUsiVmYdT-NyegiJcRBY>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id D4118780068; Wed, 15 Jan 2025 04:51:54 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AVlFRtUk"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e549be93d5eso11783892276.1
+        for <git@vger.kernel.org>; Wed, 15 Jan 2025 02:21:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736936509; x=1737541309; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=enWaYvRl6UVRVnvi1hZ47+PsqlyB7KklLr9ma7iUaNM=;
+        b=AVlFRtUkdFWzXMQ641MMoCDuoKyd0GKQQpkBL8ubkjdVY7ZQZsCAOsTtuNrfn6k+TA
+         /2BJfXgNbjXzUhhQlDR9uOazadx7fKVPP8SIgWcTOoTKUoIQ0Fp1cz7VJfqrNiT0zZgP
+         mTzX1YsTof9uHzEhUj5tRTnAPvw+vnnbHucNQDlOADSKRwMTceY53itGJnl1DhFzYzaD
+         xjMu03pJG6FPpirq1KHP43EPKp2jPpOgizd1gInzEJjiuPPPv3jWrJQFyvma3QOGaiGb
+         6brdDBkRhm+s8ALg/cbufmYROgT9PPTO7ej8NUIpAzzI4OABzxS264/i0W2fVjs2ppp1
+         bmRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736936509; x=1737541309;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=enWaYvRl6UVRVnvi1hZ47+PsqlyB7KklLr9ma7iUaNM=;
+        b=mrj+lxCtpVogW0VBWTNIvtmFWx1k76kZHHtxF3jyKdIP62VeGdMdH0TqA008bYcAy7
+         G9XzIrY3CYKKzSIHOlngsZCEbaugHjW8bzuOyn+xUMO+lU4eiXva222JEJZKY5RMMvVW
+         Vr1aDawXd+8WzM+9ylpMf79+PYDgZi1PFq46LC54tj3sS4xgzOs9CyOYLtKtDunaqtFj
+         2/73CA8TW6aeO3uLHTbjBjqQLe/tuXMhj+pEBHmH0vlHHrKA28am2mkv6hx/Vs0ojF48
+         X2KVfX2Kw+8KM0YezOdrKZ8KDB+uBq9W6E/mt8LiiZYZNVAW0yH4xn7fcd+VN0R4eNmu
+         /bkA==
+X-Forwarded-Encrypted: i=1; AJvYcCU6ESNa/w9xqYb+vjrM+s5NBg2NujQDM4cjXjfbH53OHRR+Zc6h2QLET7gBwfiKONX3Eps=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxctY08FubptdQVciGnGhfCxEIDx8Yo2S2h/oGdTkw/ciiox+ap
+	sJVxNReDypMwd8gmXD67UdGDP3X+ufmLAeLknMAwPpsGhNOpNKCSyZhksCuKHTgPnBrrBTHRKZ3
+	lF8bPd2EVYh+AKmwYOlp9oZRJJxrzD0P1Zwo=
+X-Gm-Gg: ASbGnctg+gD84lFOouHko4J2p60ezaxuIo09s8yLFqAHBHtJG2ns073pa32vPKuOU51
+	DY0ezWcW/mJ7eGiJOpDbcbgvFBF5v5knPPT/TCw==
+X-Google-Smtp-Source: AGHT+IGJYLaoqYWk49iRDLo/1Vx+QRdb+hc/k84TfF5TFUo4T4tamBPFYDk0OgMLV63NRVWIh1ZTYLbWstbimd7EY7U=
+X-Received: by 2002:a05:6902:2384:b0:e57:4ff4:f86e with SMTP id
+ 3f1490d57ef6-e574ff4fa6amr9916124276.19.1736936508977; Wed, 15 Jan 2025
+ 02:21:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 15 Jan 2025 10:51:25 +0100
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "Chris Howlett" <chowlett09@gmail.com>
-Message-Id: <1c220376-4b4b-425f-9797-abd1728aacc2@app.fastmail.com>
-In-Reply-To: <pull.1852.git.1736933815236.gitgitgadget@gmail.com>
-References: <pull.1852.git.1736933815236.gitgitgadget@gmail.com>
+References: <pull.1852.git.1736933815236.gitgitgadget@gmail.com> <1c220376-4b4b-425f-9797-abd1728aacc2@app.fastmail.com>
+In-Reply-To: <1c220376-4b4b-425f-9797-abd1728aacc2@app.fastmail.com>
+From: Chris Howlett <chowlett09@gmail.com>
+Date: Wed, 15 Jan 2025 10:21:38 +0000
+X-Gm-Features: AbW1kvYms_AjKHaY8zLL6j39l-0idlYVWFhJfHhRujE-B2qtyLfoldzJuMrQM1o
+Message-ID: <CAJVagJ=3uxcCpEivkpW5_HTxdL9Sa9Ymqm1iJQHUJ+=9XneLSg@mail.gmail.com>
 Subject: Re: [PATCH] help: add prompt-yes setting for autocorrect
-Content-Type: text/plain; charset=utf-8
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: Josh Soref <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 15, 2025, at 10:36, Chris Howlett via GitGitGadget wrote:
-> From: Chris Howlett <chowlett09@gmail.com>
+On Wed, 15 Jan 2025 at 09:51, Kristoffer Haugsbakk
+<kristofferhaugsbakk@fastmail.com> wrote:
 >
-> The help.autocorrect functionality is really useful, saving frustration
-> when a dev fat-fingers a command, and git has a pretty good idea what
-> was originally intended. The config settings are a nice selection, with
-> "prompt" asking the user to confirm that they want to run the assumed
-> command.
+> On Wed, Jan 15, 2025, at 10:36, Chris Howlett via GitGitGadget wrote:
+> > From: Chris Howlett <chowlett09@gmail.com>
+> >
+> > The help.autocorrect functionality is really useful, saving frustration
+> > when a dev fat-fingers a command, and git has a pretty good idea what
+> > was originally intended. The config settings are a nice selection, with
+> > "prompt" asking the user to confirm that they want to run the assumed
+> > command.
+> >
+> > However, with "prompt", the choice defaults to "No" - that is, hitting
+> > return will _not_ run the command. For me at least, if git is confident
+> > it knows which command I wanted, it's usually right, and the golden pat=
+h
+> > would be to run the command.
+> >
+> > Therefore this patch adds "prompt-yes" as a counterpart config setting
+> > for help.autocorrect, which does the same as "prompt", but defaults to
+> > "Yes" - hitting return will run the assumed command.
+> >
+> > I have not added any tests because the test suite doesn't have any test=
+s
+> > (that I could find) for the "prompt" behaviour - I'm assuming this is
+> > because it's hard/impossible to simulate the interactive terminal promp=
+t
+> >
+> > Signed-off-by: Chris Howlett <chowlett09@gmail.com>
 >
-> However, with "prompt", the choice defaults to "No" - that is, hitting
-> return will _not_ run the command. For me at least, if git is confident
-> it knows which command I wanted, it's usually right, and the golden pa=
-th
-> would be to run the command.
+> This seems to conflict with the patch =E2=80=9Chelp: interpret boolean st=
+ring
+> values for help.autocorrect=E2=80=9D which is in `seen`.  The latest vers=
+ion (I
+> don=E2=80=99t know what version is applied right now):
 >
-> Therefore this patch adds "prompt-yes" as a counterpart config setting
-> for help.autocorrect, which does the same as "prompt", but defaults to
-> "Yes" - hitting return will run the assumed command.
->
-> I have not added any tests because the test suite doesn't have any tes=
-ts
-> (that I could find) for the "prompt" behaviour - I'm assuming this is
-> because it's hard/impossible to simulate the interactive terminal prom=
-pt
->
-> Signed-off-by: Chris Howlett <chowlett09@gmail.com>
+> https://lore.kernel.org/git/pull.1869.v4.git.git.1736760824201.gitgitgadg=
+et@gmail.com/
 
-This seems to conflict with the patch =E2=80=9Chelp: interpret boolean s=
-tring
-values for help.autocorrect=E2=80=9D which is in `seen`.  The latest ver=
-sion (I
-don=E2=80=99t know what version is applied right now):
+That's unsurprising, as I was inspired to add this option after
+reading that committer's blog post on help.autocorrect -
+https://blog.gitbutler.com/why-is-git-autocorrect-too-fast-for-formula-one-=
+drivers/
 
-https://lore.kernel.org/git/pull.1869.v4.git.git.1736760824201.gitgitgad=
-get@gmail.com/
+I'm happy to wait for their patch to be merged, then rebase and rework
+against it, if that seems the most sensible option? Presumably I'll
+have to monitor the mailing list to learn when that happens? This is
+my first patch to git, so I'm not sure of process.
