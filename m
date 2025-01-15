@@ -1,230 +1,115 @@
-Received: from UDCM-WWU1.UNI-MUENSTER.DE (udcm-wwu1.uni-muenster.de [128.176.118.7])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AEC19C569
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 17:14:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.176.118.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDD7C15855C
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 17:19:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736961285; cv=none; b=RBGmbT/moiCFTjgT+8/aaF49CDBqKzxQi+anq3PFI3Xl8KtsT5KMcLqq2/CvcGvsTraefD1HYLr0tnGVrVxCDcFH72iVVPN3+xBD4AO1Cp7k+lFCEhdYJkrTVVN6hhnM+fLuEplGT9w4AXIyQek8rLqBc4wJJDKAvSXtA+IE5Wk=
+	t=1736961568; cv=none; b=bRsgXu7onDkCbZKKIm9vJXFhZMGObWZTniNcNa4JqbdpOHiLLde7LNd/AvNQhnbKY/RPvidk2IEH1jnp2eXfWhgsDNykDk5raIiKz6qRDFC7pqLKVci7L2vpExPzXJHlvjCv0ESQHAQMQVajN+BjadAb8BI0WDuMskIPTd7GDRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736961285; c=relaxed/simple;
-	bh=rRhTALXhQXYycZ30pZeTH3eYTdpOOpYg7hCIZlTzuLY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SLKDN+PKB/fATU6/Xnw7CrgLG62JJ0HLxemiSo9ZKmBWZGuUnwCPWMw1hT3Wa3nsAycPKEO2YCrPSnkOKnbpHnHyteA3KkSG0RlOcvI0XI/n7txndzeOoIXepo5OaETNK6mqupfq5Vzeu8GxFizzPjoeHAe/mri1OJos+j7sblE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uni-muenster.de; spf=pass smtp.mailfrom=uni-muenster.de; dkim=pass (2048-bit key) header.d=uni-muenster.de header.i=@uni-muenster.de header.b=LlVqfSud; arc=none smtp.client-ip=128.176.118.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uni-muenster.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uni-muenster.de
+	s=arc-20240116; t=1736961568; c=relaxed/simple;
+	bh=Ek9+JKkKb4sLNEXc6dWCYLw5txNA4xrCK/Du/hoT9Es=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZLDkyUIW5NDzHf77PFoQmW/0eDG53j7Ys1s9WPw2gIg1reHWWrRqPntzYqwiw93+t3GGX88lboxXnxRhYrhyhp04eOE6bRaRTk0BrNTwVTjg0M2MRM0Iznk/VOnM/kdIwLN1rb/itagHk1EsB8ytJOkugOol844250qVRK3+ymo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VyFEFEWY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pjef4tF3; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=uni-muenster.de header.i=@uni-muenster.de header.b="LlVqfSud"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=uni-muenster.de; i=@uni-muenster.de; q=dns/txt;
-  s=uniout; t=1736961281; x=1768497281;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to;
-  bh=rRhTALXhQXYycZ30pZeTH3eYTdpOOpYg7hCIZlTzuLY=;
-  b=LlVqfSudUrMXK6Y5uZ2ozdu0I+SbioHmBq6DtmoimL0yPMqiqjq/EHQx
-   CWLn6q+EVgANL6lBBrJuCH8556eKM+g9yhl0RnGUMbydgIFg9v7bUb6sL
-   vSKXtl8xWuzgZVBgCnsXeYXRKY+Qf2jxt2LCCqv7sHOwA+hTA2x0sMKFH
-   oCsHFvFJHUpXLKqVR0PwRNCLDR8SuSNd3cabHw34c6EnK8Ee/rVZR/iF3
-   eY/Pv23rJf9GpVQLrlEt9e6kp5b/Y2i+WR70BZwPtmsJvZEeO68MjzprF
-   FKTl4GXKUwkpAF0+U5yYYRlje65p3BWjjr+JUH7PchgAcbqTNzFxR2jeV
-   Q==;
-X-CSE-ConnectionGUID: A+gakIClSt2WoS+Q5579dg==
-X-CSE-MsgGUID: hOmkYR9nSjyu4YgqiJVeCw==
-X-IronPort-AV: E=Sophos;i="6.13,206,1732575600"; 
-   d="p7s'346?scan'346,208,346";a="353096849"
-Received: from secmail.uni-muenster.de ([128.176.118.4])
-  by UDCM-RELAY1.UNI-MUENSTER.DE with ESMTP; 15 Jan 2025 18:14:38 +0100
-Received: from [10.6.11.4] (jeannedarc.uni-muenster.de [10.6.11.4])
-	by SECMAIL.UNI-MUENSTER.DE (Postfix) with ESMTPSA id A999B20ADF12;
-	Wed, 15 Jan 2025 18:14:37 +0100 (CET)
-Message-ID: <c8365a5f-bcda-40c5-bcf5-ebfd9a04ae64@uni-muenster.de>
-Date: Wed, 15 Jan 2025 18:14:36 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VyFEFEWY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pjef4tF3"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id AF8D411401A4;
+	Wed, 15 Jan 2025 12:19:25 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 15 Jan 2025 12:19:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1736961565; x=1737047965; bh=7uWvzWxhmq
+	91AjhyGzYRbP5SY06F8IjQjSlNpC9O/Rk=; b=VyFEFEWYpdwLax8GmodRRnNMSg
+	AGi5Jdt2Ju1yWl2M6h+sl7vCZovTH5dRRK2oDyGD0w9hML/jyFfdDAP5Kg50xmv8
+	hcut9ymcyQuT3fUt2r62UfjSZog4wdk4NuQM2X28q+4nF6OeETHazM82+o9kf7nS
+	T51ZMY/MtPZWqp6+si4l9bkNkoZQFS5kpWSLOT2qSoi2e4LyAVJunnCRc2vueStd
+	1BP0yrFfNmsFKPLhYFJXuCSQVuc686yGBkEA5zC7Mg3ZzASQhc0iqCjMqBcNXVt8
+	TZsf77UOvGkvlpz3PvCKo7pN8XBWn8CRzlj2zGr11s1HVg3pCj1C7Gm19WSQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736961565; x=1737047965; bh=7uWvzWxhmq91AjhyGzYRbP5SY06F8IjQjSl
+	NpC9O/Rk=; b=pjef4tF3ealD9shAeDjulHRkhUn1LmI/F/WSXexn8jJ4qJTEZ25
+	s6Y+318DIkx3JY+971gv5jG/H82ViuaJ6jcJ5pDL3a+eTuYBU7QDZ0GOGCM76/uw
+	5jKEXn/FO3xkbhgOPBc04zaKrczmq9FvkMiIyHPQVhI1WJoLu5Wr+JghTvM4XKIB
+	fBQ/MQwU+D65t5Or+0QRDh4TIFjBUU/YGQjdls9s3QXugsDOYJoehVDU5YiUBynW
+	7azcTKOtqWCMDpq3I6XWefUYlDyzcBQ1sn9kVIi/27mVdLCk7XPeQgp4iD5cvlz2
+	VuiDf9ySeby5vvH4S1aZ9oQQDJGJBY7A8BA==
+X-ME-Sender: <xms:He6HZ4Ge4PwG7z3le0afFj-hA3P11yIZdHD47KhNNdbxJYJTPwUKew>
+    <xme:He6HZxV_7b555s76o8SpyLRoUYdfVz4_kZ-zn0WAKmTvC6xfJoWCd8tXxLOQaPQY3
+    OdZkfmq-HjdAeKBzg>
+X-ME-Received: <xmr:He6HZyJSCACcXECGricHhcfwXxXNNN1ztC8n_v7rkht5UEPogJzq2_--_eUcdcU8Uu8PU1CBuqVQQAo4L3fxcRD7iY6kJPONvyi4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledgjedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvg
+    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhgtvghp
+    lhestggvphhlrdgvuhdprhgtphhtthhopehjohhnrghsrdhkohhnrhgrugesuhhnihdqmh
+    huvghnshhtvghrrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:He6HZ6HwkPWYnR0J2ucuoblgOpXx3J5RY0a2OT6W1CFDlRyA6sKXqw>
+    <xmx:He6HZ-XelnVH_xKpnIZLTJN9sRv1f24S32HCW7Xyzbf1Ft9n2Soqmg>
+    <xmx:He6HZ9NBgS-21TYhn1SfO6p6lmQjgIPSpbwDsEJGr1g-PK4TFjfv6Q>
+    <xmx:He6HZ10qTnY_Mxol7zW7e3jrPUwK7gBF9XynQE4GRTC3Ay1IE7c5fQ>
+    <xmx:He6HZwdQEJlDwC3SqJLQOw-Htxnpj8JjVXLQCqZNzrlZ3_Z-XYxEwcIJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Jan 2025 12:19:24 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: =?utf-8?Q?Mat=C4=9Bj?= Cepl <mcepl@cepl.eu>,  "Jonas Konrad"
+ <jonas.konrad@uni-muenster.de>,  git@vger.kernel.org
+Subject: Re: Git branch outputs usage message on stderr
+In-Reply-To: <c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 15 Jan 2025 17:55:19 +0100")
+References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
+	<D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu> <xmqqed1414gt.fsf@gitster.g>
+	<c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
+Date: Wed, 15 Jan 2025 09:19:23 -0800
+Message-ID: <xmqq34hkyoys.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git branch outputs usage message on stderr
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Mat=C4=9Bj_Cepl?=
- <mcepl@cepl.eu>
-Cc: git@vger.kernel.org
-References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
- <D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu> <xmqqed1414gt.fsf@gitster.g>
- <c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
-From: Jonas Konrad <jonas.konrad@uni-muenster.de>
-Content-Language: en-US, de-DE
-Organization: =?UTF-8?Q?University_M=C3=BCnster?=
-In-Reply-To: <c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-512; boundary="------------ms060200000201030804030705"
+Content-Type: text/plain
 
-This is a cryptographically signed message in MIME format.
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
---------------ms060200000201030804030705
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+> On Wed, Jan 15, 2025, at 16:28, Junio C Hamano wrote:
+>> Somebody may want to go over "git help --all" and for each of them
+>> try "git $cmd -h >/dev/null" to find those that give the help output
+>> to their standard error stream.
+>
+>     #!/bin/sh
+>
+>     for cmd in $(git --list-cmds=builtins); do
+>         git $cmd -h >/dev/null
+>     done 2>&1 | grep '^usage: ' \
+>         | perl -pe 's/^usage:\s*(\(EXPERIMENTAL!\)\s*)?//; s/^(git\s+[a-zA-Z0-9-]+).*/\1/'
+>
+> Gives ...
 
-T24gMTUuMDEuMjUgMTc6NTUsIEtyaXN0b2ZmZXIgSGF1Z3NiYWtrIHdyb3RlOg0KPiBPbiBX
-ZWQsIEphbiAxNSwgMjAyNSwgYXQgMTY6MjgsIEp1bmlvIEMgSGFtYW5vIHdyb3RlOg0KPj4g
-U29tZWJvZHkgbWF5IHdhbnQgdG8gZ28gb3ZlciAiZ2l0IGhlbHAgLS1hbGwiIGFuZCBmb3Ig
-ZWFjaCBvZiB0aGVtDQo+PiB0cnkgImdpdCAkY21kIC1oID4vZGV2L251bGwiIHRvIGZpbmQg
-dGhvc2UgdGhhdCBnaXZlIHRoZSBoZWxwIG91dHB1dA0KPj4gdG8gdGhlaXIgc3RhbmRhcmQg
-ZXJyb3Igc3RyZWFtLg0KPiAgICAgICMhL2Jpbi9zaA0KPg0KPiAgICAgIGZvciBjbWQgaW4g
-JChnaXQgLS1saXN0LWNtZHM9YnVpbHRpbnMpOyBkbw0KPiAgICAgICAgICBnaXQgJGNtZCAt
-aCA+L2Rldi9udWxsDQo+ICAgICAgZG9uZSAyPiYxIHwgZ3JlcCAnXnVzYWdlOiAnIFwNCj4g
-ICAgICAgICAgfCBwZXJsIC1wZSAncy9edXNhZ2U6XHMqKFwoRVhQRVJJTUVOVEFMIVwpXHMq
-KT8vLzsgcy9eKGdpdFxzK1thLXpBLVowLTktXSspLiovXDEvJw0KPg0KPiBHaXZlcw0KPg0K
-PiAgICAgIGdpdCBhbQ0KPiAgICAgIFsuLi5dDQo+IEZvcg0KPg0KPiAgICAgICQgZ2l0IHZl
-cnNpb24NCj4gICAgICBnaXQgdmVyc2lvbiAyLjQ4LjANCg0KV2FzIGp1c3QgYWJvdXQgdG8g
-c2hhcmUgdGhlIHZlcnkgc2FtZSByZXN1bHRzLCBsZWFkaW5nIHRvIDQwIGNvbW1hbmRzIA0K
-b3V0IG9mIDE0MiBidWlsdC1pbnMgb3V0cHV0dGluZyB0aGVpciB1c2FnZSBpbmZvIHRvIHN0
-ZGVyci4gU29tZSANCmFkZGl0aW9ucyBvbiBub24tYnVpbHRpbnM6IGdpdC1zY2FsYXIgYWxz
-byBvdXRwdXRzIGl0cyB1c2FnZSBpbmZvIHRvIA0Kc3RkZXJyLiBnaXQtbGZzIGRvZXMgbm90
-IGhhdmUgInVzYWdlIHRleHQgZm9yIC1oIi4gSSBoYXZlIG5vdCB0ZXN0ZWQgDQpnaXQtc3Zu
-IGFuZCBnaXQtY3Zzc2VydmVyIHByb3Blcmx5IChkbyBub3QgaGF2ZSBpbnN0YWxsZWQgdGhl
-IHJlc3BlY3RpdmUgDQptb2R1bGVzKS4gT24gYW5vdGhlciBub3RlLCBnaXQtcDQgZG9lcyBu
-b3Qga25vdyAiLWgiLCBidXQgdGhlbiBnaXZlcyANCnVzYWdlIGluZm8gLSB0byBzdGRvdXQo
-ISkpLiBMYXN0bHksIGlmIHlvdSBzdGlsbCByZWFkLCB0ZXN0IA0KZ2l0LWh0dHAtYmFja2Vu
-ZCBhbmQgZ2l0LWZpbHRlci1icmFuY2gsIGFzIHRoZXkgc2hvdyBzcGVjaWFsIGJlaGF2aW9y
-Lg0KDQo=
+Being consistent is a good idea, and I wanted to first gauge which
+way we should unify.  It seems that those who spit their help text
+into their standard error stream are indeed in minority?
 
---------------ms060200000201030804030705
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+Thanks.
 
-MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgMFADCABgkqhkiG9w0BBwEAAKCC
-FcUwggbmMIIEzqADAgECAhAxAnDUNb6bJJr4VtDh4oVJMA0GCSqGSIb3DQEBDAUAMIGIMQsw
-CQYDVQQGEwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkx
-HjAcBgNVBAoTFVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJT
-QSBDZXJ0aWZpY2F0aW9uIEF1dGhvcml0eTAeFw0yMDAyMTgwMDAwMDBaFw0zMzA1MDEyMzU5
-NTlaMEYxCzAJBgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQD
-ExNHRUFOVCBQZXJzb25hbCBDQSA0MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA
-s0riIl4nW+kEWxQENTIgFK600jFAxs1QwB6hRMqvnkphfy2Q3mKbM2otpELKlgE8/3AQPYBo
-7p7yeORuPMnAuA+oMGRb2wbeSaLcZbpwXgfCvnKxmq97/kQkOFX706F9O7/h0yehHhDjUdyM
-yT0zMs4AMBDRrAFn/b2vR3j0BSYgoQs16oSqadM3p+d0vvH/YrRMtOhkvGpLuzL8m+LTAQWv
-QJ92NwCyKiHspoP4mLPJvVpEpDMnpDbRUQdftSpZzVKTNORvPrGPRLnJ0EEVCHR82LL6oz91
-5WkrgeCY9ImuulBn4uVsd9ZpubCgM/EXvVBlViKqusChSsZEn7juIsGIiDyaIhhLsd3amm8B
-S3bgK6AxdSMROND6hiHT182Lmf8C+gRHxQG9McvG35uUvRu8v7bPZiJRaT7ZC2f50P4lTlnb
-LvWpXv5yv7hheO8bMXltiyLweLB+VNvg+GnfL6TW3Aq1yF1yrZAZzR4MbpjTWdEdSLKvz8+0
-wCwscQ81nbDOwDt9vyZ+0eJXbRkWZiqScnwAg5/B1NUD4TrYlrI4n6zFp2pyYUOiuzP+as/A
-Znz63GvjFK69WODR2W/TK4D7VikEMhg18vhuRf4hxnWZOy0vhfDR/g3aJbdsGac+diahjEwz
-yB+UKJOCyzvecG8bZ/u/U8PsEMZg07iIPi8CAwEAAaOCAYswggGHMB8GA1UdIwQYMBaAFFN5
-v1qqK0rPVIDh2JvAnfKyA2bLMB0GA1UdDgQWBBRpAKHHIVj44MUbILAK3adRvxPZ5DAOBgNV
-HQ8BAf8EBAMCAYYwEgYDVR0TAQH/BAgwBgEB/wIBADAdBgNVHSUEFjAUBggrBgEFBQcDAgYI
-KwYBBQUHAwQwOAYDVR0gBDEwLzAtBgRVHSAAMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2Vj
-dGlnby5jb20vQ1BTMFAGA1UdHwRJMEcwRaBDoEGGP2h0dHA6Ly9jcmwudXNlcnRydXN0LmNv
-bS9VU0VSVHJ1c3RSU0FDZXJ0aWZpY2F0aW9uQXV0aG9yaXR5LmNybDB2BggrBgEFBQcBAQRq
-MGgwPwYIKwYBBQUHMAKGM2h0dHA6Ly9jcnQudXNlcnRydXN0LmNvbS9VU0VSVHJ1c3RSU0FB
-ZGRUcnVzdENBLmNydDAlBggrBgEFBQcwAYYZaHR0cDovL29jc3AudXNlcnRydXN0LmNvbTAN
-BgkqhkiG9w0BAQwFAAOCAgEACgVOew2PHxM5AP1v7GLGw+3tF6rjAcx43D9Hl110Q+BABABg
-lkrPkES/VyMZsfuds8fcDGvGE3o5UfjSno4sij0xdKut8zMazv8/4VMKPCA3EUS0tDUoL01u
-gDdqwlyXuYizeXyH2ICAQfXMtS+raz7mf741CZvO50OxMUMxqljeRfVPDJQJNHOYi2pxuxgj
-KDYx4hdZ9G2o+oLlHhu5+anMDkE8g0tffjRKn8I1D1BmrDdWR/IdbBOj6870abYvqys1qYlP
-otv5N5dm+XxQ8vlrvY7+kfQaAYeO3rP1DM8BGdpEqyFVa+I0rpJPhaZkeWW7cImDQFerHW9b
-KzBrCC815a3WrEhNpxh72ZJZNs1HYJ+29NTB6uu4NJjaMxpk+g2puNSm4b9uVjBbPO9V6sFS
-G+IBqE9ckX/1XjzJtY8Grqoo4SiRb6zcHhp3mxj3oqWi8SKNohAOKnUc7RIP6ss1hqIFyv0x
-XZor4N9tnzD0Fo0JDIURjDPEgo5WTdti/MdGTmKFQNqxyZuT9uSI2Xvhz8p+4pCYkiZqpahZ
-lHqMFxdw9XRZQgrP+cgtOkWEaiNkRBbvtvLdp7MCL2OsQhQEdEbUvDM9slzZXdI7NjJokVBq
-3O4pls3VD2z3L/bHVBe0rBERjyM2C/HSIh84rfmAqBgklzIOqXhd+4RzadUwggdpMIIFUaAD
-AgECAhAeKH2HETj0tZALXaFejQbDMA0GCSqGSIb3DQEBDAUAMEYxCzAJBgNVBAYTAk5MMRkw
-FwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQZXJzb25hbCBDQSA0
-MB4XDTI0MDQxNTAwMDAwMFoXDTI2MDQxNTIzNTk1OVowgYsxCzAJBgNVBAYTAkRFMRwwGgYD
-VQQIExNOb3JkcmhlaW4tV2VzdGZhbGVuMR4wHAYDVQQKDBVVbml2ZXJzaXTDpHQgTcO8bnN0
-ZXIxETAPBgNVBGETCEdPVkRFK05XMSswKQYJKoZIhvcNAQkBFhxqb25hcy5rb25yYWRAdW5p
-LW11ZW5zdGVyLmRlMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA64yTbhY0gfKy
-IJb2gEh4HKXbjAbpOOoSFqgqVHb2tNtjXE8JjS7nWuJ/EW4Tn0WeGx83PaYHGwou6uz+I4OO
-oQkxo9OF6s9nGPjMe9VaDyzDaseTG+HhYFhcC4KI83+LkJXajWPD9XmTnQEDedy6LVC/uPb8
-98fZ+6OySD111BqtUMHL+9DRhbxtRSN1XTQHdlE99iLpKfzabUYKH+c9Y6cSNDHsmZ9PosIi
-EauWlQO3glMLYBe7MO8sDo0oGBzPekD0ectF2wvCB/mZ+B+4RD2Zxhlwn5NgtEjTqCJKoOBz
-fSDQ0kSD/QcF5JlaVLuQtrFu+39p3zHSqeM7bGzZ9WoHHn0d0oICalwMjoc2qBUwmZh2mUIp
-iJ5+ZwkJjYRgtUCvMa90zcJZRl1IrANiqTFNqxS4kNy4i4h0niFEuKZm2q0gDSodSF3xNfWm
-z+NMr6DroZveVJo9gvXZJ3oUGc0uOnyPqljXpnGkFP1BjrHvllKmsLxOk89zbvVY+3cjc9RP
-+uhHBLLxzmiUPihH3JGooEekimwC4aUiGijj6KydfjLfaFXWGQF2nKx8uvmwsEv7kcpCAejq
-InyIakZ1hYVzKz1y9X6GI+Yt0/diyyZGdkYJGzjdAE2f/qq4I1fZMLNcn73IpBfu4wjsz0NF
-7e9vP3dy7JsD0d44reCLqLkCAwEAAaOCAgswggIHMB8GA1UdIwQYMBaAFGkAocchWPjgxRsg
-sArdp1G/E9nkMB0GA1UdDgQWBBS6SL7FpoxaCh8sXMiOPoWWGKUk3TAOBgNVHQ8BAf8EBAMC
-BaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYBBQUHAwIwUAYDVR0g
-BEkwRzA6BgwrBgEEAbIxAQIBCgMwKjAoBggrBgEFBQcCARYcaHR0cHM6Ly9zZWN0aWdvLmNv
-bS9TTUlNRUNQUzAJBgdngQwBBQICMEIGA1UdHwQ7MDkwN6A1oDOGMWh0dHA6Ly9HRUFOVC5j
-cmwuc2VjdGlnby5jb20vR0VBTlRQZXJzb25hbENBNC5jcmwweAYIKwYBBQUHAQEEbDBqMD0G
-CCsGAQUFBzAChjFodHRwOi8vR0VBTlQuY3J0LnNlY3RpZ28uY29tL0dFQU5UUGVyc29uYWxD
-QTQuY3J0MCkGCCsGAQUFBzABhh1odHRwOi8vR0VBTlQub2NzcC5zZWN0aWdvLmNvbTB4BgNV
-HREEcTBvgRhqLmtvbnJhZEB1bmktbXVlbnN0ZXIuZGWBHGprb25yYWQre0lEfUB1bmktbXVl
-bnN0ZXIuZGWBF2prb25yYWRAdW5pLW11ZW5zdGVyLmRlgRxqb25hcy5rb25yYWRAdW5pLW11
-ZW5zdGVyLmRlMA0GCSqGSIb3DQEBDAUAA4ICAQCnxbYL1kNm9x3nrVeXCuURcJE3NA4GUSDt
-m74UPHhfHD8vRmuVZa+1i/m0CEMLgmQjPpf3FcOTTAc7NX+7pSIP+fkayIr/LRKPJkvlBY+Q
-1L2Dns4CSdV6VJXJNrup5CEhXLWyy1G/SCFb0YknNqWQnqdEyPOYjLxnYLnCgwPBg0jM1yPA
-pI5xJom+/W/2djzg6FsxrWEBJnRkF3463a43YY6TI1H90WsyHb0ebVt2qSL+g5RusQXjPb47
-7w3GS07bNRvkvL+Oe/iNQubs9hy/pyrQeyZmsobp3FembLApDToqYJT4aMLyCdZsGe80lg+z
-tJlAygCzWRoxW1Uf758u9Voj5HWca2x4NrruA/UbwJ7Z+scdq2DOdHB4cWGmVTUXG87hL9Zh
-yKGt8NLBJ5R2LSpGNhZHw1H2X2kbzSCsRkd0oBYh06J9aA1FEa6EdYfV1zWSNB2bWRY9FWrM
-GRdEle6zAObiJt0vHcZHHFqknVGpgYXA7O3tEhd79HBYU6JOLgSbiIXmQzGmsLRz6+/N/Hwh
-Jqd8CxWpb3WjWo3fGZEw+jRiz651oTREwUp5Hb+rtvDIf7h3g3442SIekaaJupCKa88e/zkD
-wkd73Q96UmLXD8Cug6qIHgdxd75pIeInQ+13BRH08cS98BgwwapmGoGLvqvuYZqH22+WiinG
-tDCCB2owggVSoAMCAQICEQDu52Czgt0n4YtdGyqI6vj6MA0GCSqGSIb3DQEBDAUAMEYxCzAJ
-BgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBWZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQ
-ZXJzb25hbCBDQSA0MB4XDTI0MDQxNTAwMDAwMFoXDTI2MDQxNTIzNTk1OVowgYsxCzAJBgNV
-BAYTAkRFMRwwGgYDVQQIExNOb3JkcmhlaW4tV2VzdGZhbGVuMR4wHAYDVQQKDBVVbml2ZXJz
-aXTDpHQgTcO8bnN0ZXIxETAPBgNVBGETCEdPVkRFK05XMSswKQYJKoZIhvcNAQkBFhxqb25h
-cy5rb25yYWRAdW5pLW11ZW5zdGVyLmRlMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKC
-AgEAoOVpuYgA4+/PNrMYc8OcHUhlwTBrzi4QAOZHmuS8K1P6D4vBMKrRa/ujMiB+TFOOX3/2
-j6KDXgP8+lzuA0sBtMx4WZR0kPUcIv31fHkE7BkYBOc4RNVxXKVas0OL6ziVkFmsRy8+iKLI
-Pk9HcmnewBQRnJfvMkfM6qYkZuQtdICXm+iF6RhSNcgBFmRYPfJOR2z3G8in6Vfkq5j6ifkO
-rFZwL3CMbvA5qjfPBYzjRa36jI6iKAa07N0Zot2mLUletOrLG+QqdXHjJZGVQvir/1LKuC5e
-Y4ynegAafPtJ+shVfawn5hzKctVUd5uZN9oCL+E7DYY0HEoRwz0fwTlFSjAgb928nbjmln/+
-AatIfHtKsxcFht1ds0d0nozNt4fNepVx91ZhUJ+f2+2aLLlMJ/jpl1M/M32dHNRTZ1G8iQpT
-VFmhu8a7MbSVeXgOh2MB7CjaskzcBCFFMa7WW7xNvHWOVLLWCfjZA5EGvIttBNp63o5ALMv6
-ASbjYKMjqIZBQIHNH814UuLUpM0vWLHYynOE874jXLHPBj5VTng52INpqINNy75SyXmfuMH9
-D/QraGzJJ6FcPc34lMP5DIUoVS3TOPbqqIxvvVQ/6IrpCH7i/6e6kxB1GqtxUUvFB/3n87WP
-luczmF7N5YcwR7FLAlejrJaX+h89Gc9GSANtI8sCAwEAAaOCAgswggIHMB8GA1UdIwQYMBaA
-FGkAocchWPjgxRsgsArdp1G/E9nkMB0GA1UdDgQWBBQhnA6L7qkHtBmGTJGLOAeMy61c4TAO
-BgNVHQ8BAf8EBAMCBaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEFBQcDBAYIKwYB
-BQUHAwIwUAYDVR0gBEkwRzA6BgwrBgEEAbIxAQIBCgMwKjAoBggrBgEFBQcCARYcaHR0cHM6
-Ly9zZWN0aWdvLmNvbS9TTUlNRUNQUzAJBgdngQwBBQICMEIGA1UdHwQ7MDkwN6A1oDOGMWh0
-dHA6Ly9HRUFOVC5jcmwuc2VjdGlnby5jb20vR0VBTlRQZXJzb25hbENBNC5jcmwweAYIKwYB
-BQUHAQEEbDBqMD0GCCsGAQUFBzAChjFodHRwOi8vR0VBTlQuY3J0LnNlY3RpZ28uY29tL0dF
-QU5UUGVyc29uYWxDQTQuY3J0MCkGCCsGAQUFBzABhh1odHRwOi8vR0VBTlQub2NzcC5zZWN0
-aWdvLmNvbTB4BgNVHREEcTBvgRhqLmtvbnJhZEB1bmktbXVlbnN0ZXIuZGWBHGprb25yYWQr
-e0lEfUB1bmktbXVlbnN0ZXIuZGWBF2prb25yYWRAdW5pLW11ZW5zdGVyLmRlgRxqb25hcy5r
-b25yYWRAdW5pLW11ZW5zdGVyLmRlMA0GCSqGSIb3DQEBDAUAA4ICAQBGZEAPaT6eC+FNS0b2
-YhSzKEnSO4n5ZLL8LpS+toLn9++rI6mHsyp6HCcenRIvpQYVXfjWziL3P158XQWk0JpTGKZ+
-6Cxk1ycvQUpGjxjk+VGC/EZ+jvuWuxgEmS766mupjJDWyPZujK/5BJuyzkaJYU0K9rLDbEe5
-TDflr1wevLgxDh0Y5jmbm0xQ6eMMLgLGOmlEh41uoHo6ZF53lZKalkhGXL9Tk0UXVPJdIK5Y
-RzPUU6yqgLux3IT9M6P37WmzNQ9PtSeGPBoAJJCxFqbXCdqH61xWDhOOIk3o92EqOBNQGLAc
-QDVscB0TIweY7HkW2q5CzyMRJEns91WZ3vqhED58U0/ZtCwqlgSOZL61jYaMY5UNaOHN7Ma7
-Rhf651F/Hafr1qmmbdDZL9GH6A96L2wNPzBAwrKEVpVDbSm4ZLElfrR4Ay4wU/zYUpHJsWne
-B9NZemwUwbHK8LRBcWxmMUDlJkjngPMEYZD/fAh9Zo36EWHT7Mdej08cFplYFLls3P2FKo93
-arnt/EOkPnQdwzZnfGDcnRlIYZn4X5vyIAQC8zksaopvVDv5tzqZNaqS0CylJLkSXLP/AJid
-yPTBYNtqV6pzpq05R364xTiXb7xYOdu02kV7fHeTIWVPD3lmqc06lrSTfVzSzCZ+hQ/q1++w
-uu/jHKSloxZ90YmfyjGCBUcwggVDAgEBMFowRjELMAkGA1UEBhMCTkwxGTAXBgNVBAoTEEdF
-QU5UIFZlcmVuaWdpbmcxHDAaBgNVBAMTE0dFQU5UIFBlcnNvbmFsIENBIDQCEB4ofYcROPS1
-kAtdoV6NBsMwDQYJYIZIAWUDBAIDBQCgggK+MBgGCSqGSIb3DQEJAzELBgkqhkiG9w0BBwEw
-HAYJKoZIhvcNAQkFMQ8XDTI1MDExNTE3MTM0OFowTwYJKoZIhvcNAQkEMUIEQIubx86moV9h
-VkIcDktlAWBjX/sHcS1wIf39kURVaxcQPk2+lP67pdrF4saWNW292L/g+92l57qPg0FKtAIm
-gBgwagYJKwYBBAGCNxAEMV0wWzBGMQswCQYDVQQGEwJOTDEZMBcGA1UEChMQR0VBTlQgVmVy
-ZW5pZ2luZzEcMBoGA1UEAxMTR0VBTlQgUGVyc29uYWwgQ0EgNAIRAO7nYLOC3Sfhi10bKojq
-+PowbAYLKoZIhvcNAQkQAgsxXaBbMEYxCzAJBgNVBAYTAk5MMRkwFwYDVQQKExBHRUFOVCBW
-ZXJlbmlnaW5nMRwwGgYDVQQDExNHRUFOVCBQZXJzb25hbCBDQSA0AhEA7udgs4LdJ+GLXRsq
-iOr4+jCCAVcGCSqGSIb3DQEJDzGCAUgwggFEMAsGCWCGSAFlAwQBKjALBglghkgBZQMEAQIw
-CgYIKoZIhvcNAwcwDQYIKoZIhvcNAwICAQUwDQYIKoZIhvcNAwICAQUwBwYFKw4DAgcwDQYI
-KoZIhvcNAwICAQUwBwYFKw4DAhowCwYJYIZIAWUDBAIBMAsGCWCGSAFlAwQCAjALBglghkgB
-ZQMEAgMwCwYJYIZIAWUDBAIEMAsGCWCGSAFlAwQCBzALBglghkgBZQMEAggwCwYJYIZIAWUD
-BAIJMAsGCWCGSAFlAwQCCjALBgkqhkiG9w0BAQEwCwYJK4EFEIZIPwACMAgGBiuBBAELADAI
-BgYrgQQBCwEwCAYGK4EEAQsCMAgGBiuBBAELAzALBgkrgQUQhkg/AAMwCAYGK4EEAQ4AMAgG
-BiuBBAEOATAIBgYrgQQBDgIwCAYGK4EEAQ4DMA0GCSqGSIb3DQEBAQUABIICAHNq0oleLno+
-EUSWfLnWph5hdLByXXrTAiEpWQcCgCGidwZRekm+1tUZR1X5MxZrCiLf6M0FaUZbW64XGq3O
-Y0xs27RMu7/CqBwsrZCKLETc7WFI3caXnIKUg9j02J31kxAgf7NgOBjWsikf4j+6zCdTv74h
-Uk+Tac3DIAcEXkY+iqq3JB+A2Ub21UYuM5DA5HXs+PBDq72hFaWHwDUz1rAJy1Cs09UKBJCw
-xCKhdzdDmNOVGRBRa7bwqtizCQgyfuE1VIumZ2bjJS6eaGq6W6CVeoRc4GAacmAw1G8aniPK
-tskGD8mrtR8nQUwhPHO+JiEZpyJxLSRf783hmZIj8PkrbVomWJKYnYWXPEtqq8BYRbnLRQ28
-7B4SLJW/yrMoxTuoWh4GB6tw/du/r9EKO6VXPxTQB/Z0Ou0vl+wRxDaOAfXc89ALh5PDDfHh
-2urnduNDrk38/irW98KxOXFRuvOjpetRQfbU0YibcGhIg+fZUSVxrPHlu+EzDB+4RcB0PHch
-HfLPeXu2u3ZgwFjVf2s8y1I1KwbXiERlME4il2i0bkNBjMScJE8Amo7+mD1CL+gMHtbjxvjd
-B2FTNJZuxlCgnARu2MDUzRlOv8WXgI/VLi/NEqqHLujvyO1jWkTIu0P9dDITZKK9C9mP56fR
-E9zP4+LfuuLUFt7YFHM47pKuAAAAAAAA
---------------ms060200000201030804030705--
+
