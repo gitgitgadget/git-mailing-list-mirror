@@ -1,142 +1,154 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF7C22E419
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 05:46:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B54471DB123
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 07:56:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736919983; cv=none; b=B2D5+OtXVqMzQwwRXNkPxcOK54SO0UddyGwO8GYZXaE6AAt4uPHvPZQZdz27nefqVERqCQs1cgNguJLI3bcOZXqOBJ2aa9Vu3JoJss7ZCwAgb49g100o+1Gf983qDpZO5yCnd4caPG8xgHwnrXt39TRuxyHBmpPir96Iu96HCHI=
+	t=1736927794; cv=none; b=rFkBkQVOj/2qtWXKNVQpblrEyU7i5HGmO9lN1zXJHiZVl42FMkJYOIoZUL/L+fgIV/pYnk2/Tbm9T0uIltJhbBdBRDcicYfg7dwFrQnvBDL9EepVH+QjpqiyTSAANPLvbr9xuU3BywTcZ+YgOBBr74X3VLFljYYTwCVKb81IlQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736919983; c=relaxed/simple;
-	bh=86vdsphsMeKfNwuZ3XmcriakvhC8yM3cnnqcC8JwTa0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vCb57SGL7MtJXj3QHSUN6vchoNgD7alV16fRLDbzv3CrDr6d//FLS3Gr2mT9JRQZ2L2no+7+cCQGRQcCyYyS3JVXP7wb3OdyUolzKi26vp7SPYz3XAFDJLob38NcGpCpLEWx3voXpvHiagg7beuwLU0xFgs/xEiKZLmcNR81DJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DmuT1nPZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lHbGSyc7; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736927794; c=relaxed/simple;
+	bh=F3qszXnlXUsAXMZi/2v9j0Q8DXFOjoV1J2J6HSLZinQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AS1uS8CJ0g2i1oTvdzGX+nPeOqhu+bDJYv1DGeM4oR3y2NKMpQSUvlrlhs55VusVfJwnmN/dHOyux2bT9NwYx2L3+QT4enxM3HNJ7OestAtPEaXhoXDJREDhp8c2PhBbhFOMaKwEos7MPAZ/ohmIgUL4b9tHX0EqL0E9xbOtOgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WvtPjHSK; arc=none smtp.client-ip=209.85.208.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DmuT1nPZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lHbGSyc7"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D24D825401D4;
-	Wed, 15 Jan 2025 00:46:20 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 15 Jan 2025 00:46:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736919980; x=1737006380; bh=1WSqvZs3s2
-	FCgPZfjdaLjipSUNPJ+MFUA292O7H9HRQ=; b=DmuT1nPZDv7v0gHwfbEHoBGovc
-	tJ0X4dy5QHhdFOXmMru2HH4l912jQxuWDfuEbLOrFOEQ/Vm8Kuf5nyHUH/QLLoTf
-	F+x8hCAmiA2bqQSS/fYDUquOgw/waNk9Tt1Fo2r9z6vNyqbcgRunYtD3yyzc67WN
-	/hUiifRsR5F39VTyRiSkAhDoDvJ67UBloJklrkWxeB2WmfUJpDciKnkiYcAxEeDX
-	m/LFP1tj2xZHzon4O+eZ/IBjPnSd3N+wxIlsVdehbDhnaJo8ezMLF562gh8jlTlr
-	OvBOhw4DEaYktzIK9Un5kNsBcoMnXo6YO0MuaSmCcz11bHyqRuEXB8Py5Z1g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736919980; x=1737006380; bh=1WSqvZs3s2FCgPZfjdaLjipSUNPJ+MFUA29
-	2O7H9HRQ=; b=lHbGSyc7Kl+NWfgxBXBwLI4FpBLZaH4GHYs69dhDTlMobjKUbIG
-	bENFvZjQiS0+uoLtBERdTPmhqI9uBTxy9jmrIKJCOqmFxCGudzcf0lQk3tGlJSiA
-	uENuBjaIKc9LYAwlT/j9QsJV9I/F+8khBfe5e8lTBb6Xwu2nMOtf3/gaTw8HowO+
-	yxpR2ijMtiIphYKuCfpbOwPC3n0So4E94HK2ggk9bEny/fMOTUH2uo9RoeCGONIp
-	ST8RPcrw6SXobenLb5kPb4rav2tlvi4G67V2OPlL/OS+05OZYmjzbMSGsYQ/n4/F
-	bDk/lT3mlmhiAedO5/AdY7JXHcMBMTp5PeA==
-X-ME-Sender: <xms:rEuHZ-Gl0wrm8zjsBn_7ar-XGvGhdz3qXlXQ7Ue5LW8nNMFzmVtUxQ>
-    <xme:rEuHZ_XihxRtR4LDktMwjfPkyjXDv7ccsK0i_x6ZxI8WyNbHStp0tNaXRcKltmKT3
-    QsseHojbbUERhefGQ>
-X-ME-Received: <xmr:rEuHZ4IYAHuJkx2pQTfwS7MSdIIjwCbQtLg-aD5WuvCoTo86uaCLUkGSqbBwoMmGoys3jrqpwGOoCICOj2FIFRonLZgbg9fx29cN23chb69itr0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehjedgkeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeejvedugefgff
-    ffieegtefhgfeikeevfeefheevvdegieetgeeujeeliefhiedtueenucffohhmrghinhep
-    khgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:rEuHZ4Gnyg39XOfi0MnF3N5YLsPDkTLbSjQpu79DMFKk5z6Ui3BbrQ>
-    <xmx:rEuHZ0X89na07d6RH4CuhAWKm8ilqAPBn8JNZWeeMctSPdrEBM4jAQ>
-    <xmx:rEuHZ7MDUnSJbAlohVoyUpxnmrmHYQAQVbHCKd80RFmASmlJ0WPw7w>
-    <xmx:rEuHZ73230uct31rp1Xi2b47TC5ffQ4ldWZQpJWmU_Pdq5UUhA01yQ>
-    <xmx:rEuHZ7QMZorh614b7MTlQjtXabU7CNFb7oZW9IRu5Y_xweDbpuNzEtO2>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jan 2025 00:46:19 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f78dea6d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 15 Jan 2025 05:46:18 +0000 (UTC)
-Date: Wed, 15 Jan 2025 06:46:17 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 00/10] compat/zlib: allow use of zlib-ng as backend
-Message-ID: <Z4dLqaDItZ7xsQRS@pks.im>
-References: <20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im>
- <20250114-b4-pks-compat-drop-uncompress2-v2-0-614a2158e34e@pks.im>
- <xmqqjzax2nqw.fsf@gitster.g>
- <xmqqa5bt2jc8.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WvtPjHSK"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-5d3ecae02beso8136615a12.0
+        for <git@vger.kernel.org>; Tue, 14 Jan 2025 23:56:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736927791; x=1737532591; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KluS3tu2mNng1HVP6BP86W5+87kQUhEdqpgB5rxu0hY=;
+        b=WvtPjHSKAZFiWcPtQOgIAdJgeX+DthS7FHTCZbGqaIY2AMKuAZ/lfFBQZUegqZQ8WW
+         FaVqrP7n6xFL6DFjn8iarFNB65Y88AXtdM11gC6LC3NIdumI9I8xbc7vwuI+tjcE7MMW
+         KvgrbDiw8NdDe1NSW5aUn+JasJ7HzQ5IwY9F+sEWm5DHrAneJGGNkUbtXu6B2T8Xma+L
+         fZ1PU4f8TSeTVMk3ZyOzYoXakhKG68NEgjWMqOYg8c7tXwV1K7L064Ea4zO4tLDMCcqU
+         GsR0pedd/dXJoie6Ud0ZJfDvgezYn0lzK2//KNKbAeQ0IiN3XCSG8smfGgii092RbZOD
+         LdEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736927791; x=1737532591;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KluS3tu2mNng1HVP6BP86W5+87kQUhEdqpgB5rxu0hY=;
+        b=ljH/AzLmGIiGjCv0lKwsXjSLkNAqewDbeOeiQhm3rNQa9ZFR6W0zM+0pkoOEbwCDKY
+         w37MoMhuzH2Yn/5P8ikIMHDK9MkbHTxs23enolpZGl8N/6Xi5e9VxiTn7tFs1iiM13sR
+         3cVMHhVK/PVX3vR+E517L68HqsvEuoNKnoV2XJFTgRC3LvpEl7st7LVuUuLx+uzMLRL6
+         RbYNiyqQJ34tUhDmKeNB34HBRA14hLCBMjskP5mxb4ZbKGSsC+UvdKlgELkgkL+6oNDF
+         rlfFgM+siklSW/5Co4C04J3+SrkOK+c/Qlnptr60PHv/ycthO5qBAIb5mE2IwxqqRAZ2
+         NP2A==
+X-Forwarded-Encrypted: i=1; AJvYcCUsrXBHBG+jxCSG18NjrxDY6lx2s4p8VF9i0oBSYR8+/jpY++Y0+EYGrjYrzN8lmIohiAM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YymfYqCYfWo9lljseGkBvY0WDoRf4cbgy0xqRYTztUI/Ku+dh1W
+	i1tguAF5Gr1QxjdOstgF7txqQtzIYI9Pbq+6154LLbwJQVcoklxryGWKZkSid5OU2PttH0nQHGL
+	2OHMpLapIJ8Mp+HsPhvGiKCA+rLk=
+X-Gm-Gg: ASbGnctNCe39PvsQb8AOLTMbMi1/XXYz7giTFgA3jhf6GZHntptZhtVFNsom+5WVrJ/
+	IdFw6woCdi9ttAzRmMewd08BkTCkyn6KFg8pgfw==
+X-Google-Smtp-Source: AGHT+IHW7esOc152jsw4ou8mWl9fHLDa4oapGVUR7wI0ouWg0ziCdUdopMnjj55SnKrf+zKIS50LHhOrbi7KBKWj2o0=
+X-Received: by 2002:a05:6402:2347:b0:5d2:729f:995f with SMTP id
+ 4fb4d7f45d1cf-5d972e6f957mr25159970a12.29.1736927790630; Tue, 14 Jan 2025
+ 23:56:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa5bt2jc8.fsf@gitster.g>
+References: <pull.1843.git.1735041177817.gitgitgadget@gmail.com>
+ <pull.1843.v2.git.1735611513.gitgitgadget@gmail.com> <579757957d21faaa8dd9228a191d82f663e93c03.1735611513.git.gitgitgadget@gmail.com>
+ <20250113091750.GA794747@coredump.intra.peff.net>
+In-Reply-To: <20250113091750.GA794747@coredump.intra.peff.net>
+From: ZheNing Hu <adlternative@gmail.com>
+Date: Wed, 15 Jan 2025 15:56:18 +0800
+X-Gm-Features: AbW1kvaMINsxBWqIr8NLgxDELt5ySKLJFxsVi3mQDtOBSxfhNwnFqoX3qyuXfdM
+Message-ID: <CAOLTT8TaDBtpgXRAj9yjiJB-h8vGjd6bEg29gOiOUwvQXbzZ3g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] fix(gc): make --prune=now compatible with --expire-to
+To: Jeff King <peff@peff.net>
+Cc: ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, gitster@pobox.com, 
+	me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 14, 2025 at 01:09:43PM -0800, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > Patrick Steinhardt <ps@pks.im> writes:
-> >
-> >> Changes in v2:
-> >>   - Wire up zlib-ng in our Makefile.
-> >>   - Exercise zlib-ng via CI by adapting our "linux-musl" job to use
-> >>     Meson and installing zlib-ng.
-> >>   - Link to v1: https://lore.kernel.org/r/20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im
-> >>
-> >> The series is built on top of fbe8d3079d (Git 2.48, 2025-01-10) with
-> >> ps/meson-weak-sha1-build at 6a0ee54f9a (meson: provide a summary of
-> >> configured backends, 2024-12-30) merged into it.
-> >
-> > I think you are now also textually depending on the fuzzer thing due
-> > to touching meson_options.txt and ci/run-build-and-tests.sh with a
-> > later step.
-> >
-> >>  -:  ---------- >  9:  7ae8f413d4 ci: switch linux-musl to use Meson
-> >>  -:  ---------- > 10:  2dd1b49e4f ci: make "linux-musl" job use zlib-ng
-> >
-> > I will see what other things I can find.
-> 
-> Yup.  The patch series for some reason still does not seem to apply
-> cleanly ([09/10] ci/run-build-and-tests.sh somehow seems to be
-> troublesome), but it was easy to wiggle it in when the base was
-> prepared with these two topics merged on top of 'master':
-> 
->     4610af08e7 ci: make "linux-musl" job use zlib-ng
->     b2ddd0b33e ci: switch linux-musl to use Meson
->     5118183ef4 compat/zlib: allow use of zlib-ng as backend
->     08bf6b2062 git-zlib: cast away potential constness of `next_in` pointer
->     ebf98412e3 compat/zlib: provide stubs for `deflateSetHeader()`
->     29829e5714 compat/zlib: provide `deflateBound()` shim centrally
->     8f19b26bbe git-compat-util: move include of "compat/zlib.h" into "git-zlib.h"
->     8aab230253 compat: introduce new "zlib.h" header
->     1ce001beaa git-compat-util: drop `z_const` define
->     b9d4bd5467 compat: drop `uncompress2()` compatibility shim
->     db620fad21 Merge branch 'ps/build-meson-fixes' into ps/zlib-ng
->     64156589d9 Merge branch 'ps/meson-weak-sha1-build' into ps/zlib-ng
-> 
-> I think the reason is because the other topic that touches the fuzz
-> thing we see in the context of [09/10] is not ps/build-meson-fixes
-> but something else that is before "--fatal-meson-warnings" was
-> added.
+Jeff King <peff@peff.net> =E4=BA=8E2025=E5=B9=B41=E6=9C=8813=E6=97=A5=E5=91=
+=A8=E4=B8=80 17:17=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Tue, Dec 31, 2024 at 02:18:33AM +0000, ZheNing Hu via GitGitGadget wro=
+te:
+>
+> > diff --git a/builtin/gc.c b/builtin/gc.c
+> > index 77904694c9f..8656e1caff0 100644
+> > --- a/builtin/gc.c
+> > +++ b/builtin/gc.c
+> > @@ -433,7 +433,8 @@ static int keep_one_pack(struct string_list_item *i=
+tem, void *data UNUSED)
+> >  static void add_repack_all_option(struct gc_config *cfg,
+> >                                 struct string_list *keep_pack)
+> >  {
+> > -     if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now"))
+> > +     if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now")
+> > +             && !(cfg->cruft_packs && cfg->repack_expire_to))
+> >               strvec_push(&repack, "-a");
+>
+> I expected to see a mention of repack_expire_to here, but not
+> cfg->cruft_packs. These two are AND-ed together so we are only disabling
+> "repack -a" when both options ("--expire-to" and "--cruft") are passed.
+> Can we --expire-to without cruft? I.e., what should happen with:
+>
+>   git gc --expire-to=3Dsome-path --prune=3Dnow --no-cruft
+>
+> Looking at the underlying git-repack, it seems that we only respect
+> --expire-to at all when used with "--cruft", and don't otherwise
+> consider it. Which is what the manpage says ("Only useful with --cruft
+> -d").
+>
 
-Okay, I'll adapt the base accordingly for the next iterations. Thanks!
+Yes, this is the current state of git-repack. The --expire-to option can
+only be used with --cruft, which is why I use cruft_packs && repack_expire_=
+to
+as a double safeguard.
 
-Patrick
+When using --no-cruft, the option --expire-to becomes irrelevant.
+So leaving `git gc --prune=3Dnow` as is at this point: passing -a as a
+parameter to repack seems reasonable.
+
+> But if we look at this proposed patch for example:
+>
+>   https://lore.kernel.org/git/48438876fb42a889110e100a6c42ca84e93aac49.17=
+33011259.git.me@ttaylorr.com/
+>
+> then it is expanding how --expire-to is used during the pruning step.
+> OTOH, I think the way your patch 1 is structured means that we'd always
+> pass --expire-to to git-repack anyway, and I _think_ even with the patch
+> linked above that "repack -a -d --expire-to=3Dwhatever" would do the righ=
+t
+> thing.
+>
+
+I've taken a look at the patch, and I believe Taylor's changes are primaril=
+y
+aimed at extending the --expire-to functionality within the --cruft feature=
+,
+rather than expecting --expire-to to be used on its own.
+
+> In which case the problem really is the combination of cruft packs and
+> expire-to. Just cruft packs by themselves do not need to override using
+> "-a" for "--prune=3Dnow" because we know that any such cruft pack would b=
+e
+> empty.
+>
+> So I think this logic is correct. Taylor might have more thoughts,
+> though (and ideas on whether he intends to revisit that earlier patch).
+>
+> I do think this change should probably be done as part of patch 1,
+> rather than introducing a buggy state and then fixing it in patch 2.
+>
+
+Yes, I agree with that, and perhaps a single patch will suffice.
+
+> -Peff
+
+- ZheNing Hu
