@@ -1,115 +1,124 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFA614F12D
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 22:11:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BEBB35944
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 22:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736979121; cv=none; b=sV4eRjr0NCJ/W3qHV4xE9oaEKPjeqxM/4sUrAw6UTW8PMK6jVYY3wfBGdSlbObe6mzYQSjt39q0qS4CRyNGXDq92LC7+2LDlShuMC554hTMYy6waa0b9aD5mYhgtAJ2eNpH9ll0r4RyGam7YuDhckiwM6cV6kULu9LO3/qJ0mWk=
+	t=1736980052; cv=none; b=DvBYtDRxqz2QgCaHf43t4RHt6QYKIU96jOpJE/0/JLSUHjEVLjfNw+RGQD2b1KQQFGq8phP3RoukVQNfGaHRsP4uhTToCTEVOnMsEIyl2T8iRbZ4KmpzRK8pOtPmlQyLXbA82+sofwvY3sG56RU7tjOUz4ztqX3qIetWYK717Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736979121; c=relaxed/simple;
-	bh=c1dYXEuCYpNZuRo5nmu1pw4hR0aJshb6fU4tB591+WA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IK19W8Z244xGeosmb6WcVMZLcW6H1Z0ryNFQ9qMHPhXo0TmvNL8JkXgJHjhWLM43unK1MfPLv5MnAuHpHLaQwQ5S/kx/pQRNYHsu7pzUctEFX/7cIobA3cdagQEoex6hExl7IqFEevwW6qaJJcadEpi5i9wvkI9DKnKC83OM7Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=l5Yb2J+C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yPK+qo5F; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1736980052; c=relaxed/simple;
+	bh=xhO1lJQkUXrFf4LX73nLuYOAkD+tZBmBKTzOUZUX4+Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=p2H16CjWqUlb37aamZqLpv9wLVHRZ9zi1KIuzC0diIyZI7x1zQGh+ZlXbm0jWZWq06plxo1ihy/ka3mAODs429zuO8uBYY6Os0BwngP7n9yooitgIR9WyQc2AjvBj487TgxazqNaZe3vnV8CKDaJ53Vo3yEY0dA7cXeeUGYmAD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=THFpRBRx; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="l5Yb2J+C";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yPK+qo5F"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D09E52540112;
-	Wed, 15 Jan 2025 17:11:58 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 15 Jan 2025 17:11:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736979118; x=1737065518; bh=Y+MQN9Lhhk
-	mmo/LAQgNl6CSLG01JCVMilR0ivvTnzPQ=; b=l5Yb2J+CBhy+kFM0GwTvqjK9Nv
-	V6M49yGWZB6jYuN3e9uo1uOZJJjuFmKQSDoObNluN/15G0qRxpPbbJd8ZBj5eJAn
-	NZUfzYWndeBYLcnDhTxUsP5avM4vJkb2IYBjeoQqW2JovdKddpEzDP2sN5oHFNiq
-	uhWZJacCVMcXXjonVN6Ka8kheUHYKuRAMQxw9sIwac/xJzVAsOsfyKx1hTPDuvl2
-	JOJ9aHug98ybGCv7R67R2xH4mxTTQz03RihAqqgJpLVPu2q+36fr/qc4Dv72CnAS
-	t1PZcUSMkkTRltWv5pBa8o2tw29gPundRmAkymtID+tAjgMy4X6hbgSSkZpQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736979118; x=1737065518; bh=Y+MQN9Lhhkmmo/LAQgNl6CSLG01JCVMilR0
-	ivvTnzPQ=; b=yPK+qo5FlTBZ97SFq2zn1JAifOMYX3cMjaMCZvi3vVTq2JKGaDa
-	XT6kyTyIxe9H7Ztwhk+fdWZn8dBWckB4cWbQ4hU9exRHddN9MO5ksz8KKCSNOllp
-	FB7mh4V7WAmFIikqZCxeUfBfkaH7iKFM25sw9rKYxqjOza/2R1+q6xphK11kiDMp
-	7cAKBQir5PQ8vYMQ3AWieUg3bLS9LA9caxRBOD//i49RF+ISa3724D8gQckA868/
-	JQpUpPVBLhsVOwA2KyUA19hfpPx/wGeL+EjjT0Gx38uTfQkcIfnX75EhaWN3zUZh
-	lXnEYMGqZDUqYKNEiDdW+fNUf4zqaT+jX9A==
-X-ME-Sender: <xms:rjKIZ-L4bJUu-f9VMqhtH_T6P2IykSY11N3JY1mInRWRGf2aGvQ66w>
-    <xme:rjKIZ2IgTzvGL4sg1RTpZnUCOGC9p9KEav9szQmtDQsi8ubn3NizzEp5sp7Pt5RQi
-    TkwbAXKZsQ5U4Rkjw>
-X-ME-Received: <xmr:rjKIZ-stgSW9MwX4BqP2-B4bAjJKtZDI3KCE8hCHMwTfZ-00xRuZ4eivvgftVuirXXfBzy0NufsR5PjoAgSz3ESUMZCGZoRCwhGF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledgudeftdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
-    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepmhgtvghplhestggvphhlrdgvuhdprhgtph
-    htthhopehjohhnrghsrdhkohhnrhgrugesuhhnihdqmhhuvghnshhtvghrrdguvgdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:rjKIZzYbyWrZMlYLDJCyJ1vdF9ZymcgB6xHiNrJSXr6lIotO68zuNg>
-    <xmx:rjKIZ1beHkxoz1H2JHNFyUAkvjMP6sYAT6O4TygXnwaOA5iuLQO5IQ>
-    <xmx:rjKIZ_CKFDFdmhy-yB5fxEo0oFwpYKrLcY4Xx1G4oj67l4hQuFGAww>
-    <xmx:rjKIZ7ZZcALkIyuNXHUKg1C9-gnJcbpf4yNgAa-MqwMAqFghIntfGQ>
-    <xmx:rjKIZ6Nacvzlv8skNYSnhqkZr34KpV-YswzHMCGPQ4o0v08-_MLy5WMt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jan 2025 17:11:57 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  =?utf-8?Q?Ma?=
- =?utf-8?Q?t=C4=9Bj?= Cepl
- <mcepl@cepl.eu>,  Jonas Konrad <jonas.konrad@uni-muenster.de>,
-  git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="THFpRBRx"
+Received: (qmail 7984 invoked by uid 109); 15 Jan 2025 22:27:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xhO1lJQkUXrFf4LX73nLuYOAkD+tZBmBKTzOUZUX4+Q=; b=THFpRBRxoi5giOyw/K1U0Epicw25aZj3L3SP9Ya9EQPz6xoHvymsbNv84+Gc3xu+RNUh6rvCUArQQa3Fcl6ClxxPiZiPw1hiCkLUGkVXDqC/IN75Anqs1E+F8cjMB6/0BskPLqYG0TN9cvy6ygQWR3b496H8n3jzg2BlnRNnwRdDwjA1Ksm3YFyYtscpHnxxQT3ov9rvXl8PaEz5KGc1mqE3ulEAkAqp4qn8kRCrApXjx+yhJGVkPo8GoROXHKT8WiONHzY+dMASdRiLXeYjg3nyAyi2p0ZnPDHL6OaAWIJkcOBtFX6pC2CxbKO9fWsfghtDPBmkViJJ0yxmzr+rrg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 15 Jan 2025 22:27:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16158 invoked by uid 111); 15 Jan 2025 22:27:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 15 Jan 2025 17:27:31 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 15 Jan 2025 17:27:28 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	=?utf-8?B?TWF0xJtq?= Cepl <mcepl@cepl.eu>,
+	Jonas Konrad <jonas.konrad@uni-muenster.de>, git@vger.kernel.org
 Subject: Re: Git branch outputs usage message on stderr
-In-Reply-To: <20250115212952.GA96537@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 15 Jan 2025 16:29:52 -0500")
+Message-ID: <20250115222728.GA132248@coredump.intra.peff.net>
 References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
-	<D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu> <xmqqed1414gt.fsf@gitster.g>
-	<c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
-	<20250115171423.GB57018@coredump.intra.peff.net>
-	<xmqqmsfsx8oo.fsf@gitster.g>
-	<20250115182419.GA86610@coredump.intra.peff.net>
-	<xmqqa5brydz1.fsf@gitster.g>
-	<20250115212952.GA96537@coredump.intra.peff.net>
-Date: Wed, 15 Jan 2025 14:11:56 -0800
-Message-ID: <xmqq1px3ybf7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu>
+ <xmqqed1414gt.fsf@gitster.g>
+ <c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
+ <20250115171423.GB57018@coredump.intra.peff.net>
+ <xmqqmsfsx8oo.fsf@gitster.g>
+ <20250115182419.GA86610@coredump.intra.peff.net>
+ <xmqqa5brydz1.fsf@gitster.g>
+ <20250115212952.GA96537@coredump.intra.peff.net>
+ <xmqq5xmfyc4w.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq5xmfyc4w.fsf@gitster.g>
 
-Jeff King <peff@peff.net> writes:
+On Wed, Jan 15, 2025 at 01:56:31PM -0800, Junio C Hamano wrote:
 
-> And it uses code 129, even for "-h". I don't see any explicit rationale
-> for that in the history; I think it goes back to the beginning of
-> parse-options. It happens via the PARSE_OPT_HELP flag, but curiously we
-> also trigger that for ambiguous options (which should exit with error).
-> That might be a bug-in-waiting if we start handling PARSE_OPT_HELP
-> differently.
+> Here is what I have as v2; there will be patches that touch
+> builtin/*.c in between and I expect that the last patch to conclude
+> the series will end with an update to parse-options.c (to exit with
+> 0 when asked to give a help) and t0012 (to stop expecting 129).
+> 
+> --- >8 ---
+> Subject: [PATCH v2] parse-options: add show_usage_help_and_exit_if_asked()
 
-There is another class of callers that are protected by the same
-"argc == 2 && !strcmp(argv[1], "-h")" condition, and they call
-usage.c:usage(), instead of calling usage_with_options().  These
-calls (but not all calls to usage()) need to be updated to use a
-similar helper, say, show_usage_and_exit_if_asked().  Sigh...
+Thanks, this looks fine. The name is clunky but probably OK. ;)
+
+I don't know if we'd want something like this on top. If somebody is
+interested in just doing all the conversions in the near-term, we could
+do without the optional flag.
+
+-- >8 --
+Subject: [PATCH] t0012: optionally check that "-h" output goes to stdout
+
+For most commands, "git foo -h" will send the help output to stdout, as
+this is what parse-options.c does. But some commands send it to stderr
+instead. This is usually because they call usage_with_options(), and
+should be switched to show_usage_help_and_exit_if_asked().
+
+Currently t0012 is permissive and allows either behavior. We'd like it
+to eventually enforce that help goes to stdout, and teaching it to do so
+identifies the commands that need to be changed. But during the
+transition period, we don't want to enforce that for most test runs.
+
+So let's introduce a flag that will let most test runs use the
+permissive behavior, and people interested in converting commands can
+run:
+
+  GIT_TEST_HELP_MUST_BE_STDOUT=1 ./t0012-help.sh
+
+to see the failures. Eventually (when all builtins have been converted)
+we'll remove this flag entirely and always check the strict behavior.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t0012-help.sh | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/t/t0012-help.sh b/t/t0012-help.sh
+index 1d273d91c2..9c7ae9fd36 100755
+--- a/t/t0012-help.sh
++++ b/t/t0012-help.sh
+@@ -255,9 +255,16 @@ do
+ 		(
+ 			GIT_CEILING_DIRECTORIES=$(pwd) &&
+ 			export GIT_CEILING_DIRECTORIES &&
+-			test_expect_code 129 git -C sub $builtin -h >output 2>&1
++			test_expect_code 129 git -C sub $builtin -h >output 2>err
+ 		) &&
+-		test_grep usage output
++		if test -n "$GIT_TEST_HELP_MUST_BE_STDOUT"
++		then
++			test_must_be_empty err &&
++			test_grep usage output
++		else
++			test_grep usage output ||
++			test_grep usage err
++		fi
+ 	'
+ done <builtins
+ 
+-- 
+2.48.1.434.g4084d8f956
 
