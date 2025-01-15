@@ -1,76 +1,75 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA851D5165
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 17:40:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175601553BB
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 17:41:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736962828; cv=none; b=vCFjSm/3bfUQl//QGgpZrDXtIUj/o+CQZ4sijAKLFUWqWOfkXZ3FsyJIdHBAZc6e16L/CYFjwGB39+QFaZoCk/yR3skI5tdmfQnnwWwmSvYoUkwwyKcbfq0d6cOeyLwuZyREX71eXn1bLAU7wAx5DBMl0Vn8aa5p/ws0XgcU0fY=
+	t=1736962869; cv=none; b=T5gRybTYWkyWeOL1PWLthPVA8vV49e29QYkOEpHOnFCSD3IdCB3ddpcO4ksDfLlnKFEMSZyU+8f10EOkIaTQ36L5n4CB8PBWBZYwUGOrhUjZ6bRI88SjZ1toFbtDjPtMma3/jD5iKl8ATR6/sL6iEUPtS1G6nZvXIc9MislCkA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736962828; c=relaxed/simple;
-	bh=j1MNw/5hnzUhTrCJfv4yRrcxGaD4uTHrYTs7RPaiC60=;
+	s=arc-20240116; t=1736962869; c=relaxed/simple;
+	bh=ei+kl7ZIQWCUr3n6J73jw4zAytM/9hSLbeUh3PC6mrg=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=rB2aeTedUq0oCDN/L1dy046UkFbbKZZpityU1yDyYLK8i+nxka87wCdMo6z5rg8fEAjnp08TEo20zv2oNvY4fp0988C2rH8Ip6qJc66DW5aDrvn1dwmuY9NYvYed9yW2G6U+vuon/oMYHwZebHwmTeYtCR1QG4OJ+o27G1RGHHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=SY6gI1WD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HEijVjYn; arc=none smtp.client-ip=202.12.124.153
+	 Subject:Content-Type; b=DGrumOtVCnwHmrm/mg3wt5eq7h/ds2CP/uL2TouYEqwnIB4Wl+7b+dKJ7bS6bcfhbHmuTiON9IWcvkQsfXnjTKVMsuVEMoULZr/0Jo+9wM0B/eavhN/shhnMHVLKTAfuZl/FbAcfGnzAZrNwymdUzxGJKPzVyKZnRpQ2+dRKHsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=NVymc/7U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VFwhVOKO; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="SY6gI1WD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HEijVjYn"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="NVymc/7U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VFwhVOKO"
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 13B7A2540178;
-	Wed, 15 Jan 2025 12:40:25 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id 2C5B51140190;
+	Wed, 15 Jan 2025 12:41:06 -0500 (EST)
 Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-06.internal (MEProxy); Wed, 15 Jan 2025 12:40:25 -0500
+  by phl-compute-06.internal (MEProxy); Wed, 15 Jan 2025 12:41:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1736962824;
-	 x=1737049224; bh=JQbolMIZOAelLcFw0eDHF54FXQ/XqCX4vmZj8/UjRwY=; b=
-	SY6gI1WDr92LTlcklEbIKm7JSTLe76tc8r8XL1JRn86eJP7Qw+e7wjyNeWi3+LYU
-	EUZtRIJmAz/K3rmaMjMExmiCqH1mN7hz0x+xZaoyXkmDJTh45+HhuIVlTLlGOgla
-	1WEuXTJ4tWyRRSpEFgWzQvbN/KL9ZTEEgKEXpZsSrpPcP2DB0KfBEmwoUjnu5gd4
-	7Vmnkl4vyDCxTOfJMsF8PoZs9eskMy6u33ZC3Iq9xw8TKYiDMUmEuQ2SUH23k91N
-	o/fAHhNNRnaiDYruC/uUAoJ6/6pbPV1zadHzOroQJcFwbrh94+F/zFgcBQyJTG90
-	NTLEnPCLQgQIQymNPzKsmg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736962866;
+	 x=1737049266; bh=7zZFcbVVKlgYyZLhb774Q0CxS3Web0LIlve1Xdf8kjQ=; b=
+	NVymc/7Uz+kVjbuhTIdVy65cqC2pdMlg3/LWcC/iR92C9OX8zJHVMOLB9vqgCxUb
+	5r8OsdliLKSXiKQGDK+Bo8njo3zfZGtLJf/WGDghLS+cj6R3elehOjhGevmgRWN/
+	Tf9lwIt3X3zWjggTqbt+PnFyhPTXRud4xx6hpniZ1+7sagg3kgANVftXx2oLVxKE
+	irKo8kHxQHCg5jIBbAF+GYHxm6ukg9gwgV4kAb7P8to6k20084g9V2N29LvdnO1w
+	l+gTSzVx8OUjqPudnLFMyCr6FpXQw+K4T6k9/xp2lzkAlaJUeNX/zTfQmKFCzkM/
+	bFzmhi0ie9lPd1NefS5ClA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736962824; x=
-	1737049224; bh=JQbolMIZOAelLcFw0eDHF54FXQ/XqCX4vmZj8/UjRwY=; b=H
-	EijVjYnTjOxudfBgKOtIf+xuGFNd137izOHpdR2MhiXfwj2E9sWmA0yj160Tnd6J
-	tlhZkLo1KLEIiVQeuf2AYeHfE0kfQYte6d5sv2j4Y52trCl/10gIDWuvpPjmdPeF
-	uFroNBs5JPp0HcDgWzQMGS3TQ59pjUtN3F5YZAgu0mtrd54FAT/hxm9nanXBn9rW
-	aXCBOQoCvfcPgaXfVcvZYdnri+QvrotJF3d3Xw2AFFpambqTm4Ytg3jLpVGGXcL9
-	rEncnRAhzJK3DPAyGZk6qJeJoH6IkEfsrakyrCoNQepuvkuOlVbjQPpSofvP05yT
-	Cnv5hB0byBdTaV2WDCRsA==
-X-ME-Sender: <xms:CPOHZx9MC9A5fa7j4QE5BQLY8fOoszzdJcPOe2o7CYFzpCUSf4XYrSE>
-    <xme:CPOHZ1tfvRFfa25tpj9jqy8wXQdtD_7QtYCxe3LwMl2K8p7oF-s2jz9aj55YKwwVi
-    l8RLj0IE1f9YYWAJQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736962866; x=
+	1737049266; bh=7zZFcbVVKlgYyZLhb774Q0CxS3Web0LIlve1Xdf8kjQ=; b=V
+	FwhVOKOtzf+oru2AHBArMSAXjeW4PJY1fSvz+Q+k/Ebc3E/Vow4Vt4hsRYM12lTM
+	yye17HztiI41VG9uN7GlYYsIoLQU/1ROtY5Q9GhgJPj404mqhQ3rh2dBims4/ZjJ
+	jwWwz2xXV3V51lGd1S9GRZr5HEiDgDOoFQ39IhkG2KTg5yLbRYIK86tP146Dsq8Q
+	8R50Dl/RoO+RJTBItQPNBvHnFn0v7vn65MP8Ca/XZpVJuKgzU/0mmRTuHeRkHAI7
+	Bb/D7qLAXbXhEgfMfMCeDjLaoGpiOtK/6F8e/74+VdL2mJgIedBVX7IOg7uRHNkF
+	1xKBkRrN59E919xud3jtw==
+X-ME-Sender: <xms:MfOHZzxY9VT0eyX1-LcWXwJyfbxSXzG-LV4deILFUmMfS_JDC9XM_g4>
+    <xme:MfOHZ7SVAkEFsvxR3ePfE9UZG3DvELTTri00HgdNW3tg73j38Wd-SzLwUyoecKV5s
+    SYVIQji62Zz5HExxg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledgjeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
     necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
     htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
-    thhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfe
-    ekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
-    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
-    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmtggvphhl
-    segtvghplhdrvghupdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhonhgrshdrkhho
-    nhhrrggusehunhhiqdhmuhgvnhhsthgvrhdruggvpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:CPOHZ_CzkXrq8keyVuCyWM9BnjuA3u23JQfBAFiOuXIZ41ZsLUrg4g>
-    <xmx:CPOHZ1ep1l1K9mYStYfRYS2089oPEs0xMGaRg2wkYPWcKS_Xb3Cgrw>
-    <xmx:CPOHZ2MIApsZD3gwM0qqTiD9V7As9JCTCNvZ6HJuOY8_TyCrNsb9ig>
-    <xmx:CPOHZ3kgkenzOoZG8nX1wMUvjMsRnby26l0HbjGRZQz1QEV6U5t6NQ>
-    <xmx:CPOHZzrgmIzR-rJAkbRXYzx2Sij1uN-JKiHbpdRTdouijgX416weVczY>
+    thhtvghrnheptedvhfelhefgtdeugfefkefgudefgeetfeejheehkeduleelieduheefge
+    ehhfevnecuffhomhgrihhnpehgihhtsghuthhlvghrrdgtohhmpdhkvghrnhgvlhdrohhr
+    ghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrh
+    hishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhohiflhgvth
+    httdelsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:MfOHZ9XN6RFFFCAdSi_w17uS_7o6mof9iXl4aL-IHbcHsEVP9ztteA>
+    <xmx:MfOHZ9htuWpnpogOt0DM6XVqxCDqsni7xZaJMKyxmU8oRwsQwjbIJg>
+    <xmx:MfOHZ1CZB9k3sdi1kA_bcUg0_KAQg6cVu8ShFes-0d1YyfftelGhLQ>
+    <xmx:MfOHZ2LDoHKawZ-eNWRBiDx8ztf_r1KkkCTEpCwITvQwjfCMvNZZFQ>
+    <xmx:MvOHZ4OAjkcVMhehK16ZAORWNqif-1b-HDQY9eyJOGRF4Yx46kqAylYS>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 60F05780068; Wed, 15 Jan 2025 12:40:24 -0500 (EST)
+	id C387E780068; Wed, 15 Jan 2025 12:41:05 -0500 (EST)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,141 +77,63 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 15 Jan 2025 18:39:45 +0100
+Date: Wed, 15 Jan 2025 18:40:45 +0100
 From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: =?UTF-8?Q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>,
- "Jonas Konrad" <jonas.konrad@uni-muenster.de>, git@vger.kernel.org,
- "Jeff King" <peff@peff.net>
-Message-Id: <0cf0b268-c691-4fed-a58b-ea9f77eab295@app.fastmail.com>
-In-Reply-To: <xmqq34hkyoys.fsf@gitster.g>
-References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
- <D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu> <xmqqed1414gt.fsf@gitster.g>
- <c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
- <xmqq34hkyoys.fsf@gitster.g>
-Subject: Re: Git branch outputs usage message on stderr
+To: "Chris Howlett" <chowlett09@gmail.com>
+Cc: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Message-Id: <4a396e63-5e82-4ce4-83c2-13d508cb1f7f@app.fastmail.com>
+In-Reply-To: 
+ <CAJVagJ=3uxcCpEivkpW5_HTxdL9Sa9Ymqm1iJQHUJ+=9XneLSg@mail.gmail.com>
+References: <pull.1852.git.1736933815236.gitgitgadget@gmail.com>
+ <1c220376-4b4b-425f-9797-abd1728aacc2@app.fastmail.com>
+ <CAJVagJ=3uxcCpEivkpW5_HTxdL9Sa9Ymqm1iJQHUJ+=9XneLSg@mail.gmail.com>
+Subject: Re: [PATCH] help: add prompt-yes setting for autocorrect
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 15, 2025, at 18:19, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->> [snip]
+On Wed, Jan 15, 2025, at 11:21, Chris Howlett wrote:
+> On Wed, 15 Jan 2025 at 09:51, Kristoffer Haugsbakk
+> > [snip]
 >
-> Being consistent is a good idea, and I wanted to first gauge which
-> way we should unify.  It seems that those who spit their help text
-> into their standard error stream are indeed in minority?
+> That's unsurprising, as I was inspired to add this option after
+> reading that committer's blog post on help.autocorrect -
+> https://blog.gitbutler.com/why-is-git-autocorrect-too-fast-for-formula=
+-one-drivers/
+>
+> I'm happy to wait for their patch to be merged, then rebase and rework
+> against it, if that seems the most sensible option? Presumably I'll
+> have to monitor the mailing list to learn when that happens? This is
+> my first patch to git, so I'm not sure of process.
 
-Yes: 40 of those stderr `-h` outputs.
+You can keep an eye on the =E2=80=9CWhat's cooking=E2=80=9D emails.[1]  =
+The latest
+one mentions this other topic as branch `sc/help-autocorrect-one`
+(that=E2=80=99s Scott Chacon=E2=80=99s initals followed by the topic nam=
+e).
 
-Versus 102 that use stdout.[1]
+If you want to wait for that one to get merged:
 
-Trying a random command with usage-on-error:
+=E2=80=A2 Wait until you see such an email with this =E2=80=9Cstatus=E2=80=
+=9D under it:
 
-    $ git-upload-pack >/dev/null
-    usage: [snip]
+       Will merge to 'master'.
 
-Does give usage on stderr.
+  Which means that it will be merged to `master` soon.
 
-=E2=80=A0 1:
-    git add
-    git annotate
-    git apply
-    git archive
-    git bisect
-    git blame
-    git bugreport
-    git bundle
-    git cat-file
-    git check-attr
-    git check-ignore
-    git check-mailmap
-    git checkout
-    git cherry
-    git cherry-pick
-    git clean
-    git clone
-    git column
-    git commit-graph
-    git config
-    git count-objects
-    git credential-cache
-    git credential-cache--daemon
-    git credential-store
-    git describe
-    git diagnose
-    git difftool
-    git fast-export
-    git fetch
-    git fmt-merge-msg
-    git for-each-ref
-    git for-each-repo
-    git format-patch
-    git fsck
-    git fsck
-    git grep
-    git hash-object
-    git help
-    git hook
-    git init
-    git init
-    git interpret-trailers
-    git log
-    git ls-remote
-    git ls-tree
-    git mailinfo
-    git maintenance
-    git merge-base
-    git merge-file
-    git merge-tree
-    git mktag
-    git mktree
-    git multi-pack-index
-    git mv
-    git name-rev
-    git notes
-    git pack-objects
-    git pack-refs
-    git patch-id
-    git blame
-    git prune
-    git prune-packed
-    git pull
-    git push
-    git range-diff
-    git read-tree
-    git receive-pack
-    git reflog
-    git refs
-    git remote
-    git repack
-    git replace
-    git replay
-    git rerere
-    git reset
-    git restore
-    git revert
-    git rm
-    git send-pack
-    git shortlog
-    git log
-    git show-branch
-    git show-index
-    git show-ref
-    git sparse-checkout
-    git add
-    git stash
-    git stripspace
-    git submodule--helper
-    git switch
-    git symbolic-ref
-    git tag
-    git update-ref
-    git update-server-info
-    git-upload-pack
-    git verify-commit
-    git verify-pack
-    git verify-tag
-    git version
-    git log
-    git worktree
-    git write-tree
+(Or maybe run
+
+    git branch --remote --contains=3Dorigin/sc/help-autocorrect-one \
+    | grep master
+
+from time to time (I don=E2=80=99t know, I=E2=80=99ve never had to do th=
+at).)
+
+Or else you could build on top of it.  That=E2=80=99s more advanced thou=
+gh.
+Not something I=E2=80=99ve done myself.[2]
+
+=E2=80=A0 1: Latest: https://lore.kernel.org/git/xmqqzfjt2qye.fsf@gitste=
+r.g/
+=E2=80=A0 2: See `Documentation/SubmittingPatches under =E2=80=9Cselect =
+few topic
+    branches that are=E2=80=9D for how to depend on in-flight topics
