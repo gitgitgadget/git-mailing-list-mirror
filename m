@@ -1,110 +1,151 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DFC199FDE
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 16:53:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE12D1791F4
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 16:58:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736960008; cv=none; b=sDiSmOHs4xeq5eKe/vNO24wYUNrEJoYoF6Byl4IOYNUrIfvyt8463I1xnby9MLvNGlCg7zKx9zOKCA/bsRafVzpj1Obffr75jdJPKb431FuuAKML8JW2jG8NjRHD3tCrGiWZg9MZM+gFA7trfl+mFT/C73rudl+ezb6mHpG4WkM=
+	t=1736960318; cv=none; b=qb0LZx8IKNdFAxVYsoU0eBVgBvvdu7wRrkx/boM4LOIsiaipi72zsoY8LducWNyW6wALEinShBmp/SKjoKxVx9PFDZ4inN3HZECq0EMUXi7Dzi/8IXab6LsfOd3JVB+hZqYF3qC+wea0ofqtyMxbyrZEBJI29++cAZKPhJe5Aq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736960008; c=relaxed/simple;
-	bh=W4/kpYzSDi1bSpzlL0s7LcghdUC1O1/GWsDfz0td8oY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fwsu7AhRh+3lGfrXJe4kCkFW7i+C6Uyltb4XR4Hvos9JfynpHs0dZEXOwXfyvupVxhtVtFDTNLI3vJEBPr55VT5xvDQvp8LauUZa7LQZpHQzGrOn9cBYjQZenAhRMsHsTesFKFSqu+x7wXkanD3wtyCMK1DFIzQTykggBVqIPr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=shVsR9De; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ATDWp48o; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1736960318; c=relaxed/simple;
+	bh=FgYnuJNQeLa3dZuLvo2siUEeoBDlCJhc815cFOynR+k=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=qHaq3z9oWoCKHD4JXKDL8SdHWRpmAYzlAnb3lukVUpOqJELoQpLg0A0BlzWv5BsLKIyoM2vRJepQHTCBfVK7lmHW807szUZp38A/x5sf93FSe17+dIafJCRUXWI7jhUiIvG6SKLt4aAHjv1BzKNruMpXVFkgNc+IwWnvCNPChpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=DglhnQyo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FICdIfAn; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="shVsR9De";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ATDWp48o"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 273ED138011B;
-	Wed, 15 Jan 2025 11:53:25 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 15 Jan 2025 11:53:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1736960005; x=1737046405; bh=GiANh07hLr
-	e+eKibeiSGXLjnT+ji9xKdcxbJbaLixJ8=; b=shVsR9DeG7Ur1F/6qBguPvXH6E
-	suB5wuFLz72acf7jMimeO+Q8bM5NKpQUfyu2BrPTjqILe8gVoQJ/AnxNLsHix9x5
-	jhZIw2gektTQn6yCOfzKTg1nURtAEu36qKNgBGHTDSYRstKIrmdBCqoVdUJuNA7e
-	RJIOF3rJZWhWnZnhitZVZOEuTa9MKmDnlIwYU9GZwPUyruOYI6UuJfkdLjJlenRw
-	oY9Il186xOFwZfUs8ZHForkKBaIUu1qRiQEGtfJmEZdsJcLn01ggMSfZQgjDPGbI
-	XMOIAbnb6bXGtX6jJF1oxB2ndt1WFK/Skc9bfmcm5LLS1TweN78NBSMdqZOg==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="DglhnQyo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FICdIfAn"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id BC02F11401A6;
+	Wed, 15 Jan 2025 11:58:35 -0500 (EST)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-06.internal (MEProxy); Wed, 15 Jan 2025 11:58:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1736960315;
+	 x=1737046715; bh=ep95veCX3mE1MhwfbWt+a4a/I2b3gDd6g6WM27DLHng=; b=
+	DglhnQyosuK762zResK0RsoX3DVptJ34eyFK3WlxBOeNHMIldYYICuqTw4FEpdEl
+	P7hHfqLfKBe8OpoPvralM1PsYcee68dfIimd1G4G11B6A1r7/58RAIznVygafMty
+	nSnEvIi/xpzEl6FC369B89X08wkHrMyXNVbAMyj7pOUA6naSGXOxcJ7A7WaaneuF
+	GclkyngFjZCzWJpDP5LRT9DN4T/9TOM+2i25IWD5MseoSks5BLC8WH3Gu/oui4Us
+	QSH1LvIoZ9OO7pxfgltdcwqIfHaBCzql8v+ZroNHceFsKp46s9yhgaUWGX5gUt2H
+	bjeoofeeTv80XCOQDPhhdQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736960005; x=1737046405; bh=GiANh07hLre+eKibeiSGXLjnT+ji9xKdcxb
-	JbaLixJ8=; b=ATDWp48oFGFtKsgS16DnYar828hy45qtyriHN8xwGbCAdtpb8ZQ
-	CsZuA+mzI87d1pBPJiJJM6tqhlgdckATXIHlCfwlBP9vS/+wVvI6PYfxcg33y58K
-	9wmBdRgEZuVTaemRo5g1j3Q12T4GyInHO8gzjvot4XrsJ7S94Qey/2r0oxIBAiuM
-	tSCAA6hClCMhDw32gM1iu9QiJ4SE4gd7llp02yAXSl9TD9P+6WAY1l0AHDx9A7GV
-	yvjsVIeH3vcxO+Fz3NEPfvidSVepOlKQbOznRznmyzQDHLPHF7qP+GdC5eprx6JU
-	8W+9mVdAeHb3w9pRdEcONLxmm0wn9pOzcBA==
-X-ME-Sender: <xms:BOiHZ-wPESRux4VY8zvW1TYzONp3ZPis1IE5F_U4vi5PbE_cGVCEoA>
-    <xme:BOiHZ6TrF03zT7MPoHHDzHXmdY1AtXQfNwcjBmChY9eq6xeMhl3udDwwshsS6Uc6K
-    6F6Csxqx9cp_HVyog>
-X-ME-Received: <xmr:BOiHZwUFdbsAUK9kH7KXO3aLWDClNbl8uzQjhurlHHBqwmXQZ-jcYURmuEN2JKh2iJvRgxhiBxrOIg54zCxTiyIiZ5jygBIwL-1Q1gxpEh-2nhE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledgieejucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1736960315; x=
+	1737046715; bh=ep95veCX3mE1MhwfbWt+a4a/I2b3gDd6g6WM27DLHng=; b=F
+	ICdIfAnm6VzYBoks55PzmlSyZGSRce4p9T5mHYFMn15qYSYLAy///i8DGbguCStH
+	rpOZabB6zqForHgX0eFzjqqHbznVxEWfRcdExAk8AEiK4MU6fkCPR/AyN2EZDY8t
+	TuFPVxtbbVXedIqCEhBFZI9AkHXDCoaj3HP2qa4c9VBSk2IsFSbG2wxE+rcxIA/M
+	Maed+MJACRGH5CRQnS5Dcz8JDFTaEYaDQaBObimflMIerbM95XqHGB1yGcCC4lRD
+	T3q0wRlw33/W3OB7Corim5Jq70O+6EXwLpeervpOLzD/rrznDmVP+evSReKQFj9r
+	utF+jD7IsOsVazCBF9Hag==
+X-ME-Sender: <xms:OumHZ5yWsNMzmzKFi47foybF87uVSqLg15c8SCWdc2lJeN3EZkLK_F0>
+    <xme:OumHZ5RkRjHR6iHse46gddH76duHLs-JQLrumHqZJp6gTVvJ1n7kJIzPU_wMAQ4We
+    TLIxYmfNx7jqBFhYw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudehledgieekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhi
-    khdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:BeiHZ0gN1S5bdlyxdB_ERra9iTI3BjD8Vwn_2_UKOtmpjznbzSi-Eg>
-    <xmx:BeiHZwAcSUXWUJd5Y6krGlI4CHAmHMaV6t0KFs0hnECa292rcNTs3Q>
-    <xmx:BeiHZ1KIL4AINR32KVLgwUN5uJ8jFrnq_8Vil0Inh5n3t0XOG5FS3g>
-    <xmx:BeiHZ3BI7IKSt1O7R2hfeYmGhXkEQGDBBfvUqWIBblhGOne4DR3sPQ>
-    <xmx:BeiHZzPmTZN4Y2NqOQxZRn954YFjF-ma7LZRbIyqjmBjyfB2HkeeAZ-m>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jan 2025 11:53:24 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id aab1d698 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 15 Jan 2025 16:53:23 +0000 (UTC)
-Date: Wed, 15 Jan 2025 17:53:22 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 03/10] compat: introduce new "zlib.h" header
-Message-ID: <Z4foAvj_5meT-a4P@pks.im>
-References: <20250114-b4-pks-compat-drop-uncompress2-v2-0-614a2158e34e@pks.im>
- <20250114-b4-pks-compat-drop-uncompress2-v2-3-614a2158e34e@pks.im>
- <CAOLa=ZTvW2T3rds3YN0m9iWQC+sAaSCsiRw+fo57FqqF24pMaQ@mail.gmail.com>
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertdertddt
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnhepgedtjeeiteeghfeutdeutddtiefgvdegteektdeutddugfekleeugfelte
+    ffjeffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmtggvphhl
+    segtvghplhdrvghupdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehjohhnrghsrdhkohhnrhgrugesuhhnihdqmhhuvghnshhtvghrrdguvgdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:OumHZzUjJkEIy7EBzHC-EjZGdWeKbzfc28EDH0O_wCtDwu1eR6Pfew>
+    <xmx:OumHZ7gHnrCBnaEyStTPK9LvyGZK43MyWBX2tsvBqv3bY2THCTuzlQ>
+    <xmx:OumHZ7BdHBh2x9YrMsn7BXiuj8j12u9mlJTO35PKOlSeElA-ZSXxJg>
+    <xmx:OumHZ0KgZj9cOlnrt-Dj_xehMA-odMLbHIE0nKe3vHLRXSRZy_Sgaw>
+    <xmx:O-mHZyMM9vZbKlRANIQhDW0YYnpJd1cVsCOJFrm7asRlV4fOStzC2fxW>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 9ABFC780068; Wed, 15 Jan 2025 11:58:34 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTvW2T3rds3YN0m9iWQC+sAaSCsiRw+fo57FqqF24pMaQ@mail.gmail.com>
+Date: Wed, 15 Jan 2025 17:55:19 +0100
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ =?UTF-8?Q?Mat=C4=9Bj_Cepl?= <mcepl@cepl.eu>
+Cc: "Jonas Konrad" <jonas.konrad@uni-muenster.de>, git@vger.kernel.org
+Message-Id: <c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
+In-Reply-To: <xmqqed1414gt.fsf@gitster.g>
+References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
+ <D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu> <xmqqed1414gt.fsf@gitster.g>
+Subject: Re: Git branch outputs usage message on stderr
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jan 15, 2025 at 02:00:15PM +0000, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Introduce a new "compat/zlib-compat.h" header that we include instead of
-> > including <zlib.h> directly. This will allow us to wire up zlib-ng as an
-> > alternative backend for zlib compression in a subsequent commit.
-> >
-> > Note that we cannot just call the file "compat/zlib.h", as that may
-> > otherwise cause us to include that file instead of <zlib.h>.
-> >
-> 
-> TIL. This would be an issue if we added "compat/" to the list of paths
-> the compiler checks for headers no? I couldn't find anything in our
-> Makefile doing this, or did I miss it?
+On Wed, Jan 15, 2025, at 16:28, Junio C Hamano wrote:
+> Somebody may want to go over "git help --all" and for each of them
+> try "git $cmd -h >/dev/null" to find those that give the help output
+> to their standard error stream.
 
-You did :) Most platforms don't, but we do with MinGW and Windows. This
-is done in "config.mak.uname", which is probably why you missed it.
+    #!/bin/sh
 
-Patrick
+    for cmd in $(git --list-cmds=builtins); do
+        git $cmd -h >/dev/null
+    done 2>&1 | grep '^usage: ' \
+        | perl -pe 's/^usage:\s*(\(EXPERIMENTAL!\)\s*)?//; s/^(git\s+[a-zA-Z0-9-]+).*/\1/'
+
+Gives
+
+    git am
+    git branch
+    git check-ref-format
+    git checkout--worker
+    git checkout-index
+    git commit
+    git commit-tree
+    git credential
+    git diff
+    git diff-files
+    git diff-index
+    git diff-tree
+    git fast-import
+    git fetch-pack
+    git fsmonitor--daemon
+    git gc
+    git get-tar-commit-id
+    git index-pack
+    git ls-files
+    git mailsplit
+    git merge
+    git merge-index
+    git merge-ours
+    git merge-recursive
+    git merge-recursive-ours
+    git merge-recursive-theirs
+    git merge-subtree
+    git pack-redundant
+    git rebase
+    git remote-ext
+    git remote-fd
+    git rev-list
+    git rev-parse
+    git status
+    git unpack-file
+    git unpack-objects
+    git update-index
+    git upload-archive
+    git upload-archive
+    git var
+
+For
+
+    $ git version
+    git version 2.48.0
