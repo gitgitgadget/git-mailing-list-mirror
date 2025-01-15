@@ -1,97 +1,93 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2452B1EEA37
-	for <git@vger.kernel.org>; Wed, 15 Jan 2025 09:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C33B248165
+	for <git@vger.kernel.org>; Wed, 15 Jan 2025 09:24:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736932915; cv=none; b=GDzwQgqG9MNoAwKyjDPTSa9cyjdK4R8iD/03NOIyqw7xvSRuE9cUVDBxK/MLQrJMLHEC0L7zeaYTyWxI9O8jwDxCsJaCNTbNTkaZJ8sxjbluh+7oUctsY54JTBJrAjmngdxd/v5GsyZg45dC5VRQJcIlZOcTZ5vAmeN0Vzz8syc=
+	t=1736933093; cv=none; b=EcBrE+pQsmutwV4HBvm90lgxVRNcD+R3nzn19SUR8axISa2G4WwXdkosEQNcUsEN45oG+PqfQWSmaHWfeXs9IL3E8ITKqwZEEy5qrn1VK/9dY0oWPyXG65KqyQi2Z6eOeyN4eiJLp+UJSmwP5OQH8949s4S3qGNXyj9TQ0h4Cw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736932915; c=relaxed/simple;
-	bh=UI64hx0HYo/dnNeNdby45qLGKQ55KLxVvwXMf32MHYw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D6XYmZJP4uOISntmHrqt/r0dFS76srUmw+MmJRuiOLx8OSeOaEUMy6H0Mmqg44xDABSogYnX+zK4vUYj4lgfYcz9PW0ltLr6ull5Ffsl8RZEogLuI9CyYsSV67GUy4U8r93AoMTel9CaAXTUI9h1W88fIZLTCAqDvZlUJI/UVBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cGYI0EyD; arc=none smtp.client-ip=209.85.208.42
+	s=arc-20240116; t=1736933093; c=relaxed/simple;
+	bh=u0DmaFVGdCXpxQ7HrMo40Hyvk7uFMF/U3BhcJblVpmg=;
+	h=Message-ID:Subject:From:To:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=joRG2lHbajKt3Kev5Vkm0or+nwa5kzWCMpAfx0rn0DuiUlNfg3Zh8SYgdGpE6CsJC2ZlkC10HZHniYggG7iHl/sfjxxiV/6VufVVv1ezHDjYOA1jlCZcxO4OzV1FOVtuEEe6F6mEtvCvA45xHF5EsC6Mrian9xLx9KZCfl8Cbs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hylIZHtx; arc=none smtp.client-ip=209.85.167.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cGYI0EyD"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5d3d479b1e6so9092526a12.2
-        for <git@vger.kernel.org>; Wed, 15 Jan 2025 01:21:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hylIZHtx"
+Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-54020b0dcd2so701396e87.1
+        for <git@vger.kernel.org>; Wed, 15 Jan 2025 01:24:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1736932912; x=1737537712; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1736933089; x=1737537889; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:to:from:subject:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UI64hx0HYo/dnNeNdby45qLGKQ55KLxVvwXMf32MHYw=;
-        b=cGYI0EyD1RY03QEjUqVxisTxzGMiQmHhm9ptC1jVu2dHQDQXilj+EA/REbWSM4dL0x
-         sAJ6j4bTJWw3TofSbZ3ExqC04ecTpX+KfF9qZh8Qm3btKFOHXUxu9VeeNUZgBWR9e4U0
-         S61gK2bzVw5lD4CQgZZ8YQoxLwe1G5B6Zy/w3mN46ha2N+ODjCR+9eUZ2Nclwg9OdTuz
-         +dG1rzaa+Qrkg0NUPrdgruoe2Qp8+dZiDRnkmJguCSPbY6deS3qe+9FmQAyZA2aoNwfE
-         UlW0l1vyHM3JqvIL8Crscbi1nj6+ceIUJeRPfnnToYXAUCREzFXs6yMfqrv6zvOf05Q3
-         b1jQ==
+        bh=rIZ3xij21YihxGdYS+5XMxg8B6+qS81BwAHa2oYiZMg=;
+        b=hylIZHtxrjE/IfjIpCwGOA0V70yMKik5iGiwyTnJm3JB2hvtMfNfIQQ2AVTpwmZbwu
+         dZ9ElqZw+KU6BnF5lh4cgrWYEQGGmnQifYgTPg5XYe2wWqc+Ftf64glYfHYcdcYNXHJs
+         80YHkqDlptlgN0iHcBtdHV6JJhqkG+mamcX0RjpF7cqkt4dcmmVAcWX3fGN4k6/WSpCy
+         NHL1AnR/arzIns2AmSMF1pZfqwsXd+nuHzcZeB5TemhLmUooLvElOwcyseG3NdD+e1nT
+         58PzH82iZVoIQbOzAJyAnufr3D/vBF7CbNQYg3n+ouzO3VTOxflHwA/o/bsiXymr3gfm
+         mq9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1736932912; x=1737537712;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UI64hx0HYo/dnNeNdby45qLGKQ55KLxVvwXMf32MHYw=;
-        b=LFnz2xeNTz224AsJ5J4U6k674beoKAe7QDBsevLSVg/KoMOWueWdESNBqj2OXi8pXG
-         ef/NEeEfJvqj+XSKNtTpzANQVU1WXRc9kEpwzE1P08gS1MdmfxMTN23lPIgwwi4VN7i6
-         vfVJ3xfuxtq9qs3ghl3qK94dGQYCA1ydvbNLMKp3x0hCKuuSp2jZ/Hg1VmgDL31sjDVK
-         dFmFt1d4ysRj8/LyArSRLG4fkyC17M9eNYyNGDnl5W2YGaWjZhwAL8cIu+qu3u03815V
-         v5re6DiBW1z2CLm2eepobbwaiHvHJTbH5Eog9J2hl1H7AG/piPrBGfGU563+soFO3Ec6
-         GYWw==
-X-Gm-Message-State: AOJu0YyQs30ZTpKc5JSP9k4GiyeUih5ZKFk+B8RFOfgcso4lpZvYUdBH
-	4uC9LmsxHY/q2/dVe6l81M0VQiiS0/qAJdbDsURFd5BtBbqaSoRwlAFEKp3bKuYSuumlpgDpf5Q
-	M2cBURWFZE4cbQXN+rXq41IBxLXo8O3yJ
-X-Gm-Gg: ASbGncuRcG3K4Hl6t6bctG9rexdWAnJnJhZTZFrF6+cYaPPCJiDlt4RwDwiyTa++Sc6
-	/QHagLpMZryjzz1JM++oXBxMs36ktwL2gDxCxebgx
-X-Google-Smtp-Source: AGHT+IHIRVqGVaScXEHPb4OWcl7W2hPv9nqR6kp8fJ+FYFQFRpipVyi39wI2MD3QQm0HoBbkOxvdxE6RqrQsQRRb1i4=
-X-Received: by 2002:a05:6402:270d:b0:5d9:ad1:dafc with SMTP id
- 4fb4d7f45d1cf-5d972e639famr63419273a12.25.1736932911937; Wed, 15 Jan 2025
- 01:21:51 -0800 (PST)
+        d=1e100.net; s=20230601; t=1736933089; x=1737537889;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:to:from:subject:message-id:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=rIZ3xij21YihxGdYS+5XMxg8B6+qS81BwAHa2oYiZMg=;
+        b=MxaDgymcyQOSgQzqKR5fPickuZSvP8p0EdOppSQKr5RmFrt7wMpBnxx5R18lLtIJXp
+         NEQH/7bF/Rq1ZzAr5M0bF1DADp/x1/424o7mj1lQZDn8a7nIrQLVgyDrzZAIyiYGIUf3
+         GT6FrR+opMTYnGiUmh0dl2fMNWhT6UmZLhtKfW5U//joDykufFphnv3ike4i+X7S9dlM
+         MEg2gwxVBsfwlVfzOAyAIwHjkXzu2GyCvKiFOWB7fz0d3RvOJOIrZjXpfoG2iA6hhAD2
+         9CJRuID/7w20MehwGQ6XabxdtGp4zAZcRu4La7CxQLkr1E8oO6rQe1WrByk98e5+U5Tt
+         lg3A==
+X-Forwarded-Encrypted: i=1; AJvYcCUPJU+LqoSqMJ4f+FMZ/VhpsYM36vktMsJSSNQzTQ/VPj1YJvN6OzdHieblRRa7GlMynrk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyddh/YwCZBbIjIEsf6VLWBAHGvnqbZV2AFrrHW0dOkNZUnKiFW
+	scGHUGcm4kxOoM66IYcilzwbyMHxrMDRuQ7+nbY5LxdfV8K2chnepuIb2LW7
+X-Gm-Gg: ASbGncseLs3IK0kbl9zO6vi/lSNwlgMkobhYOSeH+fdBwc/K+DM3oiDmrLxw6Y+IOmZ
+	3Mu15iU6k+ph9EgQDC+nBV9vv3tloVfBtwC0gXNlCyjjhO1l8zEFVBd+bxM/EfUgvmuyqoYawcr
+	iJ+Npo6st4FxCjOOAlJqaBKG8hUmHasPzAKZo8ZfRZ0oar5uppsamPGH3OowiKohX5uRPn9qwfS
+	+ORUjNTea6kswkywFPP6wquCjpjAk+izJp8yaXtyKfgsBqC3vLI0swmSly5i7HWYU9+5yzB/i6J
+	MLL0OLUSsgLRfO3DvhZ/EHrpvreBLnn0sjsOGHd9HAzrz0SHgyqUfxIq8zIrRy5Aq5qKnnTxdMY
+	6XHpBCsOGQ98ZyJ8S1Jovl2nh
+X-Google-Smtp-Source: AGHT+IEwEtA+c443w3M9cX23NiwSKIdiAICAB9Jvepf6K8mClTnl6KbavQPa6bVyQzZofOIdkCSytg==
+X-Received: by 2002:a05:6512:3987:b0:542:7fa0:6701 with SMTP id 2adb3069b0e04-542abfb650emr728682e87.11.1736933088829;
+        Wed, 15 Jan 2025 01:24:48 -0800 (PST)
+Received: from 0369-666c-ac0e-85ca-4400-843f-07d0-2001.dyn.estpak.ee (0369-666c-ac0e-85ca-4400-843f-07d0-2001.dyn.estpak.ee. [2001:7d0:843f:4400:85ca:ac0e:666c:369])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5428c704547sm1980472e87.6.2025.01.15.01.24.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jan 2025 01:24:47 -0800 (PST)
+Message-ID: <6deb9ea67b2dafb12d02146a29a35ddd970f7c06.camel@gmail.com>
+Subject: Re: [PATCH] instaweb: fix ip binding for the python http.server
+From: Arti Zirk <arti.zirk@gmail.com>
+To: Alecs King <alecsk@gmail.com>, git@vger.kernel.org
+Date: Wed, 15 Jan 2025 11:24:46 +0200
+In-Reply-To: <20250110101346.30416-1-alecsk@gmail.com>
+References: <20250110101346.30416-1-alecsk@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.3 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAFAcib9rWO8WFmaAwf+1Ng85+N7O3Y=QM6wG5xEz0r4tGXJ8TQ@mail.gmail.com>
- <CAP8UFD206mL+CYxOUKOPWFj7tX1Y79Moc7UjvH4BsLVLbAk-JA@mail.gmail.com> <CAFAcib9cJOp26J=PxU3XwmLT0hQVqCb8vcS7MdGpFd5TNVfDzw@mail.gmail.com>
-In-Reply-To: <CAFAcib9cJOp26J=PxU3XwmLT0hQVqCb8vcS7MdGpFd5TNVfDzw@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 15 Jan 2025 10:21:39 +0100
-X-Gm-Features: AbW1kvY_VPvOAjL4RDj9hF7xn0jXcJm1NTrgZ7YufB-smJAW4D0bPAGUV4slJmo
-Message-ID: <CAP8UFD1ioX4R6J+Spb2oPEeTHvUBrt62iBqvRgMNJVbp45sw_Q@mail.gmail.com>
-Subject: Re: Should 'git replace' respect GIT_NAMESPACE?
-To: Josh Bleecher Snyder <josharian@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jan 14, 2025 at 11:40=E2=80=AFPM Josh Bleecher Snyder
-<josharian@gmail.com> wrote:
+On R, 2025-01-10 at 18:13 +0800, Alecs King wrote:
+> `git instaweb -d python` should bind the server to 0.0.0.0
+> `git instaweb -d python -l` should bind the server to 127.0.0.1
 
-> Do you have suggestions for alternative mechanisms I might use?
->
-> I want to be able to easily enable/disable a set of replace directives
-> for the purposes of running other git commands, without globally
-> altering the repository. Otherwise I have to worry about locking,
-> cleanup when something goes wrong, and state visibility and
-> management. All possible to fix, but messy compared with something
-> like namespaces.
+Thanks for noticing that bug and sending a patch!
 
-The simplest would likely be to develop a small set of shell
-scripts/commands to move or copy replace refs around. These scripts or
-commands could use `git for-each-ref` to get replace ref information
-and then `git update-ref` to create and/or delete replace refs.
 
-For example a 'mv-rep-refs <src> <dst>' command would move all the
-refs under "refs/replace/views/<src>/" to "refs/replace/views/<dst>/"
-except if <src> or <dst> is '.' which would mean "refs/replace/". Then
-`mv-rep-refs build-fixes .` could activate the replace refs that fix
-the build.
+>  GitWebRequestHandler(CGIHTTPRequestHandler):
 
-Alternatively you could work on implementing a similar "view"
-mechanism in Git itself and submit your patches here.
+NB: Looks like CGI support will be removed some time in the future and
+the Python backend for instaweb will stop working afterwards.
+
+https://docs.python.org/3.13/library/http.server.html#http.server.CGIHTTPRe=
+questHandler
+
+When I get the time I should look into cleaning up the instaweb script.
