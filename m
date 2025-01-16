@@ -1,110 +1,68 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD5A1DE4C8
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 13:24:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA5022ACD0
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 13:52:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737033878; cv=none; b=XkJUUIJOxQzuArJNCU9dNwqXPHeoL9XRc/vPdKRpi/SMq+KBB03QOM5asUV4xLJ6yARH6dDjisYtR1H9IgK03IoVe3GotsYdWZMF0GEkoDzT+gpA3hsBj8KA8nHI7SCjvXo5qkkabGvF2WdeJ+9/HWbjgfRYCX9Y+c8btXGy3jk=
+	t=1737035550; cv=none; b=hI2kurZUJujCxvhyaYsJKS+/V3jOyKR4DL7GzItb3eR5Ule3u+PHVlncKp8yywzbSIJ8C2C3HHWrqkfOukYc3jchIjT9alOij2pPgKj58ldgwn5cqaFTD9qyAbqHRgQsxR0hVpkb0FKlhExBPM7NtG54rfiLztob+Lx8vICZh+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737033878; c=relaxed/simple;
-	bh=uuYFlkNB99UpsrSfVpOYfcjySDLzPoRS4nBvT+e144k=;
+	s=arc-20240116; t=1737035550; c=relaxed/simple;
+	bh=kTKirs77mQo6i2qcWJKN/IYJO+r49XvaCI4wM25Teu4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lnCUrdnrKc9M+Z1p7Cmgc5orjrkvKYjdrSCYtg3uqpEebQ4eJmOFlmK0LGg78lkq7cD2k3mMLnuwF6IdzkN9O6DNxu0TmLnS0MJ5lLSLhIqBVc8bHRcXMRUrd2yNLoqtQG/fVlF/7M9Lac4C+9fWfLQP2K+5Fw2Wj6PBAK513AY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Z4++13wm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=StQloEUC; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=ptMOpNyEz3vjfwcl7WVbhDJc+ci78fJ1R4UzZ9ITe54DAVr8rIcCrJ/1tkJOSvkzOWs2CqAKkBGmfuduTAXIQHCH3vBEoqp6dL9aEIALUMYPaGYLZOvpY2YaO71lPxJRmRO84S54dVPgO25TS4epT/h4LbNEbauy0KVKPT9K7cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GvFtOH1E; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Z4++13wm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="StQloEUC"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 133AA1140164;
-	Thu, 16 Jan 2025 08:24:36 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Thu, 16 Jan 2025 08:24:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737033875; x=1737120275; bh=iB9KnUPOMm
-	POcDg3MaAT+BY9Jbz5A+wF2oM4xNhXeJE=; b=Z4++13wmYh5KkcmzwY7wMj4euq
-	kpApejmT3+RfrXoUFC1xQDyG98An+X5NtMk0aWtDxX+q+4ejVbPFJ3omJ0CGeCwo
-	A2XihF9MPOx5Ynwry2pSy6hVCY15iETSrn/pcDwenMqdthYe19R6BYeArxkQ3WhF
-	CTy4M8erU06KN8Ht8s3hTj18yIHJ/ZsBDzuvZHjA582FxPyzvnPKnMfIRVfiwKqH
-	1bTRpiU3vkQAwDpVzh4WzTTvOjzfqzEmZ3K+/Lcv3l8AyAa7WnLp6Vaxd2jETr5x
-	F5X50xX3Zx74zKqi/OBZr+Ws33vUcd2JxozKwJ5BjFELY6Q2gZCL87qonjDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737033875; x=1737120275; bh=iB9KnUPOMmPOcDg3MaAT+BY9Jbz5A+wF2oM
-	4xNhXeJE=; b=StQloEUC2H3qZTTDezliScSmP5KQCsSs6u02pYc9eRhIspkI7ZV
-	DlD2NRVMqtJ2NCPcviF1wJDZAOnmenmMCchVl1X3DG9qXUruNwD9SDJf7hrvQMUl
-	pGhsZnEFJRViCB1KiPm4wg0eV6KLLNXuzzYyTXvmLF/GNn3lKqyuWYc5PuLqgVEN
-	zkdvZeZeLhoYZ6Q+vS+X2148RUGZIeAWce6GlvpgGngEfR0wgVq9vz8xOsqICbRC
-	wUdzkdDYODmLqdhFNzXkVmALxoVD9jmkadHdG7KIwvx+EO5ZMsRe08rrXPbPabk4
-	ptWZzbw0pKXKgxGPb9PXnfKkE3/uiNlwa2Q==
-X-ME-Sender: <xms:kwiJZwZwoqXUG621dyJrhFsApLjvSxRlAYNL_5g7OVx2kv_fpRvHyA>
-    <xme:kwiJZ7YyTTj1q97KlxoB5L_bsSeKIue0yojfW5SeAMszRk3jDcVKs_0NHhr8TaSlU
-    u-JeSqI_UOMulbF8Q>
-X-ME-Received: <xmr:kwiJZ69zlt9Kvmf_Mxtm_ThQ49VZeNMNNYkjs3Z2EoF09FCJhwGII0bJ_Q7e25WTB3dT9QKDR8zJ7owT_gX8cUC9T0IhF7hF3kkG5nspRvk8o0ffLQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddggeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhh
-    ihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:kwiJZ6rnNQuLVJuWIsHHkoBxII3jM4K8M4t-ALJmMb6MRPapQA4W_A>
-    <xmx:kwiJZ7ojEm0WVwheUGWGCRpJcU6yosFAPjIQuTBZPV9Q65dC9czKSQ>
-    <xmx:kwiJZ4TuMHmhqIgx-rg_nu2ORLEKCQzSEyScjJ_SJ2djRuWsPpxiHw>
-    <xmx:kwiJZ7q3bVx5vDMjOqXmpDMREnkKkCJD81KWYvYBueFZTKa5feuIAg>
-    <xmx:kwiJZy0uNMAlKMhPK1bOl-nKIfZGosTFF2Gmh3gwa43wdaq86Oyde4gH>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jan 2025 08:24:35 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b0e91df8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 16 Jan 2025 13:24:34 +0000 (UTC)
-Date: Thu, 16 Jan 2025 14:24:33 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: karthik.188@gmail.com
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/5] pack-write: pass hash_algo to `write_rev_file()`
-Message-ID: <Z4kIkY17fFDRrBdV@pks.im>
-References: <20250116-kn-the-repo-cleanup-v1-0-a2f4c8e1c4c3@gmail.com>
- <20250116-kn-the-repo-cleanup-v1-4-a2f4c8e1c4c3@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GvFtOH1E"
+Received: (qmail 14231 invoked by uid 109); 16 Jan 2025 13:52:28 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=kTKirs77mQo6i2qcWJKN/IYJO+r49XvaCI4wM25Teu4=; b=GvFtOH1EaRHvfMczITf+oxHP2YY3ywtZiDtlimexZpmzqp5feQroxEaX3rXLZv3U6kWBDqEFTtnPCmQ8lBz/sHBHxoIPn8yMJP7/ULReVu1sBxdTMfUTw6Hgi9ITaBy/833HZRGIREnxd+3pg6JvKIatKE/RPwCvXwRuBBYaZ7O/2mdy6+AGqr4iqTti2eiUe752VU17jx6kgQlhdpQkf9ydVZlZr6KR97IA+pC/9QrlN+UWTtiTSieaigw47SNaPP4NEnc3Z/BCjUBqwPG9ZvfEGWqSz7sIbZwa/L16gcrvhu/XQYaKGGL90bxD3VaMIOkhkiyCDEkhUn2QgnzZ/g==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 16 Jan 2025 13:52:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26358 invoked by uid 111); 16 Jan 2025 13:52:27 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 16 Jan 2025 08:52:27 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 16 Jan 2025 08:52:27 -0500
+From: Jeff King <peff@peff.net>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Askar Safin <safinaskar@zohomail.com>, git <git@vger.kernel.org>
+Subject: Re: [bug] "git bisect old v3.0" takes 21 mins on Linux repo
+Message-ID: <20250116135227.GA2323616@coredump.intra.peff.net>
+References: <19461b87a5c.5a2ea74016716.8214238482389812984@zohomail.com>
+ <CALnO6CAzN1oeT4tMjJ1Qm4dW0xdVkVKHJ39oJTX8R8E614FH6g@mail.gmail.com>
+ <20250116105246.GF773990@coredump.intra.peff.net>
+ <20250116125313.GA2301268@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250116-kn-the-repo-cleanup-v1-4-a2f4c8e1c4c3@gmail.com>
+In-Reply-To: <20250116125313.GA2301268@coredump.intra.peff.net>
 
-On Thu, Jan 16, 2025 at 12:35:16PM +0100, Karthik Nayak via B4 Relay wrote:
-> From: Karthik Nayak <karthik.188@gmail.com>
-> 
-> The `write_rev_file()` function uses the global `the_hash_algo` variable
-> to access the repository's hash function. To avoid global variable
-> usage, let's pass the hash function from the layers above.
-> 
-> Altough the layers above could have access to the hash function
-> internally, simply pass in `the_hash_algo`. This avoids any
-> compatibility issues and bubbles up global variable usage to upper
-> layers which can be eventually resolved.
-> 
-> However, in `midx-write.c`, since all usage of global variables is
-> removed, don't reintroduce them and instead use the `repo` available in
-> the context.
+On Thu, Jan 16, 2025 at 07:53:13AM -0500, Jeff King wrote:
 
-Yeah, this feels quite sensible. We know this file is supposedly
-`the_repository`-clean, and callers expect it to be, so reintroducing it
-wouldn't be sensible.
+> I suspect that the whole bisection count algorithm needs to be rewritten
+> to all run in a single traversal. I guess if you iterate over the
+> commits in reverse-topo order, you should be able to just compute each
+> distance as "d(commit) = 1; d(commit) += d(p) for parents(commit)". But
+> it's not a problem I've thought a lot about, so I'm probably missing
+> some subtlety.
 
-Patrick
+Oh nevermind, that won't work, as it double-counts commits that are
+reachable from each parent. Still, it feels like there ought to be a way
+to compute it with a single traversal.
+
+I think this is similar to the reachability bitmap computation, which
+computes a bitmap for each commit (and then the weight of each commit is
+the number of set bits, but we've removed the duplicates). We do that in
+a single traversal these days, but it's pretty complex and heavyweight.
+
+So I think there's room for improvement here, but it sounds non-trivial.
+
+-Peff
