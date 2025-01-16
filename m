@@ -1,123 +1,245 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804B729405
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 02:05:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145061862
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 02:35:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736993124; cv=none; b=sxT7MiLzC9IwmSvfG/VH5aPFrkoEeO+TGfrOP0BKyPfA1kNPObYRG4vqyxZQ1Ak8yQPAMRLr4OdH6J7n/KQhiLaSNmhZ4sj3Knyp7xIUoPJ8Q6Tl5MdC8AkvFnZZ1j6fLECQ2c5ErrUluRJYvOym9asH+MJ2FeZHX2/C7kmy9ig=
+	t=1736994937; cv=none; b=ObRKB5f4suV7krEOirj6NLlXwmAg3fW6JJzFthM7LCN6ePmGtiNmnUY4Gf491xwAU9ulEqu/BX2dyIQzXKwUqZSbL5AlI/FMizVgBeuzQhGo5yO8agCOb5jwRqEuHaY7Nab8FaLhQ0YZT29PldIfjUZjbpyXmQIR7LFKJFHJoGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736993124; c=relaxed/simple;
-	bh=oTks0HersSxR03N+n5cz1wkB88+ve9bqSiQcYMEOa7g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YXGJeS4YNFpHxsyY8ZTB5EbANw6+OfMhb2rOhGJ60nqfgrnzddVJ6zU4cBK5i214i0C5Gb8LU8L66vs9C2aiznPSkX5vLre7RSo+LcLkuiVgT304rH+l4eJa/Vko/IZheUDm7fVDDSPY18EboJfoUD86ieuqQPOVn1AqFnNbRiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=mAufAekj; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1736994937; c=relaxed/simple;
+	bh=w00xgbRww2JZ0Zo5RjU1gwD9oQXlXWt2v451qZMFopM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=TDAG828OuTZxS+loUztJbK0wYADSHtVdCDts+9/s/7Wz7OzP5cJIvJsQrZi4rdLKPbRnWbev3Wm758fCUiO32xy28PS+TRvJeoLpOrGPmo6paT7BYy4Vd4lSAYiIsKIFVrwnGULls8Mt54Y2i6ikOnNJZxA5trHkPpddGdjciiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=At5P5qmI; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mAufAekj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1736993120;
-	bh=oTks0HersSxR03N+n5cz1wkB88+ve9bqSiQcYMEOa7g=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=mAufAekj+6eBRUuqRCLW0GuXpdFHwsmeKZSu3xQY2w5xL0aRNo+Q2Q+0mkA5I5c0j
-	 okkob3u49qh40A6yC+KlxIJ0+YYyN84QzhJYvlF4uLkNuNES0+0CERdb9ekv1hbSxY
-	 JN25UPuO+u1Irwd7IsV/a72XzvMJhdb/741tZltVBocrAStMjFnAfa1IDQ2TG/4r77
-	 Wqpu/T0qnpDtlV3DPjnSo5EHc8aHmjZKcYbHkgZZjfd1sW1FztvyTJW+solRaClKKp
-	 3KqpYJBbLXWqjyCOKBz/okbAKKl4trrA447pZKIeSCzg6qk9dVW3bxDG7zwWS+RpqQ
-	 t+yVC/vykq3aKAnOKWvjG6DwXgh9cCw3BTXOrzY5IklBK9Zv7+BITVD7o/6sfDo6ze
-	 2T+g7uVRLjAHo9Ihqkvb6hVo9PsDpVoUwtVMmaM56lxXDunzrGQAY9gjS7Z7TzASci
-	 J0zZ4lzURq4Vlmimokt7rDyjCdyr1JrrzZi1u6g6LRvJcwoa7Nb
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E53242003F;
-	Thu, 16 Jan 2025 02:05:20 +0000 (UTC)
-Date: Thu, 16 Jan 2025 02:05:19 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: Bug in 2.48 with `git refs migrate`
-Message-ID: <Z4hpXwtv-ChwAGeG@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-References: <Z4UbkcmJAU1MT-Rs@tapette.crustytoothpaste.net>
- <CAOLa=ZTL9n_DPhNr49XAd6bT838kc09oVx_AH7Pb4o8VK_xQ9w@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="At5P5qmI"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43622267b2eso3416175e9.0
+        for <git@vger.kernel.org>; Wed, 15 Jan 2025 18:35:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1736994934; x=1737599734; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0hgRnhRvXZLAvugqo/atPWLYQrrHZoAgCdEMRd1e+MI=;
+        b=At5P5qmIijis5D1BWzBDf4nnJrgI7RKYbB20X+g0sBvJV0BY3V/L68KC6Ybcw6Hx+0
+         DEAxMuFyWhQdoDmeKtMegDBJvFxx0kh04QDssmHp6K+Oal2pg9Of5zhOq38TKEwiDdJn
+         sbZfbn5mpGAFS1IppaCeuzJk/MeTxDI6gk3BoVIMonrartodHpdoZXYHScRKbCpSt7B3
+         wYn0TG4I4uppvh6ZDE/Uc+lhHPSGu2oXCf5YriKGQPJlHkxgHVEZCEJGW6f7y4AK0z0V
+         DHWSJiS4FG7lYKGyyMEupZcVfbWRUjF2/O10T7mMnl3l8GW33C/DpwY6Tt1Jd/QhxtMp
+         stvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1736994934; x=1737599734;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0hgRnhRvXZLAvugqo/atPWLYQrrHZoAgCdEMRd1e+MI=;
+        b=fJJ5ogKFJSZNQg4mA3z3ejZxiRQ0rZ72PWyG6CV7mukCi7rWLqslZqVmu3e/TUCSc1
+         5TV9U0HhgsMs+AToQvnD9nVzI6HOyNLSwdr7s4Cfnabtu4DVtJvuszIYdjaRbE9jJPHY
+         F4BeXEsH+qR6k0AjstCnWf7kKC0GWPALiuJx4bL2rfaWNV2sIseE6hyG9FkbLIuqKUFE
+         qGakrAqnwppvBN/BwCRDideXBbEdUulXyKujaod2AS3FrHLO3vPcDLAftsZvv0eIUqkG
+         p3eahgrcrbl5KtHZO8WTUIBw3nf6RqaGhzcRbY0j03tLItRJPDObucoIpIbyT3+KvouA
+         hS/w==
+X-Gm-Message-State: AOJu0YwhAUw52G4t8jwQEADuh+R3xaGQJd5CiNXCm1eewe1c8FZomZOA
+	Z0HQil3K+DB+tvlilOFtElI61uMO6eMfen3dBPafyhuFBnabRDZwcyWqmg==
+X-Gm-Gg: ASbGncuagtx7/OcSkvarXdgOS4JpREi7i/1HMTfssebeK+3UvXl/Ipwblk5KYMeIbfc
+	1yoY0THUptJe8LnKCjLzUGLKpjjhhMygz/0sM/n0UqnmQlaOLRHyqb3oq+EJ865eq4jCdBF9BwD
+	NHY7sQqSS1TP9w60rGhD7h0vIjUTk5i2tMSu/Yc4BWL2Z4NDVT7CZMhPpFbSUjuOUFuRVY1hCKP
+	ERBy6o2EoPhJYwf4b9ZjGRtGyTBCZjpTZ1433RD/r6D6sD2xpJTAzxonA==
+X-Google-Smtp-Source: AGHT+IFfeCHZlOl1xymguf34a5Ua4cyaDhxdGkmq7Dswrjf2MLN5+2/1nr2KHClDEagwwV2rqrBbuw==
+X-Received: by 2002:a05:600c:3b0c:b0:434:f7e3:bfa0 with SMTP id 5b1f17b1804b1-436e26e2593mr241789545e9.21.1736994933441;
+        Wed, 15 Jan 2025 18:35:33 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38a8e4c1b2asm18627168f8f.89.2025.01.15.18.35.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Jan 2025 18:35:32 -0800 (PST)
+Message-Id: <pull.1843.v3.git.1736994932003.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1843.v2.git.1735611513.gitgitgadget@gmail.com>
+References: <pull.1843.v2.git.1735611513.gitgitgadget@gmail.com>
+From: "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 16 Jan 2025 02:35:31 +0000
+Subject: [PATCH v3] gc: add `--expire-to` option
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="r+Qq/+gUc4/bAe8D"
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTL9n_DPhNr49XAd6bT838kc09oVx_AH7Pb4o8VK_xQ9w@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    me@ttaylorr.com,
+    peff@peff.net,
+    ZheNing Hu <adlternative@gmail.com>,
+    ZheNing Hu <adlternative@gmail.com>
+
+From: ZheNing Hu <adlternative@gmail.com>
+
+This commit extends the functionality of `git gc`
+by adding a new option, `--expire-to=<dir>`. Previously,
+this feature was implemented in `git repack` (see 91badeb),
+allowing users to specify a directory where unreachable and
+expired cruft packs are stored during garbage collection.
+However, users had to run `git repack --cruft --expire-to=<dir>`
+followed by `git prune` to achieve similar results within `git gc`.
+
+By introducing `--expire-to=<dir>` directly into `git gc`,
+we simplify the process for users who wish to manage their
+repository's cleanup more efficiently. This change involves
+passing the `--expire-to=<dir>` parameter through to `git repack`,
+making it easier for users to set up a backup location for cruft
+packs that will be pruned.
+
+Note: When git-gc is used with both `--cruft` and `--expire-to`,
+it does not pass `-a` to git-repack to delete all unreachable
+objects as `git gc --prune=now` originally did. Instead, it
+generates a cruft pack in the directory specified by expire-to.
+
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    gc: add --expire-to option
+    
+    I want to perform a "safe" garbage collection for the Git repository on
+    the server, which avoids data corruption issues caused by concurrent
+    pushes during git GC. To achieve this, I currently need to use git
+    repack --cruft --expire-to=<dir> and git prune in combination. However,
+    it would be simpler if we could directly use --expire-to=<dir> with the
+    git-gc command.
+    
+    v1: add --expire-to option to gc v1 -> v2: fix git gc --prune=now with
+    --expire-to v2 -> v3: squash two patch into one patch
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1843%2Fadlternative%2Fzh%2Fgc-expire-to-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1843/adlternative/zh/gc-expire-to-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1843
+
+Range-diff vs v2:
+
+ 1:  14e94bf04e5 ! 1:  0842ec34948 gc: add `--expire-to` option
+     @@ Commit message
+          making it easier for users to set up a backup location for cruft
+          packs that will be pruned.
+      
+     +    Note: When git-gc is used with both `--cruft` and `--expire-to`,
+     +    it does not pass `-a` to git-repack to delete all unreachable
+     +    objects as `git gc --prune=now` originally did. Instead, it
+     +    generates a cruft pack in the directory specified by expire-to.
+     +
+          Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+      
+       ## Documentation/git-gc.txt ##
+     @@ builtin/gc.c: struct gc_config {
+       	unsigned long big_pack_threshold;
+       	unsigned long max_delta_cache_size;
+       };
+     +@@ builtin/gc.c: static int keep_one_pack(struct string_list_item *item, void *data UNUSED)
+     + static void add_repack_all_option(struct gc_config *cfg,
+     + 				  struct string_list *keep_pack)
+     + {
+     +-	if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now"))
+     ++	if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now")
+     ++		&& !(cfg->cruft_packs && cfg->repack_expire_to))
+     + 		strvec_push(&repack, "-a");
+     + 	else if (cfg->cruft_packs) {
+     + 		strvec_push(&repack, "--cruft");
+      @@ builtin/gc.c: static void add_repack_all_option(struct gc_config *cfg,
+       		if (cfg->max_cruft_size)
+       			strvec_pushf(&repack, "--max-cruft-size=%lu",
+ 2:  579757957d2 < -:  ----------- fix(gc): make --prune=now compatible with --expire-to
 
 
---r+Qq/+gUc4/bAe8D
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+ Documentation/git-gc.txt | 6 ++++++
+ builtin/gc.c             | 9 +++++++--
+ t/t6500-gc.sh            | 6 ++++++
+ 3 files changed, 19 insertions(+), 2 deletions(-)
 
-On 2025-01-15 at 11:54:51, Karthik Nayak wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> I'm attaching a patch below which should fixes the issue for me and also
-> adding a test to test against the same. I'd be grateful if you could
-> also test the patch against the repositoryies you mention.
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 370e22faaeb..b4c0cf02972 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -69,6 +69,12 @@ be performed as well.
+ 	the `--max-cruft-size` option of linkgit:git-repack[1] for
+ 	more.
+ 
++--expire-to=<dir>::
++	When packing unreachable objects into a cruft pack, write a cruft
++	pack containing pruned objects (if any) to the directory `<dir>`.
++	See the `--expire-to` option of linkgit:git-repack[1] for
++	more.
++
+ --prune=<date>::
+ 	Prune loose objects older than date (default is 2 weeks ago,
+ 	overridable by the config variable `gc.pruneExpire`).
+diff --git a/builtin/gc.c b/builtin/gc.c
+index d52735354c9..8656e1caff0 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -136,6 +136,7 @@ struct gc_config {
+ 	char *prune_worktrees_expire;
+ 	char *repack_filter;
+ 	char *repack_filter_to;
++	char *repack_expire_to;
+ 	unsigned long big_pack_threshold;
+ 	unsigned long max_delta_cache_size;
+ };
+@@ -432,7 +433,8 @@ static int keep_one_pack(struct string_list_item *item, void *data UNUSED)
+ static void add_repack_all_option(struct gc_config *cfg,
+ 				  struct string_list *keep_pack)
+ {
+-	if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now"))
++	if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now")
++		&& !(cfg->cruft_packs && cfg->repack_expire_to))
+ 		strvec_push(&repack, "-a");
+ 	else if (cfg->cruft_packs) {
+ 		strvec_push(&repack, "--cruft");
+@@ -441,6 +443,8 @@ static void add_repack_all_option(struct gc_config *cfg,
+ 		if (cfg->max_cruft_size)
+ 			strvec_pushf(&repack, "--max-cruft-size=%lu",
+ 				     cfg->max_cruft_size);
++		if (cfg->repack_expire_to)
++			strvec_pushf(&repack, "--expire-to=%s", cfg->repack_expire_to);
+ 	} else {
+ 		strvec_push(&repack, "-A");
+ 		if (cfg->prune_expire)
+@@ -675,7 +679,6 @@ struct repository *repo UNUSED)
+ 	const char *prune_expire_sentinel = "sentinel";
+ 	const char *prune_expire_arg = prune_expire_sentinel;
+ 	int ret;
+-
+ 	struct option builtin_gc_options[] = {
+ 		OPT__QUIET(&quiet, N_("suppress progress reporting")),
+ 		{ OPTION_STRING, 0, "prune", &prune_expire_arg, N_("date"),
+@@ -694,6 +697,8 @@ struct repository *repo UNUSED)
+ 			   PARSE_OPT_NOCOMPLETE),
+ 		OPT_BOOL(0, "keep-largest-pack", &keep_largest_pack,
+ 			 N_("repack all other packs except the largest pack")),
++		OPT_STRING(0, "expire-to", &cfg.repack_expire_to, N_("dir"),
++			   N_("pack prefix to store a pack containing pruned objects")),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
+index ee074b99b70..d4b0653a9b7 100755
+--- a/t/t6500-gc.sh
++++ b/t/t6500-gc.sh
+@@ -339,6 +339,12 @@ test_expect_success 'gc.maxCruftSize sets appropriate repack options' '
+ 	test_subcommand $cruft_max_size_opts --max-cruft-size=3145728 <trace2.txt
+ '
+ 
++test_expect_success '--expire-to sets appropriate repack options' '
++	mkdir expired &&
++	GIT_TRACE2_EVENT=$(pwd)/trace2.txt git -C cruft--max-size gc --cruft --expire-to=./expired/pack &&
++	test_subcommand $cruft_max_size_opts --expire-to=./expired/pack <trace2.txt
++'
++
+ run_and_wait_for_gc () {
+ 	# We read stdout from gc for the side effect of waiting until the
+ 	# background gc process exits, closing its fd 9.  Furthermore, the
 
-Fantastic, I'll try to do that tomorrow and get back to you.  I really
-appreciate such a prompt response.
-
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> index 16550862d3..aaab711bb9 100644
-> --- a/refs/refs-internal.h
-> +++ b/refs/refs-internal.h
-> @@ -203,6 +203,7 @@ struct ref_transaction {
->  	enum ref_transaction_state state;
->  	void *backend_data;
->  	unsigned int flags;
-> +	unsigned int max_index;
->  };
->=20
->  /*
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index 00d95a9a2f..289496058e 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -942,6 +942,7 @@ struct write_transaction_table_arg {
->  	size_t updates_nr;
->  	size_t updates_alloc;
->  	size_t updates_expected;
-> +	unsigned int max_index;
-
-I wonder if this and the above should be `uint64_t` instead of `unsigned
-int`.  From the file names and the data format, it looks like we
-intentionally use a 64-bit integer.  That's good, because I have
-unfortunately seen some people who have created giant test repositories
-with really unreasonable numbers of commits and I could see us possibly
-exceeding a 32-bit integer here.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---r+Qq/+gUc4/bAe8D
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ4hpXwAKCRB8DEliiIei
-gW44AQDoVySatwpiqpmuh1UM082FLZbM/4S4QSYA+gJznUN3TgEA5ehS+wmaLZTE
-hh1QKnfSkhQ0YbnBgnFfn7sP5OHywAw=
-=veRF
------END PGP SIGNATURE-----
-
---r+Qq/+gUc4/bAe8D--
+base-commit: 92999a42db1c5f43f330e4f2bca4026b5b81576f
+-- 
+gitgitgadget
