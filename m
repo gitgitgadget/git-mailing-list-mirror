@@ -1,115 +1,124 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3DF41D8A0D
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 16:02:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB7E5674D
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 16:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737043341; cv=none; b=gvIncsxSY2q6whJKHIJizfp6dXEuXc414bHqA3j0fyx/N6rIEqhflvSYRt25wzd+GUhzMLMZKUQo9EgnLSdnBSeCBvyEv+N6IMrrupeW1NuPdnT5Sgd4ykKcrC0g8dyXNRgEMhG3w7MKD/7GTJQs9JFe3xrTHjqLIeDxyglbtqg=
+	t=1737044172; cv=none; b=OScxQEPQwexuaz43ndwbc3sbigUXodQN6ttS/UI1Dn5MNhDsyX2RoZ7qm4w33DvbidCsN8laDGhqy2SN21/VhEePnYF2ZasVJ/n4I7wiZIJBesMfIrxkrR8wfkQrTyGvHg9k0B4pg4osvVwaqQYsdSKyIuSou8Dn8tBCh0B5gBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737043341; c=relaxed/simple;
-	bh=cBUKdf5PPx+fM2D5z3b3bsbt/41C2NhAlVe/R6Elh8c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Sxk6UD2uYLhu6yIgYgD8y713x4z420myITYAZp4+B6ahsd6Jz60vIwQkAK3Thksq8fRX30Yr8NeLXwASwi8k0eQpTTpZJSpRnQ98enSbItV+97FJh1pdONJ6AsSAkwJJOwxZRsTbOJhyD1HVfL2RhCKrBvUEI87jHZW/SjTMn+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OdSAFlV/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lZSUuJ/1; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1737044172; c=relaxed/simple;
+	bh=/iunXSVGnxmH0V+R7iulsBx/R0Em1lw1nm59F7ZiivU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OFi3eZSLg/2n5zFCxhtGfPjeXie1j4PabYs4vbAQn+BpU64SjZ53cMV+CXaw5ubXANLjy3W5YiJSP/4t7a0zueUcCwiv0cTiOxxUk4hVynEnW5N2M+KmXu2IjzjcSA4Et0YFy1Y/DfBi/m+Pct6UMq3OSB9nVAt3hlvDDg5LHcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nVy9bY+D; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OdSAFlV/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lZSUuJ/1"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A2721114018A;
-	Thu, 16 Jan 2025 10:57:27 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 16 Jan 2025 10:57:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1737043047; x=1737129447; bh=GcMRaCNUVM
-	ItGNPRpRByEBnM/SXeDigJW9B0cLjZlS4=; b=OdSAFlV/j4mSZEsU558l6wMe1J
-	rkbeYDiOVIejjs8/COaAIZaiqRTHCTNJC23rcyXClj3xMbsXfdLCNRtrXfMu+PB3
-	5pRDW6S50Gv3n3m6X1daYri2rVc4FvjyQWhWNeqfNi8+qqSeQzArIfOOL+EgZe5H
-	ZXRb1jSfFDMaOXYOtLGf5h3WykTKH/JqfkIech/ZmAVEnoRab4JcBXDz3mlPYqJa
-	ElecJXVsSLK/mJGRDoYIHjJ2G5u2dvVfYGMXMz5GV35tQICb/2xGb8wwRzdv29jh
-	zlfvK78BgZHDf3zOyWZvGNKgf9vzN70idG4zGU1jVkwUrgYUcwYX1cL4bs2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737043047; x=1737129447; bh=GcMRaCNUVMItGNPRpRByEBnM/SXeDigJW9B
-	0cLjZlS4=; b=lZSUuJ/1a561gcJ4pCG6UTb0P+PhoNZZVYLTnFCZbxHHoS6pqEz
-	qld9LlZz9orYO2l9jfIaa4tg6CPan7BLn9cBkvLH8GuvMzM9ySQzZJULfxxa18AO
-	DsHnMvHlOA3R9vjeOuR3OlfcEdfPNDqvbeq7uVuQ6g+/yrJHvq44ueraF1zOj+CD
-	y7Ob1LZfrV9t1UMjzEQs2O3PQJ3xwKmfKLyGW04aLozEEzcJB0QWDZTNFpUf017R
-	eeVBuuJCk+iBdd6wGQ5ibkb/U6DC9aX6yxNvkhNpnOperlYtLTuZeXi5YihLkz+X
-	pSD0T51eL/6rYrGDgkPjHrFxDAwjfsB4yIg==
-X-ME-Sender: <xms:ZiyJZ7Uxm_haADZZCxQeIPG9YHiMvwEor5mjRgYZj5U_RP0u2iQLuA>
-    <xme:ZiyJZznkjlkl17ODJU2-Sv9Jzel0mIZlqeLSeZyirPt55MOW1u7DP2Z3kGlyzxlzn
-    KHetQ3C9rSVqWVGAw>
-X-ME-Received: <xmr:ZiyJZ3a6zkwi5RpHM1FnQXrchE4TFTfgToCZdX0trdLuv4lQXWDutvgkYi-3lQIehb9nRW4lhsgm8Hn2lSkW3fJJsj5SEiGK69wG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgkedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:ZiyJZ2XUNu0x13OHXd-Oeq-g7CmNtcF-H55bm7e86cnIul7Wvf7mMg>
-    <xmx:ZiyJZ1nxiuL4RvkZ9RY2A6S1P4m397h0uf4fTs4hKtF_Y5sGKDYq1Q>
-    <xmx:ZiyJZzdV8Xaap8BLqNR6tMhhljPEUyro2devBnO37upON-yPu_7s1w>
-    <xmx:ZiyJZ_FDoipSf71E3corF3frMMWGU5znN_riELUxqT9M7L47L0r9Hw>
-    <xmx:ZyyJZ-D_4xwDFJ70ceUxYWenivthqM0lcAMsL9XebOCH0a9CNXd1m0IP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jan 2025 10:57:26 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2] meson: ensure correct version-def.h is used
-In-Reply-To: <Z4jUsd77AFih24OW@pks.im> (Patrick Steinhardt's message of "Thu,
-	16 Jan 2025 10:43:20 +0100")
-References: <20250113-toon-fix-meson-version-v1-1-9637e2be32e3@iotcl.com>
-	<20250114-toon-fix-meson-version-v2-1-66ddb1a82c28@iotcl.com>
-	<Z4jUsd77AFih24OW@pks.im>
-Date: Thu, 16 Jan 2025 07:57:24 -0800
-Message-ID: <xmqqsepiu4yj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nVy9bY+D"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43622267b2eso10749205e9.0
+        for <git@vger.kernel.org>; Thu, 16 Jan 2025 08:16:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737044169; x=1737648969; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w34p5UoztGcyRyk7C7J+oIEkgVXMhMaFN5sKZ50czfg=;
+        b=nVy9bY+DkE4NLcnByjovw9o0UDlbYHL7RJMYr1GJmyZ2+V89SRRjuZ3H8SS4qAPS1h
+         nI6pBPxAtb+WSXOxnVswYGsfVbgFFjxMbUwXiHLdKF4pb7f9p8Fkyd7ilThqXulalFBn
+         vMudwMf/RyjkXfdOCIIzFoa5LBbiawF78kgtCUC6Exwk39SAwnyZXaAGoVLW4UMdvv0K
+         Cux4CHU2JX6z8J+/YCHJCYsfZsnHC0qLSUD4ZVyZvGU/fWnRh5jrcQdOekm3BsnyBi59
+         cSWZvtc6OGChDX/lJ9YRUtoWnoVPREuyHgZ46iqwHh5qsGi/dj7jlFZw7+QX348xX7e6
+         bWMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737044169; x=1737648969;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=w34p5UoztGcyRyk7C7J+oIEkgVXMhMaFN5sKZ50czfg=;
+        b=OMSuUBKmieK073pDRnho5i1DsTS2GEQZwm6CXfZfJHuzty2QaQAXBqb0K5/VYMvyrr
+         TLfg6Xs+Roz07nnYJ0DwGqEu/olg+wPMZsvUhMCKF3hr5O3dDEJ+4jK0hjndTktdd/q4
+         LnLtU1AItYnMDLuvmILrdAXsrZkJQ0/uq0fUhGySVdu8vzvMRdED4DSk6DxiFXtY/SLj
+         YdArtZLa8PZs7kawAMnD9Mds0Q/bOrHzMHzYNgeLoxNLPrxmS2odRr9d7rZX69YddAGI
+         LEj7NAwCdVaHvaaRoZjBKihqHf1xfDD6alMq/xayhjZUxNqWT0MTxXNPChnE0Jitzaut
+         zECg==
+X-Gm-Message-State: AOJu0YzyTZ/+nc1o8/BURqb7wVag2AomWHzj59YNpN+LnDwavu99fCdB
+	qng0iOAZ4u/RCprxAgIj5yf6BsVLECR1W4ZrTrhKxVTdA14kexdN+YA3HSXI0exr0A==
+X-Gm-Gg: ASbGncsfzXWjTWqKsUlpaNyE2khNwgFtYO4HuyrRwB41xIYc/4S8tBmIC2iN9NDhP3l
+	y27GraLcgFS7+WRyOt8XIrFPemgzkTOsPqb4/1e9V2kVyrfPcwFg2DHSoZIZoSg1k7Q0my8q3OG
+	LVjxn/zsf8qJHfAi6QozZcWsvqGCiz80vIwgAcgQ2cUvrhgJWid42/mH4tcVGioJQ/gXGDwFHRP
+	mCU43PHuPUeTeQ8hlCeMbKDs53/UdnQ1SXxBvPae6NuKa9YrUMtHD15PP5X28oXzWsjwg==
+X-Google-Smtp-Source: AGHT+IGUbrWwXyBr04aMSbpKlQ9AkVbkCFhL3SNYwp8wZzKHCMBt2jbbNb5ywxKfy0Zag2rVepn/Dw==
+X-Received: by 2002:a05:600c:1d03:b0:434:a0bf:98ea with SMTP id 5b1f17b1804b1-436e2699e91mr306834785e9.9.1737044168710;
+        Thu, 16 Jan 2025 08:16:08 -0800 (PST)
+Received: from localhost.localdomain ([154.118.34.84])
+        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-437c752935csm63177025e9.26.2025.01.16.08.16.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jan 2025 08:16:08 -0800 (PST)
+From: Seyi Kuforiji <kuforiji98@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	phillip.wood@dunelm.org.uk,
+	Seyi Kuforiji <kuforiji98@gmail.com>
+Subject: [PATCH v2 0/4] t/unit-tests: convert unit-tests to use clar
+Date: Thu, 16 Jan 2025 17:15:55 +0100
+Message-ID: <20250116161559.91038-1-kuforiji98@gmail.com>
+X-Mailer: git-send-email 2.47.0.86.g15030f9556
+In-Reply-To: <20250116104911.77405-1-kuforiji98@gmail.com>
+References: <20250116104911.77405-1-kuforiji98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hello,
 
->> diff --git a/version.c b/version.c
->> index 4d763ab48dd76c0445e5ea390ff4c1f35c1a4b12..4786c4e0a54093ca947da27f8b712bd1ea351203 100644
->> --- a/version.c
->> +++ b/version.c
->> @@ -1,8 +1,13 @@
->>  #include "git-compat-util.h"
->>  #include "version.h"
->> -#include "version-def.h"
->>  #include "strbuf.h"
->>  
->> +#ifndef GIT_VERSION_H
->> +# include "version-def.h"
->> +#else
->> +# include GIT_VERSION_H
->> +#endif
->> +
->>  const char git_version_string[] = GIT_VERSION;
->>  const char git_built_from_commit_string[] = GIT_BUILT_FROM_COMMIT;
->
-> Yup, this looks as expected. I'm fine with the solution (well,
-> obviously, I proposed it), so this looks good to me.
+This small patch series transitions the existing unit test files to the
+Clar testing framework. This change is part of our ongoing effort to
+standardize our testing approach and enhance maintainability.
 
-Excellent.  Thanks, both of you.
+changes in v2:
+- Some small fixes were made to the commit messages
+- changes was made to the code format
+
+
+Thanks
+Seyi
+
+Mentored-by: Patrick Steinhardt ps@pks.im
+Signed-off-by: Seyi Kuforiji kuforiji98@gmail.com
+
+Seyi Kuforiji (4):
+  t/unit-tests: handle dashes in test suite filenames
+  t/unit-tests: convert mem-pool test to use clar test framework
+  t/unit-tests: adapt priority queue test to use clar test framework
+  t/unit-tests: convert reftable tree test to use clar test framework
+
+ Makefile                            |  6 +-
+ t/meson.build                       |  6 +-
+ t/unit-tests/generate-clar-decls.sh |  1 +
+ t/unit-tests/t-mem-pool.c           | 31 ----------
+ t/unit-tests/t-prio-queue.c         | 91 ----------------------------
+ t/unit-tests/t-reftable-tree.c      | 86 --------------------------
+ t/unit-tests/u-mem-pool.c           | 25 ++++++++
+ t/unit-tests/u-prio-queue.c         | 94 +++++++++++++++++++++++++++++
+ t/unit-tests/u-reftable-tree.c      | 78 ++++++++++++++++++++++++
+ 9 files changed, 204 insertions(+), 214 deletions(-)
+ delete mode 100644 t/unit-tests/t-mem-pool.c
+ delete mode 100644 t/unit-tests/t-prio-queue.c
+ delete mode 100644 t/unit-tests/t-reftable-tree.c
+ create mode 100644 t/unit-tests/u-mem-pool.c
+ create mode 100644 t/unit-tests/u-prio-queue.c
+ create mode 100644 t/unit-tests/u-reftable-tree.c
+
+Range-diff against v1:
+1:  00bb4d2880 = 1:  00bb4d2880 t/unit-tests: handle dashes in test suite filenames
+2:  59abf45f08 = 2:  59abf45f08 t/unit-tests: convert mem-pool test to use clar test framework
+3:  6e01da141d = 3:  6e01da141d t/unit-tests: adapt priority queue test to use clar test framework
+4:  b397a5f131 = 4:  b397a5f131 t/unit-tests: convert reftable tree test to use clar test framework
+-- 
+2.34.1
+
