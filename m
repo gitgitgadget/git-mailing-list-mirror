@@ -1,80 +1,80 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B2E1D9A50
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 10:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D371DD88B
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 10:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737022125; cv=none; b=aoeBl1sZAynNo4WOGlyEhNZsuvftuWqrXhG2idb1XA55ybbmrNPooZPXtwH4HjlgcHxam+YkFWE3cx4QpWB144IWRAQZrmC1A9fkgJVCOrhl0+mjmSGNGjFKvM0HzKUDyQKveHUjTN5ZG5TYmUeYgFHZMw7GpgdBtl1GRAjymMk=
+	t=1737022126; cv=none; b=gFnrPOFlHjgCIbrXRKNp//kKaKwXFFQpZoaXx/pkMbx7SfpAimFSk0tRJCA9AjCfGAxcfd3mMRRmM+OS7b2/Q7KTaHuj2vZalKj3YiDYQugDXM8OJvC9drX3u+l6Ey+E21LxCILMKTVyEgAvTfFC0TxaQPVQTZqO4mEYfL9nCKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737022125; c=relaxed/simple;
-	bh=MWlPFfiBpAzkeR0o6hnl8YcAi49g/OO8o5/uZf3PM+0=;
+	s=arc-20240116; t=1737022126; c=relaxed/simple;
+	bh=m87Ho+3YbBoyDrPxeA/eFFv/F5dhyzsCeokoBgpmhXw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lRarYAErOkNRPVMSwPjZtaFw8+DM1iU2dkRlPVEb0ip71/sKbkzVYBtxzsLzV9jyJu2F2wXa5r2u9cICES7mz92/O4mlYolxy2LE0j4qqp6U2ukSl3ad4n9TqBeArgJL38yJX1We932Rmj966lQcuYvWv0CnCXX9bhKiO49sr54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eCOP2YZy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KzlvqAsY; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=QAjwfB0LI1bveT5ZifH/jotZT5lA/q1gJKJHOcx3U+meXkdm4oN82rJDNWdOkf3CDvynSYd2Kf+LbX8UqSAI7oerAmk+RYxremvSwqhPuke8IZ6YAXh026xUSvuGytZfZTx6NthFemhvPZBDgo29TtuMbADbJhytURlmqFRMmmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Vo5c/Xid; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oiZDOaht; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eCOP2YZy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KzlvqAsY"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4DF8C2540115
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 05:08:43 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Thu, 16 Jan 2025 05:08:43 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Vo5c/Xid";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oiZDOaht"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3DE9B25400B8
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 05:08:44 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Thu, 16 Jan 2025 05:08:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1737022123;
-	 x=1737108523; bh=G8HxpO2ahXyXxrAWidSkaMlkET8k8/rI1blBbt+aKKM=; b=
-	eCOP2YZyEqwWZlmf6A4Q/hCwh9PIn3lpWJgfcxxYv3sSeIwpay6ZRV0ChKlSQ9n2
-	upP5bB1XbDhfhTLruFJSfyaCQfbE2IbbiV4/+8NMIkkn/RslesimrUzqlBLfveiH
-	/q3fNvg3N/iWpzuS7oIGXbp8r3nwP/oOg/ORqsyks5cBSU0eGOLZww7jHjrbhUak
-	863hl9dnkb4gvHo0HRr++rscTraqVCGxlRf2ebX4EwbeX6HV1YkEZCNK4y/Si8L4
-	ep5cUrlkhBGwqA1B8EuGncxlHRLtjjMhM+mKhUoRzXds/2beyskXe3LpFoh36E5t
-	Jr04347IiEhXfi/w2tyhwQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1737022124;
+	 x=1737108524; bh=QD+ejurp6QxirfZ+QI6M7kUKEnMmt+/3awOEb8PtY1U=; b=
+	Vo5c/Xidp2LnfCYkc/gns25FqX09KV0sshfEq16/3/0I26sdc0R057F5+tQLdwov
+	o7Gw35GvNZXybAMqMlQHAbqp0UxucLNIj+fF5ZzQ2PsABGAhUVuy6Hutxdm+9kXG
+	ozJ+lsiHqqubLel1FfL0/kTT9FdddS6hsSvhBDZ6wcDa5j6Cp9UXfWojIAeH7y1u
+	y/RRBBEyqLiki0hPEaTmAA3kV92wilH9lVX820rZiKVLkp/j5Ew90alg4qqRGubF
+	VsoT8ejzewvLiDh57rrof4QQ/t5NMZavyREyuVuE3J37IsEucm5SHp/YgD4PGM90
+	r11aBfzI9ypwaYeQOHSevA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737022123; x=
-	1737108523; bh=G8HxpO2ahXyXxrAWidSkaMlkET8k8/rI1blBbt+aKKM=; b=K
-	zlvqAsYjBPCB+1c1u1k2k0QF7W8jsYO7QBb+8+iLHTzrGbKEegVgLPy2wNrm2d4r
-	QE0TgY3gv0iD2LACzTCvsGf5ClrC7gyZDdgDhHD1WLh5WOuDsCDFw5nRJvN9H3KB
-	OoR0tdFWpArxhfcw8wLMgvbl3ngadAHyNkKwv+h0O/kG1v2vcGpd0YHsXEuFq1OU
-	SUg4rU7yW3xePswOFNr9Bqy3PwA4da5CkN7k8FyTFapC5s1pUOir0LdcKRBnzBRa
-	sJ5mI/SugZsHhkX5Urzh6lRBr+zv96MgT34a3w/50hyzhw01cQ9ac8nvhHXhaXFr
-	b1kgU5H9JbmOyT+OYdpxQ==
-X-ME-Sender: <xms:q9qIZ05BYPJEeEvZCkcMGBvejb70EIcqlw1ik1bi3zOJ82vPdxCSZw>
-    <xme:q9qIZ17-hc3_GZ7wlzCiFVIvFn7lGehN_NdOFITUcQ6PKNZ007f94VC6bPyXg_HyH
-    zyMDEg3uRrxstDLhg>
-X-ME-Received: <xmr:q9qIZzcant4yAjiZGX09n0gqXyV8sIm_DhzZabgmIwTIHxd_P-t60Wl3PM62VhdwGExtKKtWeuxuK8QKStepkpQPhEIgehu9dUftSmteN9XEGkU2Vw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737022124; x=
+	1737108524; bh=QD+ejurp6QxirfZ+QI6M7kUKEnMmt+/3awOEb8PtY1U=; b=o
+	iZDOahtfsZVzsLpJVAvS86y8HIHYkaYEKRlfe9h8y42l8LKxG9Jbs8nB8DsrQDuk
+	zl2i2I6miX4Vsc298gZNQSv62whpQd37yaQ/IMSOMQXJ5zadutpisAOpLj8TkS6D
+	Zu7DvOn2MjrFzohEAy3QLyMy09rGq4sDNDkDkEKQ6aKl7NgI5w6D0/2ASX74N5FY
+	E0zWesKBLjhFzLu0XixSSfpUB2tSw7Jo6RMErnpG1O3HSDmxuQ1YsW6SaXIPEzLm
+	1g5EH46F3vrBcbdcaD5c2rDesIj04ZARpKeAB0BnK/BDeD3aWw+l+u97ajrw9Sd2
+	TeAepvaLE11u164yJ80WA==
+X-ME-Sender: <xms:q9qIZyBwzWlJRi81acFAXoQ7dpF_MINVA-4fKxLNVcHfdTF2GP0EHQ>
+    <xme:q9qIZ8iZqwS7hzc0BD6VBBGP48RdFsmQED16e1axm1a8nEH1roAI91WOeb6KyGNi4
+    12_fFNftHycdOTxtw>
+X-ME-Received: <xmr:q9qIZ1mC-lSmPqZh3fWQHN1sRxzffgS2fFbQUcImT0ZzE7NK52W2VbThW8_SAgn08uNRUTxnShjnjIBxDDajieIaNpAkocm1cIjEPyz5VbQv8JUf5Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddguddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucgovfgvgihtqfhnlhihqd
-    dqteefjeefqddtgeculdehtddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeer
-    tdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesph
-    hkshdrihhmqeenucggtffrrghtthgvrhhnpedtueekgfehtdegleeukedvkefgtdfhfedv
-    udeiueelheelgeeujeetvdfgteevteenucffohhmrghinhepmhgrkhdruggvvhenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:q9qIZ5L_dfYZufHO_AtVHqyQ0Qx_adTmy1A83ucUG_mjJQlVbP7UrQ>
-    <xmx:q9qIZ4LBtmb468eGRatoCpyCfEjYOErS2JOgjRgL00NAD6GFiMmOCw>
-    <xmx:q9qIZ6zMaY7zK-ywpqqGzVLuiyyTAyuqhgJsZ2K5NL3x4fvcWRC_oA>
-    <xmx:q9qIZ8I-HPq7sV2OeWlSsmtzcYsyBU6IScqjYM7pORL8BtZnwW-q1g>
-    <xmx:q9qIZyirYsjNQ8l4rGxGuu9hYT_F6SwGIBRmR5WFWbyfcY02Qyn38Mng>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
+    gtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
+    dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:q9qIZwzitNxA5B_x9YUER-az6VD8f3PzNmyItf0H-NY-MboBnWKBpg>
+    <xmx:q9qIZ3TLboM1as2UnYe0k8A--ZaDZr5q1wLZRH_mjyDSnQAM1nGoQg>
+    <xmx:q9qIZ7Z0zShqvgo2Px56L_C67aTTkcwiQ16qqwbkA__PQ9dsJkIrig>
+    <xmx:q9qIZwTHu9RkH-IPeIqIDFa30PjbQnFDCQWCHkQ6bQGXmWFmFF_cyA>
+    <xmx:rNqIZ-KiyQahqdfHCSxbdAY1n7gz7Spbt6M7wX04_ncvsN7UEkqgIdeZ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 16 Jan 2025 05:08:42 -0500 (EST)
+ <git@vger.kernel.org>; Thu, 16 Jan 2025 05:08:43 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8d136730 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id e77e71af (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 16 Jan 2025 10:08:40 +0000 (UTC)
+	Thu, 16 Jan 2025 10:08:41 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 16 Jan 2025 11:08:33 +0100
-Subject: [PATCH 01/10] meson: stop disabling -Wsign-compare
+Date: Thu, 16 Jan 2025 11:08:34 +0100
+Subject: [PATCH 02/10] reftable/record: drop unused `print` function
+ pointer
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,37 +83,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250116-b4-pks-reftable-sign-compare-v1-1-bd30e2ee96e7@pks.im>
+Message-Id: <20250116-b4-pks-reftable-sign-compare-v1-2-bd30e2ee96e7@pks.im>
 References: <20250116-b4-pks-reftable-sign-compare-v1-0-bd30e2ee96e7@pks.im>
 In-Reply-To: <20250116-b4-pks-reftable-sign-compare-v1-0-bd30e2ee96e7@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-In 4f9264b0cd (config.mak.dev: drop `-Wno-sign-compare`, 2024-12-06) we
-have started an effort to make our codebase compile with -Wsign-compare.
-But while we removed the -Wno-sign-compare flag from "config.mak.dev",
-we didn't adjust the Meson build instructions in the same way.
-
-Fix this.
+In 42c424d69d (t/helper: inline printing of reftable records,
+2024-08-22) we stopped using the `print` function of the reftable record
+vtable and instead moved its implementation into the single user of it.
+We didn't remove the function itself from the vtable though. Drop it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- meson.build | 1 -
- 1 file changed, 1 deletion(-)
+ reftable/record.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 0064eb64f5..07744c73b1 100644
---- a/meson.build
-+++ b/meson.build
-@@ -708,7 +708,6 @@ if get_option('warning_level') in ['2','3', 'everything'] and compiler.get_argum
-     # These are disabled because we have these all over the place.
-     '-Wno-empty-body',
-     '-Wno-missing-field-initializers',
--    '-Wno-sign-compare',
-   ]
-     if compiler.has_argument(cflag)
-       libgit_c_args += cflag
+diff --git a/reftable/record.h b/reftable/record.h
+index 25aa908c85..a24cb23bd4 100644
+--- a/reftable/record.h
++++ b/reftable/record.h
+@@ -73,9 +73,6 @@ struct reftable_record_vtable {
+ 	 * the same type.
+ 	 */
+ 	int (*cmp)(const void *a, const void *b);
+-
+-	/* Print on stdout, for debugging. */
+-	void (*print)(const void *rec, int hash_size);
+ };
+ 
+ /* returns true for recognized block types. Block start with the block type. */
 
 -- 
 2.48.0.257.gd3603152ad.dirty
