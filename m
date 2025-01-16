@@ -1,84 +1,81 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E02622DF9C
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 19:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0098E236A62
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 20:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737056120; cv=none; b=MnbW6FKY6nFfZKGdlmPH9+dqoBa21amPTYQyEwW9K+8Wl5v2VNg1pVeh0THZjHgBwd5nBmIzDAJEzQKAOqyDXgNCB0RionnIO55X41I+cXulZrTWZs5Xxx453zwLtFcimB3taIZ+iA9071btvySFC5n5XjIJ4TXRYZC5guE1zQQ=
+	t=1737059863; cv=none; b=fz7j3cxulpS/191hrxezdd0Mchm+wt5MIt1wlZvX2Z/DNjeYjXfcKCYYp9YQTbUoRzrUO3QAOAWpfwrvV/ItuBavSGnwkTopEPr1Nu33Q3AXNvEllBH03K/n+of4nLn3Zr+uC927ZFWk+YWUulD4aV3DAPG0XmlsChVpQDyT7Yo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737056120; c=relaxed/simple;
-	bh=8lZANnBhNon4FkYxDUkv7hIqfD2Y18WwHiavxteeiiE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PYP/RgpYtHNeQwmdsobbsvcvCwX/YzyvVjAOUTkMlRCCyRg4/2dreXLbChOlj3JJYsBp2lc+vESgp8hpWlbcEdtscjzxVtMWARJKPaaDmL7MGwH/EDjSrCyxuEzjNJneRhvOBN3HNsDSRAvHqZFQTTGUApBBBwDpxsGBL7MiD0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=65enXMrU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TRe5BViA; arc=none smtp.client-ip=103.168.172.154
+	s=arc-20240116; t=1737059863; c=relaxed/simple;
+	bh=7RrCA0xCxArgaPMrmiFW6+fDKHXGh+5RN3YaWlfAA5U=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q+pBimJ7pKex+VJFh3q1kzAdkAZix/lOV+YXGHwQh5BMy7MDIIbVQidLzJiPZ6jt1uOD3okoJpte5I62uy5jTBi0vHn6jaM+sKlB9ecy+e/uGC6gAmmaf+DsPkI5AH+sVwrmjcew83MCNikfg/48x56ANCAT35m8R/FsSMs0auE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=6kn3qGxD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xPCBr6Tq; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="65enXMrU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TRe5BViA"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="6kn3qGxD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xPCBr6Tq"
 Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4D26C11401C6;
-	Thu, 16 Jan 2025 14:35:17 -0500 (EST)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 062A811401A8;
+	Thu, 16 Jan 2025 15:37:40 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 16 Jan 2025 14:35:17 -0500
+  by phl-compute-03.internal (MEProxy); Thu, 16 Jan 2025 15:37:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1737056117; x=1737142517; bh=f5u13u90Fp
-	aznsxlRu8b77bjm/9LrsbhJc5crj1Cij8=; b=65enXMrUqd49CCih9Q0jruK7dV
-	H2vXihoW98/IdhY4WZbbGj0gQSn6FX/a1ufBf0AbsiFcJEJeXcibYYYp/1InXMvL
-	NDDuBdc1kv5A/p4wzzCJRrUvFJ8lwQxqyGDOyDDmk2FMuf1jPedl3nXmfGFRe1ee
-	1rXyWsxP3NyaYLhJWkQZPVcTNp9Ult2uwOSwPVY/CKnVbRC49pZBHL+WmP1vm7tO
-	H1ybYmUDzkdacFq+VHLHWJfTXR5rWHH0FLLShLBLQ0pcTA7JQmuQlkCPJrizBnME
-	zr0l+eoKNZKHzpCxdumDSSnkrqJJy/FKfFPrSu1trYMAtkXR87qRlk7D46Fg==
+	:subject:to:to; s=fm1; t=1737059860; x=1737146260; bh=PxkgtdMs0p
+	wCM/bxn+GaK8/LA109VdRXjw0k6YNTxsw=; b=6kn3qGxDl187lE/775jkoHM2MI
+	IrS8BKhPruwb71oWvxHETipS3Tsm5QUnlaaFXPo3CTjbQlv4Fk3Q0aiGD0/BJEFv
+	bzZYt6etubCjDJU/jr944Rx09nS/PnOHeT84y+wjrp/qTg8i+AhCMd0kB2NxDjok
+	eltqm5r1aoUwOEBNc/xXAf1lznqKyrAI2DeEWXHBal6ynlPYqCDfP4cWC1dsQ9d2
+	UsAKIgr5z5C1D9Fi5G3Zues9C9xTc+J3crNC1925A7qSWilotdmEat/eM3bmf3O7
+	cudsAD8PfTqaBpVm2kRbkQjQm3da/ymztmBUMcCj28tP2X86vm853GktvzSA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737056117; x=1737142517; bh=f5u13u90FpaznsxlRu8b77bjm/9LrsbhJc5
-	crj1Cij8=; b=TRe5BViAoivtH/g2QmdSYgIQzoEhoAmappk5HaqzCbn6DZXzZCK
-	dZn2s3ssMozcsRuGNaQ0UW0FrEFHKAaDd4FN/T/llc4HNkujryqPyJpCtUxgDNqx
-	J+qjrkNz6ak1cs4D9Gp7Ar4nYNuoPM9axQKT3Tfq0K3UDPB7Elkx110YTMXXhWfo
-	kJNXvDXuBU2py7MnIxHoCrtTYhyU9EhEA33X8d3nk43pRgt5NeD+qJny1VN08HwD
-	/g3TOGAGAzaBX9A9YueZ3YoQNAmZh4b1lLvXtK0o/xtolP4ve6wMSM3EWNVCLN89
-	1i4mZ+6GqPgbbcNx8kqUkokvu79RDZk+Dew==
-X-ME-Sender: <xms:dV-JZ9oFYQ-zbi24sWMTbkJr8IlS_PaozUAXSD8X6GuCyJKLGGqWDg>
-    <xme:dV-JZ_p1f3D0EqE16WWTk_WUoqLhY9fmBXGKZVOaxiCLBQTyQITjvuePBGndqd5tP
-    9ZOh6ab-qea_fwMmA>
-X-ME-Received: <xmr:dV-JZ6MvHPBCJZV2m6Z6qwfcIn0R7f3tt40Ngo7quqv2nZE_sihRbeBw4iqzE3mR1ZhbKQRHyINttGLdJ-T2S1OmQPmMs1j9L_7N>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddguddvgecutefuodetggdotefrod
+	1737059860; x=1737146260; bh=PxkgtdMs0pwCM/bxn+GaK8/LA109VdRXjw0
+	k6YNTxsw=; b=xPCBr6TqkO92SFKKddOIz+ksA0VxnRuw0F9sN9MBa2xClmPivUb
+	cvc9C7eXWrm0oqCkczrbVNn51ONiko2pGYwE3poDFx7DdQLFnv68iBta9l4eqoTz
+	nDa9psMrxZptvVI5Y6OyXw8jajzKtgDqEJ6gFBEKwp/SD1K1pNRgLzFL/spNCRGv
+	AuwHFR+BzTggp1l0+inEVXVfXGWJgIfekr5jwGGpT0/r1DI67VFcJkp0PnnTvVKK
+	MahV+1HNhNyo8NhO++hnVB7kWDf3EUl0pS8zTuDFvsLvtYZzPaR4lo4Eck5yMmc6
+	0fMe61+BgrEYw00Ob9IjJ0ezZ+mhccrSUxg==
+X-ME-Sender: <xms:E26JZ--pk66oAqQhsBqYmtnPco2tTXaI4purOwkFc81yPfOvTS-KXg>
+    <xme:E26JZ-sw1jGv9Vd252TvjV1J4Rh-af9eZ0_LqPvTanRWeJT5CO9mV5Gx8vt0bHK6s
+    hkhN9vIqucszVtP9Q>
+X-ME-Received: <xmr:E26JZ0BOKoIEx4IVU_a4QWifUZAw-EGIT1GNTBYCYApNUjirFkj1NZUzlRO17lcxwkSb0NMW7YrC9yZLWMYg8mT2aXrgIcYYLpKQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgudefiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeguvghvnhhulhhlod
-    hkrghrthhhihhkrddukeekrdhgmhgrihhlrdgtohhmsehkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrh
-    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:dV-JZ44m9Bfb4NxyLEB-cEqeCqGbwDhUl-2yRC7REN1ZhgY0OBuQPg>
-    <xmx:dV-JZ87Cw3gl3FoCe2IdT2424nD7aIv9ljjPABGOjrzScrpfYdCasQ>
-    <xmx:dV-JZwiiLQeaQ3V73kzSOLbF_RyE1uREl7-vtAezPuc-uXH61prsOw>
-    <xmx:dV-JZ-6-_s-lOqGR3VyWjZxpUqh57IYJfZZNH1uja-s-aTf17ZnaYg>
-    <xmx:dV-JZ339w8d9JeRlGF5SdetsNeMBe2FIS3PTDThq7-NbNhpF_UYsE1vI>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvuf
+    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekhf
+    euudetkefgtdeugedvgfeuieeuvdelgffgfeekvdffuddvvdekuefhieefjeenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:E26JZ2c9NFYqrVgyNgiUpOb9tWW20Esx7DwF6ZXJTsTYHflLSJgrfA>
+    <xmx:E26JZzNzoMzR6fjd9KDDVtXQW8nKfsEMlp6VnNC3DRskh71KZj8LSw>
+    <xmx:E26JZwl7uzWuQ1baOHzg6YzHH7iaFdX4_RSrea8kRZjH4fjkMGaBnQ>
+    <xmx:E26JZ1sKR_7_Qe04OgxWsYJ7Q-pYRgl2NkoxJiDqKqLPj39H1FbtPQ>
+    <xmx:E26JZ8aTZRh57URHRy2VG-KNQ3U9fOYHXfmmjE8NVsxaeROCyWesAOA4>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jan 2025 14:35:16 -0500 (EST)
+ 16 Jan 2025 15:37:39 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak via B4 Relay <devnull+karthik.188.gmail.com@kernel.org>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 4/5] pack-write: pass hash_algo to `write_rev_file()`
-In-Reply-To: <20250116-kn-the-repo-cleanup-v1-4-a2f4c8e1c4c3@gmail.com>
-	(Karthik Nayak via's message of "Thu, 16 Jan 2025 12:35:16 +0100")
-References: <20250116-kn-the-repo-cleanup-v1-0-a2f4c8e1c4c3@gmail.com>
-	<20250116-kn-the-repo-cleanup-v1-4-a2f4c8e1c4c3@gmail.com>
-Date: Thu, 16 Jan 2025 11:35:15 -0800
-Message-ID: <xmqq34hir1qk.fsf@gitster.g>
+To: git@vger.kernel.org
+Subject: Re: [PATCH v3 6/6] builtin: send usage() help text to standard output
+In-Reply-To: <xmqqv7uesm26.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	16 Jan 2025 09:30:57 -0800")
+References: <20250116012524.1557441-1-gitster@pobox.com>
+	<20250116012524.1557441-7-gitster@pobox.com>
+	<xmqqv7uesm26.fsf@gitster.g>
+Date: Thu, 16 Jan 2025 12:37:38 -0800
+Message-ID: <xmqqy0zapka5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,15 +85,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Karthik Nayak via B4 Relay
-<devnull+karthik.188.gmail.com@kernel.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Karthik Nayak <karthik.188@gmail.com>
+> The above is a bit of a lie.  There is one strange thing I did,
+> which needs to be redone.
 >
-> The `write_rev_file()` function uses the global `the_hash_algo` variable
-> to access the repository's hash function. To avoid global variable
-> usage, let's pass the hash function from the layers above.
+>> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+>> index bed2816c2d..9bd4b29c5b 100644
+>> --- a/builtin/fetch-pack.c
+>> +++ b/builtin/fetch-pack.c
+>> @@ -176,6 +176,9 @@ int cmd_fetch_pack(int argc,
+>>  			list_objects_filter_set_no_filter(&args.filter_options);
+>>  			continue;
+>>  		}
+>> +
+>> +		if (!strcmp(arg, "-h"))
+>> +			show_usage_and_exit_if_asked(2, &arg - 1, fetch_pack_usage);
+>>  		usage(fetch_pack_usage);
+>>  	}
+>>  	if (deepen_not.nr)
+>
+> I think we should just call show_usage_and_exit_if_asked() before
+> entering the loop without changing anything else.
 
-There are a few other functions that got an extra git_hash_algo
-parameter in this patch.  The changes to them all look sensible,
-but it would be nice to mention them here.
+I have worked on a reroll and moved this piece to the "oddball"
+pile.
