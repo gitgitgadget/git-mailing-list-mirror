@@ -1,85 +1,83 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB78F13B58C
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 22:26:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42825236A79
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 22:54:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737066408; cv=none; b=lpCAydH3y2HnSqHreTbm2ay3rQgmBtJ1ndvN9arcxwWeL3ew3LU23pBdQi6ANhZlIDlbnUC5JJvBbigt3U3jkKAFmfqAxThp9Afuuw5Nh7GcFbe5gWsIqCiYbcyNh5/qcbTe36uGACSDEindxdl9aDU4gUmIZJv/YiEAJc1k4WM=
+	t=1737068064; cv=none; b=hZmx7sRLpkze3LpCsFwInxG+Tpf0xCe5J+S/Yp2CJtOm5rVOxCmfhl8ZIgP2w8yjx0B6FwNbX46L8wfQcqqekFHF8N1w/gduE6YN4SxgPtv6ZoD9yB+KMelAtNwLW0wBvJ3cXifYGblBkTcUVezqBTZgtoDoddGCE3T1jK69dQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737066408; c=relaxed/simple;
-	bh=SEZRy2udfIp9dv8mKRJyRYkGgLK50WntkaMo8oTLMww=;
+	s=arc-20240116; t=1737068064; c=relaxed/simple;
+	bh=6giCUlkrARL1ATf1RC4U9RxC3jPJxi/r4Op6naE9+fE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KEMwgFi0uCRDroreZv7OntJrkYYmtJCXHO0Ur50NT2I1jTejwd/y2ZtHpqfHu/WDqexchHUCyuoDcV/AtWi7gjj709Hr8Kc9p+cDnDiTgGJiSHenozvMgNtvSxcGvzt4Os/sSXvvNJDFhTyTgjhOHF/d1fy4KYspHVDrN2rE7mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C9OePrlT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a+gMVs0l; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=Ma/V0zX4CxSQlqjTCLKct/DxGqR2sSuINdVNN0jWrdj4kClTNkbJGSs5v2tSGKy3CCieiRZ19YzEFt4IQguEAV62jaVQUwVvdOY/arnETDdSbHQDnraa6+YBgCbWqjFFudjpBa7RzLY74NUzK7SsNCSPd9cIa2p5tpYMcswQJiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kUuPK6/u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oFMJ8VF7; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C9OePrlT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a+gMVs0l"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BC2A911401E2;
-	Thu, 16 Jan 2025 17:26:45 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 16 Jan 2025 17:26:45 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kUuPK6/u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oFMJ8VF7"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2FDFD1140157;
+	Thu, 16 Jan 2025 17:54:21 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Thu, 16 Jan 2025 17:54:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1737066405; x=1737152805; bh=4asijRFDRV
-	fFIsQcdVTfqS++9IkNIY4sPYTy2rc6ppA=; b=C9OePrlTiitWOvkD73EmoRG7AV
-	9LQJw2Y+ir2cHa6PwI9CufwE9NLopVKHqqmhtO2ZFlXEGi9tNkTZ6emD9Z8ZqRYg
-	uM5rRSFPYjKccUryspUKp6r0NcO55ONqfG04knuw46iCkY8AIJ2LPK9pkbtbtlSh
-	jXpAm9VmTFrP74oWZ1fVJLa4d5z+4I4nM4G+Bwr1Dgm8SP/cQP0V9nRXLJcHnmpD
-	Cl1384uOV1m7bv9jEAXOURbQNxYWFkMFmKRDsX48xPpEDMFiUVu03RFoGUDfo/CA
-	MDts5oUGvSPcNXv9IJGfKAEVdsFZB0ItoSEeQCTj3kJoEAfWcBEnPg3OOsiA==
+	:subject:to:to; s=fm1; t=1737068061; x=1737154461; bh=uM+nYvQJzn
+	rpf8TqhjZcXy1mMjKu1k3gcocAP4klOeo=; b=kUuPK6/ug/OUQmRN21rtC7JKis
+	hODO4KRFQ9UWd4yGlqXNLMNBuk0TD5U0yGj5QqdXw8C2bZzWRVdFOWEkN3cjgg1n
+	ZgXqHtz0Yg3PtUSFjOAcNu/xnyksDng656IPTsIVeE1715XJ22sm+q7HPnwhxkF8
+	wMUQ8W5zmiPIVeTJRGmvOTuAZyhvFGcmMr9tIqjbbnQCZfYal1Y/FrRKbxRi4NKF
+	xWHVrnQPRAkVC5Oz1lnPL5FeQHv/Tr9NByGBWm2AnJO1W4eC48DDqbbbyl1cOkUq
+	XCrzQ+ZCpre9q43rBuXqNJ3BVeM0iDU6TL1IAxoB1tultUtOOLthlSpYfOhA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737066405; x=1737152805; bh=4asijRFDRVfFIsQcdVTfqS++9IkNIY4sPYT
-	y2rc6ppA=; b=a+gMVs0lhV6nKLZdy2BE8ynhT3+D6Zu+9jcjfM57jKPKusJamnx
-	WpmFOFosF0HkgRwrxaNQPROZnHpchUuxH/31SAY7T38rJq+jgqvrn+qbSu0/SPb9
-	foaKs+OoWtMFZpY44xn2aqHz/0zeUgruOijplJCRT96G94zJhd7n080fNFBfddep
-	ZUgc43Wj0DwFvgb6x3mYwVKL7ypV1ANaKg3UAbmmgI/OYuPUQ1TfoqCfESlqgvoc
-	2/cUShz6pzarD2l45tLYhMvrsQoxP8barnUIUe9Wktuof2w2AXpEc5XGeOXog7Q+
-	3EXZJHO3rutVSynYaBCrpMamerQ5+nILgzA==
-X-ME-Sender: <xms:pYeJZxszdJe5rqpM1UDj4QIFZIUITCgdO6FudbZSnsvTfL0_4Sqh6A>
-    <xme:pYeJZ6cgPrHiaT6HuliUvU6wft-iAdAzaLGckCZO4qYA-D8kZdTZktuB23I_RBkVO
-    WAhixmOzjyJ5AvT4A>
-X-ME-Received: <xmr:pYeJZ0xJHixTgnKAMn6h1cK7b8JV5eaK7XapfrtXaWVE1S5JKufbG7kUs4dDoOLFBkYq0SM8t3Pt3BaGT25dwJ7vSrp4irJTRo2_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgudehjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
-    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:pYeJZ4Ppsr0H72IZL8JzYXo6TRKxvCG_dbll3L0bXqJNNeB7zV9w4w>
-    <xmx:pYeJZx_jAJ65pxY15LemXzO7TfmAtNLAomkC4KViWl2FXpCVv-BPsw>
-    <xmx:pYeJZ4Uq6dWks4PHb40rcL4Q8DvfvifC47Mu8g2SPkH-4a3LSmtAXQ>
-    <xmx:pYeJZycqtIuSMhMUlb1VwGVFhxApSRilLWPD1OxdKgIOjd948Q9lTA>
-    <xmx:pYeJZ8Z7WAobVQM3Y2X5FitbQiicgzTiECSyiqQxCfWi4lzUoyTzWgc1>
+	1737068061; x=1737154461; bh=uM+nYvQJznrpf8TqhjZcXy1mMjKu1k3gcoc
+	AP4klOeo=; b=oFMJ8VF7iN1VLwKsMvvd4VXLyNbBtoNO2mj1TLBGumciFKPTQXv
+	32gV/AKGzDN/WXDIBuOHjKNuDGNDIE7iTB8Hrz1GeC53UyIxYMl2scebyEvOfOyP
+	aF/+HxIYoBIveCUh39LVlkFuBw81VkNa+N4bD4x9b3O3Oc+y+Cai1xcAwmk6sQLQ
+	T1NZpVvCV1XszR8Ab2au05+Nzt8PcSWybvzDmGzYf4dNfDrBMv8ceEaqFiNa+iZc
+	GZcn6EwSU4v7EXySjbOaD+0S/dHbYG0Z78XoovP3a3/9racdnPokuQjapPH0iqXw
+	GtOr/Od+82hwfbgrS1oXgLo/CI3Ft3hQ2YA==
+X-ME-Sender: <xms:HY6JZ4uEyvxDWhrNO3tNqoKTJc2xDUaSLaomcjhu8NYyMRcPvhLAjQ>
+    <xme:HY6JZ1dtaZelCJswqwDREpLg50oA2iuW8SGr67zlPumSZVLuqJREKyczYXHQEzmme
+    Uej1PhHah1LKa51Zg>
+X-ME-Received: <xmr:HY6JZzwQtGXwkT603yhc1BI9DY4zwk3pEcQuVaquup1922DED4rZ8Pdj33fnLcLDx1M7565K3bOMdIZk8S1ajR_6k8XaAmDyfUcx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeivddgtdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
+    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:HY6JZ7M9dFi4XKQr5G85XiVouLLyyCLyITPpLqPJHlALF5fbbeuKEA>
+    <xmx:HY6JZ4_bNHCuHvCFi2u4nanZqw-96L0bkm6Q0ZS1sMhn3E9txHio1w>
+    <xmx:HY6JZzWSfi7K5KD4v5lxLxobkUCZ0t0DG1-YIYkKuPARs2BoRM_EEw>
+    <xmx:HY6JZxdwubQyR9QzcYQIGMkpyoXeYY0LiiLNZBUhuxBMR9dbbhq1zw>
+    <xmx:HY6JZ8ZKykkOw9RsZmE084Q4ZhwUl6ov967_BiEcCHR0FKtCJYmz4Ppv>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jan 2025 17:26:45 -0500 (EST)
+ 16 Jan 2025 17:54:20 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 4/6] usage: add show_usage_and_exit_if_asked()
-In-Reply-To: <20250116215431.GA2338133@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 16 Jan 2025 16:54:31 -0500")
-References: <20250116012524.1557441-1-gitster@pobox.com>
-	<20250116012524.1557441-5-gitster@pobox.com>
-	<20250116103620.GB773990@coredump.intra.peff.net>
-	<xmqqbjw6u101.fsf@gitster.g>
-	<20250116215431.GA2338133@coredump.intra.peff.net>
-Date: Thu, 16 Jan 2025 14:26:44 -0800
-Message-ID: <xmqqfrlipf8b.fsf@gitster.g>
+To: "D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Subject: Re: [PATCH] grep: document negated line-number, column long options
+In-Reply-To: <pull.1878.git.git.1737066042014.gitgitgadget@gmail.com> (D. Ben
+	Knoble via GitGitGadget's message of "Thu, 16 Jan 2025 22:20:41
+	+0000")
+References: <pull.1878.git.git.1737066042014.gitgitgadget@gmail.com>
+Date: Thu, 16 Jan 2025 14:54:19 -0800
+Message-ID: <xmqqy0zanzdw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,30 +87,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+"D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> You said "may become a bit tricky" above, but unless I'm missing
-> something, it's just:
+> From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+>
+> I set grep.lineNumber and grep.column on in my user .gitconfig;
+> sometimes, when I script over the results from `git grep`, I want no
+> prefixes, only a filename prefix, or only the matched text. I usually
+> comment out the relevant config sections or use `git -c` to tweak them for
+> a single run---why? Because `git help grep` doesn't mention they can be
+> disabled any other way!
 
-I didn't mean "tricky to write".  I meant it would become tricky to
-reason about while reading the resulting code why we flush only when
-fh is stderr.
+While I am somewhat sympathetic, I'd prefer to see it done in a more
+centralized way, so that people understand that *any* Boolean option
+and associated configuratrion can be negated by prefixing "--no-" to
+the base option, instead of having to learn "Ah, today I learned
+that --line-number can be negated with --no-line-number thanks to
+this patch."
 
-> I think the flush _is_ about earlier stdio calls in the process; that's
-> what 116d1fa6c6 (vreportf(): avoid relying on stdio buffering,
-> 2019-10-30) says.
+>  --line-number::
+>  	Prefix the line number to matching lines.
+>  
+> +--no-line-number::
+> +	Turn off line number prefixes, even when the configuration file or a
+> +	previous option requests them.
 
-But as vreportf() has always been about stderr, when that old commit
-talks about "stdio", it is talking about stderr, isn't it?
+So, this is not quite welcome for two reasons.
 
-> I do think it's unlikely for the process to write to
-> stdout() before processing "-h", but it seems like we should do the
-> safer thing as a general principle, unless it ends up hard to do so.
+ - We do not want to see us keep repeating "configuration file" for
+   any negatable option, as it is common to all command line options
+   and associated configuration knob that the command line option
+   trumps the configuration.
 
-We are going to exit immediately at the end of this function, so
-there is no point in avoiding an fflush() call that may not be
-needed.  So I am not fundamentally opposed to unconditionally
-flushing before doing the write().
+ - We do not want to see us keep repeating the substantial part of
+   the body of the base option by adding a separate entry for a
+   corresponding variant with "--no-".
+
+Even though an approach to centrally teach people that they can
+negate a Boolean option "--opt" by saying "--no-opt", and thatn they
+can negate a configured setting with a command line option is
+desirable, for such an approach to work, the documentation must
+somehow signal which option is Boolean.
+
+The way we do so is by doing something like this.
+
+$ git grep -e '^--\[no-\]' Documentation/
+
+An example entry (this is from blame-options.txt) looks like this.
+
+    --[no-]progress::
+            Progress status is reported on the standard error stream
+            by default when it is attached to a terminal. This flag
+            enables progress reporting even if not attached to a
+            terminal. Can't use `--progress` together with `--porcelain`
+            or `--incremental`.
+
+As nobody complains that "I cannot understand what --no-progress,
+which is described in the above, means", there must be a central
+place where we describe this convention ("git help cli" talks about
+negating options).
+
+So I suspect you'd only need to do something like this
+
+    ---line-number::
+    +--[no-]line-number::
+	    Prefix the line number ...
+
+in your patch, without doing anything else.
 
 Thanks.
-
