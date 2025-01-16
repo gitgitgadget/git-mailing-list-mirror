@@ -1,81 +1,81 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815961D90B9
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 09:17:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0CB1DB15F
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 09:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737019050; cv=none; b=KDV2YeZ3gbCFFkGMzzC47czBffRbtj/apmXlmo1Ig30JRJksIwvhyY8fm1JOuhSq5lnITmCYjHEkTqfqW4rQ45ht04gRrkuiFrZ1kKKW6w+8G4UDcNhUjGMXtXFoFfktVGht4C0RvfOQu6jBAdqQtZ2stZVIIYfHLnS+atQwHjU=
+	t=1737019050; cv=none; b=UotU/w9C6SRgQDRT8Wx0P7iTDurLn028673sR0MtKsAU22qaMzRT37jvSjsJlys4hyvdQVR7patMoHlY+nWVMToozKEFNRnFzDSlm+Rvh4vOPIcPXx8nk0oBLbWUerwihuvK3AiiIEY8tBYxIuMP8bgEAznyyxeUuo8/vR6AQws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1737019050; c=relaxed/simple;
-	bh=CjD4JYvNfbtl50C7gX0wpUR8oYrzDqvXvYaHjl3guyY=;
+	bh=0UHocXob8T7CMPqijn149+Awo7oIJehey5wf2+d7ZOg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XgrrC7OQJ5Z9C3I+LuWkIJ43ljbaYdLUCmahNuKv+elXFHgBjbOsRUAJSbaWNMBLFqjdIre7t2DNKc+i1xAyMeWytO/g3C8KAdp1iNPKnrOAN+EAhL4DhP5ELa1YufcXtYXwIMYHk6JkvLicKqCmFlNOPCGZ/Og4LM9KZnCMLoo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JrNaTNj4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iV+/XZ/Z; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=Vb/xHQ64rCy7FJOMh8ZJZgDYXWYON59QgYTW82KsC5bPlx87Ri0J/QEXqCFpVClJ3wYoMAXIwhoHJBNQwW0WdVAvb70yZSeerliRbjJHAw5bOdJKj8CkhuQ6LmniUsJ3rQII5xFtNpeaRnnbTFGKYxriWN6KnUhUo9Wc8ifIfLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e/ZjRVQL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qCGuNuHg; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JrNaTNj4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iV+/XZ/Z"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3A5FB2540178;
-	Thu, 16 Jan 2025 04:17:26 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 16 Jan 2025 04:17:26 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e/ZjRVQL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qCGuNuHg"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AF5E9254018F;
+	Thu, 16 Jan 2025 04:17:27 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Thu, 16 Jan 2025 04:17:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1737019046;
-	 x=1737105446; bh=fSuuTx9zUmmyP0zK0xaqXvV3Tbcp2Ba/VN6U99rSX+E=; b=
-	JrNaTNj4d9TNbbznoNcNYtV9yQuIm60Qg520zeTv4dkExG4tE3IvOfKVNYnJE6Jw
-	QVUE6UpeIE6pT2Y+xYaE05eBsJepthAm88xd8qZeeLJBzOzYgM06KyjAsHMhkP1B
-	0WWND0/ympJrpKLbZPGa7hpcuE2WvhwPY3JJB0kA8w/phJbfbOnPdfvahjdVXZip
-	ES822THM1Str4BV1hBAEG1j5KV+T0DhR7MiUFfmE/3ZQ5M4FIjPDy24gbaU4Il+a
-	hh/P99ESTEXhqwld+Qb9zVSUNWWxKggUaUOQagfJ+88CI2ORe6ZaNBpP0xtOKsNV
-	DW3Tm5SIJ/AvWRRmC5m9mw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1737019047;
+	 x=1737105447; bh=Zexu90/MTvgq5znGNBMgC/ZTbCf0BMOQJTUXf7bhuqc=; b=
+	e/ZjRVQLCecRpLq7QIULOry1CeokaMlExrlvNZ1lzMl6fPDPesWDIUN4R0EYyTuV
+	Is0/WIAwWbgzp7uF7kMROHn3hItxIPg7+i8NbDFudfT1YfRGrGgo6Z8C3HIrQIsp
+	dLbwOg0fGPENvDkillBcUnQQBuurIr6D0H+3DTacpmaRIu9+/EoaNJpKRY+fgRcc
+	hDX5dZN5MP87dpbYGHmByy60SpT/Sw9kViVrV4DmcWyoLAPlMoHefaAv2b33EYfH
+	4winSpYaoHDKeL+AtLEWalWJeZwqjYtqiMM1D1vDz/317W0CKE0iLdxWMyRyH3Ht
+	Lckvb5zeLffq4pDGRfqlYw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737019046; x=
-	1737105446; bh=fSuuTx9zUmmyP0zK0xaqXvV3Tbcp2Ba/VN6U99rSX+E=; b=i
-	V+/XZ/ZCAPLCBATupI2KLH76Ms75zg3FYFpCNzqjrGrSyJi5YvA4ZSFeaW7dQsrX
-	dZUWyt4WPztizSAp3k47VG9pJRszBaGSOWCd/uW9MsHonQpfaddjN5bPBlRvClF0
-	JT9LQtGFBbokmbJb3Ycz/04ebH8RCkqGMjJbREtQC92ikp1UFDaKPY9BxwSzZcrg
-	Bbvq37mwhCMTJ6pihaZnyzfhEBCCQlZpwh+Gbtm/1iaB/wS3eqL4LZEE3xrfiEYM
-	u4KNy3iCFsohYTQORXkUP+ziMrkALKU3o4eXf7PueJ8XISwOlMs8rwjAE95Rgdln
-	B7ks3AHi+Rqe7r+5cwVdA==
-X-ME-Sender: <xms:pc6IZ1LCqrOS7xFQBol-qIFlF2FBQCntKInpO8wOMWldZNvXyELBwQ>
-    <xme:pc6IZxKF2HFzmMwsTBnuCAHQpE7ieku-r1SjH-awoDbh952tzBOBKyndFqOtS59xs
-    bCbtkWBtJBh8BK7tA>
-X-ME-Received: <xmr:pc6IZ9sst0BEZ9SwV3qJP8VdN1jbPVcqOiiNNOhMYirpV5xhZhjUs-3XCH3qSgeV4_nhikTSQzg9EXz-50WGkI0orpQAdFBGJ4jRg4WxlN5MsAFE3w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgtdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehkrghrthhh
-    ihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:pc6IZ2ZHEqmJ5lOFieHnM2SAwSqbZPRs1dYpNFBfb9ZNdrMqlWB4vg>
-    <xmx:pc6IZ8bOOeuE6yxb7GVA6gjKYNnOeV8hukU0mUA3IH2z5BxWAbDpug>
-    <xmx:pc6IZ6CK0eqoulyiM6rGxPgzSdqD91ZV-i1V5ZRne-lnlg-FkQ3LEw>
-    <xmx:pc6IZ6ZX4TvfisegJpoAY8gbr6JJ5pqjDmxJFrIN4aZ9mmwimpO3Pw>
-    <xmx:ps6IZ0Gk5LgPGyzr1gVeL_e4lKsR8Yo84FAcD4b2Y5GXInRPsAk2hh1s>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737019047; x=
+	1737105447; bh=Zexu90/MTvgq5znGNBMgC/ZTbCf0BMOQJTUXf7bhuqc=; b=q
+	CGuNuHg5hLspAJkKKPJs4OCYc7jQBx/3lqAcdXS552gHZ2oLHip5G/wW+ojQutRV
+	9/foLA+Ta8FaKGBrVyxuJMhJRPA3MIYGlm4JWoYIhLVVKHVkR0ttCJrjudi10Zmy
+	fDkbR/LBcbv2w809hXZo3JdCpr9FOSu7E0KUvubZbUdLdP917tnBE//4M/D+ofFI
+	agt2MwUWV56/pEQ8TnlgltP+EmJ1hkDGgHemfPWiwL2XcRwcnvtXGG07+GSVxcks
+	IAkJnSDq96lAoQBnoOThyb/sggSr3dcBPrtpWIHkt7jVSsBa2vSUmwYCeHO9JYTY
+	OvvZq+SpdVlM/XVoKz7yQ==
+X-ME-Sender: <xms:p86IZzYJvp6JYdmTkl02WoWnik0xLcU5jbHvzQHqJZNucdrc-k08wg>
+    <xme:p86IZyaM7uz1kXHpoemNxuTm8GeEEg9U487yjs-fYvZmE3XUbcbS1QmxVoQ7xyvGg
+    NxdOlwiB8ipv9M_1Q>
+X-ME-Received: <xmr:p86IZ18o5FHXqtyXwZ9p-CXXWM8-y55gDJvlVFYVZ3wEjfYEt9dPCg1s3eSuup1OLTgGNZI_ktx3QDxr4GSeMzHQSWXv003iN0X7P2oAGhpueBYpYQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiudcutefuodetggdotefrodftvfcurf
+    hrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffrtefo
+    kffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsuc
+    dlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfh
+    rhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqne
+    cuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteek
+    gedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilh
+    hfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgv
+    sehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:p86IZ5r24bjZQf1vCB5imnWbXj5eFukdqq3xZFPXd8QwXdgeMhNo-A>
+    <xmx:p86IZ-ofANr3dN1Cq41RowmpWFbJUxcMJAz-69IY4udWZvUeZWRTjA>
+    <xmx:p86IZ_RuWMcWKMlEI-ntsHpHwyWdXelcFjDL7pDfFEFjX4y1qlznsg>
+    <xmx:p86IZ2oH5Kfz_6ISvDvJHLPrHl_Wdbc7giMeocNWCGufIGniBM_GJg>
+    <xmx:p86IZxU_PBrbBt3KOMOf8slXhVrWfqSmNxxBS2lNUwQAVI_KkPqsizVO>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jan 2025 04:17:25 -0500 (EST)
+ 16 Jan 2025 04:17:26 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ddcd7034 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 16 Jan 2025 09:17:23 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2a02a20e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Jan 2025 09:17:25 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 16 Jan 2025 10:17:17 +0100
-Subject: [PATCH v3 04/10] git-compat-util: move include of "compat/zlib.h"
- into "git-zlib.h"
+Date: Thu, 16 Jan 2025 10:17:19 +0100
+Subject: [PATCH v3 06/10] compat/zlib: provide stubs for
+ `deflateSetHeader()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,137 +84,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250116-b4-pks-compat-drop-uncompress2-v3-4-f2af1f5c4a06@pks.im>
+Message-Id: <20250116-b4-pks-compat-drop-uncompress2-v3-6-f2af1f5c4a06@pks.im>
 References: <20250116-b4-pks-compat-drop-uncompress2-v3-0-f2af1f5c4a06@pks.im>
 In-Reply-To: <20250116-b4-pks-compat-drop-uncompress2-v3-0-f2af1f5c4a06@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.2
 
-We include "compat/zlib.h" in "git-compat-util.h", which is
-unnecessarily broad given that we only have a small handful of files
-that use the zlib library. Move the header into "git-zlib.h" instead and
-adapt users of zlib to include that header.
-
-One exception is the reftable library, as we don't want to use the
-Git-specific wrapper of zlib there, so we include "compat/zlib.h"
-instead. Furthermore, we move the include into "reftable/system.h" so
-that users of the library other than Git can wire up zlib themselves.
+The function `deflateSetHeader()` has been introduced with zlib v1.2.2.1,
+so we don't use it when linking against an older version of it. Refactor
+the code to instead provide a central stub via "compat/zlib.h" so that
+we can adapt it based on whether or not we use zlib-ng in a subsequent
+commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- archive.c         | 1 +
- config.c          | 1 +
- csum-file.c       | 3 ++-
- environment.c     | 1 +
- git-compat-util.h | 2 --
- git-zlib.h        | 2 ++
- reftable/block.c  | 1 -
- reftable/system.h | 1 +
- 8 files changed, 8 insertions(+), 4 deletions(-)
+ archive-tar.c        |  4 ----
+ compat/zlib-compat.h | 13 +++++++++++++
+ 2 files changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index b9c200cba6..8be4e7ac8d 100644
---- a/archive.c
-+++ b/archive.c
-@@ -7,6 +7,7 @@
- #include "convert.h"
- #include "environment.h"
- #include "gettext.h"
-+#include "git-zlib.h"
- #include "hex.h"
- #include "object-name.h"
- #include "path.h"
-diff --git a/config.c b/config.c
-index 50f2d17b39..36f76fafe5 100644
---- a/config.c
-+++ b/config.c
-@@ -19,6 +19,7 @@
- #include "convert.h"
- #include "environment.h"
- #include "gettext.h"
-+#include "git-zlib.h"
- #include "ident.h"
- #include "repository.h"
- #include "lockfile.h"
-diff --git a/csum-file.c b/csum-file.c
-index 5716016e12..78e04356d3 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -11,9 +11,10 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
- #include "git-compat-util.h"
--#include "progress.h"
- #include "csum-file.h"
-+#include "git-zlib.h"
- #include "hash.h"
-+#include "progress.h"
- 
- static void verify_buffer_or_die(struct hashfile *f,
- 				 const void *buf,
-diff --git a/environment.c b/environment.c
-index 8389a27270..e5b361bb5d 100644
---- a/environment.c
-+++ b/environment.c
-@@ -16,6 +16,7 @@
- #include "convert.h"
- #include "environment.h"
- #include "gettext.h"
-+#include "git-zlib.h"
- #include "repository.h"
- #include "config.h"
- #include "refs.h"
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 1ca2671322..fb25fbf503 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1537,8 +1537,6 @@ int cmd_main(int, const char **);
- int common_exit(const char *file, int line, int code);
- #define exit(code) exit(common_exit(__FILE__, __LINE__, (code)))
- 
--#include "compat/zlib-compat.h"
--
- /*
-  * This include must come after system headers, since it introduces macros that
-  * replace system names.
-diff --git a/git-zlib.h b/git-zlib.h
-index d8a670aff9..1e8d9aabcb 100644
---- a/git-zlib.h
-+++ b/git-zlib.h
-@@ -1,6 +1,8 @@
- #ifndef GIT_ZLIB_H
- #define GIT_ZLIB_H
- 
-+#include "compat/zlib-compat.h"
-+
- typedef struct git_zstream {
- 	z_stream z;
- 	unsigned long avail_in;
-diff --git a/reftable/block.c b/reftable/block.c
-index bc9b079634..38e3081c61 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -13,7 +13,6 @@ license that can be found in the LICENSE file or at
- #include "record.h"
- #include "reftable-error.h"
- #include "system.h"
--#include "compat/zlib-compat.h"
- 
- int header_size(int version)
+diff --git a/archive-tar.c b/archive-tar.c
+index e7b3489e1e..0edf13fba7 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -473,9 +473,7 @@ static const char internal_gzip_command[] = "git archive gzip";
+ static int write_tar_filter_archive(const struct archiver *ar,
+ 				    struct archiver_args *args)
  {
-diff --git a/reftable/system.h b/reftable/system.h
-index 5274eca1d0..f194a38686 100644
---- a/reftable/system.h
-+++ b/reftable/system.h
-@@ -14,6 +14,7 @@ license that can be found in the LICENSE file or at
- #define DISABLE_SIGN_COMPARE_WARNINGS
+-#if ZLIB_VERNUM >= 0x1221
+ 	struct gz_header_s gzhead = { .os = 3 }; /* Unix, for reproducibility */
+-#endif
+ 	struct strbuf cmd = STRBUF_INIT;
+ 	struct child_process filter = CHILD_PROCESS_INIT;
+ 	int r;
+@@ -486,10 +484,8 @@ static int write_tar_filter_archive(const struct archiver *ar,
+ 	if (!strcmp(ar->filter_command, internal_gzip_command)) {
+ 		write_block = tgz_write_block;
+ 		git_deflate_init_gzip(&gzstream, args->compression_level);
+-#if ZLIB_VERNUM >= 0x1221
+ 		if (deflateSetHeader(&gzstream.z, &gzhead) != Z_OK)
+ 			BUG("deflateSetHeader() called too late");
+-#endif
+ 		gzstream.next_out = outbuf;
+ 		gzstream.avail_out = sizeof(outbuf);
  
- #include "git-compat-util.h"
-+#include "compat/zlib-compat.h"
+diff --git a/compat/zlib-compat.h b/compat/zlib-compat.h
+index 96a08811a9..2690bfce41 100644
+--- a/compat/zlib-compat.h
++++ b/compat/zlib-compat.h
+@@ -7,4 +7,17 @@
+ # define deflateBound(c,s)  ((s) + (((s) + 7) >> 3) + (((s) + 63) >> 6) + 11)
+ #endif
  
- /*
-  * An implementation-specific temporary file. By making this specific to the
++#if ZLIB_VERNUM < 0x1221
++struct gz_header_s {
++	int os;
++};
++
++static int deflateSetHeader(z_streamp strm, struct gz_header_s *head)
++{
++	(void)(strm);
++	(void)(head);
++	return Z_OK;
++}
++#endif
++
+ #endif /* COMPAT_ZLIB_H */
 
 -- 
 2.48.0.257.gd3603152ad.dirty
