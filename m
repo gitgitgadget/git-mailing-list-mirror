@@ -1,172 +1,113 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E84E1DE894
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 11:35:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260631DC1A7
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 11:49:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737027320; cv=none; b=q/4wQkXUR5a/bHxIVRwUeWAg+A+1IhmbcRU9LLdtpGwAUJpwrQNTqhyb9ew6mnVU8XGyIAAPhmuPHouzJiMiw3AaDPUiLw3Yhb6XRQVKcWOaKUxc0taJBesif4geXDtAP9Ub9XR9IE8yMjMSGmzhKNinVTIS5FITSCkUjpDqk4Y=
+	t=1737028146; cv=none; b=HX2oYof3afosvHhQMTFZZvEZpwJKFJVM1Nwg6lLHUBseN0HdzDi3KbqnhXdG/FBvBo6Rs3G575oP8CWR2vGCjT2+turTWzPVsfwodj9EmCob0bl5gQvk/nEQ5Cp0VUquGijknKxzf/ZNx48C/aYGqwj7KwA9gkHJETVjvuBzsaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737027320; c=relaxed/simple;
-	bh=08xOZ4nX4Wpqds9TqEXj6xlVC4MVtJYbFfwe+V2yQOQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SO2Ekjk5+1Ic4q7yjBhZFcSP8c5Yy8fmMl4g/xKhyHW7YaogkWS+yKstzpxKDXdh6Nhyo/SoQrXJX7N13XowuoeqKR4y/etQCE4hylx5Y3IoX7sZbMr70NkwqSM347GTcFHvPktv02d1STj+6ci+LZ1HDYloAb1QrJszyi3R+GY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CZvTfJQL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1737028146; c=relaxed/simple;
+	bh=4a3Cb289gB8xwkJrX44j+xp7QHifMZWz6c6E8lvx5i0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s6i1Kbj3rOLrnZND0lacqPIrT5GsPeMhV33pI1vHjnJGrFJrmw/rakFgh+PqZDj0341GBnL8UpHd0qBHm1MX0YSwUGd6B5bYNiAQSMpQmUEDkx0EatuzanXU+B2H5nTLg1C0RqVOB4oNG4D36GsDvxpC84KFsWc5QaI7jSs+INs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k8dn2V7d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a3gXHF1Q; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CZvTfJQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 058D8C4CEE2;
-	Thu, 16 Jan 2025 11:35:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1737027320;
-	bh=08xOZ4nX4Wpqds9TqEXj6xlVC4MVtJYbFfwe+V2yQOQ=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=CZvTfJQLDZgOmgpn74oKJsLFdm4LGwtZJ+yHJBpqmL2UGv6pcORIMfx5LxSFbhQ43
-	 bftbfPUFQiRku/ZbB1NAq3OfmayGiLpa5SmSYYebQ3HyvPcp1KV6asHQP5Rk4KBNmI
-	 OrMQIPuipTbGFbjHnjzf2X09hssj0ZHMmPhg+g0qBamaYDNqN1wW3OI1mnHWP3e343
-	 VuDVqFGo2m9RbTrw8ffuEkUpbHSq6dksTLtdKAt/qj9vdRcY7Vs64qbUUmIbTwqwkc
-	 58YqyBcMHxUjjJthinDx/+HJCP4ehcET3N7XqilgBTamMGz9bh+S39vczel6tN43Xo
-	 C57kbnN3LdAVg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F26C4C02180;
-	Thu, 16 Jan 2025 11:35:19 +0000 (UTC)
-From: Karthik Nayak via B4 Relay <devnull+karthik.188.gmail.com@kernel.org>
-Date: Thu, 16 Jan 2025 12:35:17 +0100
-Subject: [PATCH 5/5] pack-write: pass hash_algo to `write_rev_*()`
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k8dn2V7d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a3gXHF1Q"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2D8EE2540146;
+	Thu, 16 Jan 2025 06:49:03 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Thu, 16 Jan 2025 06:49:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737028143; x=1737114543; bh=4a3Cb289gB
+	8xwkJrX44j+xp7QHifMZWz6c6E8lvx5i0=; b=k8dn2V7dCrsoLcXoR0RpyVaAFS
+	e41Ry3bxJI8EcEjrX+8vhcBUZ+f3sWayDylR/AWX54aFrK8szd+gHC36UdIjY5W1
+	YZD/iY2X/8ULR8opv0q6Dew2E7zbadiCDKT/DjkhSyOkes2j4hcKwLC7IjQ7J+ud
+	9fiNMQg5VKrrioElmG15OqLASJyMl+Gw5OfYYPY1vjhR7CkWq3RA7X7sf+ILgkml
+	8m6qi/ZWs7M7qLOR1K7J0/G9S0PJ2U50AK3omBhMnVNAkb3ZhkJ3a+zx2wVSmCW0
+	yGMauVRRODjQA4LG1/rTm1hv/3h4WWniSiRDF9TX4F2hBa8jXrq5mLuzQA0Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1737028143; x=1737114543; bh=4a3Cb289gB8xwkJrX44j+xp7QHifMZWz6c6
+	E8lvx5i0=; b=a3gXHF1QFkHrYOBzzHMEypq0wfF/NCOzipGkgy/anCP+4na1yGw
+	d/CA0LU7lgo1jW4bi2sXfeuc2vH7fB2p1G8Zc/36jrtcyTHMD1oqv0YIQ4w9Jr4N
+	wPfMr59FLR9ovM+kL6QIIQXbgMrGFoF0FTXVRSokdkz6tifcMAuUNJ2XxpuoVIqm
+	TrIpEeNIs7xG2QmzMZhSzkcw5tMX1GdW55s2qajETntvWhxLYpQ++8yUjcc5cfby
+	jHFl39kmWNm5PxWYLEqLJ8YeywR7ef7wDnhsG4nnsV0iYCz2lvM6vDiNjHDVNggQ
+	pss3sQ9o/EFEprVnYg1XQbj+smGbibf0S+g==
+X-ME-Sender: <xms:LvKIZz-9OsvRYCcIApL8WxzxnPHT4JE_A_RU8v5a3OXvh4qwengLUA>
+    <xme:LvKIZ_tJE646uuQkYCZ7T_X9kP0VbSBsunp8IPcoN0sHhWHZIVhhM917DYaHYM3HV
+    6QuFtHMREH7MrGXUg>
+X-ME-Received: <xmr:LvKIZxBackcv4YG_vVoH3pbecNlt5VZGVIQI9JhRlrRjPhQf4EQPVC6EeXjfudi6OblFyQepbKzaWrE0Egp-T58fGih28S8MJ4gamJso5eAJW8Zbqg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgfedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:LvKIZ_ckPlSAbNezNNe881pjbmKfhXFJLnXx8qoMT-E9K4C6bDxXvw>
+    <xmx:LvKIZ4NrozVPNLLAJl_m2X64clWS26UX370kvciNgtCpZH7BN3G09Q>
+    <xmx:LvKIZxkV1-Dl2F4ZxkOjUV6W39PKRp6WLBXAz4YNJ9M4PIBoCSOMcQ>
+    <xmx:LvKIZysDMowzwmmnFVdrnDE77HxyXwkGi3kvrgX4RoAEIYXfcBCxYA>
+    <xmx:L_KIZ300jbUzxceQiRqDAdR-K8h-hCvokufzItQeM6uN71l-jKqM0Zhe>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Jan 2025 06:49:01 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 185ea26b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Jan 2025 11:48:59 +0000 (UTC)
+Date: Thu, 16 Jan 2025 12:48:58 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 2/8] csum-file: store the hash algorithm as a struct
+ field
+Message-ID: <Z4jyH4yIXuD0vuqQ@pks.im>
+References: <cover.1732130001.git.me@ttaylorr.com>
+ <cover.1736363652.git.me@ttaylorr.com>
+ <99cc44895b57cc75fc8f447000817b3595368e4c.1736363652.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250116-kn-the-repo-cleanup-v1-5-a2f4c8e1c4c3@gmail.com>
-References: <20250116-kn-the-repo-cleanup-v1-0-a2f4c8e1c4c3@gmail.com>
-In-Reply-To: <20250116-kn-the-repo-cleanup-v1-0-a2f4c8e1c4c3@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3538;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=9apsR1GBlegQZhItb+8Q0LgeChaYi1HyTHkcGvoZGi8=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeI7vUQov1ESSA2Ouu5Qn6GmWVnU1BTp16lf
- nN9cCE5ZZWX9YkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJniO71AAoJED7VnySO
- Rox/8bcL/jliaQT0LoddbUaadjRZMYklcT9H9GiZzGrsnoPblf9l0Y4ompHH2qY6FUuqPiNr4p5
- r8iHxsAPRsg3fsQoT3cwokR52jcCZ/qfmiYIv9vFNVfuofXuzkpHQ0H0O2G8TVA7XU2gtHBZUpb
- njLo4v3kniTP75iqJ4R7ZwFvDssFatq9OfXHtb6ug75WOlck/DjzEFj4E0tZscoaPo+o9SmAO5b
- LvYSKJaGcMuoeEI7/+rk3zoiw8PWO3/3ELVFVaO7p9d0wmFDewiuzTi/U7hZhF830NM7CcAdqoD
- NCwE71dVo/PnRglkGhe+bnN++pY6sxqgn6iTatKdK9lsGSWJvZj+xBsKudnGoVHP841g+PtEubJ
- wesJ4BQ1HP+F6tJqu+8oM93GeKa2JChdUvFF0i0/ggf8/NAUNa4tGWfV7/vLr49qVepIwsckS/H
- NFMeCN2F4VzqgrPckGbRvHsPFhFO6bC9zBvI1aDcGVNiC+KKGgY3cNF/hQAvVfHnnjwIwG3kH38
- Ak=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
-X-Endpoint-Received: by B4 Relay for karthik.188@gmail.com/default with
- auth_id=276
-X-Original-From: Karthik Nayak <karthik.188@gmail.com>
-Reply-To: karthik.188@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <99cc44895b57cc75fc8f447000817b3595368e4c.1736363652.git.me@ttaylorr.com>
 
-From: Karthik Nayak <karthik.188@gmail.com>
+On Wed, Jan 08, 2025 at 02:14:35PM -0500, Taylor Blau wrote:
+> Throughout the hashfile API, we rely on a reference to 'the_hash_algo',
+> and call its _usnafe function variants directly.
 
-The `write_rev_*()` functions use the global `the_hash_algo` variable to
-access the repository's hash function. Pass the hash from down as we've
-added made them available in the previous few commits.
+s/usnafe/unsafe/
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- pack-write.c | 30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+> Prepare for a future change where we may use a different 'git_hash_algo'
+> pointer (instead of just relying on 'the_hash_algo' throughout) by
+> making the 'git_hash_algo' pointer a member of the 'hashfile' structure
+> itself.
 
-diff --git a/pack-write.c b/pack-write.c
-index 09ecbcdb069cc9b0383295798ceb49cbdc632b64..a2faeb1895e41f4c17281380478f1f2cabcc6f24 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -1,5 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "environment.h"
- #include "gettext.h"
-@@ -211,9 +209,10 @@ static void write_rev_index_positions(struct hashfile *f,
- 		hashwrite_be32(f, pack_order[i]);
- }
- 
--static void write_rev_trailer(struct hashfile *f, const unsigned char *hash)
-+static void write_rev_trailer(const struct git_hash_algo *hash_algo,
-+			      struct hashfile *f, const unsigned char *hash)
- {
--	hashwrite(f, hash, the_hash_algo->rawsz);
-+	hashwrite(f, hash, hash_algo->rawsz);
- }
- 
- char *write_rev_file(const struct git_hash_algo *hash_algo,
-@@ -286,7 +285,7 @@ char *write_rev_file_order(const struct git_hash_algo *hash_algo,
- 	write_rev_header(hash_algo, f);
- 
- 	write_rev_index_positions(f, pack_order, nr_objects);
--	write_rev_trailer(f, hash);
-+	write_rev_trailer(hash_algo, f, hash);
- 
- 	if (adjust_shared_perm(path) < 0)
- 		die(_("failed to make %s readable"), path);
-@@ -298,11 +297,12 @@ char *write_rev_file_order(const struct git_hash_algo *hash_algo,
- 	return path;
- }
- 
--static void write_mtimes_header(struct hashfile *f)
-+static void write_mtimes_header(const struct git_hash_algo *hash_algo,
-+				struct hashfile *f)
- {
- 	hashwrite_be32(f, MTIMES_SIGNATURE);
- 	hashwrite_be32(f, MTIMES_VERSION);
--	hashwrite_be32(f, oid_version(the_hash_algo));
-+	hashwrite_be32(f, oid_version(hash_algo));
- }
- 
- /*
-@@ -322,12 +322,14 @@ static void write_mtimes_objects(struct hashfile *f,
- 	}
- }
- 
--static void write_mtimes_trailer(struct hashfile *f, const unsigned char *hash)
-+static void write_mtimes_trailer(const struct git_hash_algo *hash_algo,
-+				 struct hashfile *f, const unsigned char *hash)
- {
--	hashwrite(f, hash, the_hash_algo->rawsz);
-+	hashwrite(f, hash, hash_algo->rawsz);
- }
- 
--static char *write_mtimes_file(struct packing_data *to_pack,
-+static char *write_mtimes_file(const struct git_hash_algo *hash_algo,
-+			       struct packing_data *to_pack,
- 			       struct pack_idx_entry **objects,
- 			       uint32_t nr_objects,
- 			       const unsigned char *hash)
-@@ -344,9 +346,9 @@ static char *write_mtimes_file(struct packing_data *to_pack,
- 	mtimes_name = strbuf_detach(&tmp_file, NULL);
- 	f = hashfd(fd, mtimes_name);
- 
--	write_mtimes_header(f);
-+	write_mtimes_header(hash_algo, f);
- 	write_mtimes_objects(f, to_pack, objects, nr_objects);
--	write_mtimes_trailer(f, hash);
-+	write_mtimes_trailer(hash_algo, f, hash);
- 
- 	if (adjust_shared_perm(mtimes_name) < 0)
- 		die(_("failed to make %s readable"), mtimes_name);
-@@ -575,8 +577,8 @@ void stage_tmp_packfiles(const struct git_hash_algo *hash_algo,
- 				      hash, pack_idx_opts->flags);
- 
- 	if (pack_idx_opts->flags & WRITE_MTIMES) {
--		mtimes_tmp_name = write_mtimes_file(to_pack, written_list,
--						    nr_written,
-+		mtimes_tmp_name = write_mtimes_file(hash_algo, to_pack,
-+						    written_list, nr_written,
- 						    hash);
- 	}
- 
+Makes sense, and it's also a good step for libification. I wonder: does
+it mean that we can also get rid of `USE_THE_REPOSITORY_VARIABLE`, or do
+we still depend on it in this file? The answer is yes, as we only reduce
+the sites where we use `the_hash_algo`, but don't remove it altogether.
+That would require the caller to provide the hash algo to us.
 
--- 
-2.47.0
-
-
+Patrick
