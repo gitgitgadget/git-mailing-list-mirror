@@ -1,118 +1,161 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB7E43594B
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 01:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D9711CD1F
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 01:25:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736990520; cv=none; b=LyE7DLDhWq5R0rlLdY0G68Uykeg2cJH/rtjOWsj1qMPp8WNHn5OhawUA5I8d++R54M4ZUW21ehvqzoUCqTZHk4aS8ddnbk175gkSSVoCjH+s1u1W55HXNUSgVXkRzw32mhgkdnq836ScyRDsMF4ROeuzPun5bAjTOl1FxKFfLx8=
+	t=1736990729; cv=none; b=XdInQkwMDYDK0L5BMb7axqpFiWr8DMKwGY26/5NZ46SYQnPipvBkFvQBqOii8TwpWKCKGm6HO/ETywbsHL4oCQ+UvkaLj9+TWYdQdzk/x1cPYjrY0vhyn86Oj7BqrhQAFX/62Gx1ATZpXooIdqhYqBGbxfuoADef8OQN+iR0mV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736990520; c=relaxed/simple;
-	bh=VhcqtXP42f9BlcTTbFWxV8VFisWAQoDqXJT0TMsEroc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=reXlFhNXyVrajAUD6vSvDRVO7/mhI8Ngjh55XSs5WB3IERuMKAMkjbnyzyBWVy2UrYNHxIRKGJjHMUgwjmbDSY3N64KHe1+p/3prjlt7ZrdnOLgKx5sg+ziHdjv9aNGwjgtef0BfqLvBzIkOooUucgzBQxrnlD8xTS5MDKRPqYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J4CPEWSq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UF+Ap/cj; arc=none smtp.client-ip=103.168.172.159
+	s=arc-20240116; t=1736990729; c=relaxed/simple;
+	bh=rAPS3FnrEeSOUfrTJK9MqZQHz+nwctVFGD6bS6HmDik=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=G9eNFuzwJefrM0jtB3WK/DaiGx4sjiwI6+/UrLQNlXlcqbnZEGIq3Nfm9Ot3EeZRpQVE3jaGNs10xxlk9r0yNSP/RgF6ZdfQHHzrIYVPqes3xFR5AlN+1cioIJhjvjVZPaYl6AmfHkDzHa0r9whtet8JZsvNf5lFz9eoGBDdXcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=28WN6FY0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g4rhPMMI; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J4CPEWSq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UF+Ap/cj"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BF69E114010A;
-	Wed, 15 Jan 2025 20:21:56 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="28WN6FY0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g4rhPMMI"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F249C1140168;
+	Wed, 15 Jan 2025 20:25:25 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 15 Jan 2025 20:21:56 -0500
+  by phl-compute-05.internal (MEProxy); Wed, 15 Jan 2025 20:25:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736990516; x=1737076916; bh=fSZfmnavmS
-	0bbPYWIkNgz3saNHewQh/wO5CzHR6EL/Q=; b=J4CPEWSq/uuHNyTlXmaNk57O3a
-	zdGlO+7oNTIjbTNlBytmYvwJOddXr/+FWMYNmtIjECK2/LZ/7RcrVIA9hoPm3Rsm
-	b8wtZtqFls6ehhubH9YzBYnDR/o+6lad3/yQPi4K6zFhaG/S+aGMWc3swq1sdHjm
-	DPeQ9Bz4tax7Ynqx6IkfJs/mzaBSILuhRL2Ez9p9blEhlYkdCzrr5wJBYpGEF3na
-	VW+tUGjmFVvnaVjwfSBc1OAowiWXRZdgwGm1L1W1hr9BQfPM8pz6TcDpa0t85bHd
-	Syerwgwh5N3yGmx2jLNPLDyzZC36q9P+oodqkolD/zrRgpOhS1QMQ4/JBqRA==
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to; s=fm1; t=1736990725; x=1737077125; bh=wvEAVbfXluU4pvnrmOtJZ
+	90kkCMwQxi/a+xhfwimGkU=; b=28WN6FY0l6gX3Nqhftd2V4Hx7s+BBSK2QI5UE
+	nZ4XSL3IaVh1Esky/HmmcblBdeZPpohe9LG17CWlVyvscuxubj+fpn6T5Kq2MLml
+	5vj+Tr+Z8V2NvMjlsRrAsnVbucPoXtnEzPm22qz0P3m4ceQoZQweAFOJaySIgR8q
+	uY75s0LeXB1sw+rLZfpBTGoN18nwpS0HFdU9N9Zs/I39cec5qM2dvS/KbDNYqR02
+	hUMvL2Kl6Op72dK1yMHS0GaINzorYTuIJ/itb/kMG5jkGmog66wXKXQBHqOZdV0v
+	0bQVe04RmMiovMCB7p3M9QriBnDvYOtK9b2Z0fzfUsc4vUnKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736990516; x=1737076916; bh=fSZfmnavmS0bbPYWIkNgz3saNHewQh/wO5C
-	zHR6EL/Q=; b=UF+Ap/cjJqIyAx3EzAAxXkzLJPJnF4SbWOcTh0YPYsVX+bHLxj7
-	3OFaKMeGdb8iSAgQl5HGoVxGt1VJ3JozGcDO6xxIcW367AMYw33oLH/swOXD0gVe
-	xkUzzRPq3oU5HEnTskMzbaoGv4szQFdWQWn6NT6vIjwkCTqbEniXyybrncYR57Fq
-	QPGf939De0iZfJ/1mprb0XdmnglSvmhxZ7PWFMoxnM4F8jwR+y88vSE4n4jEtB6+
-	gn1k/0jv6vty/sPJjqvVQeZQRyCHFennXFgPBm3FXN8L7RjtIvR2/sCb5WwIRYPo
-	ttLqpnNIROBY7b2MhTUTEqVNRwcGNstjytw==
-X-ME-Sender: <xms:M1-IZwrf8cHFfXRajJSMns-Q2GOwkMXs-xPt-CV7xlI6-fYXeduGkw>
-    <xme:M1-IZ2oPjXO0ltYtGimsN51tZXx9RjBHxkugh7Jckb9Kf4ANqSrEIafLslyfq7EVx
-    gYURJzNWk_yEU9fdQ>
-X-ME-Received: <xmr:M1-IZ1MkAQiR4GqVNw-ReMPg5VoJfoexrMLLNkECUClKtGu6Mlf3KZPggpIK2-dY77uQ-1LklndptXcyRn3VPokWqSbrbjSjryqH>
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1736990725; x=1737077125; bh=wvEAVbfXluU4pvnrmOtJZ90kkCMwQxi/a+x
+	hfwimGkU=; b=g4rhPMMIAEqeVBfPQExqwn0i4XAmiGgdppjsPci2bwBjbuD+O4t
+	ZzyMi7uSEbUCFkAKcAWzr00jfD9vfjWiPd7ZtJu3gScjbYBoKx4cf8dmObeyon1p
+	qqgkiWe10IpHUeJ1DO3fGE2e/UHJsdI3Dyyy+HalJ8wWh/ubmr47s4Of34ZETNqY
+	AeaqVmOXLWZ7F6FXf+AvMh5Uq9Q5NSnM86PSxx1Rzeb4OumwrpxtqyyY9sAn/EMn
+	IYa47uxVNdICH3GP0fkPgY7mn81amD+7Fw6Q30CEpE7V6Q1hUwcUDH+oCZPZmrsG
+	bY79H/Z8mFg+vla0NjOhPs83GvftNEldmOw==
+X-ME-Sender: <xms:BWCIZ7l4FR0JXk-JPUbJPpKrDCgFAJGZxgdfC0pwvKUfaDrmfFOo9A>
+    <xme:BWCIZ-24HK1PGHRv1OB8fiEYKjOAQMdG8msehE0eRQEGMV0nLrYGzHxy-oEwj41Ou
+    aj2-Mx2plWF3eUkzg>
+X-ME-Received: <xmr:BWCIZxoDPHvhC0K2gT5wz8qJ-hFW9OXgxjRVP5m66YPcOD3DBWW0qBiEa9WlE9ez9BmeH4fEfmmeT5M9j2ajDgBTMqyYub9pnO2d>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeitddgfeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
-    thhmrghilhdrtghomhdprhgtphhtthhopehmtggvphhlsegtvghplhdrvghupdhrtghpth
-    htohepjhhonhgrshdrkhhonhhrrggusehunhhiqdhmuhgvnhhsthgvrhdruggvpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:NF-IZ351hirv3q3AJid6NuxaRNXd6BU8GtwsQ6-3DR4OvjoohGAq5Q>
-    <xmx:NF-IZ_7-OrmzMou6mdLrqdZzkLeY7cIi3Q5rSLepr5pCnG01R3YUXg>
-    <xmx:NF-IZ3hiRbbBhAAtefZ2u7VzjPgbyX1QPligPaO5VPE2Hkf6-VNJpg>
-    <xmx:NF-IZ55OQDtkf1celbemUaqeSWn2-43Pv53bO-cHOqwTU2OU224QeQ>
-    <xmx:NF-IZ8saHZ6erB7DaSbttqIsucGRxRivkQ3OBvRj2WYEtPSiciBS5R4S>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvffuff
+    fkofgggfestdekredtredttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceo
+    ghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepledugfefvd
+    ejtdehtddujeekjedvieevgfehteeugfdthfdvleegtefhudegjeeknecuffhomhgrihhn
+    pehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthho
+    pedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:BWCIZzkaMhASrm4uilESS5PNe1OjmgDqIHcSvSjyjYoRD_amDDN13w>
+    <xmx:BWCIZ50ktL8Fthrmoc9FeJKY-v7mq2_TVcjHf2i44Oj0Ig-pnJHD0Q>
+    <xmx:BWCIZytBO-CbsE4N8QKf9AfbGmht2sermciA-amXkxP_ZwsgCr0nRQ>
+    <xmx:BWCIZ9XyCIahfyn_wvqO7SG7uzOPf8XlpGzr7KEGZzEAH1y1SQzcvg>
+    <xmx:BWCIZ3BIciP4AVdj0n6DiW4_IVrAsN_XEYfpLCGS3JBJJo1__xWhlQ8c>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jan 2025 20:21:55 -0500 (EST)
+ 15 Jan 2025 20:25:25 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  =?utf-8?Q?Ma?=
- =?utf-8?Q?t=C4=9Bj?= Cepl
- <mcepl@cepl.eu>,  Jonas Konrad <jonas.konrad@uni-muenster.de>,
-  git@vger.kernel.org
-Subject: Re: Git branch outputs usage message on stderr
-In-Reply-To: <xmqqplknvek2.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	15 Jan 2025 15:32:29 -0800")
-References: <04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de>
-	<D72M6S9O1E9F.WVEBV7ZJ1JTC@cepl.eu> <xmqqed1414gt.fsf@gitster.g>
-	<c92e7b16-b70d-46f3-9858-2be805c5285f@app.fastmail.com>
-	<20250115171423.GB57018@coredump.intra.peff.net>
-	<xmqqmsfsx8oo.fsf@gitster.g>
-	<20250115182419.GA86610@coredump.intra.peff.net>
-	<xmqqa5brydz1.fsf@gitster.g>
-	<20250115212952.GA96537@coredump.intra.peff.net>
-	<xmqq5xmfyc4w.fsf@gitster.g>
-	<20250115222728.GA132248@coredump.intra.peff.net>
-	<xmqqplknvek2.fsf@gitster.g>
-Date: Wed, 15 Jan 2025 17:21:54 -0800
-Message-ID: <xmqq7c6vv9hp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+To: git@vger.kernel.org
+Subject: [PATCH v3 0/6] Send help text from "git cmd -h" to stdout
+Date: Wed, 15 Jan 2025 17:25:17 -0800
+Message-ID: <20250116012524.1557441-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.48.1-191-gafe818080f
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jonas Konrad noticed[*] that "git branch -h" started showing the help
+text to the standard error stream.  It turns out that we are fairly
+inconsistent in our implementation of "git cmd -h".  The users of
+parse-options API will get "If -h is the only option on the command
+line, give the help text to the standard output" for free, but some
+commands manually check for the condition and then call the
+usage_with_options() function, which gives the identical help text
+to the standard error stream.  And "git branch -h" Jonas noticed was
+one of them.
 
-> It is a tangent, but I wonder how many among the 40 really needed to
-> use usage_with_options() to react to "-h" in the first place.  In
-> other words, these manual checks for "-h" are done only because the
-> code _wants_ to react to "-h" before it calls parse_options(), but
-> does everybody who _wants_ to do so really _needs_ to do so?  You
-> already have shown that "gir branch" did not have to, and to me, 40
-> among 100+ felt way too many.
+Older commands written before parse-options API became dominant show
+the help text by calling the usage() function, which is meant to be
+used when they fail to parse their command line arguments, which has
+the same problem.  An explicit request for help text "git cmd -h"
+should be fulfilled by showing the help on the standard output.
 
-It turns out that some of the actually cannot be helped, as they do
-not even use parse-options and calling usage() themselves is the
-only way to show the usage text for them.
+This series teachs "git $cmd -h" to send its help text to the
+standard output stream consistently for built-in commands.
 
-I'll send a 6-patch series out shortly.
+
+[Reference]
+
+https://lore.kernel.org/git/04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de/
+
+Jeff King (1):
+  t0012: optionally check that "-h" output goes to stdout
+
+Junio C Hamano (5):
+  parse-options: add show_usage_help_and_exit_if_asked()
+  builtins: send usage_with_options() help text to standard output
+  usage: add show_usage_and_exit_if_asked()
+  builtin: send usage() help text to standard output
+  builtin: send usage() help text to standard output
+
+ builtin/am.c                |  3 +--
+ builtin/branch.c            |  4 ++--
+ builtin/check-ref-format.c  |  4 ++--
+ builtin/checkout--worker.c  |  6 +++---
+ builtin/checkout-index.c    |  6 +++---
+ builtin/commit-tree.c       |  4 ++--
+ builtin/commit.c            |  8 ++++----
+ builtin/credential.c        |  3 ++-
+ builtin/diff-files.c        |  3 +--
+ builtin/diff-index.c        |  3 +--
+ builtin/diff-tree.c         |  3 +--
+ builtin/fast-import.c       |  3 +--
+ builtin/fetch-pack.c        |  3 +++
+ builtin/fsmonitor--daemon.c |  4 ++--
+ builtin/gc.c                |  4 ++--
+ builtin/get-tar-commit-id.c |  4 +++-
+ builtin/index-pack.c        |  3 +--
+ builtin/ls-files.c          |  4 ++--
+ builtin/mailsplit.c         |  4 ++--
+ builtin/merge-index.c       |  7 ++++++-
+ builtin/merge-ours.c        |  3 +--
+ builtin/merge-recursive.c   |  6 ++++++
+ builtin/merge.c             |  4 ++--
+ builtin/pack-redundant.c    |  3 +--
+ builtin/rebase.c            |  6 +++---
+ builtin/remote-ext.c        |  2 ++
+ builtin/remote-fd.c         |  1 +
+ builtin/rev-list.c          |  3 +--
+ builtin/rev-parse.c         |  2 ++
+ builtin/unpack-file.c       |  8 ++++++--
+ builtin/unpack-objects.c    |  2 ++
+ builtin/update-index.c      |  4 ++--
+ builtin/upload-archive.c    |  6 +++---
+ builtin/var.c               |  1 +
+ git-compat-util.h           |  2 ++
+ parse-options.c             | 10 ++++++++++
+ parse-options.h             |  4 ++++
+ t/helper/test-simple-ipc.c  |  4 ++--
+ t/t0012-help.sh             |  3 ++-
+ t/t7600-merge.sh            |  2 +-
+ usage.c                     | 28 +++++++++++++++++++++++++---
+ 41 files changed, 123 insertions(+), 64 deletions(-)
+
+-- 
+2.48.1-191-gafe818080f
+
