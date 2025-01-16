@@ -1,151 +1,164 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6453912B93
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 02:46:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F82B192B96
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 06:44:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736995589; cv=none; b=IS3gbpJjReV9mW2qk3vs1N07ZOtyI2JWcyqMBXXrOnfUwNH7wKKweH+1DBod7XPtx6d0SHSyHgULPu+C+XvbbAZWZCOxe987gzXc47hfFPZl7RZ8zwDLJ8hpNG4FHXBRESMTT+d2ETrLLndZMDnAnPfjVF6W8UJ3TVAa8wg3Bxk=
+	t=1737009869; cv=none; b=sBq+oEyysn2E0IhOdcvDbG4ruGJc6lMc3HacsTfHpLGIxWPo0LT8yfH83Ek76kuP3CWMSWWWd11krKPvDCANISk/7t4mWywbICNz3wUhPiIURKVpJBHF793cc8irZFS4i4G8LO8u3j4WML0EwIF5eSB0tFWxWtM5MTlt+R5P5ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736995589; c=relaxed/simple;
-	bh=NKzVvKI5UJzbcU+Fpz5FP75A+vJwB9GQpP8lrLk2iCA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hhoRDRokRJvh0KSjDsvTMxbUSE2MuC6sRWjUTjDwCvELqvHJn5sctz61BqUVApdqd8GUeQ1PwKvCQ/7MKepCE6hueLrMw4HNrM2o/+O9rcrxQQ6XUxmNQ+SBeE/jitpn3WbfFdENBcoh5qeNuRzq8L5jeGusVrVuZZsYn45qwDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=v7kg7O1C; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eljdpNlS; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1737009869; c=relaxed/simple;
+	bh=2trjwCPwrR6gwa6jU0OkJQ7IhBB06nIoZOvXqGBzBoU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uJ7F8oh4K+4Ln4yPcwLtbSIbMNMu000ZTZ+YkxIhSxkIB7deTKTaWV4KYRPo3qn7imammZ3iM6f4tssziLLhQuRlSVytIy47Y28+SvreqJnSxCClVUlyvw2EPwH81sKw/hDYWiJ/XT7/3vgzqe0vTzLv0IMYy1xhj0kaUmZW6dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TCDqLi4C; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="v7kg7O1C";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eljdpNlS"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5D172138028A;
-	Wed, 15 Jan 2025 21:46:25 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 15 Jan 2025 21:46:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1736995585; x=1737081985; bh=9g/UClK95u
-	LYD4yqfQSnskFl+EBwjPs2TZR8YL4UxCs=; b=v7kg7O1CRXwAiln163Dco+tSPn
-	8uBytdyXCCjf6y9kWN64Ar/NRnWx+vOWKgiO6M6KBlqZi2juxK3NhxRd93ewnK1g
-	ayNT5ePosE4iLuZ4JqfLlMJZkZzbuAWobqlNezQJa+CyW4AK1f5dZrRXNyRjz1I+
-	iqKD6clGmuJ32gsL3xkg3IAJ0M/1FSyw922TXHQYMKczLVQ2wAUs3MfTvoK/tqFr
-	ZB5a78POTTcp87XyPIsXULgbuoCgvOGPw99BY9mnTFWQiKcnn/WEsaJEhSvoSuCI
-	2ZtHZc+nY8yQRZGfXY0+51V90peyuTDUlcJcVj3+U4ynMi68NVWFVuk8+73w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1736995585; x=1737081985; bh=9g/UClK95uLYD4yqfQSnskFl+EBwjPs2TZR
-	8YL4UxCs=; b=eljdpNlSpLZXpb8gimdwINcPjsCKMRsFaSoBZX7u3d68pbLuWFZ
-	I+cX9c2j0M0me8L4PbVA6Mm/EzKs5Skr/nNabbAPdA89wcA66Dlc52u/3D1bYzh0
-	aHu9n+HAv11n9jAO+yMfyOK4RFaOA8OA0NdHYEW/9LRMe5lR5E8nbJ8mHMhYjAG4
-	uW9vfJF94V2/FzgBQSrSYReT1+q36v6IBDuhGd/VAJmyInTSi2dxbkugBr1O3zbP
-	HMI6KBZxj3MUdzA9CEQ6/+97mHcwE17RGGevnZi/pzUCKNqjty6p6jHPbxahfSmT
-	UMkEyJzvfLG+/THe5n6+xYwiloNR1pCawbw==
-X-ME-Sender: <xms:AHOIZ0U74v2S3PABBNEt_7YxL4-CwT3o9wm_pUTV_d9HUaDGzZV6QA>
-    <xme:AHOIZ4lWJRy-9xCUt9rN7z8PieSjMv2X4fr_LKrf00DwnwW6B-MEx9LFUoJ08iHs2
-    fxllEFqDcWYWFzJbw>
-X-ME-Received: <xmr:AHOIZ4ZGURM-ChbkC2FO6BT0aA40MJ1c0AoNruo18AJ5AjGoWe3hVuBmBtRrDC7bDuknH5thvRNVHPnBfkqxwN48QCXbTpZEJJKY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeitddggeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeegfefh
-    tddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomhenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeduvddpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepshhtvggrughmohhnsehgohhoghhlvgdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggrlhhvih
-    hnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepnhgrshgrmhhufhhfihhnsehg
-    ohhoghhlvgdrtghomhdprhgtphhtthhopegvmhhrrghsshesghhoohhglhgvrdgtohhmpd
-    hrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvght
-    pdhrtghpthhtohepmhhhsehglhgrnhguihhumhdrohhrghdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
-    mh
-X-ME-Proxy: <xmx:AHOIZzXXYruJFznxIMQXqc2iUB9TflQgwLIf9kVrc482kC0r24fguA>
-    <xmx:AHOIZ-kDjy157Gf908Ecw9hiawYXKwSkKkeW14jsNPFOpukgWIOF2Q>
-    <xmx:AHOIZ4ecGg3sHHwaBl_OBGNbqFCUnbi_J9kHhWLAotcAUlmOB-4I7Q>
-    <xmx:AHOIZwGBB07ZLvNINB2431CqhuQtSxAOZTZAzaly1UCTo0DH2EBPGQ>
-    <xmx:AXOIZ5_DCVr8r65KGy4Ih17HABsX0FaToI4-LHWLqL3P5p4KBnEStbJg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jan 2025 21:46:24 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org,  calvinwan@google.com,  nasamuffin@google.com,
-  emrass@google.com,  sandals@crustytoothpaste.net,  mh@glandium.org,
-  ps@pks.im,  sunshine@sunshineco.com,  phillip.wood123@gmail.com,
-  allred.sean@gmail.com
-Subject: Re: [PATCH v6 1/5] common-main: split init and exit code into new
- files
-In-Reply-To: <xmqqr053wvip.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	15 Jan 2025 14:40:46 -0800")
-References: <cover.1723054623.git.steadmon@google.com>
-	<cover.1736971328.git.steadmon@google.com>
-	<ff6cd62397ec2755d15e9d76f9af8a84b54a36c1.1736971328.git.steadmon@google.com>
-	<xmqqr053wvip.fsf@gitster.g>
-Date: Wed, 15 Jan 2025 18:46:23 -0800
-Message-ID: <xmqq34hjv5kw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TCDqLi4C"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2f44353649aso866331a91.0
+        for <git@vger.kernel.org>; Wed, 15 Jan 2025 22:44:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737009860; x=1737614660; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JwyoMBSsnziIEeH74wm0O74bLvBEukb/+h6HuHGIqCg=;
+        b=TCDqLi4CgzFznCnYkFSGz8qlUQPm0YOucpmuBx6aL2IoIsFT8Nm+i/LUQDqB8wGdfD
+         qXhwZKVcyg5Y2eOufwJeOGxaQaRIMvK4my3m3umg1nQA2weben6NM1TIG2/aP4Hgp7Gs
+         Mi3Vq66WHBnwOFl8838WkcyVb3VLBiGLxIm1kfLTvnOAEYuHqPD9weqMc4hHgQsDo3QH
+         Bu7aYt4dN1qwmHlt+MjfNyfylxkJc1XC2TsrdSZWorooh9hWmSbaIZKyFONfeYuaYY1z
+         SG1Y3Ioqis0CH44SN2etr0nVLsZZ+ttFhi98rTvlcvYL2E/dOYkKomRwFc2+ImXbDukZ
+         mFZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737009860; x=1737614660;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JwyoMBSsnziIEeH74wm0O74bLvBEukb/+h6HuHGIqCg=;
+        b=Wqdm76fGoXM9tl3J5nZXaqJUBhHK8Y0bIVi8NVRyCrLNiPExa58wFcD60zozF9cFof
+         nJ4mQVILRM3999VCKqLfH2BwqpWkoN68xcjprut1aA7nDbr01kY8w8LkZBTj8FPH4XIC
+         /HUi2ollLXcms+m658AeyzKX+z1OJti8FfFyRnDdqKG9kQuSSWaz436D2NAr53/OQnyG
+         BAepFv3KMAriu+ZZpPBILeM9yswXbPvIk3hgjGFQ+kPdaz1qkUka//RBGUohYp+EucCW
+         /AMbhfZoSfArdT+B2ex3xAVOQ0AWUUYijvrTG+M2w1ihdapchzBWthELc9rUw5pWXV1t
+         jQ9g==
+X-Forwarded-Encrypted: i=1; AJvYcCWVXROetrViPIhoRFF7r7AXtZJXaUQt+Bi5L8k5ByriAPUXZuL0DGI6iiac1mWRqV6xUQ8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwW2b7o5vXxRzs9ISprzd3x84CES6vuKOIqhmYUd04ITGTK4Myk
+	p9K/aW1jcmULUgry9yRqGGbSOfNhWe/ecCFS8JPO47y1MwCJw83PYEG3psvKGsRmdKGY/4/HZC/
+	Z1kGh8WILifWr9MVUZTsFmOSStiuCyYMK
+X-Gm-Gg: ASbGnctj36PFe92XzZL3AOnMEdMSbQxjEZjN2x6MhjpPw5rfybX7uVbqzP8yR28HPQR
+	hV7L0d4JqwH1lbQm3KYtkDixnmG+HJLrcY5iDia8=
+X-Google-Smtp-Source: AGHT+IGVvx3Cb0a0dz3wFzBOPdVQKy2UlG69ruLkOIFbF9jCs2qtkuON+DbeK/R8y/v8OWXRAReNx/rlKdDnw82WxrM=
+X-Received: by 2002:a17:90b:5403:b0:2ee:d371:3227 with SMTP id
+ 98e67ed59e1d1-2f548edf04fmr51100390a91.17.1737009859803; Wed, 15 Jan 2025
+ 22:44:19 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 16 Jan 2025 01:44:17 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqa5bsypht.fsf@gitster.g>
+References: <Z4UbkcmJAU1MT-Rs@tapette.crustytoothpaste.net>
+ <CAOLa=ZTL9n_DPhNr49XAd6bT838kc09oVx_AH7Pb4o8VK_xQ9w@mail.gmail.com> <xmqqa5bsypht.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Thu, 16 Jan 2025 01:44:17 -0500
+X-Gm-Features: AbW1kvbJR_BNsE2xgCJiwkr7sTiJI2hH7Tkrrm0_PFwFtu8ClLDJgyTBDFa0guA
+Message-ID: <CAOLa=ZR6jbJwav0+3-A+3w=XRU02Lp_9Mm4RXbN6A00-N3Xq-g@mail.gmail.com>
+Subject: Re: Bug in 2.48 with `git refs migrate`
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>
+Content-Type: multipart/mixed; boundary="000000000000aa5ab7062bcd1f0c"
+
+--000000000000aa5ab7062bcd1f0c
+Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Josh Steadmon <steadmon@google.com> writes:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> This split has previously been proposed ([1], [2]) to support fuzz tests
->> and unit tests by avoiding conflicting definitions for main(). However,
->> both of those issues were resolved by other methods of avoiding symbol
->> conflicts. Now we are trying to make libgit.a more self-contained, so
->> hopefully we can revisit this approach.
+>> Subject: [PATCH] reftable: write correct max_update_index to header
+>>
+>> In 297c09eabb (refs: allow multiple reflog entries for the same refname,
+>> 2024-12-16), the reftable backend learned to handle multiple reflog
+>> entries within the same transaction. This was done modifying the
 >
-> Yay!
+> "done" -> "done by", I think.
 >
->> Additionally, move the initialization code out of main() into a new
->> init_git() function in its own file. Include this in libgit.a as well,
->> so that external users can share our setup code without calling our
->> main().
+
+Yup, thanks!
+
+>> To fix the issue, the appropriate `max_update_index` limit must be set
+>> even before the first block is written. Add a `max_index` field to the
+>> transaction which holds the `max_index` within all its updates, then
+>> propagate this value to the reftable backend, wherein this is used to
+>> the set the `max_update_index` correctly.
 >
-> Sounds good.
 >
->> diff --git a/common-main.c b/common-main.c
->> index 8e68ac9e42..6b7ab077b0 100644
->> --- a/common-main.c
->> +++ b/common-main.c
->> @@ -1,92 +1,13 @@
->> ...
->> +#include "common-init.h"
->>  
->>  int main(int argc, const char **argv)
->>  {
->>  	int result;
->>  
->> +	init_git(argv);
->>  	result = cmd_main(argc, argv);
->>  
->>  	/* Not exit(3), but a wrapper calling our common_exit() */
->>  	exit(result);
+>> diff --git a/refs.c b/refs.c
+>> index 0f41b2fd4a..f7b6f0f897 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -1345,6 +1345,13 @@ int ref_transaction_update_reflog(struct
+>
+> Not the focus of this topic/fix, but I notice that the only caller
+> of this ref_transaction_update_reflog() function is a static
+> function migrate_one_reflog_entry() in the same file.  Do we expect
+> that we would add more callers?  Otherwise we should make it a file
+> scope static and remove it from <refs.h> file.
+>
+
+I don't think we expect any other callers now. Maybe someday we'd expose
+creating reflogs to the users. But for now, making it static is more
+worthwhile.
+
+Let's follow the boy scout rule and clean this up, I'll add a commit to
+do the same in v2 of my patch.
+
+>> ref_transaction *transaction,
+>>  	update->flags &= ~REF_HAVE_OLD;
+>>  	update->index = index;
+>>
+>> +	/*
+>> +	 * Reference backends may need to know the max index to optimize
+>> +	 * their writes. So we store the max_index on the transaction level.
+>> +	 */
+>> +	if (index > transaction->max_index)
+>> +		transaction->max_index = index;
+>> +
+>>  	return 0;
 >>  }
 >
-> Nice.  Very nice.  I wasn't too carefully validating what we lost
-> here is identical to what we added to init_git(), but hopefully
-> others would spot and stop us if that is not the case.
->
-> Thanks.
+> So from the problem description, whenever we consume an index by
+> assigning it to an update that belongs to a transaction, we must
+> make sure that transaction's max_index covers that value of the
+> index?  I was wondering if we should have a less error prone way to
+> do that by having a helper function that takes ref_update and
+> ref_transaction objects to do the above, but this is exclusively
+> used by reflog migration code path and nowhere else, so it may
+> probably be fine as-is.  I dunno.
 
-Unfortunately, build based on meson does not seem to like the
-init_git() thing.  Perhaps we need to add some missing files to
-relevant lists in meson.build file or something silly like that?
+Yup, that's correct. It should be okay, but let me do it anyways, makes
+it safer for the future.
 
-https://github.com/git/git/actions/runs/12800227601/job/35687658673#step:8:961
+--000000000000aa5ab7062bcd1f0c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9a92ca1021fffc88_0.1
 
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lSXFyb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meHB2Qy93SkM3U094WUxHS1pxZlp5OUdTVzdnbGZFWQphVUUwSVpzMDdJ
+K001Q1JHWkpiWUc2eFpvWVN3cXhLRDJhVzdsRmxsUWg1UFIzMThzVFlBMEhLb01uaGJra2ZtCkJS
+ZnBLelVBalhGRld3em1SY29iRmJlLzR0aXl2QTJ1cVFhcG9yckFuTkM2OHdJYnd6azJxNHRudm1V
+c0dhYlgKeEpnZGg2OFRtc25iQ2pYbWhXc2xwdFp3bXNTOE5vUGM4bHRUdXJTRS9qSndteEhuSlZW
+bTBnRko2Kzk5dGNZRgpXVlZSbVlaMGd3elMvSXE4Y2liNGpqbnlKRi9XdU9Jem5PZWw4VHQyY1Ur
+TnBpMEtGUXNaSWVza0JMMlljWkNhCi9RMWU5WkV1MjhHaWpYUStPKytWMStVS1AzZmNiZ3crRDhW
+TFVYS0tZc2FSalhNeGJ3cEd5N3RRdlBJbGpJWVcKZHhhVVJKSm12Q1ZkRU9Rb0N6SmVpNGlrMW1q
+Y29pbm1aazdqQjMra1Z0MnlCUWpOdTlVRkliSXAxUDF3NUMrZgpBVlpYTllCTjRwSjR3dWhSOWsv
+WmE2eDQxVnBhQTFjV1drUVFYR05meFl3L0ZqM2ZQamh5QlFKd0JvNlYxN3BiCnBSU004Yk9US3di
+Z0txSXpKN2tuZndtWm12UFgvUEJ0RStQOFlZRT0KPVdDWGEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000aa5ab7062bcd1f0c--
