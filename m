@@ -1,54 +1,54 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB0386323
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 17:24:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67E186323
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 17:28:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737048245; cv=none; b=fobwuSxfQP5dmi45UiBIQz2/p0Br1bMGy1aOOv/tcGRIKpsj4uDwwytOBxfVb8IihvKScpcrkkitSbhYI3RYwRQOTsJKAITpUIov6JGISdvavkREGZ/qkWbpxGGdf6lLzXAlCvAeL9dtNYuBnti3LX/ZPFUZ2YoHgu2sxIUdqPQ=
+	t=1737048486; cv=none; b=EIDrE7e30+/j8mZBYAWfU0YY+mhm/7OfTwazLOWs4Uzsgp75e/exU7cksOXkMxl5OciQPny6IVG3qXy6MjvMEhRW6Hw+YKbofnClyGhioX/fqiqT//9LoK945gYWbaeWc4MWJ9Vd2NuapWGsqTGYmx7dULJRv06MXtiQSpjrNDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737048245; c=relaxed/simple;
-	bh=sKfo6wjO3XP9UTu6s1N13opQ0UouE+TT1AIbQKZqT+U=;
+	s=arc-20240116; t=1737048486; c=relaxed/simple;
+	bh=bWiDzAPleCSKuJ5QJPWFikaaymFaOLyxzRPeEFWcK/o=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qai8P5/jZ3L9wKo8DwUeOXOAIWu7jN8trr7LvNqDzNsY/zf9YpVG5eyisduRfSgfYI/w9BjxMxlc4c8Zv8avQykdvuYwefo7J+W8KONczPmw5Bbc0hvkyPDsXVcQV1M5sZkqPXng73y/U40cWICMg7zdCQ8eQDuIr0jatvAgTfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OVXLnVsT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P29hNy/4; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=OJhNNUf2WwBB0RTRQ/S0I8qVpB2vkyqQxIM4gPI2h9kdHwABXVqykuWdynuN6h/JajfWGx7H7trzAxx0FiVmW+gRkxOwJoaNrbfqOAU/WUoXOgqNt4MaGswORWaQFM5lVT+pC4St63rosE/6qLDUJrKf3hFJLPIPtTxW2yvrDB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0PS4GEiy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LOfv03p5; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OVXLnVsT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P29hNy/4"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B8DEF1140186;
-	Thu, 16 Jan 2025 12:24:02 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 16 Jan 2025 12:24:02 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0PS4GEiy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LOfv03p5"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C41D811400C4;
+	Thu, 16 Jan 2025 12:28:03 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Thu, 16 Jan 2025 12:28:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1737048242; x=1737134642; bh=E9p+OVAAji
-	OrmwWFV8XeztMQ0uTJMxLowst8PDT9kUg=; b=OVXLnVsTlMVFGntii/WZWXmi+w
-	poukPtsJY3TZ4E3EBUWgselQGUM6fa9xMjIfKmxlQcfW8k88yWbhoEwYJmRXCBqn
-	fAxTODTINzbyzphVJEU1eUKcAN3iui6xcLRHo8g8HvRod2dt2QbMNQ6o8CTl1bzw
-	rxabRZ12wqL+n7G7U0rDW4hAYD4CCrISGYZwk/daDeGMbIIYvNQxVAsJigFeGd+c
-	R3+3mfd9+7tYPatRZR7aMoj6ZIjn5n/qHmonfJFKvWpNgVQyTBOJ4eUiKFM4D9UY
-	vwlSk+z0yR9trbnyuyUjovnhTh4AucEqqhALNKl0lebK3qvfbG/4UU5iZbYQ==
+	:subject:to:to; s=fm1; t=1737048483; x=1737134883; bh=UoemgpyVG7
+	No5fh3ZQaw2LyyAfY5e99QNav/osHTL+A=; b=0PS4GEiyDrBckWoqy2ICcWBnzB
+	gKbtj4lVsJ6BCySWOBED5xb51NbPYTWPGJpzQYtJ9237UzOho0uqUBsXn3XUvjDb
+	Byb5PS3OmJPYq43fpWKUcRi5eVwPK8T/LOF8bc3Ju+/U3fajkERxnU3Tewuk1nYI
+	Sa/5b0jK6vd/yfD/GATbk0gpf1PvM1ZC3DsMWySmgvV+aFC5/VEDSgQaLY6APUI3
+	F/eDYFE3T4UkzQq1K4wqsZyhw5Repj2h8E/LrpL2KW6966bUPbg66hmZvZxvIDwI
+	whOk5u8n8M4/KchlbCLBu7+Bx8M8eLz3W7pyybIeBjF8RkbcxWuq4OVrCccQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737048242; x=1737134642; bh=E9p+OVAAjiOrmwWFV8XeztMQ0uTJMxLowst
-	8PDT9kUg=; b=P29hNy/4u0lI3BmCjks9cXMP2oT/dqjO1JjejLw9lw5RaPfXlIC
-	MwTZexBM/WzAiJP0xqY/KLfmG85CGk3ZDPKe8wrlIYvtj5LZ/msDjFx7sScYYmUc
-	h0G55iNN53ApcFvFHEufN90/FwYgKnMdjrB6zjMCZjxOQz02HXm9A22HqFkZd/lA
-	zaILSkcPlto1GqOrtzweYRoFtzMJwuLLacS8mUWnIi15B40DcBEKNsf7Rivjx5k/
-	5X361Q3arJHAlqziSBkYWUtFw+kDdfdM/5FtzH7gYd32ofEnQxEzsWEP7MwaePC8
-	+53/2duv1cgzu85Em2TuDrBcZ/PlWCfMAEg==
-X-ME-Sender: <xms:skCJZ1INZsvnWiEvTgL0bnG0eDVZdzlJmvP9kaD9YcF8QJAf2OsryQ>
-    <xme:skCJZxJ0-fVA54hQWVu8BPHAE1onLzZlSJpD9eDl_RZTUnBfbkTZGPDB_HA4osy4m
-    CIa63vxD00vCuo24w>
-X-ME-Received: <xmr:skCJZ9vvdm1mMOF7oE0SiVqGM0qU_wItbVLTUqubKLgaTUcpnl-X0EoJHAR__riTfakXI5uG1p3U03aEDX-P2L75VoC0HMWKvScS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgleejucetufdoteggodetrfdotf
+	1737048483; x=1737134883; bh=UoemgpyVG7No5fh3ZQaw2LyyAfY5e99QNav
+	/osHTL+A=; b=LOfv03p5bqE95iSq9vKwl+cuZHIn/R7lRKJpY6er2SntsTUhOv8
+	moQLicpXT7zIJBkOmjsrKBOke0uHq2Q3ViT4fEiy+5c2/dHzzVvC+8zE690lGHNu
+	dZWVL1x9B2pTgTym2JdsctXZlU8E4KIISLxoePCAtk6oBEnZcydHAl6G5Q/KTdH6
+	onTqhyFzlzw2SIS0joTYjqD7hjK6od1Hz9VERwfrfLoM7T6SH4Y3VuT2nn5i8dw8
+	sxNKUQXL45UYwEYFWiVB7/SboRdsO0NCwlDk0PFhLaOOr2EXqNcm7CyAMoaHDDla
+	CpWqWRnE8jAzTEZFJNdNP+c9LNoBsVsIFUw==
+X-ME-Sender: <xms:o0GJZ6jsheaHylJrrop4WRHbIfDKpfYh3fAGR8E39vTIlsdW7Rw9gA>
+    <xme:o0GJZ7DPepz5BgfIOi6BY9IQrSh8YBw9urTZTBVB8Uu2rpKrEIeOBG8d5YXdl6vZv
+    HYB8Z3gr47yR-gONQ>
+X-ME-Received: <xmr:o0GJZyHmggQiNtEEmHgOEFq_K5EE7g5kKMinXKAOzdakntyXdF1MAT1a72OErBdWV6aF286LPZRWu5Yt4U_7yEcTqgwt05HV6OBX>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgleekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
     gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
@@ -59,25 +59,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgleejucetufdoteggod
     rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvg
     hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
     ohhm
-X-ME-Proxy: <xmx:skCJZ2ZO6sN7H75J5hkOm0U-bbCd2qkdzaSl7Ucs0azddpXXQHY7mQ>
-    <xmx:skCJZ8bJfuOAXL4jq-ajdMxD-TN5nm58rMCptmtnHF4tN_uhPrOagg>
-    <xmx:skCJZ6Bpsv2b_TFpmM59ERNIJJhLC11ByZgPrjdvdDUrwW50_F89dg>
-    <xmx:skCJZ6ZK-uHpup0drZAYMiUvyY0OzaT4vGkqkfM_Gq_39GCsCzTRMw>
-    <xmx:skCJZ0FjYg1biIa7uGFFU9mUsA5jULDEx9_BL_hCE-pYvKJUOrdyeHDl>
+X-ME-Proxy: <xmx:o0GJZzQOzY_P2PEQGs1XEpyiSQlziTWRtxMGWK2HSrgBDKLAvsGUgQ>
+    <xmx:o0GJZ3yIReFUBdzhGTgTYedBiE43DO2ma9tKKd5Wv4EsmmwcsmHrFA>
+    <xmx:o0GJZx4hcT79arpRLuw38DZBPtXjmThLsgI_9x8LxPw4-JrMrzLXyA>
+    <xmx:o0GJZ0yfMThere_Cm5M8Y3ksb0NllN_uxERnIIiSfBzANIy2U761-g>
+    <xmx:o0GJZ39MJaFJbmtKl4MgkVGvgKG7YzXAcnYBIP1r4618j90xEmlV-iNZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jan 2025 12:24:02 -0500 (EST)
+ 16 Jan 2025 12:28:03 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 5/6] oddballs: send usage() help text to standard output
-In-Reply-To: <20250116104219.GC773990@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 16 Jan 2025 05:42:19 -0500")
+Subject: Re: [PATCH v3 0/6] Send help text from "git cmd -h" to stdout
+In-Reply-To: <20250116104612.GE773990@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 16 Jan 2025 05:46:12 -0500")
 References: <20250116012524.1557441-1-gitster@pobox.com>
-	<20250116012524.1557441-6-gitster@pobox.com>
-	<20250116104219.GC773990@coredump.intra.peff.net>
-Date: Thu, 16 Jan 2025 09:24:01 -0800
-Message-ID: <xmqq7c6uu0y6.fsf@gitster.g>
+	<20250116104612.GE773990@coredump.intra.peff.net>
+Date: Thu, 16 Jan 2025 09:28:02 -0800
+Message-ID: <xmqq34hiu0rh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,15 +88,21 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
->> ....  Some
->> just do not treat "-h" any specially, and let it take the same error
->> code paths as a parameter error.
-> ...
->> +	show_usage_and_exit_if_asked(argc, argv, var_usage);
->>  	if (argc != 2)
->>  		usage(var_usage);
->
-> Hmm, what's going on in this one? It does not check "-h" at all.
+> If we want to switch the exit code for this case from 129 to 0, I think
+> we could easily do so on top (it would need modifications in three
+> places, but now that you've untangled all of the individual builtins,
+> that would get all of them).
 
-Yes, this is the one that let the usual error code paths to treat it
-as a mere parameter error.
+Yes, I consider it pretty much an orthogonal issue to update the
+exit status.
+
+> I guess there may be non-builtins that would need to be handled
+> individually, though. We don't have too many of them these days, but
+> they are not covered by t0012.
+
+Yes.  We can probably leave them as they are, as we have established
+our expectation with this series (i.e. an explicit end user request
+for help text should emit to the standard output stream), so any bug
+report can be handled without needing any policy discussion.  "Hey,
+I noticed 'git cmd -h' writes to stderr, not stdout"---"Thanks, cmd
+need to be fixed".
