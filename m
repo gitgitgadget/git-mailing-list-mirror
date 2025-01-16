@@ -1,145 +1,120 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243D4192B96
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 07:29:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09821D5CC6
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 08:33:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737012551; cv=none; b=lN71tNt3sZQf26q1n30ULT8fQAOrvyPOhaCQ+zSzlapIAd5uRXtapF1WN8/f85UJtYN4V6I0YpMOAmNyNKZTsrQf6Icit8mdTizI63a14J+veZnz5ZoOmFl6ZDH3hsE2Pe2tdgbQiBIUqQphRfnERan2Qk3+m74Ot9d1cr0p09E=
+	t=1737016412; cv=none; b=PpHPOBtzxN8BKKBuoqFoMZK7QbxcTKZ8zSKuI2PheInuZGruWfL+eY0OBeHsSW45w0IVGSUw+FYhLep/ihHt5mSSTLKGpP5DzGuTDizzpgDsUQzUQzMMKK6qaLwsxz1Yyh7masy6gyflMcRuju5whETjz51XXeqKZ0QLViloJvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737012551; c=relaxed/simple;
-	bh=mp978kuaHJlRvC5buyeYuJsRRyioGSOY2fhk8ZmBhTc=;
+	s=arc-20240116; t=1737016412; c=relaxed/simple;
+	bh=QqWm9S9jhOl+vZ1pWPmnpFMyRQZQBLvg065CzkkkmFQ=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D7N7s39Gy2LGEtzMbFALoLLTmv9sWMNUkg2cG19k+RqjF7a6a9zshgDtssicdgzvfxRme6KGCc7RtGvKS5ig4G8UYiENXkBT9ocMBfgv2eo73p49/qqLkjeE22ABj5M/vsZE9ulTsyHiCPnCw0h66sDNxPgPvTC39POECh5DO2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KX95az9j; arc=none smtp.client-ip=209.85.216.47
+	 To:Cc:Content-Type; b=cG73/7lX2yGetcK5dtcDT2wagM4wyAuMucU2ze/pbHxcnWqc3JpSauxXUiFa682Kqnu45A6LS3lr9RtH/8aA8o8XgTXsoKVjGIuAITUjEIqpHI2oiLj/KNVwj3/c4ZEXptlD3IDvRq/JM6+qGtpLA42ys1P8OaM8JHzvSHwrLe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mHk6VL8x; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KX95az9j"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-2ee67e9287fso1149064a91.0
-        for <git@vger.kernel.org>; Wed, 15 Jan 2025 23:29:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mHk6VL8x"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2166360285dso10712835ad.1
+        for <git@vger.kernel.org>; Thu, 16 Jan 2025 00:33:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737012549; x=1737617349; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1737016410; x=1737621210; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RQkbUDgIIfevLarB/bOu2z45bdaXNEUuFSW2r8o9Vdc=;
-        b=KX95az9ju8eFY7Ej7lnYJvZVUKOoa+D08/V0/ZwCkqb69Suc0CaTVJF7AksrrNb1ES
-         Y0VpiDePv2JO1X+WGEW3KC/HqlN7valslgmDE2LbQR5YpUsso2jIMVnJYEWmYJiI8VMJ
-         oi/NZ+XxwezHVL3W50meO4519BMK4NTBjVIXGR3r/ZDm9piJUMoeosBlhfY7L2nEAU+3
-         MiVfdryYVu0CZfUvRyHOR/bDbBFl1I8S0Z0NfXR1Qyip0XtRmWZ79kYA9BJj63UtTgO6
-         8iPpZ0zQ0C5Za4WucbcR0LQUwEzyn9kl7/K/V04unS+Anijli1JoZZoE/t1FhcIZYsVx
-         qheg==
+        bh=QqWm9S9jhOl+vZ1pWPmnpFMyRQZQBLvg065CzkkkmFQ=;
+        b=mHk6VL8xE3WzgXywo/6BfJG0bWr4fCwwwNGjjXrefDIXKrprgPPPpFPfulh6sIH+2Y
+         Dqe1++NBaArkRcNVL+D/Py5y6Uib5JWJxR4sLGdw4xctn+3EgU/oE5FRLih+IKXP1Uqr
+         yNPipZYI78DFpYPfHvfNxb9fcuJOXB1R6Oy74EwikfbcEwiCKWS7y8yOUdAi1cq3FdiZ
+         i6reNEDLrseAyUCD1mpKiqxY6/ztKnCg4otiAxaG1QC4sVD4iXfMSTuj8ZILK5yQHr5y
+         OZSxjfOPJVJYMDxdPziHfiv4MQJ1HnQSrC+SsK0ITMZr7qLQR1wwjdi1EdUDzjnHrnaT
+         xUSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737012549; x=1737617349;
+        d=1e100.net; s=20230601; t=1737016410; x=1737621210;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RQkbUDgIIfevLarB/bOu2z45bdaXNEUuFSW2r8o9Vdc=;
-        b=tU/Brjaoczvp8tiKfTuk9w7KXriku1u0M7+Jy6M8SF1PFEqLJQNbGNNcYh+YhfTbvQ
-         RreUTmKqyY45pnkmAesB+7JQ5fSKXFdGBsAY0oD2oPZBBjSnJ5Zcx6692WWQSWHvtR/f
-         0Lns+22FlZIRWYHqbEkvP9aXxKT85ESThh6VJKRYJLFK+wYnENDnJ/FOhTj3kjq3ajyP
-         HXHrfqqQ/JTMrlxOFTTsZLeXqLNZ8BHY9lWu57WDnn2X7uc99R7Dfhl62m71zXI81ubo
-         Gmf3d24F7BJrbELrqvG0EO/jh1a64DqZZSIg0hRg8vgIRi647Lk37WLg0ZcmRBX0FJr5
-         TUbw==
-X-Gm-Message-State: AOJu0Yy85O66Uah3M4xq/Ic1ONHZx2E+MXKxK3GWZw2MCgvbLJQdjEkr
-	DHy7Au0UQZNX6CwhOtoibDS822HqiBjGfXTeY9jFNPx+aFKAdsK2M9hcJw5zMDhaSGYBkuX1E2y
-	ddjQB2I4qaYEGFTM7aIZ/+3thfL0=
-X-Gm-Gg: ASbGncv7LWvRfnYWflWCeX5SIw/HEP5ZX10B+pXc11aeugz6Qyppn/a8gcqYjKTVa3r
-	a16mKJFVbUFPtENYYrW4+KP8p40yhNFlTqfFPFus=
-X-Google-Smtp-Source: AGHT+IFzeg5iZb5qAHkFr74KIZ3/TODLXasaUnqkVy3ksYp1clC+iiCpbZdEuSsq6O5vvPFfc5OzRIhpN1ywkRC38v8=
-X-Received: by 2002:a17:90a:d448:b0:2f2:8bdd:cd8b with SMTP id
- 98e67ed59e1d1-2f548f603e7mr46051217a91.29.1737012549375; Wed, 15 Jan 2025
- 23:29:09 -0800 (PST)
+        bh=QqWm9S9jhOl+vZ1pWPmnpFMyRQZQBLvg065CzkkkmFQ=;
+        b=rZwvJkeUSW6v3wRF/ofJkxN2TM1oBzcwMRV7GD4ESMHpdFvce9FZSftjMdVVpcmmIa
+         D/oXPA0otPwenlMCh2mn0wIP0zLB7nHzM/G1KPusJv5xaBsXhVyax1Dd2Ewi9ksl6cub
+         VjatRKz7/aYmJEAc+JVw9QkYYL23W6WiMeaFfO48xzjgeQm8i6Yxag6AwagIy9ENjZU+
+         +ebvhW4S81nnAyAGlSi0QUo0DPKlbGme0tpkR6wcZqlLYakWvlAYjTOUvSTQ0GJDwNqz
+         4zCQZCT72rsGrmHTzTOmAMVmNfDu5t1b9gzUrgKlOwupoIzvlJwAqSsHvsWuC7TGr+Uv
+         EObw==
+X-Gm-Message-State: AOJu0YwEn2luJcqn0R9otaoHTp4TJi/QZRLJ1sTd93R4zLn+0dbTendg
+	b5N57wE+KqTeUToLSFhQ87Yp5ywx9EpJE++zimPsgvNhEXzcME5E+wRa4zd+fEgsJvnKpiTz7au
+	FXhPT8HP5fR9/1IwgwOQpieB0jgcSXzA4
+X-Gm-Gg: ASbGnct8IuKHQFEduDJJlbrgSHd21H7wpWXJpFdMssqo/ZeZm+u/Tr6OPd1EQO21hLo
+	ZEq5yYeV/tsPIIhpLltcPELzZ32oPWKzaVMRPllk=
+X-Google-Smtp-Source: AGHT+IFvxpG+NXOv5A61dlna5CmaooAZCvDGOP8XxvAMiHbXIUjYyukEW8QxS6g9Ry48NRSRx6mod/mbSXzX5TGc5mc=
+X-Received: by 2002:a17:902:e84c:b0:215:4757:9ef3 with SMTP id
+ d9443c01a7336-21a83f338b0mr445458165ad.9.1737016409678; Thu, 16 Jan 2025
+ 00:33:29 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 16 Jan 2025 02:29:07 -0500
+ HTTPREST; Thu, 16 Jan 2025 03:33:27 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z4hpXwtv-ChwAGeG@tapette.crustytoothpaste.net>
-References: <Z4UbkcmJAU1MT-Rs@tapette.crustytoothpaste.net>
- <CAOLa=ZTL9n_DPhNr49XAd6bT838kc09oVx_AH7Pb4o8VK_xQ9w@mail.gmail.com> <Z4hpXwtv-ChwAGeG@tapette.crustytoothpaste.net>
+In-Reply-To: <Z4foAvj_5meT-a4P@pks.im>
+References: <20250114-b4-pks-compat-drop-uncompress2-v2-0-614a2158e34e@pks.im>
+ <20250114-b4-pks-compat-drop-uncompress2-v2-3-614a2158e34e@pks.im>
+ <CAOLa=ZTvW2T3rds3YN0m9iWQC+sAaSCsiRw+fo57FqqF24pMaQ@mail.gmail.com> <Z4foAvj_5meT-a4P@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 16 Jan 2025 02:29:07 -0500
-X-Gm-Features: AbW1kvZD36niWEDokpB5n9i3tqiH_MRiLFO3u_tskiU2bzLmJVthriaPHjQr3R8
-Message-ID: <CAOLa=ZS2ZQRSbirW1HLYJ1d1HAwmfugKdNGBCNGtS-yS1rcKEA@mail.gmail.com>
-Subject: Re: Bug in 2.48 with `git refs migrate`
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="000000000000f9f331062bcdbfb5"
+Date: Thu, 16 Jan 2025 03:33:27 -0500
+X-Gm-Features: AbW1kvbjmwImcrs4QUkegi1ikS1xkDZEC1hhYvNjhoPiBhyefJvLNeQv9vTZJoo
+Message-ID: <CAOLa=ZSPen6zhAQGmwVVZRDxO5ZWJ2==ABNYsma_VbXP=7JLJw@mail.gmail.com>
+Subject: Re: [PATCH v2 03/10] compat: introduce new "zlib.h" header
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Content-Type: multipart/mixed; boundary="0000000000001180e1062bcea66e"
 
---000000000000f9f331062bcdbfb5
+--0000000000001180e1062bcea66e
 Content-Type: text/plain; charset="UTF-8"
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On 2025-01-15 at 11:54:51, Karthik Nayak wrote:
->> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> On Wed, Jan 15, 2025 at 02:00:15PM +0000, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
 >>
->> I'm attaching a patch below which should fixes the issue for me and also
->> adding a test to test against the same. I'd be grateful if you could
->> also test the patch against the repositoryies you mention.
->
-> Fantastic, I'll try to do that tomorrow and get back to you.  I really
-> appreciate such a prompt response.
->
->> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
->> index 16550862d3..aaab711bb9 100644
->> --- a/refs/refs-internal.h
->> +++ b/refs/refs-internal.h
->> @@ -203,6 +203,7 @@ struct ref_transaction {
->>  	enum ref_transaction_state state;
->>  	void *backend_data;
->>  	unsigned int flags;
->> +	unsigned int max_index;
->>  };
+>> > Introduce a new "compat/zlib-compat.h" header that we include instead of
+>> > including <zlib.h> directly. This will allow us to wire up zlib-ng as an
+>> > alternative backend for zlib compression in a subsequent commit.
+>> >
+>> > Note that we cannot just call the file "compat/zlib.h", as that may
+>> > otherwise cause us to include that file instead of <zlib.h>.
+>> >
 >>
->>  /*
->> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
->> index 00d95a9a2f..289496058e 100644
->> --- a/refs/reftable-backend.c
->> +++ b/refs/reftable-backend.c
->> @@ -942,6 +942,7 @@ struct write_transaction_table_arg {
->>  	size_t updates_nr;
->>  	size_t updates_alloc;
->>  	size_t updates_expected;
->> +	unsigned int max_index;
+>> TIL. This would be an issue if we added "compat/" to the list of paths
+>> the compiler checks for headers no? I couldn't find anything in our
+>> Makefile doing this, or did I miss it?
 >
-> I wonder if this and the above should be `uint64_t` instead of `unsigned
-> int`.  From the file names and the data format, it looks like we
-> intentionally use a 64-bit integer.  That's good, because I have
-> unfortunately seen some people who have created giant test repositories
-> with really unreasonable numbers of commits and I could see us possibly
-> exceeding a 32-bit integer here.
+> You did :) Most platforms don't, but we do with MinGW and Windows. This
+> is done in "config.mak.uname", which is probably why you missed it.
+>
 
-Ideally it should be okay, since this only comes into play when we're
-migrating reflogs. So the index would be the number of reflog entries
-for a given ref. I suppose even for large repositories this number
-should be low. But I'd rather be safe here, so let me modify this in the
-next version to be 'uint64_t'.
+Right! Thanks for clarifying :)
 
-> --
-> brian m. carlson (they/them or he/him)
-> Toronto, Ontario, CA
+> Patrick
 
---000000000000f9f331062bcdbfb5
+--0000000000001180e1062bcea66e
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 5b19bac3a1b68fc9_0.1
+X-Attachment-Id: 6732caae053dd6ff_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lSXRVRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOFByQy85ZFZzNXNod1pUWVp4eWQ2YlFXUlVMTmd3VApBM2tCTHN2SndZ
-ZkZtbzl1aWR6R0J5WnBxMEtjZWgvaHVYQUdiUUI5SUdQTjYrdkN6NXQ5cCtqblM5TXd6bEJvCk1W
-RDdmcHpHZlRSN1ZJTTlsOXZXa2tyczlpODAwTElFeEs4di8vK0JsbHRjNXFMa3hmekxXUkZsejdQ
-UVYweDgKY3RKZkorbnY1OEJkWVdFaElEa05adUFXb0F4N3V5RHIrdXZLMDZPV3RkUHFwbXY4Rk02
-SU5LUnAyamNKOGptbApGVk9uS1dBb1VHTnJzQXpDWGVFdVBGMUJ3L3VqN0xLMWdtZzV5MG1Jb1lT
-dTdEejUxMUNIRHhMYlg2c3pMWkxICmxTVlk1UE5MYnhzVjRNWnJ6aGhjbmRSQkZXU2Jtcys0V1Ev
-c3p5Q3FCTkNUcWZqcUs4RlFRYm9ZS2d3QmU0YjcKZFhaRHJGR2J3YlVGUDJkak91Zkl0U0tzWEpZ
-NUlPZUhTNVFUa1J1SzhIK2tlZ0xrTnora1MrWmY3cnBoeEJWaApta3czbDlQbHVHdGhLaEloWThH
-eDI5b2FKaXQxc0NwRE94T0Q3V3lIelFrdmN6dTRtT2dGVFgxT21MekVjMkVFCjNMQXcyMzA2Tlhp
-cnoyajB4bTkzRHBacTRXa0U4OGZmMmdzbjRuVT0KPU1xMmcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lSXhGVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMWZmQy8wVjFTQVFYQXFIVlZrbFBBMldyV2VBb2ovVgo2Wk5TVGpvWWJj
+d0U2TGxuZzVya3NXT3lMeDh2ZUxpRTdzTW9KZW5mbUZ6eWRFYWVhcjM2YWtsNU5LZTZzenVHCnI5
+Rm9IZGNKREdSbWd1SXZGOHNKdGVSdDlwRjdQZ2FzVzZWQWQwQ2hvdDIzTzdmVW8wTitVTlg5bzBs
+YzhMUWkKenVsYzFyQnpGMURhc2FCMEFqUDhQTjR6QzIvc2RNc1FqWjhsZ3h0ZktXRlo2L2xvNHph
+RXdOWHllOGtWbHpLQwp0WkRtSlQxek9JaytHR3ZXQkhYWktxbUh0b0g3UlNZa1pYS3ljc3ZFNW4x
+OS8zTlVjNGtRdHRJcFJURGhRSGh1Cnh1S3hVSzJpWmdFZVVmZDZjRytTa0QreW91U0ZDNjIzRjJP
+dnlTbVdHTHRObWFuYzdaVjMyempGanJYaXhRUnUKN0RyTUE2UTNiTVU4WUdxOTVaOEF6eU5pUjJx
+VmxlYnpsUmdndHNsdVdFTjF3SXRuNGp2MzBmR3dwYWlpOE1kYgpIVnFpWGpRN2VUSTU5VmVVVUxa
+bGx1ekFZTDI4NVhKbzNNNGpUVDFVZitrZGYyNldqUlRGMlNIRWFwL1RzY3BGCkdPWUFrNFlZYndx
+NGFqcUVHcFV2cXBZVWxrZ1RKbDRVSnVxYmRkQT0KPWlPVm0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000f9f331062bcdbfb5--
+--0000000000001180e1062bcea66e--
