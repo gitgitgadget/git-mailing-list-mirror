@@ -1,55 +1,55 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 437591DC046
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2C11DDC18
 	for <git@vger.kernel.org>; Thu, 16 Jan 2025 10:08:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737022126; cv=none; b=GTaTFdCAezGOR/wT1GgMqlEXkE3AVcKDgbn/B0gyLXhmTzpPS/Do0xMWAQjRRwG6g+2okFao39Nep00Rg/2HXw+PLp+G0QStJoUG+e4Wql03W6M4VupM68HYfB02xKtTpqt/UX3nzyGa/DucZwK8LM5GSgKC6BFfAy0aLWQ5uGg=
+	t=1737022127; cv=none; b=bkTA+w6qYm0ZDdehLC1LOiWZ38ShVn1dhtm7m9rIIyf8+3Eq0jaQYPYQA3+GBZqeaQn7k5BECZ8jKqYs0TIo+WeuB9SI0cG5AvxvXCLvWbOi49qu7VHM8t1rJWC8DfxCmZvBZz9xq8bEm9jLLweg9aAWI0nG1rXIABPIsKw60yU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737022126; c=relaxed/simple;
-	bh=nkkbEQVV34P+UKbbxxFFPeQEYG8s9cnvK3Kw8iqQ3zM=;
+	s=arc-20240116; t=1737022127; c=relaxed/simple;
+	bh=uxD7ORFPY2y/jJ5viwLqnGnRmGkJYaTxhDavee6JtPs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pYecd4RS06vzmGrgdw7bqDXjw/0cwIaVrxgs9f3PU2d76Ckuj34aLjn5z3V7kL55Xfj5f5yAuPfe5ZwVpVZu1tIMPBs19VxHlO9YQBPBlhOXqovJlWNxpYGr6P2sCziRk4O/uhDl9ByKQkgwPUhygg7j7/iEXR+InG5fmQeU7ZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KjZWjwOz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d2ceuueW; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=p4X3J/ID6aibagcOHQAFW3Nu0Ql+qE+aus6IMyYuSEsyMhJ1it1f6uD3y44UD4GI3Vcst5ZHkILMt1r0HvxdsGOXrQx1ToPUQJRRQbcLZgnqHqoc5krvaELBJSI6n0hpeoi2VipdOIct05XxZBc80loM68/oxBo2Sok2tlsRZhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OiuCSIqg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ss81/r1u; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KjZWjwOz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d2ceuueW"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 55F6D254015B
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 05:08:44 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 16 Jan 2025 05:08:44 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OiuCSIqg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ss81/r1u"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 41B7A1140164
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 05:08:45 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Thu, 16 Jan 2025 05:08:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1737022124;
-	 x=1737108524; bh=IYTf2r9iJGwe8HUcYGASPu6OhyBuakwqFeAjFLfy1I4=; b=
-	KjZWjwOzkJHg5hCB8BrLOermLBlM8B2aLYVKbARbSUvX92TfSTvXQiH3OeDxAFd3
-	Bot7zjWJu5NNzyufkrzpvbP5Y9Y7UFlY+eo5ZO1fdzDt6vDWRzVcybyww/agiDj9
-	lDW+AZ5htOaLWYJaSCo5X3X2OjRH1vgTGwuXb1rurlf+HXvnLNdVIM1lXi/sIb3J
-	Gi3F6BizrMy9scVWO6vmXsNtKdBfugLy2kVeUocBR9iT+ti7KIyuIVOAJGbtwmyj
-	fqI6EbDtkXKROvl8qygH0FNE6qe/q1gnS2nNLzyDhmyqhBmDJflwJ3BV8OAoeM8A
-	x7VbNMrH+UD0KxsNxaFq7A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1737022125;
+	 x=1737108525; bh=hLx/YWrmkyyblqxm/hEw4hwPGeUJyM9ubleoMZ1QncQ=; b=
+	OiuCSIqgimuVdhaKJ+5q1UNe7FhVFJzQ4z+O/obOo50SfRYFpKpig2znYEmpjJ83
+	ppIrkzcM5R9aEUn28olTplZDNFeuBWyWL/MsAgr6wbmElnzwPH2ukf0wt67Fr/L+
+	FixPsSqItt3TLDf9QN6s0xObIgQ/QcEHeQXYqjP8rf40EjUiUfIY6UMliHG2HS1p
+	Ibr4XEzjGGjRwZBHblAWZjgDFGWALUtgZS1Ujmv/sImKra0Fcot8AiUpIl8SPvPY
+	U7dJYw2JS9N2ImlnkUyrEQl3SG4H0dCy0w2psBW+FFL1D0SZs8PY6R7aTL5FpJhN
+	V89iQLXIn1y0O/wWRt4WVg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737022124; x=
-	1737108524; bh=IYTf2r9iJGwe8HUcYGASPu6OhyBuakwqFeAjFLfy1I4=; b=d
-	2ceuueWf/zwQubt3ouSx0ZGkUZ+8dfUNkybovsgMD4zemC6YonwSV3/XdX5Z3RvB
-	yWVjdcmgGEfXeaB2CP3cDi56r/qeTnxsqsAjAi0a4Y+Oy/jJlJ60BsZgbdUJvsHb
-	1HDZLrkZKX1hF+bQ96ehXvD3nfQF5J2dn1TJLEriowm+vmYsKuus0TkBCCgyfOok
-	BPlrgYlO/GM4N6VcZQvFsdW7KrInQTRC0PW1yO15fuKQ80y8i/C07jcda85sskCt
-	UJwh3pkfKKsfpQc/jQUXDlG6FWSWOvOYDfxw75PZ//LvFzcYOr04fOmhyATGtd8D
-	M/0eRv6Ou8FA2RkRBzFsA==
-X-ME-Sender: <xms:rNqIZ_6xU8mTsDrUYZ8oWIPW_FViJXXIl6XTNxCrTTPJKfcYKKKuKA>
-    <xme:rNqIZ04Zq4wwdMdAJ9r04AUl7KNrVu0b3xzrom1q_vlbSPQnxKneXaVTtGqgzflFL
-    KaMiB1D9wTzKX9vVQ>
-X-ME-Received: <xmr:rNqIZ2cy3oyQd2XL6opYQbM46SW52b6RWcPKg_2M6Xc1LzK0dnTCdHSA5wG6sv0CGkD4uFo01j0xACziNR3boCjHnufwFDnfwy3rTprCfRQEGRJCBQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737022125; x=
+	1737108525; bh=hLx/YWrmkyyblqxm/hEw4hwPGeUJyM9ubleoMZ1QncQ=; b=S
+	s81/r1unZpLJi6HtnEZNwRex9DI+h0022sOyvpCm/v9RxA/c7ruTP+BY02GZfknB
+	cjrCD6DtlzU06eZPnzpCEzgGobHD28mq4AGCCvz2eVgyteWw5UylaBKnsVTWZ4cy
+	87xSZJ7434VnsgVI4R2QMW4bDDN8cZUXzhbezhnAJiGW5VVdDdJmZHsJnOTUfsUy
+	9Sga1KhVKee7d1ztKYAPCQ3mmoAKJBcWPz3oU8x2ffqcxpbZt9byC+Igf9gS9yts
+	RwmwjUG0xMyxtfgBRDIyn8H6n9YclG2FJChzjasZ+OVBtwE+ri4tXiX4uEJ+iNBS
+	k67gKDB0wtlw5UhA6Ti5Q==
+X-ME-Sender: <xms:rNqIZyxw8jd8risL53wisvkczNMvvXP8js0pfpUFWskiv09t4aUh4g>
+    <xme:rNqIZ-Rmh3u4I_QpLMarCcI1N_y7QmvXd7waR7IGVJoPhYCqqOJDbboAZS47lyvOW
+    GX0xAou0uNk44pXbw>
+X-ME-Received: <xmr:rNqIZ0X_p8gBl_S3LLa2ct5M4DWHGriacEq3Z8_pVSzIbBxFq6QS9-hrasVPXjlbt51RU4szM6nomS_wGAfEm0h07YrlGAU9Q9sdr-G4eFr5983KZA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddguddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
@@ -59,22 +59,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddguddtucetufdoteggod
     rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
     gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
     vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:rNqIZwJsu6mLBExvA1k_g5p9FHsqYOoJ8TFoCkGQijQ1PLCwWgF3bA>
-    <xmx:rNqIZzKN8jFUTme1rpld84HwnoPtLuwiOLyae4iSj4Tl0pHbMbnjag>
-    <xmx:rNqIZ5ymHzauDhMM8I-BL5Q4SjB2fuZdQr9iS2GZvr-_L5T1ryUPoA>
-    <xmx:rNqIZ_Kpl80thoE0SgM4pIYU-WHRpBLPVA7D0pWgg-Ic-NmUIyoPig>
-    <xmx:rNqIZ5g13z7RVJTX2-nVQIO5s8FA5kGxzLjymttanoFbV5vj8VcFic7f>
+X-ME-Proxy: <xmx:rdqIZ4gaX825mEYWJlxXXGrN3GP-2bmDrlYHpuIcB6guPeb-ECF9lQ>
+    <xmx:rdqIZ0BA-IRM09DrouGdSN5qhdeIbhYBTKp3R5mlCmRXfJxWOwNqFw>
+    <xmx:rdqIZ5J3U-Myt5U3iks6jTfh5MDY6u8NQLxt4hXxFFHk5z3548kmug>
+    <xmx:rdqIZ7CmLBEPH5kWDwEoH4T0ka_ICLuK8-7QrVNo-vY_OiXvMH8gFA>
+    <xmx:rdqIZ97uu_PRGqK1Z2dJtWvvh2oJe2is6Qcg2T4Rd8j8Xr7eZ5B4F6L2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 16 Jan 2025 05:08:43 -0500 (EST)
+ <git@vger.kernel.org>; Thu, 16 Jan 2025 05:08:44 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 01bd21bd (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id a28faafa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 16 Jan 2025 10:08:42 +0000 (UTC)
+	Thu, 16 Jan 2025 10:08:43 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 16 Jan 2025 11:08:35 +0100
-Subject: [PATCH 03/10] reftable/record: handle overflows when decoding
- varints
+Date: Thu, 16 Jan 2025 11:08:36 +0100
+Subject: [PATCH 04/10] reftable/basics: adjust `common_prefix_size()` to
+ return `size_t`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,163 +83,111 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250116-b4-pks-reftable-sign-compare-v1-3-bd30e2ee96e7@pks.im>
+Message-Id: <20250116-b4-pks-reftable-sign-compare-v1-4-bd30e2ee96e7@pks.im>
 References: <20250116-b4-pks-reftable-sign-compare-v1-0-bd30e2ee96e7@pks.im>
 In-Reply-To: <20250116-b4-pks-reftable-sign-compare-v1-0-bd30e2ee96e7@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-The logic to decode varints isn't able to detect integer overflows: as
-long as the buffer still has more data available, and as long as the
-current byte has its 0x80 bit set, we'll continue to add up these values
-to the result. This will eventually cause the `uint64_t` to overflow, at
-which point we'll return an invalid result.
+The `common_prefix_size()` function computes the length of the common
+prefix between two buffers. As such its return value will always be an
+unsigned integer, as the length cannot be negative. Regardless of that,
+the function returns a signed integer, which is nonsensical and causes a
+couple of -Wsign-compare warnings all over the place.
 
-Refactor the function so that it is able to detect such overflows. The
-implementation is basically copied from Git's own `decode_varint()`,
-which already knows to handle overflows. The only adjustment is that we
-also take into account the string view's length in order to not overrun
-it.
-
-While at it, refactor `put_var_int()` in the same way by copying over
-the implementation of `encode_varint()`. While `put_var_int()` doesn't
-have an issue with overflows, it generates warnings with -Wsign-compare.
-The implementation of `encode_varint()` doesn't, is battle-tested and at
-the same time way simpler than what we currently have.
+Adjust the function to return a `size_t` instead.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/record.c                | 53 +++++++++++++++++-----------------------
- reftable/record.h                |  4 +++
- t/unit-tests/t-reftable-record.c | 17 +++++++++++++
- 3 files changed, 44 insertions(+), 30 deletions(-)
+ reftable/basics.c                | 8 +++-----
+ reftable/basics.h                | 2 +-
+ reftable/record.c                | 4 ++--
+ reftable/writer.c                | 5 ++---
+ t/unit-tests/t-reftable-basics.c | 2 +-
+ 5 files changed, 9 insertions(+), 12 deletions(-)
 
-diff --git a/reftable/record.c b/reftable/record.c
-index 04429d23fe..4e6541c307 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -21,47 +21,40 @@ static void *reftable_record_data(struct reftable_record *rec);
- 
- int get_var_int(uint64_t *dest, struct string_view *in)
- {
--	int ptr = 0;
-+	const unsigned char *buf = in->buf;
-+	unsigned char c;
- 	uint64_t val;
- 
--	if (in->len == 0)
-+	if (!in->len)
- 		return -1;
--	val = in->buf[ptr] & 0x7f;
--
--	while (in->buf[ptr] & 0x80) {
--		ptr++;
--		if (ptr > in->len) {
-+	c = *buf++;
-+	val = c & 0x7f;
-+
-+	while (c & 0x80) {
-+		val += 1;
-+		if (!val || (val & (uint64_t)(~0ULL << (64 - 7))))
-+			return -1; /* overflow */
-+		if (buf >= in->buf + in->len)
- 			return -1;
--		}
--		val = (val + 1) << 7 | (uint64_t)(in->buf[ptr] & 0x7f);
-+		c = *buf++;
-+		val = (val << 7) | (c & 0x7f);
- 	}
- 
- 	*dest = val;
--	return ptr + 1;
-+	return buf - in->buf;
+diff --git a/reftable/basics.c b/reftable/basics.c
+index fe2b83ff83..10b234ea55 100644
+--- a/reftable/basics.c
++++ b/reftable/basics.c
+@@ -263,14 +263,12 @@ int names_equal(const char **a, const char **b)
+ 	return a[i] == b[i];
  }
  
--int put_var_int(struct string_view *dest, uint64_t val)
-+int put_var_int(struct string_view *dest, uint64_t value)
+-int common_prefix_size(struct reftable_buf *a, struct reftable_buf *b)
++size_t common_prefix_size(struct reftable_buf *a, struct reftable_buf *b)
  {
--	uint8_t buf[10] = { 0 };
--	int i = 9;
--	int n = 0;
--	buf[i] = (uint8_t)(val & 0x7f);
--	i--;
--	while (1) {
--		val >>= 7;
--		if (!val) {
--			break;
--		}
--		val--;
--		buf[i] = 0x80 | (uint8_t)(val & 0x7f);
--		i--;
+-	int p = 0;
+-	for (; p < a->len && p < b->len; p++) {
++	size_t p = 0;
++	for (; p < a->len && p < b->len; p++)
+ 		if (a->buf[p] != b->buf[p])
+ 			break;
 -	}
 -
--	n = sizeof(buf) - i - 1;
--	if (dest->len < n)
-+	unsigned char varint[10];
-+	unsigned pos = sizeof(varint) - 1;
-+	varint[pos] = value & 127;
-+	while (value >>= 7)
-+		varint[--pos] = 128 | (--value & 127);
-+	if (dest->len < sizeof(varint) - pos)
- 		return -1;
--	memcpy(dest->buf, &buf[i + 1], n);
--	return n;
-+	memcpy(dest->buf, varint + pos, sizeof(varint) - pos);
-+	return sizeof(varint) - pos;
+ 	return p;
  }
  
- int reftable_is_block_type(uint8_t typ)
-diff --git a/reftable/record.h b/reftable/record.h
-index a24cb23bd4..721d6c949a 100644
---- a/reftable/record.h
-+++ b/reftable/record.h
-@@ -34,6 +34,10 @@ static inline void string_view_consume(struct string_view *s, int n)
+diff --git a/reftable/basics.h b/reftable/basics.h
+index 4bf71b0954..9ff81a68f8 100644
+--- a/reftable/basics.h
++++ b/reftable/basics.h
+@@ -169,7 +169,7 @@ static inline void *reftable_alloc_grow(void *p, size_t nelem, size_t elsize,
+ #endif
  
- /* utilities for de/encoding varints */
+ /* Find the longest shared prefix size of `a` and `b` */
+-int common_prefix_size(struct reftable_buf *a, struct reftable_buf *b);
++size_t common_prefix_size(struct reftable_buf *a, struct reftable_buf *b);
  
-+/*
-+ * Decode and encode a varint. Returns the number of bytes read/written, or a
-+ * negative value in case encoding/decoding the varint has failed.
-+ */
- int get_var_int(uint64_t *dest, struct string_view *in);
- int put_var_int(struct string_view *dest, uint64_t val);
+ int hash_size(enum reftable_hash id);
  
-diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
-index 42bc64cec8..6d912b9c8f 100644
---- a/t/unit-tests/t-reftable-record.c
-+++ b/t/unit-tests/t-reftable-record.c
-@@ -58,6 +58,22 @@ static void t_varint_roundtrip(void)
- 	}
- }
- 
-+static void t_varint_overflow(void)
-+{
-+	unsigned char buf[] = {
-+		0xFF, 0xFF, 0xFF, 0xFF,
-+		0xFF, 0xFF, 0xFF, 0xFF,
-+		0xFF, 0x00,
-+	};
-+	struct string_view view = {
-+		.buf = buf,
-+		.len = sizeof(buf),
-+	};
-+	uint64_t value;
-+	int err = get_var_int(&value, &view);
-+	check_int(err, ==, -1);
-+}
-+
- static void set_hash(uint8_t *h, int j)
+diff --git a/reftable/record.c b/reftable/record.c
+index 4e6541c307..69c09ec163 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -135,9 +135,9 @@ int reftable_encode_key(int *restart, struct string_view dest,
+ 			uint8_t extra)
  {
- 	for (int i = 0; i < hash_size(REFTABLE_HASH_SHA1); i++)
-@@ -544,6 +560,7 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
- 	TEST(t_reftable_log_record_roundtrip(), "record operations work on log record");
- 	TEST(t_reftable_ref_record_roundtrip(), "record operations work on ref record");
- 	TEST(t_varint_roundtrip(), "put_var_int and get_var_int work");
-+	TEST(t_varint_overflow(), "get_var_int notices an integer overflow");
- 	TEST(t_key_roundtrip(), "reftable_encode_key and reftable_decode_key work");
- 	TEST(t_reftable_obj_record_roundtrip(), "record operations work on obj record");
- 	TEST(t_reftable_index_record_roundtrip(), "record operations work on index record");
+ 	struct string_view start = dest;
+-	int prefix_len = common_prefix_size(&prev_key, &key);
++	size_t prefix_len = common_prefix_size(&prev_key, &key);
+ 	uint64_t suffix_len = key.len - prefix_len;
+-	int n = put_var_int(&dest, (uint64_t)prefix_len);
++	int n = put_var_int(&dest, prefix_len);
+ 	if (n < 0)
+ 		return -1;
+ 	string_view_consume(&dest, n);
+diff --git a/reftable/writer.c b/reftable/writer.c
+index 740c98038e..4e6ca2e368 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -585,10 +585,9 @@ static void update_common(void *void_arg, void *key)
+ 	struct common_prefix_arg *arg = void_arg;
+ 	struct obj_index_tree_node *entry = key;
+ 	if (arg->last) {
+-		int n = common_prefix_size(&entry->hash, arg->last);
+-		if (n > arg->max) {
++		size_t n = common_prefix_size(&entry->hash, arg->last);
++		if (n > arg->max)
+ 			arg->max = n;
+-		}
+ 	}
+ 	arg->last = &entry->hash;
+ }
+diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-basics.c
+index 1d640b280f..9ba7eb05ad 100644
+--- a/t/unit-tests/t-reftable-basics.c
++++ b/t/unit-tests/t-reftable-basics.c
+@@ -120,7 +120,7 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+ 		for (size_t i = 0; i < ARRAY_SIZE(cases); i++) {
+ 			check(!reftable_buf_addstr(&a, cases[i].a));
+ 			check(!reftable_buf_addstr(&b, cases[i].b));
+-			check_int(common_prefix_size(&a, &b), ==, cases[i].want);
++			check_uint(common_prefix_size(&a, &b), ==, cases[i].want);
+ 			reftable_buf_reset(&a);
+ 			reftable_buf_reset(&b);
+ 		}
 
 -- 
 2.48.0.257.gd3603152ad.dirty
