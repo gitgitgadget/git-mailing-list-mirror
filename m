@@ -1,246 +1,188 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D7D1862
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 21:35:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958041862
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 21:35:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737063341; cv=none; b=RJ/Y6t7G3EyO4du7NoTeaJ4ARcTMYYIaxyOHxRetjknIYGp9Uq48lBpxqXSlY7gSHXUWy64v1KxruhCNeqUCCcAtZCR4fgN44WUt7GPChCl1FtYl1/TnvrcLcYe4Cnctg27qWzQd778m+d1YNnS8ffzsGqJIyOaZLPGZGsxAOM4=
+	t=1737063359; cv=none; b=GhKgXjtmZ48EkcLRRHc3U806pU6Nh+K5bbcJArsM00JVGJxuXDzHSxZnnf6VQ3/6f2baDfhBYdBmKW7kmv9yQsTIV5mbHRyNixMd3FRX7fxy65mBn7t0O9ZUQzFqp34qe9DjjA0N5T88Uftgv8h3PzXRcsHEss1GXa3pB01uDJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737063341; c=relaxed/simple;
-	bh=ygZ+Ngzw2vO7wQ2WaTiUg5f09isTLowax4ZaohnqeMc=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=DnCel/qTjSQkzFilBqP7PVKYw2m9bwuKTqeiXj9qBnPDSb/jf91XRPJYP+KD/wFb3vgE+kfRaHUlldpBFDWCaplNOvyqDfh4UARWqmo+OiZ1HwG5Up5t0KYnrldYqhR7hX9vsL3NzY87PB6sFqSOqQkB9/Z0Z0kmbkoSRLrIEts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bAMlnmCQ; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737063359; c=relaxed/simple;
+	bh=Z8j6flvjH/XS6we1cmzJp7dUF4GE4wLR0K8keGfV7mU=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=vBBaVO3VjUSZXGkV/HwJofSTnDPdnZVIyqHmdll+1+V5q4D4zWAFN6sSUv+yYgr0zDW/q0BP5RBIftZxVQWKkkQhiSASo9u7Zkj+kfuu7v33lLZfsBeXJmpsujGsPOxea6ffxewWYj1wB3wdz+9PpK0RPKZi/o8I/4bQIfrPGnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YKh2uZHH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SGfUrMgV; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bAMlnmCQ"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4361815b96cso9208705e9.1
-        for <git@vger.kernel.org>; Thu, 16 Jan 2025 13:35:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737063337; x=1737668137; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=10PrkPN+8DCLckzxC4pdQv323Oo9O/2B+P11klFe4Hg=;
-        b=bAMlnmCQpe1sD9mBERxD2kGsUC7UO9CuTPMwc3P/bXydMDaObMu12vvbLZRxGsFqlI
-         pRzcy/nICD/y2n4yhGT0sszrin172dxWaOo/IFBApyi0HNuFZfh0xMjuf39iLJDF3Hae
-         m0hdjM+1GbY/RL+4QDkkah+dtfnKppC8eP9ZHHvkABkEEVu4VOEth9ycCBaH6BreWipt
-         elVfF4O5nuAjQHU30Chn5VI67KX65nFyGWzy7rLfykmJciBES4FgylAxy4eP14fghtOp
-         /fL0MM9mF52HFssFOyaDgJCdwRUeGTaicxDUfTjVl114vDb+nxwv+W0mhNyP8IKl6ZFS
-         GHaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737063337; x=1737668137;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=10PrkPN+8DCLckzxC4pdQv323Oo9O/2B+P11klFe4Hg=;
-        b=jBGGKaDL8KzpwzdNSGMAamO3k2VFWRRZaaffXajqTZ4feT6P/o3Vznxai65lE8Mt7H
-         Fy39jOw/1l3VF/AF4vdFFYS3cR69ovWO21L0r1PbZq2rl2hCY/PG7iMwRqABi3Zuo2DZ
-         jnaV/1i+gOZHWYYLOFCcmeAhctKJ0mQKLQdkVf8VFiOyMuS9Lp0V2ym+rWJiTjNRkS1y
-         jyTdTzaJF0vhLvTX5lPA4c0swsrm5njmGAXn102rv5nBGcbjE6I9BbWTcV0LQWrgjuF7
-         i36QZJPfN36FQZEs18IqASjJQeAuMgPSpOROCE4QqrDzv1MglZ6pgNsv1Rx85/dTxk4C
-         oBNw==
-X-Gm-Message-State: AOJu0YxraAQ/g+bd+wH2Y1+meFuimivKXeIOXgpkIEysbUBgn25skqm3
-	Qvy0Jw+sP263OZdZfbHStxZRzYHOOHetPqUtXWT2ve5GdywjXjyxd4G61g==
-X-Gm-Gg: ASbGnct7iVY1DxOxIo8PMVas1vbaCP/RyP4l4Tgq986BXEoCOX7TtEM3As+0F3ZYC8V
-	NoSio9CyPe8MrUOvJnWAX7WrYo3wDLqbFVct1kxMc19AoSL07dpDbRCcrhiyM83N9PiKiWDwn3o
-	d1QbfJkO7MeQkW+36tMqoxbPYOXG13fZ9VFm6sfrv0Zcrw+GvXP3WCvRf5VDe7CysyyU9cBJCHt
-	9YVdehGp7h9Bqz3e04vQrx669dkYxG/3dEfM2uC9F6ZV4N/SL4JeU4QfA==
-X-Google-Smtp-Source: AGHT+IEK3AzkBmaBbU9IsXKSiZTG+2CkyF1bMV5L21E5jaCzCFxnN86t1ig1EWXUuChHWgHNK1sJPA==
-X-Received: by 2002:a05:600c:5486:b0:436:51bb:7a52 with SMTP id 5b1f17b1804b1-438913c9c93mr2342455e9.7.1737063336997;
-        Thu, 16 Jan 2025 13:35:36 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf322ab42sm805519f8f.44.2025.01.16.13.35.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2025 13:35:36 -0800 (PST)
-Message-Id: <pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1829.git.1731653548549.gitgitgadget@gmail.com>
-References: <pull.1829.git.1731653548549.gitgitgadget@gmail.com>
-From: "Olga Pilipenco via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 16 Jan 2025 21:35:35 +0000
-Subject: [PATCH v2] worktree: detect from secondary worktree if main worktree
- is bare
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YKh2uZHH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SGfUrMgV"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A1DFC114015B;
+	Thu, 16 Jan 2025 16:35:55 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Thu, 16 Jan 2025 16:35:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1737063355; x=
+	1737149755; bh=2UY6fkj5sWRf1U6OFh6L9m9at6J7h55shzTui9/qq7g=; b=Y
+	Kh2uZHH3MQH9KvBNPrAneTEuBfNhPeLsoHpKmiV3lndHiGbGCJAUe3cjr+WQ+EHZ
+	z+GLR75FFnqW/BLbVUUI+eMq7TElR7yb98Q+T2n/Mdsd9MTF6cVlgjV5bCjTMBDz
+	QTY7KlNgeDrfp0OHcJm9XvXdKxLoT0PNnd8rSLr4txB9eH96nvAPAbScRoKjNVap
+	plQwNEFQ0tTzRVbt1xgRvXThZUaal+aAXmqLLXf0AqAImtsuw5uZsxMhYuKFAWWn
+	T3lWTq8W6yEEhVg6RNqLLi+qIbmy7JEHWl0LacWRR31FlrgJhYr06vBGJGzqZ2H2
+	Un+WltPmow0U5v29M4tmg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1737063355; x=1737149755; bh=2UY6fkj5sWRf1U6OFh6L9m9at6J7
+	h55shzTui9/qq7g=; b=SGfUrMgVUcyJbH0qQr78W7cS4xOC67xY8wRFS0Q3YTKt
+	hZfmz+v0StrXhsvuh3tug90sq8ElATpGDxPlq3fl1y49yGzSQ8XRqapvSK5WX9Wc
+	ayaoVPj5D9jJtvyENRpiXu4VztLj1+JDVgXEjYBqfjWzmOMXaTHoJEOyFvWEtHiQ
+	OLCAemGc2gffn6JNprepWOh9sY4jTLLSMJUnxucLw/EYxBNvwivIWHRwahYkLCde
+	FzgbVDAUB6RCUIcH8FYuWmYOrd5KcCqTImSKWtYxmhtK/obxQD4OkUwZWvelnVGv
+	n8ln0NCRIgo7WTsGUk0Ja/GZLJVCQQhEmeaJQONfYg==
+X-ME-Sender: <xms:u3uJZ9r0y_uA2QdpfBjDdhMPuV8xdw0x2sLwX-96m5XAfwL-PS0-8g>
+    <xme:u3uJZ_o4wYD3PGCTK0uMAMVFDrk3AtAu_d3QjgGvAf_z2gyT4Q52L6iP3XZ_7KeDw
+    cHB5NyJpMT2WzEm_w>
+X-ME-Received: <xmr:u3uJZ6M2TrVoiqwOTUl62GEB1jhjf1uSzlKBNw98tZZ86iu8-IDojFUfx5Cs-a2Ev61VE2S9DmfElj5Qz7pJEXv25-awU0BfdpRK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgudegjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvuf
+    ffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefue
+    evveeltdetfeegveetiefhhefhtdduhfettdetfefgffduffelgffggeehgfenucffohhm
+    rghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:u3uJZ44hi3S5Lzt4dZyxmiiOXBqKv71cPJnLTFrks_cS6oK5Ci0Yvw>
+    <xmx:u3uJZ86hju5mB9GLwssliWYnrvRCnyA2jkF3qkdxzoGQTsZbUK9iTg>
+    <xmx:u3uJZwiV6AaEHQArnQB8UZKkjgS9r_h7J8Aac7T-54YJxpoux7AuFw>
+    <xmx:u3uJZ-416qxF-sGQKYx2HqBGQTKdD2hWVMC3UcLHoeRPpfd-JoF-pw>
+    <xmx:u3uJZ8HacmgolctDJNlcSKlvuxeZlRaGgXRC8cn23l6oJO-A7yEQFkGZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Jan 2025 16:35:55 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH v4 0/6] Send help text from "git cmd -h" to stdout
+Date: Thu, 16 Jan 2025 13:35:47 -0800
+Message-ID: <20250116213553.2563751-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.48.1-210-gaa1682cadd
+In-Reply-To: <20250116012524.1557441-1-gitster@pobox.com>
+References: <20250116012524.1557441-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Eric Sunshine <sunshine@sunshineco.com>,
-    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-    =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-    Junio C Hamano <gitster@pobox.com>,
-    Olga Pilipenco <olga.pilipenco@shopify.com>,
-    Olga Pilipenco <olga.pilipenco@shopify.com>
+Content-Transfer-Encoding: 8bit
 
-From: Olga Pilipenco <olga.pilipenco@shopify.com>
+Jonas Konrad noticed[*] that "git branch -h" started showing the help
+text to the standard error stream.  It turns out that we are fairly
+inconsistent in our implementation of "git cmd -h".  The users of
+parse-options API will get "If -h is the only option on the command
+line, give the help text to the standard output" for free, but some
+commands manually check for the condition and then call the
+usage_with_options() function, which gives the identical help text
+to the standard error stream.  And "git branch -h" Jonas noticed was
+one of them.
 
-Setup:
-1. Have a bare repo with core.bare = true in config.worktree
-2. Create a new worktree
+Older commands written before parse-options API became dominant show
+the help text by calling the usage() function, which is meant to be
+used when they fail to parse their command line arguments, which has
+the same problem.  An explicit request for help text "git cmd -h"
+should be fulfilled by showing the help on the standard output.
 
-Behavior:
-From the secondary worktree the main worktree appears as non-bare.
+This series teachs "git $cmd -h" to send its help text to the
+standard output stream consistently for built-in commands.
 
-Expected:
-From the secondary worktree the main worktree should appear as bare.
-
-Why current behavior is not good?
-If the main worktree is detected as not bare it doesn't allow
-checking out the branch of the main worktree. There are possibly
-other problems associated with that behavior.
-
-Why is it happening?
-While we're inside the secondary worktree we don't initialize the main
-worktree's repository with its configuration.
-
-How is it fixed?
-Load actual configs of the main worktree. Also, skip the config loading
-step if we're already inside the current worktree because in that case we
-rely on is_bare_repository() to return the correct result.
-
-Other solutions considered:
-Alternatively, instead of incorrectly always using
-`the_repository` as the main worktree's repository, we can detect
-and load the actual repository of the main worktree and then use
-that repository's `is_bare` value extracted from correct configs.
-However, this approach is a bit riskier and could also affect
-performance. Since we had the assignment `worktree->repo =
-the_repository` for a long time already, I decided it's safe to
-keep it as it is for now; it can be still fixed separately from
-this change.
-
-Real life use case:
-1. Have a bare repo
-2. Create a worktree from the bare repo
-3. In the secondary worktree enable sparse-checkout - this enables
-extensions.worktreeConfig and keeps core.bare=true setting in
-config.worktree of the bare worktree
-4. The secondary worktree or any other non-bare worktree created
-won't be able to use branch main (not even once), but it should be
-able to.
-
-Signed-off-by: Olga Pilipenco <olga.pilipenco@shopify.com>
----
-    worktree: detect from secondary worktree if main worktree is bare
-    
-    Changes since v1:
-    
-     * no code changes
-     * rebased with maint
-     * CC added
-    
-    Existing broken functionality forces our project to use hacks on bare
-    repo that we'd like to avoid. I would really appreciate reviews of this
-    patch to move closer towards fixing the issue. This is my first
-    contribution to git/git, I apologize if I got lost in the instructions,
-    but I tried my best to follow the rules.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1829%2Folga-mcbfe%2Ffix-bare-repo-detection-with-worktree-config-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1829/olga-mcbfe/fix-bare-repo-detection-with-worktree-config-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1829
-
-Range-diff vs v1:
-
- 1:  9e7170f07fc = 1:  17f4b24d1da worktree: detect from secondary worktree if main worktree is bare
+There is a related "what status should these command exit with?"
+question, and an argument can be made to switch them to exit with 0,
+instead of historical 129, but it is left outside of the series for
+now.
 
 
- t/t3200-branch.sh | 14 ++++++++++++++
- worktree.c        | 38 +++++++++++++++++++++++++++++---------
- 2 files changed, 43 insertions(+), 9 deletions(-)
+Changes since v3:
 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index a3a21c54cf6..7ca50c9a78d 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -410,6 +410,20 @@ test_expect_success 'bare main worktree has HEAD at branch deleted by secondary
- 	git -C secondary branch -D main
- '
- 
-+test_expect_success 'secondary worktree can switch to main if common dir is bare worktree' '
-+	test_when_finished "rm -rf bare_repo non_bare_repo secondary_worktree" &&
-+	git init -b main non_bare_repo &&
-+	test_commit -C non_bare_repo x &&
-+
-+	git clone --bare non_bare_repo bare_repo &&
-+	git -C bare_repo config extensions.worktreeConfig true &&
-+	git -C bare_repo config unset core.bare &&
-+	git -C bare_repo config --worktree core.bare true &&
-+
-+	git -C bare_repo worktree add ../secondary_worktree &&
-+	git -C secondary_worktree checkout main
-+'
-+
- test_expect_success 'git branch --list -v with --abbrev' '
- 	test_when_finished "git branch -D t" &&
- 	git branch t &&
-diff --git a/worktree.c b/worktree.c
-index 248bbb39d43..a7726c67747 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -65,6 +65,28 @@ static int is_current_worktree(struct worktree *wt)
- 	return is_current;
- }
- 
-+static int is_bare_git_dir(const char *git_dir)
-+{
-+	int bare = 0;
-+	struct config_set cs = { { 0 } };
-+	char *config_file;
-+	char *worktree_config_file;
-+
-+	config_file = xstrfmt("%s/config", git_dir);
-+	worktree_config_file = xstrfmt("%s/config.worktree",  git_dir);
-+
-+	git_configset_init(&cs);
-+	git_configset_add_file(&cs, config_file);
-+	git_configset_add_file(&cs, worktree_config_file);
-+
-+	git_configset_get_bool(&cs, "core.bare", &bare);
-+
-+	git_configset_clear(&cs);
-+	free(config_file);
-+	free(worktree_config_file);
-+	return bare;
-+}
-+
- /**
-  * get the main worktree
-  */
-@@ -77,18 +99,16 @@ static struct worktree *get_main_worktree(int skip_reading_head)
- 	strbuf_strip_suffix(&worktree_path, "/.git");
- 
- 	CALLOC_ARRAY(worktree, 1);
-+	/*
-+	 * NEEDSWORK: the_repository is not always main worktree's repository
-+	*/
- 	worktree->repo = the_repository;
- 	worktree->path = strbuf_detach(&worktree_path, NULL);
--	/*
--	 * NEEDSWORK: If this function is called from a secondary worktree and
--	 * config.worktree is present, is_bare_repository_cfg will reflect the
--	 * contents of config.worktree, not the contents of the main worktree.
--	 * This means that worktree->is_bare may be set to 0 even if the main
--	 * worktree is configured to be bare.
--	 */
--	worktree->is_bare = (is_bare_repository_cfg == 1) ||
--		is_bare_repository();
- 	worktree->is_current = is_current_worktree(worktree);
-+	worktree->is_bare = (is_bare_repository_cfg == 1) ||
-+		is_bare_repository() ||
-+		(!worktree->is_current && is_bare_git_dir(repo_get_common_dir(the_repository)));
-+
- 	if (!skip_reading_head)
- 		add_head_info(worktree);
- 	return worktree;
+ - The helper functions for usage_with_options() and usage() are
+   renamed to show_usage_with_options_if_asked() and
+   show_usage_if_asked(), respectively.
 
-base-commit: f93ff170b93a1782659637824b25923245ac9dd1
+ - The call to usage() in builtin/fetch-pack.c turns out to be the
+   same class as builtin/var.c that simply treats "-h" as an
+   unrecognised command line option.  The fix was rewritten to
+   follow the pattern taken to fix "git var -h" and moved to the
+   "oddball" step.
+
+ - The patches are reordered; the first three patches prepare the
+   new helper functions and ways to test their effect, and the
+   remaining patches convert the commands to use the new helper
+   functions.
+
+[Reference]
+
+https://lore.kernel.org/git/04cfaa3b-847f-4850-9dd6-c1cf9f72807f@uni-muenster.de/
+
+
+Jeff King (1):
+  t0012: optionally check that "-h" output goes to stdout
+
+Junio C Hamano (5):
+  parse-options: add show_usage_with_options_if_asked()
+  usage: add show_usage_if_asked()
+  builtins: send usage_with_options() help text to standard output
+  oddballs: send usage() help text to standard output
+  builtin: send usage() help text to standard output
+
+ builtin/am.c                |  3 +--
+ builtin/branch.c            |  4 ++--
+ builtin/check-ref-format.c  |  4 ++--
+ builtin/checkout--worker.c  |  6 +++---
+ builtin/checkout-index.c    |  6 +++---
+ builtin/commit-tree.c       |  4 ++--
+ builtin/commit.c            |  8 ++++----
+ builtin/credential.c        |  3 ++-
+ builtin/diff-files.c        |  3 +--
+ builtin/diff-index.c        |  3 +--
+ builtin/diff-tree.c         |  3 +--
+ builtin/fast-import.c       |  3 +--
+ builtin/fetch-pack.c        |  2 ++
+ builtin/fsmonitor--daemon.c |  4 ++--
+ builtin/gc.c                |  4 ++--
+ builtin/get-tar-commit-id.c |  4 +++-
+ builtin/index-pack.c        |  3 +--
+ builtin/ls-files.c          |  4 ++--
+ builtin/mailsplit.c         |  4 ++--
+ builtin/merge-index.c       |  7 ++++++-
+ builtin/merge-ours.c        |  3 +--
+ builtin/merge-recursive.c   |  6 ++++++
+ builtin/merge.c             |  4 ++--
+ builtin/pack-redundant.c    |  3 +--
+ builtin/rebase.c            |  6 +++---
+ builtin/remote-ext.c        |  2 ++
+ builtin/remote-fd.c         |  1 +
+ builtin/rev-list.c          |  3 +--
+ builtin/rev-parse.c         |  2 ++
+ builtin/unpack-file.c       |  8 ++++++--
+ builtin/unpack-objects.c    |  2 ++
+ builtin/update-index.c      |  4 ++--
+ builtin/upload-archive.c    |  6 +++---
+ builtin/var.c               |  1 +
+ git-compat-util.h           |  2 ++
+ parse-options.c             | 10 ++++++++++
+ parse-options.h             |  4 ++++
+ t/helper/test-simple-ipc.c  |  4 ++--
+ t/t0012-help.sh             |  3 ++-
+ t/t7600-merge.sh            |  2 +-
+ usage.c                     | 28 +++++++++++++++++++++++++---
+ 41 files changed, 122 insertions(+), 64 deletions(-)
+
 -- 
-gitgitgadget
+2.48.1-191-gafe818080f
+
