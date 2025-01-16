@@ -1,53 +1,53 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260631DC1A7
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 11:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11091DE3DC
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 11:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737028146; cv=none; b=HX2oYof3afosvHhQMTFZZvEZpwJKFJVM1Nwg6lLHUBseN0HdzDi3KbqnhXdG/FBvBo6Rs3G575oP8CWR2vGCjT2+turTWzPVsfwodj9EmCob0bl5gQvk/nEQ5Cp0VUquGijknKxzf/ZNx48C/aYGqwj7KwA9gkHJETVjvuBzsaA=
+	t=1737028202; cv=none; b=OO8B6kwaExgSlYAVw6GQs3xuCoWhgyu2OZI3cPpPKoEsejI6LotE0HmbwXSwrgCPr2AaKuDIAWCqaaLnsZCIPWlY9JUOU+PxggBDyFHdzou9e5xFXDPZPhGjcPSLoqcbWe/YUBXZXY765JmvJAvIZqk0xpHVi8E7T+z5JoC7eWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737028146; c=relaxed/simple;
-	bh=4a3Cb289gB8xwkJrX44j+xp7QHifMZWz6c6E8lvx5i0=;
+	s=arc-20240116; t=1737028202; c=relaxed/simple;
+	bh=eEmwsmJv71l/ET4flT2WUF2iE/iI2EhrouIkENodTkc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s6i1Kbj3rOLrnZND0lacqPIrT5GsPeMhV33pI1vHjnJGrFJrmw/rakFgh+PqZDj0341GBnL8UpHd0qBHm1MX0YSwUGd6B5bYNiAQSMpQmUEDkx0EatuzanXU+B2H5nTLg1C0RqVOB4oNG4D36GsDvxpC84KFsWc5QaI7jSs+INs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k8dn2V7d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a3gXHF1Q; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=PLq6/ynGEsF04vK9BeMQ0y7+wWShtzyxTN1l9kIrS/jyxAVpPFzuuJiWYKO7SSxRAy4iUw9wSFFuYaGQES6svEhMS9vcrTHahpi5rmbAVxKuG7wGkjyv5/wSDK6el2wRJmm+MTYFLQe0hSassTFqiWk3+sHkczM/batmXY/R6zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=X6oJloqx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tcp1adXo; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k8dn2V7d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a3gXHF1Q"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2D8EE2540146;
-	Thu, 16 Jan 2025 06:49:03 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="X6oJloqx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tcp1adXo"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C176B2540146;
+	Thu, 16 Jan 2025 06:49:59 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Thu, 16 Jan 2025 06:49:03 -0500
+  by phl-compute-03.internal (MEProxy); Thu, 16 Jan 2025 06:49:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737028143; x=1737114543; bh=4a3Cb289gB
-	8xwkJrX44j+xp7QHifMZWz6c6E8lvx5i0=; b=k8dn2V7dCrsoLcXoR0RpyVaAFS
-	e41Ry3bxJI8EcEjrX+8vhcBUZ+f3sWayDylR/AWX54aFrK8szd+gHC36UdIjY5W1
-	YZD/iY2X/8ULR8opv0q6Dew2E7zbadiCDKT/DjkhSyOkes2j4hcKwLC7IjQ7J+ud
-	9fiNMQg5VKrrioElmG15OqLASJyMl+Gw5OfYYPY1vjhR7CkWq3RA7X7sf+ILgkml
-	8m6qi/ZWs7M7qLOR1K7J0/G9S0PJ2U50AK3omBhMnVNAkb3ZhkJ3a+zx2wVSmCW0
-	yGMauVRRODjQA4LG1/rTm1hv/3h4WWniSiRDF9TX4F2hBa8jXrq5mLuzQA0Q==
+	:subject:to:to; s=fm2; t=1737028199; x=1737114599; bh=fUn87ONdKv
+	U3DolIymOEsE2rfuBWsnIKRRFGwHZU07A=; b=X6oJloqx/BxQ37o0N39ugtRPkO
+	71IeEv/jVaW8Sy+5rf9uWylQZV1C4fuRXlm4mXPjJX4FhFZKkI6kehcJHAt1wKNu
+	TS3V9oyLJay1o4GQ+rM+udLIDlQW58PeKgk4ApxlVF/ehQicXKY29/F1ga2yhH67
+	xxmrYyki0sim3lsgNicIRQzPObJtlSIZh2EkkBuRdk2Q+lvZIDGp4jje4e3toh+7
+	NMM8pUyorYkVp8X5f9+r4irGUqvt9IpxfaLUdz7e7uBJUpeww1ZuwbyMNB7gstkb
+	M5970Bftyyn+NGzalYg3ULHA8vIf3ny6y5+gku7pT2qcmQUwA+GSXgvkqFKQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737028143; x=1737114543; bh=4a3Cb289gB8xwkJrX44j+xp7QHifMZWz6c6
-	E8lvx5i0=; b=a3gXHF1QFkHrYOBzzHMEypq0wfF/NCOzipGkgy/anCP+4na1yGw
-	d/CA0LU7lgo1jW4bi2sXfeuc2vH7fB2p1G8Zc/36jrtcyTHMD1oqv0YIQ4w9Jr4N
-	wPfMr59FLR9ovM+kL6QIIQXbgMrGFoF0FTXVRSokdkz6tifcMAuUNJ2XxpuoVIqm
-	TrIpEeNIs7xG2QmzMZhSzkcw5tMX1GdW55s2qajETntvWhxLYpQ++8yUjcc5cfby
-	jHFl39kmWNm5PxWYLEqLJ8YeywR7ef7wDnhsG4nnsV0iYCz2lvM6vDiNjHDVNggQ
-	pss3sQ9o/EFEprVnYg1XQbj+smGbibf0S+g==
-X-ME-Sender: <xms:LvKIZz-9OsvRYCcIApL8WxzxnPHT4JE_A_RU8v5a3OXvh4qwengLUA>
-    <xme:LvKIZ_tJE646uuQkYCZ7T_X9kP0VbSBsunp8IPcoN0sHhWHZIVhhM917DYaHYM3HV
-    6QuFtHMREH7MrGXUg>
-X-ME-Received: <xmr:LvKIZxBackcv4YG_vVoH3pbecNlt5VZGVIQI9JhRlrRjPhQf4EQPVC6EeXjfudi6OblFyQepbKzaWrE0Egp-T58fGih28S8MJ4gamJso5eAJW8Zbqg>
+	1737028199; x=1737114599; bh=fUn87ONdKvU3DolIymOEsE2rfuBWsnIKRRF
+	GwHZU07A=; b=tcp1adXoTmf+kj9P6duhkbocMnu3/g5cF3/DPORIL3e/k3Zuhwj
+	B8NFiMGoiZgFT0ZAKbwyCWFmHKQdNODTb2hCmAgr5aEhJkLnPeWcuIErV3BlUtaO
+	MkG2Wl3Be36XCnkwieT3FRuDuHXSWzmbMZ05lp7XHlxIsLwe5715ndrHoQnbHIGz
+	pevBswBV1s1//Z4xg5TH4VU2VkakpSTjnkl3Gj2jlKWMjueiiiHuUmm3ixtKFisb
+	GuUH4aZgU/wRR/b9LlVN4SXwkLaeliqSEfz2EQcYds1/UgVRnCbxT5rI4pxcMXCh
+	8tf/AiXEx2b72EEP+gCKbiqcyVPSIpP9WlA==
+X-ME-Sender: <xms:Z_KIZz-iKvHVDnK_2BNA9YQpOfAlNFw_rbCsuUzn8gMK_VNoCJEb3g>
+    <xme:Z_KIZ_vK9XiXTV9truJF_1A0yNln70av9SFN8YmtReENknFHctN9wW5wJgApqqTLv
+    xt4K39IpbD7gJm75g>
+X-ME-Received: <xmr:Z_KIZxBHyRXmsVZ5IjPPxFJ3aKwjvJpDKWoNN4FcNu5awMiWGpCMLHSQ_VHy1ADIoea3hgF7orOlL80M7DISRajgTCt4eTMm3Lx4T3xnunnc43UZDQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgfedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,33 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgfedtucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepnhgvfihr
+    vghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
     dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:LvKIZ_ckPlSAbNezNNe881pjbmKfhXFJLnXx8qoMT-E9K4C6bDxXvw>
-    <xmx:LvKIZ4NrozVPNLLAJl_m2X64clWS26UX370kvciNgtCpZH7BN3G09Q>
-    <xmx:LvKIZxkV1-Dl2F4ZxkOjUV6W39PKRp6WLBXAz4YNJ9M4PIBoCSOMcQ>
-    <xmx:LvKIZysDMowzwmmnFVdrnDE77HxyXwkGi3kvrgX4RoAEIYXfcBCxYA>
-    <xmx:L_KIZ300jbUzxceQiRqDAdR-K8h-hCvokufzItQeM6uN71l-jKqM0Zhe>
+X-ME-Proxy: <xmx:Z_KIZ_cNL8REM5pwh_v0rlK0R9xZwwA9BREVQ7NsRSBjoiYFLMdm9Q>
+    <xmx:Z_KIZ4OgjBy2O10-jCBWomTgZjrK_xnhKq08WEyEWeufJ7wIgPj8AQ>
+    <xmx:Z_KIZxmmwJPZp7aP4c9JjPrVvPCwXqtWecIEasuG9IklaUE-sKfQXg>
+    <xmx:Z_KIZyvA6j2Ug7i18dn_RhAhv9EKVn1hixeszHdDa91xR95R-Jt28w>
+    <xmx:Z_KIZ33N-ddN-uNMsuFuhIyPgwufBN2UQFI-2Zw2atLY_tK5FL04u_cn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jan 2025 06:49:01 -0500 (EST)
+ 16 Jan 2025 06:49:58 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 185ea26b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 16 Jan 2025 11:48:59 +0000 (UTC)
-Date: Thu, 16 Jan 2025 12:48:58 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e655820a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Jan 2025 11:49:57 +0000 (UTC)
+Date: Thu, 16 Jan 2025 12:49:56 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 2/8] csum-file: store the hash algorithm as a struct
- field
-Message-ID: <Z4jyH4yIXuD0vuqQ@pks.im>
+Subject: Re: [PATCH v2 4/8] hash.h: introduce `unsafe_hash_algo()`
+Message-ID: <Z4jyZCAwqOjZ-u2U@pks.im>
 References: <cover.1732130001.git.me@ttaylorr.com>
  <cover.1736363652.git.me@ttaylorr.com>
- <99cc44895b57cc75fc8f447000817b3595368e4c.1736363652.git.me@ttaylorr.com>
+ <99dcbe2e7165d96e3a9c025540995a75f74b2489.1736363652.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,23 +90,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <99cc44895b57cc75fc8f447000817b3595368e4c.1736363652.git.me@ttaylorr.com>
+In-Reply-To: <99dcbe2e7165d96e3a9c025540995a75f74b2489.1736363652.git.me@ttaylorr.com>
 
-On Wed, Jan 08, 2025 at 02:14:35PM -0500, Taylor Blau wrote:
-> Throughout the hashfile API, we rely on a reference to 'the_hash_algo',
-> and call its _usnafe function variants directly.
+On Wed, Jan 08, 2025 at 02:14:42PM -0500, Taylor Blau wrote:
+> Address these issues by introducing a new pattern whereby one
+> 'git_hash_algo' can return a pointer to another 'git_hash_algo' that
+> represents the unsafe version of itself. So instead of having something
+> like:
+> 
+>     if (unsafe)
+>       the_hash_algo->init_fn(...);
+>       the_hash_algo->update_fn(...);
+>       the_hash_algo->final_fn(...);
+>     else
+>       the_hash_algo->unsafe_init_fn(...);
+>       the_hash_algo->unsafe_update_fn(...);
+>       the_hash_algo->unsafe_final_fn(...);
+> 
+> we can instead write:
+> 
+>     struct git_hash_algo *algop = the_hash_algo;
+>     if (unsafe)
+>       algop = unsafe_hash_algo(algop);
+> 
+>     the_hash_algo->init_fn(...);
+>     the_hash_algo->update_fn(...);
+>     the_hash_algo->final_fn(...);
 
-s/usnafe/unsafe/
+This should all be `algop->init_fn(...)` and so on, right?
 
-> Prepare for a future change where we may use a different 'git_hash_algo'
-> pointer (instead of just relying on 'the_hash_algo' throughout) by
-> making the 'git_hash_algo' pointer a member of the 'hashfile' structure
-> itself.
+> This removes the existing shortcoming by no longer forcing the caller to
+> "remember" which variant of the hash functions it wants to call, only to
+> hold onto a 'struct git_hash_algo' pointer that is initialized once.
 
-Makes sense, and it's also a good step for libification. I wonder: does
-it mean that we can also get rid of `USE_THE_REPOSITORY_VARIABLE`, or do
-we still depend on it in this file? The answer is yes, as we only reduce
-the sites where we use `the_hash_algo`, but don't remove it altogether.
-That would require the caller to provide the hash algo to us.
+We still have to remember something, but now we only have to remember
+the pointer to the hash algorithm itself, which definitely is less
+tedious.
+
+For what it's worth, this prompted me to have another look at my
+proposal to stop having to use the hash algo altogether for `update()`
+et al, and now have a version that works. It builds on top of your patch
+series, which still is a step into the right direction. So I'll send it
+once your series is being merged down.
+
+Thanks!
 
 Patrick
