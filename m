@@ -1,53 +1,53 @@
 Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6970622AE75
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 13:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B91C1862
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 13:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737035871; cv=none; b=fKmogBCGbOhPkEp/iwly5iyt9AbO90Lpx9PWerCxll8n2AzcZCWQ7tbhhe1S5juFztu5Xj9p0wEP2oydIF0P5fd+8j8swSwbrQ70DeHyHLgEj1tkL5T4iQAvrel8sppOgfNwTOr96aw7AS0aoZm4ZonOdDCQ0FYxLAUwdPucfig=
+	t=1737035874; cv=none; b=m9NjOyGAFv4G3U1Jb6x98y55Tok5RGpHtL8+pQhmccNtDgkToZ8/X72ErUODiwTnZTSLk56CWaOQVyeNnRShVElF5HRXGtNCEVXdQk/Ea7UghFlnkbA2H6ExGBaqgu+9Ns60fDqvb44QK0r9qKLM8hbEMPA27Zus0l3BnEgPzFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737035871; c=relaxed/simple;
-	bh=rSAdPTNXE0K1Aw88VDksoVmWBs8TYA9XhBfS0m7Ph2I=;
+	s=arc-20240116; t=1737035874; c=relaxed/simple;
+	bh=IKz6MDH/oljCfAmpZ2AY91lP1BNFBiqBWiSx/sd3xDY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pXEFCVMyPTSj74dOUBWE3FY/Tyw10msWWhYvnDmB92yMpFEIbFbg3TNf8s9U/WnQKQ60pwtAKLPvJKT44HhgLTpYdePI/SkHdiA6VLpSsZ/v96sTP31GGZ31dDngjZ8xpXIM2ndUFTJu3J6eIaBsCsV5uvk0f35mjycx+ISmioc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qr0AuuFs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XK9fy0W0; arc=none smtp.client-ip=202.12.124.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=puuBsSRH6n7+yuT0z0aU2BllVxew5rRJyzaVF+N4myt/zscYdD+NlpLNhoVDjAKOpPbTiyjdtJcwjV1Acgp+vwqwMSdcdW8UAPOn9AiV1PLLPyYslrlLazWrP0+GOe+FGgBxRuMqrIAMypk8ATTJvwJISuUA2/GolNBDLqbIy9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qvr8sj5H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nKifPYY+; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qr0AuuFs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XK9fy0W0"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id A7571114016C;
-	Thu, 16 Jan 2025 08:57:48 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qvr8sj5H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nKifPYY+"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5C68E114018E;
+	Thu, 16 Jan 2025 08:57:52 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Thu, 16 Jan 2025 08:57:48 -0500
+  by phl-compute-08.internal (MEProxy); Thu, 16 Jan 2025 08:57:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737035868; x=1737122268; bh=uDHS9HUc6b
-	g0kIemtOfijRzgU2R9ADEWBnohZDJHe6Y=; b=qr0AuuFsl3Cwa8aDbZxxDqi+IO
-	f6cVazxp3Uswz6Pr7s+44z9BSAUblzM/pshNnqKmLu82Xs4+fBIToolMzIK8g2Xw
-	r5jUAgzqWyC5i4M9wr/F3EX7AuJDczsVRWmfDe3SN1ZZ0uysxdpznkoM+r0WDt7k
-	btGFblnPjX27fsZcVCUbV0BwWBt/qhaVZO8TlpwHoHbv5Zi1R8h87rTlxOM1hQze
-	ER6AaMCcubnZLCtLSTwZCGWf5hUdWemJkwb/rFXqd7tjPmoQDYaqIHnuadLOobGb
-	GmRjvhUV2XBRQXGHwz8Cbzvh6Xa758TEgVz7yju0KFdS8PpCyyDIWQGppG/A==
+	:subject:to:to; s=fm2; t=1737035872; x=1737122272; bh=MpErh78c3h
+	m2mOgXf53ocL69wLmU+DHvclReIuDf+E4=; b=qvr8sj5HB0OJe/PXHsHawwTT6Q
+	iXWpHhUeTEnpLBEOC1HNHoascmBt+oZk0QEmdCp3RkF42AANq8s7VuJwT88aMS0f
+	4QYS3r3tQJSVShj3TVNdOtnmBDDzxz9GhrJbidBOgOKxir7wbYy3WkcukdaDuR8Y
+	ZhkTGu3OFwvh/Fs+CKrnccy2GB8fw5kp/bzwzQm9Nota4fyCdHvN8dHCb3MBjWcN
+	BW8fNrf+DHX6WQ9N/nw3mQcnQwvFBn5FKBg3h7IHgXHhqCkBGkefM3X5LGnfVIWl
+	PletsJPkYmHNQk2DoajjsT8sgcx8h/bZ2l8xOqDEfvm5Fdyfzc/tWasHAg6A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737035868; x=1737122268; bh=uDHS9HUc6bg0kIemtOfijRzgU2R9ADEWBno
-	hZDJHe6Y=; b=XK9fy0W0To51oaRcrcbyQujYdBdrVDH3a/SypQwF0IPhJ0Yrf2u
-	ByBvc6JRB34TIZ4Vb2MaIbunlBzyNi1OJUtjK6/w8zGnRqWQcIbA1iR1zbYD0toW
-	25fU/n3jAkitUiMZobHHPR1XGZ0exyvVsHj0xsyG109w5LhczuFu5G4vV+2aj3C+
-	XOpXnk5vUmKjRTuL/mDlA4z/XLT2eA4y08FoML2GJwrM9Kai5pXLi/pvOWtvpxJA
-	/axOktgd5fpB4jwvKIm+XeeST2bGEE175CtPRQYPnAyt+AtnNhIeO/PIiqXoSyWq
-	10SE44basiDkRp4j4mRIQyVSsURDG5FbAsw==
-X-ME-Sender: <xms:XBCJZ9iMOz38vV5cICAbGW-LpxtTZPQlyKtc1unwAsEVHkftZFr90g>
-    <xme:XBCJZyAk-wHvI_3lLqbko29xCJiCtG1ao6Y0DPLWqdGckq7rxxhNPQQ2NPg-OpSq7
-    wMHcU6nuUyyaWYRXg>
-X-ME-Received: <xmr:XBCJZ9F5Q393iy16yyggiNjOwMZhjS9VwAtDe28GKCNVnRmo-lM--4XkiTvyiRAzqEseQ-OXfBJwxDk6Uphy-KDgvfRkc1OnOXWmDVXbUCMeVzMktg>
+	1737035872; x=1737122272; bh=MpErh78c3hm2mOgXf53ocL69wLmU+DHvclR
+	eIuDf+E4=; b=nKifPYY+V56/YJkJXWkLSUsUJVq2sDALOWPTAqZFf8DKrXuE1wQ
+	GwntT4ugyw4UDtbv45r5yEcUk8oVM9PpLrwlEoQddUQDW3RcfuK//yQaCPZEJju0
+	GWFWZ7yWdzx92zC0yV+djG7opv+MAL8DdAiYEffNibWOL7ePG8+VTaSsa8sZnnR4
+	WF6zHZavqUPCC9HEY7N12rn5VNKkkJQNw8RV9T9d2ACHJn1Y4ZJhjxHEvEUnBgFA
+	D6sXzlIwBGwIOyM77VH8sU9fmSiY6WWOZ3pyn4QBBShQ9w9i1YHAUxF5aCqO4OWg
+	P+RLUnfUzIKNL/QQ3j6rTG4W9jGZ2Cncqwg==
+X-ME-Sender: <xms:YBCJZ3rCRhf_7N7PuEDkanQFVteHiZ8bqKS8G7OUWeCan3SPy5nbVw>
+    <xme:YBCJZxqGSNh9dvD777b7XXoJ68gCKUfzLEUwIRNzePg-ZeXBfcvTH28gTHDLD_P8u
+    FLEAk9VRZL8WIuOUA>
+X-ME-Received: <xmr:YBCJZ0PNtGIEaMz4w8qxgNuuxtkhOW87JLonTJ40IPfh7RKvssBQuOV1Yfs-d228FWXi-kcs-jEFUaeRCy97IOyDCfG1kDN3uSzqBSGDfce9xSP_7A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgheehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -57,32 +57,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgheehucetufdoteggod
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    mhhhrghgghgvrhesrghluhhmrdhmihhtrdgvughupdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhhhrghg
+    ghgvrhesrghluhhmrdhmihhtrdgvughupdhrtghpthhtohepkhgrrhhthhhikhdrudekke
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
     rhhg
-X-ME-Proxy: <xmx:XBCJZyQQvJ4hTr5iK-wthIM_oC5n6w_hDX9fTmgJnPMU2t8wkU4oNQ>
-    <xmx:XBCJZ6z7BuKJwYsbonqWVSuIiapUocGPuuaeifpJLP7M0LzfqE9x4Q>
-    <xmx:XBCJZ45MjC7TSmuTyp3xEUG5eQBhqPt1gHUfUV9CX2D3V-DnVn_nhw>
-    <xmx:XBCJZ_y9CQjk80w_bBeiK6dtQK9sfJCK-l79Zp11R1ZkcO7lyrBgdg>
-    <xmx:XBCJZxrIk5AlahjEZ9Cd9APIQCwNC453rdcb4jGuLpO0N0ZaouQl5RGE>
+X-ME-Proxy: <xmx:YBCJZ64DDRAp4eR0lXeFlTNr_KENdFoe2cpDTw1C4MSMoSa_Hm9hbA>
+    <xmx:YBCJZ26phAv1Hja6x3vBfuKS8CG_al74sFT9KlX31HYaPyrpx3zkpA>
+    <xmx:YBCJZyiUAy7RrdwzQ-LpYNdyIuIHnOrR321PkzsLn91mlofjiDrArg>
+    <xmx:YBCJZ46WH4bVbEHNILgFbIsKkyX3mfxPlqy2f-QcyDSFguHUb-ijEg>
+    <xmx:YBCJZ4SFIn3IUhzxSIjkWFH3qIQLlSycIXfX2LWh2XXmPdbXSJtLKvfH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jan 2025 08:57:47 -0500 (EST)
+ 16 Jan 2025 08:57:50 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 348dc613 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 16 Jan 2025 13:57:47 +0000 (UTC)
-Date: Thu, 16 Jan 2025 14:57:46 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 322a5724 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Jan 2025 13:57:50 +0000 (UTC)
+Date: Thu, 16 Jan 2025 14:57:49 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 07/10] packed-backend: create "fsck_packed_ref_entry" to
- store parsing info
-Message-ID: <Z4kQWgYXePBDthsl@pks.im>
+Subject: Re: [PATCH 08/10] packed-backend: add check for object consistency
+Message-ID: <Z4kQXeLBfpNP7HX_@pks.im>
 References: <Z3qNUizvHJLgMx1y@ArchLinux>
- <Z3qOEvyeoc7vOW73@ArchLinux>
+ <Z3qOGzfncHlnZOGY@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,24 +90,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z3qOEvyeoc7vOW73@ArchLinux>
+In-Reply-To: <Z3qOGzfncHlnZOGY@ArchLinux>
 
-On Sun, Jan 05, 2025 at 09:50:10PM +0800, shejialuo wrote:
-> We have already check whether the oid hash is correct by using
-> `parse_oid_hex_algop`. However, we doesn't check whether the object
-> exists. It may seem that we could do this when we are parsing the raw
-> "packed-refs" file. But this is impossible. Let's analysis why.
+On Sun, Jan 05, 2025 at 09:50:19PM +0800, shejialuo wrote:
+> If there is nothing wrong when parsing the raw file "packed-refs", we
+> could then iterate the "entries" to check the object consistency. There
+> are two kinds of ref entry: one is the normal and another is peeled. For
+> both situations, we need to use "parse_object" function to parse the
+> object id to get the object. If the object does not exist, we will
+> report an error to the user.
 > 
-> We will use "parse_object" function to get the "struct object". However,
-> this function will eventually call the "create_snapshot" and
-> "next_record" function in "packed-backend.c". If there is anything
-> wrong, it will die the program. And we don't want to die the program
-> during the check.
-> 
-> So, we should store the information in the parsing process. And if there
-> is nothing wrong in the parsing process, we could continue to check
-> things. So, create "fsck_packed_ref_entry" to do this.
+> Create a new function "packed_fsck_ref_oid" to do above then update the
+> unit test to exercise the code.
 
-This step can be avoided if we made the check generic.
+This one, as well.
 
 Patrick
