@@ -1,120 +1,128 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A09821D5CC6
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 08:33:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369441D5170
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 08:33:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737016412; cv=none; b=PpHPOBtzxN8BKKBuoqFoMZK7QbxcTKZ8zSKuI2PheInuZGruWfL+eY0OBeHsSW45w0IVGSUw+FYhLep/ihHt5mSSTLKGpP5DzGuTDizzpgDsUQzUQzMMKK6qaLwsxz1Yyh7masy6gyflMcRuju5whETjz51XXeqKZ0QLViloJvM=
+	t=1737016434; cv=none; b=JRR9XbHn2dn205OfshDAPbF5d2DmoUNDqwvU1rVweqEyeTluHvrJeYmEg5t7fz33/ZEspR4+i7Dam7uxcB+pRePAFL/Ana+KQH6uLLj3iwQEtqn7mI1xjNspXHtFyK2FSxZwkIDmbgC+oo8Z0gF44UQOyVP8Wz+YWq3Mi4R7Ths=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737016412; c=relaxed/simple;
-	bh=QqWm9S9jhOl+vZ1pWPmnpFMyRQZQBLvg065CzkkkmFQ=;
+	s=arc-20240116; t=1737016434; c=relaxed/simple;
+	bh=iXFkgGYMSYM7FmBlpoW+x5og+bJFihMkcMGPQmpTDU4=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cG73/7lX2yGetcK5dtcDT2wagM4wyAuMucU2ze/pbHxcnWqc3JpSauxXUiFa682Kqnu45A6LS3lr9RtH/8aA8o8XgTXsoKVjGIuAITUjEIqpHI2oiLj/KNVwj3/c4ZEXptlD3IDvRq/JM6+qGtpLA42ys1P8OaM8JHzvSHwrLe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mHk6VL8x; arc=none smtp.client-ip=209.85.214.169
+	 To:Cc:Content-Type; b=B9PgGT5cZ23+P1A8qVi0j3tu0OUOu1eu0NOSWAt30OuNA92VU1WueKKuytIQPsFKXC8rMykF5qtGseKRCLqIgWnP/Y8vc9mldvwg4pCuLH6QlZ2AVfOsf6YNFeA/fhDoQDsfrrTq8CY3buKMpfIaP5hVZs+UW3oLtZwM6nE+wzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cAuNkyl/; arc=none smtp.client-ip=209.85.216.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mHk6VL8x"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2166360285dso10712835ad.1
-        for <git@vger.kernel.org>; Thu, 16 Jan 2025 00:33:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cAuNkyl/"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2efd81c7ca4so944356a91.2
+        for <git@vger.kernel.org>; Thu, 16 Jan 2025 00:33:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737016410; x=1737621210; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1737016432; x=1737621232; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=QqWm9S9jhOl+vZ1pWPmnpFMyRQZQBLvg065CzkkkmFQ=;
-        b=mHk6VL8xE3WzgXywo/6BfJG0bWr4fCwwwNGjjXrefDIXKrprgPPPpFPfulh6sIH+2Y
-         Dqe1++NBaArkRcNVL+D/Py5y6Uib5JWJxR4sLGdw4xctn+3EgU/oE5FRLih+IKXP1Uqr
-         yNPipZYI78DFpYPfHvfNxb9fcuJOXB1R6Oy74EwikfbcEwiCKWS7y8yOUdAi1cq3FdiZ
-         i6reNEDLrseAyUCD1mpKiqxY6/ztKnCg4otiAxaG1QC4sVD4iXfMSTuj8ZILK5yQHr5y
-         OZSxjfOPJVJYMDxdPziHfiv4MQJ1HnQSrC+SsK0ITMZr7qLQR1wwjdi1EdUDzjnHrnaT
-         xUSQ==
+        bh=BNXNaJPrLaVh71U6ZAS/ut5kjwWZUhZNvVFUdu4VP/0=;
+        b=cAuNkyl/YP/eG2/1bkTBF/mOcdL0UGLZNy1rMkqyEYhghvkzMkV403O/r30yUPnboP
+         ZmlQwE1t1w4Yx5fR7RaqWkVNuLcxLO1+L3P9MSvBY+nyAzgLDet6FaDqBVwcW3kC+fZ3
+         PJc6zYr0hC2sh/yEpeQknXyb7e35XPQfbZplZxarn9FY00r3c02u0YOcolsjYPScz/fx
+         /wBmDDDYZvWjy5zhA4sf5jzmGnoFhLHoT3zXGecNNvyH6FImqaSAh1ytoTvUeznW3HqC
+         BmDdskRZkmwLhrhMCraiXyRf+QcUkMK67QcwEjXwzzS5Ow7UX/IZ2f/BWkHm79Xd0guX
+         2ltQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737016410; x=1737621210;
+        d=1e100.net; s=20230601; t=1737016432; x=1737621232;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QqWm9S9jhOl+vZ1pWPmnpFMyRQZQBLvg065CzkkkmFQ=;
-        b=rZwvJkeUSW6v3wRF/ofJkxN2TM1oBzcwMRV7GD4ESMHpdFvce9FZSftjMdVVpcmmIa
-         D/oXPA0otPwenlMCh2mn0wIP0zLB7nHzM/G1KPusJv5xaBsXhVyax1Dd2Ewi9ksl6cub
-         VjatRKz7/aYmJEAc+JVw9QkYYL23W6WiMeaFfO48xzjgeQm8i6Yxag6AwagIy9ENjZU+
-         +ebvhW4S81nnAyAGlSi0QUo0DPKlbGme0tpkR6wcZqlLYakWvlAYjTOUvSTQ0GJDwNqz
-         4zCQZCT72rsGrmHTzTOmAMVmNfDu5t1b9gzUrgKlOwupoIzvlJwAqSsHvsWuC7TGr+Uv
-         EObw==
-X-Gm-Message-State: AOJu0YwEn2luJcqn0R9otaoHTp4TJi/QZRLJ1sTd93R4zLn+0dbTendg
-	b5N57wE+KqTeUToLSFhQ87Yp5ywx9EpJE++zimPsgvNhEXzcME5E+wRa4zd+fEgsJvnKpiTz7au
-	FXhPT8HP5fR9/1IwgwOQpieB0jgcSXzA4
-X-Gm-Gg: ASbGnct8IuKHQFEduDJJlbrgSHd21H7wpWXJpFdMssqo/ZeZm+u/Tr6OPd1EQO21hLo
-	ZEq5yYeV/tsPIIhpLltcPELzZ32oPWKzaVMRPllk=
-X-Google-Smtp-Source: AGHT+IFvxpG+NXOv5A61dlna5CmaooAZCvDGOP8XxvAMiHbXIUjYyukEW8QxS6g9Ry48NRSRx6mod/mbSXzX5TGc5mc=
-X-Received: by 2002:a17:902:e84c:b0:215:4757:9ef3 with SMTP id
- d9443c01a7336-21a83f338b0mr445458165ad.9.1737016409678; Thu, 16 Jan 2025
- 00:33:29 -0800 (PST)
+        bh=BNXNaJPrLaVh71U6ZAS/ut5kjwWZUhZNvVFUdu4VP/0=;
+        b=nKLXUe42G3RaSzHQ6RfWM/7v3sZsf3HXmtQurDHYRuecZWEdtshRWUrZ4Zxph56kPo
+         gxPvYoxZZb09TUuHyYc5gX67ikb82fkrN9YW/2KPGBrTGBzjkBzcXCE87DJZHt+JC6Rd
+         0NGZPMQNgl3G2MHqozhFOZWtbRTrrlLFgUhjPWnBZQt+RVJB7exXPLU+Xk3lR3XDv3LB
+         CAHjJ5/rd387RtrMFG2I14xJKefZpcKgQxFOE5+zqsQBq7chXe3ARekp3y6iNSil4APu
+         DW2U7Oqn6XMncADnOIMT2p75qcNSIjB98G5j2QJdJpRVIagKkl7NajgQshpTFYIUpVJ5
+         JjSg==
+X-Gm-Message-State: AOJu0Yy3u+vc4rw2mNCd7yc7ogLfHbnizdnY2dUsfgN+4DUrZy0kBsql
+	zKd8WZJT4KS0mlopTMclR4P1jtJw2NYdadabm41AfYcnUlp0Z7lJmuCO3qZTQKA6N2n+pF3tz8U
+	+SOOvVMKx8ENfiMVDa3UPjXkPuD2DvhW0
+X-Gm-Gg: ASbGncuV37A8NFNTOjjS/5fcJhUlM70yDBpYc65eL0uiXNnfHtpKiVWkrJBqdgJLYMK
+	/5sSLVRaFh7lQNzt1E3dCX5H947/hA4a0SZeDVLs=
+X-Google-Smtp-Source: AGHT+IF/nPiAb1wMEpET/LqZeuF8J5erNMVR92wUk9S3MYan2LL+UpR+ijs2yWmKgsXIVQbTOjwhACEQCO8r1cBn0P8=
+X-Received: by 2002:a17:90b:270c:b0:2ee:6e22:bfd0 with SMTP id
+ 98e67ed59e1d1-2f548ee48demr41516720a91.21.1737016432525; Thu, 16 Jan 2025
+ 00:33:52 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 16 Jan 2025 03:33:27 -0500
+ HTTPREST; Thu, 16 Jan 2025 03:33:51 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z4foAvj_5meT-a4P@pks.im>
+In-Reply-To: <Z4fn_cTzEl_vZ_Rw@pks.im>
 References: <20250114-b4-pks-compat-drop-uncompress2-v2-0-614a2158e34e@pks.im>
- <20250114-b4-pks-compat-drop-uncompress2-v2-3-614a2158e34e@pks.im>
- <CAOLa=ZTvW2T3rds3YN0m9iWQC+sAaSCsiRw+fo57FqqF24pMaQ@mail.gmail.com> <Z4foAvj_5meT-a4P@pks.im>
+ <20250114-b4-pks-compat-drop-uncompress2-v2-9-614a2158e34e@pks.im>
+ <CAOLa=ZRiRWubZJHvzgag8Ypaeye_xzZ9e5bdZxRBQFL_qhzb1Q@mail.gmail.com> <Z4fn_cTzEl_vZ_Rw@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 16 Jan 2025 03:33:27 -0500
-X-Gm-Features: AbW1kvbjmwImcrs4QUkegi1ikS1xkDZEC1hhYvNjhoPiBhyefJvLNeQv9vTZJoo
-Message-ID: <CAOLa=ZSPen6zhAQGmwVVZRDxO5ZWJ2==ABNYsma_VbXP=7JLJw@mail.gmail.com>
-Subject: Re: [PATCH v2 03/10] compat: introduce new "zlib.h" header
+Date: Thu, 16 Jan 2025 03:33:51 -0500
+X-Gm-Features: AbW1kvYfWkVOjKHQ2ex8UFRy-6NEAnHn-ePudBrJBU5WOeUhXvTAkApmgjnmvtw
+Message-ID: <CAOLa=ZTVPVzy1SXvzsnMvCPNF_UtmyG5TXb2yijvzUF3XtiZ=w@mail.gmail.com>
+Subject: Re: [PATCH v2 09/10] ci: switch linux-musl to use Meson
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Content-Type: multipart/mixed; boundary="0000000000001180e1062bcea66e"
+Content-Type: multipart/mixed; boundary="0000000000006e2622062bcea784"
 
---0000000000001180e1062bcea66e
+--0000000000006e2622062bcea784
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Wed, Jan 15, 2025 at 02:00:15PM +0000, Karthik Nayak wrote:
+> On Wed, Jan 15, 2025 at 04:25:58PM +0000, Karthik Nayak wrote:
 >> Patrick Steinhardt <ps@pks.im> writes:
 >>
->> > Introduce a new "compat/zlib-compat.h" header that we include instead of
->> > including <zlib.h> directly. This will allow us to wire up zlib-ng as an
->> > alternative backend for zlib compression in a subsequent commit.
->> >
->> > Note that we cannot just call the file "compat/zlib.h", as that may
->> > otherwise cause us to include that file instead of <zlib.h>.
->> >
+>> [snip]
 >>
->> TIL. This would be an issue if we added "compat/" to the list of paths
->> the compiler checks for headers no? I couldn't find anything in our
->> Makefile doing this, or did I miss it?
+>> > diff --git a/ci/lib.sh b/ci/lib.sh
+>> > index 8885ee3c3f86c62e8783d27756b8779bd491e7e6..71d85ae85a02e5a4389e133ed53f45a5042af36e 100755
+>> > --- a/ci/lib.sh
+>> > +++ b/ci/lib.sh
+>> > @@ -378,10 +378,7 @@ linux32)
+>> >  	CC=gcc
+>> >  	;;
+>> >  linux-musl)
+>> > -	CC=gcc
+>>
+>> Question: isn't this still needed? I thought there was no way to specify
+>> the default compiler in meson and as such it is better to be explicit
+>> about which compiler we want to use.
 >
-> You did :) Most platforms don't, but we do with MinGW and Windows. This
-> is done in "config.mak.uname", which is probably why you missed it.
+> We already default to GCC anyway in "ci/lib.sh", as we have equivalents
+> to the following for all CI systems:
+>
+> 	CC="${CC_PACKAGE:-${CC:-gcc}}"
+>
+> I'll mention this in the commit message.
 >
 
-Right! Thanks for clarifying :)
+That would be useful. Thanks!
 
 > Patrick
 
---0000000000001180e1062bcea66e
+--0000000000006e2622062bcea784
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 6732caae053dd6ff_0.1
+X-Attachment-Id: a23fbf3bc60a8405_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lSXhGVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMWZmQy8wVjFTQVFYQXFIVlZrbFBBMldyV2VBb2ovVgo2Wk5TVGpvWWJj
-d0U2TGxuZzVya3NXT3lMeDh2ZUxpRTdzTW9KZW5mbUZ6eWRFYWVhcjM2YWtsNU5LZTZzenVHCnI5
-Rm9IZGNKREdSbWd1SXZGOHNKdGVSdDlwRjdQZ2FzVzZWQWQwQ2hvdDIzTzdmVW8wTitVTlg5bzBs
-YzhMUWkKenVsYzFyQnpGMURhc2FCMEFqUDhQTjR6QzIvc2RNc1FqWjhsZ3h0ZktXRlo2L2xvNHph
-RXdOWHllOGtWbHpLQwp0WkRtSlQxek9JaytHR3ZXQkhYWktxbUh0b0g3UlNZa1pYS3ljc3ZFNW4x
-OS8zTlVjNGtRdHRJcFJURGhRSGh1Cnh1S3hVSzJpWmdFZVVmZDZjRytTa0QreW91U0ZDNjIzRjJP
-dnlTbVdHTHRObWFuYzdaVjMyempGanJYaXhRUnUKN0RyTUE2UTNiTVU4WUdxOTVaOEF6eU5pUjJx
-VmxlYnpsUmdndHNsdVdFTjF3SXRuNGp2MzBmR3dwYWlpOE1kYgpIVnFpWGpRN2VUSTU5VmVVVUxa
-bGx1ekFZTDI4NVhKbzNNNGpUVDFVZitrZGYyNldqUlRGMlNIRWFwL1RzY3BGCkdPWUFrNFlZYndx
-NGFqcUVHcFV2cXBZVWxrZ1RKbDRVSnVxYmRkQT0KPWlPVm0KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lSXhHd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMCs3REFDSW1EampWY2pDYkROYXVnRGZIU290SEowMAoraDVQTXRPdmVK
+Q1VneGFZODdLcXQyOGVhMjN2RlFrVUF2QWJnNFc0bHh4K3FrTHJiaHEwTlNubGIrcENQOWw3CnBD
+d0lielpicllzM2Y4NHdiOVg0RVhKc1dJQ3RlT08vcWN2OUUzSzR6Z0NJMnhJdGZiSUF2UmQrb3d3
+a2gvQmIKZE83THlGVjU1RzdsZkVab1ZQOWVyMW5ZT2xDYVpnbDBwOURGN1dQcjhzazk0ZDUrMXdy
+cTM1aGxuVFg4aWFlQwo5Zm5FZUp0ckJWRWdhWHhMSFhIUzFVVXJwdW8rcUV5ZXh6OVVSNUdUNHVP
+cFVYNURiVlJRczhtRG4wVzBPTEJ0Cmt3aklENHJ1S3pEWS83cGNqanRpaHIyVGRiZHkzdjlWTGdB
+WkN1OXN4b3dDL2tPNlhBai9WMFNabEdlaThKVlUKQWMzUHZHVEMrZU5BT0Vla21sQTFjb1J6QnVj
+MlphSElZYUlBc2NmeXIwQ2NHTEdHbEU1MGtrM0ZqWmRJSW16SgpzWllEL3lEcXNMWUdKengxd3BW
+MHArTUd6eUQzNVc0SGxSdXdNaE01djdKUEtGUWNMZGhVUUV4M3g0RDlCL0pkClZaMDAwcEpkM3VG
+TDNUNTlWMWJaakJJZEZNOWtlZjVCc0FnbE9rYz0KPXo4b3oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000001180e1062bcea66e--
+--0000000000006e2622062bcea784--
