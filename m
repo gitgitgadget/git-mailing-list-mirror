@@ -1,54 +1,54 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E485674D
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 01:25:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1217081B
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 01:25:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1736990734; cv=none; b=Xx0USO3LBixchWYy/FHZDdmmgXAkqkp5jcgOxqJbbHQ6l/DPe9E2v/JYzwLKXdhVvx4xpr/bzxMyaJ12RdftDW9U8QpifBv5YLnmv6LbjFc4IaEr8/n+2b67c+aEiVS5hO/5QUp3nLnUYRp+rcaLIlYKWsbAAKozlMUFVfKjdpU=
+	t=1736990736; cv=none; b=UkmsyKq2pFmKiQi2N1Jz0c2ZrG5z83pc5XcQKePheAcAxXuQNNtsXsvqGziT9zRGd/3gy8HKJkzCa1bTHcVpMOCDeMIQo+1IAFe6H7HC2T8mNDG/i9LpEwZJh+WyxorCS39BzvLJOZN4ZCyqhMeoZ9GdZBLfJeMquml/kT/uxYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1736990734; c=relaxed/simple;
-	bh=j6gWbIZNNEh6chUr5makqZtgofiUG8MRhH3YWkHuWMk=;
+	s=arc-20240116; t=1736990736; c=relaxed/simple;
+	bh=019usVTayZ8lqBWWQi44x9IxpqT3MkJIqemZOqXxtmM=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qbv42CxQPwDrnPzBR5liMj59bdOZQxHEEjVItu4nt3TyYg43ovtI4u3M52qoM070Sl5Y7PgpxIXoKDVRn6BcPoJUUlfOW5gXzjiJg34rs+Yl0Bm+JXotfDkcdycGznuT9hUdCFLvqRkVfzqRA129nI5ygsBdQubCX2uNM4VK5rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pUTwiQPf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hfSnHRE0; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version; b=JJxO6i3ERxdtAK54oUN/ukjFKg0YmofOVc7So+TydMaU1v5RuHTgzlAnbYA646551JlyyKzXsZ+xy40fDsJWb1ucs2XFwAV6lA4ioFYRokbI0/aMyIzCgJ1D8+GB2b6S60f6hC75KeJdox65idUyKg0sFlyEDRDASBD9QONRxg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LuOhI1A7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z6wENsLY; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pUTwiQPf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hfSnHRE0"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id F1AE41380231;
-	Wed, 15 Jan 2025 20:25:31 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 15 Jan 2025 20:25:31 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LuOhI1A7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z6wENsLY"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 62C8C1140190;
+	Wed, 15 Jan 2025 20:25:33 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 15 Jan 2025 20:25:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1736990731; x=
-	1737077131; bh=jq76kOpYlSZD2g37Q75mprLnNU4RxLxhMWf/1vvAlRc=; b=p
-	UTwiQPfZKircrsi3L3NlIm677GizVn2tIR6lvMHkTdf1oxT/iqs881cjJ6A0SBkv
-	XP3s2ZQ6/nmOtVstXeBy+bW4SG8ARV/mNLGffXCJHNCkRfvBZjyqec+Zl6V5yajj
-	O13haDL5NVIWyLehcg1jFgls9uzzSzMWFhwQRfIMOjsK6hBMSG2SnTRFKj2CIahD
-	nYTQhb+soW7wHZgST3clPZWKMmG/ROIvS8402syEHqRmkiHY856zQiaAVPS/DWK5
-	Zvuazn66WyQYS3TAQOSYaLxVlOOvv9dt++PNLCMVGoaj8alyQk+TsTXcaknI0aMQ
-	jyeirAXILv26qKIGDFHqw==
+	:reply-to:subject:subject:to:to; s=fm1; t=1736990733; x=
+	1737077133; bh=UktsyEHPiLei5xnLVXGpFIw42qAhxzrafqObFfiKBqk=; b=L
+	uOhI1A7lepoOPJluo3IQuqCLz/clmgnqzWbe2diSSNUYytVIbUm+2TWRHRcV1Gx/
+	QqQOLUawVKEfLQMxz8rrT/fiU5a38HCHlzNnE4tQ1Oit66N06Z5P7a3+AtffjZk1
+	7zvAFUiUKQhStE2Nc3/r9MHVcW3HGmVRwJ+HbvfocRxrseFvQnJcdBUa3UoXNhIE
+	KZ4hFyJvJma8bVzmuPykEQmYOA8+hr+nuSN+3sutBhPWi4RgFxf6Iks+Uqq5QKqk
+	b3yKSUgjEX09pQk6mmok/vGXWDnn3vNxB7HFqIbOIRkqxSuQ3n3wYSLDrA+elyaX
+	rYsgRmCFhk/Iuv1VezuwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1736990731; x=1737077131; bh=jq76kOpYlSZD2g37Q75mprLnNU4R
-	xLxhMWf/1vvAlRc=; b=hfSnHRE0ce/eVCkl6PIvAnetsQb7SP7IoUZRYxFX8WJe
-	ZwvZf8YltkM85dDHmUzZPJNRVUmDotYCIoNl2wfMpUDVz6KNCv/STconE6AEqrbb
-	JfaybzPpnGFFUBwU9dfTH3keP6Zdf6FTKx+sULBZQx5xc12A9pDZ/NR7KvlmvJjt
-	kITkprOXKFoqdtk7Ey3/olDSlESQR27EoZn5Sd8TaFF1pVuaQsM5GYYTyS/YDvbK
-	vyHCEKAGcACcZSE5wnBpzwlU9J41zKHoSK0ubg8cPsPDSoQ/TCYSV7Qh8NPQY4HZ
-	OIsSUfyFkaQFghTMPqxp7oR5dCQ6pR3RiQb6NqJQzA==
-X-ME-Sender: <xms:C2CIZ6dKcARJ0_E3zVgFNJZIg37RiJagquJGD3heVZi1-tiSc-jnNg>
-    <xme:C2CIZ0Pvy7IGUhy0K0xHbPseFTW3k12jhoTwCkp-XTuhGTq0Op55mDNB2YwLZc6OL
-    NlhRIhdTaNSd41Jhw>
-X-ME-Received: <xmr:C2CIZ7hp7_yssU0MsySxv2tSF28S_HN7z-lr-c58bbZN8CBcK4MxNSEGix38_4NBUZVMEh7Tv6_l0DvhezIqLhjgT82tUJ4EbKWu>
+	fm2; t=1736990733; x=1737077133; bh=UktsyEHPiLei5xnLVXGpFIw42qAh
+	xzrafqObFfiKBqk=; b=Z6wENsLY9ofyqomakMA3CbAcVhgKGPA/hvphQV9JYk8+
+	QGkX93pR8qgHA+9X5JzWGesQDXXgHQW/ut0+9aTgxVlFpstnEPbGoVwBImXynw3s
+	ng0/l9d84s0LRZT7a4rTp8KUgiULgsojYPJaDxU7pLFr0wQ8BzdP2B+RfZc6w67o
+	+XlnWdbDDM/nUUqgVCl4Rsqwl2to/Yl/m0WbM0Ubc5/fwIAktfwSEjBcO5ZqKbhr
+	gytnX1ATxLG98QNSJtuBF5ljaQ2C//x7JIYIoL9rbf+tw+VRP8gBBHNwMkdIgOGN
+	4ac2r9+oCIxJf4pbqsZvgnLtJdj9XuCZBFpd+wJLLg==
+X-ME-Sender: <xms:DWCIZ4QKYTUSX0xsfLXEbN7PMUBsK6vcGwtnumsQ6oQFTY5AfHnWWQ>
+    <xme:DWCIZ1wualsi-VymgtI5-GQRli1eNyF0XNGyYoknA_-eAytJ58gIuH9hXpAFOhNq0
+    jBgBWZuW8MKnGDB3w>
+X-ME-Received: <xmr:DWCIZ129DM5Jr_jlxP6XEhjiBJwH99jOscbT6APQyR480Ywhd_SuNHLVxghY4-WxuKHz-0ShRVGpO8aHCjIBbxM8vK_7577EWBo7>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeitddgfeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvffuff
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeitddgfeefucetufdoteggod
     hosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhr
     tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
     htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:C2CIZ3-_bhWTcSz0x0xqPV4x1ek7YVJgUm1Gkz6VzqeUHVo4ByCrCg>
-    <xmx:C2CIZ2tni4cT2eLseG6fnBpSVkFRlbxQtpy4t8TtrHp-WnPOpET8-w>
-    <xmx:C2CIZ-HGz5aFs1POcv2f3pfSELBY94e-8Y35rzwgqnFm0Ysy7HOI9g>
-    <xmx:C2CIZ1NlL8vNM9_XOgvtnVr-qXDRzUnvvbIe1DT90WNJgjUjSVRwHQ>
-    <xmx:C2CIZ_7WdTLdHBf1PgpeLlDVwyCdeZ3MVW4AA-PonlBUIGa4Sfgiddjp>
+X-ME-Proxy: <xmx:DWCIZ8CaLarueaNtfwDrlM8FNrEYW6LJoxmYLcSa0glfsbHpM1mUfA>
+    <xmx:DWCIZxgot9NFfPDv6uIsI5-sz80_5XX7oARXocvo9oATMkOWQnBDJA>
+    <xmx:DWCIZ4o-CPpHR5g59ZJ8Rurag5bAM-2sWQCDiWPprJ7gZBQX8dN6Ng>
+    <xmx:DWCIZ0guiKOXufJz5IvsplIPTeewKGpFpY-y4MFtmKp2t1HlJL1gEw>
+    <xmx:DWCIZ0sgxnxgOOhlM1LnK6Rp9BpHDGBa3hpTzIxGBVeQaH_YywGPG4Fo>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 15 Jan 2025 20:25:31 -0500 (EST)
+ 15 Jan 2025 20:25:32 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v3 4/6] usage: add show_usage_and_exit_if_asked()
-Date: Wed, 15 Jan 2025 17:25:21 -0800
-Message-ID: <20250116012524.1557441-5-gitster@pobox.com>
+Subject: [PATCH v3 5/6] oddballs: send usage() help text to standard output
+Date: Wed, 15 Jan 2025 17:25:22 -0800
+Message-ID: <20250116012524.1557441-6-gitster@pobox.com>
 X-Mailer: git-send-email 2.48.1-191-gafe818080f
 In-Reply-To: <20250116012524.1557441-1-gitster@pobox.com>
 References: <20250116012524.1557441-1-gitster@pobox.com>
@@ -83,100 +83,106 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some commands call usage() when they are asked to give the help
-message with "git cmd -h", but this has the same problem as we
-fixed with callers of usage_with_options() for the same purpose.
+Using the show_usage_and_exit_if_asked() helper we introduced
+earlier, fix callers of usage() that want to show the help text when
+explicitly asked by the end-user.  The help text now goes to the
+standard output stream for them.
 
-Introduce a helper function that captures the common pattern
+The callers in this step are oddballs in that their invocations of
+usage() are *not* guarded by
 
-	if (argc == 2 && !strcmp(argv[1], "-h"))
-		usage(usage);
+	if (argc == 2 && !strcmp(argv[1], "-h")
+		usage(...);
 
-and replaces it with
+They are (unnecessarily) being clever and do things like
 
-	show_usage_and_exit_if_asked(argc, argv, usage);
+	if (argc != 2 || !strcmp(argv[1], "-h")
+		usage(...);
 
-to help correct these code paths.
+to say "I know I take only one argument, so argc != 2 is always an
+error regardless of what is in argv[].  Ah, by the way, even if argc
+is 2, "-h" is a request for usage text, so we do the same".  Some
+just do not treat "-h" any specially, and let it take the same error
+code paths as a parameter error.
 
-Note that this helper function still exits with status 129, and
-t0012 insists on it.  After converting all the mistaken callers of
-usage_with_options() to call this new helper, we may want to address
-it---the end user is asking us to give the help text, and we are
-doing exactly as asked, so there is no reason to exit with non-zero
-status.
+Now we cannot do the same, so these callers are rewrittin to do the
+show_usage_and_exit_if_asked() first and then handle the usage error
+the way they used to.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-compat-util.h |  2 ++
- usage.c           | 28 +++++++++++++++++++++++++---
- 2 files changed, 27 insertions(+), 3 deletions(-)
+ builtin/credential.c     | 3 ++-
+ builtin/unpack-file.c    | 8 ++++++--
+ builtin/upload-archive.c | 3 ++-
+ builtin/var.c            | 1 +
+ 4 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e283c46c6f..6edf50bc95 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -701,6 +701,8 @@ int error_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
- void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
- void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+diff --git a/builtin/credential.c b/builtin/credential.c
+index 14c8c6608b..8a8cffecc8 100644
+--- a/builtin/credential.c
++++ b/builtin/credential.c
+@@ -18,7 +18,8 @@ int cmd_credential(int argc,
  
-+void show_usage_and_exit_if_asked(int ac, const char **av, const char *err);
-+
- #ifndef NO_OPENSSL
- #ifdef APPLE_COMMON_CRYPTO
- #include "compat/apple-common-crypto.h"
-diff --git a/usage.c b/usage.c
-index 47709006c1..26cd54a511 100644
---- a/usage.c
-+++ b/usage.c
-@@ -8,7 +8,7 @@
- #include "gettext.h"
- #include "trace2.h"
+ 	git_config(git_default_config, NULL);
  
--static void vreportf(const char *prefix, const char *err, va_list params)
-+static void vfdreportf(int fd, const char *prefix, const char *err, va_list params)
- {
- 	char msg[4096];
- 	char *p, *pend = msg + sizeof(msg);
-@@ -32,8 +32,14 @@ static void vreportf(const char *prefix, const char *err, va_list params)
- 	}
+-	if (argc != 2 || !strcmp(argv[1], "-h"))
++	show_usage_and_exit_if_asked(argc, argv, usage_msg);
++	if (argc != 2)
+ 		usage(usage_msg);
+ 	op = argv[1];
  
- 	*(p++) = '\n'; /* we no longer need a NUL */
--	fflush(stderr);
--	write_in_full(2, msg, p - msg);
-+	if (fd == 2)
-+		fflush(stderr);
-+	write_in_full(fd, msg, p - msg);
-+}
-+
-+static void vreportf(const char *prefix, const char *err, va_list params)
-+{
-+	vfdreportf(2, prefix, err, params);
+diff --git a/builtin/unpack-file.c b/builtin/unpack-file.c
+index 6da2825753..307351af55 100644
+--- a/builtin/unpack-file.c
++++ b/builtin/unpack-file.c
+@@ -26,6 +26,9 @@ static char *create_temp_file(struct object_id *oid)
+ 	return path;
  }
  
- static NORETURN void usage_builtin(const char *err, va_list params)
-@@ -173,6 +179,22 @@ void NORETURN usage(const char *err)
- 	usagef("%s", err);
- }
- 
-+static void show_usage_and_exit_if_asked_helper(const char *err, ...)
-+{
-+	va_list params;
++static const char usage_msg[] =
++"git unpack-file <blob>";
 +
-+	va_start(params, err);
-+	vfdreportf(1, _("usage: "), err, params);
-+	va_end(params);
-+	exit(129);
-+}
-+
-+void show_usage_and_exit_if_asked(int ac, const char **av, const char *err)
-+{
-+	if (ac == 2 && !strcmp(av[1], "-h"))
-+		show_usage_and_exit_if_asked_helper(err);
-+}
-+
- void NORETURN die(const char *err, ...)
+ int cmd_unpack_file(int argc,
+ 		    const char **argv,
+ 		    const char *prefix UNUSED,
+@@ -33,8 +36,9 @@ int cmd_unpack_file(int argc,
  {
- 	va_list params;
+ 	struct object_id oid;
+ 
+-	if (argc != 2 || !strcmp(argv[1], "-h"))
+-		usage("git unpack-file <blob>");
++	show_usage_and_exit_if_asked(argc, argv, usage_msg);
++	if (argc != 2)
++		usage(usage_msg);
+ 	if (repo_get_oid(the_repository, argv[1], &oid))
+ 		die("Not a valid object name %s", argv[1]);
+ 
+diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
+index 9e9343f121..3b282d41e6 100644
+--- a/builtin/upload-archive.c
++++ b/builtin/upload-archive.c
+@@ -27,7 +27,8 @@ int cmd_upload_archive_writer(int argc,
+ 	const char *arg_cmd = "argument ";
+ 	int ret;
+ 
+-	if (argc != 2 || !strcmp(argv[1], "-h"))
++	show_usage_and_exit_if_asked(argc, argv, upload_archive_usage);
++	if (argc != 2)
+ 		usage(upload_archive_usage);
+ 
+ 	if (!enter_repo(argv[1], 0))
+diff --git a/builtin/var.c b/builtin/var.c
+index 1449656cc9..6a09c1c39a 100644
+--- a/builtin/var.c
++++ b/builtin/var.c
+@@ -221,6 +221,7 @@ int cmd_var(int argc,
+ 	const struct git_var *git_var;
+ 	char *val;
+ 
++	show_usage_and_exit_if_asked(argc, argv, var_usage);
+ 	if (argc != 2)
+ 		usage(var_usage);
+ 
 -- 
 2.48.1-191-gafe818080f
 
