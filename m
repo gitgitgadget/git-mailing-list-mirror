@@ -1,88 +1,88 @@
 Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FBA22ACF1
-	for <git@vger.kernel.org>; Thu, 16 Jan 2025 13:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6970622AE75
+	for <git@vger.kernel.org>; Thu, 16 Jan 2025 13:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737035868; cv=none; b=VH1OTERBTVVI5O8RpHnnZv+8jPJRwALvTaM9QaazjWLu+7Fox2XP06JH2INARgdlKMFaKcGP5A9OnyyduAnRzjHGvEJ+mAGSnSWo0YJXLtX9zSD1x+SPwwtd72SS1h7oQhS8azzlN6GnMyulrYmyucz445ykhFWweQPiiCzPJxI=
+	t=1737035871; cv=none; b=fKmogBCGbOhPkEp/iwly5iyt9AbO90Lpx9PWerCxll8n2AzcZCWQ7tbhhe1S5juFztu5Xj9p0wEP2oydIF0P5fd+8j8swSwbrQ70DeHyHLgEj1tkL5T4iQAvrel8sppOgfNwTOr96aw7AS0aoZm4ZonOdDCQ0FYxLAUwdPucfig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737035868; c=relaxed/simple;
-	bh=FA4vTeJlKEVeWkfayF6N191ceVhkdOtU/C74RXpAVnk=;
+	s=arc-20240116; t=1737035871; c=relaxed/simple;
+	bh=rSAdPTNXE0K1Aw88VDksoVmWBs8TYA9XhBfS0m7Ph2I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MrDGilEpCiGm99VrhQ8fW3nuk+MyXFsieGpmaZDcjMYJevFaxrCtjHj/MEfrnnHQsIEx7IDvKPfrSbB1TCGA/3tCbXzjzH9nKRbgSnbc8HjO0AGCWlQ9I+Xsukl4v8ImiTFTTVZlcOJBqkr/SmCJwMsBDSTICjIQ9tWjnLSb8Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EcWZDd/d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Pn7aV+lB; arc=none smtp.client-ip=202.12.124.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=pXEFCVMyPTSj74dOUBWE3FY/Tyw10msWWhYvnDmB92yMpFEIbFbg3TNf8s9U/WnQKQ60pwtAKLPvJKT44HhgLTpYdePI/SkHdiA6VLpSsZ/v96sTP31GGZ31dDngjZ8xpXIM2ndUFTJu3J6eIaBsCsV5uvk0f35mjycx+ISmioc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qr0AuuFs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XK9fy0W0; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EcWZDd/d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Pn7aV+lB"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id EF7F11140149;
-	Thu, 16 Jan 2025 08:57:45 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qr0AuuFs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XK9fy0W0"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id A7571114016C;
+	Thu, 16 Jan 2025 08:57:48 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 16 Jan 2025 08:57:46 -0500
+  by phl-compute-09.internal (MEProxy); Thu, 16 Jan 2025 08:57:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737035865; x=1737122265; bh=eNFJtze406
-	+vJPTLbJzs2zADWDTA6P6C85XPJkdrqAY=; b=EcWZDd/d7vVokVsCxxyKEdRY40
-	PN47iePaT5x4Jh6YUPLJGeWsFuXxJ66nVpt7rd4wvNtT/4RIf4oH3wNJ55D0+6wS
-	dpYHwj+LLa1ml8CwIM2f8hHgabci7uqvqpQ+KZzdabXYAVZ3ES16MNMTjLzmGx0v
-	CS1ejUP+jRdz07tVo36raVgXIQFklv5UUj4mkg+2Pg7vPrd2Dw8Dd8nIfzYVScCs
-	Q7vs1O8MCA40qRJXbpI88wS1hOJk2JLUcFkV+cnlkOecPImM2zOCkZSDmpoLdZDC
-	ZlEu8YXPSrmBJi15CL599vZ+/DKp9VEVSw91zfAD4+peyRjcvJm2tYpIFIyA==
+	:subject:to:to; s=fm2; t=1737035868; x=1737122268; bh=uDHS9HUc6b
+	g0kIemtOfijRzgU2R9ADEWBnohZDJHe6Y=; b=qr0AuuFsl3Cwa8aDbZxxDqi+IO
+	f6cVazxp3Uswz6Pr7s+44z9BSAUblzM/pshNnqKmLu82Xs4+fBIToolMzIK8g2Xw
+	r5jUAgzqWyC5i4M9wr/F3EX7AuJDczsVRWmfDe3SN1ZZ0uysxdpznkoM+r0WDt7k
+	btGFblnPjX27fsZcVCUbV0BwWBt/qhaVZO8TlpwHoHbv5Zi1R8h87rTlxOM1hQze
+	ER6AaMCcubnZLCtLSTwZCGWf5hUdWemJkwb/rFXqd7tjPmoQDYaqIHnuadLOobGb
+	GmRjvhUV2XBRQXGHwz8Cbzvh6Xa758TEgVz7yju0KFdS8PpCyyDIWQGppG/A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737035865; x=1737122265; bh=eNFJtze406+vJPTLbJzs2zADWDTA6P6C85X
-	PJkdrqAY=; b=Pn7aV+lB/zcOUjNjpzstBOjxKy/aIwivsKWZpeJZBUUOy6apb+U
-	9ykdBb7c3U8dR8rJWThyZeFYiK9aBDHG5iYMoJr5MQKiFSvyOvhwMjmsSUla+2CI
-	2j6skWFdj0Z7SnT8UqtbYLvL+eYSzor0Fos9a/UGxzN4hUfvBQabgcfxQPbMTLtw
-	PqegnvAyuO/xIHkF840JjdqvnvFf+YV3lB2q5UyYhg2iH/uEcZip7YPo4FrsBgun
-	fmnL3FG/OxrJTPM4J0SbKLEHvMmUA9OxkcMIkwDRGruU6MJX4QWo42EkQQFji2V3
-	Z8cD4tsUE1Lh7TggpqxfWOjlXXrWF/Uud/w==
-X-ME-Sender: <xms:WRCJZ0kTBPu9Qfe-Yje48bjVuHshGTnzNY20bCDbvirRD2d3B1_ISw>
-    <xme:WRCJZz3oUeckF6hSLsmaRYWw9MH90PV6-zspccnBZTy3O0_2RKRWipG_Uiu1bqpX8
-    UvO4ue-Lq8jRp-zYw>
-X-ME-Received: <xmr:WRCJZyoIIwo5CWRPneBdFNOQnide1v337ApZycl7o8zvuuaQh6fcOxfLICZTixed9Bat74RzaJ_yva7DpmNIP66-HTHuG_zQHed6L-FJQcepuCvxYA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgheeiucetufdoteggodetrfdotf
+	1737035868; x=1737122268; bh=uDHS9HUc6bg0kIemtOfijRzgU2R9ADEWBno
+	hZDJHe6Y=; b=XK9fy0W0To51oaRcrcbyQujYdBdrVDH3a/SypQwF0IPhJ0Yrf2u
+	ByBvc6JRB34TIZ4Vb2MaIbunlBzyNi1OJUtjK6/w8zGnRqWQcIbA1iR1zbYD0toW
+	25fU/n3jAkitUiMZobHHPR1XGZ0exyvVsHj0xsyG109w5LhczuFu5G4vV+2aj3C+
+	XOpXnk5vUmKjRTuL/mDlA4z/XLT2eA4y08FoML2GJwrM9Kai5pXLi/pvOWtvpxJA
+	/axOktgd5fpB4jwvKIm+XeeST2bGEE175CtPRQYPnAyt+AtnNhIeO/PIiqXoSyWq
+	10SE44basiDkRp4j4mRIQyVSsURDG5FbAsw==
+X-ME-Sender: <xms:XBCJZ9iMOz38vV5cICAbGW-LpxtTZPQlyKtc1unwAsEVHkftZFr90g>
+    <xme:XBCJZyAk-wHvI_3lLqbko29xCJiCtG1ao6Y0DPLWqdGckq7rxxhNPQQ2NPg-OpSq7
+    wMHcU6nuUyyaWYRXg>
+X-ME-Received: <xmr:XBCJZ9F5Q393iy16yyggiNjOwMZhjS9VwAtDe28GKCNVnRmo-lM--4XkiTvyiRAzqEseQ-OXfBJwxDk6Uphy-KDgvfRkc1OnOXWmDVXbUCMeVzMktg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiuddgheehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhhhrghg
-    ghgvrhesrghluhhmrdhmihhtrdgvughupdhrtghpthhtohepkhgrrhhthhhikhdrudekke
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    mhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprh
+    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    mhhhrghgghgvrhesrghluhhmrdhmihhtrdgvughupdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
     rhhg
-X-ME-Proxy: <xmx:WRCJZwmi2wHxsxO7ki-aKEu5DsxeGvgfsM3eSo3XbaYGX7nmi62ayw>
-    <xmx:WRCJZy3Yp4hARkOyTomql3NvqZtFgB9muM7Ftruoka28F-P5kJfi2g>
-    <xmx:WRCJZ3sVEsxfKdfMZof1-FCGsTSnoWATaL0ArmsRBgneJWZZMHkgOA>
-    <xmx:WRCJZ-U4AQ12ImNBgnAAnZ-M_p1bcOUcvuOatleEW61EJ-uFFat9jw>
-    <xmx:WRCJZ-_EQDIpD-60Mr4ERXAd3AlSeI3HArG6k3fUqJn7ULFEN0DPPAxQ>
+X-ME-Proxy: <xmx:XBCJZyQQvJ4hTr5iK-wthIM_oC5n6w_hDX9fTmgJnPMU2t8wkU4oNQ>
+    <xmx:XBCJZ6z7BuKJwYsbonqWVSuIiapUocGPuuaeifpJLP7M0LzfqE9x4Q>
+    <xmx:XBCJZ45MjC7TSmuTyp3xEUG5eQBhqPt1gHUfUV9CX2D3V-DnVn_nhw>
+    <xmx:XBCJZ_y9CQjk80w_bBeiK6dtQK9sfJCK-l79Zp11R1ZkcO7lyrBgdg>
+    <xmx:XBCJZxrIk5AlahjEZ9Cd9APIQCwNC453rdcb4jGuLpO0N0ZaouQl5RGE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 16 Jan 2025 08:57:44 -0500 (EST)
+ 16 Jan 2025 08:57:47 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d329bb7a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 16 Jan 2025 13:57:44 +0000 (UTC)
-Date: Thu, 16 Jan 2025 14:57:43 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 348dc613 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 16 Jan 2025 13:57:47 +0000 (UTC)
+Date: Thu, 16 Jan 2025 14:57:46 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 06/10] packed-backend: add "packed-refs" entry
- consistency check
-Message-ID: <Z4kQV4Nve632rJ3s@pks.im>
+Subject: Re: [PATCH 07/10] packed-backend: create "fsck_packed_ref_entry" to
+ store parsing info
+Message-ID: <Z4kQWgYXePBDthsl@pks.im>
 References: <Z3qNUizvHJLgMx1y@ArchLinux>
- <Z3qOB2_zrDHOh-Gx@ArchLinux>
+ <Z3qOEvyeoc7vOW73@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,62 +91,24 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z3qOB2_zrDHOh-Gx@ArchLinux>
+In-Reply-To: <Z3qOEvyeoc7vOW73@ArchLinux>
 
-On Sun, Jan 05, 2025 at 09:49:59PM +0800, shejialuo wrote:
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index f6142a4402..6e521a9f87 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1822,7 +1822,96 @@ static int packed_fsck_ref_header(struct fsck_options *o, const char *start, con
->  	return 0;
->  }
->  
-> +static int packed_fsck_ref_peeled_line(struct fsck_options *o,
-> +				       struct ref_store *ref_store, int line_number,
-> +				       const char *start, const char *eol)
-> +{
-> +	struct strbuf peeled_entry = STRBUF_INIT;
-> +	struct fsck_ref_report report = { 0 };
-> +	struct object_id peeled;
-> +	const char *p;
-> +	int ret = 0;
-> +
-> +	strbuf_addf(&peeled_entry, "packed-refs line %d", line_number);
-> +	report.path = peeled_entry.buf;
-> +
-> +	start++;
-> +	if (parse_oid_hex_algop(start, &peeled, &p, ref_store->repo->hash_algo)) {
-> +		ret |= fsck_report_ref(o, &report,
-> +				       FSCK_MSG_BAD_PACKED_REF_ENTRY,
-> +				       "'%.*s' has invalid peeled oid",
-> +				       (int)(eol - start), start);
-> +		goto cleanup;
-> +	}
-> +
-> +	if (p != eol) {
-> +		ret |= fsck_report_ref(o, &report,
-> +				       FSCK_MSG_BAD_PACKED_REF_ENTRY,
-> +				       "has trailing garbage after peeled oid '%.*s'",
-> +				       (int)(eol - p), p);
-> +		goto cleanup;
-> +	}
-> +
-> +cleanup:
-> +	strbuf_release(&peeled_entry);
-> +	return ret;
-> +}
-> +
-> +static int packed_fsck_ref_main_line(struct fsck_options *o,
-> +				     struct ref_store *ref_store, int line_number,
-> +				     const char *start, const char *eol)
-> +{
-> +	struct strbuf packed_entry = STRBUF_INIT;
-> +	struct fsck_ref_report report = { 0 };
-> +	struct strbuf refname = STRBUF_INIT;
+On Sun, Jan 05, 2025 at 09:50:10PM +0800, shejialuo wrote:
+> We have already check whether the oid hash is correct by using
+> `parse_oid_hex_algop`. However, we doesn't check whether the object
+> exists. It may seem that we could do this when we are parsing the raw
+> "packed-refs" file. But this is impossible. Let's analysis why.
+> 
+> We will use "parse_object" function to get the "struct object". However,
+> this function will eventually call the "create_snapshot" and
+> "next_record" function in "packed-backend.c". If there is anything
+> wrong, it will die the program. And we don't want to die the program
+> during the check.
+> 
+> So, we should store the information in the parsing process. And if there
+> is nothing wrong in the parsing process, we could continue to check
+> things. So, create "fsck_packed_ref_entry" to do this.
 
-It feels quite inefficient to create a separate buffer for every
-invocation of this function, as there can be many million refs in a
-repo. Might be something to avoid by passing in a scratch buffer.
+This step can be avoided if we made the check generic.
 
 Patrick
