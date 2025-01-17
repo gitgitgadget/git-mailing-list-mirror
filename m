@@ -1,77 +1,79 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB1E1D5CE5
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E448B1FBCBC
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:56:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737107781; cv=none; b=d1ZvN31pJb6Z3o1+2L5/K8IV9eaqZwAp56v2oq3p70PD5ZUtF5sibIddMt5hOEDFnHh2b+g8K/bA79YqXzrW/2v6AqrFMpfb/vheUOSBG62uziQZKKUDogtk2pHSYmFwag/p1TpJ6q5ZH9Jk8ClEA2EWh187frzs1xZDCHMmR1g=
+	t=1737107782; cv=none; b=d6WzhLYP6T93xUT/5C+5BJw0uuKsWSFdNo1MaQB1EudAS3uhhVTQ2G3MO+vRmJT/ib7XGpjYC6kGsiaktt/NyKMCW5Y2x+gQZCpVBSTGOReWxVe1M344nQGIHPU7BUA2kWRsL0AaY28g8HGbgOk86DiexgG9VCxO3YFI2V5/YVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737107781; c=relaxed/simple;
-	bh=W7SbDz3jicbv72BA9YaJ2pzNRGLd4kXdGyIkQTERvS0=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ieSI1k6FqZM+uUDPUn/8Ci2z3rV22YsZ2RWG/zycUz3wJ5n9Y/+QZ0Ym880kvfmGQl2wTOgoSfsbiiJsX3YRN4TrEhcEHL0k/E1qSGHCOMTiAi0xm8L3sOb5E2gdZPDwurTkYOtMqfkJ3bzvokHh4eMRqVBdd+5g32+0jZQLLw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gzlIQX9h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RG3pLAM/; arc=none smtp.client-ip=103.168.172.151
+	s=arc-20240116; t=1737107782; c=relaxed/simple;
+	bh=LWBJzbwp59oZ09VLdGzE1LPkvqlsEcxeebN2k+S2HP4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=gejzpNW0JfTCl3t+6QunZ9omgpSQf6IwUOVvjra0Qi50pT8JXs8wN2c7w5mwKf/f80imn8HxEHZQe4Zs3IwJctDTexpAxeJmC9E3zSzRXSK57/joxynCyzdV2K+4PZo1J5IAbPmckVIHyhsMI06wSs0ekTfr+U+of0I9D5We7LE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m9FiNr+g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YwB8kege; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gzlIQX9h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RG3pLAM/"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id A79211380217;
-	Fri, 17 Jan 2025 04:56:18 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 17 Jan 2025 04:56:18 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m9FiNr+g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YwB8kege"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id E93E31380854;
+	Fri, 17 Jan 2025 04:56:19 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Fri, 17 Jan 2025 04:56:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1737107778; x=1737194178; bh=iCC7Xk+pnB
-	AIGSnmNi/mWbBEOfWPXnneZKYaYpksE/o=; b=gzlIQX9hVomy0FOAEndvnae4eN
-	jyM5X3Up3InPrpnXlWFonI3+C1ttRkv+DkWZ02rTkLpyKka6jRHv9dqg7x/yM0Eb
-	3Nsscb9vkSMQx+O+ff0MqwsRR3+5er6Hyb6VeEyItICf5iJJCPbsuxX61xM1XJwF
-	dMVsfvZRRchjOyutc6NRux2PpufaMvdVUoHyxatvplaCIvTKR0D+jueE1RflJXC6
-	KhbNZSySYZK1EFRgQ+6SJEUzuKKXF0D8Gh7gkERSeRMlTDEVbxPaVkvBt4aoEENY
-	M1aNP9kzB/cHshL7+Ymp08Pp/ux885LNO0/Y8wjc88RGQhXnPQ9bhR5PXriw==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1737107779;
+	 x=1737194179; bh=vrcAprk0Ba89xb/9L4yFUO4WB81aPV1Fi2HUfJ3ax9U=; b=
+	m9FiNr+gujjo3Mg9T72ZzPCpi4V7l+XvjvQUQlKoouG3Hbw4qsJCSae8gYL5YUcF
+	dz/l59iLlFuYSs5giyC2uC/AUIc9Y947OSwRt5CvmTPJY8Ry0NTUioR9D655KOJt
+	/mpDfFG/w89/BiLu2oqx6ymKiihdX1j/mZ5jcD9OC1amlkKcxFqG9mv5acJ6BZ2e
+	sNTv9Yvyvy6BAKMbhAQDy4enJUCXtgznRtuKrNnShWaIqQV9/sZn57ja2m1pKKPf
+	B2LfIMCKv0ZQKTWJDgqqMQJsbUMCSdBn0rams0cm5xJhzcntrikPrCgdMt/TVQZi
+	dTEtdyNYHj+/pEFohmeIyA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1737107778; x=1737194178; bh=iCC7Xk+pnBAIGSnmNi/mWbBEOfWP
-	XnneZKYaYpksE/o=; b=RG3pLAM/IVUXuGnd0m2Kl7nhUfSDwAIw+ALqkBhOMIZ7
-	FJtPoGpnUW67h/dqV23Ait2z5g2JiROQHKNDA5VIBuGioY/pB84rw7NA/ovihvII
-	pDxjaNG4far4qMdhBghzNuLDQp/tu05XVRhSjETvQNzSap58/0pHQlkL+t0H7TEV
-	oE045oLK9FN0SwJkZH6vis3TdxAY5hnRgrERKaMdIRpg5eaVER3yYo+cPd27Zfd9
-	sWva6m1OZ0IBpS8ewAm5S/cdLz6NKb1p94i4FUfmZ7KwM7b/INQJkYojkJEvXzzK
-	Bvar38atZY2RKZf7LYmuExlmTlO+y+YD9YZV4ZMhUQ==
-X-ME-Sender: <xms:QimKZx8oWkU1VGhyuLS145_ApCX5BDIkt9ArytO-Fq_j0LHsyDlB0Q>
-    <xme:QimKZ1sL-a2UENJ3Fji4yAAew9NJQbJRaq6iG7zFYuW4lJUkl-99U_TKbxMMU97S9
-    SoEqSb7DEL4pWLMbQ>
-X-ME-Received: <xmr:QimKZ_DvgSzDWTrDt98vXDReNoXGmzqhZqq0cJEnQL3huG4vhQgPrzPv-KS8LG-hZVc78ubJRS5r3REOzccP56LoQujV3zK9FRXqxGINRD6yTkw>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737107779; x=
+	1737194179; bh=vrcAprk0Ba89xb/9L4yFUO4WB81aPV1Fi2HUfJ3ax9U=; b=Y
+	wB8kegeDdQXqXqJ2vvTuQZRLm5bYlQ8SrXgeAhywHSGExlOeHAqiYtwcx1OfAyTZ
+	DWtyyBF7L/l9e8xFHtrqT7jUSs2IMm/JSTJG23V8B0NT5esn5OrCO0NLs5YTR8NP
+	RSzGoivRkEzPkQn9YqM1eTS2HN3aYo5EJ4oXWW8ksx5GXbq6a2XiEGsZYDaG9Do4
+	7FJ2C9vEh/s2XdPUqW+MNRIk5ZBoYRLAgQy/o9h+xPySfG+n3bo0ZA2woy9EEV0G
+	YzBqubir8pOdY4RETfvkymqdeDMPbka4ccIYUVHdQ4UjlI4qUVhqNyAQzFwYAMD/
+	ALM1/NRqYpHI+/OMMURIA==
+X-ME-Sender: <xms:QymKZ9Ov8sZJaVj8S5pfQxnsim6VqzSsCY8HriDNfMmPOiPXOSsdxA>
+    <xme:QymKZ_-KxhdMOn1Om1_hzb4SIw8tQCDw_QolFlbOwYlNYRnIiOegWSVr9bhHH3N-b
+    AGheWSvyBQ1gQcnOw>
+X-ME-Received: <xmr:QymKZ8Sg3rx1GjmYRC_7nuwgUYDxYBvPPPLBvbuUSMmTfyHO2XgK1Xc1QlsZR5C6Hekt7tbeO-NBH1sbS872SdnFP4TyLPwsN6olTfBKUo87-uY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgtdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhufffkf
-    ggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetie
-    egjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
-    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrghrghgrsehfrhgvvggsshgurd
-    horhhg
-X-ME-Proxy: <xmx:QimKZ1c1CEfN1OMjCkoJEFb3qs1TxBhP9Xi0JAXe975Gd3M_oN45Tg>
-    <xmx:QimKZ2Ok4ngGngJst2kyzDycBoFDzJOZJmHdA93GdwOilgAjCAPt2w>
-    <xmx:QimKZ3mMW_6qd9T0m9kKQ6uZKa6L3wy7jdifaiosak-DwBfWMf5b_Q>
-    <xmx:QimKZwsXWW1iVVrYsR7PcepB7jWUD45CWZzxjLknUcvpfBq3MA5WGw>
-    <xmx:QimKZ_a6alX8MeYZGt-lLy9SjY0ycwgxkNBGr-4JAwNunx1vAmbc_ZMN>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
+    gtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
+    dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrghrghgrsehfrhgvvggssh
+    gurdhorhhg
+X-ME-Proxy: <xmx:QymKZ5v3zeDeXnEcviJa8lv0fEQPaZJFdAyrbTkvYEgK2fQQ4Td6gg>
+    <xmx:QymKZ1dzT636mViIhkiMmnXLS2R1nvYl2DzSnYFa061WXVOJZ_aJeg>
+    <xmx:QymKZ13ijnMStOHQ2jvs0jTuSkPN5eP8mQSmXv9TFsD94YI2TRWaqA>
+    <xmx:QymKZx-Bj1l-kXXwhSMuX1WzG8aLHGgTTJYCMDf24Qi6xPyDohDZCw>
+    <xmx:QymKZ2r0PiEgc93S6xpmO-HkABFfAEZkF3DXCUKueSYHiRnEvm2-iQAa>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 04:56:17 -0500 (EST)
+ 17 Jan 2025 04:56:19 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2cc8c8fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Jan 2025 09:56:15 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id f6caec5e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Jan 2025 09:56:17 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/3] contrib/subtree: doc fixes and support for Meson
-Date: Fri, 17 Jan 2025 10:56:04 +0100
-Message-Id: <20250117-b4-pks-build-subtree-v1-0-03c2ed6cc42e@pks.im>
+Date: Fri, 17 Jan 2025 10:56:06 +0100
+Subject: [PATCH 2/3] meson: introduce build option for contrib
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,40 +82,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIADUpimcC/x3MwQpAQBCA4VfRnE3tsBKvIgfLLBOhHaTk3W2O3
- +H/H1AOwgp18kDgS1S2NYLSBPqpW0dGGaIhM1lhiEp0FvdZ0Z2yDKinOwIzUukrImtzazzEdA/
- s5f63Tfu+H00+W+dmAAAA
-X-Change-ID: 20250117-b4-pks-build-subtree-17f91144340f
+Message-Id: <20250117-b4-pks-build-subtree-v1-2-03c2ed6cc42e@pks.im>
+References: <20250117-b4-pks-build-subtree-v1-0-03c2ed6cc42e@pks.im>
+In-Reply-To: <20250117-b4-pks-build-subtree-v1-0-03c2ed6cc42e@pks.im>
 To: git@vger.kernel.org
 Cc: Renato Botelho <garga@FreeBSD.org>
 X-Mailer: b4 0.14.2
 
-Hi,
+We unconditionally wire up building command completion present in the
+"contrib/" directory. This may or may not be what users want, and we
+don't provide a way to disable it.
 
-this patch series fixes a broken build of documentation in
-"contrib/subtree". While at it it also wires up support for the Meson
-build system.
+Introduce a new "contrib" build option. This option is introduced as an
+array so that users can manually pick which exact features they want to
+include from the "contrib" directory. By default, we build and install
+shell completions, which is a commonly used feature and also the current
+default.
 
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (3):
-      contrib/subtree: fix building docs
-      meson: introduce build option for contrib
-      meson: wire up the git-subtree(1) command
+ contrib/meson.build | 4 +++-
+ meson_options.txt   | 2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
- contrib/meson.build         |  4 ++-
- contrib/subtree/.gitignore  |  2 ++
- contrib/subtree/Makefile    | 23 ++++++++++-----
- contrib/subtree/meson.build | 71 +++++++++++++++++++++++++++++++++++++++++++++
- meson.build                 |  3 +-
- meson_options.txt           |  2 ++
- 6 files changed, 95 insertions(+), 10 deletions(-)
+diff --git a/contrib/meson.build b/contrib/meson.build
+index a7b77b87c2..d74b64a518 100644
+--- a/contrib/meson.build
++++ b/contrib/meson.build
+@@ -1 +1,3 @@
+-subdir('completion')
++foreach feature : get_option('contrib')
++  subdir(feature)
++endforeach
+diff --git a/meson_options.txt b/meson_options.txt
+index f50bb40cdf..4f02c92524 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -27,6 +27,8 @@ option('version', type: 'string', value: '',
+   description: 'Version string reported by git-version(1) and other tools.')
+ 
+ # Features supported by Git.
++option('contrib', type: 'array', value: [ 'completion' ], choices: [ 'completion', 'subtree' ],
++  description: 'Contributed features to include.')
+ option('curl', type: 'feature', value: 'enabled',
+   description: 'Build helpers used to access remotes with the HTTP transport.')
+ option('expat', type: 'feature', value: 'enabled',
 
-
----
-base-commit: 757161efcca150a9a96b312d9e780a071e601a03
-change-id: 20250117-b4-pks-build-subtree-17f91144340f
+-- 
+2.48.0.257.gd3603152ad.dirty
 
