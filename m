@@ -1,110 +1,81 @@
-Received: from mail-43167.protonmail.ch (mail-43167.protonmail.ch [185.70.43.167])
+Received: from sender4-pp-o95.zoho.com (sender4-pp-o95.zoho.com [136.143.188.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F86B1F63E0
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 03:30:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.167
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737084623; cv=none; b=rEmIv3fMFD+4l5RhwXRvNKFq0io5B73/s3AQXjI+qj1IqGvfl4drMIOuQBNRRC5diCzB+GlGoSHlbnVd7ELpwIBMklvxwKZhBEKj8MjZt3Ol3dIgeVyOgOB+cvoLc7OnoHLewWbvpLkh8xdVBBULK/jljjLHPrZRVicw9KeKFI8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737084623; c=relaxed/simple;
-	bh=n9nKRzKjKUKtx0X9LWg47ODvaQ8YqXb36dtASGdRhGU=;
-	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=UngjP0eHwLH7zkrHi5sp+vhiJIcK3ogatXmimByzKGHteOX/r9PhwHOBegyqUNt25fslYZQaCTJOqOhzKhhoqma9yqLJ054J5kguzXSSo6j4WVFZPlWayjW4sM1BCRohe3pdyt0beiDip6G26VrF5NYvI+wVy7NdgKQW5sr9CRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=apbgFkfa; arc=none smtp.client-ip=185.70.43.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF46B663
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 05:32:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.95
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1737091926; cv=pass; b=JouqB4Ba27r5bb4dE/0MCWYJ2fMQzgU6rN1IW+pZTmrBAoH4F6SMe1v0v7cBEN9+EqEawxjkhuhBwXlkgBNNhLl99hWPMyfyhE1u55R1VrGImE3tOi/mrNMPELmfDuXazPLIhgqDaj65je2XcHHulH1+d7NxqYRpl6mAtCuKJ48=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1737091926; c=relaxed/simple;
+	bh=i35f+D9z2zSgyw1Ewip3lewMP0DCBmrQJ271IvQi8m8=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=aFV26czbB6LR6KQi13xoWzvWa996JQK5hSy84cGfAhnnNXr7gK+Ax3SKWwJCOLmFWxsvVDF7rO3pae8CsBkOFh9FBy3mKhjfTYipGPQK52u5nVbw0pL0wDKjSt/kTMjvC9tFuC7yHqk97y5ayiHZeJf8FmIVi+JIGQYBMPC2efs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b=EjJc22Xr; arc=pass smtp.client-ip=136.143.188.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="apbgFkfa"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1737084613; x=1737343813;
-	bh=l6jtMrqovS/OncY3QzTXA+4IPhceEUc9L+4hYlZM6lU=;
-	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
-	 List-Unsubscribe:List-Unsubscribe-Post;
-	b=apbgFkfazaYtVDY2AgkHLI67SkfWeWOoL55TNSZPCdVHXB5CV9WRe8QdJYkqq1Blp
-	 tOUjlDTke8WO4LqJVHuyXXb56ES1MEBOxHGBdq8AuGZ6xfvevW1O2Sea2Q/nWOfDCc
-	 7P/r4Lf+Yj6WeJTQWoy+Jc7dY6rJ+UMTgIGpOQc/fPwR2ECLqfVQyIro1nMaDm5Wn3
-	 iMUiXPbpw4W+k2tp+VUZQYvFN5LeQsEDt1GHU4gkwgMcIZXgbiU7CBB+mvgnuD89hT
-	 Vo3VZCRV4E9XNGhLslw0Tj0TwcCCTcLLvf4iaW+Qi32wa4EjFmqJZ4U/59srNGejx5
-	 8wTyMTweoyKCg==
-Date: Fri, 17 Jan 2025 03:30:09 +0000
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: Koakuma <koachan@protonmail.com>
-Subject: [BUG] git crashes with a SIGBUS on sparc64 during pull
-Message-ID: <xd6Mn7uXpDxaT8zF28BwOIdV98lnvm3S0rBgxmm97nuRW3z0GQSUi_KeYe0fUuRfz8rCgo6Uialw5rnraqp5tjzMFQkFH0MZV_n4fEQg8go=@protonmail.com>
-Feedback-ID: 6608610:user:proton
-X-Pm-Message-ID: 5cd38276eb7bced8b94923603c71606783c0794e
+	dkim=pass (1024-bit key) header.d=zohomail.com header.i=safinaskar@zohomail.com header.b="EjJc22Xr"
+ARC-Seal: i=1; a=rsa-sha256; t=1737091918; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=k3Loak0+W/vlLAPKYhAuw2jdtOTpQtFxvdhna/yi87xVh6dkOlGou0KmTI/PWxZvuDpH7RK+wM4pHPEpG8Y0krFiyI2/KSrX5tKqUoVcBTQQrVp7CQQklc1E+UKFWHRj9Ts9HlKIc7qiKKHkFGynX22vZAUdhNu4/8Z3i5ZAvqM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1737091918; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=i35f+D9z2zSgyw1Ewip3lewMP0DCBmrQJ271IvQi8m8=; 
+	b=Lx1yI3AYcIFnpcU0J3Dje9AyH/0QRgImhB1HVHqzQVk7HUgBLQDplMPkcxd8HugyKRSvDuKw0R2rIZfoUvc+ds9TFgWEn9t2IuAimIq7tl/CPC7fq4SKWUv7ofqNwhCLDLs+D1oWcxJ4BZ1tIfA4otObTex+8U6RMWGhwLCI3vs=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zohomail.com;
+	spf=pass  smtp.mailfrom=safinaskar@zohomail.com;
+	dmarc=pass header.from=<safinaskar@zohomail.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1737091918;
+	s=zm2022; d=zohomail.com; i=safinaskar@zohomail.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To;
+	bh=i35f+D9z2zSgyw1Ewip3lewMP0DCBmrQJ271IvQi8m8=;
+	b=EjJc22XrAT6M3/Pzk1yDWBNvX3ExT4TeEH2bEboedo0FhXyp7h+R+wv9TwFqxwLw
+	30nE6vMcJup9IVyIlViZ4oSICnsjxJZRAnXtHpANU17J4zlWmwfBbYS6V4qgq+T0Ka1
+	33A5d6wcQuNPP7nlTG7aP8XTamDCPSfwiEpB5N8Q=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1737091916651989.445575563929; Thu, 16 Jan 2025 21:31:56 -0800 (PST)
+Received: from  [212.73.77.104] by mail.zoho.com
+	with HTTP;Thu, 16 Jan 2025 21:31:56 -0800 (PST)
+Date: Fri, 17 Jan 2025 09:31:56 +0400
+From: Askar Safin <safinaskar@zohomail.com>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "Jeff King" <peff@peff.net>, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	"git" <git@vger.kernel.org>
+Message-ID: <19472bf2353.2c31e5fd10001.1997220058832133228@zohomail.com>
+In-Reply-To: <xmqqo706u2z0.fsf@gitster.g>
+References: <19461b87a5c.5a2ea74016716.8214238482389812984@zohomail.com>
+	<CALnO6CAzN1oeT4tMjJ1Qm4dW0xdVkVKHJ39oJTX8R8E614FH6g@mail.gmail.com>
+	<20250116105246.GF773990@coredump.intra.peff.net>
+	<20250116125313.GA2301268@coredump.intra.peff.net>
+	<20250116135227.GA2323616@coredump.intra.peff.net> <xmqqo706u2z0.fsf@gitster.g>
+Subject: Re: [bug] "git bisect old v3.0" takes 21 mins on Linux repo
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+Feedback-ID: rr08011227c56d529f48cfe78fc04698f600006cde04f68187b101a97a263aa478f4a768f4fb7663e022391f:zu08011227801562e165b5aaeaa39b974f0000011108abd5721fb50ff69074f2b7b2c0d6bb08cf0dacbd2296:rf0801122b6f7de2a211e9e6a22b5ada4c0000ce1c61ceb7a4ba1d09a8dc2c43bd52d8f818535b5fe5a98dfefe99c613:ZohoMail
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+I think "git bisect" is very important part of git.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Linux's "submitting-patches" contains this text:
+> When dividing your change into a series of patches, take special care to ensure that the kernel builds and runs properly after each patch in the series. Developers using git bisect to track down a problem can end up splitting your patch series at any point; they will not thank you if you introduce bugs in the middle.
 
-1. Compile git with clang (this doesn't seem to happen with GCC, oddly)
-2. Do a `git pull` on a repository that will trigger the `unpack-objects` c=
-ode
+( https://docs.kernel.org/process/submitting-patches.html )
 
-What did you expect to happen? (Expected behavior)
+So, as you can see, existance of "git bisect" is rationale for contributor guidelines!
 
-Pull succeeds
+Contributor rules written the way they are because of "git bisect"!!!
 
-What happened instead? (Actual behavior)
-
-Pull fails with this error:
-remote: Enumerating objects: 7, done.
-remote: Counting objects: 100% (5/5), done.
-error: unpack-objects died of signal 10
-fatal: unpack-objects failed
-
-What's different between what you expected and what actually happened?
-
-The pull process crashes with a SIGBUS.
-
-Anything else you want to add:
-
-re: unpack-objects, I don't know how to specifically trigger that code,
-but I know that once `unpack-objects` is triggered it will reliably crash
-with the error above.
-
-According to gdb, the crash happens on this line:
-#0  0x000001000019ca18 in cmd_unpack_objects (argc=3D<optimized out>, argv=
-=3D0x1000063a4e0, prefix=3D<optimized out>, repo=3D<optimized out>) at buil=
-tin/unpack-objects.c:653
-653=09=09=09=09=09hdr->hdr_signature =3D htonl(PACK_SIGNATURE);
-
-Overaligning the `buffer` declaration in the same file to try to get around
-possible alignment issues seems to be able to prevent the crash,
-but I don't know if it would be a proper fix for it.
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.48.1.262.g85cc9f2d1e
-cpu: sparc64
-built from commit: 85cc9f2d1ee4d65cb1edb00d4f56863185a53e0f
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 8.10.1
-OpenSSL: OpenSSL 3.3.2 3 Sep 2024
-zlib: 1.3.1
-uname: Linux 6.6.30-sparc64-clang+ #1 SMP Sat Oct 26 21:22:10 WIB 2024 spar=
-c64
-compiler info: clang: 19.1.4
-libc info: glibc: 2.40
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
+--
+Askar Safin
+https://types.pl/@safinaskar
 
