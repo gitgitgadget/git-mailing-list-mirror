@@ -1,54 +1,54 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3AF1A257D
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 19:32:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16411AA1EC
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 19:35:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737142323; cv=none; b=VX/JXEWFp7lD1ml2GGxGizSuCrgVAXlTbGwc5bx1TqzBQxnHJHD71+LwJWZe08do4i58T9Ikdq98XQx9aaE3sD976wYEeftJ+0HGgRR8GdLUDLe8ii3WpWbNFiOxD/pZ8ZLDWQscEF3QNOofzpgz2OlSMd8J6mbex/9VeAc8Jvw=
+	t=1737142537; cv=none; b=hGOlgHm2s7PDOaF2AA+RfVkQsgAzh/6uCBjfCuVDucwDH3aDIyBi6mDxuWgtSFexGoxO42EmTjg8jmnaEey3SoUmemQGwkvZrb5Y/V88bx3IoQo/wGly6xwYLMVvrllaaTwLFOLoAS247/Puc1VjFCZ2kHv1+m3gtxNnf0fc+uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737142323; c=relaxed/simple;
-	bh=EuIjKa8Sf5o45oAQumMpYFR9E0ch797FQCFCjsLdgR8=;
+	s=arc-20240116; t=1737142537; c=relaxed/simple;
+	bh=RuVdSdiuLqsdxerFAumusg2DKZZpN04g+H4s3eqX89o=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MfzUNxTco8v9niZxU5q6yafIFqWVpOZkWOuXnk74KKT0yPgAmwAE+dRlmNKfHWIuCzExTPToQSWMK0JYIsAEH2zd8vaDhPnAgSXVerYb0gGvQMOCrl4isH3mG3HYmsF+J5IqKGFrMkXR/kxHQGEH0lkdgvL+twY2N4I7IqlW9gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0uDP92g6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HmKdqVjD; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=nrA4GnG6D7CpUok7LbYu4qchO72Mz2OxUoI1j7NjWtkwrDJ2Rhprvpzg+CkRxp00sJl+iedRnVjxdBr+SUT+i7U9/44UJYtwvlEInWBxvJuwWL8jyc6hVHG/XcfnGAHk+DfoNTN22UUOZrbDgWS4eHPDi4w1Z6ZH0gA0Jf6Cva0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WYWjMzGH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lt+hiKFI; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0uDP92g6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HmKdqVjD"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CD62611400B0;
-	Fri, 17 Jan 2025 14:31:59 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WYWjMzGH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lt+hiKFI"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id DAC61138019D;
+	Fri, 17 Jan 2025 14:35:34 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 17 Jan 2025 14:31:59 -0500
+  by phl-compute-12.internal (MEProxy); Fri, 17 Jan 2025 14:35:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1737142319; x=1737228719; bh=3Dl8EmYoAZ
-	Rzfp+UI0DJSUMAgk1NeFYPz3WlweNm694=; b=0uDP92g6nucuBZHLdI9h0UKdJI
-	PK3BP94xysqkz5HGDUKiiszHB7vaVM+/oSKk/qsIP8q9raSsw3vMZt7NeyNOc5LK
-	smuFOLRKxl5VX0EbeCSn6EURRBmio2bPwMDBnMc28Wcno3FIVx2xWWUsLDQYsqcc
-	ZjJ2hQcmrx+geL6VdczkKnxR236fSyR6s4MT6G/QeOHM+Z8higD8Q+KqM5DgCpBl
-	HCzeya0r3Cx7Y27kaOPNCwwbBbIMyZBXM6+QKHwAUFPfwuh4s0W1MLSW/P5kVOWI
-	xnT4N+uHMuSuxQptTsevzMppH7wtLM6ynz6DW4aYjIG+2PEggPlIvpW9WayA==
+	:subject:to:to; s=fm1; t=1737142534; x=1737228934; bh=RuVdSdiuLq
+	sdxerFAumusg2DKZZpN04g+H4s3eqX89o=; b=WYWjMzGHCm51I08S6dMnIl36YV
+	DSkB9oDJMumKMnQz4uOxD8Y6+0snSqXbnlJIdi/JJCSQsr/8XoRao9OU8Xrx+O6T
+	/CkagcdFxPJ/mhrtZOyc9MHT3lYF1LitehDrqGLeSXSTmMQlSn2Y3mtYju65Yq36
+	S7eal0BUZ2aM5CfKaKKz7GS9acn4vBbsl8cLdwCr3AWl9EJqwcb4/Bffj9NOrtlj
+	mrB0eZHQXmZd1JjJ2B5dLgQH4DoQViUxpsLl3xZhb3PyMSO/7au+RSzouVD5nCkX
+	ubE0Jg3stBFjbz/4K18NPRvc4D8kDzEkg9V0L15mAl5kgF4HLbRFcdZNNKKg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737142319; x=1737228719; bh=3Dl8EmYoAZRzfp+UI0DJSUMAgk1NeFYPz3W
-	lweNm694=; b=HmKdqVjDVQzQltqnnS7zYGEys1L9FXUXmG539lNhlzHvhoUKJUX
-	/IZfuqRRnzm4a4kKgmieINdHzqKTF9QPmS0ZyaL+6xz6Q7gvSidjFgY1re1z11sw
-	rGyWgnXOexjCDsMzG3DACGhq1po7eaYbYRUlEdF0yPbE/v1HPAnpfSypyZqjBvZt
-	laQ0Y7tDEymogf7f/wDNTShQO5zqUAQLp0MTUs0ejHIv4bfX768uhNOa/0TZ/fUd
-	g6xtwlzXBxdxm9jgQoOzwPMdQL2E5H4pSyGS+RnjgL9u5fdc+zFBd1Az/+ThCSnx
-	OlGnMgZTs2m0cG6YLuYINbbCY0u3uZpOBmQ==
-X-ME-Sender: <xms:LrCKZ_y9_lQmHEdo1EOHvrHBQ49egbqmJw7Er4IzAsMB1apLHRistA>
-    <xme:LrCKZ3RobQO3DI_IjQ4ezYBHkET9IhK1qmns3M0EvL62mmZsFpNgLukdzmzx0fWd_
-    MGK7fLmVrWhBamKqg>
-X-ME-Received: <xmr:LrCKZ5UJvptRtdVjh_roO-Pb82uMkwiwphzDF40k-ww-KDSqyVpjZgiE9OCMn3cesdrc1denCulO8BfGOj_Ou-jly1ETWV0OCAak>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedguddvgecutefuodetggdotefrod
+	1737142534; x=1737228934; bh=RuVdSdiuLqsdxerFAumusg2DKZZpN04g+H4
+	s3eqX89o=; b=Lt+hiKFIpVOPCsJ+jZPUzdwgCojgeauN69NnTy+otZl3DJ9j3bw
+	ZEOy2EAxOWzgQeqWhOi0i8kgNThUqvQZ95kYueYcKxV93taEjUsrD25AycKDWWDP
+	d4W9f+IZKIup3G0afhCTyM7LvSEadwYeOLLLhENA0kXM3a0ulvfps5cDRPRVYib7
+	DyfGllG/HEOe0uZB3GXwmW/UbFQpaNYIfBglrVwAXrYYZynkYxFROm/1vE6i/L/E
+	/RrfZt1cFBgTk2m2ASLzofYAlukKGsAmxl6fCC+6i3fNW7hNUYADZrOr3b5TVjLN
+	RCMNvdEMTLrD7QJs9yqPEVQbWl9LanTx9aQ==
+X-ME-Sender: <xms:BrGKZ4HnOK9mhZ8zMmqc452pN21YmxOaKBlsaaCTQg-aiIbfm97jTA>
+    <xme:BrGKZxWUGkyrMs4H-TifSbpwfjoHKnvIXtO6Y2n-LnL7H5Vd8Daf_Ex6UyUq3YdS_
+    hcSwm0FQkJxVuZjUw>
+X-ME-Received: <xmr:BrGKZyJDGPl8B_bEWaB6D3eHqCcbQZGwO7K7Bl09F9b_IajsvxS_yeqiV42o7O-su_umFKDh69KYERKReoRPwmAAtwWbM9iWBYv8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedguddvhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -65,29 +65,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedguddvgecutefuodetgg
     rhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdroh
     hrghdruhhkpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
     mh
-X-ME-Proxy: <xmx:LrCKZ5hexVz-KGzfwlvhPPUaA2O9Yw0PFR0B5N_jUhJcA_lWyxMRTw>
-    <xmx:LrCKZxCbaROS_biCNlnAc7-B5GMJ8PjglW0fOEervVkcvpwCPueJHw>
-    <xmx:LrCKZyIC7nijz-3xcMSIyLB3w7NCPjLUWk7JCCzyRKgat8cPOoCIeQ>
-    <xmx:LrCKZwAGNzmhMXlZrMzf0yXrupW3daKNyjqOv_FZi5E8TgXFEOMmFg>
-    <xmx:L7CKZ16GsFNyjSP9Xc5Be4C069cLEhh6x8AgB30zAO4t_RZkZY8n1wMf>
+X-ME-Proxy: <xmx:BrGKZ6GN4H-BoO2xGzoJA4g0MkPqInDd1SMo3ERGYh-ZFIKUcJCa0Q>
+    <xmx:BrGKZ-W3ipz5JvXZWzSeH2Lja3kNcVUUPPfCUvrY4RvIxOGeexOQpg>
+    <xmx:BrGKZ9OmSuZJfszkj6R7_gXFUfHbhwYOlBI06lhoZQM8wbqHgYFAYA>
+    <xmx:BrGKZ10rzFYsxw0Q5Mrb75ulm6orIqMj1SHs31xV946IoRQ2EMiIGg>
+    <xmx:BrGKZ_u8_c7XU0soqsWRVcdgZ1y7pNO1C_IcHiSGs_FwM0XrhCRwDYpv>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 14:31:58 -0500 (EST)
+ 17 Jan 2025 14:35:33 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Usman Akinyemi <usmanakinyemi202@gmail.com>
 Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,
   johncai86@gmail.com,  Johannes.Schindelin@gmx.de,  me@ttaylorr.com,
   phillip.wood@dunelm.org.uk,  sunshine@sunshineco.com,
   rsbecker@nexbridge.com,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 4/6] t5701: add setup test to remove side-effect
- dependency
-In-Reply-To: <20250117104639.65608-5-usmanakinyemi202@gmail.com> (Usman
-	Akinyemi's message of "Fri, 17 Jan 2025 16:16:16 +0530")
+Subject: Re: [PATCH v2 5/6] connect: advertise OS version
+In-Reply-To: <20250117104639.65608-6-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Fri, 17 Jan 2025 16:16:17 +0530")
 References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
 	<20250117104639.65608-1-usmanakinyemi202@gmail.com>
-	<20250117104639.65608-5-usmanakinyemi202@gmail.com>
-Date: Fri, 17 Jan 2025 11:31:56 -0800
-Message-ID: <xmqq4j1xkzir.fsf@gitster.g>
+	<20250117104639.65608-6-usmanakinyemi202@gmail.com>
+Date: Fri, 17 Jan 2025 11:35:32 -0800
+Message-ID: <xmqqy0z9jksb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,26 +98,14 @@ Content-Type: text/plain
 
 Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> -test_expect_success 'test capability advertisement' '
-> +test_expect_success 'setup to generate files with expected content' '
-> +	printf "agent=git/$(git version | cut -d" " -f3)" >agent_and_osversion &&
+> +os-version
+> +~~~~~~~~~~
+> +
+> ...
+> +characters(from 33 to 126 inclusive) and are typically made from the result of
 
-Is this required to be "printf" and not "echo", if so why?
+Compared to the preceding few paragraphs, this paragraph is overly
+wide (the previous iteration was much better).
 
-"git version" could contain any character if the builder gives a
-custom version string by saving it in the "version" file (we use the
-mechanism when we create a distribution tarball, for example).  What
-happens if it contains say "%s" or something?
+I'll review this step separately later.
 
-If you _really_ need to use printf, you'd want to do so more like:
-
-	printf "agent=git/%s" "$(git version | cut ...)"
-
-Is it required that agent_and_osversion lack the terminating LF?
-The use of printf without terminating "\n" at the end of the format
-string hints the readers that it is the case.  If you did not intend
-that, perhaps doing
-
-	printf "agent=git/%s\n" "$(git version | cut ...)"
-
-would avoid misleading them.
