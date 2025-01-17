@@ -1,69 +1,69 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60F801FECA1
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 12:29:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925CF1FE472
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 12:29:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737116989; cv=none; b=EwXX86/mydf3Njx8lY6pNphokCBJI2xzcHMi9nXlEKCJ/bRzk3BqBgLMn6VAUUr/X3HQUsurwJ4ZcCIVcVz8cHwOtX/u+gWuQPRItk8Ua6M9Kt/rizVx3/eA2J0OIExij25AY6K16wfmFYM2ti+mlQsnpLfvMONZtN4GJkqWJFQ=
+	t=1737116994; cv=none; b=rN+h6kez/JsjxbUKX98FEst7HGQ970Af87m0z34wkBsBPyjFuT0QMMKl2y2ozoWxngHYNbQSbCnXcatrdAO9SWsvnUD3co2uPQIpdawpyYuGt7/rvGhJeP5q91IWdryfGXFZlXL8V/FW9JO2AbezADE8cfI+6eCOQd8om4UaVd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737116989; c=relaxed/simple;
-	bh=6K/e8WYJqsLYizO+fJi/1H/TJJqTyblk3zV47tvHNKw=;
+	s=arc-20240116; t=1737116994; c=relaxed/simple;
+	bh=0PfZZchRGvwEj9MKjZkX2TKoeQjjs9/nibor6yetpWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqzE+mXbkekHb6HgFhbcNBtcF+Jeb3fszb0ix62LcjE5AYp4ziD+I1pyljquKXK3Mrwy/tbmGhbeCLI8jWxvwaI92jKvovf27m9idnSVh/uQ1awwXMtSnuiHx9NjZI9JN8XKSTrQ2eWidE9bMhynqaSy1p5BpdShIlU7jJTLiiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cSnkv+Yo; arc=none smtp.client-ip=209.85.218.45
+	 MIME-Version; b=IFReWFqRXIYXj//0X4PySpWON2/pKvNTPtPrB9QzURMvxxQMIYxxE4LI16CJXrTyy5N6Zptq681B/rHerSRtL+zxM9aA3VfJwO2gf3CdIBtwA0S7yoZwMXZ6I2CMY+YZp2rKzeVEJEW8HV5JXVJC0xyvFgpn2duXcn+K2v6wHyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NGi+7ng7; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cSnkv+Yo"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-aaf900cc7fbso342213866b.3
-        for <git@vger.kernel.org>; Fri, 17 Jan 2025 04:29:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NGi+7ng7"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-a9e44654ae3so322085366b.1
+        for <git@vger.kernel.org>; Fri, 17 Jan 2025 04:29:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737116985; x=1737721785; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1737116991; x=1737721791; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rdMNfYg/Nq9UYuGTGNO4U1NkxgEnTvWULcXRtGl+3jY=;
-        b=cSnkv+Yo8y61r/Z/bJTChGTV1fo76BElKigUMrz/PnG1si96DZyC5Ihitjhiu5iVeU
-         dEzfhnpWHqmX6uLTamoM7cWL5CMVX5mkm4i2UjWACtdolzPOXvCuyu87hxEYusS9En9j
-         UsesaKWDtPZ2A9c6ohzOzEXuVenhiSisdkKtsinQO10SVFxyaOqmVTLchOuitKhjJq3g
-         9xzmQ+rlNBZOmj+G94QfEBVW883wR+a3SvSMh1fItPI0JJ7vbEuTtkq+6qzGaMdl3qX7
-         9wQ2tT31GWu/bbiWPnFtBFUY7q/GCxAFTp4ZrIS4yJGPKG3ldoTDNSsz1CEI/+RApYhl
-         W/+g==
+        bh=p2D1ZQgyigSiR29ims/9YVQ82J01XGMI+3TgqZULvx0=;
+        b=NGi+7ng7iXSkEaG7H/aK5olsRfhfQTQOqniQ0QnShAIo41tPM/cELZWA36ZnUpcru/
+         DkJmjOJjcc23XIw4vz5Nq0BOoPn2Fp7iz4vtC9xkLgntLz8IUvqZ/iIxrE7smpduKNK+
+         LEQA7pbii3X3E+JV/xklZihpPz+VAH9QCQC9qpYP1rVqEzGce04dZI1KdZi0cnr4VQF5
+         jLgeFKbjufwjrMozo5HdI0LtVPyT+uEulij0NALANHeC2pzJAVLFWUmX8ixADPJnArYz
+         AfZCB28K/ruckLG8rry7AJhIf0wlEdUsXpEkV3S0Bo0jklsSS8mNqHst9wvSgvcUmcbc
+         kthg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737116985; x=1737721785;
+        d=1e100.net; s=20230601; t=1737116991; x=1737721791;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rdMNfYg/Nq9UYuGTGNO4U1NkxgEnTvWULcXRtGl+3jY=;
-        b=UELfjr2PXzZ2lL9636Jqy9KVeaR/30Dy1NPL9GrPJ8yerCnYvF0FF3d+gvigwb04Mt
-         qMXaUtFRk5xuzB5sJxNLRh40JMlCVTEqYUT1IxPjZSgfVLdgbrzY3iH7YKn5q3uVPiX+
-         M0QZpr/Sr9wmCFbi+ihWrEW3o15x6/yYd+5dqygMz/UvVs3U2zq4EGccGIwDX54PVddX
-         /+J4NmuTeth5ilEjX19g9TtqH2WjgH4LwnshPyHYLae+2wcx5/zgeIkbgKLl3ME/6NNi
-         nX+JZJmH2NRnlCWNmK1iNWebFEgjIchL0A/0GtV3Bzr40VGPaqzVH2CCTe/23d+WbArH
-         ImEA==
-X-Gm-Message-State: AOJu0Yx+jr9GtdxZkBvOXzwd5fYfgm6chjHj/9RMtoxcHSbe2eLTUAC8
-	X+N+suCDxcZEHVXblxTL1CDgabPj3HPbZ44fiLKMjnFIwNAip9+ndn5TT8DvbYeRtg==
-X-Gm-Gg: ASbGnct03PxTUwVT1ZU54Nm9eakGzGSlh6dRFoaa+PKOH6eSHqU8IAuP/iORPNDueCh
-	M4oAzNsL0mtrvRONXf+83NNESsFGoVbvqNEQz4pqSGnc26nk1N2b6M57tKub9Z8gTbdFh+Q2gRh
-	Majzjeb3Rg+eCkysqIvvaBqnZ2DgU07doWznZucK8Vrs08S5HAA6+oA42ORYkPzaTCVW6rizAUe
-	9YG+ObiCPoEyNLSthvrHp4O0L3BEPiGeDtsPXhqQCQULsFmWPQQ4Ft6MMxN4RQy6ebvzQ==
-X-Google-Smtp-Source: AGHT+IGwgi2iYKE35Noitd1NjBs9dOGW/qnqL0vEqsTP4V74Hknv7qJIMmOvEaFE4/M3aeEp8QS5XQ==
-X-Received: by 2002:a17:907:969f:b0:aa6:93c4:c68c with SMTP id a640c23a62f3a-ab38b382cacmr294739766b.41.1737116985196;
-        Fri, 17 Jan 2025 04:29:45 -0800 (PST)
+        bh=p2D1ZQgyigSiR29ims/9YVQ82J01XGMI+3TgqZULvx0=;
+        b=DpqOa43mqh6OFe9a/VkAu5rs6A7ANb0VOdfVyprvrtO7+kkqLdXRxSZC/yXYEOgIMF
+         Wg+HAPoYGJo63eIgNdf4/xWWltTyieu+WZLbjJ8xSFLTOffa1u3E5scTznPYba/Td+sK
+         DCEMpmiwM9MDiysOqvXaMwqC5tHuP3Ii5hbpTC7mkc4QKQd8PE1DREdct+7pW74YnN4w
+         k+zneKVjQ9Qe+ldO5z/ktlB5wjQUgDPvHpzTxSNvx5aa3WCGqys+sRMn7CCWdKfNmQM0
+         MfoTgdijFDeQbv53GypcsjFPViBcgawykl6a67i20prmIPBATga0p9CVshfsWvcAKEAi
+         mNdQ==
+X-Gm-Message-State: AOJu0YwxixgsjSCunPnSg5vC+1aNetHe1Mo3buqHwY3gobLmX8Ju3mvI
+	zxyw32oOF3vI+a+sovqaBXKSEKWC/+exXOowDYu8rdjGtXZJr2S504KMM8e41JxxnQ==
+X-Gm-Gg: ASbGncscPXzj0V5nmgsdWH4m0JQkssQGAAgOh47TlKhzg91XTUnnr95sIFC4XN+hpz+
+	QGVlIxVMuZL4XX6Z0ecs2yd3gDP0FjfzyMMIJjrb3fYxSvpHFyyhHeJ782V0F6nZV4kAct/SfNc
+	VDaC4877+quWiB3ZUlvKGaK6PAbDYpsbR53ePorlP/C7ePJGtkVRu0Pf2ix1oArX7iWBav2ZjKz
+	rAjhad7/AJrdZRyWxys+XzsnE2dmgkN6Fnssuptc95Adav/GB3tUez+dtsLzhuqYRAJ4g==
+X-Google-Smtp-Source: AGHT+IHHbiCpflYQY8EBo97ieGRDc5o1jMcotgcD4CZMYdkKaqZq60KrTua7lKRVZt2Aj4y6+XzhkA==
+X-Received: by 2002:a17:906:4794:b0:aa5:1a1c:d0a2 with SMTP id a640c23a62f3a-ab38b1c52b4mr219031766b.34.1737116990407;
+        Fri, 17 Jan 2025 04:29:50 -0800 (PST)
 Received: from localhost.localdomain ([154.118.34.84])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ab384f23007sm164362166b.96.2025.01.17.04.29.43
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ab384f23007sm164362166b.96.2025.01.17.04.29.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 04:29:44 -0800 (PST)
+        Fri, 17 Jan 2025 04:29:50 -0800 (PST)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood@dunelm.org.uk,
 	gitster@pobox.com,
 	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH v3 2/4] t/unit-tests: convert mem-pool test to use clar test framework
-Date: Fri, 17 Jan 2025 13:29:24 +0100
-Message-ID: <20250117122926.101749-3-kuforiji98@gmail.com>
+Subject: [PATCH v3 3/4] t/unit-tests: adapt priority queue test to use clar test framework
+Date: Fri, 17 Jan 2025 13:29:25 +0100
+Message-ID: <20250117122926.101749-4-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.47.0.86.g15030f9556
 In-Reply-To: <20250117122926.101749-1-kuforiji98@gmail.com>
 References: <20250116161559.91038-1-kuforiji98@gmail.com>
@@ -76,127 +76,262 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adapt the mem-pool test script to use clar framework by using clar
-assertions where necessary.Test functions are created as a standalone to
-test different test cases.
+Convert the prio-queue test script to clar framework by using clar
+assertions where necessary. Test functions are created as a standalone
+to test different cases.
+
+update the type of the variable `j` from int to `size_t`, this ensures
+compatibility with the type used for result_size, which is also size_t,
+preventing a potential warning or error caused by comparisons between
+signed and unsigned integers.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- Makefile                  |  2 +-
- t/meson.build             |  2 +-
- t/unit-tests/t-mem-pool.c | 31 -------------------------------
- t/unit-tests/u-mem-pool.c | 25 +++++++++++++++++++++++++
- 4 files changed, 27 insertions(+), 33 deletions(-)
- delete mode 100644 t/unit-tests/t-mem-pool.c
- create mode 100644 t/unit-tests/u-mem-pool.c
+ Makefile                    |  2 +-
+ t/meson.build               |  2 +-
+ t/unit-tests/t-prio-queue.c | 91 -----------------------------------
+ t/unit-tests/u-prio-queue.c | 94 +++++++++++++++++++++++++++++++++++++
+ 4 files changed, 96 insertions(+), 93 deletions(-)
+ delete mode 100644 t/unit-tests/t-prio-queue.c
+ create mode 100644 t/unit-tests/u-prio-queue.c
 
 diff --git a/Makefile b/Makefile
-index 97e8385b66..49ada4169d 100644
+index 49ada4169d..049f857512 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1338,6 +1338,7 @@ THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/%
- THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/clar/%
+@@ -1339,6 +1339,7 @@ THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/clar/%
  
  CLAR_TEST_SUITES += u-ctype
-+CLAR_TEST_SUITES += u-mem-pool
+ CLAR_TEST_SUITES += u-mem-pool
++CLAR_TEST_SUITES += u-prio-queue
  CLAR_TEST_SUITES += u-strvec
  CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
  CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
-@@ -1347,7 +1348,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
- UNIT_TEST_PROGRAMS += t-example-decorate
- UNIT_TEST_PROGRAMS += t-hash
- UNIT_TEST_PROGRAMS += t-hashmap
--UNIT_TEST_PROGRAMS += t-mem-pool
+@@ -1351,7 +1352,6 @@ UNIT_TEST_PROGRAMS += t-hashmap
  UNIT_TEST_PROGRAMS += t-oid-array
  UNIT_TEST_PROGRAMS += t-oidmap
  UNIT_TEST_PROGRAMS += t-oidtree
+-UNIT_TEST_PROGRAMS += t-prio-queue
+ UNIT_TEST_PROGRAMS += t-reftable-basics
+ UNIT_TEST_PROGRAMS += t-reftable-block
+ UNIT_TEST_PROGRAMS += t-reftable-merged
 diff --git a/t/meson.build b/t/meson.build
-index 602ebfe6a2..ffe951f9be 100644
+index ffe951f9be..09232967cd 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -1,5 +1,6 @@
+@@ -1,6 +1,7 @@
  clar_test_suites = [
    'unit-tests/u-ctype.c',
-+  'unit-tests/u-mem-pool.c',
+   'unit-tests/u-mem-pool.c',
++  'unit-tests/u-prio-queue.c',
    'unit-tests/u-strvec.c',
  ]
  
-@@ -43,7 +44,6 @@ unit_test_programs = [
-   'unit-tests/t-example-decorate.c',
-   'unit-tests/t-hash.c',
-   'unit-tests/t-hashmap.c',
--  'unit-tests/t-mem-pool.c',
+@@ -47,7 +48,6 @@ unit_test_programs = [
    'unit-tests/t-oid-array.c',
    'unit-tests/t-oidmap.c',
    'unit-tests/t-oidtree.c',
-diff --git a/t/unit-tests/t-mem-pool.c b/t/unit-tests/t-mem-pool.c
+-  'unit-tests/t-prio-queue.c',
+   'unit-tests/t-reftable-basics.c',
+   'unit-tests/t-reftable-block.c',
+   'unit-tests/t-reftable-merged.c',
+diff --git a/t/unit-tests/t-prio-queue.c b/t/unit-tests/t-prio-queue.c
 deleted file mode 100644
-index fe500c704b..0000000000
---- a/t/unit-tests/t-mem-pool.c
+index a053635000..0000000000
+--- a/t/unit-tests/t-prio-queue.c
 +++ /dev/null
-@@ -1,31 +0,0 @@
+@@ -1,91 +0,0 @@
 -#include "test-lib.h"
--#include "mem-pool.h"
+-#include "prio-queue.h"
 -
--static void setup_static(void (*f)(struct mem_pool *), size_t block_alloc)
+-static int intcmp(const void *va, const void *vb, void *data UNUSED)
 -{
--	struct mem_pool pool = { .block_alloc = block_alloc };
--	f(&pool);
--	mem_pool_discard(&pool, 0);
+-	const int *a = va, *b = vb;
+-	return *a - *b;
 -}
 -
--static void t_calloc_100(struct mem_pool *pool)
+-
+-#define MISSING  -1
+-#define DUMP	 -2
+-#define STACK	 -3
+-#define GET	 -4
+-#define REVERSE  -5
+-
+-static int show(int *v)
 -{
--	size_t size = 100;
--	char *buffer = mem_pool_calloc(pool, 1, size);
--	for (size_t i = 0; i < size; i++)
--		check_int(buffer[i], ==, 0);
--	if (!check(pool->mp_block != NULL))
--		return;
--	check(pool->mp_block->next_free != NULL);
--	check(pool->mp_block->end != NULL);
+-	return v ? *v : MISSING;
 -}
+-
+-static void test_prio_queue(int *input, size_t input_size,
+-			    int *result, size_t result_size)
+-{
+-	struct prio_queue pq = { intcmp };
+-	int j = 0;
+-
+-	for (size_t i = 0; i < input_size; i++) {
+-		void *peek, *get;
+-		switch(input[i]) {
+-		case GET:
+-			peek = prio_queue_peek(&pq);
+-			get = prio_queue_get(&pq);
+-			if (!check(peek == get))
+-				return;
+-			if (!check_uint(j, <, result_size))
+-				break;
+-			if (!check_int(result[j], ==, show(get)))
+-				test_msg("      j: %d", j);
+-			j++;
+-			break;
+-		case DUMP:
+-			while ((peek = prio_queue_peek(&pq))) {
+-				get = prio_queue_get(&pq);
+-				if (!check(peek == get))
+-					return;
+-				if (!check_uint(j, <, result_size))
+-					break;
+-				if (!check_int(result[j], ==, show(get)))
+-					test_msg("      j: %d", j);
+-				j++;
+-			}
+-			break;
+-		case STACK:
+-			pq.compare = NULL;
+-			break;
+-		case REVERSE:
+-			prio_queue_reverse(&pq);
+-			break;
+-		default:
+-			prio_queue_put(&pq, &input[i]);
+-			break;
+-		}
+-	}
+-	check_uint(j, ==, result_size);
+-	clear_prio_queue(&pq);
+-}
+-
+-#define TEST_INPUT(input, result) \
+-	test_prio_queue(input, ARRAY_SIZE(input), result, ARRAY_SIZE(result))
 -
 -int cmd_main(int argc UNUSED, const char **argv UNUSED)
 -{
--	TEST(setup_static(t_calloc_100, 1024 * 1024),
--	     "mem_pool_calloc returns 100 zeroed bytes with big block");
--	TEST(setup_static(t_calloc_100, 1),
--	     "mem_pool_calloc returns 100 zeroed bytes with tiny block");
+-	TEST(TEST_INPUT(((int []){ 2, 6, 3, 10, 9, 5, 7, 4, 5, 8, 1, DUMP }),
+-			((int []){ 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10 })),
+-	     "prio-queue works for basic input");
+-	TEST(TEST_INPUT(((int []){ 6, 2, 4, GET, 5, 3, GET, GET, 1, DUMP }),
+-			((int []){ 2, 3, 4, 1, 5, 6 })),
+-	     "prio-queue works for mixed put & get commands");
+-	TEST(TEST_INPUT(((int []){ 1, 2, GET, GET, GET, 1, 2, GET, GET, GET }),
+-			((int []){ 1, 2, MISSING, 1, 2, MISSING })),
+-	     "prio-queue works when queue is empty");
+-	TEST(TEST_INPUT(((int []){ STACK, 8, 1, 5, 4, 6, 2, 3, DUMP }),
+-			((int []){ 3, 2, 6, 4, 5, 1, 8 })),
+-	     "prio-queue works when used as a LIFO stack");
+-	TEST(TEST_INPUT(((int []){ STACK, 1, 2, 3, 4, 5, 6, REVERSE, DUMP }),
+-			((int []){ 1, 2, 3, 4, 5, 6 })),
+-	     "prio-queue works when LIFO stack is reversed");
 -
 -	return test_done();
 -}
-diff --git a/t/unit-tests/u-mem-pool.c b/t/unit-tests/u-mem-pool.c
+diff --git a/t/unit-tests/u-prio-queue.c b/t/unit-tests/u-prio-queue.c
 new file mode 100644
-index 0000000000..2bc2493b7e
+index 0000000000..145e689c9c
 --- /dev/null
-+++ b/t/unit-tests/u-mem-pool.c
-@@ -0,0 +1,25 @@
++++ b/t/unit-tests/u-prio-queue.c
+@@ -0,0 +1,94 @@
 +#include "unit-test.h"
-+#include "mem-pool.h"
++#include "prio-queue.h"
 +
-+static void test_many_pool_allocations(size_t block_alloc)
++static int intcmp(const void *va, const void *vb, void *data UNUSED)
 +{
-+	struct mem_pool pool = { .block_alloc = block_alloc };
-+	size_t size = 100;
-+	char *buffer = mem_pool_calloc(&pool, 1, size);
-+	for (size_t i = 0; i < size; i++)
-+		cl_assert_equal_i(0, buffer[i]);
-+	cl_assert(pool.mp_block != NULL);
-+	cl_assert(pool.mp_block->next_free != NULL);
-+	cl_assert(pool.mp_block->end != NULL);
-+	mem_pool_discard(&pool, 0);
++	const int *a = va, *b = vb;
++	return *a - *b;
 +}
 +
-+void test_mem_pool__big_block(void)
++
++#define MISSING  -1
++#define DUMP	 -2
++#define STACK	 -3
++#define GET	 -4
++#define REVERSE  -5
++
++static int show(int *v)
 +{
-+	test_many_pool_allocations(1024 * 1024);
++	return v ? *v : MISSING;
 +}
 +
-+void test_mem_pool__tiny_block(void)
++static void test_prio_queue(int *input, size_t input_size,
++			    int *result, size_t result_size)
 +{
-+	test_many_pool_allocations(1);
++	struct prio_queue pq = { intcmp };
++	size_t j = 0;
++
++	for (size_t i = 0; i < input_size; i++) {
++		void *peek, *get;
++		switch(input[i]) {
++		case GET:
++			peek = prio_queue_peek(&pq);
++			get = prio_queue_get(&pq);
++			cl_assert(peek == get);
++			cl_assert(j < result_size);
++			cl_assert_equal_i(result[j], show(get));
++			j++;
++			break;
++		case DUMP:
++			while ((peek = prio_queue_peek(&pq))) {
++				get = prio_queue_get(&pq);
++				cl_assert(peek == get);
++				cl_assert(j < result_size);
++				cl_assert_equal_i(result[j], show(get));
++				j++;
++			}
++			break;
++		case STACK:
++			pq.compare = NULL;
++			break;
++		case REVERSE:
++			prio_queue_reverse(&pq);
++			break;
++		default:
++			prio_queue_put(&pq, &input[i]);
++			break;
++		}
++	}
++	cl_assert_equal_i(j, result_size);
++	clear_prio_queue(&pq);
++}
++
++#define TEST_INPUT(input, result) \
++	test_prio_queue(input, ARRAY_SIZE(input), result, ARRAY_SIZE(result))
++
++void test_prio_queue__basic(void)
++{
++	TEST_INPUT(((int []){ 2, 6, 3, 10, 9, 5, 7, 4, 5, 8, 1, DUMP }),
++		   ((int []){ 1, 2, 3, 4, 5, 5, 6, 7, 8, 9, 10 }));
++}
++
++void test_prio_queue__mixed(void)
++{
++	TEST_INPUT(((int []){ 6, 2, 4, GET, 5, 3, GET, GET, 1, DUMP }),
++		   ((int []){ 2, 3, 4, 1, 5, 6 }));
++}
++
++void test_prio_queue__empty(void)
++{
++	TEST_INPUT(((int []){ 1, 2, GET, GET, GET, 1, 2, GET, GET, GET }),
++		   ((int []){ 1, 2, MISSING, 1, 2, MISSING }));
++}
++
++void test_prio_queue__stack(void)
++{
++	TEST_INPUT(((int []){ STACK, 8, 1, 5, 4, 6, 2, 3, DUMP }),
++		   ((int []){ 3, 2, 6, 4, 5, 1, 8 }));
++}
++
++void test_prio_queue__reverse_stack(void)
++{
++	TEST_INPUT(((int []){ STACK, 1, 2, 3, 4, 5, 6, REVERSE, DUMP }),
++		   ((int []){ 1, 2, 3, 4, 5, 6 }));
 +}
 -- 
 2.34.1
