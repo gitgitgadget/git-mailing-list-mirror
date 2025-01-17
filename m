@@ -1,123 +1,173 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB431D932F
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 22:45:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF9E1B3F3D
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 22:48:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737153909; cv=none; b=OebDzcWoupwInSQBx9Ebe0cvNIC7WpEWucSJ1Aqm43s/tHhnvLaevAk+EwNaI9pWvXWQB2rS0hAf2CSX5ArRvHeWaNow1ZOYU59DGmRlk54u1DiXg3E0LV1nkGTaMoo+hRF3L3rR08vGu2PojIQSjZVo/hIAgiDg85crt76NN6w=
+	t=1737154139; cv=none; b=TVsyZNmXmeZ0Ie2ORS7XpziSq9mpf0cwg6++rCATtnsx1pxYHcNn6vrGpyegQDCuGlv4PJHB3v9R4wPkboGMdXxj4iGBBhpK7OHa0xrVV5uXO15bdAb1Gtjgos9WqPl4AYLm4iN0HB51he6e8O5GTL3NqE5SPK/E21oLUbFz+Kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737153909; c=relaxed/simple;
-	bh=JcuVhFpjS7pcxbR1gXcj9AdsWYCUxKhHTZp0OYCctFg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NS6WY4nQ/cAGhZv80ymExVJImpN55sLjc9apI/7V1UxRoP8kr8gS1dgrhuZy110FdzrOusrnQVPgV+xVJ8EvJ3iue9muSYphHiENSXqPPy0nREz9br+C4bpSUD3gaEcoVr11ocr0eVO3NIZo58sy6BnI+kS06KkZ6Iy05gpRyME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tTziburp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jNTihpOP; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tTziburp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jNTihpOP"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 337661140118;
-	Fri, 17 Jan 2025 17:45:06 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 17 Jan 2025 17:45:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1737153906; x=1737240306; bh=hPBqCO1nc2
-	QEJ9KqjKuxNjc+DNr0DKxHVputir+/ed8=; b=tTziburpOO50/MpPLvRwcWqcQe
-	X48aUCL7ou/X7buoHcQBxjz7JHVPbkeMi5tThobrUpFl4i4pOWVHyHwc7ceTx2s9
-	2mHubFE99ULuNqQNosHXJSOx+KqJp6xXa6iCX7S3svrnnDG+dzzNi+7D7kds/qRc
-	xd6PfD8WrBlZZO3CDkh+9rrR9JsxCJQVJyoAYpC0vy3FzySa2PmzB7+L3X2wPpLA
-	poMfUk+bAgl9bXdkg80AUE8MdmFH1gFkHPJkY6LC9lkyj8/bXmNq6e9aJJ9vQS1h
-	6JML7+7k3QlsKExhrih2wtosg+mgJOofdL8YBp2Ig4tfbpWLy2FbZP8gWO9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737153906; x=1737240306; bh=hPBqCO1nc2QEJ9KqjKuxNjc+DNr0DKxHVpu
-	tir+/ed8=; b=jNTihpOPEfCx5fPimcNi5B3JzKANkkDNGrE59DOMZRvt1dLC+lp
-	YXj7dz0TgiOFS6SBXgnGK/H7+Vx8gdPLduFLvNorG5C5kWmiGW16oyGgWT0vqvrH
-	udEEWT3VOL1yBSm7r2rJQyyTpNjiUwtN6Mn8xzlwv6aYHxEIOUwzwYLOHOZwOAC7
-	EpUn3Y0Xru+gvVTnbylUnVn7oYaUU9KVq5Emm/QWvG12WbxLiz2cD0TwvVNuM66z
-	Pht6OrdaB6Cqiw1nuvYA9DYdZ2MkkUYtuUA0712Dq5/vJ3+9j7Vz5k9rcurXYD+F
-	gH/81xb0QKLF7mhmKwc4pIzK1S+jwYyXkkA==
-X-ME-Sender: <xms:ct2KZ24ubGMSqtVc6qMhX_xSLAqCirnKxTRtVXvopA608YJmsLladA>
-    <xme:ct2KZ_60JAActyxIXUEKHl7q56YBqSIoDuP2ur830Omw32INBHnkIEVvCg8fK7zLH
-    s1NUKJpaKo7vxLzOg>
-X-ME-Received: <xmr:ct2KZ1ecxR8K96Kn9trtAY1KfJR06OacUF8JAD0xG7UJHJfq9QRFsJgimrq_ebG9a4N1Zg8G_K58ZkFjAZDIYbsVtHTigx-6plb_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeigedgtdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
-    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhhorggthhgrnh
-    esphhrohhtohhnmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ct2KZzInsejONqGcNmUIznuJoTU4zcggkGkHF5NCJCKI6DwI7rgi_Q>
-    <xmx:ct2KZ6JgAPd_JP8cTv-hteBv1-bB_YGXPCyXtsdDzXDo3FnSniqyKg>
-    <xmx:ct2KZ0xNOZRtkcYEFH_G50EHfXDUroS6LWCycyApGfNKEBLTloDT4A>
-    <xmx:ct2KZ-LChTQrUxN9NRaTaMiIk9rV6C8UNqM5Bz-9XKOU9Ej1I3ENjg>
-    <xmx:ct2KZ_EL5LasYCXG2OF9FYCLX2QXqF-t7Xo2i_wzAsvsHCX9nXhW5Dhh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 17:45:05 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Koakuma <koachan@protonmail.com>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] packfile: factor out --pack_header argument parsing
-In-Reply-To: <20250117125459.GA2893666@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 17 Jan 2025 07:54:59 -0500")
-References: <20250117125207.GB2356599@coredump.intra.peff.net>
-	<20250117125459.GA2893666@coredump.intra.peff.net>
-Date: Fri, 17 Jan 2025 14:45:04 -0800
-Message-ID: <xmqqo705hxfz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1737154139; c=relaxed/simple;
+	bh=vzbZSHSTOVhniVBvNUv7LDRPMfqYljtoQ5d0+vTE0JQ=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Rn15SNNpDVO8kgMC4gBjfOD36Kd7JUNoS2eFpn19W4xhWI/13TJesO0d1P4Gkj31fvhIn1vlSG2U1B8K21P0M8KPKe4OegIZUfK46iPAtAb03tvOSBPGmSMJbJnvE1Y1t1bxxxWPv/Fl889CxZ6cVrXrWcflu3Mho2VT2PWYcbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen (pool-99-228-67-183.cpe.net.cable.rogers.com [99.228.67.183])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 50HMlpr83831828
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 17 Jan 2025 22:47:52 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Usman Akinyemi'" <usmanakinyemi202@gmail.com>
+Cc: <git@vger.kernel.org>, <christian.couder@gmail.com>, <ps@pks.im>,
+        <johncai86@gmail.com>, <Johannes.Schindelin@gmx.de>, <me@ttaylorr.com>,
+        <phillip.wood@dunelm.org.uk>, <sunshine@sunshineco.com>,
+        "'Christian Couder'" <chriscool@tuxfamily.org>
+References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>	<20250117104639.65608-1-usmanakinyemi202@gmail.com>	<20250117104639.65608-6-usmanakinyemi202@gmail.com> <xmqq4j1xjd2m.fsf@gitster.g>
+In-Reply-To: <xmqq4j1xjd2m.fsf@gitster.g>
+Subject: RE: [PATCH v2 5/6] connect: advertise OS version
+Date: Fri, 17 Jan 2025 17:47:46 -0500
+Organization: Nexbridge Inc.
+Message-ID: <00bb01db6931$d7cd6dc0$87684940$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQL1iKQeqDpt8guF+jE2EcHccRlcdgGGCMwEAjdRnLkCWoP1KrC2klVg
+Content-Language: en-ca
+X-Antivirus: Norton (VPS 250117-8, 1/17/2025), Outbound message
+X-Antivirus-Status: Clean
 
-Jeff King <peff@peff.net> writes:
+On January 17, 2025 5:22 PM, Junio C Hamano wrote:
+>Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+>
+>> As some issues that can happen with a Git client can be operating
+>> system specific, it can be useful for a server to know which OS a
+>> client is using. In the same way it can be useful for a client to know
+>> which OS a server is using.
+>
+>Hmph.  The other end may be running different version of Git, and the
+version
+>difference of _our_ software is probably more relevant.
+>For that matter, they may even be running something entirely different from
+our
+>software, like Gerrit.  So I am not sure I am convinced that os-version
+thing is a good
+>thing to have with that paragraph.
+>
+>> Let's introduce a new protocol (`os-version`) allowing Git clients and
+>> servers to exchange operating system information. The protocol is
+>> controlled by the new `transfer.advertiseOSVersion` config option.
+>
+>The last sentence is redundant and can safely removed.  The next paragraph
+>describes it better than "is controlled by".
+>
+>> Add the `transfer.advertiseOSVersion` config option to address privacy
+>> concerns. It defaults to `true` and can be changed to `false`. When
+>> enabled, this option makes clients and servers send each other the OS
+>> name (e.g., "Linux" or "Windows"). The information is retrieved using
+>> the 'sysname' field of the `uname(2)` system call.
+>
+>Add "or its equivalent" at the end.
 
->  			} else if (starts_with(arg, "--pack_header=")) {
-> -				struct pack_header *hdr;
-> -				char *c;
-> -
-> -				hdr = (struct pack_header *)input_buffer;
-> -				hdr->hdr_signature = htonl(PACK_SIGNATURE);
-> -				hdr->hdr_version = htonl(strtoul(arg + 14, &c, 10));
+>macOS may have one, but it probably is not quite correct to say that
+Windows have
+>uname system call (otherwise we wouldn't be emulating it on top of
+GetVersion
+>ourselves).
+>
+>> However, there are differences between `uname(1)` (command-line
+>> utility) and `uname(2)` (system call) outputs on Windows. These
+>> discrepancies complicate testing on Windows platforms. For example:
+>>   - `uname(1)` output: MINGW64_NT-10.0-20348.3.4.10-87d57229.x86_64\
+>>   .2024-02-14.20:17.UTC.x86_64
+>>   - `uname(2)` output: Windows.10.0.20348
+>>
+>> On Windows, uname(2) is not actually system-supplied but is instead
+>> already faked up by Git itself. We could have overcome the test issue
+>> on Windows by implementing a new `uname` subcommand in `test-tool`
+>> using uname(2), but except uname(2), which would be tested against
+>> itself, there would be nothing platform specific, so it's just simpler
+>> to disable the tests on Windows.
+>
+>OK.
+>
+>> +transfer.advertiseOSVersion::
+>> +	When `true`, the `os-version` capability is advertised by clients
+and
+>> +	servers. It makes clients and servers send to each other a string
+>> +	representing the operating system name, like "Linux" or "Windows".
+>> +	This string is retrieved from the `sysname` field of the struct
+returned
+>> +	by the uname(2) system call. Defaults to true.
+>
+>Presumably, both ends of the connection independently choose whether they
+>enable or disable this variable, so we have 2x2=4 combinations (here,
+versions of
+>Git before the os-version capability support is introduced behave the same
+way as
+>an installation with this configuration variable set to false).
+>
+>And among these four combinations, only one of them results in "send to
+each
+>other", but the description above is fuzzy.
+>
+>> diff --git a/connect.c b/connect.c
+>> index 10fad43e98..6d5792b63c 100644
+>> --- a/connect.c
+>> +++ b/connect.c
+>> @@ -492,6 +492,9 @@ static void send_capabilities(int fd_out, struct
+>packet_reader *reader)
+>>  	if (server_supports_v2("agent"))
+>>  		packet_write_fmt(fd_out, "agent=%s",
+git_user_agent_sanitized());
+>>
+>> +	if (server_supports_v2("os-version") &&
+>advertise_os_version(the_repository))
+>> +		packet_write_fmt(fd_out, "os-version=%s",
+>os_version_sanitized());
+>
+>Not a new problem, because the new code is pretty-much a straight copy from
+the
+>existing "agent" code, but do we ever use unsanitized versions of
+git-user-agent and
+>os-version?  If not, I am wondering if we should sanitize immediately when
+we
+>obtain the raw string and keep it, get rid of _santized() function from the
+public API,
+>and make anybody calling git_user_agent() and os_version() to get sanitized
+safe-
+>to-use strings.
+>
+>I see http.c throws git_user_agent() without doing any sanitization at the
+cURL
+>library, but it may be a mistake that we may want to fix (outside the scope
+of this
+>topic).  Since the contrast between the
+>os_version() vs the os_version_sanitized() is *new* in this series,
+however, we
+>probably would want to get it right from the beginning.
+>
+>So the question is again, do we ever need to use os_version() that is a raw
+string
+>that may require sanitizing?  I do not think of any offhand.
 
-Interesting.  So the file-scope static input_buffer[] sits in the
-BSS and happens to be well aligned not to cause the problem, but ...
+uname(2) is definitely not portable. uname(1) is almost always available,
+but
+there is no guarantee about uname(2). I am not entirely happy having my
+builds break if having to write one between rc0 and rc1 when this rolls. How
+is this being handled? os_version() is also not portable. What if we had
+something that asked for specific elements of the string, by name or id.
 
-> @@ -645,18 +646,9 @@ int cmd_unpack_objects(int argc,
->  				continue;
->  			}
->  			if (starts_with(arg, "--pack_header=")) {
-> -				struct pack_header *hdr;
-> -				char *c;
-> -
-> -				hdr = (struct pack_header *)buffer;
-> -				hdr->hdr_signature = htonl(PACK_SIGNATURE);
-> -				hdr->hdr_version = htonl(strtoul(arg + 14, &c, 10));
-
-... the same file-scope static buffer[] that also sits in the BSS
-was not well aligned by chance?
-
-Otherwise these should be identical code.  Very interesting.
-
-And of course the fix in the [2/3] is absolutely the right thing to
-do.
-
-Thanks.
 
