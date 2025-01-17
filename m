@@ -1,53 +1,53 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3CB1F76D6
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6F61F942E
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737106168; cv=none; b=F/sNHci4/roO3BWXD/oOdoKkpJ/otMiohNxg/r4KQxEWKfa61NhAIf4R/+q9iEfQKU4mJwana/FL0CbCwW/4FX2D7+snsjOJRJbYvRrya2rulsSDQxFOp9ArM3gHtSBMjy4jh1GdYOUrWs9Kzn1vWMMtKewLptyya56lFbZjrl0=
+	t=1737106171; cv=none; b=kmtfLzuEjVkgYI518f+oVagSue3sQRZUb3HALGtcEdaCC7Xeq5DH2rwIG0T1M2pAbIIqN4rJCe4mUNbhOXMiy3vDVfE9JVsTWrTF/D1Vt0HTSv/mLT/KEwW/7caQkGjZTo+Sz15RB0r3x2s1CU3a3DNmX1hjNFiftz2qrC8yIOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737106168; c=relaxed/simple;
-	bh=16vUK6GnE4qg0d3DA8TLPTAdVMa1GALfyFNdCRR1big=;
+	s=arc-20240116; t=1737106171; c=relaxed/simple;
+	bh=Mklt4tIkBFL39yXOlv30XtWHcYxQlzU2FtjC4HCGUQM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LhKiT+Bwc+HDmZqTZf2F6mYaHeixWC2dP/zty+QuRIDQKTT9hygLHptR769UdBNvmAGnj3ZJCeaPXq8j7nI6KHDw6JRdoBdCOlEyom+o6T9HlgvsBqv0ESsCOkaoRbSfyGYoqMXY/++fkhC0O/bCN3YHHZxpM7dtXYLT4ZiX4rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PCjfqJYV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ByGU5GVE; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=jK2RPwJX86G/YgH9dVV2hlndO6wZkkG05vDnAjVe6Rp0yZspiSfzwuArNvz1BLfW/rLI7enX9zmAKYbRs0yvnyPHegXrvBnapu8atS08tJXWAN7Km1TB4ugt8dUXS22Jj7Q2C1s1Chv69E+DGxenMmODIZLEFsMW/Jl+dJsNWsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XZpdGQoY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rvqjusMl; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PCjfqJYV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ByGU5GVE"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7258B138026A;
-	Fri, 17 Jan 2025 04:29:25 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XZpdGQoY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rvqjusMl"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id ADBDA13802C8;
+	Fri, 17 Jan 2025 04:29:28 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 17 Jan 2025 04:29:25 -0500
+  by phl-compute-08.internal (MEProxy); Fri, 17 Jan 2025 04:29:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737106165; x=1737192565; bh=cGT3JvIzO7
-	1ffUj+kkGnscofHHtnSzYM4JhGWHPQS5Q=; b=PCjfqJYV83K2uasWVexI2tIoSL
-	YquxbOVE2V/1b8mNjkcywTMHWTb+D2B7s7C8g+0/F42CP+EwJQfdjMptgUiFSoBi
-	MnpjZ9QU/xYKZ7W6RmfnWFndyXxmxkwa18sqOtGtZ2QQxOaiqY/4sIdmN/XICjts
-	voV/rnxwgGKWSpGuRuH8V2Edd8LFgrDmKyen5PyfkZvkLGmfW2TmKSBa+jLcgZGE
-	YsgXPZBqVOVmPMVrB/3h8G6hDb3qe/1nrgvzeyRqXFbSB/nb/UEwdiA52V9nDEbr
-	4+Po8nFcZZQnukD0wTLCcROBn+e+2A6iA6rBGrutIpkeMddcUeYQQ32JxsZQ==
+	:subject:to:to; s=fm2; t=1737106168; x=1737192568; bh=8HNrfE0U2t
+	HqxuBgOWMO4aTtp54BGE+BHvTUbVRJSbU=; b=XZpdGQoYZLDCE884mD/E8/LwQo
+	q1o0QjbFWnyl1eDWBrJTVz2VvgRcYlRWpK4oYfXCsu/+BHQnA3LCYUYZuzG5lDew
+	bUNqSvJx0MlhoaZmCRQQW848togI/48vEOQECrP1OnceEX1JPbqFCxq4I1Khzert
+	u/fNoxfO4kCV1s542do8GD9c+nfB3E5FMUwIi0/yMZeCYWOgVissAkFWhHsY0ygp
+	bl2uojx5AzyqnC2P4hEQRWJChA1h2dlJkOf+ZiqaqlUL2BCMepgyc1m5lCR2uTOE
+	nH4Jz7i3vrjfGUskz/tLaFo/kCwF9sz4Fuo1/4hOYh8NwkEsvjfKG6GLYR4A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737106165; x=1737192565; bh=cGT3JvIzO71ffUj+kkGnscofHHtnSzYM4Jh
-	GWHPQS5Q=; b=ByGU5GVEw2AIqwzz4G8sBvC+YMxGnxX6OY3RcGDGlpc5epKEDH/
-	cFUYZ93o3kl3yffTiV3lpIkRMpmMFqIoKZ1j2j+bSdysWH6/F1GENk0p8Zc+aHZL
-	76V0ECIXpMYJOJs29bzlR6pPfDsmHHIWZJg+waKv9y6JbZv8U/p7YrI1PnvhSmiw
-	1/kFM6fqLXoCLZXuAj3VJXBLL20qiOSysF1pVgNgtnKS/SOdcqSuXn0wz6zbTw3G
-	8U5p5XXuGhzHjwyye7DCCIzjxnxRFjd8xKcygsW+jLilRNwK4jLsT5ntakgDwyuJ
-	h4MUyl6YextosT8ZoZ2Q0WpyRJK4idbwppg==
-X-ME-Sender: <xms:9SKKZ0dZ1Ebm2DMv3lQjrL0rT34Kh9TkjHkJZL6weo9bFg0uDdFSVQ>
-    <xme:9SKKZ2PpCRhoDYQrwhtcyw5YpsrUVBjHhFrxnFAdwdAieS0HFL_a4FjMLN4OPWiPu
-    TrMKcyqsOFJtYE0RQ>
-X-ME-Received: <xmr:9SKKZ1ipixyk2eGM7xYH4L_X0_w2DPE3rvAfk6nmBTg2l_4kHP0_w5wihIBCWttDUfz_1C_5KZPi1bqBaZMHV89ziZFKT4hmV8UqDHJDKREWFcc>
+	1737106168; x=1737192568; bh=8HNrfE0U2tHqxuBgOWMO4aTtp54BGE+BHvT
+	UbVRJSbU=; b=rvqjusMldy2T5iv6tA/pwEUX7wZoRPHcU22R68jw6V7C8AYEFF5
+	ZmsfK+hMMaBveajFGi8iDBbWhjPXB/QJ9XSYjF1dnmg6zuqxmmh8j3YFQZO81YSC
+	5h5Heqop79kjiKR5ro0hmKJQ0TEAoDutWVRlwVf2LYslDzQ16b46SUUDNmCAdSLp
+	OILemB0mdEOsxihNPQPwMBiKXtTBg049ACyAckipnQkLxuCmdXfFEPREyepIOnGP
+	/6Yi8n1qm3Ex6JUertvwYw1eL3qNeArZJSurQwyxVY1NvXW7QOfRO9gR0sAhl2wT
+	r4ZqFVvoFGxHO8jJsn5qkJg1TH/86WZdrsg==
+X-ME-Sender: <xms:-CKKZwiw8oWaQfi70vghsA0bGJDHtFZFcCgJJWzXz-PaOed1BwOiXw>
+    <xme:-CKKZ5A_0pF2kNr_9wYVHwyPLVprIk62nw67emYaRC-5LDwGThAg_lOqceA-jzqdP
+    lL9PFPN7s9j5824EA>
+X-ME-Received: <xmr:-CKKZ4HIwGuwBVgr8hzXeEpIx8OuoO4S9dKUcWzeINCZlQzDZxG8FKW1z0UXtYGxXHBE_xieyVzwmlQkYPma1Eet0GIcdNyGskUF0DSuU4sgLQQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgtdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,30 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgtdefucetufdoteggod
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgu
-    rghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepkhgrrh
-    hthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:9SKKZ5-Wn1Mz6MR2-L8jM1i94qtUYRz_EjT4CcAEx7mghqmndNUs7A>
-    <xmx:9SKKZwvAHfULqL4A06bZIjnVV75mE_mFVAcpb5FFPPFwp4FW42GXEw>
-    <xmx:9SKKZwFDPy1XNApM-_5AL6Xhl2covX6JaV_mJjXqztTOr98t3kL2AQ>
-    <xmx:9SKKZ_P-qy88Yx2MZOj1U37doatXQfK4Vx4gbalTmK7fZrlVTWvYEQ>
-    <xmx:9SKKZyJZlRNkz0_D6KJqBq3OO-aE4lxCJhH3ji9W60lMpn1MURONPgMU>
+    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrh
+    hushhthihtohhothhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:-CKKZxSxCA_d5xzY_en8npg5Fjmom6XedrS8VPH4lQwzYdcZShW4Fw>
+    <xmx:-CKKZ9whfwgX5N1AWksGmc-z9TZmSSX5oGH_9fxRP2wvhl930-YiBQ>
+    <xmx:-CKKZ_6uQ1a2m-YM7hez1ulVtuT4vmJeP53ZXUAEoz0SeYjswtGxLw>
+    <xmx:-CKKZ6xHz5KsDaBuOBAHzwGk1YzUgiMl8yiQH0MESrknouqkMaGo7Q>
+    <xmx:-CKKZ_ufCS_7K4bgdB5MaFyOqBPzim7FyyvMt9eqH_FjPt_Db1Rh6x8Q>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 04:29:24 -0500 (EST)
+ 17 Jan 2025 04:29:27 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id db4b075c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Jan 2025 09:29:22 +0000 (UTC)
-Date: Fri, 17 Jan 2025 10:29:21 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id bb25c2e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Jan 2025 09:29:27 +0000 (UTC)
+Date: Fri, 17 Jan 2025 10:29:26 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, gitster@pobox.com
-Subject: Re: [PATCH 3/3] reftable: prevent 'update_index' changes after
- header write
-Message-ID: <Z4oi55XewgX2deTm@pks.im>
+Subject: Re: [PATCH 1/3] refs: mark `ref_transaction_update_reflog()` as
+ static
+Message-ID: <Z4oi9i_EHLaPjk0g@pks.im>
 References: <20250117-461-corrupted-reftable-followup-v1-0-70ee605ae3fe@gmail.com>
- <20250117-461-corrupted-reftable-followup-v1-3-70ee605ae3fe@gmail.com>
+ <20250117-461-corrupted-reftable-followup-v1-1-70ee605ae3fe@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,47 +88,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250117-461-corrupted-reftable-followup-v1-3-70ee605ae3fe@gmail.com>
+In-Reply-To: <20250117-461-corrupted-reftable-followup-v1-1-70ee605ae3fe@gmail.com>
 
-On Fri, Jan 17, 2025 at 08:59:14AM +0100, Karthik Nayak wrote:
-> diff --git a/reftable/writer.c b/reftable/writer.c
-> index 740c98038eaf883258bef4988f78977ac7e4a75a..c602b873543790e36178f797ed9f98112671f97f 100644
-> --- a/reftable/writer.c
-> +++ b/reftable/writer.c
-> @@ -182,6 +182,13 @@ int reftable_writer_new(struct reftable_writer **out,
->  void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
->  				uint64_t max)
->  {
-> +	/*
-> +	 * The limits shouldn't be modified post writing the first block, else
-> +	 * it would cause a mismatch between the header and the footer.
-> +	 */
+On Fri, Jan 17, 2025 at 08:59:12AM +0100, Karthik Nayak wrote:
+> diff --git a/refs.h b/refs.h
+> index a0cdd99250e8286b55808b697b0a94afac5d8319..09be47afbee51e99f4ae49588cd65596ccfcb07e 100644
+> --- a/refs.h
+> +++ b/refs.h
+> @@ -771,20 +771,6 @@ int ref_transaction_update(struct ref_transaction *transaction,
+>  			   unsigned int flags, const char *msg,
+>  			   struct strbuf *err);
+>  
+> -/*
+> - * Similar to`ref_transaction_update`, but this function is only for adding
+> - * a reflog update. Supports providing custom committer information. The index
+> - * field can be utiltized to order updates as desired. When not used, the
+> - * updates default to being ordered by refname.
+> - */
 
-Can we make this *even* stricter? I think that this is something that is
-easy to do wrong, and the fact that it only triggers in some situations
-of misuse may easily make tests miss this issue. So ideally, we should
-assert that `set_limits()` is always called before queueing any records
-to the writer. This would make us error out in all situations where the
-calling order is wrong.
-
-There are two ways I can see us doing that:
-
-  - Detect any state written by `writer_add_record()` and error out if
-    it's set when `reftable_writer_set_limits()` is called.
-
-  - Adapt `reftable_writer_new()` so that it takes the update indices as
-    input and drop `reftable_writer_set_limits()` altogether.
-
-The latter might be preferable as you basically want to set limits in
-all (most?) situations anyway.
-
-> +	if (w->next)
-> +		BUG("update index modified after writing first block");
-
-Let's not use BUG, but rather return a `REFTABLE_API_ERROR` error. It
-requires a bit more plumbing because we'll also hvae to adapt all
-callers to handle errors. But on the one hand we don't want to die in
-library code. And on the other hand we don't want to keep on adding more
-dependencies on "git-compat-util.h".
+Do we maybe want to move the comment over? The explanation of the index
+field seems useful to me.
 
 Patrick
+
+> -int ref_transaction_update_reflog(struct ref_transaction *transaction,
+> -				  const char *refname,
+> -				  const struct object_id *new_oid,
+> -				  const struct object_id *old_oid,
+> -				  const char *committer_info, unsigned int flags,
+> -				  const char *msg, unsigned int index,
+> -				  struct strbuf *err);
+> -
+>  /*
+>   * Add a reference creation to transaction. new_oid is the value that
+>   * the reference should have after the update; it must not be
