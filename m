@@ -1,195 +1,134 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0434E1F9EA4
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:21:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3CB1F76D6
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:29:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737105693; cv=none; b=JRjtn06ERjzggIjuSfRtOWNGzgcw737hYAK1Z7kAAnbVs+ZQgfSXtnFNWIXkuWD71GnqROy7IQqUGmc31FZ0TgUUSe9hISwWwuzrdBwSHt2zeR82agfuLufC93yjIapCvKp9GVVHToo7oJy3B9KDXh3SbsGceWnMK+NogySFqlc=
+	t=1737106168; cv=none; b=F/sNHci4/roO3BWXD/oOdoKkpJ/otMiohNxg/r4KQxEWKfa61NhAIf4R/+q9iEfQKU4mJwana/FL0CbCwW/4FX2D7+snsjOJRJbYvRrya2rulsSDQxFOp9ArM3gHtSBMjy4jh1GdYOUrWs9Kzn1vWMMtKewLptyya56lFbZjrl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737105693; c=relaxed/simple;
-	bh=23JyOMoFwF4jiMtL4yVRFt0D3XC8k/jej3UC8iDqdWI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WESZ/dK/ZJdHYAHhsim37a7dQ/jQEF/ttWXD5sOeEO/UeDBzmQkNHkWUe3KEgNr7R72I2qMY7LSJSoMDyovhWibMQA/lxivUxNTZqlFq2t8vc3ftJMI2KSGMSmfrE1K3iD4L8cgneMmInLVF91bAmmfPhEuqKwIr7EB+jS0I70M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mAnEcD0o; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737106168; c=relaxed/simple;
+	bh=16vUK6GnE4qg0d3DA8TLPTAdVMa1GALfyFNdCRR1big=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LhKiT+Bwc+HDmZqTZf2F6mYaHeixWC2dP/zty+QuRIDQKTT9hygLHptR769UdBNvmAGnj3ZJCeaPXq8j7nI6KHDw6JRdoBdCOlEyom+o6T9HlgvsBqv0ESsCOkaoRbSfyGYoqMXY/++fkhC0O/bCN3YHHZxpM7dtXYLT4ZiX4rs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PCjfqJYV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ByGU5GVE; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mAnEcD0o"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-21bc1512a63so37169465ad.1
-        for <git@vger.kernel.org>; Fri, 17 Jan 2025 01:21:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737105690; x=1737710490; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=F86bRfZ0CRnEFPj1MwKkdvsCHGwQ3o0fpITygS2KPxc=;
-        b=mAnEcD0ojlBFwu98hiY5cJamWADhYOV7pW2HGuq209/J2wBKPGWjY6yYJSu4q+j0Bn
-         5L899a5p9oFJoWMqqBwPxsIFEWGN9Gx21LKgR//wdQCNv1hOwK22Xdi1SQmaucNuPIVB
-         WLaWbWQHXcVJuJj+GS6AiHiHUmFX68d+aqV17dd71eP+PhYlB2XjJUQuwMoU4BCHKVA0
-         kGjmihY9RK4EryygokyC7zGEEYzfHmWO51377xn9EsfMhk7ZHJ081V8NWBItlsgrGb44
-         tLrekx7XoKq1zg0TYRGChBDOnSBL7B3jkVz8/sh+48vppi/Mc9tJMgZ/r8rTAcaQrlIH
-         reoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737105690; x=1737710490;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=F86bRfZ0CRnEFPj1MwKkdvsCHGwQ3o0fpITygS2KPxc=;
-        b=sky2swSPaKBR5trlpCajAm1/D/naR10ZVfXFUML102GTgQMPML3a2mNTVsvtJKKvZX
-         Yl71VIxGhjdx28nyYBG/4WjNE7ni55PeB67NjZd4+Ons4kmZWPxNMxHoDJAmzGWXfNaa
-         ApLH86FTL4b0tL4ysXmQYjG2K47EPE4+8qvyrxR3NYTJd/RKqLzbnXNgbffqYeupKOGk
-         enE8O+mVFKiw6ocIKXZmQNAy1zEnUpXazdx62y8RgHFZV/7gdwYOK05qPaUPWLPhKelm
-         2BSRYFgbH2zxrFQBO6gm9iSADREkgmI2ZIdwmmW8Ab70/iEY1uRm0N67K1HJUTOWEggQ
-         vrPw==
-X-Gm-Message-State: AOJu0YzidY8Oy00MkrJfUed7UavudcS2yI34WYGXXZ//rx9vbxf+2Y0C
-	TaLGxiQNBH/9gXuuDuSqPTVAHvwxa5LoLw3oJKDdxHWP7SCndh3rBmf85igr
-X-Gm-Gg: ASbGnctX5NSYR6+we8DEz8QzsZo9FF2W6r1MxfAK0KXZe1o4aL9uhOlckhVJxBgnX/+
-	c/YBKNSWkYs6uGvZFRfV9eCDYiplmPtwz1sFBf6d4dwCTXVX3ff78tnFAAuoQsqbyXoKXx1Qn8C
-	oMBmPL+nIjA3FwqvWqfnnym5r2jM0QRzjNLTtm6zh5iVmJbXvvyLY1W+gOEV+JD3QTAPTZzN3ij
-	uvAs6xUEJPlnqFYPrkyjXizVKE+xFz6KVZQQM/EcOmgPUwaszyyfsfnXTI=
-X-Google-Smtp-Source: AGHT+IHBq5jBQTl2XkrBMXVNhVcNAVx89WYSsu85yjYT5t2UMSKfhqsJSqvWINjPMJk/gUybO0TvTA==
-X-Received: by 2002:a17:902:d492:b0:216:1543:195e with SMTP id d9443c01a7336-21c3553b227mr31320065ad.5.1737105690255;
-        Fri, 17 Jan 2025 01:21:30 -0800 (PST)
-Received: from [127.0.0.2] ([103.39.127.160])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21c2d3e088bsm11714065ad.173.2025.01.17.01.21.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 01:21:29 -0800 (PST)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 17 Jan 2025 10:20:52 +0100
-Subject: [PATCH v2 5/5] pack-write: pass hash_algo to internal functions
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PCjfqJYV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ByGU5GVE"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7258B138026A;
+	Fri, 17 Jan 2025 04:29:25 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Fri, 17 Jan 2025 04:29:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737106165; x=1737192565; bh=cGT3JvIzO7
+	1ffUj+kkGnscofHHtnSzYM4JhGWHPQS5Q=; b=PCjfqJYV83K2uasWVexI2tIoSL
+	YquxbOVE2V/1b8mNjkcywTMHWTb+D2B7s7C8g+0/F42CP+EwJQfdjMptgUiFSoBi
+	MnpjZ9QU/xYKZ7W6RmfnWFndyXxmxkwa18sqOtGtZ2QQxOaiqY/4sIdmN/XICjts
+	voV/rnxwgGKWSpGuRuH8V2Edd8LFgrDmKyen5PyfkZvkLGmfW2TmKSBa+jLcgZGE
+	YsgXPZBqVOVmPMVrB/3h8G6hDb3qe/1nrgvzeyRqXFbSB/nb/UEwdiA52V9nDEbr
+	4+Po8nFcZZQnukD0wTLCcROBn+e+2A6iA6rBGrutIpkeMddcUeYQQ32JxsZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1737106165; x=1737192565; bh=cGT3JvIzO71ffUj+kkGnscofHHtnSzYM4Jh
+	GWHPQS5Q=; b=ByGU5GVEw2AIqwzz4G8sBvC+YMxGnxX6OY3RcGDGlpc5epKEDH/
+	cFUYZ93o3kl3yffTiV3lpIkRMpmMFqIoKZ1j2j+bSdysWH6/F1GENk0p8Zc+aHZL
+	76V0ECIXpMYJOJs29bzlR6pPfDsmHHIWZJg+waKv9y6JbZv8U/p7YrI1PnvhSmiw
+	1/kFM6fqLXoCLZXuAj3VJXBLL20qiOSysF1pVgNgtnKS/SOdcqSuXn0wz6zbTw3G
+	8U5p5XXuGhzHjwyye7DCCIzjxnxRFjd8xKcygsW+jLilRNwK4jLsT5ntakgDwyuJ
+	h4MUyl6YextosT8ZoZ2Q0WpyRJK4idbwppg==
+X-ME-Sender: <xms:9SKKZ0dZ1Ebm2DMv3lQjrL0rT34Kh9TkjHkJZL6weo9bFg0uDdFSVQ>
+    <xme:9SKKZ2PpCRhoDYQrwhtcyw5YpsrUVBjHhFrxnFAdwdAieS0HFL_a4FjMLN4OPWiPu
+    TrMKcyqsOFJtYE0RQ>
+X-ME-Received: <xmr:9SKKZ1ipixyk2eGM7xYH4L_X0_w2DPE3rvAfk6nmBTg2l_4kHP0_w5wihIBCWttDUfz_1C_5KZPi1bqBaZMHV89ziZFKT4hmV8UqDHJDKREWFcc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgtdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgu
+    rghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepkhgrrh
+    hthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:9SKKZ5-Wn1Mz6MR2-L8jM1i94qtUYRz_EjT4CcAEx7mghqmndNUs7A>
+    <xmx:9SKKZwvAHfULqL4A06bZIjnVV75mE_mFVAcpb5FFPPFwp4FW42GXEw>
+    <xmx:9SKKZwFDPy1XNApM-_5AL6Xhl2covX6JaV_mJjXqztTOr98t3kL2AQ>
+    <xmx:9SKKZ_P-qy88Yx2MZOj1U37doatXQfK4Vx4gbalTmK7fZrlVTWvYEQ>
+    <xmx:9SKKZyJZlRNkz0_D6KJqBq3OO-aE4lxCJhH3ji9W60lMpn1MURONPgMU>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 17 Jan 2025 04:29:24 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id db4b075c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Jan 2025 09:29:22 +0000 (UTC)
+Date: Fri, 17 Jan 2025 10:29:21 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, gitster@pobox.com
+Subject: Re: [PATCH 3/3] reftable: prevent 'update_index' changes after
+ header write
+Message-ID: <Z4oi55XewgX2deTm@pks.im>
+References: <20250117-461-corrupted-reftable-followup-v1-0-70ee605ae3fe@gmail.com>
+ <20250117-461-corrupted-reftable-followup-v1-3-70ee605ae3fe@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250117-kn-the-repo-cleanup-v2-5-a7fdc19688f5@gmail.com>
-References: <20250117-kn-the-repo-cleanup-v2-0-a7fdc19688f5@gmail.com>
-In-Reply-To: <20250117-kn-the-repo-cleanup-v2-0-a7fdc19688f5@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, gitster@pobox.com
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3750; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=23JyOMoFwF4jiMtL4yVRFt0D3XC8k/jej3UC8iDqdWI=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeKIQgQjCdjEP5Q9aZoXbQwrSqb+bG5CJtmL
- aghk66vonDotokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJniiEIAAoJED7VnySO
- Rox/cRYL/iC1vLVWiFGE69b6+SORJrpucJprZn07SQsB5K88YnkeXmUrEvXvuwVjS9B3fVl/npb
- FjutIUP+xrc7sSK1up/Y8A1HojLwINrfDM0POypdu3pZDM6ID8R5AxEfTERg+yiJVVoHznzmGWh
- Euk8W2dQoXDlgdYIpxJAz3cJBe1AlE/WroiSA6Y7bBYPXNdD5R+uwGFANce0oOgFk9BI2ByaYmF
- DxelSRIY7t7ft3lR9761gRID0yWnEUlONfHiW4q+LSdLrWfENXiQ5agjRNrVFpk9UzDShYm8Gfo
- 47SDlkD1/Vts48M2kRxcNv7KoAxFIC0MrDM5/pVBc+1tphbi2dAVmQ/bEzsrY95+4fRXFuZL38r
- mZa5at3kwEI96VmS7p/Ac1Iw2jClTqenttOi0n+viWZo52N5jF4dNub48NM34mdtiTMNVipixNT
- uwEFGhLv+v972LUhZzm+piBqNNK7vtaTItABhJoJB2gL5xqyh+MemrLd/pW4zV9Ai/vx1gcs2f5
- S0=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250117-461-corrupted-reftable-followup-v1-3-70ee605ae3fe@gmail.com>
 
-The internal functions `write_rev_trailer()`, `write_rev_trailer()`,
-`write_mtimes_header()` and write_mtimes_trailer()` use the global
-`the_hash_algo` variable to access the repository's hash function. Pass
-the hash from down as we've added made them available in the previous
-few commits.
+On Fri, Jan 17, 2025 at 08:59:14AM +0100, Karthik Nayak wrote:
+> diff --git a/reftable/writer.c b/reftable/writer.c
+> index 740c98038eaf883258bef4988f78977ac7e4a75a..c602b873543790e36178f797ed9f98112671f97f 100644
+> --- a/reftable/writer.c
+> +++ b/reftable/writer.c
+> @@ -182,6 +182,13 @@ int reftable_writer_new(struct reftable_writer **out,
+>  void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
+>  				uint64_t max)
+>  {
+> +	/*
+> +	 * The limits shouldn't be modified post writing the first block, else
+> +	 * it would cause a mismatch between the header and the footer.
+> +	 */
 
-This removes all global variables from the 'pack-write.c' file, so
-remove the 'USE_THE_REPOSITORY_VARIABLE' macro.
+Can we make this *even* stricter? I think that this is something that is
+easy to do wrong, and the fact that it only triggers in some situations
+of misuse may easily make tests miss this issue. So ideally, we should
+assert that `set_limits()` is always called before queueing any records
+to the writer. This would make us error out in all situations where the
+calling order is wrong.
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- pack-write.c | 30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+There are two ways I can see us doing that:
 
-diff --git a/pack-write.c b/pack-write.c
-index 09ecbcdb069cc9b0383295798ceb49cbdc632b64..a2faeb1895e41f4c17281380478f1f2cabcc6f24 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -1,5 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "environment.h"
- #include "gettext.h"
-@@ -211,9 +209,10 @@ static void write_rev_index_positions(struct hashfile *f,
- 		hashwrite_be32(f, pack_order[i]);
- }
- 
--static void write_rev_trailer(struct hashfile *f, const unsigned char *hash)
-+static void write_rev_trailer(const struct git_hash_algo *hash_algo,
-+			      struct hashfile *f, const unsigned char *hash)
- {
--	hashwrite(f, hash, the_hash_algo->rawsz);
-+	hashwrite(f, hash, hash_algo->rawsz);
- }
- 
- char *write_rev_file(const struct git_hash_algo *hash_algo,
-@@ -286,7 +285,7 @@ char *write_rev_file_order(const struct git_hash_algo *hash_algo,
- 	write_rev_header(hash_algo, f);
- 
- 	write_rev_index_positions(f, pack_order, nr_objects);
--	write_rev_trailer(f, hash);
-+	write_rev_trailer(hash_algo, f, hash);
- 
- 	if (adjust_shared_perm(path) < 0)
- 		die(_("failed to make %s readable"), path);
-@@ -298,11 +297,12 @@ char *write_rev_file_order(const struct git_hash_algo *hash_algo,
- 	return path;
- }
- 
--static void write_mtimes_header(struct hashfile *f)
-+static void write_mtimes_header(const struct git_hash_algo *hash_algo,
-+				struct hashfile *f)
- {
- 	hashwrite_be32(f, MTIMES_SIGNATURE);
- 	hashwrite_be32(f, MTIMES_VERSION);
--	hashwrite_be32(f, oid_version(the_hash_algo));
-+	hashwrite_be32(f, oid_version(hash_algo));
- }
- 
- /*
-@@ -322,12 +322,14 @@ static void write_mtimes_objects(struct hashfile *f,
- 	}
- }
- 
--static void write_mtimes_trailer(struct hashfile *f, const unsigned char *hash)
-+static void write_mtimes_trailer(const struct git_hash_algo *hash_algo,
-+				 struct hashfile *f, const unsigned char *hash)
- {
--	hashwrite(f, hash, the_hash_algo->rawsz);
-+	hashwrite(f, hash, hash_algo->rawsz);
- }
- 
--static char *write_mtimes_file(struct packing_data *to_pack,
-+static char *write_mtimes_file(const struct git_hash_algo *hash_algo,
-+			       struct packing_data *to_pack,
- 			       struct pack_idx_entry **objects,
- 			       uint32_t nr_objects,
- 			       const unsigned char *hash)
-@@ -344,9 +346,9 @@ static char *write_mtimes_file(struct packing_data *to_pack,
- 	mtimes_name = strbuf_detach(&tmp_file, NULL);
- 	f = hashfd(fd, mtimes_name);
- 
--	write_mtimes_header(f);
-+	write_mtimes_header(hash_algo, f);
- 	write_mtimes_objects(f, to_pack, objects, nr_objects);
--	write_mtimes_trailer(f, hash);
-+	write_mtimes_trailer(hash_algo, f, hash);
- 
- 	if (adjust_shared_perm(mtimes_name) < 0)
- 		die(_("failed to make %s readable"), mtimes_name);
-@@ -575,8 +577,8 @@ void stage_tmp_packfiles(const struct git_hash_algo *hash_algo,
- 				      hash, pack_idx_opts->flags);
- 
- 	if (pack_idx_opts->flags & WRITE_MTIMES) {
--		mtimes_tmp_name = write_mtimes_file(to_pack, written_list,
--						    nr_written,
-+		mtimes_tmp_name = write_mtimes_file(hash_algo, to_pack,
-+						    written_list, nr_written,
- 						    hash);
- 	}
- 
+  - Detect any state written by `writer_add_record()` and error out if
+    it's set when `reftable_writer_set_limits()` is called.
 
--- 
-2.47.0
+  - Adapt `reftable_writer_new()` so that it takes the update indices as
+    input and drop `reftable_writer_set_limits()` altogether.
 
+The latter might be preferable as you basically want to set limits in
+all (most?) situations anyway.
+
+> +	if (w->next)
+> +		BUG("update index modified after writing first block");
+
+Let's not use BUG, but rather return a `REFTABLE_API_ERROR` error. It
+requires a bit more plumbing because we'll also hvae to adapt all
+callers to handle errors. But on the one hand we don't want to die in
+library code. And on the other hand we don't want to keep on adding more
+dependencies on "git-compat-util.h".
+
+Patrick
