@@ -1,117 +1,140 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87281F8685
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 12:11:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036EC1F8ADA
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 12:29:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737115884; cv=none; b=aS9w4UjRl0tv5M8TIjYLVnIb79DaqCZMsvg/f/lmo0FtKd8DcQ+Z+r4x4+WU2Q3UJoEIACfW58VUmHCYfNHpulnv2Xgnvm0JYINcMeStoG8SblP5i660VlK4Rgski+xsTbOhjI6wEsdZDn8EfWHzbR02yq7su0YZnsJtmqq3HTQ=
+	t=1737116976; cv=none; b=Fgu2ecL26A69IW1J19EzWJq94HuUGoOdqOqV4pYC5wmzbYT+A5Zl6/Rq8zXf26pRfPExWgwXoRrUiwyMKJmGzQIoSB3Gn13gh0lQ1QlSZwT4t8u1JfXXOpD8pMxevCTTfLSuOHoj1FA8Xn9/EGoxYxCdylJyrnUF/ezVuyw+h9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737115884; c=relaxed/simple;
-	bh=C8ZaZt5wYL8lDD6MzA4llmPBF9+ieXSsl9UE8W8pv40=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iO3b4YoEtAqp0W6s1voPu0W1iwPEgX7zI3+HfyhNpLL0/f6Yjhsb9J5cDiVULOWVb/9Puh5mRcb4vmkKOxMQq02/28FV7ABFaVmZxgEpDD56jBTVZ0CoXfj836XH/0fOUOknYllbuJ7bJBxXZ3NQYF0W6lPqqEDc9iPPqn1mSk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WevcOF0v; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1737116976; c=relaxed/simple;
+	bh=lynPQxdt9rZNuaOuFXWCIBQo5A03xQL36+/vhHTMLQQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mU5KSW2ZbxW+emTytZ5NExEb7VAesshxiVWuW+MsXAdtVavPgHIcWVKCSDVyo8Cbkh1lor0HcDNWjbmqTazcoqBL1zkIPlqe67Dzw9n5mUCtfCYZ3gTnj/Gd2IuMN2/S0nViY/QJ8sKN7TPX0WcTpN89xXoMDDhXkj0H9N4GH9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jcfkrSP6; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WevcOF0v"
-Received: (qmail 21722 invoked by uid 109); 17 Jan 2025 12:11:22 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=C8ZaZt5wYL8lDD6MzA4llmPBF9+ieXSsl9UE8W8pv40=; b=WevcOF0v0GDlEdUbOebXasSUQgVBwGdycx1qcAk3SEwWzCkbMabC1qErWP0IuLQ0vpeDORpMV768B3WdGhQfvmRQphvaw89+6ZwcrIr1zKHK3/wIS2HO3/yMjHSerjh5BaG3ptVotEicy5RDMfv1JaK3qPhQb6RTW29JDIBli04XQvgl0G1cgJZ68EzqRWcaO4SU0mm9YO89psQUJRIySKXkygMjzYAEWpWPkyppP1QYft62VFfspONDgHHpgJF2c6ucKm1W67gBHRBnF9Xau/hCO5/i9qQEEPJkO1qWuJFhkPYR8LXlV7KTE8ljDJrLkqT9XiOq6neca4mJGHYIIQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 17 Jan 2025 12:11:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7747 invoked by uid 111); 17 Jan 2025 12:11:21 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 17 Jan 2025 07:11:21 -0500
-Authentication-Results: peff.net; auth=none
-Date: Fri, 17 Jan 2025 07:11:21 -0500
-From: Jeff King <peff@peff.net>
-To: Koakuma <koachan@protonmail.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [BUG] git crashes with a SIGBUS on sparc64 during pull
-Message-ID: <20250117121121.GA2356599@coredump.intra.peff.net>
-References: <xd6Mn7uXpDxaT8zF28BwOIdV98lnvm3S0rBgxmm97nuRW3z0GQSUi_KeYe0fUuRfz8rCgo6Uialw5rnraqp5tjzMFQkFH0MZV_n4fEQg8go=@protonmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jcfkrSP6"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-aaee2c5ee6eso359974866b.1
+        for <git@vger.kernel.org>; Fri, 17 Jan 2025 04:29:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737116973; x=1737721773; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b26OeTYqJjaWX4OYZulLLYi2DRJ+J+Pn8YqqMMF8y4w=;
+        b=jcfkrSP6N4hvuOHBywofwPl1J75X2FvtlfukVBsuhB2eBnmSs5PAHAsP7NMAtpKicM
+         XdfaZL95DmVv5v8qjRIHb9da2Ln0iHS6Owep/3wvbGfkApXXMRC7y9HyI6oFrTT6zdip
+         lZQ3u3TaUeZNnLzlGgZSsu9l7daa+kCzAWJ/Av8aSp9kvpPGM18m5SHfwv1HnyiT5PNJ
+         t5JaWpZJrJSQCzNtHJiy6hFZtoSbru+EUvUkA08A830tJjAxa1HbIvjfZeLKvoNUi4CP
+         WfmWLY3vRqiDvP7JQhUI/ehixTQfKi+qRENarjJyenOiNNxzCEj87I0Ll/DMCguht8Yn
+         xh8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737116973; x=1737721773;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b26OeTYqJjaWX4OYZulLLYi2DRJ+J+Pn8YqqMMF8y4w=;
+        b=q9wVzqlX2IubcFTycwm/+xPrlclBwcrHbjsuY/oy4kkDbpCmIKVIDbMVg0EU73buzS
+         LAW/sPWHuj3VvxNq5TwukGDaAQ7AoZ6Vz4Nf6gd7SoRp3Si9YgRKrlMCm/+36hP3+LBp
+         i7ZCWf/iy/ARndIbmtZF+OOGCku7sfHa9lSxA9ssKFVdcUB3oa9EYMq1t3V7N7OPtgIB
+         L1ColVp6gWZmuWsVPdhwJ4MRGCvLkfdFPxSwA2IMQSV88igHbU5Hkk4bAfY178ykQTaO
+         D4Szvv35aTjDsNEQPMe/LJNqwdY4RwMVt/G+aVkK+2sJIapNbBcJ3oIDOpyxPElRb4lS
+         dOKA==
+X-Gm-Message-State: AOJu0YzSIUFKnzBZj2h29yPXDPMs3dTXUKzARHJVSaQJylZtOrUfnIkx
+	OBWHjFQqv1s9gVKMAYFY7Iqis/0A5cYr3AYQi1qURgcP4T1dUAQkbXfqyOVN6rXsmQ==
+X-Gm-Gg: ASbGncukAdd7PpOsGFEhqZA5a3e5orGrZ2iZQ2sCoiFK3a47u4KnAN+ti1s6xito6UB
+	HuRC5dizmwZ1WIa1Y3iVjwxKD1LRI25WAL28Ukd6/R+U6AUGNG/B+oZIx15PLR/QoTTLZfO2OZK
+	iOteTTBScvtRXdOR9eH/Xsag4jgeZGA4XdYfRoxEZLfOAa70QC26Axc3sSn3H4oo72p6SwFQezW
+	Gn8yBSIavr+3GHvEzUE7W9ErU9hhoRwYEQ34GVW2JycHLTAgW29Iq6cM/OXJ0d9SY7Ccw==
+X-Google-Smtp-Source: AGHT+IG2pB2IgSUKy1wQM6TITTeJdQIfQ5huo4YVx4pJc0tlOqxqZ6tijaJtpp5dwTKcB/3MUqLDdA==
+X-Received: by 2002:a17:907:3d93:b0:ab3:33ad:13c6 with SMTP id a640c23a62f3a-ab38b1665b5mr223563366b.28.1737116972737;
+        Fri, 17 Jan 2025 04:29:32 -0800 (PST)
+Received: from localhost.localdomain ([154.118.34.84])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ab384f23007sm164362166b.96.2025.01.17.04.29.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jan 2025 04:29:32 -0800 (PST)
+From: Seyi Kuforiji <kuforiji98@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	phillip.wood@dunelm.org.uk,
+	gitster@pobox.com,
+	Seyi Kuforiji <kuforiji98@gmail.com>
+Subject: t/unit-tests: convert unit-tests to use clar
+Date: Fri, 17 Jan 2025 13:29:22 +0100
+Message-ID: <20250117122926.101749-1-kuforiji98@gmail.com>
+X-Mailer: git-send-email 2.47.0.86.g15030f9556
+In-Reply-To: <20250116161559.91038-1-kuforiji98@gmail.com>
+References: <20250116161559.91038-1-kuforiji98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xd6Mn7uXpDxaT8zF28BwOIdV98lnvm3S0rBgxmm97nuRW3z0GQSUi_KeYe0fUuRfz8rCgo6Uialw5rnraqp5tjzMFQkFH0MZV_n4fEQg8go=@protonmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 17, 2025 at 03:30:09AM +0000, Koakuma wrote:
+Hello,
 
-> re: unpack-objects, I don't know how to specifically trigger that code,
-> but I know that once `unpack-objects` is triggered it will reliably crash
-> with the error above.
+This small patch series transitions the existing unit test files to the
+Clar testing framework. This change is part of our ongoing effort to
+standardize our testing approach and enhance maintainability.
 
-Perhaps:
+changes in v3:
+- Some small fixes were made to the commit messages
 
-  git init repo
-  cd repo
-  git commit --allow-empty -m foo
-  git repack -ad
-  pack=$(ls .git/objects/pack/*.pack)
-  dd if=$pack of=no-header.pack bs=1 skip=12
-  # don't bother parsing the first 12 bytes; we know it is
-  # a version 2 pack with 2 objects
-  git unpack-objects --pack_header=2,2 <no-header.pack
+Thanks
+Seyi
 
-would be a minimal reproduction?
+Mentored-by: Patrick Steinhardt ps@pks.im
+Signed-off-by: Seyi Kuforiji kuforiji98@gmail.com
 
-> According to gdb, the crash happens on this line:
-> #0  0x000001000019ca18 in cmd_unpack_objects (argc=<optimized out>, argv=0x1000063a4e0, prefix=<optimized out>, repo=<optimized out>) at builtin/unpack-objects.c:653
-> 653					hdr->hdr_signature = htonl(PACK_SIGNATURE);
-> 
-> Overaligning the `buffer` declaration in the same file to try to get around
-> possible alignment issues seems to be able to prevent the crash,
-> but I don't know if it would be a proper fix for it.
+Seyi Kuforiji (4):
+  t/unit-tests: handle dashes in test suite filenames
+  t/unit-tests: convert mem-pool test to use clar test framework
+  t/unit-tests: adapt priority queue test to use clar test framework
+  t/unit-tests: convert reftable tree test to use clar test framework
 
-Interesting. We are pretty cavalier about casting mmap'd buffers to
-structs in order to read pack headers (since the format is designed to
-be 4-byte aligned).
+ Makefile                            |  6 +-
+ t/meson.build                       |  6 +-
+ t/unit-tests/generate-clar-decls.sh |  1 +
+ t/unit-tests/t-mem-pool.c           | 31 ----------
+ t/unit-tests/t-prio-queue.c         | 91 ----------------------------
+ t/unit-tests/t-reftable-tree.c      | 86 --------------------------
+ t/unit-tests/u-mem-pool.c           | 25 ++++++++
+ t/unit-tests/u-prio-queue.c         | 94 +++++++++++++++++++++++++++++
+ t/unit-tests/u-reftable-tree.c      | 78 ++++++++++++++++++++++++
+ 9 files changed, 204 insertions(+), 214 deletions(-)
+ delete mode 100644 t/unit-tests/t-mem-pool.c
+ delete mode 100644 t/unit-tests/t-prio-queue.c
+ delete mode 100644 t/unit-tests/t-reftable-tree.c
+ create mode 100644 t/unit-tests/u-mem-pool.c
+ create mode 100644 t/unit-tests/u-prio-queue.c
+ create mode 100644 t/unit-tests/u-reftable-tree.c
 
-But in this case we are _writing_ into a buffer through the cast
-structure (our caller has already parsed the header, so we are
-reconstructing it). So we are relying on the alignment of a static
-"unsigned char" in the data section.
+Range-diff against v2:
+1:  00bb4d2880 ! 1:  f9e163a181 t/unit-tests: handle dashes in test suite filenames
+    @@ Metadata
+      ## Commit message ##
+         t/unit-tests: handle dashes in test suite filenames
+     
+    -    The script is designed to extract function signatures that match a
+    -    specific pattern derived from the unit test file's name.
+    -    `generate-clar-decls.sh` does not pick up dashes in filenames, which
+    -    prevents the scripts from being run.
+    +    "generate-clar-decls.sh" script is designed to extract function
+    +    signatures that match a specific pattern derived from the unit test
+    +    file's name. The script does not know to massage file names with dashes,
+    +    which will make it search for functions that look like, for example,
+    +    `test_mem-pool_*`. Having dashes in function names is not allowed
+    +    though, so these patterns won't ever match a legal function name.
+     
+         Adapt script to translate dashes (`-`) in test suite filenames to
+         underscores (`_`) to correctly extract the function signatures and run
+-:  ---------- > 2:  f46438f53e t/unit-tests: convert mem-pool test to use clar test framework
+-:  ---------- > 3:  f5cabebd3a t/unit-tests: adapt priority queue test to use clar test framework
+-:  ---------- > 4:  5323873612 t/unit-tests: convert reftable tree test to use clar test framework
+-- 
+2.34.1
 
-Which certainly seems sketchy, though it is kind of interesting that it
-has never been a problem before (and the code has been this way for
-decades). At any rate, the fix is probably this (and we'd want the same
-in index-pack, too, I'd think):
-
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 2197d6d933..288cecf98f 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -645,18 +645,20 @@ int cmd_unpack_objects(int argc,
- 				continue;
- 			}
- 			if (starts_with(arg, "--pack_header=")) {
--				struct pack_header *hdr;
-+				unsigned char *hdr = buffer;
- 				char *c;
- 
--				hdr = (struct pack_header *)buffer;
--				hdr->hdr_signature = htonl(PACK_SIGNATURE);
--				hdr->hdr_version = htonl(strtoul(arg + 14, &c, 10));
-+				put_be32(hdr, PACK_SIGNATURE);
-+				hdr += 4;
-+				put_be32(hdr, strtoul(arg + 14, &c, 10));
-+				hdr += 4;
- 				if (*c != ',')
- 					die("bad %s", arg);
--				hdr->hdr_entries = htonl(strtoul(c + 1, &c, 10));
-+				put_be32(hdr, strtoul(c + 1, &c, 10));
-+				hdr += 4;
- 				if (*c)
- 					die("bad %s", arg);
--				len = sizeof(*hdr);
-+				len = hdr - buffer;
- 				continue;
- 			}
- 			if (skip_prefix(arg, "--max-input-size=", &arg)) {
