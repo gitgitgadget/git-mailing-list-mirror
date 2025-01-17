@@ -1,56 +1,56 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836751DDC02
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 21:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AF11DE3B3
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 21:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737149517; cv=none; b=MyjmCG2GbSFxuwR3z7Jg1xaSSYzbvaZYur4QmxN43R7DJwvGSIQJldVQJoeNqKjzXJqxYEQWpB2Uy6ezCDlJ97XOe0tQ5MgqWEHf0Uyqc4hoiqG0PoiFlRRj7B0Qgwk2T+72YQ+dfDsD/zhWNPEc3DmWY0OBDb7TlyXyz19DmYg=
+	t=1737149518; cv=none; b=o1KGzUCqIqnEND7/pyIOd7RtnZyfYFqKMZ7dSsqgj6kswiMzJTmb57xrCmdwsn9OVrnc6yHjhd7ySUPXuNVNA2plCtQUhS6lT+XxBVgm54UDzQGen1DGt4YENEKWurpcX/LmfnaAWgHxxb5uhvclks77iCGwl31dx6J8zFoFfu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737149517; c=relaxed/simple;
-	bh=ydnERI537sfl3Gc29Q+s3HB+/67xH10+UmdqNaWpGxg=;
+	s=arc-20240116; t=1737149518; c=relaxed/simple;
+	bh=WayQ5amF0hGtkeqItxLsQawB5S9haoXrnwPFFh43qRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HFpNrXtss3syaZsvk+D8iDZhOKSZBU9egUhcyJJgVh8CGrtEvIos6Bay26YugxasD+vLr08pEQ4SeCRNXq4RRDi2Yk4Ysq7kk9YPCbYn7p2voqcV86A72YqIMVT2x3btOFOFXuig6hd/b+gebsb5x0VCvca0Aor6BL+68DMQCBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VtGsdUD2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mLq+Orvj; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version; b=POEBnCyEmFSOQhLuvswaKJXQwwp3NjhzbTWKp14puPM3xnAJMY6PeC6mGIYv9yhE8VeVijMx+8YrEdTZGQNISGu7Sv7+ihB5eAcjTyM/F4GtZS4zYzRgXh+fjxYDhgdgpI5Kfxa+45PpW4x/ei7WaOfz/+sNEM5MSnnuZUv7XuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=y0fHKIrb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sjZsW7oy; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VtGsdUD2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mLq+Orvj"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 99EC21380128;
-	Fri, 17 Jan 2025 16:31:54 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Fri, 17 Jan 2025 16:31:54 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="y0fHKIrb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sjZsW7oy"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1C6FA1380167;
+	Fri, 17 Jan 2025 16:31:56 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 17 Jan 2025 16:31:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1737149514; x=
-	1737235914; bh=CB5M3NoCtHJJzl/NCWOJSxUzzqzTbSddWKxOZBAXLFE=; b=V
-	tGsdUD2H7EvyUNZLgWw0GdccVXoTanuuaJbYBmqxAoE7SM4e6WwWMdEjbEu9BrSN
-	Fhh9MbhshOUtv+r39d90gadQ0GMcbAtMeoLeeEzAEUlR/r1qrfXrHIQeWibykma9
-	aMXNzEm6bLREEodkNAEgpMfKYqMZEgy77avmPjpnvzoHIWYtviD+DXG3DlCI4wph
-	L1yNB8c+eEJx7T9lr00Fhn+WwdZ075aT3EddEQBkqrT9HiHIE5A7zF0w4Nkw/BEf
-	CBoUGeO5qSpp+8DCnj/6r/DVtrKpu8rYqqwlUSjqWzlUTioF2iPFdD7NbWgYHAOd
-	T/G2hisGgZpQBe3zE3Ukw==
+	:reply-to:subject:subject:to:to; s=fm1; t=1737149516; x=
+	1737235916; bh=pGBQ91OtwTz0DI52ftKwhVC0SaQznSAd2g+C0jmaFQ4=; b=y
+	0fHKIrbuiI+l6oyr/yEdiRKXGsFwsneOyRmYaZ/FOnorv8t0FbG5qsVxd4mlZoez
+	ILkHMRnotHQuc2Wd3JgrKBQVS+hvAepNRsqDmNqkdhIWrAi6uc9QSYJJuQuvPHZe
+	vPpawEK+xMG/R1+vGYNp208ylmo36mKaBDnvZHddUSYhZYBGDC+YnfDOWiSsrr/1
+	7y8/WVEFEyfWRUu6a3RGcK0bF1biDjBuZuCPPgaH0CYWMjhTwxSOni0EHyglap6g
+	24jdMUOr/2rUmr4tBSsE9aTTLuoQi9Vxqs5PGcY5FQcuQOkv8K0hzRJHh2t6en7d
+	za3vK0iBEZVQ31bPi2eVg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1737149514; x=1737235914; bh=C
-	B5M3NoCtHJJzl/NCWOJSxUzzqzTbSddWKxOZBAXLFE=; b=mLq+Orvj007Mi2lLA
-	lubyiDwkFeeoLUneJXUc7xI11m5tY+61xooEvIx7FaNNVejGemOa0f6d9TFPJZdP
-	STUnIftFSFxqjJBj+0yh689hdYu+JpdIgWliSMPGA4dOZs9qBH/Sl+tNfgCnGKxx
-	12cDJXDxKik02LoBu4gUHmdaxw/wc/VNd3VsMCDhSLANmoE1DoWB09y5GINJb2bz
-	ay77MGBuqV3yYtdRP2gmkVD1RpDyVRR2dNxr+ca60TLrsBdgIJezgY4FUFSY/Opi
-	iuTVbnmue/67RQPG0VL8jKdrWRlydQ+bCdUORHixHWYkEv/HUZKePin+iQEBLJH7
-	TO2Xw==
-X-ME-Sender: <xms:SsyKZ_4cYQUDfJKQT9M-DWwAuIU0OBizDtEM4fgoitsrPjqphdCDcw>
-    <xme:SsyKZ06og9Aoj8Ht-djrocJjS6VhGBlegWh3VZYbqX9IU8B9NC9Itb8OffN6cEzg8
-    vbeIc1a0ZfNypXgYg>
-X-ME-Received: <xmr:SsyKZ2cVjdSWPA-ZbPH-8fYXuE-vxqfTmNlFQj2ny1rg0vThMyApldxQ5pZN9NfWufACttSrIPPPx5iWOum2xHzmlW419KbPFetF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgudegjecutefuodetggdotefrod
+	:x-me-sender:x-sasl-enc; s=fm2; t=1737149516; x=1737235916; bh=p
+	GBQ91OtwTz0DI52ftKwhVC0SaQznSAd2g+C0jmaFQ4=; b=sjZsW7oyPNAcudZGn
+	uC+o3PlBHVKCLKbpeWC7a1HsIIsVGeGjRPcVFqk5q+zvBKvXkApZASR7+bW6lPpy
+	YGJmYKc4yy8CHsGt9l3Z3CLKvSXd1uDvumr8/xDx3phhAeZtgBupGZDAgIbGQwxx
+	gAcbOgq3KSZOaCeW5XDQkW+0uk4OcpSIWEB0tgbs1FxoZzp5LuH6lsNG0fYZuqYN
+	f+u9s2k9UCeoA4XnovHle4PCnpC/FWFisPiX5w2Sff6emmlXjea1C/r3ZGVV4rRm
+	iqmf9ZIfcSUUNEQL5UBuw+dr2oux16wktDZqSUCU2blioioBU2g4YqFA5lWcHc/3
+	Ee86A==
+X-ME-Sender: <xms:S8yKZxH_bQWdBWUs7NmH8bJBqlozJ9T3Dtp9las4yJ3-X7KGLEtILw>
+    <xme:S8yKZ2X8oEwDUBCGRJE2q2SZA2QczpzMBVx7G_fr4gd_61RP9FhcbHxg6yAcX3rph
+    rp4Qh3NUxsb7hfPzQ>
+X-ME-Received: <xmr:S8yKZzKNyn0lDqB2vAqjH61usM1DOZ0Hm51dfCtrueRM-5Cwd0UPBdQU5bEAO5DYZYQKvloizwQ-CkjMIwgAYWm5ZVHVUNy4UI35>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgudegkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
     fufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
@@ -61,20 +61,20 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgudegjecutefuodetgg
     pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
     hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
     tghomh
-X-ME-Proxy: <xmx:SsyKZwITJJMOKbORViHdsccey92P_9tzLkzf01px-FdZzsAR-Gyirg>
-    <xmx:SsyKZzKoi43h3XooEEF3vaPppQcF-zll74f1GJFFWPm2rWNb6MkBYQ>
-    <xmx:SsyKZ5wlkqh3tSWQyLktOwPUZCQtEKErGUVDZ3qa9nf1cIaVQy4dGw>
-    <xmx:SsyKZ_K8cXosYzKyEx-BBMPVSxjvQIFYpPzdjYDic-jXLfjlNOOl9w>
-    <xmx:SsyKZ70iZ7nl84DVXs796lFe3wvre8_AKxXzwx0O-9KFbkBGSrSVhcu2>
+X-ME-Proxy: <xmx:S8yKZ3F2FFVY_sXWXfSnDbWU3q0C-w1a5XmiJDS3BNWPDvIbN1-MhA>
+    <xmx:S8yKZ3W4jwYRAuvhuKqwI7AEcMUl_Yn5Zpef0dWQYvxDs2P1BLAMrQ>
+    <xmx:S8yKZyNEre11kxbH6SvkwKiHlLwtLFVTPcrWoRx3PlD-h2gDHy9-OQ>
+    <xmx:S8yKZ20G33qTh1uTWfuBwYDcut5nphEPgxLcBXc3-Qpr5sH5OngVuA>
+    <xmx:TMyKZyTrXrzPeXNPRdbN-XWz_q9_hJ9xmRSPPTLPf7sBYb_BedTbVDp3>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 16:31:54 -0500 (EST)
+ 17 Jan 2025 16:31:55 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>
-Subject: [PATCH v5 3/6] usage: add show_usage_if_asked()
-Date: Fri, 17 Jan 2025 13:31:45 -0800
-Message-ID: <20250117213148.3974552-4-gitster@pobox.com>
+Subject: [PATCH v5 4/6] builtins: send usage_with_options() help text to standard output
+Date: Fri, 17 Jan 2025 13:31:46 -0800
+Message-ID: <20250117213148.3974552-5-gitster@pobox.com>
 X-Mailer: git-send-email 2.48.1-218-gc7e8be6a8f
 In-Reply-To: <20250117213148.3974552-1-gitster@pobox.com>
 References: <20250116213553.2563751-1-gitster@pobox.com>
@@ -87,100 +87,259 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some commands call usage() when they are asked to give the help
-message with "git cmd -h", but this has the same problem as we
-fixed with callers of usage_with_options() for the same purpose.
+Using the show_usage_with_options_if_asked() helper we introduced
+earlier, fix callers of usage_with_options() that want to show the
+help text when explicitly asked by the end-user.  The help text now
+goes to the standard output stream for them.
 
-Introduce a helper function that captures the common pattern
+The test in t7600 for "git merge -h" may want to be retired, as the
+same is covered by t0012 already, but it is specifically testing that
+the "-h" option gets a response even with a corrupt index file, so
+for now let's leave it there.
 
-	if (argc == 2 && !strcmp(argv[1], "-h"))
-		usage(usage);
-
-and replaces it with
-
-	show_usage_if_asked(argc, argv, usage);
-
-to help correct these code paths.
-
-Note that this helper function still exits with status 129, and
-t0012 insists on it.  After converting all the mistaken callers of
-usage_with_options() to call this new helper, we may want to address
-it---the end user is asking us to give the help text, and we are
-doing exactly as asked, so there is no reason to exit with non-zero
-status.
-
-Helped-by: Jeff King <peff@peff.net>
+Acked-by: Jeff King <peff@peff.net>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-compat-util.h |  2 ++
- usage.c           | 27 ++++++++++++++++++++++++---
- 2 files changed, 26 insertions(+), 3 deletions(-)
+ builtin/am.c                | 3 +--
+ builtin/branch.c            | 4 ++--
+ builtin/checkout--worker.c  | 6 +++---
+ builtin/checkout-index.c    | 6 +++---
+ builtin/commit-tree.c       | 4 ++--
+ builtin/commit.c            | 8 ++++----
+ builtin/fsmonitor--daemon.c | 4 ++--
+ builtin/gc.c                | 4 ++--
+ builtin/ls-files.c          | 4 ++--
+ builtin/merge.c             | 4 ++--
+ builtin/rebase.c            | 6 +++---
+ builtin/update-index.c      | 4 ++--
+ t/helper/test-simple-ipc.c  | 4 ++--
+ t/t7600-merge.sh            | 2 +-
+ 14 files changed, 31 insertions(+), 32 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e283c46c6f..d43dd248c4 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -701,6 +701,8 @@ int error_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
- void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
- void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
+diff --git a/builtin/am.c b/builtin/am.c
+index 1338b606fe..8d8f38fa1d 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2427,8 +2427,7 @@ int cmd_am(int argc,
+ 		OPT_END()
+ 	};
  
-+void show_usage_if_asked(int ac, const char **av, const char *err);
-+
- #ifndef NO_OPENSSL
- #ifdef APPLE_COMMON_CRYPTO
- #include "compat/apple-common-crypto.h"
-diff --git a/usage.c b/usage.c
-index 47709006c1..38b46bbbfe 100644
---- a/usage.c
-+++ b/usage.c
-@@ -8,7 +8,7 @@
- #include "gettext.h"
- #include "trace2.h"
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(usage, options);
++	show_usage_with_options_if_asked(argc, argv, usage, options);
  
--static void vreportf(const char *prefix, const char *err, va_list params)
-+static void vfreportf(FILE *f, const char *prefix, const char *err, va_list params)
- {
- 	char msg[4096];
- 	char *p, *pend = msg + sizeof(msg);
-@@ -32,8 +32,13 @@ static void vreportf(const char *prefix, const char *err, va_list params)
- 	}
+ 	git_config(git_default_config, NULL);
  
- 	*(p++) = '\n'; /* we no longer need a NUL */
--	fflush(stderr);
--	write_in_full(2, msg, p - msg);
-+	fflush(f);
-+	write_in_full(fileno(f), msg, p - msg);
-+}
-+
-+static void vreportf(const char *prefix, const char *err, va_list params)
-+{
-+	vfreportf(stderr, prefix, err, params);
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 6e7b0cfddb..7c8b4b65b6 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -784,8 +784,8 @@ int cmd_branch(int argc,
+ 	filter.kind = FILTER_REFS_BRANCHES;
+ 	filter.abbrev = -1;
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(builtin_branch_usage, options);
++	show_usage_with_options_if_asked(argc, argv,
++					 builtin_branch_usage, options);
+ 
+ 	/*
+ 	 * Try to set sort keys from config. If config does not set any,
+diff --git a/builtin/checkout--worker.c b/builtin/checkout--worker.c
+index b81002a1df..da9345a44b 100644
+--- a/builtin/checkout--worker.c
++++ b/builtin/checkout--worker.c
+@@ -128,9 +128,9 @@ int cmd_checkout__worker(int argc,
+ 		OPT_END()
+ 	};
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(checkout_worker_usage,
+-				   checkout_worker_options);
++	show_usage_with_options_if_asked(argc, argv,
++					 checkout_worker_usage,
++					 checkout_worker_options);
+ 
+ 	git_config(git_default_config, NULL);
+ 	argc = parse_options(argc, argv, prefix, checkout_worker_options,
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index a81501098d..e30086c7d4 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -250,9 +250,9 @@ int cmd_checkout_index(int argc,
+ 		OPT_END()
+ 	};
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(builtin_checkout_index_usage,
+-				   builtin_checkout_index_options);
++	show_usage_with_options_if_asked(argc, argv,
++					 builtin_checkout_index_usage,
++					 builtin_checkout_index_options);
+ 	git_config(git_default_config, NULL);
+ 	prefix_length = prefix ? strlen(prefix) : 0;
+ 
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 2ca1a57ebb..38457600a4 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -119,8 +119,8 @@ int cmd_commit_tree(int argc,
+ 
+ 	git_config(git_default_config, NULL);
+ 
+-	if (argc < 2 || !strcmp(argv[1], "-h"))
+-		usage_with_options(commit_tree_usage, options);
++	show_usage_with_options_if_asked(argc, argv,
++					 commit_tree_usage, options);
+ 
+ 	argc = parse_options(argc, argv, prefix, options, commit_tree_usage, 0);
+ 
+diff --git a/builtin/commit.c b/builtin/commit.c
+index ef5e622c07..c84062bfc1 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1559,8 +1559,8 @@ struct repository *repo UNUSED)
+ 		OPT_END(),
+ 	};
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(builtin_status_usage, builtin_status_options);
++	show_usage_with_options_if_asked(argc, argv,
++					 builtin_status_usage, builtin_status_options);
+ 
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+@@ -1736,8 +1736,8 @@ int cmd_commit(int argc,
+ 	struct strbuf err = STRBUF_INIT;
+ 	int ret = 0;
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(builtin_commit_usage, builtin_commit_options);
++	show_usage_with_options_if_asked(argc, argv,
++					 builtin_commit_usage, builtin_commit_options);
+ 
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+index 029dc64d6c..0820e524f1 100644
+--- a/builtin/fsmonitor--daemon.c
++++ b/builtin/fsmonitor--daemon.c
+@@ -1598,8 +1598,8 @@ int cmd_fsmonitor__daemon(int argc, const char **argv, const char *prefix UNUSED
+ 		OPT_END()
+ 	};
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(builtin_fsmonitor__daemon_usage, options);
++	show_usage_with_options_if_asked(argc, argv,
++					 builtin_fsmonitor__daemon_usage, options);
+ 
+ 	die(_("fsmonitor--daemon not supported on this platform"));
  }
+diff --git a/builtin/gc.c b/builtin/gc.c
+index a9b1c36de2..ea007c8e7e 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -710,8 +710,8 @@ struct repository *repo UNUSED)
+ 		OPT_END()
+ 	};
  
- static NORETURN void usage_builtin(const char *err, va_list params)
-@@ -173,6 +178,22 @@ void NORETURN usage(const char *err)
- 	usagef("%s", err);
- }
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(builtin_gc_usage, builtin_gc_options);
++	show_usage_with_options_if_asked(argc, argv,
++					 builtin_gc_usage, builtin_gc_options);
  
-+static void show_usage_if_asked_helper(const char *err, ...)
-+{
-+	va_list params;
-+
-+	va_start(params, err);
-+	vfreportf(stdout, _("usage: "), err, params);
-+	va_end(params);
-+	exit(129);
-+}
-+
-+void show_usage_if_asked(int ac, const char **av, const char *err)
-+{
-+	if (ac == 2 && !strcmp(av[1], "-h"))
-+		show_usage_if_asked_helper(err);
-+}
-+
- void NORETURN die(const char *err, ...)
- {
- 	va_list params;
+ 	strvec_pushl(&reflog, "reflog", "expire", "--all", NULL);
+ 	strvec_pushl(&repack, "repack", "-d", "-l", NULL);
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 15499cd12b..a4431429b7 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -644,8 +644,8 @@ int cmd_ls_files(int argc,
+ 	};
+ 	int ret = 0;
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(ls_files_usage, builtin_ls_files_options);
++	show_usage_with_options_if_asked(argc, argv,
++					 ls_files_usage, builtin_ls_files_options);
+ 
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 5f67007bba..ba9faf126a 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1300,8 +1300,8 @@ int cmd_merge(int argc,
+ 	void *branch_to_free;
+ 	int orig_argc = argc;
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(builtin_merge_usage, builtin_merge_options);
++	show_usage_with_options_if_asked(argc, argv,
++					 builtin_merge_usage, builtin_merge_options);
+ 
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 0498fff3c9..6c9eaf3788 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1223,9 +1223,9 @@ int cmd_rebase(int argc,
+ 	};
+ 	int i;
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(builtin_rebase_usage,
+-				   builtin_rebase_options);
++	show_usage_with_options_if_asked(argc, argv,
++					 builtin_rebase_usage,
++					 builtin_rebase_options);
+ 
+ 	prepare_repo_settings(the_repository);
+ 	the_repository->settings.command_requires_full_index = 0;
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 74bbad9f87..b2f6b1a3fb 100644
+--- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -1045,8 +1045,8 @@ int cmd_update_index(int argc,
+ 		OPT_END()
+ 	};
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(update_index_usage, options);
++	show_usage_with_options_if_asked(argc, argv,
++					 update_index_usage, options);
+ 
+ 	git_config(git_default_config, NULL);
+ 
+diff --git a/t/helper/test-simple-ipc.c b/t/helper/test-simple-ipc.c
+index fb5927775d..03cc5eea2c 100644
+--- a/t/helper/test-simple-ipc.c
++++ b/t/helper/test-simple-ipc.c
+@@ -612,8 +612,8 @@ int cmd__simple_ipc(int argc, const char **argv)
+ 	if (argc < 2)
+ 		usage_with_options(simple_ipc_usage, options);
+ 
+-	if (argc == 2 && !strcmp(argv[1], "-h"))
+-		usage_with_options(simple_ipc_usage, options);
++	show_usage_with_options_if_asked(argc, argv,
++					 simple_ipc_usage, options);
+ 
+ 	if (argc == 2 && !strcmp(argv[1], "SUPPORTS_SIMPLE_IPC"))
+ 		return 0;
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index ef54cff4fa..2a8df29219 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -173,7 +173,7 @@ test_expect_success 'merge -h with invalid index' '
+ 		cd broken &&
+ 		git init &&
+ 		>.git/index &&
+-		test_expect_code 129 git merge -h 2>usage
++		test_expect_code 129 git merge -h >usage
+ 	) &&
+ 	test_grep "[Uu]sage: git merge" broken/usage
+ '
 -- 
 2.48.1-218-gc7e8be6a8f
 
