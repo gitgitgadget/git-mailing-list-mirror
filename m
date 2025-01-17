@@ -1,110 +1,137 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA2F1F6673
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 06:27:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3E325A648
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 07:59:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737095241; cv=none; b=FJiNlJpFvdASBCT4cSQHj2LGCiZFSzCQMxh0g/X9ixy6A4kOXiH9UvMWEeyXFwCsVC9E4AblX6lH021MDu73vc52yLYB94TE8/HIfKV2ljN9yd2PvKaOOt8dFtr2+RHKDWNQCBy4PZprTZcnkVDHScxlnYewaL/EEDI++TtSN/k=
+	t=1737100763; cv=none; b=q673gG8XxYJ/c9MeGKU3sFUj4uJ/CB5udXRu11/tkQG+pCFT8MFlEekEw3+dbNz2jp3wDQkTJIjNJiuuSjpHTltuvh10HZAdAhPLL4edUhG1VpYBj/D9W6UKgCaY8Dzi/nLPba8s6zcLCX8WPydSqC/v/toLcG3u3s452g2d77c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737095241; c=relaxed/simple;
-	bh=WtBvpCEhkxcZHHpi8k/FF0+OP+H0DNTO6KRsQDt75QU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GYBDNXSZ9FuePlsgU65DTTx9AOMXo/5Yu9IxjgKeDFbmTvpfV5qm4tTDUK1enCdKGpf62FuOCQGDsd87Vhj+ucflekJYLiP8RXH0J4DyWMZedqk3mL22+sRzB4XeOW6h5AXsvFDjaxotzXJLd/+oVLLPZvchoQe3422kg44LS+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=brNIKOaH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vustOLdW; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1737100763; c=relaxed/simple;
+	bh=zwVLB4Vq5UbdnfWVk1zoFhvI+KcWJuYuM8d0MdeHgpo=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=PIp/8nV5/dqcyglKJexZBtO7TPNiGUHNylvZnYysOf8YEKSqZCic8DhDhm36ocJHietD0DxFhGZi3jp/1ZUr2vDWJbvk1i6+wml58t+u4YdJUw5jBfaApj6VX1DsNbzxifTImwWT0oJd4Ok3U6zC7JOXpOkF1NygNaDGcF8GvSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V+QxcDX7; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="brNIKOaH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vustOLdW"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4025D13801F5;
-	Fri, 17 Jan 2025 01:27:18 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 17 Jan 2025 01:27:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737095238; x=1737181638; bh=P0AKV8S7gw
-	rE2QtryaF0k8yRnv2b/zFDtGYBCysDjqM=; b=brNIKOaHpq5NOTl2mM6N58h+pC
-	YELycZu6yUAOGir46GDzISWxHB/OOGXDWQwf2ZSL2pE6upqMaef6IEpgxh7r1IWN
-	JA/LNaoU2cFHkED6+4uCthWmDqp3ciMMEQdIqL+5KyfMLMQjWgj4dkG+OywJy2LZ
-	Cdh1mDB/cUCcC3bsZhIhZp8jzIxxdBPHaOpUh/MqiZ8J+QkbxKaxvEMAR2OwsTmC
-	AiBzT3GHitrr0yuBe+lKK9XhOqkfhXSMqsa2KH7ekjGzpdnQ2Ghg4QZjzfkq3CnS
-	WxZxtyH/MRpx7CnJc/STdNjDDrV825pPuWDceY4rwMpH+mfhtR1CXUqe0rWw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737095238; x=1737181638; bh=P0AKV8S7gwrE2QtryaF0k8yRnv2b/zFDtGY
-	BCysDjqM=; b=vustOLdWpUWuZ79aSoKsdBc0kNwyov2aDnHHxaZwNxlyGYMcu16
-	mo7hYj9rGo6cSj14tjvDLhrYe+YyyKS1kUWa/B6F0hGpw5cIvWIqaaBVISi214KX
-	BGfY/hOFRLY6/yGhSlZE+U8AcLoJjGgTFRh17pjXvEVbWkfvtwIlSqF6ZjmA7n7Y
-	omZ1+7l8I4en0rnw9Hj4H203U0QC/DpUNWG07bhKATyy59I7jvwnJXFxm9zf3vCl
-	zDD5L8cdvQkpNk1gSfuRDk+XkG0hybdC72Y97OvlEXJt4seCavxyp2wjKpAjWr9p
-	eg4Z0AiBUhCVMbme31q5+iEiSj8smJeGzuw==
-X-ME-Sender: <xms:RviJZ8XOrfgLi_jl952yXsnd39CmrlcvBF8ogODiekP5uB4Ofp_GgQ>
-    <xme:RviJZwkkWMXteFzwz-V7W2QwRUx1RLXjZvonYV42KNw65Cosl5m2PZIAuaG8kSpKw
-    Dp52PpDMZCUw0RqDQ>
-X-ME-Received: <xmr:RviJZwbGkzR6WL8-ryEXWAcq7ZtI0koP7Ii6LITI4KmpEXW2vSvxZGzwoZfx-dGlY7E4FsyR1k9xIXRPRuHh29beNf8stkky1JppvYGkmRYUoHg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeivddgleegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdroh
-    hrghdruhhkpdhrtghpthhtohepkhhufhhorhhijhhileeksehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:RviJZ7UgQC1rAgtIuOX4Gi7Da6FBXKum8xowGV2G5_mSl5eXpC7-xw>
-    <xmx:RviJZ2lP0DrvCUvPNjwDr59BFLmxy85ZTDl2a65NQLvu-UKQvoa8pA>
-    <xmx:RviJZwfCvPXHMD8zyMqTcvLyg4oOeOoQOsKJ6eifwNfOxaBuMcy3Hw>
-    <xmx:RviJZ4F4wprDfRwPqXV0mSO3CfoFQkL6_kfKd3aWrWX9yww2GOfigw>
-    <xmx:RviJZ4jBgjMp5BFkpzUsifkE1b0LZa0x3qNLCumDjgo08_TUyibMgTZ8>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 01:27:17 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2a4e8cd8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Jan 2025 06:27:16 +0000 (UTC)
-Date: Fri, 17 Jan 2025 07:27:15 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Seyi Kuforiji <kuforiji98@gmail.com>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/4] t/unit-tests: handle dashes in test suite
- filenames
-Message-ID: <Z4n4Qyt8qSBMVXUQ@pks.im>
-References: <20250116104911.77405-1-kuforiji98@gmail.com>
- <20250116161559.91038-1-kuforiji98@gmail.com>
- <20250116161559.91038-2-kuforiji98@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V+QxcDX7"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-21654fdd5daso30801525ad.1
+        for <git@vger.kernel.org>; Thu, 16 Jan 2025 23:59:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737100760; x=1737705560; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Asoh6Q+6jCltsKH1kdCb4DVFE6mat10+t92E43/NBxc=;
+        b=V+QxcDX7hUet4jZS7DDHzZakIR4DOGeYT2vpA587i5qUcGJsdzov7oVi0mkotS704e
+         Cnqp9SUgTM+zJBPwdWQjierC5BH/smh68GSXa94MoppdBhW/B4338D5tmG00c4bXgH3l
+         ZedwgkymPjiEMy2ZTynIIu+6CKjBgS2+bKmiQVGzNsiEOy5NaeMu34yMe8AWHERwRaAJ
+         W6J1syIeTfvsrpApbWRi0JDQ4cvAH9tJMORKVI6kysxCnLrgAvNZZWbANaEIybMvoKFV
+         bqmj2AErx5XM6FLrT1jdxBKjyKCDbHGlfR9NSdho7wt33CoXaNvR27pkoqwnljgoh91X
+         CVAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737100760; x=1737705560;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Asoh6Q+6jCltsKH1kdCb4DVFE6mat10+t92E43/NBxc=;
+        b=I5SbwJKzR05c3es7Nuc1UDrFI2amGD7cllaUfw/fT6FzLkyhlQSw3Imjt9szc4SGeB
+         G8krHRy8BD+2M6XcoP6KPYGQq11NfXwCIjbrOgYAqPLh57gkUyAiM55yoU8WbFZX4JuG
+         aklAe+8o2Tdy62gaS25RojQQiGHpF4Z5VkRnC+4Af5Wzu0gb0S+Xg6se25fNg1XfXlH5
+         87eesZGMELML8DluutFtQ4Idkk15K3TNAs7bk/+JueSZ0vtqp3j/1DGAnYqk3cWEFhuN
+         uzH1fUIEjQmXJraSDD18drs/r16JEvugCVgyg3KdwTJVTVXM5WQdTK9jKJD0y3nnn7BY
+         akvg==
+X-Gm-Message-State: AOJu0YxMF1vpHUituCEO2fHURkNwVogOUVIIyezDmEftLrJ0M3UZuPdE
+	F4mTGkw8o9SYcfS282nmqXKPSCkimg0PXLGDifxEedBv3bQviAz8
+X-Gm-Gg: ASbGncsDeDiYWcTVDNq9MeFBYbPtrZ+Xlsvwuc8d31QEhZ1tyZb3ad5viBRIIHHD4Hh
+	U44S6nYardSHgWCggJPx1P8lW7eW7WuMdEpJFMHDhnJInX8jDZIlEg3waxr7MTn8r+r1V+EgG/6
+	oaWBLRAimVMq2zMvLf48NaL+mq3j5ZQzrYRQUkJUszyaWXxBGYxVL6eJxo1QuOKHp8uQ8ck9FnW
+	6Rs3chbjo/p5SQt1L5BNAWA2u1OBo/Q+77QUM5tkc9zqttAdEJ/IL0wRD4=
+X-Google-Smtp-Source: AGHT+IFFcvT+GWkwDeGMDHXEOF/qoxcD/oocZSP4q5n4mz3uVVY+tAUbkp0apnzOaGHjDu4x+5qK4Q==
+X-Received: by 2002:a17:902:ea0e:b0:216:6fb5:fd83 with SMTP id d9443c01a7336-21c35563091mr24318245ad.29.1737100759905;
+        Thu, 16 Jan 2025 23:59:19 -0800 (PST)
+Received: from [127.0.0.2] ([103.39.127.160])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21c2d4025f4sm10517595ad.204.2025.01.16.23.59.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Jan 2025 23:59:19 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH 0/3] refs: small followups to the migration corruption fix
+Date: Fri, 17 Jan 2025 08:59:11 +0100
+Message-Id: <20250117-461-corrupted-reftable-followup-v1-0-70ee605ae3fe@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250116161559.91038-2-kuforiji98@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAM8NimcC/x2NQQqDMBAAvyJ77kI2WgW/Ij1Es6kLwYSNtoL49
+ 4YeB4aZCwqrcIGxuUD5I0XSVoEeDSyr296M4iuDNfZpiAbsesIlqR55Z4/KYXdzZAwpxvQ9MvJ
+ suAue3GBbqJVcFTn/h+l13z+sVaTncQAAAA==
+X-Change-ID: 20250117-461-corrupted-reftable-followup-eb0e4fd1a723
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, sandals@crustytoothpaste.net, 
+ gitster@pobox.com
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1734; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=zwVLB4Vq5UbdnfWVk1zoFhvI+KcWJuYuM8d0MdeHgpo=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeKDdRUaL7kuIABOmUPlxU5SvHrr+DY9JNuV
+ DF5kzlrL+B/OokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnig3UAAoJED7VnySO
+ Rox/ZmUMAISiL9w8BMJ3c8Cqn+zw1SDfkXty0bYlelAv5eQJgIrLmufmPhiQpeaigo2Ex/twAhl
+ S5JGRmvQyJMkEED0YAbrLXTgRAQYyvdqjciDLxz/TJOraAXnFldwnaW+BhJE/AUwDiT5kBS2HQl
+ BB2LH1BT4xv0OYIxnGZCJfHR9pkqj0BsO72YcpH5jzr1hn6UVD4COBDN3cFPZmoLzLZRbLeBsZw
+ 19HDVh3UYgzsilTmLwHYLGC6uHjeHCNl75mLH1jcLjQ5w+o9Q+ud6LR9MOIT21xhl7VVfDcaoOp
+ FnoslSkO64sMGQoIgpw1B2SvOK5+/YKW9Bgwf+e8NzUAhQ+1qxeo0ACCHbapKE425W3mC1EXFom
+ cAaLohYbh8Rk0ffQq/dpHeQdwOA++f1gD5AHXDndDHWlCMHQom4Q26y0js8heGFPX6gAmIdmVRc
+ QgweXvGv9rrf9x62Dax9/lynS8SrpkTzo3EOmx1WW8UXxnBkCSvO5Dr86D7v6mP7l6dkz1RYNL4
+ Xk=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-On Thu, Jan 16, 2025 at 05:15:56PM +0100, Seyi Kuforiji wrote:
-> The script is designed to extract function signatures that match a
-> specific pattern derived from the unit test file's name.
-> `generate-clar-decls.sh` does not pick up dashes in filenames, which
-> prevents the scripts from being run.
+This is a follow up to the bug that was reported [1] around `git refs
+migrate --ref-format=reftable` where the migration would fail for
+repositories with reflogs with lots of entries. This was caused due to a
+mismatch in the reftable's header and footer, specifically WRT the
+'max_update_index'.
 
-As said in my first round, saying "scripts" here is misleading as the
-unit tests aren't scripts in the first place. How about:
+While there was a fix posted. This series is a small followup to fix
+some of the topics discussed there:
+1. To mark `ref_transaction_update_reflog()` as static since it is only
+used internally within 'refs.c'.
+2. To change the type of 'max_index' from 'unsigned int' to 'uint64_t'.
+This would be much safer for large repositories with millions of files
+and on 32bit systems.
+3. To add a safeguard to prevent 'update_index' changes after first
+block is written. This is a preventive measure to ensure such bugs don't
+arise in the future.
 
-    The "generate-clar-decls.sh" script is designed to extract function
-    signatures that match a specific pattern derived from the unit test
-    file's name. The script does not know to massage file names with
-    dashes, which will make it search for functions that look like, for
-    example, `test_mem-pool_*`. Having dashes in function names is not
-    allowed though, so these patterns won't ever match a legal function
-    name.
+This is based on top of master 757161efcc (Sync with Git 2.48.1,
+2025-01-13) with 'kn/reflog-migration-fix' merged in.
 
-Patrick
+[1]: https://lore.kernel.org/r/Z4UbkcmJAU1MT-Rs@tapette.crustytoothpaste.net
+
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+Karthik Nayak (3):
+      refs: mark `ref_transaction_update_reflog()` as static
+      refs: use 'uint64_t' for 'ref_update.index'
+      reftable: prevent 'update_index' changes after header write
+
+ refs.c                  | 18 ++++++++++--------
+ refs.h                  | 14 --------------
+ refs/refs-internal.h    |  4 ++--
+ refs/reftable-backend.c |  2 +-
+ reftable/writer.c       |  7 +++++++
+ 5 files changed, 20 insertions(+), 25 deletions(-)
+---
+
+
+
+---
+
+base-commit: a5aa44e7930761cb900813d971b4105f901818fb
+change-id: 20250117-461-corrupted-reftable-followup-eb0e4fd1a723
+
+Thanks
+- Karthik
+
