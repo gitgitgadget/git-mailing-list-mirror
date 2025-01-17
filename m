@@ -1,61 +1,61 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7180A1FCF5F
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 10:46:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91CB91FDE0B
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 10:47:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737110821; cv=none; b=OgJ4oUZye0qPuYkrY05Y68rgq0atD7FreUo9xxRQ+0tWF1QAcxdkO8NHKOtBSzc2PxPzjnjajtSpcQJOcAFpLrGYH0sdYR1s8CDduronuhajPvsnV/XkEsjce4eqxric5oHICPX8/O/tAREAFPlqqHifximjG3TYQSK9z1JbvGI=
+	t=1737110824; cv=none; b=aFlp8w9JwVviiz61MxVZJO5QsWneclsnwgnSv7I4mdMVsMnV74fmX5AgHLO8zhQAJIhcZp96sQr+od6yaN68q3ogql6kqgBihI7/RcrjOZ6mFmzOPraip0f+yTh5SN6sskb9v2XmGPeoJSr/XME9L5dO0mzb7UnRiZdUMDnAuuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737110821; c=relaxed/simple;
-	bh=uW/lQTkavtnsa1OWu9hrbkfka8oPmRobgYTtX264hjQ=;
+	s=arc-20240116; t=1737110824; c=relaxed/simple;
+	bh=QQ7GUf0ktN7gLQiI5GvWRwmGffoeAeCpHGWKxF3Hxoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9Qy6/aehTMApQ3UMw4MZlbHjVzHs5c/ERvHGZkvFmS8JzgIA/hsEzPKg8iqAEWmvL5HdRst1tYzASRaeTEMZfOfLiINYpqY4x8r8c99SYoST8TxX2man6NG+s6h1MdU6gIBqmh/wns9NZGeNzY6NfPiDJ2jJ+o99nvIZt5ZN6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nKU/fDf1; arc=none smtp.client-ip=209.85.214.171
+	 MIME-Version; b=UmYn8HsnyAxpOLF1BftOE1tI0ubReiOOM5YPr/zm4D4XqDFWhLJ7I9n2YEYh0ggRco7SrEJ/LsgEdhHcadoN+AjC3w+/ay+PJ8VCoybu20pMZXGUhgsX996MKBYkSj6vWUkRFWhNkoCN9BmWUTuHbre+LGoR1kduc+hNoJNbXew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A+2CckOR; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nKU/fDf1"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2164b662090so35626745ad.1
-        for <git@vger.kernel.org>; Fri, 17 Jan 2025 02:46:58 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A+2CckOR"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-21680814d42so30838675ad.2
+        for <git@vger.kernel.org>; Fri, 17 Jan 2025 02:47:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737110817; x=1737715617; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1737110821; x=1737715621; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3Z33A2SZFbMPHdEpR80wKv2/sMPf7sPRXmGeAYZpOP0=;
-        b=nKU/fDf1swen/2lsjs+B8FG/i+i/kYelug5qSZ0bXdOg6ULs4HOUWG6vLZS/oB6HLa
-         3Xch06dF8wkUd9Eb86rJva+JA04ygcNdFZ3iKElJbHle4MqoxHSq4vyMQNL45oNYIexM
-         UWu+AUjZU2lsj/w5Um5KnD+UhzyllIQbDgnwVPAZsNql0Inlmx5mJsWOvg6VlYPpaPmK
-         yUbumGEkWJAapEAy8MXRKWHKdaFg1VekcXa9J+g42Qr1pwvpPnzTVhPKMKgppmJjFDRW
-         tq9mO5sNAimjhK+t5VLkGDKOW3aJbNQt7fx5hg41TGs6efp9Hp/oCU7Aw8E2xrMToX0n
-         d5cg==
+        bh=ALFAAhPXG1sud+Hsk5Gb/byfBFcmg+Pt5vQNmyxcz9E=;
+        b=A+2CckORcx+FSSoJihN2KDOSEpSQ+x7uP3aKysazZS6wKo1ZR+q4ZluO/Wn2MdjLvD
+         gBusIv0h5/wKH5CN0+EJOSrvV4BboYj4dKY5Jeb5F77XBDlzzoIl2V6RI0nmywX931FX
+         ALPba5pqFNj6RaAm6RFPl48Ad0EekK9do9uVR0C5nopXNAzUTr0qH3+j8+jI0PzpM5kf
+         D01hDzbB4brY/MM4JjUTKN88ta4BM5qfdTXrAmoJ229Yb3GZ16HaOF/Q1dRHskz+q81k
+         7e1TduH7YVFbps6bijIDwOD0dE5iBwTefBXQU1/6pdW1/HW34hMDHzAcJWrpky7aEVdP
+         lkgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737110817; x=1737715617;
+        d=1e100.net; s=20230601; t=1737110821; x=1737715621;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3Z33A2SZFbMPHdEpR80wKv2/sMPf7sPRXmGeAYZpOP0=;
-        b=ol8s7rpua7LA4bQDCNnyyA3abA40r6VHp7yytBbs+DuVhkArBInzw0MqRdzyVRqwaa
-         aEHWnVsqJJiMv/toLUl3s01j1c5jyxnJhxTLfsTB6Ba1n2UFcetiwrUgBUX3jb1KS0u6
-         2q8Jk9dh1lMIJdpEAHxxiSH/Aun9GfTnwHFBnj3W54z3Sb8FOtxnTMS7KMiozFWqmpna
-         D2ZgSaYSOZx+3Kpvdphlfq/RDrQT2n2q6DynNc44pFPLU6p4JXpqVHuTBPAVOkv1yNr3
-         zOr46nz4Pz+e9q9uSihEt7DlyYhDB72FIzaN88kozoj4ihmh3j31TQVoEgKd0k/lDR0L
-         bCqg==
-X-Gm-Message-State: AOJu0YzHfO/5rzU5WC28y9KgdjkLiuNeBZ67Lt+xeEGAoYhv+xuzXhOV
-	Bmna2ZFiZK2TDjjyqtxIcPH+oMdl4pdzggIlgjvqi5cS96t6LwCZ6UtKRghTFzI=
-X-Gm-Gg: ASbGnctUaXWNe0C4d+Mx/K9WNWRUyz1SNmEFJidAPVXx/Ec62xlrJ3srRJMmOeTddUl
-	qs2zB25tGT+58FmeTcRc608bH8vjzADaHAZtFNhLQIli7KiSE/Q9uP9ua1ii9wEdcV2UZUVmjq8
-	w9hji5wrb98qn8yk1X0tSXVX+P6KmE3boTBv6QwAc3IQ1HjMFMr/mvGJh+1xI/bPI4NcNsqpd0X
-	5e3ku1AAk5qOZnseOpFp6DAJZ2Tdkv80YnNFs2Q+oVxhyFiuK0vMgJb74UnuNkxusqc5teP/yp8
-	0m4Lxg==
-X-Google-Smtp-Source: AGHT+IEFoACeKCH1uG9TvSiHedGws80/XzcYKniH42ZqB89cU7BjxLsH9jysnL5OKB1iIvi5/WWwPA==
-X-Received: by 2002:a05:6a00:1813:b0:729:cc5:fa42 with SMTP id d2e1a72fcca58-72dafbaa1c1mr4010673b3a.20.1737110817648;
-        Fri, 17 Jan 2025 02:46:57 -0800 (PST)
+        bh=ALFAAhPXG1sud+Hsk5Gb/byfBFcmg+Pt5vQNmyxcz9E=;
+        b=p2Uwk1/L/J3XZWBNq77zeniUG9UO8mPmTotvuws3zFJDd1tHTA1e34wbouZzG0Uj7W
+         TCHVFr84f3n9Y4h0gBBSYhV30FjaaFNSdEdA6HQyaDYLEFA6RuiRzUGmFH0t52z4XrXx
+         0kTw0BmTFtfvoZ+QFeoz+f0oIvT1NOXl2o9q7SyTX4wub0yHjlOQtC2o0F2zxUaKYfuc
+         5BFxdV66NEsYriI6WKszhmBd/na5b/bXZmuoKEqe8mEOv4WmhtJm1woFoyjvxKmD5Ed6
+         dGTtcZo0KFo9bnMDPFfCxXv2WJmvqSgF4gr1l+9IDx0T+TF3TRv2j4IN0iqeesn0Qy9F
+         6Tsw==
+X-Gm-Message-State: AOJu0YxfTtUVcme6ozHgtxO3uByDA7CikuUCjJ4k/zHythpaZqB9Shc+
+	GZp/XFEBDYE/xvBl9h3y4LM2Vi+1MGP0PJfuX+cbZVgMBFAWfKqN3SiD7j2Hrtw=
+X-Gm-Gg: ASbGncuY/0Zic7VD3/t4lpKttjWlGbh4VCXM0qnY1PSH+j6x3qz3YWxOiJhZLWAQtOW
+	+dhNsEJnlpotNQ71xuSR9cdxWoq5IIeeLNl9wxdKU1EmQhasoaPxhRmCHovd2GfdaxP0/gwPLSl
+	6yHJlatGbjOUeodPbnrL6orX3mIzVrCA62HN1p3JG3DZjlgnrENDmiRGx6lhNI6hSaPIiPNypLE
+	g6B7Zf7Jtvdy8UMzaIP3H4no58QW6wnvhaeVHMj3+6/DeBOTw/AYkb6rM5rX0dSyYfEjjy95Tde
+	E1j5dA==
+X-Google-Smtp-Source: AGHT+IHc8OMGi1ykPM934p8Y3Y8Vi+/zv2qamYxMigmBtiDaqLMRczTG6DaTtqb16xyWiPWANq/EQg==
+X-Received: by 2002:a05:6a20:6a14:b0:1e0:cfc0:df34 with SMTP id adf61e73a8af0-1eb2149467cmr2927523637.16.1737110821430;
+        Fri, 17 Jan 2025 02:47:01 -0800 (PST)
 Received: from archlinux.plaksha.edu.in ([202.164.41.66])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72daba48eb8sm1574985b3a.136.2025.01.17.02.46.54
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72daba48eb8sm1574985b3a.136.2025.01.17.02.46.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 02:46:57 -0800 (PST)
+        Fri, 17 Jan 2025 02:47:01 -0800 (PST)
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 To: git@vger.kernel.org,
 	christian.couder@gmail.com
@@ -68,9 +68,9 @@ Cc: gitster@pobox.com,
 	sunshine@sunshineco.com,
 	rsbecker@nexbridge.com,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 3/6] version: extend get_uname_info() to hide system details
-Date: Fri, 17 Jan 2025 16:16:15 +0530
-Message-ID: <20250117104639.65608-4-usmanakinyemi202@gmail.com>
+Subject: [PATCH v2 4/6] t5701: add setup test to remove side-effect dependency
+Date: Fri, 17 Jan 2025 16:16:16 +0530
+Message-ID: <20250117104639.65608-5-usmanakinyemi202@gmail.com>
 X-Mailer: git-send-email 2.48.0
 In-Reply-To: <20250117104639.65608-1-usmanakinyemi202@gmail.com>
 References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
@@ -83,81 +83,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Currently, get_uname_info() function provides the full OS information.
-In a follwing commit, we will need it to provide only the OS name.
+Currently, the "test capability advertisement" test creates some files
+with expected content which are used by other tests below it.
 
-Let's extend it to accept a "full" flag that makes it switch between
-providing full OS information and providing only the OS name.
-
-We may need to refactor this function in the future if an
-`osVersion.format` is added.
+To remove that side-effect from this test, let's split up part of
+it into a "setup"-type test which creates the files with expected content
+which gets reused by multiple tests. This will be useful in a following
+commit.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 ---
- builtin/bugreport.c |  2 +-
- version.c           | 16 +++++++++-------
- version.h           |  2 +-
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ t/t5701-git-serve.sh | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/bugreport.c b/builtin/bugreport.c
-index 5e13d532a8..e3288a86c8 100644
---- a/builtin/bugreport.c
-+++ b/builtin/bugreport.c
-@@ -24,7 +24,7 @@ static void get_system_info(struct strbuf *sys_info)
+diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+index de904c1655..0c0a5b2aec 100755
+--- a/t/t5701-git-serve.sh
++++ b/t/t5701-git-serve.sh
+@@ -7,14 +7,17 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- 	/* system call for other version info */
- 	strbuf_addstr(sys_info, "uname: ");
--	get_uname_info(sys_info);
-+	get_uname_info(sys_info, 1);
+ . ./test-lib.sh
  
- 	strbuf_addstr(sys_info, _("compiler info: "));
- 	get_compiler_info(sys_info);
-diff --git a/version.c b/version.c
-index 96f474c8e6..46835ec83f 100644
---- a/version.c
-+++ b/version.c
-@@ -49,7 +49,7 @@ const char *git_user_agent_sanitized(void)
- 	return agent;
- }
+-test_expect_success 'test capability advertisement' '
++test_expect_success 'setup to generate files with expected content' '
++	printf "agent=git/$(git version | cut -d" " -f3)" >agent_and_osversion &&
++
+ 	test_oid_cache <<-EOF &&
+ 	wrong_algo sha1:sha256
+ 	wrong_algo sha256:sha1
+ 	EOF
++
+ 	cat >expect.base <<-EOF &&
+ 	version 2
+-	agent=git/$(git version | cut -d" " -f3)
++	$(cat agent_and_osversion)
+ 	ls-refs=unborn
+ 	fetch=shallow wait-for-done
+ 	server-option
+@@ -23,6 +26,9 @@ test_expect_success 'test capability advertisement' '
+ 	cat >expect.trailer <<-EOF &&
+ 	0000
+ 	EOF
++'
++
++test_expect_success 'test capability advertisement' '
+ 	cat expect.base expect.trailer >expect &&
  
--int get_uname_info(struct strbuf *buf)
-+int get_uname_info(struct strbuf *buf, unsigned int full)
- {
- 	struct utsname uname_info;
- 
-@@ -59,11 +59,13 @@ int get_uname_info(struct strbuf *buf)
- 			    errno);
- 		return -1;
- 	}
--
--	strbuf_addf(buf, "%s %s %s %s\n",
--		    uname_info.sysname,
--		    uname_info.release,
--		    uname_info.version,
--		    uname_info.machine);
-+	if (full)
-+		strbuf_addf(buf, "%s %s %s %s\n",
-+			    uname_info.sysname,
-+			    uname_info.release,
-+			    uname_info.version,
-+			    uname_info.machine);
-+	else
-+	     strbuf_addf(buf, "%s\n", uname_info.sysname);
- 	return 0;
- }
-diff --git a/version.h b/version.h
-index afe3dbbab7..5eb586c0bd 100644
---- a/version.h
-+++ b/version.h
-@@ -12,6 +12,6 @@ const char *git_user_agent_sanitized(void);
-   Return -1 and put an error message into 'buf' in case of uname()
-   error. Return 0 and put uname info into 'buf' otherwise.
- */
--int get_uname_info(struct strbuf *buf);
-+int get_uname_info(struct strbuf *buf, unsigned int full);
- 
- #endif /* VERSION_H */
+ 	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
 -- 
 2.48.0
 
