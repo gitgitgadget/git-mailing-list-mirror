@@ -1,54 +1,54 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA85C1D90D7
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 23:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD761D8DFE
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 23:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737155048; cv=none; b=YGzjM60sJu1t/5eDX7jO25GQeg3PEwXNqjBQWD6VTfB+EkrGcDyPoUzs8HDkxJwMm8VPDSM1WduBH78gY4sUseq+TpbMl9dalPqav4y8mh3NekCrzNRELcQcrMAlzX3SutxP+iSTZbYjFOANF3pHsv72PGHqXrNgAtqSCdRWUZU=
+	t=1737155194; cv=none; b=VwjRW533xDtcSgrav1eda8f1fsLyX90auGB2oP0aPj5N0CK6gYWoCe2E0x7CxSFA+UyJbId2OgvxQcum4wSbjMuUv+fxwcCcM7TMtrP0T8ixOwwyj2Xa/JrNz1Okhb67gJLN2v25l1ZnbP/2vTuo2IWfqaOXH+hyvDiM6Zno75g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737155048; c=relaxed/simple;
-	bh=0tmv0lqPKQrC6CxTgNlwAaRPG/fuji/MWesCGQqE8ck=;
+	s=arc-20240116; t=1737155194; c=relaxed/simple;
+	bh=qqEG0Svv81v2bR9cfXuii86mGgrF5CqGIqKJaIyBUJI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tSSzF7vb8lPxQtt3BgGDVpGJs6xEdTGDtPxfMG+mvc8Mz8E2se9t6LQtGDHbx4jY5vZ3x/KTsORRFAmNtAS0b+E03GIarZNy+q+h+FnoYPN4oHxvuMOFox8SLDrul9MKOlhFrULF7lPvitin6wvRPyBKEXGebqCu6eDfIwC6mcU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PgYB01bu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qWPKqfKp; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=bU7+svur+S0wxYINaoOGvfylFvzX2idnXYtXJtkQpl2rg/0qel/DCSmcwct4nxOvTMeXbsl3CCIHjJHbq0sl85x77LU+vGl49r1o/JQxQ5vP+zatNZHUNHYjb7s4LBJQLGu2rT3hCoDaQZZCu4DFe+OnXSKnWAna11PbsY2X4Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U3n7TR6U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zru/T4KB; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PgYB01bu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qWPKqfKp"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AD5BB114022D;
-	Fri, 17 Jan 2025 18:04:05 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U3n7TR6U";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zru/T4KB"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 21C4B114012E;
+	Fri, 17 Jan 2025 18:06:31 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 17 Jan 2025 18:04:05 -0500
+  by phl-compute-10.internal (MEProxy); Fri, 17 Jan 2025 18:06:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1737155045; x=1737241445; bh=3q8PMQI54O
-	FwIwCcSy3TaP02FAhn9Cv47e3K5OZTnPk=; b=PgYB01buR7FT1TKHaVfUTyUvgE
-	zvGVL6vcENbalEt2rg2AbWPcKxrP19A4UaRkDocbU8aaA+dOKjkqu6g+r60WhmsY
-	8De5a38eXVQ18UF/YsXGLgvTwtEZBj0N0IkQ1ZUGFpc4STW8JFjjGg98BTa8F7zM
-	BF8oWAPmtE+kd1LKKIwaHiryHVL9C6qRvv2Gse1vc+r5ZNJjNpuRO7L+GSTvOlXt
-	SFJy9yYGjNrKs9DRAIu9xt9n8hXQtzV3o3TllR9Wkr+dh5cRaooVzVMMu0bXu0C9
-	xpiVH90bjIJ67Pfz1oSWcbYmKpOPHWcX7xBbcRhcOlRnBz2YAmwJzcQjeRCA==
+	:subject:to:to; s=fm1; t=1737155191; x=1737241591; bh=qqEG0Svv81
+	v2bR9cfXuii86mGgrF5CqGIqKJaIyBUJI=; b=U3n7TR6UL0PMSFhanKBJfPlpSx
+	kSeBaomT+nUK2TbAXflIi2EPNCuHpb6PiuigiV9fKvc1X815RQ/WR3qH32qW8THQ
+	YLjrF2djDEce75uR4nLQVo/EDs1TvMkilEfOGlMACPySgA6u11IrgpPtaKbBAusT
+	5J2FDjoPO2pdE0IqEhrnuIO+zuSSnyVo2/OGJdYW5hbMYyZob1+ktipvrpXhrhY+
+	XHDOjgDI1ebdvqvNAztKdVbHF0DT7IG5kaHTzsfnB5XXGXB8JwDvt1WZQHWPlzDm
+	Erz69rOfzxzjs7AzrEwbqFuk1r5y7ABpzQ+d2NYCHigF1/91UG27EwSLFx7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737155045; x=1737241445; bh=3q8PMQI54OFwIwCcSy3TaP02FAhn9Cv47e3
-	K5OZTnPk=; b=qWPKqfKpmX7Ig36j8/UWkQZjcpudhkhhvU8OKAZ6YKlHwdUVof/
-	FbN2RcDF5gT7XUhYQx7QwmjtSwXC95sgmAljKmtHR+lXXS0bPbHNQNV/jhsssa3S
-	pfvzmsGp6sh5gg7JEmcI6HpBSg8zaYHXkrdBa9zCg4z7SAgNo9nZlrr0f9gfig9f
-	V1/URvf+zcgSVYVXezWE6dHcDijxP+kw4OkmwNoakhQENsguhXRU08tt+8SNcBIZ
-	1/Ez1H04CAAoShyZz3EpXcSGSQrFjc+L53sD7Tv0CAMe3fLsvxmhXFvKlbGinYD0
-	Tt1TeppYFZDckt48OmcwiPnpxKMmYWp8iYQ==
-X-ME-Sender: <xms:5OGKZ2NVMisrun2hzCviAUNx9Si_Eo78m-BJDxRMhPC_3r7sMngLVw>
-    <xme:5OGKZ09pX3bG1S7w8CcNIzItMvV-D10D7QpTi_HMmGh0OsgCa3ZGbjk3lrMSqa-oo
-    zgHiAGSuRxv4GZOZw>
-X-ME-Received: <xmr:5OGKZ9Qoca23uT2KYzjca3WL4VR4vn5BLKOID9xb25RHuromu7rI1qPFNFFgx6enDPZglV7S51Y4GaSvTOEFug1lzbUMv_F5A_2f>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeigedgtdehucetufdoteggodetrfdotf
+	1737155191; x=1737241591; bh=qqEG0Svv81v2bR9cfXuii86mGgrF5CqGIqK
+	JaIyBUJI=; b=Zru/T4KBJdmNvgohs7Zo8eX2oL/lu+c0GuHoGjsYVoze82W220Q
+	5JbmMXFWH41JAGOQbEKbec37kSDN4umE47K7H8pmM5G23aLBdH+w9Lnd8+GQy1Ca
+	CLySEO4y1tN/VmiEbPfYQomt15XSsGJoSzdUHqWW3CM8LTFKXlnHA14A2cQJzdwG
+	cU+eC5xrhFTM9WBOqrbeqps+Ua1+3FS/9OYmfymjyKYfRu4iXOLMIy2jO7ZJvNuQ
+	9xMXVQxu8jINIXjmauEVkoBjn2FH+y5gQE7yv4HXS9VjilCJqxD/p6ZjwTcfHnqM
+	vKKPBsN9ZVLaBPp5/M3ZD3YAC7a2Ibn2e1A==
+X-ME-Sender: <xms:duKKZ6b_na8ILU-iFwp9N2nV7PxLyb6xzr0qonSJgxmEKvEslNeljA>
+    <xme:duKKZ9YZ86JW-WYVD3IzQ-wtxmJMDpcG12rDlnqVzLIuCmK3ZCdPNNRu7enpEDVLy
+    GQWdq0JEmyM8GAy_g>
+X-ME-Received: <xmr:duKKZ0-cYCezV0apQjHXr99stAfVvO3BYqeeQUUiD4vH7AIzPs1tSfOfEPd-ASo9Da9lmXN4D-bU63qNZkTiSDFgkkcKymGi5ZZw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeigedgtdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
@@ -64,14 +64,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeigedgtdehucetufdoteggod
     hikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhn
     uggvlhhinhesghhmgidruggvpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
     dprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukh
-X-ME-Proxy: <xmx:5OGKZ2tGMETIpw2LR3Z198uHWegwF91wqrFiy3vMPBneSZ14vAcTmw>
-    <xmx:5OGKZ-fhuVgjxrTV9NAEfgA99wO5suVsgXkgZcWghv3NgM3eqnMShA>
-    <xmx:5OGKZ61V9dv7YaqT8_8MxHmf6tcaxNKdVSlMso5nrVCMtU2wnKx81w>
-    <xmx:5OGKZy96iIb3PJq2a6LHRNlskk4nOBu8yFu0Q7sw16ad7OwXhwqhNw>
-    <xmx:5eGKZ01kk91gTUfRvsjE5O5quGWaoWACBc9l00MigNOvDG9meCcJP4L2>
+X-ME-Proxy: <xmx:duKKZ8rzSHC-qZA-4UZf3lGVojNAqiU9qwcyFRF3OEGUghGP97xWHw>
+    <xmx:duKKZ1oNk4A-uRs1ioaOxc9Dzvo8ytVVWbdg_wd3slfMbFPw7Xx59w>
+    <xmx:duKKZ6Qnerhm-pNUMaOmY2CznqLUGwM-ZTZJ72K3_FgayKt1bf3tlQ>
+    <xmx:duKKZ1rKbYFSLzTAdfKrtj4ahVlJle3NeUn3pxSSjYwvqHXJpXzqHQ>
+    <xmx:d-KKZzgV6c9qkkuNdauV05DKlh2XLCo5mT7OdSAiT74NPvsD4gU_untC>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 18:04:04 -0500 (EST)
+ 17 Jan 2025 18:06:30 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: <rsbecker@nexbridge.com>
 Cc: "'Usman Akinyemi'" <usmanakinyemi202@gmail.com>,  <git@vger.kernel.org>,
@@ -79,17 +79,18 @@ Cc: "'Usman Akinyemi'" <usmanakinyemi202@gmail.com>,  <git@vger.kernel.org>,
   <Johannes.Schindelin@gmx.de>,  <me@ttaylorr.com>,
   <phillip.wood@dunelm.org.uk>,  <sunshine@sunshineco.com>,  "'Christian
  Couder'" <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 5/6] connect: advertise OS version
-In-Reply-To: <00bb01db6931$d7cd6dc0$87684940$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Fri, 17 Jan 2025 17:47:46
+Subject: Re: [PATCH v2 6/6] version: introduce osversion.command config for
+ os-version output
+In-Reply-To: <00bc01db6932$1eed21a0$5cc764e0$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Fri, 17 Jan 2025 17:49:46
 	-0500")
 References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
 	<20250117104639.65608-1-usmanakinyemi202@gmail.com>
-	<20250117104639.65608-6-usmanakinyemi202@gmail.com>
-	<xmqq4j1xjd2m.fsf@gitster.g>
-	<00bb01db6931$d7cd6dc0$87684940$@nexbridge.com>
-Date: Fri, 17 Jan 2025 15:04:03 -0800
-Message-ID: <xmqqjzathwkc.fsf@gitster.g>
+	<20250117104639.65608-7-usmanakinyemi202@gmail.com>
+	<xmqqwmethxyq.fsf@gitster.g>
+	<00bc01db6932$1eed21a0$5cc764e0$@nexbridge.com>
+Date: Fri, 17 Jan 2025 15:06:29 -0800
+Message-ID: <xmqqfrlhhwga.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -101,18 +102,9 @@ Content-Type: text/plain
 
 <rsbecker@nexbridge.com> writes:
 
->>So the question is again, do we ever need to use os_version() that is a raw
-> string
->>that may require sanitizing?  I do not think of any offhand.
->
-> uname(2) is definitely not portable. uname(1) is almost always available,
-> but
-> there is no guarantee about uname(2). I am not entirely happy having my
-> builds break if having to write one between rc0 and rc1 when this rolls. How
-> is this being handled? os_version() is also not portable. What if we had
-> something that asked for specific elements of the string, by name or id.
+> On my box, uname -srvm = "NONSTOP_KERNEL L24 08 NSV-D". Is this going to
+> Break anything?
 
-Sorry, I fail to see anything in your paragraph that is relevant to
-what I said.  Especially os_version() is a function that is
-implemented in the patchset, not something you would complain about
-being "not portable".
+If you are happy with that string, then there is no need for
+osversion.command configuration variable, is there?
+
