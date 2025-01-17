@@ -1,64 +1,64 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8629E35960
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:21:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398391F91C3
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:21:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737105679; cv=none; b=f+cip6zWmEyWF7QF2EXx7r/k3H/op4BWhPW3hrcLAUKodKTWHNWmP7F+g/xjzN5YJdAytqXa1Jf9BOb9nucPiAVsOkZrZOWUzx1Gtao2dfOhCxAgUzATf4IgZvrjwBGEsEATVXEqqTLr5TE4PmTltXOhUC67pwtzH54mk273Rvk=
+	t=1737105680; cv=none; b=myY6vfh7lsnVDT0napoQ7dX/rF8w/UHhyDpYGGXWWtbwOk9Kp1U9RuK8zW/ZngTt7o2PtC+i/31TzFitFUdAR1NUQv4yvcBHpNL5FXw0CHDcmfm0+TvjWCvS0C4FDuhvDIRjZ/ObTRtgYZbOGKOz1Y5gh7cPP7MF6MiT1dDMXSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737105679; c=relaxed/simple;
-	bh=jkZZ7IFfVeJdcQLYtnEx2tb2+OGWcVIo2VdxyTbfzbI=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=hjdhxMxS+A2r6tbL7Mkk4zJZP5W+OyfUm3j4mdOOcp4O6/KmivYA+V4U1vHfXXRTq9JQN8i9ISQ6jPnGPqmcUn7Vgyqd3ax5IX15cTEKST8P5JAMpvh19rwLBj4OYeIDIQRDsEsu4z+c6qFxAgPMLDMI3cTgf5LrWxOHh8E19B4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dmmKJ662; arc=none smtp.client-ip=209.85.214.179
+	s=arc-20240116; t=1737105680; c=relaxed/simple;
+	bh=Q3YTpVPctjeWQ1SI5ZHfabnjeICNZIAxFUmfeObUWxA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=k2zoMVQ9r4o9NBZRMi8W0GlSKImOldJTPYbcvW7nUtd1mTSRF2XfIj+9DdOPIgXpWrcCGeMjz6+GfpjN8oKdG1dQdGeTYHqFuvlDWbrGCAH2L8qFBqk3oe9PMy6DFLZaTUX68rd6pvJimaHnPTGwXrJ5Nuyc+4DlGUykik3IKkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fvetGq2c; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dmmKJ662"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-2163b0c09afso34835275ad.0
-        for <git@vger.kernel.org>; Fri, 17 Jan 2025 01:21:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fvetGq2c"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-216281bc30fso42990225ad.0
+        for <git@vger.kernel.org>; Fri, 17 Jan 2025 01:21:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737105675; x=1737710475; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1737105678; x=1737710478; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=q/ei+Y9vkI120XS40gnOnzTy1lp27ZhG/0F7FhxY498=;
-        b=dmmKJ662mFdSwULmPpUI3DgI2uQdjzMGilTlbVYtgBMV3slAM8hUkCepitUfx8ZF9q
-         A6giFmRn9hSvYNF9XlGVTNJz8W3IyILqH9dRv284d3OCX789QxfONQdGAg3dE43h05E1
-         anT1BNytFof3PVI//0zHWa1XVCHrPWCLdmuQ5pLaajQv1fTV2m7t31XFg4SnVYWSnM/T
-         lQ3luL90LBpPZqyZCIkPjAosWEhclGw/BqmMo9wH4FunJqcXXd2N5N0rXI4mimAOd/S3
-         g2gW9REevBHHlcDRGhIV97itbF2ZvVNrRAb2Pte76u1nRN9bf0DpEKTwTWtUgw+XoADy
-         TJQw==
+        bh=cG/8Kxa+G1FdV/BsesI0eK2yhTEIBu4vHbqMzWuN1eM=;
+        b=fvetGq2cQktJA4b0y1SMSBIAkLLDlhFj2lDhn7QOFmSIKB1ivqqSVpkf4AN7YV2yF2
+         WkpsJkL23pVm7FYfUNaFN0krdgwQcp5A4WS70/XdgGMBNu8jCk/5mplyefx35OMgvpLF
+         l04ZXTNOXYYdd91/SZLLyCoghlA3KramJPCxlNcWDy9Y0H4H87XiG8ArIb0mO2CfJjq3
+         Pkg2XDe6PFRaKtnvVvmLv2V/yJlrfm5c2mBDyfbVGFt6MUaZ4T++hpM8iWklQv95uv1Z
+         KpeBgQLJmB7K4qGPyuk7bFbgbbznDSq/RgAteVB2kEhNOfxV8wVVC8EBPHHHNWfXE7d7
+         nakg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737105675; x=1737710475;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
-         :message-id:date:subject:from:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=q/ei+Y9vkI120XS40gnOnzTy1lp27ZhG/0F7FhxY498=;
-        b=BfrU2UFTB4fEyjD0yqGsYsu6bzgT6l/Nu3TX5bd6Ew8Pn8ULmiJnqOSG/M0VtO81lq
-         c9UtqZ7+pTWo1livd7X0KmG2MAaI5G1/Y+CPWLMOvNSaXC4tKetOnHWqc3mf8nNCzWIi
-         vxxk9kEm4mM0Y2jSzsBHmWJZW9SwcW1grBHFE8VcxRYkbdNkm8gNGr528b0uucD8REe3
-         qUVXnGjP4fhQ5UK08IPU2p6fCDLSQqvR5ptI4dYleL4o2Kwzbl2nmoxhYAHW8BTVHdAR
-         +0jnrZxMYZTIG+EJ/NXyMi9gTAnYsKJd9uM4WSH4yN0gf5gtFgpb6uSu1d+jlFwxbvjS
-         cF7w==
-X-Gm-Message-State: AOJu0Yy8CARGI77oXd72sG5GFae+uGkdGZja+Fa/I3Myq5SMflqohDDA
-	tM+HItDChGMv6eww+QPEOEIMYpkzUWtOMWzVu7giYWGvB1gy28m/I8l8PKbQ
-X-Gm-Gg: ASbGncvZxmjhsSqpWHiK2pXUshzEWReJiV1kPU+OzRI0lzoGjvYOFgIAc7+hVrJ2lc5
-	CEzHlP68H71Fa6dlWxDMcbdYxYqmyoM2r8sfJYOTPQQVVz/PSVcHXzmYa0xZYWoMkN/QYgaqLmi
-	+kQKoRXloOJzGTS4taPbft5DIt3688FNAF0RMCek/vKWGrlyM263kQJGCFy6wiW/0N28MSHvwAL
-	uT3Gr0FlMACD/7k99j5zigKBoD0aOdppzdJwmNcZV3AaRCOVxm5RfRAuIU=
-X-Google-Smtp-Source: AGHT+IExQ/xDoTBVPRacqSO2i5+swMt1en8rYtKvf9Yh9KE7mzTssPAryLDYxIqYtjZxWpT5W8cQDg==
-X-Received: by 2002:a17:903:41c3:b0:216:4883:fb43 with SMTP id d9443c01a7336-21c35594385mr31429595ad.32.1737105675234;
-        Fri, 17 Jan 2025 01:21:15 -0800 (PST)
+        d=1e100.net; s=20230601; t=1737105678; x=1737710478;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cG/8Kxa+G1FdV/BsesI0eK2yhTEIBu4vHbqMzWuN1eM=;
+        b=BY/lKQvShfcT08jEma4rIzbWcEObpHl1lwhIXuUPHJ0fIPFC16YFuiJnTX1x5I9Hx5
+         ro8ct3hwFkLJtSeuNMD6AHSn2AIkme7bx9XRUlrUeR0K8WyC+Q+1FR4xKm2waZbgMVi1
+         aFscXP7u1EfxEcYEiaX7wkSigsEDJbWhkra5jmVwNL0giIfL5WrsDlaUI1QNuhDLOuxi
+         wo26Gr0YlYFvH3uNfcO2+Qc99RR6QjnC7v/dajY+cwi0bS1N0IltmBdeLD+bQOXrBBIg
+         GnvY8aGzQGkWqJ123jffHdC3LHBWZu39FPI1OHkE/6Tvop/D56uDsjkV5ibbGnEAKkou
+         5yjQ==
+X-Gm-Message-State: AOJu0Yz8Hg8Bd6ehEfpTw/D1bXFq33BcPAQwRTpJND8iStA7gs1iSDpp
+	9sCDdtEKpIDAXScmPZFYoNHlSuG9G0A8Xejn1WLcdA7oBcjDjXHmVoOflhYR
+X-Gm-Gg: ASbGncuM9qGyZgiSg3mYIUVBOY/bZ6DUkAyhNrr2MxJtlQfpRP//wPWBBh5XV25ATdO
+	y4/7LjGCZTQY8eVR6NoMNmGyFP/cDj7IZRMKFBWgxu2wlPGsnoiJx9rGt4eyyFVe9FxHxVXzVs+
+	GrN681Ep4nekoys2W2MyPqICZwQ+P37g88XytN1aCiFtODg3t3XGUHD5EtQK2TZKxPGz9RA3/OM
+	YFAhOL9KobO2xgwrQubI/4wtrsUvVzL+u2ojEktaGlKtOSvGtV+LZVS5g4=
+X-Google-Smtp-Source: AGHT+IHZgZHd3uUl6aSIl59o7yHVE1o6rTIOQCCF7CWbIuLgOxANrT2oKqcS6NGvcxfpC4IQ1+UGZA==
+X-Received: by 2002:a17:902:d4c8:b0:216:2e6d:babd with SMTP id d9443c01a7336-21c355beb90mr34200325ad.15.1737105677868;
+        Fri, 17 Jan 2025 01:21:17 -0800 (PST)
 Received: from [127.0.0.2] ([103.39.127.160])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21c2d3e088bsm11714065ad.173.2025.01.17.01.21.12
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21c2d3e088bsm11714065ad.173.2025.01.17.01.21.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 01:21:14 -0800 (PST)
+        Fri, 17 Jan 2025 01:21:17 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v2 0/5] pack-write: cleanup usage of global variables
-Date: Fri, 17 Jan 2025 10:20:47 +0100
-Message-Id: <20250117-kn-the-repo-cleanup-v2-0-a7fdc19688f5@gmail.com>
+Date: Fri, 17 Jan 2025 10:20:48 +0100
+Subject: [PATCH v2 1/5] pack-write: pass hash_algo to
+ `fixup_pack_header_footer()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,145 +67,208 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAO8gimcC/22NQQrCMBBFr1Jm7UiSjiKuvId0EdJpO9gmJalFK
- bm7seDO5Xvw398gcRROcK02iLxKkuALmEMFbrC+Z5S2MBhlTkprhQ+Py8AYeQ7oRrb+OSORJuo
- smdbVUJZz5E5ee/XeFB4kLSG+95NVf+2vd/7bWzUqtKYjd2HtyNW3frIyHl2YoMk5fwBsiR0vt
- gAAAA==
-X-Change-ID: 20250110-kn-the-repo-cleanup-44144fa42dc3
-In-Reply-To: <20250116-kn-the-repo-cleanup-v1-0-a2f4c8e1c4c3@gmail.com>
-References: <20250116-kn-the-repo-cleanup-v1-0-a2f4c8e1c4c3@gmail.com>
+Message-Id: <20250117-kn-the-repo-cleanup-v2-1-a7fdc19688f5@gmail.com>
+References: <20250117-kn-the-repo-cleanup-v2-0-a7fdc19688f5@gmail.com>
+In-Reply-To: <20250117-kn-the-repo-cleanup-v2-0-a7fdc19688f5@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, ps@pks.im, gitster@pobox.com
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5300; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=jkZZ7IFfVeJdcQLYtnEx2tb2+OGWcVIo2VdxyTbfzbI=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeKIQftvciFL3NlBlXGz/uCX7GYI19a+6KQe
- uf0iI/GT1j71YkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJniiEHAAoJED7VnySO
- Rox/PQML/2Et4E+onfP+PHY7QCEO2aWdj2S+/NoNamvohoe4LVCTISkdyYfGnY1ETRgEr4xwZQp
- SXz9zIBTSlMmacvA7R1/m54Dyc9MykEsfIIczzmP1gvqg9V49ZvjV6sVDGJc1j0RcsfgThRoP3z
- rjgqtXljFtEEUs/46iJ0YXBp1DEciNW3XqA3n9Hbg72O6533y3x2pExts41QUvveBdR3v/hqWjD
- LI+Wa3gmfVfvt4x2vgK+eWNX7n+xqihVVxWrZxpIWJxChER1V6fbG4ixyZvlr25mx4dpirou8EW
- xTNPr+Tu5Ym2g/mjSBcNx/jORFqhjYLRi8XItupAVWfkS4kHmOH6Z08RD7yG8TLgWojENXGka1B
- IVF3WjwQYIyE/TcgidqUW7j1EI7KnzsvVAovsRfHBjNgDa6iBR4KJhuPV8iFRL87/zNuZs2uhYD
- eUarFZ3yTsIheWlRCOhsTT5W+TYd2BYNo0xx/PCRqzcmnTNPecZ9J0kWccMVuBGKnVP3FCZyYN7
- JY=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7847; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=Q3YTpVPctjeWQ1SI5ZHfabnjeICNZIAxFUmfeObUWxA=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeKIQcEscebP3IscXsjZkrWx0bSGuzhBR1K3
+ Mf2LM76R0Y2lYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJniiEHAAoJED7VnySO
+ Rox/owML/RVQ+/xyU0tqN86RVmzziwffggh885EoQ1GEcubgxcYlal8cAaO6xXUsS1HhMJIfjA+
+ 6CHuUW+3mp0EEIdk8f1Ip0yTz+YpCwBLIa3xDrO4ZNUTMMjKaEMAttrjCT/dSGWSlRniuNl7wUv
+ rxzP78dGiCpRHib2hVrlgf4WkPahgRQSjejbW6wk1bhV43TaGRsmbKZZnGeMcsaJeH1pwTEDQTY
+ S+h1Gw1Ti1N/BLz4uX/EQU+3R5p95SCyqIn0CE8xQAvsZUYdRPDMjVxQEWMMWw8eZq7LaEwNMLX
+ jM6shqoU3hfexGx0P4LJ8iVFV1dLoSHlWowb8lxs7IOY+2KBmQd37JLX5yPwNSYW91Y2co1Nlvo
+ pjl8H27RUgm4entP2/QahGztHWkxN+TfKr6MP1e3WZLvAFvqfyhoZYOJW51Chp4igiQvQ6O3c0M
+ 1BDdRGQ8iku90NA6pZscmadU2X+wW6ybgLR62ZV9hbx1mrkswblvE8NKM9YfjOXSK7aO+fwspx5
+ og=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-This is a small series to remove global variable usage from
-`pack-write.c`. Mostly it bubble's up the usage of global variables to
-upper layers. The only exception is in `write-midx.c`, which was cleaned
-of global variable usage, so there, we use the repo that is in available
-in the context.
+The `fixup_pack_header_footer()` function uses the global
+`the_hash_algo` variable to access the repository's hash function. To
+avoid global variable usage, pass the hash function from the layers
+above.
 
-This series is based on fbe8d3079d (Git 2.48, 2025-01-10) with
-'ps/more-sign-compare' and 'ps/the-repository' merged in.
-
-There are no conflicts with topics in 'next', however there is a
-conflict with 'tb/incremental-midx-part-2' in 'seen', the fix is simple
-but happy to merge that in too if necessary.
+Altough the layers above could have access to the hash function
+internally, simply pass in `the_hash_algo`. This avoids any
+compatibility issues and bubbles up global variable usage to upper
+layers which can be eventually resolved.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
-Changes in v2:
-- Fixes to the commit messages to:
-  - Fix copy-paste error s/the_hash_algo/the_repository
-  - Mention why certain functions are modified
-  - Small cleanups
-- Link to v1: https://lore.kernel.org/r/20250116-kn-the-repo-cleanup-v1-0-a2f4c8e1c4c3@gmail.com
+ builtin/fast-import.c  |  7 ++++---
+ builtin/index-pack.c   |  2 +-
+ builtin/pack-objects.c |  5 +++--
+ bulk-checkin.c         |  2 +-
+ pack-write.c           | 28 ++++++++++++++--------------
+ pack.h                 |  4 +++-
+ 6 files changed, 26 insertions(+), 22 deletions(-)
 
----
-Karthik Nayak (5):
-      pack-write: pass hash_algo to `fixup_pack_header_footer()`
-      pack-write: pass repository to `index_pack_lockfile()`
-      pack-write: pass hash_algo to `write_idx_file()`
-      pack-write: pass hash_algo to `write_rev_file()`
-      pack-write: pass hash_algo to internal functions
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 0f86392761abbe6acb217fef7f4fe7c3ff5ac1fa..6baf2b1b71e2443a7987a41e0cd246076682bf58 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -878,9 +878,10 @@ static void end_packfile(void)
+ 
+ 		close_pack_windows(pack_data);
+ 		finalize_hashfile(pack_file, cur_pack_oid.hash, FSYNC_COMPONENT_PACK, 0);
+-		fixup_pack_header_footer(pack_data->pack_fd, pack_data->hash,
+-					 pack_data->pack_name, object_count,
+-					 cur_pack_oid.hash, pack_size);
++		fixup_pack_header_footer(the_hash_algo, pack_data->pack_fd,
++					 pack_data->hash, pack_data->pack_name,
++					 object_count, cur_pack_oid.hash,
++					 pack_size);
+ 
+ 		if (object_count <= unpack_limit) {
+ 			if (!loosen_small_pack(pack_data)) {
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 0bef61c57232e198ba539cd44ec301d26dcb0eb8..6c5e3483f4fe67fb2e26132c55b1f8395d60c11f 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -1390,7 +1390,7 @@ static void conclude_pack(int fix_thin_pack, const char *curr_pack, unsigned cha
+ 		strbuf_release(&msg);
+ 		finalize_hashfile(f, tail_hash, FSYNC_COMPONENT_PACK, 0);
+ 		hashcpy(read_hash, pack_hash, the_repository->hash_algo);
+-		fixup_pack_header_footer(output_fd, pack_hash,
++		fixup_pack_header_footer(the_hash_algo, output_fd, pack_hash,
+ 					 curr_pack, nr_objects,
+ 					 read_hash, consumed_bytes-the_hash_algo->rawsz);
+ 		if (!hasheq(read_hash, tail_hash, the_repository->hash_algo))
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index d51c021d99d9f470c04b7ec52565ab2f4c1c19ae..ffc62930b68c9b4152057572ede216381a4b0991 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1319,8 +1319,9 @@ static void write_pack_file(void)
+ 			 */
+ 
+ 			int fd = finalize_hashfile(f, hash, FSYNC_COMPONENT_PACK, 0);
+-			fixup_pack_header_footer(fd, hash, pack_tmp_name,
+-						 nr_written, hash, offset);
++			fixup_pack_header_footer(the_hash_algo, fd, hash,
++						 pack_tmp_name, nr_written,
++						 hash, offset);
+ 			close(fd);
+ 			if (write_bitmap_index) {
+ 				if (write_bitmap_index != WRITE_BITMAP_QUIET)
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 5044cb7fa083d692a3797e2491c27b61ec44c69c..c4b085f57f74fb8b998576ac9d84fed9e01ed0ed 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -70,7 +70,7 @@ static void flush_bulk_checkin_packfile(struct bulk_checkin_packfile *state)
+ 				  CSUM_HASH_IN_STREAM | CSUM_FSYNC | CSUM_CLOSE);
+ 	} else {
+ 		int fd = finalize_hashfile(state->f, hash, FSYNC_COMPONENT_PACK, 0);
+-		fixup_pack_header_footer(fd, hash, state->pack_tmp_name,
++		fixup_pack_header_footer(the_hash_algo, fd, hash, state->pack_tmp_name,
+ 					 state->nr_written, hash,
+ 					 state->offset);
+ 		close(fd);
+diff --git a/pack-write.c b/pack-write.c
+index 98a8c0e7853d7b46b5ce9a9672e0249ff051b5f9..fc887850dfb9789132b8642733c6472944dbe32d 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -380,7 +380,8 @@ off_t write_pack_header(struct hashfile *f, uint32_t nr_entries)
+  * partial_pack_sha1 can refer to the same buffer if the caller is not
+  * interested in the resulting SHA1 of pack data above partial_pack_offset.
+  */
+-void fixup_pack_header_footer(int pack_fd,
++void fixup_pack_header_footer(const struct git_hash_algo *hash_algo,
++			 int pack_fd,
+ 			 unsigned char *new_pack_hash,
+ 			 const char *pack_name,
+ 			 uint32_t object_count,
+@@ -393,8 +394,8 @@ void fixup_pack_header_footer(int pack_fd,
+ 	char *buf;
+ 	ssize_t read_result;
+ 
+-	the_hash_algo->init_fn(&old_hash_ctx);
+-	the_hash_algo->init_fn(&new_hash_ctx);
++	hash_algo->init_fn(&old_hash_ctx);
++	hash_algo->init_fn(&new_hash_ctx);
+ 
+ 	if (lseek(pack_fd, 0, SEEK_SET) != 0)
+ 		die_errno("Failed seeking to start of '%s'", pack_name);
+@@ -406,9 +407,9 @@ void fixup_pack_header_footer(int pack_fd,
+ 			  pack_name);
+ 	if (lseek(pack_fd, 0, SEEK_SET) != 0)
+ 		die_errno("Failed seeking to start of '%s'", pack_name);
+-	the_hash_algo->update_fn(&old_hash_ctx, &hdr, sizeof(hdr));
++	hash_algo->update_fn(&old_hash_ctx, &hdr, sizeof(hdr));
+ 	hdr.hdr_entries = htonl(object_count);
+-	the_hash_algo->update_fn(&new_hash_ctx, &hdr, sizeof(hdr));
++	hash_algo->update_fn(&new_hash_ctx, &hdr, sizeof(hdr));
+ 	write_or_die(pack_fd, &hdr, sizeof(hdr));
+ 	partial_pack_offset -= sizeof(hdr);
+ 
+@@ -423,7 +424,7 @@ void fixup_pack_header_footer(int pack_fd,
+ 			break;
+ 		if (n < 0)
+ 			die_errno("Failed to checksum '%s'", pack_name);
+-		the_hash_algo->update_fn(&new_hash_ctx, buf, n);
++		hash_algo->update_fn(&new_hash_ctx, buf, n);
+ 
+ 		aligned_sz -= n;
+ 		if (!aligned_sz)
+@@ -432,13 +433,12 @@ void fixup_pack_header_footer(int pack_fd,
+ 		if (!partial_pack_hash)
+ 			continue;
+ 
+-		the_hash_algo->update_fn(&old_hash_ctx, buf, n);
++		hash_algo->update_fn(&old_hash_ctx, buf, n);
+ 		partial_pack_offset -= n;
+ 		if (partial_pack_offset == 0) {
+ 			unsigned char hash[GIT_MAX_RAWSZ];
+-			the_hash_algo->final_fn(hash, &old_hash_ctx);
+-			if (!hasheq(hash, partial_pack_hash,
+-				    the_repository->hash_algo))
++			hash_algo->final_fn(hash, &old_hash_ctx);
++			if (!hasheq(hash, partial_pack_hash, hash_algo))
+ 				die("Unexpected checksum for %s "
+ 				    "(disk corruption?)", pack_name);
+ 			/*
+@@ -446,7 +446,7 @@ void fixup_pack_header_footer(int pack_fd,
+ 			 * pack, which also means making partial_pack_offset
+ 			 * big enough not to matter anymore.
+ 			 */
+-			the_hash_algo->init_fn(&old_hash_ctx);
++			hash_algo->init_fn(&old_hash_ctx);
+ 			partial_pack_offset = ~partial_pack_offset;
+ 			partial_pack_offset -= MSB(partial_pack_offset, 1);
+ 		}
+@@ -454,9 +454,9 @@ void fixup_pack_header_footer(int pack_fd,
+ 	free(buf);
+ 
+ 	if (partial_pack_hash)
+-		the_hash_algo->final_fn(partial_pack_hash, &old_hash_ctx);
+-	the_hash_algo->final_fn(new_pack_hash, &new_hash_ctx);
+-	write_or_die(pack_fd, new_pack_hash, the_hash_algo->rawsz);
++		hash_algo->final_fn(partial_pack_hash, &old_hash_ctx);
++	hash_algo->final_fn(new_pack_hash, &new_hash_ctx);
++	write_or_die(pack_fd, new_pack_hash, hash_algo->rawsz);
+ 	fsync_component_or_die(FSYNC_COMPONENT_PACK, pack_fd, pack_name);
+ }
+ 
+diff --git a/pack.h b/pack.h
+index a8da0406299bf267205256aaa8efb215f2ff73be..6d9d477adc83e83d9e9175ccf699c100b4c147c6 100644
+--- a/pack.h
++++ b/pack.h
+@@ -91,7 +91,9 @@ int check_pack_crc(struct packed_git *p, struct pack_window **w_curs, off_t offs
+ int verify_pack_index(struct packed_git *);
+ int verify_pack(struct repository *, struct packed_git *, verify_fn fn, struct progress *, uint32_t);
+ off_t write_pack_header(struct hashfile *f, uint32_t);
+-void fixup_pack_header_footer(int, unsigned char *, const char *, uint32_t, unsigned char *, off_t);
++void fixup_pack_header_footer(const struct git_hash_algo *, int,
++			      unsigned char *, const char *, uint32_t,
++			      unsigned char *, off_t);
+ char *index_pack_lockfile(int fd, int *is_well_formed);
+ 
+ struct ref;
 
- builtin/fast-import.c  | 11 +++---
- builtin/index-pack.c   | 11 +++---
- builtin/pack-objects.c | 12 +++---
- builtin/receive-pack.c |  2 +-
- bulk-checkin.c         |  7 ++--
- fetch-pack.c           |  4 +-
- midx-write.c           |  4 +-
- pack-write.c           | 99 +++++++++++++++++++++++++++-----------------------
- pack.h                 | 30 ++++++++++++---
- 9 files changed, 106 insertions(+), 74 deletions(-)
----
-
-Range-diff versus v1:
-
-1:  4e365523a5 = 1:  ed4ba01c95 pack-write: pass hash_algo to `fixup_pack_header_footer()`
-2:  efa224f83b ! 2:  10aeaa5afc pack-write: pass repository to `index_pack_lockfile()`
-    @@ Commit message
-         variable to access the repository. To avoid global variable usage, pass
-         the repository from the layers above.
-     
-    -    Altough the layers above could have access to the hash function
-    -    internally, simply pass in `the_hash_algo`. This avoids any
-    -    compatibility issues and bubbles up global variable usage to upper
-    -    layers which can be eventually resolved.
-    +    Altough the layers above could have access to the repository internally,
-    +    simply pass in `the_repository`. This avoids any compatibility issues
-    +    and bubbles up global variable usage to upper layers which can be
-    +    eventually resolved.
-     
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-3:  6cca689d32 ! 3:  a4dbc3906d pack-write: pass hash_algo to `write_idx_file()`
-    @@ Commit message
-         to access the repository's hash function. To avoid global variable
-         usage, pass the hash function from the layers above.
-     
-    +    Since `stage_tmp_packfiles()` also resides in 'pack-write.c' and calls
-    +    `write_idx_file()`, update it to accept `the_hash_algo` as a parameter
-    +    and pass it through to the callee.
-    +
-         Altough the layers above could have access to the hash function
-         internally, simply pass in `the_hash_algo`. This avoids any
-         compatibility issues and bubbles up global variable usage to upper
-4:  b29eb6a305 ! 4:  d06d8ee962 pack-write: pass hash_algo to `write_rev_file()`
-    @@ Commit message
-     
-         The `write_rev_file()` function uses the global `the_hash_algo` variable
-         to access the repository's hash function. To avoid global variable
-    -    usage, let's pass the hash function from the layers above.
-    +    usage, let's pass the hash function from the layers above. Also modify
-    +    children functions `write_rev_file_order()` and `write_rev_header()` to
-    +    accept 'the_hash_algo'.
-     
-         Altough the layers above could have access to the hash function
-         internally, simply pass in `the_hash_algo`. This avoids any
-5:  438bfec4de ! 5:  1e34f5a70c pack-write: pass hash_algo to `write_rev_*()`
-    @@ Metadata
-     Author: Karthik Nayak <karthik.188@gmail.com>
-     
-      ## Commit message ##
-    -    pack-write: pass hash_algo to `write_rev_*()`
-    +    pack-write: pass hash_algo to internal functions
-     
-    -    The `write_rev_*()` functions use the global `the_hash_algo` variable to
-    -    access the repository's hash function. Pass the hash from down as we've
-    -    added made them available in the previous few commits.
-    +    The internal functions `write_rev_trailer()`, `write_rev_trailer()`,
-    +    `write_mtimes_header()` and write_mtimes_trailer()` use the global
-    +    `the_hash_algo` variable to access the repository's hash function. Pass
-    +    the hash from down as we've added made them available in the previous
-    +    few commits.
-    +
-    +    This removes all global variables from the 'pack-write.c' file, so
-    +    remove the 'USE_THE_REPOSITORY_VARIABLE' macro.
-     
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-
-
----
-
-base-commit: 8b2efc058aaa3d1437678616bccf7c5f7ce1f92b
-change-id: 20250110-kn-the-repo-cleanup-44144fa42dc3
-
-Thanks
-- Karthik
+-- 
+2.47.0
 
