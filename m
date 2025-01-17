@@ -1,117 +1,161 @@
-Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40121F91E4
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 08:56:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24F2D1F91E1
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 08:58:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737104219; cv=none; b=u9m8vJEO1dEGOv4MpMHamgxe+M/fZAL3fOR4tJKkuaXNbcZV/LC9L2dgGQfU5T9U7FIoC/sShP7zbYpS2rIFebq+/ct0Wuc+z0p7YF2/m551AyFnvAgTcNHJzWk8ZEloUr1UntzcLpHYbFOx9usSfmxyOtppZg6rFd9MVWewA18=
+	t=1737104295; cv=none; b=UT6avnbLozbLHUKcP56y75tB+FJS2n65FjygiJ7pZ3rpwrpnODLqcnBCzd+uR2CqrIUcAAg7AqhsapI4hXWHF8ZF0JrBnYkRgXN9FeQM2b3wZM8x3iZvXnx6GCYuG8+EXNPzEXg6Ct6Iegn2mTb2SROAH61DN99Ye+tpkcS+kIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737104219; c=relaxed/simple;
-	bh=wz1pU+QXfxDL6mYjfjtq3EjF7ocFYugZCro4G+ju8pc=;
+	s=arc-20240116; t=1737104295; c=relaxed/simple;
+	bh=hlSG/3wDzNVd2CswcrIdPlJkFhHCrpZh1Ey8Xau32/E=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=r9QRn2WKPN/yGxDfN8sUbT+Bg2ljljmwbgZVqLX/FYg2lrKuupJZ6GHokeO+sm+0lk2t2K2B3G6FPYJMBbqInLXeNe2a2c1P4QtBv5A0I0oBlCQAlZBRe93xxfoVTkghiDNu4QOGeFqZeEV/IVWGMsF40OWpjBTBMIcNd5ulYlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SlG/bTha; arc=none smtp.client-ip=209.85.217.41
+	 To:Cc:Content-Type; b=IzXgCuL6+MJEAIYc6CTBjjVrxsBCp+i+WqyPn++871GIHP/Zxxj2IK5c8TITPVEiSMqsYSpuPrhfm2CMVF8sq34tHtUP0iL8A6zK1Ag7Mzh9aYXnmytPf+sUqfUySmHvDFzV7bwmRQjyJ+5SEn8fJUBnfdfpolIKw9N55Q0+gdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Qwxy8vhN; arc=none smtp.client-ip=209.85.221.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SlG/bTha"
-Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4afe4f1ce18so471609137.3
-        for <git@vger.kernel.org>; Fri, 17 Jan 2025 00:56:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Qwxy8vhN"
+Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-51cd9115009so479004e0c.3
+        for <git@vger.kernel.org>; Fri, 17 Jan 2025 00:58:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737104216; x=1737709016; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1737104293; x=1737709093; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8oRA57OSpZqHJrgvLNeVO0zreA56Gp8NIlJ0Ds0vak4=;
-        b=SlG/bThaW+xg1XM0EYGIuXAYb+UB0SWhjWnzZbI0gRH0KWTCUC75Mzwdgn84wcoBK3
-         tqoMZTCIMuIzGNVpkUEVqhqAs7cD/fYlhBaNOdYsRTpec+WWtfqqqOeybT7ar1b3Rvy6
-         VXU31vfqG2TeDtYEBm8oW8//qIyQFI56trLNtUgtpIcJmht7wGCqd79uVOSu8ledT0Ok
-         7nDqkMhQ5sLFLpFgs1wFfZtA8NTPXwFPI4U/xzaVR2MKCctwkr+b74dARzxNOoxhnnoi
-         xrIf693eCGwHphwX6fvwwUH7NwhM4+i5gL/c0V5QR4ZWfETnZPnAX94isofYC48eQcQe
-         Hzjw==
+        bh=vSKocukLhE79f8oOXOfrI6PF9IGSR+W+X/ZLqJ+CFAA=;
+        b=Qwxy8vhN6WhXhUYD79WDOVZPAKt5a5T0ULyPNEH0zPJIlBVXi46uUrEBrXZ5BTx0/h
+         BHH69e7fIGzobtTzbPI0IarPvqw4W8Q+IKF6NQZ5OK/8OpqyQpmLwsGW96pUnhTBFGNO
+         4s2QFt48Y6h2V/TrdgdAhevgMz4/K/SpOzrHLsnLIJQ6QYLY/DGXLCfZ61PTNhdIGdS1
+         AnjfOGjbCTjQhcfnMlsF59DNHgEB98sdtD4zrZ/y9HAl87Iyo8ch6BWH6c5tVIBrfsIn
+         IzYh9gJqb4nslI/J0KQ61PTRoRAT5bvRHqeakxZxFwTjQ6pHAYE1etVQN6Gg1ya2Xm12
+         MZiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737104216; x=1737709016;
+        d=1e100.net; s=20230601; t=1737104293; x=1737709093;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8oRA57OSpZqHJrgvLNeVO0zreA56Gp8NIlJ0Ds0vak4=;
-        b=s6/Un9AJYM1QSaTTlUpr4BuXI4fyZyo7QmYr4Ac2roLlXEuCmZxELSnEHMHf4rj+CJ
-         VMU6JCGSXWnOUNwNRi32U4G8NjmmkPl/S7NDIzhZxUgObFBQKX2qmvRSeS3rm54wS8Mg
-         4M17a9XxpB5PleGmhN1ZGVp9bWdU5AcjlH6h+3UEOWk6/eF64ufyK2gvmaHD8BWt3C6X
-         y+0t2nDnACnpEd4mt6lupgPUFZuw6wkR7LP4I3iD7jdpfrX/zuPzuRLbSF64TnubBzcm
-         nV4o1BHETlO8g6UrkA7IEDKICfczfeBistrlAeGhj8tH3NE6y+d07KSMzIZ/ZE1A4gF7
-         jUqw==
-X-Gm-Message-State: AOJu0Yxae8pSYwfGrkOK/qTHs10iBvixaRtN0sriJ2yxsdVBMyrv0dAq
-	YAz7igSi8ASWcB6JnaDHSCY97ooae/i4bjjmdSou+74tijdxYRVnA6D/Xcucnk1PUWvGsf25jU3
-	skteU+kqwoBZb1enw13RKAPumeSM=
-X-Gm-Gg: ASbGncsvgc54nzJlPduvrLQFYHljTW6dsBFkZTyTzgxxMMph5ZZGddMP13YfSVugriX
-	6ChOxAlDt8lUBnBWK47wzPcCwnYs2JzfFma2y1Cs=
-X-Google-Smtp-Source: AGHT+IHmkvDB+jfBcsbUuE+x86vDb5PcM/G/f5ie5YyPzpIKC6Ffu5UX7gA67zEvePyqz4rTQ7731hz9/QBNnStmVos=
-X-Received: by 2002:a05:6102:548f:b0:4b0:2d7c:43e1 with SMTP id
- ada2fe7eead31-4b690c8542cmr928838137.20.1737104216658; Fri, 17 Jan 2025
- 00:56:56 -0800 (PST)
+        bh=vSKocukLhE79f8oOXOfrI6PF9IGSR+W+X/ZLqJ+CFAA=;
+        b=YjW/P36M6nZxHk+WJ5dRzIbF39rviiCk9yEjOlNb7YhMJIlMCLxGurnc9hMt7AwChq
+         8WoKpWGpKl4tKLleedFuoWxGhox7iBg/F/oEdAl3RCSj8Rtj/XQO7saAbcTj9jH4zen3
+         hQWr16oHdAmgqJBGl/cNRlFdopr7E9tORIeegkewgQ8VCsQGOy7VgcwMsVPD+4YdUlrl
+         0wzi/fvye0/1XZlyORSaOrD3HDFcNiTVzKOZX9sdAjikou3cyA6DYvpyeR+Ma/elpeSK
+         wQHQlPM8ZxGRoBl+8PMwz+O/lp+PRVATbdN02z/awnFttS+QSgkrNlq8dS7GfHCrddzt
+         ExMw==
+X-Gm-Message-State: AOJu0Yx7O6592F71fZIcUrMqFDRNtvyHEa6vYbr2vSXJejPinvA92m1q
+	HEp/SgCrBBsPy11fdvnt1Z48x+oxD3KBZTZJzFGTNpje10IyUSMBgLMlYWvcbC7TcfwlLOxBNQl
+	ugK3g9lEVUlM1+VECtxp+Z6NaaRJGobaL
+X-Gm-Gg: ASbGncuTwSDOi57pU8X3j7HSV25oD1XY6SXtTQ4ALuX8diQabJL/a7xjHSateCCB5Qk
+	gibt6jKZUe3ngvoN84LBJNWOBdGPsLrAb9RaZIkI=
+X-Google-Smtp-Source: AGHT+IEEqosvLvekRXk218qSid7KXQWxarivS44L0Hv7T94QeSNDApHEX6NKDx0W1FI5kiMpqc93NEJ/1Xs7mf2XPwY=
+X-Received: by 2002:a05:6122:3d46:b0:50f:f21c:4fd0 with SMTP id
+ 71dfb90a1353d-51d5b30169cmr1129705e0c.8.1737104292774; Fri, 17 Jan 2025
+ 00:58:12 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 17 Jan 2025 03:56:55 -0500
+ HTTPREST; Fri, 17 Jan 2025 08:58:11 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z4kIg8ihbgPPb3C_@pks.im>
+In-Reply-To: <xmqqjzaur2ry.fsf@gitster.g>
 References: <20250116-kn-the-repo-cleanup-v1-0-a2f4c8e1c4c3@gmail.com>
- <20250116-kn-the-repo-cleanup-v1-3-a2f4c8e1c4c3@gmail.com> <Z4kIg8ihbgPPb3C_@pks.im>
+ <20250116-kn-the-repo-cleanup-v1-3-a2f4c8e1c4c3@gmail.com> <xmqqjzaur2ry.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 17 Jan 2025 03:56:55 -0500
-X-Gm-Features: AbW1kvY8mQGIPXy0Ez9JL_dJalYSexbGovlbaROVJpM4L1-9MhSqSUV86jydgkU
-Message-ID: <CAOLa=ZTGzEwKp7LtXGnHLo1cayryXouy1MCLPrNRCXPzgXk4rw@mail.gmail.com>
+Date: Fri, 17 Jan 2025 08:58:11 +0000
+X-Gm-Features: AbW1kvaYxztrPfPcV-5RfwLWkyWFyibpZrbwx6vwR4NoELwkIri-YE0Ur1yts38
+Message-ID: <CAOLa=ZS8EeC_G56CYq9CT8cwvb5QL3nEgY1Fo1_zz4uCn8jB_A@mail.gmail.com>
 Subject: Re: [PATCH 3/5] pack-write: pass hash_algo to `write_idx_file()`
-To: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>, 
+	Karthik Nayak via B4 Relay <devnull+karthik.188.gmail.com@kernel.org>
 Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000c5b901062be31764"
+Content-Type: multipart/mixed; boundary="0000000000004f55a0062be31c82"
 
---000000000000c5b901062be31764
+--0000000000004f55a0062be31c82
 Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Thu, Jan 16, 2025 at 12:35:15PM +0100, Karthik Nayak via B4 Relay wrote:
->> @@ -546,7 +547,8 @@ void rename_tmp_packfile_idx(struct strbuf *name_buffer,
->>  	rename_tmp_packfile(name_buffer, *idx_tmp_name, "idx");
->>  }
+> Karthik Nayak via B4 Relay
+> <devnull+karthik.188.gmail.com@kernel.org> writes:
+>
+>> From: Karthik Nayak <karthik.188@gmail.com>
 >>
+>> The `write_idx_file()` function uses the global `the_hash_algo` variable
+>> to access the repository's hash function. To avoid global variable
+>> usage, pass the hash function from the layers above.
+>>
+>> Altough the layers above could have access to the hash function
+>> internally, simply pass in `the_hash_algo`. This avoids any
+>> compatibility issues and bubbles up global variable usage to upper
+>> layers which can be eventually resolved.
+>> ...
 >> -void stage_tmp_packfiles(struct strbuf *name_buffer,
 >> +void stage_tmp_packfiles(const struct git_hash_algo *hash_algo,
 >> +			 struct strbuf *name_buffer,
 >>  			 const char *pack_tmp_name,
 >>  			 struct pack_idx_entry **written_list,
 >>  			 uint32_t nr_written,
+>> @@ -561,8 +563,8 @@ void stage_tmp_packfiles(struct strbuf *name_buffer,
+>>  	if (adjust_shared_perm(pack_tmp_name))
+>>  		die_errno("unable to make temporary pack file readable");
+>>
+>> -	*idx_tmp_name = (char *)write_idx_file(NULL, written_list, nr_written,
+>> -					       pack_idx_opts, hash);
+>> +	*idx_tmp_name = (char *)write_idx_file(hash_algo, NULL, written_list,
+>> +					       nr_written, pack_idx_opts, hash);
 >
-> This change was somewhat unexpected to me as it wasn't mentioned, so it
-> makes you wonder why it's different than `wried_idx_file()`.
+> The proposed log message should mention the reason why this
+> stage_tmp_packfiles() function needs to be singled out among many
+> other direct callers of write_idx_file() function.
 >
 
-Should've mentioned it. This was also modified since it exists in
-'pack-write.c'. Will amend the commit message.
+Agreed, Patrick also pointed out the same.
 
-> Patrick
+> In other words, ...
+>
+>> @@ -798,8 +798,8 @@ static const char *create_index(void)
+>>  	if (c != last)
+>>  		die("internal consistency error creating the index");
+>>
+>> -	tmpfile = write_idx_file(NULL, idx, object_count, &pack_idx_opts,
+>> -				 pack_data->hash);
+>> +	tmpfile = write_idx_file(the_hash_algo, NULL, idx, object_count,
+>> +				 &pack_idx_opts, pack_data->hash);
+>>  	free(idx);
+>>  	return tmpfile;
+>>  }
+>
+> ... this hunk could have made create_index() to take a git_hash_algo
+> object and pass it down to write_idx_file(), while changing all the
+> callers of create_index() pass the_hash_algo, but we did not do so.
+>
+> But stage_tmp_packfiles() got that treatment.  Please tell your
+> readers in the proposed log message what makes it special.
+>
+> Thanks.
+>
 
---000000000000c5b901062be31764
+Will fix it in the next version, but in short, it was because the
+function is also part of 'pack-write.c' and we're focusing only on
+cleanup of 'pack-write.c'.
+
+--0000000000004f55a0062be31c82
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 24e1cd118e255ae8_0.1
+X-Attachment-Id: 469ee0f129fa7b56_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lS0cxUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mLzhTQy85MW5Nb1VCNTZZYmhPcG1xblVaU1FwaEttSQpPei9pUHBhTUsw
-UUZubkgvVWhsSVRPT1JDNHBHNm1SL0ZBMDNOdWExTE1iVVQ2bUNYN0g1YTFDRks3QWdpRVViCnUz
-YzJsU0VYOFlSdkpvNzFPM2w4Tnkva1U5ckI5ZVNGRHlGSU12bWRUaDM4TWRUdmRpNDdhWERwVjB1
-RjJNSzAKcEJKdXlLVER1NlVaaVFNcU1ydnVZNFAxSEFubFRxazd0Q2FNdGRha0FhR3hTMXpBdk80
-WnBYNUpIRXJpbkJ3dQp2ZmNxS1pxRGxMeHRtKzlOWEp6bnhGU0tZWjJ4bWxkMVpqSC9wZkNwQUZG
-NU5ucnJoZFBBc0FxQk9sTDlkYUhKCjZMeXdTTkRORHVKV0FITGxMb1p6cmtoamVZeW03OG8rTjRt
-WTFuTzVrazZkMnFWZUlEOC9mWTgwQWRLN1FMb20KN0lodXJHVVpzZXAzQThGbFJhVFA4UlRWSm1p
-M0VjT1BBSGdQdE42a2tTbm54MFptZ010UnBtS2pwcUlES1FPawprdmxzZXBpbG1BVGpySHJlbGRm
-L0YzS2M3YmxMcHhueGZaYyt2TlhrcDQ4M1J4dmVxR3N2TkcvRElVN29GdUg4Clk2bEgzMjIvblNG
-YUlCbTRBSGNLV2tzWkpSUmFJZXRHa3RmaWpJTT0KPUdrUHEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lS0c2RVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMXFiQy85a3l5cExqQlJNWW1DWVhRRWNjaE5NaG9IYgptUmhINExQdk91
+b1c5dC9maUN2RS8zdTg5ZTdwbWhHWEtEdFkxbU1rdE1DOURZbjBhVUhmK0gxbnhNZkk4MmV2CjVH
+N0xhTGdLVU9FRXcxbzZaeTVheVFNN0d5UDV1Y05hdkkxRkVWSm9jUENQVlU4d0cxTEh3Y3EyMkth
+VUo1QmMKOEhKZ1pReTA5MFpYb203bVlOd2g2Y0pidk1iQWVNY3BiUXdzd2hJVE1hZE96Vzdjb2sz
+Y2FyeGRITTlUUVo2RApiSmkreXZ1OWczVlhRS3o1d3UwcE9RTnEzOTlOcFoyNWx3VnFzMGxVRjNR
+YUlDWHRMTjdqSXNTSkkrNUdQNzRMCmVUdHZvWmloZTdZbkwxMENiTDhiMnRBVVlXQlhpRkVlaFlr
+LzZZUUpTNytqNytkNyt1a1hUOEdzZjYyM0l6bFIKaURFcTRSK3VDeGNxdEh5bHJIczI2dGczdlk0
+a0pPMUxMc0Zhblg3MStnVm1wc2JvQUl3cCtFK29VTStXQUpXMApNRVpHcXZlU1ZhbDd0UTNLSm9q
+bDZ0eitHR0l0WGJzM21YNGR5LzNxeWZlald6UHVzTUZnMjhMczZWYk9MOWRkCk5vS0toNHNUdVgw
+Z1ZtMGtsZXNKOHlmMHBaY1lPZTk3bHY2QVpEST0KPVZFZmgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000c5b901062be31764--
+--0000000000004f55a0062be31c82--
