@@ -1,87 +1,110 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-43167.protonmail.ch (mail-43167.protonmail.ch [185.70.43.167])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C1F22338
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 03:14:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F86B1F63E0
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 03:30:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737083661; cv=none; b=Z1lrQt6rqOErpXarKxx3wOatVHrPm29KGwfOEn1jGax4f/g1ihEb9o9O6S+PsA/+Va9pJtY9ySv7uA94clJa51QzxfnxK5YrLpSSvfop2HYmPG+dh5Ep2URdEbD/iVK/NCYbIaC9p480x/Ild4ESEcOYdQqDN11h5sKn6oPzdW8=
+	t=1737084623; cv=none; b=rEmIv3fMFD+4l5RhwXRvNKFq0io5B73/s3AQXjI+qj1IqGvfl4drMIOuQBNRRC5diCzB+GlGoSHlbnVd7ELpwIBMklvxwKZhBEKj8MjZt3Ol3dIgeVyOgOB+cvoLc7OnoHLewWbvpLkh8xdVBBULK/jljjLHPrZRVicw9KeKFI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737083661; c=relaxed/simple;
-	bh=dG1HthcVfN5lN1G+Wi08cFDFeVzjgPI+jurO58k5lHI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ce+ulPW8UHrfqv3GIxxYYV0+SeRtlhFrkf/7erCUKOmUnTQydlJmkDyhP4ncLp4dskkjD9iXG/20uc7EZiLC5gEjU04NgljLskuAyjjgvG+LTF72IrKU6V/0l9LcDy1IbNDt989kVUSSV6eIMPWJJT/GXnYV/61BVI0X3xg7o9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6d8eacc4194so2291036d6.2
-        for <git@vger.kernel.org>; Thu, 16 Jan 2025 19:14:18 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737083657; x=1737688457;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=W+Ak/YrlhNpH9ErPvhHvyq21rYsBq/XdmTChaVy0f0Q=;
-        b=eP01+A/mCSQbM0/h3gvFcIC9eDfaHu9EZFKz8Nsu35kNEnHUKmz7PHyb+pb41syZ49
-         5uKbtm4kcSe0Cvm8C6opsp67H/+vZ4JyKR6u2lwq7WSVWwbB2niepDNpvteteYv8G922
-         uqSFO/SCOI681rU3XisojiXvuc7ZisWgUX11JNebo+mb116VS+joKSOheCV74SvJ9ogK
-         YluL4Hx8QX7X/vZKYxs4lDbnKD3A1MJnoEuHpiBrlC+8YiGBhOLV9RoYzRTElQKNbyTR
-         aUAOECrfLfKRkWQxPldJnmtx8MhRdI32nW98gza1FQ7eyfz6125hMsshtpKUkCzREmeU
-         Of1Q==
-X-Gm-Message-State: AOJu0YzqoTgx1DRS1r4YXWz4bcuIGGal9pDa0XbqDOHuUKtfzDY5CHiB
-	qekvUZjYnh7S5RYBKawpAgDMaXsyUVCjbEo4FE8omdBKZtQifgxcMSh3ziCX30jV4Pl/vk5yu9w
-	wZyg/bi8hVlVKjp23whwGiCZHi4SrK06I
-X-Gm-Gg: ASbGncsMgsP9goJDjcOfFxZ/nwG3eTcrbimX791gpU/5xmfnPUuWmnX43t3izaC97wH
-	4Bu9PXTqxT2a/a8kAoFDnRM3yiGmQq5juqTCYgqsKxDb0p0BmbkWX1g3xSgO6fEYKhYlL8Vw=
-X-Google-Smtp-Source: AGHT+IFaF/EquwxYH0aPFQ7LKi2Fd6Xjp88hQeuLDLcxLksNpGR3c5g1Zfp3sc5Nqg+0IMetfMOt+TWMegN2n6I8m0w=
-X-Received: by 2002:a05:6214:1253:b0:6d8:98a4:cc5c with SMTP id
- 6a1803df08f44-6e1b19d8eafmr8240706d6.0.1737083657354; Thu, 16 Jan 2025
- 19:14:17 -0800 (PST)
+	s=arc-20240116; t=1737084623; c=relaxed/simple;
+	bh=n9nKRzKjKUKtx0X9LWg47ODvaQ8YqXb36dtASGdRhGU=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=UngjP0eHwLH7zkrHi5sp+vhiJIcK3ogatXmimByzKGHteOX/r9PhwHOBegyqUNt25fslYZQaCTJOqOhzKhhoqma9yqLJ054J5kguzXSSo6j4WVFZPlWayjW4sM1BCRohe3pdyt0beiDip6G26VrF5NYvI+wVy7NdgKQW5sr9CRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=apbgFkfa; arc=none smtp.client-ip=185.70.43.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="apbgFkfa"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1737084613; x=1737343813;
+	bh=l6jtMrqovS/OncY3QzTXA+4IPhceEUc9L+4hYlZM6lU=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=apbgFkfazaYtVDY2AgkHLI67SkfWeWOoL55TNSZPCdVHXB5CV9WRe8QdJYkqq1Blp
+	 tOUjlDTke8WO4LqJVHuyXXb56ES1MEBOxHGBdq8AuGZ6xfvevW1O2Sea2Q/nWOfDCc
+	 7P/r4Lf+Yj6WeJTQWoy+Jc7dY6rJ+UMTgIGpOQc/fPwR2ECLqfVQyIro1nMaDm5Wn3
+	 iMUiXPbpw4W+k2tp+VUZQYvFN5LeQsEDt1GHU4gkwgMcIZXgbiU7CBB+mvgnuD89hT
+	 Vo3VZCRV4E9XNGhLslw0Tj0TwcCCTcLLvf4iaW+Qi32wa4EjFmqJZ4U/59srNGejx5
+	 8wTyMTweoyKCg==
+Date: Fri, 17 Jan 2025 03:30:09 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: Koakuma <koachan@protonmail.com>
+Subject: [BUG] git crashes with a SIGBUS on sparc64 during pull
+Message-ID: <xd6Mn7uXpDxaT8zF28BwOIdV98lnvm3S0rBgxmm97nuRW3z0GQSUi_KeYe0fUuRfz8rCgo6Uialw5rnraqp5tjzMFQkFH0MZV_n4fEQg8go=@protonmail.com>
+Feedback-ID: 6608610:user:proton
+X-Pm-Message-ID: 5cd38276eb7bced8b94923603c71606783c0794e
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1878.git.git.1737066042014.gitgitgadget@gmail.com>
- <xmqqy0zanzdw.fsf@gitster.g> <xmqqfrlinuys.fsf@gitster.g>
-In-Reply-To: <xmqqfrlinuys.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 16 Jan 2025 22:14:06 -0500
-X-Gm-Features: AbW1kvZ2JM8siBnHcqwp0fnNVQ1R5xXl8fIfXAPj5Ffs145NsFgKN6No-gw4CZo
-Message-ID: <CAPig+cSKHWm+Xwk8AAeyOdHh8voPc4OBT-bZdsWHBGDG0GcgJA@mail.gmail.com>
-Subject: Re: [PATCH] grep: document negated line-number, column long options
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, 
-	"D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>, "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 16, 2025 at 7:30=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Subject: [PATCH] gitcli: document that command line trumps configuration
->
-> We centrally explain that "--no-whatever" is the way to countermand
-> the "--whatever" option.  Explain that a configured default can be
-> overridden by the corresponding command line option, too.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
-> @@ -161,6 +161,20 @@ can use `--no-track` to override that behaviour. The=
- same goes for `--color`
-> +Options trump configuration
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> +When there is a configuration variable and a command line option
-> +that tweaks the behaviour of the same aspect of a Git command,
-> +the command line option overrides the configuration variable.
-> +
-> +For example, the `user.signingKey` configuration variable is used to
-> +specify the default key used by the `git tag -s` command to create a
-> +signed tag.  By giving the `-u <key-id>` option to `git tag`, which
-> +specif es the key used to sign a tag, the key specified by the `-u`
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-s/specif es/specifies/
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> +option on the command line is used, instead of the configured
-> +`user.signingKey`.
+1. Compile git with clang (this doesn't seem to happen with GCC, oddly)
+2. Do a `git pull` on a repository that will trigger the `unpack-objects` c=
+ode
+
+What did you expect to happen? (Expected behavior)
+
+Pull succeeds
+
+What happened instead? (Actual behavior)
+
+Pull fails with this error:
+remote: Enumerating objects: 7, done.
+remote: Counting objects: 100% (5/5), done.
+error: unpack-objects died of signal 10
+fatal: unpack-objects failed
+
+What's different between what you expected and what actually happened?
+
+The pull process crashes with a SIGBUS.
+
+Anything else you want to add:
+
+re: unpack-objects, I don't know how to specifically trigger that code,
+but I know that once `unpack-objects` is triggered it will reliably crash
+with the error above.
+
+According to gdb, the crash happens on this line:
+#0  0x000001000019ca18 in cmd_unpack_objects (argc=3D<optimized out>, argv=
+=3D0x1000063a4e0, prefix=3D<optimized out>, repo=3D<optimized out>) at buil=
+tin/unpack-objects.c:653
+653=09=09=09=09=09hdr->hdr_signature =3D htonl(PACK_SIGNATURE);
+
+Overaligning the `buffer` declaration in the same file to try to get around
+possible alignment issues seems to be able to prevent the crash,
+but I don't know if it would be a proper fix for it.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.48.1.262.g85cc9f2d1e
+cpu: sparc64
+built from commit: 85cc9f2d1ee4d65cb1edb00d4f56863185a53e0f
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.10.1
+OpenSSL: OpenSSL 3.3.2 3 Sep 2024
+zlib: 1.3.1
+uname: Linux 6.6.30-sparc64-clang+ #1 SMP Sat Oct 26 21:22:10 WIB 2024 spar=
+c64
+compiler info: clang: 19.1.4
+libc info: glibc: 2.40
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
