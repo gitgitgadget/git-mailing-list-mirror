@@ -1,62 +1,63 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3E325A648
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 07:59:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE901F6687
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 07:59:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737100763; cv=none; b=q673gG8XxYJ/c9MeGKU3sFUj4uJ/CB5udXRu11/tkQG+pCFT8MFlEekEw3+dbNz2jp3wDQkTJIjNJiuuSjpHTltuvh10HZAdAhPLL4edUhG1VpYBj/D9W6UKgCaY8Dzi/nLPba8s6zcLCX8WPydSqC/v/toLcG3u3s452g2d77c=
+	t=1737100764; cv=none; b=UIGFbvdthlVjvGQ8p9oHiPNPA5FTILeCNY7m2yOo5OCyZtdSAAedEK8Ti7jSYugpWpHHqP0tQWo3s2Fk6NKt/7fVSD9Y/Ho2D6rKBSXkKAPfUkz4Y4IsIGQYlGybR5VnVkZzKsWW3voc47Z+M7o4p2NTYHuV0zbTSLjsvoaQxZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737100763; c=relaxed/simple;
-	bh=zwVLB4Vq5UbdnfWVk1zoFhvI+KcWJuYuM8d0MdeHgpo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=PIp/8nV5/dqcyglKJexZBtO7TPNiGUHNylvZnYysOf8YEKSqZCic8DhDhm36ocJHietD0DxFhGZi3jp/1ZUr2vDWJbvk1i6+wml58t+u4YdJUw5jBfaApj6VX1DsNbzxifTImwWT0oJd4Ok3U6zC7JOXpOkF1NygNaDGcF8GvSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V+QxcDX7; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1737100764; c=relaxed/simple;
+	bh=TSPCf+j0k7VuAkz15xovC0Wqa5yky68vfuH+QEhBLng=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=m0JGF5Ay/aqTxd8uo/rfUlxHetL4I0OsEx2ECnaWoPqMjUIWmJjNJbNO6UCm9IQ8qwaBHiMiXwgHgEaQA2eWksxRvCpjkTLphjKP9ioB2vOM+NDASAP4Y17r3bp8dwzDkNGTH4gEqLPEzNkNGX9vmFSPKis2rtm9AJzEAaewHoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=adbFFcfh; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V+QxcDX7"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-21654fdd5daso30801525ad.1
-        for <git@vger.kernel.org>; Thu, 16 Jan 2025 23:59:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="adbFFcfh"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-216395e151bso25381745ad.0
+        for <git@vger.kernel.org>; Thu, 16 Jan 2025 23:59:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737100760; x=1737705560; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Asoh6Q+6jCltsKH1kdCb4DVFE6mat10+t92E43/NBxc=;
-        b=V+QxcDX7hUet4jZS7DDHzZakIR4DOGeYT2vpA587i5qUcGJsdzov7oVi0mkotS704e
-         Cnqp9SUgTM+zJBPwdWQjierC5BH/smh68GSXa94MoppdBhW/B4338D5tmG00c4bXgH3l
-         ZedwgkymPjiEMy2ZTynIIu+6CKjBgS2+bKmiQVGzNsiEOy5NaeMu34yMe8AWHERwRaAJ
-         W6J1syIeTfvsrpApbWRi0JDQ4cvAH9tJMORKVI6kysxCnLrgAvNZZWbANaEIybMvoKFV
-         bqmj2AErx5XM6FLrT1jdxBKjyKCDbHGlfR9NSdho7wt33CoXaNvR27pkoqwnljgoh91X
-         CVAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737100760; x=1737705560;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1737100762; x=1737705562; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Asoh6Q+6jCltsKH1kdCb4DVFE6mat10+t92E43/NBxc=;
-        b=I5SbwJKzR05c3es7Nuc1UDrFI2amGD7cllaUfw/fT6FzLkyhlQSw3Imjt9szc4SGeB
-         G8krHRy8BD+2M6XcoP6KPYGQq11NfXwCIjbrOgYAqPLh57gkUyAiM55yoU8WbFZX4JuG
-         aklAe+8o2Tdy62gaS25RojQQiGHpF4Z5VkRnC+4Af5Wzu0gb0S+Xg6se25fNg1XfXlH5
-         87eesZGMELML8DluutFtQ4Idkk15K3TNAs7bk/+JueSZ0vtqp3j/1DGAnYqk3cWEFhuN
-         uzH1fUIEjQmXJraSDD18drs/r16JEvugCVgyg3KdwTJVTVXM5WQdTK9jKJD0y3nnn7BY
-         akvg==
-X-Gm-Message-State: AOJu0YxMF1vpHUituCEO2fHURkNwVogOUVIIyezDmEftLrJ0M3UZuPdE
-	F4mTGkw8o9SYcfS282nmqXKPSCkimg0PXLGDifxEedBv3bQviAz8
-X-Gm-Gg: ASbGncsDeDiYWcTVDNq9MeFBYbPtrZ+Xlsvwuc8d31QEhZ1tyZb3ad5viBRIIHHD4Hh
-	U44S6nYardSHgWCggJPx1P8lW7eW7WuMdEpJFMHDhnJInX8jDZIlEg3waxr7MTn8r+r1V+EgG/6
-	oaWBLRAimVMq2zMvLf48NaL+mq3j5ZQzrYRQUkJUszyaWXxBGYxVL6eJxo1QuOKHp8uQ8ck9FnW
-	6Rs3chbjo/p5SQt1L5BNAWA2u1OBo/Q+77QUM5tkc9zqttAdEJ/IL0wRD4=
-X-Google-Smtp-Source: AGHT+IFFcvT+GWkwDeGMDHXEOF/qoxcD/oocZSP4q5n4mz3uVVY+tAUbkp0apnzOaGHjDu4x+5qK4Q==
-X-Received: by 2002:a17:902:ea0e:b0:216:6fb5:fd83 with SMTP id d9443c01a7336-21c35563091mr24318245ad.29.1737100759905;
-        Thu, 16 Jan 2025 23:59:19 -0800 (PST)
+        bh=5EqMzg1mu6ESTNsAg3uvLylxRV938uaovsWvPTAPeiI=;
+        b=adbFFcfhWtM+j/JQXmS/try8cKFk0c5vGgRE5c3+WQe7H/Z2zJbor/WcugRgjZgXep
+         9geuMAzFawvc11JCXPmn7K4eg9zBqi0whg5G81euGI6oqNPfiK492Fu6kOHM4zb5ok+l
+         /MTBTZFrPJxkv3g3kejfaWOimpwL+2FPLcNm9n7v3e7GKzAT2NGwg6Js76m+bLPPT2hD
+         ldVmgLY0EIpVfe/65+ovysZfJogKk6u4uEihvnyhHhJD44ClLegBrcGdWq7xOTJaDbFJ
+         gjj5SA7ZCem5sgz9PuAsUElZa+UgNkfgTWPHtvd83JSpvRnzO+O7opiCBNse0L6TygQg
+         L+ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737100762; x=1737705562;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5EqMzg1mu6ESTNsAg3uvLylxRV938uaovsWvPTAPeiI=;
+        b=VS67vXPvEZI4K815mPMbu9sTPgggKGenPSZCvqDdmWXibXQ0zTyjir4YhP7gGsL4Qd
+         Ofm+SlCcvy8LBtUfBOYUeDWojZztKfsMaZNTfPuaEwdrRL4pT7Qgy8asuIkXcJ+PPf9G
+         L+jVQguej21ItkxvzM/avpeNHmbYQSU4L7M1QF/Ln1JyixjUuSr2aLq+qjF55JhJBZz6
+         cBiX6nsqzB4u1CmryU17QF1KoPY/R9WZVp4wHII2a4OKEdShPWnzxe+xFoFhJsZCwgJw
+         JzMzuZxe4GRyXTMxkURHW+FiJeSN6+0NQ3sWaBfPTxEA2BbfdSzdSQtf8ayl445XtzaF
+         O/4g==
+X-Gm-Message-State: AOJu0Yy02GQTBLwFqvQwa6SMouwq+D3jRoqSAEQdH4X3ef2ic9sED+D0
+	uz+4Bvr8ziWVfd1GjFYr6ZJkVXoNX/lMomQAEv8MAV72FWbZq95t
+X-Gm-Gg: ASbGncvCcRVj1vC0T/AFjRVekVy4eVTzaLdRFgHqdYXhDnVO1AigeqQv2Qz1SVpjjjD
+	r6gYGTRLZot3a0wPr1IxwemZ2cGBT2mQqfA+R0TPvP+bkuA5ekMIemVpLXf6dffo3bHxu2T9bmW
+	ztqvh63LmMMYaLGCb/UkCPJjhAzdR+NDdlRlvACcwUTLbnYk1ZMEgx8lIFL1WEkp7n8KJpXpv/u
+	g1dVCm9eJNfdCJRhUCBp71iRVp7u1m60Vxq5hslIA3xdZlwDtW0OZFlrcg=
+X-Google-Smtp-Source: AGHT+IHN+yptneG/Y+7GfLvJ2cml5m75QY+CZJcM1iwzoFXFBAq56vXDHtdneDbeEExG73RjUwgmhA==
+X-Received: by 2002:a17:902:cf11:b0:216:84f0:e33c with SMTP id d9443c01a7336-21bf0cc04ddmr167486155ad.20.1737100762318;
+        Thu, 16 Jan 2025 23:59:22 -0800 (PST)
 Received: from [127.0.0.2] ([103.39.127.160])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21c2d4025f4sm10517595ad.204.2025.01.16.23.59.17
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21c2d4025f4sm10517595ad.204.2025.01.16.23.59.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 16 Jan 2025 23:59:19 -0800 (PST)
+        Thu, 16 Jan 2025 23:59:22 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 0/3] refs: small followups to the migration corruption fix
-Date: Fri, 17 Jan 2025 08:59:11 +0100
-Message-Id: <20250117-461-corrupted-reftable-followup-v1-0-70ee605ae3fe@gmail.com>
+Date: Fri, 17 Jan 2025 08:59:12 +0100
+Subject: [PATCH 1/3] refs: mark `ref_transaction_update_reflog()` as static
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,73 +66,91 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAM8NimcC/x2NQQqDMBAAvyJ77kI2WgW/Ij1Es6kLwYSNtoL49
- 4YeB4aZCwqrcIGxuUD5I0XSVoEeDSyr296M4iuDNfZpiAbsesIlqR55Z4/KYXdzZAwpxvQ9MvJ
- suAue3GBbqJVcFTn/h+l13z+sVaTncQAAAA==
-X-Change-ID: 20250117-461-corrupted-reftable-followup-eb0e4fd1a723
+Message-Id: <20250117-461-corrupted-reftable-followup-v1-1-70ee605ae3fe@gmail.com>
+References: <20250117-461-corrupted-reftable-followup-v1-0-70ee605ae3fe@gmail.com>
+In-Reply-To: <20250117-461-corrupted-reftable-followup-v1-0-70ee605ae3fe@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, sandals@crustytoothpaste.net, 
  gitster@pobox.com
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1734; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=zwVLB4Vq5UbdnfWVk1zoFhvI+KcWJuYuM8d0MdeHgpo=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeKDdRUaL7kuIABOmUPlxU5SvHrr+DY9JNuV
- DF5kzlrL+B/OokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnig3UAAoJED7VnySO
- Rox/ZmUMAISiL9w8BMJ3c8Cqn+zw1SDfkXty0bYlelAv5eQJgIrLmufmPhiQpeaigo2Ex/twAhl
- S5JGRmvQyJMkEED0YAbrLXTgRAQYyvdqjciDLxz/TJOraAXnFldwnaW+BhJE/AUwDiT5kBS2HQl
- BB2LH1BT4xv0OYIxnGZCJfHR9pkqj0BsO72YcpH5jzr1hn6UVD4COBDN3cFPZmoLzLZRbLeBsZw
- 19HDVh3UYgzsilTmLwHYLGC6uHjeHCNl75mLH1jcLjQ5w+o9Q+ud6LR9MOIT21xhl7VVfDcaoOp
- FnoslSkO64sMGQoIgpw1B2SvOK5+/YKW9Bgwf+e8NzUAhQ+1qxeo0ACCHbapKE425W3mC1EXFom
- cAaLohYbh8Rk0ffQq/dpHeQdwOA++f1gD5AHXDndDHWlCMHQom4Q26y0js8heGFPX6gAmIdmVRc
- QgweXvGv9rrf9x62Dax9/lynS8SrpkTzo3EOmx1WW8UXxnBkCSvO5Dr86D7v6mP7l6dkz1RYNL4
- Xk=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2362; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=TSPCf+j0k7VuAkz15xovC0Wqa5yky68vfuH+QEhBLng=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeKDdU0iujZxq+oY/6wYMoIlfQPb9jVc2yKE
+ Ld9FHBNtciokokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnig3VAAoJED7VnySO
+ Rox/TlsL/iS1BXnCdYC0C6tZDVavkdbj5Ynrz6debyEbZWxkRkJ+LU/RB6ABp073FULQbULTFct
+ 6BiqzJhYc1SfBNnVu2dZb8DMHt0w1i+cza7ZyWKeL1T6wfHW1tb7UiQDcPShDeHPJDuPgJ3eTNo
+ vuGhQ6pCyG98/dLyX0nbyBvt/896Ma5Xpar7iZRBzw+4dYYDlhXgC1wKdTQ84QDbLkE6T9XNjLh
+ DrglQ/yZcCELW2tMO5aE/4+ps6wbxKh6qeLWoveCACaUuEnOExJNiX2YWjupdqyDToNJ+fwWaqz
+ 33T0VkGiGOVmPbfvUgxIovfiu0BV38cRZOxdlFz0C2tiFLfH5eBRTe9jOTwJF5aLDtQ/Dbi/p/j
+ Mkfy7BRKaOMXLBvFyP9LhcUBSpWzykyNEaz3mK9tNblAHef0cC0srrWvS8dL8ZQAxFiA4vLVKa1
+ PJ/o9vqik/SqHJF+l1vmL5LqpiAi/A7H/T1hzHNJTrqo6kfiuVCla0mrO/TWcjJN5eVSgAkqII6
+ K4=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-This is a follow up to the bug that was reported [1] around `git refs
-migrate --ref-format=reftable` where the migration would fail for
-repositories with reflogs with lots of entries. This was caused due to a
-mismatch in the reftable's header and footer, specifically WRT the
-'max_update_index'.
+The `ref_transaction_update_reflog()` function is only used within
+'refs.c', so mark it as static.
 
-While there was a fix posted. This series is a small followup to fix
-some of the topics discussed there:
-1. To mark `ref_transaction_update_reflog()` as static since it is only
-used internally within 'refs.c'.
-2. To change the type of 'max_index' from 'unsigned int' to 'uint64_t'.
-This would be much safer for large repositories with millions of files
-and on 32bit systems.
-3. To add a safeguard to prevent 'update_index' changes after first
-block is written. This is a preventive measure to ensure such bugs don't
-arise in the future.
-
-This is based on top of master 757161efcc (Sync with Git 2.48.1,
-2025-01-13) with 'kn/reflog-migration-fix' merged in.
-
-[1]: https://lore.kernel.org/r/Z4UbkcmJAU1MT-Rs@tapette.crustytoothpaste.net
-
+Reported-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
-Karthik Nayak (3):
-      refs: mark `ref_transaction_update_reflog()` as static
-      refs: use 'uint64_t' for 'ref_update.index'
-      reftable: prevent 'update_index' changes after header write
+ refs.c | 16 +++++++++-------
+ refs.h | 14 --------------
+ 2 files changed, 9 insertions(+), 21 deletions(-)
 
- refs.c                  | 18 ++++++++++--------
- refs.h                  | 14 --------------
- refs/refs-internal.h    |  4 ++--
- refs/reftable-backend.c |  2 +-
- reftable/writer.c       |  7 +++++++
- 5 files changed, 20 insertions(+), 25 deletions(-)
----
+diff --git a/refs.c b/refs.c
+index f7b6f0f897eb58665e10a2efd3eb53c3f72abe61..1bb6f0356d5c5cae8bea9d6f4d5ff35164a03c64 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1318,13 +1318,15 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 	return 0;
+ }
+ 
+-int ref_transaction_update_reflog(struct ref_transaction *transaction,
+-				  const char *refname,
+-				  const struct object_id *new_oid,
+-				  const struct object_id *old_oid,
+-				  const char *committer_info, unsigned int flags,
+-				  const char *msg, unsigned int index,
+-				  struct strbuf *err)
++static int ref_transaction_update_reflog(struct ref_transaction *transaction,
++					 const char *refname,
++					 const struct object_id *new_oid,
++					 const struct object_id *old_oid,
++					 const char *committer_info,
++					 unsigned int flags,
++					 const char *msg,
++					 unsigned int index,
++					 struct strbuf *err)
+ {
+ 	struct ref_update *update;
+ 
+diff --git a/refs.h b/refs.h
+index a0cdd99250e8286b55808b697b0a94afac5d8319..09be47afbee51e99f4ae49588cd65596ccfcb07e 100644
+--- a/refs.h
++++ b/refs.h
+@@ -771,20 +771,6 @@ int ref_transaction_update(struct ref_transaction *transaction,
+ 			   unsigned int flags, const char *msg,
+ 			   struct strbuf *err);
+ 
+-/*
+- * Similar to`ref_transaction_update`, but this function is only for adding
+- * a reflog update. Supports providing custom committer information. The index
+- * field can be utiltized to order updates as desired. When not used, the
+- * updates default to being ordered by refname.
+- */
+-int ref_transaction_update_reflog(struct ref_transaction *transaction,
+-				  const char *refname,
+-				  const struct object_id *new_oid,
+-				  const struct object_id *old_oid,
+-				  const char *committer_info, unsigned int flags,
+-				  const char *msg, unsigned int index,
+-				  struct strbuf *err);
+-
+ /*
+  * Add a reference creation to transaction. new_oid is the value that
+  * the reference should have after the update; it must not be
 
-
-
----
-
-base-commit: a5aa44e7930761cb900813d971b4105f901818fb
-change-id: 20250117-461-corrupted-reftable-followup-eb0e4fd1a723
-
-Thanks
-- Karthik
+-- 
+2.47.0
 
