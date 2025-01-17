@@ -1,85 +1,82 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6F61F942E
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:29:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D6625A659
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:36:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737106171; cv=none; b=kmtfLzuEjVkgYI518f+oVagSue3sQRZUb3HALGtcEdaCC7Xeq5DH2rwIG0T1M2pAbIIqN4rJCe4mUNbhOXMiy3vDVfE9JVsTWrTF/D1Vt0HTSv/mLT/KEwW/7caQkGjZTo+Sz15RB0r3x2s1CU3a3DNmX1hjNFiftz2qrC8yIOU=
+	t=1737106580; cv=none; b=MIlkpdWbZQE57HDhmh8NtCafMb63OYTGd93FoOZdQZD24Cb1mFrkquuD5LU9InBTvK1pDn/gwzp5MHlVZ2fPiFlPtRdrzwFjZp0HNBtyOMQNXMTNOuK71HBgUoFQZdjnQUwkMRNl3BujZdb8kw2AeLqVO3qrJ6A6k1tFwgfQVRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737106171; c=relaxed/simple;
-	bh=Mklt4tIkBFL39yXOlv30XtWHcYxQlzU2FtjC4HCGUQM=;
+	s=arc-20240116; t=1737106580; c=relaxed/simple;
+	bh=4+kGRY00aGTGA+QqJVCbiICQ/PXpG8yvQfXCnknMOB0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jK2RPwJX86G/YgH9dVV2hlndO6wZkkG05vDnAjVe6Rp0yZspiSfzwuArNvz1BLfW/rLI7enX9zmAKYbRs0yvnyPHegXrvBnapu8atS08tJXWAN7Km1TB4ugt8dUXS22Jj7Q2C1s1Chv69E+DGxenMmODIZLEFsMW/Jl+dJsNWsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XZpdGQoY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rvqjusMl; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=H+/jIGW2WnY337juf4SZtH3rp+tHd0Xz/Zj13QE2REZKxai/y/1PWo+o9v+/7HgCv63SWq0G8a1he9Mi/6xlJyfTrYQDcUbJP2aa+tZRvpRgVuE/qmg9wHX5oZ5TBaBW7ErMvSi7l1WlJ7HM2DtkzZcp8dmwmD/B7F1XS1dWmo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BZhVrMB6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WK+T6yjM; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XZpdGQoY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rvqjusMl"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id ADBDA13802C8;
-	Fri, 17 Jan 2025 04:29:28 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BZhVrMB6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WK+T6yjM"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A904011400DB;
+	Fri, 17 Jan 2025 04:36:17 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Fri, 17 Jan 2025 04:29:28 -0500
+  by phl-compute-11.internal (MEProxy); Fri, 17 Jan 2025 04:36:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737106168; x=1737192568; bh=8HNrfE0U2t
-	HqxuBgOWMO4aTtp54BGE+BHvTUbVRJSbU=; b=XZpdGQoYZLDCE884mD/E8/LwQo
-	q1o0QjbFWnyl1eDWBrJTVz2VvgRcYlRWpK4oYfXCsu/+BHQnA3LCYUYZuzG5lDew
-	bUNqSvJx0MlhoaZmCRQQW848togI/48vEOQECrP1OnceEX1JPbqFCxq4I1Khzert
-	u/fNoxfO4kCV1s542do8GD9c+nfB3E5FMUwIi0/yMZeCYWOgVissAkFWhHsY0ygp
-	bl2uojx5AzyqnC2P4hEQRWJChA1h2dlJkOf+ZiqaqlUL2BCMepgyc1m5lCR2uTOE
-	nH4Jz7i3vrjfGUskz/tLaFo/kCwF9sz4Fuo1/4hOYh8NwkEsvjfKG6GLYR4A==
+	:subject:to:to; s=fm2; t=1737106577; x=1737192977; bh=CrkTdzyOYt
+	6s5qscTR3rhQ8fJyFyKE4HrCN9RmWWS6Y=; b=BZhVrMB6/BoVrpSNJyvVKYQwOn
+	zZgf893A+yWTZHIUSA9rNm6A/LNhckNa88qV+MHLwM+utPvG6qE7hRXWDz9oTOEr
+	f5oKfZC+HMdtULeVriS+LG/h5IYM/ILyjQKhyyjAXl4xDfRBJE+DzUpARNlO7XLO
+	t5fkGfNNpLXSLpOXavA3Rtx+KPukgU43ptdo5xo/VYB1YnBdyuLN5t7QVYBN9b7A
+	/BhpdfD9GHyMWKahWTNmqZ0d88AQ/e/FYVM8CTJx2qUctwmdeTaJTEHu9ec258OO
+	PAfx7fkHOGymjEhIYX7IkXYuVStpE3O551bNoXQOTTW1MSVGsC+9jxNSSwTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737106168; x=1737192568; bh=8HNrfE0U2tHqxuBgOWMO4aTtp54BGE+BHvT
-	UbVRJSbU=; b=rvqjusMldy2T5iv6tA/pwEUX7wZoRPHcU22R68jw6V7C8AYEFF5
-	ZmsfK+hMMaBveajFGi8iDBbWhjPXB/QJ9XSYjF1dnmg6zuqxmmh8j3YFQZO81YSC
-	5h5Heqop79kjiKR5ro0hmKJQ0TEAoDutWVRlwVf2LYslDzQ16b46SUUDNmCAdSLp
-	OILemB0mdEOsxihNPQPwMBiKXtTBg049ACyAckipnQkLxuCmdXfFEPREyepIOnGP
-	/6Yi8n1qm3Ex6JUertvwYw1eL3qNeArZJSurQwyxVY1NvXW7QOfRO9gR0sAhl2wT
-	r4ZqFVvoFGxHO8jJsn5qkJg1TH/86WZdrsg==
-X-ME-Sender: <xms:-CKKZwiw8oWaQfi70vghsA0bGJDHtFZFcCgJJWzXz-PaOed1BwOiXw>
-    <xme:-CKKZ5A_0pF2kNr_9wYVHwyPLVprIk62nw67emYaRC-5LDwGThAg_lOqceA-jzqdP
-    lL9PFPN7s9j5824EA>
-X-ME-Received: <xmr:-CKKZ4HIwGuwBVgr8hzXeEpIx8OuoO4S9dKUcWzeINCZlQzDZxG8FKW1z0UXtYGxXHBE_xieyVzwmlQkYPma1Eet0GIcdNyGskUF0DSuU4sgLQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgtdefucetufdoteggodetrfdotf
+	1737106577; x=1737192977; bh=CrkTdzyOYt6s5qscTR3rhQ8fJyFyKE4HrCN
+	9RmWWS6Y=; b=WK+T6yjMgTxWLYT7x3GUPga2zvn37wT/OinU9ZmX0OKyfenurmg
+	40VweuMC838RZxo8G9kTP+TZL2GWPEGek3v3jsUhfe1htWb2kWKCbNyKPYSUXRJ0
+	Nm39EKY9p9mo19Tz9yMrUniEWfI1dKl/DMjAvD89pufKPkk38nH8s0ooU9up+2bD
+	/QhpM1AhqBKsRDeCuUnp4UNeTM0J3VV6+7qU2OpllvGIsX3WrgPzZvS9KXLQZTaK
+	LkX1XEJCCSwoJ6OVw1QcmOWYMujmswAyqtWykKBzEUq0QT36NIoPZ0aPVSyNZAbX
+	60dZ7K/pYhaLqToKFtnm1F4vmoQcyBgzQnA==
+X-ME-Sender: <xms:kSSKZ4GhaZ2nppvsspi_DtIF1ZczL1jNAiRYIMHTAO9QVO5Dpm41yg>
+    <xme:kSSKZxXG9fUME0TEYEZzT6xVKg4rmTiRQO-Foi7u_4VCZf-x1o-po2SeUYw5ZyjXV
+    Qvtwb-7G4BX09lTjg>
+X-ME-Received: <xmr:kSSKZyKNWFLpXsF3hbD83I5-bW45KBe6TnT0enzm35r1rfaJgXsUBDQxpFRDpxFOQCbWTa4aoD3AbR359orHmxFpBfZJQwes3GTSmyZRKxTz0Ws>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgtdegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
     ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
     eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
     udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrh
-    hushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:-CKKZxSxCA_d5xzY_en8npg5Fjmom6XedrS8VPH4lQwzYdcZShW4Fw>
-    <xmx:-CKKZ9whfwgX5N1AWksGmc-z9TZmSSX5oGH_9fxRP2wvhl930-YiBQ>
-    <xmx:-CKKZ_6uQ1a2m-YM7hez1ulVtuT4vmJeP53ZXUAEoz0SeYjswtGxLw>
-    <xmx:-CKKZ6xHz5KsDaBuOBAHzwGk1YzUgiMl8yiQH0MESrknouqkMaGo7Q>
-    <xmx:-CKKZ_ufCS_7K4bgdB5MaFyOqBPzim7FyyvMt9eqH_FjPt_Db1Rh6x8Q>
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepmhhhsehglhgrnhguihhumhdrohhrghdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:kSSKZ6EPvHoVVNaxKhcmVZDlMOqxEuybB4ywfpVg0UCMMZtiAZrqCw>
+    <xmx:kSSKZ-URzXripXgexP5_-h9zcnz_FBlbBSL5UCd7_1fwTz-emQjitQ>
+    <xmx:kSSKZ9P4Zh2WSj2yJRK68ffbD7mlN3kuTfoH2bRjI7oTKw6Q4fMbJA>
+    <xmx:kSSKZ10Vh9dlcYBi6cqvPRsid06iC3QBy09ZAB_HZtHwb0TAldTJFQ>
+    <xmx:kSSKZ9SF-Kf7W-SEU0WaRCa0VSZmCOeTrxZxCtF70MUL7VwD2npOHSdO>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 04:29:27 -0500 (EST)
+ 17 Jan 2025 04:36:16 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bb25c2e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Jan 2025 09:29:27 +0000 (UTC)
-Date: Fri, 17 Jan 2025 10:29:26 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id a4a585b7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Jan 2025 09:36:14 +0000 (UTC)
+Date: Fri, 17 Jan 2025 10:36:13 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, gitster@pobox.com
-Subject: Re: [PATCH 1/3] refs: mark `ref_transaction_update_reflog()` as
- static
-Message-ID: <Z4oi9i_EHLaPjk0g@pks.im>
-References: <20250117-461-corrupted-reftable-followup-v1-0-70ee605ae3fe@gmail.com>
- <20250117-461-corrupted-reftable-followup-v1-1-70ee605ae3fe@gmail.com>
+To: Mike Hommey <mh@glandium.org>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] connect: address -Wsign-compare warnings
+Message-ID: <Z4okjR8YfUGvnt1t@pks.im>
+References: <20250117074909.1430067-1-mh@glandium.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,37 +85,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250117-461-corrupted-reftable-followup-v1-1-70ee605ae3fe@gmail.com>
+In-Reply-To: <20250117074909.1430067-1-mh@glandium.org>
 
-On Fri, Jan 17, 2025 at 08:59:12AM +0100, Karthik Nayak wrote:
-> diff --git a/refs.h b/refs.h
-> index a0cdd99250e8286b55808b697b0a94afac5d8319..09be47afbee51e99f4ae49588cd65596ccfcb07e 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -771,20 +771,6 @@ int ref_transaction_update(struct ref_transaction *transaction,
->  			   unsigned int flags, const char *msg,
->  			   struct strbuf *err);
+On Fri, Jan 17, 2025 at 04:49:09PM +0900, Mike Hommey wrote:
+> diff --git a/connect.c b/connect.c
+> index 10fad43e98..91f3990014 100644
+> --- a/connect.c
+> +++ b/connect.c
+> @@ -77,7 +76,7 @@ static NORETURN void die_initial_contact(int unexpected)
+>  /* Checks if the server supports the capability 'c' */
+>  int server_supports_v2(const char *c)
+>  {
+> -	int i;
+> +	size_t i;
 >  
-> -/*
-> - * Similar to`ref_transaction_update`, but this function is only for adding
-> - * a reflog update. Supports providing custom committer information. The index
-> - * field can be utiltized to order updates as desired. When not used, the
-> - * updates default to being ordered by refname.
-> - */
+>  	for (i = 0; i < server_capabilities_v2.nr; i++) {
+>  		const char *out;
 
-Do we maybe want to move the comment over? The explanation of the index
-field seems useful to me.
+I know that it's often frowned upon to change formatting while at it.
+But in the context of these refactorings I think that it's quite helpful
+if you also moved the loop index variable declarations into the loops
+themselves. This allows us to trivially see that it's not used anywhere
+else.
+
+> @@ -232,12 +231,12 @@ static void annotate_refs_with_symref_info(struct ref *ref)
+>  	string_list_clear(&symref, 0);
+>  }
+>  
+> -static void process_capabilities(struct packet_reader *reader, int *linelen)
+> +static void process_capabilities(struct packet_reader *reader, size_t *linelen)
+>  {
+>  	const char *feat_val;
+>  	size_t feat_len;
+>  	const char *line = reader->line;
+> -	int nul_location = strlen(line);
+> +	size_t nul_location = strlen(line);
+>  	if (nul_location == *linelen)
+>  		return;
+>  	server_capabilities_v1 = xstrdup(line + nul_location + 1);
+
+I think splitting out the strlen(3p)-related changes into a separate
+commit might make sense.
+
+Thanks for working on this, quite happy to see that this gets picked up
+by the community!
 
 Patrick
-
-> -int ref_transaction_update_reflog(struct ref_transaction *transaction,
-> -				  const char *refname,
-> -				  const struct object_id *new_oid,
-> -				  const struct object_id *old_oid,
-> -				  const char *committer_info, unsigned int flags,
-> -				  const char *msg, unsigned int index,
-> -				  struct strbuf *err);
-> -
->  /*
->   * Add a reference creation to transaction. new_oid is the value that
->   * the reference should have after the update; it must not be
