@@ -1,112 +1,119 @@
-Received: from mail-ua1-f43.google.com (mail-ua1-f43.google.com [209.85.222.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF4C1FC7F7
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:55:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB1E1D5CE5
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:56:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737107716; cv=none; b=mrKN4/+qPJpNo0P/Rmcn3BhdFBPuwMcMysuhFmMR+BrXl5pwlLFZJAbUBjjeglHKDmnaYey+kWbTK7lKjQAbvNir6VnObIhdkyenRX7WFE2qiRDMYOtYGEBZUfeqFJRisUbmEA3mZsRTfuw9aRnjs2L1fUNC0lzCH9dTRRn+3/M=
+	t=1737107781; cv=none; b=d1ZvN31pJb6Z3o1+2L5/K8IV9eaqZwAp56v2oq3p70PD5ZUtF5sibIddMt5hOEDFnHh2b+g8K/bA79YqXzrW/2v6AqrFMpfb/vheUOSBG62uziQZKKUDogtk2pHSYmFwag/p1TpJ6q5ZH9Jk8ClEA2EWh187frzs1xZDCHMmR1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737107716; c=relaxed/simple;
-	bh=7v4NGlGY7HuWUxKHIcywDGIHkra/1+7xipsytznzfO4=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UwaB/IkfoNv5tWPmkGmTUHYE4cwMOjxmtMKW5tZs6eWQ2bQV/bxEQj1eJfOg6qTDEH5tdCyKWxj28OrJZazIKVrFrABF5mDHkrbzsVylSOOdbvnLo/aj/PkGCct3Av7b6UVJUsZhh/7ZoILim7Fzn5XfYkb7t8EyE3QyXyrtLws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M8a/GtiJ; arc=none smtp.client-ip=209.85.222.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737107781; c=relaxed/simple;
+	bh=W7SbDz3jicbv72BA9YaJ2pzNRGLd4kXdGyIkQTERvS0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=ieSI1k6FqZM+uUDPUn/8Ci2z3rV22YsZ2RWG/zycUz3wJ5n9Y/+QZ0Ym880kvfmGQl2wTOgoSfsbiiJsX3YRN4TrEhcEHL0k/E1qSGHCOMTiAi0xm8L3sOb5E2gdZPDwurTkYOtMqfkJ3bzvokHh4eMRqVBdd+5g32+0jZQLLw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gzlIQX9h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RG3pLAM/; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M8a/GtiJ"
-Received: by mail-ua1-f43.google.com with SMTP id a1e0cc1a2514c-85b95896cefso325634241.2
-        for <git@vger.kernel.org>; Fri, 17 Jan 2025 01:55:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737107714; x=1737712514; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7v4NGlGY7HuWUxKHIcywDGIHkra/1+7xipsytznzfO4=;
-        b=M8a/GtiJnWC3fxzaWbVmxPV9S1hNLRrLQBA0pQXASgj8JCuAYqHM+PaoF/Bal4s1kb
-         jxk6OdLWxm9QXQdLSvgrAuD1oZNU1DApZ8LppS4c3jb7dRHs3BVy7Z6WnB7UxlQDifRP
-         SnybIEDAEX4u0mL6YIP0DKEh6cravFBqsMSqEuE0Q/wLvzWWcGVQGBUOiO0kTFP3YwMd
-         26ClZaGKirtRmvRSEmTwc3WeA0mzMm2StgIYRvlDcvul4v7wRcERLzmnKXbGfitc2x3W
-         wI/TZiVkDNowv/wI72/7tCVDZhC4j7n+kGDEmM5nTEGrcOaVKbN6d/fSdsZE+TV/8O3G
-         1IQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737107714; x=1737712514;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7v4NGlGY7HuWUxKHIcywDGIHkra/1+7xipsytznzfO4=;
-        b=B8vq8XXcuVNH2k5MiAxqrh+d5oAmawADQrDfPdp/2Z+MK0q4zJ/XaazCbpq8fTD+Qa
-         fCJLfTYWOD67IIt/RBPrNeD6XIUN5B2EsQQFtlb6P8FVIGlLUcCpGojE0rJ87yZEc7Jv
-         rOJzFAVB/+yZAP6QJnwO3WX4QQE9ujvryoti+xOF1dK1mD/M6DO35AX+GELsXJ5YNx7w
-         u18k7dNpIHnY5FQ3+unllF8COMCu/PbQrgAkbzhCUei0pIb2vdXDEZAo2Ys+stO0palc
-         d5iQBmlys9VTfOyPS76KIUIaaP/o16606//W+VjcXSvg5HMLgswKoGqcTxH52XoW6lWp
-         xYVQ==
-X-Gm-Message-State: AOJu0YzWjFmWbOqOJ04FOkfYvzEuEOkVjF+seJ7m5qX2MG5vMJB8AT02
-	OW1dw4t3t9GgjhWsWTc1OB3cF8Ie8+Z4MSbpPBmuBgd62aZtbOnY+tDhgUtW0VMZ65aT7l9iym0
-	YS5ZQN2GCbzEXaXcBfYkrIgLS+yHymNTP
-X-Gm-Gg: ASbGnctjO0pEy3te67AjqSplTWY0hNY2KiQFEMsKBTozrDkfCB8tjVPkrKeg1DSOzJq
-	GbDae8abyRDQ35IL+y6rMblg8fiORbhJa3d0y5iU=
-X-Google-Smtp-Source: AGHT+IHMgaUXMwydUp3DUWW519Gm7gCFnHEJBjikATXqW3iJAmKhBzLZEEtU7Qpnv8XOx18YxsstGOokx+fWEDDyqWE=
-X-Received: by 2002:a05:6102:304b:b0:4af:98c6:bc97 with SMTP id
- ada2fe7eead31-4b690cde005mr900386137.19.1737107714253; Fri, 17 Jan 2025
- 01:55:14 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 17 Jan 2025 09:55:13 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z4onCYz5zD0L1_Q-@pks.im>
-References: <20250117-kn-the-repo-cleanup-v2-0-a7fdc19688f5@gmail.com>
- <20250117-kn-the-repo-cleanup-v2-5-a7fdc19688f5@gmail.com> <Z4onCYz5zD0L1_Q-@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gzlIQX9h";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RG3pLAM/"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id A79211380217;
+	Fri, 17 Jan 2025 04:56:18 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 17 Jan 2025 04:56:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1737107778; x=1737194178; bh=iCC7Xk+pnB
+	AIGSnmNi/mWbBEOfWPXnneZKYaYpksE/o=; b=gzlIQX9hVomy0FOAEndvnae4eN
+	jyM5X3Up3InPrpnXlWFonI3+C1ttRkv+DkWZ02rTkLpyKka6jRHv9dqg7x/yM0Eb
+	3Nsscb9vkSMQx+O+ff0MqwsRR3+5er6Hyb6VeEyItICf5iJJCPbsuxX61xM1XJwF
+	dMVsfvZRRchjOyutc6NRux2PpufaMvdVUoHyxatvplaCIvTKR0D+jueE1RflJXC6
+	KhbNZSySYZK1EFRgQ+6SJEUzuKKXF0D8Gh7gkERSeRMlTDEVbxPaVkvBt4aoEENY
+	M1aNP9kzB/cHshL7+Ymp08Pp/ux885LNO0/Y8wjc88RGQhXnPQ9bhR5PXriw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1737107778; x=1737194178; bh=iCC7Xk+pnBAIGSnmNi/mWbBEOfWP
+	XnneZKYaYpksE/o=; b=RG3pLAM/IVUXuGnd0m2Kl7nhUfSDwAIw+ALqkBhOMIZ7
+	FJtPoGpnUW67h/dqV23Ait2z5g2JiROQHKNDA5VIBuGioY/pB84rw7NA/ovihvII
+	pDxjaNG4far4qMdhBghzNuLDQp/tu05XVRhSjETvQNzSap58/0pHQlkL+t0H7TEV
+	oE045oLK9FN0SwJkZH6vis3TdxAY5hnRgrERKaMdIRpg5eaVER3yYo+cPd27Zfd9
+	sWva6m1OZ0IBpS8ewAm5S/cdLz6NKb1p94i4FUfmZ7KwM7b/INQJkYojkJEvXzzK
+	Bvar38atZY2RKZf7LYmuExlmTlO+y+YD9YZV4ZMhUQ==
+X-ME-Sender: <xms:QimKZx8oWkU1VGhyuLS145_ApCX5BDIkt9ArytO-Fq_j0LHsyDlB0Q>
+    <xme:QimKZ1sL-a2UENJ3Fji4yAAew9NJQbJRaq6iG7zFYuW4lJUkl-99U_TKbxMMU97S9
+    SoEqSb7DEL4pWLMbQ>
+X-ME-Received: <xmr:QimKZ_DvgSzDWTrDt98vXDReNoXGmzqhZqq0cJEnQL3huG4vhQgPrzPv-KS8LG-hZVc78ubJRS5r3REOzccP56LoQujV3zK9FRXqxGINRD6yTkw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgtdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhufffkf
+    ggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetie
+    egjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrghrghgrsehfrhgvvggsshgurd
+    horhhg
+X-ME-Proxy: <xmx:QimKZ1c1CEfN1OMjCkoJEFb3qs1TxBhP9Xi0JAXe975Gd3M_oN45Tg>
+    <xmx:QimKZ2Ok4ngGngJst2kyzDycBoFDzJOZJmHdA93GdwOilgAjCAPt2w>
+    <xmx:QimKZ3mMW_6qd9T0m9kKQ6uZKa6L3wy7jdifaiosak-DwBfWMf5b_Q>
+    <xmx:QimKZwsXWW1iVVrYsR7PcepB7jWUD45CWZzxjLknUcvpfBq3MA5WGw>
+    <xmx:QimKZ_a6alX8MeYZGt-lLy9SjY0ycwgxkNBGr-4JAwNunx1vAmbc_ZMN>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 17 Jan 2025 04:56:17 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2cc8c8fb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Jan 2025 09:56:15 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/3] contrib/subtree: doc fixes and support for Meson
+Date: Fri, 17 Jan 2025 10:56:04 +0100
+Message-Id: <20250117-b4-pks-build-subtree-v1-0-03c2ed6cc42e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 17 Jan 2025 09:55:13 +0000
-X-Gm-Features: AbW1kvYstceIO0xpob9FKiJ1cnL_MsNAJoRN_XAa274m1G9ignEQivw8q3wgvkI
-Message-ID: <CAOLa=ZRaJUHCANv9ot6FbtgYnEDVV3itWnF--0g3NikLZkohmA@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] pack-write: pass hash_algo to internal functions
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="0000000000003ed8e5062be3e8fa"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADUpimcC/x3MwQpAQBCA4VfRnE3tsBKvIgfLLBOhHaTk3W2O3
+ +H/H1AOwgp18kDgS1S2NYLSBPqpW0dGGaIhM1lhiEp0FvdZ0Z2yDKinOwIzUukrImtzazzEdA/
+ s5f63Tfu+H00+W+dmAAAA
+X-Change-ID: 20250117-b4-pks-build-subtree-17f91144340f
+To: git@vger.kernel.org
+Cc: Renato Botelho <garga@FreeBSD.org>
+X-Mailer: b4 0.14.2
 
---0000000000003ed8e5062be3e8fa
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Patrick Steinhardt <ps@pks.im> writes:
+this patch series fixes a broken build of documentation in
+"contrib/subtree". While at it it also wires up support for the Meson
+build system.
 
-> On Fri, Jan 17, 2025 at 10:20:52AM +0100, Karthik Nayak wrote:
->> The internal functions `write_rev_trailer()`, `write_rev_trailer()`,
->> `write_mtimes_header()` and write_mtimes_trailer()` use the global
->> `the_hash_algo` variable to access the repository's hash function. Pass
->> the hash from down as we've added made them available in the previous
->
-> This doesn't read quite right -- from where do we want to pass it down?
-> Other than that the series looks good to me, thanks!
->
+Thanks!
 
-I should have s/from//, but let me rephrase it to make it clearer.
+Patrick
 
-Thanks for the review.
+---
+Patrick Steinhardt (3):
+      contrib/subtree: fix building docs
+      meson: introduce build option for contrib
+      meson: wire up the git-subtree(1) command
 
-> Patrick
+ contrib/meson.build         |  4 ++-
+ contrib/subtree/.gitignore  |  2 ++
+ contrib/subtree/Makefile    | 23 ++++++++++-----
+ contrib/subtree/meson.build | 71 +++++++++++++++++++++++++++++++++++++++++++++
+ meson.build                 |  3 +-
+ meson_options.txt           |  2 ++
+ 6 files changed, 95 insertions(+), 10 deletions(-)
 
---0000000000003ed8e5062be3e8fa
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 50fd28ba85241bd0_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lS0tQNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOEhkQy8wVFJqR05zWnVZQzJqY0xGS3JPVkVLSndzZwp0TCtWR1E1QnhC
-ejRUNzlldUxxVHZTeGJTcnpZSmhBOGZBVDNxdTlCUVIyZlRVdEFVNmhWNGxHZUxpS1hUNmlzCmZt
-MGoyQ3hjNjFYazAxR2FBVjhzaSt4MVlxcXQydVVLaGpOcllsUGJYcThLdnZnM3pPbGZSK3M1RU1W
-bGw2dmMKdXM2TzMxeXRLenFpVGlKS0RjdXpxTlNFOStvVnhjMDdac2xyKzZpOUJZR2Vja0RGM0ZC
-cEtDN1E2am5wUWlucQo1MDNhR25KbUFWUHFpV0o4ZmtlZG9NVjBIQVNPWEhJWUthaW1Tc3p2cXBy
-Skt0RGYwV3pMM1kvTEJzMHVybjRFCnJEWExGdUFhZDVLNmkraklhaGdLS3hNbHU2T29aMmZMSFJF
-R2ZJTnMvODcyOTh1TzVmaWRMN2N2cWIzeitFYzIKeDY1ejZIZ0VPRVpqaG9BTHRaVTRockpZcXNK
-Zkt3cE1xN290MnJubTNTWjdXaWVVUlJHOGJzLzhJTzc3UFVFNgpkTTFRTFdsL3I0QkdEOU1BUmdM
-d04wb0doSThwSEVPV2FueHV6eGxOcGhTTndQQmZUWDdmQys4VHpOazZ2M2tQCjVlVFJIYVhKSW5y
-QUdXbkJGOC93WlprRm1yVG9TZXl4cTVZTDlFMD0KPWZrUUYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000003ed8e5062be3e8fa--
+---
+base-commit: 757161efcca150a9a96b312d9e780a071e601a03
+change-id: 20250117-b4-pks-build-subtree-17f91144340f
+
