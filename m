@@ -1,71 +1,71 @@
-Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1567425A62F
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 13:59:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7EE42AA6
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 14:21:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737122374; cv=none; b=ui6o9ZSrdw1CCXO+HvO2cKlTlwbl5NExjBMqbXKjzqg9nzcIp/tCKOuyT1HLe2K3hBNEuIPeu4dbeMU/RaPsvrl2/PQ90aardftwoRgS7zS1k2tf+5bh5LEtVqhrCwscBDX3hcxDML3XFyhxZkyFojlkU4fKU4Vj/e4OFbYCstM=
+	t=1737123713; cv=none; b=nxHm5R9XuAHiWDtSQ183TESPPnEXlPvioJuj79bd85lG/G36QJvF4MpbYqy3rnWg1O97AuS3nLyeMat6FnIeB1Hb6MgaMZDFGkqOVrWG3Wb+S/cPxdVTl4sBhRTqwKtCgE9n5eGEJETY9d8OmoeMIj63IKCf50eSv993SWL+uRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737122374; c=relaxed/simple;
-	bh=225pTVF+Uf9mG1J4+fi4ojtOmxEBglXXIPONNEW+Wr0=;
+	s=arc-20240116; t=1737123713; c=relaxed/simple;
+	bh=kpfoW1ZdFKYXY91jninktrjRKqmC1EGf3k3YV5QQxvs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tvSuVPa5c1EkjFzbN1UiRR7cPeNraGTUifmjCTtWr1YkQgUEsaf71QZ+B6TI89YRAU4TL+hqATnpNo3FV4Oc66MeGYqZk3g/BTddWBBLJjorBUoi4oOieHKMEthXQ8taJDyui1L9T7u7z4B3vcbPGjrb288GLlggXusRo1ee3Ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wf4nCTjf; arc=none smtp.client-ip=209.85.160.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=h37h+xJ7TQ64tvft8bB1h9/etfllTztNoIYY0saxBCUfr/V52DFJXsvrINNFu7FdAHA0wCsBIdWnygtbLCgv7H1+0TnY/CimVtl1yi7HQ6AZAJLrDs32Fu0bRMZNyeja03z448hIsMlET7SB024vm1j2BZLGEHoZIOvImgTRB9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ifddm2PT; arc=none smtp.client-ip=209.85.210.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wf4nCTjf"
-Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-2a383315d96so1152918fac.3
-        for <git@vger.kernel.org>; Fri, 17 Jan 2025 05:59:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ifddm2PT"
+Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-71e2bc5b90fso1177278a34.0
+        for <git@vger.kernel.org>; Fri, 17 Jan 2025 06:21:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737122372; x=1737727172; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1737123711; x=1737728511; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kwzm+KLpwpNVvw06tuHmup8kZKHqJ3vC4faDa8omzgc=;
-        b=Wf4nCTjfWxDYM201oNmH7J3V6PjpHt8+osFhzLG9f2RO3F8do8ddh2bY//COwyTREq
-         xOoukOpIhgn8W8ocbr+wQnH/y4ULIVqsHbmD5+ioFhqqAv2M5ZfbsutZeCzWwgOGkm5t
-         RlqLjmJk9WXVJLWLgApxstMdUWdAT04wH3qtR0QJGPgXiazRFi1hG/4HldGmJ7/CTemH
-         2iS05Kko8cWjaCcFcPeDQ4+dHOgYc1gxP8t4oETnVKO7o1zyJ2T2mVnbXWEPnmGnunaL
-         +tAdBt83TlWpilm9FIQ12P+UV8fq03MQCkqyUbjoFuz5VQVXQWIU9qwK3s+YxB8C36Of
-         VHDQ==
+        bh=zMHT2v+lbfsgKTrZiJRLpbQUz+yhwVabZxw6iH1ax14=;
+        b=ifddm2PTjR3VLumLLtUEnY8EXRhTuPVm6xesC9oURu1qVA7mlSEU11yJIgRsmNoDmr
+         MPaPQNYOfUA/vPMSGeYGS7l8UEymyQ9QmRmsbkn91c+GlAWvaVi33aGA7zK5Eoe8DTB1
+         m94fX3F4zNwudrFtqmSE05MWKDfWjecRgBgfs2Sk68BpAXqeW6zKlfNvRFM9dp+H668K
+         5iygRe9S9mSqp/vxYBrj6Ni3zU/cUgiv9aGe8Nncx2Aw6F8/8/39Wn5pdZp94+DvVBW7
+         cAZzYUfom2tHgXxYze0MtvVqT+QswpmvPcZbo9jcWxeQCUXFywUxp8oFf3Y6Hj5hHh9t
+         Euuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737122372; x=1737727172;
+        d=1e100.net; s=20230601; t=1737123711; x=1737728511;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Kwzm+KLpwpNVvw06tuHmup8kZKHqJ3vC4faDa8omzgc=;
-        b=UEKS+juBbkklXbmibeLU1MaR++4ETW8+vErCTKXhh9SnEI8unw6WBcSifFih8u5QTs
-         bUsyZvjh3l55Cn7FR556xGX3630HeTjtxh4bLljkfYzSALAeWtREgfVvgrds6PMAd9vA
-         8fye2/sQ02J8js4kwXT5JVQoGheX4uTpfrMTVDOHqaylzP6zZesgHITVFEmSRIDQ8BMp
-         15zfwnbpUcIIFQbR0nw1UbCC/PIBssPMLPWUkyQuUC5gfUOXYNqXDHm8rDuDX/A0b3gz
-         sACj58wLGr4YMGEL5ZIYSKyGnenjN4XoRLPj2IP1tB/9ENvyMjB9XIj0TdRUiMLcR3zb
-         WWBQ==
-X-Gm-Message-State: AOJu0YxeGlh2ZJ/PEAlOzZ1u0qSd7l8OY2wwY5udNr/PDXd0evXxMSCj
-	qWfht8fREs+BZ3rS2ODyG2I3vm4IXuxRcnEHS/NyINzc4ALOBPEd
-X-Gm-Gg: ASbGncsybUdcR5Gxu0HvTsKjMePwx5fRHiKm4wCh0yiE20xNy/thWrrQqIfjC29rq4x
-	mbxu5tDFiktvWlutmacFAEsiAbohn/AxF4gkjqB0mKdh5Hd+fc5Pck7jUFVF+aVBPQAZWuKuo2E
-	UP3LBDA+BvsYn/oUhxFPMAjMukNF8IYrRf14kbJWYliqcNG26TFD1ltKT3UEdw7Sm1mbeGRJwJL
-	WDN/0NVlfFj66ufSOT9DVCmLlLopS3F3Uw=
-X-Google-Smtp-Source: AGHT+IH+LhcmCSYQU+/h7zw4FKmcuMAmrE5mAXpz9MvwW4dNDnmhQxpLvm+y7BI+/TvX39EX9cttHw==
-X-Received: by 2002:a05:6871:62c3:b0:29e:68d5:a12f with SMTP id 586e51a60fabf-2b1c08e2412mr1628453fac.16.1737122372038;
-        Fri, 17 Jan 2025 05:59:32 -0800 (PST)
+        bh=zMHT2v+lbfsgKTrZiJRLpbQUz+yhwVabZxw6iH1ax14=;
+        b=Hb7toqsWneDWe9klbk8rQbZUNJKowHCgA2CLUSIUNcxo4E3ArmOsoU88uM0pmnQxQF
+         umgtdRsZH+ary60HiGctZzL375fg7tqUBVtxJn3Yu6lhecByqqjIVuFEQDhQheRNy9U1
+         t+c3u/BmV0xDArR+F4HbDVjho9YL9F1w1xo5xqtH1zDENp4eiLhvaBLt/q05JH+uLOxg
+         oJXndip+YNaA38gOFpUwiQKT2O74tuKhGwVFGbTOfAVn331TdYUr75mKtK5/gBZjTSnB
+         5CHcPaO4LrbFuq/S5q/N/9eMicIDU5/0boMuB1kBgfofa6LcZKJWY/xa/AKiA/HSbfDL
+         mQpQ==
+X-Gm-Message-State: AOJu0YxT06lLP+TQ0fVe99b6PHszabe7PogpDHmw+j0QL5byTVbxQ2US
+	YMP/aNobFAIMCt1uqiLW+Ph7iAcDMIhT6xe2RmFHWFNqCHSj9wfx+8zr1q1m
+X-Gm-Gg: ASbGnctwxD8Tafcp9FjqxC23VuR3VImpXhZZtX/9lauJK+RxDi/SDmbcIoi6mAoUbV3
+	76jLJcQ/Tr9CXf7Z7aATXfVbnhkvpyEHZK5fo+F1R2+Mp+tYiHD0ejxX4qpZUZ19uJrz6LXGZi6
+	rPyez2nzP5X+JUnf45uogFW0q0Q7iBIOOigy30VRG9qCGL6vXv6uNz6+ee5n0+1h21MIqUYuryH
+	CA8kMTW2Cc2jLS+eVUs9Rd6M9UfyvsndEg=
+X-Google-Smtp-Source: AGHT+IGSEmpiBTdeOSiaYgKbJ3j3xEHDS0NW2xAqH04UIJZ9v0i3Oo1JoYX7AtsZNEMzUxMYsOx8Iw==
+X-Received: by 2002:a05:6871:64c3:b0:29f:ecfc:32df with SMTP id 586e51a60fabf-2b1c0a15a6fmr1773781fac.14.1737123710714;
+        Fri, 17 Jan 2025 06:21:50 -0800 (PST)
 Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2b1b8fee684sm1026732fac.41.2025.01.17.05.59.29
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2b1b8d4aef2sm1051828fac.26.2025.01.17.06.21.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 05:59:30 -0800 (PST)
-Date: Fri, 17 Jan 2025 22:00:47 +0800
+        Fri, 17 Jan 2025 06:21:49 -0800 (PST)
+Date: Fri, 17 Jan 2025 22:23:06 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 03/10] packed-backend: check whether the "packed-refs" is
- regular
-Message-ID: <Z4pijwANZWAP2XKH@ArchLinux>
+Subject: Re: [PATCH 04/10] packed-backend: add "packed-refs" header
+ consistency check
+Message-ID: <Z4pnyhF2V2ykuHlg@ArchLinux>
 References: <Z3qNUizvHJLgMx1y@ArchLinux>
- <Z3qN6C2IpQTdVn_S@ArchLinux>
- <CAOLa=ZQ-cRJeWjP-_6N2v4GS5P7oYVUyb9_tbY26W7MAJfJ6ZQ@mail.gmail.com>
+ <Z3qN8U2VbZBnUSWj@ArchLinux>
+ <Z4kQUb7og2Ce1iCo@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,82 +74,192 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQ-cRJeWjP-_6N2v4GS5P7oYVUyb9_tbY26W7MAJfJ6ZQ@mail.gmail.com>
+In-Reply-To: <Z4kQUb7og2Ce1iCo@pks.im>
 
-On Tue, Jan 07, 2025 at 08:33:56AM -0800, Karthik Nayak wrote:
-> shejialuo <shejialuo@gmail.com> writes:
+On Thu, Jan 16, 2025 at 02:57:37PM +0100, Patrick Steinhardt wrote:
+> On Sun, Jan 05, 2025 at 09:49:37PM +0800, shejialuo wrote:
+> > Add a new flag "safe_object_check" in "fsck_options", when there is
+> > anything wrong with the parsing process, set this flag to 0 to avoid
+> > checking objects in the later checks.
+> 
+> Okay, I understand the motivation: a corrupted refdb may be completely
+> bogus, so checking its objects may not be sensible.
+> 
+> For one of the preceding commits I made the suggestion to split out the
+> object checks into a generic part instead, as they aren't specific to
+> the backend. With such a scheme we could adapt the logic to first do the
+> backend-specific checks for the format, and only in case the backend
+> looks sane to us we'd execute those generic checks for that specific
+> backend. That'd allow us to get rid of the "safe object check" flag.
+> 
 
-[snip]
+Yes, I agree with you here. And I won't touch this topic in the next
+version. Let me make this patch concentrate on the "packed-ref" format.
 
-> > -static int packed_fsck(struct ref_store *ref_store UNUSED,
-> > -		       struct fsck_options *o UNUSED,
-> > +static int packed_fsck(struct ref_store *ref_store,
-> > +		       struct fsck_options *o,
+> > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> > index d9eb2f8b71..3b11abe5f8 100644
+> > --- a/refs/packed-backend.c
+> > +++ b/refs/packed-backend.c
+> > @@ -1748,12 +1748,100 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
+> >  	return empty_ref_iterator_begin();
+> >  }
+> >  
+> > +static int packed_fsck_ref_next_line(struct fsck_options *o,
+> > +				     int line_number, const char *start,
+> > +				     const char *eof, const char **eol)
+> > +{
+> > +	int ret = 0;
+> > +
+> > +	*eol = memchr(start, '\n', eof - start);
+> > +	if (!*eol) {
+> > +		struct strbuf packed_entry = STRBUF_INIT;
+> > +		struct fsck_ref_report report = { 0 };
+> > +
+> > +		strbuf_addf(&packed_entry, "packed-refs line %d", line_number);
+> > +		report.path = packed_entry.buf;
+> > +		ret = fsck_report_ref(o, &report,
+> > +				      FSCK_MSG_PACKED_REF_ENTRY_NOT_TERMINATED,
+> > +				      "'%.*s' is not terminated with a newline",
+> > +				      (int)(eof - start), start);
+> > +
+> > +		/*
+> > +		 * There is no newline but we still want to parse it to the end of
+> > +		 * the buffer.
+> > +		 */
+> > +		*eol = eof;
+> 
+> I don't quite understand. We've figured out that there isn't a newline,
+> so wouldn't that mean that we _are_ at the end of the buffer already?
+> 
+
+In the "packed-refs" file, the last line should end with a newline. If
+not, this is a fatal error. The motivation why I do this is that for
+each line, we could pass the "line_start" and "eol" to check. But if
+there is no newline, the "eol" will be NULL. So, I change it to "eof" to
+make sure that we could follow the same logic when "eol" is not NULL.
+
+I guess I should not handle this in this function which may cause
+confusion here. I will improve this in the next version.
+
+> > +		strbuf_release(&packed_entry);
+> > +	}
+> > +
+> > +	return ret;
+> > +}
+> > +
+> > +static int packed_fsck_ref_header(struct fsck_options *o, const char *start, const char *eol)
+> > +{
+> > +	const char *err_fmt = NULL;
+> > +	int fsck_msg_id = -1;
+> > +
+> > +	if (!starts_with(start, "# pack-refs with:")) {
+> > +		err_fmt = "'%.*s' does not start with '# pack-refs with:'";
+> > +		fsck_msg_id = FSCK_MSG_BAD_PACKED_REF_HEADER;
+> > +	} else if (strncmp(start, PACKED_REFS_HEADER, strlen(PACKED_REFS_HEADER))) {
+> > +		err_fmt = "'%.*s' is not the official packed-refs header";
+> 
+> I wouldn't say "official", because it could totally be that whatever is
+> official changes in the future, e.g. when a new format is introduced.
+> Unlikely to happen, but saying "unknown packed-refs header" might be a
+> bit more future proof.
+> 
+
+I will improve this in the next version.
+
+> > +		fsck_msg_id = FSCK_MSG_UNKNOWN_PACKED_REF_HEADER;
+> > +	}
+> > +
+> > +	if (err_fmt && fsck_msg_id >= 0) {
+> > +		struct fsck_ref_report report = { 0 };
+> > +		report.path = "packed-refs.header";
+> > +
+> > +		return fsck_report_ref(o, &report, fsck_msg_id, err_fmt,
+> > +				       (int)(eol - start), start);
+> > +
+> > +	}
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int packed_fsck_ref_content(struct fsck_options *o,
+> > +				   const char *start, const char *eof)
+> > +{
+> > +	int line_number = 1;
+> > +	const char *eol;
+> > +	int ret = 0;
+> > +
+> > +	ret |= packed_fsck_ref_next_line(o, line_number, start, eof, &eol);
+> > +	if (*start == '#') {
+> > +		ret |= packed_fsck_ref_header(o, start, eol);
+> > +
+> > +		start = eol + 1;
+> > +		line_number++;
+> 
+> The header can only appear at the beginning of the file, can't it? But
+> we accept it in every line here. We should likely verify that it's
+> actually a header and not a line at some random place.
+> 
+
+Yes. But we don't accept it in every line. Because in here, we are
+getting the first line "start" and "eol" by using
+"packed_fsck_ref_next_line". Only it starts with "#", we will check the
+header consistency.
+
+> > +	} else {
+> > +		struct fsck_ref_report report = { 0 };
+> > +		report.path = "packed-refs";
+> > +
+> > +		ret |= fsck_report_ref(o, &report,
+> > +				       FSCK_MSG_PACKED_REF_MISSING_HEADER,
+> > +				       "missing header line");
+> > +	}
+> > +
+> > +	/*
+> > +	 * If there is anything wrong during the parsing of the "packed-refs"
+> > +	 * file, we should not check the object of the refs.
+> > +	 */
+> > +	if (ret)
+> > +		o->safe_object_check = 0;
+> > +
+> > +
+> > +	return ret;
+> > +}
+> > +
+> >  static int packed_fsck(struct ref_store *ref_store,
+> >  		       struct fsck_options *o,
 > >  		       struct worktree *wt)
 > >  {
-> > +	struct packed_ref_store *refs = packed_downcast(ref_store,
-> > +							REF_STORE_READ, "fsck");
-> > +	struct stat st;
-> > +	int ret = 0;
-> >
-> >  	if (!is_main_worktree(wt))
-> > -		return 0;
-> > +		goto cleanup;
-> >
-> > -	return 0;
-> > +	/*
-> > +	 * If the packed-refs file doesn't exist, there's nothing to
-> > +	 * check.
-> > +	 */
-> > +	if (lstat(refs->path, &st) < 0)
-> > +		goto cleanup;
+> >  	struct packed_ref_store *refs = packed_downcast(ref_store,
+> >  							REF_STORE_READ, "fsck");
+> > +	struct strbuf packed_ref_content = STRBUF_INIT;
+> >  	struct stat st;
+> >  	int ret = 0;
+> >  
+> > @@ -1779,7 +1867,24 @@ static int packed_fsck(struct ref_store *ref_store,
+> >  		goto cleanup;
+> >  	}
+> >  
+> > +	if (strbuf_read_file(&packed_ref_content, refs->path, 0) < 0) {
+> > +		/*
+> > +		 * Although we have checked that the file exists, there is a possibility
+> > +		 * that it has been removed between the lstat() and the read attempt by
+> > +		 * another process. In that case, we should not report an error.
+> > +		 */
+> > +		if (errno == ENOENT)
+> > +			goto cleanup;
 > 
-> Since `lstat` return '-1' for all errors, we should check that the
-> `errno == ENOENT`.
-> 
-
-I agree here, if the reason is not "errno == ENOENT", we should report
-an error to the user.
-
-[snip]
-
-> > --- a/t/t0602-reffiles-fsck.sh
-> > +++ b/t/t0602-reffiles-fsck.sh
-> > @@ -626,4 +626,24 @@ test_expect_success 'ref content checks should work with worktrees' '
-> >  	test_cmp expect err
-> >  '
-> >
-> > +test_expect_success SYMLINKS 'the filetype of packed-refs should be checked' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	cd repo &&
-> 
-> This should be in a subshell, so that at the end we can actually remove
-> the repo. This seems to be applicable to most of the other tests in this
-> file too. Perhaps, we should clean it up as a precursor commit to this
-> series?
-
-I have searched the usage of "test_when_finished", and I don't know why
-we need to use subshell. Could you please explain this further here.
-
-> 
-> > +	test_commit default &&
-> > +	git branch branch-1 &&
-> > +	git branch branch-2 &&
-> > +	git branch branch-3 &&
-> > +	git pack-refs --all &&
-> > +
-> > +	mv .git/packed-refs .git/packed-refs-back &&
-> > +	ln -sf packed-refs-bak .git/packed-refs &&
-> 
-> This should be `ln -sf .git/packed-refs-back .git/packed-refs` no?
+> Unlikely, but good to guard us against that condition regardless. It's
+> still not entirely race-free though because the file could meanwhile
+> have changed into a symlink, and we wouldn't notice now. We could fix
+> that by using open(O_NOFOLLOW), fstat the returne file descriptor and
+> then use `strbuf_read()` to slurp in the file.
 > 
 
-No. This should not be `ln -sf .git/packed-refs-back .git/packed-refs`.
-This is because it is a relative symlink. And the file
-".git/packed-refs-back" and ".git/packed-refs" are in the same
-directory. So, from the perspective of ".git/packed-refs", it should be
-the "packed-refs-back".
+Would this be too complicated for us to avoid race condition and we will
+introduce a lot of code to handle above logic. Because there is a
+possibility that when finishing reading the file content to the memory,
+the file could be changed into a symlink and we cannot notice. So, I
+wanna say we can't avoid race condition totally. It would be good if we
+avoid race, but what I am concern about here is that we would make the
+logic too complicated. So, could we make it unchanged?
 
-Thanks,
-Jialuo
