@@ -1,54 +1,54 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D3A1991CA
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 16:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82EBE166F29
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 17:26:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737132665; cv=none; b=WXKlZfFviAc3qMfua9pFhZW3wIUVQZPOfoSp+T+PWTgr4aDOg4Jbd0FlNfzwXXAe0odFseTF8RL59iFZxIq7G/aCzTiWXCkk1C9y9GFtAqcebfr1lHXTIY1adpxfaHlpMW96oWF2F9kRpL9vlzTho+foGBUK0nlUUK3VVMh93yQ=
+	t=1737134797; cv=none; b=CYpMHlNV3AAGt3n7/NztcLyd4I2duh9l0Rpca/CXsHuKvN6CLkKN+wZpIVUcjoM0YHZBwB4YTjLv0IADA2TdgT1sT2QLoodHcQemj1xKnPIrz+aIxRK4yLHm/O9By2OKrLnwRkVtmT/Fwyc7CKz9QoYeTKsqV5/f+l35aVLdrL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737132665; c=relaxed/simple;
-	bh=6JAgItA4BHR44y4DvNCfNKbpN/duzPKJ1Ho7z7qzA6c=;
+	s=arc-20240116; t=1737134797; c=relaxed/simple;
+	bh=514Eey534cGdZ7p6RzOuifDF3GHocE8wlNliTE9+D/A=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TIsvaKM3WJ+YVhad9O99XQORTHtUnxoA07JDF3KDaIrrzv759CfRjY0ueWuwIAQKjGVwA5NZrRz/kBGkTI7MnfREaj2tDItwBkexe8jaMl1B4xKqjjm/HBdVxTXh8H/PXJrutLQRoAnUX9Y540+TigjnFkFX0Otcz0nFLlPXLjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s8/Rcwk8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZTl1nCwW; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=T+Jdqa1jXvnHVtZ3lDphwtGA5Au9Gsy4qui+uw96CvQFMqA64zinsqmA9WWm4v1kIOrfn7iqUejMVt5topamuh2lFaP9VT3Y180uc5xztiWYH/sw5CdH2keFXk7CwVqIjPeLReF/yFxT6po2Sig3dUObqxbIX3T7tbu/znCMLAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YZSTnMMq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J+QSBvc2; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s8/Rcwk8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZTl1nCwW"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 46B881140226;
-	Fri, 17 Jan 2025 11:51:00 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YZSTnMMq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J+QSBvc2"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 99F3011400FE;
+	Fri, 17 Jan 2025 12:26:34 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 17 Jan 2025 11:51:00 -0500
+  by phl-compute-03.internal (MEProxy); Fri, 17 Jan 2025 12:26:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1737132660; x=1737219060; bh=99tuAQZ3Wf
-	DQoyjceKEyZ/GboW+7phPhHG54lRi1oJ4=; b=s8/Rcwk8tcBKDQtUxk4M7+Tih5
-	iNTJJFjr1g31lgviyfqURqCxBc+CFSMzjb+25r3wf83l/FnQXGD82pAkiTanpIk/
-	NDFbYGQNdzKoY/2z/9q4N5pdYmwGRgz5SM2zJa4JXXMwziJMt+UebD2UE4J9zmIZ
-	Mr8SzXGFFM06lm3S8BjtGEGE7lyX3k6QMun0sk/kPprfgsY3NnwhTzdBEr0JnniB
-	54T7kw3QtvNShuYHXA6PEdW44qTAH+VrhdFxSaLIVETAFsOi+7rbka3UxBusFIbL
-	WQvmvHzTKt1OPD2dh5mPDnO+PaeY994M22ZpDDYRKqOiZWuc9LJzZ/6f/7ig==
+	:subject:to:to; s=fm1; t=1737134794; x=1737221194; bh=l4z7yHYkk/
+	CkHGNuUlPU7BrfwlaZP9nfzhIVWna+OLc=; b=YZSTnMMqNv9L9aZL6o+bsr/dzb
+	GqLa4oZq2NGiNmnKm9eCHvww2cXCn2AQnP1ln43wthKC1tmvD9Ok4byZLgoyS/s4
+	sYH0CmBOqmBHvSL5uBM82cw/9qUAV9FoGoApTnS6ExHVkk0kp/aTF2tmxw0+XJRL
+	gKMyXAhKwbTC5CXcEybZw/WXAk3txLNXD7Uue2XIgRJXs6+DzGvtQcdlXnW76lAI
+	qFOJIDZMlBbCOQHg4N+x7zCZToAazjiLiZRYyRyRaygV8IrCnE7I26eHglWlhaoZ
+	JDMGeGgMykgfihgtdpI4MWubGYYIPTrUr1CFKYRU7udqN+NQ5MfsYRg4wT2Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737132660; x=1737219060; bh=99tuAQZ3WfDQoyjceKEyZ/GboW+7phPhHG5
-	4lRi1oJ4=; b=ZTl1nCwWpRalvLi9r1RcPVHzTPKLxRHMOO9muKNWOSWy0ikR6L9
-	qugHGbv8rsxZ+v3Y7naT9+HnIJNOKoOChUAbfCtTgM3FnATH6qL0w9FH+fPaZtZc
-	iiGVFkBY6wtFLrD+HKV/jruqVfOk8xAVR4y+LbuK/Nd4BqNAQuO/towW2TSsTN9+
-	+TAeIsc+dix4AXHN094TdvtNBXza1QFUnWML28Tl8v6KI9LD9FZMr8os7y/enuZi
-	bcbXdUGUYbWdv5k3Vu85to3wwb1W6+/z/XKxEX47e6l3kXVxWy68kc20YFFrpoTO
-	WAbPcT1dblIAR2ASNunViKDdXziZrWZ81TA==
-X-ME-Sender: <xms:dIqKZwJ_wc7wICna9XWeYyKBKkFSaOUysWuYr3ZeuV1y_eaVCnni3Q>
-    <xme:dIqKZwL8TPpTaas_fltCDuT2fAG5r6PxoCK8lsh0IJsiCqvoWKvzECxCNjX5JKRAD
-    2uubOHbDDuvfcVvfg>
-X-ME-Received: <xmr:dIqKZwtxacKc_crTIAhajmCvawnsHJyIc_rKK0IucNqjV9kapStvyKloRPSuQ8rbdB06De5FnCfbB8aZJSderq4Kc2k8by7BBOQa>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgledvucetufdoteggodetrfdotf
+	1737134794; x=1737221194; bh=l4z7yHYkk/CkHGNuUlPU7BrfwlaZP9nfzhI
+	VWna+OLc=; b=J+QSBvc28linP18je2gUPNIPI8/c1ISGrcbMO1tQTmaD0jTyIJd
+	wGQZkIWyQioktjysnBplBBAmCHiJBTCVxDo6yRaFOvhEmlGkmuvDiNPT/tWOaLtB
+	/OtSaKswwSP6oKZjK65FvLevzWI+DbU2INY4AJc5VxpsWWMh2sX9zHJxjski5EfF
+	3jswjQEN3PjyoEp0+T9LOURLSfOBbslU6QuvjzL+wo8GN3KqlQwr/FmNu+bzlS7q
+	m2I2Ten3w1q0Js8ZGG5xwL7o+pyp8iqeACNo3+IqNYOoaGGAfYV5NvM7IW0Lszi2
+	6+FV7RXGHNHpGCB362fx/7mVPBVXfH49WZw==
+X-ME-Sender: <xms:ypKKZ6G8Fu-SsAv2UXOxlrU4nfFxkVWGs6p0J7nehSasz2Q1trMPDg>
+    <xme:ypKKZ7USiQTAuxC1qc1d38OFsok1yqt-N4_ri66zbkdDPh8RHF56-ZOJILWuqSO93
+    1PanXvVQxojDnWYSw>
+X-ME-Received: <xmr:ypKKZ0LtZ0EsPFYq-Sn_ZhS5gCfccAHzmKmB71YFv0cWqf_R43LWw3z-yV35hXNB22DD5uLbPpVIuvp67idcXAho5omlKwiH2Le5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgleekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -56,36 +56,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgledvucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehsrghfihhnrghskhgrrhesiihohhhomhgrihhlrdgtohhm
-    pdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:dIqKZ9ZvfIcDEa4Ur2KrudWfaCYEBC1E5tzS4USHRlL7-bel4FntkA>
-    <xmx:dIqKZ3amAWbG5geyEgc5inUIH40tETe84hUABoOLRQTJy9LWxIXeVA>
-    <xmx:dIqKZ5CA8DOmkSBCmpzqp6EY5ohfQj5U4NGClxlBykfLlmiDKCT4tw>
-    <xmx:dIqKZ9auRQjIFlVx9tkGyCAmzb7ZvjpCfBvAbUaqwVP70TR8XK6D_A>
-    <xmx:dIqKZyy5Fkq8q-vKTsuTIYO4IbsSl_RhWkOzeaccjAwc-3gTJ98yXgx_>
+    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhhhsehglhgrnhguih
+    humhdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ypKKZ0G9JHKwZm51HkkKRq2AAJzVC20G2YbVqJ-fR2kZohqaTB6g4Q>
+    <xmx:ypKKZwW_3K1H8wCuACvr7UJAgqkp5AQWvizb_UZYU4m9QDF42Au9Mw>
+    <xmx:ypKKZ3NvHko-foKievhKHg_n1_tACa32I1gXMXXwJQ_PiavSg5BLGA>
+    <xmx:ypKKZ31XuNFZtMSDStTlRwg11Q18Ef8rkbHpA8wudfSfKY7klvIGFw>
+    <xmx:ypKKZ3QwbONV3DvxBvlj1f0cIlwT3iy5NE-thRbt1qmSllZHsLsxfigI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 11:50:59 -0500 (EST)
+ 17 Jan 2025 12:26:34 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Askar Safin <safinaskar@zohomail.com>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  git <git@vger.kernel.org>
-Subject: Re: [bug] "git bisect old v3.0" takes 21 mins on Linux repo
-In-Reply-To: <20250117131404.GD2893666@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 17 Jan 2025 08:14:04 -0500")
-References: <19461b87a5c.5a2ea74016716.8214238482389812984@zohomail.com>
-	<CALnO6CAzN1oeT4tMjJ1Qm4dW0xdVkVKHJ39oJTX8R8E614FH6g@mail.gmail.com>
-	<20250116105246.GF773990@coredump.intra.peff.net>
-	<20250116125313.GA2301268@coredump.intra.peff.net>
-	<20250116135227.GA2323616@coredump.intra.peff.net>
-	<xmqqo706u2z0.fsf@gitster.g>
-	<19472bf2353.2c31e5fd10001.1997220058832133228@zohomail.com>
-	<20250117131404.GD2893666@coredump.intra.peff.net>
-Date: Fri, 17 Jan 2025 08:50:57 -0800
-Message-ID: <xmqqv7udmlji.fsf@gitster.g>
+To: Mike Hommey <mh@glandium.org>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] connect: address -Wsign-compare warnings
+In-Reply-To: <20250117074909.1430067-1-mh@glandium.org> (Mike Hommey's message
+	of "Fri, 17 Jan 2025 16:49:09 +0900")
+References: <20250117074909.1430067-1-mh@glandium.org>
+Date: Fri, 17 Jan 2025 09:26:32 -0800
+Message-ID: <xmqqo705mjw7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,58 +85,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Mike Hommey <mh@glandium.org> writes:
 
-> Both of those are trading a bit of accuracy in finding the exact
-> midpoint in the early steps. It's perhaps another possible option for
-> git-bisect itself: if we see a very large number of commits, we could
-> try to approximate rather than finding the exact answer.
-
-Another thing the user may (but "bisect" itself cannot) try is to
-use a path-limited bisection (that is, if you know your breakage is
-inside one subsytem, you only check commits that touch the area).
-
-> In most
-> histories I'd expect that taking the midpoint of a linearized topo-order
-> would get you a pretty reasonable outcome. E.g.:
+> Most of the warnings were about loop variables being declared as ints
+> with a condition using a size_t, whereby switching the variable to
+> size_t fixes the warning.
 >
->   total=$(git rev-list --count v3.0..v6.13-rc7)
->   git rev-list --topo-order v3.0..v6.13-rc7 |
->   tail -n +$((total / 2)) | head -n 1
->
-> runs in about 2s on my machine. The commit it finds, ed194d136769,
-> is pretty close to the middle:
->
->   $ git rev-list --count v3.0..ed194d136769
->   526863
->   $ git rev-list --count ed194d136769..v6.13-rc7
->   543312
+> One other case was comparing the result of strlen to an int passed
+> as an argument, which turns out could just as well be passed as a
+> size_t, albeit trickling to other functions.
 
-Interesting thought.
+As long as the blast radius is limited (like this one, which most of
+the cascades were within the callchain of file-scope statics), and
+the changes of type is going in the right direction (in this case, I
+see all are using size_t for length that may come from or compared
+with the result of strlen(), which falls into that category), such a
+change is very much welcomed.
 
-When I did the "single strand of pearls" optimization, I recall I
-punted and said "we need to count the weight for all merges the
-honest way".
+Even if the primary objective is to squelch the -Wsign-compare and
+even if we are talking about a line in packet_reader object, which
+would not exceed 64k bytes and using size_t is way overkill, that
+is.  I personally do not think -Wsign-compare cleanliness is buying
+us all that much, compared to the amount of code churn.  But this
+one is well within the level that I can tolerate ;-).
 
-One thing we may want to try is *not* to do the count_distance() for
-all merges.  For example, if we have 1000 commits in the range,
-first you pick a merge M among them and count how many commits in
-the range it can reach.  Let's say it reachs 400 commits.
-
-We are trying to find a commit that can reach as close to 500
-commits, and we know any ancestor of M would reach fewer than 400
-commits, so we know the score they will get would be worse than M
-without running count_distance() on them.  We should be able to
-exploit this to optimize, shouldn't we?  In order to count the
-number for M, count_distance() must have traversed all the ancestor
-commits of M before coming up with its answer, so by the time we see
-M's score (1000/2 - 400) and realize that it is the best one we have
-seen so far that we aim to improve, we know that the score for all
-the commits we have seen during that traversal cannot be better than
-M's, no?
-
-If M can reach 700 commits (instead of 400), the argument goes the
-other way---anything that can reach M can reach even more, so they
-cannot be any closer to the middle than M.  Knowing what can reach
-M, however, needs something like reachability bitmap, though.
-
+Will queue.  Thanks.
