@@ -1,121 +1,87 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6019E25A658
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 02:41:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C1F22338
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 03:14:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737081702; cv=none; b=i86mbwIyCSt2W3zSSxvLdh3o3QrhzmH9d31EXqk7W9vXuRBfI5hixs4gppRZId0PB0vIvcPEWPuBeZ2XVuZx+o7gkB1X2TleVmDIPXGQKngsHZeDSoczzZECLQ4sFHGhWpNbRjSEPU76c8vrXquyhVa/blHlr5XzXGrx1HoOVyc=
+	t=1737083661; cv=none; b=Z1lrQt6rqOErpXarKxx3wOatVHrPm29KGwfOEn1jGax4f/g1ihEb9o9O6S+PsA/+Va9pJtY9ySv7uA94clJa51QzxfnxK5YrLpSSvfop2HYmPG+dh5Ep2URdEbD/iVK/NCYbIaC9p480x/Ild4ESEcOYdQqDN11h5sKn6oPzdW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737081702; c=relaxed/simple;
-	bh=qq5aog+wrPvq1Du/fx328hj4bi+FD4w7qap84WBWZyo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Wm6LfiNJp8xcn7Cgxi8R8BL3UVUm7smwYIdIFmvHV3eaUi4hrhv81r5mMiU1aPgnePskJsouhbaS6oaJ2hKDmxJHVDhYHEs1eDpOqJvVt/xUvWYZOLPxL426y1rPx4U8UxXTKTdrtp0XLu4iWeb/O6vc48rj+xpdcdzUNjraQ3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=HBvZweOL; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="HBvZweOL"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1737081692;
-	bh=qq5aog+wrPvq1Du/fx328hj4bi+FD4w7qap84WBWZyo=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=HBvZweOL4V4D1D+6Tpr/nx8FqFrJQZMPO9//isc7vFAHIgbw0x47OylLgYNBaiXsa
-	 3H9Md91G8K+VXMJjWPfrN7BQePK1kQtNjfHR6zl+pHC9IQtySmJ7bqZMTy1qPl6Y28
-	 DhK24l3+Ig7iC02OdrDvQiTOWTlyNDJCGtvSvutp/s+VENjyuurjKSFK0Idm4Yed64
-	 ZifB5+wCHR+46Wg0G/dxrmAcnAYaRRXb/FxMGsD7f/rVnbsEvqePsR/G6HTsyQTgSZ
-	 FXe+D9hiCQHP+bX7276ZCI7vBSaJSjCfThdz76Y33fQrFgFPLjybuiOobBYvXSe7g5
-	 AlaNqFIrhssxuCviunA3XTsmazY3C4XY82Q7ZPje++yG3ZIfE91KJA3ZYBTNK/XEJY
-	 rTC2b5eDXQKYcl7qxbBQUrFkVytbZObIH3iB1F8jlRAPcefTqgPZ5Ns4ed8foAaPk5
-	 SpCdOhPK0hl4sv5yxMpTOpp5KbPxIpWszVMYqYjJZw+oDm60KR1
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 512CE20035;
-	Fri, 17 Jan 2025 02:41:32 +0000 (UTC)
-Date: Fri, 17 Jan 2025 02:41:31 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] gitcli: document that command line trumps config and
- env
-Message-ID: <Z4nDW2FQ-MdWbW5P@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <pull.1878.git.git.1737066042014.gitgitgadget@gmail.com>
- <xmqqy0zanzdw.fsf@gitster.g>
- <xmqqfrlinuys.fsf@gitster.g>
- <xmqqzfjqmbza.fsf@gitster.g>
+	s=arc-20240116; t=1737083661; c=relaxed/simple;
+	bh=dG1HthcVfN5lN1G+Wi08cFDFeVzjgPI+jurO58k5lHI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ce+ulPW8UHrfqv3GIxxYYV0+SeRtlhFrkf/7erCUKOmUnTQydlJmkDyhP4ncLp4dskkjD9iXG/20uc7EZiLC5gEjU04NgljLskuAyjjgvG+LTF72IrKU6V/0l9LcDy1IbNDt989kVUSSV6eIMPWJJT/GXnYV/61BVI0X3xg7o9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6d8eacc4194so2291036d6.2
+        for <git@vger.kernel.org>; Thu, 16 Jan 2025 19:14:18 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737083657; x=1737688457;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=W+Ak/YrlhNpH9ErPvhHvyq21rYsBq/XdmTChaVy0f0Q=;
+        b=eP01+A/mCSQbM0/h3gvFcIC9eDfaHu9EZFKz8Nsu35kNEnHUKmz7PHyb+pb41syZ49
+         5uKbtm4kcSe0Cvm8C6opsp67H/+vZ4JyKR6u2lwq7WSVWwbB2niepDNpvteteYv8G922
+         uqSFO/SCOI681rU3XisojiXvuc7ZisWgUX11JNebo+mb116VS+joKSOheCV74SvJ9ogK
+         YluL4Hx8QX7X/vZKYxs4lDbnKD3A1MJnoEuHpiBrlC+8YiGBhOLV9RoYzRTElQKNbyTR
+         aUAOECrfLfKRkWQxPldJnmtx8MhRdI32nW98gza1FQ7eyfz6125hMsshtpKUkCzREmeU
+         Of1Q==
+X-Gm-Message-State: AOJu0YzqoTgx1DRS1r4YXWz4bcuIGGal9pDa0XbqDOHuUKtfzDY5CHiB
+	qekvUZjYnh7S5RYBKawpAgDMaXsyUVCjbEo4FE8omdBKZtQifgxcMSh3ziCX30jV4Pl/vk5yu9w
+	wZyg/bi8hVlVKjp23whwGiCZHi4SrK06I
+X-Gm-Gg: ASbGncsMgsP9goJDjcOfFxZ/nwG3eTcrbimX791gpU/5xmfnPUuWmnX43t3izaC97wH
+	4Bu9PXTqxT2a/a8kAoFDnRM3yiGmQq5juqTCYgqsKxDb0p0BmbkWX1g3xSgO6fEYKhYlL8Vw=
+X-Google-Smtp-Source: AGHT+IFaF/EquwxYH0aPFQ7LKi2Fd6Xjp88hQeuLDLcxLksNpGR3c5g1Zfp3sc5Nqg+0IMetfMOt+TWMegN2n6I8m0w=
+X-Received: by 2002:a05:6214:1253:b0:6d8:98a4:cc5c with SMTP id
+ 6a1803df08f44-6e1b19d8eafmr8240706d6.0.1737083657354; Thu, 16 Jan 2025
+ 19:14:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cX+KTR7SSNHeFynO"
-Content-Disposition: inline
-In-Reply-To: <xmqqzfjqmbza.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---cX+KTR7SSNHeFynO
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <pull.1878.git.git.1737066042014.gitgitgadget@gmail.com>
+ <xmqqy0zanzdw.fsf@gitster.g> <xmqqfrlinuys.fsf@gitster.g>
+In-Reply-To: <xmqqfrlinuys.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 16 Jan 2025 22:14:06 -0500
+X-Gm-Features: AbW1kvZ2JM8siBnHcqwp0fnNVQ1R5xXl8fIfXAPj5Ffs145NsFgKN6No-gw4CZo
+Message-ID: <CAPig+cSKHWm+Xwk8AAeyOdHh8voPc4OBT-bZdsWHBGDG0GcgJA@mail.gmail.com>
+Subject: Re: [PATCH] grep: document negated line-number, column long options
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, 
+	"D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>, "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-01-17 at 02:05:13, Junio C Hamano wrote:
-> diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
-> index 7c709324ba..00b71bc462 100644
-> --- a/Documentation/gitcli.txt
-> +++ b/Documentation/gitcli.txt
-> @@ -152,6 +152,23 @@ can use `--no-track` to override that behaviour. The=
+On Thu, Jan 16, 2025 at 7:30=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Subject: [PATCH] gitcli: document that command line trumps configuration
+>
+> We centrally explain that "--no-whatever" is the way to countermand
+> the "--whatever" option.  Explain that a configured default can be
+> overridden by the corresponding command line option, too.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+> diff --git c/Documentation/gitcli.txt w/Documentation/gitcli.txt
+> @@ -161,6 +161,20 @@ can use `--no-track` to override that behaviour. The=
  same goes for `--color`
->  and `--no-color`.
-> =20
-> =20
-> +Options trump configuration and environment
-> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +Options trump configuration
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +When there is a configuration variable and a command line option
+> +that tweaks the behaviour of the same aspect of a Git command,
+> +the command line option overrides the configuration variable.
 > +
-> +When there is a configuration variable or an environment variable
-> +that tweak the behaviour of an aspect of a Git command, and also a
-> +command line option that tweaks the same, the command line option
-> +overrides what the configuration and/or environment variable say.
-> +
-> +For example, the `user.name` configuration variable is used to
-> +specify the human-readable name used by the `git commit` command to
-> +record the author and the committer name in a newly created commit.
-> +The `GIT_AUTHOR_NAME` environment variable, if set, takes precedence
-> +when deciding what author name to record.  The `--author=3D<author>`
-> +command line option of the `git commit` command, when given, takes
-> +precedence over these two sources of information.
+> +For example, the `user.signingKey` configuration variable is used to
+> +specify the default key used by the `git tag -s` command to create a
+> +signed tag.  By giving the `-u <key-id>` option to `git tag`, which
+> +specif es the key used to sign a tag, the key specified by the `-u`
 
-I appreciate you taking the time to document this.  I remember it coming
-up recently on the list and it's good that we're writing this down and
-documenting it.
+s/specif es/specifies/
 
-This is useful not only for end users, but also new contributors who
-might want to implement a feature or authors of other tools which
-interact with Git, who will be able to write tooling that behaves in a
-similar way on the first go-around.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---cX+KTR7SSNHeFynO
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ4nDWgAKCRB8DEliiIei
-gQwDAP4kepjctO7Z0srG3Wr/givA9O3vUamKc43A8eguVPBXHAEA6TdghrMRF+2L
-5Krs4AfV/a/185tygDmu2vmL+lPfxAo=
-=ACBY
------END PGP SIGNATURE-----
-
---cX+KTR7SSNHeFynO--
+> +option on the command line is used, instead of the configured
+> +`user.signingKey`.
