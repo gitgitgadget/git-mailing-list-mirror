@@ -1,68 +1,68 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A021DE8A2
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 22:03:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E46A1DE8A2
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 22:03:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737151407; cv=none; b=d4Nha/dX5IP9To8ser4ko4qY5GjfeGNbrkatmPoeGg5H03yMzLoxdNdBAqeJuplX2e4RWX5oeNWP8x9eDHvnVSJ4XlWnNdX0f00OgsT8yPN0gezBYpEVw8FwwnAkWou3ewcbN83SwmosjIhvzUXi0GKgJoJAd6QowsAD3xTBEi4=
+	t=1737151410; cv=none; b=FK10kFeTvZWZ7SUGIc/N2YaHk3LFA36C0v//aVo38mjUiOQklALMNXBgk6vlegNx1SlmcUWIUFUUdSHGUTsaRlK0rSU1QbS8I45R/80V9qkik4gRHfcb1OAkluI7B3X9EChupfH0xwzzxL2+mDRnNhhu85qhg7j4x4LiNvLEPCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737151407; c=relaxed/simple;
-	bh=1c8UGk8NIpUPvvZEDL/j+/Tl0Vnvf+F9EzYy5gaDyLc=;
+	s=arc-20240116; t=1737151410; c=relaxed/simple;
+	bh=6Sr5D0vo9c5IeE3wtXQeheOl4L07Dh4wqzZMQifXjrM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GWf17AEL7KzZk9+VWBupgmMj9DpanHL4EU3jObEMI+yiScKT4Jpkqn9/eqH3WYANx0LkXKAkg528eQ75XMOb1QXDG/DRWsBEbvbciosELif5NvwO4AkQJJDfTqyGW+qUp9snHvXMf/8sktZ1Ap9RHl9jwhEzq6EoRctaB+XHl4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=1IowE5th; arc=none smtp.client-ip=209.85.219.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=Byq+t9ykQi69cwV/NsMO9yy1Th55dcUbBVZkARYHy/OjWaPTKmonaMb18AMna2yGhi1UwJ/RKJaW53UPXhJgY7t/Z70Jyz5M4elkAE/Obmw0TIRtZd2NwQdcwU/wDL3yG4qPxXmN23LH3OOe/bpBWcix116AUXpKfGOEdrBv9GI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=wRzyYZ6W; arc=none smtp.client-ip=209.85.219.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="1IowE5th"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e3c9ec344efso4000227276.2
-        for <git@vger.kernel.org>; Fri, 17 Jan 2025 14:03:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="wRzyYZ6W"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e54bd61e793so4999169276.2
+        for <git@vger.kernel.org>; Fri, 17 Jan 2025 14:03:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737151404; x=1737756204; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737151408; x=1737756208; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=T5RdfVzpkWSjVoMBALnctho7ROnLcrWsck32SjVs6L4=;
-        b=1IowE5thtsSd/Myd+VqcTG+Wi1Oyo2yYL6ZomMyDe7jh3PDx5Evk0K2lUhbYPr8a1S
-         2L9KjFyKigkA3MpsMAJ97ie61HKSX2v5iuYrDcR2LJ1mIYKTfJ6A+enY6IxaWHCVbr1c
-         Z9nyQeJC/MAbeoPvR4Vp3q95BYqDW2yw5Viyln4qGyP/U/RIWLauj/b29QE0nnNUISZR
-         JS+lalwwFtbe4CiTdFE+AyaOE6snnnamX+GWEOgfHQjRgrMpaAGiQAy83DhAB/JoRvTW
-         ApZuGXrCbI7ipQtL4hDvIhm40kbl9A2tXtoDE0oyA+CwE4j2uJhLUmzQZPWnX7rwQAb9
-         4YhQ==
+        bh=uoN10/GjMDdlRdDA4HFTLrdK38qB77pmy38zO60vFhQ=;
+        b=wRzyYZ6WL+gQGl6r1oWP+cTx/RRotWnI2ZiVmlUQzeaFbrfA7J45LIxT4FOvUqVUt0
+         /sZqT/e/reFzCRQETTzhWkKYmTOj5xALRS5Ro4fIelH7GHR9DNb86A/WftCd4OGgawep
+         ZV3xwzf4rIjNeLjP90HhQXVIWS2JPKJ1PtzqfghaW3ZuYiyRkkazaM2v1+7kW1SWm9dQ
+         kd+57xGQyILT41hAayMEvyDoi1gVPzIojiWCPoQ2fL3Fa/2KWVoc+ruWjkrA6HHW6IxL
+         ueIog/Ru9REOSUjsudSr0jKYIcJGM3e/TMHTk5cGLk7GAkJONXxooHcJ5A6AYeFibKZc
+         tDlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737151404; x=1737756204;
+        d=1e100.net; s=20230601; t=1737151408; x=1737756208;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=T5RdfVzpkWSjVoMBALnctho7ROnLcrWsck32SjVs6L4=;
-        b=QH2QyLhDHjUgxUGOOFi8ODd/bO1oc5HkTM2uh2F6RnNUl+zVXRt4BpS97ONzL08S6/
-         eTMAN6q4G47/uIidK2MAUDKwpI4Bt4eDj3yYcXALKK/NnE1hsMwimS1hzYXlOQSEYMAN
-         MVQwhgZlICgmmkjSdzJQ5XUF9cxRJJFftW5Uq8kqlhTHN0R0Kb9Tsohbbaz6VSqHK3+l
-         VA00j24Ws4zJK9N/Y1fV6S8poEA/HoangvFZVzf+xxq3RUWFeqlLoPbkXYrMLV/1WKtH
-         PdeO2wZLbEm+eEnXy7hAM3BEaybyeo75K15o8Hn4vpKLjosfZV23m/3X7UuN7IiaH/v0
-         hTBw==
-X-Gm-Message-State: AOJu0YxFQ+pWZJTsiJu2pNN4gRrErjlcIM1gEp3GynZYrxxaiXQQlkfY
-	jCnwO79LUAEZIS+pS/TYD+NdknHh71dDo0jW7ISq+it83Iqm22G2J1hBP3cwwKnVmmfPXv2CTZz
-	TR/Q=
-X-Gm-Gg: ASbGnctjilHsHxE40/1rg71OMV+oPYnpoWLeM+PXo0q+nq9uKzxpJo0n5ZKcctvcFmj
-	RtUHpmT9qWNHr8Fumw0eBpk/D2JgtHRK5mXKZgu7ZBGEjFoQDGLvgGj4InjSWgO6+6WUWtb6nUJ
-	Gew19IvPDIHtj0hHoKoJoC33Bxkxn7nsr8pwKeDIEtKb8eavG7iH4sQ7ZLmVPaEygU2v1x4zpi2
-	oagyp6LHrt16whSCQnf5TpHNmUy4ef0ND9Vfw31U0nVTRftXOzrzS+AgTuuoonh6S/dvtKre0+E
-	P1RZzddSZyQVWCewLgIBMxtajF77
-X-Google-Smtp-Source: AGHT+IGCVnfMDQ9QrrfMwj9ZDO21QRAJuYXyqz20Oe+7BWs4/4Cwze0wqfVSxN6nymX0fFHVO2j3Kg==
-X-Received: by 2002:a05:6902:2749:b0:e55:12e2:62c4 with SMTP id 3f1490d57ef6-e57b132efd2mr3453600276.35.1737151404638;
-        Fri, 17 Jan 2025 14:03:24 -0800 (PST)
+        bh=uoN10/GjMDdlRdDA4HFTLrdK38qB77pmy38zO60vFhQ=;
+        b=kcWD/qgQFKvfkXSli7i8xHT0soH1QjGOyU8HfCzkB3g6EkO9tKEXz/wI8XPHUT0ivQ
+         5mM0vVEFW0gh+TGPZnimAX30rk0pRiX2ISz4QXnpqu+3Ldzls1aGS7hYF/yGBvj/CeXF
+         /pqZZGqsUAbi4o18NrZ0fXgzhYp/wGFH+QIOzFvvkrIBcLalLMS99BbjmamGWuIfknCG
+         6oB7rfbZJOPdvqzLvJkCq6FwTM6IBqteumwf7vbbbYpHRGRS1tIUQHbdLCLk4X0DTHle
+         SpSH0dvcRUZchQ7wFU1eM1u5iekeHPqhpRduzMs3vgOoIE1+1l7WH+TfXoJPK8pB/NxS
+         PV6Q==
+X-Gm-Message-State: AOJu0Yyg/rCAtY6RujOWFeE4vrhXfONubsLPE9twJUWtg44ra33KbdiV
+	5bIsvfstDbe2zyoOLwvSvSlTIHrot18D+prC/MOYsX8z4c7cTPjF79Hypkzx6HvBu3U6Xz1OVDk
+	geic=
+X-Gm-Gg: ASbGncu8Pn4DLbAWHcAk6sSeXeEDPGPzuq1M0CLypJWam7TE5RrTG4iDIE9eT9hGL9R
+	GLSurCkUFQBRlX+3O8MfSlp3AD+16PcXq/spvZ2Pz8+WRxgdUSne3gFrWAmTT9XlwExn3DYdU2n
+	LZn3bNSUb9WOx2CCIfkfYnmYrCGMuBWesy7wMmRMErkDk3CcCU7UvgJPyfmS44yBGikZyE0IyLF
+	S235EOTmBTZm5Bl30nC+lqPzQScMHWjwsBHHxA7nNUa6dTmdxGC8jxhOICf3Ljhd6jDplEu5T05
+	9ePLSmHtDCjyi1voyyzgE424T0iu
+X-Google-Smtp-Source: AGHT+IGhqS7P5Xot+K2cQUl/ngK3IN1iax/cYJ95greo1qi2i7RTNAq2NK1kSqedGoBqfUGnPGrE7w==
+X-Received: by 2002:a05:6902:102e:b0:e57:9250:b722 with SMTP id 3f1490d57ef6-e57b1036009mr3694324276.2.1737151407920;
+        Fri, 17 Jan 2025 14:03:27 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e57ab43aa46sm579916276.45.2025.01.17.14.03.24
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e57ab2a7665sm584334276.5.2025.01.17.14.03.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 14:03:24 -0800 (PST)
-Date: Fri, 17 Jan 2025 17:03:23 -0500
+        Fri, 17 Jan 2025 14:03:27 -0800 (PST)
+Date: Fri, 17 Jan 2025 17:03:26 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 5/8] csum-file.c: use unsafe_hash_algo()
-Message-ID: <ca67de80971fc1b8b77241a647e246e1cd4e58cf.1737151386.git.me@ttaylorr.com>
+Subject: [PATCH v3 6/8] t/helper/test-hash.c: use unsafe_hash_algo()
+Message-ID: <21b175b07ff46471acdaa1afe5fa8b0c2749248b.1737151386.git.me@ttaylorr.com>
 References: <cover.1732130001.git.me@ttaylorr.com>
  <cover.1737151386.git.me@ttaylorr.com>
 Precedence: bulk
@@ -75,98 +75,62 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1737151386.git.me@ttaylorr.com>
 
-Instead of calling the unsafe_ hash function variants directly, make use
-of the shared 'algop' pointer by initializing it to:
+Remove a series of conditionals within the shared cmd_hash_impl() helper
+that powers the 'sha1' and 'sha1-unsafe' helpers.
 
-    f->algop = unsafe_hash_algo(the_hash_algo);
-
-, thus making all calls use the unsafe variants directly.
+Instead, replace them with a single conditional that transforms the
+specified hash algorithm into its unsafe variant. Then all subsequent
+calls can directly use whatever function it wants to call without having
+to decide between the safe and unsafe variants.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- csum-file.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ t/helper/test-hash.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
 
-diff --git a/csum-file.c b/csum-file.c
-index 7a71121e340..ebffc80ef71 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -50,7 +50,7 @@ void hashflush(struct hashfile *f)
+diff --git a/t/helper/test-hash.c b/t/helper/test-hash.c
+index d0ee668df95..aa82638c621 100644
+--- a/t/helper/test-hash.c
++++ b/t/helper/test-hash.c
+@@ -9,6 +9,8 @@ int cmd_hash_impl(int ac, const char **av, int algo, int unsafe)
+ 	int binary = 0;
+ 	char *buffer;
+ 	const struct git_hash_algo *algop = &hash_algos[algo];
++	if (unsafe)
++		algop = unsafe_hash_algo(algop);
  
- 	if (offset) {
- 		if (!f->skip_hash)
--			f->algop->unsafe_update_fn(&f->ctx, f->buffer, offset);
-+			f->algop->update_fn(&f->ctx, f->buffer, offset);
- 		flush(f, f->buffer, offset);
- 		f->offset = 0;
+ 	if (ac == 2) {
+ 		if (!strcmp(av[1], "-b"))
+@@ -27,10 +29,7 @@ int cmd_hash_impl(int ac, const char **av, int algo, int unsafe)
+ 			die("OOPS");
  	}
-@@ -73,7 +73,7 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
- 	if (f->skip_hash)
- 		hashclr(f->buffer, f->algop);
- 	else
--		f->algop->unsafe_final_fn(f->buffer, &f->ctx);
-+		f->algop->final_fn(f->buffer, &f->ctx);
  
- 	if (result)
- 		hashcpy(result, f->buffer, f->algop);
-@@ -128,7 +128,7 @@ void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
- 			 * f->offset is necessarily zero.
- 			 */
- 			if (!f->skip_hash)
--				f->algop->unsafe_update_fn(&f->ctx, buf, nr);
-+				f->algop->update_fn(&f->ctx, buf, nr);
- 			flush(f, buf, nr);
- 		} else {
- 			/*
-@@ -175,8 +175,8 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
- 	f->do_crc = 0;
- 	f->skip_hash = 0;
- 
--	f->algop = the_hash_algo;
--	f->algop->unsafe_init_fn(&f->ctx);
-+	f->algop = unsafe_hash_algo(the_hash_algo);
-+	f->algop->init_fn(&f->ctx);
- 
- 	f->buffer_len = buffer_len;
- 	f->buffer = xmalloc(buffer_len);
-@@ -210,7 +210,7 @@ void hashfile_checkpoint(struct hashfile *f, struct hashfile_checkpoint *checkpo
- {
- 	hashflush(f);
- 	checkpoint->offset = f->total;
--	f->algop->unsafe_clone_fn(&checkpoint->ctx, &f->ctx);
-+	f->algop->clone_fn(&checkpoint->ctx, &f->ctx);
- }
- 
- int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint)
-@@ -221,7 +221,7 @@ int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint
- 	    lseek(f->fd, offset, SEEK_SET) != offset)
- 		return -1;
- 	f->total = offset;
--	f->algop->unsafe_clone_fn(&f->ctx, &checkpoint->ctx);
-+	f->algop->clone_fn(&f->ctx, &checkpoint->ctx);
- 	f->offset = 0; /* hashflush() was called in checkpoint */
- 	return 0;
- }
-@@ -242,15 +242,15 @@ int hashfile_checksum_valid(const unsigned char *data, size_t total_len)
- {
- 	unsigned char got[GIT_MAX_RAWSZ];
- 	git_hash_ctx ctx;
--	const struct git_hash_algo *algop = the_hash_algo;
-+	const struct git_hash_algo *algop = unsafe_hash_algo(the_hash_algo);
- 	size_t data_len = total_len - algop->rawsz;
- 
- 	if (total_len < algop->rawsz)
- 		return 0; /* say "too short"? */
- 
--	algop->unsafe_init_fn(&ctx);
--	algop->unsafe_update_fn(&ctx, data, data_len);
--	algop->unsafe_final_fn(got, &ctx);
+-	if (unsafe)
+-		algop->unsafe_init_fn(&ctx);
+-	else
+-		algop->init_fn(&ctx);
 +	algop->init_fn(&ctx);
-+	algop->update_fn(&ctx, data, data_len);
-+	algop->final_fn(got, &ctx);
  
- 	return hasheq(got, data + data_len, algop);
- }
+ 	while (1) {
+ 		ssize_t sz, this_sz;
+@@ -49,15 +48,9 @@ int cmd_hash_impl(int ac, const char **av, int algo, int unsafe)
+ 		}
+ 		if (this_sz == 0)
+ 			break;
+-		if (unsafe)
+-			algop->unsafe_update_fn(&ctx, buffer, this_sz);
+-		else
+-			algop->update_fn(&ctx, buffer, this_sz);
++		algop->update_fn(&ctx, buffer, this_sz);
+ 	}
+-	if (unsafe)
+-		algop->unsafe_final_fn(hash, &ctx);
+-	else
+-		algop->final_fn(hash, &ctx);
++	algop->final_fn(hash, &ctx);
+ 
+ 	if (binary)
+ 		fwrite(hash, 1, algop->rawsz, stdout);
 -- 
 2.48.0.rc2.35.g0c4d006e6e8
 
