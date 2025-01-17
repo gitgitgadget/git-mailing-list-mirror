@@ -1,162 +1,116 @@
-Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E4A1F6687
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 08:22:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF2B1F754C
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 08:47:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737102160; cv=none; b=Z7ncTSv5minmB1EgU+vHHpwDQQebeujg1Du4FisgPKUvrRyk9bQsR4cwppwnJ6OTEzFfEvpzZDgFkkuoqUAXEEmAC2xfT6AcF6QHmBAIUbanVnGGLPp8ay//loNBDWc24+wHlgypHsFy9cr4NYMVTVJKRoEIif05pQnLcBJ2E/w=
+	t=1737103666; cv=none; b=Oaq9q++ppSixIYw2jgW7yyQQDi2+3SMNDkRMBqjh9MQ0eiMTEqb9pk2l4b9D8ZEEzsLoJK0uBlFVJmw+Wa+g3fyYBOxvg8HJEPxOH9Joq4D2YliBwDl8Oy/gmVxRK69CbQjLSk6++3MvFg4qmjtDa0rWY4N/GtmcNp+o19RzpFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737102160; c=relaxed/simple;
-	bh=NSFnQgawqcwAx1HKo/9MkIoHs1wzvyc9IkmXLOx8pN0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GZ/gEexeeFXEf5I8S5BLmUi0Tj18zfPltEfpP7xefphq3TsQjbNMRMiSnT7hasg+PkIYT+jAaklLmsTR1xrtSw0B6N4KBsbm1zhsAteKa5xNspkMO9SodIxu8u+dxr3nve6BSlcUktfPpChkSvKQ5oh7gCdrzu+htBinOME34kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
-Received: from p3976092-ipxg00k01tokaisakaetozai.aichi.ocn.ne.jp ([221.188.33.92] helo=glandium.org)
-	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <glandium@glandium.org>)
-	id 1tYh6W-00E05N-2l;
-	Fri, 17 Jan 2025 07:49:20 +0000
-Received: from glandium by goemon.lan with local (Exim 4.96)
-	(envelope-from <glandium@goemon>)
-	id 1tYh6Q-0060OR-39;
-	Fri, 17 Jan 2025 16:49:14 +0900
-From: Mike Hommey <mh@glandium.org>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	Mike Hommey <mh@glandium.org>
-Subject: [PATCH] connect: address -Wsign-compare warnings
-Date: Fri, 17 Jan 2025 16:49:09 +0900
-Message-ID: <20250117074909.1430067-1-mh@glandium.org>
-X-Mailer: git-send-email 2.48.1.2.g265affcb1f.dirty
+	s=arc-20240116; t=1737103666; c=relaxed/simple;
+	bh=HWv3KPmG4hj/4itbQTt2apEyl5Etq/EuEflPNhF2DXk=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iGROer56LadiH2JjvgQTZH1de+Qw35ygblzy3Foj7KOcEZnmexqXh8cbzbhFNpoYSS8pwKp8sMAsynNX94mWsECi+/4uHQhvxLshu/vZwy5rLraz3M6fPukvw2sRH+06eF8isx/dczOJAPVQgy43vxs49wmMAgqn/MlcNCsiMRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UNE9oeBA; arc=none smtp.client-ip=209.85.221.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UNE9oeBA"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-51cccafb073so632832e0c.1
+        for <git@vger.kernel.org>; Fri, 17 Jan 2025 00:47:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737103663; x=1737708463; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HWv3KPmG4hj/4itbQTt2apEyl5Etq/EuEflPNhF2DXk=;
+        b=UNE9oeBA9G3tpnvsVa82zuKtHZNnRX+BJlYSyuaTQqAQfYlxE0yrGGqhBo0vz/wKMG
+         /HVnW+zVt0Gw4dEYfVImHfTv6UInVQNyMlt5d9B2P5V4txZrlismMUTi2AcTnCGsbXVh
+         WQFuhWdS/S2JFm2TjkqIxRMV+JTaUsPVEqRCfMmEmJIIK01RzQi4Iba8fP4Sg9zVkbg2
+         WF4DCL+jGXyGK3m95LHrhHHkgwsGetEt9ftjKRMejBu/W+chdUsVeJdqGwd9K7j58utT
+         pTkP5GjN7xbKEg0nDGDQQN3a1/F/yOKu/E5eBRtoW39rldBKMOfEbMtpd8TzmU5+JUid
+         7W4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737103663; x=1737708463;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HWv3KPmG4hj/4itbQTt2apEyl5Etq/EuEflPNhF2DXk=;
+        b=xGAuoPRJkXPOcg72WF2LkQG+b4udoVBpzeqoJn4j2fNOKGCk9gtR0tCLNJugfTkz6i
+         ZWEYuz/agwkMWG4o6LqetOvPG8iIceUwMco4p3ct6RxGEROSW8VDy6D6biWDmYSj1TfE
+         NkRAjeWhByny9IZ8V3HW3+JgG1hRpSDOmGy9b2XfFMpJFNDpedWl2r6LEIgtwmxT00ON
+         /DBcMV0l/sSVMTWy24zaaYW8gXSkNIjAYyV2KcDN4D85jr2LONvcQg0ezcTVOg5yRZkd
+         c3yXIkdLZCORfiES1UnsIUInFaF9cZiOpq/r+vLslbCrdW0nMXE7ckt7Ug0UCEbES8tD
+         3NTQ==
+X-Gm-Message-State: AOJu0YxNYofqUFienmdrGJ+0n2eASDHxQkWeyMZH8pw56bgQ7+NyE1bL
+	DrrRPW2Zd1C9uBRtT8eF1H9NZOruv2VA+svwPEaXiQhCrIqXQ63Fbx4EFUKNtZgUrzazlUEki5u
+	pSHtgsnYNr3nYyUSCFANu1+2O53E=
+X-Gm-Gg: ASbGncsLEqG4dU17+d73sceydXGkxDqJhlrdz07Z3BwRv125iKupFPsOwjQ+J+b7XBZ
+	6DRKMJm7KIR6+xIpVlM3dXUldipkcdW1WLoToFPE=
+X-Google-Smtp-Source: AGHT+IGy/eKfZHaOOBkBNvlf3egPOy2Y4nWKQjK/IMOiDweAZeg7dcSz6aGD3Ob5+VGvXbCXq6fu48DsmwCCAhT14kM=
+X-Received: by 2002:a05:6122:d87:b0:516:2d4e:4493 with SMTP id
+ 71dfb90a1353d-51d51b77f17mr912797e0c.1.1737103663364; Fri, 17 Jan 2025
+ 00:47:43 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 17 Jan 2025 08:47:42 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqo706r34s.fsf@gitster.g>
+References: <20250116-kn-the-repo-cleanup-v1-0-a2f4c8e1c4c3@gmail.com>
+ <20250116-kn-the-repo-cleanup-v1-2-a2f4c8e1c4c3@gmail.com> <xmqqo706r34s.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Fri, 17 Jan 2025 08:47:42 +0000
+X-Gm-Features: AbW1kvaZqJLcCX6muiz9YRAuJaIDNOGQyHLV6kOTJPEDvNWrGIY2c3RIhgPAONQ
+Message-ID: <CAOLa=ZTF_2Gq9sFZqwu3Sw2dcQficBW3FOVeJnBDuwc5n4e-gg@mail.gmail.com>
+Subject: Re: [PATCH 2/5] pack-write: pass repository to `index_pack_lockfile()`
+To: Junio C Hamano <gitster@pobox.com>, 
+	Karthik Nayak via B4 Relay <devnull+karthik.188.gmail.com@kernel.org>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000cb23e6062be2f622"
 
-Most of the warnings were about loop variables being declared as ints
-with a condition using a size_t, whereby switching the variable to
-size_t fixes the warning.
+--000000000000cb23e6062be2f622
+Content-Type: text/plain; charset="UTF-8"
 
-One other case was comparing the result of strlen to an int passed
-as an argument, which turns out could just as well be passed as a
-size_t, albeit trickling to other functions.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Mike Hommey <mh@glandium.org>
----
- connect.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+> Karthik Nayak via B4 Relay
+> <devnull+karthik.188.gmail.com@kernel.org> writes:
+>
+>> From: Karthik Nayak <karthik.188@gmail.com>
+>>
+>> The `index_pack_lockfile()` function uses the global `the_repository`
+>> variable to access the repository. To avoid global variable usage, pass
+>> the repository from the layers above.
+>>
+>> Altough the layers above could have access to the hash function
+>
+> I do not think the choice of the hash algorithm has much to do with
+> this change, though ;-)
+>
 
-diff --git a/connect.c b/connect.c
-index 10fad43e98..91f3990014 100644
---- a/connect.c
-+++ b/connect.c
-@@ -1,5 +1,4 @@
- #define USE_THE_REPOSITORY_VARIABLE
--#define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
- #include "config.h"
-@@ -77,7 +76,7 @@ static NORETURN void die_initial_contact(int unexpected)
- /* Checks if the server supports the capability 'c' */
- int server_supports_v2(const char *c)
- {
--	int i;
-+	size_t i;
- 
- 	for (i = 0; i < server_capabilities_v2.nr; i++) {
- 		const char *out;
-@@ -96,7 +95,7 @@ void ensure_server_supports_v2(const char *c)
- 
- int server_feature_v2(const char *c, const char **v)
- {
--	int i;
-+	size_t i;
- 
- 	for (i = 0; i < server_capabilities_v2.nr; i++) {
- 		const char *out;
-@@ -112,7 +111,7 @@ int server_feature_v2(const char *c, const char **v)
- int server_supports_feature(const char *c, const char *feature,
- 			    int die_on_error)
- {
--	int i;
-+	size_t i;
- 
- 	for (i = 0; i < server_capabilities_v2.nr; i++) {
- 		const char *out;
-@@ -232,12 +231,12 @@ static void annotate_refs_with_symref_info(struct ref *ref)
- 	string_list_clear(&symref, 0);
- }
- 
--static void process_capabilities(struct packet_reader *reader, int *linelen)
-+static void process_capabilities(struct packet_reader *reader, size_t *linelen)
- {
- 	const char *feat_val;
- 	size_t feat_len;
- 	const char *line = reader->line;
--	int nul_location = strlen(line);
-+	size_t nul_location = strlen(line);
- 	if (nul_location == *linelen)
- 		return;
- 	server_capabilities_v1 = xstrdup(line + nul_location + 1);
-@@ -271,14 +270,14 @@ static int process_dummy_ref(const struct packet_reader *reader)
- 		!strcmp(name, "capabilities^{}");
- }
- 
--static void check_no_capabilities(const char *line, int len)
-+static void check_no_capabilities(const char *line, size_t len)
- {
- 	if (strlen(line) != len)
- 		warning(_("ignoring capabilities after first line '%s'"),
- 			line + strlen(line));
- }
- 
--static int process_ref(const struct packet_reader *reader, int len,
-+static int process_ref(const struct packet_reader *reader, size_t len,
- 		       struct ref ***list, unsigned int flags,
- 		       struct oid_array *extra_have)
- {
-@@ -306,7 +305,7 @@ static int process_ref(const struct packet_reader *reader, int len,
- 	return 1;
- }
- 
--static int process_shallow(const struct packet_reader *reader, int len,
-+static int process_shallow(const struct packet_reader *reader, size_t len,
- 			   struct oid_array *shallow_points)
- {
- 	const char *line = reader->line;
-@@ -341,7 +340,7 @@ struct ref **get_remote_heads(struct packet_reader *reader,
- 			      struct oid_array *shallow_points)
- {
- 	struct ref **orig_list = list;
--	int len = 0;
-+	size_t len = 0;
- 	enum get_remote_heads_state state = EXPECTING_FIRST_REF;
- 
- 	*list = NULL;
-@@ -394,7 +393,7 @@ static int process_ref_v2(struct packet_reader *reader, struct ref ***list,
- 			  const char **unborn_head_target)
- {
- 	int ret = 1;
--	int i = 0;
-+	size_t i = 0;
- 	struct object_id old_oid;
- 	struct ref *ref;
- 	struct string_list line_sections = STRING_LIST_INIT_DUP;
-@@ -552,7 +551,7 @@ struct ref **get_remote_refs(int fd_out, struct packet_reader *reader,
- 			     const struct string_list *server_options,
- 			     int stateless_rpc)
- {
--	int i;
-+	size_t i;
- 	struct strvec *ref_prefixes = transport_options ?
- 		&transport_options->ref_prefixes : NULL;
- 	const char **unborn_head_target = transport_options ?
--- 
-2.48.1.1.g7a79e56076.dirty
+Oops, copy-paste error. Thanks for pointing out, will fix.
 
+[snip]
+
+--000000000000cb23e6062be2f622
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 92fc6970a9773a7_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lS0dTa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMkRBQy80cTJUbFR0OXNqemROV3lBQ1kycDVVL1hINQo3MkRVSUhsayta
+UXp0dnNjVVhpSEh4YjhEN0xIaGd4M1F3UFRBeklnUTNFOWNVQjFMMlA5N3AwclBRU0xITXBDCmh3
+UnUzb1owZkVwbGxEYk1WUFRsd1NXdTdSaTYySlZkc3h4NkhnOGJvV05TbW5VdFY2dnlPOXdob1Zr
+YkhQTHkKZGxXUHNTcy9ZQ1IxSXRUREFCRkk1eU1uMDhNZFhYL05VZ1RYOHFVYm0veGZDQXNYYWEx
+bTRHTWVjbFlsYkxVNgpteURpRkJHQWFEeVd3QmNUWVgreTlXd2FBR0lSbjFPakw5aTZ5OTY2U3Mx
+SHAwQVlRT1lCZm9kOU55MTlKd3dECnZtMzV3ZEFCbnhseFcvdnpuUmgxRGMvWlJaanJxNVh2cFdK
+b1NqZGh3TXl0UHgxSlcxYjVGVFZXQWQyQ3VWQUUKUUJtcDljNGQyZmdsVEVzNWQxTDBNZFpjLy9w
+SnM2a1VRaUlzaGpDaUs3bDlTRjVqK256MHZmMUlGV3V2em1tUgpya2M3MlljdTZZSWFOM256MUow
+bWtxaUZxdzZMa1BSbnFQRGg5eXFFQ2J1czFBb1ZQM2oxUWQ0UmFHWWVOVlJUCkVUMVQ5ckJKamtr
+VnRQT3NzS1loS2h6WXhtOStMbThpcHl1bzQ2WT0KPVRXeUcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000cb23e6062be2f622--
