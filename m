@@ -1,93 +1,83 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973461ABED9
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 22:37:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB431D932F
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 22:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737153476; cv=none; b=hJg2PfAJ/PvhlWkTPV9bVAVVRpw4mNPOIfUN6vOc7WLMdIgTgLFg5FotAdUWdJomB/Ter6QTNowLsU/A5TYkl/2YwVPU1mWyJvx7rtUPSamGT4Znao0k/mUDP2VGDAzkNDtf+t6rr+RdMEjfS1qoXCTjyr6E927eUZKrdHKbaDI=
+	t=1737153909; cv=none; b=OebDzcWoupwInSQBx9Ebe0cvNIC7WpEWucSJ1Aqm43s/tHhnvLaevAk+EwNaI9pWvXWQB2rS0hAf2CSX5ArRvHeWaNow1ZOYU59DGmRlk54u1DiXg3E0LV1nkGTaMoo+hRF3L3rR08vGu2PojIQSjZVo/hIAgiDg85crt76NN6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737153476; c=relaxed/simple;
-	bh=8twGq9y+sRgJr0/Q6qpVNN1iZr1OAK8NpZ+iauBuQ6Q=;
+	s=arc-20240116; t=1737153909; c=relaxed/simple;
+	bh=JcuVhFpjS7pcxbR1gXcj9AdsWYCUxKhHTZp0OYCctFg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Tt5xVRx9pr9ZByKhsEVdFhA+tz3tptleYx91PIxevA07gSb7JLq/VcosxzIKjs4ii/TJu35DAkhvHXWBT6Rp4xDLuWVfzEuSeDkKUAe5OGLBKObeIoM/aBj7NZ+e5C1JBtj7zlS8AUzfUMnKTzX3v49kRHI4IL0ehVwG3ouOQ6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bTVwwLpp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rehW4aVh; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=NS6WY4nQ/cAGhZv80ymExVJImpN55sLjc9apI/7V1UxRoP8kr8gS1dgrhuZy110FdzrOusrnQVPgV+xVJ8EvJ3iue9muSYphHiENSXqPPy0nREz9br+C4bpSUD3gaEcoVr11ocr0eVO3NIZo58sy6BnI+kS06KkZ6Iy05gpRyME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tTziburp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jNTihpOP; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bTVwwLpp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rehW4aVh"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A376A1140227;
-	Fri, 17 Jan 2025 17:37:53 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 17 Jan 2025 17:37:53 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tTziburp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jNTihpOP"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 337661140118;
+	Fri, 17 Jan 2025 17:45:06 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 17 Jan 2025 17:45:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1737153473; x=1737239873; bh=x0ZQKfCThH
-	gP7eVBBo+b8+lJZkYpAjxSsLTzwT94ml0=; b=bTVwwLppUUgQk69gjimFqOyip0
-	g0PrILk1xdAYdTSzPdvcelre+38hdrYOfQPyJCAPfW3OJeDg8EAIZsGTpiTf7w76
-	SSEpXMaeF/BicSdEHwEWvHu9ImgoN6uMhCFeKeyyutMiYnOPPmxExIs77rYdJFGV
-	Gl3QjnQlTNy7muC6ZxU1QE0SL3KZCpeSipyVXRUHM7WcICz9T1RhAx11r2wa8wfI
-	4G8DMf/WUqNeAJAwbkmlpX/lATiKEgwY2f+YoktBfSww2byJeokDVyr3BnHuhe3f
-	sjq5VUCKdtvoTaCK0beYl2hxNuB9h6XN6ieWdloM4ei8GnzlKvxI5nuWe7+w==
+	:subject:to:to; s=fm1; t=1737153906; x=1737240306; bh=hPBqCO1nc2
+	QEJ9KqjKuxNjc+DNr0DKxHVputir+/ed8=; b=tTziburpOO50/MpPLvRwcWqcQe
+	X48aUCL7ou/X7buoHcQBxjz7JHVPbkeMi5tThobrUpFl4i4pOWVHyHwc7ceTx2s9
+	2mHubFE99ULuNqQNosHXJSOx+KqJp6xXa6iCX7S3svrnnDG+dzzNi+7D7kds/qRc
+	xd6PfD8WrBlZZO3CDkh+9rrR9JsxCJQVJyoAYpC0vy3FzySa2PmzB7+L3X2wPpLA
+	poMfUk+bAgl9bXdkg80AUE8MdmFH1gFkHPJkY6LC9lkyj8/bXmNq6e9aJJ9vQS1h
+	6JML7+7k3QlsKExhrih2wtosg+mgJOofdL8YBp2Ig4tfbpWLy2FbZP8gWO9Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737153473; x=1737239873; bh=x0ZQKfCThHgP7eVBBo+b8+lJZkYpAjxSsLT
-	zwT94ml0=; b=rehW4aVhgQWaH/UJMOot7uFx2HYDvdrW0V/jeIIm801SBTrvLg7
-	LzEROJnSDuYY/+1QPEEIu9kUULYImS3pGvBLRhr5nRjV8002FSVNfe1JJhIqYrYN
-	Xub5usXAN0rOnOs8KgCP6J7mtdneraugowmJY2IZol3rmeWMJaIDgxtHsXhe+/DD
-	k30XarUDwvv3prxPD+xcuN8ZcEWitJ2yjp5jD+AOg8uTbuwcZJDc/wuke3u1JTXV
-	Zcz1TGNiaLLbEsA/HVOBVxm/KBd2BKkaVTjXvz0a5KeFqdrkEHPD42WKEm9Fte/z
-	qfR7n41sZBm+kVHQG7sb6+vvcyus1hjMUuA==
-X-ME-Sender: <xms:wduKZ9g_eAlv2_GOVh4gqS8jAEiRa08SW0hmT5ZL05NLFzrR8qR5Lg>
-    <xme:wduKZyBbpYTBNqUHP00BzXoJqsqOTUHH1--3gPb2BD60aYKoGSfDOAqDaX-BdkSwO
-    o4HcT_IgwSdgT59iw>
-X-ME-Received: <xmr:wduKZ9HkJsPmZdu9p_28xdBG8iEDBBRh_6A1A2Geau1eIjbL07z6ql3WCG0r4SMXsbKKlixoj4SLXUeh3UvyIMoSq_7YkXsCX7b0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeigecutefuodetggdotefrodftvfcurf
-    hrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffrtefo
-    kffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsuc
-    dlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhr
-    ohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtoh
-    hmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueff
-    teeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthho
-    pedugedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
-    gtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvg
-    hsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
-    epjhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesgh
-    hmrghilhdrtghomh
-X-ME-Proxy: <xmx:wduKZySfsnxptgBj7pEcb6EoNXgAUFZHqLOuduMkK1nzftupj_LkYg>
-    <xmx:wduKZ6zee7zI8pXgmAtWw1KMuV5BdU7NR8OAd0CU9xeRRBdrQj_a8g>
-    <xmx:wduKZ47zQnoV3zcJHMvNdKfneJc7qk1Y_mNFRvV0wIsOrBsVmIfDHw>
-    <xmx:wduKZ_zY2FLIdk7d5-aQgMOEu3u0YURU8uuTTMTzwHtl1MV5RYTqcg>
-    <xmx:wduKZ_IcM6UvFjgjJMr9QnCI1YUNpuByvwzFk7D460SM7BEZ1bBrITZb>
+	1737153906; x=1737240306; bh=hPBqCO1nc2QEJ9KqjKuxNjc+DNr0DKxHVpu
+	tir+/ed8=; b=jNTihpOPEfCx5fPimcNi5B3JzKANkkDNGrE59DOMZRvt1dLC+lp
+	YXj7dz0TgiOFS6SBXgnGK/H7+Vx8gdPLduFLvNorG5C5kWmiGW16oyGgWT0vqvrH
+	udEEWT3VOL1yBSm7r2rJQyyTpNjiUwtN6Mn8xzlwv6aYHxEIOUwzwYLOHOZwOAC7
+	EpUn3Y0Xru+gvVTnbylUnVn7oYaUU9KVq5Emm/QWvG12WbxLiz2cD0TwvVNuM66z
+	Pht6OrdaB6Cqiw1nuvYA9DYdZ2MkkUYtuUA0712Dq5/vJ3+9j7Vz5k9rcurXYD+F
+	gH/81xb0QKLF7mhmKwc4pIzK1S+jwYyXkkA==
+X-ME-Sender: <xms:ct2KZ24ubGMSqtVc6qMhX_xSLAqCirnKxTRtVXvopA608YJmsLladA>
+    <xme:ct2KZ_60JAActyxIXUEKHl7q56YBqSIoDuP2ur830Omw32INBHnkIEVvCg8fK7zLH
+    s1NUKJpaKo7vxLzOg>
+X-ME-Received: <xmr:ct2KZ1ecxR8K96Kn9trtAY1KfJR06OacUF8JAD0xG7UJHJfq9QRFsJgimrq_ebG9a4N1Zg8G_K58ZkFjAZDIYbsVtHTigx-6plb_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeigedgtdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
+    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhhorggthhgrnh
+    esphhrohhtohhnmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ct2KZzInsejONqGcNmUIznuJoTU4zcggkGkHF5NCJCKI6DwI7rgi_Q>
+    <xmx:ct2KZ6JgAPd_JP8cTv-hteBv1-bB_YGXPCyXtsdDzXDo3FnSniqyKg>
+    <xmx:ct2KZ0xNOZRtkcYEFH_G50EHfXDUroS6LWCycyApGfNKEBLTloDT4A>
+    <xmx:ct2KZ-LChTQrUxN9NRaTaMiIk9rV6C8UNqM5Bz-9XKOU9Ej1I3ENjg>
+    <xmx:ct2KZ_EL5LasYCXG2OF9FYCLX2QXqF-t7Xo2i_wzAsvsHCX9nXhW5Dhh>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 17:37:52 -0500 (EST)
+ 17 Jan 2025 17:45:05 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
-  me@ttaylorr.com,  johncai86@gmail.com,  newren@gmail.com,
-  christian.couder@gmail.com,  kristofferhaugsbakk@fastmail.com,
-  jonathantanmy@google.com,  karthik.188@gmail.com,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/5] PATH WALK III: Add 'git backfill' command
-In-Reply-To: <Z4jY2Bj-e8i9Zuig@pks.im> (Patrick Steinhardt's message of "Thu,
-	16 Jan 2025 11:00:56 +0100")
-References: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
-	<pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
-	<Z4jY2Bj-e8i9Zuig@pks.im>
-Date: Fri, 17 Jan 2025 14:37:51 -0800
-Message-ID: <xmqqsephhxs0.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Koakuma <koachan@protonmail.com>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>
+Subject: Re: [PATCH 1/3] packfile: factor out --pack_header argument parsing
+In-Reply-To: <20250117125459.GA2893666@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 17 Jan 2025 07:54:59 -0500")
+References: <20250117125207.GB2356599@coredump.intra.peff.net>
+	<20250117125459.GA2893666@coredump.intra.peff.net>
+Date: Fri, 17 Jan 2025 14:45:04 -0800
+Message-ID: <xmqqo705hxfz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,13 +87,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Jeff King <peff@peff.net> writes:
 
-> I was wondering whether we might want to mark the new command as
-> experimental at first to allow us to iterate, but the last set of
-> commands where we have done so are still experimental many years after
-> they have been introduced. So... probably not a good idea.
+>  			} else if (starts_with(arg, "--pack_header=")) {
+> -				struct pack_header *hdr;
+> -				char *c;
+> -
+> -				hdr = (struct pack_header *)input_buffer;
+> -				hdr->hdr_signature = htonl(PACK_SIGNATURE);
+> -				hdr->hdr_version = htonl(strtoul(arg + 14, &c, 10));
 
-I am not sure if I agree.  Anybody who wants any of these commands
-that are marked as experimental to be declared stable can propose
-to do so with a reasonable timeline attached.
+Interesting.  So the file-scope static input_buffer[] sits in the
+BSS and happens to be well aligned not to cause the problem, but ...
+
+> @@ -645,18 +646,9 @@ int cmd_unpack_objects(int argc,
+>  				continue;
+>  			}
+>  			if (starts_with(arg, "--pack_header=")) {
+> -				struct pack_header *hdr;
+> -				char *c;
+> -
+> -				hdr = (struct pack_header *)buffer;
+> -				hdr->hdr_signature = htonl(PACK_SIGNATURE);
+> -				hdr->hdr_version = htonl(strtoul(arg + 14, &c, 10));
+
+... the same file-scope static buffer[] that also sits in the BSS
+was not well aligned by chance?
+
+Otherwise these should be identical code.  Very interesting.
+
+And of course the fix in the [2/3] is absolutely the right thing to
+do.
+
+Thanks.
+
