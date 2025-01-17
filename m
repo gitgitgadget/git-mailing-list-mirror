@@ -1,79 +1,79 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AC01FAC4A
-	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:56:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFD21F9F61
+	for <git@vger.kernel.org>; Fri, 17 Jan 2025 09:56:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737107782; cv=none; b=mlcnGJGyHCx0P+DnWzqt8o03So5rm5cmtQOMqYNXaJlmATjsYUBO2XNCpgRkFw/ylrdscSr1ZDu9lM52GFRVPF6zuq9tkQml/1Qo/074EReyWl1zqAcYkA+DgnJAQwcrNt03Hq+PQGFTBds2+eiV/XroNETl3vui96ukCHVUDY8=
+	t=1737107783; cv=none; b=A4BPvftMjrdggRk95Wpj/cegvxNWLumcCzP25xMthpNg4rWGxRUqfDO6KWOnWs2BvDkN+eXWz7ikpLSWPSRFMvD3EZByldCnStwBM+N7fzvak33ixceiAfDkZWE+yS9m/xqzhjE8cXqCsS7rKVQ/SsdeBOjFojh3H6nhbmdWJGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737107782; c=relaxed/simple;
-	bh=+kubdm+exVz6WeR7lOGEsUtWWbWLxBAG9ZSceja3SZ0=;
+	s=arc-20240116; t=1737107783; c=relaxed/simple;
+	bh=LXrrKmIwZLgVXScflJ76WmheGqO35YoS0Cg+NDIL2dM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qUGEge4LJWCWa2jRsm9No7bX/PonwT86/ojKeLtxk1HHzPqgbFgeYv/aqZKy3gElH9f9Iw1dmZpCWCpaGRzugN24J2yeJdT3N2kpTvdFvlfqUM4lLkf8iC5+EpMPWS0oEMdNtkgFwQXkYPnVJ9r9jEKL0qVYgDE9+hTl5AENnxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=liH5zyJQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iYsf6UI1; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=lFugKaLa5+bS8cs7H132V68QtwWIrM96DzIwzsJKVENgkSBjx1+c1BY7G2Gq+YSJFAIdIgKTem5qmoiUOyihRIZkrma1zeSuKQntibyFORhaD1pGefFFe0axqzoEag2Tbw2f73edeE8ROl18jcOEL9MD0WjKVg3nHCE5Rw8NsFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=flyiY+e8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R0MmKfoa; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="liH5zyJQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iYsf6UI1"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id BF31B138085B;
-	Fri, 17 Jan 2025 04:56:19 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="flyiY+e8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R0MmKfoa"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B29631140121;
+	Fri, 17 Jan 2025 04:56:20 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 17 Jan 2025 04:56:19 -0500
+  by phl-compute-01.internal (MEProxy); Fri, 17 Jan 2025 04:56:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1737107779;
-	 x=1737194179; bh=cyKAl+9ImX3z0KnMVrS2buBpXmpxKuMim36YEZEEFeg=; b=
-	liH5zyJQN8/k+XD00skKriOG+cHes+XdlyUpRwbVGGMvhDxKJckA+3vmy31y+nA/
-	aNcdaJISb2dfVMSDW6sMbLDavFKdKVCh0amHXjxK68tTvxYBFY7x3iIRj/BxKB0W
-	z1f0sFZKWjokyIeidY4v8Ld+uq7X7MzhBkJ4gc9U+F0DdNfwxquNHEgxVtXatGZM
-	5SITRZYaAkeJIlnQhMEtXJ/7RGG43oCDGRB5M1J+DfvuaZ/Zwq4N269ZLgBWm1W7
-	hgnkWoHC9vLQpPcF21JHsffx57BwhNMLcuoxD6MQMO7ZPgvXUVXaHiGHDNkSdORd
-	QhemGvHw/zuAlIQ66aaxNg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1737107780;
+	 x=1737194180; bh=DXu73kEj5oj2q0S1xBF+LonCgaxu1onPINdEFMVii68=; b=
+	flyiY+e8cf/pRMIh6TAjxZ3oYfvKconodtt7tOsvgLMNRpSW10uQ+w3P13dzlndO
+	vLpVV0uNr28mKSTbOqPI56FNExRPkZpoG8Qgo0kjsTXFcMeFdFbDyqqmjlL91BYC
+	UWQ/8Ktzp06SuscvL848fPzQrq2SKNR/BbbtSDnmGGTwbhrR6kcSTkCwMF3SxcKf
+	ewhfHSmGqVu1c0Nd1rhORS7LO5loB0NGGBrSG6WzNYMmqmE4YJOn6PrTo8qPtvky
+	zzBvegIjeEHG1ZULKnfmLl1VFWbgY9qSiqDE7/HVRSW9uKgcyEiw0/w9DXTF40Hm
+	zcVneGR43mvoxoGctKQXrQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737107779; x=
-	1737194179; bh=cyKAl+9ImX3z0KnMVrS2buBpXmpxKuMim36YEZEEFeg=; b=i
-	Ysf6UI1RrbxH1J5VUITwvA2G6EMVmJkWWwmootWkrWMxfFb4pxTu35hQW3RqpPhg
-	AcFpIOG8StJcScDXKaiyRpRp+kodTk7e5bghiauMlkLQmYypuEYDfVHD8i9KfQk0
-	mFAo5MZ5U37eH8hSPb63GVUy2CkdypZKXO79JHpWadviPSg0bNT7jSecEFQ5Nkc+
-	HqWXsmKoftNuUA+L/szzMJe7NfePQgtB1D1iXC5OKx7wMCgEWLNFLXzwGga+j8Sv
-	3jony7kVHSFWA1SQglAFvL4Bmf2p71vkUQ669IkecozzSmTGboNzziUEK2stzOYQ
-	fk5VLLdiRKzkrMCBHsJjQ==
-X-ME-Sender: <xms:QymKZ-DyOne6-IXXSLCLsCLjDcyJjF6HZMHm4PiAO0XZzqt3lRyRLg>
-    <xme:QymKZ4jFxCgBIOAXrIT5X7_rKj_vT-ZCkzOERFwR-MhHGHjwttI3NInVASMYNGXRa
-    1gRiOxtb4GbSTcvjA>
-X-ME-Received: <xmr:QymKZxmjACYMh3eb7bKterNYe3noA8ap5_w5xLOuu3HQLmXhBro-repoUR1fh9zyaKMdle0CsBf-r2EYx9HoFGcXiDxOLhoKqHXj587D5u7t0nE>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737107780; x=
+	1737194180; bh=DXu73kEj5oj2q0S1xBF+LonCgaxu1onPINdEFMVii68=; b=R
+	0MmKfoaouxzCMD9gtn7b8/yRd192d2GIXbREmtn+8jQDrTngQPoTzTQt7kTX62mD
+	dXa6zRH9OaaIA4FFyb23EunZh2yAPeuw9gXVDTTqnYdlcXxoPZ8LiY230KmruDok
+	hGCnfoFSdKbThrjbXDDSPkpehXqr7b6x85xlUB9VwaVhtPTQUZ8Kxn0y+0FJNTcq
+	T9fXCoP5vo8W4Ur2JyZvGeEjRY87UYNXgJ097MPefTbIJmaa/ay98u66vdNW7PSP
+	zJW79moTyLCS2JMGgM485Q33V4jiHo8anUr+MLEQYnkNJ3dOrpYyhf4if8K7m+A+
+	RNSVwPD5pgJhmnVB/YUPQ==
+X-ME-Sender: <xms:RCmKZ_oBBs8lm7GKT8HNJoVAygRfEJXokFHgJS3fSkimIi3p1CtZvw>
+    <xme:RCmKZ5qPw3FB5r5uZFHny8gdBaV62lfHOp1cEJCej5nvTGr0jcnU4l7egoAvqA9LB
+    YZISVIbuID3g88nvQ>
+X-ME-Received: <xmr:RCmKZ8PYoAj3Nc4Enexh4mJCFdqDDm14MiWhaBK93kMYqvtwfVoi_qAmLKpEzUUddnlMEvzB9m8WzCrmadq9JEq4m-wT5yD7RfUkBndujslglHc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeifedgtdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
     gtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepfeefleeivd
-    ethefgudehueffheeiheehjedvheekleegffdtffevieeludeiteeknecuffhomhgrihhn
-    pegtohhnfhdrihhnpdhrsgdrihhnnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhho
-    uggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgesfhhrvggvsghsugdrohhrgh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:QymKZ8xTvQ4bDE_PnVSYa14vmIzlLOB1UzG8wNFtF_ubGOqX7dbHCA>
-    <xmx:QymKZzS6OcRCIqLdnpF-wldteNWd4IN2yWsZuPae47xBxJ8pfXZAaA>
-    <xmx:QymKZ3actaoOoR1Y4uvz3VMAGJ1ueVDgHQpeJzBulEyJ1iefAVmZ5A>
-    <xmx:QymKZ8QzS915SjFIZEnUlZsqVQ013RsPGtsc05WnrBQB6qIX8Os2Cg>
-    <xmx:QymKZ-dZZhizjF0wc_DJQdpX6JKaq5x8xyHZqNXT-Z_X70jelcctdT22>
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
+    dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrghrghgrsehfrhgvvggssh
+    gurdhorhhg
+X-ME-Proxy: <xmx:RCmKZy7p4mFT2wEok8NSAWkLgcGvss4gGzS9DLbRDtiDIYF8mBXQ-Q>
+    <xmx:RCmKZ-5gyKFKYJLmGo7a3b_91aKfwvzvBYHM4BYoU8n1DX6m51kq0w>
+    <xmx:RCmKZ6i1tSnRIkBA7Upm3lsWNBsewTGz6NI09OBIsJVhKUtdaZsIcQ>
+    <xmx:RCmKZw7aEJ0ac82hKAyS7kc9PupPijOt2zM-XoVWNc0MleIxStspaA>
+    <xmx:RCmKZ-FdOeCVaxAggIW08wadQ7sy9QJiJO9j_8crKr7ifwb3LxYKcxIE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 04:56:18 -0500 (EST)
+ 17 Jan 2025 04:56:19 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1f89a48b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 17 Jan 2025 09:56:16 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2e33568e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 17 Jan 2025 09:56:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 17 Jan 2025 10:56:05 +0100
-Subject: [PATCH 1/3] contrib/subtree: fix building docs
+Date: Fri, 17 Jan 2025 10:56:07 +0100
+Subject: [PATCH 3/3] meson: wire up the git-subtree(1) command
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,118 +82,122 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250117-b4-pks-build-subtree-v1-1-03c2ed6cc42e@pks.im>
+Message-Id: <20250117-b4-pks-build-subtree-v1-3-03c2ed6cc42e@pks.im>
 References: <20250117-b4-pks-build-subtree-v1-0-03c2ed6cc42e@pks.im>
 In-Reply-To: <20250117-b4-pks-build-subtree-v1-0-03c2ed6cc42e@pks.im>
 To: git@vger.kernel.org
 Cc: Renato Botelho <garga@FreeBSD.org>
 X-Mailer: b4 0.14.2
 
-In a38edab7c8 (Makefile: generate doc versions via GIT-VERSION-GEN,
-2024-12-06), we have refactored how we build our documentation by
-injecting the Git version into the Asciidoc and AsciiDoctor config
-files instead of doing so via arguments. As such, the original config
-files were removed, where the expectation is that they get generated via
-`GIT-VERSION-GEN` now.
+Wire up the git-subtree(1) command, which is part of "contrib/". Note
+that we have to move around the exact location where we include the
+"contrib/" subdirectory so that it comes after building the docs so that
+we have access to some of the common functionality.
 
-Whie the git-subtree(1) command part of "contrib/" also builds docs
-using these same config files, its Makefile wasn't adjusted accordingly
-and thus building the docs is broken.
-
-Fix this by using `GIT-VERSION-GEN` to generate those files.
-
-Reported-by: Renato Botelho <garga@FreeBSD.org>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/subtree/.gitignore |  2 ++
- contrib/subtree/Makefile   | 23 +++++++++++++++--------
- 2 files changed, 17 insertions(+), 8 deletions(-)
+ contrib/subtree/meson.build | 71 +++++++++++++++++++++++++++++++++++++++++++++
+ meson.build                 |  3 +-
+ 2 files changed, 73 insertions(+), 1 deletion(-)
 
-diff --git a/contrib/subtree/.gitignore b/contrib/subtree/.gitignore
-index 0b9381abca..6deaf177c7 100644
---- a/contrib/subtree/.gitignore
-+++ b/contrib/subtree/.gitignore
-@@ -1,4 +1,6 @@
- *~
-+asciidoc.conf
-+asciidoctor-extensions.rb
- git-subtree
- git-subtree.1
- git-subtree.html
-diff --git a/contrib/subtree/Makefile b/contrib/subtree/Makefile
-index 6fa7496bfd..8fe0bfd401 100644
---- a/contrib/subtree/Makefile
-+++ b/contrib/subtree/Makefile
-@@ -1,6 +1,7 @@
- # The default target of this Makefile is...
- all::
+diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
+new file mode 100644
+index 0000000000..a752a188df
+--- /dev/null
++++ b/contrib/subtree/meson.build
+@@ -0,0 +1,71 @@
++git_subtree = custom_target(
++  input: 'git-subtree.sh',
++  output: 'git-subtree',
++  command: [
++    shell,
++    meson.project_source_root() / 'generate-script.sh',
++    '@INPUT@',
++    '@OUTPUT@',
++    meson.project_build_root() / 'GIT-BUILD-OPTIONS',
++  ],
++  install: true,
++  install_dir: get_option('libexecdir') / 'git-core',
++)
++
++subtree_test_environment = test_environment
++subtree_test_environment.prepend('PATH', meson.current_build_dir())
++
++test('t7900-subtree', shell,
++  args: [ 't7900-subtree.sh' ],
++  env: subtree_test_environment,
++  workdir: meson.current_source_dir() / 't',
++  depends: test_dependencies + bin_wrappers + [ git_subtree ],
++  timeout: 0,
++)
++
++if get_option('docs').contains('man')
++  subtree_xml = custom_target(
++    command: asciidoc_common_options + [
++      '--backend=' + asciidoc_docbook,
++      '--doctype=manpage',
++      '--out-file=@OUTPUT@',
++      '@INPUT@',
++    ],
++    depends: documentation_deps,
++    input: 'git-subtree.txt',
++    output: 'git-subtree.xml',
++  )
++
++  custom_target(
++    command: [
++      xmlto,
++      '-m', '@INPUT@',
++      'man',
++      subtree_xml,
++      '-o',
++      meson.current_build_dir(),
++    ] + xmlto_extra,
++    input: [
++      '../../Documentation/manpage-normal.xsl',
++    ],
++    output: 'git-subtree.1',
++    install: true,
++    install_dir: get_option('mandir') / 'man1',
++  )
++endif
++
++if get_option('docs').contains('html')
++  custom_target(
++    command: asciidoc_common_options + [
++      '--backend=' + asciidoc_html,
++      '--doctype=manpage',
++      '--out-file=@OUTPUT@',
++      '@INPUT@',
++    ],
++    depends: documentation_deps,
++    input: 'git-subtree.txt',
++    output: 'git-subtree.html',
++    install: true,
++    install_dir: get_option('datadir') / 'doc/git-doc',
++  )
++endif
+diff --git a/meson.build b/meson.build
+index 0064eb64f5..ac7f6ef38b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1857,7 +1857,6 @@ endforeach
+ if intl.found()
+   subdir('po')
+ endif
+-subdir('contrib')
  
-+-include ../../shared.mak
- -include ../../config.mak.autogen
- -include ../../config.mak
- 
-@@ -13,17 +14,16 @@ htmldir ?= $(prefix)/share/doc/git-doc
- ../../GIT-VERSION-FILE: FORCE
- 	$(MAKE) -C ../../ GIT-VERSION-FILE
- 
---include ../../GIT-VERSION-FILE
--
- # this should be set to a 'standard' bsd-type install program
- INSTALL  ?= install
- RM       ?= rm -f
- 
- ASCIIDOC         = asciidoc
--ASCIIDOC_CONF    = -f ../../Documentation/asciidoc.conf
-+ASCIIDOC_CONF    = -f asciidoc.conf
- ASCIIDOC_HTML    = xhtml11
- ASCIIDOC_DOCBOOK = docbook
- ASCIIDOC_EXTRA   =
-+ASCIIDOC_DEPS    = asciidoc.conf
- XMLTO            = xmlto
- XMLTO_EXTRA      =
- 
-@@ -32,8 +32,9 @@ ASCIIDOC         = asciidoctor
- ASCIIDOC_CONF    =
- ASCIIDOC_HTML    = xhtml5
- ASCIIDOC_DOCBOOK = docbook
--ASCIIDOC_EXTRA  += -I../../Documentation -rasciidoctor-extensions
-+ASCIIDOC_EXTRA  += -I. -rasciidoctor-extensions
- ASCIIDOC_EXTRA  += -alitdd='&\#x2d;&\#x2d;'
-+ASCIIDOC_DEPS    = asciidoctor-extensions.rb
- XMLTO_EXTRA     += --skip-validation
+ # Gitweb requires Perl, so we disable the auto-feature if Perl was not found.
+ # We make sure further up that Perl is required in case the gitweb option is
+@@ -1884,6 +1883,8 @@ if get_option('docs') != []
+   subdir('Documentation')
  endif
  
-@@ -82,13 +83,13 @@ install-html: $(GIT_SUBTREE_HTML)
- $(GIT_SUBTREE_DOC): $(GIT_SUBTREE_XML)
- 	$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $^
- 
--$(GIT_SUBTREE_XML): $(GIT_SUBTREE_TXT)
-+$(GIT_SUBTREE_XML): $(GIT_SUBTREE_TXT) $(ASCIIDOC_DEPS)
- 	$(ASCIIDOC) -b $(ASCIIDOC_DOCBOOK) -d manpage $(ASCIIDOC_CONF) \
--		-agit_version=$(GIT_VERSION) $(ASCIIDOC_EXTRA) $^
-+		$(ASCIIDOC_EXTRA) $<
- 
--$(GIT_SUBTREE_HTML): $(GIT_SUBTREE_TXT)
-+$(GIT_SUBTREE_HTML): $(GIT_SUBTREE_TXT) $(ASCIIDOC_DEPS)
- 	$(ASCIIDOC) -b $(ASCIIDOC_HTML) -d manpage $(ASCIIDOC_CONF) \
--		-agit_version=$(GIT_VERSION) $(ASCIIDOC_EXTRA) $^
-+		$(ASCIIDOC_EXTRA) $<
- 
- $(GIT_SUBTREE_TEST): $(GIT_SUBTREE)
- 	cp $< $@
-@@ -98,6 +99,12 @@ test: $(GIT_SUBTREE_TEST)
- 
- clean:
- 	$(RM) $(GIT_SUBTREE)
-+	$(RM) asciidoc.conf asciidoctor-extensions.rb
- 	$(RM) *.xml *.html *.1
- 
-+asciidoc.conf: ../../Documentation/asciidoc.conf.in ../../GIT-VERSION-FILE
-+	$(QUIET_GEN)$(call version_gen,"$(shell pwd)/../..",$<,$@)
-+asciidoctor-extensions.rb: ../../Documentation/asciidoctor-extensions.rb.in ../../GIT-VERSION-FILE
-+	$(QUIET_GEN)$(call version_gen,"$(shell pwd)/../..",$<,$@)
++subdir('contrib')
 +
- .PHONY: FORCE
+ foreach key, value : {
+   'DIFF': diff.full_path(),
+   'GIT_TEST_CMP': diff.full_path() + ' -u',
 
 -- 
 2.48.0.257.gd3603152ad.dirty
