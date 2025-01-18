@@ -1,172 +1,149 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA4E14F98
-	for <git@vger.kernel.org>; Sat, 18 Jan 2025 01:27:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7524E22071
+	for <git@vger.kernel.org>; Sat, 18 Jan 2025 03:04:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737163645; cv=none; b=qXObypcx7uoy2mxIYNGCywz+eeDUJTGM5gbc/mp8KbxGtd5UpNy1F7ZZuNLQzkB9e9OFDb2YU5oVpZu8iIZnq0ormgB+xxpvuOSurlp+1xNzrMj5I4ppw29Dfi/1K36uuMxEzaz6zf5Y0nDz38erMulfYrsGlz7alOb6X0firzE=
+	t=1737169480; cv=none; b=uC9lYxRdwX3ruhSsRanOnKeoajEWI0ueMPjRFu4Tj0QL5YcH1u5gRvFoxqR2wEcpX0kpWAfTtjDkPa8QHjImmGwDgBJc9PaAptJ9qhhVV15+sawWEqYVEiHfyK2OK7AfqDKBqhyutVYGqu4q9b7KrQpHz+eMcLVWGtaByBe70po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737163645; c=relaxed/simple;
-	bh=4YAnK1E+lXjUpWhpBFakwbnut/ih3cHZsVhkOPWmQZ8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JSkq/fXBbP+V5uHgkktR5mhPAdCTwVdd05o3agx+wZAx/8tb89pZeQ0FD6sYLFxhaBfgnKyiLLH9C3JWvRpoUbNPx0uq1G44POoLzSH/GX/V/u6HSEvepu///y2eEizwPDA98STvPw6+locJomAfXBrWsvJHJhDCR/Cf1JYa39c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lyyUdl9y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fgVFHA6r; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1737169480; c=relaxed/simple;
+	bh=cg7zbFX+HTqEV9BeoTT32WgBx704D9+s/q/aa/p+TGA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CQXd21cQQuzN+hi0BoS0WM1To9ksvVKVt5E/0WUgGhaD0t7E4ZXSdDMHIaZezGKvaXKDkWd+F4H1kc2kQv4JjqaP/XT9bp8WrTi0iU6e1oAs+Wz6TOZlWB3i3WrxOJ9F7A1RrBe1muFhPbhIik8rcd1t1pANfUPx+eDdQADl/EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fu0lkTCR; arc=none smtp.client-ip=209.85.210.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lyyUdl9y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fgVFHA6r"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CB2132540108;
-	Fri, 17 Jan 2025 20:27:22 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 17 Jan 2025 20:27:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1737163642; x=1737250042; bh=tGVCXCrGca
-	XFF5yAgSSNecWBvKCMlZCw+2ifCYwOxOk=; b=lyyUdl9yv8h+k3fVsyN6Ll2eoE
-	M/v4XQjuEHDunv6ZOAT5wn6hhlj2DN61HMVo0zfI4tas30MkMIJRx8a5kJi6TgJd
-	8dgXnvvzN1wUGbfEmaHnRvi+s1YapK0ygvZML3ebkrQkVKp5IuJIMP0pjQtlhhaq
-	PynndLLXC0xSrAV6WHvbLyC5UfGgmLyo26GNawVEIXnYxdgmuwVnRaw8fVzGWQHy
-	Eaq0+WtE1JDF9igHa81/J5IceIwUqfi25nQRKbwH8N+CW7pOrIGW6JeIQUnnO6Jl
-	fyvgveI5bSjBuMKUnp27fzh/aHRDDiGo0sQUhLbF6muTq0Q/0S721UKYEh1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737163642; x=1737250042; bh=tGVCXCrGcaXFF5yAgSSNecWBvKCMlZCw+2i
-	fCYwOxOk=; b=fgVFHA6rkA/5DkO7YnA9QUBUdt+yC7wprXsVsky6E1sZtV3JAFV
-	w0OpNVgZmZ/zNDt+IMNPQ/kfnf6aRfreBxh+mPjhoxZlYlp+X15v7fMGYsI1MKY/
-	/UMPKzhacGytwUCj+Uf+NG78e0ez7z++RFqF+UvJe31dam3fdDKiXCqpxJMKAHwQ
-	wfPRHxBrWQjyqFeXkfn/faBiEYgx64+Jwj82eupLVXwQP4F1Xh8HoqcR0xwKMZ8V
-	cxiA0G56mKQ4WUDjG1CTDTqoRZXOifQI70aTNqwfc/dU8jfErTSch+tdnPbghuB0
-	OiLOwwpVbiryyih6qNdgKDCZWbY1H7q9JTg==
-X-ME-Sender: <xms:egOLZ4Y2uqYIobxZnEDULS0H64YaFxXU3hp85niFIxczmdpoAckbfw>
-    <xme:egOLZza3wwnZ_F0Tl8j7SEY4F3BEmRAWcoGHo5TYQjI519gUA-qtBzEuhF5BqmZkR
-    xqZ4oVoOHygMxQcKg>
-X-ME-Received: <xmr:egOLZy_eF7CXaKk4L-wlQbR3IKdOnyrVHl1p6jzKxltgzWlMWan7wi9eTDREK5pBcQHKTa_d9P5aD8sePN5_5yQKFKVmE3ZTpYAa>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeigedgfeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
-    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepkhhorggthhgrnh
-    esphhrohhtohhnmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:egOLZypA_0Uy4VkGOASmr3329wbwBvj6rOpnNGuxXkjcLjpNFPc5VA>
-    <xmx:egOLZzrST_DRVetP3dfy3cNTZshNiNA_U7ox-z8KMYYgI9nZXvS0vg>
-    <xmx:egOLZwQ7O6PE4Cs-PBccYozmAh1-CigA21FeECi2Os_AcTjZ_kOr4w>
-    <xmx:egOLZzpKiwksXI_TU-1BRzTYvV3WpmcrtBMXlwjXLglS3E1ZUZCF4Q>
-    <xmx:egOLZ0kmYtPWqL9vjIVQEOF83zU8xeK28KdbXO110KUPoqXDoKemEeN0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 17 Jan 2025 20:27:22 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Koakuma <koachan@protonmail.com>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: [PATCH 2/3] parse_pack_header_option(): avoid unaligned memory
- writes
-In-Reply-To: <20250117125530.GB2893666@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 17 Jan 2025 07:55:30 -0500")
-References: <20250117125207.GB2356599@coredump.intra.peff.net>
-	<20250117125530.GB2893666@coredump.intra.peff.net>
-Date: Fri, 17 Jan 2025 17:27:21 -0800
-Message-ID: <xmqq7c6s52ti.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fu0lkTCR"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-71e36b27b53so1500980a34.1
+        for <git@vger.kernel.org>; Fri, 17 Jan 2025 19:04:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737169477; x=1737774277; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=v2lLhU9bDpbdRMqKpfBKlQ/enIQpmt0thnX+TaPuATQ=;
+        b=Fu0lkTCR/MYyL5Hh5i9Z9VXZTkpfEHczQkqYe/aAoHEVKfVqG17yyXl6luBd00GxyL
+         eVm4/hlSODqqnPY0QOE4AH14R7yBoYgA15PKDNozmrW1fYacCQc5UZVbXcESpFIEPKbs
+         +6GoAE9kbDbEWklLBlGph/Yrl0reOZ++eZEeL10GEarTl40dF1yBXx8b6l4SK0aD8mSd
+         paLUM+3qjFemT77fuk//Ns5ZV5YK6a3QAl17iHLU7Lgw2si2O0pQ46jcQbxiCSjh2HXt
+         uCRJOOUz2M6imScFT3Rs8AwOzTFAPWWG5NUI2zalS84nGwYHXFA7ZcpjoWaR3OIHzZIa
+         GgOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737169477; x=1737774277;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=v2lLhU9bDpbdRMqKpfBKlQ/enIQpmt0thnX+TaPuATQ=;
+        b=eqlfS7bt4d/+Nc21qlDrEDf1lseOD4YKlo7M9Zh7DDyh/02cHE6idWq1EpYnwjWeIG
+         QLn0cTkX04rhl0xGYOFDEyn/ZP+JEDaL76KMiKFtg+u8yANZE7xxEjZWk4eTWK2ClPFt
+         h63sNrS4D7jAbXvuIIsuwoxTT3kJMF4G6BH1jUvHiIy9lcvrizcjQzqMfEnd4ZCceLGN
+         8mqiGqUa7RDxqLfLiOmW4tTJt0kspNbavSsq9m1i1qloy945pv0QR2mxKNx1dWupyGFa
+         YrEsqsblKM0Ub/vcncNcCBf9hI3w2jn9EMkwWsVDoykoWDR3Z84uiwifnVDIEIsPwSGJ
+         f2/w==
+X-Forwarded-Encrypted: i=1; AJvYcCUZSJOSLvDRNSo1gMyMCOgVTlJVXo0MZzsi/t8YXly0UYaMfVZ9LnKh3DL4nQ0Pz2iZWoA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOQF7Gptvvbvi05VFaFBujpqsskoRednDzuh2PWKaqSfNcCRJT
+	CKMY9WAaywnAb+tiscGYH9Adntfjb8N727XDIRmVOA+xytYr5XoR
+X-Gm-Gg: ASbGnctLBTUHjmFCUFbwjqO5KutqPw653hrP+PP4bJ0GTrjg/rf3+1UtTHu0fEQ22Ln
+	GktgtHGwU7upGtnhWfSjYwOL/KtHybX3InVssGewNUUstU56psohfCc0RF4S32vfX3QxpqekWXy
+	2XYqEtqLj4rtfD2z9HNrKlLaF4LV/ZbCHme6dQ0nU/IL9+MJVgo263cLYgYGZ0KFtGZzxCJZJRF
+	0+/YNJk29W/Yvuh4j8z6ZZSJ59Jr7BmfigC/Gwg5oE33j+y
+X-Google-Smtp-Source: AGHT+IEX+ohbj+9wouklytkQP50RmIri+lQdkycQRFP7/99c+HYcysVroK01UZF4siaLxPijW6GLug==
+X-Received: by 2002:a05:6830:670d:b0:71d:6543:e83f with SMTP id 46e09a7af769-7249da7d8f6mr2634880a34.11.1737169477431;
+        Fri, 17 Jan 2025 19:04:37 -0800 (PST)
+Received: from localhost ([2604:5040:11:69e::e973])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7249b4d2d78sm1321222a34.69.2025.01.17.19.04.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Jan 2025 19:04:36 -0800 (PST)
+Date: Sat, 18 Jan 2025 11:05:54 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH 03/10] packed-backend: check whether the "packed-refs" is
+ regular
+Message-ID: <Z4sakhF9O7q8dib5@ArchLinux>
+References: <Z3qNUizvHJLgMx1y@ArchLinux>
+ <Z3qN6C2IpQTdVn_S@ArchLinux>
+ <CAOLa=ZQ-cRJeWjP-_6N2v4GS5P7oYVUyb9_tbY26W7MAJfJ6ZQ@mail.gmail.com>
+ <Z4pijwANZWAP2XKH@ArchLinux>
+ <CAPig+cRsAPp1APNJ7W337UNtunETr+Lnn-RcGrAXEFUhN1APyA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cRsAPp1APNJ7W337UNtunETr+Lnn-RcGrAXEFUhN1APyA@mail.gmail.com>
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jan 17, 2025 at 05:01:21PM -0500, Eric Sunshine wrote:
+> On Fri, Jan 17, 2025 at 8:59 AM shejialuo <shejialuo@gmail.com> wrote:
+> > On Tue, Jan 07, 2025 at 08:33:56AM -0800, Karthik Nayak wrote:
+> > > shejialuo <shejialuo@gmail.com> writes:
+> > > > +test_expect_success SYMLINKS 'the filetype of packed-refs should be checked' '
+> > > > +   test_when_finished "rm -rf repo" &&
+> > > > +   git init repo &&
+> > > > +   cd repo &&
+> > >
+> > > This should be in a subshell, so that at the end we can actually remove
+> > > the repo. This seems to be applicable to most of the other tests in this
+> > > file too. Perhaps, we should clean it up as a precursor commit to this
+> > > series?
+> >
+> > I have searched the usage of "test_when_finished", and I don't know why
+> > we need to use subshell. Could you please explain this further here.
+> 
+> Karthik may have been thinking about operating systems, such as
+> Microsoft Windows, which won't allow a directory to be deleted if that
+> directory is in use. In this case, because the test cd's into "repo"
+> and never cd's elsewhere, the directory is still in use when
+> test_when_finished() tries to delete "repo".
+> 
+> However, there is an even more important reason to use a subshell, and
+> that is because a subshell ensures that the current working directory
+> is effectively restored to the path which was current before the cd
+> command. This is important since it guarantees that subsequent tests
+> will be run in the correct directory even if the preceding test bombed
+> out part way through. For example:
+> 
+>     test_expect_success 'foo' '
+>         git init repo &&
+>         cd repo &&
+>         ...some more commands... &&
+>         cd ..
+>     '
+> 
+> If one of the commands in "...some more commands..." fails, then the
+> `cd ..` will never be reached, and the current working directory will
+> remain "repo" rather than reverting to the path prior to the cd
+> command. Thus, any tests which follow this one in the script will end
+> up running in the wrong directory. The proper way to protect against
+> this is:
+> 
+>     test_expect_success 'foo' '
+>         git init repo &&
+>         (
+>             cd repo &&
+>             ...some more commands...
+>         )
+>     '
+> 
+> Exiting the subshell will correctly restore the current working
+> directory to the original path _regardless_ of whether the test
+> succeeds or fails somewhere in "...some more commands...". Using a
+> subshell also means that you don't have to manually restore the
+> working directory via `cd ..` or similar.
 
-> +	put_be32(hdr, PACK_SIGNATURE);
-
-Tonight's comedy.  PACK_SIGNATURE is defined as 0x5041434b (in pack.h)
-In <compat/bswap.h> we want to take advantage of the fact that
-assigning any unsigned integer to *(unsigned char *) would assign
-the integer's least significant 8 bits.
-
-static inline void put_be32(void *ptr, uint32_t value)
-{
-	unsigned char *p = ptr;
-	p[0] = value >> 24;
-	p[1] = value >> 16;
-	p[2] = value >>  8;
-	p[3] = value >>  0;
-}
-
-But sparse seems not to like that.
-
-compat/bswap.h:175:22: error: cast truncates bits from constant value (5041 becomes 41)
-compat/bswap.h:176:22: error: cast truncates bits from constant value (504143 becomes 43)
-compat/bswap.h:177:22: error: cast truncates bits from constant value (5041434b becomes 4b)
-
-Of course we could do the mask, but should we have to?
-
-I think the real compiler would be clever ehough to produce the
-identical binary with the following patch that is only needed to
-squelch this error, but I feel dirty after writing this.
-
-By the way, a "git grep" finds 
-
-	put_be32(&hdr_version, INDEX_EXTENSION_VERSION2);
-
-in the fsmonitor.c file, which does not get flagged only because the
-CPP macro expands to a small integer (2).  That is doubly insulting.
+Thanks for above detailed explanation. I somehow understand why there
+would be so many "repo/repo/repo" when I execute the test. I have
+thought that `test_expect_success` command will make the environment of
+each test totally independent. I will improve this in the next version.
 
 
- compat/bswap.h | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
-
-diff --git c/compat/bswap.h w/compat/bswap.h
-index 512f6f4b99..b34054f2bd 100644
---- c/compat/bswap.h
-+++ w/compat/bswap.h
-@@ -171,23 +171,23 @@ static inline uint64_t get_be64(const void *ptr)
- static inline void put_be32(void *ptr, uint32_t value)
- {
- 	unsigned char *p = ptr;
--	p[0] = value >> 24;
--	p[1] = value >> 16;
--	p[2] = value >>  8;
--	p[3] = value >>  0;
-+	p[0] = (value >> 24) & 0xff;
-+	p[1] = (value >> 16) & 0xff;
-+	p[2] = (value >>  8) & 0xff;
-+	p[3] = (value >>  0) & 0xff;
- }
- 
- static inline void put_be64(void *ptr, uint64_t value)
- {
- 	unsigned char *p = ptr;
--	p[0] = value >> 56;
--	p[1] = value >> 48;
--	p[2] = value >> 40;
--	p[3] = value >> 32;
--	p[4] = value >> 24;
--	p[5] = value >> 16;
--	p[6] = value >>  8;
--	p[7] = value >>  0;
-+	p[0] = (value >> 56) & 0xff;
-+	p[1] = (value >> 48) & 0xff;
-+	p[2] = (value >> 40) & 0xff;
-+	p[3] = (value >> 32) & 0xff;
-+	p[4] = (value >> 24) & 0xff;
-+	p[5] = (value >> 16) & 0xff;
-+	p[6] = (value >>  8) & 0xff;
-+	p[7] = (value >>  0) & 0xff;
- }
- 
- #endif /* COMPAT_BSWAP_H */
-
+Thanks,
+Jialuo
