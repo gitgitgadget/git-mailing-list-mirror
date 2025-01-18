@@ -1,95 +1,95 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05E435968
-	for <git@vger.kernel.org>; Sat, 18 Jan 2025 20:14:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22511B422F
+	for <git@vger.kernel.org>; Sat, 18 Jan 2025 20:33:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737231299; cv=none; b=jJTHxsWpkBwMEl8euM/St3zg94kVXYwJl1H2F9R/LXf7ShmzVFrTx6kwtjUQ3jYXBSF3m/X0aDJE+VM6DAsXPQfeLqPv2xsHGbELnyaXFtszDbRG+GdiUudqEmW5tTj+LCeTiJfDiT8BmLVbI1ArdKcL7QQ06VUS7fA5A3qiC1s=
+	t=1737232390; cv=none; b=neCUIE/ws6HnZA1XCj6UqeG+MGdG0wprNPUylFiUvhQrAXnQ99zvv6SfbsrzIz6g6JTxRt/cvOUTkbUXxLR13+xrXueHoCtyxEaljRGlMbFfzlzBMwfZYACv6HNrYqWkePy4+cmJf1JJNYJhwTm30hIIpaK8vrxx6gU77qyyaBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737231299; c=relaxed/simple;
-	bh=dFDhdU8jLjv52FgJTF7MpllL5sNinTG7MxwCXzMf4rU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DIkyujX59DqvBoSixUIm928iQI4b0ESfN1efJEwDTY+zPbLTLBvMpm2csesZ7AaO+ApDbwPbKJy8Cddab4z6Dcg/2ofq0aG7aE4LqggiBGJvAgqVZCN6Yp19uDOMT1l9wEMLxD9918gOsilMc2rzC/iIBmeV6FPw66cXcosrIk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=qEQAhtf2; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1737232390; c=relaxed/simple;
+	bh=HipogfrHzWhSr65Hjc0mqjlOlbEq+Bk15vLMRpf+vT0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=gKVF5OzL2BQJSgLTtPLTpG7FwYKpWtmR/KQPe0woHhwXkdYoXf76q78PBEnLj7tDyMcKNWZ1aJVy+vhVBuXkur9a62irUXONJlnRmV+AJ8/MkNeVrt/DyHZY54IZiKV3nK3ePKMvKQjFixmp15ZKJTsvv60cnaRmgBYdaH5vusQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WjOfRnRw; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="qEQAhtf2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1737231290;
-	bh=dFDhdU8jLjv52FgJTF7MpllL5sNinTG7MxwCXzMf4rU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=qEQAhtf2FZhldLsJN0RXjwMEU5V1rFGonYJ3kxJbrRTfVeWau+Zi8Nz3Wyt6bX20U
-	 9UFmDGlbpddGTYbLCEFKySnT0ELSE2d8JzwFr3NIFby8IT5BRg1n5g3OWnozgZ8eud
-	 fjTb7+pYwgBK9KsnZbPq/s6sXDrl2gNs2hTDuBlYvJRFC4SyRXtX7fm8Zgi9pS5VDc
-	 Ly/DCgQoX1JYHPCbwDmzuivXnBSGvbLBn4/lX2vUeoVa6hhMlm7a+bzpSxtJZZbADu
-	 PB2KYMPylB36EfHR3naHqkml1lSJ7jps6c4fuA8aWiiC3bpTA++4NYPgRb4S7nBq4G
-	 gIeNNGQrCM4ZsjRIDLt1bbEF3LEoyDuaUgtlv5ZRlADlJMXKLmjOLEaRE7C0Wt+i8X
-	 hGA7kF1QwgYile9/bGbH/tnkE5Bixs7fq+n1T6JRyi+crfMoc/EWpFX6J/Rn73m1Gs
-	 +N+fo7kh4AFKnFSNotFrrj7a7SjAVn03jJ73epYx/mlc1Qxbw3c
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:2cb2:1b88:3581:fc02])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9858D20033;
-	Sat, 18 Jan 2025 20:14:49 +0000 (UTC)
-Date: Sat, 18 Jan 2025 20:14:47 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: M Hickford <mirth.hickford@gmail.com>
-Cc: M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH v5] credential-cache: respect authtype capability
-Message-ID: <Z4wLt3oPlR5p2_e5@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	M Hickford <mirth.hickford@gmail.com>,
-	M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com
-References: <pull.1842.v4.git.1736212760709.gitgitgadget@gmail.com>
- <pull.1842.v5.git.1736462721156.gitgitgadget@gmail.com>
- <8ef3bd22-d2e4-4361-93da-581d2f76204f@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WjOfRnRw"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-436326dcb1cso21549775e9.0
+        for <git@vger.kernel.org>; Sat, 18 Jan 2025 12:33:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737232387; x=1737837187; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ynNY4smXM9rAiKGRrW/owbNTpISvzw39aUCb05g8txs=;
+        b=WjOfRnRw6V2nG9jrZJRLrD3qdhWDIY5ni/hmJUcxyWzR2tUa9bnkqpfuGDjr9GOuW9
+         v8oRiOKARpde13/oC85IZckdjM7vDPOpAM9ysij/E7380iD2L9rXkFsO8K7ish/iswWG
+         sHT1A5gkF3/ftRbjJfpR/mlIkvDFDcQewsLH2/XOL4TfZZ+1JejSwmE34dyNIcvvCMkz
+         CWxXHXmL7yZjEEumdJ8YK4/a4SECA96iXibThEVwRGowKe/udVJOJrz7BUFfaB59zGY/
+         PH49Nd5Ib2snLAozdkYO44/fSHv4HtUc5id8gB5+VQ2kClO+ePYLsosGl2r7ONQp5HhI
+         ALjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737232387; x=1737837187;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ynNY4smXM9rAiKGRrW/owbNTpISvzw39aUCb05g8txs=;
+        b=C7I6UQUvjeNMGyuOZek8DDANOE3oZh0m8LS4IF2J49ke5LvPNbbUCt8vms13plqcmn
+         QVwb80xHc+H9bNy8JgtaQGsui/CPEUJRerMGszpDRd4KTMDKWTOJZntazVEVD3Bopvpd
+         vnoPNaM5ED8OtC3ryWDHgzQzBEZ8DbIh2qJM+fI45iAlpmfzSCwfgITPMdaJM+6JUF5w
+         eFuavA1GAErHbwHfjg/lRwxEAZQ3eQJH4IfkLdbW3a5QgQz/wBHimVweRzmHjjf8RSKc
+         sgFWix3wflAVlGEDLJN+T0EsQo56PQ2qEzd64gY4A5QlDGXS/zzV3XZJt2zSVtaBfKqA
+         uvIA==
+X-Forwarded-Encrypted: i=1; AJvYcCVeX12NDmfsIfMpBD676QlAGBZXPzVxmhrZ5UyJkz2eCGpyLwTYvFiQYwXk2nxL1wVhUEc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzZua6dW9sPpDY4QnZEi2qcA78Cr1VElsCRWC45bPFvWOCBYPFn
+	Ok46TL/6ZDTcE4DZ9AAfOPqg52TRyXOU3GXAMw5R2E4n9TDN+JwK
+X-Gm-Gg: ASbGncsQupPpQoTWLpDfatnNkbbUwo3+zE5k+VOKOgOpo+XbEH90b8p1SpgQNPspaO5
+	qibhk0q4A7CqirQp4YjnFY+MRzG+F1u1V8LhgXNl8izwdCokLcaQgghhq9kJvY7c1KfpWyxqnIm
+	I5g/U+KEcYtAE9EfVnD6buiTiiPeMWlNqrZzsRwVPoMp9Tls7BVA9FWezYiqQvpU1fIYj3Oi9bn
+	ZKwc1+OCEZox7Dj7J2jwQcWZZ9nWv0o2kTL5Y80QUF2W1/bFI05fX/aR64yJpEAMf5xVrPnLVLN
+	yJafBLJYeCqY7pSPfA==
+X-Google-Smtp-Source: AGHT+IGv5J/BP9AuRMpU2TY5f1eAXDhNGJsVPXtHBFh6Q0BNd/9xCeMPVyW2REwcIBr+DKZZwzXmPw==
+X-Received: by 2002:a5d:614b:0:b0:385:f13c:570f with SMTP id ffacd0b85a97d-38bf57a1e51mr6169997f8f.33.1737232386898;
+        Sat, 18 Jan 2025 12:33:06 -0800 (PST)
+Received: from [192.168.1.186] ([2.26.170.204])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38bf322a414sm5967723f8f.47.2025.01.18.12.33.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 18 Jan 2025 12:33:06 -0800 (PST)
+Message-ID: <77741bb3-be37-4e63-9bf8-0cbeac50ae24@gmail.com>
+Date: Sat, 18 Jan 2025 20:33:04 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="o+r0HetOAwWC+e2L"
-Content-Disposition: inline
-In-Reply-To: <8ef3bd22-d2e4-4361-93da-581d2f76204f@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: transfer.credentialsInUrl should warn about personal access
+ tokens in user field #leftoverbits
+Content-Language: en-GB
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, stolee@gmail.com
+References: <20250110210500.675629-1-mirth.hickford@gmail.com>
+ <xmqqh6665p8j.fsf@gitster.g> <Z4GZ0oiZCC2Wl3bN@tapette.crustytoothpaste.net>
+From: M Hickford <mirth.hickford@gmail.com>
+In-Reply-To: <Z4GZ0oiZCC2Wl3bN@tapette.crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+On 2025-01-10 22:06, brian m. carlson wrote:
+> No, this is Basic auth.  It's just that GitHub will look at either the
+> username or password field for the token.
+
+Thanks Brian and Junio for the discussion. I understand your aversion to 
+introducing GitHub-specific PAT detection logic.
+
+The better solution would be for GitHub to stop accepting PAT in the 
+username field. Hopefully that will happen one day. It's undocumented,
+so its usage ought to diminish.
+
+To speed that along, I've edited the offending StackOverflow answer 
+https://stackoverflow.com/a/70320541/284795
 
 
---o+r0HetOAwWC+e2L
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2025-01-18 at 20:09:50, M Hickford wrote:
-> Hi Brian. Any further comments on patch v5? This addresses your comments =
-on
-> v2 and expands the commit message as encouraged by Junio. (Thank you both
-> for the review so far.)
-
-I think this looks fine.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---o+r0HetOAwWC+e2L
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ4wLtwAKCRB8DEliiIei
-gVm1AP4wPeVtTy1XEaIOniJKCEF4maL48T3peOpCx//j8sGC4QEAlEClLApvTNrL
-qBSrlz19FkiIpFSHhqVEEJ3gv+gKsg8=
-=bgai
------END PGP SIGNATURE-----
-
---o+r0HetOAwWC+e2L--
