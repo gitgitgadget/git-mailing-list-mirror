@@ -1,157 +1,161 @@
-Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EAD9126C1E
-	for <git@vger.kernel.org>; Sat, 18 Jan 2025 07:07:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.9
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371565789D
+	for <git@vger.kernel.org>; Sat, 18 Jan 2025 09:20:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737184060; cv=none; b=K1wmRCuOBeN0EPqcWa/xrsJIv2oizZ7duXDb+SXQ6ux9eiy4aWS9FOKr1rJXFCA1IW9ztF4hev65bIFaBGyXuBU7CfKfnS+Eq4slID3RiRKIfzEhdu5blmXt0Lv9DK9eqtWfYTxmeCXsEfPU0cQFKsEShpduKW4ggpqJTfL4axs=
+	t=1737192060; cv=none; b=l1TMCI6MoyNk+O4ofiftyfBh0M/KKz/o+g5UyIPjkR+Xt/JY3Cd3CEAYyJ6oD/8H4G3QN1A0Zb2gDFnDetjo6Rq/3UygMlQWqZFZgrt3fbwfv0oTCnhqigTGRG5jWYpN9VJmKarpl9Vo6Ue+Lhi7PmxVT+mFhTgfHgyrCl8vboc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737184060; c=relaxed/simple;
-	bh=WJCRlGTiXef01utS6l+YmJ0twd0GChQAG27PzZpye4M=;
-	h=Date:From:To:Subject:Content-Type:MIME-Version:Message-ID; b=a9HXXCSRdGkOntz3cIrLqektl6tpqzejCzvhLdX19EyVnr7FA+8hHnB2fmLezhuFQXwPhYK7SvvjI7+1uZQZvGKYQkFA7SFL/W/gbgcNtnDwsvpwssroZnH9IR0vh/yHbVTbxKF9cmLt5FSHm3tJiWqaq8GlaZKjiC61cxRDy7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=IvvImRLx; arc=none smtp.client-ip=117.135.210.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
+	s=arc-20240116; t=1737192060; c=relaxed/simple;
+	bh=iUd7wVHc3aVhmqNKoG5OIwpPZq6hcgVhKQDNNBJOAhE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=slXXb2YKbXzhkdAf8JklW2OJXgiXamVLP6U5PrmkTA285FYa3EmBxMG8BD4meTVdcrP8Sh/ebn0YI9Nko25DuDMyRCPnsZ3lXN19MvRy5G9zpDDWNZi4grOwOICVa6zUe7ga5T7wmWxO2W//cPeqft75uP+cCyuXMDNYkv3noi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SLZ0+ArL; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="IvvImRLx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=FnXulD9WGDh9Z2e3vW65EPxCQuOeDb5h51uHhBDA774=; b=I
-	vvImRLx2sTW3Hb3OpmQdP/zo1L7Ck1+avCEt0pT63Vz66PFJ3Z3EGG4QcyyuW2nQ
-	87ZH8DPvjI2NselQ+0VMU8sF8vm75TkJVV7akKmqZGkuDfJ7B81tThaRflCNuQ2R
-	IAAkpWGl2vj1etlickyjLRH7DexNjqryMxrN0kbimc=
-Received: from bf_bug_feedback$126.com (
- [240e:3b3:f196:4410:9f7:79ff:1390:8040] ) by ajax-webmail-wmsvr-41-119
- (Coremail) ; Sat, 18 Jan 2025 15:07:28 +0800 (CST)
-Date: Sat, 18 Jan 2025 15:07:28 +0800 (CST)
-From: Tianxiaoxiao1021 <bf_bug_feedback@126.com>
-To: git@vger.kernel.org
-Subject: Introduction of GpluginLoader Plugin for Git
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
- Copyright (c) 2002-2025 www.mailtech.cn 126com
-X-NTES-SC: AL_Qu2YBf2Tu0gv7iCZbekfmksQhe88X8e1svgn3YNTN598jADj9CouU2BcL3nPweCENCeAsQeIWhlo1cB3QrVdX4IgAUsbR/hlAG8qBdsW3EU0oA==
-Content-Type: multipart/mixed; 
-	boundary="----=_Part_27318_874228010.1737184048022"
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SLZ0+ArL"
+Received: (qmail 30138 invoked by uid 109); 18 Jan 2025 09:20:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=iUd7wVHc3aVhmqNKoG5OIwpPZq6hcgVhKQDNNBJOAhE=; b=SLZ0+ArLYoo0BsFiMeOxj9aKQEKQjHAlBBMlOWLJjN6LKLDemVE9mFKe04FbEYNP/VlbaMUE/eworT8fxpElwm45Rwfgte69SZ261D9VZsUB+ttww2IGROnsjKJnhxR7FcONCZdBqJZiUkdo0jQR6aqu5DPqBGXjpmWvZVlbCm+IA61tj6FQNg0CuaRvgy4lEfT0hWDaBSQW7o2ZiKxXsvD66cKKasA4B9II/ehqdoZOuSDG+waH6VqGkWa85b808QXxhxmIjE4s8LZaZ4fmaEP6UPIg43I19uQVyrvqxzK8rrRKW7ILruQeQ4QXSfwGpbe7qZRZWLVbFdJ38vfx1w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 Jan 2025 09:20:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18986 invoked by uid 111); 18 Jan 2025 09:20:53 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Jan 2025 04:20:53 -0500
+Authentication-Results: peff.net; auth=none
+Date: Sat, 18 Jan 2025 04:20:48 -0500
+From: Jeff King <peff@peff.net>
+To: Koakuma <koachan@protonmail.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [BUG] git crashes with a SIGBUS on sparc64 during pull
+Message-ID: <20250118092048.GA3474411@coredump.intra.peff.net>
+References: <xd6Mn7uXpDxaT8zF28BwOIdV98lnvm3S0rBgxmm97nuRW3z0GQSUi_KeYe0fUuRfz8rCgo6Uialw5rnraqp5tjzMFQkFH0MZV_n4fEQg8go=@protonmail.com>
+ <20250117121121.GA2356599@coredump.intra.peff.net>
+ <20250117125207.GB2356599@coredump.intra.peff.net>
+ <nwg0r52UT4d_kBbQa7V7xCWKxE1xtHiwXKtBvzEwxtJa-3nKpXcWG2DRGUENDSJQ9QOkk4jrEaXYjAbiSAZds2ynH1TZPcX3x6T_t4zm8s4=@protonmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Message-ID: <cd89db5.1b48.194783cf396.Coremail.bf_bug_feedback@126.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:dykvCgD3P8wwU4tnJLxUAA--.2935W
-X-CM-SenderInfo: xeibu35jbivv5geduya6rslhhfrp/1tbi1xnXPWeKQ0bUlgAFsL
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <nwg0r52UT4d_kBbQa7V7xCWKxE1xtHiwXKtBvzEwxtJa-3nKpXcWG2DRGUENDSJQ9QOkk4jrEaXYjAbiSAZds2ynH1TZPcX3x6T_t4zm8s4=@protonmail.com>
 
-------=_Part_27318_874228010.1737184048022
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_27320_1499835734.1737184048022"
+On Fri, Jan 17, 2025 at 03:55:53PM +0000, Koakuma wrote:
 
-------=_Part_27320_1499835734.1737184048022
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+> This diff does fix the issue in `cmd_unpack_objects`, however...
+> 
+> > I'm curious if it's enough. After we write to this unaligned buffer,
+> > naturally the next thing we'll do is read from it, and the reading
+> > routines will do the same cast (see unpack_all() in unpack-objects).
+> 
+> It crashes in `unpack_all`, just as you guessed:
+> 
+> #0  unpack_all () at builtin/unpack-objects.c:583
+> 583		nr_objects = ntohl(hdr->hdr_entries);
+> 
+> So I suppose the reading part needs to be adjusted as well?
 
-RGVhciBHaXQgQ29tbXVuaXR5LApUbyBhZGRyZXNzIHRoZSBkaWZmZXJlbnQgbmVlZHMgZm9yIHdv
-cmtmbG93cyBiZXR3ZWVuIGNvbW11bml0eSBtZW1iZXJzIGFuZCBkZXZlbG9wZXJzLCBJIGhhdmUg
-ZGV2ZWxvcGVkIEdwbHVnaW5Mb2FkZXIsIGEgcGx1Z2luIGxvYWRlciBmb3IgbG9hZGluZyBwbHVn
-aW5zIGJhc2VkIG9uIGMvYysrIHNvdXJjZSBjb2RlLCBhbmQgaXQgaXMgcGxhdGZvcm0gaW5kZXBl
-bmRlbnQuCkFkZGl0aW9uYWxseSwgSSBoYXZlIGluY2x1ZGVkIHNldmVyYWwgc291cmNlIGZpbGVz
-IHRvIHByb3ZpZGUgQVBJcyBmb3IgcGx1Z2lucywgaW5jbHVkaW5nIGZ1bmN0aW9ucyBmb3IgcmV0
-cmlldmluZyB0aGUgY3VycmVudCByZXBvc2l0b3J5J3MgUkVBRE1FIGZpbGUsIHByb2ZpbGUsIGFu
-ZCBob2xkZXIsIGFtb25nIG90aGVycy4gVGhlc2UgQVBJcyBhcmUgZW5jYXBzdWxhdGVkIGluIHRo
-ZSBnaXQtcGx1Z2luLWFwaS5jIGFuZCBnaXQtcGx1Z2luLWFwaS5oIGZpbGVzLgpZb3UgY2FuIGZp
-bmQgdGhlIEdwbHVnaW5Mb2FkZXIgcmVwb3NpdG9yeSBoZXJlOiBodHRwczovL2dpdGh1Yi5jb20v
-VGlhbnhpYW94aWFvMTAyMS9HcGx1Z2luTG9hZGVyLgpCZXN0IHJlZ2FyZHMsClRpYW54aWFveGlh
-byBkZXZlbG9wZXIgdGVhbTogVGlhbnhpYW94aWFvMTAyMQ==
-------=_Part_27320_1499835734.1737184048022
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+I guess that's not too surprising. Probably an application of get_be32()
+would solve it. But I do wonder if it would be simpler just to make sure
+the buffer is aligned. You mentioned that you tried that before and it
+worked. How did you do it? With a pragma/attribute, or with a union (as
+below)?
 
-PGRpdiBkYXRhLW50ZXM9Im50ZXNfbWFpbF9ib2R5X3Jvb3QiIHN0eWxlPSJsaW5lLWhlaWdodDox
-Ljc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRweDtmb250LWZhbWlseTpBcmlhbCI+PGRpdj5E
-ZWFyIEdpdCBDb21tdW5pdHksPC9kaXY+PGRpdj5UbyBhZGRyZXNzIHRoZSBkaWZmZXJlbnQgbmVl
-ZHMgZm9yIHdvcmtmbG93cyBiZXR3ZWVuIGNvbW11bml0eSBtZW1iZXJzIGFuZCBkZXZlbG9wZXJz
-LCBJIGhhdmUgZGV2ZWxvcGVkIEdwbHVnaW5Mb2FkZXIsIGEgcGx1Z2luIGxvYWRlciBmb3IgbG9h
-ZGluZyBwbHVnaW5zIGJhc2VkIG9uIGMvYysrIHNvdXJjZSBjb2RlLCBhbmQgaXQgaXMgcGxhdGZv
-cm0gaW5kZXBlbmRlbnQuPC9kaXY+PGRpdj5BZGRpdGlvbmFsbHksIEkgaGF2ZSBpbmNsdWRlZCBz
-ZXZlcmFsIHNvdXJjZSBmaWxlcyB0byBwcm92aWRlIEFQSXMgZm9yIHBsdWdpbnMsIGluY2x1ZGlu
-ZyBmdW5jdGlvbnMgZm9yIHJldHJpZXZpbmcgdGhlIGN1cnJlbnQgcmVwb3NpdG9yeSdzIFJFQURN
-RSBmaWxlLCBwcm9maWxlLCBhbmQgaG9sZGVyLCBhbW9uZyBvdGhlcnMuIFRoZXNlIEFQSXMgYXJl
-IGVuY2Fwc3VsYXRlZCBpbiB0aGUgZ2l0LXBsdWdpbi1hcGkuYyBhbmQgZ2l0LXBsdWdpbi1hcGku
-aCBmaWxlcy48L2Rpdj48ZGl2PllvdSBjYW4gZmluZCB0aGUgR3BsdWdpbkxvYWRlciByZXBvc2l0
-b3J5IGhlcmU6IGh0dHBzOi8vZ2l0aHViLmNvbS9UaWFueGlhb3hpYW8xMDIxL0dwbHVnaW5Mb2Fk
-ZXIuPC9kaXY+PGRpdj5CZXN0IHJlZ2FyZHMsPC9kaXY+PGRpdj5UaWFueGlhb3hpYW8gZGV2ZWxv
-cGVyIHRlYW06IFRpYW54aWFveGlhbzEwMjE8L2Rpdj48L2Rpdj4=
-------=_Part_27320_1499835734.1737184048022--
+The union thing should be portable, I'd think, but unfortunately has a
+lot of fallout through the code because the name of "buffer" changes (we
+could also declare the storage separately and make "buffer" a pointer to
+it, but we'd have to be careful about calls to sizeof()).
 
-------=_Part_27318_874228010.1737184048022
-Content-Type: text/x-c; name=git-plugin-api.c
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="git-plugin-api.c"
-
-LyoNCiogR3BsdWdpbkxvYWRlcjpnaXQtcGx1Z2luLWFwaS5jDQoqIA0KKiDmj5Lku7blj6/osIPn
-lKjnmoRBUEnlrp7njrANCiovDQoNCg0KI2luY2x1ZGUgImdpdC1wbHVnaW4tYXBpLmgiDQojaW5j
-bHVkZSAiYnVpbHRpbi5oIg0KI2luY2x1ZGUgInJlcG9zaXRvcnkuaCINCiNpbmNsdWRlICJzdHJi
-dWYuaCINCiNpbmNsdWRlICJjb25maWcuaCINCg0Kc3RhdGljIGNvbnN0IGNoYXIqIGdpdF9nZXRf
-cmVwb19uYW1lKHZvaWQpIHsNCiAgICBjb25zdCBjaGFyICpnaXRkaXIgPSByZXBvX2dpdF9wYXRo
-KHRoZV9yZXBvc2l0b3J5LCAiIik7DQogICAgaWYgKCFnaXRkaXIpDQogICAgICAgIHJldHVybiBO
-VUxMOw0KICAgIGNvbnN0IGNoYXIgKmxhc3Rfc2xhc2ggPSBzdHJyY2hyKGdpdGRpciwgJy8nKTsN
-CiAgICBpZiAobGFzdF9zbGFzaCAmJiBzdHJjbXAobGFzdF9zbGFzaCArIDEsICIuZ2l0IikgPT0g
-MCkgew0KICAgICAgICBjb25zdCBjaGFyICpwYXJlbnRfZGlyID0gbGFzdF9zbGFzaCAtIDE7DQog
-ICAgICAgIHdoaWxlIChwYXJlbnRfZGlyID4gZ2l0ZGlyICYmICpwYXJlbnRfZGlyICE9ICcvJykN
-CiAgICAgICAgICAgIHBhcmVudF9kaXItLTsNCiAgICAgICAgcmV0dXJuIHBhcmVudF9kaXIgKyAx
-Ow0KICAgIH0NCiAgICByZXR1cm4gTlVMTDsNCn0NCg0Kc3RhdGljIGNvbnN0IGNoYXIqIGdpdF9n
-ZXRfcmVwb19vd25lcih2b2lkKSB7DQogICAgY29uc3QgY2hhciAqb3duZXIgPSBOVUxMOw0KICAg
-IGlmICghZ2l0X2NvbmZpZ19nZXRfc3RyaW5nKCJ1c2VyLm5hbWUiLCAmb3duZXIpKQ0KICAgICAg
-ICByZXR1cm4gb3duZXI7DQogICAgcmV0dXJuIE5VTEw7DQp9DQoNCnN0YXRpYyBjb25zdCBjaGFy
-KiBnaXRfZ2V0X3JlcG9fZGVzY3JpcHRpb24odm9pZCkgew0KICAgIHN0YXRpYyBzdHJ1Y3Qgc3Ry
-YnVmIGJ1ZiA9IFNUUkJVRl9JTklUOw0KICAgIHN0cmJ1Zl9yZXNldCgmYnVmKTsNCiAgICANCiAg
-ICBpZiAoc3RyYnVmX3JlYWRfZmlsZSgmYnVmLCByZXBvX2dpdF9wYXRoKHRoZV9yZXBvc2l0b3J5
-LCAiZGVzY3JpcHRpb24iKSwgMCkgPiAwKQ0KICAgICAgICByZXR1cm4gYnVmLmJ1ZjsNCiAgICAg
-ICAgDQogICAgcmV0dXJuIE5VTEw7DQp9DQoNCnN0YXRpYyBjaGFyKiBnaXRfZ2V0X3JlcG9fcmVh
-ZG1lKHZvaWQpIHsNCiAgICBzdGF0aWMgY29uc3QgY2hhciAqcmVhZG1lX25hbWVzW10gPSB7DQog
-ICAgICAgICJSRUFETUUubWQiLA0KICAgICAgICAiUkVBRE1FIiwNCiAgICAgICAgIlJFQURNRS50
-eHQiLA0KICAgICAgICBOVUxMDQogICAgfTsNCiAgICANCiAgICBzdGF0aWMgc3RydWN0IHN0cmJ1
-ZiBidWYgPSBTVFJCVUZfSU5JVDsNCiAgICBjb25zdCBjaGFyICoqbmFtZTsNCiAgICANCiAgICBz
-dHJidWZfcmVzZXQoJmJ1Zik7DQogICAgDQogICAgZm9yIChuYW1lID0gcmVhZG1lX25hbWVzOyAq
-bmFtZTsgbmFtZSsrKSB7DQogICAgICAgIGlmIChzdHJidWZfcmVhZF9maWxlKCZidWYsICpuYW1l
-LCAwKSA+IDApDQogICAgICAgICAgICByZXR1cm4gc3RyYnVmX2RldGFjaCgmYnVmLCBOVUxMKTsN
-CiAgICB9DQogICAgDQogICAgcmV0dXJuIE5VTEw7DQp9DQoNCnN0YXRpYyBpbnQgZ2l0X2FkZF9j
-b21tYW5kKGNvbnN0IGNoYXIgKm5hbWUsIGludCAoKmZuKShpbnQsIGNvbnN0IGNoYXIgKiosIGNv
-bnN0IGNoYXIgKikpIHsNCiAgICByZXR1cm4gcmVnaXN0ZXJfYnVpbHRpbihuYW1lLCBmbik7DQp9
-DQoNCnN0YXRpYyBpbnQgZ2l0X21vZGlmeV9jb21tYW5kKGNvbnN0IGNoYXIgKm5hbWUsIGludCAo
-KmZuKShpbnQsIGNvbnN0IGNoYXIgKiosIGNvbnN0IGNoYXIgKikpIHsNCiAgICBpZiAodW5yZWdp
-c3Rlcl9idWlsdGluKG5hbWUpICE9IDApIHsNCiAgICAgICAgcmV0dXJuIC0xOw0KICAgIH0NCiAg
-ICByZXR1cm4gcmVnaXN0ZXJfYnVpbHRpbihuYW1lLCBmbik7DQp9DQoNCnN0YXRpYyBzdHJ1Y3Qg
-Z2l0X3BsdWdpbl9hcGkgcGx1Z2luX2FwaSA9IHsNCiAgICAucmVnaXN0ZXJfY29tbWFuZCA9IHJl
-Z2lzdGVyX2J1aWx0aW4sDQogICAgLnVucmVnaXN0ZXJfY29tbWFuZCA9IHVucmVnaXN0ZXJfYnVp
-bHRpbiwNCiAgICAuZ2V0X3JlcG9zaXRvcnkgPSB0aGVfcmVwb3NpdG9yeSwNCiAgICAuZ2V0X3Jl
-cG9fbmFtZSA9IGdpdF9nZXRfcmVwb19uYW1lLA0KICAgIC5nZXRfcmVwb19vd25lciA9IGdpdF9n
-ZXRfcmVwb19vd25lciwNCiAgICAuZ2V0X3JlcG9fZGVzY3JpcHRpb24gPSBnaXRfZ2V0X3JlcG9f
-ZGVzY3JpcHRpb24sDQogICAgLmdldF9yZXBvX3JlYWRtZSA9IGdpdF9nZXRfcmVwb19yZWFkbWUs
-DQogICAgLmFkZF9jb21tYW5kID0gZ2l0X2FkZF9jb21tYW5kLA0KICAgIC5tb2RpZnlfY29tbWFu
-ZCA9IGdpdF9tb2RpZnlfY29tbWFuZA0KfTsNCg0Kc3RydWN0IGdpdF9wbHVnaW5fYXBpKiBnZXRf
-Z2l0X3BsdWdpbl9hcGkodm9pZCkgew0KICAgIHJldHVybiAmcGx1Z2luX2FwaTsNCn0=
-------=_Part_27318_874228010.1737184048022
-Content-Type: text/x-c; name=git-plugin-api.h
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="git-plugin-api.h"
-
-I2lmbmRlZiBHSVRfUExVR0lOX0FQSV9IDQojZGVmaW5lIEdJVF9QTFVHSU5fQVBJX0gNCg0KI2lu
-Y2x1ZGUgInJlcG9zaXRvcnkuaCINCg0Kc3RydWN0IGdpdF9wbHVnaW5fYXBpIHsNCiAgICAvLyDl
-kb3ku6Tms6jlhoznm7jlhbNBUEkNCiAgICBpbnQgKCpyZWdpc3Rlcl9jb21tYW5kKShjb25zdCBj
-aGFyICpuYW1lLCBpbnQgKCpmbikoaW50LCBjb25zdCBjaGFyICoqLCBjb25zdCBjaGFyICopKTsN
-CiAgICBpbnQgKCp1bnJlZ2lzdGVyX2NvbW1hbmQpKGNvbnN0IGNoYXIgKm5hbWUpOw0KICAgIHN0
-cnVjdCByZXBvc2l0b3J5KiAoKmdldF9yZXBvc2l0b3J5KSh2b2lkKTsNCiAgICANCiAgICAvLyDk
-u5PlupPkv6Hmga9BUEkNCiAgICBjb25zdCBjaGFyKiAoKmdldF9yZXBvX25hbWUpKHZvaWQpOw0K
-ICAgIGNvbnN0IGNoYXIqICgqZ2V0X3JlcG9fb3duZXIpKHZvaWQpOw0KICAgIGNvbnN0IGNoYXIq
-ICgqZ2V0X3JlcG9fZGVzY3JpcHRpb24pKHZvaWQpOw0KICAgIGNoYXIqICgqZ2V0X3JlcG9fcmVh
-ZG1lKSh2b2lkKTsNCg0KICAgIC8vIOaWsOWinkFQSe+8mua3u+WKoOWSjOS/ruaUueWRveS7pA0K
-ICAgIGludCAoKmFkZF9jb21tYW5kKShjb25zdCBjaGFyICpuYW1lLCBpbnQgKCpmbikoaW50LCBj
-b25zdCBjaGFyICoqLCBjb25zdCBjaGFyICopKTsNCiAgICBpbnQgKCptb2RpZnlfY29tbWFuZCko
-Y29uc3QgY2hhciAqbmFtZSwgaW50ICgqZm4pKGludCwgY29uc3QgY2hhciAqKiwgY29uc3QgY2hh
-ciAqKSk7DQp9Ow0KDQovLyDojrflj5bmj5Lku7ZBUEnlrp7kvosNCnN0cnVjdCBnaXRfcGx1Z2lu
-X2FwaSogZ2V0X2dpdF9wbHVnaW5fYXBpKHZvaWQpOw0KDQojZW5kaWYg
-------=_Part_27318_874228010.1737184048022--
-
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index 2197d6d933..65db435b46 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -23,7 +23,10 @@ static int dry_run, quiet, recover, has_errors, strict;
+ static const char unpack_usage[] = "git unpack-objects [-n] [-q] [-r] [--strict]";
+ 
+ /* We always read in 4kB chunks. */
+-static unsigned char buffer[4096];
++static union {
++	struct pack_header hdr;
++	unsigned char bytes[4096];
++} buffer;
+ static unsigned int offset, len;
+ static off_t consumed_bytes;
+ static off_t max_input_size;
+@@ -65,24 +68,24 @@ static void add_object_buffer(struct object *object, char *buffer, unsigned long
+ static void *fill(int min)
+ {
+ 	if (min <= len)
+-		return buffer + offset;
+-	if (min > sizeof(buffer))
++		return buffer.bytes + offset;
++	if (min > sizeof(buffer.bytes))
+ 		die("cannot fill %d bytes", min);
+ 	if (offset) {
+-		the_hash_algo->update_fn(&ctx, buffer, offset);
+-		memmove(buffer, buffer + offset, len);
++		the_hash_algo->update_fn(&ctx, buffer.bytes, offset);
++		memmove(buffer.bytes, buffer.bytes + offset, len);
+ 		offset = 0;
+ 	}
+ 	do {
+-		ssize_t ret = xread(0, buffer + len, sizeof(buffer) - len);
++		ssize_t ret = xread(0, buffer.bytes + len, sizeof(buffer.bytes) - len);
+ 		if (ret <= 0) {
+ 			if (!ret)
+ 				die("early EOF");
+ 			die_errno("read error on input");
+ 		}
+ 		len += ret;
+ 	} while (len < min);
+-	return buffer;
++	return buffer.bytes;
+ }
+ 
+ static void use(int bytes)
+@@ -645,18 +648,16 @@ int cmd_unpack_objects(int argc,
+ 				continue;
+ 			}
+ 			if (starts_with(arg, "--pack_header=")) {
+-				struct pack_header *hdr;
+ 				char *c;
+ 
+-				hdr = (struct pack_header *)buffer;
+-				hdr->hdr_signature = htonl(PACK_SIGNATURE);
+-				hdr->hdr_version = htonl(strtoul(arg + 14, &c, 10));
++				buffer.hdr.hdr_signature = htonl(PACK_SIGNATURE);
++				buffer.hdr.hdr_version = htonl(strtoul(arg + 14, &c, 10));
+ 				if (*c != ',')
+ 					die("bad %s", arg);
+-				hdr->hdr_entries = htonl(strtoul(c + 1, &c, 10));
++				buffer.hdr.hdr_entries = htonl(strtoul(c + 1, &c, 10));
+ 				if (*c)
+ 					die("bad %s", arg);
+-				len = sizeof(*hdr);
++				len = sizeof(buffer.hdr);
+ 				continue;
+ 			}
+ 			if (skip_prefix(arg, "--max-input-size=", &arg)) {
+@@ -671,7 +672,7 @@ int cmd_unpack_objects(int argc,
+ 	}
+ 	the_hash_algo->init_fn(&ctx);
+ 	unpack_all();
+-	the_hash_algo->update_fn(&ctx, buffer, offset);
++	the_hash_algo->update_fn(&ctx, buffer.bytes, offset);
+ 	the_hash_algo->init_fn(&tmp_ctx);
+ 	the_hash_algo->clone_fn(&tmp_ctx, &ctx);
+ 	the_hash_algo->final_oid_fn(&oid, &tmp_ctx);
+@@ -686,7 +687,7 @@ int cmd_unpack_objects(int argc,
+ 	use(the_hash_algo->rawsz);
+ 
+ 	/* Write the last part of the buffer to stdout */
+-	write_in_full(1, buffer + offset, len);
++	write_in_full(1, buffer.bytes + offset, len);
+ 
+ 	/* All done */
+ 	return has_errors;
