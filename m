@@ -1,149 +1,157 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7524E22071
-	for <git@vger.kernel.org>; Sat, 18 Jan 2025 03:04:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+Received: from m16.mail.126.com (m16.mail.126.com [117.135.210.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4EAD9126C1E
+	for <git@vger.kernel.org>; Sat, 18 Jan 2025 07:07:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=117.135.210.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737169480; cv=none; b=uC9lYxRdwX3ruhSsRanOnKeoajEWI0ueMPjRFu4Tj0QL5YcH1u5gRvFoxqR2wEcpX0kpWAfTtjDkPa8QHjImmGwDgBJc9PaAptJ9qhhVV15+sawWEqYVEiHfyK2OK7AfqDKBqhyutVYGqu4q9b7KrQpHz+eMcLVWGtaByBe70po=
+	t=1737184060; cv=none; b=K1wmRCuOBeN0EPqcWa/xrsJIv2oizZ7duXDb+SXQ6ux9eiy4aWS9FOKr1rJXFCA1IW9ztF4hev65bIFaBGyXuBU7CfKfnS+Eq4slID3RiRKIfzEhdu5blmXt0Lv9DK9eqtWfYTxmeCXsEfPU0cQFKsEShpduKW4ggpqJTfL4axs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737169480; c=relaxed/simple;
-	bh=cg7zbFX+HTqEV9BeoTT32WgBx704D9+s/q/aa/p+TGA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CQXd21cQQuzN+hi0BoS0WM1To9ksvVKVt5E/0WUgGhaD0t7E4ZXSdDMHIaZezGKvaXKDkWd+F4H1kc2kQv4JjqaP/XT9bp8WrTi0iU6e1oAs+Wz6TOZlWB3i3WrxOJ9F7A1RrBe1muFhPbhIik8rcd1t1pANfUPx+eDdQADl/EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fu0lkTCR; arc=none smtp.client-ip=209.85.210.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737184060; c=relaxed/simple;
+	bh=WJCRlGTiXef01utS6l+YmJ0twd0GChQAG27PzZpye4M=;
+	h=Date:From:To:Subject:Content-Type:MIME-Version:Message-ID; b=a9HXXCSRdGkOntz3cIrLqektl6tpqzejCzvhLdX19EyVnr7FA+8hHnB2fmLezhuFQXwPhYK7SvvjI7+1uZQZvGKYQkFA7SFL/W/gbgcNtnDwsvpwssroZnH9IR0vh/yHbVTbxKF9cmLt5FSHm3tJiWqaq8GlaZKjiC61cxRDy7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com; spf=pass smtp.mailfrom=126.com; dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b=IvvImRLx; arc=none smtp.client-ip=117.135.210.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=126.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=126.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fu0lkTCR"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-71e36b27b53so1500980a34.1
-        for <git@vger.kernel.org>; Fri, 17 Jan 2025 19:04:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737169477; x=1737774277; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=v2lLhU9bDpbdRMqKpfBKlQ/enIQpmt0thnX+TaPuATQ=;
-        b=Fu0lkTCR/MYyL5Hh5i9Z9VXZTkpfEHczQkqYe/aAoHEVKfVqG17yyXl6luBd00GxyL
-         eVm4/hlSODqqnPY0QOE4AH14R7yBoYgA15PKDNozmrW1fYacCQc5UZVbXcESpFIEPKbs
-         +6GoAE9kbDbEWklLBlGph/Yrl0reOZ++eZEeL10GEarTl40dF1yBXx8b6l4SK0aD8mSd
-         paLUM+3qjFemT77fuk//Ns5ZV5YK6a3QAl17iHLU7Lgw2si2O0pQ46jcQbxiCSjh2HXt
-         uCRJOOUz2M6imScFT3Rs8AwOzTFAPWWG5NUI2zalS84nGwYHXFA7ZcpjoWaR3OIHzZIa
-         GgOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737169477; x=1737774277;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v2lLhU9bDpbdRMqKpfBKlQ/enIQpmt0thnX+TaPuATQ=;
-        b=eqlfS7bt4d/+Nc21qlDrEDf1lseOD4YKlo7M9Zh7DDyh/02cHE6idWq1EpYnwjWeIG
-         QLn0cTkX04rhl0xGYOFDEyn/ZP+JEDaL76KMiKFtg+u8yANZE7xxEjZWk4eTWK2ClPFt
-         h63sNrS4D7jAbXvuIIsuwoxTT3kJMF4G6BH1jUvHiIy9lcvrizcjQzqMfEnd4ZCceLGN
-         8mqiGqUa7RDxqLfLiOmW4tTJt0kspNbavSsq9m1i1qloy945pv0QR2mxKNx1dWupyGFa
-         YrEsqsblKM0Ub/vcncNcCBf9hI3w2jn9EMkwWsVDoykoWDR3Z84uiwifnVDIEIsPwSGJ
-         f2/w==
-X-Forwarded-Encrypted: i=1; AJvYcCUZSJOSLvDRNSo1gMyMCOgVTlJVXo0MZzsi/t8YXly0UYaMfVZ9LnKh3DL4nQ0Pz2iZWoA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyOQF7Gptvvbvi05VFaFBujpqsskoRednDzuh2PWKaqSfNcCRJT
-	CKMY9WAaywnAb+tiscGYH9Adntfjb8N727XDIRmVOA+xytYr5XoR
-X-Gm-Gg: ASbGnctLBTUHjmFCUFbwjqO5KutqPw653hrP+PP4bJ0GTrjg/rf3+1UtTHu0fEQ22Ln
-	GktgtHGwU7upGtnhWfSjYwOL/KtHybX3InVssGewNUUstU56psohfCc0RF4S32vfX3QxpqekWXy
-	2XYqEtqLj4rtfD2z9HNrKlLaF4LV/ZbCHme6dQ0nU/IL9+MJVgo263cLYgYGZ0KFtGZzxCJZJRF
-	0+/YNJk29W/Yvuh4j8z6ZZSJ59Jr7BmfigC/Gwg5oE33j+y
-X-Google-Smtp-Source: AGHT+IEX+ohbj+9wouklytkQP50RmIri+lQdkycQRFP7/99c+HYcysVroK01UZF4siaLxPijW6GLug==
-X-Received: by 2002:a05:6830:670d:b0:71d:6543:e83f with SMTP id 46e09a7af769-7249da7d8f6mr2634880a34.11.1737169477431;
-        Fri, 17 Jan 2025 19:04:37 -0800 (PST)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-7249b4d2d78sm1321222a34.69.2025.01.17.19.04.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Jan 2025 19:04:36 -0800 (PST)
-Date: Sat, 18 Jan 2025 11:05:54 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH 03/10] packed-backend: check whether the "packed-refs" is
- regular
-Message-ID: <Z4sakhF9O7q8dib5@ArchLinux>
-References: <Z3qNUizvHJLgMx1y@ArchLinux>
- <Z3qN6C2IpQTdVn_S@ArchLinux>
- <CAOLa=ZQ-cRJeWjP-_6N2v4GS5P7oYVUyb9_tbY26W7MAJfJ6ZQ@mail.gmail.com>
- <Z4pijwANZWAP2XKH@ArchLinux>
- <CAPig+cRsAPp1APNJ7W337UNtunETr+Lnn-RcGrAXEFUhN1APyA@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=126.com header.i=@126.com header.b="IvvImRLx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
+	Message-ID; bh=FnXulD9WGDh9Z2e3vW65EPxCQuOeDb5h51uHhBDA774=; b=I
+	vvImRLx2sTW3Hb3OpmQdP/zo1L7Ck1+avCEt0pT63Vz66PFJ3Z3EGG4QcyyuW2nQ
+	87ZH8DPvjI2NselQ+0VMU8sF8vm75TkJVV7akKmqZGkuDfJ7B81tThaRflCNuQ2R
+	IAAkpWGl2vj1etlickyjLRH7DexNjqryMxrN0kbimc=
+Received: from bf_bug_feedback$126.com (
+ [240e:3b3:f196:4410:9f7:79ff:1390:8040] ) by ajax-webmail-wmsvr-41-119
+ (Coremail) ; Sat, 18 Jan 2025 15:07:28 +0800 (CST)
+Date: Sat, 18 Jan 2025 15:07:28 +0800 (CST)
+From: Tianxiaoxiao1021 <bf_bug_feedback@126.com>
+To: git@vger.kernel.org
+Subject: Introduction of GpluginLoader Plugin for Git
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20240801(9da12a7b)
+ Copyright (c) 2002-2025 www.mailtech.cn 126com
+X-NTES-SC: AL_Qu2YBf2Tu0gv7iCZbekfmksQhe88X8e1svgn3YNTN598jADj9CouU2BcL3nPweCENCeAsQeIWhlo1cB3QrVdX4IgAUsbR/hlAG8qBdsW3EU0oA==
+Content-Type: multipart/mixed; 
+	boundary="----=_Part_27318_874228010.1737184048022"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cRsAPp1APNJ7W337UNtunETr+Lnn-RcGrAXEFUhN1APyA@mail.gmail.com>
+Message-ID: <cd89db5.1b48.194783cf396.Coremail.bf_bug_feedback@126.com>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:dykvCgD3P8wwU4tnJLxUAA--.2935W
+X-CM-SenderInfo: xeibu35jbivv5geduya6rslhhfrp/1tbi1xnXPWeKQ0bUlgAFsL
+X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
 
-On Fri, Jan 17, 2025 at 05:01:21PM -0500, Eric Sunshine wrote:
-> On Fri, Jan 17, 2025 at 8:59 AM shejialuo <shejialuo@gmail.com> wrote:
-> > On Tue, Jan 07, 2025 at 08:33:56AM -0800, Karthik Nayak wrote:
-> > > shejialuo <shejialuo@gmail.com> writes:
-> > > > +test_expect_success SYMLINKS 'the filetype of packed-refs should be checked' '
-> > > > +   test_when_finished "rm -rf repo" &&
-> > > > +   git init repo &&
-> > > > +   cd repo &&
-> > >
-> > > This should be in a subshell, so that at the end we can actually remove
-> > > the repo. This seems to be applicable to most of the other tests in this
-> > > file too. Perhaps, we should clean it up as a precursor commit to this
-> > > series?
-> >
-> > I have searched the usage of "test_when_finished", and I don't know why
-> > we need to use subshell. Could you please explain this further here.
-> 
-> Karthik may have been thinking about operating systems, such as
-> Microsoft Windows, which won't allow a directory to be deleted if that
-> directory is in use. In this case, because the test cd's into "repo"
-> and never cd's elsewhere, the directory is still in use when
-> test_when_finished() tries to delete "repo".
-> 
-> However, there is an even more important reason to use a subshell, and
-> that is because a subshell ensures that the current working directory
-> is effectively restored to the path which was current before the cd
-> command. This is important since it guarantees that subsequent tests
-> will be run in the correct directory even if the preceding test bombed
-> out part way through. For example:
-> 
->     test_expect_success 'foo' '
->         git init repo &&
->         cd repo &&
->         ...some more commands... &&
->         cd ..
->     '
-> 
-> If one of the commands in "...some more commands..." fails, then the
-> `cd ..` will never be reached, and the current working directory will
-> remain "repo" rather than reverting to the path prior to the cd
-> command. Thus, any tests which follow this one in the script will end
-> up running in the wrong directory. The proper way to protect against
-> this is:
-> 
->     test_expect_success 'foo' '
->         git init repo &&
->         (
->             cd repo &&
->             ...some more commands...
->         )
->     '
-> 
-> Exiting the subshell will correctly restore the current working
-> directory to the original path _regardless_ of whether the test
-> succeeds or fails somewhere in "...some more commands...". Using a
-> subshell also means that you don't have to manually restore the
-> working directory via `cd ..` or similar.
+------=_Part_27318_874228010.1737184048022
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_27320_1499835734.1737184048022"
 
-Thanks for above detailed explanation. I somehow understand why there
-would be so many "repo/repo/repo" when I execute the test. I have
-thought that `test_expect_success` command will make the environment of
-each test totally independent. I will improve this in the next version.
+------=_Part_27320_1499835734.1737184048022
+Content-Type: text/plain; charset=GBK
+Content-Transfer-Encoding: base64
 
+RGVhciBHaXQgQ29tbXVuaXR5LApUbyBhZGRyZXNzIHRoZSBkaWZmZXJlbnQgbmVlZHMgZm9yIHdv
+cmtmbG93cyBiZXR3ZWVuIGNvbW11bml0eSBtZW1iZXJzIGFuZCBkZXZlbG9wZXJzLCBJIGhhdmUg
+ZGV2ZWxvcGVkIEdwbHVnaW5Mb2FkZXIsIGEgcGx1Z2luIGxvYWRlciBmb3IgbG9hZGluZyBwbHVn
+aW5zIGJhc2VkIG9uIGMvYysrIHNvdXJjZSBjb2RlLCBhbmQgaXQgaXMgcGxhdGZvcm0gaW5kZXBl
+bmRlbnQuCkFkZGl0aW9uYWxseSwgSSBoYXZlIGluY2x1ZGVkIHNldmVyYWwgc291cmNlIGZpbGVz
+IHRvIHByb3ZpZGUgQVBJcyBmb3IgcGx1Z2lucywgaW5jbHVkaW5nIGZ1bmN0aW9ucyBmb3IgcmV0
+cmlldmluZyB0aGUgY3VycmVudCByZXBvc2l0b3J5J3MgUkVBRE1FIGZpbGUsIHByb2ZpbGUsIGFu
+ZCBob2xkZXIsIGFtb25nIG90aGVycy4gVGhlc2UgQVBJcyBhcmUgZW5jYXBzdWxhdGVkIGluIHRo
+ZSBnaXQtcGx1Z2luLWFwaS5jIGFuZCBnaXQtcGx1Z2luLWFwaS5oIGZpbGVzLgpZb3UgY2FuIGZp
+bmQgdGhlIEdwbHVnaW5Mb2FkZXIgcmVwb3NpdG9yeSBoZXJlOiBodHRwczovL2dpdGh1Yi5jb20v
+VGlhbnhpYW94aWFvMTAyMS9HcGx1Z2luTG9hZGVyLgpCZXN0IHJlZ2FyZHMsClRpYW54aWFveGlh
+byBkZXZlbG9wZXIgdGVhbTogVGlhbnhpYW94aWFvMTAyMQ==
+------=_Part_27320_1499835734.1737184048022
+Content-Type: text/html; charset=GBK
+Content-Transfer-Encoding: base64
 
-Thanks,
-Jialuo
+PGRpdiBkYXRhLW50ZXM9Im50ZXNfbWFpbF9ib2R5X3Jvb3QiIHN0eWxlPSJsaW5lLWhlaWdodDox
+Ljc7Y29sb3I6IzAwMDAwMDtmb250LXNpemU6MTRweDtmb250LWZhbWlseTpBcmlhbCI+PGRpdj5E
+ZWFyIEdpdCBDb21tdW5pdHksPC9kaXY+PGRpdj5UbyBhZGRyZXNzIHRoZSBkaWZmZXJlbnQgbmVl
+ZHMgZm9yIHdvcmtmbG93cyBiZXR3ZWVuIGNvbW11bml0eSBtZW1iZXJzIGFuZCBkZXZlbG9wZXJz
+LCBJIGhhdmUgZGV2ZWxvcGVkIEdwbHVnaW5Mb2FkZXIsIGEgcGx1Z2luIGxvYWRlciBmb3IgbG9h
+ZGluZyBwbHVnaW5zIGJhc2VkIG9uIGMvYysrIHNvdXJjZSBjb2RlLCBhbmQgaXQgaXMgcGxhdGZv
+cm0gaW5kZXBlbmRlbnQuPC9kaXY+PGRpdj5BZGRpdGlvbmFsbHksIEkgaGF2ZSBpbmNsdWRlZCBz
+ZXZlcmFsIHNvdXJjZSBmaWxlcyB0byBwcm92aWRlIEFQSXMgZm9yIHBsdWdpbnMsIGluY2x1ZGlu
+ZyBmdW5jdGlvbnMgZm9yIHJldHJpZXZpbmcgdGhlIGN1cnJlbnQgcmVwb3NpdG9yeSdzIFJFQURN
+RSBmaWxlLCBwcm9maWxlLCBhbmQgaG9sZGVyLCBhbW9uZyBvdGhlcnMuIFRoZXNlIEFQSXMgYXJl
+IGVuY2Fwc3VsYXRlZCBpbiB0aGUgZ2l0LXBsdWdpbi1hcGkuYyBhbmQgZ2l0LXBsdWdpbi1hcGku
+aCBmaWxlcy48L2Rpdj48ZGl2PllvdSBjYW4gZmluZCB0aGUgR3BsdWdpbkxvYWRlciByZXBvc2l0
+b3J5IGhlcmU6IGh0dHBzOi8vZ2l0aHViLmNvbS9UaWFueGlhb3hpYW8xMDIxL0dwbHVnaW5Mb2Fk
+ZXIuPC9kaXY+PGRpdj5CZXN0IHJlZ2FyZHMsPC9kaXY+PGRpdj5UaWFueGlhb3hpYW8gZGV2ZWxv
+cGVyIHRlYW06IFRpYW54aWFveGlhbzEwMjE8L2Rpdj48L2Rpdj4=
+------=_Part_27320_1499835734.1737184048022--
+
+------=_Part_27318_874228010.1737184048022
+Content-Type: text/x-c; name=git-plugin-api.c
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="git-plugin-api.c"
+
+LyoNCiogR3BsdWdpbkxvYWRlcjpnaXQtcGx1Z2luLWFwaS5jDQoqIA0KKiDmj5Lku7blj6/osIPn
+lKjnmoRBUEnlrp7njrANCiovDQoNCg0KI2luY2x1ZGUgImdpdC1wbHVnaW4tYXBpLmgiDQojaW5j
+bHVkZSAiYnVpbHRpbi5oIg0KI2luY2x1ZGUgInJlcG9zaXRvcnkuaCINCiNpbmNsdWRlICJzdHJi
+dWYuaCINCiNpbmNsdWRlICJjb25maWcuaCINCg0Kc3RhdGljIGNvbnN0IGNoYXIqIGdpdF9nZXRf
+cmVwb19uYW1lKHZvaWQpIHsNCiAgICBjb25zdCBjaGFyICpnaXRkaXIgPSByZXBvX2dpdF9wYXRo
+KHRoZV9yZXBvc2l0b3J5LCAiIik7DQogICAgaWYgKCFnaXRkaXIpDQogICAgICAgIHJldHVybiBO
+VUxMOw0KICAgIGNvbnN0IGNoYXIgKmxhc3Rfc2xhc2ggPSBzdHJyY2hyKGdpdGRpciwgJy8nKTsN
+CiAgICBpZiAobGFzdF9zbGFzaCAmJiBzdHJjbXAobGFzdF9zbGFzaCArIDEsICIuZ2l0IikgPT0g
+MCkgew0KICAgICAgICBjb25zdCBjaGFyICpwYXJlbnRfZGlyID0gbGFzdF9zbGFzaCAtIDE7DQog
+ICAgICAgIHdoaWxlIChwYXJlbnRfZGlyID4gZ2l0ZGlyICYmICpwYXJlbnRfZGlyICE9ICcvJykN
+CiAgICAgICAgICAgIHBhcmVudF9kaXItLTsNCiAgICAgICAgcmV0dXJuIHBhcmVudF9kaXIgKyAx
+Ow0KICAgIH0NCiAgICByZXR1cm4gTlVMTDsNCn0NCg0Kc3RhdGljIGNvbnN0IGNoYXIqIGdpdF9n
+ZXRfcmVwb19vd25lcih2b2lkKSB7DQogICAgY29uc3QgY2hhciAqb3duZXIgPSBOVUxMOw0KICAg
+IGlmICghZ2l0X2NvbmZpZ19nZXRfc3RyaW5nKCJ1c2VyLm5hbWUiLCAmb3duZXIpKQ0KICAgICAg
+ICByZXR1cm4gb3duZXI7DQogICAgcmV0dXJuIE5VTEw7DQp9DQoNCnN0YXRpYyBjb25zdCBjaGFy
+KiBnaXRfZ2V0X3JlcG9fZGVzY3JpcHRpb24odm9pZCkgew0KICAgIHN0YXRpYyBzdHJ1Y3Qgc3Ry
+YnVmIGJ1ZiA9IFNUUkJVRl9JTklUOw0KICAgIHN0cmJ1Zl9yZXNldCgmYnVmKTsNCiAgICANCiAg
+ICBpZiAoc3RyYnVmX3JlYWRfZmlsZSgmYnVmLCByZXBvX2dpdF9wYXRoKHRoZV9yZXBvc2l0b3J5
+LCAiZGVzY3JpcHRpb24iKSwgMCkgPiAwKQ0KICAgICAgICByZXR1cm4gYnVmLmJ1ZjsNCiAgICAg
+ICAgDQogICAgcmV0dXJuIE5VTEw7DQp9DQoNCnN0YXRpYyBjaGFyKiBnaXRfZ2V0X3JlcG9fcmVh
+ZG1lKHZvaWQpIHsNCiAgICBzdGF0aWMgY29uc3QgY2hhciAqcmVhZG1lX25hbWVzW10gPSB7DQog
+ICAgICAgICJSRUFETUUubWQiLA0KICAgICAgICAiUkVBRE1FIiwNCiAgICAgICAgIlJFQURNRS50
+eHQiLA0KICAgICAgICBOVUxMDQogICAgfTsNCiAgICANCiAgICBzdGF0aWMgc3RydWN0IHN0cmJ1
+ZiBidWYgPSBTVFJCVUZfSU5JVDsNCiAgICBjb25zdCBjaGFyICoqbmFtZTsNCiAgICANCiAgICBz
+dHJidWZfcmVzZXQoJmJ1Zik7DQogICAgDQogICAgZm9yIChuYW1lID0gcmVhZG1lX25hbWVzOyAq
+bmFtZTsgbmFtZSsrKSB7DQogICAgICAgIGlmIChzdHJidWZfcmVhZF9maWxlKCZidWYsICpuYW1l
+LCAwKSA+IDApDQogICAgICAgICAgICByZXR1cm4gc3RyYnVmX2RldGFjaCgmYnVmLCBOVUxMKTsN
+CiAgICB9DQogICAgDQogICAgcmV0dXJuIE5VTEw7DQp9DQoNCnN0YXRpYyBpbnQgZ2l0X2FkZF9j
+b21tYW5kKGNvbnN0IGNoYXIgKm5hbWUsIGludCAoKmZuKShpbnQsIGNvbnN0IGNoYXIgKiosIGNv
+bnN0IGNoYXIgKikpIHsNCiAgICByZXR1cm4gcmVnaXN0ZXJfYnVpbHRpbihuYW1lLCBmbik7DQp9
+DQoNCnN0YXRpYyBpbnQgZ2l0X21vZGlmeV9jb21tYW5kKGNvbnN0IGNoYXIgKm5hbWUsIGludCAo
+KmZuKShpbnQsIGNvbnN0IGNoYXIgKiosIGNvbnN0IGNoYXIgKikpIHsNCiAgICBpZiAodW5yZWdp
+c3Rlcl9idWlsdGluKG5hbWUpICE9IDApIHsNCiAgICAgICAgcmV0dXJuIC0xOw0KICAgIH0NCiAg
+ICByZXR1cm4gcmVnaXN0ZXJfYnVpbHRpbihuYW1lLCBmbik7DQp9DQoNCnN0YXRpYyBzdHJ1Y3Qg
+Z2l0X3BsdWdpbl9hcGkgcGx1Z2luX2FwaSA9IHsNCiAgICAucmVnaXN0ZXJfY29tbWFuZCA9IHJl
+Z2lzdGVyX2J1aWx0aW4sDQogICAgLnVucmVnaXN0ZXJfY29tbWFuZCA9IHVucmVnaXN0ZXJfYnVp
+bHRpbiwNCiAgICAuZ2V0X3JlcG9zaXRvcnkgPSB0aGVfcmVwb3NpdG9yeSwNCiAgICAuZ2V0X3Jl
+cG9fbmFtZSA9IGdpdF9nZXRfcmVwb19uYW1lLA0KICAgIC5nZXRfcmVwb19vd25lciA9IGdpdF9n
+ZXRfcmVwb19vd25lciwNCiAgICAuZ2V0X3JlcG9fZGVzY3JpcHRpb24gPSBnaXRfZ2V0X3JlcG9f
+ZGVzY3JpcHRpb24sDQogICAgLmdldF9yZXBvX3JlYWRtZSA9IGdpdF9nZXRfcmVwb19yZWFkbWUs
+DQogICAgLmFkZF9jb21tYW5kID0gZ2l0X2FkZF9jb21tYW5kLA0KICAgIC5tb2RpZnlfY29tbWFu
+ZCA9IGdpdF9tb2RpZnlfY29tbWFuZA0KfTsNCg0Kc3RydWN0IGdpdF9wbHVnaW5fYXBpKiBnZXRf
+Z2l0X3BsdWdpbl9hcGkodm9pZCkgew0KICAgIHJldHVybiAmcGx1Z2luX2FwaTsNCn0=
+------=_Part_27318_874228010.1737184048022
+Content-Type: text/x-c; name=git-plugin-api.h
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="git-plugin-api.h"
+
+I2lmbmRlZiBHSVRfUExVR0lOX0FQSV9IDQojZGVmaW5lIEdJVF9QTFVHSU5fQVBJX0gNCg0KI2lu
+Y2x1ZGUgInJlcG9zaXRvcnkuaCINCg0Kc3RydWN0IGdpdF9wbHVnaW5fYXBpIHsNCiAgICAvLyDl
+kb3ku6Tms6jlhoznm7jlhbNBUEkNCiAgICBpbnQgKCpyZWdpc3Rlcl9jb21tYW5kKShjb25zdCBj
+aGFyICpuYW1lLCBpbnQgKCpmbikoaW50LCBjb25zdCBjaGFyICoqLCBjb25zdCBjaGFyICopKTsN
+CiAgICBpbnQgKCp1bnJlZ2lzdGVyX2NvbW1hbmQpKGNvbnN0IGNoYXIgKm5hbWUpOw0KICAgIHN0
+cnVjdCByZXBvc2l0b3J5KiAoKmdldF9yZXBvc2l0b3J5KSh2b2lkKTsNCiAgICANCiAgICAvLyDk
+u5PlupPkv6Hmga9BUEkNCiAgICBjb25zdCBjaGFyKiAoKmdldF9yZXBvX25hbWUpKHZvaWQpOw0K
+ICAgIGNvbnN0IGNoYXIqICgqZ2V0X3JlcG9fb3duZXIpKHZvaWQpOw0KICAgIGNvbnN0IGNoYXIq
+ICgqZ2V0X3JlcG9fZGVzY3JpcHRpb24pKHZvaWQpOw0KICAgIGNoYXIqICgqZ2V0X3JlcG9fcmVh
+ZG1lKSh2b2lkKTsNCg0KICAgIC8vIOaWsOWinkFQSe+8mua3u+WKoOWSjOS/ruaUueWRveS7pA0K
+ICAgIGludCAoKmFkZF9jb21tYW5kKShjb25zdCBjaGFyICpuYW1lLCBpbnQgKCpmbikoaW50LCBj
+b25zdCBjaGFyICoqLCBjb25zdCBjaGFyICopKTsNCiAgICBpbnQgKCptb2RpZnlfY29tbWFuZCko
+Y29uc3QgY2hhciAqbmFtZSwgaW50ICgqZm4pKGludCwgY29uc3QgY2hhciAqKiwgY29uc3QgY2hh
+ciAqKSk7DQp9Ow0KDQovLyDojrflj5bmj5Lku7ZBUEnlrp7kvosNCnN0cnVjdCBnaXRfcGx1Z2lu
+X2FwaSogZ2V0X2dpdF9wbHVnaW5fYXBpKHZvaWQpOw0KDQojZW5kaWYg
+------=_Part_27318_874228010.1737184048022--
+
