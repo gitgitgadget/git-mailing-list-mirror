@@ -1,40 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1191B1922C4
-	for <git@vger.kernel.org>; Sat, 18 Jan 2025 12:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD5818E37D
+	for <git@vger.kernel.org>; Sat, 18 Jan 2025 12:43:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737203314; cv=none; b=VABQedlR2hp5+QMVPDvtsGDkZKwbZGvI7Rs2d1mWRgJ8rrK+cYYT7EOVdh3lkyEYjzQoyVkJ4Qgqy6iOT1z+c1azkjTufPN6bpiQbqSeI1ogn62ETZ3MvOpSbr7vL/thPujzPBd1aOORjXVIJ1RXAcRU0+SDxTTkZav8vMFn5TE=
+	t=1737204227; cv=none; b=sl+FBTNrq8ngC7d4X8juj079GdOC6NbN2pwe6nwwIIXhTMKsFD5oW3EC8FSNqAqL/8OI9nO+HEtzk4pn4QtBFe7kW8rKNmirHVhn29irjhrCW7ETASLf8PeuM2p2hEts5xXlTHwRgqfSSsGJ5L2BdIm0UdtSuTF4WJkwCakv50E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737203314; c=relaxed/simple;
-	bh=Yy4VFEOA6xkMDpGwi0y8sxX53g7L3zehMCX//jGKDCQ=;
+	s=arc-20240116; t=1737204227; c=relaxed/simple;
+	bh=WjETbZFin80TUBihDEdo/ZlZyZ97QLqmBka0V7gjb6A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UVlOso0/u4XxWZqKO6QHb7utvI2OFMIuWqZLb80JwzxUkPbfLXXBJUIX/K29oElNZPX67rcbaIdqaDbFv0qI+MsRIHcB/lwZ0b2t/wte906oHT3GeDEsK56QIR4NiweIb4iXiyxErc/k/XxlrFedqrISa86XYesrC9yPDglQ+PI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ik30nvPM; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=u/6x+l2YPK/9xQVz3ODpIcZ6H6fQXgE5tLAW323euseYsNRvKRwGnerPizt7khisTvU1QgxYrDjPED7xZTPRy6L/n8HOkBVM2lJfChBfrPFoBaEvSYU81Lp+Wov5txiqHmsf0NaATgtwYCViS47fJtydRDQPocCP3otLdVWkB5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=L+JJK6O4; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ik30nvPM"
-Received: (qmail 31356 invoked by uid 109); 18 Jan 2025 12:28:32 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Yy4VFEOA6xkMDpGwi0y8sxX53g7L3zehMCX//jGKDCQ=; b=Ik30nvPMn0TmFsjvACPsljSgOSRis7M/gqgnXesfti525VWCjKPFz516hId1rW3tPsAOflKPXViB2t+R6LyKC5/Y3DrfMX7EkpJKzmCH9FsNp7TBeiYctKnQIIuJOmk1/hnU/5Fmr3B6zzod2nnsUcd0ZvTytTMmHz0swKp6zlu73gYXVzrY1LGYtiblUPn5FsL/f6AEUFk/SMZYM8UqjxdgUE+8HxCYxLXD1LjC7nj4Dbb38HrgW26FtMz/4XekHkZDHfkWhD6bAXiGHPWe+ZgK4m6ik6lnCIQmnm7aKnG7f5R48tZP1Y6PEKeQaN/vXdDC1rO6MLSRZwNePUJtOw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="L+JJK6O4"
+Received: (qmail 31406 invoked by uid 109); 18 Jan 2025 12:43:44 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=WjETbZFin80TUBihDEdo/ZlZyZ97QLqmBka0V7gjb6A=; b=L+JJK6O4qUb6KPZm693sJ/wYjOXJp/GFwcG7Kft2SkA2DLpS44GcYL13241QTIi1ugeEpwkKRsgO+yaONWgGF53s0EZelNEL9p0BHjCNyu5Iw/47J8OAYADZHwZDI6ZTsdSZmk9P3pkoXxjRG6hGru4XFDCfNqsq7K0/8+BkIXUKWee2b0iWkFcf2y0Cow2pK4N/aMwBmPSGnSJdJaI2zFAreG1UFqJWI0j1PAqEebybE8D2ncNyRWlKjBWLpNQuu6vWTIffft8yP8Yi27/dqYNX8Y9RX17Chp5hNIzrl3zPV64Ffwyx8vIiyvuXEjXFCR6hdvPtntzUSioPuRPJoA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 Jan 2025 12:28:32 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 18 Jan 2025 12:43:44 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20304 invoked by uid 111); 18 Jan 2025 12:28:31 -0000
+Received: (qmail 20426 invoked by uid 111); 18 Jan 2025 12:43:43 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Jan 2025 07:28:31 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 18 Jan 2025 07:43:43 -0500
 Authentication-Results: peff.net; auth=none
-Date: Sat, 18 Jan 2025 07:28:31 -0500
+Date: Sat, 18 Jan 2025 07:43:43 -0500
 From: Jeff King <peff@peff.net>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
 Subject: Re: [PATCH v3 0/8] hash: introduce unsafe_hash_algo(), drop unsafe_
  variants
-Message-ID: <20250118122831.GC3510721@coredump.intra.peff.net>
+Message-ID: <20250118124343.GA3828177@coredump.intra.peff.net>
 References: <cover.1732130001.git.me@ttaylorr.com>
  <cover.1737151386.git.me@ttaylorr.com>
+ <20250118122831.GC3510721@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,67 +44,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1737151386.git.me@ttaylorr.com>
+In-Reply-To: <20250118122831.GC3510721@coredump.intra.peff.net>
 
-On Fri, Jan 17, 2025 at 05:03:07PM -0500, Taylor Blau wrote:
+On Sat, Jan 18, 2025 at 07:28:31AM -0500, Jeff King wrote:
 
->     +    Note that hash_algo_by_ptr() needs an adjustment to allow passing in the
->     +    unsafe variant of a hash function. All other query functions on the
->     +    hash_algos array will continue to return the safe variants of any
->     +    function.
->     +
->          Suggested-by: Jeff King <peff@peff.net>
->          Signed-off-by: Taylor Blau <me@ttaylorr.com>
->      
->     @@ hash.h: struct git_hash_algo {
->       };
->       extern const struct git_hash_algo hash_algos[GIT_HASH_NALGOS];
->       
->     -@@ hash.h: static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
->     - 	return p - hash_algos;
->     +@@ hash.h: int hash_algo_by_length(int len);
->     + /* Identical, except for a pointer to struct git_hash_algo. */
->     + static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
->     + {
->     +-	return p - hash_algos;
->     ++	size_t i;
->     ++	for (i = 0; i < GIT_HASH_NALGOS; i++) {
->     ++		const struct git_hash_algo *algop = &hash_algos[i];
->     ++		if (p == algop || (algop->unsafe && p == algop->unsafe))
->     ++			return i;
->     ++	}
->     ++	return GIT_HASH_UNKNOWN;
->       }
+> It does make me wonder if hash_algo_by_ptr() should just return UNKNOWN
+> for the unsafe variant. Then we'd at least get a loud error from the
+> caller (as opposed to the code before your patch, which is undefined
+> behavior). I dunno.
 
-OK, so this version introduces the loop we discussed earlier. I think we
-can probably dismiss any performance loss as theoretical unless somebody
-can think of a good way to measure. It seems like worrying about it is
-probably a premature micro-optimization.
+Doing this:
 
-It is a little quirky that it loses the transitive nature of
-hash_algo_by_ptr() and hash_algo_by_id(). So this is unsafe:
+diff --git a/hash.h b/hash.h
+index 68d4292e6d..ad2c919991 100644
+--- a/hash.h
++++ b/hash.h
+@@ -311,7 +311,7 @@ static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
+ 	size_t i;
+ 	for (i = 0; i < GIT_HASH_NALGOS; i++) {
+ 		const struct git_hash_algo *algop = &hash_algos[i];
+-		if (p == algop || (algop->unsafe && p == algop->unsafe))
++		if (p == algop)
+ 			return i;
+ 	}
+ 	return GIT_HASH_UNKNOWN;
 
-  /* start with unsafe variant */
-  algo = unsafe_hash_algo(the_hash_algo);
-  algo->init_fn(...);
-
-  /* returns GIT_HASH_SHA1, even for the unsafe variant */
-  id = hash_algo_by_ptr(algo);
-
-  /* returns the safe variant */
-  algo = hash_algo_by_id(id);
-
-  /* oops, this is mix-and-matching */
-  alog->update_fn(...);
-
-Now obviously that sort of round-trip is a silly thing to do in a single
-function. Could it happen across a larger call-chain, where the id is
-stored in a struct and passed somewhere far away? I guess so, but it
-also seems kind of unlikely.
-
-It does make me wonder if hash_algo_by_ptr() should just return UNKNOWN
-for the unsafe variant. Then we'd at least get a loud error from the
-caller (as opposed to the code before your patch, which is undefined
-behavior). I dunno.
+on top of your series doesn't trigger any issues in the test suite.
+Which I think shows that we would never have triggered the UB from the
+original implementation, either[1]. Still, I think I prefer your loop to
+being one errant function call away from undefined behavior. But maybe
+returning UNKNOWN (as above) is a safer bet than losing the inverse
+nature of the by_ptr() and by_id() functions, which could otherwise
+cause hard-to-find interactions?
 
 -Peff
+
+[1] One thing that still puzzles me. If you further add a BUG() to that
+    function when we'd return UNKNOWN, you can see that we trigger a few
+    cases in the test suite where we pass in NULL (e.g., because we're
+    not in a repo). I think these are already UB with the existing
+    "p - hash_algos" implementation! We'll return what is effectively
+    "p" cast to an int.
+
+    E.g. if I do this:
+
+    diff --git a/hash.h b/hash.h
+    index 756166ce5e..ff31156416 100644
+    --- a/hash.h
+    +++ b/hash.h
+    @@ -320,6 +320,8 @@ int hash_algo_by_length(int len);
+     /* Identical, except for a pointer to struct git_hash_algo. */
+     static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
+     {
+    +	if (!p)
+    +		BUG("null hash, return is %d", (int)(p - hash_algos));
+     	return p - hash_algos;
+     }
+
+     then t1517 shows grep dying with:
+
+       BUG: hash.h:324: null hash, return is -1646754892
+
+     I think it "works" because the backtrace is:
+
+      [...]
+      #5  0x0000556d436f6b71 in BUG_fl (file=0x556d43790e8b "hash.h", line=324,
+          fmt=0x556d43790e73 "null hash, return is %d") at usage.c:335
+      #6  0x0000556d4357c2f9 in hash_algo_by_ptr (p=0x0) at /home/peff/compile/git/hash.h:324
+      #7  0x0000556d4357c437 in oidclr (oid=0x7ffdf5810ea4, algop=0x0) at /home/peff/compile/git/hash.h:392
+      #8  0x0000556d435801c7 in prep_exclude (dir=0x7ffdf5811190, istate=0x556d608959c0, base=0x556d6089da50 "nums",
+          baselen=0) at dir.c:1699
+      [...]
+      #16 0x0000556d4344dd4a in cmd_grep (argc=0, argv=0x556d60895ee8, prefix=0x0, repo=0x0) at builtin/grep.c:1257
+
+     So we probably write a totally garbage algo field into the
+     object_id, but nobody ever ends up looking at it. Probably
+     something we should clean up, but way out of scope for your series.
+     But I do think it reinforces that returning UNKNOWN is an
+     improvement; it avoids undefined behavior and anybody who tried to
+     use it should get a BUG() from calling git_hash_unknown_*()
+     functions.
+
