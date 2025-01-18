@@ -1,40 +1,40 @@
 Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1627D42070
-	for <git@vger.kernel.org>; Sat, 18 Jan 2025 17:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D220742070
+	for <git@vger.kernel.org>; Sat, 18 Jan 2025 17:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737220307; cv=none; b=f/RyRq75zDsjHf8UxeHiP9JKv5jeBL6+Nc8ZQ2EIC0hQ/bnztas/gvNPjy/g81QGeDQxQDkRHRfHZRlbLgOv5R6bUGEGEMg3MxzXQEa4/RW/ODryAjBPpeb0P5sgI3ZIIkfLSkJ5JPUPYF8iTVi8JnuS49z+klaj3OuANf2pfC0=
+	t=1737220327; cv=none; b=Wf4wtv5cJxISS5RnIrJsspDtAgMgadDVM/x1iKkyU+iA7Ym2UkbP1jL/Oo6n+G7BeAjTa/ioy+DmSivNzYY8a3fNLKL19YLYRbjI4lHgEfVXLE0RGTCNVrsihXoj5ml4T+NA+Gflc9gVMkvUIuPMI75MsD87/rgbLiSU4X/9vjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737220307; c=relaxed/simple;
-	bh=VeLhdCuPpK0ygLAG13j8RZUUcaBtQgMFW9x1OwP3tq0=;
+	s=arc-20240116; t=1737220327; c=relaxed/simple;
+	bh=szR+2kRRP6GvjThnJdAvyd0PGlDou2os6qtb7uBSSAY=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=M2edRJhN3T9P6Wzue61+rjBQRunx16muHCOrvBQrnci4Jnevj6ObS1DExcJM+MWZfd+qigZxB8kQEGw4k7fphQKSjfEcEixKiHkyPRsawztAlCujegypBcspVVc+Swjq7B5Qr5/7LtmsHfKLVBnS0qTcy9AYbUCsglJ8VTHxqRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=EiDclZLP; arc=none smtp.client-ip=212.227.17.12
+	 In-Reply-To:Content-Type; b=Qz4R8FpkWzrM3pC53l5F4wdi5GrhlVFn49mVl7umQ0t0B9rwz3QAxjjkZbfad5wdhPsx8Z+myzG6qox8grjsr7HqYVsBGLxXxhLwFLFjCyKtMO2eAi8r9F2OI9kY16k8eGJWoIGFZkh2z3c4J6QLuGssS8pXwjjLSbvd32fK7RY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=pQqE8cll; arc=none smtp.client-ip=212.227.17.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="EiDclZLP"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="pQqE8cll"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1737220295; x=1737825095; i=l.s.r@web.de;
-	bh=xV2wTaPScE+foUl6PSBiDSj5lYITbjQxkGSDvJywpOU=;
+	s=s29768273; t=1737220319; x=1737825119; i=l.s.r@web.de;
+	bh=Vt9T8oOfPzHdAL1BAx6WmmFvns+vE3XrGNvE9XNqmWw=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
 	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=EiDclZLPlhjxVtEEFBKWuG/k6G98EOYbW4gW0p2eewJCxExFM9yysALlKoVLoMCZ
-	 MamuU5l9aPDanWbPRSNZbcRjGk3K+bMMqZmNeFLN5/gf5eE6BT60BEHFXcXxaahhp
-	 yb9m8Felrk1IM7nNyNMSd0LEdN0DsT5gImoAQgHDAbfuZhAmyPXEtLKVtu0BJ5Eug
-	 229/Zy9ZMXvP9XNvac5pehn4bmALxM6uCuQULa4M/gl5Q11mma6NqUm/fWFflodxl
-	 3QSBxLJ6W5yLanS3le3z022ApsVeD653y/Qn81bmfOjgDtTnNv4tqU3dF9xiXolHx
-	 Bx24YFQmQgyMWw9jNQ==
+	b=pQqE8cllLNXpx04ZsQqc4YsHwcxKRxwJZQS+skDCtTEvrVbjr5V7V2dedK/a0FPu
+	 ymZ4T7E0om2pY70CL8stOy/gRDoZpRt+t3zMU/yjN98Lo71XE78/K3NmgRMCsmesH
+	 7Xa40pgr8iywxUZEeWA5Xjk2BWFCmv20lC+8wdg4VMVe1B+mMyJv3UhvMv4FRHBAb
+	 +UPEcDYbBon3Jg5shRyzLraywAMCnJNgyhcRFGDZnBfFg4bPyGNq6G8p/iZid1eId
+	 QBwU9yHt61SN2GhmqtJJo3JrYlNHN1mkDptNBp2zH7fUkGZyT8Y46eY9c2wWHP+Is
+	 Gk164kdKqM3sOlTlag==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.157.126]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MD5o3-1thgoh46Xh-00ARTf; Sat, 18
- Jan 2025 18:11:35 +0100
-Message-ID: <08fbb64d-8d01-4c24-8072-f6065b4f4ab9@web.de>
-Date: Sat, 18 Jan 2025 18:11:34 +0100
+Received: from [192.168.178.29] ([91.47.157.126]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MqZQY-1tD2pb2FIe-00l3Vj; Sat, 18
+ Jan 2025 18:11:59 +0100
+Message-ID: <bd53e91c-f33d-43cd-b650-2ed93e0b963b@web.de>
+Date: Sat, 18 Jan 2025 18:11:59 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,7 +42,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 1/3] ref-filter: move ahead-behind bases into used_atom
+Subject: [PATCH v2 3/3] ref-filter: remove ref_format_clear()
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Derrick Stolee <stolee@gmail.com>,
@@ -53,271 +53,120 @@ Content-Language: en-US
 In-Reply-To: <6b824f05-6f16-4cd9-85b7-3b8b236158b4@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:ST6qpDlW3dE5RAfKuBdJUrcYg5wsoHuCmm6z/7PqwHR6KZbNFGU
- tJ2sP81Z7F8LRfjL8WEeHH7KhMPikmbxzGT3uHVC5cJ9CPRI1bHZKmW92rLMgq9RdkxKWO+
- 8izy+VCdQrb/6IgKa1xHNZqy3r+uG7FlvPc10LhU45eXNQwolPEmNLfNETOnk6A1iaF7LQM
- 6YCKnJRSyg7Zz7b+WuTqg==
+X-Provags-ID: V03:K1:eLUdl8Kis36Kc9XVrqW3CqYyO5DLJ412CRfN9Rol9PDmmfCCqCu
+ n+gdEVyHWD7OE5CsSDk/SRBvfXO8MPKLGL+3nqaiiN1khm8dDKc/gTj7C8bneHRcSBVmrCR
+ iCxOoJ5KspR3bv+GSs71sZF0eg2EycLce1iBInC1abuZs5jbsWJzDWoS6vI3qXAV4QnAAtP
+ YC/tJa1sL4iv+xB1lRS7A==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:rAFNpCocsj4=;4/ZT2J1q9aYoIpPK19YkmxekpVL
- 1j3AedTpb0E6wkqpomIYZnM/DDRLmmXKRf9GbxmG7l4X27ND3KLqS/l+kOLsY4TIBUbwZ67Cm
- mdspz3b70Pjw7Qx53BTIndi5Z0UlkQyxbZuOwgPBEhb7WIVCXV4EIdTi4c7nn4nLl8fGToVIN
- MaSmi9xcxLLlXg7Wyaj2dmyia048wIEJjcDMt1FABwpgZrX3tx+ZDEeiliNQX8tMAxIKAVyhu
- ApuLoHPYp6HcdkOCtfJbLbcFmFUncogJSXanecM4ioq06qhQAG8Aii4AkYNZrj6gY3wZRjw8m
- qkw3IPdgCBVg3R9NT6foYarNdJG7ut35CQMHXNoiyFH5bHFlGgE6QGXhga3Bv/LtmkmWxOgk/
- nNB1DKwd+rE/GDQ+MkODUaBW0pH6wuOsfugZ2zlUp3S36cZ2/H0UGT99QI3fwmeQtOktjgJtN
- OWBFlMY5P8haQicbTiL4k5sZ5i5EczU/Tn1Xffz8eapXQVZrkU0cEqGwZpGNYxvzRbQQL284z
- 0AF1euFDAOU22zt9BBuvMfp4vp7tNgjjfj/4QwWmXLpIpXLnN1N8hq6tzMKA5/8lLlgEW+jyo
- c3Lt25R2cZ60P/mIMyeyJb2vzsAM0WA2rQTLdg2Eg3k7aZxsKhobBDehPW5mG7cZLtgS6Catn
- PAEiHLEWP/Q6lG7RptWG09uX3dxfF1ph453PO98tkZPekvZeu3XWe3tE72isFraDlaBzRFWDi
- so4Mtd6/kAf3l/0lSJCFp3kPoV9cYvk81OjhEGAE7r3LSTDs553lySnN6V85CC5U1OhOAKnf4
- gzJIEPRDKymyRcpaiCYRXEPC7bGuZ2cVJyGJjPpMsi3kTC4qcgLodMzFEXvKaWb7LCWITLkJF
- mEYkwEnMsqqgXOYPqNolWH5Ex9WQh/wYxGSGzmTS6NNLU0HOghU8gzn6Ji8dFQW5o8imel/sF
- 6ZdhIrOdTQuLef7G+SExQxonH6+jlmnIRD+7EetFu482l3QZpDlmf6sMgDcvf4sH7aqBLoROp
- m1mUZTpK/zhukLgSNwjNJ0d5HkUU0PQo+pwkNt/7MebAVDT9BqW6AfTwRaiwcXR/FUT40vyLL
- xB+sBLHO5lWrz1AGzzad6kIsvqq4rlOtdg29TksfqDgKcncw5sQhww4SPJba1zIDwAZujCbks
- kqMzdAvauono++MC8y+lR/qWJ46SRzRzFsW9RsTT3xA==
+UI-OutboundReport: notjunk:1;M01:P0:7mdO6ayoZXk=;0od1are+C6eeyNrxuwE6fxGKFfp
+ CoOKBNfxiTJSTlDTeYFLVFtspoz4MXZRb59A5UPm/Pg068/BuY5HzEmf9Zxd4yuQJiBKoTe9O
+ vSC9v9Nla17ByXFDYOCeOcqXMATmP9kHhE4Qc617fEQEqPVH5tMz7i/uzRr1Ux8CHUzAWEGT9
+ 55QVhnaTpHFT1srbDuFuGuBTuGTZchYoiiLiT2HloF+iC0ojw3/VsEIE7I1CJgXEPXx/KndRh
+ VptPqSFu85WUjm0t9wljA/zkOsfDEZw26u2bQfccLpVlxUJh958WwP/O2GJGFedc07nLczvpC
+ 4awZqhiPdG5Um9Qh5wU5YNA9P4AX1UoFAagV2GmS2ClneyRLHISl3PK4BXo3mKYWajb4M1VQM
+ D70I8PtDnyfZhVoZbp7e2PG9bU4Ha3bOiIdtBU8+A/t2G2+PXrHanccgWPpbd4Jo36DJU8xpn
+ glLuR6M2tHiZDYG6uSLNMluIAIpYCdCZKyZ4HO3ELVaA0LJYgH1S2BkOtIV+fbvdQ7oKjqZbi
+ re12EmF4ZCC+gk7p6Slevo07VOcuAq8Jj+z3Pv/+U94d+12qbNJoTFA74dSBjgNtjk2ZeTyXc
+ w5EfScY5YbxbUY7t/WTIMDTYRzgeezRr4FUZfyh2I7qEivtsq7J04+/9Lkaz1rladuHN3INCi
+ eyTrYAp693cDnawb1cjyqDfkiYLqIeoUYhxPLRV47Mh5B8MY+SMfxZuHQZ31yYCrAgNBK3BtY
+ dsj6h+Cq5Uh/6v08RLG3J4DPaFidDcGAO4lcAcoKoBWIybqT9f2ZkZ7mvRcQgOBuBvIvOsYB3
+ 9DXy/n4oZWGJ4NLONuGKfgqVuosFzUR7btEJ6ueSWoHF/g5zUAaRLFEgJ1tk4EU+RogclgdUt
+ nkWv3hk487o0vjtVuTZ/mqRnDhwQNKGmaTvWQtc2ezDKA7GvtMSCYh993KPAHmeJy5KddGcr5
+ W1zIh8MTcfLAUdpqT7RmUDg6FoVafq1WHEZgc5KYsFUssLtbOz1Bui88oIEfCUJ31ilOn10Ck
+ KOcro1m6ZM07pBxK/6Kb/9Pg6LE9Aa9o/ANpqGvvZ7AAmuy3dCEzztBvanl5B3WZcBVEqvnnz
+ 6Arb4WAC2KvUmmzthEtSR42a8a7ZkrK7X1vakmU7A9iLNshC2VRLOn9EyJsfldpkbiyHhT5jG
+ 4Fd9g3iySRULRBqMr8BODrIjnlLg0BCVEs+AjeUjfMQ==
 
-verify_ref_format() parses a ref-filter format string and stores
-recognized items in the static array "used_atom".  For
-"ahead-behind:<committish>" it stores the committish part in a
-string_list member "bases" of struct ref_format.
+Now that ref_format_clear() no longer releases any memory we don't need
+it anymore.  Remove it and its counterpart, ref_format_init().
 
-ref_sorting_options() also parses bare ref-filter format items and
-stores stores recognized ones in "used_atom" as well.  The committish
-parts go to a dummy struct ref_format in parse_sorting_atom(), though,
-and are leaked and forgotten.
-
-If verify_ref_format() is called before ref_sorting_options(), like in
-git for-each-ref, then all works well if the sort key is included in the
-format string.  If it isn't then sorting cannot work as the committishes
-are missing.
-
-If ref_sorting_options() is called first, like in git branch, then we
-have the additional issue that if the sort key is included in the format
-string then filter_ahead_behind() can't see its committish, will not
-generate any results for it and thus it will be expanded to an empty
-string.
-
-Fix those issues by replacing the string_list with a field in used_atom
-for storing the committish.  This way it can be shared for handling both
-ref-filter format strings and sorting options in the same command.
-
-Reported-by: Ross Goldberg <ross.goldberg@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/branch.c         |  2 +-
- ref-filter.c             | 50 ++++++++++++++++++++++++----------------
- ref-filter.h             |  5 ----
- t/t3203-branch-output.sh | 28 ++++++++++++++++++++++
- 4 files changed, 59 insertions(+), 26 deletions(-)
+ builtin/branch.c       |  1 -
+ builtin/for-each-ref.c |  1 -
+ builtin/tag.c          |  1 -
+ builtin/verify-tag.c   |  1 -
+ ref-filter.c           | 11 -----------
+ ref-filter.h           |  3 ---
+ 6 files changed, 18 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 6e7b0cfddb..fbb9536282 100644
+index fbb9536282..9a29de5bf1 100644
 =2D-- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -473,7 +473,7 @@ static void print_ref_list(struct ref_filter *filter, =
-struct ref_sorting *sortin
- 	if (verify_ref_format(format))
- 		die(_("unable to parse format string"));
+@@ -884,7 +884,6 @@ int cmd_branch(int argc,
+ 		string_list_clear(&output, 0);
+ 		ref_sorting_release(sorting);
+ 		ref_filter_clear(&filter);
+-		ref_format_clear(&format);
 
--	filter_ahead_behind(the_repository, format, &array);
-+	filter_ahead_behind(the_repository, &array);
- 	ref_array_sort(sorting, &array);
+ 		ret =3D 0;
+ 		goto out;
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 715745a262..8085ebd8fe 100644
+=2D-- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -108,7 +108,6 @@ int cmd_for_each_ref(int argc,
+ 	filter_and_format_refs(&filter, flags, sorting, &format);
 
- 	if (column_active(colopts)) {
+ 	ref_filter_clear(&filter);
+-	ref_format_clear(&format);
+ 	ref_sorting_release(sorting);
+ 	strvec_clear(&vec);
+ 	return 0;
+diff --git a/builtin/tag.c b/builtin/tag.c
+index c4bd145831..e8a344b926 100644
+=2D-- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -698,7 +698,6 @@ int cmd_tag(int argc,
+ cleanup:
+ 	ref_sorting_release(sorting);
+ 	ref_filter_clear(&filter);
+-	ref_format_clear(&format);
+ 	strbuf_release(&buf);
+ 	strbuf_release(&ref);
+ 	strbuf_release(&reflog_msg);
+diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+index a7f20618ff..f6b97048a5 100644
+=2D-- a/builtin/verify-tag.c
++++ b/builtin/verify-tag.c
+@@ -69,6 +69,5 @@ int cmd_verify_tag(int argc,
+ 		if (format.format)
+ 			pretty_print_ref(name, &oid, &format);
+ 	}
+-	ref_format_clear(&format);
+ 	return had_error;
+ }
 diff --git a/ref-filter.c b/ref-filter.c
-index bf5534605e..c3957473e5 100644
+index 9a4b2d4cea..6da8d4c03b 100644
 =2D-- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -235,6 +235,9 @@ static struct used_atom {
- 			enum { S_BARE, S_GRADE, S_SIGNER, S_KEY,
- 			       S_FINGERPRINT, S_PRI_KEY_FP, S_TRUST_LEVEL } option;
- 		} signature;
-+		struct {
-+			struct commit *commit;
-+		} base;
- 		struct strvec describe_args;
- 		struct refname_atom refname;
- 		char *head;
-@@ -891,18 +894,15 @@ static int rest_atom_parser(struct ref_format *forma=
-t UNUSED,
- 	return 0;
+@@ -3660,14 +3660,3 @@ void ref_filter_clear(struct ref_filter *filter)
+ 	free_commit_list(filter->unreachable_from);
+ 	ref_filter_init(filter);
  }
-
--static int ahead_behind_atom_parser(struct ref_format *format,
--				    struct used_atom *atom UNUSED,
-+static int ahead_behind_atom_parser(struct ref_format *format UNUSED,
-+				    struct used_atom *atom,
- 				    const char *arg, struct strbuf *err)
- {
--	struct string_list_item *item;
 -
- 	if (!arg)
- 		return strbuf_addf_ret(err, -1, _("expected format: %%(ahead-behind:<co=
-mmittish>)"));
-
--	item =3D string_list_append(&format->bases, arg);
--	item->util =3D lookup_commit_reference_by_name(arg);
--	if (!item->util)
-+	atom->u.base.commit =3D lookup_commit_reference_by_name(arg);
-+	if (!atom->u.base.commit)
- 		die("failed to find '%s'", arg);
-
- 	return 0;
-@@ -3084,22 +3084,30 @@ static void reach_filter(struct ref_array *array,
- }
-
- void filter_ahead_behind(struct repository *r,
--			 struct ref_format *format,
- 			 struct ref_array *array)
- {
- 	struct commit **commits;
--	size_t commits_nr =3D format->bases.nr + array->nr;
-+	size_t bases_nr, commits_nr;
-
--	if (!format->bases.nr || !array->nr)
-+	if (!array->nr)
- 		return;
-
--	ALLOC_ARRAY(commits, commits_nr);
--	for (size_t i =3D 0; i < format->bases.nr; i++)
--		commits[i] =3D format->bases.items[i].util;
-+	for (size_t i =3D bases_nr =3D 0; i < used_atom_cnt; i++) {
-+		if (used_atom[i].atom_type =3D=3D ATOM_AHEADBEHIND)
-+			bases_nr++;
-+	}
-+	if (!bases_nr)
-+		return;
-
--	ALLOC_ARRAY(array->counts, st_mult(format->bases.nr, array->nr));
-+	ALLOC_ARRAY(commits, st_add(bases_nr, array->nr));
-+	for (size_t i =3D 0, j =3D 0; i < used_atom_cnt; i++) {
-+		if (used_atom[i].atom_type =3D=3D ATOM_AHEADBEHIND)
-+			commits[j++] =3D used_atom[i].u.base.commit;
-+	}
-
--	commits_nr =3D format->bases.nr;
-+	ALLOC_ARRAY(array->counts, st_mult(bases_nr, array->nr));
-+
-+	commits_nr =3D bases_nr;
- 	array->counts_nr =3D 0;
- 	for (size_t i =3D 0; i < array->nr; i++) {
- 		const char *name =3D array->items[i]->refname;
-@@ -3108,8 +3116,8 @@ void filter_ahead_behind(struct repository *r,
- 		if (!commits[commits_nr])
- 			continue;
-
--		CALLOC_ARRAY(array->items[i]->counts, format->bases.nr);
--		for (size_t j =3D 0; j < format->bases.nr; j++) {
-+		CALLOC_ARRAY(array->items[i]->counts, bases_nr);
-+		for (size_t j =3D 0; j < bases_nr; j++) {
- 			struct ahead_behind_count *count;
- 			count =3D &array->counts[array->counts_nr++];
- 			count->tip_index =3D commits_nr;
-@@ -3277,9 +3285,12 @@ static inline int can_do_iterative_format(struct re=
-f_filter *filter,
- 	 * - filtering on reachability
- 	 * - including ahead-behind information in the formatted output
- 	 */
-+	for (size_t i =3D 0; i < used_atom_cnt; i++) {
-+		if (used_atom[i].atom_type =3D=3D ATOM_AHEADBEHIND)
-+			return 0;
-+	}
- 	return !(filter->reachable_from ||
- 		 filter->unreachable_from ||
--		 format->bases.nr ||
- 		 format->is_base_tips.nr);
- }
-
-@@ -3303,7 +3314,7 @@ void filter_and_format_refs(struct ref_filter *filte=
-r, unsigned int type,
- 	} else {
- 		struct ref_array array =3D { 0 };
- 		filter_refs(&array, filter, type);
--		filter_ahead_behind(the_repository, format, &array);
-+		filter_ahead_behind(the_repository, &array);
- 		filter_is_base(the_repository, format, &array);
- 		ref_array_sort(sorting, &array);
- 		print_formatted_ref_array(&array, format);
-@@ -3647,7 +3658,6 @@ void ref_format_init(struct ref_format *format)
-
- void ref_format_clear(struct ref_format *format)
- {
--	string_list_clear(&format->bases, 0);
- 	string_list_clear(&format->is_base_tips, 0);
- 	ref_format_init(format);
- }
+-void ref_format_init(struct ref_format *format)
+-{
+-	struct ref_format blank =3D REF_FORMAT_INIT;
+-	memcpy(format, &blank, sizeof(blank));
+-}
+-
+-void ref_format_clear(struct ref_format *format)
+-{
+-	ref_format_init(format);
+-}
 diff --git a/ref-filter.h b/ref-filter.h
-index 754038ab07..5f3dd6c931 100644
+index 0ba94df651..013d4cfa64 100644
 =2D-- a/ref-filter.h
 +++ b/ref-filter.h
-@@ -99,9 +99,6 @@ struct ref_format {
- 	/* Internal state to ref-filter */
- 	int need_color_reset_at_eol;
+@@ -211,7 +211,4 @@ void filter_is_base(struct repository *r,
+ void ref_filter_init(struct ref_filter *filter);
+ void ref_filter_clear(struct ref_filter *filter);
 
--	/* List of bases for ahead-behind counts. */
--	struct string_list bases;
+-void ref_format_init(struct ref_format *format);
+-void ref_format_clear(struct ref_format *format);
 -
- 	/* List of bases for is-base indicators. */
- 	struct string_list is_base_tips;
-
-@@ -117,7 +114,6 @@ struct ref_format {
- }
- #define REF_FORMAT_INIT {             \
- 	.use_color =3D -1,              \
--	.bases =3D STRING_LIST_INIT_DUP, \
- 	.is_base_tips =3D STRING_LIST_INIT_DUP, \
- }
-
-@@ -205,7 +201,6 @@ struct ref_array_item *ref_array_push(struct ref_array=
- *array,
-  * If this is not called, then any ahead-behind atoms will be blank.
-  */
- void filter_ahead_behind(struct repository *r,
--			 struct ref_format *format,
- 			 struct ref_array *array);
-
- /*
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index 500c9d0e72..a6bd88a58d 100755
-=2D-- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -368,6 +368,34 @@ test_expect_success 'git branch --format with ahead-b=
-ehind' '
- 	test_cmp expect actual
- '
-
-+test_expect_success 'git branch `--sort=3D[-]ahead-behind` option' '
-+	cat >expect <<-\EOF &&
-+	(HEAD detached from fromtag) 0 0
-+	refs/heads/ambiguous 0 0
-+	refs/heads/branch-two 0 0
-+	refs/heads/branch-one 1 0
-+	refs/heads/main 1 0
-+	refs/heads/ref-to-branch 1 0
-+	refs/heads/ref-to-remote 1 0
-+	EOF
-+	git branch --format=3D"%(refname) %(ahead-behind:HEAD)" \
-+		--sort=3Drefname --sort=3Dahead-behind:HEAD >actual &&
-+	test_cmp expect actual &&
-+
-+	cat >expect <<-\EOF &&
-+	(HEAD detached from fromtag) 0 0
-+	refs/heads/branch-one 1 0
-+	refs/heads/main 1 0
-+	refs/heads/ref-to-branch 1 0
-+	refs/heads/ref-to-remote 1 0
-+	refs/heads/ambiguous 0 0
-+	refs/heads/branch-two 0 0
-+	EOF
-+	git branch --format=3D"%(refname) %(ahead-behind:HEAD)" \
-+		--sort=3Drefname --sort=3D-ahead-behind:HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'git branch with --format=3D%(rest) must fail' '
- 	test_must_fail git branch --format=3D"%(rest)" >actual
- '
+ #endif /*  REF_FILTER_H  */
 =2D-
 2.48.1
