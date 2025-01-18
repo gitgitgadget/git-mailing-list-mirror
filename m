@@ -1,74 +1,92 @@
-Received: from mail-10698.protonmail.ch (mail-10698.protonmail.ch [79.135.106.98])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3E519CC24
-	for <git@vger.kernel.org>; Sat, 18 Jan 2025 16:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.135.106.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B139A19ABB6
+	for <git@vger.kernel.org>; Sat, 18 Jan 2025 17:11:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737219436; cv=none; b=q0YfxUxsZEJUW5D/fJJbw+tMwLUUyRbPHZsc2tKwqXoQZXA37B0u8ilHFiI1vySUheCFk1CUhvSvZyFXc2JsH2ZJ8UsB5r9R1MWSdZB0CgYcjFd/9THm1ZGZEgDwrWPMyAVul51lS9lVPpWsJreSs7LLPRL0TO2doIkabp1ejn0=
+	t=1737220292; cv=none; b=ca1qH+FpHyu1GlNgRtFi59pwK0PMKrs6lx491W1TmYKzu2grh+FIqmpUkLp7jQT5l5N9wHVHlxMwQnEzYUD9cn+JTvF/aCYeI1KjWqZoJTQJuvW3/MJ9joSM//HJrNixW8+WrlCMsTKfFW9FIAEY5TJDm0LlK42UtoLDTab3LbE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737219436; c=relaxed/simple;
-	bh=z1zy1Ue6xfOB3rpw06mHPgvbKGEIGbzRxA8U4IXBmEw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RvdnADkgQBGbAtBl3Ut/aIFGR9Cyy2ApcFavjE07dXsJj68CId78QLo4e5X/2c8Cw5hMEjWMsJFkvslfikKLop1PcwTDxy2mbqEbSdknrSujPXEKylQgEGcdG/no6RY+0ff12PXnrpZBjRdFve+J6ifBd/lwJMcTafxLxvbJdlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=XsV5QEeF; arc=none smtp.client-ip=79.135.106.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
+	s=arc-20240116; t=1737220292; c=relaxed/simple;
+	bh=TUuaiSuDgPdqwMBQhnI2HUCBnujAIHEZImZeC1HiCY8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=D6Xyt4Lf24kr9GPRKJqaaHtVHUPovCTn05X/opZjhSyvW2dQ/ZzpmKCQM4sYhCg/mdSedrcQ8G30Wr/qhy+9h/2jRcAMT+nd6o68J1KVQVLH+mQbwpLDntG6yH1ISKQG+1fwxhY5GSyb5e7m3wOZbEZlCpppz5r5Nid5G3EccgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=coR5giVA; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="XsV5QEeF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-	s=protonmail3; t=1737219426; x=1737478626;
-	bh=z1zy1Ue6xfOB3rpw06mHPgvbKGEIGbzRxA8U4IXBmEw=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector:List-Unsubscribe:List-Unsubscribe-Post;
-	b=XsV5QEeFrsXYprqlmDt5QIj7QpTiNeJRThjNYWesLPo5QEZMh52Wj74OozQNL0zZA
-	 HkSftW7B62vBt7O7Aj53TSDGvnQC2CAsGpFzdNX5Dd2Q8RE0d/VR8u7/mr4Oj9mRSE
-	 2d/W8Ki7Fmvis6CAmjU60UBQWI/QtBhdrP3WSZ6ta/ISqIsf+vJtOvGDRbor9Z8YWw
-	 AGFGhrP40dhue6em7GM1kkvP7suswTw9K+WTgV3TNjwS+Q/A2R/i8KbP3+e0dIW+1N
-	 kyUlEv0WttqVOlo2Jn9DvN4uZTpa+yEUFSf0qln/bb0eOzg4Xo645sQasGbRQvQR3i
-	 SrFMBD2iTH+rw==
-Date: Sat, 18 Jan 2025 16:57:02 +0000
-To: Jeff King <peff@peff.net>
-From: Koakuma <koachan@protonmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] packfile: factor out --pack_header argument parsing
-Message-ID: <oyahQoMDgyHL5zm-JuAtwlkUM2gHqO67zs83WP5Cm2h07S0x_xt8m4CNiShDFe2epznxlJF3kC-X_g414dRhDdrko44xo_yfsDXq1esVYVo=@protonmail.com>
-In-Reply-To: <20250118092351.GB3474411@coredump.intra.peff.net>
-References: <20250117125207.GB2356599@coredump.intra.peff.net> <20250117125459.GA2893666@coredump.intra.peff.net> <xmqqo705hxfz.fsf@gitster.g> <20250118092351.GB3474411@coredump.intra.peff.net>
-Feedback-ID: 6608610:user:proton
-X-Pm-Message-ID: 3f12daa4c4873f42da75e8b70042e314243c6644
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="coR5giVA"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1737220282; x=1737825082; i=l.s.r@web.de;
+	bh=TUuaiSuDgPdqwMBQhnI2HUCBnujAIHEZImZeC1HiCY8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=coR5giVA1sOnkFone8K9JLU8weR923zkU93cBPWKf6BRp7/bnDeyYTzY/XgoGcRb
+	 29lXTKexrGiiG7KKyDBjaAVAEbd7Ty7oZ+s1jZsG9dpCYkY5qVK1PkeA0Oj/Gwa8j
+	 eecQdZeDHs/CqEOqEE94W/QFy1CiHjDWnhdll6azY5oU/Ml77IWAXr/7AYyL3LRQz
+	 zw8s3vBrl/9DvJ3bPs/IbWvCWze8r1PPMkAA/pz82w0WPXmIYEFNoUcuwvVNgH+Do
+	 c/imNhmNZR2M99q5Cr6Mu85GNImXkBBpotfvdEDhmXgx2UaE77tkcw9vb3zyjBa+7
+	 Zw/uBpL9VbGbjHkIog==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.157.126]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MCol0-1thxmM1Ydk-00GPja; Sat, 18
+ Jan 2025 18:11:22 +0100
+Message-ID: <400bbcae-5dc8-4263-b5c4-86884c54c37c@web.de>
+Date: Sat, 18 Jan 2025 18:11:21 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ref-filter: share bases and is_base_tips between
+ formatting and sorting
+To: Jeff King <peff@peff.net>
+Cc: Ross Goldberg <ross.goldberg@gmail.com>, git@vger.kernel.org,
+ Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>
+References: <CAAEcvMovcZucuq4H70ouQzKS=_wHnBi1DqJ-4MMFVXX9XLEciw@mail.gmail.com>
+ <6b824f05-6f16-4cd9-85b7-3b8b236158b4@web.de>
+ <20250113051700.GA767856@coredump.intra.peff.net>
+ <57066d48-ce68-42ec-8e94-4ef6c1eba920@web.de>
+ <20250116095128.GA144555@coredump.intra.peff.net>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <20250116095128.GA144555@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:gn0SCYy29CxZ+9mpM14laO7oB9KAc32H10yPEib7pPSTWOoWRTq
+ M6vBModTO6xCQgjOf4CLH2WXIRVMbqRHg6ymJHEKDaDoSYz/Q37R38j/29JcsBvovxcKWrG
+ FMpnwmOECyE7zl0gu5MVSOmbJ/WBrue0VXjg/vc1wFwXjcbocqS7DdhlVCx2Y5Kt83f/q6h
+ 60n3UAyr8kKn15TlA6dAw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:fTFBDHfx75o=;G3Ts1VEvL+tSyhTzgzIgox9YIhx
+ I56h5+VBcwDbYSWv2n/wUMbZtuXksULgLoOl1/5T9WopOFCXVM5M0GgrZIjqg+5+9m2IIG6OV
+ BSFmmQkZ+7p9jY8iM2xagdQhZ7nFdAv2V+2u/+gneqIe7MjgJchlPC9N3gPzTJpy278tp9mAv
+ D9Y+mjSLVHGKMSnY4I+a20t9hI0IgcPUhj/WrfAZ5G2y+kNQhJy2aEZfCjUR+1aCkWTFM+Or8
+ 80bD7jWY5RRS81FIJNujnH+01LMIcoAkCDXthFPqnR9Z11Ptt8ylEtETHr7pXNlPCXhReqPTj
+ hKRBcJoVwkXP7GmohsymQ+tg/OHipJ6qxk0R+mx8mQ7I30PQcBVzLm7ZYYLO9fcn23X1pk25N
+ a9KaSlaGyFDLv8CRW8WNy6vyrRXkmzqxSrDD6BPXvYG//1tMy2WRqk26kL4qwgLO1IpV3Fn9n
+ 8vU7x7XExLsieK/NLeWXmzPro7MgKq+A4Z0q2rjKbWXuHVAW3xtvAA7SdR5Q43AR18R4Tz566
+ qEoMfxwTQ8LHf1MR2AKEzQM2Lh5AKYV5caBCUlyWjW6UGZ4JqquZUEupU+CbLsTvtJVY9Qeoc
+ wAH3YkQ4YoEOzS14g2oK+Qp22TynuPCF7L5zlJY7/kPSbVCoQMyc8j+hYPsG1ZJyMigu+gD5a
+ 2kXaCk7D/N0uBr3+h2SALBlbUyLwgeCVVL51EiXnsx7gmhF+mRqev9g1asRy1mBuEoMrhUEHz
+ yGifYvQ/zHgmMMQnnaXYjv4z+63Z9SQ/gdScyP/r25i4lJgcG2NWo6IzrbcNetnYRCNm0Rb3M
+ uq9TeGJuKf4eTSXkik8SM71M/Jvx9KysAKVIIvxVR2bMFWm8wlSXyEXsTn3XurqfFj/Xaqu3C
+ 9I5gPdXGpB/HeW0cQeA+JPZK06+NsGFMFgfR+xFhbYNhvkaC430j0WhwTH0gyPCPkgYfyDBp3
+ MN1RPfI23VP9lKljIrXoTKC7L7CbcHWnS+OanLw5I6X1dzFQ2C+XNZ8JTZOuvADehogkkaP/c
+ mfSUN7U1qYOiuvbUEArTxrTsm/wr3nTjXtdMlXW0sCaC3CaaOOoO1hDrRHxOMyoLE//1NYUSi
+ L1CHf0aW69iwomskjeGon4b/v3uLEmk4qWDC+U1KLf2rio3UvLAWx6ZC0cmrH1x8xlhgWibiW
+ 37FLZsoUaUnSEbuQgWTOf3Hy/zWJ9HqoehVFsW8h5qg==
 
-Jeff King <peff@peff.net> wrote:
-> Junio C Hamano wrote:
-> > Jeff King peff@peff.net writes:
-> > Interesting. So the file-scope static input_buffer[] sits in the
-> > BSS and happens to be well aligned not to cause the problem, but ...
->=20
-> I suspect it is a problem, but either:
->=20
-> - The OP's test case was small enough to trigger unpack-objects, not
-> index-pack. Possibly:
->=20
-> git index-pack --stdin --pack_header=3D2,2 <no-header.pack
->=20
-> would fail for them.
->=20
-> - We simply got lucky with alignment based on the other things in BSS,
-> the whim of the compiler, etc. But it is an accident waiting to
-> happen.
->=20
-> -Peff
+Am 16.01.25 um 10:51 schrieb Jeff King:
+> Yet another option in the near term might be storing these ahead-behind
+> bits in the individual atoms.
 
-That particular command doesn't seem to crash for me right now, but, as you
-said, that is probably just a lucky coincidence that the compiler happens t=
-o
-place the buffer on aligned memory.
+That makes a lot of sense.
+
+Ren=C3=A9
+
