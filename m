@@ -1,136 +1,83 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E8A4A21
-	for <git@vger.kernel.org>; Sun, 19 Jan 2025 16:21:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A390D1DED6B
+	for <git@vger.kernel.org>; Sun, 19 Jan 2025 17:58:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737303708; cv=none; b=qG0dktCHjukwKQMzxcapV6jTwizF+1rUDfEBw1zrxkH2OTGusnLlXD6i6eXFX3wCz+rHVP1EWGjR7ltxo0c44ikAtMZqfBOQs1EjknyQI7ef7pt4tM6Vm3dejcLFRFo+9+3skjjiXY81cBtmrDWfYsc26dI4936+TJ/YcZnnBqk=
+	t=1737309492; cv=none; b=VUG36JHtUZBJXZq27GUO3D4jsA0wmLnymk9lFJ1KSEZm1GFmHb+bX8XN72C0g5vDMq8OJW8Jvip58LQuYvZCaND7R99UskiU/718jdfLiT/5CVvXTc7jP0KYS23iXlGodQQdHb0ppL430cEBVcHn1CpdCWqe/1Y+xsU/dD7rTI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737303708; c=relaxed/simple;
-	bh=tAZP5z0d0X/atgiJebwxZPhRlyFilVs27TmX4hl61v8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kvAYeEeym1LuuN/M+iEKJm1Er10yCYLdV+5/0L8lawc2hocGbH3PmUv7Ou128cm16BTfjyWVtZX3n1VRrVcM+7tT0jQG/doEnFUGF1fmV4FkZKLkQWBoskLd+5J+vrWbGtTK/tPegbkLT7GZzJb7G80oJe3g0WRqBjydRVEla/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=DbQ7f1Iy; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1737309492; c=relaxed/simple;
+	bh=kCwYAyMX4voDvuqLHTAT+HN07a8dUf0d+1gmadYDn2I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=k76No8JrRG8kmSM01+O3txNMhljjDWnrcmCpdTOhDBej1siYH839svVmVmu9eKY9w0P4sUQAxw0Kct5D9rWw4AtYcru1Qj4i5Nf0zB+yqOied/3PotD3kWMGPU8UDU4T+1h3Sn0IokdkWBgCd/YM4Yg79KbE1JyaSBIK7Cvulvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=cy/OJJSh; arc=none smtp.client-ip=212.27.42.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="DbQ7f1Iy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1737303703;
-	bh=tAZP5z0d0X/atgiJebwxZPhRlyFilVs27TmX4hl61v8=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=DbQ7f1IyocIV7RyTpd1i7w0xSTEMjNllmbxWYHtsGeR7zTYnnCDmdvV0uV3smuomN
-	 sk7TuJVSXDsal0MxZndBbqRoVKspZxcMtVsAeAymtQ8tBcSPRVTCDzQWAFekru27A1
-	 /XJfTtgfOTnRVcOxWNMwuxSxd9+59qzh+6q98g68u8UP/9ZwGCUSzemDmSDGze6ExW
-	 nu5eQlTypS1KilW3w2GjVk7X942neExqlFAM4Vi+WkTZcpGuQGzw9U/hC4uzu/FxoA
-	 OwPQL2wQiJSW2tKWso7w82LXHxSvfgNuId+HLwErGO2KwYzOhu23wZAeZ896ds25Mq
-	 4jiBrkNbxOCoGYQmbScldAO/VnyA+H40jnjjKPW7U5nnZydumxHfqe+3XM0iyal8Oj
-	 8FsUnu0khn3Uu38uP4O4n5AaHvoAjt2AiLnsKbswsE9knQSsRJ2KK9blMR1IdOAVQU
-	 f8nvrtETMMQ0kTtuD4CpcFroLKcYDXj/r5Pu+Vq5q6MKGmXT0cO
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id AC50120033;
-	Sun, 19 Jan 2025 16:21:43 +0000 (UTC)
-Date: Sun, 19 Jan 2025 16:21:42 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Al Grant <bigal.nz@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Rebase
-Message-ID: <Z40mlmfnUOXI2ghd@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Al Grant <bigal.nz@gmail.com>, git@vger.kernel.org
-References: <CAODtcdcTjquNUBaTWKzyy54J5NoH7WO+9uMzJ+wWRDf0Na3OPA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="cy/OJJSh"
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:ebc1:636e:a4c7:c1a2])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp4-g21.free.fr (Postfix) with ESMTPSA id DE6FC19F73C;
+	Sun, 19 Jan 2025 18:57:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1737309481;
+	bh=kCwYAyMX4voDvuqLHTAT+HN07a8dUf0d+1gmadYDn2I=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cy/OJJShKysPNMhUgFGEcM8PRg0zSk2BVdFKBe6c8ZO8h7i9W5kp8HM4qc50hIJke
+	 QipEHj5XkPGyzXk4EBGnoJ0iW12M1IKpo9v7lstBzph5QAq3QFzw+BN9o5GvDGZ0UN
+	 RPXpC8qvI7KekWoPxgS6BOo4lVuj3QXFKp9n5BEmsxG/VIs7c2uqpcmASPiv7mFMAa
+	 6bQSiaMAdM+yOgO5+AqYCcgw2NFf6AvVOAGZkzIv/1QIShkMnm9pCDDsl6OfS0LbE0
+	 SNE1WNcPiZs60xF6y6Qd6MTDYBqbGFFAQt09fIhCsgWKJM+aA1AVlMYLiPFx3EVX0y
+	 Ck1nzc9UR3SVQ==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: gitster@pobox.com, johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im,
+ me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com,
+ christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com,
+ jonathantanmy@google.com, karthik.188@gmail.com,
+ Derrick Stolee <stolee@gmail.com>, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 3/5] backfill: add --batch-size=<n> option
+Date: Sun, 19 Jan 2025 18:57:46 +0100
+Message-ID: <2972493.e9J7NaK4W3@cayenne>
+In-Reply-To:
+ <3cfd23073a036ea426569769b3e31290076257a6.1733515638.git.gitgitgadget@gmail.com>
+References:
+ <pull.1820.git.1733515638.gitgitgadget@gmail.com>
+ <3cfd23073a036ea426569769b3e31290076257a6.1733515638.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="oz63mVm42KbNHm7z"
-Content-Disposition: inline
-In-Reply-To: <CAODtcdcTjquNUBaTWKzyy54J5NoH7WO+9uMzJ+wWRDf0Na3OPA@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+
+On Friday, 6 December 2024 21:07:16 UTC+1 Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <derrickstolee@github.com>
+> 
+
+> @@ -38,6 +38,14 @@ delta compression in the packfile sent by the server.
+>  By default, `git backfill` downloads all blobs reachable from the `HEAD`
+>  commit. This set can be restricted or expanded using various options.
+>  
+> +OPTIONS
+> +-------
+> +
+> +--batch-size=<n>::
+
+Please format automatically using backticks:  `--batch-size=<n>`::
+
+> +	Specify a minimum size for a batch of missing objects to request
+> +	from the server. This size may be exceeded by the last set of
+> +	blobs seen at a given path. Default batch size is 16,000.
+> +
+>  SEE ALSO
+>  --------
+>  linkgit:git-clone[1].
 
 
---oz63mVm42KbNHm7z
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On 2025-01-19 at 05:29:09, Al Grant wrote:
-> Hello,
->=20
-> I am looking for some assistance rebasing please.
->=20
-> I have a feature branch which has the many recent commits and a main
-> branch which has not had a commit for a long time. I want to make the
-> code in the feature branch the code in the main branch.
->=20
-> I think a rebase is the command I need, but the exact steps I am not sure=
- of.
->=20
-> I did try this:
->=20
-> 1. Sync both branches with remote (github)
-> 2. git checkout feature
-> 3. git rebase main
 
-If you just want to make the branches completely identical, you can do
-this:
-
-----
-$ git checkout feature
-$ git update-ref refs/heads/main $(git rev-parse --verify refs/heads/featur=
-e)
-----
-
-That will make `main` the exact same commit as `feature`.  Note that you
-don't want to be on the destination branch (in this case, `main`) when
-you do the `git update-ref` call because that will result in the index
-being out of sync with the commit.
-
-You could also do this:
-
-----
-$ git checkout main
-$ git reset --hard feature
-----
-
-That will update `main` and the working tree to be completely identical
-to `feature`.  Please note that it will also completely and
-irrecoverably destroy changes in any modified files in the working tree,
-so you may prefer the first option, which is a little safer.
-
-In either case, if there are changes in the `main` branch which are not
-in the `feature` branch, this will remove them.  What I gave you above
-will make them completely identical in every way, including in terms of
-history.
-
-If you want to preserve some of those changes, then you do need a
-rebase, and the commands you gave are correct.  You will then need to
-resolve the merge conflicts in each conflicting commit and continue the
-rebase each time.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---oz63mVm42KbNHm7z
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ40mlgAKCRB8DEliiIei
-gdXuAP4sTQBRqIa5gqjilV9bGhPXSG3INhuAkUJoVanHqXboygD8DlDrJeloFpTh
-CYemhG5pqTjf/9NGKQc2MIAFej9zZgI=
-=6/aS
------END PGP SIGNATURE-----
-
---oz63mVm42KbNHm7z--
