@@ -1,40 +1,40 @@
 Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763737FD
-	for <git@vger.kernel.org>; Sun, 19 Jan 2025 09:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BFE14375C
+	for <git@vger.kernel.org>; Sun, 19 Jan 2025 09:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737277880; cv=none; b=j235eM0YZhd1Ai0Hzbhi4UkLGlj362MnnBuV7SAYlDleHBM+HdjdZPCXheomxW/hvBG3tNzy/zKoIIM7nTHm0lENX1LhMbTXldR03OoC2f/7H2pP4mfyoVOqVzi7gwMNosZ0/qCoYvoultaxGc6ZOHyXZ1HNi3XJRU+x23G9vxI=
+	t=1737278188; cv=none; b=NyTsX9egQBFVdLcqUyBlU1iq7HxDYALopaPUVq3zlCuR+hGZnsD+5OYnI56GnBaSbYfG4CmhdZ0lfOWwPlWpYYFXPFcD7pz+KCSEuDjj9Uk2frM1SNIIt/YOAixA3lfGDjfhEFdM0HtFhJ2IH7igMhXr6b4PKG02bSrsnh1j7Eo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737277880; c=relaxed/simple;
-	bh=YlP384QuCKfUdpRoVknEiHnOVAOe/wijfGGaomYFxs8=;
+	s=arc-20240116; t=1737278188; c=relaxed/simple;
+	bh=soFd3aB10MXZGwSxlSDnE5/QPY6UqxgWZDtagN5hE2k=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=QRi1XjncFjdjBmg1LdzTfJ23XHzY8R8Gdy7UOMFyKpPVmzlLjELdH/ZIu5DwblQ3WrbwikuXoFe8OfjsNUOiLlOQq2f1hW12sC0X2LLXqAZKkg1jahCB/DedPe6+46fnoCDKJAoDyLbNusBC+SaUUp1oJktKl6K8PygQDlZ/YAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=J5ZdcAEo; arc=none smtp.client-ip=212.227.15.3
+	 In-Reply-To:Content-Type; b=FEzFig4Uv/0H87xRy/fuB6G5M2u4+GUTBzEbJO821ErqLKM6kyItCPI/xZKeodDUpbYIhEU8q0DKoNZCKpmrZSnnNWXH9q490pf8mdg00NF+EV0QJtnNqnQer/7pejXLCzaAFVVtuqloUOQqkBP/kJMrtulAR0WL9uqVjzDm6ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=KMcf/KnD; arc=none smtp.client-ip=212.227.15.3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="J5ZdcAEo"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="KMcf/KnD"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1737277867; x=1737882667; i=l.s.r@web.de;
-	bh=UYsOXucmZ1Oe1JP3IAKKwBDy+79NepsdbK6fqqp6yaE=;
+	s=s29768273; t=1737278184; x=1737882984; i=l.s.r@web.de;
+	bh=F1qrf1aO53FiUSExwW6Bwfa3PPYoR6iP/W+uOwMJBgc=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
 	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=J5ZdcAEoVN0EBzTC36QIjCstNv7nu9Ir5nRx+dkHD+90hNu6fkLxppYorAvT3UOa
-	 WgJBL8z/FSUoD09Ff18gy3fuCuI4WtZlUT+i1hhIeq4GN/apA/Wdzd+V9lR06qIjV
-	 PLw3AXZj3oeZfNQ+NJ0lPftj4300pKIICPY9l37trnE1PMaBGbf4gvxlukLN5WymT
-	 t1Ui1ECVjw6sBL27WYtq3hPFsvuPXakfmUvFzTFYO8KXnVuXaK2H9h15Q9qM5qGcD
-	 9cDs26eC6gcihJh7/Me63/ldeU7u9bmbfRnTa/qe9TexTxyuq6ObLp9JWSrK/UHbA
-	 KgspHsSGJx3/1/HGxA==
+	b=KMcf/KnDZQncryNNZUyeAvbjYX8IbNgtLjhlgVORGlZ/3KbiUCuid3e1USujZ4vL
+	 DtZL78ZKDh6wDWiW6CXTffvwuOZXOdev1CymXXd+BLaajGQmkyKLJojS3aUKqJfE+
+	 Wvf9jdn4P8RwwKpT/TYuJC3GjOPi89JQX2ZeU9RM00OmMX0Ke7ZxYxZ5XbV5hxTi7
+	 u9fXIggi6DekK5tnoiR2WXhfVTh+1B+lR0wkouQ9lDcjlT8u0QQQ9d2amZCLZKVPk
+	 0PsskuOfDr/LPZEDPZ+eLBzjXafOLfNZFIiTb5XctXblm9DpqJ6OPMoBCam/lnkdr
+	 GvTS8e9deUwb0az/5w==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([91.47.157.126]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M8TBM-1tdrBb2PJY-004KJ9; Sun, 19
- Jan 2025 10:11:07 +0100
-Message-ID: <246b8d96-19a5-4834-bd17-d0dbb79da182@web.de>
-Date: Sun, 19 Jan 2025 10:11:07 +0100
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M3Euv-1tWQWj3O7J-0057eg; Sun, 19
+ Jan 2025 10:11:04 +0100
+Message-ID: <d5029c1b-4a21-442c-bb72-00b4e855c3c2@web.de>
+Date: Sun, 19 Jan 2025 10:11:04 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,175 +60,157 @@ Content-Language: en-US
 In-Reply-To: <2fbe47c2-22c0-49ff-a211-057bd96ddbc9@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:D/hVpt9utaeiaU2How0l0ANdRTe3mEYZ1Rf0jqZvuh4bEAooovW
- 7gBmEp60eYZwN+vH/0dqmPX0ffb+SMN3RVdi3qWR2sK71dDL3z7VkzCWgR6TInCzxLNFE1G
- r3AfBk4lOZQFcXQXv98uAotslsY7B3TZiT/4BIcrNgHATvZRMCSZilij89mPaykWhP2rgGY
- 7/MF1Oi3TeDBNxY9t2T3g==
+X-Provags-ID: V03:K1:LjEB87KFB7N6FwiL/rjfvcLxslIx+GtGS5M6lpigdr/8psbczsF
+ LUUVXX47KLs/9VsE12YnfaLORK6VyWN7RPvhsvpAmlFiIxU/5yeSCk3x/D55vfqseUZR+nj
+ aiBmZPmuNKR10SxMKQJ1VozaekYc+6MnzwnCuJr3x9lihsRMXtc8e4WPvBLwVCRJBuqzdsZ
+ 2bpJCMqNqBSJ9ouSQyBhQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Ulofy4H7foI=;WvKoGg6qZqYorojio3ycm7IjtWU
- 5CTn6MT7q/y0rPTFEVmT+w8kZcrBnlLQw3l/mGn9cIAWlfI/yuZe1YefmWyU16q9dObbGshOK
- 4KtGxlBK03TwEi9OIv7EGy8eP9es6L9/hHsIdFkToUbQ4MGtKsagpgAS6l0i62ecwzb1Fncfs
- ORfmT81VdSPtHdv4/Q6PNqe0UPkSt0RBCWcUQDcx8vtk+0lFFh3PGCCQN5DTIZpo22PPRdFeE
- f5AU+SnUlbCeoxT1AjhUOZT2vGOtp4gw9iu9lwkrYNQblZnq48h+vMPi8n1ulYtl1EXIduyLr
- 36CmMexndNY/WoyBpLwqGtQJGfL1YCcArGYq8GxgV4hiLvmRJwfvH4LNKOY5tZuQoBieEokBh
- s7h17VDJBaCB0owyQz36HWFli0fUOpVa1bidq1TmO2CgErjJPGIXipp+UzZ1XqH3ZDkayM6P9
- hfcgen9eIWa4NKVC3K0giNX9ZzIUHoloMPnbaTyaoicSE+1/K0jtLcMZ3F+We+lS6L2Wrw//N
- X1Dl4dcU5WwBr+XLGZPzEcSDWwnfO93qRs7Fq5Nlt7hJH9CQA2ZYnhy/n3tSrh3AoOTh1+WsC
- Fp8yc+ELAvZMgN8DahxjBKoqd4o48uo3pu1THg+2uOKgb09VPKyZh6uDRm7PN2B1PLAPAvEv9
- gsdICsmUqt4mGYd90gC/f9CLd2DBz1fkTq8adOlrIgQjC8ZBYSfkJ2sIwgN7q4w8Mvofd3136
- 1XrorFuUPV8Ai5rVoEG+bcMUZY2VnBJxy/fZROTwQGVaSOlsf+HJq+ieAaOtTrEU9Fd3Kg2pE
- MC5SchvFC0ex8i2VBgGYPMg/YO2ieb4jxdBMBWJeZolnrJu5xo6d7WZXdNyu754qehaLqfvQw
- i5FY9kGoXfHPKMADYRUZx0Y/kooi31PbbD4c+3n0wsXXunX+jtMY0ig93G7KA46tOzXezSmUz
- RiMprCVy8co0J7C8CrdSTbYVFXgmPOYpEpzl2aQsoht7ci0CE1LLAcf//8mEyI9aVwbiy7v4E
- RrsWX3wo7biR06bno32wlHn3c/vQhZLpap4Mm21zmyYK+cc/p6IRIwFuSnaz3P4CZEDssyUrC
- mKKr7r/QtCtyswFDrCpf5qg+RC9cQDLI9jiH6/qGR7WScOcIkot1haHb/oHc5FXACdtfv0v0T
- g4im9Waq42wVEsBzQErbd2TRFVfqsiJ7HZTbeJbxqvw==
+UI-OutboundReport: notjunk:1;M01:P0:IIFbU7yCXRw=;+CDo8E8S6W6j6jnm15JXglyyYsB
+ ulb+WVYkD7jB8tay9d4dcLlnfvuSl5pS2NYkfHKl0hSGK/of+Cf3ZcZpUTsq0jEbqvKv2Upo/
+ 9MdKIVwBPEVj3TA+z7lfNFdeoT5sOJbmmZQm/6S0hg07oGwQm1VMFcvKAUv4lMp80Pt5Mi7NT
+ qFdPPBGs0THrDkFnsPBVTykKV5UHC1YHtz0mffyJepejXbQmxN6RwjhA1NQOMio0TxvXknyWW
+ mOoHBKEKapu0wexaNK9GkRnYe1NkJYIoffdxXnzzDptCexVRbXM8EgGV07TkrzH45rsgz1ZFs
+ hMDZF7w6GoZeCk46IobAY1lKsHnRy7Kdxv44af5EUOlsFj5j48ndz/dX3ax99x0+K0Yzm+4SL
+ /JDbLW7nD2uVBlxGmPDQ5P9thtz7spt9kEcBIqIu0eRoQnVAjkiaBPFqRtOtNWrir92wNzp9T
+ /LX7dpA9knR9ZiNZtOdsp1GODKs9oWtzTLBAodI1Ef0y/4aqde6nuiYeB8Fu6hQ5kVSTBOycF
+ Pm6NRtNSbcqLovAd3klJWy6r6fWsMePola6L9lPSiFIGMNyB636ygRhumnBPFp+Nl1XKo+lC6
+ M+e+YXcflYpe1Ol5oaiCsWCu9GgJQRo22CxiC5kRA4HoZwsZLXlZSnGlq1/1QEBFZ6S28HjbC
+ 7B358gZtlSj0f5FkUjN703oVfUT9NQxLoNV1/VbfkVz+jnMwxPVd1l9cTESV9xwdu5LVpTp/6
+ ri9tQ8W8gV0AwcpHeZe8kJvTpQBGpj9NEd86hbbdHQw4/HzCKD8E54coTG7xzzKYIf1qL71EG
+ rhuvqfma1QjMiKrwZdDVexeBYYrfV9HUe5C94naNN1f4xawhz+TLoe2V2MSTxtOliN9y/yRnh
+ +n+gn9nBqX8WC/9+2t7UTfwM0SeAU1g0tq3k8L32da0smh2ffQkdHIRg6ej0VgqVBNedSmxDf
+ o69t9Ya2SmHurSK2rTqc12QDnUUCCYVdNSmO5CtMqJW1lf+9H1DMJzrwelt4CS1sHhmT4pAaT
+ 7kvNHM59z8SA/aT268eBd3nQah01vvSVYo91JbaXRv7NMouwpyzC3OgC+dllywRWPWJdsONU4
+ X4NT8OW06gj2YgoSIXMbtT3ev7eqAoRxlJXDOo/qmwFi86xMufxqZ9AmRYxj6QHtL9rp+5FS+
+ bLLubZEiieoj8sAvInMXJPw0tOK65Z8FRgUp6ywVWeQ==
 
 Am 18.01.25 um 18:11 schrieb Ren=C3=A9 Scharfe:
 > I think moving to the right place in one step requires less churn.  Let'=
 s
 > compare; v2 coming up.
 
-... and this:
+The version building on top of v1 would look like this:
 
 =2D--
- ref-filter.c | 49 +++++++++++++++++++++++++++++--------------------
- 1 file changed, 29 insertions(+), 20 deletions(-)
+ ref-filter.c | 48 ++++++++++++++++++++++++++++--------------------
+ 1 file changed, 28 insertions(+), 20 deletions(-)
 
 diff --git a/ref-filter.c b/ref-filter.c
-index caf28466ab..6da8d4c03b 100644
+index 89f44936f9..caf28466ab 100644
 =2D-- a/ref-filter.c
 +++ b/ref-filter.c
-@@ -236,6 +236,7 @@ static struct used_atom {
+@@ -235,6 +235,9 @@ static struct used_atom {
+ 			enum { S_BARE, S_GRADE, S_SIGNER, S_KEY,
  			       S_FINGERPRINT, S_PRI_KEY_FP, S_TRUST_LEVEL } option;
  		} signature;
- 		struct {
-+			char *name;
- 			struct commit *commit;
- 		} base;
++		struct {
++			struct commit *commit;
++		} base;
  		struct strvec describe_args;
-@@ -245,9 +246,6 @@ static struct used_atom {
+ 		struct refname_atom refname;
+ 		char *head;
+@@ -242,9 +245,6 @@ static struct used_atom {
  } *used_atom;
  static int used_atom_cnt, need_tagged, need_symref;
 
--/* List of bases for is-base indicators. */
--static struct string_list is_base_tips =3D STRING_LIST_INIT_DUP;
+-/* List of bases for ahead-behind counts. */
+-static struct string_list bases =3D STRING_LIST_INIT_DUP;
 -
- /*
-  * Expand string, append it to strbuf *sb, then return error code ret.
-  * Allow to save few lines of code.
-@@ -912,17 +910,15 @@ static int ahead_behind_atom_parser(struct ref_forma=
-t *format UNUSED,
+ /* List of bases for is-base indicators. */
+ static struct string_list is_base_tips =3D STRING_LIST_INIT_DUP;
+
+@@ -898,17 +898,14 @@ static int rest_atom_parser(struct ref_format *forma=
+t UNUSED,
  }
 
- static int is_base_atom_parser(struct ref_format *format UNUSED,
--			       struct used_atom *atom UNUSED,
-+			       struct used_atom *atom,
- 			       const char *arg, struct strbuf *err)
+ static int ahead_behind_atom_parser(struct ref_format *format UNUSED,
+-				    struct used_atom *atom UNUSED,
++				    struct used_atom *atom,
+ 				    const char *arg, struct strbuf *err)
  {
 -	struct string_list_item *item;
 -
  	if (!arg)
- 		return strbuf_addf_ret(err, -1, _("expected format: %%(is-base:<committ=
-ish>)"));
+ 		return strbuf_addf_ret(err, -1, _("expected format: %%(ahead-behind:<co=
+mmittish>)"));
 
--	item =3D string_list_append(&is_base_tips, arg);
+-	item =3D string_list_append(&bases, arg);
 -	item->util =3D lookup_commit_reference_by_name(arg);
 -	if (!item->util)
-+	atom->u.base.name =3D xstrdup(arg);
 +	atom->u.base.commit =3D lookup_commit_reference_by_name(arg);
 +	if (!atom->u.base.commit)
  		die("failed to find '%s'", arg);
 
  	return 0;
-@@ -3012,6 +3008,8 @@ void ref_array_clear(struct ref_array *array)
- 			free(atom->u.head);
- 		else if (atom->atom_type =3D=3D ATOM_DESCRIBE)
- 			strvec_clear(&atom->u.describe_args);
-+		else if (atom->atom_type =3D=3D ATOM_ISBASE)
-+			free(atom->u.base.name);
- 		else if (atom->atom_type =3D=3D ATOM_TRAILERS ||
- 			 (atom->atom_type =3D=3D ATOM_CONTENTS &&
- 			  atom->u.contents.option =3D=3D C_TRAILERS)) {
-@@ -3027,7 +3025,6 @@ void ref_array_clear(struct ref_array *array)
+@@ -3030,7 +3027,6 @@ void ref_array_clear(struct ref_array *array)
  	}
  	FREE_AND_NULL(used_atom);
  	used_atom_cnt =3D 0;
--	string_list_clear(&is_base_tips, 0);
+-	string_list_clear(&bases, 0);
+ 	string_list_clear(&is_base_tips, 0);
 
  	if (ref_to_worktree_map.worktrees) {
- 		hashmap_clear_and_free(&(ref_to_worktree_map.map),
-@@ -3140,10 +3137,17 @@ void filter_is_base(struct repository *r,
- 		    struct ref_array *array)
+@@ -3095,18 +3091,27 @@ void filter_ahead_behind(struct repository *r,
+ 			 struct ref_array *array)
  {
- 	struct commit **bases;
--	size_t bases_nr =3D 0;
-+	size_t bases_nr =3D 0, is_base_nr;
- 	struct ref_array_item **back_index;
-
--	if (!is_base_tips.nr || !array->nr)
+ 	struct commit **commits;
+-	size_t commits_nr =3D bases.nr + array->nr;
++	size_t bases_nr, commits_nr;
++
 +	if (!array->nr)
 +		return;
-+
-+	for (size_t i =3D is_base_nr =3D 0; i < used_atom_cnt; i++) {
-+		if (used_atom[i].atom_type =3D=3D ATOM_ISBASE)
-+			is_base_nr++;
+
+-	if (!bases.nr || !array->nr)
++	for (size_t i =3D bases_nr =3D 0; i < used_atom_cnt; i++) {
++		if (used_atom[i].atom_type =3D=3D ATOM_AHEADBEHIND)
++			bases_nr++;
 +	}
-+	if (!is_base_nr)
++	if (!bases_nr)
  		return;
 
- 	CALLOC_ARRAY(back_index, array->nr);
-@@ -3153,7 +3157,7 @@ void filter_is_base(struct repository *r,
- 		const char *name =3D array->items[i]->refname;
- 		struct commit *c =3D lookup_commit_reference_by_name_gently(name, 1);
-
--		CALLOC_ARRAY(array->items[i]->is_base, is_base_tips.nr);
-+		CALLOC_ARRAY(array->items[i]->is_base, is_base_nr);
-
- 		if (!c)
- 			continue;
-@@ -3163,15 +3167,20 @@ void filter_is_base(struct repository *r,
- 		bases_nr++;
- 	}
-
--	for (size_t i =3D 0; i < is_base_tips.nr; i++) {
--		struct commit *tip =3D is_base_tips.items[i].util;
--		int base_index =3D get_branch_base_for_tip(r, tip, bases, bases_nr);
+-	ALLOC_ARRAY(commits, commits_nr);
+-	for (size_t i =3D 0; i < bases.nr; i++)
+-		commits[i] =3D bases.items[i].util;
++	ALLOC_ARRAY(commits, st_add(bases_nr, array->nr));
 +	for (size_t i =3D 0, j =3D 0; i < used_atom_cnt; i++) {
-+		struct commit *tip;
-+		int base_index;
++		if (used_atom[i].atom_type =3D=3D ATOM_AHEADBEHIND)
++			commits[j++] =3D used_atom[i].u.base.commit;
++	}
 
-+		if (used_atom[i].atom_type !=3D ATOM_ISBASE)
-+			continue;
-+
-+		tip =3D used_atom[i].u.base.commit;
-+		base_index =3D get_branch_base_for_tip(r, tip, bases, bases_nr);
- 		if (base_index < 0)
+-	ALLOC_ARRAY(array->counts, st_mult(bases.nr, array->nr));
++	ALLOC_ARRAY(array->counts, st_mult(bases_nr, array->nr));
+
+-	commits_nr =3D bases.nr;
++	commits_nr =3D bases_nr;
+ 	array->counts_nr =3D 0;
+ 	for (size_t i =3D 0; i < array->nr; i++) {
+ 		const char *name =3D array->items[i]->refname;
+@@ -3115,8 +3120,8 @@ void filter_ahead_behind(struct repository *r,
+ 		if (!commits[commits_nr])
  			continue;
 
- 		/* Store the string for use in output later. */
--		back_index[base_index]->is_base[i] =3D xstrdup(is_base_tips.items[i].st=
-ring);
-+		back_index[base_index]->is_base[j++] =3D xstrdup(used_atom[i].u.base.na=
-me);
- 	}
-
- 	free(back_index);
-@@ -3290,10 +3299,10 @@ static inline int can_do_iterative_format(struct r=
-ef_filter *filter,
- 	for (size_t i =3D 0; i < used_atom_cnt; i++) {
- 		if (used_atom[i].atom_type =3D=3D ATOM_AHEADBEHIND)
- 			return 0;
-+		if (used_atom[i].atom_type =3D=3D ATOM_ISBASE)
+-		CALLOC_ARRAY(array->items[i]->counts, bases.nr);
+-		for (size_t j =3D 0; j < bases.nr; j++) {
++		CALLOC_ARRAY(array->items[i]->counts, bases_nr);
++		for (size_t j =3D 0; j < bases_nr; j++) {
+ 			struct ahead_behind_count *count;
+ 			count =3D &array->counts[array->counts_nr++];
+ 			count->tip_index =3D commits_nr;
+@@ -3282,9 +3287,12 @@ static inline int can_do_iterative_format(struct re=
+f_filter *filter,
+ 	 * - filtering on reachability
+ 	 * - including ahead-behind information in the formatted output
+ 	 */
++	for (size_t i =3D 0; i < used_atom_cnt; i++) {
++		if (used_atom[i].atom_type =3D=3D ATOM_AHEADBEHIND)
 +			return 0;
- 	}
--	return !(filter->reachable_from ||
--		 filter->unreachable_from ||
--		 is_base_tips.nr);
-+	return !(filter->reachable_from || filter->unreachable_from);
++	}
+ 	return !(filter->reachable_from ||
+ 		 filter->unreachable_from ||
+-		 bases.nr ||
+ 		 is_base_tips.nr);
  }
 
- void filter_and_format_refs(struct ref_filter *filter, unsigned int type,
 =2D-
 2.48.1
 
