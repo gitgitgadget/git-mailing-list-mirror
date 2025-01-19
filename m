@@ -1,83 +1,103 @@
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A390D1DED6B
-	for <git@vger.kernel.org>; Sun, 19 Jan 2025 17:58:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAFB7DA82
+	for <git@vger.kernel.org>; Sun, 19 Jan 2025 20:39:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737309492; cv=none; b=VUG36JHtUZBJXZq27GUO3D4jsA0wmLnymk9lFJ1KSEZm1GFmHb+bX8XN72C0g5vDMq8OJW8Jvip58LQuYvZCaND7R99UskiU/718jdfLiT/5CVvXTc7jP0KYS23iXlGodQQdHb0ppL430cEBVcHn1CpdCWqe/1Y+xsU/dD7rTI4=
+	t=1737319168; cv=none; b=nccLxK3ruLYiQIj0cV00AAaPfEWl2Jp3Lql2S+MoYCxvb3YED3nNA2fJYU4uh3O224cpOhlx3hza51AfdlWg+kIljvSOkgzQpnX4IMi5nZ3oEAqWInCVCfb15B3KJDqmA1t+XWa/cS6StXo3ftnWKaXDCdp7a4EotKTTGHbi5DI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737309492; c=relaxed/simple;
-	bh=kCwYAyMX4voDvuqLHTAT+HN07a8dUf0d+1gmadYDn2I=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=k76No8JrRG8kmSM01+O3txNMhljjDWnrcmCpdTOhDBej1siYH839svVmVmu9eKY9w0P4sUQAxw0Kct5D9rWw4AtYcru1Qj4i5Nf0zB+yqOied/3PotD3kWMGPU8UDU4T+1h3Sn0IokdkWBgCd/YM4Yg79KbE1JyaSBIK7Cvulvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=cy/OJJSh; arc=none smtp.client-ip=212.27.42.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1737319168; c=relaxed/simple;
+	bh=Wd1DF2epVjOPJTw+beQSlwmGOpDqWtcqsAib4wZ5Yd8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=m8s+DV4QxMr/2t1ygTisytUuj6JoGuVMkAWXAzU6JSHmjuDAflKFDCvNdo0/ZwEJQklHmktwEz2mKWAWnk+/ASMYGc0dBvsauJYBRcmCe58I+OPQluzrMJKLVSXJcls5VbWMfC6UOozCFqpuCwy0ykRpN1RPjLfENOn5laQ+cgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cQ7NnbZB; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="cy/OJJSh"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:ebc1:636e:a4c7:c1a2])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id DE6FC19F73C;
-	Sun, 19 Jan 2025 18:57:46 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1737309481;
-	bh=kCwYAyMX4voDvuqLHTAT+HN07a8dUf0d+1gmadYDn2I=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cy/OJJShKysPNMhUgFGEcM8PRg0zSk2BVdFKBe6c8ZO8h7i9W5kp8HM4qc50hIJke
-	 QipEHj5XkPGyzXk4EBGnoJ0iW12M1IKpo9v7lstBzph5QAq3QFzw+BN9o5GvDGZ0UN
-	 RPXpC8qvI7KekWoPxgS6BOo4lVuj3QXFKp9n5BEmsxG/VIs7c2uqpcmASPiv7mFMAa
-	 6bQSiaMAdM+yOgO5+AqYCcgw2NFf6AvVOAGZkzIv/1QIShkMnm9pCDDsl6OfS0LbE0
-	 SNE1WNcPiZs60xF6y6Qd6MTDYBqbGFFAQt09fIhCsgWKJM+aA1AVlMYLiPFx3EVX0y
-	 Ck1nzc9UR3SVQ==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: gitster@pobox.com, johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im,
- me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com,
- christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com,
- jonathantanmy@google.com, karthik.188@gmail.com,
- Derrick Stolee <stolee@gmail.com>, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 3/5] backfill: add --batch-size=<n> option
-Date: Sun, 19 Jan 2025 18:57:46 +0100
-Message-ID: <2972493.e9J7NaK4W3@cayenne>
-In-Reply-To:
- <3cfd23073a036ea426569769b3e31290076257a6.1733515638.git.gitgitgadget@gmail.com>
-References:
- <pull.1820.git.1733515638.gitgitgadget@gmail.com>
- <3cfd23073a036ea426569769b3e31290076257a6.1733515638.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cQ7NnbZB"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-aaf57c2e0beso784457366b.3
+        for <git@vger.kernel.org>; Sun, 19 Jan 2025 12:39:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737319165; x=1737923965; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NW41rYTC10uLpy+iGcA64mmb8oxi6rsPji6xf96Q4KY=;
+        b=cQ7NnbZBCz7iwKsxpB+mt1pZLrD97tEdFR/laHgcyf9TBYHkc6ff5bW8eHPWf052p9
+         kdDK3Wwrm1oStR3Gd7ZzrLOv6ECwvwyGiEOLBOJEVuXjwEJmmrRln5AcuyPNg8aBw3vO
+         akCoXpU7lRpk7qkWiZ3k4cktyOIMbEIWGTYoO4ujT4z2z3H3IdM92lDOtQORuhUNG8In
+         XCKXZg8wsDs5iGUivEUS5y8ZS9inmCrMqkZy1NLt8tXvBeE9sDbYnprZ4lRy8F4RLp31
+         Mk/6TgLgMxi6X1xTYh/SOx+7J1KAfNYEQM6XuqqCYgTw/hvKnz7YVmeDWXnEN7cX7Nkd
+         utwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737319165; x=1737923965;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NW41rYTC10uLpy+iGcA64mmb8oxi6rsPji6xf96Q4KY=;
+        b=SVTjOFElfzI26k4O/FXEhhKRk6Cv4CmnGHJmmsf2m56OSKjcw4XcYtoOi6nJB7vHuy
+         MUGX3Sw4z8nE2Kjqaoarj9Ux7tTdwb+AzSdgVfsC8hcD1bfUW0gvU1gGOdoh9W7nktnL
+         sZsKpIhBFjzsanS3ZGAI7Jzvte2PbVg8Vy948+fFA8owZumbh2fDa+krUEse51AcIjDM
+         bjMCLKP0YnoWWhfibSKGa3GyTzyot1q9GAtgz5Exec4B7pur8haq7cxExCcrRrVxVHuO
+         o+Zg4vPhvJT4SaWE2r8qP672DLuGNmC5ibXd+T39qqDY7Y/9NchrWbefg8EvW4epE48y
+         vbcg==
+X-Forwarded-Encrypted: i=1; AJvYcCWuZ5JZl1iuVRQB20sfpiADFPkPiHMVmP9S18ziKfOQkCfAzDv379gjEOD8EkotyoK00rQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzFuUpfXHCEd4vBgo1uORzdE/2YoXDfGS4dwCbQN6L76oyLBpi6
+	4XGBWGyJcHWCkhd1/eFlVPOzkgf43jLHba3CIwKAD3TCxteCUHms4kux+KqQXnt/X/DS1yLkWl1
+	72bo2EsC7nmD012Eo27vBeIGCwRo=
+X-Gm-Gg: ASbGncs/6W3QgRXrrbQSKnvvtGSWb6cHdtMYdpVcILMZ0MzpArxxAWXAOwpj3w60LMw
+	tsu5obOJhFBqEdhX1F1uBGTHH5ea+9naOMRPFyvotiTbXTFAYhwQuCg==
+X-Google-Smtp-Source: AGHT+IGc7/jPmqjRJE9iO85btMNHdH+ecz3oSqabNWpaUCT4TPOYT+LUKtUP3f3wenuk8WwPp9I5YxXhX+HeRJQMiIA=
+X-Received: by 2002:a17:907:9802:b0:aae:8491:bab5 with SMTP id
+ a640c23a62f3a-ab38b30e1admr871532766b.26.1737319165053; Sun, 19 Jan 2025
+ 12:39:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+References: <CAODtcdcTjquNUBaTWKzyy54J5NoH7WO+9uMzJ+wWRDf0Na3OPA@mail.gmail.com>
+ <Z40mlmfnUOXI2ghd@tapette.crustytoothpaste.net> <CAODtcdf-+QpPpB5R-hLkKWKacwM=N3=XRDs-tK60W9WzUJu7xw@mail.gmail.com>
+In-Reply-To: <CAODtcdf-+QpPpB5R-hLkKWKacwM=N3=XRDs-tK60W9WzUJu7xw@mail.gmail.com>
+From: Al Grant <bigal.nz@gmail.com>
+Date: Mon, 20 Jan 2025 09:39:13 +1300
+X-Gm-Features: AbW1kvaKnpoawH-0H1QCkQ3k8lmZfrZLaaoF6_KsRXf15byK_e4RDlzMKx_BNf0
+Message-ID: <CAODtcdfS+TVmrwohtHFUXRZRwC1WmF5ENpZLVoZTyJgA--SC-Q@mail.gmail.com>
+Subject: Re: Rebase
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Al Grant <bigal.nz@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Friday, 6 December 2024 21:07:16 UTC+1 Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <derrickstolee@github.com>
-> 
+Yes. But I'm keen to understand how to deal with a merge conflict.
 
-> @@ -38,6 +38,14 @@ delta compression in the packfile sent by the server.
->  By default, `git backfill` downloads all blobs reachable from the `HEAD`
->  commit. This set can be restricted or expanded using various options.
->  
-> +OPTIONS
-> +-------
-> +
-> +--batch-size=<n>::
+My IDE is VSCode and when I run the merge I get this image:
 
-Please format automatically using backticks:  `--batch-size=<n>`::
+https://imgur.com/a/vynTxaj
 
-> +	Specify a minimum size for a batch of missing objects to request
-> +	from the server. This size may be exceeded by the last set of
-> +	blobs seen at a given path. Default batch size is 16,000.
-> +
->  SEE ALSO
->  --------
->  linkgit:git-clone[1].
+Which highlights this code:
 
+255: <<<<<<< HEAD
+256:        samples = signal.convolve(samples, [1]*189, 'same')/189
+257:
+258:        #for testing - log to file
+259:        #self.f.write(samples.astype(np.float32).tobytes())
+260:
+261:=======
+262:        samples = signal.convolve(samples, [1] * 10, "same") / 189
+263:
+264:        # for testing - log to file
+265:        # self.f.write(samples.astype(np.float32).tobytes())
+266:
+267:>>>>>>> 1f893dc (Make project runnable on Linux)
 
+Now I would assume that samples = .... from ln 256 abd 262 are the
+differences between MAIN and FEATURE?
 
+But when I search main (at least I think its main - my IDE doesnt tell
+me mid rebase process) for ` samples = signal.convolve(samples,
+[1]*189, 'same')/189` AND `samples = signal.convolve(samples, [1] *
+10, "same") / 189` - those lines do not exists anywhere in MAIN???
 
+So what is going on????
+
+Al
