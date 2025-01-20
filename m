@@ -1,85 +1,83 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF22118FC84
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 07:43:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A5917E015
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 07:43:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737358989; cv=none; b=FG/3FyNu1ZuWPwboUKRDmoSKLaJHvu9ZjXuaNk6R17al3TIBV9tyblrTia4j6OzjO+zd5AP3dH1xFbZDmeEkw+WixzJzAROEkCvcymr0FSrdY98wZBWiox2k3jdp2cmzgCwXIb8jNzV8dQ1ezDt60AMIuejDuFSe1Dr2ldY3vJw=
+	t=1737358990; cv=none; b=VcDbWy6D/OqVdJsgono+D0pPb55t7yVtZOpKEldyWCcwSqlZI9LsbbpO+jcL9NxNBh46Y5TSDgPLn1YaWJ270j9nY3NueBu3x7R71k+qBZ+zJLCw4QPkSVI3jrchgsnMTpXZTO+ONNMQPBn6nE6EawE61YkLjzLWN8nTILPGmU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737358989; c=relaxed/simple;
-	bh=cgvp4QKZW0tLYpQ+J7EeA9vFEQdVxZIpi7yQm6dNc6I=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=TofxCzkCY3TUT4gM6QZQOqRYyQ1oQ7cO2Jspt8Wq4nIKtAuKZEMbqOBEncrP6+zoYEIAicLlbvguLi0WNyLvB8/ZqiV8Pw9k9gPlXskh+81vz9cuY2U94GUPuBg3A8bSsgkFzPqQk/orRPXCDNZV2oh3U8iZ42ru7Ud9bwpA0FM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vBpGEKRg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PCJKBTZg; arc=none smtp.client-ip=202.12.124.157
+	s=arc-20240116; t=1737358990; c=relaxed/simple;
+	bh=9EEihKmkitqNWQrxZQDCJJjt/xCnMiMhQrF4CmvvqbQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=olJ68VKkhAVR+DsyQgH1RlFtdYVdHje2+xzJjOE+5vzwLbdUO0/DdFO93+k2CirfEE2lw7NDrtIMExdQ5KcsTRZNg7HoDpCGHFfzVhpR4ol43AJdH08+5fon9rtsgvQn/SWYkdAhkmzzb+rmdjNPvQ7lqeFzUWqQS994Lzj2yTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gFF9VzHT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qDMnqlzb; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vBpGEKRg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PCJKBTZg"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F1F87254010D;
-	Mon, 20 Jan 2025 02:43:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gFF9VzHT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qDMnqlzb"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id D930B11400E5;
+	Mon, 20 Jan 2025 02:43:06 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Mon, 20 Jan 2025 02:43:05 -0500
+  by phl-compute-08.internal (MEProxy); Mon, 20 Jan 2025 02:43:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1737358984;
-	 x=1737445384; bh=3TGrDibhbcazyDWNU4J3NiDHOBvPeZTWpTMTxdOpokI=; b=
-	vBpGEKRgb6JtZXA+eY0ZkGrE2Twvzi8PO71VGudMzRchF98TTpqKk24tNoRBkaBA
-	VR2+BqPVqNI1gHXS7thSFzqp308R67LMFUR7O04p/ZnbRsBExgydiw5Xfv3N+rya
-	YoTBMoH58IPE+LNuVVlfaPkq5HdnJhluA0jV36ubpQb1v9jUFQJp/xS3ad0guJkU
-	kVAyETHyM3qYEFUAZBnIwCY4nUBxw36ll4GmWzL4am/P13nRr9JB7Achces/E/cz
-	XnyTEcWRJpPLSD815BTIR8TRUNT9GvSxK+2s0JdFwFeasGJ2s9kNq604QT0q0bdQ
-	zDoN++xT5rH/rPijDoNUKw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1737358986;
+	 x=1737445386; bh=XIsdY7j+Im1DZvQ/PieUsySE+is2IsH57UR1AnEo+Dk=; b=
+	gFF9VzHTci+0vQzcurvMstujNFHdCSVlZgOr88ho312GYmF6SI8ffA8uR6PLs5f8
+	qB+RVlEViM2HK8AYIXGbTPG0p5q9Pc3y3O46WNgo14YlAQlEg7Qx3GcJSO3cAf12
+	sa+s0aNJ6HSyOHUjQ6Bt4Pl8eaC/vDO4K/50GHb9kgtpGmKno1C/S5NhNvS0TYMk
+	CSyPvxKbRl1AOrcnFK6FV5RUht2jIGixe05MLKYBXKnB1ZBWT6Vi/AwyZp9ug6ET
+	Zz24zI0JCthKyh3Sdbynfcwu8XYo1SSVJ+sbDBr8sct3S34M3yqKAnG+bhUxvbHN
+	bX5Fwu67CAklPsJ+3pU7HA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737358984; x=
-	1737445384; bh=3TGrDibhbcazyDWNU4J3NiDHOBvPeZTWpTMTxdOpokI=; b=P
-	CJKBTZg/MzbIbtsXPTkjlD9Dp3Ekm8/AMHO68ogWvx0orHfVpe9GZEJ2FquDdeDC
-	UmH7HOdO5ONUQO6thW5z7KnOQIxzX3XKrMQiB8kJTIsdksjQa3z7dHblRWZ4ho5Y
-	RSPuJfN/Dd0JprIvazhzUCa2wFhAe9phKHWBfBqMND9k3RrIeewu8O7d7mffPUmP
-	xdT5vowq6o8tLMcF+IYTxAFyvqXngd5R9iQsAf9uUiA3j5mfvyMWBm4GMc0qQ5JZ
-	ycFPfIZHqT7Wt9TvkixCez+GOvb/I+wfUZEyF6HfUhtrc3crafhl5iYzMcUrkDVH
-	AF1bKeZvv5Ud1VdUNOgfQ==
-X-ME-Sender: <xms:iP6NZx3DwYL4X4j7jbnbXO-4Lp6l6LbqRNJHo_RpA9_so2NmpqM7NQ>
-    <xme:iP6NZ4E9fg6oQaKFq67jgoyRePREzoQ1awSdeCOAgKpNLrhLKY3u3-WIQke0ybZiU
-    Ay--x_f18gZbrA-rA>
-X-ME-Received: <xmr:iP6NZx5uTh8c-rUFD_CQuytP_BErgF9fdmj_odazWlFeRljE-JAYWemWbmNMp3f0rD02uCyUvHs_HOMzyXTJ9eAZ65ESyKSUpqCdylQzRPpiuw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737358986; x=
+	1737445386; bh=XIsdY7j+Im1DZvQ/PieUsySE+is2IsH57UR1AnEo+Dk=; b=q
+	DMnqlzbSeQ/6FIYMmtYcgDlh6Li7lnJNAeQUDShYs4aa1AdijuLvOgJqPePjXBaB
+	N+p6gEfjVm4VHIde9Lw2IB1NuhRAgrOdqHkFREB1XdchYAVrFtqDntTVKFZtLctT
+	MPSSHTGXyCKr7UhmvMqVDRi5Vwjk+YPbhud2xLjJieusClbji8TAOosJwfQBz1xE
+	BM9vbjxv6xweVlivhJ+5OjD8Q0AGjrcO++reW3Cs1xqvzvEsmAtUOi6G36epL3QS
+	nzjfPoTSwIZV9O8ipAgTdD3PE4BXatAN5U1fAXHTJQM6gUm/BhNbjkN7e6+mBwG8
+	xBc5dYJPTcuZU3Ycwbouw==
+X-ME-Sender: <xms:iv6NZ7wfhdZQ5niaEej7Of6ZfzhfPxtn6hAfyuMFClW4Oow0A5Q6cA>
+    <xme:iv6NZzSHd4LgQCXxDxaawA4WRFXjQXEpZ-lWpNvtl4GsqO4olHVHhJzA9hXK66N-N
+    JEBYG7juNldcph5DA>
+X-ME-Received: <xmr:iv6NZ1WhraP6ENdT8rIbGFikC5OLdXcA0eU_iyf7tkaxnJZhgZuZYMBggnRyndgUIUbvBqW-HA5qT_chFsSX5br3PvFKZ7MQxfSrMF1ja9jdxA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeikedguddtlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhufffkfggtgfgjghfvfevofesthejredtredt
+    hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
     jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepteeuueehhffhiedtueehtddtieekfedtudehtdeh
-    fefhgeffveeggedthfehuedvnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hrohgsvghrthdrtghouhhpsehkohhorhguihhnrghtvghsrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehrrghnuggrlhhlrd
-    gsvggtkhgvrhesnhgvgigsrhhiughgvgdrtggrpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtg
-    homhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
-X-ME-Proxy: <xmx:iP6NZ-1C35eXHBLiOucFKex2zYvDNsjP2iWm7Ph9IxgBGjzGxhgs8Q>
-    <xmx:iP6NZ0Ex8LTea_VyXhx7L2pjVTPijnTi7i4DcruqNa0EPHLXD-eUsQ>
-    <xmx:iP6NZ__6Vx2Zkie5A2eldAuWYLhWDlaMAjn54KmftfATcMM730gxSA>
-    <xmx:iP6NZxmKqIGjzycRZ_LZyqKhVI6u7rcPQnTwZ0MVPbMSTbSkRX0A2Q>
-    <xmx:iP6NZ54pSqvBYPSWDuXomRLLKQ0_mz6IsBUuy960HeUvHeaIzgzqLw7R>
+    himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
+    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtoheprhgrnhgurghllhdrsggvtghkvghrsehnvgigsg
+    hrihgughgvrdgtrgdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhih
+    rdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsggvnhdrkhhn
+    ohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhhosggvrhhtrdgtohhupheskh
+    hoohhrughinhgrthgvshdrtghomh
+X-ME-Proxy: <xmx:iv6NZ1h7H2XWvh6ua7FIBXETGG_jN_mRumCLxsin0bI7t4TytzfKrQ>
+    <xmx:iv6NZ9BYnJjoAlvvJ2LVkZ9TrAlGdeZ74QqGnX284V6iI-GaIIsQfg>
+    <xmx:iv6NZ-JMAzM8SMYio9V-ybXEJa8aEvvQHixENwDrkAGboV4SPX0cYw>
+    <xmx:iv6NZ8BZcP4cZ_xf3aSeLHaxAD6hHppJemiJ6h-jg8IE1fXJ63yGFw>
+    <xmx:iv6NZ_3rqQ5bU-ujFLgW2LZQXCK3-ZF0xokHCe30kE7nqVuWfatdmr_w>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jan 2025 02:43:02 -0500 (EST)
+ 20 Jan 2025 02:43:05 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id b2d97f63 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 20 Jan 2025 07:43:00 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 82197cac (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 20 Jan 2025 07:43:02 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 0/5] remote: announce removal of "branches/" and
- "remotes/"
-Date: Mon, 20 Jan 2025 08:42:57 +0100
-Message-Id: <20250120-pks-remote-branches-deprecation-v3-0-c7e539b6a84f@pks.im>
+Date: Mon, 20 Jan 2025 08:42:59 +0100
+Subject: [PATCH v3 2/5] ci: merge linux-gcc-default into linux-gcc
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,13 +86,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIH+jWcC/4WOyw6CMBBFf4V0bU2nQ3m48j+Mi1pGaQwP20o0h
- H+34GvJ8t7JPWdG5slZ8myXjMzRYL3t2hhwkzBT6/ZC3FYxMylkClIo3l89d9R0gfjJ6dbU5Hl
- FvSOjQ9xygblOsSg15jmLlHg528diOBzf2dHtHkXhX9bWh849ly8GmNuPEGBVOAAXHFIEkpiVg
- GofF1vbsBk8yC9MCRDZOkxGmDRU5EYoVJj9YNM0vQBa7+hdLQEAAA==
-X-Change-ID: 20241205-pks-remote-branches-deprecation-037a4389a377
-In-Reply-To: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
-References: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
+Message-Id: <20250120-pks-remote-branches-deprecation-v3-2-c7e539b6a84f@pks.im>
+References: <20250120-pks-remote-branches-deprecation-v3-0-c7e539b6a84f@pks.im>
+In-Reply-To: <20250120-pks-remote-branches-deprecation-v3-0-c7e539b6a84f@pks.im>
 To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, 
  Junio C Hamano <gitster@pobox.com>, 
@@ -103,149 +97,94 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  "Randall S. Becker" <randall.becker@nexbridge.ca>
 X-Mailer: b4 0.14.2
 
-Hi,
+The "linux-gcc-default" job is mostly doing the same as the "linux-gcc"
+job, except for a couple of minor differences:
 
-back when Git was in its infancy, remotes were configured via separate
-files in "branches/" (back in 2005). Later that year we introduced a
-more powerful mechanism with the "remotes/" directory. These mechanism
-have eventually been superseded by config-based remotes, and it is very
-unlikely that anybody still uses these directories to configure their
-remotes. Both of these directories have been marked as deprecated, one
-in 2005 and the other one in 2011.
+  - We use an explicit GCC version instead of the default version
+    provided by the distribution. We have other jobs that test with
+    "gcc-8", making this distinction pointless.
 
-This patch series follows through with the deprecation of these and
-announces them for removal in Git 3.0. Furthermore, it creates the infra
-to compile Git with such breaking changes enabled and wires up a CI job
-both for GitHub and GitLab to test those breaking changes.
+  - We don't set up the Python version explicitly, and instead use the
+    default Python version. Python 2 has been end-of-life for quite a
+    while now though, making this distinction less interesting.
 
-The series is based on top caacdb5dfd (The fifteenth batch, 2024-12-10)
-with ps/build at 904339edbd (Introduce support for the Meson build
-system, 2024-12-06) merged into it.
+  - We set up the default branch name to be "main" in "linux-gcc". We
+    have other testcases that don't and also some that explicitly use
+    "master".
 
-Changes in v2:
-- Some small fixes to the deprecation notice of "branches/" and
-  "remotes/".
-- Some small fixes to commit messages.
-- Link to v1: https://lore.kernel.org/r/20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im
+  - We use "ubuntu:20.04" in one job and "ubuntu:latest" in another. We
+    already have a couple other jobs testing these respectively.
 
-Changes in v3:
-- Print warnings when reading remotes from "remotes/" or "branches/".
-- A couple of commit mesasge improvements.
-- Link to v2: https://lore.kernel.org/r/20250106-pks-remote-branches-deprecation-v2-0-2ce87c053536@pks.im
+So overall, the job does not add much to our test coverage.
 
-Thanks!
+Drop the "linux-gcc-default" job and adapt "linux-gcc" to start using
+the default GCC compiler, effectively merging those two jobs into one.
 
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (5):
-      Makefile: wire up build option for deprecated features
-      ci: merge linux-gcc-default into linux-gcc
-      ci: repurpose "linux-gcc" job for deprecations
-      builtin/pack-redundant: remove subcommand with breaking changes
-      remote: announce removal of "branches/" and "remotes/"
+ .github/workflows/main.yml | 4 ----
+ .gitlab-ci.yml             | 4 ----
+ ci/lib.sh                  | 5 -----
+ 3 files changed, 13 deletions(-)
 
- .github/workflows/main.yml             |  6 +----
- .gitlab-ci.yml                         |  6 +----
- Documentation/BreakingChanges.txt      | 25 ++++++++++++++++++
- Documentation/gitrepository-layout.txt |  7 +++--
- GIT-BUILD-OPTIONS.in                   |  1 +
- Makefile                               |  7 +++++
- builtin/remote.c                       |  2 ++
- ci/lib.sh                              |  5 ----
- ci/run-build-and-tests.sh              |  3 ++-
- contrib/buildsystems/CMakeLists.txt    |  1 +
- git.c                                  |  2 ++
- meson.build                            |  6 +++++
- meson_options.txt                      |  2 ++
- remote.c                               | 19 ++++++++++++++
- remote.h                               |  2 ++
- t/t5323-pack-redundant.sh              |  6 +++++
- t/t5505-remote.sh                      |  6 ++---
- t/t5510-fetch.sh                       | 13 ++++------
- t/t5515-fetch-merge-logic.sh           | 47 ++++++++++++++++++----------------
- t/t5516-fetch-push.sh                  | 14 +++++-----
- t/test-lib.sh                          |  4 +++
- 21 files changed, 125 insertions(+), 59 deletions(-)
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 808ddc19b8..32d35d2257 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -271,7 +271,6 @@ jobs:
+             pool: ubuntu-latest
+           - jobname: linux-gcc
+             cc: gcc
+-            cc_package: gcc-8
+             pool: ubuntu-20.04
+           - jobname: linux-TEST-vars
+             cc: gcc
+@@ -286,9 +285,6 @@ jobs:
+           - jobname: osx-gcc
+             cc: gcc-13
+             pool: macos-13
+-          - jobname: linux-gcc-default
+-            cc: gcc
+-            pool: ubuntu-latest
+           - jobname: linux-leaks
+             cc: gcc
+             pool: ubuntu-latest
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index a1bc92893f..b86bb0bdb3 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -46,14 +46,10 @@ test:linux:
+       - jobname: linux-gcc
+         image: ubuntu:20.04
+         CC: gcc
+-        CC_PACKAGE: gcc-8
+       - jobname: linux-TEST-vars
+         image: ubuntu:20.04
+         CC: gcc
+         CC_PACKAGE: gcc-8
+-      - jobname: linux-gcc-default
+-        image: ubuntu:latest
+-        CC: gcc
+       - jobname: linux-leaks
+         image: ubuntu:latest
+         CC: gcc
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 930f98d722..e67c481d4f 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -328,11 +328,6 @@ export SKIP_DASHED_BUILT_INS=YesPlease
+ 
+ case "$distro" in
+ ubuntu-*)
+-	if test "$jobname" = "linux-gcc-default"
+-	then
+-		break
+-	fi
+-
+ 	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
+ 	# have it anymore. We thus only test with Python 2 on older LTS
+ 	# releases.
 
-Range-diff versus v2:
-
-1:  bc6d8bcb19 ! 1:  3ceab66906 Makefile: wire up build option for deprecated features
-    @@ Commit message
-         such a switch because they predate those instructions.
-     
-         Introduce the proposed `WITH_BREAKING_CHANGES` preprocessor macro and
-    -    wire it up with both our Makefiles and Meson.
-    +    wire it up with both our Makefiles and Meson. This does not yet wire up
-    +    the build flag for existing deprecations.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-2:  015a70e998 ! 2:  408f3afa48 ci: merge linux-gcc-default into linux-gcc
-    @@ Commit message
-             have other testcases that don't and also some that explicitly use
-             "master".
-     
-    -    So overall, the job does not add much to our test coverage. Merge it
-    -    into our "linux-gcc" job to reduce our test matrix a bit.
-    +      - We use "ubuntu:20.04" in one job and "ubuntu:latest" in another. We
-    +        already have a couple other jobs testing these respectively.
-    +
-    +    So overall, the job does not add much to our test coverage.
-    +
-    +    Drop the "linux-gcc-default" job and adapt "linux-gcc" to start using
-    +    the default GCC compiler, effectively merging those two jobs into one.
-     
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-3:  f776eb0e4e = 3:  545df94c7d ci: repurpose "linux-gcc" job for deprecations
-4:  c40f85dde2 = 4:  0142480800 builtin/pack-redundant: remove subcommand with breaking changes
-5:  78bda8dd6b ! 5:  a67bde4eda remote: announce removal of "branches/" and "remotes/"
-    @@ Commit message
-     
-         Back when Git was in its infancy, remotes were configured via separate
-         files in "branches/" (back in 2005). This mechanism was replaced later
-    -    that year with the "remotes/" directory. These mechanism have eventually
-    +    that year with the "remotes/" directory. Both mechanisms have eventually
-         been replaced by config-based remotes, and it is very unlikely that
-         anybody still uses these directories to configure their remotes.
-     
-    @@ remote.c: static void add_instead_of(struct rewrite *rewrite, const char *instea
-      static const char *skip_spaces(const char *s)
-      {
-      	while (isspace(*s))
-    +@@ remote.c: static void read_remotes_file(struct remote_state *remote_state,
-    + 
-    + 	if (!f)
-    + 		return;
-    ++
-    ++	warning(_("Reading remote from \"remotes/%s\", which is nominated\n"
-    ++		  "for removal. If you still use the \"remotes/\" directory\n"
-    ++		  "it is recommended to migrate to config-based remotes. If\n"
-    ++		  "you cannot, please let us know you still use it by sending\n"
-    ++		  "an e-mail to <git@vger.kernel.org>."), remote->name);
-    ++
-    + 	remote->configured_in_repo = 1;
-    + 	remote->origin = REMOTE_REMOTES;
-    + 	while (strbuf_getline(&buf, f) != EOF) {
-    +@@ remote.c: static void read_branches_file(struct remote_state *remote_state,
-    + 	if (!f)
-    + 		return;
-    + 
-    ++	warning(_("Reading remote from \"branches/%s\", which is nominated\n"
-    ++		  "for removal. If you still use the \"branches/\" directory\n"
-    ++		  "it is recommended to migrate to config-based remotes. If\n"
-    ++		  "you cannot, please let us know you still use it by sending\n"
-    ++		  "an e-mail to <git@vger.kernel.org>."), remote->name);
-    ++
-    + 	strbuf_getline_lf(&buf, f);
-    + 	fclose(f);
-    + 	strbuf_trim(&buf);
-     @@ remote.c: static void read_branches_file(struct remote_state *remote_state,
-      	strbuf_release(&buf);
-      	free(to_free);
-
----
-base-commit: 713ec79a9091cec60b110d605b418904759982ab
-change-id: 20241205-pks-remote-branches-deprecation-037a4389a377
+-- 
+2.48.0.257.gd3603152ad.dirty
 
