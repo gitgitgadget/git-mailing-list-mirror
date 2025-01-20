@@ -1,110 +1,106 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB5E1DFD85
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 13:16:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498431E0DD8
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 13:25:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737378969; cv=none; b=jpYeU3iwvQcZu2f8SEPznObgDvC4emF/d6f7xhdqOa63K+LEiGabK7M2+5027iB9okzzu/mTYKFv/jVOE8xcnBOt5YV4vpBI9QvPDB/RLPcoSIXcF2ydaFXTvp2bv4E3KwFGK4DYqwirKLpo92UGL5dBuzkbhCwSmdk9KnYHwIw=
+	t=1737379554; cv=none; b=FJ1l8VGnd5c0Qun/hFHGfjTDUf0zGtr+J0cXy43KG010Ep9uEg9iHcRCz/yRjgHyf0UeFjbLSgGe2oaHqRej5rzPbTr0JCYTHgWOUpS7wdBtuvUaaSeetsaY51Hl06nYXJKG4yfmM1Iq/960BM4r6I4P/7yqoAtwwx/pWPcRX6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737378969; c=relaxed/simple;
-	bh=HvUq6XNoAEpn/xPYbd3uqwMz7NWVbHO0FELGTtLOH3w=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Y43tdSbe4wzqsET2WSZkIbThbTT7nML4lrcn8Gj1of4gaTPQzKyh1iWFRZaEIHlfs21Pleuf9TwktifJrx6RDCdYYgI5k9fH4aJjhEdGzb7Xffpq5cwpJXx1jke6ie78dUYwbzCbu0CmV4mtDPerbbOiCMbWXUoxVjht3+U9uO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=synergi.so; spf=pass smtp.mailfrom=synergi.so; dkim=pass (2048-bit key) header.d=synergi.so header.i=@synergi.so header.b=gUkkCkRv; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=synergi.so
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=synergi.so
+	s=arc-20240116; t=1737379554; c=relaxed/simple;
+	bh=c7677mio5rVC2SZul9TC4nBl8szOYKOe3+G76uZc3vw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a9Ao1xFn61yrLQBS+1cTebFTR5QgvcWLBAClJJztyNZ1j7tpJlsgqFtd+p7VsalQREVSZq/cvCWp1v21ppueSIcG8Q28zqzbRkYDLYq+re4bBcfzvfkOgm2ehvsIj/L16t6LxpP28RD/8sdQXZKeuIRxWXpXebFl38QB26WudYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=atN5QUlv; arc=none smtp.client-ip=209.85.167.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=synergi.so header.i=@synergi.so header.b="gUkkCkRv"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-aa6954ec439so55989766b.1
-        for <git@vger.kernel.org>; Mon, 20 Jan 2025 05:16:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="atN5QUlv"
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3eba583fbe8so1340935b6e.3
+        for <git@vger.kernel.org>; Mon, 20 Jan 2025 05:25:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=synergi.so; s=google; t=1737378965; x=1737983765; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pAVpDgAiroLIY/Kixjk/IW6cqIiX0LCe0Ai+ZFHEyGY=;
-        b=gUkkCkRvvJzL5fsJsk58oAoPHpDlYuP4xskf18fE6nmcVOyr2m1EtsoiCOh0L7ehoY
-         yf3eKWh5nZwevMerWN++dyBSIpN5XKt/ZKNPQzfIigH/uJvAuKguYvzDFhxI1uN0tO5Q
-         pLOjUNkFWRNfB3VAwezz58Mkkg4jAyVthTCFQsBgQqgyQ5U6UojLW0iKkQWP1HV2BO9r
-         HIWyh/T3nOEXMJzzDDiZUJccOigfMb33loyWdPSssx/Iw/T7Ay+JRok4B+CxytWwO90E
-         LBbOoIOzWdx9DCXxdQ2WxMr+krzNKmwkUHmaElLEwwdAPZxP/EjNPkIDgr2sWqnJPq2y
-         N6jg==
+        d=gmail.com; s=20230601; t=1737379552; x=1737984352; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3rbcd3GgaluhsJCd5+AXwFkAzWVwEhMm4e8nwVEe3hw=;
+        b=atN5QUlvLDinMZ0k+YmS5KtCZ8AGH1Uxl5HB6m4uzO1TOlxHjTDhNNQtFh/hs5n5Bx
+         q362BsJIkUz+rj2HdSpeFTtEz6igM4J9mV0vGt+p8xi8R9qPKVuQkU3U96D/xybXNRxq
+         W3IU33EvoX1atKya6OdwzEynxCn36euZfeLpHPsydq5Hjje5xXneQgilp4/rvUxsHyRi
+         KQ14l0Kcc0UVdomtWDn0r776h68WX8YelIDyrKpmOPO/fu0ME9VraTpcLaENkdl5z6d7
+         vy0nEH3g1Rp6CgK8McZpeSZaVuqZeVPXHseY+aMpV7QcO2iRVj+QhIQk+tFgoXv5vPN9
+         oPgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737378965; x=1737983765;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pAVpDgAiroLIY/Kixjk/IW6cqIiX0LCe0Ai+ZFHEyGY=;
-        b=tjdH7VWlxVE+jS3QT37L8WorhOepgAFLtUEGGNs79viAgJ+MswCJjOABgVHcT2OXVh
-         kyxJnFdKrO9Fcbkjdj1x7niweAAgPDDmr8iwgwSqYiyzsly0t0nunWywY+zVF+3tEdX4
-         yzB1eG8s4UkjYs6OVCCEQe+l9EKSAvrhFa8iWWQdysPCBr2+ByoKuvWX26ZUPQHuVBZ2
-         gGlc/TgaMphPQ0j2brwOAa3cBLIeQ0nJcKN8hqkwQL2Mfwj6YjMWjAhKY3GXX6rhDTct
-         IaHsoEkOCnoSoMMzjIqQK7KmJ406ue5O8jduXxrLWGWWh+aRa1a/PFn444/7XalqSEfh
-         c7SQ==
-X-Gm-Message-State: AOJu0Yw7/xXjQ1cje4a7ietKfFPKuH5GLARHtEYhfxMp4omBfj0/Memn
-	gLkYYxmqLYh4cPUQWNblfw7qqNjbmdICFcEbFfn8xR3QjoiB1xPProcS+16j1oWzzQ3MvNnp1QO
-	xgucJo1LH/7GENRV3jSzPxVEpIan0AjStg/9E8d9Kc9pucyNZTg0tzA==
-X-Gm-Gg: ASbGncsU4tUfjbURnFJsWxVMx7Hu5GU0d5iCSRDpC9eFuqGDSy9myl5USfxUhrH5SSR
-	mQWYC6PmCgC9gttpZcX31OCUPlST989guc/ct6b5jTIPXAtZezIU=
-X-Google-Smtp-Source: AGHT+IGTs3acjKN1w9IN8Rp/w/sDjq2Zje+OM/8Pb/zU+uHj6HeIqIagObPsflLZVtcJb0U6gw59P9v2q2UsGcTM7Ho=
-X-Received: by 2002:a17:907:948a:b0:aa6:6792:8bce with SMTP id
- a640c23a62f3a-ab38b1b6f43mr385281966b.3.1737378965384; Mon, 20 Jan 2025
- 05:16:05 -0800 (PST)
+        d=1e100.net; s=20230601; t=1737379552; x=1737984352;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3rbcd3GgaluhsJCd5+AXwFkAzWVwEhMm4e8nwVEe3hw=;
+        b=WdmLwwEFcEXvMyt9p7JdALJ5FRRD4/7gOiA17xIA87rPm5ActlkX5VPsXqH5rhY8pA
+         uixLuaJTEiyXjItvBLDMQPu+kCO9NdXLihXCEv0Mo0cjbgzJ/ZhH68Ns8bSdwkPHm3EG
+         7FGb/ty0nNvaOENq7CpeVb1Wkr/rvsb5mP15+GfVCIwy/xw+W9TSzo3W7g5KFcE/JigL
+         lqfGohhPICQE2kJLHl4ICdobEGJO5DuU1BEx+RU+qQwpj4kiEzZ9rXh+4CZJne0usle1
+         IlUnjwB6shvL/vaR1R/Rpp0Uy2+WRM6inf2T5V/qJOypUTteSdvib5rEMPNV1+YuZmyu
+         FgXQ==
+X-Gm-Message-State: AOJu0YwWfKkhQDIPCmbWLf2zGfpXP2AteU5wi55JlZs7kcnRYAsMVGiT
+	oCm6Im4P6A9XhBjIKVu5IVJO5Cjn7ErO0pxKttsHGZvYZdrqVLMK
+X-Gm-Gg: ASbGncslrEdI9kf4qDFcuEQM17ncUQOqG4DYQUK13zA1dBKMnCgpCQm1YcdQ5vNDciH
+	T8lx0QV1sbUVoXb7kvPr3DMbsB5ciTy2eoPBwDGYSWXGpYiJcdRXrA0JYI7XuPqnQs6MHJ8K246
+	dDXcgGjMNeqUfZ8Rp6ZmMvxBPv7xuQVriGhbpaAJJTnugmEkdpoPKRmd88MjXohvV8JuBrsvUyT
+	Cvr4jNt33tiSB2nEGdZpAOr7WqfdcTOb0VZb6/Gd3Nu/Obr
+X-Google-Smtp-Source: AGHT+IE01qtnks0Qu7eyZywlYJjfMq+FuBl2Dm600CdNwnJdquU6H8TnEXI+p/GYqauiBlUGs8+jpg==
+X-Received: by 2002:a05:6808:3a13:b0:3eb:4f4d:c292 with SMTP id 5614622812f47-3f19fc2a63bmr8991213b6e.18.1737379552043;
+        Mon, 20 Jan 2025 05:25:52 -0800 (PST)
+Received: from localhost ([2604:5040:11:69e::e973])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3f19da450fdsm2403558b6e.3.2025.01.20.05.25.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jan 2025 05:25:50 -0800 (PST)
+Date: Mon, 20 Jan 2025 21:27:11 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git in GSoC 2025
+Message-ID: <Z45PL3YEfX1NfM6O@ArchLinux>
+References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Bob Ruiken <bob@synergi.so>
-Date: Mon, 20 Jan 2025 15:15:54 +0200
-X-Gm-Features: AbW1kvZ4f6Xn7YAY9Nbl0U--eGVim68X2t0LuUMHnNfuTFtaOewtp_5MEFgPAPU
-Message-ID: <CAK_bMgeW6ACsWKDbLk0fvm7DuOo5BYhN2OpA-EyOTCSWrkEXSw@mail.gmail.com>
-Subject: [bug] Using --ignore-space-at-eol with --name-only does not apply the filtering
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
 
-Hi,
+On Sun, Jan 19, 2025 at 03:43:29PM +0530, Kaartic Sivaraam wrote:
+> Hello everyone,
+> 
+> It is that time of year. GSoC Org Applications for 2025 are open now[1].
+> They are due before Tuesday, February 11 at 1800 UTC. It's good to see that
+> few contributors have already started working on microprojects this year :-)
+> 
+> I could help as an Org Admin like previous years. I prefer not to
+> volunteer as a mentor this time owing to other commitments, though.
+> 
 
-While doing some diffing work today I found a small issue combining a
-filtering and formatting flag. Let me know if anything is missing in
-this email, this is my first time reporting a bug here.
+Thanks for volunteering again just like previous year.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-I'm using "git diff --name-only" to analyse the difference between the
-current branch and a target branch.
-Then I wanted to expand the preciseness, I don't actually care about
-spacing differences at the end of lines, for which I use the
-"--ignore-space-at-eol" flag.
-The problem comes in when combining the two flags: when I do "git diff
---name-only --ignore-space-at-eol" the names of the files where only
-space changes at EOL are happening still appear.
+> There are no noticeable changes to the program this year.
+> 
+> The GSoC contributor application period is March 24 - April 8, so
+> (co-)mentors and org admins are already welcome to volunteer. As usual,
+> we also need project ideas to refresh our idea page from last year
+> (https://git.github.io/SoC-2024-Ideas/). Feel free to share your
+> thoughts and discuss. It would be great if we could come up with a good mix
+> of small, medium and large projects.
+> 
 
-What did you expect to happen? (Expected behavior)
-I expect the two flags "--name-only" and "--ignore-space-at-eol" to
-work together such that files not matching the latter filter are not
-shown in the output.
+I'd like to mentor for GSoC this year. However, I think I could only
+co-mentor with others due to the following two reasons:
 
-What happened instead? (Actual behavior)
-The files that the "--ignore-space-at-eol" flag is supposed to filter
-are still shown when "--name-only" is used.
+1. I am still learning the internal things of Git.
+2. I could mentor the student during my off-work hours.
 
-What's different between what you expected and what actually happened?
-Filenames being resulted that do not match the filters added by flags.
-
-Best regards,
-
-Bob
-
-[System Info]
-git version:
-git version 2.39.5 (Apple Git-154)
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Darwin 23.5.0 Darwin Kernel Version 23.5.0: Wed May  1 20:14:38
-PDT 2024; root:xnu-10063.121.3~5/RELEASE_ARM64_T6020 arm64
-compiler info: clang: 16.0.0 (clang-1600.0.26.6)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
+Thanks,
+Jialuo
