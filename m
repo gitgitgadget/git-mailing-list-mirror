@@ -1,156 +1,118 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB67C188580
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 10:48:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B3F1C5F25
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 11:09:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737370107; cv=none; b=UyPGAnFs+tvCBWqLr75iXJKJGGS9bxRR9i/HEIXV6HPD7n0k8qplt9sTpauYl2pjsIwvWJXGwoTBJC/HUzESv0C45mSP/2nVfiku1+1r2P5pUgsPXz5zSWNANP6RKX3AIXSyx1wisuWBmwvTAoeHFh+amsFvuvkWtDEQn+GFGx4=
+	t=1737371384; cv=none; b=OTeu5pXCz0bdZMRgLLU9D+w1bLzKnY9n4ptEG2IIyqwz7hbxQYvwJGN8pXjP2SF3QvSzi4T9L40YgRxHNExmOINOiIbXBBz2wekpZEbF6RIgjkb0sQlIclqZ6vMp+gIJnn2F5T6XetHplg/qBEqqBoIU5wEb2b4oSbw0k/E3DyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737370107; c=relaxed/simple;
-	bh=XFzh8rYi9pHXN7LxxCemP5mZVSnRPhJ9/zYxeBereag=;
+	s=arc-20240116; t=1737371384; c=relaxed/simple;
+	bh=MdOYh8dOpcS5jNOMgLDok7FALt8v2HWeOm5mn16yId4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CWJnVIF9q21adCOHDWJCaRK5eYpbrGdTmmvaE47ucS1yA6Xnqn6Htbu56//HmRPtj82nFxKvKxfIYX8pEl7W5B4xi0mE9CuYlHOrnQ8S+CDnnIiADcIBSHgYM6muUOZKaR4Xa6TnzX/18CgUpiEPkzx0T4rrdOFPfRyXam4cFtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=XxF1OXwE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nvDB2wKA; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=CMQKR8lfmTrWxe5ulb1XDXoEQgwXG1GcgegffEx054NrjsjtWh1J8vKdxNzdQt+u+eh611vqP1y/tI0BoYRuoOe/m836flIC1fyeyUlnLCYAHPIbrzccFRD3QJR+P4NbQgkqTqsAiSwhOgM+A2nOzumsw6bQW+lxvIN/hchOhys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZZOX0NmN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r1xFq/EG; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="XxF1OXwE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nvDB2wKA"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CE1A21140210;
-	Mon, 20 Jan 2025 05:48:23 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 20 Jan 2025 05:48:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZZOX0NmN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r1xFq/EG"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4B76E25400A3;
+	Mon, 20 Jan 2025 06:09:40 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 20 Jan 2025 06:09:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737370103; x=1737456503; bh=wol72Ce9Ft
-	V/HRX4KKQtRoUYl9PWSqyDezaPXNTPhZU=; b=XxF1OXwEnZF1uoy85hzkZieFzW
-	gZgTwsffvPQ2EZmI+h2wMdt0r7e7URsLpaUnWteyAUMNP1aoRF090eWbUha5jBBe
-	W53EoLRtWXH3bTWvYmYfCGkV5jGhKt0Cjib6TOTQqmS4t93NzIC2PJ/qSTl4q1Ab
-	LpR04sKNZ1j0ThXw1RJKXU59SIR6UdK1RrZMxxBOARBOdk6GU5KEOA7aBcTOLpz4
-	pdZDFp86aLzz3ttg+28txSo1JO0f9AEuhnf6bhh39pF0scEEJalgiyrYbSWYmQC3
-	IvP8lhMhrTHXXSgXMKEyZMhM5UcQ2tMAUBixSeelsoPldEvHfH9LvkJoKq2w==
+	:subject:to:to; s=fm2; t=1737371380; x=1737457780; bh=BrBFvEGJOL
+	g2pXhrXltmU73ovGxgGfypmgDV8OIFxME=; b=ZZOX0NmNL9RHriGHq3Yei3XOIs
+	CmwrwpGfrEoyX/LSPZn0pXQf1S7IvxxPDDwfVuvdxzwxJHsBSWAVhwk1E63nZJdi
+	4ToiPv7pKKAB24Q3G4LtZpecywTUzhjDJos4Xgd5eDuqa0zcfyIs/7iYu0ZP7W16
+	vLDjJyqT0BnyKbos+4muYVreiZpA4AXOjr4YCLqEi2TAxt14IXGSaNFw9bGe2P3b
+	FhBHIMWnjJ/d/0EAjfqGN3EXa8przwrhOXuD2n1i2KECjm/pIqJ25NFn0CFBOKK0
+	ZiDUi/jTNAekBmYKx4fph20shnPV1yzkeNXAz89uAsKeyUrWoEkkNM12Ca3w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737370103; x=1737456503; bh=wol72Ce9FtV/HRX4KKQtRoUYl9PWSqyDeza
-	PXNTPhZU=; b=nvDB2wKAb6phawxepc217oBrOKxJtt1GYHegdDndPm15e3rHH2w
-	1FUQTU4oNbiqasPCm6aNxvB8/DTjQSUWZgp0vrs9iyAYDKxsV11obM3LSWvgM4Ww
-	+2a/fiJOKEihrbsaDztbloXOpSJ+s+5M8IuQ8/f/LSrLJ4kBNc7GE/UB0IFP6NZJ
-	ciH2tlsIjfB9nI8lcezhnY39/8G/bCAVmdjCAjkyuKaVsZCB2IqOuE+oLcAKDU7R
-	r9ptU5XM9DFdgjEzi6WtmpcR7X6KTXzpKUXYLlsHubgE59aqL9PT6W4b1bIUL5ma
-	zOlyXnhsTyeKaYxpvtMZx1nqMNBRQDVtgVA==
-X-ME-Sender: <xms:9ymOZ4qJubTqXDr3ZcaZTT-BY2nAh8Z-n8yKDgFfjve4fLUtJ6QrzQ>
-    <xme:9ymOZ-qnv2MibWgaJijjUDPhVCybqQdVzKkqmoWpf27o0mDlRWAzpFB3_4ldf4ODX
-    0MqKdJGRptVrvsd6w>
-X-ME-Received: <xmr:9ymOZ9MSj1jM7dmka3tJqj-nZ813zGgBcfD67jrToyHsQAAGLF9L6MSRl7Y2kUNsaBip98Oz2PCKLSa8PVSlGLLPNmboRd-PAg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiledgudejucetufdoteggodetrfdotf
+	1737371380; x=1737457780; bh=BrBFvEGJOLg2pXhrXltmU73ovGxgGfypmgD
+	V8OIFxME=; b=r1xFq/EGnHgmiKAL5VJVseaH7AcvGNmAw/5N0WABYK42u9shuzY
+	EVE4/yA3XiZmVeTTgQrSFRwUNjLzWDRLfFM9e3RYHlBOml3XwTN+pbQqwPZglNpC
+	YvU1KB6ZfGibAUvN83Hf5nyhFUpz3rgHB5ubSCUIIKwupg+OT75gOiwg1ZhKkbkS
+	9A/159Vnr6yG8+eTN3A+r+hn83FBeczKqwug5N7qBdW6qaBwli/vr1JZgnIHe6tr
+	HgLLmjkN0TDzBd7gmgVaoaFyQadk66B/IRV0uBvS8M4j2rRjVEPYhHuXVjsnvJD9
+	o7gJ4/VFtnrnXDSvYz32dJnkHatDMtuH5YA==
+X-ME-Sender: <xms:8y6OZ8VScLYULzH2kyX8YdaAv7VLL97ZC7wwLAF8OIMQhY0BYUZ7mg>
+    <xme:8y6OZwlYwgPxJcaeBHyjPF6NsOuCfH8wPZ8fAYt1uSIisLcmuRWb9MvXxsUBjpTpf
+    OCO9SPX2QNAHEYOow>
+X-ME-Received: <xmr:8y6OZwbqgyKuzjpE6DB7ssRGwpij1bcH15nQukZHYxpoFxJwA_xgvZJm5VqmcLxzkFn5PMpEocIIyT8ILj2xCY3LJWsT5BitPnwUVy7xFP9GZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiledgvddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujggfsehttdfstddtreej
-    necuhfhrohhmpeflrghnucfrrghluhhsuceojhhprghluhhssehfrghsthhmrghilhdrtg
-    homheqnecuggftrfgrthhtvghrnheptdeujeeutdelhfeljeegledttdektedvveetjeeg
-    fefhfffhudejudehfeekffejnecuffhomhgrihhnpehgnhhurdhorhhgnecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepjhhprghluhhssehfrghs
-    thhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpshes
-    phhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:9ymOZ_4BPNloUTBc2xaqTAlD0yU-t1Dqiwl2mTCOruEBJJiMyHhqeQ>
-    <xmx:9ymOZ37Rwr7CqdYK7bPmDM7yYiuqGxhthP_mfGOmbPgjlADXXfUPoQ>
-    <xmx:9ymOZ_gCOSY-e1qHwzM9RYm7RPm3fT2WJFTwBsIvq3vS5FZSjXb97A>
-    <xmx:9ymOZx6lLr6OfoXvgzI_apT-cT1EQFLOhEyyUbgczzdXQH9jj2D_LA>
-    <xmx:9ymOZ5nPsbHzXgE5J4VnnkK9qk3mr3RIppj_M6V8VzEWMCkhK9NO6fzU>
-Feedback-ID: i01894241:Fastmail
+    htshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnecujfgurhep
+    fffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuuf
+    htvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvefh
+    ffejvdffkeevtdegudelledtvdekudeivdffgfdukeehkeffudfhgeduiefgnecuffhomh
+    grihhnpehgihhthhhusgdrihhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrghrthhitgdrshhivhgrrhgrrghmsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:8y6OZ7V012z8lw8pNIuGKm7dtpy4ZozRPXp2D6AM4ACa_JOyFc8oVg>
+    <xmx:8y6OZ2kTt7PU97dNFHdLhyeejardehXNA2dsmhM_ADsQZ_4LRU5AqQ>
+    <xmx:8y6OZwc2FnT3xGMHdZol6G1APKEMeZZ3oWXmEOp4Fh7Yvh6xgMGlYQ>
+    <xmx:8y6OZ4HcELVQNCsqCIYU2-nzkQn74QIU_Lg1ngwoB2Ws1szoWlR-tA>
+    <xmx:9C6OZ3AatyJkEOqKF_EriUN12ZUPFB4upzoG3vbiFOJDIp94F3c-0d5n>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jan 2025 05:48:22 -0500 (EST)
-Date: Mon, 20 Jan 2025 11:47:56 +0100
-From: Jan Palus <jpalus@fastmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH] t8002-blame: simplify padding generation in blank
- boundary tests
-Message-ID: <bwo4w2qbbe6czt4n7vshwyn4lbl2ieihqmdugz4fmnhd4qbsd2@tevhcjwigxbi>
-References: <20250111231107.2190448-1-jpalus@fastmail.com>
- <Z4UIWId7ExLB2gWJ@pks.im>
- <xmqqr056bv8v.fsf@gitster.g>
- <xmqqikqd3p3m.fsf@gitster.g>
+ 20 Jan 2025 06:09:38 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 53fa02ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 20 Jan 2025 11:09:35 +0000 (UTC)
+Date: Mon, 20 Jan 2025 12:09:34 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git in GSoC 2025
+Message-ID: <Z44u7od-mDiKcKVZ@pks.im>
+References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
+ <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqikqd3p3m.fsf@gitster.g>
-User-Agent: NeoMutt/20250113
+In-Reply-To: <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
 
-On 17.01.2025 17:09, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Jan 20, 2025 at 09:19:53AM +0100, Christian Couder wrote:
+> > As usual,
+> > we also need project ideas to refresh our idea page from last year
+> > (https://git.github.io/SoC-2024-Ideas/). Feel free to share your
+> > thoughts and discuss. It would be great if we could come up with a good
+> > mix of small, medium and large projects.
 > 
-> >> So, my suggestion would be:
-> >>
-> >>     t8002: fix unportable printf formatting directives
-> >>
-> >>     In e7fb2ca945 (builtin/blame: fix out-of-bounds write with blank
-> >>     boundary commits, 2025-01-10), we have introduced two new tests that
-> >>     expect a certain amount of padding. This padding is generated via
-> >>     printf using the "%0.s" formatting directive. That directive is
-> >>     non-portable and not understood by for example mksh, breaking these
-> >>     tests on platforms using that shell.
-> >>
-> >>     Fix this issue by using "%${N}s" instead, which is already being
-> >>     used in t5300 and thus portable enough for us.
-> >
-> > Is "%.0s" really not portable, or is it just mksh
-> > being a bit lacking?
+> It might be nice if we could refresh our microproject idea list too.
+> Maybe we could add ideas related to removing the_repository or
+> compiling with -Wsign-compare?
 
-Contrary to other shells mksh does not have printf builtin:
+Yes, agreed, both of these projects make sense to me.
 
-$ mksh -c 'type printf'
-printf is a tracked alias for /bin/printf
+I was wondering whether it might make sense to also move the list of
+microprojects into the Git project itself, e.g. as something like
+"Documentation/Projects.txt". This would make it easier for us to update
+the list of long-running projects whenever a new project is added and
+makes it easier for people to discover it.
 
-so it uses printf from coreutils. This version however interprets "0"
-as a flag marking "s"/"c" conversion specifiers as not allowed:
+It would also help to document consensus in the Git project. The file
+would likely not always be 100% accurate, but it'd probably be more so
+compared to tracking it out of our tree.
 
-https://git.savannah.gnu.org/gitweb/?p=coreutils.git;a=blob;f=src/printf.c;h=2a73bb7fed892347eafb40f497ce5080f511fc9b;hb=v9.6#l586
-
-> > "That directive non-portable ..." -> "Some implementations (e.g.
-> > one that is built into mksh) does not support the precision to be 0
-> > (i.e. "%.0" before the "s" conversion)"
-> >
-> > Other than that, your version is easy to read and understand.
-
-Note that original version was "%0.s" in which there is some ambiguity
-whether "0" is a flag or field width and not "%.0s" in which "0" indeed
-would mean precision.
-
-> >>> -	$(printf "%0.s " $(test_seq 11)) (<author@example.com> 2005-04-07 15:45:13 -0700 1) abbrev
-> >>> +	$(printf "%11s" "") (<author@example.com> 2005-04-07 15:45:13 -0700 1) abbrev
-> >>>  	EOF
-> >>>  	git blame -b --abbrev=10 ^HEAD -- abbrev.t >actual &&
-> >>>  	test_cmp expect actual
-> >>
-> >> Okay, makes sense. And as mentioned, we already have such a use of
-> >> printf in t5300, so it should be portable enough for our use case.
-> >
-> > Thanks for reviewing, and thanks, Jan, for noticing and fixing.
-> 
-> Sorry, as Jan is not a list regular, perhaps I should have
-> communicated more carefully when I said "Thanks".
-> 
-> The above message from me with "Thanks" does not mean that the patch
-> is now settled.  There are suggested improvements pending that needs
-> to be incorporated before the patch becomes acceptable to our tree.
-> 
-> Anybody can help that "further polishing as suggested" step, and
-> when the patch is left in limbo for too long, I might step in to do
-> it myself (when I have no other better things to do), but it is
-> customary around here that the original patch submitter does so.
-
-I was about to follow-up but didn't find time. Sorry it took so long.
-I will post v2 shortly.
+Patrick
