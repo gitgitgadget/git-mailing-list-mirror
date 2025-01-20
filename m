@@ -1,103 +1,103 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167EE1E9B1B
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 15:50:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BB310F9
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 16:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737388251; cv=none; b=HFs3BCRSSSpvdw4FMteyLb1msafYvPz0aLN6mKTQIqTdJ/t9owo4KJrVIcZi4C167zA3xv2gKDYXCCsdMcXQmuNG2CS+RdqWXuo+pEm7zPD0B4OHyebRaNFAbWr9v4MAOPerm1pOX2vMDrkM+M/wSVbGH4vMXFaraZxkA7VPc+s=
+	t=1737389071; cv=none; b=Dv0rKaCW8z91hBTQ4NhT0xzz7GulXgtiNt0vzhSM/mRqmucJDVLjODd7f+/K3FD67y2EB14OwyaV5SS/7OQ3+LrnXgdTrFFmj8URjyukLKSlgg5oHAn76bYYkxeAtmyleXuzDOuH4UxB7isN12LS/HQT4psCDNPYYv/WBkerFUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737388251; c=relaxed/simple;
-	bh=APxKGj/5/AT3//dgBIUnYZbOHI6AhFqfGx+k4eu6ocI=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=LZOmvcphZKjIXaacHzdg98UAtT8khmcqByB0vClqjM7KGFxtxdlLXUtOBSXye/8RFG3qd22wnwPfK1mqIdbyj3neytFGT441TY/tiPSaiNtRoPu03Pd9IFBnMrt6R18K8mt3EImDUkE/v4xNw4vNSjysVYqX4o07qc/m90wQ9JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QlP4uuB8; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737389071; c=relaxed/simple;
+	bh=cNdPbWwFbM8YbJ8y6pgvedBBTsavma14oYF+8P9gk94=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IVb3StzIe8ucoagA533xTDpyjk9p5vMvv/7vfera8xTUI6a0L8hvcm0BCcih0r/JrOyPimCuPdERiQ4dvTOaPKJZZ7VwJhfX6AK25Z8E1+UVPC5ugINY/gDdl+y32h2rEtoRalLFv+9jNpeMlKG3jrduLYROqgl9Bdy8tlKTXqI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mavit.org.uk; spf=pass smtp.mailfrom=mavit.org.uk; dkim=pass (1024-bit key) header.d=mavit.org.uk header.i=@mavit.org.uk header.b=S7lgrMZb; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mavit.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mavit.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QlP4uuB8"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2ef72924e53so7881092a91.3
-        for <git@vger.kernel.org>; Mon, 20 Jan 2025 07:50:49 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=mavit.org.uk header.i=@mavit.org.uk header.b="S7lgrMZb"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-436326dcb1cso32360755e9.0
+        for <git@vger.kernel.org>; Mon, 20 Jan 2025 08:04:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737388248; x=1737993048; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4IPS+7l7Kox7uIki+jM2nwAs84xQnpQP065I2PQMKLo=;
-        b=QlP4uuB88iQocRDY2zEfrImULsw69qbUlz6oOF55ySG760q7YuFG21FoWIVDf4hXtN
-         Pa30ofWr2Yni4IxYZEOKepjL5gjIBOb3T8fzCBdfnDfzhM8lXo3/d1vg5I5CpXwjqk2K
-         OC/X4Ib9Qqw6Vooix1U5l6XxKe1LX/FCD7CRCdumG46zZtM8YLBZ8dP4UwS840+mvE2y
-         1zUT3Csk8+n01hP7R0nTNCY0t0Hm1AhILYmbEfRSzsHs5YLMWIFE7Gy3aFTlIDXOv8F1
-         lpWC750q35G9jCT5RMbhbeH/TfQ58QVLja1CvVPlRX1PIzORHENYUrdPu7s1bbXoCsXM
-         abYw==
+        d=mavit.org.uk; s=google; t=1737389066; x=1737993866; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=yFRjdaoII/QDPkVUa/UW2ij8oS63PCGE6uhur+vloA8=;
+        b=S7lgrMZbqqE8y0fffl0mrWASBOwauWRDr3i/in+c5hfYMms5oAmWULfS2ojtf9vm/v
+         zuzrBL9p2RKRU4qOwPke2M12sSyfdo5lEMZeQydwhyIpoTKbSQnhLuMafKU5QRApYKDJ
+         yCmL4NoN4aD7WEDnJM4U5OeOKDIwDuTrX0yrM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737388248; x=1737993048;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=4IPS+7l7Kox7uIki+jM2nwAs84xQnpQP065I2PQMKLo=;
-        b=qDNL0oA3qZDyQxTEP3Ng+ACpcqW5Kl8Ycs6hNQzA169NiVxy0J+tNPB4AYsLQYroyY
-         iyrez3uvw8zSbEdrQSCfWAaFNVJnEIko9GeswKkGPDm5uGUz2oaCvtpv/IirS40cbbeY
-         I8frdOUE6bDrot8Pn5QoUEFhGjIzOsRLdoPJjh9wK7OU80E6IHWTGHDVs/0oP7JpsUyT
-         qXs6Q5aXcQiDhpJIguJYbQeMJFNLj949guiUl/FcBcSfJS5t8yL8yvwTipfoI1LflUO5
-         yoA0ui1hc8f4WZlwPEyFgxlh06zwYvfl25JlA3KrAktZ20YLpSWPg9RhNXRui7fJ3264
-         7e8w==
-X-Gm-Message-State: AOJu0Ywpp5MwGTl6NA6X5BBSIz+i9a0p6ERa6nhkjS7yEwhbbXRmpdzU
-	Ov92oHQ88Y8qMrQ/VwjLZ/jTwbqfHpDMAwa39xTvIlChObxMFmdEtVBsnGuG
-X-Gm-Gg: ASbGncuija9O3tbujabFS5WJj07q/dGUJ3XendxnJHyUAudT7stJatgUu6gTRgyHEBP
-	elf58GiFl22RC9Px/+6XrwcpeW89zY1JorJGwxS1S46TtvUH1H2DWgFBhvIsDgLz/JoKxI6X4md
-	EqqhtRm2v3DSO6iZGxWYCQmeB8Pyc7TLfdxQm4FWt4QtW74tNquLlTe1tw6EOF6AgqQOBBqAyE/
-	tYKY5ohU/VYhZrHk2hjAXC6F6gHohARvH5BD/AD2Uu/FJTbOaHsT1TdxOd2EO+NY4JL4d78Z2U3
-	D3mvQg==
-X-Google-Smtp-Source: AGHT+IELQ565zx2R4tRt3TFDI5PmRnPGKWER2APasovNM416btPnEfP9+CKwWTVyiNuBT6xE4vUTUQ==
-X-Received: by 2002:a05:6a00:10d4:b0:72d:8fa2:9999 with SMTP id d2e1a72fcca58-72dafa03124mr19491308b3a.11.1737388248312;
-        Mon, 20 Jan 2025 07:50:48 -0800 (PST)
-Received: from [192.168.15.3] ([191.181.57.71])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72dab81737asm7520174b3a.57.2025.01.20.07.50.47
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Jan 2025 07:50:47 -0800 (PST)
-Message-ID: <1be70312-8d4d-4e24-8a67-9f320a3ce593@gmail.com>
-Date: Mon, 20 Jan 2025 12:50:44 -0300
+        d=1e100.net; s=20230601; t=1737389066; x=1737993866;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yFRjdaoII/QDPkVUa/UW2ij8oS63PCGE6uhur+vloA8=;
+        b=n1/N4MOI/FnXqN4Ey8AMY/m9euWJ5TZ6OzueKH6RGg4GGeDfG1LFGrdF28ABd0a7zm
+         +PCQa7pG+XMnhAWazwdBevPe/YFILuIzCTCXc1OAnbZBiJASm7mM7n3iFJuGyFzzLXTg
+         Gn1+bXKLmGb2B/qMtzHTiwCeMfembjnsaWIZ7cbM3XpwPRovhqjhTFIxidWc9KKNHXC/
+         b7eP/F83QIC48waVdBEjts/I8flDdi2AojZKDETODRSVm3udyUc8uBUhlcLXcM9k/As7
+         4OQY5+vrUArOdLyGpM4GE9pSA7T0Qb3OcU9VjJA0svTPpJpGXjikICzIt/mL/94XhIuX
+         O6PA==
+X-Gm-Message-State: AOJu0YwC/OyBqRL/KZ9ajs9E+w3eTQVPohr8pVr3mg8dS0QUxkjDMkFm
+	Pr2CISLJ1fVkMHbuL2cKoTBxL6bwGffdD0ALsMoLH7nCTUoBkicl8uRDDQcneMVJW+N6oyxfLy4
+	=
+X-Gm-Gg: ASbGncsQX0Zwv6QXPN8e9r+3H8ummCLsL92i2bG7oVTQwqQFbnLfChDmpEbSySuGef9
+	SHky1GED3NBsfK/NLIAiKv+EdF0kcEFGKqhsTAVs9Y1xkKcvHkla/zVw6t9s4EhK3INyedLppSh
+	2XdGnKbD4zJ8lBw3p5ozPLPGbZCAeTVA+cpZjTyBt5LYA/mqGHr4ymabz2NOHsCJPTRXDzludiA
+	YNeoLh+Psy5ap7HQ25tmLnDKjF/uTYwlovgC6W3hE+KneSGEeUCkhaBgOAd+KfmNlSMhtYbXWgX
+	Uqpxw0lSqa9GKtk+rlJog9pZmQQ+22egjB598dfpTJypyBvlzeLj4BXPlGwVFzHbN3gJTDK/Jw=
+	=
+X-Google-Smtp-Source: AGHT+IGfgj1VM3+/g709Zkl5V6erz7C24JosSS6hHZHGrmNp+VqZaw2SC3jiqioktoMKbtBPhoQPtw==
+X-Received: by 2002:a05:600c:3d97:b0:436:f960:3427 with SMTP id 5b1f17b1804b1-4389142745amr116600685e9.22.1737389066189;
+        Mon, 20 Jan 2025 08:04:26 -0800 (PST)
+Received: from froglet.home.mavit.org.uk (dudl-14-b2-v4wan-165812-cust3365.vm31.cable.virginm.net. [82.34.125.38])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-437c753c617sm206259155e9.37.2025.01.20.08.04.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Jan 2025 08:04:25 -0800 (PST)
+Sender: Peter Oliver <mavit@mavit.org.uk>
+From: Peter Oliver <p.d.oliver@mavit.org.uk>
+X-Google-Original-From: Peter Oliver <git@mavit.org.uk>
+Received: from froglet.home.mavit.org.uk (localhost [127.0.0.1])
+	by froglet.home.mavit.org.uk (8.18.1/8.17.1) with ESMTPS id 50KG4OYC121495
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Mon, 20 Jan 2025 16:04:24 GMT
+Received: (from mavit@localhost)
+	by froglet.home.mavit.org.uk (8.18.1/8.18.1/Submit) id 50KG4Nsm121494;
+	Mon, 20 Jan 2025 16:04:23 GMT
+To: git@vger.kernel.org
+Cc: ps@pks.im, Peter Oliver <git@mavit.org.uk>
+Subject: [PATCH 1/2] Check for Perl 5.26.0 from Meson build
+Date: Mon, 20 Jan 2025 16:03:00 +0000
+Message-ID: <20250120160301.121245-1-git@mavit.org.uk>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: en-US
-From: Lucas Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC] Introduction and microproject for GSoC 2025
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hello everyone!
+Commit 702d8c1 (which landed not long before Meson was added) dropped
+support for Perl versions back to 5.8.1.
 
-I'm expecting to apply for GSoC 2025 in Git, so let me present myself!
+Signed-off-by: Peter Oliver <git@mavit.org.uk>
+---
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-My name is Lucas Oshiro, I'm a developer from São Paulo, Brazil,
-currently a grad student in CS at University of São Paulo. My interest
-in Git dates from years ago and I even submitted a patch here in the
-past (which wasn't finished due to scheduling conflicts with my
-capstone project).
+diff --git a/meson.build b/meson.build
+index 0064eb64f5..f01d81b39f 100644
+--- a/meson.build
++++ b/meson.build
+@@ -755,7 +755,7 @@ endif
+ 
+ # Note that we only set NO_PERL if the Perl features were disabled by the user.
+ # It may not be set when we have found Perl, but only use it to run tests.
+-perl = find_program('perl', version: '>=5.8.1', dirs: program_path, required: perl_required)
++perl = find_program('perl', version: '>=5.26.0', dirs: program_path, required: perl_required)
+ perl_features_enabled = perl.found() and get_option('perl').allowed()
+ if perl_features_enabled
+   build_options_config.set('NO_PERL', '')
+-- 
+2.48.1
 
-Since then, I haven't been involved directly with Git community,
-however, I kept my interest in Git alive by:
-
-- Translating parts of Pro Git to pt-BR:
-   https://github.com/progit/progit2-pt-br/pull/81
-
-- Writing some blog posts about Git, for example, this one that
-   explains how Git can be used as a debugging tool:
-   https://lucasoshiro.github.io/posts-en/2023-02-13-git-debug/
-
-- Writing a subset of Git in Haskell:
-   https://github.com/lucasoshiro/oshit
-
-Even though GSoC 2025 didn't start so far, I intend to select as a
-microproject replacing a `test -f` by `test_path_is_*` in `t7603`. If
-someone else is working on that I can change it by another test.
-
-I hope to get in touch again soon!
-Lucas
