@@ -1,118 +1,132 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B3F1C5F25
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 11:09:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E501BA89C
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 11:17:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737371384; cv=none; b=OTeu5pXCz0bdZMRgLLU9D+w1bLzKnY9n4ptEG2IIyqwz7hbxQYvwJGN8pXjP2SF3QvSzi4T9L40YgRxHNExmOINOiIbXBBz2wekpZEbF6RIgjkb0sQlIclqZ6vMp+gIJnn2F5T6XetHplg/qBEqqBoIU5wEb2b4oSbw0k/E3DyI=
+	t=1737371855; cv=none; b=MAelxxzH8rjdq36hXu7xyiY20wn8fmqDT0a1kwU4x5hqR0HQw919PWkv7BIXUEpS72tZ4CZRUIFLYo0IRDV76IItQy5rfhWzmpRkveYks209irEkf1y4xfi7bJxmzsiCsOm9XG9JQhu8tEjtm8YBX/8xizKDiIbjG5wbAp39I0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737371384; c=relaxed/simple;
-	bh=MdOYh8dOpcS5jNOMgLDok7FALt8v2HWeOm5mn16yId4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CMQKR8lfmTrWxe5ulb1XDXoEQgwXG1GcgegffEx054NrjsjtWh1J8vKdxNzdQt+u+eh611vqP1y/tI0BoYRuoOe/m836flIC1fyeyUlnLCYAHPIbrzccFRD3QJR+P4NbQgkqTqsAiSwhOgM+A2nOzumsw6bQW+lxvIN/hchOhys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZZOX0NmN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r1xFq/EG; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1737371855; c=relaxed/simple;
+	bh=FSE4b/Q7B1oa7IU6AWxAVTqtiqXxixdF3XzToUVKqs4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YJlvTDelGoBbLiOK9nU2sDvRE3b0btsYR6H+HZirFnjUty28oaPBrYSzUh+oM7VhXdEUZJgcmIn9yTKh6IudWiE7cBOwCAhxjQcEnV3begZ44e5pVK8Fuys+/rfJ7Ng54jZQ1ZqpuoT9hIHXvK9mcf32TGZF5m61pzhV/ftpuXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eGRfv8p4; arc=none smtp.client-ip=209.85.221.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZZOX0NmN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r1xFq/EG"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4B76E25400A3;
-	Mon, 20 Jan 2025 06:09:40 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 20 Jan 2025 06:09:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737371380; x=1737457780; bh=BrBFvEGJOL
-	g2pXhrXltmU73ovGxgGfypmgDV8OIFxME=; b=ZZOX0NmNL9RHriGHq3Yei3XOIs
-	CmwrwpGfrEoyX/LSPZn0pXQf1S7IvxxPDDwfVuvdxzwxJHsBSWAVhwk1E63nZJdi
-	4ToiPv7pKKAB24Q3G4LtZpecywTUzhjDJos4Xgd5eDuqa0zcfyIs/7iYu0ZP7W16
-	vLDjJyqT0BnyKbos+4muYVreiZpA4AXOjr4YCLqEi2TAxt14IXGSaNFw9bGe2P3b
-	FhBHIMWnjJ/d/0EAjfqGN3EXa8przwrhOXuD2n1i2KECjm/pIqJ25NFn0CFBOKK0
-	ZiDUi/jTNAekBmYKx4fph20shnPV1yzkeNXAz89uAsKeyUrWoEkkNM12Ca3w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737371380; x=1737457780; bh=BrBFvEGJOLg2pXhrXltmU73ovGxgGfypmgD
-	V8OIFxME=; b=r1xFq/EGnHgmiKAL5VJVseaH7AcvGNmAw/5N0WABYK42u9shuzY
-	EVE4/yA3XiZmVeTTgQrSFRwUNjLzWDRLfFM9e3RYHlBOml3XwTN+pbQqwPZglNpC
-	YvU1KB6ZfGibAUvN83Hf5nyhFUpz3rgHB5ubSCUIIKwupg+OT75gOiwg1ZhKkbkS
-	9A/159Vnr6yG8+eTN3A+r+hn83FBeczKqwug5N7qBdW6qaBwli/vr1JZgnIHe6tr
-	HgLLmjkN0TDzBd7gmgVaoaFyQadk66B/IRV0uBvS8M4j2rRjVEPYhHuXVjsnvJD9
-	o7gJ4/VFtnrnXDSvYz32dJnkHatDMtuH5YA==
-X-ME-Sender: <xms:8y6OZ8VScLYULzH2kyX8YdaAv7VLL97ZC7wwLAF8OIMQhY0BYUZ7mg>
-    <xme:8y6OZwlYwgPxJcaeBHyjPF6NsOuCfH8wPZ8fAYt1uSIisLcmuRWb9MvXxsUBjpTpf
-    OCO9SPX2QNAHEYOow>
-X-ME-Received: <xmr:8y6OZwbqgyKuzjpE6DB7ssRGwpij1bcH15nQukZHYxpoFxJwA_xgvZJm5VqmcLxzkFn5PMpEocIIyT8ILj2xCY3LJWsT5BitPnwUVy7xFP9GZQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiledgvddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnecujfgurhep
-    fffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuuf
-    htvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvefh
-    ffejvdffkeevtdegudelledtvdekudeivdffgfdukeehkeffudfhgeduiefgnecuffhomh
-    grihhnpehgihhthhhusgdrihhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrghrthhitgdrshhivhgrrhgrrghmsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:8y6OZ7V012z8lw8pNIuGKm7dtpy4ZozRPXp2D6AM4ACa_JOyFc8oVg>
-    <xmx:8y6OZ2kTt7PU97dNFHdLhyeejardehXNA2dsmhM_ADsQZ_4LRU5AqQ>
-    <xmx:8y6OZwc2FnT3xGMHdZol6G1APKEMeZZ3oWXmEOp4Fh7Yvh6xgMGlYQ>
-    <xmx:8y6OZ4HcELVQNCsqCIYU2-nzkQn74QIU_Lg1ngwoB2Ws1szoWlR-tA>
-    <xmx:9C6OZ3AatyJkEOqKF_EriUN12ZUPFB4upzoG3vbiFOJDIp94F3c-0d5n>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jan 2025 06:09:38 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 53fa02ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 20 Jan 2025 11:09:35 +0000 (UTC)
-Date: Mon, 20 Jan 2025 12:09:34 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git in GSoC 2025
-Message-ID: <Z44u7od-mDiKcKVZ@pks.im>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eGRfv8p4"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-51cccb020a9so2661076e0c.0
+        for <git@vger.kernel.org>; Mon, 20 Jan 2025 03:17:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737371852; x=1737976652; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xe+oS/eojzbBKATnjKuv/QXIwzRra0KYOjAt1gxrBOo=;
+        b=eGRfv8p4m8kn6lNp3XzYS253T6X5ESTIId5YtXvF/IqNNOx/JCK6qScLdLE2/tgHHT
+         qGiV4iXlFfAORwoInX+mIlcmbv4ZZ34G18JSmB+gyjQfS1Bec97yCV3EocyEC45gusnb
+         wCgCtshI0PNe9I7X2FnUj2I1G4HVKYnLoDP9wN1yVuX8wgJO1RMvhJjQR6S571hqx9F2
+         5JgPzXt1HU5EkE1e55gvRn6TfLF6XCquPjNx1EHg4idsqyLW31zAg9QSU1XY6rXLgOgu
+         /e2g0EOA7gz/WB9d7LBN19ugZqcesBnChaAP5f5jti2DlQ4wfmLYJxP5BGpMDMZ/qfHB
+         K0MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737371852; x=1737976652;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xe+oS/eojzbBKATnjKuv/QXIwzRra0KYOjAt1gxrBOo=;
+        b=wklXa79WZZd4SfUqPiHEQB63XaKs4qupoVhRgO5ncaj2JsE3IykGph2+MTX+tmqAK+
+         g8gsxDgasTEKfB5hHuj2+08qmETkX7N9p4CWZtPDoo4lwFNahxm4oYzXGlhnrtnqFzch
+         h5OlJCvDGBcDrzkJVM2FadEsM3PTsZIje5kb+ljs/L8hu85AQz9G+mQFYxB9TeUoHajP
+         1diUqxy4tLMRjZq9Y3+ussl02kHzY7nFTYQ8tOOPMI2cC+B0mYuPf1c4AlKzmpMRy+/N
+         VZLwrN2MCfLS9B281vK/DQMtxRoj/D/WL6DoKKO4HtBrqowlEuZxGtQuHNeTS+mm9TQL
+         qXnw==
+X-Gm-Message-State: AOJu0YxuC+Ojgt62m1k4CScd+btNMw8rg/WAKfBxQ2rq71pOsdRViJVW
+	07aFOZS9XqS90M2JprUi9iCfk6kaBYgnccaai/BZ8a+4eYiK46RC1+3gQK9s5VvSyXw7gEIfEtC
+	SlXOL1FVV65p9tFS7Gm9dr9DTQZnOkm3L
+X-Gm-Gg: ASbGncskd1l/tdjBvTsVvsZVXQZyW/T7jDRkbZ07iQdBpJngSkjqTF4tnLpXnLsb/Dz
+	YKm5pyyBAONCiZhAwSnk9hXHMuiB3ecOZdJt9KHGknuUmRpbeS4gN
+X-Google-Smtp-Source: AGHT+IF7TOiaUyR6awF6yQ1q6a5bsUYmC72aZinytwhvyxCgxJwW+TEGVdMDKI7ohgDvMAqL4KytwvH8U21LQXnX2Ck=
+X-Received: by 2002:a05:6122:1998:b0:50d:6a43:d525 with SMTP id
+ 71dfb90a1353d-51d592b74e8mr7755992e0c.1.1737371852235; Mon, 20 Jan 2025
+ 03:17:32 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 20 Jan 2025 06:17:31 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <Z4oi9i_EHLaPjk0g@pks.im>
+References: <20250117-461-corrupted-reftable-followup-v1-0-70ee605ae3fe@gmail.com>
+ <20250117-461-corrupted-reftable-followup-v1-1-70ee605ae3fe@gmail.com> <Z4oi9i_EHLaPjk0g@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
+Date: Mon, 20 Jan 2025 06:17:31 -0500
+X-Gm-Features: AbW1kvZkVrkuAxbi-CKk3qjGL2PgPibZ8bLJkGzToTuyd8vyrAabpenmx5__EpQ
+Message-ID: <CAOLa=ZTWxy65o4+=nF8r3+Z44DjcpEvwHhocAcM8L2VqZucR1g@mail.gmail.com>
+Subject: Re: [PATCH 1/3] refs: mark `ref_transaction_update_reflog()` as static
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="00000000000018936d062c216821"
 
-On Mon, Jan 20, 2025 at 09:19:53AM +0100, Christian Couder wrote:
-> > As usual,
-> > we also need project ideas to refresh our idea page from last year
-> > (https://git.github.io/SoC-2024-Ideas/). Feel free to share your
-> > thoughts and discuss. It would be great if we could come up with a good
-> > mix of small, medium and large projects.
-> 
-> It might be nice if we could refresh our microproject idea list too.
-> Maybe we could add ideas related to removing the_repository or
-> compiling with -Wsign-compare?
+--00000000000018936d062c216821
+Content-Type: text/plain; charset="UTF-8"
 
-Yes, agreed, both of these projects make sense to me.
+Patrick Steinhardt <ps@pks.im> writes:
 
-I was wondering whether it might make sense to also move the list of
-microprojects into the Git project itself, e.g. as something like
-"Documentation/Projects.txt". This would make it easier for us to update
-the list of long-running projects whenever a new project is added and
-makes it easier for people to discover it.
+> On Fri, Jan 17, 2025 at 08:59:12AM +0100, Karthik Nayak wrote:
+>> diff --git a/refs.h b/refs.h
+>> index a0cdd99250e8286b55808b697b0a94afac5d8319..09be47afbee51e99f4ae49588cd65596ccfcb07e 100644
+>> --- a/refs.h
+>> +++ b/refs.h
+>> @@ -771,20 +771,6 @@ int ref_transaction_update(struct ref_transaction *transaction,
+>>  			   unsigned int flags, const char *msg,
+>>  			   struct strbuf *err);
+>>
+>> -/*
+>> - * Similar to`ref_transaction_update`, but this function is only for adding
+>> - * a reflog update. Supports providing custom committer information. The index
+>> - * field can be utiltized to order updates as desired. When not used, the
+>> - * updates default to being ordered by refname.
+>> - */
+>
+> Do we maybe want to move the comment over? The explanation of the index
+> field seems useful to me.
+>
 
-It would also help to document consensus in the Git project. The file
-would likely not always be 100% accurate, but it'd probably be more so
-compared to tracking it out of our tree.
+Yeah, that'd be useful indeed, let me move it.
 
-Patrick
+> Patrick
+>
+>> -int ref_transaction_update_reflog(struct ref_transaction *transaction,
+>> -				  const char *refname,
+>> -				  const struct object_id *new_oid,
+>> -				  const struct object_id *old_oid,
+>> -				  const char *committer_info, unsigned int flags,
+>> -				  const char *msg, unsigned int index,
+>> -				  struct strbuf *err);
+>> -
+>>  /*
+>>   * Add a reference creation to transaction. new_oid is the value that
+>>   * the reference should have after the update; it must not be
+
+--00000000000018936d062c216821
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 48b85ec1051d171a_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lT01Na1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN2RwQy80emJNUjVVTTRZM05SR0VldEVkTEYrU0VuQgpJd3dISi9FUHNQ
+cGRXOEs3RmVxTTFtMUlGamFaeTVEQy9zYlYxZlpabU1SSjY1RjQ1SityWHRSaXUwdFJyUG95ClBp
+b1oxZWpjdjBTcWpsWGk0UFBzNVJmQWsvS25pdXkzOURtRmhTMmpPQ0l5UytwY3Y1ZUc2VCtlaFNC
+MTB4RXEKU2lZY0MrN1pyL1NKbzJldUczUzZ1bnZJWkZNQlB2Mk82ZFZMSk9ieHloZytITDgvNlZZ
+R09DVkdZd3UvbkhldApNREFTUmV1QVRqdFlXT0lJeGt0TDY5TTRiQ0ZhU244MDdxVjdiRDl6b1Rn
+R2ttZ1VPY3FXOTAzT3VaN0h1UjA0CmVFMlR0aU1mZ0ZaUEhFWjh6dm1wcWFpMktkekZvUXNXWFBR
+Vm1QZndNL0hZUlRUekl3aGZucEZ0Rk9IeEEwbVUKYWJoZ2RxWjZDaGpqWjJZZmMvajBUbUxUcWtL
+ckxSR2hmTE1iV2ZEdTRjcklKN1VSbjFUdXYrVWVXZit6bHoyVQpJTWNyeUVldkhwMnQ3SWlMNmVZ
+eVVXekV6KzNmR3FWZHZPU0srMThYWWhyd3c1SHlQaXY3MUMvcDlNYXlKTExXCngvc0l0SnM0QUI4
+WGJuSVVRbTRoR2RETzNOSGtEMTFkaHo1dU1EST0KPUFrSHQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000018936d062c216821--
