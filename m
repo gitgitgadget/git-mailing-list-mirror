@@ -1,150 +1,176 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F5A1E9B0D
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 16:27:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987CD1494CC
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 17:10:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737390426; cv=none; b=uYXqa8jEYkUD+cLXBT0CNRPiDRXjoVw+Sw77aqW86SuE5TObpsMiJj4U2YDYy+sQW3omWK5cln8gN3samr2nkEMm48n/Gqo+RD0yK2aiI9qkPVkoqZqd7FvoSIKci/Fsy0/deS9Z3emPbgZ4BKHBoM+c6HoCG51z4keQC36qakU=
+	t=1737393025; cv=none; b=YdoOTscGewNw5DJVRUjFvYWdnDof8WK9RBFcX1eykVnaf2GWH3y+wtzed/hSXK/QZFRdHkDJu8SNABvnyTt26DaPSanFeAqUs/KDoGuw5EDblXg1ybWLa9kSdWleD/b9ZepNO9eGtGzPh7JpI2NziGScfyJzU263jpzz/v8WYxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737390426; c=relaxed/simple;
-	bh=kcISKKIL+tGkj70KPWt6A8U0SCVg/7Hiaf3vGvWLdHE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JpacPGaDhVqSK+hKMU2eUNoAR7R05xcwH6yBI6n2MjpoAW/2uFGvZknaCMiqq2fApjQPdCnpUHaGn6NsSDUccXJxN2os0nRuVHZptelZu10jloTPJF8jrwGHWdrUOgdpNgeXQszdWCDq+kxYybBJlSAilnyavwbUWF/uwzWoYFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XLj5nFMS; arc=none smtp.client-ip=209.85.167.176
+	s=arc-20240116; t=1737393025; c=relaxed/simple;
+	bh=mMx1Av+/IXoiQ3deQ/z+07B5olUN92KUQDUt7OaCsmM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fIg4f2YYlXj78Bg8hF6UflgMa1aYo1Oo4Ka1V3oXTlDIN0dZtevQ3LsUkuSHb/28u6gKINzyBTD7gyJkbTq0rW13vs0UtwY+59qPrT4NPZrdrZHicjvmAGfeZYDD5zxeFnGoDskar6Bzj9G/DR2/vRAmcGvR7sAGWngdtMAdf2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bPzI6k2R; arc=none smtp.client-ip=209.85.221.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XLj5nFMS"
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3eb790888c6so1210749b6e.2
-        for <git@vger.kernel.org>; Mon, 20 Jan 2025 08:27:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bPzI6k2R"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-51873bc7377so1356844e0c.1
+        for <git@vger.kernel.org>; Mon, 20 Jan 2025 09:10:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737390423; x=1737995223; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9MX/DkJq7rLcG6H/4us4g+uFHuUVMry4mGPs+mrS8jY=;
-        b=XLj5nFMSzNvdNs8Z5TPt55pw2O0e1R5rOVZP4KnSu1UiuwIgeEmbMwK6Q0DowWIxVK
-         KB6aSG0mSXTa9uaN3dW6Sahkw+X9j3i6EphxoxsRmEpKwQUoxasmSR4mJesxH6c310I4
-         Nu7QslHKOJF2LcDUhL7Bd/C9DvwAMPTJgSpQcLqX8vfAqlGV5FIQQqlLUbl9eza1FLb3
-         KSjS10gBLuCt6y0NzzcJx0E/4AT1LUiz0B4t+T+Bq0NbCUWKthuH+TB9fmZ8qBZaqX5V
-         Q+g5nlUI0rKP21gjVT5PAWOE9Ywrx97tbZC0qnESgg82hH6bQT823GniB1MFp6DZXfzB
-         TtIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737390423; x=1737995223;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1737393022; x=1737997822; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9MX/DkJq7rLcG6H/4us4g+uFHuUVMry4mGPs+mrS8jY=;
-        b=a594J0A3/B+AWfefL5LTpZvIO/iwEae/PX/Sr0Wn5QyKK0Cp2jqSfFoDj0JDXCcCh9
-         lXkj0BnIFQjy496S9r66/FlnoHEtkVtAdsKH3ul3w7+7jXLYHVtDMFEzLTHVRE/0fq7M
-         nbJTfQSjLO3VVivwvvsZvc9E7a6j7y/bVZ8+yyREhvqhvd+6R+xjJiFfEoS6hBm1hlKy
-         c+GnB6dmJKtM8UaAV9GN1T0o5+0rktMHjynJtLmWzhPQKLj9GTdhv1utc8wkd0yo3rO1
-         lq8yMlgsUgMCCEtUSXKllOo62D0YxopaeCzMt7h42eFMAvUDejWhcDWwCzn8bviVeZFA
-         ZVSw==
-X-Gm-Message-State: AOJu0Yy7anxkM1V3jTvAx9lEjCOsxUGGmWfp8t9pY/bC0Flzf3AfEqjn
-	SBEdvasUXRAgbcu86ikgyNKcCFzyjm8ggDnuX3tVAOppMIf/N/VanazGXiSP
-X-Gm-Gg: ASbGnctfcG3AmP1mO5JkL6lHAZHzmB0U4qWkoKQyr0BC4xM2MgfIrLRUI0MbyJolEZh
-	Dp4BuwWvCVnhAcI7m/gPLe9IvsuLjcPUWPLITg3HOZJe145FaN8ftOfRG8f/YeEeDbIE6s9KQMG
-	QhiOzXePFsL2m5F3ONmn0ekBXfCmumuvhU59MRXXMCJjwGc4v0riZyPxWOfOriWbfmIoqQJgTii
-	SddaeLs13xrlVXnuGlR2opqn3ZQrKbTfwaKec57ApXMkwCw
-X-Google-Smtp-Source: AGHT+IENMj2gmzmf+dIVJSCc84FWUTBwiBxDA0WpPQSrCoWt8omZaB6vQb/FNhgeXhlNHuuOJNhJTg==
-X-Received: by 2002:a05:6808:3c86:b0:3eb:512e:24e5 with SMTP id 5614622812f47-3f19fb43ccemr8124092b6e.0.1737390423463;
-        Mon, 20 Jan 2025 08:27:03 -0800 (PST)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3f19da85a80sm2456348b6e.28.2025.01.20.08.27.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 20 Jan 2025 08:27:02 -0800 (PST)
-Date: Tue, 21 Jan 2025 00:28:22 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Bob Ruiken <bob@synergi.so>
-Cc: git@vger.kernel.org
-Subject: Re: [bug] Using --ignore-space-at-eol with --name-only does not
- apply the filtering
-Message-ID: <Z455pim1i2u_1odm@ArchLinux>
-References: <CAK_bMgeW6ACsWKDbLk0fvm7DuOo5BYhN2OpA-EyOTCSWrkEXSw@mail.gmail.com>
+        bh=ExmiSfY8rvQWSv6zvkyr/qK+3evng+rdEClwhoQpJQk=;
+        b=bPzI6k2RJzR2Tp2PW2NJKamu5UTE5DblyIwn7Xaxblz3tuy6izFTtryEHvmKDL2UUe
+         +cbfydq+dxGw90KTdMGTjUJeVNUkhMN7scw0Wd4yukCYEagqvKvHDWQHWUQX3l3P7VGu
+         Z4aAwSW1RFOpViLNABFU6diUmcduUaLyHwbk5yPa/RT4tNI/R/klbHi2Fj3sAteE3q1Y
+         62drzhuJ0gZnvbgAZERSAVpNgsSn+J5DA6cFj4nGg9EupIVxAE29mXdDRIyV5FLOWr8v
+         youjOeUXbRJYZrJY+ViK7zM2DCjeGQj7WHp4KjVnJdmUUie8unYsyFxBLb7RXCcS02s5
+         Ua5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737393022; x=1737997822;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ExmiSfY8rvQWSv6zvkyr/qK+3evng+rdEClwhoQpJQk=;
+        b=AOFO7umoOBKeaMoK4teW40leLa4NAbaFnSLVDUhW1F+acashqabmQDIAhUUJeMV6jl
+         MiwmNZ2aH+2io0RYq42FiSXNGVq1xOBdWgT3yBye8YIFpWTPQbdCJPQMvUCNnbPG74iA
+         igID0s8HD/fY4OAJ4paot8BGf8V33hK1CuGmPwPqbJ7Ew2iJs49MHwWVdtj1tMBMhQQO
+         +RxZzcOlUl7uTcNl8uHz+0gHWbOIX7fwVsfRbrtrV1R1goDFIj4jzoeEt1qpT4bXIgmC
+         YnOxW/0HJal1jk4EyLLp07mHhgpCKVqKO3OIR6x6XYbmN+9bHFBnS2DcHUyJj5WPtJxt
+         Czng==
+X-Gm-Message-State: AOJu0YwqBtUxnGddzAqq6mEPukb7G1oqy45HMv5jLGouXecvR1HcKhMq
+	uJ0bDb4bEdGs4DJbQoK9goBM0cbo3r90PjGYkz0M0C6EsJcfdF1dG+PdPFE+ALKky5vAFBLi0fa
+	XnnMyWSH0TbN99Jdq2KrF0v1c62Q=
+X-Gm-Gg: ASbGnctL3fTksFH+cukZApi6ywhqP9mdUM3AbDQSUOYKN1yi6GRMt2gMyMh4KT4KaCB
+	E66XxUdeKpPpdZIf3ZTRULcM/1Ze7XjJ8DM/aoE8+goUH4IULIjs=
+X-Google-Smtp-Source: AGHT+IE+IevTjRNDmrcfqXfqM/0I2KcV2vNUABSFYhav4tZDY6y+HySy1LJ4EgP3zrkdqgYPtod+OYMuCwhhPyKC12U=
+X-Received: by 2002:a05:6122:481:b0:51d:eb9b:6b5 with SMTP id
+ 71dfb90a1353d-51deb9b325bmr8067443e0c.2.1737393022289; Mon, 20 Jan 2025
+ 09:10:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAK_bMgeW6ACsWKDbLk0fvm7DuOo5BYhN2OpA-EyOTCSWrkEXSw@mail.gmail.com>
+References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
+ <20250117104639.65608-1-usmanakinyemi202@gmail.com> <20250117104639.65608-2-usmanakinyemi202@gmail.com>
+ <xmqqfrlhl2jv.fsf@gitster.g>
+In-Reply-To: <xmqqfrlhl2jv.fsf@gitster.g>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Mon, 20 Jan 2025 22:40:11 +0530
+X-Gm-Features: AbW1kvY-LZU0Olt8UH0q6Uktqwq_3LsT6vc9D3NKHsus70BkevtdG8EylnXR0js
+Message-ID: <CAPSxiM-NPobarwmeRA+Z1L1DCLMEJy=1REobt3tyCKKFZOO_gw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] version: refactor redact_non_printables()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
+	johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
+	phillip.wood@dunelm.org.uk, sunshine@sunshineco.com, rsbecker@nexbridge.com, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 20, 2025 at 03:15:54PM +0200, Bob Ruiken wrote:
-> Hi,
-> 
-> While doing some diffing work today I found a small issue combining a
-> filtering and formatting flag. Let me know if anything is missing in
-> this email, this is my first time reporting a bug here.
-> 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> I'm using "git diff --name-only" to analyse the difference between the
-> current branch and a target branch.
-> Then I wanted to expand the preciseness, I don't actually care about
-> spacing differences at the end of lines, for which I use the
-> "--ignore-space-at-eol" flag.
-> The problem comes in when combining the two flags: when I do "git diff
-> --name-only --ignore-space-at-eol" the names of the files where only
-> space changes at EOL are happening still appear.
-> 
-
-Thanks for your report, this problem could be reproduced in the master
-branch with the following shell commands:
-
-```sh
-git init repo && cd repo
-printf "foo\n" > foo
-git add foo && git commit -mx && git branch test
-printf "foo    \n" > foo
-git add foo && git commit -mx
-git diff master test --name-only --ignore-space-at-eol
-```
-
-> What did you expect to happen? (Expected behavior)
-> I expect the two flags "--name-only" and "--ignore-space-at-eol" to
-> work together such that files not matching the latter filter are not
-> shown in the output.
-> 
-> What happened instead? (Actual behavior)
-> The files that the "--ignore-space-at-eol" flag is supposed to filter
-> are still shown when "--name-only" is used.
-> 
-
-This logic is in the "diff.c::diff_flush" function, when specifying the
-"--name-only" option, it will set the "DIFF_FORMAT_NAME" bit which will
-let the code goes to the following control flow and then exit the
-function.
-
-```c
-	if (output_format & (DIFF_FORMAT_RAW |
-			     DIFF_FORMAT_NAME |
-			     DIFF_FORMAT_NAME_STATUS |
-			     DIFF_FORMAT_CHECKDIFF)) {
-		for (i = 0; i < q->nr; i++) {
-			struct diff_filepair *p = q->queue[i];
-			if (check_pair_status(p))
-				flush_one_pair(p, options);
-		}
-		separator++;
-	}
-```
-
-So as long as you specify "--name-only", from my understanding (maybe
-not correct here), there is no real diff here. We have just stored the
-information about which file is added, modified or deleted by comparing
-two trees.
-
-Although you have specified "--ignore-space-at-eol", the code path does
-not care about this option at all. Because it simply uses the
-information described above to print the difference between the two
-trees without checking their real contents.
-
-I am not familiar with the code in the diff part, it would cause too
-much effort for me to solve this problem. From my perspective, we need to
-explain more about "--name-only" option or we need to make sure that we
-cannot use both "--name-only" and "--ignore-space-at-eol" options.
-
-Thanks,
-Jialuo
+On Fri, Jan 17, 2025 at 11:56=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+>
+> > The git_user_agent_sanitized() function performs some sanitizing to
+> > avoid special characters being sent over the line and possibly messing
+> > up with the protocol or with the parsing on the other side.
+> >
+> > Let's extract this sanitizing into a new redact_non_printables() functi=
+on,
+> > as we will want to reuse it in a following patch.
+> >
+> > For now the new redact_non_printables() function is still static as
+> > it's only needed locally.
+> >
+> > While at it, let's use strbuf_detach() to explicitly detach the string
+> > contained by the 'buf' strbuf.
+> >
+> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> > Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+> > ---
+> >  version.c | 22 ++++++++++++++++------
+> >  1 file changed, 16 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/version.c b/version.c
+> > index 4d763ab48d..78f025c808 100644
+> > --- a/version.c
+> > +++ b/version.c
+> > @@ -6,6 +6,20 @@
+> >  const char git_version_string[] =3D GIT_VERSION;
+> >  const char git_built_from_commit_string[] =3D GIT_BUILT_FROM_COMMIT;
+> >
+> > +/*
+> > + * Trim and replace each character with ascii code below 32 or above
+> > + * 127 (included) using a dot '.' character.
+>
+> /*
+>  * Trim and replace each byte outside ASCII printable
+>  * (33 to 127, inclusive) with a dot '.'.
+>  */
+>
+> perhaps?
+This sounds confusing, it sounds like the byte we are replacing with dot ar=
+e
+in the range of 33 to 127 whereas, it is those outside these range.
+>
+> > + * TODO: ensure consecutive non-printable characters are only replaced=
+ once
+>
+> I am not sure what your plans are for this change.  Has the list
+> reached the consensus to squish consecutive redaction dots into one
+> in the user-agent string?  If not, let's not mention it.  Making an
+> incompatible change to the user-agent string is not the primary aim
+> of this topic anyway.
+>
+> > +*/
+>
+> Funny indentation.  The asterisk should have a SP before it, just
+> like on the previous lines.
+Mistake, thanks for catching it, will make a change to it in the next
+patch series.
+>
+> > +static void redact_non_printables(struct strbuf *buf)
+> > +{
+> > +     strbuf_trim(buf);
+> > +     for (size_t i =3D 0; i < buf->len; i++) {
+> > +             if (buf->buf[i] <=3D 32 || buf->buf[i] >=3D 127)
+>
+> <sane-ctype.h> defines isprint() we can use here.
+I think it would be better to add this in another commit so that one commit
+does one thing. I will add it after this patch series got settled,
+what do you think ?
+>
+> > +                     buf->buf[i] =3D '.';
+> > +     }
+> > +}
+>
+> Do we want to do anything special when the resulting buf->buf[]
+> becomes empty or just full of dots without anything else?  Should
+> the caller be told about such a condition, or is it callers'
+> responsibility to check if they care?  I am inclined to say that it
+> is the latter.
+I agreed.
+>
+> > @@ -27,12 +41,8 @@ const char *git_user_agent_sanitized(void)
+> >               struct strbuf buf =3D STRBUF_INIT;
+> >
+> >               strbuf_addstr(&buf, git_user_agent());
+> > -             strbuf_trim(&buf);
+> > -             for (size_t i =3D 0; i < buf.len; i++) {
+> > -                     if (buf.buf[i] <=3D 32 || buf.buf[i] >=3D 127)
+> > -                             buf.buf[i] =3D '.';
+> > -             }
+> > -             agent =3D buf.buf;
+> > +             redact_non_printables(&buf);
+> > +             agent =3D strbuf_detach(&buf, NULL);
+> >       }
+> >
+> >       return agent;
