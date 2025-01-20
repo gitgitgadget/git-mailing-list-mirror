@@ -1,93 +1,92 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4856D155A52
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 20:19:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C97B81E9900
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 20:37:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737404358; cv=none; b=Rq/HI+BzBA1tCqDXOWD659PjxyOfywGFZGo+IwesWGtmk6Bx3oQLNI9lx4US1TixaJAr+h34Rjulq/lxcmTL09oVvER9zxyo+uwJRNlTzVUgye0JxqD6xm6642jvYWgbxRcX/DNsEspvubC5zllenjyzirIbGrK+LcR4R50Kmdc=
+	t=1737405455; cv=none; b=tzBfkWXPmb1Q12atvU8wW0JxXH9NlU8SVPRUVMMikwT8Ddr2e0+JBNNGGS8Y2RZ3ACPBeiMI9hH4Bp4ReOkQQ1WzR2Ws+0adaGf28RI2zjKJSCARHrot/U57ZNBKFtNdKtFqsvq0GvEzznhfFSjTIb1dsMwn3mrN+8QyQ2xtmZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737404358; c=relaxed/simple;
-	bh=CDyLziBXgGYXWdYMwiEqYaNk87E4zdPH8+AiQZ8SjPc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OeRhmqyXVYgPAulx3FH5C4jZ8I3ddLhzZsTgOQ8PvMTFtLMefmpEYv0WjVrZjrwyE4arNH+8rzgqU3As0UJz2lZXMreAWgsRRI0Drbb8VbBSXBLynNH8pCJdIoh1DIa7JHjLGmzqy+GKrboCVqo9hhvdpOrAgmSweYZ8rAK8FKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O8NLadxe; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737405455; c=relaxed/simple;
+	bh=D4FYc0Y2il/iK0msWjAE1OiX9Zm6HZRDCwxUtG2Lc0U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=A8d3eTVgeSW8ZMgCoHNvq7X0aMlb79HxnODaTMBWtlNguXtIzPGKAs2wPX3KTlDQyl5ZF9otWyeuElNnRloGJ0iLgXxDHaJgZJ+CtsgQH8c6pPa6kX/Sc0nL0Xj05Dx5/FeuZY3sWzlAtuDa/awibnw8z6BkFgK6fscGkACzOKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=RTxz7SNc; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O8NLadxe"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-aaf60d85238so824006166b.0
-        for <git@vger.kernel.org>; Mon, 20 Jan 2025 12:19:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737404352; x=1738009152; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CDyLziBXgGYXWdYMwiEqYaNk87E4zdPH8+AiQZ8SjPc=;
-        b=O8NLadxefzZmRFbQt+IZNz36MBR7DEtIszx9bUdRtvABIC7io+DtDu9ur22LU4EHGH
-         3B5vJYgZbIFKjhJle1glHMC6xQgrA0VHDrIoJI4RJxKSEZChKs/XD33ECEJN3elCQVLI
-         V2/Ty7nZ3d+J8wsRrVzc0QywIYljCs08SFcfQxbgjeJHooShk/OSbNllKGxnOjur/suK
-         0Kg1nU5c9EOBncJiD7P2KLa6zLDzmzA+EaPdfK6DfprZ8BlBwCbRlF/o+jUIQ2VgWRQH
-         5hIHxB1cbjT7IsUjbaAhY3ImXPIh6MvESNoPrOahJLDmccY3VmKOZ9zXboN3nbpvGe5l
-         Opbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737404352; x=1738009152;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CDyLziBXgGYXWdYMwiEqYaNk87E4zdPH8+AiQZ8SjPc=;
-        b=tvZ/R/ScUDGBcNV3vqfXqwLatf7vyO9G01f0pYdvvRMK+pBrWyMxoorZ5tSNi9AThU
-         V3YnoYJEZPWo6qTVDL4y/qKAKArp/UXPikxKUOgwKn+Sxp/NPH18NTWr4Qoz7REXpm3u
-         NsD5K8pKjIf4hOJ431wpQiAudcoclY1HCJ5m8sdtPiRFrB/F86gTtktm0okOPFRRp2Jk
-         1RMwgs15YmUhPpdDAUtn23DSuvVwswdCYSvZeVEXjQGrEcak/p3DxB9gyAfErsdi061R
-         inEwH09wGSetjBYcdvxR5GL+4yKLT0ww6CxMfSW7HrpmgYdgXhkCcrg95fTHZmJVRYUb
-         Vl7g==
-X-Gm-Message-State: AOJu0Yxop3sN8959xBQ/VdS/lITsW7aZzTI30ZEJFkG3BZnF25WoVvX4
-	m57IDHZM8ehKEdOzkvRtUi6SCfOoebTYp8WuBSFbdA4G1fNqJoMX4Wzu1pmGHkRo6JQDbCsLUK2
-	DClxzD+fxQJXEvUICdonAS7Z+F54=
-X-Gm-Gg: ASbGnct6deqYgxzA85P+XHBkJcOsr90CDFsFAKzxTVLH6Pf6TN42fVpRgnE7XIpkMrv
-	YxxC2iJsqjzCe9pOHtVbBFGS83JTDYHGNnNakTtm0bASqt7jxCAzrQMSQUFWU/wy9aEr3fSZjEP
-	42LoeIuDY=
-X-Google-Smtp-Source: AGHT+IEfIUwTrig49rkEEtSEyJzeFdABuSsvXNV5HSxGUZQ8Ed1Alu4ExQQG0EGz5fvjhmR+sHxLLDFnNxWkprOkFv8=
-X-Received: by 2002:a17:906:d54d:b0:aae:bac6:6659 with SMTP id
- a640c23a62f3a-ab38b190d52mr1324385866b.7.1737404352450; Mon, 20 Jan 2025
- 12:19:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="RTxz7SNc"
+Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 5EDD8428D52
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 21:37:22 +0100 (CET)
+Received: from [192.168.3.122] (unknown [87.149.37.23])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp1-g21.free.fr (Postfix) with ESMTPSA id F0356B0053D;
+	Mon, 20 Jan 2025 21:37:10 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1737405434;
+	bh=D4FYc0Y2il/iK0msWjAE1OiX9Zm6HZRDCwxUtG2Lc0U=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=RTxz7SNcDA+5A8IYlOhEFwQWzdBo1zaTOAf0/DSJP0J6aKmnV/ubC+l7Bj4Ole3EZ
+	 OyMt9/lBCxpV0NZDLiomQRRP8riWtwRp2OTg1kvKTqYy2sqp65CHacwfVD5kLn3uKO
+	 Kx4cjCYS7OvNXaSdn9EqpCkbDrOi+2m/pBQkYDU06Tf1TE7cmHpHBtx3NLcirRJJ7J
+	 QyvE/PCUOeq6NahMkTROnQeNgU7kgY8LgZp4kdlLWukBX/6UTqlX0RLUs41nwsT4sJ
+	 AR9bZ/oUMzjwNn+3lW0lOzlYEAYe+tB46WJSwhKVbxLF/I1wNDvnVi0dVQl1SXhSXQ
+	 zzXRcy3wXlkqg==
+Message-ID: <46cec27d-ee66-4dfb-8271-953b032d0b2f@free.fr>
+Date: Mon, 20 Jan 2025 21:37:10 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] doc: use .adoc extension for AsciiDoc files
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, M Hickford <mirth.hickford@gmail.com>
 References: <20250120015603.1980991-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20250120015603.1980991-1-sandals@crustytoothpaste.net>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 20 Jan 2025 15:19:01 -0500
-X-Gm-Features: AbW1kvZPEj0PSt2nDfMRjLsMcT4RwOo1MqrhIKG2aX-MXEdJvMtbuih8_MshUb0
-Message-ID: <CALnO6CCzHU1bD4yVuJKBf+uFVFe-AenQ2sGP+fgEkdADzqgqNQ@mail.gmail.com>
-Subject: Re: [PATCH 0/5] Convert AsciiDoc files to .adoc extension
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	M Hickford <mirth.hickford@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <20250120015603.1980991-5-sandals@crustytoothpaste.net>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Language: fr
+In-Reply-To: <20250120015603.1980991-5-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Sun, Jan 19, 2025 at 8:56=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> [snip]
->
-> I found that using `git log -p --word-diff --word-diff-regex=3D.` produce=
-d
-> the nicest rendering of the large patch, so I would recommend that to
-> reviewers.
->
+Le 20/01/2025 à 02:56, brian m. carlson a écrit :
+> We presently use the ".txt" extension for our AsciiDoc files.  While not
+> wrong, most editors do not associate this extension with AsciiDoc,
+> meaning that contributors don't get automatic editor functionality that
+> could be useful, such as syntax highlighting and prose linting.
+> 
+> It is much more common to use the ".adoc" extension for AsciiDoc files,
+> since this helps editors automatically detect files and also allows
+> various forges to provide rich (HTML-like) rendering.  Let's do that
+> here, renaming all of the files and updating the includes where
+> relevant.  Adjust the various build scripts and makefiles to use the new
+> extension as well.
+> 
+> Note that this should not result in any user-visible changes to the
+> documentation.
+> 
 
-[off topic] It's a small thing, but I've started including a
-"Best-viewed-with: <git diff options>" trailer in commits where I
-think it's relevant. Now I wonder about including a configuration
-option to automatically apply such options (though safety + alerting
-someone to this change in how the diff is presented would be an
-interesting UI factor).
+Maybe for users of the end product of the documentations compiled here,
+but there are other users who use the source files and this change
+breaks their workflow pretty bad. I am one of those users for the
+git-scm.com website and the manpage translation projects.
 
---=20
-D. Ben Knoble
+If the purpose of this change is clear, the breakage of backward
+compatibility is an issue. When documentation writers know how to turn
+on the asciidoc mode in their editor, they surely know how to enable it
+on .txt files in this specifically in this directory.
+
+For instance in emacs, create a `.dir-locals.el` in the Documentation
+directory with the following line:
+
+((auto-mode-alist . (("\\.txt\\'" .  adoc-mode))))
+
+
+Maybe a smoother transition could be performed by creating links between
+txt and adoc files.
+
+JN
+
+
