@@ -1,127 +1,164 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3BC191F95
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 11:41:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECCA1B415B
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 11:47:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737373298; cv=none; b=pvMCk1dji1BqAhjm+8a7/jSSE6Pk5QOvb3NT49XHVDOz8NSxVjBzQGEDcIy7hqRibcOsfKaEwwIHz0hiRz6T8jm4tZJKqUUcvC5Nh/5gEFCUtZdkbmGJstWKl3BdBciJsDjnBSw2trA9uLHgEHWa83G5ST2baV/eZWvm/mArFxY=
+	t=1737373626; cv=none; b=oMx3qRdeSmMnxWZPCJf7qvr2L17rdeduzvD+NWedJfdbKkwBt1NpMZ3iLjqJuC2N5NZUwTK6eqmCLRi5JOEDYdRyGJkelXcDPkM446LOsUCOeqhEjgThEUAV+mHasTc0JdJU35Ch0DCbaQU1mstJqf9b5EjkXJ1uWscYGVDIS3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737373298; c=relaxed/simple;
-	bh=MwKMicVuw4zgZgyVODf967NoOnzkAELtQfMsCIGmVtw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=m0aP5NZEIDiEcnE9Lr61mPuQs7VQekAOJaAoR9kvx82EqFw4GXu4AuYh7YSkbJqlp9ytF1uy2YI7QXycD7yEq5VlYP4hGCIq5Z2lPEq+jkz31mWo3X/xGvrHQd4xy4zCHoUq3pp4xikZJTpEgbT51QmZHOON+q9WwbVm6Ro41LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=iYTXSN1s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lRjnDCO8; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1737373626; c=relaxed/simple;
+	bh=9K6qfr7UJJnmnCnSSVyEf4i/76k5hqc4ndrz5cBhXTg=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=O0l3GnfnQYJElklkeM6IsafGDaMeG6KtPFx6wKpoS78pf5mqpzKYmgqnv5FXh7RJPAsGY7RO8pTs8qlMka/aT/ERsJp1U9gsbuXptnP35pJdNYBtxzgYeG56EiwOjajsD+m3buetuv6gYwaxnjwEv3aU2MOLmM7GvbYV2mIhwGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EprnBuy4; arc=none smtp.client-ip=209.85.222.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="iYTXSN1s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lRjnDCO8"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8A37D1380219;
-	Mon, 20 Jan 2025 06:41:35 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Mon, 20 Jan 2025 06:41:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to; s=fm2; t=1737373295; x=1737459695; bh=O2xXbnm7Jd6eGZ6K5rTjv
-	zONQ+XCjzWCDzCo3MzpcQk=; b=iYTXSN1sGeHyNxRTLU/JRn5Z04VWDLnwZb3CU
-	ljhCMy+JPTYIRqSS03s34qRKwdQFWLfsKNM7KUZsQl55WnTN4lVo+0Ys8jRFnQQH
-	Tzn/OB6yIa1t+ddhHPGuXOehezzOXtRN138ZUcszLcm3Vg8xmDu8OyLXNCrKScKG
-	saX5moCmKbc7+vBiw01CI3xrcmzl71Rb+A67wijFQIH/2eyCj59teoJsIVw0eUUE
-	f7w4icUgJAcwppv5MnzddpNrW93+OPt/X62EXWoAN4HpJTtsIeRd970jCgZMN2X2
-	Q6MgK1CNXFHWRfl4VMikVWbqtTf0CLoEYw/2CFCSeAbeA632g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737373295; x=1737459695; bh=O2xXbnm7Jd6eGZ6K5rTjvzONQ+XCjzWCDzC
-	o3MzpcQk=; b=lRjnDCO8/DvLi7uPj2td6H4PCzGUK8XhzFuI79yKqdns7b0/dUD
-	RHv5Ld7wQUTk+d4uP9Ve+ClOJK+jvgyM2frNxsrkLW0N4l21BxerPUiypl5i0rhe
-	4N23/GOXBtCXzevVPz7QQbddmrFIR7sWUwakQ3+71g8O2jnDREiXy6JTG7Sr9PAz
-	DJpJWyGwfubbGq9IaWt8u8bYrV4d2ZFWK3On1hvsoTFuZR5arALVeDiYSPLPqiav
-	KXOjhyhElMZ8KC21/nz+Gt7d1cHEi3jc96wRTgfHbaY1bDP83gzS5/QKx1fjNjRK
-	bEGoM27voaGqCnZqlmBeehlZYaVZhVBocWQ==
-X-ME-Sender: <xms:bzaOZ31ghKYa16zTnUouHDCZakLLdVQOU5QIRdyzOsAwG4o4bUXI9A>
-    <xme:bzaOZ2F_P3YlwQbZmLatQuKpXdB17JEEhLpUSxSgO9osD3CQ7CSjvk6wxV63OqC7K
-    kEiRqv1xu1_fCcOiQ>
-X-ME-Received: <xmr:bzaOZ366RujdPOU-F5TTbC1slX5DtlYCObTn8WOYs-yBBjXM3gc-A5RLS-CkTa35lDgLfQLZVIWzSgwkS_nljS3raLNTgDO9wg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiledgvdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefufffkofgggfestdekredtredttdenucfh
-    rhhomheplfgrnhcurfgrlhhushcuoehjphgrlhhushesfhgrshhtmhgrihhlrdgtohhmqe
-    enucggtffrrghtthgvrhhnpefhkedvvdegkefhjeduieevueeihfdukeehjefhleehudfh
-    hfelgefgtedtteeutdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehjphgrlhhushesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthho
-    peegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
-    phhtthhopehjphgrlhhushesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepphhsse
-    hpkhhsrdhimh
-X-ME-Proxy: <xmx:bzaOZ80HtuYIiZ3pDWsSztuyronoiJze-rPibwodq7H8ClkIA70qfA>
-    <xmx:bzaOZ6FEw_lcZrewzFbClUWp53tOekw-hDEHfTv8ry3lxkNqTCgHfg>
-    <xmx:bzaOZ996HyuIHIhWojIWgVUViTHVUr6z5fLBBdYWrVnEZVQFJxKjgQ>
-    <xmx:bzaOZ3k8_b6BwFWatQ--7eznRpg0-yr0cb52KBztd-hXP7Asoj1BMQ>
-    <xmx:bzaOZ2iBoiAnvEKTkrMsi8n0BlfbryOD-wrJZpsIoVJNuCpM1A1Q1y3A>
-Feedback-ID: i01894241:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jan 2025 06:41:34 -0500 (EST)
-From: Jan Palus <jpalus@fastmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jan Palus <jpalus@fastmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2] t8002: fix ambiguous printf conversion specifications
-Date: Mon, 20 Jan 2025 12:41:06 +0100
-Message-ID: <20250120114106.2844157-1-jpalus@fastmail.com>
-X-Mailer: git-send-email 2.48.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EprnBuy4"
+Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-85b9f2de38eso846149241.2
+        for <git@vger.kernel.org>; Mon, 20 Jan 2025 03:47:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737373623; x=1737978423; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+NS0LI8ARsF48HS4LX89xNultoM8Aup62y1sOCzZD0M=;
+        b=EprnBuy49VUsq156x9vpfVYRmm3qUdM/gmycAE5gL+ukmD884JXVhC3kCMx37DYEfI
+         PqQDOT2A/wsZ91oRIV6WKaNLWnGN6xWN8Ha0qI4mYYw8HwWf2F+pgpqbjYALBBYMY5Gl
+         tkW3TLPVjCKWFJcgu5eDQBs+mNpe7Hl5qpLgPvXIvJB3p0YySUmx4aN96zzL+XX5r2A9
+         hSu1IcwDGCA+7Jwptu2nhwpk5E+5jqKltiUaFOfHpZNSxPC1ur8QcTgR2rtG8bKjUiiL
+         YCIBAAGvNXxuW6FfbBCi0FN15oSrpaPQV5r2uXFvWb0pUITozkweuBeQf6PerAq99K/c
+         DhCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737373623; x=1737978423;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+NS0LI8ARsF48HS4LX89xNultoM8Aup62y1sOCzZD0M=;
+        b=FWS280GKm5V/4CATf5Hlc4fkb0QiwFJ62LyeHk+8vvshz8jJ9WpwOrwZlXaGn7iLSd
+         3n0+f3OLQbEomq/jBs1avf3ohWoSVD7nKgIJ+SlF5dVrAJFFkuwRT+xTajjFwqql4iBf
+         WS+ZYRAX4CdXZ9nZ9RLfkR9l6HDaiFyVWTTteqrsGz6Hp5X0nq8ffDtGknbAgmUAuQ4h
+         ZjIAFIkYVbFiGHCBHxOAH+9Ppy7EAf6e6TzEx3Je9JDKrVzFH9ha/9WiUbfZaeMeWa/K
+         kamuFI9EPcLEU/vD85XbOCTlRcnntb8cDxG+yHjhA/r0bPUz8j0RCKuz+bLrqbqAEAPM
+         Tidw==
+X-Gm-Message-State: AOJu0YyDFRf5Em/3RIhJwckr2JJX5ItSy16Z9nLNFXKYv03ireXYRVDH
+	f/yeR32LJ3jSEfKetlkrQpFjGGl2RPzEhWua+Qpy8g3+oQOad8qzswR4QdZna5K+oYMZg7xipl4
+	hHi7fPU9g7obvgY5THacF75/ZLOU=
+X-Gm-Gg: ASbGnctrrEH2mdJdi2VG0yvyRHxazbHOlZXYc8VFjdFbuQsVMRqQP61URy/lEwpKu7F
+	KP0KL/qCAvGOShQNFtHCItOKquy2sJDvoiInupjij4WbwmZBx9Vbu
+X-Google-Smtp-Source: AGHT+IH5EatoEtDKOn1qPByzoOUqiInA1gz82/X3H/9o0np8kivtGHKdbA72CJpeFKiX7Q/lvl/qcNnIuWvRZPUFTXY=
+X-Received: by 2002:a05:6102:1625:b0:4b2:ad50:a99c with SMTP id
+ ada2fe7eead31-4b690b86c0fmr9073078137.2.1737373623627; Mon, 20 Jan 2025
+ 03:47:03 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 20 Jan 2025 03:47:02 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <Z4oi55XewgX2deTm@pks.im>
+References: <20250117-461-corrupted-reftable-followup-v1-0-70ee605ae3fe@gmail.com>
+ <20250117-461-corrupted-reftable-followup-v1-3-70ee605ae3fe@gmail.com> <Z4oi55XewgX2deTm@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Mon, 20 Jan 2025 03:47:02 -0800
+X-Gm-Features: AbW1kvYmi4kJBOjiyd_ficfeXl_21bo4fQq32vM44_wqgFYFaTnQRmkkrY3US14
+Message-ID: <CAOLa=ZQpg+8vg+3XMcG4XyoaOMvtMV7KuSkQhJXTkFiPatO7Lw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] reftable: prevent 'update_index' changes after header write
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, sandals@crustytoothpaste.net, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="000000000000add8a1062c21d1f5"
 
-In e7fb2ca945 (builtin/blame: fix out-of-bounds write with blank
-boundary commits, 2025-01-10), we have introduced two new tests that
-expect a certain amount of padding. This padding is generated via
-printf using the "%0.s" conversion specification. That directive is
-ambiguous because it might be interpreted as field width (most shells)
-or 0-padding flag for numeric fields (coreutils).
+--000000000000add8a1062c21d1f5
+Content-Type: text/plain; charset="UTF-8"
 
-Fix this issue by using "%${N}s" instead, which is already being
-used in other tests (i.e. t5300, t0450) and is unambiguous.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Jan Palus <jpalus@fastmail.com>
----
- t/t8002-blame.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> On Fri, Jan 17, 2025 at 08:59:14AM +0100, Karthik Nayak wrote:
+>> diff --git a/reftable/writer.c b/reftable/writer.c
+>> index 740c98038eaf883258bef4988f78977ac7e4a75a..c602b873543790e36178f797ed9f98112671f97f 100644
+>> --- a/reftable/writer.c
+>> +++ b/reftable/writer.c
+>> @@ -182,6 +182,13 @@ int reftable_writer_new(struct reftable_writer **out,
+>>  void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
+>>  				uint64_t max)
+>>  {
+>> +	/*
+>> +	 * The limits shouldn't be modified post writing the first block, else
+>> +	 * it would cause a mismatch between the header and the footer.
+>> +	 */
+>
+> Can we make this *even* stricter? I think that this is something that is
+> easy to do wrong, and the fact that it only triggers in some situations
+> of misuse may easily make tests miss this issue. So ideally, we should
+> assert that `set_limits()` is always called before queueing any records
+> to the writer. This would make us error out in all situations where the
+> calling order is wrong.
+>
 
-diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
-index 1ad039e123..e98993276a 100755
---- a/t/t8002-blame.sh
-+++ b/t/t8002-blame.sh
-@@ -138,7 +138,7 @@ test_expect_success 'blame --abbrev -b truncates the blank boundary' '
- 	# Note that `--abbrev=` always gets incremented by 1, which is why we
- 	# expect 11 leading spaces and not 10.
- 	cat >expect <<-EOF &&
--	$(printf "%0.s " $(test_seq 11)) (<author@example.com> 2005-04-07 15:45:13 -0700 1) abbrev
-+	$(printf "%11s" "") (<author@example.com> 2005-04-07 15:45:13 -0700 1) abbrev
- 	EOF
- 	git blame -b --abbrev=10 ^HEAD -- abbrev.t >actual &&
- 	test_cmp expect actual
-@@ -146,7 +146,7 @@ test_expect_success 'blame --abbrev -b truncates the blank boundary' '
- 
- test_expect_success 'blame with excessive --abbrev and -b culls to hash length' '
- 	cat >expect <<-EOF &&
--	$(printf "%0.s " $(test_seq $hexsz)) (<author@example.com> 2005-04-07 15:45:13 -0700 1) abbrev
-+	$(printf "%${hexsz}s" "") (<author@example.com> 2005-04-07 15:45:13 -0700 1) abbrev
- 	EOF
- 	git blame -b --abbrev=9000 ^HEAD -- abbrev.t >actual &&
- 	test_cmp expect actual
--- 
-2.48.1
+I agree here, it makes sense to make this stricter. Like you mentioned,
+currently they are independent. The only way to enforce the limits is to
+ensure that they are dependent.
 
+> There are two ways I can see us doing that:
+>
+>   - Detect any state written by `writer_add_record()` and error out if
+>     it's set when `reftable_writer_set_limits()` is called.
+>
+
+Yeah I think this would be simple to do. I guess we can check
+`w->last_key` is set, since any record write would modify that.
+
+>   - Adapt `reftable_writer_new()` so that it takes the update indices as
+>     input and drop `reftable_writer_set_limits()` altogether.
+>
+
+This one is a bit harder to do because of our flow. Generally the writer
+is provided to callers via a callback function passed to
+`reftable_addition_add()`. I guess I could simply pass the data:
+
+  caller -> reftable_addition_add() -> reftable_writer_new()
+
+Any direct users of `reftable_writer_new()` would simply pass the data
+directly.
+
+I'll play around and see if this is doable without too much refactoring
+and have something in the next version.
+
+> The latter might be preferable as you basically want to set limits in
+> all (most?) situations anyway.
+>
+>> +	if (w->next)
+>> +		BUG("update index modified after writing first block");
+>
+> Let's not use BUG, but rather return a `REFTABLE_API_ERROR` error. It
+> requires a bit more plumbing because we'll also hvae to adapt all
+> callers to handle errors. But on the one hand we don't want to die in
+> library code. And on the other hand we don't want to keep on adding more
+> dependencies on "git-compat-util.h".
+>
+
+Fair enough, thanks for explaining.
+
+> Patrick
+
+--000000000000add8a1062c21d1f5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: b5091f66d790ce3_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lT043UVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meGRNQy80L1pRUEhiZExoWUkzRDJEdFFKbkFkMnk3ZwpWcytZWnU2Tlkr
+ZUxuc2wzR29pSkdWRmk3RS81TW9Cc1hFZUVFajRUdktZYVpjaUFVUHVWTWh3cmI1TDExZm5zCnI2
+MEVVMFhlK2Y0S0pyMWhhRHZWU1M1QVFpVVVFQndKL2dER2duN0VlVmNSY090Ylp0R0ZGMzNDUHdD
+UnBWWkcKeTZJZ3NYNUpqSThiVjA3MTdRVHlGbkZDajFneVNicWQ4cHBWNzl4bVVoN1BEbUxZMnJ1
+eWV4M3ZWQWY4QjVvaApjc2poNDI0ck9QaS9tVEpOUlV1aXZtUGE4YTk3ODM0RDdGazN0SWpuNzk3
+TldDc2REMVovS2loRWd1Szk4a05JCjBHNnJDbVArZEZGSE5JWnRvMlk0NU15VGJoM3NoUlJJN2Vm
+b3NBaEVCNHBmM0QzdTc2NzgvTHRWVDRlbzNVRnQKZHZFVXY4cjIyaU5uZFArVi9XWFJkSFc2WHB1
+ZVNtU3ljc2tSbFRMVENtdTdVNTdvWWhxN29iSkQ3eVNFTlVOSQpkMHpBMGJUQmlwUm9DZy83M3Fh
+aEdWZ2tJQ24rK0JTdzh0U0ZzMWswRnZMYTdZVHozaUc3WjNrQlRMNzV3TFgxClUxQlFhcUNlajVM
+R29kNWM3T0daSWpZT3NnTjFaMmNZU0VYdlk0Yz0KPURYUWUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000add8a1062c21d1f5--
