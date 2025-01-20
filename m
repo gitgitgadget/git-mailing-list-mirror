@@ -1,76 +1,188 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AE11E1C32
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 14:38:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1819A1B4F02
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 15:09:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737383923; cv=none; b=NFFR0eyZRVsQbZ6oXwReC34W3TbZoYYMU0Ep3Dm2Vm5BbQDTNK7LS98sBFO3x+mLwSfE1uMg2I/gQ/PZJNopwwqMIPl9Rn9EE+nPXKuYA2cMs9nBAUENakTQz8Aw0PYd5FQDVuFQF8x2QfHq6gkhJXlSCVSyMaIj1YU7La1QgKQ=
+	t=1737385796; cv=none; b=LUlfzcSHnqeZwOubwV106szvN2Yn3KygQgZllfBkywnVMQ2bVkIoPnUGiin4u//fyc33CLVHuuE2J1N1jdJTbRp6WOyGwhsxE+FJSdtuyfCf11BNVUke/KDHUQOhG7xondTa9eb/NTgra9mKBB5eyQGj7Jm4sgsNwf53eCgrNAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737383923; c=relaxed/simple;
-	bh=CHGBQOGC2XpV0Mx+o4cqkrOh1a5NJXxVx7B2PKfxWwc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OS5ar9Go5zsGLymQlkWVj+HOCmRLN/MC4P8j2m6ezQvSrIB4MNacs5NjjsW4hQcesyaDffqnrdNo4KXJ644GE4X+r5A6gjpnk9dRE6vYnMfsH6yRF+0iXaoLqrCSyJAdp39DV0AH6ikX0JG6o7Py32TSH7oUUNaLvUnqxuaPnI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T2MU1SiV; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737385796; c=relaxed/simple;
+	bh=GnucthqIHp/wjNSTVn/lThY0G7QZm1UhaerPtggjGH4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=I3sLpGnOIH62ZbtAeu1DM8YQ91SIRfCld6oXz9bpkV0TG3za4+9mutfDLagU93GQA1Vqn9xBRCCXmIHoBC3j3zdAg6wdLzIuPOxrjFzTjQtLT2RGSTLHIDnddfk18QaqNYkFWq6DNGgOLzMkfWn/2mhmgJbayhAAFFdQUnl6g+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HOcpqvXs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XstOHUwT; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T2MU1SiV"
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e3983426f80so6860785276.1
-        for <git@vger.kernel.org>; Mon, 20 Jan 2025 06:38:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737383921; x=1737988721; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5anRzXWOhlT0/y1yD7QlOon7nuKY1I++rU4Nn7lSWww=;
-        b=T2MU1SiV/iNRe1vIDjtuwrwnvg/pw5u/E3pfZVGUnu05XGGJp3OgDDZD5PEsWmV6LS
-         KTErxKegKWQiU33z5hwAq9M/hA/PORZt1GL9wiQomBG2zNtpUOgtRpNpEn8k+FEN2FsH
-         UsEWvdIJjkw1LdfvYXDc6JKVU46qNb12wQP+aioucEUmn+mToxKTe826wd/KbiiLahX/
-         d8RLi+ndz9NuaseAVkgoBZ87Cci54bWG9ioOjgK5JDYCCpGvuksHt+BDCF2wF67zfw+H
-         OgHLwWv4Ax0W10TySCNPQ3zep/pQ3Uj7qLB3IY0AVx8Iw0L/nkDQplozvzfqgQqauqRH
-         yApQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737383921; x=1737988721;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5anRzXWOhlT0/y1yD7QlOon7nuKY1I++rU4Nn7lSWww=;
-        b=QXCupXoFMwWsB5yeSPzri1fb+1CmYsrVXM9zkgR18ZPzmVDXknmtqMozDjD4Ho5gz+
-         M+6staf9CcHnJL7quQAciddk9SdWaysxhJBZ+/ctIMajBypSC6G2hd+vghLF8fMB22Hn
-         R0eXiLURKJDGKZ6Gm0SIpWzU7yx00WMAAAlxsdQlc7R8pGqQCKPUJt7jST/EgUA6DsKC
-         7yt4HCe6G0bbOAOA9/K1WIy8Q1b2ReDQVk8xC12/tB/Dfhtm34xK53ZmHmIJWnwfFWNr
-         e7sbRm5VPfEZwhfWEYrMgjVZ1sjHY0WUh/NU7QTuaQACQw5cvD+koUjB75TW+YsFQhKW
-         bgeA==
-X-Gm-Message-State: AOJu0YyaCnrtFdhD8LWRP6IkspQGSqe7thCYgQ0Ksz55dYJPIDhkU0xC
-	T52eAvKmE5eqISwC4t9ZX6CtH/jwUikyHVdkie3AzynWg1OIp626vzGqHuSZgZuQyCmvFV/kgwf
-	f7vJ3T5lFg4RLTMiTkL7bgnrDnawWGqHECKxi1w==
-X-Gm-Gg: ASbGncsQCy94zF3+SX5S7UZ8k4BRUu/8vPxEovgWfEoJ53+Tu6D8o5j2bZFWklJH2Ka
-	EIWH7+J77ZEGtzCre7bZ0xdIisR1YasmoAxWWOLk+2P0hgeR0Zz8=
-X-Google-Smtp-Source: AGHT+IF9MxYebC/i8S0gUJcf3q5niJ5UrtCTRNLZ6DzEUNYNZFGizVjUGrr7bBNTj3K4xO6JO67W6joAQZSx44YOocs=
-X-Received: by 2002:a05:690c:9c11:b0:6f6:d405:7010 with SMTP id
- 00721157ae682-6f6eb908d30mr94656177b3.29.1737383921029; Mon, 20 Jan 2025
- 06:38:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HOcpqvXs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XstOHUwT"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id DA65F138088A;
+	Mon, 20 Jan 2025 10:09:52 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Mon, 20 Jan 2025 10:09:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737385792; x=1737472192; bh=saBLBqo7df
+	hle0jwjmJk0RT1qhDRN8gG8Uyf+cygmFU=; b=HOcpqvXsIVHYt2PYZpD/xcxMoh
+	V4IhVFLtNn7DbDWg+fumSkf49O9x1GxEWxZWCb1I9JpZ00vySOtol2eiKD7JJrmI
+	5GzXEC2840V+DIbGdV5UdbRydjXQeN4IxVUDA/wYhBUkHlS5UQn/aNv6KbxszBrm
+	1Qn9oEHmV6dpeyWocR7FfSZPI/ZzUw7UC/2ex4kGajGE1cZcDKOqHsGmi/RU4St/
+	JWyEPYlOy+sacrWGOvYyIIELWHv++dJZRmBEmqMgdTyh/kglcOD8Lj/2SA4rlV6M
+	AkKyGwPQ6mE65A4qigUEIlXUj6q44YEwNfY9sBvkikntX+yMTKGm3AWTgutg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1737385792; x=1737472192; bh=saBLBqo7dfhle0jwjmJk0RT1qhDRN8gG8Uy
+	f+cygmFU=; b=XstOHUwT/6htK6INxzM92UJhxYkqgn+Clj1bu4dKGb7jfaQ2mKA
+	6JCMiVcesaj0ZUB92avUxrv2L2Fvl7ELESvjPIgaVFge0rdrnnQVXKAvKl1YorXR
+	f907aqj0BAvneZUFuBd0hf7ihWTlN4RLx9QYJejTT+QA3DEcL++g3yPgDSzHsTv6
+	kl4Hn/HdAXOizwF0YRRrEP6GzucKKHqIcME2NcYYcllKu9u1Osyn7XlqZ6dhyE6j
+	wCI1fYPPGMkdkJSZiWVFhUMStcVjJT2bNr1/WmPiDlzeZCD8fy176YiFiqqtQ2Ss
+	fFC7ZsgdlkblhaoQw4o6oR7ZPh+AzBXWFfA==
+X-ME-Sender: <xms:QGeOZwYbsqZ-2YPzWybWdcSaOXnfng_-yjfgUBbYnm4GTO0A75Ngbw>
+    <xme:QGeOZ7YBm2N6Smk1KAFwMFYQCpvy3QsZFkY2CEhdB8yKWFjdVPmrVAErilP0q09Rj
+    FrvgBAm27iFLNI8Vg>
+X-ME-Received: <xmr:QGeOZ6-WsQt1cXcMLqaA5cGdxotoa-YuY68pO5WstN0a7Vfj1jfolvtxmYljdiMU2Rxplr_wBDJhApre8wB_sBna_b_0WC9aQKQBP7Sza3Dzcw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeiledgieekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:QGeOZ6rONXjELgUacA_hNVw2JJi7nw-S7fS9KhE9-VymBDKGPNXkTQ>
+    <xmx:QGeOZ7p-kbNhKDrUv73c1v4oLuI_EOV_GqUuf1RHR2484f30Om612Q>
+    <xmx:QGeOZ4StLM0l-fgR5cxilK69Uy6lWbs_ilxp-lGk_DNsjUdVz1L5QA>
+    <xmx:QGeOZ7oKOGCSFQo7zIuJA3LH4dHp1KhKkzDoGlU3VD_5kdiR_47Ftg>
+    <xmx:QGeOZy3pIxdoEoebkgQFouYg-5ZIQjqcj7bT5Rs8Qc3dh3ZofWBylQKt>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 20 Jan 2025 10:09:51 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id d5f18b12 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 20 Jan 2025 15:09:48 +0000 (UTC)
+Date: Mon, 20 Jan 2025 16:09:48 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 03/10] reftable/record: handle overflows when decoding
+ varints
+Message-ID: <Z45nMqLUHwMGEy11@pks.im>
+References: <20250116-b4-pks-reftable-sign-compare-v1-0-bd30e2ee96e7@pks.im>
+ <20250116-b4-pks-reftable-sign-compare-v1-3-bd30e2ee96e7@pks.im>
+ <CAOLa=ZQxp=tmmBwAV2OR9ODLGf_VHLxG_50-YwN7-s7+c6pmNQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGedMtcSSkmQ2u9yYvKMiWnprWR2VZrbuoT9EX+U6nuxOWiEHw@mail.gmail.com>
- <CAGedMtd0-m54075w97Z4pQ0wqAjgPRA8+HX5iar0POyuC6-GCA@mail.gmail.com> <CAGedMteK9=wYwCoPMGZ5t+FN_ZHOcSGxDenq8fkVM64oGpc4sQ@mail.gmail.com>
-In-Reply-To: <CAGedMteK9=wYwCoPMGZ5t+FN_ZHOcSGxDenq8fkVM64oGpc4sQ@mail.gmail.com>
-From: Seyi Chamber <kuforiji98@gmail.com>
-Date: Mon, 20 Jan 2025 15:38:26 +0100
-X-Gm-Features: AbW1kvYRKMmBK9knoBoYl0mc0IrohAfrHnn6h8LPAotkPp_5ChrGDMNn6N0Vuu8
-Message-ID: <CAGedMtfiAttLUgPNyU9nNrvOjNrJ0NsCayjyTevCoAurwMDwzg@mail.gmail.com>
-Subject: Re: [Outreachy] Blog: Introducing myself as an intern working to
- convert unit test to use clar
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQxp=tmmBwAV2OR9ODLGf_VHLxG_50-YwN7-s7+c6pmNQ@mail.gmail.com>
 
-Hello everyone,
-I published a new blog post on modifying my expectations and the next
-batch of test scripts to be converted. I would love for you to check
-it out and share your thoughts!  Find the link here:
-https://seyi-kuforiji-902b48.gitlab.io/posts/modifying-expectations
+On Mon, Jan 20, 2025 at 04:47:47AM -0500, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/reftable/record.c b/reftable/record.c
+> > index 04429d23fe..4e6541c307 100644
+> > --- a/reftable/record.c
+> > +++ b/reftable/record.c
+> > @@ -21,47 +21,40 @@ static void *reftable_record_data(struct reftable_record *rec);
+> >
+> >  int get_var_int(uint64_t *dest, struct string_view *in)
+> >  {
+> > -	int ptr = 0;
+> > +	const unsigned char *buf = in->buf;
+> > +	unsigned char c;
+> >  	uint64_t val;
+> >
+> > -	if (in->len == 0)
+> > +	if (!in->len)
+> >  		return -1;
+> > -	val = in->buf[ptr] & 0x7f;
+> > -
+> > -	while (in->buf[ptr] & 0x80) {
+> > -		ptr++;
+> > -		if (ptr > in->len) {
+> > +	c = *buf++;
+> > +	val = c & 0x7f;
+> > +
+> > +	while (c & 0x80) {
+> > +		val += 1;
+> 
+> I was at first confused, I understand that we add 1 to check if there is
+> an overflow before adding the next section. But this actually modifies
+> the value itself, but looking below at `put_var_int()`, we did value--
+> before storing each continuation byte. So during decoding.
+> 
+> Nit: it would be nice to explain that part a bit here with comments.
+
+Yeah, I had to think about it a bit myself. It's quite a clever
+optimization: when the 0x80 bit is set, we know that the remaining value
+cannot be 0. We thus don't have to represent that value, which is why we
+can subtract 1 when encoding and re-add 1 when decoding. This allows us
+to save a byte in some edge cases.
+
+[snip]
+> > -int put_var_int(struct string_view *dest, uint64_t val)
+> > +int put_var_int(struct string_view *dest, uint64_t value)
+> >  {
+> > -	uint8_t buf[10] = { 0 };
+> > -	int i = 9;
+> > -	int n = 0;
+> > -	buf[i] = (uint8_t)(val & 0x7f);
+> > -	i--;
+> > -	while (1) {
+> > -		val >>= 7;
+> > -		if (!val) {
+> > -			break;
+> > -		}
+> > -		val--;
+> > -		buf[i] = 0x80 | (uint8_t)(val & 0x7f);
+> > -		i--;
+> > -	}
+> > -
+> > -	n = sizeof(buf) - i - 1;
+> > -	if (dest->len < n)
+> > +	unsigned char varint[10];
+> > +	unsigned pos = sizeof(varint) - 1;
+> > +	varint[pos] = value & 127;
+> 
+> Nit: While the `get_var_int()` uses hexes, here we use ints. Would be
+> nicer to use `0x7f` and so on and be consistent.
+
+Yup, makes sense.
+
+> > +	while (value >>= 7)
+> > +		varint[--pos] = 128 | (--value & 127);
+> > +	if (dest->len < sizeof(varint) - pos)
+> >  		return -1;
+> > -	memcpy(dest->buf, &buf[i + 1], n);
+> > -	return n;
+> > +	memcpy(dest->buf, varint + pos, sizeof(varint) - pos);
+> > +	return sizeof(varint) - pos;
+> >  }
+> >
+> >  int reftable_is_block_type(uint8_t typ)
+> > diff --git a/reftable/record.h b/reftable/record.h
+> > index a24cb23bd4..721d6c949a 100644
+> > --- a/reftable/record.h
+> > +++ b/reftable/record.h
+> > @@ -34,6 +34,10 @@ static inline void string_view_consume(struct string_view *s, int n)
+> >
+> >  /* utilities for de/encoding varints */
+> >
+> 
+> We should remove this, no?
+
+Yup, good catch.
+
+Patrick
