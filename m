@@ -1,147 +1,216 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0100635968
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 07:07:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF26718FC92
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 07:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737356882; cv=none; b=NbTP3emjrW6J4ZbcmsQbuMlLLWavPVXtczbLIU2qvTQzyMlRc7zNiezbiMTzTXgLX+ppQYEqd8836G4iqH1xEY7lSrPvVROdfFmdMIbmNUUYliWyVOrsY+EvBg2nL6JoZuTRmepuaBN+GN4zdo4ETnaLm7anV+DfJVEu6kG2z+c=
+	t=1737358988; cv=none; b=bYampqN8W22msX5uPyojPDMrgJq2pSaVl8dHbvY0NDW0qHTskyv0vapZMLOiEawu+Pd3SXcAEZTCVBFH7JDXCY0XKyVS2WC9efJRZh6jf3ad5H7raTJjxcnEdFg83xp21wOg+WbhKdCO66C296r/ZwzVspcsPOhU2vlyY80yyHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737356882; c=relaxed/simple;
-	bh=WkQFt3TQM5z8qC13oQ8/8or0PB6g3JFh6a8ahY/YOew=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=szJPncP6TnfiSQb7dKxFxdbux3mDmTaGf1JDZ/gODtXOBTo/dTmRhvPvHjpcM8wJ6NI7VlmM6o6vEQXaPOVmq6lILCEkYVSs+7Pf8xnHkG2ZfzXEio/laZnxHQqFe61uFKjKy7b2056+b4/E60ihvTeGwRuB7vodHSzJQSlt5gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F+4h8Et1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jKJBU+9I; arc=none smtp.client-ip=202.12.124.149
+	s=arc-20240116; t=1737358988; c=relaxed/simple;
+	bh=sLje2TTIAv4VxIu5yBaTmpV+OL67bnq8uMXaPNaFHwk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=BFqN2mV12OlFrUW8e9QxUZxpLhvwfzUEAieXgq1Hy8K/vVdLEsMt9KK+9r0iIeNhHmEu+w7GBAHd9Q4PWhyGlp9VZnmAy17NaCLiXWZM1pOkIOZG4FCtD791Mo6mm1b445gvYY/OMrQpoUTI1isHDD6yzLFJuNEnIDCaEmjF+MM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=glrl9cjo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NqO8tx/r; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F+4h8Et1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jKJBU+9I"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id E5FED114012E;
-	Mon, 20 Jan 2025 02:07:58 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="glrl9cjo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NqO8tx/r"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A149E2540113;
+	Mon, 20 Jan 2025 02:43:05 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Mon, 20 Jan 2025 02:07:59 -0500
+  by phl-compute-03.internal (MEProxy); Mon, 20 Jan 2025 02:43:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737356878; x=1737443278; bh=UNe5HIJCcu
-	xJsYJ9yFHQNmqikuJLTvkdZyvz4L54Bc4=; b=F+4h8Et1WOY1dxx1GhJCuSzwWH
-	qg9LdWGJ9HCKjYmNd45aJGbGeBldDq7paV/RYnc/RW8OhXUJG+vsnekzPaqcHTAW
-	of2yLsYIPAEfo7B5EfQ2KR25DJEPivI29JnhCTq46WZ4Hhrh2Ei6+IMr/MMwBKe5
-	pvx2k6+T5OZfFWeEGYJSXtvW+wvKpAvIMgBjur2sLOIrZnooY5bV1Ndo1eINbQSf
-	zAy2WK1JvVf3cUlWWYp4dtnxIr4RCcqnfgV0OyYKwAlgjabfsejO/4mQYWJcZcyZ
-	s3TTZpc6r50AeOUh4LypsJ5/02K/Ro9d80E3G1UoHqwRpu51FqORSBYCS/oQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1737358985;
+	 x=1737445385; bh=vxvZjcGkYuHjB2vv5nD6ItzKb6OUNlNp/ubQh2ToHz8=; b=
+	glrl9cjo+8HHva2713JxTIpwOGmk5wd450XqZpqSLAj8oC6siZo+njSJbg+9ElWO
+	GIWGLKpPspAUMopcyprwfAgJfzbG2H0kQAmfO80YWnKXATSDe7w7FMAgnTjSymEG
+	01AQGWWIeYQiSVUY0DxpjYCfcVeAMvdbTMkO5rjYlhQp6Q4qORlI5XKolahQDVP8
+	xuJhKOnu5kqZbTCwnBcyCJkG+PwkisZBrIwMN4eREf1yIN7YXIwD0SrhfG9V88op
+	Dlbwx7kgjxFepkamVownic99FTP5UKPuC54kRtqH+XdfnSU8kXhyFDKncPM4zTIH
+	Ul+5lywuVItKAGeC92oNcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1737356878; x=1737443278; bh=UNe5HIJCcuxJsYJ9yFHQNmqikuJLTvkdZyv
-	z4L54Bc4=; b=jKJBU+9IQgtAy8hyVMlgYh5JmP2JAdZprsiIKx1V0AGz5joSdfw
-	iOuJuVUkN+iIZJ3GxQc6jTTo4D/OaWsHYhEWurjpG0WhdjUdcN7g4YzBjFin+6g+
-	WNaAPXLYe0XACDGlgYU/S1NafLE/M9/Bj7e2uMpSeeW+d6AzDVYs00aPr/eGvlzl
-	zV+H8zt39RJxZW7dtm2iOlEDtgdJv/g7dneUyzLy511OyMnSCJi/H0WhFlfF8WNS
-	qvIavixqLkFCvdNJ+hm4B9CINcpBDafAwyRiBTxZnO2yO/4buIIYR2h5y4ZXf99k
-	PlNIRjDw3r8WXvRnqaBeetme3wYwmRcOIlg==
-X-ME-Sender: <xms:TvaNZ9yKrtsqupywFYduH8MCkUsfK5Kl3YYdWdtEDlwrgarrL15ZLA>
-    <xme:TvaNZ9Tj2GzQk-bAl4TGpE0jMymyBDm5e9GehZjANFXVcvfCi7UOEbcZDfoBzvLKQ
-    Ydpkr0i5n44gAzm9Q>
-X-ME-Received: <xmr:TvaNZ3XR2QuJ4o4s4Exf7nSnYhyELvXxS1KYVNqamTYKIsBUYxxcW9CxgHZKnfuwaO1AmloRWyvqNpLMcAL-msuFoKIvrXLX3No9wpJJi77vCQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeikedguddtudcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1737358985; x=
+	1737445385; bh=vxvZjcGkYuHjB2vv5nD6ItzKb6OUNlNp/ubQh2ToHz8=; b=N
+	qO8tx/rx4mHrj7ybkDp8cr4aOxBiN+jcYyBWzo2SwQMuC21V2XjjuUjFOHGT17v1
+	uzy3p8Ee+5pa2Rs/UeUQGA4J1du4+ws/M8/VT19EenAJjxxWDgpVBaZKkPXbEyYF
+	v+rP9XCBsxuu1diy/+y4bmB1g403/8eKNg+IRVn0v8ZTzW1RlFKUdkER86byeXBM
+	7R49QjqOogb6K6N7F8S7yk0bW28ovqIDWTsNRGiloEKsAtnWAD0HRszU5QY7Y+KC
+	ab9rBXs+GxwkjTKHDUY4OkTgBu8GTnY1uJhaQEXisslRstU/GPhMZIEadpkCYaaA
+	e//QGCH6ueQGab8H4ws3w==
+X-ME-Sender: <xms:if6NZ5yjQ0N7kb68raXbakPTeVCiljnWL1zZ1iqKSY7WjYEXzXcF6w>
+    <xme:if6NZ5TtkMxJHX0ly-GbZBbhz8c1j761VPIc0ZQv3KwRXu72Sii9guuQkWPbPeKdL
+    oiQcgY4MqBCiUNgfg>
+X-ME-Received: <xmr:if6NZzV4-KKgxr3e-adt7e3niSo3p8DrVdzCU3DkSHfe5zzqD5JX0u8zrabP7GWx20CHbavwwu4KRb9iPs4UEDIstP2cZMEhfGIvHhi9wlzPZw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeikedguddtkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughr
-    peffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkuc
-    futhgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeek
-    ueelvddukeeftefhjeetgeegheekgfdugfeugfevuddtuddvgfelfeeigfeujeenucffoh
-    hmrghinhepghhithhhuhgsrdhiohdpghhoohhglhgvsghlohhgrdgtohhmnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-    dpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgr
-    rghrthhitgdrshhivhgrrhgrrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrh
-    hishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:TvaNZ_i4rJD_r3HO7bNNG8VIayzjUkzF1u-mpSNbbUf8ul-xyh5Q-A>
-    <xmx:TvaNZ_BVnZichlohDgtdnsXlhWGpH429zjgsTQ12eHAFm5ZFIkUd-Q>
-    <xmx:TvaNZ4LTWTARjKYy-REWEnzy8rhQlNuXKq456by_U3freQ6JPqtFog>
-    <xmx:TvaNZ-Bru3RUYFdcLXRkJWnLRGNMK9Huo_clFlHjZPn0DmnmAv9Feg>
-    <xmx:TvaNZ6-WeoAu-YJIHj3SF8nLB0xINnw94zhd_UMuGys4x7_jYk7IufsF>
+    hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
+    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
+    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehrrghnuggrlhhlrdgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtggrpdhr
+    tghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtth
+    hopehrohgsvghrthdrtghouhhpsehkohhorhguihhnrghtvghsrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknh
+    hosghlvgesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:if6NZ7g4iqsxYdPjE2B-Cvl3vC0kFzX0UkYj_SpnpBeaZkqOa2fAYA>
+    <xmx:if6NZ7A6s04Nep0OD-8Sl0T86xJWXu6_J_HvKKroAXLQFpvShpa-eA>
+    <xmx:if6NZ0K5MMT84O_OORyNuXdKgQQRXRLVnTTy3c88q4NXqhw9atoTrw>
+    <xmx:if6NZ6C-pcYoVDrQNcapdQkM61kVrKRasMy4FeXGDdkCf1Z9jyf1Dg>
+    <xmx:if6NZ90nkentrGgLbDknEwmaBlp1WSMPKl1MVsuBkb5uQwxgrMMlO7-Y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Jan 2025 02:07:57 -0500 (EST)
+ 20 Jan 2025 02:43:03 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 90cd98e5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 20 Jan 2025 07:07:54 +0000 (UTC)
-Date: Mon, 20 Jan 2025 08:07:53 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 67ece214 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 20 Jan 2025 07:43:01 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git in GSoC 2025
-Message-ID: <Z432QXJb_TfzNBa2@pks.im>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
+Date: Mon, 20 Jan 2025 08:42:58 +0100
+Subject: [PATCH v3 1/5] Makefile: wire up build option for deprecated
+ features
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250120-pks-remote-branches-deprecation-v3-1-c7e539b6a84f@pks.im>
+References: <20250120-pks-remote-branches-deprecation-v3-0-c7e539b6a84f@pks.im>
+In-Reply-To: <20250120-pks-remote-branches-deprecation-v3-0-c7e539b6a84f@pks.im>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, 
+ Junio C Hamano <gitster@pobox.com>, 
+ Robert Coup <robert.coup@koordinates.com>, 
+ Christian Couder <chriscool@tuxfamily.org>, 
+ "Randall S. Becker" <randall.becker@nexbridge.ca>
+X-Mailer: b4 0.14.2
 
-On Sun, Jan 19, 2025 at 03:43:29PM +0530, Kaartic Sivaraam wrote:
-> Hello everyone,
-> 
-> It is that time of year. GSoC Org Applications for 2025 are open now[1].
-> They are due before Tuesday, February 11 at 1800 UTC. It's good to see that
-> few contributors have already started working on microprojects this year :-)
-> 
-> I could help as an Org Admin like previous years. I prefer not to
-> volunteer as a mentor this time owing to other commitments, though.
+With 57ec9254eb (docs: introduce document to announce breaking changes,
+2024-06-14), we have introduced a new document that tracks upcoming
+breaking changes in the Git project. In 2454970930 (BreakingChanges:
+early adopter option, 2024-10-11) we have amended the document a bit to
+mention that any introduced breaking changes must be accompanied by
+logic that allows us to enable the breaking change at compile-time.
+While we already have two breaking changes lined up, neither of them has
+such a switch because they predate those instructions.
 
-Thanks for your work, as usual!
+Introduce the proposed `WITH_BREAKING_CHANGES` preprocessor macro and
+wire it up with both our Makefiles and Meson. This does not yet wire up
+the build flag for existing deprecations.
 
-> There are no noticeable changes to the program this year.
-> 
-> The GSoC contributor application period is March 24 - April 8, so
-> (co-)mentors and org admins are already welcome to volunteer. As usual,
-> we also need project ideas to refresh our idea page from last year
-> (https://git.github.io/SoC-2024-Ideas/). Feel free to share your
-> thoughts and discuss. It would be great if we could come up with a good mix
-> of small, medium and large projects.
-> 
-> Do feel free to ask if there's anything that needs to be clarified.
-> 
-> Just like previous year, there will be a GSoC Meetup in Brussels during
-> FOSDEM weekend on Saturday, February 1st in the evening. If you are
-> around, interested and haven't received the link to register directly
-> from Google, let me know so I can send it to you.
-> 
-> [1]: https://opensource.googleblog.com/2025/01/google-summer-of-code-2025-is-here.html
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ GIT-BUILD-OPTIONS.in                | 1 +
+ Makefile                            | 5 +++++
+ contrib/buildsystems/CMakeLists.txt | 1 +
+ meson.build                         | 6 ++++++
+ meson_options.txt                   | 2 ++
+ t/test-lib.sh                       | 4 ++++
+ 6 files changed, 19 insertions(+)
 
-I'd be happy to mentor this year again. A couple of ideas:
+diff --git a/GIT-BUILD-OPTIONS.in b/GIT-BUILD-OPTIONS.in
+index f651116102..f1d0ecf123 100644
+--- a/GIT-BUILD-OPTIONS.in
++++ b/GIT-BUILD-OPTIONS.in
+@@ -45,3 +45,4 @@ GITWEBDIR=@GITWEBDIR@
+ USE_GETTEXT_SCHEME=@USE_GETTEXT_SCHEME@
+ LOCALEDIR=@LOCALEDIR@
+ BROKEN_PATH_FIX=@BROKEN_PATH_FIX@
++WITH_BREAKING_CHANGES=@WITH_BREAKING_CHANGES@
+diff --git a/Makefile b/Makefile
+index 06f01149ec..dc3c980aa7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2230,6 +2230,10 @@ ifdef FSMONITOR_OS_SETTINGS
+ 	COMPAT_OBJS += compat/fsmonitor/fsm-path-utils-$(FSMONITOR_OS_SETTINGS).o
+ endif
+ 
++ifdef WITH_BREAKING_CHANGES
++	BASIC_CFLAGS += -DWITH_BREAKING_CHANGES
++endif
++
+ ifeq ($(TCLTK_PATH),)
+ NO_TCLTK = NoThanks
+ endif
+@@ -3187,6 +3191,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 		-e "s|@USE_GETTEXT_SCHEME@|\'$(USE_GETTEXT_SCHEME)\'|" \
+ 		-e "s|@LOCALEDIR@|\'$(localedir_SQ)\'|" \
+ 		-e "s!@BROKEN_PATH_FIX@!\'$(BROKEN_PATH_FIX)\'!" \
++		-e "s|@WITH_BREAKING_CHANGES@|\'$(WITH_BREAKING_CHANGES)\'|" \
+ 		GIT-BUILD-OPTIONS.in >$@+
+ 	@if grep -q '^[A-Z][A-Z_]*=@.*@$$' $@+; then echo "Unsubstituted build options in $@" >&2 && exit 1; fi
+ 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 49904ca8a9..63d0088928 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -1198,6 +1198,7 @@ string(REPLACE "@GITWEBDIR@" "'${GITWEBDIR}'" git_build_options "${git_build_opt
+ string(REPLACE "@USE_GETTEXT_SCHEME@" "" git_build_options "${git_build_options}")
+ string(REPLACE "@LOCALEDIR@" "'${LOCALEDIR}'" git_build_options "${git_build_options}")
+ string(REPLACE "@BROKEN_PATH_FIX@" "" git_build_options "${git_build_options}")
++string(REPLACE "@WITH_BREAKING_CHANGES@" "" git_build_options "${git_build_options}")
+ if(USE_VCPKG)
+ 	string(APPEND git_build_options "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
+ endif()
+diff --git a/meson.build b/meson.build
+index 0dccebcdf1..316cd93264 100644
+--- a/meson.build
++++ b/meson.build
+@@ -644,6 +644,12 @@ build_options_config.set('GIT_TEST_UTF8_LOCALE', '')
+ build_options_config.set_quoted('LOCALEDIR', fs.as_posix(get_option('prefix') / get_option('localedir')))
+ build_options_config.set('GITWEBDIR', fs.as_posix(get_option('prefix') / get_option('datadir') / 'gitweb'))
+ 
++if get_option('breaking_changes')
++  build_options_config.set('WITH_BREAKING_CHANGES', 'YesPlease')
++else
++  build_options_config.set('WITH_BREAKING_CHANGES', '')
++endif
++
+ if get_option('sane_tool_path') != ''
+   build_options_config.set_quoted('BROKEN_PATH_FIX', 's|^\# @BROKEN_PATH_FIX@$|git_broken_path_fix "' + get_option('sane_tool_path') + '"|')
+ else
+diff --git a/meson_options.txt b/meson_options.txt
+index 32a72139ba..800e518d95 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -43,6 +43,8 @@ option('sha256_backend', type: 'combo', choices: ['openssl', 'nettle', 'gcrypt',
+   description: 'The backend used for hashing objects with the SHA256 object format')
+ 
+ # Build tweaks.
++option('breaking_changes', type: 'boolean', value: false,
++  description: 'Enable upcoming breaking changes.')
+ option('macos_use_homebrew_gettext', type: 'boolean', value: true,
+   description: 'Use gettext from Homebrew instead of the slightly-broken system-provided one.')
+ 
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 62dfcc4aaf..6e423f655d 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1864,6 +1864,10 @@ test_lazy_prereq CURL '
+ 	curl --version
+ '
+ 
++test_lazy_prereq WITHOUT_BREAKING_CHANGES '
++	test -z "$WITH_BREAKING_CHANGES"
++'
++
+ # SHA1 is a test if the hash algorithm in use is SHA-1.  This is both for tests
+ # which will not work with other hash algorithms and tests that work but don't
+ # test anything meaningful (e.g. special values which cause short collisions).
 
-  - Consolidate ref-related functionality into git-refs(1). This would
-    mean that we add new subcommands "list", "get", "exists", "write"
-    and "optimize" to it so that we have a central place to manage refs
-    overall. This would replace git-update-ref(1), git-for-each-ref(1)
-    git-show-ref(1) as well as git-pack-ref(1), which would of course
-    stay around for the foreseeable future.
+-- 
+2.48.0.257.gd3603152ad.dirty
 
-  - Refactor "environment.c" such that more of its global state is
-    instead stored locally, e.g. as part of `struct repository` or
-    `struct repository_settings`.
-
-  - Create a new command to query repository-level information,
-    potentially making it machine-readable via for example JSON. This
-    would move such information out of git-rev-parse(1), which is a
-    somewhat weird home for it. It's something I have been thinking
-    about quite a bit, but it wasn't ever discussed to the best of my
-    knowledge. So maybe not a good fit.
-
-I'll keep on thinking about potential topics.
-
-Patrick
