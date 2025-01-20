@@ -1,56 +1,56 @@
-Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA1B7DA82
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 18:58:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97F58479
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 19:08:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737399504; cv=none; b=BVJsgTp/uM2ofuWy5W2KuPvaSXj4SrJGoqUcFb0xwdf926M+g/OZQiEet0JjvrsrgLrlzy9asL0d7JEA0nAJozVA23efZRXJOX3/YRDA7R/2ajoh079dnDxgccVs/7LA6g3MVIT1/n7WA4yCAqEtW0d3j58bFKutVkRDptHIgwg=
+	t=1737400111; cv=none; b=APYiPrFWJLe4AqwwP4xPKxWRfs8Du5w75IqjXQm64Hs/1gGM2ohAg9mJcJC+dpQiKXr+9d4ZFy9yzL/lagWc/CUHeGJvaqf6W+kA26rpiG+XKFrQlhWpCuORJv3QMHgy5dy9ejjeyCMIVZDPf44LWZs3FlMZVqw4a6u3zXI3NgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737399504; c=relaxed/simple;
-	bh=ZnTZBOWt4afvSaPzR79sJHKmWQh9WKdEqgmkITPK2y4=;
+	s=arc-20240116; t=1737400111; c=relaxed/simple;
+	bh=o++7AoS5HpCnD1SeeHl47pBVP+QPuRL7xGJE5tXKNHM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L3OeZ6Ds3KkrXYnO/v3P5yT0hZx1KRJbQMMVVGL6S/P0tKDGXEM5F1cXyz/eoGqVZ7WOLM+JlryZoy9Ge7r9Op4YrzbyV445M71eRGoGIv28eKxBl6mZSy5AjkmbFjXYTykzHg2q/d36GXc2MaNlp/YKStaD8/kzTMTtpQaH3UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BQ460G3i; arc=none smtp.client-ip=209.85.222.48
+	 To:Cc:Content-Type; b=EHMxkwIelKCLvCSAZOfIPbDCsb4Icrjjm/Mo9Xc+jTdjyY8s7zqDQEbroOwQwPoDJL2tw88UI506+QO+1I7EPwTWyDe9Na8zy+ywCEccuuEcqd+GRS0G9tBVa83dBNRsS/GmKCJtQNZB4d+FwfmGJR1Q+4ePTSYsgZ/TwKFLuAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HvArigWR; arc=none smtp.client-ip=209.85.217.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BQ460G3i"
-Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-85ba92b3acfso2248663241.1
-        for <git@vger.kernel.org>; Mon, 20 Jan 2025 10:58:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HvArigWR"
+Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-4b6398d477fso1302977137.0
+        for <git@vger.kernel.org>; Mon, 20 Jan 2025 11:08:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737399502; x=1738004302; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1737400108; x=1738004908; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J9nTQ2lgXSJYBZ5ioBKoCjbTf2rUCJQWGCg6huwm6Ic=;
-        b=BQ460G3iEr4hEPuueyisA1PD0qxG4+O/SQet6tgeTzsHCibwnq3q1wyElEyIt5Cwu9
-         3VsS+spdLNic2lXpmY7gYtCJSTgWW9DLerrE7v7aWW5rCsRjYbwRC0RVCG6TiHGVqK/T
-         MIRGXZ+pyBDn/crySVFtS4eUF9pY5QQi6oDNpDwBZHXCUm7uHuumP9/mQfSuZZy8dnBg
-         5kHsoGrSHJM4psHvN/HmfIZKaMP+XeOBZVpTJK0rCe9BCPpro0ACsn7rp5DM9Ba94FFr
-         vDwt4ZQMAZxTp6vyJo8cS/HNpylDV6tQ5ZylnnYPG6evC4fzM1XkDsYgTQDHXnIVb4pN
-         BRvQ==
+        bh=oNVMlDA4sU/k3yCASRHnAwoN8AH47b4IvFyTBQ95dsM=;
+        b=HvArigWRv/FT7pwI2amXZgB7ACb6Er4VjVXgvXyoILDvXLJk78PccvQlRxLDUapTYh
+         YKAJRfFABd1qvAHltDzOOFdNSDgdL16I94lVNFd7n7rv9/GExH6yTrb8njK2ImVFjCca
+         guZ+Z9iWgq6moKLu512AahvsYOgr2ZWZSOrF+N0KlJN6z+/KMMCfqqOhxIu6qXFiSeQI
+         z/1ayTiNaYPXLCrw+hZMGLfqtaxfyc5VsLU3Tbx6CvC/JYRIuBGToV9c+cGCZjbBjVHO
+         2TAv1k74viTB6lzbPqqIUcu+o2jXGCT02JR9BBlhL9dsp+Zn9awNeB64V4qw5wGRrJk9
+         ApDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737399502; x=1738004302;
+        d=1e100.net; s=20230601; t=1737400108; x=1738004908;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=J9nTQ2lgXSJYBZ5ioBKoCjbTf2rUCJQWGCg6huwm6Ic=;
-        b=Tj5RxaO1XUsIeXsgUz57+ufHvsW0MR5XvSOze9KZ0xeNfszRI61Cp+y0OOwQNBiDzr
-         nYt10Wbo/lDaff2R8zQtY7bQhvQXr3PlytU8+N6zP9VcupFfAxEdYex66lAbCH5QXiLo
-         D1fKtFjeT+z8tYBr3coBWMh4TPAobXFCGLrGt68UammYjy+M3nmpTkx+hYgKCrgW2QCG
-         Mvx/qEg0QStKmasWXbu94/TXQfG0r0m7X8Ij9YqLluHSUhHqAnI3H6OQ5WJWqKxG4ArX
-         aSbKyvKAbN66bjTI3S0w5xySnVyt94CIQAJo/RHrBHPd0g+DFCYqDGZCwqGniVxivk2O
-         NfNg==
-X-Gm-Message-State: AOJu0YwWmUhNjCm59VSTlOBr1maz8YeEp7sV2HdeM4ivg4euEAQqffB9
-	aXmpM/LB+3PwGiwfICRCi8kMGoy4NlVI7F11JvuZtQWXbfj3LGa1RlZEIBVzNFspcW12tYiGhfY
-	n2SaRnpMvoLxidS9v8XnauXz9Hw4=
-X-Gm-Gg: ASbGncvGdZDVDWemoQmpCIg2hZVH+7w2MRpSjfUfSKujX52wxs6KDMPdsAGfzUJVM3S
-	matBJurs4HANDoE9MJ00bCk2XwYrWZ9rFIRsGJbcsGAdrF74hoJE=
-X-Google-Smtp-Source: AGHT+IHdq8Af5AsvwaU9sqlZMXrEtWrf5Gxu1A7dVMXSU4aqXMEPGO4XxQkwyUEuRiLoBmD+J4hHn/qIQhFM9cCROOM=
-X-Received: by 2002:a05:6102:3049:b0:4b6:20a5:8a13 with SMTP id
- ada2fe7eead31-4b690c19fe5mr10897258137.13.1737399501844; Mon, 20 Jan 2025
- 10:58:21 -0800 (PST)
+        bh=oNVMlDA4sU/k3yCASRHnAwoN8AH47b4IvFyTBQ95dsM=;
+        b=D1wtLz2BcEtFiBNEDN6d9aiMjCEV6obnsl1K25nvfqIkbxMa2fjySsXhL3OaoJtpeU
+         gizzXRXgeMikDBwi94qq+2UP+aRU77aIjUPZO5D+YjTwrSCW9x0+w6+43ZgMWJjUEg4Q
+         uN4krgJpJf78m/N2xONfdKhg6UX3AbXirwquiDxCjnU6mPdHS4PnW9bzw0Z94GQl1rrn
+         albHcKCTmaB4SYRE67mKG6oZdmWG9RnAlqIIBGyfqYaNQOTMZ5Lr4PfI95/h8YfYbyS3
+         HX5vAdLsP9G8IcZnjs9u6/G+QvyP0LRrv7GkVX3a5/xUw4WiSMco5xgI83TIq+KX+RJm
+         eKhQ==
+X-Gm-Message-State: AOJu0Ywhnx5gln9jF/y8Vgn10CA3s/tb3E0an/M8km5hrlt8AyuUcSUQ
+	HX52zB1VywYBwkoCMAExiyHf5nEQ+CoFH7TnXh8IIA7av4yR1XgTSSWPvnJh7w+GFIzd55OQkI2
+	aIUMBk31S80JkaRbXdekqQ3xiANM=
+X-Gm-Gg: ASbGncuxBepLz28h7nauDKz0ntSELwn99D21vcif4aCj+2fE/JvAORvwi2ZHLY+0IPm
+	YucmDHTwELttwc0/fFvPAOasl5tK61zKB0k8qqEwmlhKoQrddi4E=
+X-Google-Smtp-Source: AGHT+IFUwsLoQJ9hURRX6ABPRNaRYtQTJlYArVrV814DsZ1hIHC6nnNI1y3jezq138Dju/BUzhKl50CavB5w7c1OcBM=
+X-Received: by 2002:a05:6102:c52:b0:4af:c519:4e86 with SMTP id
+ ada2fe7eead31-4b690b988b7mr10010031137.1.1737400108702; Mon, 20 Jan 2025
+ 11:08:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,96 +59,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
  <20250117104639.65608-1-usmanakinyemi202@gmail.com> <20250117104639.65608-7-usmanakinyemi202@gmail.com>
- <xmqqwmethxyq.fsf@gitster.g>
-In-Reply-To: <xmqqwmethxyq.fsf@gitster.g>
+ <CAPig+cR6oCLw5h78NTrxDztTCLn4eseidk7wBc3JgVzKEE3+zA@mail.gmail.com>
+ <CAPSxiM9Vm7DxDeneTvWLYaZnPK1Zpk79xfcH5US7-+R39v-i7g@mail.gmail.com> <CAPig+cSE=2jZvTUHsBnRRMizC3pxRwyud+TGDV7iw=QNmFmycQ@mail.gmail.com>
+In-Reply-To: <CAPig+cSE=2jZvTUHsBnRRMizC3pxRwyud+TGDV7iw=QNmFmycQ@mail.gmail.com>
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Tue, 21 Jan 2025 00:28:11 +0530
-X-Gm-Features: AbW1kvZ39wAIPEk5a_Itm5YVmsOXZHY6YYJKAbEblJswwReab2WyG7bBP4e19Sk
-Message-ID: <CAPSxiM_9JKxu5QkxjHUFDM6cb5rSs400O72eYCiM8jHF9dr7Vw@mail.gmail.com>
+Date: Tue, 21 Jan 2025 00:38:17 +0530
+X-Gm-Features: AbW1kvajPjIHYLZ5g1Ra-zNIdCS4w_phEkyuQ-6Qj_BrjEAZozYbWoKawgNvLtI
+Message-ID: <CAPSxiM9QoCy7e+R9GAoELP1i+bssPoq2ogXPnbW59-ta6wjdoQ@mail.gmail.com>
 Subject: Re: [PATCH v2 6/6] version: introduce osversion.command config for
  os-version output
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
-	johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
-	phillip.wood@dunelm.org.uk, sunshine@sunshineco.com, rsbecker@nexbridge.com, 
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com, 
+	ps@pks.im, johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
+	phillip.wood@dunelm.org.uk, rsbecker@nexbridge.com, 
 	Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jan 18, 2025 at 4:03=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Tue, Jan 21, 2025 at 12:11=E2=80=AFAM Eric Sunshine <sunshine@sunshineco=
+.com> wrote:
 >
-> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+> On Mon, Jan 20, 2025 at 1:17=E2=80=AFPM Usman Akinyemi
+> <usmanakinyemi202@gmail.com> wrote:
+> > On Sat, Jan 18, 2025 at 3:14=E2=80=AFAM Eric Sunshine <sunshine@sunshin=
+eco.com> wrote:
+> > > On Fri, Jan 17, 2025 at 5:47=E2=80=AFAM Usman Akinyemi
+> > > <usmanakinyemi202@gmail.com> wrote:
+> > > > +       if test_have_prereq !WINDOWS
+> > > > +       then
+> > > > +               printf "\nos-version=3D%s\n" $(uname -srvm | test_r=
+edact_non_printables) >>agent_and_long_osversion
+> > > > +       fi &&
+> > >
+> > > As an aid to future readers, please add an explanation either in the
+> > > commit message or as a comment here in the code explaining why Window=
+s
+> > > is being singled out as special.
+> >
+> > The previous commit which introduced this has this information,
+> > can we do some form of referencing ?
 >
-> > Let's introduce a new configuration option, `osversion.command`, to han=
-dle
-> > the string exchange between servers and clients. This option allows
-> > customization of the exchanged string by leveraging the output of the
-> > specified command. This customization might be especially useful on som=
-e
-> > quite uncommon platforms like NonStop where interesting OS information =
-is
-> > available from other means than uname(2).
+> My main concern is that someone looking at this change in the future
+> -- who did not have the benefit of reading the cover letter or the
+> review discussion -- may have a hard time understanding why Windows is
+> singled out by this patch. As long as you give some sort of
+> explanation, whether in the code or in the commit message, then you
+> save that future user from having to figure it out on his or her own.
 >
-> After reading the above rationale, I doubt the usefulness of this
-> feature even more.
+> So, your suggestion of referencing some other commit may work.
+> Augmenting the commit message of this patch with something along the
+> lines of:
 >
-> Shouldn't that kind of anomalies be handled by compat/ layer to make
-> their uname(2) emulated, or allow get_uname_info() to be customized
-> at compile time by platform implementations, to yield more useful
-> pieces of information instead?
+>    As with the previous commit, we skip the tests on Windows.
 >
-> That way, we do not need to add another mechanism that lets people
-> spawn an arbitrary command while Git is running, we do not need to
-> worry about security implications, and we do not need to worry about
-> people abusing the facility to throw totally random and useless
-> garbage information at the other end to make their stats useless.
-Hi Junio,
-
-Thanks for the review.
-This config option was added at Randall's request.
-
-Randall wrote:
-
-"Instead of an override, what about a knob that specifies the uname
-command to use to build the value. Personally, I would use `uname -s
--r -v` on NonStop to get the kernel version used in the build. The
-difficulty on my platform is that this is not truly useful info. The
-effective build OS compatibility version is in a #define
-__L_Series_RVU and __H_Series_RVU, so the knob might be needed in
-git_compat_util.h or similar. This comes from the compiler arguments,
-which are not yet captured."
-
-So, the difficulty is that the compile time information might not be useful=
-.
-
-This patch is the last patch of the series and can be a stand alone also.
+> may be enough to tell the reader where to look for the explanation.
+Yeah, thanks, this looks better and clearer. I will add this in the
+next iteration
+if we agree to include the osversion.command config.
 
 Thank you.
-
->
-> I'll skip the overly wide documentation changes.
->
-> > diff --git a/Documentation/config/transfer.txt b/Documentation/config/t=
-ransfer.txt
-> > ...
-> > diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotoc=
-ol-v2.txt
-> > ...
->
-> > +test_expect_success 'test capability advertisement with osVersion.comm=
-and config set' '
-> > +     test_config osVersion.command "uname -srvm" &&
->
-> If osversion.command configuration variable turns out to be
-> acceptable addition, I do not think we want to use "uname -srvm" as
-> its value for its test.  Do you know for sure how portable srvm is?
->
-> If you use something like "printf ' \001a\011b\015\012c '", you do
-> not even have to worry about how portable srvm is and on top, you
-> can test your unprintable-redacting logic in the code.
->
-> But all of that may be moot, if we take the "fewer customization at
-> runtime" approach.
->
-> Thanks.
+Usman Akinyemi.
