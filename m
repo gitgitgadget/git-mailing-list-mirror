@@ -1,248 +1,135 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69DC140E3C
-	for <git@vger.kernel.org>; Mon, 20 Jan 2025 07:54:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D187E190679
+	for <git@vger.kernel.org>; Mon, 20 Jan 2025 07:58:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737359697; cv=none; b=F5uhPK52zhHVszrkFAzpOk4m4Yf8fpiDsydVG34VfUX8qHKOVizK8yCQ3KMUMkE55W9nqh8RuywOZe+QMncDuSpAep0wy2sleXPx/e0kONQOE2mFqoXq4HAMw393ZPJaSUOc2qyv/NGjDpsT7chBLVDd67U8xr+rhHqbyKR9qn0=
+	t=1737359899; cv=none; b=uuabfIzVX9iBRXh64MSxk02xyHt0k8lnHjxWkBlwu2ErjWWVVhrCtdCcR6UtgHoseESfEVrloCisEfZnv6/98bqKciCzTorT6/YZXAQhHPe0afkyr950rhjL7iY5wLWUo31sWSPbYli2vzEjD852ypnN9wSl8CXJ6Qk4CtmgemU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737359697; c=relaxed/simple;
-	bh=4AENtTLuU4F8BZGEmoZGCfAbwjKjza50fNE5RdkKd0E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tIOAGWXwUS85a2cH8kAwsjeR/5M/DnYJSQw+4wB+t6G+D1ZpyiY1QH4nC3rFRUm+8Yv4uIgIVWvsO1hVSUhNEsNKW0hSXfuUFeuyYo05SfN4ukeE7Tkbc4U0EAyTxxTAPUc6GtR58ZTWHgEozw+Gjjy9pix492mN656KFn5r2pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bGBLRNpM; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737359899; c=relaxed/simple;
+	bh=YK+BcmrhwTbRjMZSRT//IA8HL7L6FacYZ/tjaZvp3v4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eQ6WQ+Sa+WbN4XqBSJXf4QaXPp/b2iklbGxLWmP4rOeO4J3H+tPg9HSU4ueZunaIyrdT3BbjPeoaCnjLdQjuEvRvkiHpiP1siNtWHBIpa4PZgsYvVN9SoMuV8jzaVCzFSUQfCnItvGAe56TzdYQbHCO5ZrtanZmjIfBaK3z9rhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WtcU67ko; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SmMZgV9O; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGBLRNpM"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-21680814d42so68122145ad.2
-        for <git@vger.kernel.org>; Sun, 19 Jan 2025 23:54:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737359695; x=1737964495; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r8hFZ+IK9PwIsSSuUKl+2gZ4tCgn9chMGTN5PCJKPZE=;
-        b=bGBLRNpMe6nintfUm/pdnFUJCez7bE/+m4C20HJiCAv8MiUrQMli7Ep5niyXxPvtDf
-         tcqbknt71+vOV11i3zMdt9srSWte2RI5BIjcrDPaV3+BGl6FO12VrCm9xU4Qiqw95o9m
-         GjvafUhlWTqTrWG3zv/CQoAaSm47G6ZVQkwAkDjDKzBZG3LNOz8L6rNd6xv1ggZvyhJZ
-         K28vizPmvcMeN7lvvMr6M/36MSFZ7I0vzASSKG4RLY8FPT95O54LWs9d1iJAozB1k6bb
-         5mX0HPb3uywOEM6qsT7ReybI48+svv2qq0XxtmOH/LdfYAfmyAwcXBkrsBrYaTyB9E2k
-         ohpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737359695; x=1737964495;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=r8hFZ+IK9PwIsSSuUKl+2gZ4tCgn9chMGTN5PCJKPZE=;
-        b=p1GK+M58clLerS3+2F2r5H0wO865ATX+hzjtQAREfOrIyvEptXLWu5MrhL7BZ4h3p1
-         Qwz4cJ/T7hduqD7H0TRjhQ1GQYSJDZh/AfP02C4FMKJcyiR/UUOVRPcRIcbLeFfdnoRO
-         RKr3I2Hlx7Xn5tkpBo8bJnMZTXZsv4COD5SXysqmcFZp3bPMY4OGxZ0mCLe5lv+ABHBF
-         hiwwvrA9F83/Dthtx0PReaiXe58JYZABIWt3T/T+0/uo+HTcyUQ2UferiAgwlRru7N0z
-         jk7jgPV2yqrj1eEMl7iXvVEcqEqBXbMDoFKFtM1kVejxzYDIEIPy92mW3dECYAu2q5aP
-         9C6g==
-X-Forwarded-Encrypted: i=1; AJvYcCX4oU3Ptjd4K2668JACX7WxBXJ6skEBAUI48jPWWWAqhMb2vtD3AlUcO89PcMnaDFKvOsE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxja0VHaEoHb8dR0JTfi0a2WuNXt4tbrlnfD4Q96sYsmx0t+c2d
-	qcup/giu7SR6oPNHUwf6CblLP7M/1v8WF59gV5n7JdBH0Mrx8VZe
-X-Gm-Gg: ASbGncuyVOfbEdMFB4OJ7lOes9Dl/ZI9hBqJdO60CUri37Wjtq5iyy6jsugiTD8GETR
-	2z4mrj6yQ546rbTYrFNVVw6ctMt3B4loCWC1tp5nQ3k8h2FCknY24ueas22HYllbYedFtQD4gz0
-	Mn69t/eMhW7waY7YcL13P+m2zFH4OHv6m8eADwJgOKuRKBg3uKB6FB9CZvPX6oc1XMH64d/gJAc
-	qYZTwpZcnBK4yvEWCP+Od/FbkXLvNApSKNzn/ymo8JPljY+/lX82CMtsksw+EreXj7+GZT5yDYu
-	5+m9Qg==
-X-Google-Smtp-Source: AGHT+IGpAcjTh94vChBZYjR/T2maGWdXv+LnPa5SXjMDraoeJwPtV23io3U+/VQs6OumzBa1oLLnrA==
-X-Received: by 2002:a05:6a21:6d9d:b0:1e0:d934:6189 with SMTP id adf61e73a8af0-1eb2159bf7amr20456391637.31.1737359694784;
-        Sun, 19 Jan 2025 23:54:54 -0800 (PST)
-Received: from localhost.localdomain ([172.56.123.18])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-a9bcdcf7c87sm5287630a12.43.2025.01.19.23.54.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Jan 2025 23:54:54 -0800 (PST)
-From: David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Scott Chacon <schacon@gmail.com>,
-	git@vger.kernel.org
-Subject: [PATCH] help: make help.autocorrect = 1 the same as "prompt"
-Date: Sun, 19 Jan 2025 23:54:52 -0800
-Message-ID: <20250120075452.137992-1-davvid@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <Z43y0mNhHsEdF22L@gmail.com>
-References: <Z43y0mNhHsEdF22L@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WtcU67ko";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SmMZgV9O"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EC930254008B;
+	Mon, 20 Jan 2025 02:58:16 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 20 Jan 2025 02:58:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737359896; x=1737446296; bh=2L85jjnrPL
+	rMFIPnIOJSdG6mWdPKNow8cppbrmtDdE8=; b=WtcU67ko3KJxSYkdU+3pVIypvA
+	M2oDyx5vb08maDcXWXgsCmuICV1S6S6Ukedo04BstyXIYGLYPi/zAZiv6T5WkYys
+	mXxlJGGrE2r8WcUJypQ6Q22Yw5MhtXhfkUctERqWo9kXgUNABcqik9Y1cVPq2PP4
+	cFAnVGo+0XjS5d4+82OZJnLvSa64yl5D4TPLRhmtktKXohjapWQPzamwW91mcpSh
+	YqBd1JpKHnA6c9TBOx3HKnkjRAVjvr+TAUMiAq3GwnclVKQyfwYDIvh3kxRHZDK7
+	0qcixb578QG8jj6geRJVXrJY8EXP2jmlk8DYBQD+xcameYSbm8rXDTnuRlmQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1737359896; x=1737446296; bh=2L85jjnrPLrMFIPnIOJSdG6mWdPKNow8cpp
+	brmtDdE8=; b=SmMZgV9OPKmH6ToLlliOWEVwcvz19HAClFNkwugg8HFmOb46JLQ
+	TFqeIyawFPJuJKsmQdZvmedAwNxLWMp6qAaDR1Sw2kAHMVAyf6KY6kp4aSZP982J
+	vs6iTWJV07QJcPDidX0t83+HhLUzdPzxKapBaqtHzSwySLOXBe4Mr7RsK0afaitj
+	/n1VaygKlBul8YABW5Kvv39AT16DDjn9uzChOQuqgOQq3mKTbPsjs2nsFpzaA77B
+	nk3r4GPnS/f9PL0QVrl9BSLSwK/3c5eworINd4BhUTLH89Rhl7kw+lvsoH7XIw/o
+	6m2gMkpPitKb2+dv4qFxD2oWJ1HlH+YM2TA==
+X-ME-Sender: <xms:GAKOZ98XrdAQRUi-qQq7n2Op7NIRNsD91hLXyX5pwuQVNR3XvbaGEw>
+    <xme:GAKOZxugrwjBMavU7Mw6CDt74MaxSp9OacCMG8YAxmtqrY3BYq-37kPz2sSIqJxYW
+    gsynBXGxi1zMDKq-w>
+X-ME-Received: <xmr:GAKOZ7DF43ZgG76hn4Oon5BO-VHeOSdjwKe29AYQGB7-TNcA4OOvAs4EVK-q5oz7R56UcMKyFMwLyf1a7Np-WtnoYWxyzXsQxYyfSn6-TN2aSQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudeikedguddutdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepmhhhsehglhgrnhguihhumhdrohhrghdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:GAKOZxe4umVByZoTjWLihQGjzDHGebJdUy-kVM0U6IPkLNb1qvTzXQ>
+    <xmx:GAKOZyPQXPVJCPLjMx6aOaSNVi0WVo8IQIGvTG7LOH2gJ9w-CtDgdA>
+    <xmx:GAKOZzmtrpY1wRb7rKo0uE7NMCofi4VgCvstOx8Yvzh37Nj5MEb33A>
+    <xmx:GAKOZ8uIKqkhorj_U5itZoeSnEkyouZigjsHyDqv45bclR3C8lunuw>
+    <xmx:GAKOZ_ogAEC5cef6TuX7XPyuSLwFdGVzZ0yFuFf1mpzqjnH74yP_BIQu>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 20 Jan 2025 02:58:15 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 905d67f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 20 Jan 2025 07:58:13 +0000 (UTC)
+Date: Mon, 20 Jan 2025 08:58:12 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Mike Hommey <mh@glandium.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH] connect: address -Wsign-compare warnings
+Message-ID: <Z44CDZJblkvQ_6po@pks.im>
+References: <20250117074909.1430067-1-mh@glandium.org>
+ <xmqqo705mjw7.fsf@gitster.g>
+ <20250117211830.75prk6e2u3qlatwt@glandium.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250117211830.75prk6e2u3qlatwt@glandium.org>
 
-Choose the least surprising behavior by prompting the user
-when when help.autocorrect is set to a boolean "true" value.
+On Sat, Jan 18, 2025 at 06:18:30AM +0900, Mike Hommey wrote:
+> On Fri, Jan 17, 2025 at 09:26:32AM -0800, Junio C Hamano wrote:
+> > Mike Hommey <mh@glandium.org> writes:
+> > 
+> > > Most of the warnings were about loop variables being declared as ints
+> > > with a condition using a size_t, whereby switching the variable to
+> > > size_t fixes the warning.
+> > >
+> > > One other case was comparing the result of strlen to an int passed
+> > > as an argument, which turns out could just as well be passed as a
+> > > size_t, albeit trickling to other functions.
+> > 
+> > As long as the blast radius is limited (like this one, which most of
+> > the cascades were within the callchain of file-scope statics), and
+> > the changes of type is going in the right direction (in this case, I
+> > see all are using size_t for length that may come from or compared
+> > with the result of strlen(), which falls into that category), such a
+> > change is very much welcomed.
+> > 
+> > Even if the primary objective is to squelch the -Wsign-compare and
+> > even if we are talking about a line in packet_reader object, which
+> > would not exceed 64k bytes and using size_t is way overkill, that
+> > is.  I personally do not think -Wsign-compare cleanliness is buying
+> > us all that much, compared to the amount of code churn.  But this
+> > one is well within the level that I can tolerate ;-).
 
-Make "0" and other "false" boolean values the same as "never".
+It does generate quite a bit of churn indeed. But it also made us look a
+lot closer in many places where such warnings are generated, and we
+found multiple sites already where unexpected values can cause us to do
+weird stuff, including going out of bounds. So if this allows us to
+detect (or even better avoid introducing) even a single out-of-bounds
+read/write that can be exploited I'm happy.
 
-Make "help.autocorrect = show" the same as the default behavior
-so that users can override it in a repository-local .git/config.
+I think overall it's going to be a net win in the long term as it forces
+us to think more carefullly about types, which we haven't really been
+doing until now. And this is a frequent observation during code reviews,
+so it also gets a tiny fraction of reviewer's time back.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
-Here's what the proposed changes to make "true" = "prompt"
-might look like.
+> Do you want me to address Patrick's comments?
 
- Documentation/config/help.txt | 26 ++++++++++++++++--------
- help.c                        | 14 +++++++++----
- t/t9003-help-autocorrect.sh   | 38 +++++++++++++++++------------------
- 3 files changed, 47 insertions(+), 31 deletions(-)
+I don't mind it too much, the end result would be the same anyway. Just
+keep it in mind for future patch series.
 
-diff --git a/Documentation/config/help.txt b/Documentation/config/help.txt
-index a4c6079af8..344b4b13f7 100644
---- a/Documentation/config/help.txt
-+++ b/Documentation/config/help.txt
-@@ -11,14 +11,24 @@ help.autoCorrect::
- 	If git detects typos and can identify exactly one valid command similar
- 	to the error, git will try to suggest the correct command or even
- 	run the suggestion automatically. Possible config values are:
--	 - 0: show the suggested command (default).
--	 - 1, "true", "on", "yes", "immediate": run the suggested command
--immediately.
--	 - positive number > 1: run the suggested command after specified
--deciseconds (0.1 sec).
--	 - "false", "off", "no", "never": don't run or show any suggested command.
--	 - "prompt": show the suggestion and prompt for confirmation to run
--the command.
-++
-+--
-+show;;
-+	Show the suggested command but do not run it. This is the default.
-+
-+immediate;;
-+	Run the suggested command immediately.
-+
-+never, false, off, no, 0;;
-+	Do not run or show the suggested command.
-+
-+prompt, true, on, yes, 1;;
-+	Show the suggestion and prompt for confirmation to run the command.
-+
-+positive number greater than 1;;
-+	Run the suggested command after specified deciseconds (0.1 sec).
-+--
-++
- 
- help.htmlPath::
- 	Specify the path where the HTML documentation resides. File system paths
-diff --git a/help.c b/help.c
-index 7148963e46..447e0c9423 100644
---- a/help.c
-+++ b/help.c
-@@ -552,6 +552,7 @@ struct help_unknown_cmd_config {
- 	struct cmdnames aliases;
- };
- 
-+#define AUTOCORRECT_SHOW (-4)
- #define AUTOCORRECT_PROMPT (-3)
- #define AUTOCORRECT_NEVER (-2)
- #define AUTOCORRECT_IMMEDIATELY (-1)
-@@ -560,7 +561,7 @@ static int parse_autocorrect(const char *value)
- {
- 	switch (git_parse_maybe_bool_text(value)) {
- 		case 1:
--			return AUTOCORRECT_IMMEDIATELY;
-+			return AUTOCORRECT_PROMPT;
- 		case 0:
- 			return AUTOCORRECT_NEVER;
- 		default: /* other random text */
-@@ -573,6 +574,8 @@ static int parse_autocorrect(const char *value)
- 		return AUTOCORRECT_NEVER;
- 	if (!strcmp(value, "immediate"))
- 		return AUTOCORRECT_IMMEDIATELY;
-+	if (!strcmp(value, "show"))
-+		return AUTOCORRECT_SHOW;
- 
- 	return 0;
- }
-@@ -589,8 +592,10 @@ static int git_unknown_cmd_config(const char *var, const char *value,
- 
- 		if (!v) {
- 			v = git_config_int(var, value, ctx->kvi);
--			if (v < 0 || v == 1)
--				v = AUTOCORRECT_IMMEDIATELY;
-+			if (v == 1)
-+				v = AUTOCORRECT_PROMPT;
-+			else if (v <= 0)
-+				v = AUTOCORRECT_NEVER;
- 		}
- 
- 		cfg->autocorrect = v;
-@@ -713,7 +718,8 @@ char *help_unknown_cmd(const char *cmd)
- 		     n++)
- 			; /* still counting */
- 	}
--	if (cfg.autocorrect && n == 1 && SIMILAR_ENOUGH(best_similarity)) {
-+	if (cfg.autocorrect && cfg.autocorrect != AUTOCORRECT_SHOW &&
-+	    n == 1 && SIMILAR_ENOUGH(best_similarity)) {
- 		char *assumed = xstrdup(main_cmds.names[0]->name);
- 
- 		fprintf_ln(stderr,
-diff --git a/t/t9003-help-autocorrect.sh b/t/t9003-help-autocorrect.sh
-index 85a5074b5e..ea20526248 100755
---- a/t/t9003-help-autocorrect.sh
-+++ b/t/t9003-help-autocorrect.sh
-@@ -29,7 +29,7 @@ test_expect_success 'setup' '
- '
- 
- test_expect_success 'autocorrect showing candidates' '
--	git config help.autocorrect 0 &&
-+	git config help.autocorrect show &&
- 
- 	test_must_fail git lfg 2>actual &&
- 	grep "^	lgf" actual &&
-@@ -38,28 +38,28 @@ test_expect_success 'autocorrect showing candidates' '
- 	grep "^	distimdistim" actual
- '
- 
--for immediate in -1 immediate
--do
--	test_expect_success 'autocorrect running commands' '
--		git config help.autocorrect $immediate &&
-+test_expect_success 'autocorrect running commands' '
-+	git config help.autocorrect immediate &&
- 
--		git lfg >actual &&
--		echo "a single log entry" >expect &&
--		test_cmp expect actual &&
-+	git lfg >actual &&
-+	echo "a single log entry" >expect &&
-+	test_cmp expect actual &&
- 
--		git distimdist >actual &&
--		echo "distimdistim was called" >expect &&
--		test_cmp expect actual
--	'
--done
-+	git distimdist >actual &&
-+	echo "distimdistim was called" >expect &&
-+	test_cmp expect actual
-+'
- 
--test_expect_success 'autocorrect can be declined altogether' '
--	git config help.autocorrect never &&
-+for never in -1 0 no false never
-+do
-+	test_expect_success 'autocorrect can be declined altogether' '
-+		git config help.autocorrect $never &&
- 
--	test_must_fail git lfg 2>actual &&
--	grep "is not a git command" actual &&
--	test_line_count = 1 actual
--'
-+		test_must_fail git lfg 2>actual &&
-+		grep "is not a git command" actual &&
-+		test_line_count = 1 actual
-+	'
-+done
- 
- test_expect_success 'autocorrect works in work tree created from bare repo' '
- 	git clone --bare . bare.git &&
--- 
-2.48.0.rc2.33.gfa4adeb460
-
+Patrick
