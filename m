@@ -1,125 +1,110 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644F4A41
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 00:05:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC0FEDDAB
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 01:17:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737417909; cv=none; b=JmwQ9rSsL2sRNAN5ba6IkScj7TR784YRCjLUAtKbhdxbsH3zCRptxXPsPccGkA2FYuZeCJvtbWGr9CONq+UUqueUlXwICCCXPaZpiiOe1brZj0NEmEc3we4FlpqQdoW4+IeFXsW/Ba0nn53mgY6ElTp8Ar7TOo/kdiX+G370fgc=
+	t=1737422227; cv=none; b=uKnEtKm1JBU1vpRgL65CwojdRS9u/lrsNjTIxIECRCT9Ead6b10ugpvEIH8gq/gRJcmXOfASbtsvcw7JKXQs6R9pFoi63YXj/5Di56Yt45X18Go5Gjdcha8ph9j0P4LXDY92gFHnqWqwTG5ccd8DyyiO/2cKciss5tIQQUXXA6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737417909; c=relaxed/simple;
-	bh=mHfsfB9h2fB+8Nn9tkRuGPVXBK8zmOAH3baEVcZsvJ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fbJR9vJd0qYtAYOPfx/3HoNJMibSy65eyf3S+EMnNtah7g16pN4gNRpolvOL//6I+vN/QvVUNOXCGG6WOASHsY5TYcMYO/Lti4+jdBcPj83HALLMShncNnOz9Akd+9NklDXzJd6QynAnZVR0oLm9Gps2tY7I+GHIGhzadda3N6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=sYVEq1ZQ; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1737422227; c=relaxed/simple;
+	bh=wQxXscSQrxH5kPRG6x3xJxmxO/vTtb25JHB0cqXTpGA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Tm0NJiCsH+h3fbV9XoyLz37QiZ40zY7A3P59e/v/9tI++BoAyJozy63EW26BUHBscRBCdS6Ag1qPLEV0ozYPnFH5yRZqUWQaOyniJf3wDqFQZUPKodWrzi2799q6ANb0gSFSbXYwaLx1ROj9S9MxqD5DP3CFtl+i/QW0wjtlLDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wA5HNvg2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EHHKry7H; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="sYVEq1ZQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1737417905;
-	bh=mHfsfB9h2fB+8Nn9tkRuGPVXBK8zmOAH3baEVcZsvJ0=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=sYVEq1ZQ2OigbQbjO7B1gnu/N83601haQEFjQbToDXWBZ4uRvnP3neiVuWoAPHTbS
-	 nxlyb1RSt88FZQ9yYlMrmzf+V9FSTUkBWq87xNVOeU05GJVCwa2RD/44YcRwLjJDms
-	 w0g/l+no5PBzkICs40sTYAnKHM57X8I8Zg5EGfiv53IWUt6pV/ycDXgP2zsDZ/7t3r
-	 scPM9CggowOm5ahtHw+jLHrvC5rroSPeHcxkGOUz3OxH5MSa9rfq65KOFK/wWfp9aR
-	 8m9X5mBZDT2BJ9pb5uhq8SRwX6+FFsBk7B33DEPNfsOHjnTh6VL7vgYmJ6wKaxGdb+
-	 ES25OacN9ArAyDhj/fS1AeuqTm9WP0WsKR878liG8Vs3jNwCtOMZbxAHDObl8V+3MF
-	 TBPepAwG/Pa5yFo3X9v+qlXv5nC6fq9VP/NAr4QIo+pbQxIlGgABDvqmQslxZWCDh7
-	 7+i7c0nkGZUY2iYBPAWFpLYeWF/Ii9V+UZix2IkU9I1G+BZKkDN
-Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1557A20033;
-	Tue, 21 Jan 2025 00:05:05 +0000 (UTC)
-Date: Tue, 21 Jan 2025 00:05:03 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Josh Steadmon <steadmon@google.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com,
-	emrass@google.com, gitster@pobox.com, mh@glandium.org, ps@pks.im,
-	sunshine@sunshineco.com, phillip.wood123@gmail.com,
-	allred.sean@gmail.com
-Subject: Re: [PATCH v6 0/5] Introduce libgit-rs, a Rust wrapper around
- libgit.a
-Message-ID: <Z47kr0_fYYdaMWyA@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-	calvinwan@google.com, nasamuffin@google.com, emrass@google.com,
-	gitster@pobox.com, mh@glandium.org, ps@pks.im,
-	sunshine@sunshineco.com, phillip.wood123@gmail.com,
-	allred.sean@gmail.com
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wA5HNvg2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EHHKry7H"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9D172114018B;
+	Mon, 20 Jan 2025 20:17:03 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 20 Jan 2025 20:17:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1737422223; x=1737508623; bh=jCdAmmZr82
+	ws4Bl+Xv0blHi8lxzcbMfIHbE28Xg8q0E=; b=wA5HNvg2pg6zXlEEe/pZ9Z8hDo
+	gGEOrutawdGUkDQFbtPx4ZdmDNfqU5aQRL6J7ABi0MfiIdvO67rw8MNMfIMH06Mj
+	dlr4GZCAj1E0La3PbxGoK/JAo1smFY676ksnzX/V6kHiMV0TLx8+WBjZBiyWqidE
+	9UZracFySg4XKS+QGFYPvDrV17QK840sXXYetaOEO1KAMgTX28tBEegzjSPH6jHS
+	WNiXodxzbXTF6GwyWX3GMyPDV4i3OE9yFD8+5zfC2/VP4vxenRIVNUc3hMySy6C1
+	G6bhCjL83UUXpyuoNsCjp6zKZOo64ha80ySONXLeQHb5pQ0hH93tdBP/CYZw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1737422223; x=1737508623; bh=jCdAmmZr82ws4Bl+Xv0blHi8lxzcbMfIHbE
+	28Xg8q0E=; b=EHHKry7H8eHXmUkzh8pfpxef/uMu8RAfckMhpXNRDxZfI7ZzkJZ
+	ZpLf07zcjT/wZzbgtIM8SLTc9hmVJ/RYxVa71tXtc9jaVavq1NAH4F1zmNFuWAt5
+	5O8lvfNRFA5lSh37EGdtEPkGK24LMMaptqmlUVEBAHfBucEPF/YhHQvW2Ektffg3
+	lfrEkne0aZnvpKRT7mvVnV9KQpHJWBqc1MwUVQTVr2O7fp9tTGq89t038uUIrUm1
+	+BOvXKYROmm73XaKfABuoT5xuFjj2TFG+VnTB4oTZGXHIlVb/xTv9pweb1InWUVy
+	9Tg2VaRUF6qjavFDiBwLKNebl995uvwd4ug==
+X-ME-Sender: <xms:jvWOZwVx0AEuSoT7Tndyr7S1a9byrki_hmcuFZqmUA_De--2xfRhzA>
+    <xme:jvWOZ0m53NmiTLrAeklhoKoFYJ1gCgO9Y-kl4E8Mq-XnokM3IowEnjjsEYtssqb5t
+    i1xKQexn8ZeeouC8Q>
+X-ME-Received: <xmr:jvWOZ0bSHia2cs0yrlelGXWCbFQPT0yV8D-qOMtgIdqGw63gW13BdtBevoeTyVnbkeVd86TdL-pcBeMArcbd2romA6EAKVU1ezr->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejtddgfedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepuddvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhsse
+    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehsthgvrggumhho
+    nhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopegtrghlvhhinhifrghnsehgohhoghhlvgdrtghomhdprhgt
+    phhtthhopehnrghsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepvg
+    hmrhgrshhssehgohhoghhlvgdrtghomhdprhgtphhtthhopehmhhesghhlrghnughiuhhm
+    rdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsuhhnshhhih
+    hnvgesshhunhhshhhinhgvtghordgtohhm
+X-ME-Proxy: <xmx:jvWOZ_XXdb07CN_8rA8z_S9kjt7dAGAldN7peHyAYjFq3jz8r9_KcQ>
+    <xmx:jvWOZ6nVUlNbvr-9GaxuE4IwqkX5kPMdiFdh-k86vmut8dWwsivP_g>
+    <xmx:jvWOZ0dr7ez3t-lrLrRtjw6N4xx0Y1Ee6MYx3tjdTD-f2t5j6d7N6A>
+    <xmx:jvWOZ8EIihnQVsdOiBHsrhTRIpbvrRYzSOlVzGLjW7LkKj9sgWqnRw>
+    <xmx:j_WOZ1-7PY5YbXV6d3XHiWh-nj_Tn4uYgcC-0HY4uBWnXquAc3eK10-I>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 20 Jan 2025 20:17:02 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Josh Steadmon <steadmon@google.com>,  git@vger.kernel.org,
+  calvinwan@google.com,  nasamuffin@google.com,  emrass@google.com,
+  mh@glandium.org,  ps@pks.im,  sunshine@sunshineco.com,
+  phillip.wood123@gmail.com,  allred.sean@gmail.com
+Subject: Re: [PATCH v6 0/5] Introduce libgit-rs, a Rust wrapper around libgit.a
+In-Reply-To: <Z47kr0_fYYdaMWyA@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Tue, 21 Jan 2025 00:05:03 +0000")
 References: <cover.1723054623.git.steadmon@google.com>
- <cover.1736971328.git.steadmon@google.com>
+	<cover.1736971328.git.steadmon@google.com>
+	<Z47kr0_fYYdaMWyA@tapette.crustytoothpaste.net>
+Date: Mon, 20 Jan 2025 17:17:01 -0800
+Message-ID: <xmqqikq92cfm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="9lO1h3uXbp9RqR4y"
-Content-Disposition: inline
-In-Reply-To: <cover.1736971328.git.steadmon@google.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---9lO1h3uXbp9RqR4y
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> It looks like we're building a general Rust lib crate and a static
+> library here, so symbol versioning isn't an issue.  I expect in the
+> future we may want to provide a shared library, in which case we will
+> indeed want to do that, but I agree that can wait until later.
+>
+> In any event, I overall think this series is a nice improvement, and I
+> am very enthusiastic about it.  (This is mostly for the benefit of
+> Junio, since I think the authors of this series already know that.)
+> Once it lands, I do plan to build on it somewhat.
 
-On 2025-01-15 at 20:05:39, Josh Steadmon wrote:
-> Apologies for the long delay on V6; I am finally back after several
-> months of $DAYJOB firefighting, holidays, and sick leave. I should have
-> time to devote to this series again, but given the lack of feedback on
-> V5 I am hopeful that this will be the final iteration of this series.
->=20
-> This series provides two small Rust wrapper libraries around parts of
-> Git: "libgit-sys", which exposes a few functions from libgit.a, and
-> "libgit", which provides a more Rust-friendly interface to some of those
-> functions. In addition to included unit tests, at $DAYJOB we have tested
-> building JJ[1] with our library and used it to replace some of the
-> libgit2-rs uses.
->=20
-> [1] https://github.com/martinvonz/jj
->=20
-> There is known NEEDSWORK, but I feel that they can be addressed in
-> follow-up changes, rather than in this series. If you feel otherwise,
-> please let me know:
->=20
-> * Investigate alternative methods of managing symbol visibility &
->   renaming.
->=20
-> * Figure out symbol versioning
-
-It looks like we're building a general Rust lib crate and a static
-library here, so symbol versioning isn't an issue.  I expect in the
-future we may want to provide a shared library, in which case we will
-indeed want to do that, but I agree that can wait until later.
-
-In any event, I overall think this series is a nice improvement, and I
-am very enthusiastic about it.  (This is mostly for the benefit of
-Junio, since I think the authors of this series already know that.)
-Once it lands, I do plan to build on it somewhat.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---9lO1h3uXbp9RqR4y
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ47krwAKCRB8DEliiIei
-gbWcAQDHEfkIwFXh04QfjtDCEH5JMi4t6M/oJ39A2afndsit+wEAkv7/ufYdxPIC
-Swz22vRxHe+/IHuQzcwCBvgRVuzN/ws=
-=gZ21
------END PGP SIGNATURE-----
-
---9lO1h3uXbp9RqR4y--
+;-)  Thanks, I heard you.
