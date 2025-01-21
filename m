@@ -1,92 +1,112 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5951F76D2
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 21:52:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC69A1F7075
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 22:00:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737496365; cv=none; b=YxLMwtcQ861U9Viq58ub3SaqIu9cMqW4IzbEWlsfgkvHBR34t9ZDKTwsDqyNHCHJhhHdXMwRJArgQUB7jzAHQGajUv3mIfEJuUczNAPuEGOihnLg9TXvzoC5f3D60yFl/jsDJM8CkeDIrbL160wZIrvWEMX+rUP5dBO3/2c/FlM=
+	t=1737496810; cv=none; b=fcQmVuI1jvoayb1Sjn56YWV/wbNHjysp9hqfV/LLJ4TDRy8sb+Rc6snBDilXUenpIhS7R32aej4WsmEC15ftcltkg6wq5b9VavVo4IlYOxwNoMdOHv+kp2tig9J1A+l7pnn++coBbiFTGXFxHxpoxtQh6US3UN8KcjuNlh0AhRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737496365; c=relaxed/simple;
-	bh=EdGy14TpFcmdoXxLYEVHaHzAOBteFCy7QpAPtnGjdiM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j8O2PEQv6Jj3xcx8FsIQkL3Qc5D60bAHa1c3ehfjq9Q77T0OWUexMMKOAMp6D8Fsw8eW6Z5gQoAV4ZNjHU/pZGhxg7LqT0t326gUMAEFjIrQzE+ttUIRnE7VZGBcau+DjIppgs9oG9dF6lXG9NYheQVFO7JtfQau7pE7pViZh5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NbNRg7BO; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1737496810; c=relaxed/simple;
+	bh=u9Bu7RCNW1806mzuKxy498E84w1Sq8zhOvpGsAP04qg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=C3ko57BSc7/lnlCOtGb8L7lQ2T4PPsn1IYPnnu1yu8sVg+FCRgn/WDbtO64fPPPFvGyAaRLqiz7czNJjFwO7OYKda1wE8t+tcLinMFBOMihSigMjJD86n08i7bESQLpRFyVOih9kqweuCkGknQ1vx+9kLKM4xevZFIaA1AjWVMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=aEEOvVdj; arc=none smtp.client-ip=212.27.42.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NbNRg7BO"
-Received: (qmail 2676 invoked by uid 109); 21 Jan 2025 21:52:37 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=EdGy14TpFcmdoXxLYEVHaHzAOBteFCy7QpAPtnGjdiM=; b=NbNRg7BOJXt8V6rPWYkV6fTKLr5EKXCugbGsO/3cKGGXZ7N03G4p3lu/l5dk4hiaebvsuvdZV4nWeI2y9R5y4r/oYCSYcCCl0sUT8pii7/mfI3bQuUcxsVRU/A/noAqDIJgELJc3wDGIvGPwC7V/WhYl2HjKrGsVWGavg16STKDmkeSgGmAbSQOVQIO5QgxaQa4c8Il4eiL6gP4iKBbWZS6FDrHC7KoBzQNDFwPJgOmBolt17rJW0cuMY2ljehiDqdGnuuLHnnw9gike6zAPB3NG6TvLCqRiMl/YtMX39haJxmlGVj98IAfn7+qnl09NLRTmaNH+W43+Pt9KCzHbuA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Jan 2025 21:52:37 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31725 invoked by uid 111); 21 Jan 2025 21:52:38 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 21 Jan 2025 16:52:38 -0500
-Authentication-Results: peff.net; auth=none
-Date: Tue, 21 Jan 2025 16:52:35 -0500
-From: Jeff King <peff@peff.net>
-To: Nika Layzell <nika@thelayzells.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Subject: Re: `git update-ref` fails to set reflog old_oid in 2.48
-Message-ID: <20250121215235.GA2753621@coredump.intra.peff.net>
-References: <CACwGqKixQEGau8CZuLwJx02F4h8hxrf9e_7N1tHMU=Wvy8ViyQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="aEEOvVdj"
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+	by smtpfb2-g21.free.fr (Postfix) with ESMTP id DA01842D80A
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 22:59:57 +0100 (CET)
+Received: from [192.168.3.122] (unknown [87.149.32.105])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 3B6AA13FA38;
+	Tue, 21 Jan 2025 22:59:45 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1737496790;
+	bh=u9Bu7RCNW1806mzuKxy498E84w1Sq8zhOvpGsAP04qg=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=aEEOvVdjYouvWMH2s5tba86WR4v+9W+7YlBMWnr1WP7xx1Fe6fdZEz3XGpYBB6zGX
+	 I8N4Twm4g2QLgMGjPjMYvcVhxgsm7H1OrA0nEJtpH/spNtPyRv2/uR6OlvRFmhBPHH
+	 jgAYK8zyvm9BtvfIo9l2FpU8I4537+Whjvk5rDEetv8b1o6KOp8RLphiWFCek1PUis
+	 yZQZ06juNG6oBfbUuAYaYa/hB8REkaWJB/Y+0Nj9fWkz/qnrEcvXpZ64zw3mFqoRWP
+	 2ENmuz0MkumZo9OluNEuT045rfnI9D+RJMdVQeXpLQ5A7PY5+uJnX2LooSj0ZZSI/B
+	 96CiDG7h/j1IQ==
+Message-ID: <012b67af-ede4-46e9-a30f-ef3b60ce1e80@free.fr>
+Date: Tue, 21 Jan 2025 22:59:44 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CACwGqKixQEGau8CZuLwJx02F4h8hxrf9e_7N1tHMU=Wvy8ViyQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] doc: use .adoc extension for AsciiDoc files
+To: Junio C Hamano <gitster@pobox.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>, git@vger.kernel.org,
+ M Hickford <mirth.hickford@gmail.com>
+References: <20250120015603.1980991-1-sandals@crustytoothpaste.net>
+ <20250120015603.1980991-5-sandals@crustytoothpaste.net>
+ <46cec27d-ee66-4dfb-8271-953b032d0b2f@free.fr>
+ <Z47JUbdzMtz1CTMg@tapette.crustytoothpaste.net> <xmqqmsfl2gro.fsf@gitster.g>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Language: fr
+In-Reply-To: <xmqqmsfl2gro.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jan 21, 2025 at 03:40:06PM -0500, Nika Layzell wrote:
-
-> In git 2.48.1, the `git update-ref` subcommand no longer correctly
-> updates the reflog in some cases. Specifically, it appears that the
-> `old_oid` field will not be updated when modifying a branch referenced
-> by another symbolic ref (e.g. HEAD). This doesn't break the `git
-> reflog` subcommand, but does break references like `HEAD@{1}`, which
-> appear to read the `old_oid` field.
+Le 21/01/2025 à 00:43, Junio C Hamano a écrit :
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 > 
-> STR (in a fresh directory):
-> ```
-> git init -b main
-> git commit --allow-empty -m "A"
-> git commit --allow-empty -m "B"
-> git update-ref -m "reason" refs/heads/main HEAD~ HEAD
-> ```
-> [...]
-> The `old_oid` field is empty (all zeroes). This is only the case in
-> derived reflogs (in this case .git/logs/HEAD). The reflog for
-> refs/heads/main appears to be updated correctly.
+>> On 2025-01-20 at 20:37:10, Jean-Noël Avila wrote:
+>>> Maybe for users of the end product of the documentations compiled here,
+>>> but there are other users who use the source files and this change
+>>> breaks their workflow pretty bad. I am one of those users for the
+>>> git-scm.com website and the manpage translation projects.
+>>
+>> I appreciate that this is a big change, but we do also sometimes make
+>> those and contributors and downstreams need to change over eventually.
+> 
+> Yup.  FWIW, this change would break my private toolings by renaming
+> things under Documentation/RelNotes/, which I did not think we even
+> pass through AsciiDoc, even though by inertia I write something akin
+> to AsciiDoc in these release note files.
 
-Thanks for an easy reproduction recipe. Looks like it bisects to
-297c09eabb (refs: allow multiple reflog entries for the same refname,
-2024-12-16). Author cc'd.
+That's what I had in mind when advocating a bit of caution on this
+change. I'm not opposed to the change, because indeed, the original file
+extension pushed me to change the editor's configuration, which is
+cumbersome and may hinder newcomers on helping with the documentation.
+But to be honest, it's only because I'm monitoring the list these days
+that I stumbled upon this patch series. Some other consumers of the
+documentation source files may miss it and just discover the change
+after the fact.
 
-Just looking at the diff, the early return from lock_ref_for_update()
-seems suspicious to me. Doing this:
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 8953d1c6d3..1c0e24a855 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2611,9 +2611,6 @@ static int lock_ref_for_update(struct files_ref_store *refs,
- 
- 	update->backend_data = lock;
- 
--	if (update->flags & REF_LOG_ONLY)
--		goto out;
--
- 	if (update->type & REF_ISSYMREF) {
- 		if (update->flags & REF_NO_DEREF) {
- 			/*
+> 
+> In this particular case, I would imagine that the use cases of
+> myself and Jean-Noël would _eventually_ want to be adjusted to deal
+> with anything the upstream picks as the file extension that may or
+> may not be ".txt" (to put it differently, they are written to expect
+> that these files end with ".txt", but the _ONLY_ reason why they are
+> is because those files in my tree _happen_ to have such names).  We
+> certainly do not want to make a change like this unnecessarily and
+> unannounced.  But with sufficient advance warning and enough time to
+> prepare transition, it shouldn't too bad.
 
-makes the problem go away, and doesn't fail any tests. But that is just
-me poking at it without understanding why those lines were there in the
-first place.
+Agreed.
 
--Peff
+> 
+> Perhaps it may be enough keep the topic cooking a lot longer in
+> 'next' than usual one calendar week.  This of course requires that
+> those on the creator side echosystem are paying attention to 'next',
+> are capable of writing necessary adjustment (in my case, I would
+> tweak my tooling so that it uses "$filename.$suffix" instead of
+> hardcoded "txt" in the rest of the script, checks the presence of
+> Documention/git.adoc to tweak suffix from default "txt") for their
+> tooling, and can arrange to test their tooling with 'next'.
+
+For git-scm, IIRC, present and previous versions of the manpages are
+processed, so the import script must manage both extensions. Fair
+enough, not an impossible task.
+
+
