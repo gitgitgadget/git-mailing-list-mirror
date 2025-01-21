@@ -1,103 +1,84 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3151B1B425A
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 11:47:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57CD1F1937
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 12:37:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737460043; cv=none; b=LiTp/ZpbW7f6Zrm6nXlAFSStBxyzmWaC/DO/ITeqaO6OwwKQAxfZEbJAFaBeEeBKWjDVXsWuyP24HQ/0K+DZW+KykZG/QjcmySkVmMV3UsTRoLzin7Wm3WvyLMJn0qkHoQQgGTShZYtkIGlsxwYE+3l6pVenSBW8XzbfoH8whgI=
+	t=1737463063; cv=none; b=hSfHp8F2updjw4rTBOivYwZrlHPAfOTyxKL1kXSbeUOb+XPNxBzXhfcKF0QV+Yh1JWOkyIsK8gsjBiyHWp/Qd8GDvHRQ1MBqJ/MNHD7QKo0BCppuDC5G57xp/dNzBVKBoMSCtMoBhJDIWd7ksaOCe4uv2fikIbW3ha0dSq//5b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737460043; c=relaxed/simple;
-	bh=j+D+FLkydV2RLngU9i2+nPR5fDUN4Xzm6reLTMgmGaU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xq/Qgo5268h3gP8IeIId9OZUbnhV5KQ3QlvIYbRSMeWUAGPqu+htHkJHJ0PoqdBvyXCRchGxC3sEzBKGR+s6FNO3NG9TC6n7HacNgU5TTAa7pW0oX0d7HUNvP3IsWGieVAdv253AbvkYqEcIlTCt3AV9IN/bs9617JmbVBLRBxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=KF8jrrpd; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1737463063; c=relaxed/simple;
+	bh=xOh3npxCuWavOJYE2/HHe/BEMMbjVkEjl7kAABUOh1U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iiuCj1VDILG0J+OCy2FzehHwFIFvWPagX8CAa0xaCM8/1MoKOFeGh+fVcpQY65iXbH30ht8cwgw+nyX/lH8SoOYie4AZoi1y49VCw9Mt5+ndv6JwPtqQut2t6BqnhHt7zMqDr1NpYZXHHTyBv3Ie1vpjoMMSDRkECZRqL8EQPNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=oECYbHcW; arc=none smtp.client-ip=95.215.58.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="KF8jrrpd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1737460034; x=1738064834;
-	i=oswald.buddenhagen@gmx.de;
-	bh=07N8SiI6+ohuQCdM/4Sj7nWjsxBQzpvuea14ceKa+Tg=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=KF8jrrpd2Z/BvU+fDCLBky0fGJulIcOOfcSeYPd88x+5K5L2GEohYo+IRmwxVgOO
-	 krpuBh2yIPxthqZinESJO3i6RBWEtmQDJHIRyHjpqGZ8f6qI34BQ9JXSYEqQufogl
-	 kt8BFdbM0HAEgT+X9KZhhRf612TjYmULN+xJ6bQDydq5+uttjg3J5M1p+VMb70Dxs
-	 l3SzVnWlZZk9NCIbtcvIbdgfchtX5f0AHIGRWVc7gCcBUPsOGAJd2oPf7XYGBO2Bp
-	 13S4uOQGfA6NKObxDjuBWzCJD/u4B/Y3JnAtJ3NjrX63f3EFVqcD2/yMD7IQizIcf
-	 5OS5ZD4YTjck1Sj9UA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from ugly.fritz.box ([89.247.162.120]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mkpex-1t5ZkL3CEp-00hne7; Tue, 21
- Jan 2025 12:47:14 +0100
-Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
-	id 1taCiw-e6H-00; Tue, 21 Jan 2025 12:47:14 +0100
-Date: Tue, 21 Jan 2025 12:47:14 +0100
-From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git in GSoC 2025
-Message-ID: <Z4-JQp9uOP8ALT7R@ugly>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <Z432QXJb_TfzNBa2@pks.im>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="oECYbHcW"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1737463055;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=QblvnwnT5dtEOlJutyY8HkgKfIzJ9v3h1Fw1wew6/ak=;
+	b=oECYbHcWeb3NBcoUQOr5kyCl0i6yEvxJ+Y+2ycAx+mq6gjg7dRQhbFmBqylRtA+L4yWmtH
+	KBj4GJn/wg8E5oW9zAcLzG7PgONvRzKgKkAf0t76CEqAOpNzC0caEcebO+VvrizA3/lPiZ
+	RxHBREotA+bVoQ+qZ2L3jzkrs86AREE=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Evan Martin <evan.martin@gmail.com>, Eli Schwartz
+ <eschwartz@gentoo.org>, Junio C Hamano <gitster@pobox.com>, M Hickford
+ <mirth.hickford@gmail.com>
+Subject: Re: [PATCH v2 06/11] meson: wire up generation of distribution archive
+In-Reply-To: <20250114-b4-pks-meson-additions-v2-6-8d7ec676cfd9@pks.im>
+References: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
+ <20250114-b4-pks-meson-additions-v2-6-8d7ec676cfd9@pks.im>
+Date: Tue, 21 Jan 2025 13:37:23 +0100
+Message-ID: <87plkgibr0.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <Z432QXJb_TfzNBa2@pks.im>
-X-Provags-ID: V03:K1:5sW24y9jVRD7TTuB1+YAK28ltlPV5HXJgbJXeHsbc7QSX+F/PdG
- oe01grK1o5S9+aUKT/QnFXV4AHNfsbuAMqEfAb8bXYZF1ECUq9gMIm40ijWpr5TMuYwsicL
- mWy+0BiBO3ERKDrhXjjV/YJwSyeBmEilBDXPjAzyzzRSRqvcgu2qt/mFllyyeH0ul2EGylt
- Xhyj/lLu9YavXjJKgIk2g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:PVx3MQ4SvN0=;4IUGnjuXqeqx/c6PGzseYnzMm0a
- WfDlZ9uZnUqwX9l0ZTounqzoJnuUBvQtEsUNUaT3kOVDA2N0B+ySEeoRsOkveiQ4fEgJ2yU2d
- h7J0i1th2uan4omofXnGrlBTOOc/j2wYMaSMDz3gOBIEvF/NkN8eYcTou0ioHed35hY7Zjy+2
- 2fjuwHUGkLT4WTXsQTBZoaegHXYltjBuUPdxyzbL3eC4z+tilGImNkxK5EgQgglU4/Vy4n7YE
- SCn4ms+bxl0s0hI+H4oKZSA3fCbAjFvQWZkzuRGmySF0EtpVtBWI2lV3HNjvMzFP7JB58JTaw
- duFQGxSFSS2wQ6c92QYhptcFsPhbj4fq3+HsFXj5BCnobeY4bliSKIcwCUEkUQjYwhar/JTrU
- 06inANa9bBB7EF2q0seJtYl972l9ZWgjM6Bzq9E1P2jmTlDkCb/FDxK4KTs2Jfth5iIX0rpDR
- m+KgC42RtJP5SK9MdOnnZutq1FYVb6KjFnnMPVAVsvsPEfYUoK+3CJN480U2RbuNXPp1nZsw9
- BRsdswhCsWNBxklRdzCQiZWJm7ky8XXUsvHB3w+smNdYSZBrxnF1xH3uck10HYh8uH1D0kWBI
- HkaIWsghd1txgybMWeHN1XtFEfpC+B2skdAdkOB8dF3dQngBIMRYRe03YAQDkmQlGXqKt31JI
- ETd+sOJy6CKIzKF2kEK5ez77UjpofXUwyISWs2T0F+ftwusrtsn3yTUILT2N06iWsGMX5KOgD
- RZHO8I+KbPcOvHKYaWGmVYbuY89Z0wEm2tbKyWzartxK1aebfoPjVvlJWA/nMYrfVHL0LWWwX
- SP2wTFLynAlWX/6bGdrRxtaGK/voT8eNQRUHznBwjPoEju3RM3gQLT3y2PbifJjY+gKYYtOeu
- OASQC1dU1vLFyr251G3Mn2uqQRPR03duiQYwp+rttzcn6tqq9RF42gh6xcSHOLTFTsIn380XD
- OOwPHKeTt/VD9egFrR+1JNT3oc9q296Dbwqve4Z5W2du+B5nA5fmU46OAnSoJkeJeXdGlWUPn
- VzK0S6JZVgaTFgRBN/Ci0pQ5pv2CMTGkTseAUjuqcx2cLhRUoHfWz+d5XcuJ2dW5aJR5r3cDA
- Fa79yuFQxOEj+ws4xRERJCMFXT83AS2MqdK1Y0zuDQt0NXrP4toIEk8YORV3pnjZ6cFkwchPX
- vP9Yz19X60PLbovY3SnFLIMH8OeHq7QZ3PR2hRge2pw==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Jan 20, 2025 at 08:07:53AM +0100, Patrick Steinhardt wrote:
->  - Create a new command to query repository-level information,
+Patrick Steinhardt <ps@pks.im> writes:
 
->    potentially making it machine-readable via for example JSON.
+> Meson knows to generate distribution archives via `meson dist`. In
+> addition to generating the archive itself, this target also knows to
+> compile and execute tests from that archive, which helps to ensure that
+> the result is an adequate drop-in replacement for the versioned project.
 >
-only optionally, please. the current positional output (each line
-corresponds to the respective query command) is much easier to deal with
-in shell scripts.
-
->    This
->    would move such information out of git-rev-parse(1), which is a
->    somewhat weird home for it. It's something I have been thinking
->    about quite a bit,
-
-> but it wasn't ever discussed to the best of my knowledge.
+> While this already works as-is, one omission is that we don't propagate
+> the commit that this is built from into the resulting archive. This can
+> be fixed though by adding a distribution script that propagates the
+> version into the "version" file, which GIT-VERSION-GEN knows to read if
+> present.
 >
-that depends on what level of engagement counts as "discussed".
-https://lore.kernel.org/git/ZZbFGTkM8aR7MXQu@tanuki/
+> Use GIT-VERSION-GEN to populate that file. As the script is executed in
+> the build directory, not in the directory where we generate the archive,
+> we have adapt it to honor the "MESON_DIST_ROOT" environment variable.
+
+I failed to understand why you couldn't pass the absolute path of the
+output file to GIT-VERSION-GEN. So I looked at the previous version of
+this patch, and it seems you explain better over there.
+
+I was testing things locally and tried this line for the last argument
+to the script:
+
+  run_command(shell, '-c', 'echo $MESON_DIST_ROOT', capture: true, check: true).stdout().strip() / 'version',
+
+And I think I understand it better now. Meson does not execute this when
+you run `meson dist`, but when it (re)generates it's build files. At
+that stage $MESON_DIST_ROOT is not set.
+
+It's unfortunate we have to learn GIT-VERSION-GEN about the
+$MESON_DIST_ROOT environment variable, but I don't see any other way.
 
 
+--
+Toon
