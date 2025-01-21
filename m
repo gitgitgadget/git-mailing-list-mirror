@@ -1,189 +1,91 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DA61A83F4
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 06:56:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E5A1B3921
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 07:52:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737442596; cv=none; b=AQnM95xWpiiOSk7lI/x0U0bllQCWWw/bZW2dfxrmQVnZLcIbwdr+CcrFhsIqWuMWgx/N2YUj7iWvCy/6DQZWUEnV4JFI3gOLv8XWIJk+9zB9k7rXeSioVdMbjTiZrs8pFtlU7DE0DIq6RxnssNVM8e+hCH2jja2tSNq0E2Fl3fA=
+	t=1737445934; cv=none; b=HInRA0UkB7pvtvWKjYa0OjxiEuLQk8d7ifWFKjUALx4kdQJuC/J1jXvozWJ4c1Ykj3bwEP7kODmBV//6bwm5T2TfQkRaTxLghNUXCUKo58wD08QvqaJgYMqlESIyRi1k+5WB3l15Lhda1V/issvR+c5KxvuwYUjL4Ex+tWU+aTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737442596; c=relaxed/simple;
-	bh=wOHvhWezJHjyrMsidQLFsrQSDByQlUPdSohRzsbR+aI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WhTYWEa5cGdElTpBlezCpniYhkyPEgcQ0/4MZPUDXycr0Hp04wuRRfEbyXtIu1g01qfffRgDWrH8J/F1U8897mJAmoZyd2D0vatA9w8DDbA83aLi2lf++WS9ZbsnZFrRm7oOGL4E+mi+PDz4x9mkSzasImZ12pew0iEsYZhDgrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S06zRpmz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T30Cy0yM; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1737445934; c=relaxed/simple;
+	bh=6Mcj3gv7tiYdSVyeD9vWMvO/p+fL2JL3StYW/tGa2MI=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=Z+4QlxsoIi/uMUU5UPeUpi3++TASfPthDkhsYeZ3sYlrBOMUZCyFHv8GPHiKHf8xwISOpE++L7O6AcuA/WO1eKnTL4fnBSBMaydBgg6+NcU9zV6F2cdo1BESCaKdgiR89wG9VLvCbHp2b5B544EBflnd5JnoAMENsTaNGTF06U0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eLeM5oWw; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S06zRpmz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T30Cy0yM"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 354EC25401BF;
-	Tue, 21 Jan 2025 01:56:33 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 21 Jan 2025 01:56:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737442593; x=1737528993; bh=v7CE1uIVGs
-	OspYTPrCMOe45y+ArJXnk6EHNUOzbBVWo=; b=S06zRpmzf4OXQo4bWmJnf2EVM+
-	sWta8Q7m7cOPLZGQ+eRZz2cSKcnMzFaYCVCpk/Hn9IqmQopOo5soz4fBtiGKobbx
-	hDTiGyvQ4OciBce9cyFoinUcVPz1f78an8c6tLLtkVzWDCfih9vou+phczcEX9W+
-	3IWJShi2SO8qfF16OAvN8qYmmAyrwWqZc9m8IQwa/BpohTKfjLccooITNrvR/RBM
-	0P50QuU1LGjRmg2QCoa6qwBe+eqWrW4FPbrfT27Pi7cOC5qsJILU0WyaICOq2eRp
-	8HauP3aY5iKEE5cXpwFoQlXjvmwtN9lpaIDvsLnYp73YmIH2xmcLp+gxx8xw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737442593; x=1737528993; bh=v7CE1uIVGsOspYTPrCMOe45y+ArJXnk6EHN
-	UOzbBVWo=; b=T30Cy0yMEZ5jjdF/IFtL4l2baR0eH4OgatjOb+dQmFBvrdvsWi2
-	vrvcyWdC2gD+hkJOcw6hho8SWhMXJ2IKe3FMWXAS1ZinNXH+DzQlmSLflxY7+dbO
-	ZWC5EAwcCg5a33kXs91HxwvK39XwSUzAA7+vqe7aqaXF56bl6qACkn7vaiFMtUs7
-	MzmFC9Cl/j+U4byayptsjNwh3GBSq2mj8Qi9muVyYwZOcJ0HI/rTYI0fASDQrTRM
-	kam8xqMSC4I1RnYOM3m7rTTIcpEzN/o3IH+HkuUMIoUFKllnzr2AymY0gUWfqXOC
-	X9UcGnPHQYnHUDmFl/b9R4z9UqwxQMWJXWQ==
-X-ME-Sender: <xms:IEWPZ9B6f4asNrDifTfqozTXvjFnTRq5FWTz3g4TsnZPdYKqmpTwzQ>
-    <xme:IEWPZ7hGVKyNhDlzvq07_sl_KUzrumvPKKEisoq8UG9tlaDBDVf-PWlV3tIFtkSR6
-    EQfckKY-cCuU7lGTQ>
-X-ME-Received: <xmr:IEWPZ4nEa9CWcWwFxZpIa58I-uGWpO369ueAQFhZp8X37bjLyp-cjDbBiI59I_zNQ9JIe4iJuHee6NF-_HVwwdXc-WKFiCLN1-qGUKy3Pd5ttw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejtddguddtudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:IEWPZ3wwpdGDXz4P-VB9IuI80ku2drA83CMI3MVs0FcCcZZT1sUivw>
-    <xmx:IEWPZyTReCPkRlNyRlV2M-sc8uGK5TY4AXkpe-_6hjLyqnIDCzan4Q>
-    <xmx:IEWPZ6YAbixvqn9re_8WihtRmpAhMOfC1Cfnr_VnH7s5vfhZoQmdlw>
-    <xmx:IEWPZzT8EL-gNfDcJeSF7SiWfv3C2oBE3wmJMfpvgwB0F0RrvYbmQA>
-    <xmx:IUWPZ9ded-9kLt_O1epSFgtnBhMLfTr8K7nXKEXBhabxQ14IsVrMzKWD>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Jan 2025 01:56:32 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ac58d3d6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 21 Jan 2025 06:56:30 +0000 (UTC)
-Date: Tue, 21 Jan 2025 07:56:29 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] reftable: prevent 'update_index' changes after
- adding records
-Message-ID: <Z49FHQgsFSX6sTxu@pks.im>
-References: <20250121-461-corrupted-reftable-followup-v2-0-37e26c7a79b4@gmail.com>
- <20250121-461-corrupted-reftable-followup-v2-3-37e26c7a79b4@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eLeM5oWw"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2f4409fc8fdso8002085a91.1
+        for <git@vger.kernel.org>; Mon, 20 Jan 2025 23:52:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737445932; x=1738050732; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QolBN+jgfUxNqhdNID7NF3HIsDr9aUN+nzwnAD4LgkY=;
+        b=eLeM5oWwLKpXL1V4It3yKzz08ZaaUTvQH/zEFjJPYOEYkFSwrojuJJWwiuqpL09Zab
+         t/tt09cvdRWwJp8SMz5+RTcPj7MSTylVH3RCPilpRlYc/hvCYur+r+rQ4/6lhZcIU881
+         /bOysVZz0QNhsyHICgKtoTsFsr+tXZSA1Ud7bYAEZ3256ZQIKbXlQcJMy0lFvMUbbsM0
+         sDc10Hm6tI9zpdMbkbYFwj/KqCiEaEpnLPMEgKL7O3IZ2VpZUyWwIrlRX9I7GbGaFogm
+         wzK3KHT0YtNPv62K8vl5wxkU4ZFjsGrl0a7x8fjXLlvp3BDpLXmxQygM5YmfHJ+KVOnq
+         ioMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737445932; x=1738050732;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=QolBN+jgfUxNqhdNID7NF3HIsDr9aUN+nzwnAD4LgkY=;
+        b=G7lk2cWKAPs1nPLjXqL/EbcCfw6f8hJREHKdzUTaR1xHAXbRJKRRTDL/aguzu3whkZ
+         eKnBT+vKaaNHCunKbMKd3WlFl4DDAZOVvrjs+4brPp3WnhfXgBqoo9rU41p+amQSc58v
+         9umvJWIRIlm5TSE8YuVaIwxHYkvPycOb9+qVEXBf3NR2548sWfhizbVW3c3mA4bVtQrz
+         I3vM5hTWGIKHPSb/L22UaF/c3Qa8VSok2PqnFjRoCqTn588jVezk7F6ShG2ZHpW+u81P
+         JoUcmCGgdaSaZ+XTmF6abgHOffc4neWCtQXC8BuOfvUcrzvrotG8M8Kuztebon86c8Vc
+         fR0g==
+X-Gm-Message-State: AOJu0YxELSAtqXaRY5CIlZxDM0iMM+wWZhjX2pZostj2uleIuwVw/Ba1
+	dPiRIoCmI0svAZhkP3WK1Gqd0+mdpbrXb8IJhFmwB+pRWRElgDvV7yjQCZ/f
+X-Gm-Gg: ASbGnctOiwfnyYCRuJIMYYZ3mN+zVfZkJsRRVN+2XddL1usWsyyNG8ge1eXjgNr+CYS
+	zemqYMM+LwBrLoawzZsclqFwKuYSIhOluCpulv3nHWEciPXhQORPP2SaeZSY6IJRbadCmsgMiDY
+	pMdb5yFJzG9Z1bRCIi52RYqPwAgMZD5OJeZON33Dx/ubOonPou8XzuGwHoivlf0Exv0MEY0O1kI
+	N9hNzgOFOEaFS5iVXv66eZRzcIWRtSpvYAOOTUvQepiTS5yzd1vtyPV09jaCh6NL1a5QibESqQ/
+	nrTMIWs15PvqetKiq8WmDjk5koUGc2opmuiQLu2rSGqpbFKP/g==
+X-Google-Smtp-Source: AGHT+IHv/8BV3JdqInK5FNPjXfmeMQBc1BnwWN6SHREZuOeoRL6FUr6TokplibPcLdSTTlxpKfoicg==
+X-Received: by 2002:a17:90a:e7c3:b0:2f4:4431:51d4 with SMTP id 98e67ed59e1d1-2f728dc0ae0mr36284092a91.6.1737445932139;
+        Mon, 20 Jan 2025 23:52:12 -0800 (PST)
+Received: from ?IPV6:2402:800:61c7:46e3:ca2:9bb0:6bf1:5979? ([2402:800:61c7:46e3:ca2:9bb0:6bf1:5979])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-a9bdd30d1fdsm8277457a12.60.2025.01.20.23.52.11
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Jan 2025 23:52:11 -0800 (PST)
+Message-ID: <7e5e2f26-deda-41a3-af46-79c42435b3c7@gmail.com>
+Date: Tue, 21 Jan 2025 14:52:09 +0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250121-461-corrupted-reftable-followup-v2-3-37e26c7a79b4@gmail.com>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: =?UTF-8?Q?L=C3=AA_Duy_Quang?= <leduyquang753@gmail.com>
+Subject: `git add` with unmatching case silently fails on case-insensitive
+ file systems
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 21, 2025 at 04:34:12AM +0100, Karthik Nayak wrote:
-> The function `reftable_writer_set_limits()` allows updating the
-> 'min_update_index' and 'max_update_index' of a reftable writer. These
-> values are written to both the writer's header and footer.
-> 
-> Since the header is written during the first block write, any subsequent
-> changes to the update index would create a mismatch between the header
-> and footer values. The footer would contain the newer values while the
-> header retained the original ones.
-> 
-> To fix this bug, prevent callers from updating these values after any
+Good morning,
 
-Nit: it's not really fixing a bug, but protecting us against it. Not
-worth a reroll though, from my point of view.
+I am using Git on Windows, whose file system is case-insensitive. If the 
+working tree has a file called `SourceFile.c`, for example, and I run 
+`git add sourcefile.c`, I would expect either (a) Git stages 
+`SourceFile.c` or (b) Git errors with "fatal: pathspec 'sourcefile.c' 
+did not match any files". However, none of those actually took place; 
+instead Git did not stage the file and produced no output as if the 
+command had succeeded, which led me to proceed to committing without 
+realizing I had missed the file.
 
-> diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
-> index 5f9afa620bb00de66c311765fb0ae8c6f56401ae..1ea014d389cc47f173279e3234a82f3fcbc807a0 100644
-> --- a/reftable/reftable-writer.h
-> +++ b/reftable/reftable-writer.h
-> @@ -124,17 +124,21 @@ int reftable_writer_new(struct reftable_writer **out,
->  			int (*flush_func)(void *),
->  			void *writer_arg, const struct reftable_write_options *opts);
->  
-> -/* Set the range of update indices for the records we will add. When writing a
-> -   table into a stack, the min should be at least
-> -   reftable_stack_next_update_index(), or REFTABLE_API_ERROR is returned.
-> -
-> -   For transactional updates to a stack, typically min==max, and the
-> -   update_index can be obtained by inspeciting the stack. When converting an
-> -   existing ref database into a single reftable, this would be a range of
-> -   update-index timestamps.
-> +/*
-> + * Set the range of update indices for the records we will add. When writing a
-> + * table into a stack, the min should be at least
-> + * reftable_stack_next_update_index(), or REFTABLE_API_ERROR is returned.
-> + *
-> + * For transactional updates to a stack, typically min==max, and the
-> + * update_index can be obtained by inspeciting the stack. When converting an
-> + * existing ref database into a single reftable, this would be a range of
-> + * update-index timestamps.
-> + *
-> + * The function should be called before adding any records to the writer. If not
-> + * it will fail with REFTABLE_API_ERROR.
->   */
+I would like to know whether this is intended behavior or I have bumped 
+into a case-sensitivity bug.
 
-Thanks for updating this. I think the reftable library is one of those
-code areas where it makes sense to sneak in a formatting fix every now
-and then because its coding style is quite alien to Git's own in some
-places. We could also do it all in one go, but I strongly doubt that it
-would be worth the churn.
-
-> -void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
-> -				uint64_t max);
-> +int reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
-> +			       uint64_t max);
->  
->  /*
->    Add a reftable_ref_record. The record should have names that come after
-
-> diff --git a/reftable/writer.c b/reftable/writer.c
-> index 740c98038eaf883258bef4988f78977ac7e4a75a..03acbdbcce75fd51820c5fb016bd94f0f7f4914a 100644
-> --- a/reftable/writer.c
-> +++ b/reftable/writer.c
-> @@ -179,11 +179,20 @@ int reftable_writer_new(struct reftable_writer **out,
->  	return 0;
->  }
->  
-> -void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
-> -				uint64_t max)
-> +int reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
-> +			       uint64_t max)
->  {
-> +	/*
-> +	 * The limits should be set before any records are added to the writer.
-> +	 * Check if any records were added by checking if `last_key` was set.
-> +	 */
-> +	if (w->last_key.len)
-> +		return REFTABLE_API_ERROR;
-
-Hm. Using the last key feels somewhat dangerous to me as it does get
-reset at times, e.g. when finishing writing the current section. It
-_should_ work, but overall it just feels a tad to disconnected from the
-thing that we actually want to check.
-
-How about we instead use `next`? This variable records the offset of the
-next block we're about to write, and `writer_flush_nonempty_block()`
-uses it directly to check whether we're currently writing the first
-block in order to decide whether it needs to write a header or not. If
-it's 0, we know that we haven't written the first block yet. That feels
-much closer aligned with what we're checking.
-
-> diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
-> index aeec195b2b1014445d71c5db39a9795017fd8ff2..b23edf18a7d75b0c2292490ad06d4dfaaa571e79 100644
-> --- a/t/unit-tests/t-reftable-stack.c
-> +++ b/t/unit-tests/t-reftable-stack.c
-
-Can we maybe add a unit test that demonstrates the error?
-
-Patrick
+Regards,
+Quang
