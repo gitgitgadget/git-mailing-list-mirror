@@ -1,144 +1,189 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8B21ADFFE
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 06:44:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70DA61A83F4
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 06:56:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737441875; cv=none; b=rrCSrD7MDpQuvZSrK/hSgOT4FXYhWHUAl+ugMIrrHoZ9gK9VoBcqbiPfesylWJsDCd8t+USHi1K4UUj/uiSKeY+38rN4sFmrrimcptt4pujLxVANIjVTPS+5JMPcmgGH182eIkaEk0ZBpNHBIouBz7j3abeFLUc2G106/TvNU/k=
+	t=1737442596; cv=none; b=AQnM95xWpiiOSk7lI/x0U0bllQCWWw/bZW2dfxrmQVnZLcIbwdr+CcrFhsIqWuMWgx/N2YUj7iWvCy/6DQZWUEnV4JFI3gOLv8XWIJk+9zB9k7rXeSioVdMbjTiZrs8pFtlU7DE0DIq6RxnssNVM8e+hCH2jja2tSNq0E2Fl3fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737441875; c=relaxed/simple;
-	bh=Oi5TmldlbY100Xz37sHOP5BXSD7dIv9zTpPgPUBoipA=;
+	s=arc-20240116; t=1737442596; c=relaxed/simple;
+	bh=wOHvhWezJHjyrMsidQLFsrQSDByQlUPdSohRzsbR+aI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D+Lp+8ipvMAJ+BntqcRJSq3BvixmBBvyu4E11Bfue0HrjGQJDKxHBBrOVJrxi25y2LegGCkcn+1d6v6lrY9X2gyduqQH5oGdsJfynaJHOdM1zrGAu16wY79cqO+MhoSYxeN/Jg4YgC4Nfd1oBNTy+66izv7T3Tp5fgLW6WbmtvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gJJZiOC9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZaysyMeG; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=WhTYWEa5cGdElTpBlezCpniYhkyPEgcQ0/4MZPUDXycr0Hp04wuRRfEbyXtIu1g01qfffRgDWrH8J/F1U8897mJAmoZyd2D0vatA9w8DDbA83aLi2lf++WS9ZbsnZFrRm7oOGL4E+mi+PDz4x9mkSzasImZ12pew0iEsYZhDgrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S06zRpmz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T30Cy0yM; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gJJZiOC9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZaysyMeG"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id BD0631140196;
-	Tue, 21 Jan 2025 01:44:32 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 21 Jan 2025 01:44:32 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S06zRpmz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T30Cy0yM"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 354EC25401BF;
+	Tue, 21 Jan 2025 01:56:33 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Tue, 21 Jan 2025 01:56:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1737441872;
-	 x=1737528272; bh=0BGp1G44JHNrXwf3zrSMUdh1ghuFRsHwNhyk0HExCLI=; b=
-	gJJZiOC9N5z2Lsvjl0jg3SyyxeoHS4+ieae9CjaidvovKuWJHjbspN5NoTRYKJGK
-	73V+GHf9PivDf21V4pWkLw9FvoidkV14uC3gV0XFqQ/yQMG0vYFFyPhPjf0ePK27
-	PG6dqbs9xWKZdce2FyNnsRj4m9l70QUHQ9XrpaGnuQfsoKT2zvvy1+PTFeJbUeYm
-	1C0u9VlLJPUt080oBB1gz+4N09iyzAa3hLTcpVvHqlIX+9sFfKX2LRz4xb8vwhEd
-	+N9y8j34xR8lsK0XbWx4kZJryiDPKjI4eYOx54C+Jh22Y1zU1TdtJJ4ah65cAvaM
-	lR39Eq1/Q9IqJyYVgv8/Ag==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737442593; x=1737528993; bh=v7CE1uIVGs
+	OspYTPrCMOe45y+ArJXnk6EHNUOzbBVWo=; b=S06zRpmzf4OXQo4bWmJnf2EVM+
+	sWta8Q7m7cOPLZGQ+eRZz2cSKcnMzFaYCVCpk/Hn9IqmQopOo5soz4fBtiGKobbx
+	hDTiGyvQ4OciBce9cyFoinUcVPz1f78an8c6tLLtkVzWDCfih9vou+phczcEX9W+
+	3IWJShi2SO8qfF16OAvN8qYmmAyrwWqZc9m8IQwa/BpohTKfjLccooITNrvR/RBM
+	0P50QuU1LGjRmg2QCoa6qwBe+eqWrW4FPbrfT27Pi7cOC5qsJILU0WyaICOq2eRp
+	8HauP3aY5iKEE5cXpwFoQlXjvmwtN9lpaIDvsLnYp73YmIH2xmcLp+gxx8xw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737441872; x=
-	1737528272; bh=0BGp1G44JHNrXwf3zrSMUdh1ghuFRsHwNhyk0HExCLI=; b=Z
-	aysyMeG40b+9RKxUfH7eddGmPpgTbI+C85+8iHmCMU+bpFF+VYreAiBaaFrA8pSJ
-	PN0z0F+d4bKnespzfdJM/uKpoZWcSq31EDQhGjucIXag6MlFLjn+QyEfyKoGlelV
-	3Nf5ZwLlq9KQQo1V5eUsdCynosN2Fd1T30rxRSqnZlHLrLuexKZLtwpbjZ9/5dn1
-	6797AYvuL/rB/ATEu16KUAUA4jiGwJ8cwFVotsQ5/LTegrwLLYHbrfCoVngF/yul
-	WiU3KEkzTnXqBZGv7xIswWF7pmj1litVTd1enY5m3Za59BVrlALjE1M1D/a7E/AN
-	DW972ufpCSy6TnM+hlN9w==
-X-ME-Sender: <xms:UEKPZ7EbOEciXim6w_cmSe8edxVSiDNCAih9HaXQU7h1lG5e_2Qmaw>
-    <xme:UEKPZ4Xs5ggNXW8S2YEglXVCLjTyLtQJ4OG5KhB-ZqTQ4VPQioguJE_Y36c-fLaDY
-    qmq6ePBILlD3wxS5w>
-X-ME-Received: <xmr:UEKPZ9KKzpqTZQGzfACx0F_WkXFBWKbBqTKU4LBFYhhJ8s6ANzHWwJ9tCNutNWsOOKXuWYVXr-lwmSw8B5gFpwxj37FAzmOYT6jiZ2RKSnz4Aw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejtddgleekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737442593; x=1737528993; bh=v7CE1uIVGsOspYTPrCMOe45y+ArJXnk6EHN
+	UOzbBVWo=; b=T30Cy0yMEZ5jjdF/IFtL4l2baR0eH4OgatjOb+dQmFBvrdvsWi2
+	vrvcyWdC2gD+hkJOcw6hho8SWhMXJ2IKe3FMWXAS1ZinNXH+DzQlmSLflxY7+dbO
+	ZWC5EAwcCg5a33kXs91HxwvK39XwSUzAA7+vqe7aqaXF56bl6qACkn7vaiFMtUs7
+	MzmFC9Cl/j+U4byayptsjNwh3GBSq2mj8Qi9muVyYwZOcJ0HI/rTYI0fASDQrTRM
+	kam8xqMSC4I1RnYOM3m7rTTIcpEzN/o3IH+HkuUMIoUFKllnzr2AymY0gUWfqXOC
+	X9UcGnPHQYnHUDmFl/b9R4z9UqwxQMWJXWQ==
+X-ME-Sender: <xms:IEWPZ9B6f4asNrDifTfqozTXvjFnTRq5FWTz3g4TsnZPdYKqmpTwzQ>
+    <xme:IEWPZ7hGVKyNhDlzvq07_sl_KUzrumvPKKEisoq8UG9tlaDBDVf-PWlV3tIFtkSR6
+    EQfckKY-cCuU7lGTQ>
+X-ME-Received: <xmr:IEWPZ4nEa9CWcWwFxZpIa58I-uGWpO369ueAQFhZp8X37bjLyp-cjDbBiI59I_zNQ9JIe4iJuHee6NF-_HVwwdXc-WKFiCLN1-qGUKy3Pd5ttw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejtddguddtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeefheffgeeflefgieduleehueeugfeifeevjeejveel
-    heetvdegjefgkeeguefgtdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsehmrghvihht
-    rdhorhhgrdhukhdprhgtphhtthhopehprdgurdholhhivhgvrhesmhgrvhhithdrohhrgh
-    druhhk
-X-ME-Proxy: <xmx:UEKPZ5EzJdUeilFDZjCEVfU0uDKHkvt8bqdgMO8pp4MBOvWokiVetw>
-    <xmx:UEKPZxX_GrEADsmp5s4Neuv1S55kJFA_FChcKzTHcBIOJsjLPr469w>
-    <xmx:UEKPZ0MW7odrCdzkeAA_Wq3hPAqqDelmL-g5RS3EvpzP6zolmq1kuQ>
-    <xmx:UEKPZw0-wdrrSPjWEgRnSqHI6K-w7BRk05gspJdfx6espyNgdy1RyA>
-    <xmx:UEKPZ0Th2x_zWunKT1id8Bv2ACqHar2yZIEmrb0vZcIkrVV74iEH-XKY>
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:IEWPZ3wwpdGDXz4P-VB9IuI80ku2drA83CMI3MVs0FcCcZZT1sUivw>
+    <xmx:IEWPZyTReCPkRlNyRlV2M-sc8uGK5TY4AXkpe-_6hjLyqnIDCzan4Q>
+    <xmx:IEWPZ6YAbixvqn9re_8WihtRmpAhMOfC1Cfnr_VnH7s5vfhZoQmdlw>
+    <xmx:IEWPZzT8EL-gNfDcJeSF7SiWfv3C2oBE3wmJMfpvgwB0F0RrvYbmQA>
+    <xmx:IUWPZ9ded-9kLt_O1epSFgtnBhMLfTr8K7nXKEXBhabxQ14IsVrMzKWD>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Jan 2025 01:44:31 -0500 (EST)
+ 21 Jan 2025 01:56:32 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f3fc6aa8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 21 Jan 2025 06:44:30 +0000 (UTC)
-Date: Tue, 21 Jan 2025 07:44:29 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id ac58d3d6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 21 Jan 2025 06:56:30 +0000 (UTC)
+Date: Tue, 21 Jan 2025 07:56:29 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Peter Oliver <p.d.oliver@mavit.org.uk>
-Cc: git@vger.kernel.org, Peter Oliver <git@mavit.org.uk>
-Subject: Re: [PATCH 2/2] Fix Meson Perl version check
-Message-ID: <Z49CTa-wconHakMs@pks.im>
-References: <20250120160301.121245-1-git@mavit.org.uk>
- <20250120160301.121245-2-git@mavit.org.uk>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] reftable: prevent 'update_index' changes after
+ adding records
+Message-ID: <Z49FHQgsFSX6sTxu@pks.im>
+References: <20250121-461-corrupted-reftable-followup-v2-0-37e26c7a79b4@gmail.com>
+ <20250121-461-corrupted-reftable-followup-v2-3-37e26c7a79b4@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250120160301.121245-2-git@mavit.org.uk>
+In-Reply-To: <20250121-461-corrupted-reftable-followup-v2-3-37e26c7a79b4@gmail.com>
 
-On Mon, Jan 20, 2025 at 04:03:01PM +0000, Peter Oliver wrote:
-> Command `perl --version` says, e.g., “This is perl 5, version 26,
-> subversion 0 (v5.26.0)”, which Meson interprets as version 26.
+On Tue, Jan 21, 2025 at 04:34:12AM +0100, Karthik Nayak wrote:
+> The function `reftable_writer_set_limits()` allows updating the
+> 'min_update_index' and 'max_update_index' of a reftable writer. These
+> values are written to both the writer's header and footer.
+> 
+> Since the header is written during the first block write, any subsequent
+> changes to the update index would create a mismatch between the header
+> and footer values. The footer would contain the newer values while the
+> header retained the original ones.
+> 
+> To fix this bug, prevent callers from updating these values after any
 
-Yeah, I've also discovered this issue, but decided to improve it
-upstream in Meson [1]. Meson now prefers version numbers with dots when
-scanning through the output, which makes it match the "v5.26.0" part
-instead of the "version 26" part. This will be released with Meson
-1.7.0, which should be released soonish.
+Nit: it's not really fixing a bug, but protecting us against it. Not
+worth a reroll though, from my point of view.
 
-I'm a little torn whether it still makes sense to fix the issue in that
-light. If we do, we should use a fix that properly fixes the underlying
-issue instead of adapting to the misdetected version, as that will stop
-working once the mentioned fix is released.
+> diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
+> index 5f9afa620bb00de66c311765fb0ae8c6f56401ae..1ea014d389cc47f173279e3234a82f3fcbc807a0 100644
+> --- a/reftable/reftable-writer.h
+> +++ b/reftable/reftable-writer.h
+> @@ -124,17 +124,21 @@ int reftable_writer_new(struct reftable_writer **out,
+>  			int (*flush_func)(void *),
+>  			void *writer_arg, const struct reftable_write_options *opts);
+>  
+> -/* Set the range of update indices for the records we will add. When writing a
+> -   table into a stack, the min should be at least
+> -   reftable_stack_next_update_index(), or REFTABLE_API_ERROR is returned.
+> -
+> -   For transactional updates to a stack, typically min==max, and the
+> -   update_index can be obtained by inspeciting the stack. When converting an
+> -   existing ref database into a single reftable, this would be a range of
+> -   update-index timestamps.
+> +/*
+> + * Set the range of update indices for the records we will add. When writing a
+> + * table into a stack, the min should be at least
+> + * reftable_stack_next_update_index(), or REFTABLE_API_ERROR is returned.
+> + *
+> + * For transactional updates to a stack, typically min==max, and the
+> + * update_index can be obtained by inspeciting the stack. When converting an
+> + * existing ref database into a single reftable, this would be a range of
+> + * update-index timestamps.
+> + *
+> + * The function should be called before adding any records to the writer. If not
+> + * it will fail with REFTABLE_API_ERROR.
+>   */
 
-One way would be to use `perl -V:version` instead of `perl --version`,
-which will print the following:
+Thanks for updating this. I think the reftable library is one of those
+code areas where it makes sense to sneak in a formatting fix every now
+and then because its coding style is quite alien to Git's own in some
+places. We could also do it all in one go, but I strongly doubt that it
+would be worth the churn.
 
-    version='5.40.0';
+> -void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
+> -				uint64_t max);
+> +int reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
+> +			       uint64_t max);
+>  
+>  /*
+>    Add a reftable_ref_record. The record should have names that come after
 
-The support of overriding the version argument has only been added
-recently with Meson 1.5.0 though. We can still make it work though by
-making this conditional:
+> diff --git a/reftable/writer.c b/reftable/writer.c
+> index 740c98038eaf883258bef4988f78977ac7e4a75a..03acbdbcce75fd51820c5fb016bd94f0f7f4914a 100644
+> --- a/reftable/writer.c
+> +++ b/reftable/writer.c
+> @@ -179,11 +179,20 @@ int reftable_writer_new(struct reftable_writer **out,
+>  	return 0;
+>  }
+>  
+> -void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
+> -				uint64_t max)
+> +int reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
+> +			       uint64_t max)
+>  {
+> +	/*
+> +	 * The limits should be set before any records are added to the writer.
+> +	 * Check if any records were added by checking if `last_key` was set.
+> +	 */
+> +	if (w->last_key.len)
+> +		return REFTABLE_API_ERROR;
 
-    diff --git a/meson.build b/meson.build
-    index 07744c73b1..c452a79e37 100644
-    --- a/meson.build
-    +++ b/meson.build
-    @@ -754,7 +754,11 @@ endif
-     
-     # Note that we only set NO_PERL if the Perl features were disabled by the user.
-     # It may not be set when we have found Perl, but only use it to run tests.
-    -perl = find_program('perl', version: '>=5.8.1', dirs: program_path, required: perl_required)
-    +if meson.version().version_compare('>=1.5.0')
-    +  perl = find_program('perl', version: '>=5.8.1', dirs: program_path, required: perl_required, version_argument: '-V:version')
-    +else
-    +  perl = find_program('perl', version: '>=5.8.1', dirs: program_path, required: perl_required)
-    +endif
-     perl_features_enabled = perl.found() and get_option('perl').allowed()
-     if perl_features_enabled
-       build_options_config.set('NO_PERL', '')
+Hm. Using the last key feels somewhat dangerous to me as it does get
+reset at times, e.g. when finishing writing the current section. It
+_should_ work, but overall it just feels a tad to disconnected from the
+thing that we actually want to check.
 
-Is it worth it? I dunno. But also doesn't hurt if you want to go down
-that path.
+How about we instead use `next`? This variable records the offset of the
+next block we're about to write, and `writer_flush_nonempty_block()`
+uses it directly to check whether we're currently writing the first
+block in order to decide whether it needs to write a header or not. If
+it's 0, we know that we haven't written the first block yet. That feels
+much closer aligned with what we're checking.
 
-Thanks!
+> diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
+> index aeec195b2b1014445d71c5db39a9795017fd8ff2..b23edf18a7d75b0c2292490ad06d4dfaaa571e79 100644
+> --- a/t/unit-tests/t-reftable-stack.c
+> +++ b/t/unit-tests/t-reftable-stack.c
+
+Can we maybe add a unit test that demonstrates the error?
 
 Patrick
-
-[1]: https://github.com/mesonbuild/meson/commit/a3679a64eec7c312c81d657880f34f015426c7db
