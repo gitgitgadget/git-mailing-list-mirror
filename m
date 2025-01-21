@@ -1,128 +1,214 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D9B1B2EFB
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 21:10:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A283F1B87FA
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 21:25:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737493847; cv=none; b=FtPxLIUC+S7eanzpbvVEk7YjmefedJCBsncZP6TWV3jSh0CpgoQH8T1ZppvshV2dv39bVU91uPHr4z5lmfvKEZK01tU57Z+NK0Jmtd6v4JMB7bfcpjkPEoBuDac5otO3n+YlKzuhfEYAZyNbEtIP438ZzzDvQ9wV9bCJw2sUx2A=
+	t=1737494761; cv=none; b=NZlAL8AwVUwplPR7uc4A/9gXasOBSOGVv/T2bgQ5x3iqDvtCPkM9LuSsEo792BPJdqRxdQteY6faxIr0pQj+AkkD35y4eP2pNLX8LLual1F8O1/rbHzxG2adbjCblakALZH2UYTLD2dRFdrfW80zrO6mg4zXKox6uoLp1u6Cv3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737493847; c=relaxed/simple;
-	bh=1DNFotEKYqdoSC4FqGutRaklGfgZPpq9c9H7oDUYya0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Av/kBUFDv3ZgG7d+9x9GxYONPCnItWbgPDXcknFB7hlO6D+QuwuHqhkqcvoZ/+tOws27+DIPqQjH1ilfKjlq+sQ6/6vXKWP6zLmQDE8t7QtoZAX3fARLCv34/s7513WhMHbqo5rlGv4uenfkMGrK54DQW3j9YYTlowz9sASwwpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uH0gRxx6; arc=none smtp.client-ip=209.85.160.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1737494761; c=relaxed/simple;
+	bh=3Scstprq3fvRLKSfREGwkGXrP8JVBjqnRLj9sQxb3Y8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=j24Ik0l91w0YuyacxT/KgDx9y8KyV2Dg9K8UwppXMXb4Eqy0hqO9UcTEZedA9w49pNJ0Z3kqANPIlsTqb7x+UkWwbOTmLKdrOdTECDBk9DmMUNG5KEKqyzldpcvdfXmlI4aDEfOI0I1bk+9zjpk5/5E5lOgM7wh4eieruBiVNeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=O/D9Iqw5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I5KV7821; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uH0gRxx6"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-4678c9310afso11771cf.1
-        for <git@vger.kernel.org>; Tue, 21 Jan 2025 13:10:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1737493845; x=1738098645; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1DNFotEKYqdoSC4FqGutRaklGfgZPpq9c9H7oDUYya0=;
-        b=uH0gRxx6cVY23vYhF6k49PxSZrjWBYJjvTpUoXjebnrZ+3SgbYWsLehGT+EPOZZ5rI
-         5wfP7Kxw+e09zK/VK6QdVV87JGmVThtZkex7jCGGgRvsI3z5CkNHleY5QzKDcdqhNMDc
-         DjqMgU2orksEE1CFAFz5g6r0NleV1cuY/aNf4afj/5V2PQmivQUd6GV3BwVGGGqo8KC4
-         ZJDzpaaIHo7PhbNgbgcs58cBIITWIzxD21yAwZChxX0qI1enHE+kTpJmvBTVPo32D3DS
-         GbLwsRJpnwYTmu+zbGHMGbVRD8CpiUXf0ZBHgkBKWt8fZF1ZmJscDNYBKUSMQZI6ol6s
-         pnNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737493845; x=1738098645;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1DNFotEKYqdoSC4FqGutRaklGfgZPpq9c9H7oDUYya0=;
-        b=X3qdhL/IePeW9wT6MLuZbdShCUChLp2F+zTHO1fEX41ugQ17/wFr8uLJqzLAQ1/sQe
-         kBg+c3SbWoB+q4U8z/zSK917g1xmwIANIaQTrs2JapP02tbSVV0mpP1GCpOpkQ1yqtup
-         Rp/5xHG2V9Vw7AAvXr7eTQORVgCyPSaBbq4yI/qcaTHHhGICi3KtgQOWi2+qwv5sTMG7
-         7zF8qaQWENrGxZfCHpCtJhy1NYYDFgspdm2+Kt2FzhnqZvwW27IrrkwE+PBXoNMO6mpT
-         Qwm8CBi83bqcvncIIquzwRT7/Y/J3LfZFhETj0ycaizgJMQQjMM66eCIz5jLRggH2FQy
-         MyxA==
-X-Gm-Message-State: AOJu0Yw7qiPJSF8GdPznhOl+U2X7VSgMAYJV9ympvW7XR7+sho0l/wHs
-	ABFab3866/Q4XN9DGFtFmv52JQB1ye3dVOSE5FrdK4Gyana9ABSbm+QO8QQb0scjZDTh/miEN6D
-	sgLFN89dYDLw8Trqi9ZcpazdCUvGxIOA9xwuzVqg5PSWgbjxBsg==
-X-Gm-Gg: ASbGncvwUo6ox8spi8WGjuYQ0gFWKJR8yhjBPNVgKcrHMTEpPdHuP1Pi7L9GMYM+9aU
-	HMQg6zIMGGyDVdi4LFUF+/uWHWqMvSVLvwZK5YfXFGD8E5wSH4LERWUeMAvPv6P0agRTHlj/xyu
-	fu0laB5g==
-X-Google-Smtp-Source: AGHT+IF3x4v/uM+Y0dcr30uDVJ09ZHyAtZdM+aO6/q0P+ecLz/Jb8FY0DF89G70aK2XkBOoLN0oIB4skkvE4IaDZzeU=
-X-Received: by 2002:a05:622a:1206:b0:465:3d28:8c02 with SMTP id
- d75a77b69052e-46e500426d3mr698351cf.26.1737493844699; Tue, 21 Jan 2025
- 13:10:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="O/D9Iqw5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I5KV7821"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 76A3F25401E5;
+	Tue, 21 Jan 2025 16:25:58 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 21 Jan 2025 16:25:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737494758; x=1737581158; bh=L1NI6LJYWP
+	ZTjpl8YVn00XbvxuMVq1W8Il8PwQCY/Yk=; b=O/D9Iqw5Rm6WUqP5T/nd3B8LzG
+	hUBNtBdekR+vzUDpZCuRSbTS897qANqZ6X0mYS18CLxcEFJ6D9TcRuLcNw97fVW3
+	zyV1b0ypnrqEGqkKxFstnHYG1jynU7fktmogcvTW9xZ2X8p2qe/m9AYw4gjMg2js
+	4cTNRDCmz9ZyuXQuzR0MdLsa+37+fm1hFXPVWw9rpqmdMB+B6jvD64jUL9Dl9Hws
+	dSUt7ivKBS4684cAQ1vT1LE+BGcB5R5zX6o19FkvlERCCd54pcZR7uyXwZ5PWZ2U
+	CS5ye1IXreO0XtGp5/GapHCfZJ3N47efGnHGAvycY0lC/RrnB43/K6FYpk8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737494758; x=1737581158; bh=L1NI6LJYWPZTjpl8YVn00XbvxuMVq1W8Il8
+	PwQCY/Yk=; b=I5KV7821rwIMFAXf9FpRv0acVv6uYTcTgwdyrh29mqB70LozN0t
+	zxdvs9ukN+I+YynowZmHZkuJAgcgv3EXfSTgCF0S235WLRqAnJ4U0PtrVliBJHoX
+	1cEyVbMRQKIVpznmgRRIuG64u8KeFQrEcIOjIGsRZLf/Ww2XgQIZuf3Yq3s3ztJx
+	01WD6cmwelMid+jAiOdzM1rCBaxi39CEkKkSHufCqA20tZAWob5mFa4HzrAW4XBO
+	UNBKYcA9OQ8Jz+3IXpUCoPFLIF29utCSqU5c2XqAAmz3lGszIgk/pQUCjOcjrzSk
+	EDRCMwuk2zPyrsinzi1C5mh+oqkPoKpyR+g==
+X-ME-Sender: <xms:5hCQZ3WPwxl9u6x9ufCXbSRlax2sQDej4zS-ECwn-PjcFERp688mtA>
+    <xme:5hCQZ_lO-agSWnFuXGw0LwbWqBu349JPEpFHEqnYG1SnOCc-7nVGrtJinjcbq0ZiF
+    kjv3x12tg5QgRCQ0g>
+X-ME-Received: <xmr:5hCQZzauBqJre7libq0el_4kV1_fUJo4ryvm9EFMa8ZgKJG0SjwZXNwjadkGdov_EHwUN2JCxCgjSgryhJvQVUCMoPpzhSMaJT2e>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejvddguddukecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehrohgsvghrth
+    drtghouhhpsehkohhorhguihhnrghtvghsrdgtohhmpdhrtghpthhtoheptghhrhhishgt
+    ohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehrrghnuggrlhhlrdgsvg
+    gtkhgvrhesnhgvgigsrhhiughgvgdrtggrpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:5hCQZyUdCLBlgThybvo2zy2rOGKuKiuwf9HJgjYXKrM8BeNCTfdWXw>
+    <xmx:5hCQZxlrA24zfE4TiPW4jSeNzySB3zgk-75LsX2UclXhgXb_Nf18jQ>
+    <xmx:5hCQZ_ern9N0ujQDyjHrEhbcVFujeq6EPIkU8bquE2NJ1g7PH4z3WQ>
+    <xmx:5hCQZ7GzzbuHOHrbciI8B0y2_AW2ytpR_X08A-1oGCvDSPs1EpV4Hg>
+    <xmx:5hCQZ3WJKPUMGdNn1xuwzdhlhkl_PuJ3RyCSvEonTtCPmaex_UNAGULB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 21 Jan 2025 16:25:57 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Robert
+ Coup <robert.coup@koordinates.com>,  Christian Couder
+ <chriscool@tuxfamily.org>,  "Randall S. Becker"
+ <randall.becker@nexbridge.ca>
+Subject: Re: [PATCH v3 5/5] remote: announce removal of "branches/" and
+ "remotes/"
+In-Reply-To: <20250120-pks-remote-branches-deprecation-v3-5-c7e539b6a84f@pks.im>
+	(Patrick Steinhardt's message of "Mon, 20 Jan 2025 08:43:02 +0100")
+References: <20250120-pks-remote-branches-deprecation-v3-0-c7e539b6a84f@pks.im>
+	<20250120-pks-remote-branches-deprecation-v3-5-c7e539b6a84f@pks.im>
+Date: Tue, 21 Jan 2025 13:25:56 -0800
+Message-ID: <xmqqtt9ryi3f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <DB9PR05MB110863344D3776D13B436F563C1E72@DB9PR05MB11086.eurprd05.prod.outlook.com>
-In-Reply-To: <DB9PR05MB110863344D3776D13B436F563C1E72@DB9PR05MB11086.eurprd05.prod.outlook.com>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Tue, 21 Jan 2025 13:10:33 -0800
-X-Gm-Features: AbW1kvb7z9JW6xaEWh3-qQgD31KusSaEXg3spUQ4k_GQawHWUpuLuvR_Al_6i8A
-Message-ID: <CAJoAoZnecm5y8243R9JsGjRDuv-Mb=UAwa+Hbj5CKDKNPBLB4g@mail.gmail.com>
-Subject: Re: [Feature Request] Allow batch removal of remotes with 'git remote remove'
-To: Christian Fredrik Johnsen <cfj@johnsen.no>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Jan 20, 2025 at 3:07=E2=80=AFPM Christian Fredrik Johnsen
-<cfj@johnsen.no> wrote:
->
-> Hello =F0=9F=98=83
->
-> I would like to propose a feature enhancement to the 'git remote remove' =
-command.
->
-> --- The Problem ---
-> Currently, 'git remote remove' only supports removing one remote at a tim=
-e. However, it would be useful to allow batch removal of remotes, as in:
->
-> `git remote remove remote1 remote2 remote3`
->
-> This would simplify workflows for repositories with multiple remotes when=
- clean-up operations are needed.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Hi Christian, is there a reason why opening up the config (`vim
-.git/config` or `git config edit --local`) and batch-deleting remotes
-from there is undesirable? If this is a solution you believe only
-power users need, then I'd posit a power user can both list all
-remotes *and* remove the offending ones in a single editor pass,
-rather than having to run multiple `git remote` commands, anyway.
+> +repositories at all and most users aren't even aware of these mechanisms. They
+> +have been deprecated for almost 20 years and 14 years respectively, and we are
+> +not aware of any reason why anybody would want to use these mechanisms.
 
->
-> --- Proposed Solution ---
-> Modify the 'git remote remove' command to accept multiple remote names as=
- arguments and remove them all in a single invocation.
->
-> For example:
->
-> `git remote remove myfork myrepo origin`
->
-> --- Benefits
-> - Reduces repetitive commands for users with many remotes.
-> - Aligns with existing batch-like behavior in commands like 'git branch -=
-d branch1 branch2'.
-> - Streamlines repository maintenance, especially for power users.
->
-> Thank you for considering this request. I=E2=80=99d be happy to provide f=
-urther details or clarification if needed.
->
-> Best regards,
-> Christian Fredrik Johnsen
->
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D
-> ---> Generated this message with ChatGPT, but it gets to the point.
->
-> I am assuming that this is such a niche case that it hasn't been reported=
- yet, though please correct me if I am wrong.
-> There are no `github issues` I can search through to find older related i=
-ssues, so I'll give it a go.
->
-> Attached a picture showing the situation where I encountered the issue.
+I am aware of one reason why some folks may prefer being able to say
+
+    $ ls .git/branches/*pattern*
+    $ echo "$URL#branch" >".git/branches/$shortname"
+    $ git fetch $shortname
+
+over the configuration file based mechanism, especially when they
+have to deal with dozens of remotes that change the branch name to
+be pulled from.  And as I already said the above while reviewing the
+previous round of this series, _we_ are now aware of it.
+
+I however am in favor of deprecating and removing the support, but
+that is not because I am not aware how useful they could be.  I am
+and we are aware, but we haven't heard anybody jumping up and down
+to advocate for its undeprecation for a long time, and that is why
+I am personally OK with this removal.
+
+>  branches::
+> -	A slightly deprecated way to store shorthands to be used
+> +	A deprecated way to store shorthands to be used
+>  	to specify a URL to 'git fetch', 'git pull' and 'git push'.
+>  	A file can be stored as `branches/<name>` and then
+>  	'name' can be given to these commands in place of
+> @@ -162,7 +162,8 @@ branches::
+>  	and not likely to be found in modern repositories. This
+>  	directory is ignored if $GIT_COMMON_DIR is set and
+>  	"$GIT_COMMON_DIR/branches" will be used instead.
+> -
+> ++
+> +Git will stop reading remotes from this directory in Git 3.0.
+>  
+>  hooks::
+>  	Hooks are customization scripts used by various Git
+> @@ -238,6 +239,8 @@ remotes::
+>  	and not likely to be found in modern repositories. This
+>  	directory is ignored if $GIT_COMMON_DIR is set and
+>  	"$GIT_COMMON_DIR/remotes" will be used instead.
+> ++
+> +Git will stop reading remotes from this directory in Git 3.0.
+
+OK.
+
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 1ad3e70a6b..e565b2b3fe 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -640,10 +640,12 @@ static int migrate_file(struct remote *remote)
+>  	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
+>  	for (i = 0; i < remote->fetch.nr; i++)
+>  		git_config_set_multivar(buf.buf, remote->fetch.items[i].raw, "^$", 0);
+> +#ifndef WITH_BREAKING_CHANGES
+>  	if (remote->origin == REMOTE_REMOTES)
+>  		unlink_or_warn(git_path("remotes/%s", remote->name));
+>  	else if (remote->origin == REMOTE_BRANCHES)
+>  		unlink_or_warn(git_path("branches/%s", remote->name));
+> +#endif /* WITH_BREAKING_CHANGES */
+>  	strbuf_release(&buf);
+
+Interesting.  I wonder if our new warning should talk about whatever
+end-user facing interface that triggers this code path.  It would
+help them wean themselves away from the old interface, no?
+
+> diff --git a/remote.c b/remote.c
+> index 10104d11e3..5feb0ae886 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -293,6 +293,7 @@ static void add_instead_of(struct rewrite *rewrite, const char *instead_of)
+>  	rewrite->instead_of_nr++;
+>  }
+>  
+> +#ifndef WITH_BREAKING_CHANGES
+>  static const char *skip_spaces(const char *s)
+>  {
+>  	while (isspace(*s))
+> @@ -308,6 +309,13 @@ static void read_remotes_file(struct remote_state *remote_state,
+>  
+>  	if (!f)
+>  		return;
+> +
+> +	warning(_("Reading remote from \"remotes/%s\", which is nominated\n"
+> +		  "for removal. If you still use the \"remotes/\" directory\n"
+> +		  "it is recommended to migrate to config-based remotes. If\n"
+
+Do we have a way to concisely say "how" to do this?  If I am reading
+the caller of migrate_file() in builtin/remote.c, it would be
+
+    $ git remote mv foo foo
+
+for any foo in .git/remotes/* or .git/branches/* hierarchy?
+
+Of course they may be an ancient leftover file that the user even no
+longer is aware of having, in which case
+
+    $ rm .git/remotes/foo
+
+might be an OK answer, but even then
+
+    $ git remote rm foo
+
+would probably be more appropriate.
+
+> +		  "you cannot, please let us know you still use it by sending\n"
+
+I do not think we care to receive a piece of e-mail that only says
+"I still use it".  We may want to learn _why_ they cannot switch
+away, though.
+
+The same comment applies to the other side.
+
+Everything else in this patch looked superb.
+
+Thanks.
