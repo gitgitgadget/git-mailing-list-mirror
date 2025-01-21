@@ -1,119 +1,141 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51551B808
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 20:40:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D1E1F78E1
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 20:51:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737492020; cv=none; b=mNT4yXLoy1xGJH3htiaH9zlJHLB+9BeJ8mBToCMuRgadyPEuQftm5Ubw5P9v7hiWFevfZBLw1GH86JiMViuHHPJTfKovaJvUVlGClNqPFIA2cufWrgC+p3fbp0kf/vf1uKKWWhOKpC4xyO+eXOV1BnCDwYc5NkjxLhpKl6UOxUI=
+	t=1737492720; cv=none; b=diqgfLE6YraI/2+SqWNBOpnhOseNg862jcqHtEDlFeXUC6Avq4vZh5aPpYpAP5F++0JDRsnRqSL3Ddic+ofMrc9dJtz9HufsKiRp1xOo7Do8528OQMVdzIs97lA3zgCVp8ipkqqChvDm5MBlzqb/jgj/mpUZ5D2JoSQT511+/AI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737492020; c=relaxed/simple;
-	bh=h9zWPw0dyF0CSohkgBCGhoccFmqVp/InF0hCTu3MHJY=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=QXfX6EkUU00LY7SWTiNr5KNfVH/kiLZcL4o/qBwbCnMM5Rl6EZLTadcZ/rUtrvZx1h4QzUzLKuVO5qj5U+Uz93HPpkI90CvtjLVtJeJ86FIwRSF63bVJ54lP8ARb/tGFmC/VlU8uaBR74A0de90IXqrOGUxmR0AFz0v/NuRRGwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thelayzells.com; spf=pass smtp.mailfrom=thelayzells.com; dkim=pass (2048-bit key) header.d=thelayzells-com.20230601.gappssmtp.com header.i=@thelayzells-com.20230601.gappssmtp.com header.b=C9dtzXDW; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=thelayzells.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=thelayzells.com
+	s=arc-20240116; t=1737492720; c=relaxed/simple;
+	bh=4FwFfkCw8mew3NUGCatmxoPjj7A+d+DZYaVGkNQEb+U=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HguPrOvKGzoRQY4/MasVxNvr8kQ+OpHVAVFda9dvhYgA5jFzsnMQhgPMn8z0YqQtU89o1C7fQC86gnnekx2idfnELnqsJ0X3qz6si08YSRP9clG0cj//SUQeAF6dmBarYwZ63L2+YmnAY5RWuoyn0l5t73ClZwmNlNhVe7A2kow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hctJlozO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=R6LDjIS6; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=thelayzells-com.20230601.gappssmtp.com header.i=@thelayzells-com.20230601.gappssmtp.com header.b="C9dtzXDW"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4679fc9b5f1so53384811cf.1
-        for <git@vger.kernel.org>; Tue, 21 Jan 2025 12:40:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=thelayzells-com.20230601.gappssmtp.com; s=20230601; t=1737492016; x=1738096816; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=/R/pNoscriki70ZlFIRQwJkW5f4HDEYH8z3osM8Dxv8=;
-        b=C9dtzXDWcYYlUoD74LEuXevj0TTGm92MWFiCc+HUGoHKV+u+D1AeGnXs+43ZTNtbGz
-         ogJLhwzBkMeeEKfzf187PvX5i1Mllop73jBd1LdrGlg2H+8ueKKVqtBFEGiC8k+8WxKk
-         +cFb8h13LcUZFVNbpyoVpfDqSZ0RUfJBmgk4cKX1OA3++LjCNx9ZbKxGiz0NbOBqxu52
-         sT4gRqaaIiE+bphkplyZuVthW6z4w9WZbb8bOZnN7sQU77Frj4gZmFw2iCe+YM207FNc
-         AS6anJUsVOvBa87M7GTkiUEt2ti4LKizgoj7o+YOA7RA/g0G94sXcD0dUPk1HYFxfJLJ
-         3dFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737492016; x=1738096816;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/R/pNoscriki70ZlFIRQwJkW5f4HDEYH8z3osM8Dxv8=;
-        b=MOEq+rKgyG/IkuQng+5M0sq6Nm3qLkKeLvMU/Jx2rTcKE+6KqHRRn2rXFifhFYWFqE
-         ysT+9y9xubxWCWyeqBHfYFYquZj/RqtUMRMunhE9M56L/BzYz+caXqiagFc3PWo/geVF
-         dwEuulxpdA6d0TZNHahG3sn2jvLdLH/ylMJun9V0Ax8PjLgKxp0LEN7G0MfG9Nu6lXUC
-         8OGDESJg5jvXE44nOqWSONTsKRgIeX/EQgl3xmmtA1/NhrjrYTbk7+RuAHcyOf79rd0H
-         P2FdeYMUqFZhePsMxxLDEufVLp9djo0GqN4O8nfEtPb4Nsg/L1DJvYzW10HMdcR3BcJx
-         Lfdw==
-X-Gm-Message-State: AOJu0Yz96oGdB/sJFHugdirF59pdXcy5Zna0OWM+hQhr2TosqneR3N8t
-	hFhctymWUPtnwO0Xn62FfvOway3pxNaP3K32LiThmWS2z0VHdCkaP//RF8R1A71SWbYNWPOYZ6G
-	Iwsw856tjKOy0ljMgbQKMwJ9Hyu6P+Xxvt88+F7oL2iP9uWl7RK8=
-X-Gm-Gg: ASbGncs1C5pR482OF5TgZC0s1WzBbXHM5UNFhno+qSjnlm6aCHiHzIpt8RUrERHiweJ
-	SjRbu/qn7ADt5tPWp5uzCZpsWYElkl5TX2LG6/gfjrG2IO6p9nV8=
-X-Google-Smtp-Source: AGHT+IGeaSBJv1vvWLRzPynM3+CqIz/UvexS+Poom4pkrKh53MxQV9NgEQxl6ktiu9xdcgUwD+5dolCOx8ItM2YIctI=
-X-Received: by 2002:ac8:7fd4:0:b0:467:5836:a98 with SMTP id
- d75a77b69052e-46e12a55e7emr274693831cf.19.1737492016549; Tue, 21 Jan 2025
- 12:40:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hctJlozO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="R6LDjIS6"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id A3032114015F;
+	Tue, 21 Jan 2025 15:51:57 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 21 Jan 2025 15:51:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1737492717;
+	 x=1737579117; bh=FV3sQJ0RMZ94JpzgklzXqEOuFA3AcmJcruY1RgAy7tw=; b=
+	hctJlozOeIKq2HfOXz2oxUxT7WZ9fMiH90Sq27VCJWwkoU0WWvRI1jPZQQrBBJE8
+	cQlBxwpjJdBI/cua/6tB2hNyH/SYqRUDm4691Xvuvlm7VOrGX1i3Wm2abDWhIS92
+	X7jfu25UoxxzWykTn4tLsLxExzc9ps6eLnBMZQSf203ImdKOHrTE0g2G+ppw0c4+
+	ol1HT0E+mzy17/zOd4eS8we1g5MdGPDyDMxKovAqmIL/pKeQC2Pm5ZmjN/b8q2fp
+	cMP19Dy+MpOQc0HJXLx6q06QsED3zoyngeWauPRHF4ommS/6YEp9vjqYdFgHp87F
+	3U+ou9ENJ8zFEpttUV5FAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737492717; x=
+	1737579117; bh=FV3sQJ0RMZ94JpzgklzXqEOuFA3AcmJcruY1RgAy7tw=; b=R
+	6LDjIS6IaxYuGWzWTyVj5Vi89U17m+7fbk4Rfn84ZFZzrRQK5jcf28KvS4jXhhwQ
+	2TvndRhZKD10nQHBohKIvT6cmIQLP5uOSpJ55jNaGbBYbFVr0/cJsXtlKqCUWsy9
+	RPY6v4CTK7JFwkEhCKG86QigKzi1Gvd76v0FGiMq0dQAz6ZVtGY+juosQqxkajyz
+	VTDNXRfqJPBRmgJ6lm1w55XNSzObL4IxmJOgSqTFKYviFjH6VqTAEyAwAsKx6XsD
+	nN4F6A4zaHpFkC/UPLx8Wh5vhG9JvaHd98TPB0FpbdcY9/BVmVjCoQ0Pkv4dBP89
+	XMNQTuv5Y2zH/edxU6s9Q==
+X-ME-Sender: <xms:7QiQZ0IgPYoE3g2wQ048jpznOMYrOUEeMDLzSWmBc1OJIScYdyLGwg>
+    <xme:7QiQZ0Ik0AfvtaZhoX17CGhS6FNqrpR3n1ZMIDlnjlHrDYoObEf0brLwXTlJKinN0
+    kfS2ftxkMuJu01nkQ>
+X-ME-Received: <xmr:7QiQZ0sUa_Sy0L0e75q8Jyvp7mNrLw6pqUwD-HDTewhRrOo_a6lWUDsqoIQWXNT1UVtpEsZQDIAkxOKDUN2QiBryuVoOQ0Xci9LK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejvddgudduvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
+    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
+    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnoh
+    gslhgvodhgihhthhhusgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhg
+    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdr
+    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:7QiQZxZy2kmCRBWahCxZKhcIVBeSkrQj9kHG_SpXzMfhgnblTGvA9w>
+    <xmx:7QiQZ7YbDjGylFzZmQ7Boasv7m038P_R-6Ov5oQaMnwIbhhJIb3jVQ>
+    <xmx:7QiQZ9DslXCpTs_FAB2caMkzF0CZ1z84FLL10No-T-gRZdUQcVugfw>
+    <xmx:7QiQZxZG9sTpmPulEAioE6GecKTXf_QYj9cdis-iTlGd7lpZsO3-hA>
+    <xmx:7QiQZ2wn6V27-jVupJiuoFYtwDTzDZ6PvTYw2lQ-CQlcZ13oOdIsBe-C>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 21 Jan 2025 15:51:56 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: "D. Ben Knoble via GitGitGadget" <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] grep: document negated line-number, column long options
+In-Reply-To: <CALnO6CBUbmZaL1NuG2RxrvuxbUexKdtKfgYi2jTDY3QEa9NQkA@mail.gmail.com>
+	(D. Ben Knoble's message of "Sun, 19 Jan 2025 18:17:03 -0500")
+References: <pull.1878.git.git.1737066042014.gitgitgadget@gmail.com>
+	<xmqqy0zanzdw.fsf@gitster.g>
+	<CALnO6CBUbmZaL1NuG2RxrvuxbUexKdtKfgYi2jTDY3QEa9NQkA@mail.gmail.com>
+Date: Tue, 21 Jan 2025 12:51:55 -0800
+Message-ID: <xmqqjzanzy8k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Nika Layzell <nika@thelayzells.com>
-Date: Tue, 21 Jan 2025 15:40:06 -0500
-X-Gm-Features: AbW1kvaF5MVG6iqRG7ttGyJY-Xba4u4dJAeC8GHeNQShKj4n7e3BhEbZYPuyIAI
-Message-ID: <CACwGqKixQEGau8CZuLwJx02F4h8hxrf9e_7N1tHMU=Wvy8ViyQ@mail.gmail.com>
-Subject: `git update-ref` fails to set reflog old_oid in 2.48
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-In git 2.48.1, the `git update-ref` subcommand no longer correctly
-updates the reflog in some cases. Specifically, it appears that the
-`old_oid` field will not be updated when modifying a branch referenced
-by another symbolic ref (e.g. HEAD). This doesn't break the `git
-reflog` subcommand, but does break references like `HEAD@{1}`, which
-appear to read the `old_oid` field.
+"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 
-STR (in a fresh directory):
-```
-git init -b main
-git commit --allow-empty -m "A"
-git commit --allow-empty -m "B"
-git update-ref -m "reason" refs/heads/main HEAD~ HEAD
-```
+>> $ git grep -e '^--\[no-\]' Documentation/
+>>
+>> An example entry (this is from blame-options.txt) looks like this.
+>>
+>>     --[no-]progress::
+>>             Progress status is reported on the standard error stream
+>>             by default when it is attached to a terminal. This flag
+>>             enables progress reporting even if not attached to a
+>>             terminal. Can't use `--progress` together with `--porcelain`
+>>             or `--incremental`.
+>
+> Fair enough; I dislike the `[no-]` formatting because it is harder to
+> build into a search pattern (I have Vim keybindings to search manuals
+> for long and short options that it breaks), but I will probably live
+> with it and adjust my search patterns rather than complain further.
 
-Expected Result:
-```
-$ git rev-parse HEAD@{1}
-70d9116663eee9f01065c3a6d8984b1dea661f20
+$ git grep -e '^[`]*--\[no-\]' -e '^[`]*--no-' Documentation/
 
-$ cat .git/logs/HEAD
-0000000000000000000000000000000000000000
-17dd31aaf89190a36b8d04136a1a0f83fb37da4c AUTHOR <EMAIL> TIME  commit
-(initial): A
-17dd31aaf89190a36b8d04136a1a0f83fb37da4c
-70d9116663eee9f01065c3a6d8984b1dea661f20 AUTHOR <EMAIL> TIME  commit:
-B
-70d9116663eee9f01065c3a6d8984b1dea661f20
-17dd31aaf89190a36b8d04136a1a0f83fb37da4c AUTHOR <EMAIL> TIME  reason
-```
+tells us that we also can write the above more like so:
 
-The `old_oid` field for the reflog entry added by `git update-ref` is
-present, and correctly initialized. This was the case prior to git
-2.48.
+	--progress::
+	--no-progress::
+		Progress status is reported ...
 
-Actual Result:
-```
-$ git rev-parse HEAD@{1}
-warning: log for ref HEAD unexpectedly ended on TIME
-17dd31aaf89190a36b8d04136a1a0f83fb37da4c
+which may make it more palatable?  I didn't count and sift the hits
+into two bin to see which style is more prevalent, but it may not be
+a bad idea to consider unifying into one style.
 
-$ cat .git/logs/HEAD
-0000000000000000000000000000000000000000
-17dd31aaf89190a36b8d04136a1a0f83fb37da4c AUTHOR <EMAIL> TIME  commit
-(initial): A
-17dd31aaf89190a36b8d04136a1a0f83fb37da4c
-70d9116663eee9f01065c3a6d8984b1dea661f20 AUTHOR <EMAIL> TIME  commit:
-B
-0000000000000000000000000000000000000000
-17dd31aaf89190a36b8d04136a1a0f83fb37da4c AUTHOR <EMAIL> TIME  reason
-```
+> Sounds like you would prefer a re-roll that does something similar for
+> `--[no-]line-number` and `--[no-]column`? I suppose I have to
+> wonder—for which Boolean options is it worth doing so?
 
-The `old_oid` field is empty (all zeroes). This is only the case in
-derived reflogs (in this case .git/logs/HEAD). The reflog for
-refs/heads/main appears to be updated correctly.
+Ones that are not marked with OPT_NONEG all take --no- variant, and
+while going through the list of options we may realize some of them
+should *not* take negated forms.  They all commonly share that
+"giving --no-opt countermands an earlier --opt or the corresponding
+configuration variable setting", and any "--opt" that has its own
+corresponding configuration variable should already have the variable
+documented in the paragraph, the body text may not have to be updated
+at all in the best case (in other words, the only change required may
+be to add lines of "--no-foo::" form next to existing "--foo::".
+
+Thanks.
+
