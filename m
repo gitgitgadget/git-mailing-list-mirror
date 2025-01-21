@@ -1,64 +1,64 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D911B0F20
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 20:19:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527BB4594A
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 20:21:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737490769; cv=none; b=nKt3aWwKJ4DRE+t5SDNAifD27nOSM0Uu+Vc/RnYAYmSAVgTTr0qyjFibzDfXWP/c9XXjzV/ItE6GBrjtsDNTmYDlPR/tKLWaCNTubS6f4Xnr3GBxF7jU5+LEqAr2Bj98GQyvcOax7Tjkp160YIoSiBaqTw4r3C8tYjV4jnaplu8=
+	t=1737490879; cv=none; b=A1ASc/9GtMrL/F96cQZCDcvSHRd+V2fF1t/WSBor1uWbt6hLJGskVS3PSvSm/TsGhIb5z6S0vWg9gElKgKvjRpwhLz2iNaf4lxJq18kFiTBwYuaCMWy/4t16/Cpc3an6jUfn/Y7AhPHfoGN576Y4fg3Um9KSYscjtMy7gwBFpcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737490769; c=relaxed/simple;
-	bh=VoZd06IF9SVg/6Ikfb0iWapw51Cj9Y2y0mJ8PUJymFQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=jhyRxoSdm9P0oPb4yBax9eJZ/IoaLjTmgMubhKtXlOVmErT3lmcf09YolrB5dgH4Eou4gkm/lPikd5qooV2d/nydgoqRcvuPqmYCMCxyhNEp/oGzLv4tRhXSMiT8gcFPkoexRHgqxnv1rti8XlsUpQhKDioriwRkqoan8bBiXEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EranmR5f; arc=none smtp.client-ip=209.85.219.172
+	s=arc-20240116; t=1737490879; c=relaxed/simple;
+	bh=BivF/ROLic4EzFr5sHYgukabm/WvDWpjAwfrwNW85LA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hVD0oLeAueGT6SdiT7hq0fCcLv1kf2UzO+bATz7ylALivYkWbVFAQ5e7VENi2YaDbS3L2ZhiiJpw1gWlts4tTJ2aTMqhXDRXKHTTly/wOPkLfwBDIG3GX4iO9/Ytu88wZuMy6qy4WjZRnnXiiQILjLjWeEz22oKymP8nrvy3FvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XEKRuBCn; arc=none smtp.client-ip=209.85.219.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EranmR5f"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e3983426f80so9387679276.1
-        for <git@vger.kernel.org>; Tue, 21 Jan 2025 12:19:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XEKRuBCn"
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e479e529ebcso8526460276.3
+        for <git@vger.kernel.org>; Tue, 21 Jan 2025 12:21:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737490767; x=1738095567; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1737490877; x=1738095677; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=uMdsuNBtY2CYnseyo5wQ7/CeGPz8W5Crb6cBoMM9/3M=;
-        b=EranmR5fscyP7CY26hYDzoF+v9UotuMnpX75DNKygDD8zEHOJ74KyyZe6FMh+ourdN
-         ceuA0qp+VJEWB0deB4T2Ujv394rsW779xqbo3cioD0K/X31hodeYlGXitLoTFYezQJ0G
-         snZyIiVVFEBCpIptW7E1/yYLjEAKNTDSP6MTo8CM9/Rgy4A091y3WEPRTHVC6Y5teOZL
-         2UkWENJKWMdm4TkhOJBKwa+NrcohLxJjno2OuuX/orjMgZuiATwjGQflUyuvyBWcyzM/
-         KUbT5Y2Jtpy6RxVM5A2wUIydzZrHK2KwOUrznvo7WUmnCCfqFwl94EbFe+Et8XOih8f2
-         htMg==
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=skoFd0vMXuWaj5qcfbM1e0frGfXcPQmggLVPBbjaJ98=;
+        b=XEKRuBCn1kOvhKm6GT+JI2LTjhYx1Kad/L/p5U+hhDzXJDiIdeXv4BBmfgmhJ14265
+         PxmgJQCt/PXlAcdzRS63RT9lqrRWnMVLB2weQDnHtL2fhTUTiYLp64zepWr2dRt3QFzX
+         SVtCdq821nen22BMEwmSsSPdyEtzPm66K3lkfFKlAkAUiVWW0hyj8EJmWStwNqvCo4AN
+         b9u+nLy2WyHWOsj6dXPs2b23C6unXL3yQXv+1EXRKzlSB03eqsBvMBmYG8sL76C7P9wU
+         fUBRVeRWCwmjd4NTbFrHjHouM4v4ZF1n8HrV0YfIsgl+ZdU443fiuoCq0ePcgkMyQG67
+         tklA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737490767; x=1738095567;
+        d=1e100.net; s=20230601; t=1737490877; x=1738095677;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uMdsuNBtY2CYnseyo5wQ7/CeGPz8W5Crb6cBoMM9/3M=;
-        b=GDVCd3dq6SEFvZqK0+9tnNfpa64WK3URkzPQQvilroMVv5xc2fU7VNP1CMeF+EJObU
-         YUqA6HBSfqdUGyJ91d+PWsju7vJhxoNzqasMSeUryEmN0Tn/CeSrnedtByqjy/dh73oL
-         MAp1l9U5W7U506sd/hG4xzisy4zxfMJlRIR0xKANT9016lAtceedgAExfSlvqpBmizTT
-         X0WCeabe0gwb9PfEyEGlAzeBNwi0INiuEjnb7Txh4wuevg0MYTnDbjgG7nkqVruQFpAC
-         f26EkW9l0V609qSv2MeF5zphapzgJt1muBScWT+L0tsY0kt02j3vPkuIxl36KDUkwYwz
-         Y39g==
-X-Forwarded-Encrypted: i=1; AJvYcCWqvvA4R5h4cwNfDwpmA/981FY94zU71wpXnIr1/YWKA2VNONRU31ymFVKbPvD35qUBdtE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6/DuG8gATnCIYLa46TYt7mhE/Kq803bngTge8yBeLTfpKQw78
-	qbvAfjM6mPcslA5PHTY1NcOsgmD2n+9FaL4NTfClzIbgwzhj6jYu+/C1IiMV
-X-Gm-Gg: ASbGncszOzCF2YJbq8Qd3DL3l55d2AVNiA0jR13QHJb30C7pRHqY3HCPqOLupy4jZ1d
-	FVt3SfmLrNDkDGyxymzmb4F5mHIPX5risiW/JqEXAQ2X6lsVNOgdQz256qGor0m+pTf9Yw6suK+
-	Up7wmlyje/a4xQW5SFmn3RQlSDUBJy5/9TvuDsHCnjY7xvVNWSh7eTmpigq4u/YZfsq9lgTbGD4
-	by8L/9likZeHqTM7iF/w1QAPkDQzpDn52VGJEAdWWCicNpQ4jzRzBdKcNoFbm8FGdTt7NkciNWI
-	dj1gLrcIUXT6EOkAsBrYByKRhmLfaLVAgLRx/BCt13A7hxzriYrcmUQI0Q==
-X-Google-Smtp-Source: AGHT+IHww/OeQgII/zMx5HHUxvLMzXWg8cVB7Qm75L1KeDbmWwzoVb/7QsF6pyQPyzy58ztKNnNp0Q==
-X-Received: by 2002:a05:690c:4808:b0:6ef:e390:1d36 with SMTP id 00721157ae682-6f6eb6708b0mr145094877b3.12.1737490767295;
-        Tue, 21 Jan 2025 12:19:27 -0800 (PST)
+        bh=skoFd0vMXuWaj5qcfbM1e0frGfXcPQmggLVPBbjaJ98=;
+        b=tCF+ByBE3wG7UmB0jkMgC1HCh5Z2hEt4fcUKz7rJpyQy/j3Ks0TfMRz0rezsJLVZQ0
+         Yfxn4AxxXZU33K0/FFO1QzN6uZHYtxHCx/lyF94Qg83HjpERJ6D/9LSlsN0SaVgKwRrR
+         RfVpbTmKcMjkHCHAhIYbkkjf25fEEebdoH5/tRQX+P0Xb5qNA8PcQkyVEvWtNdhdnh2w
+         J9eWxEjhokk6XmXq6ThPLBsi9uT0zfkYGnRyS1VYmIK0rwZd3UFMLQ4tvkU1cGz6uH2l
+         KP9i7Q2IV/JIhsq84ZpTDQPVdMMyEZkiZ7u9Y5ZWZzUId8YLG6PkH9EZl2ZlPXiHTqW3
+         +M6A==
+X-Forwarded-Encrypted: i=1; AJvYcCVa9SzSCNE3jyQ3uQ8i09C1pQ2Rp55/fuxCzbKn9yeCung7I+HPOcI5neckz89H8yZTo/4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCXcZSidL6XXd47ICS/FxldQmUciFojmBgAWfa5Bn61K7OPKnY
+	FQe0a8d5bJ+nj+Kq5poAZs4q2VV2d4dOqZTtBq08Dlr6WFQ5c3cL
+X-Gm-Gg: ASbGnctUnHPTjBLhJNAI3nwhTTcCCDABBYvNRv6Jiz/EysBVqjCgPk2mofRYxt4E9wp
+	TwX8iOT1pZMXgSGXPB2E4Np4T9j5j7ckNhldQmRunu0NfpA4Ke0ZB9btoM9nGojEVLTDqgEOyER
+	WK2thixb+00Azn7PrrnSmwapX3ALeLw3vQu2U56mU3nqaPf20C7/T6n2MLeKsXEdiX7+9iWXUQg
+	juYm65rT3nIm1PA2DigsL2YqFO/J4G/Ij95M5P0zk7j1iZyHrZaJmaQFOTYg99ayrpHxjoGygWO
+	BkJx7KvvoS3aWNq6mDJnpYsJtRgumvbFLiksxTi7HuTVdptGy2q85kYJ2Q==
+X-Google-Smtp-Source: AGHT+IE8A5C2kiSl0CgFs7QbJInP2t7hPzcRUsjCXI0M7/WGamVR0f7ZBmWrJHeFQYdy8/2JqlRmaw==
+X-Received: by 2002:a05:690c:3383:b0:6f6:8b81:4c90 with SMTP id 00721157ae682-6f6eb92218amr153633487b3.30.1737490877153;
+        Tue, 21 Jan 2025 12:21:17 -0800 (PST)
 Received: from ?IPV6:2600:1700:60ba:9810:c52c:1d3e:3dc2:a210? ([2600:1700:60ba:9810:c52c:1d3e:3dc2:a210])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f6e6405690sm18128547b3.43.2025.01.21.12.19.26
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f6e63a96d2sm18708657b3.24.2025.01.21.12.21.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 21 Jan 2025 12:19:26 -0800 (PST)
-Message-ID: <1331d214-890e-4b47-87c6-44f445172bb2@gmail.com>
-Date: Tue, 21 Jan 2025 15:19:26 -0500
+        Tue, 21 Jan 2025 12:21:16 -0800 (PST)
+Message-ID: <35026c72-f9b4-40a3-b528-1c28b1238972@gmail.com>
+Date: Tue, 21 Jan 2025 15:21:15 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,43 +66,68 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: What's cooking in git.git (Jan 2025, #05; Fri, 17)
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqwmetgdgm.fsf@gitster.g>
+Subject: Re: [PATCH v3 0/8] pack-objects: Create an alternative name hash
+ algorithm (recreated)
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: gitster@pobox.com, johannes.schindelin@gmx.de, peff@peff.net, ps@pks.im,
+ me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com,
+ jonathantanmy@google.com, karthik nayak <karthik.188@gmail.com>
+References: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
+ <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqwmetgdgm.fsf@gitster.g>
+In-Reply-To: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 1/17/25 7:42 PM, Junio C Hamano wrote:
-
-> * ds/name-hash-tweaks (2024-12-20) 8 commits
->   - pack-objects: add third name hash version
->   - pack-objects: prevent name hash version change
->   - test-tool: add helper for name-hash values
->   - p5313: add size comparison test
->   - pack-objects: add GIT_TEST_NAME_HASH_VERSION
->   - repack: add --name-hash-version option
->   - pack-objects: add --name-hash-version option
->   - pack-objects: create new name-hash function version
+On 12/20/24 12:19 PM, Derrick Stolee via GitGitGadget wrote:
+> This is a recreation of the topic in [1] that was closed. (I force-pushed my
+> branch and GitHub won't let me reopen the PR for GitGitGadget to create this
+> as v3.)
 > 
->   "git pack-objects" and its wrapper "git repack" learned an option
->   to use an alternative path-hash function to improve delta-base
->   selection to produce a packfile with deeper history than window
->   size.
+> [1]
+> https://lore.kernel.org/git/pull.1785.v2.git.1726692381.gitgitgadget@gmail.com/
 > 
->   Comments?
->   source: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
+> I've been focused recently on understanding and mitigating the growth of a
+> few internal repositories. Some of these are growing much larger than
+> expected for the number of contributors, and there are multiple aspects to
+> why this growth is so large.
 
-I'll poke the thread, too, but this seems to be the most promising
-topic in the area of better delta compression. The latest version
-does not have any comments.
+> The main issue plaguing these repositories is that deltas are not being
+> computed against objects that appear at the same path. While the size of
+> these files at tip is one aspect of growth that would prevent this issue,
+> the changes to these files are reasonable and should result in good delta
+> compression. However, Git is not discovering the connections across
+> different versions of the same file.
 
-The only decision point I think remains is whether or not to
-include the last patch (--name-hash-version=3) which I would be
-happy either way.
+> This series creates a mechanism to select alternative name hashes using a
+> new --name-hash-version=<n> option. The versions are:
+> 
+>   1. Version 1 is the default name hash that already exists. This option
+>      focuses on the final bytes of the path to maximize locality for
+>      cross-path deltas.
+> 
+>   2. Version 2 is the new path-component hash function suggested by Jonathan
+>      Tan in the previous version (with some modifications). This hash
+>      function essentially computes the v1 name hash of each path component
+>      and then overlays those hashes with a shift to make the parent
+>      directories contribute less to the final hash, but enough to break many
+>      collisions that exist in v1.
+> 
+>   3. Version 3 is the hash function that I submitted under the
+>      --full-name-hash feature in the previous versions. This uses a
+>      pseudorandom hash procedure to minimize collisions but at the expense of
+>      losing on locality. This version is implemented in the final patch of
+>      the series mostly for comparison purposes, as it is unlikely to be
+>      selected as a valuable hash function over v2. The final patch could be
+>      omitted from the merged version.
+This series has been at this version for a while. I'm pretty sure that this
+is the most promising direction we have at the moment for improving delta
+compression for many users.
+
+The only decision point I think remains is whether or not to include the last
+patch (--name-hash-version=3) which I would be happy either way.
 
 Thanks,
 -Stolee
-
