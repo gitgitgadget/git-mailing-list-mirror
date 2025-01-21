@@ -1,160 +1,100 @@
-Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AF4E57D
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 13:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 729901BCA0E
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 13:44:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737465390; cv=none; b=akXm/CR0EvKeBO5M0VwPQoONc6f0UIdmILojw3BA/FU+28XN9eOp6NrzgOTkw6tB0b2rk0q6RveNMptR7eia7TfRFcDH6QLNVj1ldl0ptbLd0Ru3aIS2yfn3lqcMVhUrQNR+J1u8rqqa+QDXTDlPAoEpK7tHSBG4QkiGOURsej4=
+	t=1737467048; cv=none; b=UNx/KevBu15b77hboV4kqps4Ke3fHsm9AQ/HpJ7IUv3G23kDwCUR4US5ajSwYpp1+UNFSzrboTzCXj1GQe04wa99ddSZGanfTLtX3ji/cu0gHXYCdCf93KV6kUNMhcOafpEfv/fojf/pX4e+bcUAFg9tX6eNpHygMm6WOyckReQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737465390; c=relaxed/simple;
-	bh=JjOpea0Tcuz0gDzRR3KXJszq0cxpFlYTXSXCePKxxGU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BPmwYoFpmezpNmxbr6uYPfveBJ0Q42KerbGFNi0vHFW2wPTq3aoZTAAISpwusKcKDnuFqeVIeC8/PnWQg4GwugFSsl9IkFIL+SVgBH/0g4gL74uGaWRvChgca6unYuouKxKLJYiVuqyhBMy3DrSK3LNWu7lJQ4th6awAn6is7Ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=2ZIpzaBf; arc=none smtp.client-ip=95.215.58.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1737467048; c=relaxed/simple;
+	bh=0l0AedE6aJMNzqSgeYbtjUIAqC5EuD7SJqLRjroSmvQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Y5abl40ybiRMxITwKeiRQEe+MTxmusxA4h36FdP/T+Gc+O3G1SNpAgbDm6d0UJR8u+mi61jRROw/FBU7EpJ7NHu4r6yDiXZ5/vQoZemjd8kDnVTAFJpjReNyQULW+EeywE8nqKknYvqjKGRas6HBaL7y6/kLnJgxhveOlaBqCe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y1EfKnLU; arc=none smtp.client-ip=209.85.221.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="2ZIpzaBf"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1737465385;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=GB8Q57m0dhpbUk9l8ZWMxQ8wLxDAD1qX9yOd/kWzQHA=;
-	b=2ZIpzaBfVVZgv5baXg6HFAO5kt+CSbLYQX7zHAqPXIRmziD+y1U8bcIyzs8RtyyBQwORoN
-	ii3qqVThY4dOBHVRwSDmqnucy8UGoX9em1TkuJ5cneFwhwZR5l7tP1STV/ItFtHuCHQeWV
-	+eGdzyHzs3nisbtOkVHaFg3qukZAsrc=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Evan Martin <evan.martin@gmail.com>, Eli Schwartz
- <eschwartz@gentoo.org>, Junio C Hamano <gitster@pobox.com>, M Hickford
- <mirth.hickford@gmail.com>
-Subject: Re: [PATCH v2 02/11] GIT-VERSION-GEN: allow running without input
- and output files
-In-Reply-To: <20250114-b4-pks-meson-additions-v2-2-8d7ec676cfd9@pks.im>
-References: <20250114-b4-pks-meson-additions-v2-0-8d7ec676cfd9@pks.im>
- <20250114-b4-pks-meson-additions-v2-2-8d7ec676cfd9@pks.im>
-Date: Tue, 21 Jan 2025 14:16:11 +0100
-Message-ID: <87jzaoi9yc.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y1EfKnLU"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-51889930cb1so1603946e0c.0
+        for <git@vger.kernel.org>; Tue, 21 Jan 2025 05:44:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737467046; x=1738071846; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aCLjelJvuVcAAEPvXFUxgpecsjZ2nbvxxvC9nFN1ozM=;
+        b=Y1EfKnLUTO5wYhOyKFEzMtfKLukhz19kkXcG6wEu750nlPDFw52JzKVcr06vIvNhq0
+         2OK5X7zi8JLqv5Fd4tGWOJD2+m00SYj/SnqdgKoNkGxxPrtlueeMIC4409vUV59005+x
+         7p5MipP3RX1mIvg1HOVl33A85L+Y6oT4oFWgwocdmuQ3afVKyeImi+YGlvkyHCKTP4Dw
+         CeL68gAtvorKYf2E4aECLzC/2ijrjpRxrHlfVDVjguvCfq2jcz0IBPq6kJfPe3q9s59y
+         /iE/lmTIJIVw4dFC5yAmahrQ8MVz3jMez7NwxIbTnVeOjzAHlFm1sIA1kynCHfYaoDYV
+         hA4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737467046; x=1738071846;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aCLjelJvuVcAAEPvXFUxgpecsjZ2nbvxxvC9nFN1ozM=;
+        b=NuG/KCJ1cbAgiMaC2vhCKTh7WV+aAvWssXWa2tIvmFzmMNvd7WIOfQGlePdHCATGEF
+         VgoH2uw7hyYX2dmIjECT46cH0HCMdtjQwyA++qh3MIsxqrwy0KfaBTmEHSrU7sKm9dnj
+         31k0w8A9X0WIaOLSVoWSyRxT680b/NV9mwNQCiWp7EO7oDSrq1e6u9IVcAlERd98naxZ
+         CFuvGk4ZYfD+dlpB8eP8m300vuN7+PU6Pm5V9FShoOMBkVQEKZtxnGnQZEzDd+vYz5pp
+         sPqgXDyJBaLLjd/Zf8f6THMtEOGuS+sUZpxSSfE5Ug8QUfFmlq7V6JSMJsVvrSyTxYRe
+         Wg0w==
+X-Gm-Message-State: AOJu0Ywj5EOJ1s7AHyNpQHJx66/REjCW3tZdLwGQEOf/riVY4OVDjPKF
+	aKwqaUlgEZKdKSpPY/udq32KMA5sBLgKvaVwvfy6ysjw8D9sFZdlcjFD3XxJs8YX322MGzV41fP
+	WX0a5Ddl2dC1MPflFAxovpbFp5UI=
+X-Gm-Gg: ASbGncs0R8U78ukMilZBYGoB1lveFMFQH/Ei9gZwlcUgqF0UDjcjFMnNJk5vTcoSEO2
+	KciYordzuTjFXDj2f02VxcxwiVQ1xU6FqrB7ts/mClDihGg2+JuM=
+X-Google-Smtp-Source: AGHT+IGSVwp+Ct2iTFc5LBbEpUrOHDqDSBjS3nL82zBlUg4lYZMu5d6zLnPD6wZgP/DC7Mx/qN/RW5TCzAjGTFaYeQg=
+X-Received: by 2002:a05:6122:d1b:b0:515:ed1b:e6dd with SMTP id
+ 71dfb90a1353d-51d4c656390mr11920290e0c.0.1737467046065; Tue, 21 Jan 2025
+ 05:44:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+References: <20250106103713.1452035-1-usmanakinyemi202@gmail.com>
+ <20250117104639.65608-1-usmanakinyemi202@gmail.com> <20250117104639.65608-5-usmanakinyemi202@gmail.com>
+ <xmqq4j1xkzir.fsf@gitster.g> <CAPSxiM9qRQ2HuTJDmhq_xeCRmn+yUvjXokwEwJE0S4av9Y-TKg@mail.gmail.com>
+ <xmqqy0z52rg4.fsf@gitster.g>
+In-Reply-To: <xmqqy0z52rg4.fsf@gitster.g>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Tue, 21 Jan 2025 19:13:54 +0530
+X-Gm-Features: AbW1kvakVQo3VQv3poTmrZPBmVpHK2HXtSz9Qc5xAOsUjCcZdM5Mlo7uD4Q4ako
+Message-ID: <CAPSxiM90EGU+eYN9KTpOXX4nK3Rhu605CCQd+-TzYK51svHStg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/6] t5701: add setup test to remove side-effect dependency
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
+	johncai86@gmail.com, Johannes.Schindelin@gmx.de, me@ttaylorr.com, 
+	phillip.wood@dunelm.org.uk, sunshine@sunshineco.com, rsbecker@nexbridge.com, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> The GIT-VERSION-GEN script requires an input file containing formatting
-> directives to be replaced as well as an output file that will get
-> overwritten in case the file contents have changed. When computing the
-> project version for Meson we don't want to have either though:
+On Tue, Jan 21, 2025 at 1:22=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
->   - We only want to compute the version without anything else, but don't
->     have an input file that would match that exact format. While we
->     could of course introduce a new file just for that usecase, it feels
->     suboptimal to add another file every time we want to have a slightly
->     different format for versioned data.
+> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 >
->   - The computed version needs to be read from stdout so that Meson can
->     wire it up for the project.
+> > Yeah, that is true, I could not notice this as the next commit of the
+> > patch series
+> > was able to fix it. I will change it to "echo", with this, it will be b=
+etter.
 >
-> Extend the script to handle both usecases by recognizing `--format=` as
-> alternative to providing an input path and by writing to stdout in case
-> no output file was given.
+> If we want to prepare ourselves against any arbitrary garbage the
+> builder may throw at us, using printf with _fixed_ format and feed
+> the potentially arbitrary garbage as its parameter to be
+> interpolated is the safest approach, so writing it as
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  GIT-VERSION-GEN | 44 +++++++++++++++++++++++++++++---------------
->  1 file changed, 29 insertions(+), 15 deletions(-)
+>     printf "agent=3Dgit/%s\n" "$(git version | cut ...)"
 >
-> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-> index b8b683b9337e5771e14a2cfb84022a11489bb432..9d201a98fd2766911544225c62159cbfe8dff5fe 100755
-> --- a/GIT-VERSION-GEN
-> +++ b/GIT-VERSION-GEN
-> @@ -5,21 +5,29 @@ DEF_VER=v2.48.0
->  LF='
->  '
->  
-> -if test "$#" -ne 3
-> +if test "$#" -lt 2 || test "$#" -gt 3
->  then
-> -    echo >&2 "USAGE: $0 <SOURCE_DIR> <INPUT> <OUTPUT>"
-> +    echo >&2 "USAGE: $0 <SOURCE_DIR> (--format=<STRING>|<INPUT>) [<OUTPUT>]"
->      exit 1
->  fi
->  
->  SOURCE_DIR="$1"
-> -INPUT="$2"
-> -OUTPUT="$3"
->  
-> -if ! test -f "$INPUT"
-> -then
-> -	echo >&2 "Input is not a file: $INPUT"
-> -	exit 1
-> -fi
-> +case "$2" in
-> +--format=*)
-> +	INPUT="${2#--format=}"
-> +	;;
-> +*)
-> +	if ! test -f "$2"
-> +	then
-> +		echo >&2 "Input is not a file: $2"
-> +		exit 1
-> +	fi
-> +	INPUT=$(cat "$2")
-> +	;;
-> +esac
-> +
-> +OUTPUT="$3"
->  
->  # Protect us from reading Git version information outside of the Git directory
->  # in case it is not a repository itself, but embedded in an unrelated
-> @@ -74,19 +82,25 @@ read GIT_MAJOR_VERSION GIT_MINOR_VERSION GIT_MICRO_VERSION GIT_PATCH_LEVEL trail
->  $(echo "$GIT_VERSION" 0 0 0 0 | tr '.a-zA-Z-' ' ')
->  EOF
->  
-> -sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
-> +REPLACED=$(printf "%s" "$INPUT" | sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
->  	-e "s|@GIT_MAJOR_VERSION@|$GIT_MAJOR_VERSION|" \
->  	-e "s|@GIT_MINOR_VERSION@|$GIT_MINOR_VERSION|" \
->  	-e "s|@GIT_MICRO_VERSION@|$GIT_MICRO_VERSION|" \
->  	-e "s|@GIT_PATCH_LEVEL@|$GIT_PATCH_LEVEL|" \
->  	-e "s|@GIT_BUILT_FROM_COMMIT@|$GIT_BUILT_FROM_COMMIT|" \
->  	-e "s|@GIT_USER_AGENT@|$GIT_USER_AGENT|" \
-> -	-e "s|@GIT_DATE@|$GIT_DATE|" \
-> -	"$INPUT" >"$OUTPUT".$$+
-> +	-e "s|@GIT_DATE@|$GIT_DATE|"
-> +)
->  
-> -if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$+ "$OUTPUT" >/dev/null
-> +if test -z "$OUTPUT"
->  then
-> -	mv "$OUTPUT".$$+ "$OUTPUT"
-> +	printf "%s\n" "$REPLACED"
->  else
-> -	rm "$OUTPUT".$$+
-> +	printf "%s\n" "$REPLACED" >"$OUTPUT".$$+
-> +	if ! test -f "$OUTPUT" || ! cmp "$OUTPUT".$$+ "$OUTPUT" >/dev/null
-> +	then
-> +		mv "$OUTPUT".$$+ "$OUTPUT"
-> +	else
-> +		rm "$OUTPUT".$$+
-> +	fi
->  fi
+> would signal the readers that whoever wrote it knew what they were
+> doing and was being extra careful.
 >
-> -- 
-> 2.48.0.257.gd3603152ad.dirty
-
-I was considering to suggest to have GIT-VERSION-GEN accept --stdin for
-$INPUT and have it read from stdin instead of passing the format as an
-argument, but looking at the following commits I agree with your
-approach.
-
---
-Toon
+> THanks.
+Yeah, I will add this in the next iteration.
+Thanks.
