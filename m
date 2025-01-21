@@ -1,113 +1,128 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A771B2EFB
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 21:09:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D9B1B2EFB
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 21:10:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737493796; cv=none; b=ku8hOulrAvfNIU9Qzro/2Dzd8tbZ8PiSAcMF9g0qzl4cdiByMmHiuOJrteoQmQKwWcWsrUtjhKYRGKt3nlCGFv00fI4GUKyzqy9EzxESmNFqx0PN2La2yB4vVrv7luKNF3J3jp3RBcl5Cc7t86PM8F5nL31sUeMWjZlBM4PIu8s=
+	t=1737493847; cv=none; b=FtPxLIUC+S7eanzpbvVEk7YjmefedJCBsncZP6TWV3jSh0CpgoQH8T1ZppvshV2dv39bVU91uPHr4z5lmfvKEZK01tU57Z+NK0Jmtd6v4JMB7bfcpjkPEoBuDac5otO3n+YlKzuhfEYAZyNbEtIP438ZzzDvQ9wV9bCJw2sUx2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737493796; c=relaxed/simple;
-	bh=RPXj89IIBFrjle5LbyWiLzSr5nZXtSlm6nYlgWiN8Bk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=alauNqf4cOCmXXsQyX/kOIvDUL9OYvWZB2Ak0hpMMx6CmAb5F8T4XnRzcJscbFcZFnGqWNPiU1EkldXG/9brMSoMzN8B40i8aF8vLlHNhHfANz04Yq2RJSKhXHDWnt0wtBhlOnXtQOyPf2zRXuZ8J+uxJce+cLckQDsU65Twi2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FPD7VhxM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EELc8ggF; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1737493847; c=relaxed/simple;
+	bh=1DNFotEKYqdoSC4FqGutRaklGfgZPpq9c9H7oDUYya0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Av/kBUFDv3ZgG7d+9x9GxYONPCnItWbgPDXcknFB7hlO6D+QuwuHqhkqcvoZ/+tOws27+DIPqQjH1ilfKjlq+sQ6/6vXKWP6zLmQDE8t7QtoZAX3fARLCv34/s7513WhMHbqo5rlGv4uenfkMGrK54DQW3j9YYTlowz9sASwwpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uH0gRxx6; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FPD7VhxM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EELc8ggF"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 03AD911401F0;
-	Tue, 21 Jan 2025 16:09:52 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Tue, 21 Jan 2025 16:09:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737493792; x=1737580192; bh=QUQn747rR5
-	2VQi0qO3U0KJLf6vLGAFN+ljz0QR7LNLc=; b=FPD7VhxM9RUiAZ4Kf13nkqCL6P
-	kG+1Mw8I0eEiOWxzWUSdmfjg4N5KLd+X6viVrn4j8SJ0e7yx2nJ96Usa2KvNDOFk
-	N8rFA0AuG4sBnskrPP7132k3SWrQeuW5kFezIeEW6qxaGRDlOtt2t0v1blv8yxaA
-	dfHOPQ1wdarXKJC4QGmeCPBq9wokopU5Yq1KDD5t3a/XO4/mp4+A/uj2AWzHZ4oT
-	soXZLFw8b5KY85UcKDLtw2rW73HjmqlPSG8G0/SmTluVIi8UOtz5sIah3sxo8vhI
-	KxDmVDNNOYhfzb/wJPYXPAfee02Xcn4YPdfH0WSgv0Lcbn7ArmsMhnnbnQrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737493792; x=1737580192; bh=QUQn747rR52VQi0qO3U0KJLf6vLGAFN+ljz
-	0QR7LNLc=; b=EELc8ggFI/Iy3aCra0mTbftJc65AUkgKSJj1CrMSlxrpH4voS1A
-	54r9IDMzeT1zfhbq/aWugS1nhB7ZCr02UYWJG/A+gFVbq1tVy8RfmsMiae1W4IVm
-	/MIuVIxRg13A3WXXLNyOwodcPkkgKnZyzXyg6dEuAfmjtMWPIB9Ln3/EImpvnnMA
-	R7y7A/8s5QmNjqL7K33GPaogoX04nFhBR7QOlJdnPh4bp85jMQ+eDSbFko4uJohv
-	ZLxHJqSGRa+QddInsPmiVR/ym0JGpQFFLNqGmrmMjMnyVcKUX4kCitYG1eedtjds
-	d2jdI9B7OQxDGaflMQME3lThjXGiCuGwzQA==
-X-ME-Sender: <xms:IA2QZ3DAT3jQ_x6tbcl3fBX5y3XEvkzyhzpNqAk-EnudbSIMG2pj1A>
-    <xme:IA2QZ9irD7BThmVWdusWos-YC1k-lvf5xJpPcUKAnEtthrhJHl7uoC-m3a2O3sDQZ
-    P7CpX10QHS7t--u4Q>
-X-ME-Received: <xmr:IA2QZymTkL0XUGGJkQuZS-DJwFdarKoMwFnozLJ8jvNrEc1r48EEFuQM1ynNKeZ9bF3BWNyPK5vctIGa9ujQrdhm4mtFO_yrDNHm>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejvddgudduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehrohgsvghrth
-    drtghouhhpsehkohhorhguihhnrghtvghsrdgtohhmpdhrtghpthhtoheptghhrhhishgt
-    ohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehrrghnuggrlhhlrdgsvg
-    gtkhgvrhesnhgvgigsrhhiughgvgdrtggrpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:IA2QZ5zqdBcqziDhhj81hop2rtVoDGJHvdlgMEa7DxQ7lKHMhww43w>
-    <xmx:IA2QZ8TQo9OZiL5FxAQZ8PEqcy_NKVCUt44AqnRDdptsGrCSESvGzA>
-    <xmx:IA2QZ8aX5jdGk3R5yBVfd121ZdFNKudxaeW3bF1Y0c_Z_hPMvv5-6w>
-    <xmx:IA2QZ9QUsAoChKPgIg-leIZi7OEep9ze_XhfQG5OnDQU1jsCdtqsvg>
-    <xmx:IA2QZxTcm6OiWGdt47mM4ipVI2yXLR0IHJ_Xbkz3oivC7R4ng5zTXPG->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 21 Jan 2025 16:09:51 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Robert
- Coup <robert.coup@koordinates.com>,  Christian Couder
- <chriscool@tuxfamily.org>,  "Randall S. Becker"
- <randall.becker@nexbridge.ca>
-Subject: Re: [PATCH v3 4/5] builtin/pack-redundant: remove subcommand with
- breaking changes
-In-Reply-To: <20250120-pks-remote-branches-deprecation-v3-4-c7e539b6a84f@pks.im>
-	(Patrick Steinhardt's message of "Mon, 20 Jan 2025 08:43:01 +0100")
-References: <20250120-pks-remote-branches-deprecation-v3-0-c7e539b6a84f@pks.im>
-	<20250120-pks-remote-branches-deprecation-v3-4-c7e539b6a84f@pks.im>
-Date: Tue, 21 Jan 2025 13:09:50 -0800
-Message-ID: <xmqqed0vzxep.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uH0gRxx6"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-4678c9310afso11771cf.1
+        for <git@vger.kernel.org>; Tue, 21 Jan 2025 13:10:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1737493845; x=1738098645; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1DNFotEKYqdoSC4FqGutRaklGfgZPpq9c9H7oDUYya0=;
+        b=uH0gRxx6cVY23vYhF6k49PxSZrjWBYJjvTpUoXjebnrZ+3SgbYWsLehGT+EPOZZ5rI
+         5wfP7Kxw+e09zK/VK6QdVV87JGmVThtZkex7jCGGgRvsI3z5CkNHleY5QzKDcdqhNMDc
+         DjqMgU2orksEE1CFAFz5g6r0NleV1cuY/aNf4afj/5V2PQmivQUd6GV3BwVGGGqo8KC4
+         ZJDzpaaIHo7PhbNgbgcs58cBIITWIzxD21yAwZChxX0qI1enHE+kTpJmvBTVPo32D3DS
+         GbLwsRJpnwYTmu+zbGHMGbVRD8CpiUXf0ZBHgkBKWt8fZF1ZmJscDNYBKUSMQZI6ol6s
+         pnNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737493845; x=1738098645;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1DNFotEKYqdoSC4FqGutRaklGfgZPpq9c9H7oDUYya0=;
+        b=X3qdhL/IePeW9wT6MLuZbdShCUChLp2F+zTHO1fEX41ugQ17/wFr8uLJqzLAQ1/sQe
+         kBg+c3SbWoB+q4U8z/zSK917g1xmwIANIaQTrs2JapP02tbSVV0mpP1GCpOpkQ1yqtup
+         Rp/5xHG2V9Vw7AAvXr7eTQORVgCyPSaBbq4yI/qcaTHHhGICi3KtgQOWi2+qwv5sTMG7
+         7zF8qaQWENrGxZfCHpCtJhy1NYYDFgspdm2+Kt2FzhnqZvwW27IrrkwE+PBXoNMO6mpT
+         Qwm8CBi83bqcvncIIquzwRT7/Y/J3LfZFhETj0ycaizgJMQQjMM66eCIz5jLRggH2FQy
+         MyxA==
+X-Gm-Message-State: AOJu0Yw7qiPJSF8GdPznhOl+U2X7VSgMAYJV9ympvW7XR7+sho0l/wHs
+	ABFab3866/Q4XN9DGFtFmv52JQB1ye3dVOSE5FrdK4Gyana9ABSbm+QO8QQb0scjZDTh/miEN6D
+	sgLFN89dYDLw8Trqi9ZcpazdCUvGxIOA9xwuzVqg5PSWgbjxBsg==
+X-Gm-Gg: ASbGncvwUo6ox8spi8WGjuYQ0gFWKJR8yhjBPNVgKcrHMTEpPdHuP1Pi7L9GMYM+9aU
+	HMQg6zIMGGyDVdi4LFUF+/uWHWqMvSVLvwZK5YfXFGD8E5wSH4LERWUeMAvPv6P0agRTHlj/xyu
+	fu0laB5g==
+X-Google-Smtp-Source: AGHT+IF3x4v/uM+Y0dcr30uDVJ09ZHyAtZdM+aO6/q0P+ecLz/Jb8FY0DF89G70aK2XkBOoLN0oIB4skkvE4IaDZzeU=
+X-Received: by 2002:a05:622a:1206:b0:465:3d28:8c02 with SMTP id
+ d75a77b69052e-46e500426d3mr698351cf.26.1737493844699; Tue, 21 Jan 2025
+ 13:10:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <DB9PR05MB110863344D3776D13B436F563C1E72@DB9PR05MB11086.eurprd05.prod.outlook.com>
+In-Reply-To: <DB9PR05MB110863344D3776D13B436F563C1E72@DB9PR05MB11086.eurprd05.prod.outlook.com>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Tue, 21 Jan 2025 13:10:33 -0800
+X-Gm-Features: AbW1kvb7z9JW6xaEWh3-qQgD31KusSaEXg3spUQ4k_GQawHWUpuLuvR_Al_6i8A
+Message-ID: <CAJoAoZnecm5y8243R9JsGjRDuv-Mb=UAwa+Hbj5CKDKNPBLB4g@mail.gmail.com>
+Subject: Re: [Feature Request] Allow batch removal of remotes with 'git remote remove'
+To: Christian Fredrik Johnsen <cfj@johnsen.no>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Jan 20, 2025 at 3:07=E2=80=AFPM Christian Fredrik Johnsen
+<cfj@johnsen.no> wrote:
+>
+> Hello =F0=9F=98=83
+>
+> I would like to propose a feature enhancement to the 'git remote remove' =
+command.
+>
+> --- The Problem ---
+> Currently, 'git remote remove' only supports removing one remote at a tim=
+e. However, it would be useful to allow batch removal of remotes, as in:
+>
+> `git remote remove remote1 remote2 remote3`
+>
+> This would simplify workflows for repositories with multiple remotes when=
+ clean-up operations are needed.
 
-> The git-pack-redundant(1) subcommand has been announced for removal with
-> 53a92c9552 (Documentation/BreakingChanges: announce removal of
-> git-pack-redundant(1), 2024-09-02). Stop compiling the subcommand in
-> case the `WITH_BREAKING_CHANGES` build flag is set.
+Hi Christian, is there a reason why opening up the config (`vim
+.git/config` or `git config edit --local`) and batch-deleting remotes
+from there is undesirable? If this is a solution you believe only
+power users need, then I'd posit a power user can both list all
+remotes *and* remove the offending ones in a single editor pass,
+rather than having to run multiple `git remote` commands, anyway.
 
-Nice.
-
-The date it was added to BreakingChanges document is probably of
-much lessor impact and importance to the end users than when we
-stopped working unless the user gave "--i-still-use-this" which was
-done by 4406522b (pack-redundant: escalate deprecation warning to an
-error, 2023-03-23) that was in Git 2.41.
-
-Other than that, I love this step.  The fewer the subcommands, the
-happier the users ;-)
+>
+> --- Proposed Solution ---
+> Modify the 'git remote remove' command to accept multiple remote names as=
+ arguments and remove them all in a single invocation.
+>
+> For example:
+>
+> `git remote remove myfork myrepo origin`
+>
+> --- Benefits
+> - Reduces repetitive commands for users with many remotes.
+> - Aligns with existing batch-like behavior in commands like 'git branch -=
+d branch1 branch2'.
+> - Streamlines repository maintenance, especially for power users.
+>
+> Thank you for considering this request. I=E2=80=99d be happy to provide f=
+urther details or clarification if needed.
+>
+> Best regards,
+> Christian Fredrik Johnsen
+>
+> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D
+> ---> Generated this message with ChatGPT, but it gets to the point.
+>
+> I am assuming that this is such a niche case that it hasn't been reported=
+ yet, though please correct me if I am wrong.
+> There are no `github issues` I can search through to find older related i=
+ssues, so I'll give it a go.
+>
+> Attached a picture showing the situation where I encountered the issue.
