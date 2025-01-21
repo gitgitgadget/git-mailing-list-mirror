@@ -1,111 +1,92 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FE71B4233
-	for <git@vger.kernel.org>; Tue, 21 Jan 2025 21:32:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5951F76D2
+	for <git@vger.kernel.org>; Tue, 21 Jan 2025 21:52:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737495141; cv=none; b=dT8GdYGSkC0ZHYk4scM11P4d2EgR6qMDd6k9QmNgCZc20kcfPUbq7rR41HIFnd0O6qRqmFDkW2PNvahIj80aXbMuzXyHbYh7T9xcVSb55OmZiy/esDjU4dQYA6KD0pHrnMY55722Gyp7HAaONG0RASmgGpIPo/8oWVJHcppnhGM=
+	t=1737496365; cv=none; b=YxLMwtcQ861U9Viq58ub3SaqIu9cMqW4IzbEWlsfgkvHBR34t9ZDKTwsDqyNHCHJhhHdXMwRJArgQUB7jzAHQGajUv3mIfEJuUczNAPuEGOihnLg9TXvzoC5f3D60yFl/jsDJM8CkeDIrbL160wZIrvWEMX+rUP5dBO3/2c/FlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737495141; c=relaxed/simple;
-	bh=4adHDktWKN+OJgFCCE3sGw7MN0Htbbuaxfu9EgfjlHI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZaM1Lb8FmepwEc/AyJbWe2+b6q0IadNaXdzbik/JPWAXyDTLqcuIeSRWpOOjmOBWeokYTcJf7q2XF1MxGjOUDZDHGXGl58RPJaUxr0mc3oj03hVo8c7UzO4sDAsdwfTF7AEugeb/8S6FpotHKHnveTKttQ8d0rmHF8T5+xkPe0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S6jFQAYm; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737496365; c=relaxed/simple;
+	bh=EdGy14TpFcmdoXxLYEVHaHzAOBteFCy7QpAPtnGjdiM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j8O2PEQv6Jj3xcx8FsIQkL3Qc5D60bAHa1c3ehfjq9Q77T0OWUexMMKOAMp6D8Fsw8eW6Z5gQoAV4ZNjHU/pZGhxg7LqT0t326gUMAEFjIrQzE+ttUIRnE7VZGBcau+DjIppgs9oG9dF6lXG9NYheQVFO7JtfQau7pE7pViZh5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=NbNRg7BO; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S6jFQAYm"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a9e44654ae3so873885966b.1
-        for <git@vger.kernel.org>; Tue, 21 Jan 2025 13:32:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737495136; x=1738099936; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4adHDktWKN+OJgFCCE3sGw7MN0Htbbuaxfu9EgfjlHI=;
-        b=S6jFQAYmuoHUTr1kLp+CqPf9RE6kTSG7pIOraRVn2cIjmj21by2q3KGnjzaYciK0n6
-         DYcgBlSziRz+pl7cJ5orkUnAjQB9Er9Dh8E4vhU31mP5uqbZUwOJPQMJN/BYituI7mGH
-         kwS8bkEPe73PmWqV37VS5pCtRcyM3IoECuawjEVv22+i6WKGhKYYd26cObFIE4jzC0uY
-         vJOGpZW4rhWk3Q2VKAyLMAQZpmLpD8Xe3tCUNlzadC8sP7BI8wCxUhqr3a5DCw4wnBT6
-         8GNgSKcDbLtYXChWLbq4ZsUqInJw1Hu1JxlZcEVinyrDLUm3KCc3f8sRh/QzPNhxrIEn
-         zmlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737495136; x=1738099936;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4adHDktWKN+OJgFCCE3sGw7MN0Htbbuaxfu9EgfjlHI=;
-        b=Jl1cjUnWz9jXlnHNvn4VGBGnC7sDDlt4GR6qljq+4KepH2u0yHHpeXkavcMIoX4FCR
-         sEHLEvWOf6j+bVL9MywSiArReagqb8/6VggnWWSYy/18RVczOc5pPkL6ggD5tnGGQi+S
-         rO7jt17lOCPmUI386Z2jgQ5Gh50bqYlx3tx4GioR0KbJHjaoNXwvulSanNyvHo+Lau4i
-         qLCwSeWQMJLuOEJmglY1iemaCJUyb0ycQuwI6YLInMaH+KsURh1rwdqTT8PKYKGTHEze
-         T9XekEdFDBmbelNvnIge5OmYBKwQtX2Dj9dUy2s5cful/g1ugNb2mN8OrqWjCZ3/B3nH
-         Uf5A==
-X-Forwarded-Encrypted: i=1; AJvYcCUXVIn9VF6XV9XQtHrYik8/ld7i9lDS8mKANqS7e7bKB1BFT0dsI2j06J35REXgzXC3rhE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwemB/hAxmmm1o4kauUUbdfwVZLH3fWvzHBKzYOXgjsRWs0hk3Z
-	hvhi/3yosgqtlvjA4fMEPpx0ezhWajJiZiIQ6UdeCP5BH+3PINa0n/nk5j2ZtXJFnz16cyJG55l
-	9yAwLcj2k2knxiW5kdtZ0ZJeGqRY=
-X-Gm-Gg: ASbGncv7Go1Uj+jfpfi35BCm79LabJTttkBVcSDtKgTuhrQNqJ0r7X35WdMUfB9UYq7
-	HyAqBMBzKcNdQMqmUFVlAv2c6w9ZWdBrFoqIhJyymQFNUiMPVBqRF+/Kbv6GU+/uoMcXgUrU+Ho
-	zhebfMays=
-X-Google-Smtp-Source: AGHT+IEaCGdkLF37b+CZWzcQxvjjYw00jZRwUZOc98Dt6vN0qfcssY0HTNqU/CHCraOCXI6E7XCOAqSVBvpPBAUcbHk=
-X-Received: by 2002:a17:907:6095:b0:aae:bd4c:22c0 with SMTP id
- a640c23a62f3a-ab38b1100b4mr1578290866b.19.1737495135562; Tue, 21 Jan 2025
- 13:32:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="NbNRg7BO"
+Received: (qmail 2676 invoked by uid 109); 21 Jan 2025 21:52:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=EdGy14TpFcmdoXxLYEVHaHzAOBteFCy7QpAPtnGjdiM=; b=NbNRg7BOJXt8V6rPWYkV6fTKLr5EKXCugbGsO/3cKGGXZ7N03G4p3lu/l5dk4hiaebvsuvdZV4nWeI2y9R5y4r/oYCSYcCCl0sUT8pii7/mfI3bQuUcxsVRU/A/noAqDIJgELJc3wDGIvGPwC7V/WhYl2HjKrGsVWGavg16STKDmkeSgGmAbSQOVQIO5QgxaQa4c8Il4eiL6gP4iKBbWZS6FDrHC7KoBzQNDFwPJgOmBolt17rJW0cuMY2ljehiDqdGnuuLHnnw9gike6zAPB3NG6TvLCqRiMl/YtMX39haJxmlGVj98IAfn7+qnl09NLRTmaNH+W43+Pt9KCzHbuA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 21 Jan 2025 21:52:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31725 invoked by uid 111); 21 Jan 2025 21:52:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 21 Jan 2025 16:52:38 -0500
+Authentication-Results: peff.net; auth=none
+Date: Tue, 21 Jan 2025 16:52:35 -0500
+From: Jeff King <peff@peff.net>
+To: Nika Layzell <nika@thelayzells.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: `git update-ref` fails to set reflog old_oid in 2.48
+Message-ID: <20250121215235.GA2753621@coredump.intra.peff.net>
+References: <CACwGqKixQEGau8CZuLwJx02F4h8hxrf9e_7N1tHMU=Wvy8ViyQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <DB9PR05MB110863344D3776D13B436F563C1E72@DB9PR05MB11086.eurprd05.prod.outlook.com>
- <CAJoAoZnecm5y8243R9JsGjRDuv-Mb=UAwa+Hbj5CKDKNPBLB4g@mail.gmail.com>
-In-Reply-To: <CAJoAoZnecm5y8243R9JsGjRDuv-Mb=UAwa+Hbj5CKDKNPBLB4g@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 21 Jan 2025 16:32:04 -0500
-X-Gm-Features: AbW1kvaZDX9flfvj_BykmP2QcqGkT-O2MqHsLERHNboAxL7DPJH83RBN3bsqOOM
-Message-ID: <CALnO6CAEaOUNwMpOTF8wKVd7LAv+UiU5W62ZCBc0U-K_JhHU-g@mail.gmail.com>
-Subject: Re: [Feature Request] Allow batch removal of remotes with 'git remote remove'
-To: Emily Shaffer <nasamuffin@google.com>
-Cc: Christian Fredrik Johnsen <cfj@johnsen.no>, "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CACwGqKixQEGau8CZuLwJx02F4h8hxrf9e_7N1tHMU=Wvy8ViyQ@mail.gmail.com>
 
-On Tue, Jan 21, 2025 at 4:16=E2=80=AFPM Emily Shaffer <nasamuffin@google.co=
-m> wrote:
->
-> On Mon, Jan 20, 2025 at 3:07=E2=80=AFPM Christian Fredrik Johnsen
-> <cfj@johnsen.no> wrote:
-> >
-> > Hello =F0=9F=98=83
-> >
-> > I would like to propose a feature enhancement to the 'git remote remove=
-' command.
-> >
-> > --- The Problem ---
-> > Currently, 'git remote remove' only supports removing one remote at a t=
-ime. However, it would be useful to allow batch removal of remotes, as in:
-> >
-> > `git remote remove remote1 remote2 remote3`
-> >
-> > This would simplify workflows for repositories with multiple remotes wh=
-en clean-up operations are needed.
->
-> Hi Christian, is there a reason why opening up the config (`vim
-> .git/config` or `git config edit --local`) and batch-deleting remotes
-> from there is undesirable? If this is a solution you believe only
-> power users need, then I'd posit a power user can both list all
-> remotes *and* remove the offending ones in a single editor pass,
-> rather than having to run multiple `git remote` commands, anyway.
+On Tue, Jan 21, 2025 at 03:40:06PM -0500, Nika Layzell wrote:
 
-I'd posit a power user can also do something a bit like (Zsh with GNU
-or FreeBSD xargs) `print -N my remotes to delete | xargs -0n1 git
-remote remove`, or (portably) `for remote in my remotes to delete; do
-git remote remove "$remote"; done`.
+> In git 2.48.1, the `git update-ref` subcommand no longer correctly
+> updates the reflog in some cases. Specifically, it appears that the
+> `old_oid` field will not be updated when modifying a branch referenced
+> by another symbolic ref (e.g. HEAD). This doesn't break the `git
+> reflog` subcommand, but does break references like `HEAD@{1}`, which
+> appear to read the `old_oid` field.
+> 
+> STR (in a fresh directory):
+> ```
+> git init -b main
+> git commit --allow-empty -m "A"
+> git commit --allow-empty -m "B"
+> git update-ref -m "reason" refs/heads/main HEAD~ HEAD
+> ```
+> [...]
+> The `old_oid` field is empty (all zeroes). This is only the case in
+> derived reflogs (in this case .git/logs/HEAD). The reflog for
+> refs/heads/main appears to be updated correctly.
 
-I couldn't find a comparable command beyond `git branch --delete`,
-which _does_ take multiple branches.
+Thanks for an easy reproduction recipe. Looks like it bisects to
+297c09eabb (refs: allow multiple reflog entries for the same refname,
+2024-12-16). Author cc'd.
 
---=20
-D. Ben Knoble
+Just looking at the diff, the early return from lock_ref_for_update()
+seems suspicious to me. Doing this:
+
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 8953d1c6d3..1c0e24a855 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2611,9 +2611,6 @@ static int lock_ref_for_update(struct files_ref_store *refs,
+ 
+ 	update->backend_data = lock;
+ 
+-	if (update->flags & REF_LOG_ONLY)
+-		goto out;
+-
+ 	if (update->type & REF_ISSYMREF) {
+ 		if (update->flags & REF_NO_DEREF) {
+ 			/*
+
+makes the problem go away, and doesn't fail any tests. But that is just
+me poking at it without understanding why those lines were there in the
+first place.
+
+-Peff
