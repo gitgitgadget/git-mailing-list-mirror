@@ -1,82 +1,85 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55830215793
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 17:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D316D213E81
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 17:50:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737567814; cv=none; b=XNiF9XSWt3yGSc+27BvSnfcEwQ4FDLP6AZJdnqpscX4hnhRaqLfG3AwKcpX9is2zGjQh9UleWRhqZZMZK2ayifhN0CirCzmXSMWMTs2T/cq9VQGf2p2QRFd0v/dJvcUppkJUl8AwXCH5Dhr5BiLy+CTVdKRhrPAAjxGEuS21Oto=
+	t=1737568233; cv=none; b=gz2imK7EFeJ/hr+OF2YBo3xqWYKagf1tA8T2ZcfhDkWtwBg7NNW5eOtRHYq5Im1HECwGQBj4T4+uEv+ieOGqNtOJ1+wZ7IgtKJ46n8HLn6nrZz1XusduWmGhP5HuisGSToMnGwHYOLZF4QGilUdF7RIQ1FHBj3YU1KTj80T1FRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737567814; c=relaxed/simple;
-	bh=reqefmapvvkpPYWW7yIIDadfBa6UbDwB89muv2UGj18=;
+	s=arc-20240116; t=1737568233; c=relaxed/simple;
+	bh=f8J360nG+jsUrfAoiAFcwGcDU7TvSmiBBtwlPgFIdL0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L8wWqpONmcIXQID81gkKaFg2wH/hZa0l5GFV8l+bbtJxFfU41DPLR4UHp80UAs9YEfPcPvd6s6gvqABTLrTeLnC8tCICKcPtpYfTBo8KmLmchYY0opbPpI9pQpQhfpPxAX0GZnbeflVLyxy65sKIh6qnnJEAHoC8T8eLxHOxboE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q5Nd7yuh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DfmbI4aJ; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=O4ZgLkBftMuYDJ84qmIKZQSepAtEG66NalyCold8TJqE9ZHFlXWehftuFsfLl8QhpuhTVuWj6iZ48oo57zDHJjNx0NkveuuqHbVV4VtHS0EgQM5FjOQDWaOJEQbXHdN2JCJwhkur+ewl2nG6MHmGIDGF+ZvX2CZP47BBBP2/J6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nUYz3zRD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JD1C5XzW; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q5Nd7yuh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DfmbI4aJ"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 58CF9254016F;
-	Wed, 22 Jan 2025 12:43:31 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 22 Jan 2025 12:43:31 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nUYz3zRD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JD1C5XzW"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E267B25401EE;
+	Wed, 22 Jan 2025 12:50:30 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Wed, 22 Jan 2025 12:50:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737567811; x=1737654211; bh=L8fJhOX/US
-	PmuwAqbqI7ZIGNXmKb1mO/TfNNUOeDsHU=; b=Q5Nd7yuhcM4PQ8cNduieiXxyRw
-	s2SJzU8RVPfxMB5dPvSmlxtgfaS3QDPQuxw2V0dacs3leATrs7GCwXmHlCmugCUD
-	IEJF7t9YeTEkL6N4iqAOhaAux1UxnFh9aVlL9vpkzJx2AFSVW77iCZRvWOSPLZJn
-	ulNRPPCWWQ1lJnpC5gr3o7I3/UYFsfCwwT4WrAbGqFmGm6dL1PhfxfeZfybpeiEv
-	hg67SaWPTalPr9jUMxXJfbxG0RjZSTLu+/MRcbUI3kGWnsnoa0f6qMKekHuXiMxM
-	7OqlkrqbSd3HxZNfuFUp+JbDUO/a1j0amgbKoKMzWdr4N2gW244RtlzoAV6A==
+	:subject:to:to; s=fm2; t=1737568230; x=1737654630; bh=f/mnMb1wHk
+	mN6bivZsZ26s7zrO9g/RW9ozJ1JsXjoNY=; b=nUYz3zRDPbpG7sF+tG8PSHPDP4
+	z7cyS9HnU38ol89zqoYNWAAfWlbjReKZ+4DumRqo4BN1pYHRpcvho7CuG8jnl063
+	lEoYURXaAlhrPI44EuDqOOhIiaI1yWTf5NgjAl9x4bK3zcd28Zi4VatT0qyHc5M8
+	dY/7po//ERW+bszH4wrzMgR9sRGMeEEVtx40junYJ4sGDwm7YvU5O7mj8UANKl6V
+	IDxdMK5Dx21jvuJCQsN+wxUHQDJA5BU/ERr+fOLD/TQGtGg4JW7CHtNa9UJNqJ/f
+	2Qfx8aulzcKB2QvwCqoTZNL8fk+csMWAifVBXcozMYpPC/6agfV44SyiHMNQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737567811; x=1737654211; bh=L8fJhOX/USPmuwAqbqI7ZIGNXmKb1mO/TfN
-	NUOeDsHU=; b=DfmbI4aJoG7eW/eXu8dpmJMpj7ZZAkoKknf8nWIt4qQC93/UvWD
-	RAv2c9ESfPtrb5NSC38wy2QvdW7ZghxAJEjuxxbIWeugG+GYGrPo6OgxvbZk916c
-	AFpHmZYWU2qnlhRKpJfcoABkJzbzOrsu+2DebxpObrcARHgSqzm86qIM281XfRP6
-	8MUuN3j/2rWxdobuK3c2Cgj5rFN6wgOLylsUPeRTu8YaMJZZCqu0ZF9O1ogQMdVB
-	uYsutHKvIvrrtbs1Ui/ZFLZVeGiEIm4kQASP3qTlaMUuU11T+Rdu9Jas1F8OFnzz
-	vZkUNgQLpiGOF9W7tDQXf7o0MY02vlbd2iA==
-X-ME-Sender: <xms:Qy6RZzY7y4VxwX7YmemA5fBG8gcwTr9iB7OTFsa8PLUHBIfqCe5XIw>
-    <xme:Qy6RZybWeECasId4wDwTVPMTLViZ9Sjz3aLX721mhZKy8W3Rpx-o5r-Pga7b3JlgG
-    x-8Wr2LqUM1lvHrmg>
-X-ME-Received: <xmr:Qy6RZ1-qQVrwZv0DwHr01nVWA0r52V-NvZAcFdYbd8dWeYwpcoDbhky_WdtDvczGaMhR2cENLwv1cCOc-UOFj8cPn02OUv8t4x8t>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgvddvjecutefuodetggdotefrod
+	1737568230; x=1737654630; bh=f/mnMb1wHkmN6bivZsZ26s7zrO9g/RW9ozJ
+	1JsXjoNY=; b=JD1C5XzWUeDB42zN0Qjjl4j7KluxAMVgKWR5JEsBIa9PWKxqBj4
+	43cwZA4nPKuPPLX2oU7smYUogpqTjOpllJ0dOX0k7VZh93U+AYPwqWkDqhzIatPY
+	EuBbgZ766cHVIBH3V8bziSPXgTj7Jp2HmmhanLrLyf7FiEq8A7OJ6IVKw2YVTtSz
+	6KHkTnwYkIxCELdHy6nDyltKM7mmV5tRfSM+CPsTqEi2JMzRJggbz1ywLXIAu9Q0
+	JsUOfhmRGVxSSZUdl3v+1vERV7Hj6qN4NkN7LLYk6oN8MUe+biTVgC+eNoKku6HL
+	chK482uhhAq5gk3lv7xUgt4rgGA00NJcuZQ==
+X-ME-Sender: <xms:5i-RZ2EcanweP6Znt9lfbI6TDkJ1Yw8JRoEzBK1jgiyDH-ZTEQm2Cg>
+    <xme:5i-RZ3VXD95nsxWnIV_lOEgYbnUYy5h16tLEHhkRdkUhlH37Z0GLfCU7bSOhFi8Fd
+    q1Z9huAgHGsluYNyQ>
+X-ME-Received: <xmr:5i-RZwKzV2LKsDtxgMnqNmYgnf6ToEvMsIAHZTfckOYZ61ZyFi2FYaAIdd1_n1Mk6b8L9mfyBVQmKNpwmDcB90_m_cKWbTGEE3PA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgvddvkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
     necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
-    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
-    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepmhgthhgvvghlsegrgiigvghsshdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:Qy6RZ5pQfiOSqGe79nPnPnF5aEKECudlgXhAWoQlNVYNHa21LFYJWA>
-    <xmx:Qy6RZ-pxbq_OGZgtRHTliknX32-Utc23tLG-cTpyhtBQNMmtzYd3jw>
-    <xmx:Qy6RZ_RY_VzJmkW3g4eqWFSKTPzOJ7G7NHL752uuPktm9sLr-JYLdA>
-    <xmx:Qy6RZ2qpV0G_8fsfg2NEvbW-cFhbMhKbbKC977cL7ZmbgLt58yx6uw>
-    <xmx:Qy6RZxVp1KNhPIXrPtLTJOWawlRlUg422ZtsQnglwZJ44k_FfUvw1P_z>
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
+    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:5i-RZwFw5rA36c_a3-c-WwfSK9VVpBeC8N4zAUX3pRMILNP_T2ngUw>
+    <xmx:5i-RZ8Va7rVzsX-nF_rVkIQoItHPVrZX4UaINK96xoFC6zChqdyO1A>
+    <xmx:5i-RZzNAjKC5zYqDIrPZ04ivqD-MUxKR723Easkj8TZgrygPtbV0AA>
+    <xmx:5i-RZz25BjnEVPpNlNnnvMqyeF6aaXZ3WCbCJTkLRvkuM8idhNHsoQ>
+    <xmx:5i-RZ6xSrYSJ7XsktGbPGIW4t6i8b96KDSjLQ8ZGjjnHMeNzR3swHyRH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jan 2025 12:43:30 -0500 (EST)
+ 22 Jan 2025 12:50:30 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Michael Cheel <mcheel@axxess.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Git Version Confusion
-In-Reply-To: <SJ0PR10MB4750C74BF6A4A26AF4730BCFBBE12@SJ0PR10MB4750.namprd10.prod.outlook.com>
-	(Michael Cheel's message of "Wed, 22 Jan 2025 16:57:25 +0000")
-References: <SJ0PR10MB4750C74BF6A4A26AF4730BCFBBE12@SJ0PR10MB4750.namprd10.prod.outlook.com>
-Date: Wed, 22 Jan 2025 09:43:29 -0800
-Message-ID: <xmqq5xm6ycam.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] reftable: prevent 'update_index' changes after
+ adding records
+In-Reply-To: <Z5DgxQuc2j_-5GHg@pks.im> (Patrick Steinhardt's message of "Wed,
+	22 Jan 2025 13:12:53 +0100")
+References: <20250122-461-corrupted-reftable-followup-v3-0-ae5f88bf04fa@gmail.com>
+	<20250122-461-corrupted-reftable-followup-v3-3-ae5f88bf04fa@gmail.com>
+	<Z5DgxQuc2j_-5GHg@pks.im>
+Date: Wed, 22 Jan 2025 09:50:29 -0800
+Message-ID: <xmqqzfjiwxei.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,20 +89,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Michael Cheel <mcheel@axxess.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Can anyone tell me why the git home page says the latest version
-> is 2.48.1 (released 2025-01-13) but then the download page (for
-> windows) says 2.47.1(2) released 2025-01-14? It is a bit confusing
-> to me.
+>> +static void t_reftable_invalid_limit_updates(void)
+>> +{
+>> +	struct reftable_ref_record ref = {
+>> +		.refname = (char *) "HEAD",
+>> +		.update_index = 1,
+>> +		.value_type = REFTABLE_REF_SYMREF,
+>> +		.value.symref = (char *) "master",
+>> +	};
+>> +	struct reftable_write_options opts = {
+>> +		.default_permissions = 0660,
+>> +	};
+>
+> Nit: it's unnecessary to pass write options. Other than that the test
+> looks good to me, and this nit isn't worth a reroll.
 
-The 2.48.1 is the official source release and the latest.  Depending
-on the platform and distribution, some may lag behind releasing the
-latest and that is perfectly expected.
+This write_options opts is used later in this call.
 
-Looking at the output from
+	err = reftable_new_stack(&st, dir, &opts);
 
-  https://lore.kernel.org/git/?q=s:Announce+f:Schindelin
+and "git grep reftable_new_stack" finds many hits, almost all in
+t/unit-tests/ hierarchy, only two among many of them passing NULL as
+the "use the default set of options" signal.  And majority of them
+initialize their opts like so:
 
-I suspect that Windows binary based on 2.48.1 has not been released
-yet, even though one based on 2.47.1 has.
+	struct reftable_write_options opts = { 0 };
+
+So I agree that this one should pass NULL to be more explicit that
+we do not exercise any special features from the API, but so should
+many other existing callers that pass such meaningless &opts, I
+would think.
+
+Thanks.
+
+
