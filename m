@@ -1,85 +1,84 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A26653
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 11:31:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDBE156F2B
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 11:31:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737545499; cv=none; b=ahaNSik7W/3CHoYa9xDb1cBnQ4PJuhqApoPRPi7fOG2qxr2kSTCdFUDn5oRb/Gpxdsu525KMuNPhcsfWGj6gZ9N6Py1IRkW/qsQZd8SvBMxRZJg8gCjzV2iq58nC631/QEm/SPrOLOaW99r9fgauYD6J4n8JjjMdEmPNtm0Ja4I=
+	t=1737545499; cv=none; b=Wypm5WKzaiXI9wpJNvpF0+Gco78DtF+viVZgBP6iiRZyCgNpu6WHCBh7+utzpjnxhXIvvw7mZsASmt1t/8xp9QtYpCbLmR0xMBwXDBuDtkUyyeRLAR6N0eDim7jirXbgTmrXQuWJX3XVxecT92L7XY/cAgRwYTJ5kGtxOBP7QEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1737545499; c=relaxed/simple;
-	bh=arnB5XR+H/yKV2akvwn1vf1zxw2RHXvxM3sJy6AbNkI=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=JrBOpZKfLNvdopgj9r/4tYzRY+FqJveMfD8FOXmxLPhXOiEpxLSNtbxQyyGJm1m54ukZBAa4f8tzGUA/6K8Vx5cHT3dYCzhmHvGslAvO7BvQdUljv1wj1FkyOfdJ7JjHD++BQs4MJCXYDVCvjiUc1CZgKDlWeEtowqUJ0Hnuuxo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O/giE+5g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KVU6xpHW; arc=none smtp.client-ip=202.12.124.157
+	bh=D/kLwR3I0FOH0MmJpKK+21io7hwpNSQp9HEenhAtft4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ACDkbCKwNzAMYg+OZsa8sA1qC2ucOQk3bjDVQNmogau+otGcR+434U6JMVN7q7QOzyOu5SPzF0BQvYLNpZ3l3FXvObJrioudkpaA5XnrBNIJXNNYbMJ86ADbtih+xaKq+u3iSTpZjhk5kvH2JLYiPbz5DjWwrUlUzDDS/9QmkHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LIM0ISn9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YLsxGkvW; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O/giE+5g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KVU6xpHW"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LIM0ISn9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YLsxGkvW"
 Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D84CC2540143;
-	Wed, 22 Jan 2025 06:31:35 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
+	by mailfout.stl.internal (Postfix) with ESMTP id 825E8114011C;
+	Wed, 22 Jan 2025 06:31:36 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
   by phl-compute-03.internal (MEProxy); Wed, 22 Jan 2025 06:31:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1737545495;
-	 x=1737631895; bh=q3ZEUmQXBPvJEYxvNMycG2/y959pmT0Ne6RqeNxdb2M=; b=
-	O/giE+5gAuCwinoE9pWeI9Tb2M8hQuATNC2LZXjRe9cEKAQ9rbXIVWVSSjSRNluT
-	syLpF5Rxl1TBkWE2MwvohnEY20gDIBCLxuA4j6gGS53kqQm5mxtqqP8InXmqxgvn
-	jGub4GqWH019iFba7DYjjCLhZiPKGnuLB4WiYlf4QF5dSercBJoGLWjwU0iTcoZj
-	eskJkybt98Bf7CumQxkyaxPu9Lf4WZhM37i3EQ2galqs8ZXQTIqocJEpTTqBsfHB
-	1f2rwbp38CJUg920l7hjyS4ItZwW+Slzx/52Nuf4imL/VR4gIqW+mFYiDXsK51y/
-	s+CAdDaJtbAIB97zL9R88g==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1737545496;
+	 x=1737631896; bh=AMNy1+3ZP7nwdA5WQT6Lgny1HpgGhfLUH7AOYszCjHM=; b=
+	LIM0ISn9WenkYbp/dW/QwWb8RA1mVmCjYXrqXcCEbDW0Yu+mAbuv1N8yNVfoFwmI
+	9iUB4W2eqIlIzQupsZXN+O+wOVakDvx3t2qXipz1dtIb9kZ2//A9RRF58Ts8Pclg
+	HWMP7siXaAFzY5KgB1/bTiMahfv1wSbmJ8YyB+dqIC9+1ajkYjvjMXxW0AL7XJtD
+	gD/nnZgu2L/abyT94CGx0J9BSQHy31qn46NekvGzYJEiJpgW1Xdywy345yPaG1qv
+	KewjS1cQuTp3OQ2e9/EGMDcXYVO/T9rSj4yjgKozJjVg3A1bjecia/FtOiKiEiHR
+	JfK2KJK7qCG6IZzoucOZVA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737545495; x=
-	1737631895; bh=q3ZEUmQXBPvJEYxvNMycG2/y959pmT0Ne6RqeNxdb2M=; b=K
-	VU6xpHW8rToR3Kb3znVJREpfkGpcsrBxxekfQeKrj5DHcoeJuEngaEykhn2AMiIA
-	NO3NSVIrrnZrm26HxGmgTbHR75RgpvkkzZ33feEJcC2spYEO/LiPks9FNiy5rPdq
-	7pPqpLl67ZmelwQuYALlsmoc1gBAoDdb8Rj7DftZXPGAZ3iP1hiYdIr/+ZiQhU8n
-	JfhDXDmkrWlIXLgac2knyXoX4zfo/zpziYhtNa9cxaSsnfJQUnbAe6wMeuEuiolD
-	pG4cd9L5L7ffN2qORIpwEc0QN+KZB8vaDUO82Sh/hqKP10eSizU4gJUlmBUfOcFb
-	ECb6tdB2MQlh4kyaNLfbQ==
-X-ME-Sender: <xms:F9eQZ0aisbQeSkDIbkBaXH3jJhTltR8ZkIdi6LpWVw152uFgBALgYg>
-    <xme:F9eQZ_YX6xuKruXuGp831JZDxfuWrxj9VonDyM9VNUljym09it4q7WcvVy_Pb_GjH
-    qZv-9iDICCw03u3Rg>
-X-ME-Received: <xmr:F9eQZ--PyHxXCXslJSsesLyNz-MgObfA0fh7JLYwpLhbnu-KX_kbqoPU5OQvEhjHqfo5zgS8aMgImaykhQPcI_nDGhSDHiDyS1Mm3BWM8ycgIfE>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737545496; x=
+	1737631896; bh=AMNy1+3ZP7nwdA5WQT6Lgny1HpgGhfLUH7AOYszCjHM=; b=Y
+	LsxGkvWbNKDAzOA9ft8BZ1fE9+ah5yqhH7Dbp04NuPHxyldkiGeRh6v1qnf1neyB
+	lV7GrpsvxB1dH3uiwfkZTDmEk37rOo/FvP8dmhTYM/yMVuxEwdeEKvQgPcfjGfxP
+	H9IJa4yAM0ub4qyQJtcrS0ZWajPHzwJv0uhZGGhONRfPfW7wknroyDIqbfW3f3Uj
+	sN3p42yIFOM+Uxh01FWliZh6fx88VQgf/4eGpYHKAUnZ+kYCC7kqAeU6hw0Cq1a/
+	2zbngc/haNPkkqBt0g0IL5QBvmcz+P9NYOUEhodyeZS7MrM9/50eDEtOQ2EfYjsa
+	oXzFAk61RVhYbQ3MPsadg==
+X-ME-Sender: <xms:GNeQZwESKuDfPythRl3BpoDGO94jffTZaElXK08BXxwUU7wHXHMh3w>
+    <xme:GNeQZ5Ws-PxIlZMD9uvARnGK1gMHxJnH-Bo5_J7agoEmu5D0NmfTu4g0nI2UWCtNp
+    vP_EknwvOfYMceJ4A>
+X-ME-Received: <xmr:GNeQZ6Kxq2d8xonXwsnFtWbjvHW0SvUldWubrevqSkxqNGQWisc-3FkZAPZ6kRZiBperYfbozSgzNmEtnP-_uKFYuG-jDAwKyopAYhuotOdiswY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgudehgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhufffkfggtgfgjghfvfevofesthejredtredt
+    hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
     jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepteeuueehhffhiedtueehtddtieekfedtudehtdeh
-    fefhgeffveeggedthfehuedvnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhgrnhgurghllhdr
-    sggvtghkvghrsehnvgigsghrihgughgvrdgtrgdprhgtphhtthhopegthhhrihhstghooh
-    hlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtoheprhhosggvrhhtrdgtohhupheskhhoohhrughinh
-    grthgvshdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:F9eQZ-pu7Yl6Ijf8UMVGDch08ENEsz8KWejs6mCjrQXEvFIXp3hFaA>
-    <xmx:F9eQZ_o5unO7xvKrK0qCcyLmmY6pEJSHSsskZiefFXv1AqY82mTI1g>
-    <xmx:F9eQZ8Tnv1XZWLZauZWz0DCsflpyn_GK_9lBcOn0nkFOmuxVIVPHGQ>
-    <xmx:F9eQZ_pXPQBao1MHMcBhqlQRzNjslGqUUl9THlLqcP1V94P6_brcWg>
-    <xmx:F9eQZwclhLdGvqpHrL59_Hhi0Yo7cr6zIQSXCfbflt5P6N8er44w7EgM>
+    himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
+    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtoheprhgrnhgurghllhdrsggvtghkvghrsehnvgigsg
+    hrihgughgvrdgtrgdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhih
+    rdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehrohgs
+    vghrthdrtghouhhpsehkohhorhguihhnrghtvghsrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:GNeQZyGa7ecQwLYRnIcpMiq20XDQQ46w_Ano9w_RhXngehGlEmhSQQ>
+    <xmx:GNeQZ2UKVCl_DCluaaN0SyHZ1idToQA4IIwVpRu85BRKdc6WedKlEQ>
+    <xmx:GNeQZ1PHIcb9Qwy_vvCj_U0_FsjWPHhXsi2AkGuQl6QzhQX5KJ_7vw>
+    <xmx:GNeQZ90BmOKJKr0qEE_Vopxf_nd5odV0XHwmKJx3dbgzHP1a8BXtSw>
+    <xmx:GNeQZ4L5s3J8PiPEEzEdRDoKbQ54Sl869I1zKifIlwMAsoUyvGx_ToUP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jan 2025 06:31:34 -0500 (EST)
+ 22 Jan 2025 06:31:35 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 1e8bcb30 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 22 Jan 2025 11:31:31 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4a23c53d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 22 Jan 2025 11:31:32 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 0/5] remote: announce removal of "branches/" and
- "remotes/"
-Date: Wed, 22 Jan 2025 12:31:28 +0100
-Message-Id: <20250122-pks-remote-branches-deprecation-v4-0-5cbf5b28afd5@pks.im>
+Date: Wed, 22 Jan 2025 12:31:29 +0100
+Subject: [PATCH v4 1/5] Makefile: wire up build option for deprecated
+ features
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,14 +87,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIABDXkGcC/4XOTY7CMAwF4KugrCcojpOmZcU9EIsQDI1GtCUpF
- Qj17pifGWDV5bPl7/kqMqVIWSxmV5FoiDm2DQfzMxOh9s2eZNxyFlppA1pZ2f1mmejQ9iQ3yTe
- hpiy31CUKvudbqdB5g2Xl0TnBCm928fxoWK2fOdHxxEX9e1jH3Lfp8vhigPv0VQgwWTiAVBIMA
- mksKkC75It5PIg7POg/zCpQxTSmGdOBSheURYvFF4YfmFbTGDIWHFmsNoUvze4fG8fxBk0w/RR
- 6AQAA
-X-Change-ID: 20241205-pks-remote-branches-deprecation-037a4389a377
-In-Reply-To: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
-References: <20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im>
+Message-Id: <20250122-pks-remote-branches-deprecation-v4-1-5cbf5b28afd5@pks.im>
+References: <20250122-pks-remote-branches-deprecation-v4-0-5cbf5b28afd5@pks.im>
+In-Reply-To: <20250122-pks-remote-branches-deprecation-v4-0-5cbf5b28afd5@pks.im>
 To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, 
  Junio C Hamano <gitster@pobox.com>, 
@@ -104,148 +98,119 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  "Randall S. Becker" <randall.becker@nexbridge.ca>
 X-Mailer: b4 0.14.2
 
-Hi,
+With 57ec9254eb (docs: introduce document to announce breaking changes,
+2024-06-14), we have introduced a new document that tracks upcoming
+breaking changes in the Git project. In 2454970930 (BreakingChanges:
+early adopter option, 2024-10-11) we have amended the document a bit to
+mention that any introduced breaking changes must be accompanied by
+logic that allows us to enable the breaking change at compile-time.
+While we already have two breaking changes lined up, neither of them has
+such a switch because they predate those instructions.
 
-back when Git was in its infancy, remotes were configured via separate
-files in "branches/" (back in 2005). Later that year we introduced a
-more powerful mechanism with the "remotes/" directory. These mechanism
-have eventually been superseded by config-based remotes, and it is very
-unlikely that anybody still uses these directories to configure their
-remotes. Both of these directories have been marked as deprecated, one
-in 2005 and the other one in 2011.
+Introduce the proposed `WITH_BREAKING_CHANGES` preprocessor macro and
+wire it up with both our Makefiles and Meson. This does not yet wire up
+the build flag for existing deprecations.
 
-This patch series follows through with the deprecation of these and
-announces them for removal in Git 3.0. Furthermore, it creates the infra
-to compile Git with such breaking changes enabled and wires up a CI job
-both for GitHub and GitLab to test those breaking changes.
-
-The series is based on top caacdb5dfd (The fifteenth batch, 2024-12-10)
-with ps/build at 904339edbd (Introduce support for the Meson build
-system, 2024-12-06) merged into it.
-
-Changes in v2:
-- Some small fixes to the deprecation notice of "branches/" and
-  "remotes/".
-- Some small fixes to commit messages.
-- Link to v1: https://lore.kernel.org/r/20241211-pks-remote-branches-deprecation-v1-0-1431e2369135@pks.im
-
-Changes in v3:
-- Print warnings when reading remotes from "remotes/" or "branches/".
-- A couple of commit mesasge improvements.
-- Link to v2: https://lore.kernel.org/r/20250106-pks-remote-branches-deprecation-v2-0-2ce87c053536@pks.im
-
-Changes in v4:
-- Add migration instructions to the warning when reading deprecated
-  remote types.
-- Clarify the deprecation text a bit.
-- Link to v3: https://lore.kernel.org/r/20250120-pks-remote-branches-deprecation-v3-0-c7e539b6a84f@pks.im
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (5):
-      Makefile: wire up build option for deprecated features
-      ci: merge linux-gcc-default into linux-gcc
-      ci: repurpose "linux-gcc" job for deprecations
-      builtin/pack-redundant: remove subcommand with breaking changes
-      remote: announce removal of "branches/" and "remotes/"
+ GIT-BUILD-OPTIONS.in                | 1 +
+ Makefile                            | 5 +++++
+ contrib/buildsystems/CMakeLists.txt | 1 +
+ meson.build                         | 6 ++++++
+ meson_options.txt                   | 2 ++
+ t/test-lib.sh                       | 4 ++++
+ 6 files changed, 19 insertions(+)
 
- .github/workflows/main.yml             |  6 +----
- .gitlab-ci.yml                         |  6 +----
- Documentation/BreakingChanges.txt      | 25 ++++++++++++++++++
- Documentation/gitrepository-layout.txt |  7 +++--
- GIT-BUILD-OPTIONS.in                   |  1 +
- Makefile                               |  7 +++++
- builtin/remote.c                       |  2 ++
- ci/lib.sh                              |  5 ----
- ci/run-build-and-tests.sh              |  3 ++-
- contrib/buildsystems/CMakeLists.txt    |  1 +
- git.c                                  |  2 ++
- meson.build                            |  6 +++++
- meson_options.txt                      |  2 ++
- remote.c                               | 26 +++++++++++++++++++
- remote.h                               |  2 ++
- t/t5323-pack-redundant.sh              |  6 +++++
- t/t5505-remote.sh                      |  6 ++---
- t/t5510-fetch.sh                       | 13 ++++------
- t/t5515-fetch-merge-logic.sh           | 47 ++++++++++++++++++----------------
- t/t5516-fetch-push.sh                  | 14 +++++-----
- t/test-lib.sh                          |  4 +++
- 21 files changed, 132 insertions(+), 59 deletions(-)
+diff --git a/GIT-BUILD-OPTIONS.in b/GIT-BUILD-OPTIONS.in
+index f651116102..f1d0ecf123 100644
+--- a/GIT-BUILD-OPTIONS.in
++++ b/GIT-BUILD-OPTIONS.in
+@@ -45,3 +45,4 @@ GITWEBDIR=@GITWEBDIR@
+ USE_GETTEXT_SCHEME=@USE_GETTEXT_SCHEME@
+ LOCALEDIR=@LOCALEDIR@
+ BROKEN_PATH_FIX=@BROKEN_PATH_FIX@
++WITH_BREAKING_CHANGES=@WITH_BREAKING_CHANGES@
+diff --git a/Makefile b/Makefile
+index 06f01149ec..dc3c980aa7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2230,6 +2230,10 @@ ifdef FSMONITOR_OS_SETTINGS
+ 	COMPAT_OBJS += compat/fsmonitor/fsm-path-utils-$(FSMONITOR_OS_SETTINGS).o
+ endif
+ 
++ifdef WITH_BREAKING_CHANGES
++	BASIC_CFLAGS += -DWITH_BREAKING_CHANGES
++endif
++
+ ifeq ($(TCLTK_PATH),)
+ NO_TCLTK = NoThanks
+ endif
+@@ -3187,6 +3191,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 		-e "s|@USE_GETTEXT_SCHEME@|\'$(USE_GETTEXT_SCHEME)\'|" \
+ 		-e "s|@LOCALEDIR@|\'$(localedir_SQ)\'|" \
+ 		-e "s!@BROKEN_PATH_FIX@!\'$(BROKEN_PATH_FIX)\'!" \
++		-e "s|@WITH_BREAKING_CHANGES@|\'$(WITH_BREAKING_CHANGES)\'|" \
+ 		GIT-BUILD-OPTIONS.in >$@+
+ 	@if grep -q '^[A-Z][A-Z_]*=@.*@$$' $@+; then echo "Unsubstituted build options in $@" >&2 && exit 1; fi
+ 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 49904ca8a9..63d0088928 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -1198,6 +1198,7 @@ string(REPLACE "@GITWEBDIR@" "'${GITWEBDIR}'" git_build_options "${git_build_opt
+ string(REPLACE "@USE_GETTEXT_SCHEME@" "" git_build_options "${git_build_options}")
+ string(REPLACE "@LOCALEDIR@" "'${LOCALEDIR}'" git_build_options "${git_build_options}")
+ string(REPLACE "@BROKEN_PATH_FIX@" "" git_build_options "${git_build_options}")
++string(REPLACE "@WITH_BREAKING_CHANGES@" "" git_build_options "${git_build_options}")
+ if(USE_VCPKG)
+ 	string(APPEND git_build_options "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
+ endif()
+diff --git a/meson.build b/meson.build
+index 0dccebcdf1..316cd93264 100644
+--- a/meson.build
++++ b/meson.build
+@@ -644,6 +644,12 @@ build_options_config.set('GIT_TEST_UTF8_LOCALE', '')
+ build_options_config.set_quoted('LOCALEDIR', fs.as_posix(get_option('prefix') / get_option('localedir')))
+ build_options_config.set('GITWEBDIR', fs.as_posix(get_option('prefix') / get_option('datadir') / 'gitweb'))
+ 
++if get_option('breaking_changes')
++  build_options_config.set('WITH_BREAKING_CHANGES', 'YesPlease')
++else
++  build_options_config.set('WITH_BREAKING_CHANGES', '')
++endif
++
+ if get_option('sane_tool_path') != ''
+   build_options_config.set_quoted('BROKEN_PATH_FIX', 's|^\# @BROKEN_PATH_FIX@$|git_broken_path_fix "' + get_option('sane_tool_path') + '"|')
+ else
+diff --git a/meson_options.txt b/meson_options.txt
+index 32a72139ba..800e518d95 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -43,6 +43,8 @@ option('sha256_backend', type: 'combo', choices: ['openssl', 'nettle', 'gcrypt',
+   description: 'The backend used for hashing objects with the SHA256 object format')
+ 
+ # Build tweaks.
++option('breaking_changes', type: 'boolean', value: false,
++  description: 'Enable upcoming breaking changes.')
+ option('macos_use_homebrew_gettext', type: 'boolean', value: true,
+   description: 'Use gettext from Homebrew instead of the slightly-broken system-provided one.')
+ 
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 62dfcc4aaf..6e423f655d 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1864,6 +1864,10 @@ test_lazy_prereq CURL '
+ 	curl --version
+ '
+ 
++test_lazy_prereq WITHOUT_BREAKING_CHANGES '
++	test -z "$WITH_BREAKING_CHANGES"
++'
++
+ # SHA1 is a test if the hash algorithm in use is SHA-1.  This is both for tests
+ # which will not work with other hash algorithms and tests that work but don't
+ # test anything meaningful (e.g. special values which cause short collisions).
 
-Range-diff versus v3:
-
-1:  c9ab464545 = 1:  b72e562c5a Makefile: wire up build option for deprecated features
-2:  992c55543e = 2:  a6c0aa40f0 ci: merge linux-gcc-default into linux-gcc
-3:  e9d9721fbf = 3:  c4aa9d092b ci: repurpose "linux-gcc" job for deprecations
-4:  2588dff0f8 = 4:  7977a853ef builtin/pack-redundant: remove subcommand with breaking changes
-5:  671a527782 ! 5:  c607948f6a remote: announce removal of "branches/" and "remotes/"
-    @@ Documentation/BreakingChanges.txt: Cf. <xmqq1rjuz6n3.fsf_-_@gitster.c.googlers.c
-     +As our documentation mentions, these directories are not to be found in modern
-     +repositories at all and most users aren't even aware of these mechanisms. They
-     +have been deprecated for almost 20 years and 14 years respectively, and we are
-    -+not aware of any reason why anybody would want to use these mechanisms.
-    ++not aware of any active users that have complained about this deprecation.
-     +Furthermore, the ".git/branches/" directory is nowadays misleadingly named and
-     +may cause confusion as "branches" are almost exclusively used in the context of
-     +references.
-    @@ remote.c: static void add_instead_of(struct rewrite *rewrite, const char *instea
-      static const char *skip_spaces(const char *s)
-      {
-      	while (isspace(*s))
-    +@@ remote.c: static const char *skip_spaces(const char *s)
-    + 	return s;
-    + }
-    + 
-    ++static void warn_about_deprecated_remote_type(const char *type,
-    ++					      const struct remote *remote)
-    ++{
-    ++	warning(_("reading remote from \"%s/%s\", which is nominated for removal.\n"
-    ++		  "\n"
-    ++		  "If you still use the \"remotes/\" directory it is recommended to\n"
-    ++		  "migrate to config-based remotes:\n"
-    ++		  "\n"
-    ++		  "\tgit remote rename %s %s\n"
-    ++		  "\n"
-    ++		  "If you cannot, please let us know you still use it by sending an\n"
-    ++		  "e-mail to <git@vger.kernel.org>."),
-    ++		type, remote->name, remote->name, remote->name);
-    ++}
-    ++
-    + static void read_remotes_file(struct remote_state *remote_state,
-    + 			      struct remote *remote)
-    + {
-     @@ remote.c: static void read_remotes_file(struct remote_state *remote_state,
-      
-      	if (!f)
-      		return;
-     +
-    -+	warning(_("Reading remote from \"remotes/%s\", which is nominated\n"
-    -+		  "for removal. If you still use the \"remotes/\" directory\n"
-    -+		  "it is recommended to migrate to config-based remotes. If\n"
-    -+		  "you cannot, please let us know you still use it by sending\n"
-    -+		  "an e-mail to <git@vger.kernel.org>."), remote->name);
-    ++	warn_about_deprecated_remote_type("remotes", remote);
-     +
-      	remote->configured_in_repo = 1;
-      	remote->origin = REMOTE_REMOTES;
-    @@ remote.c: static void read_branches_file(struct remote_state *remote_state,
-      	if (!f)
-      		return;
-      
-    -+	warning(_("Reading remote from \"branches/%s\", which is nominated\n"
-    -+		  "for removal. If you still use the \"branches/\" directory\n"
-    -+		  "it is recommended to migrate to config-based remotes. If\n"
-    -+		  "you cannot, please let us know you still use it by sending\n"
-    -+		  "an e-mail to <git@vger.kernel.org>."), remote->name);
-    ++	warn_about_deprecated_remote_type("branches", remote);
-     +
-      	strbuf_getline_lf(&buf, f);
-      	fclose(f);
-
----
-base-commit: 713ec79a9091cec60b110d605b418904759982ab
-change-id: 20241205-pks-remote-branches-deprecation-037a4389a377
+-- 
+2.48.1.321.gbf1f004a4a.dirty
 
