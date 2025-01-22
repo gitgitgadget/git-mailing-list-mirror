@@ -1,372 +1,170 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9002C170826
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 05:36:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0F554738
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 06:03:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737524171; cv=none; b=b+p+/Rd4axGsTtdXoxtcRR139+eKjbQIqV1ue7zBfvJFkYY8NbpiA+v3UdNeFEdclZT/VhiSS71G/ukf180zrJvTzUJYmdFDs9/AIBZxwimpP5GEsj8TxywA++96c7lLOmJS0Hz2SuqU6BFmr8l6NBoBybsPQ+FxEeXXbOVfHh8=
+	t=1737525794; cv=none; b=YZU/T5xasmxhk1BmvWw3keWwIm62EI7HwrETHq64YyaPcDm0xj2xXl5kVhrQyze1PrK/JFMDBP05YAykGTTGLwIB/24p3hWbEUQzZEJek69q62Cz9fCvW9p3cWzgQgdb/k1zv9KPwyVXIE7RRF36PVKg81i8CLd8Ry66jKbMHF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737524171; c=relaxed/simple;
-	bh=zn+jsCfxo1JBK34Hji45uwsLF+WzAwQtQiARZAzzUJw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YBbqntqM6UlgwXhKFMsf2B5bWGK0JWqWQM9tvKpCo8OGBCxQcDVXEWGPgCzxnZFrrD/lraD4pGGKBGktz1pCaWeE1F+eyze65QLI7GYlB23lhgqxZFlAKAKaDmo8jQNaRQaWmzYuCOwQEKhDWq4kmnY0hv60bBtbjDbsHyWTYwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NWukDbly; arc=none smtp.client-ip=209.85.214.178
+	s=arc-20240116; t=1737525794; c=relaxed/simple;
+	bh=Y4+TZs22WOuXuyjfnmhjtTu0GdGsJ3N6mLHNFxukk2k=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kvA5Ve3R99N/3wu9h1UtAl6y5SPqCxBGLEhRsKjc2HFT1peFgnWzsf9lEFYQ/Ly2DcXhmmwDSQkWZmRkNLU1o5joTI32KLHwtGUiaIO1B5/8+dfUdVr6RWPQv5JwrLOJY40I6axNthrujAedc6aoF2wtl2lEYKa+9Bh23YDXczw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T5PP0Ez3; arc=none smtp.client-ip=209.85.217.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NWukDbly"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2162c0f6a39so9064005ad.0
-        for <git@vger.kernel.org>; Tue, 21 Jan 2025 21:36:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T5PP0Ez3"
+Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-4afdf096fc5so1527994137.2
+        for <git@vger.kernel.org>; Tue, 21 Jan 2025 22:03:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737524169; x=1738128969; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YnvgPaFKbJZIpZWQHBD/HDrx1fTvfA+buSmX6eF9l5Y=;
-        b=NWukDblyUxXoeob7ByUqUyRIknrEkL4qJIvoAKbrr6f3+V4jokstgsVFfIjUpa39NX
-         0/LmciRs+2ARsxlVJaSJSf8xsBAsGxgnUzY9Q12gnO6XvYEWERQdVA+nsC4cDSZZlHfY
-         o6k5s+hhP+w/nJexiLGnGIu6fJeAGvOtFE+eJLsqjBBUn/scYGuVVcaY3X/TY01w3nAi
-         GkUVjXec0X2kx5kAy1pU0zp9KZThdIqovAKskhMXTq4Ws7q76HqJk4p2Cm02ZK4r/kj7
-         hAgRJQyQAwvaqIZgpbrcgKYc7Kni5lsNuO5dohNifiNFDhUMuetclc5JIPsbHGSJVi60
-         uvpw==
+        d=gmail.com; s=20230601; t=1737525792; x=1738130592; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7+ck8C8iEhgcTJo1sgL76rT6R5b1iV1U8AePNLuMBx8=;
+        b=T5PP0Ez3t4bC8biOUCQAVcdUP5rUc+w2slLuxpE2OETpMMw16o4TzWsmVa4lAYB9bY
+         jzi0tP9hYts20IOcC2PWjx8u4dYu+D82xZ/EuEup7jP0lmEpHZU9rjAY4rTbAMVdJRwr
+         YWHSdFQfiUOFSWNopb0vZm/NW8wRA5GoIH/hZJ40udnRMf962dcVEXekhdh7qItSmvEn
+         1yZNIT2P8VyA2pYrf1Yfq7JGIIixpGCCPxeYGFJvtUbZjRBgsgXyyxghsAG+pnjGuyQQ
+         wxMrW8uhyxe9COCqbIKy72WEjYvSw7xL2FC/zlkR6PvSCu/ruvuiz58K/i4Ik95qM4Uj
+         bSRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737524169; x=1738128969;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YnvgPaFKbJZIpZWQHBD/HDrx1fTvfA+buSmX6eF9l5Y=;
-        b=HHiVrtJgMz3D9C/STWh2G7TcVUyVC4oYdf/HZ8IreEsiQPqsZxXpZRlZCjI9HWyMqQ
-         QXu15PBKwCxVCqusRu4soP71Pa1FTERuYkMqHasm+2MJiSosFMp0JSF3gXoX+vRw7Ybg
-         U6lgeacUMIeRPYawziXoWWRKzuUj6rPdSgG75mYlJUybuQ5/QW8arH0AciwACr3SpqqS
-         McamaY02FjSpRIQvG+hgEomgDggA9kAhtdtnGCa5E/wzE7M2ufMhqn0ZizgZ0iOkQfut
-         kHVLwzBGIeNHRg7rff5aarQiJep6jFKkVChE0oUDQHv/mobKyPqdy1KFgNPgMJSpcDE9
-         8sWA==
-X-Gm-Message-State: AOJu0Yz3gEfCqUylj5/Nm0I09CoDLG++zy4C6vYUd10n3zFvpIinxkjp
-	M4JD3FyXvemEYVPAUZtEHBZ9oeNL0H1i/3kw4RxUiawi8G0EL6uTeO9A+Lbl
-X-Gm-Gg: ASbGncv+sxFZvTjzrpUJyPHAhYgrK3A8DMKZmlg8PMTXrxBD7t5bbV8jvYViEnWaFKN
-	wV2Ogt0L0XUZFcbRy/qkmD9bX6IPgEfgSG2/4VvMK5N/8ErAd/lWeKNRLKLyOy9/U2TcVpmVkCt
-	Oivi+G25ui9xq3PotHuJHx6dFL04YDLwj8RGwCTwDoQje/hO0fWd1R9kIVPSQ5RlXe8X7Y37IzL
-	gsGFd07z/K56eulaAhpkZjBTVkT/wWLC9BJFvznLYvRucgM00rT0hsNb4l8MbstsO50gfyt
-X-Google-Smtp-Source: AGHT+IHv5aW8PeOMbRsgPsikUslK19W+dRTMdQNdNQ6PfYVpocd1StB1xCuMxa1JUByxgInr1WyJvw==
-X-Received: by 2002:a05:6a00:66cb:b0:727:39a4:30cc with SMTP id d2e1a72fcca58-72d8c46e973mr38657133b3a.1.1737524168603;
-        Tue, 21 Jan 2025 21:36:08 -0800 (PST)
-Received: from [127.0.0.2] ([103.39.127.160])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72db4e718efsm9369207b3a.152.2025.01.21.21.36.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2025 21:36:07 -0800 (PST)
+        d=1e100.net; s=20230601; t=1737525792; x=1738130592;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7+ck8C8iEhgcTJo1sgL76rT6R5b1iV1U8AePNLuMBx8=;
+        b=WgYyvybXHTL3THRTczU5FJFx00bCK9Vbm9NDoXLFHCeR1v30SaZ+Xwou7kN15F+8U9
+         BKMKtVVkjKJtrw36c62wudjWBaH9irhyly4wlVX+Citvs9ec+lMDMQp8SygUqtkyC9Fj
+         PUC+zzImM+CtNbe8whXzh7Rs3Wf0W8CU0mE/ZZ4IIr9gzNlFNQpxV20nvVdLfoFiDfRk
+         zV6TP3uW3WBLop/zho0tqFDP1wYpmtRevxG8H+Wk8PZiRm6OhTWEwK+jeygzQiPMMkro
+         Huzmqfuc8LzxTwAY/sm1Qqwow+8BrHpvNXAZsCKY+KVLYUzXXDGuB7u6olixwkg+gCt9
+         goUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW8SBERc+WVP/cSiC4Ws5aYoUEipP2CpKTfRhN1/3gXcLVjD5w+u8mX3EEkWjPd6MKK7wE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrOWjmMuLSQARvnZ4M09aVJqbLetyEijG+MMhGpCIQvcx9fVEM
+	9Ekf9539jFNPx9p6FWPU7eg81lvkNXxMuBzVsnmSGPxGvr6EfzF3H4TzI94L9wK7Awq/UPPyTUr
+	SPbiivz720YoUN7mf3vMVYmTLkIfO6EPC
+X-Gm-Gg: ASbGncvqUeJHN2D7iwSd5G7zzR6SELK4FgEJn/OmpPIqVSXdfMbH0UTqfgRjEvy2zU6
+	woJVBMbtQ2gZZKvWa9MF6JQXNgq/CHPnLs9PJJ+7OAQekWj8EcPs0
+X-Google-Smtp-Source: AGHT+IEqrQ4lT/Ww0o6qZBrvhZgkN2wjJziu/zEtdI06C/hQ31ODu3QwgymGdA39Vosx8BjSNr7BltX7e8RaAxRWTMI=
+X-Received: by 2002:a05:6102:3fa3:b0:4af:e643:e1e5 with SMTP id
+ ada2fe7eead31-4b690bb1b2emr16982896137.2.1737525792152; Tue, 21 Jan 2025
+ 22:03:12 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 21 Jan 2025 22:03:11 -0800
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 22 Jan 2025 06:35:49 +0100
-Subject: [PATCH v3 3/3] reftable: prevent 'update_index' changes after
- adding records
+In-Reply-To: <Z5BTQRlsOj1sygun@tapette.crustytoothpaste.net>
+References: <Z5BTQRlsOj1sygun@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250122-461-corrupted-reftable-followup-v3-3-ae5f88bf04fa@gmail.com>
-References: <20250122-461-corrupted-reftable-followup-v3-0-ae5f88bf04fa@gmail.com>
-In-Reply-To: <20250122-461-corrupted-reftable-followup-v3-0-ae5f88bf04fa@gmail.com>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11286;
- i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=zn+jsCfxo1JBK34Hji45uwsLF+WzAwQtQiARZAzzUJw=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeQg75o1zZ6eWstgI+SceD0yp2geR5pQXZES
- Zt9/jhqcXSjNokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnkIO+AAoJED7VnySO
- Rox/PYUL/RGs89lm4lxjsbE7JuyUtA54noGlERFcvlKuAGrGnxdIGuj0jGsz5jmsh3eUpiIszY8
- mjqir8EffopGbG1iYVWseAqi+giZOyzXeAw7Fc9ECMV7tDcp6FBkKNs8zJnEwrcYwQ2s1+lnofc
- Hq0bDrKCtI36bNCGaR6YnycBHhPK+hP/JuzDIUu/hKJaI1Wr1HUxdk9GVkGn4f4/5b0cxFxEsxx
- l8mp4uLZj4s2L+p+OktHxosJjrsXWmKdiSmyUoexDCeBJeyEOgjl6HctBeZZTv4QlvM45suC97d
- O2ws9yT3sJlBHEkU8DWPjXL9hms3tyAs9GXRzkoveb2p7i5nvocGpQO1ANiTfXxAQrQkq5itwSo
- 1r7HyayDzTwrWgZg36PAKq4934sqYVOqzlAa4QTrjz0hLnhRlge9yLv2bxOOx2paqBr3Vm7Xmm2
- 6Q5YphKhkupwHRIyKdpVYWHfnoCZHNmrcUF7O0vD22pxpKBUw+9ITziqe/pat3VbStHmlXOkpD5
- vw=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Date: Tue, 21 Jan 2025 22:03:11 -0800
+X-Gm-Features: AbW1kvbzkHC9LsJAP3kngoGnw0zb_sHQmBrsBlLdKpQZzQvuHk6AtjoGVEbOVFc
+Message-ID: <CAOLa=ZQmPRXSNtZfm7noMoUgBYp4+BcOgikkCY+JyAc6n1OuUQ@mail.gmail.com>
+Subject: Re: git refs migrate does not migrate stash entries
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Content-Type: multipart/mixed; boundary="000000000000a13c63062c453f4d"
 
-The function `reftable_writer_set_limits()` allows updating the
-'min_update_index' and 'max_update_index' of a reftable writer. These
-values are written to both the writer's header and footer.
+--000000000000a13c63062c453f4d
+Content-Type: text/plain; charset="UTF-8"
 
-Since the header is written during the first block write, any subsequent
-changes to the update index would create a mismatch between the header
-and footer values. The footer would contain the newer values while the
-header retained the original ones.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-To protect against this bug, prevent callers from updating these values
-after any record is written. To do this, modify the function to return
-an error whenever the limits are modified after any record adds. Check
-for record adds within `reftable_writer_set_limits()` by checking the
-`last_key` and `next` variable. The former is updated after each record
-added, but is reset at certain points. The latter is set after writing
-the first block.
+> After the recent fix for reflog migrations posted to the list, I
+> converted two work repositories. Unfortunately, it doesn't appear as
+> though the reflog for `refs/stash` was converted, so I think I may have
+> lost my stashes.  While I would have liked to retain them, fortunately
+> they were not essential in these repos and I can live without them, but
+> we probably do want to fix this issue since users in general will want
+> to maintain them.
+>
+> Here's a shell script that reproduces the problem on the latest `next`:
+> ----
+> #!/bin/sh -e
+>
+> rm -fr test-repo
+> git version
+> git init -b dev test-repo
+> cd test-repo
+> touch abc.txt
+> git add abc.txt
+> git commit -m +
+> echo abc >abc.txt
+> git stash
+> git show stash@{0}
+> git stash list -p
+>
+> echo "Converting..."
+> git refs migrate --ref-format=reftable
+>
+> echo "Now using reftable."
+>
+> git stash show
+> git show stash@{0}
+> git stash list -p
+> ----
+>
 
-Modify all callers of the function to anticipate a return type and
-handle it accordingly. Add a unit test to also ensure the function
-returns the error as expected.
+Confirming that I can also reproduce the issue.
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- refs/reftable-backend.c         | 20 +++++++++++----
- reftable/reftable-error.h       |  1 +
- reftable/reftable-writer.h      | 24 ++++++++++--------
- reftable/stack.c                |  6 +++--
- reftable/writer.c               | 15 +++++++++++-
- t/unit-tests/t-reftable-stack.c | 54 ++++++++++++++++++++++++++++++++++++++---
- 6 files changed, 99 insertions(+), 21 deletions(-)
+> My expectation is that the script exits 0 and prints the stashes a
+> second time, but it exits early and unsuccessfully and the stashes don't
+> appear to be preserved.  It does appear to work correctly if you comment
+> out the `git refs migrate` command.
+>
+> I would have liked to have done more investigation, but I'm dealing with
+> some administrivia in my personal life that has taken up more of my
+> evenings than I would have liked, so I have not done so.
+>
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 6814c87bc618229ac8a70b904be3f850371ad876..9cfb0cb26721a9425c3b4a374f7b41e192037315 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1443,7 +1443,9 @@ static int write_transaction_table(struct reftable_writer *writer, void *cb_data
- 	 * multiple entries. Each entry will contain a different update_index,
- 	 * so set the limits accordingly.
- 	 */
--	reftable_writer_set_limits(writer, ts, ts + arg->max_index);
-+	ret = reftable_writer_set_limits(writer, ts, ts + arg->max_index);
-+	if (ret < 0)
-+		goto done;
- 
- 	for (i = 0; i < arg->updates_nr; i++) {
- 		struct reftable_transaction_update *tx_update = &arg->updates[i];
-@@ -1766,7 +1768,9 @@ static int write_copy_table(struct reftable_writer *writer, void *cb_data)
- 	deletion_ts = creation_ts = reftable_stack_next_update_index(arg->be->stack);
- 	if (arg->delete_old)
- 		creation_ts++;
--	reftable_writer_set_limits(writer, deletion_ts, creation_ts);
-+	ret = reftable_writer_set_limits(writer, deletion_ts, creation_ts);
-+	if (ret < 0)
-+		goto done;
- 
- 	/*
- 	 * Add the new reference. If this is a rename then we also delete the
-@@ -2298,7 +2302,9 @@ static int write_reflog_existence_table(struct reftable_writer *writer,
- 	if (ret <= 0)
- 		goto done;
- 
--	reftable_writer_set_limits(writer, ts, ts);
-+	ret = reftable_writer_set_limits(writer, ts, ts);
-+	if (ret < 0)
-+		goto done;
- 
- 	/*
- 	 * The existence entry has both old and new object ID set to the
-@@ -2357,7 +2363,9 @@ static int write_reflog_delete_table(struct reftable_writer *writer, void *cb_da
- 	uint64_t ts = reftable_stack_next_update_index(arg->stack);
- 	int ret;
- 
--	reftable_writer_set_limits(writer, ts, ts);
-+	ret = reftable_writer_set_limits(writer, ts, ts);
-+	if (ret < 0)
-+		goto out;
- 
- 	ret = reftable_stack_init_log_iterator(arg->stack, &it);
- 	if (ret < 0)
-@@ -2434,7 +2442,9 @@ static int write_reflog_expiry_table(struct reftable_writer *writer, void *cb_da
- 		if (arg->records[i].value_type == REFTABLE_LOG_UPDATE)
- 			live_records++;
- 
--	reftable_writer_set_limits(writer, ts, ts);
-+	ret = reftable_writer_set_limits(writer, ts, ts);
-+	if (ret < 0)
-+		return ret;
- 
- 	if (!is_null_oid(&arg->update_oid)) {
- 		struct reftable_ref_record ref = {0};
-diff --git a/reftable/reftable-error.h b/reftable/reftable-error.h
-index f4048265629fe456207b88620658193f770a84f0..a7e33d964d0cfe5546f588d26c0fcb66ab326828 100644
---- a/reftable/reftable-error.h
-+++ b/reftable/reftable-error.h
-@@ -30,6 +30,7 @@ enum reftable_error {
- 
- 	/* Misuse of the API:
- 	 *  - on writing a record with NULL refname.
-+	 *  - on writing a record before setting the writer limits.
- 	 *  - on writing a reftable_ref_record outside the table limits
- 	 *  - on writing a ref or log record before the stack's
- 	 * next_update_inde*x
-diff --git a/reftable/reftable-writer.h b/reftable/reftable-writer.h
-index 5f9afa620bb00de66c311765fb0ae8c6f56401ae..1ea014d389cc47f173279e3234a82f3fcbc807a0 100644
---- a/reftable/reftable-writer.h
-+++ b/reftable/reftable-writer.h
-@@ -124,17 +124,21 @@ int reftable_writer_new(struct reftable_writer **out,
- 			int (*flush_func)(void *),
- 			void *writer_arg, const struct reftable_write_options *opts);
- 
--/* Set the range of update indices for the records we will add. When writing a
--   table into a stack, the min should be at least
--   reftable_stack_next_update_index(), or REFTABLE_API_ERROR is returned.
--
--   For transactional updates to a stack, typically min==max, and the
--   update_index can be obtained by inspeciting the stack. When converting an
--   existing ref database into a single reftable, this would be a range of
--   update-index timestamps.
-+/*
-+ * Set the range of update indices for the records we will add. When writing a
-+ * table into a stack, the min should be at least
-+ * reftable_stack_next_update_index(), or REFTABLE_API_ERROR is returned.
-+ *
-+ * For transactional updates to a stack, typically min==max, and the
-+ * update_index can be obtained by inspeciting the stack. When converting an
-+ * existing ref database into a single reftable, this would be a range of
-+ * update-index timestamps.
-+ *
-+ * The function should be called before adding any records to the writer. If not
-+ * it will fail with REFTABLE_API_ERROR.
-  */
--void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
--				uint64_t max);
-+int reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
-+			       uint64_t max);
- 
- /*
-   Add a reftable_ref_record. The record should have names that come after
-diff --git a/reftable/stack.c b/reftable/stack.c
-index 531660a49f0948c33041831ee0d740feacb22b2f..9649dbbb04c51e106ee752f14481bbad381cb348 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -1058,8 +1058,10 @@ static int stack_write_compact(struct reftable_stack *st,
- 
- 	for (size_t i = first; i <= last; i++)
- 		st->stats.bytes += st->readers[i]->size;
--	reftable_writer_set_limits(wr, st->readers[first]->min_update_index,
--				   st->readers[last]->max_update_index);
-+	err = reftable_writer_set_limits(wr, st->readers[first]->min_update_index,
-+					 st->readers[last]->max_update_index);
-+	if (err < 0)
-+		goto done;
- 
- 	err = reftable_merged_table_new(&mt, st->readers + first, subtabs_len,
- 					st->opts.hash_id);
-diff --git a/reftable/writer.c b/reftable/writer.c
-index 740c98038eaf883258bef4988f78977ac7e4a75a..76e24018172fc1d80a6535698757979e53b0e213 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -179,11 +179,24 @@ int reftable_writer_new(struct reftable_writer **out,
- 	return 0;
- }
- 
--void reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
-+int reftable_writer_set_limits(struct reftable_writer *w, uint64_t min,
- 				uint64_t max)
- {
-+	/*
-+	  * Set the min/max update index limits for the reftable writer.
-+	  * This must be called before adding any records, since:
-+	  * - The 'next' field gets set after writing the first block.
-+	  * - The 'last_key' field updates with each new record (but resets
-+	  *   after sections).
-+	  * Returns REFTABLE_API_ERROR if called after writing has begun.
-+	 */
-+	if (w->next || w->last_key.len)
-+		return REFTABLE_API_ERROR;
-+
- 	w->min_update_index = min;
- 	w->max_update_index = max;
-+
-+	return 0;
- }
- 
- static void writer_release(struct reftable_writer *w)
-diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
-index aeec195b2b1014445d71c5db39a9795017fd8ff2..c3f0059c346edbe1ad543c9832959c6fc0aa9180 100644
---- a/t/unit-tests/t-reftable-stack.c
-+++ b/t/unit-tests/t-reftable-stack.c
-@@ -103,7 +103,8 @@ static void t_read_file(void)
- static int write_test_ref(struct reftable_writer *wr, void *arg)
- {
- 	struct reftable_ref_record *ref = arg;
--	reftable_writer_set_limits(wr, ref->update_index, ref->update_index);
-+	check(!reftable_writer_set_limits(wr, ref->update_index,
-+					  ref->update_index));
- 	return reftable_writer_add_ref(wr, ref);
- }
- 
-@@ -143,7 +144,8 @@ static int write_test_log(struct reftable_writer *wr, void *arg)
- {
- 	struct write_log_arg *wla = arg;
- 
--	reftable_writer_set_limits(wr, wla->update_index, wla->update_index);
-+	check(!reftable_writer_set_limits(wr, wla->update_index,
-+					  wla->update_index));
- 	return reftable_writer_add_log(wr, wla->log);
- }
- 
-@@ -961,7 +963,7 @@ static void t_reflog_expire(void)
- 
- static int write_nothing(struct reftable_writer *wr, void *arg UNUSED)
- {
--	reftable_writer_set_limits(wr, 1, 1);
-+	check(!reftable_writer_set_limits(wr, 1, 1));
- 	return 0;
- }
- 
-@@ -1369,11 +1371,57 @@ static void t_reftable_stack_reload_with_missing_table(void)
- 	clear_dir(dir);
- }
- 
-+static int write_limits_after_ref(struct reftable_writer *wr, void *arg)
-+{
-+	struct reftable_ref_record *ref = arg;
-+	check(!reftable_writer_set_limits(wr, ref->update_index, ref->update_index));
-+	check(!reftable_writer_add_ref(wr, ref));
-+	return reftable_writer_set_limits(wr, ref->update_index, ref->update_index);
-+}
-+
-+static void t_reftable_invalid_limit_updates(void)
-+{
-+	struct reftable_ref_record ref = {
-+		.refname = (char *) "HEAD",
-+		.update_index = 1,
-+		.value_type = REFTABLE_REF_SYMREF,
-+		.value.symref = (char *) "master",
-+	};
-+	struct reftable_write_options opts = {
-+		.default_permissions = 0660,
-+	};
-+	struct reftable_addition *add = NULL;
-+	char *dir = get_tmp_dir(__LINE__);
-+	struct reftable_stack *st = NULL;
-+	int err;
-+
-+	err = reftable_new_stack(&st, dir, &opts);
-+	check(!err);
-+
-+	reftable_addition_destroy(add);
-+
-+	err = reftable_stack_new_addition(&add, st, 0);
-+	check(!err);
-+
-+	/*
-+	 * write_limits_after_ref also updates the update indexes after adding
-+	 * the record. This should cause an err to be returned, since the limits
-+	 * must be set at the start.
-+	 */
-+	err = reftable_addition_add(add, write_limits_after_ref, &ref);
-+	check_int(err, ==, REFTABLE_API_ERROR);
-+
-+	reftable_addition_destroy(add);
-+	reftable_stack_destroy(st);
-+	clear_dir(dir);
-+}
-+
- int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
- {
- 	TEST(t_empty_add(), "empty addition to stack");
- 	TEST(t_read_file(), "read_lines works");
- 	TEST(t_reflog_expire(), "expire reflog entries");
-+	TEST(t_reftable_invalid_limit_updates(), "prevent limit updates after adding records");
- 	TEST(t_reftable_stack_add(), "add multiple refs and logs to stack");
- 	TEST(t_reftable_stack_add_one(), "add a single ref record to stack");
- 	TEST(t_reftable_stack_add_performs_auto_compaction(), "addition to stack triggers auto-compaction");
+I didn't investigate it yet, over the top, it seems like the reflog is
+migrated, however the detection and display doesn't work for some reason:
 
--- 
-2.47.0
+  $ git for-each-ref --include-root-refs
+  0652ae7d444e73ed8bee7ca7a0b66e4413386297 commit	HEAD
+  0652ae7d444e73ed8bee7ca7a0b66e4413386297 commit	ORIG_HEAD
+  0652ae7d444e73ed8bee7ca7a0b66e4413386297 commit	refs/heads/dev
+  2652bce3ffc3769feb7eca552d3dbe27ff901aaf commit	refs/stash
 
+I will spend time on this week.
+
+> I also apologize for sending a constant barrage of bug reports that
+> might make it seem like I'm dissatisfied with the work on reftable, when
+> in fact that's not the case and I do very much appreciate the work being
+> done.  I did promise Patrick that I'd try it out and be the guinea pig,
+> and so I'm doing so.  I'm excited to see it end up in its final state.
+> --
+
+If anything, this is really useful and I really appreciate you putting
+efforts to report these bugs. This helps us improve the bridge and also
+helps the community overall.
+
+Thanks for your work!
+
+> brian m. carlson (they/them or he/him)
+> Toronto, Ontario, CA
+
+--000000000000a13c63062c453f4d
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 8e13672c0ba09c07_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lUWloMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOXJHQy93TU5zaGRsZlVmMGJxbWZJOUxnSTg5WFk3Kwoyd0U1bXY0Y0hj
+K1RHZVpxVmdXeUFIOW9TOXpaM0c4eHJMTitER1B2R0xabFA0YU5aMXVmN2duVHp3ait4STZyCjNi
+YnNNSE1TejBwSTRWMEdUT29xNWx5ckc2YWM2Nk5VSVpqVVBwN0l6eEFKUzd3eWY3TkZsNklrOWdm
+WEw5SEkKbUFOUzhHZ1VtWEliMWVIajQ4UitNcjBjd0VZZlNoTlVXTGtLMFJkYTI4VHVURWJGY1FR
+Nlh6QjYzRTZhYXdKTQpSdEFrWjFscjh4Wi9LanllTzFZbU5TNkx2bmR5ODYrS2xJa2VCQkZWaXNJ
+RWE1ZDhoYmhIeTEwS0tsaVVaQS9tClBXbkF0WExkcGJOSjdOS2ZJM01qUWQySzM4U2VpNzFxbjNw
+aVpSMU8xdGdWSVZVT3E4M1J1VGVYT0daREovRlgKOHhVcXhiNGhXbFQvQWs1OUJhSVZ4K1VldGFP
+YTlPem5SbEUwbW9UQVNWVlFtMnJINUM5ZlFIandjNHNtK3FqUgpYcTdveXZMZWZuMU9mdSs1a0Ex
+Y3czK3BZdEYrNEFuY2NnRXBrYjdUUWdKM2JUQnoyanN4OXB2eDhKekcweE1TCnlVTmVGSXhtc1ZE
+TjQyUTRGWDJrMU9WdHkxWTJFdEFxeG9VbHN5UT0KPXVhVisKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000a13c63062c453f4d--
