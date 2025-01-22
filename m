@@ -1,56 +1,56 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CDBE156F2B
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 11:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF7C20FA9A
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 11:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737545499; cv=none; b=Wypm5WKzaiXI9wpJNvpF0+Gco78DtF+viVZgBP6iiRZyCgNpu6WHCBh7+utzpjnxhXIvvw7mZsASmt1t/8xp9QtYpCbLmR0xMBwXDBuDtkUyyeRLAR6N0eDim7jirXbgTmrXQuWJX3XVxecT92L7XY/cAgRwYTJ5kGtxOBP7QEo=
+	t=1737545500; cv=none; b=u3/e9LIMrjmZ42Tw89ujeZvVgAbeanNdQTcdLaw744CPqIFZFGg+18KJn5C+Gh67pw27jxf6YRYbI8XYkG2ARmiBXO/HWQXK9eWfN8J5ioHTFtjX6ndImo816QSEsx4DCWzO/XaX7FqG1Ct1JkU0wCqYyx/wC/gWhAwxqPTPRrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737545499; c=relaxed/simple;
-	bh=D/kLwR3I0FOH0MmJpKK+21io7hwpNSQp9HEenhAtft4=;
+	s=arc-20240116; t=1737545500; c=relaxed/simple;
+	bh=MBFnCrBoVuW11QfJkrrVYSbDrGut5xQzgTGFzP3SQVM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ACDkbCKwNzAMYg+OZsa8sA1qC2ucOQk3bjDVQNmogau+otGcR+434U6JMVN7q7QOzyOu5SPzF0BQvYLNpZ3l3FXvObJrioudkpaA5XnrBNIJXNNYbMJ86ADbtih+xaKq+u3iSTpZjhk5kvH2JLYiPbz5DjWwrUlUzDDS/9QmkHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LIM0ISn9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YLsxGkvW; arc=none smtp.client-ip=202.12.124.149
+	 In-Reply-To:To:Cc; b=OUm22jE1CoLqGXLYSs3R8EmDO1HBfvgSuJbI7LhrNIQH02oZqSjGw4FyhifKc2FqvlP52ce9HMe6q9Q/M9JQU5uk9F12BGO+TwoQTWiZg/6NDKhjVNiYyzy2QX0zJddTAf6A3q3LkSNQwJ+l1TLEm74wZL8YWPMLHXy5G/uZCf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MjdMwa8w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UB+z27lJ; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LIM0ISn9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YLsxGkvW"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 825E8114011C;
-	Wed, 22 Jan 2025 06:31:36 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 22 Jan 2025 06:31:36 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MjdMwa8w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UB+z27lJ"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id B7E581140123;
+	Wed, 22 Jan 2025 06:31:37 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Wed, 22 Jan 2025 06:31:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1737545496;
-	 x=1737631896; bh=AMNy1+3ZP7nwdA5WQT6Lgny1HpgGhfLUH7AOYszCjHM=; b=
-	LIM0ISn9WenkYbp/dW/QwWb8RA1mVmCjYXrqXcCEbDW0Yu+mAbuv1N8yNVfoFwmI
-	9iUB4W2eqIlIzQupsZXN+O+wOVakDvx3t2qXipz1dtIb9kZ2//A9RRF58Ts8Pclg
-	HWMP7siXaAFzY5KgB1/bTiMahfv1wSbmJ8YyB+dqIC9+1ajkYjvjMXxW0AL7XJtD
-	gD/nnZgu2L/abyT94CGx0J9BSQHy31qn46NekvGzYJEiJpgW1Xdywy345yPaG1qv
-	KewjS1cQuTp3OQ2e9/EGMDcXYVO/T9rSj4yjgKozJjVg3A1bjecia/FtOiKiEiHR
-	JfK2KJK7qCG6IZzoucOZVA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1737545497;
+	 x=1737631897; bh=OsJaIhL/66BSCaKwX49vP8QcAwbh/nyoVjlbcifKxEU=; b=
+	MjdMwa8wcVr91THw1qqKNj8lTb2wv5Zth9sxlJYvlu66dYPYGCJ8hceI6DDAHMfn
+	OJs5BvmAGVGRu5e9FgI1Ozws6wilOiQ5SCwdYI5EJIA0I79+U87xRwTUiZx4XVrp
+	DkGu35ryYh6Eb06vj4wcZ/EfEj09i21pWmsThllh1ngGse0oekEKFQryHWLS1NtZ
+	2GPPmJHxwL8Ka/USUdkkBEl1kQuytrXRI/wy46nUWYrwzCJ+8KpeZD2eymbEmB8L
+	Dpa5jPRUmXSVnQ4/mY+iSb8Gi/SxnWxNvbjRufyKASDFQN3FEQfzxVKwFdtZHagZ
+	qfAmYepGKzNPKLyNIk0Fsw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737545496; x=
-	1737631896; bh=AMNy1+3ZP7nwdA5WQT6Lgny1HpgGhfLUH7AOYszCjHM=; b=Y
-	LsxGkvWbNKDAzOA9ft8BZ1fE9+ah5yqhH7Dbp04NuPHxyldkiGeRh6v1qnf1neyB
-	lV7GrpsvxB1dH3uiwfkZTDmEk37rOo/FvP8dmhTYM/yMVuxEwdeEKvQgPcfjGfxP
-	H9IJa4yAM0ub4qyQJtcrS0ZWajPHzwJv0uhZGGhONRfPfW7wknroyDIqbfW3f3Uj
-	sN3p42yIFOM+Uxh01FWliZh6fx88VQgf/4eGpYHKAUnZ+kYCC7kqAeU6hw0Cq1a/
-	2zbngc/haNPkkqBt0g0IL5QBvmcz+P9NYOUEhodyeZS7MrM9/50eDEtOQ2EfYjsa
-	oXzFAk61RVhYbQ3MPsadg==
-X-ME-Sender: <xms:GNeQZwESKuDfPythRl3BpoDGO94jffTZaElXK08BXxwUU7wHXHMh3w>
-    <xme:GNeQZ5Ws-PxIlZMD9uvARnGK1gMHxJnH-Bo5_J7agoEmu5D0NmfTu4g0nI2UWCtNp
-    vP_EknwvOfYMceJ4A>
-X-ME-Received: <xmr:GNeQZ6Kxq2d8xonXwsnFtWbjvHW0SvUldWubrevqSkxqNGQWisc-3FkZAPZ6kRZiBperYfbozSgzNmEtnP-_uKFYuG-jDAwKyopAYhuotOdiswY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgudehgecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737545497; x=
+	1737631897; bh=OsJaIhL/66BSCaKwX49vP8QcAwbh/nyoVjlbcifKxEU=; b=U
+	B+z27lJOJh6jHHtqyvjU2IxYjg6rJd34OMOmsH0ukZVMvdKD1MZpPoBysYeV1fPt
+	WIm5lCkls/1xAYSPtXNV3nYZ6fSBrWZjY4GjBmMARJL6Ol6GghARgFp4dLSvFtQ2
+	kc8cOBLJupC1owyK4sBDmRax5q4+zcE423gNI2RVaQY7uD9DYM2TkDad0xg20fPv
+	bDO0VvNGiLp2wUxQ5jCHWpGoJKnIpz/XtW7vtJ7t0UFbN5H3/9urdx7W+v3F/VWy
+	12PJPr86ttI+6PQX4ppADCxgTkjJnpMELF2ODCgmBpF2fQ7DN/rVtXHKTCjtHh6c
+	dqHErX8gJDB87fenNtpTg==
+X-ME-Sender: <xms:GdeQZx6wdnzWcAuWJEctQPeBdVtcbAD516tqR1sn4r8D5w1Qu4-PZg>
+    <xme:GdeQZ-4MYkg6fI0G7h9yKYT4uUSDJkJF4hnNlTRHrLsBC7dPDQ94Bnn2UXGUOUndB
+    4BhEt1npzJkUpIDcw>
+X-ME-Received: <xmr:GdeQZ4etJTDT4CiDHI9-5X0MTaIbz945Tq0r2YT7Ps-DY32-TnP7pmH_nI1_MQNbbGEGll-wcPz-n9Vrv5w9s8NDmVAtp0WTqKTzK2vg-NrDn0s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgudehhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
@@ -60,25 +60,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgudehgecutefuodetgg
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
     pehsmhhtphhouhhtpdhrtghpthhtoheprhgrnhgurghllhdrsggvtghkvghrsehnvgigsg
     hrihgughgvrdgtrgdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhih
-    rdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehrohgs
+    rdhorhhgpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehrohgs
     vghrthdrtghouhhpsehkohhorhguihhnrghtvghsrdgtohhmpdhrtghpthhtohepghhith
     hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:GNeQZyGa7ecQwLYRnIcpMiq20XDQQ46w_Ano9w_RhXngehGlEmhSQQ>
-    <xmx:GNeQZ2UKVCl_DCluaaN0SyHZ1idToQA4IIwVpRu85BRKdc6WedKlEQ>
-    <xmx:GNeQZ1PHIcb9Qwy_vvCj_U0_FsjWPHhXsi2AkGuQl6QzhQX5KJ_7vw>
-    <xmx:GNeQZ90BmOKJKr0qEE_Vopxf_nd5odV0XHwmKJx3dbgzHP1a8BXtSw>
-    <xmx:GNeQZ4L5s3J8PiPEEzEdRDoKbQ54Sl869I1zKifIlwMAsoUyvGx_ToUP>
+X-ME-Proxy: <xmx:GdeQZ6KYSamp0PeXJfJppP2PWloBaNtc5FmdWHFbkZuJtUocHPWkPQ>
+    <xmx:GdeQZ1JNE6GdTLi9zcsG6AtYey6JrNUGJakViLdO3qUidUGTDwu61Q>
+    <xmx:GdeQZzw0LtEV0IULu5d3ssZ05z7403rpq0IkUoHnVTgfdASzSp87Lw>
+    <xmx:GdeQZxK3hzUZKBmXz_u_NK4kXzGBA_pI8HWEswGBhER06EMIbVod5g>
+    <xmx:GdeQZ99YiEDfIJxLtdbs1HxZ3oyhDQF9We8Kxmudg1IjgQ2eu7r1_oC9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jan 2025 06:31:35 -0500 (EST)
+ 22 Jan 2025 06:31:36 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4a23c53d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 22 Jan 2025 11:31:32 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2a6bff9c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 22 Jan 2025 11:31:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 22 Jan 2025 12:31:29 +0100
-Subject: [PATCH v4 1/5] Makefile: wire up build option for deprecated
- features
+Date: Wed, 22 Jan 2025 12:31:30 +0100
+Subject: [PATCH v4 2/5] ci: merge linux-gcc-default into linux-gcc
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250122-pks-remote-branches-deprecation-v4-1-5cbf5b28afd5@pks.im>
+Message-Id: <20250122-pks-remote-branches-deprecation-v4-2-5cbf5b28afd5@pks.im>
 References: <20250122-pks-remote-branches-deprecation-v4-0-5cbf5b28afd5@pks.im>
 In-Reply-To: <20250122-pks-remote-branches-deprecation-v4-0-5cbf5b28afd5@pks.im>
 To: git@vger.kernel.org
@@ -98,118 +97,93 @@ Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
  "Randall S. Becker" <randall.becker@nexbridge.ca>
 X-Mailer: b4 0.14.2
 
-With 57ec9254eb (docs: introduce document to announce breaking changes,
-2024-06-14), we have introduced a new document that tracks upcoming
-breaking changes in the Git project. In 2454970930 (BreakingChanges:
-early adopter option, 2024-10-11) we have amended the document a bit to
-mention that any introduced breaking changes must be accompanied by
-logic that allows us to enable the breaking change at compile-time.
-While we already have two breaking changes lined up, neither of them has
-such a switch because they predate those instructions.
+The "linux-gcc-default" job is mostly doing the same as the "linux-gcc"
+job, except for a couple of minor differences:
 
-Introduce the proposed `WITH_BREAKING_CHANGES` preprocessor macro and
-wire it up with both our Makefiles and Meson. This does not yet wire up
-the build flag for existing deprecations.
+  - We use an explicit GCC version instead of the default version
+    provided by the distribution. We have other jobs that test with
+    "gcc-8", making this distinction pointless.
+
+  - We don't set up the Python version explicitly, and instead use the
+    default Python version. Python 2 has been end-of-life for quite a
+    while now though, making this distinction less interesting.
+
+  - We set up the default branch name to be "main" in "linux-gcc". We
+    have other testcases that don't and also some that explicitly use
+    "master".
+
+  - We use "ubuntu:20.04" in one job and "ubuntu:latest" in another. We
+    already have a couple other jobs testing these respectively.
+
+So overall, the job does not add much to our test coverage.
+
+Drop the "linux-gcc-default" job and adapt "linux-gcc" to start using
+the default GCC compiler, effectively merging those two jobs into one.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- GIT-BUILD-OPTIONS.in                | 1 +
- Makefile                            | 5 +++++
- contrib/buildsystems/CMakeLists.txt | 1 +
- meson.build                         | 6 ++++++
- meson_options.txt                   | 2 ++
- t/test-lib.sh                       | 4 ++++
- 6 files changed, 19 insertions(+)
+ .github/workflows/main.yml | 4 ----
+ .gitlab-ci.yml             | 4 ----
+ ci/lib.sh                  | 5 -----
+ 3 files changed, 13 deletions(-)
 
-diff --git a/GIT-BUILD-OPTIONS.in b/GIT-BUILD-OPTIONS.in
-index f651116102..f1d0ecf123 100644
---- a/GIT-BUILD-OPTIONS.in
-+++ b/GIT-BUILD-OPTIONS.in
-@@ -45,3 +45,4 @@ GITWEBDIR=@GITWEBDIR@
- USE_GETTEXT_SCHEME=@USE_GETTEXT_SCHEME@
- LOCALEDIR=@LOCALEDIR@
- BROKEN_PATH_FIX=@BROKEN_PATH_FIX@
-+WITH_BREAKING_CHANGES=@WITH_BREAKING_CHANGES@
-diff --git a/Makefile b/Makefile
-index 06f01149ec..dc3c980aa7 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2230,6 +2230,10 @@ ifdef FSMONITOR_OS_SETTINGS
- 	COMPAT_OBJS += compat/fsmonitor/fsm-path-utils-$(FSMONITOR_OS_SETTINGS).o
- endif
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 808ddc19b8..32d35d2257 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -271,7 +271,6 @@ jobs:
+             pool: ubuntu-latest
+           - jobname: linux-gcc
+             cc: gcc
+-            cc_package: gcc-8
+             pool: ubuntu-20.04
+           - jobname: linux-TEST-vars
+             cc: gcc
+@@ -286,9 +285,6 @@ jobs:
+           - jobname: osx-gcc
+             cc: gcc-13
+             pool: macos-13
+-          - jobname: linux-gcc-default
+-            cc: gcc
+-            pool: ubuntu-latest
+           - jobname: linux-leaks
+             cc: gcc
+             pool: ubuntu-latest
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index a1bc92893f..b86bb0bdb3 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -46,14 +46,10 @@ test:linux:
+       - jobname: linux-gcc
+         image: ubuntu:20.04
+         CC: gcc
+-        CC_PACKAGE: gcc-8
+       - jobname: linux-TEST-vars
+         image: ubuntu:20.04
+         CC: gcc
+         CC_PACKAGE: gcc-8
+-      - jobname: linux-gcc-default
+-        image: ubuntu:latest
+-        CC: gcc
+       - jobname: linux-leaks
+         image: ubuntu:latest
+         CC: gcc
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 930f98d722..e67c481d4f 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -328,11 +328,6 @@ export SKIP_DASHED_BUILT_INS=YesPlease
  
-+ifdef WITH_BREAKING_CHANGES
-+	BASIC_CFLAGS += -DWITH_BREAKING_CHANGES
-+endif
-+
- ifeq ($(TCLTK_PATH),)
- NO_TCLTK = NoThanks
- endif
-@@ -3187,6 +3191,7 @@ GIT-BUILD-OPTIONS: FORCE
- 		-e "s|@USE_GETTEXT_SCHEME@|\'$(USE_GETTEXT_SCHEME)\'|" \
- 		-e "s|@LOCALEDIR@|\'$(localedir_SQ)\'|" \
- 		-e "s!@BROKEN_PATH_FIX@!\'$(BROKEN_PATH_FIX)\'!" \
-+		-e "s|@WITH_BREAKING_CHANGES@|\'$(WITH_BREAKING_CHANGES)\'|" \
- 		GIT-BUILD-OPTIONS.in >$@+
- 	@if grep -q '^[A-Z][A-Z_]*=@.*@$$' $@+; then echo "Unsubstituted build options in $@" >&2 && exit 1; fi
- 	@if cmp $@+ $@ >/dev/null 2>&1; then $(RM) $@+; else mv $@+ $@; fi
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 49904ca8a9..63d0088928 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1198,6 +1198,7 @@ string(REPLACE "@GITWEBDIR@" "'${GITWEBDIR}'" git_build_options "${git_build_opt
- string(REPLACE "@USE_GETTEXT_SCHEME@" "" git_build_options "${git_build_options}")
- string(REPLACE "@LOCALEDIR@" "'${LOCALEDIR}'" git_build_options "${git_build_options}")
- string(REPLACE "@BROKEN_PATH_FIX@" "" git_build_options "${git_build_options}")
-+string(REPLACE "@WITH_BREAKING_CHANGES@" "" git_build_options "${git_build_options}")
- if(USE_VCPKG)
- 	string(APPEND git_build_options "PATH=\"$PATH:$TEST_DIRECTORY/../compat/vcbuild/vcpkg/installed/x64-windows/bin\"\n")
- endif()
-diff --git a/meson.build b/meson.build
-index 0dccebcdf1..316cd93264 100644
---- a/meson.build
-+++ b/meson.build
-@@ -644,6 +644,12 @@ build_options_config.set('GIT_TEST_UTF8_LOCALE', '')
- build_options_config.set_quoted('LOCALEDIR', fs.as_posix(get_option('prefix') / get_option('localedir')))
- build_options_config.set('GITWEBDIR', fs.as_posix(get_option('prefix') / get_option('datadir') / 'gitweb'))
- 
-+if get_option('breaking_changes')
-+  build_options_config.set('WITH_BREAKING_CHANGES', 'YesPlease')
-+else
-+  build_options_config.set('WITH_BREAKING_CHANGES', '')
-+endif
-+
- if get_option('sane_tool_path') != ''
-   build_options_config.set_quoted('BROKEN_PATH_FIX', 's|^\# @BROKEN_PATH_FIX@$|git_broken_path_fix "' + get_option('sane_tool_path') + '"|')
- else
-diff --git a/meson_options.txt b/meson_options.txt
-index 32a72139ba..800e518d95 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -43,6 +43,8 @@ option('sha256_backend', type: 'combo', choices: ['openssl', 'nettle', 'gcrypt',
-   description: 'The backend used for hashing objects with the SHA256 object format')
- 
- # Build tweaks.
-+option('breaking_changes', type: 'boolean', value: false,
-+  description: 'Enable upcoming breaking changes.')
- option('macos_use_homebrew_gettext', type: 'boolean', value: true,
-   description: 'Use gettext from Homebrew instead of the slightly-broken system-provided one.')
- 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 62dfcc4aaf..6e423f655d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1864,6 +1864,10 @@ test_lazy_prereq CURL '
- 	curl --version
- '
- 
-+test_lazy_prereq WITHOUT_BREAKING_CHANGES '
-+	test -z "$WITH_BREAKING_CHANGES"
-+'
-+
- # SHA1 is a test if the hash algorithm in use is SHA-1.  This is both for tests
- # which will not work with other hash algorithms and tests that work but don't
- # test anything meaningful (e.g. special values which cause short collisions).
+ case "$distro" in
+ ubuntu-*)
+-	if test "$jobname" = "linux-gcc-default"
+-	then
+-		break
+-	fi
+-
+ 	# Python 2 is end of life, and Ubuntu 23.04 and newer don't actually
+ 	# have it anymore. We thus only test with Python 2 on older LTS
+ 	# releases.
 
 -- 
 2.48.1.321.gbf1f004a4a.dirty
