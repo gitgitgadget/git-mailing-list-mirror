@@ -1,227 +1,129 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D54391392
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 00:03:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F8717BB6
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 02:09:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737504235; cv=none; b=iwW//RGK7989cRlhIAP8H9HvBaCmB/UR4GZH+uczBLaDwSMjBLueDl76m9X7BvVTRloiNoZsTzbBw132p8nCaAUGgYW25b4V0OWlZu4dRr2rqT4zWDvC8w+BPoZd61FLRP/roEvZusaDkIhcyaxFU5O/SY3KAiol9nn9alaqVrM=
+	t=1737511756; cv=none; b=IVIX9YtHt2YJmfX1MGAIVRwc+GJ8u2WJJlDC0ocDLNX5Mlhp/iGiEYgVC8VljNwmWs9JFVNhHQCxEAzdGURn1G7XY64edxndN62adF2B9+wlay3xye6XGNTbrwYLQk+VHCpx4NEyYflIzJnbdY30Q+vx/E64eUpc9kGTH+o92s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737504235; c=relaxed/simple;
-	bh=lxGYZH1j5NhFDapsx95Jv+vOlmwLCCHDptEzLcGnwPQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YU0aB0LjDDiWqYUBDTm8w6C6cSiuK6np5Ke3TA8g4vhk9glWIlJSUKzZYKdxc1cUMiupgE8KerQnLXFpdEWH+2+tXAHoMvatZyiHE8A78SGdWr3cP9zv8viU+FQFYy6HaLhviSPXqP8AC/levnDP/xE4OVa9Qzk9VCWsGzNIDeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=f0gFi3Qu; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1737511756; c=relaxed/simple;
+	bh=fHRdE0WVO5iU9PkVpoaToOcl8Mujm83s+YxPuK6LwxE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=QAK5MPtBLC8nrLiuzlr4/8iy8edhVSgq+TzJtZqmE6xphziQf3kCglg/XyUgUqV2HvgWx1XJ27uqG+PyLBYNMXw13jtkon8c3rnPOmxYNdtsRJz4IfheKGFryqKYrxHLT/kt5qvV/bDn+N2aS0lr/Eh4kskxM4LEf1fy6yVaDQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=CTRK/68P; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="f0gFi3Qu"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2163affd184so27755ad.1
-        for <git@vger.kernel.org>; Tue, 21 Jan 2025 16:03:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1737504233; x=1738109033; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kkvBEB2EYDa6tndvVYoABcU/yGjuYjCU3MRrstfEqWg=;
-        b=f0gFi3QuaDQuBQc35iAhA6opnqWINIiCLKTAfkiFv3BWhIN2VQgME9hc8G220uSTWh
-         cvN9JYTPe+ONg5eWsyv++k00Nj15A3gKIJDjy46NUzqPrAnYoe0UioSacIZt8cOhTckG
-         yPu1LnCmIXMC/WTiCoIWI87vgSig0cHm+N2rh1r6X4T2tCjeu7d6kixhnyWn0zfPc0hz
-         y87t92cH44iASIQf/2ZLSzQTiaz18Ao21i1z4X8NsTvfBaxsncohN/gONeijnmGKn8EY
-         UGn6uqhmbvccN8KJTwUpBSzTIBci7PBDiDu+qQMPBr7300Q5MSufsCmimw/LVjw1R3dI
-         mGGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737504233; x=1738109033;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kkvBEB2EYDa6tndvVYoABcU/yGjuYjCU3MRrstfEqWg=;
-        b=lb154838mZE9pAerOgRA9OoLBuUTbqKbTE7KAkDYiyCkMDXKSRaxyCwW81heksbybi
-         wuuUw4/zJOA+ntmpXWnTZN2nYzUgv7220KDJFn6zQ/zbZ6N3KNuXZaljuRQOnPIoYRef
-         GqB4FmUOOHx69AZBCi/QKVz0Y+dd5Bt7/KQQluiZFkp4h3tw4KZPNPusTbSvFUnYMsp2
-         Yt7Vij0DcnR4CfKXmpW/A7Kz6VT9IfXhRE4fVwZ6ap5nGKDDSENCaO6H2NEK0dV1TAu8
-         etWrFnzxS7cxbxMHDBQjoXg/8xnh0WHBIRLblHV488fZb7rOWyOs3F+Cg3C9SIKJfig6
-         550w==
-X-Gm-Message-State: AOJu0Yxl4RFwJOvAYTviLyrhgwAbsmut7KjEwMYxdFTX14yCQfmFiyjQ
-	SRLVTS5fNAeDdrsYNDK8FFPJtEsx0E9JQE978v7e94abp4y0vc4HpYyOkhycew==
-X-Gm-Gg: ASbGncshLsQQL2bKlqtX47PmTPXns5iNFH9+If4KM1uNijD5vYFx6FoeTnpc//6sWTM
-	0IlvtiphE8xbVrA4RyijVLGWMyOKGUmDdndgdzNsBuLaqzU+xnlN67Lm9bBeLr32s/pd85wRfk2
-	R09ZfC+wLM4W/6mqtjvnE0j0Ol1WzBKgbmpH03gdKZ4LIOM2KRcC48QzG6b9ZNKQta8lxYw2dza
-	CAvYv/kWOJ37RMFxLq7X1eh2FxT7N324h2YFV9L6FKmunKFqVLhngSReY7KDYMAj9YD
-X-Google-Smtp-Source: AGHT+IG8Img93fb/tZJONmtyXbPMzI746UubAbZFZuGd07wm9Qu0+c3cRq77iOXKVX0MMxn3nsTF6Q==
-X-Received: by 2002:a17:902:ed97:b0:216:2839:145 with SMTP id d9443c01a7336-21d8ec8a7d5mr506605ad.1.1737504232493;
-        Tue, 21 Jan 2025 16:03:52 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:204:16d0:c948:f6ad:1381])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f7e6ad43cdsm101953a91.39.2025.01.21.16.03.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Jan 2025 16:03:51 -0800 (PST)
-Date: Tue, 21 Jan 2025 16:03:47 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
-	emrass@google.com, sandals@crustytoothpaste.net, mh@glandium.org, ps@pks.im, 
-	sunshine@sunshineco.com, phillip.wood123@gmail.com, allred.sean@gmail.com
-Subject: Re: [PATCH v6 2/5] libgit-sys: introduce Rust wrapper for libgit.a
-Message-ID: <d2qnphuygwjfi753pvhlhg4hunhddmqrs25wo3zmruruop6q3b@s6ustbmf4rn5>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
-	emrass@google.com, sandals@crustytoothpaste.net, mh@glandium.org, ps@pks.im, 
-	sunshine@sunshineco.com, phillip.wood123@gmail.com, allred.sean@gmail.com
-References: <cover.1723054623.git.steadmon@google.com>
- <cover.1736971328.git.steadmon@google.com>
- <5fc66cdb1628e0c9e420f3f0455779d7471f46ee.1736971328.git.steadmon@google.com>
- <xmqqa5brwtzq.fsf@gitster.g>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="CTRK/68P"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1737511746;
+	bh=fHRdE0WVO5iU9PkVpoaToOcl8Mujm83s+YxPuK6LwxE=;
+	h=Date:From:To:Cc:Subject:Content-Type:Content-Disposition:From:
+	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+	b=CTRK/68PCaz4FE7sjy0hGSSD2Ys4Fv2B/nVbdWCyYlLbJqTr6HdoaeJ5wibEATicA
+	 GYJBz/L3o1oPtah/cSL55zqbIJgGzFvcZO3YS0LXAOB5kIXNXV+q8oqmE/fkt4CePC
+	 TopPJFPtgwsjWC+nQSMwOppgyRE3PZMTANw0HU8C0Fxcqax7cROGLJd31OQ6OVAkEW
+	 F7KNWlvaUhAEMhcbYl2mURQjIRW9N4rDZsFSJ2XfF2pgWUL4XF7eH2I5Adxmhd2wuc
+	 3rB3uqWlm+H+gv7NP9yTgbfHhX3dgMEN6Ax5SXHT9qGeUIY284E94fICfe0udE7JCx
+	 vPBjhZCt1yxirIcutZ5S1W0AgbeEhzxrzAtafoBGr0fIalG4UBQHrDlxnGuFlNvVbp
+	 bdwlUXzhcmHbaJcVlw347KGTK2U0grWAfJgtUiA78azYWTrJpejOeQ8zBqJcrI0J9f
+	 KEbJKrwpmjp06PUwBs23toaAWbxWp6QrTMJDO7P63Y0ElXd0lXr
+Received: from tapette.crustytoothpaste.net (ipagstaticip-2d4b363b-56b8-9979-23b8-fd468af1db4c.sdsl.bell.ca [142.112.6.242])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id BDD8220033;
+	Wed, 22 Jan 2025 02:09:06 +0000 (UTC)
+Date: Wed, 22 Jan 2025 02:09:05 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>
+Subject: git refs migrate does not migrate stash entries
+Message-ID: <Z5BTQRlsOj1sygun@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="4vKHtMAqxWSMKXr/"
 Content-Disposition: inline
-In-Reply-To: <xmqqa5brwtzq.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On 2025.01.15 15:13, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
-> > diff --git a/Makefile b/Makefile
-> > index 27e68ac039..47e864a861 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -657,6 +657,8 @@ CURL_CONFIG = curl-config
-> >  GCOV = gcov
-> >  STRIP = strip
-> >  SPATCH = spatch
-> > +LD = ld
-> > +OBJCOPY = objcopy
-> 
-> This assumes GNU binutils is available.  As long as our intention is
-> to start the Rust support as an optional feature, that is OK.
-> Hopefully the piece that requires $(OBJCOPY) is arranged to be
-> easily opted out.  Let's keep reading.
-> 
-> > @@ -2731,6 +2733,7 @@ OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
-> >  OBJECTS += $(UNIT_TEST_OBJS)
-> >  OBJECTS += $(CLAR_TEST_OBJS)
-> >  OBJECTS += $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(UNIT_TEST_PROGRAMS))
-> > +OBJECTS += contrib/libgit-sys/public_symbol_export.o
-> 
-> This is compiled for everybody, even for those whose platform cannot
-> support Rust interface (or those who choose not to build it).  As
-> long as what is in the file is written portably, it is fine to have
-> stubs and entry points that their build will not use.
 
-Later on in the series we add an INCLUDE_LIBGIT_RS variable to control
-builds and tests; I don't see any reason why we can't move that earlier
-in the series, so I'll do so in V7 and then look at what we need to do
-to make things more portable.
+--4vKHtMAqxWSMKXr/
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> >  ifndef NO_CURL
-> >  	OBJECTS += http.o http-walker.o remote-curl.o
-> > @@ -3726,6 +3729,10 @@ clean: profile-clean coverage-clean cocciclean
-> >  	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
-> >  	$(MAKE) -C Documentation/ clean
-> >  	$(RM) Documentation/GIT-EXCLUDED-PROGRAMS
-> > +	$(RM) -r contrib/libgit-sys/target
-> > +	$(RM) -r contrib/libgit-sys/partial_symbol_export.o
-> > +	$(RM) -r contrib/libgit-sys/hidden_symbol_export.o
-> > +	$(RM) -r contrib/libgit-sys/libgitpub.a
-> 
-> Which one of the above is a directory?  The latter three smells like
-> a regular file, so we shouldn't say "-r" there.
-> 
-> > @@ -3887,3 +3894,12 @@ $(CLAR_TEST_PROG): $(UNIT_TEST_DIR)/clar.suite $(CLAR_TEST_OBJS) $(GITLIBS) GIT-
-> >  build-unit-tests: $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG)
-> >  unit-tests: $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG) t/helper/test-tool$X
-> >  	$(MAKE) -C t/ unit-tests
-> > +
-> > +contrib/libgit-sys/partial_symbol_export.o: contrib/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
-> > +	$(LD) -r $^ -o $@
-> 
-> OK.  We build a "relocatable" object, which is unconditionally made
-> as part of $(OBJECTS) above.  Even without GNU binutils "ld", people
-> hopefully can convince their linker to do the equivalent.  I am not
-> sure if it is healthy to assume that such a linker also uses "-r"
-> for the feature, so we may have to make this rule more customizable,
-> or make partial_symbol_export.o only conditionally part of $(OBJECTS)
-> to allow them to opt out.
-> 
-> > +contrib/libgit-sys/hidden_symbol_export.o: contrib/libgit-sys/partial_symbol_export.o
-> > +	$(OBJCOPY) --localize-hidden $^ $@
-> 
-> Unlike the "public" thing, hidden_symbol_export.o was not made part
-> of $(OBJECTS), so this part is arranged to allow people without
-> $(OBJCOPY) to easily opt out of this part of the system, which is
-> good.
-> 
-> > +contrib/libgit-sys/libgitpub.a: contrib/libgit-sys/hidden_symbol_export.o
-> > +	$(AR) $(ARFLAGS) $@ $^
-> 
-> Likewise, people can easily opt out of building "libgitpub.a", which
-> is good (these targets are triggered only from build.rs).
-> 
-> > diff --git a/contrib/libgit-sys/README.md b/contrib/libgit-sys/README.md
-> > new file mode 100644
-> > index 0000000000..c061cfcaf5
-> > --- /dev/null
-> > +++ b/contrib/libgit-sys/README.md
-> > @@ -0,0 +1,4 @@
-> > +# libgit-sys
-> > +
-> > +A small proof-of-concept crate showing how to provide a Rust FFI to Git
-> > +internals.
-> 
-> OK.
-> 
-> > diff --git a/contrib/libgit-sys/public_symbol_export.c b/contrib/libgit-sys/public_symbol_export.c
-> > new file mode 100644
-> > index 0000000000..7cd5007902
-> > --- /dev/null
-> > +++ b/contrib/libgit-sys/public_symbol_export.c
-> > @@ -0,0 +1,21 @@
-> > +// Shim to publicly export Git symbols. These must be renamed so that the
-> > +// original symbols can be hidden. Renaming these with a "libgit_" prefix also
-> > +// avoids conflicts with other libraries such as libgit2.
-> 
-> Style.
-> 
-> > +#include "git-compat-util.h"
-> > +#include "contrib/libgit-sys/public_symbol_export.h"
-> > +#include "version.h"
-> > +
-> > +#pragma GCC visibility push(default)
-> > +
-> > +const char *libgit_user_agent(void)
-> > +{
-> > +	return git_user_agent();
-> > +}
-> > +
-> > +const char *libgit_user_agent_sanitized(void)
-> > +{
-> > +	return git_user_agent_sanitized();
-> > +}
-> > +
-> > +#pragma GCC visibility pop
-> 
-> I do not think we would mind not having Rust binding support on
-> platforms without GCC (and clang---I assume it would be aware of and
-> react to that #pragma GCC the same way?).  But do we allow this file
-> to be left uncompiled when the build wants to opt out of Rust
-> support?
-> 
-> > diff --git a/contrib/libgit-sys/public_symbol_export.h b/contrib/libgit-sys/public_symbol_export.h
-> > new file mode 100644
-> > index 0000000000..a3372f93fa
-> > --- /dev/null
-> > +++ b/contrib/libgit-sys/public_symbol_export.h
-> > @@ -0,0 +1,8 @@
-> > +#ifndef PUBLIC_SYMBOL_EXPORT_H
-> > +#define PUBLIC_SYMBOL_EXPORT_H
-> > +
-> > +const char *libgit_user_agent(void);
-> > +
-> > +const char *libgit_user_agent_sanitized(void);
-> > +
-> > +#endif /* PUBLIC_SYMBOL_EXPORT_H */
-> 
-> OK.
+After the recent fix for reflog migrations posted to the list, I
+converted two work repositories. Unfortunately, it doesn't appear as
+though the reflog for `refs/stash` was converted, so I think I may have
+lost my stashes.  While I would have liked to retain them, fortunately
+they were not essential in these repos and I can live without them, but
+we probably do want to fix this issue since users in general will want
+to maintain them.
+
+Here's a shell script that reproduces the problem on the latest `next`:
+----
+#!/bin/sh -e
+
+rm -fr test-repo
+git version
+git init -b dev test-repo
+cd test-repo
+touch abc.txt
+git add abc.txt
+git commit -m +
+echo abc >abc.txt
+git stash
+git show stash@{0}
+git stash list -p
+
+echo "Converting..."
+git refs migrate --ref-format=3Dreftable
+
+echo "Now using reftable."
+
+git stash show
+git show stash@{0}
+git stash list -p
+----
+
+My expectation is that the script exits 0 and prints the stashes a
+second time, but it exits early and unsuccessfully and the stashes don't
+appear to be preserved.  It does appear to work correctly if you comment
+out the `git refs migrate` command.
+
+I would have liked to have done more investigation, but I'm dealing with
+some administrivia in my personal life that has taken up more of my
+evenings than I would have liked, so I have not done so.
+
+I also apologize for sending a constant barrage of bug reports that
+might make it seem like I'm dissatisfied with the work on reftable, when
+in fact that's not the case and I do very much appreciate the work being
+done.  I did promise Patrick that I'd try it out and be the guinea pig,
+and so I'm doing so.  I'm excited to see it end up in its final state.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--4vKHtMAqxWSMKXr/
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ5BTQQAKCRB8DEliiIei
+gWybAP4k1O6gGPCUvmjFGOvlGWWTzVamMTi2p/K9oCrJ7PXuWAD+NK1wig7ZaVSC
+FdRlU9s7ALWfwWQ6len3ErCU5oTE2AY=
+=bcVx
+-----END PGP SIGNATURE-----
+
+--4vKHtMAqxWSMKXr/--
