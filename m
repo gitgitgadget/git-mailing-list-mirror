@@ -1,179 +1,165 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0880211299
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 09:48:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1B3211290
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 10:03:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737539294; cv=none; b=r4pqmBVi2klGOPn4ozNXQyqP//v4AQynp5TLWEwEfBC/nXyaEvEGKo0B1XTQRHZ08f0yQERNNE97dMlzZjpQrtclBUS/XbHo17h+CudF86X21PxA9K/jFxrKwtALEBskOuHPLDY+1P246gtya81LCVFln8hMWvnJCLdZuXkAR24=
+	t=1737540212; cv=none; b=uYhXDwVLhEfYsbQhJoolnwCTrdVyt8otZEmS++Dnq6a6eo5zuKyeD0ik58qjgUGVCzgScDHkFsiSGUANz5MulnkhifvwIQ2M+dplwzunio1CiCuCH0PnJbM4lNXJA+9dbvUqoTHCnGlJe/B/8xOSe1a+OboZfNvb+4P6sbrgAS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737539294; c=relaxed/simple;
-	bh=0trjfko5S1xSgrjGyFWXw+IJym4XihLn0rMWSe5gk44=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=YOJlh+JebKLWftsHi8ZUENKwhB+NbjI/dqP+X/Ops0SPl3VFRnfEAhBOgmjDGRCVYzLQLzMxgG9F9R5zmMftp0m/u7SGjGQxoBWGBEQohdTeOk4pIskuS9Zsn7CckvIkhL408KT6te23APkIhmAdTfH2/CQmTkk9MKoWnY+Z47M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TFdHM1qo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TQ4rF1pz; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1737540212; c=relaxed/simple;
+	bh=OurbPe6n3ILQwBFwe7RNgeg4adgGOIok4TQ3w7CWi7Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Ek3/bK+jJt9DrVZyNvK5XzqyujDPPxSyW1wVJlis9bMuRiYdEV7mHZuWzYZm3/I0d3yA88uAjmhXW6yIRdcTpqX7otYjOexFQ1h80trJuk4rB9RUfjRaiLzeBpnNKt4Z/sGmZmc3HEYp+xJR4my/o+uyM2iBH0Ndb1eIq8Of+18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hv8DZVC9; arc=none smtp.client-ip=209.85.216.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TFdHM1qo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TQ4rF1pz"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C22B625401FF;
-	Wed, 22 Jan 2025 04:48:10 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 22 Jan 2025 04:48:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1737539290; x=1737625690; bh=8NDCREsLoO
-	dqHfOQU7xqkClTwd1M52fRuRfnSvlxruE=; b=TFdHM1qoLOMRnkjJNy2cvWOQuP
-	gM9ticIcnp37RXUFoxjYUvjdEUgC86KjBIOx0nf+D04hSj67kaf2477K1OP9idCQ
-	aYJ7c+UPFkQaZBuYiXsTVJnFmkdDGUtgI+f02vYY9/4ijJuSpTk+SG9X+Zbn3aDJ
-	tNtr+qp4BPS0Qfg1s63PJsX/nAgDEYY4yQsHFkNWPpqdUuVz2/9HFj8cCq3DpNBi
-	/MSY+JIkQ0wy1Vgf9Dk1VosOfCLXEH6OVsOyw4lzb8RzPcmFCa23pswXOAYaUNMa
-	loTwMBkEH9NSxPxRJjjMVel8pDKj0HFYhlG1SmrSuraytvO0kvqG+1utzbdg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1737539290; x=1737625690; bh=8NDCREsLoOdqHfOQU7xqkClTwd1M
-	52fRuRfnSvlxruE=; b=TQ4rF1pzPQOxvlvIyD82hMx4m4hmNf83lPLl/N3vwGLp
-	/D1EC/02D1pLMmb4QNpkin8v0CDsIN1/8RAa1N0dvAsQ7wsVLEUCwboY6iBMSLnn
-	gxLK9WKfvvbMyuKVk/DDF+saCl8xMc+8ToQbRYMkq20cC/D93uwM8cG2ZNbJJPSg
-	0rF4h/JTDlV7Gw587q3BbgSz/2spYZPJwfpLywb8nSh0IQBG9CAFuiyccFtnlXM5
-	JbpKqlZipIL0beG+PnOp7eCc7ngJPVIL3tRet5EYbFSzqssoHF7hJHsVJkc4yxKV
-	SHxeS2mFVR/Il+JIsfeNjffY+YChSTbfwcyIeLPHkA==
-X-ME-Sender: <xms:2r6QZ4QliO_71n8yqbJ07dZDtJY9SOiq7brOrXgECnk5rR0soRoAeA>
-    <xme:2r6QZ1ytUqTpufEHuHX3-RS-y6pYn6kRpmJQigpaw3iBJXWofUyZM2C5w2SYAtptV
-    c3G1gTTf70YJ_FnFA>
-X-ME-Received: <xmr:2r6QZ13QJM9ss7t6GWBnp13qqjHMkGyv7_uwOqLzbVJ11s0oIR5Ai3498fm5pie9IEeE2DHktFSq1uyOBPSJZsaxBKAwavQSEmQIGneKWYIbUOo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgudefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkvfevofesthejredtredtjeen
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepiefgiedtffffvddvueehheejheehleduudfhheekkeeg
-    gefgueffheevgeetjeefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    shgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvght
-X-ME-Proxy: <xmx:2r6QZ8Cxf0baKN5VT5ZEcrY5VWdTEFSdLaGtYo7hblgDZAix35WSvw>
-    <xmx:2r6QZxjzVFes6YuLk-dKUyVKjHhA4wp9laNziocHHM8q3I7UAeBEpw>
-    <xmx:2r6QZ4qtmewjKRyQHC14Lbmy4V9FiUzlaVbVur8j8azAl4dR3r2Dbw>
-    <xmx:2r6QZ0hxLulJNwcwFZFNZUanzhebjdcPIY5AzwqZnykV5DEm4gPSEw>
-    <xmx:2r6QZ2t6MqMbPqwFs4uO9iw7xRIHNCSihUfpjBAoxk7vviaWBhAWfdL9>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jan 2025 04:48:09 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id dd0e4cd9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 22 Jan 2025 09:48:08 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 22 Jan 2025 10:48:06 +0100
-Subject: [PATCH] refs: fix migration of reflogs respecting
- "core.logAllRefUpdates"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hv8DZVC9"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2f441791e40so8783156a91.3
+        for <git@vger.kernel.org>; Wed, 22 Jan 2025 02:03:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737540210; x=1738145010; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6C3w2GUTtJXjUuPVI76B430uK48nqdFDv9vkfNg1Wm8=;
+        b=hv8DZVC9bPjPrloaW0TunNr97JAUyXJTJNd28SlARbNMDPxy/pIVBtMqdiUgAaIDpd
+         pBKRLmI5QPY/1PcqrPYXk3rpZ23RnLhDn7MLPXTXmOSX7xrkC2MK8OaAL6aDqa9aaiJF
+         bz/VxMX0vWemvYIuHxEWhPZu4ehoXxOFlio/x8KOaG6JpzZp/cI/SlyiINVLeHhSYLry
+         jTHDz9ZNokNTX50yeN0MWqU9UxdXPT+pJ4LpuRFbNVe28Xxdnek5/ON7+zioVYu/G28j
+         tYNpAtfpNcAm1JuHM1HfDc7zXiS/S7lekTd4j7XfG6FlIi0+iPDo+GYRqjHlr/e3vQcy
+         F4rA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737540210; x=1738145010;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6C3w2GUTtJXjUuPVI76B430uK48nqdFDv9vkfNg1Wm8=;
+        b=l0aZS2r+wD6S382/xKjw8SGvHHodkxy8VDaY3P3TYhATK6OOwyzwqQ6trMP3kkech8
+         fwNkUwBRWwKMohU7p1dTZHfiWiBrcs19RNuCZlZDW5CUlmsRaeLYBvR6ahyrcCG1amT1
+         97fywBGw1ag+rWfsFAeqQRpcFwVpsihKeCmUOKHzQGFY5ucFEu3H7ggdSqTvzxG+Xz/1
+         UF6/OiT3I+Pb76vJN8GoWRDfFUP8PUvoLqgBYoPOckRzV5EUD/rkvteLGDoOWeVkBwGm
+         Vy2cmUAE4v+XDzJyKHSRUw03YtTHgsfKXS/XOkmOx3+kJzNbAAlUfINIFlyngYI21NGH
+         r2Uw==
+X-Gm-Message-State: AOJu0Yy7KiTivtUJzjO2PqBhb3nwf/sbSGpA6XUE3wcDv5AVa5gWiona
+	FtcMEOyXwt0wDp2i//Mxy9dILsHFPTnhhWG1Bs1oAY5nrnq4Ad9pbiLOlWeI
+X-Gm-Gg: ASbGncsRT2rFnHwZv5p2lps0MC6ZDZ59TVkll1Uo8EsrnJ1Y9iE85biiy24R2IvzEfq
+	7k90WPFGKlJsZyo7UMV11KORN0EaeiBVCSi5LbliLOb/Sv27c/SAVG45vAmUPZp12ukWl9rtwK5
+	gH9eJzXXvebls7JnmoQlqr2DN892LSZdHlVi8RDf9NYJ8BqhbZbjApY3xS3a9wPgddwiJfqQRbb
+	8Wnbq4wfYMRhmUIoD/QJ7ZfQxoI3BgXwgiBG7Fn9HzEryp2hikWVmvH0kDRgXGEpFuJSAZOEknQ
+	h5Xm1y44sw==
+X-Google-Smtp-Source: AGHT+IFTLaMA0Jk4zXVddkdGzErmIWnYQiMjk3d6pXvoifh4QZSO9SW2fZSriVXHoU3Kzko1w1nxnA==
+X-Received: by 2002:a05:6a00:428d:b0:725:ae5f:7f06 with SMTP id d2e1a72fcca58-72dafadbc37mr29540892b3a.23.1737540210392;
+        Wed, 22 Jan 2025 02:03:30 -0800 (PST)
+Received: from localhost.localdomain ([103.39.127.160])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72dabad00dcsm10978061b3a.174.2025.01.22.02.03.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jan 2025 02:03:30 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: peff@peff.net
+Cc: git@vger.kernel.org,
+	karthik.188@gmail.com,
+	nika@thelayzells.com,
+	gitster@pobox.com,
+	ps@pks.im
+Subject: [PATCH] refs: fix creation of corrupted reflogs for symrefs
+Date: Wed, 22 Jan 2025 11:03:19 +0100
+Message-ID: <20250122100319.2280647-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20250121215235.GA2753621@coredump.intra.peff.net>
+References: <20250121215235.GA2753621@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250122-b4-pks-reflog-migration-fix-stash-v1-1-27dbae4602f7@pks.im>
-X-B4-Tracking: v=1; b=H4sIANW+kGcC/x2NSwqEMBAFryK9tiGJDopXERdx7MTGL+kggnj3a
- WZZ8OrVA0KJSaArHkh0sfCxK9iygO/s90jIkzI44z7GOodjjecimCisR8SNY/JZHQx8o2QvM04
- 2UFO1JrS1B/05dcv3v9EP7/sDFSy7xHMAAAA=
-X-Change-ID: 20250122-b4-pks-reflog-migration-fix-stash-d1fe7380f84a
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
- Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.14.2
+Content-Transfer-Encoding: 8bit
 
-In 246cebe320 (refs: add support for migrating reflogs, 2024-12-16) we
-have added support to git-refs(1) to migrate reflogs between reference
-backends. It was reported [1] though that not we don't migrate reflogs
-for a subset of references, most importantly "refs/stash".
+The commit 297c09eabb (refs: allow multiple reflog entries for the same
+refname, 2024-12-16) added logic for reflogs to exit early in
+`lock_ref_for_update()` after obtaining the required lock. This was
+added as a performance optimization as it was assumed that no further
+processing was required for reflog only updates. However this was
+incorrect since for a symref's reflog entry, the update needs to be
+populated with the old_oid value. This is done right after the early
+exit.
 
-This issue is caused by us still honoring "core.logAllRefUpdates" when
-trying to migrate reflogs: we do queue the updates, but depending on the
-value of that config we may decide to just skip writing the reflog entry
-altogether. And given that:
+This caused a bug in Git 2.48 where target references of symrefs being
+updated would create a corrupted reflog entry for the symref since the
+old_oid is not populated. Undo the skip in logic to fix this issue and
+also add a test to ensure that such an issue doesn't arise in the
+future.
 
-  - The default for "core.logAllRefUpdates" is to only create reflogs
-    for branches, remotes, note refs and "HEAD"
+The early exit was added as a performance optimization for reflog-only
+updates, but this accidentally broke symref reflog handling. Remove the
+optimization since it wasn't essential to the original changes.
 
-  - "refs/stash" is neither of these ref types.
-
-We end up skipping the reflog creation for that particular reference.
-
-Fix the bug by setting `REF_FORCE_CREATE_REFLOG`, which instructs the
-ref backends to create the reflog entry regardless of the config or any
-preexisting state.
-
-[1]: <Z5BTQRlsOj1sygun@tapette.crustytoothpaste.net>
-
-Reported-by: brian m. carlson <sandals@crustytoothpaste.net>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Reported-by: Nika Layzell <nika@thelayzells.com>
+Co-authored-by: Jeff King <peff@peff.net>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
-Hi,
 
-this patch addresses the issue reported by brian where "refs/stash"
-isn't getting migrated correctly. The patch is based on top of "maint"
-so that it can be easily backported.
+Hello,
 
-Thanks for the report!
+This patch is based on top of 'maint' so that it can be easily backported.
+Sorry for the inconvenience here. This was a premature optimization which
+wasn't needed, and unfortunately this wasn't captured by any test.
 
-Patrick
+Karthik
+
 ---
- refs.c                  |  2 +-
- t/t1460-refs-migrate.sh | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+ refs/files-backend.c  |  3 ---
+ t/t1400-update-ref.sh | 16 ++++++++++++++++
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index 0f41b2fd4a..37b8cfb90c 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1330,7 +1330,7 @@ int ref_transaction_update_reflog(struct ref_transaction *transaction,
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 5cfb8b7ca8..29f08dced4 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2615,9 +2615,6 @@ static int lock_ref_for_update(struct files_ref_store *refs,
  
- 	assert(err);
+ 	update->backend_data = lock;
  
--	flags |= REF_LOG_ONLY | REF_NO_DEREF;
-+	flags |= REF_LOG_ONLY | REF_FORCE_CREATE_REFLOG | REF_NO_DEREF;
+-	if (update->flags & REF_LOG_ONLY)
+-		goto out;
+-
+ 	if (update->type & REF_ISSYMREF) {
+ 		if (update->flags & REF_NO_DEREF) {
+ 			/*
+diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+index e2316f1dd4..59493dd73f 100755
+--- a/t/t1400-update-ref.sh
++++ b/t/t1400-update-ref.sh
+@@ -4,6 +4,8 @@
+ #
  
- 	if (!transaction_refname_valid(refname, new_oid, flags, err))
- 		return -1;
-diff --git a/t/t1460-refs-migrate.sh b/t/t1460-refs-migrate.sh
-index f59bc4860f..ceb0c4977d 100755
---- a/t/t1460-refs-migrate.sh
-+++ b/t/t1460-refs-migrate.sh
-@@ -224,6 +224,23 @@ do
- 			test_commit --date "100003000 +0700" --no-tag -C repo second &&
- 			test_migration repo "$to_format"
- 		'
-+
-+		test_expect_success "$from_format -> $to_format: stash is retained" '
-+			test_when_finished "rm -rf repo" &&
-+			git init --ref-format=$from_format repo &&
-+			(
-+				cd repo &&
-+				test_commit initial A &&
-+				echo foo >A &&
-+				git stash push &&
-+				echo bar >A &&
-+				git stash push &&
-+				git stash list >expect.reflog &&
-+				test_migration . "$to_format" &&
-+				git stash list >actual.reflog &&
-+				test_cmp expect.reflog actual.reflog
-+			)
-+		'
- 	done
+ test_description='Test git update-ref and basic ref logging'
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+ 
+@@ -2068,4 +2070,18 @@ do
+ 
  done
  
-
----
-base-commit: f93ff170b93a1782659637824b25923245ac9dd1
-change-id: 20250122-b4-pks-reflog-migration-fix-stash-d1fe7380f84a
++test_expect_success 'update-ref should also create reflog for HEAD' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit A &&
++		test_commit B &&
++		git rev-parse HEAD >>expect &&
++		git update-ref --create-reflog refs/heads/main HEAD~ &&
++		git rev-parse HEAD@{1} >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
+-- 
+2.47.0
 
