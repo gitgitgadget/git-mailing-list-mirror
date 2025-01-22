@@ -1,118 +1,102 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556391C5D66
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 21:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EADC1149E17
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 22:08:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737583059; cv=none; b=UAc2MQ3UxbaT+1lP2fiuO3NjgpnxpdxS0wA5EG4XIsizmFvvWWg/8buXJiCnjw6KHCz9bN14tmAwO+MilVdw07tXqzg+Ylf0xCQFXGOr8OPe+aVVw5PLhLvI/R/I6V1bkDPzdrS/1gKMk4WIUs00H/crZy0oa+D4K5HnHAfK3A0=
+	t=1737583724; cv=none; b=ca9WzFhYJSkUbSvIs9G1u0OJzTBLUD8uYWavK2PpFHgEDtONqhECVdNebduQ2PS93KBOFSCAZ6jOLvyJY2uJ1Pr7Kf6cu33YE7DubSGFioVxXe3vEg9MxGFgJkKYkn6wvxKIlow5MZH+6NKxOZhdr7wI85iurxQtt2WGrFTv8nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737583059; c=relaxed/simple;
-	bh=VlmhYHsfMtMxHnVtBK9h/i9fAQf305RZN4QneIvvxfA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iiuL/bwR7cpzU7cdthTwTsH3/UDDhHesMp9sSKlSephiTfsi/NLIK1z1UdpZJHt3tQ7L/uwMD3hRaklg2diacNv3fWK1UqoXAKUEx8Kh6l+YVMTE0hjaZ2HXtH9eR3DnBLZEnn+ibGi6G+6dXl7isNCaRWNZT6jB+8y12hk95jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M7tnQDWK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qWesNPmA; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1737583724; c=relaxed/simple;
+	bh=IRRO6NcDWBClZ4DYXim7P5j2UY9/jQ7ZVKVwAyRDyME=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ua1Y757QAPXIpn5fiwlQXA7zJMbe+42pkmTD5/3Fz+NpjMD1zx8D/Gk3rdvf8onolHsZQD/xUgh1tJjkpCuMvjo0UpP5fftvrhUOp3X5P4Y704CkWR+3hilgmzN/GL5XVMsCMtEe9yR1+B0rYreqeZZU0pn0rX/3AXTpYOHX7so=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=rFP7albm; arc=none smtp.client-ip=209.85.219.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M7tnQDWK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qWesNPmA"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 48A6513801DD;
-	Wed, 22 Jan 2025 16:57:36 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 22 Jan 2025 16:57:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737583056; x=1737669456; bh=uG2cGUASvI
-	sXL5Bp1/XuqpO484HR/aQl7hMwno5o+9A=; b=M7tnQDWKoQGPhsfN4IgYr1X5EA
-	Tj4XjrM5dQ9KzB74Zxm2E2qjny9WgdHuu+/FqD7VslfWY7vbrpk7QZDJfZzzSga4
-	eFNCnnzNiqj3UGJoT87HnhNMNxOx8hsWw5tgm1F65ATtxelqUgQjS5K7mduGcAif
-	gvOgzOOKq3OFLxMjKTmJRNHU3LSa68s5DcljXDX6h8DShQ36ZzhJ2rnazTGolB0K
-	e8b+VrhvGmR3PM25Hl6HcjU5bv6QihkawXfZdbJ3UjJsrMwCgSdXmOgzBq4FLLk/
-	JXoX7ziU0egV/ODcH5jBoWPsu9oDOnWLshWiyaMgR7yUyvh49IYrniv8xPqQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737583056; x=1737669456; bh=uG2cGUASvIsXL5Bp1/XuqpO484HR/aQl7hM
-	wno5o+9A=; b=qWesNPmAJNIkqawISbo3UvK1In4r0XgGu33I9GFCllX0m97L2Ku
-	o2mTN7wPP2kfGU+dOCnkadce1UnAHtqzBJPsuq0xmpHRMJD+vSya7H2KuqIniQ47
-	WMW80kRFhG2CJzmkm4Y5Q85HwDXIOVNZyLghUOsNCM0yC1tFAD5HZrOq/t557kj2
-	Uji+JRVhGvVCweROAxcACu5cpF+pj5rBSjnIGJk3NfKEDUmOQ2IgmFo4AQ0T3W4b
-	HS+YEYLFVNMVH5YEmh3xYdia1/a/Us2ohfaYB9Ewf3NgV5imsrPLn92KqH84UrZQ
-	OaX0r3x1/R7eaOqcAz2FQBombF/V+c3d6Pw==
-X-ME-Sender: <xms:0GmRZ6y2bC_J9P2iWLQMhy3hq8rP2e1EOBeJ0CmUq5oiUYSoRXdU-w>
-    <xme:0GmRZ2Rr7rNVUqp6XqNm8Ja8MRHhc45VjDdGJBs_KTufnRmvJsQBy14EXPtzCVLMy
-    y3rT2CN07LcAPrbCQ>
-X-ME-Received: <xmr:0GmRZ8Xpj4BovJOn25uZDxxj-h3zv_w3QjylASzuT14Y_nRUtdGmBa_ENDJ2CxTPYDOxObScvxrou1f81Lp3OBq-NEzqWTI53ap6>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgvdejkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:0GmRZwjzzKVORrB1_VP7nv8pDg0nIdoRVSXum3FjzSQ83jgFP4kz7A>
-    <xmx:0GmRZ8BuQPINya1kSzta_fARylX4Wvg5rfN_xAzOZCgntc5rCm41Rg>
-    <xmx:0GmRZxJE1iIOooMhOj1pWJLIBKHVYOJwQpyf3b3WRTzxy-ex6jwu3w>
-    <xmx:0GmRZzC5mCUA0RUtHLvHbjlFpAlJLih9QRgWrXpdRKsXmgK_VrGvUA>
-    <xmx:0GmRZ_89lpzokJ_NbJDvkCmWbx8ZuHuMj7TH6Lq3c4093WeHYIiGM7ss>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jan 2025 16:57:35 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] reftable: prevent 'update_index' changes after
- adding records
-In-Reply-To: <xmqqzfjiwxei.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	22 Jan 2025 09:50:29 -0800")
-References: <20250122-461-corrupted-reftable-followup-v3-0-ae5f88bf04fa@gmail.com>
-	<20250122-461-corrupted-reftable-followup-v3-3-ae5f88bf04fa@gmail.com>
-	<Z5DgxQuc2j_-5GHg@pks.im> <xmqqzfjiwxei.fsf@gitster.g>
-Date: Wed, 22 Jan 2025 13:57:34 -0800
-Message-ID: <xmqqo6zyv7e9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="rFP7albm"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e5372a2fbddso392562276.3
+        for <git@vger.kernel.org>; Wed, 22 Jan 2025 14:08:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737583722; x=1738188522; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IRRO6NcDWBClZ4DYXim7P5j2UY9/jQ7ZVKVwAyRDyME=;
+        b=rFP7albmNZGO8qogxmEPaKJFw7zMU+Hd1GSNBZVgMffCnPuWIdKI9HZRafngsKbajq
+         FG7z+q4cHrSctRXP552qfI0kO8b6RB2iNymPjdJC533oG5CNfP+Sf4CCbEx+AMm8uYRu
+         R5BBuZ2w6/aDMkyaCJQ4PuyzS2y0cwcJPLZ+/45IKddljaJPeq4zSdMbDYE+AUPANOxe
+         GR5TAIMttcnEF4TY1fM1LP5Wp29S05qfBImSgZF+fv8qwT1v1MCSk49f9rCo+/RiTuVf
+         nK8kk9PRcJNlqvt9gcWsgjEU7QQFgH7ftawZsV2a4sOsL90Wq8mEtE5bvSBQRbCaoOTu
+         07xw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737583722; x=1738188522;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IRRO6NcDWBClZ4DYXim7P5j2UY9/jQ7ZVKVwAyRDyME=;
+        b=UY3ncBZTuxibQs1+1ibF633mq3vCsxjYOcO4UzMVtkBZCIS7qTII+RlmvoiiVrDUdo
+         28vU3Lv1T7g3ax2C46CmbSjmj1pmgUcrrrBUp817iqrrYflGQlROqQvhwWH+BRLGYpIo
+         rs9zvnKHMzNaTnXO4naj7283goy4o5x8crbspktIZr4eChu7/sNT/hqQrXROsPsXzjL0
+         /fVwbG34t2mOchwIYDpx0Xdp7jNV11BH6Lc+Mr26EfbK5bWPxRBQY9riDBhVloWdvv5M
+         R6bnvapTLOndM5CHS5XwgavPRAPskYdFdvH1k/Efv7kUIPccZc2xyS/xSj0PK8haovJc
+         XiyA==
+X-Gm-Message-State: AOJu0YxYk4PpN6pbcVj/Tc60rT/iQQh6TnUu/2j52fa5eJ8srd3WI6S2
+	OIulqV/spjEPoQ7Mi7ajZEgaW3YaSQqyTqyFni/U1nDBKc/EyHzKW9/Tdkco3Zs=
+X-Gm-Gg: ASbGncsg1306SMvYCRkRK7w0WxGZ0X8m3x8pd0FBdqJx0D55kQDCLkA4/KV06DPAj1w
+	fZcLChFWMaPA9lSRqXyzc1yy6Pe3Z6zae9RV3TBsDW8cqo/LhrcxrbnTBgkjHFgfaDVucSnCraa
+	Kld0GRgViHvlr6i9mNXJ108yOGc0EdMCefyZVZmSZMrrDrzTjeJRM1+3hljqQvS6ME8qmWNGpJ8
+	Lln4uj19JLpQarw80aGBA5ow9BGlfHG//4k6FGpSvwCvr4LO4H8vXlaTVcdO0lN68rCpoFIYf5Q
+	bO9+oppuTSJ12p9wMEoKRgTvo0wBKp4SqJxTWUxY2A==
+X-Google-Smtp-Source: AGHT+IH9t6GomHkJlI/754HAzOhh/DPvbK/dIt48/5wlQ0fORPj8X7keOocgU0i6Lkl4J8Tc1+/Q6Q==
+X-Received: by 2002:a05:6902:841:b0:e39:95e8:31be with SMTP id 3f1490d57ef6-e57b1035d33mr17461249276.8.1737583721740;
+        Wed, 22 Jan 2025 14:08:41 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e57ab313b53sm2245418276.31.2025.01.22.14.08.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Jan 2025 14:08:40 -0800 (PST)
+Date: Wed, 22 Jan 2025 17:08:39 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Jonathan Tan via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+	peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
+	jonathantanmy@google.com, karthik nayak <karthik.188@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 1/8] pack-objects: create new name-hash function
+ version
+Message-ID: <Z5FsZ7MK6YcmeYIV@nand.local>
+References: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
+ <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
+ <68b4127580e2d475bec0d7cd0f6a9ae5e626b3c9.1734715194.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <68b4127580e2d475bec0d7cd0f6a9ae5e626b3c9.1734715194.git.gitgitgadget@gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Dec 20, 2024 at 05:19:47PM +0000, Jonathan Tan via GitGitGadget wrote:
+> The first change is to be more careful about paths using non-ASCII
+> characters. With these characters in mind, reverse the bits in the byte
+> as the least-significant bits have the highest entropy and we want to
+> maximize their influence. This is done with some bit manipulation that
+> swaps the two halves, then the quarters within those halves, and then
+> the bits within those quarters.
 
->> Nit: it's unnecessary to pass write options. Other than that the test
->> looks good to me, and this nit isn't worth a reroll.
->
-> This write_options opts is used later in this call.
->
-> 	err = reftable_new_stack(&st, dir, &opts);
->
-> and "git grep reftable_new_stack" finds many hits, almost all in
-> t/unit-tests/ hierarchy, only two among many of them passing NULL as
-> the "use the default set of options" signal.  And majority of them
-> initialize their opts like so:
->
-> 	struct reftable_write_options opts = { 0 };
->
-> So I agree that this one should pass NULL to be more explicit that
-> we do not exercise any special features from the API, but so should
-> many other existing callers that pass such meaningless &opts, I
-> would think.
+Makes sense, and seems quite reasonable.
 
-I may have been vague, but what I meant was that cleaning it up to
-pass NULL when &opts is unnecessary can and probably should be left
-outside the scope of this miniseries, and done with a clean-up patch
-that is separate.
+> The second change is to perform hash composition operations at every
+> level of the path. This is done by storing a 'base' hash value that
+> contains the hash of the parent directory. When reaching a directory
+> boundary, we XOR the current level's name-hash value with a downshift of
+> the previous level's hash. This perturbation intends to create low-bit
+> distinctions for paths with the same final 16 bytes but distinct parent
+> directory structures.
 
-Thanks.
+Very clever, I love this idea.
+
+Thanks,
+Taylor
