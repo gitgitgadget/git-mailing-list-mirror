@@ -1,123 +1,142 @@
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2115.outbound.protection.outlook.com [40.107.212.115])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F5C21481F
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 16:44:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737564260; cv=none; b=PMZiiZ0y/fUbueqmH22QvCNpOzBcvzXHst3WJmp84RDnNwXjcEnc1I4oulq6gjFxj4uM8FM08rihueigPxqJiAt/PWaGgauOnHmtmNRTNgnP1xjKzF7PW7E2W8pBy35YeaudxRpHIremAK18K1A2+WKD6QbWZH+h6VkFwnrzd5E=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737564260; c=relaxed/simple;
-	bh=VHAivLMYiQn8RGUDM7/xJfyX2icJzirvFhuXhDTRafE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ocLQt1SIeetcdSm0xjmjolqk2C6JdKEM4FK+hu5FmVrrVHNtA6/HZ5ZCvd11/GkCtyju/Ht140etIeSn7Y6ZSuZOm+cbM604LbP5phWcJtNXBOMQvffNtUYJUERhQnNaNHFZbmWJcDN3vn5Ahr/i21VRG7ReLdPN/SQr/4N0GnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gqPRLlAD; arc=none smtp.client-ip=209.85.222.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A4D94C9F
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 16:57:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.212.115
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1737565050; cv=fail; b=JJon8fJHGaFG19EesWhybDd7k5zme0gAU6sVb5eOu7JlVWGPu8ulEF0qxTIqaOQ+LjFsuOMTNViqFNIovtceOf0e5FTN6+4pTaN98+bfIVbYXxYs/MslcHfwVgFdwefnakpm0Xr9H3r4IbrWQLeAQEPe9XhFBqkB65NRjr9b/5Q=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1737565050; c=relaxed/simple;
+	bh=hBU8evtB/fUEBa++WXke/3aUGyW82KEqdJX9s6YzNYs=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=BGwsnUmBicfGR13rhUxDAcmsoT8YXp/Om5jh2FkJBAVT6VfxioDJpPvIh6vA6SOMRZmh4Oat5X7XQhnYMVXEhzVZiHpUxbyWkzryluOas0ikuV/8qJ/9stAM/uhi0bEGKNYXH1lbhnv7OW7uV+I7r7zHYBcXb20ay49PVSVo/WQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axxess.com; spf=pass smtp.mailfrom=axxess.com; dkim=pass (1024-bit key) header.d=axxessweb.onmicrosoft.com header.i=@axxessweb.onmicrosoft.com header.b=nluncy/K; arc=fail smtp.client-ip=40.107.212.115
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=axxess.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=axxess.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gqPRLlAD"
-Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-85c5a91374cso3105001241.3
-        for <git@vger.kernel.org>; Wed, 22 Jan 2025 08:44:15 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=axxessweb.onmicrosoft.com header.i=@axxessweb.onmicrosoft.com header.b="nluncy/K"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=A4rIiU07qrlvqnxZhwq+KFBytv35JERrRrXkJgfubJfOyDdjgBfo6ql/OtdXEIiYbJhuGF2uK1t8OuiOgV4ajWhu+RqR4b7PCJ/Yqv9/AhsBDrD0AzQmJMgORTv9+HGrQfRqml4XSdV7CQkbikHhxgFMsJAMtFfY9DW3mTDnhwYtgPA4uhXFDfQCNzFaGgbqMOoVc6zs8VkFYQrxv8BDjNV45pVyfXGIXgXYMXaeMDKtV1hNV45PHrYpVDL0xBM65L6KXbC/BecvYszdFoNAanZ7SoBrP2mueJm+wEPrvzYONqeX5yOC03sHSG2D26Y5hjGRGd8t423qErNaXKAaJg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XApThL9ZBRgzZ0XIAhVKp1CfskOqdTsjHfc058ZtL4g=;
+ b=hQSr392MGjq5vNtKUBFddSxeOs0x+x7bapbi8nDF3tuxo40EiQzWBt4/1pJCKfIT4JSKrrXnnQ8MvnY6hoMjAh+KNUVzZZ+tQWKoji2qd2yvu2cz/+aECPwzpZrrLFPysCWFqDTiAY+Ltrs+IwyDXwGwDQ2ZcR4YQ7FCW6UyfS+xiBbNDTgCn0wunon/CD8jZC6HhN8V/M2q44fRyohGHf7bWBB8Kd5xgVTIcD94vW/f5v+TVoipSfjfiJtpOdycFqDl5LVzga/kDE7QcKp46fzzKrq+eqEDg6OeQZdTa4TxhUmukubSqgcN8tTJHM09grs0gmiW7KRyZoic//3hww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=axxess.com; dmarc=pass action=none header.from=axxess.com;
+ dkim=pass header.d=axxess.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737564254; x=1738169054; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TyiPe8MWB7RvBfSXVFXJMYw3rFXoEmEIzccr2SGhdkc=;
-        b=gqPRLlADbWXNlpjqlhpWRLyUYf1xomQTEpegNFJNYsVn/Eh//CWvmDc5P7iZgmoSoE
-         GoKkpyFkt2QM5stkhpdOJOID06ED8hB99ckAi9PHP9EH7DSSYueGDya6HzYz67UfFOcD
-         ZYo5WcKGLyEcip1IRN4AkJ+6UbW4SqOD1gyVe3NvfUvTWDeyPgXMxG83LRWuruptmpOA
-         75SiRSLiNfjzYh0wurPhdIk/PorlrIxW1jfvuJf+rwmggSmdB+izeIA9HyvfqXzB8KLm
-         0z6GKsXdyYaykMHP7TzDr2G9BmkZVWD8+vgJRLmROHn2wE3xT6Z4rt96Hs8MHdxOES66
-         LAnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737564254; x=1738169054;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TyiPe8MWB7RvBfSXVFXJMYw3rFXoEmEIzccr2SGhdkc=;
-        b=tSEvfOT9JBylkpyHscIdyRALH8vOKH5ofWSJsHhohhXRuYAVcdoHrBH96DCh+a6DbJ
-         iJghJ4ptjrblBAAjwJuIP89zpXfoycZdRMyOIecMjwG4BWxSTn3kYdlk464R5vwSUQVQ
-         alF3daR6lwB6aKCeN5dgXIeRCKkd3IBqIAIg4nTW4s7YHuv0g6DNKx/eloNUdxFrJ22l
-         3zV50LRpFPLka2chgFub2PKHlBrjkdtmI6D6aZzKuq8fPCHCCRPUv8oHwh/ddQtubIRW
-         4qvvig+epwY2fMgEQ5xsn7ahztu+r8ctnUpJyl53TaeQY59VAosgVMMRa+Bz7pkWEKKp
-         J9ZA==
-X-Forwarded-Encrypted: i=1; AJvYcCWygFw3eLBpYHzpn8QzBLSM/4KTybeKFoKNZOOXPss3skxYgG9GWvzgQEW/ZbOVvoW6N4U=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx1FPNOSu/qJlVc1FNHyngkE+VhCnTA+lQPxZjqgNFwBjeyamfD
-	PMVvH5P4CO+aoC+Xu+T8UWn1gahHyGZ2ER0CQtwAmObbnTjIyTFJnt+c+h0Rmur2r+Dl3NkFWwT
-	Q0bPNkxVzbVlDxyCh19gqpr/lgMU=
-X-Gm-Gg: ASbGncvUt/G296+0bhDGmfpYd5G4IDis4mEDyECBrgJMiPmmcT2LhGVLGlOGL1o75N7
-	jkaiRBeSI+cbaTgOfEJWEVVJQ/vnuIuuD5+wqP55DwIg30yBvRKP5
-X-Google-Smtp-Source: AGHT+IG1oAgAc8LY7JLQKQVcUaGT5pRTbo/xTMLnDTp6/ZkB/LyVoBpsRrGbpUwiuVcxsF7YxzosbkEBVVYbrh0w05c=
-X-Received: by 2002:a05:6122:8b87:b0:518:a287:56e3 with SMTP id
- 71dfb90a1353d-51d5b2fd483mr19388049e0c.7.1737564254147; Wed, 22 Jan 2025
- 08:44:14 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 22 Jan 2025 08:44:13 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqwmetgdgm.fsf@gitster.g>
-References: <xmqqwmetgdgm.fsf@gitster.g>
+ d=axxessweb.onmicrosoft.com; s=selector2-axxessweb-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XApThL9ZBRgzZ0XIAhVKp1CfskOqdTsjHfc058ZtL4g=;
+ b=nluncy/Kw/Pe8U/JpBIK8PUoWmZaOKUwZQcLjKIskaDeRMtgljqmvG3vqh+T6sxpXiK3WguI9Ua8YBpOpAtopVEdKLhEufnyf/yUbbwlnhIEDiIrBB5v2jxFVHcsgf/swaMXxKiGrdMdRp1yyw2ZuC7VpKpeOP3bvpIEyYuxIGc=
+Received: from SJ0PR10MB4750.namprd10.prod.outlook.com (2603:10b6:a03:2d5::7)
+ by SA1PR10MB7709.namprd10.prod.outlook.com (2603:10b6:806:3a9::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8377.16; Wed, 22 Jan
+ 2025 16:57:26 +0000
+Received: from SJ0PR10MB4750.namprd10.prod.outlook.com
+ ([fe80::6ded:ceaa:8e23:ca55]) by SJ0PR10MB4750.namprd10.prod.outlook.com
+ ([fe80::6ded:ceaa:8e23:ca55%6]) with mapi id 15.20.8356.017; Wed, 22 Jan 2025
+ 16:57:25 +0000
+From: Michael Cheel <mcheel@axxess.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Git Version Confusion
+Thread-Topic: Git Version Confusion
+Thread-Index: Adts7p3yZ6pAz9KTRIel9H0eJ+LWsQ==
+Date: Wed, 22 Jan 2025 16:57:25 +0000
+Message-ID:
+ <SJ0PR10MB4750C74BF6A4A26AF4730BCFBBE12@SJ0PR10MB4750.namprd10.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axxess.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ0PR10MB4750:EE_|SA1PR10MB7709:EE_
+x-ms-office365-filtering-correlation-id: d056822f-0962-4f40-2f8d-08dd3b05d911
+x-ms-exchange-atpmessageproperties: SA
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|1800799024|366016|376014|38070700018;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?ICiWBTaHPG/aV2VbZ/5g/Fjhki8+M4qHj7qMTAYa4JfYl1LqUeTyTgop71Ol?=
+ =?us-ascii?Q?xJA+ditYtyjD6ZxFglrcVQmNJkh/u4AwvXjD9/SdJCdZrYfoYC6Aof5/dIXP?=
+ =?us-ascii?Q?mMI9+abocfOvXAvXxt86Pic1bG/QcSfmHWD6LjURuops7qPTtZ4kfPHYeFQu?=
+ =?us-ascii?Q?zKjkBg2VMge4+SEBkFKgCf+yryrlVKZMupyxzE7LKZwYJnvlMgNBBavGxI5E?=
+ =?us-ascii?Q?mbw8THzEhtszdw6pYqmxuOU2WRTPDYAIqho/fqAui2OQcOyRz3SFREkL0qHw?=
+ =?us-ascii?Q?hnpjEf5uTVaJw3DYDhtwJWK64Q5fOj5nzBWyyjS5rYzxdKNWW3H+Hl3/ffN4?=
+ =?us-ascii?Q?hVO8/Al1JdH9c6ng+imIRZlsqBxZGSmngYQkQggtecYSt8tXeNh5Gg0JQYdh?=
+ =?us-ascii?Q?O0tS7upR0Hj/QtAbQn7VsASwgER9u+X0h8Tf6GIyUUKW6dFs/O6c6Er37XBL?=
+ =?us-ascii?Q?ek6BZf0wTfAMh5TF7IKT8pgDk0e3qwGW//M9lCIeOVDDmtwQkk4BnB0RIxvD?=
+ =?us-ascii?Q?QyrC3XLoLMouc7leOMYBs2d8Isl29o62mYEz2ny53QtPV9gOC8qWXzoH7TXU?=
+ =?us-ascii?Q?nVGPuQrcym9sW1pduPoJIQEwW4ga+nYh6iDNQKoDY/CxEHCSrFpcuQ0Nyyyv?=
+ =?us-ascii?Q?OMy146YtUXSVJqEXoRrzaUx3qmA1tf3XJeAuKOKWMTLpmRKa6ZMRRwmAkvUD?=
+ =?us-ascii?Q?XZHn/p9YKVG8jRGn3WyLxlALrANKk9r0iQUuq1qywf8UL631h3U/LJbCurRs?=
+ =?us-ascii?Q?zq0d2GSFrqIHeMI90ls9Wa0pnoUXmxv5nF3JcxOBb9M226pzQUE05kCXcVPt?=
+ =?us-ascii?Q?v2NI4uvzDQWtoXNBD/s7Z3sVUMHNTnOV68NUA17BuMMShH+2LNilG5JDaS+u?=
+ =?us-ascii?Q?F1JmooP1feEgzQW2+GHGAA8ExyrKEA6/X+r3VXxfiED2Cj70XiItfL1JBT6o?=
+ =?us-ascii?Q?4ddi6flKpVE2GtpHNiBZuxxz3dST+5ZMpGxe/4QlhyrAn9Uyw9OLHdk04obS?=
+ =?us-ascii?Q?BOxPpDFsIy3N6Pl5Uo/U/VLgy00yAN2nwjabVsTRgwLwnSA6h99idPJ0eW48?=
+ =?us-ascii?Q?PARC++wy17rhZ2QQvNCeSkVSkH7vNa3QQ3kixN9Wv4X9fbQ3ASInwoQTtI1C?=
+ =?us-ascii?Q?BRqWp+K2N9nBeajykwy+d1dvg22cVxUbLiDgDggM1T3ruyJq5FX5ZNQMHqHB?=
+ =?us-ascii?Q?O7O2sSg435Ql38hUYcUoKXI6lGFIeoIFtBROVObf+ol6u4MqOIJxEWgQcA6R?=
+ =?us-ascii?Q?gw+XreRfNAnsa6Jh2XPxFqN7biNjJZkvdHtAQC+YdIA+8+Ax0b2G4Vs9AOIH?=
+ =?us-ascii?Q?T1DWsKLMakz0XXBtzUY4xiDlS9koJXfNMs/kBt1r6s7fAZsE1uyor+aKe/3c?=
+ =?us-ascii?Q?/lARzPfjYAs3/PfCV+Nt9TuEKMgNvVvfjuwra9js6uslduY76M2YTamBN0WP?=
+ =?us-ascii?Q?/9/Nfi6h9Y/Pkfn1G9rFDa96QbqZz6nE?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR10MB4750.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?oYGYh/QlaloppPBdZG43X8AslLveeh6WWY8fR0u5DCoGiQK7m7L0+NOjBFPx?=
+ =?us-ascii?Q?45SpSY1R4Ajdv+wLk/K3KyzV/Qpvh+673b80Nx2FLXyR9d4BDj8ZxCUtUtAF?=
+ =?us-ascii?Q?oq9P9i4xWkwYSX5Z1PxAmJ0drjfNZvG0POSllQ4GGB+7LCyVROIg+Oo1oKsQ?=
+ =?us-ascii?Q?+qrIrYYxrbhhb8p+n0ufQzEa6ApMZOlvdJ+Ho4Da7iz02b0ss77Um+E4q14c?=
+ =?us-ascii?Q?0NNvrpK2EhCESI0hT6HT+pSi3sJ6JhqrRH4ME6W3RfUv3kNUeZub03dSybM5?=
+ =?us-ascii?Q?e/ldwBARpzOXrUy8DL7I2GUDqmtLdZCJl1SoNH9GpcleyHOZR6epnBajD031?=
+ =?us-ascii?Q?ZJvxgppragVo3GyWNFxdYxC7lwf5q2CC3EPpCaHtrkw3b1EIUzAdGltA51rw?=
+ =?us-ascii?Q?TyeD1abljGAQOaDmYVw1/U/mzhGI+Clii+IJ2K+yHu43PRT64xgJqoIIUgXI?=
+ =?us-ascii?Q?P0wlmpdpsOXU4V259bNp2OJjpb5DWarvutUKm6NKLOkGFU0bBZ/uV44nztk4?=
+ =?us-ascii?Q?PGeEWPZRJ/finlepQXS+zWsNkl0Zo33eUowk+1WrzIDfpK3tvAL6O+FPFz2x?=
+ =?us-ascii?Q?ypLplX1blcytTEjgJRP9x+du/nDK6JleKUm2eOJpY8suS2vwMGBhJdUAAZn9?=
+ =?us-ascii?Q?nCT3Kg21TZObfcQyRFpMNl22IB94/wfZJN8QbwHFj/I6WKj7b8oopupph5IR?=
+ =?us-ascii?Q?iVPE2dR06Z5uT4AbV57U7B9ZM83XOmcw577TgQIS6tiSPYnXqM1gwIVxwv1Z?=
+ =?us-ascii?Q?mhy563WY+ec6Nx5ASRdlNJWgtQu5oWxcpvFV3kcQD8yLptWlVXzQeLDm8/YC?=
+ =?us-ascii?Q?w2QNAa1DPK77sECUVezam2kHs+jcOoi+c/1/8EJGvbDoi6JyRdpoo90QXsWU?=
+ =?us-ascii?Q?kX934IkX/cV637CHXA60VM2zRnxAGunq+1pHR3OoNa4ApxtCJV+jjH5zicUw?=
+ =?us-ascii?Q?JaKqn7/76xNakC85bihbvKTsvdBnXrpo5BKRUcoa3nTrLBZmYQw7fohHzbQJ?=
+ =?us-ascii?Q?OnB6RstAauqh6t8cTghIAwtb0ay/nFzUJ/dZPFvhEfDYzKZb4g6lVPJSpOJH?=
+ =?us-ascii?Q?foG8KD4tpSoL8GWZBAYGTmjsrfqO1eGzp7yTDWp/0xNF024L/VJt58o2Nos2?=
+ =?us-ascii?Q?CDXr2zwKvfTOQzbRT7ywoNht36Gh32fIx05tmJPOAuLTEJatap+hvvWntOIf?=
+ =?us-ascii?Q?k+YATH/rXQNV2PCCqJnJpg7CGT7cIEVa+RWClnFl4wDhJu0oix45Xj5+ZR6R?=
+ =?us-ascii?Q?e2KysS3w5kt+6NbzNdVkjkMuwnWNxgIdIJrJZkfXxpjGKu7AXMf7G4g+mN+s?=
+ =?us-ascii?Q?w2oiZho84rpF6wrj4aZggXEta/U7Gpct5la5bagOMH96zTErd06Wo8m25c4K?=
+ =?us-ascii?Q?Txg+1/AoeOqVcTuYMS6K04b2z47MiEzynPTXPEPJ8UQMNnYHhIigHe554xx3?=
+ =?us-ascii?Q?MOYJkgNCi5s7mETlnQwRywbaS61GQEVkkUhJGdiHXmQZUOpPD2OaneWtT6Jq?=
+ =?us-ascii?Q?IuYNVfCVUcgilN3P79BSW46muCYXKwvNTH9cW42zrrc0wTNZ4oPI3B7yDv4t?=
+ =?us-ascii?Q?d98EnL1CydrvvSNC1Os=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 22 Jan 2025 08:44:13 -0800
-X-Gm-Features: AWEUYZlP2NnEqnUfoAmfjmzFBdAUf7-YSzmWt2oUpdsp0rhxdKx6q8uHTioTBaM
-Message-ID: <CAOLa=ZSyEg8G9g1B78VRymgfk9eo=d3KkhD=+S14_BSqaAO2Mg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2025, #05; Fri, 17)
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: multipart/mixed; boundary="00000000000024c2a3062c4e3425"
+X-OriginatorOrg: axxess.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR10MB4750.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d056822f-0962-4f40-2f8d-08dd3b05d911
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jan 2025 16:57:25.8964
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: e6bf28ee-8182-4066-8c27-bce796efa02e
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: S7E04LefEobI/kMy/pPPnUs4LvrDJYCgFpgatzTihKJe1+UqCqYQTrLAmYxaMWcKMcf/SDnSUB6qgtQ35dEQfw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB7709
 
---00000000000024c2a3062c4e3425
-Content-Type: text/plain; charset="UTF-8"
-
-Junio C Hamano <gitster@pobox.com> writes:
-
-> * kn/reflog-migration-fix (2025-01-15) 1 commit
->   (merged to 'next' on 2025-01-16 at ae8f9ce9a0)
->  + reftable: write correct max_update_index to header
->  (this branch is used by kn/reflog-migration-fix-followup.)
->
->  "git refs migrate" for migrating reflog data was broken.
->
->  Will merge to 'master'.
->  cf. <Z4mUizLNUdq_1BgY@tapette.crustytoothpaste.net>
->  source: <CAOLa=ZTL9n_DPhNr49XAd6bT838kc09oVx_AH7Pb4o8VK_xQ9w@mail.gmail.com>
-
-This seems to be breaking on 'next'. I tested it locally with
-
-  GIT_TEST_DEFAULT_REF_FORMAT=reftable meson test -v --test-args='-i'
-t1400-update-ref
-
-my local tests were made on files backend, and it didn't trigger on the
-CI either for some reason (I shall investigate that soon). But dscho
-(CC'd) reported that macos builds for reftable were failing [1] for his
-branch and I could bisect it to this.
-
-I'm yet to understand why this fails and also why the CI didn't notify
-of the issue. But that is something I shall do next. For now we need to
-remove it from next.
-
-[1]: https://github.com/dscho/git/actions/runs/12906424058/job/35987723223
-
---00000000000024c2a3062c4e3425
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 53a61bc0ff2466fb_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lUklGb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMGRNQy85aU5jbU9GRWorM3YrbjVPRUg4YXd1WmpvSQpXVkFRK1puQUNK
-czMxcmtjUk9oZ0p2UmpTQmtDL1dGNFFvVGJ2L0R4WFBwTEJHY2pyd01jZEZvMWlxSFhKMG1vCjdL
-U3JvNVJTcFRmRmpzZGFtZnAwUmxOeXBzV282SklFc1dDOHM4TjZKWnF0YzgwUWg5dkhJWGtuWHlE
-M1RZck8KVTl4dmRpVXgyREhubS9SZmxkQlVuT3IxSWo0R0Q3YUp0VkgrcDBpTDE2MzJVN1dtWVZZ
-eDFUci9zb1FmN0tyQwoxN0J6dTBsazdCaGwzL3RTakNTWHJCaGNleHQ1MG0vZStQY1VtMXM1Snph
-RExLSEFyRTdyem1FOTZHYWRGR1lICmhTUk9WbWNVVFFjQmxkZ0ZoTjlFMXBwTzhrZHNZaHRENWYx
-SmM5bXFUaHNRMlpncitEd21CdGJmNFEyVUczSncKMFFWNG9scHZRSEZsTjd1NktqVjJGb3lhcGZE
-RjRpRC80RTVkeWtkQWhWMFkxQjhkdEFMNFZobm9iTFhEYTZ0TworNzhqdGN2SENBN3FvZGlRcVFJ
-TFVTWWxVSllnSC9iR2FnazN3b3lCM1grc1l3K2ZlZ2hwRUpYTER0aHNGdzJNCkh2b1ptYmZXZG96
-enppdG5jR3RGUHh5UGFDczFSWFJDTnhaYXQ2RT0KPTVnTkoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000024c2a3062c4e3425--
+Can anyone tell me why the git home page says the latest  version is 2.48.1=
+ (released 2025-01-13) but then the download page (for windows) says 2.47.1=
+(2) released 2025-01-14? It is a bit confusing to me.
