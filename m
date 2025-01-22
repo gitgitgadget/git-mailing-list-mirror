@@ -1,231 +1,890 @@
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE6084A3E
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 22:37:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E2E38DF9
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 22:48:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737585432; cv=none; b=stGCA5J2r8cRUJzHvd7yj5FZ4OtuBlf9HtZIxc9iTrOXIU5ho6PzHy1szKpa8JablTYdbRvzFC2cmogK865Fnixrc/HQWiJgwG9P27d7aN49x5/oGXQGO11RqCIDx8zDehb8g+mzyXoK3p+ObwLC74bPxXEBxQQMTCkf+yulaUs=
+	t=1737586129; cv=none; b=X9XaLL4ejhcKnJzdC6VZyG1oiH7NGwIzwgq182t4DsT64+Dg435AUAWmrM33MZIWVM9JMBa8UuCrfUIcoMGWiBtrq7GSDtsXbp0gVXzHCcbQfDonh+pEcWDYOsAUGceIPuZkPJ7+q45u5phKOlUjR8xl0WmQvTUgYDD0SrKLv24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737585432; c=relaxed/simple;
-	bh=aGITzI4u7YIPIdKJZxKbx2RKiPyJyZ9xbi27do9fI8w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jHXwofcvRpfpD/gNdIdI2SSLPtaT7nTHqIHNFOUc4FGCYD4rPZsEx+kAy7MGRjAt5QgpETO7ltpkObQKUwxoDrH/Aaqo7SrBTe4CcmK/7IvCZ43gre+qGcYZSy8YYnXIWMgahiV6fVct5H6U//rQLhMfLZueLJZ5xAdDxKTxSXA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=3ETX6cDQ; arc=none smtp.client-ip=209.85.219.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1737586129; c=relaxed/simple;
+	bh=H8EunqtG7GBB7URiHs/jUmtnqUJHj6fdx5dLCXumGD0=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=I3ZmaSoNXeBnaFjn5OYvqyqWi3G+y00Win7KsrYsGa1KBINWArtjhzFDRD+KLXXRvUwFaMbor4yuVe6XcNpnNtJzjrg798p1o2Zycu9va7ifPhdLqwh4qxNTyJiNW7s98KOhsiQy12khJLfUlRTSt4EqA0FO0FWKIjuoE/CFSEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QyAMNWso; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qVzGtf2Z; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="3ETX6cDQ"
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e53537d8feeso442457276.0
-        for <git@vger.kernel.org>; Wed, 22 Jan 2025 14:37:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737585429; x=1738190229; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XT/Bj6dZ3LLNRrEA6rPy3WFjX/ogalKCG/mtoC9t00g=;
-        b=3ETX6cDQDcjd51mVsUMFdo+ID3ChBxF5AmK0oJaHTLrKA0kVr67oN6VDyCQ/x5CmSB
-         ZPqkDNtvgTVlJA6fkf2hT4fsnKlkilQTIvsj1LQboLbvG4oBo2XNlupDfDG+3TXI2utd
-         dP4fmuaGRpIpsIM9ONg2Xtaw5diKqoApl5wk0pHNESwn+5juUF7CtSirQgkyhEl7rtxy
-         1khzodk7tUlDwiZd60tiMYDlea+jsZ+g02pHdw04z4gJHlOLHxM8k9gBAf69pY76WZQz
-         ifrA5Zw3NU7AaSUD2Dl+SC7nNliJ01q0ETVdWLjk8KZkOmlIKdAK6GTLHo3Z13sMBH2X
-         5y9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737585429; x=1738190229;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XT/Bj6dZ3LLNRrEA6rPy3WFjX/ogalKCG/mtoC9t00g=;
-        b=dFK/AO/mZ2a3fuBVehSvA1X3/KqptZSnOcW2JReiEZ8sQmgu7X9VYcK4QcgxmIH8I4
-         D7p3371KeSzfylVKJ9IDDXaaVwmFomDsvmZzND9N8tQBTA0CE1ul002n0M+0MZKs2jwM
-         e7mKMAI37MsaAGgrcJ2W9F73SbpThoeATFmybcovwEje8n0BXovsjZoEy1LRm8LRRTiN
-         E06RAGHl+FPrSTyJtVTz79zh0Dx85maal/HQih8K4EOMk10zee22Jlomch0hrmTqFQdO
-         vF00id7LZU4ZmApAToCPjRTLt/M193VxISpHureKoUkwc8EGlafRj/WIskj2opZFMopT
-         pmww==
-X-Gm-Message-State: AOJu0YxPuKjcXUQ3f1zMZ3ruUOynC6EENA/lLZDkT+1SxNBJ1Yb8bSw4
-	51iiljp88wKyn50CQIaSWhkYq4/BLm6p5bFs9AZ2vbaF0OOVBM8ZFezcsxSldXk=
-X-Gm-Gg: ASbGncsft/sNV2lZMuiOznwio4Ruoz9fTdtDpOVcwuoy8Ucsra1eyBq3wGMAY4ckDhm
-	+213oCPhWb6jCj2oJCk6nntXTd89XjJG+3W8+92/KelGJQl95dS1hAUMTQLOeI2fUEg+ipt5Uoo
-	qkoeBYWuo68yzXXEtxhbK5THiLWNvPu8nPzd7mQ2Nxe6cnl0uc8yi+1oysvCxEm/Cd3Rj4h2Xes
-	7WDUR6p8bqY06QboZiQlMuP9r7qxnolSQ3qyJytQdvJ7FAk3BXE0m+jn8x5OH0JbbdVxek7g1ru
-	yGvIsssnKU4FemfVzNdZ7rmo3ALUaPp2eFpaRawcKQ==
-X-Google-Smtp-Source: AGHT+IGqmiUt2i/BuTY+x3/iBvI4PSejV0uUJinXleCf1TEEJn24M5ElQOsxmxuOrPlgyOMil0Z3Wg==
-X-Received: by 2002:a25:d314:0:b0:e58:835:a7b0 with SMTP id 3f1490d57ef6-e580835a8f7mr5414618276.37.1737585429490;
-        Wed, 22 Jan 2025 14:37:09 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e57ab2e7dc4sm2319166276.21.2025.01.22.14.37.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jan 2025 14:37:09 -0800 (PST)
-Date: Wed, 22 Jan 2025 17:37:07 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-	peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
-	jonathantanmy@google.com, karthik nayak <karthik.188@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 8/8] pack-objects: add third name hash version
-Message-ID: <Z5FzE1XpBlEyhK2T@nand.local>
-References: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
- <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
- <3d63954f318e5133630b1f579a399a123e434cf8.1734715194.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QyAMNWso";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qVzGtf2Z"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 367011140177;
+	Wed, 22 Jan 2025 17:48:45 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 22 Jan 2025 17:48:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1737586125; x=1737672525; bh=D3cos/MSqDvAF5vm/bU3rF9qrxgjwj1i
+	KWxwDFKc7Pc=; b=QyAMNWsotZmZvravDPc1fuqmK6yd3bCrYqMnrI2yXhw7VxR9
+	PrLzPtl2DJiHDAWwfaqlI0v7nlQaLmNmQz/Q2F2rcCjAMHLfptz3CuifO8r3/+BE
+	bqB7WcAGMfCiiBIERWtKP5K2dGwPFCO49Z6SRCf4Z68Jvt/n4HfV9ILGt1q7b1y2
+	85vUUe6iLWD7iREF6kWna8f0NfXVHhozh7dpHEmUHHx25vaRv9srgEzN96mgxsLt
+	MKUQlkQbH54yqOkXkzIbIRwJn6qZUB8S/2h5dvpjpF4Z1D8WB0HyCU+clSdY2OcP
+	hvpmOTrWagLOT98ZEUjipZhQuM0Kw1SWc4nTSQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737586125; x=
+	1737672525; bh=D3cos/MSqDvAF5vm/bU3rF9qrxgjwj1iKWxwDFKc7Pc=; b=q
+	VzGtf2ZzkFdEfy6xZ0g1sR2smf77N0LMu6kMdhPXfOHosj14VW3D4iu81XWj4P4G
+	xLPHsAVt1i1/cWdOLsKymN8khJYNe5GkIQ4NzpkR3AsGHfXD4xMYpRMsTF3sh5Cs
+	35YCrRQTvY1VA/OjKW8hcNvPkWTMe+13eKwl4h0xq3NmB628A6itEIxtnwyN7UE1
+	QuSdaEZvYgEAlixwYXSubQVOp5Xa/vr9YlKebyjJtDTKSZaVTnsKijfXb8NddHfu
+	YjoBccI91K1fch3lF8qkqjD5zMHK4VG1KABNQx243kWgKQAveuo8kjuLYMuAVTXq
+	ENX0amdekDpPQ2DGRgf1w==
+X-ME-Sender: <xms:zXWRZ2nVwqMkMATu_9M9h_oO9ZqNV7riwmNJR-3nJQdd4BOeacwoPw>
+    <xme:zXWRZ91Pc9inM4AmOrSJPkBAotN7xgDlY12JNE_DDfHf6lnvYoaHJprK8PWXBx4GR
+    fOV7GjK8OBU1AzRjw>
+X-ME-Received: <xmr:zXWRZ0rn9f_QTyKngE9p2-EYDZfh1K6tP129EKRv_Q9uzu5Cw8KGZbyp6qTCb1HdeLztoT2oIEd9R4rVVlIIx4izev1IlBxImeWr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgtddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvffuff
+    fkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceo
+    ghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptddtvdffle
+    ejvefhjeeigfelffefjefgfeegjeelheekffegiedvkedvkeeiledunecuffhomhgrihhn
+    pehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpd
+    hgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgep
+    tdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomh
+    dpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrdhnvg
+    htpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:zXWRZ6lim5J4nOdT4xsM-8fluYV7k8iumXjq1szF6NJ9wieZjMU4Cw>
+    <xmx:zXWRZ02c3MSqSzDdsXVqemsz_ZMlYr70GrBDM5kV7OIwutJ7BoR3Hg>
+    <xmx:zXWRZxtXPmRXorMhUmmDU6yDdM8u9Q9aIHF9AL1He1z9Cd0KFOhhWw>
+    <xmx:zXWRZwXqTtoV2l6etY_L6iDrDSnwt28M8kgoP6aSxI0ziYmok8HqGg>
+    <xmx:zXWRZxxlsuX9kRh8AlUo-01gWhH6eGUQ4nrhIZxOMCBqhjzR7EUkrbW1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Jan 2025 17:48:44 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (Jan 2025, #06; Wed, 22)
+X-master-at: 4e746b1a31f9f0036032b6f94279cf16fb363203
+X-next-at: 3171845b731fb90dfa49d89be174ccc6dfbf5729
+Date: Wed, 22 Jan 2025 14:48:43 -0800
+Message-ID: <xmqqbjvyv510.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3d63954f318e5133630b1f579a399a123e434cf8.1734715194.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
 
-On Fri, Dec 20, 2024 at 05:19:54PM +0000, Derrick Stolee via GitGitGadget wrote:
-> Create a third name hash function and extend the '--name-hash-version'
-> option in 'git pack-objects' and 'git repack' to understand it. This
-> hash version abandons all efforts for locality and focuses on creating a
-> somewhat uniformly-distributed hash function to minimize collisions.
->
-> We can observe the effect of this collision avoidance in a large
-> internal monorepo that suffered from collisions in the previous
-> versions. The updates to p5314-name-hash.sh show these results:
->
-> Test                               this tree
-> --------------------------------------------------
-> 5314.1: paths at head                       227.3K
-> 5314.2: distinct hash value: v1              72.3K
-> 5314.3: maximum multiplicity: v1             14.4K
-> 5314.4: distinct hash value: v2             166.5K
-> 5314.5: maximum multiplicity: v2               138
-> 5314.6: distinct hash value: v3             227.3K
-> 5314.7: maximum multiplicity: v3                 2
->
-> These results demonstrate that of the 227,000+ paths, nearly all of them
-> find distinct hash values. The maximum multiplicity is 2, improved from
-> 138 in the v2 hash function. The v2 hash function also had only 166K
-> distinct values, so it had a wide spread of collisions.
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
-I had a little trouble reading this section of the commit message. I
-think the framing makes sense (v2 has collisions which can impact pack
-generation time and/or size), but this section explains v3 I think one
-level too deep.
+There are quite a few topics that are listed here but without much
+review activities.  I earlier said that I'll review the notes below
+with list archive myself to see which ones are truly stale and
+discard them, but this is progressing a lot slower than my liking.
+Help is greatly appreciated.
 
-This comparison (and the one below it for v3) shows a reduction in
-distinct hash values and the maximum multiplicity (I'm assuming for
-colliding hash values, in which case I might suggest renaming it as
-"maximum collisions").
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-But I imagine that many readers will primarily care about the effect of
-the new hash function on pack generation time and size. You show that
-below, but I think that it should potentially appear earlier in the
-commit message.
+With maint, master, next, seen, todo:
 
-Alternatively, you could consider leaving the time/size table alone
-where it is, and devote an extra sentence or two to explaining the
-impact on repacking time/size that the two metrics above (distinct hash
-values, multiplicity/collisions) have on the repacking time/size.
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
 
-> A more modest improvement is available in the open source fluentui repo
-> [1] with these results:
->
-> Test                               this tree
-> --------------------------------------------------
-> 5314.1: paths at head                        19.5K
-> 5314.2: distinct hash value: v1               8.2K
-> 5314.3: maximum multiplicity: v1               279
-> 5314.4: distinct hash value: v2              17.8K
-> 5314.5: maximum multiplicity: v2                44
-> 5314.6: distinct hash value: v3              19.5K
-> 5314.7: maximum multiplicity: v3                 1
->
-> [1] https://github.com/microsoft/fluentui
->
-> However, it is important to demonstrate the effectiveness of this
-> function in the context of compressing a repository. We can use
-> p5313-pack-objects.sh to measure these changes. I will use a simplified
-> table summarizing the output of that performance test.
->
->  | Test      | V1 Time | V2 Time | V3 Time | V1 Size | V2 Size | V3 Size |
->  |-----------|---------|---------|---------|---------|---------|---------|
->  | Thin Pack |  0.37 s |  0.12 s |  0.07 s |   1.2 M |  22.0 K |  20.4 K |
->  | Big Pack  |  2.04 s |  2.80 s |  1.40 s |  20.4 M |  25.9 M |  19.2 M |
->  | Shallow   |  1.41 s |  1.77 s |  1.27 s |  34.4 M |  33.7 M |  34.8 M |
->  | Repack    | 95.70 s | 33.68 s | 20.88 s | 439.3 M | 160.5 M | 169.1 M |
+With all the integration branches and topics broken out:
 
-OK, now we get to the chart that I demonstrates the effects of each hash
-function on the most externally visible effects. Are these measurements
-taken from the fluentui repo, or somewhere else? In either case, it
-may be worth mentioning.
+	https://github.com/gitster/git/
 
-> Here, there are some performance improvements on a time basis, and the
-> thin and big packs are somewhat smaller in v3. The shallow and repacked
-> packs are somewhat bigger, though, compared to v2.
->
-> Two repositories that have very few collisions in the v1 name hash are
-> the Git and Linux repositories. Here are their stats for p5313:
->
-> Git:
->
->  | Test      | V1 Time | V2 Time | V3 Time | V1 Size | V2 Size | V3 Size |
->  |-----------|---------|---------|---------|---------|---------|---------|
->  | Thin Pack |  0.02 s |  0.02 s |  0.02 s |   1.1 K |   1.1 K |  15.3 K |
->  | Big Pack  |  1.69 s |  1.95 s |  1.67 s |  13.5 M |  14.5 M |  14.9 M |
->  | Shallow   |  1.26 s |  1.29 s |  1.16 s |  12.0 M |  12.2 M |  12.5 M |
->  | Repack    | 29.51 s | 29.01 s | 29.08 s | 237.7 M | 238.2 M | 237.7 M |
->
-> Linux:
->
->  | Test      | V1 Time  | V2 Time  | V3 Time  | V1 Size | V2 Size | V3 Size |
->  |-----------|----------|----------|----------|---------|---------|---------|
->  | Thin Pack |   0.17 s |   0.07 s |   0.07 s |   4.6 K |   4.6 K |   6.8 K |
->  | Big Pack  |  17.88 s |  12.35 s |  12.14 s | 201.1 M | 149.1 M | 160.4 M |
->  | Shallow   |  11.05 s |  22.94 s |  22.16 s | 269.2 M | 273.8 M | 271.8 M |
->  | Repack    | 727.39 s | 566.95 s | 539.33 s |   2.5 G |   2.5 G |   2.6 G |
->
-> These repositories make good use of the cross-path deltas that come
-> about from the v1 name hash function, so they already had mixed results
-> with the v2 function. The v3 function is generally worse for these
-> repositories.
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-I appreciate you sharing some counterexamples as well.
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-> While the fluentui repo had an increase in size using the v3 name hash,
-> the others had modest improvements over the v2 name hash. But those
-> modest improvements are dwarfed by the difference from v1 to v2, so it
-> is unlikely that the regression seen in the other scenarios (packfiles
-> that are not from full repacks) will be worth using v3 over v2. That is,
-> unless there are enough collisions even with v2 that the full repack
-> scenario has larger improvements than these.
+Release tarballs are available at:
 
-This is the paragraph that I thought most about (both while reading the
-above sections, and then again after seeing my internal thoughts written
-down here).
+	https://www.kernel.org/pub/software/scm/git/
 
-It seems like the general conclusion is that v2 is a strict improvement
-on v1 in almost all cases. v3 appears to be an improvement on v2 in some
-cases, and a regression (as you note) in others. But I think more
-importantly (again as you note) is that the improvement from v1 to v2 is
-so pronounced that it's unlikely that the regression from v2 to v3 will
-matter or even be noticeable in most cases.
+--------------------------------------------------
+[Graduated to 'master']
 
-Are there easy ways to detect when v3 would be an improvement over v2?
-If so, then I think exposing those detection mechanisms to users (either
-as an automated tool or through documentation, perhaps in
-git-packing(7), which is perfect for this sort of discussion) would be
-worthwhile. Then users could make an informed decision about which hash
-function to use for their repositories.
+* aj/difftool-config-doc-fix (2025-01-09) 1 commit
+  (merged to 'next' on 2025-01-10 at b8902a53d1)
+ + difftool docs: restore correct position of tool list
 
-But if there isn't such a mechanism, then I wonder what would drive a
-user to choose v3 over v2. I suspect the answer is that curious users
-would try repacking both ways, and then stick with whichever one has a
-bigger impact on the metric(s) they care most about.
+ Docfix.
+ source: <pull.1849.git.1736379323427.gitgitgadget@gmail.com>
 
-If that's the case, I suspect that v2 will be the dominant choice,
-especially if we consider changing the default from 1 to 2 at some point
-in the future. Given all of that, I share your feeling that it may be
-worth dropping this patch entirely. It is true that some cases will be
-worse off (at least compared to v2) without this part of the series. But
-it gets us out of having to support v3 forever, or go through the
-process of deprecating it. I'd like the project to avoid both of those
-if possible, especially if we don't anticipate many users will select v3
-over v2.
 
-Thanks,
-Taylor
+* dk/zsh-config-completion-fix (2025-01-06) 1 commit
+  (merged to 'next' on 2025-01-10 at efba7d534c)
+ + completion: repair config completion for Zsh
+
+ Completion script updates for zsh
+ source: <pull.1860.v3.git.git.1736200026899.gitgitgadget@gmail.com>
+
+
+* jk/lsan-race-ignore-false-positive (2025-01-07) 3 commits
+  (merged to 'next' on 2025-01-09 at 3d7cd910b5)
+ + test-lib: add a few comments to LSan log checking
+ + test-lib: simplify lsan results check
+ + test-lib: invert return value of check_test_results_san_file_empty
+
+ The code to check LSan results has been simplified and made more
+ robust.
+ source: <20250107070409.GA584456@coredump.intra.peff.net>
+
+
+* jk/t7407-use-test-grep (2025-01-07) 1 commit
+  (merged to 'next' on 2025-01-09 at 1d584ee42d)
+ + t7407: use test_grep
+
+ Test clean-up.
+ source: <20250107071824.GA594237@coredump.intra.peff.net>
+
+
+* jt/fsck-skiplist-parse-fix (2025-01-07) 1 commit
+  (merged to 'next' on 2025-01-09 at d08b30fd78)
+ + fsck: reject misconfigured fsck.skipList
+
+ A misconfigured "fsck.skiplist" configuration variable was not
+ diagnosed as an error, which has been corrected.
+ source: <20250107162914.3756968-2-jltobler@gmail.com>
+
+
+* mh/gitattr-doc-markup-fix (2025-01-07) 1 commit
+  (merged to 'next' on 2025-01-10 at 9b8f84ebe2)
+ + docs: fix typesetting of merge driver placeholders
+
+ Doc markup fix.
+ source: <20250107212421.7yyvuzw4uqxnqv7t@archP14s>
+
+
+* ps/reftable-get-random-fix (2025-01-07) 2 commits
+  (merged to 'next' on 2025-01-09 at bc024b7a45)
+ + reftable/stack: accept insecure random bytes
+ + wrapper: allow generating insecure random bytes
+
+ The code to compute "unique" name used git_rand() which can fail or
+ get stuck; the callsite does not require cryptographic security.
+ Introduce the "insecure" mode and use it appropriately.
+ source: <20250107-b4-pks-reftable-csprng-v1-0-6109a54a8756@pks.im>
+
+
+* ps/the-repository (2024-12-18) 15 commits
+  (merged to 'next' on 2025-01-09 at 1de40edade)
+ + match-trees: stop using `the_repository`
+ + graph: stop using `the_repository`
+ + add-interactive: stop using `the_repository`
+ + tmp-objdir: stop using `the_repository`
+ + resolve-undo: stop using `the_repository`
+ + credential: stop using `the_repository`
+ + mailinfo: stop using `the_repository`
+ + diagnose: stop using `the_repository`
+ + server-info: stop using `the_repository`
+ + send-pack: stop using `the_repository`
+ + serve: stop using `the_repository`
+ + trace: stop using `the_repository`
+ + pager: stop using `the_repository`
+ + progress: stop using `the_repository`
+ + Merge branch 'ps/build-sign-compare' into ps/the-repository
+
+ More code paths have a repository passed through the callchain,
+ instead of assuming the primary the_repository object.
+ source: <20241217-pks-use-the-repository-conversion-v1-0-0dba48bcc239@pks.im>
+
+
+* sk/unit-test-hash (2025-01-09) 1 commit
+  (merged to 'next' on 2025-01-13 at 865b121824)
+ + t/unit-tests: convert hash to use clar test framework
+
+ Test update.
+ source: <20250109140952.5267-1-kuforiji98@gmail.com>
+
+--------------------------------------------------
+[New Topics]
+
+* bc/doc-adoc-not-txt (2025-01-21) 5 commits
+ - Remove obsolete ".txt" extensions for AsciiDoc files
+ - doc: use .adoc extension for AsciiDoc files
+ - gitattributes: mark AsciiDoc files as LF-only
+ - editorconfig: add .adoc extension
+ - doc: update gitignore for .adoc extension
+
+ All the documentation .txt files have been renamed to .adoc to help
+ content aware editors.
+
+ Will merge to 'next' and keep it there for at least 3 weeks.
+ source: <20250120015603.1980991-1-sandals@crustytoothpaste.net>
+
+
+* jp/t8002-printf-fix (2025-01-21) 1 commit
+  (merged to 'next' on 2025-01-22 at 20bc202378)
+ + t8002: fix ambiguous printf conversion specifications
+
+ Test fix.
+
+ Will merge to 'master'.
+ source: <20250120114106.2844157-1-jpalus@fastmail.com>
+
+
+* am/trace2-with-valueless-true (2025-01-22) 1 commit
+ - trace2: prevent segfault on config collection with valueless true
+
+ source: <pull.1814.v2.git.1736494100622.gitgitgadget@gmail.com>
+
+
+* kn/reflog-symref-fix (2025-01-22) 1 commit
+ - refs: fix creation of corrupted reflogs for symrefs
+
+ source: <20250122100319.2280647-1-karthik.188@gmail.com>
+
+
+* ps/reflog-migration-with-logall-fix (2025-01-22) 1 commit
+ - refs: fix migration of reflogs respecting "core.logAllRefUpdates"
+
+ source: <20250122-b4-pks-reflog-migration-fix-stash-v1-1-27dbae4602f7@pks.im>
+
+--------------------------------------------------
+[Cooking]
+
+* sj/meson-doc-technical-dependency-fix (2025-01-14) 1 commit
+  (merged to 'next' on 2025-01-16 at 3ec55e0703)
+ + meson: fix missing deps for technical articles
+
+ The meson build procedure for Documentation/technical/ hiearchy was
+ missing necessary dependencies, which has been corrected.
+
+ Will merge to 'master'.
+ source: <5114dc9a00377826a55f6bab007d2ad1a4de8bc5.1736866030.git.sam@gentoo.org>
+
+
+* tc/meson-use-our-version-def-h (2025-01-14) 1 commit
+  (merged to 'next' on 2025-01-16 at 76e9e81736)
+ + meson: ensure correct version-def.h is used
+
+ The meson build procedure looked for the 'version-def.h' file in a
+ wrong directory, which has been corrected.
+
+ Will merge to 'master'.
+ source: <20250114-toon-fix-meson-version-v2-1-66ddb1a82c28@iotcl.com>
+
+
+* js/libgit-rust (2025-01-16) 6 commits
+ - fixup! common-main: split init and exit code into new files
+ - Makefile: add option to build and test libgit-rs and libgit-rs-sys
+ - libgit: add higher-level libgit crate
+ - libgit-sys: also export some config_set functions
+ - libgit-sys: introduce Rust wrapper for libgit.a
+ - common-main: split init and exit code into new files
+
+ Foreign language interface for Rust into our code base has been added.
+
+ Expecting a reroll.
+ cf. <xmqqtt9ypj4m.fsf@gitster.g>
+ cf. <Z47jgK-oMjFRSslr@tapette.crustytoothpaste.net>
+ cf. <Z47kr0_fYYdaMWyA@tapette.crustytoothpaste.net>
+ source: <cover.1736971328.git.steadmon@google.com>
+
+
+* kn/reflog-migration-fix (2025-01-15) 1 commit
+  (merged to 'next' on 2025-01-16 at ae8f9ce9a0)
+ + reftable: write correct max_update_index to header
+ (this branch is used by kn/reflog-migration-fix-followup.)
+
+ "git refs migrate" for migrating reflog data was broken.
+
+ On Hold.
+ cf. <Z4mUizLNUdq_1BgY@tapette.crustytoothpaste.net>
+ cf. <CAOLa=ZT4nws0irdZKUuWc70Rv9RUNQuSXnGAt1SnE1O+umSReg@mail.gmail.com>
+ source: <CAOLa=ZTL9n_DPhNr49XAd6bT838kc09oVx_AH7Pb4o8VK_xQ9w@mail.gmail.com>
+
+
+* jc/show-usage-help (2025-01-17) 6 commits
+  (merged to 'next' on 2025-01-21 at 5a17181a32)
+ + builtin: send usage() help text to standard output
+ + oddballs: send usage() help text to standard output
+ + builtins: send usage_with_options() help text to standard output
+ + usage: add show_usage_if_asked()
+ + parse-options: add show_usage_with_options_if_asked()
+ + t0012: optionally check that "-h" output goes to stdout
+
+ The help text from "git $cmd -h" appear on the standard output for
+ some $cmd and the standard error for others.  The built-in commands
+ have been fixed to show them on the standard output consistently.
+
+ Will merge to 'master'.
+ cf. <20250117114123.GA2356746@coredump.intra.peff.net>
+ source: <20250117213148.3974552-1-gitster@pobox.com>
+
+
+* kn/pack-write-with-reduced-globals (2025-01-21) 5 commits
+ - pack-write: pass hash_algo to internal functions
+ - pack-write: pass hash_algo to `write_rev_file()`
+ - pack-write: pass hash_algo to `write_idx_file()`
+ - pack-write: pass repository to `index_pack_lockfile()`
+ - pack-write: pass hash_algo to `fixup_pack_header_footer()`
+
+ Code clean-up.
+
+ Well merge to 'next'?
+ source: <20250119-kn-the-repo-cleanup-v3-0-a495fce08d71@gmail.com>
+
+
+* ps/reftable-sign-compare (2025-01-21) 10 commits
+  (merged to 'next' on 2025-01-22 at a5ae1ce801)
+ + reftable: address trivial -Wsign-compare warnings
+ + reftable/blocksource: adjust `read_block()` to return `ssize_t`
+ + reftable/blocksource: adjust type of the block length
+ + reftable/block: adjust type of the restart length
+ + reftable/block: adapt header and footer size to return a `size_t`
+ + reftable/basics: adjust `hash_size()` to return `uint32_t`
+ + reftable/basics: adjust `common_prefix_size()` to return `size_t`
+ + reftable/record: handle overflows when decoding varints
+ + reftable/record: drop unused `print` function pointer
+ + meson: stop disabling -Wsign-compare
+
+ THe reftable/ library code has been made -Wsign-compare clean.
+
+ Will merge to 'master'.
+ source: <20250120-b4-pks-reftable-sign-compare-v2-0-b4566d02e4a5@pks.im>
+
+
+* sk/unit-tests (2025-01-17) 4 commits
+  (merged to 'next' on 2025-01-21 at 799bbc6b82)
+ + t/unit-tests: convert reftable tree test to use clar test framework
+ + t/unit-tests: adapt priority queue test to use clar test framework
+ + t/unit-tests: convert mem-pool test to use clar test framework
+ + t/unit-tests: handle dashes in test suite filenames
+
+ Move a few more unit tests to the clar test framework.
+
+ Will merge to 'master'.
+ source: <20250117122926.101749-1-kuforiji98@gmail.com>
+
+
+* zh/gc-expire-to (2025-01-16) 1 commit
+ - gc: add `--expire-to` option
+
+ "git gc" learned the "--expire-to" option and passes it down to
+ underlying "git repack".
+
+ Needs review.
+ source: <pull.1843.v3.git.1736994932003.gitgitgadget@gmail.com>
+
+
+* jc/cli-doc-option-and-config (2025-01-17) 1 commit
+  (merged to 'next' on 2025-01-17 at 71f41b00d8)
+ + gitcli: document that command line trumps config and env
+
+ Doc update.
+
+ Will merge to 'master'.
+ source: <xmqqzfjqmbza.fsf@gitster.g>
+
+
+* jk/pack-header-parse-alignment-fix (2025-01-21) 5 commits
+  (merged to 'next' on 2025-01-21 at 60017ef61a)
+ + index-pack, unpack-objects: use skip_prefix to avoid magic number
+ + index-pack, unpack-objects: use get_be32() for reading pack header
+ + parse_pack_header_option(): avoid unaligned memory writes
+ + packfile: factor out --pack_header argument parsing
+ + bswap.h: squelch potential sparse -Wcast-truncate warnings
+
+ It was possible for "git unpack-objects" and "git index-pack" to
+ make an unaligned access, which has been corrected.
+
+ Will merge to 'master'.
+ source: <20250119131224.GA1541095@coredump.intra.peff.net>
+
+
+* kn/reflog-migration-fix-followup (2025-01-22) 4 commits
+ - reftable: prevent 'update_index' changes after adding records
+ - refs: use 'uint64_t' for 'ref_update.index'
+ - refs: mark `ref_transaction_update_reflog()` as static
+ - Merge branch 'kn/reflog-migration-fix' into kn/reflog-migration-fix-followup
+ (this branch uses kn/reflog-migration-fix.)
+
+ Code clean-up.
+
+ Will merge to 'next'.
+ cf. <Z5DgxQuc2j_-5GHg@pks.im>
+ source: <20250122-461-corrupted-reftable-followup-v3-0-ae5f88bf04fa@gmail.com>
+
+
+* mh/connect-sign-compare (2025-01-17) 1 commit
+  (merged to 'next' on 2025-01-21 at 6d872e6042)
+ + connect: address -Wsign-compare warnings
+
+ The code in connect.c has been updated to work around complaints
+ from -Wsign-compare.
+
+ Will merge to 'master'.
+ source: <20250117074909.1430067-1-mh@glandium.org>
+
+
+* ps/build-meson-subtree (2025-01-17) 3 commits
+  (merged to 'next' on 2025-01-21 at fe4e60a331)
+ + meson: wire up the git-subtree(1) command
+ + meson: introduce build option for contrib
+ + contrib/subtree: fix building docs
+
+ THe meson-driven build is now aware of "git-subtree" housed in
+ contrib/subtree hierarchy.
+
+ Will merge to 'master'.
+ source: <20250117-b4-pks-build-subtree-v1-0-03c2ed6cc42e@pks.im>
+
+
+* ak/instaweb-python-port-binding-fix (2025-01-10) 1 commit
+  (merged to 'next' on 2025-01-17 at bcb5e21e0b)
+ + instaweb: fix ip binding for the python http.server
+
+ The "instaweb" bound only to local IP address without "--local" and
+ to all addresses with "--local", which was the other way around, when
+ using Python's http.server class, which has been corrected.
+
+ Will merge to 'master'.
+ source: <20250110101346.30416-1-alecsk@gmail.com>
+
+
+* bf/fetch-set-head-fix (2025-01-13) 1 commit
+ - fetch set_head: fix non-mirror remotes in bare repositories
+
+ Fetching into a bare repository incorrectly assumed it always used
+ a mirror layout when deciding to update remote-tracking HEAD, which
+ has been corrected.
+
+ Needs review.
+ source: <20250112165125.130400-1-bence@ferdinandy.com>
+
+
+* mh/doc-credential-helpers-with-pat (2025-01-10) 2 commits
+  (merged to 'next' on 2025-01-17 at a70beabaf5)
+ + docs: discuss caching personal access tokens
+ + docs: list popular credential helpers
+
+ Document that it is insecure to use Personal Access Tokens, which
+ some hosting providers take as username/password, embedded in URLs.
+
+ Will merge to 'master'.
+ source: <pull.1851.v2.git.1736549677.gitgitgadget@gmail.com>
+
+
+* ps/build-meson-fixes (2025-01-22) 12 commits
+ - ci: wire up Visual Studio build with Meson
+ - ci: raise error when Meson generates warnings
+ - meson: fix compilation with Visual Studio
+ - meson: make the CSPRNG backend configurable
+ - meson: wire up fuzzers
+ - meson: wire up generation of distribution archive
+ - meson: wire up development environments
+ - meson: fix dependencies for generated headers
+ - meson: populate project version via GIT-VERSION-GEN
+ - GIT-VERSION-GEN: allow running without input and output files
+ - GIT-VERSION-GEN: simplify computing the dirty marker
+ - Merge branch 'ps/meson-weak-sha1-build' into ps/build-meson-fixes
+ (this branch is used by ps/zlib-ng.)
+
+ More build fixes and enhancements on meson based build procedure.
+
+ Will merge to 'next'?
+ source: <20250122-b4-pks-meson-additions-v3-0-5a51eb5d3dcd@pks.im>
+
+
+* ps/zlib-ng (2025-01-22) 12 commits
+ - ci: make "linux-musl" job use zlib-ng
+ - ci: switch linux-musl to use Meson
+ - compat/zlib: allow use of zlib-ng as backend
+ - git-zlib: cast away potential constness of `next_in` pointer
+ - compat/zlib: provide stubs for `deflateSetHeader()`
+ - compat/zlib: provide `deflateBound()` shim centrally
+ - git-compat-util: move include of "compat/zlib.h" into "git-zlib.h"
+ - compat: introduce new "zlib.h" header
+ - git-compat-util: drop `z_const` define
+ - compat: drop `uncompress2()` compatibility shim
+ - Merge branch 'ps/build-meson-fixes' into ps/zlib-ng
+ - Merge branch 'ps/meson-weak-sha1-build' into ps/zlib-ng
+ (this branch uses ps/build-meson-fixes.)
+
+ The code paths to interact with zlib has been cleaned up in
+ preparation for building with zlib-ng.
+
+ Needs review.
+ source: <20250116-b4-pks-compat-drop-uncompress2-v3-0-f2af1f5c4a06@pks.im>
+
+
+* rs/ref-fitler-used-atoms-value-fix (2025-01-21) 3 commits
+ - ref-filter: remove ref_format_clear()
+ - ref-filter: move is-base tip to used_atom
+ - ref-filter: move ahead-behind bases into used_atom
+
+ "git branch --sort=..." and "git for-each-ref --format=... --sort=..."
+ did not work as expected with some atoms, which has been corrected.
+
+ Will merge to 'next'.
+ source: <6b824f05-6f16-4cd9-85b7-3b8b236158b4@web.de>
+
+
+* tb/unsafe-hash-cleanup (2025-01-17) 8 commits
+ - hash.h: drop unsafe_ function variants
+ - csum-file: introduce hashfile_checkpoint_init()
+ - t/helper/test-hash.c: use unsafe_hash_algo()
+ - csum-file.c: use unsafe_hash_algo()
+ - hash.h: introduce `unsafe_hash_algo()`
+ - csum-file.c: extract algop from hashfile_checksum_valid()
+ - csum-file: store the hash algorithm as a struct field
+ - t/helper/test-tool: implement sha1-unsafe helper
+
+ The API around choosing to use unsafe variant of SHA-1
+ implementation has been updated in an attempt to make it harder to
+ abuse.
+
+ Expecting a hopefully small and final reroll.
+ cf. <20250118124343.GA3828177@coredump.intra.peff.net>
+ source: <cover.1737151386.git.me@ttaylorr.com>
+
+
+* en/object-name-with-funny-refname-fix (2025-01-13) 2 commits
+  (merged to 'next' on 2025-01-16 at 89cd7778c9)
+ + object-name: be more strict in parsing describe-like output
+ + object-name: fix resolution of object names containing curly braces
+
+ Extended SHA-1 expression parser did not work well when a branch
+ with an unusual name (e.g. "foo{bar") is involved.
+
+ Will merge to 'master'.
+ source: <pull.1844.v3.git.1736788417.gitgitgadget@gmail.com>
+
+
+* sj/ref-consistency-checks-more (2025-01-06) 10 commits
+ - builtin/fsck: add `git refs verify` child process
+ - packed-backend: check whether the "packed-refs" is sorted
+ - packed-backend: add check for object consistency
+ - packed-backend: create "fsck_packed_ref_entry" to store parsing info
+ - packed-backend: add "packed-refs" entry consistency check
+ - packed-backend: check whether the refname contains NULL binaries
+ - packed-backend: add "packed-refs" header consistency check
+ - packed-backend: check whether the "packed-refs" is regular
+ - builtin/refs.h: get worktrees without reading head info
+ - files-backend: add object check for regular ref
+
+ "git fsck" becomes more careful when checking the refs.
+ source: <Z3qNUizvHJLgMx1y@ArchLinux>
+
+
+* mh/credential-cache-authtype-request-fix (2025-01-09) 1 commit
+  (merged to 'next' on 2025-01-22 at 51a22e98a1)
+ + credential-cache: respect authtype capability
+
+ The "cache" credential back-end did not handle authtype correctly,
+ which has been corrected.
+
+ Will merge to 'master'.
+ source: <pull.1842.v5.git.1736462721156.gitgitgadget@gmail.com>
+
+
+* jk/combine-diff-cleanup (2025-01-09) 14 commits
+ - tree-diff: make list tail-passing more explicit
+ - tree-diff: simplify emit_path() list management
+ - tree-diff: use the name "tail" to refer to list tail
+ - tree-diff: drop list-tail argument to diff_tree_paths()
+ - combine-diff: drop public declaration of combine_diff_path_size()
+ - tree-diff: inline path_appendnew()
+ - tree-diff: pass whole path string to path_appendnew()
+ - tree-diff: drop path_appendnew() alloc optimization
+ - run_diff_files(): de-mystify the size of combine_diff_path struct
+ - diff: add a comment about combine_diff_path.parent.path
+ - combine-diff: use pointer for parent paths
+ - tree-diff: clear parent array in path_appendnew()
+ - combine-diff: add combine_diff_path_new()
+ - run_diff_files(): delay allocation of combine_diff_path
+
+ Code clean-up for code paths around combined diff.
+ source: <20250109082723.GA2748497@coredump.intra.peff.net>
+
+
+* sc/help-autocorrect-one (2025-01-13) 1 commit
+ - help: interpret boolean string values for help.autocorrect
+
+ "[help] autocorrect = 1" used to be a way to say "please wait for
+ 0.1 second after suggesting a typofix of the command name before
+ running that command"; now it means "yes, if there is a plausible
+ typofix for the command name, please run it immediately".
+
+ Looking good except for "should 0 and false be 'tell it without doing it'?".
+ source: <pull.1869.v4.git.git.1736760824201.gitgitgadget@gmail.com>
+
+
+* ja/doc-notes-markup-updates (2025-01-10) 1 commit
+ - doc: convert git-notes to new documentation format
+
+ Doc mark-up updates.
+ source: <pull.1846.v2.git.1736503703573.gitgitgadget@gmail.com>
+
+
+* ja/doc-restore-markup-update (2025-01-10) 1 commit
+ - doc: convert git-restore to new style format
+
+ Doc mark-up updates.
+ source: <pull.1847.v2.git.1736503760086.gitgitgadget@gmail.com>
+
+
+* ua/os-version-capability (2025-01-17) 6 commits
+ - version: introduce osversion.command config for os-version output
+ - connect: advertise OS version
+ - t5701: add setup test to remove side-effect dependency
+ - version: extend get_uname_info() to hide system details
+ - version: refactor get_uname_info()
+ - version: refactor redact_non_printables()
+
+ The value of "uname -s" is by default sent over the wire as a new
+ capability, with an opt-out for privacy-concious folks.
+ source: <20250117104639.65608-1-usmanakinyemi202@gmail.com>
+
+
+* ja/doc-commit-markup-updates (2025-01-15) 5 commits
+ - doc: migrate git-commit manpage secondary files to new format
+ - doc: convert git commit config to new format
+ - doc: make more direct explanations in git commit options
+ - doc: the mode param of -u of git commit is optional
+ - doc: apply new documentation guidelines to git commit
+
+ Doc updates.
+
+ Will merge to 'next'.
+ source: <pull.1845.v2.git.1736972628.gitgitgadget@gmail.com>
+
+
+* ps/ci-misc-updates (2025-01-10) 10 commits
+ - ci: remove stale code for Azure Pipelines
+ - ci: use latest Ubuntu release
+ - ci: stop special-casing for Ubuntu 16.04
+ - gitlab-ci: add linux32 job testing against i386
+ - gitlab-ci: remove the "linux-old" job
+ - github: simplify computation of the job's distro
+ - github: convert all Linux jobs to be containerized
+ - github: adapt containerized jobs to be rootless
+ - t7422: fix flaky test caused by buffered stdout
+ - t0060: fix EBUSY in MinGW when setting up runtime prefix
+
+ CI updates (containerization, dropping stale ones, etc.).
+ source: <20250110-b4-pks-ci-fixes-v4-0-6e4613446080@pks.im>
+
+
+* sk/strlen-returns-size_t (2024-12-26) 1 commit
+ - date.c: Fix type missmatch warings from msvc
+
+ Code clean-up.
+
+ The remainder needs to be reviewed.
+ source: <20241223110407.3308-3-soekkle@freenet.de>
+
+
+* sk/maintenance-remote-prune (2025-01-03) 1 commit
+ - maintenance: add prune-remote-refs task
+
+ A new periodic maintenance task to run "git remote prune" has been
+ introduced.
+
+ Expecting a reroll.
+ source: <pull.1838.v3.git.1735928035056.gitgitgadget@gmail.com>
+
+
+* jc/show-index-h-update (2024-12-20) 1 commit
+ - show-index: the short help should say the command reads from its input
+
+ Doc and short-help text for "show-index" has been clarified to
+ stress that the command reads its data from the standard input.
+
+ Comments?
+ source: <xmqqfrmidyhk.fsf@gitster.g>
+
+
+* jc/doc-attr-tree (2024-12-14) 1 commit
+ - doc: give attr.tree a bit more visibility
+
+ Make sure that "git --attr-source=X", GIT_ATTR_SOURCE, and
+ attr.tree configuration variables appear at the same places in the
+ documentation.
+
+ On hold.
+ cf. <20241216111112.GA2201417@coredump.intra.peff.net>
+ source: <xmqq5xnladwi.fsf@gitster.g>
+
+
+* ps/3.0-remote-deprecation (2025-01-22) 7 commits
+ - SQUASH???
+ - remote: announce removal of "branches/" and "remotes/"
+ - builtin/pack-redundant: remove subcommand with breaking changes
+ - ci: repurpose "linux-gcc" job for deprecations
+ - ci: merge linux-gcc-default into linux-gcc
+ - Makefile: wire up build option for deprecated features
+ - Merge branch 'ps/build' into ps/3.0-remote-deprecation
+
+ Following the procedure we established to introduce breaking
+ changes for Git 3.0, allow an early opt-in for removing support of
+ $GIT_DIR/branches/ and $GIT_DIR/remotes/ directories to configure
+ remotes.
+
+ Will merge to 'next'?
+ source: <20250122-pks-remote-branches-deprecation-v4-0-5cbf5b28afd5@pks.im>
+
+
+* cc/lop-remote (2024-12-07) 5 commits
+ . doc: add technical design doc for large object promisors
+ . promisor-remote: check advertised name or URL
+ . Add 'promisor-remote' capability to protocol v2
+ . strbuf: refactor strbuf_trim_trailing_ch()
+ . version: refactor strbuf_sanitize()
+
+ Expecting a reroll.
+ cf. <CAP8UFD3bdEo1_bg+aX52xSGxmg9KfNrpiX+2LwUM-yDqjvfZbQ@mail.gmail.com>
+ source: <20241206124248.160494-1-christian.couder@gmail.com>
+
+
+* ds/backfill (2024-12-20) 6 commits
+ - backfill: assume --sparse when sparse-checkout is enabled
+ - backfill: add --sparse option
+ - backfill: add --min-batch-size=<n> option
+ - backfill: basic functionality and tests
+ - backfill: add builtin boilerplate
+ - Merge branch 'ds/path-walk-1' into ds/backfill
+ (this branch uses ds/path-walk-1.)
+
+ Lazy-loading missing files in a blobless clone on demand is costly
+ as it tends to be one-blob-at-a-time.  "git backfill" is introduced
+ to help bulk-download necessary files beforehand.
+
+ Expecting a reroll.
+ cf. <Z4jeQSLmARruE5l3@pks.im>
+ source: <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
+
+
+* tb/incremental-midx-part-2 (2024-11-20) 15 commits
+ - midx: implement writing incremental MIDX bitmaps
+ - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
+ - pack-bitmap.c: keep track of each layer's type bitmaps
+ - ewah: implement `struct ewah_or_iterator`
+ - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
+ - pack-bitmap.c: compute disk-usage with incremental MIDXs
+ - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
+ - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
+ - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
+ - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
+ - pack-bitmap.c: open and store incremental bitmap layers
+ - pack-revindex: prepare for incremental MIDX bitmaps
+ - Documentation: describe incremental MIDX bitmaps
+ - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
+ - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
+
+ Incrementally updating multi-pack index files.
+
+ Needs review.
+ source: <cover.1732054032.git.me@ttaylorr.com>
+
+
+* ps/send-pack-unhide-error-in-atomic-push (2024-11-14) 2 commits
+ - transport: don't ignore git-receive-pack(1) exit code on atomic push
+ - t5504: modernize test by moving heredocs into test bodies
+
+ "git push --atomic --porcelain" used to ignore failures from the
+ other side, losing the error status from the child process, which
+ has been corrected.
+
+ Needs to see if competing parallel topic needs to replace this one.
+ source: <20241113-pks-push-atomic-respect-exit-code-v1-0-7965f01e7f4e@pks.im>
+
+
+* ds/name-hash-tweaks (2024-12-20) 8 commits
+ - pack-objects: add third name hash version
+ - pack-objects: prevent name hash version change
+ - test-tool: add helper for name-hash values
+ - p5313: add size comparison test
+ - pack-objects: add GIT_TEST_NAME_HASH_VERSION
+ - repack: add --name-hash-version option
+ - pack-objects: add --name-hash-version option
+ - pack-objects: create new name-hash function version
+
+ "git pack-objects" and its wrapper "git repack" learned an option
+ to use an alternative path-hash function to improve delta-base
+ selection to produce a packfile with deeper history than window
+ size.
+
+ Will merge to 'next'.
+ (microhalt) <Z5E5KdbwHE7fmiJx@nand.local>
+ source: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
+
+
+* ds/path-walk-1 (2024-12-20) 7 commits
+  (merged to 'next' on 2025-01-22 at 3171845b73)
+ + path-walk: reorder object visits
+ + path-walk: mark trees and blobs as UNINTERESTING
+ + path-walk: visit tags and cached objects
+ + path-walk: allow consumer to specify object types
+ + t6601: add helper for testing path-walk API
+ + test-lib-functions: add test_cmp_sorted
+ + path-walk: introduce an object walk by path
+ (this branch is used by ds/backfill.)
+
+ Introduce a new API to visit objects in batches based on a common
+ path, or by type.
+
+ Will merge to 'master'.
+ cf. <Z4jeQSLmARruE5l3@pks.im>
+ source: <pull.1818.v4.git.1734711675.gitgitgadget@gmail.com>
+
+
+* ej/cat-file-remote-object-info (2025-01-14) 8 commits
+ - cat-file: add remote-object-info to batch-command
+ - transport: add client support for object-info
+ - serve: advertise object-info feature
+ - fetch-pack: move fetch initialization
+ - fetch-pack: refactor packet writing
+ - t1006: split test utility functions into new "lib-cat-file.sh"
+ - cat-file: add declaration of variable i inside its for loop
+ - git-compat-util: add strtoul_ul() with error handling
+
+ "git cat-file --batch" and friends can optionally ask a remote
+ server about objects it does not have.
+
+ Comments?
+ source: <20250114021502.41499-1-eric.peijian@gmail.com>
+
+
+* jc/move-is-bare-repository-cfg-variable-to-repo (2024-11-07) 3 commits
+ . repository: BUG when is_bare_cfg is not initialized
+ . setup: initialize is_bare_cfg
+ . git: remove is_bare_repository_cfg global variable
+
+ Code rewrite to turn the is_bare_repository_cfg global variable
+ into a member in the the_repo singleton repository object.
+
+ Will discard.
+ Has been in "Waiting for response to reviews" state for too long.
+ cf. <xmqqy116xvr3.fsf@gitster.g>
+ Seems to break t0021-conversion on Windows.
+ cf. https://lore.kernel.org/git/xmqqzfl1hl52.fsf@gitster.g/
+ source: <pull.1826.git.git.1730926082.gitgitgadget@gmail.com>
