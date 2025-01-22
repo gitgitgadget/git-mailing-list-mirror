@@ -1,119 +1,118 @@
-Received: from mailout11.t-online.de (mailout11.t-online.de [194.25.134.85])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE8E214204
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 19:09:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.25.134.85
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72FF1AF0BB
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 20:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737572955; cv=none; b=C81/JNeLKcJ64k6zBWci9YqmTU0LFVB8ZNaw7V+g5NnLCaaXm4pU/NclN9OmVwGhcKI+ph/OVxFQGpNn+sm5IdN04+K4pWe/3dZ4LD5blKJOvK3o8riawNphOCMwp4eOanG2kWZGfA+8JRkzDnBNeS5WFtjETERys8pps5QWFCg=
+	t=1737577929; cv=none; b=sAYYClgvlO6VQuuJ98ELl/VhJpA12G7o2pu15Hhkqt3tYf/PntxkfHrS/FYa4/rZXx+uAIqQPQOyIro55bl5Jv9TrSwWl83cuFlrU7IjFUIbyc5ZmlemYgrTLFYvSB5Un2na7IXxkpMAWZII0A9WHLSpzc5iXy21y21I+wZfdZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737572955; c=relaxed/simple;
-	bh=skCrNoum77/XGG39CG2qKay29loShbnfmdmq8WAVwMM=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=JBNKDRmlgDYGWqbD0/8PtKhNPHuFekuy6wDaE6fCY94k4vqt0KcFDdoxLcjKanuS1AW1CQ4ihddC6liObxv/4Ws+wJLtUZQYmrYW00oZE2gt1+c8uFn7vk8V3JympWi3/YcH0uiP0rb94Wyv2uyt8p6Us5OcB1HbtEYLCAELSiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=t-online.de; spf=pass smtp.mailfrom=t-online.de; arc=none smtp.client-ip=194.25.134.85
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=t-online.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=t-online.de
-Received: from fwd79.aul.t-online.de (fwd79.aul.t-online.de [10.223.144.105])
-	by mailout11.t-online.de (Postfix) with SMTP id 276E7219A
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 20:01:31 +0100 (CET)
-Received: from [192.168.178.52] ([77.20.184.84]) by fwd79.t-online.de
-	with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
-	esmtp id 1tafyk-0y5Sb20; Wed, 22 Jan 2025 20:01:30 +0100
-Message-ID: <d7fd0b1c-98fe-4cc3-b657-c2c3d0bc5c47@t-online.de>
-Date: Wed, 22 Jan 2025 20:01:31 +0100
+	s=arc-20240116; t=1737577929; c=relaxed/simple;
+	bh=SsOW4Fwg8lXEzXzV6mMI//0xyY3axyT5gPf/EL1364k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UdUP4QxK2FnHRRX5rnPNK3/4qC4ga08wpw+L5YfOZoQ419KXLERbkDdR+8LL0MEhxKQ22XWBj9p14rMKnzUYzC3H77MdjUh8V9Py5NXfLt0IdxXe5O15cqNHM8h4xc4WLMM/LRAuBCzedVPas1OhSK4qhLo0fMbShaDegdzvxqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OCoanlZ6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1CtxhdRC; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OCoanlZ6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1CtxhdRC"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id E88B41380061;
+	Wed, 22 Jan 2025 15:32:06 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Wed, 22 Jan 2025 15:32:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737577926; x=1737664326; bh=HkJjiOm9bA
+	9/8BYm7AiCL3dhhwSH7OFfIKaeWGaFAWw=; b=OCoanlZ6yL8ZesgbiQSjXypp6R
+	vJFN10omP7uwG8ssimVKzOcKYClvNs9Gy//w//TkVcvmjSBFmAaNy+ASI1Fl0ify
+	8TeydD7IFH7WV9wFOMWnOgDEql8lzwkQKJoadAufEhK0C0stUAb1aaXG/fZ8jMN3
+	Y2wSkueR6I6qKrJbs4peTKV1/hViKsFOq2hzrZ1ukH7oVYEmq635Rxq1+ZYzkJ/5
+	nUEfhI36BYdndAQ9/jK2rsThTz2Pe/nzro3KE1CF194OQ9mKn+gtW3IAv9xcbW2L
+	HaZVbnJySQZgnmcs8Vw5znyJ1bK2zQQVjbTvvEjMMT09Yu2f5rrX3inH3x+A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737577926; x=1737664326; bh=HkJjiOm9bA9/8BYm7AiCL3dhhwSH7OFfIKa
+	eWGaFAWw=; b=1CtxhdRCjjMVnU41bbMPFKbvQbG0gYe8CJ5vPTx+q/ynoebc/kk
+	C7UctWQkQdvL93vlDUimTDKXgw69+xTMzdH89SkF0umMVRvrbZ+9jEAZXU8ZRYZU
+	1xjWO32pFapY6MetKv5fMwmWnYdxsQ/en4xZ+Af52PLO+n8gQ9W9rEf13Lg7zV2/
+	wKg7RGww4sJlzijcDG5BarPXq92W+mfimEbNCQFr1YfFW/ErLN5LU/YhS3IcH7l7
+	1ID/q9O3OxoPpHjgKfT8+FOKZG/044M3fDeCcyglt/LUjPqcQGANHESk0LAG41Bc
+	PqYUArR6hrX4T+6dla246DfYcDCty6SNh2Q==
+X-ME-Sender: <xms:xlWRZ1dBpbyVwwxyDsbw_KCdRxje8JuizvDk83fhgmXIzp5UySAodw>
+    <xme:xlWRZzMYO8HQVUZZZomvb_8p6E7Ui2tUezp4ah_w6YVmKFgCVvQASbsjDO9qFFYYQ
+    MT4sc8-pJiabkoWVw>
+X-ME-Received: <xmr:xlWRZ-h3S97oJnSbHGc7Gi7gaSdp6x4Sb9wQA3HXm-_B5xGP4CORtQFid9PQzcl1FYUgOJnzwjc3y-u5P9mQ67G5kG1kGrpNG_yT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgvdeiudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehrohgsvghrth
+    drtghouhhpsehkohhorhguihhnrghtvghsrdgtohhmpdhrtghpthhtoheptghhrhhishgt
+    ohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehrrghnuggrlhhlrdgsvg
+    gtkhgvrhesnhgvgigsrhhiughgvgdrtggrpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:xlWRZ-_pn3LIX_mKP-WEO09zBoNp_TlAsplAYav0ouV2nRxZyDETeg>
+    <xmx:xlWRZxsZ26BC9Lz7jeR2TGXH8icfgWhQgo1kfk5WIGDImWW0nWkXJA>
+    <xmx:xlWRZ9GOomX8vbMbap1BZUjTasEPpKEPJhu7opsI69dYOwW0FFm43w>
+    <xmx:xlWRZ4Mm0KtKbXVl4A0SsUMvY2pGF_qzp7SPLkn8n74P_zVJhBFoEg>
+    <xmx:xlWRZy8Vt4_3_XKSkb6hTPXRG7BbE4z3sFthK_tyRAZEmoJONNA6ThZd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Jan 2025 15:32:06 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Robert
+ Coup <robert.coup@koordinates.com>,  Christian Couder
+ <chriscool@tuxfamily.org>,  "Randall S. Becker"
+ <randall.becker@nexbridge.ca>
+Subject: Re: [PATCH v4 5/5] remote: announce removal of "branches/" and
+ "remotes/"
+In-Reply-To: <20250122-pks-remote-branches-deprecation-v4-5-5cbf5b28afd5@pks.im>
+	(Patrick Steinhardt's message of "Wed, 22 Jan 2025 12:31:33 +0100")
+References: <20250122-pks-remote-branches-deprecation-v4-0-5cbf5b28afd5@pks.im>
+	<20250122-pks-remote-branches-deprecation-v4-5-5cbf5b28afd5@pks.im>
+Date: Wed, 22 Jan 2025 12:32:04 -0800
+Message-ID: <xmqq1pwuwpx7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-From: Christian Reich <Zottelbart@t-online.de>
-Subject: unlink errors under windows in git pack-refs
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TOI-EXPURGATEID: 150726::1737572490-5B7FD956-AAB9E2F7/10/3626336762 SUSPECT URL
-X-TOI-MSGID: 1d7ecdc7-1bc8-4e9e-b317-77b2a4759508
+Content-Type: text/plain
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Patrick Steinhardt <ps@pks.im> writes:
 
-I have a git repository cloned which uses reftables.
+> +		  "If you cannot, please let us know you still use it by sending an\n"
+> +		  "e-mail to <git@vger.kernel.org>."),
+> +		type, remote->name, remote->name, remote->name);
+> +}
 
-git clone --ref-format=reftable https://github.com/eclipse-jgit/jgit.git
+I do not think we want to receive a piece of e-mail that says they
+want us to know they still use it.  I do not mind seeing one that
+says WHY they cannot switch, though.
 
-A jgit-program (java) is running and sleeping for 100seconds to 
-demonstrate the problem.
+If there is no objection, let me do
 
-         Git git = Git.init().setDirectory(new 
-File("c:\\temp\\jgit")).call();
+	"let us know you still" -> "let us know why you still"
 
-         FileRepository repo = (FileRepository) git.getRepository();
+on top.
 
-         try {
-             Thread.sleep(100000);
-         } catch (InterruptedException e) {
-         }
-         git.close();
+I like the way this has been made into a helper function, without
+causing sentence-logo that would have annoyed translators.
 
-While the jgit-program is sleeping in git-bash update a ref und pack the 
-reftablefiles:
-
-git update-ref refs/tags/test 939d321faccd12bff4cb13ce6358820297fbc78e
-
-git pack-refs
-
-What did you expect to happen? (Expected behavior)
-
-git pack-refs should work without messages.
-
-What happened instead? (Actual behavior)
-
-git tries to unlink the reftable-files, but jgit hold windows-system 
-lock, so the file can't be unlinked.
-An answers 'n' for retry causes more asks. After the third try git give up.
-
-Unlink of file 
-'C:/temp/jgittest/jgit/.git/reftable/0x000000000002-0x000000000004-50486d0e.ref' 
-failed. Should I try again? (y/n) n
-Unlink of file 
-'C:/temp/jgittest/jgit/.git/reftable/0x000000000002-0x000000000004-50486d0e.ref' 
-failed. Should I try again? (y/n) n
-Unlink of file 
-'C:/temp/jgittest/jgit/.git/reftable/0x000000000002-0x000000000004-50486d0e.ref' 
-failed. Should I try again? (y/n) n
-
-
-What's different between what you expected and what actually happened?
-
-I would expect, that git tries to unlink the files. But if this fails 
-git should ignore this and try to delete the files next time on 
-pack-files. Its documented in https://git-scm.com/docs/reftable
-
-Anything else you want to add:
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.48.0.rc2.windows.1
-cpu: x86_64
-built from commit: 049f0cf1a5d000f1e24f0e80b79b0d043a8b83b2
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: D:/git-sdk-64-build-installers/usr/bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.11.1
-OpenSSL: OpenSSL 3.2.3 3 Sep 2024
-zlib: 1.3.1
-uname: Windows 10.0 22631
-compiler info: gnuc: 14.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
-
-
-[Enabled Hooks]
-commit-msg
+Thanks.  Will replace.
 
