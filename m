@@ -1,85 +1,87 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB3B21505A
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 18:02:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DDC2153D5
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 18:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737568927; cv=none; b=PfDNSsWt0XQnZHcOWy2Yj8uMDiEc13/GVwP9oGJ0oXTRohYvmG3wKsONPL0caNMBbOHfnUqyUYIWQJu5Ccqn7jGU+5Na+bRRbRSDnp04fBxQeHIn1IatDmHbab53RDOFIOKsGTGzz3bXk0fVL92NWQqnqL/F4EZblOau+KnFkjQ=
+	t=1737569575; cv=none; b=G8vBG6zXOEPJfRHechyZ7WyvWHJYOeHIjIY7seJtqzhmMzJiL63B/Sl/0IQwvSUseVK9nwfBBMaZfyV/Id+fDdd8VuxPS3tSS3+oKHaf/l1pFRfJMATH+UAspQANGAKDlzt4ykBLytAm5rhd2wDqtGlQ4qyzBoHeJK33efGJnyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737568927; c=relaxed/simple;
-	bh=DDHZo7nsRk573iHR/2RF61G453Yib5/kjQc0Ch+sJVc=;
+	s=arc-20240116; t=1737569575; c=relaxed/simple;
+	bh=H4Iyo5MUvoEXlrxtJPWWvVmHD8XcJR4j+PJxEUTCnHo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ew6IfPXNWe4GZL3cv4IkS/2HSmZnsX7597ml1+A4ce1ncWMrpBWhZDLXNaroBTppetOUn2LIZP5jdSeScNNFqPvc9ofblmG3AbXiHmlb0GV0IxGklzvtwd7a4ZqgoDj0Si0ixPniKAAkYpmF2cU564fHeAWa1NhBy5qH53c1CMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=N0rSpTw7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tNUz0W/P; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=aoaJ156F7BXe+3KfHvedEaHYo+cMFjehN2lIuU8n0SAr7f50/tNK/0zj9e3fe5L8b3d/ZJYCOVipdidWawkjeC7NcAGiC0+NsxYISrMryIQMRiVVefleQ66wI0kFGj/NU2do1keHHLbVY/9cTPEZbC+M17lg9QnaxdtlaZC2FYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JlMrsGvf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NAd0I/lJ; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="N0rSpTw7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tNUz0W/P"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C50D2114011F;
-	Wed, 22 Jan 2025 13:02:03 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 22 Jan 2025 13:02:03 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JlMrsGvf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NAd0I/lJ"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 699721140227;
+	Wed, 22 Jan 2025 13:12:52 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Wed, 22 Jan 2025 13:12:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737568923; x=1737655323; bh=O9bsMpnx3H
-	EJy3jV9TrgWen6STjq+ttyt9PZumRzo/M=; b=N0rSpTw7hFls51waSDjkQ0IHYF
-	dhnFINFUfA0AvHXLbpZrd4m3hbnNM9ONrPkFliP6aWC9pLW/2f0bWZ1SB6ne5jOD
-	69d1p4Kx+dBBnl2H+Y1NM+A6tjNoFYb/uZdgKJEAmoBE+l7K9lcqCbD+oJocUvLi
-	HGyf9q3q6Zb9ibe4un5Nc+iCHi5lFVq5iWrMvGfpVZsXG14ZDtRq4IENnCuX/Kha
-	8LZTplWV0hWkXKTjrxjGccY+twcb1KFEvFRq61eG2Bvsd2zH3vLz/3Ds6AkdH0SB
-	V48P91k/QOuIGv/8OtPxq0L8HB9s1+qMDZ7SRRNonwrlsJpyXNwJJxuCWvCw==
+	:subject:to:to; s=fm2; t=1737569572; x=1737655972; bh=qQVZyEqAzd
+	RfJLmnLKrCkgOy8rJZZilILoXVXpjBWMQ=; b=JlMrsGvfav7HTmxL5ADdUt8UZ3
+	EsP0E1xy2kz7Z+LV8zihQNCHYmLC+dWG4HII7ovx9jSZBcAUjZYiTMRnwUA+3jq/
+	Ae+EspP8/JrRbesF3drpQjm+7Qga0K9hIIqFoMeLNCUfMbssRBF503b3Opd41geh
+	K4IAZdIwoCNsKbwxk6K0P2viSMjptCgsCP7Aoo7SBYod4s9Q+ZN0qCsp1Kw5cjB/
+	3ITV7LrGWVLT1tb6v5QGhDT9JduxJHHlUWDy8+pfMM7aSgZXAJQjHKYLfXJuubBU
+	DMLNDkbDkYZpNDFqy1FNrisGHI5fGWW+WQUuiX19qzwRfiR7nPncFdXuQgkg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737568923; x=1737655323; bh=O9bsMpnx3HEJy3jV9TrgWen6STjq+ttyt9P
-	ZumRzo/M=; b=tNUz0W/Pe0ZkJupDk2gkFpYcLzWRd/ttOAcVhFEUa3EUdLC26Y7
-	M9+6NA3Iusac6vPbbyruemnISzrkZH9LzXuHBiEdU/LSyiuQdL37cecp3VeOl9vb
-	kCP5iUvzZty6Lj8QUYH2ZmjYv9GdENLFK1+fh4cNM65Xb8Ab1zuS5sEo4Hd1QZk1
-	7lEmjhGbBtzd64O8kXXa967gZBRuiHMLyoYCKgQES1gtsggMlq14xUzE9b0zyqtM
-	XcRD72/sIa+8hVXz7OgjvEZMoUNxDem1hz74bNYEUTSWFTMbOHRiQJeWlR6vf4sX
-	P+uVpVqBMOzpqyCTW7I4kX3UkSzCrxViYxQ==
-X-ME-Sender: <xms:mzKRZ8FBSyfuSCVidkmABtLFmHkq3r7G9A-v1F9pk64-CB9PPHM1oQ>
-    <xme:mzKRZ1WBAJzIcKoTArs9kmHdW25NcgQFFrprSyOkvANJCPYQTOVS5kypvBRSqZ-im
-    6MdBgN7Y9v3tXydlw>
-X-ME-Received: <xmr:mzKRZ2LHJcitBPnacvRT9THw0YZBCFCTQ27Jyh8l6VT-vO9fO6mxE37EBoUzP7tM6unOwWKsn-KJEVkNYh9CxcFHR8C9qv-aLUFb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgvdeftdcutefuodetggdotefrod
+	1737569572; x=1737655972; bh=qQVZyEqAzdRfJLmnLKrCkgOy8rJZZilILoX
+	VXpjBWMQ=; b=NAd0I/lJZ69ITGMoDleo9x69PyiBv+YD2CQTOr1ZHX19NrVNHJl
+	ZKhq+37SH3dghPY8JeThgZL2frf57zi6LlOS4vdQRUbWvHuUwEx6JXc5Eqiko7s/
+	XB6R31szlSan2rRWGa7YjjOvU7h3djRNaQI3mcVmp6nkEIzrhHK+RC+6YprAzjJg
+	hutlCS8mpFejFBU4EL9kiGLJl/08Xde36oCcpQFEtVJ9GDki9xVcIvRoWUVJ41HB
+	lGfSbQEfjo03qDRYMNLoqCqyfZHhvJwrP3yUQuGEWImrQUAxdKmjten9mB0PlJJR
+	d+gNwuj4G3q0l+dCQJ9PwtsH9fwdeKA8r/w==
+X-ME-Sender: <xms:JDWRZ0jfa6VtZOno-Hd4NPJ-QH0mgX1C8rH7dGagPFp9cNwomSsbHQ>
+    <xme:JDWRZ9Dd3udT0RyyFtpVKxX3OV1OxmBmTEIc98aBb9e2Z5DKYoEVRjgGMC9P7851r
+    NukriDlHQVcZCmpQg>
+X-ME-Received: <xmr:JDWRZ8GpTcjgXGee-Q-539A33vRihqtLU3KRTaYUZdDOEGk04lM1WLTOSYoGGpm0P9D0SxwuyP6BevnuC9uK8VsxMtulqk_IDe-E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgvdeffecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
     necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
-    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtth
-    hopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:mzKRZ-FcczgwftFz2ZCMAwfFuWXW0vc7QcXmzn440jy-FCP_GEL5jA>
-    <xmx:mzKRZyV2QKhHXHoaYnZ2BfxgqdCMekQfUaMtldqXbMZGWpMvzt-PHA>
-    <xmx:mzKRZxMomg5hm7nZIaVrf7CsEXjGFtMc56IS372hXYQDpto-PMEegQ>
-    <xmx:mzKRZ52zxZXboS5gFpwK_EL3v5F7npDUr41LQgPJBS-IFWOHqtvkIA>
-    <xmx:mzKRZ0cIWwyQnzzhCVuJoKHWqP3mizawfzIj7CckaorAMVP8McPvrRDV>
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvsh
+    drshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtghhithhgrggu
+    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtoheprggusegtrghnvhgrrdgtohhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:JDWRZ1QZZDC30Xump9wEeNXl_7CxyL1VHl4ehvOfz1hmT96j7t5F_w>
+    <xmx:JDWRZxwFFPcENixOJG_wS_M5pGPf8UokUQi925taejsYhS6qfxKKCg>
+    <xmx:JDWRZz7x064oalFvuvGv8Xjz1BoyCyTDF-zPDKgfWR_hb9TPPb8Iow>
+    <xmx:JDWRZ-z8wHYvdKd7dNp95F7TqaKXhtHw_AImc60j7JRtH80U9l8DdA>
+    <xmx:JDWRZ0qKtHsD3rTanIdeL235hB6HrYSCYWR6U7pY32yqaIjlRZ3-f898>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jan 2025 13:02:02 -0500 (EST)
+ 22 Jan 2025 13:12:51 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
-  Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH] refs: fix migration of reflogs respecting
- "core.logAllRefUpdates"
-In-Reply-To: <20250122-b4-pks-reflog-migration-fix-stash-v1-1-27dbae4602f7@pks.im>
-	(Patrick Steinhardt's message of "Wed, 22 Jan 2025 10:48:06 +0100")
-References: <20250122-b4-pks-reflog-migration-fix-stash-v1-1-27dbae4602f7@pks.im>
-Date: Wed, 22 Jan 2025 10:02:01 -0800
-Message-ID: <xmqqjzamwwva.fsf@gitster.g>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Adam Murray via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Adam Murray <ad@canva.com>
+Subject: Re: [PATCH v2] trace2: prevent segfault on config collection where
+ no value specified
+In-Reply-To: <c1398676-ddd7-c161-e114-2249316b5311@gmx.de> (Johannes
+	Schindelin's message of "Wed, 22 Jan 2025 11:11:14 +0100 (CET)")
+References: <pull.1814.git.1730937889182.gitgitgadget@gmail.com>
+	<pull.1814.v2.git.1736494100622.gitgitgadget@gmail.com>
+	<c1398676-ddd7-c161-e114-2249316b5311@gmx.de>
+Date: Wed, 22 Jan 2025 10:12:50 -0800
+Message-ID: <xmqqfrlawwd9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,54 +91,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> In 246cebe320 (refs: add support for migrating reflogs, 2024-12-16) we
-> have added support to git-refs(1) to migrate reflogs between reference
-> backends. It was reported [1] though that not we don't migrate reflogs
-> for a subset of references, most importantly "refs/stash".
 >
-> This issue is caused by us still honoring "core.logAllRefUpdates" when
-> trying to migrate reflogs: we do queue the updates, but depending on the
-> value of that config we may decide to just skip writing the reflog entry
-> altogether. And given that:
->
->   - The default for "core.logAllRefUpdates" is to only create reflogs
->     for branches, remotes, note refs and "HEAD"
->
->   - "refs/stash" is neither of these ref types.
->
-> We end up skipping the reflog creation for that particular reference.
->
-> Fix the bug by setting `REF_FORCE_CREATE_REFLOG`, which instructs the
-> ref backends to create the reflog entry regardless of the config or any
-> preexisting state.
+> This patch looks good to me!
 
-Thanks for a clear problem analysis description.  The appraoch makes
-perfect sense.
+Thanks.  As I punted on reviewing the tgt_perf part, it is very good
+to see somebody else step in to look it over.
 
 Will queue.
 
-> +		test_expect_success "$from_format -> $to_format: stash is retained" '
-> +			test_when_finished "rm -rf repo" &&
-> +			git init --ref-format=$from_format repo &&
-> +			(
-> +				cd repo &&
-> +				test_commit initial A &&
-> +				echo foo >A &&
-> +				git stash push &&
-> +				echo bar >A &&
-> +				git stash push &&
-> +				git stash list >expect.reflog &&
-> +				test_migration . "$to_format" &&
-> +				git stash list >actual.reflog &&
-> +				test_cmp expect.reflog actual.reflog
-> +			)
-> +		'
->  	done
->  done
->  
->
-> ---
-> base-commit: f93ff170b93a1782659637824b25923245ac9dd1
-> change-id: 20250122-b4-pks-reflog-migration-fix-stash-d1fe7380f84a
+>> diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
+>> index a6f9a8a193e..19ae7433ef8 100644
+>> --- a/trace2/tr2_tgt_perf.c
+>> +++ b/trace2/tr2_tgt_perf.c
+>> @@ -446,8 +446,9 @@ static void fn_param_fl(const char *file, int line, const char *param,
+>>  	struct strbuf scope_payload = STRBUF_INIT;
+>>  	enum config_scope scope = kvi->scope;
+>>  	const char *scope_name = config_scope_name(scope);
+>> -
+>> -	strbuf_addf(&buf_payload, "%s:%s", param, value);
+>> +	strbuf_addstr(&buf_payload, param);
+>> +	if (value)
+>> +		strbuf_addf(&buf_payload, ":%s", value);
+>>  	strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
+>>
+>>  	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
+>>
+>> base-commit: 8f8d6eee531b3fa1a8ef14f169b0cb5035f7a772
+>> --
+>> gitgitgadget
+>>
+>>
