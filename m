@@ -1,55 +1,55 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC00212D68
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 12:05:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458CC212B2F
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 12:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737547557; cv=none; b=VFuzr6sIXfik9amfzK8rgADg2Nc9L4x1AQ9i4QaFKO5cD3km9nbRqRvLpp1SSJTv3v99/Mp6QE0wt+P+8HYb969DOSq0F1WbseZ4CsKrQIEh24BfwO865KH8I+Dj2jEatyArr+71/Qfi43sV135DEBx/XbssXRf7Y1xNhpzPmiA=
+	t=1737547558; cv=none; b=cV21eQhiCyX1i63LHbPgY6D0Qhu1lsmsCjjcJxiBzXjTBqSe67F6O856G757mevJBwvATuzqjTN0rrk4HkxG0mhhtvwItqbjYduMOExWP0/bRWgnvc1RpvORrhMaFYrPCGiS6RUiOFIaPkylB2TpO3BlIXMd7IIL1Klh92inYiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737547557; c=relaxed/simple;
-	bh=UBFTHgn1IOr8SWTf+6qljlNV9IbsMwPcISTxkLd98M8=;
+	s=arc-20240116; t=1737547558; c=relaxed/simple;
+	bh=4zm9yoeayWZEoBI3tVdgj4FKGfDiNrpd6JmfGtg1msc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=USW5m8LeBssGeC190FsO7P/3gLZkQ7zEZFJrr1MrI+/XgEy9/T1I0fZHkyYFdyrKXky8YFkkEy9qeBgP3uncfLQZQNYO0IO1gL5eiOq/0G1hjuvWpvmXs0tpRLb3qj3VPp0G4mzaLOlLuXXZvO6DSslSzq/oBrdYoRzA0PUCj5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RgEgMTFP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tAa5kAkb; arc=none smtp.client-ip=103.168.172.157
+	 In-Reply-To:To:Cc; b=FRrCQkOK7ZP7L+iWsdx3Bin3MOREOjK4irF5n6PQr33lwtiEM5XWr9oFfufXaVwRLo6VWLcNcWx5ahcyntjqEt5p0Nq4AC/A7iKAHF06sPjRiQBv3oh+NBiUEDo/fFRuO9rTbXvm0IL0tsSWvxbXgTj324kdigki1UVMdRAvc8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nK9y6ez/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O06BodqD; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RgEgMTFP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tAa5kAkb"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CADDA11400B4;
-	Wed, 22 Jan 2025 07:05:54 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nK9y6ez/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O06BodqD"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4992911401B6;
+	Wed, 22 Jan 2025 07:05:56 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Wed, 22 Jan 2025 07:05:54 -0500
+  by phl-compute-03.internal (MEProxy); Wed, 22 Jan 2025 07:05:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1737547554;
-	 x=1737633954; bh=i4fZHWMKJFnfwetqkkLFeLMM1jDSTxDt4+6zS29l0jU=; b=
-	RgEgMTFPfOpaD20FaDNlZP/5X8H17Cwi25471ED3xp2d31ihCo7s07GfOiy24G7M
-	54+B/RWK5YdeEmunGZcN+d0dmfHTJOPKHmOJ8q0T22wgq/Gu4nVKPgi2251CVp0d
-	/DgwfV2y49SFHIDj9Od+k5o1dMqCKj7ZxKWc/HTgzly0z5AbVp2Oqv045LGDOpDX
-	F0ZB9aLJEfMW0xfXhzdamHW/ypJfeLZXIZS3o57rvDWwStn/LNQ27Os/b2RprdDH
-	MYvfJJsQ5hE1HWcCTgGybuN123ZgoZmdTu87kmCeXOwL7Ig6XjJag0CUkjjGYxF0
-	iM5WMUKHaVpaj0y0c7y+AA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1737547556;
+	 x=1737633956; bh=YXPIS7c3UyGVrQhe6aSse6uQPxFSSLfE8nTySMqYjZw=; b=
+	nK9y6ez/GKpXxmCkquyMs1kgL7VGJbmoWG4EhxmqkUXerSMkw/c9uyNK/ErGq7yH
+	fl4/xIAiMw7chMJo/kGJ8A9NJAZwFDeXmtIAr65M9E7za1mw4W0NGAa1uzjE8MvH
+	TyQ88Pzvx5oktEA9opixIVVfKvAZue9m+MZZVrJoxE7qzp4dO6D/ufjcaDnFITpn
+	I5x3YEGO19uTdTeml7QmfSK3Grd8ORwhd+rvJZHIneBMkB+W2civ+J3wsaoq2WNB
+	GskiuLQMPMLyuwJN+GJGMCbyuK60uT5tZ8TAQ+Uh9sxT/++g87ajQTnnGNb6CihL
+	Rva2DLw56bJAwM0rEmS8fQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737547554; x=
-	1737633954; bh=i4fZHWMKJFnfwetqkkLFeLMM1jDSTxDt4+6zS29l0jU=; b=t
-	Aa5kAkbCPNnrgnyzutenUa4HGGzwTIEwnz5VPsuJw7nqIYhBuYy2QlXiKChP0+iJ
-	/lDwObgIUS02TFeqZfJ6GmJLnuO2OLbTGTFZbDSPqD0JmeHOeuY5nzHy0vXTv2Hp
-	B1Lohd48M+p4OgpmFjB7PXyvlkk087IslKjyHfdmtYzC9a6i2d71098EjvUrpmhg
-	5msyAYaI1tMFhluiL+4i/Dy4C7B+qWNKhSRTaOy2l0t7/yRIDQ4i+B6B9wvuf+i9
-	AFS5WKEPyeGaB+2F3EZKqzETcTceMq4s8IQTXDbIvH0yCZW02iipboyJHrOMDPB7
-	OcsmWbkuEOmNiL4y+1VJw==
-X-ME-Sender: <xms:It-QZ0_SNBBL-5-j_De9GwhMIRzpJcMB0dC7wFzxZXnrdwYCIHCsMw>
-    <xme:It-QZ8uhOgZ-FGsJGpGKZNPlissYeVycSGJ6tdpj4pHP8SI1ZsVQ-hWjIlBujoQUo
-    qZazHDAW9Me0ip4YA>
-X-ME-Received: <xmr:It-QZ6Cd13x29ctJn3i4UfEP0KUdjYi9cQboB5Xzq3BMe7Nj4lqOx1aCg6pPbp3cEhShBuRZBpvojdP74pwduzN63yyCUeo_ui5u0HeVur6N7xI>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737547556; x=
+	1737633956; bh=YXPIS7c3UyGVrQhe6aSse6uQPxFSSLfE8nTySMqYjZw=; b=O
+	06BodqDL1pZrzxlm/2oD+iVmNb8jGsJytBYf7IzvDUc1e6aE4NC4mUaUphcuCvD6
+	xGiqWehzlGFN9sBz02uqV5rgACk+233Hnz9sCMyDoLHPTpmKraCF0J8snMYfsair
+	fPI2tlb7Kol6fk4dVfLLefs5n18noQkoYDquyxfffZ3u2Yadid3Hgpee0vRl2Efw
+	0RbuncA05pViZ2VY5rS1zqmNlXhfdhJbENSypVrg7geTMX7Xlf8XBdQ6pTm784YX
+	Xbi8KLpYR/YS5aejum1Q4oo2mM2IgO2pnoVEvVvZjI+4c5MrLh8UBxY/ouDPPIXZ
+	ukjcb2a1K2SFCmvI1Lhyw==
+X-ME-Sender: <xms:JN-QZ0PE2P8IJREOxlaUtWnhS35IMMM0iOqOlyMIJaiuXkCmORygnw>
+    <xme:JN-QZ6_eWf90tzVrAmf_1uDuRaVpDy3S_EYVlYRfCr551ecBsrYgkmMZCQc6ynshx
+    og-HVkCKOZWS_WKZA>
+X-ME-Received: <xmr:JN-QZ7RiCXoBFousdo1SmCe2aGdA6yZmPXSEDTZcXlQt1yYz8cNIlKJUwzph2oaoz1MYeUXxv9pkilMdmXDuHYVSleZUGXRTIq_6Rvsv0agA-PM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgudeiudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -58,26 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgudeiudcutefuodetgg
     himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
     heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthho
-    pegvvhgrnhdrmhgrrhhtihhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnse
-    hiohhttghlrdgtohhmpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:It-QZ0dJzzMuxeUzNMR1LuAvVk4s74vc2HEyuuUi9ACrmZ2q0Acy8A>
-    <xmx:It-QZ5PBz6a9Qg6qhc09YVRItZ2AjnX9pBBPcvvh9__L6UzkWKoC_g>
-    <xmx:It-QZ-kZyhw0RBWgjhiYBqVZrfyF6DfZDytKMqgBdf3aZdAVdwtWGg>
-    <xmx:It-QZ7vvvTj2o1iFo_FvCzXRcmGZExr7bm0O8oryn8OvcWYdz7Hm3A>
-    <xmx:It-QZ1BpRx6KGdcrxq3Sbyw9yH4cg2muawnjcheisZprB3Ffch0ChKxH>
+    pehsmhhtphhouhhtpdhrtghpthhtohepvghvrghnrdhmrghrthhinhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    vghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmihhrthhhrdhhihgtkhhfohhruges
+    ghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomh
+X-ME-Proxy: <xmx:JN-QZ8sqgL8casqBpfRob44m0XoMKVvJW5zrqA6hhz6tO3-J1FGfJA>
+    <xmx:JN-QZ8debGntwRHrM-HS5HrtSqypTyiRN3NrJoTqlMt_mwP4Qqsm9A>
+    <xmx:JN-QZw3BpbLq0SNonkLdcuhq4WEOpN5sf9nzgqmAHGKOvOctHdFqtA>
+    <xmx:JN-QZw9ynqzDRSEEl58YYt2YTmL-gv5eOgQzYxxHoKTODCYKjxAKwQ>
+    <xmx:JN-QZ0TAW2E6QjO8txIov-WPIEZ7-FFd4iQelPxFZolpNOa5zv3Q2M3R>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jan 2025 07:05:53 -0500 (EST)
+ 22 Jan 2025 07:05:54 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e6d33031 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 22 Jan 2025 12:05:50 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 757f48de (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 22 Jan 2025 12:05:51 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 22 Jan 2025 13:05:46 +0100
-Subject: [PATCH v3 03/11] meson: populate project version via
- GIT-VERSION-GEN
+Date: Wed, 22 Jan 2025 13:05:47 +0100
+Subject: [PATCH v3 04/11] meson: fix dependencies for generated headers
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250122-b4-pks-meson-additions-v3-3-5a51eb5d3dcd@pks.im>
+Message-Id: <20250122-b4-pks-meson-additions-v3-4-5a51eb5d3dcd@pks.im>
 References: <20250122-b4-pks-meson-additions-v3-0-5a51eb5d3dcd@pks.im>
 In-Reply-To: <20250122-b4-pks-meson-additions-v3-0-5a51eb5d3dcd@pks.im>
 To: git@vger.kernel.org
@@ -95,62 +94,65 @@ Cc: Evan Martin <evan.martin@gmail.com>,
  M Hickford <mirth.hickford@gmail.com>, Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-The Git version for Meson is currently wired up manually. It can thus
-grow (and already has grown) stale quite easily, as having multiple
-sources of truth is never a good idea. This issue is mostly of cosmetic
-nature as we don't use the project version anywhere, and instead use the
-GIT-VERSION-GEN script to propagate the correct version into our build.
-But it is somewhat puzzling when `meson setup` announces to build an old
-Git release.
+We generate a couple of headers from our documentation. These headers
+are added to the libgit sources, but two of them aren't used by the
+library, but instead by our builtins. This can cause parallel builds to
+fail because the builtin object may be compiled before the header was
+generated.
 
-There are a couple of alternatives for how to solve this:
+Fix the issue by adding both "config-list.h" and "hook-list.h" to the
+list of builtin sources. While "command-list.h" is generated similarly,
+it is used by "help.c" and thus part of the libgit sources indeed.
 
-  - We can keep the version undefined, but this makes Meson output
-    "undefined" for the version, as well.
-
-  - We can use GIT-VERSION-GEN to generate the version for us. At the
-    point of configuring the project we haven't yet figured out host
-    details though, and thus we didn't yet set up the shell environment.
-    While not an issue for Unix-based systems, this would be an issue in
-    Windows, where the shell typically gets provided via Git for Windows
-    and thus requires some special setup.
-
-  - We can pull the default version out of GIT-VERSION-GEN and move it
-    into its own file. This likely requires some adjustments for scripts
-    that bump the version, but allows Meson to read the version from
-    that file trivially.
-
-Pick the second option and use GIT-VERSION-GEN as it gives us the most
-accurate version. In order to fix the bootstrapping issue on Windows
-systems we simply set the version to 'unknown' in case no shell was
-found. As the version is only of cosmetic value this isn't really much
-of an issue.
-
+Reported-by: Evan Martin <evan.martin@gmail.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- meson.build | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ meson.build | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index 7361eb2eaa..213998986e 100644
+index 213998986e..4053024dad 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -170,7 +170,14 @@
+@@ -487,6 +487,13 @@ libgit_sources = [
+   'xdiff/xutils.c',
+ ]
  
- project('git', 'c',
-   meson_version: '>=0.61.0',
--  version: 'v2.47.GIT',
-+  # The version is only of cosmetic nature, so if we cannot find a shell yet we
-+  # simply don't set up a version at all. This may be the case for example on
-+  # Windows systems, where we first have to bootstrap the host environment.
-+  version: find_program('sh', required: false).found() ? run_command(
-+    'GIT-VERSION-GEN', meson.current_source_dir(), '--format=@GIT_VERSION@',
-+    capture: true,
-+    check: true,
-+  ).stdout().strip() : 'unknown',
++libgit_sources += custom_target(
++  input: 'command-list.txt',
++  output: 'command-list.h',
++  command: [shell, meson.current_source_dir() + '/generate-cmdlist.sh', meson.current_source_dir(), '@OUTPUT@'],
++  env: script_environment,
++)
++
+ builtin_sources = [
+   'builtin/add.c',
+   'builtin/am.c',
+@@ -614,14 +621,7 @@ builtin_sources = [
+   'builtin/write-tree.c',
+ ]
+ 
+-libgit_sources += custom_target(
+-  input: 'command-list.txt',
+-  output: 'command-list.h',
+-  command: [shell, meson.current_source_dir() + '/generate-cmdlist.sh', meson.current_source_dir(), '@OUTPUT@'],
+-  env: script_environment,
+-)
+-
+-libgit_sources += custom_target(
++builtin_sources += custom_target(
+   output: 'config-list.h',
+   command: [
+     shell,
+@@ -632,7 +632,7 @@ libgit_sources += custom_target(
+   env: script_environment,
  )
  
- fs = import('fs')
+-libgit_sources += custom_target(
++builtin_sources += custom_target(
+   input: 'Documentation/githooks.txt',
+   output: 'hook-list.h',
+   command: [
 
 -- 
 2.48.1.321.gbf1f004a4a.dirty
