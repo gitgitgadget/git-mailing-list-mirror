@@ -1,299 +1,168 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E6916BE3A
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 10:11:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867B418AE2
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 11:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737540680; cv=none; b=Z0TQOo+UMId4nDIr7RjD8/TPsNGaWWnqjlBL/J3BTQPXNmW0gJjE/g8qq1SydYXMGaz/pSf8cH8RFH+f5St+EowdbM4ffPe6Qp6tCxCNd2qVbzBrXjLAjVxtFSWbBBAWR78PfjT649fc6iwRD8E7tqxSMREZ6pQkJbZoGXDZU54=
+	t=1737543966; cv=none; b=K+Cx6/R5SJsvDUTOJgBwTbkp5uYj+uD+ej3EiF4ra+BaEgzcYBI6cAEIiRqGbbkFELGcYIHSurhFpYbGBqNWU/1HgbQUjCHIKbwam4WkH82cShF5rOpMgCtSZcKdfj+K3/BJPgGhjw2lE1ctieL6fsh0TNwUrI6CMpVc84qATHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737540680; c=relaxed/simple;
-	bh=ID1sBY3V8paj5Lec4Jm42V53jCFIc9diuSZsMvvqLgY=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=aQhGGdzcnf4OzldqbQSUW5V44Qs3u2dGEU5O/udIHBCOuv8exP0SpGEhomvkIsHcJOLTYcZ+XBLK++UO4CgdiSP88fMkTX+/czaIkFjQpMYDzeJ2kNdFCpHQhmi5vKd7XOhFwfp74cysS2ZmkPDQfJrJDzPH1ZRa3GwSzCUqhxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=AYcFoGV1; arc=none smtp.client-ip=212.227.15.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1737543966; c=relaxed/simple;
+	bh=kzR9qRtnJpQP603Zasf5oFI73/97qUpoG8HbQotNzFk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LolGXhFbSu7pPvNn9Qum9B/VTjxm85FfVzvRds5Q7iVuyvI3nBhRaP2s9xgeSWe4jynIuSktT6c1Wwl50t5KX5XUOYbJemsLsk1pAHmbF1LerU2hpkKoJPSNfZu1hYLH6y3At3zLHqn8stMP5yufe23Bm7uPpi5ItDkqvIzyoUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CSpUzw8n; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JPYZrYus; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="AYcFoGV1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1737540675; x=1738145475;
-	i=johannes.schindelin@gmx.de;
-	bh=VSZdhUTTzdmOUiQDGME3Bn9ErvITJjMT3jLfTThAmiM=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=AYcFoGV1sKBY1KAgTcJfMyNDJA6balOKAR7ZZfNDx7Rp5r9tXHAtixghRs2jo2o3
-	 3pfQIQXub4zXUMgbMl5lB8O12CrMOsqC6wb1y6vRPVdZal6dGkM+7XcvkTXF9uu5e
-	 ozSH9EtnFnUSXdce8v7P9fo0wqtigiiQ3NLm0gbuRwiImaH4bVzqp/KtyfjoCTqaV
-	 5BFF0bXboMS8Zl4GmdDqeM8nAdld0nHK0tfeS4f13ss5mWjOI/evN1TQ9jJD8Vcds
-	 rRz/LlhHs0GMGk1T9MB0M8cG6ncm6wg6O4mwE+Et96mO2Pp6lIrYjScfIcV6ELxtT
-	 sfmJWNR9ArWwuZ/9UA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.212.165]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MLR1V-1tsttp49Lf-00QSol; Wed, 22
- Jan 2025 11:11:15 +0100
-Date: Wed, 22 Jan 2025 11:11:14 +0100 (CET)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Adam Murray via GitGitGadget <gitgitgadget@gmail.com>
-cc: git@vger.kernel.org, Adam Murray <ad@canva.com>, 
-    Adam Murray <ad@canva.com>
-Subject: Re: [PATCH v2] trace2: prevent segfault on config collection where
- no value specified
-In-Reply-To: <pull.1814.v2.git.1736494100622.gitgitgadget@gmail.com>
-Message-ID: <c1398676-ddd7-c161-e114-2249316b5311@gmx.de>
-References: <pull.1814.git.1730937889182.gitgitgadget@gmail.com> <pull.1814.v2.git.1736494100622.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CSpUzw8n";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JPYZrYus"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 611A811401B4;
+	Wed, 22 Jan 2025 06:06:02 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 22 Jan 2025 06:06:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1737543962; x=1737630362; bh=nKw+E4NbBm
+	jyikWKflfZC9zIuWBBRwo75mA9l4gEUPk=; b=CSpUzw8nFyVErJAle38R+2xdjD
+	zWgVymxxpfA9PYHe05uC9EEl+7pLmgFve3FDc9BdwJhI1fsRLIIj91xaFAj54aEU
+	K5plHCFeVc412w34DPujGC4M4m1wn1kMosYODhH1SqdrLDQvsd9EhHXojMfIGwdC
+	ox6wBw7khQNCFQN0m3QK/fI8iKCw98JK9dVrj3zpWjiz68tOWW61qU1x41XZOMlI
+	xNEf/ht93rkvNszkDyjCHTycHnHszvFXlS8qu6pElRemocg75EDm1Q0wvHbTWF+3
+	S/PsrZTNS07BeK04yknryjTsQnzAbZgTqE35LPAURBZ1W9oDgOpG0lSyEocw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737543962; x=1737630362; bh=nKw+E4NbBmjyikWKflfZC9zIuWBBRwo75mA
+	9l4gEUPk=; b=JPYZrYusVRxuVwU1e4qmG9yAhuFZ/d1goxArSdS5XbvM3qIPFz1
+	NCPDA/yUu/+TC755q5naYH9anhp+mfgPmqEEooDYoAwgXjen/2LKJQTWnbDznIAV
+	U1wgzzGxEd0dRIhxDx2WJZ0XKKBhHVRtlEZGUBN4gDVwDEMinefA5kH0YMWF6b2o
+	vhWeTFVOxLZRMsHdiL0MuN2QQos+4jfPfk+HmXy+r6gblFX0qiZgUYouPqjq1Z9R
+	hydhowy5sRDngG5hmuxG8U79X0bdqB0wNmVRD11j+mXwTNTwHlpfuo5zULhxVYdO
+	INKv8LMtPWIVZGfeCxIfq2N7nWshaRairkQ==
+X-ME-Sender: <xms:GdGQZ1t3a_9_S1x0gzK6ScTY5b87cTlrrcLxs5SZQXHHqypL7QGgBw>
+    <xme:GdGQZ-ev14fPqKPYEzjHxXYe7wfcczA62dF6s7WFwwE6zFwR8H-tn-WEcEB-vRiaH
+    aKtJVyFZVlDw6wcIw>
+X-ME-Received: <xmr:GdGQZ4zHMxE6mxgGWwe8vKKsYK95h7D0BrthG9HRZgCEBck8KWBdjwkM-Yobzet5zdc3xmJQuFqpIi5cG2qNuK9ArNSaB_O_wOBMClMfuFRj6Y0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgudeglecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhstghoohhlse
+    htuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtoheprhgrnhgurghllhdrsggvtghkvghr
+    sehnvgigsghrihgughgvrdgtrgdprhgtphhtthhopehrohgsvghrthdrtghouhhpsehkoh
+    horhguihhnrghtvghsrdgtohhm
+X-ME-Proxy: <xmx:GdGQZ8MqR3paB72ZlmlEQ5IFj5kyKTiZI8v8EstMDn7GOsAoF7NCvQ>
+    <xmx:GdGQZ18rwMLqjseLlUCaMVrKaoJ56V5VQBfJP1O7t-DsXaKrr7gtKA>
+    <xmx:GdGQZ8VtRHHSfkqOZbSueoczJiwBR7AZ0uvXAqwY5zB-ceOYH8UvPQ>
+    <xmx:GdGQZ2dM-y5bJ_xChTANDOwwGXGS2rJaB52g5W7g2v6SaRgCzctJ5A>
+    <xmx:GtGQZ1xp4ZFOD6eyZ7h0jOEIH73no4csoMIiPE77Db8C0MjS8bq1BNSb>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Jan 2025 06:06:00 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 09814ecb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 22 Jan 2025 11:05:58 +0000 (UTC)
+Date: Wed, 22 Jan 2025 12:05:53 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Robert Coup <robert.coup@koordinates.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	"Randall S. Becker" <randall.becker@nexbridge.ca>
+Subject: Re: [PATCH v3 5/5] remote: announce removal of "branches/" and
+ "remotes/"
+Message-ID: <Z5DRESPpegE41xaT@pks.im>
+References: <20250120-pks-remote-branches-deprecation-v3-0-c7e539b6a84f@pks.im>
+ <20250120-pks-remote-branches-deprecation-v3-5-c7e539b6a84f@pks.im>
+ <xmqqtt9ryi3f.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bctwMvbW3olsouoOvGWd8ax043uQicpuq7KAQACJW+Z+b0Zg7t8
- Nguihpj/QK+KD5Jo0XHdFFL1/WoslXFg2k4elerCAZezUUFdyPoNfPug4NZji6slH8CMMta
- bXExEj9XWXel87Qq/mZ58EfA11JEpesS/BMjp8bMRZY4zElAASR4dmDzRRo5QYcHc4hEUbe
- vtG3QaGljV+iJz1Jhr81A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Zj1nSWEQ60k=;onH3UX4O48FVCmOwtyqojmFtScw
- XXYHoYNmklPAukV5aTEwRaXu5ZMTZXIvrcAebbiX8BqFEKN07jAXu/T6Rhz9gPC/fxlFcCcON
- EcuiRY6hmlbKKYsEXvKHBO8n2CWruPuYG8ukCeiIrl9rbSQte3WaWUqJIuUqJ2H6hx+Xhi2N6
- rSJExppmZSSQpw5+qJKgH/A8RN6zql8YYaWoKjKSrJxAacGe9HkXstJNwZrsgmS7aflo7wMrQ
- Y9nQUZGC0pnhiL7joyhc5+7naYEzBpnYsL6C5pn/daCVrFanp6PFV5eSek/+4G7gCRlUXYXTk
- CwH4OBLOo98iWJH7l1jdA7G0kKpIWNcjMDC03q/CMfoCCUd+JeA8GLB1T2vTy13Qh9FV3J/8f
- evh3Bgsl5qQpDIJzPJXTi0ryuDpWQeleXNFKIYdXtkLAoZEwPKsYsw9S4/hP4GfZdJG3rilpA
- XAcAR5QU8Hi7mDZL7w9NIiGIDqdNG5P7XLpSFhFh+saMKf1hlWEO7vlqFrEuyll/Rzku5fI+b
- fdNY+N+ES3fQ4l2ZApRn/p5LXvWa67a1U7YbICxiuaSLnvflwsrrAVyJTRdLDqupuVW/or78O
- 47e+utdoTG3H0rhvR0y3H8RxLB2DKuwfbWEqL4X5RKtsyOFOKwxpWFQj4gLYEVYnflYo8yD37
- lPCIafI+r8ZhypKjMYF3OfXAhKeR/t76qweEHAyP9VFuXCF6QzMZ2fkTWqjYDVAZ8LcvA1Ur0
- 6p11QtAlg6N/Lah7TsAkDCJIGMpe4fQxFZ6zpy7NFCqpAELhmCN+opTQjNTRzcEymPfYEIgeX
- qB6Il3vByAayp/vHww0voHxYdHe05ZA/HefE3HXOwpm/u0MLHLk7+JM40mBjJuNpjq+GRpld8
- wOHoFfdGD49w5uohiJl3RSp/nxGVjP6U6dFcwHOS+TL3En8c3W3Y68WcQwaGnbRbYPoruBOA4
- 1stHpkRWsRuj3zFip/KmT4by9HA61y3z9G8XaOLFXCxcHsHHB8rC8AZDfxxkcmhTtUgmLQLIX
- Lr2EtY+/Dl+BUjRR7ro9IMmZHrMO/o49NDWxtdvaK3D2GSU0ylVOp7xYb6YxLVpLL2ZAAhLMF
- Eazso3d7fGUT4e5tYKifxgO4m3ZT4A/DnVd/8diC1pMylSn/l/di2JHjteyN8wDeI2eN/v+3j
- yzdAUuwVy3gUXvHrLaCZXQU6Lw+vvGzLhUzkEX26cC3Jp8wVox6t1S8xAdO6Q9WpMBfA0m92V
- sIcjqydAIeCx
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtt9ryi3f.fsf@gitster.g>
 
-Hi Adam,
+On Tue, Jan 21, 2025 at 01:25:56PM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/builtin/remote.c b/builtin/remote.c
+> > index 1ad3e70a6b..e565b2b3fe 100644
+> > --- a/builtin/remote.c
+> > +++ b/builtin/remote.c
+> > @@ -640,10 +640,12 @@ static int migrate_file(struct remote *remote)
+> >  	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
+> >  	for (i = 0; i < remote->fetch.nr; i++)
+> >  		git_config_set_multivar(buf.buf, remote->fetch.items[i].raw, "^$", 0);
+> > +#ifndef WITH_BREAKING_CHANGES
+> >  	if (remote->origin == REMOTE_REMOTES)
+> >  		unlink_or_warn(git_path("remotes/%s", remote->name));
+> >  	else if (remote->origin == REMOTE_BRANCHES)
+> >  		unlink_or_warn(git_path("branches/%s", remote->name));
+> > +#endif /* WITH_BREAKING_CHANGES */
+> >  	strbuf_release(&buf);
+> 
+> Interesting.  I wonder if our new warning should talk about whatever
+> end-user facing interface that triggers this code path.  It would
+> help them wean themselves away from the old interface, no?
 
-On Fri, 10 Jan 2025, Adam Murray via GitGitGadget wrote:
+Not quite sure that I understand what you're saying. Is it that we
+should tell whether we were reading from "branches/" or "remotes/"? If
+so we already do that.
 
-> From: Adam Murray <ad@canva.com>
->
-> When TRACE2 analytics is enabled, a git config option that has no value
-> causes a segfault.
->
-> Steps to Reproduce
-> GIT_TRACE2=3Dtrue GIT_TRACE2_CONFIG_PARAMS=3Dstatus.*
-> git -c status.relativePaths version
-> Expected Result
-> git version 2.46.0
-> Actual Result
-> zsh: segmentation fault GIT_TRACE2=3Dtrue
->
-> This adds checks to prevent the segfault and instead return
-> an empty value.
->
-> Signed-off-by: Adam Murray <ad@canva.com>
+> > diff --git a/remote.c b/remote.c
+> > index 10104d11e3..5feb0ae886 100644
+> > --- a/remote.c
+> > +++ b/remote.c
+> > @@ -293,6 +293,7 @@ static void add_instead_of(struct rewrite *rewrite, const char *instead_of)
+> >  	rewrite->instead_of_nr++;
+> >  }
+> >  
+> > +#ifndef WITH_BREAKING_CHANGES
+> >  static const char *skip_spaces(const char *s)
+> >  {
+> >  	while (isspace(*s))
+> > @@ -308,6 +309,13 @@ static void read_remotes_file(struct remote_state *remote_state,
+> >  
+> >  	if (!f)
+> >  		return;
+> > +
+> > +	warning(_("Reading remote from \"remotes/%s\", which is nominated\n"
+> > +		  "for removal. If you still use the \"remotes/\" directory\n"
+> > +		  "it is recommended to migrate to config-based remotes. If\n"
+> 
+> Do we have a way to concisely say "how" to do this?  If I am reading
+> the caller of migrate_file() in builtin/remote.c, it would be
+> 
+>     $ git remote mv foo foo
+> 
+> for any foo in .git/remotes/* or .git/branches/* hierarchy?
+> 
+> Of course they may be an ancient leftover file that the user even no
+> longer is aware of having, in which case
+> 
+>     $ rm .git/remotes/foo
+> 
+> might be an OK answer, but even then
+> 
+>     $ git remote rm foo
+> 
+> would probably be more appropriate.
 
-This patch looks good to me!
+Very good idea indeed. We also have tests that exercise this behaviour
+in t5505 (with the slight exception that it is `git remote rename`, not
+`git remote mv`).
 
-Thank you for the fix,
-Johannes
-
-> ---
->     trace2: prevent segfault on config collection where no value specifi=
-ed
->
->     cc: Jeff King peff@peff.net
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1814%2=
-Fad-murray%2Ffix-trace2-segfault-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1814/ad-m=
-urray/fix-trace2-segfault-v2
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1814
->
-> Range-diff vs v1:
->
->  1:  24ba9db7aa1 ! 1:  fd7bed52dda trace2: prevent segfault on config co=
-llection where no value specified
->      @@ Commit message
->           Actual Result
->           zsh: segmentation fault GIT_TRACE2=3Dtrue
->
->      -    This adds a null check to prevent the segfault and instead ret=
-urn
->      -    the "empty config value" error.
->      +    This adds checks to prevent the segfault and instead return
->      +    an empty value.
->
->           Signed-off-by: Adam Murray <ad@canva.com>
->
->      @@ t/t0210-trace2-normal.sh: test_expect_success 'bug messages foll=
-owed by BUG() ar
->
->        ## trace2.c ##
->       @@ trace2.c: void trace2_def_param_fl(const char *file, int line, =
-const char *param,
->      - 	int j;
->      - 	const char *redacted;
->      -
->      --	if (!trace2_enabled)
->      -+	if (!trace2_enabled || !value)
->      + 	if (!trace2_enabled)
->        		return;
->
->      - 	redacted =3D redact_arg(value);
->      +-	redacted =3D redact_arg(value);
->      ++	redacted =3D value ? redact_arg(value): NULL;
->      +
->      + 	for_each_wanted_builtin (j, tgt_j)
->      + 		if (tgt_j->pfn_param_fl)
->      +
->      + ## trace2/tr2_tgt_event.c ##
->      +@@ trace2/tr2_tgt_event.c: static void fn_param_fl(const char *fil=
-e, int line, const char *param,
->      + 	event_fmt_prepare(event_name, file, line, NULL, &jw);
->      + 	jw_object_string(&jw, "scope", scope_name);
->      + 	jw_object_string(&jw, "param", param);
->      +-	jw_object_string(&jw, "value", value);
->      ++	if (value)
->      ++		jw_object_string(&jw, "value", value);
->      + 	jw_end(&jw);
->      +
->      + 	tr2_dst_write_line(&tr2dst_event, &jw.json);
->      +
->      + ## trace2/tr2_tgt_normal.c ##
->      +@@ trace2/tr2_tgt_normal.c: static void fn_param_fl(const char *fi=
-le, int line, const char *param,
->      + 	enum config_scope scope =3D kvi->scope;
->      + 	const char *scope_name =3D config_scope_name(scope);
->      +
->      +-	strbuf_addf(&buf_payload, "def_param scope:%s %s=3D%s", scope_na=
-me, param,
->      +-		    value);
->      ++	strbuf_addf(&buf_payload, "def_param scope:%s %s", scope_name, p=
-aram);
->      ++	if (value)
->      ++		strbuf_addf(&buf_payload, "=3D%s", value);
->      + 	normal_io_write_fl(file, line, &buf_payload);
->      + 	strbuf_release(&buf_payload);
->      + }
->      +
->      + ## trace2/tr2_tgt_perf.c ##
->      +@@ trace2/tr2_tgt_perf.c: static void fn_param_fl(const char *file=
-, int line, const char *param,
->      + 	struct strbuf scope_payload =3D STRBUF_INIT;
->      + 	enum config_scope scope =3D kvi->scope;
->      + 	const char *scope_name =3D config_scope_name(scope);
->      +-
->      +-	strbuf_addf(&buf_payload, "%s:%s", param, value);
->      ++	strbuf_addstr(&buf_payload, param);
->      ++	if (value)
->      ++		strbuf_addf(&buf_payload, ":%s", value);
->      + 	strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
->      +
->      + 	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
->
->
->  t/t0210-trace2-normal.sh | 8 ++++++++
->  trace2.c                 | 2 +-
->  trace2/tr2_tgt_event.c   | 3 ++-
->  trace2/tr2_tgt_normal.c  | 5 +++--
->  trace2/tr2_tgt_perf.c    | 5 +++--
->  5 files changed, 17 insertions(+), 6 deletions(-)
->
-> diff --git a/t/t0210-trace2-normal.sh b/t/t0210-trace2-normal.sh
-> index b9adc94aab4..4047ab562a4 100755
-> --- a/t/t0210-trace2-normal.sh
-> +++ b/t/t0210-trace2-normal.sh
-> @@ -244,6 +244,14 @@ test_expect_success 'bug messages followed by BUG()=
- are written to trace2' '
->  	test_cmp expect actual
->  '
->
-> +test_expect_success 'empty configuration values are handled' '
-> +  test_when_finished "rm trace2.normal actual expect" &&
-> +  echo >expect &&
-> +  GIT_TRACE2=3D"$(pwd)/trace2.normal"  GIT_TRACE2_CONFIG_PARAMS=3Dfoo.e=
-mpty \
-> +	  git -c foo.empty config foo.empty >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  sane_unset GIT_TRACE2_BRIEF
->
->  # Now test without environment variables and get all Trace2 settings
-> diff --git a/trace2.c b/trace2.c
-> index f894532d053..49e7d1db88f 100644
-> --- a/trace2.c
-> +++ b/trace2.c
-> @@ -762,7 +762,7 @@ void trace2_def_param_fl(const char *file, int line,=
- const char *param,
->  	if (!trace2_enabled)
->  		return;
->
-> -	redacted =3D redact_arg(value);
-> +	redacted =3D value ? redact_arg(value): NULL;
->
->  	for_each_wanted_builtin (j, tgt_j)
->  		if (tgt_j->pfn_param_fl)
-> diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-> index 45b0850a5ec..8e09485c83c 100644
-> --- a/trace2/tr2_tgt_event.c
-> +++ b/trace2/tr2_tgt_event.c
-> @@ -491,7 +491,8 @@ static void fn_param_fl(const char *file, int line, =
-const char *param,
->  	event_fmt_prepare(event_name, file, line, NULL, &jw);
->  	jw_object_string(&jw, "scope", scope_name);
->  	jw_object_string(&jw, "param", param);
-> -	jw_object_string(&jw, "value", value);
-> +	if (value)
-> +		jw_object_string(&jw, "value", value);
->  	jw_end(&jw);
->
->  	tr2_dst_write_line(&tr2dst_event, &jw.json);
-> diff --git a/trace2/tr2_tgt_normal.c b/trace2/tr2_tgt_normal.c
-> index baef48aa698..924736ab360 100644
-> --- a/trace2/tr2_tgt_normal.c
-> +++ b/trace2/tr2_tgt_normal.c
-> @@ -307,8 +307,9 @@ static void fn_param_fl(const char *file, int line, =
-const char *param,
->  	enum config_scope scope =3D kvi->scope;
->  	const char *scope_name =3D config_scope_name(scope);
->
-> -	strbuf_addf(&buf_payload, "def_param scope:%s %s=3D%s", scope_name, pa=
-ram,
-> -		    value);
-> +	strbuf_addf(&buf_payload, "def_param scope:%s %s", scope_name, param);
-> +	if (value)
-> +		strbuf_addf(&buf_payload, "=3D%s", value);
->  	normal_io_write_fl(file, line, &buf_payload);
->  	strbuf_release(&buf_payload);
->  }
-> diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-> index a6f9a8a193e..19ae7433ef8 100644
-> --- a/trace2/tr2_tgt_perf.c
-> +++ b/trace2/tr2_tgt_perf.c
-> @@ -446,8 +446,9 @@ static void fn_param_fl(const char *file, int line, =
-const char *param,
->  	struct strbuf scope_payload =3D STRBUF_INIT;
->  	enum config_scope scope =3D kvi->scope;
->  	const char *scope_name =3D config_scope_name(scope);
-> -
-> -	strbuf_addf(&buf_payload, "%s:%s", param, value);
-> +	strbuf_addstr(&buf_payload, param);
-> +	if (value)
-> +		strbuf_addf(&buf_payload, ":%s", value);
->  	strbuf_addf(&scope_payload, "%s:%s", "scope", scope_name);
->
->  	perf_io_write_fl(file, line, event_name, NULL, NULL, NULL,
->
-> base-commit: 8f8d6eee531b3fa1a8ef14f169b0cb5035f7a772
-> --
-> gitgitgadget
->
->
+Patrick
