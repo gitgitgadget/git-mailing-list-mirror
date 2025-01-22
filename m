@@ -1,54 +1,54 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DAD215173
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 17:56:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC32214A73
+	for <git@vger.kernel.org>; Wed, 22 Jan 2025 17:58:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737568588; cv=none; b=r+D+oxPkSOWgFtai0rnPxdPD0/GEiOKbsFKJwoz4Mh8S8bCkZNM63MXeKECKA4Ux2caQlwuVx3t0djukWqjgoOA9+UfeAUlEKhYjqyNhvxmwd25WC+gulYG8ePBAwgFBwn9OD5Wu/SoCTZxquOB9VNnNFIK57bEE2tjMKCmrQnE=
+	t=1737568708; cv=none; b=TcdFqt86IaSAfh9N5JmdrNlb3uz54rbjF+QPXacTg6L0YZWnTIXS9kjo84p3e6nJgGm+sgVApLmMRls1rPL80mpZMTumi1j7O3dPQiDlVbf05kQtHCzg8YjQc7HynDUc8XN0m9fxhf7q8X4U2fsXcQC1MbPj1VV9LDWCe/tFrcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737568588; c=relaxed/simple;
-	bh=aMO+kWU5TRTFs2b0La5jIremVZeK6zWJUaqQphTB3bo=;
+	s=arc-20240116; t=1737568708; c=relaxed/simple;
+	bh=XSZOsc+XTpNKHquhJ+Zbs888qGbwxcrO4R9a6g1hAFc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Fe6wYpF/vtsutTuR15rTYwTbZslnRLLv+Lxfw5bbmnpAHlWXoKeK6tccx8kUY3G09SiWbklb5xJKG/FaM3JL0edXfQcEw6xV1VLl2e6PRTgjnW2KKznrrkiYTpvXj8sTmV1zdlg71R41nFlxITbstpus5TPzOLCDa65kJ3JAn6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=v6xjHTFU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=geQ8W5MN; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=SSKYjSxWMRE4GsaW+NSHHUEsk2Xuo+N8XCu9C7evxpP0XqvL+4SXdSrG56zoqrys24DH4SfftagYpinsp5ADT4BBgNb7i3c/GUpB/v689xLDPy9CzH/i5FdE8cynZdo5sqZCzRAc03Te+En99rL8l/emSheAFosiaw6iLn88Ivc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gxs8y5yn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F4HBbOu1; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="v6xjHTFU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="geQ8W5MN"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A080725401A0;
-	Wed, 22 Jan 2025 12:56:25 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 22 Jan 2025 12:56:25 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gxs8y5yn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F4HBbOu1"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 97B2F1140076;
+	Wed, 22 Jan 2025 12:58:25 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Wed, 22 Jan 2025 12:58:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737568585; x=1737654985; bh=xentsfYRCi
-	fsteqjx7f6YIR2lV4HulpuQHxAPDi5064=; b=v6xjHTFUGlNWEeaJcCeGa/ACV3
-	2zEFrUIPPuYJU4TC+d6ZF+mzb41/xUkRdPspXfamAuJVukYLHEpCnlbv7yyzDPOB
-	Ge90z9ckbjTSnQVHAw1dXWR1IT9k0upJYPhIitFLO7EGptNlfkcCryl3ilUzPo+T
-	NuzcvIL3EU8hjCk7y/dayuB7b+Kht7RShImMWn4fPl6AK1iuoPaQ5mq+NJ0rhtfi
-	mhS9t4bGkZwHIeRd/6WGJtQ9N+CpHrLvZk6fgTk1F9d6bR8UgKoaG9VP8Y64uE19
-	nMjTxx19ZMzZ6QKgsGy5yrUr3v+LolBjZlYNUMZf646Woh/FigN5YeLhGJSQ==
+	:subject:to:to; s=fm2; t=1737568705; x=1737655105; bh=veROqNMUA5
+	IMN/NlzbStr0FYPXn21k1+lUZig6G2A/k=; b=Gxs8y5ynocvnjbXFhrOIiDCRVG
+	Folu/OcXMcH3Ex9wim7S1sTlXEkgAdNJlma1GiycNa4Ke1wdfKhsGbPgnlRt0cOH
+	w7PKuQVxMPNe7RIlrlawLMeyUUXzXrRsZk+hIRyBd4CLIXJff+btwmmLzycsh7Hz
+	Fnq8bsASxacn6mBbj9W1JX/b4tIvDbwHK6R8J51lMq68Mw6TzbZqUDz75XHY3z9y
+	rJwseUpihWugaGiK/oLZxmDcajCqhTxPbsNxV79rFcHXaJ/l2SpwTNNmPNOCsA7w
+	xsmCgTM896+1VfKo+tFsXEaO0w008knOK/Qfsgl4RQV8lEhoVCuRKTXZiTRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737568585; x=1737654985; bh=xentsfYRCifsteqjx7f6YIR2lV4HulpuQHx
-	APDi5064=; b=geQ8W5MNHIdG+IgrDSM3EOrdP7UcpKwy5yXJY1QicMVyKxrVv8T
-	fieP6ZfTsSu9zHzYqs33nnWy/WgWcmjUIXZbQ5ptCeZyoVokoq7H6X4M5BrEoW+Y
-	d8/8h5kBTN1aNLqPLY+sfCi2HrOnXjZN1Aj2WXmuTOVtPBM2lbW7lTsyv9F8RAns
-	lDWBV6EAmHjYyj64bV9e28J40/GQGR3q7vZvorvP+Supu3dVI5fMtUGNIa8xdiVz
-	RV0xuEK7n26Ph5eO7Ue/VOAS1nUcJeXDUgp5btbc/ImdIpL0j/M/wZjipfOorhEP
-	kNyUZO4YO6py1AqK8TtV5zDZ11YAMvLDyRg==
-X-ME-Sender: <xms:SDGRZyl86tcz9-kjtiVgKXwkdnWus3UyAyn-sXHZSOLZrJyxZ-Juzg>
-    <xme:SDGRZ53PJeZZLGctWDLhlfqvLx3AOcP3yh0R-0nxEwu2cKAnNU8fO6ssjP5H2ZVAT
-    O4r3g9IpfLUY1rkfg>
-X-ME-Received: <xmr:SDGRZwrMvHiGaqzH7WyaJQS7OzozxaYsYAhSoOKa4_Y9Ql9vwF60X_IwbQCWRF1vwUBsnMnGh6YDk_HccqEbgD8HHItZmhhj4R3K>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgvddvlecutefuodetggdotefrod
+	1737568705; x=1737655105; bh=veROqNMUA5IMN/NlzbStr0FYPXn21k1+lUZ
+	ig6G2A/k=; b=F4HBbOu1LtUr580CZoNyAgBx41I1mB0howD1XdlcDaBHR+VMo0E
+	WZADRSEw+t/FAgi/uMJE5IruHLStH+zWExd2aRBumWf1ziAVGeLIXnqSYGe+NAY7
+	QBZGAqyq62fqPQ1a4rj2R6o0HCdqZJlXS9GkmA2RRtjwYt0uH25df+aQuorib3un
+	gz/oMhNBQ/ph+2tHF/tGnYwH1Ntixe+vGR6Md4Dvc8sG5pah3xbV0zVkBFVqO5ra
+	ZEoQatcRxE8cgCWQWAzLrKl0597QfaDxhV2JYGnpMqkyQ5xk/hyAzpFZrpkU5kDE
+	YjQHSiESQSr2eeE8vAFoZGWbVLbDfxP+jdQ==
+X-ME-Sender: <xms:wTGRZ78mjRDtYzBEELwnT8MJNyLdFRrnXRZ7tIJRE0z29aV0EiUOOA>
+    <xme:wTGRZ3s1835-UT3mm0CH5_Dk5aP7RFODCA8HWII9xuJJnFFj817ifJTv-vwyiodef
+    0pfkR_KPcbTrkCQIg>
+X-ME-Received: <xmr:wTGRZ5CfXn6beSw0BmMhFTTZqyxM-413Jqk6b-4_McWF7plvEkUYt8H-SG1ak3leFpuAkB4opxRNCHGXZB_RG4-buDYXw2HLbCiT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgvdeftdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,31 +56,36 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejfedgvddvlecutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehnihhkrgesthhhvghlrgihiigvlhhlshdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:SDGRZ2lIzxF5JL5jsGmPIoxOiXo6cT8qSF_7s_eZYwc_lIegyI1KPA>
-    <xmx:SDGRZw3vX9sAmZ4-rce3QDtvxPOjMbz-jJPCXWHwFBSriN68WTQwBQ>
-    <xmx:SDGRZ9sSgb-dHllEtBUp_0EQIqFSoNi8yxbTu1Y7wm7l1cYdmfOAVw>
-    <xmx:SDGRZ8VaZz_kyF0bJ9sWWYSO5v8o7GXQSapNy5vPW9RkGI4ujDO8NA>
-    <xmx:STGRZ6o9g_W9tVyTMN_JqIRE9IvXUnp_IlPGZzWUVed63tLKwwImxuL4>
+    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehrohgsvghrth
+    drtghouhhpsehkohhorhguihhnrghtvghsrdgtohhmpdhrtghpthhtoheptghhrhhishgt
+    ohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehrrghnuggrlhhlrdgsvg
+    gtkhgvrhesnhgvgigsrhhiughgvgdrtggrpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:wTGRZ3e8SA-WuVgbGRZWTv6dnWIpKsk1NuVuoz9R4QQSZN--4DNYPA>
+    <xmx:wTGRZwPtQgfme4PgvJv0fnAUHkOOanIKRtbxdmvWzfZcW3DR6snrsg>
+    <xmx:wTGRZ5k4GtLIpVg1dHvDwqrYMGpabaHrHXYFVpgqmBvTnfLrbkGqug>
+    <xmx:wTGRZ6sgrVGlbrduyZtAKhabPRFbksGBea46K83r6qY5dCkxd0DtfQ>
+    <xmx:wTGRZ3cUUXDw8muSChbIzzWDqwJ7yFXQaSbXeE4CdKCa5AxBLiEEg6r->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Jan 2025 12:56:24 -0500 (EST)
+ 22 Jan 2025 12:58:24 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  peff@peff.net,
-  git@vger.kernel.org,  nika@thelayzells.com
-Subject: Re: [PATCH] refs: fix creation of corrupted reflogs for symrefs
-In-Reply-To: <Z5De17-Ed3K31kzh@pks.im> (Patrick Steinhardt's message of "Wed,
-	22 Jan 2025 13:04:39 +0100")
-References: <20250121215235.GA2753621@coredump.intra.peff.net>
-	<20250122100319.2280647-1-karthik.188@gmail.com>
-	<Z5De17-Ed3K31kzh@pks.im>
-Date: Wed, 22 Jan 2025 09:56:23 -0800
-Message-ID: <xmqqsepawx4o.fsf@gitster.g>
+Cc: git@vger.kernel.org,  "D. Ben Knoble" <ben.knoble@gmail.com>,  Robert
+ Coup <robert.coup@koordinates.com>,  Christian Couder
+ <chriscool@tuxfamily.org>,  "Randall S. Becker"
+ <randall.becker@nexbridge.ca>
+Subject: Re: [PATCH v3 5/5] remote: announce removal of "branches/" and
+ "remotes/"
+In-Reply-To: <Z5DRESPpegE41xaT@pks.im> (Patrick Steinhardt's message of "Wed,
+	22 Jan 2025 12:05:53 +0100")
+References: <20250120-pks-remote-branches-deprecation-v3-0-c7e539b6a84f@pks.im>
+	<20250120-pks-remote-branches-deprecation-v3-5-c7e539b6a84f@pks.im>
+	<xmqqtt9ryi3f.fsf@gitster.g> <Z5DRESPpegE41xaT@pks.im>
+Date: Wed, 22 Jan 2025 09:58:23 -0800
+Message-ID: <xmqqo6zywx1c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,38 +97,35 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
->> This caused a bug in Git 2.48 where target references of symrefs being
->> updated would create a corrupted reflog entry for the symref since the
->> old_oid is not populated. Undo the skip in logic to fix this issue and
->> also add a test to ensure that such an issue doesn't arise in the
->> future.
+> On Tue, Jan 21, 2025 at 01:25:56PM -0800, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> > diff --git a/builtin/remote.c b/builtin/remote.c
+>> > index 1ad3e70a6b..e565b2b3fe 100644
+>> > --- a/builtin/remote.c
+>> > +++ b/builtin/remote.c
+>> > @@ -640,10 +640,12 @@ static int migrate_file(struct remote *remote)
+>> >  	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
+>> >  	for (i = 0; i < remote->fetch.nr; i++)
+>> >  		git_config_set_multivar(buf.buf, remote->fetch.items[i].raw, "^$", 0);
+>> > +#ifndef WITH_BREAKING_CHANGES
+>> >  	if (remote->origin == REMOTE_REMOTES)
+>> >  		unlink_or_warn(git_path("remotes/%s", remote->name));
+>> >  	else if (remote->origin == REMOTE_BRANCHES)
+>> >  		unlink_or_warn(git_path("branches/%s", remote->name));
+>> > +#endif /* WITH_BREAKING_CHANGES */
+>> >  	strbuf_release(&buf);
+>> 
+>> Interesting.  I wonder if our new warning should talk about whatever
+>> end-user facing interface that triggers this code path.  It would
+>> help them wean themselves away from the old interface, no?
 >
-> It's a bit curious that you describe the fix here, then in the next
-> paragraph describe why we have skipped the logic only to reiterate the
-> fix.
->
->> The early exit was added as a performance optimization for reflog-only
->> updates, but this accidentally broke symref reflog handling. Remove the
->> optimization since it wasn't essential to the original changes.
+> Not quite sure that I understand what you're saying. Is it that we
+> should tell whether we were reading from "branches/" or "remotes/"? If
+> so we already do that.
 
-Yeah, that indeed is a "bit" curious.  I'd call it confusing, though
-;-).
+No, what I meant was to say "You are using outdated remotes/
+hierarchy to describe this remote.  You can run 'remote mv %s %s'
+to migrate its definition to the more modern config-based system".
 
-> Okay, makes sense. The error is specific to the "files" backend, which
-> might be worth mentioning in the commit message.
+The message already says the first sentence, but not the latter.
 
-Indeed.
-
->>  test_description='Test git update-ref and basic ref logging'
->> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->>  
->>  . ./test-lib.sh
->>  
->
-> We could use `git symbolic-ref HEAD` to resolve the branch name instead
-> of overriding the branch name here.
-
-I agree.  That sounds like a more sensible way to go.
-
-Thanks.
