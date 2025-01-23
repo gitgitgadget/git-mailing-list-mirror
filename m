@@ -1,68 +1,68 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070F4166F32
-	for <git@vger.kernel.org>; Thu, 23 Jan 2025 17:34:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9991F13D882
+	for <git@vger.kernel.org>; Thu, 23 Jan 2025 17:34:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737653683; cv=none; b=S+iza9WTOvDGEWM1qW3UEpOvz1bnvKqeyNZsyy8/Jy9faltch+J5raXl4+nbs56d46ZIfeSBcyligNt2DrypZPUXSrfpirrYoeJBw4Wxu6k0mdGu/tkxnMmNpuLjuzkH8ivA87Cmv7c507Wdni2ZqepY7qPCwnkTMjUtMZWpqQY=
+	t=1737653688; cv=none; b=ZG0p9BKV+Ce/ASmhJu20hQTd9BvynTHgvbzWpuKaoZ9Lp914joLgOxgeL3ch15A8UWwDfn/rDr4Z9qooFRODla8NlU6imxUhsQfrIgQMlzbo4CjCYxcQp6QKlnuuD4yrBB/dhJM/O9ikEOT2zArPnWlec7oa+KCatYY+ocfMp+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737653683; c=relaxed/simple;
-	bh=XX9CayRwodWzzPoMzTsJqWyYVvYPKGyCntRvQaeBaJQ=;
+	s=arc-20240116; t=1737653688; c=relaxed/simple;
+	bh=ZxufP7yCO8MOsTX4t0D2bm0+KT8jpBLSNFAIQRpzwW4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nfC0bkZU6y++55GAcAKOrNpWIshTHeBj/T8lCK8hy67h2Y8GamjBx9+l5P5nm3ZU1WShKecnlWjZxI0ydy2LaX7h0Xtbl/Ujwdsdcp38vQjTsJZomUiVT1CK7A62w7W/51pbCHnNJx/hWdA2JK/qH94eBCiEr60D+MYocOFPvPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=eOshSluP; arc=none smtp.client-ip=209.85.219.181
+	 Content-Type:Content-Disposition:In-Reply-To; b=nK9Xy0HfUzzfSahQ3vd4xctsrk+YE4sa6DTGc8rQIPPkCj8hX4I54dswaknIIZydob1hEOKVMRJSVabUQJ4ZQjGFuVs9uZHFoAU6T/jAy2eEMYHE8xIV7PWRusmy7pK22be1aN4AXPOL3Gsfem09JLIhjpWXDdfV/XMqTuJ/Qkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=emkVgVWG; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="eOshSluP"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e53a91756e5so2153906276.1
-        for <git@vger.kernel.org>; Thu, 23 Jan 2025 09:34:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="emkVgVWG"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e53ef7462b6so2001806276.3
+        for <git@vger.kernel.org>; Thu, 23 Jan 2025 09:34:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737653681; x=1738258481; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737653684; x=1738258484; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3XfbhZ4NJq/su2IZlAhXveMpldbkSQsCFX7OvTBk/uk=;
-        b=eOshSluP5GfYViMr6FonUOV7Rym5o1oz4qsStt52C4PQg7h8TtjRf4fboXbkQF0iW+
-         BNgCucYlWzA1kU8PIt41acl5Y+orGDFVlubefwD8ROBRs3atKHe+wQpnNXeNu0aBEvXG
-         n5Jd1mP/SZmM9nK6PJ3RYPWRWmLjBJEkrXRVMy3YelKdzIM7pK2ZFzopi02tr1u12yBk
-         NaYhA/fol5/TvnGS+zWECeF+gO4iryP+9XWDXRqo4Z1FgiOJYyOhxhfdh54R2eSC4LOt
-         FgGvENtKcY5xIyF9n90EIL+svtihCr3xyoxQRiVsRL5naRnFSjlyFnalqOrQXMUbN46T
-         9sww==
+        bh=QA4d8lONclLoGTt0Pu9UVbPowqoU8qd1DWCHz0he9Zc=;
+        b=emkVgVWGDz2ukpMwtHIPyWO2u8JdOBsgvYZHT/8RgRAt3dSKJADwFJplywM+4hqpRx
+         8ZECw2ztn+bno/C+MT2UGFg6UmVOD81Fb2Ut6nR5T+Tr6bQ3dwcRbvQkjZzBaGT35Hhb
+         zGfYNqQIKUBLt+xhmTqrUAGBQw+JcaNg67w5WC047e6b6ppfdfYj7nq3LPkXpynTQ7sl
+         AFljzz8xcLfiz1CsbMXZw+s4Tt2GDm4QTY5CarsgTAmsnBu6MfXIX4ZmC2Z5yFF1vQiq
+         NpWU7MWKHcKBRbv6dK4AIzcyAl5Y1NnMFB2Bx4TwAt+F4ODHo8elP64k0hhdZKeUuoPb
+         M1JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737653681; x=1738258481;
+        d=1e100.net; s=20230601; t=1737653684; x=1738258484;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3XfbhZ4NJq/su2IZlAhXveMpldbkSQsCFX7OvTBk/uk=;
-        b=ZvX3ZcuhxaUvPYqhLxRZr53nGIECibA/nA/GpPAGVY+AXRNFfXtzDv1TdayA54xyfY
-         RllWXKPsOkkXPp2Lf2Ii8vFTy3OHYVHmHtgmGpLZnDLONR5rey/w81OJy1pQuQuS3fPK
-         HFC4MUqg00Uj2Kyu1SRwqGRCT/yuRI6XulJjocsSd89cQiT7rB/wY+dxN7GKurOtJSQF
-         rw8NV0m982qjtjtoSgQD/st4J5WMf+88P/6mTc+67LCRlLiML9/ZS3w5eab7H8WaYrh0
-         GqtN6hf+78TouXPCEqcPS6lnhL1smzM/5QVWu/kc3+ZBx8qIxPbCqq1jkZviSd3IQeSC
-         Zw1w==
-X-Gm-Message-State: AOJu0YzQenBGxJB2e396TWY8mh9wA8y3bc81qlSFNk+y3kMZafUB29CN
-	aIB6NzhVCg6tzw+aWD9I9pyT1G29nKHSsxOdwtsC+ObefrBdVH1LgTJv0Apk55CaGgwUVFkDK1D
-	hSQk=
-X-Gm-Gg: ASbGncuWNpEItk7Rgkfrkvpzbj707bqyel0JZLqfJ4MuB+2MqLsnvFMclOyfdgv+UT/
-	xlZTvyJhQoyD4GAfJp2LKd+rKCLHLXGMPNY5d4X0FoVzgK7kDjeiBKSrSuR5RXnyAneawxiF7PL
-	4OUqG70gzg1yxh0FE4K0H1KZZa7TxpFk2VnRIhTxYLElebU6LFBwKXiWxw5TDzaL+P1/fb8DyEz
-	FSCH5ONBJXIvbr8d6TYPzr+sYO7q98qhb04DUvC2GnMMlmmkLCh/Kayf5p2mQ+kTwFcFweQ3qTe
-	+e0QJSh2IpwJ0j/N/agtTNIF15dwnOOkX3vh2vjDYFXwnm9CUQsa
-X-Google-Smtp-Source: AGHT+IEZPzO8cQYdu3ZrqizZz1Xa8Bq5Woa735CCoG7j1vzFjtK07oLZgBdT4JoF9gMh4GBucjQuzg==
-X-Received: by 2002:a05:690c:6812:b0:6f6:cba2:a881 with SMTP id 00721157ae682-6f6eb93f1e7mr215946327b3.33.1737653680867;
-        Thu, 23 Jan 2025 09:34:40 -0800 (PST)
+        bh=QA4d8lONclLoGTt0Pu9UVbPowqoU8qd1DWCHz0he9Zc=;
+        b=moJ7K64ZlCge4EBXym4JkRPtBmjJ/C9yc3VaNnR3Lda8J5bTksn2galCJ6n1aRI/F7
+         8lAAHrMhZCYeDNyq7tMRNo/tr10dWQwhB9C/zzfemYP74/EaSso7/CiZMlx6OW/dqNp6
+         ywePF9xS3tLoUdkei3QVwhlhLQPrPzWXPY4n57TACJ9gkeP+1EYRp+pHIgTGaA38MViB
+         fdma042CwYJ0wUFv8lVIUtVsvtxAd956xfXBFiADjYInty3R+o4xH4Fe3kMvVMiAo/ak
+         nbZOdc7bPRH5+ajQtsUHFG1fy9Z4kZ0Fd2fvnIZk5wvTKaB10BjruXOkURfMV5vq0Q8d
+         kQKA==
+X-Gm-Message-State: AOJu0Yz6ualSh6FCTx84nExvXrC74m0S6zHoBM/cY2ZinzIfc6S17vTI
+	ruSTnnKzp3zoPZzQXDXLLzvEakISFg4bjhqJBa0QABzkGxUioN7b1DTP1UCSzEcL5CIDa4djv4V
+	rpCs=
+X-Gm-Gg: ASbGncu+5wdlfLvVyFToZiatjZ2+idpJT5BpWfBUAGLaWCWzHoA55+koeid7tcxMuO0
+	J+QMWTkwoXuV4I85x1cTVwllhmFKKGYJKDWXBW5b8pysbx9dVNBpAIxhxo4fWM+KdPzdIjE1YDT
+	7uKD8gWNSznPbBN9I35OYN0und8OWC8/Nh055CRaxRODzm30UPucHvR7YKcgnSWNgbHEnKxqctw
+	qoRDwcANj2jpmxKj5ebN2aYezZaDZX6h4vrjy1oNd4p/zxLIqC797AzlZ1A+8tSRZqwFDJNRuQm
+	NH1ZCcTY7uIkqt8sUbO57Pd+rLphbg6+mRvTVyChfNwyz+/wChZoWmkpsR679F0=
+X-Google-Smtp-Source: AGHT+IFOCx4Ug2PR8TPown5J9ppR9MKRRuzk0jV9O/HiMXzaKt8bKdF7vJs7uDCrIUN9v+lKX/l5QQ==
+X-Received: by 2002:a05:690c:6603:b0:6ef:c5f6:2ac8 with SMTP id 00721157ae682-6f6eb904750mr219145267b3.27.1737653684031;
+        Thu, 23 Jan 2025 09:34:44 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f757a0554csm455377b3.93.2025.01.23.09.34.40
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f757891e2esm483877b3.45.2025.01.23.09.34.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2025 09:34:40 -0800 (PST)
-Date: Thu, 23 Jan 2025 12:34:39 -0500
+        Thu, 23 Jan 2025 09:34:43 -0800 (PST)
+Date: Thu, 23 Jan 2025 12:34:42 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 7/8] csum-file: introduce hashfile_checkpoint_init()
-Message-ID: <da97157c4a1fde62a62dbb258d54a91320712fd7.1737653640.git.me@ttaylorr.com>
+Subject: [PATCH v4 8/8] hash.h: drop unsafe_ function variants
+Message-ID: <0ba27182b5ed666cb9f49c674f2597eec7572b90.1737653640.git.me@ttaylorr.com>
 References: <cover.1732130001.git.me@ttaylorr.com>
  <cover.1737653640.git.me@ttaylorr.com>
 Precedence: bulk
@@ -75,131 +75,89 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1737653640.git.me@ttaylorr.com>
 
-In 106140a99f (builtin/fast-import: fix segfault with unsafe SHA1
-backend, 2024-12-30) and 9218c0bfe1 (bulk-checkin: fix segfault with
-unsafe SHA1 backend, 2024-12-30), we observed the effects of failing to
-initialize a hashfile_checkpoint with the same hash function
-implementation as is used by the hashfile it is used to checkpoint.
+Now that all callers have been converted from:
 
-While both 106140a99f and 9218c0bfe1 work around the immediate crash,
-changing the hash function implementation within the hashfile API to,
-for example, the non-unsafe variant would re-introduce the crash. This
-is a result of the tight coupling between initializing hashfiles and
-hashfile_checkpoints.
+    the_hash_algo->unsafe_init_fn();
 
-Introduce and use a new function which ensures that both parts of a
-hashfile and hashfile_checkpoint pair use the same hash function
-implementation to avoid such crashes.
+to
 
-A few things worth noting:
+    unsafe_hash_algo(the_hash_algo)->init_fn();
 
-  - In the change to builtin/fast-import.c::stream_blob(), we can see
-    that by removing the explicit reference to
-    'the_hash_algo->unsafe_init_fn()', we are hardened against the
-    hashfile API changing away from the_hash_algo (or its unsafe
-    variant) in the future.
+and similar, we can remove the scaffolding for the unsafe_ function
+variants and force callers to use the new unsafe_hash_algo() mechanic
+instead.
 
-  - The bulk-checkin code no longer needs to explicitly zero-initialize
-    the hashfile_checkpoint, since it is now done as a result of calling
-    'hashfile_checkpoint_init()'.
-
-  - Also in the bulk-checkin code, we add an additional call to
-    prepare_to_stream() outside of the main loop in order to initialize
-    'state->f' so we know which hash function implementation to use when
-    calling 'hashfile_checkpoint_init()'.
-
-    This is OK, since subsequent 'prepare_to_stream()' calls are noops.
-    However, we only need to call 'prepare_to_stream()' when we have the
-    HASH_WRITE_OBJECT bit set in our flags. Without that bit, calling
-    'prepare_to_stream()' does not assign 'state->f', so we have nothing
-    to initialize.
-
-  - Other uses of the 'checkpoint' in 'deflate_blob_to_pack()' are
-    appropriately guarded.
-
-Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/fast-import.c | 2 +-
- bulk-checkin.c        | 9 ++++++---
- csum-file.c           | 7 +++++++
- csum-file.h           | 1 +
- 4 files changed, 15 insertions(+), 4 deletions(-)
+ hash.h        | 15 ---------------
+ object-file.c | 15 ---------------
+ 2 files changed, 30 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 0f86392761a..4a6c7ab52ac 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -1106,7 +1106,7 @@ static void stream_blob(uintmax_t len, struct object_id *oidout, uintmax_t mark)
- 		|| (pack_size + PACK_SIZE_THRESHOLD + len) < pack_size)
- 		cycle_packfile();
+diff --git a/hash.h b/hash.h
+index 0bf63cedfa4..ad2c919991c 100644
+--- a/hash.h
++++ b/hash.h
+@@ -282,21 +282,6 @@ struct git_hash_algo {
+ 	/* The hash finalization function for object IDs. */
+ 	git_hash_final_oid_fn final_oid_fn;
  
--	the_hash_algo->unsafe_init_fn(&checkpoint.ctx);
-+	hashfile_checkpoint_init(pack_file, &checkpoint);
- 	hashfile_checkpoint(pack_file, &checkpoint);
- 	offset = checkpoint.offset;
+-	/* The non-cryptographic hash initialization function. */
+-	git_hash_init_fn unsafe_init_fn;
+-
+-	/* The non-cryptographic hash context cloning function. */
+-	git_hash_clone_fn unsafe_clone_fn;
+-
+-	/* The non-cryptographic hash update function. */
+-	git_hash_update_fn unsafe_update_fn;
+-
+-	/* The non-cryptographic hash finalization function. */
+-	git_hash_final_fn unsafe_final_fn;
+-
+-	/* The non-cryptographic hash finalization function. */
+-	git_hash_final_oid_fn unsafe_final_oid_fn;
+-
+ 	/* The OID of the empty tree. */
+ 	const struct object_id *empty_tree;
  
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 433070a3bda..892176d23d2 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -261,7 +261,7 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
- 	git_hash_ctx ctx;
- 	unsigned char obuf[16384];
- 	unsigned header_len;
--	struct hashfile_checkpoint checkpoint = {0};
-+	struct hashfile_checkpoint checkpoint;
- 	struct pack_idx_entry *idx = NULL;
- 
- 	seekback = lseek(fd, 0, SEEK_CUR);
-@@ -272,12 +272,15 @@ static int deflate_blob_to_pack(struct bulk_checkin_packfile *state,
- 					  OBJ_BLOB, size);
- 	the_hash_algo->init_fn(&ctx);
- 	the_hash_algo->update_fn(&ctx, obuf, header_len);
--	the_hash_algo->unsafe_init_fn(&checkpoint.ctx);
- 
- 	/* Note: idx is non-NULL when we are writing */
--	if ((flags & HASH_WRITE_OBJECT) != 0)
-+	if ((flags & HASH_WRITE_OBJECT) != 0) {
- 		CALLOC_ARRAY(idx, 1);
- 
-+		prepare_to_stream(state, flags);
-+		hashfile_checkpoint_init(state->f, &checkpoint);
-+	}
-+
- 	already_hashed_to = 0;
- 
- 	while (1) {
-diff --git a/csum-file.c b/csum-file.c
-index ebffc80ef71..232121f415f 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -206,6 +206,13 @@ struct hashfile *hashfd_throughput(int fd, const char *name, struct progress *tp
- 	return hashfd_internal(fd, name, tp, 8 * 1024);
- }
- 
-+void hashfile_checkpoint_init(struct hashfile *f,
-+			      struct hashfile_checkpoint *checkpoint)
-+{
-+	memset(checkpoint, 0, sizeof(*checkpoint));
-+	f->algop->init_fn(&checkpoint->ctx);
-+}
-+
- void hashfile_checkpoint(struct hashfile *f, struct hashfile_checkpoint *checkpoint)
- {
- 	hashflush(f);
-diff --git a/csum-file.h b/csum-file.h
-index 2b45f4673a2..b7475f16c20 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -36,6 +36,7 @@ struct hashfile_checkpoint {
- 	git_hash_ctx ctx;
- };
- 
-+void hashfile_checkpoint_init(struct hashfile *, struct hashfile_checkpoint *);
- void hashfile_checkpoint(struct hashfile *, struct hashfile_checkpoint *);
- int hashfile_truncate(struct hashfile *, struct hashfile_checkpoint *);
- 
+diff --git a/object-file.c b/object-file.c
+index 43efa4ca361..c4b42dd4be9 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -230,11 +230,6 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 		.update_fn = git_hash_unknown_update,
+ 		.final_fn = git_hash_unknown_final,
+ 		.final_oid_fn = git_hash_unknown_final_oid,
+-		.unsafe_init_fn = git_hash_unknown_init,
+-		.unsafe_clone_fn = git_hash_unknown_clone,
+-		.unsafe_update_fn = git_hash_unknown_update,
+-		.unsafe_final_fn = git_hash_unknown_final,
+-		.unsafe_final_oid_fn = git_hash_unknown_final_oid,
+ 		.empty_tree = NULL,
+ 		.empty_blob = NULL,
+ 		.null_oid = NULL,
+@@ -250,11 +245,6 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 		.update_fn = git_hash_sha1_update,
+ 		.final_fn = git_hash_sha1_final,
+ 		.final_oid_fn = git_hash_sha1_final_oid,
+-		.unsafe_init_fn = git_hash_sha1_init_unsafe,
+-		.unsafe_clone_fn = git_hash_sha1_clone_unsafe,
+-		.unsafe_update_fn = git_hash_sha1_update_unsafe,
+-		.unsafe_final_fn = git_hash_sha1_final_unsafe,
+-		.unsafe_final_oid_fn = git_hash_sha1_final_oid_unsafe,
+ 		.unsafe = &sha1_unsafe_algo,
+ 		.empty_tree = &empty_tree_oid,
+ 		.empty_blob = &empty_blob_oid,
+@@ -271,11 +261,6 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
+ 		.update_fn = git_hash_sha256_update,
+ 		.final_fn = git_hash_sha256_final,
+ 		.final_oid_fn = git_hash_sha256_final_oid,
+-		.unsafe_init_fn = git_hash_sha256_init,
+-		.unsafe_clone_fn = git_hash_sha256_clone,
+-		.unsafe_update_fn = git_hash_sha256_update,
+-		.unsafe_final_fn = git_hash_sha256_final,
+-		.unsafe_final_oid_fn = git_hash_sha256_final_oid,
+ 		.empty_tree = &empty_tree_oid_sha256,
+ 		.empty_blob = &empty_blob_oid_sha256,
+ 		.null_oid = &null_oid_sha256,
 -- 
 2.48.0.rc2.35.gd215225db14
-
