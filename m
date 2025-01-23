@@ -1,70 +1,118 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285C214BF87
-	for <git@vger.kernel.org>; Thu, 23 Jan 2025 18:50:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269B88BF8
+	for <git@vger.kernel.org>; Thu, 23 Jan 2025 21:00:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737658258; cv=none; b=UuHTAz4CumDx66MGJIgVt+h++AEykVgpDS7eEyJoU6zbqhAo2vK0PT1tmVDFBX44klsJcJjptMm6t8Egcif+5mW7RHsTc8/n6S4JM4gExkPhNAO/tQHoPpXCEc/R8naHYM2GoBQWAqUChs6y1cmKtUMRY+CWNNw0jsrp5qQenf0=
+	t=1737666047; cv=none; b=nW0qAnDvNUXLWbv0tOUetu4SkonqvW3WJT2Gd2nRD9pyqJmjLssOTnhZmEsPvnVGZhcw+fD8+Ss4Zb2X95nkrhV+aw4uiyTBEioPjkUUOHODTCQyO3dzDK2ohAfVozav6c4TyywWkU96u26UYG4UsNEAGfS4JpiBQjKBbma4yik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737658258; c=relaxed/simple;
-	bh=NwThHqUxGf8DnvMjWWzE8t7JVnECS1n4Qa6G+YCGI54=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NanRRsg7t9pXVcFZU2uhTnuT371Yt9DqTkUF0V21oKlFizccL5jCr082exXa0qVlTgpTSsE4AqQmbvgeEK3/9xaErULp2w+jIOVbIro8stjNY3BY6RCjYzeiNxR9KQc5b7LbjAABErkggA+RSMqXRCcJpBaQFB1KjalhNvl6BRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GgzYFkUr; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1737666047; c=relaxed/simple;
+	bh=FwR7JJYUvYv15wKUQ4hGQ6RWT5RkGi2VSU8M+LgdJho=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rE3VYq/QA/bYNfmtKOVGmpzXuqO+6NyXC7j6HYI92j+AvGht3zW3tDpGTLLDMoAorXRdSiZuGOdBvoOVG9eYkJPmOAbApXXQQCBllNwWhMQRjqXVCs++MD485c+O4YrcI4hmoVIwHkfAN2ZdGaRgDk0SkRlrdcyYrFxD1JL9NWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bMiKCt7i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mg9ZCSLy; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GgzYFkUr"
-Received: (qmail 30340 invoked by uid 109); 23 Jan 2025 18:50:55 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=NwThHqUxGf8DnvMjWWzE8t7JVnECS1n4Qa6G+YCGI54=; b=GgzYFkUrrgjyTA8VXeALfLysIQ0fkciTrrLk2Xumi3Yd7O5x9rMa4+E0qrSDYgwfvGK/fB2Fl/RwCiak6XDyQoYsh2MDtdieh/FQwxbvnLP/jR4rDE2jmsUW+3Wpg9jAHdP7AWpM0akHArlpdIe9r/Xe3LtYjFllawwlHHy6jQvDDGI2P3VOnKCuUp3ZTd8oNY8qUhmrylRXXwCyMwFbfUsmKdeqBEqgJ+NmpvlPsbP4RzymKVrNtb+yi07w7nat15I61V3kd3nMFqLZzbav/975QoJcKX5v3uHm7/2KoWLGuRxcXMs+bb7tefDIDUVbLMx+3b77YYUo4xBCwjYTIw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 23 Jan 2025 18:50:55 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30242 invoked by uid 111); 23 Jan 2025 18:50:55 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 23 Jan 2025 13:50:55 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 23 Jan 2025 13:50:53 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 0/8] hash: introduce unsafe_hash_algo(), drop unsafe_
- variants
-Message-ID: <20250123185053.GA3928656@coredump.intra.peff.net>
-References: <cover.1732130001.git.me@ttaylorr.com>
- <cover.1737653640.git.me@ttaylorr.com>
- <xmqqwmelqt75.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bMiKCt7i";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mg9ZCSLy"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D667625401C2;
+	Thu, 23 Jan 2025 16:00:43 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Thu, 23 Jan 2025 16:00:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737666043; x=1737752443; bh=OcZjGTiQf8
+	diVptL4z5rtOwzbJ1WIe4TcyrWGu/EKn8=; b=bMiKCt7ixvC5L2uDEJeVqPvlU2
+	9xlSPFO8Mq3Y1dGwn/WsfkWw9eOeIqbXj8uIKuQqpz1WMWXNNgiCB2jCK/WLz2at
+	XyL5d7elUX4984X6JO7KYFHg6VKRH7ntOa9F19kZm4zVlykAQTkt1MQJdDO+7seM
+	hCUwOc4HB+0STQmHNpcPqK2pQi0PXtAjAe72q05GWHVmycurNR5WxTjI33MWNlKL
+	+47DfiSPXIWdo2MKP4fQDefju9bvZ4OJHiTPv/o6uMR96gMJLTEtgco6kqsa5Gnc
+	NYYxstjfvYCDzhlKQZAFKROQ0q+vBBcjd9GFcCJGfmGt7ztXfucbTJO0v/lA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737666043; x=1737752443; bh=OcZjGTiQf8diVptL4z5rtOwzbJ1WIe4Tcyr
+	WGu/EKn8=; b=mg9ZCSLy66FWvt6yLnPy/9MwwL2ie40VfNzsJYeZoD+ltQtNd05
+	aOJwNuAylGp3PjeNO/ROTkPVwnuxbxU90c0NrlzY33ofdKO2z0lB+pyYHb4NQ9O5
+	yCxLKBskn1+P9FVSu33ZdTZePJjquEqvALiLRB5oitKyoG7vVZN6Gn8y1pXhuGEM
+	LP7fn8kVXXKOWfbBpN5cDvIy19I9Ac13fDX3vZgpwfD5o4VQ+/rHxKKTNxoK7wbN
+	MYDYE6bBdnBoZbqzVPLA35C6gvJYoQ9Wuy+Ff/7VeuVPOTJBqanfQQ/mr4KTdhPO
+	9I6m8UCPc883UWPBrrOebs1ns2lQm5ncgcQ==
+X-ME-Sender: <xms:-62SZ1wsJ1zlX2tJOKujQj7Gti1hlAH-27vGrv5MV2YAi0Z9Yj9HLg>
+    <xme:-62SZ1SnTmMx3ezpVtteHTuB7y-pWAuygEp2wgr5dIwbs26jtpDUPM7yXFV4bhyhU
+    CGL_STz1Ppo3oHffA>
+X-ME-Received: <xmr:-62SZ_UOowNI08abbAIWDPRLDafqvY5VGfBavhS_2e30xmcXOzsUfyHMLAXFZ8yfWlRGotjofeKIG7JDpzzkpOSxS9TWZzzEkX75>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgvdeikecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghilhesvgifoh
+    hrmhdruggvpdhrtghpthhtoheplhhishhtsegvfihorhhmrdguvgdprhgtphhtthhopegs
+    vghntggvsehfvghrughinhgrnhguhidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:-62SZ3jonJBr7OHy2nG1yulaYQA2_JViLcNPWNr8GrgYVMI_e-ZEtg>
+    <xmx:-62SZ3CPjibciOxT6dcJ9MAg0zye5HFIiAL8xECqORW8vgyD7XDiHA>
+    <xmx:-62SZwJPuFsmxfPvVb7OreVF8jr7KLw75fbP2uEb-0xDxDmvkSHe8w>
+    <xmx:-62SZ2AB66j4sz_jublcun8WnTAYeKsh76Qq7-jpE3ZXWK8Gsh8y4A>
+    <xmx:-62SZy5wwT6nZoNf7FAGumuIK4E0F3r7X-kYyVb3yqvJv5a8gvY9dCip>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 23 Jan 2025 16:00:42 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Hesse <mail@eworm.de>, 	"Christian Hesse" <list@eworm.de>,
+ Bence Ferdinandy <bence@ferdinandy.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] fetch set_head: fix non-mirror remotes in bare
+ repositories
+In-Reply-To: <20250112165125.130400-1-bence@ferdinandy.com> (Bence
+	Ferdinandy's message of "Sun, 12 Jan 2025 17:51:22 +0100")
+References: <20250111202628.0e5894e4@leda.eworm.net>
+	<20250112165125.130400-1-bence@ferdinandy.com>
+Date: Thu, 23 Jan 2025 13:00:41 -0800
+Message-ID: <xmqqr04tqm86.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqwmelqt75.fsf@gitster.g>
+Content-Type: text/plain
 
-On Thu, Jan 23, 2025 at 10:30:06AM -0800, Junio C Hamano wrote:
+Bence Ferdinandy <bence@ferdinandy.com> writes:
 
-> Taylor Blau <me@ttaylorr.com> writes:
-> 
-> > (This series is based on 14650065b7 (RelNotes/2.48.0: fix typos etc.,
-> > 2025-01-07)).
-> >
-> > Here is a hopefully final version of my series to harden the unsafe hash
-> > algorithm changes added in v2.47.0. The only difference from last time
-> > is that hash_algo_by_ptr() now returns GIT_HASH_UNKNOWN for NULL and
-> > unsafe variants, which is a strict improvement from both v3 of this
-> > series and the status-quo on master.
-> >
-> > As usual, a (small) range-diff is included below for convenience, and
-> > the original cover letter is as follows:
-> 
-> Thanks.  I'll mark it for 'next', unless there are any further
-> comments.
+> In b1b713f722 (fetch set_head: handle mirrored bare repositories,
+> 2024-11-22) it was implicitly assumed that all remotes will be mirrors
+> in a bare repository, thus fetching a non-mirrored remote could lead to
+> HEAD pointing to a non-existent reference. Make sure we only overwrite
+> HEAD if we are in a bare repository and fetching from a mirror.
+> Otherwise, proceed as normally, and create
+> refs/remotes/<nonmirrorremote>/HEAD instead.
+>
+> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+> Reported-by: Christian Hesse <list@eworm.de>
 
-Nope, it looks good to me.
+These should be chronological; somebody reports an issue, the patch
+gets written, and finally it is sent out with a Sign-off to certify
+that the patch is not a stolen property.
 
--Peff
+> ---
+>  builtin/fetch.c   | 15 ++++++++-------
+>  t/t5505-remote.sh | 10 ++++++++++
+>  t/t5510-fetch.sh  | 13 +++++++++++++
+>  3 files changed, 31 insertions(+), 7 deletions(-)
+
+We haven't heard from Chritian; has this been tested OK?
+
+What the patch does does look sensible.  Thanks.
