@@ -1,76 +1,126 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92598BF8
-	for <git@vger.kernel.org>; Thu, 23 Jan 2025 22:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70923139CEF
+	for <git@vger.kernel.org>; Thu, 23 Jan 2025 23:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737669662; cv=none; b=anbH4CazBOyOA5gqclWXHVk9xMfWHJuwKWRklwPjEINhEO1/14MiujvV1lqwnW8pC2/EvSbpUXo2h5sl4YFVOdZ0iQSxSdYfLFW7APQv2pRMcwk3HYJLFEggWHpLsxOl/tZPG2xFT44vmmDMGw3Pjxv1gXK6vHyqaN7tH0QBJbM=
+	t=1737673539; cv=none; b=C/um03c7W0M5gf5AiQnyVMnVmKU4DiZzELqYpZEi2/CwigNZttAuXmcIW4Ov9psHlt6d8UJgk39CH4sDQeWZB+ZLgIADW9Ej4uILCCPnkAO2tQY+qclKCda5nAtF3Usp+/up3E22vDqOqlHGQpFj+SUkrZCl/ZrUHDBLyV533Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737669662; c=relaxed/simple;
-	bh=kUX8mp8Zfva0plRYJpyNdhTLgwfUJScqK3xEa+skhIM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GT24oUBojjI+gg4yxUxbcyuqB2l6taicvdW34zBC0I9T02qipCvD9rdKR/AYpRa17cg6LJZoKBJXFDC2tIOlUjlTvOJSAnIqfzaSHDMkNG1TjE78A7R/uzFWPFJXd+SAqUFsXpY/r5ly7TTGleZo8OKGFdao2P9I7MUo4T0j12Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7b6e9dd985dso11533085a.2
-        for <git@vger.kernel.org>; Thu, 23 Jan 2025 14:00:59 -0800 (PST)
+	s=arc-20240116; t=1737673539; c=relaxed/simple;
+	bh=wQpc8ghHK8cPRbAmODnJakoKfW+ITZfI3UjrJwKm200=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sW9OOw8iN351D8ZfleeB+ku8Vco/eJWa5Y0d7sj5AVQqs3w/eCx/2Rq0mThRO7zG1+r5FBZUP48rvMgXWPZBWXH5htKwTx0sT/drIddl03BH3vNBW3ZICgrRvz788WBdk5rYqc8AqmRHSsaQlOsL5hUDpsyZirw2e6exsNKj9/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=TxyIIG/X; arc=none smtp.client-ip=209.85.219.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="TxyIIG/X"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e549dd7201cso2818433276.0
+        for <git@vger.kernel.org>; Thu, 23 Jan 2025 15:05:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737673536; x=1738278336; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OvfUgxusFjv3Igsdj3Y5jp5YNkw8F+MjF6T7uUEiKbY=;
+        b=TxyIIG/XivOp1Box9wChXTGzdibCC+CJlr2f/Zjp+GW/DayhNR9JlEJcWC1uCg6wtl
+         OCnSMxzUOAu9Ud4JJCzJBIkfr3lnZcecflFLy9HJAa9eRMcApjC7Z4wh5PhtDcOT8s6c
+         n4ynJaw0H09fuYhB2hsZpxb49yA1hfuewkHTbnzU0z0Lm9mTQp70qNqbnJtTHMuVXs8l
+         f2BRMrI8U68qG5NBCD8qcXh2BqymPTE2h4r5UGcst9rtah5nlYZrwEHvc42rjaeiBDTZ
+         qtrroY6xIOdR1X+9XNYmkvS2bnJ5gWjdENdJc9CGNNo1fX1y1qCSG31bwa+GwAPCdUEc
+         ZPaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737669659; x=1738274459;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kUX8mp8Zfva0plRYJpyNdhTLgwfUJScqK3xEa+skhIM=;
-        b=duO/J0wDBGwdJ6CLWdHs6hy4/wR54pHe7ub5uTTySI5f1rmHXq46L2VRSNK0hWggOC
-         CWcPqNGk1Gqa68qrpvm5h7ahZ3PiSMhRe6Qjiz3W7BCAdCWfnF5o/BzR8HPk4/zmGjZi
-         kbSifZtHXVlj+BqfJnkv02YaTbUoij1XwEa9JbYKvxsschLSHEVb0xe4B1buo7zYlfsC
-         VtGyLnuZmOPtRVUgsW1sJMN+ZNlQPTVkxhA9ejAqI6eb1UHtWOolPo2Dmwl2nUAi7B+t
-         zMHZimpzvTclWlmtMlk06MUcAGhJR4SyYlZhHn86cLNZ9IPRKO7nI9f62Twk7XmaJCaa
-         EQaA==
-X-Forwarded-Encrypted: i=1; AJvYcCU3G/Mib+onUxb7//e63p126KTruobaq4JtGcO9+TCp9mQsti90c6imOuFca3IGkI73AqY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwihPQzrVuvHpsTPFU7pOWWc2EqcERPlZU/p+hwhdum4Dpdu6+L
-	cESahMIzO+XjmrLZ2IROwjf9UdOqc5BbGN5Y8hS/1rYt0oFmLYu93VFs+dKGw7RlBFRZWiGHHPa
-	YvVU9eKFgp9ujONCyB/6Wsjyyp8s=
-X-Gm-Gg: ASbGncs67SJL7Hw65iqirADpoRiB/wjjM0pErgr35+fijkdE73e72gzqx/WAbrCWO2L
-	Zz7siFpxq9v2jy9ZiqBlqQDVwYFRFH7ELEI3UckBTPQ0XARsoF70MSfF3JDp7x41+IY2VdDrbwG
-	4EQEenRd4sYtCQauYkI2HJB59d3CSpMA==
-X-Google-Smtp-Source: AGHT+IEcnpZwLrGaNVUfIgj6RikQImhfldWaLQYm3nz4twUWEk6kS5xyNQ6cE4aXA36l3XHifvXwCyIankBzfd14kMU=
-X-Received: by 2002:a05:6214:21ae:b0:6d8:a723:6990 with SMTP id
- 6a1803df08f44-6e1ee704634mr47272796d6.7.1737669657936; Thu, 23 Jan 2025
- 14:00:57 -0800 (PST)
+        d=1e100.net; s=20230601; t=1737673536; x=1738278336;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OvfUgxusFjv3Igsdj3Y5jp5YNkw8F+MjF6T7uUEiKbY=;
+        b=JxUrLP19RFWpCb3E2sx09OVFzvRW1uefoKLoG77G9fCJ8JPQkKaCHwmso+kAxx5fMZ
+         gbFgf+yo7qj9BCEqUOZFLufKkcWIcx9XT9e5A02cgtv7CqCOrbKMsfktb1WD88uwk2Ym
+         xYl6BI9n2wGchCnFVhsg79JolHg5rkqYNKwA3vUGoqCl2Shu9gD5HQljb4bjMobt7vjh
+         eqkCb1kRFpJYt1D6XOLH95gFvF7s8tx2Xv/AxPkGa+vZ0FF6cEUVhDI+hI90CF0K5tKZ
+         wJCYFYqsgmXAuJcPdHPWs4ipVdXO148BTwvt+RzbHA4uAzWZixtpUfz+ctuyvmQzbAZF
+         ohvA==
+X-Forwarded-Encrypted: i=1; AJvYcCW7TTS87yEfP9mt1WHUBxH9Nd5cmxOcow9IL6cBrLCXpTwr/xFgXisksTHQwTvjJyCcPZs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzMR0IUf2c9JpkOOqKdQ2hCOvWjVcydNe2vZt+UuhMhTL23JEFV
+	F/kHFSt5JO2OrmrosmbfaMDBPsjBJzKP/Z5+uRS0bsans0FEd1qx93ZbkW68q/U=
+X-Gm-Gg: ASbGncspAfYV6kyaoDrt8eJFXOudEKXscGMynlQJdFgsrhBZv+Wlj13bnwM7qXMUgla
+	ybI/bLMdqPk4KLCWyIjn1BGrZQ/mKh1QuyOLF9WRNAzLg/1lmTo2EwrP7wQi/kHoM3hnbvZ9Q2/
+	XjzGXfeHJEf5GbxPgRThVVD13lKWz5FHyXPmFwHuci+eKqAh2rm2Goasu7gfx+JMBKuVhIu3dDH
+	ycMQz8kS61GiPKc+zuI1jiIUeymG9X8aTph2bRMfXU2eiiCPP7dLEr71ngXoSUElwBR2h8TFeMI
+	TCP19FfL24gHL72NA3eouTKsy+vN+SI4XneQnrTIrtnYtU/A+Iqy
+X-Google-Smtp-Source: AGHT+IGV/4SMnzFMNqJTvUPb2HDg96KFubsU/0+kdjg+8RF0kMuwCJX0oyd59Ge5U5j2pyFhRwyyPw==
+X-Received: by 2002:a05:690c:6406:b0:6ef:4696:f1cc with SMTP id 00721157ae682-6f6eb6b288cmr229396767b3.22.1737673534514;
+        Thu, 23 Jan 2025 15:05:34 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f757a4a8dasm1492767b3.120.2025.01.23.15.05.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Jan 2025 15:05:33 -0800 (PST)
+Date: Thu, 23 Jan 2025 18:05:24 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2025, #05; Fri, 17)
+Message-ID: <Z5LLNMKSa6Y2zvHK@nand.local>
+References: <xmqqwmetgdgm.fsf@gitster.g>
+ <1331d214-890e-4b47-87c6-44f445172bb2@gmail.com>
+ <xmqqv7u7zz8v.fsf@gitster.g>
+ <Z5E5KdbwHE7fmiJx@nand.local>
+ <xmqqh65qv6oc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250111202628.0e5894e4@leda.eworm.net> <20250112165125.130400-1-bence@ferdinandy.com>
- <xmqqr04tqm86.fsf@gitster.g> <D79S38LX7NLS.34MN1BWV0HVJ0@ferdinandy.com>
-In-Reply-To: <D79S38LX7NLS.34MN1BWV0HVJ0@ferdinandy.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 23 Jan 2025 17:00:47 -0500
-X-Gm-Features: AWEUYZnQiaPF2YGi8mVl8J8WuSa_Y2YUjoqd4ngadQJ637-6kikzxXICWw0Nw-s
-Message-ID: <CAPig+cTmtuL1NtFjJLDb-bXDk=h5s88v12ezywr3q35+Zcrqnw@mail.gmail.com>
-Subject: Re: [PATCH] fetch set_head: fix non-mirror remotes in bare repositories
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Christian Hesse <mail@eworm.de>, Christian Hesse <list@eworm.de>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh65qv6oc.fsf@gitster.g>
 
-On Thu, Jan 23, 2025 at 4:48=E2=80=AFPM Bence Ferdinandy <bence@ferdinandy.=
-com> wrote:
-> On Thu Jan 23, 2025 at 22:00, Junio C Hamano <gitster@pobox.com> wrote:
-> > Bence Ferdinandy <bence@ferdinandy.com> writes:
-> >> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
-> >> Reported-by: Christian Hesse <list@eworm.de>
-> >
-> > These should be chronological; somebody reports an issue, the patch
-> > gets written, and finally it is sent out with a Sign-off to certify
-> > that the patch is not a stolen property.
+On Wed, Jan 22, 2025 at 02:13:07PM -0800, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> Makes sense, I'll send a v2 in that case.
+> > On Tue, Jan 21, 2025 at 12:30:08PM -0800, Junio C Hamano wrote:
+> >> Derrick Stolee <stolee@gmail.com> writes:
+> >>
+> >> > On 1/17/25 7:42 PM, Junio C Hamano wrote:
+> >> >
+> >> >> * ds/name-hash-tweaks (2024-12-20) 8 commits
+> >> ...
+> >> I am happy with the updated function that gives us better of both
+> >> worlds, without losing too much from the "renamed from other
+> >> directory" while making sure we do not lose too many bits in deeper
+> >> trees.
+> >
+> > I had a couple of thoughts that I meant to share before the holiday
+> > break, and haven't quite had a chance to get to it now that I'm back at
+> > my desk.
+> >
+> > Let me try and find some time to respond to the latest round of this
+> > series, and apologies for holding it up in the meantime.
+>
+> The topic has been stalled for unusually long time, so it won't hurt
+> too much for it to wait for a few more days, but it wouldn't be fair
+> to stall a topic further with just a promise to "try and find time"
+> forever.  Let's say we'll go ahead by this weekend unless we hear
+> otherwise?
 
-It's a good idea to check whether Junio has himself fixed this sort of
-thing when queuing your patch. (In this case, it appears that he has.)
+I agree, and I apologize for the delay. I prioritized this yesterday and
+left some review which I think you have seen since sending this email.
+
+> I am not ultra-happy with the last step, as I personally do not see
+> this different algorithm as "version" (in that people would always
+> want to use version N+1 over version N when both are available) but
+> as "variant" (in that there may be prefer to use variant N over
+> variant N+1 depending on the circumstances), but that may be just
+> the matter of terminology.  What's important is to make sure we do
+> not mix two algorhtims up while creating a packfile.
+
+Yeah, I think "variant" is probably more accurate, but I don't mind the
+naming. I think having a unique identifier is important, but I am not
+convinced that we need to introduce v2 and v3 at the same time. I would
+rather see us unify behind a single approach to present a
+clearer/smaller set of options to users.
+
+Thanks,
+Taylor
