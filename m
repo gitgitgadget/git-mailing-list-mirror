@@ -1,53 +1,53 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A983413D882
-	for <git@vger.kernel.org>; Thu, 23 Jan 2025 17:55:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E017B14F9ED
+	for <git@vger.kernel.org>; Thu, 23 Jan 2025 18:02:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737654954; cv=none; b=ZomT8yiejCBcFTZG2FExDnMg9hQxt8xmrKFRi77v3T2WEI5LeIgJGTi65FAoF7e2rN804aO0cxNE51WZS9wYxQBO4+RU7LWg3f+gXsVHeBkdlJreSSZaqF1SiNGJeFLfxo1V1/xLOYa5PmyG5H+xZdHE5y64EJUy01MYXdwsljM=
+	t=1737655370; cv=none; b=mU3KHeCg//17T8DSOOwrFLuHCrrCDmP3KzTE+GNNwS95bqvHGBAM56j1nuKE3AyMyZR8PCoqjyIFttFUrRkL+aEFB0TjNDGk5f/6ge+lbNF/rQvA7qnY2Od/n2CyvjXa8s7W4KZgUHoGxGzOBAT2XCVvJVPK2u7hsICXK8Fu6gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737654954; c=relaxed/simple;
-	bh=gKnZPDQfRuCKlL6xLsB8aBnNheyvsOLGJZqEzfVQJ/8=;
+	s=arc-20240116; t=1737655370; c=relaxed/simple;
+	bh=mHj6mmelWx4I5gq1nFXP7tOvHaVRU0nV5IAVYY897Vc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u3PxKsMfRIvRnFSK061vAUpzyVpFDCDkTRxFbSLpNDWqst3o58KCXLmQuC8hxlRyfVzzhikKjFEpV/wLVhlBg3AADd4eDhPZ1E/h/7xS1DAg7cS681HLGEmLEPV26XheN5Tjsl6Hp+kSmyByH6VODdNeP+R1jleiC3RhKN7D9sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CDGmUZWM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vqCqVD7n; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=snzHBnigxTdqQYfodIgHjPrJqYeX7Ck3xjG5+ZDJp9VjzV4IfaCxJH4taXvYmTCOsrAN5PlxyA0JB8vnw01UE3vUj8eVxLCVrEU6RXp2JTawN1EWyCVuKGRPtJ0GmipPz87j2BWAz+iejeMEobSOudYXeicYnOSli+Q7FwefXZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pLtoGSw2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z1YgxFdv; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CDGmUZWM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vqCqVD7n"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9A92D11401C3;
-	Thu, 23 Jan 2025 12:55:51 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pLtoGSw2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z1YgxFdv"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id CF1A111401B3;
+	Thu, 23 Jan 2025 13:02:47 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 23 Jan 2025 12:55:51 -0500
+  by phl-compute-04.internal (MEProxy); Thu, 23 Jan 2025 13:02:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737654951; x=1737741351; bh=KHC0NLuBCV
-	ngOciSoPTKsBC2qOIWFalLMqmezo35wJc=; b=CDGmUZWMZVy+l0jLsIdZXn0Yvv
-	+HcU1NVffflSGF3ODk0CrLqoJz3jbf12SOC/s4GLXLNJh2Bz8qzkhgrbnDvYwD4/
-	CuI4OZFK1lJQKh9CX6IMmx23/3uEy1MT8iQfADquNEDgVieV2tm/M5pa3HFkrYp0
-	KGeUGhWiXpryGd7VAg0gn5i9j6c0a3ZEcNrB7hwbc3FhzsDJ2MYWgdBbRry9hQcM
-	VOE+Wy2HyCi5/jZ5LOz9qTpS6fWL2y6EpBtt6dRTPpwFLhrTVcsgfzv5mxsSxRIQ
-	6URBSCQSRB3TfluWG5ur3cKBZwpeayF8AI+vB/ACQhG64t95lm81BgC4Hn4A==
+	:subject:to:to; s=fm2; t=1737655367; x=1737741767; bh=uO+3TFzRD3
+	vmMZIrkt4dyNvRKN9+4yciQ2Tdj3UKGOM=; b=pLtoGSw27+dcq4BmbPFc0w78lE
+	5IxImZy/gwkP2TqPSFMQh44xr7AcvBVZm5kgEUNuSrPhmz1Q6HAGeKev1tRgBw/7
+	GTrKsNffrXHUul8YStHPXX5FsZ0/aSitvi9wlO9ZxGncWmPALu9H91ft0L5iTodA
+	dd7cdGF0eprHUzwLJZg6K5EmFpWw+xbjiLTzYuBOHxFLF4kYtjkPyhsQizotNgPF
+	tVu2l2K848Q0aGsfj95gMrfA4IRoDnTUUJk3Ya2oos+89lH3On5QGN5wbcmqJYx6
+	mejHdU7pswGErkr/JnZZAymjsaLkbVjr4ydmr8/LYEja0YfPfxHJXtBX7mkg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737654951; x=1737741351; bh=KHC0NLuBCVngOciSoPTKsBC2qOIWFalLMqm
-	ezo35wJc=; b=vqCqVD7nT9+F5ZeplCyZZz13SYAkXNre5wAsrb5gxNEUM15HfRX
-	NzQVJMLlg2RXeZ770ghobx59O8cnjO0Usla1MPqjRcn7dEkdh0d+7QkBsKdqZfDS
-	WeItZ/GOrHxvKSB8c6ZMilZYN9k/OA2tJM/FUl78OZSmKUKI23P7aa9XfnU3z2KO
-	PGOSkZjJwo1RssYEFpGclcvEW1xISH0e8/58U+DRrKfZJ1eAnSZFAD/MbsmGFr3Y
-	Kip7jnaX+S2wyxiEiER/17la4ZovWDmCNj/3T0EqOn2aq9QI+BS9ZZCs2yTpbcn7
-	/BfmDpPM/hSzNTW6DP7U2ZOUNvIJMInzDWQ==
-X-ME-Sender: <xms:p4KSZ1FW-x0bzw9PKWh8nkXUoACY29cvSKwuaELEbzNjPf7Zy5nMcg>
-    <xme:p4KSZ6WiMqx0NOLTpeOj2vJnCikp0A_E6drwUdkpCtdHfZ8tktAKRmpbR9env6sGs
-    TGDU2WapFfXR9unjA>
-X-ME-Received: <xmr:p4KSZ3LWK81-iVOyuh45fw2vcds6n0ormN6DtwdRwwLTUe8Jm_rWRFhSFjdj1M7XApyk_8d4xyjjNzsx25TJ38kNLwnOKUt0qMXf>
+	1737655367; x=1737741767; bh=uO+3TFzRD3vmMZIrkt4dyNvRKN9+4yciQ2T
+	dj3UKGOM=; b=Z1YgxFdv9QjO4oJ/nqCd2naukz2Dn24ppRgYX0OtOiRYpHJSIOt
+	GXL6UUv1n390znlhcIezCTLbhy1jlnNKKZ7J7u9kEusbwsbysJfMZbCFz9Soyrna
+	U3SioYN04BM8K0B4eRepnFDLIKUTGPbcBhw+aB9OCXp5Bh0L6XxE+PmFt7qThNbM
+	U9ZMkR7B1/9ArWBUMV7HzkVBQbpo9H1DPU0ePOZnaCdrWDfUg1/TQaOYSZlwffPY
+	OxOhzXLUOrDE3AbANjdi6OJ/S5XydttqjTrZTeDdLJ2mguaBo2pYJLvLgxykoXKG
+	shLwEGR01Hdy7UCFo6U1O5HYoNYYiM2cztQ==
+X-ME-Sender: <xms:R4SSZxskLnMyvRa_SSw6t9yIa0OUyyRKDLHymXaxcHHgqGsmqfOIMA>
+    <xme:R4SSZ6e973l_lGbb803SQfDfPe2UeSezCXsroBsRwkvlNx5Ct5aBrysapB3a1q9TI
+    m89BzbF5DgmuxF57Q>
+X-ME-Received: <xmr:R4SSZ0wizO5Vyl3L9uMUm08LhlZLrI0_ro5mCZk_5nSJzLPxcoGR0vn1XRyw3wXJlDs_XVFDI6ZK4Y7KvpSjSBC-vwQkb8w-qtAI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgvdefvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -56,29 +56,36 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgvdefvdcutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
-    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehnihhkrgesthhhvghlrgihiigvlhhlshdrtghomhdprh
-    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhi
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:p4KSZ7EmUJDtP1AWkxVc8QzFHJiePwDTmsoDTYam_uI677qzYJvr-g>
-    <xmx:p4KSZ7VDU9pOy5sTK3ZGVHMLaAbHMsXH7PrgvWXSHL__EboBfIeJQw>
-    <xmx:p4KSZ2MOC6aufsCE9LtROgHQqOhbqdUYIx6SfGOg_sGAHAqsULxtAw>
-    <xmx:p4KSZ62jgzGJBjERcdcQdzYCvcWu1e2MuL5IpdR779d_TtduJL-eyA>
-    <xmx:p4KSZ9LxnrvNSz3h2YPpift4YPa-AtqOT0BE9evT_NTETJf6jhGEf2ph>
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosg
+    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhm
+    rghilhdrtghomhdprhgtphhtthhopegrugestggrnhhvrgdrtghomhdprhgtphhtthhope
+    hjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:R4SSZ4NOrt6VaG2kG2_lrmTamvcM6AIraO8rF1whDUlfBREm71NvtQ>
+    <xmx:R4SSZx_kyKG5kCttFR0teaUR8S7srDdyaB5QqTH4UcNpRi6cu-nVxQ>
+    <xmx:R4SSZ4WX9w5XQcj2RiQmkuTcZXHRKInwYGhmQQyM_AkuyRz3UI3vAg>
+    <xmx:R4SSZyeTxkhTGNOLgtJwz6AwgukkZBbeICIQsQOs2oHaIpYglzh6LQ>
+    <xmx:R4SSZxzGqMIBYq9Fd-j7_BBfnW8XWvPvJRqABTx5tjQyD6exaQ2RBTGj>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 23 Jan 2025 12:55:50 -0500 (EST)
+ 23 Jan 2025 13:02:46 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  nika@thelayzells.com,  peff@peff.net,  ps@pks.im
-Subject: Re: [PATCH v2] refs: fix creation of corrupted reflogs for symrefs
-In-Reply-To: <20250123112944.3922712-1-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Thu, 23 Jan 2025 12:29:44 +0100")
-References: <20250122100319.2280647-1-karthik.188@gmail.com>
-	<20250123112944.3922712-1-karthik.188@gmail.com>
-Date: Thu, 23 Jan 2025 09:55:49 -0800
-Message-ID: <xmqqv7u5s9cq.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Adam Murray via GitGitGadget <gitgitgadget@gmail.com>,  Adam Murray
+ <ad@canva.com>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v2] trace2: prevent segfault on config collection where
+ no value specified
+In-Reply-To: <CALnO6CDH1aQrq0tcvr4rEGukksYv5bJ9W4icqBUC2Z3AyixRUw@mail.gmail.com>
+	(D. Ben Knoble's message of "Thu, 23 Jan 2025 12:01:40 -0500")
+References: <pull.1814.git.1730937889182.gitgitgadget@gmail.com>
+	<pull.1814.v2.git.1736494100622.gitgitgadget@gmail.com>
+	<c1398676-ddd7-c161-e114-2249316b5311@gmx.de>
+	<xmqqfrlawwd9.fsf@gitster.g> <xmqqbjvyww3j.fsf@gitster.g>
+	<CALnO6CDH1aQrq0tcvr4rEGukksYv5bJ9W4icqBUC2Z3AyixRUw@mail.gmail.com>
+Date: Thu, 23 Jan 2025 10:02:45 -0800
+Message-ID: <xmqqr04ts916.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,89 +95,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-> Subject: Re: [PATCH v2] refs: fix creation of corrupted reflogs for symrefs
+> I was curious what changed, so I found 792a3850fa (trace2: prevent
+> segfault on config collection with valueless true, 2025-01-10) and I
+> noticed this:
+>
+> -       redacted = redact_arg(value);
+> +       redacted = value ? redact_arg(value): NULL;
 
-This may be just me, but every time I see the above title, it read
-to me as if we are on purpose doing "creation of corrupted reflogs
-for symrefs", but we are failing to do so for some reason, and this
-commit is about improving the situation so that we can correctly
-create corrupted reflog entries for symbolic ref updates.
+Oh, I do not think I tweaked any of the code, other than fixing the
+new test that was not properly formatted.  Mostly I touched up the
+log message.
 
-And because the only sensible reason why we may on purpose do
-"creation of corrupted reflogs" I can think of is perhaps we prepare
-such corrupted thing to test how robust the production code is when
-seeing such corrupted data, I would expect to see a change to t/
-hierarchy.
-
-But the patch touches the code, not just tests, which makes me
-doubly puzzled.
-
-It happens every time I see this title and the change.  Perhaps drop
-"corrupted" from the title?
-
-> The commit 297c09eabb (refs: allow multiple reflog entries for the same
-> refname, 2024-12-16) added logic for reflogs to exit early in
-> `lock_ref_for_update()` after obtaining the required lock. This was
-
-I do not think the actor, who "exits early", is not "reflogs".
-Should we have "for reflogs" in the above, or perhaps move it to the
-end of the sentence (i.e. the required lock gets obtained because we
-want to do some operation "for reflogs")?
-
-> added as a performance optimization as it was assumed that no further
-> processing was required for reflog-only updates. However this was
-> incorrect since for a symref's reflog entry, the update needs to be
-> populated with the old_oid value. This is done right after the early
-> exit.
-
-"The early exit skipped this required work"?
-
-> This caused a bug in Git 2.48 in the files backend where target
-> references of symrefs being updated would create a corrupted reflog
-> entry for the symref since the old_oid is not populated. Undo the skip
-> in logic to fix this issue and also add a test to ensure that such an
-> issue doesn't arise in the future.
-
-OK.
-
-> The early exit was added as a performance optimization for reflog-only
-> updates, and it wasn't essential to the original changes. As such,
-> reverting it shouldn't cause any further issues.
-
-I am not sure if this is even worth saying, as you already said that
-the early return was done incorrectly assuming that the remainder of
-the function can be skipped as an optimization.  What may help
-readers is to state that all the rest of the code path that was
-skipped by a mistaken optimization is necessary and would not do
-anything unwanted.
-
-> Reported-by: Nika Layzell <nika@thelayzells.com>
-> Co-authored-by: Jeff King <peff@peff.net>
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-
-> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-> index e2316f1dd4..29045aad43 100755
-> --- a/t/t1400-update-ref.sh
-> +++ b/t/t1400-update-ref.sh
-> @@ -2068,4 +2068,13 @@ do
->  
->  done
->  
-> +test_expect_success 'update-ref should also create reflog for HEAD' '
-> +	test_commit to-rewind &&
-> +	git rev-parse HEAD >expect &&
-> +	head=$(git symbolic-ref HEAD) &&
-> +	git update-ref --create-reflog "$head" HEAD~ &&
-> +	git rev-parse HEAD@{1} >actual &&
-> +	test_cmp expect actual
-> +'
-
-Nice.  We could rename "head" to something more meaningful (like
-"current branch") but I can live with the above version.  It is much
-nicer than assuming on what branch we would be, which was what the
-previous iteration did.
-
-Thanks.
+Will touch it up.  Thanks for a careful reading.
