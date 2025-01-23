@@ -1,123 +1,115 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF731C3C1A
-	for <git@vger.kernel.org>; Wed, 22 Jan 2025 23:28:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F8F46B8
+	for <git@vger.kernel.org>; Thu, 23 Jan 2025 00:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737588526; cv=none; b=oHMm3W8f4vBCN9g6bbOEicoFmHJlPUBCB56fYmJYL8i8VYKLODaZks4n3B0UI6+Te6/SmflHauUtkRzmeL8BcZvwgL3yVbaVNmA7z0a3CMziNmndBO40Z70hGPCxzAFPT8BtaboxYSSV3tQUpJjK6F10an/bm4GvNCdx4jevSQY=
+	t=1737591373; cv=none; b=P/SF868PvIBZHUZRLpvZ6OC2D/a/H1IzNWEJiZA03guJnL1LJEiSZBTiDrhxk4J9AnVS8S3fTJUikVrY6q8A/LWzqxOGX77vh4jOuGxF89Y11BGzM5LR8UBRHgkyc1/SFlW6HCC7nYgUWCUli1Fb4g97TBeQ09rwrtrsdVqE/6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737588526; c=relaxed/simple;
-	bh=4vnad7+O44g1R9FbiOP3DUtdPIbwIwn1tZ6j5CMzfPA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gqdvz5T8nTWcXKR8qPoVZSb0C5RjrF35aRg/q6mk+hfi3cYGBc1XIUOFFCKtbJhpL0RQq1PNW0NCb1tnZyegIw20yYCFEK59rPz04PQ6ntv26qq6ciYVAv0dfFVAxwhfIfP7vz/kEQci/I8kbAlaZi8XLKOXEEagsKzUNz4JSuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=BFvTX5rk; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1737591373; c=relaxed/simple;
+	bh=zjhvasR/+XIxE6NDBmPO7cm6yR7/LtZbDqHMWP7gzyU=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=nqYNuFUJWsBBb19P6oHJYycrCW94Bxzj2ab2JVyzWejlzi6mdipcg3QPbmOjH5sECKYODQeFRdXjVfAtb4a8RSK3zcQ8u+rXDWPfMQ0+bB2eM0iorowyaLwhuc6nIos/gwHv59bbRzJwf5CXwCWDk264JG+TqD5ovC4Y/MOvoU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f4qUHcCZ; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="BFvTX5rk"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e46ac799015so449142276.0
-        for <git@vger.kernel.org>; Wed, 22 Jan 2025 15:28:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f4qUHcCZ"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4361b0ec57aso3476315e9.0
+        for <git@vger.kernel.org>; Wed, 22 Jan 2025 16:16:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737588523; x=1738193323; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4vnad7+O44g1R9FbiOP3DUtdPIbwIwn1tZ6j5CMzfPA=;
-        b=BFvTX5rk39IxGm5KwLfYqSgZ9SY74FUZX7IoI5j77tbyZIk+OXFe9D+mf1cf9Xxfp8
-         Dow6cnJQyXFmmpzAkAlKPhkkbXaJfptRkSaFLpliNpDCm14RYWjBx3PN99GO+29dyy9E
-         yFIbz2lnt5QNT2A4M0epOafXhcWKMUwMGGrDR+VMgMLIIFjkVmRlWZg0IJ2n/WpMHFTM
-         +Vk5yOQuQk2InLqSSs2oQ3tv4HYJrJW+Tn+BYjYipaAXI03w82hZnSIz3RFvx07QGwMk
-         sZKaYrFKgGZRe9p/h+HafdgEoclFBF3aJvpqwBNwSWfDWDY8fS6KFin/4X/fCjxr4Wyl
-         nnrQ==
+        d=gmail.com; s=20230601; t=1737591368; x=1738196168; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=LfIBtNHl0UPmK18wMAnckwi/ErdryzjMPnWqNWGNt7U=;
+        b=f4qUHcCZHf5r/vsMq4buGdKLPrSTNZzD5RhuCNrENPl++fSDXvRZajo8zfB+NiZ9Xx
+         k49PREfnsYfuQbGUakDdWz2SQi6YBP0U8hiVuhOm+Yp4q32bmiEgPkTjP4xaBJ8+KL2i
+         bzLQiBVhP7VGQqeAhtz3znItEETMHxoQhzV4RbFcRs7x3Yfymqm9fghm7sEcqYn4QMkh
+         EhY6A4FN172fzTXczme5AAuL53k5OVt5iiNLQ4YXT5jpSzFRorheTidgGOK7HYCdAMxx
+         Ybd422nzY/AtOY6oLiB8igHDhfods1gsrvJBQ7D2+9o32F9CnMJrNhm9zZ8RrlActZD7
+         NWEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737588523; x=1738193323;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4vnad7+O44g1R9FbiOP3DUtdPIbwIwn1tZ6j5CMzfPA=;
-        b=bmzM1eGIPV3rSi0I81UBxO5aiex7LnJLtgjK1J6EQS4ECy+8TpGh36VoiLZMlcvIbC
-         gAIGyw3s6TrF0ZW/s4+SPmowdtnZmjil1bbvyorqS2K+8Km40fE0CywfJiyUHLVD9n+b
-         eBK10vtxsa44wxWJsHSk0N9jyo1ns1X9vpAoES0WLJE26QrZ+PW4fLNAswIZAaFSdo1Z
-         ggKZ1JHbVhAhCytWqtueN8QTKI3L84hNzo3u7It1gsncxYsRV9WD2/vZ5m8NVmH7Erj4
-         OgH460OfWRyMS04M1cjLLrTiktWJlzW00+LOlCWXgeYyGJtLqwifbaevhZsdb3ibCOuW
-         CwMA==
-X-Forwarded-Encrypted: i=1; AJvYcCWY2tiMrJO5exHpTlb1AB+3GyAW22MiCPaE943J0OiPX2hxkjaiG1LHzXDYixXZe4/xHu0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz08Z5u3KXemczFWHJ/MLFNol4K/IIYnRVbsMWIMJ6mktqk8NqL
-	2LPVjQAEpIk4I/eJajvDRkmW50kRbtufuWhxOMX8S2cj9AegrwILbT0YBkW8/E8=
-X-Gm-Gg: ASbGncspYuDQ/TYpcrHKRnPQhTyV1VbPSILEYgGI7HMbS1Ns6Z813odnmHI6T03DpjN
-	5ZqSJONhLJVG04DMpbUTQwKWiZ7621rMVocwx1rsi2MDgxjpaim2d1lpjrLwJ0nsPuas4LcWAN7
-	QeXNpLJsYHjkCgsgoX8chsQxcUXTZTh+mgAqhOCLOzqRcqqt97Mf2D0uB0k9J9DmlMi/4819ie3
-	rGJhCIxARVp0dI2mELD1L8f1OLEB8SlaFO6hn1QxP5iFPLqJX2+bQRenevFk8dCvlCOQiO91mLt
-	x7nAMn6wYNRyaEHiirsgFS0nMgifINERzpTFaqHWng==
-X-Google-Smtp-Source: AGHT+IFLsw7TgCvI211RoyjFOmXd1/GCCks35vnma2ROpKmyvCVm5WIAR47QEKXG1/2EOi9MVGUYiA==
-X-Received: by 2002:a05:690c:4090:b0:6ef:a4bc:8bc9 with SMTP id 00721157ae682-6f6eb6b02ddmr130644477b3.21.1737588518680;
-        Wed, 22 Jan 2025 15:28:38 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f6e66fd850sm21798107b3.117.2025.01.22.15.28.38
+        d=1e100.net; s=20230601; t=1737591368; x=1738196168;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LfIBtNHl0UPmK18wMAnckwi/ErdryzjMPnWqNWGNt7U=;
+        b=W1Xn5Pj26Xle8O45keOyPBQiD8OjUUmaSMxFyZihpgsCKjZC9wZrtk1WZwttFGM0GH
+         CNIhbuokBraw29LSaLS/txZXPLlZfLhKWWGGoPoiV/Zqkh7DXIX8+cmmg+V/2Ow9jgnL
+         IJGoMgEVikrB24qyFUjwrkAOb8uWOR6ndG748fUtIWwO1pRVS51kUVe/QhK11tdpENsj
+         FfAKgixrVfAM+Z9qI45c2OvLxP4+LwmtNGyOuVvYYNki1mnFJ+63be+DQOXc5hycaZTk
+         7EnKdRjzomBPNayhYxUtimQvZEaE7nkmk/P3rDad7b+VzvWEK0K50sDZiKvYSRfZJvGk
+         /j3g==
+X-Gm-Message-State: AOJu0YwZ2uWCEX9bLe0hLRp8z++kmf0sJM+cVkSXbX/7pi3p2oVknm3p
+	dx4Jfyp5nLKCGvjFuS08KlSMRklVz0LeNN5wApr1wm77qfts12rLPtZc4Q==
+X-Gm-Gg: ASbGncsVnGQV3ZyBfVfqKgpWY1qapv/cekWrgn5A3z9yAkQ2BvBO9ci5qglnIP1x7Rh
+	NtR6fNGxWx8qO4bOYKn5ZbliAKZcR/6geQS4Z6Vv7NJeddZYF5QoXOy74ylBauQvijJY/TQU6eD
+	qjEOBYghjwK3a1bFane0wMFWISJOlzz4szt9mXvkhCI+wiv5YAvXc0JmHnyyaTSX6JxC7uonrd1
+	+mf0szBsvkIEbNZ7EIdhL4D+CEXpc7/EWEm8L9bxvosx8Pypdlaj1XnCdcdda+ABDp7rBk=
+X-Google-Smtp-Source: AGHT+IFH0zf/uCxu4ua/Y6yMLqkBUUwE3Jh1bE05HZaWRI9yRlv7SC/2pGQj9CHN0pMlM7iEtMUFUg==
+X-Received: by 2002:a05:600c:1c16:b0:435:32e:8270 with SMTP id 5b1f17b1804b1-438913de562mr232232065e9.14.1737591368026;
+        Wed, 22 Jan 2025 16:16:08 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438b319e2e4sm42086605e9.9.2025.01.22.16.16.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Jan 2025 15:28:38 -0800 (PST)
-Date: Wed, 22 Jan 2025 18:28:37 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
-	peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
-	jonathantanmy@google.com, karthik nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 0/8] pack-objects: Create an alternative name hash
- algorithm (recreated)
-Message-ID: <Z5F/JdnSAYqUBJ8s@nand.local>
-References: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
- <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
- <35026c72-f9b4-40a3-b528-1c28b1238972@gmail.com>
+        Wed, 22 Jan 2025 16:16:07 -0800 (PST)
+Message-Id: <pull.1854.git.1737591366672.gitgitgadget@gmail.com>
+From: "Andrew Carter via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 23 Jan 2025 00:16:06 +0000
+Subject: [PATCH] docs: indicate http.sslCertType and sslKeyType
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <35026c72-f9b4-40a3-b528-1c28b1238972@gmail.com>
+To: git@vger.kernel.org
+Cc: Andrew Carter <andrew@emailcarter.com>,
+    Andrew Carter <andrew@emailcarter.com>
 
-On Tue, Jan 21, 2025 at 03:21:15PM -0500, Derrick Stolee wrote:
-> This series has been at this version for a while. I'm pretty sure that this
-> is the most promising direction we have at the moment for improving delta
-> compression for many users.
->
-> The only decision point I think remains is whether or not to include the last
-> patch (--name-hash-version=3) which I would be happy either way.
+From: Andrew Carter <andrew@emailcarter.com>
 
-Sorry that I punted on reviewing this for way longer than I should have,
-and thanks for bearing with me.
+These useful config options were added in 0a01d41ee4c but lacked
+documentation.
 
-I took a close look at this latest round of patches, skipping over the
-parts that I remembered from previous rounds. My memory is far from
-perfect, so I may have commented on things that we've already discussed,
-in which case I apologize :-).
+Signed-off-by: Andrew Carter <andrew@emailcarter.com>
+---
+    document http.sslCertType and sslKeyType
 
-I left a handful of comments on the patches themselves, but they are
-mostly cosmetic. My idle thought before having a chance to review this
-series is that the --name-hash-version option was handing over too much
-control to the user without clear instruction on when to use one version
-over the other.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1854%2Fplentydone%2Fcurl-cert-options-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1854/plentydone/curl-cert-options-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1854
 
-After reviewing, I think the idea of having a versioned name-hash is a
-good one, and I agree that it'll make the eventual .bitmap changes much
-easier to implement.
+ Documentation/config/http.txt | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-So I think in that sense exposing a `--name-hash-version` is the right
-thing to do. My feeling is that we should probably just add Jonathan's
-"v2", since it appears to be a improvement in nearly all cases against
-v1, and more often an improvement than not when compared to v3. In that
-world, just introducing v2 leaves us with less code to maintain and
-fewer, clearer options presented to users.
+diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+index a14371b5c96..cd39e182527 100644
+--- a/Documentation/config/http.txt
++++ b/Documentation/config/http.txt
+@@ -216,6 +216,18 @@ http.sslBackend::
+ 	This option is ignored if cURL lacks support for choosing the SSL
+ 	backend at runtime.
+ 
++http.sslCertType::
++	Type of client certificate used when fetching or pushing over HTTPS.
++	(e.g. "PEM", "DER", or "P12"). See also libcurl `CURLOPT_SSLCERTTYPE`
++	Can be overridden by the `GIT_SSL_CERT_TYPE` environment variable.
++
++http.sslKeyType::
++	Type of client private key used when fetching or pushing over HTTPS.
++	(e.g. "PEM", "DER", or "ENG"). Particularly useful when set to "ENG"
++	for authenticating with PKCS#11 tokens. See also libcurl
++	`CURLOPT_SSLCERTTYPE` . Can be overridden by the `GIT_SSL_KEY_TYPE`
++	environment variable.
++
+ http.schannelCheckRevoke::
+ 	Used to enforce or disable certificate revocation checks in cURL
+ 	when http.sslBackend is set to "schannel". Defaults to `true` if
 
-If you feel strongly about keeping v3, I am definitely open to changing
-my mind here, but my feeling on first blush of this most recent round is
-that I would probably just include v2.
-
-I'm excited about seeing these patches land, and I am glad that someone
-is working on them!
-
-Thanks,
-Taylor
+base-commit: 4e746b1a31f9f0036032b6f94279cf16fb363203
+-- 
+gitgitgadget
