@@ -1,101 +1,99 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from aib29agh124.zrh1.oracleemaildelivery.com (aib29agh124.zrh1.oracleemaildelivery.com [192.29.178.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94FDF3DBB6
-	for <git@vger.kernel.org>; Thu, 23 Jan 2025 21:15:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DE813D520
+	for <git@vger.kernel.org>; Thu, 23 Jan 2025 21:48:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737666927; cv=none; b=kmY/904UwJzs0eqoIi73mWEdERlFK5Mbi/TNk1yiHa2casf6S2osgB9LJbneIp/fB6DcwCTL0N0jlwvCLl+j4vhj+VAcEeVOMRBlkUimacP5O06FHIWLc97aXPSTBOOXGUWHmHNv5hwRn1m7MP9eh1jkaEqRCclOwhFjGzojSgo=
+	t=1737668891; cv=none; b=OGV5Nh9Nl0d50J8QKastvNUAT8S3mBnm1D/LaHemOYLIQdLbZe6ELKI32kpzV+oo6lfsGK++mTPyd7TqhbRPVx1Ozhl+s9noPHH6LbE1O4cTfIZSIAu7H/dM90+DNrQG82QCP5Hfdmvb+g7JNKz1xcQJVYCk+GjTiWLsEYgq5Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737666927; c=relaxed/simple;
-	bh=AVnvAq6Gw8SCm7Q+0D62OaGv1LwnXgMfnOhCxT2ADJg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ok1dc8SOt9EU6+uV53SkvsPm02bQ1LVxN+v+ngiJ0z8z0ytTAvvlMOr5Txcj0eCGJ1uQo7K6I4SNPuFhMtaeU3xJd13ONsJzmA0bC7zSFV9jVXjDoUl+jBxKRv4g3xADhYPbxit+k9IHGsNhuIjl2nBNf6t9haO+Nku3u0EpFmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iU2xuwA+; arc=none smtp.client-ip=209.85.218.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737668891; c=relaxed/simple;
+	bh=9C3ewpPeJlH4VlTQsJGLdXm6Xj+HKaymLJcSxueJwLo=;
+	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
+	 References:In-reply-to; b=BZSIGxJ1AO+n5ODsdyzLiFX71CjzF6BMTDob6NkWU9U3ac3HxYBNTmveifs6OknhQYgk1ILWZJTduiw2jpsq3WVL9WUhDjHiW4+cvvhv0dysy8ZFelVsTKEz3ncw+pbmQwqO+blrEHEL2PA6owywQ/dWXNiHNv/8H489M5+hhTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=VwBh/+K8; arc=none smtp.client-ip=192.29.178.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iU2xuwA+"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ab322ecd75dso289356866b.0
-        for <git@vger.kernel.org>; Thu, 23 Jan 2025 13:15:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737666924; x=1738271724; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9Y0SJknFuqx3e3W+PGT84H2N3bevyOJ1FusPSX5KwdM=;
-        b=iU2xuwA+Hy+aENufTcKsEqab/1+E5HsxirDgQq6s2aypU9yNrxdOxjoX+MaHAZznhn
-         Aq7U9gEY9sX/qc0wMNpjpFtQG9LnSB6ZiBO0aXcZgHk3XM/wN0mFtKuO/jXd8x/8JYaM
-         vO6euf/N+gthsZcdYSEX5Qizxz2BoU5f1FZcfJKluI3GReeynQl1gvxnfnLfEAmTRaXj
-         Ue00ualitfXxkaeafYKBKAjisd7Z2rj1hfdF1K4tXoJfEcUps0DahCjjWfDMxriAsoXO
-         qID2GuWZa49S1TN6ZJGHTXihjpYsdtiE/bcboOQoRWqRU8DRBPGu8g5KQWLxrq3tsLeQ
-         ekDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737666924; x=1738271724;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9Y0SJknFuqx3e3W+PGT84H2N3bevyOJ1FusPSX5KwdM=;
-        b=Ti5RSO8pC6hA5RmXBOXIU2rbfEeejtEMQ/NOUZAZEuEauGmjSXxPZfiQWX/SGcc86Y
-         4jOwpx1RLaz2QxngeoANKk7scdDrB+nWRu4LHsz0FEvqmsmebwX+gZTO3SEJduHiCZQ1
-         YGvXAzpBITQJjEruY9GaINXwQan/APTWJrRxBV/bulgx9gwZwpYqiq0n/kt9rK12wFRK
-         3QfmJDPBINVla8wjLLGyGxRwTDX1EIFLr8wri+wTPT6k17uCKGur2jHx6tiWm3n+hCKO
-         YLmx8kpnKnkXR9Nl+B5wiXh2kkuoRROY3YniNjdB9ZkHBUHPtBtcTFTOcm/YWyc6Emeo
-         aERw==
-X-Forwarded-Encrypted: i=1; AJvYcCX5uRJ8w2U/wn7VERYz+AWGvlBwImvFVuNTWm+k/cBVW89/HlkIMLT8gTp/Be2vIVeb3nQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwtXsGKIPjHy1m3wUT3aZ1k2NYAHJWqDh1WaTEX4BH0rEUYPpE8
-	qsyXJ8nYPEXoL6Ypu+r48okEXjMA2i9rXM/rP5bSni2QD/a7b3zo71Ixhlu2SRKNpnt2QFEErwW
-	adzR/JuIVe5M+TPLMZFrP2fcpNnwCuc5c
-X-Gm-Gg: ASbGnctehltTCue0p9D1YoMbkk/811lN4S7CK3q53HGghdwiPApopqnSqpFZ7sh0DRd
-	dmeHWhtAcCG8wWqDAyRM2YGw62AcSXJI9KX53viqMBJG/caRsQn6rdMev1FCHcQ==
-X-Google-Smtp-Source: AGHT+IGJW2BBWer76R0K9ZcaA+74N1T+wFfdkJ0LMs2KBSYCi3QLw7kkwj6psDRxMDFpd/wtcsfgNmphMTE0EAI2gPY=
-X-Received: by 2002:a17:907:988:b0:aab:a02c:764e with SMTP id
- a640c23a62f3a-ab67460161dmr79079066b.14.1737666923655; Thu, 23 Jan 2025
- 13:15:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="VwBh/+K8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=cvCdvsjXrHnvVHk1aDTtCVoMgL9uucI2eWWQ/ghqm7E=;
+ b=VwBh/+K8APm2ZLL49Eox4Umb3MPuTwV7Ni4XltG69sbcs7rfyNw9Vmc+q2QLKrESJLfeDOB+QbXi
+   unZLBBz9z9DK3mfeqsNWxZrQL/wYaTNzHhLHQC2hWn32YZnjFWtBF7q79VKyLJacns24HVCGeTxU
+   W7UjUTaMpfYeOs2f/yyeKV3z/x7IBx1cmGdscllkB1p1VshGBVh/baPByzeh6kUs1CeqJhxAE+72
+   xkOvzXWUZ3HhrIGPE4nlXveJmnn6QSqpEN65Fp/aui/mfGZgIkNJR4g/NQixgUXWISk3DRsHzYPd
+   v7PIBFjmVEghHwi+e/R4eu64n9TLn01EkJVodw==
+Received: by omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
+ 2024))
+ with ESMTPS id <0SQK005EI9NJ7F80@omta-ad1-fd2-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Thu, 23 Jan 2025 21:42:55 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <pull.1814.git.1730937889182.gitgitgadget@gmail.com>
- <pull.1814.v2.git.1736494100622.gitgitgadget@gmail.com> <c1398676-ddd7-c161-e114-2249316b5311@gmx.de>
- <xmqqfrlawwd9.fsf@gitster.g> <xmqqbjvyww3j.fsf@gitster.g> <CALnO6CDH1aQrq0tcvr4rEGukksYv5bJ9W4icqBUC2Z3AyixRUw@mail.gmail.com>
- <xmqqr04ts916.fsf@gitster.g>
-In-Reply-To: <xmqqr04ts916.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Thu, 23 Jan 2025 16:15:12 -0500
-X-Gm-Features: AWEUYZkF8cbBKJswyJ5jHAi02dfYojEgnvt_itUC8JGFi7VFxG9IRPR1HI764r8
-Message-ID: <CALnO6CAcv+544jRdp9VO1d38dvHX6MNfu4VLKenjKZCsCaf14Q@mail.gmail.com>
-Subject: Re: [PATCH v2] trace2: prevent segfault on config collection where no
- value specified
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Adam Murray via GitGitGadget <gitgitgadget@gmail.com>, Adam Murray <ad@canva.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Thu, 23 Jan 2025 22:42:23 +0100
+Message-id: <D79S38LX7NLS.34MN1BWV0HVJ0@ferdinandy.com>
+Subject: Re: [PATCH] fetch set_head: fix non-mirror remotes in bare repositories
+Cc: <git@vger.kernel.org>
+To: "Junio C Hamano" <gitster@pobox.com>, "Christian Hesse" <mail@eworm.de>,
+ "Christian Hesse" <list@eworm.de>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+References: <20250111202628.0e5894e4@leda.eworm.net>
+ <20250112165125.130400-1-bence@ferdinandy.com> <xmqqr04tqm86.fsf@gitster.g>
+In-reply-to: <xmqqr04tqm86.fsf@gitster.g>
+Reporting-Meta:
+ AAGqQ6FpNX794oUyaAb/ZHrG1noQmZEJ4+k86DIwU2L3cqSedU8AEEt1TY4LV+WR
+ CFYt9uZ6r+AFI2WAGf5m+jrwk7fIIB6HFwOjsdqzO411gEvfzm8DXUqzrbaQe3zU
+ crqpMhFKS5I5Allx05MyTbDXI50TrwQPJ1Ny22LByOGM3gabHm7W4C0UvNAKx70w
+ /x4OCB4WTt4eAxmHGnhXoUlNng5PL+U6RLZE87jF7/21YLW72Hna8ySLt2ny2pry
+ 9AAxNCjY7lc9DzoTivahVs1QqCJC7JFT+sFY111QBGVs+sW4BEQX9EmKbvmBpzUK
+ dBLyJvnXfKa/uWXwmptgDYIJiXKt6BADJALFXqqlG/CUU1ErC1TSroEg9I1GDpen
+ XNeUlbneU5wckjwBpVyVEz3UINuz11caj/poJbARuRd8S9hlhn8be0F79Y94p51Y
+ vmLIVMZffiqBdg+ltiQ2Csa6J71jUOim7vXuJhcv2YP6846F8tI/MIyS
 
-On Thu, Jan 23, 2025 at 1:02=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+
+On Thu Jan 23, 2025 at 22:00, Junio C Hamano <gitster@pobox.com> wrote:
+> Bence Ferdinandy <bence@ferdinandy.com> writes:
 >
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+>> In b1b713f722 (fetch set_head: handle mirrored bare repositories,
+>> 2024-11-22) it was implicitly assumed that all remotes will be mirrors
+>> in a bare repository, thus fetching a non-mirrored remote could lead to
+>> HEAD pointing to a non-existent reference. Make sure we only overwrite
+>> HEAD if we are in a bare repository and fetching from a mirror.
+>> Otherwise, proceed as normally, and create
+>> refs/remotes/<nonmirrorremote>/HEAD instead.
+>>
+>> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+>> Reported-by: Christian Hesse <list@eworm.de>
 >
-> > I was curious what changed, so I found 792a3850fa (trace2: prevent
-> > segfault on config collection with valueless true, 2025-01-10) and I
-> > noticed this:
-> >
-> > -       redacted =3D redact_arg(value);
-> > +       redacted =3D value ? redact_arg(value): NULL;
+> These should be chronological; somebody reports an issue, the patch
+> gets written, and finally it is sent out with a Sign-off to certify
+> that the patch is not a stolen property.
+
+Makes sense, I'll send a v2 in that case.
+
 >
-> Oh, I do not think I tweaked any of the code, other than fixing the
-> new test that was not properly formatted.  Mostly I touched up the
-> log message.
+>> ---
+>>  builtin/fetch.c   | 15 ++++++++-------
+>>  t/t5505-remote.sh | 10 ++++++++++
+>>  t/t5510-fetch.sh  | 13 +++++++++++++
+>>  3 files changed, 31 insertions(+), 7 deletions(-)
+>
+> We haven't heard from Chritian; has this been tested OK?
 
-I could have been clearer=E2=80=94I think this was in the original. I just
-happened to notice it because I was curious about what touch-ups you
-performed :)
+To the extent of the tests I've added, but I'm not aware of anybody else,
+especially Christian trying it out.
 
+>
+> What the patch does does look sensible.  Thanks.
 
-
---=20
-D. Ben Knoble
+Thanks,
+Bence
