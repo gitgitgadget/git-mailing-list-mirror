@@ -1,68 +1,68 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2024A1581E1
-	for <git@vger.kernel.org>; Thu, 23 Jan 2025 17:34:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 050F215CD41
+	for <git@vger.kernel.org>; Thu, 23 Jan 2025 17:34:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737653674; cv=none; b=L5h9WxepUGTRzOMG9qUm5vNWaViWlHhitMRD/XHbIOLPvNb8Jy+6XFSswqJKObTnDIx/q0ONVxK+6wNbZBTPbpiatmzMhYhx3EbddFHGIwoQGKTzi3HVpZPhO0i/p5sZJilKsKzivvggpZxFdJdCq/kNkBnKX+9pk8tEzF+8QaA=
+	t=1737653677; cv=none; b=iwx/Y4fsiB6sK9DlVb2DMSydLGjszDxM7f2DJu4KA2MJQO6rquXzwBmKY4spIVB0CiyGUpYmiKWw753Kz+5VR2Xv9/ODkkzWHn7NgfzkIm7XEjfX0g83mJBbT/0OXdWaDR4ZrDLcR6RgSfd3Z9hp1vXs+0+FaifvEDAKxPw4ldk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737653674; c=relaxed/simple;
-	bh=tKuokJvo/WLcpKuTv5D85uir6Kce7cwhYiN7194yR2A=;
+	s=arc-20240116; t=1737653677; c=relaxed/simple;
+	bh=Q6l+NBYTp6zJ75VFRnmoiRxGhf5iSth8xzw3xRCUxd4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OVMaJPxMPexJYudiWXlR9o06P2xNvQbNtRx7qz0TFl4/jbw3lfuOs9Vdj7+YVBby6BGTDZeflApiqdexbhdVKI+n5GcZU0tjlN656VJzvPFcmk8Rw87NsefJpIV+UktvvCeQmpXH7d71L1oUfVyK6ElAHqDzWMTo2ALG4J2YTB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=2wi79pxU; arc=none smtp.client-ip=209.85.219.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=l6mgzcb87vjsxJD67AW7kmRFZKIeh9TnHiFZ9hmrU+BtnVoi/qKzeOc6YQSCMorQkkDLgP7og8pAgrYvbg7gBlIiMGX1IvvwLt1TFZJ6IJ85aikQ4m7PaQ8BMyW28J6tMHv1m/wp8grsNxun1uE+5RmFYueGFB0IKGQEOmuUoyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=aiYx6m/y; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="2wi79pxU"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e573136107bso2013470276.3
-        for <git@vger.kernel.org>; Thu, 23 Jan 2025 09:34:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="aiYx6m/y"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e5447fae695so2150029276.2
+        for <git@vger.kernel.org>; Thu, 23 Jan 2025 09:34:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737653672; x=1738258472; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737653674; x=1738258474; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yoym53bWBwApkNdptCke/Beu/+I3YNdcEMeZRNHNY5Q=;
-        b=2wi79pxUfBuvyEIsKFQbqTygP6Sp1TM8zjfGsOrYWFXDLPDEdl/DYkkgHx0CMLhBuh
-         mGTrM1c2yXmK819m6VxLXmsUXntWyN+VGaYx9dH7NdVrfJqYg0Yea6AZuE3LLAzwqWTg
-         rWu56FuJFRBGCBgKwpM40P+7wYlT1Ic+73BM0ygWUo0h2sn2P1WQHxcfLFgnnlOdnEtC
-         b/cw8iGN1PL+oqpUV/xi/aWJYso5phGXrIMe7773OlJ76UP4THVX2z5EESbkiB+cntpb
-         GbzYjt7UulcZq5cfpVU6n6FesZ/BVARV00vXV7UUTyjnkANAuR06GcSvYHd8P2A5iudj
-         FiHA==
+        bh=gT7XGZHCsVln4HE+Q6fBXpLgxkC3FR/cb3zgeiUKGbA=;
+        b=aiYx6m/yNaH7bOzzDKs+J8xL/CuHeKgumayPXNEb/73mwcWH/eWGMU0Wqw6IRmJF+M
+         pgWLYru3UpE6dMPq2wjjBdbtos7qgMFd5zICFJsmYouUAkjCOms4RXQu1kUOFhG402FH
+         GinUAGD/MFMmPriWO8aYCgN7abJ3LJtQL/MfokgQweSQVxKvWIs6fZExgOjemKoI5PLc
+         cIJ/KwGRV2j6G2rVQ7FD7tuBa/4FJWCvddzIvbZaZJ7FvMMJzZvw58DkDIC5zcJGobg9
+         4leV2uyq7rcGmG1CaJM3bE87exk4296Nh5qNQQY/6wOA09SOBBPFNLrk3cYePYwMh5V3
+         +xFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737653672; x=1738258472;
+        d=1e100.net; s=20230601; t=1737653674; x=1738258474;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yoym53bWBwApkNdptCke/Beu/+I3YNdcEMeZRNHNY5Q=;
-        b=o6Y3JG/b+/hjG1P1Ome1kPI/U5Dx/7WrE5Y5kkDFHf5DA/0ofdoKaucpreXd7rzyyU
-         lPNsYW93iAL3B3deVqJnDLwwKlBsrRv2osSIVTbuPHJTX21elGQXiAmuS+A54rQaNc/A
-         oGNFKripT2prPuumkaDt+5GnyQ0oP+xNKdszbbev6rqfKeGeoM/La6TeKzmxroTO4mT5
-         ixKpSBq2vW1eNfVo8AH8SLgy5ocql/HAmhXsF/XfprjwnEkdaoBn22Lqj0F4ukoKzzmO
-         ioQ5E6+Zrj5pRP8wsKltXMSy24JFCCS7JLts40GmGFOfjPBwCXq4nZzji7W99FRHgJyR
-         Bi0g==
-X-Gm-Message-State: AOJu0YwBf54fCzquC6gxG6+6D2/Vgd4/tZu+HJDq2a4+AajsdWKpUwPT
-	lkng+ARQLs+CZ8r5onRoXqvxE7FTWBV7uhBa0hP9cIGS5WGXlSwjlGeTqVIFHq9yIB79/mB+SWa
-	Ms3k=
-X-Gm-Gg: ASbGnctU9/JkbBY21QpiVFR8rvmUqpSCmYS+Re9oHT0nOJcDR1Q8Ys17bS6MmWfwtNl
-	MtW6zel15pK1gmEaUUoyiNpfoJxTzXqrLiZQxc2/Sa0r0hu2pLwVQftyJFHs7PLmlzibkj2J61D
-	MDkeeT8tN7cOxor1BKDik075duk0B2sdhms3grurioc2TxflN/sqFidr47q19mRE8Ww01H3VwpZ
-	Qt6h8Uergah0zIHCSKQVUkiiHv4HthsV5XCnJLfqrvPZMNkREw07Gsm3fsU/3RxkLKvQaOp8i3H
-	to3Csn3OfTZRUnHiIQRckF9fQgdqNRLJhp5t7QPwQX0VInRN5rnz
-X-Google-Smtp-Source: AGHT+IFnwGFCkFn2XUEDC56BhtTWMSGuTd0kKDsXkLTcaK2Zei/T8kxFaaI2HaZGPNtYWBMjdjrw0g==
-X-Received: by 2002:a05:690c:4c13:b0:6ef:8e0b:8c63 with SMTP id 00721157ae682-6f6eb677dddmr205259517b3.14.1737653671595;
-        Thu, 23 Jan 2025 09:34:31 -0800 (PST)
+        bh=gT7XGZHCsVln4HE+Q6fBXpLgxkC3FR/cb3zgeiUKGbA=;
+        b=Rcgj43BedjFJkSlJQuy8K0u2rTgC32zy38iCwIarhPk5Oj09/wFFcbWG95AlbiJMFO
+         gWo5TNb2oYZ8022gIWtCl3sAEz/764rqyPrK7sUZrmbA5ktmZuoVkg2cdzG6CXrZLVVI
+         21U7Rr/9toIfPaqPR71xeo7h1+/tvEKT+WgFv9AFUACrCS+G/mXHoFrc0LV2lZ9jlBO4
+         4xbiDN+fovmOQ26OUIuEJH5hxajZAW4W/ilwbSb4qvq2ruffjTZuZUaG6Uq3fmxphsPx
+         DAW1ncPWa8952t3RpEwwkn9c+W8wiZHT5R1Bmj9vSoRTHTCQbvVktti0yQck0iE34WUN
+         L4RQ==
+X-Gm-Message-State: AOJu0Yy4DiAbmMZR/8Et95IxyvRe69cEdTRPe6TrDSZw9jF4Vdt6aoEY
+	u8lcOt4gdC6RbXQ4FhJM41FS6U4DjuiH84krUpv++4W2VQHy4d8bos9YZY/Z2m5FMTK7ZJnSsA9
+	+8sQ=
+X-Gm-Gg: ASbGncufBErt9JoOJM2pyYJPnpmfPZaFvh3KEnFha78m4h0SIY07mPeCokLMBhwtdnE
+	oisnHFLuOsiqNPrKZBMRQFFd0z6eMSUxKrvkQL+Wap+ytIl7/392ZMpnFe+SdU8dO5qmkH1YrnU
+	QlKUCv8O3Ch09TGVmcfxjpEpttJoW/eYU0fWqgEQVuCAeZnnBAgSL7lgdI+QzmwD1wj5nTcy4Gi
+	PJK+W4zRSLWgFmR7OzLz9KNcClGy83QZcXOw1kRfz+5UNGbBslI8ngttnkoESlz2gT9jAk29mdF
+	eBV3z3uRw12cZ7EMWabhnRQM6ypJ3hAnN/fcVQw6pYfJRZ9R8E46
+X-Google-Smtp-Source: AGHT+IEDwQijrDq++X85oZP9e7uOLlMi/huBO7q1eq9Uqphj57NissZ/B/xCLZDfGBYtq84GeSEwaw==
+X-Received: by 2002:a05:690c:9692:b0:6f2:8e62:d8b2 with SMTP id 00721157ae682-6f6eb922360mr201850107b3.29.1737653674669;
+        Thu, 23 Jan 2025 09:34:34 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f75787710dsm487167b3.4.2025.01.23.09.34.30
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f757a33e41sm439397b3.115.2025.01.23.09.34.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2025 09:34:30 -0800 (PST)
-Date: Thu, 23 Jan 2025 12:34:29 -0500
+        Thu, 23 Jan 2025 09:34:34 -0800 (PST)
+Date: Thu, 23 Jan 2025 12:34:33 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v4 4/8] hash.h: introduce `unsafe_hash_algo()`
-Message-ID: <ae01f1f4274baa81d632f1075c236a6676a9476d.1737653640.git.me@ttaylorr.com>
+Subject: [PATCH v4 5/8] csum-file.c: use unsafe_hash_algo()
+Message-ID: <64a850c77ae23b92698acf89761f0e7513b6d35e.1737653640.git.me@ttaylorr.com>
 References: <cover.1732130001.git.me@ttaylorr.com>
  <cover.1737653640.git.me@ttaylorr.com>
 Precedence: bulk
@@ -75,150 +75,98 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1737653640.git.me@ttaylorr.com>
 
-In 253ed9ecff (hash.h: scaffolding for _unsafe hashing variants,
-2024-09-26), we introduced "unsafe" variants of the SHA-1 hashing
-functions by introducing new functions like "unsafe_init_fn()" and so
-on.
+Instead of calling the unsafe_ hash function variants directly, make use
+of the shared 'algop' pointer by initializing it to:
 
-This approach has a major shortcoming that callers must remember to
-consistently use one variant or the other. Failing to consistently use
-(or not use) the unsafe variants can lead to crashes at best, or subtle
-memory corruption issues at worst.
+    f->algop = unsafe_hash_algo(the_hash_algo);
 
-In the hashfile API, this isn't difficult to achieve, but verifying that
-all callers consistently use the unsafe variants is somewhat of a chore
-given how spread out all of the callers are. In the sha1 and sha1-unsafe
-test helpers, all of the calls to various hash functions are guarded by
-an "if (unsafe)" conditional, which is repetitive and cumbersome.
+, thus making all calls use the unsafe variants directly.
 
-Address these issues by introducing a new pattern whereby one
-'git_hash_algo' can return a pointer to another 'git_hash_algo' that
-represents the unsafe version of itself. So instead of having something
-like:
-
-    if (unsafe)
-      the_hash_algo->init_fn(...);
-      the_hash_algo->update_fn(...);
-      the_hash_algo->final_fn(...);
-    else
-      the_hash_algo->unsafe_init_fn(...);
-      the_hash_algo->unsafe_update_fn(...);
-      the_hash_algo->unsafe_final_fn(...);
-
-we can instead write:
-
-    struct git_hash_algo *algop = the_hash_algo;
-    if (unsafe)
-      algop = unsafe_hash_algo(algop);
-
-    algop->init_fn(...);
-    algop->update_fn(...);
-    algop->final_fn(...);
-
-This removes the existing shortcoming by no longer forcing the caller to
-"remember" which variant of the hash functions it wants to call, only to
-hold onto a 'struct git_hash_algo' pointer that is initialized once.
-
-Similarly, while there currently is still a way to "mix" safe and unsafe
-functions, this too will go away after subsequent commits remove all
-direct calls to the unsafe_ variants.
-
-Note that hash_algo_by_ptr() needs an adjustment to allow passing in the
-unsafe variant of a hash function. All other query functions on the
-hash_algos array will continue to return the safe variants of any
-function.
-
-Suggested-by: Jeff King <peff@peff.net>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- hash.h        | 13 ++++++++++++-
- object-file.c | 26 ++++++++++++++++++++++++++
- 2 files changed, 38 insertions(+), 1 deletion(-)
+ csum-file.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/hash.h b/hash.h
-index 756166ce5e8..0bf63cedfa4 100644
---- a/hash.h
-+++ b/hash.h
-@@ -305,6 +305,9 @@ struct git_hash_algo {
+diff --git a/csum-file.c b/csum-file.c
+index 7a71121e340..ebffc80ef71 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -50,7 +50,7 @@ void hashflush(struct hashfile *f)
  
- 	/* The all-zeros OID. */
- 	const struct object_id *null_oid;
-+
-+	/* The unsafe variant of this hash function, if one exists. */
-+	const struct git_hash_algo *unsafe;
- };
- extern const struct git_hash_algo hash_algos[GIT_HASH_NALGOS];
+ 	if (offset) {
+ 		if (!f->skip_hash)
+-			f->algop->unsafe_update_fn(&f->ctx, f->buffer, offset);
++			f->algop->update_fn(&f->ctx, f->buffer, offset);
+ 		flush(f, f->buffer, offset);
+ 		f->offset = 0;
+ 	}
+@@ -73,7 +73,7 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
+ 	if (f->skip_hash)
+ 		hashclr(f->buffer, f->algop);
+ 	else
+-		f->algop->unsafe_final_fn(f->buffer, &f->ctx);
++		f->algop->final_fn(f->buffer, &f->ctx);
  
-@@ -320,9 +323,17 @@ int hash_algo_by_length(int len);
- /* Identical, except for a pointer to struct git_hash_algo. */
- static inline int hash_algo_by_ptr(const struct git_hash_algo *p)
+ 	if (result)
+ 		hashcpy(result, f->buffer, f->algop);
+@@ -128,7 +128,7 @@ void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
+ 			 * f->offset is necessarily zero.
+ 			 */
+ 			if (!f->skip_hash)
+-				f->algop->unsafe_update_fn(&f->ctx, buf, nr);
++				f->algop->update_fn(&f->ctx, buf, nr);
+ 			flush(f, buf, nr);
+ 		} else {
+ 			/*
+@@ -175,8 +175,8 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
+ 	f->do_crc = 0;
+ 	f->skip_hash = 0;
+ 
+-	f->algop = the_hash_algo;
+-	f->algop->unsafe_init_fn(&f->ctx);
++	f->algop = unsafe_hash_algo(the_hash_algo);
++	f->algop->init_fn(&f->ctx);
+ 
+ 	f->buffer_len = buffer_len;
+ 	f->buffer = xmalloc(buffer_len);
+@@ -210,7 +210,7 @@ void hashfile_checkpoint(struct hashfile *f, struct hashfile_checkpoint *checkpo
  {
--	return p - hash_algos;
-+	size_t i;
-+	for (i = 0; i < GIT_HASH_NALGOS; i++) {
-+		const struct git_hash_algo *algop = &hash_algos[i];
-+		if (p == algop)
-+			return i;
-+	}
-+	return GIT_HASH_UNKNOWN;
+ 	hashflush(f);
+ 	checkpoint->offset = f->total;
+-	f->algop->unsafe_clone_fn(&checkpoint->ctx, &f->ctx);
++	f->algop->clone_fn(&checkpoint->ctx, &f->ctx);
  }
  
-+const struct git_hash_algo *unsafe_hash_algo(const struct git_hash_algo *algop);
-+
- const struct object_id *null_oid(void);
- 
- static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2, const struct git_hash_algo *algop)
-diff --git a/object-file.c b/object-file.c
-index 5b792b3dd42..43efa4ca361 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -202,6 +202,22 @@ static void git_hash_unknown_final_oid(struct object_id *oid UNUSED,
- 	BUG("trying to finalize unknown hash");
+ int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint)
+@@ -221,7 +221,7 @@ int hashfile_truncate(struct hashfile *f, struct hashfile_checkpoint *checkpoint
+ 	    lseek(f->fd, offset, SEEK_SET) != offset)
+ 		return -1;
+ 	f->total = offset;
+-	f->algop->unsafe_clone_fn(&f->ctx, &checkpoint->ctx);
++	f->algop->clone_fn(&f->ctx, &checkpoint->ctx);
+ 	f->offset = 0; /* hashflush() was called in checkpoint */
+ 	return 0;
  }
+@@ -242,15 +242,15 @@ int hashfile_checksum_valid(const unsigned char *data, size_t total_len)
+ {
+ 	unsigned char got[GIT_MAX_RAWSZ];
+ 	git_hash_ctx ctx;
+-	const struct git_hash_algo *algop = the_hash_algo;
++	const struct git_hash_algo *algop = unsafe_hash_algo(the_hash_algo);
+ 	size_t data_len = total_len - algop->rawsz;
  
-+static const struct git_hash_algo sha1_unsafe_algo = {
-+	.name = "sha1",
-+	.format_id = GIT_SHA1_FORMAT_ID,
-+	.rawsz = GIT_SHA1_RAWSZ,
-+	.hexsz = GIT_SHA1_HEXSZ,
-+	.blksz = GIT_SHA1_BLKSZ,
-+	.init_fn = git_hash_sha1_init_unsafe,
-+	.clone_fn = git_hash_sha1_clone_unsafe,
-+	.update_fn = git_hash_sha1_update_unsafe,
-+	.final_fn = git_hash_sha1_final_unsafe,
-+	.final_oid_fn = git_hash_sha1_final_oid_unsafe,
-+	.empty_tree = &empty_tree_oid,
-+	.empty_blob = &empty_blob_oid,
-+	.null_oid = &null_oid_sha1,
-+};
-+
- const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 	{
- 		.name = NULL,
-@@ -239,6 +255,7 @@ const struct git_hash_algo hash_algos[GIT_HASH_NALGOS] = {
- 		.unsafe_update_fn = git_hash_sha1_update_unsafe,
- 		.unsafe_final_fn = git_hash_sha1_final_unsafe,
- 		.unsafe_final_oid_fn = git_hash_sha1_final_oid_unsafe,
-+		.unsafe = &sha1_unsafe_algo,
- 		.empty_tree = &empty_tree_oid,
- 		.empty_blob = &empty_blob_oid,
- 		.null_oid = &null_oid_sha1,
-@@ -305,6 +322,15 @@ int hash_algo_by_length(int len)
- 	return GIT_HASH_UNKNOWN;
+ 	if (total_len < algop->rawsz)
+ 		return 0; /* say "too short"? */
+ 
+-	algop->unsafe_init_fn(&ctx);
+-	algop->unsafe_update_fn(&ctx, data, data_len);
+-	algop->unsafe_final_fn(got, &ctx);
++	algop->init_fn(&ctx);
++	algop->update_fn(&ctx, data, data_len);
++	algop->final_fn(got, &ctx);
+ 
+ 	return hasheq(got, data + data_len, algop);
  }
- 
-+const struct git_hash_algo *unsafe_hash_algo(const struct git_hash_algo *algop)
-+{
-+	/* If we have a faster "unsafe" implementation, use that. */
-+	if (algop->unsafe)
-+		return algop->unsafe;
-+	/* Otherwise use the default one. */
-+	return algop;
-+}
-+
- /*
-  * This is meant to hold a *small* number of objects that you would
-  * want repo_read_object_file() to be able to return, but yet you do not want
 -- 
 2.48.0.rc2.35.gd215225db14
 
