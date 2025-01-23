@@ -1,149 +1,149 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91EDCEC5
-	for <git@vger.kernel.org>; Thu, 23 Jan 2025 17:36:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708621487ED
+	for <git@vger.kernel.org>; Thu, 23 Jan 2025 17:43:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737653821; cv=none; b=AKnkEGY4k5Eily6vEhOdS9vt2wEeGBTIKYQAvrCo2Dbe0lpqxkHPbF3KnvB8dlfxWDHOCHlsCbRg9CvnQ4sjz6XpwbtBKl9w31WMkB8h+dI6tzQLgkdWq2NdToE0HI0CitURVdSYBbNU/FKVjwEp/Nd8GAkTs9CQo9GnYvVnjKM=
+	t=1737654193; cv=none; b=XtbDNX5iqMGH/tPJbhfdEDWy/rTvFe2t5Xvn3ESO44Uhq7FNMhmo1RPQ9txarywGztiTH1WECBXS3KWPHFiz0QhTng5WfcI8NzpiOGnW7a3Q+LN3e2/EJw0qQ2unYBsQXAEckAXtrZoVJJdmpfSq89TlWFVmsEvl/c8VQM4MVoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737653821; c=relaxed/simple;
-	bh=lOA5QDD5oyAZEpWaZUKSiKE87DZwP2rTwt6sKLm4SDA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TRjPPqNqTmGky72fI7pT0rsR3vjuxP27Ov4a6ZlCGw6ZvZhf2Xk1bfiei0PJ2bxgxD5Tc+ikH2hXTLWd6iM9nly4JsJG81+PbSCTq1OCAFqyTQCFEq6l3TyXCLCRlR2uJLnCMbSEhq6p/o6U9DPvCs6psuJvd3RSM1pHsQLdTa8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=06BxA3zx; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1737654193; c=relaxed/simple;
+	bh=wpt443Wd/cwOLS7enBRtokPw9n9R6WOSZlt1kMg67J8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=POyAqrFaRMvUzBGDmwRhmR0SuK6XPMWGb2jYr8vJmp9Jq61mhStzWrivgMWOcwexU1+ckpwTkXM8+HujXzrHChuuk3jq5b1b4Fh5EPUJgIyGBFrXcugFeo9+RTgzAEsPhg+zLqz0WZ4SSIbnxCwxLZUD7EkIh4jbMNeTIS4JUOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RBsMGWmB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zd1CfNAy; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="06BxA3zx"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e3a0acba5feso1751733276.2
-        for <git@vger.kernel.org>; Thu, 23 Jan 2025 09:36:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1737653818; x=1738258618; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZZKucF4VGYX7JdhEz5o6Uam1uAhne3Ifq0NiCArh5fk=;
-        b=06BxA3zxmd8/B5SW7dCo4YRtCHT4nVwATi/yGVkNm2Fe+kGKTF8XTWyW//4o+nwHpv
-         nEnc/U1AP7pJuJD5eyURl0rGadTJ0BY/cNEduP/vLhZLal49w0ukrbdm6Wjgqcw8gDZN
-         9okAUJ1vzo6mo/ue8iqd6o793toqyrDRaHL2M/FRpBxgoAyAYR0/BFDb/xljP8afeTjL
-         LhAqAAovCCDNfXP3siFv9gzmwvrWxnG34iF/uYZAnQAFPS4IWu4KdK+Mug5dI3WaGGdR
-         o2JFu4SkmQMbi2aSkP4X5hItKfe5fP6XdZlHGMEIT//5xS8FO7skwXPC320vwX5JgJAl
-         EIbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737653818; x=1738258618;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZZKucF4VGYX7JdhEz5o6Uam1uAhne3Ifq0NiCArh5fk=;
-        b=ZPpZg/urf1dFYwSJWS0X7wIouwrwFdfswk5gsYK9lbJUgmxacJZTwma20yr1O/zLMm
-         H3jVDH8e8AFZs+vmu/uDja8QDwRh+h8SGXxvhJEis4XHUyT3WRZcbIZXx19OILHNnxyH
-         XfOwk4OV+hHNaZlg53Z9WUqipUW1eWCKNw3bAZ9uTpqXOinmEStMvZVREzGQBTe34sYQ
-         xR+1ybuVM57oxsp9V6dOSS+pMDS8Ybn46JFStqTTKxpnRMw/IyXVDy3Q/x8ZrrPGnP7p
-         ew+4lRWQj9lWOy+K8Y1TdJNenwcZXeUyZaYC0aimmIowH7L/MCGjThqGhVJGpp07Lbob
-         347Q==
-X-Gm-Message-State: AOJu0YzfOaejeVEUWg/xyZEXuhY9LZZEQJqsKNEknLOwt0S/0/uN0SPf
-	wOZOPeoAPAWoYAdraHDeYHu45ouWY8wj44bEREl6jX0aBfvxEdbRqJIaCHLi0s44s/fRWagJF7B
-	NIxY=
-X-Gm-Gg: ASbGncv4u4dSqJiPZk1VP7XOWCLyyTe8Ie2MHo+3qUPugQFlymVjyJBAeqJZKhGYQ/w
-	moQns5zEdDEy2FOToLbNdtPXSaJFcR8pivM27z5wvQNbtLThkGwNa6JLF+myE/42xflIAHvXNGq
-	4rQ1aCzSVWlk+aUK+mSQyiwTUdgNv/x4lXnuUatv5Xx6EUM21v6sOc1fTlp17k7zC2WzZvvgRRh
-	Dv0lTAOiRjSTrKeXkzbcAbseT6fA6ChCJENA0I27JNCFW/8TpmyHlbfU7+jchtS/IwUur9eUjqK
-	IgXk5fJB4vlsD348eZGqJkLJg2FStOekUid044jAboEwvd9f46LO
-X-Google-Smtp-Source: AGHT+IFP9cS3wnPjCnt/D8tOtLpznxeD8Dvwt+ZUJDtC803Dyx/+EWWzlL2A5KpBQEgk2p4mnOWYSg==
-X-Received: by 2002:a05:690c:6e07:b0:6ef:6a71:aa55 with SMTP id 00721157ae682-6f6eb51a3b4mr218033537b3.0.1737653818365;
-        Thu, 23 Jan 2025 09:36:58 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f7578a23d4sm487557b3.54.2025.01.23.09.36.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Jan 2025 09:36:58 -0800 (PST)
-Date: Thu, 23 Jan 2025 12:36:56 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
-Message-ID: <Z5J+ONavA9XUTPn1@nand.local>
-References: <xmqqbjvyv510.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RBsMGWmB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zd1CfNAy"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 66DB913800E8;
+	Thu, 23 Jan 2025 12:43:10 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Thu, 23 Jan 2025 12:43:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737654190; x=1737740590; bh=TDpJ2RqpQd
+	GhW6TIq7E4mrukVxVAjstZU7kFFghc6FQ=; b=RBsMGWmBXRIBT8KJgN6OVNHt6C
+	MDudGfi0kqS6jLGfzM4Ggg9L1EdTg1usAsP0S7SMb6LIi/R4QTNcHLIeM4/eMR+E
+	bJ/UmZSOaZsO2R4lXUp5oQjObyPCwutPrEuBYYa444fJD/OfIVX/a4LmlbilTjEV
+	aBclRmNW2w2NZVvGcz+XSBXaF/dcPpyt626xB3ivoMqlV7r/UsmColAAuVIiClpu
+	K0NyG6G66oMNrHt3qhCUI0aPuEpBLCm8mXVa4kLKM+ZBScctre8SA12fsvw4F1aG
+	A1AaiYJNpciE2RJQXvWM4KYMKio143NVryAMFDFg+tj7VataK+LWfYRTOHPQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737654190; x=1737740590; bh=TDpJ2RqpQdGhW6TIq7E4mrukVxVAjstZU7k
+	FFghc6FQ=; b=zd1CfNAyKUHRR90uOcvgawwcXMECmGr9fyRfUMGuEJldt98dIcJ
+	LrbphF1KhkTw0ysw269JnrS5MOIvVQPaQRWsvDrdVWi2yMgIZ635Fa0LtUiHyo9e
+	CNuCOPsS6ADTa41qxeRm73NHr/wN9RvaUhuAJVafdz5RGpqH1k/ckVQTcWGCMZBo
+	6IqHnx70yUJmkNpsxxNPYcuwKev79JIcXz+XJTN42pP1CB1nYmv6Yb+qyr3wJ7pU
+	nTPyghwF/MJ0dlMxcRL9fl8eUPgv4gSx0TWDzAUYxsQTFmng4aC4phROlBnHkczH
+	TZcZlrpH1YZyG+nBZ+9GFdLtSkwB7TGrBaA==
+X-ME-Sender: <xms:rX-SZ8Wd6Bo5YTzY6aMyV6sJdj7jh122tFQdrUkMyVRpce8EqCQYMA>
+    <xme:rX-SZwlHXAIbdN77t8R0mscyN-4j7T532eHpoQFW4vyiGoRiQtZAcR9GsLP3-4ipH
+    LfzQ2MMJlnkJ1jAfw>
+X-ME-Received: <xmr:rX-SZwatyCocAcy8PbNc2-sXAxjo2UNQI6jl1OQqw6j_Dy1mDWPQ3OgcsnqvvKT0fjMjN5VS0Rsx5hhHgstigzUPcBTM90Bhbo-H>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgvddvlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
+    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
+    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
+    rdhnvghtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegr
+    nhgurhgvfiesvghmrghilhgtrghrthgvrhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:rn-SZ7V7UH2JI3xaxLPFPCTlGlDeK2HeDkPlOLbpVbeaCK6L95yZ5g>
+    <xmx:rn-SZ2kOieeC6AVdHCsDJY0tsfZNjaOyYqgKhyUUuFq34neO0VBBYQ>
+    <xmx:rn-SZwcVAJAx52jdnG-CbCbjg2cme___UQbhPHzZnye3gIF20TzeOQ>
+    <xmx:rn-SZ4HP_kmM4zEhAFi4WWU6xrQ5oRzJU1XoE_zpT53aQkEOFse-Xg>
+    <xmx:rn-SZ9suGgItil8-dW3tyxp2eeCr7CfGpL12WZ-lJG8k5p0h0I0n0Jws>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 23 Jan 2025 12:43:09 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Andrew Carter via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Andrew Carter <andrew@emailcarter.com>
+Subject: Re: [PATCH] docs: indicate http.sslCertType and sslKeyType
+In-Reply-To: <Z5GOfwBR7JBloIs0@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 23 Jan 2025 00:34:07 +0000")
+References: <pull.1854.git.1737591366672.gitgitgadget@gmail.com>
+	<Z5GOfwBR7JBloIs0@tapette.crustytoothpaste.net>
+Date: Thu, 23 Jan 2025 09:43:08 -0800
+Message-ID: <xmqq7c6ltoib.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqbjvyv510.fsf@gitster.g>
+Content-Type: text/plain
 
-On Wed, Jan 22, 2025 at 02:48:43PM -0800, Junio C Hamano wrote:
-> * tb/unsafe-hash-cleanup (2025-01-17) 8 commits
->  - hash.h: drop unsafe_ function variants
->  - csum-file: introduce hashfile_checkpoint_init()
->  - t/helper/test-hash.c: use unsafe_hash_algo()
->  - csum-file.c: use unsafe_hash_algo()
->  - hash.h: introduce `unsafe_hash_algo()`
->  - csum-file.c: extract algop from hashfile_checksum_valid()
->  - csum-file: store the hash algorithm as a struct field
->  - t/helper/test-tool: implement sha1-unsafe helper
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+
+> On 2025-01-23 at 00:16:06, Andrew Carter via GitGitGadget wrote:
+>> diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+>> index a14371b5c96..cd39e182527 100644
+>> --- a/Documentation/config/http.txt
+>> +++ b/Documentation/config/http.txt
+>> @@ -216,6 +216,18 @@ http.sslBackend::
+>>  	This option is ignored if cURL lacks support for choosing the SSL
+>>  	backend at runtime.
+>>  
+>> +http.sslCertType::
+>> +	Type of client certificate used when fetching or pushing over HTTPS.
+>> +	(e.g. "PEM", "DER", or "P12"). See also libcurl `CURLOPT_SSLCERTTYPE`
+>> +	Can be overridden by the `GIT_SSL_CERT_TYPE` environment variable.
+>> +
+>> +http.sslKeyType::
+>> +	Type of client private key used when fetching or pushing over HTTPS.
+>> +	(e.g. "PEM", "DER", or "ENG"). Particularly useful when set to "ENG"
+>> +	for authenticating with PKCS#11 tokens. See also libcurl
+>> +	`CURLOPT_SSLCERTTYPE` . Can be overridden by the `GIT_SSL_KEY_TYPE`
+>> +	environment variable.
 >
->  The API around choosing to use unsafe variant of SHA-1
->  implementation has been updated in an attempt to make it harder to
->  abuse.
+> Are there any particular limitations on these values that are platform-
+> or backend-specific that we should document?  For instance, I seem to
+> recall that at some point PKCS#12 files were limited to schannel or
+> Windows, although I could be mistaken.
 >
->  Expecting a hopefully small and final reroll.
->  cf. <20250118124343.GA3828177@coredump.intra.peff.net>
->  source: <cover.1737151386.git.me@ttaylorr.com>
+> Do we also have documentation for whatever engine parameter is required
+> according to the libcurl documentation?
 
-Thanks for the nudge. I sent out a very small reroll of this series as
-<cover.1737653640.git.me@ttaylorr.com>.
+Both are very good points.
 
-> * tb/incremental-midx-part-2 (2024-11-20) 15 commits
->  - midx: implement writing incremental MIDX bitmaps
->  - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
->  - pack-bitmap.c: keep track of each layer's type bitmaps
->  - ewah: implement `struct ewah_or_iterator`
->  - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
->  - pack-bitmap.c: compute disk-usage with incremental MIDXs
->  - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
->  - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
->  - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
->  - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
->  - pack-bitmap.c: open and store incremental bitmap layers
->  - pack-revindex: prepare for incremental MIDX bitmaps
->  - Documentation: describe incremental MIDX bitmaps
->  - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
->  - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
->
->  Incrementally updating multi-pack index files.
->
->  Needs review.
->  source: <cover.1732054032.git.me@ttaylorr.com>
+I went back to the original thread that added the change cited in
+the proposed log message [*1*], hoping that maybe somebody brought
+up caveats but didn't find anything relevant other than that we
+punted to add tests for this since it was too cumbersome to set up.
 
-Yeah, I would really like to see this one progress. I'll gently nudge
-Peff (CC'd) as a potential reviewer here.
+Note to Andrew, when referring to an existing commit in your
+proposed log message, please do not just write its abbreviated
+commit object name, like 0a01d41e.
 
-> * ds/name-hash-tweaks (2024-12-20) 8 commits
->  - pack-objects: add third name hash version
->  - pack-objects: prevent name hash version change
->  - test-tool: add helper for name-hash values
->  - p5313: add size comparison test
->  - pack-objects: add GIT_TEST_NAME_HASH_VERSION
->  - repack: add --name-hash-version option
->  - pack-objects: add --name-hash-version option
->  - pack-objects: create new name-hash function version
->
->  "git pack-objects" and its wrapper "git repack" learned an option
->  to use an alternative path-hash function to improve delta-base
->  selection to produce a packfile with deeper history than window
->  size.
->
->  Will merge to 'next'.
->  (microhalt) <Z5E5KdbwHE7fmiJx@nand.local>
->  source: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
+Instead, use it in "git show -s --format=reference 0a01d41e" to
+obtain something like
 
-Hmm. I think that the first seven patches are fine as-is (I had some
-minor comments on them, but as I noted they are mostly cosmetic and
-don't require a reroll IMHO). But I think it would be worth having a
-more thorough discussion about the last patch, or at least to hear from
-Stolee before proceeding.
+    0a01d41ee4 (http: add support for different sslcert and sslkey
+    types., 2023-03-20)
 
-Thanks,
-Taylor
+that would help people to immediately see what the change was about
+and how old it was.
+
+Thanks.
+
+
+[Reference]
+
+*1* https://lore.kernel.org/git/pull.1474.v2.git.git.1679327330032.gitgitgadget@gmail.com/
