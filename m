@@ -1,116 +1,78 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53EE9629
-	for <git@vger.kernel.org>; Thu, 23 Jan 2025 00:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F3F19BBC
+	for <git@vger.kernel.org>; Thu, 23 Jan 2025 00:38:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737592583; cv=none; b=Hx8uvbn8ukud2lfgUSXfsD6zdEiYX0blkGp6xE7mYoXtUGb2ET8g2lgDvmG06ebukxS+J513faCxDf5DzEOTmr8jW6Y0z8wHvndeGEPYBKEwVANBVBGuIBEwiq/Hio5QX5/rkst7PzcvDyvmT6ZGn/V24Em5kkvUxYvFD2RJvaQ=
+	t=1737592696; cv=none; b=tR1TPMWarndrDZzXXpJytr0WEBCowM/FgtuN11f1woEACEPK66bTT2dzGYLt8bPzjycFCKPihr+gQxxOk/ALx7pf3YVqj4Bhi0I0nEexjMnS1kAjKsVJhTQ2zRgz0TorM5ErHe7H9T3ZPdoP5ieYggl30Ys+RseKR+kWXHW3lUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737592583; c=relaxed/simple;
-	bh=jz9v/BS9XckaiGo2+8dar5zF4D/VbMCVchvJODh54po=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KKGB7axYRDSe5MVgU8oKgXZazzOej436QTYBdncWrnfAK8jnvZloCrOgPUSgfobxb6RtxAMlmivmKdDrwXFbQm+L2Kqt/ozqVOgaJmiesKGRRGoaepVuwdtMf7MvvVzciMWO9fQjVKvKRKIAW8oWyon1Zycr08tr8cjY5aAPlTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=h9tj9bgj; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="h9tj9bgj"
-Received: (qmail 19418 invoked by uid 109); 23 Jan 2025 00:36:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=jz9v/BS9XckaiGo2+8dar5zF4D/VbMCVchvJODh54po=; b=h9tj9bgjETPav7r9kDry5xtzN4eVb6cwEDcV5LG7KYe5bUSWKke9sZEDzDcKzcEWOgz1IO/woKYF9YCkjeApn+5CKvsiaIkpDQZ8BEsDutsQl67ts7M0ZXHAYsdrgSLZ6LwH97LEnjLB9WwfiSJ8ifHHmpUiUC0dw3AzsGCh6yeZasbsiLRmTTItpumUv9fBRaF+wHSc5hOyRLTn4Yv6XwQQrhlZu7t552jT8T2sAOalDK+Q4R1qCEpl4FZHeDSWEvZ2/B+UywoFCYZPoBWyhZ5IVTM7c5qTr/utWqYARtlOFtzCvgXr9BsQAcielz8aaIdj+m+jWrC/4tS3HfJCiQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 23 Jan 2025 00:36:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19626 invoked by uid 111); 23 Jan 2025 00:36:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 22 Jan 2025 19:36:16 -0500
-Authentication-Results: peff.net; auth=none
-Date: Wed, 22 Jan 2025 19:36:13 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
-Message-ID: <20250123003613.GA3900660@coredump.intra.peff.net>
-References: <xmqqbjvyv510.fsf@gitster.g>
+	s=arc-20240116; t=1737592696; c=relaxed/simple;
+	bh=XojWN/nKBthCwEJBJHGo3csk8d393Lno/2BwNchOE7I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hMkRM/CeAZ5AVeQYyrwrH2TbjUYbkRhNJomYSTDAo6/70XwA1W4VfoWRg1O9k5Gns4yS/w5DbKcnPpIci+2O9ljGRcabvfuGSXtrXMsosnPdVJDvHiFSpO8mQKOgp7GnBvo4Ic0GNc+q571jMXw7RzQMmre9EEmotV30ZDTROGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6df8f7f9442so631126d6.0
+        for <git@vger.kernel.org>; Wed, 22 Jan 2025 16:38:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737592693; x=1738197493;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xZIJo57ZjNPAoUUPiwuF1AdVysbqoS5me3b8/zcfK9s=;
+        b=XYlsnXf1VkorIi7fiWrJ+toFAmuVHPMeqPdABKsbt3y7v9aSb7rCE5gTY+E1d84kRh
+         SQlXbDGxESvR1q8sOuLSR1daEWasPbQHIEs2CqXb8+hEpMi2LEV5z+SyHcOSO4LN8KFE
+         MpSPdBmJoNSyFIklBEZN9vAQ0WArdbqxQS2ZcJ9YwALNuO4baQf8TlCVX0/HmG+XgulF
+         r2/EX8gtUhR1nEV8kaNfQ9YgW0vekIB3tYNOSlgSUit3bju1jYmwAxn+4LsxAjRawNu1
+         meIMngtpNBf11P7SNBCu7sXPE2/55ryCD18W6w0c3e84Xb2mBnod8hGcitYnTzHSZv3t
+         VM0g==
+X-Gm-Message-State: AOJu0Yz0Mm7V0lpTcocuNF2w1YVGQ/abF+4FfDo8Qk9kXXFztseIiTfn
+	twEOlSlDf33GAsSkKMg0b5aUT6mJ9JdYTAojQ9p1E4c0JSZRiqbxxzMtzl46cbG0+QR7kXFUrfD
+	5LtS72bi8PvioB4We7TLBHUKVF1E=
+X-Gm-Gg: ASbGnct/Ilo+PQh/Hiyh8VxMgcJVSIzwN3VfZ8Pij0tt2RO0WGb6G/CP4sUWqZxixtU
+	hiOYCuNGCwJ3+ozHgo+FNJvZLEqRBb1No2vn92FCcNYNNt/eWiw==
+X-Google-Smtp-Source: AGHT+IEv/7BHa+pcrkJ+nad57BOjSMKQZQM+83DdSm2lLgfOnIxKfnFubnLNwM+kFeiYNUBF0Bo1GfFySPtzdBNFeYM=
+X-Received: by 2002:a05:6214:27e5:b0:6d8:967a:1a60 with SMTP id
+ 6a1803df08f44-6e1b2155c60mr138080906d6.2.1737592693605; Wed, 22 Jan 2025
+ 16:38:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <xmqqbjvyv510.fsf@gitster.g>
 In-Reply-To: <xmqqbjvyv510.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 22 Jan 2025 19:38:02 -0500
+X-Gm-Features: AWEUYZnJW8_S1i8ROG-qxy0fX60DofgsO1ChZTzpQuEuPhRxyyUjkf6CuOEgHTU
+Message-ID: <CAPig+cTBgHn8vjKDjy5JujFf-S4kQxPQ0iFMdh0HA37f76eqLA@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 22, 2025 at 02:48:43PM -0800, Junio C Hamano wrote:
+On Wed, Jan 22, 2025 at 5:49=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> * ps/reftable-sign-compare (2025-01-21) 10 commits
+>   (merged to 'next' on 2025-01-22 at a5ae1ce801)
+>  + reftable: address trivial -Wsign-compare warnings
+>  + reftable/blocksource: adjust `read_block()` to return `ssize_t`
+>  + reftable/blocksource: adjust type of the block length
+>  + reftable/block: adjust type of the restart length
+>  + reftable/block: adapt header and footer size to return a `size_t`
+>  + reftable/basics: adjust `hash_size()` to return `uint32_t`
+>  + reftable/basics: adjust `common_prefix_size()` to return `size_t`
+>  + reftable/record: handle overflows when decoding varints
+>  + reftable/record: drop unused `print` function pointer
+>  + meson: stop disabling -Wsign-compare
+>
+>  THe reftable/ library code has been made -Wsign-compare clean.
 
-> * ds/path-walk-1 (2024-12-20) 7 commits
->   (merged to 'next' on 2025-01-22 at 3171845b73)
->  + path-walk: reorder object visits
->  + path-walk: mark trees and blobs as UNINTERESTING
->  + path-walk: visit tags and cached objects
->  + path-walk: allow consumer to specify object types
->  + t6601: add helper for testing path-walk API
->  + test-lib-functions: add test_cmp_sorted
->  + path-walk: introduce an object walk by path
->  (this branch is used by ds/backfill.)
-> 
->  Introduce a new API to visit objects in batches based on a common
->  path, or by type.
-> 
+s/THe/The/
+
 >  Will merge to 'master'.
->  cf. <Z4jeQSLmARruE5l3@pks.im>
->  source: <pull.1818.v4.git.1734711675.gitgitgadget@gmail.com>
-
-Since this hit 'next', it made it into my Coverity runs, producing the
-small fixup below.
-
--- >8 --
-Subject: [PATCH] path-walk: drop redundant parse_tree() call
-
-This call to parse_tree() was flagged by Coverity for ignoring the
-return value. But if we look a little further up the function, we can
-see that there is already a call to parse_tree_gently(), and we'll
-return early if that fails. So by this point the tree will always be
-parsed, and the call is redundant.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- path-walk.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/path-walk.c b/path-walk.c
-index 136ec08fb0..9715a5550e 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -116,27 +116,26 @@ static int add_tree_entries(struct path_walk_context *ctx,
- 
- 	if (!tree) {
- 		error(_("failed to walk children of tree %s: not found"),
- 		      oid_to_hex(oid));
- 		return -1;
- 	} else if (parse_tree_gently(tree, 1)) {
- 		error("bad tree object %s", oid_to_hex(oid));
- 		return -1;
- 	}
- 
- 	strbuf_addstr(&path, base_path);
- 	base_len = path.len;
- 
--	parse_tree(tree);
- 	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
- 	while (tree_entry(&desc, &entry)) {
- 		struct type_and_oid_list *list;
- 		struct object *o;
- 		/* Not actually true, but we will ignore submodules later. */
- 		enum object_type type = S_ISDIR(entry.mode) ? OBJ_TREE : OBJ_BLOB;
- 
- 		/* Skip submodules. */
- 		if (S_ISGITLINK(entry.mode))
- 			continue;
- 
- 		/* If the caller doesn't want blobs, then don't bother. */
- 		if (!ctx->info->blobs && type == OBJ_BLOB)
--- 
-2.48.1.519.gaa5dee9535
-
+>  source: <20250120-b4-pks-reftable-sign-compare-v2-0-b4566d02e4a5@pks.im>
