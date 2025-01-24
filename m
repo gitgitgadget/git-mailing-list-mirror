@@ -1,123 +1,134 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC5D1D516A
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 17:44:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C51F41C6E
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 17:45:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737740655; cv=none; b=RQKiV3X8Exs+i9fJGRcCts0agU7jlg86Ar17tS2FRes0PmhowduAJ2aVg8GDFevVCqWvbT3gr/f792gTKmlZ6skxSmYIbGXQr/f0x4oZWRqHpozVWZyNP9oTVTM/c41hpxUhoeIAhaLoaXeEOUXLCRDeniHWb8x+Y8o2E9+faAQ=
+	t=1737740752; cv=none; b=HRvqQ4ZFYBY0/k8ckGNlM+XNvcjEjcoyUFlg+v6BTJdlt+vUT0wuNYl7oPy4kOWpoSqV9a0LD6qPxkPf1GJZJ8G0DZxs75D2RK6wrNmKSqt2NQzyeZYBhd/FLEEd/jBvUaQBL4PzYs98nym8IN+MvSsg8JvLjAhKqC+xtlwDw2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737740655; c=relaxed/simple;
-	bh=YEUwFB4c+U/WhUqJXOyj53PscTi/AtyLC/Y69gz+kk4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nRNV04Lz4r3qpYMw+ekszANNmAOTWrbuvzkYdqcmkvJ55Rb7KSCfOSNdFHXLxLc4cweZusW0tJBD5z/LGnxUWYIV/C9qZPU2hZ8UOqevQ1dzVqnvwCERPGl2l6LqC57upfvVkajyXkPv7ZQ7faux5AHFE/XB7Msp8MYZ5WqLJfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WsFsMXXa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EF0svAFi; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1737740752; c=relaxed/simple;
+	bh=7+P/JrzVldJZUnidxCHZqb8nDQ1HFEjaAujn4cFErpk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SUL2ueZxGZ3tczqifejuC8WU8f9Vd4pm7xnLwEl6rNvi0FAtqexymj3Z9GPl+x/Qc+/UVB0Hu5iw1bZgzIzvMwLEi7r1hcoLA2QOCWqgWyS/aB6yRwk4MgpsUXrxli3p4LoK5rswzn8k+kTkCBA6lvD7UdD4vWi6iwm/rjayCJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PyRkzR/G; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WsFsMXXa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EF0svAFi"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id E713711400BF;
-	Fri, 24 Jan 2025 12:44:11 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 24 Jan 2025 12:44:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1737740651;
-	 x=1737827051; bh=Ndtyp/xfFmZK7MMEGl2i9pUG1GeIWwab/EdlD22Vzqw=; b=
-	WsFsMXXaEXZvADmXLM+QjVo+v3x2jjTFMhYZNQZEBn7Un3r4yjbWYRouUhx5rILp
-	e4BsK6nnL5T2G+YZLUV1cw19+dQcL3g9tpgCehvxx0mrb9UK8Sgy4Z2lq+cXw6ag
-	B3ScCrA0lTrBpgoqAL2i33SD1Y13N4AMAgM6h9JU51E3Co5Xm/F2/S8c4ZAgB9bp
-	Neaeegjzg7BvTuQcmV2WG6tGocV2fzx0yeg3gy8KodKBq1ZpL31Pll2OJYarZ426
-	FkoFCg8vEooptMC/v7qqnbQMDqu5Hd6yvJAxAu4LxeKKpzbH4fzlQmIwoFtm4V7p
-	leWdaUlBEKDc92E/unI4NA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737740651; x=
-	1737827051; bh=Ndtyp/xfFmZK7MMEGl2i9pUG1GeIWwab/EdlD22Vzqw=; b=E
-	F0svAFiv4ei7ft/zVOHY7am5lZw2ag39zF7K9SxNEtkhgGG0w+KBHsjWwZ5iNY2n
-	H+9SfTJ9zmIuG9pxlZFhv6TKvwPXu54JLjdL4ns45QAOfDjXZPLkFPJUkGrOvVv0
-	gujuJeeLDTUZkl5a7J2wYo3Gw/28NnYqZk27T22Chm7IjmTnBqebO3bmZcYGnsj4
-	tdY5Ml3h97h7adtfJchZ+3jWh4XCLcDBf2kshc/V25NP1Kk71K0gbXFZFokcutLG
-	zyW443clHAAPidd+dNfTK54SkgULw5eppB8zHkFXbMVLy0rHiQ8wZF9eL+4NzcZd
-	hH8oisn5T3OHCo5p0FLJQ==
-X-ME-Sender: <xms:a9GTZ8OwIb2H4pgTpr3036fK1CR9upsxCSOBK5VXehOHOoFenqZCjA>
-    <xme:a9GTZy-R4SF6tq96u060wu63BgdXiKOQy3F0B6GcIwryRDrKPg1KN4X19gXVhAUh1
-    Ibv4SwnnQaaLITWUw>
-X-ME-Received: <xmr:a9GTZzRjL6Zy8IxahHqqBhnsbwk57XTgD_4_wuYxLELciA9_WUcLQ83c3tQYlscd9GeNKbFoH5AfnYCbWXy9ynjIhbGq1j-Zmt4A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedghedugecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekofdttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepkefgtdeuvdejfffgheeufeeugefhtdej
-    hffgkefhhfetieffteehleehtdfghedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinh
-    gvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtghhithhgrggughgv
-    thesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepjhhulhhirghnsegurhhutghkuggvvhdrgiihiidprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:a9GTZ0thISYbIQ8ve7AvAhewOy2nIK034HUTZIWwwRwwsUPOV5j9Nw>
-    <xmx:a9GTZ0eTBzHeDml5KCFQpYy0732rwnsH-kdQhmUeov7-8RS3S_m7Yw>
-    <xmx:a9GTZ40b5oZnzQt1RYCEleAmYl1-uQDD8h-qSmVUBAQ9HcFTqmnwzg>
-    <xmx:a9GTZ4_6U0trpGTIlQvRKwY5h79gLH98H6bHF2r5NRLjVbHmseGhRg>
-    <xmx:a9GTZ5EAcBUsCAe8ZslmBb99IehGk4COFsplmZtMUIsPpaqW9z01yjp0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jan 2025 12:44:10 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Julian Prein via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Julian Prein <julian@druckdev.xyz>
-Subject: Re: [PATCH] config.txt: add trailer.* variables
-In-Reply-To: <CAPig+cTj5Rwp8=KA-r6SkZaf=VpqSieD-p2FgGFoMW2zmnr0Uw@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 24 Jan 2025 10:48:52 -0500")
-References: <pull.1871.git.git.1736429142334.gitgitgadget@gmail.com>
-	<CAPig+cTj5Rwp8=KA-r6SkZaf=VpqSieD-p2FgGFoMW2zmnr0Uw@mail.gmail.com>
-Date: Fri, 24 Jan 2025 09:44:09 -0800
-Message-ID: <xmqqwmekyumu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PyRkzR/G"
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e54d268bc3dso4430375276.1
+        for <git@vger.kernel.org>; Fri, 24 Jan 2025 09:45:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737740750; x=1738345550; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Lyn7r0+AVbm+DALgWJrFRWa5p3/WBh7Yl6i59WCFUMY=;
+        b=PyRkzR/GX9ycMCT2w0GVQ2eeTh86pjXpolfKPhPxFVHgRUAsfeA1BQ4ehfXnYjaLYm
+         2j7zxh7sALVqoydhyQfzPD6Z2iB+IAo6VRacnjvVAfgp3EPIojKsDlxNqhPMFIHvqtDp
+         TwFketHgNinfp0QObePPEm0f6zyPaQ326wxCyafoNT9UvVyfiSt71qUaeZAoMCwFW5F3
+         8YnIy2FXL9IJHsPjKGoFnvrxdi8+ORiw+W+pA4g8OynQS/K/RwsaCzM2OKlXGxnO+0az
+         fTKto6y/HU/yf61l2s1o2dtcHpRqpg5LrnZPgoLTRSMRqsrEz0W2YGdXI+WovuuThbDq
+         jo+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737740750; x=1738345550;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Lyn7r0+AVbm+DALgWJrFRWa5p3/WBh7Yl6i59WCFUMY=;
+        b=bw1pZ8MRzO4rrzm/UCOMOdKHrzyOPKpKZObUKRqLv+9OtYvW0lTz7Ac/6k9hc8YCg3
+         PAEwxGhxTLl/BYpnfYRpvxnR+qvsRnK0XopnTXuuXettYkOfUbRO9CqyCSkVwukrK+V+
+         6jZqrlm6RdLpybT5Kn224y4lYFkVFfm5/wkSgOiEct40XXNtasRHdlp5LV4FMqOdNDx7
+         JiPW9ddgsaDXvTfkumhfCvVUl9QmdyrWoFxm4H4B8w6e2+r60rtIrwmB+T2FZ4Mh11VB
+         cyqeJE7yCtmNaCWGtCCyuhpXjinNrnqA350wFe/q/45lM9pGUy7EVs1Mkl/L9sCFlGM6
+         VhaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVuiaFRwmB9+8SYcL9qGxtD16mYuWTBq7QQUOCJhqBo41I9QSQvPcwxmYz6LQgaruyAsZY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyOfg/0r5abBp19VpSb5kMDvgitbVI2QAhkk/fiNQCOg3bDvtsk
+	ngPD0azyIS10xf+yZuOmXyYX159tct01u2olaB/5GjIwwD3kFToG/OTVqf2y
+X-Gm-Gg: ASbGncvHUlWPilE4+LV/ySHT03mc3fysKKUgFtw3kkzrnBdoGG6LZQH65pg8vJY2PSA
+	W8tCQ5re/rAPN7Q7Aag9+It9Z4VvMQ6Pi/BEEMd67CAiLQmfCxdHktNmQ0r90TrSiu0NejBwjFI
+	KlVwe5YIj0YF20iKK4VfXDN0uJnHGcvhqS4zG88FQcs4SeHGEEF8KB+K2SbLBDwY1EKS74IRtIl
+	LT7zZjnK4o833BRt7KsiMQE3UU9+9L9mhp2Lq45rSVMacs4ebt/14eeNBgU5aRlxfkCfwi9kMlT
+	whZMQENgeO4/Wny+jFuour1BzyjUjNy48Tn7cnFfHLLjRmtN1FxedbGiKEqkHwNByvsQ
+X-Google-Smtp-Source: AGHT+IE7y0ejx+In3Q582lVOWCiYGwR6fL7dJ7fhbKZlJaVXex6rEbRofZWNPe7uxK2zM0s/DntbGQ==
+X-Received: by 2002:a05:6902:1501:b0:e58:1412:95e5 with SMTP id 3f1490d57ef6-e5814129711mr9617946276.32.1737740750130;
+        Fri, 24 Jan 2025 09:45:50 -0800 (PST)
+Received: from ?IPV6:2600:1700:60ba:9810:c52c:1d3e:3dc2:a210? ([2600:1700:60ba:9810:c52c:1d3e:3dc2:a210])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e583b88db9bsm420171276.48.2025.01.24.09.45.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 24 Jan 2025 09:45:49 -0800 (PST)
+Message-ID: <7fe5f33c-4923-42a4-b98e-e7c2116a2782@gmail.com>
+Date: Fri, 24 Jan 2025 12:45:49 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/8] pack-objects: Create an alternative name hash
+ algorithm (recreated)
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
+ peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
+ jonathantanmy@google.com, karthik nayak <karthik.188@gmail.com>
+References: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
+ <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
+ <35026c72-f9b4-40a3-b528-1c28b1238972@gmail.com>
+ <Z5F/JdnSAYqUBJ8s@nand.local>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <Z5F/JdnSAYqUBJ8s@nand.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On 1/22/25 6:28 PM, Taylor Blau wrote:
+> On Tue, Jan 21, 2025 at 03:21:15PM -0500, Derrick Stolee wrote:
 
-> On Thu, Jan 9, 2025 at 8:25 AM Julian Prein via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> The trailer.* configuration variables are currently only described in
->> git-interpret-trailers(1) but affect git-commit and git-tag as well.
->> Move that section into its own config/trailer.txt file and also include
->> it in git-config(1).
->
-> Makes sense. git-commit.txt and git-tag.txt do indeed reference these
-> variables, and one would expect them to be mentioned by
-> Documentation/config.txt, as well.
->
->> Signed-off-by: Julian Prein <julian@druckdev.xyz>
->> ---
->> diff --git a/Documentation/config.txt b/Documentation/config.txt
->> @@ -540,6 +540,8 @@ include::config/tar.txt[]
->>  include::config/trace2.txt[]
->>
->> +include::config/trailer.txt[]
->> +
->>  include::config/transfer.txt[]
->
-> Nice to see that you maintained alphabetical ordering here[*].
->
-> [*]: 5f78d52dce (docs: sort configuration variable groupings
-> alphabetically, 2024-02-29)
+> Sorry that I punted on reviewing this for way longer than I should have,
+> and thanks for bearing with me.
 
-Thanks for reviewing carefully.
+I wanted to give people time to recover from release mechanics before
+poking this series again. Thanks for reviewing so quickly after my
+message.
+
+> I left a handful of comments on the patches themselves, but they are
+> mostly cosmetic. 
+
+Thanks. I have prepped a v4 with those cosmetic updates and will intend
+to send it on Monday, unless there are more comments before then.
+
+> After reviewing, I think the idea of having a versioned name-hash is a
+> good one, and I agree that it'll make the eventual .bitmap changes much
+> easier to implement.
+
+Thanks!
+
+[I reordered a paragraph below]
+
+> My idle thought before having a chance to review this
+> series is that the --name-hash-version option was handing over too much
+> control to the user without clear instruction on when to use one version
+> over the other.
+...
+> So I think in that sense exposing a `--name-hash-version` is the right
+> thing to do. My feeling is that we should probably just add Jonathan's
+> "v2", since it appears to be a improvement in nearly all cases against
+> v1, and more often an improvement than not when compared to v3. In that
+> world, just introducing v2 leaves us with less code to maintain and
+> fewer, clearer options presented to users.
+
+I think these ideas are related. The thought that really convinced me
+that v3 isn't worth it right now is that users won't know which version to
+use without some kind of opinion being voiced by tooling. If users assume
+that "newer is better" then they may accidentally get into a worse
+situation by defaulting to v3 over v2. It's unsatisfying to say "try both
+and see which is better" especially when v3 is rarely better.
+
+I'll drop the last patch in the next version, but I'll keep it in my fork
+for possible future resurrection.
+
+Thanks,
+-Stolee
+
