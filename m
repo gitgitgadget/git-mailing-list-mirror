@@ -1,118 +1,110 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [85.215.255.25])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7521723A0
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 15:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.25
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737733161; cv=pass; b=ZMzfI1Ky3MfAicBh//cbOafKYFWwkTx9kBrve9ubVyhrXpcH7xyK9YApk9o6hGV5vKYed+17Xnd1Pv6GsepfNob6uhIl9JnarSkUT/gw3VrtJc4pd0/X4HA56guglMNRBCnwHxEVUCYwl2xabAoRWM+/mcfsTBWWO8z9azNvYk8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737733161; c=relaxed/simple;
-	bh=t9MOZSUD4GDE0VVvlRxhI1SWJPHXtYrvtuJgh2stGXw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XVjOT+t4K7uxsRNxI9EXUCyvHm1ZdyGQ+xM9FxFdsk3ws/+id1qtdhpP+gTNoUb+5+qTXQKEaQvMZBQEMBUe9YEzK/eaweFPwWM91QVzlxTQs6fbIa4c5SLhKjCVggKT3P+07R0KbaaV+Jdy8XIxYWvPAXhq/k4MC8goKeQnFU8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=druckdev.xyz; spf=none smtp.mailfrom=druckdev.xyz; dkim=pass (2048-bit key) header.d=druckdev.xyz header.i=@druckdev.xyz header.b=o1o4TvSe; dkim=permerror (0-bit key) header.d=druckdev.xyz header.i=@druckdev.xyz header.b=YHE3kZl0; arc=pass smtp.client-ip=85.215.255.25
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=druckdev.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=druckdev.xyz
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061BB22087
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 15:47:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1737733640; cv=none; b=VZAPrB2IvaoXyxCzF+RypDdRSc545mygHW479fSGtpOgp6y/oG0S7Y5Rl6/0xQ55ptohQQ8Np1peppVYZ4Ir+ctXLBRrejP9dLoEOdNojRreMteIFo54pKh8iKYUNjY3BvZvzA1ul4oANO6w77lGToJHomUcVgf6XDrt36cFKxg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1737733640; c=relaxed/simple;
+	bh=wbxceSkb+w9EzxXB2iOkmERG2raJ4TPwXwjxDAUo3gU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=X3BdnJQEEP/YPuzErrRPMICw/UytCaeega2T+gZlSXL9tKDJUqxky2WpouYg0M9lGqHzcylUC1pSporcn0p01TsEb3cxMHhkOsvNOgx07dImxR75mgaldL6lraAZwzbdpfcO1gX/taoBySaZEhIpT2VlIguOZKRNIqy434jC3Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vOpde+Qh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oHfCkP41; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=druckdev.xyz header.i=@druckdev.xyz header.b="o1o4TvSe";
-	dkim=permerror (0-bit key) header.d=druckdev.xyz header.i=@druckdev.xyz header.b="YHE3kZl0"
-ARC-Seal: i=1; a=rsa-sha256; t=1737733151; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=e8rMeXX6KVf+TbRuIdLYluOUlZJdOCH+GoLNqb/dAEsPutYTbDD+8vjmtEH6FVgJHc
-    GiSQzIqcP45ypXiYFt+J3DN3M6hYV6b085t7d7yP079FsTbNr4/AUz8XdM6Jg+POruU+
-    jtCqe/Lh8T17UMXmzgksu9+vZpHvtI/ff9cmVlmwaRzudQkTn+/rs9aR+qexjwFOZlwT
-    1l/i8BGCcY/om1fKl9+naoHg6H0oLrSI5cTAYftd+VLNSocZI7O1egG1Am+D+6ljnbBy
-    DKLQ90ltHHexqznRGpjJRi7i7ayRD/NSe5v/eB9hG4f7A66RphjfVmNKalz40BR/RrLC
-    0yDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1737733151;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=nPFlVTO05Gt1QUyMoq4QK2OmEdve8mL0nBmcqjZj/zY=;
-    b=H4Fu1oS9GbtDiVzrkeHokHZRM80/sY4au/uOudPa09Cv894w8QFbykmZagfR6yt0sw
-    xj9wrb/h2+Zfhw2yqkEyXE5gdLz78+b7iUPPR15+A+/b0ddWSgaItuxZtR+k837TJwwT
-    gvHUIpNVaQNB656YjYWhVtsrXuczutcN2Apo+kumHu28t4cMA06S/Q+Wq0KUjFM/iAlu
-    lasvzMMjhaBHotFLUCshIXWRLxgP7wL33tu6UvjY/eNronWWASHLFLjDvM3ZIOUM5R6W
-    UUmJ+x3uIdXH9vwLtFWYaEmkqVImi8l7EIv5liWatrFeC3hwbJp7s8UQ50zn1cYz+w5b
-    nhHg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1737733151;
-    s=strato-dkim-0002; d=druckdev.xyz;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=nPFlVTO05Gt1QUyMoq4QK2OmEdve8mL0nBmcqjZj/zY=;
-    b=o1o4TvSeckKm7kIpdWDzgAt7M8oRfW2Z6IBjjztcgWy4TF2/HsYq5I73olIFGE/S82
-    R8jV8eBLSqbFYLPj4iz1ljbjbMm2w53d2GusseFqmWs0pHeSRU7tzETTJJkHXTro5WEu
-    ubhIWf1ewgRF0qkcWX/QWlZJyYG0oLReiprcr4fyD7gbX5w6I+7w//OxR4slhLOg/Ief
-    VY342jQTXFzSCE/l6BQeo/Dkax4B1LqijMkmY+Q4MP/Ls5Dh5FD2wvaHRLGnh5nCv0e6
-    8/01GBWfObjOznEJ3g9752zRAeBjBu2Y6wntAMJAbj/XzI6JEFZWRXtuCHH5YNh7Y4gY
-    NUVA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1737733151;
-    s=strato-dkim-0003; d=druckdev.xyz;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=nPFlVTO05Gt1QUyMoq4QK2OmEdve8mL0nBmcqjZj/zY=;
-    b=YHE3kZl0+quvwV+AL/vuPVUzIb4UTTD7UwCV6OGHpEb3iriCJopgbNxYWmEcpAFNxh
-    +rCOCM8qWN9B+3d3zdAg==
-X-RZG-AUTH: ":JnkIfEGmW/seMrxmWVd+x7RM4PVX8ZiQ+hfSn8fqWajQd+FGXzHces4NmdTRo+jLqhwh"
-Received: from localhost
-    by smtp.strato.de (RZmta 51.2.21 DYNA|AUTH)
-    with ESMTPSA id efbf3a10OFdBrTR
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Fri, 24 Jan 2025 16:39:11 +0100 (CET)
-Date: Fri, 24 Jan 2025 16:39:03 +0100
-From: Julian Prein <julian@druckdev.xyz>
-To: Julian Prein via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] config.txt: add trailer.* variables
-Message-ID: <7igsgrrvt7rvh3p7xa5g7r67ksqpmkgbrbqdpwng42hcqyrvln@3eumorcj6my3>
-References: <pull.1871.git.git.1736429142334.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vOpde+Qh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oHfCkP41"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id E793B1140176;
+	Fri, 24 Jan 2025 10:47:16 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 24 Jan 2025 10:47:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737733636; x=1737820036; bh=Si4ruh0jMa
+	ZPQbvdT0he9ouHprrz8rOPyoOtU03uitg=; b=vOpde+QhnDwwzn7JQJjsevl4ZX
+	yjeYErBv1ChDpfNzbJC57jDZp0KtCw+ZyQrIlNJG236zi1BjN55KZgq3S2+5zbPG
+	6r0L/R7X/ZyGm5hLVkIXV9sTS7T6CSzLzOu5OsmbVnqYyw/X8eAwidw5AudEHIbs
+	FiSw6ndZGUmXkK5c0VqfYaKx2KmnBlTeO7SpjXxhUXOkF5Rk6g/QXeUwRnNqEV1I
+	WgNY/qa/h1Go8ALbsKFn864DQ3xGzGuSKaMWPMZBlepczAemeZM+gvMH6rOgjLQv
+	aN7a6Sm1gez/gfQBHgA0vt0f/04VL1Edjhzwfrj3wiryHwn1T3Fa4SAZKLig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737733636; x=1737820036; bh=Si4ruh0jMaZPQbvdT0he9ouHprrz8rOPyoO
+	tU03uitg=; b=oHfCkP415YWTOiy/bdjI/eeG9EnAlGawsedpdGa91nlREY2TC13
+	9a+spBTXLczEEKtuQCVizxoZ+VLfD7MXGCv5jISkPy7Zj6+Lij21yxXR/56yKjMd
+	UJHJ4de0/QU0puziEKrzX5budZ1JYVckKJiVTH2IbCnvV7v7F2g7ysKxwjuDrWDI
+	gZgQGWQYO820G8b2TiraLxyZvewiZd+m8jphvV7AqxSngLgJEz1pCgttUrhgw3sI
+	aX/qN2VG1hlj3SWLOOyHibFet+bC9V+VQ8fsA5lkQoV1uhWOLjzejkoEHMVEw5Aw
+	AjvP6U/gjMh3dXfgx9WJtBFAHfy95oXLC7g==
+X-ME-Sender: <xms:BLaTZ6OmEaSuGVKmA_mURMCwj4mNgr98qyY6PStFZSTJ8xDYIQ1SHg>
+    <xme:BLaTZ4-BdPdRUQpTxSHAHSmLnqHGo5NtBO1cAdvhgS6pEnsWCBJggOpBuJ3k8NZWt
+    xomSSbqgq7SUsqLRQ>
+X-ME-Received: <xmr:BLaTZxT8NXKUR2W742h9rhS1NKpnSxj7Qyvy-KV-3ACi31Z25V_MFJzJo754RmaBxf2DyCAaKRg1iC9Jv50NWopV5613pzOdoTYa>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedggeeludcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnse
+    hiohhttghlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:BLaTZ6u4ySB_qTYn7q_4NYP2hS-9m09KQIo9d7RBM_FsipEylryvWA>
+    <xmx:BLaTZycHtfUMBQoKp2LuUMfa7Mr_p-TGUwnmVl_Hh5uCKA3kshnGSw>
+    <xmx:BLaTZ-2xWy0Fa0iPEFBxHg3NsWJJR78jPKvBYlg09qp0NJ0rdtts2A>
+    <xmx:BLaTZ29B_7BJ1vCKxDzzQ0DgPKT8A76e4YjS3QKdQcPOynnUuvvI9w>
+    <xmx:BLaTZ_G5pvOu23eBVz8UwffOpUqFSegsy9ETpwqdZBy11spvcYaG2MrN>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Jan 2025 10:47:15 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,
+  toon@iotcl.com
+Subject: Re: [PATCH v3 0/5] pack-write: cleanup usage of global variables
+In-Reply-To: <Z5MpOelecT-4ym7B@pks.im> (Patrick Steinhardt's message of "Fri,
+	24 Jan 2025 06:46:33 +0100")
+References: <20250117-kn-the-repo-cleanup-v2-0-a7fdc19688f5@gmail.com>
+	<20250119-kn-the-repo-cleanup-v3-0-a495fce08d71@gmail.com>
+	<Z5MpOelecT-4ym7B@pks.im>
+Date: Fri, 24 Jan 2025 07:47:14 -0800
+Message-ID: <xmqq1pwsqkn1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1871.git.git.1736429142334.gitgitgadget@gmail.com>
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On Thu, 2025-01-09 at 14:25 +0100, Julian Prein via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: Julian Prein <julian@druckdev.xyz>
+Patrick Steinhardt <ps@pks.im> writes:
+
+> On Sun, Jan 19, 2025 at 12:19:25PM +0100, Karthik Nayak wrote:
+>> This is a small series to remove global variable usage from
+>> `pack-write.c`. Mostly it bubble's up the usage of global variables to
+>> upper layers. The only exception is in `write-midx.c`, which was cleaned
+>> of global variable usage, so there, we use the repo that is in available
+>> in the context.
+>> 
+>> This series is based on fbe8d3079d (Git 2.48, 2025-01-10) with
+>> 'ps/more-sign-compare' and 'ps/the-repository' merged in.
+>> 
+>> There are no conflicts with topics in 'next', however there is a
+>> conflict with 'tb/incremental-midx-part-2' in 'seen', the fix is simple
+>> but happy to merge that in too if necessary.
 >
-> The trailer.* configuration variables are currently only described in
-> git-interpret-trailers(1) but affect git-commit and git-tag as well.
-> Move that section into its own config/trailer.txt file and also include
-> it in git-config(1).
->
-> Signed-off-by: Julian Prein <julian@druckdev.xyz>
-> ---
->     config.txt: add trailer.* variables
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1871%2Fdruckdev%2Ftrailer-config-vars-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1871/druckdev/trailer-config-vars-v1
-> Pull-Request: https://github.com/git/git/pull/1871
->
->  Documentation/config.txt                 |   2 +
->  Documentation/config/trailer.txt         | 136 ++++++++++++++++++++++
->  Documentation/git-interpret-trailers.txt | 137 +----------------------
->  3 files changed, 140 insertions(+), 135 deletions(-)
+> Thanks, this version looks good to me.
 
-Hello,
-
-since it has been two weeks now in which this didn't get any feedback, I fear
-that it might have been lost in the void and thus wanted to bump the thread and
-kindly ask if someone could take a look at this.
-
-I am also aware that a patch to the documentation is probably very low priority,
-so please tell me for the future if I'm too impatient with this and should have
-waited a bit longer.
-
-Thanks,
-Julian
+Thanks, both of you.  Let me mark it for 'next' then.
