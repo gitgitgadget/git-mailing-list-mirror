@@ -1,211 +1,161 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110B91CDA01
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 10:38:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0D323B0
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 11:06:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737715093; cv=none; b=FW7ytlZTSTOES1xxCmnBlfJpVtZv6F4tw2NIFNN5dqYcC2SXlW18zSkYMDM/nOSXVKmdswirRSzZE5jQWmknGv3JSlc5eWg479/aV7ZQMylCyyFy9oH8vzQ5Qb6P6VdPsAYPH2Pb+2N2bqPPdGHZOCkLL8dA4fno9+PzmdQUj1o=
+	t=1737716762; cv=none; b=YJAQJhu2TIVPSBgJGwDLrEIS9jzFx/3a+++agX/cq++YGbZySNYHFE6MVgxUKHM+2Xzk6ff6dUOarkTFVEtDWGIM7DK8ttMixLNZPN6za9xLIviqM/s8F+/sBa1x3jgqXvHRNaT+s+PLkgVCsF7Hni1gvomKEsN+XWNyzttxUWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737715093; c=relaxed/simple;
-	bh=6h0j3PMI8HSsEclIz31Eeem4wUUXGcZcvrBhHtFZMtc=;
+	s=arc-20240116; t=1737716762; c=relaxed/simple;
+	bh=Q1YYN2xoDKTYadsUQOgyPeFVww0kRdBCVZm4AE87zhs=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XshEuXtlLPtoOYoYYPFr+7yl/yXQIeFuKYcsP5FWOwVQdviGer28rlJHj5eAhXvQTf/jEWC2PyVKiJ5DToTAfC/Kg2R5xT0NyOs0aT8Ll+Bn0MDSwSyOFmjTu5aciwIgAVF96nrtk70xUI/+csCbeoxA2Hh7IAkkOFt4bfAOJSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dmHc/sIu; arc=none smtp.client-ip=209.85.221.172
+	 To:Cc:Content-Type; b=YJecadUqsj7mXSaWXQRzUCnfhpIOD2WN8mikAJT0EpKOw24sBlzoLqkmf18gLBnwQGUU6chCq9+nQBHz4PpSOTP4GGZ4htACvG8gzbuMRAWGWuzPpEz3N545XCu7qWvfCswFMlP0yKWDcVWJhE9yXAuZ1+GVAzrSuZCCN20kB6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H5ycI7tZ; arc=none smtp.client-ip=209.85.221.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dmHc/sIu"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-51c68d851feso643951e0c.2
-        for <git@vger.kernel.org>; Fri, 24 Jan 2025 02:38:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H5ycI7tZ"
+Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-51640f7bbd3so611920e0c.2
+        for <git@vger.kernel.org>; Fri, 24 Jan 2025 03:06:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737715091; x=1738319891; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1737716760; x=1738321560; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uk9fjYfrMG+eHqFjZhgWlzbPSFb2fH3z6BZF949XZNg=;
-        b=dmHc/sIuJn33KqNLEX2Y+yMp9nIkXhp8+m1MtqcHiTk5Azs6eEmh3OfDsUyEHFgzqa
-         ki0nNC41jz4w8Fm2ODcugpRu8QoMdKmpMkzSNZjQizgATB88bixT43MXFDJEvrCBClNl
-         HTrkE2AHjufoAzgNtxZShUEjuFvNQ3zdZpjFUFt1LfHm7xgruqOltv7oip7RbJAoYi/W
-         WJyPZ+Wtm6mn78cXjqujFznQNtEU/AzPtJUktcF9xRpQMeeGLTwmYpP+MK7FpNuqf5PU
-         1+3PAd0CIfZeyxRP6P2D39VqUakUg1HhdIC9Gdn37v2vVjmHaiG0KIQCrAY5QR0b5jr0
-         7LRg==
+        bh=fe34y+uGUbQs+L7JNxtQaQM/f+fYg+ux6TyhR5t1zZk=;
+        b=H5ycI7tZky0q2JulW4pEoJCbZSM8twZn0TBN5RyZxkU8lknqxxeoqs+2JN3gB/VZr6
+         E+xiviApml3Z4EVRbxui/AI4yKWsHpFlFTh3MjEtL7i6jAkReyetJ8JDgFFQTpDzsSut
+         7vj+nVKX7KulmlFrml+iAJK/6PMfd01jgJ5WTwWLu+5VF9UZS20D9Ey3eglVCmvdjQwg
+         rmBwfqrs6yhmuAfjUh4SaZgqND7SbnYPlISHsyn+oCufTaAxR6PnwO3IUVPUueIrTi6y
+         t+Nw7bwUmVS0ZYaBHoK90JayiOxzyg8H1mHcxf6M2B+eTZKp8jm7R1Oq9UTlskjimU0z
+         U9tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737715091; x=1738319891;
+        d=1e100.net; s=20230601; t=1737716760; x=1738321560;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uk9fjYfrMG+eHqFjZhgWlzbPSFb2fH3z6BZF949XZNg=;
-        b=OcQb1A60neJ2NOSnuFqLNB//CaQYPLWX/OLHxAKqLguVZcQDeLWI3qsa51iZHbKExy
-         Zf70CJTsnB8sFOGvo/VMtP+LVDzOE/dbckeupd7GgtzX8zp8dBKpYVh9ylYvmZbNYWZ/
-         SLA0oRueaSFK6xTgi6I8Jf977X3lHTOO37VMuwNbwPa9eiFEYNcuJSDMimVnv9jR5Frb
-         zh4HD8L0OBX27APFoohv2j/cI2uygro3eoNOj6XOjsRaB2gy7ZuIV1gnDLJbHqHTXP29
-         wUtR297dq0pDoDuaLWcghtEvupIShyF8xvtLunyVw+TRTZlBDEZ9e2qNjYr9d6QODiuV
-         BGAw==
-X-Gm-Message-State: AOJu0Ywfn+D35U8brDF2Ijj5cLPY7yNfjkwuVSZu1PbskXi8T2BAerRM
-	fiLzuA4cghjPA7GPJBnDlIHyoK1fiZI4DpFzDaDHnsW/+JOgj0E1f5RAGrjP+cmGmaQmcEolMxF
-	9vIPeWAkKwU7S9yyZx911llLkYc/G70S3
-X-Gm-Gg: ASbGncuXxPCYNghCOQnP5a1dzM8PeYz2cKV0Ixpta7byBwZHBFLVYdR7d/gKdGwfbCR
-	cWhaS6SgvvRaotioVX9KdWcXOFMN680+RO0eqQ4RFvf5Iwbn5ZULuINmeYUYxwAopcjJq0HsVaW
-	ZOqXte67UeL1BVSx9x4CLW
-X-Google-Smtp-Source: AGHT+IGlPSfd33Ivqbn8/WWgs0Xt6vQNlrptufQ9BTluKSsAP7Lsc3ICgX0nTKHfBI8IJRDmB41UBG9K/LxcHptY7ec=
-X-Received: by 2002:a05:6122:370f:b0:514:eeba:517 with SMTP id
- 71dfb90a1353d-51d5b3768ccmr24790270e0c.10.1737715090648; Fri, 24 Jan 2025
- 02:38:10 -0800 (PST)
+        bh=fe34y+uGUbQs+L7JNxtQaQM/f+fYg+ux6TyhR5t1zZk=;
+        b=EGDXv1Gx41LgmQyuLqHnv7nr+6nYEVDlMXYPxp7uqMsfOjH8nmUBY2aQLipBg2rq69
+         HCJGFb0lvmglLNkpIwaIeKUa9w7b2s6+utAgiaIoySiosh1FDBnrai+8chfJPPulcUMj
+         wlP+SObVJuEDi7e0bH0HO93J7wiRNVcKuc0THJVp6k8N7m+RxtjfBH0Nf0M6sRefa3YI
+         Nxbd+pJ2dTb3Uj9tX5/gx6x5Jbmq3Afk06C5U6YZOCsUSSfZsuzC9NgXLwHYh34n5I14
+         hsUDjPCWSTmxHXP/FszPhQzf9TKKF0Klej0Cb/DyMilzhIHiRmRNCcsCKvGLS+k3s60H
+         TtLw==
+X-Gm-Message-State: AOJu0Yyy0ngc759Z9h7LCqwDf4jAqLkiPRMg6VpO7jX5x6Y9Nj1J8QHv
+	F8BWrpWBVG1P8t/DwczTfGfNbxmA3PO9+lxi/L9NqtaczRwCorBNw/8BAY84Grs9ZrWvKmIwqAA
+	wGwfM9Vu5osTm2IS+ZP6EmXYmYfs=
+X-Gm-Gg: ASbGncuevnsRrIP5MA1RtV+VqeNPMi4aNswwf+8KzqrTZz1oL0aROJKgQByU60tC1b4
+	xtLcZRbJXAZ258g59BqdCEMJ2lLXoMpZw7ldyrDiiDyP5tQ1kX9X8+KBx6+Djyy8Bw2xvvdP8aE
+	zKmsXSQsR8X5RpBQHCJ3vL
+X-Google-Smtp-Source: AGHT+IGwWT/t8GNgjQhdy2tp4uepE8P3Q1447+DtLGu+M81/nujn72QBokOQJlA8gJnTXlu4Mxf2qxsTElG1JeEoW14=
+X-Received: by 2002:a05:6122:4011:b0:51b:b750:8303 with SMTP id
+ 71dfb90a1353d-51d5b39ad50mr25344461e0c.11.1737716759901; Fri, 24 Jan 2025
+ 03:05:59 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 24 Jan 2025 02:38:09 -0800
+ HTTPREST; Fri, 24 Jan 2025 03:05:59 -0800
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqv7u5s9cq.fsf@gitster.g>
-References: <20250122100319.2280647-1-karthik.188@gmail.com>
- <20250123112944.3922712-1-karthik.188@gmail.com> <xmqqv7u5s9cq.fsf@gitster.g>
+In-Reply-To: <Z5KAUo4FeG2M1mIa@pks.im>
+References: <xmqqwmetgdgm.fsf@gitster.g> <CAOLa=ZSyEg8G9g1B78VRymgfk9eo=d3KkhD=+S14_BSqaAO2Mg@mail.gmail.com>
+ <CAOLa=ZT4nws0irdZKUuWc70Rv9RUNQuSXnGAt1SnE1O+umSReg@mail.gmail.com>
+ <xmqqldv1tpgp.fsf@gitster.g> <Z5KAUo4FeG2M1mIa@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 24 Jan 2025 02:38:09 -0800
-X-Gm-Features: AWEUYZmEX2Bji65DDvlMWRQnl_SvnQ6QsD8_-mp8uRWTZeJtJUroCGWpBNqN38U
-Message-ID: <CAOLa=ZTPy_gMkG0gPeasATdudynDY2uATvHUS3dpiqdgqZtR0g@mail.gmail.com>
-Subject: Re: [PATCH v2] refs: fix creation of corrupted reflogs for symrefs
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, nika@thelayzells.com, peff@peff.net, ps@pks.im
-Content-Type: multipart/mixed; boundary="000000000000b30f84062c7152b9"
+Date: Fri, 24 Jan 2025 03:05:59 -0800
+X-Gm-Features: AWEUYZnDBjpA_lK_k4LPAqXk3pfLvV6c1u8nGrjvPpkYtTrQBMH3V0XQAdgAdRs
+Message-ID: <CAOLa=ZSotvEPgOyU0FnZBpNwnpjhBk4-PXk5rc=cQZuToUmVDw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2025, #05; Fri, 17)
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000031d290062c71b6a5"
 
---000000000000b30f84062c7152b9
+--00000000000031d290062c71b6a5
 Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> Subject: Re: [PATCH v2] refs: fix creation of corrupted reflogs for symrefs
->
-> This may be just me, but every time I see the above title, it read
-> to me as if we are on purpose doing "creation of corrupted reflogs
-> for symrefs", but we are failing to do so for some reason, and this
-> commit is about improving the situation so that we can correctly
-> create corrupted reflog entries for symbolic ref updates.
->
-
-Okay. I see what you mean.
-
-> And because the only sensible reason why we may on purpose do
-> "creation of corrupted reflogs" I can think of is perhaps we prepare
-> such corrupted thing to test how robust the production code is when
-> seeing such corrupted data, I would expect to see a change to t/
-> hierarchy.
->
-> But the patch touches the code, not just tests, which makes me
-> doubly puzzled.
->
-> It happens every time I see this title and the change.  Perhaps drop
-> "corrupted" from the title?
->
-
-Yeah, that would make it much clearer.
-
->> The commit 297c09eabb (refs: allow multiple reflog entries for the same
->> refname, 2024-12-16) added logic for reflogs to exit early in
->> `lock_ref_for_update()` after obtaining the required lock. This was
->
-> I do not think the actor, who "exits early", is not "reflogs".
-
-Took me some time to understand this, but I get what you're talking
-about. My sentence adds ambiguity on what we're exactly exiting early.
-
-> Should we have "for reflogs" in the above, or perhaps move it to the
-> end of the sentence (i.e. the required lock gets obtained because we
-> want to do some operation "for reflogs")?
->
-
-Yeah that would make it much clearer.
-
->> added as a performance optimization as it was assumed that no further
->> processing was required for reflog-only updates. However this was
->> incorrect since for a symref's reflog entry, the update needs to be
->> populated with the old_oid value. This is done right after the early
->> exit.
->
-> "The early exit skipped this required work"?
->
-
-Yeah, that works!
-
->> This caused a bug in Git 2.48 in the files backend where target
->> references of symrefs being updated would create a corrupted reflog
->> entry for the symref since the old_oid is not populated. Undo the skip
->> in logic to fix this issue and also add a test to ensure that such an
->> issue doesn't arise in the future.
->
-> OK.
->
->> The early exit was added as a performance optimization for reflog-only
->> updates, and it wasn't essential to the original changes. As such,
->> reverting it shouldn't cause any further issues.
->
-> I am not sure if this is even worth saying, as you already said that
-> the early return was done incorrectly assuming that the remainder of
-> the function can be skipped as an optimization.  What may help
-> readers is to state that all the rest of the code path that was
-> skipped by a mistaken optimization is necessary and would not do
-> anything unwanted.
->
-
-That was what I was trying to convey.
-
->> Reported-by: Nika Layzell <nika@thelayzells.com>
->> Co-authored-by: Jeff King <peff@peff.net>
->> Signed-off-by: Jeff King <peff@peff.net>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->
->> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
->> index e2316f1dd4..29045aad43 100755
->> --- a/t/t1400-update-ref.sh
->> +++ b/t/t1400-update-ref.sh
->> @@ -2068,4 +2068,13 @@ do
+> On Thu, Jan 23, 2025 at 09:22:30AM -0800, Junio C Hamano wrote:
+>> Karthik Nayak <karthik.188@gmail.com> writes:
 >>
->>  done
+>> > Karthik Nayak <karthik.188@gmail.com> writes:
+>> >
+>> >> Junio C Hamano <gitster@pobox.com> writes:
+>> >>
+>> >>> * kn/reflog-migration-fix (2025-01-15) 1 commit
+>> >>>   (merged to 'next' on 2025-01-16 at ae8f9ce9a0)
+>> >>>  + reftable: write correct max_update_index to header
+>> >>>  (this branch is used by kn/reflog-migration-fix-followup.)
+>> >>> ...
+>> >> This seems to be breaking on 'next'.
+>> > ...
+>> > reproduces the issue. I haven't found the root cause yet, but will
+>> > mostly call it a day and get back to this tomorrow.
 >>
->> +test_expect_success 'update-ref should also create reflog for HEAD' '
->> +	test_commit to-rewind &&
->> +	git rev-parse HEAD >expect &&
->> +	head=$(git symbolic-ref HEAD) &&
->> +	git update-ref --create-reflog "$head" HEAD~ &&
->> +	git rev-parse HEAD@{1} >actual &&
->> +	test_cmp expect actual
->> +'
+>> We have a handful of topics related to refs subsystem in flight,
+>> and I am a bit lost here.
+>>
+>> (1) kn/reflog-migration-fix (the above) was done as a "fix" for the
+>>     issue reported by brian in
+>>     https://lore.kernel.org/all/Z4UbkcmJAU1MT-Rs@tapette.crustytoothpaste.net/
+>>
+>> (2) You mention that (1) is broken in the message I am responding
+>>     to.  There is no known fix yet, so (1) needs to wait in 'next'
+>>     until it gets fixed.
+>>
+>> (3) kn/reflog-migration-fix-followup is a code clean-up for (1); it
+>>     has to wait for (2) as well.
+>>
+>> (4) kn/reflog-symref-fix is a fix for a different bug the commit
+>>     that introduced the bug (1) addresses.  It can proceed
+>>     independently from the other topics.
+>>
+>> (5) ps/reflog-migration-with-logall-fix is another fix for a
+>>    different bug introduced by the same series whose bugs are
+>>    addressed by (1) and (4).  It can proceed independently from the
+>>    other topics.
+>>
+>> The above is my current understanding; did I miss any other relevant
+>> topics that are related to these efforts, and/or did I misunderstand
+>> the dependencies among them?
+>>
+>> If I am not misunderstanding the current status of these topics,
+>> I'll be marking (4) and (5) for 'next'; I am undecided for (3).
 >
-> Nice.  We could rename "head" to something more meaningful (like
-> "current branch") but I can live with the above version.  It is much
-> nicer than assuming on what branch we would be, which was what the
-> previous iteration did.
+> Karthik has meanwhile sent a v2 [1] of the broken patch in (1) that
+> fixes the issue discovered in (2). Given that (1) has already been in
+> next, (2) probably needs to be rerolled to be a patch on top of what we
+> already have in next.
 >
-> Thanks.
+> Other than that yes, I think (4) and (5) can be merged independently of
+> (1) to (3).
+>
+> Patrick
+>
+> [1]: <20250123135613.748916-1-karthik.188@gmail.com>
 
-I agree, this is much nicer indeed.
+This seems right, just providing another set of eyes here.
 
-Also I just noticed that you have already amended the commit message
-and added it to `next`. Thanks for doing that. Happy to re-roll if
-needed!
+Thanks!
 
-Karthik
-
---000000000000b30f84062c7152b9
+--00000000000031d290062c71b6a5
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 70a4b641e0d5c5ad_0.1
+X-Attachment-Id: 25f7c1588b40db4e_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lVGJYNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMGNtQy9zRUF6ZzlmYXdnajZXSnZpM09RWWRaMk44VwpGMmhTREsyaUhT
-OTN5MzVjWDRJOTlNcUVXTXZMcWF1SE54dmdDaUE4cXRJNE1vSSswSVJDK3VmUjR5MTROQmtmClFs
-MUpST2JUaG9wRWlsR2tEV3NJcnlkcitxOGovRk94cEVHUytmTmUyQnVNV2xZaG0xVjlUQXBmVkI1
-b2xhb0EKVDYxZTN0Q3A2clNMNnRNSkkwSGo2UVhmNjlwVTEyanE2Tm9sbWRhcFhSeUhCbWVEWHBN
-eW9URTArWmlkTXIvMwpMbEdVOXpUVG5iQ2VrWmlZUG9KOEk0cVVxeHEycmxZVGo5TkxOcm1tcHUw
-bzRDTThsbzNxRGt2aSswN0xCNUVwCmZSejR1TEljWDhKK3hjK21zZCtoa0lXVStNdEtTeFNjUU9w
-SkJieVpUOFpxQmlma1ZQMTd0ZDBtZGVNTlYvK2gKUVkwMTFVVTdnN3oyMUpaaVFqbit1OS9NcmFx
-VW82SmlCWWNkSjRlK0hPV3pTNWgxVkVrcG0vOHRIa01aNlpVYgpBSHBmMFgwbi9USkxmUmV5MDJw
-MWZsM1Z0ZGxEeXBpZThTUHlXZzM2bTM3d01YeHVkcTFDbnNLK2IvcGozUGRLCnVycDQyaXRPUC9l
-c2crcjFNYmJMYkpyRnV1VUU1RUFRZG9GMUdPWT0KPXFaWGwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lVGRBa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md2JXQy85aS9LaGtzRU54NHd3UTBoVGZwR2lHOVk4cQoraXhlUHZ6eU9Z
+Tmc2bzJMWFhuM1hGN21UZnU0MVFsd0t1ZTVzeVVYanIwV1Y0QUlLTnlHUUZIQW9SaFJDQ0tSClZ6
+Q3hadDJwOXVVYzFNY1l3Q1pHSHoxbnA5MjhPTzI5ZndIN0NRb2lmbmdZZ1VKKzg2SElOWFp0ZkZL
+ak5FTDQKeVdEQ0RybjFnSGphRXRma1ZGRjNFekd6dnV4SVRZM1IySXVYQW9TS2E1ZVBpcDJFZThj
+YVR6bkdCaHdtNngzQgpYaUZvbGF4akJxUjJ4U2xOMVkwMjlzZEV5ZGFTUnFOWHVBK24rTkpHK2kv
+U01JQTg5YUZNMjhyUlFxQy96VEp5CmgxWStsTlc4NVg4Z0FtSytWMnBJOWxSUlhpb3ZXYUl4WEcr
+d2xXNytveG03MDFGbFk5WjNSRzVSL3JrMDdldkgKY0EwcTRBcCtoQ01kR1NERHIwZU1IRjJFWlpN
+QXBYWk1SYXFTVTF4ZSsxVXJpNmsyem1pV2hnUFBNQlVsdTEzTApNWlBBNTVsSGE2Uy9sNzJpeWYv
+enFnRWlqblMvTmhCMWRMUXAxY3BRclhjT21vUnVaSUNFUnJkU2ZUd0lhK05QCjdCVXQ2RzJDaFA3
+bThTN0VwOERxc3ZLbUVIWEp3cUJGbCswelVxaz0KPXZpSksKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000b30f84062c7152b9--
+--00000000000031d290062c71b6a5--
