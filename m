@@ -1,82 +1,77 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7530723A0
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 09:59:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE37E573
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 10:31:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737712760; cv=none; b=R04ghlBpJjDw9qNGgyuwtouCUugAMusURzBCZUaLzMOk9otIDxH7zz1TS/kbRrGZdogovZ6heLXk49EqfNaehZuLY5H6dXqyC4cxghkb/2/9wLkdScOSeQunSndQBU74B8PiAIJx/cUyzX5EcjLNZh7hMbwLUYQup9+Wc0y5050=
+	t=1737714668; cv=none; b=gnGuRva2ZOyHVknRWdUnrIJVLqF3WCxV6O+AofAEe45LbQGvlWul5/0NtMaqAZXw53eREY6Fm2+em8FMx0oOw7b12SabYqon1HoUvOKhsTXijA9yED4N4GoW4fteCsWpQQwgisdYxEkROJfM67dNrJvu4T/xUJrlp+7rza8GsZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737712760; c=relaxed/simple;
-	bh=/QRfCd0BkHz/bUxZFz/EfKyBvcadwUwW3sqZ17DHU0M=;
+	s=arc-20240116; t=1737714668; c=relaxed/simple;
+	bh=w+FJpIQ+oggcEV/Iq0qAcuaFGrYqNql/TzkCuBGdX8I=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CZm6qiNYzsk1R6d8d2fIU3myyf0edEtKOTGsfp6QyNbjjQAJUct+wIJ6LMutYEe3pM0DZO3BXUZSo7u0tRP4F7g0cz9rnNdWAkai4kDwh7MoxvUW3QMfHE+IlGOfbji9NMkrQWhko6YDjenJ1BlSDwBwcWuIaTzc17v+cth+E9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=azmHimbJ; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	 To:Cc:Content-Type; b=h5LIcjh/1eukf8rozU6VOHmNQbGYCM5oglT5X7bMyZ551zFYjK1QPmij0avBGiM55baaowgeIRXH38Ik/dGa60hnKdoeOwcDRJKtWGoRwW1o2FMF/Vb3sTFvGzIbDQ6XNHd6UfMJhtG9vHJ6Gk5Qqs976fo3VGgzv9Eqc5Lom7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="azmHimbJ"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5d90a5581fcso3350906a12.1
-        for <git@vger.kernel.org>; Fri, 24 Jan 2025 01:59:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737712757; x=1738317557; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/QRfCd0BkHz/bUxZFz/EfKyBvcadwUwW3sqZ17DHU0M=;
-        b=azmHimbJCekFMZuV9X1Xpg70ePV0OZvv9+jpePIkbzPLAgpg0YKG9h/ITUFtnu/Qbt
-         +Rb3FXXl3CQcw70O53N7sXZLQWJlIM8w8Pga474K+XpAOIFquMzv65d6X8ZxPXOi3rm/
-         ecLx2dXls4XIC+cS4ZFsvUFY9yI6F0lKnm9ql/1qdZIPk/6wbfZl0X59h0NI1W3O8r4S
-         8dUAIronMoILqWommrI/5dhNzebPwCDz75U+A1d3VHvJ0PUA3ht7HKQi3YPCwp2qP4Ei
-         WC6u7JTdiLfEtOtJVNhjh542LZnlR/lpIOWDI7eYq+2Jg1uMC73+HkHT0Ht0Q/oaOpa6
-         E5ww==
+Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6d8fe74cc9aso2314896d6.3
+        for <git@vger.kernel.org>; Fri, 24 Jan 2025 02:31:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737712757; x=1738317557;
+        d=1e100.net; s=20230601; t=1737714665; x=1738319465;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/QRfCd0BkHz/bUxZFz/EfKyBvcadwUwW3sqZ17DHU0M=;
-        b=nReqhNyutal2crr+wzqVTiaa2cpypPGJKeCPWaeCW8DE/tDD8NXnoadHo2FGiTZ4eZ
-         xGPUe8YUT1WKy4VjOy0cdVWGYnLKSN1aoLMVVxx/KVoX+C46DQ80XZRERaBt09EjDSaT
-         oopbYEtUjUmob/0xTn8LR89BOcH7Y7QgsSC3N4N8WJVWJRNkujBRaIHuimFFoSaDLSlY
-         VWMaSvXQAF3+QEPok5P6P1B5bqja4n5+aDbmzcJs1WgvZavoAApx/C7QYOxwmV2DxEdC
-         z+n5bHN+K5kEzov6Q5wew6b2fV30sZV1cZYoRxbTZNtgoqn24wNH0iN5euPjyV5186Bw
-         bc+Q==
-X-Gm-Message-State: AOJu0YxkzIg5FSRt4e4bR3BzDhC0LNS8PnH3QSNwIgbnNx/A0ZM5eLFR
-	pu+4O91cHlXD6T5022XXidmRA7IPr3kKB6KqUDL0LNY5DVkD9nNtmE3qU70gIPkEs6SJz2sX+U5
-	IxD+PopwNSP+lPoyBfCLu0Ld4Kdo=
-X-Gm-Gg: ASbGncvi0SNS1T1DkNlJWVlr1WEuMMsRfcfmJFG2mfgkEyiTIOecD7CogKqvjQ7vIVq
-	f2+MMAknSsHPTSGOwZgQgbyfyy7iCzRI1gpxRv/69W3rtgkMYgbuEuwtPx98IheHC
-X-Google-Smtp-Source: AGHT+IHdJzxjYjiztumipMiVklr+KXQY6eQYnWj1aMg+eBTx7dn6MCW+Z6yxpU4ueqzT052YTUjtKJ5odDRIOSD4fWg=
-X-Received: by 2002:a05:6402:1ed0:b0:5dc:f48:f01e with SMTP id
- 4fb4d7f45d1cf-5dc0f48f23emr3826788a12.30.1737712756561; Fri, 24 Jan 2025
- 01:59:16 -0800 (PST)
+        bh=5UGhEAjty5G8PQkhE3Ee41NiHJxmKA/IIT63n/OhD9I=;
+        b=FreKZpVx0mfnjfDZsz9nv6UohLQT+BZgFim68UbV369NFEQpbIU+SrQBz2OXJMBje5
+         Gxr3mFzRqSZOyGexlfQzxB8AlYDRV6JkxUi0hdY4UZw1rS2gEJhUww9fzCCZZiv1q4Go
+         qLCf5TZQ5iNsyBqSMXMdrlHNXSp17HOEZoYwuPx0TWwTK8rxIGIPvZlZTfZgW2xclrz8
+         YZvbhL9tcJ/6CXBPFXCIekHE/1DoLHrXFHswk6LjzExfLYcy/Mx2lc/jZceF73DvWgHN
+         c0NM9Xsjp7TWu4RUGTeRawnkvuomXhL/NjSnL2PiLpFjYynwy+I5fS32vp7A0uAggEc1
+         a5dg==
+X-Forwarded-Encrypted: i=1; AJvYcCULrksAnhUzNebvjxBPWm66tuFpRXmj9OM9odZohY/dgadaWl4y1uaHLuJ/OE6cMxGe4co=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+zs5NBqC83Ja7pYn6mue4J4rTkRFUQALZ5fDD6ThooI73jvWp
+	Hp4LKfsJu15Ce3CHpwxzqtte6s6GPNd05Iddq9P2hA3WkavU7sH5CRy5vcq+QUtKHhx7Ks1IhBY
+	gfluSgs3LT00wCVhWuw26YojorHQqMwBF
+X-Gm-Gg: ASbGnctqj3YxdN5RxjzTgep7b3ulcO03/jxhmS56kDhtr9es4vNJT13r3CnNhP3Rq1k
+	P24mDdM/9/YzcSgpOK9Hg4n4n9nSaso+/JKSHTyX5jPC9WkPRpygc+0uh8ySHnQVKfn8A77uk/0
+	STf66gdMnwoU9iA51hHlk=
+X-Google-Smtp-Source: AGHT+IHqX9FzRfZF/It57zMrlTlBWYM/LyKdVz51cfIS6gsbd3Sw+MnutdKQ4gAnq1vokrG5jI6HNi4iLwuqCImGy5E=
+X-Received: by 2002:a05:6214:2389:b0:6d8:e6be:50fc with SMTP id
+ 6a1803df08f44-6e1b21d0231mr154871206d6.6.1737714665194; Fri, 24 Jan 2025
+ 02:31:05 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250103-b4-pks-ci-fixes-v1-0-a9bb95dff833@pks.im> <20250110-b4-pks-ci-fixes-v4-0-6e4613446080@pks.im>
-In-Reply-To: <20250110-b4-pks-ci-fixes-v4-0-6e4613446080@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 24 Jan 2025 10:59:04 +0100
-X-Gm-Features: AWEUYZkJ7WyZ7CBvwrlvXbmwGKNC2ZNIyYFrcaWJfk2yLInQ9opuZqhaImCKMhM
-Message-ID: <CAP8UFD0oYM6Cp=NQfN4p+FS3Mfdng1kXQxObtoOG2QuhPN-Aeg@mail.gmail.com>
-Subject: Re: [PATCH v4 00/10] A couple of CI improvements
+References: <20250111202628.0e5894e4@leda.eworm.net> <20250112165125.130400-1-bence@ferdinandy.com>
+ <Z5Mrk02wMdABtrVZ@pks.im>
+In-Reply-To: <Z5Mrk02wMdABtrVZ@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 24 Jan 2025 05:30:54 -0500
+X-Gm-Features: AWEUYZnGGKQGPtmrRpSurvgrd7_t9wdBn9xkjHmiPm5lMbqLzGPc5g31-13Ve4A
+Message-ID: <CAPig+cTE4ELybkuemQu_FT5BzqaKnVPYYA3dUOA64b7E_v=6PA@mail.gmail.com>
+Subject: Re: [PATCH] fetch set_head: fix non-mirror remotes in bare repositories
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
-	Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: Bence Ferdinandy <bence@ferdinandy.com>, git@vger.kernel.org, 
+	Christian Hesse <mail@eworm.de>, Christian Hesse <list@eworm.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 10, 2025 at 12:34=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
+On Fri, Jan 24, 2025 at 12:56=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
 te:
+> On Sun, Jan 12, 2025 at 05:51:22PM +0100, Bence Ferdinandy wrote:
+> > +test_expect_success "fetch test remote HEAD in bare repository" '
+> > +     cd "$D" &&
+> > +     git init --bare barerepo &&
+> > +     cd barerepo &&
+>
+> The `cd` needs to happen in a subshell. ALso, the same comment here
+> regarding whether we want to have `test_when_finished` to clean up
+> state.
 
-> this patch series addresses a couple of issues I've found while
-> investigating flaky CI jobs. Besides two more fixes for flaky jobs it
-> also removes some stale code and simplifies the setup on GitHub Actions
-> to always use containerized jobs on Linux.
+By way of explanation regarding `cd` in a subshell, see [*].
 
-I left a few comments but I don't think they require a reroll. This
-series looks good to me too.
+[*]: https://lore.kernel.org/git/CAPig+cRsAPp1APNJ7W337UNtunETr+Lnn-RcGrAXE=
+FUhN1APyA@mail.gmail.com/
