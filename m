@@ -1,170 +1,108 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4197C23B0
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 04:06:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047E0320F
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 05:46:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737691584; cv=none; b=dAlSgwTtSY/HLZRYf41AzFsHzCeBR/CyQt0K7WPu2E8+FjYg42gAVeVYd4aGz2qPlkH6o6NFPnP49qYbck0OrwXEHjI/O7MA0yEkB8RiOYCNLm0YMpzy1rGhSPnz9+xpIxp2PMkeA9cQMjd18VFMqkHgLKg8GbRoGjf1wxWJc5g=
+	t=1737697612; cv=none; b=JDPbNYYWUFBEXhm1GQfeAexBH+q8J8+w6hAlKITsUEqrM+S1JMAl2ezgnfdspb8Lsn7tZGs0wgqB0X570ZoYYQ3G6e88cAU1PxQwibXaZ6F6GptJBr7tVmI0mKNzJZxgbfZ6fNkSS7FgXOKkaKhGh4o5vY36liUyJCdI0MybOgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737691584; c=relaxed/simple;
-	bh=Pohz9HkRY51+ov82fFcAPSw7fkOUFj0A9ds6Jfd63ms=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lwFm1pVq64sQ19RpEtAsZ3e8Bkq08BDWSFT4PTevA7uF7lcgwF46Eu5C2zxTk9eXSEekcJG7mBmRSng0SYbnWK7iWhnWZMouP7+7c9mV8cgrtL1k7mebnoMuduyuioaPQp64CoeuHjsX9ZFz91Vc2wowUMgqFVCqRnrHOhHnrnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lm/TgE2O; arc=none smtp.client-ip=209.85.221.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737697612; c=relaxed/simple;
+	bh=YHGgXd+2ViUsl70JOnIQtZWeX1+KrH+Pp9uQxya1+AU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sLJFCLZGRpI8lLgMgHk55jf6UjLuj904Pq9/UQkrGlAicM53e6FYGJ3WcMLB2RRs5c1bYkVHwh1NGb/+anJTzEjl2PrVwKZLxOg6zabkMEUk2pKAeyl+Se67CEZyW1Ma6Bodrehyo08c4ywKTCbJZVIH+6GAyq7wGIeNOVvfYEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lv0mWJ4b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OWthjP/Q; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lm/TgE2O"
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-51c7b5f3b8bso547290e0c.2
-        for <git@vger.kernel.org>; Thu, 23 Jan 2025 20:06:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737691582; x=1738296382; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sLdXIqGlEHqhKKQNt2c6qos64S84aKsxcayO4XoNneI=;
-        b=lm/TgE2Ov/oMqR0gwK3GVdl4/rtRVRb1lE+nKoKTwD7YL2JBDJB9W1Zl45a2QHtRWl
-         J6Ixye3regweFgu4iEy3gQS/mbqIjGrCkrFn6OiC5AJw1ySLk3THksmeG0VJrordno/8
-         P2nDFhkT/Qdrn9jdf8kqGMLcphJLKg5rworUJp8TWu/AC0qKw56K1TOVP5xv8kpvslDZ
-         CwC3Y7U7SV9i50s/jUffn0WlagJQJW7CyOvB8ZlhBspduOd2Yi9hUZH3cJ/HU4HAXoX+
-         R7/v5IicMgqXfrQMAU/v9LjunzSSqiNMKtmMBw9lP9nSIynNf0TyLo0zAJE+twtLg0fX
-         V+bA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737691582; x=1738296382;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sLdXIqGlEHqhKKQNt2c6qos64S84aKsxcayO4XoNneI=;
-        b=BOxfyCiEc4CYUhU783SgzkS7YmE8GCesPvUoMIjazjkWHvP27VVCyFTAFWRdp1DeCx
-         c9GiWEkkBhcmpVTjtS/TN9qxLsxzXOBx2BsHD2QQOb8Y3tZcTP+DmaECO/FnsCSumFQY
-         wFEPSf7O6yke6STlkYSGpHSdebHO1C0MMIACNUOpwz0eTMiu3b8t8RHPuqwPbbsIgE6p
-         vfSOicqCOjdKTyWw/hIqFCz88qRkzYIKpU4r6MKxu0eFNFpKwYwnpvaV7E1Q2dMpmwlc
-         CPuDWfi6ki+coGqfuPNKQtBG+QdPRiMnLuIDS74ny1qwmicbKbfmybCziKTiEbgX3RsB
-         KTlg==
-X-Gm-Message-State: AOJu0YxLrySgT3g8mMZ8X9sk8HVlISXZm3u8PeKzFqImNirMql0X5Mu9
-	ox1E4DRLpwMC6Xkzq8T/4OxbtrFIQ/vS9LZKeLUNXC263SoRUmRXeF3W9Uxs1nIje+hg0CS/u9A
-	8l2YwVfPHAEboS1jVL/kHz2r5NI0=
-X-Gm-Gg: ASbGncv0cTJhZDeFkStp7PLhnbw3EJ1qF/RTGtY2kHb78rfuAi3pZBf61xRmReQdJrR
-	8tdy4sWj0b9ERGE7vtSTqkNydAlbZg5Bj/d+kavRZelgDEf0NaNe907UHEo3R8Gc=
-X-Google-Smtp-Source: AGHT+IHv9EPcFTvnSTmvnHxcYwkZxXoGPevqYf3xNWmysgI5kfxvkpmgl0+vuvt9MZZ5bzk/l/QvpipI71HlAv7xzIA=
-X-Received: by 2002:a05:6122:6610:b0:51c:aa1a:2b5b with SMTP id
- 71dfb90a1353d-51d5b2641e4mr26712956e0c.4.1737691581915; Thu, 23 Jan 2025
- 20:06:21 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 23 Jan 2025 20:06:21 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqbjvxs8me.fsf@gitster.g>
-References: <CAOLa=ZTL9n_DPhNr49XAd6bT838kc09oVx_AH7Pb4o8VK_xQ9w@mail.gmail.com>
- <20250123135613.748916-1-karthik.188@gmail.com> <xmqqbjvxs8me.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lv0mWJ4b";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OWthjP/Q"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 88CAE1140191;
+	Fri, 24 Jan 2025 00:46:48 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 24 Jan 2025 00:46:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1737697608; x=1737784008; bh=VhZO6bMT+D
+	HLODz1BMVCRhVp0/r8Rv6OxwqLThHSh5o=; b=lv0mWJ4bqpuWjLk9n+d2N62DMm
+	lviCTcsZIKTXV35OGwSFu0k0kSFeIWXOpwNBVYKV8sksROxBtymivrHeXUfhPf8e
+	ANxmsVbh1tYx1Ey72F9pPOu14RMxqQMbwpcthtM9mdCd4Vo7X1HtEvMmDG0b4Qlm
+	dbChYbApk4xnW+/FlCXaAvzkCqsZp3i+jfr85wvg8cL+Xr8UDdyI5MkFbq9xY8XS
+	Bk45rdr28Y8HqgOOy3aDm8pLUeLl0GHP45W20pFgpEDwkrGjVF+yZ6eVcAADYLVc
+	mad5GFm9hJCV3Eu7xK5DDHpew0G/3RUbkOdmCmQNgXi9jkMcsFlZc7raFZNQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737697608; x=1737784008; bh=VhZO6bMT+DHLODz1BMVCRhVp0/r8Rv6Oxwq
+	LThHSh5o=; b=OWthjP/Qa/27sMJp3LgIQkdWPY1rRTzIxlZ/2XIXWO2cy29tp1n
+	iz532zKfGgVlop3L2LValcdzrMUteaqtRTvFr2h+ZRuCeuVe9iTVLs435Emc7R8b
+	9MGX43Pkp3OB4sh8raPhdVct5lVqJvWuBA9yoz2dc9v3ifcX6WuTIYhTkGAFHEWt
+	VE5Hzmb67is8wZEjUKI6JQNCJdn6WZF52SRDZ+FCvd4bDvjIsWajrve6aWtpBX1A
+	/H7/Cb07MP0waEocR3F/b009rx/OjZndRF7vr7UisbeXa2kzNLwRJRemvBFTBccB
+	LL/UbQi+vLtYiR77oxWihbQRoCKbT3AqcMg==
+X-ME-Sender: <xms:RymTZ8zgC62hKL7gBRkxgVEPMOi60xfulacNvd-xtUhdaNRuSwazgg>
+    <xme:RymTZwQbDMa9XpEEKbWlLt7bZJS3ImaEv-U56ZzU7JR4De82dsvgrVfwas2GcBngs
+    z9oCNwPUe_c3uR84A>
+X-ME-Received: <xmr:RymTZ-VwfYrqXM_rwYl_NcbUuJKoYau84t7IDSg5G82NzkcJn2Zz8CCMPmEmvHxOR24kE3og5KXfSB3gKqNygsY4eYrx6_vWQUlK1_1gei7CUA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgfeejfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrih
+    hlrdgtohhm
+X-ME-Proxy: <xmx:RymTZ6g71pj0_rAdDbkKjel_PIcsrzub9oND_ALc6Fyc1UAOQCkZwA>
+    <xmx:RymTZ-Aa9HeI07tHb06c-oXvOL2u3bH2zW7_Z7QdNjkljw7X4kDO_Q>
+    <xmx:RymTZ7JNe-qTcEzktdOeQ-oPrlIEDTkg77f4vq3DzttimzVV6PV38w>
+    <xmx:RymTZ1CSAw0FMuVm2mKQ1CPDmxlZtTPUw1rut15zCqy-Bk1KU8fjNA>
+    <xmx:SCmTZx8b1w-r9-DtlqD8eIWj6LDx3kl4ncTh8gk_v5FMxL5NBcXBYsPT>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Jan 2025 00:46:46 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id a5f784fe (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 24 Jan 2025 05:46:44 +0000 (UTC)
+Date: Fri, 24 Jan 2025 06:46:33 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, toon@iotcl.com
+Subject: Re: [PATCH v3 0/5] pack-write: cleanup usage of global variables
+Message-ID: <Z5MpOelecT-4ym7B@pks.im>
+References: <20250117-kn-the-repo-cleanup-v2-0-a7fdc19688f5@gmail.com>
+ <20250119-kn-the-repo-cleanup-v3-0-a495fce08d71@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 23 Jan 2025 20:06:21 -0800
-X-Gm-Features: AWEUYZlxGgBicVnXleglSsWn7EDo2G3AA3vfT5wCzq1fPJj5anJax30uCE-vA1M
-Message-ID: <CAOLa=ZSisRwmUyLHAP0e=8U0QjfFbDfXwd2mJXKjVywcmM56Tg@mail.gmail.com>
-Subject: Re: [PATCH v2] reftable: write correct max_update_index to header
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, sandals@crustytoothpaste.net, 
-	Johannes.Schindelin@gmx.de
-Content-Type: multipart/mixed; boundary="000000000000784197062c6bd96e"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250119-kn-the-repo-cleanup-v3-0-a495fce08d71@gmail.com>
 
---000000000000784197062c6bd96e
-Content-Type: text/plain; charset="UTF-8"
+On Sun, Jan 19, 2025 at 12:19:25PM +0100, Karthik Nayak wrote:
+> This is a small series to remove global variable usage from
+> `pack-write.c`. Mostly it bubble's up the usage of global variables to
+> upper layers. The only exception is in `write-midx.c`, which was cleaned
+> of global variable usage, so there, we use the repo that is in available
+> in the context.
+> 
+> This series is based on fbe8d3079d (Git 2.48, 2025-01-10) with
+> 'ps/more-sign-compare' and 'ps/the-repository' merged in.
+> 
+> There are no conflicts with topics in 'next', however there is a
+> conflict with 'tb/incremental-midx-part-2' in 'seen', the fix is simple
+> but happy to merge that in too if necessary.
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thanks, this version looks good to me.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> While this patch was merged to next, Dscho reported that it was flaky
->> on macos pipeline. On further investigation I found this was easily
->> reproducible when the leak sanitizer was turned on and the reftable
->> tests were run. The fix was simply to add the missing 0 initialization.
->
-> If it is already _in_ 'next', please turn it into a relative patch
-> on top of it, instead of replacing it.
->
-> That will give you an opportunity to describe the breakage in the
-> original version, which everybody missed until it hit 'next'.  And
-> you can also credit the folks who reported the breakage, and
-> describe the fix.
->
-> The reason we do not revert out of 'next' lightly is because the
-> changes we merge to 'next' are supposed to be reviewed well enough,
-> which means that any bug we discover later is likely to have been
-> caused by mistakes any of us may repeat in the future, and it is
-> worth documenting in our history.
->
-> It is quite a different review philosophy if you compare the rules
-> we use for patches that haven't hit 'next'.  These uncooked patches
-> may have mistrakes that reviewers can easily spot and get corrected,
-> and these easy ones are not worth documenting as much.
->
-
-Thanks Junio, I understand your reasoning here and it makes sense to me.
-Do you think it is worthwhile to also add something like this to our
-Documentation? I couldn't find anything there. I'll add a small patch to
-the bottom of this mail.
-
->> The patch is based on Maint f93ff170b9 (Git 2.48.1, 2025-01-13).
->
-> Thanks.
-
--- >8 --
-
-Subject: [PATCH] doc: add guideline to tackle bugs in `next`
-
-When fixing a bug in a topic already merged into `next`, there are no
-strict guidelines to follow. While topics in `seen` can be reverted,
-topics in `next` have undergone thorough review. Documenting fixes for
-such topics is valuable, as it helps to clarify the issue and
-contributes to preventing similar problems in the future.
-
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- Documentation/SubmittingPatches | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index 958e3cc3d5..72454acf21 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -115,6 +115,13 @@ latest HEAD commit of `maint` or `master` based
-on the following cases:
-   new API features on the cutting edge that recently appeared in
-   `master` but were not available in the released version).
-
-+* If you're fixing a bug in a topic that's already been merged into
-+  `next`, it's preferable to create a patch relative to that topic.
-+  This approach allows you to describe the issue in the original version
-+  that went unnoticed until it reached next. Additionally, it provides
-+  an opportunity to credit those who reported the issue and document
-+  the details of the fix.
-+
- * Otherwise (such as if you are adding new features) use `master`.
-
-
--- 
-2.47.0
-
---000000000000784197062c6bd96e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: aca9e8c4313962fc_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lVEVic1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOURNQy85NDcxZThNekF6Y0dZT3pNRVdMTk1UTk9xNgpJd2lBcW5JdEgx
-WFhLSTFBNlRpUTRvam9XUE8zMUFrK3lWanA5OGlFK2g5UUFBWE96cWdQTkVuVWVKTytTcXpsClVJ
-bVI5MllteEpxaDVWYmVEaXRkWGt4WllaVGFHSDhZMHdkV1pOakNyZndTWkhPa0F3NlRYQTVUVUlE
-NVlGNE4KeVY5Z0RDWGpaTFNLeVpDT1NqOC9yemx2ZWtBcnI4cXFueUJxYktsSEs4RWVobGFZeWpj
-aXFJYzZCWVhvc0R6ZgpXYTBqald1djBCNG12VGlYcWlIKzhRT015aUxodEsyZjU4VDlIQzd6a0tk
-cWZvWG5NSzZ4ZWlTaDVJRzI2bTRUCmQxeEVPaHNQT0ROcmtLSldLV2FOK1ZwYjZGUnJ6Umd4T1FN
-blUzVEZTQVpxaGp4aGtnSGQzRFFLNWxBUGk4TTQKL0YxQnJmUXZmWkw2d2RNcHpxY0dLSHlGTEVm
-SzVCYkpHK0YycVB4eC93dHhFNnN3YkVpeUx6dTZYUGFkU0J6ZgpZZElreGRPWHVsVWEwK3BnbEpu
-ZEhpMzU2bVZpRTFVYXA0cnZxNUZrd3hlWkVrQnNZQUtNZDZtNG54dFdLTGN5ClVKbkpYMm83bVNs
-eVpVa29ad3JQai9VNk05dFo2RjRCbmJuRVFBbz0KPTRXajgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000784197062c6bd96e--
+Patrick
