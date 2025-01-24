@@ -1,134 +1,153 @@
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C51F41C6E
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 17:45:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D901D88D3
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 18:12:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737740752; cv=none; b=HRvqQ4ZFYBY0/k8ckGNlM+XNvcjEjcoyUFlg+v6BTJdlt+vUT0wuNYl7oPy4kOWpoSqV9a0LD6qPxkPf1GJZJ8G0DZxs75D2RK6wrNmKSqt2NQzyeZYBhd/FLEEd/jBvUaQBL4PzYs98nym8IN+MvSsg8JvLjAhKqC+xtlwDw2Q=
+	t=1737742376; cv=none; b=B8itc1BCkCnGKRS2hMPxo1QfZvzWVdsOFrEJqPk52DvNYIMo8fHywWGgSFUdxVEVjSYmhDt7zPN6iLYPHU4oa5/HZvv5o5l8ijMqBQAzu7vCM1ppyItnk1kl033qRMn1X0bZTx1FztvZ9dYR7pfroP5vmEOoNsBrTXpI7w1snEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737740752; c=relaxed/simple;
-	bh=7+P/JrzVldJZUnidxCHZqb8nDQ1HFEjaAujn4cFErpk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SUL2ueZxGZ3tczqifejuC8WU8f9Vd4pm7xnLwEl6rNvi0FAtqexymj3Z9GPl+x/Qc+/UVB0Hu5iw1bZgzIzvMwLEi7r1hcoLA2QOCWqgWyS/aB6yRwk4MgpsUXrxli3p4LoK5rswzn8k+kTkCBA6lvD7UdD4vWi6iwm/rjayCJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PyRkzR/G; arc=none smtp.client-ip=209.85.219.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1737742376; c=relaxed/simple;
+	bh=t+UytN7id+7T3P0Ao67m3SnzEt6ucSFk7BbboOVdf0Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VNVf3k5WJzRUP4effYpZKcPx0gwlZbETZWKafiX/D+nf2VaLRu5iPUfig6eKzzlUwrpaXjhHHOq1D93MPMrrb/fhhiK/Leqqorli8J3oVBuVNdm6c0nzH/Rzcr5s86UOjqRC9y9+qi3YMfG8D3J7j/J74e7a5jRt8xGrpUu5GCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hL/snYI4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s6elLzLQ; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PyRkzR/G"
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e54d268bc3dso4430375276.1
-        for <git@vger.kernel.org>; Fri, 24 Jan 2025 09:45:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737740750; x=1738345550; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Lyn7r0+AVbm+DALgWJrFRWa5p3/WBh7Yl6i59WCFUMY=;
-        b=PyRkzR/GX9ycMCT2w0GVQ2eeTh86pjXpolfKPhPxFVHgRUAsfeA1BQ4ehfXnYjaLYm
-         2j7zxh7sALVqoydhyQfzPD6Z2iB+IAo6VRacnjvVAfgp3EPIojKsDlxNqhPMFIHvqtDp
-         TwFketHgNinfp0QObePPEm0f6zyPaQ326wxCyafoNT9UvVyfiSt71qUaeZAoMCwFW5F3
-         8YnIy2FXL9IJHsPjKGoFnvrxdi8+ORiw+W+pA4g8OynQS/K/RwsaCzM2OKlXGxnO+0az
-         fTKto6y/HU/yf61l2s1o2dtcHpRqpg5LrnZPgoLTRSMRqsrEz0W2YGdXI+WovuuThbDq
-         jo+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737740750; x=1738345550;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lyn7r0+AVbm+DALgWJrFRWa5p3/WBh7Yl6i59WCFUMY=;
-        b=bw1pZ8MRzO4rrzm/UCOMOdKHrzyOPKpKZObUKRqLv+9OtYvW0lTz7Ac/6k9hc8YCg3
-         PAEwxGhxTLl/BYpnfYRpvxnR+qvsRnK0XopnTXuuXettYkOfUbRO9CqyCSkVwukrK+V+
-         6jZqrlm6RdLpybT5Kn224y4lYFkVFfm5/wkSgOiEct40XXNtasRHdlp5LV4FMqOdNDx7
-         JiPW9ddgsaDXvTfkumhfCvVUl9QmdyrWoFxm4H4B8w6e2+r60rtIrwmB+T2FZ4Mh11VB
-         cyqeJE7yCtmNaCWGtCCyuhpXjinNrnqA350wFe/q/45lM9pGUy7EVs1Mkl/L9sCFlGM6
-         VhaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVuiaFRwmB9+8SYcL9qGxtD16mYuWTBq7QQUOCJhqBo41I9QSQvPcwxmYz6LQgaruyAsZY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyOfg/0r5abBp19VpSb5kMDvgitbVI2QAhkk/fiNQCOg3bDvtsk
-	ngPD0azyIS10xf+yZuOmXyYX159tct01u2olaB/5GjIwwD3kFToG/OTVqf2y
-X-Gm-Gg: ASbGncvHUlWPilE4+LV/ySHT03mc3fysKKUgFtw3kkzrnBdoGG6LZQH65pg8vJY2PSA
-	W8tCQ5re/rAPN7Q7Aag9+It9Z4VvMQ6Pi/BEEMd67CAiLQmfCxdHktNmQ0r90TrSiu0NejBwjFI
-	KlVwe5YIj0YF20iKK4VfXDN0uJnHGcvhqS4zG88FQcs4SeHGEEF8KB+K2SbLBDwY1EKS74IRtIl
-	LT7zZjnK4o833BRt7KsiMQE3UU9+9L9mhp2Lq45rSVMacs4ebt/14eeNBgU5aRlxfkCfwi9kMlT
-	whZMQENgeO4/Wny+jFuour1BzyjUjNy48Tn7cnFfHLLjRmtN1FxedbGiKEqkHwNByvsQ
-X-Google-Smtp-Source: AGHT+IE7y0ejx+In3Q582lVOWCiYGwR6fL7dJ7fhbKZlJaVXex6rEbRofZWNPe7uxK2zM0s/DntbGQ==
-X-Received: by 2002:a05:6902:1501:b0:e58:1412:95e5 with SMTP id 3f1490d57ef6-e5814129711mr9617946276.32.1737740750130;
-        Fri, 24 Jan 2025 09:45:50 -0800 (PST)
-Received: from ?IPV6:2600:1700:60ba:9810:c52c:1d3e:3dc2:a210? ([2600:1700:60ba:9810:c52c:1d3e:3dc2:a210])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e583b88db9bsm420171276.48.2025.01.24.09.45.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 24 Jan 2025 09:45:49 -0800 (PST)
-Message-ID: <7fe5f33c-4923-42a4-b98e-e7c2116a2782@gmail.com>
-Date: Fri, 24 Jan 2025 12:45:49 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hL/snYI4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s6elLzLQ"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6F436138011B;
+	Fri, 24 Jan 2025 13:12:52 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 24 Jan 2025 13:12:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737742372; x=1737828772; bh=0KAOrQzxTh
+	tGuiZwwdM2rv/2sOkyLihzYrNIe78Cqcs=; b=hL/snYI4Ih7zOg7Nfd69mQHHEl
+	ZqkukVYc4RLQ9b6h6eLsumy/5S8S8OlA4yPY508Gzxs8foCgrg5H2MxnUuBUn3rc
+	JLhrdoq1ZKWQBFPXxiJOTPKRHYJJ9VH4QW9JckH/NSlNdYlZA/kkOatzvNvWFhpR
+	i8JXHOgwH86lbyqxjRLX9eK1poPnZCk2paRoKDvMCLDp2dpl3JvC+0M43xLD0wec
+	ZQrSw4dX4pIt2TYX2UubtqM9WINzxAiE8ZC8Qp+cz8V+X1hDra3JDALwtCmvynZJ
+	OTRzXC2RIQW43goqivmjaRPAt4jdFcHcMN18/unISC17QW193D8vk3mzqC9w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737742372; x=1737828772; bh=0KAOrQzxThtGuiZwwdM2rv/2sOkyLihzYrN
+	Ie78Cqcs=; b=s6elLzLQOazdJGeth5EvYg8vTjKmbky3x1eKxduplhyGSmMl6ml
+	htgkITqw3KYs8d54/b+Dff0XjL+5Ms/XU7zieWQG0ORUKBrmSbPHUloroGAuwpLM
+	/A1/f1CLI0gZOw0Fnj3hzRg8dV78z8Zta8sXd3jl1olqUlFC30ETnFgy7wZZ/+Oq
+	xyJsSirZIzYwUvKSnU1N05CtmLGF29Cpld0Q+sdokd2010oCDevL05iCHvOdbLzZ
+	lVr7cB7iksBmuR0KKs5cRoTpWJNunWKZXTG/KYRvxdKRNvqOduuNp63S1hqUxYbX
+	C49ukgab659BoyjJslixL3RPLPlS2MAnsFA==
+X-ME-Sender: <xms:I9iTZ5m3-io-AKCjALF8U-6EiDlftLIIza21dVbS-sgJkGdhsEiKzA>
+    <xme:I9iTZ02-tcTmTfKbnk0ZS_3qqyDmJalxf37qq73PdrRwoZXM4X2TsCaP8IqPp0VjH
+    86X6XAu6JGAyOHGaA>
+X-ME-Received: <xmr:I9iTZ_qMtzafXtPMuUIuQFtSJ0SkuS0AHDCMIyTH0UmucCm9mO03AgjZj0y7Ll_Ke4Z3rBjOz3rhampJou2f_eqO68OAsCM7z4Ho>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedghedulecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkh
+    hinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohep
+    jhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvsh
+    drshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehmvgesthhtrgihlhho
+    rhhrrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdroh
+    hrghdruhhkpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhm
+X-ME-Proxy: <xmx:I9iTZ5kOKzy1jPdl6TNzsss_DO9zg8Uqp6ET5HyEZ3xlcHpKP5vthA>
+    <xmx:I9iTZ31xwqylariWI-tAANk6xXD8UKFilR1GGUbxC75-3VfGYxU6FA>
+    <xmx:I9iTZ4s848arQWw2J--5QnyuRnDS0lcDscJ_eEeie8V_SKGZwb9NEA>
+    <xmx:I9iTZ7U656M5dDh264kbdCzfqvYOKIFxDmr1_XVLd04v9kx1_yNvpA>
+    <xmx:JNiTZ1NS24w0CzqH31AA0bnD7Iic01oFUNzIFYOdVaLF0NijigGG_zOd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Jan 2025 13:12:50 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,  ps@pks.im,
+  johncai86@gmail.com,  Johannes.Schindelin@gmx.de,  me@ttaylorr.com,
+  phillip.wood@dunelm.org.uk,  rsbecker@nexbridge.com,
+  sunshine@sunshineco.com,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 5/6] t5701: add setup test to remove side-effect
+ dependency
+In-Reply-To: <20250124122217.250925-6-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Fri, 24 Jan 2025 17:51:40 +0530")
+References: <20250117104639.65608-1-usmanakinyemi202@gmail.com>
+	<20250124122217.250925-1-usmanakinyemi202@gmail.com>
+	<20250124122217.250925-6-usmanakinyemi202@gmail.com>
+Date: Fri, 24 Jan 2025 10:12:49 -0800
+Message-ID: <xmqq5xm4ytb2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/8] pack-objects: Create an alternative name hash
- algorithm (recreated)
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
- peff@peff.net, ps@pks.im, johncai86@gmail.com, newren@gmail.com,
- jonathantanmy@google.com, karthik nayak <karthik.188@gmail.com>
-References: <pull.1823.v2.git.1733181682.gitgitgadget@gmail.com>
- <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
- <35026c72-f9b4-40a3-b528-1c28b1238972@gmail.com>
- <Z5F/JdnSAYqUBJ8s@nand.local>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <Z5F/JdnSAYqUBJ8s@nand.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 1/22/25 6:28 PM, Taylor Blau wrote:
-> On Tue, Jan 21, 2025 at 03:21:15PM -0500, Derrick Stolee wrote:
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> Sorry that I punted on reviewing this for way longer than I should have,
-> and thanks for bearing with me.
+> Currently, the "test capability advertisement" test creates some files
+> with expected content which are used by other tests below it.
+>
+> To remove that side-effect from this test, let's split up part of
+> it into a "setup"-type test which creates the files with expected content
+> which gets reused by multiple tests. This will be useful in a following
+> commit.
+>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+> ---
+>  t/t5701-git-serve.sh | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
 
-I wanted to give people time to recover from release mechanics before
-poking this series again. Thanks for reviewing so quickly after my
-message.
+Nice clean-up.
 
-> I left a handful of comments on the patches themselves, but they are
-> mostly cosmetic. 
-
-Thanks. I have prepped a v4 with those cosmetic updates and will intend
-to send it on Monday, unless there are more comments before then.
-
-> After reviewing, I think the idea of having a versioned name-hash is a
-> good one, and I agree that it'll make the eventual .bitmap changes much
-> easier to implement.
-
-Thanks!
-
-[I reordered a paragraph below]
-
-> My idle thought before having a chance to review this
-> series is that the --name-hash-version option was handing over too much
-> control to the user without clear instruction on when to use one version
-> over the other.
-...
-> So I think in that sense exposing a `--name-hash-version` is the right
-> thing to do. My feeling is that we should probably just add Jonathan's
-> "v2", since it appears to be a improvement in nearly all cases against
-> v1, and more often an improvement than not when compared to v3. In that
-> world, just introducing v2 leaves us with less code to maintain and
-> fewer, clearer options presented to users.
-
-I think these ideas are related. The thought that really convinced me
-that v3 isn't worth it right now is that users won't know which version to
-use without some kind of opinion being voiced by tooling. If users assume
-that "newer is better" then they may accidentally get into a worse
-situation by defaulting to v3 over v2. It's unsatisfying to say "try both
-and see which is better" especially when v3 is rarely better.
-
-I'll drop the last patch in the next version, but I'll keep it in my fork
-for possible future resurrection.
-
-Thanks,
--Stolee
-
+>
+> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+> index de904c1655..9394235fa0 100755
+> --- a/t/t5701-git-serve.sh
+> +++ b/t/t5701-git-serve.sh
+> @@ -7,22 +7,28 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>  
+>  . ./test-lib.sh
+>  
+> -test_expect_success 'test capability advertisement' '
+> +test_expect_success 'setup to generate files with expected content' '
+> +	printf "agent=git/%s\n" "$(git version | cut -d" " -f3)" >agent_and_osversion &&
+> +
+>  	test_oid_cache <<-EOF &&
+>  	wrong_algo sha1:sha256
+>  	wrong_algo sha256:sha1
+>  	EOF
+> +
+>  	cat >expect.base <<-EOF &&
+>  	version 2
+> -	agent=git/$(git version | cut -d" " -f3)
+> +	$(cat agent_and_osversion)
+>  	ls-refs=unborn
+>  	fetch=shallow wait-for-done
+>  	server-option
+>  	object-format=$(test_oid algo)
+>  	EOF
+> -	cat >expect.trailer <<-EOF &&
+> +	cat >expect.trailer <<-EOF
+>  	0000
+>  	EOF
+> +'
+> +
+> +test_expect_success 'test capability advertisement' '
+>  	cat expect.base expect.trailer >expect &&
+>  
+>  	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
