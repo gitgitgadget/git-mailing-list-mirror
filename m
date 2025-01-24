@@ -1,82 +1,87 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F55B1836D9
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 16:02:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B486D1531EF
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 16:07:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737734545; cv=none; b=eea0HHI1I4zA9AXxIKaMw1JaUINZ243LnKEDlmpS8dXZUi7QWhGyJbkWwvLBLKI3hSJ6eZZwnds35AuL+zy++J0SP1cACSxmpNbQPRPJT7XFpdYlZJKq3D9CYq49nIpiK4SFwunhJ4PQrzwid9f10xXlZSvsty383thmW6AhxKo=
+	t=1737734839; cv=none; b=oVndhL/aClYWsVH/9dBq+MKGPvTq5j9v3jBekoCVFoz5cOK/TebawHgYEGf2D3abogkfE7+r8/gMtKLHhKEiaMFz5uc05mpD63OPIi2uL4CpgHQrvbg0Fr8EjUs1W8S6H+sBHXnreHyf7RwcgUC7fTxI9mqxjV2ycqp500+C7M8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737734545; c=relaxed/simple;
-	bh=fwxLD3gWgq5XkYk4sdnp6zyISgwkWsWAq4VteodJ1/M=;
+	s=arc-20240116; t=1737734839; c=relaxed/simple;
+	bh=sdk/HbJwhUBZ/thrQ5AxODvI26U/jCRvQzqMfqtbKxw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ci2/9T9BTpWNenGLsPUzUpRFEcGsQYiX6TScS0NC+vD2JmDanE3Br1g18ivbi7XERy3kHYaz/ctdjg4VMosjtzrYA1SDtKCiMydwfQD2gy26CsXYEp3XvyIdozgc4tdcn5eVgYnKAuGaQt3tfDA0X/fPdck5DGFE3F4tWrBNNfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MAdh5sU/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nOtPwHLP; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=IqofRTCNxSoOO9N1pextz5xu7wlfEiegujmtV/WU0aEkTOK+3V/GngBUnHyBKvk0eaFTmrtr6ealqULJyLPOVgAIY/atCZHDM5I62WTcjfgjIhYeRwhXdELe0RS2FHFM9uLQ068bGcjiqb3QCa13N8QIl8pEFbAzqLCs4H05D2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kVKLb5XF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YAVkoOvB; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MAdh5sU/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nOtPwHLP"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5DDAF11400BD;
-	Fri, 24 Jan 2025 11:02:22 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kVKLb5XF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YAVkoOvB"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 916ED25401C9;
+	Fri, 24 Jan 2025 11:07:16 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 24 Jan 2025 11:02:22 -0500
+  by phl-compute-04.internal (MEProxy); Fri, 24 Jan 2025 11:07:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737734542; x=1737820942; bh=wT+mOVmsYv
-	8FahjpUju2MjIVhV8JvVrBx28406MzaBo=; b=MAdh5sU/vXrcED+fzPVHE5N/vG
-	x4gbnk1hhSn5jrApFqYEn3oP4PMBjmaF3c/EIVQOMupBjBsoMuV10caJWPgGUHPj
-	0+YnneavQuZDz5ojlp76+jyMigmf/pcGJqkylTRl7H0r7SzDbJZKCR6cJHaCv1/9
-	PxNArUA92LeOTN/tCjtVxQG6Iio/uPYPbc0mW9k2tDABqJImVWhL5EnslRAmohbv
-	lsoGuqCAbS5DgYd8/PWo1Ah9w0qMlDL4vXDr7F2wOuKrZ9BTOTFMhSJu0ToPk8rE
-	Z+yS1RDCX91jjV1L35/gIoQuwl9PKQp4W2vj+JAXRFTT+IWcoDmY7hBkMnAw==
+	:subject:to:to; s=fm2; t=1737734836; x=1737821236; bh=PJscM3tbhG
+	GjyF1Jo1H1n0qwnMMhBoMCc/QKDH5YA7o=; b=kVKLb5XFBS+QXJ0OJFc8nibzQU
+	7MpxuK8RG5WvnBmNU4cPI8hzHUY6ADOzP3vXGmiTVYnU7N6DVrCE0YqVLaB8WPZ5
+	x/pGJTlpVpANkjgeQoW0x2hYFfniyw392ODdVnxyMz/fjHglM+YNCc0OxAcZQ4k9
+	ipB+RJIZetpKzW7YLoivBI6MOPr4We35rjZhxE36OVX3O3lrHuJRvqmGAggpumvo
+	mjjihaUo2GuEBF79hGWJKiCmGLMlhuvU4DCV6wQgf8L7hcVQJnnSMrSyOEbUyg9X
+	1yx5eLVxGXO5ygwM8UlIiAMeXVdfEKCwUXB22yIcyWGCUygICXJsN6Z4Ng8A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737734542; x=1737820942; bh=wT+mOVmsYv8FahjpUju2MjIVhV8JvVrBx28
-	406MzaBo=; b=nOtPwHLPrkH4AEhMNsnBXwQFYZUes7iTCpodvfdTLVU707tRWmb
-	lua3RqVvCjspscuvnDms4+hWXaYq5gYqgZwbplSzYFsWGz05bevtisju1NH7fKM0
-	WNyqxG/0Vzv5fW4RfP+CXs7bxcjMTGAczOfG4/8bQHwGSl4UnwUHDQc7IVzXZ+1O
-	9wBxVMscj/KiKUWwIxiriOlRNcBK8lDI6lu07o5Nc3tIHU/D0csirM8/yzsZlVNY
-	d3Z/L4Ry5ykGL415Mo2gzLPWWCZFNKtp2eYhN1LzxaT460Cda75cnCVWvKO9BrZv
-	ng8aP9R91y4ZUfYQvNmbTGc6t231XvVtq7g==
-X-ME-Sender: <xms:jbmTZ-gDnKDCidg1i_AbWo5dpt2qiAplecU5G8V6Wgpq3ByngNeNzQ>
-    <xme:jbmTZ_A1xp_8Ee0M8Oa1BvwOvdMDMMBjapPPgpcQmlrbsCUw63uEOGc9kanhlRPVR
-    7kplXct5H__5owbVA>
-X-ME-Received: <xmr:jbmTZ2HveuzBGfkjd6q_o4vfWePb_Ys7OrPt6C4qGs_tgiIqZQw-5Y7MkpfaxRjoL-v2sWAliQCPtnNan0LDKsOBQBVpLwxSWSic>
+	1737734836; x=1737821236; bh=PJscM3tbhGGjyF1Jo1H1n0qwnMMhBoMCc/Q
+	KDH5YA7o=; b=YAVkoOvBaMIlxBblfbL5hGw8Rmn9IA3FRP/nIDaZfdkwhFYuz6D
+	V4EvTKZ+M1K2OBYDdIguL/gdY9LnjpMLtSRvuQHb+CNQfM8U4MIG6OKKM8KYVX2o
+	gyJlVJkKsIRKqHRnYM3Nnpr/51pBjOZRrB1qsfL/lCXiSUdqCDXGWmqzUPv1e1On
+	Mimieg3ioeiwVOFLAowRRQi2yF1UvYYjt3XAgFjWbSu2chBVIkogEXXwiUflUkvE
+	KnP9Xblh8OhQAgNBxTzhj1X9uOmPTzOLSnMFY3TsSZEJnbRxsVNYhTdD/n1cPxvU
+	BbdQis7GWDe5ydXUbiLoV49S9uROgnk4EtQ==
+X-ME-Sender: <xms:s7qTZ_kIsiba87MjxA-T12MBsDA5ZxVfFCJ3cycFuHWDY1ZlUP36Dg>
+    <xme:s7qTZy2kX-l0bPUUBCwKoWS4i8cbi8_B7fn1xGVQ8BCr-CM2nafeV8xk2q4LMZsrW
+    sjnks89Vxn6ocIA3Q>
+X-ME-Received: <xmr:s7qTZ1qtFaJne3L1r3ALjfRBx8gsQjEMfJWFtl0bqx0drkqqYfITVJZByuqDZjerLTqmDb6YpT80SLieTnUmXx8n9P-d8pK5gQlJ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedggeelgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
     necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpedvudegieeilefhuedtudehkeejhefhieeg
-    gedtieehgfevveffteduieekkeelfeenucffohhmrghinhepthhhvghnrdhpshdpmhgvrh
-    hgvgdrphhsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:jbmTZ3R-uDPgFUNprEmRtgw0qjiYXg0FgZlxJeOvQmvMeIi43C-jHQ>
-    <xmx:jbmTZ7zTXS47DGbM78yeFNut3RidSZw3yi9kHlSCAfmToIBGPMpMGQ>
-    <xmx:jbmTZ16rZMTM48RQ2lLZQUrjlInI5R2eXQfF3Amr-rwJvayXW-xRqQ>
-    <xmx:jbmTZ4z8GAJRCTzyKJZ_ul-qDEqVmqd0IGWvHnWLAsks8bz8kTF_EQ>
-    <xmx:jrmTZ7_ep-PiNJY0wk_lycFHgTY79azyOpaFL7jluJ5IvS4lyytwe6Sf>
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepsggvnhgtvgesfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmrghilhesvg
+    ifohhrmhdruggvpdhrtghpthhtoheplhhishhtsegvfihorhhmrdguvgdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:s7qTZ3kX1ZxuplDX1VdBfyKJ8u_xzDtz-MRUKNlmCHcKXCU1M22rAg>
+    <xmx:s7qTZ914oQcNrypCMECgUpmKkQCVT2VHdsLXgY9FOrGDzoeIKmrDgg>
+    <xmx:s7qTZ2ug-eRxZbH82rbTVP-9e6BMKWUx887uvtx_uBOpCS00lmZFbA>
+    <xmx:s7qTZxUBq-NKGExQEP6A8zIKMKKXlo5I9PcRoKa8c-cpwDcM9f1xnA>
+    <xmx:tLqTZ3qeh1NCslVCve3bc3cPo2TJG_MXUKH6_BxasOLOFk5BlRK6UNPy>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jan 2025 11:02:21 -0500 (EST)
+ 24 Jan 2025 11:07:15 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
-In-Reply-To: <Z5MuCd_GbbLK_puS@pks.im> (Patrick Steinhardt's message of "Fri,
-	24 Jan 2025 07:07:05 +0100")
-References: <xmqqbjvyv510.fsf@gitster.g> <Z5MuCd_GbbLK_puS@pks.im>
-Date: Fri, 24 Jan 2025 08:02:20 -0800
-Message-ID: <xmqqr04sp5df.fsf@gitster.g>
+Cc: Bence Ferdinandy <bence@ferdinandy.com>,  git@vger.kernel.org,
+  Christian Hesse <mail@eworm.de>,  Christian Hesse <list@eworm.de>
+Subject: Re: [PATCH] fetch set_head: fix non-mirror remotes in bare
+ repositories
+In-Reply-To: <Z5Mrk02wMdABtrVZ@pks.im> (Patrick Steinhardt's message of "Fri,
+	24 Jan 2025 06:56:35 +0100")
+References: <20250111202628.0e5894e4@leda.eworm.net>
+	<20250112165125.130400-1-bence@ferdinandy.com>
+	<Z5Mrk02wMdABtrVZ@pks.im>
+Date: Fri, 24 Jan 2025 08:07:14 -0800
+Message-ID: <xmqqldv0p559.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,96 +93,33 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
->> * ps/ci-misc-updates (2025-01-10) 10 commits
->>  - ci: remove stale code for Azure Pipelines
->>  - ci: use latest Ubuntu release
->>  - ci: stop special-casing for Ubuntu 16.04
->>  - gitlab-ci: add linux32 job testing against i386
->>  - gitlab-ci: remove the "linux-old" job
->>  - github: simplify computation of the job's distro
->>  - github: convert all Linux jobs to be containerized
->>  - github: adapt containerized jobs to be rootless
->>  - t7422: fix flaky test caused by buffered stdout
->>  - t0060: fix EBUSY in MinGW when setting up runtime prefix
->> 
->>  CI updates (containerization, dropping stale ones, etc.).
->>  source: <20250110-b4-pks-ci-fixes-v4-0-6e4613446080@pks.im>
+>> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
+>> index 2d9587059f..cfa63ae086 100755
+>> --- a/t/t5510-fetch.sh
+>> +++ b/t/t5510-fetch.sh
+>> @@ -84,6 +84,19 @@ test_expect_success "fetch test remote HEAD" '
+>>  	branch=$(git rev-parse refs/remotes/origin/main) &&
+>>  	test "z$head" = "z$branch"'
+>>  
+>> +test_expect_success "fetch test remote HEAD in bare repository" '
+>> +	cd "$D" &&
+>> +	git init --bare barerepo &&
+>> +	cd barerepo &&
 >
-> This series was approved by Peff, but other than that it didn't get much
-> feedback indeed. I'll rope in some additional reviewers.
+> The `cd` needs to happen in a subshell. ALso, the same comment here
+> regarding whether we want to have `test_when_finished` to clean up
+> state.
 
-This one I took another look while reordering topics for the next
-integration and noticing that it had a bit of interaction with
-another topic.  It looked good, so let me mark it for 'next'.
-Unless these others find anything objectionable, that is.
+Yes, indeed.  The change to another script we saw earlier followed
+the "chdir around only in a subshell" pattern.
 
->> * sk/strlen-returns-size_t (2024-12-26) 1 commit
->>  - date.c: Fix type missmatch warings from msvc
->> 
->>  Code clean-up.
->> 
->>  The remainder needs to be reviewed.
->>  source: <20241223110407.3308-3-soekkle@freenet.de>
->
-> This one seems stale to me, as there's been a v2 with [1].
+> I see though that you simply follow existing code style, both for the
+> call to cd(1) and for the single-quote, so these are fine. This test
+> file could use a makeover, but that is obviously outside of the scope of
+> this patch series.
 
-IIRC the patches were pretty much independent, and this one was
-clearly ready from the initial batch.  I'll let it merged to 'next'
-independently instead of waiting for the remainder, which was not.
-
->> * jc/show-index-h-update (2024-12-20) 1 commit
->>  - show-index: the short help should say the command reads from its input
->> 
->>  Doc and short-help text for "show-index" has been clarified to
->>  stress that the command reads its data from the standard input.
->> 
->>  Comments?
->>  source: <xmqqfrmidyhk.fsf@gitster.g>
->
-> This series looks good to me.
-
-Will mark for 'next', then.
-
-
->> * ps/3.0-remote-deprecation (2025-01-22) 7 commits
->>  - SQUASH???
->>  - remote: announce removal of "branches/" and "remotes/"
->>  - builtin/pack-redundant: remove subcommand with breaking changes
->>  - ci: repurpose "linux-gcc" job for deprecations
->>  - ci: merge linux-gcc-default into linux-gcc
->>  - Makefile: wire up build option for deprecated features
->>  - Merge branch 'ps/build' into ps/3.0-remote-deprecation
->> 
->>  Following the procedure we established to introduce breaking
->>  changes for Git 3.0, allow an early opt-in for removing support of
->>  $GIT_DIR/branches/ and $GIT_DIR/remotes/ directories to configure
->>  remotes.
->> 
->>  Will merge to 'next'?
->>  source: <20250122-pks-remote-branches-deprecation-v4-0-5cbf5b28afd5@pks.im>
->
-> The squash-commit on top of the series looks good to me, so I think this
-> should be ready.
-
-OK, will squash and merge.
-
->> * ps/send-pack-unhide-error-in-atomic-push (2024-11-14) 2 commits
->>  - transport: don't ignore git-receive-pack(1) exit code on atomic push
->>  - t5504: modernize test by moving heredocs into test bodies
->> 
->>  "git push --atomic --porcelain" used to ignore failures from the
->>  other side, losing the error status from the child process, which
->>  has been corrected.
->> 
->>  Needs to see if competing parallel topic needs to replace this one.
->>  source: <20241113-pks-push-atomic-respect-exit-code-v1-0-7965f01e7f4e@pks.im>
->
-> I think v3 sent by Jiang Xin looks like a reasonable alternative to my
-> fix, but it needs some fixups. I'll maybe wait one more week for them to
-> reroll the series, and if that doesn't happen I might adopt their
-> patches and do the fixups by myself.
-
-OK, so just keep this one so that I can point to your above remark
-in the message I am responding to ;-)
+Terminating quote can stay, but chdir is a correctness issue that
+may want to be addressed minimally (i.e. not making things worse,
+while leaving it for later to clean up the existing ones).
 
 Thanks.
