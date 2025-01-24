@@ -1,119 +1,91 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05461DBB2E
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 08:01:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F077A1C3C1A
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 09:16:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737705716; cv=none; b=I7q68bF1p/Un/5mM/PUiHqxdSo83yUvR2sUcT7FKxq3MPikI1s8nY8VTWMjki7NoC1+ZASd49G7OzkHM6vUTMYV3NWy/2ZXrUVgqj/txx9MyBt2RzJDf2rlZC3BOV1RXhmRFPbCO+rg5JuvFZgoYdOi7ltKuXoI/gpLycTZlZmQ=
+	t=1737710195; cv=none; b=myMsO4KEF2xrwJ1kNfqUEm1PGhD7s1J229GMvEaxRHudQpHysRZSuL3474XAHl417fXztW4PENHSBRgwrqBL62ltNrdBEesf1z7Dc+K1AvE8SQ6cL+yxXbXrdfkWhqiFSC7McxaIPgBgWMB3h+tRulCcxYqhwxRXJMa6QPYJ7Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737705716; c=relaxed/simple;
-	bh=OKAkBj7OVr2zE+43r0q3RZw2DTyDgQ4BNTHQ5L0u7Cg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Zp9rWG/kUSVDeo8resBjbdft9X4P7AcQjNTp3yjmmrCqNjh7iPF1JnH9RVu+LZe+1EG0JFkxVw47tsEwI0pyzciRFeudhOTGPoi4d3zk/ePqfLVguiFE8iOOujVzuYzRZcx0mSUjuaV3mKyl2Q9uLl7i9f/uYIuOT1v+Aq6kkmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YGDKT9bd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cKrBCI1j; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1737710195; c=relaxed/simple;
+	bh=wUT89IB92fa+1SvAbfKuCZ4e/HXRMvfsSrEGWyZAkK4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PGQUIvW0mI3ITn6GOOfsKkk8UxSdJUFaGL4fs8CYxboVOn9FxTxyYQ7HEIV8laqWKcOBkGo6ZveELS47beJHUPvXUEK6+BzLhkncQY0Y1zdA0JeNf8tMjJ/sSVED1pnWAVSi2sQpIAS0j2/mvy5iC/Rz8TwxGOuxQs3vQtN4JCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d+5+xZCF; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YGDKT9bd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cKrBCI1j"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 857C11140142;
-	Fri, 24 Jan 2025 03:01:53 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Fri, 24 Jan 2025 03:01:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1737705713; x=1737792113; bh=xwE5Q17uom
-	zurRKbghEfcVUWzTA4jlQIdHkE5Ft1BSw=; b=YGDKT9bdgY6BnCTOFYgok40ReV
-	PAzB3RMdJVUVCSySc9Bh1o3DJpm9y6V+j3u3cER9/lxuVleILbJZlitLNMiFf0bu
-	99gBPReOp7PHiYmSvc6eib9w2TU0l7Cq+4S1LR5XFRNbSCeDOXkwJQy/NsuoDCh/
-	k9ZhOhako6ikNOfwWw8UJPJSP0qjQosH4UoSHTkmfPRf3xX/Kf7hCKS6PBQ6kFbC
-	VZyTi5jN4eA97Tl2kcG+TpnAaYxL/l5+LauV3g5Hv6e8tmZEeacJikIgqpR1xTqJ
-	bi8TXUHOjNy6qsDWmVNkttcrAIZvnNX7mqhXl2J8/Sjdcy0tFb/BiSHc31+Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737705713; x=1737792113; bh=xwE5Q17uomzurRKbghEfcVUWzTA4jlQIdHk
-	E5Ft1BSw=; b=cKrBCI1jPR4Kxd2nSztMtF59+mp8MK0guMrhwp2E05I+4JP+hU0
-	ot7SMKuf5gNaNpeD14A0b01fOU09ZyLndCS5J9BGJXRi9NBBgerJezQWX6gTsUEP
-	FfY5UCttyK8nkO8vXuhz7ASHvKKZtJXpUxym+HypYwaOhsDJy2besEYgo9rRBWiu
-	kQHKAptWcymOrZUqOk+XtI4/UCeAb64u2X5TeXLF/wMlsLzv47Vanv7jTSs/iRHW
-	mCebSPVJswqvriXRFkHe/2MWcvizy44rGlxKVmylsSkOwJoBnkdRoeKXOMw9I9kA
-	uXEj/anoZpvJWMVrkyrSxRdW4cloAobn2ng==
-X-ME-Sender: <xms:8UiTZ-zQQ7TyqW1S-zJlc1raLhdjD8gMpghCgfYUYtAwsvQjttfHWA>
-    <xme:8UiTZ6QYGjgEtURqQWkde8L00M2cLpUHqBjcUtZgCq1aiUZIj6Z761d32hIKF5ZE5
-    CqdV8yRtFyxXNhO-g>
-X-ME-Received: <xmr:8UiTZwUu0DvnGcKceyuRkyeqB9x9ZyPqyMYF1X2H9dMi4A0OvpRb8_Lr1IJSPkqh_WjH7WzaCna2wsGDmj_4zfqTrOF65ZgzdQlTyRZGhVFudQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedggedttdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehmvggvthhsohhniheftddujeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepjhgrtghosgdrkhgvlhhlvghrsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepshhhuhgshhgrmhdrkhgrnhhoughirgdutdesghhmrghilhdrtghomh
-    dprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:8UiTZ0iCe4i5fsLZLUiHtqzqJy0B3oyEAe7lKd6LBHfaq-i7v2yICQ>
-    <xmx:8UiTZwDtRtrbabmg7faw_H2G04-nrr9lvPho0k2pZAmu4vHx3o22gQ>
-    <xmx:8UiTZ1KFB6ZMsqmDMq_GJ4QXHUSrQ6Neyfz0VA5CDnrVxQ4rgf8STA>
-    <xmx:8UiTZ3ABMenM_3Ul1Q5SSc_5VbnqReLftXqkvAwKh52zLsjCIxRHDg>
-    <xmx:8UiTZ-ATiw_lWUBFVkqp3T8yml4-USxo3LIbFnAkUlQ6PsRld870YKeu>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jan 2025 03:01:51 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 95f129d3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 24 Jan 2025 08:01:51 +0000 (UTC)
-Date: Fri, 24 Jan 2025 09:01:50 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, shubham.kanodia10@gmail.com,
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [RFC PATCH 3/3] refspec: relocate apply_refspecs and related
- funtions
-Message-ID: <Z5NI7vQ66aSCgjjg@pks.im>
-References: <20250122075154.5697-1-meetsoni3017@gmail.com>
- <20250122075154.5697-4-meetsoni3017@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d+5+xZCF"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5d4e2aa7ea9so3503051a12.2
+        for <git@vger.kernel.org>; Fri, 24 Jan 2025 01:16:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737710192; x=1738314992; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wUT89IB92fa+1SvAbfKuCZ4e/HXRMvfsSrEGWyZAkK4=;
+        b=d+5+xZCFDBQrR6Yeu6m930ZywQzcr9K6Radg7/UfVOGBXiLpjDeMTo2lnBaPcMIWrQ
+         C16W5tuyoUoSbIQ3QcUm78ArO4bM28MVcadDSQzIGQCouy9p9wRfjgOdoDTJU/kIHI1Z
+         Hx63ia9ZWWPKYk5dzPiXr1c2pwF6bW2BJn687BnsznAaLeYdCpeZxbUC+DiF952HRP8H
+         bhNls5geHN423yh0ky6rA6H31K4nNjntfq/dTYEZqzueYn3XRaY+LFeOlKnTBHP7qgEM
+         I/DmLOwvevs12GPMVua8uQ25+K0CFDMICdv3YhosL+cJRzgGEesC8p0zBVwcJvHgIATP
+         JDeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737710192; x=1738314992;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wUT89IB92fa+1SvAbfKuCZ4e/HXRMvfsSrEGWyZAkK4=;
+        b=jwI7aDNW74hkYV4wSLRMDDSx+PU0jkUgb0ADxf43X0I7vMXGRyfRNfzz3m977yrvIX
+         E35SI4v7YM1B7losWZHR2A5+MVHz/EcfQ7wNJyu/UntwvyXVfNTUvhJ/FlXGDUeRvkuz
+         kBqvY3twRD3C5OSvU1w4IHuIi2sRPv/keVjq+kBVxoKKOKAClxxo3QDUYF2uI5FUJcUG
+         5/c/wI3PuyR0qUguLNBuQ+eBX0u9tK0ZXDZa83a+AFZu5Dm31oKM2sCTJCqLM4hvoy3j
+         kz8Wn6Il3liyENOm8jEPpKTRD5FVJD1TmDrRd7nMKeEhFqLG4A3C++e7zcktVwrs0AnP
+         9evQ==
+X-Gm-Message-State: AOJu0Yz3duUNglA8Bgh8XkwK6MCJaTj/gCf6m8JICw0F1rpwk2Zmt3Je
+	UCl1wJPQAbEcJbgyckZUmtS0xoyjTS1nwTEHn1n2rYn74aqUh8b+QZz+cTmDwaxh7md8ILhN9b4
+	plDf8Hk7FbU5fSqrF4x0psvegoHs=
+X-Gm-Gg: ASbGnctK0ueUAdMdEadI+3AHb9QILQZNHj5lvPyz88IQVNz5pADw30Ju62QNBiJFnAj
+	5EzjlI0dWZ+eBrUONxNwTOrKADyNtU5wqEn7nkIqQvqh8rL+Bc6yo9PXCbc34/nr4
+X-Google-Smtp-Source: AGHT+IFKrzQlyhMLpp18STNRfqAEG1Px3UtFHPeik36rj7255TSz4ZH+EC9xY6QJO+ZKkAQNAaHR+PEpxihEHvpIV40=
+X-Received: by 2002:a50:d58c:0:b0:5d3:e8d1:a46 with SMTP id
+ 4fb4d7f45d1cf-5db7db12cdamr21617698a12.30.1737710191944; Fri, 24 Jan 2025
+ 01:16:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250122075154.5697-4-meetsoni3017@gmail.com>
+References: <20250110-b4-pks-ci-fixes-v4-0-6e4613446080@pks.im> <20250110-b4-pks-ci-fixes-v4-2-6e4613446080@pks.im>
+In-Reply-To: <20250110-b4-pks-ci-fixes-v4-2-6e4613446080@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 24 Jan 2025 10:16:19 +0100
+X-Gm-Features: AWEUYZkLt1Ss5ekH7j5poBryg6TQIEt8jKqxlcuS5a_CVd6dRSG_hDiHppQiNUk
+Message-ID: <CAP8UFD1NX4C2jpbcb=CtX6w5qj3tZPchQ+bdHCX4x9fFqyBrBQ@mail.gmail.com>
+Subject: Re: [PATCH v4 02/10] t7422: fix flaky test caused by buffered stdout
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 22, 2025 at 01:21:54PM +0530, Meet Soni wrote:
-> diff --git a/refspec.h b/refspec.h
-> index d3c97bfdc5..294068d226 100644
-> --- a/refspec.h
-> +++ b/refspec.h
-> @@ -86,4 +86,12 @@ void query_refspecs_multiple(struct refspec *rs,
->  				    struct refspec_item *query,
->  				    struct string_list *results);
->  
-> +/*
-> + * Remove all entries in the input list which match any negative refspec in
-> + * the refspec list.
-> + */
-> +struct ref *apply_negative_refspecs(struct ref *ref_map, struct refspec *rs);
-> +
-> +char *apply_refspecs(struct refspec *rs, const char *name);
-> +
->  #endif /* REFSPEC_H */
+On Fri, Jan 10, 2025 at 12:32=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
+te:
 
-Same comment here regarding the documentation of `apply_refspecs()`.
+> Fix the issue by generating a couple thousand nested submodules and
+> matching on the first nested submodule. This ensures that the recursive
+> git-submodule(1) process completely fills its stdout buffer,
 
-Patrick
+The patch looks great to me and I like the previous discussion with
+Peff about it. I just want to say that, after reading the discussion
+and then this paragraph, I wondered if it would have been possible to
+instead have a `test-tool submodule` helper that would behave the same
+as `git submodule` except that it would call setvbuf() to reduce the
+size of the stdout buffer. This might have allowed a test that didn't
+need 2000 nested submodules, and thus might have been faster. No need
+to change anything though.
+
+> which makes
+> subsequent writes block until the downstream consumer of the pipe either
+> reads more or closes it.
