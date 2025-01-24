@@ -1,83 +1,92 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486CF1D47D9
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 08:01:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EC71DA636
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 08:01:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737705705; cv=none; b=MyaT4C461+NDFaCF57I9ktkPpr/z5fEew6CbabuXAAroi1mo1/qEfEKjAzdyhRh+h6iOOHqhTsGA0y5BI2YqToAu7akbKgh/ydj/6caylGvJce9KV/ClE3Sc9pTWvuRI11mo9Pj6n+nh66dVs/HS273ap8f8GspR/Gf2ay1nbfA=
+	t=1737705709; cv=none; b=A/qqI0fD8ZKGm0+5Mku17E/hbvvfDj0uMFNYhs0+EpSqFGryQsTpJWOVRjf9BPiWmtCpEnXqSQIGbYaBWCUCHtmzYurRZypEon+bZGzX+JQix19heGHg8bg75VB5+nWrMOyaIsVfdPJ9a3w9vVSCwaTBe7H4spTLl/53i4ZUUR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737705705; c=relaxed/simple;
-	bh=hb+2gSQ/Oj0UYTEI63wV4UOn64XDCT3WgzZCV4Erw9g=;
+	s=arc-20240116; t=1737705709; c=relaxed/simple;
+	bh=3ky1VO84rj5megk4ubA4MaPTUV2Mq3+vlCPpUm/XDQw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=COf+RDDr7BesAzisXfovPxg3tTVEySXh/MLFaeiDTZgv0UzR2mU10BXIEwTuVOOFagUFnTDS18w+DqaIhRDuj0qxtGuFYqNBNCP7FYzJ+rd6vWSEj+sbVBd4Yvxc/LkqUpFqS1qXzDP5sn1Zl9ss0/CxWbnv8e7qNjkPT4XYoAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZuZI760H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NEBxJpBM; arc=none smtp.client-ip=202.12.124.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=RwblWOEIDTma7Vj54wDYe4TH90wVOEx/i3fWZDCp5wLBcwfA7xOz42RJozIQIjIFrkJafHQ0fZUK8urTHD0mRqFogbjiQhe5NYmtiClZZ2ORF1z2ruajgHkUj6Di42nyFEPoKtkFpJ2mi31gEFPfaTzqzaa7ccqmRDLN36gMM6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BjVRfZGh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I3PpbxTh; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZuZI760H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NEBxJpBM"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 41541114013C;
-	Fri, 24 Jan 2025 03:01:42 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BjVRfZGh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I3PpbxTh"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5A99325400A4;
+	Fri, 24 Jan 2025 03:01:46 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Fri, 24 Jan 2025 03:01:42 -0500
+  by phl-compute-10.internal (MEProxy); Fri, 24 Jan 2025 03:01:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1737705702; x=1737792102; bh=vzVrmpdHBL
-	prbn6FI4Xo37Cc+kqQA5tS739kgtctiEk=; b=ZuZI760H3u8lp+51svT7cXjqI0
-	NeZkDfqFizdBnmIzVg38N8bBsa0Yd8VjUApuC7NUcmbSG0UW2IcLJHy6qtZ/w3ku
-	KLlohY1+pliCAfEHW2WBsYHg7P2eCkLcR41MVqjhYCcNH4I+WfT3JKGZeHlK8DdX
-	elbrYwsVhi2ou6WvmbNQmPCnYrLUT8gNWZE+HaFPGLDFNr/v/kc1FSjQEltIf4U9
-	zInjS96l6z7/MJq+WL+B4VigCQJpeXt+nIvLjGEVUpNZyWR2BuOu0iIY8bwp/jwD
-	kjTbEMclO49ikJcNI86Cv1mweIZhdqhXbVQPDNsJA9hquJtHEuI/cvsYpv9Q==
+	:subject:to:to; s=fm3; t=1737705706; x=1737792106; bh=pqAStWgHla
+	piTPcUGbpYn0G9TUr/TvZg/bTAhnG255k=; b=BjVRfZGhIv7vEqRY/MNtDHM0NS
+	4n31VAXp1u3n9ABElKgGiJ1xhjKEaCEzTrgK68DKsDsWAXYih0CQ57J2IETOZziQ
+	nMreG5Ecmv2gsHPFyXbzQY+RCzOGjJrBJGy6E/ElY6+DH/uMxJI+LxQlxbF8pTAc
+	7osTCgtHxWnDvxmg32rKSDksTmUKBXbFMnH3yYVSgAB7Bee48fQQcEgL0Nn2Bbic
+	tYNrrbwYrsdV3M1Kov36kd7tX4BIoaN7RBKNo3OD8PM1UAfuWyWNrDjvJQlI7XEO
+	LKmOgenEZIeVt/ipPGzib0ows1cpOcz7uwUkZrXmVvNYHpuYbW1DBhHth+KQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737705702; x=1737792102; bh=vzVrmpdHBLprbn6FI4Xo37Cc+kqQA5tS739
-	kgtctiEk=; b=NEBxJpBMuXnG8zp4p3OFXScbw54vor4K/WWMCXmwMEYKhspmmIy
-	AFfdx+zL+RoP2wAT7au4zjWnl+neFj9vNdNA10pPzI7Yyio/Oi3lmX90yiy5af1+
-	cKlpe9v/0Lum53syK+rzOSbIC+ZFojVWRyYPS1NXxBUCunKFPRVzh82K0tEIVDmx
-	5QBGjgB+IwP0JDT+p8jAXcxP+0B36S2L9dSzBgfZrY5OmlBLqMi11xc67F5e86VQ
-	ksc0Z/EnebnBQWRUO6es+sIrweBy2JnI+nDKlsrL37zz0kwLB5Yl3BPAR9aQdEjs
-	pKUuuLHQ09r9TnMQD1b+F5REHSzj0/Dkckg==
-X-ME-Sender: <xms:5UiTZ_fowmsMoqgBEVjm-XYv6sj_LG1jNrMIOzB7D3gtunfigo83dg>
-    <xme:5UiTZ1M39TwOnY5fysJCa_yMxUxw1uZhanUo7zZ7L-Ws3rLFYZV0wzoaG31B1yeyK
-    zxEDtKvYBfmv2cpCQ>
-X-ME-Received: <xmr:5UiTZ4h4ATbmo8eBu6eWG3h3Bg-Qvw1BBb6dwxAVcFVdDsqczw18T6h4W7rvsiokEdAMTbDHyGfg3Sh7xQVglLpL1S1tM-yLMFvEZNdNLHwwKQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgfeellecutefuodetggdotefrod
+	1737705706; x=1737792106; bh=pqAStWgHlapiTPcUGbpYn0G9TUr/TvZg/bT
+	AhnG255k=; b=I3PpbxThqH9jGwHlKwlBzJpGWkmd517wZuYtaQZhIe/wmdXeL7T
+	+7ZkeGm7kOvgXdTYiNLURQUjITWNT/WALYTuzZTOHCg85AOepqAPR5nr2xCuDycK
+	93c3ngCmAJZpot/nK/RL/lv4fZIQK4Us3eKdd1Xkyn7b3BOmPmENwEgvhRvAFiqk
+	dClStKO5HfrVLPfHUbc9gSaQ3caHksFv3Oxnrsm/S7D/Se22LEx4+q7WrqvDVxzH
+	sOU03pbJ4UloD1AkITt6UW5KnPR8B+RClApltLpsY1VfPK5NBTgI1vf1P8zhNUZU
+	SUX9vf4Ej7+iuSr7yiPcwzLisi2YPhmcNow==
+X-ME-Sender: <xms:6kiTZ8_LMyRhGAyI8XJExs2UomgNtTwE3QSaq17hNngdYEeZi2xXrg>
+    <xme:6kiTZ0vd859mgrWznHgjpmcAKzZknKbK7Eo35YFnE-BBlqVP1LS5o66XveZK_xmlL
+    XpglFL7QvSNPzGU7A>
+X-ME-Received: <xmr:6kiTZyDzKja_fhmKtZte-fKkzq-ef2HKFEfumEHtJv0Zre9XD8jLe0xRPtrnhHOvK_8wbnGQ1gnWA1P4KQSS4o7DUxyMQ3JfkR6ZqJhjMWyyvQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedggedttdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeejvedugefgffffieegtefhgfeikeevfeefheevvdeg
-    ieetgeeujeeliefhiedtueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhhusghhrghmrdhk
-    rghnohguihgruddtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvvghtshhonhhife
-    dtudejsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:5UiTZw_uLaNFwPIiq_R_Wth4fnrZ2OocUrZNX9lFhZPjkgjhTsBLBA>
-    <xmx:5kiTZ7uah3I3rRT_xHDxHgFFrsgyiI2gSLA5jqIj44m8PA-B4jGzlA>
-    <xmx:5kiTZ_F_C-iWOdWfZAfFW8-Oi361p6x-PyNVqoxaYKKxXHBjOOwaAw>
-    <xmx:5kiTZyORoYSeEmep64mmrfRHw-oJSHgM6Vg6MlulqDJoWabP-TPERQ>
-    <xmx:5kiTZ7KSbyBFIyqyYkgTJwqxcObpH8PIy1c4zzXrjce8lNUy7n5FG2vx>
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epshhhuhgshhgrmhdrkhgrnhhoughirgdutdesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomhdprhgtphhtthhopehmvggvthhsohhniheftddujeesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehprghvvghlrdhrrghpphhosehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepjhgrtghosgdrvgdrkhgvlhhlvghrsehinhhtvghlrdgtohhm
+X-ME-Proxy: <xmx:6kiTZ8ewG81RF-__mqka2na_i8SRz4eGeLAI4ugS3uAPkCsIqbElOw>
+    <xmx:6kiTZxPTVPu0YevfXTS5cMAL9pgsmgkmT58XR4ZxvQwccvJdBaLy8g>
+    <xmx:6kiTZ2mNK8kcaThrkdex0_uepjiaRZhp9SJNoqOOX3qTusXFriYFDA>
+    <xmx:6kiTZzsdAaai0KHGpwxhRm3R7mN01u1DTAikPA6bWkVKEP9tKbwQBA>
+    <xmx:6kiTZ6jj_HiGgiG7mEPnReFMNLNtRVFfI8_GnsHSwnwvw56hzzSX0I48>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jan 2025 03:01:41 -0500 (EST)
+ 24 Jan 2025 03:01:44 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 76dc5358 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 24 Jan 2025 08:01:39 +0000 (UTC)
-Date: Fri, 24 Jan 2025 09:01:38 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 31f5a92e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 24 Jan 2025 08:01:43 +0000 (UTC)
+Date: Fri, 24 Jan 2025 09:01:42 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, shubham.kanodia10@gmail.com
-Subject: Re: [RFC PATCH 0/3] refspec: centralize refspec-related logic
-Message-ID: <Z5NI4uUaeHknckJY@pks.im>
+Cc: git@vger.kernel.org, shubham.kanodia10@gmail.com,
+	Jeff King <peff@peff.net>, Jacob Keller <jacob.keller@gmail.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Pavel Rappo <pavel.rappo@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 1/3] refspec: relocate omit_name_by_refspec and
+ related functions
+Message-ID: <Z5NI5jVxcNtPQmi8@pks.im>
 References: <20250122075154.5697-1-meetsoni3017@gmail.com>
+ <20250122075154.5697-2-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,28 +95,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250122075154.5697-1-meetsoni3017@gmail.com>
+In-Reply-To: <20250122075154.5697-2-meetsoni3017@gmail.com>
 
-On Wed, Jan 22, 2025 at 01:21:51PM +0530, Meet Soni wrote:
-> As Patrick pointed out in [1], the logic related to refspec is currently
-> split across multiple headers. This patch series addresses that by
-> relocating refspec-related logic from remote to refspec for improved
-> cohesion.
-> 
-> There are a few functions that seem to be on the borderline. They seem
-> to have refspec-related logic, but also contain some elements related
-> to remote logic, so I'm unsure whether they should be moved.
-> Specifically:
-> 
->     * get_fetch_map()
->     * count_refspec_match()
->     * check_push_refs()
->     * match_push_refs()
-> 
-> [1]: https://lore.kernel.org/git/ZysQvUyxgdRqjvj2@pks.im/
+On Wed, Jan 22, 2025 at 01:21:52PM +0530, Meet Soni wrote:
+> diff --git a/refspec.h b/refspec.h
+> index 69d693c87d..9556d08bd5 100644
+> --- a/refspec.h
+> +++ b/refspec.h
+> @@ -71,4 +71,12 @@ struct strvec;
+>  void refspec_ref_prefixes(const struct refspec *rs,
+>  			  struct strvec *ref_prefixes);
+>  
+> +/*
+> + * Check whether a name matches any negative refspec in rs. Returns 1 if the
+> + * name matches at least one negative refspec, and 0 otherwise.
+> + */
+> +int omit_name_by_refspec(const char *name, struct refspec *rs);
+> +int match_name_with_pattern(const char *key, const char *name,
+> +				   const char *value, char **result);
 
-Thanks for this series! A couple comments from my side, but I think that
-the overall goal of this series is sensible (well, I seemingly proposed
-it at one point, so no surprise there).
+Reading the signature of `match_name_with_pattern()` I wouldn't have any
+clue how to use it. Could we maybe add some documentation to it now that
+we expose it?
+
+>  #endif /* REFSPEC_H */
+> diff --git a/remote.c b/remote.c
+> index 0f6fba8562..40c2418065 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -907,54 +907,6 @@ void ref_push_report_free(struct ref_push_report *report)
+>  	}
+>  }
+>  
+> -static int match_name_with_pattern(const char *key, const char *name,
+> -				   const char *value, char **result)
+> -{
+
+It's a bit unfortunate that we have to convert this static function to a
+non-static one, but I guess it makes sense in the bigger picture of what
+this series wants to achieve.
 
 Patrick
