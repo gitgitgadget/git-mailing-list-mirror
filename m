@@ -1,125 +1,98 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B486D1531EF
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 16:07:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6D8158853
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 16:31:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737734839; cv=none; b=oVndhL/aClYWsVH/9dBq+MKGPvTq5j9v3jBekoCVFoz5cOK/TebawHgYEGf2D3abogkfE7+r8/gMtKLHhKEiaMFz5uc05mpD63OPIi2uL4CpgHQrvbg0Fr8EjUs1W8S6H+sBHXnreHyf7RwcgUC7fTxI9mqxjV2ycqp500+C7M8=
+	t=1737736275; cv=none; b=RgDTelJsKwxQRfa0miNstoh5GL9dQfWC3cBAPD6S5Mo0AbDc+dH6SFVwcx9/vIzNID2uzVJLdJUr34nPGZiUVe/nPncUzECRCzPRCGfoydfdf0lzVLbRg3SkN8JQ9QYg++B9cTKU+QB+UIKEnqYEtcV/egZ4S3ToiNWkpaaOEX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737734839; c=relaxed/simple;
-	bh=sdk/HbJwhUBZ/thrQ5AxODvI26U/jCRvQzqMfqtbKxw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IqofRTCNxSoOO9N1pextz5xu7wlfEiegujmtV/WU0aEkTOK+3V/GngBUnHyBKvk0eaFTmrtr6ealqULJyLPOVgAIY/atCZHDM5I62WTcjfgjIhYeRwhXdELe0RS2FHFM9uLQ068bGcjiqb3QCa13N8QIl8pEFbAzqLCs4H05D2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kVKLb5XF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YAVkoOvB; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1737736275; c=relaxed/simple;
+	bh=L0JXJP/hVMwY4VJB8blRl0B/t+pUedHowPZLZHgHj5Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=H3blDtMv7Jnv0PdEpBycnEOUbAZnsgORGq8hNLo0zdKbALh/vZVax4Ku/eTLpYR8/NwYFu9huoftWeOI7nPzWttxplOftqAydgFQAb6mhHl6f8Kleht08GlmmRSU9ptv8abFFm2dNBmRxBFsRw5sPVv4DTs7ETSiNyEEaA55PEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mavit.org.uk; spf=pass smtp.mailfrom=mavit.org.uk; dkim=pass (1024-bit key) header.d=mavit.org.uk header.i=@mavit.org.uk header.b=CEG+E10j; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mavit.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mavit.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kVKLb5XF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YAVkoOvB"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 916ED25401C9;
-	Fri, 24 Jan 2025 11:07:16 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 24 Jan 2025 11:07:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737734836; x=1737821236; bh=PJscM3tbhG
-	GjyF1Jo1H1n0qwnMMhBoMCc/QKDH5YA7o=; b=kVKLb5XFBS+QXJ0OJFc8nibzQU
-	7MpxuK8RG5WvnBmNU4cPI8hzHUY6ADOzP3vXGmiTVYnU7N6DVrCE0YqVLaB8WPZ5
-	x/pGJTlpVpANkjgeQoW0x2hYFfniyw392ODdVnxyMz/fjHglM+YNCc0OxAcZQ4k9
-	ipB+RJIZetpKzW7YLoivBI6MOPr4We35rjZhxE36OVX3O3lrHuJRvqmGAggpumvo
-	mjjihaUo2GuEBF79hGWJKiCmGLMlhuvU4DCV6wQgf8L7hcVQJnnSMrSyOEbUyg9X
-	1yx5eLVxGXO5ygwM8UlIiAMeXVdfEKCwUXB22yIcyWGCUygICXJsN6Z4Ng8A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737734836; x=1737821236; bh=PJscM3tbhGGjyF1Jo1H1n0qwnMMhBoMCc/Q
-	KDH5YA7o=; b=YAVkoOvBaMIlxBblfbL5hGw8Rmn9IA3FRP/nIDaZfdkwhFYuz6D
-	V4EvTKZ+M1K2OBYDdIguL/gdY9LnjpMLtSRvuQHb+CNQfM8U4MIG6OKKM8KYVX2o
-	gyJlVJkKsIRKqHRnYM3Nnpr/51pBjOZRrB1qsfL/lCXiSUdqCDXGWmqzUPv1e1On
-	Mimieg3ioeiwVOFLAowRRQi2yF1UvYYjt3XAgFjWbSu2chBVIkogEXXwiUflUkvE
-	KnP9Xblh8OhQAgNBxTzhj1X9uOmPTzOLSnMFY3TsSZEJnbRxsVNYhTdD/n1cPxvU
-	BbdQis7GWDe5ydXUbiLoV49S9uROgnk4EtQ==
-X-ME-Sender: <xms:s7qTZ_kIsiba87MjxA-T12MBsDA5ZxVfFCJ3cycFuHWDY1ZlUP36Dg>
-    <xme:s7qTZy2kX-l0bPUUBCwKoWS4i8cbi8_B7fn1xGVQ8BCr-CM2nafeV8xk2q4LMZsrW
-    sjnks89Vxn6ocIA3Q>
-X-ME-Received: <xmr:s7qTZ1qtFaJne3L1r3ALjfRBx8gsQjEMfJWFtl0bqx0drkqqYfITVJZByuqDZjerLTqmDb6YpT80SLieTnUmXx8n9P-d8pK5gQlJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedggeelgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepsggvnhgtvgesfhgvrhguihhnrghnugihrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmrghilhesvg
-    ifohhrmhdruggvpdhrtghpthhtoheplhhishhtsegvfihorhhmrdguvgdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:s7qTZ3kX1ZxuplDX1VdBfyKJ8u_xzDtz-MRUKNlmCHcKXCU1M22rAg>
-    <xmx:s7qTZ914oQcNrypCMECgUpmKkQCVT2VHdsLXgY9FOrGDzoeIKmrDgg>
-    <xmx:s7qTZ2ug-eRxZbH82rbTVP-9e6BMKWUx887uvtx_uBOpCS00lmZFbA>
-    <xmx:s7qTZxUBq-NKGExQEP6A8zIKMKKXlo5I9PcRoKa8c-cpwDcM9f1xnA>
-    <xmx:tLqTZ3qeh1NCslVCve3bc3cPo2TJG_MXUKH6_BxasOLOFk5BlRK6UNPy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Jan 2025 11:07:15 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Bence Ferdinandy <bence@ferdinandy.com>,  git@vger.kernel.org,
-  Christian Hesse <mail@eworm.de>,  Christian Hesse <list@eworm.de>
-Subject: Re: [PATCH] fetch set_head: fix non-mirror remotes in bare
- repositories
-In-Reply-To: <Z5Mrk02wMdABtrVZ@pks.im> (Patrick Steinhardt's message of "Fri,
-	24 Jan 2025 06:56:35 +0100")
-References: <20250111202628.0e5894e4@leda.eworm.net>
-	<20250112165125.130400-1-bence@ferdinandy.com>
-	<Z5Mrk02wMdABtrVZ@pks.im>
-Date: Fri, 24 Jan 2025 08:07:14 -0800
-Message-ID: <xmqqldv0p559.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=mavit.org.uk header.i=@mavit.org.uk header.b="CEG+E10j"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-436326dcb1cso16026925e9.0
+        for <git@vger.kernel.org>; Fri, 24 Jan 2025 08:31:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=mavit.org.uk; s=google; t=1737736270; x=1738341070; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+3nrbzwdHhhR9jUinJ9cZbdaY2f6R7N/VVxuK0MyBQw=;
+        b=CEG+E10jW1C8DwasNekefHQ9wEnii7ssky234sl51vRn7l8k/8kZCWgWZLN4VboD1w
+         5ijEFSgDZCWM93sSwwI3/JzZSDurlRDD3n47rXp3eWizhJAJ+p3EIOobNOdbu4DO8Xi4
+         7Y9Nvi0iWd0DkX9FzxrVvpeFH9wWNfGe5x3Oo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737736270; x=1738341070;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=+3nrbzwdHhhR9jUinJ9cZbdaY2f6R7N/VVxuK0MyBQw=;
+        b=rvVCDqjpUYdvYLuh9qGLpQX8fbRbuhJAtr76Z+ZJZ1wpKXE9gcXXnYk2h2Ak+8MomV
+         wHmezpqbZpjnLBh7xgWaXAt3XJeXdb55/h76BkY8+Dd1GIMbHUAhKyFLGKQEJ7Oz4rpW
+         9aJRWIKQ53yceo7fhp8Ug/jFJ6IiCcZc93aUTbsKM7SpkXRj6YykZwADb46wS7Cb/Sm2
+         +VWY9yoQZHs8voeAEtlluvsu+blyQgjVHW2nx6TKkQz5WJJ3ghDjz3bZ9TsF5edsNwrm
+         YiAur97viYfgzX6f9dl3OrXQiSyhV+TAkYBBon8chBC2bAiBaYiiZYdpFdyf+nMo9b8u
+         G1Qw==
+X-Gm-Message-State: AOJu0YzhE1qB+cRaswKSnUYRe4SYf4UvBlctSX53XqKbnHFmJCq7iESg
+	Px0oevtKwmcIG8Wqqfi0DESm5DjgSp0gwQgvLbtkTts5fmHb3qKSfgDheHAVVkWzp1rPFgNfL+t
+	GEQ==
+X-Gm-Gg: ASbGnct5os2cH/bX9ij19ZiEWVI9Of3LG7MBxRYsCEubNStbxBBkHtkzKJ/uguF9FE4
+	SfjVPPC+ZKmJA3YZbB5Bqc+qH4kSNoKKf7NarZ/yXGs6jSas2Hb2U3CxHpP8N1xf+5PbiJ/K8fN
+	qI6J11HfQ44zSPXl+wwOaB+VjZnBJWmgpV1kUKe6tftSraLeNtW2aSOL/hUAvHQXMekOeOKaqi3
+	w+l6iMMFUc5IvFBhz8+Nz3NfG4IjO1J9p93xGLcmIXuXDEfj4JGIyqM/AyH8/YZlFu8nplXCYed
+	LHRalSMHu7eAdHr8ahFS9NfP/lMluRsow0Mx4on9JrQ0BmoYMFnb7ptaDjB2mmaRzj12OGgl9R0
+	qbhlW/C0F
+X-Google-Smtp-Source: AGHT+IF5hN8Gc1b1d65CPqq/75BViSb+5SOz7lBz7gLqFXO/MWUf76XpbmDU+4FXNlL5YPxcA9qjIg==
+X-Received: by 2002:a05:600c:1c93:b0:42a:a6d2:3270 with SMTP id 5b1f17b1804b1-43891426ebcmr239193775e9.21.1737736270198;
+        Fri, 24 Jan 2025 08:31:10 -0800 (PST)
+Received: from froglet.home.mavit.org.uk (dudl-14-b2-v4wan-165812-cust3365.vm31.cable.virginm.net. [82.34.125.38])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd573245sm31649025e9.33.2025.01.24.08.31.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Jan 2025 08:31:09 -0800 (PST)
+Sender: Peter Oliver <mavit@mavit.org.uk>
+From: Peter Oliver <p.d.oliver@mavit.org.uk>
+X-Google-Original-From: Peter Oliver <git@mavit.org.uk>
+Received: from froglet.home.mavit.org.uk (localhost [127.0.0.1])
+	by froglet.home.mavit.org.uk (8.18.1/8.17.1) with ESMTPS id 50OGV6TZ024001
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Fri, 24 Jan 2025 16:31:07 GMT
+Received: (from mavit@localhost)
+	by froglet.home.mavit.org.uk (8.18.1/8.18.1/Submit) id 50OGV61Q024000;
+	Fri, 24 Jan 2025 16:31:06 GMT
+To: ps@pks.im
+Cc: git@vger.kernel.org, Peter Oliver <git@mavit.org.uk>
+Subject: [PATCH v2 0/2] Fix Meson Perl version check
+Date: Fri, 24 Jan 2025 16:30:47 +0000
+Message-ID: <20250124163049.23965-1-git@mavit.org.uk>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250120160301.121245-1-git@mavit.org.uk>
+References: <20250120160301.121245-1-git@mavit.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+As suggested, I have reworded the commit message of the first patch, and
+improved the second patch to work correctly with future versions of
+Meson.
 
->> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->> index 2d9587059f..cfa63ae086 100755
->> --- a/t/t5510-fetch.sh
->> +++ b/t/t5510-fetch.sh
->> @@ -84,6 +84,19 @@ test_expect_success "fetch test remote HEAD" '
->>  	branch=$(git rev-parse refs/remotes/origin/main) &&
->>  	test "z$head" = "z$branch"'
->>  
->> +test_expect_success "fetch test remote HEAD in bare repository" '
->> +	cd "$D" &&
->> +	git init --bare barerepo &&
->> +	cd barerepo &&
->
-> The `cd` needs to happen in a subshell. ALso, the same comment here
-> regarding whether we want to have `test_when_finished` to clean up
-> state.
+Peter Oliver (2):
+  meson: bump minimum required Perl version to 5.26.0
+  meson: fix Perl version check for Meson versions before 1.7.0
 
-Yes, indeed.  The change to another script we saw earlier followed
-the "chdir around only in a subshell" pattern.
+ meson.build | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-> I see though that you simply follow existing code style, both for the
-> call to cd(1) and for the single-quote, so these are fine. This test
-> file could use a makeover, but that is obviously outside of the scope of
-> this patch series.
+-- 
+2.48.1
 
-Terminating quote can stay, but chdir is a correctness issue that
-may want to be addressed minimally (i.e. not making things worse,
-while leaving it for later to clean up the existing ones).
-
-Thanks.
