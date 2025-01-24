@@ -1,119 +1,106 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5213D1991AF
-	for <git@vger.kernel.org>; Fri, 24 Jan 2025 16:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DB723B0
+	for <git@vger.kernel.org>; Fri, 24 Jan 2025 17:05:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737736283; cv=none; b=FlYxZLfmvLifOfuK9GYql9oHROdmn0KmNaOka3WTCXJXaJdv2U5LYR42StHqC7u1mrVXHu/u0mTPspq4Sz+1orlIGFM0v7f+N4Bq0+t9sdtTE6j4xRs4/6XaaSUtZu7bcaGAkFD5JVDYz7Rg87touCLE1/acmfXo6yFIcraYE5A=
+	t=1737738330; cv=none; b=YBENmCBvAfl9xLAWsOjo3Xc6bs+5fmoP5xS3lG19EmKQERDGJaEDq+rxhvApdoEXUXdsMf2M/UMzEztl9cExm66eZ447FfhBzDI9g5UqmU001KNfg5SOYLUrTlHMssQL4OIEUSQI+4YGFVDfvaJziW2T6Gu6s8vLxGoRVovZH9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737736283; c=relaxed/simple;
-	bh=NsYpQR8D8EWiAxl7//ZB7Dy+dNeCtRT5jyytUrqyL6k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Aniz1rAvoyrnVHybH8E/qKL07eVKsBE3KXUP1l4DqaOutZJAQJhSKXjYTLuJhQfKz+4Sj2zkJXGRKvN3jzQHXfXH0551SHGZYz8WscrubVzc22VYkgO2m1L6nUMRiRBuD1X15tQXXqRf1hGu/3cU0H4mDeyhGWzIeDl+Lh6KzQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mavit.org.uk; spf=pass smtp.mailfrom=mavit.org.uk; dkim=pass (1024-bit key) header.d=mavit.org.uk header.i=@mavit.org.uk header.b=l/bauwJj; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mavit.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mavit.org.uk
+	s=arc-20240116; t=1737738330; c=relaxed/simple;
+	bh=jzu1fky5pQkRTXg9FK73HMj/eSFViyRqzEiGwAnpE7Q=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hBXmpDk/EKBDGZpU+Csnw+YTnggehj4eqQBT4Ql4YoVSMwBNDP1VOiQb8KH6XXZ3lyVdmsKYy0ySJ2kIItAC2WalueAqsnHod4XCVT5m0WhhaNwH/eELHyBqQehxD05FdgLee+g3Q73SBLkkq16E4VeFPGECkuj+pG5hq/V97Tc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=O8bgnzeO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=br3zbYTl; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=mavit.org.uk header.i=@mavit.org.uk header.b="l/bauwJj"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4361dc6322fso15862655e9.3
-        for <git@vger.kernel.org>; Fri, 24 Jan 2025 08:31:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=mavit.org.uk; s=google; t=1737736280; x=1738341080; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=020pw6KPimANOioRtqmhtcPnYPTEs56+5pPiQg3BZXQ=;
-        b=l/bauwJjj008dhDlb+633gXvTKx/9m2uFRm0v8p+1YTT8P5cG1+R/eXzciLvY4Z68b
-         +YqrIiupZCBnY/k+fWZtr5ztpGtqKpdbPY6A184/Nyp0Us7Hpbq7dF18Dn35CZF1YE+2
-         Pf+dsLc51hom8OMJZ/TOT47dbAEkn5GnznNIs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737736280; x=1738341080;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=020pw6KPimANOioRtqmhtcPnYPTEs56+5pPiQg3BZXQ=;
-        b=TAtu7oi2isBqOSFSz8vpu5eu2ueDur0EA0E8+DJAorsLxHEyk3ygyS3J4JUDdBfAgb
-         PRfI7WTRt/q+uhJJgv8q9KyHkez9RtGNEyHWEyqn3zpbF8TbC7VltO1hd6NvrXaOgn8T
-         PCGz53irpShSMEkPrxpJzBLx2VwdEiWQwUmrvPomLy2tF0I/d4nI7D46Ku3Immn5OxNA
-         1p2ZBnKQzIdRVNMxvMkVOr8iMEQB1BpGFVE1YJjiPN+bz1ZtPsY9vuuEJ/ISIg1rIfnc
-         3pxsVuT0LzxAeBKu8MvRJ2W8LUaEmMgFwVzkztERAJxXp/0s1XxBiBoRvwXRz9+WkZhZ
-         nViQ==
-X-Gm-Message-State: AOJu0Yx1DFkmnP9gIfdBTIyX6oXYUHBApfiG4ySmTS6vtuWxg3oIgO8D
-	+At3M7Zn/w+3ctkpPL89/7b2CLXafCRY6UGaHpsVS0te48QrN8QSCYIzfXjNOQ==
-X-Gm-Gg: ASbGncsuDt8xkR7QNJJ1CvRVyDSmMfVqKZLiseTrPRsKSKHHHPuo+GY7MKUcUfrF9vh
-	cgCpECRbL24SMJWbhy9jpn6fLJUCa4HcThE0/LXm+T5z0QIsp6b9booHfQ04DtqiRKDl1eo+lRu
-	nHopr/3NLbKQP+0Gepyt9EkWLcUSlBiZBjpcBIwehfDs8w/9rV97IJoBlsXk6vBDSmaeFMfSgSi
-	YOyapoe8vNCLmA2z2yv/xGFDEL8ctlsH8LQ8Nbkume6IgpYjkA8vGeQdxqDpmv5YJ6aisMyjNX8
-	Y/x9de2v72vCpktFjANDfgslXuyY30uFFISlp3TIuzvhyiwjzKp0dEIhzdTmT7ko2W3f2yVy4EQ
-	cLGWGxu87
-X-Google-Smtp-Source: AGHT+IHXiaA4w0173ToCwwou1pAg706ZkrT+nL4csyyoPPLTWdBWM5IL6Qw95SuG3sZ+CsnojZ56zg==
-X-Received: by 2002:a05:6000:1864:b0:386:3328:6106 with SMTP id ffacd0b85a97d-38bf59e199cmr33775022f8f.35.1737736279484;
-        Fri, 24 Jan 2025 08:31:19 -0800 (PST)
-Received: from froglet.home.mavit.org.uk (dudl-14-b2-v4wan-165812-cust3365.vm31.cable.virginm.net. [82.34.125.38])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1bb101sm3239490f8f.66.2025.01.24.08.31.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Jan 2025 08:31:18 -0800 (PST)
-Sender: Peter Oliver <mavit@mavit.org.uk>
-From: Peter Oliver <p.d.oliver@mavit.org.uk>
-X-Google-Original-From: Peter Oliver <git@mavit.org.uk>
-Received: from froglet.home.mavit.org.uk (localhost [127.0.0.1])
-	by froglet.home.mavit.org.uk (8.18.1/8.17.1) with ESMTPS id 50OGVHdP024011
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Fri, 24 Jan 2025 16:31:17 GMT
-Received: (from mavit@localhost)
-	by froglet.home.mavit.org.uk (8.18.1/8.18.1/Submit) id 50OGVHoY024010;
-	Fri, 24 Jan 2025 16:31:17 GMT
-To: ps@pks.im
-Cc: git@vger.kernel.org, Peter Oliver <git@mavit.org.uk>
-Subject: [PATCH v2 2/2] meson: fix Perl version check for Meson versions before 1.7.0
-Date: Fri, 24 Jan 2025 16:30:49 +0000
-Message-ID: <20250124163049.23965-3-git@mavit.org.uk>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250124163049.23965-1-git@mavit.org.uk>
-References: <20250120160301.121245-1-git@mavit.org.uk>
- <20250124163049.23965-1-git@mavit.org.uk>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="O8bgnzeO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="br3zbYTl"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id E15921140165;
+	Fri, 24 Jan 2025 12:05:26 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 24 Jan 2025 12:05:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1737738326; x=1737824726; bh=B2yu4NDFdW
+	9qUhA225Az0laeNaeivjYRubOKV+vX9aw=; b=O8bgnzeOSBY349O7Z8T3yrZywd
+	+92tBflkUY9VnuhJZYxC2VQO7o47E8NANvRtjMLRMYk7Yn/HWxn1lxDL2fBzHjYx
+	ilZRg6R4qnCyL/XJcOdKw8a/bOky03Dnf4R3AcEyA3k9nN6vVES+wy4BJrzsRmjI
+	z2jN+M5OrM6sYOiG/W3uSR3o945bs6z62mtXwrTfGzwzUJYhvmp3rPtEGjVUCXu7
+	O3cF+l81TUkoxy5UhRp9bapR/A+k0CvU7Kxyo52j8QyItpSalxTVJnF+EYfZnNSW
+	RIrsj3dH/fIEEu0vgSM/jhA5KerEdAUpxSwnBBu1RmmESX7ikAZhy1J4W0gg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737738326; x=1737824726; bh=B2yu4NDFdW9qUhA225Az0laeNaeivjYRubO
+	KV+vX9aw=; b=br3zbYTlAawaKKyH5391Qme2voX5c0HGPW2qhonSu9vFwvXX0mr
+	8J9AeTJoShUMJm6yqWBqOYY0Oz8e+rqzpcdGg6XR7xwGbdgksgGLFUF1omUyJhtl
+	vXlz6yIM5FBeSGxaEtf4q1ob9XGXKF9MZ92aAFHLgnj0DiEPoFsM10qtKxvWuhEF
+	ivNZLQVYjMV9HRnTnJKORNMT0PIOZAu3kVR9iKQWhAtjo2byEqjJs2VmdOs+W/VK
+	m+ci/ozUee3+g8cSaYwHDDU2SZjVyCTp4lKai5RDZJRnVZ/Cau2HVUiJoJ945ST1
+	tgPs/p4ODAxICqgFd9TfAcoCC9vbq9ZwqRw==
+X-ME-Sender: <xms:VciTZ8CUowLU_jDC4Jun6bT3P06YSqJl4pczH3oYk8fmStdIlE8CCA>
+    <xme:VciTZ-jxQAAUbJbIyXnKljsUlOEz-hVHs-zsGcY-TN__x1_1Wf4qqLDwxVYU3G-11
+    3b1W_xnMSckHib7DA>
+X-ME-Received: <xmr:VciTZ_nHPZ5jew8DC4z8NKYPMp4XRfeNk5ekAIJR2HgzrINjCGJPidx2ihuRQrDgvts_9WkGicmfmKT-Co0ng9TFixiOTLT4eFLM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedghedtiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhoth
+    gtlhdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:VciTZyxHZ26Xt_eOw2QG5jzVATp2GTKZgWjyqZjWodjIQfIcU126Yw>
+    <xmx:VciTZxSavsziMUewqaXbJKEyi9Ux3oxN7x_9TOcwV6k4oUNX9M4c_Q>
+    <xmx:VciTZ9Yu7E53mS-s2Db20TVKGsPR4_w4Yg_kXhnNI7zBtPLuutfwgg>
+    <xmx:VciTZ6TGiQC9Vlf7AIc4lDZoDVTQ827BAv8ZXGfp_OrWT3bozI8Zcw>
+    <xmx:VsiTZ_MFyIr2FhB8jbA9jIqUN8qmGkxgNZb8b__RM5h6gY9Z59VRQnuc>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Jan 2025 12:05:25 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
+In-Reply-To: <874j1o5q2c.fsf@iotcl.com> (Toon Claes's message of "Fri, 24 Jan
+	2025 13:55:39 +0100")
+References: <xmqqbjvyv510.fsf@gitster.g> <Z5MuCd_GbbLK_puS@pks.im>
+	<874j1o5q2c.fsf@iotcl.com>
+Date: Fri, 24 Jan 2025 09:05:23 -0800
+Message-ID: <xmqqed0s16ss.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Command `perl --version` says, e.g., “This is perl 5, version 26,
-subversion 0 (v5.26.0)”, which older versions of Meson interpret as
-version 26.
+Toon Claes <toon@iotcl.com> writes:
 
-This will be fixed in Meson 1.7.0, but at the time of writing that isn’t
-yet released.
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+>> On Wed, Jan 22, 2025 at 02:48:43PM -0800, Junio C Hamano wrote:
+>>> * ps/build-meson-fixes (2025-01-22) 12 commits
+>>>  - ci: wire up Visual Studio build with Meson
+>>>  ...
+>>>  Will merge to 'next'?
+>>>  source: <20250122-b4-pks-meson-additions-v3-0-5a51eb5d3dcd@pks.im>
+>>
+>> Ready from my perspective.
+>
+> I can't really vouch for the last commit about Visual Studio, but the
+> other commits are ready for me as well.
 
-If we run `perl -V:version` we get the unambiguous response
-“version='5.26.0';”, but we need at least Meson 1.5.0 to be able to do that.
-
-Signed-off-by: Peter Oliver <git@mavit.org.uk>
----
- meson.build | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/meson.build b/meson.build
-index f01d81b39f..80af578d36 100644
---- a/meson.build
-+++ b/meson.build
-@@ -755,7 +755,11 @@ endif
- 
- # Note that we only set NO_PERL if the Perl features were disabled by the user.
- # It may not be set when we have found Perl, but only use it to run tests.
--perl = find_program('perl', version: '>=5.26.0', dirs: program_path, required: perl_required)
-+if meson.version().version_compare('>=1.5.0')
-+  perl = find_program('perl', dirs: program_path, required: perl_required, version: '>=5.26.0', version_argument: '-V:version')
-+else
-+  perl = find_program('perl', dirs: program_path, required: perl_required, version: '>=26')
-+endif
- perl_features_enabled = perl.found() and get_option('perl').allowed()
- if perl_features_enabled
-   build_options_config.set('NO_PERL', '')
--- 
-2.48.1
-
+Thanks.
