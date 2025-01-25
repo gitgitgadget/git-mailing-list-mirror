@@ -1,285 +1,121 @@
-Received: from out-171.mta1.migadu.com (out-171.mta1.migadu.com [95.215.58.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970733FBA5
-	for <git@vger.kernel.org>; Sat, 25 Jan 2025 19:02:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB792CA4E
+	for <git@vger.kernel.org>; Sat, 25 Jan 2025 19:59:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737831734; cv=none; b=IijU+cZwJsU8taEJPouSL05boV9ljv1HObzRJBv7w/GfjYCSz8dQ70l0ZwBUMleE6W2P/M6TXLJwvfITl8LC0u9OBvvP2V1zX6YEyE7NO9IABtZOlJv/S0p/KDdi5MATV6ZFvWgyuF8n8wSmNJH6GIWyhWAY+WnK1f6NkHFaD2o=
+	t=1737835171; cv=none; b=a44f4GXr7kxEPHNmYpN65H4LPrtYCzsnD8jSYzBYgX0YOpqkYULQemjJO/Ja+m/vrsvXqqe1xl2DdFTFaNw3osrDeDCGT4xOVD5vF8lgaYNqeaFYvi3lC69Br7X21JGSVo++jkAupaKtUiRIDW9rmFLkhNfdq/SKPmdFnfnNyKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737831734; c=relaxed/simple;
-	bh=SRJftxT/lY+d27vXS9SzV2RsWMaLyZWgdnbZMT5ISXU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=quZCOKZfYen0QbSRCFTY8Izp3sSNPxZngbn9Lc9RsR0Uv8F0cwmWWRaRimLtf9wGE4Fkieq2AibcLicCNJMaWsYDHPFvS79Nkcz6BN6CfGr/8bAxKz5eVJcHhplwU0NaLH6F085ALgGPVif/YhA6jSpPsal8NAQ/zZo9usdGalM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=swagemakers.org; spf=pass smtp.mailfrom=swagemakers.org; dkim=pass (1024-bit key) header.d=swagemakers.org header.i=@swagemakers.org header.b=CT+ZZJea; arc=none smtp.client-ip=95.215.58.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=swagemakers.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=swagemakers.org
+	s=arc-20240116; t=1737835171; c=relaxed/simple;
+	bh=IC/GFm9dn28FJwAoiPu2zy9am4cFOeJM5RWVnZUH9Aw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=aWB5InAhURuMXOwdIHpQASnJoOkXz5cZOaEFQM6Z3lw8mXHk9Tu6NfmmtruAds+pLmEBd14u2M0/m+ikStKrdjw/9/A7eqnpmcUsa8bErEP3P1+S1+gC3ZXvxKbLimjLpOKtqH3da06PsWAUiqupbc1f0fIiziKLJ3+S1jBkA0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TFcblycN; arc=none smtp.client-ip=209.85.217.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=swagemakers.org header.i=@swagemakers.org header.b="CT+ZZJea"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=swagemakers.org;
-	s=key1; t=1737831726;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Qn1QoNp/ENkUIDPhrFvRhtSdaXJZtMQtUTpDYvCSzUk=;
-	b=CT+ZZJeafQWT2sOxoRVxViWAc7yle6Qfz+G0sutUJdwZxkoILGgNwTxGiBxT7iJZPajVP/
-	i6KzCD7hz8J2QHiewrnuDWkBW8DJaKWllNWefQJ08K72KvVj+IQVF3wmCvdCNJU3io/byX
-	E0yE3/CNypBhunUyTYYwY0tMBzznvFE=
-From: Julian Swagemakers <julian@swagemakers.org>
-To: git@vger.kernel.org
-Cc: mirth.hickford@gmail.com,
-	julian@swagemakers.org,
-	sandals@crustytoothpaste.net,
-	wiagn233@outlook.com
-Subject: [PATCH v2] send-email: implement SMTP bearer authentication
-Date: Sat, 25 Jan 2025 20:01:31 +0100
-Message-ID: <20250125190131.48717-1-julian@swagemakers.org>
-In-Reply-To: <20240225103413.9845-1-julian@swagemakers.org>
-References: <20240225103413.9845-1-julian@swagemakers.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TFcblycN"
+Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-4b24d969db1so700810137.0
+        for <git@vger.kernel.org>; Sat, 25 Jan 2025 11:59:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737835168; x=1738439968; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IC/GFm9dn28FJwAoiPu2zy9am4cFOeJM5RWVnZUH9Aw=;
+        b=TFcblycNKB/vmow3CWA9+TdN6kKjcvzyWpiXR51hz2ZffUpfPpB1rn0UxW3ROAa/90
+         fhs7YN3mQTPre5qOxJhGvYDgbNJZO06yb4sNhIEhoJRcZ0Q7kSwbfoYNhdIoEkt9DTXw
+         f9wMlyJQpJ9o1eS6XtRDQbZXR/mqEXPGcebWN89Glk79Sf7NtxEx64Ob+hbFTjaovt7r
+         GCD7q4gUuCIKLHpeK4m1YOaUDGBLTOEOY/CKRwHytOAvDUIR0fK1T/ZxjF9yT2O+yrCt
+         yV6+VctnBhovLmLov5O3YJeVfjlxcKXa1VcVU3EA0khQ/NQlcpqKYWlJnrGiyq9zX/6T
+         ofgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737835168; x=1738439968;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IC/GFm9dn28FJwAoiPu2zy9am4cFOeJM5RWVnZUH9Aw=;
+        b=pS1LhDbBJAoavmN8dDqZhYBKZDfDyNCEf1ca8Vw8klY4QLmBmmVviy6PCVBEGk4TVO
+         UBUJnyODR4YA40rRzK0Z9ekNCyD5JRRNWg4ktMUm8fJ0htZNwrilW8VoVLrWHyNTVKXF
+         8oKvDzc/8hQazvC2w6Bl6PQXPxHiaZBHE33wCHaUE5OKyyvBkcHDd/Q6YX6yqHIs2vY0
+         sK7fy2+Y3xTA1yK1A3qjw6auVMCwQlivd7YvEr0znjXbMOtw8SE02B2+7j5wAzBxt6bm
+         lJj9l2qhlALIYsiB0moYxr3uXgbpTgCmWrndGi53rFCfT9HP4rqk0EfHDm9aCtQL8mJq
+         vQPQ==
+X-Gm-Message-State: AOJu0YyenaY4QIw6isLSj8+r56BIQj+mcetBqkRRGciCyPZ+vu7Ao9Z6
+	I9sieAwjpZIyf38TWMXeCfSoUmWeTwW/vvWmVF4saEyAQbkcm+exXQBuNVwY9Lf1E9uBwT1wFBL
+	fQv09jjvFZlFf+G68qnIJS6ipxAgfTJpN
+X-Gm-Gg: ASbGncvIJYVvFJMJ1LHtDFpXP3mP/T7i3vw5owKMHsGx2rHrgGHjEktoBYSS+fzajh0
+	aaDHQ8k7tsVM1fENC6wEU4GNVrqD4OrofANrXeAznebb7JVgDidYxo5vcXldR
+X-Google-Smtp-Source: AGHT+IH2XAj98+MV0KTU8LLmN3N+r7SmcTgQCNuCUSRZ0Z1uFoOpERMgCynkMaDS7eWDhE6TRQNZKwKJmiuYgBYGTpY=
+X-Received: by 2002:a05:6102:4b81:b0:4b2:cbe5:fbc5 with SMTP id
+ ada2fe7eead31-4b690c6b396mr30455570137.20.1737835168470; Sat, 25 Jan 2025
+ 11:59:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
+From: dev oft <devoft1@gmail.com>
+Date: Sat, 25 Jan 2025 14:59:17 -0500
+X-Gm-Features: AWEUYZkliXgrvH-gRbVESMF-Q_gXRz-vF-V5lKUUPule8ak-AezaMEIY2VMNhiA
+Message-ID: <CADfRhQ7Gcv6SB5ZYwdE1HRxkeBwrEbYMu6KcKPRuxWdDH+gZMw@mail.gmail.com>
+Subject: Proposal: "GitPanel" Project Contribution
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Manually send SMTP AUTH command for auth type OAUTHBEARER and XOAUTH2.
-This is necessary since they are currently not supported by the Perls
-Authen::SASL module.
+Dear Git Team,
 
-The bearer token needs to be passed in as the password. This can be done
-with git-credential-oauth[0] after minor modifications[1]. Which will
-allow using git send-email with Gmail and oauth2 authentication:
+I am devtracer on GitHub, and I recently reached out to Git=E2=80=99s GitHu=
+b
+page to contribute a project of mine to the community. During this
+process, I had the privilege of receiving guidance from dscho, who
+kindly explained how to open pull requests and share ideas in a
+respectful and constructive manner. Following their advice, I=E2=80=99m
+reaching out through this email to share my project idea and verify
+whether any similar projects exist within the community. For
+reference, here is a link to our prior conversation: Git Pull Request
+#1877 https://github.com/git/git/pull/1877
 
-    [credential]
-        helper = cache --timeout 7200    # two hours
-        helper = oauth
-    [sendemail]
-        smtpEncryption = tls
-        smtpServer = smtp.gmail.com
-        smtpUser = example@gmail.com
-        smtpServerPort = 587
-        smtpauth = OAUTHBEARER
+The project I am proposing is called gitpanel (a working title subject
+to change). Gitpanel is designed to provide a built-in terminal user
+interface (TUI) for viewing and managing Git and GitHub accounts
+directly from the terminal. The key features include:
+Profile Overview: Displays an ASCII-styled version of the user=E2=80=99s
+GitHub profile picture (similar to Neofetch), along with their
+username and email address.
 
-As well as Office 365 accounts:
+*Account Management* : Allows users to easily add or update their
+account details, such as username and email.
 
-    [credential]
-        helper = cache --timeout 7200   # two hours
-        helper = oauth
-    [sendemail]
-        smtpEncryption = tls
-        smtpServer = smtp.office365.com
-        smtpUser = example@example.com
-        smtpServerPort = 587
-        smtpauth = XOAUTH2
+*Project Preview*: Provides quick access to a user=E2=80=99s GitHub project=
+s,
+enhancing convenience for developers.
 
-[0] https://github.com/hickford/git-credential-oauth
-[1] https://github.com/hickford/git-credential-oauth/issues/48
+The motivation behind this project lies in its potential to simplify
+access and usability. By running a single command (gitpanel), users
+can:
 
-Tested-by: M Hickford <mirth.hickford@gmail.com>
-Signed-off-by: Julian Swagemakers <julian@swagemakers.org>
----
- Documentation/git-send-email.txt |  5 ++-
- git-send-email.perl              | 65 +++++++++++++++++++++++++++++++-
- 2 files changed, 67 insertions(+), 3 deletions(-)
+*Streamline Setup*: Guide first-time Git users on a device through
+logging in to their GitHub account and configuring their username and
+email.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index bc3ef45acb..b1972d99bf 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -213,7 +213,10 @@ SMTP server and if it is supported by the utilized SASL library, the mechanism
- is used for authentication. If neither 'sendemail.smtpAuth' nor `--smtp-auth`
- is specified, all mechanisms supported by the SASL library can be used. The
- special value 'none' maybe specified to completely disable authentication
--independently of `--smtp-user`
-+independently of `--smtp-user`. Specifying `OAUTHBEARER` or `XOAUTH2` will
-+bypass SASL negotiation and force bearer authentication. In this case the
-+bearer token must be provided with `--smtp-pass` or using a credential helper
-+and `--smtp-encryption=tls` must be set.
- 
- --smtp-pass[=<password>]::
- 	Password for SMTP-AUTH. The argument is optional: If no
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 798d59b84f..a78159971b 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1398,6 +1398,63 @@ sub smtp_host_string {
- 	}
- }
- 
-+sub generate_oauthbearer_string {
-+	# This will generate the oauthbearer string used for authentication.
-+	#
-+	# "n,a=" {User} ",^Ahost=" {Host} "^Aport=" {Port} "^Aauth=Bearer " {Access Token} "^A^A
-+	#
-+	# The first part `n,a=" {User} ",` is the gs2 header described in RFC5801.
-+	# * gs2-cb-flag `n` -> client does not support CB
-+	# * gs2-authzid `a=" {User} "`
-+	#
-+	# The second part are key value pairs containing host, port and auth as
-+	# described in RFC7628.
-+	#
-+	# https://datatracker.ietf.org/doc/html/rfc5801
-+	# https://datatracker.ietf.org/doc/html/rfc7628
-+	my $username = shift;
-+	my $token = shift;
-+	return "n,a=$username,\001port=$smtp_server_port\001auth=Bearer $token\001\001";
-+}
-+
-+sub generate_xoauth2_string {
-+	# "user=" {User} "^Aauth=Bearer " {Access Token} "^A^A"
-+	# https://developers.google.com/gmail/imap/xoauth2-protocol#initial_client_response
-+	my $username = shift;
-+	my $token = shift;
-+	return "user=$username\001auth=Bearer $token\001\001";
-+}
-+
-+sub smtp_bearer_auth {
-+	my $username = shift;
-+	my $token = shift;
-+	my $auth_string;
-+	if ($smtp_encryption ne "tls") {
-+		# As described in RFC7628 TLS is required and will be enforced
-+		# at this point.
-+		#
-+		# https://datatracker.ietf.org/doc/html/rfc7628#section-3
-+		die __("For $smtp_auth TLS is required.")
-+	}
-+	if ($smtp_auth eq "OAUTHBEARER") {
-+		$auth_string = generate_oauthbearer_string($username, $token);
-+	} elsif ($smtp_auth eq "XOAUTH2") {
-+		$auth_string = generate_xoauth2_string($username, $token);
-+	}
-+	my $encoded_auth_string = MIME::Base64::encode($auth_string, "");
-+	$smtp->command("AUTH $smtp_auth $encoded_auth_string\r\n");
-+	use Net::Cmd qw(CMD_OK);
-+	if ($smtp->response() == CMD_OK){
-+		return 1;
-+	} else {
-+		# Send dummy request on authentication failure according to rfc7628.
-+		# https://datatracker.ietf.org/doc/html/rfc7628#section-3.2.3
-+		$smtp->command(MIME::Base64::encode("\001"));
-+		$smtp->response();
-+		return 0;
-+	}
-+}
-+
- # Returns 1 if authentication succeeded or was not necessary
- # (smtp_user was not specified), and 0 otherwise.
- 
-@@ -1431,8 +1488,12 @@ sub smtp_auth_maybe {
- 		'password' => $smtp_authpass
- 	}, sub {
- 		my $cred = shift;
--
--		if ($smtp_auth) {
-+		if (defined $smtp_auth && ($smtp_auth eq "OAUTHBEARER" || $smtp_auth eq "XOAUTH2")) {
-+			# Since Authen:SASL does not support XOAUTH2 nor OAUTHBEARER we will
-+			# manually authenticate for these types. The password field should
-+			# contain the auth token at this point.
-+			return smtp_bearer_auth($cred->{'username'}, $cred->{'password'});
-+		} elsif ($smtp_auth) {
- 			my $sasl = Authen::SASL->new(
- 				mechanism => $smtp_auth,
- 				callback => {
+*Boost Accessibility*: Offer an intuitive TUI interface that presents
+account information and projects in a clear, organized way, all within
+a terminal environment.
 
-Range-diff against v1:
-1:  ab3ba94099 ! 1:  7532a1ee0a send-email: implement SMTP bearer authentication
-    @@ Commit message
-         with git-credential-oauth[0] after minor modifications[1]. Which will
-         allow using git send-email with Gmail and oauth2 authentication:
-     
-    -    ```
-    -    [credential]
-    -            helper = cache --timeout 7200   # two hours
-    +        [credential]
-    +            helper = cache --timeout 7200    # two hours
-                 helper = oauth
-    -    [sendemail]
-    -        smtpEncryption = tls
-    -        smtpServer = smtp.gmail.com
-    -        smtpUser = example@gmail.com
-    -        smtpServerPort = 587
-    -        smtpauth = OAUTHBEARER
-    -    ```
-    +        [sendemail]
-    +            smtpEncryption = tls
-    +            smtpServer = smtp.gmail.com
-    +            smtpUser = example@gmail.com
-    +            smtpServerPort = 587
-    +            smtpauth = OAUTHBEARER
-     
-         As well as Office 365 accounts:
-     
-    -    ```
-    -    [credential]
-    +        [credential]
-                 helper = cache --timeout 7200   # two hours
-                 helper = oauth
-    -    [sendemail]
-    -        smtpEncryption = tls
-    -        smtpServer = smtp.office365.com
-    -        smtpUser = example@example.com
-    -        smtpServerPort = 587
-    -        smtpauth = XOAUTH2
-    -    ```
-    +        [sendemail]
-    +            smtpEncryption = tls
-    +            smtpServer = smtp.office365.com
-    +            smtpUser = example@example.com
-    +            smtpServerPort = 587
-    +            smtpauth = XOAUTH2
-     
-         [0] https://github.com/hickford/git-credential-oauth
-         [1] https://github.com/hickford/git-credential-oauth/issues/48
-     
-    +    Tested-by: M Hickford <mirth.hickford@gmail.com>
-         Signed-off-by: Julian Swagemakers <julian@swagemakers.org>
-     
-    + ## Documentation/git-send-email.txt ##
-    +@@ Documentation/git-send-email.txt: SMTP server and if it is supported by the utilized SASL library, the mechanism
-    + is used for authentication. If neither 'sendemail.smtpAuth' nor `--smtp-auth`
-    + is specified, all mechanisms supported by the SASL library can be used. The
-    + special value 'none' maybe specified to completely disable authentication
-    +-independently of `--smtp-user`
-    ++independently of `--smtp-user`. Specifying `OAUTHBEARER` or `XOAUTH2` will
-    ++bypass SASL negotiation and force bearer authentication. In this case the
-    ++bearer token must be provided with `--smtp-pass` or using a credential helper
-    ++and `--smtp-encryption=tls` must be set.
-    + 
-    + --smtp-pass[=<password>]::
-    + 	Password for SMTP-AUTH. The argument is optional: If no
-    +
-      ## git-send-email.perl ##
-     @@ git-send-email.perl: sub smtp_host_string {
-      	}
-    @@ git-send-email.perl: sub smtp_host_string {
-     +	my $token = shift;
-     +	my $auth_string;
-     +	if ($smtp_encryption ne "tls") {
-    -+		# As described in RFC7628 TLS is required and will be will
-    -+		# be enforced at this point.
-    ++		# As described in RFC7628 TLS is required and will be enforced
-    ++		# at this point.
-     +		#
-     +		# https://datatracker.ietf.org/doc/html/rfc7628#section-3
-     +		die __("For $smtp_auth TLS is required.")
-    @@ git-send-email.perl: sub smtp_auth_maybe {
-      		my $cred = shift;
-     -
-     -		if ($smtp_auth) {
-    -+		if ($smtp_auth eq "OAUTHBEARER" or $smtp_auth eq "XOAUTH2") {
-    ++		if (defined $smtp_auth && ($smtp_auth eq "OAUTHBEARER" || $smtp_auth eq "XOAUTH2")) {
-     +			# Since Authen:SASL does not support XOAUTH2 nor OAUTHBEARER we will
-    -+			# manuall authenticate for tese types. The password field should
-    ++			# manually authenticate for these types. The password field should
-     +			# contain the auth token at this point.
-     +			return smtp_bearer_auth($cred->{'username'}, $cred->{'password'});
-     +		} elsif ($smtp_auth) {
--- 
-2.48.1
+I think gitpanel can complement the Git ecosystem by enhancing
+usability and accessibility for users who prefer terminal-based
+workflows.
 
+In this email, I have addressed the questions: What does this project
+aim to accomplish? and Why does it function as it does now? I would
+greatly appreciate your feedback and insights, as well as any
+information on similar projects that might exist within the community.
+
+Thank you for your time and consideration. I look forward to
+collaborating further!
+
+Best regards,
+devtracer
+(GitHub: https://github.com/devtracer)
