@@ -1,114 +1,128 @@
-Received: from aib29agh122.zrh1.oracleemaildelivery.com (aib29agh122.zrh1.oracleemaildelivery.com [192.29.178.122])
+Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59341E521
-	for <git@vger.kernel.org>; Sun, 26 Jan 2025 22:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.122
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CBF1E521
+	for <git@vger.kernel.org>; Sun, 26 Jan 2025 22:09:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737929215; cv=none; b=QHenzu1o7DDsOToQysab8qsrXT532j5BRHZgKMyW8lSk1Zd7Cr2lFsLUDZIi7mI6QKfCdNv22QQHlc5Rqn7MNrwgApln0FI8o9ZJcaapfrzVvlS/wvwP1/Nj4bV0ABE6LN51WvImUBPlDN+lzji7BzPjh+YEcKHgDfT3TOyUtxU=
+	t=1737929381; cv=none; b=B2Pkpff0RP4F28hnM3BSmrOKoV/EogPBJX4WFzJtjtaQ2ZhmaabOiGYtJaxsXv42xrYvWk7p5M99sT7mpCJZDH7Uvaa1tNQpA4Liup9iivUdt4CnyX0sLGmPnrVn+AnejASfpmxf5wG12rEyCV3TpghGGh+h6FWNoAuSJHB/8ZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737929215; c=relaxed/simple;
-	bh=Wy5FO3qyMauukAK8HTO20AeDKKCX3DeuCwglREqFZeo=;
-	h=MIME-version:Content-type:Date:Message-id:Subject:Cc:To:From:
-	 References:In-reply-to; b=Yp8d41tpyqY8/U98CbJzKwb+0Q2lGCakiRI9ICHfTCrr5xs/tJFOeYXq1UxmgtiOZbID78PGnj55yJk+P+tcAvGnb83TF5tQXU4UoZ4i4Hp52SO6vKEehDVtV3hS9bp3k4efM+cTV1HiPr3tGsJ9DOafHM0+M8dPQjX1ZnmGotE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=iZ+X5dj1; arc=none smtp.client-ip=192.29.178.122
+	s=arc-20240116; t=1737929381; c=relaxed/simple;
+	bh=EJWovt9lmm9fK/kcujJdzUR2C5L+PHPva/m56w3/uu0=;
+	h=From:To:Cc:Subject:Date:Message-id:In-reply-to:References:
+	 MIME-version; b=QLlUb1pmOYACbPy0F7ICFRmDUtGshcW7HsbhMy6+QHki6hI9Mp0KZQ/duroZ8DE+RJU/vIYcQ+vuszZqV0WwqjOXUfNqRMBFuxPOHSd7hY2w7ZUI497D27hLIIFgqIOt5jOrMf8f/tzEa6oYd1FtXSw1YaAZIouumyl6xSRW9JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=mpuZOR6k; arc=none smtp.client-ip=192.29.178.127
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="iZ+X5dj1"
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="mpuZOR6k"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
  d=zrh1.rp.oracleemaildelivery.com;
  h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
- bh=AMKB++EzwPCVDYCfwHUc+17okuFE0wuU4cWDTrvRKyA=;
- b=iZ+X5dj1wv7UkvDmW1DFk/tz0bF9yR7pFFd5OiQcQ8ZUtsBgg+we/f6HV4iTFJerq2lcIWz4kwkI
-   wPiOYWvnjnYSRjlfM/REgTDW5VXDWEGabgdFPSHFfAIRh2wvVRA+cDd6pLB0iyLRz4+ecobhchVI
-   tU7baUFIc6fOdV45LyUyyVqayoxbzj7nmOVShX8dZdtHgoB0rQbhRfCq64iC8vn1c56hcu/WsK3p
-   sqDkiVfYsVL+FBBRPbKMQaGLTGj4Aos3FoR88kcorgzvGc6SrC5eKGvsjxoRA79DMy/Wx1ha0mbn
-   rh1aX7J3doRJ3BQJuKjLIfiIEoVHnSjNsOBQtw==
-Received: by omta-ad1-fd1-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ bh=wpXB9FcIRvnEGo0uLz9YWwlx3Spv3U4R9yrCbVkyPJg=;
+ b=mpuZOR6k6A7PaVQEMQEkGODZW9+zc9JP4aHupLgpGTeSxBTm8okDfd7KWzakMaEVQAO/ciPaKpVq
+   1qt6yuCelLRBDI8rO1nMcBa0s3FiTAsS8d8k/N2/BaSHeUKblZeSAgOkN+u+2SnzJfsLMWL2Hk0g
+   f6dJIglPLdGVfLMYtKqgtiZi+Ezm1vfK1olEXrwF86UOzgCDFYTc+gDMJVsM57OJbwq3obtcCGDi
+   BqRBQJ6sq624foYfcwxZy8uSRo0yYtvawnU4GG0ibhxYsySPraEVO8NAgHDY0AKXxriX0fUe0LhV
+   rzK7rdbWyoBAK4DZQ+sB5vDYTItsHVcFTaKihg==
+Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
  (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
  2024))
- with ESMTPS id <0SQP00M1JUITN710@omta-ad1-fd1-401-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
- git@vger.kernel.org; Sun, 26 Jan 2025 22:01:41 +0000 (GMT)
+ with ESMTPS id <0SQP00EFBUNJSQ90@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Sun, 26 Jan 2025 22:04:31 +0000 (GMT)
 List-Unsubscribe-Post: List-Unsubscribe=One-Click
+From: Bence Ferdinandy <bence@ferdinandy.com>
+To: git@vger.kernel.org
+Cc: Christian Hesse <mail@eworm.de>,	Christian Hesse <list@eworm.de>,
+	"Patrick Steinhardt" <ps@pks.im>,	Bence Ferdinandy <bence@ferdinandy.com>
+Subject: [PATCH v2 1/2] fetch set_head: refactor to use remote directly
+Date: Sun, 26 Jan 2025 23:02:10 +0100
+Message-id: <20250126220403.289742-1-bence@ferdinandy.com>
+In-reply-to: <Z5Mrk02wMdABtrVZ@pks.im>
+References: <Z5Mrk02wMdABtrVZ@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-version: 1.0
-Content-transfer-encoding: quoted-printable
-Content-type: text/plain; charset=UTF-8
-Date: Sun, 26 Jan 2025 23:01:14 +0100
-Message-id: <D7CCDAZ9CWQ9.28LRY70X1JBAZ@ferdinandy.com>
-Subject: Re: [PATCH] fetch set_head: fix non-mirror remotes in bare repositories
-Cc: <git@vger.kernel.org>, "Christian Hesse" <mail@eworm.de>,
- "Christian Hesse" <list@eworm.de>
-To: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
-From: "Bence Ferdinandy" <bence@ferdinandy.com>
-References: <20250111202628.0e5894e4@leda.eworm.net>
- <20250112165125.130400-1-bence@ferdinandy.com> <Z5Mrk02wMdABtrVZ@pks.im>
- <xmqqldv0p559.fsf@gitster.g>
-In-reply-to: <xmqqldv0p559.fsf@gitster.g>
+Content-transfer-encoding: 8bit
 Reporting-Meta:
  AAGxQJE2mvPvJYyGsn82nZBi6C+00/KI80E9EqRXX2QbGz3gT1lVU9+HX+sJCJZI
- 0MPjyFvpW1LwzYkg+DQapeaSWGuN9XSExqXFFoHFLgZVNZ9uYsgUKq4NE0a0Da+6
- gmS0BfdggRzSfdoSCU7Hpf3BWnb/fCVBivm9RrCunxFvda0Lv2l866xJlwZWIc4b
- gRZXcINqebIhYkF9GY1R+e3dRwBM+R+QJJbxPE8AWQk8JXBe59bPqAw+8x+02MNn
- cEmBkFWfLPQBVEUviXKn/hUoIkymB5pm9cQqI9tS8+Oug0lBuF0ty7TgoUO4QDHB
- WgEkQDW8COpALzXUWmkwcceBOZK3fm20gV6DImU1vGunOKWeM7TFUM9tGEeeZa/O
- HFHPDI74rCvmGJ0NHv90tNPR9xv/Ry6OfPFIMLB/NZrYe421V/bzDpnGfd+n/elO
- 37MqA8RWFXRyuGoA7dkMesWMt3nqe6HQZRZxScdTurGDXTBG6iD7CFVw
+ 0MPjyFvpW1LwzYkg+DT5peaSWGuN9XSExqU3q63PprS9qAkIOvvuL4CJTX0KFm1d
+ yLh7eYt8GixHeH5WvcOgGjp0SRGmCPg5886wbcXk2B4p3v02YNBGrcsh4EDEm4EA
+ HrznAyMl8Vkx8+aW3wY//vKVRhNqoS0PoCdgsooqRLIS8D5TdSZex+76U5kPNfcs
+ dmkqR8X7GCSDhMwA6TVa+HsyJMB3hc1QwmXsZWfW/n96i53YjActQYa7ljG9KTVO
+ dI+FGsOugeY4jXEwY4DE4M5NB19ae3iTTGSViHkVzcvJZyacsiGhS/nf88Veorat
+ neDpfGTSu4fV+35aZKIrwaHtUV1oj4ZVfsPNgv/Qn5Y0Dn1Vxg/YgW9awdMWLntF
+ yC4IY0vQCvkFEv2hqPHhO0BYnsevOp/66Rir8XoIAji+u/fwMQtNZg1o
 
+As a preparatory step to use even more properties from the remote
+struct, refactor set_head to take the entire struct as a parameter,
+instead of the necessary bits. This also allows consolidating the use of
+gtransport->remote in set_head, making the access of the remote's
+properties consistent in the function.
 
-On Fri Jan 24, 2025 at 17:07, Junio C Hamano <gitster@pobox.com> wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->
->>> diff --git a/t/t5510-fetch.sh b/t/t5510-fetch.sh
->>> index 2d9587059f..cfa63ae086 100755
->>> --- a/t/t5510-fetch.sh
->>> +++ b/t/t5510-fetch.sh
->>> @@ -84,6 +84,19 @@ test_expect_success "fetch test remote HEAD" '
->>>  	branch=3D$(git rev-parse refs/remotes/origin/main) &&
->>>  	test "z$head" =3D "z$branch"'
->>> =20
->>> +test_expect_success "fetch test remote HEAD in bare repository" '
->>> +	cd "$D" &&
->>> +	git init --bare barerepo &&
->>> +	cd barerepo &&
->>
->> The `cd` needs to happen in a subshell. ALso, the same comment here
->> regarding whether we want to have `test_when_finished` to clean up
->> state.
->
-> Yes, indeed.  The change to another script we saw earlier followed
-> the "chdir around only in a subshell" pattern.
->
->> I see though that you simply follow existing code style, both for the
->> call to cd(1) and for the single-quote, so these are fine. This test
->> file could use a makeover, but that is obviously outside of the scope of
->> this patch series.
->
-> Terminating quote can stay, but chdir is a correctness issue that
-> may want to be addressed minimally (i.e. not making things worse,
-> while leaving it for later to clean up the existing ones).
+Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+---
 
-I'll be sending the fix with also the terminating quote fixed as well. Actu=
-ally
-tests after this which I added for followremotehead followed the correct st=
-yle
-so why not here as well ...
+Notes:
+    v2: - new patch
 
-5505 remote also has some style issues that came up before so if I find som=
-e
-time I'll probably send a patches cleaning the up both.
+ builtin/fetch.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
->
-> Thanks.
-
-
-
-
---=20
-bence.ferdinandy.com
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index fe2b26c74a..3167b055d1 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1617,13 +1617,13 @@ static void report_set_head(const char *remote, const char *head_name,
+ 	strbuf_release(&buf_prefix);
+ }
+ 
+-static int set_head(const struct ref *remote_refs, int follow_remote_head,
+-		const char *no_warn_branch)
++static int set_head(const struct ref *remote_refs, struct remote *remote)
+ {
+ 	int result = 0, create_only, is_bare, was_detached;
+ 	struct strbuf b_head = STRBUF_INIT, b_remote_head = STRBUF_INIT,
+ 		      b_local_head = STRBUF_INIT;
+-	const char *remote = gtransport->remote->name;
++	int follow_remote_head = remote->follow_remote_head;
++	const char *no_warn_branch = remote->no_warn_branch;
+ 	char *head_name = NULL;
+ 	struct ref *ref, *matches;
+ 	struct ref *fetch_map = NULL, **fetch_map_tail = &fetch_map;
+@@ -1661,8 +1661,8 @@ static int set_head(const struct ref *remote_refs, int follow_remote_head,
+ 		strbuf_addstr(&b_head, "HEAD");
+ 		strbuf_addf(&b_remote_head, "refs/heads/%s", head_name);
+ 	} else {
+-		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", remote);
+-		strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", remote, head_name);
++		strbuf_addf(&b_head, "refs/remotes/%s/HEAD", remote->name);
++		strbuf_addf(&b_remote_head, "refs/remotes/%s/%s", remote->name, head_name);
+ 	}
+ 		/* make sure it's valid */
+ 	if (!is_bare && !refs_ref_exists(refs, b_remote_head.buf)) {
+@@ -1678,7 +1678,7 @@ static int set_head(const struct ref *remote_refs, int follow_remote_head,
+ 	if (verbosity >= 0 &&
+ 		follow_remote_head == FOLLOW_REMOTE_WARN &&
+ 		(!no_warn_branch || strcmp(no_warn_branch, head_name)))
+-		report_set_head(remote, head_name, &b_local_head, was_detached);
++		report_set_head(remote->name, head_name, &b_local_head, was_detached);
+ 
+ cleanup:
+ 	free(head_name);
+@@ -1924,8 +1924,7 @@ static int do_fetch(struct transport *transport,
+ 				  "you need to specify exactly one branch with the --set-upstream option"));
+ 		}
+ 	}
+-	if (set_head(remote_refs, transport->remote->follow_remote_head,
+-		transport->remote->no_warn_branch))
++	if (set_head(remote_refs, transport->remote))
+ 		;
+ 		/*
+ 		 * Way too many cases where this can go wrong
+-- 
+2.48.1.93.g276f59c085
 
