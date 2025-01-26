@@ -1,184 +1,236 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from mout3.freenet.de (mout3.freenet.de [195.4.92.93])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9BC199EAF
-	for <git@vger.kernel.org>; Sun, 26 Jan 2025 02:49:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2507946BF
+	for <git@vger.kernel.org>; Sun, 26 Jan 2025 12:59:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.4.92.93
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737859802; cv=none; b=VAaIDsKrQxnqvapSaBOZjdTQdqesJKwZcjJXbahm8zrBEh80HEF326YFumgT0KtPiTzLhruDuXSWNhC4GcWPzO2HOsj8Jzl5dw2h/VPRIoBPaSyLxMR73faiSI4P7VZXmDhBQTHa0W7TwPXeieLGThToTyYkUpO1MseNjRaStvo=
+	t=1737896396; cv=none; b=MlfY83RbFxPA+aiuf08q13JA8++7vt5FNoYtFrr5FoneZQajwWZqXb87if3MkqttMh88gPH81uh7F5JpL4KB7evWi2gArmFUn5ncTOSA7G03Kcvy05WLtgl0kHbaJ6B0AiYkfjhNQmBb5itFKss0clkx8Q4uEuhrp7pZyET4H94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737859802; c=relaxed/simple;
-	bh=cWbAxPPuAhr8R1JeFCOZig/zq3rrQX5DWRh6ZB6fBo8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aV1pipoObRIwFYnqwmmmlkStzim48zhV8CP4c2kRqYxBDg4hLLIAXPAILs93R082z78/54OcatQl2zT+r5N/l0Ekxi3zTSJrILPPigL0x5A7o3Vq5FO3S6pJ2ws81c7pSdGUYvZx7hzjV8zsnNf1eNbIg1P96NcNX4AA1ms5Cik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k10rh6nX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nTs9HtYW; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1737896396; c=relaxed/simple;
+	bh=9M5r7VlJvbsl/CqatIX23Oj8CrONDdbND/ihf6qd+30=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=EeUDavJ+JB9SWSbor4iWiWFNAY2WqLGGrXInJbewif9PBs4VJQofA4xvi4GV4K8S8x5+BOHQ4BAv05t6BvnatHlBnKmefSRKocn9xBlyMb9xYV6ljKhNfDpWrxlHbcAWO6umDeeaY6bylllk8hpsh7wpzP8J31J2BpkR5EJW2kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de; spf=pass smtp.mailfrom=freenet.de; dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b=bUkEiT4C; arc=none smtp.client-ip=195.4.92.93
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=freenet.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=freenet.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k10rh6nX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nTs9HtYW"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2416B11401C6;
-	Sat, 25 Jan 2025 21:49:58 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sat, 25 Jan 2025 21:49:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737859798; x=1737946198; bh=nh/dtnXP8F
-	4YwMAFHOfx6ir9rxEhTCA2ehsLhHvebYM=; b=k10rh6nXhy5bjOKewqUoJMDXyL
-	PTC236Am52zeQqp1VhAZa4yYx566cTIEWM25gYx6nv13DY07oAWF4wIqlgK5Cb7r
-	NVEJZsO6MmvEkpoYFj56FeqSks/+Vdrd4h6I/V5JEm8lFcjoSFclublhE8hYPmQ0
-	+OSvuGR45xIUu33JSoFoE4VuiG9msn7IaflWtOtX6SBG2fufFexCSLHx6gMZY5cL
-	WnYVdfcRFosO2Xbj3WuM64uUe+3Ieg/eds98S0nnMMtPyvPANxx73ZX2ONu1zvcW
-	8Qn7ky5/lQCUtWTiJ53V/wwRzt0jHsuNtFPmbdNOHVTOe+HI70Xm1gu/AMKA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737859798; x=1737946198; bh=nh/dtnXP8F4YwMAFHOfx6ir9rxEhTCA2ehs
-	LhHvebYM=; b=nTs9HtYW3bvTFcReWhjAv/SUDavJqfXfzpLsag7fuTFz0E0zsFG
-	AbphFC6alf7UitKb7CVGRh38KuDBWqY1W9cdzNFUP7YnxANLwMuqltNLPlnvWX+s
-	5Uk1Pp8VtpUeWxxMlyTFs397vL70TQdOR0IZyCnFvQsIYu0lEU2I1hZyHADkXONp
-	KThUF2ZzBojj6gbn8nBlhGv4ysgLvekUPcljJHpFl1goN+LbwNY84FUx+1CmDji/
-	q4LIddaqp1+P7XgoPwtZQbJBneuB0jGJ4Na+6HqABscxcbUkqo0Y69pbZxMFpKn2
-	7PnHwSSOqfYUMYWYtu/GQDmdiO3NArV7wrw==
-X-ME-Sender: <xms:1aKVZzpfyRYyKNVu_yWDDjIGpmvABZVrXaU2afyu-PWDK6FEXYYTUg>
-    <xme:1aKVZ9rDufwFl4Vbvt66t5XWS5wyqt6yYzwai9uHMybWgGlqTpuHWy5NL4mzUdGwo
-    3GHcbRxvAR0skPHVw>
-X-ME-Received: <xmr:1aKVZwOYZhHj1SVJ0ORU5HYbuQFdqh5-EDe1Bvyiz736FD7kHXOmnXIk-ooEZ0_wr9ruiR2XjUOMZDNFTyBuGIQIqgL5n4zipMOf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgleduudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
-    hmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:1qKVZ27X6JYLq4WPGcphGyv2ujP9hC0S-cV26m691R8G8Jrl83-ONg>
-    <xmx:1qKVZy5SXKyNvWsJpdsaPAq9saBEBCg62NOHqDmKfBqtJtZsdJPRbQ>
-    <xmx:1qKVZ-jtcnzUoMqcRt1OwuEGYzgSc1md6s_vjy9UKipxcmhrwXZuhQ>
-    <xmx:1qKVZ05NKzPCRRNEhP_-iPium18HsuAC95S_tChRkpyUsgCFsWxLIg>
-    <xmx:1qKVZ933z3C9AhvVLCQ2EQ5VuWPEDqLorvnbWRlUsfvTVdxIkPdflCWI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 25 Jan 2025 21:49:57 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] bundle: avoid closing file descriptor twice
-In-Reply-To: <pull.1857.git.1737849456338.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Sat, 25 Jan 2025 23:57:36
-	+0000")
-References: <pull.1857.git.1737849456338.gitgitgadget@gmail.com>
-Date: Sat, 25 Jan 2025 18:49:56 -0800
-Message-ID: <xmqqa5bewap7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=freenet.de header.i=@freenet.de header.b="bUkEiT4C"
+Received: from [194.97.210.52] (helo=sub6.mail.fnrz.de)
+	by mout3.freenet.de with esmtpa (ID soekkle@freenet.de) (port 25) (Exim 4.94.2 #2)
+	id 1tc2Ev-00EnWg-5P; Sun, 26 Jan 2025 13:59:49 +0100
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=freenet.de;
+	s=mjaymdexmjqk; h=Content-Transfer-Encoding:Content-Type:MIME-Version:
+	Reply-To:Message-Id:Date:Subject:Cc:To:From:Sender:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=AN9cdzo6TIIqIQmHVxUvUo5XR54I66z7FM3heGpfDM0=; b=bUkEiT4Chus79EM0fDP0qiqUbo
+	ZQ1+jDA8alWGAVGfCcodUSndkWHqNKmImyZ3OH83VpNHvnfAmFq4g3K//7+FTjmbZ3t5Pqzr1+Mn0
+	0XybwI3HHqawvHfnOrqOa22R/33eJcUdyqb9DzhASy1vZd1jkZYdaUx3u/JZhUE8EvvIHCyXFpIOk
+	pvTQ0JiPoQ8bnl9KNEnOnh3++n926PjuLvr+GANQDe+AdPYl/xYRXXFwsBIpAamh+Xuya+PBajanT
+	PmJHaK+1s5VSM/qxmwBoFKEJDo3uRFF6RPg0hfsqiri9C3StLxmLd0ictLiZ/3CpFljT2DT3KjvAH
+	iHbJa8Vg==;
+Received: from p200300e2e705fb00dacb8afffee0ca63.dip0.t-ipconnect.de ([2003:e2:e705:fb00:dacb:8aff:fee0:ca63]:58466 helo=localhost.localdomain)
+	by sub6.mail.fnrz.de with esmtpsa (ID soekkle@freenet.de) (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (port 465) (Exim 4.96 #2)
+	id 1tc2Eu-009NhH-2r;
+	Sun, 26 Jan 2025 13:59:49 +0100
+From: =?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	phillip.wood123@gmail.com,
+	ps@pks.im,
+	sunshine@sunshineco.com,
+	=?UTF-8?q?S=C3=B6ren=20Krecker?= <soekkle@freenet.de>
+Subject: [PATCH v3 3/4] apply.c : Fix type conversation warnings from msvc
+Date: Sun, 26 Jan 2025 13:59:45 +0100
+Message-Id: <20250126125945.3241-1-soekkle@freenet.de>
+X-Mailer: git-send-email 2.39.5
+Reply-To: 20250126125638.3089-1-soekkle@freenet.de
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-FN-MUUID: 173789638876D03EF0E756O
+X-Originated-At: 2003:e2:e705:fb00:dacb:8aff:fee0:ca63!58466
+X-Scan-TS: Sun, 26 Jan 2025 13:59:48 +0100
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Fix compiler warnings from msvc in apply.c for value truncation from 64
+bit to 32 bit integers.
 
-> This seems not to have caused too many problems in almost two decades,
-> but I encountered a situation today where it _does_ cause problems: In
-> i686 variants of Git for Windows, it seems that file descriptors are
-> reused quickly after they have been closed.
+Also switch from int to size_t for all variables with result of strlen()
+which cannot become negative.
 
-Nice finding.  It pays not to be in too uniform a monoculture.
-
->     This is a really old bug. Deviating from Git's practice, I did not apply
->     this on top of the bugged commit. In fact, I did not even apply this on
->     top of an older maint-* branch because it would cause conflicts even
->     cherry-picking it on top of maint-2.47.
-
-Just for fun, attached is my backport to maint-2.44 track.  It
-merges, with conflict which is rather trivial to resolve, back to
-v2.48.1, on which your original patch is based, and gives the
-merge result identical to the result of direct application of your
-patch to v2.48.1.
-
-I am not sure what to feel about the FD leak mentioned in the log
-message, though.
-
-Thanks, will queue.
-
-
---- >8 ---
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Sat, 25 Jan 2025 23:57:36 +0000
-Subject: [PATCH] bundle: avoid closing file descriptor twice
-
-Already when introduced in c7a8a16239 (Add bundle transport,
-2007-09-10), the `bundle` transport had a bug where it would open a file
-descriptor to the bundle file and then close it _twice_: First, ...
-
-... At least this here patch is relatively easy to reason about, and
-addresses a hard failure (`fatal: mmap: could not determine filesize`)
-at the expense of leaking a file descriptor under very rare
-circumstances in which `git fetch` would error out anyway.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Sören Krecker <soekkle@freenet.de>
 ---
- bundle.c    | 4 +++-
- bundle.h    | 2 ++
- transport.c | 1 +
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ apply.c | 37 +++++++++++++++++++------------------
+ apply.h |  6 +++---
+ 2 files changed, 22 insertions(+), 21 deletions(-)
 
-Obviously this is hard to test ;-)
-
-diff --git a/bundle.c b/bundle.c
-index a9744da255..7b3f2da40f 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -616,8 +616,10 @@ int unbundle(struct repository *r, struct bundle_header *header,
- {
- 	struct child_process ip = CHILD_PROCESS_INIT;
- 
--	if (verify_bundle(r, header, flags))
-+	if (verify_bundle(r, header, flags)) {
-+		close(bundle_fd);
- 		return -1;
-+	}
- 
- 	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
- 
-diff --git a/bundle.h b/bundle.h
-index 021adbdcbb..8b187be7cf 100644
---- a/bundle.h
-+++ b/bundle.h
-@@ -50,6 +50,8 @@ int verify_bundle(struct repository *r, struct bundle_header *header,
-  *
-  * Before unbundling, this method will call verify_bundle() with the
-  * given 'flags'.
-+ *
-+ * Note that the `bundle_fd` will be closed as part of the operation.
-  */
- int unbundle(struct repository *r, struct bundle_header *header,
- 	     int bundle_fd, struct strvec *extra_index_pack_args,
-diff --git a/transport.c b/transport.c
-index df518ead70..25e2233da0 100644
---- a/transport.c
-+++ b/transport.c
-@@ -184,6 +184,7 @@ static int fetch_refs_from_bundle(struct transport *transport,
- 		get_refs_from_bundle_inner(transport);
- 	ret = unbundle(the_repository, &data->header, data->fd,
- 		       &extra_index_pack_args, 0);
-+	data->fd = -1; /* `unbundle()` closes the file descriptor */
- 	transport->hash_algo = data->header.hash_algo;
- 	return ret;
+diff --git a/apply.c b/apply.c
+index 4a7b6120ac..b896889505 100644
+--- a/apply.c
++++ b/apply.c
+@@ -414,9 +414,9 @@ static int read_patch_file(struct strbuf *sb, int fd)
+ 	return 0;
  }
+ 
+-static unsigned long linelen(const char *buffer, unsigned long size)
++static size_t linelen(const char *buffer, size_t size)
+ {
+-	unsigned long len = 0;
++	size_t len = 0;
+ 	while (size--) {
+ 		len++;
+ 		if (*buffer++ == '\n')
+@@ -688,7 +688,7 @@ static char *find_name_common(struct strbuf *root,
+ 	 * or "file~").
+ 	 */
+ 	if (def) {
+-		int deflen = strlen(def);
++		size_t deflen = strlen(def);
+ 		if (deflen < len && !strncmp(start, def, deflen))
+ 			return squash_slash(xstrdup(def));
+ 	}
+@@ -1088,7 +1088,7 @@ static int gitdiff_index(struct gitdiff_data *state,
+ 	 */
+ 	const char *ptr, *eol;
+ 	int len;
+-	const unsigned hexsz = the_hash_algo->hexsz;
++	const size_t hexsz = the_hash_algo->hexsz;
+ 
+ 	ptr = strchr(line, '.');
+ 	if (!ptr || ptr[1] != '.' || hexsz < ptr - line)
+@@ -1131,7 +1131,7 @@ static int gitdiff_unrecognized(struct gitdiff_data *state UNUSED,
+  */
+ static const char *skip_tree_prefix(int p_value,
+ 				    const char *line,
+-				    int llen)
++				    size_t llen)
+ {
+ 	int nslash;
+ 	int i;
+@@ -1158,7 +1158,7 @@ static const char *skip_tree_prefix(int p_value,
+  */
+ static char *git_header_name(int p_value,
+ 			     const char *line,
+-			     int llen)
++			     ssize_t llen)
+ {
+ 	const char *name;
+ 	const char *second = NULL;
+@@ -1313,15 +1313,15 @@ static int check_header_line(int linenr, struct patch *patch)
+ 	return 0;
+ }
+ 
+-int parse_git_diff_header(struct strbuf *root,
++size_t parse_git_diff_header(struct strbuf *root,
+ 			  int *linenr,
+ 			  int p_value,
+ 			  const char *line,
+-			  int len,
+-			  unsigned int size,
++			  size_t len,
++			  size_t size,
+ 			  struct patch *patch)
+ {
+-	unsigned long offset;
++	size_t offset;
+ 	struct gitdiff_data parse_hdr_state;
+ 
+ 	/* A git diff has explicit new/delete information, so we don't guess */
+@@ -1378,7 +1378,7 @@ int parse_git_diff_header(struct strbuf *root,
+ 			break;
+ 		for (i = 0; i < ARRAY_SIZE(optable); i++) {
+ 			const struct opentry *p = optable + i;
+-			int oplen = strlen(p->str);
++			size_t oplen = strlen(p->str);
+ 			int res;
+ 			if (len < oplen || memcmp(p->str, line, oplen))
+ 				continue;
+@@ -1430,7 +1430,8 @@ static int parse_num(const char *line, unsigned long *p)
+ static int parse_range(const char *line, int len, int offset, const char *expect,
+ 		       unsigned long *p1, unsigned long *p2)
+ {
+-	int digits, ex;
++	int digits;
++	size_t ex;
+ 
+ 	if (offset < 0 || offset >= len)
+ 		return -1;
+@@ -1465,7 +1466,7 @@ static int parse_range(const char *line, int len, int offset, const char *expect
+ 	return offset + ex;
+ }
+ 
+-static void recount_diff(const char *line, int size, struct fragment *fragment)
++static void recount_diff(const char *line, size_t size, struct fragment *fragment)
+ {
+ 	int oldlines = 0, newlines = 0, ret = 0;
+ 
+@@ -1475,7 +1476,7 @@ static void recount_diff(const char *line, int size, struct fragment *fragment)
+ 	}
+ 
+ 	for (;;) {
+-		int len = linelen(line, size);
++		size_t len = linelen(line, size);
+ 		size -= len;
+ 		line += len;
+ 
+@@ -1543,11 +1544,11 @@ static int parse_fragment_header(const char *line, int len, struct fragment *fra
+  */
+ static int find_header(struct apply_state *state,
+ 		       const char *line,
+-		       unsigned long size,
++		       size_t size,
+ 		       int *hdrsize,
+ 		       struct patch *patch)
+ {
+-	unsigned long offset, len;
++	size_t offset, len;
+ 
+ 	patch->is_toplevel_relative = 0;
+ 	patch->is_rename = patch->is_copy = 0;
+@@ -2132,7 +2133,7 @@ static int use_patch(struct apply_state *state, struct patch *p)
+  *   the number of bytes consumed otherwise,
+  *     so that the caller can call us again for the next patch.
+  */
+-static int parse_chunk(struct apply_state *state, char *buffer, unsigned long size, struct patch *patch)
++static int parse_chunk(struct apply_state *state, char *buffer, size_t size, struct patch *patch)
+ {
+ 	int hdrsize, patchsize;
+ 	int offset = find_header(state, buffer, size, &hdrsize, patch);
+@@ -2491,7 +2492,7 @@ static int match_fragment(struct apply_state *state,
+ 	struct strbuf fixed = STRBUF_INIT;
+ 	char *fixed_buf;
+ 	size_t fixed_len;
+-	int preimage_limit;
++	ssize_t preimage_limit;
+ 	int ret;
+ 
+ 	if (preimage->line_nr + current_lno <= img->line_nr) {
+diff --git a/apply.h b/apply.h
+index 90e887ec0e..bb01ce7dbc 100644
+--- a/apply.h
++++ b/apply.h
+@@ -166,12 +166,12 @@ int check_apply_state(struct apply_state *state, int force_apply);
+  *
+  * Returns -1 on failure, the length of the parsed header otherwise.
+  */
+-int parse_git_diff_header(struct strbuf *root,
++size_t parse_git_diff_header(struct strbuf *root,
+ 			  int *linenr,
+ 			  int p_value,
+ 			  const char *line,
+-			  int len,
+-			  unsigned int size,
++			  size_t len,
++			  size_t size,
+ 			  struct patch *patch);
+ 
+ void release_patch(struct patch *patch);
 -- 
-2.48.1-293-gbb90fdfe3c
+2.39.5
 
