@@ -1,54 +1,54 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF7C17583
-	for <git@vger.kernel.org>; Sun, 26 Jan 2025 01:41:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9BC199EAF
+	for <git@vger.kernel.org>; Sun, 26 Jan 2025 02:49:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737855709; cv=none; b=qRTe+joeAU/hS/jc4fKCdWUipc+O5YM6qLn02k9alNj8HerPZUUH7t/8n9pDDhrmPJzS48gRHJBuIFQ74cX5TUagm1zAXUllD7dh4+J9SxR8wDaMT+B9Ik2zJu+A9qofjsBCqhz3FO2vdkPrmXMYLYeccLwCYmXudC1NsGiejs8=
+	t=1737859802; cv=none; b=VAaIDsKrQxnqvapSaBOZjdTQdqesJKwZcjJXbahm8zrBEh80HEF326YFumgT0KtPiTzLhruDuXSWNhC4GcWPzO2HOsj8Jzl5dw2h/VPRIoBPaSyLxMR73faiSI4P7VZXmDhBQTHa0W7TwPXeieLGThToTyYkUpO1MseNjRaStvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737855709; c=relaxed/simple;
-	bh=uVudWnyFuCQnSBr1QFdGvwaNMnT3JjqRyuobcuE8nUQ=;
+	s=arc-20240116; t=1737859802; c=relaxed/simple;
+	bh=cWbAxPPuAhr8R1JeFCOZig/zq3rrQX5DWRh6ZB6fBo8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pePFD9oMgVgowQZ9z87EucDxF7Qjpp6sLUadEDNOqJeJrIN4ywOZ94YMAX8tcqiXWAKE4MQkLDf30vJxwWLw/NBv0PPNrqZ4UaV3p5lyZp85YY/MSxJN8vHIm6SJ/pWN2cCDdOj+xOBz78dTLXneGlGcW/RIa7ZMA5JBAeUUJC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZeQn1jXd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E1mLRgxY; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=aV1pipoObRIwFYnqwmmmlkStzim48zhV8CP4c2kRqYxBDg4hLLIAXPAILs93R082z78/54OcatQl2zT+r5N/l0Ekxi3zTSJrILPPigL0x5A7o3Vq5FO3S6pJ2ws81c7pSdGUYvZx7hzjV8zsnNf1eNbIg1P96NcNX4AA1ms5Cik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k10rh6nX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nTs9HtYW; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZeQn1jXd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E1mLRgxY"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k10rh6nX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nTs9HtYW"
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2C61B11400B1;
-	Sat, 25 Jan 2025 20:41:45 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sat, 25 Jan 2025 20:41:45 -0500
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2416B11401C6;
+	Sat, 25 Jan 2025 21:49:58 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Sat, 25 Jan 2025 21:49:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737855705; x=1737942105; bh=RrRaoaTNJt
-	nYNpnsPOqBS8bb3y5nbqfJwe28qEws3eI=; b=ZeQn1jXdRqN3OHrNc00CR4y1Qn
-	5qBCgQnrTAIyxzkClYys0ZTVqQKs3jwb8h1dE3UtRi48cZjHSObLGSbGLP5LrMZ8
-	r8WrHYnTgUnv7uR2M9sQ+HZ0S4TAVhyac61pgBS48G0i3krUV/LjTCuBQ+oL2ige
-	HmQcsI4Jtcx6jsakD90iYNn8yLWFzrVSp4GIPjYB3MmMZnaUKbkigLsMKC1INIUr
-	nJyqJdkIjZgBrtq885cQ98jOKJr+Nxr71fF7ZmxyH6Uoc62FbqYx4TBUETcpFlat
-	/cIV78kiXFclnY3RLW5xgfz1NA7co2OR/q5IvukqVwltHjNMWZZZLJBi493A==
+	:subject:to:to; s=fm2; t=1737859798; x=1737946198; bh=nh/dtnXP8F
+	4YwMAFHOfx6ir9rxEhTCA2ehsLhHvebYM=; b=k10rh6nXhy5bjOKewqUoJMDXyL
+	PTC236Am52zeQqp1VhAZa4yYx566cTIEWM25gYx6nv13DY07oAWF4wIqlgK5Cb7r
+	NVEJZsO6MmvEkpoYFj56FeqSks/+Vdrd4h6I/V5JEm8lFcjoSFclublhE8hYPmQ0
+	+OSvuGR45xIUu33JSoFoE4VuiG9msn7IaflWtOtX6SBG2fufFexCSLHx6gMZY5cL
+	WnYVdfcRFosO2Xbj3WuM64uUe+3Ieg/eds98S0nnMMtPyvPANxx73ZX2ONu1zvcW
+	8Qn7ky5/lQCUtWTiJ53V/wwRzt0jHsuNtFPmbdNOHVTOe+HI70Xm1gu/AMKA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737855705; x=1737942105; bh=RrRaoaTNJtnYNpnsPOqBS8bb3y5nbqfJwe2
-	8qEws3eI=; b=E1mLRgxYvrgKJkBY+XJhI8n0ohDlVXhVh8gc83VOsX2LCzDqLCD
-	VNkwDsH5ZiSHpq5ZrOQB6YVg8AHBxjZufJF0G+Ro/AEgzfK9WxCT4NhvzqqOl9l+
-	2qK6bzSX65d2VjDU9UlRhpZ6d+ArsEt0Xu9mpyaeZxFRVS2nCyWsax/OBL+nyFsF
-	Z5XHvW0ulk8TmzWfu+GGS33mwMbE3EuDmlmLYB0iCcRuJ0/m2eT6YTbvOuyg78f+
-	E2jNY2lMNGujbFZX6fXJgRPPz72s0W+uL5XzvO5SLsfwaqg0UNhVLZaf7MpWqvc2
-	tJYoPLzX8hw+p8iA4JL0nfHKPf7I2weV6bw==
-X-ME-Sender: <xms:2JKVZ5xqAU5O2esbkyLPOePThRom8iorS9T-2H1sAg5k49QyIQWYpA>
-    <xme:2JKVZ5SoKFTp5WoBs86YOvnaWjxLUG7s5oTduFHAUxGIYkMweVfa2IB58F5fnpcuH
-    r0mmWhDKo7goF9m6w>
-X-ME-Received: <xmr:2JKVZzUXlRQ1yzaHt4WGYGg75OIYWSEJo-AK4ODXBAH-0a6citt3Q8SpBOivORaLqaIdorEieww9GgWvY9X5-wZRcvcUI7p2inSy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgkeelkecutefuodetggdotefrod
+	1737859798; x=1737946198; bh=nh/dtnXP8F4YwMAFHOfx6ir9rxEhTCA2ehs
+	LhHvebYM=; b=nTs9HtYW3bvTFcReWhjAv/SUDavJqfXfzpLsag7fuTFz0E0zsFG
+	AbphFC6alf7UitKb7CVGRh38KuDBWqY1W9cdzNFUP7YnxANLwMuqltNLPlnvWX+s
+	5Uk1Pp8VtpUeWxxMlyTFs397vL70TQdOR0IZyCnFvQsIYu0lEU2I1hZyHADkXONp
+	KThUF2ZzBojj6gbn8nBlhGv4ysgLvekUPcljJHpFl1goN+LbwNY84FUx+1CmDji/
+	q4LIddaqp1+P7XgoPwtZQbJBneuB0jGJ4Na+6HqABscxcbUkqo0Y69pbZxMFpKn2
+	7PnHwSSOqfYUMYWYtu/GQDmdiO3NArV7wrw==
+X-ME-Sender: <xms:1aKVZzpfyRYyKNVu_yWDDjIGpmvABZVrXaU2afyu-PWDK6FEXYYTUg>
+    <xme:1aKVZ9rDufwFl4Vbvt66t5XWS5wyqt6yYzwai9uHMybWgGlqTpuHWy5NL4mzUdGwo
+    3GHcbRxvAR0skPHVw>
+X-ME-Received: <xmr:1aKVZwOYZhHj1SVJ0ORU5HYbuQFdqh5-EDe1Bvyiz736FD7kHXOmnXIk-ooEZ0_wr9ruiR2XjUOMZDNFTyBuGIQIqgL5n4zipMOf>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgleduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,30 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgkeelkecutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    peiiohhtthgvlhgsrghrthesthdqohhnlhhinhgvrdguvgdprhgtphhtthhopehjohhhrg
-    hnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2JKVZ7jrE1b-I6tZ4mprdr7lsT-JgHZzzYcU42Kri4fa_t4Sfc0N6Q>
-    <xmx:2JKVZ7BxJqZYKhAhhEYC7Bg1ke2rRiv9cSPq7nv4jR2k6V73VAc8NA>
-    <xmx:2JKVZ0IkqTfbWA_-8GtyNIHF8gxoqbk1AMxhJwwNoVtF_eJDtnJV1Q>
-    <xmx:2JKVZ6BNDcXJFU5OBLy9EgxMYU9egLoAnKGzlAz2-MaOTfzmjCuoQw>
-    <xmx:2ZKVZ24PLXNJ_8_aMFIUAyH76xXZCORIbgqc6Q58DThhCrIRznchcFni>
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
+    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
+    hmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:1qKVZ27X6JYLq4WPGcphGyv2ujP9hC0S-cV26m691R8G8Jrl83-ONg>
+    <xmx:1qKVZy5SXKyNvWsJpdsaPAq9saBEBCg62NOHqDmKfBqtJtZsdJPRbQ>
+    <xmx:1qKVZ-jtcnzUoMqcRt1OwuEGYzgSc1md6s_vjy9UKipxcmhrwXZuhQ>
+    <xmx:1qKVZ05NKzPCRRNEhP_-iPium18HsuAC95S_tChRkpyUsgCFsWxLIg>
+    <xmx:1qKVZ933z3C9AhvVLCQ2EQ5VuWPEDqLorvnbWRlUsfvTVdxIkPdflCWI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 25 Jan 2025 20:41:44 -0500 (EST)
+ 25 Jan 2025 21:49:57 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Christian Reich <Zottelbart@t-online.de>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] reftable: ignore file-in-use errors when unlink(3p)
- fails on Windows
-In-Reply-To: <20250125-b4-pks-reftable-win32-in-use-errors-v1-1-356dbc783b4f@pks.im>
-	(Patrick Steinhardt's message of "Sat, 25 Jan 2025 06:41:34 +0100")
-References: <20250125-b4-pks-reftable-win32-in-use-errors-v1-1-356dbc783b4f@pks.im>
-Date: Sat, 25 Jan 2025 17:41:42 -0800
-Message-ID: <xmqqfrl6wdux.fsf@gitster.g>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] bundle: avoid closing file descriptor twice
+In-Reply-To: <pull.1857.git.1737849456338.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Sat, 25 Jan 2025 23:57:36
+	+0000")
+References: <pull.1857.git.1737849456338.gitgitgadget@gmail.com>
+Date: Sat, 25 Jan 2025 18:49:56 -0800
+Message-ID: <xmqqa5bewap7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,90 +87,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index 1d5b211b54..0e4b6a70a4 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -302,7 +302,7 @@ static wchar_t *normalize_ntpath(wchar_t *wbuf)
->  	return wbuf;
->  }
->  
-> -int mingw_unlink(const char *pathname)
-> +int mingw_unlink(const char *pathname, int handle_in_use_error)
->  {
->  	int ret, tries = 0;
->  	wchar_t wpathname[MAX_PATH];
-> @@ -317,6 +317,9 @@ int mingw_unlink(const char *pathname)
->  	while ((ret = _wunlink(wpathname)) == -1 && tries < ARRAY_SIZE(delay)) {
->  		if (!is_file_in_use_error(GetLastError()))
->  			break;
-> +		if (!handle_in_use_error)
-> +			return ret;
-> +
->  		/*
->  		 * We assume that some other process had the source or
->  		 * destination file open at the wrong moment and retry.
+> This seems not to have caused too many problems in almost two decades,
+> but I encountered a situation today where it _does_ cause problems: In
+> i686 variants of Git for Windows, it seems that file descriptors are
+> reused quickly after they have been closed.
 
-So this is how we can avoid falling into the retry plus interaction.
-This underlying function is prepared to offer both choices at
-runtime.
+Nice finding.  It pays not to be in too uniform a monoculture.
 
-> diff --git a/compat/mingw.h b/compat/mingw.h
-> index ebfb8ba423..a555af8d54 100644
-> --- a/compat/mingw.h
-> +++ b/compat/mingw.h
-> @@ -224,8 +224,12 @@ int uname(struct utsname *buf);
->   * replacements of existing functions
->   */
->  
-> -int mingw_unlink(const char *pathname);
-> -#define unlink mingw_unlink
-> +int mingw_unlink(const char *pathname, int handle_in_use_error);
-> +#ifdef MINGW_DONT_HANDLE_IN_USE_ERROR
-> +# define unlink(path) mingw_unlink(path, 0)
-> +#else
-> +# define unlink(path) mingw_unlink(path, 1)
-> +#endif
+>     This is a really old bug. Deviating from Git's practice, I did not apply
+>     this on top of the bugged commit. In fact, I did not even apply this on
+>     top of an older maint-* branch because it would cause conflicts even
+>     cherry-picking it on top of maint-2.47.
 
-This one is yucky.  All calls to unlink() used in compilation units
-with the CPP macro defined are going to fail on a path that is in
-use, but in other code paths, there will be the retry loop.
+Just for fun, attached is my backport to maint-2.44 track.  It
+merges, with conflict which is rather trivial to resolve, back to
+v2.48.1, on which your original patch is based, and gives the
+merge result identical to the result of direct application of your
+patch to v2.48.1.
 
-Regardless of the platform, the code must be prepared to see its
-unlink() fail and deal with the failure, but I wonder how much the
-initial "if file-in-use caused problem, retry with delay without
-bugging the end user" loop is helping.  
+I am not sure what to feel about the FD leak mentioned in the log
+message, though.
 
-After that retry loop expires, we go interactive, and I can
-understand why end-users may be annoyed by the code going
-interactive at that point.
+Thanks, will queue.
 
-But wouldn't it be too drastic a change to break out of the retry
-loop immediately after the initial failure?
 
-Unless the case found in reftable is that the process that has the
-file in use is ourselves but somebody else that is not under our
-control, it could be that the current users are being helped by the
-retry loop because these other users would quickly close and exit
-while we are retrying before going interactive.  What I am getting
-at is that it might be a less drastic move that helps users better
-if we moved the "let's just accept the failure and return to the
-caller" after that non-interactive retry loop, instead of "return
-after even the first failure."  That way, we'll still keep the
-automatic and non-interactive recovery, and punt a bit earlier than
-before before we go into the other interactive retry loop.
+--- >8 ---
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Sat, 25 Jan 2025 23:57:36 +0000
+Subject: [PATCH] bundle: avoid closing file descriptor twice
 
-Of course, if we are depending on the ability to unlink what _we_
-ourselves are using, we should stop doing that by reorganizing the
-code.  I recall we have done such a code shuffling to avoid removing
-open files by flipping the order between unlink and close before
-only to mollify Windows already in other code paths.  But if we are
-failing due to random other users having the file open at the same
-time, at least the earlier non-interactive retry loop sounds like a
-reasonable workaround for quirks in the underlying filesystem to me.
+Already when introduced in c7a8a16239 (Add bundle transport,
+2007-09-10), the `bundle` transport had a bug where it would open a file
+descriptor to the bundle file and then close it _twice_: First, ...
 
-Thanks.
+... At least this here patch is relatively easy to reason about, and
+addresses a hard failure (`fatal: mmap: could not determine filesize`)
+at the expense of leaking a file descriptor under very rare
+circumstances in which `git fetch` would error out anyway.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ bundle.c    | 4 +++-
+ bundle.h    | 2 ++
+ transport.c | 1 +
+ 3 files changed, 6 insertions(+), 1 deletion(-)
+
+Obviously this is hard to test ;-)
+
+diff --git a/bundle.c b/bundle.c
+index a9744da255..7b3f2da40f 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -616,8 +616,10 @@ int unbundle(struct repository *r, struct bundle_header *header,
+ {
+ 	struct child_process ip = CHILD_PROCESS_INIT;
+ 
+-	if (verify_bundle(r, header, flags))
++	if (verify_bundle(r, header, flags)) {
++		close(bundle_fd);
+ 		return -1;
++	}
+ 
+ 	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
+ 
+diff --git a/bundle.h b/bundle.h
+index 021adbdcbb..8b187be7cf 100644
+--- a/bundle.h
++++ b/bundle.h
+@@ -50,6 +50,8 @@ int verify_bundle(struct repository *r, struct bundle_header *header,
+  *
+  * Before unbundling, this method will call verify_bundle() with the
+  * given 'flags'.
++ *
++ * Note that the `bundle_fd` will be closed as part of the operation.
+  */
+ int unbundle(struct repository *r, struct bundle_header *header,
+ 	     int bundle_fd, struct strvec *extra_index_pack_args,
+diff --git a/transport.c b/transport.c
+index df518ead70..25e2233da0 100644
+--- a/transport.c
++++ b/transport.c
+@@ -184,6 +184,7 @@ static int fetch_refs_from_bundle(struct transport *transport,
+ 		get_refs_from_bundle_inner(transport);
+ 	ret = unbundle(the_repository, &data->header, data->fd,
+ 		       &extra_index_pack_args, 0);
++	data->fd = -1; /* `unbundle()` closes the file descriptor */
+ 	transport->hash_algo = data->header.hash_algo;
+ 	return ret;
+ }
+-- 
+2.48.1-293-gbb90fdfe3c
 
