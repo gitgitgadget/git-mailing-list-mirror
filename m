@@ -1,90 +1,89 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AE425A65E
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 07:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DE71F5413
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 07:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737961249; cv=none; b=kMaSZ28++SEwvuwsdLX7yCMZeuEVKDda8rbUC3Ian6boaCXCTgaZ00E0Htb3E5zlqXRPl25L51uygDVVtB51tpjn2YTtA7T5lJONePvSRrKtS+Pf36WULFPl8TfPt28MqHSMRJuwv43R9Ysj3L2USBB/VFwEutBpzK4eOVXTahM=
+	t=1737962781; cv=none; b=DPaG+08s6eqw8Qb8PwjYE/nY3qfnCHwFB0P1VNdjj+Fw3+ZAGfeoQvUg24sOBNSdJo93ln0JQw+ydmuAsydH5Am0iDSq6jopaAhaxBtUY3yGUlhqvquRrEYPf+o+0pXDIBdrRTUjcPi33wVEtsjNRxi/Nh50W8QY/bHWABSIFag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737961249; c=relaxed/simple;
-	bh=ucWgEcpDBVzgCwazqqwz56Hf0L5y2liwSFPIgSHGC3g=;
+	s=arc-20240116; t=1737962781; c=relaxed/simple;
+	bh=p5gfJOmx8q9epqGBvTosCfZFC9FOo6aOlD+v4P24CzE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q445EqTcKZZUlc9i/PJvWmWG02fM/82KQDiYtd672VPPMA40f7WL4Q3/szza+tDEAmkbTFx3/nnAr/A1ll4YhCUYMuqDRu8JMvINZIRfvjZN7/GtWRpOC29+Wp0AAsBWC/FEYw6dq7s+BxlXNmqkpG1//q2q61nJr8NDIiGac4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KKlr28Nl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uzM5vmaq; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=YmHc/swfDJWU88QA6TeGxTUmHZV6FY5814t/OjJKBrFBMgMhHLe+8mT+Tr67DizYtJ40CVE8EFZG/+6C1Y9MWwA8Ed2Sd2P94BJazqE+9LQsAmLoM3nIwE523GI/+DodrWiY536UAtDon58SeXA4SDq5yd2Qd5DRnBFMhsKMlpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cuubI3sC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lYBezBKH; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KKlr28Nl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uzM5vmaq"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cuubI3sC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lYBezBKH"
 Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9188525401A9;
-	Mon, 27 Jan 2025 02:00:45 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 27 Jan 2025 02:00:45 -0500
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 96496254010A;
+	Mon, 27 Jan 2025 02:26:18 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Mon, 27 Jan 2025 02:26:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1737961245;
-	 x=1738047645; bh=s6mGCgexOqBdpAf1xCGrpWGT7Bk1pSGJv7y0dvG48nE=; b=
-	KKlr28Nl9MvWck3rzqjrTQzzDU614LdeePxPg8eQwKLBX05S+aInPqiWyVYhrFA8
-	BYRtOaS19n8AXzaJLcNWK84DEGhT+7CUBaqnkVNrCXunZG+9ubQTiOndKFrZQkNz
-	wq06gaR48ZS65GmbcYasseTHhGYi/nkTWxsy7XX3WLEKqXAhRv2Lq9mZZ94CS8dG
-	b2MBpZQ3tZYns5jmk0uM2zpJvWPgVEBWFjAM9GfwlVUn6Rvif7ZwL//lv42DSHTF
-	WEU1oPbH7YXpooHAkDlMcJ+VdP+RSc4DubCjulbMTX/tlwWaU0hP1CejvhSRLAZA
-	d32PMxK6Mmdu+Gq5zEXLKQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1737962778;
+	 x=1738049178; bh=rAFEjlAQ8XQpUxR8y1KtHdPI9ql6ID3g3HVxUaxvfeE=; b=
+	cuubI3sCI4m38mB4/j2dUQ42VwYPgW8r3cTXGxhnHQq6EhMAaYCntdpb9tF/kkcT
+	JgV2ucYFJ4OWUhYbxecK/QOG4QaCRTE+S2ul70lKCifBG70Dnuu7TqjXLQfxTvJA
+	zfxUanUGhRM4fq7LZ3w7F0jqH1P7PGDe069kv2mZj3fa78iPWA4w6qvPvmTaj9GL
+	c3u+IlaScu7FUFohrNiLt4Mq4eQYQL7Nuco5c/5oQZn2XeCsJPkFRlZFeyk+pSfY
+	c0G28x8wY5jRpw14EUAfoAeaq4n33DV/Z0PpvzWeVAcu+VZQHTQnoQPyFkSMwIEa
+	Hcga4UPoNJfUM5GdXCZrxA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737961245; x=
-	1738047645; bh=s6mGCgexOqBdpAf1xCGrpWGT7Bk1pSGJv7y0dvG48nE=; b=u
-	zM5vmaqhoacvGpDrbo63XRb8Qc8sCSr27O+soaYyDUie+b/TTd1VcyvAplMk0lvn
-	CL/jRc889jJROrsr4YwQR2sAjp8teD63yTS3mQ52WKKp70//nUCm753q4oumtuw+
-	1Fh2Z4Kg0FDDbjOx7RfUwdBbe+c7XfGrybDoQuQgbGD39DA8zE1Ii39DYi2ld4U5
-	GY7w1PM4sfNX76/EcCCpKjm8WCNxjDZXAAxUmvHCqEWp3UCco24X3zZSYQGr1HSd
-	ThHyIqfm+qhtjvmb0cm7fRMWEKBR7tOQuIeLTFEwXAzvO1TK0VCTliY8VNLYo05D
-	Ti1xb2yLaEkqeAbnF2cqg==
-X-ME-Sender: <xms:HC-XZyMoiTwjBi9opJELEGEIkvpfWDhRwASqxs1Rp6VRtMNPQAQm-Q>
-    <xme:HC-XZw-lr6LzW_ND7JNSH__JKCDje6IERZ_B_kmsEqJjWvqo2Twyk_sTkDT741knD
-    mVFLteXasBpSuo8sA>
-X-ME-Received: <xmr:HC-XZ5QZSTbjmdV97M73CUoLtHhFRALfF4kyVFxpMCwhnqa7PhWCizIOCEdMvsA0ltOWlZBhWvx3iEVITLs0sdtssFxGlcrb6Lt0CIJUciYw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedguddvheduucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737962778; x=
+	1738049178; bh=rAFEjlAQ8XQpUxR8y1KtHdPI9ql6ID3g3HVxUaxvfeE=; b=l
+	YBezBKHJnZIO38Iv3r8gzhOa6C8S4oO0nOQJy92zIK3x6wWxdp/DRHj2tltdlbnw
+	BEA385D8ZRqILUn0S1PlAhdK/2XQFwnRztNIu72+N1CNr2/vpG/nMNSmphwDN2JV
+	q/KS1uObYzgaeAzG9OCQA1MIGrlc/2pdlpwqxczuVo4hGuiAvJJ/ZM0Lkeewz66H
+	HlFpVlmYPYk6sqwmjmz66mBys6LM0Z5F39qBSbWEC72iQ065L4fuam6siSAtidJ1
+	jDiWXaJq2zpCmrEKfcFKEDCBx6R24k+FkoGodITt7pDztzrBLcK+wTwnwyxD0vOB
+	JVbFTQryAsIWduVbANtfA==
+X-ME-Sender: <xms:GjWXZwQNPM7hFGUFYY-DSwJKFCAcTNdMuWAQnN532zcWz58saA4Gcg>
+    <xme:GjWXZ9w-6YLV-II1ghpsOE0DNcWdRkHj6LZKraoUWtuQHhCX2LvX0OduU7i3V3nwU
+    zM-sqAPoNT7kUvjFg>
+X-ME-Received: <xmr:GjWXZ93D-f0JOOcnKwrTa50XGHRap_xMkaJSc18yFIEvffnMCM6FnerKAKqnCfvhynazCGmo0za7J528WS6fC09Qs44La5UXI9VIO7lebXOA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedguddvheeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhr
-    tghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:HC-XZytIbvu2dynjrRBLFLRuwbxeBqMkRiJGpI3EfeOLD1l4g7jFSg>
-    <xmx:HC-XZ6cgszCBTEe2b4y2i8XRlBV_9UHtmTkiDOdI0J6IBnQWAuiDKw>
-    <xmx:HC-XZ22NdRiwje8bGj9O_9jmKwb8qnCOzmdAgSbbRIILsgEbPRkL_w>
-    <xmx:HC-XZ--2NmC6rAwNH3YUdXY-M_-YPLWOLMzrL8bxxhVyG0W57PHM_w>
-    <xmx:HS-XZ3ExvuW9_GnpH9HbHrLRu1-Ot_Qp_fbf_vpvHe5dgY_KyO0uMAT->
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufht
+    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefje
+    eitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    dpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhu
+    nhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvddtvdehtdduvdei
+    uddvheeifeekrdeftdekledquddqshhovghkkhhlvgesfhhrvggvnhgvthdruggvpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhovghkkhhlvgesfhhrvggvnh
+    gvthdruggv
+X-ME-Proxy: <xmx:GjWXZ0Bf8AMMjLpaS0sz_Pz8LfG0H8q1pJ2XCpAH6LzoVXDoa2VDtQ>
+    <xmx:GjWXZ5jSLy4GTNksDdgIIP2upoYW8Enjn1R9w1IBtwD0nhd6rjY3jQ>
+    <xmx:GjWXZwrXlxZE9b73AIqdKxc9ZyVgFcS0CCfTok91C4cpqXXAK6axsw>
+    <xmx:GjWXZ8gcr2XKzJulBeObyQ1QAPFjsVIYyQqZu6ijv8kiMquX9B-fMA>
+    <xmx:GjWXZ0W7luYm3ORVh254TXV3RoAQbdECaVGeBkL7t5fFSknq2_5FdB9r>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jan 2025 02:00:43 -0500 (EST)
+ 27 Jan 2025 02:26:16 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 53e3f894 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 27 Jan 2025 07:00:40 +0000 (UTC)
-Date: Mon, 27 Jan 2025 08:00:35 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id ea5ec3f0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 27 Jan 2025 07:26:16 +0000 (UTC)
+Date: Mon, 27 Jan 2025 08:26:15 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v4 00/10] A couple of CI improvements
-Message-ID: <Z5cvE8DkgTANo_0U@pks.im>
-References: <20250103-b4-pks-ci-fixes-v1-0-a9bb95dff833@pks.im>
- <20250110-b4-pks-ci-fixes-v4-0-6e4613446080@pks.im>
- <CAP8UFD0oYM6Cp=NQfN4p+FS3Mfdng1kXQxObtoOG2QuhPN-Aeg@mail.gmail.com>
+To: 20250126125638.3089-1-soekkle@freenet.de
+Cc: git@vger.kernel.org, gitster@pobox.com, phillip.wood123@gmail.com,
+	sunshine@sunshineco.com,
+	=?utf-8?B?U8O2cmVu?= Krecker <soekkle@freenet.de>
+Subject: Re: [PATCH v3 2/4] date.c: Fix type conversation warnings from msvc
+Message-ID: <Z5c1F7oqsaPrHRiT@pks.im>
+References: <20250126125850.3195-1-soekkle@freenet.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,19 +93,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD0oYM6Cp=NQfN4p+FS3Mfdng1kXQxObtoOG2QuhPN-Aeg@mail.gmail.com>
+In-Reply-To: <20250126125850.3195-1-soekkle@freenet.de>
 
-On Fri, Jan 24, 2025 at 10:59:04AM +0100, Christian Couder wrote:
-> On Fri, Jan 10, 2025 at 12:34 PM Patrick Steinhardt <ps@pks.im> wrote:
+On Sun, Jan 26, 2025 at 01:58:50PM +0100, Sören Krecker wrote:
+> Fix compiler warnings from msvc in date.c for value truncation from 64
+> bit to 32 bit integers.
 > 
-> > this patch series addresses a couple of issues I've found while
-> > investigating flaky CI jobs. Besides two more fixes for flaky jobs it
-> > also removes some stale code and simplifies the setup on GitHub Actions
-> > to always use containerized jobs on Linux.
-> 
-> I left a few comments but I don't think they require a reroll. This
-> series looks good to me too.
+> Also switch from int to size_t for all variables with result of strlen()
+> which cannot become negative.
 
-Thanks for your review!
+As far as I can see this patch only does the latter and doesn't do the
+former, so the commit message seems inaccurate to me.
+
+> diff --git a/date.c b/date.c
+> index a1b26a8dce..0a3fafc8a4 100644
+> --- a/date.c
+> +++ b/date.c
+> @@ -1270,8 +1270,8 @@ static const char *approxidate_alpha(const char *date, struct tm *tm, struct tm
+>  
+>  	tl = typelen;
+>  	while (tl->type) {
+> -		int len = strlen(tl->type);
+> -		if (match_string(date, tl->type) >= len-1) {
+> +		size_t len = strlen(tl->type);
+> +		if (match_string(date, tl->type)+1 >= len) {
+
+Formatting is off here, there should be spaces around `+`, even though
+you simply followed previous style. It would be nice to point out why
+this change is makde in the commit message.
 
 Patrick
