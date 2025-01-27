@@ -1,61 +1,61 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1339D1422D4
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 15:17:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E60EAD0
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 15:17:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737991051; cv=none; b=q8MJNGVUa1I5n582J/tL4h2NJVE60IHStVVw+/XZPLyjatU5xTccnoJOWKn2a6BLUnVe1U+fu5kzjW7JPKepkQFdyi86A+QENFLoRGSlHCOK17MxpIMgNJnvS9/eRFkjXQn2fjAeuj30nrxpU2cGucb2I5XIFQNI630yuIduoEk=
+	t=1737991055; cv=none; b=KDPuOGZG52JbbssMS3SL/tpeGlvB6l4ZhpauqQa4OBGiXUflW2J8aKSOZZSDypd629HIJaCSEAv54t3sGdxuBv/dXjFjfw+C9IMa0M85Y0gfUOo+wqX00OF9pl/iWsKxgYQBoYCuTJytu+3JaHUpbRc+QX1UNClcFDjfEdF3UCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737991051; c=relaxed/simple;
-	bh=XX1lI+s9eZJmzKG558T8RW5UGgIBK5HTcg4dXvseW8o=;
+	s=arc-20240116; t=1737991055; c=relaxed/simple;
+	bh=Uqw55LslRk0bdq9KbsqVYM1miFy5vPEkH0CTmdSwVqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0SQcgOntFTHuvEVdjDFArolEF7a6gDJrW4eX0i1Q2taRDY6X/6KH5WZuFkcuc2190d+GLzB61nurmlYmipl9a72llPzupJfsmVC2x7rOJTlfoY2lXshPE+I+C3T7f8S0aL1YjFFEcjPNJ7B850a5x6n3TgdQMpXEniRc3OTlVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EQVhp6Ex; arc=none smtp.client-ip=209.85.128.51
+	 MIME-Version; b=N3ZrDxU3w/lWzr1gnW+F6SMGnnGkIQ/iuupMPEhocuRqQyE0Q8y+JGJNOf6DKxNB5L0IbAv0k7EdbCgplo6xKi0jss7L7e40m86tam7If4u3TckSZ4VyMK5Dhs3exiB3NJlalmIVnMu/GJZ6Xm3e3rQn3kBilI0go/wmsMgnEyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ynv2cIYs; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EQVhp6Ex"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-4368a293339so52586895e9.3
-        for <git@vger.kernel.org>; Mon, 27 Jan 2025 07:17:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ynv2cIYs"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-4361dc6322fso30436535e9.3
+        for <git@vger.kernel.org>; Mon, 27 Jan 2025 07:17:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1737991046; x=1738595846; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1737991049; x=1738595849; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eHwz/LpcMoV2utc3fpcE6nsiapR7XeU9YBqNRU+OPyk=;
-        b=EQVhp6Ex7MLzTzRuDxzV+XRiMQ6GmO8KioJHIgPd7ZFanwtGhfu0DfAWE/q0wVtR0t
-         MQQsUKkCC+TflhOBtSQRBbzM3H4rGrzxQ6nF3POncvnjT9W89YYPxT+Aa3aMugGd24IT
-         5xr5UppK4QHaU0mgDl21XZxiQrAKgvPbduBF4Y5Z/97+oNfHZgZOz08n/MxkrHbbkHDt
-         8nwjLuE8zGmJdwhYX4WRl3nReFZWp/7wC3VI6DMlZ5sZ3VZPcJLbExAEjxgUGwHg/X+0
-         J3q2TAhr3dX57XUC797JxAhWNzStMJNM2d6GEhM0f23Zbn5jZpAJpohL/Rfia8/0rlJ9
-         uMrQ==
+        bh=exPcaS6Bj1S0vihPEFhQhMs4/zKh5YQA20EpiSgLAko=;
+        b=Ynv2cIYsPWnUTLsnI2NafHlonlkzHJ4DxBa342r6HNjMilsb52KqDjUhH633l239Sm
+         rfKufDzP0UCiOB/EuuTpsPoR3ga6Aw4DZTKDYqBCJjvKiVuOGm3bISX6qcVSgu1AEPgc
+         Xfe2BxYqerYKNyXfx9Joep7QWU/qp3RoXD+nOugGj2VvzJZaQiZi6Gm24eLR0dGQPCXq
+         phs/EUrjoinatTm5MVrU5Mp5QFgf5t06ttBtCPTNhEYsg5pN7k1SE3tp2W1KErRK0dDg
+         9Gj+y6G/763ENS3MPCntTo+1gG4KUCspoNfTkesHNXMaDn1f1ML9ODkpYupKicW/Z2v6
+         R/RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737991046; x=1738595846;
+        d=1e100.net; s=20230601; t=1737991049; x=1738595849;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eHwz/LpcMoV2utc3fpcE6nsiapR7XeU9YBqNRU+OPyk=;
-        b=kKe1NTbHhhTBs0m7LmsHLEtKUqZiNzp1eXzaWJxv+P2btspwBmRrYidXE0UrXtjQ8S
-         dWjWiCV8PlnzxhjKyAAkUX2kmwbJYLqY5Ty2cYOhqYt966YReQjiNKQ94Mkuc31nZTq9
-         JfdtyVVA5RnN5LsGUY8mYPCCS/6iVTpQIjEHxBg09UsOlPnA/gu3ZC488THw9W5GlEeI
-         YhrgYOcPKHQKN7I0TEdw64C3oQDCH2eohuo5wcaShTEfmyZnAr3eSXpinCVIy+vhjYIU
-         vqZsbfnk3eQwyK9X+FEQf7FzL22HrYZJC4sjXFdHTIrWV0/xyomCYmfxZjavDrhpTyca
-         Wd8g==
-X-Gm-Message-State: AOJu0YxENsL2PuBDOH+mc17D0qXKRxzLm4fa/oljDUF9zrxi0r+tmwby
-	zWn9VVeAF6ISeCtoWhVHg4K0yFS5C6AjoGa+iDgT4aq8kVEDMxvv2+V26w==
-X-Gm-Gg: ASbGncsn9uW4V7jGYa5FT1cTbTX7J4n25UbCD7V2OlV0RzSrxISc+ayXkLmmPktDaH+
-	C9NlWYOiyB6FzSQ2RvLJTYbjPpxwaDglIsmK3HriFWQ+yj4WfPSE393AZzdXIR9IjexDZfyY1Ju
-	3M3Zi8uZVrA4CUX5gltCFJxvaS0Fvan2Yfty0XXIyTwq9z6l4eK5bydpSxRZ+BDaYAiAokPtxbA
-	OnTz5IFmqnkg/KgF55SqcbzvLhuZ/2NUEVaOsS2Dxs3MXXGxsNFISZ7HXUANIdQU5rIG/v3Ltyy
-	JR+WyOhM6InAxeKbL7Yice23E0nDzSSorWdty/W5BtU9lqIhSGdQF8wuoc75wcI=
-X-Google-Smtp-Source: AGHT+IGpgeXeqLrkDDULP1uPNpq9sr86JCIyEz0dQYAlcd6irhdniaOtGM4zOunODuUhQ2SLDZE0Tg==
-X-Received: by 2002:a05:600c:6b18:b0:438:a1f4:3e9d with SMTP id 5b1f17b1804b1-438a1f43efdmr279188865e9.9.1737991045999;
-        Mon, 27 Jan 2025 07:17:25 -0800 (PST)
+        bh=exPcaS6Bj1S0vihPEFhQhMs4/zKh5YQA20EpiSgLAko=;
+        b=fiUKANqC9WuNOqaE7fzqRSzPyPJxkqYdnWo/ZXEYYFdWBo7n0Wlkq3X9+5q0tWaM5s
+         NwUDK/t5ZQHDuiJkBmx+kHMcxqA/tpwsHfcHP+9iBtd64Vy3SNBgVgyDS9VjsTjlCnsO
+         f5O+ZaibCSm2LuMgDHrcCG2MNmPx7+9tAiI5THjULVNaz/7rnmdkO3E/yclIu/VJx2uK
+         RfSPhipKGh2nK0PGUKG8siDGU8EDVlfkHnR0LlUMHu0jA3zRVdXSIRBOrGpV5O/8TMI5
+         9PHF4S62kXK+N7oETJeZp9yvQdh8X+Kby4ZX/w5i3CoLG0VITHRWKuCBwCwCGG0WzLfd
+         /6OA==
+X-Gm-Message-State: AOJu0Yx4uTpCH3MOe16CEZ8QLw018YpM1JvF6rvV8IIPaDw0AmRdX1oG
+	3uADLxIYa31531Qbd7NznwummatutARq56+4TQbzf2GzPp57Bq2XItKJ1g==
+X-Gm-Gg: ASbGncuBtVJ4GuV3QNKpkMIT0JN8jWij4bBo1UdT1gCKct7MYu/P/dm1Ao5sLGxCxTl
+	eLx/WEBIhdacAVChoM4b6CibIidNElk4wXmrLX/yhUqjHkkEStMouD1XUat2ChsOp/OVAe2h8Ss
+	96fqf2ZYDqvpeFr/GSo+JgmMFQ3TKHPvB9a5XPvo4NV7Sskkr+NICnNmoKtMQZxL7jmQ40+r8UD
+	48LWXX/Hatnbu5glJPiEMwv8zf7mIr/c1c6nbTFyG5qPQ5H1eznMWE7CtF08/O9zIiEasVvFvEv
+	9YZ6KW93yW/yHpHXYmbGnBQ6w+6huyKVlUtbDQv/Vi4J93yZUPYnj9k9wejT2fE=
+X-Google-Smtp-Source: AGHT+IEzScc9dnQaUgxfW9JJija8zOlTH7zEr4uCVP8eKXbkZt3NxxN4OJYVgG/b38JRYOrlQFkB7A==
+X-Received: by 2002:a05:600c:1386:b0:434:f2f4:4c07 with SMTP id 5b1f17b1804b1-438913de07cmr382046155e9.15.1737991048956;
+        Mon, 27 Jan 2025 07:17:28 -0800 (PST)
 Received: from christian-Precision-5550.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd4d34e3sm135269625e9.39.2025.01.27.07.17.24
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd4d34e3sm135269625e9.39.2025.01.27.07.17.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2025 07:17:24 -0800 (PST)
+        Mon, 27 Jan 2025 07:17:27 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -68,9 +68,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	"Randall S . Becker" <rsbecker@nexbridge.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 4/6] Add 'promisor-remote' capability to protocol v2
-Date: Mon, 27 Jan 2025 16:16:59 +0100
-Message-ID: <20250127151701.2321341-5-christian.couder@gmail.com>
+Subject: [PATCH v4 6/6] doc: add technical design doc for large object promisors
+Date: Mon, 27 Jan 2025 16:17:01 +0100
+Message-ID: <20250127151701.2321341-7-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.46.0.rc0.95.gcbf174a634
 In-Reply-To: <20250127151701.2321341-1-christian.couder@gmail.com>
 References: <20241206124248.160494-1-christian.couder@gmail.com>
@@ -83,833 +83,663 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When a server S knows that some objects from a repository are available
-from a promisor remote X, S might want to suggest to a client C cloning
-or fetching the repo from S that C may use X directly instead of S for
-these objects.
+Let's add a design doc about how we could improve handling liarge blobs
+using "Large Object Promisors" (LOPs). It's a set of features with the
+goal of using special dedicated promisor remotes to store large blobs,
+and having them accessed directly by main remotes and clients.
 
-Note that this could happen both in the case S itself doesn't have the
-objects and borrows them from X, and in the case S has the objects but
-knows that X is better connected to the world (e.g., it is in a
-$LARGEINTERNETCOMPANY datacenter with petabit/s backbone connections)
-than S. Implementation of the latter case, which would require S to
-omit in its response the objects available on X, is left for future
-improvement though.
-
-Then C might or might not, want to get the objects from X. If S and C
-can agree on C using X directly, S can then omit objects that can be
-obtained from X when answering C's request.
-
-To allow S and C to agree and let each other know about C using X or
-not, let's introduce a new "promisor-remote" capability in the
-protocol v2, as well as a few new configuration variables:
-
-  - "promisor.advertise" on the server side, and:
-  - "promisor.acceptFromServer" on the client side.
-
-By default, or if "promisor.advertise" is set to 'false', a server S will
-not advertise the "promisor-remote" capability.
-
-If S doesn't advertise the "promisor-remote" capability, then a client C
-replying to S shouldn't advertise the "promisor-remote" capability
-either.
-
-If "promisor.advertise" is set to 'true', S will advertise its promisor
-remotes with a string like:
-
-  promisor-remote=<pr-info>[;<pr-info>]...
-
-where each <pr-info> element contains information about a single
-promisor remote in the form:
-
-  name=<pr-name>[,url=<pr-url>]
-
-where <pr-name> is the urlencoded name of a promisor remote and
-<pr-url> is the urlencoded URL of the promisor remote named <pr-name>.
-
-For now, the URL is passed in addition to the name. In the future, it
-might be possible to pass other information like a filter-spec that the
-client may use when cloning from S, or a token that the client may use
-when retrieving objects from X.
-
-It is C's responsibility to arrange how it can reach X though, so pieces
-of information that are usually outside Git's concern, like proxy
-configuration, must not be distributed over this protocol.
-
-It might also be possible in the future for "promisor.advertise" to have
-other values. For example a value like "onlyName" could prevent S from
-advertising URLs, which could help in case C should use a different URL
-for X than the URL S is using. (The URL S is using might be an internal
-one on the server side for example.)
-
-By default or if "promisor.acceptFromServer" is set to "None", C will
-not accept to use the promisor remotes that might have been advertised
-by S. In this case, C will not advertise any "promisor-remote"
-capability in its reply to S.
-
-If "promisor.acceptFromServer" is set to "All" and S advertised some
-promisor remotes, then on the contrary, C will accept to use all the
-promisor remotes that S advertised and C will reply with a string like:
-
-  promisor-remote=<pr-name>[;<pr-name>]...
-
-where the <pr-name> elements are the urlencoded names of all the
-promisor remotes S advertised.
-
-In a following commit, other values for "promisor.acceptFromServer" will
-be implemented, so that C will be able to decide the promisor remotes it
-accepts depending on the name and URL it received from S. So even if
-that name and URL information is not used much right now, it will be
-needed soon.
-
-Helped-by: Taylor Blau <me@ttaylorr.com>
-Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/config/promisor.txt     |  17 ++
- Documentation/gitprotocol-v2.txt      |  54 ++++++
- connect.c                             |   9 +
- promisor-remote.c                     | 196 +++++++++++++++++++++
- promisor-remote.h                     |  36 +++-
- serve.c                               |  26 +++
- t/meson.build                         |   1 +
- t/t5710-promisor-remote-capability.sh | 244 ++++++++++++++++++++++++++
- upload-pack.c                         |   3 +
- 9 files changed, 585 insertions(+), 1 deletion(-)
- create mode 100755 t/t5710-promisor-remote-capability.sh
+ .../technical/large-object-promisors.txt      | 640 ++++++++++++++++++
+ 1 file changed, 640 insertions(+)
+ create mode 100644 Documentation/technical/large-object-promisors.txt
 
-diff --git a/Documentation/config/promisor.txt b/Documentation/config/promisor.txt
-index 98c5cb2ec2..9cbfe3e59e 100644
---- a/Documentation/config/promisor.txt
-+++ b/Documentation/config/promisor.txt
-@@ -1,3 +1,20 @@
- promisor.quiet::
- 	If set to "true" assume `--quiet` when fetching additional
- 	objects for a partial clone.
-+
-+promisor.advertise::
-+	If set to "true", a server will use the "promisor-remote"
-+	capability, see linkgit:gitprotocol-v2[5], to advertise the
-+	promisor remotes it is using, if it uses some. Default is
-+	"false", which means the "promisor-remote" capability is not
-+	advertised.
-+
-+promisor.acceptFromServer::
-+	If set to "all", a client will accept all the promisor remotes
-+	a server might advertise using the "promisor-remote"
-+	capability. Default is "none", which means no promisor remote
-+	advertised by a server will be accepted. By accepting a
-+	promisor remote, the client agrees that the server might omit
-+	objects that are lazily fetchable from this promisor remote
-+	from its responses to "fetch" and "clone" requests from the
-+	client. See linkgit:gitprotocol-v2[5].
-diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotocol-v2.txt
-index 1652fef3ae..f25a9a6ad8 100644
---- a/Documentation/gitprotocol-v2.txt
-+++ b/Documentation/gitprotocol-v2.txt
-@@ -781,6 +781,60 @@ retrieving the header from a bundle at the indicated URI, and thus
- save themselves and the server(s) the request(s) needed to inspect the
- headers of that bundle or bundles.
- 
-+promisor-remote=<pr-infos>
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+The server may advertise some promisor remotes it is using or knows
-+about to a client which may want to use them as its promisor remotes,
-+instead of this repository. In this case <pr-infos> should be of the
-+form:
-+
-+	pr-infos = pr-info | pr-infos ";" pr-info
-+
-+	pr-info = "name=" pr-name | "name=" pr-name "," "url=" pr-url
-+
-+where `pr-name` is the urlencoded name of a promisor remote, and
-+`pr-url` the urlencoded URL of that promisor remote.
-+
-+In this case, if the client decides to use one or more promisor
-+remotes the server advertised, it can reply with
-+"promisor-remote=<pr-names>" where <pr-names> should be of the form:
-+
-+	pr-names = pr-name | pr-names ";" pr-name
-+
-+where `pr-name` is the urlencoded name of a promisor remote the server
-+advertised and the client accepts.
-+
-+Note that, everywhere in this document, `pr-name` MUST be a valid
-+remote name, and the ';' and ',' characters MUST be encoded if they
-+appear in `pr-name` or `pr-url`.
-+
-+If the server doesn't know any promisor remote that could be good for
-+a client to use, or prefers a client not to use any promisor remote it
-+uses or knows about, it shouldn't advertise the "promisor-remote"
-+capability at all.
-+
-+In this case, or if the client doesn't want to use any promisor remote
-+the server advertised, the client shouldn't advertise the
-+"promisor-remote" capability at all in its reply.
-+
-+The "promisor.advertise" and "promisor.acceptFromServer" configuration
-+options can be used on the server and client side respectively to
-+control what they advertise or accept respectively. See the
-+documentation of these configuration options for more information.
-+
-+Note that in the future it would be nice if the "promisor-remote"
-+protocol capability could be used by the server, when responding to
-+`git fetch` or `git clone`, to advertise better-connected remotes that
-+the client can use as promisor remotes, instead of this repository, so
-+that the client can lazily fetch objects from these other
-+better-connected remotes. This would require the server to omit in its
-+response the objects available on the better-connected remotes that
-+the client has accepted. This hasn't been implemented yet though. So
-+for now this "promisor-remote" capability is useful only when the
-+server advertises some promisor remotes it already uses to borrow
-+objects from.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/connect.c b/connect.c
-index 10fad43e98..7d309c4a7b 100644
---- a/connect.c
-+++ b/connect.c
-@@ -23,6 +23,7 @@
- #include "protocol.h"
- #include "alias.h"
- #include "bundle-uri.h"
-+#include "promisor-remote.h"
- 
- static char *server_capabilities_v1;
- static struct strvec server_capabilities_v2 = STRVEC_INIT;
-@@ -488,6 +489,7 @@ void check_stateless_delimiter(int stateless_rpc,
- static void send_capabilities(int fd_out, struct packet_reader *reader)
- {
- 	const char *hash_name;
-+	const char *promisor_remote_info;
- 
- 	if (server_supports_v2("agent"))
- 		packet_write_fmt(fd_out, "agent=%s", git_user_agent_sanitized());
-@@ -501,6 +503,13 @@ static void send_capabilities(int fd_out, struct packet_reader *reader)
- 	} else {
- 		reader->hash_algo = &hash_algos[GIT_HASH_SHA1];
- 	}
-+	if (server_feature_v2("promisor-remote", &promisor_remote_info)) {
-+		char *reply = promisor_remote_reply(promisor_remote_info);
-+		if (reply) {
-+			packet_write_fmt(fd_out, "promisor-remote=%s", reply);
-+			free(reply);
-+		}
-+	}
- }
- 
- int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
-diff --git a/promisor-remote.c b/promisor-remote.c
-index c714f4f007..5ac282ed27 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -11,6 +11,8 @@
- #include "strvec.h"
- #include "packfile.h"
- #include "environment.h"
-+#include "url.h"
-+#include "version.h"
- 
- struct promisor_remote_config {
- 	struct promisor_remote *promisors;
-@@ -221,6 +223,18 @@ int repo_has_promisor_remote(struct repository *r)
- 	return !!repo_promisor_remote_find(r, NULL);
- }
- 
-+int repo_has_accepted_promisor_remote(struct repository *r)
-+{
-+	struct promisor_remote *p;
-+
-+	promisor_remote_init(r);
-+
-+	for (p = r->promisor_remote_config->promisors; p; p = p->next)
-+		if (p->accepted)
-+			return 1;
-+	return 0;
-+}
-+
- static int remove_fetched_oids(struct repository *repo,
- 			       struct object_id **oids,
- 			       int oid_nr, int to_free)
-@@ -292,3 +306,185 @@ void promisor_remote_get_direct(struct repository *repo,
- 	if (to_free)
- 		free(remaining_oids);
- }
-+
-+static int allow_unsanitized(char ch)
-+{
-+	if (ch == ',' || ch == ';' || ch == '%')
-+		return 0;
-+	return ch > 32 && ch < 127;
-+}
-+
-+static void promisor_info_vecs(struct repository *repo,
-+			       struct strvec *names,
-+			       struct strvec *urls)
-+{
-+	struct promisor_remote *r;
-+
-+	promisor_remote_init(repo);
-+
-+	for (r = repo->promisor_remote_config->promisors; r; r = r->next) {
-+		char *url;
-+		char *url_key = xstrfmt("remote.%s.url", r->name);
-+
-+		strvec_push(names, r->name);
-+		strvec_push(urls, git_config_get_string(url_key, &url) ? NULL : url);
-+
-+		free(url);
-+		free(url_key);
-+	}
-+}
-+
-+char *promisor_remote_info(struct repository *repo)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	int advertise_promisors = 0;
-+	struct strvec names = STRVEC_INIT;
-+	struct strvec urls = STRVEC_INIT;
-+
-+	git_config_get_bool("promisor.advertise", &advertise_promisors);
-+
-+	if (!advertise_promisors)
-+		return NULL;
-+
-+	promisor_info_vecs(repo, &names, &urls);
-+
-+	if (!names.nr)
-+		return NULL;
-+
-+	for (size_t i = 0; i < names.nr; i++) {
-+		if (i)
-+			strbuf_addch(&sb, ';');
-+		strbuf_addstr(&sb, "name=");
-+		strbuf_addstr_urlencode(&sb, names.v[i], allow_unsanitized);
-+		if (urls.v[i]) {
-+			strbuf_addstr(&sb, ",url=");
-+			strbuf_addstr_urlencode(&sb, urls.v[i], allow_unsanitized);
-+		}
-+	}
-+
-+	redact_non_printables(&sb);
-+
-+	strvec_clear(&names);
-+	strvec_clear(&urls);
-+
-+	return strbuf_detach(&sb, NULL);
-+}
-+
-+enum accept_promisor {
-+	ACCEPT_NONE = 0,
-+	ACCEPT_ALL
-+};
-+
-+static int should_accept_remote(enum accept_promisor accept,
-+				const char *remote_name UNUSED,
-+				const char *remote_url UNUSED)
-+{
-+	if (accept == ACCEPT_ALL)
-+		return 1;
-+
-+	BUG("Unhandled 'enum accept_promisor' value '%d'", accept);
-+}
-+
-+static void filter_promisor_remote(struct strvec *accepted, const char *info)
-+{
-+	struct strbuf **remotes;
-+	const char *accept_str;
-+	enum accept_promisor accept = ACCEPT_NONE;
-+
-+	if (!git_config_get_string_tmp("promisor.acceptfromserver", &accept_str)) {
-+		if (!accept_str || !*accept_str || !strcasecmp("None", accept_str))
-+			accept = ACCEPT_NONE;
-+		else if (!strcasecmp("All", accept_str))
-+			accept = ACCEPT_ALL;
-+		else
-+			warning(_("unknown '%s' value for '%s' config option"),
-+				accept_str, "promisor.acceptfromserver");
-+	}
-+
-+	if (accept == ACCEPT_NONE)
-+		return;
-+
-+	/* Parse remote info received */
-+
-+	remotes = strbuf_split_str(info, ';', 0);
-+
-+	for (size_t i = 0; remotes[i]; i++) {
-+		struct strbuf **elems;
-+		const char *remote_name = NULL;
-+		const char *remote_url = NULL;
-+		char *decoded_name = NULL;
-+		char *decoded_url = NULL;
-+
-+		strbuf_strip_suffix(remotes[i], ";");
-+		elems = strbuf_split(remotes[i], ',');
-+
-+		for (size_t j = 0; elems[j]; j++) {
-+			int res;
-+			strbuf_strip_suffix(elems[j], ",");
-+			res = skip_prefix(elems[j]->buf, "name=", &remote_name) ||
-+				skip_prefix(elems[j]->buf, "url=", &remote_url);
-+			if (!res)
-+				warning(_("unknown element '%s' from remote info"),
-+					elems[j]->buf);
-+		}
-+
-+		if (remote_name)
-+			decoded_name = url_percent_decode(remote_name);
-+		if (remote_url)
-+			decoded_url = url_percent_decode(remote_url);
-+
-+		if (decoded_name && should_accept_remote(accept, decoded_name, decoded_url))
-+			strvec_push(accepted, decoded_name);
-+
-+		strbuf_list_free(elems);
-+		free(decoded_name);
-+		free(decoded_url);
-+	}
-+
-+	strbuf_list_free(remotes);
-+}
-+
-+char *promisor_remote_reply(const char *info)
-+{
-+	struct strvec accepted = STRVEC_INIT;
-+	struct strbuf reply = STRBUF_INIT;
-+
-+	filter_promisor_remote(&accepted, info);
-+
-+	if (!accepted.nr)
-+		return NULL;
-+
-+	for (size_t i = 0; i < accepted.nr; i++) {
-+		if (i)
-+			strbuf_addch(&reply, ';');
-+		strbuf_addstr_urlencode(&reply, accepted.v[i], allow_unsanitized);
-+	}
-+
-+	strvec_clear(&accepted);
-+
-+	return strbuf_detach(&reply, NULL);
-+}
-+
-+void mark_promisor_remotes_as_accepted(struct repository *r, const char *remotes)
-+{
-+	struct strbuf **accepted_remotes = strbuf_split_str(remotes, ';', 0);
-+
-+	for (size_t i = 0; accepted_remotes[i]; i++) {
-+		struct promisor_remote *p;
-+		char *decoded_remote;
-+
-+		strbuf_strip_suffix(accepted_remotes[i], ";");
-+		decoded_remote = url_percent_decode(accepted_remotes[i]->buf);
-+
-+		p = repo_promisor_remote_find(r, decoded_remote);
-+		if (p)
-+			p->accepted = 1;
-+		else
-+			warning(_("accepted promisor remote '%s' not found"),
-+				decoded_remote);
-+
-+		free(decoded_remote);
-+	}
-+
-+	strbuf_list_free(accepted_remotes);
-+}
-diff --git a/promisor-remote.h b/promisor-remote.h
-index 88cb599c39..814ca248c7 100644
---- a/promisor-remote.h
-+++ b/promisor-remote.h
-@@ -9,11 +9,13 @@ struct object_id;
-  * Promisor remote linked list
-  *
-  * Information in its fields come from remote.XXX config entries or
-- * from extensions.partialclone.
-+ * from extensions.partialclone, except for 'accepted' which comes
-+ * from protocol v2 capabilities exchange.
-  */
- struct promisor_remote {
- 	struct promisor_remote *next;
- 	char *partial_clone_filter;
-+	unsigned int accepted : 1;
- 	const char name[FLEX_ARRAY];
- };
- 
-@@ -32,4 +34,36 @@ void promisor_remote_get_direct(struct repository *repo,
- 				const struct object_id *oids,
- 				int oid_nr);
- 
-+/*
-+ * Prepare a "promisor-remote" advertisement by a server.
-+ * Check the value of "promisor.advertise" and maybe the configured
-+ * promisor remotes, if any, to prepare information to send in an
-+ * advertisement.
-+ * Return value is NULL if no promisor remote advertisement should be
-+ * made. Otherwise it contains the names and urls of the advertised
-+ * promisor remotes separated by ';'
-+ */
-+char *promisor_remote_info(struct repository *repo);
-+
-+/*
-+ * Prepare a reply to a "promisor-remote" advertisement from a server.
-+ * Check the value of "promisor.acceptfromserver" and maybe the
-+ * configured promisor remotes, if any, to prepare the reply.
-+ * Return value is NULL if no promisor remote from the server
-+ * is accepted. Otherwise it contains the names of the accepted promisor
-+ * remotes separated by ';'.
-+ */
-+char *promisor_remote_reply(const char *info);
-+
-+/*
-+ * Set the 'accepted' flag for some promisor remotes. Useful when some
-+ * promisor remotes have been accepted by the client.
-+ */
-+void mark_promisor_remotes_as_accepted(struct repository *repo, const char *remotes);
-+
-+/*
-+ * Has any promisor remote been accepted by the client?
-+ */
-+int repo_has_accepted_promisor_remote(struct repository *r);
-+
- #endif /* PROMISOR_REMOTE_H */
-diff --git a/serve.c b/serve.c
-index f6dfe34a2b..e3ccf1505c 100644
---- a/serve.c
-+++ b/serve.c
-@@ -10,6 +10,7 @@
- #include "upload-pack.h"
- #include "bundle-uri.h"
- #include "trace2.h"
-+#include "promisor-remote.h"
- 
- static int advertise_sid = -1;
- static int advertise_object_info = -1;
-@@ -29,6 +30,26 @@ static int agent_advertise(struct repository *r UNUSED,
- 	return 1;
- }
- 
-+static int promisor_remote_advertise(struct repository *r,
-+				     struct strbuf *value)
-+{
-+	if (value) {
-+		char *info = promisor_remote_info(r);
-+		if (!info)
-+			return 0;
-+		strbuf_addstr(value, info);
-+		free(info);
-+	}
-+	return 1;
-+}
-+
-+static void promisor_remote_receive(struct repository *r,
-+				    const char *remotes)
-+{
-+	mark_promisor_remotes_as_accepted(r, remotes);
-+}
-+
-+
- static int object_format_advertise(struct repository *r,
- 				   struct strbuf *value)
- {
-@@ -155,6 +176,11 @@ static struct protocol_capability capabilities[] = {
- 		.advertise = bundle_uri_advertise,
- 		.command = bundle_uri_command,
- 	},
-+	{
-+		.name = "promisor-remote",
-+		.advertise = promisor_remote_advertise,
-+		.receive = promisor_remote_receive,
-+	},
- };
- 
- void protocol_v2_advertise_capabilities(struct repository *r)
-diff --git a/t/meson.build b/t/meson.build
-index 7b35eadbc8..20e15c407c 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -727,6 +727,7 @@ integration_tests = [
-   't5703-upload-pack-ref-in-want.sh',
-   't5704-protocol-violations.sh',
-   't5705-session-id-in-capabilities.sh',
-+  't5710-promisor-remote-capability.sh',
-   't5730-protocol-v2-bundle-uri-file.sh',
-   't5731-protocol-v2-bundle-uri-git.sh',
-   't5732-protocol-v2-bundle-uri-http.sh',
-diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-remote-capability.sh
-new file mode 100755
-index 0000000000..0390c1dbad
+diff --git a/Documentation/technical/large-object-promisors.txt b/Documentation/technical/large-object-promisors.txt
+new file mode 100644
+index 0000000000..1984f11a55
 --- /dev/null
-+++ b/t/t5710-promisor-remote-capability.sh
-@@ -0,0 +1,244 @@
-+#!/bin/sh
++++ b/Documentation/technical/large-object-promisors.txt
+@@ -0,0 +1,640 @@
++Large Object Promisors
++======================
 +
-+test_description='handling of promisor remote advertisement'
++Since Git has been created, users have been complaining about issues
++with storing large files in Git. Some solutions have been created to
++help, but they haven't helped much with some issues.
 +
-+. ./test-lib.sh
++Git currently supports multiple promisor remotes, which could help
++with some of these remaining issues, but it's very hard to use them to
++help, because a number of important features are missing.
 +
-+GIT_TEST_MULTI_PACK_INDEX=0
-+GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=0
++The goal of the effort described in this document is to add these
++important features.
 +
-+# Setup the repository with three commits, this way HEAD is always
-+# available and we can hide commit 1 or 2.
-+test_expect_success 'setup: create "template" repository' '
-+	git init template &&
-+	test_commit -C template 1 &&
-+	test_commit -C template 2 &&
-+	test_commit -C template 3 &&
-+	test-tool genrandom foo 10240 >template/foo &&
-+	git -C template add foo &&
-+	git -C template commit -m foo
-+'
++We will call a "Large Object Promisor", or "LOP" in short, a promisor
++remote which is used to store only large blobs and which is separate
++from the main remote that should store the other Git objects and the
++rest of the repos.
 +
-+# A bare repo will act as a server repo with unpacked objects.
-+test_expect_success 'setup: create bare "server" repository' '
-+	git clone --bare --no-local template server &&
-+	mv server/objects/pack/pack-* . &&
-+	packfile=$(ls pack-*.pack) &&
-+	git -C server unpack-objects --strict <"$packfile"
-+'
++By extension, we will also call "Large Object Promisor", or LOP, the
++effort described in this document to add a set of features to make it
++easier to handle large blobs/files in Git by using LOPs.
 +
-+check_missing_objects () {
-+	git -C "$1" rev-list --objects --all --missing=print > all.txt &&
-+	perl -ne 'print if s/^[?]//' all.txt >missing.txt &&
-+	test_line_count = "$2" missing.txt &&
-+	if test "$2" -lt 2
-+	then
-+		test "$3" = "$(cat missing.txt)"
-+	else
-+		test -f "$3" &&
-+		sort <"$3" >expected_sorted &&
-+		sort <missing.txt >actual_sorted &&
-+		test_cmp expected_sorted actual_sorted
-+	fi
-+}
++This effort aims to especially improve things on the server side, and
++especially for large blobs that are already compressed in a binary
++format.
 +
-+initialize_server () {
-+	count="$1"
-+	missing_oids="$2"
++This effort aims to provide an alternative to Git LFS
++(https://git-lfs.com/) and similar tools like git-annex
++(https://git-annex.branchable.com/) for handling large files, even
++though a complete alternative would very likely require other efforts
++especially on the client side, where it would likely help to implement
++a new object representation for large blobs as discussed in:
 +
-+	# Repack everything first
-+	git -C server -c repack.writebitmaps=false repack -a -d &&
++https://lore.kernel.org/git/xmqqbkdometi.fsf@gitster.g/
 +
-+	# Remove promisor file in case they exist, useful when reinitializing
-+	rm -rf server/objects/pack/*.promisor &&
++0) Non goals
++------------
 +
-+	# Repack without the largest object and create a promisor pack on server
-+	git -C server -c repack.writebitmaps=false repack -a -d \
-+	    --filter=blob:limit=5k --filter-to="$(pwd)/pack" &&
-+	promisor_file=$(ls server/objects/pack/*.pack | sed "s/\.pack/.promisor/") &&
-+	>"$promisor_file" &&
++- We will not discuss those client side improvements here, as they
++  would require changes in different parts of Git than this effort.
+++
++So we don't pretend to fully replace Git LFS with only this effort,
++but we nevertheless believe that it can significantly improve the
++current situation on the server side, and that other separate
++efforts could also improve the situation on the client side.
 +
-+	# Check objects missing on the server
-+	check_missing_objects server "$count" "$missing_oids"
-+}
++- In the same way, we are not going to discuss all the possible ways
++  to implement a LOP or their underlying object storage, or to
++  optimize how LOP works.
+++
++Our opinion is that the simplest solution for now is for LOPs to use
++object storage through a remote helper (see section II.2 below for
++more details) to store their objects. So we consider that this is the
++default implementation. If there are improvements on top of this,
++that's great, but our opinion is that such improvements are not
++necessary for LOPs to already be useful. Such improvements are likely
++a different technical topic, and can be taken care of separately
++anyway.
+++
++So in particular we are not going to discuss pluggable ODBs or other
++object database backends that could chunk large blobs, dedup the
++chunks and store them efficiently. Sure, that would be a nice
++improvement to store large blobs on the server side, but we believe
++it can just be a separate effort as it's also not technically very
++related to this effort.
+++
++We are also not going to discuss data transfer improvements between
++LOPs and clients or servers. Sure, there might be some easy and very
++effective optimizations there (as we know that objects on LOPs are
++very likely incompressible and not deltifying well), but this can be
++dealt with separately in a separate effort.
 +
-+copy_to_server2 () {
-+	oid_path="$(test_oid_to_path $1)" &&
-+	path="server/objects/$oid_path" &&
-+	path2="server2/objects/$oid_path" &&
-+	mkdir -p $(dirname "$path2") &&
-+	cp "$path" "$path2"
-+}
++In other words, the goal of this document is not to talk about all the
++possible ways to optimize how Git could handle large blobs, but to
++describe how a LOP based solution can already work well and alleviate
++a number of current issues in the context of Git clients and servers
++sharing Git objects.
 +
-+test_expect_success "setup for testing promisor remote advertisement" '
-+	# Create another bare repo called "server2"
-+	git init --bare server2 &&
++I) Issues with the current situation
++------------------------------------
 +
-+	# Copy the largest object from server to server2
-+	obj="HEAD:foo" &&
-+	oid="$(git -C server rev-parse $obj)" &&
-+	copy_to_server2 "$oid" &&
++- Some statistics made on GitLab repos have shown that more than 75%
++  of the disk space is used by blobs that are larger than 1MB and
++  often in a binary format.
 +
-+	initialize_server 1 "$oid" &&
++- So even if users could use Git LFS or similar tools to store a lot
++  of large blobs out of their repos, it's a fact that in practice they
++  don't do it as much as they probably should.
 +
-+	# Configure server2 as promisor remote for server
-+	git -C server remote add server2 "file://$(pwd)/server2" &&
-+	git -C server config remote.server2.promisor true &&
++- On the server side ideally, the server should be able to decide for
++  itself how it stores things. It should not depend on users deciding
++  to use tools like Git LFS on some blobs or not.
 +
-+	git -C server2 config uploadpack.allowFilter true &&
-+	git -C server2 config uploadpack.allowAnySHA1InWant true &&
-+	git -C server config uploadpack.allowFilter true &&
-+	git -C server config uploadpack.allowAnySHA1InWant true
-+'
++- It's much more expensive to store large blobs that don't delta
++  compress well on regular fast seeking drives (like SSDs) than on
++  object storage (like Amazon S3 or GCP Buckets). Using fast drives
++  for regular Git repos makes sense though, as serving regular Git
++  content (blobs containing text or code) needs drives where seeking
++  is fast, but the content is relatively small. On the other hand,
++  object storage for Git LFS blobs makes sense as seeking speed is not
++  as important when dealing with large files, while costs are more
++  important. So the fact that users don't use Git LFS or similar tools
++  for a significant number of large blobs has likely some bad
++  consequences on the cost of repo storage for most Git hosting
++  platforms.
 +
-+test_expect_success "clone with promisor.advertise set to 'true'" '
-+	git -C server config promisor.advertise true &&
++- Having large blobs handled in the same way as other blobs and Git
++  objects in Git repos instead of on object storage also has a cost in
++  increased memory and CPU usage, and therefore decreased performance,
++  when creating packfiles. (This is because Git tries to use delta
++  compression or zlib compression which is unlikely to work well on
++  already compressed binary content.) So it's not just a storage cost
++  increase.
 +
-+	# Clone from server to create a client
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.server2.promisor=true \
-+		-c remote.server2.fetch="+refs/heads/*:refs/remotes/server2/*" \
-+		-c remote.server2.url="file://$(pwd)/server2" \
-+		-c promisor.acceptfromserver=All \
-+		--no-local --filter="blob:limit=5k" server client &&
-+	test_when_finished "rm -rf client" &&
++- When a large blob has been committed into a repo, it might not be
++  possible to remove this blob from the repo without rewriting
++  history, even if the user then decides to use Git LFS or a similar
++  tool to handle it.
 +
-+	# Check that the largest object is still missing on the server
-+	check_missing_objects server 1 "$oid"
-+'
++- In fact Git LFS and similar tools are not very flexible in letting
++  users change their minds about the blobs they should handle or not.
 +
-+test_expect_success "clone with promisor.advertise set to 'false'" '
-+	git -C server config promisor.advertise false &&
++- Even when users are using Git LFS or similar tools, they are often
++  complaining that these tools require significant effort to set up,
++  learn and use correctly.
 +
-+	# Clone from server to create a client
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.server2.promisor=true \
-+		-c remote.server2.fetch="+refs/heads/*:refs/remotes/server2/*" \
-+		-c remote.server2.url="file://$(pwd)/server2" \
-+		-c promisor.acceptfromserver=All \
-+		--no-local --filter="blob:limit=5k" server client &&
-+	test_when_finished "rm -rf client" &&
++II) Main features of the "Large Object Promisors" solution
++----------------------------------------------------------
 +
-+	# Check that the largest object is not missing on the server
-+	check_missing_objects server 0 "" &&
++The main features below should give a rough overview of how the
++solution may work. Details about needed elements can be found in
++following sections.
 +
-+	# Reinitialize server so that the largest object is missing again
-+	initialize_server 1 "$oid"
-+'
++Even if each feature below is very useful for the full solution, it is
++very likely to be also useful on its own in some cases where the full
++solution is not required. However, we'll focus primarily on the big
++picture here.
 +
-+test_expect_success "clone with promisor.acceptfromserver set to 'None'" '
-+	git -C server config promisor.advertise true &&
++Also each feature doesn't need to be implemented entirely in Git
++itself. Some could be scripts, hooks or helpers that are not part of
++the Git repo. It would be helpful if those could be shared and
++improved on collaboratively though. So we want to encourage sharing
++them.
 +
-+	# Clone from server to create a client
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.server2.promisor=true \
-+		-c remote.server2.fetch="+refs/heads/*:refs/remotes/server2/*" \
-+		-c remote.server2.url="file://$(pwd)/server2" \
-+		-c promisor.acceptfromserver=None \
-+		--no-local --filter="blob:limit=5k" server client &&
-+	test_when_finished "rm -rf client" &&
++1) Large blobs are stored on LOPs
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +
-+	# Check that the largest object is not missing on the server
-+	check_missing_objects server 0 "" &&
++Large blobs should be stored on special promisor remotes that we will
++call "Large Object Promisors" or LOPs. These LOPs should be additional
++remotes dedicated to contain large blobs especially those in binary
++format. They should be used along with main remotes that contain the
++other objects.
 +
-+	# Reinitialize server so that the largest object is missing again
-+	initialize_server 1 "$oid"
-+'
++Note 1
++++++++
 +
-+test_expect_success "init + fetch with promisor.advertise set to 'true'" '
-+	git -C server config promisor.advertise true &&
++To clarify, a LOP is a normal promisor remote, except that:
 +
-+	test_when_finished "rm -rf client" &&
-+	mkdir client &&
-+	git -C client init &&
-+	git -C client config remote.server2.promisor true &&
-+	git -C client config remote.server2.fetch "+refs/heads/*:refs/remotes/server2/*" &&
-+	git -C client config remote.server2.url "file://$(pwd)/server2" &&
-+	git -C client config remote.server.url "file://$(pwd)/server" &&
-+	git -C client config remote.server.fetch "+refs/heads/*:refs/remotes/server/*" &&
-+	git -C client config promisor.acceptfromserver All &&
-+	GIT_NO_LAZY_FETCH=0 git -C client fetch --filter="blob:limit=5k" server &&
++- it should store only large blobs,
 +
-+	# Check that the largest object is still missing on the server
-+	check_missing_objects server 1 "$oid"
-+'
++- it should be separate from the main remote, so that the main remote
++  can focus on serving other objects and the rest of the repos (see
++  feature 4) below) and can use the LOP as a promisor remote for
++  itself.
 +
-+test_expect_success "clone with promisor.advertise set to 'true' but don't delete the client" '
-+	git -C server config promisor.advertise true &&
++Note 2
++++++++
 +
-+	# Clone from server to create a client
-+	GIT_NO_LAZY_FETCH=0 git clone -c remote.server2.promisor=true \
-+		-c remote.server2.fetch="+refs/heads/*:refs/remotes/server2/*" \
-+		-c remote.server2.url="file://$(pwd)/server2" \
-+		-c promisor.acceptfromserver=All \
-+		--no-local --filter="blob:limit=5k" server client &&
++Git already makes it possible for a main remote to also be a promisor
++remote storing both regular objects and large blobs for a client that
++clones from it with a filter on blob size. But here we explicitly want
++to avoid that.
 +
-+	# Check that the largest object is still missing on the server
-+	check_missing_objects server 1 "$oid"
-+'
++Rationale
+++++++++++
 +
-+test_expect_success "setup for subsequent fetches" '
-+	# Generate new commit with large blob
-+	test-tool genrandom bar 10240 >template/bar &&
-+	git -C template add bar &&
-+	git -C template commit -m bar &&
++LOPs aim to be good at handling large blobs while main remotes are
++already good at handling other objects.
 +
-+	# Fetch new commit with large blob
-+	git -C server fetch origin &&
-+	git -C server update-ref HEAD FETCH_HEAD &&
-+	git -C server rev-parse HEAD >expected_head &&
++Implementation
++++++++++++++++
 +
-+	# Repack everything twice and remove .promisor files before
-+	# each repack. This makes sure everything gets repacked
-+	# into a single packfile. The second repack is necessary
-+	# because the first one fetches from server2 and creates a new
-+	# packfile and its associated .promisor file.
++Git already has support for multiple promisor remotes, see
++link:partial-clone.html#using-many-promisor-remotes[the partial clone documentation].
 +
-+	rm -f server/objects/pack/*.promisor &&
-+	git -C server -c repack.writebitmaps=false repack -a -d &&
-+	rm -f server/objects/pack/*.promisor &&
-+	git -C server -c repack.writebitmaps=false repack -a -d &&
++Also, Git already has support for partial clone using a filter on the
++size of the blobs (with `git clone --filter=blob:limit=<size>`).  Most
++of the other main features below are based on these existing features
++and are about making them easy and efficient to use for the purpose of
++better handling large blobs.
 +
-+	# Unpack everything
-+	rm pack-* &&
-+	mv server/objects/pack/pack-* . &&
-+	packfile=$(ls pack-*.pack) &&
-+	git -C server unpack-objects --strict <"$packfile" &&
++2) LOPs can use object storage
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +
-+	# Copy new large object to server2
-+	obj_bar="HEAD:bar" &&
-+	oid_bar="$(git -C server rev-parse $obj_bar)" &&
-+	copy_to_server2 "$oid_bar" &&
++LOPs can be implemented using object storage, like an Amazon S3 or GCP
++Bucket or MinIO (which is open source under the GNU AGPLv3 license) to
++actually store the large blobs, and can be accessed through a Git
++remote helper (see linkgit:gitremote-helpers[7]) which makes the
++underlying object storage appear like a remote to Git.
 +
-+	# Reinitialize server so that the 2 largest objects are missing
-+	printf "%s\n" "$oid" "$oid_bar" >expected_missing.txt &&
-+	initialize_server 2 expected_missing.txt &&
++Note
++++++
 +
-+	# Create one more client
-+	cp -r client client2
-+'
++A LOP can be a promisor remote accessed using a remote helper by
++both some clients and the main remote.
 +
-+test_expect_success "subsequent fetch from a client when promisor.advertise is true" '
-+	git -C server config promisor.advertise true &&
++Rationale
+++++++++++
 +
-+	GIT_NO_LAZY_FETCH=0 git -C client pull origin &&
++This looks like the simplest way to create LOPs that can cheaply
++handle many large blobs.
 +
-+	git -C client rev-parse HEAD >actual &&
-+	test_cmp expected_head actual &&
++Implementation
++++++++++++++++
 +
-+	cat client/bar >/dev/null &&
++Remote helpers are quite easy to write as shell scripts, but it might
++be more efficient and maintainable to write them using other languages
++like Go.
 +
-+	check_missing_objects server 2 expected_missing.txt
-+'
++Some already exist under open source licenses, for example:
 +
-+test_expect_success "subsequent fetch from a client when promisor.advertise is false" '
-+	git -C server config promisor.advertise false &&
++  - https://github.com/awslabs/git-remote-s3
++  - https://gitlab.com/eric.p.ju/git-remote-gs
 +
-+	GIT_NO_LAZY_FETCH=0 git -C client2 pull origin &&
++Other ways to implement LOPs are certainly possible, but the goal of
++this document is not to discuss how to best implement a LOP or its
++underlying object storage (see the "0) Non goals" section above).
 +
-+	git -C client2 rev-parse HEAD >actual &&
-+	test_cmp expected_head actual &&
++3) LOP object storage can be Git LFS storage
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +
-+	cat client2/bar >/dev/null &&
++The underlying object storage that a LOP uses could also serve as
++storage for large files handled by Git LFS.
 +
-+	check_missing_objects server 1 "$oid"
-+'
++Rationale
+++++++++++
 +
-+test_done
-diff --git a/upload-pack.c b/upload-pack.c
-index 728b2477fc..7498b45e2e 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -32,6 +32,7 @@
- #include "write-or-die.h"
- #include "json-writer.h"
- #include "strmap.h"
-+#include "promisor-remote.h"
- 
- /* Remember to update object flag allocation in object.h */
- #define THEY_HAVE	(1u << 11)
-@@ -319,6 +320,8 @@ static void create_pack_file(struct upload_pack_data *pack_data,
- 		strvec_push(&pack_objects.args, "--delta-base-offset");
- 	if (pack_data->use_include_tag)
- 		strvec_push(&pack_objects.args, "--include-tag");
-+	if (repo_has_accepted_promisor_remote(the_repository))
-+		strvec_push(&pack_objects.args, "--missing=allow-promisor");
- 	if (pack_data->filter_options.choice) {
- 		const char *spec =
- 			expand_list_objects_filter_spec(&pack_data->filter_options);
++This would simplify the server side if it wants to both use a LOP and
++act as a Git LFS server.
++
++4) A main remote can offload to a LOP with a configurable threshold
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++On the server side, a main remote should have a way to offload to a
++LOP all its blobs with a size over a configurable threshold.
++
++Rationale
+++++++++++
++
++This makes it easy to set things up and to clean things up. For
++example, an admin could use this to manually convert a repo not using
++LOPs to a repo using a LOP. On a repo already using a LOP but where
++some users would sometimes push large blobs, a cron job could use this
++to regularly make sure the large blobs are moved to the LOP.
++
++Implementation
++++++++++++++++
++
++Using something based on `git repack --filter=...` to separate the
++blobs we want to offload from the other Git objects could be a good
++idea. The missing part is to connect to the LOP, check if the blobs we
++want to offload are already there and if not send them.
++
++5) A main remote should try to remain clean from large blobs
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++A main remote should try to avoid containing a lot of oversize
++blobs. For that purpose, it should offload as needed to a LOP and it
++should have ways to prevent oversize blobs to be fetched, and also
++perhaps pushed, into it.
++
++Rationale
+++++++++++
++
++A main remote containing many oversize blobs would defeat the purpose
++of LOPs.
++
++Implementation
++++++++++++++++
++
++The way to offload to a LOP discussed in 4) above can be used to
++regularly offload oversize blobs. About preventing oversize blobs from
++being fetched into the repo see 6) below. About preventing oversize
++blob pushes, a pre-receive hook could be used.
++
++Also there are different scenarios in which large blobs could get
++fetched into the main remote, for example:
++
++- A client that doesn't implement the "promisor-remote" protocol
++  (described in 6) below) clones from the main remote.
++
++- The main remote gets a request for information about a large blob
++  and is not able to get that information without fetching the blob
++  from the LOP.
++
++It might not be possible to completely prevent all these scenarios
++from happening. So the goal here should be to implement features that
++make the fetching of large blobs less likely. For example adding a
++`remote-object-info` command in the `git cat-file --batch` protocol
++and its variants might make it possible for a main repo to respond to
++some requests about large blobs without fetching them.
++
++6) A protocol negotiation should happen when a client clones
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++When a client clones from a main repo, there should be a protocol
++negotiation so that the server can advertise one or more LOPs and so
++that the client and the server can discuss if the client could
++directly use a LOP the server is advertising. If the client and the
++server can agree on that, then the client would be able to get the
++large blobs directly from the LOP and the server would not need to
++fetch those blobs from the LOP to be able to serve the client.
++
++Note
++++++
++
++For fetches instead of clones, a protocol negotiation might not always
++happen, see the "What about fetches?" FAQ entry below for details.
++
++Rationale
+++++++++++
++
++Security, configurability and efficiency of setting things up.
++
++Implementation
++++++++++++++++
++
++A "promisor-remote" protocol v2 capability looks like a good way to
++implement this. The way the client and server use this capability
++could be controlled by configuration variables.
++
++Information that the server could send to the client through that
++protocol could be things like: LOP name, LOP URL, filter-spec (for
++example `blob:limit=<size>`) or just size limit that should be used as
++a filter when cloning, token to be used with the LOP, etc.
++
++7) A client can offload to a LOP
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++When a client is using a LOP that is also a LOP of its main remote,
++the client should be able to offload some large blobs it has fetched,
++but might not need anymore, to the LOP.
++
++Note
++++++
++
++It might depend on the context if it should be OK or not for clients
++to offload large blobs they have created, instead of fetched, directly
++to the LOP without the main remote checking them in some ways
++(possibly using hooks or other tools).
++
++Rationale
+++++++++++
++
++On the client, the easiest way to deal with unneeded large blobs is to
++offload them.
++
++Implementation
++++++++++++++++
++
++This is very similar to what 4) above is about, except on the client
++side instead of the server side. So a good solution to 4) could likely
++be adapted to work on the client side too.
++
++There might be some security issues here, as there is no negotiation,
++but they might be mitigated if the client can reuse a token it got
++when cloning (see 6) above). Also if the large blobs were fetched from
++a LOP, it is likely, and can easily be confirmed, that the LOP still
++has them, so that they can just be removed from the client.
++
++III) Benefits of using LOPs
++---------------------------
++
++Many benefits are related to the issues discussed in "I) Issues with
++the current situation" above:
++
++- No need to rewrite history when deciding which blobs are worth
++  handling separately than other objects, or when moving or removing
++  the threshold.
++
++- If the protocol between client and server is developed and secured
++  enough, then many details might be setup on the server side only and
++  all the clients could then easily get all the configuration
++  information and use it to set themselves up mostly automatically.
++
++- Storage costs benefits on the server side.
++
++- Reduced memory and CPU needs on main remotes on the server side.
++
++- Reduced storage needs on the client side.
++
++IV) FAQ
++-------
++
++What about using multiple LOPs on the server and client side?
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++That could perhaps be useful in some cases, but for now it's more
++likely that in most cases a single LOP will be advertised by the
++server and should be used by the client.
++
++A case where it could be useful for a server to advertise multiple
++LOPs is if a LOP is better for some users while a different LOP is
++better for other users. For example some clients might have a better
++connection to a LOP than others.
++
++In those cases it's the responsibility of the server to have some
++documentation to help clients. It could say for example something like
++"Users in this part of the world might want to pick only LOP A as it
++is likely to be better connected to them, while users in other parts
++of the world should pick only LOP B for the same reason."
++
++When should we trust or not trust the LOPs advertised by the server?
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++In some contexts, like in corporate setup where the server and all the
++clients are parts of an internal network in a company where admins
++have all the rights on every system, it's OK, and perhaps even a good
++thing, if the clients fully trust the server, as it can help ensure
++that all the clients are on the same page.
++
++There are also contexts in which clients trust a code hosting platform
++serving them some repos, but might not fully trust other users
++managing or contributing to some of these repos. For example, the code
++hosting platform could have hooks in place to check that any object it
++receives doesn't contain malware or otherwise bad content. In this
++case it might be OK for the client to use a main remote and its LOP if
++they are both hosted by the code hosting platform, but not if the LOP
++is hosted elsewhere (where the content is not checked).
++
++In other contexts, a client should just not trust a server.
++
++So there should be different ways to configure how the client should
++behave when a server advertises a LOP to it at clone time.
++
++As the basic elements that a server can advertise about a LOP are a
++LOP name and a LOP URL, the client should base its decision about
++accepting a LOP on these elements.
++
++One simple way to be very strict in the LOP it accepts is for example
++for the client to check that the LOP is already configured on the
++client with the same name and URL as what the server advertises.
++
++In general default and "safe" settings should require that the LOP are
++configured on the client separately from the "promisor-remote"
++protocol and that the client accepts a LOP only when information about
++it from the protocol matches what has been already configured
++separately.
++
++What about LOP names?
++~~~~~~~~~~~~~~~~~~~~~
++
++In some contexts, for example if the clients sometimes fetch from each
++other, it can be a good idea for all the clients to use the same names
++for all the remotes they use, including LOPs.
++
++In other contexts, each client might want to be able to give the name
++it wants to each remote, including each LOP, it interacts with.
++
++So there should be different ways to configure how the client accepts
++or not the LOP name the server advertises.
++
++If a default or "safe" setting is used, then as such a setting should
++require that the LOP be configured separately, then the name would be
++configured separately and there is no risk that the server could
++dictate a name to a client.
++
++Could the main remote be bogged down by old or paranoid clients?
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++Yes, it could happen if there are too many clients that are either
++unwilling to trust the main remote or that just don't implement the
++"promisor-remote" protocol because they are too old or not fully
++compatible with the 'git' client.
++
++When serving such a client, the main remote has no other choice than
++to first fetch from its LOP, to then be able to provide to the client
++everything it requested. So the main remote, even if it has cleanup
++mechanisms (see section II.4 above), would be burdened at least
++temporarily with the large blobs it had to fetch from its LOP.
++
++Not behaving like this would be breaking backward compatibility, and
++could be seen as segregating clients. For example, it might be
++possible to implement a special mode that allows the server to just
++reject clients that don't implement the "promisor-remote" protocol or
++aren't willing to trust the main remote. This mode might be useful in
++a special context like a corporate environment. There is no plan to
++implement such a mode though, and this should be discussed separately
++later anyway.
++
++A better way to proceed is probably for the main remote to show a
++message telling clients that don't implement the protocol or are
++unwilling to accept the advertised LOP(s) that they would get faster
++clone and fetches by upgrading client software or properly setting
++them up to accept LOP(s).
++
++Waiting for clients to upgrade, monitoring these upgrades and limiting
++the use of LOPs to repos that are not very frequently accessed might
++be other good ways to make sure that some benefits are still reaped
++from LOPs. Over time, as more and more clients upgrade and benefit
++from LOPs, using them in more and more frequently accessed repos will
++become worth it.
++
++Corporate environments, where it might be easier to make sure that all
++the clients are up-to-date and properly configured, could hopefully
++benefit more and earlier from using LOPs.
++
++What about fetches?
++~~~~~~~~~~~~~~~~~~~
++
++There are different kinds of fetches. A regular fetch happens when
++some refs have been updated on the server and the client wants the ref
++updates and possibly the new objects added with them. A "backfill" or
++"lazy" fetch, on the contrary, happens when the client needs to use
++some objects it already knows about but doesn't have because they are
++on a promisor remote.
++
++Regular fetch
+++++++++++++++
++
++In a regular fetch, the client will contact the main remote and a
++protocol negotiation will happen between them. It's a good thing that
++a protocol negotiation happens every time, as the configuration on the
++client or the main remote could have changed since the previous
++protocol negotiation. In this case, the new protocol negotiation
++should ensure that the new fetch will happen in a way that satisfies
++the new configuration of both the client and the server.
++
++In most cases though, the configurations on the client and the main
++remote will not have changed between 2 fetches or between the initial
++clone and a subsequent fetch. This means that the result of a new
++protocol negotiation will be the same as the previous result, so the
++new fetch will happen in the same way as the previous clone or fetch,
++using, or not using, the same LOP(s) as last time.
++
++"Backfill" or "lazy" fetch
++++++++++++++++++++++++++++
++
++When there is a backfill fetch, the client doesn't necessarily contact
++the main remote first. It will try to fetch from its promisor remotes
++in the order they appear in the config file, except that a remote
++configured using the `extensions.partialClone` config variable will be
++tried last. See
++link:partial-clone.html#using-many-promisor-remotes[the partial clone documentation].
++
++This is not new with this effort. In fact this is how multiple remotes
++have already been working for around 5 years.
++
++When using LOPs, having the main remote configured using
++`extensions.partialClone`, so it's tried last, makes sense, as missing
++objects should only be large blobs that are on LOPs.
++
++This means that a protocol negotiation will likely not happen as the
++missing objects will be fetched from the LOPs, and then there will be
++nothing left to fetch from the main remote.
++
++To secure that, it could be a good idea for LOPs to require a token
++from the client when it fetches from them. The client could get the
++token when performing a protocol negotiation with the main remote (see
++section II.6 above).
++
++V) Future improvements
++----------------------
++
++It is expected that at the beginning using LOPs will be mostly worth
++it either in a corporate context where the Git version that clients
++use can easily be controlled, or on repos that are infrequently
++accessed. (See the "Could the main remote be bogged down by old or
++paranoid clients?" section in the FAQ above.)
++
++Over time, as more and more clients upgrade to a version that
++implements the "promisor-remote" protocol v2 capability described
++above in section II.6), it will be worth it to use LOPs more widely.
++
++A lot of improvements may also help using LOPs more widely. Some of
++these improvements are part of the scope of this document like the
++following:
++
++  - Implementing a "remote-object-info" command in the
++    `git cat-file --batch` protocol and its variants to allow main
++    remotes to respond to requests about large blobs without fetching
++    them. (Eric Ju has started working on this based on previous work
++    by Calvin Wan.)
++
++  - Creating better cleanup and offload mechanisms for main remotes
++    and clients to prevent accumulation of large blobs.
++
++  - Developing more sophisticated protocol negotiation capabilities
++    between clients and servers for handling LOPs, for example adding
++    a filter-spec (e.g., blob:limit=<size>) or size limit for
++    filtering when cloning, or adding a token for LOP authentication.
++
++  - Improving security measures for LOP access, particularly around
++    token handling and authentication.
++
++  - Developing standardized ways to configure and manage multiple LOPs
++    across different environments. Especially in the case where
++    different LOPs serve the same content to clients in different
++    geographical locations, there is a need for replication or
++    synchronization between LOPs.
++
++Some improvements, including some that have been mentioned in the "0)
++Non Goals" section of this document, are out of the scope of this
++document:
++
++  - Implementing a new object representation for large blobs on the
++    client side.
++
++  - Developing pluggable ODBs or other object database backends that
++    could chunk large blobs, dedup the chunks and store them
++    efficiently.
++
++  - Optimizing data transfer between LOPs and clients/servers,
++    particularly for incompressible and non-deltifying content.
++
++  - Creating improved client side tools for managing large objects
++    more effectively, for example tools for migrating from Git LFS or
++    git-annex, or tools to find which objects could be offloaded and
++    how much disk space could be reclaimed by offloading them.
++
++Some improvements could be seen as part of the scope of this document,
++but might already have their own separate projects from the Git
++project, like:
++
++  - Improving existing remote helpers to access object storage or
++    developing new ones.
++
++  - Improving existing object storage solutions or developing new
++    ones.
++
++Even though all the above improvements may help, this document and the
++LOP effort should try to focus, at least first, on a relatively small
++number of improvements mostly those that are in its current scope.
++
++For example introducing pluggable ODBs and a new object database
++backend is likely a multi-year effort on its own that can happen
++separately in parallel. It has different technical requirements,
++touches other part of the Git code base and should have its own design
++document(s).
 -- 
 2.46.0.rc0.95.gcbf174a634
 
