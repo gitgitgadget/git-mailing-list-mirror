@@ -1,147 +1,96 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A5C17B50A
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 19:25:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EF4A17B50A
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 19:28:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738005932; cv=none; b=dJrQjcwHtua2pC94K1wUeos9XEQ7uHfKdb1fk4iO0QSFuM+AWFucarjn9VTxotSXxkKKLQIkLGcZc6cbuiajVmdk/j7jhfS5/VlxZTh64T2tB4YQYpmZbBdiM63lLR0gehQqJ/ATnJgIfXnYitw5/J578g4burIVfXs9whovh7o=
+	t=1738006105; cv=none; b=R7zJunuqrmuu13qr9pE5bp/SRA87d8Db06mPJWap9bjCZ45GVvz2aofSCFf46UtwGGh+fyOnolkGUG/m6xW0qx+SVzIx4o8n9/W9pGNrJgvV70KUIrVkmXPAA0VfGdxpYyYYhUWTuLdcolvceYjl7t25mPFdxHJAM1FKSGXSzMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738005932; c=relaxed/simple;
-	bh=GyTW9qfZMSXeJjhrUPwXNFFEAxKdmKTrm8FVgwR4/X0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rGvkLfB42BEV+q7mgEjMZNuuOvYqcN0ytX1sSV4BwLJ2QvGYBtqw1I7a0yPKkuih0BY7AXGdmVUUBoVx+zWkwRGqNNYkQEr74poUHEGEkwTdm00fpSU1IzaDs7r7AmSbjsoysYb9KsAGK1EX4k610O9GcoRafas6UconCi7/+dU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E+eijVSy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IZ75KuR3; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738006105; c=relaxed/simple;
+	bh=rE/K2+PIt4kBa6lvS9f8+jMssAECCHF1XNCgDNrQV+E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VuUcGdWq0WOE3sZvNCZdRH8X05Svw3snV6YiUvxxasraRrZwWPQeD9hffVEPbYHrcEhqZdFj5hLzSwY8sMLh8mb8eTZzn4Bd0DA2SLr+fWI/7S/2k5MMnSMdk5AoVgtUWW3abukDnAHBftwuCG/441zX5IvfW1obfWXmKTWwFrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QIAnNn2B; arc=none smtp.client-ip=209.85.160.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E+eijVSy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IZ75KuR3"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B7C3F25401B9;
-	Mon, 27 Jan 2025 14:25:28 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 27 Jan 2025 14:25:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738005928; x=1738092328; bh=W8uSai2dgS
-	R5gr93o0fIoAKVuQjFGIPAfw84AcTX1M0=; b=E+eijVSyv3hGEGtK5XU37BA1fB
-	yvqAC4UEyDlZHbT99dn+532bqbDBJzRwWEGHOPZywbCieQk0erEIkbUuxhD2DMcn
-	V52RwzNhlq2l1ih8fImsHrQDS1zoCsSMjECdzf7A0CzODpGoUI2km8vI7hapNNpW
-	kZpzozzpovPUHzDM7v18DHTwiHy95oaXBK/nZK71AQPFkS3eHmNC8AtsulCLni5a
-	wkuoRr+hZFY6SRKt/B33mrUsZV5IKjFhz008AJw74b047KrAxt1Ws3eKB/btgNYV
-	gHCaB9JUztZS8JETBrVcGtPRptc3C+/SSzF2sY6MJzRdLCJNd5fIGE4QDtzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738005928; x=1738092328; bh=W8uSai2dgSR5gr93o0fIoAKVuQjFGIPAfw8
-	4AcTX1M0=; b=IZ75KuR35f0hNLYwhTLy/PLmiXdDjoL8+/ZF/Rn1jyHkfXocMhx
-	/m8ZkBYIqm9ia6EPXJVqXJt9DzA1OI1Q+C50mnvA+3I86oESkO5DwvozEVitdEB8
-	28uMDOc0OPR3JTKVnsnz405ud38Y4k9ozEx+5YXIxw0yqbmIAVVJCZPTXtkRno3V
-	iAViVpgrmbYGQnqh00YAbhT+DXOokLQS56pGOiLCY4+KnyVgS/NVIDg/2JqZM4OL
-	jDTIfgt9TdNLDDVwP2hVBPYTVUrjDt78Ha08nvWUBHGawk8EkEw1po+JUwSYqDyV
-	pWSq/HIV+RzAxYNZNkyaFtVSOKWnO1x3rNA==
-X-ME-Sender: <xms:qN2XZzszB0Zk4A643igv8OQVPTnv0ckILyKWF4oUPARiRdgSnCswag>
-    <xme:qN2XZ0fucfUcv8Ez1xAY7YkjR9ivgillw517oViT1ZTquvBejpvDQcuUtopU9yjXz
-    y_sp4E8nx_ivUn8eA>
-X-ME-Received: <xmr:qN2XZ2yWahBNNYcUJ6HQ3hCCqXCZz7DtJcw9U0K3X4e7Nfk7oDSWqggkk7vQ9iZOZq54BOGuYnum5PuuOjW3ltsS0c0GCpb9n_8j>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudegtddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvvghtshhonh
-    hifedtudejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehshhhusghhrghmrdhkrghnohguihgruddtsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthho
-    pehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehnihhpuhhnnhesughroh
-    hpsghogidrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qN2XZyOA-lgmt2ZxkrkQY3qBFtvCF0nvWxvA8TAfP05zS7AKBT-FDQ>
-    <xmx:qN2XZz_FT6guNOYhcbqHVqGsXfKIU21UA_m0_Qq-JDAkhnlGh_NRqQ>
-    <xmx:qN2XZyUyKE4Y7hZ7ZO5NVkXAgt2i34D50KUWuWFGW8IhxAH1-9qRpA>
-    <xmx:qN2XZ0cp5CZJnpWi7QT2YOCOU4y2JTGpiAydjQjmhGrA15jseeG4qw>
-    <xmx:qN2XZ0OYX8BwfIarNH_EGpkBZo7IMUob2JHwMaoTZTV9_VB3DI5VwMei>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jan 2025 14:25:27 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org,  shubham.kanodia10@gmail.com,  Jeff King
- <peff@peff.net>,  Elijah Newren <newren@gmail.com>,  Nipunn Koorapati
- <nipunn@dropbox.com>
-Subject: Re: [PATCH v2 2/3] refspec: relocate query related functions
-In-Reply-To: <20250127103644.36627-3-meetsoni3017@gmail.com> (Meet Soni's
-	message of "Mon, 27 Jan 2025 16:06:43 +0530")
-References: <20250127103644.36627-1-meetsoni3017@gmail.com>
-	<20250127103644.36627-3-meetsoni3017@gmail.com>
-Date: Mon, 27 Jan 2025 11:25:26 -0800
-Message-ID: <xmqq7c6grrdl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QIAnNn2B"
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-2adc2b6837eso1373789fac.1
+        for <git@vger.kernel.org>; Mon, 27 Jan 2025 11:28:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738006103; x=1738610903; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=klA8cElq+qZm+FPWWVi4Etr0DsIg6a9dc7ooHMF7ssg=;
+        b=QIAnNn2BUggl4KdXFy8SzHDny1cKcdXjrQHWA9pL7Pl3mqhMOrdiPn5swMi8kVraWz
+         us4CBW0KWIEEmtzjwVZfYMrWEynN14PPEEgRh3vPqyKoWIC9b+Lsx1KOcigZBHQ0Z4Pt
+         oJ1GyvOvtUI0pCPSgzZVQU63e4uGmYY81VtMgLfgw6n6W79xoLJyE4BTED/SmhDTm2Ju
+         pn44p/kcfP+FCiP7aOj/Add0Ue67TXr1wvw3uv6UXotXg5vWq8JMDeLk+F7uubP75CTu
+         zY0JWVnlDC50eNCqoQwmiS/Ihr2rnQ4Ha0KJffPBjmeRfoinCYr5f88b0kDj8TyLlpWu
+         /Iuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738006103; x=1738610903;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=klA8cElq+qZm+FPWWVi4Etr0DsIg6a9dc7ooHMF7ssg=;
+        b=MLv2uSLhNwdHFXxB+u5UMlFUmGVlBQuxmc5Wtw/Hy4PHO8NlO3xVksql3kTXGLR8t5
+         V6yXgZpWoQK3JlK1/tZQxCsRwDerXJgPmxqAAK+guuRmf1upPpUOJ6NPy379wMV5rcWn
+         C1AoERKlhejOsSebDQkeZmJhhTjQxo/MA/lE3Y4D+qWv7atD0SBbGSS78CtoLLaAKemi
+         WwE/Ba1P4LslxbMAod0V+RJEk/FK6ZxABAwGtw3eFGmEpiul0Vwci7PTlU2ngJczHfxO
+         B7eiqhBBthRAo6Rp4tw15Bv9VDfJXzT98maj/1vJkUNiRdhaz8PTzBpGmRCFrSI7N9HB
+         5mmA==
+X-Gm-Message-State: AOJu0YxRpHYtXmwavwwWC0o1A15Is7VLIxUcgAHjKVnE+PegeXuU9t2I
+	8NDfnbgWSc4r0OyOqdbT0HX5buoQOr6cBfSZ5y+H1QNbXJeMkmOV
+X-Gm-Gg: ASbGncsJqdmV2zDQ7V/wFF41urV/ltHmrFjKpY3yHpJrRNAVt5QsARu3P6u5Nll81Yy
+	vv7Qep5VQ+8Ocf0q0Be68+G6tlHC4Vu9x6MhXmhMKZFPIcP6KpDIDfmM2dZTsFi1xX/f7ViGCh8
+	G6i/opDWVh7hOwQlfeHAmwemYd5UTVN1iOu0PPXE0EBSkAxBC6YuRLXOHLS8zVM6gtKgvaxIcg+
+	0OmTEuNwOvTXeXKfNccamj2ORd0kuLV+1MnquTiBNqRk6veWJkpiHYlyKPKFWq+enXrJfVM9Q==
+X-Google-Smtp-Source: AGHT+IEzFpTehvnSPW9vXH/RQqpE73WkNirhVpCcS3BS0rqYUak2uA1u3G5m0QYAlYqVPytv3lhZQg==
+X-Received: by 2002:a05:6871:5e15:b0:29e:5c94:5afd with SMTP id 586e51a60fabf-2b1c099e645mr21059625fac.1.1738006103341;
+        Mon, 27 Jan 2025 11:28:23 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2b28f0facaesm2845818fac.1.2025.01.27.11.28.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2025 11:28:22 -0800 (PST)
+Date: Mon, 27 Jan 2025 13:25:31 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: [PATCH 17/19] git-compat-util.h: split out POSIX-emulating bits
+Message-ID: <qpwuo3av2zvopiip75lxuntugfekym7tncdv4e3aww2n74ivbo@imsgukjwneu6>
+References: <20250127-pks-reftable-drop-git-compat-util-v1-0-6e280a564877@pks.im>
+ <20250127-pks-reftable-drop-git-compat-util-v1-17-6e280a564877@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250127-pks-reftable-drop-git-compat-util-v1-17-6e280a564877@pks.im>
 
-Meet Soni <meetsoni3017@gmail.com> writes:
+On 25/01/27 02:04PM, Patrick Steinhardt wrote:
+> The "git-compat-util.h" header is a treasure trove of various bits and
+> pieces used throughout the project. It basically mixes two different
+> things into one:
+> 
+>   - Providing a POSIX-like interface even on platforms that aren't
+>     POSIX-compliant.
+> 
+>   - Providing low-level functionality that is specific to Git.
+> 
+> This intermixing is a bit of a problem for the reftable library as we
+> don't want to recreate the POSIX-like interface there. But neither do we
+> want to pull in the Git-specific functionality, as it is otherwise quite
+> easy to start depedning on the Git codebase again.
 
-> Move the functions `query_refspecs()`, `query_refspecs_multiple()` and
-> `query_matches_negative_refspec()` from `remote.c` to `refspec.c`. These
-> functions focus on querying refspecs, so centralizing them in `refspec.c`
-> improves code organization by keeping refspec-related logic in one place.
+s/depedning/depending/
 
-I think query_matches_negative_refspec() is appropriate named (not
-that it matters much, as it becomes a mere private helper in the
-file), unlike the ones in the first patch that are suboptimally
-named.  query_refspecs() could probalby lose the plural 's' at the
-end---there is only single refspec, which is a collection of refspec
-items, involved and it makes a single query---but otherwise it also
-has an appropriate name (this matters a bit more, but not that much,
-as it was already public).
-
-query_refspecs_multiple() is not a great name, though.  It does not
-convey what is multiple.  Does it make multiple questions in one go?
-Does it ask a question that can have multiple answers?
-
-> Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
-> ---
->  refspec.c | 123 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  refspec.h |  16 +++++++
->  remote.c  | 122 -----------------------------------------------------
->  remote.h  |   1 -
->  4 files changed, 139 insertions(+), 123 deletions(-)
-
-> diff --git a/refspec.h b/refspec.h
-> index 891d50b159..d0788de782 100644
-> --- a/refspec.h
-> +++ b/refspec.h
-> @@ -30,6 +30,8 @@ struct refspec_item {
->  	char *raw;
->  };
->  
-> +struct string_list;
-> +
->  #define REFSPEC_FETCH 1
->  #define REFSPEC_PUSH 0
->  
-> @@ -84,4 +86,18 @@ int omit_name_by_refspec(const char *name, struct refspec *rs);
->  int match_name_with_pattern(const char *key, const char *name,
->  				   const char *value, char **result);
->  
-> +/*
-> + * Queries a refspec for a match and updates the query item.
-> + * Returns 0 on success, -1 if no match is found or negative refspec matches.
-> + */
-> +int query_refspecs(struct refspec *rs, struct refspec_item *query);
-
-This one now has an excellent comment.  Great job.
-
-Thanks.
+> Split out a new header "compat/posix.h" that only contains the bits and
+> pieces relevant for the emulation of POSIX, which we will start using in
+> the next commit.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
