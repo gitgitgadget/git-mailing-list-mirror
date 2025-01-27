@@ -1,91 +1,88 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D4F53BE
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 20:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B212191F74
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 20:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738008848; cv=none; b=LrpiXn9xQ69NFxlqLNSmJgzs/h+eJ55tI6o7mbGl7VZwASDgITAcdbevWjJLZqVVK/68jnjUCHxTWxfTQ3b6p3e+ZrtU5hCC7kMlF0S1xEpFmAlfSOE0J7sR4IzaUJ8Mz71rt2LHVst0FurlWZHO1gZAlwGFQlv4qdfjmEXjaLI=
+	t=1738009142; cv=none; b=nvwwqSBJ+t0fOSbFjDZjJRmLtok9YenAUOO1XrV2aimskb3822z6wA3X5UdHwJawyIK16BF7a7thb77VRKIK66j2ROaaR7AyTGnUAZ0UqJU7g/LVprEX/8snDtaH/JtkKD5Tp+059p5wvvCC0mzepjTbtE2zI1/1V4nIbLKLk7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738008848; c=relaxed/simple;
-	bh=BjHn8TI5VW8VtPOxsGzQUztzeBSUg4ibWTm23FgRguQ=;
+	s=arc-20240116; t=1738009142; c=relaxed/simple;
+	bh=Lj+DZBct5x9Vy7uWcokfSeFjBDAlGWp8vXMo2wRBKmg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tQtE2Pz24nAHWPE7Xanm9uK5SwyyUafDgcjpSay+R6PHXStc+uwZCbthiO3CoIKMrHhIpJvYg7MQYfjXZ831oZIkDFHAcbgAFB7ap+bP0F6R5o82In0d1nXx6YQ/k19Zbfes1bmxFgEXhJPJcRsQg5ge1PoVYJJi1TS3RRbp0HE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mtuvfHNK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nr0CHsFe; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=ihqmQaevFNDPzRy5KWbWv7OYrVaqABUrVamsQSlnmTOEx0eJ3fuXGshkNPz1TUYJs86QDPGWMiOgdNWdXqj70zSWg2MpILE/O8H82etJxSI2Wm5Vr+S6rWjQj6L/JrGHrmrYuP6gax39aVz6MZeKJrmZKsInaGCgor21EfZUYJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XywGc9e6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CeWAb3KD; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mtuvfHNK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nr0CHsFe"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5B13711401CF;
-	Mon, 27 Jan 2025 15:14:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XywGc9e6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CeWAb3KD"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1979A11401C7;
+	Mon, 27 Jan 2025 15:18:59 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 27 Jan 2025 15:14:04 -0500
+  by phl-compute-12.internal (MEProxy); Mon, 27 Jan 2025 15:18:59 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738008844; x=1738095244; bh=k0+OOol2xM
-	BNEER5xGyauLoEgsoOAFlC3maM1pF5gTI=; b=mtuvfHNKonZsee61sYELhVcTWG
-	ACcJ9rVS5YI6z9mxeFuz7cfFjTKghieGyjYPsAS8e5OKq98yx3eYy8wU/fJ1G2Tl
-	4y4ws+Yv3EhwgqwMTABaKrWi/4FNJ12qFsZGrvIesjQb7LBveWHFpmby9bJVAabB
-	zuLjdwsOMVRL77PWPHVVXtStoAQn8o3D0/C99qb9SjHyhNfQ5R+PY+F5lX4Ah7ks
-	zhE/bVtoD/Mdzu18OOvyRl1itjK5E4hGnh+xVXQwz02VwniaOEhTMWsMQS1f4bZJ
-	v/Y6M93KXvaiAdtfapV7+uauFPzYOBH9m+Nq5imdwL85ljruGYMRFUj58zfw==
+	:subject:to:to; s=fm2; t=1738009138; x=1738095538; bh=Nj0J+tqIQG
+	XjpnXxTYnIslyATNYFf9c+bgNgtOiLNeU=; b=XywGc9e6/RWigYn3rTu0+nP0Wc
+	co4QdFPNu09ZCcdEh5/65domOAQu3/7dG+R7+dZbwNPkqf4j588Q+j4up9wxE6Ew
+	WEYiYAGBHoGB77hjE/q9tEX/3+Ws/+SZeCdJ8KqYYcnRJU7PCf/9kPoayLanReLN
+	OnjLksZn30D29wSY8ZNyZyRYapbHK7V327cd/UtrA5FWcr1rq4W92InoQ3pHPJRf
+	ws/RHLVP/v/v2r0+wgjG494sc9HHXRkdKwkZeMxMJf1JnxPbzNRX3ANBkNbe2vi5
+	LFAsKdQ9MHmbHAw/YUX+srIkiuosaUMYOpry4JsKQIcbInDEIOv8UoZrqzHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738008844; x=1738095244; bh=k0+OOol2xMBNEER5xGyauLoEgsoOAFlC3ma
-	M1pF5gTI=; b=Nr0CHsFexza7Gv/FzjpV5sO+398h3tvB2fa9JkxEw23+sXNzz1b
-	wuWjtuCJUtr1+Zr0mgBjdMheyWCYfZnM4UvJZMzwOTE1EL15IrlQOcUImq06Ha3T
-	4erjBZuYTjENv86Hd7Q0Rrf8pl9YhoC7tOkCZSL7l5mk7tiCPLpUZt91MrSBB5K5
-	L+hRPlYrrsovGOynjlrLTHMB509QHBKyEmSzOdTvCxLTYyPIKUCqM1r38rWbfEB3
-	JCMWPwwufns54C9HnlEdCukG6iJU+1+xW/87o+cRJlTlfXthUKIuARzT5/DS1bco
-	sO0toklwVFlwFb+5AX4ikK5iw+lKf1YwrzQ==
-X-ME-Sender: <xms:C-mXZ9HS7r_AyZ6SjNdfOopup6JPAWYphq5T23rYMovYlcDiZyCXrA>
-    <xme:C-mXZyWluSh7PWjRiULMr0gP1sOjkbP2jBJ4dfA2p92iGR1ELwzOBMKkfbxw-2lDN
-    9m98se1ma08CkbiaQ>
-X-ME-Received: <xmr:C-mXZ_Lm5mzr0vBWdbR6CV7r0voIQbCA2Rt-stbSxfNxHjznSlGth7lpOg8nDwxR_KdhE2E3oDg8y9Ad-iUhXe-aP_NhTZe4xOBM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudegudduucetufdoteggodetrf
+	1738009138; x=1738095538; bh=Nj0J+tqIQGXjpnXxTYnIslyATNYFf9c+bgN
+	gtOiLNeU=; b=CeWAb3KDBcqgBrsXtVSpU1ichMzAQDlMFvDodrY509k0kgNHvea
+	x7t+kY9qpLcNrb3E8RY6P36IyB5bv6Pg3zvtuuhCYY4nLk0jSrR2rga92seQL7U3
+	8mQFy1liJGZ8Cs5AoZv5oQED+rMtIXTn2haRJ0pFYsKvSDm0LwBoMP9x9BWSlmUx
+	JFICkTwtEX/9iCp5DBzWtjfD8hgW3+Et3IP0m61tCNPk6d59LiQuDVnyKCQVe6xR
+	/TyerUlxopWrPabZO02ITXOt31OYGjKx7rA1y9fAUEF7UuWcjggWN6mLCKzXvHaL
+	Jlf5PR/l4H4GXwsEEvl8VJF9Hl2DrK/yFtg==
+X-ME-Sender: <xms:MuqXZ7Yls0Tfl9KLG2guNs0NciyydKENJ3PLDbxVFZ_9Z8iRc_O4BA>
+    <xme:MuqXZ6au5hNrUDGcAYV_6yFcKYUtkUH9kSr7LJNaxfuv3L7FCcAa7d52EJUdVjrDD
+    ZrjxjMURCKphYFAHw>
+X-ME-Received: <xmr:MuqXZ9_YiabLfZukWrUf1UAP2M-I2AoJ_tl2sXylMsiBM0jwCfGSMgRs3-2ocW4mZ9BSbqt9p-7rB8gWHQIaqL8UUi3-LIqcAboj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudeguddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
+    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvvghtshhonh
-    hifedtudejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehshhhusghhrghmrdhkrghnohguihgruddtsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepjhgrtghosgdrkhgvlhhlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmh
-    grthhtrhelgeesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhn
-    vghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:DOmXZzEtydnfBStwdMDNQk_56o_AxRob0_AqtQejEB5wq51_G5ST7g>
-    <xmx:DOmXZzUIstzWYvhl03TrUoMzscCeom8BSJObJ1eCt0Ft2AkJBvyObA>
-    <xmx:DOmXZ-O47_JGGxwuW3k9lampzCzjWnUXKgxHySL9RxyxOyxUGXNehA>
-    <xmx:DOmXZy08D46EL6wLMDnKrV6l37gZoxJyWf9nTmdFp3k-nDRrYOSz5Q>
-    <xmx:DOmXZzT8t9XUqw-FdeVrJtt5PAKjvDtSl0Az9TBfxCiL76KRbhfWp8ax>
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopegsvghntggvsehfvghrughinhgrnhguhidrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrihhlse
+    gvfihorhhmrdguvgdprhgtphhtthhopehlihhsthesvgifohhrmhdruggvpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:MuqXZxodAVYDu6SRklggHuhv_Kj7ohU9D34ugnSNXKzauxO9WMazgg>
+    <xmx:MuqXZ2qE2jp08bBeI8FOz-zech5tBaiO4894heXFqrd5gXIXnV6pow>
+    <xmx:MuqXZ3Q5oOCfhDSVCLanlTEAfPZvYoRp6K1l5UPEqmkexUEux2fJmw>
+    <xmx:MuqXZ-o_ZJmqXKe51XrSBplI3UVm3US3x1fIYbQOjIRD98Xv140VyA>
+    <xmx:MuqXZ3dkrdnl3HPoi-Aw7FfBDsNvMQ10ZkpWiRTaRUP_qRF_JOGhlT08>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jan 2025 15:14:03 -0500 (EST)
+ 27 Jan 2025 15:18:57 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org,  shubham.kanodia10@gmail.com,  Elijah Newren
- <newren@gmail.com>,  Jacob Keller <jacob.keller@gmail.com>,  Matthew
- Rogers <mattr94@gmail.com>,  Jeff King <peff@peff.net>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 3/3] refspec: relocate apply_refspecs and related
- funtions
-In-Reply-To: <20250127103644.36627-4-meetsoni3017@gmail.com> (Meet Soni's
-	message of "Mon, 27 Jan 2025 16:06:44 +0530")
-References: <20250127103644.36627-1-meetsoni3017@gmail.com>
-	<20250127103644.36627-4-meetsoni3017@gmail.com>
-Date: Mon, 27 Jan 2025 12:14:02 -0800
-Message-ID: <xmqqtt9kqak5.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Bence Ferdinandy <bence@ferdinandy.com>,  git@vger.kernel.org,
+  Christian Hesse <mail@eworm.de>,  Christian Hesse <list@eworm.de>
+Subject: Re: [PATCH v2 2/2] fetch set_head: fix non-mirror remotes in bare
+ repositories
+In-Reply-To: <Z5c2CKpYM3KevMyD@pks.im> (Patrick Steinhardt's message of "Mon,
+	27 Jan 2025 08:30:16 +0100")
+References: <Z5Mrk02wMdABtrVZ@pks.im>
+	<20250126220403.289742-1-bence@ferdinandy.com>
+	<20250126220403.289742-2-bence@ferdinandy.com>
+	<Z5c2CKpYM3KevMyD@pks.im>
+Date: Mon, 27 Jan 2025 12:18:56 -0800
+Message-ID: <xmqqjzagqabz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,26 +92,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Meet Soni <meetsoni3017@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> +/*
-> + * Remove all entries in the input list which match any negative refspec in
-> + * the refspec list.
-> + */
-> +struct ref *apply_negative_refspecs(struct ref *ref_map, struct refspec *rs);
+> On Sun, Jan 26, 2025 at 11:02:11PM +0100, Bence Ferdinandy wrote:
+>> In b1b713f722 (fetch set_head: handle mirrored bare repositories,
+>> 2024-11-22) it was implicitly assumed that all remotes will be mirrors
+>> in a bare repository, thus fetching a non-mirrored remote could lead to
+>> HEAD pointing to a non-existent reference. Make sure we only overwrite
+>> HEAD if we are in a bare repository and fetching from a mirror.
+>> Otherwise, proceed as normally, and create
+>> refs/remotes/<nonmirrorremote>/HEAD instead.
+>> 
+>> Reported-by: Christian Hesse <list@eworm.de>
+>> Signed-off-by: Bence Ferdinandy <bence@ferdinandy.com>
+>
+> Thanks, both of these patches look sensible to me.
 
-Excellent.  
-
-    ... it is merely moved from the original so it is not entirely
-    your achievement, but still, this is good.
-
-> +/*
-> + * Applies refspecs to a name and returns the corresponding destination.
-> + * Returns the destination string if a match is found, NULL otherwise.
-> + */
-> +char *apply_refspecs(struct refspec *rs, const char *name);
-
-Explaining a function whose name has "apply" with a comment that
-uses "apply" as the verb does not add as much information as a
-comment with a bit rephrased explanation.  What does it mean to
-"apply refspec to a name" in the context of this function?
+Yeah, they read quite well.  Thanks, all.
+Will queue.
