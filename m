@@ -1,78 +1,79 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502064C8F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AEE1537C8
 	for <git@vger.kernel.org>; Mon, 27 Jan 2025 13:04:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737983060; cv=none; b=JGdjDJ4OABBOk+/S/Aghm9BV5AX+INt6QXfvScxiEZtHQXUpElNgabJEgAbdmyfw1GdYXIxtux9lWKS6YDmv5mu+BM0Ll8lmWbnlISEmi+AaZwM4e0Zt5AIS/MMwxzYjwwtFj86hHNqbwuE7toOFUlK0x7WP+tDO1R5iM8vvy1I=
+	t=1737983061; cv=none; b=mSOkBeqKiZDC6fukNSUvyWzGlfPg/tC6k+q+u30ojPIh4dzJoH0NR2GleBMS9ynxMVG3Qa3yZD1jbaTA6u19wE59v+GJFuuLRPF40KBz8TNoiySor+w5r87BUM7x//AzKJ1NNR0enmQPeb66J4WK/RwanlVEZ7I1BO7QTk6RNjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737983060; c=relaxed/simple;
-	bh=O0J0k30ErqMTQq9VtOL9IoTXst5qUFULT+Hdf/34BBA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=GCjygt3wm9EwPX2suWdu9b/8iGX/ubQ2dBh5cGHJY/Hnk4J58rgxNQy8tNdjU+kxJCx9D7T5NnY7UqGOJeYboMHLi2EBYaMcVRrSye0lPQZJyK2v1X7I4iDxXVnsBzPSHj36pJyuMxb74++NMv/K7uDjqnS2IjNIzdPzGVJSF7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ezTqIs4F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lunbaepi; arc=none smtp.client-ip=103.168.172.148
+	s=arc-20240116; t=1737983061; c=relaxed/simple;
+	bh=ZQ2XEXDcUn70nxnghchKgY/1/IPyW0wJW4m9KlBlwVY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=UkXRl1Z530u2WJEiXWCsXh+RIFXCdmbpMo8AUwuAgNboRTWgLVog2aMYGAbpWtdmLspvFwrYYrAKS9xzWcZQvB26+uBALCAF3Sa0ogQHfMQjv4O6hf7L/f7YhUTStirDfEoLFRfJ821U6bi9Is46kZsnmcRTQ9xcH2XLXUSuh7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Mif+fHx5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IHQGqFJd; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ezTqIs4F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lunbaepi"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 450EF1380079;
-	Mon, 27 Jan 2025 08:04:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Mif+fHx5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IHQGqFJd"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5476F1380A90;
+	Mon, 27 Jan 2025 08:04:18 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 27 Jan 2025 08:04:17 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 27 Jan 2025 08:04:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1737983057; x=1738069457; bh=YA7belgwK6
-	9PN7A5eVE0ubAV4ny5JO+4dEUfVLqGNXc=; b=ezTqIs4Ftqfo5gNjnXwNeI0QTI
-	brhx3JrmdViO2HisuBl51GT80By/Aul+5Y0MtFC9h5WozCovvB2QPK/WvVcEoT3n
-	l19inrYKImF0oSK1SfWGGRaPx25/WZYrvMmmwE7zNzylmIa59sz0PkKKP9MJPbQM
-	vwMROVEF4ekr9rNYcvcmFknhW43RkBWRoDhXR+luVbBMKmbBOt0F9b1L57GgWkBW
-	rQwf/2gAxsyQ5eEH7ALHL49HxelfPi+A/RwIJ3SheD8CA5d/xpiPOqfLUmitFdbx
-	2BZlWVPzA5ubFQLgHwlqYDqYyj4x2nj2uob0LnlNkpKOS9W19F2QLjL0+8wA==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1737983058;
+	 x=1738069458; bh=OAfz3VQFjKoHw7bRx0dztIrW4fPn64Mv0AWtbw4sj0g=; b=
+	Mif+fHx5mHtM4EaghISRNicXDnzz/yzFbuHjPtI3H2raCscKrM3ahit4FpKOuO6N
+	cUlICDYZdtEZvvn5AWEHUpwTDdJPReY3q9phtetVKC6ZNK9hjLlSWTC/xZR1BZu9
+	tOaSCrAzkOuYGDeSSiHc2Ybg+qD3TfDtM8kzCwQEYh2ITDIQYw/93yCkcE0qBEnC
+	PQUl16j/hk5+ICHh5IzontfpnK2JFPRedTAC68MTht/e/uAflyX/ywyhKTTp9qsu
+	ohgbOYmAIWSP/BzpZLyuvZxFRawVNhGsuJxLZ/Z7SYLn9B5IwYlrUrrFdXmBtHQF
+	f22rXOYFJzFUptFNcua9EQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1737983057; x=1738069457; bh=YA7belgwK69PN7A5eVE0ubAV4ny5
-	JO+4dEUfVLqGNXc=; b=lunbaepihJL7oiC5rj75x8soS/YXxYS71PSGOGavcXNc
-	RJwgUZRiACTSihqm5p1EVGOCz6ZEK2os2zbmucc5vkIMVrTS6Waa/ozGgdE/Iz+Z
-	JFPRHqsHmFqDQrKJMegH2+An55s5D5ZVutVCPOVH0CDUjyQ3Nhaz6/33UeD5pPdw
-	XrfucLJxKUkYGnJ97XQ1xX7fFnScFjfOesVaM2MT/RnTvLPtWNLcUITEq8jqPTx3
-	dOeABFCVe3BSe7OHaPVq0QBUG1mx+oKBAnhmPvzkUHtuVy3b4CNuBsKNG/OQPT2Y
-	H2CXtBCQkh63M+zeAmQ15orsUv3hHACE8TxMzxUNvw==
-X-ME-Sender: <xms:UYSXZ39b5xUpP7g12rMu_-lY249_-XfSrnaiyK_1gohKveHLNc7coA>
-    <xme:UYSXZzsrwPLFxutnU8LxBWmci-nJMKTjdN5hkOyPKzKc38wn0Xu-BsPR_-rtV2ymF
-    cF6fbvk8xp0F6xBPg>
-X-ME-Received: <xmr:UYSXZ1DCbf65VET30MHQovs_EiOApJm8NeszosMDTIuYOTJ-ZaAOFIK5qq5eHdYlu6t3Ut59oGM_IrEWYYihKDF-uQJ98ol8rClnK6V4QQxh>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737983058; x=
+	1738069458; bh=OAfz3VQFjKoHw7bRx0dztIrW4fPn64Mv0AWtbw4sj0g=; b=I
+	HQGqFJd7TZBCCeI/IuoRC34XIvcUe0+/nCYqxVgNcmzT9ezVU7XnySrQ7V8ZtYci
+	WYAXQYQD5ZAnlHcy/CCugHPZCZijWdH0UElHLh7daeukAKFvsxS4RBxlkaRxVECB
+	Vje8xWOlTYZ0K4DlsuLtLc4ay1nYSsLR6pMmGp53BV+a1flpVo82jVAm4CIIsERz
+	k72GoqOsJtaD9odE9DY/olDcvftECtpZB5bNHusTGipv/rS7drgf3EUmXBZ090wd
+	1q7Fpe1Dq7f8Ow1cI2KJvsQ1Eh6XvUsQxqZ6isMdBXTffsAyt4H9bTpolvj4wi+6
+	jBIpjrdxt5i1FoCxl/WIQ==
+X-ME-Sender: <xms:UoSXZ3c04XAuslwmDcUTf-luqY6skk5qVlYx3dAVrc4wONS79C3pnw>
+    <xme:UoSXZ9NcsDz-Ewc8v8rOWj5BuF9HWMsTxtuZh898cOmnEmn3IKbfk1r-qzlryOJQB
+    eSjUKjdqwqUOW1tKg>
+X-ME-Received: <xmr:UoSXZwhwYc5m_Lgr7X_sO0x3l1cs5EbZuAoiCDt9E-Rhh022KL6tQ67Lr-t8M2M_0x7etzZ-EELZxI7HFBOHJm6367X4bSTbo2H7ebTLZi47>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudefvdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffufffkgggtgffvvefosehtjeertdertdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeehjeeugfduhfevfeeufffghfevueevuefhffefkeef
-    gedtteejkefhueeiuddufeenucffohhmrghinhepghhoohhglhgvrdgtohhmnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvthhhohhmshhonhes
-    vggufigrrhguthhhohhmshhonhdrtghomh
-X-ME-Proxy: <xmx:UYSXZzcI87dG8FBujHhghNblqyZlLyYXemTvDIiERVNtTbj53Df68g>
-    <xmx:UYSXZ8Ot0yynIjCt9eDLVoI08uJgJyjdq89DBOFX_DA1y9BYHJMaUg>
-    <xmx:UYSXZ1nK6A4TcBpaVAe3j9KjTiOYY0ednI-lpHPaVX7K93Z8lvRCMg>
-    <xmx:UYSXZ2uvk6n1WHt-sMal2we8HTR6V2RSlxoNr4LD7LZdmRyoZo37lg>
-    <xmx:UYSXZ1aQLzeXpkx7UuRuTYHv6PDSYt_xlEjPnj4psxi55NJ8Qfyx4ZX5>
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhoh
+    hmshhonhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:UoSXZ49PZ-Zhcikdgkvd_cyJdFcKM8wC0dT1ROtcc0wQ3eBJdx_lAQ>
+    <xmx:UoSXZzsej4F_ClHuDPOYwlMYNQwVugLlIWyGtyfh-d_wUwnocFuizQ>
+    <xmx:UoSXZ3F9Y0gCG4zE3dolVoykaKUbrzROLje3P4WODm1kB7UjNEg5gA>
+    <xmx:UoSXZ6OA2UkDKDpCdJfp8Lgxcclb8NPmsl498FwyovfQ-bVxqI1Xkg>
+    <xmx:UoSXZ86Xi1eiiwEMjffJ21FaAoBCCmeriIyFygczEttC9d97rvqCXLXC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jan 2025 08:04:16 -0500 (EST)
+ 27 Jan 2025 08:04:17 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 04d428c1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 27 Jan 2025 13:04:13 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 01f43429 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 27 Jan 2025 13:04:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 00/19] reftable: stop using "git-compat-util.h"
-Date: Mon, 27 Jan 2025 14:04:08 +0100
-Message-Id: <20250127-pks-reftable-drop-git-compat-util-v1-0-6e280a564877@pks.im>
+Date: Mon, 27 Jan 2025 14:04:10 +0100
+Subject: [PATCH 02/19] reftable/stack: stop using `write_in_full()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,118 +82,83 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAEmEl2cC/yWNyw6DIBQFf8WwLgkgCvorjQuEey2pDwrYNDH+e
- 2ldzsnJzEESRA+J9NVBIrx98ttagN8qYh9mnYB6V5gIJiTnvKPhmWgEzGacgbq4BTr5TO22BJP
- pnv1MpWIoRnTQtIIUTyh3//k37sPFEV57SeVrJKNJ8FMsPvdVgxoV0xyVarmxDnXtmJG21bxDq
- J0SEhl3igzn+QUxnBqOvwAAAA==
-X-Change-ID: 20241119-pks-reftable-drop-git-compat-util-470f2bfde562
+Message-Id: <20250127-pks-reftable-drop-git-compat-util-v1-2-6e280a564877@pks.im>
+References: <20250127-pks-reftable-drop-git-compat-util-v1-0-6e280a564877@pks.im>
+In-Reply-To: <20250127-pks-reftable-drop-git-compat-util-v1-0-6e280a564877@pks.im>
 To: git@vger.kernel.org
 Cc: Edward Thomson <ethomson@edwardthomson.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+Similar to the preceding commit, drop our use of `write_in_full()` and
+implement a new wrapper `reftable_write_full()` that handles this logic
+for us. This is done to reduce our dependency on the Git library.
 
-this patch series is the final step to fully decouple the reftable
-library from the rest of the Git codebase. The goal of this is to make
-the library reusable by other projects like libgit2 by simply copying
-over the source files, making Git the canonical upstream for reftable
-functionality.
-
-This patch series stops using all kinds of helpers exposed by our
-"git-compat-util.h" header and open-codes them instead. In order to keep
-us from using these helpers by accident the final step is to pull out
-POSIX-related bits and pieces into a new "compat/posix.h" header, which
-the reftable library then uses instead of "git-compat-util.h".
-
-The series is built on top of master at 5f8f7081f7 (The third batch,
-2025-01-23) with ps/reftable-sign-compare at 33319b0976 (reftable:
-address trivial -Wsign-compare warnings, 2025-01-20) merged into it.
-There is a trivial merge conflict with ps/zlib-ng that can be solved
-like this:
-
-    diff --cc reftable/system.h
-    index e4a8944a70,d02eacea8f..0000000000
-    --- a/reftable/system.h
-    +++ b/reftable/system.h
-    @@@ -11,15 -11,9 +11,15 @@@ https://developers.google.com/open-sour
-      
-      /* This header glues the reftable library to the rest of Git */
-      
-     -#include "git-compat-util.h"
-     +#include "compat/posix.h"
-    - #include <zlib.h>
-    + #include "compat/zlib-compat.h"
-      
-     +/*
-     + * Return a random 32 bit integer. This function is expected to return
-     + * pre-seeded data.
-     + */
-     +uint32_t reftable_rand(void);
-     +
-      /*
-       * An implementation-specific temporary file. By making this specific to the
-       * implementation it becomes possible to tie temporary files into any kind of
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (19):
-      reftable/stack: stop using `read_in_full()`
-      reftable/stack: stop using `write_in_full()`
-      reftable/blocksource: stop using `xmmap()`
-      reftable/record: stop using `COPY_ARRAY()`
-      reftable/record: stop using `BUG()` in `reftable_record_init()`
-      reftable/record: don't `BUG()` in `reftable_record_cmp()`
-      reftable: stop using `BUG()` in trivial cases
-      reftable/basics: stop using `st_mult()` in array allocators
-      reftable/basics: provide wrappers for big endian conversion
-      reftable/reader: stop using `ARRAY_SIZE()` macro
-      reftable/system: introduce `reftable_rand()`
-      reftable/stack: stop using `sleep_millisec()`
-      reftable/basics: stop using `SWAP()` macro
-      reftable/basics: stop using `UNUSED` annotation
-      compat/mingw: split out POSIX-related bits
-      compat/msvc: split out POSIX-related bits
-      git-compat-util.h: split out POSIX-emulating bits
-      reftable: decouple from Git codebase by pulling in "compat/posix.h"
-      Makefile: skip reftable library for Coccinelle
+ reftable/stack.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
- Makefile                                |   2 +-
- compat/{mingw.c => mingw/compat-util.c} |   0
- compat/mingw/compat-util.h              | 220 +++++++++++++
- compat/{mingw.h => mingw/posix.h}       | 216 +------------
- compat/{msvc.c => msvc/compat-util.c}   |   2 +-
- compat/msvc/compat-util.h               |   7 +
- compat/{msvc.h => msvc/posix.h}         |   8 +-
- compat/posix.h                          | 541 ++++++++++++++++++++++++++++++++
- config.mak.uname                        |   6 +-
- contrib/buildsystems/CMakeLists.txt     |   2 +-
- git-compat-util.h                       | 535 +------------------------------
- meson.build                             |   8 +-
- reftable/basics.c                       |  19 --
- reftable/basics.h                       | 123 +++++++-
- reftable/block.c                        |  16 +-
- reftable/blocksource.c                  |  21 +-
- reftable/iter.c                         |  20 +-
- reftable/merged.c                       |  27 +-
- reftable/pq.c                           |  40 ++-
- reftable/pq.h                           |   2 +-
- reftable/reader.c                       |  33 +-
- reftable/record.c                       |  96 +++---
- reftable/record.h                       |   6 +-
- reftable/stack.c                        |  52 ++-
- reftable/system.c                       |   7 +
- reftable/system.h                       |   9 +-
- reftable/writer.c                       |  29 +-
- t/unit-tests/t-reftable-basics.c        |  28 +-
- t/unit-tests/t-reftable-pq.c            |  22 +-
- t/unit-tests/t-reftable-record.c        |  42 ++-
- 30 files changed, 1214 insertions(+), 925 deletions(-)
+diff --git a/reftable/stack.c b/reftable/stack.c
+index 9490366795..5f155b344b 100644
+--- a/reftable/stack.c
++++ b/reftable/stack.c
+@@ -48,6 +48,25 @@ static int stack_fsync(const struct reftable_write_options *opts, int fd)
+ 	return fsync(fd);
+ }
+ 
++static ssize_t reftable_write_data(int fd, const void *data, size_t size)
++{
++	size_t total_written = 0;
++	const char *p = data;
++
++	while (total_written < size) {
++		ssize_t bytes_written = write(fd, p, size - total_written);
++		if (bytes_written < 0 && (errno == EAGAIN || errno == EINTR))
++			continue;
++		if (bytes_written < 0)
++			return REFTABLE_IO_ERROR;
++
++		total_written += bytes_written;
++		p += bytes_written;
++	}
++
++	return total_written;
++}
++
+ struct fd_writer {
+ 	const struct reftable_write_options *opts;
+ 	int fd;
+@@ -56,7 +75,7 @@ struct fd_writer {
+ static ssize_t fd_writer_write(void *arg, const void *data, size_t sz)
+ {
+ 	struct fd_writer *writer = arg;
+-	return write_in_full(writer->fd, data, sz);
++	return reftable_write_data(writer->fd, data, sz);
+ }
+ 
+ static int fd_writer_flush(void *arg)
+@@ -784,7 +803,8 @@ int reftable_addition_commit(struct reftable_addition *add)
+ 			goto done;
+ 	}
+ 
+-	err = write_in_full(add->tables_list_lock.fd, table_list.buf, table_list.len);
++	err = reftable_write_data(add->tables_list_lock.fd,
++				  table_list.buf, table_list.len);
+ 	reftable_buf_release(&table_list);
+ 	if (err < 0) {
+ 		err = REFTABLE_IO_ERROR;
+@@ -1468,8 +1488,8 @@ static int stack_compact_range(struct reftable_stack *st,
+ 			goto done;
+ 	}
+ 
+-	err = write_in_full(tables_list_lock.fd,
+-			    tables_list_buf.buf, tables_list_buf.len);
++	err = reftable_write_data(tables_list_lock.fd,
++				  tables_list_buf.buf, tables_list_buf.len);
+ 	if (err < 0) {
+ 		err = REFTABLE_IO_ERROR;
+ 		unlink(new_table_path.buf);
 
-
----
-base-commit: 5f8f7081f7761acdf83d0a4c6819fe3d724f01d7
-change-id: 20241119-pks-reftable-drop-git-compat-util-470f2bfde562
+-- 
+2.48.1.362.g079036d154.dirty
 
