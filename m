@@ -1,54 +1,54 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFA060B8A
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 18:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B721607A4
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 18:10:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738000944; cv=none; b=DYrD8dqRsUenCwUWAqoT5PCiNojpTFROA/f221WugFnyKXdM8cTE/raTS73WDCQgAgTP70RV71nIU4avt0EngJfdcMCrG6XbXa/UWNL2ChnW3h+rHOLdVf0JRk7NxyLgPKJnEx5CsVHv7uGCX70Ruo11fhM2/lXSoIk+8UjUgr0=
+	t=1738001432; cv=none; b=KkjHJvT6AmRlscfuT6da7xgOaLRSjZjAMklAFh4J2fMUGxSQQyv79icWJkDu0X7nLKnWzBwsyNsd7jgO9/pb9T2Zi8ruRYCiqzb71gnOS8ztkbzYYYhCxNtii1k9wWIUT6Lj0xjfo2MQOEf8oKwHrll2oKainQ2eBq03bIsMXLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738000944; c=relaxed/simple;
-	bh=mXC7b4UDkvzRIa5WiIcPRqBF8363tdzQD9hubgiDGkc=;
+	s=arc-20240116; t=1738001432; c=relaxed/simple;
+	bh=k8/cq/BhFVC6URbzf9r1O0/W1PrXqSRw7P1GLEiZ0E8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OB0dhNJe8kQ5ed4wVvLWJBOhbezuFUNu4pQu+QH9iJ9/rTEbpKAx+MqfDkjSspxrpMXhk0n9VpqjF7UcR2FEO1t/Se2xjSpiN7DRetuWe1SDqszOeAbnx4H/PoT6B8E3J9vPCo85DmDA/ZAbTRZB8ytbnywhuDKHmUZ0YL71lUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qYze6bYq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=exQHlPSc; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=Cx4EhITOTbak530dJEaaXhxu+DtaBXUXKIhd4tXC5bvNbdRh0jXn5ufag4n8C6B/q9WpSMIk2fW5fQfYt2aRQXZoF/NLuVPsTJ1Bny2mGRAYEMso9Vt4XZ6DDD9HkX8cwNYMvdllAbT3ot1EsT9FDIHvZPwXoj5wot3NAENBx4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OjeRIqHo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AAVuRgF9; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qYze6bYq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="exQHlPSc"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 57D9D25400DE;
-	Mon, 27 Jan 2025 13:02:21 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OjeRIqHo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AAVuRgF9"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A155F25401CC;
+	Mon, 27 Jan 2025 13:10:29 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 27 Jan 2025 13:02:21 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 27 Jan 2025 13:10:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738000941; x=1738087341; bh=CiKPWoSbIX
-	V8Vl7YSgsvBhg3FPlQjDoKHCaBmoXQNO8=; b=qYze6bYq+PoQ25B7Mz79GzI+ln
-	RgDc3KE9nmDGJxFuloDVVIHGQ4Oyu+uhlKGBcSjTbcpagHLMzmOf53pLaVT8/U64
-	+LxPBcEsBXvWH7CAaNeO83nAGITxF0VqTthXcFBGF4+4mKU9Xs4PX9h0WlqLX8tt
-	rwL0GGSGIV9mqtjPOICSSDpnDVeTG/ERrPq4VhsRdp9od/eCNcWuIMCxU4B0CfT9
-	nHGPhEafjATOYAqiy0IGyVIZZPqdmK/+1OzmdoC48WNLDBcloF0I17DASjwbTgo6
-	PdCuMR+CrLEjM0iEiv3JDLToA7uRXQj6YzSO/bwsHeg7+JOHAFpUyni7RGbA==
+	:subject:to:to; s=fm2; t=1738001429; x=1738087829; bh=4SlshXmL84
+	+HWGqR6OabZPijurUCcVUrsZuzu4XE4KU=; b=OjeRIqHoPJTRxuRoM7lTgQR1nA
+	dXIQci2ZFazodyfp2puHQy5kF+kbV45+3Pf0dXahY1bW6g4amJoizELSnyzchjLp
+	GdfyTTC9KRUKiYkQELng16wK0Lz3wK1QKYF05Jd+10x1dNCVGjlDCFqnMDxFWk3Y
+	EJ6W6TG7xQGYyD/jharsRfZWI0LTqkt6q37N3lmnraa8Qv5A/ES7yMDMzKIbsrzl
+	0WHmEYKvD3/NJCP5TqISIrV5gAU6TIcGhPPpNolp7UuCK6/QDVoKgExJcNDGZKNF
+	en3X2n3ayYk8TEbRZD+8kCltse4nvakg8LrWvfaxLdvronpeCHKUrwECbtBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738000941; x=1738087341; bh=CiKPWoSbIXV8Vl7YSgsvBhg3FPlQjDoKHCa
-	BmoXQNO8=; b=exQHlPScV2eUl5ThnVeD4/tw8A8h901f8JrB4HMSH03uYRoJNUV
-	Zmp6Gy7Q9hNHxbJ0HW+OiZ/843Ng+JEaA1/cT7dojlqgHCyAa8gVeHoW/7VKo9as
-	T9IAjCJAiWY+KMW/nxK2TOoABnuvskexbA8NATxJ1yotEc3z4XTMAqBlIJLyG3so
-	6IUamUqt9SmDFGnAAqRWi60urjN5CHkFmTW9r6KGl1PBx9NNrxuLONLlmodwSwqW
-	9UbwCIOyxkMvXmzNygbRCZv9PeooETcyrxclgcy72O1I7xCo8SVdz0+HbbhPf8o9
-	QSi2wk1dLqXOyBgJ9xXl0i042oiz9Qn5C9A==
-X-ME-Sender: <xms:LMqXZ4nQXt7-sMpvckhwJ0f9_HtpWTr5eEoWf1dmeTsw-obfbdV9Ag>
-    <xme:LMqXZ338-zGKzS7xcdFIOI7oN4lmv_zwGQOh4iK6PvY-ra2SCFsqMNvJ5bKdYTAH0
-    I5i5P7rNKWHhw8COQ>
-X-ME-Received: <xmr:LMqXZ2onv82WvU-zFZ7uZq0SZ-3AuRIb_8xVCAxszoJzBK6H3qL5fmlgR7kVxJtkf7YbuW7evzpmXUNpIuIAXxK8MLAzn8fgGW4M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudefkeehucetufdoteggodetrf
+	1738001429; x=1738087829; bh=4SlshXmL84+HWGqR6OabZPijurUCcVUrsZu
+	zu4XE4KU=; b=AAVuRgF9WlHmxtpjTGdKGmB2u3TZk123JCOICw3sdvJzCjtemQt
+	cyUcVkmZLp5gvn8PcofQErEXpRDnCrY+QVIbP6A6YsO/kk/QvP/e5l2msImYp761
+	7icVX0XrgaI6C48byv4xLCyCwItjwtHi1bBJ0BPyMEn9dkDDrpV8CrYjYIPbFA9K
+	cEI9LA0SbXdVD7CuCaLTovbUWTmlbZvGDLy8xOWAVQM2nemOqI7Q89mRz7GLHt8N
+	6YD9vq2NiWH8B4LmmnCWHpZGoq9SICBuWJqdXBysgFiXKu+ulAUraw+cRrOnAnva
+	XI+ADkeX7CFiysmNmRW1jyvBwJPEnIMG8Uw==
+X-ME-Sender: <xms:FcyXZ5yuJsMHCxwz-xr84iXPIRfsACP64UBP5JeizNoG6oGq4nNeFA>
+    <xme:FcyXZ5ScHmDF0hVPZZwUKMlrEQ0Rr2K6aS2RycMiHpXBVzAbN6jaM0QBmJt42Yu3R
+    q-AZQbM__DLgiUQsA>
+X-ME-Received: <xmr:FcyXZzX7hRX_i6JlUCfo_fCPYUGthzQu2OlaSw4af4IOPp60UtIytI6fKk3jz2EZ9DJ1CQM3srq6WkeqRaGiygZAde54JxtF_jB_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudefkeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,37 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudefkeehucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtih
-    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgih
-    lhhorhhrrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtoh
-    drtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:LMqXZ0lwaN7M9Dp-jvGKVmFAUUMn3jiFNtXmjvrxJ_COCnJK-IpkmQ>
-    <xmx:LMqXZ20p6ZQjvoAlr7aEFqhJvhgcQlO-WKYJmfo1QF5eAz7plkrWuw>
-    <xmx:LMqXZ7st4Rms0Z5wWmp3jOblScPihhM3mPnP77pBvKa-h7VchCQaxw>
-    <xmx:LMqXZyUM-BiwqL3ebzh-qf7V_TcSLvHi8fnwkB5Ji0aVg2B4c89GPQ>
-    <xmx:LcqXZ3K-jo_1Rzlh9kFXQO-mlD-GDx67xZCdKTOiZiqKW3QwmDxditL9>
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvvghtshhonh
+    hifedtudejsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehshhhusghhrghmrdhkrghnohguihgruddtsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:FcyXZ7j_fFkcj7fF9JoFzIojEDtFYC9Oj8qa-Grt6xhIFBlk8cfPQA>
+    <xmx:FcyXZ7D12_EAuKMuAJo7DvJO1jmSeWFDG-8SJYwMCs1V0smNDuBnBg>
+    <xmx:FcyXZ0JYijgIBT5A11r6d_FOofO-RaOD-YNqRCiu96yca2w1cr1ZDw>
+    <xmx:FcyXZ6BxqGm4qsGIWF-cVH3rewus4m9UmX3_WayEzs9vyu8FO-RIxQ>
+    <xmx:FcyXZ2-UWl6EGT2CmpoyjvJEBXn16YEWdrOYTTCC4eMbMUeXAVzahDl1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jan 2025 13:02:20 -0500 (EST)
+ 27 Jan 2025 13:10:28 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  John Cai <johncai86@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>,  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v3 5/5] doc: add technical design doc for large object
- promisors
-In-Reply-To: <CAP8UFD2Pehtk2=GkjrXga0bqsrUFauYKkPYPWgdRHsoaDvQQDA@mail.gmail.com>
-	(Christian Couder's message of "Mon, 27 Jan 2025 16:11:18 +0100")
-References: <20240910163000.1985723-1-christian.couder@gmail.com>
-	<20241206124248.160494-1-christian.couder@gmail.com>
-	<20241206124248.160494-6-christian.couder@gmail.com>
-	<xmqqjzc7lq60.fsf@gitster.g>
-	<CAP8UFD2Pehtk2=GkjrXga0bqsrUFauYKkPYPWgdRHsoaDvQQDA@mail.gmail.com>
-Date: Mon, 27 Jan 2025 10:02:18 -0800
-Message-ID: <xmqqplk8rv85.fsf@gitster.g>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org,  shubham.kanodia10@gmail.com
+Subject: Re: [PATCH v2 0/3] refspec: centralize refspec-related logic
+In-Reply-To: <20250127103644.36627-1-meetsoni3017@gmail.com> (Meet Soni's
+	message of "Mon, 27 Jan 2025 16:06:41 +0530")
+References: <20250127103644.36627-1-meetsoni3017@gmail.com>
+Date: Mon, 27 Jan 2025 10:10:27 -0800
+Message-ID: <xmqqikq0ruuk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,55 +86,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Meet Soni <meetsoni3017@gmail.com> writes:
 
->> > +In other words, the goal of this document is not to talk about all the
->> > +possible ways to optimize how Git could handle large blobs, but to
->> > +describe how a LOP based solution could work well and alleviate a
->> > +number of current issues in the context of Git clients and servers
->> > +sharing Git objects.
->>
->> But if you do not discuss even a single way, and handwave "we'll
->> have this magical object storage that would solve all the problems
->> for us", then we cannot really tell if the problem is solved by us,
->> or by handwaved away by assuming the magical object storage.
->> We'd need at least one working example.
+> Thank you for reviewing :)
 >
-> It's not magical object storage. Amazon S3, GCP Bucket and MinIO
-> (which is open source), for example, already exist and are used a lot
-> in the industry.
+> I've added documentation comments for various function signatures to
+> better understand what they do.
 
-That's just "we can store bunch of bytes and ask them to be
-retrieved".  What I said about handwaving the presence of magical
-"object storage" is exactly the "optimize how to handle large blobs"
-part.  I agree that we do not need to discuss _ALL_ the possible
-ways.  But without telling what our thoughts on _how_ to use these
-"lower cost and safe by duplication but with high latency" services
-to store our objects efficiently enough to make it practical, I'd
-have to call what we see in the document "magical object storage".
+Before saying all that, please help those who haven't read the
+previous round (which wasn't even v1 IIRC but RFC and may have been
+skipped by some potential reviewers) by summarizing what this series
+is about.  For other's convenience, here is a key excerpt from the
+cover letter of the previous iteration:
 
->> > +7) A client can offload to a LOP
->> > +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->> > +
->> > +When a client is using a LOP that is also a LOP of its main remote,
->> > +the client should be able to offload some large blobs it has fetched,
->> > +but might not need anymore, to the LOP.
->>
->> For a client that _creates_ a large object, the situation would be
->> the same, right?  After it creates several versions of the opening
->> segment of, say, a movie, the latest version may be still wanted,
->> but the creating client may want to offload earlier versions.
->
-> Yeah, but it's not clear if the versions of the opening segment should
-> be sent directly to the LOP without the main remote checking them in
-> some ways (hooks might be configured only on the main remote) and/or
-> checking that they are connected to the repo. I guess it depends on
-> the context if it would be OK or not.
+    As Patrick pointed out in [1], the logic related to refspec is currently
+    split across multiple headers. This patch series addresses that by
+    relocating refspec-related logic from remote to refspec for improved
+    cohesion.
 
-If it is not clear to us or whoever writes this document, the users
-would have a hard time to make effective use of it, which is why I
-am worried about the current design in this feature.
+While I was working on an unrelated issue, I noticed that there is
+one function, "extern int valid_remote_name(const char *);" declared
+in <refspec.h> which is only about a remote and should probably be
+moved to <remote.h>; cleaning it up does not have to be part of this
+series, but since you are doing a similar clean-up effort, I thought
+you would want to be aware of it.
 
-Thanks for clarifying other parts of my confusion.
-
-
+Thanks.
