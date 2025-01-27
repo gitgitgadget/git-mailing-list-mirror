@@ -1,158 +1,140 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496F61FCFDB
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 11:48:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC9E81FE454
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 12:41:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737978532; cv=none; b=m6GtD3r3GKS6DMwDtFgoHXryGgOl+gqtaX5Ie7yxNvG6dF4FITfTpjY7tXrCSIJtPryzDgQWYZVgFuUteJWPBZJGk68cbMQNQfZ8E4XA5t0e9QPWrM920ftkzLJVirV0X8sGmI1kVeGporMmU+0l6WwOzUD9hoFjk0JPkoQFjrc=
+	t=1737981703; cv=none; b=IpUY/f0wLmIkgDWdYqpHBeQYOcE+IlSIdsclZN1/Hfl6AZDswv/gHBVcZHGl9mN/C+aNp4pGxcDX+bva/MBoUh8M6s5czbJ1+zcOlXFCpfh7DsAK568at/NQh/m+BYcDe9t5GNCiB7pGZ2xOhS0IQXP+pNXyUjoKU5Iwypg8xqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737978532; c=relaxed/simple;
-	bh=pRLh4FR9dT2CtJAGj9OIbruJ22X4t/eP9l9iSMQhyn8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XWVuZh0DQzrFAyULhz14HA9kE4i4OQxkKXEY0EVt9vGHeHs7xyUybk3zxCk4nbhE7vev4xcjt+Aoq9p1jQt/i26bvTly1VF4vfG8lEAeMQOXoo5EfEIU7b1bI7T+LyCmJJfT/pHeL4smL4DurNj58/PKwGfBczZEv3FNXcKV0Ew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=jetbrains.com; spf=pass smtp.mailfrom=jetbrains.com; dkim=pass (1024-bit key) header.d=jetbrains.com header.i=@jetbrains.com header.b=EwgDIHPH; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=jetbrains.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jetbrains.com
+	s=arc-20240116; t=1737981703; c=relaxed/simple;
+	bh=j5AiWWljneRoXyTFVOiSC9bzd20MfaS8a+s3dE5dhno=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dT3j+NkT2cMIQI7MSyCLSALwgdSLrz5Lh3Liqzj4j2xkBQccjz4/Jy1r358Eq2oJwMIjfXnj7clUI4qDJsUiQkgY61H61TUx7Hc25D2O8pwHO8c28qX0rQK42DKNDAjI6iA92PRt9hEci3rnRNCe4GVKnlih42NIv1qbPAhGvZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SRH1Ehjw; arc=none smtp.client-ip=209.85.214.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=jetbrains.com header.i=@jetbrains.com header.b="EwgDIHPH"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2166651f752so83781365ad.3
-        for <git@vger.kernel.org>; Mon, 27 Jan 2025 03:48:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SRH1Ehjw"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-21a7ed0155cso69859035ad.3
+        for <git@vger.kernel.org>; Mon, 27 Jan 2025 04:41:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jetbrains.com; s=googleapps; t=1737978529; x=1738583329; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jsvWkH08wb0mtM9UF4sCIwmtYuNu4sADDZ8GtyhUT6Y=;
-        b=EwgDIHPHS5jOp1CsQ9usYUtZdNS5nLtJeYnBQx9iiw2JSvE/mPo273Calj7z/cTHFi
-         cRb45rlJe3Kzc2eo312h0MdzGJhF5AVHfurb1u8Xi4szGD1hUFTxTb/vDHmPYVsT7s9M
-         x8meX1iWroyyrYhBC7VdXkA6ZiWU9l3Vklrvw=
+        d=gmail.com; s=20230601; t=1737981700; x=1738586500; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=suzl5PrtVFY7x1Bi3/9VDjSWscSYkCqNGe6eV6Z77Jc=;
+        b=SRH1Ehjw429RvkGBYelH2OjAUT6YxlqYBELwV7eFWHtvdIQkruUz9caSYvF6rhDBsU
+         Zo32BW78qS/rlRVmPfJQ/41Qqsi6c8hx1uaNUKWkiSmXTnYUvowyhPnKnEn7Jzpti7k7
+         YotZDnO3EaybiMdOZ0J4xGgl5kYm1SQb9J0E/FBU5g5sDFacuzwLi43v8f5TZTUSyAlp
+         R/cKpwGjlNUFma0t3HRUNGTOstEpsxA6LqOs7iv+TZwz3ouOj1Z5wmnR+pFNeYmaanqe
+         jovJZ2M3KWz7fHGTKc7NL9c889pwdXodtdIgmy78SZWAEbb4HuY3R1uS0GZ5AC3p80u2
+         th3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1737978529; x=1738583329;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jsvWkH08wb0mtM9UF4sCIwmtYuNu4sADDZ8GtyhUT6Y=;
-        b=Ob7pL1jP3P5ycNKH3wNXUQxw3OexP3Gt70yv0ZzL/6MhHClWn4qi66g7ujdPANsWCm
-         2HAw5MKbzUePdqsHPiXZEwaYHhVE3D0nmNSQnEHllnRxpJF3Yp2z8O5scaQUBNt21tay
-         x9UNMlbEnU5hLT8hSzLHXuCVgvbkf6zUiu4M1/JRryAgDWIks9YZzhhgERNiKWRBtANt
-         92qyAo88In6+Ixaaqx8Tk/gAH76EULgSogDHkZTwjhyXzIhfgcDqkPjNGQKNMr35pmyt
-         n7fQi+DHKnGMX75RCUR/HMQ4ebY32e3sPlyBQRc7qo1vwlpEfyzmJni3jXjPSCCIT5o9
-         daHg==
-X-Gm-Message-State: AOJu0YxfNC4V1XBGiOWT5K93cFdrSBeXAFkw7bpIvdCaXG1SE3/D6qwe
-	wqOu9KbwBu6G7FEK9chuzg3GDHQQaJkV8R0ZMvZArm1Dcds3/RbOpVY0sQy5byjkW4uCXEUSo+5
-	gn8BfOxhb4TpDd+QW2GOquxNneRmJLfUee/8LgF69GGEcinml
-X-Gm-Gg: ASbGncsAG3G3Uo86Ymcz29tJVF25v+oblhKeTeZtwxK/rQvijVVjjwH3PYtfrQkub9A
-	9jO+gVpnQohSgp0/XT0APCAW6fLmFTfQMod+r5c9yT0ZODsQJUzwSsgkNxSuCbg==
-X-Google-Smtp-Source: AGHT+IHCHj/mWk3Wood4BCKKsnSMquoZjvSjdN3GtLKP0S24olJIeVweo0Bp5qlSuAQjCpfG8mI3lQUZyjNbpbhLRE8=
-X-Received: by 2002:a05:6a00:21c3:b0:72a:bcc2:7748 with SMTP id
- d2e1a72fcca58-72daf8515f4mr58953363b3a.0.1737978529539; Mon, 27 Jan 2025
- 03:48:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1737981700; x=1738586500;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=suzl5PrtVFY7x1Bi3/9VDjSWscSYkCqNGe6eV6Z77Jc=;
+        b=IzeO33KcTa2dLFcnuhTue+5IXriEXMKLoAClYh1e2SuxWphqaUqbB3x3u+7tNdPzt/
+         wRYgVaecpnPAoXhI/PzK8Hq5v+Ohwn4mQVU5VrqP/skDsN0uZDO+xCGIhB8WaXI8BLwY
+         JkeKiErprF82goFd9X2ddIKux9VCCmjfJ2Ml+2+QdYwBYNsvQpNnQ8URYa/VcgvfdfL/
+         UcxNKmjGam0vTpMYMF8ESl5Pp+Q3gWTN5I74OtLaADo+GpVXjvISPhTtFXRow284NxRF
+         wsbacb5+w2W5kb3O4GVd1NyzQTTzDvXFSiZ7cVWCZmmPjPsxAwJzHqN7zhde7kkmgpNp
+         sDaA==
+X-Forwarded-Encrypted: i=1; AJvYcCWrw2dA/qKDvbrBqQ10u2/QEsd2cl9dwMVF8sPnommmWOv6cEipanGsm8HkH53wS+HskzE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxZ+LmLDtB8WXL7JN9dWDHu3kJHy3aq+vXhIGQoZAS2ja7HTKr8
+	l7UmhIl7CjAFTBeJieZeewgXorqm4dh6oSGewn2T7OID5sREdkIv
+X-Gm-Gg: ASbGncsq9Lhenh2B/P5912CzMJs7JTsmRdkcJlYB6/F7tYFAO3WcpDXjdiVFTTjJZnV
+	9bKeMY6d/fllxWcu73m5ta4JDuYCo6PJZMKIrwGdXukRyFfJMW7w4aAu+6gg6VS1HTb8GL2OpB5
+	7/+37XgY3L41d8ygLuExTWVc3XweDhRshtD7DHSoMxmjOwwyBQEMfeqkWSdy+S0VHP2B9vuEkru
+	Kn2DTm6qsQUEeS49/cGfc1UUzgThB4zpyX8Bwd003uwMCkVXyInVe9K+Zo=
+X-Google-Smtp-Source: AGHT+IHH2FPex6h2CehQrPc52aZyf6/OftJGeu+S2jMBnhgyzji7Z/gULnwZW8YiypbNTdhsi/zctA==
+X-Received: by 2002:a05:6a20:258b:b0:1e0:ca1c:8581 with SMTP id adf61e73a8af0-1eb214c7b53mr53826673637.21.1737981699921;
+        Mon, 27 Jan 2025 04:41:39 -0800 (PST)
+Received: from localhost ([2604:5040:11:69e::e973])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-72f8a77c85esm7008963b3a.128.2025.01.27.04.41.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2025 04:41:39 -0800 (PST)
+Date: Mon, 27 Jan 2025 20:43:09 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+	karthik nayak <karthik188@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git in GSoC 2025
+Message-ID: <Z5d_XbPfQQBnwgQf@ArchLinux>
+References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
+ <Z432QXJb_TfzNBa2@pks.im>
+ <CA+ARAtqfXo75PzzB3cQjDbvLxwytUK=xJiGG=VHZ1sNCcfyktQ@mail.gmail.com>
+ <Z5c-jFA9OAT9x5s7@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAM6buW5KSDGHD7txroqVa0TN_Ou_eV-LocMy06cPy0ZGDQmY9A@mail.gmail.com>
- <D6ZXVILR1D36.3W0QVQCVE1P2J@ferdinandy.com> <CAM6buW6NbdZ6wLGP6LWePiA7n0At=jxxqtBEUv0fTY6mOdTmyw@mail.gmail.com>
- <D705W1554XJ9.30SRYLNGNOX4@ferdinandy.com> <CAM6buW77CeuKfr3b4SUbYyFaU1OTvRsYBjPBE05YMzJo36bGdw@mail.gmail.com>
- <D706LPHBPUL4.3LN27T1UG1FI2@ferdinandy.com> <CAM6buW4UiCs9pFeH0cxxdhLHCSNO9wLVz9_p4Y0u8LaGWy--ng@mail.gmail.com>
- <D712LKI48ZUD.2UK8FX0YZBEYM@ferdinandy.com> <CAM6buW4e4c_3BgPo_GU64Fvi7XGcP7tuxdaap1LypyFCOZvZEw@mail.gmail.com>
- <D7CEDCJ0KKYL.YS0EWVFCN72X@ferdinandy.com>
-In-Reply-To: <D7CEDCJ0KKYL.YS0EWVFCN72X@ferdinandy.com>
-From: Danila Manturov <danila.manturov@jetbrains.com>
-Date: Mon, 27 Jan 2025 12:48:37 +0100
-X-Gm-Features: AWEUYZlHZetwgRkFAgo8kUk8VxVEmTkgV011i5VUaMWTifgfBDFKPr-BVcXyBc8
-Message-ID: <CAM6buW5TTwtcCvpbkPBJp2=DuQmQSpUjDh+9u8NY7e4+QJxdGA@mail.gmail.com>
-Subject: Re: Git 2.48. Changed behavior of the git fetch
-To: Bence Ferdinandy <bence@ferdinandy.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z5c-jFA9OAT9x5s7@pks.im>
 
-Hello. Thank you for the investigation. The patch will help us because
-the git command is generated by the code, and it is important to
-ensure backward compatibility with previous versions of our product.
-Thank you!
+On Mon, Jan 27, 2025 at 09:06:36AM +0100, Patrick Steinhardt wrote:
+> On Mon, Jan 27, 2025 at 12:19:26PM +0530, Kaartic Sivaraam wrote:
+> > Hi Patrick, Christian, Karthik and Jialuo,
+> > 
+> > Thank you very much for your interest in volunteering as a mentor!
+> > 
+> > On Mon, Jan 20, 2025 at 12:37 PM Patrick Steinhardt <ps@pks.im> wrote:
+> > 
+> > > I'd be happy to mentor this year again. A couple of ideas:
+> > >
+> > >
+> > Thank you for suggesting these ideas, Patrick! I've incorporated them into
+> > a draft
+> > ideas page for now. You can see them here:
+> > 
+> > https://git.github.io/SoC-2025-Ideas/
+> 
+> Great, thanks a lot!
+> 
+> > Kindly suggest any corrections to the description, project size /
+> > difficulty as necessary.
+> > I've mentioned potential mentors based on what I'm aware of so far.
+> > 
+> > Patrick, Christian and Karthik, kindly mention the ideas that you're
+> > interested to
+> > mentor.
+> > 
+> > While I have not included them as of yet, I wonder if the following ideas
+> > which we
+> > had last year[1] could still be retained this year:
+> > 
+> > - Implement consistency checks for refs. The idea could be about
+> >    implementing further ref checks which Jialuo appears to be helping
+> >    out with. We could leave it if Jialuo prefers to continue working on
+> >    the same in a flow.
+> 
+> The biggest omission right now is the reftable backend, but that one I
+> plan to work on myself in this release cycle.
+> 
 
-On Mon, Jan 27, 2025 at 12:35=E2=80=AFAM Bence Ferdinandy <bence@ferdinandy=
-.com> wrote:
->
->
-> On Tue Jan 21, 2025 at 18:26, Danila Manturov <danila.manturov@jetbrains.=
-com> wrote:
-> > Hello. I have done some experiments. For some reason, it works
-> > correctly with JSch. With native ssh/https it doesn't work
-> >
-> > On Mon, Jan 13, 2025 at 5:03=E2=80=AFPM Bence Ferdinandy <bence@ferdina=
-ndy.com> wrote:
-> >>
-> >>
-> >> On Mon Jan 13, 2025 at 15:14, Danila Manturov <danila.manturov@jetbrai=
-ns.com> wrote:
-> >> > According to our CI, the first commit where the bug occurs is
-> >> > 5f212684abb66c9604e745a2296af8c4bb99961c
-> >>
-> >> That makes sense, what is more interesting is why the fix Junio wrote =
-later
-> >> doesn't work in this case ... I didn't have time to dig yet.
-> >>
-> >>
->
-> I looked up the original thread leading to 6c915c3f85 (fetch: do not ask =
-for
-> HEAD unnecessarily, 2024-12-06) by Junio, which fixed a similar issue (se=
-e
-> https://lore.kernel.org/git/444kgiknevb3kwtypjjc2glryaav27t5fafgyzqq5257w=
-7o4pf@4fngcyfmvfcp/T/#u).
->
-> Originally Josh there suggested just changing the order of adding tags la=
-ter to
-> the prefixes should solve the issue. I don't think we ever actually figur=
-ed out
-> why the order of the prefixes should matter, and Junio's patch solved tha=
-t
-> particular problem by just not asking for HEAD in that case, but it seems=
- that
-> the current problem can also be solved by swapping the order of tags and =
-HEAD.
->
-> This seems like a band-aid again, and I still don't get why the order mat=
-ters,
-> but I can turn this into a patch if needed:
->
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index fe2b26c74a..7147f06395 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1768,6 +1768,11 @@ static int do_fetch(struct transport *transport,
->                 }
->         }
->
-> +       if (uses_remote_tracking(transport, rs)) {
-> +               must_list_refs =3D 1;
-> +               strvec_push(&transport_ls_refs_options.ref_prefixes, "HEA=
-D");
-> +       }
-> +
->         if (tags =3D=3D TAGS_SET || tags =3D=3D TAGS_DEFAULT) {
->                 must_list_refs =3D 1;
->                 if (transport_ls_refs_options.ref_prefixes.nr)
-> @@ -1775,10 +1780,6 @@ static int do_fetch(struct transport *transport,
->                                     "refs/tags/");
->         }
->
-> -       if (uses_remote_tracking(transport, rs)) {
-> -               must_list_refs =3D 1;
-> -               strvec_push(&transport_ls_refs_options.ref_prefixes, "HEA=
-D");
-> -       }
->
->         if (must_list_refs) {
->                 trace2_region_enter("fetch", "remote_refs", the_repositor=
-y);
->
->
->
->
+I am happy to see this. If you plan to work on this in this release
+cycle. I won't touch this. I'll review to learn more knowledge about
+reftable backend.
+
+> I'll leave it to Jialuo to decide whether there's anything else in this
+> context that would make for a good GSoC project, as he's been the
+> primary driving force here.
+> 
+
+One thing I could think about is to clean up "git-fsck(1)" to make the
+boundary between the ref checks and object checks clear which means we
+need to remove unnecessary checks and reorder the program sequence.
+However, I think this is a little risky for a GSoC project. So, I'd like
+to implement this later on my own.
+
+Thanks,
+Jialuo
