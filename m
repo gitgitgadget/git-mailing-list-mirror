@@ -1,114 +1,165 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from aib29agh127.zrh1.oracleemaildelivery.com (aib29agh127.zrh1.oracleemaildelivery.com [192.29.178.127])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0035B14E2E8
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 16:24:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5302155756
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 16:37:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.29.178.127
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737995060; cv=none; b=tS/bYeoOfQ9wk5xJ5SXz7ZrGm9xjjy7cDooPHQ3dFiLM21LldGWM8TbzCLHRf3BzFd/BR4BqjUlXsPkLm44gM2Oe9fZryLBQSY0+sESLPdyOmpM1l1lPrFzeaFG1cNJb7NxQI4U7BivCnKRem+Mh3hr12phrfhrHACg/YVqrk5w=
+	t=1737995835; cv=none; b=nmZjQyK+bLBggVO2nBj+2SU7Xty30rnZ90FbrktrFnB+0EyEqPKbliFZ0FrJHiA4cZD7v5WwI9kwTx86DYZXOCQF3G/CFtOdZQhSL3QzxmK5sIY870V32fJlqHbeZTjMtIb5PJmUCS0k7HzFCuuDqVcSErJ+FFkbh3xxtEkGV0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737995060; c=relaxed/simple;
-	bh=a5PDWUH1w9oL30Jf/4DEu26M/GZUq/5usOTNK69gQUo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Cj9MVE5A/GIk6lPsdIk1FVzomtLJUHYRVzjlW70p1gB3slpoKF57jkORzZdJCUPuxJvmji6P/fHOHKaOmsqcmbbDe0z0pCodqvOxGq7KFr5+/zE3/WiEMYFT3ltd8XAxPrs32zxbzSVg/Ds2jRhddINAqbOEXMYPYEx9lS/K83s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Icck4hHo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eVcKVQhe; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1737995835; c=relaxed/simple;
+	bh=QRsK8BpAeYXjlINOx9q30O0vmICgXd8CpEyGe+rTQqU=;
+	h=MIME-version:Content-type:Date:Message-id:From:Subject:Cc:To:
+	 References:In-reply-to; b=k1+qKy+8iZnoIzfTLXVx8tO9EyuNEvocVNek+2lnSaaGtLNpUa6Er82Rt7RUFHylcTqob9GTVHT2y8OmBoMw2DB9xRHZ2MYH3VvRTPuNaHRocFrZEek99MQqweISRDZpF3U9QtVVPYQaKeTcsKxaQrbWd6iu/2z+PPvrmAFF7nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com; dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b=pMSnzHj5; arc=none smtp.client-ip=192.29.178.127
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=ferdinandy.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zrh1.rp.oracleemaildelivery.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Icck4hHo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eVcKVQhe"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 036B91380B20;
-	Mon, 27 Jan 2025 11:24:15 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 27 Jan 2025 11:24:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737995054; x=1738081454; bh=ZQL18W0HCk
-	/5jgdZK+0yA0E3pfbel9L51o6Tr/LvZXA=; b=Icck4hHorWNgIOBcJS8RoOYJn4
-	2MRLq6lgK0xBQnwhff9SkXLuTu4V7cPe9+ZBguUB/fnXEoTFgFDt02xS7abGaKk7
-	oTdkOafZNN06cULPsFgT+fIuwiU1huruqjqTFOGMTYUuDvuaRYIm2U5ibU0afUHP
-	Uqnsyl9f9jOUXO79jVuTEOePbovm3P0LOsQvudnJiCKaYSlVlOAGLJtzeQCKElYL
-	7NGZjWB2gzeTYvHeQDY7r8jBHEugqMJrrICuz2hoJFmgw6KF+2l1JMzoZ3UFkMTT
-	TXT1PmXLiW9ohcM5j8vHN+a4dEk85fSYUV1MJLeGp1YZiS9ZZJUFzVCfqo7g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737995054; x=1738081454; bh=ZQL18W0HCk/5jgdZK+0yA0E3pfbel9L51o6
-	Tr/LvZXA=; b=eVcKVQheNmFVOoPb0/yR9hLMdv2m3UYYGILp83jMxGNBFns/KWZ
-	LGzvxaxi8wusrerQlCtJHgZoHICGalFepitagoqPqz1sSOBiU1ndflfayzkmM0mg
-	jV66Uzz8ZsUcwcVdo5G5GsfQYfts4HfzHF/YPx6zCu1EU3QpnNBK2bv1Ex2V5dXZ
-	KpDnxvTaWlzQV2w23RbZh9SnuxUkoobMUU1lskIuYeU6KSsdiU7rrUCfF9HxZsEX
-	C/AOqtV53rK17r4gq6jvI771wl7PCz1Pt5UU91io3xCvVQT1sPW20d1zH3Ny6jk4
-	aUjetn48OQI8kw8QsUmTlDz7pJ16zLB/92w==
-X-ME-Sender: <xms:LrOXZw-Sx6XqPIN0aD-Xzwa1EwvE3KSN3R6nlbWZ7GoSxZvnnFpWpg>
-    <xme:LrOXZ4vG_NI_0uwlK3-DP6NZb_TBRsfxO4J5N_pOmKZf7HFt-urfRhQ5pPPsCKZ_H
-    CgTee-7RDOn2v5flg>
-X-ME-Received: <xmr:LrOXZ2DDhXnvqc3FzTc01X7xXQLP-FQ72hIegD6PAwE1uGd3jElfB1i5QxJ8Y0u8eRL5SBpylg57x-43Qze1D2ZyJMdPIsVfvgqt>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudefieeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepveehgedtvddtveekueehgfehgeeuledv
-    gfetudeghfejgedtkeduudffieekkeegnecuffhomhgrihhnpehpkhhsrdhimhenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghr
-    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuth
-    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudek
-    keesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvg
-    hlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrd
-    hnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:LrOXZwfc34ygVVxXrtwswm-TF7db_jTmQJHDCHmMsit-1kNhVgSnBw>
-    <xmx:LrOXZ1O9tj8MkuvK7qvZLk68447QINHzj7GGzJl5B3RQwvx57Jb3cA>
-    <xmx:LrOXZ6nKUVL3aHARNU5F-TkaEHg7HSidrA3AFZTAujKOvQulBaqrDg>
-    <xmx:LrOXZ3uxUF3TxfA4_8d9byZh-nyObqDGbMLK-NhdLolO1eugEUM4QQ>
-    <xmx:LrOXZxCZCSGzpUxhx85-We48BPq7_u0WGGdg26ldvwDs_0GgkXnSZ5RS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jan 2025 11:24:14 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  Johannes.Schindelin@gmx.de,
-  git@vger.kernel.org,  sandals@crustytoothpaste.net
-Subject: Re: [PATCH v3] refs: fix uninitialized memory access of `max_index`
-In-Reply-To: <Z5dd1YOYytx7kZee@pks.im> (Patrick Steinhardt's message of "Mon,
-	27 Jan 2025 11:20:05 +0100")
-References: <xmqq5xm5s80e.fsf@gitster.g>
-	<20250124140203.886324-1-karthik.188@gmail.com>
-	<Z5On1waE-2uwIjS2@pks.im>
-	<CAOLa=ZR=Hz+LU0n-uC2dpk8_sLqAyaxO0NswJH8bP_kEdDdbUQ@mail.gmail.com>
-	<Z5dd1YOYytx7kZee@pks.im>
-Date: Mon, 27 Jan 2025 08:24:13 -0800
-Message-ID: <xmqqikq0uswi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=zrh1.rp.oracleemaildelivery.com header.i=@zrh1.rp.oracleemaildelivery.com header.b="pMSnzHj5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; s=prod-zrh-20200406;
+ d=zrh1.rp.oracleemaildelivery.com;
+ h=Date:To:From:Subject:Message-Id:MIME-Version:Sender:List-Unsubscribe:List-Unsubscribe-Post;
+ bh=0yhCnDh7Rp7VC1ZrMjrglNLj2nGUr8i1meQX8J26b6w=;
+ b=pMSnzHj5UoivwcutLcJukfQiVudlC0aSKRDoe0fTFdBuHm8j+uHTgXU0GK527nG6j0xXsFmFblF0
+   0UpNxs43JaFftybMLkj8eVqy33nC+llJwoH3BY6OaiVNjeDJzgUDzXItNr+oabavUAyjqiGMbil7
+   mEsl20l77UHFoQC4Cr5FtI1epe0azunTWpBWNoqoeAozcLgJxSzUd3Sa9OtwrRErzm/wSkdzhflu
+   0QHfV9gHaY13VhCL+KJxyUy22mLrn/bZpl2ICQqBHzwTaLOGK7zgF2HBgnZxo/C28GBtA4E6eh8v
+   lsK9LTVprD1kZlufYwlkzaiFjnE3K+1gGMvO6A==
+Received: by omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com
+ (Oracle Communications Messaging Server 8.1.0.1.20241107 64bit (built Nov  7
+ 2024))
+ with ESMTPS id <0SQR00NYGA5VJS70@omta-ad1-fd3-402-eu-zurich-1.omtaad1.vcndpzrh.oraclevcn.com> for
+ git@vger.kernel.org; Mon, 27 Jan 2025 16:37:07 +0000 (GMT)
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+MIME-version: 1.0
+Content-transfer-encoding: quoted-printable
+Content-type: text/plain; charset=UTF-8
+Date: Mon, 27 Jan 2025 17:36:17 +0100
+Message-id: <D7D031QT4HEX.14TRNKRC6FC7S@ferdinandy.com>
+From: "Bence Ferdinandy" <bence@ferdinandy.com>
+Subject: Re: Git 2.48. Changed behavior of the git fetch
+Cc: <git@vger.kernel.org>, "Junio C Hamano" <gitster@pobox.com>,
+ "Jonathan Tan" <jonathantanmy@google.com>
+To: "Danila Manturov" <danila.manturov@jetbrains.com>
+References:
+ <CAM6buW5KSDGHD7txroqVa0TN_Ou_eV-LocMy06cPy0ZGDQmY9A@mail.gmail.com>
+ <D6ZXVILR1D36.3W0QVQCVE1P2J@ferdinandy.com>
+ <CAM6buW6NbdZ6wLGP6LWePiA7n0At=jxxqtBEUv0fTY6mOdTmyw@mail.gmail.com>
+ <D705W1554XJ9.30SRYLNGNOX4@ferdinandy.com>
+ <CAM6buW77CeuKfr3b4SUbYyFaU1OTvRsYBjPBE05YMzJo36bGdw@mail.gmail.com>
+ <D706LPHBPUL4.3LN27T1UG1FI2@ferdinandy.com>
+ <CAM6buW4UiCs9pFeH0cxxdhLHCSNO9wLVz9_p4Y0u8LaGWy--ng@mail.gmail.com>
+ <D712LKI48ZUD.2UK8FX0YZBEYM@ferdinandy.com>
+ <CAM6buW4e4c_3BgPo_GU64Fvi7XGcP7tuxdaap1LypyFCOZvZEw@mail.gmail.com>
+ <D7CEDCJ0KKYL.YS0EWVFCN72X@ferdinandy.com>
+In-reply-to: <D7CEDCJ0KKYL.YS0EWVFCN72X@ferdinandy.com>
+Reporting-Meta:
+ AAH4gv0+gOAkKmKgW3Bm/CEyrdFz4afZcyiuQ2B5fijYjnfX3uPi7Ujsb6GIMJ4w
+ KCzS/M6Y6LW+v01+S9h5J4Hc5AB7tvNFfKWbrGs0i5wySbRe6TfPO3YKoUcrSWOx
+ H1bbq0YJH+5wkhuHosWTiTwhWVmuvREUBSrDqYhcgqgsxUpUrSpdYVE4F57E6tyA
+ OGGGpAWJ8rJdADKJEYnmgpSDX8gLVf+76oouPJyj6tQak+SpmVwHaqYi42bFC5DT
+ GpYWY9ATlS046Ihqrb2PrPhZiNTxAMZHI1BO0VhwKjQFFxQcXN7DMxiQR+zbZUAe
+ OYUs0D6Vk+AbK+z3KzOp5jg3f7moQMJf7WXyy8Ciy69G8ET0b1dnSPlkGumZ/55F
+ ZM9S+EjYuOb0cg4rTIFmUxTV0vmDLeOAlQPp/D/5bwEowND3qs2YUZBbf4OsHRLa
+ 9jfBPs5g9aQGkhlOfr8TzO8l04rscgEF/bPq5ChSzzXqCc9pQc7ulck5
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> On Fri, Jan 24, 2025 at 07:48:43AM -0800, Karthik Nayak wrote:
->> Thanks Patrick for taking the time, this seems much better. Let me add
->> this in for the next version.
+On Mon Jan 27, 2025 at 00:35, Bence Ferdinandy <bence@ferdinandy.com> wrote=
+:
 >
-> I've sent a v4 of this patch, but forgot to set the In-reply-to header.
-> The patch can be found at [1].
+> On Tue Jan 21, 2025 at 18:26, Danila Manturov <danila.manturov@jetbrains.=
+com> wrote:
+>> Hello. I have done some experiments. For some reason, it works
+>> correctly with JSch. With native ssh/https it doesn't work
+>>
+>> On Mon, Jan 13, 2025 at 5:03=E2=80=AFPM Bence Ferdinandy <bence@ferdinan=
+dy.com> wrote:
+>>>
+>>>
+>>> On Mon Jan 13, 2025 at 15:14, Danila Manturov <danila.manturov@jetbrain=
+s.com> wrote:
+>>> > According to our CI, the first commit where the bug occurs is
+>>> > 5f212684abb66c9604e745a2296af8c4bb99961c
+>>>
+>>> That makes sense, what is more interesting is why the fix Junio wrote l=
+ater
+>>> doesn't work in this case ... I didn't have time to dig yet.
+>>>
+>>>
 >
-> Patrick
+> I looked up the original thread leading to 6c915c3f85 (fetch: do not ask =
+for
+> HEAD unnecessarily, 2024-12-06) by Junio, which fixed a similar issue (se=
+e
+> https://lore.kernel.org/git/444kgiknevb3kwtypjjc2glryaav27t5fafgyzqq5257w=
+7o4pf@4fngcyfmvfcp/T/#u).
 >
-> [1]: <b7e3dd3cc870024f0e80dad26c5a7a96483c6cf4.1737970803.git.ps@pks.im>
+> Originally Josh there suggested just changing the order of adding tags la=
+ter to
+> the prefixes should solve the issue. I don't think we ever actually figur=
+ed out
+> why the order of the prefixes should matter, and Junio's patch solved tha=
+t
+> particular problem by just not asking for HEAD in that case, but it seems=
+ that
+> the current problem can also be solved by swapping the order of tags and =
+HEAD.
 
-Ah, how very considerate of you.  List-archive spelunkers have
-bidirectional links to see (1) from an older discussion, how the
-issues were resolved, and (2) from the final attempt, where the
-issues came from.
+I had a little bit of time to investigate.
 
-Thanks.
+This is the place of interest in builtin/fetch.h:1771-1781=20
+
+	if (tags =3D=3D TAGS_SET || tags =3D=3D TAGS_DEFAULT) {
+		must_list_refs =3D 1;
+		if (transport_ls_refs_options.ref_prefixes.nr)
+			strvec_push(&transport_ls_refs_options.ref_prefixes,
+				    "refs/tags/");
+	}
+
+	if (uses_remote_tracking(transport, rs)) {
+		must_list_refs =3D 1;
+		strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
+	}
+
+
+If `transport_ls_refs_options.ref_prefixes` is empty we fetch tags. If
+`transport_ls_refs_options.ref_prefixes` is not empty, we fetch what is in =
+this
+`ref_prefixes`. The current code checks if we have anything in ref_prefixes
+before adding tags to ref_prefixes and only adds tags if `ref_prefixes` is =
+not
+empty. So currently, since we always add HEAD to `ref_prefixes` it is never
+empty later down the line, but for this case, it is empty when we get to
+checking the TAG conditions. This is why switching the order works, because
+then `ref_prefixes` is not empty and tags are explicitly appended.
+
+This checking for non-empty `ref_prefixes` seems to have been added here by=
+ Jonathan:
+
+e70a3030e7 (fetch: do not list refs if fetching only hashes, 2018-09-27)
+
+What is not quite clear to me, is that it looks like that the original
+intention was to pretty much always fetch tags, yet it was not achieved by
+always pushing `refs/tags` into ref_prefixes. Deleting the check for
+`ref_prefixes` being empty [1] breaks quite a lot of things, but reversing =
+the
+order [2] does not. That feels a bit strange tbh since it feels like the tw=
+o
+should bring about the same state ...
+
+Hopefully someone more knowledgeable knows why things are as they are, but =
+it
+seems that reversing the order really is a band-aid here.
+
+1: https://github.com/ferdinandyb/git/commit/6074a9b8c88451e589eade4034282d=
+d9b6c86345
+2: https://github.com/ferdinandyb/git/commit/31e3f0a6b829d6c7953bf89d015b98=
+e7edabe6b5
+
+Best,
+Bence
