@@ -1,230 +1,122 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f46.google.com (mail-oo1-f46.google.com [209.85.161.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA92B7DA6A
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 17:21:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B960518B495
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 17:39:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737998520; cv=none; b=UU5gOhMb2v8DnRyFLTBDljYtKHSKfMJpFzlfyaA9bXpSiVwof9lwXEOl/D6++5rs4nlpTMpxe+bD9gG4YF6y6JTFmnDY836ntiv1M2+5ZInPofvaDZzK8u58DvqzgRX7KTwPeEqo5iurnEVujNWlvskneFXAJwlIOD5o0GzgbJ0=
+	t=1737999591; cv=none; b=lP0RwPdL4v2t74058OBdfarDZVp7fcu+TQpf+pXl/7EJ+MoxeLMbwjta8iLwo/enM3MnYAVMG49cOLa6aUkIbQK8lb2kCT4q4wEKJkZHXE8mPLR7MuL21ghjizT6J/GT4UdSOsN8PZK/xEwY7RLybZFFD+NL/GU3zUFX6R8xqs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737998520; c=relaxed/simple;
-	bh=RUdZSSw4ByW4It/fIii8vcOBq4irNOCTfWbPG7gCIOM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bPfrVfQx73DtpPPp216YNZ1fc7zIKgZnjS3CuvQ5RtvI3+tZ+nfzKGOnY/aYxqx3T6JnjxfJuBK9OGwuCvEh4kQv93f2vkGIM9p86tPEqUkqRVZJDxSjX62FsJS8RoMZvtlQNsoSke0rQwZyXTJOQLa0xbz+F8KAX8BUzX7Rdik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DBbkGvs+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dtrbmhrW; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1737999591; c=relaxed/simple;
+	bh=WFh9ySK0FzH3dnYQRMK1QXJYuuHq/rQNmtYS4DJhjT8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bFt4omEpI1C0K09ba67k8/+pZeQTvxByo5W3TWXensoZ0r52EQCTDWuavYcORC/CaQ5L9pMU/0zxBKVZSd0OAaqqxVOHeATIMs+e7M9SXe7kgSAAZHNQIGN8RRxp3DhTo/CPPHz23Qvhw43NUJOB6q2BvHIkNg8HVT/8f+nHuUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E+novM25; arc=none smtp.client-ip=209.85.161.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DBbkGvs+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dtrbmhrW"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id A9E6913801CB;
-	Mon, 27 Jan 2025 12:21:56 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 27 Jan 2025 12:21:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1737998516; x=1738084916; bh=U9SIFqk/Kw
-	RMWyAFU1Sp/2/3nlvry/KGoqEUpeigBAI=; b=DBbkGvs+csJlr0LMGFAO1BwLia
-	fGA0VFViT0J+klyV5/kTDHFRTa61tGcD5S5rQ9EXWVUn03IJI9M3OWy6t5/Fcgks
-	GYVi6g0vRY63WROOWWhfiWiFf6ntBXbqcdnyqJpS40Xo9vOHPKx+QNF6kGlBB8ue
-	c+PxwYrCGjzP7bFP4Ja4hhekmFQwERmDH2b2I15tDaQvYg14GECIq/OiQRHWr7oi
-	aJAflFAchrq/xZDxyWd2HRPlE2Yo6Xv3FmPdIOkpiacoT41r8DiXO7MrTt5UjKjQ
-	K4EYV1YLWsR2wwsK/pLOmDqbqBOBtO3LCG6IpKqy3n2UJOph9jCI9kAb/shQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1737998516; x=1738084916; bh=U9SIFqk/KwRMWyAFU1Sp/2/3nlvry/KGoqE
-	UpeigBAI=; b=dtrbmhrW3i7Hm7V/zfjNIE4GqMIhQ/8m7D57EGdVbqD8z5I8OCz
-	RrYPOEv4f4PTmkW98bKtU7O4AKi7bQrSN94BKDEwNWgEuKTpB4ksYNzr/yy4YsFO
-	h6Q2h4qzLVS/pHttiAclZl3qHiSw1tRy2FfYI3ooOuvJ0/APVRpnUHl9bYkuHiOQ
-	6mJVym5v4sNhBdwVPabcWbwnPloM4JjQosweNyjyoazVpUeZdw8WKoS+jNlybPca
-	2RjzCUqxgxoRUoJKLLVGu+0okDM3EXNYYA9xVv58GAuihLGZl5Wv1orXzEKDONWx
-	0qMfrwjBgRt2wtlF+MBQYmq5BGVIFG8sWGA==
-X-ME-Sender: <xms:tMCXZ9ChWZCEk0NOLD064BrhUW9NTs4vML9IYrhzRebMaRgGGRqtug>
-    <xme:tMCXZ7jhQNHbUAdoGAYLEY6uZPQDwIWh5G4t0t2ob0Fq12apIQJTPMkq1FcMoCnfJ
-    3C3eXSDDbREl6i6EA>
-X-ME-Received: <xmr:tMCXZ4nDawCM6R6rix7h2OfaTIO_gNLUio1Javdm92UwhCF7AP3OGtHrwmF3wZfw_Bw7jwAR-i3LtzrMWfow7USxVXZxFql35cZR>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudefjeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvggvthhsoh
-    hniheftddujeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepshhhuhgshhgrmhdrkhgrnhhoughirgdutdesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehprghvvghlrdhrrghpphhosehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjrggtoh
-    gsrdgvrdhkvghllhgvrhesihhnthgvlhdrtghomhdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtohepmhgrthhtrhelgeesghhmrghilhdrtghomhdprhgtphhtthhope
-    hjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:tMCXZ3zDvlQJRrvYX-ACeImDYX66MFy36EDstOSwtA7QNK_7N8QPXw>
-    <xmx:tMCXZyRobnME-ByaROWfEt1fYFIhgIVp4YA8nZAtRZkFNfCKYGX9YA>
-    <xmx:tMCXZ6ZLqRGiRtYiHFaWjh7Y93-oINL0jpfXQZgPAzl6I3HSAEIZSw>
-    <xmx:tMCXZzTrscIugkQR3fqvc1ijrj-cbcum3w9ey2cdSInZdQ5POdtbdw>
-    <xmx:tMCXZ3JLj2woT7ZzRavgeoaDSpdiMkHfn-andnbUD1FKWG5MDVAjEMPu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jan 2025 12:21:55 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org,  shubham.kanodia10@gmail.com,  Pavel Rappo
- <pavel.rappo@gmail.com>,  Jeff King <peff@peff.net>,  Jacob Keller
- <jacob.e.keller@intel.com>,  Patrick Steinhardt <ps@pks.im>,  Matthew
- Rogers <mattr94@gmail.com>,  Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v2 1/3] refspec: relocate omit_name_by_refspec and
- related functions
-In-Reply-To: <20250127103644.36627-2-meetsoni3017@gmail.com> (Meet Soni's
-	message of "Mon, 27 Jan 2025 16:06:42 +0530")
-References: <20250127103644.36627-1-meetsoni3017@gmail.com>
-	<20250127103644.36627-2-meetsoni3017@gmail.com>
-Date: Mon, 27 Jan 2025 09:21:54 -0800
-Message-ID: <xmqqa5bctbnx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E+novM25"
+Received: by mail-oo1-f46.google.com with SMTP id 006d021491bc7-5f31d3b4f8cso1054288eaf.2
+        for <git@vger.kernel.org>; Mon, 27 Jan 2025 09:39:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1737999589; x=1738604389; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vJVVdjK6TSVH76zNcMaXTmxPZRd+nBjzgxipGuLanS8=;
+        b=E+novM252lMyRhLoHEDE4BEBaNDDFXgrvWa3/uAfb17rAEEDvAl7vzKJS0ypLPtkJU
+         RB/JmRF6JLhmjRCosVw2z+CU+nnL5U78aw6vicol+l8a4k0DYIacKsULkphISHKM4SGk
+         Jd2aiLC8uQn4JYhYAZAVmSSOu3CmTKvejvyeLIoSwdIzNge9ogzgeEA37sorWE6QnyVt
+         nwqxQ7EPWuC+XKRdW2p3w/42fAAbK936ypjAhY31lJ2g9CcwyrnjsM5Of37Ef3D4vHm5
+         srIMLRMVOkFRVMPJVEd4APABmE1M/vHjCmiaAarGjQNXDxxhfdlwqD1MN/xVMe5NBSx7
+         0zjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1737999589; x=1738604389;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vJVVdjK6TSVH76zNcMaXTmxPZRd+nBjzgxipGuLanS8=;
+        b=MLiO9p02vjyTc3hez/rnv+ncFwJh4UL3LCESJla7T1aaTjceX8F8bHHHyxqFKx8WqA
+         dpnILHpCPFTHMHuG4zz0z2+y6GhuXU9O2ORUbDGSQ4zrZXsHIh2VuxdhwU9QbtivaBnz
+         8wV0qopU9tVl/BKxijQae7cFvlrMbbvB74LL+8ob1dU/nDoFK/YxsvRhyW2SdqPVlT7R
+         dO3lqW8EsC0/VLDtQlBQX8az/0+svQAyRpXlr0PEedZPx9o9CCMItMn4pg/JyTIf7R7S
+         7zNW+Mgp4e0MUi9PjXNoCy/sbTUYJcYM2ZPDEwoydWffZE5skFzRt3Z99rdmecBwvH5c
+         /ZSg==
+X-Gm-Message-State: AOJu0YzIhJgfS1XUWA9Pr/EXeK9cqDzIZMoF9KAcwG1Zfzv0MLOkcREi
+	ex0Pb0FPXKEtg7NeTQrNRY8H+oNLrWNbI1PCq4SSqM4dsZ6DBfPlmSXIqw==
+X-Gm-Gg: ASbGncvV60ne4RwbDJnrt7/ebYf+QA+zpDadj1S4fFrHaEfZBPiK/QSkp+iSShVe96p
+	jpaF7u5ZnZ+2cdGNR/OqBDWklexJrsK6u5z+0/eJOoqY/SOJau5ZACX4Tko6m36z7pRP1HnHAcl
+	kAZLte/QeiG0HxvIZpxdT69Z0nm9zOjLp7ecCb1mWAa4VziPVi83VVw7USaPLHYqFQac2Ilkf95
+	qu1Ct1wrRPI3XQSS9iGHHJJPILgqQaz1JNxeKMes99qGJESgA/ywAE7yhDwe64sUQaUAZOTEw==
+X-Google-Smtp-Source: AGHT+IFOf9NbvKwBMwQf5/Ki3qA+HPJ0Q6g56MqEvrAlvQHAopF6lJ4PvWGpNAaR5qhKLcmq4Gbr4w==
+X-Received: by 2002:a05:6870:910b:b0:296:e366:28ea with SMTP id 586e51a60fabf-2b1c0b5ed45mr25395741fac.33.1737999588703;
+        Mon, 27 Jan 2025 09:39:48 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2b28f16c1dasm2750753fac.20.2025.01.27.09.39.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2025 09:39:47 -0800 (PST)
+Date: Mon, 27 Jan 2025 11:36:57 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: [PATCH 05/19] reftable/record: stop using `BUG()` in
+ `reftable_record_init()`
+Message-ID: <v3rkbym7a6tm3co6okuleppiabx6t4zxbcn5iei66iv3dxqkrf@wmqsctl2mmgn>
+References: <20250127-pks-reftable-drop-git-compat-util-v1-0-6e280a564877@pks.im>
+ <20250127-pks-reftable-drop-git-compat-util-v1-5-6e280a564877@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250127-pks-reftable-drop-git-compat-util-v1-5-6e280a564877@pks.im>
 
-Meet Soni <meetsoni3017@gmail.com> writes:
-
-> Move the functions `omit_name_by_refspec()`, `refspec_match()`, and
-> `match_name_with_pattern()` from `remote.c` to `refspec.c`. These
-> functions focus on refspec matching, so placing them in `refspec.c`
-> aligns with the separation of concerns. Keep refspec-related logic in
-> `refspec.c` and remote-specific logic in `remote.c` for better code
-> organization.
->
-> Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+On 25/01/27 02:04PM, Patrick Steinhardt wrote:
+> We're aborting the program via `BUG()` in case `reftable_record_init()`
+> was invoked with an unknown record type. This is bad because we may now
+> die in library code, and because it makes us depend on the Git codebase.
+> 
+> Refactor the code such that `reftable_record_init()` can return an error
+> code to the caller. Adapt any callers accordingly.
+> 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
-> ...
-> diff --git a/refspec.h b/refspec.h
-> index 69d693c87d..891d50b159 100644
-> --- a/refspec.h
-> +++ b/refspec.h
-> @@ -71,4 +71,17 @@ struct strvec;
->  void refspec_ref_prefixes(const struct refspec *rs,
->  			  struct strvec *ref_prefixes);
+[snip]
+> diff --git a/reftable/record.c b/reftable/record.c
+> index d1664c47ca..31985bb977 100644
+> --- a/reftable/record.c
+> +++ b/reftable/record.c
+> @@ -1301,7 +1301,7 @@ reftable_record_vtable(struct reftable_record *rec)
+>  	abort();
+>  }
+>  
+> -void reftable_record_init(struct reftable_record *rec, uint8_t typ)
+> +int reftable_record_init(struct reftable_record *rec, uint8_t typ)
+>  {
+>  	memset(rec, 0, sizeof(*rec));
+>  	rec->type = typ;
+> @@ -1310,11 +1310,11 @@ void reftable_record_init(struct reftable_record *rec, uint8_t typ)
+>  	case BLOCK_TYPE_REF:
+>  	case BLOCK_TYPE_LOG:
+>  	case BLOCK_TYPE_OBJ:
+> -		return;
+> +		return 0;
+>  	case BLOCK_TYPE_INDEX:
+>  		reftable_buf_init(&rec->u.idx.last_key);
+> -		return;
+> +		return 0;
+>  	default:
+> -		BUG("unhandled record type");
+> +		return REFTABLE_API_ERROR;
 
-Back when these functions were mere local helper functions in
-remote.c, their name being less descriptive of what they do may have
-been OK (because readers have more context to understand them), but
-when we make it a part of a public API, we should re-evaluate if
-their names are good enough.
 
-> +/*
-> + * Check whether a name matches any negative refspec in rs. Returns 1 if the
-> + * name matches at least one negative refspec, and 0 otherwise.
-> + */
-> +int omit_name_by_refspec(const char *name, struct refspec *rs);
+I was initially unsure if `REFTABLE_API_ERROR` would be the most
+appropriate error to return here in this situation, but looking at its
+documented use case, I would say this fits as a "misuse of the API". The
+other option would be to add a more granular error type to indicate the
+unsupported record type, but that seems unnecessary here.
 
-Imagine you found this description in the header file and are trying
-to figure out if it helps you writing the feature you are adding to
-Git.  Are the above description and the name of the function useful
-enough to you?
-
-The first question that came to my mind was "what is exactly a 'name'?"
-
-In the context of the original, the caller iterates over a list of
-"struct ref" and feeds the "name" member of the struct, but this
-caller does not even have to know it is getting a part of "struct
-ref"; it only cares about its parameter being a character string.
-
-In that context, is "name" the best identifer you can give to this
-parameter?  At least calling it "refname" might boost the signal the
-name gives to the reader a bit better (and it is in line with how
-refs.h calls these things).
-
-Another thing to consider is if the comment describes the purpose of
-the function well, instead of just rephrasing what its
-implementation does.  What does it mean to return true iff there is
-even one negative refspec that matches?  What is the conceivable use
-a caller would want to use such a function?
-
-As I said, calling it "omit" was probably OK in the context of the
-original file, but it was already sloppy.  This function merely
-provides one bit of information (i.e. "does it match any nagative
-refspec---Yes or No?"), and it is up to its caller how to use that
-piece of information form.
-
-One of its callers, apply_negative_refspecs(), happens to use it to
-filter a list of "struct ref" it received from its caller to drop
-the refs from the list that match any negative refspec, but the
-other existing caller does not even filter or omit anything from a
-collection it has.
-
-My personal preference is to do this kind of change in two separate
-patches:
-
- (1) as a preliminary clean-up, we rename functions and their
-     parameters in the original place; if needed, add clarifying
-     comments.
-
- (2) move the resulting functions with the comments to their new
-     home.
-
-If these two step conversions results in
-
-extern int refname_matches_negative_refspec_item
-	(const char *refname, struct refspec *refspec);
-
-I suspect that it is clear enough that there is no need for any
-extra comment to explain what it does.
-
-> +/*
-> + * Checks whether a name matches a pattern and optionally generates a result.
-> + * Returns 1 if the name matches the pattern, 0 otherwise.
-> + */
-> +int match_name_with_pattern(const char *key, const char *name,
-> +				   const char *value, char **result);
-> +
-
-As this is merely moved from an existing header, I am tempted to say
-I'll leave it as an exercise to the readers to improve this one, as
-improving it is outside the scope of this work.
-
-Some hints for those who want to tackle the clean-up for extra
-points, perhaps after the dust settles from this series.
-
-The "pattern" in the name refers to the src side of a globbing
-refspec and is passed in the parameter "key", so we are calling the
-same thing in three different names, which is already triply bad.
-
-"optionally generates a result" does not convey any meaning outside
-the context of the original, as it does not even talk about what
-computation is creating the result.  It does not even say what
-controls the optionality---without reading the implementation, it is
-likely your readers would assume passing NULL to result is all it
-takes to skip that optional feature, but that is not the case.
-
-If I understand correctly, here is what this one does.
-
-   It takes the source side of a globbing refspec item (e.g.
-   "refs/heads/*" in "refs/heads/*:refs/remotes/origin/*"), a
-   refname that might match the glob pattern, the destination side
-   of the refspec item (e.g. "refs/remotes/origin/*" in the same
-   example), and a pointer that points at a variable to receive the
-   result.  If the source pattern matches the given refname, apply
-   the source-to-destination mapping rule to compute the resulting
-   destination refname and store it in the result.
-
-   The destination side is optional; if you do not need to map the
-   refname to another refname, but are merely interested if the
-   refname matches the glob pattern, you can pass NULL and result
-   location is not touched.
-
-   In either case, returns true iff the source side of the globbing
-   refspec item matches the given refname.
-
-So "name" in the function name should probably become a bit
-narrower, like "refname".  Also the names of its parameters need to
-be better thought out.
+>  	}
+>  }
