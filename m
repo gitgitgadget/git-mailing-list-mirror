@@ -1,111 +1,129 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E92748D
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 21:18:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380EF18D626
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 23:19:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738012732; cv=none; b=DDDkXwRs+WLBWeaJ9Obsqrho/905hVL3XYsEP/ol1jbPuP7RE3YO+mUy8btRp9YG/akQfy4E5dtPuKnJ3FGKVDe04BurZwWDcq4fcpEWSKwkGbNVvxkltsShCu1f8oHHktdeOOTndV7HoOrZgLQvO3PG6WpnksN+PnIIBAr40EE=
+	t=1738019945; cv=none; b=gdfO3y8UpMBUMOTEh9sZIkzUnGuNnB1N/dHgDofOb584uyGCLfjaXuptmyxiSOY7IZMHI2atyCedod3sA0bNTztGjiUoaYkgXGimiBuTGWzbcFmxlJjJuOcctbMWWPEo+H+FfVYLfcF3LTGHAkFxD/cB/EwkZ6IpBk1eHtLamJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738012732; c=relaxed/simple;
-	bh=RyqvBkikpYOR7VUpZ1KfluipCNC7bwBzS4rR+QR9eg0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Al8yk26rP62B2pEgK9w0LSgrok5NPCtdDfe9aSb67ynY6vdhg2SR4s7M4+anPK5teFN3eTQTtvhAM0UjIUZSROwkUB1ATLKZ66jl1bzTidOdrOco0TnAFwSETA12V8j44lsYU/Fczipb70ySAupndytF/pFeVUMnWe2du3ahhm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UMp/ezCc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MOVa5E+x; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738019945; c=relaxed/simple;
+	bh=n5cU0bZw8gyt/FSttAQAyPGYmEy8v1GLSPeYz96Y0Dw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jbstvRkV+BmZRO8NHL1LTVq3Xf+2I1bAyCS2Obvjt4QGB4gCIwEK+13ExGATSQGXPQrrBZskK/aOmELcDLG0crzF7YPTy1aPOaVcz+Sv28kEXVvlov2gdU4k05VC0b8+WdMrqSM+fbS8IKbBc2YKdWSAJ4jJz2VbIjlrcLGVu9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NxIGKKSV; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UMp/ezCc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MOVa5E+x"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C486A2540184;
-	Mon, 27 Jan 2025 16:18:48 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 27 Jan 2025 16:18:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738012728; x=1738099128; bh=jd7px20gpp
-	ehLwtA9UcaPmx8XfdW759k2s8QsxmFE0k=; b=UMp/ezCcqFgE9liGy3coDht5wi
-	pBgY9NBGQCyOT7rECU9Kwi4P/9m3DKYewQqwJWVT3Dj0av/hxsTqTqoaNOg4Bt/v
-	iH5EoMb4yWkdV6p8qbtb7zR6Zvr0IAbP2VSKg1yY11XrK5+Zfka4rysSq+pAqkFZ
-	rxCAiNP9gSBW0G4tXm+N5Ls8zWf33l8hLBwA+pIp1FqihzmzlrpnKcjgCibIHKDy
-	xVYjAhcbdbReibc0HE8x+yuu9mLkc0ZGtklwJ9x6qan6DK2nPtHOuQeMGfRePGyv
-	L/r+RkgbpVNfuPfQ56TlgWVimnbvFrwiJtgzyiBWmqCJC4YGmvjK3QnBKlJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738012728; x=1738099128; bh=jd7px20gppehLwtA9UcaPmx8XfdW759k2s8
-	QsxmFE0k=; b=MOVa5E+x/fuC32/Rk3RTmc/+J4Y+ukr3yMsoGNuyrPIm4YAMcrD
-	kkQuYjQq8f0ZfpFaYngb5gkTgN4IZLpiRvZEqlwvG4iogv7AhEsY4OAtwBSNyzjS
-	7TmfraTOm+09CKn0wfZJH1myqOnM/edd4B0wZmpWSFcG/qy5RzlslomQPtxSo20R
-	FzgP3D+IufYC/UjyY1eu70yKOUhhQa+vEDQNl0fT2TXDjGVSD5ejTgAxDnPImHc6
-	6QyY4QKVUtocHvPRegT1FlWmdtNYHGaYkzHHY3LsY+VlGnGuU1OoZn2+u2944jZ7
-	mJR1+u+WOd6ObvucR5yV0KoscP18OVGyqFw==
-X-ME-Sender: <xms:OPiXZxkJtn7oso0rtb2Kt6_LapHn4sR3D8yADfgcqkteDWq92K0Wcg>
-    <xme:OPiXZ81xsNie_cvvQugh9ljU4goQ7390IUu6OnEuHtXZ39zTccxZSPCsBwgFmc2t_
-    J3rtGprdQEBbK9yNA>
-X-ME-Received: <xmr:OPiXZ3r6um920B-M22PZkUrx5nNlPuSaLGSeBDtZvpDQijzoG8_m92LgnTnhXoG95vJImqm3TY1hW51oNIANbDZIue0I-iZiPYj9>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudegvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepuddvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhith
-    hgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinh
-    esghhmgidruggvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthho
-    pehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprh
-    gtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgv
-    fihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhonhgrthhhrghnthgrnhhmhi
-    esghhoohhglhgvrdgtohhm
-X-ME-Proxy: <xmx:OPiXZxmuAYnZkW-ijZhPbI4g1n4AEc7bMaQ45Z6y29AN3u0AQ4ZOKQ>
-    <xmx:OPiXZ_1acUGGKQLt-02X_7LdeIYOcks-RMci6HJNvdbSATNXdf2zpg>
-    <xmx:OPiXZwuoJX2TMBHJNmyVV26olKERrLkVon2XsNyahzdwCz8bjCzwBQ>
-    <xmx:OPiXZzUAxAR9uiZxblW4HlExWhq7AIhaLsg039SuVRNkiPvS-XZu0g>
-    <xmx:OPiXZ9N3dFxZ-zRqAHfediEu8LXDr8a3YBgT5HZmHxvabjP9cnjuSXuI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jan 2025 16:18:47 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,
-  peff@peff.net,  ps@pks.im,  me@ttaylorr.com,
-  johncai86@gmail.com,  newren@gmail.com,
-  jonathantanmy@google.com,
-  karthik nayak <karthik.188@gmail.com>,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v4 2/7] pack-objects: add --name-hash-version option
-In-Reply-To: <7ee1845144fda5b8192dfa13eaab3cbd669b39ed.1738004555.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Mon, 27 Jan 2025
-	19:02:29 +0000")
-References: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
-	<pull.1823.v4.git.1738004554.gitgitgadget@gmail.com>
-	<7ee1845144fda5b8192dfa13eaab3cbd669b39ed.1738004555.git.gitgitgadget@gmail.com>
-Date: Mon, 27 Jan 2025 13:18:46 -0800
-Message-ID: <xmqqy0ywoszt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NxIGKKSV"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-219f6ca9a81so21825ad.1
+        for <git@vger.kernel.org>; Mon, 27 Jan 2025 15:19:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1738019943; x=1738624743; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=k6mzxaL5RojOvdYvN4sy2WwjMF/dL7RaRJiqFYE62r0=;
+        b=NxIGKKSVtiwJ1cR7BjwfKjfIOsqjEMcDcyv9JNOWwMqU5LWlyYKLOW7Yzwut04I1Au
+         MQu8j5q6r7ZkF4yhgULMR4HhqAaTZVHm568wi2GRBBFyVb4gFQ6Rfv2RzQJSEPRrW4QQ
+         yq/I5vT4Tw71JiAQRqYNX4CbMRF3z7lgCSr8WCsZ8vL9WntA5X1YmIVPgJQREnk+4zAl
+         KNMHH+g/Rjt05LNeS7gl6IyqUf3b4JCeXudNgP3AeRtmxRapvCxXIQREPY/kKOLEXXR+
+         AUYM0qG7CEipXwtTNfTzwCux1DUbHbFNkhvnyy7D5xoYvOxrQdn2l0YHEFJNAxS5NIZ6
+         JofQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738019943; x=1738624743;
+        h=in-reply-to:content-disposition:mime-version:references
+         :mail-followup-to:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=k6mzxaL5RojOvdYvN4sy2WwjMF/dL7RaRJiqFYE62r0=;
+        b=VpxXOtRO/rUYIC8L778YI0DLJifSfvKr3Xu1dLsY5XVaDFKLybm13uxk6eJkO3/hNN
+         kEkNDdlkEeRkIq577hxNNLVjwDN56Zy5oHF1LhU92g0W5wrn/+3nYIivv/pu4CwDya49
+         Xv2voTYBGRkSWMj5ay1rJz/FLjqP3lZEyQOsxhWMtHU7SUz4zLw5fkT+wzdveh7L8q87
+         lvs8huZBCC6a3SxXC/9LDh2bAHu0gCxgpIhRYFzpKNyAhFw5QJO8Kdb39FJ0jGx5+Nwk
+         Ky34WwNSGtVE13PnApIEmkdtKiHt0LSi9W084VIFnZ0rv3RCVRrpyP9rgFNMd+BzCTFF
+         8cVg==
+X-Gm-Message-State: AOJu0Yz6BW4C+I3j2ko+jaAkHPhYmK5w9cU4owkO9uq6qiQ214iie35E
+	NMOQ3PlWNr9kWOglMXU87FPM7HyxJh4f/Pdxa7zIQkWNSg1RsUdYNvO4DFEZrA==
+X-Gm-Gg: ASbGncv5acyUyjuzOfWjwgu7QucfTRePnKdiHutIZXPH93M5ZZDoJx8/6IRIJ+WOYhv
+	B7rE4h1j9PDVEZUci2mO3cVn1QRgVQjcuDfsJmVLvrp3ozj5LrTT+XgtOemKgZv1iKhXaFkvHHX
+	0Wre57DknNUu775nrcYJIQx+TH385f2RQAMP4Rgqcl6JRcgXc/PI8TDeq9KXwTpCK2dyFzHMLI2
+	xC6bK//q9TI3DDCpzWBMlQewyd1dkDWbIbRRdyjm162uhc67ajh32dbYcMeMrKrbrWVoo3dFIV9
+	aco=
+X-Google-Smtp-Source: AGHT+IF2EgVIZjHDOVPyZiMcw/dGXWHD6QJIimZ8xahsaPaz6iL+9bE8RXuU6IYsnsgyWQ1B9qdYMQ==
+X-Received: by 2002:a17:903:284:b0:215:7ced:9d67 with SMTP id d9443c01a7336-21dccece379mr894345ad.24.1738019943184;
+        Mon, 27 Jan 2025 15:19:03 -0800 (PST)
+Received: from google.com ([2620:15c:2d3:204:61c6:8099:70ae:8d93])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72f8a77c595sm8007613b3a.143.2025.01.27.15.19.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Jan 2025 15:19:02 -0800 (PST)
+Date: Mon, 27 Jan 2025 15:18:57 -0800
+From: Josh Steadmon <steadmon@google.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
+	emrass@google.com, sandals@crustytoothpaste.net, mh@glandium.org, ps@pks.im, 
+	sunshine@sunshineco.com, phillip.wood123@gmail.com, allred.sean@gmail.com
+Subject: Re: [PATCH v6 2/5] libgit-sys: introduce Rust wrapper for libgit.a
+Message-ID: <ebqg66cp3mttyrjne2gonmjis7v6djp6jmnpzjj6o6e7sz5taw@fezpjrflojm5>
+Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
+	emrass@google.com, sandals@crustytoothpaste.net, mh@glandium.org, ps@pks.im, 
+	sunshine@sunshineco.com, phillip.wood123@gmail.com, allred.sean@gmail.com
+References: <cover.1723054623.git.steadmon@google.com>
+ <cover.1736971328.git.steadmon@google.com>
+ <5fc66cdb1628e0c9e420f3f0455779d7471f46ee.1736971328.git.steadmon@google.com>
+ <xmqqa5brwtzq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqa5brwtzq.fsf@gitster.g>
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 2025.01.15 15:13, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+> > diff --git a/contrib/libgit-sys/public_symbol_export.c b/contrib/libgit-sys/public_symbol_export.c
+> > new file mode 100644
+> > index 0000000000..7cd5007902
+> > --- /dev/null
+> > +++ b/contrib/libgit-sys/public_symbol_export.c
+> > @@ -0,0 +1,21 @@
+> > +// Shim to publicly export Git symbols. These must be renamed so that the
+> > +// original symbols can be hidden. Renaming these with a "libgit_" prefix also
+> > +// avoids conflicts with other libraries such as libgit2.
+> 
+> Style.
+> 
+> > +#include "git-compat-util.h"
+> > +#include "contrib/libgit-sys/public_symbol_export.h"
+> > +#include "version.h"
+> > +
+> > +#pragma GCC visibility push(default)
+> > +
+> > +const char *libgit_user_agent(void)
+> > +{
+> > +	return git_user_agent();
+> > +}
+> > +
+> > +const char *libgit_user_agent_sanitized(void)
+> > +{
+> > +	return git_user_agent_sanitized();
+> > +}
+> > +
+> > +#pragma GCC visibility pop
+> 
+> I do not think we would mind not having Rust binding support on
+> platforms without GCC (and clang---I assume it would be aware of and
+> react to that #pragma GCC the same way?).
 
-> +/**
-> + * Check whether the name_hash_version chosen by user input is apporpriate,
+Yes, GCC and clang both handle this the same way.
 
-appropriate.  Will tweak while queueing, so no need to resend only
-to change this.
 
-> + * and also validate whether it is appropriate with other features.
-> + */
+> But do we allow this file
+> to be left uncompiled when the build wants to opt out of Rust
+> support?
 
-Thanks.
+Yes, in V7 this will only be built if INCLUDE_LIBGIT_RS is set.
