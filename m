@@ -1,84 +1,85 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FED1D540
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 09:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6AE7179BF
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 10:19:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1737971061; cv=none; b=i/aliZgUpAeNh8+HgJS+MIXKzi0nydMcSQdNRcc1a2T3vAknpya0Ylme3tAtpo26QihhD2VHG6yk9qnVEkRyzQcBXmqlFB4+nGEI7cu1UJwZGlIiqgV/p2OOG+NBefaOmY4+i05mmwY/u1sGH/ZV5MZeqiguX+91euW4UVHM3NE=
+	t=1737973171; cv=none; b=b2CqN8AW/vVCg6+DZk1aU3F2POk8vsrYdOrU6Q0flusbse+BlRKNTA5XmVNWefCNHRX25ii9q73Fgy4g2fAWvFuk/NMCog/SEweN2jkv6ILbXoPFfxeQtGVWQjTi+4BQ+EXYVfTk9d+yYlLWtJ6P7oN4N0ml5T7V7jM69Cv/WdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1737971061; c=relaxed/simple;
-	bh=olOY0Z5QkNtmRV4cILEBJ7peLlSId5HQGHI/9OdAiQY=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=i/bS5zkkg/yFcQlj4qsvo9kM7ZQLUGwozLuNiFIYid4Nuxd6cufOCFrZ4E5yRFUzhqZHLXpWnmcuH9O3B13CGEhGEIXnNojBRuTX7Kmn94vKPLLoCQZ451LIxUO/Mf9kwUCvQC2wDNiQr2ke90AFSTkZbRlPrEeDNIUoAVOxa78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AHXorCiR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Eba66ywf; arc=none smtp.client-ip=202.12.124.158
+	s=arc-20240116; t=1737973171; c=relaxed/simple;
+	bh=E5kXjQisbsE2oaSUo66joRpCNKds/1O+gvJAiHEOJmc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rl4No3qlgQjMpE7UqrC+7lUKk40L/YXj4gXygH8CJ7KVWH6s1stF2FE4XMAxkEeEupCHVBntFNEaj7D9Ykra/QZRkrfrmtDLyKgg2iHGOP3A2H7X3GCwhyVNkz51Yg6oG++bM6UWCpRRf1DBjPLwT/JWnKU/kPbVt/8kI4IhDSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U+OjWA9S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OsOYEZhj; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AHXorCiR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Eba66ywf"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BB4BE25401A1;
-	Mon, 27 Jan 2025 04:44:17 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 27 Jan 2025 04:44:17 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U+OjWA9S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OsOYEZhj"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9780B11401B0;
+	Mon, 27 Jan 2025 05:19:27 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Mon, 27 Jan 2025 05:19:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1737971057; x=1738057457; bh=lczi33a0PBbTZwHYGLUUMRGDkLKKTA4Z
-	QTxnQ4Beikk=; b=AHXorCiRnkzVUNlH91DPQq7vh29J39QNK+JfHbU4D3eOvnKr
-	37I6NVE/H3SmqxFCAA/dBANLOM+MjSyfH8S9LR2vlcEEhiyvjkjiGBhBjITzXqhs
-	X2eE+KgTKs18ViEFWu0mUT4xxMzsojvi9Lp2l6k21VPACXt6DUDeS37yipwMEP3Z
-	Fp+Po0QdDQ1DrvPdSr2VG7SblAPOmmgZYJIUJl0huSbCKSDShmRpE7WQlxNDiO5x
-	h1VPmGi6R8Orh0i0azZ/uc2aODevTnyxFtjEYBkk1/qP7fGlIePCu4n+GWgp9+PQ
-	TemwaVK60gb4u+vdg5JGGkF/Xn29PPY4OUaN1g==
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1737973167; x=1738059567; bh=E5kXjQisbs
+	E2oaSUo66joRpCNKds/1O+gvJAiHEOJmc=; b=U+OjWA9SgOhXBOUQR0CYuUc8vm
+	V4HgwEhAKT9ApmoeD8xGH7cpb+8n4wRU3UFmF8UcxeM/L7beHRpK0IxOMnCmaXfX
+	NqbGBH2HhQaf+KYj08S+UlK3U/AQpxFzNFukLLh2ArI8cmjqzw6nx8ipUKwCELff
+	WZNWdt42VsIg7OWOZSL8qi/o4iYY4Tj3wEC6JAF8JAp/zOEafsiXR2n5P+K0vODy
+	9d0RDhdupC0Vyvt0lHyMJ/K4OZGhU4u88S16Lg8A6PoLUz1GBOSXQb2Lydw7c98y
+	pel3ahgeXN1FQYDtH0B/pEJD9LQubJy+/DX1GJE4ldznUZjmj6sOK7ARNCoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1737971057; x=
-	1738057457; bh=lczi33a0PBbTZwHYGLUUMRGDkLKKTA4ZQTxnQ4Beikk=; b=E
-	ba66ywfaxtknXHjLAixieK43LyNCthuNHUXNsBHmqgMw7iNK3BYVw57qrDjTVH+L
-	n1aFl7AqilI/poqgKtoAk24Wq+dbagE/7mDT2hvEOqioih5WiSD49mXQeQRdYpKs
-	m1RUGDkRRmPIEnp21mDLOG3lHg6O+Rc7CbcRjd7+osl+gxrxrLeVJj4aX2ohaoLg
-	3rTXAQPFoap0jzeMfhSTs0FGZoESQ2Wgx5Lpppm2LP6G0BAEusLFsy3wQgnJMpy3
-	av5GgsXrBEqogsPzOkkPdci/P6FrAMqk8n3cr+XnvMcPJ0nLyBwe/aLXLF/g1SCz
-	K4Mda41t17QOGHkrWlf9g==
-X-ME-Sender: <xms:cVWXZ5VUKzBa-ZQTMXWVjNnDNADhjsru9bweTPygX_ZoHRC7W3tdyg>
-    <xme:cVWXZ5n9wuc0aCHoScUeDz_8hvDv6dduA1k2-EEgCFmAkkyKqPzTIVKood2tvs-P8
-    kZ3vGKMlIMkuERNRA>
-X-ME-Received: <xmr:cVWXZ1bISUyOwWU4Y5xQQqMZyZslLxTj7ImOxxcIz3gX_exhG81bp1tfJjb9DsmDsim2TIjYkKbaBItufNxVVEDTuJ4SHlGEYPVUmVAY2_yG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedguddvkeegucetufdoteggodetrf
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1737973167; x=1738059567; bh=E5kXjQisbsE2oaSUo66joRpCNKds/1O+gvJ
+	AiHEOJmc=; b=OsOYEZhjXoOEf9iugtwfItt/wpPer3cEMWy2GBiKst0e7Bl+jTa
+	SwgZBg5hJr3YiwXMIrPGgn02fptgf5b6yoWtK7G2+JIdaDs8AAy1ryKNmsa9Qxtf
+	eAfXc9R/ye01C8bB4ElL1aUARwRfpax7LhLtLczqQgJLvcNCa/+p8lx5mfX/AfzL
+	DBi/Wu03/sLl6z/ddMN7ou2P8Rwlzfe433DYfLLaxm0yaufpphnhjQ0Ckf8M207N
+	Oa9jqeBwgHybPFjrBy6GSlF3E/B+Q8pOw4kL9Za0+zNitAyvIgZb99hV+g0vgxIr
+	+7irAqISABriEtp/PICARICk4eZXvc4OlSA==
+X-ME-Sender: <xms:r12XZwAiM36wErqYpH2zTsB-cKH4oJJUNW6df3bHmkjOknXLe6uHJg>
+    <xme:r12XZyiWR0wib_DxU42QAs-IBC2wMaLIpCi9jA3HJ0_3pbtGroVFs-xJ-7YWWQAhA
+    -iOSfEWKUCcxFoR6Q>
+X-ME-Received: <xmr:r12XZzk3o99DMt9J-RppizHPeStGy7guOMUXF75BagqYYaJZYz9YjaytsKp4KeYGJuJSUvmQ10F44BDmG9-qbaH6OseS1FwK7ytTqciikUzd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedguddvleduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
-    fvvefukfggtggusehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeiuedvhfette
-    elgffhhedtvdehlefhtdffhffhgfeljeefvdetfeevledtueeivdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhih
-    hnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
-    rghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhph
-    grshhtvgdrnhgvth
-X-ME-Proxy: <xmx:cVWXZ8X8kk0AUGVJvOYtqUvEnCVPFCIloTBncV1u38dzY15RMh0Izw>
-    <xmx:cVWXZzliji5g2j55JarrUcwTpVDB1hnR3jqlpb2ksErLhRzsnFaPUg>
-    <xmx:cVWXZ5ekUTqimIVvCXT_XAbR2Z1zrgVPCgCosAuMloKhHLBY4tYO0g>
-    <xmx:cVWXZ9FPdE6dCktCGCjR8YSTNiTpavDPL2z5HRwiPF-wBRoUKHP61w>
-    <xmx:cVWXZ8Cntwe00A-8iZWkDpaAe6vOirMT7VehsXtt5TrFvVFIpArUHXao>
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghn
+    uggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhs
+    tghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepkhgrrhhthhhikhdrudekke
+    esghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:r12XZ2wli3dzoXA35xZJCgL8D27If4yXvvW-ErPXKJ9UxB6YMWyFHg>
+    <xmx:r12XZ1S7sU2UD6dRC8oeJA_8npjRoBl9qWBcHdnz-sIr5SZjmRuQNg>
+    <xmx:r12XZxbXUM1vqU9egGYhHFClHGDatK0W-rgvujpcLJE1BKvn-6ty6A>
+    <xmx:r12XZ-Tpjtu9qLa437SdzLrGkzHtqT3sk6gB3rpclY6nCFAKphAj7A>
+    <xmx:r12XZzNRls9f03QJ0zbbjW9gZQIdXwLPxJj9LX3z7wmjQTHtf5W2V_a0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 27 Jan 2025 04:44:16 -0500 (EST)
+ 27 Jan 2025 05:19:26 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id bad4abd0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 27 Jan 2025 09:44:12 +0000 (UTC)
-Date: Mon, 27 Jan 2025 10:44:08 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id c3efb636 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 27 Jan 2025 10:19:24 +0000 (UTC)
+Date: Mon, 27 Jan 2025 11:19:23 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: git@vger.kernel.org
 Cc: Johannes.Schindelin@gmx.de, karthik.188@gmail.com,
 	sandals@crustytoothpaste.net
-Subject: [PATCH v4] refs/reftable: fix uninitialized memory access of
+Subject: Re: [PATCH v4] refs/reftable: fix uninitialized memory access of
  `max_index`
-Message-ID: <b7e3dd3cc870024f0e80dad26c5a7a96483c6cf4.1737970803.git.ps@pks.im>
+Message-ID: <Z5ddq3DE071XLzEg@pks.im>
+References: <b7e3dd3cc870024f0e80dad26c5a7a96483c6cf4.1737970803.git.ps@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,165 +88,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <b7e3dd3cc870024f0e80dad26c5a7a96483c6cf4.1737970803.git.ps@pks.im>
 
-From: Karthik Nayak <karthik.188@gmail.com>
+On Mon, Jan 27, 2025 at 10:44:08AM +0100, Patrick Steinhardt wrote:
+> Karthik is out of office this week, so I'm taking over this series for
+> him to ensure that it lands soonish. The only change compared to v3 is
+> an adapted commit message based on my own feedback.
 
-When migrating reflogs between reference backends, maintaining the
-original order of the reflog entries is crucial. To achieve this, an
-`index` field is stored within the `ref_update` struct that encodes the
-relative order of reflog entries. This field is used by the reftable
-backend as update index for the respective reflog entries to maintain
-that ordering.
-
-These update indices must be respected when writing table headers, which
-encode the minimum and maximum update index of contained records in the
-header and footer. This logic was added in commit bc67b4ab5f (reftable:
-write correct max_update_index to header, 2025-01-15), which started to
-use `reftable_writer_set_limits()` to propagate the mininum and maximum
-update index of all records contained in a ref transaction.
-
-However, we only set the maximum update index for the first transaction
-argument, even though there can be multiple such arguments. This is the
-case when we write to multiple stacks in a single transaction, e.g. when
-updating references in two different worktrees at once. Consequently,
-the update index for all but the first argument remain uninitialized,
-which may cause undefined behaviour.
-
-Fix this by moving the assignment of the maximum update index in
-`reftable_be_transaction_finish()` inside the loop, which ensures that
-all elements of the array are correctly initialized.
-
-Furthermore, initialize the `max_index` field to 0 when queueing a new
-transaction argument. This is not strictly necessary, as all elements of
-`write_transaction_table_arg.max_index` are now assigned correctly.
-However, this initialization is added for consistency and to safeguard
-against potential future changes that might inadvertently introduce
-uninitialized memory access.
-
-Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-
-Hi,
-
-Karthik is out of office this week, so I'm taking over this series for
-him to ensure that it lands soonish. The only change compared to v3 is
-an adapted commit message based on my own feedback.
-
-Thanks!
+Ugh, sorry, forgot to set the In-reply-to header. This was meant as a
+reply to [1].
 
 Patrick
 
- refs/reftable-backend.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 289496058e..d39a14c5a4 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1020,6 +1020,7 @@ static int prepare_transaction_update(struct write_transaction_table_arg **out,
- 		arg->updates_nr = 0;
- 		arg->updates_alloc = 0;
- 		arg->updates_expected = 0;
-+		arg->max_index = 0;
- 	}
- 
- 	arg->updates_expected++;
-@@ -1628,10 +1629,9 @@ static int reftable_be_transaction_finish(struct ref_store *ref_store UNUSED,
- 	struct reftable_transaction_data *tx_data = transaction->backend_data;
- 	int ret = 0;
- 
--	if (tx_data->args)
--		tx_data->args->max_index = transaction->max_index;
--
- 	for (size_t i = 0; i < tx_data->args_nr; i++) {
-+		tx_data->args[i].max_index = transaction->max_index;
-+
- 		ret = reftable_addition_add(tx_data->args[i].addition,
- 					    write_transaction_table, &tx_data->args[i]);
- 		if (ret < 0)
-
-Range-diff against v3:
-1:  614274cede ! 1:  b7e3dd3cc8 refs: fix uninitialized memory access of `max_index`
-    @@ Metadata
-     Author: Karthik Nayak <karthik.188@gmail.com>
-     
-      ## Commit message ##
-    -    refs: fix uninitialized memory access of `max_index`
-    +    refs/reftable: fix uninitialized memory access of `max_index`
-     
-         When migrating reflogs between reference backends, maintaining the
-         original order of the reflog entries is crucial. To achieve this, an
-    -    `index` field is stored within the `ref_update` struct.
-    +    `index` field is stored within the `ref_update` struct that encodes the
-    +    relative order of reflog entries. This field is used by the reftable
-    +    backend as update index for the respective reflog entries to maintain
-    +    that ordering.
-     
-    -    In the reftable backend, before writing any references, the writer must
-    -    be configured with the minimum and maximum update index values. The
-    -    `max_update_index` is derived from the maximum `ref_update.index` value
-    -    in a transaction . The commit bc67b4ab5f (reftable: write correct
-    -    max_update_index to header, 2025-01-15) addressed this by propagating the
-    -    `max_update_index` value from the transaction to
-    -    `write_transaction_table_arg` and, ultimately, to
-    -    `reftable_writer_set_limits()`, which sets the min and max index for the
-    -    reftable writer.
-    +    These update indices must be respected when writing table headers, which
-    +    encode the minimum and maximum update index of contained records in the
-    +    header and footer. This logic was added in commit bc67b4ab5f (reftable:
-    +    write correct max_update_index to header, 2025-01-15), which started to
-    +    use `reftable_writer_set_limits()` to propagate the mininum and maximum
-    +    update index of all records contained in a ref transaction.
-     
-    -    However, that commit introduced an issue:
-    +    However, we only set the maximum update index for the first transaction
-    +    argument, even though there can be multiple such arguments. This is the
-    +    case when we write to multiple stacks in a single transaction, e.g. when
-    +    updating references in two different worktrees at once. Consequently,
-    +    the update index for all but the first argument remain uninitialized,
-    +    which may cause undefined behaviour.
-     
-    -      - In `reftable_transaction_data`, which contains an array of
-    -      `write_transaction_table_arg`, only the first element was assigned the
-    -      `max_index` value.
-    +    Fix this by moving the assignment of the maximum update index in
-    +    `reftable_be_transaction_finish()` inside the loop, which ensures that
-    +    all elements of the array are correctly initialized.
-     
-    -    As a result, any elements beyond the first in the array contained
-    -    uninitialized `max_index`. The writer contains multiple elements of
-    -    `write_transaction_table_arg` to correspond to different worktrees being
-    -    written. This uninitialized value was later used to set the
-    -    `max_update_index` for the writer, potentially causing overflow or
-    -    undefined behavior.
-    -
-    -    Fix this by:
-    -
-    -      - Initializing the `max_index` field to 0.
-    -      - Moving the assignment of `max_index` in
-    -      `reftable_be_transaction_finish()` inside the loop, ensuring all
-    -      elements of the array are correctly initialized.
-    -
-    -    Initializing `max_index` to `0` is not strictly necessary, as all
-    -    elements of `write_transaction_table_arg.max_index` are now assigned
-    -    correctly. However, this initialization is added for consistency and to
-    -    safeguard against potential future changes that might inadvertently
-    -    introduce uninitialized memory access.
-    +    Furthermore, initialize the `max_index` field to 0 when queueing a new
-    +    transaction argument. This is not strictly necessary, as all elements of
-    +    `write_transaction_table_arg.max_index` are now assigned correctly.
-    +    However, this initialization is added for consistency and to safeguard
-    +    against potential future changes that might inadvertently introduce
-    +    uninitialized memory access.
-     
-         Reported-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-    +    Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## refs/reftable-backend.c ##
-     @@ refs/reftable-backend.c: static int prepare_transaction_update(struct write_transaction_table_arg **out,
--- 
-2.48.1.362.g079036d154.dirty
-
+[1]: <CAOLa=ZR=Hz+LU0n-uC2dpk8_sLqAyaxO0NswJH8bP_kEdDdbUQ@mail.gmail.com>
