@@ -1,68 +1,68 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A1718F2EF
-	for <git@vger.kernel.org>; Mon, 27 Jan 2025 19:02:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16388190664
+	for <git@vger.kernel.org>; Mon, 27 Jan 2025 19:02:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738004563; cv=none; b=usLOsM8Mo8AeaKsxBXW4ZfrVzBMt72jc9AxuJmkgufoNlACT0/zi1PaVIJlxQ+yWgKMUe6df4h0p3KvqnKTeAB5LuyGEP89zoxO1nXZE25XjxfyEJ0ofYV5iVEr/Eai/H1Z8zhOgDWoqYN9n1mkBKDfe+qb3XbSHkQjbAbrh05Y=
+	t=1738004565; cv=none; b=ea+PQG3hDo27WiekJsCgdEKRYioALdo4lD52H9WEoKS7IYoapNVC6g/9HC6u0G1/a2AIpWpJ/zxgpfkVYcq9aKsWrcf7BUkNo2QR8gdktBEpLLY8QTGNR9gpID34Uj8CGCNioqTcAqRUhj2zVeOxIk7gShcrstqFYBvNRtfNhaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738004563; c=relaxed/simple;
-	bh=k8MQC+N2aVbjxI5hoHkypI0UkbjCFdXsq4kXmVJXDr0=;
+	s=arc-20240116; t=1738004565; c=relaxed/simple;
+	bh=0Nf5AGtzCSFTmnaSVtirnCXKemBVTtwwPh9V8hDxbN8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=aP27rmt2OIt3R1c3NyMDGwpPBJFoq+RQgj6AJjwVPNUMkgrlP//QxIbt8FF4uCmZEQPvsQ2BvwErHNDuteTH2H60pmAlH6xhenqt4W0ZgECgNNBEM2RztgVelvCrdkuuuT/FIUzOm2PwcFu9BpFPoJ7hqONso0d7x2VFI8Sbcvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E9mAf9oz; arc=none smtp.client-ip=209.85.128.53
+	 MIME-Version:To:Cc; b=bVDQQ5S2rMoGaWjUqGGV9aGivl0kMIEocOJcswo/VOPxVzuy9m7vrzGlmTznkydmLoY0iXAV3oApgxmWgiS6iodtD4sxh9msxXyYmIXJcqcvN6tCWHcBHV2PeqIbTGIcIbG0o+ycQIVcibK8USS5Q3Y1yGpTeooUiF7mmKBFdeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iEjK0bWR; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E9mAf9oz"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-436281c8a38so33924085e9.3
-        for <git@vger.kernel.org>; Mon, 27 Jan 2025 11:02:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iEjK0bWR"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-388cae9eb9fso2827219f8f.3
+        for <git@vger.kernel.org>; Mon, 27 Jan 2025 11:02:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738004559; x=1738609359; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738004561; x=1738609361; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JZMEj2Cgkx4xj43UqaYcdHWu3cPiAf8tko9NUF8PKIQ=;
-        b=E9mAf9ozM6FFBNIKxFI7/3OCLTiqqXcpcFarf2Rh5+b0OivH2WGSilKrmnt7jIAzBQ
-         TyLQJ5GnfaHqlVbPf/iD/yds6ySEV+eg/PU2ukx++DURLCMcORE42wRscPxUHCvfyvrK
-         XOpoXsY7H1IAqcXKKEce75gZYthCUMx4WsxVwaDj6P1uZo578BR+zo04QdaB0HmlMhWw
-         wKZHkItLKAGFm95sfnP8qDGXE/2sx966E8ouDjEr4lVdQcfFuF8eocgU6VZ1hS5cMXJN
-         xXjzKZPv9p/8jBSR6Odfs3RcnzIcGrXRzI/qgTDmfabNggluxQWs5Nc6fRaEN9o0T8Pm
-         QxCg==
+        bh=77K8kgoMDyRhMx8QhVVcok8ld6dm3mng1ayqE/yzTtc=;
+        b=iEjK0bWRK2RchtGJ967udFV22eWXPG2JYoTSGolrWt7RHqk6adtGXmVsBOV+VH93m3
+         thN/DAtrXDnC6PexTv4rOI/+eWqPBxGSe0Gpz5qLkzoUqHDnYFZE/NrD4nYlPzN2dzWl
+         jFFjCUL1PLmhLSFmGg5I+DL4wDm32+LYFHH1YXbpgCCC+Xs6grYFe3DqORy63z2irZcJ
+         2X+jy/QMAKwanZY8qUtJbwh7QvcAvs3rXlGaEEEMRK9WhDgmmTLE9EQYsJ9WYpb57muF
+         9UriG4F1e4ktCH1M2OOwMdS4fhnvoFVhZpk3pnX0EEw4Z7vei9xaDPtrvvBXDOW5L7u+
+         N/bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738004559; x=1738609359;
+        d=1e100.net; s=20230601; t=1738004561; x=1738609361;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JZMEj2Cgkx4xj43UqaYcdHWu3cPiAf8tko9NUF8PKIQ=;
-        b=nKQVh54rXExpNdowAwwYvwRqZYv3fUuLbmuRJB82WGFMrxreRKmA7njrkHXjtG41Bp
-         FqpkKd1+Hbbj7hWyWCbacCg5chI4OH2zEhfNbx2Nn/sSZ+VSkSGIveo6oT6fZ6K4IXOm
-         EI9VtXIOfTu3HhBFs1OZ7M/W/mDkkizVCSOvUaWOr6iC4Ny9tufxN7N6MElBlSVCxlQu
-         gnkmRYRnFKezxVTSWwPBLCZkMVAxR9xt9SBXe+vwVBVTGwG98/h8uv8vPZi3D8IwPv9K
-         LKymQIr5Xt4vj7RzuWktYMIMFXotxnd6xx0eWmlymI+n+qWaMNJjoALcHJVhwHBGNYdP
-         m2Pw==
-X-Gm-Message-State: AOJu0Yyj89Hb+Gb6qSdhnNKwg0EHjgXK5eOpByFYiqgNxFeTV3HFX53o
-	59vbwVYLV99AQbQRcTI35q/LTys3AxVmbK6Mnfp++VPmEkprSwWJ1Uft3Q==
-X-Gm-Gg: ASbGncu9/u9/473oZCMJSH9ycWxt3IvcD7KD/9GA4p/0/oUIfGZfLkeAdmnv97CX3Zy
-	PUnn/VP+OTBwMP0zJiDLcY8c0vrVarr/D4SlVrJ480+gh67yNMlBW43+65Tfuro1hLOELKbIAFz
-	D1ra0tylFU87ka2DnVb2wzfkI9kNh84htB5i45EZEFA8kbGg1VUD0H+2JtOXHunlGbZr1KW+nVj
-	ioFAODWiCNdgK86qwPmV1XzUNjeSIv1bY6jIm0agzS8PMhNzZbp61PSdmRwp9rcovRbGZaq3AbK
-	7RVRjw==
-X-Google-Smtp-Source: AGHT+IGxRmNPVy/o39MKjK17cFSLF2FYkfgNmYHrdmf2qMMzTp9D7c/g+LyJQMi+2wrYiYi7Je+BcQ==
-X-Received: by 2002:a5d:6da1:0:b0:385:e411:c894 with SMTP id ffacd0b85a97d-38bf57a6844mr39771733f8f.43.1738004558542;
-        Mon, 27 Jan 2025 11:02:38 -0800 (PST)
+        bh=77K8kgoMDyRhMx8QhVVcok8ld6dm3mng1ayqE/yzTtc=;
+        b=XuxKmrmEyRNRdldnKrbSVOePSGxQKIHn8oZI9hcQq6TGqLltiqB50kI1Lu/fyXrJEB
+         MD8xPedd4Ko2isYH8UZnFG8v/zbE7euCo4Q0DX0nsCRHiN+EI9hPl3IzDreMKR/QuYQ3
+         jSGnQPAn5lll+nFf+YNOaaPQQhNBE6X5lwzeZGAQQqNxBW8h2rdbO5H7w1ef0wjfUSOz
+         7Zowr17kSWdt2so8rZNO4QHoy7P1yVbhjO+W4UvVc/zBCnUDnKJmcM761LDn1vFyYKch
+         w9dshYd7BjUNW99dEMjAJ1SpKEBESVulY1ea8GtpLcGrWAzgablhSwY164AZ7JYnkMQW
+         mgTg==
+X-Gm-Message-State: AOJu0YxYtnmoavybvNhbAQD9PbTbYChYdIk6nocAVuk7CtuQGYg0jKZ+
+	bJmNoNfAPB2p709TiVoJjRAW0RdSkLXOjK9gG9P4Ch0kfrZVuV+I/ENIgg==
+X-Gm-Gg: ASbGnctaW0cMUn5b7rveFIOlWGhwyQjYBzgKGAGevzD//F1CKiq9rHgZZM2lk6oiDk+
+	W08aNTiIdtQTzH67i+QHZlAiCZYMLpHd6GHIkJWITOaga2mLk/lo+RkruGnrlMD9r91WpQPsLNx
+	blbb9+GLx9LvlNYvYlcBY8hfiEhM+hSUU8ymhhh03xInDa6NsA7qNp+Zpxb4cKL49hWU/PbYAiZ
+	LfyUp03KBaYlo3tL0MxlbZRYyPGa0OcL4LLMZS8mXe5WPiC06I0JpLg3EwJBQzm1ytQCnQa2B7/
+	jBBhcg==
+X-Google-Smtp-Source: AGHT+IFmKlyKVlePIeczZqGsz3iGdetftJGS5L6YfKmNTUfJ+KLCAjtz0qghWMo8w1BEel43TrKqzA==
+X-Received: by 2002:a05:6000:1f81:b0:385:eb8b:3ec6 with SMTP id ffacd0b85a97d-38bf5674369mr39981440f8f.29.1738004560679;
+        Mon, 27 Jan 2025 11:02:40 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a176434sm12001936f8f.13.2025.01.27.11.02.38
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c2a1bb0dfsm12179075f8f.63.2025.01.27.11.02.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Jan 2025 11:02:38 -0800 (PST)
-Message-Id: <68b4127580e2d475bec0d7cd0f6a9ae5e626b3c9.1738004555.git.gitgitgadget@gmail.com>
+        Mon, 27 Jan 2025 11:02:40 -0800 (PST)
+Message-Id: <a4f3d1276861ff0b96e1ffe94b8ff6db1df24729.1738004555.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1823.v4.git.1738004554.gitgitgadget@gmail.com>
 References: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
 	<pull.1823.v4.git.1738004554.gitgitgadget@gmail.com>
-From: "Jonathan Tan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 27 Jan 2025 19:02:28 +0000
-Subject: [PATCH v4 1/7] pack-objects: create new name-hash function version
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 27 Jan 2025 19:02:30 +0000
+Subject: [PATCH v4 3/7] repack: add --name-hash-version option
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,118 +83,168 @@ Cc: gitster@pobox.com,
     jonathantanmy@google.com,
     karthik nayak <karthik.188@gmail.com>,
     Derrick Stolee <stolee@gmail.com>,
-    Jonathan Tan <jonathantanmy@google.com>
+    Derrick Stolee <stolee@gmail.com>
 
-From: Jonathan Tan <jonathantanmy@google.com>
+From: Derrick Stolee <stolee@gmail.com>
 
-As we will explore in later changes, the default name-hash function used
-in 'git pack-objects' has a tendency to cause collisions and cause poor
-delta selection. This change creates an alternative that avoids some
-collisions while preserving some amount of hash locality.
+The new '--name-hash-version' option for 'git repack' is a simple
+pass-through to the underlying 'git pack-objects' subcommand. However,
+this subcommand may have other options and a temporary filename as part
+of the subcommand execution that may not be predictable or could change
+over time.
 
-The pack_name_hash() method has not been materially changed since it was
-introduced in ce0bd64 (pack-objects: improve path grouping
-heuristics., 2006-06-05). The intention here is to group objects by path
-name, but also attempt to group similar file types together by making
-the most-significant digits of the hash be focused on the final
-characters.
+The existing test_subcommand method requires an exact list of arguments
+for the subcommand. This is too rigid for our needs here, so create a
+new method, test_subcommand_flex. Use it to check that the
+--name-hash-version option is passing through.
 
-Here's the crux of the implementation:
+Since we are modifying the 'git repack' command, let's bring its usage
+in line with the Documentation's synopsis. This removes it from the
+allow list in t0450 so it will remain in sync in the future.
 
-	/*
-	 * This effectively just creates a sortable number from the
-	 * last sixteen non-whitespace characters. Last characters
-	 * count "most", so things that end in ".c" sort together.
-	 */
-	while ((c = *name++) != 0) {
-		if (isspace(c))
-			continue;
-		hash = (hash >> 2) + (c << 24);
-	}
-
-As the comment mentions, this only cares about the last sixteen
-non-whitespace characters. This cause some filenames to collide more than
-others. This collision is somewhat by design in order to promote hash
-locality for files that have similar types (.c, .h, .json) or could be the
-same file across a directory rename (a/foo.txt to b/foo.txt). This leads to
-decent cross-path deltas in cases like shallow clones or packing a
-repository with very few historical versions of files that share common data
-with other similarly-named files.
-
-However, when the name-hash instead leads to a large number of name-hash
-collisions for otherwise unrelated files, this can lead to confusing the
-delta calculation to prefer cross-path deltas over previous versions of the
-same file.
-
-The new pack_name_hash_v2() function attempts to fix this issue by
-taking more of the directory path into account through its hash
-function. Its naming implies that we will later wire up details for
-choosing a name-hash function by version.
-
-The first change is to be more careful about paths using non-ASCII
-characters. With these characters in mind, reverse the bits in the byte
-as the least-significant bits have the highest entropy and we want to
-maximize their influence. This is done with some bit manipulation that
-swaps the two halves, then the quarters within those halves, and then
-the bits within those quarters.
-
-The second change is to perform hash composition operations at every
-level of the path. This is done by storing a 'base' hash value that
-contains the hash of the parent directory. When reaching a directory
-boundary, we XOR the current level's name-hash value with a downshift of
-the previous level's hash. This perturbation intends to create low-bit
-distinctions for paths with the same final 16 bytes but distinct parent
-directory structures.
-
-The collision rate and effectiveness of this hash function will be
-explored in later changes as the function is integrated with 'git
-pack-objects' and 'git repack'.
-
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- pack-objects.h | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ Documentation/git-repack.txt |  9 ++++++++-
+ builtin/repack.c             |  9 ++++++++-
+ t/t0450/txt-help-mismatches  |  1 -
+ t/t7700-repack.sh            |  6 ++++++
+ t/test-lib-functions.sh      | 26 ++++++++++++++++++++++++++
+ 5 files changed, 48 insertions(+), 3 deletions(-)
 
-diff --git a/pack-objects.h b/pack-objects.h
-index b9898a4e64b..681c1116486 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -207,6 +207,34 @@ static inline uint32_t pack_name_hash(const char *name)
- 	return hash;
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.txt
+index c902512a9e8..5852a5c9736 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -9,7 +9,9 @@ git-repack - Pack unpacked objects in a repository
+ SYNOPSIS
+ --------
+ [verse]
+-'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m] [--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>] [--write-midx]
++'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
++	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
++	[--write-midx] [--name-hash-version=<n>]
+ 
+ DESCRIPTION
+ -----------
+@@ -249,6 +251,11 @@ linkgit:git-multi-pack-index[1]).
+ 	Write a multi-pack index (see linkgit:git-multi-pack-index[1])
+ 	containing the non-redundant packs.
+ 
++--name-hash-version=<n>::
++	Provide this argument to the underlying `git pack-objects` process.
++	See linkgit:git-pack-objects[1] for full details.
++
++
+ CONFIGURATION
+ -------------
+ 
+diff --git a/builtin/repack.c b/builtin/repack.c
+index d6bb37e84ae..5e7ff919c1a 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -39,7 +39,9 @@ static int run_update_server_info = 1;
+ static char *packdir, *packtmp_name, *packtmp;
+ 
+ static const char *const git_repack_usage[] = {
+-	N_("git repack [<options>]"),
++	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
++	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
++	   "[--write-midx] [--name-hash-version=<n>]"),
+ 	NULL
+ };
+ 
+@@ -58,6 +60,7 @@ struct pack_objects_args {
+ 	int no_reuse_object;
+ 	int quiet;
+ 	int local;
++	int name_hash_version;
+ 	struct list_objects_filter_options filter_options;
+ };
+ 
+@@ -306,6 +309,8 @@ static void prepare_pack_objects(struct child_process *cmd,
+ 		strvec_pushf(&cmd->args, "--no-reuse-delta");
+ 	if (args->no_reuse_object)
+ 		strvec_pushf(&cmd->args, "--no-reuse-object");
++	if (args->name_hash_version)
++		strvec_pushf(&cmd->args, "--name-hash-version=%d", args->name_hash_version);
+ 	if (args->local)
+ 		strvec_push(&cmd->args,  "--local");
+ 	if (args->quiet)
+@@ -1203,6 +1208,8 @@ int cmd_repack(int argc,
+ 				N_("pass --no-reuse-delta to git-pack-objects")),
+ 		OPT_BOOL('F', NULL, &po_args.no_reuse_object,
+ 				N_("pass --no-reuse-object to git-pack-objects")),
++		OPT_INTEGER(0, "name-hash-version", &po_args.name_hash_version,
++				N_("specify the name hash version to use for grouping similar objects by path")),
+ 		OPT_NEGBIT('n', NULL, &run_update_server_info,
+ 				N_("do not run git-update-server-info"), 1),
+ 		OPT__QUIET(&po_args.quiet, N_("be quiet")),
+diff --git a/t/t0450/txt-help-mismatches b/t/t0450/txt-help-mismatches
+index 28003f18c92..c4a15fd0cb8 100644
+--- a/t/t0450/txt-help-mismatches
++++ b/t/t0450/txt-help-mismatches
+@@ -45,7 +45,6 @@ rebase
+ remote
+ remote-ext
+ remote-fd
+-repack
+ reset
+ restore
+ rev-parse
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index c4c3d1a15d9..b9a5759e01d 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -777,6 +777,12 @@ test_expect_success 'repack -ad cleans up old .tmp-* packs' '
+ 	test_must_be_empty tmpfiles
+ '
+ 
++test_expect_success '--name-hash-version option passes through to pack-objects' '
++	GIT_TRACE2_EVENT="$(pwd)/hash-trace.txt" \
++		git repack -a --name-hash-version=2 &&
++	test_subcommand_flex git pack-objects --name-hash-version=2 <hash-trace.txt
++'
++
+ test_expect_success 'setup for update-server-info' '
+ 	git init update-server-info &&
+ 	test_commit -C update-server-info message
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 78e054ab503..af47247f25f 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1886,6 +1886,32 @@ test_subcommand () {
+ 	fi
  }
  
-+static inline uint32_t pack_name_hash_v2(const unsigned char *name)
-+{
-+	uint32_t hash = 0, base = 0, c;
++# Check that the given subcommand was run with the given set of
++# arguments in order (but with possible extra arguments).
++#
++#	test_subcommand_flex [!] <command> <args>... < <trace>
++#
++# If the first parameter passed is !, this instead checks that
++# the given command was not called.
++#
++test_subcommand_flex () {
++	local negate=
++	if test "$1" = "!"
++	then
++		negate=t
++		shift
++	fi
 +
-+	if (!name)
-+		return 0;
++	local expr="$(printf '"%s".*' "$@")"
 +
-+	while ((c = *name++)) {
-+		if (isspace(c))
-+			continue;
-+		if (c == '/') {
-+			base = (base >> 6) ^ hash;
-+			hash = 0;
-+		} else {
-+			/*
-+			 * 'c' is only a single byte. Reverse it and move
-+			 * it to the top of the hash, moving the rest to
-+			 * less-significant bits.
-+			 */
-+			c = (c & 0xF0) >> 4 | (c & 0x0F) << 4;
-+			c = (c & 0xCC) >> 2 | (c & 0x33) << 2;
-+			c = (c & 0xAA) >> 1 | (c & 0x55) << 1;
-+			hash = (hash >> 2) + (c << 24);
-+		}
-+	}
-+	return (base >> 6) ^ hash;
++	if test -n "$negate"
++	then
++		! grep "\[$expr\]"
++	else
++		grep "\[$expr\]"
++	fi
 +}
 +
- static inline enum object_type oe_type(const struct object_entry *e)
- {
- 	return e->type_valid ? e->type_ : OBJ_BAD;
+ # Check that the given command was invoked as part of the
+ # trace2-format trace on stdin.
+ #
 -- 
 gitgitgadget
 
