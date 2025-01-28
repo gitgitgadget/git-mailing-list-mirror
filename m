@@ -1,126 +1,168 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CFC1E521
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 08:46:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D204517A586
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 09:56:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738053965; cv=none; b=ZJQ6jlZQlbjViVjEEZVfg/foJlIOPtkxk18sOdDSgQK8TajnLUSUwyl6jZrWePcikGqtGpAIsAKY6QLLLhWcZUkQ38WchvKuFIjYZ+H4OSkcPSoyccEL7z2sM33UVTRMxcw80IRntpOyjxo91UbzarGN8JFu7ISqdXLWeBLO4js=
+	t=1738058219; cv=none; b=YXX0IXyRgxkuJI1vzJFGTimsNmZQDBlidUmtrKul7KyFx+VG4MxJvK6ltbR+kc+g8Dt71KTDmts/oJa3GE9S0B6JV/1aBhTbmz577CnJgRDp6nMEgp9wYOLUCv8knIGMHC//SCNggDsPW4aneDBeNUIuUJJ7UAH7xUGzFqtP61Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738053965; c=relaxed/simple;
-	bh=RFlWMpWcVc7v7Su6pgiFEVrCpQOCaIVGumTkA4zbCi4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KDL7/vdAno6/x9aIFQsb+gRFoZEw6a5E8t33N70X6VEF2Aayw9N6VZZqbOtUddEWWGCc/2VnC2R9HTclyU5QCfeSdDQy6enWPYgSjy88mzAUn6FW4BiGVQHGW6CYBuMGweVJD6wgSnMUW6StL2bZni8Swo+ZXZylwCyseIZb0lc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cEpX21kQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L3sFm6/n; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1738058219; c=relaxed/simple;
+	bh=0Aa/Vl7BtondivvTeB41FB2Qh6iQmb/rFZpMjToubEw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=eFPLaNv702bdnpKNjP8CvwPSf+TJHPwal2W8J7mtvhQk/ZWHf3LuilaMTabPVIX9MK8VAv54ycrIczf5pUypgPPkEHUHLPA+3iFW053h2igJJ1kqe0t+Izyums3MzASeFTN2+R+DPpfL3Wq6B+JMXBer2JxmMNgx6LLT14eJ2+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E/QuOoxS; arc=none smtp.client-ip=209.85.222.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cEpX21kQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L3sFm6/n"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B4083254023B;
-	Tue, 28 Jan 2025 03:45:59 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 28 Jan 2025 03:45:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738053959; x=1738140359; bh=snPvGoTI5M
-	IuBy+LBt6qXFE1LxHub++lFqAXFRaMzvw=; b=cEpX21kQ/uYPpK3MLI6JEe+KyQ
-	Xw/vLYX8rr34g7Zs/jKUDSIYWCnDIt0uhYTerOOebH35mKe62o2EJP60KyqOu51K
-	7FKlM5wRzVYpZ8KO43DDAMvC6fqU4FeV4ob/CxPOSitckZpPqMY5sUBLvo+yjLZf
-	EOK/gZ31HwdfwiDMiC0XxCbKGo45VNXHJ08rq05VpMH+FYZ+FEvR/UqSuBywXpzv
-	Y6lpy6A9yJWWRVnikLlpTIUyL84DW4Phsm6kXqwFXe2yoSQJAunBuRsrVKXx4kxv
-	bVhgU1yS/wEEB04q4dKy0UlYq25ccouHkTOPL/VyQjEeOCMP4XeH9HBjlz4Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738053959; x=1738140359; bh=snPvGoTI5MIuBy+LBt6qXFE1LxHub++lFqA
-	XFRaMzvw=; b=L3sFm6/nYU4xfaSpsow6U29TW8RZ3gcv+zCACsL7iM45D5Hkv7z
-	WnhvWY6lXeccyKyYzvJYPnur8JKSd+E08ZeHhcn7WuRBTLDW1n0Hebft4HI4cfl8
-	hVgVHwIey6kvryTNM8LL2td5aDKl39NbT6/AFlE9MlzmBq2+CBMoqxaT5fRorDh/
-	qDqxk9kqlWNGn0FGXb1I/D6h1YqTpRUUoyQEg2fQOBoB8gAJJdSgBayQHRbiBku6
-	zBwu3ISam3Rl1WC9EwvE5qG55yoPL39x6h0FNpaBPVLt2h8uOqfkFSsMGznidwHt
-	UAdINnVq1VHcu/2Y6YeIbylHm54Pp4+Iw8A==
-X-ME-Sender: <xms:RpmYZziUbibRsrF9Eaq0yYp_Nb5Qnp_NcXeBiZODR2uEJqLjTqGUEw>
-    <xme:RpmYZwCI1TFXxeKJh2fSSpxk6YtLBGR2q78FKT-lmgYVPk90vhyImv2DKqJxLUX21
-    fgOzZ-xQei5_pcp9A>
-X-ME-Received: <xmr:RpmYZzFAe2fmp7Lgd7bNqf9t9WeiZ1qAXSdhaiR4PGdeqJfV_kOxglL6jApbkaiC4Fh2S_33R6rtGI9E87yIBqQTwuEtXW8Da8PpOzNHsng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudehieehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
-    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
-    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsohgv
-    khhklhgvsehfrhgvvghnvghtrdguvgdprhgtphhtthhopehphhhilhhlihhprdifohhoug
-    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvddtvdehtdduvdeiuddvheeifeek
-    rdeftdekledquddqshhovghkkhhlvgesfhhrvggvnhgvthdruggvpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhu
-    nhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrgh
-X-ME-Proxy: <xmx:RpmYZwTHNbttLu6sYbNIBCiB_wfH2HwTrVqcYvq-c-MRupeop0sEdA>
-    <xmx:RpmYZwwZpzL0SLHgKgfIvWVEVr5CogqFoZNhEu2vCweQ1l5qjInhDA>
-    <xmx:RpmYZ24OnbGQ5FsTgGpZGwMhZSr78ypXW9prt-33F4Re8Y_DBYfI0w>
-    <xmx:RpmYZ1yK294CSEHPANmCa4iTx829t6km71pdf7VJUurHclGRY7Amow>
-    <xmx:R5mYZ3l3CXTomZuBEZEyE-TeWKATl4e1CBdJOYeZNWAHtNRnqBtq1IDT>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jan 2025 03:45:57 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 30638343 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 Jan 2025 08:45:56 +0000 (UTC)
-Date: Tue, 28 Jan 2025 09:45:55 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: 20250126125638.3089-1-soekkle@freenet.de, git@vger.kernel.org,
-	phillip.wood123@gmail.com, sunshine@sunshineco.com,
-	=?utf-8?B?U8O2cmVu?= Krecker <soekkle@freenet.de>
-Subject: Re: [PATCH v3 2/4] date.c: Fix type conversation warnings from msvc
-Message-ID: <Z5iZQ3-egivQOcJp@pks.im>
-References: <20250126125850.3195-1-soekkle@freenet.de>
- <Z5c1F7oqsaPrHRiT@pks.im>
- <xmqqwmegutbe.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/QuOoxS"
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-85c4e74e2baso1105967241.0
+        for <git@vger.kernel.org>; Tue, 28 Jan 2025 01:56:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738058216; x=1738663016; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JUIq8vEmfw0nIleaeL6dDxqnMSCsfezWdhDhgmeQp/k=;
+        b=E/QuOoxSSDYU1Pb9vnOxGC8SkSCzHj+X/lVNOIUkIqVCfBCg8I9oJuBkMGYWLxPe8r
+         ojsCq5WhuxsSy9mBouu2LYBIvXnyBojc4Sbd8LIQo02Wjfn/YtAMSGxEWZ16sBkHLsPS
+         lTJCVMCGT6AK3uyr4fdRQ2z9GsrN0IuKevaoXVkjstce64se/s/zcdTKDkCN+x1Y0UqM
+         1aM5yPIdHQg+cjSibEOhGmfgGQkDBwQhkB4oSUl7gkBT90Rv5Q/kSxy+0ZEUC0uwD8ez
+         XopedgLanjUbw20Wy9V7uTBXgeK72sRulADkGwRN2MphYedYBshZc48pZga7TQ8mxU3r
+         OD9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738058216; x=1738663016;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JUIq8vEmfw0nIleaeL6dDxqnMSCsfezWdhDhgmeQp/k=;
+        b=kZ1G3QIG/txPytoBb5fB9SCZBuC+dbO5zwP7JiqX8zAaMwhJHRlk/vElg2ur82VJ7M
+         E6Ie3DOgB9RnqMEPQ04dzJhVii7rbHR6XE2uEId7P1km1P0PetrvCls6lgQwMqi1x378
+         KBA+/FOTfC3umjFYHDRo61VuAjauYiL9a6tyFYi9yDPth84ECB194HMC8Q+M7GsQ3ziD
+         0eMv52zgBPbaxDhRm4qhCQMSIXcUqVQHq/Y99WCsfE6hdscIR7ZJtZi1y5uXRVhMWhRi
+         2+8/xlgy2yQEqxlbRTzDUqZiGdXxmFJCVHhL3iJpA/RYutxI21LfcMxs3EivtruWNrcc
+         xq2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCW+u1Z76innMT8SGd1WFkok/uREWccpD6u4JbFFZEMepfMi+NdP/KtpLKQSIeDQaczRGJE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwGdbyfvNKw2jD335TwUrR1DxTEAc3O6XnkUvQzN/2D2/aHGwqS
+	ipP/9C2FOIbtIPTSXpj0v48KrBcbhc1A26YsO2J8lOVq3C0kCs4LsYKPI/G0xIXIYHMNwj54nfW
+	KW7jPta8Vwdcc0F94Ao6mgfF8K+0=
+X-Gm-Gg: ASbGncvknpJHFEdj/nU1dui75BEwOmZBfhs3i9mKWP58FHOR+67sgzoCyMxT6mUPCJe
+	xYwcWAYdK+G++6939Lb9KJK7Eqd7v0hUGM9DpXGsVvtlqaO3JMheqFawcqnLMU93IQiTuNco=
+X-Google-Smtp-Source: AGHT+IFpK0S73ncJivn5YwQbCtPeL0yMziEUsqx60JXbW1xakyIT4MXELxN2oKHW1UotgyIpb2/hOUXs2K6zadry0ZQ=
+X-Received: by 2002:a05:6102:d88:b0:4b5:aa82:926d with SMTP id
+ ada2fe7eead31-4b690ba90b3mr35227740137.6.1738058216598; Tue, 28 Jan 2025
+ 01:56:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwmegutbe.fsf@gitster.g>
+References: <CADfRhQ7Gcv6SB5ZYwdE1HRxkeBwrEbYMu6KcKPRuxWdDH+gZMw@mail.gmail.com>
+ <Z5VUxwjN4GLtZHuS@tapette.crustytoothpaste.net>
+In-Reply-To: <Z5VUxwjN4GLtZHuS@tapette.crustytoothpaste.net>
+From: dev oft <devoft1@gmail.com>
+Date: Tue, 28 Jan 2025 04:56:45 -0500
+X-Gm-Features: AWEUYZl5GlZjNMuzdtey7Cb_4-GX7vpoCru9z8GKg-zA5-1Z7gtmbQrRld4QX_k
+Message-ID: <CADfRhQ4htQ9JWa4ij6b4xQXjEC=s_+gd3_o=LA4u=gNVnyWu8g@mail.gmail.com>
+Subject: Re: Proposal: "GitPanel" Project Contribution
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, dev oft <devoft1@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 27, 2025 at 08:15:17AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> >> diff --git a/date.c b/date.c
-> >> index a1b26a8dce..0a3fafc8a4 100644
-> >> --- a/date.c
-> >> +++ b/date.c
-> >> @@ -1270,8 +1270,8 @@ static const char *approxidate_alpha(const char *date, struct tm *tm, struct tm
-> >>  
-> >>  	tl = typelen;
-> >>  	while (tl->type) {
-> >> -		int len = strlen(tl->type);
-> >> -		if (match_string(date, tl->type) >= len-1) {
-> >> +		size_t len = strlen(tl->type);
-> >> +		if (match_string(date, tl->type)+1 >= len) {
+Dear Brian,
+
+Thank you for taking the time to review my proposal for Gitpanel and
+for providing such thoughtful and detailed feedback. I truly
+appreciate your guidance and insights regarding the direction of my
+project and its alignment (or lack thereof) with the goals of the Git
+project.
+
+I now have a clearer understanding of the Git project's approach to
+maintaining forge-neutrality, and I see how prioritizing Git-hub
+specific features might not align with its principles. Your suggestion
+to explore support for multiple forges by developing a generic
+abstraction layer is invaluable. This would undoubtedly make the
+project more versatile and appealing to a broader audience.
+
+I'll also take a closer look at tools to better understand existing
+solutions and identify potential gaps that Gitpanel could address.
+Your suggestion to consider the needs of both hosted and self-hosted
+environments resonates with my goal of creating a widely useful and
+adaptable tool.
+
+Thank you again for your encouragement and for sharing your
+perspective. I look forward to iterating on Gitpanel and exploring
+ways to make it more inclusive and valuable for the larger Git
+ecosystem.
+
+Best regards,
+devtracer
+
+On Sat, Jan 25, 2025 at 4:16=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2025-01-25 at 19:59:17, dev oft wrote:
+> > Dear Git Team,
 > >
-> > Formatting is off here, there should be spaces around `+`, even though
-> > you simply followed previous style. It would be nice to point out why
-> > this change is makde in the commit message.
-> 
-> I think len-1 here is perfectly fine, as there is no element in
-> typelen[] whose .type member is an empty string, and no need to
-> touch that.
-> 
-> Besides, we already have this one in 'next'.
-
-Huh, do we? Oh, indeed. I guess this patch should then be dropped from
-future rerolls of this patch series, shouldn't it?
-
-Patrick
+> > I am devtracer on GitHub, and I recently reached out to Git=E2=80=99s G=
+itHub
+> > page to contribute a project of mine to the community. During this
+> > process, I had the privilege of receiving guidance from dscho, who
+> > kindly explained how to open pull requests and share ideas in a
+> > respectful and constructive manner. Following their advice, I=E2=80=99m
+> > reaching out through this email to share my project idea and verify
+> > whether any similar projects exist within the community. For
+> > reference, here is a link to our prior conversation: Git Pull Request
+> > #1877 https://github.com/git/git/pull/1877
+> >
+> > The project I am proposing is called gitpanel (a working title subject
+> > to change). Gitpanel is designed to provide a built-in terminal user
+> > interface (TUI) for viewing and managing Git and GitHub accounts
+> > directly from the terminal. The key features include:
+> > Profile Overview: Displays an ASCII-styled version of the user=E2=80=99=
+s
+> > GitHub profile picture (similar to Neofetch), along with their
+> > username and email address.
+>
+> I think this sounds like an interesting project, but it's probably not
+> appropriate as part of the Git project.
+>
+> Part of the reason is that there are many different forges, of which
+> GitHub is only one, and we try not to prioritize any particular forge or
+> implementation.  From the project's point of view, we consider it just
+> as desirable to host your own source code using a simple HTTPS or SSH
+> server, or using a self-hosted solution such as Gitolite and cgit, as it
+> is to use something like GitHub, GitLab, or Codeberg.
+>
+> With that in mind, a lot of the functionality that you offer here is
+> quite specific to GitHub.  Pull requests are not a Git feature, although
+> most forges have them under some name.  Similarly, Git doesn't have the
+> idea of a profile picture, or even a profile at all.
+>
+> So ultimately I think many people might find your project useful, but it
+> wouldn't be suitable to be within the Git project itself.  As for
+> similar projects, I believe there's tig, which provides a Git-related
+> TUI (although I've never used it, and so can't speak to it much more
+> than that).
+>
+> A suggestion I might make if you want your project to be more generally
+> useful is to support a couple different types of forges, possibly by
+> creating some sort of reusable generic abstraction layer.  For instance,
+> I'm sure GitHub, GitLab, and Forgejo all have profiles, so being able to
+> work with all three would be useful, and if your software also supported
+> the on-premises versions of these forges, it might be useful as well to
+> people in large companies and universities, which often self-host for
+> various reasons.
+>
+> Part of the reason I suggest that is because even though I do work for
+> one of the major forges (although my participation here is in my
+> individual capacity), some of the open-source software I use in my
+> personal or even work life is hosted on another forge (which I'm sure is
+> also true for many other contributors), so being able to use the same
+> tooling that works for a variety of forges is helpful.
+>
+> Best of luck on your project!
+> --
+> brian m. carlson (they/them or he/him)
+> Toronto, Ontario, CA
