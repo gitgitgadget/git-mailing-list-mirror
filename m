@@ -1,123 +1,147 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B8C13632B
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 20:27:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE511DE8AC
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 20:44:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738096026; cv=none; b=QlxInKx9X3b57J+CaSyZIfSCzzT2njTD6ePUwJZe3/6jV64JExBFCyt/aSoBXQP08kxIcTyCAUlGkK3hpciH4sNLsofaLsh4XLpworHmD3G6E3cT7fSN2Wxt/CJYe3KpUFIUPxkhT7rfszL7jXd+HXVEWS62x97qWgmOVsshrO4=
+	t=1738097078; cv=none; b=CJRcLVF2ObHGaKvW0rvViWp+7hrt+jzLE7EFKlk9q8bvd15XA3HfrrcSQElNQYP+D1GpMAlOeukNKJNq0WJI1ftXvBfuNFCEt11AYtSFcCLJoptQ8AubWG8o0R92sUkCPVWqC5hAeOnaKGKgrkZ+AaldvdGQokqjF2GgGwD9vQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738096026; c=relaxed/simple;
-	bh=ay9+fgD+p53iOY1fMf7Po3x1gX9BHA/gRMg9rFoss+k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o56LAkCF6v4c2EiR3D28vKM2H79k2OTbOCpirJcKc8/CKCHm3vc+AaSalRH1ynO1Sw0Z7bBJvrIcRy1fXTEPnxtf7tmTwkGQt/++qst3Yfh20bK3GPuOL7WBZBtpG/zxU7AUfdj2eWHRgv1M2LNabYevaJaRsGaPigYPwcrcmhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=uOn6tWrJ; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1738097078; c=relaxed/simple;
+	bh=33X89F3fArurEViWdOUG5Q6LUsYUrVZCzqe9XaL1YbM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=hqsol0K1t6nLHc397496hGYAEDfyQKWMs+UJi8PFVgKgaGt0PR2zOIcH6/pLcL1Kfs9bcWGhWS7E9NvTZ4l8FYu5CdwuXkSoL8niymRfpxhqJAb/ZVI8aeuQX2Fc5HxbIZlrVVKB44ACrK8zvzqb83cIwWvoEtqnOlLwi04aOTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SELxa3r1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U5QtJsKh; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="uOn6tWrJ"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-215740b7fb8so215505ad.0
-        for <git@vger.kernel.org>; Tue, 28 Jan 2025 12:27:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738096024; x=1738700824; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Qm0YPI+p+oxvRRmsT3njxEpFFe2XMUolq4nwPr3zzPo=;
-        b=uOn6tWrJn8ao3fWrciiMxQQtxNRzqZ1r36ujzWBtx5g75PVlJ0qjaQbc7eINoJ2fhy
-         fUeb9pCnTh6lJSzNMXSvQZb0rW4Bbh30d2dsdpImt/1gS6x+xtfYT3o40YHlp6joiubJ
-         hfuJDxdtVNtl2zBwDNCph13HOyny/Gdz8GkjoMs8vvBgH5AU8yhwN3OODbpJnhhczKZ4
-         U5krBd5Z5RzDwanE6V8K/piQoKPcJGreuUFYEw8t2rwm0L8SUGtB7YSLvOWRt7L9frGG
-         YRbzjG8LwJIuv7mgIeK2APzX/Jo69hOL7l1IYYuuJaHOQPNmKcRhIlGUUBseXYB+mFqa
-         36Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738096024; x=1738700824;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qm0YPI+p+oxvRRmsT3njxEpFFe2XMUolq4nwPr3zzPo=;
-        b=K1AmAmoLGIOEwyK0BbyvyBA1Fln3X2PaEdD65YNR4bWnlpGhxFR72OnA5KQaRTcZWr
-         4EIzzJ9k+MkF3vEoiwshLKGjMhcJq9CDlKX+BtZpmA7sSKPK+CIPcu598LuDmVu7ocVU
-         NdL3g7xfiDIYsnALqIRKBWXRQLyqRzCK1QGE4lwASmwpkQzGYkZ8oySjZ2gveqhn9khy
-         pao2tCzbpKS0wIfoEfdcO7i0fLTJXPHJWH86bcSDhWQQbTMoVM0tuYoyl88mLiB2icS/
-         sxbMvHdG6LropQcYy8jtW1lWv/zVLWvlnQOPuaO9fQDf6KSu/UzAirFuGi5DD2Ejyj3/
-         euYg==
-X-Gm-Message-State: AOJu0Yy1BvWLa8XpIJH+oIrc85ZmlRonpRn3m3i4ER33wbFHMQlFxBUA
-	rvLe9I3cmdrfPbYG1z/lZM35PuGmsgXjB+KMmz2tpXPYN/zhTRPxaQ6+mVMYlg==
-X-Gm-Gg: ASbGncs3K4+hFmjQAHew7MdnMy1Lk6OLx+puDsN47gAjq+xONc4G/QaxkE7ndUWWuvO
-	6+cn+mOsjRFjhnocQcVLYf9ZXYQUe3HjU5Lip/C8RamslU3m8CajwoxwT/MFMczyYMirYF77BPo
-	LZp1tACxEUeZ78+3zHylSFRiURzzULxDdGQWsKeB8T2X1MkGqiUs8Ljif1/6IJukSx8AZJ2sV8h
-	v81KeN5+d8FoH+RihLrFbYGLNK+vGqEa2KpfdWW6ahNihBylHoV3vJLGYQs38Chle/grvxb1ss0
-	5SVqA4l0CRsXVA==
-X-Google-Smtp-Source: AGHT+IEPB/0IvIJFGBnlywyHdq9W2yUnwsNpLgDbyMsyuMG1PHPzn8QTfGzVhkjXAaIjS+/H/F3gGQ==
-X-Received: by 2002:a17:902:ccc6:b0:215:7ced:9d67 with SMTP id d9443c01a7336-21dd8072b9cmr369735ad.24.1738096023808;
-        Tue, 28 Jan 2025 12:27:03 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:204:ad31:b9eb:e4cd:2ffc])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72f8a77c851sm9968702b3a.137.2025.01.28.12.27.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jan 2025 12:27:02 -0800 (PST)
-Date: Tue, 28 Jan 2025 12:26:58 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
-	emrass@google.com, gitster@pobox.com, sandals@crustytoothpaste.net, ps@pks.im
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SELxa3r1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U5QtJsKh"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D96F0114018A;
+	Tue, 28 Jan 2025 15:44:34 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Tue, 28 Jan 2025 15:44:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738097074; x=1738183474; bh=77/HbMHVKF
+	uKSW77bzY1WPVblSal3qDphNk9BVJqEJM=; b=SELxa3r12rSMWrQnrTOOSUK9Sa
+	F9b90P1WamM9bDRVdwinYPwR1fPB7ikjbZfDQo6JngGeUB+EOYYWQ34mryl5taqW
+	oefLnDf8ayTvyOwo/5d9GWP3Po2m9dpqQwcI9raLq3+GhnEglbkEbTPdbcVXtxWc
+	ix9wcFYBddfMjBFmT5b50r89pFCO7xDVdObnjh46ummbxT0o7Prj+wJRUpe/ZZDi
+	/HIgB85+cIUcxkRX15epomHajupWVFLi8N3/wfMaYrMaWlQtPDrUMD+t6PXw/mgS
+	vpg3YsDekPiqH5C9CvH3q0Wa3ylJWE29cxQMbEdI9ldR+EgyhZhgi3XyL56g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738097074; x=1738183474; bh=77/HbMHVKFuKSW77bzY1WPVblSal3qDphNk
+	9BVJqEJM=; b=U5QtJsKhCM91UIe+7FQ1eEoKUJ7X6vdY6LUlmfX0GX2xB1HMrxV
+	8RocOSCHIv868/OYTcpeH1ma41q29pFW5odwiggQuG++ZuuOphtRyqY/qoV2VPao
+	y1dkoL8MLWKYVf4nyOnyxG5sRtiQggtALXF45rfH8Jg8nm3LCWIZGd3S5bJ8cxYf
+	B1iHJXp1S7Aly5RXCwAu0w+XTQL6hknOASvBsAL45Mo1ZXZg3mgih+Yk5Fcb//au
+	h4Dj+hNZkHhsADvjs3JFih/uEQenKQCeVJHSCqO1h4VPzH2ELRvOn6Y6hvzC9avQ
+	OykpkogcPlwtt+kLEV6YnVrCWirJTPxtZug==
+X-ME-Sender: <xms:skGZZ8YXruazHzd5EWK23GmIUOEiXRkoETKaPPq2XSZaB7kJ6UqMAA>
+    <xme:skGZZ3Yf-ofx2MI6f-1kL7ZJ8yDjoRUjhyL6TwahKTXBcQY-iAS3pq_AnCDOgKJts
+    xVM4ydwBcHA3eyx5A>
+X-ME-Received: <xmr:skGZZ2_B6-m18wj4YdFdgYl3r9A_GBGOw49Dqo5OSuBpEzuvjG01s1kY7UCU7GJ8dXykWEMFMSBwPvxAS220DmgsUoVyCy31FImN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
+    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtvggrughmohhnse
+    hgohhoghhlvgdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgv
+    lhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrdgtohhmpdhrtghpthht
+    ohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopegvmhhrrg
+    hsshesghhoohhglhgvrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthih
+    thhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:skGZZ2qCYkKIlMUPqjYOsFxZaCZd57qBFSQWmUL0YTVd0j9n6iLS-g>
+    <xmx:skGZZ3qHGCeAEF55SY5Opgwb9u8tlPH2LHGHFbPUtUzyAg98XoDVfg>
+    <xmx:skGZZ0Tnh-A025YZ6msHITnMeAi3l2odddnYlscqw_WMJki6xn2xBA>
+    <xmx:skGZZ3oh8lDCql5RAsnAwjKR3fp4dCUI4UaiZp8HQ4VKCWzrQn_gkA>
+    <xmx:skGZZ60RJZUVM2gmIX50zLErrimuO42orwY5rKrLqZGBbTMClhSxyF23>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Jan 2025 15:44:33 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josh Steadmon <steadmon@google.com>
+Cc: phillip.wood@dunelm.org.uk,  git@vger.kernel.org,  calvinwan@google.com,
+  nasamuffin@google.com,  emrass@google.com,  sandals@crustytoothpaste.net,
+  ps@pks.im
 Subject: Re: [PATCH v7 2/4] libgit-sys: introduce Rust wrapper for libgit.a
-Message-ID: <ghkzloozvlb2hx5jxiqjydifppwu5m46rotjqirtedmyqowngv@w3rehiaqhskr>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	phillip.wood@dunelm.org.uk, git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
-	emrass@google.com, gitster@pobox.com, sandals@crustytoothpaste.net, ps@pks.im
+In-Reply-To: <ghkzloozvlb2hx5jxiqjydifppwu5m46rotjqirtedmyqowngv@w3rehiaqhskr>
+	(Josh Steadmon's message of "Tue, 28 Jan 2025 12:26:58 -0800")
 References: <cover.1723054623.git.steadmon@google.com>
- <cover.1738023208.git.steadmon@google.com>
- <f1502b85901d81889d86597f31eca40e1965d56f.1738023208.git.steadmon@google.com>
- <3559a70c-7ed3-41cd-a45f-390134218c52@gmail.com>
+	<cover.1738023208.git.steadmon@google.com>
+	<f1502b85901d81889d86597f31eca40e1965d56f.1738023208.git.steadmon@google.com>
+	<3559a70c-7ed3-41cd-a45f-390134218c52@gmail.com>
+	<ghkzloozvlb2hx5jxiqjydifppwu5m46rotjqirtedmyqowngv@w3rehiaqhskr>
+Date: Tue, 28 Jan 2025 12:44:32 -0800
+Message-ID: <xmqqzfjamzwv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3559a70c-7ed3-41cd-a45f-390134218c52@gmail.com>
+Content-Type: text/plain
 
-On 2025.01.28 15:08, Phillip Wood wrote:
-> 
-> 
-> On 28/01/2025 00:19, Josh Steadmon wrote:
-> > Introduce libgit-sys, a Rust wrapper crate that allows Rust code to call
-> > functions in libgit.a. This initial patch defines build rules and an
-> > interface that exposes user agent string getter functions as a proof of
-> > concept. This library can be tested with `cargo test`.
-> 
-> It's great to see some tests. This is looking good, I've left a couple of
-> small comments below.
-> 
-> > +contrib/libgit-sys/partial_symbol_export.o: contrib/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
-> > +	$(LD) -r $^ -o $@
-> 
-> This is a very long line and the ones below are pretty long - perhaps we
-> could put the list of sources in a variable?
+Josh Steadmon <steadmon@google.com> writes:
 
-Done for V8.
+> On 2025.01.28 15:08, Phillip Wood wrote:
+>> 
+>> 
+>> On 28/01/2025 00:19, Josh Steadmon wrote:
+>> > Introduce libgit-sys, a Rust wrapper crate that allows Rust code to call
+>> > functions in libgit.a. This initial patch defines build rules and an
+>> > interface that exposes user agent string getter functions as a proof of
+>> > concept. This library can be tested with `cargo test`.
+>> 
+>> It's great to see some tests. This is looking good, I've left a couple of
+>> small comments below.
+>> 
+>> > +contrib/libgit-sys/partial_symbol_export.o: contrib/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
+>> > +	$(LD) -r $^ -o $@
+>> 
+>> This is a very long line and the ones below are pretty long - perhaps we
+>> could put the list of sources in a variable?
+>
+> Done for V8.
+>
+>
+>> > +contrib/libgit-sys/hidden_symbol_export.o: contrib/libgit-sys/partial_symbol_export.o
+>> > +	$(OBJCOPY) --localize-hidden $^ $@
+>> > +
+>> > +contrib/libgit-sys/libgitpub.a: contrib/libgit-sys/hidden_symbol_export.o
+>> > +	$(AR) $(ARFLAGS) $@ $^
+>> > [...]
+>> > diff --git a/contrib/libgit-sys/public_symbol_export.c b/contrib/libgit-sys/public_symbol_export.c
+>> > new file mode 100644
+>> > index 0000000000..cd1602206e
+>> > --- /dev/null
+>> > +++ b/contrib/libgit-sys/public_symbol_export.c
+>> > @@ -0,0 +1,22 @@
+>> > +/* Shim to publicly export Git symbols. These must be renamed so that the
+>> 
+>> Style: Multiline comments start with an empty "/*" so this should be
+>> 
+>> /*
+>>  * Shim ...
+>
+> Whoops, fixed, thanks.
 
+The series is looking good and it seems that we'll be expecting a
+hopefully small and final reroll?  I'll mark the topic in the
+"What's cooking" draft as such.
 
-> > +contrib/libgit-sys/hidden_symbol_export.o: contrib/libgit-sys/partial_symbol_export.o
-> > +	$(OBJCOPY) --localize-hidden $^ $@
-> > +
-> > +contrib/libgit-sys/libgitpub.a: contrib/libgit-sys/hidden_symbol_export.o
-> > +	$(AR) $(ARFLAGS) $@ $^
-> > [...]
-> > diff --git a/contrib/libgit-sys/public_symbol_export.c b/contrib/libgit-sys/public_symbol_export.c
-> > new file mode 100644
-> > index 0000000000..cd1602206e
-> > --- /dev/null
-> > +++ b/contrib/libgit-sys/public_symbol_export.c
-> > @@ -0,0 +1,22 @@
-> > +/* Shim to publicly export Git symbols. These must be renamed so that the
-> 
-> Style: Multiline comments start with an empty "/*" so this should be
-> 
-> /*
->  * Shim ...
-
-Whoops, fixed, thanks.
+Thanks, all.
