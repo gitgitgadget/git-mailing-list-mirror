@@ -1,76 +1,75 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D51199EAF
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 20:47:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852371B413D
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 20:50:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738097255; cv=none; b=p4rXohYLLZWInNvXMEqyB+JtjzO1qLwFYIM4AteW8VGWksN2OS9EJg2Dt30+S+2YD+1LHcD6JfRpKLC8/qg+SZ6FERqS8v9J1/C33YV/Abw/D6+IfZAL1aAoQy8VMjz9zq2rX2PvD34l7e5XcOrOiBkbdlEtVxN9aTSBXTuJDPk=
+	t=1738097439; cv=none; b=a1Z4tvDNCCmBa0BUhWXAVXo1jhpv8ySqdByIq1JRQqE6UKNRIju96PdLkzA4etlHoZMYLhSy7ugKOt4rcUiPnKuILdt7dbN9l3Yefjjv3YvMXzJ5Tf77vS5hprL/SqhBqgFthWujUD1nwwIih1khOjjKOmetG44vMHgjzzKvUfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738097255; c=relaxed/simple;
-	bh=NekWp5GtxgyU9ok1rQ5nE1Fkc4BnlxptlSncPBxx1hU=;
+	s=arc-20240116; t=1738097439; c=relaxed/simple;
+	bh=Y8VWaO8vcjrhVB2bhpJmZJq1P72LPynSkCA80D8gDPE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NRFjEOSJBBNVBrhKf8qCFiVUvi4id9zdkEsf7jXvRLmpRvyLWvYFv3k+GnIY2ASOgCNF35MRP5+AVjF/I0KjYeXfsFZ9eFahofpMNlYvnTRWB5VwdInS+wrSdrDMVppO1basxZ5SkhXa7vlwE0Fn8YDrG0Y3gPUyaRuoIHDxYsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=S7siGUDL; arc=none smtp.client-ip=209.85.214.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=R15hUerGRy3UuS+FXTuymH59ySRLAvo6Gy0nfLSz/bFC3NMH/iqfLgknViAWUXRq6xRblPkHsH/wYH6agx9BrTAkPgUkgwHz6ZGjZm8E8WaekIHh9cyeG8Q2doM1FlQeYoOavMMDeuMzeHwyeeuGRJ/cCNDC98I3pNWNtiRA0j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mSqkTyOF; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="S7siGUDL"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2163affd184so184705ad.1
-        for <git@vger.kernel.org>; Tue, 28 Jan 2025 12:47:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mSqkTyOF"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2163affd184so185485ad.1
+        for <git@vger.kernel.org>; Tue, 28 Jan 2025 12:50:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738097253; x=1738702053; darn=vger.kernel.org;
+        d=google.com; s=20230601; t=1738097438; x=1738702238; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=anwKhqv/GsDj0agCBAPjZbVC8VlLef/4ubo3Yp9QSvQ=;
-        b=S7siGUDLlZDyDDp0t8gYvPQ/yC5cXhctftHBLp8xc0+0wZnRWH0gMrCIl1Aqa7/Nab
-         w1V9OCIvUzhua1GPnzqBIuGDHatNKWQLA52ykgUgnIOzVUdVhj8vkEFtTQHajMdv09R8
-         dFQ6jqkQ7qpDFQqXdvbmN8ec7UClyo4CWC7vZaxSFKqulFf6FJStxYhRTpKd3Dp5m/nA
-         0k47H1yyCUnLMAYGBu+WPMQkXTX1bFaESO48oojODP1pdpqLAS6XCg9gMWLoIgbEJsyf
-         O1PKo0R8p7eM2X4V0sNDHYh5ShTT6zjpditUi4caxQBSKUgcrwXROpcOZWuHad4pYEjW
-         ASwA==
+        bh=iogMDHFre8qnwBC6Tb+dFIMzwrRJaE5qWhC4sanfC48=;
+        b=mSqkTyOFYU8y9a+Rro/hoc23UtWpGjG8nL2FOLDvkk4HxtuKugV7/GEl4Fcnp33xbM
+         4NMCZAOKkzKlosl/TO9Osjl/A32Bs3TRN4G87c1ELbIlS48Br4MZpGQTVWBXUvZCPjGc
+         1Kf/HUu8fM1kTh+RUfFI0AsoBUquqrSt0TBgxaMWHTp87RHnNObdUW0Q8026RU8Umazj
+         LhrDHJIUVLBzX/2neVsez8BWvlzPkN+hLpkxeSZmfdVHc+QjQLf6lCqWbnYAQyfrkqjL
+         gGpMwt92aus8Km1tlD8BBljZF1/HRF8DbAVFA3O8dfe4k/iMxw0WYh2i5/WY1JtiMWDz
+         mu2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738097253; x=1738702053;
+        d=1e100.net; s=20230601; t=1738097438; x=1738702238;
         h=in-reply-to:content-disposition:mime-version:references
          :mail-followup-to:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=anwKhqv/GsDj0agCBAPjZbVC8VlLef/4ubo3Yp9QSvQ=;
-        b=W/FhcYWH6mb0j5IgHkB7VEcqWan/lt1XIBGi6lyYI4F8gkWSFQnjZM1GhVWmKFMrLx
-         MfTCH2k36TwXRImoy0j8agzWtSFVAXMTX37287WG+NFDn6u6ymy0s6rYWZk2w6QoWfeu
-         iV2++XKJeVHBrbOuPJ+3e8tmpCi7+8K2sr8U8k4iuaKNpxxlKxhwZF3/mdKrwk5c0Mmv
-         Y59Tr1+Kipkx9smebWZN0Z9X0x1vPzbCKN7trwVLzz95v84/1Dwf3h/KJxFnCImBUleJ
-         vN3FbgdBXJDAmwA7HPOmYcrXOMnoVajkTQPhmx0tHYYq68mBT8c4tOzllT/qJvxpc2GR
-         vBFQ==
-X-Gm-Message-State: AOJu0YwtJutidDSDspFvC6b3361Wsei/0O5nM/sBcFP1SfX3pb9mqOWW
-	v9Pmh+cFn/v1NTys4tD2MNpb8pcaXb/eWsr3NOX54aTtaUnrwom0WS8dv6oGKmSubAIwQtNTAPf
-	DMwnR
-X-Gm-Gg: ASbGncswVvsRtirpVQt7PiFgaL9IIdrFAeFfhD1yK8SAKNi1xwWqt2ger3VCuvuQ5pD
-	Hefi2ZIxtln2DiPK4VSCvaesW8N9L6M0YUKOlNCKcW7FWsFDlz0bUFMCWBJwZr1uMfci2iLjoZZ
-	sfRridJYFGtFuf0w6GLgQh18+artyAfZAdDyarBt7NVmespMV09TtfMkBl+FLh4YPCwJcF6o8cX
-	hJRSDFgbvkXlpw9ZKODu7kh2nCEtXNvZA27P7IVUUGLXLcC5Za6NKAtowMDHebw4h9WGvhPWzxo
-	4STCsTAYl5FvtA==
-X-Google-Smtp-Source: AGHT+IG5UN0v1M/tiHO2E0/op3i8JdFhy5dEVZSZNl3lbw/8xvgtWOfLIcdhwZt6BNXRbbc21bWl3w==
-X-Received: by 2002:a17:903:2408:b0:216:33a:4b70 with SMTP id d9443c01a7336-21dd7f95454mr477605ad.2.1738097253159;
-        Tue, 28 Jan 2025 12:47:33 -0800 (PST)
+        bh=iogMDHFre8qnwBC6Tb+dFIMzwrRJaE5qWhC4sanfC48=;
+        b=CQHtxMudPNB+dnwcil5fQILmPpsfeL3cun5u7DhRe4G7O4z0qalsPGa0GAXw1GuUGy
+         RwQfkfDsMLLpsZWy9zL4ktqt5bxQCzVfAUaZdRVrhUd6LIJD5BLrES90QCUSOpEUXBP9
+         jFwhPExcRVpKl6f2jms1H9BCcOBNa5kAuuWV4OWHiOUPMp7E8Qyj9VmYaYbPPRhVkWYD
+         cS7sVRSMuO99cxK4vTktAhZkK3+rQ/oVGPXy4V6t5QJhrjwiY5MOmjSrx3pOuUNGmV8g
+         2vrjqyVwvQpunmc13UiPP8/kczqJsCpnQR6Fz4wQwmnlTwbY4SHHNswH+cvgKFuhkTts
+         fprA==
+X-Gm-Message-State: AOJu0Yz5T6Uxc84yS16JCXXosKWk1SnKWpExVoRVMGFjfNdHJ8Lp6WYD
+	N0UiXYhpeaMtcBgDVRGwea/gaiaZnVzldgp6xUVWh1tnvWPVfKOG2IK5ZoDEEg==
+X-Gm-Gg: ASbGncvkd3SrY7J9rt/Dj7jjkG4X4uzGvbPsF2Sa7FvsYaolI3JVlcUx/N1jCe1R3du
+	OsJK4H2UWRZypbPemESsoS9fB4zV8r+OptunqUMncaYdW9LUW1LyzvbRA5jOIlHxuk32WUYH2lN
+	jjMmCWi902/NYbsQyQ1FHBpPsfrgilGl1ilT7iNBUHroXAwunuwi5/vnJl4LDTUKCYz7aZawza5
+	89xU+bXQwS2Qf8Lm9pvufIiCsKJE0ZJtOzZVULYGeap3tXz7EYrGDk4e0we8Hh2H/9rkVkVqvp2
+	uwUbkThtcHYwTQ==
+X-Google-Smtp-Source: AGHT+IHRNSUcobXRqqS4lGSP2/X5XC95m+yWChCtWMrQEIsUEm24m1OLuauxG9kuqRx4wrGqPdRkHw==
+X-Received: by 2002:a17:902:ce05:b0:215:884a:e8d1 with SMTP id d9443c01a7336-21dd809d2e1mr443185ad.24.1738097437589;
+        Tue, 28 Jan 2025 12:50:37 -0800 (PST)
 Received: from google.com ([2620:15c:2d3:204:ad31:b9eb:e4cd:2ffc])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72f8a6b31besm9991999b3a.54.2025.01.28.12.47.31
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f7ffa77043sm10914261a91.35.2025.01.28.12.50.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jan 2025 12:47:32 -0800 (PST)
-Date: Tue, 28 Jan 2025 12:47:28 -0800
+        Tue, 28 Jan 2025 12:50:36 -0800 (PST)
+Date: Tue, 28 Jan 2025 12:50:32 -0800
 From: Josh Steadmon <steadmon@google.com>
-To: phillip.wood@dunelm.org.uk
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
-	emrass@google.com, gitster@pobox.com, sandals@crustytoothpaste.net, ps@pks.im
-Subject: Re: [PATCH v7 3/4] libgit-sys: also export some config_set functions
-Message-ID: <hlfseilciwto4qajr2c4qvoxrfycef3jcvikpwj5aosopf3r3e@ohdkdqllyjxo>
+	emrass@google.com, sandals@crustytoothpaste.net, ps@pks.im
+Subject: Re: [PATCH v7 4/4] libgit: add higher-level libgit crate
+Message-ID: <iexpjuyxdg3yzk2eeibtzfgyzzrnpo2fg2ic6eeajky5lm7elw@tby4wimoqjrg>
 Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	phillip.wood@dunelm.org.uk, git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
-	emrass@google.com, gitster@pobox.com, sandals@crustytoothpaste.net, ps@pks.im
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
+	emrass@google.com, sandals@crustytoothpaste.net, ps@pks.im
 References: <cover.1723054623.git.steadmon@google.com>
  <cover.1738023208.git.steadmon@google.com>
- <d67d3648d1bdb7dde5e475f3a8eba834cc0ea891.1738023208.git.steadmon@google.com>
- <8ed463cb-1191-4106-bf30-87e9e8bcc95a@gmail.com>
+ <88425bb0b1b90cf6b3d2d5a1af57e46c7a03ad39.1738023208.git.steadmon@google.com>
+ <xmqqzfjbo7sb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,83 +78,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <8ed463cb-1191-4106-bf30-87e9e8bcc95a@gmail.com>
+In-Reply-To: <xmqqzfjbo7sb.fsf@gitster.g>
 
-On 2025.01.28 15:08, Phillip Wood wrote:
-> Hi Josh
+On 2025.01.27 20:56, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
 > 
-> On 28/01/2025 00:19, Josh Steadmon wrote:
-> > In preparation for implementing a higher-level Rust API for accessing
-> > Git configs, export some of the upstream configset API via libgitpub and
-> > libgit-sys. Since this will be exercised as part of the higher-level API
-> > in the next commit, no tests have been added for libgit-sys.
-> > 
-> > While we're at it, add git_configset_alloc() and git_configset_free()
-> > functions in libgitpub so that callers can manage config_set structs on
-> > the heap. This also allows non-C external consumers to treat config_sets
-> > as opaque structs.
+> > -.PHONY: libgit-sys
+> > +.PHONY: libgit-sys libgit-rs
+> >  libgit-sys:
+> >  	$(QUIET)(\
+> >  		cd contrib/libgit-sys && \
+> >  		cargo build \
+> >  	)
+> > +libgit-rs:
+> > +	$(QUIET)(\
+> > +		cd contrib/libgit-rs && \
+> > +		cargo build \
+> > +	)
+> >  ifdef INCLUDE_LIBGIT_RS
+> > -all:: libgit-sys
+> > +all:: libgit-sys libgit-rs
+> >  endif
 > 
-> This interface is looks nice, I've left a couple of comments below
+> I somehow would have expected this part of the patch to do
 > 
-> > diff --git a/contrib/libgit-sys/public_symbol_export.c b/contrib/libgit-sys/public_symbol_export.c
-> > index cd1602206e..a0297cb1a5 100644
-> > --- a/contrib/libgit-sys/public_symbol_export.c
-> > +++ b/contrib/libgit-sys/public_symbol_export.c
-> > @@ -4,11 +4,40 @@
-> >    */
-> >   #include "git-compat-util.h"
-> > +#include "config.h"
-> >   #include "contrib/libgit-sys/public_symbol_export.h"
-> >   #include "version.h"
-> >   #pragma GCC visibility push(default)
+> 	libgit-sys libgit-rs:
+> 		$(QUIET)( \
+> 			cd contrib/$@ && cargo build \
+> 		)
 > 
-> Personally I'd prefer it if we actually defined struct libgit_config_set
-> here
-> 
-> struct libgit_config_set {
-> 	struct config_set cs;
-> }
-> 
-> Then we could avoid all the casts below. For example
-> 
-> struct libgit_config_set *libgit_configset_alloc(void)
-> {
-> 	struct libget_config_set *cs =
-> 		xmalloc(sizeof(struct libgit_config_set));
-> 	git_configset_init(&cs->cs);
-> 	return cs;
-> }
+> but the above longhand is fine.
 
-Hmm yeah I remember this feedback from (checks Lore) back in V2. I think
-you're right, we should have gone this way from the beginning. Done in
-V8.
+Fixed since I'm sending out a V8 for Phillip's feedback anyway. Thanks.
 
-> > +struct libgit_config_set *libgit_configset_alloc(void)
-> > +{
-> > +	struct config_set *cs = xmalloc(sizeof(struct config_set));
-> > +	git_configset_init(cs);
-> > +	return (struct libgit_config_set *) cs;
-> > +}
+> > +    /// Load the value for the given key and attempt to parse it as an i32. Dies with a fatal error
+> > +    /// if the value cannot be parsed. Returns None if the key is not present.
+> > +    pub fn get_int(&mut self, key: &str) -> Option<i32> {
+> > +        let key = CString::new(key).expect("Couldn't convert to CString");
+> > +        let mut val: c_int = 0;
+> > +        unsafe {
+> > +            if libgit_configset_get_int(self.0, key.as_ptr(), &mut val as *mut c_int) != 0 {
+> > +                return None;
+> > +            }
+> > +        }
 > > +
-> > +void libgit_configset_free(struct libgit_config_set *cs)
-> > +{
-> > +	git_configset_clear((struct config_set *) cs);
-> > +	free((struct config_set *) cs);
-> > +}
-> > +
-> > +int libgit_configset_add_file(struct libgit_config_set *cs, const char *filename)
-> > +{
-> > +	return git_configset_add_file((struct config_set *) cs, filename);
-> > +}
-> > +
-> > +int libgit_configset_get_int(struct libgit_config_set *cs, const char *key, int *dest)
+> > +        Some(val.into())
+> > +    }
 > 
-> Style: this and the one below could do with being wrapped at 80 characters
-
-Fixed.
-
-> This whole series looks pretty good to me
+> Nice.
 > 
-> Best Wishes
+> I was wondering why libgit_configset_get_int() in [3/4] does not do
+> better than just wrapping the raw C interface, which returns the
+> error/success status separately from the value we parsed.  With this
+> higher-layer wrapper around it, the interface becomes a bit more
+> like a higher-level language.
 > 
-> Phillip
+> Thanks, will queue.
