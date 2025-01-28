@@ -1,80 +1,82 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F145F18C91F
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE4018B476
 	for <git@vger.kernel.org>; Tue, 28 Jan 2025 08:41:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738053696; cv=none; b=E3OBlUlQOMIdeYA5KeH4pIf+Nwd6ma4XTrRKIKSqr2Q/z4UBskPthDcVE74qbkTtPUplAOTTzVbHeCRBXYC/qztd9vWJLUKXWG4k7p7Vnl+aRsg/0sojgCKq/YBCVQ1fOObgncpH1KFGTN5XfpLP4/MqmlJ3rmTseEl+tNucD+4=
+	t=1738053697; cv=none; b=NKw23j8/7MBuENYUFm8SJAk1BNHdD0ztnvAyjzO/UMrrrgVnKjTtXUq9KMR+DrLPAVAjQK2cFYce5JvV6X6lcJl8HG4V8MSuuk0EhCE53lEZLiIQy+X5ylpMh+lI5biQK6OG79iDfyAGo7R/GBzlAV2pCr29W+KLkt1h3OlrRoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738053696; c=relaxed/simple;
-	bh=FsQFbJtOec+Wgk/wib68HyD5Czlb5D6fbTZywVQ8GpY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=P5wCXwY28aqThG3vTnhmR1cthJGa+vbq7dkxgouWlklwkXtWDbM8FRmsOc811mX7xSs4PWjq8EVd/HAv3KEpayJkuaeSwuGsltCypPwcVzG+Usp//saELiKm3d2oP3H4Udx8ndJhsBtB+8h4BnygZzuL7wGXgUQ7kSkepay7ILc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AgaZOp0K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NKhfNsmI; arc=none smtp.client-ip=202.12.124.148
+	s=arc-20240116; t=1738053697; c=relaxed/simple;
+	bh=Bkzz3vXk5JwBSp7lwkOUNOEjS+ngvJ7Pj6mrjG9ISGs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=J9CFYraKIJi1jtFCTjMBtMpN5L2z6mxqIk+uk5vagZlqGzluTBUKqDWPoV5NQrZtkfNZNYG8bow4wM5yHQK+RT7qTTJdDtOdaVZm6awFpxohbu7j+wyX7m8xntVfD5gHN3jJ6s1dTRPw2hp6lDa+64cSlp2SSygNx5ErthdaoT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aAQR5QbH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VZztiv86; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AgaZOp0K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NKhfNsmI"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id D7C631140147;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aAQR5QbH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VZztiv86"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C0F8925401D1;
 	Tue, 28 Jan 2025 03:41:33 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Tue, 28 Jan 2025 03:41:34 -0500
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Tue, 28 Jan 2025 03:41:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm3; t=1738053693;
-	 x=1738140093; bh=ye8uSdYa2vZ5CKQbHevM5cNBg5UZo3j8hfxI5hgXlLI=; b=
-	AgaZOp0K5rTbYZt2HhekN881mXIt3dKUlk47BRBWI0IJr+n/1x+nhh2hBMQzGAIv
-	Yyea+lxF7ZYuZi159Xj8kY/RLGcpkc7uz9lWCNUDxsYpdNBbyvYHy2fqYh14qjBs
-	WKYAJ9kBxrpvR8sEaM9/Gr7MjtBmKFWQOXT0i4twWBQMieHX8RHF1yB0nnEq+gVO
-	vG04PzJ3TfDHOabHVoqYxnWDnAv/0sDFOMxHhJ6yQ1GfpX8I3BYNgtuINmqjkPYv
-	VBrYlQnM9wcXWe9vSgewwlq0gctZK+q04X34aFzt1hWbmHdOYE5vJGvMSh81lqnj
-	pCmmmHBw0blAT9A1Lh4IaA==
+	 x=1738140093; bh=mLRH/aEDQedX20xm+v6r82bH4clswoeFisOMajYHqb0=; b=
+	aAQR5QbHI7CtwZbcxlQ830R/avj9FWoHfOwn/rbUZO/CV1FYXPrBUsL+ULf7YSiU
+	QmbZUv1D6s6p+j5TdzpzRMuS63kCEY+/UyKmqeAazBnu4uRUNzeQTwJSjkKeDRXi
+	enoXcUR//emQAEOeciJOb6FFmCVKd5i72CM3iuO5X6HQbmZbRO6TxCo9rdtwDs6M
+	GCKoKOLbCeslOr1RhoplD5xUEjGNsJYAvDTEMBVjpvSlSTxtOCaweLh9IF2sdsCT
+	yllJZYb0xFrd/7r7RSgNzYYmn1Ig8sE7xSoVf1GOIY21EYPu1r5FsVejHgMLI+bI
+	eLPizK/J9qViKCCNa/lywA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738053693; x=
-	1738140093; bh=ye8uSdYa2vZ5CKQbHevM5cNBg5UZo3j8hfxI5hgXlLI=; b=N
-	KhfNsmIFgvLlZhKwVz6m19T4z/hqy5P5DvSg/IEawVFrG3Y2wgIE4XQ4XP+IdIss
-	lw2dwuvvUS/VPqFFOD6O/geK5kuBAVmvue2q2DStAjnyceam1bRP0My8bE7HeDYx
-	7+o8fNWmDrCgdLSCSBOBjGquOEutV4v0jVlHkqpgLnA3qdk6Hq3oRC3g0UfKWcTm
-	fz+fk9qheYHXPMU+6kerhBZcRV1R10aiR8MCi5AdllBR1OZI0luUjOOcmNegCFZ8
-	vg4muvPVR9ehrmo8Sx/lHHcrUcmfqYAasLNj6JDpJnKZzPBtc0l1Uln02VMTp87I
-	aUoy7hsPaIjSKxDuz7vCQ==
-X-ME-Sender: <xms:PZiYZ9Ty857T3Hjg-pc_5DOwCYzjuoZYNpQSBku3NNY6lXMpm3NKJg>
-    <xme:PZiYZ2z4btXk0jCBFlFXe9y-7g2sZiB6d-VE6Mpihl4B0LXfU_SdWbAqFTN_F8tKV
-    7ODYYRaC7F9-OH8gw>
-X-ME-Received: <xmr:PZiYZy0mYTbl2MICk1tmWnxsFJh_NMUPUf1QRz-tPtAAGrjqKUZ4dVgXNoN925n-8C-JlecNDICoZESpK7mIrjRHdAssbHoyuj_Xn_yUd4w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudehieehucetufdoteggodetrf
+	1738140093; bh=mLRH/aEDQedX20xm+v6r82bH4clswoeFisOMajYHqb0=; b=V
+	Zztiv86TNxnwCBHU/diQmDzmCX8kPuj7t1IoxTnopsOJD8fkJ1s0M9rE3Cyin4UH
+	ddc3mu96vi6iuzXBkNJGUbNI6OGcJ15/9vNcgFi58SRgwD4IpfAateyNDAHYjhKp
+	EKjxAiCEHvjgZO5EsMD17QvdKTbgZOm9jHYWCsLANT5goeSqCtyxZ0IoiWBOjEae
+	P+iea+shXLtWN1TDO6cWksdaogyh63EV3NYx/FR3vj3TN2lxgXozDUXwnYTC0IQk
+	qAot/iy/QjLXt57W4j7TQmmbd1Q0cZPAtVlWcbjPcv2J0W+g6RNU3oC4S/EHwYX4
+	bst6qQRM9IVs0tmbyIiNw==
+X-ME-Sender: <xms:PZiYZ9_pvpl5eIs8VeNGbcqeRWUToeS5tuAzd-xkbhCnV_rg3NTeyw>
+    <xme:PZiYZxsK8j-W-JOFtBvcgb2uqnucOX3MisS0VFFsZuHIALb9U-8moFPho2yQmhpIr
+    qcq2Is1HNFq9WpjeA>
+X-ME-Received: <xmr:PZiYZ7DnZmFO731Ami2V2X9ZTUwU744rJje8fUI6LOXNl-f05ejF-bOQl0A2LyTswVcAgY7gnAIozeKn-7B0tXo6mgoyNJ5OGZfQfKv0d7I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudehieegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
+    gvnhhtshculddquddttddmnecujfgurhephffufffkgggtgfgjfhfvvefosehtkeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
-    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:PZiYZ1AbCeylgzaRpKmkhPa-6BkjpaN2SQB8KjzxAc3pw00Av7oyNg>
-    <xmx:PZiYZ2hFbniaGVYbx704Nhlwrtn6e16sbyAAqt1k3dJWtJlWvbzVug>
-    <xmx:PZiYZ5qZFQY2cxIfs-kf5wyTqQ9S7B1_cAbR9X9kwonnV31csL-fmw>
-    <xmx:PZiYZxhUyJdEAFpZz6sK78pItjoqKUJt8IIcAxB35vwWKbqy9SGzAg>
-    <xmx:PZiYZ3vYGfIx3uqX-TryO-xuWlj7JHnYO7tBXSrSO4w6r8yZG9UWc2II>
+    drihhmqeenucggtffrrghtthgvrhhnpeduudevjeffffegjeegheeiteeuffdtvdehleeg
+    feefvedtgeetlefhkeevtedtheenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
+    rdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhk
+    rddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtg
+    homh
+X-ME-Proxy: <xmx:PZiYZxcyHGhdI8WDu5Kyd71DCphfIZbdbd4kFrpwRU0VOIPut3wxIw>
+    <xmx:PZiYZyPCeQS_pB6nf3L1dpXugin7MqTR64BshGG9dRss6bFYwzyy3Q>
+    <xmx:PZiYZzm3bR8YDeuKSRQneLdi6-ciKDDDBWqp4SZzx9y4mTl5sYYYyw>
+    <xmx:PZiYZ8vKfb0Tm_ITAZv5sdM7X_LBzTikIkFnezHAW06ed_aPLz67Pg>
+    <xmx:PZiYZ_pq1vldaoQgOj3O_IE1R25NLObq5lcqdTYJY8q4_OO_qVEk8IqE>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
  28 Jan 2025 03:41:32 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2daea82e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 Jan 2025 08:41:30 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 87b2c433 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 28 Jan 2025 08:41:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 28 Jan 2025 09:41:27 +0100
-Subject: [PATCH v4 01/10] compat: drop `uncompress2()` compatibility shim
+Subject: [PATCH v4 00/10] compat/zlib: allow use of zlib-ng as backend
+Date: Tue, 28 Jan 2025 09:41:26 +0100
+Message-Id: <20250128-b4-pks-compat-drop-uncompress2-v4-0-129bc36ae8f5@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,175 +84,191 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250128-b4-pks-compat-drop-uncompress2-v4-1-129bc36ae8f5@pks.im>
-References: <20250128-b4-pks-compat-drop-uncompress2-v4-0-129bc36ae8f5@pks.im>
-In-Reply-To: <20250128-b4-pks-compat-drop-uncompress2-v4-0-129bc36ae8f5@pks.im>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIADaYmGcC/43NQQ6CMBCF4auQrh3TDlMUV97DuCi0SGOkpMVGQ
+ 7i7hYXBFS7/l8k3IwvGWxPYKRuZN9EG67oUtMtY3aruZsDq1Aw5Si4Eh4qgvweo3aNXA2jvenh
+ 2c3kTAoKpZCmIZFnnyBKS5sa+lgeXa+rWhsH59/Ivinn9m44COJSF1JwjqgPpc7re2web3Yhri
+ zYtTFYhSKGQR5OT+bHytVVsWnmyGlSNaGRNihdfa5qmDx6UmYNhAQAA
+X-Change-ID: 20250110-b4-pks-compat-drop-uncompress2-eb5914459c32
+In-Reply-To: <20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im>
+References: <20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.2
 
-Our compat library has an implementation of zlib's `uncompress2()`
-function that gets used when linking against an old version of zlib
-that doesn't yet have it. The last user of `uncompress2()` got removed
-in 15a60b747e (reftable/block: open-code call to `uncompress2()`,
-2024-04-08), so the compatibility code is not required anymore. Drop it.
+Hi,
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+I have recently started to play around with zlib-ng a bit, which is a
+hard fork of the zlib library. It describes itself as zlib replacement
+with optimizations for "next generation" systems. As such, it contains
+several implementations of central algorithms using for example SSE2,
+AVX2 and other vectorized CPU intrinsics that supposedly speed up in-
+and deflating data.
+
+And indeed, compiling Git against zlib-ng leads to a significant speedup
+when reading objects. The following benchmark uses git-cat-file(1) with
+`--batch --batch-all-objects` in the Git repository:
+
+    Benchmark 1: zlib
+      Time (mean ± σ):     52.085 s ±  0.141 s    [User: 51.500 s, System: 0.456 s]
+      Range (min … max):   52.004 s … 52.335 s    5 runs
+
+    Benchmark 2: zlib-ng
+      Time (mean ± σ):     40.324 s ±  0.134 s    [User: 39.731 s, System: 0.490 s]
+      Range (min … max):   40.135 s … 40.484 s    5 runs
+
+    Summary
+      zlib-ng ran
+        1.29 ± 0.01 times faster than zlib
+
+So we're looking at a ~25% speedup compared to zlib. This is of course
+an extreme example, as it makes us read through all objects in the
+repository. But regardless, it should be possible to see some sort of
+speedup in most commands that end up accessing the object database.
+
+This patch series refactors how we wire up zlib in our project by
+introducing a new "compat/zlib.h" header function. This header is then
+later extended to patch over the differences between zlib and zlib-ng,
+which is mostly just that zlib-ng has a `zng_` prefix for each of its
+symbols. Like this, we can support both libraries directly, and a new
+Meson build options allows users to pick whichever backend they like.
+
+In theory, these changes shouldn't be necessary because zlib-ng provides
+a compatibility layer that make it directly compatible with zlib. But
+most distros don't allow you to install zlib-ng with that layer is it
+would mean that zlib would need to be replaced globally. Instead, they
+typically only provide a version of zlib-ng that only has the `zng_`
+prefixed symbols.
+
+Given the observed speedup I do think that this is a worthwhile change
+so that users (or especially hosting providers) can easily switch to
+zlib-ng without impacting the rest of their system.
+
+Changes in v2:
+  - Wire up zlib-ng in our Makefile.
+  - Exercise zlib-ng via CI by adapting our "linux-musl" job to use
+    Meson and installing zlib-ng.
+  - Link to v1: https://lore.kernel.org/r/20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im
+
+Changes in v3:
+  - Fix a couple of commit message typos.
+  - Mention why we can safely drop "CC=gcc" when converting the musl job
+    to use Meson.
+  - Link to v2: https://lore.kernel.org/r/20250114-b4-pks-compat-drop-uncompress2-v2-0-614a2158e34e@pks.im
+
+Changes in v4:
+  - Add a comment explaining why we can stub out `deflateSetHeader()`.
+  - Add a comment explaining why we have to cast away constness with
+    zlib-ng's `next_in` field.
+  - Link to v3: https://lore.kernel.org/r/20250116-b4-pks-compat-drop-uncompress2-v3-0-f2af1f5c4a06@pks.im
+
+I've adjusted the series to be based on top of fbe8d3079d (Git 2.48,
+2025-01-10) with ps/meson-weak-sha1-build at 6a0ee54f9a (meson: provide
+a summary of configured backends, 2024-12-30) and ps/build-meson-fixes
+at 4e517e68b5 (ci: wire up Visual Studio build with Meson, 2025-01-14)
+merged into it. This matches what Junio has in his tree -- sorry for
+screwing up the previous base!
+
+Thanks!
+
+Patrick
+
 ---
- Makefile                  |  1 -
- compat/zlib-uncompress2.c | 96 -----------------------------------------------
- git-compat-util.h         |  9 -----
- meson.build               |  1 -
- 4 files changed, 107 deletions(-)
+Patrick Steinhardt (10):
+      compat: drop `uncompress2()` compatibility shim
+      git-compat-util: drop `z_const` define
+      compat: introduce new "zlib.h" header
+      git-compat-util: move include of "compat/zlib.h" into "git-zlib.h"
+      compat/zlib: provide `deflateBound()` shim centrally
+      compat/zlib: provide stubs for `deflateSetHeader()`
+      git-zlib: cast away potential constness of `next_in` pointer
+      compat/zlib: allow use of zlib-ng as backend
+      ci: switch linux-musl to use Meson
+      ci: make "linux-musl" job use zlib-ng
 
-diff --git a/Makefile b/Makefile
-index 97e8385b66..86c6c3d7ad 100644
---- a/Makefile
-+++ b/Makefile
-@@ -984,7 +984,6 @@ LIB_OBJS += commit.o
- LIB_OBJS += compat/nonblock.o
- LIB_OBJS += compat/obstack.o
- LIB_OBJS += compat/terminal.o
--LIB_OBJS += compat/zlib-uncompress2.o
- LIB_OBJS += config.o
- LIB_OBJS += connect.o
- LIB_OBJS += connected.o
-diff --git a/compat/zlib-uncompress2.c b/compat/zlib-uncompress2.c
-deleted file mode 100644
-index 77a1b08048..0000000000
---- a/compat/zlib-uncompress2.c
-+++ /dev/null
-@@ -1,96 +0,0 @@
--#include "git-compat-util.h"
--
--#if ZLIB_VERNUM < 0x1290
--/* taken from zlib's uncompr.c
--
--   commit cacf7f1d4e3d44d871b605da3b647f07d718623f
--   Author: Mark Adler <madler@alumni.caltech.edu>
--   Date:   Sun Jan 15 09:18:46 2017 -0800
--
--       zlib 1.2.11
--
--*/
--
--/*
-- * Copyright (C) 1995-2003, 2010, 2014, 2016 Jean-loup Gailly, Mark Adler
-- * For conditions of distribution and use, see copyright notice in zlib.h
-- */
--
--/* clang-format off */
--
--/* ===========================================================================
--     Decompresses the source buffer into the destination buffer.  *sourceLen is
--   the byte length of the source buffer. Upon entry, *destLen is the total size
--   of the destination buffer, which must be large enough to hold the entire
--   uncompressed data. (The size of the uncompressed data must have been saved
--   previously by the compressor and transmitted to the decompressor by some
--   mechanism outside the scope of this compression library.) Upon exit,
--   *destLen is the size of the decompressed data and *sourceLen is the number
--   of source bytes consumed. Upon return, source + *sourceLen points to the
--   first unused input byte.
--
--     uncompress returns Z_OK if success, Z_MEM_ERROR if there was not enough
--   memory, Z_BUF_ERROR if there was not enough room in the output buffer, or
--   Z_DATA_ERROR if the input data was corrupted, including if the input data is
--   an incomplete zlib stream.
--*/
--int ZEXPORT uncompress2 (
--    Bytef *dest,
--    uLongf *destLen,
--    const Bytef *source,
--    uLong *sourceLen) {
--    z_stream stream;
--    int err;
--    const uInt max = (uInt)-1;
--    uLong len, left;
--    Byte buf[1];    /* for detection of incomplete stream when *destLen == 0 */
--
--    len = *sourceLen;
--    if (*destLen) {
--	left = *destLen;
--	*destLen = 0;
--    }
--    else {
--	left = 1;
--	dest = buf;
--    }
--
--    stream.next_in = (z_const Bytef *)source;
--    stream.avail_in = 0;
--    stream.zalloc = (alloc_func)0;
--    stream.zfree = (free_func)0;
--    stream.opaque = (voidpf)0;
--
--    err = inflateInit(&stream);
--    if (err != Z_OK) return err;
--
--    stream.next_out = dest;
--    stream.avail_out = 0;
--
--    do {
--	if (stream.avail_out == 0) {
--	    stream.avail_out = left > (uLong)max ? max : (uInt)left;
--	    left -= stream.avail_out;
--	}
--	if (stream.avail_in == 0) {
--	    stream.avail_in = len > (uLong)max ? max : (uInt)len;
--	    len -= stream.avail_in;
--	}
--	err = inflate(&stream, Z_NO_FLUSH);
--    } while (err == Z_OK);
--
--    *sourceLen -= len + stream.avail_in;
--    if (dest != buf)
--	*destLen = stream.total_out;
--    else if (stream.total_out && err == Z_BUF_ERROR)
--	left = 1;
--
--    inflateEnd(&stream);
--    return err == Z_STREAM_END ? Z_OK :
--	   err == Z_NEED_DICT ? Z_DATA_ERROR  :
--	   err == Z_BUF_ERROR && left + stream.avail_out ? Z_DATA_ERROR :
--	   err;
--}
--#else
--static void *dummy_variable = &dummy_variable;
--#endif
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e283c46c6f..d50f487c00 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1540,15 +1540,6 @@ int common_exit(const char *file, int line, int code);
- #define z_const
- #include <zlib.h>
- 
--#if ZLIB_VERNUM < 0x1290
--/*
-- * This is uncompress2, which is only available in zlib >= 1.2.9
-- * (released as of early 2017). See compat/zlib-uncompress2.c.
-- */
--int uncompress2(Bytef *dest, uLongf *destLen, const Bytef *source,
--		uLong *sourceLen);
--#endif
--
- /*
-  * This include must come after system headers, since it introduces macros that
-  * replace system names.
-diff --git a/meson.build b/meson.build
-index 30d7a89490..12129a8b95 100644
---- a/meson.build
-+++ b/meson.build
-@@ -263,7 +263,6 @@ libgit_sources = [
-   'compat/nonblock.c',
-   'compat/obstack.c',
-   'compat/terminal.c',
--  'compat/zlib-uncompress2.c',
-   'config.c',
-   'connect.c',
-   'connected.c',
+ .github/workflows/main.yml |  2 +-
+ .gitlab-ci.yml             |  2 +-
+ Makefile                   | 21 +++++++---
+ archive-tar.c              |  4 --
+ archive.c                  |  1 +
+ ci/install-dependencies.sh |  4 +-
+ ci/lib.sh                  |  5 +--
+ ci/run-build-and-tests.sh  |  3 +-
+ compat/zlib-compat.h       | 53 +++++++++++++++++++++++++
+ compat/zlib-uncompress2.c  | 96 ----------------------------------------------
+ config.c                   |  1 +
+ csum-file.c                |  3 +-
+ environment.c              |  1 +
+ git-compat-util.h          | 12 ------
+ git-zlib.c                 |  7 +---
+ git-zlib.h                 |  2 +
+ meson.build                | 24 +++++++++---
+ meson_options.txt          |  4 ++
+ reftable/block.c           |  1 -
+ reftable/system.h          |  1 +
+ 20 files changed, 107 insertions(+), 140 deletions(-)
 
--- 
-2.48.1.362.g079036d154.dirty
+Range-diff versus v3:
+
+ 1:  00984b07b9 =  1:  fcfcf1ed81 compat: drop `uncompress2()` compatibility shim
+ 2:  de7bf8bf15 =  2:  b483553549 git-compat-util: drop `z_const` define
+ 3:  1aea050dae =  3:  f4f23ad8bc compat: introduce new "zlib.h" header
+ 4:  40229f1c0a =  4:  14f6055809 git-compat-util: move include of "compat/zlib.h" into "git-zlib.h"
+ 5:  230d23877f =  5:  acb5212ed3 compat/zlib: provide `deflateBound()` shim centrally
+ 6:  05e0757235 !  6:  918cf3eb0d compat/zlib: provide stubs for `deflateSetHeader()`
+    @@ compat/zlib-compat.h
+      # define deflateBound(c,s)  ((s) + (((s) + 7) >> 3) + (((s) + 63) >> 6) + 11)
+      #endif
+      
+    ++/*
+    ++ * zlib only gained support for setting up the gzip header in v1.2.2.1. In
+    ++ * Git we only set the header to make archives reproducible across different
+    ++ * operating systems, so it's fine to simply make this a no-op when using a
+    ++ * zlib version that doesn't support this yet.
+    ++ */
+     +#if ZLIB_VERNUM < 0x1221
+     +struct gz_header_s {
+     +	int os;
+ 7:  b10e6f35d7 !  7:  4047b9226a git-zlib: cast away potential constness of `next_in` pointer
+    @@ git-zlib.c: static void zlib_post_call(git_zstream *s)
+      	s->total_out = s->z.total_out;
+      	s->total_in = s->z.total_in;
+     -	s->next_in = s->z.next_in;
+    ++	/* zlib-ng marks `next_in` as `const`, so we have to cast it away. */
+     +	s->next_in = (unsigned char *) s->z.next_in;
+      	s->next_out = s->z.next_out;
+      	s->avail_in -= bytes_consumed;
+ 8:  6149885889 !  8:  d8f5c87d71 compat/zlib: allow use of zlib-ng as backend
+    @@ compat/zlib-compat.h
+     -#endif
+     +# define z_stream zng_stream
+     +#define gz_header_s zng_gz_header_s
+    - 
+    --#if ZLIB_VERNUM < 0x1221
+    ++
+     +# define crc32(crc, buf, len) zng_crc32(crc, buf, len)
+     +
+     +# define inflate(strm, bits) zng_inflate(strm, bits)
+    @@ compat/zlib-compat.h
+     +# if defined(NO_DEFLATE_BOUND) || ZLIB_VERNUM < 0x1200
+     +#  define deflateBound(c,s)  ((s) + (((s) + 7) >> 3) + (((s) + 63) >> 6) + 11)
+     +# endif
+    -+
+    + 
+    + /*
+    +  * zlib only gained support for setting up the gzip header in v1.2.2.1. In
+    +@@
+    +  * operating systems, so it's fine to simply make this a no-op when using a
+    +  * zlib version that doesn't support this yet.
+    +  */
+    +-#if ZLIB_VERNUM < 0x1221
+     +# if ZLIB_VERNUM < 0x1221
+      struct gz_header_s {
+      	int os;
+ 9:  f663af4332 =  9:  87fbc86f47 ci: switch linux-musl to use Meson
+10:  376c05fe77 = 10:  f3ea4c5a81 ci: make "linux-musl" job use zlib-ng
+
+---
+base-commit: cbdbb490357c16eaaa6528c1d550c513a632d196
+change-id: 20250110-b4-pks-compat-drop-uncompress2-eb5914459c32
 
