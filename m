@@ -1,53 +1,53 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CE17A59
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 08:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1285614EC4E
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 08:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738053348; cv=none; b=SRwjjzghzCjmZOyTkd6/YooQYYDzMUszX8FMTw/jxmToApGo5+hnz1MYIxyz8QF8ppllrJ9E1IgB6N2OBY8NyS5+2vlVLo3vXBrxUcClFoczgO6h07lzLE5Wj4OshXT0lH8Z+yktcb4uPXiW3/fmDcXhkVs6XkNv83TND9x9U8Y=
+	t=1738053350; cv=none; b=nGmcGFEg9Z6SQWQ8uFKeknWrWEf+4mtRIaFP3LXqLhHXLrWdZQmDcobXcdMOpsRJ/+w2jRq9GA5kErP2Y0s8Tay1u+MSAAfnLRwggP8Jx7zAWSXc45s0iG/Y50YMjtznlCewsF69vlgRis9NemaQ3AQM08kpSrS6tmSDXOhgkQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738053348; c=relaxed/simple;
-	bh=Vdkap8NDGzOXQIJUIAm0Y5rlibi3ZLAsWIBpg9hiI88=;
+	s=arc-20240116; t=1738053350; c=relaxed/simple;
+	bh=eTY6TUv3/bdt+VmKQO3gwiGJHAx6PHsbQx4Mv8S9FQ0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qUlrdLLPeLxseBWMV8DJj2Z2nPF7PiuH/CUshz/xjQ8wfay/CBIECIfYNObxwLdoz3qkDED+vWS8hYE0BT+VE/xICuc8ZYy2tzfDir5WqHkvZsytFJKhfy7QxraGYykEE/JVq4Re6AUdrymeqeM2iQQS8iT9hDldEccfLaud160=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NM8ci3ga; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1AtiC+x3; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=TWO/jVjs27J8wcyHSdz/utSa9lXucpkw1ZXzGZofyZ8DsAoSZr5MCLUP2yH2BUUG9x3cGmor9H8zZ2eN1pcEzZ43MR1G4QWSyh3zi1s1iCUpnKCf9rnjcpOb9xLWKlOBHAJ2V0gsYT9txXHVdbhjdzLQFRv/t+jsfldlvuQUjGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R3emmh/r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BRk6Ka2v; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NM8ci3ga";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1AtiC+x3"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8574C2540216;
-	Tue, 28 Jan 2025 03:35:46 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R3emmh/r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BRk6Ka2v"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2496F2540219;
+	Tue, 28 Jan 2025 03:35:48 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 28 Jan 2025 03:35:46 -0500
+  by phl-compute-09.internal (MEProxy); Tue, 28 Jan 2025 03:35:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738053346; x=1738139746; bh=R0tzdUKTN/
-	5qRkNMZdf/rjQqgUy9OTO99ANjjg8cvrE=; b=NM8ci3ga+GC+jcgvuf1r3E7X/m
-	YDVL59JakN1hJyNegeHWnvc7EcVKKsBd/MneTnzlG3pTa35mL4bK1YV0km7RAGdU
-	khoWx3qTWl7qUAJ2IKWlxWXKDgyl5bEHHbDoeC9gezhKEnjoitHCvCIymG6W1/CJ
-	2M8/h6sTS+gC1uL/5SdemL6cUSq4fJkA7yJaFdRfMRRWfloZZE5MSEHSTMWZaGk1
-	IgyOA8rAqN8aTPWBz9w5rh9UCRryDcxw7uC2I8nxxOwaPkam7SjAiSV3NNBQp8DJ
-	RPuQ8vgRXwE+QECGRajxZ6Iz5/bdpuzTjcjEJmRP4kcmoVc2a4qH0OSgsAUQ==
+	:subject:to:to; s=fm3; t=1738053347; x=1738139747; bh=oMUeIDNWP1
+	28he/SxNzQyJ4gORNgXceMxaDTfWXHpqo=; b=R3emmh/rPoz2JMeqEl8Pro+wBC
+	Mz0fBRu6lXr3xzc9j1Vscp516/CkICHtCMsAl3/9vxO0VS2BLGLU8v7vur5HfHdy
+	WSJYXfKan7YHkYg3zD4S8kYJdvKGTrTsj5Df42wvbIkTJnBmzVlIYVGE78F59BL8
+	dyKINWUFIMWkom5PCfth9rUXOTxPSlYONSZF+YNyIPKZiZce7cMCQuYE40zNaXNz
+	3VRfhMYU7w+MjcEfGaMkcmb1MnBgrfH3QfZzfhjRml8YlE5C2cyKMEWvJyy6faGI
+	u+eDug7/sKfP2J9Mqa/Izkg2D8dEENNg5YjGpPzZgDkmj4WpoMAWK3jt+Jtg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738053346; x=1738139746; bh=R0tzdUKTN/5qRkNMZdf/rjQqgUy9OTO99AN
-	jjg8cvrE=; b=1AtiC+x3R7eV5ZFvTzh5bY2wuvViNrAf6HYzy+nq/0oMgcbk37s
-	jxvIAJ+78scRtUxlbQu2XIsBn3MYm7ufRADfw6o3eTWYnqxLpqLPT7U03UqdbcJR
-	0o2OkNPyjSBtbB3QBLKseaj7jIAit8MXCdwLbHIHxRhItZDp/SkdK3g2mth7/w3+
-	oJFNddKa7r77VdlfIjQUvnJYJQfv67kO0rbIdTngeVXirWALFX3qoD65VRj8eT0G
-	6jIXe8rGuSjmgHNusV5oTQL02k5q/TPLvuD0/Mps+OJ2QIoktMVGz7kQ9V+T2SOy
-	7dWJFdM/OeUs/UuZxrgjiH9VNs71btj3Gkg==
-X-ME-Sender: <xms:4paYZ9wqBaPX_wx3bfUcooHGdOOLAiIHE6L4mS2QZUrGakGpi8d5Og>
-    <xme:4paYZ9QDe6CS7r01cQG-aZnJFBWHblCeyrvx-2WE9doioxDxjIkYmqI8g5eTO2j3W
-    P_xpVf37XTDDShDrA>
-X-ME-Received: <xmr:4paYZ3VxoTCtAbETLJQzP-yptQi7KYG6XiWoRroRKkQJxLK6vHSh-i4j0E3sI_GSr9F7dZZj_nEoqbL6BVkPkjGzwnuEANLXu5tls4QWEVg>
+	1738053347; x=1738139747; bh=oMUeIDNWP128he/SxNzQyJ4gORNgXceMxaD
+	TfWXHpqo=; b=BRk6Ka2vAG1Mnvy2w6kFDknRLOSDu+m7/7qfnzzXhcMINw5mRCH
+	EV00Lg0hUsDO+rADUNKtmMSy1aRDi5QF9LygVF/hvqal0Tfr/kuhcyHNSPNBNXNy
+	Xy5teYuti1Y56QLdAZ1F0Y3W3A6wnbMGUAedx9OjspNvIHbFU0Pbatd8IAKWeC1b
+	5bAU8wnv8jzG0klWIzXGLD2JCPevB0M34OjVdsdf74o+TN1qKktAnLZUtEDntbPl
+	wT8pVgMgKfYnCj+rZ12UPijmF2WfIlhjRZOaxmNeGZ0lsvcdhAjUeJrGZXY9++x4
+	uyR9Ycn5pYFzY8r9LGXIBlmei+8I2nISonQ==
+X-ME-Sender: <xms:45aYZwcLRUXz5pTkttJe_Ti4XI-m0pPKjiunMD5uLwFtRlkz1N2q3A>
+    <xme:45aYZyMYuApgtAAo6agubjN05EyhkSxjp8XXqKgJa8KAW-39KQAXGh9ZB1NWvWTCE
+    AN_dFx4-eG-HP363w>
+X-ME-Received: <xmr:45aYZxgRtodxKceZLy_hGLruN6L0BuK3gwC36W2Uf8k4jariYTwJ7zNbtmdcybRq7QLtJ4D1gcfpnYE-WtUfHaWL-grTdRl8R8uGxAiS0jA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudehieegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -56,32 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudehieegucetufdote
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
     ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhi
+    pehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhi
     hlohhrrhdrtghomh
-X-ME-Proxy: <xmx:4paYZ_jYaxM0halAAtTsBX7IiW-1YnpHu2PNYpfZTH9OqrbKc6Ntsw>
-    <xmx:4paYZ_D1vXpUYLkb28lBvvVPma9kNU12nQq4YstHNFb9Z2ai2Uq7Fw>
-    <xmx:4paYZ4Lz_UfTESNcQCxZEQAGNrNS2v-rjVzirtJRC9LOQorPv1PExw>
-    <xmx:4paYZ-ALXXo8wF74Hy7v13QPSVpxn_ItsjK18wk4HJy1q-fZ19IWQg>
-    <xmx:4paYZ682sLwVEcrL7c7fecQflxVBf6yJUpPh1fLszJqNrZ1j7Xg9O_go>
+X-ME-Proxy: <xmx:45aYZ19D5DIbXDSgrAgNawRM9cBPYV35moNO3f0jLbO2NKbn47R6Ew>
+    <xmx:45aYZ8vNj3nz5dQYTPgYu6HfuGai4SwkI4Cw4iSK2WHis3zZlkxJkA>
+    <xmx:45aYZ8GdKTcsSztuJEbdDTbFA6jZBLmZSPPOlLwrto5pYdNonXfvpQ>
+    <xmx:45aYZ7Mi_R5LlFejblrTaZ79pnyraOF1Bf7mxu0Ji7-yYuBmBbcDqA>
+    <xmx:45aYZ-I0_7yONoIBfDYskBcaC-9HcrSoESXqEDx5hCTnMEOGXwYi5KvC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jan 2025 03:35:45 -0500 (EST)
+ 28 Jan 2025 03:35:46 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5d9090f8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 Jan 2025 08:35:43 +0000 (UTC)
-Date: Tue, 28 Jan 2025 09:35:42 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8d040eb1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 28 Jan 2025 08:35:46 +0000 (UTC)
+Date: Tue, 28 Jan 2025 09:35:45 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
 	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v3 06/10] compat/zlib: provide stubs for
- `deflateSetHeader()`
-Message-ID: <Z5iW3utsn6j3lbRh@pks.im>
+Subject: Re: [PATCH v3 07/10] git-zlib: cast away potential constness of
+ `next_in` pointer
+Message-ID: <Z5iW4dFgSQaN0I3U@pks.im>
 References: <20250116-b4-pks-compat-drop-uncompress2-v3-0-f2af1f5c4a06@pks.im>
- <20250116-b4-pks-compat-drop-uncompress2-v3-6-f2af1f5c4a06@pks.im>
- <n64enlt3wcjftyz74evkdh53romwvmnwwd4qdpfaw6jedktcvh@fdy2zmdgmqm2>
+ <20250116-b4-pks-compat-drop-uncompress2-v3-7-f2af1f5c4a06@pks.im>
+ <jofg2g5hpvxq33cikq2jevqunrmmvwfqfcsjuipt5m3umz46sb@js5qlbp4jkxn>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,39 +90,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <n64enlt3wcjftyz74evkdh53romwvmnwwd4qdpfaw6jedktcvh@fdy2zmdgmqm2>
+In-Reply-To: <jofg2g5hpvxq33cikq2jevqunrmmvwfqfcsjuipt5m3umz46sb@js5qlbp4jkxn>
 
-On Sun, Jan 26, 2025 at 06:56:40PM -0600, Justin Tobler wrote:
+On Sun, Jan 26, 2025 at 06:58:40PM -0600, Justin Tobler wrote:
 > On 25/01/16 10:17AM, Patrick Steinhardt wrote:
-> > diff --git a/compat/zlib-compat.h b/compat/zlib-compat.h
-> > index 96a08811a9..2690bfce41 100644
-> > --- a/compat/zlib-compat.h
-> > +++ b/compat/zlib-compat.h
-> > @@ -7,4 +7,17 @@
-> >  # define deflateBound(c,s)  ((s) + (((s) + 7) >> 3) + (((s) + 63) >> 6) + 11)
-> >  #endif
+> > The `struct git_zstream::next_in` variable points to the input data and
+> > is used in combination with `struct z_stream::next_in`. While that
+> > latter field is not marked as a constant in zlib, it is marked as such
+> > in zlib-ng. This causes a couple of compiler errors when we try to
+> > assign these fields to one another due to mismatching constness.
+> > 
+> > Fix the issue by casting away the potential constness of `next_in`.
+> > 
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  git-zlib.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/git-zlib.c b/git-zlib.c
+> > index 2e973320c2..519b3647ac 100644
+> > --- a/git-zlib.c
+> > +++ b/git-zlib.c
+> > @@ -59,7 +59,7 @@ static void zlib_post_call(git_zstream *s)
 > >  
-> > +#if ZLIB_VERNUM < 0x1221
-> > +struct gz_header_s {
-> > +	int os;
-> > +};
-> > +
-> > +static int deflateSetHeader(z_streamp strm, struct gz_header_s *head)
-> > +{
-> > +	(void)(strm);
-> > +	(void)(head);
-> > +	return Z_OK;
-> > +}
-> > +#endif
-> > +
-> >  #endif /* COMPAT_ZLIB_H */
+> >  	s->total_out = s->z.total_out;
+> >  	s->total_in = s->z.total_in;
+> > -	s->next_in = s->z.next_in;
+> > +	s->next_in = (unsigned char *) s->z.next_in;
 > 
-> In zlib versions under 1.2.2.1, `gz_header_s` and `deflateSetHeader()`
-> are not defined. It looks like we are defining them here, but so they
-> behave as a no-op where used. If I'm understanding this correctly, it
-> might be nice to have a comment explaining the no-op component.
+> Without the context of the commit, its not obvious to me why this cast
+> is happening and looks curious. It might be nice to leave a comment here
+> explaining its purpose.
 
-It's non-obvious why skipping the logic would be fine, so explicitly
-documenting makes sense indeed.
+Fair, otherwise someone using zlib might wonder why we have a seemingly
+unnecessary cast in the first place.
+
+Thanks for your input!
 
 Patrick
