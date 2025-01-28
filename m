@@ -1,160 +1,140 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD5F1DE8A5
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 18:26:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76D71990C4
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 18:30:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738088778; cv=none; b=dy1L7ltRPy45PyItd5tjGbk3mbFNunhRi009GUXWQba2Qr8rzjFMntvGrBkel7fRJIJ7pTYuC/Oi2jUKpaAZSgvPvuISMjbq3DNTYmh5ar7+Z0wj7ZxzNIilCxnR09fRs4wztbejBHcbNWRN2BdYx7yAUafYnLGRaFV/7cNG1jc=
+	t=1738089045; cv=none; b=T3JI89chjI52pVbbUpjBIcpfU6bP8orGn4pE6bO/zZ5U6Exh/6hlMmiLLpnNc+WDUFaNQOkKcTapreALKSvyIHs1x6X7vmcsipvviKIsEtmeKBP+alfQwaivqNf2mviMjA+IFlEB8Cibjyw2vXsayRIfLC16kiXZJU8joi+8RcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738088778; c=relaxed/simple;
-	bh=yUZg751eqpPeZIiRtLuu26vmwAbAemI1IC5vOVr/Pvg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KElzew4rY7H5qr1oX1GchYbkr7NWh5p15DeWtaiPXlVL8nePqH0ICi65P47oNAR6aMOZPLqYJfO9C/1KZP5moSGov2DYEnHyu8iFEhSmYaQP2ksJAABNSeJa6Q89/0wM3aLUVLFYTySXWGTVB1Xd2awCOlhHw2hcnO51p3sCogA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CBqhEuOw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=foXVjaqZ; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738089045; c=relaxed/simple;
+	bh=YDsRYTiVBHkPe8Z7UdNvrrfYG/Vb1Xx+15rTG1Ot2ZY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=T3TQGhsw3Kqd3f/WOmbpIURNpYmNMoc2L5HE07xa0nFmBs6RBHTBXyg2Xb77b/Z44ao+cS68uzDChwJGrahmpIfJ5os9/CBPWq4rosgiwNeqaf8hPV8SPLGY6/qZdWJwS8kZPUBBcQws3/b5HFo+ciEONBb1bjjMm9A17Uuiv7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ipHNJv+l; arc=none smtp.client-ip=209.85.166.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CBqhEuOw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="foXVjaqZ"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 70DF51380C70;
-	Tue, 28 Jan 2025 13:26:14 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 28 Jan 2025 13:26:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738088774; x=1738175174; bh=mvTdcnr3zk
-	jynDZd2xOWW0zdlUO7WKORnb9PcZeC3Oc=; b=CBqhEuOw26Uj88in+lJBQMB1I2
-	Jfiw8mYz4IrC7Ef4PWJpVJ/noymrvExMx10ahzKFBXwNEe7DnQoKn0yPLx/hcOAR
-	0TeyIuvD5HMODhBZaEe7JrAIi0mf8Lv0cwNqR3o0YxKpqc5Y1vhw0lH0DOObCi+v
-	w6pmzXt6N9SCmVub9Gup905rjA7yO0DCN/yM+zym58Q4TheLqfcRq11HljfJB3yE
-	Z2kLCEi4bi+s4TU91tqXI64FL+6xMMPsayV0BrHVm3XPPnko7l16K54gMW2fvizE
-	5SWl7+BE9V1+fOPDTnTMXRz5JPAptyQUUSIMAYT8xnATxeVCCfKfvMemUgnQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738088774; x=1738175174; bh=mvTdcnr3zkjynDZd2xOWW0zdlUO7WKORnb9
-	PcZeC3Oc=; b=foXVjaqZTuhpe8NdcEDyDG5mAUJml1Eu+BpXC1Dbjx5zGrGMuLX
-	ifrkQVV2pH/gOpAKlWknUtPLYjbnp2XYL32Ap0RbVIsy5NpzYgcV7R68b1nIE2PX
-	qHcdcAy6faHCGwQPKvpq/AsG6Zz7SFzSZ4tbSvnZvk5ZM+RPORGjaJgTLXN5rtPQ
-	Sdzwg7LcUujJ3FEpNTZpSv/OXc4Vuurb5LiSRufh8gcNrn4zwDhVjJl4iPeRCVb5
-	i+DT85stfuMtNP22BBBhO2Yqqwc0PqQVJ8NKGWkHc8vY16rlSxfTnORcnqht6Y/f
-	FLRWuNM/O7eqjUUU9GwC4ZEaRbAgyGMy9Iw==
-X-ME-Sender: <xms:RiGZZ_I1w9oF2eFyaVKXJYIWxWMpPM776tn1M-0nQwSh0o-PYjvlmw>
-    <xme:RiGZZzKAo2ba9AGN4wXharyFsLbd3jZTaz6QNq9wTGig74seFSPMvkdxFB8nalDnr
-    mTjCudk9ffT4RE7jQ>
-X-ME-Received: <xmr:RiGZZ3vZQhqNrOpf1J5L5CfVybAyt-0TDgsz4O51qvf_bevfaV3N2Gl1NMStE3l8O_kPHJ_ohNT4NwHK2hNpgcXurlDxUIiGvwLX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvvefujg
-    hffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevte
-    etjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhsse
-    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:RiGZZ4aHIqp3WCLQh68tyghMWND_oV6GvIqRV_UK1pWv-TS_hWjq0A>
-    <xmx:RiGZZ2bcQdZTZvncUX3jkafF0bIIiSmk8ZtNMEfnqydJfmiqFsseaQ>
-    <xmx:RiGZZ8AX_YiYOT8G5cyZYck7WlYDj2_--N-1SE7gUdb8mooT3Q83Rg>
-    <xmx:RiGZZ0Yut44OZBVSpSbUfntHI-MS7flW0KAwi1dyPxAnkcZeXlyGQg>
-    <xmx:RiGZZ9X_aap6y49JLyVW7mCuhtLayik2AfGxbZH5pzD7LX4Ailk1mZbb>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jan 2025 13:26:13 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2025, #07; Fri, 24)
-In-Reply-To: <xmqq8qquom4t.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	28 Jan 2025 09:59:14 -0800")
-References: <xmqqwmekvubv.fsf@gitster.g>
-	<20250128164606.GA1688180@coredump.intra.peff.net>
-	<xmqq8qquom4t.fsf@gitster.g>
-Date: Tue, 28 Jan 2025 10:26:12 -0800
-Message-ID: <xmqq4j1iokvv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ipHNJv+l"
+Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-844ce213af6so165116539f.1
+        for <git@vger.kernel.org>; Tue, 28 Jan 2025 10:30:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738089043; x=1738693843; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HWF8ZX3Y2XNWSsnGPwm6xSy3qMgxM0OkN7XyoI8f8Jg=;
+        b=ipHNJv+l/Mb8nE3MAB76ZWnnMo3XopPD1HbEspZ++tyl+GcFdipMwVTj1ORR6dQD4K
+         o+acB3tZgRhqKLusBkLQyYy96+c+5eCN2Q4GX4r8twzbMkFnF9jIyYq6G1i7evfBbR4A
+         8LmCsGLCRm/ocQfeh+bSlw0ISr/zY/vZAt2WMB/0ayJHqWcGAti8TKF80KWHPzI2V8aw
+         M/i6bqbPi38pWz49GvUXchUp5gUI3arTenXIvcHZ5Yy2DGI7TviaQk28jrZARTxuEzRJ
+         Q2sy4aokwQSgeaADb/dw39sHP4b44OnEzpIgiVBNSTl1aAhF9K3RZF8OIv6IM+N+Qj4p
+         EwAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738089043; x=1738693843;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HWF8ZX3Y2XNWSsnGPwm6xSy3qMgxM0OkN7XyoI8f8Jg=;
+        b=PEvy3vHZhtOYa/cMdm2EYvbH+3Zus0pT688GbDTDal5E4FWHNRQS6ErfsnqNQZUU0e
+         oGeujBUMJg+b+9s9VIHjTcHaDa6BpncETgajE8oDons5lJlGFR8LPplEMPPlpWh3wHj1
+         8SqCCxOA6Ep5YTptlyKlJJEnLzcdbqligPIiG6b9s25ELOwfMJR0LwI7taw4S4bumTvh
+         rYgtRV/pRtE84N74YJ5Sta4UFtq2r3Ckm7u2FH+a+WSpkmJWAfIKIQOI6rb2f9D3OfPx
+         YTEVTpZ+ZHUK+sby09ZJyTh86AgzI7h8NixxXkp/K7s02W3QIj69jKqrDCQtgK8Zw4rw
+         PQDQ==
+X-Gm-Message-State: AOJu0YynTPOWL5wMwy/O2WCVqryj6zMFa4UUybolEWjVehRxW8tgQiis
+	O8A2THapNqZtFIua84wzcow1DZqf3CspI0hCUO20fTGHUgdXYAH9jDEyhThU8uKnHIgxHlnHkVT
+	qSHkRbDhOIb1AxiyvsfNIqf5JDv3L9A==
+X-Gm-Gg: ASbGncvJJPPGsCfhLqhhePf/dsjsZ8HFsiG63wWpb39tlfX3XXBv2bIxVP4KRhwxDrs
+	9O8HrGD5WI1cG5kRCLgRn4sc0aGSTf4H4wCH92fOmspjaVEsCPuxoM5BDVe0mtNumdY5XjPDSrw
+	vWA7UtxTXBOKBodlZD1D4wjv7p/n6jWg==
+X-Google-Smtp-Source: AGHT+IE9rpZ6XHYcZW6/S1Zy3ZQdvuK3lrSA5UiF9uspi9kaGlNLFqS+ZV0OLhyOKuKZP8j0lm3VY10wSMyw0RbGt8Y=
+X-Received: by 2002:a05:6e02:1ca1:b0:3cf:cbfb:b509 with SMTP id
+ e9e14a558f8ab-3cffe3d1b64mr1629725ab.2.1738089042807; Tue, 28 Jan 2025
+ 10:30:42 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20241214181306.296673-1-toke@toke.dk>
+In-Reply-To: <20241214181306.296673-1-toke@toke.dk>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 28 Jan 2025 10:30:31 -0800
+X-Gm-Features: AWEUYZm9Bjx8R-MFMfhwLSBtT-sDY-oFIjv3BFxLHZ6vCDcged3jOf1-rzqFiWM
+Message-ID: <CABPp-BHZ99ovFUfBUpvGRvhoudTbz4vZgCdVr=iUcE171CAYuQ@mail.gmail.com>
+Subject: Re: [filter-repo PATCH] Don't crash on multi-line config values
+To: =?UTF-8?B?VG9rZSBIw7hpbGFuZC1Kw7hyZ2Vuc2Vu?= <toke@toke.dk>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Jeff King <peff@peff.net> writes:
+On Sat, Dec 14, 2024 at 10:13=E2=80=AFAM Toke H=C3=B8iland-J=C3=B8rgensen <=
+toke@toke.dk> wrote:
 >
->> I noticed CI complaining about a missing include file:
->>
->>   2025-01-28T15:51:45.3979314Z asciidoc: WARNING: difftool.adoc: line 16: include file not found: /home/runner/work/git/git/Documentation/mergetools-diff.txt
->>
->> The problem is that the line was introduced by another concurrent
->> branch, aj/difftool-config-doc-fix. So we can't fix it independently on
->> either branch; the line does not exist yet in brian's adoc branch, and
->> the file is still ".txt" in Adam's doc-fix branch.
->>
->> It has to be fixed in an evil merge of the two (or brian's rebased on
->> Adam's, which has since graduated to master).
+> The parsing of the output of `git config --list` fails if any of the
+> config values contain newlines. Fix this by using the --null parameter
+> to `git config`, which is designed for this purpose.
+
+Nice; that's a cleaner way to do it than the other proposals.
+
+> Add a simple test that causes the crash pre-patch.
+
+Much appreciated.
+
+> Signed-off-by: Toke H=C3=B8iland-J=C3=B8rgensen <toke@toke.dk>
+> ---
+>  git-filter-repo               |  6 +++---
+>  t/t9390-filter-repo-basics.sh | 11 +++++++++++
+>  2 files changed, 14 insertions(+), 3 deletions(-)
 >
-> Thanks; I had this one on my radar and I thought there was a
-> merge-fix I made somewhere, but it is likely to have been lost
-> during shuffling the order of merges.  Will take a look again.
+> diff --git a/git-filter-repo b/git-filter-repo
+> index a40bce548d2c..3b75eadd81d7 100755
+> --- a/git-filter-repo
+> +++ b/git-filter-repo
+> @@ -1683,14 +1683,14 @@ class GitUtils(object):
+>    def get_config_settings(repo_working_dir):
+>      output =3D ''
+>      try:
+> -      output =3D subproc.check_output('git config --list'.split(),
+> +      output =3D subproc.check_output('git config --list --null'.split()=
+,
+>                                      cwd=3Drepo_working_dir)
+>      except subprocess.CalledProcessError as e: # pragma: no cover
+>        raise SystemExit('fatal: {}'.format(e))
 >
-> Thanks.
+>      # FIXME: Ignores multi-valued keys, just let them overwrite for now
+> -    return dict(line.split(b'=3D', maxsplit=3D1)
+> -                for line in output.strip().split(b"\n"))
+> +    return dict(item.split(b'\n', maxsplit=3D1)
+> +                for item in output.strip().split(b"\0") if item)
+>
+>    @staticmethod
+>    def get_blob_sizes(quiet =3D False):
+> diff --git a/t/t9390-filter-repo-basics.sh b/t/t9390-filter-repo-basics.s=
+h
+> index c129799fb6a5..1dc2dca789ab 100755
+> --- a/t/t9390-filter-repo-basics.sh
+> +++ b/t/t9390-filter-repo-basics.sh
+> @@ -895,4 +895,15 @@ test_expect_success 'origin refs without origin remo=
+te does not die' '
+>         )
+>  '
+>
+> +test_expect_success 'multi-line config value' '
+> +       test_create_repo multiline_config &&
+> +       (
+> +               cd multiline_config &&
+> +
+> +               git config set test.test "test
+> +test" &&
+> +               git filter-repo --force
+> +       )
+> +'
+> +
+>  test_done
+> --
+> 2.47.1
 
-Here is what I'd directly apply to 'next'.  The merge-fix mechanism
-knows about the same change, so when I merge the bc/doc-adoc-not-txt
-topic down to 'master', the same tweak will be made as an evil
-merge.
-
-Thanks.
-
---- >8 ---
-Subject: [PATCH] Fix mismerge at 737049d332
-
-The world order after merging the bc/doc-adoc-not-txt topic
-is that there is no .txt files in Documentation/ hierarchy,
-as everything should have been migrated to .adoc suffix.
-
-There were a fiew topics that were simultaneously in flight
-that got graduated earlier than the topic, hence needed an
-evil merge to adjust.  This commit belatedly adjusts the merge
-result to account for them.  The same merge-fix will be made
-when the topic eventually graduates to 'master'.
-
-Reported-by: Jeff King <peff@peff.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/difftool.adoc                              | 2 +-
- .../technical/{api-path-walk.txt => api-path-walk.adoc}         | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename Documentation/technical/{api-path-walk.txt => api-path-walk.adoc} (100%)
-
-diff --git a/Documentation/config/difftool.adoc b/Documentation/config/difftool.adoc
-index 6cd47331a9..4f7d40ce24 100644
---- a/Documentation/config/difftool.adoc
-+++ b/Documentation/config/difftool.adoc
-@@ -13,7 +13,7 @@ diff.guitool::
- 	and requires that a corresponding difftool.<guitool>.cmd variable
- 	is defined.
- 
--include::{build_dir}/mergetools-diff.txt[]
-+include::{build_dir}/mergetools-diff.adoc[]
- 
- difftool.<tool>.cmd::
- 	Specify the command to invoke the specified diff tool.
-diff --git a/Documentation/technical/api-path-walk.txt b/Documentation/technical/api-path-walk.adoc
-similarity index 100%
-rename from Documentation/technical/api-path-walk.txt
-rename to Documentation/technical/api-path-walk.adoc
--- 
-2.48.1-325-g31d6edeeb9
-
+Looks good to me; applied.
