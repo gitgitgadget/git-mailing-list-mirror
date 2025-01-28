@@ -1,403 +1,364 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pj1-f74.google.com (mail-pj1-f74.google.com [209.85.216.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DE31E98FD
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 21:45:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B3E7199E80
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 22:01:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.74
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738100703; cv=none; b=Gf6MwgIzg60LUxF1WbGAJhuhzyHm3xw9fzP5G5R0lKoPQdQ1oDChGiZYt/yNnXTXyfRlrEcIzr8cH9GxVXK2ENoS2w8fXXF5Y9PmGTkuv+JSAflv4CPybb9gU1GJH8C7P5k6n/XW+qoaXGiWG6W4l86TvXAUA82NM3jL7Pm4JWo=
+	t=1738101705; cv=none; b=ZO+jMnGMk86yVNxIyQz0AgeinXoJ9ast1BAmZWOsk7W494RAwxWOZZJabFyiogpbHrthdmahSYpP55qqRJameQ/qKoUEg8+thyRc3yj6NaPASA8l+NFQG0JqufSvM5IMCtwSiy4U7R6sBS2EpkwGafGJxFxrFerGexGla3aQDjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738100703; c=relaxed/simple;
-	bh=8ZdSJbl9tqEsZtQPBLTYUnsoFF0Z9SDvg2PNEQIyHYI=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=R6XBuDnU4f8W6pR4vJRLqtAQoHNqtn2kOBps6kOekI+shi4vthdPUaQUxIJZob/eI7Lbv//xIljWHBbgrkh/fwreiozb4G84Jj7IkPgG6dkpdfHir1IS+CmnE6RrYQulu/TNaLNvWePH15JEfJUjun/u/vUov5n4df+a62r//pQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=iR1nDFjm; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
+	s=arc-20240116; t=1738101705; c=relaxed/simple;
+	bh=2D8GolkC0PuLrb1GD9deSGeEX5FFP3REw3xvrnMGJeU=;
+	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
+	 To:Cc:Content-Type; b=piv2iGTTgw/QJFHJkcMw8sPQ97Nqf41EPaVmMoJ2r/v84OjxFaqkdnoAh8t4Q4I0Xyz+8eic2s84Np147NoBE7mtet5gi1/7gILKvupbbeZoVGceaJmzBTP63yM15VUwGqwaSwseyIAX/VUa5rXEEQk63725klVwNiilGSchU6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=MM+QjX6r; arc=none smtp.client-ip=209.85.216.74
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--steadmon.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="iR1nDFjm"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2161d4b820bso11382405ad.1
-        for <git@vger.kernel.org>; Tue, 28 Jan 2025 13:45:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="MM+QjX6r"
+Received: by mail-pj1-f74.google.com with SMTP id 98e67ed59e1d1-2f2a9f056a8so12258002a91.2
+        for <git@vger.kernel.org>; Tue, 28 Jan 2025 14:01:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shopify.com; s=google; t=1738100701; x=1738705501; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Y4LsFo6KdPyWNE2MffzccY+J47boNPmKbkJol4+ErzA=;
-        b=iR1nDFjmQAtCIrOrkyxr0qI1NSzfmHyDm1ZVTNgrmSmBR0VQZNO7PxeJ5Hyf7FVZ3j
-         IiDvfoB0hi+Je76s78WHbMU+zjAWBGr8tn1UCnkEH3zfJIabvPuOvS6FcWBfZ7BO4CVk
-         t2cga3soYj6JDtsiBOnPSpGaeV3zUcpNbeCa0=
+        d=google.com; s=20230601; t=1738101702; x=1738706502; darn=vger.kernel.org;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+r0dCDyhYc3gn0StHV1F+jeYy8zDhULpIVtCZAEZNMk=;
+        b=MM+QjX6r2e/ujJxJ7UggEnjxLR3dc5l4hs0dwkxQlziYACF6ueaiN1d0YuSwoVrEt+
+         81fWdK76xUK47VXix+ZpJRZUilnAXNVUdkKAfwOEF5leje8pn6sCFmXra29jFFlxzlnv
+         RGfYdsFv9Bhz8zVgBQwmbVSso1xsG2Ju4CpfSDBq/JM7t3VaTYKhPO4/sUdizhyALE/G
+         1aYiZiCxmxDQ6MhivhHwwCOmOXuV02QU7nam6sPySxfsFgVWbslMC76BS6BOoVg19QIy
+         dFRI2LyeM8z3XP3aY9gJ6YTB4B90EV6WNxnTzN2777Ztv08OnkugD4NAFa8TtpwLAy7K
+         EdZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738100701; x=1738705501;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y4LsFo6KdPyWNE2MffzccY+J47boNPmKbkJol4+ErzA=;
-        b=KAkxwEsafVH/001pkarptX/1UlxH2MzGBiUlzs7B+pX5jdgbme9A5Ew/ABomXx+WCb
-         Pw3Vk48r/+6eRbAdBi6bseSp9CrWVbQ1398kdrdJ04oj/JvEOi9YBAWXgRuzTLQihHw1
-         dOCda/fW92EUsR6vaZEILbW0wvnUakCClI8PrUALPHagSK1tnSsvg/nGqy0sWrbDLJ2p
-         ftIklukAmm9BquC6ASl/BSF5PNkV2zlpovgC/VivvwUnRFFCjgiadkalPR6oKuRTjSCf
-         ltxjFxLnyeXEb3m133KxXIqYia+GTB/ZzrsV0L+bHnzwoHPbW2jq+as6RBRCKiKapynY
-         OGjg==
-X-Forwarded-Encrypted: i=1; AJvYcCWrNoNI8KbSwxHQ/lH0y7Sn1i++WbvOuBbQAGWBf0DR0yBisnFHLS8+Zpl6F7Z8Vt5BNtQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyHmJAboZrN1Qh1JCLKJWY0GTgjjxlO9bBGo36fpXMIe/eomTaz
-	Hemjwo0stasAkkpwkmiBHM2Y1DJDm4XofpGy5ikcrLZXQ7S8gJSE6p/VjX9vse0=
-X-Gm-Gg: ASbGncv24HySno5L1V6w6or08gOa9WI0kWRrXpXcZMzm5O6IHxHiKG5ushnRkC2Uivp
-	ZFmKS+LgvhSSAwZtv+7YVR5P969SsS+xgyO73Yyphck4345wwznK4OB2gHq66mV39dEMSpMbHXW
-	3FrGXUUwK7wDM+MjgOJusoNuyv9xb1BeMabdT8tNfCVTnDs6GjmPrHlAakUOxuGb1MJL4czf6Xx
-	NxF+W9dFlV2aKm77Tx1mCDlz+kZBE2tEvziAffmH5v+zH2Z38GLEhgvGOKO/Wxpz/UxjEtBJJmr
-	jmwOeE9HFA4S8aQWXVejpLP/NnUEhLan40DeB/alVaZg71sDj3U=
-X-Google-Smtp-Source: AGHT+IH6kPpahYcbLGeoT5UQHtKdkkkFatrY4mzOC+gPrb5cysvJdHMO8swwy9cKI08e1bVW2WL3Og==
-X-Received: by 2002:a17:902:cec9:b0:21d:cdb7:876c with SMTP id d9443c01a7336-21dd7c43c92mr4330325ad.3.1738100699037;
-        Tue, 28 Jan 2025 13:44:59 -0800 (PST)
-Received: from smtpclient.apple ([2604:3d09:1c88:400:68e6:a0b4:7dfa:e89d])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21da3d9c9fdsm87493395ad.4.2025.01.28.13.44.57
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 28 Jan 2025 13:44:58 -0800 (PST)
-Content-Type: text/plain;
-	charset=utf-8
+        d=1e100.net; s=20230601; t=1738101702; x=1738706502;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+r0dCDyhYc3gn0StHV1F+jeYy8zDhULpIVtCZAEZNMk=;
+        b=NvkTJepqlgzBMWGWMtCMJQ1/Dfm+46tjjYnvGMMyceeM8e1anQ2uKkOT3lOkNmFKFC
+         nm2n4RF9zDBoTMdcoJA7M2iFBAz+F2dpT3jDQe5Pwv31iA6ShzU8u0pPT0z81wQGmRgX
+         dAII4/w5qtg92Pde73exiqqcX9YM3ZWXFlG7TNIKYWCJQ1M23gzuQYANptYXIgTNNIbP
+         b8xIeN5z0MlgiGhZ1d1Dlk8DTbQ8wWv4wknMd6SaSXeOKQfrz2VW7qPy8S7AOGE6QGna
+         7bycblVj2vQmMpWQPcs8XsBokUtZtotVaNgWHUqXWJWg8ZCc/2obwDHAqzDFEbOMnpnw
+         uwVA==
+X-Gm-Message-State: AOJu0YwkCl5lj9EtfwsEJRDc6n8hO6vOeWacZ7CQ5AI3SDi7QVM2w7GL
+	qrDXSIiaGKSGArA8zs9qyOFUO2zYQPq0diMBLxujpYZtETd4HQof2YWR6QJBPJrCwu3b4/XYcLK
+	RkPri2RMlxzZ2EFuZcn/lWIRISYmrMlG++jG4CQrmlweZbwaFwoJJw2frd/XUNShMPhL4hZ6Akj
+	2VryqsLpvLI4M9NXTUQHz8xGdCDA3mAXmjFlEaLmc=
+X-Google-Smtp-Source: AGHT+IF/n0gI8x6gqQCgBvBA5G2GXvrQXxqx3Q2xI1HMwPGzmKbj0AsS5cnIwtxHILYAgvo+1TOrCQRsoTug4w==
+X-Received: from pjbtb4.prod.google.com ([2002:a17:90b:53c4:b0:2ee:53fe:d0fc])
+ (user=steadmon job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90b:3a0e:b0:2ee:b2fe:eeeb with SMTP id 98e67ed59e1d1-2f83ac66135mr736017a91.22.1738101702228;
+ Tue, 28 Jan 2025 14:01:42 -0800 (PST)
+Date: Tue, 28 Jan 2025 14:01:36 -0800
+In-Reply-To: <cover.1723054623.git.steadmon@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.300.87.4.3\))
-Subject: Re: [PATCH v2] worktree: detect from secondary worktree if main
- worktree is bare
-From: Olga Pilipenco <olga.pilipenco@shopify.com>
-In-Reply-To: <CAPig+cRpKKpVHT8x6nOx1KNjWR=hywz-nHZga9fhiXMXD7KOSw@mail.gmail.com>
-Date: Tue, 28 Jan 2025 14:44:47 -0700
-Cc: Olga Pilipenco via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <116C27A8-EF7B-42E1-9606-815FDA3CF94C@shopify.com>
-References: <pull.1829.git.1731653548549.gitgitgadget@gmail.com>
- <pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com>
- <CAPig+cRpKKpVHT8x6nOx1KNjWR=hywz-nHZga9fhiXMXD7KOSw@mail.gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: Apple Mail (2.3826.300.87.4.3)
+Mime-Version: 1.0
+References: <cover.1723054623.git.steadmon@google.com>
+X-Mailer: git-send-email 2.48.1.262.g85cc9f2d1e-goog
+Message-ID: <cover.1738101256.git.steadmon@google.com>
+Subject: [PATCH v8 0/4] Introduce libgit-rs, a Rust wrapper around libgit.a
+From: Josh Steadmon <steadmon@google.com>
+To: git@vger.kernel.org
+Cc: calvinwan@google.com, nasamuffin@google.com, emrass@google.com, 
+	gitster@pobox.com, sandals@crustytoothpaste.net, ps@pks.im, 
+	phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you for the review, I totally understand the delay in the review =
-process and appreciate your time spent on this.
+This series provides two small Rust wrapper libraries around parts of
+Git: "libgit-sys", which exposes a few functions from libgit.a, and
+"libgit", which provides a more Rust-friendly interface to some of those
+functions. In addition to included unit tests, at $DAYJOB we have tested
+building JJ[1] with our library and used it to replace some of the
+libgit2-rs uses.
 
-> On Jan 19, 2025, at 3:30=E2=80=AFPM, Eric Sunshine =
-<sunshine@sunshineco.com> wrote:
->=20
-> On Thu, Jan 16, 2025 at 4:35=E2=80=AFPM Olga Pilipenco via =
-GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> Setup:
->> 1. Have a bare repo with core.bare =3D true in config.worktree
->> 2. Create a new worktree
->>=20
->> Behavior:
->> =46rom the secondary worktree the main worktree appears as non-bare.
->>=20
->> Expected:
->> =46rom the secondary worktree the main worktree should appear as =
-bare.
->>=20
->> Why current behavior is not good?
->> If the main worktree is detected as not bare it doesn't allow
->> checking out the branch of the main worktree. There are possibly
->> other problems associated with that behavior.
->>=20
->> Why is it happening?
->> While we're inside the secondary worktree we don't initialize the =
-main
->> worktree's repository with its configuration.
->=20
-> Okay, this is clearly a very real problem and explains this comment
-> added by f3534c98e4 (worktree: update is_bare heuristics, 2019-04-19):
->=20
->    NEEDSWORK: If this function is called from a secondary worktree and
->    config.worktree is present, is_bare_repository_cfg will reflect the
->    contents of config.worktree, not the contents of the main worktree.
->    This means that worktree->is_bare may be set to 0 even if the main
->    worktree is configured to be bare.
->=20
-> (Aside: I recall reading this comment when Jonathan added it but
-> wasn't able to dig into it at the time to really understand it, and
-> never got back around to it. Now, after studying your patch, I
-> understand what it was about.
->=20
->> How is it fixed?
->> Load actual configs of the main worktree. Also, skip the config =
-loading
->> step if we're already inside the current worktree because in that =
-case we
->> rely on is_bare_repository() to return the correct result.
->=20
-> I found that I had to dig around a bit to fully understand the problem
-> expressed by this commit message. Perhaps adding a bit more detail
-> would help? Here's my attempt at rewriting the above (also in a way
-> which is more idiomatic to this project):
->=20
->    When extensions.worktreeConfig is true and the main worktree is
->    bare -- that is, its config.worktree file contains core.bare=3Dtrue
->    -- commands run from secondary worktrees incorrectly see the main
->    worktree as not bare. As such, those commands incorrectly think
->    that the repository's default branch (typically "main" or
->    "master") is checked out in the bare repository even though it's
->    not. This makes it impossible, for instance, to checkout or delete
->    the default branch from a secondary worktree, among other
->    shortcomings.
->=20
->    This problem occurs because, when extensions.worktreeConfig is
->    true, commands run in secondary worktrees only consult
->    $commondir/config and $commondir/worktrees/<id>/config.worktree,
->    thus they never see the main worktree's core.bare=3Dtrue setting in
->    $commondir/config.worktree.
->=20
->    Fix this problem by consulting the main worktree's config.worktree
->    file when checking whether it is bare. (This extra work is
->    performed only when running from a secondary worktree.)
+[1] https://github.com/jj-vcs/jj
+
+There is known NEEDSWORK, but I feel that they can be addressed in
+follow-up changes, rather than in this series. If you feel otherwise,
+please let me know:
+
+* Investigate alternative methods of managing symbol visibility &
+  renaming.
+
+* Figure out symbol versioning
+
+Changes in V8:
+* Define a private libgit_config_set struct to avoid excessive casting
+  in public_symbol_export.c.
+
+* Style fixes: merge some Makefile rules, limit rule line length by
+  defining intermediate variables, add initial empty comment line, add
+  linebreaks in function definitions.
+
+Changes in V7:
+* Moved the ConfigSet implementation in libgit-rs to a `config` module.
+
+* Added doc comments for ConfigSet and its methods.
+
+* Fix meson builds by adding new object files to `libgit_sources`
+
+* Moved INCLUDE_LIBGIT_RS Makefile changes earlier in the series, so
+  that we can make it optional to compile some of the libgitpub sources.
+  Squashed V6 patch 5/5 into this series' patch 4/4.
+
+* Don't publicly export FFI types in libgit-rs.
+
+* Removed extraneous `-r` argument to $(RM) in the clean rules.
+
+* Added TODO reminder in Cargo.toml about removing Cargo.lock once we
+  hit a certain minimum supported Rust version.
+
+* Style cleanup in public_symbol_export.c
+
+Changes in V6:
+* Rebased onto current master, since V5 was several months old.
+
+* Move libgit-sys out of libgit-rs; while this sort of nesting is common
+  in Rust crates with standalone repositories, it doesn't make as much
+  sense when they're contained in the larger Git project's repo.
+
+* Standardize the naming of some of the Makefile targets to always
+  include a dash in the "-rs" or "-sys" suffixes.
+
+* Clean up READMEs and crate descriptions in preparation for
+  uploading to crates.io.
+
+Changes in V5:
+* When building with INCLUDE_LIBGIT_RS defined, add
+  "-fvisibility=hidden" to CFLAGS. This allows us to manage symbol
+  visibility in libgitpub.a without causing `make all` to rebuild from
+  scratch due to changing CFLAGS.
+
+* Avoid using c_int in the higher-level Rust API.
+
+* Remove libgitpub.a and intermediate files with `make clean`.
+
+Changes in V4:
+* Drop V3 patch #3, which added wrappers around repository
+  initialization and config access. These are not well-libified, and
+  they are not necessary for JJ's proof-of-concept use case, so let's
+  avoid exporting them for now.
+
+* Set a minimum supported Rust version of 1.63. Autodetect whether our
+  Rust version has c_int and c_char types; if not, define them
+  ourselves.
+
+* When building libgitpub.a via build.rs, set DEVELOPER=1 to catch
+  additional errors at build time.
+
+* In build.rs, use the make_cmd crate to portable select the correct
+  invocation of GNU Make.
+
+* Follow naming standards for _alloc() and _free() functions.
+
+* Use String instead of CString in higher-level API.
+
+* Move libgit_configset_alloc() and libgit_configset_free() out of
+  upstream Git, to the libgitpub shim library.
+
+* In libgitpub, initialize libgit_config_set structs in the _alloc()
+  function rather than with a separate _init() function.
+
+* Remove unnecessary comments in libgit-sys showing where the wrapped
+  functions were originally defined.
+
+* Fix clippy lint: don't reborrow configfile path references.
+
+* Various typo fixes and `cargo fmt` fixes.
+
+Changes in V3:
+* Renamed cgit-rs to libgit-rs and cgit-sys to libgit-sys
+
+* Makefile cleanup, particularly adding config.mak options that
+  developers can set to run Rust builds and tests by default (Patch 6)
+
+* Provide testdata configs for unit tests
+
+* ConfigSet API now uses &Path instead of &str -- more ergonomic for
+  Rust users to pass in and errors out if the path string isn't UTF-8
+
+* Fixed unresolved dependency on libz in Cargo.toml
 
 
-Wow, your explanation is so much better than mine.Thank you for =
-=E2=80=9Ctranslating" it for the world :) I=E2=80=99m still trying to =
-get used to the terminology used in this codebase.
-I=E2=80=99ll steal your description for sure (if you don=E2=80=99t =
-mind).
+Calvin Wan (1):
+  libgit: add higher-level libgit crate
 
->=20
->> Other solutions considered:
->> Alternatively, instead of incorrectly always using
->> `the_repository` as the main worktree's repository, we can detect
->> and load the actual repository of the main worktree and then use
->> that repository's `is_bare` value extracted from correct configs.
->> However, this approach is a bit riskier and could also affect
->> performance. Since we had the assignment `worktree->repo =3D
->> the_repository` for a long time already, I decided it's safe to
->> keep it as it is for now; it can be still fixed separately from
->> this change.
->=20
-> I found this paragraph somewhat confusing because it seems to conflate
-> a repository (i.e. the shared object database) with the `struct
-> repository` type, and the configuration which happens to get loaded
-> and stored (as one of *many* members) of the repository structure. I
-> had to read it several times to understand that this was talking about
-> instantiating a separate `struct repository` initialized from the main
-> worktree configuration. I agree that doing so would likely be overkill
-> and could impact performance negatively. I understand that you added
-> this paragraph because SubmittingPatches suggests to do so, but I
-> think it can probably be omitted in this case unless it can be
-> rewritten to be more clear (but even then I doubt it is necessary to
-> keep it).
+Josh Steadmon (3):
+  common-main: split init and exit code into new files
+  libgit-sys: introduce Rust wrapper for libgit.a
+  libgit-sys: also export some config_set functions
 
-Trust me, it took me a while to wrap my head around `struct repository` =
-as well.
-I agree if the explanation is too confusing and doesn=E2=80=99t bring =
-any value, it can be omitted.
+ .gitignore                                |   2 +
+ Makefile                                  |  49 ++++++++++
+ common-exit.c                             |  26 ++++++
+ common-init.c                             |  63 +++++++++++++
+ common-init.h                             |   6 ++
+ common-main.c                             |  83 +----------------
+ contrib/libgit-rs/Cargo.lock              |  77 ++++++++++++++++
+ contrib/libgit-rs/Cargo.toml              |  17 ++++
+ contrib/libgit-rs/README.md               |  13 +++
+ contrib/libgit-rs/build.rs                |   4 +
+ contrib/libgit-rs/src/config.rs           | 106 ++++++++++++++++++++++
+ contrib/libgit-rs/src/lib.rs              |   1 +
+ contrib/libgit-rs/testdata/config1        |   2 +
+ contrib/libgit-rs/testdata/config2        |   2 +
+ contrib/libgit-rs/testdata/config3        |   2 +
+ contrib/libgit-sys/Cargo.lock             |  69 ++++++++++++++
+ contrib/libgit-sys/Cargo.toml             |  19 ++++
+ contrib/libgit-sys/README.md              |   4 +
+ contrib/libgit-sys/build.rs               |  35 +++++++
+ contrib/libgit-sys/public_symbol_export.c |  59 ++++++++++++
+ contrib/libgit-sys/public_symbol_export.h |  18 ++++
+ contrib/libgit-sys/src/lib.rs             |  79 ++++++++++++++++
+ meson.build                               |   2 +
+ t/Makefile                                |  15 +++
+ 24 files changed, 672 insertions(+), 81 deletions(-)
+ create mode 100644 common-exit.c
+ create mode 100644 common-init.c
+ create mode 100644 common-init.h
+ create mode 100644 contrib/libgit-rs/Cargo.lock
+ create mode 100644 contrib/libgit-rs/Cargo.toml
+ create mode 100644 contrib/libgit-rs/README.md
+ create mode 100644 contrib/libgit-rs/build.rs
+ create mode 100644 contrib/libgit-rs/src/config.rs
+ create mode 100644 contrib/libgit-rs/src/lib.rs
+ create mode 100644 contrib/libgit-rs/testdata/config1
+ create mode 100644 contrib/libgit-rs/testdata/config2
+ create mode 100644 contrib/libgit-rs/testdata/config3
+ create mode 100644 contrib/libgit-sys/Cargo.lock
+ create mode 100644 contrib/libgit-sys/Cargo.toml
+ create mode 100644 contrib/libgit-sys/README.md
+ create mode 100644 contrib/libgit-sys/build.rs
+ create mode 100644 contrib/libgit-sys/public_symbol_export.c
+ create mode 100644 contrib/libgit-sys/public_symbol_export.h
+ create mode 100644 contrib/libgit-sys/src/lib.rs
 
->=20
->> Real life use case:
->> 1. Have a bare repo
->> 2. Create a worktree from the bare repo
->> 3. In the secondary worktree enable sparse-checkout - this enables
->> extensions.worktreeConfig and keeps core.bare=3Dtrue setting in
->> config.worktree of the bare worktree
->> 4. The secondary worktree or any other non-bare worktree created
->> won't be able to use branch main (not even once), but it should be
->> able to.
->=20
-> This is mostly repeating what was said earlier, thus probably isn't
-> adding any value to the commit message. I'd probably drop it.
+Range-diff against v7:
+1:  cd0cb9aa04 = 1:  cd0cb9aa04 common-main: split init and exit code into new files
+2:  f1502b8590 ! 2:  3588a3c3fc libgit-sys: introduce Rust wrapper for libgit.a
+    @@ Makefile: $(CLAR_TEST_PROG): $(UNIT_TEST_DIR)/clar.suite $(CLAR_TEST_OBJS) $(GIT
+     +all:: libgit-sys
+     +endif
+     +
+    -+contrib/libgit-sys/partial_symbol_export.o: contrib/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
+    ++LIBGIT_PUB_OBJS = contrib/libgit-sys/public_symbol_export.o
+    ++LIBGIT_PUB_OBJS += libgit.a
+    ++LIBGIT_PUB_OBJS += reftable/libreftable.a
+    ++LIBGIT_PUB_OBJS += xdiff/lib.a
+    ++
+    ++LIBGIT_PARTIAL_EXPORT = contrib/libgit-sys/partial_symbol_export.o
+    ++
+    ++LIBGIT_HIDDEN_EXPORT = contrib/libgit-sys/hidden_symbol_export.o
+    ++
+    ++$(LIBGIT_PARTIAL_EXPORT): $(LIBGIT_PUB_OBJS)
+     +	$(LD) -r $^ -o $@
+     +
+    -+contrib/libgit-sys/hidden_symbol_export.o: contrib/libgit-sys/partial_symbol_export.o
+    ++$(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+     +	$(OBJCOPY) --localize-hidden $^ $@
+     +
+    -+contrib/libgit-sys/libgitpub.a: contrib/libgit-sys/hidden_symbol_export.o
+    ++contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+     +	$(AR) $(ARFLAGS) $@ $^
+     
+      ## contrib/libgit-sys/Cargo.lock (new) ##
+    @@ contrib/libgit-sys/build.rs (new)
+     
+      ## contrib/libgit-sys/public_symbol_export.c (new) ##
+     @@
+    -+/* Shim to publicly export Git symbols. These must be renamed so that the
+    ++/*
+    ++ * Shim to publicly export Git symbols. These must be renamed so that the
+     + * original symbols can be hidden. Renaming these with a "libgit_" prefix also
+     + * avoids conflicts with other libraries such as libgit2.
+     + */
+3:  d67d3648d1 ! 3:  f4452fffe6 libgit-sys: also export some config_set functions
+    @@ contrib/libgit-sys/public_symbol_export.c
+      
+      #pragma GCC visibility push(default)
+      
+    ++struct libgit_config_set {
+    ++	struct config_set cs;
+    ++};
+    ++
+     +struct libgit_config_set *libgit_configset_alloc(void)
+     +{
+    -+	struct config_set *cs = xmalloc(sizeof(struct config_set));
+    -+	git_configset_init(cs);
+    -+	return (struct libgit_config_set *) cs;
+    ++	struct libgit_config_set *cs =
+    ++			xmalloc(sizeof(struct libgit_config_set));
+    ++	git_configset_init(&cs->cs);
+    ++	return cs;
+     +}
+     +
+     +void libgit_configset_free(struct libgit_config_set *cs)
+     +{
+    -+	git_configset_clear((struct config_set *) cs);
+    -+	free((struct config_set *) cs);
+    ++	git_configset_clear(&cs->cs);
+    ++	free(&cs->cs);
+     +}
+     +
+     +int libgit_configset_add_file(struct libgit_config_set *cs, const char *filename)
+     +{
+    -+	return git_configset_add_file((struct config_set *) cs, filename);
+    ++	return git_configset_add_file(&cs->cs, filename);
+     +}
+     +
+    -+int libgit_configset_get_int(struct libgit_config_set *cs, const char *key, int *dest)
+    ++int libgit_configset_get_int(struct libgit_config_set *cs, const char *key,
+    ++			     int *dest)
+     +{
+    -+	return git_configset_get_int((struct config_set *) cs, key, dest);
+    ++	return git_configset_get_int(&cs->cs, key, dest);
+     +}
+     +
+    -+int libgit_configset_get_string(struct libgit_config_set *cs, const char *key, char **dest)
+    ++int libgit_configset_get_string(struct libgit_config_set *cs, const char *key,
+    ++				char **dest)
+     +{
+    -+	return git_configset_get_string((struct config_set *) cs, key, dest);
+    ++	return git_configset_get_string(&cs->cs, key, dest);
+     +}
+     +
+      const char *libgit_user_agent(void)
+4:  88425bb0b1 ! 4:  ada9fc0a13 libgit: add higher-level libgit crate
+    @@ Makefile: build-unit-tests: $(UNIT_TEST_PROGS) $(CLAR_TEST_PROG)
+      	$(MAKE) -C t/ unit-tests
+      
+     -.PHONY: libgit-sys
+    +-libgit-sys:
+     +.PHONY: libgit-sys libgit-rs
+    - libgit-sys:
+    ++libgit-sys libgit-rs:
+      	$(QUIET)(\
+    - 		cd contrib/libgit-sys && \
+    +-		cd contrib/libgit-sys && \
+    ++		cd contrib/$@ && \
+      		cargo build \
+      	)
+    -+libgit-rs:
+    -+	$(QUIET)(\
+    -+		cd contrib/libgit-rs && \
+    -+		cargo build \
+    -+	)
+      ifdef INCLUDE_LIBGIT_RS
+     -all:: libgit-sys
+     +all:: libgit-sys libgit-rs
+      endif
+      
+    - contrib/libgit-sys/partial_symbol_export.o: contrib/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
+    + LIBGIT_PUB_OBJS = contrib/libgit-sys/public_symbol_export.o
+     
+      ## contrib/libgit-rs/Cargo.lock (new) ##
+     @@
 
-I agree, your improved description captures this scenario perfectly.
-
->=20
->> Signed-off-by: Olga Pilipenco <olga.pilipenco@shopify.com>
->> ---
->>    Changes since v1:
->>=20
->>     * no code changes
->>     * rebased with maint
->>     * CC added
->=20
-> Sorry. I've had your v1 sitting in my ever-increasingly-large backlog
-> of patches to look at, but have been extra busy the last many months
-> and never managed to get to it.
-
-Totally understand. Thanks again for getting to it eventually.
-
->=20
->>    Existing broken functionality forces our project to use hacks on =
-bare
->>    repo that we'd like to avoid. I would really appreciate reviews of =
-this
->>    patch to move closer towards fixing the issue. This is my first
->>    contribution to git/git, I apologize if I got lost in the =
-instructions,
->>    but I tried my best to follow the rules.
->=20
-> Your submission is fine. Unfortunately, the project has a lack of
-> reviewers but no lack of submitters, so sometimes patches get
-> overlooked or simply buried.
->=20
->> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
->> @@ -410,6 +410,20 @@ test_expect_success 'bare main worktree has HEAD =
-at branch deleted by secondary
->> +test_expect_success 'secondary worktree can switch to main if common =
-dir is bare worktree' '
->=20
-> The use of "common dir" is a bit confusing. Also, this patch is fixing
-> the more general problem that secondary worktrees think that the bare
-> main worktree has a branch checked out. So, perhaps a better title
-> would be:
->=20
->    secondary worktrees recognize core.bare=3Dtrue in main =
-config.worktree
->=20
-> or something?
-
-Sounds good, will update.
-
->=20
->> +       test_when_finished "rm -rf bare_repo non_bare_repo =
-secondary_worktree" &&
->> +       git init -b main non_bare_repo &&
->> +       test_commit -C non_bare_repo x &&
->> +
->> +       git clone --bare non_bare_repo bare_repo &&
->> +       git -C bare_repo config extensions.worktreeConfig true &&
->> +       git -C bare_repo config unset core.bare &&
->> +       git -C bare_repo config --worktree core.bare true &&
->> +
->> +       git -C bare_repo worktree add ../secondary_worktree &&
->> +       git -C secondary_worktree checkout main
->> +'
->=20
-> Very straightforward and exactly what I expected to see once I
-> understood the problem.
->=20
->> diff --git a/worktree.c b/worktree.c
->> @@ -65,6 +65,28 @@ static int is_current_worktree(struct worktree =
-*wt)
->> +static int is_bare_git_dir(const char *git_dir)
->=20
-> Nit: I wonder if a name such as is_main_worktree_bare() would clue
-> readers in a bit more?
-
-I was about to explain how I wanted this function to be more generic and =
-handle all sorts of bare and non-bare cases - whether it=E2=80=99s the =
-main worktree or not. However, after seeing your comments and after =
-revisiting the code, I realized that generalization doesn=E2=80=99t =
-really provide much benefit here. It is much clearer if we're explicit =
-that the bare check in this case is only performed on the main worktree. =
-I=E2=80=99ll update it in the next version.
-
->=20
->> +{
->> +       int bare =3D 0;
->> +       struct config_set cs =3D { { 0 } };
->=20
-> This is not your fault since this construct is used elsewhere in this
-> file (from which I presume you copied it), but project consensus is
-> that using the notation `{{0}}` to work around a complaint from the
-> Apple compiler (and only the Apple compiler) should be avoided, and
-> that `{0}` is preferred. So, if you reroll, changing this to `{0}` may
-> make other reviewers happy (or you can leave it as is to be consistent
-> with existing precedence in this file; I don't feel strongly about
-> it).
-
-I=E2=80=99ll fix it, sounds like a good reason.
-
->=20
->> +       char *config_file;
->> +       char *worktree_config_file;
->> +
->> +       config_file =3D xstrfmt("%s/config", git_dir);
->> +       worktree_config_file =3D xstrfmt("%s/config.worktree",  =
-git_dir);
->> +
->> +       git_configset_init(&cs);
->> +       git_configset_add_file(&cs, config_file);
->> +       git_configset_add_file(&cs, worktree_config_file);
->=20
-> Genuine question: I haven't thought too deeply about it, but do we
-> gain anything by loading $commondir/config here -- which is shared by
-> the main worktree and all secondary worktrees -- considering that it
-> was already loaded and consulted by the earlier is-bare check before
-> this function was even called?
-
-This function determines if a worktree is bare or not. I want this logic =
-to work even when it=E2=80=99s called from a different context and not =
-rely on other is-bare checks (that are a bit confusing tbh).
-
->=20
->> +       git_configset_get_bool(&cs, "core.bare", &bare);
->> +
->> +       git_configset_clear(&cs);
->> +       free(config_file);
->> +       free(worktree_config_file);
->> +       return bare;
->=20
-> Everything gets cleaned up correctly. Good.
->=20
->> @@ -77,18 +99,16 @@ static struct worktree *get_main_worktree(int =
-skip_reading_head)
->> +       /*
->> +        * NEEDSWORK: the_repository is not always main worktree's =
-repository
->> +       */
->>        worktree->repo =3D the_repository;
->>        worktree->path =3D strbuf_detach(&worktree_path, NULL);
->=20
-> I found this new NEEDSWORK comment rather confusing the first several
-> times I read the patch. It wasn't until I finally realized that the
-> reference to `the_repository` here is the same reference to
-> `the_repository` in the commit message -- which confused me, as well
-> -- that I understood what this was trying to say. The actual problem,
-> of course, is that the _configuration_ stored in `the_repository` is
-> the secondary worktree's configuration, not the main worktree's
-> configuration. Considering that this patch addresses that problem, I'd
-> probably just drop this new comment altogether (unless, perhaps, you
-> rewrite it to talk about the _configuration_ stored in
-> `the_repository`).
-
-This `the_repository` structure is soooo confusing, took me a while to =
-figure out what it is! I would feel guilty not mentioning that under =
-some circumstances `the_repository` assigned here could be not actual =
-configuration of the worktree object. I don=E2=80=99t know if that will =
-ever matter or not, but I find this assignment kinda =E2=80=9Cstinky=E2=80=
-=9D and want everyone to know about it. I don=E2=80=99t want to change =
-this assignment in this patch because it didn=E2=80=99t bring any harm =
-so far. I=E2=80=99ll try again to rephrase this comment, just to give a =
-heads up in case someone experiences =E2=80=9Cweird=E2=80=9D behaviour =
-in this area (same way the previous NEEDSWORK comment gave me ideas why =
-my workflow didn=E2=80=99t work and inspired me to try to fix it).
-
->=20
->> -       /*
->> -        * NEEDSWORK: If this function is called from a secondary =
-worktree and
->> -        * config.worktree is present, is_bare_repository_cfg will =
-reflect the
->> -        * contents of config.worktree, not the contents of the main =
-worktree.
->> -        * This means that worktree->is_bare may be set to 0 even if =
-the main
->> -        * worktree is configured to be bare.
->> -        */
->> -       worktree->is_bare =3D (is_bare_repository_cfg =3D=3D 1) ||
->> -               is_bare_repository();
->>        worktree->is_current =3D is_current_worktree(worktree);
->> +       worktree->is_bare =3D (is_bare_repository_cfg =3D=3D 1) ||
->> +               is_bare_repository() ||
->> +               (!worktree->is_current && =
-is_bare_git_dir(repo_get_common_dir(the_repository)));
->=20
-> This is performing the expensive check only if the earlier checks left
-> the question unanswered. Good.
-
-Thanks for the review. I=E2=80=99ll incorporate the changes in my next =
-version and hopefully it will be good to go :tada:
-I hope I responded to all the comments, it=E2=80=99s a bit =
-nerve-wrecking to contribute for the first time (so many rules and =
-instructions!) :)
+base-commit: 757161efcca150a9a96b312d9e780a071e601a03
+-- 
+2.48.1.262.g85cc9f2d1e-goog
 
