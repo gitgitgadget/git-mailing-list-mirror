@@ -1,66 +1,65 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B0A42AA3
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 15:08:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7CB42AA3
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 15:08:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738076915; cv=none; b=MXXX2ApFhNPqkTU/sZqsXZXX0mEwKKZwOselgzxzldgSQF4j3LMvEPEC2Z77qiwpInCMwsFQlQ5Vdq8GPPhmZZ6zb6qSCBpTOoXFQO6LJRoidYPfdbWCtcDDDRizMxo1uX1Qtc7PI5ZCg2tYKbYxeZg/r2IpTGgJ68+dcSryrXE=
+	t=1738076934; cv=none; b=VEY9Omwed93nxv6DGjADPTcmrvEPSXZ7RVHNryIfdXac1GWJ0B50GDXizzYL8MGbwDYsUrvLDPO3i/h8ZGzcNf+ENq5q7CFceT9xhwQvKGkFPBxGgfcfQBiMeUuvHQ8JX2kZyqdKPj03HCYKJorv65/zSm9RFv3QGr0GUIMFCEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738076915; c=relaxed/simple;
-	bh=SZfqg8CQwHm/q5irtJ/kdVqTC0hTizrvxsPk704raIc=;
+	s=arc-20240116; t=1738076934; c=relaxed/simple;
+	bh=ggZgMadSAKdh7usy07F6Sdg68leJAOzcc4LBCsehTJQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ifvo7cf4cdFXwPa+BmgVsilPFqWue7mRuMO/y7hIXNUCoFr4E4p6c2J5WWemqQd3GR9mqnZmteUdyL++o0xM+OROfbA8bXYH2tJldwuEZzCCttPsw1qkaMp5LdAFLDzepAzRfRyUcbUHR1x/a8ex6N+Nzmf76dj/lnZwcINWrMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=crkZey5s; arc=none smtp.client-ip=209.85.128.49
+	 In-Reply-To:Content-Type; b=IptBoSEL3hSB6+TTRxNoYP6MvYitilZTMDVog3GpjxeUEjvpGb2MZWvk3H8a8bSUm4fZLiZLfhC+A2Z1/LLZebqFDbUMD05pCMMQg6xeBDdwYn39t45cnB8fktzMMjmD2Bb/RaxzaKi7h3N/QA456GXokBZesp1dSvvsEJVu/f4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DQ7UNiJi; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="crkZey5s"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43675b1155bso65930715e9.2
-        for <git@vger.kernel.org>; Tue, 28 Jan 2025 07:08:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DQ7UNiJi"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-435f8f29f8aso41076345e9.2
+        for <git@vger.kernel.org>; Tue, 28 Jan 2025 07:08:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738076911; x=1738681711; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738076930; x=1738681730; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=nPB0MsIMVeAgR7pugxnLnOS3ns6QEtthOo2wK7mgDrE=;
-        b=crkZey5ssL8tH3bPJkaGsfjJPfn0kwuz2Ppj6FAuc5VejfZFZEz5kXLXQMP7/zZ2jC
-         2nSRTD0Wv2vFsh8VDh2Vu4lJtEC/rNDaDcW/cwYWlEIDIGK0/9x4oagGipRwVoicT/4D
-         FMkY/ES8qNqI9I8XEm781yyAB+MWJ0+H78GqgY2za6uuJgbBin+2oGB/Ka9ExGA5gpH2
-         zKLDrbhY6L5I7k/M7Ve5QnF3eAYNCHZoDP+CXlGztjd363leMyhPZ7arAVJiOulx3Z83
-         qdqD/lmNUQ5DwqA5XTkS4AW1vgdII6QFN5m4cwk6qm2loGjmHWyF//RYmTZOMuE7X092
-         5kRg==
+        bh=C8bYkeSksXh2fh+NDH2VfdfeWG0urrPLKJOh53cZxJU=;
+        b=DQ7UNiJi7+viJ0vn6fH64HHVri9upnhAG6onWXw/SE8anz+SFZhZsqNE73AI6ooJMN
+         M/I/wQ5IokKOkmEAHUQ3YIk49nGjgdm+rutwCJyiLXgOnINrzWVPvn1OZHhPDB2L3Hzu
+         Uw0MIvy4LaQJe1o8okVQzSY0uBcpJDMRB3ZjfexDjSifCsz/bypPupsE39gIpcs0cuwZ
+         D/4lOSuJSF3n0NDQTvP6Y4lxt0eTf+8Jf+vuRD0mWVdXo+jL25BCuUUd9PNbB2H2Zi5t
+         wNuJaa33Kuh9XfX5/T+yuhMH6rLm1nPjEyLfOGY0Zcvhdr3o+RtTAuI6EL7uTS247f8e
+         P8Ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738076911; x=1738681711;
+        d=1e100.net; s=20230601; t=1738076930; x=1738681730;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nPB0MsIMVeAgR7pugxnLnOS3ns6QEtthOo2wK7mgDrE=;
-        b=OawvQheKDoHtbQBx3lcinqb620ES0iw9b/7dBlk8aZLBIcm2U2I5GMBwzjuRMMBP8D
-         bFRqSZlfL/TL6+j3TACeY4cRMfe/4TTOxE+8BFR8mUZhjCZn5DMGwyFgXjAEfnvmZuvt
-         7FqX+qNrr0YvN/Y7mHTPjyhb8EeHW5hPBANjJzWtDolB2QhwxSQyRQuS1jdBCIq7Zq++
-         D4XPfb7sVzKrknkfpIb7r/KVuVKfJjMq32BZPFp1iKtsHh8SeVvYdpEgQybBZIEvV48x
-         Uz8KRc9EbdLJzKPiPv51pWlBvw7+Podz9PoITKG8c4cyJCs25m8JogLvVyAjbKEd5//+
-         6KWw==
-X-Forwarded-Encrypted: i=1; AJvYcCUNhLuYZyGOe/f6Zmc9NPyYTWzRL8AkyvfMrNhvpXic6GC3pk8RvkREkscimlf4fyaNzEc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzAtgyrtqCoAH5GKK3hoyinwqWiMdnaTlQew6W3l7rRfTSVvfxm
-	xhFfQjlC68sQQe1GF18pGK8HzqkpwdY65c1TP+HqATbQmdvJskbF
-X-Gm-Gg: ASbGncuMo1kDhCQqJklbrZ75jLcevqdYBbgvlBOgrVj3RCaWmItO15ahe1cz5gcn1ha
-	wBj9iRA261gpnKvLvzhusjThGLLepaOYXNvgjOkuwL5CT+0XL5FiYLbNy9LQyyDUnsKuPov0t8Q
-	tvjgdppWzApRkIMLuH7WtyfWPitUdU4WZE9HJTWZuUateu3tgsHgzSwLGn4hxkkl+AFAKqWsaEl
-	6Tj3EP93MCTPf/LS6AuhKrLV/B0KmcsnpHHqa42+MvR610TPbzGScPZHSBdZr+3W5chEtq5iV8I
-	BmmYm0WWJHXb0RDaAKNnWQ5oHA0WDo7QIYMHGx89CQjVaQD3NbiG8FL2YpsXy8wO/JAanNeoVfT
-	VwCNi
-X-Google-Smtp-Source: AGHT+IHAHnKIueykHCgBHrcUSy04Bv6JbqVlZ6NpbRAEPJopai/RsfE0KuwKZIpn4Tb559U8MG2dIw==
-X-Received: by 2002:a05:600c:46cb:b0:436:1b96:7072 with SMTP id 5b1f17b1804b1-438913bebe7mr415576245e9.5.1738076910758;
-        Tue, 28 Jan 2025 07:08:30 -0800 (PST)
+        bh=C8bYkeSksXh2fh+NDH2VfdfeWG0urrPLKJOh53cZxJU=;
+        b=fA42IyvQl291fdKCZyl2zQ7avCCl1o45bMgFpdjdHfPYqj9VWO/z+ZmZR2BA2bIC8r
+         0iDnidhbb1jPKxdBYC8vDpVhwd4J4UPHdBUavqiDfLd1Wi6VdNsiJc9tPpjRuUJ+t6UU
+         QcuXh5DZ0Eu/cXSuF85jvb34b6haDI+8uxGlXE34iQEJ6qxI67rnX6fR19+GuzNknooT
+         y7Jxb7g/eYRUY2Wfir4BG77KpvtoHLQFIYMrd27DE/Bo8TEAN9JFP+PETPpaz3xlrjja
+         wy20U6dioSblck6jWZ4fCBbrYoystZbDBuLhTco3LbzWGYKokHk01qfINEKP5iOYE59x
+         6lTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVLTg0lbgNKwpSpibneFcwos1ZV0Lqn3mbUlSSkJLxv0tO6YvWN1Psyb5XBKWdeLhCZa84=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxcnobQ8UMl8YopS1vZvEhsay0yQkCAvh1gKdXfl8PdVQj55auj
+	eOm8x6VeMoccbwwer9Iyk7P2NeM4viZciOOygnIzt7x3XRi+zFgg
+X-Gm-Gg: ASbGncsFvtbku92nlWJeS+A2QhJ0+WQ+1XP5ZHYnD6xSbq+75tWfQdb5lirOH63MMXx
+	upfhiotIBRIARK7f9/O5uVwTiGkNfE2Zqv7RKQ/FINWS84npKyWskiHR5l2xiLyHsT/gI1LWwqU
+	e91i9VQwAaER9WJ1ROgRhwmZMwKlAr4cds0AfG9IaB5iWYPRnlEr3kJoF8BFskQpTzgqd+/uLLA
+	y1E+w/BkNQC2iJK+r78EVtEj86wrATM6cj/+I5JOOuTbR6sx6sdb3WA8F/nXr4bsf4vOy2ywsEv
+	ye7PZnQRqssSJDga0BxLWAWNZZnX84yTt9tO7Hprr3BghxhwzjeyXQzb0DIb2rUmpdeRmQ==
+X-Google-Smtp-Source: AGHT+IGMt56KSdDWCB618RTcFcvUhOlMJu98j0S5NVMaDn4SDiA1cWvuchIC4kyPWrrn1r9apsEU4Q==
+X-Received: by 2002:a05:600c:3114:b0:436:1aa6:b8ee with SMTP id 5b1f17b1804b1-438913bfe72mr432914205e9.2.1738076930017;
+        Tue, 28 Jan 2025 07:08:50 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd4c75c0sm170954585e9.31.2025.01.28.07.08.29
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438bd4fa3efsm174354555e9.2.2025.01.28.07.08.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jan 2025 07:08:30 -0800 (PST)
-Message-ID: <8ed463cb-1191-4106-bf30-87e9e8bcc95a@gmail.com>
-Date: Tue, 28 Jan 2025 15:08:29 +0000
+        Tue, 28 Jan 2025 07:08:49 -0800 (PST)
+Message-ID: <3559a70c-7ed3-41cd-a45f-390134218c52@gmail.com>
+Date: Tue, 28 Jan 2025 15:08:48 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,174 +68,162 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v7 3/4] libgit-sys: also export some config_set functions
+Subject: Re: [PATCH v7 2/4] libgit-sys: introduce Rust wrapper for libgit.a
 To: Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
 Cc: calvinwan@google.com, nasamuffin@google.com, emrass@google.com,
  gitster@pobox.com, sandals@crustytoothpaste.net, ps@pks.im
 References: <cover.1723054623.git.steadmon@google.com>
  <cover.1738023208.git.steadmon@google.com>
- <d67d3648d1bdb7dde5e475f3a8eba834cc0ea891.1738023208.git.steadmon@google.com>
+ <f1502b85901d81889d86597f31eca40e1965d56f.1738023208.git.steadmon@google.com>
 From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <d67d3648d1bdb7dde5e475f3a8eba834cc0ea891.1738023208.git.steadmon@google.com>
+In-Reply-To: <f1502b85901d81889d86597f31eca40e1965d56f.1738023208.git.steadmon@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Josh
+
 
 On 28/01/2025 00:19, Josh Steadmon wrote:
-> In preparation for implementing a higher-level Rust API for accessing
-> Git configs, export some of the upstream configset API via libgitpub and
-> libgit-sys. Since this will be exercised as part of the higher-level API
-> in the next commit, no tests have been added for libgit-sys.
-> 
-> While we're at it, add git_configset_alloc() and git_configset_free()
-> functions in libgitpub so that callers can manage config_set structs on
-> the heap. This also allows non-C external consumers to treat config_sets
-> as opaque structs.
+> Introduce libgit-sys, a Rust wrapper crate that allows Rust code to call
+> functions in libgit.a. This initial patch defines build rules and an
+> interface that exposes user agent string getter functions as a proof of
+> concept. This library can be tested with `cargo test`. 
 
-This interface is looks nice, I've left a couple of comments below
+It's great to see some tests. This is looking good, I've left a couple 
+of small comments below.
 
+> +contrib/libgit-sys/partial_symbol_export.o: contrib/libgit-sys/public_symbol_export.o libgit.a reftable/libreftable.a xdiff/lib.a
+> +	$(LD) -r $^ -o $@
+
+This is a very long line and the ones below are pretty long - perhaps we 
+could put the list of sources in a variable?
+
+> +contrib/libgit-sys/hidden_symbol_export.o: contrib/libgit-sys/partial_symbol_export.o
+> +	$(OBJCOPY) --localize-hidden $^ $@
+> +
+> +contrib/libgit-sys/libgitpub.a: contrib/libgit-sys/hidden_symbol_export.o
+> +	$(AR) $(ARFLAGS) $@ $^
+ > [...]
 > diff --git a/contrib/libgit-sys/public_symbol_export.c b/contrib/libgit-sys/public_symbol_export.c
-> index cd1602206e..a0297cb1a5 100644
-> --- a/contrib/libgit-sys/public_symbol_export.c
+> new file mode 100644
+> index 0000000000..cd1602206e
+> --- /dev/null
 > +++ b/contrib/libgit-sys/public_symbol_export.c
-> @@ -4,11 +4,40 @@
->    */
->   
->   #include "git-compat-util.h"
-> +#include "config.h"
->   #include "contrib/libgit-sys/public_symbol_export.h"
->   #include "version.h"
->   
->   #pragma GCC visibility push(default)
+> @@ -0,0 +1,22 @@
+> +/* Shim to publicly export Git symbols. These must be renamed so that the
 
-Personally I'd prefer it if we actually defined struct libgit_config_set 
-here
+Style: Multiline comments start with an empty "/*" so this should be
 
-struct libgit_config_set {
-	struct config_set cs;
-}
+/*
+  * Shim ...
 
-Then we could avoid all the casts below. For example
-
-struct libgit_config_set *libgit_configset_alloc(void)
-{
-	struct libget_config_set *cs =
-		xmalloc(sizeof(struct libgit_config_set));
-	git_configset_init(&cs->cs);
-	return cs;
-}
-
-> +struct libgit_config_set *libgit_configset_alloc(void)
-> +{
-> +	struct config_set *cs = xmalloc(sizeof(struct config_set));
-> +	git_configset_init(cs);
-> +	return (struct libgit_config_set *) cs;
-> +}
-> +
-> +void libgit_configset_free(struct libgit_config_set *cs)
-> +{
-> +	git_configset_clear((struct config_set *) cs);
-> +	free((struct config_set *) cs);
-> +}
-> +
-> +int libgit_configset_add_file(struct libgit_config_set *cs, const char *filename)
-> +{
-> +	return git_configset_add_file((struct config_set *) cs, filename);
-> +}
-> +
-> +int libgit_configset_get_int(struct libgit_config_set *cs, const char *key, int *dest)
-
-Style: this and the one below could do with being wrapped at 80 characters
-
-This whole series looks pretty good to me
+> + * original symbols can be hidden. Renaming these with a "libgit_" prefix also
+> + * avoids conflicts with other libraries such as libgit2.
+> + */
 
 Best Wishes
 
 Phillip
 
+> +#include "git-compat-util.h"
+> +#include "contrib/libgit-sys/public_symbol_export.h"
+> +#include "version.h"
+> +
+> +#pragma GCC visibility push(default)
+> +
+> +const char *libgit_user_agent(void)
 > +{
-> +	return git_configset_get_int((struct config_set *) cs, key, dest);
+> +	return git_user_agent();
 > +}
 > +
-> +int libgit_configset_get_string(struct libgit_config_set *cs, const char *key, char **dest)
+> +const char *libgit_user_agent_sanitized(void)
 > +{
-> +	return git_configset_get_string((struct config_set *) cs, key, dest);
+> +	return git_user_agent_sanitized();
 > +}
 > +
->   const char *libgit_user_agent(void)
->   {
->   	return git_user_agent();
+> +#pragma GCC visibility pop
 > diff --git a/contrib/libgit-sys/public_symbol_export.h b/contrib/libgit-sys/public_symbol_export.h
-> index a3372f93fa..701db92d53 100644
-> --- a/contrib/libgit-sys/public_symbol_export.h
+> new file mode 100644
+> index 0000000000..a3372f93fa
+> --- /dev/null
 > +++ b/contrib/libgit-sys/public_symbol_export.h
-> @@ -1,6 +1,16 @@
->   #ifndef PUBLIC_SYMBOL_EXPORT_H
->   #define PUBLIC_SYMBOL_EXPORT_H
->   
-> +struct libgit_config_set *libgit_configset_alloc(void);
+> @@ -0,0 +1,8 @@
+> +#ifndef PUBLIC_SYMBOL_EXPORT_H
+> +#define PUBLIC_SYMBOL_EXPORT_H
 > +
-> +void libgit_configset_free(struct libgit_config_set *cs);
+> +const char *libgit_user_agent(void);
 > +
-> +int libgit_configset_add_file(struct libgit_config_set *cs, const char *filename);
+> +const char *libgit_user_agent_sanitized(void);
 > +
-> +int libgit_configset_get_int(struct libgit_config_set *cs, const char *key, int *dest);
-> +
-> +int libgit_configset_get_string(struct libgit_config_set *cs, const char *key, char **dest);
-> +
->   const char *libgit_user_agent(void);
->   
->   const char *libgit_user_agent_sanitized(void);
+> +#endif /* PUBLIC_SYMBOL_EXPORT_H */
 > diff --git a/contrib/libgit-sys/src/lib.rs b/contrib/libgit-sys/src/lib.rs
-> index d4853f3074..dadb4e5f40 100644
-> --- a/contrib/libgit-sys/src/lib.rs
+> new file mode 100644
+> index 0000000000..d4853f3074
+> --- /dev/null
 > +++ b/contrib/libgit-sys/src/lib.rs
-> @@ -1,15 +1,44 @@
->   #[cfg(has_std__ffi__c_char)]
-> -use std::ffi::c_char;
-> +use std::ffi::{c_char, c_int};
->   
->   #[cfg(not(has_std__ffi__c_char))]
->   #[allow(non_camel_case_types)]
->   pub type c_char = i8;
->   
+> @@ -0,0 +1,46 @@
+> +#[cfg(has_std__ffi__c_char)]
+> +use std::ffi::c_char;
+> +
 > +#[cfg(not(has_std__ffi__c_char))]
 > +#[allow(non_camel_case_types)]
-> +pub type c_int = i32;
+> +pub type c_char = i8;
 > +
->   extern crate libz_sys;
->   
-> +#[allow(non_camel_case_types)]
-> +#[repr(C)]
-> +pub struct libgit_config_set {
-> +    _data: [u8; 0],
-> +    _marker: core::marker::PhantomData<(*mut u8, core::marker::PhantomPinned)>,
+> +extern crate libz_sys;
+> +
+> +extern "C" {
+> +    pub fn libgit_user_agent() -> *const c_char;
+> +    pub fn libgit_user_agent_sanitized() -> *const c_char;
 > +}
 > +
->   extern "C" {
->       pub fn libgit_user_agent() -> *const c_char;
->       pub fn libgit_user_agent_sanitized() -> *const c_char;
+> +#[cfg(test)]
+> +mod tests {
+> +    use std::ffi::CStr;
 > +
-> +    pub fn libgit_configset_alloc() -> *mut libgit_config_set;
-> +    pub fn libgit_configset_free(cs: *mut libgit_config_set);
+> +    use super::*;
 > +
-> +    pub fn libgit_configset_add_file(cs: *mut libgit_config_set, filename: *const c_char) -> c_int;
+> +    #[test]
+> +    fn user_agent_starts_with_git() {
+> +        let c_str = unsafe { CStr::from_ptr(libgit_user_agent()) };
+> +        let agent = c_str
+> +            .to_str()
+> +            .expect("User agent contains invalid UTF-8 data");
+> +        assert!(
+> +            agent.starts_with("git/"),
+> +            r#"Expected user agent to start with "git/", got: {}"#,
+> +            agent
+> +        );
+> +    }
 > +
-> +    pub fn libgit_configset_get_int(
-> +        cs: *mut libgit_config_set,
-> +        key: *const c_char,
-> +        int: *mut c_int,
-> +    ) -> c_int;
-> +
-> +    pub fn libgit_configset_get_string(
-> +        cs: *mut libgit_config_set,
-> +        key: *const c_char,
-> +        dest: *mut *mut c_char,
-> +    ) -> c_int;
-> +
->   }
+> +    #[test]
+> +    fn sanitized_user_agent_starts_with_git() {
+> +        let c_str = unsafe { CStr::from_ptr(libgit_user_agent_sanitized()) };
+> +        let agent = c_str
+> +            .to_str()
+> +            .expect("Sanitized user agent contains invalid UTF-8 data");
+> +        assert!(
+> +            agent.starts_with("git/"),
+> +            r#"Expected user agent to start with "git/", got: {}"#,
+> +            agent
+> +        );
+> +    }
+> +}
+> diff --git a/t/Makefile b/t/Makefile
+> index daa5fcae86..53ba01c21b 100644
+> --- a/t/Makefile
+> +++ b/t/Makefile
+> @@ -177,3 +177,13 @@ perf:
 >   
->   #[cfg(test)]
+>   .PHONY: pre-clean $(T) aggregate-results clean valgrind perf \
+>   	check-chainlint clean-chainlint test-chainlint $(UNIT_TESTS)
+> +
+> +.PHONY: libgit-sys-test
+> +libgit-sys-test:
+> +	$(QUIET)(\
+> +		cd ../contrib/libgit-sys && \
+> +		cargo test \
+> +	)
+> +ifdef INCLUDE_LIBGIT_RS
+> +all:: libgit-sys-test
+> +endif
 
