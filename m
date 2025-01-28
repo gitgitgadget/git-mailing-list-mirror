@@ -1,136 +1,109 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852371B413D
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 20:50:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DE51B413D
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 20:50:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738097439; cv=none; b=a1Z4tvDNCCmBa0BUhWXAVXo1jhpv8ySqdByIq1JRQqE6UKNRIju96PdLkzA4etlHoZMYLhSy7ugKOt4rcUiPnKuILdt7dbN9l3Yefjjv3YvMXzJ5Tf77vS5hprL/SqhBqgFthWujUD1nwwIih1khOjjKOmetG44vMHgjzzKvUfs=
+	t=1738097447; cv=none; b=nyHqPKbZHMsBg7tgyoI8ebAhJ+4vFW5mfc+CLDjt/ynhDahkltNsMNnALW+K0vrB+6KGEQkIQh9nMIVpn1XxBDxUMUnra+KldwwT/GH4k+XRVQfd6xFzm6t6gV9Tanyp7QtQ0bs7lRYAOZAuihoka0SAF/BvO/TwQ7+TMjb/28U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738097439; c=relaxed/simple;
-	bh=Y8VWaO8vcjrhVB2bhpJmZJq1P72LPynSkCA80D8gDPE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R15hUerGRy3UuS+FXTuymH59ySRLAvo6Gy0nfLSz/bFC3NMH/iqfLgknViAWUXRq6xRblPkHsH/wYH6agx9BrTAkPgUkgwHz6ZGjZm8E8WaekIHh9cyeG8Q2doM1FlQeYoOavMMDeuMzeHwyeeuGRJ/cCNDC98I3pNWNtiRA0j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=mSqkTyOF; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1738097447; c=relaxed/simple;
+	bh=UgeJ739bHdaWBLlYxltjlyMIy3a4jQ4AouJpanhl3Fo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kD0fJy5ltSZGNqY8eHI2waiNhWDhLgDXcXMgBIYA/w4g9w0LqQVhTqlvm6C4MejfCMZe5WjSPmzbuZHVDDwd1NgklVm1i/ejOVDd0zA3xNerlyMLXzZepGqkNaYmBhoYLu3MJfAanIPQz788wcVe1j4pFbo797d9qJvu9IP5XHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bUJGTeoV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j+9A8sP3; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="mSqkTyOF"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2163affd184so185485ad.1
-        for <git@vger.kernel.org>; Tue, 28 Jan 2025 12:50:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1738097438; x=1738702238; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iogMDHFre8qnwBC6Tb+dFIMzwrRJaE5qWhC4sanfC48=;
-        b=mSqkTyOFYU8y9a+Rro/hoc23UtWpGjG8nL2FOLDvkk4HxtuKugV7/GEl4Fcnp33xbM
-         4NMCZAOKkzKlosl/TO9Osjl/A32Bs3TRN4G87c1ELbIlS48Br4MZpGQTVWBXUvZCPjGc
-         1Kf/HUu8fM1kTh+RUfFI0AsoBUquqrSt0TBgxaMWHTp87RHnNObdUW0Q8026RU8Umazj
-         LhrDHJIUVLBzX/2neVsez8BWvlzPkN+hLpkxeSZmfdVHc+QjQLf6lCqWbnYAQyfrkqjL
-         gGpMwt92aus8Km1tlD8BBljZF1/HRF8DbAVFA3O8dfe4k/iMxw0WYh2i5/WY1JtiMWDz
-         mu2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738097438; x=1738702238;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iogMDHFre8qnwBC6Tb+dFIMzwrRJaE5qWhC4sanfC48=;
-        b=CQHtxMudPNB+dnwcil5fQILmPpsfeL3cun5u7DhRe4G7O4z0qalsPGa0GAXw1GuUGy
-         RwQfkfDsMLLpsZWy9zL4ktqt5bxQCzVfAUaZdRVrhUd6LIJD5BLrES90QCUSOpEUXBP9
-         jFwhPExcRVpKl6f2jms1H9BCcOBNa5kAuuWV4OWHiOUPMp7E8Qyj9VmYaYbPPRhVkWYD
-         cS7sVRSMuO99cxK4vTktAhZkK3+rQ/oVGPXy4V6t5QJhrjwiY5MOmjSrx3pOuUNGmV8g
-         2vrjqyVwvQpunmc13UiPP8/kczqJsCpnQR6Fz4wQwmnlTwbY4SHHNswH+cvgKFuhkTts
-         fprA==
-X-Gm-Message-State: AOJu0Yz5T6Uxc84yS16JCXXosKWk1SnKWpExVoRVMGFjfNdHJ8Lp6WYD
-	N0UiXYhpeaMtcBgDVRGwea/gaiaZnVzldgp6xUVWh1tnvWPVfKOG2IK5ZoDEEg==
-X-Gm-Gg: ASbGncvkd3SrY7J9rt/Dj7jjkG4X4uzGvbPsF2Sa7FvsYaolI3JVlcUx/N1jCe1R3du
-	OsJK4H2UWRZypbPemESsoS9fB4zV8r+OptunqUMncaYdW9LUW1LyzvbRA5jOIlHxuk32WUYH2lN
-	jjMmCWi902/NYbsQyQ1FHBpPsfrgilGl1ilT7iNBUHroXAwunuwi5/vnJl4LDTUKCYz7aZawza5
-	89xU+bXQwS2Qf8Lm9pvufIiCsKJE0ZJtOzZVULYGeap3tXz7EYrGDk4e0we8Hh2H/9rkVkVqvp2
-	uwUbkThtcHYwTQ==
-X-Google-Smtp-Source: AGHT+IHRNSUcobXRqqS4lGSP2/X5XC95m+yWChCtWMrQEIsUEm24m1OLuauxG9kuqRx4wrGqPdRkHw==
-X-Received: by 2002:a17:902:ce05:b0:215:884a:e8d1 with SMTP id d9443c01a7336-21dd809d2e1mr443185ad.24.1738097437589;
-        Tue, 28 Jan 2025 12:50:37 -0800 (PST)
-Received: from google.com ([2620:15c:2d3:204:ad31:b9eb:e4cd:2ffc])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f7ffa77043sm10914261a91.35.2025.01.28.12.50.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Jan 2025 12:50:36 -0800 (PST)
-Date: Tue, 28 Jan 2025 12:50:32 -0800
-From: Josh Steadmon <steadmon@google.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
-	emrass@google.com, sandals@crustytoothpaste.net, ps@pks.im
-Subject: Re: [PATCH v7 4/4] libgit: add higher-level libgit crate
-Message-ID: <iexpjuyxdg3yzk2eeibtzfgyzzrnpo2fg2ic6eeajky5lm7elw@tby4wimoqjrg>
-Mail-Followup-To: Josh Steadmon <steadmon@google.com>, 
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, calvinwan@google.com, nasamuffin@google.com, 
-	emrass@google.com, sandals@crustytoothpaste.net, ps@pks.im
-References: <cover.1723054623.git.steadmon@google.com>
- <cover.1738023208.git.steadmon@google.com>
- <88425bb0b1b90cf6b3d2d5a1af57e46c7a03ad39.1738023208.git.steadmon@google.com>
- <xmqqzfjbo7sb.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bUJGTeoV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j+9A8sP3"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 853471380C7C;
+	Tue, 28 Jan 2025 15:50:43 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Tue, 28 Jan 2025 15:50:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738097443; x=1738183843; bh=6CQm8FmorE
+	kaM+Kx79CkhDpnqmQpmUfBKOQ7fSXkr1M=; b=bUJGTeoVq2R6zPaRrbhWXYcNL4
+	ZzYl+royCb9xGWiWVjdJPqKrFNG/n2aYs2p1d9RMEKerfTNVJ/ZKA4p5aubhd0bB
+	jb/Wxf6OEiLTyW+7LRTdVWkPjOtIhznpbzMOAB9T4zWa12aObizYV3KeSD5eui53
+	eBMKsjGiErPzBpHF/wyPh4cMMA6cQm9m1gB5QAyWLPw/+wHaISYeGbvutk47x3XI
+	EV/O08rZg1yTGEYgA6gQaAoFAl2CyZ49hkuBta9Q08JQT3GqFqvCE4mde4CvJkjM
+	qgPRKG8s4SHALSueFiysU2Zom1Ow13KmDy7DEL/9cmvd3l2au3BxUyFS2xnQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738097443; x=1738183843; bh=6CQm8FmorEkaM+Kx79CkhDpnqmQpmUfBKOQ
+	7fSXkr1M=; b=j+9A8sP3BsD5HN8w5XqsJ0O4P9uoZ5L7d+fXId9MYF4Ag3haqUo
+	IqnzTQG02GjPfdPiR02M1CbJC2mtw8rXc5wer0QYqiFnvt9XgMvdsALggA2CgKAC
+	9EHXoJOXWbhEbLgyWib5/bsPiqqp7TK6lf7iCemSMOi+qdHcRHe15vu79Z0gzg1E
+	VY8SqNF7Km1DTRzmTLRoJIkF8JbKI8dBSlxLorc0fOwVjRKRq00JOjMWLmbh2ums
+	R+M38Axlm8eiiDDL2BTM7lDjnNjTEXXZOidJpwKuete2NGduMrWvoJgE0WeVRyLw
+	eG76Y+lNzEMJMkqlkg0GzV7PGxICtFsW7NQ==
+X-ME-Sender: <xms:I0OZZ9wKkKEo8F10hePpAia0TuHTDNFhUSO7MRCkOHGzo7E3QOnuCA>
+    <xme:I0OZZ9Rj3EbcLPurjhB2kO0yjcHfhGkfvBfpLD1G8U_AA1i6007C0uHzfmSlqE2xU
+    WZNN73AkJUhENeSSw>
+X-ME-Received: <xmr:I0OZZ3VRVwTN4ZHm2c_fDgqdQEs-wYdpUkBdp5zRIE2PY-dsn95AP6ttpUhXmGpUh42u4XzuZnACmTbc6oRIpkPW-ZQHsoNhT2pj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduuddtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeekveet
+    veevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpd
+    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:I0OZZ_g4HB9jj4XEe87MYLBApMEcxAV4bLVgTczAY6K7QHaGCAixMw>
+    <xmx:I0OZZ_DVFmuN5NdQZQBdVlbZr3T7fb0c1alyU6ZeIG9VU3e4IOAHSg>
+    <xmx:I0OZZ4JTFffQKcumQ1tpMrx5MzsYtPHXaMnMR2lY-_ZpBFvptTNKvA>
+    <xmx:I0OZZ-DrkIdCrv9i2O-ZmPsBBiBfbsgn3_vZUFyF7cTVSzLn3Qtnrw>
+    <xmx:I0OZZ67Yh5Kj9KB0O-MaKMRlic8DB_K3MuLBsC5eZ0UjjeltBTQgOS0o>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Jan 2025 15:50:42 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Karthik Nayak
+ <karthik.188@gmail.com>
+Subject: Re: [PATCH v4 00/10] compat/zlib: allow use of zlib-ng as backend
+In-Reply-To: <20250128-b4-pks-compat-drop-uncompress2-v4-0-129bc36ae8f5@pks.im>
+	(Patrick Steinhardt's message of "Tue, 28 Jan 2025 09:41:26 +0100")
+References: <20250110-b4-pks-compat-drop-uncompress2-v1-0-965d0022a74d@pks.im>
+	<20250128-b4-pks-compat-drop-uncompress2-v4-0-129bc36ae8f5@pks.im>
+Date: Tue, 28 Jan 2025 12:50:41 -0800
+Message-ID: <xmqqv7tymzmm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqzfjbo7sb.fsf@gitster.g>
+Content-Type: text/plain
 
-On 2025.01.27 20:56, Junio C Hamano wrote:
-> Josh Steadmon <steadmon@google.com> writes:
-> 
-> > -.PHONY: libgit-sys
-> > +.PHONY: libgit-sys libgit-rs
-> >  libgit-sys:
-> >  	$(QUIET)(\
-> >  		cd contrib/libgit-sys && \
-> >  		cargo build \
-> >  	)
-> > +libgit-rs:
-> > +	$(QUIET)(\
-> > +		cd contrib/libgit-rs && \
-> > +		cargo build \
-> > +	)
-> >  ifdef INCLUDE_LIBGIT_RS
-> > -all:: libgit-sys
-> > +all:: libgit-sys libgit-rs
-> >  endif
-> 
-> I somehow would have expected this part of the patch to do
-> 
-> 	libgit-sys libgit-rs:
-> 		$(QUIET)( \
-> 			cd contrib/$@ && cargo build \
-> 		)
-> 
-> but the above longhand is fine.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Fixed since I'm sending out a V8 for Phillip's feedback anyway. Thanks.
+> Changes in v4:
+>   - Add a comment explaining why we can stub out `deflateSetHeader()`.
+>   - Add a comment explaining why we have to cast away constness with
+>     zlib-ng's `next_in` field.
+>   - Link to v3: https://lore.kernel.org/r/20250116-b4-pks-compat-drop-uncompress2-v3-0-f2af1f5c4a06@pks.im
+>
+> I've adjusted the series to be based on top of fbe8d3079d (Git 2.48,
+> 2025-01-10) with ps/meson-weak-sha1-build at 6a0ee54f9a (meson: provide
+> a summary of configured backends, 2024-12-30) and ps/build-meson-fixes
+> at 4e517e68b5 (ci: wire up Visual Studio build with Meson, 2025-01-14)
+> merged into it. This matches what Junio has in his tree -- sorry for
+> screwing up the previous base!
 
-> > +    /// Load the value for the given key and attempt to parse it as an i32. Dies with a fatal error
-> > +    /// if the value cannot be parsed. Returns None if the key is not present.
-> > +    pub fn get_int(&mut self, key: &str) -> Option<i32> {
-> > +        let key = CString::new(key).expect("Couldn't convert to CString");
-> > +        let mut val: c_int = 0;
-> > +        unsafe {
-> > +            if libgit_configset_get_int(self.0, key.as_ptr(), &mut val as *mut c_int) != 0 {
-> > +                return None;
-> > +            }
-> > +        }
-> > +
-> > +        Some(val.into())
-> > +    }
-> 
-> Nice.
-> 
-> I was wondering why libgit_configset_get_int() in [3/4] does not do
-> better than just wrapping the raw C interface, which returns the
-> error/success status separately from the value we parsed.  With this
-> higher-layer wrapper around it, the interface becomes a bit more
-> like a higher-level language.
-> 
-> Thanks, will queue.
+Looks like this is getting close to the final.  Will replace.
+
+Thanks.
