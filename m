@@ -1,130 +1,99 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F4C1EEE6
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 17:31:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22D81DE4CC
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 17:32:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738085464; cv=none; b=pPF/FVHODsIzJBdPzY4PibaaUve1KgkQZBMwgz/Fe6XMdELnZB+Gq6swMGq/k4CV/2tBlX3e8W7MipPgcpG51AVQc9jzLbz2LShmqLlI90L4Hhv9m2rQhXuq00IP8VWmgnYtjaRk2ZRmAyqe0/ncd3HvjPYKZ1jwBUlgqzwqBG4=
+	t=1738085579; cv=none; b=Ui3UbVkaGjX0x+vnBRKs0SgQ9IIRFSB77xfBol6ItTuM2WNsh+Vp/3NOJVSywzZJ4xMge6EGA/YdwmG/ahDrdVgOXqitmMwB0i1XUflukUhbCPDydViHc4TbaCZAa8NByZf1ix4owLjQ8GU6lwTRI60vJGhXDUM4sw+rc9WRUBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738085464; c=relaxed/simple;
-	bh=/4PV0+/nV3s/BcrD4BjyjaPHeJVvPlVplFuCjJNHR+E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Xa4t1Pcnl1+seH6qyiNEHeKcwXM2IHYPaHlb1b8dIbVQDidhss2QzJWKEsFx0ymuLKaM6a9In9VNBXTJALiKdK1z8k1zXwm/qJtG//1NBqZfDOIBQczlW4etta5g3Z83MnubJhsy8/YOn1sml7ML4/nKbGpcik2SnQX+HSHpEh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AahupGmv; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738085579; c=relaxed/simple;
+	bh=i+uoBjqSbICJqh+2aeaAe7aCJVjQMpF0bYCdztgbZGE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jC5QXyoFQ003WRL9G+HX3+/LX7Lsm/gAmrWZ2TC3ySocoNyi/4ihs0aX7ZhPA16W8tIRyrtKrcryxJqbqJuvXAzqfFnb885bFEI0ah3RdazoQ3Yyt5uVbCckyD93HWUvEzYlWNSPAc973CKZyJTLa4B7ptgKPrWvDLFei1PSjYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EyZYYtFq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U1C4F5wS; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AahupGmv"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-21661be2c2dso102223085ad.1
-        for <git@vger.kernel.org>; Tue, 28 Jan 2025 09:31:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738085462; x=1738690262; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gwAHKXei7hYhS0VQLypPqTsUPMYNeAMqEQgfVRUpS80=;
-        b=AahupGmv0gZLxMcD6dIUVdlqYLUEhN9NLCQ7A7E3xG1zb4AhROpp8reXWwg2TQezVq
-         c6WuDtOqvO0fJDdgJhX9Nusi32qs5Gr7ft826x+E9mvvzGRuLzNIr9InuBDJTau4av0x
-         BbAER0af4lw210CBBjr1NryhjVqhDp2M4XifswpqRhCNzgXoXRCe1A3scko6QdYO/s1O
-         f3XnVrMN2uetRSSy42n7YSzNeqb8oZ2ZubkpdxWcH7ydaiUJ4HSTNwxQyicvhxnVgYD4
-         CZomDY6wadVthoxTHEbKfboglm+ZfdFDOtPxK3L9nLieZTO9m1bskq0gHthTDgQ9O1Mv
-         DYMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738085462; x=1738690262;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gwAHKXei7hYhS0VQLypPqTsUPMYNeAMqEQgfVRUpS80=;
-        b=abdnVNQvbYRFNXisq8EhrILZWhFrjawzNZkk7ox6+6drh/PmbrTm+KxmRtuJ/Dqbnc
-         N3AsnGPjxaRqIMeIt0A7PSQ2bxD0gLudg5KiDltjczpiTvEe/xDlVxm1rlNm/kwWBuZY
-         6curm7PmYOYIaS3mlL5DmFmmOOAFrUlPRrd1kaMLf5Mt1ssSzOmyh8IKSb+fMf37qORg
-         FjTo64OJJj1zJr7/UhQI6piAmUCoEY/yIi3bB8oZMa+WJGfLPFRhAKKDx8oIIE/Z++nP
-         fn4dJoM5a1kv7eOBwyzdiusLID22q0IpgwC/z9/TvcuRlGgvVwlHsh1iYC6yQNrYHGJq
-         lXSQ==
-X-Gm-Message-State: AOJu0YwPw9mcYJeD6UJP67Z8ij+vmRpbx4UY/al9lqBSk3pqE4+YiR4e
-	8+Rw65RKIrUbiaBACkikci8+b76M/p76X0IUuu12fVNfzDpKyozGTf6tug==
-X-Gm-Gg: ASbGnctyENcQVAZwyfHheOT5FPyleL7eIyamSuhtYPlC15QmTCJVTnIAf53DKl1Ev7Y
-	kGxkFKRVU5AUzlgDq+BWf7zPcvh3+ENwpWAkBjNE1Qb6isByUL7xDEJg3FuN+7Jgkq5SxLSmUBU
-	WSamKDR73Qpq6+UAc6of0zwYeULXvtAqRZKHoTUtGk4qLwzWzgIifUhfBelyFd2kG2ApWWGyeeK
-	GdCeRR68P9rPzDrTqsco4L2wZSE4AgGvzeBGPDwLYYQ0PWM9VDUwjKcgGGkdBu5kq1d0SxWFoce
-	pNmii8+KY3ySdWs16bKQCG6U2r2RorEeoZ4=
-X-Google-Smtp-Source: AGHT+IEfGY/RCD6uRJpWc3qIwX+sV4ikVMXJ1OOuU9W612MhwIQd1SuRq6sxTewTWCZEOUhVhrJrIQ==
-X-Received: by 2002:a17:902:d542:b0:215:a2f2:cfbf with SMTP id d9443c01a7336-21c3540b755mr617630895ad.18.1738085462392;
-        Tue, 28 Jan 2025 09:31:02 -0800 (PST)
-Received: from [192.168.0.7] ([106.51.24.86])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21da414e256sm84956325ad.170.2025.01.28.09.30.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 28 Jan 2025 09:31:01 -0800 (PST)
-Message-ID: <c39c5424-71d0-4b6d-90b1-a6a70f2ee61b@gmail.com>
-Date: Tue, 28 Jan 2025 23:00:40 +0530
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EyZYYtFq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U1C4F5wS"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DD758254025E;
+	Tue, 28 Jan 2025 12:32:56 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 28 Jan 2025 12:32:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738085576; x=1738171976; bh=N0B2g83ZAd
+	v0pITpFaMxuy7hsp5Tn0hUFtycAJ2vy2s=; b=EyZYYtFqoSVeTNS55MLpeRdMCQ
+	QbvKKeaaPATVen6LhOnd/sSCSepntXIzZgXMr0bUMJTbnlwsQ6+AIU20AbiFcG9n
+	aMQG9whhPNKFhA+2UeBUxhU96VrfUWISXe1bDrBpnXolgEkenXejAFLbRE1fGDoA
+	UGW53JwsDDbvNDVNpfxRXj/ItK/Yx7mALS0MyKFToZF+e0pMNoLZ4SEzS+BEVhaY
+	+0eRn7jAMheLXWJaB0Rqv9vI1VX/mX2E0uvyNTXeQmSzq+ntTT7mtC/dqha5CnqJ
+	C0+Bh/eF3SMUBVoi4YpZpZrBTEQG40wCmQVy87SUpY69026N+ZFlZ4FFCv/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738085576; x=1738171976; bh=N0B2g83ZAdv0pITpFaMxuy7hsp5Tn0hUFty
+	cAJ2vy2s=; b=U1C4F5wSWYYmU8X1tnleTiPKGji/WFHPYFpODErZnAgtmdNvCJU
+	9fsPT3E1QI8Q4v3w41NzeCUgHPrY3bAtdmAI3T/no0vw3ONuYDXbmz/Xr1PCG+ZK
+	hUeQHNvoEq1zHTcFE2h/u1i8bgpecEETmoBFNtN+7BzbE5yxrKniYlc+6skkHboY
+	BKCcTOSfoYjk2k+onjDMOzPAkSDmHA8VFa+QQDk7vdmQoe7gCvJglv7ciynmuGXW
+	SrJTsHtLCtdFzB5nShaDMyG+W5eEf6CYnwff0KYzgkTrQaSTj10HoyN7eZKYAqsZ
+	2xURJfmyUB/BMfT1Qcfh5EBjS4hTudVvcTA==
+X-ME-Sender: <xms:yBSZZyMkd4rihOtAt211H2ISpmHNYqPQPH4U_B3JAMYDSu3UPP5pWg>
+    <xme:yBSZZw_xa_FpX9Zoh22VBbGLjuulcZMgCdSefpXzPTjlX6MFzcvMS9rNhnvW77krh
+    LU1XG4iq6LqC7PgCQ>
+X-ME-Received: <xmr:yBSZZ5R1vfiytAfLTUGjB6QFCRI7Itjni4rziBOP6qqhwQ3mpVwXqx24NUw8n_9ECMR-hEOHQa9uIs0XZrqkdo3o0kvGPTLPekEi>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegv
+    thhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:yBSZZyt0oSEP9FNvPWKtXVpwFl_Q4_-4LHiZ06c_5fHdOYnwM9pD7w>
+    <xmx:yBSZZ6fcBP6DQMnDTsItjN2Oyw4DDyKkFwJmc48EcTOhW3VhyWbiVQ>
+    <xmx:yBSZZ22ZKkP110nf6lfZofUq4hqYnIsrewHY_FJ6arS3iDr88KzTbQ>
+    <xmx:yBSZZ-_SFEgwfka2X-iZxXw5GsYPOe8PA6pHAYbAVPpmmJ4I8pTJAQ>
+    <xmx:yBSZZ54wLnwM67I7iDfVGMHBNXGw8CXfU1Tqe9gsVQV_yTT7pdTFwjSf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 28 Jan 2025 12:32:55 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Edward Thomson <ethomson@edwardthomson.com>
+Subject: Re: [PATCH 00/19] reftable: stop using "git-compat-util.h"
+In-Reply-To: <Z5iTz69yq-IF9qU0@pks.im> (Patrick Steinhardt's message of "Tue,
+	28 Jan 2025 09:22:39 +0100")
+References: <20250127-pks-reftable-drop-git-compat-util-v1-0-6e280a564877@pks.im>
+	<xmqqtt9krw1z.fsf@gitster.g> <Z5iTz69yq-IF9qU0@pks.im>
+Date: Tue, 28 Jan 2025 09:32:54 -0800
+Message-ID: <xmqqo6zqoncp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git in GSoC 2025
-To: Patrick Steinhardt <ps@pks.im>,
- Christian Couder <christian.couder@gmail.com>,
- Karthik Nayak <karthik.188@gmail.com>, Jialuo She <shejialuo@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <Z432QXJb_TfzNBa2@pks.im>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <Z432QXJb_TfzNBa2@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-(Apologies for the delayed re-send. I just noticed that this one
-  got dropped by the mailing list. I'll respond to existing replies
-  in that thread)
+Patrick Steinhardt <ps@pks.im> writes:
 
-Hi Patrick, Christian, Karthik and Jialuo,
+> I guess time will tell how much of a problem this really is. As said, my
+> prediction is that we won't face many bugs in the low-level code, and
+> then the question becomes moot anyway. But if time proves me wrong I'll
+> think a bit more about potential solutions.
 
-Thank you very much for your interest in volunteering as a mentor!
+Sure.  I am OK with the approach of playing by the ear.
 
-On Mon, Jan 20, 2025 at 12:37 PM Patrick Steinhardt <ps@pks.im> wrote:
-
- > I'd be happy to mentor this year again. A couple of ideas:
-
-
-Thank you for suggesting these ideas, Patrick! I've incorporated them 
-into a draft ideas page for now. You can see them here:
-
-https://git.github.io/SoC-2025-Ideas/
-
-Kindly suggest any corrections to the description, project size /
-difficulty as necessary. I've mentioned potential mentors based on what
-I'm aware of so far.
-
-Patrick, Christian and Karthik, kindly mention the ideas that you're
-interested to mentor.
-
-While I have not included them as of yet, I wonder if the following
-ideas which we had last year[1] could still be retained this year:
-
-- Implement consistency checks for refs. The idea could be about
-   implementing further ref checks which Jialuo appears to be helping
-   out with. We could leave it if Jialuo prefers to continue working on
-   the same in a flow.
-
-- Refactor git-bisect(1) to make its state self-contained
-
-- Implement support for reftables in "dumb" HTTP transport
-
-Would these be interesting ones to consider? Is anyone willing to
-mentor these this time around?
-
-
- > I'll keep on thinking about potential topics.
-
-
-Sure. That would be great! Others could also chime in with your
-potential ideas. Also, do not hesitate to let us know if you're
-interested in mentoring.
-
--- 
-Sivaraam
+Thanks.
