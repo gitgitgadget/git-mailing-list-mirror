@@ -1,81 +1,82 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F981F473F
-	for <git@vger.kernel.org>; Tue, 28 Jan 2025 08:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEFC1F5601
+	for <git@vger.kernel.org>; Tue, 28 Jan 2025 08:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738052910; cv=none; b=s7OejRf9RiiEAdaD46wMv4ymppzjYVWmB84bm8R8JO3nu2db29frJfnK7INMCuTFra3uKZ2lMgpWTNmmrzeGwn6vwrMmN4sfpnBK0KmQc0J33d6oalWWn0A+I1VAdQAUm0WgpLhQD7u02rDdMs+JYHdms7z9cfmrBLkAg8QV0kA=
+	t=1738052912; cv=none; b=EFIjOr2oVafS9vET4Fox/o2QxhGvWNWwykLFnkmRhz/5lU23iWNBRcibuIXVks2IE72KWuhDPHZiIzZWecUBU9L8DUm6r7jtDtLKsLwtAcNAKrt5pK6G/+Xx8UxtOJEiC2r6SOtQ4smk6f36bJ7JFVfn6fQ0FlULzY+/1txc3yM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738052910; c=relaxed/simple;
-	bh=VI0guBAnlrQx8ug+rNahw3HaYKaoL90XO6wmT73ZoD8=;
+	s=arc-20240116; t=1738052912; c=relaxed/simple;
+	bh=hMQudkP5PvPM3amYis0O62zHHl/xgIPtUsOVl2e/Fq8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Xpf8Jy0vByysTu3Ndb/iFC8bRfCBtvs/sQq83lO7A6jCat25jXLtnJnCnpQ3Kzon/TJF77LN3VgqXuM+Eq/AxEulcwuD513BCE0kmvpufE9bg70hn69xHhKizP1L5zFw1MdnWdFgmSf2Vu0wqw+93r3+nBxYO9E94gNx07TNrKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KBUVwmYX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=n8fNflDX; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=qUxAq1S5WqBthj+grYQsH4DYDATIJ1Izxdsyr9/Eb84fCeau6H5qkRbsASGwtAY3nawwpOqGSvgq9TZIXxBcmDU+5hwo+Y0D7BYh7zXXD2w/N0l03SlBpSrW3r3hqQIrQbEx3/zxrDDoajDxJQdXIbS0b+CeS86rXdJNewthSsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pYOhHxoI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nCR+fmVQ; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KBUVwmYX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="n8fNflDX"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3680E11401CC;
-	Tue, 28 Jan 2025 03:28:28 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 28 Jan 2025 03:28:28 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pYOhHxoI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nCR+fmVQ"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2C8B311401CF;
+	Tue, 28 Jan 2025 03:28:29 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 28 Jan 2025 03:28:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738052908;
-	 x=1738139308; bh=xkd0YUwGaxAHDbOLxLubeRD8GcdkulaMiz/zIRxrvlU=; b=
-	KBUVwmYXRpJ2r8aSbqogb534NYRQMKGir4QIiK6bkNkMRcav8Hkdg8mHaMGBzV2N
-	LfYUGOres8qSFij8ML8F6F7f416yPuktzi2B1NAHgeaPI80StHyBWLJ/0YY5cuzA
-	pfDZNa1ynlFZCgDihh+pGxfZKnA2Nv6pX5KohvZpkeQGXaACL2ooyVlCLwCzBAkk
-	8dx+RB+o1tgvG/hFitQqKrSofPyLHGVaV8BR2GgbgEJANM9m0C2sZ/OfZxoXAuCS
-	Atjf2SpMp8fY3hqnpLQ94ZiGazsO8VTIhHL90E05HdJvjBmr1TXF79q2ABmDJ3Au
-	KxzUNuVgnnELC6mnxMRhOw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738052909;
+	 x=1738139309; bh=oeX5NsOVng39ZWoO7fVGs4ulJzBxgaUCVro90lPiDfo=; b=
+	pYOhHxoIYaRFSnlU7JjlmT4gFWImsiY41a71GmBq8GSq0DUJLZLehbgy3TANHrHh
+	XLYbYaIKznp4gilwfQ6Qb48QSQWszblyN2LznYZR7fGF071896QkuZ+dEUtYhxvB
+	ozu1tx7Ez6ZjPLtb0kkzTEv4C1D+CyqkPhEJ4YYlEWG52u0lr+ywfs9HoxFC9O9Z
+	QOXLGNHaYApbovKzaUoiV30j1P9FglyOlqR5TTK9erEbd/x9eyLqWBx4ToHqzQ1c
+	VpiSRbHPLmUJWtx7CsS9eqEB/naqMpq7NesBEvrnG0qEcCwFHFoHG8nZowGeyVnU
+	Bee5Uy1XnNbtOr5Fkzk90Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738052908; x=
-	1738139308; bh=xkd0YUwGaxAHDbOLxLubeRD8GcdkulaMiz/zIRxrvlU=; b=n
-	8fNflDX9ahYKhkUgiSpfaw62xMtyn+66xjIqUYl7jlZJhEcBO8S8YCRg5eKdiMvP
-	7gV9GjnEWcfGA9HSFtlILOlBqWvieCY5z5wHef4U7Wsx1uQfBcJJS5sPUXM88wZf
-	lfyeCJLqC8olRUYr63+ET7s5Bjjw33+pf8MDrIYWYFzbxf7e+ZOo41mFABLYMHJA
-	h5yuXNz3fvpb52bu61NlMnrt6aV3W8XuG170l66kS4789/b9DmvBrAMpgmRa9hVc
-	fDsCcNyx3lgRvw92qhcsXBqYaBrzK2p/gz032a9nprofuM79OUdn4UxZFNQfVr3J
-	bhZHu5xMQFb5sW3Ecz4Vw==
-X-ME-Sender: <xms:K5WYZzDm20HW_yC-sQdDActBYoixl1Ans0Y1FD4pkcP2_VoGtPYPpg>
-    <xme:K5WYZ5g-prcBNTZBl5RVQoXe7vPNiMCRhSyvumVZh5qm3LUjQKz-Tiif4yddHClAY
-    2V-kPdKgIZANjKmIA>
-X-ME-Received: <xmr:K5WYZ-mOhQl4Y3tJgl0Tg2FymjWJk_fa22Crv4yofClk1Mxp-pgaTPs_zSj-PQrA5KjCjrCQI50SIUQqGLHE0yFvEeueGXA2ZlX1tvLMVq0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudehieefucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738052909; x=
+	1738139309; bh=oeX5NsOVng39ZWoO7fVGs4ulJzBxgaUCVro90lPiDfo=; b=n
+	CR+fmVQfG6Uvf02phyZI4rK/VNdUtwyYsAmZelraNKa9hy86HjPRFyuFJNpkTXVd
+	XdYSBtbevU3NT6ZEz6cZzkVe/6v9FarptW23wiMnJx1OKxvVQHZgRNSrhtXW9ABL
+	6W7l2YCiZBBgsY3luzbskB8ICYrnuzg/cghFNHaoiw7nAzSKMqS2oFh1Had+kkBQ
+	oPS2lac096Tekq3RBLiclX0obZhzul8+pfX8jqpssLOhyDjlkPALq/8TEjxwWf4z
+	sRHDIFdNqgPOG9m1IL593SzQ8nHB+xh+NhEDsOz73UBxWIOyIs1PoYM1MnBwaMPT
+	M88Q9pmo9IQMe6X1diDxg==
+X-ME-Sender: <xms:LJWYZ4ROfEL4Z_FEWLxYszd3pi-uzAxdtl3j0pJdMFrTchZYp3Dmkw>
+    <xme:LJWYZ1wiHh9X0oBdfNJAOsddYaEJCgjHvyeo0HNs5QAF-rpSR3px41XdvVLrMyqlU
+    eMiJMgkF2uNTRBkvw>
+X-ME-Received: <xmr:LJWYZ12h47474suUS15Y-V02l5fCJr24BCzmUCVB-wMvGscvFxbXqKTMMIKVJRRUmB2k7kKfmiE2KczNIhGCk8_FjEUHEVIm_Ym5c7Pz3tA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrudejgedgudehiedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    vghthhhomhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:K5WYZ1yb8h1oaWXbHrk-IUIh3mLxPSW3q3S5mY7eKGaemPTjlPmR9w>
-    <xmx:K5WYZ4SS9PTyUbnrM7HzQV4Ym2gGlYId985VvROK1ZWjYPyZ-6QzTQ>
-    <xmx:K5WYZ4aWWxIbQId06Qgh4koArVjQonv0cnpCfKr4rvqrn-M1ohyIkA>
-    <xmx:K5WYZ5QMYYQ_z_3LjLAHc_ptBJFI5V69fbYz_QoVDwYq6u5gexNtaA>
-    <xmx:LJWYZ-MZqGloV6-ZrJxV8ROWIzxMsrdz58jUL2KHGCsHZnE5OFspdbWR>
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehj
+    lhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegvthhhohhmshhonhesvg
+    gufigrrhguthhhohhmshhonhdrtghomh
+X-ME-Proxy: <xmx:LJWYZ8CuhHbF0b8bJMPWiDchhYNdZt7OYVXRf0o5cLR_i1e5vYJOrA>
+    <xmx:LJWYZxiswoAokiVq0eBINa_NidsESciYHGDJFyhNXSg9AQGR5v8qOw>
+    <xmx:LJWYZ4pyh7BEgXBavkgZUxGs_EoYBR9y7Fbx6gY-O6083cWX94qXpQ>
+    <xmx:LJWYZ0hSaZCDon9NAKoykGIfhYbO1DTjkAvVd1SfXfJm9xD9etYXHA>
+    <xmx:LZWYZxfiB_nrryO7tUxlHC3hU9KOWdIm9vhYyQdkgKoOXJ0IcxllKO6Z>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 28 Jan 2025 03:28:26 -0500 (EST)
+ 28 Jan 2025 03:28:27 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 4d6375a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 28 Jan 2025 08:28:26 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 17529e8f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 28 Jan 2025 08:28:27 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 28 Jan 2025 09:28:15 +0100
-Subject: [PATCH v2 14/20] reftable/basics: stop using `UNUSED` annotation
+Date: Tue, 28 Jan 2025 09:28:16 +0100
+Subject: [PATCH v2 15/20] compat: consistently resolve headers via project
+ root
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250128-pks-reftable-drop-git-compat-util-v2-14-c85c20336317@pks.im>
+Message-Id: <20250128-pks-reftable-drop-git-compat-util-v2-15-c85c20336317@pks.im>
 References: <20250128-pks-reftable-drop-git-compat-util-v2-0-c85c20336317@pks.im>
 In-Reply-To: <20250128-pks-reftable-drop-git-compat-util-v2-0-c85c20336317@pks.im>
 To: git@vger.kernel.org
@@ -92,296 +93,598 @@ Cc: Edward Thomson <ethomson@edwardthomson.com>,
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Stop using the `UNUSED` annotation and replace it with a new
-`REFTABLE_UNUSED` macro. The latter is a weaker guarantee compared to
-`UNUSED` as it only suppresses unused parameters without generating a
-warning in case a parameter marked as unused is in fact used. But it's
-good enough, and by relaxing the behaviour a bit we avoid having to wire
-up compiler-specific logic.
+The way we include headers in the "compat/" directory is inconsistent:
+
+  - Sometimes we use includes relative to the current file.
+
+  - Sometimes we use includes relative to the project root directory,
+    which is being added via a `-I` compiler switch.
+
+  - On Windows we also use includes relative to "compat/", which is
+    being added via another platform-specific `-I` compiler switch in
+    "compat.mak.uname".
+
+This makes it very confusing to figure out which specific file is being
+included right now and from what layer that file comes.
+
+Stop adding "compat/" to the Windows-specific include directories and
+adapt all includes in "compat/" to be relative to the projet's root
+directory. Despite being more consistent, it also makes it way easier to
+spot where an include comes from.
+
+This change also prepares for subsequent commits where we split up both
+"compat/mingw.h" and "compat/msvc.h".
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics.h      |  2 ++
- reftable/blocksource.c | 10 +++++++---
- reftable/iter.c        | 17 ++++++++++++-----
- reftable/record.c      | 51 ++++++++++++++++++++++++++++++++++++--------------
- reftable/writer.c      |  4 +++-
- 5 files changed, 61 insertions(+), 23 deletions(-)
+ compat/access.c                          |  3 ++-
+ compat/basename.c                        |  4 ++--
+ compat/fileno.c                          |  2 +-
+ compat/fopen.c                           |  2 +-
+ compat/fsmonitor/fsm-health-darwin.c     |  2 +-
+ compat/fsmonitor/fsm-health-win32.c      |  2 +-
+ compat/fsmonitor/fsm-listen-darwin.c     |  4 ++--
+ compat/fsmonitor/fsm-listen-win32.c      |  2 +-
+ compat/inet_ntop.c                       |  2 +-
+ compat/inet_pton.c                       |  2 +-
+ compat/memmem.c                          |  2 +-
+ compat/mingw.c                           | 24 ++++++++++++------------
+ compat/mkdir.c                           |  2 +-
+ compat/mkdtemp.c                         |  2 +-
+ compat/mmap.c                            |  2 +-
+ compat/msvc.c                            |  8 ++++----
+ compat/nonblock.c                        |  4 ++--
+ compat/obstack.c                         |  2 +-
+ compat/pread.c                           |  4 ++--
+ compat/precompose_utf8.c                 |  2 +-
+ compat/qsort_s.c                         |  2 +-
+ compat/regcomp_enhanced.c                |  2 +-
+ compat/setenv.c                          |  2 +-
+ compat/snprintf.c                        |  2 +-
+ compat/strcasestr.c                      |  2 +-
+ compat/strdup.c                          |  2 +-
+ compat/strlcpy.c                         |  2 +-
+ compat/strtoimax.c                       |  2 +-
+ compat/strtoumax.c                       |  2 +-
+ compat/unsetenv.c                        |  2 +-
+ compat/win32/dirent.c                    |  2 +-
+ compat/win32/flush.c                     |  2 +-
+ compat/win32/path-utils.c                |  4 ++--
+ compat/win32/pthread.c                   |  4 ++--
+ compat/win32/syslog.c                    |  2 +-
+ compat/win32/trace2_win32_process_info.c | 10 +++++-----
+ compat/win32mmap.c                       |  2 +-
+ compat/winansi.c                         |  6 +++---
+ config.mak.uname                         |  4 ++--
+ 39 files changed, 67 insertions(+), 66 deletions(-)
 
-diff --git a/reftable/basics.h b/reftable/basics.h
-index 59000798f0..4d0645a4e9 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -16,6 +16,8 @@ license that can be found in the LICENSE file or at
- #include "system.h"
- #include "reftable-basics.h"
- 
-+#define REFTABLE_UNUSED(x) (void)(x)
+diff --git a/compat/access.c b/compat/access.c
+index 19fda3e877..918f51a08b 100644
+--- a/compat/access.c
++++ b/compat/access.c
+@@ -1,5 +1,6 @@
+ #define COMPAT_CODE_ACCESS
+-#include "../git-compat-util.h"
 +
- struct reftable_buf {
- 	size_t alloc;
- 	size_t len;
-diff --git a/reftable/blocksource.c b/reftable/blocksource.c
-index 02972c46f4..bfd64b0e48 100644
---- a/reftable/blocksource.c
-+++ b/reftable/blocksource.c
-@@ -13,15 +13,17 @@ license that can be found in the LICENSE file or at
- #include "reftable-blocksource.h"
- #include "reftable-error.h"
++#include "git-compat-util.h"
  
--static void reftable_buf_return_block(void *b UNUSED, struct reftable_block *dest)
-+static void reftable_buf_return_block(void *b, struct reftable_block *dest)
+ /* Do the same thing access(2) does, but use the effective uid,
+  * and don't make the mistake of telling root that any file is
+diff --git a/compat/basename.c b/compat/basename.c
+index c33579ef61..2f59c5475b 100644
+--- a/compat/basename.c
++++ b/compat/basename.c
+@@ -1,5 +1,5 @@
+-#include "../git-compat-util.h"
+-#include "../strbuf.h"
++#include "git-compat-util.h"
++#include "strbuf.h"
+ 
+ /* Adapted from libiberty's basename.c.  */
+ char *gitbasename (char *path)
+diff --git a/compat/fileno.c b/compat/fileno.c
+index 8e80ef335d..977d63bf62 100644
+--- a/compat/fileno.c
++++ b/compat/fileno.c
+@@ -1,5 +1,5 @@
+ #define COMPAT_CODE_FILENO
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ 
+ int git_fileno(FILE *stream)
  {
-+	REFTABLE_UNUSED(b);
- 	if (dest->len)
- 		memset(dest->data, 0xff, dest->len);
- 	reftable_free(dest->data);
- }
+diff --git a/compat/fopen.c b/compat/fopen.c
+index 107b3e8182..4af1f14996 100644
+--- a/compat/fopen.c
++++ b/compat/fopen.c
+@@ -9,7 +9,7 @@
+  *  fopen after including git-compat-util.h is inadequate in this case.
+  */
+ #define SUPPRESS_FOPEN_REDEFINITION
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
  
--static void reftable_buf_close(void *b UNUSED)
-+static void reftable_buf_close(void *b)
+ FILE *git_fopen(const char *path, const char *mode)
  {
-+	REFTABLE_UNUSED(b);
- }
+diff --git a/compat/fsmonitor/fsm-health-darwin.c b/compat/fsmonitor/fsm-health-darwin.c
+index c2afcbe6c8..68c9fd7363 100644
+--- a/compat/fsmonitor/fsm-health-darwin.c
++++ b/compat/fsmonitor/fsm-health-darwin.c
+@@ -1,7 +1,7 @@
+ #include "git-compat-util.h"
++#include "compat/fsmonitor/fsm-health.h"
+ #include "config.h"
+ #include "fsmonitor-ll.h"
+-#include "fsm-health.h"
+ #include "fsmonitor--daemon.h"
  
- static ssize_t reftable_buf_read_block(void *v, struct reftable_block *dest,
-@@ -67,8 +69,10 @@ static uint64_t file_size(void *b)
- 	return ((struct file_block_source *)b)->size;
- }
+ int fsm_health__ctor(struct fsmonitor_daemon_state *state UNUSED)
+diff --git a/compat/fsmonitor/fsm-health-win32.c b/compat/fsmonitor/fsm-health-win32.c
+index 2aa8c219ac..16e073383b 100644
+--- a/compat/fsmonitor/fsm-health-win32.c
++++ b/compat/fsmonitor/fsm-health-win32.c
+@@ -1,7 +1,7 @@
+ #include "git-compat-util.h"
++#include "compat/fsmonitor/fsm-health.h"
+ #include "config.h"
+ #include "fsmonitor-ll.h"
+-#include "fsm-health.h"
+ #include "fsmonitor--daemon.h"
+ #include "gettext.h"
+ #include "simple-ipc.h"
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index 43c3a915a0..b9414da0d1 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -1,6 +1,6 @@
+ #ifndef __clang__
+ #include <dispatch/dispatch.h>
+-#include "fsm-darwin-gcc.h"
++#include "compat/fsmonitor/fsm-darwin-gcc.h"
+ #else
+ #include <CoreFoundation/CoreFoundation.h>
+ #include <CoreServices/CoreServices.h>
+@@ -24,8 +24,8 @@
+ #endif
  
--static void file_return_block(void *b UNUSED, struct reftable_block *dest UNUSED)
-+static void file_return_block(void *b, struct reftable_block *dest)
+ #include "git-compat-util.h"
++#include "compat/fsmonitor/fsm-listen.h"
+ #include "fsmonitor-ll.h"
+-#include "fsm-listen.h"
+ #include "fsmonitor--daemon.h"
+ #include "fsmonitor-path-utils.h"
+ #include "gettext.h"
+diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
+index 9a6efc9bea..3fb5710e21 100644
+--- a/compat/fsmonitor/fsm-listen-win32.c
++++ b/compat/fsmonitor/fsm-listen-win32.c
+@@ -1,7 +1,7 @@
+ #include "git-compat-util.h"
++#include "compat/fsmonitor/fsm-listen.h"
+ #include "config.h"
+ #include "fsmonitor-ll.h"
+-#include "fsm-listen.h"
+ #include "fsmonitor--daemon.h"
+ #include "gettext.h"
+ #include "simple-ipc.h"
+diff --git a/compat/inet_ntop.c b/compat/inet_ntop.c
+index 68307262be..3bac8377cc 100644
+--- a/compat/inet_ntop.c
++++ b/compat/inet_ntop.c
+@@ -15,7 +15,7 @@
+  * SOFTWARE.
+  */
+ 
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ 
+ #ifndef NS_INADDRSZ
+ #define NS_INADDRSZ	4
+diff --git a/compat/inet_pton.c b/compat/inet_pton.c
+index 2b9a0a4e22..60935a1c83 100644
+--- a/compat/inet_pton.c
++++ b/compat/inet_pton.c
+@@ -15,7 +15,7 @@
+  * WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  */
+ 
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ 
+ #ifndef NS_INT16SZ
+ #define NS_INT16SZ       2
+diff --git a/compat/memmem.c b/compat/memmem.c
+index 56bcb4277f..2df3e7b7b9 100644
+--- a/compat/memmem.c
++++ b/compat/memmem.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ 
+ void *gitmemmem(const void *haystack, size_t haystack_len,
+                 const void *needle, size_t needle_len)
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 1d5b211b54..5b0593c59d 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1,22 +1,22 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+-#include "../git-compat-util.h"
+-#include "win32.h"
++#include "git-compat-util.h"
++#include "compat/win32.h"
+ #include <aclapi.h>
+ #include <sddl.h>
+ #include <conio.h>
+ #include <wchar.h>
+-#include "../strbuf.h"
+-#include "../run-command.h"
+-#include "../abspath.h"
+-#include "../alloc.h"
+-#include "win32/lazyload.h"
+-#include "../config.h"
+-#include "../environment.h"
+-#include "../trace2.h"
+-#include "../symlinks.h"
+-#include "../wrapper.h"
++#include "strbuf.h"
++#include "run-command.h"
++#include "abspath.h"
++#include "alloc.h"
++#include "compat/win32/lazyload.h"
++#include "config.h"
++#include "environment.h"
++#include "trace2.h"
++#include "symlinks.h"
++#include "wrapper.h"
+ #include "dir.h"
+ #include "gettext.h"
+ #define SECURITY_WIN32
+diff --git a/compat/mkdir.c b/compat/mkdir.c
+index 02aea3b32e..8bd7c9a927 100644
+--- a/compat/mkdir.c
++++ b/compat/mkdir.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ #undef mkdir
+ 
+ /* for platforms that can't deal with a trailing '/' */
+diff --git a/compat/mkdtemp.c b/compat/mkdtemp.c
+index 1136119592..4349e15eee 100644
+--- a/compat/mkdtemp.c
++++ b/compat/mkdtemp.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ 
+ char *gitmkdtemp(char *template)
  {
-+	REFTABLE_UNUSED(b);
-+	REFTABLE_UNUSED(dest);
- }
+diff --git a/compat/mmap.c b/compat/mmap.c
+index 2fe1c7732e..0a50adc9b9 100644
+--- a/compat/mmap.c
++++ b/compat/mmap.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
  
- static void file_close(void *v)
-diff --git a/reftable/iter.c b/reftable/iter.c
-index b2ffb09c16..452add2705 100644
---- a/reftable/iter.c
-+++ b/reftable/iter.c
-@@ -25,18 +25,23 @@ int iterator_next(struct reftable_iterator *it, struct reftable_record *rec)
- 	return it->ops->next(it->iter_arg, rec);
- }
- 
--static int empty_iterator_seek(void *arg UNUSED, struct reftable_record *want UNUSED)
-+static int empty_iterator_seek(void *arg, struct reftable_record *want)
+ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset)
  {
-+	REFTABLE_UNUSED(arg);
-+	REFTABLE_UNUSED(want);
- 	return 0;
- }
+diff --git a/compat/msvc.c b/compat/msvc.c
+index 71843d7eef..5aacf3af19 100644
+--- a/compat/msvc.c
++++ b/compat/msvc.c
+@@ -1,6 +1,6 @@
+-#include "../git-compat-util.h"
+-#include "win32.h"
++#include "git-compat-util.h"
++#include "compat/win32.h"
+ #include <conio.h>
+-#include "../strbuf.h"
++#include "strbuf.h"
  
--static int empty_iterator_next(void *arg UNUSED, struct reftable_record *rec UNUSED)
-+static int empty_iterator_next(void *arg, struct reftable_record *rec)
+-#include "mingw.c"
++#include "compat/mingw.c"
+diff --git a/compat/nonblock.c b/compat/nonblock.c
+index 5b51195c32..99ea76a7a4 100644
+--- a/compat/nonblock.c
++++ b/compat/nonblock.c
+@@ -1,5 +1,5 @@
+ #include "git-compat-util.h"
+-#include "nonblock.h"
++#include "compat/nonblock.h"
+ 
+ #ifdef O_NONBLOCK
+ 
+@@ -14,7 +14,7 @@ int enable_pipe_nonblock(int fd)
+ 
+ #elif defined(GIT_WINDOWS_NATIVE)
+ 
+-#include "win32.h"
++#include "compat/win32.h"
+ 
+ int enable_pipe_nonblock(int fd)
  {
-+	REFTABLE_UNUSED(arg);
-+	REFTABLE_UNUSED(rec);
- 	return 1;
- }
+diff --git a/compat/obstack.c b/compat/obstack.c
+index 27cd5c1ea1..baab07aca4 100644
+--- a/compat/obstack.c
++++ b/compat/obstack.c
+@@ -19,7 +19,7 @@
  
--static void empty_iterator_close(void *arg UNUSED)
-+static void empty_iterator_close(void *arg)
+ #include "git-compat-util.h"
+ #include <gettext.h>
+-#include "obstack.h"
++#include "compat/obstack.h"
+ 
+ /* NOTE BEFORE MODIFYING THIS FILE: This version number must be
+    incremented whenever callers compiled using an old obstack.h can no
+diff --git a/compat/pread.c b/compat/pread.c
+index 484e6d4c71..82161b5a2a 100644
+--- a/compat/pread.c
++++ b/compat/pread.c
+@@ -1,5 +1,5 @@
+-#include "../git-compat-util.h"
+-#include "../wrapper.h"
++#include "git-compat-util.h"
++#include "wrapper.h"
+ 
+ ssize_t git_pread(int fd, void *buf, size_t count, off_t offset)
  {
-+	REFTABLE_UNUSED(arg);
- }
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index f7cc7b3be5..994a2f1303 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -7,13 +7,13 @@
+ #define USE_THE_REPOSITORY_VARIABLE
  
- static struct reftable_iterator_vtable empty_vtable = {
-@@ -143,9 +148,11 @@ static int indexed_table_ref_iter_next_block(struct indexed_table_ref_iter *it)
- 	return 0;
- }
+ #include "git-compat-util.h"
++#include "compat/precompose_utf8.h"
+ #include "config.h"
+ #include "environment.h"
+ #include "gettext.h"
+ #include "path.h"
+ #include "strbuf.h"
+ #include "utf8.h"
+-#include "precompose_utf8.h"
  
--static int indexed_table_ref_iter_seek(void *p UNUSED,
--				       struct reftable_record *want UNUSED)
-+static int indexed_table_ref_iter_seek(void *p,
-+				       struct reftable_record *want)
+ typedef char *iconv_ibp;
+ static const char *repo_encoding = "UTF-8";
+diff --git a/compat/qsort_s.c b/compat/qsort_s.c
+index 0f7ff30f5f..66cd6e096d 100644
+--- a/compat/qsort_s.c
++++ b/compat/qsort_s.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ 
+ /*
+  * A merge sort implementation, simplified from the qsort implementation
+diff --git a/compat/regcomp_enhanced.c b/compat/regcomp_enhanced.c
+index 84193ce53b..693b63c2c4 100644
+--- a/compat/regcomp_enhanced.c
++++ b/compat/regcomp_enhanced.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ #undef regcomp
+ 
+ int git_regcomp(regex_t *preg, const char *pattern, int cflags)
+diff --git a/compat/setenv.c b/compat/setenv.c
+index 7849f258d2..c49df82534 100644
+--- a/compat/setenv.c
++++ b/compat/setenv.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ 
+ int gitsetenv(const char *name, const char *value, int replace)
  {
-+	REFTABLE_UNUSED(p);
-+	REFTABLE_UNUSED(want);
- 	return REFTABLE_API_ERROR;
- }
+diff --git a/compat/snprintf.c b/compat/snprintf.c
+index 0b11688537..91a63cf3f7 100644
+--- a/compat/snprintf.c
++++ b/compat/snprintf.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
  
-diff --git a/reftable/record.c b/reftable/record.c
-index d86cd65bb4..46093ef987 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -490,11 +490,13 @@ static void reftable_obj_record_release(void *rec)
- }
+ /*
+  * The size parameter specifies the available space, i.e. includes
+diff --git a/compat/strcasestr.c b/compat/strcasestr.c
+index 26896deca6..d66609361b 100644
+--- a/compat/strcasestr.c
++++ b/compat/strcasestr.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
  
- static int reftable_obj_record_copy_from(void *rec, const void *src_rec,
--					 uint32_t hash_size UNUSED)
-+					 uint32_t hash_size)
+ char *gitstrcasestr(const char *haystack, const char *needle)
  {
- 	struct reftable_obj_record *obj = rec;
- 	const struct reftable_obj_record *src = src_rec;
+diff --git a/compat/strdup.c b/compat/strdup.c
+index f3fb978eb3..9ef99f88f2 100644
+--- a/compat/strdup.c
++++ b/compat/strdup.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
  
-+	REFTABLE_UNUSED(hash_size);
-+
- 	reftable_obj_record_release(obj);
- 
- 	REFTABLE_ALLOC_ARRAY(obj->hash_prefix, src->hash_prefix_len);
-@@ -523,13 +525,16 @@ static uint8_t reftable_obj_record_val_type(const void *rec)
- }
- 
- static int reftable_obj_record_encode(const void *rec, struct string_view s,
--				      uint32_t hash_size UNUSED)
-+				      uint32_t hash_size)
+ char *gitstrdup(const char *s1)
  {
- 	const struct reftable_obj_record *r = rec;
- 	struct string_view start = s;
- 	int i = 0;
- 	int n = 0;
- 	uint64_t last = 0;
-+
-+	REFTABLE_UNUSED(hash_size);
-+
- 	if (r->offset_len == 0 || r->offset_len >= 8) {
- 		n = put_var_int(&s, r->offset_len);
- 		if (n < 0) {
-@@ -558,8 +563,8 @@ static int reftable_obj_record_encode(const void *rec, struct string_view s,
+diff --git a/compat/strlcpy.c b/compat/strlcpy.c
+index 4024c36030..780b39ff82 100644
+--- a/compat/strlcpy.c
++++ b/compat/strlcpy.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
  
- static int reftable_obj_record_decode(void *rec, struct reftable_buf key,
- 				      uint8_t val_type, struct string_view in,
--				      uint32_t hash_size UNUSED,
--				      struct reftable_buf *scratch UNUSED)
-+				      uint32_t hash_size,
-+				      struct reftable_buf *scratch)
+ size_t gitstrlcpy(char *dest, const char *src, size_t size)
  {
- 	struct string_view start = in;
- 	struct reftable_obj_record *r = rec;
-@@ -567,6 +572,9 @@ static int reftable_obj_record_decode(void *rec, struct reftable_buf key,
- 	int n = 0;
- 	uint64_t last;
+diff --git a/compat/strtoimax.c b/compat/strtoimax.c
+index ac09ed89e7..c9ed79f0d1 100644
+--- a/compat/strtoimax.c
++++ b/compat/strtoimax.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
  
-+	REFTABLE_UNUSED(hash_size);
-+	REFTABLE_UNUSED(scratch);
-+
- 	reftable_obj_record_release(r);
- 
- 	REFTABLE_ALLOC_ARRAY(r->hash_prefix, key.len);
-@@ -613,17 +621,20 @@ static int reftable_obj_record_decode(void *rec, struct reftable_buf key,
- 	return start.len - in.len;
- }
- 
--static int not_a_deletion(const void *p UNUSED)
-+static int not_a_deletion(const void *p)
+ intmax_t gitstrtoimax (const char *nptr, char **endptr, int base)
  {
-+	REFTABLE_UNUSED(p);
- 	return 0;
- }
+diff --git a/compat/strtoumax.c b/compat/strtoumax.c
+index 5541353a77..50fe26d746 100644
+--- a/compat/strtoumax.c
++++ b/compat/strtoumax.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
  
- static int reftable_obj_record_equal_void(const void *a, const void *b,
--					  uint32_t hash_size UNUSED)
-+					  uint32_t hash_size)
+ uintmax_t gitstrtoumax (const char *nptr, char **endptr, int base)
  {
- 	struct reftable_obj_record *ra = (struct reftable_obj_record *) a;
- 	struct reftable_obj_record *rb = (struct reftable_obj_record *) b;
+diff --git a/compat/unsetenv.c b/compat/unsetenv.c
+index b9d34af613..d96e0d7bcc 100644
+--- a/compat/unsetenv.c
++++ b/compat/unsetenv.c
+@@ -1,4 +1,4 @@
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
  
-+	REFTABLE_UNUSED(hash_size);
-+
- 	if (ra->hash_prefix_len != rb->hash_prefix_len
- 	    || ra->offset_len != rb->offset_len)
- 		return 0;
-@@ -1049,12 +1060,14 @@ static int reftable_index_record_key(const void *r, struct reftable_buf *dest)
- }
- 
- static int reftable_index_record_copy_from(void *rec, const void *src_rec,
--					   uint32_t hash_size UNUSED)
-+					   uint32_t hash_size)
+ int gitunsetenv(const char *name)
  {
- 	struct reftable_index_record *dst = rec;
- 	const struct reftable_index_record *src = src_rec;
- 	int err;
+diff --git a/compat/win32/dirent.c b/compat/win32/dirent.c
+index 52420ec7d4..362622746d 100644
+--- a/compat/win32/dirent.c
++++ b/compat/win32/dirent.c
+@@ -1,4 +1,4 @@
+-#include "../../git-compat-util.h"
++#include "git-compat-util.h"
  
-+	REFTABLE_UNUSED(hash_size);
-+
- 	reftable_buf_reset(&dst->last_key);
- 	err = reftable_buf_add(&dst->last_key, src->last_key.buf, src->last_key.len);
- 	if (err < 0)
-@@ -1070,19 +1083,23 @@ static void reftable_index_record_release(void *rec)
- 	reftable_buf_release(&idx->last_key);
- }
+ struct DIR {
+ 	struct dirent dd_dir; /* includes d_type */
+diff --git a/compat/win32/flush.c b/compat/win32/flush.c
+index 291f90ea94..bcad557eb4 100644
+--- a/compat/win32/flush.c
++++ b/compat/win32/flush.c
+@@ -1,6 +1,6 @@
+ #include "git-compat-util.h"
+ #include <winternl.h>
+-#include "lazyload.h"
++#include "compat/win32/lazyload.h"
  
--static uint8_t reftable_index_record_val_type(const void *rec UNUSED)
-+static uint8_t reftable_index_record_val_type(const void *rec)
+ int win32_fsync_no_flush(int fd)
  {
-+	REFTABLE_UNUSED(rec);
- 	return 0;
- }
+diff --git a/compat/win32/path-utils.c b/compat/win32/path-utils.c
+index 966ef779b9..20e9a69f56 100644
+--- a/compat/win32/path-utils.c
++++ b/compat/win32/path-utils.c
+@@ -1,7 +1,7 @@
+ #define USE_THE_REPOSITORY_VARIABLE
  
- static int reftable_index_record_encode(const void *rec, struct string_view out,
--					uint32_t hash_size UNUSED)
-+					uint32_t hash_size)
+-#include "../../git-compat-util.h"
+-#include "../../environment.h"
++#include "git-compat-util.h"
++#include "environment.h"
+ 
+ int win32_has_dos_drive_prefix(const char *path)
  {
- 	const struct reftable_index_record *r =
- 		(const struct reftable_index_record *)rec;
- 	struct string_view start = out;
-+	int n;
+diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
+index 58980a529c..86199d67ba 100644
+--- a/compat/win32/pthread.c
++++ b/compat/win32/pthread.c
+@@ -7,8 +7,8 @@
+  * no need for double-checking.
+  */
  
--	int n = put_var_int(&out, r->offset);
-+	REFTABLE_UNUSED(hash_size);
-+
-+	n = put_var_int(&out, r->offset);
- 	if (n < 0)
- 		return n;
+-#include "../../git-compat-util.h"
+-#include "pthread.h"
++#include "git-compat-util.h"
++#include "compat/win32/pthread.h"
  
-@@ -1092,15 +1109,19 @@ static int reftable_index_record_encode(const void *rec, struct string_view out,
- }
+ #include <errno.h>
+ #include <limits.h>
+diff --git a/compat/win32/syslog.c b/compat/win32/syslog.c
+index 4e4794743a..587fb99ba9 100644
+--- a/compat/win32/syslog.c
++++ b/compat/win32/syslog.c
+@@ -1,4 +1,4 @@
+-#include "../../git-compat-util.h"
++#include "git-compat-util.h"
  
- static int reftable_index_record_decode(void *rec, struct reftable_buf key,
--					uint8_t val_type UNUSED,
-+					uint8_t val_type,
- 					struct string_view in,
--					uint32_t hash_size UNUSED,
--					struct reftable_buf *scratch UNUSED)
-+					uint32_t hash_size,
-+					struct reftable_buf *scratch)
+ static HANDLE ms_eventlog;
+ 
+diff --git a/compat/win32/trace2_win32_process_info.c b/compat/win32/trace2_win32_process_info.c
+index f147da706a..55e482f100 100644
+--- a/compat/win32/trace2_win32_process_info.c
++++ b/compat/win32/trace2_win32_process_info.c
+@@ -1,10 +1,10 @@
+ #define USE_THE_REPOSITORY_VARIABLE
+ 
+-#include "../../git-compat-util.h"
+-#include "../../json-writer.h"
+-#include "../../repository.h"
+-#include "../../trace2.h"
+-#include "lazyload.h"
++#include "git-compat-util.h"
++#include "compat/win32/lazyload.h"
++#include "json-writer.h"
++#include "repository.h"
++#include "trace2.h"
+ #include <psapi.h>
+ #include <tlhelp32.h>
+ 
+diff --git a/compat/win32mmap.c b/compat/win32mmap.c
+index e951934316..aff1768acb 100644
+--- a/compat/win32mmap.c
++++ b/compat/win32mmap.c
+@@ -1,6 +1,6 @@
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ 
+ void *git_mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset)
  {
- 	struct string_view start = in;
- 	struct reftable_index_record *r = rec;
- 	int err, n = 0;
+diff --git a/compat/winansi.c b/compat/winansi.c
+index ac2ffb7869..143685e5ab 100644
+--- a/compat/winansi.c
++++ b/compat/winansi.c
+@@ -6,11 +6,11 @@
  
-+	REFTABLE_UNUSED(val_type);
-+	REFTABLE_UNUSED(hash_size);
-+	REFTABLE_UNUSED(scratch);
-+
- 	reftable_buf_reset(&r->last_key);
- 	err = reftable_buf_add(&r->last_key, key.buf, key.len);
- 	if (err < 0)
-@@ -1115,11 +1136,13 @@ static int reftable_index_record_decode(void *rec, struct reftable_buf key,
- }
+ #define DISABLE_SIGN_COMPARE_WARNINGS
  
- static int reftable_index_record_equal(const void *a, const void *b,
--				       uint32_t hash_size UNUSED)
-+				       uint32_t hash_size)
- {
- 	struct reftable_index_record *ia = (struct reftable_index_record *) a;
- 	struct reftable_index_record *ib = (struct reftable_index_record *) b;
+-#include "../git-compat-util.h"
++#include "git-compat-util.h"
+ #include <wingdi.h>
+ #include <winreg.h>
+-#include "win32.h"
+-#include "win32/lazyload.h"
++#include "compat/win32.h"
++#include "compat/win32/lazyload.h"
  
-+	REFTABLE_UNUSED(hash_size);
-+
- 	return ia->offset == ib->offset && !reftable_buf_cmp(&ia->last_key, &ib->last_key);
- }
- 
-diff --git a/reftable/writer.c b/reftable/writer.c
-index 5961698311..0040a1b1c4 100644
---- a/reftable/writer.c
-+++ b/reftable/writer.c
-@@ -636,10 +636,12 @@ static void write_object_record(void *void_arg, void *key)
- done:;
- }
- 
--static void object_record_free(void *void_arg UNUSED, void *key)
-+static void object_record_free(void *void_arg, void *key)
- {
- 	struct obj_index_tree_node *entry = key;
- 
-+	REFTABLE_UNUSED(void_arg);
-+
- 	REFTABLE_FREE_AND_NULL(entry->offsets);
- 	reftable_buf_release(&entry->hash);
- 	reftable_free(entry);
+ static int fd_is_interactive[3] = { 0, 0, 0 };
+ #define FD_CONSOLE 0x1
+diff --git a/config.mak.uname b/config.mak.uname
+index b12d4e168a..cd9535a65c 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -501,7 +501,7 @@ endif
+ 		compat/win32/pthread.o compat/win32/syslog.o \
+ 		compat/win32/trace2_win32_process_info.o \
+ 		compat/win32/dirent.o
+-	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DDETECT_MSYS_TTY -DNOGDI -DHAVE_STRING_H -Icompat -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
++	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DDETECT_MSYS_TTY -DNOGDI -DHAVE_STRING_H -Icompat/regex -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
+ 	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -ENTRY:wmainCRTStartup -SUBSYSTEM:CONSOLE
+ 	# invalidcontinue.obj allows Git's source code to close the same file
+ 	# handle twice, or to access the osfhandle of an already-closed stdout
+@@ -692,7 +692,7 @@ ifeq ($(uname_S),MINGW)
+ 	HAVE_PLATFORM_PROCINFO = YesPlease
+ 	CSPRNG_METHOD = rtlgenrandom
+ 	BASIC_LDFLAGS += -municode
+-	COMPAT_CFLAGS += -DNOGDI -Icompat -Icompat/win32
++	COMPAT_CFLAGS += -DNOGDI -Icompat/win32
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
+ 		compat/win32/trace2_win32_process_info.o \
 
 -- 
 2.48.1.362.g079036d154.dirty
