@@ -1,95 +1,95 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19DC01DF255
-	for <git@vger.kernel.org>; Wed, 29 Jan 2025 11:01:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0A51FDD
+	for <git@vger.kernel.org>; Wed, 29 Jan 2025 13:38:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738148489; cv=none; b=bFu8Vz+LZ9OWerMOJyrpdCtIiMhZ8d+5QJJm028c/7qr3IaYaN2YYq7PtL8ucgMAAc3BE5YFbSWURjcnYUxHiGHwB0UMUY17ZvOjB1EAD7yIR3egt0QrS0ytqiYRGEED4d0VK/j0qqkAYUiFL0BaarjxG2R+yNOJ47vOuTfsRBQ=
+	t=1738157896; cv=none; b=RFA2kCYWFz8U34ScJWgVfu7iTf7SHes9bz8teiOGRI+YAdZ8CO+4fwelRIFds8fisr2G64ynSf+objVgnAtqQvrY37+BnihZEVzNaif+x5+2DCcxr2wRslS4Y5NC+jdkDS2blOhSsRgH54zsUUmQR49QyqQJdXL/GqakJ5zkvjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738148489; c=relaxed/simple;
-	bh=xJADib2B3n9q6662xVfgFYEJ2XelNiN9RrDoDIvYsH4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JoPaOTevRTsPCT+AxTn5uBjwjA2PUlZ0Sa0Hfw0aZA6VWStTr2YnSQZReDVIXjFjE0n+ksloMbTOBOXpdGU1nCT7/Z4qptHcDelGo/0uBkjDnKMSi4iTd5QoxMvx7/4zVupwqoVld3EWcYPE0kCwJGwN+P8rjJT+hsS3YUm8yPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DGG/TyAI; arc=none smtp.client-ip=209.85.167.49
+	s=arc-20240116; t=1738157896; c=relaxed/simple;
+	bh=FXU7ITERwvmlVwj8PvmGpPhiFsoY1apdtD6J9zfLCw0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JSGddBGuIgR2cXTJbwbCgm/b7pQ/j8tBvF7mChf9goLnSVxVWCZoAj+q59qrDvQitzpCqA5KJeFdGlQA1CIVMofh9PcxCO04DWsWJ4ba/PNJhuRvOfeNBTPEj5VQ8nXSWMgE3PPySJGrSWTB5MIP8tpbpZwvPZ3SI6RX6QvLVSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2LSHTQl; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DGG/TyAI"
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-54298ec925bso7751123e87.3
-        for <git@vger.kernel.org>; Wed, 29 Jan 2025 03:01:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2LSHTQl"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e58a90c6059so863252276.1
+        for <git@vger.kernel.org>; Wed, 29 Jan 2025 05:38:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738148485; x=1738753285; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xJADib2B3n9q6662xVfgFYEJ2XelNiN9RrDoDIvYsH4=;
-        b=DGG/TyAINohCq7ghEQbAtwqmdFrpyPruOWZYnkYkgxWZS0xlnIL7WaGsZJB6ci7PSu
-         8B4z+WvMCfxvzH5p7NxxiysqzEO3Qj7O+RlWRzHISzcp3Ljosyh5Og3eXUluOZIFgd/O
-         0eCHktww/6IEy3US7ev8kd6ScpItU+/DL7w5P/zonwuV8S/jksNaZd+Qy7B3RlK+uvZN
-         Zz+HUeHln1wULkGVNspFRnHg/EMSas49PU/OqotUT0ZMR/ARWIx+XskxdVRMH5qjqIOM
-         RCDhbq6MeZlxSwZe8LXGnTVjrr8r/TPVWRwo3Kc/W6eWMoCnEc99wcZvK/XEhahJ1ijm
-         fOXg==
+        d=gmail.com; s=20230601; t=1738157893; x=1738762693; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wNOy2s3VO6eM4D07091H3i16TW+/39D0ohetCX24Avo=;
+        b=A2LSHTQlbXm6zk4DQRga296r4HEf/R/EvjeeU1/MqNPhv6h9QXGfADQdaW8f0Tv0lc
+         UD75uA/ENutGtG/OHx5Z+zJMoYFufiXGO5jcQplDg7mwQo3KHkNTby3c+1AUWfBEKQkN
+         1U1J/JZMkB4jSlW/WpJYHXT6tk7L6SldohevJe5hJqtV1dvWoN4lMGlPIRWDBPs82ZEI
+         fYq0hcWWf04agGlRyg42jg8eWjuTpAHcnBhxhNUXlYNFlXWQs8PBh+rPldQnJipO8+xc
+         6F8B5T5XxuH8fwY8Guj/PHzTsLVJqBz96E0w/lCwzkgppT0kRhno3MeMZyu2YA6fyHqo
+         pS6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738148485; x=1738753285;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xJADib2B3n9q6662xVfgFYEJ2XelNiN9RrDoDIvYsH4=;
-        b=BYgny5HX/pGrpdyWXcXgXeNOItKfuJf9beiRCg0qn17z0Qz0M7yXpQiVaY+u1in5aD
-         skXN9m93r2seHursONbqoGlrR7G3LpjCeiEWWcf7kZ3W3KXYNx0Ki3gC64nYJL5JnoHc
-         J/2QhJRrHmpbRFC9K3tAJwxeI8kspAbyEU4h51ePFJtzwtb7bNfza0/Ksmd+sjUiE2q1
-         0EI5Fssi7Bz3S7HCRQwJNxckQaeZYMdv85bChWMPiE/CjERuC3cU5RH+T52MMrPZJdfy
-         mINdKz5FW9lkbZ0nxlE3rDjXOayFsILx+R/RTHVaKa1k4fqMlOJsFeDJsLe9uUZSIu1L
-         imtw==
-X-Gm-Message-State: AOJu0Yw9BBlmFTfEKYrPDCHtqqLYCvjRpCkmHqWtQVGnMJd0F4xZUAzI
-	/QyaYscUKY02nZBhtvbs2pEbFlbAw7N8uFATF03CtjWDBsm13fO78BesQA3Qsbds1YqRHv6bYKZ
-	vr2hg30kOrP/3oF1pniz68Fyz4cc=
-X-Gm-Gg: ASbGnct4GZHgUsrf2Gc0ny2gIimr+oGTjlj0KHR6KFMJqFh4nAemsii9u+RlYbuKOVg
-	+PjYt4SU9hA9gevPZlkCa3AdxTDd7oYW2oyOf5PWgzl4yuaNxBhYX4oIt3DauXI8/M2GBmtSYgA
-	==
-X-Google-Smtp-Source: AGHT+IEIGYzyEGZb0ho4Q+priWY5T87Ya0l7zSuHcF4sdEaUhOHctEINfoy3xC5amBvMuQQInlzCOA2/rWf0oYxR57s=
-X-Received: by 2002:a05:6512:3094:b0:542:9a42:7991 with SMTP id
- 2adb3069b0e04-543e4bdfef9mr1048459e87.3.1738148484597; Wed, 29 Jan 2025
- 03:01:24 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738157893; x=1738762693;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wNOy2s3VO6eM4D07091H3i16TW+/39D0ohetCX24Avo=;
+        b=avHULolMrtUu+5xynC+HMI9k0UV0v1y/OeS1eSZDtNSNnIHVDSyhIKVXRHVPoYVoXl
+         DpIiKatObgYnP64BbDmEIYO1O7VZRWxPDXeH6MG4O5DgomwnKxuLJCEKIHfyt+6vLq+f
+         tPFLRbNNEtVk8Oog09O+B9pOJ/OaKi6J7Hz8sOmZmoimK0P61+F1l5i8GraLGAFOUY7G
+         6wMn+WZUVqh30ZzYcBBtykQN6eAjvKV/N7L4s9pNoyUVcR/jRb3OB2Nw1lS/frqg2DmA
+         eMhdR+7ef9VmqdMcs8de3gvjqoy3fAE1GDKTctKM7bak90HQB+5k5wbYaeWNqP1VKuS1
+         AzGA==
+X-Gm-Message-State: AOJu0YzMyg4Car9qT2VvdSigaNYslgctFj6n8/yxmz8VAzsmGknr/5w9
+	ylDh20qDZoUCfCchVhZlM+HvqIaB+7TSsYLZWrb+woUwpfCs4Iix
+X-Gm-Gg: ASbGncvmjDJocomTLFGBH2SmfDQoLwFaAdH7DqcoaHV1CKITAS0c6Ij9TmXEKOQizwz
+	pTwhNbXTCuZ4OYrs5j8Bid3P65MNcx9mk33Sy2euAWZ0rSgNnWPsYxdboGjpF/XbR1BSH/xzm/L
+	eMcRbIWp/Am5ukuCRS9Coc+GtO39GR6V2jk+OXgUL2Z2NzKwO6Ox0I76WGsNsz9xuXxnCDjFy5H
+	8+8JgceF2SxBNgv1/yNmZin+Q3Yey/aJoTL3wUmzw5HYqJZbEAgPEr8Dse7SQGSEZ40tar1WcPp
+	s40Jm2+TUWD1ag5CZno5134LenmvRIz4lY8kMcisgGtVpJvActxSxqaMJuEP21fvtIhC5rik2/9
+	s
+X-Google-Smtp-Source: AGHT+IHJF7FEiyLJVaZbD3VOfR9Rof09EBH4XCgn7/hWjauXG2dTs2dxFDNwneEqUbPxMUQzw9aDew==
+X-Received: by 2002:a05:690c:6285:b0:6dd:b8ff:c29c with SMTP id 00721157ae682-6f797730641mr59579857b3.17.1738157893587;
+        Wed, 29 Jan 2025 05:38:13 -0800 (PST)
+Received: from ?IPV6:2600:1700:60ba:9810:89cc:5f2b:c6ab:6d1? ([2600:1700:60ba:9810:89cc:5f2b:c6ab:6d1])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f757a2d5besm22852517b3.97.2025.01.29.05.38.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jan 2025 05:38:12 -0800 (PST)
+Message-ID: <001e3382-e851-41a4-acc2-48e44501efca@gmail.com>
+Date: Wed, 29 Jan 2025 08:38:12 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+U2-7GiHq9qhiyLPLgzOd1JK072gzkmZ+4vQ11V0QpKgPif=Q@mail.gmail.com>
-In-Reply-To: <CA+U2-7GiHq9qhiyLPLgzOd1JK072gzkmZ+4vQ11V0QpKgPif=Q@mail.gmail.com>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Wed, 29 Jan 2025 03:01:13 -0800
-X-Gm-Features: AWEUYZlkn6bGmC2jL_kEGaCuJOOkKF7rt3mt2PPic3gw700Q7cgYsnruiZcryQA
-Message-ID: <CAPx1Gvf+80Yty1R3O766fwYiRUysQ3Ss1XbFq7hmrfcUcawBAA@mail.gmail.com>
-Subject: Re: git diff -G: Regex pattern to exclude a word
-To: Raghavendra N <nraghavendra89@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/7] pack-objects: add --name-hash-version option
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, johannes.schindelin@gmx.de, peff@peff.net,
+ ps@pks.im, me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com,
+ jonathantanmy@google.com, karthik nayak <karthik.188@gmail.com>
+References: <pull.1823.v3.git.1734715194.gitgitgadget@gmail.com>
+ <pull.1823.v4.git.1738004554.gitgitgadget@gmail.com>
+ <7ee1845144fda5b8192dfa13eaab3cbd669b39ed.1738004555.git.gitgitgadget@gmail.com>
+ <xmqqy0ywoszt.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqy0ywoszt.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 28, 2025 at 10:05=E2=80=AFPM Raghavendra N <nraghavendra89@gmai=
-l.com> wrote:
-> I'm trying to understand how the -G option in git diff works.
-> Specifically I'm trying to test a Regex which excludes a word from the
-> git diff.
+On 1/27/25 4:18 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> +/**
+>> + * Check whether the name_hash_version chosen by user input is apporpriate,
+> 
+> appropriate.  Will tweak while queueing, so no need to resend only
+> to change this.
+Thank you for catching and fixing this!
 
-"Inverting" a regular expression is technically always possible,
-but is difficult to get right, and I think you made a slight error in
-your attempt. See also https://www.vidarholen.net/contents/blog/?p=3D36
-(which has a link to a Haskell program to generate an inverted regex
-automatically).
-
-With `git grep` you can specify perl-style regular expressions,
-which allow negative lookahead, but `git diff -G` does not
-support that. See
-https://stackoverflow.com/questions/39789921/what-flavor-of-regex-does-git-=
-use
-for details.
-
-I think it would be nice to add some of `git grep`'s options to
-`git diff` here, but I leave that as an exercise. :-)
-
-Chris
+-Stolee
