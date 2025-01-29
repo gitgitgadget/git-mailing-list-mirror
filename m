@@ -1,106 +1,66 @@
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDE97FD
-	for <git@vger.kernel.org>; Wed, 29 Jan 2025 05:19:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91A32F29
+	for <git@vger.kernel.org>; Wed, 29 Jan 2025 06:03:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738127945; cv=none; b=AhcqxSvuSOUMvmnvegyoapKy+6k7A8K4RVZwRbpxwwIRLsIuTeBLCHLRIg0wJgol4unNAxRsAYMJHewRXULHC7oo5FvFdFOjRfWqQ2RCZEGPKb9nY8kic6VsDAPK7aAgsOJwbYgVPgSzQmINy0Pt1ExcCYvJ/H8Oldfou95hKuw=
+	t=1738130600; cv=none; b=rNUvO+iBWpwmvCkv9r6TrhPeoAbQI9pCb75wCPTh3xBQCUJwu7I9C3c5qWgFWsro4SeOEro/l0CdHzqXIvcxuIRtc0JVwA/XakwE6zPAc7kY5HxtQ0ylncsoGZjadWtSdkz2ob9AfgrNfbT6IVV5yOyfA7FKVnQ1ftv7G3qD5v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738127945; c=relaxed/simple;
-	bh=jFz8/3UKVBV22OGcSXxKU5G7WCKXwbgDB2RC/J8x+gg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XvuObduTBbYkfAFN743qMiZxcS08QLzenZdoANfaZMAaLyFhITzA9wU3s8ALm+IGIUJyKyVbgf6G3TDyLX4+2y+nJrlD40acZTEMEjM4IBWW8c/26wVLd1xNmLgK7eK+CX1n3vW23ydGQ8bxiByPvJmBKy00FPGLWOxEdndkS0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XGhUxPAH; arc=none smtp.client-ip=209.85.167.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738130600; c=relaxed/simple;
+	bh=eZIBGO/jZqWkNCJmpjY0Goe+rmiKNUZIAGDuFPVmCDk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i8X3T8KBKBcza7IvykRpzHdfL+nErwH3Pk6S6gfEref8/3C4GkVyaQfaNLw/giJZc6iepOPqxdr0eqMUbhTjavdfiFG0yDKUq9ki+C7+MF0RYdl/rXwcOhGifJrBZ207ccqqt79DT0Cg16MUgHQpakf1MhG7H8N04YqB21H2C7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=WiGdZLt8; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XGhUxPAH"
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5401e6efffcso6929226e87.3
-        for <git@vger.kernel.org>; Tue, 28 Jan 2025 21:19:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738127941; x=1738732741; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0/BDEgmOy2eeLpuFDkmjwQux0E0kBfr96eV9/bRIXUg=;
-        b=XGhUxPAHY+1Sniqo5lW6TZ0O8lWsLHCfZCGioJCAMvLurV+KCpMNfVQp5E45wbNzls
-         Bo7jACAqwfyMSirPN+umxgz2F1kUMCttQcMEjo/Z+TrLYr2X/LXmkaosWGVmBcfuXQTd
-         E7A+kXu70qhBIWh2PM36GuFg3RgB3IY3xXByWf97zxzqQNJOJMw1ewqkcTMDPJSLQsDx
-         3L7OCFiZRWmA+eXVbDWbe+LNEW1APWdU1c7m44mImE+HjfKSaZEgkuGsM7yK3kofK3g3
-         x0OtuOE70yh0ESThTKvy+YpJcP4IaHUoj3RSvG0vEFJRF2x75tQtIMMwy6PMMgcT9gzf
-         sY7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738127941; x=1738732741;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0/BDEgmOy2eeLpuFDkmjwQux0E0kBfr96eV9/bRIXUg=;
-        b=aCuV8wQ5XrGK/hnkQgumdF6hS1JX5QuGOdPqvUSvsi6R8MpdksH88xTmH2o96aKZuV
-         dLxxotpPNGxs71HyONeLjg8ciYBr7mfuKBFwBPzev+OVN9zHOj8sTuvJ2IvNcmO4SZJo
-         LsXe9OaHJAzXbl1hW1faSHr2bFv2C0lDqqJLlxveN3VYNvCEJ6GFRiAYxUzniQc1Cu8m
-         Dk1KiVas+xFFDZd58F4cZHa/XRu45q51P++zHwzAJOjFCFgL0UiD0AuHMEWfSN4554uu
-         TG0iinE5f5b0SGgAOb1DETZ6frg5TRU59WOIRZLc/r65aOF9rBUlVAsn9JAgr8h0IYjI
-         mzoA==
-X-Gm-Message-State: AOJu0YwP13w63yuJO8CHB1s5/ROUL05Mjkt89o0Z38SGDgG96hXe0gG/
-	HiIDcBg/Qtxxqs+QOJUo9dIybMc3ibJRksoIxAvsBSp6FyicK4QpyWaEJStacxkHJIYEucFr9bB
-	FfttD0Np62W302/5vYNI11MGkzmXsGOu/zZ8=
-X-Gm-Gg: ASbGnctgQ8YOByvD8ePFwAbh/KCp/mY3E1Q0msdHcBviBciZDKXzdJlSG7G1qjQo1xE
-	XcIKBrxAhdDK85A2vgQlnRqz3firQZITgMjWJGzS1M8QgLf/ivTw5fz1lKTDqrjSW+aeF1tsnCF
-	LI+nPH6WHH+A==
-X-Google-Smtp-Source: AGHT+IGVJTc/wK48+Mp7fa+ncaPc0LCDqXCnS5Lmn4Mfbvl19maWhsqrBqoYqDv7kaZXeG7mSGb4A2M75a6oQ3K0NaE=
-X-Received: by 2002:ac2:4318:0:b0:542:28a9:dcac with SMTP id
- 2adb3069b0e04-543e4c0184bmr409554e87.30.1738127941254; Tue, 28 Jan 2025
- 21:19:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="WiGdZLt8"
+Received: (qmail 19679 invoked by uid 109); 29 Jan 2025 06:03:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=eZIBGO/jZqWkNCJmpjY0Goe+rmiKNUZIAGDuFPVmCDk=; b=WiGdZLt8Xwc6O45KIGqB7+oZT2P8MJ455i4VJfr8d/xrg3CAPtN2NBWEq7WOFMFcABAQUskWhxCBUWaSdje7Wd7fNJco7HbECHqfPvbDbcSf9SmJfnULJ2J0vQB2pTsbcJLiSpuir1BL1McQfgCf2/vHFncUDkXKOqT/MoJfzPT8KxqxtroBWVlR+URDUnvXTZELE3G8YhyuKS8ykKLO1PFUiauSJNnI8g7mAEdIrutzP1jTG32Dzs99nz8UY0hVK2aUCcUE9Ve7w2NlFUt6AtX24rMWmuK2wimZvVAF0roGreVVej25oMvSvSKzZ+wnuDndLtOTS9Ef/gWZaaBzUA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 29 Jan 2025 06:03:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26376 invoked by uid 111); 29 Jan 2025 06:03:16 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 29 Jan 2025 01:03:15 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 29 Jan 2025 01:03:11 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2025, #07; Fri, 24)
+Message-ID: <20250129060311.GA1712361@coredump.intra.peff.net>
+References: <xmqqwmekvubv.fsf@gitster.g>
+ <20250128164606.GA1688180@coredump.intra.peff.net>
+ <xmqq8qquom4t.fsf@gitster.g>
+ <xmqq4j1iokvv.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250127103644.36627-1-meetsoni3017@gmail.com> <xmqqikq0ruuk.fsf@gitster.g>
-In-Reply-To: <xmqqikq0ruuk.fsf@gitster.g>
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Wed, 29 Jan 2025 10:48:50 +0530
-X-Gm-Features: AWEUYZmP3SO3daDcUa1L51ydp5ekGdx_T8sy-SwtDXeUWaTVEYIU-k_v20O6cUM
-Message-ID: <CAPhwyn3za29WwtFFJJodHXOpVRFuq8QhByE8ixjPPq9oyxfCmQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] refspec: centralize refspec-related logic
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, shubham.kanodia10@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq4j1iokvv.fsf@gitster.g>
 
-On Mon, 27 Jan 2025 at 23:40, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Meet Soni <meetsoni3017@gmail.com> writes:
->
-> > Thank you for reviewing :)
+On Tue, Jan 28, 2025 at 10:26:12AM -0800, Junio C Hamano wrote:
+
+> >> It has to be fixed in an evil merge of the two (or brian's rebased on
+> >> Adam's, which has since graduated to master).
 > >
-> > I've added documentation comments for various function signatures to
-> > better understand what they do.
->
-> Before saying all that, please help those who haven't read the
-> previous round (which wasn't even v1 IIRC but RFC and may have been
-> skipped by some potential reviewers) by summarizing what this series
-> is about.  For other's convenience, here is a key excerpt from the
-> cover letter of the previous iteration:
->
->     As Patrick pointed out in [1], the logic related to refspec is curren=
-tly
->     split across multiple headers. This patch series addresses that by
->     relocating refspec-related logic from remote to refspec for improved
->     cohesion.
->
-Understood.
+> > Thanks; I had this one on my radar and I thought there was a
+> > merge-fix I made somewhere, but it is likely to have been lost
+> > during shuffling the order of merges.  Will take a look again.
+> >
+> > Thanks.
+> 
+> Here is what I'd directly apply to 'next'.  The merge-fix mechanism
+> knows about the same change, so when I merge the bc/doc-adoc-not-txt
+> topic down to 'master', the same tweak will be made as an evil
+> merge.
 
-> While I was working on an unrelated issue, I noticed that there is
-> one function, "extern int valid_remote_name(const char *);" declared
-> in <refspec.h> which is only about a remote and should probably be
-> moved to <remote.h>; cleaning it up does not have to be part of this
-> series, but since you are doing a similar clean-up effort, I thought
-> you would want to be aware of it.
->
-> Thanks.
-Thank you for pointing this out. I=E2=80=99ll be happy to write up a patch =
-after
-this series is done.
+Yeah, that looks perfect, thanks.
+
+-Peff
