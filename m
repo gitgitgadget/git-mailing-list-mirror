@@ -1,226 +1,106 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE457FD
-	for <git@vger.kernel.org>; Wed, 29 Jan 2025 05:15:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDE97FD
+	for <git@vger.kernel.org>; Wed, 29 Jan 2025 05:19:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738127721; cv=none; b=IohKyJluw+Nc1xU7sD9TbyI46YFLLymSHyCTkWRs0H0Tl/SuTPqKfKykBVGeNgvmW59pNRwGnXO9+aJnDpB6Pa8TKNB4NhCDCFqDifQhLXXMEmHlIXbXWcBMzbNYh/Brb5QdLtwbsDvrzVi0SlUphJ0VJ6FkjBbZOYlzs4DG1cg=
+	t=1738127945; cv=none; b=AhcqxSvuSOUMvmnvegyoapKy+6k7A8K4RVZwRbpxwwIRLsIuTeBLCHLRIg0wJgol4unNAxRsAYMJHewRXULHC7oo5FvFdFOjRfWqQ2RCZEGPKb9nY8kic6VsDAPK7aAgsOJwbYgVPgSzQmINy0Pt1ExcCYvJ/H8Oldfou95hKuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738127721; c=relaxed/simple;
-	bh=FA+ZhyoepP2WVFQVJrOnTepRz8/nlFw0uY+OXJUyXmQ=;
+	s=arc-20240116; t=1738127945; c=relaxed/simple;
+	bh=jFz8/3UKVBV22OGcSXxKU5G7WCKXwbgDB2RC/J8x+gg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AdZv0IBzLFlgL28neruRF1M7A/ntWlFFNB5lDTWuZHuXDE25qB0i6jlgIZAPXolbV8JJY5musLrOyGrhMV9bKBeW051rJdXyz/sUtY5f/3j7X/qOYIgGW8oIvn/gKIwMQle9kdwwTp8+Hj9W/dK+dwuIAW+UWpi/9S4yCcIG//g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NCIJgCBb; arc=none smtp.client-ip=209.85.167.46
+	 To:Cc:Content-Type; b=XvuObduTBbYkfAFN743qMiZxcS08QLzenZdoANfaZMAaLyFhITzA9wU3s8ALm+IGIUJyKyVbgf6G3TDyLX4+2y+nJrlD40acZTEMEjM4IBWW8c/26wVLd1xNmLgK7eK+CX1n3vW23ydGQ8bxiByPvJmBKy00FPGLWOxEdndkS0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XGhUxPAH; arc=none smtp.client-ip=209.85.167.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NCIJgCBb"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-5401b7f7141so5722920e87.1
-        for <git@vger.kernel.org>; Tue, 28 Jan 2025 21:15:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XGhUxPAH"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-5401e6efffcso6929226e87.3
+        for <git@vger.kernel.org>; Tue, 28 Jan 2025 21:19:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738127718; x=1738732518; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738127941; x=1738732741; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vr9HmXO7T4pFjIezHGSrq1c9QeGMzlEsNtfdiixnF6g=;
-        b=NCIJgCBbUKee9pSHVhSdyOrQ8HcflvEqvFDO2aOXEa+N+Y6c7IQSbcmJbSDTbyFXhs
-         o8HwpwfE47bsiAEtzGcmJsfUI0flLRv6fAI1bIo2P+viUNFTTKleJowi79ENJcxMAkvp
-         t1IgP4gscC08CffSAf9lpjPw0LWiGYdyraoT9QwOGCg9NpxMmcZhjCy0l/7oDugz/393
-         +2zEASHBq0mfqHT6maE4cJvLhFbHvPK6y8/DV3TmzAuCFqaE3ChArpKQuGBuazdHUWeL
-         8RjeAjPPi7daJi/09M6RQRUzN/j5hPuEoFpN4b5bh9lN+UsZ4j1dBxrJabci8gFWG0a/
-         b88g==
+        bh=0/BDEgmOy2eeLpuFDkmjwQux0E0kBfr96eV9/bRIXUg=;
+        b=XGhUxPAHY+1Sniqo5lW6TZ0O8lWsLHCfZCGioJCAMvLurV+KCpMNfVQp5E45wbNzls
+         Bo7jACAqwfyMSirPN+umxgz2F1kUMCttQcMEjo/Z+TrLYr2X/LXmkaosWGVmBcfuXQTd
+         E7A+kXu70qhBIWh2PM36GuFg3RgB3IY3xXByWf97zxzqQNJOJMw1ewqkcTMDPJSLQsDx
+         3L7OCFiZRWmA+eXVbDWbe+LNEW1APWdU1c7m44mImE+HjfKSaZEgkuGsM7yK3kofK3g3
+         x0OtuOE70yh0ESThTKvy+YpJcP4IaHUoj3RSvG0vEFJRF2x75tQtIMMwy6PMMgcT9gzf
+         sY7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738127718; x=1738732518;
+        d=1e100.net; s=20230601; t=1738127941; x=1738732741;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vr9HmXO7T4pFjIezHGSrq1c9QeGMzlEsNtfdiixnF6g=;
-        b=PlxlI+cHupwocHu55S4qTdRcRxYZIG3gZYHlrF1Ah8BoVyKm7Fidl/9RXURY3M7BPa
-         lN6sTjVuFU3meoY/ONQweyk4iETsCZM+ihBcHVtyeqPgTaHCKoI61Saxdp5VUR3Dtgaz
-         JXYqQ8q1ddiSfob0b9ODTIjc6d85SAoSPQKlGosvEu1bx8GHlrTSYQI/sNXJtDA79uhg
-         7761f9gtUfViocpfg7+icjUM4BmX4MUgMNcroP/pQ1RpcL96YD+hJtUWv5Ue7rstxxZn
-         EGzTXDX7GR0NzRwG/n1TbeK+LgTvpQEA+GQyw+ShPKTFhSpsiDjuvja8cQ/m4/ONQUuT
-         leXA==
-X-Gm-Message-State: AOJu0YxsO9GCw3l1c+WciLqgPvbBbOAYY5yJrgtXvphQOakevmVkPsee
-	ysnkC5zAvVKDMx1jzSGkSPqY/lE5mx69VFYks+m5osUIMio47ouvRAJ/6UcIJoDYMq9GZUlAiKD
-	jcTze+v1urUDIHLngb9pJxiM+YUo055uqox8=
-X-Gm-Gg: ASbGncu2k8paAWvxgdCwiTO9ThElqIFCgmEYky1V2yOtAD5trhoHAVEk2up5bgCgkKq
-	+aGe/hXs3N56yKf9kfkfy4x19npdVGESy13+lp4q4+iZHFhpZvcs5f4doclcDuo71FBgfxOIibF
-	0=
-X-Google-Smtp-Source: AGHT+IH0uyvXDGSLY91BkRl9SiXly/T2jm+A5HxEA/Rg9oPuuNxkG45Zm/AfhUnV2yWl1J4kU23raVMLpOPvCqIYcFg=
-X-Received: by 2002:a05:6512:983:b0:53d:dd02:7cc5 with SMTP id
- 2adb3069b0e04-543e4bd634amr402296e87.7.1738127717498; Tue, 28 Jan 2025
- 21:15:17 -0800 (PST)
+        bh=0/BDEgmOy2eeLpuFDkmjwQux0E0kBfr96eV9/bRIXUg=;
+        b=aCuV8wQ5XrGK/hnkQgumdF6hS1JX5QuGOdPqvUSvsi6R8MpdksH88xTmH2o96aKZuV
+         dLxxotpPNGxs71HyONeLjg8ciYBr7mfuKBFwBPzev+OVN9zHOj8sTuvJ2IvNcmO4SZJo
+         LsXe9OaHJAzXbl1hW1faSHr2bFv2C0lDqqJLlxveN3VYNvCEJ6GFRiAYxUzniQc1Cu8m
+         Dk1KiVas+xFFDZd58F4cZHa/XRu45q51P++zHwzAJOjFCFgL0UiD0AuHMEWfSN4554uu
+         TG0iinE5f5b0SGgAOb1DETZ6frg5TRU59WOIRZLc/r65aOF9rBUlVAsn9JAgr8h0IYjI
+         mzoA==
+X-Gm-Message-State: AOJu0YwP13w63yuJO8CHB1s5/ROUL05Mjkt89o0Z38SGDgG96hXe0gG/
+	HiIDcBg/Qtxxqs+QOJUo9dIybMc3ibJRksoIxAvsBSp6FyicK4QpyWaEJStacxkHJIYEucFr9bB
+	FfttD0Np62W302/5vYNI11MGkzmXsGOu/zZ8=
+X-Gm-Gg: ASbGnctgQ8YOByvD8ePFwAbh/KCp/mY3E1Q0msdHcBviBciZDKXzdJlSG7G1qjQo1xE
+	XcIKBrxAhdDK85A2vgQlnRqz3firQZITgMjWJGzS1M8QgLf/ivTw5fz1lKTDqrjSW+aeF1tsnCF
+	LI+nPH6WHH+A==
+X-Google-Smtp-Source: AGHT+IGVJTc/wK48+Mp7fa+ncaPc0LCDqXCnS5Lmn4Mfbvl19maWhsqrBqoYqDv7kaZXeG7mSGb4A2M75a6oQ3K0NaE=
+X-Received: by 2002:ac2:4318:0:b0:542:28a9:dcac with SMTP id
+ 2adb3069b0e04-543e4c0184bmr409554e87.30.1738127941254; Tue, 28 Jan 2025
+ 21:19:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250127103644.36627-1-meetsoni3017@gmail.com>
- <20250127103644.36627-2-meetsoni3017@gmail.com> <xmqqa5bctbnx.fsf@gitster.g>
-In-Reply-To: <xmqqa5bctbnx.fsf@gitster.g>
+References: <20250127103644.36627-1-meetsoni3017@gmail.com> <xmqqikq0ruuk.fsf@gitster.g>
+In-Reply-To: <xmqqikq0ruuk.fsf@gitster.g>
 From: Meet Soni <meetsoni3017@gmail.com>
-Date: Wed, 29 Jan 2025 10:45:06 +0530
-X-Gm-Features: AWEUYZmLlv1fkORwgWpB9ZenZpL0uY8TmSXJAqJm9gO3Kd2GiToRZTjuqpsR9NU
-Message-ID: <CAPhwyn34H1NgR5k67MBKEezwTJXtCLeiUhwKQkfVGcmKu7_v5A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] refspec: relocate omit_name_by_refspec and related functions
+Date: Wed, 29 Jan 2025 10:48:50 +0530
+X-Gm-Features: AWEUYZmP3SO3daDcUa1L51ydp5ekGdx_T8sy-SwtDXeUWaTVEYIU-k_v20O6cUM
+Message-ID: <CAPhwyn3za29WwtFFJJodHXOpVRFuq8QhByE8ixjPPq9oyxfCmQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] refspec: centralize refspec-related logic
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, shubham.kanodia10@gmail.com, 
-	Pavel Rappo <pavel.rappo@gmail.com>, Jeff King <peff@peff.net>, 
-	Jacob Keller <jacob.e.keller@intel.com>, Patrick Steinhardt <ps@pks.im>, Matthew Rogers <mattr94@gmail.com>, 
-	Jacob Keller <jacob.keller@gmail.com>
+Cc: git@vger.kernel.org, shubham.kanodia10@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 27 Jan 2025 at 22:51, Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, 27 Jan 2025 at 23:40, Junio C Hamano <gitster@pobox.com> wrote:
 >
 > Meet Soni <meetsoni3017@gmail.com> writes:
 >
-> > Move the functions `omit_name_by_refspec()`, `refspec_match()`, and
-> > `match_name_with_pattern()` from `remote.c` to `refspec.c`. These
-> > functions focus on refspec matching, so placing them in `refspec.c`
-> > aligns with the separation of concerns. Keep refspec-related logic in
-> > `refspec.c` and remote-specific logic in `remote.c` for better code
-> > organization.
+> > Thank you for reviewing :)
 > >
-> > Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
-> > ---
-> > ...
-> > diff --git a/refspec.h b/refspec.h
-> > index 69d693c87d..891d50b159 100644
-> > --- a/refspec.h
-> > +++ b/refspec.h
-> > @@ -71,4 +71,17 @@ struct strvec;
-> >  void refspec_ref_prefixes(const struct refspec *rs,
-> >                         struct strvec *ref_prefixes);
+> > I've added documentation comments for various function signatures to
+> > better understand what they do.
 >
-> Back when these functions were mere local helper functions in
-> remote.c, their name being less descriptive of what they do may have
-> been OK (because readers have more context to understand them), but
-> when we make it a part of a public API, we should re-evaluate if
-> their names are good enough.
+> Before saying all that, please help those who haven't read the
+> previous round (which wasn't even v1 IIRC but RFC and may have been
+> skipped by some potential reviewers) by summarizing what this series
+> is about.  For other's convenience, here is a key excerpt from the
+> cover letter of the previous iteration:
 >
-> > +/*
-> > + * Check whether a name matches any negative refspec in rs. Returns 1 =
-if the
-> > + * name matches at least one negative refspec, and 0 otherwise.
-> > + */
-> > +int omit_name_by_refspec(const char *name, struct refspec *rs);
+>     As Patrick pointed out in [1], the logic related to refspec is curren=
+tly
+>     split across multiple headers. This patch series addresses that by
+>     relocating refspec-related logic from remote to refspec for improved
+>     cohesion.
 >
-> Imagine you found this description in the header file and are trying
-> to figure out if it helps you writing the feature you are adding to
-> Git.  Are the above description and the name of the function useful
-> enough to you?
->
-> The first question that came to my mind was "what is exactly a 'name'?"
->
-> In the context of the original, the caller iterates over a list of
-> "struct ref" and feeds the "name" member of the struct, but this
-> caller does not even have to know it is getting a part of "struct
-> ref"; it only cares about its parameter being a character string.
->
-> In that context, is "name" the best identifer you can give to this
-> parameter?  At least calling it "refname" might boost the signal the
-> name gives to the reader a bit better (and it is in line with how
-> refs.h calls these things).
->
-> Another thing to consider is if the comment describes the purpose of
-> the function well, instead of just rephrasing what its
-> implementation does.  What does it mean to return true iff there is
-> even one negative refspec that matches?  What is the conceivable use
-> a caller would want to use such a function?
->
-> As I said, calling it "omit" was probably OK in the context of the
-> original file, but it was already sloppy.  This function merely
-> provides one bit of information (i.e. "does it match any nagative
-> refspec---Yes or No?"), and it is up to its caller how to use that
-> piece of information form.
->
-> One of its callers, apply_negative_refspecs(), happens to use it to
-> filter a list of "struct ref" it received from its caller to drop
-> the refs from the list that match any negative refspec, but the
-> other existing caller does not even filter or omit anything from a
-> collection it has.
->
-> My personal preference is to do this kind of change in two separate
-> patches:
->
->  (1) as a preliminary clean-up, we rename functions and their
->      parameters in the original place; if needed, add clarifying
->      comments.
->
->  (2) move the resulting functions with the comments to their new
->      home.
->
-> If these two step conversions results in
->
-> extern int refname_matches_negative_refspec_item
->         (const char *refname, struct refspec *refspec);
->
-> I suspect that it is clear enough that there is no need for any
-> extra comment to explain what it does.
->
-Makes sense. I'll implement this in the upcoming version of this patch.
+Understood.
 
-Since I=E2=80=99ve already prepared a patch for moving the function in the =
-current
-series, I=E2=80=99ll add a commit to handle the renaming and changing comme=
-nts.
-
-> > +/*
-> > + * Checks whether a name matches a pattern and optionally generates a =
-result.
-> > + * Returns 1 if the name matches the pattern, 0 otherwise.
-> > + */
-> > +int match_name_with_pattern(const char *key, const char *name,
-> > +                                const char *value, char **result);
-> > +
+> While I was working on an unrelated issue, I noticed that there is
+> one function, "extern int valid_remote_name(const char *);" declared
+> in <refspec.h> which is only about a remote and should probably be
+> moved to <remote.h>; cleaning it up does not have to be part of this
+> series, but since you are doing a similar clean-up effort, I thought
+> you would want to be aware of it.
 >
-> As this is merely moved from an existing header, I am tempted to say
-> I'll leave it as an exercise to the readers to improve this one, as
-> improving it is outside the scope of this work.
->
-> Some hints for those who want to tackle the clean-up for extra
-> points, perhaps after the dust settles from this series.
->
-> The "pattern" in the name refers to the src side of a globbing
-> refspec and is passed in the parameter "key", so we are calling the
-> same thing in three different names, which is already triply bad.
->
-> "optionally generates a result" does not convey any meaning outside
-> the context of the original, as it does not even talk about what
-> computation is creating the result.  It does not even say what
-> controls the optionality---without reading the implementation, it is
-> likely your readers would assume passing NULL to result is all it
-> takes to skip that optional feature, but that is not the case.
->
-> If I understand correctly, here is what this one does.
->
->    It takes the source side of a globbing refspec item (e.g.
->    "refs/heads/*" in "refs/heads/*:refs/remotes/origin/*"), a
->    refname that might match the glob pattern, the destination side
->    of the refspec item (e.g. "refs/remotes/origin/*" in the same
->    example), and a pointer that points at a variable to receive the
->    result.  If the source pattern matches the given refname, apply
->    the source-to-destination mapping rule to compute the resulting
->    destination refname and store it in the result.
->
->    The destination side is optional; if you do not need to map the
->    refname to another refname, but are merely interested if the
->    refname matches the glob pattern, you can pass NULL and result
->    location is not touched.
->
->    In either case, returns true iff the source side of the globbing
->    refspec item matches the given refname.
->
-> So "name" in the function name should probably become a bit
-> narrower, like "refname".  Also the names of its parameters need to
-> be better thought out.
-
-I agree that the function and its parameters could be improved for clarity.
-Since you mentioned leaving it as an exercise for readers, I=E2=80=99m happ=
-y to
-take it up and write a follow-up patch to address these issues after
-finishing the current series, if that works.
+> Thanks.
+Thank you for pointing this out. I=E2=80=99ll be happy to write up a patch =
+after
+this series is done.
