@@ -1,133 +1,113 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0465C1E0E10
-	for <git@vger.kernel.org>; Wed, 29 Jan 2025 20:45:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC98022619
+	for <git@vger.kernel.org>; Wed, 29 Jan 2025 21:34:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738183503; cv=none; b=OttWxH2iUEgBv1hbV3DFcIP5fHGmP83RUh0namxnvmEOXyuPKvCZNE8OHvm8y4ukRPsx0rpmtH8ewb6w46lx779ZiRzWQSH5jvydFbGkYpbbDuu/BA4lIKo0IwjcnFZVP6GHKb+FaBKFVgFJiFRkRV/2YOZRMIRDQeocy7maY9o=
+	t=1738186484; cv=none; b=YXWfu7kEX6qnYrtbTTiuUZ+akhcAZMoYAdi4Rs00oLy5nZVWOMnahmAvzXrYfqsRA3W92Yg9D53IqxdBqm8BLxX/s1hCtnNJHLzLbsMNm/0/rE39FBf3v+FFHTjAPnGm830XXpql3pQRiA6zQTd70iVf1PoQgm6jrzsmK/M50rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738183503; c=relaxed/simple;
-	bh=/xmymbh/UXAhSbeAp7bIF2Vb8Y1k0i7VXFBjJgRDAAo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n1FlsWzkcbVTF34maPmy446h7bBnd2cNS++84TiYiKfDtwjL0ZtZHSEqfJrxjUrc160alSslS9So+OT8p3Qj0zI/gti0NmuiCkU/V2XnkVlj1JQs0Ic7s5ItHcFO+X+DOohuxJgGBc4CM4va/MdF3vPyeF02/AUY87S673gQZYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jzlw0Las; arc=none smtp.client-ip=209.85.210.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738186484; c=relaxed/simple;
+	bh=qHPAejgb328J3Q1Un1+RcoA2kdossf7+0RT/MTz6BjU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IMgyPR3dVo5ssbVU1oVyX9aU6LI6rps/fI9Yvs03wOrIJZnIOxIJ4BidIjE5dgPNIEmNIwACoF1OEtNw8rOICeqkwVyxpwRtZDuDFQpSY5+kmQJo0OCXcNAbigVDaeoVQrVP13BVVo1uPUThSI9EyXQK94OOxWV3v9wrgEXZzfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jRY9a7zY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p6TlbRIG; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jzlw0Las"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-71e287897ceso79030a34.0
-        for <git@vger.kernel.org>; Wed, 29 Jan 2025 12:45:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738183501; x=1738788301; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2Jbt7tcghAKyiGheDiUv7jJRvamhp4RL67UvOUTbQPs=;
-        b=Jzlw0LasqnmaKo+fzTNWMUhkN/Le5hX23o+yOvUYhDXmg1hazsEvIqJ2EYwfdxwt4m
-         usfT90ejBXaQX0XS8XeAF1ChD6CROFnh28Js2JCKiYq2RXAzJcCuWOhX+jV1AvpOPbjZ
-         e1FJAbuk9qg9LbGuT3FWL6zn38fpf3qdHBuwU0+vRr0+ejseUTJ1R6AMUYgx8sGBOYhP
-         02IJDRDNank10nGCgsv4pR0v+ZdaTMewyi5zn4Q1fcEpSKsFPSsDNuLi5eobWeu/BrNu
-         ykr550NH0aWiahPMexbl/VLANt2A0Lmwp1C1JW9vJslg0hcSBwXixl9ACqf/dxjh3W9D
-         zniA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738183501; x=1738788301;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2Jbt7tcghAKyiGheDiUv7jJRvamhp4RL67UvOUTbQPs=;
-        b=lgBSrBp4iUZeiviOT1vOsprvWzgJPBNtA6Ki06JGZr0Y3EaOMPM5TUl78SzLc69BlF
-         iHfRrpwcG611rGW5mCfXpTqUV7mHyZdd0t/lE2iOC6AnPJqtTNnwNcaZHTDXowW50Dp5
-         6PADif0YVmo37NjI8VsIEpilxOdbw1QsA/PjdiVEyT7v44OaoKC8nhpIJ8ZW3hBuYVqn
-         pNAHDjq93d7v19irpbvxttHit4AayEmXyMZF5mtQjuU/R1hXBNo+pldkyTrQB5i7cbI/
-         7wMWfbUFFx8US4l731+s6UhTwF73WTjAHaxCccwprSexYk1dSTBMlXt9vgfQXgRpxA8L
-         DFPA==
-X-Gm-Message-State: AOJu0Yxmq2fpw9BxuU5C4eVxoSO472bLZMdyuRUamZlcXIHYCxWR6sY0
-	HUTbbNr+aFoUPu1kJ2zfH4dXsBMwFCdPjmWpKhXLMWpD1+02vOfLI0gc8A==
-X-Gm-Gg: ASbGncuWxX4+D52Xer0cgVAeuK2XMtX8wJTFwAYT3lVSaFAGAaqWybjBW9/hAVERKXi
-	zJYrPcmSUr7oYYB2/UUiMkXKjQ8mBXB0e0EA7PvF4Eph54dC3q/GIMhsNZD5Dplj4YUxEc0ob2B
-	8+/hjD2E9EAWtOyTTuePTzhMoFzNYN7oTwenbS0UNQkg0xRf8SVAq9Eho+JSEmtAA3T4p9rGx6b
-	SsNmUk6DfxjibHuB5MD6Cm/Vn30lmYW9sUU4zDcxH/8IiwTJohltrmrD5ZoOM+stBRLAucy04It
-	76WRMT3v
-X-Google-Smtp-Source: AGHT+IHS2q5KuUX0dF93CseKooqoDcirpL2yQUhGZdLYOzNKo8fDuoRTPV7fCJ+uXZo/ixg8g5nXFA==
-X-Received: by 2002:a05:6830:2901:b0:724:921b:5b03 with SMTP id 46e09a7af769-72656785110mr2443940a34.14.1738183500920;
-        Wed, 29 Jan 2025 12:45:00 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2b35610846csm12398fac.4.2025.01.29.12.45.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jan 2025 12:45:00 -0800 (PST)
-Date: Wed, 29 Jan 2025 14:42:07 -0600
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jRY9a7zY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p6TlbRIG"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B6ADF2540168;
+	Wed, 29 Jan 2025 16:34:41 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 29 Jan 2025 16:34:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738186481; x=1738272881; bh=0AT9Pd9X71
+	ANoqIKqKqXZhyyX4YiGJg295nRQqKSqqQ=; b=jRY9a7zYSJzTO4pJB5/OU9yTXq
+	PzP2LaqQmmFBsZ30HjyoCtLYFfk2ykz6ypeuSii2bI2bJUAR71YmqzoT4J49mfut
+	nDtKYcqHpEV7wNjOLM0efraLWjy/xPBvDF5YBeA2cZymqD1djK0HN5Yya5JTbFRZ
+	nBuoWPEz/7Q3oR+0wN2hOfqCVteSH4blat5q3ZErRwl2H3OylzROsbGwXTfBw86E
+	M5jPvG14Fi+VigQz+j2F+Hc+/XMaMjITxoomkLMwfvhpu8bfLMznnYvNI+XX00iZ
+	SpZ1XhuAMlP0B8DuFHRjbnyLWBw+oz/S9bbAmNfpnD0ujApPQ84vzAfRNzlA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738186481; x=1738272881; bh=0AT9Pd9X71ANoqIKqKqXZhyyX4YiGJg295n
+	RQqKSqqQ=; b=p6TlbRIGXK8y8eOx24MpkTWc8RpkJ3LbpuOkIFsKbaJWv7blHBw
+	OnvW1dtMy7FMAvwWp41dxWXk7RGWAdE7Fq00gzl41kCXQcw7r8R8Zi1T5WByHAol
+	xYLiRVnDIb7CTrPh1aRSiYZO8hG88Wy+wDjR1ePmZyirHKkWm0A3Dw7OU0b5iKnx
+	cl58PmDLyLsbgpWxzikKptd7gNEbBfURL7QZSQgKnyjhGOgIgdEJJ0anyAUEs+hI
+	D+CY72dPPY1/pGwZQvf2LQQm2Z/3GS0sIxuTvDC41atBZFNp8aGdW+nymCnJ4Gzq
+	4Rnw1MDlp8ElSJzXiC9ir16r4eZAarpfipw==
+X-ME-Sender: <xms:8Z6aZy0XsRz1aEm0UjjkHv1yDtTBBNuhnkEiiN5a4clsoXPsz82nmw>
+    <xme:8Z6aZ1Foq_2j-8G2JGBgnLdvouVEk8zsVocy3XLmG90UdXk4zQt6mVwa6oR6khLO8
+    N-hz4o16YEHi3t8GQ>
+X-ME-Received: <xmr:8Z6aZ66IwGFoyrL9DYEvN7NzfT0it6CIFjpv_08_N4ECBC7Qgeezw2WFCp_smna0UElUF_tof0Ty8oGsJ7kwmjT0IHky_1etSuUE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegtdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:8Z6aZz3yEcOw_0wJxU8yiNe122DPdIXovjNORv5fUVq31ju2zBG5EA>
+    <xmx:8Z6aZ1G2xqAcQHo3bTvZametWAX52Q_bdrDleWKDSjAGcg9TRH5I3Q>
+    <xmx:8Z6aZ88C-80fA3krifmIddSU7X0AWczF7YBsyijmyXjKOIT1JAEz3w>
+    <xmx:8Z6aZ6m918PWIdmjzL0ouzZlS6nurSbBk_6NTxyFro4S1DGen_UIPQ>
+    <xmx:8Z6aZ1BTrVJxabbPRla93cDJjLr6MsPnsf84WgFU0pqRxz_nXcppqsih>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 29 Jan 2025 16:34:40 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 08/11] meson: simplify setup of PATH environment variable
-Message-ID: <ujdktdisdk56ow3f2uudfgyh4lkya372wennuh7xsurbmylkgx@gh6p3l5hx3nf>
-References: <20250129-b4-pks-meson-improvements-v1-0-ab709f0be12c@pks.im>
- <20250129-b4-pks-meson-improvements-v1-8-ab709f0be12c@pks.im>
+Subject: Re: What's cooking in git.git (Jan 2025, #08; Tue, 28)
+In-Reply-To: <xmqqr04lk98n.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	29 Jan 2025 06:03:36 -0800")
+References: <xmqqlduulbgn.fsf@gitster.g> <Z5nfcAUZPNdDSI0l@pks.im>
+	<xmqqr04lk98n.fsf@gitster.g>
+Date: Wed, 29 Jan 2025 13:34:39 -0800
+Message-ID: <xmqq1pwli9sg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250129-b4-pks-meson-improvements-v1-8-ab709f0be12c@pks.im>
+Content-Type: text/plain
 
-On 25/01/29 08:12AM, Patrick Steinhardt wrote:
-> We're setting up the PATH environment variable such that a set of
-> necessary build tools can be found at build time. Make this step a bit
-> less repetitive by only looping through the set of found programs once.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  meson.build | 17 ++++++++---------
->  1 file changed, 8 insertions(+), 9 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 48eb068fd8..e3829f2365 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -181,22 +181,21 @@ if host_machine.system() == 'windows'
->    program_path += [ 'C:/Program Files/Git/bin', 'C:/Program Files/Git/usr/bin' ]
->  endif
->  
-> +cat = find_program('cat', dirs: program_path)
->  cygpath = find_program('cygpath', dirs: program_path, required: false)
->  diff = find_program('diff', dirs: program_path)
-> +git = find_program('git', dirs: program_path, required: false)
-> +grep = find_program('grep', dirs: program_path)
-> +sed = find_program('sed', dirs: program_path)
->  shell = find_program('sh', dirs: program_path)
->  tar = find_program('tar', dirs: program_path)
+Junio C Hamano <gitster@pobox.com> writes:
 
-At first I was curious to why we wouldn't just invoke `find_program()`
-during the loop as well, but some of these programs are not required and
-marked as such here.
+> Patrick Steinhardt <ps@pks.im> writes:
+>
+>> On Tue, Jan 28, 2025 at 04:18:00PM -0800, Junio C Hamano wrote:
+>>> * ps/ci-misc-updates (2025-01-10) 10 commits
+>>> ...
+>>> 
+>>>  CI updates (containerization, dropping stale ones, etc.).
+>>> 
+>>>  Will merge to 'master'.
+>>>  source: <20250110-b4-pks-ci-fixes-v4-0-6e4613446080@pks.im>
+>>
+>> I'm a bit confused about the state of this topic. You say it will be
+>> merged to 'master', but as far as I can see it's not even part of 'next'
+>> yet.
+>
+> I am utterly confused---I'll figure out what happened here.
 
->  script_environment = environment()
-> -foreach tool : ['cat', 'grep', 'sed']
-> -  program = find_program(tool, dirs: program_path)
-> -  script_environment.prepend('PATH', fs.parent(program.full_path()))
-> +foreach program : [cat, cygpath, diff, git, grep, sed, shell, tar]
-> +  if program.found()
-> +    script_environment.prepend('PATH', fs.parent(program.full_path()))
-> +  endif
+This turns out to be a simple typo where I meant to say "next" and
+typed "master".  I was worried about something worse, like
+accicentally removing one entry that was ready to be merged to
+'master' that happened to be listed immediately after this one.
 
-It looks like cygpath, diff, shell, and tar were previously not being
-appended to the path environment. With this change now they are.
-
->  endforeach
-> -
-> -git = find_program('git', dirs: program_path, required: false)
-> -if git.found()
-> -  script_environment.prepend('PATH', fs.parent(git.full_path()))
-> -endif
-> -
->  if get_option('sane_tool_path') != ''
->    script_environment.prepend('PATH', get_option('sane_tool_path'))
->  endif
-> 
-> -- 
-> 2.48.1.362.g079036d154.dirty
-> 
-> 
+Thanks for noticing.
