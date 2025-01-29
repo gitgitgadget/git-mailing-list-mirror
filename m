@@ -1,87 +1,81 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3A6DDCD
-	for <git@vger.kernel.org>; Wed, 29 Jan 2025 23:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327FD1A2398
+	for <git@vger.kernel.org>; Wed, 29 Jan 2025 23:48:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738193814; cv=none; b=fzfW/NLZt6h6vMoB6vzUlM5aExsCRnTAQPojw+2XQU8W5WmgnqR7Hc4IKKVFJGDnmbECfPDkf0WoU0BRfre6uTn9iCM8PjSiYNJHujRBY0fCX+0TKiMZ03jfuWSYo9YIcshxpzOQzPUY4YzneU//1MhrvWjETPWGxN0PdUf3dAM=
+	t=1738194532; cv=none; b=fZv8YIlFFjuDGSNQwzYZOQXA331znTta4jbMIvcawlti/zbRrlhzMuBcAV2AkzYie44NzJK5IC2RJYxhh+ZFxK3HGGiW6GVnmtGfZg84lVO7IKOs3a7ctKE+j+opp8DPbgaHL2K4qFSk+rpWjaK3c6Wqu/+4emjDpYlvTfKRK+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738193814; c=relaxed/simple;
-	bh=meAuQ+cES4rLkYdJLGY75cfZtO9sjs2olUGQld+dcXs=;
+	s=arc-20240116; t=1738194532; c=relaxed/simple;
+	bh=6xgq03FCbVoaVwazT1xpm+pb1wHjpFCEELAzjnXMW6s=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FSKDGS431RbAs6zt7HIZyimAtVilQ/NUkxqQkLFoKDjZWTgmebB0T4C6CU70OIG5mV3gI2jyCFuEsJvF/Hss7qZ8FdJ5RNAGcWh+sC/XGjqZm2zDdl+L851L81EIZv8oo0tFKAF1YjqWVmJ5UlQAi+hP5+B+W2GJOgJ7c8Jfh98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eQeLvNya; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jKLw2kmO; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=dJTgiEbeGzjfZySUO4bUhVba2TBZiD09Ty79AS2w8PrCNu9TOZa/wULHbHCSCMpdaksfPeB3nbPpV7SU4wiF299Ct4pfqOGz4TZIKOmyKkc1Kwh24/hNt5HmBHa4lgc4PpLn6RfyIzKQTPRwVdIlwtPGJnvWJNDXtKze1hr2ypg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IetMUBpZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VbEm5/vS; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eQeLvNya";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jKLw2kmO"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IetMUBpZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VbEm5/vS"
 Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 97664114019F;
-	Wed, 29 Jan 2025 18:36:50 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id 38ACA114014E;
+	Wed, 29 Jan 2025 18:48:50 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 29 Jan 2025 18:36:50 -0500
+  by phl-compute-12.internal (MEProxy); Wed, 29 Jan 2025 18:48:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738193810; x=1738280210; bh=l4bJ3hHyCi
-	Y9htiwYLM7a+GgytwKXZIzmCzE8ZJNwLI=; b=eQeLvNya17SgH0wFfWpT4InRF3
-	40U/VOcdzg7fsNZ8iYkv/ritZirs4HLTdqYwye9mlZaQOy6w0di5CywayX91XZQG
-	bvqUAVzhXW0qbJ1o5GLYhdzQ64byf/NBWyVjqFjwuw09zjkLY+xyeOvi4aHs+j3h
-	Iofi0e0EMH56oaN3cyJYmvp2w2hQKG3GEbk/5LRiJzdtYUfwWfg3o8wFJgGKWOOs
-	4sz8jjBWQlUN8QATndK0LG63IzhFQPzogyNfOl2us2KLI1/YlbJP2L4FfP7kU3mT
-	Mt5hCHBoAT6BX4qxs/9E3ZXMTUQr1mVsa25Y5vzWC+BsYg6U5xbZR6lhXHvg==
+	:subject:to:to; s=fm2; t=1738194530; x=1738280930; bh=eLhNu5Ffv8
+	HiUwwF2XP0ket4bPsq23sx4Xuo1hUzhoo=; b=IetMUBpZCq5JyowNZTz7fkCqCT
+	D4b8V+ijLQQe0x5e9arhyO9D+/RgmmvvMB5u+qe2k/lfD0U39k9wwNkJMwY2LYw7
+	DLrSe1gusUWfl5ioE4KQpLQ3gc6siZJWf1QRKIz1iMtRCnw1CPgOE8qVN/S3C+/N
+	Tcojqq/rNbqNKRzz/m1Vr0XlWP+Yl+QWCzLlYRqI2tOfhF87mqu+32okHfa4SdwW
+	57AhM0Mq2R2z471OBxtaFVWCtY3+nSxPSOCUPEBkPddyWvFEww1Ng2PTV0Fc1KBo
+	fhXFRE7yyxe23Nk9xtoe4SEL4h5iEGnsKz5qmcbop9OTb48D0Ayplp1CLNdQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738193810; x=1738280210; bh=l4bJ3hHyCiY9htiwYLM7a+GgytwKXZIzmCz
-	E8ZJNwLI=; b=jKLw2kmOggz8e3ve7OY6wOj0qKeYqWcUluAak65tWFae8Avp7QE
-	I59MqgZGK2aolxsyvAh3qb+sgmgMV71a3iogiYVXNO7yRJRXl43c4Ni4ClUkaoAz
-	9B7QOIsxib24Gpf3cQHNawGocydkKD56j3/G1RZtuIXbmXPgWCd3+6Ef7LC+TRqe
-	avOytBHZCqH4d5oJ9bBs9G/xRjaswopz9x23k10UTAFHH1O4mC3+iU43oQ9Ghgsd
-	DPFcJa1rOqXmpp7jxIGfC3J2tWCPrusx+/K48b7RBFJtmMG+kdzHOFiUeTOkVbqX
-	d7X3SoVIEWydrs7AiFbErGi2kheFS34mFew==
-X-ME-Sender: <xms:kruaZ8a_bzoVYkUS3fFrRgq3AYyawYdZca0cqhUo6nToZog1BxwVHA>
-    <xme:kruaZ3anXg7J6MRubTMG_M2Id8ENRXHvXXzFrLTVmZ6Jm139EjfxZNtaoO41-cXsh
-    onDy08FEz9SDoeWvA>
-X-ME-Received: <xmr:kruaZ2-p6dT1l7IjrzjzKN_kup30xlDllzRxkoCvZA8VckVHegc4u4fxZxhNUeGUk1zFW7DQSGSTwSx7CMA2nvplnBl1VVKKpsM7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegvdduucetufdoteggodetrfdotf
+	1738194530; x=1738280930; bh=eLhNu5Ffv8HiUwwF2XP0ket4bPsq23sx4Xu
+	o1hUzhoo=; b=VbEm5/vSvQqekagdc6qNfgJRIlghzGSi2RSeE1Jec4vU/cAY6i2
+	hqg+pmc0ANrxqhYLIev/pZ6soDImIU7qisFwvstQhOnmK0tCuZEpMza89Emuv12/
+	uXOc0xIMjBLxo80LlppQc6kCNGmKEtvy//gXZJMH4RX0wMRLcTfpN1AxYvrBCmd3
+	ipl4XlE1GuEhpvRUz4hiccBqH+xaAAFkjb55113BC4ys2W5Dfe9UySJn6xLP3hmh
+	PryjaCc6PHhEnr6erqlEdjcQdlmQVvMpWQHjKYK/XVxkBXBZEMcYiceUQVyHW7n7
+	9V4Nheuk06KoyVjUuE2va3jfx/UqpKgl4GQ==
+X-ME-Sender: <xms:Yb6aZyc5xt-E3GE_NjbbG-Zjora-2hbYa-KIRm9OmOtSVQOvJtQXpg>
+    <xme:Yb6aZ8N7qSixl_bkQDjYcWQ68Fcxl7iPWJwpAioijvdlePOfFn-qdY3puXthxZsUa
+    Fb9U7eAK_7ZPIWWVA>
+X-ME-Received: <xmr:Yb6aZzg8f74X1MXe96e8b8lX8fo875-5IMJ4kvg_2GGIUbzet24JcoUyBtLXm_pfVHOwHMWP-cBLPCOKuOQ0Y_hwP5_D-TpT_qWx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegvdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeive
-    ffhefgvedugeejkedtheevfeeigeehuefguddtjeeliedtffetgfejjeejhfenucffohhm
-    rghinhepghhithdqshgtmhdrtghomhdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:kruaZ2pK7k7jMYgnHENkoqfq49porhrTZI2BO1V0MNyuRGgHYbOpvA>
-    <xmx:kruaZ3qvTHQfoJpc0SUhRQ_IIwUNp1Z1QYB4eBEJp_VFMgTip42Utg>
-    <xmx:kruaZ0TvrHuyF7FYJL6a54chyQBSC-1XMEvDFgOTEzJuhRWCJEKxXA>
-    <xmx:kruaZ3qJ5gT2pzs6kt6AdWU42LWE4grbjZJL9-D3r_C3bQEKWBSRpg>
-    <xmx:kruaZ2V5YhC_9YFcGrEZ3JswIVYu1wmMOHIFXvRPo4-0LhSDDXVAGbi9>
-Feedback-ID: if26b431b:Fastmail
+    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehjuhhnihhosehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefgjeehje
+    ekhedvvdfgtefhuddvtddtfeelieffkeelieetieffffeuleejudektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhunhhiohesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:Yb6aZ_9fysT5jl5NFLjXHpAQ5Ql-u1aOfGf-s4FtQwvr-CaTA9o9nA>
+    <xmx:Yb6aZ-u9wXmBm1MSgqQ9bDNJJR7De8EgH-c65i7AQL-m3EsTvKLRBg>
+    <xmx:Yb6aZ2GbqUevYlrhdcIOvoyUS-Wn-rGBFhERdlEU6tEE471kaL_4cw>
+    <xmx:Yb6aZ9Pf2bL10gJQaZ2JeSWbhYOmlfLYMitmXSl4S84hRFinrnZYAA>
+    <xmx:Yr6aZyKsCy4WGG0mTFxiQUekIpcmaPt7gsVxT7xfEAfP-iWOZMHsUR4z>
+Feedback-ID: i1ffb436d:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Jan 2025 18:36:49 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
+ 29 Jan 2025 18:48:49 -0500 (EST)
+From: Junio C Hamano <junio@pobox.com>
 To: <rsbecker@nexbridge.com>
 Cc: <git@vger.kernel.org>
 Subject: Re: [BUG] PREFIX environment variable ignored by git config --system
-In-Reply-To: <009c01db728d$164a60d0$42df2270$@nexbridge.com>
-	(rsbecker@nexbridge.com's message of "Wed, 29 Jan 2025 15:33:36
-	-0500")
+In-Reply-To: Junio C. Hamano's message of "(unknown date)"
 References: <007f01db726b$ac911ce0$05b356a0$@nexbridge.com>
 	<xmqqbjvpk1wo.fsf@gitster.g>
-	<008201db726f$6e6990b0$4b3cb210$@nexbridge.com>
-	<xmqq5xlxidh6.fsf@gitster.g>
-	<009c01db728d$164a60d0$42df2270$@nexbridge.com>
-Date: Wed, 29 Jan 2025 15:36:48 -0800
-Message-ID: <xmqqwmedgpkf.fsf@gitster.g>
+Date: Wed, 29 Jan 2025 15:48:48 -0800
+Message-ID: <xmqqsep1gp0f.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,37 +85,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-<rsbecker@nexbridge.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On January 29, 2025 3:15 PM, Junio C Hamano wrote:
->><rsbecker@nexbridge.com> writes:
->>
->>> The documentation on the Environment Configuration page seems to imply
->>> that
->>
->>Sorry, I am totally lost.  Whose documentation on what software are you
-> referring
->>to?
->>
->>  $ git grep -i -e 'environment configuration'
->>
->>comes back empty.
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> It is here:
-> https://git-scm.com/book/ms/v2/Git-Internals-Environment-Variables
-
-It is news to me ;-).
-
-    $ git grep '[^_]PREFIX[^_]'
-
-does not have any hits in the source, so I do not see how we _could_
-be paying any attention to such a thing.
-
-The description seems to originate at
-
-  https://github.com/progit2-ms/progit2/commit/c24f22d6a6b0572f5756afd64f0c2e9fa6f804fa
-
-that was more than 10 years old.  I do not know how reliable the
-description there is.
-
-
+>> <rsbecker@nexbridge.com> writes:
+>>
+>>> Thank you for filling out a Git bug report!
+>>>
+>>> Please answer the following questions to help us understand your issue.
+>>>
+>>> What did you do before the bug happened? (Steps to reproduce your issue)
+>>> export PREFIX=/home/randall
+>>> git config --system --list
+>>>
+>>> What did you expect to happen? (Expected behavior)
+>>> Git should use ${PREFIX}/etc/gitconfig instead of the build location to
+>>
+>> But that is now how PREFIX works, as far as I remember.  PREFIX is a
+>> build-time thing.
+>
+> Sorry, I misspoke.
+>
+> I was talking about $(prefix) Makefile macro, that is all lowercase.
