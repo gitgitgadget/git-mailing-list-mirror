@@ -1,79 +1,79 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3A519C543
-	for <git@vger.kernel.org>; Wed, 29 Jan 2025 07:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B19199239
+	for <git@vger.kernel.org>; Wed, 29 Jan 2025 07:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738134734; cv=none; b=TJRF//XRCTAiCW/WtlFNN8CuG1OiBXUtlWgTicaCs11bK7cIXm6swE4jOFSEbkJ6v5sZWNqNsXuzyTyH3rey/rD7H563LkS8O1P/9JTge8BVIK9aA3WuWcJB9/K2oawO7rL5DVCRNRiLMtCykd0sO0Iw5Ad9fyEEhcO6QYVQwtc=
+	t=1738134734; cv=none; b=CuURCNwLs2eLnJ3/6iAWxEJTwlaF5T0v8Hl80rVFhmUHXX0d3tlGiCiU0VOcZMr5VhlGfm4GaZVJzvcnGzcZZxIUMQ2jLdLSYHH6BdVX+3nYeWFJbUyoDZdp5WSRf4KYvhYN8DQd/oIZuqxGP1GmnxDyZbPgQNZD9X473Qa9+Fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1738134734; c=relaxed/simple;
-	bh=BrxBjTLPzkGFIyJSC672QcWajo/q7kuw7dmBNePl/mI=;
+	bh=gfmq9Bz/iI14EXSQeArFjuJMH63Mfimla+0Gfd1d5H0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ROAAMoe70AeqfaXhpV2RI6MQbK5jDk46t/AWKHJ35OXN53CietchSzktZaGx0688XwMqGKdqw8EXZf9/BMmfJQ0Xbj230E6EN9IZ+Ne+EI/Fajkpwp6sMzm4g6OcfnG9iKbfqkOG8cxPRdXn4kdP2da7BlK1Ogzhwj0UzTJ0zfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ux2unMfR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CMfdfYFg; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=rz7sLy5CxFBC8VMlsuVOgqvlrYa/KfzCwx8SSwXKZ2rTZnVZVvT+CHPvMBkkr90oEoSAPYxe/x+L3ql8QEJpRc8Uq2/aAgNyNvVdsKT1vcKH8lVGWQpybyFwpodV3HQWDVR/GU4XWhEtms8ywYhXEIcOK5wxoMKuTuti4hnP+/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YE/1e1Hv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zQeKgTl2; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ux2unMfR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CMfdfYFg"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B598E1140109
-	for <git@vger.kernel.org>; Wed, 29 Jan 2025 02:12:11 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Wed, 29 Jan 2025 02:12:11 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YE/1e1Hv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zQeKgTl2"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6419F1140105
+	for <git@vger.kernel.org>; Wed, 29 Jan 2025 02:12:09 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Wed, 29 Jan 2025 02:12:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738134731;
-	 x=1738221131; bh=kuhCG1nvNWYsHBYL2GwZaed2ri+bQg3c+cVuu4LJlG0=; b=
-	Ux2unMfRL2WhPIvpm3GH1nT/FvkTgY3EwBNi3pKL5kEs/v0bjyVfxnLruQRZDi/P
-	Xpngi99TLM1r5Wiu05UYzh6vO4ijPb8u1Vi7IQhTr/Lwitrry47gagFjACLHCqpg
-	UxBzrNV3imouV23QKoOmU/dBe9LWggzLrOuLCxEmeGyGpuMRCf9KA9qUCAka+1Fp
-	MjW+IduFHS6CnyeFGOaxu41UotpdpqfloNwvVoW8aB84r+rs9P5wqJ2r9/nH3wHT
-	VZX42iTEU9qFdovZjelD86wtJb4CPZmgTu99nLpPPINMSLd2PFaYthlmGX+TgI6d
-	d06Q6u2kPY96U0qTeB043g==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738134729;
+	 x=1738221129; bh=+1iINIM4+lNJxj+3XBXnklPr4m4zzCV7g0cZRRd9kJA=; b=
+	YE/1e1Hvz3n6L3vGXY0k30R/cKq2wZaSILQyxx7zGbLCRSOZyrpMZZUgMA+NH242
+	r9EmhZCNsEwH02nR3hs8p7UADgESaYYNx3xDggusY7XUnxlSCceSrvwZdSAYyO25
+	rGoUQkC8sFfm0b/XLmV2WIYdm1azy/S/yvkgGy0KtlmnLHkRKSMZoQHF0ApLf455
+	yAxG7WIqh40GIkODkC70uVSRt9WBghvFmjSfOYlj5QiCp0ELfMq6JPj/PpPjhE98
+	ZlwZCyKFGVvlNkZ2xZWF6QkbKEzTBGQDAb4Yh4gEn9/MZl1m/h5Mo3IgB3GuTJyH
+	W+nQSEnFwlycCz74bTf67A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738134731; x=
-	1738221131; bh=kuhCG1nvNWYsHBYL2GwZaed2ri+bQg3c+cVuu4LJlG0=; b=C
-	MfdfYFggltk8x69uW9UG0O1JT4aJiVwcG0o5VtjpVdUlKcDs8VMFyPag0cuUSzJJ
-	J+K8Ggv0a7pEmaXt+AZGap0rGfCL1sgAjbWGtp0oeQSEvKlZXdIQYzud2OtxXnum
-	V6zhxxXQif5npwetCZCAMH2ZpZcSECwVpBsEXs57zJrVOJcc6jGqpTodUk3Ckow9
-	PF8bb2yoHz31uw7kRX91K7ak3ba1P+B+Q+waU5XXuIki8+VLv4uUIopMkzfXeS+e
-	PAvveQaW9U2i3k0ktG2ypTi8ELCxcRJWpUBGL4S99fmG3eLeq/rJlXBq88vjCAPI
-	zKeYe/bqJ/QaEPsModm5Q==
-X-ME-Sender: <xms:y9SZZz6GN-da3q2736NEj6E6IjWBe3KVD-5umMSwj6t4kMtFrC6Vxw>
-    <xme:y9SZZ474XSI0F-EnYz_4TfZKjjh8cZbK-tVllFQpdl9JEgHCODG-rHGf9HNC5fSfY
-    a8nwCuaRPdX6ZVRfA>
-X-ME-Received: <xmr:y9SZZ6fAmk2atwHE29juYA0F-A05ZwNMfXL4tP-SrxaIChOUt1fENJoPjiyffnwGCmaLeRHgG9TGVrZ1dEcI-yEgmvlpgjGVnGaiqNpoGRCxYxGH6g>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738134729; x=
+	1738221129; bh=+1iINIM4+lNJxj+3XBXnklPr4m4zzCV7g0cZRRd9kJA=; b=z
+	QeKgTl2xEvVwRMffXCJMz/VBG4FrYP9rRuK0kQJ2j8O66H4ZXAvskFkmqqbaP0ux
+	ndF1BO/3LXmUcH7WTkbT46RlceSv4PK48InUd0mN9B7ixAl8dFJxnrr1gSKwmOuW
+	ooEnDa0UTeps0EyqdnG35jEmHJ1gh42VjCjVm+rmlI9bxEOTNAgBtdwrBdViRB8z
+	TWgwag5ScYPDnz5ktVPgk/nqu3MupQThDyYHDj2C7lBso1fjsrdFfh/+8arAcGgd
+	5QlhrVQJZOGjzJaONNijFtibX2ghzfswec0VWfrUJVgeOgphBaBfqBoeGqzOLkAO
+	LX7ZpSpmFakI/mexLtW9Q==
+X-ME-Sender: <xms:ydSZZ-0LlQ_MB2d-RHc13mMGYa8RHJHuryO3TlXcJt1T48WZzSiibw>
+    <xme:ydSZZxEen1cZGxVg6V6WSloyo9BXTGS08JE5YlLsjQ4MXBK4-zxN262gU1lPPIX4l
+    rgeYPH2Jg0lr1O0sQ>
+X-ME-Received: <xmr:ydSZZ25rz7D_dcu3KXE9P81ae3Dr9_tK_iG5c_38YHv7nb8WZgC0UrZBwCtOfvNs6EKhn7AQNUvzCeqd9qADHy4oS7O4gXm8lvjO3TSyQgR7QevLLw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvfeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
     gtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
     nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
     dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
-    rhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
     gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
     vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:y9SZZ0J90cSZusFSW-ccRRA-4f0BGJACH33k8yZHGepEHS42bx74tw>
-    <xmx:y9SZZ3Jl1_SztCLGSQhdFT4DbKjbQsogqeZ1AhhNZC42a4KeIW90ZQ>
-    <xmx:y9SZZ9w52abIA0VPVdKwYrvrBMa8UvKsXgnkOW1iagM4TR_3ssaBXg>
-    <xmx:y9SZZzLc5sXrbvFENiABQ3bD6OSPvmToGlB4HjAl0zkz5MSFMOV9_g>
-    <xmx:y9SZZ9gurq_ct_iqlvndHuEGUFqoL1jqNC6GBvpsuV0q-o82GiP9J9wu>
+X-ME-Proxy: <xmx:ydSZZ_39IFWpZoBIZr7RX8jl_iWOnoi_dBgEtYyRjgoxj-MIuohi-g>
+    <xmx:ydSZZxE3vaoNquvBan4u5PnyQpbBLQ_FDoRqpXKC4SPJ6A6N_EGfew>
+    <xmx:ydSZZ49UnLSWWrwT82DpXONDlt7F8zFGXgGDLMyAXx6-uslrgiCEDw>
+    <xmx:ydSZZ2kM-sJanHF_77dJQsgmAtySrFn3oVZcaLhK5f2gGn8HUOdguQ>
+    <xmx:ydSZZ_Pr6Gq1eUK7pACeimwLbX-Hc9t4QlLS99eejpxxcNdiXFY4NdW7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 29 Jan 2025 02:12:11 -0500 (EST)
+ <git@vger.kernel.org>; Wed, 29 Jan 2025 02:12:08 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6f118c72 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7ccdbbaf (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 29 Jan 2025 07:12:10 +0000 (UTC)
+	Wed, 29 Jan 2025 07:12:07 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 29 Jan 2025 08:12:01 +0100
-Subject: [PATCH 08/11] meson: simplify setup of PATH environment variable
+Date: Wed, 29 Jan 2025 08:11:58 +0100
+Subject: [PATCH 05/11] meson: introduce `libgit_curl` dependency
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,57 +82,102 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250129-b4-pks-meson-improvements-v1-8-ab709f0be12c@pks.im>
+Message-Id: <20250129-b4-pks-meson-improvements-v1-5-ab709f0be12c@pks.im>
 References: <20250129-b4-pks-meson-improvements-v1-0-ab709f0be12c@pks.im>
 In-Reply-To: <20250129-b4-pks-meson-improvements-v1-0-ab709f0be12c@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-We're setting up the PATH environment variable such that a set of
-necessary build tools can be found at build time. Make this step a bit
-less repetitive by only looping through the set of found programs once.
+We've got a set of common source files that we use for those executables
+that link against libcurl. The setup is somewhat repetitive though.
+Simplify it by declaring a `libgit_curl` dependency that bundles all of
+it together.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- meson.build | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ meson.build | 41 ++++++++++++++++++-----------------------
+ 1 file changed, 18 insertions(+), 23 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index 48eb068fd8..e3829f2365 100644
+index 6f62728117..e022235815 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -181,22 +181,21 @@ if host_machine.system() == 'windows'
-   program_path += [ 'C:/Program Files/Git/bin', 'C:/Program Files/Git/usr/bin' ]
+@@ -1623,30 +1623,32 @@ bin_wrappers += executable('scalar',
+ )
+ 
+ if get_option('curl').enabled()
+-  curl_sources = [
+-    'http.c',
+-    'http-walker.c',
+-  ]
+-
+-  git_remote_http = executable('git-remote-http',
+-    sources: curl_sources + 'remote-curl.c',
++  libgit_curl = declare_dependency(
++    sources: [
++      'http.c',
++      'http-walker.c',
++    ],
+     dependencies: [libgit_commonmain, curl],
++  )
++
++  test_dependencies += executable('git-remote-http',
++    sources: 'remote-curl.c',
++    dependencies: libgit_curl,
+     install: true,
+     install_dir: get_option('libexecdir') / 'git-core',
+   )
+-  test_dependencies += git_remote_http
+ 
+   test_dependencies += executable('git-http-fetch',
+-    sources: curl_sources + 'http-fetch.c',
+-    dependencies: [libgit_commonmain, curl],
++    sources: 'http-fetch.c',
++    dependencies: libgit_curl,
+     install: true,
+     install_dir: get_option('libexecdir') / 'git-core',
+   )
+ 
+   if expat.found()
+     test_dependencies += executable('git-http-push',
+-      sources: curl_sources + 'http-push.c',
+-      dependencies: [libgit_commonmain, curl],
++      sources: 'http-push.c',
++      dependencies: libgit_curl,
+       install: true,
+       install_dir: get_option('libexecdir') / 'git-core',
+     )
+@@ -1654,8 +1656,8 @@ if get_option('curl').enabled()
+ 
+   foreach alias : [ 'git-remote-https', 'git-remote-ftp', 'git-remote-ftps' ]
+     test_dependencies += executable(alias,
+-      objects: git_remote_http.extract_all_objects(recursive: false),
+-      dependencies: [libgit, curl],
++      sources: 'remote-curl.c',
++      dependencies: libgit_curl,
+     )
+ 
+     install_symlink(alias + executable_suffix,
+@@ -1665,16 +1667,9 @@ if get_option('curl').enabled()
+   endforeach
  endif
  
-+cat = find_program('cat', dirs: program_path)
- cygpath = find_program('cygpath', dirs: program_path, required: false)
- diff = find_program('diff', dirs: program_path)
-+git = find_program('git', dirs: program_path, required: false)
-+grep = find_program('grep', dirs: program_path)
-+sed = find_program('sed', dirs: program_path)
- shell = find_program('sh', dirs: program_path)
- tar = find_program('tar', dirs: program_path)
- 
- script_environment = environment()
--foreach tool : ['cat', 'grep', 'sed']
--  program = find_program(tool, dirs: program_path)
--  script_environment.prepend('PATH', fs.parent(program.full_path()))
-+foreach program : [cat, cygpath, diff, git, grep, sed, shell, tar]
-+  if program.found()
-+    script_environment.prepend('PATH', fs.parent(program.full_path()))
-+  endif
- endforeach
--
--git = find_program('git', dirs: program_path, required: false)
--if git.found()
--  script_environment.prepend('PATH', fs.parent(git.full_path()))
+-imap_send_sources = ['imap-send.c']
+-imap_send_dependencies = [libgit_commonmain]
+-if use_curl_for_imap_send
+-  imap_send_sources += curl_sources
+-  imap_send_dependencies += curl
 -endif
 -
- if get_option('sane_tool_path') != ''
-   script_environment.prepend('PATH', get_option('sane_tool_path'))
- endif
+ test_dependencies += executable('git-imap-send',
+-  sources: imap_send_sources,
+-  dependencies: imap_send_dependencies,
++  sources: 'imap-send.c',
++  dependencies: use_curl_for_imap_send ? [libgit_curl] : [libgit_commonmain],
+   install: true,
+   install_dir: get_option('libexecdir') / 'git-core',
+ )
 
 -- 
 2.48.1.362.g079036d154.dirty
