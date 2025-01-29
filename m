@@ -1,123 +1,98 @@
-Received: from ext7.scm.com (ext7.scm.com [49.12.148.225])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63A51B0F18
-	for <git@vger.kernel.org>; Wed, 29 Jan 2025 10:11:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.148.225
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A98192D63
+	for <git@vger.kernel.org>; Wed, 29 Jan 2025 10:49:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738145520; cv=none; b=PA4aK0OTJaTxgok9xjEsmkMXxj1bLUSFV1DQML0pIyJk0sAesibOur110terqrRD8XbIBsqT87CDaaSjpdp24iNdeKV46v1QgaqADXyKfhxh4OvIKxU8kX5BmMbgvcmR8qOkb02wyLRJEAa7Aqv7E3+yeF8Was1DIwvG2QryWFw=
+	t=1738147770; cv=none; b=Pp8ojE/nCdwNxPbG+BXlCaIYd7rdBZyAGJ6zeLbuqNFI57njaz2kLurEHZACLe71Q2jqVqPP2WxeIsnlk4PWW6NW9CTUjU/gku477R0yuCLF8cHArUn0MUh4RV1g7N5A0tuIw8HpqHAKv1iDuOx2u6cBEA7TuYZqAUUi1xQghwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738145520; c=relaxed/simple;
-	bh=I07B8LFviU4lBLRpe02HnAAtVvxcaieYpICnSmDv10A=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=bv59UvFyT6oqLIXOub5nY/Qb+Pf5P4RNztnwRRhwYlZyFzbNjwXuS9ghJv+QX9CAFBp4P5WVTVDy/POSTO54qKw3WsMNc/NcQCu/y4UZWlID0/AMKwl+mp6Bd/fUQ6ZHq4VBYujTclL83jhZAryoCWfoSrYh346LlJjfW3y3eRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scm.com; spf=pass smtp.mailfrom=scm.com; dkim=pass (4096-bit key) header.d=scm.com header.i=@scm.com header.b=ct8L46up; arc=none smtp.client-ip=49.12.148.225
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scm.com
+	s=arc-20240116; t=1738147770; c=relaxed/simple;
+	bh=WwQejdpJkjJnbSqAdwiAFo7ijD7bFDDhnSVxXsPVs8g=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Xdh+lYj/oxPbHB2eDG5XaAB5rQFxvx+X1jT4pXJOXULdgdHJQMSApDBceCc+QyetLig8YfsHqAHTrFAoYVgvgfVYwn9x2khR8JPc+/5PgB2AaQIpmg99mNSBNz/OzfOCm73LyW2Hy9GMQSeG4MpnLoX/pa9NV22Hdme9++Tw/TA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lWiKsOoC; arc=none smtp.client-ip=209.85.166.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=scm.com header.i=@scm.com header.b="ct8L46up"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scm.com;
-	s=ext7dkim24; t=1738144927;
-	bh=ZvCOo9yzpuW77Vxv6HeQm/SHV7xrAu+gUQWvyIcBb9w=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ct8L46up+CYGhr3JLgLCoHnpw4Cx0zrMvLC2NfPBflQ7T/A/A3PoOngtaNfOorp8z
-	 xMNkWkwtzAn2zZ/2Zk+UwXFFpxJLrNhR2IBWVpFtItyDeUXDabEu2QSk/+2Do0dNeA
-	 BUqPHS89bl9RtrJf4/RmhmSFJ/7L35xfmNNm0aK7monDQ+MAv7fYKgAX4AYGP0qG54
-	 X9rmOuIqXy9oQVIJTWyFvzwkaMnz+BAfHkkwq2jlCSqK76QxeOiC0mXdyL/xC9ipqT
-	 uy6W4K1L9UPyNLXdP+UAxwunP/z8Zi5OyVZizy3CUEs9Nu2kp/m3StZgnK2081+ueC
-	 qSgv0Sq3pkcJjyiNW8lje8W1HTbTb7Jq1RSCztkz30vvUih3vpzuFx/vgmyVg1xG28
-	 y6DOEN5UvcgKm/14afOCNQnsmyykdfoPrXyJ2Xy8tOg/Qtk568OI9lc9Da0YSb41oq
-	 A9Zu+ePLpplp3cYaMmduMHAMYWiAqA4Cqm7Dzi1w9Urst6igdfdhqxxZFDuWNTnTfW
-	 r11nrtUcjGDFwV75c2d8yJ4u7DAKmByaIw7xtnekeosflyk+BJtkEPWiR0zMp7GL79
-	 dmA2zDmGUOEok1vwnUZQ0Iy4NWuBDTJpzmMJJxFiBQqiDa0NIIexGR6381izr0e+yL
-	 Ar13uLJkIjSmNIt+pfJ3+lG8=
-X-Virus-Scanned: Debian amavisd-new at ext7.scm.com
-From: =?UTF-8?B?VG9tw6HFoQ==?= Trnka <trnka@scm.com>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
- Jeff King <peff@peff.net>
-Subject:
- [RFC PATCH resend] builtin/repack: Honor --keep-pack and .keep when repacking
- promisor objects
-Date: Wed, 29 Jan 2025 11:02:06 +0100
-Message-ID: <2728513.vuYhMxLoTh@mintaka.ncbr.muni.cz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lWiKsOoC"
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3cfeff44d94so7064415ab.0
+        for <git@vger.kernel.org>; Wed, 29 Jan 2025 02:49:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738147768; x=1738752568; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=WwQejdpJkjJnbSqAdwiAFo7ijD7bFDDhnSVxXsPVs8g=;
+        b=lWiKsOoCllNRa7ywkRJxpwLsWf6wsBuF902DESdlP3TA/dNx7goenQlWRSkgZE+HGe
+         Cy92v+/+EYb/07FL4g5li2gq0vsiufe0bOqPBgQYL3V/EhvCkB7bQMbriF9Qwa/K7uRC
+         r8oTx4JLBxRmWmzinFeXbG0zzAcpvUZAthG6v3OvljeTAq4CEo8qP3PtxmjgaJQ+tS7p
+         TwMRRtWPrc382pw8Bh8ZVX+34sWJNzUz4SlWxulJhbk/KxxIjMTl2VmW7BHg2EQpcj71
+         s3JR40Wtx4BBEkk6jSQlf0sFKix/kqNuSc49azaw+z6b+JeFS7xvwqAgufEJF1YmfoDY
+         eLFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738147768; x=1738752568;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=WwQejdpJkjJnbSqAdwiAFo7ijD7bFDDhnSVxXsPVs8g=;
+        b=G+loKnBYt/M1eeoKLZxHnA31Hx3bWpn0GdHjiMi6Ne+M+8NvjFNBXBZ7IW4/XgGihi
+         YG55iTfqNvirm9IYQ3vkgj1W3981gH/ESH159KS7NchjyEg8m+gMBWikitf5CA35/0Rx
+         YsfKI1xfhempKe2+6IOwOBWfXgiyPrZFNuqPdW+j5bAs7wRsKgMmQ/+PvQ7NyKM1hhpb
+         yOHZrwLJO6E/INCVsh0EzcMMvzLcb/2Ba9FrE1seOaLoterNiBOITqDdfkmb8lhEL+Z1
+         E4Di0m6EFmsN83+agsA653EqXEdvsfwDwA6WTSCu0RtOC6oR5SLivxjym7X9QnFyfzHX
+         XpwA==
+X-Gm-Message-State: AOJu0Yzfun1gOQaXflOBip66esVqc5x+Hspbjz0K3uHlQYPxacdmI/vO
+	0Lh0JZDzBIv2BwQVHXnMlrB5GdY25DKO7HLyNT29z22SfCKF5NVN0o+sX7juqUydB64dkouJyWR
+	/8uZz2/Sdkk7UcTnsMkUWxBXvCKJExsfN
+X-Gm-Gg: ASbGnctbFYRQDxu8nIOJy1lEJ37D+BuGuif54y4XXI6q9bAbHTDLdWEgRsH6Ul+K79P
+	w6o/p5YEtvZ/PndbHJQDTgGHrcCzTl3eI3/cQUUyM7NseQSIyp8Ob3K0IvtW96Mt11LHf9/51HL
+	x62eLD/kl8DF2wz8GjCBY4irZYbgYhPizVURadBiKfsg==
+X-Google-Smtp-Source: AGHT+IFjIenr6+h1QnoGJ53pMotgvy/KlFRE98HeSv2l24k5v0hnSYuQyL76t1UXdMUe8sybZFQNOU27q9cRsts7lI4=
+X-Received: by 2002:a05:6e02:17ca:b0:3ce:6628:3c4 with SMTP id
+ e9e14a558f8ab-3cffe3a6c3dmr20434135ab.6.1738147768060; Wed, 29 Jan 2025
+ 02:49:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+From: Mike Weltevrede <mikeweltevrede@gmail.com>
+Date: Wed, 29 Jan 2025 11:49:15 +0100
+X-Gm-Features: AWEUYZnzBuUZT0Rt1b2C5xQAatQDhSSx_jlET1fn2Kr9Hq67EvC--yUvv7EpdGs
+Message-ID: <CAAE-bwUQ+0ERbvC=SS=-R_K4H3p2su+=Ogf7BSkyq5J4GmmRYw@mail.gmail.com>
+Subject: Feature idea: Git hook for pre-checkout
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-git-repack currently does not pass --keep-pack or --honor-pack-keep to
-the git-pack-objects handling promisor packs. This means that settings
-like gc.bigPackThreshold are completely ignored for promisor packs.
+Good morning,
 
-The simple fix is to just copy the keep-pack logic into
-repack_promisor_objects(), although this could possibly be improved by
-making prepare_pack_objects() handle it instead.
+I had an idea for a feature in Git. I am not sure if this is the
+correct channel, but I could not find anything else. If not, could you
+please let me know the best way to submit this?
 
-Signed-off-by: Tom=C3=A1=C5=A1 Trnka <trnka@scm.com>
-=2D--
+Below, I will explain the idea and then the problem that this would solve.
 
-RFC: This probably needs a test, but where and how should it be
-implemented? Perhaps in t7700-repack.sh, copying one of the tests using
-prepare_for_keep_packs and just touching .promisor files? Or instead in
-t/t0410-partial-clone.sh using a copy/variant of one of the basic=20
-repack tests there?
+<The idea>
+I have a project that is using Git hooks. Besides pre-commit and
+pre-push, I would like to use pre-checkout (rather than the already
+available post-checkout). However, it seems like an active choice not
+to have pre-checkout given the existing hooks, so I am curious as to
+the reason behind this.
 
- builtin/repack.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/repack.c b/builtin/repack.c
-index d6bb37e84a..fe62fe03eb 100644
-=2D-- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -388,15 +388,23 @@ static int has_pack_ext(const struct generated_pack_d=
-ata=20
-*data,
- }
-=20
- static void repack_promisor_objects(const struct pack_objects_args *args,
-=2D				    struct string_list *names)
-+				    struct string_list *names,
-+				    struct string_list=20
-*keep_pack_list)
- {
- 	struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	FILE *out;
- 	struct strbuf line =3D STRBUF_INIT;
-+	int i;
-=20
- 	prepare_pack_objects(&cmd, args, packtmp);
- 	cmd.in =3D -1;
-=20
-+	if (!pack_kept_objects)
-+		strvec_push(&cmd.args, "--honor-pack-keep");
-+	for (i =3D 0; i < keep_pack_list->nr; i++)
-+		strvec_pushf(&cmd.args, "--keep-pack=3D%s",
-+			     keep_pack_list->items[i].string);
-+
- 	/*
- 	 * NEEDSWORK: Giving pack-objects only the OIDs without any=20
-ordering
- 	 * hints may result in suboptimal deltas in the resulting pack. See=20
-if
-@@ -1350,7 +1358,7 @@ int cmd_repack(int argc,
- 		strvec_push(&cmd.args, "--delta-islands");
-=20
- 	if (pack_everything & ALL_INTO_ONE) {
-=2D		repack_promisor_objects(&po_args, &names);
-+		repack_promisor_objects(&po_args, &names,=20
-&keep_pack_list);
-=20
- 		if (has_existing_non_kept_packs(&existing) &&
- 		    delete_redundant &&
-
-base-commit: 92999a42db1c5f43f330e4f2bca4026b5b81576f
-=2D-=20
-2.47.1
+<The problem>
+I want to do branch name validation when someone does git checkout -b.
+If the branch name does not meet the requirements, the user should not
+be allowed to checkout to it. As such, the post-checkout hook does not
+fully meet my needs. It helps with doing the branch name validation,
+but if it fails, the user is still on the feature branch. As such, if
+they are ignorant about the error message, this does not stop them. I
+am currently combining post-checkout and pre-push but would prefer
+pre-checkout because this would prevent the user from doing work on
+this feature branch and having to move their work.
 
 
+I am looking forward to your thoughts. Thank you for your consideration.
 
 
+Met vriendelijke groet / Kind regards,
+
+Mike Weltevrede
