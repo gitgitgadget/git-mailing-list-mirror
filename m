@@ -1,95 +1,82 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F7061FC8
-	for <git@vger.kernel.org>; Wed, 29 Jan 2025 17:08:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37DD1DFD99
+	for <git@vger.kernel.org>; Wed, 29 Jan 2025 17:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738170511; cv=none; b=hoL9ei/gp5XWzBakKCt8tkJXXccjGk5EBdJzmGjyk/PFBbSSvklM/rNDA5ja9XV6dG9nv2QlIBf7KJv4mkvXO9vM35lXJ9TTUXld+g4/VB4bvjs3ghASEyRPgjluI3hVmlinfhZt90BIHYgQOKRS48ZYEwSXJEJbQEBKcKR8ixE=
+	t=1738171305; cv=none; b=HKjHToRAuzjvs/X40fNnh4+swf4+R5cQ+PS/xaqK0TPgC/mBD99zwweCwyF7iq6+K2351nR+IrHlKX3OIK5q2oSBmq8P36hvDD3R/qFhBT7kr7zi4BU5KvIkMvxBy3lBQQ97L5OcYUTGm3ANTvlivoXpsIfwdWY7zbbbUqdZvnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738170511; c=relaxed/simple;
-	bh=B1UbV62RiL2QSll71s9cU0Eic/0oC1qOCiW5D+jzsEs=;
+	s=arc-20240116; t=1738171305; c=relaxed/simple;
+	bh=oFvQXNjOgdD1kNnxX7+evHLP+OZFizjhu5tPaBOIqPA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GqdN6kWt+aE9N1Rtkryg/ysrwtYKDQ7/+Yjq1v+Pl/+/Xsv2xeWtFjmd1Q+9r+otEkQey90cumBVoNgwsiX/zWn8XrvqIZeIuYOM0g0BR/EvDAAmM22DMygecLBGygWVT1IJYJo7B8xI+BiL7m9KFwIAa09cS1LJYnVryKaK8yM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lcrfAnnR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t9HZJmOw; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=aRBFlrnSeCitsUEHO935hzQaLerqCy1/PRTLzjWKwQN9wBtPwNtXBnNZfGtVVTjVOniqUvnk4WK2OuE4Hp6LHA6LoVsouMKAsV6mwPRBpPDDz7yLJZz01F57q05EOB8/lxflI2bfl7Ohu8VoF7u0WUlbf9dcWyn9YbpM1IwqK+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lt9bUFAk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0xQC/rAX; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lcrfAnnR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t9HZJmOw"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6A4151140051;
-	Wed, 29 Jan 2025 12:08:28 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Wed, 29 Jan 2025 12:08:28 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lt9bUFAk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0xQC/rAX"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id DE90E1140101;
+	Wed, 29 Jan 2025 12:21:41 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 29 Jan 2025 12:21:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1738170508;
-	 x=1738256908; bh=HQQJqrqK4P/uhI+ELrkt+OAa0Gn5rAVAFooBsaMNHKI=; b=
-	lcrfAnnRu9oqLx8L+LqMYHONaFB1HuaEpMBB+mfbjB351egZNOtiyMTkkOGORVbI
-	kYEgqB0vZv4vdL+LsMQReEx/hlwbebswUPPsonL6UOgc7AY3I/neJpcJ5M403NDI
-	SCMY9uTHA6FNWEYgLBuoX+VW3ZvpYJotbebyHI8aAlBCnViiNHHV6wxokAcOSsw0
-	oZt6GAHvnfjoNb5qki1Jdj05hiHKzjErCToLMxqDpXgPAZ8nRWn4MqyWat3OKjTP
-	PIiRsMF/nVPaQsjCgWWVapNmZgD6X3YWKA2I/d87CpIiz7QTc1o22/j71lkZCmjQ
-	rjr3pZdvE/Yf77A4NG+C9g==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738171301; x=1738257701; bh=hnAmirygPx
+	UbgLvQvRaqPNIr1f8Sy+uXiZ+daQWTpgQ=; b=Lt9bUFAkbfwGM56Yj0lCzut25k
+	1TdpOBd2O0yRonOs7osLQQStHWtL3AHCZE9N9FxHLhCmmeaJUXUzB/zJsBEKufCp
+	QXrH5xoAV0lDukppxvwmpDmkWHHDirEdBUXz9l6VtwtbgfKgmoyxFt1+9slgnnB5
+	L9plTrraXDJKVf5BUaJi0zmEM9Alwj8wkceVbJnXrs4zyVZsg0zUn0yiRe1OjJ3W
+	XiEV4MkNKCQxNzM+VOL/l5u+2z2WuxcuTwtyEAZ300BcCzQA+BgfPDAkMXF3uvYo
+	sGTDVi/RpoTsVf+7iohFajkbFIkT92Tc4k9FVhHBXUxAqdSnU4Ddi0vhe4ig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738170508; x=
-	1738256908; bh=HQQJqrqK4P/uhI+ELrkt+OAa0Gn5rAVAFooBsaMNHKI=; b=t
-	9HZJmOw8IzG37uVNnzN3InU5UGheSLRnDrheH+R8ZcIy+R4SQevLIvNbgtHjNctq
-	nFF2zBHRfkF4LBToGFHyX8o7sqlZAEYglYmANgMX6EzGCwbNKkbdOyhBfU53D90a
-	jMku/6+ZlaDeD1SKrALm5DLVeH9B8V2omsUkA5F5dGwvXR1v1p1CTtEyOn3H2Pkz
-	+VWS4i65pdqspClOfmhtJTmfmN4aqg7wc1C3kb2OYKpzDsitRnHcMxWWiaVnpW35
-	0AfICW4Md4vHGSjM/jB+CrC7aUAjM4mgJgJEWOHy+G4HJgPe9I1NokCG2ms6MahZ
-	ohdzoNuiI6+1cSvQOQSSA==
-X-ME-Sender: <xms:i2CaZ5XaSFQA61Jnc66YU_zo5HjNLo5gjZwQlC6cVKMJYQg0HnX45g>
-    <xme:i2CaZ5kLuVZYccocIY2j5rjImtnntOgAfeBy04pIyCaqAJkPDB4ksSYJZbhSDRq8V
-    6snmOdUVYvPl67hEg>
-X-ME-Received: <xmr:i2CaZ1a-oYMcBJThygp9iUT3E02_oxgvLac4CPQAoITEUhUls5jkQ599wW3ApiqKGZvG4EJqIsvaqiLGnMYHo_7s-bWagJB2qDYY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefheeiucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738171301; x=1738257701; bh=hnAmirygPxUbgLvQvRaqPNIr1f8Sy+uXiZ+
+	daQWTpgQ=; b=0xQC/rAXY15X+p0oycqByfDEmRF733p7QsHgXpR4S2G+UlTD+ct
+	vGSDlbfKORixh1qWOAy68NnoArBozEvEa5QSBoyqQMn1ZO96jdgADDaU75LgSwuy
+	iXJhgfmqcUOwl9TKd0C3WC2HO2RGbEKly7lyKexdB38Z9Zp0LVm4tjSRHing1vvU
+	DVImibJS7TXGFo1iu6F0Z+Q9JSfzu8Jw1HLkzzMsyKWGyGfWkabW/FD6HLWUBs6u
+	cvpuwTKr3v/VXHxPr1yO6lSlj2fR0PIUwSAnBatSNAR9a4ItjA2ck9Hr68LQF4pR
+	YUfKRMaCM80Mc/KG62gMXCiYFzA+p4sn2ew==
+X-ME-Sender: <xms:pWOaZzD70379sf3qUrxa7MllyTa2Kq1KT1biVYqzGHnIrxA3MM5wQQ>
+    <xme:pWOaZ5gvJezU0EScJYBMSfuHdYcp3ydT4f5ko1XH5jGpffSvHtMEIXBE0gPo59DrL
+    NenisvjeFXo2FJh0A>
+X-ME-Received: <xmr:pWOaZ-krGJwD1c521g72I0eQZ96yorMqx2mbbiKgUGUCCGGHY6i4yV0XiwtYBb4Fwb0LhK87pJkT9qPbh6bdHsf-vajDhL4UXQfx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefheelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeef
-    heeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvg
-    esshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepohhlghgrrdhpihhlihhpvghn
-    tghosehshhhophhifhihrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhohhgrnhhnvghsrd
-    hstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheplhdrshdrrhesfigvsgdr
-    uggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:i2CaZ8W6Cq0h4ai-U_FGN2IfPDHZaTN69m0pF9s7a_D17nCsyfPrPw>
-    <xmx:i2CaZzlIPpFCHq5NZoIhXzi7TxdgvkPuSeFBwjXFG7EAh7yexWf-iQ>
-    <xmx:i2CaZ5eS2k_AFnfcQizrVm5leVJ54Mf0_755U76etsqYzc55Dl3H0A>
-    <xmx:i2CaZ9GllecHzs2ZOXG_Vx51fM95jyDMohCcIsQGJ6xbafjl0dbNqA>
-    <xmx:jGCaZ17oNGY8t9ssy5mZ-Ar1YGMMcfnmxQgL_KdBAiyuqf-E5kmB2LF7>
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:pWOaZ1x0bfsez7d6zQz6VgBdFSECRrFIX-CiQOn5Q8P3qDbAK7TYgA>
+    <xmx:pWOaZ4T3OK2kWLm3P1pgD7sV0WgAqkJU23zlo1Akp3QcyN1sKIKoWA>
+    <xmx:pWOaZ4aXOBZF_jP9XPDFVGpCpkKgNjFZYy9nu7_Ues5bnP69BSqcYQ>
+    <xmx:pWOaZ5R5YKSYFSJ_J-Sfc0V33XRcDJ_MikFdMgHEA97peuDHhmp79A>
+    <xmx:pWOaZ-cnbgmLCF91N2lPQh7qyYOBhbenhCi0RXwtT6kRbKLCO4Gh9ANK>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Jan 2025 12:08:27 -0500 (EST)
+ 29 Jan 2025 12:21:41 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Olga Pilipenco <olga.pilipenco@shopify.com>,  Olga Pilipenco via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v2] worktree: detect from secondary worktree if main
- worktree is bare
-In-Reply-To: <CAPig+cSdbjzTmsBOmFnMxzYLGrUzY46=mkW9S+si2KxLhS623Q@mail.gmail.com>
-	(Eric Sunshine's message of "Wed, 29 Jan 2025 08:41:54 -0500")
-References: <pull.1829.git.1731653548549.gitgitgadget@gmail.com>
-	<pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com>
-	<CAPig+cRpKKpVHT8x6nOx1KNjWR=hywz-nHZga9fhiXMXD7KOSw@mail.gmail.com>
-	<116C27A8-EF7B-42E1-9606-815FDA3CF94C@shopify.com>
-	<CAPig+cSdbjzTmsBOmFnMxzYLGrUzY46=mkW9S+si2KxLhS623Q@mail.gmail.com>
-Date: Wed, 29 Jan 2025 09:08:26 -0800
-Message-ID: <xmqq7c6dk0ol.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] unix-socket: fix memory leak when chdir(3p) fails
+In-Reply-To: <20250129-b4-pks-memory-leaks-v1-1-79e41299eb0c@pks.im> (Patrick
+	Steinhardt's message of "Wed, 29 Jan 2025 17:24:14 +0100")
+References: <20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im>
+	<20250129-b4-pks-memory-leaks-v1-1-79e41299eb0c@pks.im>
+Date: Wed, 29 Jan 2025 09:21:39 -0800
+Message-ID: <xmqq34h1k02k.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,27 +84,80 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> Wow, your explanation is so much better than mine.Thank you for
->> “translating" it for the world :) I’m still trying to get used to
->> the terminology used in this codebase.  I’ll steal your description
->> for sure (if you don’t mind).
+> When trying to create a Unix socket in a path that exceeds the maximum
+> socket name length we try to first change the directory into the parent
+> folder before creating the socket to reduce the length of the name. When
+> this fails we error out of `unix_sockaddr_init()` with an error code,
+> which indicates to the caller that the context has not been initialized.
+> Consequently, they don't release that context.
 >
-> You are more than welcome to use the proposed commit message rewrite.
+> This leads to a memory leak: when we have already populated the context
+> with the original directory that we need to chdir(3p) back into, but
+> then the chdir(3p) into the socket's parent directory fails, then we
+> won't release the original directory's path. The leak is exposed by
+> t0301, but only via Meson with `meson setup -Dsanitize=leak`:
+
+Did you mean
+
+    $ meson configure -Db_sanitize=leak
+    $ meson test t0301-credential-cache
+
+I'll need to figure out how to make various tweaks at runtime
+working with meson based build tree.  The next thing I need to
+figure out is to see how to get verbose error output from the tests,
+as I cannot just go back to the source tree and say "cd t && sh
+t0301-credential-cache -v -i -x" because the build is out of tree.
+
+>     Direct leak of 129 byte(s) in 1 object(s) allocated from:
+>         #0 0x5555555e85c6 in realloc.part.0 lsan_interceptors.cpp.o
+>         #1 0x55555590e3d6 in xrealloc ../wrapper.c:140:8
+>         #2 0x5555558c8fc6 in strbuf_grow ../strbuf.c:114:2
+>         #3 0x5555558cacab in strbuf_getcwd ../strbuf.c:605:3
+>         #4 0x555555923ff6 in unix_sockaddr_init ../unix-socket.c:65:7
+>         #5 0x555555923e42 in unix_stream_connect ../unix-socket.c:84:6
+>         #6 0x55555562a984 in send_request ../builtin/credential-cache.c:46:11
+>         #7 0x55555562a89e in do_cache ../builtin/credential-cache.c:108:6
+>         #8 0x55555562a655 in cmd_credential_cache ../builtin/credential-cache.c:178:3
+>         #9 0x555555700547 in run_builtin ../git.c:480:11
+>         #10 0x5555556ff0e0 in handle_builtin ../git.c:740:9
+>         #11 0x5555556ffee8 in run_argv ../git.c:807:4
+>         #12 0x5555556fee6b in cmd_main ../git.c:947:19
+>         #13 0x55555593f689 in main ../common-main.c:64:11
+>         #14 0x7ffff7a2a1fb in __libc_start_call_main (/nix/store/h7zcxabfxa7v5xdna45y2hplj31ncf8a-glibc-2.40-36/lib/libc.so.6+0x2a1fb) (BuildId: 0a855678aa0cb573cecbb2bcc73ab8239ec472d0)
+>         #15 0x7ffff7a2a2b8 in __libc_start_main@GLIBC_2.2.5 (/nix/store/h7zcxabfxa7v5xdna45y2hplj31ncf8a-glibc-2.40-36/lib/libc.so.6+0x2a2b8) (BuildId: 0a855678aa0cb573cecbb2bcc73ab8239ec472d0)
+>         #16 0x5555555ad1d4 in _start (git+0x591d4)
 >
-> (If you want to acknowledge assistance rendered, a Helped-by: trailer,
-> preceding your Signed-off-by:, is the way to do so. Or not. It's up to
-> you.)
-> ...
+>     DEDUP_TOKEN: ___interceptor_realloc.part.0--xrealloc--strbuf_grow--strbuf_getcwd--unix_sockaddr_init--unix_stream_connect--send_request--do_cache--cmd_credential_cache--run_builtin--handle_builtin--run_argv--cmd_main--main--__libc_start_call_main--__libc_start_main@GLIBC_2.2.5--_start
+>     SUMMARY: LeakSanitizer: 129 byte(s) leaked in 1 allocation(s).
+>
+> Fix this leak.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  unix-socket.c | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
 
-> Agreed about the is-bare checks -- and indeed the entire Git startup
-> sequence -- being difficult to digest, however...
-> ...
+Thanks.  The analysis and the fix looked superbly clear.
 
-Thanks for an easy-to-read review (and thanks OP for working on it,
-of course).
+Will queue.
 
+> diff --git a/unix-socket.c b/unix-socket.c
+> index 483c9c448c..8860203c3f 100644
+> --- a/unix-socket.c
+> +++ b/unix-socket.c
+> @@ -65,8 +65,10 @@ static int unix_sockaddr_init(struct sockaddr_un *sa, const char *path,
+>  		if (strbuf_getcwd(&cwd))
+>  			return -1;
+>  		ctx->orig_dir = strbuf_detach(&cwd, NULL);
+> -		if (chdir_len(dir, slash - dir) < 0)
+> +		if (chdir_len(dir, slash - dir) < 0) {
+> +			FREE_AND_NULL(ctx->orig_dir);
+>  			return -1;
+> +		}
+>  	}
+>  
+>  	memset(sa, 0, sizeof(*sa));
