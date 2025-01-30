@@ -1,132 +1,100 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C5F1AF0CA
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 21:00:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A89A1F12F6
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 21:18:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738270832; cv=none; b=aInLuh6iPJwpN3a9ud1fobZBKLad7a4EQA43Ojc1ZMs44mAkOUTiaOI0frNf2Hnix27ohkZOZswEnfUUQrm1npj0RxtKk98ewc89d0GGr6lMWWzarSs/I5WUORNtwYLhrdPZBxRRzNUEwBtkg4+8WbdiwssRZ0m5uT14ceQzmjk=
+	t=1738271922; cv=none; b=CxpKJVJESxOt0yy0NnolKdR+dEYJm+sDwnlTM1+nZvQDTMxgh0TQ9oiOSAmK96L85IGn64+hPyTIXdEMmplfF2LgM0NTae3wozZEadEdPaY9A7/RJ0aWdCmU1BsMf9bcskdm4q+YfAOtwODwFB/uAn0lPj37OZFPXuVQPlK0xS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738270832; c=relaxed/simple;
-	bh=RwyyELcjlsj8fO8maeX02nXpagStMTDl76u+Yii9ifk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U4UriSKPpdjsrSNK3O5nBHQ5V+yH7MrZve5MEvsyvxn4xukdmCdwovq2REOJHPgH/tQazSca8kOWr76Us/JYjtzRiyQdpDOkAty3MknY/vXQezPHP7n39sqWa6mQ/2iUB/z3f3tdmzFtTujyH/3BftAjdJqaTY/txlRe4TJiIos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jZwfVc2f; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g/Unbv+1; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738271922; c=relaxed/simple;
+	bh=4AzA164PLC4A3HcYC9eQ7HApchibKmCXdz7/jt4wIg0=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=tawmfLnwB0TDsd+BGXwpZtPWG51h2xwXLzNCwcUCZNEuaLWpaPQe6DJJMqb56kII1VeocA11VW14XwRsvkX2n2yR3xsgRUaXDKZB1WnTQIDQ6toDoTR7vhzRMLGOJC1filMJUjtX7bf3eyVU8KuRzvrxTPSJ84LL7o1Ww/EOBoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ObZiDjSL; arc=none smtp.client-ip=209.85.208.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jZwfVc2f";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g/Unbv+1"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3B5E211401A4;
-	Thu, 30 Jan 2025 16:00:29 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Thu, 30 Jan 2025 16:00:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738270829; x=1738357229; bh=9c0xyS4dNN
-	km/2EhpHaR203cBeJFMwyzr4qZrGn0NoE=; b=jZwfVc2fq0114qcaKMrCo8JXlN
-	Ec+5KNi2UvXZ5mchfe/cQctPoV2o2/4PApbx+Djrms3OWitp9jPWUDhyxY0oKErR
-	hDLZsJ70OE/Cpx6uSFi9hjtbggiJxRnvD3/6GT2DIxJkccb18xdsQyiTE+chdMi/
-	Hp7Csx7iwjaIc2RhmZwVHfURwTCaBfJh1cwbt1otCWF7jjqPTYqbx9vkKdB7Z26+
-	9eJ+DIXJGb9094w6I6+lTGSDlP6H5e8rCmIEg9N/er553jQPLw9bQBVAs4jwtfMM
-	vj1FJd3mai98bQW0YBPWroDq9eqq2L0biEX4oqLRXRqCVD36tpjWs/oyvniQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738270829; x=1738357229; bh=9c0xyS4dNNkm/2EhpHaR203cBeJFMwyzr4q
-	ZrGn0NoE=; b=g/Unbv+1BlOQHfiwCJBGj54lQsDmW3erdL0LvembW6bgKIQuPRU
-	nz7GZtGHF5zkSuKCiNOiG1nyPN9ZPgg94/2NcwWXZiPkGdOQsIRmJRg5ZK7SEcXT
-	ebMPVELkYwu41X0kETe813BdDKjcq5FfzqHziFKlGBxVYUGkfuR4EpIRjjdFkw3t
-	RrjZBl0qIXUVECSD/PIyrbBI4H2wazIDVwjDqa0y4lA4ygiYh3gPx1vtjtaihiuE
-	uGth6Y6PJYaWnGR3n/cVmGLD3lMAhmcWkOdpTV9F2/YODH7EZJYDORB8sD3AWo+L
-	1yIC1liSotZ5Pb/3P/qITf2ZIeyHFhTVVCw==
-X-ME-Sender: <xms:bOibZ9I5Agdl80bCmwcTmnupI3nIU6zyEfugjGuzEgFXNLP_OMa5ng>
-    <xme:bOibZ5Jmc62LxBfX31rUw7iKE28tRkv0p62_UP5bgMGEn5ZFL98u2hAj8xMEMbSqS
-    3jwU5tKBBilW9u3uQ>
-X-ME-Received: <xmr:bOibZ1swQqqfvFUqNs0VkX-Py3-FjSgUDbnH00mF8z5mec8LMcfUXY8pEbCJR4E2WUOE2jZbCGgtFG_7G3alUiVMUDQubMh5JznH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeikeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehkrggrrhhtihgtrdhsihhvrghrrggrmhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:beibZ-bEZ7gSxCcUejXsNOI2l9NVDvNsqnhVsaJkxaRLqUEnWl59xw>
-    <xmx:beibZ0Y-YfO2dIrGkRwh4Huc7m_kKR2i46FI1lPe0N_66q_RUWQW6g>
-    <xmx:beibZyAEyZtg23GIVXpNfveIEubZOJrQ5lBkcEtjb3jhqWpeC2ispQ>
-    <xmx:beibZyYTae7vQN31_EWlx6c2JP5Oi3GUf4ML5De8rWSA1VbxaUqLfQ>
-    <xmx:beibZzwBv_eeqBefjnyrd0D7KNc6V7Q47FaJAGVl7mx07Sik6lk7AFVw>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jan 2025 16:00:28 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,  Christian Couder
- <christian.couder@gmail.com>,  Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git in GSoC 2025
-In-Reply-To: <xmqqjzaccdpn.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	30 Jan 2025 11:18:44 -0800")
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
-	<CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
-	<Z44u7od-mDiKcKVZ@pks.im> <xmqqr04vzyz9.fsf@gitster.g>
-	<b784f612-4b6b-414a-9742-86611c50c55f@gmail.com>
-	<Z5srHBSPKQlsuH53@pks.im> <xmqqjzaccdpn.fsf@gitster.g>
-Date: Thu, 30 Jan 2025 13:00:27 -0800
-Message-ID: <xmqqr04kaufo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ObZiDjSL"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5d4e2aa7ea9so2686572a12.2
+        for <git@vger.kernel.org>; Thu, 30 Jan 2025 13:18:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738271918; x=1738876718; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Q2CqOA3xXxSHVzjfhvG1ATsTE6Z5jDTwlVdqm82Aqt4=;
+        b=ObZiDjSLWumEk4oBklGp8xyPJss5ChtBttBVIXwKMqdTGp6DI5Eh14VEjFF9OOs2hu
+         DyAfDzfYXMkWokciLH9CXpvvjmxtIAw538VzWbNB9UZbhwGnB7uptbf4MixGbjKGdgUb
+         /IaopXdfxa2zADkc90grXa2opTi4VwbGJ3O4ZbmwCzkRyGwxj4+Wsjiq49Uy1wmhG9ri
+         m7JSGOr5PqU+JP/gkbtKaSc8NAiq3N3gHyJ1/USxwaOL60uUNyPgDogFGaqPI0rbzKZs
+         5a7wX0a6RC0cJmEUhzQtNqE/K/LF+yn5sFTw7qILNPcEPdDqkLGYA8VWrzTjfdmoF2cg
+         RnYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738271918; x=1738876718;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Q2CqOA3xXxSHVzjfhvG1ATsTE6Z5jDTwlVdqm82Aqt4=;
+        b=RwXHV2VE+l4SRWQMQX0uX80jEBLT8/OSsy74r86t6vyNG/Ek6ywIAaJnkiVM3rHald
+         u9zIu6K7wa/oHmjKUWUxb7PTf7L8veN+kJz3BQ3zcUSDQGBYnnFby1AdMeEHPwBDQus0
+         BGwy9FQMvt6wgQ18izJJnvC+/t8Xd1SYJtC9V1uf+vbo8xO2ghxoue9Io8QIUrUx9CDk
+         qIAIslfjnfju5LzlGeiAHkC9OpwO5A29GkwZlBvxHOpQV8jB5rYD1CoUPQqFhKU44FlY
+         DnBdMBK/35o73f5xWXmE1JBPcolUlbtjibBTnYySgkAghsm+056zsHZqn2TPBA4HJRYH
+         YJnw==
+X-Gm-Message-State: AOJu0YxPR4xo626Kvuelex2rkgKY+LfySQyPntexHJgNjDw7q+q2rlkh
+	IRzI2rYawCKXM+6IR83aTqPXw1X9Ee/VU5j4rWzpCmg3gieMfNC4qg6s0lNn/aIjR+siLiv4mfd
+	SYXSBZ4D5fC2pTb1v7agWtXGKQpHSMgiN
+X-Gm-Gg: ASbGncsI9Zp5v21Fa5psHDBlTRFGMYUVTPzAF2z2/ROLCYRICvDoBTnZy71WTR6Yj1R
+	HIKleS29/4zGFmfMaQYk6DjP06qfLL40bMUpvqOzEjhbtRECvyVzLce7D/7ft9X1BxuvdlU5vAG
+	0=
+X-Google-Smtp-Source: AGHT+IElQDPZCqbHNVKoQUc2Sa1Q7kg/if4aEi97jskCplitP7J9HEHXrXmTkhSdAFWP8J2FUhzzx1GchBFSj7GQgxo=
+X-Received: by 2002:a05:6402:2812:b0:5d9:f8d3:6e6b with SMTP id
+ 4fb4d7f45d1cf-5dc5efec2famr8769776a12.22.1738271917534; Thu, 30 Jan 2025
+ 13:18:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 30 Jan 2025 22:18:25 +0100
+X-Gm-Features: AWEUYZkr1dpQMBL6AeMGNQ2qHd_KuBhzmjI8z9tyIoJz3D_RnfbNYhk1jkJZdsA
+Message-ID: <CAP8UFD1wUUwNhCbGi=Vo4pCfquLGwxXsh=mP0DgQDU3JhtXgwQ@mail.gmail.com>
+Subject: Draft of Git Rev News edition 119
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, 
+	"Peter B." <pb@das-werkstatt.com>, Justin Tobler <jltobler@gmail.com>, 
+	Brandon Pugh <bp@brandonpugh.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, Adam Johnson <me@adamj.eu>
+Content-Type: text/plain; charset="UTF-8"
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi everyone,
 
-> I do not mind either word, either, but I have two small issues to
-> raise:
->
->  - Is each topic "owned" by some specific person?  Would an owner
->    retires from the project, would the leftover bits go away with
->    the owner?
+A draft of a new Git Rev News edition is available here:
 
-I obviously meant "When an owner retires", but more importantly, I
-should have offered an alternative here, instead of just raising it
-as an issue.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-119.md
 
-How about making the rule a lot simpler?
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-    The expiration date kicks in _mechanically_, i.e. stale entries
-    are unconditionally dropped at the date, based solely on the
-    comparison between the timestamp and the wall clock.
+  https://github.com/git/git.github.io/issues/741
 
-People are free to advocate for its continued existence, and when
-such an effort achieves a concensus among then-active members of the
-community by the stated expiration date, a patch to update the
-entry's expiration date may be accepted, thereby prolonging its
-shelf life.  Unless such a thing happens before the expiration date
-comes, we will mechanically drop the entry.
+You can also reply to this email.
 
-Of course people _can_ resurrect an expired entry later as a new
-one when it seems appropriate.
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
 
-That makes the decision to expire things from the list easy to make.
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
 
-This is a tangent, perhaps we should adopt the same "drop
-mechanically purely based on timestamp, but allow resuscitation"
-rule for topic branches that take forever to hit 'next'.  It would
-make my life a little bit simpler ;-).
+Jakub, Markus, Kaartic and I plan to publish this edition on Saturday
+February 1st, 2025.
 
-Thanks.
-
+Thanks,
+Christian.
