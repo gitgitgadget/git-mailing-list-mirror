@@ -1,54 +1,54 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7121EEA3D
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 17:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9311E1EB9E1
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 17:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738258518; cv=none; b=rkhmTclJq+FqoJo5QtR9IrTfeVSNbjxDCN8Ti8BSF33dBHf+Egdg/x97VXCe9kOrGeGjnxYijmduf6nOaEruGEupBSFgR/pdZtSS9uKubZU291O0qAFERUgYSZaTN6mHQUvvlf8KimyFovChEp0kv87SBHH6MexiZ70mpJqWAuM=
+	t=1738259632; cv=none; b=XjzW3plSN40koLR3X3AnHwcvaBjPN5/lljeNQ0egNwXIw2RQ9DvqLX6SHhcEmMKMsRq3EjE5Q2NAe8frr3ux8xuQvM8KpswujDPoOshI3Mwnm+y4AD2HO0zFonIzpOsTLyFV8TrsV/jE05a/l4aCVMvcfOPWB3PzxvEeQ26XYl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738258518; c=relaxed/simple;
-	bh=xiqMh3naKKTXZXqGC0VJkkgDTUEOAX+ZQQ7iCQOWr+4=;
+	s=arc-20240116; t=1738259632; c=relaxed/simple;
+	bh=i4DWsRDpgl7ZQe1ce1VxktuGgHG4VTRjbunsxEeNnKA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lYunnG0t/6D5BWb2nxk2d6en2m6tTPiRgdPEKAppg2QSJ6VXz9MHrC0lRQosUXZ4b8cxHlt4p9nzKOM7Goyx8YkO+GXoxuEjpZyEQ4K8wWS65nJHe1DaNlFfA4FZj+wpkajWa8v46o9UR/ejLw2YSy8skQlRcYjSFAuSPvidMy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kiVc1HqC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jhOe+dN1; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=AQcthggkEDHdLowQk5rtFmaBiufLyOwqWPokokBL1brCV1AiR5wbxvlUXfd5HkPf2Gd6prPW5XEjP5MucRGa5ubcxTAbrnHyr9s5JL+HuVpmvkpwcBFd9CS4pHGRHektc9VuvwP+I8cjXbOW6iN74vWZ55Ux2/D60VNQBRVV4to=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nx4AugGW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jWcQNAKh; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kiVc1HqC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jhOe+dN1"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 07FFA254012F;
-	Thu, 30 Jan 2025 12:35:15 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nx4AugGW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jWcQNAKh"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 94674254018A;
+	Thu, 30 Jan 2025 12:53:49 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 30 Jan 2025 12:35:15 -0500
+  by phl-compute-06.internal (MEProxy); Thu, 30 Jan 2025 12:53:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738258514; x=1738344914; bh=G0IebimxHn
-	0YcBzMXNJQ1cNceJSfC9FDQtVWRoXqZzE=; b=kiVc1HqCVZtaw/MJ/geI53n1cI
-	Keym9/n4nzC3/3wrTEOdn5tbHpWP7lrV4C7/7QpatjpeO/cCW6XLC5duNKSfNquo
-	POT8kBJDxe8c+wLwaowjYHvBrQGPB4sZL3YdCxAk1z6mmR5YiibTdYPnAfk2zHVo
-	Kzaje0OIVC4prDWZEZeBAZppjz4IixWFTZIzjsNU9neGHM09uSBb1rjgI+Lt7pKB
-	ySxPRfo73ru98DVi3mx0kfaNUu3Aw6xu8+FgfgDDAzXqkj1RRmbxp6KA4v0ZPikF
-	9JoJto4wdb2BIOyp8LJ3vWq7mTXVyMYH7apDOpASEyIQyb/+ECAZuhUkGbag==
+	:subject:to:to; s=fm2; t=1738259629; x=1738346029; bh=FTCjwFiZ+b
+	hjrxEDml5FzicsgspNRguo532Dx9XXXeA=; b=nx4AugGWfysvuleHOEHv8H3vFK
+	xmf+Iff1GVMIJI2JP7v3K/z4OqWVpCv4NUq7byanF66S3178L18ZSRXGjp04RLMk
+	nd4m7vcR7dxjHskH/+IDfurw6PXbsK7ZUIkbN1iePV3gUaTtTPnDe02w9RqsTnnF
+	DkgBK7HqzLmAs8ScK0Z/0bZsZtYPZhZfAxM7JGz0O2uMrusGwf5yHzQG39IkuCLZ
+	PW414NExAoJ70DnRuQEqbz4bxEEmN4ubpgv8gI+Kv0IVQBwTqF7JZZnvkc2wLFVN
+	zerxeP8/sKjphD163hsjsGJBXWBSvB5CV/j37AMkDrUcsLyALG+pLK4bB98g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738258514; x=1738344914; bh=G0IebimxHn0YcBzMXNJQ1cNceJSfC9FDQtV
-	WRoXqZzE=; b=jhOe+dN1ssl+Fk75rkRxS6yIgCCEyws5w3hYY/Eaqspzoi+ifBt
-	QqlUNmBZE/of3LgQc4Tmn+QvUJMRM+p47jH4SbAnJED/f663PesB2iqP0pq9cexz
-	5+IW6Ujm+m6VqvcMtkMA7pIfqzaHb+OgbVktG09g1TNa/UsZ1MPg+SOw6k+x3vi+
-	W0ZeWFP5/8JEcMDh4eKYFCZSiGbkjRUiDsxPkeq6Jo5H7rhQ6vQ6s8FIE6zh+Vh9
-	AafXrb1Kf7MhgfkaLdT/RkGTRAyhuHG/fheyJ7/1vEUurn0wDxopdbi+y/KucpTM
-	ZqhkvfnQhu30g+wSkTPTtn0QMoYqtCzxMUQ==
-X-ME-Sender: <xms:UribZwxPciReC_OlFIpTzdoK5CTU8pCjaTmzL6BXHiYa5FIcNIXrHQ>
-    <xme:UribZ0SMtsbrRhpc_6rA4Irkyhwx-f1H3iBpGN8m7uOzytExefG0Cuzv9wrT22dr3
-    3GCVQj3ngP6XgE1XA>
-X-ME-Received: <xmr:UribZyUpz9tP41vZmKLy_gPY1f0ohvd2OML4yuGApLdv0MY5_eBZGt4_XSy2hMLPu23-0pgVK8B8BW31Ysy0yOCxl8pv8b5W_Oc7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeegucetufdoteggodetrfdotf
+	1738259629; x=1738346029; bh=FTCjwFiZ+bhjrxEDml5FzicsgspNRguo532
+	Dx9XXXeA=; b=jWcQNAKhujcbUlXYlsl4T8oMaVbRyCqbqlqpSMz7SQno4AnjGY+
+	lGzp1MFWgsnEemYP2ZLD/iI/VsjRHwqClFOBgYlkKBagPaKcxcZBa5tY4/iiaySH
+	uc8BSWFFuRy14Z+k3rq4UEqIwT64KETX7uZuCfmBvBVuXps0iIzVMNZdxgkhoAds
+	ykILLIDVrO6m01NFJk27CcbcWa6Cxg3hEoUb1TlcVLJw6nmeGd3aLYnKlM3GaQ1o
+	dFoey2CijyLZSs8IZKSVcLfjPkB8Us73ROtocxOiFVMPExJ/plWjWwg0XHglY/Lg
+	u/U07UddY4/ocX6CwzMcWBWNQx+k17Djfdg==
+X-ME-Sender: <xms:rLybZ6Onhj-TnqxRsJknDPmXoFK3f0yKJcIFA18tOUCFaS_DRShrGQ>
+    <xme:rLybZ4_uKzMM8r17lyyym_0dATFfOeY6sz2y6JsuYKsZL-pI_BnbwOZk0rN-pmAsa
+    9Qrt7mMYFDHdx-j6w>
+X-ME-Received: <xmr:rLybZxRlPSeHbcoBomF-XXZgOfW6LGa-L8CKT5xuJkB5JT00hvGX2wnubEC9n7_tm7XYWGSH8Ii5aSl3hA20vP0JG76c5W2h-wWg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -56,31 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeegucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:UribZ-guK__0jXhaP5D0uMdAssruYyCxrZLc1C3bpqdtI9rBuhwmAA>
-    <xmx:UribZyAtqxswlnTybr2RArWcACsdVlySgG9-BZuN6rl_kWpETkb24g>
-    <xmx:UribZ_KS02yC7Acn89NKQv7PUHL1-DWteHp_aR37sk3vT-3bZxT_ig>
-    <xmx:UribZ5CO0DELvLmo7Jj2midF5F0oxSsI9W9Ob5zOwIETxhuLwvwL2Q>
-    <xmx:UribZ19fL1QLmeHSIzoGlEqCLr042HwKetIe7HtLJ3t9kZKnzbhrugB->
+    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlhhuoh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhhhrghgghgvrhesrghluhhmrdhm
+    ihhtrdgvughupdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:rLybZ6ttR6kXmiiE--1ndYT0X_g7MKQkQizxHTHRoK1nVMepN381lA>
+    <xmx:rLybZycY2d_1YIvjyKKtAxe6LMUcQgit66HD2dEbyCyyBFPR6TCLuw>
+    <xmx:rLybZ-3u_PEUX1zBFSXvZxun01-24uqJaq-CswxZba-liksB2a1AhA>
+    <xmx:rLybZ286dILTsOyHRRiNzn5AHyE665YwTo4IfufM-0T3l2gLjnvXoA>
+    <xmx:rbybZ6Q7ye_aPkrjUkg8G3uzZzjaoBfJ0B4YYLfmj8qRBP66_LgfF9nj>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jan 2025 12:35:14 -0500 (EST)
+ 30 Jan 2025 12:53:48 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/2] unix-socket: fix memory leak when chdir(3p) fails
-In-Reply-To: <Z5sWCxEF3J7t8WvW@pks.im> (Patrick Steinhardt's message of "Thu,
-	30 Jan 2025 07:02:51 +0100")
-References: <20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im>
-	<20250129-b4-pks-memory-leaks-v1-1-79e41299eb0c@pks.im>
-	<xmqq34h1k02k.fsf@gitster.g>
-	<20250129200702.GB2331283@coredump.intra.peff.net>
-	<Z5sWCxEF3J7t8WvW@pks.im>
-Date: Thu, 30 Jan 2025 09:35:13 -0800
-Message-ID: <xmqqldusfbn2.fsf@gitster.g>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 1/8] t0602: use subshell to ensure working directory
+ unchanged
+In-Reply-To: <Z5r64p7ZiCoETGnU@ArchLinux> (shejialuo@gmail.com's message of
+	"Thu, 30 Jan 2025 12:06:58 +0800")
+References: <Z5r6ZnLH3Ee8IQnN@ArchLinux> <Z5r64p7ZiCoETGnU@ArchLinux>
+Date: Thu, 30 Jan 2025 09:53:46 -0800
+Message-ID: <xmqqcyg4fas5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,47 +89,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+shejialuo <shejialuo@gmail.com> writes:
 
->> > Did you mean
->> > 
->> >     $ meson configure -Db_sanitize=leak
->> >     $ meson test t0301-credential-cache
+> For every test, we would execute the command "cd repo" in the first but
+> we never execute the command "cd .." to restore the working directory.
+> However, it's either not a good idea use above way. Because if any test
+> fails between "cd repo" and "cd ..", the "cd .." will never be reached.
+> And we cannot correctly restore the working directory.
 >
-> Oh, yes, I indeed forgot the `b_` prefix. Other than that I wanted to
-> abbreviate steps a bit so that I don't have to give the full sequence of
-> commands, but my attempt was somewhat lacking :)
-
-Thanks.  It also confused me trying between setup and configure.  
-
-As the use of meson in this project is a fairly recent development,
-if we want to entice more people and interest those in the "make"
-world, we should try to leave enough droppings for them, even the
-meson-novice ones like myself, to try out themselves whenever we
-have a chance, and the proposed log message of a commit that adds or
-fixes meson related part of the system is one of the good place to
-do so.
-
-> You can pass arbitrary arguments via `--test-args`:
+> Let's use subshell to ensure that the current working directory could be
+> restored to the correct path.
 >
->     $ meson test -i --test-args=-vix t0301*
->
-> `-i` makes the test run interactively so that stdout/stderr remains
-> connected to your terminal, which also allows you to use `test_pause` et
-> al.
->
->> (The "b_" prefix on "sanitize" confused me as well after reading the
->> commit message).
->
-> You've probably been confused by the lack of "b_" in my commit message,
-> not by the prefix itself, which was a simple typo.
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+> Signed-off-by: shejialuo <shejialuo@gmail.com>
+> ---
+>  t/t0602-reffiles-fsck.sh | 967 ++++++++++++++++++++-------------------
+>  1 file changed, 494 insertions(+), 473 deletions(-)
 
-For me, both were confusing equally ;-)
+Note for bystanders who may be interested in helping to ensure
+correctness of this step.
 
-> ...
-> options can be discovered by running `meson configure` in either a build
-> directory or the source directory.
+The patch meant for the machines we see here is unreadable for
+humans [*], but the result of applying it and then running
 
-Very nice to know.
+    $ git show -wW t/
 
-Thanks.
+gives me a very clear "from here to there, the entire thing now has
+a pair of () around it" pattern.  If you look at the clean-up step
+each test piece defines with test_when_finished at the front, and
+comparing it with the directory name the test repository "git init"
+in each test piece creates and "cd" goes into, it is fairly easy to
+see that the patch is doing the right thing without doing anything
+unwanted.
+
+All the here-doc in the test are now indented one level deeper, but
+you can check that they use "<<-EOF" to be oblivious to the leading
+tabs, making this conversion a safe one.
+
+One thing that is hard to validate by code inspection alone is
+
+ - This change will change the commit timestamps of the commits
+   created by "test_commit" helper function, now that they are run
+   in subshells to get their internal clock reset in each test
+   piece.
+
+But if the tests rely on the exact commit object names, running the
+resulting script just once would be sufficient to notice.
+
+Overall, very nicely done.
+
+Queued.  Thanks.
+
+
+[Footnote]
+
+ * No, I do not mean to say that you should spend time trying to
+   make the message readable by humans in a case like this.  A patch
+   that can be mechanically processed and leave the byte sequence
+   you intended to give the recipients is exactly what we want.
