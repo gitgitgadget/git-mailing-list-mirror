@@ -1,100 +1,253 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4591E522
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 19:37:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B23F514F102
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 20:07:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738265842; cv=none; b=U3imOzurOhkety3/8gHGCsTCKfQ8ceQfyIZbiK8Z+2pkwgkV+eEMKeKhDvl/uIMMJVka6DtwDqRmOR787XytT4ZKF1ASYA4v9OPpAPD9Twv5FyibY4cPj+2muHkaYKLWoRVdAHX+TkrDGsoeuAoOzfkJZndYznMNnHYmkWCekd0=
+	t=1738267668; cv=none; b=LyXtuLJqet+xqFICEqphOW4zcw4V2O9pjvugXgiZ7wiEg1RMiue0TgcafPo/MbaH1Kbge+zm7QVOWNfwEicYOd8+oRblXJbOU4FO1mPyjYQZZxNOwsA1n7yf7C0JZ7yk59Ith2xkboEjFjORkaiAlYpjAwOaZVHVd8QaoraRcso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738265842; c=relaxed/simple;
-	bh=WdWykITtm30AHAVrJnnG6bLu/gWHY456wdFTp1TACbI=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=Q2gvj+NECFocE06sbmSrFt04U8M3A5pXWeiCNEMHPJrX7E64XM8tLUwD+H6kRgEAtg7xu6YY7ISFrW8t803E/pvMRUSDb/Luhy8Uit9GO2qwk7W8wcxULBPquf72VRlPL2DUW80Nzk0MvNpiG8S5Eb6EN11Oxm8jJjN7mSz+uHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DHqFWzq8; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738267668; c=relaxed/simple;
+	bh=lWK+30aivDJ6Y/DUpUJPs7ugTJlDFqferJ/UAotke4U=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Content-Type; b=b5blUvHB87oHC03/SIE/jWfrwOeUOdk5Xi8sjL2MPgjLKyRxuspTGx8Ucn0W0jvGStdQ17i5z7Ueo9I/hUs63ydEp/n8H6EkAoq1LuqkgfwKeD4XIJ7ghD0X8UnF8B07mHBAlljsNz4YPcuIOeTuvd9Se2XYajvXkd7cpjB4phg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr; spf=pass smtp.mailfrom=online.fr; dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b=LAbOh508; arc=none smtp.client-ip=212.27.42.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=online.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=online.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DHqFWzq8"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6dcdd9a3e54so11282846d6.3
-        for <git@vger.kernel.org>; Thu, 30 Jan 2025 11:37:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738265840; x=1738870640; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WdWykITtm30AHAVrJnnG6bLu/gWHY456wdFTp1TACbI=;
-        b=DHqFWzq8Kj7/DWm78YOgFxnm1LohXB8CE9fkWhQkLSxakXPWp1xFTC2uqv4vG2juP0
-         wipA0OYeNl4wAsmRXk7DOSa7Yxxsqp7VRds3IHr9ejBXz/8icdndGGtFJ+XSEw1YU+r3
-         tJWdTLUkrEMUUC3DC0EKDA2n80stZVD/hp/IQ20MqpN8z4uueli72rOL91evjIXUplVG
-         0QA3WZ/NzaNGtBS3JqIKFG4zewmVCK3TCMS9xve9l1SycYDHn621eZoJZynivpy0drI3
-         IvwXdni6U/S/Yj/zZqWAJTxeX7/wkLUsy7fKIsmiSPPsdvNT8pz0JlEfJD4dAiESHIzC
-         68ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738265840; x=1738870640;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WdWykITtm30AHAVrJnnG6bLu/gWHY456wdFTp1TACbI=;
-        b=E3AngoKLukYcqecREWEa1Y8ZeZOpORPBXIpYH3GRvAAUbf0JXSIqzALQzs3OhOyKzc
-         Fa1JRdFXaKScnvia//5MBD/TGF5svKCGWGHgLDb3UvnQFiPf83Nm1rMPCjGRjfiGFmeR
-         nVx56tDIKafGLheLPTJqrxmpjus0kRYUsVtLZPUuPA+NzXuquFuxAWWS1q9Vh/gSJvNq
-         Cdkt8LLHjejlM8pZHGpwD4peKU3YKNvFW52KL6aTug8oQ3YPqGU6npkIj3KIEkF3vLnl
-         XWnYCuRXacUUJtJKc0srcyaIqCttAGXe20YWjZCgkYFJmkyUJNHufnYUCIBnUw0+ztjx
-         UYUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUCNJNY177B8u1tCMNeWWmNV7KSp444KG20NVNxX3NPde3uskEUxvG8QsVTw2RvfeGKIeE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw2u7EtqwoAgE1yfH1HTlxQX9/jkrlOXCA4MUOX+Wq30LcLdFTb
-	LX+ivo56G1sFO302oJ/Vk28FW4DZwZWjnbtrvr1U+ktG+WHnndZu
-X-Gm-Gg: ASbGncuvju0AnyG6b5Q1sQExbn1V4TglDJZNOX91H4L46+LAjvSoTpr23PKv4XcSUXv
-	kYJE+1BtQqgiOfmcgW43sqd27arkTGa6LRNNWBa4jtd5h5adBWLcDuVab9GzjAJv4s+c/Hy7lVU
-	u179D3w2/fsWOyRVD1OsJi5XEr/uUmNoBwYrbHlpJq7d4YJ/Rb5IubQY1DTF6XTGNYtAGJ54lSA
-	3jDFUTvkX5FLRE0VEUKAz61hPDgKiGIjD55iPLhZ5IxgtgtktbKwZvUFV+kufhnZO9aLjBRuHxf
-	Pa34X7+jKHvDIvaKYBNu2i5fzKWJgVOXwvrUTV8w
-X-Google-Smtp-Source: AGHT+IFPO4+Cu00Vpcwxw6W0/MclPzSR8rCX2mJiDORuWI0ykvvB+jsmS9eieEyuCipxkzhtLDV36A==
-X-Received: by 2002:a05:6214:408:b0:6d8:aba8:837b with SMTP id 6a1803df08f44-6e243c78da1mr103203736d6.41.1738265840077;
-        Thu, 30 Jan 2025 11:37:20 -0800 (PST)
-Received: from smtpclient.apple ([2601:5c1:8380:760:c1f3:891:f16a:c37a])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e2547f3e55sm9353166d6.16.2025.01.30.11.37.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jan 2025 11:37:19 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=online.fr header.i=@online.fr header.b="LAbOh508"
+Received: from smtp5-g21.free.fr (smtp5-g21.free.fr [212.27.42.5])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 49F3A84130F
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 21:00:12 +0100 (CET)
+Received: from [IPV6:2a01:e0a:ecb:c5f0:4838:9472:ea18:c785] (unknown [IPv6:2a01:e0a:ecb:c5f0:4838:9472:ea18:c785])
+	(Authenticated sender: thomas.koutcher@online.fr)
+	by smtp5-g21.free.fr (Postfix) with ESMTPSA id 4670E5FFC0;
+	Thu, 30 Jan 2025 21:00:04 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=online.fr;
+	s=smtp-20201210; t=1738267205;
+	bh=lWK+30aivDJ6Y/DUpUJPs7ugTJlDFqferJ/UAotke4U=;
+	h=Date:From:Subject:To:From;
+	b=LAbOh508fnOYpie+DEYSSAmtL4rvazBfb6xdwIkQLFR4iho4/uP2KS6zrwi03dVc/
+	 ccggUsp3tcDyKVj8mLlGF4YfIF/shKArS+pPkksoWI2p+K+6wpEsa5E0zKSBtXkibT
+	 t6VvMEIVHtQ9iVP89aSZQOX6DxbX+aKoHeT96JQleFIBPA9rXiWSReJ2XnF+YZ3HLc
+	 0qIUR2iQ/EteEXvTRcC0j80NGclYiQbrlhKOaCWPosXO5sz1DfCTCk0Zon/418lIoV
+	 SOPYp32m9hVH7zoLjbP9cRgDwpvt1Tw33wABW3IgNNiAdvsziPkcVFAGHrNkHKSmEx
+	 M/RLpnI3MmH/w==
+Message-ID: <bc4dd9c0-336f-40db-aeb7-e2c13063fe3e@online.fr>
+Date: Thu, 30 Jan 2025 21:00:03 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [BUG] PREFIX environment variable ignored by git config --system
-Date: Thu, 30 Jan 2025 14:37:08 -0500
-Message-Id: <EC3D4518-9330-4D08-BFE9-0A45E71112C6@gmail.com>
-References: <001801db72af$20a35560$61ea0020$@nexbridge.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-In-Reply-To: <001801db72af$20a35560$61ea0020$@nexbridge.com>
-To: rsbecker@nexbridge.com
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Thomas Koutcher <thomas.koutcher@online.fr>
+Subject: [ANNOUNCE] tig-2.5.11
+To: git@vger.kernel.org
+Content-Language: en-GB, et, fr
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Hi,
+
+I am pleased to announce Tig version 2.5.11 which brings some improvements
+and bugfixes. See the release notes below for a detailed list of changes.
+
+What is Tig?
+------------
+
+Tig is an ncurses-based text-mode interface for git. It functions mainly
+as a Git repository browser, but can also assist in staging changes for
+commit at chunk level and act as a pager for output from various Git
+commands.
+
+- Homepage:https://jonas.github.io/tig/
+- Manual:https://jonas.github.io/tig/doc/manual.html
+- Tarballs:https://github.com/jonas/tig/releases
+- Gitter:https://gitter.im/jonas/tig
+- Q&A:https://stackoverflow.com/questions/tagged/tig
+
+Release notes
+-------------
+Incompatibilities:
+
+  - Update remote repo variables. (#1358)
+
+Bug fixes:
+
+  - Fix various issues with `diff.noprefix` and `--no-prefix`.
+  - Fix `Ctrl-C` behavior within the Readline prompt. (#1342)
+  - Fix message upon edit from diffstat without patch.
+  - Fix missing dates in the refs view.
+  - Don't report an error when diff-highlight is killed intentionally.
+  - Fix parsing of reflog designator in timestamp format.
+
+Improvements:
+
+  - Open the blob corresponding to the diff line. (#1334)
+  - Keep cursor position in the main view when toggling
+    file-filter and rev-filter.
+  - Make errors visible in views showing Git output. (#1346)
+  - Allow different colors for all references types.
+  - Enable search in sections titles. (#1043)
+  - Show committer date by default in the date column. (#294)
+  - Update utf8proc to v2.10.0, supporting Unicode 16.
+  - Only show stash, notes and prefetch in the refs view when
+    invoked with `tig refs --all`. (#1359)
+
+Change summary
+--------------
+The diffstat and log summary for changes made in this release.
+
+  INSTALL.adoc                    |     4 +-
+  Makefile                        |     7 +-
+  NEWS.adoc                       |    28 +
+  compat/compat.h                 |     2 +-
+  compat/utf8proc.c               |    53 +-
+  compat/utf8proc.h               |   104 +-
+  compat/utf8proc_data.c          | 30816 +++++++++++++++---------------
+  compat/wordexp.c                |     2 +-
+  contrib/tig-completion.bash     |     2 +-
+  doc/asciidoc.conf               |     3 +
+  doc/manual.adoc                 |    14 +-
+  doc/tig.1.adoc                  |     2 +-
+  doc/tigrc.5.adoc                |    13 +-
+  include/tig/apps.h              |     2 +-
+  include/tig/argv.h              |     2 +-
+  include/tig/blame.h             |     2 +-
+  include/tig/blob.h              |     2 +-
+  include/tig/diff.h              |     2 +-
+  include/tig/display.h           |     2 +-
+  include/tig/draw.h              |     2 +-
+  include/tig/git.h               |    14 +-
+  include/tig/graph.h             |     2 +-
+  include/tig/grep.h              |     2 +-
+  include/tig/help.h              |     2 +-
+  include/tig/io.h                |     2 +-
+  include/tig/keys.h              |     2 +-
+  include/tig/line.h              |     6 +-
+  include/tig/log.h               |     2 +-
+  include/tig/main.h              |     2 +-
+  include/tig/map.h               |     2 +-
+  include/tig/options.h           |     8 +-
+  include/tig/pager.h             |     2 +-
+  include/tig/parse.h             |     4 +-
+  include/tig/prompt.h            |     2 +-
+  include/tig/refdb.h             |     2 +-
+  include/tig/reflog.h            |     2 +-
+  include/tig/refs.h              |     2 +-
+  include/tig/repo.h              |     3 +-
+  include/tig/request.h           |     2 +-
+  include/tig/search.h            |     2 +-
+  include/tig/stage.h             |     2 +-
+  include/tig/stash.h             |     2 +-
+  include/tig/status.h            |     2 +-
+  include/tig/string.h            |     2 +-
+  include/tig/tig.h               |     2 +-
+  include/tig/tree.h              |     2 +-
+  include/tig/types.h             |     9 +-
+  include/tig/ui.h                |     2 +-
+  include/tig/util.h              |     2 +-
+  include/tig/view.h              |     2 +-
+  include/tig/watch.h             |     2 +-
+  src/apps.c                      |     2 +-
+  src/argv.c                      |     2 +-
+  src/blame.c                     |     9 +-
+  src/blob.c                      |     2 +-
+  src/diff.c                      |    31 +-
+  src/display.c                   |     2 +-
+  src/draw.c                      |     2 +-
+  src/graph-v1.c                  |     2 +-
+  src/graph-v2.c                  |     2 +-
+  src/graph.c                     |     2 +-
+  src/grep.c                      |     2 +-
+  src/help.c                      |     2 +-
+  src/io.c                        |     2 +-
+  src/keys.c                      |     2 +-
+  src/line.c                      |    10 +-
+  src/log.c                       |     4 +-
+  src/main.c                      |    27 +-
+  src/map.c                       |     2 +-
+  src/options.c                   |    47 +-
+  src/pager.c                     |     5 +-
+  src/parse.c                     |    11 +-
+  src/prompt.c                    |    13 +-
+  src/refdb.c                     |    25 +-
+  src/reflog.c                    |     4 +-
+  src/refs.c                      |    36 +-
+  src/repo.c                      |    10 +-
+  src/request.c                   |     2 +-
+  src/search.c                    |     2 +-
+  src/stage.c                     |    23 +-
+  src/stash.c                     |     4 +-
+  src/status.c                    |     6 +-
+  src/string.c                    |     2 +-
+  src/tig.c                       |     2 +-
+  src/tree.c                      |    12 +-
+  src/types.c                     |     2 +-
+  src/ui.c                        |     2 +-
+  src/util.c                      |     2 +-
+  src/view.c                      |    11 +-
+  src/watch.c                     |     2 +-
+  test/blame/default-test         |     1 +
+  test/blame/start-on-line-test   |    48 +-
+  test/diff/diff-stat-split-test  |     1 +
+  test/diff/editor-test           |     4 +-
+  test/diff/submodule-editor-test |     4 +-
+  test/diff/worktree-editor-test  |     4 +-
+  test/main/date-test             |     1 +
+  test/main/filter-args-test      |     4 +
+  test/main/graph-argument-test   |     2 +-
+  test/main/jump-ends-test        |     4 +
+  test/main/no-merges-test        |     4 +
+  test/main/start-on-line-test    |    12 +-
+  test/refs/filter-test           |     4 +-
+  test/refs/start-on-line-test    |     6 +-
+  test/status/repo-var-test       |     5 +-
+  test/tigrc/width-test           |     1 +
+  test/tools/libgit.sh            |     2 +-
+  test/tools/libtest.sh           |     2 +-
+  test/tools/show-results.sh      |     2 +-
+  test/tools/test-graph.c         |     2 +-
+  test/tree/chdir-test            |     2 +-
+  test/tree/default-test          |     1 +
+  tigrc                           |    15 +-
+  tools/announcement.sh           |     2 +-
+  tools/doc-gen.c                 |     2 +-
+  tools/header.h                  |     2 +-
+  tools/install.sh                |     2 +-
+  tools/make-builtin-config.sh    |     2 +-
+  tools/release.sh                |     2 +-
+  tools/uninstall.sh              |     2 +-
+  120 files changed, 16004 insertions(+), 15629 deletions(-)
+
+Ivan Shapovalov (1):
+       Fix `Ctrl-C` behavior within the Readline prompt (#1342)
+
+Thomas Koutcher (22):
+       Open the blob corresponding to the diff line
+       Keep cursor position when toggling file-filter in the main view
+       Fix parsing of `--no-prefix` argument
+       Fix staging with `diff.noprefix` and `--no-prefix`
+       Keep cursor position in the main view when toggling file-filter 
+from split diff view
+       Make errors visible in views showing Git output
+       Allow different colors for all references types
+       Fix message upon edit from diffstat without patch
+       Enable search in sections titles
+       Show committer date by default in the date column
+       Fix missing dates in the refs view
+       Keep cursor position in the main view when toggling rev-filter
+       Don't report an error when diff-highlight is killed intentionally
+       Parse committer date in --pretty=raw output
+       Refresh the view when toggling date-use-author
+       Update remote repo variables
+       Fix parsing of reflog designator in timestamp format
+       Update utf8proc to v2.10.0
+       Show stash, notes and prefetch in refs view with `tig refs --all`
+       Bump copyright year to 2025
+       Change the date in generated documentation
+       tig-2.5.11
+
+--
+Thomas Koutcher
 
 
-
-> Le 29 janv. 2025 =C3=A0 19:37, rsbecker@nexbridge.com a =C3=A9crit :
->=20
-> =EF=BB=BFOn January 29, 2025 7:24 PM, Junio C Hamano wrote:
->> <rsbecker@nexbridge.com> writes:
->>=20
->>> This appears to do exactly what I am looking for. When I create that
->>> file, git picks up config values from that file.The question is, is
->>> this environment variable actually sanctioned or is it just coincidence?=
-
-> It does
->> exactly what I am looking for.
->>=20
->> How about reading "git config --help"?
->=20
-> Yup. It's there, thanks. So should I figure out how to sync the website wi=
-th
-> this
-> or ignore it?
-
-I often link less experienced Git users to git-scm.com, so I appreciate if i=
-t is fixed in some way.=20=
