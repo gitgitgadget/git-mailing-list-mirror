@@ -1,100 +1,139 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A89A1F12F6
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 21:18:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA491A2C29
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 21:57:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738271922; cv=none; b=CxpKJVJESxOt0yy0NnolKdR+dEYJm+sDwnlTM1+nZvQDTMxgh0TQ9oiOSAmK96L85IGn64+hPyTIXdEMmplfF2LgM0NTae3wozZEadEdPaY9A7/RJ0aWdCmU1BsMf9bcskdm4q+YfAOtwODwFB/uAn0lPj37OZFPXuVQPlK0xS8=
+	t=1738274266; cv=none; b=PHbEc0lbLOHRXey1SxfpEkQC3jlgzQkbLFRGgTnByH2BfNc/2OTf5k/0gIl2e65NiDAEwjoj+R20q1NmuKJnr2iK6MYrhW0OpwiK41IaRStjREDkozpLcU4lt2elbcD+GVJVtFlNDFMl6TM52Otc8DQLkklqfwk/t+M61qse8Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738271922; c=relaxed/simple;
-	bh=4AzA164PLC4A3HcYC9eQ7HApchibKmCXdz7/jt4wIg0=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=tawmfLnwB0TDsd+BGXwpZtPWG51h2xwXLzNCwcUCZNEuaLWpaPQe6DJJMqb56kII1VeocA11VW14XwRsvkX2n2yR3xsgRUaXDKZB1WnTQIDQ6toDoTR7vhzRMLGOJC1filMJUjtX7bf3eyVU8KuRzvrxTPSJ84LL7o1Ww/EOBoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ObZiDjSL; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738274266; c=relaxed/simple;
+	bh=0L8fMvgb0TYjfa70xg7pvNU/QWE98qtIzge1jDG3WbE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Iexg/k4RCOy8LEfkurGrbjaprhLKOHav4KCV7rbD//lwGTXApHvA2wsagjdbtHjAREqMo+TMnYVsfNHfWMy9O/p83C6o4WB86D6z96xsvBGIIbNWBEFVP2+ytV6nGH6/APFwU+bElsDcMdKs4XGyO7N1FZ8UynuVRsrxh2huXbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CDw/EUJl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D+NymI8B; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ObZiDjSL"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5d4e2aa7ea9so2686572a12.2
-        for <git@vger.kernel.org>; Thu, 30 Jan 2025 13:18:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738271918; x=1738876718; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Q2CqOA3xXxSHVzjfhvG1ATsTE6Z5jDTwlVdqm82Aqt4=;
-        b=ObZiDjSLWumEk4oBklGp8xyPJss5ChtBttBVIXwKMqdTGp6DI5Eh14VEjFF9OOs2hu
-         DyAfDzfYXMkWokciLH9CXpvvjmxtIAw538VzWbNB9UZbhwGnB7uptbf4MixGbjKGdgUb
-         /IaopXdfxa2zADkc90grXa2opTi4VwbGJ3O4ZbmwCzkRyGwxj4+Wsjiq49Uy1wmhG9ri
-         m7JSGOr5PqU+JP/gkbtKaSc8NAiq3N3gHyJ1/USxwaOL60uUNyPgDogFGaqPI0rbzKZs
-         5a7wX0a6RC0cJmEUhzQtNqE/K/LF+yn5sFTw7qILNPcEPdDqkLGYA8VWrzTjfdmoF2cg
-         RnYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738271918; x=1738876718;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Q2CqOA3xXxSHVzjfhvG1ATsTE6Z5jDTwlVdqm82Aqt4=;
-        b=RwXHV2VE+l4SRWQMQX0uX80jEBLT8/OSsy74r86t6vyNG/Ek6ywIAaJnkiVM3rHald
-         u9zIu6K7wa/oHmjKUWUxb7PTf7L8veN+kJz3BQ3zcUSDQGBYnnFby1AdMeEHPwBDQus0
-         BGwy9FQMvt6wgQ18izJJnvC+/t8Xd1SYJtC9V1uf+vbo8xO2ghxoue9Io8QIUrUx9CDk
-         qIAIslfjnfju5LzlGeiAHkC9OpwO5A29GkwZlBvxHOpQV8jB5rYD1CoUPQqFhKU44FlY
-         DnBdMBK/35o73f5xWXmE1JBPcolUlbtjibBTnYySgkAghsm+056zsHZqn2TPBA4HJRYH
-         YJnw==
-X-Gm-Message-State: AOJu0YxPR4xo626Kvuelex2rkgKY+LfySQyPntexHJgNjDw7q+q2rlkh
-	IRzI2rYawCKXM+6IR83aTqPXw1X9Ee/VU5j4rWzpCmg3gieMfNC4qg6s0lNn/aIjR+siLiv4mfd
-	SYXSBZ4D5fC2pTb1v7agWtXGKQpHSMgiN
-X-Gm-Gg: ASbGncsI9Zp5v21Fa5psHDBlTRFGMYUVTPzAF2z2/ROLCYRICvDoBTnZy71WTR6Yj1R
-	HIKleS29/4zGFmfMaQYk6DjP06qfLL40bMUpvqOzEjhbtRECvyVzLce7D/7ft9X1BxuvdlU5vAG
-	0=
-X-Google-Smtp-Source: AGHT+IElQDPZCqbHNVKoQUc2Sa1Q7kg/if4aEi97jskCplitP7J9HEHXrXmTkhSdAFWP8J2FUhzzx1GchBFSj7GQgxo=
-X-Received: by 2002:a05:6402:2812:b0:5d9:f8d3:6e6b with SMTP id
- 4fb4d7f45d1cf-5dc5efec2famr8769776a12.22.1738271917534; Thu, 30 Jan 2025
- 13:18:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CDw/EUJl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D+NymI8B"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7B80413801E2;
+	Thu, 30 Jan 2025 16:57:43 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-08.internal (MEProxy); Thu, 30 Jan 2025 16:57:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738274263; x=1738360663; bh=ieqT7A8mAm
+	vtGtFg2VAYfZoR4lJq8/KBPeYSw1e5u/g=; b=CDw/EUJlmVNSVxYwBhy2w6/FYe
+	OX0QZDy2QnTCipCPhhTJlt21pDyi3zBqagvzviRMfdV+22fsdFwUFDU+uz7E05UN
+	e5eN6VENKp4ITDDGt5w3nB3X+u8ufZNHjB997j8KYDVamLP22rOFZgkxQyBNUv9O
+	IUr+dPybQpoqNFvO/nYwHPZwfU6vrnh1qjvIliKCmVP+7kX8A2iCIq02fPIx9DpR
+	FXPrmslvkwlDayQYTK3j7WayoyOrl/EKrECIX84/Mmtszwrv3vdQfu5DhUtszaOn
+	qzRgv0g71T1vLMGk86M3HlSZhCAiIQEVJxAaBLbGWgR1kBeduX5Fdfmtflgg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738274263; x=1738360663; bh=ieqT7A8mAmvtGtFg2VAYfZoR4lJq8/KBPeY
+	Sw1e5u/g=; b=D+NymI8BobNtMBMAb1aRgKmVIkFNGPAuPVj7hvDu06o2emv8X2V
+	AWE5ZmOfB9DK3emDO7fdbRdgqkF0T3WCD/TUf/OxdUrrTxZgpNvyeG9yB25cAoMY
+	ZQ2W/0kEy3Uh4L+pC0e7K/fPJebWXhnE3n3HBRazi2zI+kidudwLRxBzaD/Boo2a
+	iS+UsXvQpSlGStpFLdlNcbQVluLDW19/m50QN+3/O0+1KkjJJCwClT+K1qWejFh9
+	vpjSLoQvF9/lkRKWLhAfhQtvq3tYeII5s6FOE6l+rsynsV5QoJ12G+FWVWmZ/qd3
+	se1quKcyVTIUPr/1l1aCiYm8PPdxzr0EjDQ==
+X-ME-Sender: <xms:1_WbZ7kyfzNJenp92wcCRcQjW9DID3LpKGAw5W3dnzljPu1SHnXWTw>
+    <xme:1_WbZ-3qPK1FXsZVDLK5tAkZga1x4kntyslXmjp3si7pfzUBs3zJidP7awyLABL0w
+    F1MPT-K6wK1TCwJnA>
+X-ME-Received: <xmr:1_WbZxpN3Y3YrQCBQCf3-X0poLETLDvdl_EJ6k3dPuw2vOfEqfpGd-zeq35nE05xyADovkaZZ56gD1ddCBGcNop8QNY7Tyl_ynAt>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeileeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    gjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeejke
+    eujeegteevjeetgeeileeujeeijeefueegieetiedtleffvdffheeihedufeenucffohhm
+    rghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhssggvtghkvghrse
+    hnvgigsghrihgughgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:1_WbZzmcWh_WKMq5BAD_5TVLcKTQm1rJB9cA9zWhA_blb9ZAixDfXg>
+    <xmx:1_WbZ51-v3CGHF-xnL7m-bahWyxcbz_00KRCQjpYC4rT6LL44ep30w>
+    <xmx:1_WbZyuT7GxlGX7BVxYRFWQa4Bf9sVdZX8JXhpz_48K0onONrHRIBg>
+    <xmx:1_WbZ9XcNFXF1se4Pez_SD_ua6glYfEwoR6PFwrtSdtycDseKikWfQ>
+    <xmx:1_WbZywTxtnIJXlwa0rpjaCcVIlEh-a6Ngj6AluLiaweDxepiuYiLR01>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Jan 2025 16:57:42 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: <rsbecker@nexbridge.com>
+Cc: <git@vger.kernel.org>
+Subject: Re: [BUG] PREFIX environment variable ignored by git config --system
+In-Reply-To: <001801db72af$20a35560$61ea0020$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Wed, 29 Jan 2025 19:37:17
+	-0500")
+References: <007f01db726b$ac911ce0$05b356a0$@nexbridge.com>
+	<xmqqbjvpk1wo.fsf@gitster.g>
+	<008201db726f$6e6990b0$4b3cb210$@nexbridge.com>
+	<xmqq5xlxidh6.fsf@gitster.g>
+	<009c01db728d$164a60d0$42df2270$@nexbridge.com>
+	<xmqqwmedgpkf.fsf@gitster.g>
+	<001201db72a8$72719480$5754bd80$@nexbridge.com>
+	<xmqqfrl1gosc.fsf@gitster.g>
+	<001501db72aa$fc812350$f58369f0$@nexbridge.com>
+	<xmqqbjvpgnea.fsf@gitster.g>
+	<001801db72af$20a35560$61ea0020$@nexbridge.com>
+Date: Thu, 30 Jan 2025 13:57:41 -0800
+Message-ID: <xmqqldusarsa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 30 Jan 2025 22:18:25 +0100
-X-Gm-Features: AWEUYZkr1dpQMBL6AeMGNQ2qHd_KuBhzmjI8z9tyIoJz3D_RnfbNYhk1jkJZdsA
-Message-ID: <CAP8UFD1wUUwNhCbGi=Vo4pCfquLGwxXsh=mP0DgQDU3JhtXgwQ@mail.gmail.com>
-Subject: Draft of Git Rev News edition 119
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, 
-	"Peter B." <pb@das-werkstatt.com>, Justin Tobler <jltobler@gmail.com>, 
-	Brandon Pugh <bp@brandonpugh.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, Adam Johnson <me@adamj.eu>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi everyone,
+<rsbecker@nexbridge.com> writes:
 
-A draft of a new Git Rev News edition is available here:
+> On January 29, 2025 7:24 PM, Junio C Hamano wrote:
+>><rsbecker@nexbridge.com> writes:
+>>
+>>> This appears to do exactly what I am looking for. When I create that
+>>> file, git picks up config values from that file.The question is, is
+>>> this environment variable actually sanctioned or is it just coincidence?
+> It does
+>>exactly what I am looking for.
+>>
+>>How about reading "git config --help"?
+>
+> Yup. It's there, thanks. So should I figure out how to sync the website with
+> this
+> or ignore it?
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-119.md
+It depends on how good a friend you are to them, right ;-)?
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+https://github.com/progit/progit2/issues?q=is%3Aissue%20state%3Aopen%20PREFIX
 
-  https://github.com/git/git.github.io/issues/741
+seems to say that the issue has not been reported, and doing so
+might be a good first step.
 
-You can also reply to this email.
+We'd probably want a bit of history digging to see if we ever
+supported "$PREFIX/etc/gitconfig" before opening that issue, though.
+How to phrase the issue would be different between "we used to but
+no longer support this since version X" and "we never supported such
+a variable".  This is a #leftoverbit for those without a lot of
+coding skills but patience, being good at using "git blame", and a
+good notetaking skills to summarize findings, are needed.
 
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
+Another good thing to do is to match the environment variables and
+their descriptions we have in the output from "git help git" with
+that page.  We may have acquired a few more of them since that page
+of the book was written 10 years ago, for example.  This would be a
+good #leftoverbit for those without any coding experience but want
+to improve the documentation that exists in the overall ecosystem.
 
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
+Thanks.
 
-Jakub, Markus, Kaartic and I plan to publish this edition on Saturday
-February 1st, 2025.
-
-Thanks,
-Christian.
