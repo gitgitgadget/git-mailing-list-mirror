@@ -1,77 +1,79 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4ED139B
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 16:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9227322B
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 16:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738254272; cv=none; b=CkpiklSrEzUsv9WDF9PfA3UPE1N0pNPqVqZ3s2odv7JRjmb5nE64gt49KQdoe0t3VG1fdCFwtXymk50yI3c1WCoXN6aZiBFmbjPCiYy+3WbHDNJbT6K0P4ATzokz6kFO2fAUq0CJFFtEVYetcObkm33aQd6HZw7HouXtMjFxxNs=
+	t=1738254273; cv=none; b=Npw0kwgum8L9dA4Z1AN8GCciXXPVzxMasW26Scn8KobyoJztahKc7qY063VQBoN3hxvEA50BNI1GS/aPRl0q1GBlHMPLCG1G8jKBvYiDQ9JXpdsbbsobYMOleKCbO59h7Abqvq+1o9NBQBnP8wRTe9equrN+Z8peO9bey4p1Ak4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738254272; c=relaxed/simple;
-	bh=XAyuCdvSy46ahZi8t0Ai+E3k6ePWsd7qS5O8aNlLx6U=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XlEP53BboVI34/ByYaQCUx6i/E7Ujnw76tkfdjpuzgeAA2+MaFObaz4MP/FzBFawr4AntDsv9gFRP8TKVP9xslQNjDCgx5LoZgzSXQ6aePliu68zNLolp6hfO5pVu6r7YUMWsLqy97Qn3JOkOuxEFLG2sig07dtibmO+iSXDMm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K2njVwll; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c6wqy715; arc=none smtp.client-ip=103.168.172.158
+	s=arc-20240116; t=1738254273; c=relaxed/simple;
+	bh=buvSfmVe2py6cCTe+k7N1zLt8EUwpk7wxw1pBnk3k20=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ZFSgHVruBEmhalyJna9aNaQw8VbDMKPRtkT3P2Ddx2n0BQcLztbeBlYlD4aV7Lc96vh78/JSBqG9Fq00nUyKxLIQncPLKY9gn6Cl2c67uyJiAbUoZrzyXoHpKyr/5TRmwTJmA/AYK5aRFvLXE54QI+MRc332aWHJt7VnAJWwhYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QBBMh4Jg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SFZq6t34; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K2njVwll";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c6wqy715"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E3FCC114010A
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 11:24:29 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QBBMh4Jg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SFZq6t34"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C89A71140088
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 11:24:30 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 30 Jan 2025 11:24:29 -0500
+  by phl-compute-03.internal (MEProxy); Thu, 30 Jan 2025 11:24:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1738254269; x=1738340669; bh=3/NXgZl4Ht
-	3SOKlE9IfG7Fh47snc3PazjWuNGOFiyTw=; b=K2njVwllOU9m34I83RX98eEDGr
-	zx2cpy9iL+vN1L8caqza0+LCNuxFV7fZv84scf/KcJjqAF+dBVhaT2CUhRLKKnjR
-	RZ5WL86i/K3tVJabkL0l23fbBYW7nlDerjV9z3n5sWO5m1r26JesfDJR/oWgpbIr
-	9/KLrV7DhB31gJxhOrjRb8sBQX1uFfYlnCSjFzGl2PAs64GCcC3hriEnxyZ7jeTC
-	8vs0/Jqt04+IjN1hvx6z8LfBD5K/rt25SeQ60EXnEcj7BTqJwhiPzry2pm3SBo1U
-	n0AaV8ASJlP3Lp1UzO0Ob6jYzOxtxPFrZjqmqXiTNdnPb4XzmAjB/bVwgzSA==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738254270;
+	 x=1738340670; bh=6mfrHfmFhWvZdNjFDNsiPM4nxLero6jl5+qofJ3QkqI=; b=
+	QBBMh4Jg9CvN/ciGl8F6qd3z1Fqt8iBKoKsdc/iudpRt6veuDrqqydeVWFhzdZZS
+	4HbovQV//jLNPBoty4W/NzfFxEXQt1+Zl2ri6kUnpM37gyYdLEz5teXHp1XNErjV
+	kTNa9PmQ9tArR5E4VANrYOl/mCozT2ZBESSGGEl4680otCmenkg1U4PTw4FJGYTm
+	rzd0B5SBXD5YXA4wcUV/lMOpJ19R0CqN84tG7FwF5HG+JvDI68mr1xeczQT4iweO
+	dNF5/GPE8fQPGyrRUtmt2k79ncCi5R13c+eKMoYhSwWEmFzuMskxzbK3qesFrlVe
+	wcdUyrBmcQvczkCJofFxpg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1738254269; x=1738340669; bh=3/NXgZl4Ht3SOKlE9IfG7Fh47snc
-	3PazjWuNGOFiyTw=; b=c6wqy715YMUWzpjt3AGAOsmYiXu8a4HHCLV8UPrNeqWO
-	AtpSLm/H5aK3Fh2oJLbM/j70JayEogt/vsniy0MfOpB1d9iQLVuYXdUtaexxXUR8
-	NL8ju3+KKa9+SwWbcirkQTXFSOuC3u4kj6y7T8atj5mCOaTXWgMrt43sR0s9Co2D
-	4IplSZ4REkCz634046TWzFeTNwInaoiqop3bNuhf+FiivqqwdFuvCaXoC2kIwh8F
-	5q/iLLbEiICHrSoaesTCyEhmPWL+lcIQjG0pPsbF+dB+nhZrPrJ+aGEN73nDz+dP
-	tvxUB4NSFxdHsoarZOtDzLnmRq8lQ/GtiCP09J0IqA==
-X-ME-Sender: <xms:vaebZ7Od0ZX457Ipd5D9MLiA67hI2AeJyP8knpDGpTS7HE-k6-DwkA>
-    <xme:vaebZ18T6QBV41r14H_uHeOqgzFPb5vtBqlCyOKw-CnalgYjhieVYeltrg9XZYxm0
-    USuV-seqFyPj3iRLg>
-X-ME-Received: <xmr:vaebZ6TxmP8APf-YDMRkLpobDRnso34HsvoKPhE7Hwele5Z2Rq5C0Iy3jCliO93HdA3H48ydu0sM6y3BMGom2fe4MS-pPrz0Zad0R7PnSgGg>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738254270; x=
+	1738340670; bh=6mfrHfmFhWvZdNjFDNsiPM4nxLero6jl5+qofJ3QkqI=; b=S
+	FZq6t343pzCeD/0KwJGKU+a4e7Wg9J64Eeg95+dmNQf+F9vQ+yRZzmJLHTnNZ8wY
+	bvbEEI1K0jzYL5uoK1G2Y+1wND5ujMg4h8cp4/yUccWEuNirZd6rzIsx6FtEhRF5
+	iP2Cy9AgkqXIM2AwjXr1CJVTfOzqp9buMjV9Xmffmb/6zBveduVzGwA3Gk9UglAp
+	zbXZ09xJdCVw1JJm/l3rfR083oGLy53shmiPd8u2gM6c8ZLJ6lQ8KmX3TEfF/zHJ
+	/4SOnjQVkHnsQRvep2FJa7b01y3E4RATVOdHsfHX2yz9AZa8BYbdnbxs6djfMn8w
+	kIDHVEh6DeIf2o7RTRnPA==
+X-ME-Sender: <xms:vqebZx--ARY0zQsN9oUu0bqWz-m_P3ZxGVUVz5NFkgzs1Qfc5yoNCw>
+    <xme:vqebZ1vpF17dvclJD3RcrFq42izhVFpjMZ-Pyz9chRjSdZpwSHUibTEyBqy-pvM23
+    VaZCW4Oj30eS5sl3w>
+X-ME-Received: <xmr:vqebZ_B1Go0-odiC7yXNHyYb9e_6Fyh84absbAyBSNSLUKj_8lePr7AE0hRBuuE6JKdmJPJYY1G4s5Q4h3y57E2QViHcZW9h1RO9xBPkp3Id>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeivdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhufffkf
-    ggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
-    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetie
-    egjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
-    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:vaebZ_umS30FLT67b3JYko8OYyHJUevao0cpRAOveW3wxNooYeMkTw>
-    <xmx:vaebZzdf4yabCKZB5pXG_qSb3Tr6Ow7bClq5fKmA4zf5V1ssY6x4SQ>
-    <xmx:vaebZ72Q9c9GySrqmDmZSwMRP-sghUy9aWVO07n-lmNvXtGUyV450Q>
-    <xmx:vaebZ___cfLNUejdqn0DSMo-X9DvP6KHBLNoEJ0IMFKRtmYkfl4CRQ>
-    <xmx:vaebZ7F2FEbAOWq3xSNJCl7q15LOTMG4Vkb-DaG1EWjssOv5nn3F1O9B>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
+    gtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
+    dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:vqebZ1dDXfjN1KJsy-b6KwgGCTNK4vXVJGh_H-xvPLe2IYJvc3B9Dg>
+    <xmx:vqebZ2OarUxttnSfHKztei1U_GpkJ94nEkWCkxiTFjrONYy2UiNLuA>
+    <xmx:vqebZ3lKykzimTONa0WICvfbV5wWP7tVNc9hw1UlrH3OCuIMChK1pw>
+    <xmx:vqebZwv9M3mIaUreTPDCmpQ6LXPC22iE0RYImhgmeeTtVnl-vfBxGw>
+    <xmx:vqebZ43CwtDc6GbpjbHsGZJCfahNhNNYmsFphOC6WHTOdg0x9scDHZ4w>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 30 Jan 2025 11:24:29 -0500 (EST)
+ <git@vger.kernel.org>; Thu, 30 Jan 2025 11:24:30 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id af41b067 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 22e9b06a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 30 Jan 2025 16:24:25 +0000 (UTC)
+	Thu, 30 Jan 2025 16:24:26 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/3] setup: fix reinit of repos with different formats
-Date: Thu, 30 Jan 2025 17:24:16 +0100
-Message-Id: <20250130-b4-pks-reinit-default-ref-format-v1-0-d2769ca01207@pks.im>
+Date: Thu, 30 Jan 2025 17:24:17 +0100
+Subject: [PATCH 1/3] t0001: remove duplicate test
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,38 +82,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIALCnm2cC/x3NQQqDMBCF4avIrB1IYhTaqxQXsU7qUE0kiVII3
- t2hy48f3quQKTFleDYVEp2cOQaBbht4Ly58CHkWg1GmV7pTOFncvxkTceCCM3l3rEXo0ce0uYK
- PwfVktLLWaJCZXRr//hev8bpu1JV8S3IAAAA=
-X-Change-ID: 20250130-b4-pks-reinit-default-ref-format-96a5e2104421
+Message-Id: <20250130-b4-pks-reinit-default-ref-format-v1-1-d2769ca01207@pks.im>
+References: <20250130-b4-pks-reinit-default-ref-format-v1-0-d2769ca01207@pks.im>
+In-Reply-To: <20250130-b4-pks-reinit-default-ref-format-v1-0-d2769ca01207@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Hi,
+The test in question is an exact copy of the testcase preceding it.
+Remove it.
 
-this issue with the reinitialization of the ref format was recently
-discovered in our CI systems at GitLab, where caches contained repos
-with one ref format but we tried to reinit them with a different ref
-format. But turns out that the same issue also exists for the object
-format, so this patch series fixes both issues.
-
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (3):
-      t0001: remove duplicate test
-      setup: fix reinit of repos with incompatible GIT_DEFAULT_REF_FORMAT
-      setup: fix reinit of repos with incompatible GIT_DEFAULT_HASH
+ t/t0001-init.sh | 9 ---------
+ 1 file changed, 9 deletions(-)
 
- setup.c         |  8 ++++++--
- t/t0001-init.sh | 30 +++++++++++++++++++++---------
- 2 files changed, 27 insertions(+), 11 deletions(-)
+diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+index 72a0c2e7d4..213d5984b1 100755
+--- a/t/t0001-init.sh
++++ b/t/t0001-init.sh
+@@ -861,15 +861,6 @@ test_expect_success 're-init with includeIf.onbranch condition' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 're-init with includeIf.onbranch condition' '
+-	test_when_finished "rm -rf repo" &&
+-	git init repo &&
+-	git -c includeIf.onbranch:nonexistent.path=/does/not/exist init repo &&
+-	echo $GIT_DEFAULT_REF_FORMAT >expect &&
+-	git -C repo rev-parse --show-ref-format >actual &&
+-	test_cmp expect actual
+-'
+-
+ test_expect_success 're-init skips non-matching includeIf.onbranch' '
+ 	test_when_finished "rm -rf repo config" &&
+ 	cat >config <<-EOF &&
 
-
----
-base-commit: 3b0d05c4a79d0e441283680a864529b02dca5f08
-change-id: 20250130-b4-pks-reinit-default-ref-format-96a5e2104421
+-- 
+2.48.1.468.gbf5f394be8.dirty
 
