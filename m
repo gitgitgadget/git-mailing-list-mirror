@@ -1,83 +1,90 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFA71F12F9
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 19:19:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF1A1946C8
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 19:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738264759; cv=none; b=anmQD2NEMlqlSVDgVUA1WngdbI84iAPvi7slZfsBEms8B3/sAxwAPW6a/r1r+euoDCBPXAZrVhXZ3S0JWebyBzH4sa3wO7/LOTBZrvF4UEbWjacRmxe177k2S1VeyLJAjkvupP00HUHWlC2mGnu2c6cnj/KB/nn3fXeJSBWcFf0=
+	t=1738265065; cv=none; b=CricgaRN5ZZL43MKfCHal0rdgLo+At4jBBZlOGC+X849934geKbrkpWp68284Oggp9Ae7et6Hz3tUsDKX0aGqgVma6ym21EwztMkxJQbLR2rGU+UCEL0AHE6EqCabvIuDLfc6/F2pUVG818hJ1/teOQ5iE4NrpWPtvhvPc5fX7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738264759; c=relaxed/simple;
-	bh=dXr5kfmEzhLMppaYv9G91cbHl6OJzR0OQFLjoQAqx2k=;
+	s=arc-20240116; t=1738265065; c=relaxed/simple;
+	bh=FbmRoNNDD5R0/o6dnLx2GGu+ureIdeEX09plkmmUqyI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uJaCquEpinhp57814zalvVueckfCtyv5rm5II/G76kaydJfODekjK/3aIRTFqo7lRZZl7Blq/ev6I3yCoMrXGoX4iK+5oEYCSaeiXjmKdYhsJXkNewvRTUKjqqkyfJAnecmkl0aM3X+HTq1kJkMKsTdtMoo7EKmbAhaRUCVqQ+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hmFdE2B9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r8E5oZxQ; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=mfn57VXSNkHO8PRyxV9xLBPAPizNb+FcMhR9X6SQBpLT4L74aHQr0DgmuQioD+paWWtX77qlWH5QPa52SGbK8jiBWF5H4OnmGkGC41IftqcpPOOJrdSglF9VPNDXpAFJ58bU8huieZ/B/Zk/Cv4+VCZG9AN0PXP4VC27s2Cyec0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D+o/Ozg4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EQ1HggZ3; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hmFdE2B9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r8E5oZxQ"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 17809114011B;
-	Thu, 30 Jan 2025 14:19:16 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 30 Jan 2025 14:19:16 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D+o/Ozg4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EQ1HggZ3"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8F1B71140195;
+	Thu, 30 Jan 2025 14:24:22 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 30 Jan 2025 14:24:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738264756; x=1738351156; bh=J7BCL5cGF6
-	mEQ+jWQmgSD1PSMHM64S7QM21pN6TfD/0=; b=hmFdE2B9WPRtXS7UtpVSmrLVNb
-	yVsbW1c/dmPy9dwDTVhdpTBsozruVuRKIKXjnlRqylAK3ChKqBp5Zt5dXpqmVEnA
-	3cDIz7/sWK0LzHiql8mlnYDATOXMz4wX1eap2BGifH0Cs8AK0tOp/vzY1JJGw6vF
-	1cHTWYkqh/yLIZKnHl1QAJegWfoMIMLeqxZwTiNcqH3Hu8OieUYLpld002m7Qbb6
-	nBosSVe17b1q5xo5cB+a4g1BilDmZr8ofVx1n8pZINUvJC8RoiaKkMImrSWe/k4v
-	0GatMtd298K46C8ZUKmL24dj2I2XfcYQGqgcCdgXYfqqCSPm5hHDo9eIjkRg==
+	:subject:to:to; s=fm2; t=1738265062; x=1738351462; bh=nPIlZ+shgo
+	H1l+HHsowOgtMWMG+SMK577WqCeSpM3cw=; b=D+o/Ozg4ETTEbj1BoCWiPCl6Kh
+	tKZqcLF1MHHAVGEwIpfMicco4j7RftPxxIid9aBh9btA+KzftcLyqmdCDhUEJe90
+	B1YVKnmDbJZqss9T4JsLL2M29TSH6diws0QKL5GSyCKTWcpWw9EZhWY7uyIYAAuH
+	rawxQV+xquc7XnTHoFkcm2+tO85+XGgD0FvPlm2IRZLv/GR3ZUZqbD66sI3Y+MaT
+	tUuNWed0McAWkwMQXYlmTySNOFFeLwvJZyCKcUJs17ta47ueYFtZqlmhBNoZeump
+	Ot1okAEP0cQC0EzS5J210/Km+e8ElbRYd3RqM1tsc6mJ3f08G7Zoxw1ps2MQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738264756; x=1738351156; bh=J7BCL5cGF6mEQ+jWQmgSD1PSMHM64S7QM21
-	pN6TfD/0=; b=r8E5oZxQSRe8MQ5qwKl4LKR+9X5OSQAypWTNLDZIc1JBj1kMPbW
-	DF2kO+eYsCU8q/twtcsmvQ19Mq94YijmKteuEqhn5bwgOAtRwbhQSIPFGH9uNDBH
-	PLht5Hfq9RJoFWZ5LuFNI5B/s5pkRN+C8u1GybQN3HpoFw8tez33d70HRT7yOqmP
-	dC/CoTHQhPoCDxWyceERiWsy61fV3UoN8nK99Ve/1cIw2atrvibPUU57dOnCccNP
-	PEGuEUqs0h67VMeVVazS4TPSlM9a9FAEuxWeoTdTX0UbTHIHqWTgM+XBtnhLtJT1
-	arUSGr9AkOUhPpFra0HNnbbch/undprJp+w==
-X-ME-Sender: <xms:s9CbZ5_aX2iERzPcZkX-vk-tVmQu4qnkqtaWU-8Wij40QzAEBQahpA>
-    <xme:s9CbZ9sLxUNy3V198QW5rJNS-Q1MNtp4D2QksQ7o2XQpcjFOfbbmRWWCzDftKFvsp
-    qXDM_MX2nUMBJPItg>
-X-ME-Received: <xmr:s9CbZ3Am0bJu3YT8tZ18MS0yjLsajG5WfAaAEqehKSfrZBhUFNvXA15IzS7ntAus9Mcmmi1OxFWAZA77blClmfUtlsGuVapfCpEq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiieegucetufdoteggodetrfdotf
+	1738265062; x=1738351462; bh=nPIlZ+shgoH1l+HHsowOgtMWMG+SMK577Wq
+	CeSpM3cw=; b=EQ1HggZ3/Tag+GWb7N5L+sWSR6BMq+iraPnbCEUCMmr6pQTJotP
+	GBo+vinoPpL9cAKd9IwffHBZDYs5eKLsZOGanpaQz1BLk9NCr7QoBzU57YTI3vEH
+	ik/fT5oHH1mxmIRHzJLInS44EsH3g1IoM30Bf3E0G9qRlNKsbBahawiP9CEIJhEU
+	9qEUkcLejCz0CQQEilib85ZSwU0/gu00XEn8f8L89sjcz702KjtyQiMo718T+5o6
+	+/kiTU5HAhY8Xa+lHp/6vRl0sp9FpO9JWJVS0K3RGZnvvdwyBm099PiyOcG9SN0W
+	sXQInh0B3Pl2M5Vg+Y1w3uVPaIqrQFMKVQg==
+X-ME-Sender: <xms:5tGbZxGyYn6C_zrADPOjbb36LoxbiEkBF87UwvLR_lt32NBQm5J01w>
+    <xme:5tGbZ2Uzo6mN2nT41HihtGol2o855fX6sAJ3fnQ1ElcvwRJKWaZ2UHQYezY12CRus
+    NCoxQpytZllg_fu7Q>
+X-ME-Received: <xmr:5tGbZzL4JcnADpcK34NoT3y2zAf5Sw9RTLtYrVDxxhCiR_2Y4TkcRabCwE6_gbLAjrebkaBPwkaMN9NLZ1Piw7qzYg9Hnm-Pzw8r>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiieehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
     ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeekveet
-    veevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpoh
-    huthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:s9CbZ9dpud-bw_TWoeupZs1OhlrhH6OAOvZsU-1svfAJvP4RCzmHOw>
-    <xmx:s9CbZ-P-gBcoeKuYOlCeXfY2bUKZerSswJXKrvAnA9qDILSdpgpIVw>
-    <xmx:s9CbZ_kUFzvmdxvOaANgVJ1eEwsqjHYIMh58XS6Ly9CyXZqppgEFsg>
-    <xmx:s9CbZ4s11Zsh4d_CJk0mzVTmcKCf1XgYC0zTV6RPb5NNPW4CQbJA3g>
-    <xmx:tNCbZ7rKxekRonMGMntTeAZ1J0BqkJgbRaU2XkF8yUVpdGDQj1I64SCk>
+    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
+    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfi
+    hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsuh
+    hnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepshhovghkkhhl
+    vgesfhhrvggvnhgvthdruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:5tGbZ3EFIzHORRXxR_lGYognG_9jEIbdsveOLb96GOXMqCy9Av507w>
+    <xmx:5tGbZ3WbPKExs_2VlafBibBMeXVCH0Z5AkoIFAmhigp7avU6YUvdWg>
+    <xmx:5tGbZyPrO2E60zbP1S2Ppd5D3ybnrSAfz4R-0U-amamdRc2QY5G-Sw>
+    <xmx:5tGbZ20hpszwHdoq9XxVRdXlAjwHw3rf9N3H7YiVCGpGY20o2RlACg>
+    <xmx:5tGbZ5K9lJfsM974L-bkrJhEWefBMlGZO0rWK6CVDkGyc_nAn3jGhs2m>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jan 2025 14:19:15 -0500 (EST)
+ 30 Jan 2025 14:24:21 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/2] Plug two memory leaks exposed via Meson
-In-Reply-To: <20250130-b4-pks-memory-leaks-v2-0-fc29dc7d4b19@pks.im> (Patrick
-	Steinhardt's message of "Thu, 30 Jan 2025 07:17:37 +0100")
-References: <20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im>
-	<20250130-b4-pks-memory-leaks-v2-0-fc29dc7d4b19@pks.im>
-Date: Thu, 30 Jan 2025 11:19:14 -0800
-Message-ID: <xmqqfrl0cdot.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  sunshine@sunshineco.com,
+  =?utf-8?Q?S=C3=B6ren?=
+ Krecker <soekkle@freenet.de>
+Subject: Re: [PATCH v3 1/4] add-patch: Fix type conversion warnings from msvc
+In-Reply-To: <57031bce-6dc4-48a7-b4b5-1b837ea3ab8f@gmail.com> (Phillip Wood's
+	message of "Thu, 30 Jan 2025 10:47:22 +0000")
+References: <20250126125638.3089-1-soekkle@freenet.de>
+	<20250126125638.3089-2-soekkle@freenet.de>
+	<6a251603-25bc-415d-ab8c-ae698bd7977a@gmail.com>
+	<xmqqsep1iei6.fsf@gitster.g>
+	<57031bce-6dc4-48a7-b4b5-1b837ea3ab8f@gmail.com>
+Date: Thu, 30 Jan 2025 11:24:20 -0800
+Message-ID: <xmqqbjvocdgb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,22 +94,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> I've had the need to play around with the memory leak sanitizer today
-> and for the first time used it with Meson. Interestingly enough, a test
-> run with Meson flags two memory leaks that our Makefile doesn't. I
-> haven't found the time yet to figure out why that is, but this small
-> patch series fixes both of these leaks.
+> On 29/01/2025 19:52, Junio C Hamano wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>> By the way, who is
+>> <CAPig+cQ49Hdc_8=mRhhJDTny_Kqo6Wg6Nr98rsBN_YXmBrQ6kA@mail.gmail.com>
+>> and why is such an apparently bogus e-mail address Cc'ed?
 >
-> Changes in v2:
->   - Add an explanation why t0301 only fails sometimes.
->   - Fix commit messages to properly point out the `-Db_sanitize=leak`
->     option.
->   - Link to v1: https://lore.kernel.org/r/20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im
->
-> Thanks!
->
-> Patrick
+> That's the Reply-To address from the mail I was replying
+> to. Unfortunately it does not seem to exist.
 
-Thanks, will queue.  Looking good.
+It just occured to me that it is probably added by a mistake and the
+sender really wanted to add it to In-Reply-To: instead of Reply-To:
+
+I wonder if this is a mistake we can do something to help users
+avoid?  "git send-email" has the "--reply-to=" option and there is a
+valid use case for that option, so disabling that option is a
+non-starter.
+
+Of course there are other ways to send e-mailed patches, but I do
+not think of a way to misuse them with reply-to and in-reply-to
+mixed up.
+
+Thoughts?
+
+
+
+
+
