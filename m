@@ -1,80 +1,77 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BED1EBFE6
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 14:44:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4ED139B
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 16:24:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738248264; cv=none; b=meiXPtFO9GDsnLuOw+hl4bGBUyP9cKjtvx4YIJq6XDCMKv1RiOnJjvZSNV2sph9Dvu5jz4st3Bnfp1eYj6CG7uYFV65yTDh72KOR7qqBaX/9ymD36McYUjYDYfRNIfCKcay8c90y5yKqyQ+LaMiwQ5+9xHCoHABBLNb5hA8Jxbo=
+	t=1738254272; cv=none; b=CkpiklSrEzUsv9WDF9PfA3UPE1N0pNPqVqZ3s2odv7JRjmb5nE64gt49KQdoe0t3VG1fdCFwtXymk50yI3c1WCoXN6aZiBFmbjPCiYy+3WbHDNJbT6K0P4ATzokz6kFO2fAUq0CJFFtEVYetcObkm33aQd6HZw7HouXtMjFxxNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738248264; c=relaxed/simple;
-	bh=2OwugQwWEOo0sABALL1aqT5jCo8XPdhzwmyVvP/XlNk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZhMBzqhUBSZIn/dxRByiKn5MO+e5XqMlj8SDanOW8tve0ffizIdC+SZXA1HP2iLdo2r5jW2HOrnpAjX0HxFxDjuf8Q1JqaM4lQzOKmoC4I6NgWiMkUbwubHhCfojyaDzt8acvHBMJXMXca/khJ5LtrzdjHkPF8Q/pHZJ8oX586A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=erxHGN97; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lXRFWwbY; arc=none smtp.client-ip=103.168.172.157
+	s=arc-20240116; t=1738254272; c=relaxed/simple;
+	bh=XAyuCdvSy46ahZi8t0Ai+E3k6ePWsd7qS5O8aNlLx6U=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=XlEP53BboVI34/ByYaQCUx6i/E7Ujnw76tkfdjpuzgeAA2+MaFObaz4MP/FzBFawr4AntDsv9gFRP8TKVP9xslQNjDCgx5LoZgzSXQ6aePliu68zNLolp6hfO5pVu6r7YUMWsLqy97Qn3JOkOuxEFLG2sig07dtibmO+iSXDMm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K2njVwll; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c6wqy715; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="erxHGN97";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lXRFWwbY"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1934311400E1;
-	Thu, 30 Jan 2025 09:44:22 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K2njVwll";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c6wqy715"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E3FCC114010A
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 11:24:29 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 30 Jan 2025 09:44:22 -0500
+  by phl-compute-06.internal (MEProxy); Thu, 30 Jan 2025 11:24:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738248262;
-	 x=1738334662; bh=XdM7u/BgsxMzFUb72ZQhr4zRNztnViQv6tuZvmDM6D4=; b=
-	erxHGN973YMCb7YNvUMBnKb+Ipn7RgG3w5P7PzJPq6fJ5mOO0mxtO/s16ZWkbnMB
-	YsFMdxjPkNCStO20goRjJyVeC3CNimi5tq6sDG3uX3xTmS5OxEx5lf0xMqQOLAfv
-	smeqSPhOriw2AR9CGiaIEIznC1kYoHSP0MgwYXHUmz5HgTlSk0dMY5KiIoDp+3ar
-	aqmG/Oi9McOe3rkQF4pl3/EtkP2RiyI9L44cTrWmztgE09w5pCr6i12Qf7/UBDIT
-	Rt6Wnrh/c4VOrr8ETXOIHPXol5m1Or2xfnrj2rV3rwxHV7T9k/Bbqi/zuv3OROtg
-	ZepydabkXqe6kyG2HuEOLA==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1738254269; x=1738340669; bh=3/NXgZl4Ht
+	3SOKlE9IfG7Fh47snc3PazjWuNGOFiyTw=; b=K2njVwllOU9m34I83RX98eEDGr
+	zx2cpy9iL+vN1L8caqza0+LCNuxFV7fZv84scf/KcJjqAF+dBVhaT2CUhRLKKnjR
+	RZ5WL86i/K3tVJabkL0l23fbBYW7nlDerjV9z3n5sWO5m1r26JesfDJR/oWgpbIr
+	9/KLrV7DhB31gJxhOrjRb8sBQX1uFfYlnCSjFzGl2PAs64GCcC3hriEnxyZ7jeTC
+	8vs0/Jqt04+IjN1hvx6z8LfBD5K/rt25SeQ60EXnEcj7BTqJwhiPzry2pm3SBo1U
+	n0AaV8ASJlP3Lp1UzO0Ob6jYzOxtxPFrZjqmqXiTNdnPb4XzmAjB/bVwgzSA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738248262; x=
-	1738334662; bh=XdM7u/BgsxMzFUb72ZQhr4zRNztnViQv6tuZvmDM6D4=; b=l
-	XRFWwbYcaXYxEOhkDd/nDVnZPOEEmjE1cX9vIdsRqOa6EHrCNeLiCrBjuvDWbzNP
-	nZjpZYr/iPMTGRq//b2hFzthwxWyQNB7dHJ0tvUeEs57M7jElYv2FFc+Q+68IxD6
-	uqs2hw7+X9zHmOqUdpmIYH4D504nfC9VUieMaveCZZLtqdYwJMkIpgNelEpt5m4D
-	5De7NF4IHbazbYazldZr+KY5lU65W6wjTVJrKXiXsJPXa0ung5zkdLQOoZ8VOHZ0
-	3Vki4Sm6VPJu4W5YAvWs4ivkvz6Ydh6Lf4GYEHHpV8czcyMz3bl1FBefsfy/VDtE
-	govWxLOzLTRsK3Ne02lLg==
-X-ME-Sender: <xms:RZCbZyN_SVNGnMflQ3Q_1V5QvvdiyVczkxFhXfRY2EsAKWaEs2-BZQ>
-    <xme:RZCbZw-wvlRMvvkcGvWtN2dvfPLSw160kGcvtzr-X9tfrccxTVPWz36iFLDlrT2pT
-    ayMso-9UBFdgLpUjA>
-X-ME-Received: <xmr:RZCbZ5TIkq5S37BPTvyhGd-S-zsVi7LaY6qsE92cPQzghIiaBsEwliwKRut_OQfs59h47YddjYCnbqVXE68k_rYO5URq1146uvinQgBzZ6Kf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeitdelucetufdoteggodetrfdotf
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1738254269; x=1738340669; bh=3/NXgZl4Ht3SOKlE9IfG7Fh47snc
+	3PazjWuNGOFiyTw=; b=c6wqy715YMUWzpjt3AGAOsmYiXu8a4HHCLV8UPrNeqWO
+	AtpSLm/H5aK3Fh2oJLbM/j70JayEogt/vsniy0MfOpB1d9iQLVuYXdUtaexxXUR8
+	NL8ju3+KKa9+SwWbcirkQTXFSOuC3u4kj6y7T8atj5mCOaTXWgMrt43sR0s9Co2D
+	4IplSZ4REkCz634046TWzFeTNwInaoiqop3bNuhf+FiivqqwdFuvCaXoC2kIwh8F
+	5q/iLLbEiICHrSoaesTCyEhmPWL+lcIQjG0pPsbF+dB+nhZrPrJ+aGEN73nDz+dP
+	tvxUB4NSFxdHsoarZOtDzLnmRq8lQ/GtiCP09J0IqA==
+X-ME-Sender: <xms:vaebZ7Od0ZX457Ipd5D9MLiA67hI2AeJyP8knpDGpTS7HE-k6-DwkA>
+    <xme:vaebZ18T6QBV41r14H_uHeOqgzFPb5vtBqlCyOKw-CnalgYjhieVYeltrg9XZYxm0
+    USuV-seqFyPj3iRLg>
+X-ME-Received: <xmr:vaebZ6TxmP8APf-YDMRkLpobDRnso34HsvoKPhE7Hwele5Z2Rq5C0Iy3jCliO93HdA3H48ydu0sM6y3BMGom2fe4MS-pPrz0Zad0R7PnSgGg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeivdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:RZCbZyvLB7pjKprIRcooanYtZGM0Hkvu3jNcHrgNAikEiOI_TtMZrQ>
-    <xmx:RpCbZ6fnwQclrM7zi23xz56HA_jHOQ5FDRGZCpZVaEhKbmsmIg97Fw>
-    <xmx:RpCbZ21IimR3uf9FWQKQ8Mk5pOHISb_hXMgQtqVEE0fz8TdgxoToNg>
-    <xmx:RpCbZ-9VDMmgPCMz0O-jY6QHVGbDz31yzVOhbB-SnGSfJrTcyBNPEA>
-    <xmx:RpCbZ7qizV8g9M7HB2FSEisaWMdtKb-fsP1P01LZL3OVnGtpnNv895Eo>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhufffkf
+    ggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhh
+    rghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetie
+    egjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspg
+    hrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:vaebZ_umS30FLT67b3JYko8OYyHJUevao0cpRAOveW3wxNooYeMkTw>
+    <xmx:vaebZzdf4yabCKZB5pXG_qSb3Tr6Ow7bClq5fKmA4zf5V1ssY6x4SQ>
+    <xmx:vaebZ72Q9c9GySrqmDmZSwMRP-sghUy9aWVO07n-lmNvXtGUyV450Q>
+    <xmx:vaebZ___cfLNUejdqn0DSMo-X9DvP6KHBLNoEJ0IMFKRtmYkfl4CRQ>
+    <xmx:vaebZ7F2FEbAOWq3xSNJCl7q15LOTMG4Vkb-DaG1EWjssOv5nn3F1O9B>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jan 2025 09:44:21 -0500 (EST)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Thu, 30 Jan 2025 11:24:29 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6c34759b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 30 Jan 2025 14:44:20 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id af41b067 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	for <git@vger.kernel.org>;
+	Thu, 30 Jan 2025 16:24:25 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 30 Jan 2025 15:44:05 +0100
-Subject: [PATCH v2 13/13] gitlab-ci: restrict maximum number of link jobs
- on Windows
+Subject: [PATCH 0/3] setup: fix reinit of repos with different formats
+Date: Thu, 30 Jan 2025 17:24:16 +0100
+Message-Id: <20250130-b4-pks-reinit-default-ref-format-v1-0-d2769ca01207@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,41 +80,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250130-b4-pks-meson-improvements-v2-13-2f05581ffb44@pks.im>
-References: <20250130-b4-pks-meson-improvements-v2-0-2f05581ffb44@pks.im>
-In-Reply-To: <20250130-b4-pks-meson-improvements-v2-0-2f05581ffb44@pks.im>
+X-B4-Tracking: v=1; b=H4sIALCnm2cC/x3NQQqDMBCF4avIrB1IYhTaqxQXsU7qUE0kiVII3
+ t2hy48f3quQKTFleDYVEp2cOQaBbht4Ly58CHkWg1GmV7pTOFncvxkTceCCM3l3rEXo0ce0uYK
+ PwfVktLLWaJCZXRr//hev8bpu1JV8S3IAAAA=
+X-Change-ID: 20250130-b4-pks-reinit-default-ref-format-96a5e2104421
 To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>
+Cc: 
 X-Mailer: b4 0.14.2
 
-The hosted Windows runners on GitLab.com only have 7.5GB of RAM. Given
-that "link.exe" provided by Microsoft Visual Studio is multi-threaded by
-itself already and thus quite memory hungry this can quickly lead to
-memory starvation, out-of-memory situations and thus failed CI jobs.
+Hi,
 
-Fix the issue by limiting the number of concurrent linker jobs. The same
-issue hasn't been observed on GitHub Actions yet, probably because it
-got more than twice the amount of RAM with 16GB.
+this issue with the reinitialization of the ref format was recently
+discovered in our CI systems at GitLab, where caches contained repos
+with one ref format but we tried to reinit them with a different ref
+format. But turns out that the same issue also exists for the object
+format, so this patch series fixes both issues.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+Thanks!
+
+Patrick
+
 ---
- .gitlab-ci.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Patrick Steinhardt (3):
+      t0001: remove duplicate test
+      setup: fix reinit of repos with incompatible GIT_DEFAULT_REF_FORMAT
+      setup: fix reinit of repos with incompatible GIT_DEFAULT_HASH
 
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 4976e18a05..7e1cecc6a7 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -169,7 +169,7 @@ build:msvc-meson:
-   extends: .msvc-meson
-   stage: build
-   script:
--    - meson setup build -Dperl=disabled
-+    - meson setup build -Dperl=disabled -Dbackend_max_links=1
-     - meson compile -C build
-   artifacts:
-     paths:
+ setup.c         |  8 ++++++--
+ t/t0001-init.sh | 30 +++++++++++++++++++++---------
+ 2 files changed, 27 insertions(+), 11 deletions(-)
 
--- 
-2.48.1.468.gbf5f394be8.dirty
+
+---
+base-commit: 3b0d05c4a79d0e441283680a864529b02dca5f08
+change-id: 20250130-b4-pks-reinit-default-ref-format-96a5e2104421
 
