@@ -1,118 +1,179 @@
-Received: from ext7.scm.com (ext7.scm.com [49.12.148.225])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2AB819
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 08:11:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.148.225
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD56F51C5A
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 08:38:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738224698; cv=none; b=XZNb9+Cdm+sFDOUIy6QGofHlb77GW7dnP3iL+sK7zIbWhHQDwqB8vIkXU403ZVJiYWeosD7heM9uz1dwWYS+AD4VvuphugGEKPn0yUezwQCGvbxEiOZiF7hZe3Xu7YNAMZANZ8o+Yt7eKeW9l0S1uq4lqTRzRjvR4K1ov7qgIiQ=
+	t=1738226284; cv=none; b=tZDqlGgtlYaynaduhxc3a0cM6lyVlCUQ5ZBGibXljBqsCHNx0Fe1eUaSP/vJrvSbA844CRm81Fn5y1iryi0oOsDZaHfGDahj2Hqt5HEJ7abbOmM726AOa3CD8ZolcGUQENzCaVmFoAeVlFndfV2M70U/hNAB+8tXh/X75itTbZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738224698; c=relaxed/simple;
-	bh=M5g0n3ipCLptce5pYv8dt71RCxAqLtQVilr2NcRwPCo=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Rbc9iAqAW1ArQ1PVlRy51F5LUOxxaH5j+y0jSEGguHtMfVMlyqoUIAL7S/U89HXdMJaJ3gp8iDKFR/l6XF3wHGH5fo8G93XGafwo5Ihy4ldXhaI4cFgzSHftVMt9qkVgd3wJqx2VUURD2dcchEgWHQAa4q9su52gYPiqzBr8IZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scm.com; spf=pass smtp.mailfrom=scm.com; dkim=pass (4096-bit key) header.d=scm.com header.i=@scm.com header.b=eefncqzf; arc=none smtp.client-ip=49.12.148.225
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scm.com
+	s=arc-20240116; t=1738226284; c=relaxed/simple;
+	bh=t1GvorwWDc3eixJlzPQv9lniCJB01KYd2DT+sRgvT+c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mJOgBGZXNv58HOvpjfa2Bp1I5gJSglXpJ4zP/9dL9HQf5gtFZiWj56sqmFbM8PhCxLDUT/L//Yr9172FBHykG3lTShkgF1HbbAAmzr2sYG0/crlUP7+sJ65NafFrxl7n/c7v2st8iHesjrdN5hw53bfF7BZmmEmv163bP5sOQ7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ItF59dqU; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=scm.com header.i=@scm.com header.b="eefncqzf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scm.com;
-	s=ext7dkim24; t=1738224692;
-	bh=c8K2fhGa94WSl/MQTVJDQQvKLBg08qTe5AW9cHBMweA=;
-	h=From:To:Cc:Subject:Date:From;
-	b=eefncqzfqYOkfYzxgpohpbBUQFNxtCGLmjGvqgsk5vn7lMb47c8dIwWtyJAf0j8mp
-	 kEjDW9v+ISXKGhCmdFHaseIHFOOdIPBFUZHpeO7WPn//avkR1DNcqcNIAx/T3qbu3K
-	 HcXRp3Pmrs56vWXe61rCVE36PnyUZfVTim3hHIpU7AqwN6S01O2w/GMjFJATcSbkyD
-	 /uzruUtN8FkVfKlT7M1pdXRiA2DcrgJQ4pNesyIQ6JaN5z5DFpkOXkaNL9rCg8TnkX
-	 n6pKhD2TUc3IEg7J9UcDc+PkBLRZoLeU2wWM3Lx2Vhcso82RtNAtOxxb1zsxAVAs/u
-	 cm4C1E4Gn5sittL4Z5jRB+/49yBui/vTXZmq+BQ3FshjKO0hC353aLvvm2Ksr7mkwg
-	 3WtJ2mFZMmJlwo6+y44jekuT0LHKYZE5oJXN5XFTOfdNLg2DtNn7DwEccbk69eQWmq
-	 GbbPxXI2/Gve7OLdyG+Io//81K2jf7EU6mayLJvGkTomg70dT1cYjhs3czpBh3TrAi
-	 7k64Ba8FpfYt+e5duhZHqoSqJwct7/U+wQxsXQXC6VEL9jS0ZIJyrb215qX/xSx03Z
-	 rWFq8k5otXsp/vSa4JhDMeWrEZNkpt3APKp+JrAND307OD35Y+vyfJ55G8+c2GQHF+
-	 ncCSV9meDrY8DOEfOuVTCxbU=
-X-Virus-Scanned: Debian amavisd-new at ext7.scm.com
-From: =?UTF-8?B?VG9tw6HFoQ==?= Trnka <trnka@scm.com>
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
- Jeff King <peff@peff.net>
-Subject:
- [RFC PATCH resend] builtin/repack: Honor --keep-pack and .keep when repacking
- promisor objects
-Date: Thu, 30 Jan 2025 09:11:31 +0100
-Message-ID: <19759704.fSG56mABFh@electra>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ItF59dqU"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5dc10fe4e62so914780a12.1
+        for <git@vger.kernel.org>; Thu, 30 Jan 2025 00:38:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738226281; x=1738831081; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dHWR5joUz4eUnrKDKSYm6gv240sACaUAlflIRMQZ4+w=;
+        b=ItF59dqUAY/zkOE7AHVfA1EGawqzYLJ/BP2f+YxcK0/MeAAyYd9g/cU2GGZFvw6Kfv
+         aQUg+FLtT5p+FnlYgzLn98Bo5sJ3+7mpsqo4fEOD6GofB/1cjWyd5qveazWiuQnrIQZU
+         NVNyJ51QlgVYpQd6Y8NQYAQXDe2v+VkyNEGs4AO1ybG37e2ICwK5icGnrKzOQBvfkFhm
+         JfaNuWZgUrpAKLo0nhxhhyW72X4X9Qsu6/JhVliQ64FCFn2OnqRr3ajsSvT9J97gEKxv
+         B6HEV9lBW+quqzvy8YuupvvqUsq2wX9WC/67eqkC3ooADBL2gsjF2ESjkur9JMCl/zxc
+         /IqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738226281; x=1738831081;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dHWR5joUz4eUnrKDKSYm6gv240sACaUAlflIRMQZ4+w=;
+        b=Fazj/B9c4eJVs6mMHP4w6CEaXQTWMH+ta0VT+p1OeCNaj6Pb/9u1z/TJExscjQtfuY
+         rcNixlD8UmiRrUZ5J1Ue74VqCuJHvI7L9WAK8//8Iksj4f80hi3Iq3QxpvdP9VmoZTns
+         ky2oavw+iEaiE7T73TRIiopzvv4LfBWJGsz8VGkAb+Hyza11lpJkcc7p1mr6t7+1pGQu
+         KdEzmyaVItngJRvdMVw578Ez3XUsOTlqKPcVEwvdMLzXhUs/gPAGIYy1R8AasqCTITsO
+         Bgb9oc21r6WQ7EibyDs/FSa8YJAAm2GX8MuYcRQIGcVSigIPxXwSIBDef+4wAg6hQsfq
+         g8qQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXOdfdwLjF7lb2M7m+rnhAtA1mV147BekKFhP0SZMGCpGzg1KcpxdeoIlpZp1bKNad0fPc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy15EWdEllaWj3UJyJG9cHu+UnD8Du4CFUgE08wu5YqA9NyLb5j
+	IYyEZr0Pc6I9tLR2q9kZpGTIP84EjcNEhjbDN1w95Pf3RVwUn+T1YbUdl55SyT9KfGtoi9O0GCT
+	/Pt45+bTzZEdSZXJonEGy8vI8zy8=
+X-Gm-Gg: ASbGnctjcd4Ef6evJtaxNSGkfgco3rPEJ+gKH79zC/VE72h+zRVL17TgdjwROZW5lhG
+	bwogJK1Hokr/Uum4TaY9zxWi8k8cp5ru7yhEqSxLVcM7GN6wSMLjMPwQCWdUvKpBz1NI3cVFTth
+	0=
+X-Google-Smtp-Source: AGHT+IFfl+X9HFyxQhlCaakKCguJPsKAle9YmX9CnJlKDWjvtyO64iuXJP+Nlk5a//qvm3khBS+yiNrJfazsDRY8jA8=
+X-Received: by 2002:a05:6402:520e:b0:5d0:aa2d:6eee with SMTP id
+ 4fb4d7f45d1cf-5dc5efe6376mr5794258a12.26.1738226280815; Thu, 30 Jan 2025
+ 00:38:00 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
+ <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
+ <Z44u7od-mDiKcKVZ@pks.im> <xmqqr04vzyz9.fsf@gitster.g> <b784f612-4b6b-414a-9742-86611c50c55f@gmail.com>
+ <Z5srHBSPKQlsuH53@pks.im>
+In-Reply-To: <Z5srHBSPKQlsuH53@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 30 Jan 2025 09:37:47 +0100
+X-Gm-Features: AWEUYZl-ExS_veY6K-i8huNuuzSkaooI3V2MpqmEhU-eQHFN972JSpKmHEvaOXo
+Message-ID: <CAP8UFD0s1nOr5EDx0MW=u7grpmywRTpGzx0v_d4PSjmgJ0ZBbQ@mail.gmail.com>
+Subject: Re: Git in GSoC 2025
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
 
-git-repack currently does not pass --keep-pack or --honor-pack-keep to
-the git-pack-objects handling promisor packs. This means that settings
-like gc.bigPackThreshold are completely ignored for promisor packs.
+On Thu, Jan 30, 2025 at 8:32=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Thu, Jan 30, 2025 at 11:14:06AM +0530, Kaartic Sivaraam wrote:
 
-The simple fix is to just copy the keep-pack logic into
-repack_promisor_objects(), although this could possibly be improved by
-making prepare_pack_objects() handle it instead.
+> > We could certainly curate it from time to time. I wonder how
+> > we could set the timeline for a microproject idea, though. Would it mak=
+e
+> > sense to fix a rough timeline such as 1 year or so and remove any idea
+> > whose age is more than the same?
+>
+> That'd be fine with me. Ideas don't necessarily have to get removed
+> immediately, but may get "refreshed" in case they are still accurate.
+> So personally I'd frame it less like an expiration date and more like
+> the following:
+>
+>     Every topic added to the list will need to be checked regularly for
+>     whether it is still accurate so that we can avoid an ever-growing
+>     list of stale topics. As such, every topic needs to be accompanied
+>     by a "best-before" date that indicates when the next check for this
+>     topic is due.
+>
+>     It is the responsibility of the owner of the topic to determine
+>     whether it is still accurate. This check should happen close to the
+>     noted best-before date and come in the form of a patch that either
+>     bumps the date in case it _is_ accurate, or alternatively removes
+>     the topic from the list in case it is _not_ accurate anymore.
+>
+>     In case the topic owner does not send such a patch, contributors
+>     other than the owner are encouraged to send a patch that removes the
+>     topic, putting the owner into Cc.
 
-Signed-off-by: Tom=C3=A1=C5=A1 Trnka <trnka@scm.com>
-=2D--
+Thanks for this. I will use something similar.
 
-RFC: This probably needs a test, but where and how should it be
-implemented? Perhaps in t7700-repack.sh, copying one of the tests using
-prepare_for_keep_packs and just touching .promisor files? Or instead in
-t/t0410-partial-clone.sh using a copy/variant of one of the basic=20
-repack tests there?
+> Well... maybe it _is_ an expiration date. I dunno, I don't mind which
+> exact term we use for it.
 
- builtin/repack.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+I don't mind much either.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index d6bb37e84a..fe62fe03eb 100644
-=2D-- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -388,15 +388,23 @@ static int has_pack_ext(const struct generated_pack_d=
-ata *data,
- }
-=20
- static void repack_promisor_objects(const struct pack_objects_args *args,
-=2D				    struct string_list *names)
-+				    struct string_list *names,
-+				    struct string_list *keep_pack_list)
- {
- 	struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	FILE *out;
- 	struct strbuf line =3D STRBUF_INIT;
-+	int i;
-=20
- 	prepare_pack_objects(&cmd, args, packtmp);
- 	cmd.in =3D -1;
-=20
-+	if (!pack_kept_objects)
-+		strvec_push(&cmd.args, "--honor-pack-keep");
-+	for (i =3D 0; i < keep_pack_list->nr; i++)
-+		strvec_pushf(&cmd.args, "--keep-pack=3D%s",
-+			     keep_pack_list->items[i].string);
-+
- 	/*
- 	 * NEEDSWORK: Giving pack-objects only the OIDs without any ordering
- 	 * hints may result in suboptimal deltas in the resulting pack. See if
-@@ -1350,7 +1358,7 @@ int cmd_repack(int argc,
- 		strvec_push(&cmd.args, "--delta-islands");
-=20
- 	if (pack_everything & ALL_INTO_ONE) {
-=2D		repack_promisor_objects(&po_args, &names);
-+		repack_promisor_objects(&po_args, &names, &keep_pack_list);
-=20
- 		if (has_existing_non_kept_packs(&existing) &&
- 		    delete_redundant &&
+> In any case, my proposal would be to add this paragraph or a variant
+> thereof to a preamble explaining the purpose of the document as well as
+> how to use it. This is somewhat similar to how our "BreakingChanges.txt"
+> lays out expectations, which I think should be an inspiration for the
+> new document, as well.
 
-base-commit: 92999a42db1c5f43f330e4f2bca4026b5b81576f
-=2D-=20
-2.47.1
+Sure.
 
+> > Also, the current list of ideas could roughly be seen here:
+> >
+> >
+> > https://github.com/git/git.github.io/blob/2025-microprojects/SoC-2025-M=
+icroprojects.md#ideas-for-microprojects
+> >
+> > The topics are:
+> >
+> >   - Fix Sign Comparison Warnings in Git's Codebase
+> >
+> >   - Modernize Test Path Checking in Git's Test Suite
+> >
+> >   - Add more builtin patterns for userdiff
+>
+> This one doesn't feel like a sensible addition to me as it is
+> open-ended.
+>
+> >   - Replace a run_command*() call by direct calls to C functions
+>
+> This one, too.
 
+We could put those two in a section for projects that are a bit larger
+than microprojects though. It might help those who have already worked
+on a microproject and want to do something a bit more involved.
 
+It happens more and more often that people who want to apply to the
+GSoC or Outreachy start getting involved early, which is nice. They
+often have time, after their microproject and before working on their
+application, to work on something a bit more involved. So it would be
+nice if they could easily find something else to work on like those
+two ideas and others similar to them.
 
+> >   - Avoid suppressing git's exit code in test scripts
+> >
+> >   - Use unsigned integral type for collection of bits.
+> >
+> >   - Modernize a test script
+> >
+> > Do share your thoughts on which of these you find being relevant
+> > currently. That would help in preparing the first version of the in-tre=
+e
+> > project ideas list.
+>
+> All the other topics are ongoing topics indeed and would be a good fit
+> from my perspective.
+
+I agree.
+
+> Note that Chris is also preparing such a doc right now, so you might
+> want to coordinate with him.
+
+Yeah, I need to prepare a draft for the next Git Rev News edition
+first, but I will work on this really soon after.
+
+Thanks.
