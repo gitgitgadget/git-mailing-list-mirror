@@ -1,69 +1,69 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A833E1B4243
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 09:13:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087F51B4228
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 09:13:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738228438; cv=none; b=qySO3M3dCScx9K1DIER6dPCJ9WS5/L1pQnYbQTzbZJ5DP3p4CvJ+EFbZsJIhOlov0/gikZlBwqByrA2XrS2HQtwPYojRv/E9bEvotKzcI4CQtL5f07SBFNkwx/T9j0is85fJGVLrBNWlhjLN3W1YwCKIHowCBVNsyBxAfJPg1pk=
+	t=1738228442; cv=none; b=E1L247OxehOc/47jrHGauaqHmipXCEK/680xZSdeAYIARaci/hT2zs4CLrGTuNdjPpSJZgUa0HSYfMIej0eHvOp5VXY/M6hXOW1kPLnndu6WtGdgtXtn+13j6zEdSuTFhBvQ2JptKBesdv0g13BubgayvBuBM6972VNVJt27eaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738228438; c=relaxed/simple;
-	bh=jfTH4JEv1ZTwEjAiZIiJ0Ym9Mv56yiRN8sblrkutTY8=;
+	s=arc-20240116; t=1738228442; c=relaxed/simple;
+	bh=kxiWGlfHVqJJc7kjiFJ752FOiU6AHsrviRaskebe9eQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CzXvLfGscvNpzJJqojS+Bkgq3Oyeq92TdVxOwTLVPjNn1rwa4CkSnyjsksC+apwt9Tswno5NBOPT5Tl6Q2HdU/YKexpt8ru6UcPcw7IyWp15QezbmY4cAJgsW9TpBJILA7JYJa9CCp+Ty99+1jbYJH85tC6V37HbPVImscPwWX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J+0UC/oo; arc=none smtp.client-ip=209.85.208.47
+	 MIME-Version; b=ezZKWq3XNXtvaKhIFwA5JgZ1izqJsDyQvRQxUSdbRoMmoT3JSWJC+4liEYOGjC+GBT4bnFnibsna8eekttRy16gh0e1VdT/biGlvIcLMrdufI/P6D8txVPIoNelQag0nhXrLYOn/rb+uP3eOSf/MCxr0fW2xFPU7B1e+YmyxwHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EXu0vq0k; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J+0UC/oo"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5db689a87cbso937869a12.3
-        for <git@vger.kernel.org>; Thu, 30 Jan 2025 01:13:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EXu0vq0k"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5d3f28881d6so689916a12.1
+        for <git@vger.kernel.org>; Thu, 30 Jan 2025 01:13:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738228435; x=1738833235; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738228438; x=1738833238; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=46ZJLy13d8XyVS+Tm2//4aBH5tveKhmyIuJs4p8Kc98=;
-        b=J+0UC/ooqDtC6I37/YEq+HVbQjPwCT+vELycVNk5Lgs/JOUMYFTqD3NCrc78rqaC8j
-         zhvXcCVXOupdhlhIFeOr2iA/V3z31xmZs/xtTa8/mtvBKSt9+1QknxiaPlLlEXbJc2+M
-         NUFFdEZloIJDi+UH3GSyH2jtIKRZSx716VbzBkJyO+IjGNKLDP/9p+0s/55ibYFPhVc4
-         ygNPlV3n2IAtFXBBD9Hl86ttmb/H0A/AiCjEYa/nTRGrrEIdYmGZG7JN7s8jlnNwDkDm
-         7N9AI2JvF3BSptUryiWQzlk7E2DDbB1Srnw4MBwWDMK0ITS+fFPrOcrVT9ob0ja2D492
-         KZWg==
+        bh=i0SxbEBeNdokXNPpE6tqi9lrmzHFgZuRVqqdScJgHcU=;
+        b=EXu0vq0kqEhZlvb3DIV0UTvwABAvkIlT0OAdjd20B/10ik/v9W76tFsC66E2lm9iTV
+         KUICRof3dg1uA271qasVbSVBwabOFxlwAZWQDPoFmnEWpn1+0/LoBxP5RLOdKn78lfhA
+         0tb2l/hVha4r8zGRO7Mdb+KZk+c9hPDCu7pPmnYDVzqIF0ImgZCMj9JNk6dqdxBXFxba
+         +rO0baCUEttLD3zW9Uh2zkFAYPwzoc58Pa/9T7tCqZnNWKaQocjTT39AzhTwNk94shOw
+         Xd7OgB/38mezc4BLT4XqEwhSnzMvZp3to7Poc+LhYxOnf+CVcMWf0RCj56DlpPJ10E2V
+         6fUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738228435; x=1738833235;
+        d=1e100.net; s=20230601; t=1738228438; x=1738833238;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=46ZJLy13d8XyVS+Tm2//4aBH5tveKhmyIuJs4p8Kc98=;
-        b=mNR5zcAfI+wJWVdehSJy1yajSQMDY0b4immFV9697vhpcIAUI2vFTUDA6+X4LQg5HO
-         lh5YuTxAJpOf9VUTLsyXQfkkDELjLoB/cQU8EkZwy+4que4Bm1y2Zjrzs/FS/t3HJ8Bd
-         FV4w/Yb8LT5BHBtz/Ppw8sEgtyoTeKvt2ROL4DLdcTSYyn7QNMUIFM85ymg/KuNR5qf+
-         K30wmRZW718zM181htD1QrIj+opEs8JQC8gxDjuZP+q6lNFPmLIk1W9GE8ZcUFUuEHpt
-         2ZIt4g4YfefeL/Z0ufPTxOzSrnPFZtJuOZL+ynolloGFcykntDXukFKmqhS8ca562cBW
-         iXlA==
-X-Gm-Message-State: AOJu0Yyl1sp380FkYTIjmpwrzg4hbrvUnVoRISnmDz+Oyidt/HeFpCE5
-	8zel2bI9yQyRrq9xjuLOLWsacTG2HmIoRh3zVcURvr8YxvqRnCgpE/8bPnwmLMyz8A==
-X-Gm-Gg: ASbGnctzoG/9T0zbfIq4qVR7nGPMXZ2VkmOXHkjtwQ5sTM9iOdI6FSLH/cHSNNu+O+i
-	5H6miakv77QNSjc52PEULrJ4YZgaMO7JgPIeMweb764qLObmZoQHoJf3xp2KLyd4coRvNIONazR
-	GEcym0jdzriEa2WOWvkf5anMmbGc23Ni8MY3qMts3WfueHrZqSBU/3b6RjCDibST9n91TJpuxG7
-	abUaxnFDocEVJLSPgTbIXn1anVWBd0lL86Lfoj5+e1rjFPLRKJkEZ7KGE4W2RLRoZwrGUwhFDbn
-	+F7Xt3Iw+NYCxaqL2BhvLFxDJ+BSSg==
-X-Google-Smtp-Source: AGHT+IEdSG4y6SqzpWxIjRgxENFtQqkIjXHH/Jfj+qtD4ozkVb+tawVYw2uEZDCX5eTbM2gbhP/TlQ==
-X-Received: by 2002:a05:6402:2791:b0:5db:faf8:e06d with SMTP id 4fb4d7f45d1cf-5dc5efb8ccemr6530302a12.7.1738228434524;
-        Thu, 30 Jan 2025 01:13:54 -0800 (PST)
+        bh=i0SxbEBeNdokXNPpE6tqi9lrmzHFgZuRVqqdScJgHcU=;
+        b=tQSoGEXiyyPX4xO1VvLP0jF90BC+RSvDR3YhF249286Vqo2uKX6sdAYzq7kZF2jA/+
+         Quq9FKwm0bP59nCa1qVgHDiM50i5SWF9/yMtPTzif8Jh5Ms/LvytCT5+X4y7O0zN/hXh
+         0DdY5nDqUK6zxOvl/GbE2hzQXKc17hGvGaZGV/HvzZYj8KGS9RuVotObpwO1lOyHzi6N
+         wDa7VVBc59Cb+86XZKRhwXGoMD+qN9zvd4CaS/LPa/zUkvJW1fCQyldMHkBOLjVYkhh3
+         mKpl62P0aAYYLj4rfPU5T/J/If+z0rql08ooxxqGt2eCd3PabLbBiSwOySVI0BDgwTY+
+         RyYA==
+X-Gm-Message-State: AOJu0YwXSiQx+iJfHSgmBoEEOaGFGZS/AyV4ZRwWpaEA2/NcYWQJF1sh
+	G+mW8LQO4s4yHYtspR7cZA5vfrW80CDp9USftjqH6G6bEiQimqOgqq8XL7Bk+P0JQQ==
+X-Gm-Gg: ASbGnctquZoUaBE6+fmZBjylvUEzU+9onWjAfjJnyUNqSfVxr2Z81OXXtz/G0SqreCp
+	xPwKe4w00JLE+P5MyEOgXKMOmd+g2xKaH5u77oEKbE9wihzDs16fUJ7oqUXIe59D9DsilfDWgoG
+	kgAUzA/BqIRhlHJeupWUSsm4TuRcOxDmWUBm2TVFJlLIHijXOnEx66jr0DIpwNXJx1mkQagFOs1
+	CaZtgo3w1vTWW4cJrznErWLgqdkbjHokNbJm+wV/KzpifwLxjFkafFWppZccAxmVgnVroDRAEpL
+	uUuUzQmHT9BS0785HXzGlfzBLCOHOA==
+X-Google-Smtp-Source: AGHT+IE3rClwh0ScdmXvpxbO2FVk6Uu9d5A6tZJ1iYj+i8wxo6Et7uNH0cU9O7ry8+I71f9yGgIfcw==
+X-Received: by 2002:a05:6402:358e:b0:5da:1219:c81 with SMTP id 4fb4d7f45d1cf-5dc5efc5d27mr14484094a12.16.1738228437832;
+        Thu, 30 Jan 2025 01:13:57 -0800 (PST)
 Received: from localhost.localdomain ([154.120.90.178])
-        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5dc723e9ee4sm742249a12.25.2025.01.30.01.13.52
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-5dc723e9ee4sm742249a12.25.2025.01.30.01.13.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jan 2025 01:13:54 -0800 (PST)
+        Thu, 30 Jan 2025 01:13:57 -0800 (PST)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood@dunelm.org.uk,
 	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH 2/4] t/unit-tests: adapt example decorate test to clar framework
-Date: Thu, 30 Jan 2025 10:13:32 +0100
-Message-ID: <20250130091334.39922-3-kuforiji98@gmail.com>
+Subject: [PATCH 3/4] t/unit-tests: convert strbuf test to clar framework
+Date: Thu, 30 Jan 2025 10:13:33 +0100
+Message-ID: <20250130091334.39922-4-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.47.0.86.g15030f9556
 In-Reply-To: <20250130091334.39922-1-kuforiji98@gmail.com>
 References: <20250130091334.39922-1-kuforiji98@gmail.com>
@@ -75,221 +75,315 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adapts example decorate test script to clar framework by using clar
-assertions where necessary. Test functions are created as standalone to
-test different test cases.
+Adapt strbuf test script to clar framework by using clar assertions
+where necessary. Test functions are created as standalone to test
+different test cases.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- Makefile                          |  2 +-
- t/meson.build                     |  2 +-
- t/unit-tests/t-example-decorate.c | 74 ------------------------------
- t/unit-tests/u-example-decorate.c | 76 +++++++++++++++++++++++++++++++
- 4 files changed, 78 insertions(+), 76 deletions(-)
- delete mode 100644 t/unit-tests/t-example-decorate.c
- create mode 100644 t/unit-tests/u-example-decorate.c
+ Makefile                |   2 +-
+ t/meson.build           |   2 +-
+ t/unit-tests/t-strbuf.c | 122 ----------------------------------------
+ t/unit-tests/u-strbuf.c | 121 +++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 123 insertions(+), 124 deletions(-)
+ delete mode 100644 t/unit-tests/t-strbuf.c
+ create mode 100644 t/unit-tests/u-strbuf.c
 
 diff --git a/Makefile b/Makefile
-index 2d9dad119a..732d765f1c 100644
+index 732d765f1c..358193597f 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1338,6 +1338,7 @@ THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/%
- THIRD_PARTY_SOURCES += $(UNIT_TEST_DIR)/clar/clar/%
- 
- CLAR_TEST_SUITES += u-ctype
-+CLAR_TEST_SUITES += u-example-decorate
- CLAR_TEST_SUITES += u-hash
- CLAR_TEST_SUITES += u-hashmap
+@@ -1344,6 +1344,7 @@ CLAR_TEST_SUITES += u-hashmap
  CLAR_TEST_SUITES += u-mem-pool
-@@ -1349,7 +1350,6 @@ CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
- CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
- CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
- 
--UNIT_TEST_PROGRAMS += t-example-decorate
- UNIT_TEST_PROGRAMS += t-oid-array
- UNIT_TEST_PROGRAMS += t-oidmap
- UNIT_TEST_PROGRAMS += t-oidtree
+ CLAR_TEST_SUITES += u-prio-queue
+ CLAR_TEST_SUITES += u-reftable-tree
++CLAR_TEST_SUITES += u-strbuf
+ CLAR_TEST_SUITES += u-strvec
+ CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
+ CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
+@@ -1361,7 +1362,6 @@ UNIT_TEST_PROGRAMS += t-reftable-reader
+ UNIT_TEST_PROGRAMS += t-reftable-readwrite
+ UNIT_TEST_PROGRAMS += t-reftable-record
+ UNIT_TEST_PROGRAMS += t-reftable-stack
+-UNIT_TEST_PROGRAMS += t-strbuf
+ UNIT_TEST_PROGRAMS += t-strcmp-offset
+ UNIT_TEST_PROGRAMS += t-trailer
+ UNIT_TEST_PROGRAMS += t-urlmatch-normalization
 diff --git a/t/meson.build b/t/meson.build
-index af597f9804..c7e08eca6f 100644
+index c7e08eca6f..6cb72842b1 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -1,5 +1,6 @@
- clar_test_suites = [
-   'unit-tests/u-ctype.c',
-+  'unit-tests/u-example-decorate.c',
-   'unit-tests/u-hash.c',
-   'unit-tests/u-hashmap.c',
+@@ -6,6 +6,7 @@ clar_test_suites = [
    'unit-tests/u-mem-pool.c',
-@@ -45,7 +46,6 @@ clar_unit_tests = executable('unit-tests',
- test('unit-tests', clar_unit_tests)
+   'unit-tests/u-prio-queue.c',
+   'unit-tests/u-reftable-tree.c',
++  'unit-tests/u-strbuf.c',
+   'unit-tests/u-strvec.c',
+ ]
  
- unit_test_programs = [
--  'unit-tests/t-example-decorate.c',
-   'unit-tests/t-oid-array.c',
-   'unit-tests/t-oidmap.c',
-   'unit-tests/t-oidtree.c',
-diff --git a/t/unit-tests/t-example-decorate.c b/t/unit-tests/t-example-decorate.c
+@@ -57,7 +58,6 @@ unit_test_programs = [
+   'unit-tests/t-reftable-readwrite.c',
+   'unit-tests/t-reftable-record.c',
+   'unit-tests/t-reftable-stack.c',
+-  'unit-tests/t-strbuf.c',
+   'unit-tests/t-strcmp-offset.c',
+   'unit-tests/t-trailer.c',
+   'unit-tests/t-urlmatch-normalization.c',
+diff --git a/t/unit-tests/t-strbuf.c b/t/unit-tests/t-strbuf.c
 deleted file mode 100644
-index bfc776e223..0000000000
---- a/t/unit-tests/t-example-decorate.c
+index 3f4044d697..0000000000
+--- a/t/unit-tests/t-strbuf.c
 +++ /dev/null
-@@ -1,74 +0,0 @@
--#define USE_THE_REPOSITORY_VARIABLE
--
+@@ -1,122 +0,0 @@
 -#include "test-lib.h"
--#include "object.h"
--#include "decorate.h"
--#include "repository.h"
+-#include "strbuf.h"
 -
--struct test_vars {
--	struct object *one, *two, *three;
--	struct decoration n;
--	int decoration_a, decoration_b;
--};
--
--static void t_add(struct test_vars *vars)
+-/* wrapper that supplies tests with an empty, initialized strbuf */
+-static void setup(void (*f)(struct strbuf*, const void*),
+-		  const void *data)
 -{
--	void *ret = add_decoration(&vars->n, vars->one, &vars->decoration_a);
+-	struct strbuf buf = STRBUF_INIT;
 -
--	check(ret == NULL);
--	ret = add_decoration(&vars->n, vars->two, NULL);
--	check(ret == NULL);
+-	f(&buf, data);
+-	strbuf_release(&buf);
+-	check_uint(buf.len, ==, 0);
+-	check_uint(buf.alloc, ==, 0);
 -}
 -
--static void t_readd(struct test_vars *vars)
+-/* wrapper that supplies tests with a populated, initialized strbuf */
+-static void setup_populated(void (*f)(struct strbuf*, const void*),
+-			    const char *init_str, const void *data)
 -{
--	void *ret = add_decoration(&vars->n, vars->one, NULL);
+-	struct strbuf buf = STRBUF_INIT;
 -
--	check(ret == &vars->decoration_a);
--	ret = add_decoration(&vars->n, vars->two, &vars->decoration_b);
--	check(ret == NULL);
+-	strbuf_addstr(&buf, init_str);
+-	check_uint(buf.len, ==, strlen(init_str));
+-	f(&buf, data);
+-	strbuf_release(&buf);
+-	check_uint(buf.len, ==, 0);
+-	check_uint(buf.alloc, ==, 0);
 -}
 -
--static void t_lookup(struct test_vars *vars)
+-static int assert_sane_strbuf(struct strbuf *buf)
 -{
--	void *ret = lookup_decoration(&vars->n, vars->one);
--
--	check(ret == NULL);
--	ret = lookup_decoration(&vars->n, vars->two);
--	check(ret == &vars->decoration_b);
--	ret = lookup_decoration(&vars->n, vars->three);
--	check(ret == NULL);
+-	/* Initialized strbufs should always have a non-NULL buffer */
+-	if (!check(!!buf->buf))
+-		return 0;
+-	/* Buffers should always be NUL-terminated */
+-	if (!check_char(buf->buf[buf->len], ==, '\0'))
+-		return 0;
+-	/*
+-	 * Freshly-initialized strbufs may not have a dynamically allocated
+-	 * buffer
+-	 */
+-	if (buf->len == 0 && buf->alloc == 0)
+-		return 1;
+-	/* alloc must be at least one byte larger than len */
+-	return check_uint(buf->len, <, buf->alloc);
 -}
 -
--static void t_loop(struct test_vars *vars)
+-static void t_static_init(void)
 -{
--	int objects_noticed = 0;
+-	struct strbuf buf = STRBUF_INIT;
 -
--	for (size_t i = 0; i < vars->n.size; i++) {
--		if (vars->n.entries[i].base)
--			objects_noticed++;
--	}
--	check_int(objects_noticed, ==, 2);
+-	check_uint(buf.len, ==, 0);
+-	check_uint(buf.alloc, ==, 0);
+-	check_char(buf.buf[0], ==, '\0');
+-}
+-
+-static void t_dynamic_init(void)
+-{
+-	struct strbuf buf;
+-
+-	strbuf_init(&buf, 1024);
+-	check(assert_sane_strbuf(&buf));
+-	check_uint(buf.len, ==, 0);
+-	check_uint(buf.alloc, >=, 1024);
+-	check_char(buf.buf[0], ==, '\0');
+-	strbuf_release(&buf);
+-}
+-
+-static void t_addch(struct strbuf *buf, const void *data)
+-{
+-	const char *p_ch = data;
+-	const char ch = *p_ch;
+-	size_t orig_alloc = buf->alloc;
+-	size_t orig_len = buf->len;
+-
+-	if (!check(assert_sane_strbuf(buf)))
+-		return;
+-	strbuf_addch(buf, ch);
+-	if (!check(assert_sane_strbuf(buf)))
+-		return;
+-	if (!(check_uint(buf->len, ==, orig_len + 1) &&
+-	      check_uint(buf->alloc, >=, orig_alloc)))
+-		return; /* avoid de-referencing buf->buf */
+-	check_char(buf->buf[buf->len - 1], ==, ch);
+-	check_char(buf->buf[buf->len], ==, '\0');
+-}
+-
+-static void t_addstr(struct strbuf *buf, const void *data)
+-{
+-	const char *text = data;
+-	size_t len = strlen(text);
+-	size_t orig_alloc = buf->alloc;
+-	size_t orig_len = buf->len;
+-
+-	if (!check(assert_sane_strbuf(buf)))
+-		return;
+-	strbuf_addstr(buf, text);
+-	if (!check(assert_sane_strbuf(buf)))
+-		return;
+-	if (!(check_uint(buf->len, ==, orig_len + len) &&
+-	      check_uint(buf->alloc, >=, orig_alloc) &&
+-	      check_uint(buf->alloc, >, orig_len + len) &&
+-	      check_char(buf->buf[orig_len + len], ==, '\0')))
+-	    return;
+-	check_str(buf->buf + orig_len, text);
 -}
 -
 -int cmd_main(int argc UNUSED, const char **argv UNUSED)
 -{
--	struct object_id one_oid = { { 1 } }, two_oid = { { 2 } }, three_oid = { { 3 } };
--	struct test_vars vars = { 0 };
--
--	vars.one = lookup_unknown_object(the_repository, &one_oid);
--	vars.two = lookup_unknown_object(the_repository, &two_oid);
--	vars.three = lookup_unknown_object(the_repository, &three_oid);
--
--	TEST(t_add(&vars),
--	     "Add 2 objects, one with a non-NULL decoration and one with a NULL decoration.");
--	TEST(t_readd(&vars),
--	     "When re-adding an already existing object, the old decoration is returned.");
--	TEST(t_lookup(&vars),
--	     "Lookup returns the added declarations, or NULL if the object was never added.");
--	TEST(t_loop(&vars), "The user can also loop through all entries.");
--
--	clear_decoration(&vars.n, NULL);
+-	if (!TEST(t_static_init(), "static initialization works"))
+-		test_skip_all("STRBUF_INIT is broken");
+-	TEST(t_dynamic_init(), "dynamic initialization works");
+-	TEST(setup(t_addch, "a"), "strbuf_addch adds char");
+-	TEST(setup(t_addch, ""), "strbuf_addch adds NUL char");
+-	TEST(setup_populated(t_addch, "initial value", "a"),
+-	     "strbuf_addch appends to initial value");
+-	TEST(setup(t_addstr, "hello there"), "strbuf_addstr adds string");
+-	TEST(setup_populated(t_addstr, "initial value", "hello there"),
+-	     "strbuf_addstr appends string to initial value");
 -
 -	return test_done();
 -}
-diff --git a/t/unit-tests/u-example-decorate.c b/t/unit-tests/u-example-decorate.c
+diff --git a/t/unit-tests/u-strbuf.c b/t/unit-tests/u-strbuf.c
 new file mode 100644
-index 0000000000..3a457d41fc
+index 0000000000..fec3c768d2
 --- /dev/null
-+++ b/t/unit-tests/u-example-decorate.c
-@@ -0,0 +1,76 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
++++ b/t/unit-tests/u-strbuf.c
+@@ -0,0 +1,121 @@
 +#include "unit-test.h"
-+#include "object.h"
-+#include "decorate.h"
-+#include "repository.h"
++#include "strbuf.h"
 +
-+struct test_vars {
-+	struct object *one, *two, *three;
-+	struct decoration n;
-+	int decoration_a, decoration_b;
-+};
-+
-+static struct test_vars vars;
-+
-+void test_example_decorate__add(void)
++/* wrapper that supplies tests with an empty, initialized strbuf */
++static void setup(void (*f)(struct strbuf*, const void*),
++		  const void *data)
 +{
-+	void *ret = add_decoration(&vars.n, vars.one, &vars.decoration_a);
-+	cl_assert(ret == NULL);
-+	ret = add_decoration(&vars.n, vars.two, NULL);
-+	cl_assert(ret == NULL);
++	struct strbuf buf = STRBUF_INIT;
++
++	f(&buf, data);
++	strbuf_release(&buf);
++	cl_assert_equal_i(buf.len, 0);
++	cl_assert_equal_i(buf.alloc, 0);
 +}
 +
-+void test_example_decorate__readd(void)
++/* wrapper that supplies tests with a populated, initialized strbuf */
++static void setup_populated(void (*f)(struct strbuf*, const void*),
++			    const char *init_str, const void *data)
 +{
-+	void *ret;
++	struct strbuf buf = STRBUF_INIT;
 +
-+	cl_assert(add_decoration(&vars.n, vars.one, &vars.decoration_a) == NULL);
-+	cl_assert(add_decoration(&vars.n, vars.two, NULL) == NULL);
-+
-+	ret = add_decoration(&vars.n, vars.one, NULL);
-+	cl_assert(ret == &vars.decoration_a);
-+	ret = add_decoration(&vars.n, vars.two, &vars.decoration_b);
-+	cl_assert(ret == NULL);
++	strbuf_addstr(&buf, init_str);
++	cl_assert_equal_i(buf.len, strlen(init_str));
++	f(&buf, data);
++	strbuf_release(&buf);
++	cl_assert_equal_i(buf.len, 0);
++	cl_assert_equal_i(buf.alloc, 0);
 +}
 +
-+void test_example_decorate__lookup(void)
++static void assert_sane_strbuf(struct strbuf *buf)
 +{
-+	void *ret;
-+
-+	add_decoration(&vars.n, vars.two, &vars.decoration_b);
-+	add_decoration(&vars.n, vars.one, NULL);
-+
-+	ret = lookup_decoration(&vars.n, vars.two);
-+	cl_assert(ret == &vars.decoration_b);
-+	ret = lookup_decoration(&vars.n, vars.one);
-+	cl_assert(ret == NULL);
++	/* Initialized strbufs should always have a non-NULL buffer */
++	cl_assert(buf->buf != NULL);
++	/* Buffers should always be NUL-terminated */
++	cl_assert(buf->buf[buf->len] == '\0');
++	/*
++	 * Freshly-initialized strbufs may not have a dynamically allocated
++	 * buffer
++	 */
++	if (buf->len == 0 && buf->alloc == 0)
++		return;
++	/* alloc must be at least one byte larger than len */
++	cl_assert(buf->len < buf->alloc);
 +}
 +
-+void test_example_decorate__loop(void)
++void test_strbuf__static_init(void)
 +{
-+	int objects_noticed = 0;
++	struct strbuf buf = STRBUF_INIT;
 +
-+	add_decoration(&vars.n, vars.one, &vars.decoration_a);
-+	add_decoration(&vars.n, vars.two, &vars.decoration_b);
-+
-+	for (size_t i = 0; i < vars.n.size; i++) {
-+		if (vars.n.entries[i].base)
-+			objects_noticed++;
-+	}
-+	cl_assert_equal_i(objects_noticed, 2);
++	cl_assert_equal_i(buf.len, 0);
++	cl_assert_equal_i(buf.alloc, 0);
++	cl_assert(buf.buf[0] == '\0');
 +}
 +
-+void test_example_decorate__initialize(void)
++void test_strbuf__dynamic_init(void)
 +{
-+	struct object_id one_oid = { { 1 } }, two_oid = { { 2 } }, three_oid = { { 3 } };
++	struct strbuf buf;
 +
-+	vars.one = lookup_unknown_object(the_repository, &one_oid);
-+	vars.two = lookup_unknown_object(the_repository, &two_oid);
-+	vars.three = lookup_unknown_object(the_repository, &three_oid);
++	strbuf_init(&buf, 1024);
++	assert_sane_strbuf(&buf);
++	cl_assert_equal_i(buf.len, 0);
++	cl_assert(buf.alloc >= 1024);
++	cl_assert(buf.buf[0] == '\0');
++	strbuf_release(&buf);
 +}
 +
-+void test_example_decorate__cleanup(void)
++static void t_addch(struct strbuf *buf, const void *data)
 +{
-+	clear_decoration(&vars.n, NULL);
++	const char *p_ch = data;
++	const char ch = *p_ch;
++	size_t orig_alloc = buf->alloc;
++	size_t orig_len = buf->len;
++
++	assert_sane_strbuf(buf);
++	strbuf_addch(buf, ch);
++	assert_sane_strbuf(buf);
++	cl_assert_equal_i(buf->len, orig_len + 1);
++	cl_assert(buf->alloc >= orig_alloc);
++	cl_assert(buf->buf[buf->len] == '\0');
++}
++
++static void t_addstr(struct strbuf *buf, const void *data)
++{
++	const char *text = data;
++	size_t len = strlen(text);
++	size_t orig_alloc = buf->alloc;
++	size_t orig_len = buf->len;
++
++	assert_sane_strbuf(buf);
++	strbuf_addstr(buf, text);
++	assert_sane_strbuf(buf);
++	cl_assert_equal_i(buf->len, orig_len + len);
++	cl_assert(buf->alloc >= orig_alloc);
++	cl_assert(buf->buf[buf->len] == '\0');
++	cl_assert_equal_s(buf->buf + orig_len, text);
++}
++
++void test_strbuf__add_single_char(void)
++{
++	setup(t_addch, "a");
++}
++
++void test_strbuf__add_empty_char(void)
++{
++	setup(t_addch, "");
++}
++
++void test_strbuf__add_multi_char(void)
++{
++	setup_populated(t_addch, "initial value", "a");
++}
++
++void test_strbuf__add_single_str(void)
++{
++	setup(t_addstr, "hello there");
++}
++
++void test_strbuf__add_multi_str(void)
++{
++	setup_populated(t_addstr, "initial value", "hello there");
 +}
 -- 
 2.47.0.86.g15030f9556
