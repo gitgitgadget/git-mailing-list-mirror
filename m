@@ -1,116 +1,174 @@
-Received: from fallback2.i.mail.ru (fallback2.i.mail.ru [79.137.243.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414A8199939
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 14:12:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.68
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FB11E9B27
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 14:32:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738246346; cv=none; b=rFEND7OUGmnU6e6irlRhk8hc8H3R1pC937ZvaRduoRpEpXwDWVuAqGePAnlPhovVuuJyO2VndE1xx777tnVegroC/pkJjvZWEF2F5Q794Bg2DFm+GkAXw5emKbXbZPSSpnkkapvfxAINgnfJ2CrGaLO1W520nV2hIuwH2JahzPc=
+	t=1738247557; cv=none; b=hEpA2NZfeg2IsI+SkhsRVZHUJDGiKfTeOpkffBKVpMrC/+IpMIUv3F3hABOMHMOxpWotXHP6wj9OTaQY33JucyCOi5+XiI8Fu6/WAU195sUkUDueZ/V60rcIsT/tx0QEwWPbHMAuwp86xVIXg1t/LKFbL9U4ScpA/SacQ1BnD6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738246346; c=relaxed/simple;
-	bh=tuzMkYcQ/NQwWrZ0MQ+myv5RXf6BYnbVbzwKsqXj1Gk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ucf+piFP/2tKn5uJjuZiHuUd3Oc4TElx2A33ob0W7CTSMxvxcYJwfcr/eah+iovB9vwi1dcPmw6OMDAWM4b9cKCBy7Hgzn4JVpIqOIfyCrGLMR8Y/4xub9BOsLtfxOzL4J6okymP6o3Zc4iXuqQSweTB2xguaN3pMpzkiNoAwyo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru; spf=pass smtp.mailfrom=bswap.ru; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=oqUUnD7J; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=nTdSMaHu; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=w7Kg6R7U; arc=none smtp.client-ip=79.137.243.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bswap.ru
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="oqUUnD7J";
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="nTdSMaHu";
-	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="w7Kg6R7U"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
-	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=Xu9r8HMUgUsvIWBEw9ZhWtkEyMnrdn+zWYDhrfhC+k0=;
-	t=1738246341;x=1738336341; 
-	b=oqUUnD7JtxIO9xFixWELAF5I2ScJjEksC/au5irassTsjgRxHad/Pl8BERz2J4hM+5xQA0GVMsgfSC8vgwxE0ZXvM8hR3dLibCUVsrmERhDPYUQRg37iSaNRlvu5s/y8Qr2+8BZxIpH1MaZv3imIb+7wkvyd7Sg1OFsld0v1bpA=;
-Received: from [10.113.184.7] (port=55168 helo=send77.i.mail.ru)
-	by fallback2.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
-	id 1tdVHB-003GA3-09
-	for git@vger.kernel.org; Thu, 30 Jan 2025 17:12:13 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
-	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
-	bh=Xu9r8HMUgUsvIWBEw9ZhWtkEyMnrdn+zWYDhrfhC+k0=; t=1738246333; x=1738336333; 
-	b=nTdSMaHuV5ZX8EHs69tcWRJw7ERI2lj2Ek2KIj/eQPHFNvGcY7bIFSohajHGwjSzo1g12JgtNA9
-	/Ag4t8kSGcn3VD44QYRAL7DJso/t1BYz9TEonIZB/yo2V2znnp0WxhCvr/pq7rNlxkUwxu8fbKpzc
-	UpKtc5xt2fzKr9RQ9fs=;
-Received: from [10.113.153.212] (port=52748 helo=send172.i.mail.ru)
-	by exim-fallback-797fb87cff-5f69n with esmtp (envelope-from <kostix@bswap.ru>)
-	id 1tdVH2-00000000bPU-3umT
-	for git@vger.kernel.org; Thu, 30 Jan 2025 17:12:05 +0300
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
-	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:From:Sender:Reply-To:To:Cc:Content-Type:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
-	X-Cloud-Ids:Disposition-Notification-To;
-	bh=Xu9r8HMUgUsvIWBEw9ZhWtkEyMnrdn+zWYDhrfhC+k0=; t=1738246324; x=1738336324; 
-	b=w7Kg6R7UufZL1lKUEtsXwT2yVQFGVs4lqhMMY9PYCFmcxTZkWvfvj15m74O5nSvBPIAVOFXXPxU
-	pWmszGpTYWX6jy/puZ4yF+9z3LIQAhANfmk9QexNwwNKba3GykgKSGlNI5w6TTyMITLSn6xIlKCM0
-	otCcLspRuINpeoe2Ne8=;
-Received: by exim-smtp-5d58c69cd6-c7x6t with esmtpa (envelope-from <kostix@bswap.ru>)
-	id 1tdVGt-00000000F9x-22Hp; Thu, 30 Jan 2025 17:11:56 +0300
-Date: Thu, 30 Jan 2025 17:11:54 +0300
-From: Konstantin Khomoutov <kostix@bswap.ru>
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Mike Weltevrede <mikeweltevrede@gmail.com>
-Subject: Re: Feature idea: Git hook for pre-checkout
-Message-ID: <20250130141154.gglc65fegstuzbjy@carbon>
-Mail-Followup-To: git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Mike Weltevrede <mikeweltevrede@gmail.com>
-References: <CAAE-bwUQ+0ERbvC=SS=-R_K4H3p2su+=Ogf7BSkyq5J4GmmRYw@mail.gmail.com>
- <Z5rhXrkbhINwFDXT@tapette.crustytoothpaste.net>
+	s=arc-20240116; t=1738247557; c=relaxed/simple;
+	bh=YljyOJteGpZsIQnJaCt4ckPvUGuLJ2UJJe7ssE6ApMM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XOFTVe2KQB2OkPgoGkFB4Mk7aE/d0eut683JKGBeVaxwv2tMwRyYWjBfKIfvPVrEj1fg2aNynykhdN/tcvuSjnaCDfOfdcpxDLmZfc1Mtij6VSAB6iDd1KEksy5rV14Jf2EVw2x1JJ9i1lC3CnfNM/gZG2uDA6aQDW30NM9HogA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6d90044ac35so533246d6.1
+        for <git@vger.kernel.org>; Thu, 30 Jan 2025 06:32:34 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738247554; x=1738852354;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ICIQJ5i4Lg1Q+R4skftjutO92e3DyfJ8D4uT8Fk2eeE=;
+        b=ueaB1ziaCrZRRTXQHoMeA33wPygYVUmL9yTQUX5g9RQ0oO+dnjtdX0S8Kci1DhxUe6
+         /ZjmsdhxIxrIi+dkgpV6KexExkVowY4fbHiRjSSIKIVUHC4AO0zhFaIo0PLNA/pLeaCV
+         WVK0PApOg9nnYc7KCGZaYqSGBn2YsgPavT7ncdSGWyJyRc0i7pWRaRXhqcQAaQcXFSTP
+         0mmV+MGcYwL/ndIBgmJEF6AtFuHF4VPy8Ur0QH1oHXz9C7/VzCiou79whktoTLVoJ22T
+         CAnNBp/UXWjzL417SQQA5ztohuzkzAX3C4r3rWlTC599WKjAM+xAUgXbjQXUdH6KV2Om
+         ozXA==
+X-Forwarded-Encrypted: i=1; AJvYcCV2d2gMFPtsj6/VabltTxtWmg+KuW8eegzGEXUv4C3TJBaAjH6FFw8mkNKEENd8PlJRYp4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwpAqkCWR8MRg5myv1O/3XlfwgQDeBilolI/5Y9m7vKlCkFR+ZR
+	b/VW0ei7lDdOlxHJULH38dxopCJiUCGP+WjlWMFES4r2rnYJP41qlcN6AHuiElC6B6pHYDPGcBd
+	3AD3NH8vfv+jQ5JSs22Cr50KPThFOfKa4
+X-Gm-Gg: ASbGnct3mpFVedPNAtRpqHx0mGEt7IMpcKqUuP09STUP7bXRXY3WFskcslpcpBdsgL4
+	s6MJAjXbMAPMw5QtpLjEBTq+A69+YbJ2WVQ21+9FP7AF7Wc3zgkjaduHW4/c8zyBXI0HN3be0kk
+	cqqoxgPeU8cDTqEXbQBq6906N7hAxumw==
+X-Google-Smtp-Source: AGHT+IG+zG0cqe5cjJCT3iXygeRAE6ntH/g0lGYuWHb2W4RuIvmWDJ6IWLZys5UgW/7KXckhszu3/TY0a/RW68RRXUM=
+X-Received: by 2002:a05:6214:3018:b0:6d8:adb8:eb8c with SMTP id
+ 6a1803df08f44-6e243cdda8emr41046396d6.10.1738247553988; Thu, 30 Jan 2025
+ 06:32:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z5rhXrkbhINwFDXT@tapette.crustytoothpaste.net>
-X-Mailru-Src: smtp
-X-7564579A: 646B95376F6C166E
-X-77F55803: 4F1203BC0FB41BD985D89FF3B425BBEF60198EBAA7A2E64509B496FF1DBC87B0CD62213F67905E7AAE03594B2C21549BC01D4CCAC62E93481FD1368B0EF4E406B02582ABDB060753C5C7FD16981B76AE
-X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7DECE8D0A5E25C0FCEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637A521848D7B067A388638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8F3151B09BE46E20506FA4C9B758132B77FC63A5E0A6CFCABCC7F00164DA146DAFE8445B8C89999728AA50765F7900637F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F7900637F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C4CB6874B0BCFF0B8302FCEF25BFAB3454AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3642883364D384F09BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF3D321E7403792E342EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE784355C927A450B6A731C566533BA786AA5CC5B56E945C8DA
-X-C1DE0DAB: 0D63561A33F958A54CC352804C2AF9755002B1117B3ED696C5E670A30F38C7DF8D59E407A97E9958823CB91A9FED034534781492E4B8EEADB1D70E2111C441FFBDAD6C7F3747799A
-X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D3498910055B812BD9C492C86326148638250A13BF1AA26826C27F17C7B05D516B20042F0E09B6C92111D7E09C32AA3244CC1FC4B32195CCC8E77DD89D51EBB7742CF3C3CFC9E581EC1EA455F16B58544A2557BDE0DD54B35903871D1C702CBDB0A9665A0FD7AD89E8F722DFA761B3F797A
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojB5k2t8NeLmDpugBP721zpg==
-X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138E5A6661DC275DD18EA62B7A476541487B9143D3C39C7CA70D537AA6D4973CF862F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
-X-Mras: Ok
-X-Mailru-Src: fallback
-X-7564579A: B8F34718100C35BD
-X-77F55803: 6242723A09DB00B4A84B4964F946E17EB1A91FC540E416C11582D74B19986F8F049FFFDB7839CE9E643586C112B81D11E30A09B53E2A5AEF22B6598BEDFC969FEDEE49E581E46C18B5FEFDBAB9BF3490
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSrmgqWMIa0Sipuf5RTkiCWD
-X-Mras: Ok
-X-7564579A: 646B95376F6C166E
-X-77F55803: 6242723A09DB00B4A84B4964F946E17EB1A91FC540E416C12D8BAB617684C85D049FFFDB7839CE9E643586C112B81D112A8131BFA484CC464476D5B6773D467216BFFF1A501FE2EF
-X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSrlkrUOmOySqtyqHyU9iLcO
-X-Mailru-MI: 20000000000000800
-X-Mras: Ok
+References: <pull.1829.git.1731653548549.gitgitgadget@gmail.com>
+ <pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com> <CAPig+cRpKKpVHT8x6nOx1KNjWR=hywz-nHZga9fhiXMXD7KOSw@mail.gmail.com>
+ <116C27A8-EF7B-42E1-9606-815FDA3CF94C@shopify.com> <CAPig+cSdbjzTmsBOmFnMxzYLGrUzY46=mkW9S+si2KxLhS623Q@mail.gmail.com>
+ <F15C12AB-2238-4553-AFA5-18277B18CE5A@shopify.com>
+In-Reply-To: <F15C12AB-2238-4553-AFA5-18277B18CE5A@shopify.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 30 Jan 2025 09:32:22 -0500
+X-Gm-Features: AWEUYZnV9bk5P_ZCtdyGpbQjtzw5DqftcmU9ohPDdn1pEpeeF2RTVepJnAlfJdg
+Message-ID: <CAPig+cTHfD1fK73+S3fqQ+Oz_VpBzap5=nFFE1bntSeaHLcu8g@mail.gmail.com>
+Subject: Re: [PATCH v2] worktree: detect from secondary worktree if main
+ worktree is bare
+To: Olga Pilipenco <olga.pilipenco@shopify.com>
+Cc: Olga Pilipenco via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 30, 2025 at 02:18:06AM +0000, brian m. carlson wrote:
+On Thu, Jan 30, 2025 at 2:09 AM Olga Pilipenco <olga.pilipenco@shopify.com>=
+ wrot
+> On Jan 29, 2025, at 6:41 AM, Eric Sunshine <sunshine@sunshineco.com> wrot=
+e:
+> > I see. When reviewing, I was wondering why the git-dir was being
+> > passed into the function. Your explanation above answers that
+> > question. On that note, in addition to renaming the function as
+> > suggested, for clarity, I would probably go a bit further and pass in
+> > a `struct repository *` rather than passing in the git-dir itself,
+> > just to make it clear that the function is checking main-worktree
+> > bareness of the repository in question, as opposed to merely checking
+> > bareness of any arbitrary directory. (At least, I would find the
+> > intention more clear at-a-glance with that additional change applied.)
+>
+> Indeed, no need to pass git-dir anymore.  There is actually no need
+> to pass `the_repository` because it=E2=80=99s global. I like how this
+> simplified things and made code clearer.
 
-[...]
-> It's also possible to use one name locally and push to another, such as with
-> `git push origin my-feature:refs/features/foo`.
+The reason I suggested passing in a `struct repository *` is that the
+project is slowly moving away from the `the_repository` global, so
+making this new function accept a `struct repository *` as its sole
+argument means less work later on.
 
-I would add that I, for one, have a habit of working on a detached HEAD and
-then pushing the results with
+> > One reason I asked the question was due to concern that future readers
+> > of this code may very well wonder (as I did) why $commondir/config is
+> > being loaded when doing so is (apparently) unnecessary in this
+> > particular context. The question is especially pertinent given that
+> > this is a private helper function with a single caller. A second
+> > reason was that, over the years, a good deal of effort has been put
+> > into optimizing Git's startup to avoid doing unnecessary work, and
+> > this appears to be unnecessary since $commondir/config would already
+> > have been consulted by earlier checks before this function gets called
+> > (assuming I'm correctly understanding the code-flow).
+>
+> I trust your judgement and knowledge of the code and really like the
+> reasons presented.  I=E2=80=99ll change this function to only check for
+> worktree config.  However I=E2=80=99d like to give it a good name where i=
+t=E2=80=99s
+> clear we only check worktree config.  It=E2=80=99s a bit challenging to m=
+ake
+> it short-ish and not to include multiple =E2=80=9Cworktree=E2=80=9D words=
+ in the
+> name.  Before I submit a new release, maybe I have time to quickly
+> align on the name.  What do you think about this one:
+>
+> is_main_worktree_bare_in_worktree_config
+>
+> (It will check if bare=3Dtrue in the main worktree=E2=80=99s worktree.con=
+fig)
+>
+> Naming is harder than the code itself :)
 
-  git push HEAD:refs/heads/whatever
+It's a historic "accident" that when worktree support was designed,
+the idea of linking worktrees to a bare repository was not considered.
+Support for using worktrees with a bare repository was added later.
+However, by that time, the term "main worktree" was already well
+established, with the very unfortunate result that even when there is
+no actual "main worktree" but only a bare repository with "linked
+worktrees" hanging off it, the repository itself is usually referred
+to as the "bare main worktree", which is an obvious misnomer; the
+repository is just a repository (i.e. the object database and other
+meta-information) and there is no actual main worktree.
 
-and only creating a local branch when I think I'm going to abandon the current
-work for too long (otherwise I just inspect the output of `git reflog HEAD`
-to find the place where I left off and then check it out back).
+Given the very real potential for confusion when employing the "bare
+main worktree" misnomer, I suspect that we won't be able to come up
+with a good name which easily conveys the function's purpose. Since
+this is an internal helper (hence, there is slightly less pressure to
+come up with a perfect name) rather than public API, this might be one
+of those cases in which it makes more sense to choose a concise name
+and then explain the function's purpose with a short comment block.
+Perhaps something like this would be most helpful to future readers of
+the code:
 
-I don't think it's a widely adopted approach to work with Git, so mentioning
-it more for the purpose of widening the OP's view of the subject matter.
+    /*
+     * When in a secondary worktree, and when extensions.worktreeConfig
+     * is true, only $commondir/config and $commondir/worktrees/<id>/
+     * config.worktree are consulted, hence any core.bare=3Dtrue setting in
+     * $commondir/config.worktree gets overlooked. Thus, check it manually
+     * to determine if the repository is bare.
+     */
+    static int is_repo_bare(struct repository *r) {...}
 
-[...]
+> Thank you for this thorough explanation. I=E2=80=99ll drop the comment
+> completely. Less code to read.  (To be honest I=E2=80=99m not a big fan o=
+f
+> comments and definitely don=E2=80=99t want to introduce confusing comment=
+s
+> :)
 
+Understood. Self-explanatory code is preferred. That said, a comment
+such as the one proposed above can really help readers not intimately
+familiar with this otherwise nonobvious behavior, thus may be
+justified.
+
+> Fun fact: my email app kept changing =E2=80=9Cworktree=E2=80=9D to =E2=80=
+=9Ccorktree=E2=80=9D. Maybe
+> another git feature?
+
+Your mailer obviously suffers from Gitophobia or is perhaps a nemophilist.
+
+(By the way, when replying, please use the normal ">", "> >", "> > >"
+markers to signify quoted portions of earlier messages in the thread
+rather than using only indentation. The reason I make this request is
+that when I replied to your message, my mailer stripped away all
+indentation from your message, leaving all earlier quoted portions
+flush with the left margin, which made it very difficult to figure out
+which quotes came from which authors from which earlier messages, and
+I ended up having to reinsert the "> >" markers manually to restore
+structure to my reply.)
