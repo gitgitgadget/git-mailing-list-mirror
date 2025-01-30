@@ -1,88 +1,83 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8941EF093
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 19:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFA71F12F9
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 19:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738264729; cv=none; b=MI8oVzhc6td3zjzW8Fq0+8fVhxcAno5C6rFe8YjhwgLJhxk9mVD59AJGi4qztGEq+nFZZv/V8oyywlUdzPykDvc9DOvOl6iKrSDrS6KvwFV/c/iNHtR28y2HfRw76WkEWRo6aY0v6mcbry2S+T1Ay6LKqK/1rKp4BBDEaX92574=
+	t=1738264759; cv=none; b=anmQD2NEMlqlSVDgVUA1WngdbI84iAPvi7slZfsBEms8B3/sAxwAPW6a/r1r+euoDCBPXAZrVhXZ3S0JWebyBzH4sa3wO7/LOTBZrvF4UEbWjacRmxe177k2S1VeyLJAjkvupP00HUHWlC2mGnu2c6cnj/KB/nn3fXeJSBWcFf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738264729; c=relaxed/simple;
-	bh=HYfGWIiQYA07ChR+no9rMXglnXYIytNIhzd1Gco0TKE=;
+	s=arc-20240116; t=1738264759; c=relaxed/simple;
+	bh=dXr5kfmEzhLMppaYv9G91cbHl6OJzR0OQFLjoQAqx2k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=euLagu030iKmpqgNEgaBboF71s6wp1lUu6AndKSsAcvviT32qcuQ3RsyzZjJoLxtyzOyzVD7q4Zv2cFRkSwtq7YqynEBz3bv4/XT4wXlLHbnSqt3vY8zTTO9Y8i4DY2gbVguwH7wGJH7elBH7wTjQ8AR8JaH2magcFNkfPh1WwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KZ2J1n93; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iijV1+AN; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=uJaCquEpinhp57814zalvVueckfCtyv5rm5II/G76kaydJfODekjK/3aIRTFqo7lRZZl7Blq/ev6I3yCoMrXGoX4iK+5oEYCSaeiXjmKdYhsJXkNewvRTUKjqqkyfJAnecmkl0aM3X+HTq1kJkMKsTdtMoo7EKmbAhaRUCVqQ+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hmFdE2B9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r8E5oZxQ; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KZ2J1n93";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iijV1+AN"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5996B1140092;
-	Thu, 30 Jan 2025 14:18:46 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 30 Jan 2025 14:18:46 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hmFdE2B9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r8E5oZxQ"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 17809114011B;
+	Thu, 30 Jan 2025 14:19:16 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 30 Jan 2025 14:19:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738264726; x=1738351126; bh=0WNQrA++L2
-	IpWSySH9uagqUvX9fY3/Pza6pEp/+Gz+A=; b=KZ2J1n93OFy6V7hymDkwCIXAMW
-	5SlBxZQ5Mmfe/PoAPKxAnqqfZOfWN6ZJIo3kYfmgVgLotlJu2bVLPTU1vFGn3eOd
-	3Jp/qbUbvuK7aRlMEciVOg7QbAH5CTwIdIBzTff8ABxLfdZ+0iBIuBCGaA6nGCiv
-	dXkp24BXucNpguKILGZ2BuXGl7TBarSi/39sbxX6R1VcSNpsZT0jqmXkuCw87fbR
-	S91gjyzDl1xTdkCBmad7cHLst98F9hTk3VSKsL+5QQ89v/wPxU7ovrgC+iYEffXg
-	IoNqN6apQZCMuaUrCI1RXgm23DAN90PEaOmigDbNPpwZoqvaLG5nPpF7TJ4Q==
+	:subject:to:to; s=fm2; t=1738264756; x=1738351156; bh=J7BCL5cGF6
+	mEQ+jWQmgSD1PSMHM64S7QM21pN6TfD/0=; b=hmFdE2B9WPRtXS7UtpVSmrLVNb
+	yVsbW1c/dmPy9dwDTVhdpTBsozruVuRKIKXjnlRqylAK3ChKqBp5Zt5dXpqmVEnA
+	3cDIz7/sWK0LzHiql8mlnYDATOXMz4wX1eap2BGifH0Cs8AK0tOp/vzY1JJGw6vF
+	1cHTWYkqh/yLIZKnHl1QAJegWfoMIMLeqxZwTiNcqH3Hu8OieUYLpld002m7Qbb6
+	nBosSVe17b1q5xo5cB+a4g1BilDmZr8ofVx1n8pZINUvJC8RoiaKkMImrSWe/k4v
+	0GatMtd298K46C8ZUKmL24dj2I2XfcYQGqgcCdgXYfqqCSPm5hHDo9eIjkRg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738264726; x=1738351126; bh=0WNQrA++L2IpWSySH9uagqUvX9fY3/Pza6p
-	Ep/+Gz+A=; b=iijV1+AN1SzbBicJ5pd2AWMsJCqFsoEebq3DYt7XA4FTGQ9j6Vm
-	9zJ1Q37beji8ChY0EunPErqWaR1ZQpd7YNN9NS54NMCricR5SOH+BOG7ci/35PrF
-	4PkYETo+lyhP8APF+VIQATxyX5cgCuMxA+cqMt1HL70SC3FKYoY1TrQmR0tV3XrR
-	lrHOktIs2REunXK5SurQClbzW8Dv8NMypzzPI12PX961gyZkH8OJ050F+VQQqAu9
-	uMNgPkj6tvMUVsQN33edNrvFLBP3Fqs04+iJtMulLE9LW9Ak0bOczEzxN8TMp9Lk
-	YwHca+lC7EbW0IF+gz7xdE0nJp1/NMmI4Tw==
-X-ME-Sender: <xms:ltCbZzZe7eRIkP5ubX7c_S1VBBtlObnxSbjbMLd8vSLL9wiEm-Uimg>
-    <xme:ltCbZya9c7EcsPjhp6WNHkPMjiY9idDMsHmOPF8YOXX2YUzArAH-vtBMzYNk8t7-i
-    yDdkxevOm6Oq2latw>
-X-ME-Received: <xmr:ltCbZ18FoNT9_Pa_APrylHnvje15fN7fvnCO-OWE8DiFzlVr2fDgis6LSQyi8B38-xHDKUqPSq0TQbwZyj-pO827CQXXZ8Ru27TU>
+	1738264756; x=1738351156; bh=J7BCL5cGF6mEQ+jWQmgSD1PSMHM64S7QM21
+	pN6TfD/0=; b=r8E5oZxQSRe8MQ5qwKl4LKR+9X5OSQAypWTNLDZIc1JBj1kMPbW
+	DF2kO+eYsCU8q/twtcsmvQ19Mq94YijmKteuEqhn5bwgOAtRwbhQSIPFGH9uNDBH
+	PLht5Hfq9RJoFWZ5LuFNI5B/s5pkRN+C8u1GybQN3HpoFw8tez33d70HRT7yOqmP
+	dC/CoTHQhPoCDxWyceERiWsy61fV3UoN8nK99Ve/1cIw2atrvibPUU57dOnCccNP
+	PEGuEUqs0h67VMeVVazS4TPSlM9a9FAEuxWeoTdTX0UbTHIHqWTgM+XBtnhLtJT1
+	arUSGr9AkOUhPpFra0HNnbbch/undprJp+w==
+X-ME-Sender: <xms:s9CbZ5_aX2iERzPcZkX-vk-tVmQu4qnkqtaWU-8Wij40QzAEBQahpA>
+    <xme:s9CbZ9sLxUNy3V198QW5rJNS-Q1MNtp4D2QksQ7o2XQpcjFOfbbmRWWCzDftKFvsp
+    qXDM_MX2nUMBJPItg>
+X-ME-Received: <xmr:s9CbZ3Am0bJu3YT8tZ18MS0yjLsajG5WfAaAEqehKSfrZBhUFNvXA15IzS7ntAus9Mcmmi1OxFWAZA77blClmfUtlsGuVapfCpEq>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiieegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
     ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
-    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehkrggrrhhtihgtrdhsihhvrghrrggrmhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ltCbZ5oPbec0tkj-KHK_AYjAx1T5z8-ccXX1eX27ZDIf1J_MqqTlzw>
-    <xmx:ltCbZ-rEr6-y-1ijZ7OrirIvLFyJc_sQGRouclSs-d_fEU_y7ZQeRw>
-    <xmx:ltCbZ_SvX624ZwD4dSfQpfSlITZFn06xOLkcZbNprbG8fVrDBBlXsg>
-    <xmx:ltCbZ2q0YAmk5LmucevDPFFQ0u9GeOaoBPrO8im_dRNsXLVCiJ4A4Q>
-    <xmx:ltCbZ7CN1PtLqeUWftHcZPwl4SwNUhEVmKCIccZ9nVlz6B8tJOcU5tT2>
+    drtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeekveet
+    veevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:s9CbZ9dpud-bw_TWoeupZs1OhlrhH6OAOvZsU-1svfAJvP4RCzmHOw>
+    <xmx:s9CbZ-P-gBcoeKuYOlCeXfY2bUKZerSswJXKrvAnA9qDILSdpgpIVw>
+    <xmx:s9CbZ_kUFzvmdxvOaANgVJ1eEwsqjHYIMh58XS6Ly9CyXZqppgEFsg>
+    <xmx:s9CbZ4s11Zsh4d_CJk0mzVTmcKCf1XgYC0zTV6RPb5NNPW4CQbJA3g>
+    <xmx:tNCbZ7rKxekRonMGMntTeAZ1J0BqkJgbRaU2XkF8yUVpdGDQj1I64SCk>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jan 2025 14:18:45 -0500 (EST)
+ 30 Jan 2025 14:19:15 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,  Christian Couder
- <christian.couder@gmail.com>,  Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git in GSoC 2025
-In-Reply-To: <Z5srHBSPKQlsuH53@pks.im> (Patrick Steinhardt's message of "Thu,
-	30 Jan 2025 08:32:44 +0100")
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
-	<CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
-	<Z44u7od-mDiKcKVZ@pks.im> <xmqqr04vzyz9.fsf@gitster.g>
-	<b784f612-4b6b-414a-9742-86611c50c55f@gmail.com>
-	<Z5srHBSPKQlsuH53@pks.im>
-Date: Thu, 30 Jan 2025 11:18:44 -0800
-Message-ID: <xmqqjzaccdpn.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/2] Plug two memory leaks exposed via Meson
+In-Reply-To: <20250130-b4-pks-memory-leaks-v2-0-fc29dc7d4b19@pks.im> (Patrick
+	Steinhardt's message of "Thu, 30 Jan 2025 07:17:37 +0100")
+References: <20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im>
+	<20250130-b4-pks-memory-leaks-v2-0-fc29dc7d4b19@pks.im>
+Date: Thu, 30 Jan 2025 11:19:14 -0800
+Message-ID: <xmqqfrl0cdot.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,48 +89,20 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
->     It is the responsibility of the owner of the topic to determine
->     whether it is still accurate. This check should happen close to the
->     noted best-before date and come in the form of a patch that either
->     bumps the date in case it _is_ accurate, or alternatively removes
->     the topic from the list in case it is _not_ accurate anymore.
+> I've had the need to play around with the memory leak sanitizer today
+> and for the first time used it with Meson. Interestingly enough, a test
+> run with Meson flags two memory leaks that our Makefile doesn't. I
+> haven't found the time yet to figure out why that is, but this small
+> patch series fixes both of these leaks.
 >
->     In case the topic owner does not send such a patch, contributors
->     other than the owner are encouraged to send a patch that removes the
->     topic, putting the owner into Cc.
+> Changes in v2:
+>   - Add an explanation why t0301 only fails sometimes.
+>   - Fix commit messages to properly point out the `-Db_sanitize=leak`
+>     option.
+>   - Link to v1: https://lore.kernel.org/r/20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im
 >
-> Well... maybe it _is_ an expiration date. I dunno, I don't mind which
-> exact term we use for it.
-
-I do not mind either word, either, but I have two small issues to
-raise:
-
- - Is each topic "owned" by some specific person?  Would an owner
-   retires from the project, would the leftover bits go away with
-   the owner?
-
- - "relevant" may be a more appropriate adjective than "accurate".
-   An item in the list may still accurately expresses somebody's
-   wish, but because a better alternative has been implemented in
-   the meantime, the feature-wish may no longer relevant.
-
->>   - Fix Sign Comparison Warnings in Git's Codebase
-
-This one I am not sure if it is even something we want more of; a
-careless "-Wsign-compare" squelching often makes the resulting code
-worse.
-
->>   - Add more builtin patterns for userdiff
+> Thanks!
 >
-> This one doesn't feel like a sensible addition to me as it is
-> open-ended.
+> Patrick
 
-If you add a list of missing types of documents and curate that
-list, then it can evolve over time.  Cobol may be on that list
-forever, while other minor languages may come and go.
-
->>   - Replace a run_command*() call by direct calls to C functions
->
-> This one, too.
-
-This one, too.
+Thanks, will queue.  Looking good.
