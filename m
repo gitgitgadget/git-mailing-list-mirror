@@ -1,85 +1,86 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C53E1A7046
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 17:26:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D7121EEA3D
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 17:35:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738258007; cv=none; b=QX2v6TkZYNJ5aSQ8IMzryb9z7L5up7fBcWkR0oXYHhVbUkc3XBzHih5KaCfa23PrfMFlrTVA9vt1BXruZ5uIo17GtI3mBeelwUHcD8/rLxQdt6N5t+JhucurNAfHajA5SKVFVhMfp0JSxPz1JEr//CAQlMYChjqVUkla89OTYUA=
+	t=1738258518; cv=none; b=rkhmTclJq+FqoJo5QtR9IrTfeVSNbjxDCN8Ti8BSF33dBHf+Egdg/x97VXCe9kOrGeGjnxYijmduf6nOaEruGEupBSFgR/pdZtSS9uKubZU291O0qAFERUgYSZaTN6mHQUvvlf8KimyFovChEp0kv87SBHH6MexiZ70mpJqWAuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738258007; c=relaxed/simple;
-	bh=F/yE9ABWyEZmMDMsVT5nDF7roo739BYQOjXnsQnFzao=;
+	s=arc-20240116; t=1738258518; c=relaxed/simple;
+	bh=xiqMh3naKKTXZXqGC0VJkkgDTUEOAX+ZQQ7iCQOWr+4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fqIvG2Cb0YnGJIy6UTMi/1AXQykkyqf30Cz4nIy/gzgbDHQBvQB/F2ux2LkeJPiSby63/kmlYsrojC4NOR8BVPD+cMaAzPn9y/4A2nil/20T6Ji4THnv/PCYLrOLme/hygD580XyITJDnVMSG5tfZWzeVoQPyMdVA0E0thsnJF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jGlqs2e4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mudw9CAB; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=lYunnG0t/6D5BWb2nxk2d6en2m6tTPiRgdPEKAppg2QSJ6VXz9MHrC0lRQosUXZ4b8cxHlt4p9nzKOM7Goyx8YkO+GXoxuEjpZyEQ4K8wWS65nJHe1DaNlFfA4FZj+wpkajWa8v46o9UR/ejLw2YSy8skQlRcYjSFAuSPvidMy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kiVc1HqC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jhOe+dN1; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jGlqs2e4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mudw9CAB"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2A2F5114009C;
-	Thu, 30 Jan 2025 12:26:44 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Thu, 30 Jan 2025 12:26:44 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kiVc1HqC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jhOe+dN1"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 07FFA254012F;
+	Thu, 30 Jan 2025 12:35:15 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 30 Jan 2025 12:35:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738258004; x=1738344404; bh=0kcno/kNwO
-	046fEkX/H1hQe7w9W7lHNxK10iEcENY7k=; b=jGlqs2e4Ur/DYEHkuA/ubxCYDQ
-	gS2zchCNwvNeuFXF92xcT9cigFDqPlmC00bcOVhRN2aqB6HniRhYl2CDGdi7TScJ
-	um0T4qJFfnbHoXplco09iI3B3+mDsCgGbD9DPxZyRi1ToFPXgrzlofDQnZCrnJz0
-	mCBEQP29troGizLMhaaVDwNDSIdPJ2YsWHAGmKZ6g9RRt9OqgtsZdkz/97Aaw0Uo
-	J8LR55U43nKQGeIvfm2pruzuP9Z74qE2BBudv03DPCvMmJsFvSdjGtfL3CbSwzzo
-	Yv/SzWbZziqvvKPgXenLX+ruDe/fx6Cp9/8a3wydgeVqSmD7FPHyzLQDXRUw==
+	:subject:to:to; s=fm2; t=1738258514; x=1738344914; bh=G0IebimxHn
+	0YcBzMXNJQ1cNceJSfC9FDQtVWRoXqZzE=; b=kiVc1HqCVZtaw/MJ/geI53n1cI
+	Keym9/n4nzC3/3wrTEOdn5tbHpWP7lrV4C7/7QpatjpeO/cCW6XLC5duNKSfNquo
+	POT8kBJDxe8c+wLwaowjYHvBrQGPB4sZL3YdCxAk1z6mmR5YiibTdYPnAfk2zHVo
+	Kzaje0OIVC4prDWZEZeBAZppjz4IixWFTZIzjsNU9neGHM09uSBb1rjgI+Lt7pKB
+	ySxPRfo73ru98DVi3mx0kfaNUu3Aw6xu8+FgfgDDAzXqkj1RRmbxp6KA4v0ZPikF
+	9JoJto4wdb2BIOyp8LJ3vWq7mTXVyMYH7apDOpASEyIQyb/+ECAZuhUkGbag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738258004; x=1738344404; bh=0kcno/kNwO046fEkX/H1hQe7w9W7lHNxK10
-	iEcENY7k=; b=Mudw9CABjkFxlIjXINld4u6bymF0EfcyLrMMmwiilghR/+Odftx
-	pJQ+DSjxLouKNTdGyJ7CSWsn7dnm36IXn/uFlYBi2aa+NbXs7XR/trv3WlT9MWWs
-	KPm+v8fpYqqFTN4abuWQ/jb1c8IrKPUbuonKwHQH6DEomQd1HL8UvR5eW7mTeyJ+
-	Q6HRjns/0+hZI7TQBLCr3Vvw7/QsR+Tugu4u6PzHd9WvEUzlwefOTEHs8HfZiL95
-	OMVsvfMMvC+cmAi14IOYZ1MOKODtAI970WiacpiFk2YAKb2GAdxZ+m9BLzV7Xpsk
-	OWobdH1oeYsF3w6W8jN++oR6iH7FNnk4bwQ==
-X-ME-Sender: <xms:U7abZ652OxwV4jSytgZtE1UETTwwJNopmxiVqFZvS9rT3VSVfkU-lA>
-    <xme:U7abZz74TwbE2Qt8xsNvbHBesuKY7S20QuiVIDRZ2l7jELZSHwU1Be59L2hgbniwe
-    Ej5iOMvd6UoKMCmZA>
-X-ME-Received: <xmr:U7abZ5e-nB1uKGlGy27EnYQqP9dDpLG2qvXFPd9_bTp2hYk2nQZGUSx9suSs7MHVm-B843Lij3SqfaQNV9zfVGv95EOJFVvk0OHp>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigedvucetufdoteggodetrfdotf
+	1738258514; x=1738344914; bh=G0IebimxHn0YcBzMXNJQ1cNceJSfC9FDQtV
+	WRoXqZzE=; b=jhOe+dN1ssl+Fk75rkRxS6yIgCCEyws5w3hYY/Eaqspzoi+ifBt
+	QqlUNmBZE/of3LgQc4Tmn+QvUJMRM+p47jH4SbAnJED/f663PesB2iqP0pq9cexz
+	5+IW6Ujm+m6VqvcMtkMA7pIfqzaHb+OgbVktG09g1TNa/UsZ1MPg+SOw6k+x3vi+
+	W0ZeWFP5/8JEcMDh4eKYFCZSiGbkjRUiDsxPkeq6Jo5H7rhQ6vQ6s8FIE6zh+Vh9
+	AafXrb1Kf7MhgfkaLdT/RkGTRAyhuHG/fheyJ7/1vEUurn0wDxopdbi+y/KucpTM
+	ZqhkvfnQhu30g+wSkTPTtn0QMoYqtCzxMUQ==
+X-ME-Sender: <xms:UribZwxPciReC_OlFIpTzdoK5CTU8pCjaTmzL6BXHiYa5FIcNIXrHQ>
+    <xme:UribZ0SMtsbrRhpc_6rA4Irkyhwx-f1H3iBpGN8m7uOzytExefG0Cuzv9wrT22dr3
+    3GCVQj3ngP6XgE1XA>
+X-ME-Received: <xmr:UribZyUpz9tP41vZmKLy_gPY1f0ohvd2OML4yuGApLdv0MY5_eBZGt4_XSy2hMLPu23-0pgVK8B8BW31Ysy0yOCxl8pv8b5W_Oc7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
-    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
     dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhg
     vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
     gtohhm
-X-ME-Proxy: <xmx:U7abZ3I8EFkVvE2g4HSAIXmXqWrm66lf0HuewyhBpT1IVOQkniXXwQ>
-    <xmx:U7abZ-Lsk1MykNHWdrTjZHX4C35LMjZKcUlG-3Vj4gAzaQnKVvfZ-A>
-    <xmx:U7abZ4yEDVr48aR2cVqDJaBkg-NWz2GxFtr8b1YXQwv-u79OSWxODw>
-    <xmx:U7abZyLJhIiIWEFSUr63XyKigYtWMgpyhBAV6pCpADwELm0ScN5lMA>
-    <xmx:U7abZzGa5ZbB9pL8ss1t75LAMRWm9BKOmdxmJFTsq3R1GTlE7Q-ulDEs>
+X-ME-Proxy: <xmx:UribZ-guK__0jXhaP5D0uMdAssruYyCxrZLc1C3bpqdtI9rBuhwmAA>
+    <xmx:UribZyAtqxswlnTybr2RArWcACsdVlySgG9-BZuN6rl_kWpETkb24g>
+    <xmx:UribZ_KS02yC7Acn89NKQv7PUHL1-DWteHp_aR37sk3vT-3bZxT_ig>
+    <xmx:UribZ5CO0DELvLmo7Jj2midF5F0oxSsI9W9Ob5zOwIETxhuLwvwL2Q>
+    <xmx:UribZ19fL1QLmeHSIzoGlEqCLr042HwKetIe7HtLJ3t9kZKnzbhrugB->
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jan 2025 12:26:43 -0500 (EST)
+ 30 Jan 2025 12:35:14 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: Jeff King <peff@peff.net>,  git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2025, #07; Fri, 24)
-In-Reply-To: <Z5rkFcp_awa2hjxu@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 30 Jan 2025 02:29:41 +0000")
-References: <xmqqwmekvubv.fsf@gitster.g>
-	<20250128164606.GA1688180@coredump.intra.peff.net>
-	<xmqq8qquom4t.fsf@gitster.g> <xmqq4j1iokvv.fsf@gitster.g>
-	<Z5rkFcp_awa2hjxu@tapette.crustytoothpaste.net>
-Date: Thu, 30 Jan 2025 09:26:42 -0800
-Message-ID: <xmqqtt9gfc19.fsf@gitster.g>
+Subject: Re: [PATCH 1/2] unix-socket: fix memory leak when chdir(3p) fails
+In-Reply-To: <Z5sWCxEF3J7t8WvW@pks.im> (Patrick Steinhardt's message of "Thu,
+	30 Jan 2025 07:02:51 +0100")
+References: <20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im>
+	<20250129-b4-pks-memory-leaks-v1-1-79e41299eb0c@pks.im>
+	<xmqq34h1k02k.fsf@gitster.g>
+	<20250129200702.GB2331283@coredump.intra.peff.net>
+	<Z5sWCxEF3J7t8WvW@pks.im>
+Date: Thu, 30 Jan 2025 09:35:13 -0800
+Message-ID: <xmqqldusfbn2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,14 +90,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On 2025-01-28 at 18:26:12, Junio C Hamano wrote:
->> Here is what I'd directly apply to 'next'.  The merge-fix mechanism
->> knows about the same change, so when I merge the bc/doc-adoc-not-txt
->> topic down to 'master', the same tweak will be made as an evil
->> merge.
+>> > Did you mean
+>> > 
+>> >     $ meson configure -Db_sanitize=leak
+>> >     $ meson test t0301-credential-cache
 >
-> I agree that seems like the right solution.
+> Oh, yes, I indeed forgot the `b_` prefix. Other than that I wanted to
+> abbreviate steps a bit so that I don't have to give the full sequence of
+> commands, but my attempt was somewhat lacking :)
+
+Thanks.  It also confused me trying between setup and configure.  
+
+As the use of meson in this project is a fairly recent development,
+if we want to entice more people and interest those in the "make"
+world, we should try to leave enough droppings for them, even the
+meson-novice ones like myself, to try out themselves whenever we
+have a chance, and the proposed log message of a commit that adds or
+fixes meson related part of the system is one of the good place to
+do so.
+
+> You can pass arbitrary arguments via `--test-args`:
+>
+>     $ meson test -i --test-args=-vix t0301*
+>
+> `-i` makes the test run interactively so that stdout/stderr remains
+> connected to your terminal, which also allows you to use `test_pause` et
+> al.
+>
+>> (The "b_" prefix on "sanitize" confused me as well after reading the
+>> commit message).
+>
+> You've probably been confused by the lack of "b_" in my commit message,
+> not by the prefix itself, which was a simple typo.
+
+For me, both were confusing equally ;-)
+
+> ...
+> options can be discovered by running `meson configure` in either a build
+> directory or the source directory.
+
+Very nice to know.
 
 Thanks.
