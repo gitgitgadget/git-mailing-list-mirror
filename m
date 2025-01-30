@@ -1,80 +1,79 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0BCB660
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 06:17:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BC633987
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 06:17:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738217870; cv=none; b=Bj4jTP9/t1u5DQJbwzoYH3m50b0xnHRqpZYI1ZXDcaBGapoL1jUPgZJpQWltZtK3GBXKYOMNaVAq8UN3POYnCrDL37PNTvl0bidIUkfOI6oF9aKY8CJZJ0IvhcoAuez765lzOnrwgS+MQorJvw7mtwm3Yzdze3jfsBLQvch/1mc=
+	t=1738217870; cv=none; b=NON2e7ViWri68SJEMCC/gZYarACUILbY90hiMvFD017/MqmjTtxtvgRzRwXIq7qgJrojb1pcSk24Chk0jdMIlHs8ZvnIYT3eFcLQlh/HbPdeIThHx8KMuHiuu7j18wE8/i4r0gudfbE7ON+P01U2ZdIZVG4as6kw0fvBZ51oud0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1738217870; c=relaxed/simple;
-	bh=+bJiA1fhrUGwjRyYvLhCGGvPXj3XomyUo1grLlJNA84=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=nE4/VHOr3W2r0pAucF6ncPxQohWZjxX4+a6AiMsrOHRDsw9uaWDSSCaxtKi4PASVoeLvfOUMRkb9Y1UvmSBCNjwxHynRadNMms9GqQDgs7IAYQwQxOULnjE4dZ+YMug6TTAxhD1l69XRz2zfSHApn5rRljqxVCRI0kBEXKe+Eso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SI3EswM5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tSx8Towa; arc=none smtp.client-ip=202.12.124.152
+	bh=+GqcjI+RKHPHnfPfhkoHIfI5igMkmlqre7IGUlCQOXk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=D6sJ4/xtHx2UdfFNP9lEwB4LoyzP+6VfuzCDoGDNfQ9w9JXhY6wdoDZN+ZQxw1L0MWfSAOSCbEUS3OmTSXPkKdAYlsWL6vY26W8s525vAAkisu3E/uSir+WsiakH/9DPso+f8pVundoHngCrYhYgaxwoobV4tvxbFM57/bZJBfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZcY7fa8a; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cdMZSOa9; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SI3EswM5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tSx8Towa"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3594025400EC;
-	Thu, 30 Jan 2025 01:17:47 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZcY7fa8a";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cdMZSOa9"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7570D1140140;
+	Thu, 30 Jan 2025 01:17:48 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 30 Jan 2025 01:17:47 -0500
+  by phl-compute-12.internal (MEProxy); Thu, 30 Jan 2025 01:17:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738217867;
-	 x=1738304267; bh=KCeZQJdqo7cdI5Yk+h5woukNnol6OGnoY9YSWv6G4EA=; b=
-	SI3EswM5VuJU/n55drNPzCtWAT+HBI34It602PlQfQfDarBn/37+5VitmbEf4sTr
-	/NGwg4i1rrJhxVhgRO9TjKWgIIJaRqekdpu9J1tQifsAgoxIyJj9S0qgEKqy6ty6
-	nAwX3muzfTaRwtQvAKboRZcqfx72iUFTAyOR96FTg+MEbsb7UW0g4Mk/nGiUYdvg
-	R0aVdLh7aC3vtlosjQB9a2cB/wdGyQ+r030ElTA1X5lIONLqtBo7yOvIuBWtXTKX
-	SAT9O59yd7Wo17DSKbepFl9dddsqVqrE9r2nr6St48l2Jfb/1s5ON6iBkd4kRbsw
-	zIzi/QPcr5brxkpGIJAUTg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738217868;
+	 x=1738304268; bh=drkv6oUbCf5k8OoQeLC/gl6e6n6JaaUXtcSzA1cRku0=; b=
+	ZcY7fa8aU3niKDhuXC7bhb6GnyS0vIvhTwfvZhXhi7GW0N+dmQad8s7TYYqRkjfF
+	VYm9bdkfAXtJgl8fjWqfHUh8ov1RpY29SFUHwUARbs203MHGHboHNTiwbjnTLZRr
+	k357mTn5gRRZhbwcF48OPP6JmO8atV+9bSsb1poadD5FzEdyXp61jY3nF4V3YcEb
+	8qZaTSLEI080gEAey44ZOQu8keKkdK0LJwfQIDpLWc6Q2eHh3d8E4pfpo8IUII7f
+	Q7vaalV2ZseWC3WJXCoGOTouEU+qEZ7jMpB7212b0YrnQm9+nqn7Srl8UEu4+POs
+	ZkIn3A29C+6sV4iBBbXc9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738217867; x=
-	1738304267; bh=KCeZQJdqo7cdI5Yk+h5woukNnol6OGnoY9YSWv6G4EA=; b=t
-	Sx8TowamceIcUOoINRoy4vEnaDLjBjq2Cli9v8t8vxQPeYdtqyEV5G2C+dnLr/C2
-	8YtEjAqte/IQeP/Q+MtwwLfuk56BA76Zf7EGzlonsaEP+f745VxIeavZMXLyrKps
-	K36codoAI+8NeZXVSDEkJAI+Jerc4XpGlhsXmos0teMA4fDXFw2W631wRdxf16wQ
-	CJfoRA6JbN5xzR/LOloeYvzlrsXgU2JjNcE0Ok34SM0lZPHBbkeEIIsmpGrDDBle
-	Y01wudMhho0w2MhFjUTuz6eQXC4+I+S1QMExcOZEr3RpljL3swjy1Zi231Ds3tjH
-	nHkHVzXX0qnjppnC2limw==
-X-ME-Sender: <xms:ihmbZ0-f0NUfMq4pW9xvl1cuz9sQQ4-Iwh8pSmKdAEJTc95jTbcl1g>
-    <xme:ihmbZ8vqvh_lDUWcu89Isj5PEZzGS1oPZqzO4mjHLEWZJcAuZKuYlNnTkt1lelScu
-    0TRwOkMjiM34n7rMA>
-X-ME-Received: <xmr:ihmbZ6CywH8UDNFZvmNNBp-iIeOw3EO-TEz2uzF5SCiN9C4CGlBJF1to7BC-Rq0VCKRc2_9ceY35ZqrtYw-sCxJUcMxyb9edd8rU_-02UaXJ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738217868; x=
+	1738304268; bh=drkv6oUbCf5k8OoQeLC/gl6e6n6JaaUXtcSzA1cRku0=; b=c
+	dMZSOa97Q+8JZTmDAcQBbmu5ZKXifQKSAh2d2MWn+zGesh/9oe08F7iUG2HPirce
+	dQq7tdVrFI8Yetm8ozm9gc7jHisipDdfRlzbBnPBie1ON2+gDcPGlz9SrAN22ubv
+	KgAevHj6DNsrU3EJRV/1cfDytKbnUYO9FTMXhBNt4HvgKJlixnJ+LDJlKBcHeSJ7
+	Y2S7F5IW/SxDq7pSX1LHyq09xahFMXzjTUsiz3qcGGym8c878o7qDoZ+aErTUeVM
+	n2yjqs2NkHYfBVZUR//NP8PvUen3lj0O5SQt1orOvCFxy1rp64d1MbCsIE0cBsFB
+	I187RUUxJBXD6AjgWKacQ==
+X-ME-Sender: <xms:jBmbZ_STvNCvE_5CqB4ice9wgGur4jKd9z42iUujMYo249hKPHw_vQ>
+    <xme:jBmbZwxTHpIuycTAoPzXqmwq0__tNWh6EO3nppfp08GzSkFk319Gva1VZGIWzGsiR
+    RnfXsblJCNbXsQrXQ>
+X-ME-Received: <xmr:jBmbZ0189mPmAl_y-5WU8B899c1E9O7tXj79JLm6rnKLJCEQnxpF9fgtDUyyCTJG2Ojvkqze4vA-z4TB2IuP-FH09GsM7nopROtKAZjVx4lp>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehtdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhufffkf
-    ggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteeuueehhf
-    fhiedtueehtddtieekfedtudehtdehfefhgeffveeggedthfehuedvnecuffhomhgrihhn
-    pehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:ihmbZ0c66zVW1Sw3KON6dJ5YydPQ0KgjY42Qj73oFL7DUm1PWk_RaA>
-    <xmx:ihmbZ5NeO9M0fgGoHkEy1KoprSqmLKpcmtfb6ET3XLCnYlY8X1EOgw>
-    <xmx:ihmbZ-nyqXE8yafpCsIgDJ50W46WHsIxNfMSTMOxRIDKYLGql70xMA>
-    <xmx:ihmbZ7tUA4VGcQNZWNMCU5wYTtTLCv3eQSOhz1HX9K-Pl1EmxG1ceA>
-    <xmx:ixmbZyaLbs9DRHnKpYHETFnm3iFPNQ7xCgrvD_3u_oTBcIb8qOlyHJmQ>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
+    gtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
+    dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhf
+    sehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hg
+X-ME-Proxy: <xmx:jBmbZ_CGf6WerRNBoR3dMXwoAs5B3Yp-coQlcy50xtwUhg_Kt99TqA>
+    <xmx:jBmbZ4jYC8wywpODUME9v0bhgBY8ir0kzisFcVtXNHmOzttHokKctw>
+    <xmx:jBmbZzr-25P_FFIe7On2HRB6CfVrx4NdOybGdmCNoSr01OVIBbv0Ig>
+    <xmx:jBmbZzjsKLeYVMztZtAxayy6YSvr2pn1emj5O8FqNqrxMGjXcNzq6A>
+    <xmx:jBmbZ7tudik0DrkxzY4mPy605SupBSG2J-n7tW63Gl07XmmH6irWQ4_M>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jan 2025 01:17:46 -0500 (EST)
+ 30 Jan 2025 01:17:47 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 69b1f0ee (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 30 Jan 2025 06:17:44 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 465e81ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 30 Jan 2025 06:17:45 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/2] Plug two memory leaks exposed via Meson
-Date: Thu, 30 Jan 2025 07:17:37 +0100
-Message-Id: <20250130-b4-pks-memory-leaks-v2-0-fc29dc7d4b19@pks.im>
+Date: Thu, 30 Jan 2025 07:17:38 +0100
+Subject: [PATCH v2 1/2] unix-socket: fix memory leak when chdir(3p) fails
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,79 +82,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIEZm2cC/32NQQ6CMBBFr0Jm7Zi2QLSuvIdhUeogEy2Q1jQS0
- rs7cgCX7+f9/zdIFJkSXKoNImVOPE8C5lCBH930IOS7MBhlWqWNxb7B5ZkwUJjjii9yAsbV+ky
- tG8hrkOYSaeDPvnrrhEdOb7H3k6x/6f+9rFHhyVIjgqVe+asoRw7QlVK+nX73mbMAAAA=
-X-Change-ID: 20250129-b4-pks-memory-leaks-2a318e5afec1
-In-Reply-To: <20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im>
-References: <20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im>
+Message-Id: <20250130-b4-pks-memory-leaks-v2-1-fc29dc7d4b19@pks.im>
+References: <20250130-b4-pks-memory-leaks-v2-0-fc29dc7d4b19@pks.im>
+In-Reply-To: <20250130-b4-pks-memory-leaks-v2-0-fc29dc7d4b19@pks.im>
 To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>
 X-Mailer: b4 0.14.2
 
-Hi,
+When trying to create a Unix socket in a path that exceeds the maximum
+socket name length we try to first change the directory into the parent
+folder before creating the socket to reduce the length of the name. When
+this fails we error out of `unix_sockaddr_init()` with an error code,
+which indicates to the caller that the context has not been initialized.
+Consequently, they don't release that context.
 
-I've had the need to play around with the memory leak sanitizer today
-and for the first time used it with Meson. Interestingly enough, a test
-run with Meson flags two memory leaks that our Makefile doesn't. I
-haven't found the time yet to figure out why that is, but this small
-patch series fixes both of these leaks.
+This leads to a memory leak: when we have already populated the context
+with the original directory that we need to chdir(3p) back into, but
+then the chdir(3p) into the socket's parent directory fails, then we
+won't release the original directory's path. The leak is exposed by
+t0301, but only when running tests in a directory hierarchy whose path
+is long enough to make the socket name length exceed the maximum socket
+name length:
 
-Changes in v2:
-  - Add an explanation why t0301 only fails sometimes.
-  - Fix commit messages to properly point out the `-Db_sanitize=leak`
-    option.
-  - Link to v1: https://lore.kernel.org/r/20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im
+    Direct leak of 129 byte(s) in 1 object(s) allocated from:
+        #0 0x5555555e85c6 in realloc.part.0 lsan_interceptors.cpp.o
+        #1 0x55555590e3d6 in xrealloc ../wrapper.c:140:8
+        #2 0x5555558c8fc6 in strbuf_grow ../strbuf.c:114:2
+        #3 0x5555558cacab in strbuf_getcwd ../strbuf.c:605:3
+        #4 0x555555923ff6 in unix_sockaddr_init ../unix-socket.c:65:7
+        #5 0x555555923e42 in unix_stream_connect ../unix-socket.c:84:6
+        #6 0x55555562a984 in send_request ../builtin/credential-cache.c:46:11
+        #7 0x55555562a89e in do_cache ../builtin/credential-cache.c:108:6
+        #8 0x55555562a655 in cmd_credential_cache ../builtin/credential-cache.c:178:3
+        #9 0x555555700547 in run_builtin ../git.c:480:11
+        #10 0x5555556ff0e0 in handle_builtin ../git.c:740:9
+        #11 0x5555556ffee8 in run_argv ../git.c:807:4
+        #12 0x5555556fee6b in cmd_main ../git.c:947:19
+        #13 0x55555593f689 in main ../common-main.c:64:11
+        #14 0x7ffff7a2a1fb in __libc_start_call_main (/nix/store/h7zcxabfxa7v5xdna45y2hplj31ncf8a-glibc-2.40-36/lib/libc.so.6+0x2a1fb) (BuildId: 0a855678aa0cb573cecbb2bcc73ab8239ec472d0)
+        #15 0x7ffff7a2a2b8 in __libc_start_main@GLIBC_2.2.5 (/nix/store/h7zcxabfxa7v5xdna45y2hplj31ncf8a-glibc-2.40-36/lib/libc.so.6+0x2a2b8) (BuildId: 0a855678aa0cb573cecbb2bcc73ab8239ec472d0)
+        #16 0x5555555ad1d4 in _start (git+0x591d4)
 
-Thanks!
+    DEDUP_TOKEN: ___interceptor_realloc.part.0--xrealloc--strbuf_grow--strbuf_getcwd--unix_sockaddr_init--unix_stream_connect--send_request--do_cache--cmd_credential_cache--run_builtin--handle_builtin--run_argv--cmd_main--main--__libc_start_call_main--__libc_start_main@GLIBC_2.2.5--_start
+    SUMMARY: LeakSanitizer: 129 byte(s) leaked in 1 allocation(s).
 
-Patrick
+Fix this leak.
 
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (2):
-      unix-socket: fix memory leak when chdir(3p) fails
-      scalar: free result of `remote_default_branch()`
-
- scalar.c      | 4 +++-
  unix-socket.c | 4 +++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Range-diff versus v1:
+diff --git a/unix-socket.c b/unix-socket.c
+index 483c9c448c..8860203c3f 100644
+--- a/unix-socket.c
++++ b/unix-socket.c
+@@ -65,8 +65,10 @@ static int unix_sockaddr_init(struct sockaddr_un *sa, const char *path,
+ 		if (strbuf_getcwd(&cwd))
+ 			return -1;
+ 		ctx->orig_dir = strbuf_detach(&cwd, NULL);
+-		if (chdir_len(dir, slash - dir) < 0)
++		if (chdir_len(dir, slash - dir) < 0) {
++			FREE_AND_NULL(ctx->orig_dir);
+ 			return -1;
++		}
+ 	}
+ 
+ 	memset(sa, 0, sizeof(*sa));
 
-1:  94205fa36f ! 1:  63fd407649 unix-socket: fix memory leak when chdir(3p) fails
-    @@ Commit message
-         with the original directory that we need to chdir(3p) back into, but
-         then the chdir(3p) into the socket's parent directory fails, then we
-         won't release the original directory's path. The leak is exposed by
-    -    t0301, but only via Meson with `meson setup -Dsanitize=leak`:
-    +    t0301, but only when running tests in a directory hierarchy whose path
-    +    is long enough to make the socket name length exceed the maximum socket
-    +    name length:
-     
-             Direct leak of 129 byte(s) in 1 object(s) allocated from:
-                 #0 0x5555555e85c6 in realloc.part.0 lsan_interceptors.cpp.o
-2:  a4b4b31084 ! 2:  9248925ca0 scalar: free result of `remote_default_branch()`
-    @@ Commit message
-     
-         We don't free the result of `remote_default_branch()`, leading to a
-         memory leak. This leak is exposed by t9211, but only when run with Meson
-    -    via `meson setup -Dsanitize=leak`:
-    +    with the `-Db_sanitize=leak` option:
-     
-             Direct leak of 5 byte(s) in 1 object(s) allocated from:
-                 #0 0x5555555cfb93 in malloc (scalar+0x7bb93)
-    @@ Commit message
-         ever gets assigned the allocated string and free that one to plug the
-         leak.
-     
-    +    It is unclear why the leak isn't flagged when running the test via our
-    +    Makefile.
-    +
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-     
-      ## scalar.c ##
-
----
-base-commit: da898a5c645ce9b6d72c2d39abe1bc3d48cb0fdb
-change-id: 20250129-b4-pks-memory-leaks-2a318e5afec1
+-- 
+2.48.1.468.gbf5f394be8.dirty
 
