@@ -1,79 +1,80 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B261EC017
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 14:44:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C691EE017
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 14:44:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738248262; cv=none; b=J0+msk2MXhyoYOffcMiOO+Ls0pq9wZiOeAZVOqEZLYpDUEynfqgy1+RchCUR/QIO19ukeF2S91B1UXuTeGnyESRWRU5GWHKmFeuM+60MirzF1THCf+jbpKY0XXEFuk+eVqMbhuhMc8KZy7uaYT9QI14B+osMu6J2sWoBqbsF3dg=
+	t=1738248263; cv=none; b=oGklmbFsiP+pzs7W7Oa8BGj1A95nX5cAx10/8qYKLXRXD3eQu9/8Ltbfx3Nh75dTnOIqEzvJCb/OG8+/YSyWHh2y2QhrzLIldKbE3hRNn56W/lN3BYn5mQtK0h6oGKsyY1F7fhi5u3QyCf5PbLR37Osfpa7i1TM4JUe0DWxlLh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738248262; c=relaxed/simple;
-	bh=h3v9Ybb1s9qqSd+wwu0XTDTls7whNjHDwCKxmgF/XUc=;
+	s=arc-20240116; t=1738248263; c=relaxed/simple;
+	bh=vbL2dEi9vlBVe6jJ1DPUFh7hbF8qjYobTxrDVrLmk/4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fbzOuSkkO9mKriV8r/FcRFGzLSguwLLW+r32leYiZPzuBuVCildnwNHVA3BKq54gYjsduPtIMYeIPgsPy27eisC1rI2KdLPVRoIbau6dBNJRe/dN78Mp4k27ZiyOh7kiVkvFKkpQTn21+nHPgABEfw9ARL9N8fGjHsC2eLok6/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mmkvp3xk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=po0KG5rz; arc=none smtp.client-ip=103.168.172.157
+	 In-Reply-To:To:Cc; b=i7uAI1bDsUfsIGhj1uNlDnv1gP1tQNHHaEB/LzVeProR+DXQopVsa80Zcz3xF5acpoZr345A8gG2BWr+hrYCw2qfeyAEzfzFv1nc7wdr/+Mzo/ntdNr5JQvgP0jWQxZZzPcPFCMk1+nLNtkU/tpH5EG12s8Ul1ey9yxKJzW/Xp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cnpIzgY7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZrJRDEn+; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mmkvp3xk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="po0KG5rz"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 16DAD1140108;
-	Thu, 30 Jan 2025 09:44:20 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cnpIzgY7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZrJRDEn+"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1CCF11380137;
+	Thu, 30 Jan 2025 09:44:21 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Thu, 30 Jan 2025 09:44:20 -0500
+  by phl-compute-01.internal (MEProxy); Thu, 30 Jan 2025 09:44:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738248260;
-	 x=1738334660; bh=UsfhuRZbMzYB+Tu2+b7MOT+3T6OtqOH6ptlD5cLlBG8=; b=
-	mmkvp3xkmCiXcQC9hAJO9p6l0+otpnafbB7WKt7H40W/R+Jv0DInqplk+Jmo+lU1
-	HLA8kzQQHSVCRvTGXq5n3OxCdH1GHJjrGEy+d89a+kj8oGZLxYuHJxu4dBuQ2Aww
-	am499flBXaydFmBFz4RAZ8izAA6o/mZcHs3gNbyaDIjQ3Zh17JhmmeC7y674935+
-	+x+Vau9+B0IaQ0ZUiKrD8EEMfOhS+G4N0LTnIN432Eto8jZG9J8MmGZXH5G5m3k5
-	8rbmMtJyZ1OuPdcAmM09alJZR6aALHOyYucwDkrFoAocQU1YY8GRYU9/VCIrIxSc
-	ptdUHRQBD/7M4pAXDrDEwQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738248261;
+	 x=1738334661; bh=mgrMs1Uaa+C9N+mTCMn4h+oL04i6sUPJMFx5j2e29rE=; b=
+	cnpIzgY7TUUNQ90uregKBVootdLYWstg9uaDe21isf+BLwVyHVTt4uIFxq5lfGey
+	CzDHH+R85BD73ZpuTPPhzFCdnLWVRpzsvMTbbz/wp5xE6KSlqjTajdB2LOoKbj8P
+	wmreJPad1m2ttZJN4wqhhW8nJ0AWLDAH1W8V8f2EpUMKm0BM3YzWV8nnF4EgjYTw
+	qE6+9UL+GtSALxKMdY1GLMzf6NqccURMvOOHLF1dCM3Z17nZhDq7GNGBgy0d1SHI
+	x83iAV7/QcZy15F6fEWVD8pQ2OZxH+J2cFaHEN43NaK6CJxhCkNUeSkibRXLPLHj
+	nxHouESa//5yxnTbD+O65Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738248260; x=
-	1738334660; bh=UsfhuRZbMzYB+Tu2+b7MOT+3T6OtqOH6ptlD5cLlBG8=; b=p
-	o0KG5rzaZ9ql97ERQ0PIftVkKMhW6qLs01WY8sW/3w1/n7MqweuE4PtLzc5zdChK
-	+vM3+Ef+txJhI35k/ldFwhKNxI6vyITmxd8SaUnFtt5AnzIAWibN7wTCTe5wPEM9
-	BjKL03tZBmeGzaz6k7Su6FvM3wuYJsO2jfIHKiDD/I7I5P//CnxGpdWvfNn1xqub
-	YhL2VQeGWMH8Gy0R2+sWZL1R8Cgp9Uw2xwg0vI/x9DXTGK28SGzQuBbd0rWm59ri
-	qJA6ykkGqnwOqNBoH4khMH0ppZsRDkOujuTyyUWrbsrQhBvIFk5+Bo7ebW2Vt+9t
-	X4xJeNbGJgnbIBY/gKc1w==
-X-ME-Sender: <xms:Q5CbZ_wrUUpD0kVumN1Chzsd4qqEmbCqt2sr-3Rl26VY0AfnfdphWQ>
-    <xme:Q5CbZ3Q-Wu7r8UQfIfJgoZtRLzPrXK5twpQaQlqEoxFiRsdIyfnb7YiuDU0RsB96y
-    C0jeNIWYuNhcXviqQ>
-X-ME-Received: <xmr:Q5CbZ5Un2bL9LQ66sC57qO-gj67CNC2S6UUfeklJOHnODRJe-eVXl7SFBaaPuDhLgxmOdhL_0SBMTQ-78wMvnV0evt0QI6Qi9Hks2Uc28GyG>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738248261; x=
+	1738334661; bh=mgrMs1Uaa+C9N+mTCMn4h+oL04i6sUPJMFx5j2e29rE=; b=Z
+	rJRDEn+xc8b9Ltf6G0OCRMpHZvUVJBp7fkDJEwL9ekykmZLB6AE+1jAtKgkZ1XkX
+	YvjSRzTQvzi1PvEmg8xLbPu0izKRF1r4FKpKcqOV1HxO8wAlp6qDM+XBDVBRW4sh
+	LCHCQEpj6nNOi/oDUhdQneSYr2vrqki1t95as3JyAUdVvGpG8PDAqQYxc4jVSUxL
+	ts6azifi2z+M/A7MJGmMfMZwng/ox/w1ZoAEH2r6/S3UMfb4VWki/YybHwSi9ip8
+	OOT40pOV4QVyqzzUCOp6h0E2ZJAxeGAJnZZT2yoArPzQUKIGJ0g+eX+1i0ueeaT/
+	gjVNTamlPcYOaaDC3nR6w==
+X-ME-Sender: <xms:RJCbZ3bB1tke3lWfVSOosRSs6mEmAGwBsXFizCis1hELEt3HFaHokA>
+    <xme:RJCbZ2Z__qb55BOoQmIB-vWOG6QbRw4y3xVjGJwhN0DZLCppQM_YrH6UUpo-dcsqa
+    I2s-KFWN5-Uiff1LQ>
+X-ME-Received: <xmr:RJCbZ586Op503pEB0AtG900__h7Hi9fyumTsOTK8hiqkBGsND0oESJcWHDkSsuAzd8MDb5ntt0kC77HgaxsQlkK4CTc5ixHsTJ8mkMKwezlC>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeitdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdej
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
-    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
     shhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprh
     gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:Q5CbZ5gkRTg4Z7yygk8joDdcFucyODjqaTp0cPgUST7yz-KGx28pXA>
-    <xmx:Q5CbZxDptNz3jP5keO_lL3ZhxByeD7y1oGsgOFWm3dN9PnUgnZjY7w>
-    <xmx:Q5CbZyI4Er4D81WST5BRT7iFbhzCHvvATFiwqHxw8TXxDif0bTmqQw>
-    <xmx:Q5CbZwAEJvoilc0N6VS9LmwBSYdUcDnMQsyhqMtnru-oDeMpT2bk4Q>
-    <xmx:RJCbZ0MILixdVrRIh95neSy5F4iGMUaTiZM3zrZlsszOaQM2DRn-HlYx>
+X-ME-Proxy: <xmx:RJCbZ9o77eDOpstHYLgrQs__fNnfNnNQv5vKu2RXDMFCm8GoSaEVxA>
+    <xmx:RZCbZyocBF5QlHe75LRa7yByn2rz7ihkYsPNyKIMm4HMKGxo9G_LhQ>
+    <xmx:RZCbZzRWrJzicFhmgu4LuBqRJwjqoaItiCxxIw671c0vfC8SA_lyaA>
+    <xmx:RZCbZ6r9YI08e42GS9onvtUM118XJuCU84dn3JWlJjWCVmV3QM8XgA>
+    <xmx:RZCbZ53E4pD-0UX_BM82mLpNsAZO7t2BRlAuLeU8sNrZ1szKS4nb10KS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jan 2025 09:44:19 -0500 (EST)
+ 30 Jan 2025 09:44:20 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 302e2a91 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 30 Jan 2025 14:44:18 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5c0c10e0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 30 Jan 2025 14:44:19 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 30 Jan 2025 15:44:03 +0100
-Subject: [PATCH v2 11/13] meson: fix overwritten `git` variable
+Date: Thu, 30 Jan 2025 15:44:04 +0100
+Subject: [PATCH v2 12/13] meson: consistently use custom program paths to
+ resolve programs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,74 +83,79 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250130-b4-pks-meson-improvements-v2-11-2f05581ffb44@pks.im>
+Message-Id: <20250130-b4-pks-meson-improvements-v2-12-2f05581ffb44@pks.im>
 References: <20250130-b4-pks-meson-improvements-v2-0-2f05581ffb44@pks.im>
 In-Reply-To: <20250130-b4-pks-meson-improvements-v2-0-2f05581ffb44@pks.im>
 To: git@vger.kernel.org
 Cc: Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-We're assigning the `git` variable in three places:
+The calls to `find_program()` in our documentation don't use our custom
+program path. This variable gets populated on Windows with the location
+of Git for Windows so that we can use it to provide our build tools.
+Consequently, we may not be able to find all necessary binaries on
+Windows.
 
-  - In "meson.build" to store the external Git executable.
-
-  - In "meson.build" to store the compiled Git executable.
-
-  - In "Documentation/meson.build" to store the external Git executable,
-    a second time.
-
-The last case is only needed because we overwrite the original variable
-with the built version. Rename the variable used for the built Git
-executable so that we don't have to resolve the external Git executable
-multiple times.
+Adapt the calls to use the program path to fix this. While at it, drop
+`required: true` arguments, which are the default anyway.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/meson.build | 1 -
- meson.build               | 6 +++---
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ Documentation/meson.build | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/meson.build b/Documentation/meson.build
-index 2a26fa8a5f..6438fa6792 100644
+index 6438fa6792..c6117366ff 100644
 --- a/Documentation/meson.build
 +++ b/Documentation/meson.build
-@@ -283,7 +283,6 @@ elif docs_backend == 'asciidoctor'
+@@ -206,9 +206,9 @@ manpages = {
+ 
+ docs_backend = get_option('docs_backend')
+ if docs_backend == 'auto'
+-  if find_program('asciidoc', required: false).found()
++  if find_program('asciidoc', dirs: program_path, required: false).found()
+     docs_backend = 'asciidoc'
+-  elif find_program('asciidoctor', required: false).found()
++  elif find_program('asciidoctor', dirs: program_path, required: false).found()
+     docs_backend = 'asciidoctor'
+   else
+     error('Neither asciidoc nor asciidoctor were found.')
+@@ -216,7 +216,7 @@ if docs_backend == 'auto'
+ endif
+ 
+ if docs_backend == 'asciidoc'
+-  asciidoc = find_program('asciidoc', required: true)
++  asciidoc = find_program('asciidoc', dirs: program_path)
+   asciidoc_html = 'xhtml11'
+   asciidoc_docbook = 'docbook'
+   xmlto_extra = [ ]
+@@ -245,7 +245,7 @@ if docs_backend == 'asciidoc'
+     asciidoc_conf,
+   ]
+ elif docs_backend == 'asciidoctor'
+-  asciidoctor = find_program('asciidoctor', required: true)
++  asciidoctor = find_program('asciidoctor', dirs: program_path)
+   asciidoc_html = 'xhtml5'
+   asciidoc_docbook = 'docbook5'
+   xmlto_extra = [
+@@ -283,7 +283,7 @@ elif docs_backend == 'asciidoctor'
    ]
  endif
  
--git = find_program('git', required: false)
- xmlto = find_program('xmlto')
+-xmlto = find_program('xmlto')
++xmlto = find_program('xmlto', dirs: program_path)
  
  cmd_lists = [
-diff --git a/meson.build b/meson.build
-index b5e8aca288..cf3f0d59d5 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1605,13 +1605,13 @@ libgit_commonmain = declare_dependency(
- bin_wrappers = [ ]
- test_dependencies = [ ]
- 
--git = executable('git',
-+git_builtin = executable('git',
-   sources: builtin_sources + 'git.c',
-   dependencies: [libgit_commonmain],
-   install: true,
-   install_dir: get_option('libexecdir') / 'git-core',
- )
--bin_wrappers += git
-+bin_wrappers += git_builtin
- 
- test_dependencies += executable('git-daemon',
-   sources: 'daemon.c',
-@@ -1702,7 +1702,7 @@ test_dependencies += executable('git-imap-send',
- 
- foreach alias : [ 'git-receive-pack', 'git-upload-archive', 'git-upload-pack' ]
-   bin_wrappers += executable(alias,
--    objects: git.extract_all_objects(recursive: false),
-+    objects: git_builtin.extract_all_objects(recursive: false),
-     dependencies: [libgit],
+   'cmds-ancillaryinterrogators.txt',
+@@ -404,7 +404,7 @@ if get_option('docs').contains('html')
+     pointing_to: 'git.html',
    )
  
+-  xsltproc = find_program('xsltproc')
++  xsltproc = find_program('xsltproc', dirs: program_path)
+ 
+   user_manual_xml = custom_target(
+     command: asciidoc_common_options + [
 
 -- 
 2.48.1.468.gbf5f394be8.dirty
