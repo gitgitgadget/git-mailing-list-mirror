@@ -1,142 +1,120 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBFD84D34
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 11:08:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AE7819
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 13:19:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738235317; cv=none; b=X57yasYm/aN1e2rKB5gGguLCCO0G78ZMG9FWGh9dmDk7rz93qzUfFIKvCIwSp9WCkhwlfZCVlfsPPzyQM5xVpuOESQA4Urb0BKLr0VDg0Tb3MN0JxrZsYXtD1mViYKgyJG8fwe94xQijTcxMSGzPSR7IcjoH7oKiQfhxn3Ef4PM=
+	t=1738243192; cv=none; b=lLfNfBjGAYtTQErmeRbHfUO6XV10DCN1+HfcuPWx69iucdg6dTcN15hTTr7cR+MKtc2pWPa+OFYfVuln7t7RmtrBbl1H8vL0sFKy6wMp02zO1WMOElACLoCVelYQGvT+vencX4GvSztN4z/msjm7x4Polc8V3R2YWeuVYiZaQrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738235317; c=relaxed/simple;
-	bh=VLFbdSpKpzS5hpiGJrnAbaFBkk7B21CWFEy7J8ecSWA=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Mloye7KpGfX1jcfdxv4+IWQF/nFo8rBF6WwibRjdQprQywac1QyAj6zu1s+5Tf4v3hLOW3/+4R/Z5SlnAydjA0FVmDCRBD3SzRHVW1eBdrCJNv0JLy8XjXoDNVCzo5YITDjUAl2hL7xDW6lvEol2Hg7GWKQ0lfvE1Vm9hzuYXk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DzH2JvP0; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738243192; c=relaxed/simple;
+	bh=Mn679G6dLfd0vg/Um4gaNPC3OsvHC01cxFlmcWfPTDw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=sQrLqHTKK7gp6s0JQyo42CTRIowa+0af47hnhImGm+iiH6kcDzJc/P21syfM6TAqKpD5ptlEZnzT99553v0oQXIq/25WZ8FGTDZ0MeHiM3HkVxEjb1FfidPdDZ4H/AGLsC8ImTwL+oHEhYzlwvEHub0QuU1l2wtYuYdEoMbdN4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=emailcarter.com; spf=none smtp.mailfrom=carter.tools; dkim=pass (2048-bit key) header.d=carter-tools.20230601.gappssmtp.com header.i=@carter-tools.20230601.gappssmtp.com header.b=JuNbfTLH; arc=none smtp.client-ip=209.85.210.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=emailcarter.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=carter.tools
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DzH2JvP0"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-38a8b35e168so351845f8f.1
-        for <git@vger.kernel.org>; Thu, 30 Jan 2025 03:08:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=carter-tools.20230601.gappssmtp.com header.i=@carter-tools.20230601.gappssmtp.com header.b="JuNbfTLH"
+Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-724a5d04befso339302a34.1
+        for <git@vger.kernel.org>; Thu, 30 Jan 2025 05:19:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738235312; x=1738840112; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=WGbGHR/95TWRNjgVws9gJDYHoRkn9T/r7OWzC1YTgNU=;
-        b=DzH2JvP0vHv2WBJ5xT/MILEj2iELspLs789Wj85v/chsY5j+5ZAodWwdGdbvbJopCA
-         QrwBkZykhaetcpxxwUcfcVhyekMp7m2Lf9kI2O+BlOcsaOZgbi4JD6mYmJvFZfiHUjTS
-         wBCnqK+t9pqB6B4A6gPaA/MMET26U+fJyjwRRUaUxfSaJrcWyFj07XQBmi+OBBrqKpWw
-         Ub2sCGfuKUlt2haIlLT6Su8v1c6Hd2iwKUhBlf7dMlCOhHybhf5MmnCsKGwXUXCkOd6T
-         24a+3M11sNBs/ffqbyxz96PNaTmn6gODtBPw5ltIRmc2752DPfYNt/qUZmJQ8eKjRNnc
-         Hiug==
+        d=carter-tools.20230601.gappssmtp.com; s=20230601; t=1738243188; x=1738847988; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=qkkwONY7Jybs0pnVUGhQDiBHbifSpur+bogK8rnHjVI=;
+        b=JuNbfTLHUKdZCH1PHpqSkRs9fMREk+OVpO2bgnlRtfarm2th67xqM/L/NHWf1Glimn
+         07OwQHX1jInh2AvFjUsyK4uXtUBOlLST9hYRGFh7lbxAytL6rd47EyIGN98w6GOFK5v3
+         SaGLIcbPcae4yX5wFZ+3fHD1Vb8JTTkyAYp9/LJR9fS3RZ3KA8ryuagRo7hG1FYZw4eC
+         FNIvO8vdj8UxNC9ARI5eUS3Mg8MMnV+eBm7oDeqMbAJMSq8960coQPcwUnTc8GUwUUXj
+         ToFh/5HY3lEfAPpG8XhXViVW/qSdiCEUbIGQgfWrF34rFzeTJMRUoyOywRqX/10cPspH
+         syJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738235312; x=1738840112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WGbGHR/95TWRNjgVws9gJDYHoRkn9T/r7OWzC1YTgNU=;
-        b=FlaAe+o4koFZkX8nzu4SC+cmW8qVQkSy2jv3YpuWBoplKlTwO429fMgzaSQjbc6Qfc
-         JO/GIY/FQr1qsZwF+FptCI4mC/ONyQjnppx+ttZbFg17EMNe9s9tiAOmmALAxvZ25M7/
-         9LN9QsBAZhvJgsB8iTlUlWP75jdFOqW8bmls3/y4TbG3MGcuutvSePzMhB4DuLIyt7Zt
-         GNYpNvKv0mO0WYZ8Wmio/aH+1c81nkYyCLmznjpx9Ah6yq/Bp4qHf54u8PfsmTxLzv9O
-         Le916wZ3W2O8XBEfDRk6HyJv9Gh7Q57xFnJGTZGFI4rYINuAU6UMRPXY8I8zwe5eJtLv
-         XP4A==
-X-Gm-Message-State: AOJu0Yx6zy/Um6L236H4jOpJSxHX+UCVjtjEx4OpUrAsNX5AmlCpCsTK
-	sQG1GmZb+EjonI+Q941vG+MOBkiOdwHSSYqhb0ScZAcpuafYLYEyrEFgaA==
-X-Gm-Gg: ASbGncujJ3/ZRkE+U1XKe/uhL3JZHGxWTI0ttHEgswx63+dBwwfhk1SoxieNUeff8h4
-	bbfMaG50HtS39wO6bdMYP8FXxsY6b/dyp0ZAScEr2ZGYttpBaAVC6I+3QIFLIDQVpOa1un1vY11
-	hvfX1fDvfOVgKkkWg/Sp4Wli4jQlM9TsG6RTKMRZnc+537aPakoMhHb4NH5vxhi3lDm7PLu8fdo
-	0R4AHd6JXPoD2WdtAR8ZorPWlgKYf3BedktGVD1tI+mN/7n7KEY+6H19Se0rjDqfCo7p5ld+46l
-	hUkRIoB76AmGRVob
-X-Google-Smtp-Source: AGHT+IH1agF1qQM3/ppxl50Yb1ESWvShn+nSsB9NcZXRL8zGJron252079dNuSaTM0bTkk5TiHtYgQ==
-X-Received: by 2002:a5d:648a:0:b0:38b:f4dc:4494 with SMTP id ffacd0b85a97d-38c5a9bf605mr2429492f8f.26.1738235312100;
-        Thu, 30 Jan 2025 03:08:32 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38c5c1b5780sm1660162f8f.67.2025.01.30.03.08.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Jan 2025 03:08:31 -0800 (PST)
-Message-Id: <pull.1858.git.1738235310815.gitgitgadget@gmail.com>
-From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 30 Jan 2025 11:08:30 +0000
-Subject: [PATCH] apply: detect overflow when parsing hunk header
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1738243188; x=1738847988;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qkkwONY7Jybs0pnVUGhQDiBHbifSpur+bogK8rnHjVI=;
+        b=NgpUqtyRwGrLwUFyhmX5scpwXRcRp7xbyDfFE23B36GnJELIMS+gCGDPkMntB/OtVa
+         Jb1SrnnMlEOaGE1g5yL7vCGJJy6v9ubdtJduWs6thMeq/6rIJG+jlX6GssXuIFbvKIN7
+         grGUFvvXdOun8gG+y/SDeQHxVunB1kEM4Bw0zfFpxM29sEefMoPYVMYr5tU8ljhotQXu
+         xL0Hd/XRRVwnRzU+Io309F6sJNyKh4/QfiHyL4fFdtW1+y95r1r4R/x7rwcbxWWPBowS
+         HXuz5zQtRcuARlRHYAn3a/DxQeSOwyI8L26rsgliPFlipTdl3cG3Gh8S17K0Z1jtnUgx
+         lKZw==
+X-Gm-Message-State: AOJu0YzC0cs0WgzCib1qRlCNLZGbwzZS8juaF7veqpY5ZgwJm8shWvyR
+	PcRCYX5+rwdykpsGaZd0FVbBM7XzioOfckeaFK6fOhTGBCNXL1EfZccx584YntcylP0d9ggau+8
+	lS0MDOg==
+X-Gm-Gg: ASbGnctdocY3l36OWKfLkP6Bxk2Y3PPxEZgNimh72tT1Crh95g3+LCoDMWaw7hrjyKq
+	UFt9Y43BKLFlo8duckJmo+mJ/cazODnXdJWxqk6st/XXST/eCcdleOTMS6ifOCZXM6hcY/MBvL0
+	xWQcIPa1S0XkwxhgArr8DTj7dq7gayNy4zH2pEvPdzp2LuA5hgsnPEmtP1vDdFPgCjLFCG1KUuU
+	qilUiBfjtWekWloGIGhJ8O9nhaO81rb7aCT0glF/WcnMvSYQHv+3m/hFag79AwRRafpnx8ttcZ0
+	J1sHIZOD5Zxra4dbTnlu3CbDs4TI9VCAXyA=
+X-Google-Smtp-Source: AGHT+IFt8CZY4EiwSWQVf+jMXTEEaNXLwjwOYkB7r/r/suflaNTTyZGWpX1oQnGdUnmFgQWplnT7EQ==
+X-Received: by 2002:a05:6830:d0d:b0:71d:b6a9:74c3 with SMTP id 46e09a7af769-726603cbbc8mr2354116a34.7.1738243188222;
+        Thu, 30 Jan 2025 05:19:48 -0800 (PST)
+Received: from [192.168.1.193] ([136.50.173.150])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-726618ba0cdsm309753a34.51.2025.01.30.05.19.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Jan 2025 05:19:47 -0800 (PST)
+Message-ID: <dd5d9b93-1585-4165-8f5d-d9737725071e@emailcarter.com>
+Date: Thu, 30 Jan 2025 07:18:08 -0600
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?S=C3=B6ren?= Krecker <soekkle@freenet.de>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH v2] docs: indicate http.sslCertType and sslKeyType
+To: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Junio C Hamano <gitster@pobox.com>
+References: <pull.1854.git.1737591366672.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Andrew Carter <andrew@emailcarter.com>
+In-Reply-To: <pull.1854.git.1737591366672.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-"git apply" uses strtoul() to parse the numbers in the hunk header but
-silently ignores overflows. As LONG_MAX is a legitimate return value for
-strtoul() we need to set errno to zero before the call to strtoul() and
-check that it is still zero afterwards. The error message we display is
-not particularly helpful as it does not say what was wrong.  However, it
-seems pretty unlikely that users are going to trigger this error in
-practice and we can always improve it later if needed.
+0a01d41ee4 (http: add support for different sslcert and sslkey types.,
+2023-03-20) added useful SSL config options, but did not document them.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Andrew Carter <andrew@emailcarter.com>
 ---
-    apply: detect overflow when parsing hunk header
-    
-    We should do something similar in "git add -p" but I'll wait to see what
-    happens with
-    https://lore.kernel.org/git/20250126125638.3089-2-soekkle@freenet.de/
-    first
+  Documentation/config/http.txt | 15 +++++++++++++++
+  1 file changed, 15 insertions(+)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1858%2Fphillipwood%2Fapply-detect-hunk-header-overflow-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1858/phillipwood/apply-detect-hunk-header-overflow-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1858
+diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+index a14371b5c9..38e874307b 100644
+--- a/Documentation/config/http.txt
++++ b/Documentation/config/http.txt
+@@ -216,6 +216,21 @@ http.sslBackend::
+      This option is ignored if cURL lacks support for choosing the SSL
+      backend at runtime.
 
- apply.c               |  3 +++
- t/t4100-apply-stat.sh | 13 +++++++++++++
- 2 files changed, 16 insertions(+)
-
-diff --git a/apply.c b/apply.c
-index 4a7b6120ac8..b124678b93b 100644
---- a/apply.c
-+++ b/apply.c
-@@ -1423,7 +1423,10 @@ static int parse_num(const char *line, unsigned long *p)
- 
- 	if (!isdigit(*line))
- 		return 0;
-+	errno = 0;
- 	*p = strtoul(line, &ptr, 10);
-+	if (errno)
-+		return 0;
- 	return ptr - line;
- }
- 
-diff --git a/t/t4100-apply-stat.sh b/t/t4100-apply-stat.sh
-index 146e73d8f55..a5664f3eb3c 100755
---- a/t/t4100-apply-stat.sh
-+++ b/t/t4100-apply-stat.sh
-@@ -38,4 +38,17 @@ incomplete (1)
- incomplete (2)
- EOF
- 
-+test_expect_success 'applying a hunk header which overflows fails' '
-+	cat >patch <<-\EOF &&
-+	diff -u a/file b/file
-+	--- a/file
-+	+++ b/file
-+	@@ -98765432109876543210 +98765432109876543210 @@
-+	-a
-+	+b
-+	EOF
-+	test_must_fail git apply patch 2>err &&
-+	echo "error: corrupt patch at line 4" >expect &&
-+	test_cmp expect err
-+'
- test_done
-
-base-commit: fbe8d3079d4a96aeb4e4529cc93cc0043b759a05
++http.sslCertType::
++    Type of client certificate used when fetching or pushing over HTTPS.
++    "PEM", "DER" are supported when using openssl or gnutls backends. "P12"
++    is supported on "openssl", "schannel", "securetransport", and 
+gnutls 8.11+.
++    See also libcurl `CURLOPT_SSLCERTTYPE`. Can be overridden by the
++    `GIT_SSL_CERT_TYPE` environment variable.
++
++http.sslKeyType::
++    Type of client private key used when fetching or pushing over 
+HTTPS. (e.g.
++    "PEM", "DER", or "ENG"). Only applicable when using "openssl" 
+backend. "DER"
++    is not supported with openssl. Particularly useful when set to 
+"ENG" for
++    authenticating with PKCS#11 tokens, with a PKCS#11 URL in sslCert 
+option.
++    See also libcurl `CURLOPT_SSLCERTTYPE`. Can be overridden by the
++    `GIT_SSL_KEY_TYPE` environment variable.
++
+  http.schannelCheckRevoke::
+      Used to enforce or disable certificate revocation checks in cURL
+      when http.sslBackend is set to "schannel". Defaults to `true` if
 -- 
-gitgitgadget
+2.39.5 (Apple Git-154)
