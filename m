@@ -1,150 +1,100 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8707D2FB
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 04:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2119C51C5A
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 05:40:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738210013; cv=none; b=gxyh2WTCDXT+6/Zy+U/2DS7l44lZHwq9dJAFvqx4F8bYULv97Fr6ALeHM/MwSC5qG2nBlDGw4R+rx/pCjzdNHTnIgQUxoKmNF4xIsK6XoKXYIlqhvuBQdeawg9PPtXM01AX2lPLFa3q2e++P00fdWAazPkckAiOms4/fG8M7Z/c=
+	t=1738215610; cv=none; b=Gl46EAafcgs56xHfJ7+hdFsKtfgnuGrRUmckmQSqZhPXObUSqeSrPbyUchjODj32ZtsZV1QoxyibQ5mjMg86uFS3kcv0jPyvue734LiWAhNGarE8dodQawb9gVuQqWA/7+7wSGmW2+6muVeuZcpmcwXtOtb4cBz2oSF4IIo9qgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738210013; c=relaxed/simple;
-	bh=qNjcZDRpsgK0melEBrO3nWr6WvcMd/JYFvdNOs6bLs4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a29IQMlU794k0cHKfYOB+qghDOZm5K9KzgH8ZMmF8saZRe2N5YnQiV+VbImjJK583Ji8x8Z7+DFyAClVEAneZjmeFY33xmUF4VFv/7V6uu1AWG9SsVacCyiJuTnsNFOZeKsFdh9bNM+noLjbarxq8YFZg/wxrHdgid3PB2/NKTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cu1i8bpc; arc=none smtp.client-ip=209.85.214.176
+	s=arc-20240116; t=1738215610; c=relaxed/simple;
+	bh=XHfMT/kZprloX/N2EAYq+r56M66IC0bCSzOJRJvNWW8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BCaWn5VBksV9KKN6Gv9EyIo8XmqV0fk2okdCzRegHRdYi31Q6rreTUTTlhg3c3diGBLckEpewRJYofVmT/9FyFH5oDIFMH6uY/tawwi4BE7xZKIAv+OXKiUdB5fUdSHlRh2RHqjKZVeZEDGgw3syE4k3Iwhf2dXyvQ7BW1uwFsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SLbzr0B8; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cu1i8bpc"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2166360285dso5244785ad.1
-        for <git@vger.kernel.org>; Wed, 29 Jan 2025 20:06:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SLbzr0B8"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2eed82ca5b4so603181a91.2
+        for <git@vger.kernel.org>; Wed, 29 Jan 2025 21:40:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738210010; x=1738814810; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gb7mfR9eLI9MX3S8Fmi0snuygFRASRa0K/Dt94u/lS0=;
-        b=Cu1i8bpc4SbgdyLZSEa9VzyvzcJghXWQEKvEfeg7LbPNG1C7vdWTFaFuiTSCIa9Ihd
-         t01UuJfojBaspnnr/y/RYnNg5A7ksYripMcAVdNOKFa3fy1RxrLYL6A6lAhoegkch3nU
-         GkVLvLqeTFMg1UQjaDZMBAasT4dkFQzkmZSKk+qY/R7nU8DnONVZbmEojNjjwSG+989q
-         z1a3UgMmAb6sBYh6OUzPgHHnLfdQFGeibaGuFDUzD/jZFWMPdfV4Kt6Yqyyh6eaVy6mv
-         K6ZfUd5w3a59qi9ur2CgnZsP+TksxUlxEA4gozbm6iHsuKtWNki3pug9SdZhIyIEi1eI
-         +hyA==
+        d=gmail.com; s=20230601; t=1738215608; x=1738820408; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eZgA8qzTwGQkq6LlxkKW0dJMADGeQwHq5mOlG6iMt5E=;
+        b=SLbzr0B81PAGRjXCHk12uy1PX33Nd8MFSMPo6YvixcNPkr8PgauiX7I3WYpq9R81PU
+         AYHPUf0eHC4WdaacoqIoQRb+EYvctuoFgSgaqdSnO6DXWsuXuXW5bFOqRgPbLzDtuoga
+         fv02jCKk0aTzA6QCibFjNs5/SdB1lLVNcp5KiDt/hKJG8eTu+KMrqpKrUXstYj5xDxKU
+         heUcRm9gEG1skbfIT40G43xacVGo2x8YD65WgXuIOyVhQt8hp+nEeBDpcAA5mFH3vB5Y
+         24YHDVzlVsuGBfhyWyJtGXF9myBY/J4CSXuUlPonL/6IFJolY3YNjDH08IBiz1OQK9VS
+         oR5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738210010; x=1738814810;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gb7mfR9eLI9MX3S8Fmi0snuygFRASRa0K/Dt94u/lS0=;
-        b=CK/4fBhpwutBO3WAHyrFw36y6/yoboFq1fVIzPy3kQIOUFVCmfi2FgBqmE6pVvIkBI
-         NBKzeU/IC+FDfwHNoFmK0lXYs6bs72uy6YMZRoYJiL23owU8oPO0tfwtDwEvW2KFxhoR
-         7ofEsZk/ACBp7MZ8l3rS7kM7LlYcZ3Gmemmum1pxx00lniO1VieggAMjMW2FMWwk6DRQ
-         Uorj5mSNM2ROtEI3PMs5lPoump9Q1iApoWQr1FcolWWLz/kFAxaz/NNrchFVh9nEvcdS
-         ndg6Mz4Vt/PAUDNH+HW6cb9v9ya3a3P0YHxCe21/782mXLcPeiWkHYd6aHSUkxzaYxs+
-         DNTw==
-X-Gm-Message-State: AOJu0Yx7yOoBQKCG9eCVesGWp4IYuLwGbxfHKbBnufc16/dIghNi7b0J
-	YCx8EvkJG9oxIolShvx4PV/7Yenb73GFziQLl01Zm5fYHnW1i9BdpVBNhcl0
-X-Gm-Gg: ASbGnct2689KCFI5qCtjE199qVJp/YebAYQrfIp35Ot5Jn9+ABejOVyq3T8rH3dAMN0
-	OCHg99W3mi+3R/ohOZWlT+l+yYt/bOvO0a9sxjejedVY3lDoO8LRMOkz0/dBt/1MtxnB08PUUnz
-	Q5HHDewZr6fI5S4lk29COTlVL4U8wqU1wD6QiiRzMTjIQUvmgQmNzknJQ1kwnjtgcKEjZJ59nM7
-	pla75KWNkbluE4LhRQAUoClqZPbdaywTT2JtodBQBXkT1hftDRIh+5J6TpP1dLnWEik7w==
-X-Google-Smtp-Source: AGHT+IFqx6UyZB2r80RkOpCxlwVporks3uclavCEQA3b77MQ41cBiZlZ1+DcnMgwEgeJVHsq5FvNgA==
-X-Received: by 2002:a05:6a21:b8a:b0:1ea:e7be:ff27 with SMTP id adf61e73a8af0-1ed7a5b6781mr9495831637.7.1738210010532;
-        Wed, 29 Jan 2025 20:06:50 -0800 (PST)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-72fe6424facsm342820b3a.39.2025.01.29.20.06.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Jan 2025 20:06:50 -0800 (PST)
-Date: Thu, 30 Jan 2025 12:08:22 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v2 8/8] builtin/fsck: add `git refs verify` child process
-Message-ID: <Z5r7NnzvirWEljwV@ArchLinux>
-References: <Z5r6ZnLH3Ee8IQnN@ArchLinux>
+        d=1e100.net; s=20230601; t=1738215608; x=1738820408;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eZgA8qzTwGQkq6LlxkKW0dJMADGeQwHq5mOlG6iMt5E=;
+        b=CsFiEV1yeaILUmSjftNmNZITd6MezuM1qcnco11FuToA0NiNNXQCp9lSeXFeaIPvED
+         Gdvyit/h5XtMEVBslxUKmNxvTcqczZMnAmyp62ZkPoJFYvj1wZmbCywuHXNW1kNbyect
+         ieBiAEoIWZkWap9Zsy4bF62z5GMyQ996p0adva9V7CF3O6NAoB3ld3vBe9zwwLvYP1r8
+         UPlC7XANUjewrRNjXpFJf13/GkPuNF5OrkQxB7iyEutOxT15/ZG3kUWzmk6veoVbt1GF
+         3orWBrrrblOkwP6LcDWVzxs7kPGQ253kqIk7ajnWsMakJYWpYeP1IntuuewgZ+nSpnaS
+         /MDw==
+X-Gm-Message-State: AOJu0YziFfZiFqhwgesw3RtfWeED5gY5d4NBwyLcvWYAnT50M8JA40g3
+	4OGTBcA8EWLSbXeTmW+U6MXmVmlHxufskXoIFrkyMB/b+voSrGuuu6hNFg==
+X-Gm-Gg: ASbGncsOZd/fxkpm3q8SS/KCTYkiXTvfrzJaVgCh/Kton2hnz042AJwfmj9vGLq83HW
+	Dp3AOYQPYQkz5GRI4Rtygm6CCkqaujQg4DGlavK/ApX0XdYtZt1pO4JWSC+FqZsZowMAhAIj5QR
+	MIQpfpWoD0y/LiLIsPKcGYrg/KlOogIiaflF8VO1B0PMV6aWJVx2v2nEPrcTvFI8iqNewrfAU69
+	uxRV2v9dQNp3YRiLR64scxvHz3YhdwEkcbAm6+7D2K2b606oqdUzl4Vc2paFpkOpmvh0Pcpkjl8
+	B2MOF4uIxg0RNvQ1KGLaVZqJ
+X-Google-Smtp-Source: AGHT+IEjV6uIcB4B5SFOwA9lNNN/Ky7T6syqXRoZxDWIAAvDmAtkdRWfSj1MXk8zGdHWcXGPHqzW7A==
+X-Received: by 2002:a05:6a00:4acc:b0:72a:8cc8:34aa with SMTP id d2e1a72fcca58-72fd097948emr9728709b3a.0.1738215608281;
+        Wed, 29 Jan 2025 21:40:08 -0800 (PST)
+Received: from [192.168.0.7] ([106.51.24.86])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72fe69cdfecsm507504b3a.133.2025.01.29.21.40.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Jan 2025 21:40:07 -0800 (PST)
+Message-ID: <398978b6-6033-428c-993d-feba69334f8a@gmail.com>
+Date: Thu, 30 Jan 2025 11:09:47 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z5r6ZnLH3Ee8IQnN@ArchLinux>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git in GSoC 2025
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>, Junio C Hamano
+ <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
+ <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-At now, we have already implemented the ref consistency checks for both
-"files-backend" and "packed-backend". Although we would check some
-redundant things, it won't cause trouble. So, let's integrate it into
-the "git-fsck(1)" command to get feedback from the users. And also by
-calling "git refs verify" in "git-fsck(1)", we make sure that the new
-added checks don't break.
+Hi Christian,
 
-Introduce a new function "fsck_refs" that initializes and runs a child
-process to execute the "git refs verify" command. In order to provide
-the user interface create a progress which makes the total task be 1.
-It's hard to know how many loose refs we will check now. We might
-improve this later.
+On 20/01/25 13:49, Christian Couder wrote:
+> 
+> It might be nice if we could refresh our microproject idea list too.
+> Maybe we could add ideas related to removing the_repository or
+> compiling with -Wsign-compare?
+>
 
-And we run this function in the first execution sequence of
-"git-fsck(1)" because we don't want the existing code of "git-fsck(1)"
-which implicitly checks the consistency of refs to die the program.
+Thank you for your suggestion! I've incorporated the `-Wsign-compare`
+idea in the new microprojects page that I've created here:
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- builtin/fsck.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
-
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 7a4dcb0716..9a8613d07f 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -905,6 +905,34 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
- 	return res;
- }
  
-+static void fsck_refs(struct repository *r)
-+{
-+	struct child_process refs_verify = CHILD_PROCESS_INIT;
-+	struct progress *progress = NULL;
-+	uint64_t progress_num = 1;
-+
-+	if (show_progress)
-+		progress = start_progress(r, _("Checking ref database"),
-+					  progress_num);
-+
-+	if (verbose)
-+		fprintf_ln(stderr, _("Checking ref database"));
-+
-+	child_process_init(&refs_verify);
-+	refs_verify.git_cmd = 1;
-+	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
-+	if (verbose)
-+		strvec_push(&refs_verify.args, "--verbose");
-+	if (check_strict)
-+		strvec_push(&refs_verify.args, "--strict");
-+
-+	if (run_command(&refs_verify))
-+		errors_found |= ERROR_REFS;
-+
-+	display_progress(progress, 1);
-+	stop_progress(&progress);
-+}
-+
- static char const * const fsck_usage[] = {
- 	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
- 	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
-@@ -970,6 +998,8 @@ int cmd_fsck(int argc,
- 	git_config(git_fsck_config, &fsck_obj_options);
- 	prepare_repo_settings(the_repository);
- 
-+	fsck_refs(the_repository);
-+
- 	if (connectivity_only) {
- 		for_each_loose_object(mark_loose_for_connectivity, NULL, 0);
- 		for_each_packed_object(the_repository,
--- 
-2.48.1
+https://github.com/git/git.github.io/blob/2025-microprojects/SoC-2025-Microprojects.md#ideas-for-microprojects
 
+Kindly check it and let me know your thoughts. Would it be possible for
+you to add the 'the_repository' idea to the same? I could do that if you
+could elaborate a bit on what we expect out of the microproject.
+
+--
+Sivaraam
