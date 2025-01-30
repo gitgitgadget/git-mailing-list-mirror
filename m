@@ -1,136 +1,144 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 206581CFBC
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 05:44:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E664135A53
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 06:03:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738215870; cv=none; b=l2U6E2Z9VkNV9lg7jvnS2xiGicvsJBFWWEkVWcJ/WPKf8KLZkryXwMMQ7QQLlvJN/wVXX885vkYgPyoxGoLKVkqdoaFXRCJUVJRSHcDk/3NsUZ5+GbwnRoNyAyZ3nyT13SW2xSIKl6kGp0DEIs7kPnmrjcZXl7KmVKrGzDfNsqA=
+	t=1738216982; cv=none; b=lLFpbdho6ezky4+t1H6cOPR60059l0o2FmEjQFmQCk+Yiq2Xaa7XUcXjO1MMR35w4R0notO4RkjUPpDiCf3MvcwUDwX16+Xsnrh3yOqqaXlhrn2ymFyjcCM+HB4PTZ9PpmCDQsPiFsvTHmhvEfMb+l0i4T1EqTSo/F4sOifJYok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738215870; c=relaxed/simple;
-	bh=dx0c/AhEsjeDCeYxMY0YjZdZ5BrunV1AXMq1rx6Blmg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pBNwo4VuXeaWwVd8QrX0G/mHUkhB9dA5v2cTCAgIMkQhyt1m+RfM17WlCq27GSpyI/hc6bgAlb/PdqEuHGrqk7nSte5/zU9H4B+iFX4JvmXWbvETYg6x9TVnz1nmsvFswVbHNzEaYzGU/w3md9rtiVuC/nwPCd/JHdQdi2KVuCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CVHCdqdz; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738216982; c=relaxed/simple;
+	bh=u/nxbhVNWl9I0InJZkNQ3auCJ5aV97SDNrfNRgR3r1E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hvJm+fbNQV+IY5M3HdvutsuyU/lbAqo3/RApqIDegSuu+K19Qq38ChtHiq7Z7XhCbYJV7PonjyvOiLI0p5NjEm7lFLsLfbjO+YknxHpOMFjADUKdLH9IoE7h3i8PCNUy6g3SG039b+nZah/mN9Mk/Q/qguWgAD8XqclwK1UjeBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C3/cZdbx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kpj75oTt; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CVHCdqdz"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2166f1e589cso9115465ad.3
-        for <git@vger.kernel.org>; Wed, 29 Jan 2025 21:44:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738215868; x=1738820668; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Vey3nGQ40izHkdmNORM3Hmeq4iKmzjQ0w/ptGghOLsk=;
-        b=CVHCdqdz30LctBPsK678cslVSNq8udCIo1ylGP9JAWbLwDZHy69L09gCKREA3Om+t/
-         P+4TBz9PxKxFNd4yPvfSCpLKCFTREE6755lHn9LQn8AqMowmfEgRf5N/kg6WY8L3EhnQ
-         qFEG15CJV4gOpYUtdm4VftNyp/jiV05sdlADYdbNGrb9m5h+wHsgX0pcXDx3X/U90o1x
-         adb6dn9EYRmeR+a0YZsx/piuMw5Ewt7BTO0KAnm+hMDkFHy0e67idlolKeqE4wOl21cV
-         B3em9R7Np9JfLZD3egnVlhNHTrV7uQEPQXgpmFtmqxoCCAVOhhL0qSGK0foE3RIzuPAr
-         BKrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738215868; x=1738820668;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vey3nGQ40izHkdmNORM3Hmeq4iKmzjQ0w/ptGghOLsk=;
-        b=AFftM9Nm3bHwBsyIcqj58srajDiRKP7KmckmSScu7ugVik1j0jd1FehcPY8nmMd/Kb
-         5LNDTSU5rouR+qdRY0YywtmsBFod3Hp5GXrKaYayyrsvv2Y38hWbi7MomIHHrzGTRSqg
-         Pv6n2MHt1LE0oajsQl/7oftEgxiNIcVsBnCNWE3v2Y4P5JBm1/MB5CYTjkBwy57+f+TE
-         2ClaHH8IxqzCGtzAALtM8/8YxiRqQP3aeD5Is2+gpAWJPe0gYl7IJ5DRSnRPtGQpNmBa
-         4+GHF8Ya3nQs5bUxfWUGLvBn8nO31aX2WrIdOr7i2lzXQjteFCJXEsDxe8V3n0JyqxVY
-         N1hQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUTtt6b+4ypfBmoFKa+oT01v+UO6n3qdStHULe8AM3QPlqTXZ9BOp9MC118estIkRGqMJA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGvthJnLrGKeBNjAVXB549DiDvxJs7n53Axrk7t60CCfkV/CU6
-	96R3F1WIM5IWZjIAifbbv/195WrCe9PoaNTfw49IoJ3QNZXZgU27hxVong==
-X-Gm-Gg: ASbGncvLejSPFDSM/xZnECL3QO8g/qXtsZ1x9cO9j8q38SIohaBiYmhWMrIF3LPUi1D
-	CZhYY9lXaVBkQVVdVNGnyZ9gBnxoQWYJjHL6IglX6wjaddoDEVKkyZHTAWokTj+Hat0A/9o15XZ
-	8NIQzJ/DCJz5dRfXv8DJzF+nxEUjPfSYgxjKddQS4J3J6JNfU/M/LJHO4lkG4er+BGQb9ohWGhK
-	tAymaVAbWat3A+i2oIi08tefXZwORE5HptXojFvRP6Qhsa3y4zWqx+TSFtZa7GYk+XLb36I3P3d
-	yHEJyFzWiidjDF802bP3HLd6
-X-Google-Smtp-Source: AGHT+IHymSWJuMjNq6RXRts1SP3v4DuGpkiAqWvoeDZ8fbcNWK6648nWDwdCvXZKBOor7h3zuPhq3g==
-X-Received: by 2002:a17:903:1205:b0:21a:87d1:168a with SMTP id d9443c01a7336-21dd7dde161mr100274895ad.41.1738215867991;
-        Wed, 29 Jan 2025 21:44:27 -0800 (PST)
-Received: from [192.168.0.7] ([106.51.24.86])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de31f77acsm5642675ad.98.2025.01.29.21.44.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Jan 2025 21:44:27 -0800 (PST)
-Message-ID: <b784f612-4b6b-414a-9742-86611c50c55f@gmail.com>
-Date: Thu, 30 Jan 2025 11:14:06 +0530
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C3/cZdbx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kpj75oTt"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 72B1B1140101;
+	Thu, 30 Jan 2025 01:02:59 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Thu, 30 Jan 2025 01:02:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1738216979; x=1738303379; bh=iD8ewNxXi3
+	jvRz2U2oUbx88Kq9zC6w9j5rr6WR54xSY=; b=C3/cZdbx4CcKzF2+v0gSFLTOBj
+	qdIDYx/eGsCDPFX8s2mXOYeC+od1D9Aty0bXSXXsIGuXf+1Se49F1XBVwArylm5L
+	HNnCnd6FO6/qNBW/nfLHFA+mNWDRsfq1AsWRjIM6UEgQ6CuDi74pYlj2U8bl/iHo
+	eGoPOUBdCTCX0SW4XbyAaIOI4QVCyA85i8AANoKYM939U6fzAtWsZulKPLsrmf7X
+	9kmJmwplVyFN5dsY4rYupSVVs2aZhfbQXWFwMKNgJT9rqFNRDM25Ts2TOulSKDE2
+	9fEzObAx8c6jSEOyZsKPje/hPJDH6w3job9WH0mC+QQtWGZgDm/9vaN7ONSA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738216979; x=1738303379; bh=iD8ewNxXi3jvRz2U2oUbx88Kq9zC6w9j5rr
+	6WR54xSY=; b=Kpj75oTtUTn9DLn0NvtinXYY5FynLKlSOohti/nLzQnx9exFF+z
+	V1hOVxhaz4xxL01Pos6fq/lCt/QkDjrE8atbJnJMu9qg4SpMHqToU7XX32YQwbKm
+	sJcF2pBS6V2jDfhO9SXEDGhxBLS/3elm6FXy1TTXJOjnEdQsekrgCPF5a49MyhPk
+	AO7qExCSSMPyT7q0bN4QTZ6WY2l6kYFDDwrZxk/LOiyWmt1AgB6jDOBDl7kZWZZj
+	AHApz+Xiyujau55Q2SovcM19vf0YFhFsFXc4fFi2aKaUyENWmbtHUW6IJxlQhQzB
+	VbgXM0jCslHyq5gtf5xfcDm/stX2WiSrHxg==
+X-ME-Sender: <xms:ExabZ0OV4LjuihYD9tL-JwCSo1_AzJ9QtlnhRCdMZe_X_AhjQSQD2Q>
+    <xme:ExabZ6_bc3mIEVkmUiN2oeB2Hgsl17HGVkfdc2ijvebtdMIQBYGy_FlvFxj4e59pm
+    03r3LLR-yJHfsMEYg>
+X-ME-Received: <xmr:ExabZ7QbaAzy3zb52hItf96AxZnmuksBAqvAeDtDbz21NU4X7xs0VcOtOciiGnYtEny0s5UP3QSX-MVmG14hhzHF__ToLSu_BcgP92GAk-WC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehtdefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
+    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhes
+    phgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ExabZ8vvCrhNFommrCtrl4JQg0qwis8cm8fgFtyz7O-5O7TAZNzj7w>
+    <xmx:ExabZ8c_gIWtHcxUBjz_6fe94U8WWd-JM_77bnkiZrhpTjZ6Q9etNQ>
+    <xmx:ExabZw2OQu9WtadcLVskyVUE_BE2UBgMVQhQykbqPmbEJr0WGhIrGQ>
+    <xmx:ExabZw-7j1dHqwnkRKHrLTv04l1svIlu7Ap67g0bIIwfStzjaWVFhA>
+    <xmx:ExabZ07IV67ZGrKDpszGGR6qjzA1BWbZLCMwqH1DfpC6dI9Xa61n0xam>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Jan 2025 01:02:58 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 992b9b1f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 30 Jan 2025 06:02:56 +0000 (UTC)
+Date: Thu, 30 Jan 2025 07:02:51 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] unix-socket: fix memory leak when chdir(3p) fails
+Message-ID: <Z5sWCxEF3J7t8WvW@pks.im>
+References: <20250129-b4-pks-memory-leaks-v1-0-79e41299eb0c@pks.im>
+ <20250129-b4-pks-memory-leaks-v1-1-79e41299eb0c@pks.im>
+ <xmqq34h1k02k.fsf@gitster.g>
+ <20250129200702.GB2331283@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git in GSoC 2025
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: Christian Couder <christian.couder@gmail.com>,
- Git Mailing List <git@vger.kernel.org>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
- <Z44u7od-mDiKcKVZ@pks.im> <xmqqr04vzyz9.fsf@gitster.g>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <xmqqr04vzyz9.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250129200702.GB2331283@coredump.intra.peff.net>
 
-Hi Patrick and Junio,
-
-On 22/01/25 02:05, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Wed, Jan 29, 2025 at 03:07:02PM -0500, Jeff King wrote:
+> On Wed, Jan 29, 2025 at 09:21:39AM -0800, Junio C Hamano wrote:
 > 
->> I was wondering whether it might make sense to also move the list of
->> microprojects into the Git project itself, e.g. as something like
->> "Documentation/Projects.txt". This would make it easier for us to update
->> the list of long-running projects whenever a new project is added and
->> makes it easier for people to discover it.
->>
->> It would also help to document consensus in the Git project. The file
->> would likely not always be 100% accurate, but it'd probably be more so
->> compared to tracking it out of our tree.
+> > > This leads to a memory leak: when we have already populated the context
+> > > with the original directory that we need to chdir(3p) back into, but
+> > > then the chdir(3p) into the socket's parent directory fails, then we
+> > > won't release the original directory's path. The leak is exposed by
+> > > t0301, but only via Meson with `meson setup -Dsanitize=leak`:
+> > 
+> > Did you mean
+> > 
+> >     $ meson configure -Db_sanitize=leak
+> >     $ meson test t0301-credential-cache
+
+Oh, yes, I indeed forgot the `b_` prefix. Other than that I wanted to
+abbreviate steps a bit so that I don't have to give the full sequence of
+commands, but my attempt was somewhat lacking :)
+
+> > I'll need to figure out how to make various tweaks at runtime
+> > working with meson based build tree.  The next thing I need to
+> > figure out is to see how to get verbose error output from the tests,
+> > as I cannot just go back to the source tree and say "cd t && sh
+> > t0301-credential-cache -v -i -x" because the build is out of tree.
 > 
-> I am OK with the general idea, with one condition.  Each item in the
-> list should have clear expiration date that makes it automatically
-> eligible to be dropped from there.  Another uncurated list of random
-> things is not what I want to add to and carry in my tree (the other
-> uncurated list of random things being the set of topic branches that
-> go stale without hitting 'next').
+> I did:
 > 
+>   GIT_BUILD_DIR=$PWD/../build ./t0301-credential-cache.sh -v -i
+> 
+> but I don't know if there's an easier way from meson.
 
-Understood. We could certainly curate it from time to time. I wonder how
-we could set the timeline for a microproject idea, though. Would it make 
-sense to fix a rough timeline such as 1 year or so and remove any idea
-whose age is more than the same?
+You can pass arbitrary arguments via `--test-args`:
 
-Also, the current list of ideas could roughly be seen here:
+    $ meson test -i --test-args=-vix t0301*
 
- 
-https://github.com/git/git.github.io/blob/2025-microprojects/SoC-2025-Microprojects.md#ideas-for-microprojects
+`-i` makes the test run interactively so that stdout/stderr remains
+connected to your terminal, which also allows you to use `test_pause` et
+al.
 
-The topics are:
+> (The "b_" prefix on "sanitize" confused me as well after reading the
+> commit message).
 
-   - Fix Sign Comparison Warnings in Git's Codebase
+You've probably been confused by the lack of "b_" in my commit message,
+not by the prefix itself, which was a simple typo.
 
-   - Modernize Test Path Checking in Git's Test Suite
+But regardless of that, in case anybody else reads this and wonders
+what the prefix means: the "b_" prefix comes from "base options". These
+are a couple of flags that Meson provides out of the box and control the
+base mode that the compiler runs with. This includes e.g. sanitizers,
+`-Wl,--as-needed`, LTO, precompiled headers and other stuff. These
+options can be discovered by running `meson configure` in either a build
+directory or the source directory.
 
-   - Add more builtin patterns for userdiff
-
-   - Replace a run_command*() call by direct calls to C functions
-
-   - Avoid suppressing git's exit code in test scripts
-
-   - Use unsigned integral type for collection of bits.
-
-   - Modernize a test script
-
-Do share your thoughts on which of these you find being relevant
-currently. That would help in preparing the first version of the in-tree
-project ideas list.
-
---
-Sivaraam
+Patrick
