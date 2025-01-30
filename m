@@ -1,54 +1,54 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B109D38DD3
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 18:23:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0C784D34
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 18:58:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738261400; cv=none; b=g1bXMRlrxnzrORbqGSyM29EAV0ak9QF2AtAfJXfTcFkxYTFCanxKRuRGA1+upb7Z+HrcGa0aC/JM1vL5KY1aPmt+qU3LZQMytsJi48jNr4cOl70p5VSCOFTWFoIRez9Zfwro6f4rvFH2sUrZKI8xqumVZfUbUxGhzvFw38UFFr0=
+	t=1738263517; cv=none; b=fPKW3iqPQLWzyC1boUwI/piEYANV3k2n+RA1CBi8DGiMwLLxmfYv6GfzWTVM7/0DUqBBN1aoTQ2zWEfNtxNwiqVpGKRqRsrJ7B5TLIv/IioQtxVfUSVf2+uPMiTEdf7PBUifP5ICMoWW8gtW2XCnUwyksgopM27TFbLHvikHGsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738261400; c=relaxed/simple;
-	bh=JBNWphy6V/B+eU1AlPgMj2lJMh+Id/qPXitwTn3nWv4=;
+	s=arc-20240116; t=1738263517; c=relaxed/simple;
+	bh=qtqe63DIj7SsE4D5xstjLyjNt+g+yHLEi+8ZRpXikZ8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HLxPLL2AIUXlXK30HgouZDTPoAoMkXGvha1K6E3xKzNyilBqH6wkgagUCt4SZ+i3DA8YuJ6svSXjrhmaCFwm1+0rHTiN+L7n3sV/EIaAY82OtAs3xo6G0EtkWBxsWHUXNb0j3sdZA0XZgVUw95fbTK0GoGFxTRd7esf+B/TMuUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SaOyOcfX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fbph/u01; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=Hvd9yS9ubu/aMAw26SLgOo/72yJqGtAA2kOOeGYKvq0uYItRcqzRMNFINtLWzpZ1TLAKKFqLOyUFuEKM9aQs2huRaWGwheG5z5vSvuIP+6z8MUfCOHMC4zRTiHcAygB8SjEB/G5LPtwjA5ySvB4ACSBP14eIFX3JdCIuarhf6KI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TxCwsqS1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Xhq3sIzV; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SaOyOcfX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fbph/u01"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AA0C311400DC;
-	Thu, 30 Jan 2025 13:23:17 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TxCwsqS1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Xhq3sIzV"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 20BFF138011A;
+	Thu, 30 Jan 2025 13:58:34 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 30 Jan 2025 13:23:17 -0500
+  by phl-compute-11.internal (MEProxy); Thu, 30 Jan 2025 13:58:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738261397; x=1738347797; bh=yZ50XbK7Q2
-	0qGQiFvEl0FEOb51GAqTzpFV1NlaH0Km8=; b=SaOyOcfXl26GkynIvJYX2EeMDm
-	zSxZrDk3O1cZ+fpvOSM0o2c0ImDr4ZjQlPc8R+2X3p2tBPI30kJIJEynZp8xm4mB
-	B7cDwoJSJDkl12khJH2Ovhju7z62jsrj756n0JKYQ1FAPf0WpmdyPfUI20jpGyFG
-	7+uAdSfYhYbZ9ot/WgfgcKLLGtu9qqHQvCwYTzaXkxSbTvEQdBkC5EBy51FoL8Lt
-	UpPPFN6zy+kg9JqSl8dxTupJ/bYi56Dm1YggE1ejpydH8tP8wso+5XAgEnyu7lHH
-	7K9o0eHtkVsyTX5ucsDcYE/Uhv4oZJW2/QV/42Vd6E4MmFF4ZcKYTWW3H4KQ==
+	:subject:to:to; s=fm2; t=1738263514; x=1738349914; bh=PrFP60loIF
+	9B+dlFP298mROvQJITox0j/2gBngWQe5Y=; b=TxCwsqS1KtJyVNTIWVbLbp7TdN
+	ko+wVbgEA8VYcFCQSlWX8lI8J3sHaCsnp7F7R84e/5cCD+MTUHkxbgxCTANygs+p
+	wQIAfgaUlb2y2fOLa7SYE80Kr+QiaMoEPOEEYnjPR+M7yb/DlKLScmExNPWfk6DR
+	9WmiYbzY3hwMnKDlGW77sUxEm04ty1UIryneeeoDPmM2EvxLOUrY2ZPQOmjxkomw
+	thktFljEVHVFoWXi9EOInq3mB8MWSrU9BDPcMAkuTlgxDe+13350hp7quRH1j6x7
+	d0/Avz7g+4QBpfr4Fx8Jumdr4+0vx5ARxUZv097oEhRTFJCOZE53ujDEGZ/g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738261397; x=1738347797; bh=yZ50XbK7Q20qGQiFvEl0FEOb51GAqTzpFV1
-	NlaH0Km8=; b=Fbph/u015uWJuSl4NK2P6ukcUOmVOe2EBvivuP9ambpQcThFjQA
-	HdEx0CnwF9BwZoCEdlLevWuOMgXJsZs/tvY6YDoFcv1fBa0bQcdA6LqDWS28tl59
-	xKYZZkVwWmZ/XCdE91rO7x9n+pFladhQoyiygAS+nVQu0csuk02EuWq2jE6Lh5Jv
-	Mstk6rcjXd1dNwlT+mcG+eTjJQdLatbiy4koeSFNAfHZ+sq8NzlAGzDPMHnv538A
-	t5LYRtnfrsfoDR8BAQxYIL3PVUYPDBEZ/KCxlPMKvkTGe+LkTL8ekYH8luzi9/5S
-	6l3aPSSlYeBUtr3BMWu2whjgUK/EzJ0uZlw==
-X-ME-Sender: <xms:lcObZwLkeyvBEotPWuZbQqB36BrOkzpdWfImvU6zFylVfkLykIvZCw>
-    <xme:lcObZwL9ZwgtOafUwBk4WyGBvZ6Kx2qYEGuoloXQ-zny0dpyFoIVwXmFM77tpmxGE
-    u64cTEUblQjjYQmeA>
-X-ME-Received: <xmr:lcObZwvezvJsy5Vu9zf4XewPRgunCejPUQs_JlP90ejuvYHId54fKLUKTDhC5e8zJdZ9vpODQnqt6sBkYJW1cd3MW4JoI9EYGKWD>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiheefucetufdoteggodetrfdotf
+	1738263514; x=1738349914; bh=PrFP60loIF9B+dlFP298mROvQJITox0j/2g
+	BngWQe5Y=; b=Xhq3sIzVvJBfUPYyalyVjGHGqh5z0Do5/j7XBzvBgXnYoe9hvVn
+	cU8l1ilBINVWtwwDliYdRx+nWsGNLen3j9LVGe7TyxIoOPmMoo19fVwRiYYrZ9Q9
+	M27tdsHd/P5elISxlnkpU7bqO3b/IEL8ZuH1R+/7f0s2p9w/IgCrrnyqZ+cP8q83
+	8C/PP3skSbJPNzHikezIBwmQa+2IeTwvWR2eioqFH13h+8IjOEL56+P+O/DJGBtu
+	Hz2qw1QWiYAAcc5Sq7qylcd5ltEq9zjpkSi5Zq8UlwFh0s0wEQ7kebaOii9QOf8l
+	zxj5SdEbheyIP42WbeNsaCzQKUQ8ElvOwlQ==
+X-ME-Sender: <xms:2cubZ4RgKRXXDphQEp_LujdPZbPlTa-_cxBvzom2RcwGvqKJh8I1QA>
+    <xme:2cubZ1zM-ugui9At5ptHS-rXymWA4C73m_KD6ufQbyFVQLMrymjr_A7DCcMQwDILw
+    DJNi6Pf6kDUoeqfpQ>
+X-ME-Received: <xmr:2cubZ10DlKod4i8PdHaQUGROvDGlEp_ezgfTjnzC8sOMzwyXE7j_NHTMuKCMIqRe4hsoPVSwzgpr5LUwKHJZZCCdzGecOBjlFwt8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiiedtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -61,25 +61,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiheefucetufdoteggod
     rhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrd
     dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhhhrghgghgvrhesrghluhhmrdhm
     ihhtrdgvughupdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:lcObZ9bYmb51EM-8MOVZZG8NNYfztTZSCMqvV5fiFFWAaEAZqyoVNw>
-    <xmx:lcObZ3Zb3RX9d7u2c43wj1wsRjlfNCH6jKaDct-llQ8g1yv4yl6K-g>
-    <xmx:lcObZ5CRGlW7QJHE3o8LgJnYywutoNqjUQOD7_bYOCwZinPX90-HnQ>
-    <xmx:lcObZ9brdJ6WVGvTZ0YIvqn0o9n1LrC9aaYrSocnOUjTMeR7uZwoDQ>
-    <xmx:lcObZ8NNkr6cpvgBNx0cGbRednssG5PrqMukGWG_txtei5yDiZVk6NBn>
+X-ME-Proxy: <xmx:2cubZ8BoqqCSa-9nE7K-sRcsEw3vD8_6-J99Q23l5hTt4Sn93mNr7A>
+    <xmx:2cubZxje7s_9Sx9f4lt8rONpfHuKZsXK94wkSiJTQfO1vzeCL9C-tg>
+    <xmx:2cubZ4q8RDPFeIX83DD-ArsnpLrtKWxyCb-Qp_2N_28c4ojBjdoiRA>
+    <xmx:2cubZ0jUfYNcDJL72PAQRLNDRVEVBo8Espm4Ln3wloihWy5BgCuR5Q>
+    <xmx:2subZ8Xuf5npSgGC1TjpBk8_d1JSbIPuLTmiKKR6tEkJrakB35A2JxyE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jan 2025 13:23:17 -0500 (EST)
+ 30 Jan 2025 13:58:33 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
  <karthik.188@gmail.com>,  Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 3/8] packed-backend: check whether the "packed-refs"
- is regular
-In-Reply-To: <Z5r6-52eBgT4TUYG@ArchLinux> (shejialuo@gmail.com's message of
-	"Thu, 30 Jan 2025 12:07:23 +0800")
-References: <Z5r6ZnLH3Ee8IQnN@ArchLinux> <Z5r6-52eBgT4TUYG@ArchLinux>
-Date: Thu, 30 Jan 2025 10:23:15 -0800
-Message-ID: <xmqqplk4duuk.fsf@gitster.g>
+Subject: Re: [PATCH v2 4/8] packed-backend: add "packed-refs" header
+ consistency check
+In-Reply-To: <Z5r7BuEJvjwQ9f4G@ArchLinux> (shejialuo@gmail.com's message of
+	"Thu, 30 Jan 2025 12:07:34 +0800")
+References: <Z5r6ZnLH3Ee8IQnN@ArchLinux> <Z5r7BuEJvjwQ9f4G@ArchLinux>
+Date: Thu, 30 Jan 2025 10:58:32 -0800
+Message-ID: <xmqq1pwkdt7r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,137 +91,161 @@ Content-Type: text/plain
 
 shejialuo <shejialuo@gmail.com> writes:
 
-> It might seems that the method one is much easier than method two.
-> However, method one has a significant drawback. When we have checked the
-> file mode using "lstat", we will need to read the file content, there is
-> a possibility that when finishing reading the file content to the
-> memory, the file could be changed into a symlink and we cannot notice.
+> In "packed-backend.c::create_snapshot", if there is a header (the line
+> which starts with '#'), we will check whether the line starts with "#
+> pack-refs with:". As we are going to implement the header consistency
+> check, we should port this check into "packed_fsck".
+>
+> However, the above check is not enough, this is because "git pack-refs"
+> will always write "PACKED_REFS_HEADER" which is a constant string to the
+> "packed-refs" file. So, we should check the following things for the
+> header.
 
-To me, the above sounds like saying:
+I haven't done history digging in this area for a while, but we
+should make sure we are not flagging a file that was written in
+ancient version of Git whose repository is still supported.
 
-    The user can run 'git refs verify' and it may declare that refs
-    are all good, and then somebody else can come in and turn the
-    packed-refs file into a bad one, but the user will not notice
-    the mischeif until the check is run the next time.
+> 1. If the header does not exist, we may report an error to the user
+>    because it should exist, but we do allow no header in "packed-refs"
+>    file. So, create a new fsck message "packedRefMissingHeader(INFO)" to
+>    warn the user and also keep compatibility.
 
-It is just the time that somebody else comes in becomes a bit
-earlier than the time the 'git refs verify' command finishes, and
-there is no fundamental difference.
+Are we sure "it should exist"?  I think the header did not exist
+before "Git v1.5.0".  I didn't check with other reimplementations of
+Git (like jgit or libgit2), but as long as our reading side of the
+runtime allows a packed-refs file without the header without
+complaint, I do not think it is a good idea to treat it as a
+report-worthy event from "git fsck".
 
-> With method two, we could get the "fd" firstly. Even if the file is
-> changed into a symlink, we could still operate the "fd" in the memory
-> which is consistent across the checking which avoids race condition.
+> 2. If the header content does not start with "# packed-ref with:", we
+>    should report an error just like what "create_snapshot" does. So,
+>    create a new fsck message "badPackedRefHeader(ERROR)" for this.
 
-The end result is the same with the lstat(2) approach, isn't it,
-though?.  'git refs verify' may say "I opened the file without
-following symlink and checked the contents, which turned out to be
-perfectly fine".  But because that somebody else came in just after
-the command did nofollow-open and swapped the packed-refs file, the
-repository has a packed-refs file that is not a regular file after
-the command returns success.  So I am not sure if I am following
-your argument to favor the latter over the former.  What am I
-missing?
+This I can agree with.  If the first line begins with "#" but not
+with that string (with a trailing SP), that is a sign that it may
+not even be a valid packed-refs file, which is a report-worthy
+event.
 
-As long as both approaches are equally portable, I do not think it
-matters which one we pick from correctness point of view, and we can
-pick the one that is easier to use to implement the feature.
+> 3. If the header content is not the same as the constant string
+>    "PACKED_REFS_HEADER", ideally, we should report an error to the user.
 
-On a platform without O_NOFOLLOW, open_nofollow() falls back to the
-lstat and open, so your "open_nofollow() is better than lstat() and
-open()" argument does not portably work, though.
+NO.  THAT IS NOT IDEAL AT ALL.
 
-> Reuse "FSCK_MSG_BAD_REF_FILETYPE" fsck message id to report the error to
-> the user if "packed-refs" is not a regular file.
+The header was written like this:
 
-Good.  Say "regular file" on the commit title, too, and it would be
-perfect.
+        /* perhaps other traits later as well */
+        fprintf(cbdata.refs_file, "# pack-refs with: peeled \n");
 
-> -static int packed_fsck(struct ref_store *ref_store UNUSED,
-> -		       struct fsck_options *o UNUSED,
-> +static int packed_fsck(struct ref_store *ref_store,
-> +		       struct fsck_options *o,
->  		       struct worktree *wt)
->  {
-> +	struct packed_ref_store *refs = packed_downcast(ref_store,
-> +							REF_STORE_READ, "fsck");
+in the older versions of Git before it was made into a separate
+preprocessor macro and lost the comment (the above excerpt is from
+"git show v1.5.0:builtin-pack-refs.c").
+
+Notice "other traits later" in the comment?
+
+The thing is _designed_ to be extensible.  In fact, these days we
+support a few more traits
+
+        static const char PACKED_REFS_HEADER[] =
+                "# pack-refs with: peeled fully-peeled sorted \n";
+
+(an excerpt from the current refs/packed-backend.c).
+
+Reporting an error when you see something written by an older
+version of Git is far from ideal.
+
+>    However, we allow other contents as long as the header content starts
+>    with "# packed-ref with:". To keep compatibility, create a new fsck
+>    message "unknownPackedRefHeader(INFO)" to warn about this. We may
+>    tighten this rule in the future.
+
+Whatever we do, what we do with an unknown trait should be in line
+with what the runtime does.  If the runtime failed (we do not, but
+this is to illustrate the principle [*]) on a packed-refs file
+without "sorted" trait, noticing that "sorted" is not there and
+flagging as an error is a good thing to do.  But if the runtime
+gracefully degrades and sorts the list of refs read from such a
+packed-refs file before continuing, then a packed-refs file that
+lack "sorted" trait is not a report-worthy event.
+
+I do not offhand recall if we introduced the concept of mandatory vs
+optional traits in the packed-refs part of the system (like we have
+in the index extension subsystem, where a version of Git that
+encounters an unknown *and* mandatory index extension must refuse to
+touch the repository), but if there is a mandatory trait declared in
+the header that our version of Git does not understand, it is a
+report-worthy event that must be flagged with "git refs verify".
+
+> +static int packed_fsck_ref_header(struct fsck_options *o, const char *start, const char *eol)
+> +{
+> +	const char *err_fmt = NULL;
+> +	int fsck_msg_id = -1;
+> +
+> +	if (!starts_with(start, "# pack-refs with:")) {
+> +		err_fmt = "'%.*s' does not start with '# pack-refs with:'";
+> +		fsck_msg_id = FSCK_MSG_BAD_PACKED_REF_HEADER;
+> +	} else if (strncmp(start, PACKED_REFS_HEADER, strlen(PACKED_REFS_HEADER))) {
+> +		err_fmt = "'%.*s' is an unknown packed-refs header";
+> +		fsck_msg_id = FSCK_MSG_UNKNOWN_PACKED_REF_HEADER;
+> +	}
+
+As I outlined above, this is totally unacceptable.  
+
+Inspecting the header is good, but if this code claims to be a
+checker, it should do at least what the runtime does, i.e. parse the
+header to tell what traits the packed-file declares, not just
+assuming that it is a fixed string.  And error on unknown trait(s)
+if they are mandatory (if such a concept is implemented in the
+runtime reading side).  Informing on an unknown and optional
+trait(s) I can live with, but personally I wouldn't recommend it.
+
+In other words, report loudly if it is an error, but otherwise stay
+silent if we know we tolerate it well. 
+
+> +static int packed_fsck_ref_content(struct fsck_options *o,
+> +				   const char *start, const char *eof)
+> +{
+> +	struct strbuf packed_entry = STRBUF_INIT;
+> +	int line_number = 1;
+
+We limit ourselves with about 1 billion refs in the packed-refs
+file, which may be plenty, but I do not quite understand the use of
+this variable.  There is no loop inside this so ...
+
+> +	const char *eol;
 > +	int ret = 0;
-> +	int fd;
->  
->  	if (!is_main_worktree(wt))
-> -		return 0;
-> +		goto cleanup;
->  
-> -	return 0;
-> +	if (o->verbose)
-> +		fprintf_ln(stderr, "Checking packed-refs file %s", refs->path);
 > +
-> +	fd = open_nofollow(refs->path, O_RDONLY);
-> +	if (fd < 0) {
-> +		/*
-> +		 * If the packed-refs file doesn't exist, there's nothing
-> +		 * to check.
-> +		 */
-> +		if (errno == ENOENT)
-> +			goto cleanup;
+> +	strbuf_addf(&packed_entry, "packed-refs line %d", line_number);
+
+... this is always line #1, and then
+
+> +	ret |= packed_fsck_ref_next_line(o, &packed_entry, start, eof, &eol);
+> +	if (*start == '#') {
+> +		ret |= packed_fsck_ref_header(o, start, eol);
 > +
-> +		if (errno == ELOOP) {
-> +			struct fsck_ref_report report = { 0 };
-> +			report.path = "packed-refs";
-> +			ret = fsck_report_ref(o, &report,
-> +					      FSCK_MSG_BAD_REF_FILETYPE,
-> +					      "not a regular file");
-> +			goto cleanup;
-> +		}
+> +		start = eol + 1;
+> +		line_number++;
+
+... it may be incremented, but upon returning from the funcition, it
+is lost.
+
+Perhaps you wanted to make it a function-scope static, but then you
+are allowed to read one single packed-refs file during the life of
+your process before you exit, which I am not sure is what you want?
+
+> +	} else {
+> +		struct fsck_ref_report report = { 0 };
+> +		report.path = "packed-refs";
 > +
-> +		ret = error_errno(_("unable to open %s"), refs->path);
-> +		goto cleanup;
+> +		ret |= fsck_report_ref(o, &report,
+> +				       FSCK_MSG_PACKED_REF_MISSING_HEADER,
+> +				       "missing header line");
 > +	}
 > +
-> +cleanup:
+> +	strbuf_release(&packed_entry);
 > +	return ret;
->  }
+> +}
 
-Looking good.
-
-> diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-> index cf7a202d0d..42c8d4ca1e 100755
-> --- a/t/t0602-reffiles-fsck.sh
-> +++ b/t/t0602-reffiles-fsck.sh
-> @@ -617,4 +617,26 @@ test_expect_success 'ref content checks should work with worktrees' '
->  	)
->  '
->  
-> +test_expect_success SYMLINKS 'the filetype of packed-refs should be checked' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit default &&
-> +		git branch branch-1 &&
-> +		git branch branch-2 &&
-> +		git branch branch-3 &&
-> +		git pack-refs --all &&
-> +
-> +		mv .git/packed-refs .git/packed-refs-back &&
-> +		ln -sf packed-refs-bak .git/packed-refs &&
-> +		test_must_fail git refs verify 2>err &&
-> +		cat >expect <<-EOF &&
-> +		error: packed-refs: badRefFiletype: not a regular file
-> +		EOF
-> +		rm .git/packed-refs &&
-> +		test_cmp expect err
-> +	)
-> +'
-> +
->  test_done
-
-OK.  I notice that the previous step did not have any new test
-associated with it.  Perhaps we can corrupt "HEAD" *and* replace
-packed-refs file with a symbolic link (or do some other damage
-to the refs) and make sure both breakages are reported?
-
-It does not have to be done in this step, and certainly not as a
-part of this single test this step adds, but we'd want it tested
-somewhere.
+I'll stop here for now.
 
 Thanks.
+
