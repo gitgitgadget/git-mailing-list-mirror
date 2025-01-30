@@ -1,120 +1,116 @@
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fallback2.i.mail.ru (fallback2.i.mail.ru [79.137.243.68])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AE7819
-	for <git@vger.kernel.org>; Thu, 30 Jan 2025 13:19:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414A8199939
+	for <git@vger.kernel.org>; Thu, 30 Jan 2025 14:12:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=79.137.243.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738243192; cv=none; b=lLfNfBjGAYtTQErmeRbHfUO6XV10DCN1+HfcuPWx69iucdg6dTcN15hTTr7cR+MKtc2pWPa+OFYfVuln7t7RmtrBbl1H8vL0sFKy6wMp02zO1WMOElACLoCVelYQGvT+vencX4GvSztN4z/msjm7x4Polc8V3R2YWeuVYiZaQrY=
+	t=1738246346; cv=none; b=rFEND7OUGmnU6e6irlRhk8hc8H3R1pC937ZvaRduoRpEpXwDWVuAqGePAnlPhovVuuJyO2VndE1xx777tnVegroC/pkJjvZWEF2F5Q794Bg2DFm+GkAXw5emKbXbZPSSpnkkapvfxAINgnfJ2CrGaLO1W520nV2hIuwH2JahzPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738243192; c=relaxed/simple;
-	bh=Mn679G6dLfd0vg/Um4gaNPC3OsvHC01cxFlmcWfPTDw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=sQrLqHTKK7gp6s0JQyo42CTRIowa+0af47hnhImGm+iiH6kcDzJc/P21syfM6TAqKpD5ptlEZnzT99553v0oQXIq/25WZ8FGTDZ0MeHiM3HkVxEjb1FfidPdDZ4H/AGLsC8ImTwL+oHEhYzlwvEHub0QuU1l2wtYuYdEoMbdN4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=emailcarter.com; spf=none smtp.mailfrom=carter.tools; dkim=pass (2048-bit key) header.d=carter-tools.20230601.gappssmtp.com header.i=@carter-tools.20230601.gappssmtp.com header.b=JuNbfTLH; arc=none smtp.client-ip=209.85.210.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=emailcarter.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=carter.tools
+	s=arc-20240116; t=1738246346; c=relaxed/simple;
+	bh=tuzMkYcQ/NQwWrZ0MQ+myv5RXf6BYnbVbzwKsqXj1Gk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ucf+piFP/2tKn5uJjuZiHuUd3Oc4TElx2A33ob0W7CTSMxvxcYJwfcr/eah+iovB9vwi1dcPmw6OMDAWM4b9cKCBy7Hgzn4JVpIqOIfyCrGLMR8Y/4xub9BOsLtfxOzL4J6okymP6o3Zc4iXuqQSweTB2xguaN3pMpzkiNoAwyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru; spf=pass smtp.mailfrom=bswap.ru; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=oqUUnD7J; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=nTdSMaHu; dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b=w7Kg6R7U; arc=none smtp.client-ip=79.137.243.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bswap.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bswap.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=carter-tools.20230601.gappssmtp.com header.i=@carter-tools.20230601.gappssmtp.com header.b="JuNbfTLH"
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-724a5d04befso339302a34.1
-        for <git@vger.kernel.org>; Thu, 30 Jan 2025 05:19:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=carter-tools.20230601.gappssmtp.com; s=20230601; t=1738243188; x=1738847988; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=qkkwONY7Jybs0pnVUGhQDiBHbifSpur+bogK8rnHjVI=;
-        b=JuNbfTLHUKdZCH1PHpqSkRs9fMREk+OVpO2bgnlRtfarm2th67xqM/L/NHWf1Glimn
-         07OwQHX1jInh2AvFjUsyK4uXtUBOlLST9hYRGFh7lbxAytL6rd47EyIGN98w6GOFK5v3
-         SaGLIcbPcae4yX5wFZ+3fHD1Vb8JTTkyAYp9/LJR9fS3RZ3KA8ryuagRo7hG1FYZw4eC
-         FNIvO8vdj8UxNC9ARI5eUS3Mg8MMnV+eBm7oDeqMbAJMSq8960coQPcwUnTc8GUwUUXj
-         ToFh/5HY3lEfAPpG8XhXViVW/qSdiCEUbIGQgfWrF34rFzeTJMRUoyOywRqX/10cPspH
-         syJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738243188; x=1738847988;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qkkwONY7Jybs0pnVUGhQDiBHbifSpur+bogK8rnHjVI=;
-        b=NgpUqtyRwGrLwUFyhmX5scpwXRcRp7xbyDfFE23B36GnJELIMS+gCGDPkMntB/OtVa
-         Jb1SrnnMlEOaGE1g5yL7vCGJJy6v9ubdtJduWs6thMeq/6rIJG+jlX6GssXuIFbvKIN7
-         grGUFvvXdOun8gG+y/SDeQHxVunB1kEM4Bw0zfFpxM29sEefMoPYVMYr5tU8ljhotQXu
-         xL0Hd/XRRVwnRzU+Io309F6sJNyKh4/QfiHyL4fFdtW1+y95r1r4R/x7rwcbxWWPBowS
-         HXuz5zQtRcuARlRHYAn3a/DxQeSOwyI8L26rsgliPFlipTdl3cG3Gh8S17K0Z1jtnUgx
-         lKZw==
-X-Gm-Message-State: AOJu0YzC0cs0WgzCib1qRlCNLZGbwzZS8juaF7veqpY5ZgwJm8shWvyR
-	PcRCYX5+rwdykpsGaZd0FVbBM7XzioOfckeaFK6fOhTGBCNXL1EfZccx584YntcylP0d9ggau+8
-	lS0MDOg==
-X-Gm-Gg: ASbGnctdocY3l36OWKfLkP6Bxk2Y3PPxEZgNimh72tT1Crh95g3+LCoDMWaw7hrjyKq
-	UFt9Y43BKLFlo8duckJmo+mJ/cazODnXdJWxqk6st/XXST/eCcdleOTMS6ifOCZXM6hcY/MBvL0
-	xWQcIPa1S0XkwxhgArr8DTj7dq7gayNy4zH2pEvPdzp2LuA5hgsnPEmtP1vDdFPgCjLFCG1KUuU
-	qilUiBfjtWekWloGIGhJ8O9nhaO81rb7aCT0glF/WcnMvSYQHv+3m/hFag79AwRRafpnx8ttcZ0
-	J1sHIZOD5Zxra4dbTnlu3CbDs4TI9VCAXyA=
-X-Google-Smtp-Source: AGHT+IFt8CZY4EiwSWQVf+jMXTEEaNXLwjwOYkB7r/r/suflaNTTyZGWpX1oQnGdUnmFgQWplnT7EQ==
-X-Received: by 2002:a05:6830:d0d:b0:71d:b6a9:74c3 with SMTP id 46e09a7af769-726603cbbc8mr2354116a34.7.1738243188222;
-        Thu, 30 Jan 2025 05:19:48 -0800 (PST)
-Received: from [192.168.1.193] ([136.50.173.150])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-726618ba0cdsm309753a34.51.2025.01.30.05.19.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 30 Jan 2025 05:19:47 -0800 (PST)
-Message-ID: <dd5d9b93-1585-4165-8f5d-d9737725071e@emailcarter.com>
-Date: Thu, 30 Jan 2025 07:18:08 -0600
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="oqUUnD7J";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="nTdSMaHu";
+	dkim=pass (1024-bit key) header.d=bswap.ru header.i=@bswap.ru header.b="w7Kg6R7U"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+	h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:From:Subject:Content-Type:Content-Transfer-Encoding:To:Cc; bh=Xu9r8HMUgUsvIWBEw9ZhWtkEyMnrdn+zWYDhrfhC+k0=;
+	t=1738246341;x=1738336341; 
+	b=oqUUnD7JtxIO9xFixWELAF5I2ScJjEksC/au5irassTsjgRxHad/Pl8BERz2J4hM+5xQA0GVMsgfSC8vgwxE0ZXvM8hR3dLibCUVsrmERhDPYUQRg37iSaNRlvu5s/y8Qr2+8BZxIpH1MaZv3imIb+7wkvyd7Sg1OFsld0v1bpA=;
+Received: from [10.113.184.7] (port=55168 helo=send77.i.mail.ru)
+	by fallback2.i.mail.ru with esmtp (envelope-from <kostix@bswap.ru>)
+	id 1tdVHB-003GA3-09
+	for git@vger.kernel.org; Thu, 30 Jan 2025 17:12:13 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive:X-Cloud-Ids;
+	bh=Xu9r8HMUgUsvIWBEw9ZhWtkEyMnrdn+zWYDhrfhC+k0=; t=1738246333; x=1738336333; 
+	b=nTdSMaHuV5ZX8EHs69tcWRJw7ERI2lj2Ek2KIj/eQPHFNvGcY7bIFSohajHGwjSzo1g12JgtNA9
+	/Ag4t8kSGcn3VD44QYRAL7DJso/t1BYz9TEonIZB/yo2V2znnp0WxhCvr/pq7rNlxkUwxu8fbKpzc
+	UpKtc5xt2fzKr9RQ9fs=;
+Received: from [10.113.153.212] (port=52748 helo=send172.i.mail.ru)
+	by exim-fallback-797fb87cff-5f69n with esmtp (envelope-from <kostix@bswap.ru>)
+	id 1tdVH2-00000000bPU-3umT
+	for git@vger.kernel.org; Thu, 30 Jan 2025 17:12:05 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru;
+	s=mailru; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:From:Sender:Reply-To:To:Cc:Content-Type:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive:
+	X-Cloud-Ids:Disposition-Notification-To;
+	bh=Xu9r8HMUgUsvIWBEw9ZhWtkEyMnrdn+zWYDhrfhC+k0=; t=1738246324; x=1738336324; 
+	b=w7Kg6R7UufZL1lKUEtsXwT2yVQFGVs4lqhMMY9PYCFmcxTZkWvfvj15m74O5nSvBPIAVOFXXPxU
+	pWmszGpTYWX6jy/puZ4yF+9z3LIQAhANfmk9QexNwwNKba3GykgKSGlNI5w6TTyMITLSn6xIlKCM0
+	otCcLspRuINpeoe2Ne8=;
+Received: by exim-smtp-5d58c69cd6-c7x6t with esmtpa (envelope-from <kostix@bswap.ru>)
+	id 1tdVGt-00000000F9x-22Hp; Thu, 30 Jan 2025 17:11:56 +0300
+Date: Thu, 30 Jan 2025 17:11:54 +0300
+From: Konstantin Khomoutov <kostix@bswap.ru>
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Mike Weltevrede <mikeweltevrede@gmail.com>
+Subject: Re: Feature idea: Git hook for pre-checkout
+Message-ID: <20250130141154.gglc65fegstuzbjy@carbon>
+Mail-Followup-To: git@vger.kernel.org,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Mike Weltevrede <mikeweltevrede@gmail.com>
+References: <CAAE-bwUQ+0ERbvC=SS=-R_K4H3p2su+=Ogf7BSkyq5J4GmmRYw@mail.gmail.com>
+ <Z5rhXrkbhINwFDXT@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2] docs: indicate http.sslCertType and sslKeyType
-To: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
- Junio C Hamano <gitster@pobox.com>
-References: <pull.1854.git.1737591366672.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Andrew Carter <andrew@emailcarter.com>
-In-Reply-To: <pull.1854.git.1737591366672.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z5rhXrkbhINwFDXT@tapette.crustytoothpaste.net>
+X-Mailru-Src: smtp
+X-7564579A: 646B95376F6C166E
+X-77F55803: 4F1203BC0FB41BD985D89FF3B425BBEF60198EBAA7A2E64509B496FF1DBC87B0CD62213F67905E7AAE03594B2C21549BC01D4CCAC62E93481FD1368B0EF4E406B02582ABDB060753C5C7FD16981B76AE
+X-7FA49CB5: FF5795518A3D127A4AD6D5ED66289B5278DA827A17800CE7DECE8D0A5E25C0FCEA1F7E6F0F101C67BD4B6F7A4D31EC0BCC500DACC3FED6E28638F802B75D45FF8AA50765F7900637A521848D7B067A388638F802B75D45FF36EB9D2243A4F8B5A6FCA7DBDB1FC311F39EFFDF887939037866D6147AF826D8F3151B09BE46E20506FA4C9B758132B77FC63A5E0A6CFCABCC7F00164DA146DAFE8445B8C89999728AA50765F7900637F6B57BC7E64490618DEB871D839B7333395957E7521B51C2DFABB839C843B9C08941B15DA834481F8AA50765F7900637F6B57BC7E6449061A352F6E88A58FB86F5D81C698A659EA73AA81AA40904B5D9A18204E546F3947C4CB6874B0BCFF0B8302FCEF25BFAB3454AD6D5ED66289B523666184CF4C3C14F6136E347CC761E07725E5C173C3A84C3642883364D384F09BA3038C0950A5D36B5C8C57E37DE458B330BD67F2E7D9AF16D1867E19FE14079C09775C1D3CA48CF3D321E7403792E342EB15956EA79C166A417C69337E82CC275ECD9A6C639B01B78DA827A17800CE784355C927A450B6A731C566533BA786AA5CC5B56E945C8DA
+X-C1DE0DAB: 0D63561A33F958A54CC352804C2AF9755002B1117B3ED696C5E670A30F38C7DF8D59E407A97E9958823CB91A9FED034534781492E4B8EEADB1D70E2111C441FFBDAD6C7F3747799A
+X-C8649E89: 1C3962B70DF3F0ADBF74143AD284FC7177DD89D51EBB7742DC8270968E61249B1004E42C50DC4CA955A7F0CF078B5EC49A30900B95165D3498910055B812BD9C492C86326148638250A13BF1AA26826C27F17C7B05D516B20042F0E09B6C92111D7E09C32AA3244CC1FC4B32195CCC8E77DD89D51EBB7742CF3C3CFC9E581EC1EA455F16B58544A2557BDE0DD54B35903871D1C702CBDB0A9665A0FD7AD89E8F722DFA761B3F797A
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5ycPtXkTV4k65bRjmOUUP8cvGozZ33TWg5HZplvhhXbhDGzqmQDTd6OAevLeAnq3Ra9uf7zvY2zzsIhlcp/Y7m53TZgf2aB4JOg4gkr2biojB5k2t8NeLmDpugBP721zpg==
+X-Mailru-Sender: 641179478317D3F0421D0BEF39CFD138E5A6661DC275DD18EA62B7A476541487B9143D3C39C7CA70D537AA6D4973CF862F0A6AF357119A4D04176AAE5055CC72595A8557D9C981F4633CE835492D9647D182D770C8C7E642B4A721A3011E896F
+X-Mras: Ok
+X-Mailru-Src: fallback
+X-7564579A: B8F34718100C35BD
+X-77F55803: 6242723A09DB00B4A84B4964F946E17EB1A91FC540E416C11582D74B19986F8F049FFFDB7839CE9E643586C112B81D11E30A09B53E2A5AEF22B6598BEDFC969FEDEE49E581E46C18B5FEFDBAB9BF3490
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSrmgqWMIa0Sipuf5RTkiCWD
+X-Mras: Ok
+X-7564579A: 646B95376F6C166E
+X-77F55803: 6242723A09DB00B4A84B4964F946E17EB1A91FC540E416C12D8BAB617684C85D049FFFDB7839CE9E643586C112B81D112A8131BFA484CC464476D5B6773D467216BFFF1A501FE2EF
+X-D57D3AED: 3ZO7eAau8CL7WIMRKs4sN3D3tLDjz0dLbV79QFUyzQ2Ujvy7cMT6pYYqY16iZVKkSc3dCLJ7zSJH7+u4VD18S7Vl4ZUrpaVfd2+vE6kuoey4m4VkSEu530nj6fImhcD4MUrOEAnl0W826KZ9Q+tr5+wYjsrrSY/u6NqYXWMR0/V85CnFjCYTu9APdQH0PvpnP5qz8aO2mjTJzjHGC4ogvVuzB3zfVUBtENeZ6b5av1fnCBE34JUDkWdM6QxE+Ga5d8voMtmXfSrlkrUOmOySqtyqHyU9iLcO
+X-Mailru-MI: 20000000000000800
+X-Mras: Ok
 
+On Thu, Jan 30, 2025 at 02:18:06AM +0000, brian m. carlson wrote:
 
-0a01d41ee4 (http: add support for different sslcert and sslkey types.,
-2023-03-20) added useful SSL config options, but did not document them.
+[...]
+> It's also possible to use one name locally and push to another, such as with
+> `git push origin my-feature:refs/features/foo`.
 
-Signed-off-by: Andrew Carter <andrew@emailcarter.com>
----
-  Documentation/config/http.txt | 15 +++++++++++++++
-  1 file changed, 15 insertions(+)
+I would add that I, for one, have a habit of working on a detached HEAD and
+then pushing the results with
 
-diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
-index a14371b5c9..38e874307b 100644
---- a/Documentation/config/http.txt
-+++ b/Documentation/config/http.txt
-@@ -216,6 +216,21 @@ http.sslBackend::
-      This option is ignored if cURL lacks support for choosing the SSL
-      backend at runtime.
+  git push HEAD:refs/heads/whatever
 
-+http.sslCertType::
-+    Type of client certificate used when fetching or pushing over HTTPS.
-+    "PEM", "DER" are supported when using openssl or gnutls backends. "P12"
-+    is supported on "openssl", "schannel", "securetransport", and 
-gnutls 8.11+.
-+    See also libcurl `CURLOPT_SSLCERTTYPE`. Can be overridden by the
-+    `GIT_SSL_CERT_TYPE` environment variable.
-+
-+http.sslKeyType::
-+    Type of client private key used when fetching or pushing over 
-HTTPS. (e.g.
-+    "PEM", "DER", or "ENG"). Only applicable when using "openssl" 
-backend. "DER"
-+    is not supported with openssl. Particularly useful when set to 
-"ENG" for
-+    authenticating with PKCS#11 tokens, with a PKCS#11 URL in sslCert 
-option.
-+    See also libcurl `CURLOPT_SSLCERTTYPE`. Can be overridden by the
-+    `GIT_SSL_KEY_TYPE` environment variable.
-+
-  http.schannelCheckRevoke::
-      Used to enforce or disable certificate revocation checks in cURL
-      when http.sslBackend is set to "schannel". Defaults to `true` if
--- 
-2.39.5 (Apple Git-154)
+and only creating a local branch when I think I'm going to abandon the current
+work for too long (otherwise I just inspect the output of `git reflog HEAD`
+to find the place where I left off and then check it out back).
+
+I don't think it's a widely adopted approach to work with Git, so mentioning
+it more for the purpose of widening the OP's view of the subject matter.
+
+[...]
+
