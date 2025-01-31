@@ -1,193 +1,139 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3FF1F428A
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 22:14:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CBB2F56
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 22:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738361684; cv=none; b=txc6d9C4A0cwr1UW3pQmI4M5W1a/gFlIhpU+Zx+o3h0HZ/prjX/zmJcl2iLDs7lrrkbrDpENXIYferYk3rPytS6pH9mXcw+mxoK/6MBk1MwxWFaIjpKEJGDI9TjJZcqmQABWzVobvTAa83BhhlG4t0c7ACZkb7XvBnq5oGoK9S0=
+	t=1738363106; cv=none; b=dlWC6sPizZcznutTxQd2jFiXa4cjM2mMUXUuXNJNjyZykd9kgWZigfCmeP/BxERcznm2cwQzVNIin/NwdV5LfZ0XiG0cIdPvWYV1HLrZTm+hDZE64SDjTqdsRsFfZXmaC68dQQPqRdDXZ4ovAUuf0iNtLvhjA1Vo7L1AvC/+RVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738361684; c=relaxed/simple;
-	bh=pnaZI3AYjZdwYsLcGZfAj0vZF4dU5BZDi84EVS12oOA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xi+VtehkOxQhd5fRJY9KOpf6+/viSws5MlwGOxfunmIWxK/C8R+kOR17xBdm39LH6bT/2DVM7vsYxqlav7zC7phaBHtUQOEJgbNbB0bu0AOeTqSeSMv9WfK1kTgYbSAW2Igp2vmTPz7UrLQWiJ+sxx+AGF7LnaizBXTpMZS+euw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GqYlXAPL; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738363106; c=relaxed/simple;
+	bh=j7Mzi4lfHqDWYunHfeuNjX6g1/QmzVAAV6X1Hqd63y4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=V0qSYxKz9La+AnFJ3GhRZJLk0rNZkv3rfvGPrT2GK/98nvkZxfskc5XWDX91Cct8pr3V37ETwJxtc+dLXejRnB3RuHZNyy9S7cQsH6DjqymuaOgJq8XPFpMOf75BVD4zFysona+irPgz0YR7eb4+ssloWYzJ+gpKVMW6J0O4J70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PvydstX7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PCuRG8Ix; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GqYlXAPL"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5da12292b67so3849403a12.3
-        for <git@vger.kernel.org>; Fri, 31 Jan 2025 14:14:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738361681; x=1738966481; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eTz+u+xh5ejnDHgZnUTHlZu9tLo7KlskV/grW18aj5I=;
-        b=GqYlXAPLFsEP8U5OWnAX7zCu1JEkk8dKE/yWg+FmqP56/otOHTkehcdb18ehY72ZfG
-         Pp8pNLLmAVS9USolMHCXKv9y4BswONsISpShXT6uCE+JhPilNLEISZfXegl0KTGyEUG7
-         pbrSvYVeuoATQ/XSzgOTi7VTsoIx09SN3u6mfxBRuQaH6DT1U7LvvKWARNVsnGoGbkDC
-         GWCZqMYHaZ8PZVhbywnV/lLytzIVFlzV5GXn8raWhpzo2dzOb1qWm/Q0viCy3Wo2c+ts
-         Xl867JJNA/igVAOfrKxxvnZvHZ7awTPmtaaRPBfOGtHwjMKBiTy7L2mw32Jam6LBTT37
-         WzYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738361681; x=1738966481;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eTz+u+xh5ejnDHgZnUTHlZu9tLo7KlskV/grW18aj5I=;
-        b=NjfgVofY/ohRLq+zb9qb1RiGwjvfVyfaLUZIoswKPIs9MAraqEMo+387QtQOO29ehy
-         SmRq9anoKE6yOq26b0MTK416zd/cuWcVTlJqcqEX6kmbhGdO0Aq3RKohS/pGjjXsS7AF
-         E4jvhPB+vk7eClHcOqapnOhduQZm4iOMrRbT024B7FrlevrFWAYYBPZLDN2dPuqHvQ5m
-         AL46iVS7+FXEOkA77tOqPY5qIpYOPhmNybxLzYP4zPzgEyt2JgexzDY5pAPCN88VFeJc
-         AmIKO9nPsBBBZ66DNc7igXGBCNoQnYR2Cfup4UZwoxABKV/89kFt+C3SNh6Kg8MueNEd
-         6ehA==
-X-Gm-Message-State: AOJu0Yyamd0aA/v3w+/EqKPli4F4MmpZt3HCMpZt6M1tBYQHc4eB6tIM
-	2dReXC9sVhVkJ2SOWo3zd81JXrwgYz7HMWKlpE5asoevY6yU4u6phbsNOevPYShlDw==
-X-Gm-Gg: ASbGncuNYsfbh0W0N3Yze88incdxbeU/vkDa0Cq4Aohq2xnGb89+/B9tBpqtFlszBHD
-	WFY+tpkm4pX5wOUtz8Ee90rUTFd7K9mid+HN6W2ymUtvg98wHFmBC3MHaZ0NqTIBxKLUJprRDkI
-	BXcycNskABKruYiXbnzQz175QbwWRBkTef1t3dqXjQj7w02BTWpqvL717o7mjYDntSdf2M3KBt6
-	3viCC6dmSPPFauY5WkjR06kU7G2GJPrrvgYy6nwKXr5IwJOsMnGgDFrIKkMUjPPdmOW7U+kveN1
-	4fQ+LKJru7FNCud9PG/Pg1ifSyJ7UUQ=
-X-Google-Smtp-Source: AGHT+IGF4sy9IVgd4oOCCoU4akjjeq7cSV4tq8WmmZO8bNZXEPaUqvRYsN7PVXhsTH1FXsnXKGrdwg==
-X-Received: by 2002:a05:6402:4309:b0:5d0:fb56:3f with SMTP id 4fb4d7f45d1cf-5dc5efbf5d8mr31753142a12.12.1738361680958;
-        Fri, 31 Jan 2025 14:14:40 -0800 (PST)
-Received: from localhost.localdomain ([154.120.111.177])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ab6e49ff77fsm359288966b.108.2025.01.31.14.14.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jan 2025 14:14:39 -0800 (PST)
-From: Seyi Kuforiji <kuforiji98@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	phillip.wood@dunelm.org.uk,
-	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH v2 4/4] t/unit-tests: convert strcmp-offset test to use clar test framework
-Date: Fri, 31 Jan 2025 23:14:20 +0100
-Message-ID: <20250131221420.38161-5-kuforiji98@gmail.com>
-X-Mailer: git-send-email 2.47.0.86.g15030f9556
-In-Reply-To: <20250131221420.38161-1-kuforiji98@gmail.com>
-References: <20250130091334.39922-1-kuforiji98@gmail.com>
- <20250131221420.38161-1-kuforiji98@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PvydstX7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PCuRG8Ix"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B9EE2254014C;
+	Fri, 31 Jan 2025 17:38:22 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 31 Jan 2025 17:38:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738363102; x=1738449502; bh=PLplFHEMNV
+	notEhjC1xbndfuZwfr+MwnDB3dJwVCDc0=; b=PvydstX7avWDmg0ej5tNnEWO2F
+	vx6iqPon2TW9b6F30mxLuQyE+tQnlFMUjee1GJngRACtMsrr7jwkcO3ddA0bFjJp
+	aIiM8Oaoe3wjd0EV9Py9s9yHPZHVzlNwIuXM9p6CqIvAHtIz0R5wolUr2DWLeLht
+	AR9dzddUIxGErLrdtYY+kxRaWSmrEkRLfC754otTx9XrQ1bkxjqiPTaBzN6KhclY
+	hm10NeNQW3CJB8MDsYkKu8ii6dzRepwA/oZBInUZ+VUjfu1R+3dq3fRDokn/N9Nk
+	A3mtBJ3Jm7qvTiOPsxcemH+fJ3p77/fyBfR0gZoojg75TR9KJg5eX32ZzPRg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738363102; x=1738449502; bh=PLplFHEMNVnotEhjC1xbndfuZwfr+MwnDB3
+	dJwVCDc0=; b=PCuRG8IxYP34Wcz3PRhPWaNHIX3gYz7EY6nFJN59qOh1ZlCz7R8
+	vRkV7+iI3W7C+pLdQ9P9rk4GfvOJV5owv7uQ2FuKmoIkZw8o6gyTzVh2um4jVvZa
+	J7ykfeYXPXVcIsDXveV1jxZn4A3tmP0a2IigFIVAGOo6Wa+F7KdIty5HigKWpAd8
+	baPc1I/H5mhDPDcMn5wYkzmiKy8fT7fiuS18YKTHrvqM9b5BYOdE+H1OA/9860U4
+	4NxeEnVPOZDlHWBLjoE4sbNodfSm0j8V3Vp/FOyls4jV5fAy96nD/UfVsinUQrGy
+	mizwP0r+u9KO4CRDcqJAA3gSRpxpO/IGvvg==
+X-ME-Sender: <xms:3lCdZ1JC9wpAeBpZAPR3mmzXFsLc0RcuYCJTCUfKQuw8gAn64robzA>
+    <xme:3lCdZxIFa1jRo9xJ_2PUCxy8FPxOo7AOxjo805wJ65PpU5dAuLN0Ho4vdsG-2n9DW
+    TXHwOZTkXXKSJOE0A>
+X-ME-Received: <xmr:3lCdZ9usFwwAwl-P1g0KkAnnO-5YkUik7Wm2vbQ8O_ZhzdD0gRsmj4UkaA9GJtj_lO-2vTPnvhbiFeww0y-73rz_Cxp4kNYsCDhU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:3lCdZ2bHKPQAbYXKZDk3UZM5ckL5VkSPyXB_rjGg1V2ueQOM0EmZ0g>
+    <xmx:3lCdZ8ZOzhq2imBL8187seBLomhVFTKLc33eB2kClFvZ-gBc_VRwjg>
+    <xmx:3lCdZ6AKDJiQrPU8_0Z28q4lT-gO0IxCuZdX_Emq8GK097Rs5lYVxA>
+    <xmx:3lCdZ6bXyYwjSXQUA14A4g5DUzbhA5E1KmwSAwTKCzTCE1wkDgkPEQ>
+    <xmx:3lCdZ0Ek7-IpWZH9VK5-i23XwZaHp21AkLyxFqLKC13jfzRsI3HTm5mM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 31 Jan 2025 17:38:21 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] setup: fix reinit of repos with incompatible
+ GIT_DEFAULT_REF_FORMAT
+In-Reply-To: <20250130-b4-pks-reinit-default-ref-format-v1-2-d2769ca01207@pks.im>
+	(Patrick Steinhardt's message of "Thu, 30 Jan 2025 17:24:18 +0100")
+References: <20250130-b4-pks-reinit-default-ref-format-v1-0-d2769ca01207@pks.im>
+	<20250130-b4-pks-reinit-default-ref-format-v1-2-d2769ca01207@pks.im>
+Date: Fri, 31 Jan 2025 14:38:20 -0800
+Message-ID: <xmqqv7tu623n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Adapt strcmp-offset test script to clar framework by using clar
-assertions where necessary. Introduce `test_strcmp_offset__empty()` to
-verify `check_strcmp_offset()` behavior when both input strings are
-empty. This ensures the function correctly handles edge cases and
-returns expected values.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
----
- Makefile                                      |  2 +-
- t/meson.build                                 |  2 +-
- .../{t-strcmp-offset.c => u-strcmp-offset.c}  | 36 ++++++++++++-------
- 3 files changed, 25 insertions(+), 15 deletions(-)
- rename t/unit-tests/{t-strcmp-offset.c => u-strcmp-offset.c} (39%)
+> Instead of retaining the current ref format, the reinitialization tries
+> to reinitialize the repository with the different format. This action
+> fails when git-init(1) tries to write the ".git/refs/heads" stub, which
+> in the context of the reftable backend is always written as a file so
+> that we can detect clients which inadvertently try to access the repo
+> with the wrong ref format. Seems like the protection mechanism works for
+> this case, as well.
+>
+> Fix the issue by ignoring the environment variable in case the repo has
+> already been initialized with a ref storage format.
 
-diff --git a/Makefile b/Makefile
-index 358193597f..76b5de4fdd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1345,6 +1345,7 @@ CLAR_TEST_SUITES += u-mem-pool
- CLAR_TEST_SUITES += u-prio-queue
- CLAR_TEST_SUITES += u-reftable-tree
- CLAR_TEST_SUITES += u-strbuf
-+CLAR_TEST_SUITES += u-strcmp-offset
- CLAR_TEST_SUITES += u-strvec
- CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
- CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
-@@ -1362,7 +1363,6 @@ UNIT_TEST_PROGRAMS += t-reftable-reader
- UNIT_TEST_PROGRAMS += t-reftable-readwrite
- UNIT_TEST_PROGRAMS += t-reftable-record
- UNIT_TEST_PROGRAMS += t-reftable-stack
--UNIT_TEST_PROGRAMS += t-strcmp-offset
- UNIT_TEST_PROGRAMS += t-trailer
- UNIT_TEST_PROGRAMS += t-urlmatch-normalization
- UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
-diff --git a/t/meson.build b/t/meson.build
-index 6cb72842b1..3935782bbb 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -7,6 +7,7 @@ clar_test_suites = [
-   'unit-tests/u-prio-queue.c',
-   'unit-tests/u-reftable-tree.c',
-   'unit-tests/u-strbuf.c',
-+  'unit-tests/u-strcmp-offset.c',
-   'unit-tests/u-strvec.c',
- ]
- 
-@@ -58,7 +59,6 @@ unit_test_programs = [
-   'unit-tests/t-reftable-readwrite.c',
-   'unit-tests/t-reftable-record.c',
-   'unit-tests/t-reftable-stack.c',
--  'unit-tests/t-strcmp-offset.c',
-   'unit-tests/t-trailer.c',
-   'unit-tests/t-urlmatch-normalization.c',
- ]
-diff --git a/t/unit-tests/t-strcmp-offset.c b/t/unit-tests/u-strcmp-offset.c
-similarity index 39%
-rename from t/unit-tests/t-strcmp-offset.c
-rename to t/unit-tests/u-strcmp-offset.c
-index 6880f21161..7e8e9acf3c 100644
---- a/t/unit-tests/t-strcmp-offset.c
-+++ b/t/unit-tests/u-strcmp-offset.c
-@@ -1,4 +1,4 @@
--#include "test-lib.h"
-+#include "unit-test.h"
- #include "read-cache-ll.h"
- 
- static void check_strcmp_offset(const char *string1, const char *string2,
-@@ -15,21 +15,31 @@ static void check_strcmp_offset(const char *string1, const char *string2,
- 			result > 0 ? 1 :
- 			0);
- 
--	check_int(result, ==, expect_result);
--	check_uint((uintmax_t)offset, ==, expect_offset);
-+	cl_assert_equal_i(result, expect_result);
-+	cl_assert_equal_i((uintmax_t)offset, expect_offset);
- }
- 
--#define TEST_STRCMP_OFFSET(string1, string2, expect_result, expect_offset) \
--	TEST(check_strcmp_offset(string1, string2, expect_result,          \
--				 expect_offset),                           \
--	     "strcmp_offset(%s, %s) works", #string1, #string2)
-+void test_strcmp_offset__empty(void)
-+{
-+	check_strcmp_offset("", "", 0, 0);
-+}
-+
-+void test_strcmp_offset__equal(void)
-+{
-+	check_strcmp_offset("abc", "abc", 0, 3);
-+}
- 
--int cmd_main(int argc UNUSED, const char **argv UNUSED)
-+void test_strcmp_offset__different(void)
- {
--	TEST_STRCMP_OFFSET("abc", "abc", 0, 3);
--	TEST_STRCMP_OFFSET("abc", "def", -1, 0);
--	TEST_STRCMP_OFFSET("abc", "abz", -1, 2);
--	TEST_STRCMP_OFFSET("abc", "abcdef", -1, 3);
-+	check_strcmp_offset("abc", "def", -1, 0);
-+}
- 
--	return test_done();
-+void test_strcmp_offset__mismatch(void)
-+{
-+	check_strcmp_offset("abc", "abz", -1, 2);
-+}
-+
-+void test_strcmp_offset__different_length(void)
-+{
-+	check_strcmp_offset("abc", "abcdef", -1, 3);
- }
--- 
-2.47.0.86.g15030f9556
+It certainly is better than corrupting the repository, but if we are
+to do this change, shouldn't we at least issue a warning to tell
+users that (a part of) their request was ignored, instead of
+silently ignoring the specified ref-format?
 
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  setup.c         | 4 +++-
+>  t/t0001-init.sh | 9 +++++++++
+>  2 files changed, 12 insertions(+), 1 deletion(-)
+>
+> diff --git a/setup.c b/setup.c
+> index 8a488f3e7c..53ffeabc5b 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -2534,7 +2534,9 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+>  		ref_format = ref_storage_format_by_name(env);
+>  		if (ref_format == REF_STORAGE_FORMAT_UNKNOWN)
+>  			die(_("unknown ref storage format '%s'"), env);
+> -		repo_fmt->ref_storage_format = ref_format;
+> +		if (repo_fmt->version < 0 ||
+> +		    repo_fmt->ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
+> +			repo_fmt->ref_storage_format = ref_format;
+
+Perhaps something silly like this?
+
+		if (0 <= repo_fmt->version &&
+		    repo_fmt->ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN)
+			warning("ignoring the specified ref-format");
+		else
+			repo_fmt->ref_storage_format = ref_format;
+
+In the longer term, we might want to consider automatically
+migrating the ref backend (by calling into "git ref migrate"),
+but it is a good first move to stop damaging the repository.
+
+Thanks.
