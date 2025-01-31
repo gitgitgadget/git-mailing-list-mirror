@@ -1,53 +1,53 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21241DFF0
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 17:51:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0D71DFF0
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 17:55:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738345920; cv=none; b=kCpxfgfuQ/VxC290lgkkJmRpcOAEuAwrto1a6Aw0UNSzaVtJEpKCPxtqTQStWhCKPyXlue7Wlwbk/ZGXlW4iT66Pz+q5YhCaIuW+1OyABIWSGPLUYyUVoXa96e+OwvI/om0/RzQS0jgZysdTra5ACk9KoDUwqj8mc7XQ3faBviQ=
+	t=1738346124; cv=none; b=c+yYUMWhQ6mAkcc+ZdATo8kPCmfqFRFSGHQ+jbkBEoYhclLeUyPj43YP3sD99qCTNQYLr/XOJuO+H7nCTKXj2eBb5C5yeIrPEhHyM/c5p3cQ58XY1uQ8OuKLtRH9EPnJOetr0kIWyJOeH3auRqkEtOdr+aN0TEi1EAfWVf4hoMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738345920; c=relaxed/simple;
-	bh=i127LVJCKVYZ50BZcpmXpF04sI+aJQrs01scZGXNpUE=;
+	s=arc-20240116; t=1738346124; c=relaxed/simple;
+	bh=wAJCDbUtL6AIWXObv0LUcUCOYucdwRfhZlDumbKnYwA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QuOcmAw+8UZCx/XMPFKPCABWjeirZcwKfcjq9Tequ1uzj1nHz9t4ubZtvrxyLekvsERyeVwL1PNAvqCRy2LSBsYB6lowtetq6QcRYJe3kocuyU64Ji4BEE/rIcZsQ7qRDDGl/nLuMcZYuLOH+aPtrlXF20mIAzgd7fZ5Y7cKGgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PHvOgiRc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j67cTjup; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=fIAFkNL8F68iuzZkUGORLhBJWYHk1I15pwA82efqq24gZaWwbzCkHRTdEa8gmS3RcdQZGqytnZjCd3Xuj+b7KvCc+DfhBQ3BLnyz6k21oBSgrBubQMFM1Ch7cCClrX633fVGMRuEA2p6tB9PSdBoQGNx7XUc2NwOpMmfJV5iVoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aEIstCUf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SzMuyeRP; arc=none smtp.client-ip=202.12.124.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PHvOgiRc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j67cTjup"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9567825400DA;
-	Fri, 31 Jan 2025 12:51:56 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aEIstCUf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SzMuyeRP"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id DEECF11400FC;
+	Fri, 31 Jan 2025 12:55:20 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Fri, 31 Jan 2025 12:51:56 -0500
+  by phl-compute-11.internal (MEProxy); Fri, 31 Jan 2025 12:55:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738345916; x=1738432316; bh=xwdJweiO7g
-	MESCaZAMjM+t3RI15AalRd1YQj7facCTw=; b=PHvOgiRcsBGksj3GMHnBBeh/Vw
-	LvrKr265xMYrdLboT+eG8xX/F5FLzfEaol/cFf5zTD1WqpLUImVU8xnimpqjOc0u
-	sjHNz0TsWS/U0Lg7w5oZubjYGcpAedN9g1sU7CHI1BvWMVFTi5cEGk+LCnrbq8ot
-	7Aky/mKrLhw6WQg7GsZcZJgOrnAbU+myndBO09GAPV+fEhtiX5tPQevz2UXarZUV
-	NbP7ddMMSxNCGLno6gAiOjXpURMil+FCCEWzMc5zD7p2dgWhEUh3Th8L3Vi/spnS
-	uiqn73BSERQbP0MttBnpzqWvcowfx3QepRaX5Y8fRvCs2OzB4ggyas0/AwZQ==
+	:subject:to:to; s=fm2; t=1738346120; x=1738432520; bh=wAJCDbUtL6
+	AIWXObv0LUcUCOYucdwRfhZlDumbKnYwA=; b=aEIstCUfpjY2cFKzYfcrg7BZHG
+	/Ck8gdYjicAjk0TXEO/ERMkgrfuJ1CgjDrUuI5EqcbiadTx2AzyxkaXgncuYIDLI
+	I6PP9R3BcZ6tt8csVZ02tzLGzggzm2RRS3404DnuwbF9/eJ2eUowBK2Q/gvB8U4d
+	oqutFB4Gxf/SYhjlVoQC5GPFC173EOK/FX8hgqdoAUVB0CgHPIIlvz53lKhmhJiq
+	dwOydpR6rTZdypTxO2AjOlXF5uIjnMX5us9ty4AvjcufhyFglcHLB3kpzsX0xVfm
+	bTGDupr6o03SgfEaxggUZ9rH7Aqdhp0AF8BcqS1QJeVAz67to0IDVw+M8aYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738345916; x=1738432316; bh=xwdJweiO7gMESCaZAMjM+t3RI15AalRd1YQ
-	j7facCTw=; b=j67cTjup6O7dIQbskcRiA+IWTAXtm8yjjmyYocMhwG+JiRjaj9y
-	yCu/hdSceIJs6cxhAcjvEbZ/N0Usbyw7AxrVJDch2sjxMiBNoiIm73BXVRPn2vQh
-	CPMmI3rqnVq53/IsrFFcIMpbQr07ljL6sH8egJVlHKsfpk9N4Ehsw4agNyL+msaI
-	XgZEb9ypeM1iAXm5NWetklPuVyBEoVsYkVsLBKm4a3EXkIn5jNwzh6iCjRtUslH3
-	+VuSCXVVIm4/ccfGtn6OQD0tmRDCxbOFk3I+mZVu94TALu9RFsIMksBPjeAL/krB
-	81Yb/RWAW55VV9w9soAkzaopris1Y26RcaQ==
-X-ME-Sender: <xms:uw2dZ4A1fvySMlXGu2OvzUv-xadr9H1gQ17hvvt_PqxPHQHAv97dQQ>
-    <xme:uw2dZ6jjw3-RVUpcLDy5EENSydi2TNQk4k8iX4PmlZcLf1C5ElVzUxROwaAHb53bU
-    w04MfAlc9xCsOziGg>
-X-ME-Received: <xmr:uw2dZ7k2MeumguW6euICC9-d7OcPT_vNJShJkHNy6G30LrScQrFKwGvxrcTSTUBfsdl11R5KO7YGFNNHnw5FuIpbKAPrcLYcMS5R>
+	1738346120; x=1738432520; bh=wAJCDbUtL6AIWXObv0LUcUCOYucdwRfhZlD
+	umbKnYwA=; b=SzMuyeRPf0k9va2clgQC7h84UBY5s+dVmRUagu6Agxo/jBvXN3v
+	KKsRtJ1DWje+PatG9LyKk3FFtK/tbFzFolSRqIu47aqUBEAJ6wqwiWbPtqamWtwd
+	A6JkIeN7kIs7a5WP6KvZX1CugIzmsAveaj4zR/o8T1YsZWrhMB6evnbQlQN7OAbs
+	eMnznES9VNhaAFrRrWpBXTNXbOAyIoJNESSjpHG3wnK0FI2cmZotxp5LWdEpFMFz
+	RnXMZ8bLqVHqb78t3Xfethcy20iihmmgvnJnOJCeldvAi7Ktif9JC2MxOzWDo1g4
+	GBlRlhbJ2cZy+1upRElCwNnYFNqtqFUUaDA==
+X-ME-Sender: <xms:iA6dZ--9OMbIla5wDBXP8boZwFZUrAOeIk3JEAaNxQiRz1Mhjc33LA>
+    <xme:iA6dZ-u0FwP8N58M2NBLX88xUKsdDjnyLUfaiv1BE6l5FD2sKqtbNdunj0Hp6JU9H
+    rFM9nB_72EGqgkAtA>
+X-ME-Received: <xmr:iA6dZ0CCpyfaeRVbVNQ7---WwemoSXvMOgQ9Ksqk1MOsssWWf5V15EHYhT9Nlar_4j0hMZ5UpXgqfL1OPD75t-LbflgeBlPXp8Zz>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelgeefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,26 +56,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelgeefucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlihgrnhesughruhgtkhguvghvrdig
-    hiiipdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:uw2dZ-zujYDXoTUcH2Ylam1_gTnWXUibi_1hZwx-R6-N0IdWQmYfNw>
-    <xmx:uw2dZ9SG6mad2mtNgNCEsbL4a5a2isJXhg1hhMeiuDXul1S1BTOYPg>
-    <xmx:uw2dZ5Z8VCswifjIy6Sqgu8KD8EY016oRPBvZnsL5erog6VPMX2JJA>
-    <xmx:uw2dZ2Rhzbtzm-nxkea7zI1Au9wyejI9Epo-gWuQ66251hGOhNye7A>
-    <xmx:vA2dZ_eemyC63Ht-FJdHxqXFkWOVduYvMhlRv1OgLyA1X8zMb_xS-y9q>
+    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepohhpohhhohhrvghlse
+    hrvgguhhgrthdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
+    thhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:iA6dZ2dhOzmJ2UmkEr144KLVFFdf-0Kn7CpxtD7IcCReswp28A-A0w>
+    <xmx:iA6dZzPHAhG_tWXAORHQQFNgSSFL2FGizkyREI2Q4GwpxypZJIPOig>
+    <xmx:iA6dZwk_ERskf0fgvWFBHK_LEpB59RcnqH-1Bfd6EzUmBPsCqRl9qQ>
+    <xmx:iA6dZ1t-42FmnwlwCXpq0BAAcwC52i8wOOBkl3Wgt__7LNOsX3OVYg>
+    <xmx:iA6dZ_B8nSEEZKFj9TehtUJg48tcB-Bb4mWK7AMH37sB9VK7BvwRh11E>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jan 2025 12:51:55 -0500 (EST)
+ 31 Jan 2025 12:55:20 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Julian Prein <julian@druckdev.xyz>
-Subject: Re: What's cooking in git.git (Jan 2025, #08; Tue, 28)
-In-Reply-To: <xmqqlduulbgn.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	28 Jan 2025 16:18:00 -0800")
-References: <xmqqlduulbgn.fsf@gitster.g>
-Date: Fri, 31 Jan 2025 09:51:54 -0800
-Message-ID: <xmqqr04i98hx.fsf@gitster.g>
+To: Ondrej Pohorelsky <opohorel@redhat.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/3] Sanitize sideband channel messages
+In-Reply-To: <CA+B51BHQe_X=b9ncuwhBDi873OAZst=PAULiARs0NARy58VfnA@mail.gmail.com>
+	(Ondrej Pohorelsky's message of "Tue, 28 Jan 2025 17:03:03 +0100")
+References: <pull.1853.git.1736878772.gitgitgadget@gmail.com>
+	<Z4bqMYKRP7Gva5St@tapette.crustytoothpaste.net>
+	<xmqqwmevtfye.fsf@gitster.g>
+	<CA+B51BHQe_X=b9ncuwhBDi873OAZst=PAULiARs0NARy58VfnA@mail.gmail.com>
+Date: Fri, 31 Jan 2025 09:55:18 -0800
+Message-ID: <xmqqlduq98c9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,21 +93,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Ondrej Pohorelsky <opohorel@redhat.com> writes:
 
-> * jp/doc-trailer-config (2025-01-24) 1 commit
->  - config.txt: add trailer.* variables
->
->  Documentaiton updates.
->
->  Will merge to 'next'?
->  source: <pull.1871.git.git.1736429142334.gitgitgadget@gmail.com>
+> From
+> the discussion, it seems the fix may not be shipped in the near
+> future, if at all.
 
-I've held the topic (and others that touch documentation) in 'seen'
-as we have been seeing GitHub CI breakages on documentation task,
-but I think I figured out that it was due to semantic mismerge with
-this topic and the recent "everything in Documentation/ now ends
-with *.adoc; they are no longer *.txt".  I'll make a merge-fix and
-will mark this topic for 'next' when the result proves OK.
+A patchset was sent, one person assessed that it is not solving the
+right problem and introduces regressions, another person agreed.
+
+It is not quite a discussion (yet) and I think there could be more
+convincing argument for accepting regressions made, so I personally
+feel that it is too early to call it settled yet, but without seeing
+any further counter-arguments, I agree with you that things seem
+that way.
 
 Thanks.
