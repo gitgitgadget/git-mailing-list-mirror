@@ -1,86 +1,144 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E486CE571
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 03:29:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3051392
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 04:48:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738294148; cv=none; b=DnxOIvG1t+NturSejlo8S+CI4BkmFash7jVRXDJRQnHhI7D8QgXixezjpfFE4vElpPkPNfjNRNK4pdWYemCJw++klp2xYGYjwe1SPOZFuPRouDcJ8JfbGbnWFX71WSmXtzj5ll2F3zm+fPYCAia5CgfzDDXsuXjc9BVYm29s5No=
+	t=1738298934; cv=none; b=PQBULAktq6etUU67O2xmV1DEYEZfwU/rtcwN0UojXYSNmbK2H8E0wYaHDiO1xzgoTQ4tSGFJRgom0LEH8f8PsKifD/rQ9Y6ft2rE2YVjF4EyU0GpTPLl1jIxkXTzpUc18zRFLVY4fqstKb9fJs6yScW5yY3Ed4O7KrjZeTYz6qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738294148; c=relaxed/simple;
-	bh=yoE5VqEfuTaZiUF1qdKqQxAS/beETkJ+mgyoN20+BiQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LD8TXykf3JP7Mg+0mbKeluIEvqL8qsPLMtLSDt02Gcyww3beF9T4b0cOw6GxJFaPvHbYZkum7iqB6irZwZZB6AMDiCNZLRUACA+fDD0p1ndet8Jrrl7OuXtsSye7YJ3TmYV1Ty9lUwTDCpCoAanKzuzHusRX7c46NrOJ+TzpS+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JDLPXG1d; arc=none smtp.client-ip=209.85.216.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738298934; c=relaxed/simple;
+	bh=tAOnASC/N5rYLO10E89TvNfBojl4QGqeLCe1upWfaXE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XTrwzZjK7wuMZ9TjrA9L/XXI7KL5YHDGwyQni/VToLaTxn/TwnSk1teYMog/6JMgoCrazDh64uK5ryUkcaZNwxz002qtHhRdPstaXcxIJAgJ8Jyl+l89exWrgTZ3LJmBber7ZEtDsCTk9y6jPTmJE8aNMCuUJibIuaNR2gnxV8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZtkwLDuN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wMEuPT52; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JDLPXG1d"
-Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-2ee50ffcf14so4158206a91.0
-        for <git@vger.kernel.org>; Thu, 30 Jan 2025 19:29:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738294146; x=1738898946; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yoE5VqEfuTaZiUF1qdKqQxAS/beETkJ+mgyoN20+BiQ=;
-        b=JDLPXG1dfbh0uMpaeXc+pCW3J+iS9isySo6D+t1JcL84UvZvAH6rKwsg2V1Cg/OyLK
-         D3+Oa44hND9P4nyYSPJESGZTfziWLibYBxpeNkhu8bmgHOTrCMC9F9EK4G0TghmXoofZ
-         x08oX16adQjaAcPjLoq7ls33YyMAH47n0JxAS3nutUi8e2WQRhvWvoW4VTH94BxAM+xa
-         mE1/LC26epPSxWAjV7rMT+eTAVEiW89aNQpc/K2Ye+CpXrdhP7RyaxD++SCWmTUK4OSn
-         3t+LH57YNdbrmfKx1Bxapvmm80hWC4Newh4Odv22UlLz4SUmjqcu7/wtBFMvgu4rbq8o
-         eb3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738294146; x=1738898946;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yoE5VqEfuTaZiUF1qdKqQxAS/beETkJ+mgyoN20+BiQ=;
-        b=KQQtlAk0g7gDRNFiScChY12GFtMAWwrNTohn1z7p1tvlrLstvR2zxMJlw2yt7N5JCl
-         Al+F1GFSs9WULaoUrr/mJNznMRH+GwY4BHnZ1XMkDYfuNc5Um7JHMfCH6pWsiVMGu05Z
-         m0r6i+fVGodL+yUfd59wkQoC4s78RqjfC3qXXYoH5gBzfRFiDvm37sblW7FjEgwecQ6n
-         b+R0fmK/gSqsqbP1gEyxBfiEzQRXN0aSXGQgYlF0D8w9JCCii0ULgFd/ms7rhHAEU2uH
-         UHRReBXAGB8aYBX33k5HJA7OC4CpmE+AIxQSG78AEgXNc6/vQv2see5EoS2/HcHs6WTt
-         nc7Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWTEJo66DiZZTOP2iROpIlZEFRqIVgPcQGJnjncY/1aIlvAfxxqzImrdcAzoM6G3DhfZGI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxzwoe6owG4luUXoQVnbIayP2OT7HSR6+75RsdblDcNnZa7F4Cl
-	EmCqtVIC8v6AnGQifdubRe22cSzBEwoUy0lGiLN8XEuUCvS0Bx66
-X-Gm-Gg: ASbGnctfaoOXmTy0Q0OlzEcQC6JeIluKUkt9SuWATSmFlf9aAELpZ61nyh3ZnzFKJ1o
-	KY1TSnEFAUf3A4PMhzFDPKOenHajayO2saIx+aLsepk00eNFP09xQ/Gwe1f2BLOz1pBRvB2Tclv
-	Und8zHDm9PsGQLi2Cqlg/K6t7IeE1O89Dudur1IYiFUchNHQH8dpdkMklVrY4VJEv6u7cOQUI01
-	kkXVlLfjUo94/W+bESm8JjjSY/maCNxr0mSbhrp/CIUwrkli+ubgU24XlxerzwUnz6RTuKB0T6n
-	N22lbMWAmPybHFQ3N9VxNgBugm1xOgiOfGlpqP/C/ucGBf+4XSKqt2tEraTqHQ==
-X-Google-Smtp-Source: AGHT+IES0XGMJZTJxpWcH6F7P6XUZMkzlzeWKHQH9S0dLKZLgGnv5fIVRSP0pHRM4SMJhao08PKCkA==
-X-Received: by 2002:a05:6a00:140e:b0:726:a820:921d with SMTP id d2e1a72fcca58-72fe2d5c46fmr8780403b3a.10.1738294145174;
-        Thu, 30 Jan 2025 19:29:05 -0800 (PST)
-Received: from FWC02J2WN1.office.atlassian.com ([122.171.19.203])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72fe6426aa7sm2244256b3a.46.2025.01.30.19.29.02
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 30 Jan 2025 19:29:04 -0800 (PST)
-From: Manoraj K <kmr.manu535@gmail.com>
-X-Google-Original-From: Manoraj K <mkenchugonde@atlassian.com>
-To: gitgitgadget@gmail.com
-Cc: Johannes.Schindelin@gmx.de,
-	avarab@gmail.com,
-	chooglen@google.com,
-	git@vger.kernel.org,
-	m.ispare63@gmail.com,
-	me@ttaylorr.com,
-	sunshine@sunshineco.com
-Subject: [PATCH 0/7] fsmonitor: completing a stale patch that Implements fsmonitor for Linux
-Date: Fri, 31 Jan 2025 08:58:59 +0530
-Message-ID: <20250131032859.37865-1-mkenchugonde@atlassian.com>
-X-Mailer: git-send-email 2.46.2
-In-Reply-To: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
-References: <pull.1667.git.git.1707992978.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZtkwLDuN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wMEuPT52"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5A9961140100;
+	Thu, 30 Jan 2025 23:48:50 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Thu, 30 Jan 2025 23:48:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1738298930; x=1738385330; bh=AVFutWkAqL
+	Rf9OyOgB6+5WIZMN4vSc0NoClm07/tBiI=; b=ZtkwLDuNI2sklnd6e1fJ9nHXD6
+	5Y5lGu8u/y481M3oNaMPzg4z/dw/N12yIFWTyej5lYZ8PX/g/j5h6JrgDnEcEfRN
+	zccUGT0mymHpHB0xG1WKBAD1WvxtAeJv8yYgqJVnkfvcYmR/0N+8EvJzLGe8ONdN
+	IEV4sD4q8QbWsUX4SU2QFDUdk70iS+i/DxHNpaM5p+iw5BJbXhiKZ/qj6R1+vW99
+	vMxQwf04UzvkQ97I0JVzJf4Cn8pX5ZYaCs1H37a4rnLYX/1sgB3AeWb4jBU2fuGV
+	Z74hgqRayAB+yH75c9mwsErZd5agc5prY0gMTAr8gLTHXX92EO805Rr0dXwQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738298930; x=1738385330; bh=AVFutWkAqLRf9OyOgB6+5WIZMN4vSc0NoCl
+	m07/tBiI=; b=wMEuPT52uxofVzGK1Y8gXwqlP4F1W2Go9zJgROiVlpfjIRGiRSE
+	kfyMn7UtMgqovCukNcuaFcTBDgGknOfuqgSItTCCE9gFEdwEPBSNODbljNSGy48m
+	w6tQ+vmzutM3bDwPRn2Cfw8c5hkBeUKB7FEIgbBy+PYWdL3vVkeChIeYdQ2hx3ws
+	c5kN2xIcEy8BqMSPTUaTkdhjLkf4EQv+gurkJsC36dP0LA7Yvohx9UHEt7hmciJs
+	maqAUJ9Ts+6L6j7BBrnHvpJo/dDszvB5E7pjUZJPAicq4sdZYTRprz7BTTTof/V6
+	pCuLLAhYRV5rWXlkEFxnae1PLKh+SoKwxXQ==
+X-ME-Sender: <xms:MlacZ5VPxuQdAPUeVYv-NDyZEAj-WaRMd4UeXmUOZAZM0uduDI0eDA>
+    <xme:MlacZ5ncQW82fizaxCKdkrN4HcF6hPOHoe9LLbcmCSeitw3fJyJHc6_pikNk617BT
+    MQHm2eJ9y7Wm_70Vg>
+X-ME-Received: <xmr:MlacZ1a7qI2usx5dY6M0RmvMsd7DDSOozVcAhNNIhWbwHUVYIVQVkk1EXG4OdVEfjRGI3dMwIlJzYFrimI8NCY6jjpVZPd-YH9U3N_LY8YeIwQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejkeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopehkrggrrhhtihgtrdhsihhvrghrrggrmhesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:MlacZ8VzUnVQ773iMQbdAm2Q5G1yWDHpqLCY5IE3BT_65ejQI1-vFg>
+    <xmx:MlacZzkN_tMtTF_-i3R8_ZLPB4TdRnekDjqXPMzcUtK2Tnul_h2o9g>
+    <xmx:MlacZ5dzf6KcZzPQCbMpk1fxWp2wcZLoCs732g6lXdnaldaVx9ZBew>
+    <xmx:MlacZ9Fy76U-dlthH-CQrMdJMMtMA0GXdOo3xn03jxvRkThwaaDiAQ>
+    <xmx:MlacZ8AqVNj-HHLJS6PbLBC3F9iX5pVBN9L_MvOWrNpfdLxbGF_0lbxD>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 30 Jan 2025 23:48:49 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 95b74e02 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 31 Jan 2025 04:48:46 +0000 (UTC)
+Date: Fri, 31 Jan 2025 05:48:45 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+	Christian Couder <christian.couder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: Git in GSoC 2025
+Message-ID: <Z5xWLVFZhjUwcN16@pks.im>
+References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
+ <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
+ <Z44u7od-mDiKcKVZ@pks.im>
+ <xmqqr04vzyz9.fsf@gitster.g>
+ <b784f612-4b6b-414a-9742-86611c50c55f@gmail.com>
+ <Z5srHBSPKQlsuH53@pks.im>
+ <xmqqjzaccdpn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqjzaccdpn.fsf@gitster.g>
 
-Hi @maryis, I'm Just checking to see if you are able to make any progress on this PR post the last commit. FYI, I tried the build from this branch on one of the Linux instances, and the git status is ~80% faster.
+On Thu, Jan 30, 2025 at 11:18:44AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> >     It is the responsibility of the owner of the topic to determine
+> >     whether it is still accurate. This check should happen close to the
+> >     noted best-before date and come in the form of a patch that either
+> >     bumps the date in case it _is_ accurate, or alternatively removes
+> >     the topic from the list in case it is _not_ accurate anymore.
+> >
+> >     In case the topic owner does not send such a patch, contributors
+> >     other than the owner are encouraged to send a patch that removes the
+> >     topic, putting the owner into Cc.
+> >
+> > Well... maybe it _is_ an expiration date. I dunno, I don't mind which
+> > exact term we use for it.
+> 
+> I do not mind either word, either, but I have two small issues to
+> raise:
+> 
+>  - Is each topic "owned" by some specific person?  Would an owner
+>    retires from the project, would the leftover bits go away with
+>    the owner?
 
-There are some merge conflicts with master branch (config.mak.uname and compat/fsmonitor/fsm-ipc-darwin.c) I tried to solve them, but, couldn't make sense of the changes so didn't proceed.
+Good point. "Owner" to me rather indicates who is the primary contact
+for a specific topic. It doesn't mean that nobody else is allowed to
+contribute to it, and neither does it say that the person has any kind
+of authority over it. So if that person doesn't care about the topic
+anymore due to whatever reason it's also fair to change the primary
+contact to somebody else.
+
+>  - "relevant" may be a more appropriate adjective than "accurate".
+>    An item in the list may still accurately expresses somebody's
+>    wish, but because a better alternative has been implemented in
+>    the meantime, the feature-wish may no longer relevant.
+
+Agreed.
+
+> >>   - Fix Sign Comparison Warnings in Git's Codebase
+> 
+> This one I am not sure if it is even something we want more of; a
+> careless "-Wsign-compare" squelching often makes the resulting code
+> worse.
+
+That's a fair remark indeed. We could add it, but add a warning that
+these refactorings are non-trivial?
+
+Patrick
