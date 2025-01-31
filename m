@@ -1,54 +1,54 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B0AF1E3784
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 16:26:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF721F3D58
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 16:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738340772; cv=none; b=eSrhohbkqmevmXQSAizvSRZ1hzQGfxSUn5QmcufWUL3gcs0FSyzY8qJhnxfr3s6SyrU6zbCyT8IFUcHTIttQKogWbFYpLpCPhzqovo8vpuebTd3oR3n4rMU5EYVdlzQKrlwk+H5dNP5mK1NjlfkCN/21knTmdd1WwQ+ISkmY4vk=
+	t=1738341466; cv=none; b=k/cig/RCgNd0X9Qi547nE6CEMTalAmEhcc15Vbj2OX7333A5/6Xr3h/tC5H3uoG+zZlyLaJN5WikoR40TX0XRj0mkMN/pFGMw4xKLR/TyaUWVeGA1XkkpEI0txq4b9wmfHyTtjEq8e3WryOwgC74B83ZQOF07+lVDd+Gpp+4X+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738340772; c=relaxed/simple;
-	bh=ErBViTOaopZjHec/u9paYzFrQIGxCSEEs91yaOKpo68=;
+	s=arc-20240116; t=1738341466; c=relaxed/simple;
+	bh=mNCpnod4UyhJWKwvyW17DhGf1bdVpWbuUp75i2E2v/4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CvTaZOL7Wfqdmy0jmb0W97Tqqg0+rsx1M/V4JtqC97tJtE+4B1H4ps2XfPD0losjx72e46miTmi/KsMyllfNoKj+3atd72YtipF/gRebqDiVNqJgu6JDzQn6kGQ5zgm4T8AdYoLUHJxzu4SKI94KPc2cGTKu8e8LELm0M3T4SFc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J8zDJsoD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XkMdlNAq; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=JYV8vGF04hswTLyvZPR3xj4hWgxMwcHrxCRRsLqjIMO5pOFtPBQqILeH0V10Qu/KNQ+8yUV2qaBAPfyWnJ1pSBSjf5SdpC4yV6gMStYnDN/RMFMpaTea++Rc6/vVIW1nMyS+ta8t437SV0OMajvAUwcXs8UFvI8Y0vqxKGAIDRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gkQiWZpy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QVtAwZS5; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J8zDJsoD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XkMdlNAq"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4BA851140149;
-	Fri, 31 Jan 2025 11:26:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 31 Jan 2025 11:26:09 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gkQiWZpy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QVtAwZS5"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4F1B81140124;
+	Fri, 31 Jan 2025 11:37:43 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 31 Jan 2025 11:37:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738340769; x=1738427169; bh=BVtZQDfzh3
-	2ZBPcoEb2bk3wlbN65QoiGDzWoxJkvr3U=; b=J8zDJsoDwJYLJebVbUMUqKb1T9
-	N9nKgNIGKTT7QFcJCu0cbyPV5LLEAZonCafV93p7ddO3BX8CUJPLW4a+6/kmuqm0
-	gkQH8U+5RnsqJe80iy+xH/GxK1/FOg8sjDciw+fT+8Ru5tUliJhA3Qqfj/yO9sWq
-	75iJ8VVGxwvjTosjQiNWh6wmCWl9Vb4K76IbVnPVYszdBabSgrisryIEYTeoOACn
-	pYfiYBcUe8KiATmXF7PdkVdlhh/bjx8Up/ZwggzsmXz+GSHzqcPxAdU+pVUoBUrC
-	TQliRue9zCRbLf/dC8nQ5qAwPyukYmoQddbp/wWimxeGfBh9hXvO55DkdZgg==
+	:subject:to:to; s=fm2; t=1738341463; x=1738427863; bh=hhLayRpCuA
+	OKnGSskbGd4f/HqGN1yEYp/QY1rpy/OgU=; b=gkQiWZpykE3ePquV7Qey+2+KZ5
+	97a3vHOTgG1cbcg5V69myEAvnTaI6T3NVpRVkHSLGXazcTCWqM/+Tsl82Z+z1dkM
+	bwGCvsKDUXYoiJ6md0X4PurxQvdscmsKbm+MvcR51A9h0R/UzEiAQVNftdFLCj4F
+	YDUJzPmtDB0Qh2wCkiKfXdxKaGJbtHUsWQtbZBk2/uqIrdcJ+wX8x7qZHbO7lUT9
+	a06PVT1bgue1iOIyZ3d6A5moMOEQPDiygILpUQw26ZGhfqkXXCMBauOuXjxBrKM1
+	m75QU5ZlPG0SjJI/6C+4uxfBMhR4XSznofmmFlQukO+eTGIW2I8wSY2JoTqw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738340769; x=1738427169; bh=BVtZQDfzh32ZBPcoEb2bk3wlbN65QoiGDzW
-	oxJkvr3U=; b=XkMdlNAqD8VS1dj9/imcWWgdBxNqpahhJoNbt32oZ20ClaJ1LzU
-	aAATnWgtln2P3RxqGIhq4UkvzeoZlygXMJTguOib5QRwyyNv9rdqMPk45JiDhMRa
-	wZtzRtnWfdI5r3t1++9y+kgRm+faKrf2pB8o4COy/xVO86DUs8cqIg5S4ZMp0Z/D
-	BzGj5YRTOIcDdu1JwXDpbgMUmP4RhWaRAh5WakRJTpxjMjuQflFd5viLaMQ/6k5y
-	Q2pz2ckDua59G/iTLCtz3rRMhfBSO/DgU+cRkMZo2sJmdBP8uRNX9cCVNQ/QQgNL
-	oHrfXEGhsEaTz5kbIpTrNCF611Bjk2TdZig==
-X-ME-Sender: <xms:oPmcZxxo32kvQtK5ymfNlO7kjZddz0YH9hAEUtLrAuePSMO-WA1e3A>
-    <xme:oPmcZxSYblVAb1x22oQmP92ns91yK75FTvszuVO4-pseiJjxEG0TmIQq9GQhi3F81
-    O0cj2P3bOMExrl0MQ>
-X-ME-Received: <xmr:oPmcZ7UQiT7GPhcKR8AGWuDcBOoLqmkGlhZafS7huyoAB0iYVnNKgw5TNL1_lZfdr6D4Z1OZBAKYyA_blVO7KO6P5HOkbmrpa4kp>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelvdegucetufdoteggodetrfdotf
+	1738341463; x=1738427863; bh=hhLayRpCuAOKnGSskbGd4f/HqGN1yEYp/QY
+	1rpy/OgU=; b=QVtAwZS5zD+YEZzx9DQHx24puu8ZqRLqZHQgI5Chxwql29GnM52
+	g5QWXA+dIg1mLf7Cy6nWZH2ZjUQVVPJyAOQSqtS5RTZg7Fl5sMscbZ9+qe9/1leO
+	G9bz0CqY8ihYp8CvcPAfKzcP3Z2k2qXwSbUTxY6MmrZMW0AbvGrQeMy7uIDYUwPR
+	xjHYIvrcrAGnXdpmA9c2I0TAWzMGI4VoLebhS0HL7nbIPWzXif773495b8FVAfdr
+	zYg7bHssaJf8vsDvBtQZG2b2kPFRWAvIkiKRY6bXGZildfZbFNusVweb6KjCyXqf
+	cihBXYaCDuyFHBpXBmzPRpMVvt0ft/hfxiQ==
+X-ME-Sender: <xms:VvycZ7r6yavrxba1LvlVyD3taxvNXZ0b4Dm8TxyacFvTqp2nGhZCGg>
+    <xme:VvycZ1r5sFOUVdkwnbPOzKynrzGAql3rfPO4EwZs1HYdYZkLwM2zLKj-GyQ8r6hbF
+    Vgq4sFd6rCr59Gy3Q>
+X-ME-Received: <xmr:VvycZ4NfuYQ8MKAxuhjsAi65bTKPMiL88YiLyPkgh5oFwPkERHZ8UVhU14C57bogAL6zh0oVi6pvoqaWjur8GNUG2GFnhknaXh_3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelvdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -56,32 +56,40 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelvdegucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvse
-    hsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeiihhhihi
-    houhdrjhigsegrlhhisggrsggrqdhinhgtrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:oPmcZzgnHmd1daA6gIuZ9QJ-m3K8XCVGJ1kiQVfZjnXX_s7GRBqT6w>
-    <xmx:oPmcZzDH9vL7jL9WnFCIj-N6rz07I7HPLEKMEKQnMvF9ju4hHbwu7Q>
-    <xmx:oPmcZ8KLLuu1nOU7CoiKm8sbu0y5FbuTcqb7iP97_Fjlxi4RuVzzPA>
-    <xmx:oPmcZyBf13k8grbXtZemNYbO_tliJvxGI1sH3DOUSenM118K3c9gEA>
-    <xmx:ofmcZ-5yegrNMZxUySZSiXlbeDpSxmRUu-nay8xQeMvC0gAmKN-9iR6h>
+    thhtohepuddupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirg
+    hnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehushhmrghnrghkihhn
+    higvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehj
+    ohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrd
+    hstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepmhgvsehtthgrhihlohhr
+    rhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorh
+    hgrdhukhdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomh
+X-ME-Proxy: <xmx:VvycZ-7IZPrz7O3VlyGj_1wrU2UOFgSHzGtdUMAmZoaNGsEUByULlg>
+    <xmx:VvycZ64lGwUbMgbaxywhCOQpL-2t5wT5c4jKw248T8yYKk5HLMZw7Q>
+    <xmx:VvycZ2j7t7Hpq0YqqBWqiRpXsCqf1pTg6AXAhM4hlsjfpbB6w0-krg>
+    <xmx:VvycZ84Ms10vRp7n-mHSD8HcRgMtv5NloduZ2JYQBoj7Pr8SeQVcIw>
+    <xmx:V_ycZyi4Y7mPPLo26CDhVt9yjzVX5u8InrAqk2sLBOK5us9-M7mxICQl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jan 2025 11:26:07 -0500 (EST)
+ 31 Jan 2025 11:37:41 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Jiang Xin
- <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v4 1/8] t5504: modernize test by moving heredocs into
- test bodies
-In-Reply-To: <CAPig+cRnm9z06YsCRyTJGqTCF_208BuD+3QoEKqwO7eWTfesAw@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 31 Jan 2025 09:28:01 -0500")
-References: <20250131-pks-push-atomic-respect-exit-code-v4-0-a8b41f01a676@pks.im>
-	<20250131-pks-push-atomic-respect-exit-code-v4-1-a8b41f01a676@pks.im>
-	<CAPig+cRnm9z06YsCRyTJGqTCF_208BuD+3QoEKqwO7eWTfesAw@mail.gmail.com>
-Date: Fri, 31 Jan 2025 08:26:06 -0800
-Message-ID: <xmqqa5b79cgx.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,  git@vger.kernel.org,
+  ps@pks.im,  johncai86@gmail.com,  Johannes.Schindelin@gmx.de,
+  me@ttaylorr.com,  phillip.wood@dunelm.org.uk,  rsbecker@nexbridge.com,
+  sunshine@sunshineco.com
+Subject: Re: [PATCH v3 0/6][Outreachy] Introduce os-version Capability with
+ Configurable Options
+In-Reply-To: <CAP8UFD1+Qa2cRkYs8R_Lgr8Bkz7YqPUW6Q3ogKcrBSp+q-3qbw@mail.gmail.com>
+	(Christian Couder's message of "Fri, 31 Jan 2025 15:30:09 +0100")
+References: <20250117104639.65608-1-usmanakinyemi202@gmail.com>
+	<20250124122217.250925-1-usmanakinyemi202@gmail.com>
+	<xmqqed0sxdiz.fsf@gitster.g>
+	<CAP8UFD31A9KuqzXrDWzjokWzBtTYsF1FGJPX8PFAWXnn_2BH_w@mail.gmail.com>
+	<xmqq5xm0wa5l.fsf@gitster.g>
+	<CAP8UFD1+Qa2cRkYs8R_Lgr8Bkz7YqPUW6Q3ogKcrBSp+q-3qbw@mail.gmail.com>
+Date: Fri, 31 Jan 2025 08:37:40 -0800
+Message-ID: <xmqqzfj77xd7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,20 +99,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
->> @@ -78,6 +72,11 @@ test_expect_success 'push without strict' '
->> +       cat >exp <<-EOF &&
->> +       To dst
->> +       !       refs/heads/main:refs/heads/test [remote rejected] (missing necessary objects)
->> +       Done
->> +       EOF
->
-> It's minor, but to make this conform to modern style even more, it
-> would use `\EOF` rather than `EOF`.
->
-> (Probably not worth a reroll on its own.)
+> By the way, if we put the OS information in the "agent" capability,
+> how do we separate it from the existing "package/version" content and
+> make it easy to parse?
 
-Yup.  The rule of thumb is to quote the end-of-heredoc marker when
-the here-doc does not need interpolation, to serve as a hint to tell
-the readers that the here-doc is a literal text.
+Do NOT parse, period.
+
+If three "things" that talk the Git protocol on the other end of the
+connection gives "Linux git/2.48.0", and "macOS libgit2/1.9.0", and
+"Windows git/2.47.1" as their (enhanced) "agent" strings, there is
+no "ah, this one is 1.9.0 which way older than 2.47.1 so it must be
+missing features X and Y" the users of the information are allowed
+to infer.
+
+Just take it as a single opaque string, and group identical ones.
+
+In the above scenario, we found three different kinds now.  Maybe
+we'll accumulate the counts and notice that there are N times as
+many connections whose agent string begins with "Windows" as "Linux"
+and "macOS" combined or something.  That would be an offline
+analysis, and forcing users to do the stats offline would reduce the
+temptation to use it for purposes other than its intended one.
+
+You may find "ImNotTellingYou" and may wonder what OS the user is
+really using, but they do not want to tell you, so you honor their
+wish.
+
+> I don't see a good solution because
+> GIT_USER_AGENT could be used, and the config option to not show the OS
+> name could be used too.
+
+That is a good privacy measure.
+
+> Also we don't know what could be in the "version" part. The doc says
+> that the agent part is typically of the form "package/version" but
+> doesn't require it.
+
+Exactly.  I would think it is a feature, and the way to treat the
+string in line with the philosophy behind that feature is to take it
+as a single opaque thing.
+
+
