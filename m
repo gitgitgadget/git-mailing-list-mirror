@@ -1,54 +1,54 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900A717BB6
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 22:40:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A961494AD
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 23:03:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738363248; cv=none; b=cSkK7WEdPSy4QhI2yoC+YKgoH/emj+L5SUZjhv2Hw/csgW/mIgKgI97h+jyY3ufUZ3dZlMLS/lC/C7letX/+lmUTYBkCRzrksuzNjwGvc9JwU3TP9i7nuZXWMnS91YGZnu/e6uN9kUY0NDdtmb+luAESQLYIPXCUWDX3h6t/kYA=
+	t=1738364588; cv=none; b=QewAvrlqRwiAZt8RlwldL1aOtWru/vYEiwtOXu0+wtolS9pa17oXJreaAcei4IStaqwxVQpP3ZWg6x49kUiwND2DVUEvL8we0wmEWHnOto0wONuoeKoQUbynsNkOoGh+pjgBWpM3zyv0mI3zdgpBe2WQ5j7kZkNtmUvT7LYWYGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738363248; c=relaxed/simple;
-	bh=4ij7lhGex8mqY9n0yLZV9g0Qs66pwmK8hNpJU9fPHo8=;
+	s=arc-20240116; t=1738364588; c=relaxed/simple;
+	bh=+obeAeyVRGjWVYG5l4VXExn/YEKD5qJ09OKQamnH6kU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p5nWA4dxwj56YqMTwEyUEFH3vmGsuJTo/knt1Q1SXoFosm+oMJRJozmCD3VnR23T3ifX+0AslqWrSDkXBmsTcOhS9wDjItruHWq69h+H1OsuMy+f/ALQd2/6Hfvp8aVPdtzgjjBtKk30xreLDAxgmN4nPpwbZhEdHe8oASt12Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hzmDHZTH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qQMX9nsJ; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=dtDEmsBH8SO5xs8fq+6fXZIo5ivmG39IVPqXBeba/FT8xn0hkYVZYswQHyd8utoSbBY2ebgROYVNSc/U5pPCxIdK1gpNJUrZWzSryISYQA6c9uCC3Fc+57QVhljQCbZ7lLK5XTaMem6bZBre6kHdb9BuDwf9KcgQs5/RZziCz74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GqH2K0Ae; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RXZldpr6; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hzmDHZTH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qQMX9nsJ"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8DDC211400FC;
-	Fri, 31 Jan 2025 17:40:45 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 31 Jan 2025 17:40:45 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GqH2K0Ae";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RXZldpr6"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A743E25400FA;
+	Fri, 31 Jan 2025 18:03:05 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Fri, 31 Jan 2025 18:03:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738363245; x=1738449645; bh=4ij7lhGex8
-	mqY9n0yLZV9g0Qs66pwmK8hNpJU9fPHo8=; b=hzmDHZTHtGYn+zT0hWUHDRivqa
-	4fBpTh7+R3OpWrD9DDWLUKLBDYt7alTxJkG71d8qA4WMGp0ojvhenDoW/tI3Ek5/
-	ZUhkNJXAORmJOvG7Qqk5O23K35OAnZSOWahaSDOiy7VuyqrzXevKCH9GQt9Ll8vy
-	/+CfaryHQDltZdcqoC+CnP1TbJg0l3KiCS7Umssqz9wdcNvqiyFG1Wv7g/iQzhy4
-	QSFSGjCqn5k0qwthm4uCVmJQWok7ukxY6FK2FHOoNqrguVUwjQLd7IoweQetcF7c
-	VqHv+Owfvl6X48OKQIwHQ6Wbf8EXrVcs7dxpZueyscbyA3oDSSAYrC0hmGuw==
+	:subject:to:to; s=fm2; t=1738364585; x=1738450985; bh=LEyG+F6cE2
+	cltcPAJh70tjs0R59NPENQ1JtFf7VfzkU=; b=GqH2K0Ae6nOpaphkh8FBryn3/5
+	9Z5O34lhIw+wR8vfpgKrbRT7wUOhDxbVPRkOpXOnzRuop3xR+hRGCfCsnJTJ9SxZ
+	3cCMG+uxWIgW8XbRggY1UCikdsqHiRzYYiyvr7OeCC+s7vWNbeW7EkDh9kMsEQRD
+	XY1RTUVpf1YkdvhOZ6r8i7zE09BwqDR974jk9KzcnaOkl4v8DYnvHs4JN3zLjoos
+	p4lkN2wXCYy/eXwn+cuyJ4JjLlG5//RtOL4fNaiMDuUjWQBEPgafLA54Ttmzid9H
+	SLBeyJphSuIkr9YO/1RGzyANqBx5z1ix2NGXFGlGhiW6uGfiT66JwhxZ6pDw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738363245; x=1738449645; bh=4ij7lhGex8mqY9n0yLZV9g0Qs66pwmK8hNp
-	JU9fPHo8=; b=qQMX9nsJFIjg5E4Fa4KEvZWnH4D5R8XZVyTCWVRryIwdpk65KnC
-	KVCDDAJiOLkrnslxPPCRmw8WN/xjIk22Gn26OqB7qz2zuEBFF/TcQHDWIY6OnIj8
-	5XGvt5Ri8t7wGHKSi6MYEcETr2smNervxBje0VHpucWk0KsvxSEn5I6V0cdmHTjn
-	75Kurt5ixBZ5OElCWqklGNn+cF7K78ybtlUFLETsNL6qEPEohJnbZIKb2fwglfB+
-	sDlpv79uXz26+kDLecsUBXdWxkXc0IIUDHwADW/yPH66cUGZ9rpKG1eGEDG2A/wk
-	u3OJb8/e8fjW3R4o0cLAFOrCwQpCZFrCZ8g==
-X-ME-Sender: <xms:bVGdZ93QSRrczokEWvoRkNYYdVqcFrXgcxFOfsAP-DKVBFCAU384Jg>
-    <xme:bVGdZ0GYxvwcZVKqP6ABnBeYugHGEJHctwZGCLwfZSkrwftC9C_xPK3M4vMS5MdNQ
-    051LyTB3mOucKacCg>
-X-ME-Received: <xmr:bVGdZ96Rpb4NR_TsZVJsXBrNaQ1kTPDLPRJh6czzC6BP1ZtQQeCTzAm7exUSB4F_FFlccjnH8k36MsywBAVWiheH_Xc9xtQfVA26>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddtudcutefuodetggdotefrod
+	1738364585; x=1738450985; bh=LEyG+F6cE2cltcPAJh70tjs0R59NPENQ1Jt
+	Ff7VfzkU=; b=RXZldpr6IehraMqTebVuVFt0jF1yc3lb0LXcvEvXyeyy5cY6M5k
+	Et+fYah2aPvL+UnZ20KViae3TMq5ZAfnhq6Irn9+moV//AkZJQccPoLORpeFz1bP
+	jxNqnX3U1iony9PEcaO/vFafMzcVN1Ny+YaoaPWT4A+iDCOR0EAymoXq4GpeMnXr
+	1tdIcYC9IZl7MJnhqBU98/aScCiz7JxvA2GyloonR/PNxtx7gYWZWWz99968ATDw
+	27QXw2/0dkUPx+ZMujG64Vyv2mUxY8CVtHTXNftMw4y31prNKVCvW3VGSYpI2Cku
+	/1aV0xtdF1e2FZ+gwzFCoeP/W7aUTw0EMvA==
+X-ME-Sender: <xms:qFadZwviBk2rYdKVFaeXVThJzdG2N_i6P-AvxCnn_v9qtUKC9ifA1g>
+    <xme:qFadZ9c8Hi8Q9MyyjI6Yds53kKjXZC1FyUsiUAJUjDLqNCSNROQorRDYrlRBontA_
+    IcBIZyGgPWL3ULl9Q>
+X-ME-Received: <xmr:qFadZ7xpHbq63pdDkWNzYvCL90UZShCpTDD86BE6imt1j1-nAV7t5e3rdKwQ5ENPrQkH-hS3EECyn9KrjyZxq8PrHa1nCbWVOLW4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,28 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutddtudcutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bVGdZ637Fy-3X8-pNKOaHJuuaz8ndbhlbLDiuz2-dkMdwWDoCBBhMA>
-    <xmx:bVGdZwFbE98abN5awfSjixfmlKbWLqB17EhzN-NNhtTrCV5BxwYuBw>
-    <xmx:bVGdZ79B06KIge5XIRPPEZ7e0MSWr3k4MEFTbjZcxTXB98pvWjOhSA>
-    <xmx:bVGdZ9kpttF77rQ0kiqwWEx1j00uQo9xzZBD5tuRUUVFuCJKRiLIGA>
-    <xmx:bVGdZ0CAVDqFlXsJDH2MYoskLRGTfTqMkBUb0Ko82QICklg-KA2bbuXV>
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkuhhfohhrihhjih
+    elkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:qFadZzNZuHFZ_-W7EIfbVxfkGwHSvOpDd5yKcKgTOrjom1ppMk0HmQ>
+    <xmx:qFadZw-R6bxIwDhdTFxL-KQTVfxHeDvi0rguG6OKACY9jhcvNi0LSA>
+    <xmx:qFadZ7XZgIQlZLUuuu7l9LiBz3cab_u7RbLL6ppjJtHlzTYUkJywdA>
+    <xmx:qFadZ5fh7knt_3hWnWxvr5vHmBNEFMPbCJDd3lq-CDdQ8b63jyBKhA>
+    <xmx:qVadZ_nzgTGFcHSMqvs31ZfMU9a5qG9ObN0KPon1ARxe8TTBJDBXj6cM>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jan 2025 17:40:44 -0500 (EST)
+ 31 Jan 2025 18:03:04 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/3] setup: fix reinit of repos with incompatible
- GIT_DEFAULT_HASH
-In-Reply-To: <20250130-b4-pks-reinit-default-ref-format-v1-3-d2769ca01207@pks.im>
-	(Patrick Steinhardt's message of "Thu, 30 Jan 2025 17:24:19 +0100")
-References: <20250130-b4-pks-reinit-default-ref-format-v1-0-d2769ca01207@pks.im>
-	<20250130-b4-pks-reinit-default-ref-format-v1-3-d2769ca01207@pks.im>
-Date: Fri, 31 Jan 2025 14:40:43 -0800
-Message-ID: <xmqqr04i61zo.fsf@gitster.g>
+To: Seyi Kuforiji <kuforiji98@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 1/4] t/unit-tests: convert hashmap test to use clar
+ test framework
+In-Reply-To: <20250131221420.38161-2-kuforiji98@gmail.com> (Seyi Kuforiji's
+	message of "Fri, 31 Jan 2025 23:14:17 +0100")
+References: <20250130091334.39922-1-kuforiji98@gmail.com>
+	<20250131221420.38161-1-kuforiji98@gmail.com>
+	<20250131221420.38161-2-kuforiji98@gmail.com>
+Date: Fri, 31 Jan 2025 15:03:03 -0800
+Message-ID: <xmqqikpu60yg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,19 +90,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Seyi Kuforiji <kuforiji98@gmail.com> writes:
 
-> The exact same issue as described in the preceding commit also exists
-> for GIT_DEFAULT_HASH. Thus, reinitializing a repository that e.g. uses
-> SHA1 with `GIT_DEFAULT_HASH=sha256 git init` will cause the object
-> format of that repository to change to SHA256. This is of course bogus
-> as any existing objects and refs will not be converted, thus causing
-> repository corruption:
+> Adapts hashmap test script to clar framework by using clar assertions
+> where necessary.
+>
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
+> ---
+>  Makefile                                  |   2 +-
+>  t/meson.build                             |   2 +-
+>  t/unit-tests/{t-hashmap.c => u-hashmap.c} | 226 +++++++++++-----------
+>  3 files changed, 114 insertions(+), 116 deletions(-)
+>  rename t/unit-tests/{t-hashmap.c => u-hashmap.c} (60%)
 
-The exact same comment on silently ignoring applies, but unlike the
-previous one, converting the entire history is far more expensive,
-so it may be much less likely to be worth going the automatic
-conversion route than the previous one.
-
-Thanks.
+The conversion looks fairly straight-forward.
+Nice work.
 
