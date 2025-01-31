@@ -1,144 +1,129 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF721F3D58
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 16:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8DC1F0E49
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 17:43:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738341466; cv=none; b=k/cig/RCgNd0X9Qi547nE6CEMTalAmEhcc15Vbj2OX7333A5/6Xr3h/tC5H3uoG+zZlyLaJN5WikoR40TX0XRj0mkMN/pFGMw4xKLR/TyaUWVeGA1XkkpEI0txq4b9wmfHyTtjEq8e3WryOwgC74B83ZQOF07+lVDd+Gpp+4X+M=
+	t=1738345436; cv=none; b=KLaPXe/PK22EjYCkEVuRYSOvHQCfeuCZex9NWzgq87wRw7yGHrTG/XrwudKehhN3TQbrmZFATDRNB6SnhLXIH/+I0/tmseiMtQbiL0bbpJfdqo7US428ZiXAR4+c/Z98cYN5E0NlPzmnid03q5Hrg/ojZN4NZ2RV1sWymuqXDUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738341466; c=relaxed/simple;
-	bh=mNCpnod4UyhJWKwvyW17DhGf1bdVpWbuUp75i2E2v/4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JYV8vGF04hswTLyvZPR3xj4hWgxMwcHrxCRRsLqjIMO5pOFtPBQqILeH0V10Qu/KNQ+8yUV2qaBAPfyWnJ1pSBSjf5SdpC4yV6gMStYnDN/RMFMpaTea++Rc6/vVIW1nMyS+ta8t437SV0OMajvAUwcXs8UFvI8Y0vqxKGAIDRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gkQiWZpy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QVtAwZS5; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738345436; c=relaxed/simple;
+	bh=kR2Zx4zHzSV5+OoHv3fLo8fx+HvvWCjpQ/O9GTQ3P/Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NvtBbXC3SQUrRjqD14ErSOitatp4YR7gbQqgD/txhx1uidT0m26hnBqlAjtHsXcGvJ+1xk5ueaRTfdVlUpSb3Cfj9O2QBotdjx/XGklB+kWcOC3VZJl0y6mT7rCC0cb/wphLMtdPpwdNPQLaLDy+6e2AZRhjeOvdUX/OwTrl9E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ICPB12ll; arc=none smtp.client-ip=209.85.161.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gkQiWZpy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QVtAwZS5"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4F1B81140124;
-	Fri, 31 Jan 2025 11:37:43 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 31 Jan 2025 11:37:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738341463; x=1738427863; bh=hhLayRpCuA
-	OKnGSskbGd4f/HqGN1yEYp/QY1rpy/OgU=; b=gkQiWZpykE3ePquV7Qey+2+KZ5
-	97a3vHOTgG1cbcg5V69myEAvnTaI6T3NVpRVkHSLGXazcTCWqM/+Tsl82Z+z1dkM
-	bwGCvsKDUXYoiJ6md0X4PurxQvdscmsKbm+MvcR51A9h0R/UzEiAQVNftdFLCj4F
-	YDUJzPmtDB0Qh2wCkiKfXdxKaGJbtHUsWQtbZBk2/uqIrdcJ+wX8x7qZHbO7lUT9
-	a06PVT1bgue1iOIyZ3d6A5moMOEQPDiygILpUQw26ZGhfqkXXCMBauOuXjxBrKM1
-	m75QU5ZlPG0SjJI/6C+4uxfBMhR4XSznofmmFlQukO+eTGIW2I8wSY2JoTqw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738341463; x=1738427863; bh=hhLayRpCuAOKnGSskbGd4f/HqGN1yEYp/QY
-	1rpy/OgU=; b=QVtAwZS5zD+YEZzx9DQHx24puu8ZqRLqZHQgI5Chxwql29GnM52
-	g5QWXA+dIg1mLf7Cy6nWZH2ZjUQVVPJyAOQSqtS5RTZg7Fl5sMscbZ9+qe9/1leO
-	G9bz0CqY8ihYp8CvcPAfKzcP3Z2k2qXwSbUTxY6MmrZMW0AbvGrQeMy7uIDYUwPR
-	xjHYIvrcrAGnXdpmA9c2I0TAWzMGI4VoLebhS0HL7nbIPWzXif773495b8FVAfdr
-	zYg7bHssaJf8vsDvBtQZG2b2kPFRWAvIkiKRY6bXGZildfZbFNusVweb6KjCyXqf
-	cihBXYaCDuyFHBpXBmzPRpMVvt0ft/hfxiQ==
-X-ME-Sender: <xms:VvycZ7r6yavrxba1LvlVyD3taxvNXZ0b4Dm8TxyacFvTqp2nGhZCGg>
-    <xme:VvycZ1r5sFOUVdkwnbPOzKynrzGAql3rfPO4EwZs1HYdYZkLwM2zLKj-GyQ8r6hbF
-    Vgq4sFd6rCr59Gy3Q>
-X-ME-Received: <xmr:VvycZ4NfuYQ8MKAxuhjsAi65bTKPMiL88YiLyPkgh5oFwPkERHZ8UVhU14C57bogAL6zh0oVi6pvoqaWjur8GNUG2GFnhknaXh_3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdelvdejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepuddupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirg
-    hnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehushhmrghnrghkihhn
-    higvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehj
-    ohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrd
-    hstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepmhgvsehtthgrhihlohhr
-    rhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorh
-    hgrdhukhdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomh
-X-ME-Proxy: <xmx:VvycZ-7IZPrz7O3VlyGj_1wrU2UOFgSHzGtdUMAmZoaNGsEUByULlg>
-    <xmx:VvycZ64lGwUbMgbaxywhCOQpL-2t5wT5c4jKw248T8yYKk5HLMZw7Q>
-    <xmx:VvycZ2j7t7Hpq0YqqBWqiRpXsCqf1pTg6AXAhM4hlsjfpbB6w0-krg>
-    <xmx:VvycZ84Ms10vRp7n-mHSD8HcRgMtv5NloduZ2JYQBoj7Pr8SeQVcIw>
-    <xmx:V_ycZyi4Y7mPPLo26CDhVt9yjzVX5u8InrAqk2sLBOK5us9-M7mxICQl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jan 2025 11:37:41 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,  git@vger.kernel.org,
-  ps@pks.im,  johncai86@gmail.com,  Johannes.Schindelin@gmx.de,
-  me@ttaylorr.com,  phillip.wood@dunelm.org.uk,  rsbecker@nexbridge.com,
-  sunshine@sunshineco.com
-Subject: Re: [PATCH v3 0/6][Outreachy] Introduce os-version Capability with
- Configurable Options
-In-Reply-To: <CAP8UFD1+Qa2cRkYs8R_Lgr8Bkz7YqPUW6Q3ogKcrBSp+q-3qbw@mail.gmail.com>
-	(Christian Couder's message of "Fri, 31 Jan 2025 15:30:09 +0100")
-References: <20250117104639.65608-1-usmanakinyemi202@gmail.com>
-	<20250124122217.250925-1-usmanakinyemi202@gmail.com>
-	<xmqqed0sxdiz.fsf@gitster.g>
-	<CAP8UFD31A9KuqzXrDWzjokWzBtTYsF1FGJPX8PFAWXnn_2BH_w@mail.gmail.com>
-	<xmqq5xm0wa5l.fsf@gitster.g>
-	<CAP8UFD1+Qa2cRkYs8R_Lgr8Bkz7YqPUW6Q3ogKcrBSp+q-3qbw@mail.gmail.com>
-Date: Fri, 31 Jan 2025 08:37:40 -0800
-Message-ID: <xmqqzfj77xd7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ICPB12ll"
+Received: by mail-oo1-f50.google.com with SMTP id 006d021491bc7-5fa22d0b88fso1335192eaf.1
+        for <git@vger.kernel.org>; Fri, 31 Jan 2025 09:43:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738345433; x=1738950233; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=V7WTOZbmigzoHllTmZ+HBxdAgxAmqMz+z8aXc0SuVeo=;
+        b=ICPB12ll+svlRgcKhqSwZTjIuygQjIKXX2Ylmd/Dw9BCV6U96sxaRI38UK21ZOgFll
+         PGpPDWDaAkpZu9KIwVoQ7AyCvbeiTU8rYb/XTifHzlC3djACRM4ei2PYtPV0LPK4NRsU
+         CKMFmpfjSYLI4jqY0lNm5p3z5AEsrcskLGfwBul2sCd/7hduxVDg4z52nJC8u/qx9je0
+         AO67Az28DiOwYe4ygGbjB6gqtodQ6SZbMm9tW+OJMxFIuu7EZrEp6leiHAvVawQ5Kf+C
+         ODltY9fRPm7lSMbH/t2hX3YUjJJI9kyJX94mneTEWvBKPIC3ikrHDBzp9sY1qqdjcqts
+         BEgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738345433; x=1738950233;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V7WTOZbmigzoHllTmZ+HBxdAgxAmqMz+z8aXc0SuVeo=;
+        b=A0J1pOjZr6oMka0bzfg26AwmUQ3JdNfTDGsNJyU+EAAz5HxVt3BmYU203AWRa9dKK3
+         xQE5PSxKU1KgkzAWM09jlyrSx+ugH3s9ReSRbMT/834TEf516CXbNW2/ScDftn9zUzgO
+         FPKnAoCwT63UEdlIy6iQmtpicHUFTVkCW5+rzYlQFcWR1rMeAJVF/YHNODqTgM2Im7Ym
+         nDy+BSKU2MKXALkciVGmRUtCrBUHfPUyepatILOf/5xiHg5S8Xd7i0rnlIWx3dfFnwdz
+         6Pe7v+Vs3wMcG9JrsbCoa/JAgmVucsXN5PRrd8uNpOG7YvNiAP1Bm5P/4KD5mVQFjSBP
+         6jqw==
+X-Gm-Message-State: AOJu0YwfuuEBFvmCT62X8spcax3MZ9mnPMPP7cOvrB7ChmZeBr7vb2L0
+	nWrvMhrAIxiwv2EC/r5gyC71MO6bieDpFc0VT38b6T9vNFnceVRYp7EpYA==
+X-Gm-Gg: ASbGncvAdm8Npa09Ml+XYaRKDzes8xcKUdFAce7RiNVUym6RWuqwgLFMYa4if1fXm/R
+	iaDj5xbXs0vvvAYYzKIjA+UZxvSV6SaVHP8WhzkT/tgw2TWZrHwO0lR0u+FCSJkcZOOzvjas9ls
+	WchgQ90OUzh3Ks4WgRYhb0fH/Iqr6ZfBQHjiuDDjwYAUnInMiYSvWx5Wp2xXjBiNxav/N9g6NEO
+	HzF/mzaMcoPn8bXAWDPMX9uUD1mQswqalxbZTcWg8eED2oSK6JQzOOWoJxP7MZueZV2DHhP37Ll
+	FyohJ0wZvs62bX7Ojv/P3zQ=
+X-Google-Smtp-Source: AGHT+IE7kR6r4HLSpWJH0CdNeraZ/3T4eS+Ej/8YLJ2pNVBEAsrf5T+OfXp8lR3F+3BUoKnGUxVgbg==
+X-Received: by 2002:a05:6820:2294:b0:5f8:b916:2516 with SMTP id 006d021491bc7-5fc00135c96mr7708096eaf.0.1738345432871;
+        Fri, 31 Jan 2025 09:43:52 -0800 (PST)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5fc104f6cf0sm980494eaf.22.2025.01.31.09.43.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jan 2025 09:43:52 -0800 (PST)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: toon@iotcl.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH] ci: fix base commit fallback for check-whitespace and check-style
+Date: Fri, 31 Jan 2025 11:39:38 -0600
+Message-ID: <20250131173938.3592899-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.48.1.157.g3b0d05c4a7
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Christian Couder <christian.couder@gmail.com> writes:
+The check-whitespace and check-style CI scripts require a base commit.
+In GitLab CI, the base commit can be provided by several different
+predefined CI variables depending on the type of pipeline being
+performed.
 
-> By the way, if we put the OS information in the "agent" capability,
-> how do we separate it from the existing "package/version" content and
-> make it easy to parse?
+In 30c4f7e350 (check-whitespace: detect if no base_commit is provided,
+2024-07-23), the GitLab check-whitespace CI job was modified to support
+CI_MERGE_REQUEST_DIFF_BASE_SHA as a fallback base commit if
+CI_MERGE_REQUEST_TARGET_BRANCH_SHA was not provided. The same fallback
+strategy was also implemented for the GitLab check-style CI job in
+bce7e52d4e (ci: run style check on GitHub and GitLab, 2024-07-23).
 
-Do NOT parse, period.
+The base commit fallback is implemented using shell parameter expansion
+where, if the first variable is unset, the second variable is used as
+fallback. In GitLab CI, these variables can be set but null. This has
+the unintended effect of selecting an empty first variable which results
+in CI jobs providing an invalid base commit and failing.
 
-If three "things" that talk the Git protocol on the other end of the
-connection gives "Linux git/2.48.0", and "macOS libgit2/1.9.0", and
-"Windows git/2.47.1" as their (enhanced) "agent" strings, there is
-no "ah, this one is 1.9.0 which way older than 2.47.1 so it must be
-missing features X and Y" the users of the information are allowed
-to infer.
+Fix the issue by defaulting to the fallback variable if the first is
+unset or null.
 
-Just take it as a single opaque string, and group identical ones.
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+Successful GitLab CI check-whitespace and check-style runs:
+  - https://gitlab.com/gitlab-org/git/-/jobs/9011117606
+  - https://gitlab.com/gitlab-org/git/-/jobs/9011117607
+---
+ .gitlab-ci.yml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-In the above scenario, we found three different kinds now.  Maybe
-we'll accumulate the counts and notice that there are N times as
-many connections whose agent string begins with "Windows" as "Linux"
-and "macOS" combined or something.  That would be an offline
-analysis, and forcing users to do the stats offline would reduce the
-temptation to use it for purposes other than its intended one.
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index 9254e01583..273a8bad39 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -183,7 +183,7 @@ check-whitespace:
+   # be defined in all pipelines.
+   script:
+     - |
+-      R=${CI_MERGE_REQUEST_TARGET_BRANCH_SHA-${CI_MERGE_REQUEST_DIFF_BASE_SHA:?}} || exit
++      R=${CI_MERGE_REQUEST_TARGET_BRANCH_SHA:-${CI_MERGE_REQUEST_DIFF_BASE_SHA:?}} || exit
+       ./ci/check-whitespace.sh "$R"
+   rules:
+     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+@@ -203,7 +203,7 @@ check-style:
+   # be defined in all pipelines.
+   script:
+     - |
+-      R=${CI_MERGE_REQUEST_TARGET_BRANCH_SHA-${CI_MERGE_REQUEST_DIFF_BASE_SHA:?}} || exit
++      R=${CI_MERGE_REQUEST_TARGET_BRANCH_SHA:-${CI_MERGE_REQUEST_DIFF_BASE_SHA:?}} || exit
+       ./ci/run-style-check.sh "$R"
+   rules:
+     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
-You may find "ImNotTellingYou" and may wonder what OS the user is
-really using, but they do not want to tell you, so you honor their
-wish.
-
-> I don't see a good solution because
-> GIT_USER_AGENT could be used, and the config option to not show the OS
-> name could be used too.
-
-That is a good privacy measure.
-
-> Also we don't know what could be in the "version" part. The doc says
-> that the agent part is typically of the form "package/version" but
-> doesn't require it.
-
-Exactly.  I would think it is a feature, and the way to treat the
-string in line with the philosophy behind that feature is to take it
-as a single opaque thing.
-
+base-commit: 3b0d05c4a79d0e441283680a864529b02dca5f08
+-- 
+2.48.1.157.g3b0d05c4a7
 
