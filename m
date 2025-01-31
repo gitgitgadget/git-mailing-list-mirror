@@ -1,55 +1,55 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720D01B6D15
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 10:53:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56C11B85D0
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 10:53:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738320818; cv=none; b=n1Za7gM3wYYsJILeA99ZEKy4pDvMM/VsTOSi6O81VCAu4lo+MT1CFNPzzTOuvsGuzEB7xKhk3+P2kJyCrii4sj95NS5d86U+R6VqNSPq6CionA6AIUS45Ijs/rzAvt+tjDQQwuUTT8Ecf21V3NdE//Kw8NuNsTh4Ho/y1ngnFBs=
+	t=1738320818; cv=none; b=IRAGN3+a28RuKe2PnJ4XC66DBLFT5s/7gJ+d9ZbRI6xwGFTq3Q7iWkqpc4UIETLBcDlHZfJs2aj+P2Xdr8Ryn45sLviKeAoriQfQgCNBNHoYXAzIsTYg6RvdIEPfFIUZzA7n5qrxV42IeAl1vPeI+B5SIQ6Z24h+e/c0bc2SY9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1738320818; c=relaxed/simple;
-	bh=NZAEqcda03KMD4751hwnIPd2IvMxgJJbkqyfr7cCcbA=;
+	bh=nFeC6BtcS+hOfHxDK3EtT6qcz0nydlJdwyNZA2ujWho=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kfKDXSNksfLeHz8a/xcrxxw3/t5WE6+Rw3tbBny+zCp4Hbasnw0Kf7hlxHO0rvFaNKJxjcLGGqr1D5N5KAAhj1cCMM5gV2pjEC86udZupFt3oabDTdHGyb6ynVDChO5owKa+K5UJcZEgtrVx1Yeu4wz/fPH+LYgfPTleFqx5kRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eIZEoo9d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xjFwprKR; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=gArVz9Z/DnL+iC0bX3vpO4DKFJatGJ+BaOdGN9ybZTtwJaBvGZuQJsxI08dyky1jkBrK5RUpqV+ijrDRSuco5ywIaArgbr+0UaRyJGX0I98W85PsUdaDpX6IEBZMISAQndNZdSMS4MKCtviqMVdCccoLPPFnQZ4s5Y5U9ruhl24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y7mICj5N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bbOWl2/h; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eIZEoo9d";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xjFwprKR"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4CD5E13801AD;
-	Fri, 31 Jan 2025 05:53:34 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y7mICj5N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bbOWl2/h"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CF9591140109;
+	Fri, 31 Jan 2025 05:53:35 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Fri, 31 Jan 2025 05:53:34 -0500
+  by phl-compute-04.internal (MEProxy); Fri, 31 Jan 2025 05:53:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738320814;
-	 x=1738407214; bh=NL/aSjUGctRTgM/tGKGtfUnBT0kPLUTyWnUFrJ0otio=; b=
-	eIZEoo9dttOZ4wqU3ibNSifAk7JSYK/s08qv+GmCBYJPWM4cspGn8fAnZFe9DuaR
-	dimhMdMVXiZ2mklRDb7B2EXG6i/w6eiAaNp0+XGQKrP+iJlz4TO42WjkFhHkxOsG
-	fhDJPzD/51TH6p0txWwhFHUtInr0hxfUfWZxWHf4v2f79HvKeM+q6LKu34bVs5Pv
-	qvlGwcU0kYo5lmQsj7qNwVB9H0T9S6Jq4JEGi/zNqkNuFLIQ07kqn/WVdbWzUlEV
-	SI/+16wbpheHTktmeCyaIPjBKBEz8UThgsbUcC6+f72HyxnstMms8LuRbenZdF/H
-	30RYDZGu0XcSPa+FFbSptA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738320815;
+	 x=1738407215; bh=3y8btysFk6GGvvuftdxS6BVIk/hr4qyQagAbM69FupY=; b=
+	Y7mICj5NCzdhaOZ4IPNrGzqH/bP+xNK1c6D4CH6DgxYtxAdHSXLzvqmxvuzxZ6pM
+	TrSJxsXzDgrAhW6zSNAobA4S4/AcW6x67gDBBNLFIWqXsadfxrGgbj6hlxV01tYH
+	TAuTzJ5d6+6k2EUK6meh703TwKRFLFTeXxk6fui4Cy64aYFJ4qJvE1oMxugoRrWM
+	T74ZpTJAEp49Ah4YEzTl7aWwRzCFlSvigHyeUQ/1SOQCdPUFBnEfmr77ZGUCf59a
+	fu/ekaq3kwzEzhkdrEeop9m84K/vxijletHKjgCXZgvR/9z9DEPi5N684Q9QPanL
+	3R1PUSs2sW8TAvIQ6Nthvw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738320814; x=
-	1738407214; bh=NL/aSjUGctRTgM/tGKGtfUnBT0kPLUTyWnUFrJ0otio=; b=x
-	jFwprKRwT2e2DU2zEPsVL1RU1CkZ5jqihIkGtDolnxSTYLEW9I4v1areVjClov+u
-	srH1jGJcRI6nXFiCR9xgkRxy7thuIDRnc0d37tz0kU1DSlk41rjnyeKvSEevJOmR
-	JvWGBPtyyRPSUlxHgraIksSeZBSEF+45oB+M+g2uWlv2nrSLIDcR21RAyVS0V8vL
-	lwJN728dKMcUvmn5XH9bz8SaJIWA4IuodL7ILKKRxHGHbhFTnr+An8ozJdOra7I4
-	pChIfe/4jwNMQDghUCzx+up5e2vtHw6V/18kV18hx8bq5LqFBfGCo29EqnF54yMO
-	yplYRR1fEt+OKmGD/bANg==
-X-ME-Sender: <xms:rqucZ_dvPJXckrtIxKll-u4-hlZgoO6MyaXf6zy5_0HGCHbSdrO7SQ>
-    <xme:rqucZ1Oy_YiEP6HvCZxOgqdl0ySrZbpEA6bqn3VxpqnyJO0IoRkfbg5bpDo9H9VHn
-    xwNdHlFDJUQbLpEaA>
-X-ME-Received: <xmr:rqucZ4jXH5jyUuXoa-W0cU1Of9gBR9hnjFYagb8h_466VfPvJSsyfEqr2LHlIksylzkei-SAQ6g0F0KMrs13gHbskVC2uLmvV0Ec68uYjsfyGg>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738320815; x=
+	1738407215; bh=3y8btysFk6GGvvuftdxS6BVIk/hr4qyQagAbM69FupY=; b=b
+	bOWl2/hnCioYMdzFH5C8QyFliK6NyX4hwlOW+ySovhWGrsq2T72X68iD7WOlkj2F
+	9S2u/mvqLfjIt83bRaq5uCp3o7Yer2x/lcFx/y8jtvyGApyjojy0D/EmEsWxbFqM
+	YeJdAAA+Sif4ItXaiR5V3hk0pTJ1mW2BSIynK/NlgkAAJ1zp7puwUZqrDmS2KG4G
+	VZncYI1KimwDf61TznQJDTZpsX7Ctx5WTmkQyhQ4G7UbrYtKUT7wAQEpPYCbscT7
+	cItzTNPjvma9IuiCifV/i4l1tklD6ZKpuKWU27nL1Es9AALvk4Y3AtzApe406m3t
+	aveIE1aE3UPicKIS3gSIQ==
+X-ME-Sender: <xms:r6ucZ_bwpKIxINvkqERHdNa7v1yW5ipuUgrCPbLfRTqOrwuNzZcY7Q>
+    <xme:r6ucZ-a4dS9QZYpXmEOqs6mQKhonG36XKEKWeEwqU2uvI7O3_l3_jY8CBPlBLaDEp
+    hnhDo0HQbO5v50RNg>
+X-ME-Received: <xmr:r6ucZx-2pthXYBymxZRA4eyvvStwED7ndQ5S73MJcmjEkVc6equHg_WAZCi9OofQUFlFvZxOyoxd4IBVbFFb75psRstteTTwwb_0e6_7-nSRgg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekheekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhfffugg
@@ -57,24 +57,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekheekucetufdoteggod
     nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuieduje
     dvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgv
     rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepiihhihihohhurdhjgiesrghlihgsrggsrgdqihhntgdr
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepiihhihih
+    ohhurdhjgiesrghlihgsrggsrgdqihhntgdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
     tghomh
-X-ME-Proxy: <xmx:rqucZw9hdkcrmhEy0fYegxZoO8vaDs2fWtZU8vI-mK26fQFzph68Cw>
-    <xmx:rqucZ7uRsoALDeyLViC__gXHHw-76PJzAIWDmsZEYwuGypGSOl2p1w>
-    <xmx:rqucZ_GqQD7q-oZkpthfOj8UByTFtFgFI0i0x4Ma8y6uvJ_Q48KKUg>
-    <xmx:rqucZyPg5qGY0NejHO2ZQ4fYSbYj9g1AERKy2xIEsswBgw0EIkcgEQ>
-    <xmx:rqucZ7Id_3k5iWoQUH-zFMnuq61d6x8OksiSPL9eWXQ4giq6cAAa1MKL>
+X-ME-Proxy: <xmx:r6ucZ1rREhIFTknmxcRDGAu-_Y-Mn2YCxpt4LTzCC4i3zLNd8SbagA>
+    <xmx:r6ucZ6rDVeFjnz5pBp_qXE_LOz-AC5QcbWvIExsEJLL4hHdUROHGAg>
+    <xmx:r6ucZ7Sn7UyUF0Hra-3BiFgEyTbxu3ipNayIyMq54RsRtswJiXD4Mg>
+    <xmx:r6ucZyqxaWrVmr-xe_j6X-tOtQHbm7G34xaEJJiSPhTsU7LPtrXcVw>
+    <xmx:r6ucZ9XPd3Ra8Ps7d8hYpDpdaZukcHN2iSWyweVzsxqx2aCHN8m1d9WL>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jan 2025 05:53:33 -0500 (EST)
+ 31 Jan 2025 05:53:34 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9de03c54 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 31 Jan 2025 10:53:29 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id ccf7192c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 31 Jan 2025 10:53:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 31 Jan 2025 11:53:27 +0100
-Subject: [PATCH v4 3/8] t5548: refactor test cases by resetting upstream
+Date: Fri, 31 Jan 2025 11:53:31 +0100
+Subject: [PATCH v4 7/8] t5543: atomic push reports exit code failure
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250131-pks-push-atomic-respect-exit-code-v4-3-a8b41f01a676@pks.im>
+Message-Id: <20250131-pks-push-atomic-respect-exit-code-v4-7-a8b41f01a676@pks.im>
 References: <20250131-pks-push-atomic-respect-exit-code-v4-0-a8b41f01a676@pks.im>
 In-Reply-To: <20250131-pks-push-atomic-respect-exit-code-v4-0-a8b41f01a676@pks.im>
 To: git@vger.kernel.org
@@ -91,248 +91,60 @@ Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>,
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Add new test cases in t5543 to avoid ignoring the exit code of
+git-receive-pack(1) during atomic push with "--porcelain" flag.
 
-Refactor the test cases with the following changes:
+We'd typically notice this case because the refs would have their error
+message set. But there is an edge case when pushing refs succeeds, but
+git-receive-pack(1) exits with a non-zero exit code at a later point in
+time due to another error. An atomic git-push(1) would ignore that error
+code, and consequently it would return successfully and not print any
+error message at all.
 
- - Calling setup_upstream() to reset upstream after running each test
-   case.
-
- - Change the initial branch tips of the workspace to reduce the branch
-   setup operations in the workspace.
-
- - Reduced the two steps of setting up and cleaning up the pre-receive
-   hook by moving the operations into the corresponding test case,
-
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t5548-push-porcelain.sh | 149 +++++++++++++++++++++-------------------------
- 1 file changed, 67 insertions(+), 82 deletions(-)
+ t/t5543-atomic-push.sh | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
-diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
-index a3defd5b75..ededd8edb9 100755
---- a/t/t5548-push-porcelain.sh
-+++ b/t/t5548-push-porcelain.sh
-@@ -96,8 +96,8 @@ setup_upstream_and_workbench () {
- 	# we will use it in the subsequent test cases.
- 	upstream="$1"
+diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
+index 04b47ad84a..32181b9afb 100755
+--- a/t/t5543-atomic-push.sh
++++ b/t/t5543-atomic-push.sh
+@@ -280,4 +280,34 @@ test_expect_success 'atomic push reports (reject by non-ff)' '
+ 	test_cmp expect actual
+ '
  
--	# Upstream  after setup : main(B)  foo(A)  bar(A)  baz(A)
--	# Workbench after setup : main(A)
-+	# Upstream  after setup: main(B)  foo(A)  bar(A)  baz(A)
-+	# Workbench after setup: main(A)                  baz(A)  next(A)
- 	test_expect_success "setup upstream repository and workbench" '
- 		setup_upstream "$upstream" &&
- 		rm -rf workbench &&
-@@ -105,6 +105,8 @@ setup_upstream_and_workbench () {
- 		(
- 			cd workbench &&
- 			git update-ref refs/heads/main $A &&
-+			git update-ref refs/heads/baz $A &&
-+			git update-ref refs/heads/next $A &&
- 			# Try to make a stable fixed width for abbreviated commit ID,
- 			# this fixed-width oid will be replaced with "<OID>".
- 			git config core.abbrev 7 &&
-@@ -133,19 +135,14 @@ run_git_push_porcelain_output_test() {
- 	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
- 	# Refs of workbench: main(A)                  baz(A)  next(A)
- 	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
--	test_expect_success "porcelain output of successful git-push ($PROTOCOL)" '
--		(
--			cd workbench &&
--			git update-ref refs/heads/main $A &&
--			git update-ref refs/heads/baz $A &&
--			git update-ref refs/heads/next $A &&
--			git push --porcelain --force origin \
--				main \
--				:refs/heads/foo \
--				$B:bar \
--				baz \
--				next
--		) >out &&
-+	test_expect_success ".. git-push --porcelain --force ($PROTOCOL)" '
-+		test_when_finished "setup_upstream \"$upstream\"" &&
-+		git -C workbench push --porcelain --force origin \
-+			main \
-+			:refs/heads/foo \
-+			$B:bar \
-+			baz \
-+			next >out &&
- 		make_user_friendly_and_stable_output <out >actual &&
- 		format_and_save_expect <<-EOF &&
- 		> To <URL/of/upstream.git>
-@@ -169,115 +166,103 @@ run_git_push_porcelain_output_test() {
- 		test_cmp expect actual
- 	'
- 
--	# Refs of upstream : main(A)  bar(B)  baz(A)  next(A)
--	# Refs of workbench: main(B)  bar(A)  baz(A)  next(A)
--	# git-push         : main(B)  bar(A)  NULL    next(A)
--	test_expect_success "atomic push failed ($PROTOCOL)" '
--		(
--			cd workbench &&
--			git update-ref refs/heads/main $B &&
--			git update-ref refs/heads/bar $A &&
--			test_must_fail git push --atomic --porcelain origin \
--				main \
--				bar \
--				:baz \
--				next
--		) >out &&
-+	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
-+	# Refs of workbench: main(A)                  baz(A)  next(A)
-+	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
-+	test_expect_success ".. git push --porcelain --atomic ($PROTOCOL)" '
-+		test_when_finished "setup_upstream \"$upstream\"" &&
-+		test_must_fail git -C workbench push --porcelain --atomic origin \
-+			main \
-+			:refs/heads/foo \
-+			$B:bar \
-+			baz \
-+			next >out &&
- 		make_user_friendly_and_stable_output <out >actual &&
- 		format_and_save_expect <<-EOF &&
--		To <URL/of/upstream.git>
--		> =	refs/heads/next:refs/heads/next	[up to date]
--		> !	refs/heads/bar:refs/heads/bar	[rejected] (non-fast-forward)
--		> !	(delete):refs/heads/baz	[rejected] (atomic push failed)
--		> !	refs/heads/main:refs/heads/main	[rejected] (atomic push failed)
--		Done
-+		> To <URL/of/upstream.git>
-+		> =	refs/heads/baz:refs/heads/baz	[up to date]
-+		> !	<COMMIT-B>:refs/heads/bar	[rejected] (atomic push failed)
-+		> !	(delete):refs/heads/foo	[rejected] (atomic push failed)
-+		> !	refs/heads/main:refs/heads/main	[rejected] (non-fast-forward)
-+		> !	refs/heads/next:refs/heads/next	[rejected] (atomic push failed)
-+		> Done
- 		EOF
- 		test_cmp expect actual &&
- 
- 		git -C "$upstream" show-ref >out &&
- 		make_user_friendly_and_stable_output <out >actual &&
- 		cat >expect <<-EOF &&
--		<COMMIT-B> refs/heads/bar
-+		<COMMIT-A> refs/heads/bar
- 		<COMMIT-A> refs/heads/baz
--		<COMMIT-A> refs/heads/main
--		<COMMIT-A> refs/heads/next
-+		<COMMIT-A> refs/heads/foo
-+		<COMMIT-B> refs/heads/main
- 		EOF
- 		test_cmp expect actual
- 	'
- 
--	test_expect_success "prepare pre-receive hook ($PROTOCOL)" '
--		test_hook --setup -C "$upstream" pre-receive <<-EOF
--		exit 1
-+	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
-+	# Refs of workbench: main(A)                  baz(A)  next(A)
-+	# git-push         : main(A)  NULL    (B)     baz(A)  next(A)
-+	test_expect_success ".. pre-receive hook declined ($PROTOCOL)" '
-+		test_when_finished "rm -f \"$upstream/hooks/pre-receive\" &&
-+			setup_upstream \"$upstream\"" &&
-+		test_hook --setup -C "$upstream" pre-receive <<-EOF &&
-+			exit 1
- 		EOF
--	'
--
--	# Refs of upstream : main(A)  bar(B)  baz(A)  next(A)
--	# Refs of workbench: main(B)  bar(A)  baz(A)  next(A)
--	# git-push         : main(B)  bar(A)  NULL    next(A)
--	test_expect_success "pre-receive hook declined ($PROTOCOL)" '
--		(
--			cd workbench &&
--			git update-ref refs/heads/main $B &&
--			git update-ref refs/heads/bar $A &&
--			test_must_fail git push --porcelain --force origin \
--				main \
--				bar \
--				:baz \
--				next
--		) >out &&
-+		test_must_fail git -C workbench push --porcelain --force origin \
-+			main \
-+			:refs/heads/foo \
-+			$B:bar \
-+			baz \
-+			next >out &&
- 		make_user_friendly_and_stable_output <out >actual &&
- 		format_and_save_expect <<-EOF &&
--		To <URL/of/upstream.git>
--		> =	refs/heads/next:refs/heads/next	[up to date]
--		> !	refs/heads/bar:refs/heads/bar	[remote rejected] (pre-receive hook declined)
--		> !	:refs/heads/baz	[remote rejected] (pre-receive hook declined)
-+		> To <URL/of/upstream.git>
-+		> =	refs/heads/baz:refs/heads/baz	[up to date]
-+		> !	<COMMIT-B>:refs/heads/bar	[remote rejected] (pre-receive hook declined)
-+		> !	:refs/heads/foo	[remote rejected] (pre-receive hook declined)
- 		> !	refs/heads/main:refs/heads/main	[remote rejected] (pre-receive hook declined)
--		Done
-+		> !	refs/heads/next:refs/heads/next	[remote rejected] (pre-receive hook declined)
-+		> Done
- 		EOF
- 		test_cmp expect actual &&
- 
- 		git -C "$upstream" show-ref >out &&
- 		make_user_friendly_and_stable_output <out >actual &&
- 		cat >expect <<-EOF &&
--		<COMMIT-B> refs/heads/bar
-+		<COMMIT-A> refs/heads/bar
- 		<COMMIT-A> refs/heads/baz
--		<COMMIT-A> refs/heads/main
--		<COMMIT-A> refs/heads/next
-+		<COMMIT-A> refs/heads/foo
-+		<COMMIT-B> refs/heads/main
- 		EOF
- 		test_cmp expect actual
- 	'
- 
--	test_expect_success "remove pre-receive hook ($PROTOCOL)" '
--		rm "$upstream/hooks/pre-receive"
--	'
--
--	# Refs of upstream : main(A)  bar(B)  baz(A)  next(A)
--	# Refs of workbench: main(B)  bar(A)  baz(A)  next(A)
--	# git-push         : main(B)  bar(A)  NULL    next(A)
--	test_expect_success "non-fastforward push ($PROTOCOL)" '
-+	# Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
-+	# Refs of workbench: main(A)                  baz(A)  next(A)
-+	# git-push         : main(A)                          next(A)
-+	test_expect_success ".. non-fastforward push ($PROTOCOL)" '
- 		(
- 			cd workbench &&
- 			test_must_fail git push --porcelain origin \
- 				main \
--				bar \
--				:baz \
- 				next
- 		) >out &&
- 		make_user_friendly_and_stable_output <out >actual &&
- 		format_and_save_expect <<-EOF &&
--		To <URL/of/upstream.git>
--		> =	refs/heads/next:refs/heads/next	[up to date]
--		> -	:refs/heads/baz	[deleted]
--		>  	refs/heads/main:refs/heads/main	<COMMIT-A>..<COMMIT-B>
--		> !	refs/heads/bar:refs/heads/bar	[rejected] (non-fast-forward)
--		Done
-+		> To <URL/of/upstream.git>
-+		> *	refs/heads/next:refs/heads/next	[new branch]
-+		> !	refs/heads/main:refs/heads/main	[rejected] (non-fast-forward)
-+		> Done
- 		EOF
- 		test_cmp expect actual &&
- 
- 		git -C "$upstream" show-ref >out &&
- 		make_user_friendly_and_stable_output <out >actual &&
- 		cat >expect <<-EOF &&
--		<COMMIT-B> refs/heads/bar
-+		<COMMIT-A> refs/heads/bar
-+		<COMMIT-A> refs/heads/baz
-+		<COMMIT-A> refs/heads/foo
- 		<COMMIT-B> refs/heads/main
- 		<COMMIT-A> refs/heads/next
- 		EOF
++test_expect_failure 'atomic push reports exit code failure' '
++	write_script receive-pack-wrapper <<-\EOF &&
++	git-receive-pack "$@"
++	exit 1
++	EOF
++	test_must_fail git -C workbench push --atomic \
++		--receive-pack="${SQ}$(pwd)${SQ}/receive-pack-wrapper" \
++		up HEAD:refs/heads/no-conflict 2>err &&
++	cat >expect <<-EOF &&
++	To ../upstream
++	 * [new branch]      HEAD -> no-conflict
++	error: failed to push some refs to ${SQ}../upstream${SQ}
++	EOF
++	test_cmp expect err
++'
++
++test_expect_failure 'atomic push reports exit code failure with porcelain' '
++	write_script receive-pack-wrapper <<-\EOF &&
++	git-receive-pack "$@"
++	exit 1
++	EOF
++	test_must_fail git -C workbench push --atomic --porcelain \
++		--receive-pack="${SQ}$(pwd)${SQ}/receive-pack-wrapper" \
++		up HEAD:refs/heads/no-conflict-porcelain 2>err &&
++	cat >expect <<-EOF &&
++	error: failed to push some refs to ${SQ}../upstream${SQ}
++	EOF
++	test_cmp expect err
++'
++
+ test_done
 
 -- 
 2.48.1.502.g6dc24dfdaf.dirty
