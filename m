@@ -1,99 +1,98 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B76DEAC6
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 14:35:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD46C219FC
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 14:46:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738334152; cv=none; b=RN0/ZbR+DC7s5lJlgDfINMn1O46SRgUoE2j95SP5wJ6d8/DdkTZ8q/3G0BvQ/gYjoYJvesTr74XuUWIGTTeWny6Hb7yTxkUrXIKobUcdHqKPKfT+UfQ+OcS+pR4IN5bc+gC3WFvSWz9ugG7UCPaBqTkvea3DAiuHwADAv095E9Y=
+	t=1738334787; cv=none; b=X+lNodtLc8fu6G2oeAZViD6tqsBDu6/okz1dFZzIog13uRm+E6HLQ/MebgrTvsUJ16krDtIBz8n46ftCNQnIop2ZWACkJkF6VcHMRkL8D0UcUgzdWFOZjZvOITn5Fw9Di2pi4Gq59TFZq7nesrqsL3wOC6f9u6w5ObEiWLSVP/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738334152; c=relaxed/simple;
-	bh=njdaKhjxi66guFArae0MqGpjVkKUG0iDnJb4QH2b96w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=neElICKluN1euAVeMRzz1evjq8YvcMxjVlzM7yybMjLjIHisZcc2M23pySy/OY0l9U7vQuB4Ze0eIbQiH/IzWkbSzEahwImScgLcgZZt/1QftodRRKWDboXvFuWmc6zeVXhaK7KXB9w2somS11qvwW86TTYf/lmqjC98cgYUrMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OG+XU+Ct; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1738334787; c=relaxed/simple;
+	bh=/pqznN6wss46C6/bfVIsUpePtcNjrfbwn6umCpmZM6E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=qtpKc6qPH3aTNgAOD7IC2NYWWGLIGN1BTpHzByWiN2AkLgnoe1z8vvGqNb3tq2593aG1RxFsWR5ksUuSe7IWou8PYEBFIl+PG5pqMwZjwilT/gKOkB1djgNQ41gUpYAGkwVt2rpztZ5mKZVaWsodQPJ+qY0sF16Q10mHg9sJB8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OG+XU+Ct"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-216401de828so38101925ad.3
-        for <git@vger.kernel.org>; Fri, 31 Jan 2025 06:35:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738334150; x=1738938950; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RxZ8zterNeqDX87awC1pQlgMZjqV415tnnbBJlEHnXY=;
-        b=OG+XU+CtaJxufLkqcUaElugrXtBlRE/mORLhGqU8SJglscKmDWFrIbbxMwI9NxM3CH
-         cUCaB/GoKMGz6DMnDVSbcjk9WA9AyGxDFqQriYVf8ZE+MX1tuz5jCIdi+ZRPX08VIXJQ
-         tGtBEQplWh6KTNRGx7dj8LzUVpiQSDOGV54Ef+dYIvGvTm/3Bss2JP6ndTfc5JPCI3Es
-         R77C0Oe8RZsgEel76Hv0X8b5EEOKOoK2Yk3O1KY6Dh39zKkK4vs8KKm1SwzmQqMhElCe
-         QhpvwVQimPL5ryb52YKwAMbqUr2npngYQfHHPCsXXcmGa1fbUtEaAH7W1jWJjWBb1i/6
-         bRuw==
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7bb849ac4cbso14560385a.2
+        for <git@vger.kernel.org>; Fri, 31 Jan 2025 06:46:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738334150; x=1738938950;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RxZ8zterNeqDX87awC1pQlgMZjqV415tnnbBJlEHnXY=;
-        b=QDyKOCQc3ok3ZNx340c4xYqYUwyjw8WoFuxRPrE379V25oyqkT5Xc/UiuLSPa4ROAI
-         YG/FSMSFckrpffERcZi1LXih4ThurRo5A505p45q4k5FnD83EdagKi0rcX7oC7JqFr1p
-         3n4c78yDV4FVRzgkkBi8Y5YI79pAjnRCviOh53r0Z5DuWL5jU6Lx6e11ffUlppJrbA0W
-         UWjsLCrJyosISgtC7I5tIr0rWMYk1AvT1kKfth6Zt6AUEOT7SDvgWikH1IwkmIwM8rrh
-         kgUHP9obbQh8CFSbyG8RjBxvyvwjhQtP5d//RfpLzVT7RwlJR9yNp7opxI9sr4LR24Oz
-         sXOA==
-X-Gm-Message-State: AOJu0YzFBGs6er84noOIPrTJcbCcoskL472VFuYbgbLLDJdjGDKB/+IV
-	bWrBevB3+jABNWSo1zaGHGHyV9Wboo1w9uq1DAwNa0W23tZYW7wS
-X-Gm-Gg: ASbGncvKbJYKP6y7RU+g4J+YzNFxSa0bS3ssitk1OKglbw2Hw9VkVDAUAInVdMjGmTY
-	5yFnbEMbvIs9Wmhijln7mQZKRU7N/hKdTPqXkBK6mApir0Zoo11zMFkXKya9eGGH/+UzJSrz/3b
-	2PxpIeaSUuVJZ6VCYLzxV6/7yt5RlZ+qDz15ne2bpqOZ/6ceELa6p/irKj6AKvOHNpJgAsJPmW/
-	EADe0U8YYyZTROcPl0uQXk/t72Fa5+MiQ0AiYzsn3KuPDhRVhXe3m6myPEy4tpSDIHX5Q==
-X-Google-Smtp-Source: AGHT+IHePJzI5++Upy+IKqs9+hVq+k2hQRen/E28yKQ4cmjmyuSqR20+ddJiLyqYOuNj0imS14ViaQ==
-X-Received: by 2002:a17:902:ef45:b0:215:ba2b:cd51 with SMTP id d9443c01a7336-21dd7d64d98mr183691005ad.15.1738334148854;
-        Fri, 31 Jan 2025 06:35:48 -0800 (PST)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2f83bcd0d9csm6549057a91.14.2025.01.31.06.35.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jan 2025 06:35:48 -0800 (PST)
-Date: Fri, 31 Jan 2025 22:37:22 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 8/8] builtin/fsck: add `git refs verify` child process
-Message-ID: <Z5zgIp7k0Z9kscmt@ArchLinux>
-References: <Z5r6ZnLH3Ee8IQnN@ArchLinux>
- <Z5r7NnzvirWEljwV@ArchLinux>
- <xmqqsep0ceec.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1738334784; x=1738939584;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=r1x8hstnMbVVHxE+iapbaX5+KPtbKuK2gHPQeCs3kZA=;
+        b=Y/tXJEQNykPKa+p5MDyCR+PrzDkxYA5q7zxVzJdgPsb/rk+2D4E4ThSjQ8gioNTbc0
+         1dT+MAnaZHX+9b26BkaQeMrkqo+5qkZ6maWrKKxQf0u9X2/hEs5Ovb+Mjz7I7QFN77Uu
+         PAhl+0pctC91ayo5kIjbl3mINTEjpkGI4aU6s+UB6Tr5xy68KTEhmkac6NHSbCvxUwLM
+         5vCDgB2fiqXun/wlwzgFMQKonKKPZ2zkaMynGAKj0LbPltwVkroqxH8bpYDHeFtiQZK6
+         0sxYPMF0vKafzoAdHqJRgdEWZGwqpJtraD0cyprPRtgyAfmw3qBDdiIbCdzJuutXkefl
+         LK4w==
+X-Gm-Message-State: AOJu0YyaH4JWC/Mxdzvy8iDsm+ikJpW6+QczbEVwJ82voSUUOMxF1iyD
+	2j1rbp0gqpkxppydQM61i4XKAM7/+vBNNWJEP2EC2o/I+AP7u8XLNDojl6AgDbt9iYBeJlXTIod
+	Wz3c92U48IwKN9LObmiICa2hy+tGy1w==
+X-Gm-Gg: ASbGncuB2+mFpJcOROtBp/HMVWCSqjUQ4Hfde6TT4MEHZPQTVMA04Bm+vti/bFRYNv/
+	zjtjj2lvpVbbWMyTWSAPhvJdZAPA8GVStdIfIpD2GDHPDKWVPPHpFImuQHM8X7LVll8VKVqVQFT
+	HOxwv1rqoVlmvXrAhQ9Yxpzzp7dwzpHg==
+X-Google-Smtp-Source: AGHT+IEEcQOYO57nC6dkb+Wb5USSyoNZlJZM0vo8NeDSH/ti4YA2TWbI/F8YeL7wPoIuc8AaxjYvYbdyvqnTqEcfDy8=
+X-Received: by 2002:a05:6214:624:b0:6c3:5dbd:449c with SMTP id
+ 6a1803df08f44-6e243b925e7mr67441846d6.1.1738334784398; Fri, 31 Jan 2025
+ 06:46:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqsep0ceec.fsf@gitster.g>
+References: <20250131-pks-push-atomic-respect-exit-code-v4-0-a8b41f01a676@pks.im>
+ <20250131-pks-push-atomic-respect-exit-code-v4-4-a8b41f01a676@pks.im>
+In-Reply-To: <20250131-pks-push-atomic-respect-exit-code-v4-4-a8b41f01a676@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 31 Jan 2025 09:46:13 -0500
+X-Gm-Features: AWEUYZnFQRBBb5HgSZZHVvwXrdo8AC_Msz4i2YVOFELy6rx2WbW2yqwOsXkWaoo
+Message-ID: <CAPig+cRu20put-2WM=OfJeMmDe+1_jDKPeThbC9Vsw1EmHAp3w@mail.gmail.com>
+Subject: Re: [PATCH v4 4/8] t5548: add new porcelain test cases
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jiang Xin <zhiyou.jx@alibaba-inc.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 30, 2025 at 11:03:55AM -0800, Junio C Hamano wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > +static void fsck_refs(struct repository *r)
-> > +{
-> > +	struct child_process refs_verify = CHILD_PROCESS_INIT;
-> > +	struct progress *progress = NULL;
-> > +	uint64_t progress_num = 1;
-> > +
-> > +	if (show_progress)
-> > +		progress = start_progress(r, _("Checking ref database"),
-> > +					  progress_num);
-> 
-> I do not see why we need an extra variable progress_num here.  Just
-> passing a literal constant 1 should be sufficient.  The called
-> function has function prototype to help the compiler promite it to
-> the appropritate type.
+On Fri, Jan 31, 2025 at 5:53=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> Add two more test cases exercising git-push(1) with `--procelain`, one
+> exercising a non-atomic and one exercising an atomic push.
+>
+> Based-on-patch-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
+> @@ -132,6 +132,40 @@ run_git_push_porcelain_output_test() {
+> +       # Refs of upstream : main(B)  foo(A)  bar(A)  baz(A)
+> +       # Refs of workbench: main(A)                  baz(A)  next(A)
+> +       # git-push         : main(A)  NULL    (B)     baz(A)  next(A)
+> +       test_expect_success ".. git-push --porcelain ($PROTOCOL)" '
+> +               test_when_finished "setup_upstream \"$upstream\"" &&
+> +               test_must_fail git -C workbench push --porcelain origin \
+> +                       main \
+> +                       :refs/heads/foo \
+> +                       $B:bar \
+> +                       baz \
+> +                       next >out &&
+> +               make_user_friendly_and_stable_output <out >actual &&
+> +               format_and_save_expect <<-EOF &&
+> +               > To <URL/of/upstream.git>
+> +               > =3D     refs/heads/baz:refs/heads/baz   [up to date]
+> +               >       <COMMIT-B>:refs/heads/bar       <COMMIT-A>..<COMM=
+IT-B>
+> +               > -     :refs/heads/foo [deleted]
+> +               > *     refs/heads/next:refs/heads/next [new branch]
+> +               > !     refs/heads/main:refs/heads/main [rejected] (non-f=
+ast-forward)
+> +               > Done
+> +               EOF
 
-You are correct, let me improve this in the next version.
+Using '\EOF' rather than bare 'EOF' would be appropriate here and in
+the other new heredocs added by this patch.
 
-Thanks,
-Jialuo
+(Not worth a reroll on its own.)
