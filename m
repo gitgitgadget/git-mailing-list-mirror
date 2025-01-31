@@ -1,170 +1,134 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45E518E25
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 19:48:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED57815CD52
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 20:05:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738352891; cv=none; b=CDLzP8ebkPH7cz+1D8sWX4Zmqi1hhHFd2a9X+Sc/vi5+BiHsF2azt8oErUU+9r4SWLI8wIWGkIsTd5SfCGVIVjUV76ETvrIZm1J5c9mD2rB7WlnemYfqkiwUGzOLY6qCH3HEWhfs0Tx5qBREHCQzLtajAfPBJL8ij8bQ2HMknI4=
+	t=1738353951; cv=none; b=nn7tv/hZVXfBz7liAggzSwCW3mZsFVfFdgk1zhUfICUxpFIkZ9k7mmlO/X8i7dGVA/rQoO9LzrvZc9HO3nH48/8clQUnqNoPURjd09+jbkHWtonaSO6T9WSQsxi8z4I6grD6yfuph631AD2OoSfFAvHaYGXUcBl72G/VX6ppMCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738352891; c=relaxed/simple;
-	bh=UfwJiU265/Ho0JoPwfh8zgZ162+VxBGunePRP427HkI=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=hC+CWZ3muF+ZP7fs6ErTZ27QLw3iH8EknFQP3t2U6eA9b2QxdLcLyDx317tjmpJdkMIGWdSBJlt+kH84QmqU6IoPODRrMwKXupG4txS7hYfvwPtSqchfdLSgHLFlEMWKVxsK35HeF5U4857HD4IH1tbWAO5LWzxILtf7NqVz/k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZlZSp/Xc; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738353951; c=relaxed/simple;
+	bh=ZHjji7nsQQJ9jRVjNtWH7dDlP4ak9Lh8VqCQieEPCrs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZbPJmMePp26s5SPZeWrQpjv1Cje2aK84U0JKaEibqWDwuQdkuSdSxZLEVJnLRG1eF42rpyS1OHhB0e9BF8eSx/v/mrVh4X8I6RPzIDJXEt/96BSB2XMiFQKY5aRf0p0VHQz8bYx+YX1+madNmTOtZ+aayHse5sS4nDoBvfCoVKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VESyf2hS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v6Jm0wQN; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZlZSp/Xc"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-aaf57c2e0beso493918566b.3
-        for <git@vger.kernel.org>; Fri, 31 Jan 2025 11:48:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738352887; x=1738957687; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ooUA5V9wvx9XofjTjlNSGoviLfBXUTbTPpvb6FvPOAc=;
-        b=ZlZSp/Xcdth60leHbHtNdb4MDUgpKKlzNsXe0nuDaxAjceB20ZC/sefibBL4N7fYRF
-         aJh8IPEjXxdp72+tdTighHzIrjwht9I/nVoi+elUMVNI6nIDm5nZwPfIwmUs5lt90Yhb
-         qlw5zXCO3FGWlhHeYAIib/ZPS+Z868QUS6xmiXGg8CXn5rZgLJc3fAFZaYqq0kMXnwx4
-         qQM00p8l4FVPOwPkHJ3ygL91Yq6KWMCFVQWyyamsQYf8hkRwCD8H7BSjiMeVW+oJOuwh
-         /rKSn1vcdnWAJorKMEm1sSV7irRwYhQ0dd/1kzNfmbM1hyEaaVYJQCNwOR40QqkOO5ge
-         nAcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738352887; x=1738957687;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ooUA5V9wvx9XofjTjlNSGoviLfBXUTbTPpvb6FvPOAc=;
-        b=EyUMWxtk3iGYBc5OhYPoz85dnfAWRKwmhRgWbhMyxBwrErxaEJPzzZRjcG9S1jyZ1B
-         f85yk425XMXV59WcddCrV7E/tMFcK09hdZoUBowasawaw0lRLC6Rp9aaEU4sTl9TL5Q6
-         yveblPB9xybVyC1xC/5nY4TIZd54ZSbe9yXV9/7LSSYHWHJLjfUg8YkgEvmjltk6hxtU
-         c19ziqZzw5eqUUk/lZzQJ0anKZhEuuquX704/v4jse3f6WjlvxUPgkYrgICgRzPPpEGg
-         I1nTe78jN5z5MN3m5lz9tD8DQAW8omeMRru1wMxeABHnKuevaHGskRFlkWViEAqll+9u
-         iweA==
-X-Gm-Message-State: AOJu0YwxO5RdPCyWcAJoXxvBNrsvpIRLINO4MYiclDXnoxXxKMTkStvU
-	kyE6dadFuBVC9QQjruxnBa4qYGN3McMnFH98QooQ042TM0BQgkPjLwcA1Q==
-X-Gm-Gg: ASbGncsmFGPoxZCmw5iFdKfANI9dio/4YC5xaGXbNJSYQKbFj5hzg8XMGibjEL7MecO
-	JSgobwp0ouR0XN5JFv2sn20f5aD+TAlWTtbJd8Iw0d5R74W4sGLveFZe71c7tUScMwhw7sS3V/v
-	ElqlS0lBjpWggO8McRyiaMjDJ1mTxbvBZhMqh65AaYscAjLPbnLpV9xNPQvKWdHCnx/2EmnvxF1
-	ZODHlctGodviGS9gxl3Vl55YWq+gNqKx51Xv0YYNg0W5K3WStKvtpLNy+V+LkA+3C/HSRCXG/aT
-	Dgcr7G34feKE+FYu
-X-Google-Smtp-Source: AGHT+IGHopVqRS1pej5xAkTxj6LTOUxsXkZx+4suDDr6CdtMSKMT5MMVg8BKg9LVTudjOurD1i968Q==
-X-Received: by 2002:a17:907:c31c:b0:ab6:e10e:6e8a with SMTP id a640c23a62f3a-ab6e10e72cfmr1003418266b.27.1738352887052;
-        Fri, 31 Jan 2025 11:48:07 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab6e47ceadfsm344454766b.51.2025.01.31.11.48.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jan 2025 11:48:06 -0800 (PST)
-Message-Id: <pull.1856.git.1738352886190.gitgitgadget@gmail.com>
-From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 31 Jan 2025 19:48:06 +0000
-Subject: [PATCH] credential: warn about git-credential-store [RFC]
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VESyf2hS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v6Jm0wQN"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 935AF2540162;
+	Fri, 31 Jan 2025 15:05:48 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 31 Jan 2025 15:05:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738353948; x=1738440348; bh=guYUlAN+1G
+	MzsnrprX/TnUGKvoFSmkLDB77AzXdFcyI=; b=VESyf2hShup6LwhDqQXdK9fByB
+	uaFhzuqRv+4HrTVazw3hRyLbiCo9oESQdygCbnbKHU4aXxjZ/oxFCDIwfL3pr5me
+	MtH3zaeGU85wX6ON3qshYy9cuVivk8Ipij8DWWwqk09kHxjjmVsVIhwsjc1FtcG5
+	mHPCoKE2zWk3j+fJ9uO4VYc5jxyC4Y6FgIzprAmmWYH0szPKFdL4GQ1LmVcHjMTW
+	dVTXWnsI+sc29xAeNnh5vWySGgMAMbb45j74sHMNoP3lwngRBDaW6P+k/Iyd3ELz
+	jU3ksZYhpFA7mOEBRJ0jQkQrhWiANAKxNdLLA+i66WiE70D+i25zpEhekPOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738353948; x=1738440348; bh=guYUlAN+1GMzsnrprX/TnUGKvoFSmkLDB77
+	AzXdFcyI=; b=v6Jm0wQNQ42t3LGLK2/LLlNNVMU/MFLQMMDrUnVMIZUOgdR4fzC
+	J5pJw9sAp4Zeq9BTD8zb8o56MJvjgQp4zzf1Xi5TnOhNLfV43vsFp5Oyg3GLHEmw
+	z56V6rP3UqhMthQpviymgSm+d0QjnkDTn0XEW1+iSOUwg1SfRSz49f4j8rRLE28x
+	myzwqJwe6bq66Qy/ZENpwMR6w7H/3CelfSEGkaOQaQpauQWJMSsSFx9KUKhReiPG
+	kL1kZ2EcRmyhq55IrVsd+BjLS/cUV+QgzfNJZMLCfbrNk6/lOrDPvegxro7siAdK
+	CZ5fm5yzgeLODvsQWqJ419UtVcUNkU0fbOw==
+X-ME-Sender: <xms:Gy2dZ19RJCh-Y6YlVE01yJfE1tgeWescP7UGWyDidLx5Hufbvdgy_Q>
+    <xme:Gy2dZ5sbHGaiFsr54GizSiZ1TSx7TT1txg_CpQW2F0uzR-o9ZqssrYV1WIbj6qTBm
+    4mYRBg0_X4RnikhbA>
+X-ME-Received: <xmr:Gy2dZzBbCY_gNtDYnZLceDA12CCETpcRwRfmpqPLEOYcroLOJIDZy8KDxcGUXz4UU20tQqJ85SS_kTlSkUHdnSwhIxDU0kxQnWTq>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeljedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
+    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphht
+    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
+    hopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheprhhssggvtghkvghrsehnvgig
+    sghrihgughgvrdgtohhmpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:HC2dZ5dfDEQKiOmYih7sCrkN90btEfEc55cAlUra4z31tMsUBXOXRg>
+    <xmx:HC2dZ6MhnmS8YKZEDKpiCUJaQC3Emhwm62PZHf_lN3tJvO2acrkAGw>
+    <xmx:HC2dZ7lgt8Ya7QOFZxz_HJFMl06XtBro1qQ0yYf-CUBxbgzPgj0gnA>
+    <xmx:HC2dZ0v2I2jkDMVUIZxPUhHTHH76CHu4_Z2U2w0iRHYFc_38-wyAOw>
+    <xmx:HC2dZxqUZG02r1gt5xxpG9uJpyft-_a4uvfwNcWwQBnrsFUp6CDtC8iC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 31 Jan 2025 15:05:47 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  sandals@crustytoothpaste.net,  stolee@gmail.com,
+  Johannes.Schindelin@gmx.de,  peff@peff.net,  rsbecker@nexbridge.com,  M
+ Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH] credential: warn about git-credential-store [RFC]
+In-Reply-To: <pull.1856.git.1738352886190.gitgitgadget@gmail.com> (M. Hickford
+	via GitGitGadget's message of "Fri, 31 Jan 2025 19:48:06 +0000")
+References: <pull.1856.git.1738352886190.gitgitgadget@gmail.com>
+Date: Fri, 31 Jan 2025 12:05:46 -0800
+Message-ID: <xmqqlduq7nqd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: sandals@crustytoothpaste.net,
-    stolee@gmail.com,
-    Johannes.Schindelin@gmx.de,
-    peff@peff.net,
-    rsbecker@nexbridge.com,
-    Johannes.Schindelin@gmx.de,
-    M Hickford <mirth.hickford@gmail.com>,
-    M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain
 
-From: M Hickford <mirth.hickford@gmail.com>
+> -	if (!c->password)
+> +	if (!c->password) {
+> +		if (c->helpers.nr >= 1 && starts_with(c->helpers.items[0].string, "store"))
+> +			warning("git-credential-store saves passwords unencrypted on disk. For alternatives, see gitcredentials(7).");
 
-git-credential-store saves secrets unencrypted on disk.
+I have no strong opinion on the details of how the detection of use
+of the "store" helper should be implemented, but I recall reading
+somewhere that users can configure more than one helpers and they
+are used in casdading fashion?  Insecure helpers may be configured
+to come later on the list, so [0] might not be sufficient.  A few
+other things are that git-credential-store could be installed in an
+unusual place and credential.c:credential_do() may find it from its
+absolute path.  Also the end-users can use third-party helpers,
+whose names we do not control, but presumably they will not name
+theirs exactly the same as the one we ship, so starts_with() may
+want to get a bit tightened.  If somebody writes a custom helper
+"git-credential-store-securely" and installs the binary in a
+directory where "git" can find via the usual GIT_EXEC_PATH mechanism
+as "git credential-store-securely", helpers.items[].string would say
+"store-securely".
 
-Warn the user before they type their password, suggesting alternative
-credential helpers.
+I agree with you that it is a rather unfortunate layering violation
+that you need to know what helper would see the result from this
+function, because you want to warn before the user gives the
+password to us.
 
-An alternative could be to warn in "credential-store store". A
-disadvantage is that the user wouldn't see the warning until after they
-typed their password, which is less helpful. The warning would appear
-again every time the user authenticated, which feels too frequently.
+Warning immediately before the bits hits the disk platter (i.e., the
+result of _fill() is passed to the helper) is not as secure because
+there is no way to say "ah, was I using an insecure backend?  Then
+please stop and do not store it there" later, so I do not think of a
+strong reason to claim that it is a wrong place to give the warning.
 
-Signed-off-by: M Hickford <mirth.hickford@gmail.com>
----
-    credential: warn about git-credential-store [RFC]
-    
-    RFC for discussion. Some tests fail
+Regarding the warning message, you may want to consider using the
+advice mechanism for a thing like this, perhaps?  If somebody has a
+legitimate reason why they need to use and cannot move away from the
+backend, it does not help them at all to keep giving the same
+warning() they are already aware of, without a way to say "Yes, I
+know, I've seen it enough times, go shut up, please".
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1856%2Fhickford%2Fstore-warn-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1856/hickford/store-warn-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1856
-
- credential.c                | 6 +++++-
- t/lib-credential.sh         | 2 ++
- t/t0302-credential-store.sh | 3 +++
- 3 files changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/credential.c b/credential.c
-index 2594c0c4229..6e05bba7e2f 100644
---- a/credential.c
-+++ b/credential.c
-@@ -285,9 +285,13 @@ static int credential_getpass(struct repository *r, struct credential *c)
- 	if (!c->username)
- 		c->username = credential_ask_one("Username", c,
- 						 PROMPT_ASKPASS|PROMPT_ECHO);
--	if (!c->password)
-+	if (!c->password) {
-+		if (c->helpers.nr >= 1 && starts_with(c->helpers.items[0].string, "store"))
-+			warning("git-credential-store saves passwords unencrypted on disk. For alternatives, see gitcredentials(7).");
-+
- 		c->password = credential_ask_one("Password", c,
- 						 PROMPT_ASKPASS);
-+	}
- 	trace2_region_leave("credential", "interactive", r);
- 
- 	return 0;
-diff --git a/t/lib-credential.sh b/t/lib-credential.sh
-index 58b9c740605..47483f09006 100644
---- a/t/lib-credential.sh
-+++ b/t/lib-credential.sh
-@@ -67,6 +67,8 @@ reject() {
- helper_test() {
- 	HELPER=$1
- 
-+	# help wanted: expect warning "git-credential-store saves passwords
-+	# unencrypted" when helper equals "store"
- 	test_expect_success "helper ($HELPER) has no existing data" '
- 		check fill $HELPER <<-\EOF
- 		protocol=https
-diff --git a/t/t0302-credential-store.sh b/t/t0302-credential-store.sh
-index c1cd60edd01..349b5f0b084 100755
---- a/t/t0302-credential-store.sh
-+++ b/t/t0302-credential-store.sh
-@@ -133,6 +133,7 @@ invalid_credential_test() {
- 		password=askpass-password
- 		--
- 		askpass: Username for '\''https://example.com'\'':
-+		warning: git-credential-store saves passwords unencrypted on disk. For alternatives, see gitcredentials(7) or https://git-scm.com/doc/credential-helpers.
- 		askpass: Password for '\''https://askpass-username@example.com'\'':
- 		--
- 		EOF
-@@ -155,6 +156,7 @@ test_expect_success 'get: credentials with DOS line endings are invalid' '
- 	password=askpass-password
- 	--
- 	askpass: Username for '\''https://example.com'\'':
-+	warning: git-credential-store saves passwords unencrypted on disk. For alternatives, see gitcredentials(7) or https://git-scm.com/doc/credential-helpers.
- 	askpass: Password for '\''https://askpass-username@example.com'\'':
- 	--
- 	EOF
-@@ -186,6 +188,7 @@ test_expect_success 'get: credentials with DOS line endings are invalid if path
- 	password=askpass-password
- 	--
- 	askpass: Username for '\''https://example.com/repo.git'\'':
-+	warning: git-credential-store saves passwords unencrypted on disk. For alternatives, see gitcredentials(7) or https://git-scm.com/doc/credential-helpers.
- 	askpass: Password for '\''https://askpass-username@example.com/repo.git'\'':
- 	--
- 	EOF
-
-base-commit: 4e746b1a31f9f0036032b6f94279cf16fb363203
--- 
-gitgitgadget
+Thanks.
