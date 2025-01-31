@@ -1,134 +1,170 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED57815CD52
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 20:05:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4912E155C88
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 20:11:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738353951; cv=none; b=nn7tv/hZVXfBz7liAggzSwCW3mZsFVfFdgk1zhUfICUxpFIkZ9k7mmlO/X8i7dGVA/rQoO9LzrvZc9HO3nH48/8clQUnqNoPURjd09+jbkHWtonaSO6T9WSQsxi8z4I6grD6yfuph631AD2OoSfFAvHaYGXUcBl72G/VX6ppMCc=
+	t=1738354274; cv=none; b=N98vMDj5czn2bmmcb5zGzMS/Xs/K7IkZDDz6yBNXfXDi8roWHSm+kWrRHMDinrbMtjqXyS5KxsFHRZWa5/EsrZ1e+xhtE1XCGPVqfiRDoh+kzsuMIeenUt1AaTFVW4c1kp6U9TAsULowdemovBBb4xxU72UYKdbt1wGT29BaUTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738353951; c=relaxed/simple;
-	bh=ZHjji7nsQQJ9jRVjNtWH7dDlP4ak9Lh8VqCQieEPCrs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZbPJmMePp26s5SPZeWrQpjv1Cje2aK84U0JKaEibqWDwuQdkuSdSxZLEVJnLRG1eF42rpyS1OHhB0e9BF8eSx/v/mrVh4X8I6RPzIDJXEt/96BSB2XMiFQKY5aRf0p0VHQz8bYx+YX1+madNmTOtZ+aayHse5sS4nDoBvfCoVKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VESyf2hS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v6Jm0wQN; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738354274; c=relaxed/simple;
+	bh=Gdj0/hL4j2VCpPBmULNucjS+BIvqVPU5bMtWs8PdC8M=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=O8fEnUZzyMY5OJqoEx2k0x0Ii8dqD9i8H10bl/8/BobqwOE9oURPA4M6pahfmSmyLRllTG6aLTNp9BKSTMX5MC9rKN2TiuGf0TzpCpFcWMC66pDdjBU3yd1367H1GhzJLAV5jDpEMKVlsGOmPszTEIzGfWQA1T0T7kHnEeaXfXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=WdZEW0SL; arc=none smtp.client-ip=209.85.161.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VESyf2hS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v6Jm0wQN"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 935AF2540162;
-	Fri, 31 Jan 2025 15:05:48 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 31 Jan 2025 15:05:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738353948; x=1738440348; bh=guYUlAN+1G
-	MzsnrprX/TnUGKvoFSmkLDB77AzXdFcyI=; b=VESyf2hShup6LwhDqQXdK9fByB
-	uaFhzuqRv+4HrTVazw3hRyLbiCo9oESQdygCbnbKHU4aXxjZ/oxFCDIwfL3pr5me
-	MtH3zaeGU85wX6ON3qshYy9cuVivk8Ipij8DWWwqk09kHxjjmVsVIhwsjc1FtcG5
-	mHPCoKE2zWk3j+fJ9uO4VYc5jxyC4Y6FgIzprAmmWYH0szPKFdL4GQ1LmVcHjMTW
-	dVTXWnsI+sc29xAeNnh5vWySGgMAMbb45j74sHMNoP3lwngRBDaW6P+k/Iyd3ELz
-	jU3ksZYhpFA7mOEBRJ0jQkQrhWiANAKxNdLLA+i66WiE70D+i25zpEhekPOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738353948; x=1738440348; bh=guYUlAN+1GMzsnrprX/TnUGKvoFSmkLDB77
-	AzXdFcyI=; b=v6Jm0wQNQ42t3LGLK2/LLlNNVMU/MFLQMMDrUnVMIZUOgdR4fzC
-	J5pJw9sAp4Zeq9BTD8zb8o56MJvjgQp4zzf1Xi5TnOhNLfV43vsFp5Oyg3GLHEmw
-	z56V6rP3UqhMthQpviymgSm+d0QjnkDTn0XEW1+iSOUwg1SfRSz49f4j8rRLE28x
-	myzwqJwe6bq66Qy/ZENpwMR6w7H/3CelfSEGkaOQaQpauQWJMSsSFx9KUKhReiPG
-	kL1kZ2EcRmyhq55IrVsd+BjLS/cUV+QgzfNJZMLCfbrNk6/lOrDPvegxro7siAdK
-	CZ5fm5yzgeLODvsQWqJ419UtVcUNkU0fbOw==
-X-ME-Sender: <xms:Gy2dZ19RJCh-Y6YlVE01yJfE1tgeWescP7UGWyDidLx5Hufbvdgy_Q>
-    <xme:Gy2dZ5sbHGaiFsr54GizSiZ1TSx7TT1txg_CpQW2F0uzR-o9ZqssrYV1WIbj6qTBm
-    4mYRBg0_X4RnikhbA>
-X-ME-Received: <xmr:Gy2dZzBbCY_gNtDYnZLceDA12CCETpcRwRfmpqPLEOYcroLOJIDZy8KDxcGUXz4UU20tQqJ85SS_kTlSkUHdnSwhIxDU0kxQnWTq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeljedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
-    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
-    htvgdrnhgvthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
-    hopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheprhhssggvtghkvghrsehnvgig
-    sghrihgughgvrdgtohhmpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:HC2dZ5dfDEQKiOmYih7sCrkN90btEfEc55cAlUra4z31tMsUBXOXRg>
-    <xmx:HC2dZ6MhnmS8YKZEDKpiCUJaQC3Emhwm62PZHf_lN3tJvO2acrkAGw>
-    <xmx:HC2dZ7lgt8Ya7QOFZxz_HJFMl06XtBro1qQ0yYf-CUBxbgzPgj0gnA>
-    <xmx:HC2dZ0v2I2jkDMVUIZxPUhHTHH76CHu4_Z2U2w0iRHYFc_38-wyAOw>
-    <xmx:HC2dZxqUZG02r1gt5xxpG9uJpyft-_a4uvfwNcWwQBnrsFUp6CDtC8iC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jan 2025 15:05:47 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  sandals@crustytoothpaste.net,  stolee@gmail.com,
-  Johannes.Schindelin@gmx.de,  peff@peff.net,  rsbecker@nexbridge.com,  M
- Hickford <mirth.hickford@gmail.com>
-Subject: Re: [PATCH] credential: warn about git-credential-store [RFC]
-In-Reply-To: <pull.1856.git.1738352886190.gitgitgadget@gmail.com> (M. Hickford
-	via GitGitGadget's message of "Fri, 31 Jan 2025 19:48:06 +0000")
-References: <pull.1856.git.1738352886190.gitgitgadget@gmail.com>
-Date: Fri, 31 Jan 2025 12:05:46 -0800
-Message-ID: <xmqqlduq7nqd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="WdZEW0SL"
+Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5f8d5e49ea1so50078eaf.3
+        for <git@vger.kernel.org>; Fri, 31 Jan 2025 12:11:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=shopify.com; s=google; t=1738354271; x=1738959071; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nPXUIyUW34bdwcCVvwpfhR0woegJqdaCTS2vd+JlKWY=;
+        b=WdZEW0SLzsNBRKiUlCDWBUjdpU6AAzYT288VRDrfMB4U4g+qnHsza9+Hm8zvZc5mXS
+         qLDsZAi3grpwvi6iqn2hBgkkOmZvxcfSR/uIqspSMUIo976mMSFkaILBvrNGPRv7NX4P
+         syUaStj3urQrylyFWqcCN9Vqdkd2Ph+pJIrtA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738354271; x=1738959071;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nPXUIyUW34bdwcCVvwpfhR0woegJqdaCTS2vd+JlKWY=;
+        b=TmI/aA5oLkFpUBbyOawR2nu1DKUMVGNaaSu8vaIr2G0pFHLO3Myv4uxtgHWiTp3Teb
+         KIjT+t+3je92/v0DyVQoKnEQ0POedDCHz7IskLft5KzkmweesFJpkwP8UdvLm1MQ7oD9
+         GcpKU+4AHRIBlBvA/L0Tu22zQiTKYnxZErf1hrnwF7gkv+c7+Ph0m+L/KzkUMhWHtor8
+         aFk1OzUKFEj0Qi2jwg92o/hA0WFtLq2PKKFgyVt+5SV3GDVOp2/pUNAFbzqkkt5BNfPx
+         id+X7DvSYg9MMbUGhuFI1ZSOYIGQUN2fv6YXlXpBN3s5pwLbJdEkpQ2KwWvc1n3yvdnt
+         TRoA==
+X-Forwarded-Encrypted: i=1; AJvYcCUGIrEQe2CFOQXYJNVeOMF4phEKxtDcj9wSb3IfZCNPo7p2Dkrjnr5OESjgNt7ka/eGopM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyX2kqdVqVRCE8GKRvIFfa4laOrDTTuBSVSvI93tLtzYdRpCHTa
+	AUajZbgEazbQGcD5F1wMizzKgulVxMcank+4cUyFdiQLOLIZQyOCjMph27kN0afu5LNHafC6dym
+	dIk20L5FIPrDBl8OL5nBg2w2kM5UVfJYpyJ8IKw==
+X-Gm-Gg: ASbGncurhJTeZiMvL/k7fAWzsThRuCoRwmo9i56Qodz4ifrp7g+RkwwVNKpCR8cQ3NJ
+	2p21S9FDmtMw2a5ydi8Xtt27V0s6ZFHjwQUonLMfw30EIdaWiICkmZrv2d0uPq7LpHb/BaL2u3z
+	OtnH4JHnJQoq1OSALZ10HYZbo5FnSALA==
+X-Google-Smtp-Source: AGHT+IGnRGHqMXGmXPApRWPAhSHQThFymevJUdi9BHPkPVHInLC36t4CazGNecuAxlc/VPvTpBLDDp6iofODI6emat8=
+X-Received: by 2002:a05:6870:af93:b0:29f:de73:b4e3 with SMTP id
+ 586e51a60fabf-2b32eb80769mr2876956fac.0.1738354271186; Fri, 31 Jan 2025
+ 12:11:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com>
+ <pull.1829.v3.git.1738346881907.gitgitgadget@gmail.com> <xmqqcyg294ft.fsf@gitster.g>
+ <xmqq8qqq943u.fsf@gitster.g>
+In-Reply-To: <xmqq8qqq943u.fsf@gitster.g>
+From: Olga Pilipenco <olga.pilipenco@shopify.com>
+Date: Fri, 31 Jan 2025 13:11:00 -0700
+X-Gm-Features: AWEUYZkKxsa8riyLf9nqAV0-Z2L1chtBWPvR8B7KSn3opkmykwlYcPCp9NGSoqs
+Message-ID: <CAFLeGL52tKmurpAHymk42Y9DGazbK8nRdtWAoyzW85eMDxJQhQ@mail.gmail.com>
+Subject: Re: [PATCH v3] worktree: detect from secondary worktree if main
+ worktree is bare
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Olga Pilipenco via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> -	if (!c->password)
-> +	if (!c->password) {
-> +		if (c->helpers.nr >= 1 && starts_with(c->helpers.items[0].string, "store"))
-> +			warning("git-credential-store saves passwords unencrypted on disk. For alternatives, see gitcredentials(7).");
+On Fri, Jan 31, 2025 at 12:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > "Olga Pilipenco via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> >
+> >> +/*
+> >> +* When in a secondary worktree, and when extensions.worktreeConfig
+> >> +* is true, only $commondir/config and $commondir/worktrees/<id>/
+> >> +* config.worktree are consulted, hence any core.bare=3Dtrue setting i=
+n
+> >> +* $commondir/config.worktree gets overlooked. Thus, check it manually
+> >> +* to determine if the repository is bare.
+> >> +*/
+> >> +static int is_main_worktree_bare(struct repository *repo)
+> >> +{
+> >> +    int bare =3D 0;
+> >> +    struct config_set cs =3D {0};
+> >> +    char *worktree_config =3D xstrfmt("%s/config.worktree", repo_get_=
+common_dir(repo));
+> >> +
+> >> +    git_configset_init(&cs);
+> >> +    git_configset_add_file(&cs, worktree_config);
+> >> +    git_configset_get_bool(&cs, "core.bare", &bare);
+> >> +
+> >> +    git_configset_clear(&cs);
+> >> +    free(worktree_config);
+> >> +    return bare;
+> >> +}
+> >
+> > That is nicely described.
+> >
+> >>  /**
+> >>   * get the main worktree
+> >>   */
+> >> @@ -79,16 +101,11 @@ static struct worktree *get_main_worktree(int ski=
+p_reading_head)
+> >>      CALLOC_ARRAY(worktree, 1);
+> >>      worktree->repo =3D the_repository;
+> >>      worktree->path =3D strbuf_detach(&worktree_path, NULL);
+> >> -    /*
+> >> -     * NEEDSWORK: If this function is called from a secondary worktre=
+e and
+> >> -     * config.worktree is present, is_bare_repository_cfg will reflec=
+t the
+> >> -     * contents of config.worktree, not the contents of the main work=
+tree.
+> >> -     * This means that worktree->is_bare may be set to 0 even if the =
+main
+> >> -     * worktree is configured to be bare.
+> >> -     */
+> >> -    worktree->is_bare =3D (is_bare_repository_cfg =3D=3D 1) ||
+> >> -            is_bare_repository();
+> >>      worktree->is_current =3D is_current_worktree(worktree);
+> >> +    worktree->is_bare =3D (is_bare_repository_cfg =3D=3D 1) ||
+> >> +            is_bare_repository() ||
+> >> +            (!worktree->is_current && is_main_worktree_bare(the_repos=
+itory));
+> >
+> > Is "this worktree does not have is_current bit set" equivalent to
+> > "this worktree is the main one, so is_main_worktree_bare() needs to
+> > be consulted"?  That linkage between "the is_current bit unset" and
+> > "is the main worktree" is not obvious to me.
+>
+> Does the thinking behind it go like this?
+>
+>     We grabbed the "main" worktree object and stored it in worktree;
+>     it is either our current worktree (in which case is_current is
+>     true), or it is not (in which case, is_current is false).  We
+>     know that the old logic failed when asking the "is it bare"
+>     question from a secondary worktree.  !worktree->is_current tells
+>     us that we _are_ asking the question from a secondary worktree,
+>     so we need to make the extra call to check config.worktree file
+>     as well in that case.
+>
+> Perhaps the logic is clear to those who diagnosed the problem, wrote
+> the patch, and reviewed it, in which case there is no reason to
+> reroll.  Perhaps it was just me to whom it was not obvious that
+> the purpose of "is_current" check was not about "are we looking at
+> the main worktree" but was about "if we are not in the main worktree,
+> we need this extra check".
+>
+> Thanks.
 
-I have no strong opinion on the details of how the detection of use
-of the "store" helper should be implemented, but I recall reading
-somewhere that users can configure more than one helpers and they
-are used in casdading fashion?  Insecure helpers may be configured
-to come later on the list, so [0] might not be sufficient.  A few
-other things are that git-credential-store could be installed in an
-unusual place and credential.c:credential_do() may find it from its
-absolute path.  Also the end-users can use third-party helpers,
-whose names we do not control, but presumably they will not name
-theirs exactly the same as the one we ship, so starts_with() may
-want to get a bit tightened.  If somebody writes a custom helper
-"git-credential-store-securely" and installs the binary in a
-directory where "git" can find via the usual GIT_EXEC_PATH mechanism
-as "git credential-store-securely", helpers.items[].string would say
-"store-securely".
+You did a great job figuring it out and I agree it's confusing at
+first, but we tried
+our best to make it less confusing.
+`is_current` check is actually not necessary there, but having it there sav=
+es
+extra unnecessary calculations, also describes & fixes the exact scenario
+that didn't work (not being able to see main worktree as bare from a
+secondary worktree).
 
-I agree with you that it is a rather unfortunate layering violation
-that you need to know what helper would see the result from this
-function, because you want to warn before the user gives the
-password to us.
-
-Warning immediately before the bits hits the disk platter (i.e., the
-result of _fill() is passed to the helper) is not as secure because
-there is no way to say "ah, was I using an insecure backend?  Then
-please stop and do not store it there" later, so I do not think of a
-strong reason to claim that it is a wrong place to give the warning.
-
-Regarding the warning message, you may want to consider using the
-advice mechanism for a thing like this, perhaps?  If somebody has a
-legitimate reason why they need to use and cannot move away from the
-backend, it does not help them at all to keep giving the same
-warning() they are already aware of, without a way to say "Yes, I
-know, I've seen it enough times, go shut up, please".
-
-Thanks.
+Thanks for looking into that.
