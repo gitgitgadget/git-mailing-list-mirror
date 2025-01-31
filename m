@@ -1,170 +1,128 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4912E155C88
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 20:11:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6085482EB
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 20:15:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738354274; cv=none; b=N98vMDj5czn2bmmcb5zGzMS/Xs/K7IkZDDz6yBNXfXDi8roWHSm+kWrRHMDinrbMtjqXyS5KxsFHRZWa5/EsrZ1e+xhtE1XCGPVqfiRDoh+kzsuMIeenUt1AaTFVW4c1kp6U9TAsULowdemovBBb4xxU72UYKdbt1wGT29BaUTw=
+	t=1738354540; cv=none; b=UAOcVY2DCEZZHmAfxGxw6flge1yPCN7otqPE2MCb+dNukVfithQeb3iIh6KTrOIz6el1l1hckNb/y+TzQo3oyi+ui9+i76JvG5p7zpryaRopMaJL4azY467cIHz8eIwoeF/RNO6c9ItFZHpwgk1/uSzoGeGDWhfgRgmRK8Dj4ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738354274; c=relaxed/simple;
-	bh=Gdj0/hL4j2VCpPBmULNucjS+BIvqVPU5bMtWs8PdC8M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=O8fEnUZzyMY5OJqoEx2k0x0Ii8dqD9i8H10bl/8/BobqwOE9oURPA4M6pahfmSmyLRllTG6aLTNp9BKSTMX5MC9rKN2TiuGf0TzpCpFcWMC66pDdjBU3yd1367H1GhzJLAV5jDpEMKVlsGOmPszTEIzGfWQA1T0T7kHnEeaXfXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=WdZEW0SL; arc=none smtp.client-ip=209.85.161.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
+	s=arc-20240116; t=1738354540; c=relaxed/simple;
+	bh=0qqKjRvtUXaSGVCmqLMxqkAeET41gzcx18dr0Rmfg5A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IP+Dq0vwisEbKzl/LRLXPPDwtM4FGr4Doy3ogOBAPwdTzuRdnq/Hc1+N04vnEXgpHJIhGOaEe2VAeQkPFsEfCXWU9QPELmcYTZuTcO2WCXjfeDoMyupvYAPz88VpXs0n2kxHn/a0kYlmAcTJzOcTRDxrjGiF7e32wPF3E/r9YoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jBfw5hai; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aMUYvcyu; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="WdZEW0SL"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-5f8d5e49ea1so50078eaf.3
-        for <git@vger.kernel.org>; Fri, 31 Jan 2025 12:11:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shopify.com; s=google; t=1738354271; x=1738959071; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nPXUIyUW34bdwcCVvwpfhR0woegJqdaCTS2vd+JlKWY=;
-        b=WdZEW0SLzsNBRKiUlCDWBUjdpU6AAzYT288VRDrfMB4U4g+qnHsza9+Hm8zvZc5mXS
-         qLDsZAi3grpwvi6iqn2hBgkkOmZvxcfSR/uIqspSMUIo976mMSFkaILBvrNGPRv7NX4P
-         syUaStj3urQrylyFWqcCN9Vqdkd2Ph+pJIrtA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738354271; x=1738959071;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nPXUIyUW34bdwcCVvwpfhR0woegJqdaCTS2vd+JlKWY=;
-        b=TmI/aA5oLkFpUBbyOawR2nu1DKUMVGNaaSu8vaIr2G0pFHLO3Myv4uxtgHWiTp3Teb
-         KIjT+t+3je92/v0DyVQoKnEQ0POedDCHz7IskLft5KzkmweesFJpkwP8UdvLm1MQ7oD9
-         GcpKU+4AHRIBlBvA/L0Tu22zQiTKYnxZErf1hrnwF7gkv+c7+Ph0m+L/KzkUMhWHtor8
-         aFk1OzUKFEj0Qi2jwg92o/hA0WFtLq2PKKFgyVt+5SV3GDVOp2/pUNAFbzqkkt5BNfPx
-         id+X7DvSYg9MMbUGhuFI1ZSOYIGQUN2fv6YXlXpBN3s5pwLbJdEkpQ2KwWvc1n3yvdnt
-         TRoA==
-X-Forwarded-Encrypted: i=1; AJvYcCUGIrEQe2CFOQXYJNVeOMF4phEKxtDcj9wSb3IfZCNPo7p2Dkrjnr5OESjgNt7ka/eGopM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyX2kqdVqVRCE8GKRvIFfa4laOrDTTuBSVSvI93tLtzYdRpCHTa
-	AUajZbgEazbQGcD5F1wMizzKgulVxMcank+4cUyFdiQLOLIZQyOCjMph27kN0afu5LNHafC6dym
-	dIk20L5FIPrDBl8OL5nBg2w2kM5UVfJYpyJ8IKw==
-X-Gm-Gg: ASbGncurhJTeZiMvL/k7fAWzsThRuCoRwmo9i56Qodz4ifrp7g+RkwwVNKpCR8cQ3NJ
-	2p21S9FDmtMw2a5ydi8Xtt27V0s6ZFHjwQUonLMfw30EIdaWiICkmZrv2d0uPq7LpHb/BaL2u3z
-	OtnH4JHnJQoq1OSALZ10HYZbo5FnSALA==
-X-Google-Smtp-Source: AGHT+IGnRGHqMXGmXPApRWPAhSHQThFymevJUdi9BHPkPVHInLC36t4CazGNecuAxlc/VPvTpBLDDp6iofODI6emat8=
-X-Received: by 2002:a05:6870:af93:b0:29f:de73:b4e3 with SMTP id
- 586e51a60fabf-2b32eb80769mr2876956fac.0.1738354271186; Fri, 31 Jan 2025
- 12:11:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jBfw5hai";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aMUYvcyu"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 67ED62540195;
+	Fri, 31 Jan 2025 15:15:37 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 31 Jan 2025 15:15:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738354537; x=1738440937; bh=tJyaM6/LEj
+	fwmeaCxGZLjjykn9OouDbfWacwZZbEnFU=; b=jBfw5haikTQL+k7j2EjmDttCqU
+	jFBY39TnqYj9dV4D6UmFxmpUdLUK+3JkptjhoWw5TMAo7R0GMiZrBFcPUz2upWLw
+	2mZ2TbUDETVRye5caihCDTbQ2cf3BTsZqRt+XTH3ZK79rzKFNyz5OGU0x+03r5M7
+	+upb+F40Qz9gHRyWDiH3geE9/1AC1saFG/S7HPfX9puUtoYQ3rhGYZ8oRc8kbVs+
+	opfMt3L4M3sevTPuT/iQuX+iBQGyo3y5jVFIH9DxsZ0b657j9mMJ2vyN1/qHSu3p
+	FyFIM1p2wjoto/fRG1146JR9BtudFXNQP3+xiDW2A95fQC06NzsEyZXNrCew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738354537; x=1738440937; bh=tJyaM6/LEjfwmeaCxGZLjjykn9OouDbfWac
+	wZZbEnFU=; b=aMUYvcyu2c/JLw0E6b0eia9uh4OZhE7FcdzndpEqpbCFSgIKMEb
+	5396CjAL9kxv0HwbFDTda/176QxSbV1Il60NwrcdwI8zZ2Cuk+OVnKYoYQ+mOrnE
+	bSkidG7MKlXawjVvbim3DPSIiWEDc3x47pcVXelJ06vy/RXdEjeeDQ86Wcgy7+mN
+	ZlNXAaYkJj/WlE+T21xIyma301GISKU7b+WqLKdsDZsJEmsI+ix20bJ9/ZIQaV1L
+	NH8Z6l46U8/DfOyjfdIL8ak29NVd/W9fS0WVOCdStfDpugVRHZUHRsmHmk2+1BIp
+	g6duOqUJRJ/4F2E1nHdhGRK46Y23ipJbTww==
+X-ME-Sender: <xms:aC-dZ1xN_LKq1eP-UghvYAO2H_aSLz54dSqEW9pVfgDovkI4Vd2GoA>
+    <xme:aC-dZ1S0s0NEP_rUbR120rNGiquxybxaqjdrPj7EVcH-NmYl41rFxzQq5nJU7tt70
+    90whkXVb5qhxmLm-w>
+X-ME-Received: <xmr:aC-dZ_WXV1QP57puzGNKdeGDi6prk1JQLEcm1stA7_Sj42ZaQnql6DmTIzjiCilQmURY1XC0wqH3CqG_NEWW4BTM9YSuZJbuqdXO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeljeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepuddupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkih
+    hnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghn
+    rdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehj
+    ohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrd
+    hstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepmhgvsehtthgrhihlohhr
+    rhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorh
+    hgrdhukhdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomh
+X-ME-Proxy: <xmx:aC-dZ3g9kWw2lKI_fIrWo0TFj5jZTrWdumnQ1LH5G7sq7rdDTh8-0w>
+    <xmx:aC-dZ3DA9K0zQ0T1IDF4HwZDEbk5IxuhHjbAFst2ndRYDBCJGkHhJA>
+    <xmx:aC-dZwIsQf6eeawHk-SiWzKWfVIyk2k995l3qegRaXbxWfum_aSI-w>
+    <xmx:aC-dZ2Aav491ecLlYkY0C4CKqbrIKiqcLeBusI9Q7A_2xh3EWJ_Hhg>
+    <xmx:aS-dZ0JDYgAyUBT4UsldpDii789qMgSiYuJE7PTSwMe2HndXCCprM5QU>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 31 Jan 2025 15:15:35 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
+  ps@pks.im,  johncai86@gmail.com,  Johannes.Schindelin@gmx.de,
+  me@ttaylorr.com,  phillip.wood@dunelm.org.uk,  rsbecker@nexbridge.com,
+  sunshine@sunshineco.com
+Subject: Re: [PATCH v3 0/6][Outreachy] Introduce os-version Capability with
+ Configurable Options
+In-Reply-To: <CAPSxiM9xO+GPNrScQS0C02qNJM8M+hOpEfkr0Vp1Tz3i_jkCjA@mail.gmail.com>
+	(Usman Akinyemi's message of "Sat, 1 Feb 2025 01:12:34 +0530")
+References: <20250117104639.65608-1-usmanakinyemi202@gmail.com>
+	<20250124122217.250925-1-usmanakinyemi202@gmail.com>
+	<xmqqed0sxdiz.fsf@gitster.g>
+	<CAP8UFD31A9KuqzXrDWzjokWzBtTYsF1FGJPX8PFAWXnn_2BH_w@mail.gmail.com>
+	<xmqq5xm0wa5l.fsf@gitster.g>
+	<CAP8UFD1+Qa2cRkYs8R_Lgr8Bkz7YqPUW6Q3ogKcrBSp+q-3qbw@mail.gmail.com>
+	<xmqqzfj77xd7.fsf@gitster.g>
+	<CAPSxiM9xO+GPNrScQS0C02qNJM8M+hOpEfkr0Vp1Tz3i_jkCjA@mail.gmail.com>
+Date: Fri, 31 Jan 2025 12:15:34 -0800
+Message-ID: <xmqqh65e7na1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com>
- <pull.1829.v3.git.1738346881907.gitgitgadget@gmail.com> <xmqqcyg294ft.fsf@gitster.g>
- <xmqq8qqq943u.fsf@gitster.g>
-In-Reply-To: <xmqq8qqq943u.fsf@gitster.g>
-From: Olga Pilipenco <olga.pilipenco@shopify.com>
-Date: Fri, 31 Jan 2025 13:11:00 -0700
-X-Gm-Features: AWEUYZkKxsa8riyLf9nqAV0-Z2L1chtBWPvR8B7KSn3opkmykwlYcPCp9NGSoqs
-Message-ID: <CAFLeGL52tKmurpAHymk42Y9DGazbK8nRdtWAoyzW85eMDxJQhQ@mail.gmail.com>
-Subject: Re: [PATCH v3] worktree: detect from secondary worktree if main
- worktree is bare
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Olga Pilipenco via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Jan 31, 2025 at 12:26=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > "Olga Pilipenco via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> >
-> >> +/*
-> >> +* When in a secondary worktree, and when extensions.worktreeConfig
-> >> +* is true, only $commondir/config and $commondir/worktrees/<id>/
-> >> +* config.worktree are consulted, hence any core.bare=3Dtrue setting i=
-n
-> >> +* $commondir/config.worktree gets overlooked. Thus, check it manually
-> >> +* to determine if the repository is bare.
-> >> +*/
-> >> +static int is_main_worktree_bare(struct repository *repo)
-> >> +{
-> >> +    int bare =3D 0;
-> >> +    struct config_set cs =3D {0};
-> >> +    char *worktree_config =3D xstrfmt("%s/config.worktree", repo_get_=
-common_dir(repo));
-> >> +
-> >> +    git_configset_init(&cs);
-> >> +    git_configset_add_file(&cs, worktree_config);
-> >> +    git_configset_get_bool(&cs, "core.bare", &bare);
-> >> +
-> >> +    git_configset_clear(&cs);
-> >> +    free(worktree_config);
-> >> +    return bare;
-> >> +}
-> >
-> > That is nicely described.
-> >
-> >>  /**
-> >>   * get the main worktree
-> >>   */
-> >> @@ -79,16 +101,11 @@ static struct worktree *get_main_worktree(int ski=
-p_reading_head)
-> >>      CALLOC_ARRAY(worktree, 1);
-> >>      worktree->repo =3D the_repository;
-> >>      worktree->path =3D strbuf_detach(&worktree_path, NULL);
-> >> -    /*
-> >> -     * NEEDSWORK: If this function is called from a secondary worktre=
-e and
-> >> -     * config.worktree is present, is_bare_repository_cfg will reflec=
-t the
-> >> -     * contents of config.worktree, not the contents of the main work=
-tree.
-> >> -     * This means that worktree->is_bare may be set to 0 even if the =
-main
-> >> -     * worktree is configured to be bare.
-> >> -     */
-> >> -    worktree->is_bare =3D (is_bare_repository_cfg =3D=3D 1) ||
-> >> -            is_bare_repository();
-> >>      worktree->is_current =3D is_current_worktree(worktree);
-> >> +    worktree->is_bare =3D (is_bare_repository_cfg =3D=3D 1) ||
-> >> +            is_bare_repository() ||
-> >> +            (!worktree->is_current && is_main_worktree_bare(the_repos=
-itory));
-> >
-> > Is "this worktree does not have is_current bit set" equivalent to
-> > "this worktree is the main one, so is_main_worktree_bare() needs to
-> > be consulted"?  That linkage between "the is_current bit unset" and
-> > "is the main worktree" is not obvious to me.
->
-> Does the thinking behind it go like this?
->
->     We grabbed the "main" worktree object and stored it in worktree;
->     it is either our current worktree (in which case is_current is
->     true), or it is not (in which case, is_current is false).  We
->     know that the old logic failed when asking the "is it bare"
->     question from a secondary worktree.  !worktree->is_current tells
->     us that we _are_ asking the question from a secondary worktree,
->     so we need to make the extra call to check config.worktree file
->     as well in that case.
->
-> Perhaps the logic is clear to those who diagnosed the problem, wrote
-> the patch, and reviewed it, in which case there is no reason to
-> reroll.  Perhaps it was just me to whom it was not obvious that
-> the purpose of "is_current" check was not about "are we looking at
-> the main worktree" but was about "if we are not in the main worktree,
-> we need this extra check".
->
-> Thanks.
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-You did a great job figuring it out and I agree it's confusing at
-first, but we tried
-our best to make it less confusing.
-`is_current` check is actually not necessary there, but having it there sav=
-es
-extra unnecessary calculations, also describes & fixes the exact scenario
-that didn't work (not being able to see main worktree as bare from a
-secondary worktree).
+> Do you have any concerns "git/2.47.1 Windows" instead of
+> "Windows git/2.47.1" ?
 
-Thanks for looking into that.
+Either is fine.  I expect that
+
+ (1) Implementors on _our_ side will do the sensible thing and
+     reviewers help them to make sure, where the definition of "the
+     sensible thing" will be that whatever order we pick, we
+     consistently use that same order.  If "git/2.47.1 Windows" is
+     how GfW identifies itself, "git/2.48.1 Linux" or "git/2.49.0
+     macOS" would be its contemporary counterparts, and _our_
+     binaries would not identify themselves as "Linux git/2.49.0".
+
+ (2) Implementors of third-party reimplementations of Git will just
+     mimick what we will do, as long as we tell them our intention
+     (i.e. this is a single opaque unparsable string to be collected
+     for statistics, nothing more) clearly enough.
+
+ (3) Most users are lazy and/or trusting enough that only a very few
+     minority privacy conscious folks would configure it away,
+     making their "IamNotTellingYou" agent string merely an
+     insignificant noise in the statistics.
+
