@@ -1,137 +1,105 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CEB136A
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 04:51:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B59838DD3
+	for <git@vger.kernel.org>; Fri, 31 Jan 2025 07:05:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738299117; cv=none; b=nNfkgJcHunC8L0StjwB2h94fjMjqC54D8r4NqhplhhwEI9Dy2xnJXAJo1Lm/M8cloGBZxPO5MiAfx3uA2Tlf2Hw7XkPQXJ5CeMMCL6zqVzHIRgai8Fsh6r9gUcYlHHJCTdgcnWylWM9CsBWRGw1lZ6Y7mjtgANMxxQ09xx9yw+M=
+	t=1738307124; cv=none; b=mB/gkQSUPUar3/502kGYvV+Ekmdprd99CLyxBTkyHlomD9MJi8/6ns5nk54Ru8r1OEy3pTFyY53bWnWy0HGpZ0+EGEl/F9CJNy//Qi5NWL0eHfIL3kI1KuHNsucIV+wj4Ww2FY2Wt82eyRql9i55+c3fuhKAR5KOdtqFuEb1Qww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738299117; c=relaxed/simple;
-	bh=ONVkdVdH43PoQkk2OsHrZUOIgIjd5fT+gMX4XEhH2MI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=njCm3+w1epsN9SXSiJl2tD3uPFw4VkNJXU6emwrcPcs98R6zO5jf3k7ZGhN2W3M841ISmJyDst1ifX7qqTnsxNYHWEHOXfwdkjWJYTKrfbN0LuGk/z9uGHGYgn/PDdjlA68X83Iwbc1S1fba6kvdQGLIa+G/Om66z8iEWj2qgFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=esHuAkqr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nyE8l38j; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1738307124; c=relaxed/simple;
+	bh=3hBA1BVc9vj0I/GtTrmOCZeKC3RzgpmIRo+NKbiElhE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RM1RZ4SqnvsA3TN7W1TMtC6i0Ks/GTEXMPIt+OS7HRV73uNPY0r8tuObtmtBbB5Ifrn8c5kywZci7OgZFRWX9QrVEWv0Bsc1bpU8RQllQC7LGU2mSP68uz8uotTSDLetsdjZZFcTSHbgv0EWDdpAxN2Q6JD3ZaA1XjEcHh7eBgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=V8nVqCjf; arc=none smtp.client-ip=209.85.161.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="esHuAkqr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nyE8l38j"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8807D254011D;
-	Thu, 30 Jan 2025 23:51:54 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 30 Jan 2025 23:51:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738299114; x=1738385514; bh=IfUTOvJW8F
-	hUBiWkc1APxXjkefoHu/3jciX1rQe4QvQ=; b=esHuAkqrclSwNC0wFy26+ery+b
-	b7+vJuuenzU8qu7JGQhTskoGSPMhwcq4oEWBFBIpIlBeH4HpTnDL1ATKPy24O1m7
-	oE/8cwtVHKDAnD7yhyQo/MwPuyj2NLv2I1GF8vHwyxgC0tTFGsvArr4MIsI+hHIE
-	HCQJfIYlLzR6fkWiOaoZ4d+4kcFhmLeQvme9DuTl09tPW8+fi3t6W7FIfUWiuV3t
-	14WpjX21sGCzZ98Q3z1lBrwPAVMItbSWhe5oV+9fJ3dx8JMP4Cd8zJFGM3vBsSii
-	Tsg2t5fOlMOl9FMflyn18DtNGdsbVS9VFat5shsiZXWUCA/bT36C/wYcZFIg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738299114; x=1738385514; bh=IfUTOvJW8FhUBiWkc1APxXjkefoHu/3jciX
-	1rQe4QvQ=; b=nyE8l38jETDJpbgbnRn1fhC75LbYRc4ml8WDBnSqeOn1w9MjjIL
-	aVHviBRlg0ffVhqKIPT7+9B2cK5YPALlLzjP8fStlmgu6/8XgjbxVtF6Z/H8H1IP
-	FvgtdEzL+cru8GpySTWLTvBKf93qjGuExL3AL3REgednC0fZAexeEz7u9JmoRt7m
-	dgbAwnJFwelEjePwHvy/2N+9p4Bv7Jmyo5nWOAVLO/ISvmSiFZ0Uw6CSkx10sWra
-	dLVmedRe7vmOJD4IJ8hS4HTTV/vQBZxvZ/9XcijQGpbhPVXX0/WbO/MVdpspfGdg
-	BryTR1a5LBqGbyKrq/+Oi79KYfiPuG8d5yw==
-X-ME-Sender: <xms:6lacZzXbK1nqk6se7JX-5z4P3k2m314drLlw_-WxarU4ki-r_5WkWg>
-    <xme:6lacZ7kPcLHhORI0ZVmvuDDuvN431sqBN1SuDgyIKrMznTJQc9z-qnJMO31DU-iIK
-    Pq-1LYRQW5z817Jxg>
-X-ME-Received: <xmr:6lacZ_Y_wx7g6lb0kl_CjOUDXl9d1YN1nW_mEKhfgIJGfYnC69Y53uvDOtkCi4BZAiOC4DFFkoP7xPkjz7AFS8bO0gZues85EwMxR8eQxwXL5g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejkedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrghr
-    thhitgdrshhivhgrrhgrrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhish
-    htihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:6lacZ-WrRBSrp_rsrYxqO4WMgA7-zQhkQzQCiI6Zo81FOG9fRGd5Qw>
-    <xmx:6lacZ9myDJ3AkVibgOgKPP8gzEnk1Up0DKEGzUCwH3pJUo_Pb-15Ow>
-    <xmx:6lacZ7e4Cdb6tCgLUSmMs4b_NSItANVChwQT8zpuD-BfMoasU1KCjg>
-    <xmx:6lacZ3GhaUvhlu8RVKtf7PqlKsOrmEYD_xNAUUdJjRfiqiTuu-99YQ>
-    <xmx:6lacZ2CNKS0y5dKUplNdEoPHNsemWiup75ZhfxCWKpo2RfxGTkb3-oNp>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 30 Jan 2025 23:51:53 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 722c148c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 31 Jan 2025 04:51:52 +0000 (UTC)
-Date: Fri, 31 Jan 2025 05:51:51 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git in GSoC 2025
-Message-ID: <Z5xW57fsOCNcGViY@pks.im>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
- <Z44u7od-mDiKcKVZ@pks.im>
- <xmqqr04vzyz9.fsf@gitster.g>
- <b784f612-4b6b-414a-9742-86611c50c55f@gmail.com>
- <Z5srHBSPKQlsuH53@pks.im>
- <xmqqjzaccdpn.fsf@gitster.g>
- <xmqqr04kaufo.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="V8nVqCjf"
+Received: by mail-oo1-f54.google.com with SMTP id 006d021491bc7-5f2dff625c2so44632eaf.0
+        for <git@vger.kernel.org>; Thu, 30 Jan 2025 23:05:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=shopify.com; s=google; t=1738307120; x=1738911920; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3hBA1BVc9vj0I/GtTrmOCZeKC3RzgpmIRo+NKbiElhE=;
+        b=V8nVqCjfP4/V5RreVag4sHphL31OqUKyJL6UFqb29ITVhMwAVBDUdi+ZjwQscDKO25
+         oyzmcFSwMrAiOZeiM9SkUx4dYZQLt98H8c9jIwfL5A8uDrS0iw+YUmWmzozeslpl45Ry
+         ZBqT1Gl+1vG8I0Yl80k40vOt6LP2W8UkGH9+I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738307120; x=1738911920;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3hBA1BVc9vj0I/GtTrmOCZeKC3RzgpmIRo+NKbiElhE=;
+        b=ngHC5wZKMP65nZkBgTj/yqHVzVLduXf4UCula0W55s91vUL6UQCL0aS21Yz+BPh7M+
+         ztbZsSxpCq8ocXre8S9aS9HdUe3gijTsa96JAC0iSk3jgVNL0gURJHoJQCIqNlpUqSUW
+         8zIU+9QGRLkiEyw1c5jvLad3mRCL3eVaJFLDLV1Q27VtnX00VZpQaOdl5lYTJc9Hcl/j
+         QsiiE3qJU8zl+S9hq/QXaf4XUUj+sCv6C5TvJ6NPK421YVwmXjhC2rQ+qvhmpMsQ66sV
+         fu/OIUNQOJ/+Jg60VYHYiYFQXe658paclgRWqn3xpcA0LxSfF5eKpcEh4JRYxg7FdyQ+
+         uNtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVCTDiHzK475tNu/hLCOHrOeGVj2b0IZBWVJhB7lBKB2ltZ6xMmKePoKiOsi5qMOGrjpak=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw767Z+cHLqB/dDMiTli20a9n6ZsNGsYoonVm7VR5+Ibm24/N1U
+	GK/krn1xWEJZ2YJRtikrq1GCrhfS6Lhh/ak8jf/MZkccKWTHIJE/XQdYo8pCEqkg+K5dbCBg4D/
+	f9acA8sIH2otC6qIK8U5rIofbYXm/g3TzCqrzPQ==
+X-Gm-Gg: ASbGncu07fGr5XG7Z2QxSFbXsbDl5rwV0ajyBV4ZKMy6ZTC0kwdmxbxNebflokV+LvE
+	8yAkGe6+Hjg6Yw68dvRmSQVJqaxUVAQbS1zMPOSdEYem+2mH79i8RmJsViRVCAIlaBWWdjDVDvw
+	6qou3krPMM9BdyUxyXVGTtCwKEdL+umg==
+X-Google-Smtp-Source: AGHT+IGDPET2tphLDibZmiqNnSESLXMyXwsmmyT+Fp+xkwpXpMRB5ixsNuGCxb1mTvGmkXkV9o4u8BydPaSqiEvfo8A=
+X-Received: by 2002:a4a:d0a2:0:b0:5f2:37de:5808 with SMTP id
+ 006d021491bc7-5fc000e7e12mr2065300eaf.0.1738307120545; Thu, 30 Jan 2025
+ 23:05:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqr04kaufo.fsf@gitster.g>
+References: <pull.1829.git.1731653548549.gitgitgadget@gmail.com>
+ <pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com> <CAPig+cRpKKpVHT8x6nOx1KNjWR=hywz-nHZga9fhiXMXD7KOSw@mail.gmail.com>
+ <116C27A8-EF7B-42E1-9606-815FDA3CF94C@shopify.com> <CAPig+cSdbjzTmsBOmFnMxzYLGrUzY46=mkW9S+si2KxLhS623Q@mail.gmail.com>
+ <F15C12AB-2238-4553-AFA5-18277B18CE5A@shopify.com> <CAPig+cTHfD1fK73+S3fqQ+Oz_VpBzap5=nFFE1bntSeaHLcu8g@mail.gmail.com>
+ <CAPig+cRv9Z2mQ964PNgbbgk+ByGvC1EMNc6=-itD_7v6_4Pg+A@mail.gmail.com>
+In-Reply-To: <CAPig+cRv9Z2mQ964PNgbbgk+ByGvC1EMNc6=-itD_7v6_4Pg+A@mail.gmail.com>
+From: Olga Pilipenco <olga.pilipenco@shopify.com>
+Date: Fri, 31 Jan 2025 00:05:09 -0700
+X-Gm-Features: AWEUYZkJAp6vOQ8dKwAFEI76QFXIkncgm3nnrHVV_0yCoUwsiTsTxkutC0dleQE
+Message-ID: <CAFLeGL5L=Pv4RH7-7Os+khewvtxHDTX+a4hmmORz=b_e-1FLoQ@mail.gmail.com>
+Subject: Re: [PATCH v2] worktree: detect from secondary worktree if main
+ worktree is bare
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Olga Pilipenco via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jan 30, 2025 at 01:00:27PM -0800, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
-> > I do not mind either word, either, but I have two small issues to
-> > raise:
-> >
-> >  - Is each topic "owned" by some specific person?  Would an owner
-> >    retires from the project, would the leftover bits go away with
-> >    the owner?
-> 
-> I obviously meant "When an owner retires", but more importantly, I
-> should have offered an alternative here, instead of just raising it
-> as an issue.
-> 
-> How about making the rule a lot simpler?
-> 
->     The expiration date kicks in _mechanically_, i.e. stale entries
->     are unconditionally dropped at the date, based solely on the
->     comparison between the timestamp and the wall clock.
-> 
-> People are free to advocate for its continued existence, and when
-> such an effort achieves a concensus among then-active members of the
-> community by the stated expiration date, a patch to update the
-> entry's expiration date may be accepted, thereby prolonging its
-> shelf life.  Unless such a thing happens before the expiration date
-> comes, we will mechanically drop the entry.
-> 
-> Of course people _can_ resurrect an expired entry later as a new
-> one when it seems appropriate.
-> 
-> That makes the decision to expire things from the list easy to make.
+On Thu, Jan 30, 2025 at 7:44=E2=80=AFAM Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
+>
+> On Thu, Jan 30, 2025 at 9:32=E2=80=AFAM Eric Sunshine <sunshine@sunshinec=
+o.com> wrote:
+> > (By the way, when replying, please use the normal ">", "> >", "> > >"
+> > markers to signify quoted portions of earlier messages in the thread
+> > rather than using only indentation. The reason I make this request is
+> > that when I replied to your message, my mailer stripped away all
+> > indentation from your message, leaving all earlier quoted portions
+> > flush with the left margin, which made it very difficult to figure out
+> > which quotes came from which authors from which earlier messages, and
+> > I ended up having to reinsert the "> >" markers manually to restore
+> > structure to my reply.)
+>
+> Examining more closely, I see that your message was in fact multipart
+> MIME with an HTML portion which was using <blockquote> and whatnot,
+> which my (plain text) mailer stripped out, hence lost all formatting.
+> If you can configure your mailer to send plain text and use the normal
+> ">" markers, that would be generally helpful on this list.
 
-Works for me. Ideally, as any other topic, the retirement should be sent
-to the mailing list as a normal patch series so that people may chime in
-on the retirement and state reasons why they don't think that is a good
-idea.
-
-Patrick
+Ufff, my bad, sorry about that (should be plain text now).
+I'm having trouble responding to my previous email and keeping that
+quoting format,
+so I'll not waste time on trying to fix that (please forgive me, everyone).
+Just want to let you know that I agree with your response, I'll adjust my p=
+atch.
+Enough talking, let's get the code out!
