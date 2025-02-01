@@ -1,119 +1,139 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A582AD20
-	for <git@vger.kernel.org>; Sat,  1 Feb 2025 10:07:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567AE2AD20
+	for <git@vger.kernel.org>; Sat,  1 Feb 2025 10:09:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738404473; cv=none; b=dJLmFuVSQYmxkwpAWKOqYcGcoRk81Fb5C+mDwMlrmBkZ9TLTArWKzVO9yhes3Il2KZVtkf127FxhmIaXpdl8u1c8c7B5aS0RUHWEn6TD2NFZ/1rN4WvH680iAruxEmZQeAjf3tbixG1m6fISKPcr7yUKAqFiyquJY6w9YwP4S5A=
+	t=1738404577; cv=none; b=IIIMN43vjuuZi7/uStO2B5R0zfEYBjLC8hjP6UlABuC6eDjaZffwc3XkPCa+Uq57Von26zs73+dtR31OtBNuQ1q4z/HdaEAZF9Gi6h2xW6g2OhhdDIHvW7j1esRpFEWMUIwb8b/LT1g3mZ3+HsjcN4zRBQtbv0QmV0GIgUEePEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738404473; c=relaxed/simple;
-	bh=AFGR5wOLBhekK4kBt1iwotECHb3vFSUWszSJ43w2YjI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lKnoxuBg3gG/q8IS/mfFGhrLdq7LyO4YzrkjaDnDUpLRNH9f/KApPt7wfXmH+nDGLGOaZnMSaJW62FaQEMQIjQ7GElXtggNAwaq1kEjcZP1zDN6LDmi+ebXKOZZ6OFBpoqGBKMm2NSXrVvjLVAvVr2nS1XZNssyYgqGQUUEOpXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=yvj9PrCU; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1738404577; c=relaxed/simple;
+	bh=LB/4w92tb31LmIKtvYhhRa0glcxjKaeBP5s7N2gp4Bg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ryFyX/yIaKDH0O6vKckaTEGwYbSg2cY17FE1O5jdmvUNzB3CGFlCA6OCw1ctg0Tf4Ya6KI/20STyt4PDrfGTKkr7lwmbXFjGSjCHzBlG3ao2UYjyTHhIlQs3jLR8KjaYetARiZ9cjOk+nOrZk/jTV/0JvpO1VfO3Yw+TEV5oKIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aWNsuFjn; arc=none smtp.client-ip=209.85.166.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="yvj9PrCU"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1738404462;
-	bh=AFGR5wOLBhekK4kBt1iwotECHb3vFSUWszSJ43w2YjI=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=yvj9PrCULSxgVSlB2dqdej1ypmk+hWQ0F8/82ESGF2GpdOzXEGqmu3w736AOcnOZ3
-	 dECJZ9V2lPSJ+efLdRo6j0F7Fao1xkFGPrKBTu0RvnTnaeYV1bGr8UhFUdWdQGELLD
-	 8mVgzEEcVd5JjrlFOgwKHc+5UN/a8hDSC2CyuElXJ1EfkHsELD20aBq+6SfxhDp80o
-	 UDdl3TnT07rckm2OixcpJzpky/JHDrMsCN3thbvXoyM2KABC1eYgc4YEGAhy2VhNEV
-	 IWIf0yYDxQgFPARkTT1lJFTr/Du2qj4fWXSZzYYx3orawyiM+zNXpK8QsDbmowUcaH
-	 CGcXVZT926qOoZqFewE1cLDVlStOePjik9FZL/9wbhONe7qIfXsGV44RQGa0iEsu3S
-	 a6xm9AZzrHilX4TrDst2BbhEWuCKXgy9pTsrYb43OqIyI18HwyG3qNJw2Y+kWFHmMc
-	 EbaD+NhyNL0orms1Rz2uQWY0BCyBGXAJnQCelgbVDPq3TraBSge
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D1D6120042;
-	Sat,  1 Feb 2025 10:07:42 +0000 (UTC)
-Date: Sat, 1 Feb 2025 10:07:41 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: M Hickford via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, stolee@gmail.com, Johannes.Schindelin@gmx.de,
-	peff@peff.net, rsbecker@nexbridge.com,
-	M Hickford <mirth.hickford@gmail.com>
-Subject: Re: [PATCH] credential: warn about git-credential-store [RFC]
-Message-ID: <Z53ybUCIHPG78Vj2@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, stolee@gmail.com, Johannes.Schindelin@gmx.de,
-	peff@peff.net, rsbecker@nexbridge.com,
-	M Hickford <mirth.hickford@gmail.com>
-References: <pull.1856.git.1738352886190.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aWNsuFjn"
+Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3a9c9f2a569so19338615ab.0
+        for <git@vger.kernel.org>; Sat, 01 Feb 2025 02:09:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738404575; x=1739009375; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=oz5eUF+e//WiHeDhmbJwqp2Wqi8vU1b2YLAl7T81ySk=;
+        b=aWNsuFjn35TRCNRex5hiM+vacOCgiIsn8Q9N5iHiXGsvjyotyvi7XrxzbVIhkVZDOV
+         okoGkplBSzLENFbDs8RxF/9swCLNE/aHYeGw67C1eER8Iaz3jSnPb858GlECxncgjqr/
+         Ua01+C39ubH0B6MXr7/EJ6SACjPAAZ6Hfw1AzoNXWUQepLyVmcSCIGhIYJc4jD/JwV1O
+         HW3jS6u1BsgSkBTa8XLjKTpYqbIe54M2cxaq67OK4TT2fncS5WWcVbgRiMcUKBCHuunU
+         tGV+r2ETP4tIRTvGXDskz3z172efVKgVMobWHtd34gqpRLDyl3sWwq5VuW1Nc/JmOV6P
+         00+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738404575; x=1739009375;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oz5eUF+e//WiHeDhmbJwqp2Wqi8vU1b2YLAl7T81ySk=;
+        b=UvpIi+hozVkWbGaet7eE+oDrC4mq6g+E+BtQ0WT9btqpY4pKa15UJhkz7l+rNOwMF+
+         E7t1JeYxeAlQFY2p2Sa402vZe/GQnlUOowp+sfW/sQ35NYSs7091kwmgRL8S5xkGkVv/
+         6rVVoi5Ycq1IKtKdHcAUn5XgyjzpvpKyMJ4uoTqWzf45dcMFjeUpUVbsqhyHMTw0nQS6
+         my9ptFfh32R+pKFjUawxfQfyjkKFnYMr2pRH60zr8KvClX4nOSm6nfMS3uGo78gghAp1
+         1KAeh653hNIAjwmJmfGvz5IFOAxw6lkyEcYoNgiBtb9jezvHIY58FkA6bi5HVTv+qPY9
+         /zAA==
+X-Forwarded-Encrypted: i=1; AJvYcCVjLbKYovigxr2wDwHF948K51kOyn8HZIcV6l2hlD6IqGbXOdLs+Awg1Z6oGoCUnPSxp5Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxr7KHJCK/F1oaQrNy5MffmAAGRCizLUlZh0hc5GaWZ7NunmGZa
+	A/WJmJNkhCFI52SbPJJ8i8uwypd+uQV/dUKNWOcs/2vDhaUv/nM3ceTuYmtrBmXXFFQbUv/As+z
+	uxDisS/cOLIDs4eQRi/6l8RLLJAM=
+X-Gm-Gg: ASbGncsjQtgQjUGc9XWDO7jGsjRnk+KhQEAsMFgS8vmA3LZx+HJYAti8PrYBD4oPJt2
+	iVDpA/Z8zv2QwUXUkwN5PySyz1FnCv4T2+qQdN+3HsDr1UT5HIttprZ71tvT9/zwTCoye8fxXFg
+	WZcwJoJiXwdpfBfmxJqGqIbeX20RqKZj0=
+X-Google-Smtp-Source: AGHT+IG9zH1ovkTE0+pvNGWQZCA89vaWwPCLrItBsjTJKwfUAYUi9egp2lG+CVVqRasLEg2iN6B0Q7n90tbgk0Dwgek=
+X-Received: by 2002:a05:6e02:1707:b0:3cf:c5b0:6a0c with SMTP id
+ e9e14a558f8ab-3cffe3d1744mr133347945ab.4.1738404575211; Sat, 01 Feb 2025
+ 02:09:35 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="hCtMH6HVKSbKMCHG"
-Content-Disposition: inline
-In-Reply-To: <pull.1856.git.1738352886190.gitgitgadget@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+References: <CAAE-bwUQ+0ERbvC=SS=-R_K4H3p2su+=Ogf7BSkyq5J4GmmRYw@mail.gmail.com>
+ <Z5rhXrkbhINwFDXT@tapette.crustytoothpaste.net> <xmqqy0ysfc2t.fsf@gitster.g>
+In-Reply-To: <xmqqy0ysfc2t.fsf@gitster.g>
+From: Mike Weltevrede <mikeweltevrede@gmail.com>
+Date: Sat, 1 Feb 2025 11:09:22 +0100
+X-Gm-Features: AWEUYZlARvOZHDTsPAxJ0u5oIkFJi3JUQqkCxledTaPeQEJVA_hv7yI_1f4Ctus
+Message-ID: <CAAE-bwV4z8WO2v7FF+kAfNVU8Cd3RsRJV5rLitwZrr=s+PocXw@mail.gmail.com>
+Subject: Re: Feature idea: Git hook for pre-checkout
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+Hi all,
+
+Thanks for your swift and elaborate response. I think that those are a
+very clear explanation and it makes sense to me to take a look into
+the alternatives you propose.
 
 
---hCtMH6HVKSbKMCHG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Kind regards,
 
-On 2025-01-31 at 19:48:06, M Hickford via GitGitGadget wrote:
-> From: M Hickford <mirth.hickford@gmail.com>
->=20
-> git-credential-store saves secrets unencrypted on disk.
->=20
-> Warn the user before they type their password, suggesting alternative
-> credential helpers.
->=20
-> An alternative could be to warn in "credential-store store". A
-> disadvantage is that the user wouldn't see the warning until after they
-> typed their password, which is less helpful. The warning would appear
-> again every time the user authenticated, which feels too frequently.
+Mike Weltevrede
 
-I don't think this is a good idea.  While it's typically recommended to
-use a different credential helper, it can be difficult to do so in an
-environment where you don't have a desktop, since all of the major
-helpers use the system keychain, where a desktop is required.
-
-If you have such an environment (such as a remote system) and can't use
-SSH (because your corporate environment only allows HTTPS), then you
-really don't have many, if any, alternatives[0].  All warning in this
-case is going to do is just annoy the user, especially if they have many
-such systems.
-
-If we are going to do this, I'd recommend using the advice system, so
-that users can just disable the warning.
-
-[0] Okay, I lied.  I have a tool called Lawn (local spawn) which allows
-you to run a command on your laptop or desktop from the remote machine,
-such as a credential helper, but it's not in widespread use and I don't
-think it's polished enough to recommend here.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---hCtMH6HVKSbKMCHG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ53ybQAKCRB8DEliiIei
-gcghAP0QYGr62jty4rGqvOsNDuBXBvcXouekO35IDgd8EyzEMQD9GWNozWYw5NbD
-QjFCCeLiUU42swsg+HdiYKaifUtxwQQ=
-=rtRd
------END PGP SIGNATURE-----
-
---hCtMH6HVKSbKMCHG--
+On Thu, 30 Jan 2025 at 18:25, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>
+> > On 2025-01-29 at 10:49:15, Mike Weltevrede wrote:
+> >> Good morning,
+> >>
+> >> I had an idea for a feature in Git. I am not sure if this is the
+> >> correct channel, but I could not find anything else. If not, could you
+> >> please let me know the best way to submit this?
+> >
+> > This is the appropriate place to make feature requests.
+>
+> Yes, indeed.
+>
+> > I don't think this is likely to be adopted.  We intentionally don't
+> > place a lot of restrictions on local actions, ...
+> > In addition, this change wouldn't really be very effective, ...
+> > `git push origin my-feature:refs/features/foo`.
+> > It also sounds like you're trying to implement a policy decision on the
+> > local system, which is the wrong place, as the Git FAQ outlines[0]:
+>
+> Thanks for raising all good points.
+>
+> Even though I am negative on adding a hook that does not satisify
+> any of the "5 valid reasons" [*], this one squarely satisifies (1).
+> But I fully agree with you that it is ineffective as a policy
+> enforcement mechanism, and a local hook should not be used as such.
+>
+> Having said that, giving reminders locally and early to help users
+> avoid making mistakes that will be pointed out at the remote at
+> reception time via their pre-receive hook, only when the user does
+> "git push", can still be a good friction reducer.
+>
+> So I am not opposed to an idea to have a mechanism that reminds the
+> users of project-specific naming convention of branches and files
+> (think: cross platform projects that have participants from case
+> insensitive filesystems) when they create such a thing anew locally,
+> especially the project would have a rejection mechanism when their
+> participants try to push their changes that adds such a thing.
+>
+> Here, however, again I agree with you that a pre-checkout hook will
+> not be an effective mechanism to give that reminder.  The mechanism
+> must sit at the ref API layer in order to vet all ways of creating
+> (or renaming) a ref in order for to be effectively restrict branch
+> names.  For pathnames, the mechanism must sit at the cache API layer
+> to tell add_to_index() what names are problematic.
+>
+> Thanks.
+>
+>
+> [Reference]
+>
+> *1* There may be slightly updated versions of this in the archive, but
+> https://lore.kernel.org/git/7vbq7ibxhh.fsf@gitster.siamese.dyndns.org/
+> is one of them.
