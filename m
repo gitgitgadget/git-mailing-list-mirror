@@ -1,119 +1,102 @@
-Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5556433BE
-	for <git@vger.kernel.org>; Sat,  1 Feb 2025 09:32:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7972B9A9
+	for <git@vger.kernel.org>; Sat,  1 Feb 2025 09:45:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738402377; cv=none; b=At2Pa53IzzzHy1ovVnkDPPALsW0tZct6Lj+lNT80viH95u1/eKwz4hiUZm1FboolCIJ+2XQT5Mm59DSBfmo8nX5SI6cB1RBkYGcFXexS701CUvD9htkZW94KjzBDGw36QTETfyOdLrtw/SzAiC4QGbHBD0XtQlhLTxm4eMq2phI=
+	t=1738403153; cv=none; b=arF8mzfDLIFunQJpY5NtSKGZwknsb+zXaOHqImiSBEkhweWrTmImwYGoQVnxgD/4xhXrlryw5kDYWgMCfjEwR1q1EeCAST1GArJl8aVbwkAp5Jpku7jNshU9P72PrcbbHQzgkad7LBG1y9M9JdTB5494XIsQ3b2LYVcZC8duas4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738402377; c=relaxed/simple;
-	bh=PreuGU3tQwgEDQUa1bFnR9IJ/qjk/M4IDMy9JlohWqQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RUbDZ7Osa1aoMexgbWqkAefGy4v2ZZIsGkxFHsx+bnkwRUgqjs07B+hdEJe5flE04ptlQnhJZC9MVhU3K+j+6URi2bFPljw8GAvPgfN4EUpYrLcdMkpQNIg+/r0lCHimpAGIh34JyHdnD1UqHcyX5KeN/VdR3ORKQ+2TzJdY0ns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IWAHA6Ie; arc=none smtp.client-ip=209.85.167.41
+	s=arc-20240116; t=1738403153; c=relaxed/simple;
+	bh=XnBJUt0wdbGuq8NKvei4vwskS6ZVF/tDkLRiGVkY+40=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sYDVJdyJGH8DMrxDw/RZwXO0+8MgFG6H2IZ2YAnTzdZZ2JT5k3s1Z0JgtNskkiMcfkH+cfc5wKhru7EU525pC7MeP8VmYatFh5OEtxqw1bVECkc23ZWX45huTWGF/ScL6GrTqmeM6kX+YeYfodYxdv38B1AZuwwjjj6x2JazuEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fKOWn3ka; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IWAHA6Ie"
-Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-53e3778bffdso2846525e87.0
-        for <git@vger.kernel.org>; Sat, 01 Feb 2025 01:32:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fKOWn3ka"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ee709715d9so3839998a91.3
+        for <git@vger.kernel.org>; Sat, 01 Feb 2025 01:45:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738402374; x=1739007174; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=h9TXi67gUMS1YHlXlO+4LyPIRPh3dbGiAPFYNZKKleQ=;
-        b=IWAHA6IegM8nbUe4Nl2Iri0wNo7sUilzloyHKrKnIitue4wW7QwzolcVmfx+EoHqoY
-         lrGKdBMMSZ+MK6eDGQvf+7QoZW9vU7sqK4iOpx0i/WKiLLoTqAM87zX79p7ZH4XiUTxo
-         XIHglp7wcK3iz76ET/vZSnEipDOA1aVvZq0/r6e8WNS+LGklXhVl/UogESPZvjjll5aa
-         aXD70+p8bJRAZxcqgLH755iXx7Cf+rADj19UzBwO6G5mHVV1WZiEcYbMUMsGs5qc2E83
-         v2uscXnUvnvcMyYtSrWib9irponI6sfKWv9Waeg31T8s8yZf3O6wRG9oxGk5qSHSxbnp
-         rk0w==
+        d=gmail.com; s=20230601; t=1738403151; x=1739007951; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=x3Z+oGjDhEiX4guatF2Po5aerr3QcLZ0EVRDGU+uCws=;
+        b=fKOWn3kake/LCQ0epnTrSYeqy82/3cWWmORgLbFwfIl5HAHShLxChq/Wl1JNMb59Ek
+         bqrHfzM4BxfGomcecpChxHU3hlzn/31jrKHFyaEWjHLe6hNhqgQ3dYwChF0bo8TVlQKN
+         Faz3SM1AGfFpDQKr1FB3wHLarywMZZUS+Mxr8Fy7G/BXw7hWdDMjWWIZWggpOFQL0z7/
+         fGZ6R6TikQvwYa5SVokWvSeQuIHJAMR5yShNMiW6Q22YlZy5cR7IRYdciekPnYvjni85
+         7LX9kd28sQVwZho/2bv/oEUzCeNyTxS84lo0ApL9e+XgWpaxh3A9hZKGUadDPPiKrTxx
+         idlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738402374; x=1739007174;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=h9TXi67gUMS1YHlXlO+4LyPIRPh3dbGiAPFYNZKKleQ=;
-        b=Bulca1LkjA4bhxwHB26oOuU5zIA9Ocq1T0yPPOWRlr50yZCYIjoDXQSs8P5RxuKAgA
-         Ujby7ucP0thrCMFRgfLrS4iWX984tAGcot7HqiSKzsulVBLOCH2hf+J9l72bPPCjuIS2
-         F4/esXC7na4ME9iGh3GPaC6RDVxi5ve7/mL3AFYz/5joL5x7P5TUe04jnKl1cr++bEtn
-         oei4tkdCIbQ4cayH9sLz4sYNYvqYfUF8edJtJ1FLXBD5PPBzaVchFg/U13X5SQfcNzVW
-         g2IRBHa/0d64V1WDMG6aEIiG1JtIGRyuFghN27Sf+q4EicHPhIxJvKRKpMbBX1TERi9H
-         sCAg==
-X-Gm-Message-State: AOJu0Yzbc1P8+uwpi6gntqfZCaLKl4r9aeMOhu//s6NLTuul+dpp4mXm
-	cj6aYwas0dJAX+QrDVY9kBKCxsT1HAsjq5AK5zpZU3I4I7SgMKlX9VlrCvQS20rR2a0z80yLbF2
-	Z7M3SUUh58EsZxJMmu01hkn/IcZo=
-X-Gm-Gg: ASbGncvC9s4QfLDvdYPxrrIhwcqsfkfFUA76NsSxG5PeO2/eppHWv61iJoY+FjzDfWt
-	vMet+QRGQFA3DwxmXX8b3l5YRZHbj3iQS5LEAIt9HNjtgGKAZOefvX5nqzfqyqEu0kIZEgYZmaC
-	I=
-X-Google-Smtp-Source: AGHT+IGf/mNUv85BNF77sz419r0wa2efn/ANOseOROVWyN5SMpFdVhgvSN8TWaNcb3QRDhe7WRFXRlv1hmbfkEo2iG8=
-X-Received: by 2002:a05:6512:2389:b0:542:9a0a:131c with SMTP id
- 2adb3069b0e04-543e4bdef4dmr4817344e87.11.1738402373623; Sat, 01 Feb 2025
- 01:32:53 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738403151; x=1739007951;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=x3Z+oGjDhEiX4guatF2Po5aerr3QcLZ0EVRDGU+uCws=;
+        b=EYg0VEpOth3AJfNWc8Cv2Ba9Y9etGsY32sGLwlQ4BjpbwQsd6N0wP0zahx6aa3mEKf
+         iReXozpsogf0Na6TY+t9IIrJUTCUA1AGpy4/jSyyucz60X/atsWArBdxvCWFmYfPZBhE
+         L1vRnZb+dfrstQuWLW+JOHjlBPfy12FSK6qF8hy8Rpts8HcVOE42QheZpv1YwP7UxI+G
+         YswOt4DyN6cd+5K5HhWekFfHaIqdovWPEnKF6CeZ5C8OzU3qqLo0a2r9F/n92FBE2TrJ
+         VbhkyOxZ88LEtiXWM0rkKhHalITA5QocBc3+kV9+j//qMT620YcEuAhTeQAv5X3gqV8e
+         ETCA==
+X-Gm-Message-State: AOJu0YxztdvnCOMd2ydEhkRcO2j3z8Y7+gera7foGk2sQW8nI7vcXG2w
+	8jgrx+n47lneIaV6tbKt1mbHn3KyLI2Wl8yUUCsakv3VKYXSpHIe
+X-Gm-Gg: ASbGnctNMPu9Q/38PntzQkTuPJdi6aQRioIpCy+0nDRbyB4IbdEAm/nhPnF2ozhv2BQ
+	jOdpFTq8scvmOA8Prul3knhPkilVziH4KijQniyDW3Cd3UghlAJcK3PQKswa72yxTYAfo2+Xp1a
+	3z93OPjgWOyXGfcdHJTGQ+FMoWy+lECTksEfaE8voyTRO58X2KNJ83nZ7knaC+5u3VrzYtpQR6j
+	JL3rXMKQ0i1uBiH0eIoVBXqM2vWOROPdDmovxSxFfGvoZk8Od85N1cjxL8azP3XQcGkPQ==
+X-Google-Smtp-Source: AGHT+IE1LuW+Xr6i2iv6OBv8ybysxdRhzqKUDE77vUBVWCNRxhgEXHE/3urEvSRXNLgG2yjtZwk2Fw==
+X-Received: by 2002:a17:90b:5445:b0:2ee:aa28:79aa with SMTP id 98e67ed59e1d1-2f83abc3161mr19831451a91.6.1738403150936;
+        Sat, 01 Feb 2025 01:45:50 -0800 (PST)
+Received: from localhost ([2604:5040:11:69e::e973])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2f83bfdb81bsm7370161a91.49.2025.02.01.01.45.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 01 Feb 2025 01:45:50 -0800 (PST)
+Date: Sat, 1 Feb 2025 17:47:26 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v2 3/8] packed-backend: check whether the "packed-refs"
+ is regular
+Message-ID: <Z53triurDqskbRaA@ArchLinux>
+References: <Z5r6ZnLH3Ee8IQnN@ArchLinux>
+ <Z5r6-52eBgT4TUYG@ArchLinux>
+ <xmqqplk4duuk.fsf@gitster.g>
+ <Z5zWE1M4u3NrROI-@ArchLinux>
+ <xmqqikpv9cq3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250201071210.30509-1-amch9605@gmail.com>
-In-Reply-To: <20250201071210.30509-1-amch9605@gmail.com>
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Sat, 1 Feb 2025 15:02:42 +0530
-X-Gm-Features: AWEUYZm4JZe3XI_cvyVe5YTLXaicjIODRjMaSm8u8laqR1LlXjWUPkdHCV_i0Kc
-Message-ID: <CAPhwyn0tGHuX_Gh=rno9wj8fLb6zG4M3QAZyQDQ8qZyE+Uyg_Q@mail.gmail.com>
-Subject: Re: [PATCH 1/1] t5401: prefer test_path_is_* helper function
-To: ambar chakravartty <amch9605@gmail.com>
-Cc: git@vger.kernel.org, ambar chakravartty <chakravarttyambar@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqikpv9cq3.fsf@gitster.g>
 
-Hi Ambar
-On Sat, 1 Feb 2025 at 12:43, ambar chakravartty <amch9605@gmail.com> wrote:
->
-> From: ambar chakravartty <chakravarttyambar@gmail.com>
->
->     test -f does not provide a nice error message when we hit test
->     failures, so use test_path_is_file instead
->
-> Signed-off-by: ambar chakravartty <amch9605@gmail.com>
-> ---
-Instead of sending a separate cover letter, you can add it here between
-"---" and diffstat.
-cf. https://github.com/git/git/blob/58b5801aa94ad5031978f8e42c1be1230b3d352f/Documentation/MyFirstContribution.txt#L1220
->  t/t5401-update-hooks.sh | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
->
-> diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
-> index 723d1e17ec..17a46fd3ba 100755
-> --- a/t/t5401-update-hooks.sh
-> +++ b/t/t5401-update-hooks.sh
-> @@ -64,14 +64,14 @@ test_expect_success 'updated as expected' '
->  '
->
->  test_expect_success 'hooks ran' '
-> -       test -f victim.git/pre-receive.args &&
-> -       test -f victim.git/pre-receive.stdin &&
-> -       test -f victim.git/update.args &&
-> -       test -f victim.git/update.stdin &&
-> -       test -f victim.git/post-receive.args &&
-> -       test -f victim.git/post-receive.stdin &&
-> -       test -f victim.git/post-update.args &&
-> -       test -f victim.git/post-update.stdin
-> +       test_path_is_file victim.git/pre-receive.args &&
-> +       test_path_is_file victim.git/pre-receive.stdin &&
-> +       test_path_is_file victim.git/update.args &&
-> +       test_path_is_file victim.git/update.stdin &&
-> +       test_path_is_file victim.git/post-receive.args &&
-> +       test_path_is_file victim.git/post-receive.stdin &&
-> +       test_path_is_file victim.git/post-update.args &&
-> +       test_path_is_file victim.git/post-update.stdin
->  '
->
->  test_expect_success 'pre-receive hook input' '
-> --
-> 2.48.1
->
->
-The patch looks great! Thanks.
-Meet
+On Fri, Jan 31, 2025 at 08:20:36AM -0800, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
+> 
+> >
+> > As I have said in the previous comment, we cannot detect the error if
+> > "HEAD" itself is corrupted. However, we will check the referent in the
+> > later. So, we don't need to do this.
+> 
+> I still think you absolutely need to diagnose and tell the user
+> about the broken HEAD.  With your "don't check HEAD because a
+> repository with a broken HEAD is not a repository", a check run in
+> such a place may find everything else in the repository perfectly
+> fine, but because the user wanted "git refs verify" to tell them
+> about breakages, you would want to somehow tell them about it.
+> Either it is missing, malformed, whatever.
+
+Yes, that's absolutely correct. However, I don't want to do this in
+this series. Actually, there is no check for root ref. I will add checks
+for root refs later.
+
+Thanks,
+Jialuo
