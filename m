@@ -1,75 +1,73 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89805BA34
-	for <git@vger.kernel.org>; Sat,  1 Feb 2025 06:42:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA16BA34
+	for <git@vger.kernel.org>; Sat,  1 Feb 2025 06:43:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738392170; cv=none; b=WggWt9iMOaBAqLQDo443Hn//c6wXJ5iBZavfPIUCwQLtDnYu5rbrAUe0zBBOjnrhMSZJ30c2c9b6mg7qCijRZVM5BJRaoM8Hm44mWqN6cgMkBcKpDuZHnAJmjsQ/oF7s/mWDeFfb8QSGbYG7xpyUXpUyD4jHozU9BP4GfVgHcR4=
+	t=1738392183; cv=none; b=mQnpVYYnSg66S2RIv/jfqiXBkH4uzhj7pTYvJg7ycOKhL57Oo8zmaSdwhFnN+9sPbANtL2KQP4pood8YWHxJ7WC/ng3c4xuumCcqgFXudQJWPd6CBESbjiEopu+Oo7CARbKhxKPmK1U5H9WYNoogC0l8yzFP08qUY5uzbGnMHJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738392170; c=relaxed/simple;
-	bh=M+ZyVYSBVPxPQXNw8GRFPvnS9/7hRNvMyX2F+ofKHPU=;
+	s=arc-20240116; t=1738392183; c=relaxed/simple;
+	bh=K8c7zrz3BsEzSXdD0bAIEFml7K9yEkDFRfdtYIl1MW4=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=PEbtXpJsu1udlam5E3cwp+hgp1PFj3n/2tjPQoE4RM32mFJ9BgVRayB8FF8UAfGorfKYBme6XrOehfwFGRZejnncacvYzerSqzKSPZJa9GKVy4Qro+zCRMnhOJLpQ8K4D3Exh198cpVtp5vqHLdBBR58ND6MsJrhWacGGm459T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ar9YBO/V; arc=none smtp.client-ip=209.85.214.172
+	 MIME-Version; b=BOIuAje4Ik5TQb0rkwo70nE79Lo0ZnVOH70ybsArW4Wj1TbByxFeE/jQbJwKHrM6QQ/k2/ooKh5J9QyLe+EwUq9RP2NtWf3p8t04sfdQlTes07CeczLraP/OoZ9QuqvuSfGXTGtRKzQUpsxk6VHrwXYPlJbX2e8Uf04gUTJ1vUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HM1k+Yca; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ar9YBO/V"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2165cb60719so50597995ad.0
-        for <git@vger.kernel.org>; Fri, 31 Jan 2025 22:42:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HM1k+Yca"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2163dc5155fso49594615ad.0
+        for <git@vger.kernel.org>; Fri, 31 Jan 2025 22:43:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738392167; x=1738996967; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738392180; x=1738996980; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QPs+pVBrIP21zpkuhISs9jJHORFBB6K5p8XwuYzdVgw=;
-        b=ar9YBO/VHJR7moFIPmUCP/aFIaeoptPTPY2vmbROtYGsw/cnYG7ND0L7KWhHProlLS
-         6GZxFzYhxxPPccjaO41yjE7agQaQ3huweC/xQPnU5uR4v9P/iHZrXpyCxcF1d7S48zxY
-         0fqkvs7EGZ+nhwxiBuuYlJUbFU0YV2Ny5bb6qJoTG0tqzUu7bTCnqqER0UgtjlSufTQA
-         7MY/tNtBC4MHbFUKFMMpRoqG8FWEHpo7KWjpiTfHdQP1dZiZ+wRufUW//GD2rKukle2H
-         yo/V2zvb6PQownMjB/GyitJXQFkcliD/RTY0m0UnJt4fvJUD0jLI4zsfmhWRZ75Fzyp6
-         m0Jg==
+        bh=+XrzHN4wuZPJQC7cj5lxtiODkgcNKnVudGps5nhWM6o=;
+        b=HM1k+YcawlLTgAa2DcjKtcZg25mbTSN4W9GeD8D9UF4aYKoHPBjZ8FqPp87nBHpRmq
+         2gCCm1B9LJIvgg+Y08zJv6iNT8phxRKXTepDDMXp80g+qhZxrWDGqPXJL270IidRq6pr
+         xvTrocwLrURkaKSxobBSLG7RuXtY8M4AIrJveTNqMWEUNUh7CmJJ1YoqjZG2G1/FWf4D
+         eBZZiIUuG3dZnJsbl+x45Ms2MgkiBI3IR3EwCNS9kpe8ISm9ZlEU6bCZUDeW1yz5Dgh0
+         pbqBEfQ3jhcQTH1qCYAuJtItd9g8zoQqILKtmCQmKsG2BV83IlCDjpCERMd6/2x40aLG
+         PQsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738392167; x=1738996967;
+        d=1e100.net; s=20230601; t=1738392180; x=1738996980;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QPs+pVBrIP21zpkuhISs9jJHORFBB6K5p8XwuYzdVgw=;
-        b=r8soY4sYxRhxFkcm889vBPA/dAbNZHpsdVNS2QOO7dDhUt+Hj/v207txF98LydvwVE
-         9L5drvcGyx9/ADy+BuEemxR5uYvFmebRXmRoz5j7wXTiOC0JNUxdLn/2Kpvmo0y9psyO
-         8QdOwV5kMXQj3kQsZDvTFg8rRuQrG2pz5eMcxYwqsPzA8oB/t8NfNEnm5aZJVo6b2E0R
-         AJAQyyiFwuwbay7Rlahl7iP4GiRNdJ2IPG71CABxmsGlqTTcTeZagxmRVjqF5KgC1iJP
-         mPhms4Py6H4mEA6KmOsGaBcjVmKPkUfvBmnOk1pgxzY6Y/ktnm4QYwMpMFSGhl3ycwSL
-         kVGQ==
-X-Gm-Message-State: AOJu0YxRPO8FHspYWDEacsrOlEDg1SKzENcCU4NfgeBAOdmOh5OlfNHq
-	QteJCw/4mXr/OaJcjqxQKBxLcaxkjhuo+iifkM8sucLqcA/W8ckDdTVi/tgT
-X-Gm-Gg: ASbGncvwUD+KThnx4L9ttpcdILNIDWoKVfw+HAF+TQCYhTnUb07QaaNDwdNFC9q2OcL
-	HvhweNkm4wQdgu65nKGrajJ92cRlGYm/An5xoEgtjCU+JTzwlt60sL4jg/1DD0UoCFNF90uuM7J
-	y8rK4SioXUdGho7IMCF5EQV5gJkx8VETYubgz9q2biYYz5LbK0kzwT0Hc59mNwXcXC4ZCnEvEAV
-	5dVMy2vM9aQSuNUq2ubk0Wt8xaKj7hdBDNSFa8c6PhLmEzdcFBwpJWe+69YHHk8PCTkOHxU04rA
-	kJbmkQU7KKNhRA==
-X-Google-Smtp-Source: AGHT+IG3N729kM+Hxm8jE5uJPtPDfvP32gpGbfpLcnjAsfm1FOxMdWDhXa0LZ+GJf60DMyQzxvOZGA==
-X-Received: by 2002:a05:6a21:7101:b0:1e2:88b:4f1b with SMTP id adf61e73a8af0-1ed7a62497cmr21607089637.39.1738392167262;
-        Fri, 31 Jan 2025 22:42:47 -0800 (PST)
+        bh=+XrzHN4wuZPJQC7cj5lxtiODkgcNKnVudGps5nhWM6o=;
+        b=k/2ZNY5RxbBVtjJSc+klwS/i5+wsmWAByj3qiFDj4K4y779Ir6ntvQKGtC2HpTxw4x
+         jP7738+hzODO/eeC/f5826Nlu9gm++FHN22ycoavy3+nu1R2rHHkWmcvqeKfZkL3dr7A
+         csiAOrVDLTpDSiHSX5SaGFovfTacCzNhYuVrFfF7DoDW2zeRiqtsgl5jFN80dDZmk/BK
+         Ax9sjgxmpjGP/Zdsf6kJGhTawJrtrN3ataVG8bbYM4YNUaTX0RVTLs6wGVtlzXls5RXs
+         c/cz+8qH1s8H0zUM+z6cYBCF841XgmDNPp+aZYKeKsEJSyu0SDzsM63RK+Jk1B/029gU
+         ccVw==
+X-Gm-Message-State: AOJu0YxEHfmuoXniFJghf8FyznAoJC+6pENJfPEHN6m5pJXZra7j2a3S
+	k2MryPTcVPCxMde+F5X8NOVkLYD8M5eqDm4BrEuGj3f5zF0iNVtUi+x5VsXn
+X-Gm-Gg: ASbGncsgI3Bfu30Tq2dYQRBajo/vjiHCPPagofRYjPK2oDNRx5LsNne+E/zdUgqb2Qx
+	F9P300+b7bq28rteZBvZVPzuV9QgEyDFqw5cwmUFED3WgE3OO/l5AiH6HKu7yKcNWfTO0ReH+Z2
+	usK+BFF5dv3vK+8uKs/6CTVFbS8jUZYNwJ2oilcn+U67g1T8kr1kIp7pIIh7xPYM4ndEEq2xk2o
+	7LDyNu3mXIVi6BrYETwVMAIcx8pxneWO8Hyij63wLq/RNrIuRpx9RIDgbiJXonF+LBzgx6k/9s4
+	G5hhd73TRlG+lA==
+X-Google-Smtp-Source: AGHT+IEbd1o4HRqRCy4hZlZ+za6BhYHIeCcZvAjBpUAizcH3C5bN+Ax9/bAKwKh/eoQGi4OyJgYp0g==
+X-Received: by 2002:a05:6a20:9c8b:b0:1e1:b28e:a148 with SMTP id adf61e73a8af0-1ed7a5a56d7mr20628078637.5.1738392180594;
+        Fri, 31 Jan 2025 22:43:00 -0800 (PST)
 Received: from meet.. ([103.240.169.233])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-acec0e8ef61sm4058592a12.78.2025.01.31.22.42.43
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-acec0e8ef61sm4058592a12.78.2025.01.31.22.42.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 31 Jan 2025 22:42:46 -0800 (PST)
+        Fri, 31 Jan 2025 22:43:00 -0800 (PST)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
 Cc: shubham.kanodia10@gmail.com,
 	Meet Soni <meetsoni3017@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Jacob Keller <jacob.e.keller@intel.com>,
 	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Matthew Rogers <mattr94@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
-	Pavel Rappo <pavel.rappo@gmail.com>
-Subject: [PATCH v3 1/5] refactor(remote): rename function omit_name_by_refspec
-Date: Sat,  1 Feb 2025 12:11:58 +0530
-Message-Id: <20250201064202.76116-2-meetsoni3017@gmail.com>
+	Matthew Rogers <mattr94@gmail.com>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH v3 2/5] refspec: relocate refname_matches_negative_refspec_item
+Date: Sat,  1 Feb 2025 12:11:59 +0530
+Message-Id: <20250201064202.76116-3-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250201064202.76116-1-meetsoni3017@gmail.com>
 References: <20250127103644.36627-1-meetsoni3017@gmail.com>
@@ -82,94 +80,153 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Rename the function `omit_name_by_refspec()` to
-`refname_matches_negative_refspec_item()` to provide clearer intent.
-The previous function name was vague and did not accurately describe its
-purpose. By using `refname_matches_negative_refspec_item`, make the
-function's purpose more intuitive, clarifying that it checks if a
-reference name matches any negative refspec.
-
-Rename function parameters for consistency with existing naming
-conventions. Use `refname` instead of `name` to align with terminology
-in `refs.h`.
-
-Remove the redundant doc comment since the function name is now
-self-explanatory.
+Move the functions `refname_matches_negative_refspec_item()`,
+`refspec_match()`, and `match_name_with_pattern()` from `remote.c` to
+`refspec.c`. These functions focus on refspec matching, so placing them
+in `refspec.c` aligns with the separation of concerns. Keep
+refspec-related logic in `refspec.c` and remote-specific logic in
+`remote.c` for better code organization.
 
 Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
- builtin/remote.c | 2 +-
- remote.c         | 8 ++++----
- remote.h         | 6 +-----
- 3 files changed, 6 insertions(+), 10 deletions(-)
+ refspec.c | 48 ++++++++++++++++++++++++++++++++++++++++++++++++
+ refspec.h |  9 +++++++++
+ remote.c  | 48 ------------------------------------------------
+ 3 files changed, 57 insertions(+), 48 deletions(-)
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 0435963286..258b8895cd 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -383,7 +383,7 @@ static int get_ref_states(const struct ref *remote_refs, struct ref_states *stat
- 				states->remote->fetch.items[i].raw);
+diff --git a/refspec.c b/refspec.c
+index 6d86e04442..b447768304 100644
+--- a/refspec.c
++++ b/refspec.c
+@@ -276,3 +276,51 @@ void refspec_ref_prefixes(const struct refspec *rs,
+ 		}
+ 	}
+ }
++
++int match_name_with_pattern(const char *key, const char *name,
++				   const char *value, char **result)
++{
++	const char *kstar = strchr(key, '*');
++	size_t klen;
++	size_t ksuffixlen;
++	size_t namelen;
++	int ret;
++	if (!kstar)
++		die(_("key '%s' of pattern had no '*'"), key);
++	klen = kstar - key;
++	ksuffixlen = strlen(kstar + 1);
++	namelen = strlen(name);
++	ret = !strncmp(name, key, klen) && namelen >= klen + ksuffixlen &&
++		!memcmp(name + namelen - ksuffixlen, kstar + 1, ksuffixlen);
++	if (ret && value) {
++		struct strbuf sb = STRBUF_INIT;
++		const char *vstar = strchr(value, '*');
++		if (!vstar)
++			die(_("value '%s' of pattern has no '*'"), value);
++		strbuf_add(&sb, value, vstar - value);
++		strbuf_add(&sb, name + klen, namelen - klen - ksuffixlen);
++		strbuf_addstr(&sb, vstar + 1);
++		*result = strbuf_detach(&sb, NULL);
++	}
++	return ret;
++}
++
++static int refspec_match(const struct refspec_item *refspec,
++			 const char *name)
++{
++	if (refspec->pattern)
++		return match_name_with_pattern(refspec->src, name, NULL, NULL);
++
++	return !strcmp(refspec->src, name);
++}
++
++int refname_matches_negative_refspec_item(const char *refname, struct refspec *rs)
++{
++	int i;
++
++	for (i = 0; i < rs->nr; i++) {
++		if (rs->items[i].negative && refspec_match(&rs->items[i], refname))
++			return 1;
++	}
++	return 0;
++}
+diff --git a/refspec.h b/refspec.h
+index 69d693c87d..584d9c9eb5 100644
+--- a/refspec.h
++++ b/refspec.h
+@@ -71,4 +71,13 @@ struct strvec;
+ void refspec_ref_prefixes(const struct refspec *rs,
+ 			  struct strvec *ref_prefixes);
  
- 	for (ref = fetch_map; ref; ref = ref->next) {
--		if (omit_name_by_refspec(ref->name, &states->remote->fetch))
-+		if (refname_matches_negative_refspec_item(ref->name, &states->remote->fetch))
- 			string_list_append(&states->skipped, abbrev_branch(ref->name));
- 		else if (!ref->peer_ref || !refs_ref_exists(get_main_ref_store(the_repository), ref->peer_ref->name))
- 			string_list_append(&states->new_refs, abbrev_branch(ref->name));
++int refname_matches_negative_refspec_item(const char *refname, struct refspec *rs);
++
++/*
++ * Checks whether a name matches a pattern and optionally generates a result.
++ * Returns 1 if the name matches the pattern, 0 otherwise.
++ */
++int match_name_with_pattern(const char *key, const char *name,
++				   const char *value, char **result);
++
+ #endif /* REFSPEC_H */
 diff --git a/remote.c b/remote.c
-index 0f6fba8562..cb70ce6f3b 100644
+index cb70ce6f3b..1da8ec7037 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -944,12 +944,12 @@ static int refspec_match(const struct refspec_item *refspec,
- 	return !strcmp(refspec->src, name);
+@@ -907,54 +907,6 @@ void ref_push_report_free(struct ref_push_report *report)
+ 	}
  }
  
--int omit_name_by_refspec(const char *name, struct refspec *rs)
-+int refname_matches_negative_refspec_item(const char *refname, struct refspec *rs)
+-static int match_name_with_pattern(const char *key, const char *name,
+-				   const char *value, char **result)
+-{
+-	const char *kstar = strchr(key, '*');
+-	size_t klen;
+-	size_t ksuffixlen;
+-	size_t namelen;
+-	int ret;
+-	if (!kstar)
+-		die(_("key '%s' of pattern had no '*'"), key);
+-	klen = kstar - key;
+-	ksuffixlen = strlen(kstar + 1);
+-	namelen = strlen(name);
+-	ret = !strncmp(name, key, klen) && namelen >= klen + ksuffixlen &&
+-		!memcmp(name + namelen - ksuffixlen, kstar + 1, ksuffixlen);
+-	if (ret && value) {
+-		struct strbuf sb = STRBUF_INIT;
+-		const char *vstar = strchr(value, '*');
+-		if (!vstar)
+-			die(_("value '%s' of pattern has no '*'"), value);
+-		strbuf_add(&sb, value, vstar - value);
+-		strbuf_add(&sb, name + klen, namelen - klen - ksuffixlen);
+-		strbuf_addstr(&sb, vstar + 1);
+-		*result = strbuf_detach(&sb, NULL);
+-	}
+-	return ret;
+-}
+-
+-static int refspec_match(const struct refspec_item *refspec,
+-			 const char *name)
+-{
+-	if (refspec->pattern)
+-		return match_name_with_pattern(refspec->src, name, NULL, NULL);
+-
+-	return !strcmp(refspec->src, name);
+-}
+-
+-int refname_matches_negative_refspec_item(const char *refname, struct refspec *rs)
+-{
+-	int i;
+-
+-	for (i = 0; i < rs->nr; i++) {
+-		if (rs->items[i].negative && refspec_match(&rs->items[i], refname))
+-			return 1;
+-	}
+-	return 0;
+-}
+-
+ struct ref *apply_negative_refspecs(struct ref *ref_map, struct refspec *rs)
  {
- 	int i;
- 
- 	for (i = 0; i < rs->nr; i++) {
--		if (rs->items[i].negative && refspec_match(&rs->items[i], name))
-+		if (rs->items[i].negative && refspec_match(&rs->items[i], refname))
- 			return 1;
- 	}
- 	return 0;
-@@ -962,7 +962,7 @@ struct ref *apply_negative_refspecs(struct ref *ref_map, struct refspec *rs)
- 	for (tail = &ref_map; *tail; ) {
- 		struct ref *ref = *tail;
- 
--		if (omit_name_by_refspec(ref->name, rs)) {
-+		if (refname_matches_negative_refspec_item(ref->name, rs)) {
- 			*tail = ref->next;
- 			free(ref->peer_ref);
- 			free(ref);
-@@ -1021,7 +1021,7 @@ static int query_matches_negative_refspec(struct refspec *rs, struct refspec_ite
- 	}
- 
- 	for (i = 0; !matched_negative && i < reversed.nr; i++) {
--		if (omit_name_by_refspec(reversed.items[i].string, rs))
-+		if (refname_matches_negative_refspec_item(reversed.items[i].string, rs))
- 			matched_negative = 1;
- 	}
- 
-diff --git a/remote.h b/remote.h
-index bda10dd5c8..66ee53411d 100644
---- a/remote.h
-+++ b/remote.h
-@@ -261,11 +261,7 @@ int resolve_remote_symref(struct ref *ref, struct ref *list);
-  */
- struct ref *ref_remove_duplicates(struct ref *ref_map);
- 
--/*
-- * Check whether a name matches any negative refspec in rs. Returns 1 if the
-- * name matches at least one negative refspec, and 0 otherwise.
-- */
--int omit_name_by_refspec(const char *name, struct refspec *rs);
-+int refname_matches_negative_refspec_item(const char *refname, struct refspec *rs);
- 
- /*
-  * Remove all entries in the input list which match any negative refspec in
+ 	struct ref **tail;
 -- 
 2.34.1
 
