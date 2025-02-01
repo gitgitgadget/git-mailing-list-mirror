@@ -1,68 +1,68 @@
-Received: from mail-oi1-f172.google.com (mail-oi1-f172.google.com [209.85.167.172])
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CFA57C93
-	for <git@vger.kernel.org>; Sat,  1 Feb 2025 20:20:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CF71CDFBC
+	for <git@vger.kernel.org>; Sat,  1 Feb 2025 20:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738441209; cv=none; b=FVlJ+ekZ16kn1KcSZmUcXGbJjm6tSptg31uh3OKrFKb9HDj6frAPHDyJR2iBfPghOmFDAv+4tf5MCmbwhn7yOWHVbuE69WIG0OtLEajHx5d6CtLIHOrc0ehr41oTuQp/Tn45IGQpTXewuh7Y+rg6TLY79fKk3TFU0537G6sDQT0=
+	t=1738441210; cv=none; b=Jo02wVHAzemz6j8JTF4RSb35eq1i14k0zTk1z3zX1N2bpde886O1eRca+HSuZ8cOoON0OXgUYEvm2UAm8Zixhqw25Uam6YWjC+lbqnwFB8KDg5C5Fc0LXt/LC6/fE/ibrDdArJQuBwStdufVNqQ2ya6VDbMP3Y9RHnKQ+N97NBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738441209; c=relaxed/simple;
-	bh=9W7dMn1Qku0x98lJjGot4hKO77JvknffjmFMtnrtMB8=;
+	s=arc-20240116; t=1738441210; c=relaxed/simple;
+	bh=64lgMiWh+2Ze1k7XBTu/SfF0i8j7YxNOKSVW3IWYdaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZL+b2H831PC/DUAhutZLPHnHeoBoUZdIsRhpWohXhGiod9o8xSCZ0G7S6spA8/9KWlDpQfY8RQ+0Pmv0blo/M7wZP4E0Ihr/lD2hUO3l25MpDcR+pNWTuu3HDm9RAXB8Mr2wOeFjPDMoG1RUFyJxgcWe/+ZY1ACJ44Qc69EFkRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RgmzOldo; arc=none smtp.client-ip=209.85.167.172
+	 MIME-Version; b=ihpf+LSNcRhHEWQzmiYi3I28d8M2mmEUsIMJoqwn39I5osnrbqUnlQsXkc10d1AaewEwtA8T8OLktyjkfwpVEFIU4M48xFnBuBiWwsFl7m1CdfFBOTgYoplusIXXTzuQs8BdqH6AxqgHCcc7bSIfC//Dtb5aEOhd0btGU+73hpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L1i3Ulm0; arc=none smtp.client-ip=209.85.167.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RgmzOldo"
-Received: by mail-oi1-f172.google.com with SMTP id 5614622812f47-3ebb4aae80dso1392161b6e.2
-        for <git@vger.kernel.org>; Sat, 01 Feb 2025 12:20:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L1i3Ulm0"
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3eb8559b6b0so1880970b6e.1
+        for <git@vger.kernel.org>; Sat, 01 Feb 2025 12:20:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738441206; x=1739046006; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738441208; x=1739046008; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CHYWLJK55mooskMg01y7EmX2oDf94DQEr+i1mU/ip6k=;
-        b=RgmzOldoYWrnmS0nh5HSIiD1FrT2hhxlu2a0bbKjIYT/5LmMM+eRn2yLdxRUijCCrC
-         oecOuuTSlh9tkCFDdIcN/e9gtDi56sZAf6Nu3K9yruu6yV1iDYpOZ3r2nibsp4V8Y7qG
-         6D6A0S/RuEkltqV5L+tB3XCqwEmLKWY+E1wdO6/nKUMbt+NzV0PwcijBWvr+trJ6WgkC
-         AhzmIR/KwvZ/w2DD46ebKZH1DNkDWLs50OmIUetREO17+g8fwzb+YdKLaGsQzLfCksbC
-         3rSZOPqzOJIosmh1GFRoWZU1sigNRYg5dnj1g3U6G1ZR4gBISNOWV5ShLLeTScctoBWY
-         Mx2w==
+        bh=YhkHmzFPePb+VueEvMYmbYngo1a6iUd/ux8IdFi6HRI=;
+        b=L1i3Ulm01rli0dtcLwsfFZTmZeLSVtB6/30ObNWhpJRvIKwDf3TTXxwKOJRdYJPBdI
+         peXO/TE1mh2/l64FZ5eO5a2NOavUjpvCmu0weCeRussiR8cdqtTtJOtRSzHpaFZSkC9+
+         +iZOkQ5WT/jRckzZxRmTC/iSW6Et4L5rI7C65GogAWvA/weFv6DiZEhJx+yAEdPIygQC
+         M6enoqF1w5VjV+Rb8f88gyOrh+pXF6PtgcOJQoKgc0RfDzBiaVFIoE7jyeauRI+p4jJz
+         4xNjYlgQVUoRSJkg2Dh2bM1bWQNQD0f1bm4ODQnWSrms4fNQ0bAyxxItRLvswdXGWU2z
+         XOkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738441206; x=1739046006;
+        d=1e100.net; s=20230601; t=1738441208; x=1739046008;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CHYWLJK55mooskMg01y7EmX2oDf94DQEr+i1mU/ip6k=;
-        b=m03md0QIFRgyw1DtZJnRYmib8kfpxmPdS6I6SFk1OQ2ZYqlBDBxdCG8ui2kAXyrkaV
-         nMxXZRWwDKqrbea8GzLJim1XTaaqe+LErGsGw6xXiqx40xqdvexYQxsaVlUxXrYFh1x6
-         gf41B3nzb9Hj2xPbflb3vslcAjiUzwjDvV/C4HdVA2Uv3kTT6VC9VRKfhw1hZzeexLhb
-         cn2I/ZiF62Zj3pTyjp6WAvmPImNQfkmm/o0kBXECycXzW1jJgi/Ht8KhcuXmpFigitY8
-         1Upn8IPxB1GiXnMEMaoBJD5QgOI8B2o6ozbOX+1B4qzuwLK8OnjdzTy8Y5av3WDzPRar
-         A0ow==
-X-Gm-Message-State: AOJu0YyAb0MXPB6gHj17RK1Cn6Zaj4U2tt4R55Q1dy+6B7jJyJyKnH3I
-	CblgCcEph3R7WC8kWdN/VyJYRo92L9njzEEEtTxTh1in78ELlACmEWdtKw==
-X-Gm-Gg: ASbGncvhxLQLlty6Gd2YX9Rncj4SNOmPKSqlNAPQYvIwrOSVRs21Cj0lp9gemCkleWR
-	ZKk+MwvoNauIOnA49Z/9OX0zQdYE/e44shFLFk6x3Zxe5tMS2i1XPUZEMSIHF6sF6KhEh/TlIV3
-	dxANg+9ynoCSFhDsjXBc18YoPGSWc2YkDpubuUT94s/ztSEdhoUoBb2hD2NFdfUALJ3Bw/1pkux
-	JQM9/s7mjg68+BM0k10zwKWACHVAf1Lw96GmIsUsTsRsPnLwqfi9h4G9zuamueDvzP25TYV6lqc
-	mFKTeIBC6Kp0cGOEKYKYlfs=
-X-Google-Smtp-Source: AGHT+IH80IOiklwBeN0m/gF2iTYfxz/AMrMmexM8prgJxcxJOWjRR211/eqf8BofLfD9MOPUaxzw8Q==
-X-Received: by 2002:a05:6808:229e:b0:3ea:367e:db44 with SMTP id 5614622812f47-3f3239ed577mr10445881b6e.3.1738441206256;
-        Sat, 01 Feb 2025 12:20:06 -0800 (PST)
+        bh=YhkHmzFPePb+VueEvMYmbYngo1a6iUd/ux8IdFi6HRI=;
+        b=MCbXn8a8kdXeUGaA9dcbVQLDAx1zj8c0NyUsHKcLEnThr8bZ7hulnZBeX38oTrpy6f
+         wEIQuC9a3hTZ7JUa7NmrCsqzq7TbMySbOFEfy0pJLow7tBoZ8Q4XqpGheRZyeJ+1vYCP
+         dzIGjZIZ2unED5Xt7FOAj5xFUsIicAKthbpO6Dd+LKzEWqCLh7bI79jb+nxvXjVHbEpW
+         9+ncEIw4aPAiEPkDjjnLNxozlRk8J7kMG/Q2AcWXEnwlddanw2EJY/yJTSZF5Pu+l1OZ
+         xmZ5JNZ7KTeosiK3zQc5mWKMlwU7n7V996yu/fFRfDHo8vNtfPRMt4Vbp+3hr1VpBcL1
+         tRTw==
+X-Gm-Message-State: AOJu0YwyOAUhhBrnJK/k3hEpB6CtDM3VE4y+OeLKikDyBnOz48K4ROSZ
+	kr1DEdllu2KPI5/gumFpONGRmlZQAyQubdF3qeAR63hHokum9C1i9AQsXw==
+X-Gm-Gg: ASbGncvb/rYdb/zW3FKo7fW4Qr/pxM/VivZfRMUIRs39xQmoFfE6EO06TyfpzFKvpy7
+	a8ENObRAcIHQPyMuIsMLTWpA4p7uLoRmzwbqxFRcclYA5P6jJWM4ifB0ZgOuxFWBN3Itu6dsS0d
+	iAwzfF5LH49PMY2IDsGZw9vduJLKMM/uhf4hGAP7R3ZN9kI6UbfZG9Sh5yIdFeCT+Y5Iy4QpOBa
+	LqoJqgFWG1S/s4BfIkuQxDi+NfTmMB/KRorYbLwyETEzPLgn3cquiYmaXkHK78IHdRCHQI7joiH
+	Rfw7xSEY+eILFK0i/GlWFKc=
+X-Google-Smtp-Source: AGHT+IF+n/z1y9tb/iRnrGvfrEx/WU5JhFuwHsJrG3OHvSSkI9ziBUzSOkIfJxcpWyFL7DsGpsz5Rg==
+X-Received: by 2002:a05:6808:3386:b0:3ef:27fe:e969 with SMTP id 5614622812f47-3f323a3ea70mr11019672b6e.11.1738441207831;
+        Sat, 01 Feb 2025 12:20:07 -0800 (PST)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3f3332bb032sm1588336b6e.0.2025.02.01.12.20.05
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-3f3332bb032sm1588336b6e.0.2025.02.01.12.20.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Feb 2025 12:20:05 -0800 (PST)
+        Sat, 01 Feb 2025 12:20:07 -0800 (PST)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: christian.couder@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 1/4] quote: add c quote flag to ignore core.quotePath
-Date: Sat,  1 Feb 2025 14:16:55 -0600
-Message-ID: <20250201201658.11562-2-jltobler@gmail.com>
+Subject: [PATCH v3 2/4] quote: add quote_path() flag to ignore config
+Date: Sat,  1 Feb 2025 14:16:56 -0600
+Message-ID: <20250201201658.11562-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.48.1.157.g3b0d05c4a7
 In-Reply-To: <20250201201658.11562-1-jltobler@gmail.com>
 References: <20250110053417.2602109-2-jltobler@gmail.com>
@@ -75,83 +75,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The output of `cq_must_quote()` is affected by `core.quotePath`. This is
-undesirable for operations that want to ensure consistent output
-independent of config settings.
+The `quote_path()` function invokes `quote_c_style_counted()` to handle
+quoting. This means the output `quote_path()` is ultimately affected by
+`core.quotePath` configuration. In a subsequent commit, `quote_path()`
+will be used in a scenario where the output should remain consistent
+regardless of the current configuration.
 
-Introduce the `CQUOTE_IGNORE_CONFIG` flag for the `quote_c_style*`
-functions which when set makes `cq_must_quote()` always follow the
-default behavior (core.quotePath=true) regardless of how its set in the
-config.
+Introduce the `QUOTE_PATH_IGNORE_CONFIG` flag for `quote_path()`which
+when set instructs the underlying `quote_c_style_counted()` to also
+ignore the `core.quotePath` configuration when executed.
 
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- quote.c | 14 ++++++++------
+ quote.c | 13 ++++++++++---
  quote.h |  3 ++-
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ 2 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/quote.c b/quote.c
-index b9f6bdc775..d129c1de70 100644
+index d129c1de70..baec34ca94 100644
 --- a/quote.c
 +++ b/quote.c
-@@ -232,21 +232,22 @@ static signed char const cq_lookup[256] = {
- 	/* 0x80 */ /* set to 0 */
- };
- 
--static inline int cq_must_quote(char c)
-+static inline int cq_must_quote(char c, int ignore_config)
+@@ -370,10 +370,18 @@ char *quote_path(const char *in, const char *prefix, struct strbuf *out, unsigne
  {
--	return cq_lookup[(unsigned char)c] + quote_path_fully > 0;
-+	return cq_lookup[(unsigned char)c] + (quote_path_fully || ignore_config) > 0;
- }
+ 	struct strbuf sb = STRBUF_INIT;
+ 	const char *rel = relative_path(in, prefix, &sb);
+-	int force_dq = ((flags & QUOTE_PATH_QUOTE_SP) && strchr(rel, ' '));
++	unsigned cquote_flags = 0;
++	int force_dq = 0;
  
- /* returns the longest prefix not needing a quote up to maxlen if positive.
-    This stops at the first \0 because it's marked as a character needing an
-    escape */
--static size_t next_quote_pos(const char *s, ssize_t maxlen)
-+static size_t next_quote_pos(const char *s, ssize_t maxlen, int ignore_config)
- {
- 	size_t len;
- 	if (maxlen < 0) {
--		for (len = 0; !cq_must_quote(s[len]); len++);
-+		for (len = 0; !cq_must_quote(s[len], ignore_config); len++);
- 	} else {
--		for (len = 0; len < maxlen && !cq_must_quote(s[len]); len++);
-+		for (len = 0;
-+		     len < maxlen && !cq_must_quote(s[len], ignore_config); len++);
- 	}
- 	return len;
- }
-@@ -282,13 +283,14 @@ static size_t quote_c_style_counted(const char *name, ssize_t maxlen,
- 	} while (0)
+ 	strbuf_reset(out);
  
- 	int no_dq = !!(flags & CQUOTE_NODQ);
-+	int ignore_config = !!(flags & CQUOTE_IGNORE_CONFIG);
- 	size_t len, count = 0;
- 	const char *p = name;
- 
- 	for (;;) {
- 		int ch;
- 
--		len = next_quote_pos(p, maxlen);
-+		len = next_quote_pos(p, maxlen, ignore_config);
- 		if (len == maxlen || (maxlen < 0 && !p[len]))
- 			break;
- 
++	if ((flags & QUOTE_PATH_QUOTE_SP) && strchr(rel, ' ')) {
++		force_dq = 1;
++		cquote_flags &= CQUOTE_NODQ;
++	}
++	if (flags & QUOTE_PATH_IGNORE_CONFIG)
++		cquote_flags &= CQUOTE_IGNORE_CONFIG;
++
+ 	/*
+ 	 * If the caller wants us to enclose the output in a dq-pair
+ 	 * whether quote_c_style_counted() needs to, we do it ourselves
+@@ -381,8 +389,7 @@ char *quote_path(const char *in, const char *prefix, struct strbuf *out, unsigne
+ 	 */
+ 	if (force_dq)
+ 		strbuf_addch(out, '"');
+-	quote_c_style_counted(rel, strlen(rel), out, NULL,
+-			      force_dq ? CQUOTE_NODQ : 0);
++	quote_c_style_counted(rel, strlen(rel), out, NULL, cquote_flags);
+ 	if (force_dq)
+ 		strbuf_addch(out, '"');
+ 	strbuf_release(&sb);
 diff --git a/quote.h b/quote.h
-index 0300c29104..2a793fbef6 100644
+index 2a793fbef6..84903951ef 100644
 --- a/quote.h
 +++ b/quote.h
-@@ -83,7 +83,8 @@ int sq_dequote_to_strvec(char *arg, struct strvec *);
- int unquote_c_style(struct strbuf *, const char *quoted, const char **endp);
+@@ -94,7 +94,8 @@ void write_name_quoted_relative(const char *name, const char *prefix,
  
- /* Bits in the flags parameter to quote_c_style() */
--#define CQUOTE_NODQ 01
-+#define CQUOTE_NODQ	     (1u << 0)
-+#define CQUOTE_IGNORE_CONFIG (1u << 1)
- size_t quote_c_style(const char *name, struct strbuf *, FILE *, unsigned);
- void quote_two_c_style(struct strbuf *, const char *, const char *, unsigned);
+ /* quote path as relative to the given prefix */
+ char *quote_path(const char *in, const char *prefix, struct strbuf *out, unsigned flags);
+-#define QUOTE_PATH_QUOTE_SP 01
++#define QUOTE_PATH_QUOTE_SP	 (1u << 0)
++#define QUOTE_PATH_IGNORE_CONFIG (1u << 1)
  
+ /* quoting as a string literal for other languages */
+ void perl_quote_buf(struct strbuf *sb, const char *src);
 -- 
 2.48.1.157.g3b0d05c4a7
 
