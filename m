@@ -1,72 +1,75 @@
-Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C441A1CBE87
-	for <git@vger.kernel.org>; Sat,  1 Feb 2025 20:20:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D43C61C5F38
+	for <git@vger.kernel.org>; Sat,  1 Feb 2025 21:33:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738441214; cv=none; b=PN6xTBDY+7qNevfXNZN1hFZz1BOQG0Ruu+QqddzvnHydCmvOf7wqs7cPNDgPAjkAb2yhIWkj6CiH1pDQ5ZWfUrCCAajGZpOx5xsFxSRTYiiq9xOpWxW4X/0rBlS0OnpYKAkXvsYGRLbtqyx6pTomEDzxQ+a5vHJthfhxrCEj2Zw=
+	t=1738445604; cv=none; b=UEDkCl+4r8j4Mfs2g9cRsYYcVG7zVGb7NUsykQmCcs3y+Zmx3Kg6T0D/48rQ84RNdt3PVp+VAbqbzdVpvJ3cUFIIgvd6QfzUzgiQlg9EbZgZBiisOqyuz/G4uq+V43icDZ8I2v77RNh1ZgGHXnCxKjme4Syzom99Ojq+CPdyxkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738441214; c=relaxed/simple;
-	bh=gXJLtyvcSkqUbmZsllV1MYxcE6Vsp7c1nYHzdC/Runs=;
+	s=arc-20240116; t=1738445604; c=relaxed/simple;
+	bh=msL2mXrmHsUfjPSOU4gGVVmAtTK76Xw6kiY7Yv6gAYM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q8zZc9GXLQ6krHD46RFXa0Pb/B+AB3niWND9ojpBY4O+5IcYCKApFi4CZdPVJtS5LkU4pgqS1Rc2te/SuUq7Ei9cICvbcarrCYg8/A/juMsYMxeeeXCoX0cC+KG4PYGvWzKOMp1bCnJPxMHREpl2uWVaKzpPQiSzuaNBXTHobRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dSvOpNbb; arc=none smtp.client-ip=209.85.167.171
+	 MIME-Version; b=WRry74bQleATEczQA4pTfh/swQH0vvEu4N/FRsVI2utrf5SqydmtE39ifP5AjQm2BKpI7HDAgDTfhJcj4kJ+aN4Lm7ocFUt2fSVJAkCP1GIvVwfFkEW3uERfT/Xflsb9bLDsGS+euZy59BevRtTp8RgyCCCfLOvbIEksZ5glQWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C6nDdN7k; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dSvOpNbb"
-Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-3eba7784112so1711747b6e.2
-        for <git@vger.kernel.org>; Sat, 01 Feb 2025 12:20:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C6nDdN7k"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-21c2f1b610dso72409165ad.0
+        for <git@vger.kernel.org>; Sat, 01 Feb 2025 13:33:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738441211; x=1739046011; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738445602; x=1739050402; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UIAVxO/hyNcU2z7+EW7A4eD5X/AtlgSjbCbPT1g7Ars=;
-        b=dSvOpNbbhIwIGCWzGGa2bEdhzCCTGmXpKkp8SKUEeouWDLtF+kDRRkwRDhxAh/H1kQ
-         KOwPawkqsDI9P5hvUhTLJC7WQ8jryWx1HwLFQWpgkA8mtCwkY2BN0SAx4ZhQ/I1ixUkq
-         cH6TRZw9f77E1WumJGrxlgjhcpSOyke5IN/qnRo/Jrl0WpF0aeWOSqA8xFnOUikxTvSz
-         UeYBhmd6oKES7FncG+npgbhg+judXxi4fF+L/CbxVHwYxpTw0jTd5RXZusq6Jb2y8DZd
-         hKU0Acjg8DxCaPJTaueoimWZJpyIDjb6hS4OOhIPZc+Ksw4hm+HmBf5Zg3EVgZVN2lFz
-         RxrQ==
+        bh=8HApIVssl5zdVi/CxLtWS9esQorbQt0pSW3zwNOhGd0=;
+        b=C6nDdN7k1Nam3zNLxXxp2DEZu2RZRYTMOacCY60qKDpK82OU2MBzKOVkYPnKHFgn2S
+         BA8/GVNjSwlP15FWHk1D4tVEJPcKKao9mcrAeIKJG6lZYWppNSgNdl0wVWQWsdnu98Fc
+         paHxwefm7V0qB+Hct5+cg4tYxGEc15zY4SvoYnW9zwGuyKtmW5L5PRAevwyoJZenZmUH
+         cAyT2IefdZtzlT59Mggw6Pt5l9oZMdS+R1eWyGeR9oX7CD4fC6l/c75JOxGWZ42j1rXo
+         RfaSPQ8ymei4zKVMDvoZXgy72fA3cRKDfSsKrbNi8OiWgKJ4Xh6lx8TVgs+IwGn5MyrA
+         agyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738441211; x=1739046011;
+        d=1e100.net; s=20230601; t=1738445602; x=1739050402;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UIAVxO/hyNcU2z7+EW7A4eD5X/AtlgSjbCbPT1g7Ars=;
-        b=TeqB9mvRh6ZZuaogAjqi5tBK3SIDPGc6niynrzXlwAbtteRhJnpDDbU1oC/gYXC2qS
-         5wJVia3306pGaOvjOS7ObfzsSJTw+qAk8fbMMkBhUNgO18CWQKWpCZa74U2DQ9t8rXVX
-         ulsQdtDK+pGZr++sL3qwo4G3/KdpGDSi1YLBBaJQ4pUGHNjilF1lZFGiwIVcJRTt1HZz
-         nXJ+rgr2raR2zj0VDXxMJv1YcauCGauZSDp1PTmx4P/Wox9VaPkCnn4yj4+CX84JDnpc
-         fe7qfFt1kU/VVTjQd5Aqel6ROBXnAzVWcMSwq3ZWCQlj2wk5dtF6GeGaTPvbxDWvpzcR
-         H33A==
-X-Gm-Message-State: AOJu0YxcYaG+SGHy4BM1EOr+Y/5qHhgThbvkKPz++ilsDp2hZ9TZMuDq
-	R8ouW4WHfeZPCEaFAk2GKJ5/tpdWDVlybSm9bdVTf0EDmYx1Lv5l/ElBtQ==
-X-Gm-Gg: ASbGnctu5ucvij4WjTpkzYVSPZfhNFMQJfbEZfkcm41Kffu7IiMCnIQcXda7XR9VyCi
-	UFEYSGL6n6AZl3ATa7kIIC0ZIsf5Hfh0Pqd1axhPQqtFi6Rj8+y3BLPIlu8J5VHriGV+tbj/Faf
-	Ca+6nHkHZzxWUtBF/npOl7oWe3AOl7C/Aj5JjMw6i/dKtej1oA901FosssbczIChMp0MJuf0aAa
-	XKQmhxz2IOZQ1lnpVB1e2CUoRqOzfmTmBgY65Naq050KsSG/5/NLMCW6q94aQLe200CSVgoPpYr
-	R7jI1xFXe/Ed0N81gHxJgfI=
-X-Google-Smtp-Source: AGHT+IF/FlOhYcGx6eZ6Nfx5183fOXEfpY+1muZjjhn8P2LtI8hh9oH6J2Rv7DWJfD4QxnHp8bihtQ==
-X-Received: by 2002:a05:6808:15a4:b0:3eb:58b5:8614 with SMTP id 5614622812f47-3f323b674fbmr10215498b6e.29.1738441211650;
-        Sat, 01 Feb 2025 12:20:11 -0800 (PST)
-Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 5614622812f47-3f3332bb032sm1588336b6e.0.2025.02.01.12.20.10
+        bh=8HApIVssl5zdVi/CxLtWS9esQorbQt0pSW3zwNOhGd0=;
+        b=ZPc4NR9QmQZplFq9aLIj0QvXTzunWVosGMvJpJGnebi67xY8YmgeweWgo0xvvRqjqf
+         lB4JObDO1kvGZcJ2m14zgAvlp4Yxf9/61N3vshFNCZKNFi/OXZuLTUcsNGExWFofSGTX
+         mkAGf5XIPuntRpO6YiMqbh5fXJSgzOA0GfTjcTgjt/QpKwpiqUbUAR1vxM0tHygtYM74
+         jJuy3eclWrEsOPiBETVFVgEpy9N6aimaVPjDYzs3QuRXRf4JXmxmz6rKlc+nvsdpb1Ys
+         WTsBGxz/YvmDn9SbQJCogMF2H6b1UyRp7tDQn6+tEn0sH1NTXtROvPZqfL+3I23CUrBl
+         iVyw==
+X-Gm-Message-State: AOJu0Yx8EBopLRCgjdbSZ7dIJ3TPsr7hxMUC7YF7LaRacOm5sP7ZwpBU
+	2mt9nhuhLrny6GaXcOHFWcdQ6GtdFuPSevnitoKsMbud/87ffNT6OzNLVg==
+X-Gm-Gg: ASbGncugQtZsjf2k53z2Aydrf9n8avLXSLOKytl+sOdUSIs/d4b7Vqr+sLdAiLbAlv6
+	2u7J3ZCD63S3ENUUwcTOv5jH6g2ur9JjZ7ZEtGnQfkOBJq3BUd+FRg5OLjR6d7gCzAGbDvwPt0d
+	XEmrWxoClOQ8+N9W1dzmANxgP1I0z7NpnuchL58ceKE+vxJrNwGpOmyKElxIVmvtyseB4xojbL6
+	Ov/Y/LOah9u643+mt+r4Swji1zSDFyHOTyoZQ7x88/+J/V6Fp5gr7uFIG2iRHqVsC+qwB4lX8oF
+	In8p6S6dizAl1kE+d3KxbIRc55w=
+X-Google-Smtp-Source: AGHT+IHef4gSROs/5oxPCgaZAjfVz6FwX9ZCLyt+k0/gTsQinpEuQyutnXnZ05mwxzL5vfKtjZROKg==
+X-Received: by 2002:a05:6a20:ce4f:b0:1e1:ae9a:6311 with SMTP id adf61e73a8af0-1ed7a5c4601mr26388196637.4.1738445601893;
+        Sat, 01 Feb 2025 13:33:21 -0800 (PST)
+Received: from localhost.localdomain ([172.56.122.18])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72ffde3d977sm2453292b3a.177.2025.02.01.13.33.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Feb 2025 12:20:10 -0800 (PST)
-From: Justin Tobler <jltobler@gmail.com>
+        Sat, 01 Feb 2025 13:33:21 -0800 (PST)
+From: David Aguilar <davvid@gmail.com>
 To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v3 4/4] rev-list: extend print-info to print missing object type
-Date: Sat,  1 Feb 2025 14:16:58 -0600
-Message-ID: <20250201201658.11562-5-jltobler@gmail.com>
-X-Mailer: git-send-email 2.48.1.157.g3b0d05c4a7
-In-Reply-To: <20250201201658.11562-1-jltobler@gmail.com>
-References: <20250110053417.2602109-2-jltobler@gmail.com>
- <20250201201658.11562-1-jltobler@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Yongmin <yewon@revi.email>,
+	Jeff King <peff@peff.net>
+Subject: [PATCH 1/2] help: show the suggested command when help.autocorrect is false
+Date: Sat,  1 Feb 2025 13:33:18 -0800
+Message-ID: <20250201213319.153109-1-davvid@gmail.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <pull.1869.v4.git.git.1736760824201.gitgitgadget@gmail.com>
+References: <pull.1869.v4.git.git.1736760824201.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,112 +78,108 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Additional information about missing objects found in git-rev-list(1)
-can be printed by specifying the `print-info` missing action for the
-`--missing` option. Extend this action to also print missing object type
-information inferred from its containing object. This token follows the
-form `type=<type>` and specifies the expected object type of the missing
-object.
+Make the handling of false boolean values for help.autocorrect
+consistent with the handling of value 0 by showing the suggested
+commands but not running them.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- Documentation/rev-list-options.txt |  3 +++
- builtin/rev-list.c                 | 11 ++++++++---
- t/t6022-rev-list-missing.sh        |  3 ++-
- 3 files changed, 13 insertions(+), 4 deletions(-)
+This is based on the sc/help-autocorrect-one patches from this thread
+and is in response to the open question from "What's coooking in git.git":
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 0bea9d4ad3..f10f78c600 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -1038,6 +1038,9 @@ one of the following:
- * The `path=<path>` shows the path of the missing object inferred from a
-   containing object. A path containing SP or special characters is enclosed in
-   double-quotes in the C style as needed.
-++
-+* The `type=<type>` shows the type of the missing object inferred from a
-+  containing object.
- --
- +
- If some tips passed to the traversal are missing, they will be
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 4a45a4e555..963f96d031 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -79,6 +79,7 @@ static int arg_print_omitted; /* print objects omitted by filter */
- struct missing_objects_map_entry {
- 	struct oidmap_entry entry;
- 	const char *path;
-+	unsigned type;
+> On Fri, 31 Jan 2025 18:51:33 -0800 Junio C Hamano <gitster@pobox.com> wrote:
+> Looking good except for "should 0 and false be 'tell it without doing it'?".
+
+source: <xmqq5xlu4bt6.fsf@gitster.g>
+
+This is what it would look like if the answer were to be, "yes".
+
+ Documentation/config/help.txt |  4 ++--
+ help.c                        |  6 ++++--
+ t/t9003-help-autocorrect.sh   | 17 ++++++++++-------
+ 3 files changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/config/help.txt b/Documentation/config/help.txt
+index a4c6079af8..676ba3a55f 100644
+--- a/Documentation/config/help.txt
++++ b/Documentation/config/help.txt
+@@ -11,12 +11,12 @@ help.autoCorrect::
+ 	If git detects typos and can identify exactly one valid command similar
+ 	to the error, git will try to suggest the correct command or even
+ 	run the suggestion automatically. Possible config values are:
+-	 - 0: show the suggested command (default).
++	 - 0, "false", "off", "no": show the suggested command (default).
+ 	 - 1, "true", "on", "yes", "immediate": run the suggested command
+ immediately.
+ 	 - positive number > 1: run the suggested command after specified
+ deciseconds (0.1 sec).
+-	 - "false", "off", "no", "never": don't run or show any suggested command.
++	 - "never": don't run or show any suggested command.
+ 	 - "prompt": show the suggestion and prompt for confirmation to run
+ the command.
+ 
+diff --git a/help.c b/help.c
+index 7148963e46..55425c0d97 100644
+--- a/help.c
++++ b/help.c
+@@ -552,6 +552,7 @@ struct help_unknown_cmd_config {
+ 	struct cmdnames aliases;
  };
- static struct oidmap missing_objects;
- enum missing_action {
-@@ -109,7 +110,8 @@ static off_t get_object_disk_usage(struct object *obj)
- 	return size;
- }
  
--static void add_missing_object_entry(struct object_id *oid, const char *path)
-+static void add_missing_object_entry(struct object_id *oid, const char *path,
-+				     unsigned type)
- {
- 	struct missing_objects_map_entry *entry;
- 
-@@ -118,6 +120,7 @@ static void add_missing_object_entry(struct object_id *oid, const char *path)
- 
- 	CALLOC_ARRAY(entry, 1);
- 	entry->entry.oid = *oid;
-+	entry->type = type;
- 	if (path)
- 		entry->path = xstrdup(path);
- 	oidmap_put(&missing_objects, entry);
-@@ -143,6 +146,8 @@ static void print_missing_object(struct missing_objects_map_entry *entry,
- 
- 		strbuf_release(&path);
++#define AUTOCORRECT_SHOW (-4)
+ #define AUTOCORRECT_PROMPT (-3)
+ #define AUTOCORRECT_NEVER (-2)
+ #define AUTOCORRECT_IMMEDIATELY (-1)
+@@ -562,7 +563,7 @@ static int parse_autocorrect(const char *value)
+ 		case 1:
+ 			return AUTOCORRECT_IMMEDIATELY;
+ 		case 0:
+-			return AUTOCORRECT_NEVER;
++			return AUTOCORRECT_SHOW;
+ 		default: /* other random text */
+ 			break;
  	}
-+	if (entry->type)
-+		strbuf_addf(&sb, " type=%s", type_name(entry->type));
- 
- 	printf("?%s%s\n", oid_to_hex(&entry->entry.oid), sb.buf);
- 	strbuf_release(&sb);
-@@ -167,7 +172,7 @@ static inline void finish_object__ma(struct object *obj, const char *name)
- 
- 	case MA_PRINT:
- 	case MA_PRINT_INFO:
--		add_missing_object_entry(&obj->oid, name);
-+		add_missing_object_entry(&obj->oid, name, obj->type);
- 		return;
- 
- 	case MA_ALLOW_PROMISOR:
-@@ -844,7 +849,7 @@ int cmd_rev_list(int argc,
- 
- 		/* Add missing tips */
- 		while ((oid = oidset_iter_next(&iter)))
--			add_missing_object_entry(oid, NULL);
-+			add_missing_object_entry(oid, NULL, 0);
- 
- 		oidset_clear(&revs.missing_commits);
+@@ -713,7 +714,8 @@ char *help_unknown_cmd(const char *cmd)
+ 		     n++)
+ 			; /* still counting */
  	}
-diff --git a/t/t6022-rev-list-missing.sh b/t/t6022-rev-list-missing.sh
-index 38afca6f09..3e2790d4c8 100755
---- a/t/t6022-rev-list-missing.sh
-+++ b/t/t6022-rev-list-missing.sh
-@@ -164,6 +164,7 @@ do
+-	if (cfg.autocorrect && n == 1 && SIMILAR_ENOUGH(best_similarity)) {
++	if (cfg.autocorrect && cfg.autocorrect != AUTOCORRECT_SHOW && n == 1 &&
++	    SIMILAR_ENOUGH(best_similarity)) {
+ 		char *assumed = xstrdup(main_cmds.names[0]->name);
  
- 			oid="$(git rev-parse "$obj")" &&
- 			path=".git/objects/$(test_oid_to_path $oid)" &&
-+			type_info=" type=$(git cat-file -t $oid)" &&
+ 		fprintf_ln(stderr,
+diff --git a/t/t9003-help-autocorrect.sh b/t/t9003-help-autocorrect.sh
+index 85a5074b5e..5ebfc00f52 100755
+--- a/t/t9003-help-autocorrect.sh
++++ b/t/t9003-help-autocorrect.sh
+@@ -28,15 +28,18 @@ test_expect_success 'setup' '
+ 	test_cmp expect actual
+ '
  
- 			case $obj in
- 			HEAD:foo)
-@@ -184,7 +185,7 @@ do
- 			# get the expected oids.
- 			git rev-list --objects --no-object-names \
- 				HEAD ^"$obj" >expect.raw &&
--			echo "?$oid$path_info" >>expect.raw &&
-+			echo "?$oid$path_info$type_info" >>expect.raw &&
+-test_expect_success 'autocorrect showing candidates' '
+-	git config help.autocorrect 0 &&
++for show in false no off 0
++do
++	test_expect_success 'autocorrect showing candidates' '
++		git config help.autocorrect $show &&
  
- 			mv "$path" "$path.hidden" &&
- 			git rev-list --objects --no-object-names \
+-	test_must_fail git lfg 2>actual &&
+-	grep "^	lgf" actual &&
++		test_must_fail git lfg 2>actual &&
++		grep "^	lgf" actual &&
+ 
+-	test_must_fail git distimdist 2>actual &&
+-	grep "^	distimdistim" actual
+-'
++		test_must_fail git distimdist 2>actual &&
++		grep "^	distimdistim" actual
++	'
++done
+ 
+ for immediate in -1 immediate
+ do
 -- 
-2.48.1.157.g3b0d05c4a7
+2.48.0.rc2.34.gefa3f50b25
 
