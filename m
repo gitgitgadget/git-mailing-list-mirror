@@ -1,80 +1,122 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F0D1DFE8
-	for <git@vger.kernel.org>; Sat,  1 Feb 2025 13:41:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 751871ADC9D
+	for <git@vger.kernel.org>; Sat,  1 Feb 2025 16:47:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738417311; cv=none; b=ZCxoom2VnIWSoRndyMV4rMj61XvVi4lUQv85/sK1qCz/yQGM2CiFgjO0GYzX8jhqCFd+CV5MLloV+FxZgqV3TCwuDO7XMHyLDznPAKm21OPNh26bDZTzuH3u6N1uNbaZEelK7ELtfGSB80QIEpXEOnwqXeRuy+PrnNRb3bDsDOs=
+	t=1738428482; cv=none; b=W3qz7B9HMwaer/ezlWl/EcKT53wqNTIUFoG7FstlBwRVD4JLfZDiJCy7tQqoZDOZceZed+O4B1VBtBOJG5uaBPVdQDFFIt9w1FTisdWLU2rjLvCzbyD7mbn2phjixdB9bRSKxNhTz19lWAPwOwCn2NplihGKjA83gEPqinFyWcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738417311; c=relaxed/simple;
-	bh=6S2525yqhyKpImexYSk2G8chwmuxse2NrXbTBcWHQG4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eKaOIl6JsfqdOBBMRkyvYx/JgJx9Mua87y2faLRnC6F2kRoBHUQnYJ1/OAPxslhXXdJPSRnqRkMgSC6BfWh1e7+ZgHseN4eOfzRbwIwy86+oBdK4rnCfXKiWEw087Mimbf+lmn7kWus0gEKkOBs0lzpOL3cUBaFYtve8pN7GKEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gMn8NqRf; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738428482; c=relaxed/simple;
+	bh=vnTZEbQ7B7IdPv01m9aeP6t1+7VH0nUqippiOHIVv2Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bC6prbP/UV3pkUoqy2K1qV1Wx8yh3c9NSJpearsRf5KTm/sjSWkxWfGhGqrYnVL5rpVWQ+hdIIOljqsanG0/v/ZnGepCQs2Avwmm8vA1BSDsX6YoV/CVAfnkT6/gqJLOPT07XSP0KBE+mE8v0JBQO0gk/rhY3lJxlaCHf65wCuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=fdfUWwxe; arc=none smtp.client-ip=212.27.42.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gMn8NqRf"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-216281bc30fso65861365ad.0
-        for <git@vger.kernel.org>; Sat, 01 Feb 2025 05:41:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738417309; x=1739022109; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=05A71CPFVr2XyPU29tLrLK9fP0y0KV4YLIDAqdK22+w=;
-        b=gMn8NqRfmZ8Kn5td8mKV7YNyugPPyI4N3IW8AsMgf/SYbBcnaTX6DBtiFpGPBF2Qhi
-         FRqSp1Qv6I+PpL2ypG362MdMXYIObi5dTRvqgmK6c3a058aPWclRx61rBRa7unR0fK52
-         tb3p5Y+Mjr79k1dC8FHOZfszq66HNROuc/pcGpytJpQodRCsU00NcL2PqR0n5YKjY5Na
-         ng8QLoR8xIsQuC8rRGIjG1SFK6KK9OepSoaJY0d4fjzJRiRnfJe4QY7vQV/J9JV2+UXx
-         O/1GnDfN1BvgET96YfhmpRqQc06vuaXMc9FiMIRBNAKRfeRDwSAonJG561E28DvfjYeU
-         3myg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738417309; x=1739022109;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=05A71CPFVr2XyPU29tLrLK9fP0y0KV4YLIDAqdK22+w=;
-        b=vLViQ5QEy6KCgZvG1YwyGoicm+AOFceySEYcda06f0osaKRjd2LCOy7k1m1SX0OLun
-         nTMARzYXXA59DJspt8NIa0WOsvcvHkTCfyhvjqOHgFvXuElvw+BZJqu3sDQTnApnzE7i
-         9U4B9QK3lbl92zdCxMELVQR41e9cwwl7IdT1Q1MEGkYNUxvzGIlkOa7mBmPnuCgQfP5a
-         9xaHDbtZfPA+41eY+W30D4FTktVLkmEicEvOe1cSaQrsxPlMqb6Qh9i/+AaTfsEjKiOZ
-         u9b/XWPv8YK1Zn1zLeBRi44/3dwI4Odm03geICW9WoEbbdUT33KUHah+P7ot37apufWc
-         1IYA==
-X-Gm-Message-State: AOJu0YySX9vNF7lMfZ3OYaoouZDVNF2YoYIQ51cKhSz4kZ9i/xYiluwj
-	+kUHB4/aBj+hxEN5hGA5ERbVpw5vkuwlv2xyZaBDT46fKdoRKkTBS9p+9w==
-X-Gm-Gg: ASbGncvdrUJN1j1XHLRV6T7tlbmKEoznPgnLI97pmjemtR3/VhHLJ0ET2BCX8K9qdrF
-	PJRWRxMkhklNqcRD7rbyLm3+jqEyWxejEOfmEqMrCCgANsgzIh9RSOpR2/gAOD5n/PLq3U4AIKG
-	Rd3ivlxBdpqRrpsRLCw4LSibRvDnzlKzDnDNkK/7+oY5d3mgihxq9OqaFrbQddljjDEdtUSnRbR
-	cyU0KRGbIxfgYZRlgByt7w4S6ey+aCksQKCv8WQOnr0j7VEN4uxMd4NhjCjzeiBgTjM0GyNdO8m
-	uE7nyyz8UJ9oBVmv8hboYClroQ==
-X-Google-Smtp-Source: AGHT+IGBEZJwK4tQ526uWZJetd4mmpU3rypcb9OvyhNRoXM1ltnxKychcrIbB2kGnRP+3tjcdqal8w==
-X-Received: by 2002:a17:902:ce8d:b0:215:94eb:adb6 with SMTP id d9443c01a7336-21dd7dd46bemr237688555ad.40.1738417309620;
-        Sat, 01 Feb 2025 05:41:49 -0800 (PST)
-Received: from localhost.localdomain ([171.60.225.9])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de4a91af6sm44200755ad.17.2025.02.01.05.41.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 01 Feb 2025 05:41:49 -0800 (PST)
-From: Moumita <dhar61595@gmail.com>
-To: git@vger.kernel.org
-Cc: Moumita <dhar61595@gmail.com>
-Subject: [PATCH 0/1] Rename all *.txt files to .adoc in Documentation
-Date: Sat,  1 Feb 2025 19:10:23 +0530
-Message-ID: <20250201134023.27695-1-dhar61595@gmail.com>
-X-Mailer: git-send-email 2.48.0
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="fdfUWwxe"
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id A28BB83542F
+	for <git@vger.kernel.org>; Sat,  1 Feb 2025 17:47:50 +0100 (CET)
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:f89b:5f6f:dbed:efce])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id B8BC713F8B9;
+	Sat,  1 Feb 2025 17:47:36 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1738428463;
+	bh=vnTZEbQ7B7IdPv01m9aeP6t1+7VH0nUqippiOHIVv2Y=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=fdfUWwxejEYvGlJ0yvNDs6ThTSzlPV+GBDtdNAYrKEE24w7Qs0nAOj3mBWLWoPEgq
+	 lQRbL8ePzPeeaT3EAz+avYlfwAoOI22kI44pMIdLoy0VUlD0xu+6UplnbviceaQQ5R
+	 1TCY51H5T6Stnym5CU0c/qyO1WSx6dkIbGUXW7siXNDA/D6xu8prz8wX54NRddACis
+	 UBKmC1En/yq+ALROGOtgDXD3K+XbWaA7LiMzh2IWmji6JQ/nkNMTGYzfPulZG+6RrO
+	 4yasXgv4GrNZwCRl1pVSYoP/Eowsxu33EpzS3XESF5X1a6RsRi7u6iJx2ap2NCqXDy
+	 dRiG2i0fGJdiw==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
+To: git@vger.kernel.org, Toon Claes <toon@iotcl.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+ Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
+ Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v4 2/6] clone: make it possible to specify --tags
+Date: Sat, 01 Feb 2025 17:47:36 +0100
+Message-ID: <1911002.tdWV9SEqCh@cayenne>
+In-Reply-To: <20250131-toon-clone-refs-v4-2-2a4ff851498f@iotcl.com>
+References:
+ <20250131-toon-clone-refs-v4-0-2a4ff851498f@iotcl.com>
+ <20250131-toon-clone-refs-v4-2-2a4ff851498f@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-Hello, I am Moumita Dhar . I am a newbie I tried to do this issue because it was tagged #leftoverbits . This patch renames all `.txt` files in the Documentation directory to `.adoc`
-to align with AsciiDoc formatting standards.
+Hello,
 
-Moumita (1):
-  Renamed all *.txt files to .adoc of Documentation
+I'm only reviewing the doc part.
 
--- 
-2.48.0
+On Friday, 31 January 2025 16:30:30 UTC+1 Toon Claes wrote:
+> Option --no-tags was added in 0dab2468ee (clone: add a --no-tags option
+> to clone without tags, 2017-04-26). At the time there was no need to
+> support --tags as well, although there was some conversation about
+> it[1].
+> 
+> To simplify the code and to prepare for future commits, invert the flag
+> internally. Functionally there is no change, because the flag is
+> default-enabled passing `--tags` has no effect, so there's no need to
+> add tests for this.
+> 
+> [1]:
+> https://lore.kernel.org/git/
+CAGZ79kbHuMpiavJ90kQLEL_AR0BEyArcZoEWAjPPhOFacN16
+> YQ@mail.gmail.com/
+> 
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+>  Documentation/git-clone.txt |  7 ++++---
+>  builtin/clone.c             | 14 +++++++-------
+>  2 files changed, 11 insertions(+), 10 deletions(-)
+> 
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> index
+> de8d8f58930ecff305f79480b13ddce10cd96c60..99a9222e63429b3447deb3e7c08962d4ec6
+> 0a295 100644 --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -13,7 +13,7 @@ git clone [--template=<template-directory>]
+>  	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+>  	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference 
+<repository>]
+>  	  [--dissociate] [--separate-git-dir <git-dir>]
+> -	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
+> +	  [--depth <depth>] [--[no-]single-branch] [--[no-]-tags]
+
+There's an extra '-' : it should read '--[no-]tags'
+
+>  	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+>  	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--
+[no-]reject-shallow]
+> [--filter=<filter-spec>] [--also-filter-submodules]] [--] <repository> @@
+> -273,8 +273,9 @@ corresponding `--mirror` and `--no-tags` options instead.
+> branch when `--single-branch` clone was made, no remote-tracking
+>  	branch is created.
+> 
+> -`--no-tags`::
+> -	Don't clone any tags, and set
+> +`--[no-]tags`::
+> +	By default tags are cloned, and passing `--tags` doesn't change 
+that.
+> +	With `--no-tags`, no tags are cloned, and set
+
+Better keep and start the description  with the imperative mood , as in the 
+previous version and add the "By default,..." at the end of the description.
+
+>  	`remote.<remote>.tagOpt=--no-tags` in the config, ensuring
+>  	that future `git pull` and `git fetch` operations won't follow
+>  	any tags. Subsequent explicit tag fetches will still work,
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index
+
+
 
