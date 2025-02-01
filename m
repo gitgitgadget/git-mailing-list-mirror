@@ -1,127 +1,114 @@
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF0A208A9
-	for <git@vger.kernel.org>; Sat,  1 Feb 2025 16:50:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C497DA84
+	for <git@vger.kernel.org>; Sat,  1 Feb 2025 20:03:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738428647; cv=none; b=cSgg5lilsLpjgBJMA7gM/s6MqwCOBkmfm9ou4/qCeM8Uh0rjGvVssBoUxvXpG04FaWzkR7QALMvlx20plYDyPS1Yxoy0OR7/n80twItfPKfWmgM0P1rNeMPFOmcDn6YEumrQAtdr9EJcpb0SRZTICXOqQk+VIf/FKG6Vl+tFZnY=
+	t=1738440189; cv=none; b=qOIe5U8Vhjrd7gNX+Po003i1cYAlrTX/yYQ+Jr2MwoI27moi2sRdwdS773uMhkaNdikPnCVnJby+h/bS9Zp/REEbiO8z+MD3G1KGoegiKXiTP03idSvH9c+EK7v2gNVsB5U6Mh8v//K5QSJQSn5HiTOHx7ukEGCVtDRAv0304ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738428647; c=relaxed/simple;
-	bh=I72J74hAUmwZrkHAcp2kYSakVu4Yj/v1dzs/Ru06swU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h4ZhQyCX32GloV7QnXLP0ImhP/W05iyvNcqxooMelOAJUyRzZ75mSBgM5y1yEVKE3YPwMI/8RW7TzpLpY5HHIAWv1Fvt6X/1G8TAGQPBKOpesttT5EIyZbVmzr8pycJ+38iAyu3egJIr/r7Fg5nO2vzfaBaKCVeZrbQ99iuM1ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=FAxSw8mZ; arc=none smtp.client-ip=212.27.42.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1738440189; c=relaxed/simple;
+	bh=2Fnuokkm8cNrWdAP1R8lt2a/A6LRvhIGhNbhvrD0Zls=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=l1wO72OWSs/j6GjUv2R4Eyr4tnmM3jPckNkpP+WOhgYdvVC2/agIgB6+qslWDhFeIntKeQ+yvNXDbzY/uxlcASYdTA6S5QLi0B2fxFbF/9mIxF+0Rx+Jkd5pLtPju4uqB6R/ajJ0slnngv6C8gR/mJqYnOr18+4vZBqyvzaTctU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=UqJFwM8t; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="FAxSw8mZ"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:f89b:5f6f:dbed:efce])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 9523113F880;
-	Sat,  1 Feb 2025 17:50:36 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1738428642;
-	bh=I72J74hAUmwZrkHAcp2kYSakVu4Yj/v1dzs/Ru06swU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FAxSw8mZEicR0cPN55PJxA2N27Vp2yXMiZGBBQSYwLR17ZzX9lIVCdhsi5EzXc1g5
-	 L98CnkKXZni49EKthvJOQtCHlYqwf0GhMlHrimv2dJBbeZXjQ3oWpF/R7p7RPcoZ4J
-	 GvFp7Mj5W+61DR2Zeys+Ez+bJ9xGkHCKPOnK3arXka6aXPMLM4XhAvUXNNBK1r//8n
-	 SPckU1GEGxkNo5En1ah2uPY2V78fMbUnrqUFmkgFrhbgSnNb1UcN4JNXdwx4U212ih
-	 lpob/8Ikbx2aDjkXQLuj4pCR91Hszr6R3iC9dCjxX6lEFwrXyAiUQw0mkjctKi1paM
-	 zv7MKlfns/7Pw==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org, Toon Claes <toon@iotcl.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Michal =?UTF-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
- Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>,
- Toon Claes <toon@iotcl.com>
-Subject:
- Re: [PATCH v4 6/6] builtin/clone: teach git-clone(1) the --revision= option
-Date: Sat, 01 Feb 2025 17:50:36 +0100
-Message-ID: <2974411.e9J7NaK4W3@cayenne>
-In-Reply-To: <20250131-toon-clone-refs-v4-6-2a4ff851498f@iotcl.com>
-References:
- <20250131-toon-clone-refs-v4-0-2a4ff851498f@iotcl.com>
- <20250131-toon-clone-refs-v4-6-2a4ff851498f@iotcl.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="UqJFwM8t"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1738440185;
+	bh=2Fnuokkm8cNrWdAP1R8lt2a/A6LRvhIGhNbhvrD0Zls=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=UqJFwM8tpfAn8Il3b8IDuJfrnH1QQjHIWRfQjwIohrT0zgCdzbpkV4i7n7+rhvzxA
+	 3gXesF9kkyIesMlUWfoUHiNxVp6R4pcdRHJqDHUDG11Px5rUmz8GXbeiaNSv0AWMDP
+	 qg5bRE9DZKi+N6SG7Rve7pGX3pPAJK3JQa74/7uFhmzdnQ/tM1yZOakMgaeNCSRV7E
+	 jIwNU4mrwlbYWG4x+6n+NgnAdMMXoLyS4zbUKX1ODn0cAyrO1eqc03BpOyyr4zaTJS
+	 hFTSHhXf9BisN+6V0xWwWNnrPzAECxdN/nuyrlK9swymH2AnwMipoNMVs9n32UNsWD
+	 1/ikOBPyVMLy6qzLQ1gpaNNaB0JSay175x3Eh46PmmoMjcoVL+Pco6L+cwqy7i9klJ
+	 HraztalwiByZWm8QnRUyWkxQryEMXVTBd00ygdsoh+rvCikpTtZPO0ZU49q9yfgOx3
+	 C+l0T5i6GAtrCmQwjwG3tWskb2gZDNP2hqMqNxva25hdm6JMmjI
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B764920068;
+	Sat,  1 Feb 2025 20:03:04 +0000 (UTC)
+Date: Sat, 1 Feb 2025 20:03:02 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Moumita <dhar61595@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Rename all *.txt files to .adoc in Documentation
+Message-ID: <Z5599iKKWOQ1KHXI@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Moumita <dhar61595@gmail.com>, git@vger.kernel.org
+References: <20250201125851.21079-1-dhar61595@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
-
-On Friday, 31 January 2025 16:30:34 UTC+1 Toon Claes wrote:
-> The git-clone(1) command has the option `--branch` that allows the user
-> to select the branch they want HEAD to point to. In a non-bare
-> repository this also checks out that branch.
-> 
-> Option `--branch` also accepts a tag. When a tag name is provided, the
-> commit this tag points to is checked out and HEAD is detached. Thus
-> `--branch` can be used to clone a repository and check out a ref kept
-> under `refs/heads` or `refs/tags`. But some other refs might be in use
-> as well. For example Git forges might use refs like `refs/pull/<id>` and
-> `refs/merge-requests/<id>` to track pull/merge requests. These refs
-> cannot be selected upon git-clone(1).
-> 
-> Add option `--revision` to git-clone(1). This option accepts a fully
-> qualified reference, or a hexadecimal commit ID. This enables the user
-> to clone and check out any revision they want. `--revision` can be used
-> in conjunction with `--depth` to do a minimal clone that only contains
-> the blob and tree for a single revision. This can be useful for
-> automated tests running in CI systems.
-> 
-> Using option `--branch` and `--single-branch` together is a similar
-> scenario, but serves a different purpose. Using these two options, a
-> singlet remote tracking branch is created and the fetch refspec is set
-> up so git-fetch(1) will receive updates on that branch from the remote.
-> This allows the user work on that single branch.
-> 
-> Option `--revision` on contrary detaches HEAD, creates no tracking
-> branches, and writes no fetch refspec.
-> 
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
->  Documentation/git-clone.txt |  10 ++++
->  builtin/clone.c             |  59 +++++++++++++++++----
->  parse-options.h             |   9 ++++
->  t/meson.build               |   1 +
->  t/t5621-clone-revision.sh   | 123
-> ++++++++++++++++++++++++++++++++++++++++++++ 5 files changed, 193
-> insertions(+), 9 deletions(-)
-> 
-> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-> index
-> 
-99a9222e63429b3447deb3e7c08962d4ec60a295..6c882b6fc56c2595059124cd0ecdaf825e3
-> 10160 100644 --- a/Documentation/git-clone.txt
-> +++ b/Documentation/git-clone.txt
-> @@ -221,6 +221,16 @@ objects from the source repository into a pack in the
-> cloned repository. `--branch` can also take tags and detaches the `HEAD` at
-> that commit in the resulting repository.
-> 
-> +`--revision` _<rev>_::
-
-You can use the backticks for full synopsis style: `--revision <rev>`
-
-> +	Create a new repository, and fetch the history leading to the given
-> +	revision _<rev>_ (and nothing else), without making any remote-
-tracking
-> +	branch, and without making any local branch, and point `HEAD` to
-> +	_<rev>_. When creating a non-bare repository, the revision is 
-checked
-> +	out on a detached `HEAD`. The argument can be a ref name
-> +	(e.g. `refs/heads/main` or `refs/tags/v1.0`) that peels down to a
-> +	commit, or a hexadecimal object name.
-> +	This option is incompatible with `--branch` and `--mirror`.
-> +
->  `-u` _<upload-pack>_::
->  `--upload-pack` _<upload-pack>_::
->  	When given, and the repository to clone from is accessed
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rUxZDRskOaUn7M2z"
+Content-Disposition: inline
+In-Reply-To: <20250201125851.21079-1-dhar61595@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
+--rUxZDRskOaUn7M2z
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On 2025-02-01 at 12:58:51, Moumita wrote:
+> Hello, I am Moumita Dhar . I am a newbie I tried to do this issue because=
+ it was tagged #leftoverbits . This patch renames all `.txt` files in the D=
+ocumentation directory to `.adoc`
+> to align with AsciiDoc formatting standards.
+>=20
+> Moumita (1):
+>   Renamed all *.txt files to .adoc of Documentation
+
+I think your patch has been incorrectly generated and is much too large
+to make it to the list.  The patches you've sent to me have been as
+large as 10 MB, which I'm pretty sure the list won't accept.
+
+Also, I regret to inform you that I've sent a series that did this which
+is cooking in `next`.  I realize it doesn't appear in `master` yet,
+since Junio is trying to let it cook for a little longer and see if
+anyone has any problems with it.
+
+I might also request that if possible, when Cc'ing someone, that you use
+the Cc field and not the Bcc field, since my mail filtering is designed
+to place mail that includes me _and_ the list but doesn't have the
+List-Id header into a special patches folder which is not my inbox (and
+thus, doesn't go to my phone).  Your emails don't include me in the To
+or Cc, and thus they _do_ go to my inbox and phone, which is much less
+preferable, since I only review code on my laptop.  Perhaps others have
+similar filtering.
+
+It would be great if you decided to pick up another small item of
+#leftoverbits or just a TODO in the code, because that is indeed a great
+way to get involved, and that's how I started to contribute to Git.  So
+all that to say, best of luck on a different project.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--rUxZDRskOaUn7M2z
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ5599gAKCRB8DEliiIei
+gbxZAP0VEA6U/zUZsoUVMxMTjnjZISFwjxHfmZU8t4zvlwwnigD+LhvK2YdjlvVO
+IvzlteVK6rpXg469MOFnksQ4aCnWiwE=
+=/tPj
+-----END PGP SIGNATURE-----
+
+--rUxZDRskOaUn7M2z--
