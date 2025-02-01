@@ -1,119 +1,140 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D496199223
-	for <git@vger.kernel.org>; Fri, 31 Jan 2025 23:49:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86759625
+	for <git@vger.kernel.org>; Sat,  1 Feb 2025 00:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738367367; cv=none; b=eePOALLwDUkFjLJQ1g0WSMM/HdIX71IRTJI1yq/XrmbZWudlSwZsZe+ugH4c4vWwKOOJpQi0+KW8HWWrSCMas9XBXGPmiv09nhtH2kzdghJ2NnzZ2mRdqLR0+WJLWCT6pVokgU9bJAIuL5//ramA8xnBo60r+ltZVr/5WHPlgzo=
+	t=1738370768; cv=none; b=VI/VoRH+vL0UyrzvaVoVbxZtRbvJ4HIqWHxZO8fVAyOBosILYx1mkAMfpOqO5gh+clxgYXsmOrWD0WC/BABKULfSZ8Xrdh59Ne6ZCu5KHEselk9YUk13LxCXdt18KymiQb8Xuq/vE1vZSUAd9xPDPCrv+kZ7n0AJHhPenbhHsfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738367367; c=relaxed/simple;
-	bh=ab3VZc0FKuzsHHXQJ2PO47sp+6863+j2rbn8MOXqt4g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Xim2UoSnDtHHRH1JIsW8xDxPgsf9ANsTjbPcj0GgPxthgPtRD3gJClKVsrl+l6YI7yAy0XX1NBzCDQgcCvv34vmgZUhyRN5PUeVSUP/XA6gGfx1YIl/sttg/SmCL1cxXsaKuvg0QAigfavGBbYp9Zf8VR1VIU4rhD4DMWmdO+2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Tl38z+Hb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nDquQKS/; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738370768; c=relaxed/simple;
+	bh=eEl+/zgNUzw0lhNll6DDdz+MktUuzSvjYj4G+jUWU0g=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=b7m93npfyPZ+uKK4ZnZ0L76UvFuXGKnXrINyKkc8h5NurKTaGlOlPcrWb5n5zxMTvBJdXtM6tbubjTazptVob8KRgmPrHx9U+8zV/Z35GeKN7gQfV2TpfqHDIUr1VLkolgSkIQZtofd4dI0A3YIw+5EEgR8xklv1Ou0EIGLuPsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=koBVAVYB; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Tl38z+Hb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nDquQKS/"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7304E1140105;
-	Fri, 31 Jan 2025 18:49:24 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Fri, 31 Jan 2025 18:49:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738367364; x=1738453764; bh=/2yVwYUkcx
-	P/HxQTg902waYx2ru/L5QGMkPygYvSWeo=; b=Tl38z+HbAt5HBKi5wCHfJBSGoy
-	ou3lgqO9b63h2YQHzD8iJEHggXd8tXDz6fBQrQxCColYSDV8P1YpNowpFL+7YBt9
-	4Sw20+uhj01D94vWFu/MhyCeoSkyHE1ajI1F0W/PwuuspnXP8CFVs8Juwr/kvlKB
-	5g0YbTkV0dCWUkYEtiLFiQMrspOg190j/2jkS7q/h+iZ3+hvcAu3/zOgxcp0SWwT
-	krUxJIqgXlE8nNzAQiJaB96d0StK9G+LoEIW1S86DdNlujWnFw2cQ9oTlqECI+9F
-	eMq+Tuqfxf/mbmMCfQZ6RKjjuKR/+5TMePZ6BaLqUQWa9O5c+M9h1ReSxBrQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738367364; x=1738453764; bh=/2yVwYUkcxP/HxQTg902waYx2ru/L5QGMkP
-	ygYvSWeo=; b=nDquQKS/E3HDYXH2QyE7lP0RKc12StwRtVdXr+gZRfKClLu3D9y
-	tLraS85Efil250IAG2eL68ceWiqf7iJxE08q/7h4liZst1LMpYJzZ2zx2Phgtzx+
-	prg6lBt0Ixu4CsD5zT1780breE+n9CphANWt6rR5m47Xur5oLp8Cg9vR9yDE+fk1
-	gGOZCvTGz1+hG1RHNN5ArUV1qSpqf9VyhsIEoaPhrP8NXwT3tNcpSKVuabd9BWZM
-	snzPPYiwGp6ocejkQzyUEV4ieV1Z3OOkaAr2vrLDUxFwFJQxQrnUF1BmzVOWLi6R
-	lil/YbvDYuN+LumjY8OPTxLmm2oGNLJWdxg==
-X-ME-Sender: <xms:hGGdZ4Ts_qJ-WwyJxABeLE76fRLDtlunCVyw3dBy-v-kPUWElrZbJQ>
-    <xme:hGGdZ1xorzgbV8awthW08eXoJYblgk7aM10BzXovuXLV0vYBb1Bb2XKVIy79zEJSq
-    uzktp_nSkEEnyEWuQ>
-X-ME-Received: <xmr:hGGdZ11voq5lRAJJR-J86U1MxGRZKIhPtsnkmlsKLwKl-ADD7A3W0QhVcXaKZuxa79_IR_vNVj1RhPlXxsGQV-r0q6nfgxnPh_iD>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddutdduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:hGGdZ8Bk1t9vZc7k3R_ZLrTusZztP00rcgmGLiuPRXVV_gsdLVMU0g>
-    <xmx:hGGdZxgqEYo-TmVt71SWurZwnbgLe7vcN7vf1_1Rz7LsQwrMkWzFVA>
-    <xmx:hGGdZ4oYJ1S-zyrK2__ddc2E3JZdjYVH0Y0o1NheT0W8f2GeBBL0kQ>
-    <xmx:hGGdZ0gAh7Iis1s5S4coGXTnBrl_9wpSyNzVbHiaMhV_ldHDY5nKFg>
-    <xmx:hGGdZxdQ7fMbdPmUGZU_3QAgPlJ3yNveLETEFAQHvmnyQRmqgsLTdUde>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 31 Jan 2025 18:49:23 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Derrick Stolee <stolee@gmail.com>,  git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
-In-Reply-To: <20250131233452.GB3544301@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 31 Jan 2025 18:34:52 -0500")
-References: <xmqqbjvyv510.fsf@gitster.g>
-	<20250123003613.GA3900660@coredump.intra.peff.net>
-	<xmqq5xm6uwip.fsf@gitster.g>
-	<20250131233452.GB3544301@coredump.intra.peff.net>
-Date: Fri, 31 Jan 2025 15:49:22 -0800
-Message-ID: <xmqq1pwi5yt9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="koBVAVYB"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2166022c5caso40935885ad.2
+        for <git@vger.kernel.org>; Fri, 31 Jan 2025 16:46:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738370765; x=1738975565; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wjWQEK6rOgZG3Hoae3/XGQJcBq4DNMC8e98+7TwTHng=;
+        b=koBVAVYB+bphlBzqESbiiThc2gbBAoXIttYCYRZ4c7JGdLnbLg6za6PlQlthjzyYAR
+         9nOpwywgNXRHB4j3OTp4KyYNAw8IhN7dgZjg5v4QLsrOk7ftUJ/pVoGnVY5n9kxMNBpv
+         NEGZ8XKLkcI5EIE3yh75fW/gbw8pe3Jkg8J7xIh0Z1tneWH2mVxSGJbPJiVoz/jdfYOD
+         4zzdh0nMco2QSfC2XWaIzK+ujxvgisZqzZ1WYAcppxo+gDeca9X2uGjgkw0Dgw+Cl/nV
+         JaBkUtRORzAOmsJ+xIb8zNZhut201s3W8mAF+9zd7ZvrXt+eIbQv0XliyE42lbpAWzNH
+         dgMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738370765; x=1738975565;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wjWQEK6rOgZG3Hoae3/XGQJcBq4DNMC8e98+7TwTHng=;
+        b=TxWAKApR4qJsB5FYFj18zxxYgERB3zySZduGjy6c1ZKpify6+pJwBJi5M3jWChlOj4
+         v9BTcOFRaIqHRbCxUS01l3IbwoZF467+YMd7BXNBoycQOAn7VSiKaRNiNzWzvNVajl75
+         33pYzBKUcPladRU8hQsNJcW5i7+UGq1nq7/GBCv09+BembTjS+tw+VwGyxK9Ly/qKoYy
+         V4YtDil35lNYzf4kxSkVjryltg9KoTkGY8TSBRYnC9yMmBWyFs8oMvmlyN2Nchx5IipK
+         86X6A2KV3OeQ3PE9RHmDgM7nEx8jnwUB1QUUD/9YIdndtGNu51e8Epm0uju60L12GuxH
+         F2/A==
+X-Gm-Message-State: AOJu0Yx7W+O+b/n7pjCLgE4brWKRxCRoww0IWKqoR0/vtmU2rIRNJTxE
+	BYQKLfB+zd8jvgoHXR9KK8kzkKwN1ikMysyHdK/Ts0pzo7T0MnnemKSmL4JBIvY=
+X-Gm-Gg: ASbGncuilnvcWFeLh7rn/P+vZx+iftgpbnJ1gjZyouQr7xFjA0UeEJuDXAVDHBW3yC8
+	v9tUNeO3MGx6ZtCFkOnIhkdEMgHnige7e4py/s4qm0WyBZwfvoVmG4E/5W7HWalKwRyk+tY+D8P
+	zh9icQAuPw1EfUpU3MtppmGVSNIu6ipuIo6Ym7ZaARnbl3DUSKJ6TRJ5UxTmhDIenEmqD5nu5Fw
+	xU06kHhMILcYyNfNHGwnU1hHERd2DS/dmeFw9a2z1svqnbtGPV7twPPAjuv6sUmbX/ScyK91XlA
+	XTemw6ydhB0gGAotoONjs8VGAsUmjQia
+X-Google-Smtp-Source: AGHT+IEQZPk2bmFbKaaK7SyRgcSm7en9RTPmbjf2c8IfMRxRWLdDIworKLL7EAhSXrEuw4076aC84w==
+X-Received: by 2002:a17:903:2f8e:b0:215:b75f:a1cb with SMTP id d9443c01a7336-21dd9fa74bcmr182248645ad.9.1738370765466;
+        Fri, 31 Jan 2025 16:46:05 -0800 (PST)
+Received: from bl4ze-rig.iitr.ac.in ([103.37.201.226])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de32ee0acsm35562235ad.111.2025.01.31.16.46.04
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 31 Jan 2025 16:46:05 -0800 (PST)
+From: ayu-ch <ayu.chandekar@gmail.com>
+To: git@vger.kernel.org
+Subject: [GSOC] [Newbie] Test Script t6423 Microproject
+Date: Sat,  1 Feb 2025 06:15:56 +0530
+Message-ID: <20250201004556.930220-1-ayu.chandekar@gmail.com>
+X-Mailer: git-send-email 2.48.GIT
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+Hello everyone,  
+I am Ayush Chandekar, a second-year undergraduate student at IIT Roorkee.  
+I've been using Git ever since I started learning about development. When I  
+started out, I used to solve some problems/exercises related to git. It was  
+very crucial for getting better and now as I'm looking forward to start my  
+contribution to open source, I find Git! I read almost all the docs on the website, blogs  
+and tried to understand as much code as I can. I just want to take a moment  
+to appreciate how great all the documentation is. It's honestly the best  
+I've ever seen out of any org. It developed an urge of giving back to git  
+after I'd spent so much time developing things. I even started a small  
+project of making my own git (obviously mini version).  
 
->> Thanks.  A greedy me wonders if things like this can be caught by
->> them a bit earlier before they hit 'next', though ;-)
->
-> I've always been a little afraid to touch 'seen' since it does not
-> necessarily even pass tests, and I don't want to waste too much time
-> hunting problems in other people's topics. ;)
+Coming to the topic, I saw that we need to submit a microproject, and I  
+started to find my microproject. I stumbled upon the thread which mentioned  
+skip bitmap traversal for --left-right in git rev-list. I tried to  
+understand the issue, which I pretty much understood why it's happening,  
+but I figured I still need to discuss it with someone. This is also my  
+first post/patch on the mailing list, so I would love if someone can discuss  
+about that issue with me :)  
 
-I do not generally recommend using the tip of the 'seen' branch to
-those who want automated testing, as it more often than not contains
-topics that are known-broken (which I do on purpose, so that I can
-point at GitHub CI failure to authors), but it the automated testing
-includes automatically bisecting once 'seen' is found broken, that
-would work fine and it would be extra useful. The next greater step
-would be to feed the bisection result to Copilot or whatever
-programming peer of your choice, and see if it can fix the breakage.
+The docs also said that only one microproject should be done, and for now  
+I've selected the one mentioned in them, which is Avoid suppressing git's  
+exit code in test scripts. But I feel that the ones mentioned are pretty  
+small. Can I still contribute more by not calling them as microprojects? I  
+can do it for more files, but first I would like to have some feedback about  
+my initial patch. I know there might be a lot of mistakes as this is my  
+first patch. Thanks for taking out your time for going through this :)  
 
-To help the idea of catching before things hit next, it probably
-would make the most sense to test the tip of the 'jch' branch, which
-is somewhere between the 'master' and the 'seen' branches and
-contains a bit more topics than the 'next' branch does. The branch
-is usually what I use for my work every day, so even though it may
-have acquired new leaks and UBs that would not cause troubles in
-practice, it should functionally be a lot more stable and usable
-than the tip of 'seen'.
+Best regards,  
+Ayush  
 
-Thanks.
+Signed-off-by: ayu-ch <ayu.chandekar@gmail.com>
+---
+ t/t6423-merge-rename-directories.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
+index 88d1cf2cde..bdd19de3aa 100755
+--- a/t/t6423-merge-rename-directories.sh
++++ b/t/t6423-merge-rename-directories.sh
+@@ -5071,7 +5071,7 @@ test_expect_success '12i: Directory rename causes rename-to-self' '
+ 		test_path_is_file source/bar &&
+ 		test_path_is_file source/baz &&
+ 
+-		git ls-files | uniq >tracked &&
++		git ls-files >actual && uniq <actual >tracked &&
+ 		test_line_count = 3 tracked &&
+ 
+ 		git status --porcelain -uno >actual &&
+@@ -5129,7 +5129,7 @@ test_expect_success '12j: Directory rename to root causes rename-to-self' '
+ 		test_path_is_file bar &&
+ 		test_path_is_file baz &&
+ 
+-		git ls-files | uniq >tracked &&
++		git ls-files >actual && uniq <actual >tracked &&
+ 		test_line_count = 3 tracked &&
+ 
+ 		git status --porcelain -uno >actual &&
+@@ -5187,7 +5187,7 @@ test_expect_success '12k: Directory rename with sibling causes rename-to-self' '
+ 		test_path_is_file dirA/bar &&
+ 		test_path_is_file dirA/baz &&
+ 
+-		git ls-files | uniq >tracked &&
++		git ls-files >actual && uniq <actual >tracked &&
+ 		test_line_count = 3 tracked &&
+ 
+ 		git status --porcelain -uno >actual &&
+-- 
+2.48.GIT
+
