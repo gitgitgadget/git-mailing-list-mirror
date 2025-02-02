@@ -1,127 +1,118 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D231D5143
-	for <git@vger.kernel.org>; Sun,  2 Feb 2025 23:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F31917993
+	for <git@vger.kernel.org>; Sun,  2 Feb 2025 23:33:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738538039; cv=none; b=kGXb2e3wTbb+HmuY66NDb7W4mNAVjAGItf1uszYfu53iCmxQ0Cxen2EIRc7hZcJXO1I+Exm41lCzabjZyLdqVRx5m0KDWJtD3sdM50pv+M80eJ9/oZEGaQbXKVntR8C1XhoUZ9WQc7JAUptVsjKzj/hWKQQiG5toR2NzLH95i6E=
+	t=1738539191; cv=none; b=o2qDap/kashXcHZbbjWvyh0fqHRBs4x3YKeZsvA0VkYf1GKU2OCgtUX96PKaGAWslHDUWrjoReuIc8w0c3W0z/ADwVwFnDRxRjaISF2ezYVuKtluFvZ2unOBQow4emq9U/U1FZiM9dw/zUnIuQ65xazs+rrtPgkVJUsMkGL6Rqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738538039; c=relaxed/simple;
-	bh=nSo41tW6GZWyQpSRHCFmk+B3H0ghJGp788OEAW3bKsA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eCAU566CIDaF8ZcSk3cWCN3bAPo+onrUqdsbSpZ3lOEO8p2nP2goz22RG5Nw4P5Z50uATdkN+5RMd6rPF2uX4ysI/oy8zPOt4lg/4RNHjvZ+nTGzZYHb9agrHeFqM0kfEGc0HsrzIjL6E76eiCnKaxfmF142mpVx0T62fQLiVug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=0CWVSkMe; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1738539191; c=relaxed/simple;
+	bh=48rlALBzk9Drsla+gA3D+HwECLHbnu765+HgEkgyZN4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Q3L34AUEU7xRp42IQdxX62QkAMXC47XlIl029NpcRkYTxdSBmtWtDOpTe8eiplRpQV7LOSQZWmkKFcwCFtVKA7bLp5saaqpZZq9pbcBN1Fvyn//4W5VWIMN6D34t/iI+v1+FNk0LYbuECqQC2fT7Yx6j/HW8xuM6rCPFH+CusGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DNz1jnG1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qWZ5oOFE; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0CWVSkMe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1738538036;
-	bh=nSo41tW6GZWyQpSRHCFmk+B3H0ghJGp788OEAW3bKsA=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=0CWVSkMef11E1iy/UWNBRJhKd/f6rVbdbeVFgM1fR9wCuqmSVMea9FdbEyYR4uNvi
-	 dG9B2AoToGzpfoRZgEcvLVwlcbYuWD17hIy1ZNxYikJxjbHqDTym49LLEBO4C4sjxQ
-	 brbMQakGycxsFpQwLxhbaGhiSoj7v8r267Cgy8ua8y/dGARlPag2tcv9F937YBnl8H
-	 QHI2NOOheKcmPN2exh4pIDmw9k+2q67TTYIFdjsGTMu54T8sYz0W3hx9bIIRCqq9pg
-	 YGWo1rAFSdk3wVVnKqbjntVZfg8H7R3DpG7Y94VNh83nuima1WCCzJRUF06e27kyE8
-	 Gev0xXgCRQ7gh3Xo+72oh9CwpR+MpqvSL23I1Sn8cQ9e8EyUA1E/z9zGR9fi8liOsx
-	 uuI+T7HlIvCfJfcW4vO1n4lsxdBOTzotvyvIJjYIPCzS5PWMjU8pM3wWYrV1wiPB+w
-	 81BDWUwfN2msLLPrTS76skGrw6FuzKu5prrMZtlgtJyIcI/rdxk
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3C845200AF;
-	Sun,  2 Feb 2025 23:13:56 +0000 (UTC)
-Date: Sun, 2 Feb 2025 23:13:54 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: M Hickford <mirth.hickford@gmail.com>
-Cc: Johannes Sixt <j6t@kdbg.org>, Patrick Steinhardt <ps@pks.im>,
-	soekkle@freenet.de, Git Mailing List <git@vger.kernel.org>
-Subject: Re: "meson test" very slow on Windows
-Message-ID: <Z5_8MuRxJKZm2bdH@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	M Hickford <mirth.hickford@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-	Patrick Steinhardt <ps@pks.im>, soekkle@freenet.de,
-	Git Mailing List <git@vger.kernel.org>
-References: <CAGJzqsmmq1R9_q=p_AsuFMFr3UzyQ4H186CpfWTnCoAnHu_OXA@mail.gmail.com>
- <89612095-6b10-44a1-a29c-b143d67ce7da@kdbg.org>
- <CAGJzqsmo988VwABNgozwQEKBe-nyfw9f2G2obygqs8OtuYpeiQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DNz1jnG1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qWZ5oOFE"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 43B8611400EC;
+	Sun,  2 Feb 2025 18:33:08 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Sun, 02 Feb 2025 18:33:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738539188; x=1738625588; bh=+J7sqkoTxN
+	+lQQKaFvThj8dPwoEpkskIdR3PuFtaIIg=; b=DNz1jnG1JHK5jj4L1tFn7lIRb2
+	MyxTs39tdvSP7nG0v8/gYKsViQZtxEJIyyfG2n/R/YyDQXidjEYIvmfTKrWEmWDn
+	8UVVuhjcosmW04nU+S5XcQALcGTos5x7h3HltdWFSbBjWSLo5zyo5z2RNTZXIAK1
+	p+e9Ijn9FDc7X6SglQbmIPx0yAzNarRqz9gesZTcEVXZWUdFGyt1oZzFvnr5Nsd2
+	RiQbRwlTWAEicNvXl8cuIazBtIEBp5ljtNDnQ5UP+kFfdALAMYu5Q2Owqp3cci1b
+	02EjZNfDT1uhLUcr9QZXQsBcxH/zrxYmlRqyx9dZ6NHtPQr3fJGAouYui2TA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738539188; x=1738625588; bh=+J7sqkoTxN+lQQKaFvThj8dPwoEpkskIdR3
+	PuFtaIIg=; b=qWZ5oOFEXSiA/IlEir8BYpcv1cmJ8PVks7W/xs04EI3zYLeeKYm
+	/y9C8Cw2v5wYe/ro7IyLwwPh5/7w75IEzLAOLmKlGQSwtB3sPSpwaEMmWbwgOmSx
+	hz4fJSCXZikRVdWkS8Qarm6en7CZE3KGXwz5p3eEygp4/sd12kqTj6tTPqCnvGh6
+	99n9dXY8ghbNun7Zfb49/i7cYq0RZI4OJp7Hq/GXjojKn7+PKu5FaXScWnQ3zGPR
+	MPqohYu9POHmPjaOHrA4fBqOGwMfWsY8PVB/tPKUQkLWwiuMoVBKY5mlWQ6lcSOS
+	mzaFq35B1D1RK4ysJ166sQDJAtS3b29a4+A==
+X-ME-Sender: <xms:swCgZ9G9ruSpbMWDeZJbv05DkwFBnrtPAHxVEqioAB2JDMnOPNb11w>
+    <xme:swCgZyW0kt8iEgTnsmz5XrDHcMqZo1SjB2ZjzKeIQ9wmXI1bF6RTLqwFsRn6ya-mi
+    gTl8CMS3i1hzUjxYg>
+X-ME-Received: <xmr:swCgZ_JJzB7GX7Bt9dpU9f57mxx1bE65-Kcspmya4UqD4RRV6JcKqCPQMCQ9odRmC5YFdNdSUZ4EwNr6JKMUbg1nv7PCHKCDHthl>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedtvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
+    hfrdhnvghtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:swCgZzFUZvPlFQlgrQw0EgxpoyTS5HoGzXiuOXohQ2A5zdYsOsRWTA>
+    <xmx:swCgZzWjpelMivg_HXMYsCjF4YruiAqwZkY-gqfeuEDk6e0X7zh-BQ>
+    <xmx:swCgZ-O36jc_ZmgJ3e8GFLUO4_5n-gWIv8-Yg09jB7Ea8Q2TS4UTcw>
+    <xmx:swCgZy3PB4IotuFVavdv2pXQWAaDzumJZpv9LTySSeR5y02GJd7oZg>
+    <xmx:tACgZ5w2IdYnkJfOu5JHLt7RxoK_T0Ssnntxi7yv_kwGvJFR0GY_xzRp>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 2 Feb 2025 18:33:07 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Derrick Stolee <stolee@gmail.com>,  git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
+In-Reply-To: <20250131233452.GB3544301@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 31 Jan 2025 18:34:52 -0500")
+References: <xmqqbjvyv510.fsf@gitster.g>
+	<20250123003613.GA3900660@coredump.intra.peff.net>
+	<xmqq5xm6uwip.fsf@gitster.g>
+	<20250131233452.GB3544301@coredump.intra.peff.net>
+Date: Sun, 02 Feb 2025 15:33:06 -0800
+Message-ID: <xmqqwme73ost.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yyPxVyJ3XgcL8VbO"
-Content-Disposition: inline
-In-Reply-To: <CAGJzqsmo988VwABNgozwQEKBe-nyfw9f2G2obygqs8OtuYpeiQ@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Jeff King <peff@peff.net> writes:
 
---yyPxVyJ3XgcL8VbO
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> Nice way to use extended context to show why the change makes sense.
+>
+> I've been tempted to support a:
+>
+>   Diff-options: -U10
+>
+> trailer, but that is probably overkill and full of annoying corner
+> cases.
 
-On 2025-02-02 at 21:45:34, M Hickford wrote:
-> On Sun, 2 Feb 2025 at 07:46, Johannes Sixt <j6t@kdbg.org> wrote:
-> >
-> > Am 01.02.25 um 23:56 schrieb M Hickford:
-> > > Hi. Has anyone else found that "meson test" is very slow on Windows? I
-> > > built Git using "meson compile" with compiler MSVC and backend ninja.
-> >
-> > The tests are very slow on Windows in general. Please clarify: when you
-> > say "very slow on Windows with meson", do you then mean "slower than
-> > with a Makefile build"?
->=20
-> Thanks, I didn't know about that. This is my first time I've
-> successfully built Git on Windows, so I can't compare build systems.
-> (Makefile and CMake never worked for me.)
->=20
-> Out of curiosity, why are the integration tests so much slower on
-> Windows than Linux? Is it the 10+ ms overhead of creating each new
-> process? https://stackoverflow.com/q/47845/284795
-> https://stackoverflow.com/questions/10710912/what-is-the-process-creation=
--overhead-in-windows
+Do you mean to embed it in the commit log trailer and upon seeing
+it, the log family of commands add it to their setup_revisions()
+invocation, thusly affecting things like "format-patch" and "show"?
 
-Our tests are primarily written in shell, which does a lot of fork and
-exec.  These are native to and highly optimized on Unix, but Windows
-doesn't have this functionality natively for Win32 programs and the
-emulation is slow.  Part of that is because the Cygwin-based libc
-actually has to emulate it nearly perfectly for software to work.  While
-a partial emulation might work in _some_ cases, it would break in
-others, so a lot of care and expense has to be provided in making it
-work just so.
+As a reminder for a patch submitter (i.e., communicated by you who
+wrote the commit to future you who will run format-patch for
+submission), something locally maintained might be sufficient,
+e.g. refs/notes/diffopts that is not shared by default, but still,
+this hint probably wants to be per-path (ideally per-hunk).
 
-Windows _does_ have this functionality in the kernel and it is
-reasonably performant, but it's only available in the Linux subsystem
-and not in the Win32 subsystem.  The tests will probably be much faster
-if you use WSL, although that wouldn't allow you to build a Windows
-binary.
+But I think it will make it annoying if you forced those who fetched
+from you to use "-U10" when they do "git show", as the choice would
+be strongly affected by personal preference.  And I certainly do not
+want to see anything less benign than "-U10" silently forced upon me.
 
-Dscho and others put a lot of effort into porting shell programs into C
-to make them more performant on Windows (and elsewhere), since this has
-been a problem for a long time.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---yyPxVyJ3XgcL8VbO
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ5/8MgAKCRB8DEliiIei
-gYO4AQDIwzMjEhiCLyPwMai09HizNCj4cbl3mHPWOxrhK3Ei7QD8DuoNayZSDKFi
-9NIeSdJDEulhKm65yDVvc5DFjzUS6wM=
-=ShgA
------END PGP SIGNATURE-----
-
---yyPxVyJ3XgcL8VbO--
+Thanks.
