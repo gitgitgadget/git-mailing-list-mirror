@@ -1,120 +1,124 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536BC111AD
-	for <git@vger.kernel.org>; Sun,  2 Feb 2025 11:52:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50ACD1CDA2F
+	for <git@vger.kernel.org>; Sun,  2 Feb 2025 12:09:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738497151; cv=none; b=Rnrzh80otXnwdl1bnU38fCMXFLqTAS5QAbK40Jiqnj8Mh10YN5jqFqJta9YnZWJ7vh13+EgGUtiN0GTFlPL3UPfjqEWrUcBPfKo0QeDi4mod6qAeWlmxLgKF04z+iZob6easXEJqo4zyCcKm/Jay7eXW9X94bRRk7q9Oqp8/uyA=
+	t=1738498182; cv=none; b=TY8R1cqQ2zpehSLrSQ/s0YCEANTBVjChSW9Wmt3GNVsfAZgbNdgRvbrwtKIXI9i8Q6X+cwvmb/98wsY1ZHSsHXkmozD3uAvKwLeECsvZlG4hUESrJjRb1ULAtIa/FtuUotfF2zrLsVn3l6IG7CIy8tXxVZVRopqhkPBXHwH4juQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738497151; c=relaxed/simple;
-	bh=AHlS1jB34I44RDRz1DUMPHD2jmOeMs/IKAUp0+Y0Qt0=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=XKj2wtHkkbUzlqmhKDD02ONLsE66m1L51rLkKcDrnzTL/n7IzJsup45m9Vu8G6z63PFdsfzcEzvoHEgaNs6q/enmZNmHEbQoxrBMnaodeTBipjG089XBbiisBg4pu1wmZ6artFIno7BqD2DmiZn/9/IDKaSUzqCg0/z+gCss53U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IsjKQ9WD; arc=none smtp.client-ip=209.85.216.48
+	s=arc-20240116; t=1738498182; c=relaxed/simple;
+	bh=z09vNCfTwIvzHMStuoGQByS5ZMSF0coCpC7JuZglBq8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Nui/vttqOu1lbTOdMNOzhrna3lXGvIw4veKR9wcPaObejJOKjJmVDRbaeaS2ZhaJv7KlNUf3bBNGxtpA8ip77x5wfNP06twWvpzdKSMid9CnvD/CtuCTiXgSVenWcDyEA4ZYTNhsDMTtf2XqOgcnTnwaQsZI1lkeL3V1RoiTa4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H1vIWwnr; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IsjKQ9WD"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-2efd81c7ca4so4428897a91.2
-        for <git@vger.kernel.org>; Sun, 02 Feb 2025 03:52:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H1vIWwnr"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-216728b1836so56766915ad.0
+        for <git@vger.kernel.org>; Sun, 02 Feb 2025 04:09:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738497149; x=1739101949; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Rn2Y9EczZGdJTIWrGDHIrCwfhuCHuf3ow/1/z5CNr1A=;
-        b=IsjKQ9WDkam4dzdRl6hbHpGYAltB1vZRnTJkaX9ue9zMe4Wu9ujGDV5SzKkDvCDrEa
-         XS8LC5Ecuy55upf8xbeGIDVVWrvQmwjkNT6QYtHXeBphPbrAoc//9kc4cpEOOjUNyT0P
-         +rJVvGgnTyfmfVXehWjcZe/CehIM11A96+qABv26ZsSrwNnhwHcoy3peicFbw6hIP3ik
-         SNoHBnNIBxqlqkDnvE7r1iMIUKW/VXRdb/4l6YacHAH6tF/Be3D1SnVQgJnQ5MCdWD/V
-         Ywxqa8enrZhB1ixXB31NLesIDlyB427Kzfe6wxc+LomUhoPYdYl3RuXJkj1KBPpIMxIO
-         fFcA==
+        d=gmail.com; s=20230601; t=1738498180; x=1739102980; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9VWn0nUPss7jmyvUjESt3K3puGK8DOax26a6HQ7S+RE=;
+        b=H1vIWwnrRLVfKVRerMX4bA9DrH+9z48j4tI6uT6qXE435+v86kH060XRTxE6CwoeuH
+         XoKi/MM5c61j8CKkJU+lEVxMabwu6raFoO1detUCi1boEL2KxK9nSvpJP31vWjAWsPKV
+         6K6IXyHbemoLLRmOlUCD1HZ8LkW4CY2nxcvx4MZ2BR66GSlagG2zIKTyuBERqgjpJnK6
+         xcduWyENUhUeQ0sLMfrqYbGJCxmA88hge8W2SfFS6Z1SFjAQ7/7/TZ9qxeJzEbppKJRI
+         SOVROFB7gbUPUrxFKLjAiOBFmDAkoi3znB7JYZRK8Xflbcok+iUNGIs21yhi329XxU3I
+         YnuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738497149; x=1739101949;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rn2Y9EczZGdJTIWrGDHIrCwfhuCHuf3ow/1/z5CNr1A=;
-        b=uuZt+SZGl/+uF/VwJC15r8X/Am9Z+37+I1oghDo+uKdRSTuqv3gfjyOAqKrYFi0mg9
-         V8I6XM0GUWKukjCviyBjBk3FftwJsU/gnTf/D1JaFQF1JeKEMPHXWrtoJ2ylhveL5Od+
-         50NDf3c7KFxKPwjL62KoVBYO6u40SA0KxdBsw0mZ/VYMMH6lxVs24eJc5FfBhqXd+MOp
-         s7UqwRz+cpnoC9kFQnsWcggHWCeH9sC5XNGMoq/JQ7RDUECpYBKtmntm8eEuoqjEN664
-         6Uk2vWI1mprNrxc4zm3r3Jh/SjiX0y/tcs8j2Z2wCWRMaaRdWsvxFPJgQ9LI8PGEj5Xu
-         Fesw==
-X-Gm-Message-State: AOJu0YyU5GXwS5SB0qjd0tvW90sTvsp+Is66gxqCExEW0fcMcZm9WWgf
-	IGIRZmhr9YazGhiO5wcucSNSwMlHnixdO7CwUTL/5LuilaPabx6x
-X-Gm-Gg: ASbGncsf9rGBnZ05cS66u9/6seYnfnnbEHOafvjF3F2X7x5iyL7wopaz74gh3sOjdGD
-	V7+ewcbM0FujJqcZqfZO2w6+emz3dvrq/AfLFxNpxv0ge8hKSDJTcsnVMa5G+eOoyYW0pvotsdn
-	t9b/E9qNiPGVphaM5bOUHZsXSUzCpl8WAO4MEAn8X5vQvbN147kU6slHViWDx3oju+UNr7ih4Nt
-	ZNUs6tBR2jq9vZ5Uw3IdHol2q1k0bY3XtryZc2wWJhl4bP/KLPk12pFfjN8ucgALqnpMe0u0GJU
-	L9nZpopWtYI7DuoWN1fAZn6D
-X-Google-Smtp-Source: AGHT+IF+hSVEFay6spgAbi7q2K3I+toy3HRZXmGo08wMcHMeXUrNJ+LkMaxXW3e0EtNSdzZKl3R4qQ==
-X-Received: by 2002:a05:6a00:1411:b0:727:3fd5:b530 with SMTP id d2e1a72fcca58-72fd0c60405mr22444256b3a.15.1738497149391;
-        Sun, 02 Feb 2025 03:52:29 -0800 (PST)
-Received: from [192.168.0.7] ([106.51.24.86])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72fe6a1d212sm6529612b3a.179.2025.02.02.03.52.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 02 Feb 2025 03:52:29 -0800 (PST)
-Message-ID: <cd90cf17-6113-4634-a774-6df707b73e95@gmail.com>
-Date: Sun, 2 Feb 2025 17:22:05 +0530
+        d=1e100.net; s=20230601; t=1738498180; x=1739102980;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9VWn0nUPss7jmyvUjESt3K3puGK8DOax26a6HQ7S+RE=;
+        b=h8LI70soUF6O6pbMZIEOoI43ls98q8KONDygmS0xBJpsphX69/2WjioFlbJ1t18Zjh
+         5qxbN9pssvOiIvRoKmfDIyMw4FzMCXXRe+DxG/m9XJHZjksMN5qRp5TcDDlJhZcO+oAH
+         UPUbu90rMtP02mQWpnJ3PKvTja5UCv0UjWdS4qrZiRYBUssXpfbISZLiF8MmRYKhxGDa
+         8I9izKuBmWhhfVPb0N45y8UckYTVpOy6qsacPKgqYr5qFb9nOZ90neAlY4R2glFAUJdF
+         RsGI7p2L/xcHaY/aTBQRCT3lq5jIoqYfvrPAmsplImvxF5XqRixKI9h1ipmKpsZB8+bI
+         poDg==
+X-Gm-Message-State: AOJu0Yyzlp24ad30ruvyB2QY81px135wttjaeKQB+7JlEi777iJ1PTN1
+	fDdVl8vASiU5AaLLjNH/J7ru2/elbVNxvTPIW3vM3iLDiqH5rI1FZXACzqrsHRGDTA==
+X-Gm-Gg: ASbGncsWddGVIz0o+aqAPzFtnJyfPgerZY16rxhLs2NG3kmCvUlqEASb5d51Rcml9bh
+	QrIY6seTcBY7swB66FQpdlqqNgSRA9K10rbHRnkZLqh4m59eQyAIkCBYmSTKeBzoAQzxCJtXSza
+	EUM049YKbEDqTBaCeeeKN8KjFqE7G/bKHqIMnWE8KO+sDOWalO/EXUT2CDYxHBYhvdJYnxgosIg
+	8icVtk2omJ30VCj0iopSoHvv25/oP+cTLGNfs1FeASODBmISZatP6Kb1QtkLAfdz/jxwwo5FKJp
+	vbSQsUlfdKVqU6q9p5sdlRc096tKGOXk
+X-Google-Smtp-Source: AGHT+IGom50g6/VcXERkftocTlEk1Nv7F5b9JEOLLspmMZ/Iy1AngBPt7WcYy4BkT3y6i5RCShQdDw==
+X-Received: by 2002:a05:6a21:516:b0:1e1:9f57:eab4 with SMTP id adf61e73a8af0-1ed7a5f9036mr28950984637.16.1738498180129;
+        Sun, 02 Feb 2025 04:09:40 -0800 (PST)
+Received: from bl4ze-rig.iitr.ac.in ([103.37.201.222])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72fe631bf73sm6452720b3a.36.2025.02.02.04.09.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 02 Feb 2025 04:09:39 -0800 (PST)
+From: ayu-ch <ayu.chandekar@gmail.com>
+To: git@vger.kernel.org
+Cc: =gitster@pobox.com,
+	Ayush Chandekar <ayu.chandekar@gmail.com>
+Subject: [PATCH] t6423: fix suppression of Git’s exit code in tests
+Date: Sun,  2 Feb 2025 17:39:26 +0530
+Message-ID: <20250202120926.322417-1-ayu.chandekar@gmail.com>
+X-Mailer: git-send-email 2.48.GIT
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git in GSoC 2025
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>,
- Christian Couder <christian.couder@gmail.com>,
- Karthik Nayak <karthik.188@gmail.com>, Jialuo She <shejialuo@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <Z432QXJb_TfzNBa2@pks.im> <c39c5424-71d0-4b6d-90b1-a6a70f2ee61b@gmail.com>
-Content-Language: en-US
-In-Reply-To: <c39c5424-71d0-4b6d-90b1-a6a70f2ee61b@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hello Christian, Karthik, Jialuo, Patrick and all,
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
 
-On 28/01/25 23:00, Kaartic Sivaraam wrote:
-> 
-> Thank you for suggesting these ideas, Patrick! I've incorporated them 
-> into a draft ideas page for now. You can see them here:
-> 
-> https://git.github.io/SoC-2025-Ideas/
-> 
-> Kindly suggest any corrections to the description, project size /
-> difficulty as necessary. I've mentioned potential mentors based on what
-> I'm aware of so far.
-> 
-> Patrick, Christian and Karthik, kindly mention the ideas that you're
-> interested to mentor.
-> 
+Some test in t6423 supress Git's exit code, which can cause test
+failures go unnoticed. Specifically using git <subcommand> |
+<other-command> masks potential failures of the Git command.
 
-Gentle reminder that the ideas list needs completion. Specifically, the
-following ideas only list Patrick as a potential mentor:
+This commit ensures that Git's exit status is correctly propogated by:
+- Avoiding pipes that suppress exit codes.
 
-   - Refactoring in order to reduce Git’s global state
+Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+---
+ t/t6423-merge-rename-directories.sh | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-   - Machine-Readable Repository Information Query Tool
+diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
+index 88d1cf2cde..94080c65d1 100755
+--- a/t/t6423-merge-rename-directories.sh
++++ b/t/t6423-merge-rename-directories.sh
+@@ -5071,7 +5071,8 @@ test_expect_success '12i: Directory rename causes rename-to-self' '
+ 		test_path_is_file source/bar &&
+ 		test_path_is_file source/baz &&
+ 
+-		git ls-files | uniq >tracked &&
++		git ls-files >actual &&
++		uniq <actual >tracked &&
+ 		test_line_count = 3 tracked &&
+ 
+ 		git status --porcelain -uno >actual &&
+@@ -5129,7 +5130,8 @@ test_expect_success '12j: Directory rename to root causes rename-to-self' '
+ 		test_path_is_file bar &&
+ 		test_path_is_file baz &&
+ 
+-		git ls-files | uniq >tracked &&
++		git ls-files >actual &&
++		uniq <actual >tracked &&
+ 		test_line_count = 3 tracked &&
+ 
+ 		git status --porcelain -uno >actual &&
+@@ -5187,7 +5189,8 @@ test_expect_success '12k: Directory rename with sibling causes rename-to-self' '
+ 		test_path_is_file dirA/bar &&
+ 		test_path_is_file dirA/baz &&
+ 
+-		git ls-files | uniq >tracked &&
++		git ls-files >actual &&
++		uniq <actual >tracked &&
+ 		test_line_count = 3 tracked &&
+ 
+ 		git status --porcelain -uno >actual &&
+-- 
+2.48.GIT
 
-The following idea mentions Karthik and Patrick as potential
-mentors.
-
-   - Implement support for reftables in “dumb” HTTP transport
-
-The following idea mentions Jialuo and Patrick as potential
-mentors.
-
-   - Consolidate ref-related functionality into git-refs
-
-It would helpful if you all could chime in to let me know if the
-existing allocation is fine and to what other projects you need
-to be mentioned as potential mentors.
-
---
-Sivaraam
