@@ -1,101 +1,91 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D2B2AE93
-	for <git@vger.kernel.org>; Sun,  2 Feb 2025 18:09:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3492F3B
+	for <git@vger.kernel.org>; Sun,  2 Feb 2025 21:46:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738519794; cv=none; b=bAmlAoTHSaYtvK0S2co3YGhPYqfWgOjptIOtGHLU2X4HTI8qrCMbreePVnw8PgloV5A5JwSrJ2rRGLB/zJve88sdRQXxZcyU0RWN3bTFlt2S49eNjTn/sA9OoIKM5rm6cY5bzeqa9iDYlyTo5KSmt23cD2M1zq8F7J9FuHz5DHk=
+	t=1738532774; cv=none; b=OE8rLXH7N/J0HLGTDRHb6AX1qVNIHeeVVUMRqbYVqHTzNBODA4WJGF+j9YP3FiRCLDtmygWt0qso/cBXASjHfrpVSvTSBQkzpFneGyvyoU9jffrMdd3CK9rcs7uhwKbNxDmiLcoa90J9iJVBtH/M2hrNABdGYo5eqnvsjcauiE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738519794; c=relaxed/simple;
-	bh=w12NJWXTOLrwiw3N73GbTp8GIM61tuhwJEBDjdK6RTU=;
+	s=arc-20240116; t=1738532774; c=relaxed/simple;
+	bh=rcMoazbtq9Ivyi4rYNmBq9ZVp8UmjFR9sbmUNMHj6Aw=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H4IWExQA2/akl1vdm6bT23cN836afEeWbgIrxg7lWyJ3SBAJWVG7AmBJb5o3nWubtq8BisJW0Go7Zoo68PELO8MWAiWAL9ROGZL4bhR2OA95VXdzACxbba7RIROx8NxEFSGAvGNwg/xwlHMFY0+0LjiTuzFY41Mf4sYiFKpODlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m7et8gvh; arc=none smtp.client-ip=209.85.218.53
+	 To:Cc:Content-Type; b=UGu4JwxtSeZQXmBz2evfzxCRI8EAk79MwwlLFBl8FiemtqJcmCJTRT33iE4x9AKm3FUA5hObYVz1krcSCIhJwtlqpFuQreYGPpux8XI3IBj9W6FAIRp+/rvl86bdwwEQiYMQE9YAG2ojNetzRGiBpmSozi3Q2QjNtX12hY2Djws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T/ezIMBO; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m7et8gvh"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-aa68b513abcso642017166b.0
-        for <git@vger.kernel.org>; Sun, 02 Feb 2025 10:09:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T/ezIMBO"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5dbf7d45853so777952a12.1
+        for <git@vger.kernel.org>; Sun, 02 Feb 2025 13:46:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738519791; x=1739124591; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IQ60EdowXN/LPLUbgYbkqrZJoh82OEDyCHfdupEtbvE=;
-        b=m7et8gvhG8LVpDDXRYY4n2+JFniilZCcHMBldBa+4rQCoC7epiCuVKQbLms8p6jmMI
-         lOQ8OuZqY8OEK8ep2/q2std8QjYSM45MpQh0DmUo92kTwdf1KXJ2Mf3qaPi+DG37EMne
-         fNyhJMMIyXn/QO6sH/htCxtc6eO44Qlg22DwapPWQfT/USSxafNzEwD+22nV8f9mVX2x
-         +u25fUkQlJFrMicZFKHnsgtYS4eXpBMwEv3irVcU1f4jSmZMkwTr926aeoOoFDzZeDBJ
-         zQNzVlx1OJbKBzBu+5CZ5T8MGuV9aE9fc1mIzxqS4g05nqLRbKTtJDE8GSsAJCk6H/PO
-         VWYQ==
+        d=gmail.com; s=20230601; t=1738532771; x=1739137571; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rcMoazbtq9Ivyi4rYNmBq9ZVp8UmjFR9sbmUNMHj6Aw=;
+        b=T/ezIMBOajak34EPxhG97+2TIjgJbTaMvBnZSb+CVXXHGPU++p+/29WvAhH8zSOitH
+         rkVFEpseuzCt8FPFAf+gU58LDvmvii4s24eijqbVbjvizqkVKUKAvn2qwYnefo/HZvmP
+         RUDKCbfRJSIP3X/3ckLuXYeIpXbwbdATMvzXJc0mCuLlQQ2x7IWL/I1rkcj3KvUECjpJ
+         sjbt0pzMDWIcYnEp6rnFPr+r7gCcjNWdx3xR6tSwL7YxNJtsrCfQ5zTnjB552XP7hdBV
+         /WD8OYP1b8mvtUdi7N8XACCYhaUJUVZ1zCYBySeKQqfvu+yRyU6yuK7P8G5QDDtwrINv
+         PVhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738519791; x=1739124591;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IQ60EdowXN/LPLUbgYbkqrZJoh82OEDyCHfdupEtbvE=;
-        b=ctfpQ8svlnp6MCXetzjzgoj5FQi6ISjGenATXHCqDZdX6VbvC+7cBvck2x/dpwQt7b
-         k7vTMib4JKthimZtroGQCMEtbvs1/kXC0n2sntsf92QQcdD4w+uBrLFkoEN/m8H5PrQe
-         3f6xNCsDIz4KJQDL2Fx7oTkxTC9F1fk6aRy4/J0g24Ve4lVE0JlyFOx2FwK1nMN6RMgk
-         Veh4HeEHyLErtaR080QiG/9TKih/WKTCLyRbUr+ZH18PMUsT26+Qp6v4NN7NKcoxNIuK
-         pbqk7KxYr8Tb/CwjvG+pIC2oAZAFRdeu7yE7o2XUg05KKfhHMxqe8QrqVsN/O/esYB1B
-         Td3g==
-X-Forwarded-Encrypted: i=1; AJvYcCWg3XVSHj9mK2eCpPP4rZCnBTMGNZ9vNWbQUpaXxLcN7T8zVwSTQ1m10JAquz5QkTF1jt0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6BDpQm0NLH3qQBMUg5Z9L+rnxq8PP7O9hDGhm5SmD13h1XUSV
-	K8qe2VKcSuXeFHRFHDGgOFBFlrN5oqLyZT7WdnG57YcpIm0/9LSuB5FYP440UPg0skcISRN5bAx
-	4qVbsSlnKLgLyQOxXXUQGvMrgaOF7gw==
-X-Gm-Gg: ASbGncv5vw4qGy1C+9W7rUaylI3aF1/YVyoVDzRBQVk4VIMtj3xS/1RnsKUd2i5a9G5
-	/8ahmjhEU0kc5ezJXZh4EXOGOeOOiV+OhlPxjLNeV0YLsh3thhp3f4fVq9gZ5X9p0NAxPVyUlY+
-	BjF1LLpWjJLl8mcLVHYWvo0kVzR6s=
-X-Google-Smtp-Source: AGHT+IHUTspYDQZX4It9W8sr+LjrVnyn/DHfW/t7dz7BbWSfkuJX68YnaMAYz3eEcjVem2gZTiWF/7zViscr5Qu0Tic=
-X-Received: by 2002:a17:907:869f:b0:ab7:371:d150 with SMTP id
- a640c23a62f3a-ab70371d301mr1090558966b.15.1738519790637; Sun, 02 Feb 2025
- 10:09:50 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738532771; x=1739137571;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rcMoazbtq9Ivyi4rYNmBq9ZVp8UmjFR9sbmUNMHj6Aw=;
+        b=bxdPSsHdysXxPcCpvbodwRf6dLsBcsAsEEmN5SAVYqfHcdf/aVKIAc9vOQw5IdhdVN
+         Zg7mfaV3sqCeZtK56o3PdcVkvxhHZXtMBpK3RF2W+gdzRJ5+0P5v1x3pCCgzph0LHM/b
+         pqL+DdhHvY/lhvzwpqsmcpKybgaTKXWtyIVditeOP+TIFKwZQCnpg9/UwqsStaY1YfG+
+         J16sKkrO0vpGtT8V7alIkU3HdmGsE4GWDDUZ2I1hgDwT7DLkYxLPAT4y4JRDTn0q4Gtx
+         fy7t8KJf7iI9F/cPVWd/seQPmCVp7rMTS1DwPxl3DZqG7Lk6SmAmIDfWfknNIxXc3X/0
+         akDg==
+X-Forwarded-Encrypted: i=1; AJvYcCUDReCvRJfLFOWWh3zbeDu9untY8RD+WyhKVucfqijzfCeC0itxpYT7rUIwZ76YCN0Xamo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIojdOrBWmGrBAG4yvDQwIh8v2DTZMr5jxEsR4m8FhHrO14v18
+	3V9D1ZNRGpsdjW2Fk5wOVsSWAevNvNDCsPrluoqlLJ8/70RObioCKKFcpYeTClp81RK7relUkQi
+	W6x7IzH5HpiUARZrh5q38+CZmPFeNmG0ULrg=
+X-Gm-Gg: ASbGncsg7z+D4I2IdD6ZKaB0WT6+kBAfmSUjCSCfwTbG2bJRPtQPkjEBsDy0bz9xKV1
+	37NCB74pQ13MUDpATg+AUs5194D7fDDPPdL51GlH9XBEOlhNJ72zL/4NkdNnLFaY6A1n7MAhv+N
+	ynbCCF3danwptTodSA1Iq17BgVKTSYlQQ=
+X-Google-Smtp-Source: AGHT+IHRsOGY4HZxjKAOayReB6aADqkAeutOMrd+RLFa8dYtvmRrxi/qX7HSSkeEfAfPA6dF5nphZiMzEoxJV850hvQ=
+X-Received: by 2002:a17:907:948d:b0:aa5:a60:ad6a with SMTP id
+ a640c23a62f3a-ab6cfdbb725mr934940266b.8.1738532770462; Sun, 02 Feb 2025
+ 13:46:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqbjvyv510.fsf@gitster.g> <20250123003613.GA3900660@coredump.intra.peff.net>
- <xmqq5xm6uwip.fsf@gitster.g> <20250131233452.GB3544301@coredump.intra.peff.net>
-In-Reply-To: <20250131233452.GB3544301@coredump.intra.peff.net>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sun, 2 Feb 2025 13:09:39 -0500
-X-Gm-Features: AWEUYZn-pKrKagXo3LbhhlBJLsKbqQZza6PvdugilflpErmqVzvubwvDWpOo6tA
-Message-ID: <CALnO6CDqHJP_wa_8eKHBkU+_1vQ6D+C=QRZyW1FKnG71wDxnnQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+References: <CAGJzqsmmq1R9_q=p_AsuFMFr3UzyQ4H186CpfWTnCoAnHu_OXA@mail.gmail.com>
+ <89612095-6b10-44a1-a29c-b143d67ce7da@kdbg.org>
+In-Reply-To: <89612095-6b10-44a1-a29c-b143d67ce7da@kdbg.org>
+From: M Hickford <mirth.hickford@gmail.com>
+Date: Sun, 2 Feb 2025 21:45:34 +0000
+X-Gm-Features: AWEUYZmJIihizjD0a4omRBW9Hhk8WP6YrRjv_ONzKMsVf2G_xqCW8SwVP1h825c
+Message-ID: <CAGJzqsmo988VwABNgozwQEKBe-nyfw9f2G2obygqs8OtuYpeiQ@mail.gmail.com>
+Subject: Re: "meson test" very slow on Windows
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: M Hickford <mirth.hickford@gmail.com>, Patrick Steinhardt <ps@pks.im>, soekkle@freenet.de, 
+	Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 31, 2025 at 6:35=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+On Sun, 2 Feb 2025 at 07:46, Johannes Sixt <j6t@kdbg.org> wrote:
 >
-> On Wed, Jan 22, 2025 at 05:52:30PM -0800, Junio C Hamano wrote:
+> Am 01.02.25 um 23:56 schrieb M Hickford:
+> > Hi. Has anyone else found that "meson test" is very slow on Windows? I
+> > built Git using "meson compile" with compiler MSVC and backend ninja.
 >
-> > Jeff King <peff@peff.net> writes:
-> >
->
-> > Nice way to use extended context to show why the change makes sense.
->
-> I've been tempted to support a:
->
->   Diff-options: -U10
->
-> trailer, but that is probably overkill and full of annoying corner
-> cases.
->
-> -Peff
->
+> The tests are very slow on Windows in general. Please clarify: when you
+> say "very slow on Windows with meson", do you then mean "slower than
+> with a Makefile build"?
 
-Fairly off-topic, but I've been writing "Best-viewed-with:" trailers
-now, and also had a similar thought (what would it take to make it
-"safe" from ACEs + obvious when something is influencing diff
-options?).
+Thanks, I didn't know about that. This is my first time I've
+successfully built Git on Windows, so I can't compare build systems.
+(Makefile and CMake never worked for me.)
 
-
---=20
-D. Ben Knoble
+Out of curiosity, why are the integration tests so much slower on
+Windows than Linux? Is it the 10+ ms overhead of creating each new
+process? https://stackoverflow.com/q/47845/284795
+https://stackoverflow.com/questions/10710912/what-is-the-process-creation-overhead-in-windows
