@@ -1,138 +1,233 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78AC13D502
-	for <git@vger.kernel.org>; Sat,  1 Feb 2025 22:57:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA4F4C6C
+	for <git@vger.kernel.org>; Sun,  2 Feb 2025 00:53:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738450656; cv=none; b=UgOLgX2Uh5WKeUAIaeO/+4vvgn7G22Q+tfil54f+5+9IPVF7DFnM5oermuwnXA9ZmYpxqLf1/0cgJasNUFevZneM4JBzlMnmwuw0hF0woh58OBUm+l6o4SfkK6xgaw5zktff4HnlMsJ1PXPylfUmYszypR6LHr3ebl8ne4RIwxI=
+	t=1738457635; cv=none; b=emKZhTmMoQ+hmy82+0XCh+r6o/sULeoNClXmG4nXgWkqACKiTurKTxKX8cmiBARuHBiO6G31B+7UGFnxilUlaO7jB1orI/5dMF5xdSJgjfMbmx7NTD1AxySlyMmCGbXu53UnFn4OpVKAYXipgQl4RXucYe8Fpx/A077o0cH9FtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738450656; c=relaxed/simple;
-	bh=dbfSRfiL2vrCnguSR7oChsmh8/psDdAh8IO8oUttXc4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=Q6ogvULlshn1JbG9T+UgjjvFnvlPgCZ5AnaP/hHzJdR2IgmSrVd0/wv7QyypPurWbOIBcBrcFT7Mg/7aFTuj9+f+bMrM0SeBu5VK/DFvHewSktBAzV9dTXwCLR9i6acuFo0G3/buw3vLX0mV0wRrddGx+GYwRHLyU7jKthvV+Yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cj0j2WRi; arc=none smtp.client-ip=209.85.218.48
+	s=arc-20240116; t=1738457635; c=relaxed/simple;
+	bh=iKlWC9OhZCi0XaFcv+QS5LR5q9VcudnsLv5Inp6ZM3g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RKN2C/q9TZzJ7xOV23hMLK4tFeXB8Hk7MtZlvevEYo+jrzuaZf9gNf5uFWHtCQoMbhY4dFwDhEtKOlyGe+4OTy6U+hluc7SWNqHLtT4NnXx8TvfCtQvt8nNfU7RWGJa01hx0lgYfwlWs529oYl7lGQ9ck9HOAVaNu6M4ZJuOKRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mYQskG6b; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cj0j2WRi"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ab6d4810332so45792066b.1
-        for <git@vger.kernel.org>; Sat, 01 Feb 2025 14:57:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mYQskG6b"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6dd0d09215aso24077506d6.2
+        for <git@vger.kernel.org>; Sat, 01 Feb 2025 16:53:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738450652; x=1739055452; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mXkJoqxgwD5+635spElidHyfrp0EQiEvrtnFfWbj5+M=;
-        b=cj0j2WRiNPLS/Tef0s0lt5v4mr8NxRzFr8k+CA5/SUrdYK/qkgdxEW7G6LtEOjPP+I
-         lbsn1CUFvsQkVhBXvbVQN86siXxEaIlKuf8Beux7uoD9QD0TTDtITlQ92eIsdCwhD+CB
-         bKuKNauofXPLKc54J3ycsdcDwyZRoqJApEH4oLGREh6VbUOLdJ6zTAiWbR0ke6u6DDhw
-         OP6VzGv+8vOowuKQBgjimEIPQFoBercAHJSbKdSvb62PKE+IkilJgtUv8nA4Co+Rasv+
-         gOi8nBpyUlVkfHjYGz/DEyhKvoEgmsCRmQo4t1AO+AS2SNEK87KazjKaNu2FrJrGgkx9
-         SgLg==
+        d=gmail.com; s=20230601; t=1738457632; x=1739062432; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TU0shLJWPgbWBBBiyyUxpmo8DVUX3j20ERoklLSLrck=;
+        b=mYQskG6bAL78ppORdcVmO6J75PecJo0e8jMZ0FbztzEs8vhlRHvcarBS77Y08NXthp
+         x3ncXI0JcZrbkRCT1MDLbWwW+F6Ud+mAj5gjWt2wIqz1MwglH6+Fnhgz+aJwFX+Xw1d4
+         GID8YLxmv9xrmoRULmpUMZ6dGZc1UWVLnbQQWos0cXDYOUy63c9V28epgof9J6/PEqsj
+         u6pDdiD4KB1fpusXzyjF45Qt/n1gFR2SCiZ+zYsNhwIh/YrJABeRUch2uR0Fl5I8R1wj
+         JYeP681MAT/IXE2U2n4C49Cv2BBD4gSe/TtompE5ECx3DcysBlQxaAX9dfUz5OjJ8YY/
+         sWBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738450652; x=1739055452;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mXkJoqxgwD5+635spElidHyfrp0EQiEvrtnFfWbj5+M=;
-        b=ukOVfGDSWz/Dvt2RiCCBRTLhcIBjL9Qf6lmwRTo6qnoiK08Xo8oDlVewVrb/gMFvfn
-         +DOURWcHJtXlt/umdL0rNCdvlP8sKtEQZ/zhqHakngc/zrVAvbKA4Z3XbWc3/3Y4BQc4
-         aLR1hdY5hao35ZsdkzLkdwXgqgwMaiFw4K5EAAmDTckl5A4Su6mi2xdHKYDfFKoPn4+B
-         Dl+5WHQNv3xh1KiWuW9oDdBv0RHW+u97s+0vBxLqP/AgklFzisJQESBiqcCr2LoD7q96
-         U8CH+YZM8rTAfUqaHTj9R1/MQ/OhFjvliuSMicfZtSKfi6y/pa0B2vUPkB/301o3esvY
-         QE8w==
-X-Gm-Message-State: AOJu0YwSz03J3UNrnBUzgee4twS2GxWGjD7utXqGDBy5Ft3NSdhmTbuO
-	GMDNp6bTt6dtynNn66x9JX37gFlbrfq2MxnOuijRiWt9DtxqrFRs6Vj6nYRhoWD2nZKRvlDPipR
-	ZLTOVii/ixuHZx3dma6hbyK6ccSK0K8cuBrw=
-X-Gm-Gg: ASbGncuHARDT2vZHPqeYuIB64QluxVVbRF9SrUPxN9cq5AClnfuz02waVm7sgv9qOmE
-	0CHzwVxXLnZbyZ+gBMFpsOlOlGMzUB9F8BwJX3b6Hz9QthfME4k2B7s2hN0M6LzSYRw2Aqdc/6d
-	SYjgyIvntJgIBxNX0P8cgTKPe4U/6Ib5I=
-X-Google-Smtp-Source: AGHT+IHZproRL+vuHAuGNF1JLHxc3Pk2oYDgvfSL4psKqbmbyBTeexsSKywvy9kDWuXNgiJXHLj4tM4WJvIzEuUrgSA=
-X-Received: by 2002:a17:907:8693:b0:ab6:dd24:3342 with SMTP id
- a640c23a62f3a-ab6dd243b72mr648967966b.8.1738450651613; Sat, 01 Feb 2025
- 14:57:31 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738457632; x=1739062432;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TU0shLJWPgbWBBBiyyUxpmo8DVUX3j20ERoklLSLrck=;
+        b=I831shuWm7uU+RK8YnDq4KWgfv65xaEcKPjCk9RX0JHGsh0QzRttws/c+qu18RXzRG
+         UYXsQI0ssE/qFdjIAhR7uu5Vbw8O812+dkxfQqkieGoYUulyyv2rSfnb1CKmLO47B7sJ
+         MvogxtGhmz+8dKU9aMRDtQWMovoVOAn5aROUWyRUK6D+sudFuaCVWDv3qvc4FuUpqoX1
+         Hj4pa6NMiXuaVpmJ276xGuqdNytburcY1F3YWmLtYwxUD+dyqmFfqXUOtGxE9wLr3QtT
+         YzChJqXQTTOfe8nCuFACzDety6xA6v/WRGKAkBt7d2RQ48hn+Pxxvbw/GK/Q5EHG8oup
+         nOgA==
+X-Gm-Message-State: AOJu0YwNHmcC/+a8Z1dJyZ48KaZxSBwEGoFrAlTz0/mkMT6R9OcVDlUC
+	IL44r+ApFChmKb7wtVW1x4drGCmuHXhs4iSm42mKmP3Ape93nRn2lj4oYW3tnai7WwVFi1gNck2
+	UC4SZRtVOESloWQTFTyPgQJfD0u21oBeWFb3mUw==
+X-Gm-Gg: ASbGncvilzWAxe3axdaCdQ2HXOvY0KcmlWne4/4Kanhv9Eh5BgHzeCq+7bwJOVgP9R8
+	E9qmLRmM4AfZ7mVS+yheYysBxHnACPvG6W2kolk29wLd4qL4vrMUo1m1TgSvmmzEf5bltwgMhrg
+	==
+X-Google-Smtp-Source: AGHT+IEYmBPAAkwRnG3tLloYvk0qiD/hSUN95NKk8NWB2dQ8vYfRHCsCm1J+cTKTJrcb9GIjjDtZIGkQugwrI9EcjhY=
+X-Received: by 2002:a05:6214:e8d:b0:6d8:8f14:2f5b with SMTP id
+ 6a1803df08f44-6e243bf03demr294489306d6.19.1738457632250; Sat, 01 Feb 2025
+ 16:53:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: M Hickford <mirth.hickford@gmail.com>
-Date: Sat, 1 Feb 2025 22:56:53 +0000
-X-Gm-Features: AWEUYZkpcGFt_CPtfRAN244W_Ps3tfi5h0DSzNSuTTk5PlC6Gvmf6b3sHIQZM4w
-Message-ID: <CAGJzqsmmq1R9_q=p_AsuFMFr3UzyQ4H186CpfWTnCoAnHu_OXA@mail.gmail.com>
-Subject: "meson test" very slow on Windows
-To: Git Mailing List <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>, soekkle@freenet.de
+References: <20250201004556.930220-1-ayu.chandekar@gmail.com> <xmqqjzaa4g6m.fsf@gitster.g>
+In-Reply-To: <xmqqjzaa4g6m.fsf@gitster.g>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Sun, 2 Feb 2025 06:23:41 +0530
+X-Gm-Features: AWEUYZmkwqEfROPVg53ISLg04-GkSWVIW9spfLXKXpFIlo5GN38c4uaeKpuXTok
+Message-ID: <CAE7as+YC-u84ef=LRP-FB_0ApJbaP6Le6k6QrV58itiGMHsk1Q@mail.gmail.com>
+Subject: Re: [GSOC] [Newbie] Test Script t6423 Microproject
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi. Has anyone else found that "meson test" is very slow on Windows? I
-built Git using "meson compile" with compiler MSVC and backend ninja.
+Thank you so much for your response!
+I also deeply apologize for the lack of etiquette. I will submit another pa=
+tch
+which is the same but follows the guidelines.
 
-Curiously the first few tests were fast. Test 20 (exact number varies)
-and later were slow:
+> Otherwise, the patch looks good.
+Thanks for the feedback
 
-   1/1029 unit-tests                                               OK
-            2.11s
-   2/1029 t-example-decorate                                       OK
-            1.45s
-   3/1029 t-hash                                                   OK
-            1.32s
-   4/1029 t-hashmap                                                OK
-            1.24s
-   5/1029 t-mem-pool                                               OK
-            1.16s
-   6/1029 t-oid-array                                              OK
-            1.10s
-   7/1029 t-oidmap                                                 OK
-            1.05s
-   8/1029 t-oidtree                                                OK
-            0.98s
-   9/1029 t-prio-queue                                             OK
-            0.94s
-  10/1029 t-reftable-basics                                        OK
-            0.89s
-  11/1029 t-reftable-block                                         OK
-            0.83s
-  12/1029 t-reftable-merged                                        OK
-            0.77s
-  13/1029 t-reftable-pq                                            OK
-            0.72s
-  14/1029 t-reftable-reader                                        OK
-            0.64s
-  15/1029 t-reftable-readwrite                                     OK
-            0.54s
-  16/1029 t-reftable-record                                        OK
-            0.45s
-  17/1029 t-reftable-tree                                          OK
-            0.29s
-  18/1029 t-strbuf                                                 OK
-            0.20s
-  19/1029 t-strcmp-offset                                          OK
-            0.51s
-  20/1029 t-trailer                                                OK
-            5.40s
-  21/1029 t-urlmatch-normalization                                 OK
-            5.32s
-  22/1029 t-reftable-stack                                         OK
-           17.67s
-  23/1029 t0013-sha1dc                                             OK
-           42.50s
-  24/1029 t0004-unwritable                                         OK
-           46.87s
-  25/1029 t0022-crlf-rename                                        OK
-           43.77s
-  26/1029 t0014-alias                                              OK
-           49.05s
-  27/1029 t0023-crlf-am                                            OK
-           32.28s
-  28/1029 t0005-signals                                            OK
-           49.83s
-  29/1029 t0018-advice                                             OK
-           58.71s
-  30/1029 t0010-racy-git                                           OK
-           64.75s
+Regards,
+Ayush
 
-On Linux, all tests were fast as expected.
-
-I built at commit 58b5801aa9 (The sixth batch, 2025-01-31)
-
-Any ideas?
+On Sat, Feb 1, 2025 at 6:47=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> ayu-ch <ayu.chandekar@gmail.com> writes:
+>
+> > Hello everyone,
+> > I am Ayush Chandekar, a second-year undergraduate student at IIT Roorke=
+e.
+> > I've been using Git ever since I started learning about development. Wh=
+en I
+> > started out, I used to solve some problems/exercises related to git. It=
+ was
+> > very crucial for getting better and now as I'm looking forward to start=
+ my
+> > contribution to open source, I find Git! I read almost all the docs on =
+the website, blogs
+> > and tried to understand as much code as I can. I just want to take a mo=
+ment
+> > to appreciate how great all the documentation is. It's honestly the bes=
+t
+> > I've ever seen out of any org. It developed an urge of giving back to g=
+it
+> > after I'd spent so much time developing things. I even started a small
+> > project of making my own git (obviously mini version).
+> >
+> > Coming to the topic, I saw that we need to submit a microproject, and I
+> > started to find my microproject. I stumbled upon the thread which menti=
+oned
+> > skip bitmap traversal for --left-right in git rev-list. I tried to
+> > understand the issue, which I pretty much understood why it's happening=
+,
+> > but I figured I still need to discuss it with someone. This is also my
+> > first post/patch on the mailing list, so I would love if someone can di=
+scuss
+> > about that issue with me :)
+> >
+> > The docs also said that only one microproject should be done, and for n=
+ow
+> > I've selected the one mentioned in them, which is Avoid suppressing git=
+'s
+> > exit code in test scripts. But I feel that the ones mentioned are prett=
+y
+> > small. Can I still contribute more by not calling them as microprojects=
+? I
+> > can do it for more files, but first I would like to have some feedback =
+about
+> > my initial patch. I know there might be a lot of mistakes as this is my
+> > first patch. Thanks for taking out your time for going through this :)
+> >
+> > Best regards,
+> > Ayush
+>
+> Welcome.
+>
+> The why our "microprojects" are designed to be technically too
+> trivial is because we want to get the formality and the process
+> behind as early as possible.  If you look at the output of "git log
+> --no-merges -200" (and the equivalent "git shortlog") from our
+> recent past, you may notice that a contributor must adopt certain
+> discipline in writing commits for this project, including but not
+> limited to:
+>
+>  - to be familiar with and adhere to the coding guidelines;
+>
+>  - to choose the right granularity to make commits;
+>
+>  - to write the proposed commit log message clearly and in the same
+>    style as existing commits;
+>
+>  - other formalities like signing off your patches.
+>
+> It is expected that a microproject submission would never be perfect
+> in the first attempt.  Do not let it discourage you if you received
+> review comments that point out the differences between what you did
+> in your microproject submission and what we expect to see in our
+> patches.  During the "send patches -> get review comments -> send
+> updated patches -> ..." cycle, you'll learn the proper interaction
+> with the reviewers to get your patches accepted.  For that, as an
+> exercise material, microprojects are designed to be technically not
+> too challenging.
+>
+> The idea behind "only one microproject per student" is that you do
+> not have to do (and we do not want you to deplete our stash of)
+> microprojects in order to call yourself prepared for one of our
+> mentorship programs, like GSoC or Outreachy.
+>
+> Now, a patch critique.
+>
+>  * Everything you wrote in the body of the message so far are *not*
+>    suitable for a proposed commit log message.  Making introduction
+>    and stuff is a very good thing to do but that is not something
+>    you want the "git am", which gets run on the receiving end, to
+>    make it a part of our history (and by the way, you should try
+>    sending your patch message to yourself and then try to apply it
+>    with "git am" as a practice).  Studying "git log --no-merges" and
+>    "git shortlog --no-merges" of our history would have taught that
+>    already.
+>
+>  * The Subject: line which is the patch title needs to be carefully
+>    written, too.  Again, "git shortlog --no-merges" would be a good
+>    guide.  We want to make it possible to remind ourselves what each
+>    commit was about only by looking at the single-line entry in
+>    "shortlog".  Your title tells us the commit touches t6423, was
+>    done by a Newbie, for a GSoC application, as a microproject.
+>    Among these, the _ONLY_ relevant information in the longer span
+>    for the project is that it touched t6423.  What kind of thing the
+>    commit did to t6423 is a lot more important than who did that or
+>    it was done in preparation for GSoC, but the title does not tell
+>    us that.
+>
+>  * Be familiar with Documentation/SubmittingPatches, as it should
+>    tell everything I said above, and more, I think.  Pay attention
+>    to the [[real-name]] section, too.
+>
+> > Signed-off-by: ayu-ch <ayu.chandekar@gmail.com>
+> > ---
+>
+> Here, between "---" line and the diffstat, is a space you can use to
+> give your "greetings", and other things you do not want "git am" to
+> make a part of the resulting commit log message.  We often use the
+> space to describe what changed since the initial revision when
+> sending an updated patch.
+>
+> >  t/t6423-merge-rename-directories.sh | 6 +++---
+> >  1 file changed, 3 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename=
+-directories.sh
+> > index 88d1cf2cde..bdd19de3aa 100755
+> > --- a/t/t6423-merge-rename-directories.sh
+> > +++ b/t/t6423-merge-rename-directories.sh
+> > @@ -5071,7 +5071,7 @@ test_expect_success '12i: Directory rename causes=
+ rename-to-self' '
+> >               test_path_is_file source/bar &&
+> >               test_path_is_file source/baz &&
+> >
+> > -             git ls-files | uniq >tracked &&
+> > +             git ls-files >actual && uniq <actual >tracked &&
+> >               test_line_count =3D 3 tracked &&
+>
+> We tend to write one command invocation per line in our shell
+> scripts (cf. Documentation/CodingGuidelines), so this should be
+> written more like:
+>
+>                 git ls-files >actual &&
+>                 uniq <actual >tracked &&
+>
+> The same comment applies to all other hunks.
+>
+> Otherwise, the patch looks good.
