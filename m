@@ -1,84 +1,85 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A783E1876
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 05:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FC31863E
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 05:40:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738560579; cv=none; b=NUrXpIgOHhgOgKJh+KvUSp51/X5gXxF67ku0cOsAAzx04a8qgwvyBSAg3au4c+5EuuUg3J+cj/j83jDAL/unmVFvpd5fLrH6je2Lii+o5KWi2RImKUcMB1RKcVdSifK3X6w8kA/j9CX/d4DuY6zhRtpfz9+GiHCtpPAdFOmcqdY=
+	t=1738561235; cv=none; b=T3GOIQQIy1jqJVSDjOzb+8kwtw7g3ZyIzJuJHxkvDxQRpRwSWA+fO3+ZW/CIuLBiZfx8mevhIBb4Vmv5uGE0BSXQ/oHOiZUNtdjuoquNUwYegbmsExnV9/quLGN4p0t73bIpWvyCAAnHu2jWAWF4Wz6VU8tSjrw7TFegMcmJdrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738560579; c=relaxed/simple;
-	bh=bYhcuUvHtkU4wH1AUX51WMSwTtbsHBvY4xCZ2y81PVc=;
+	s=arc-20240116; t=1738561235; c=relaxed/simple;
+	bh=NDli8d//O1ED5nharBWRyBEb7hTSNVOky7zVFFJW/LI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=H6rXv9yIVpTJrJLN8G8uKG1y48gBlBnxtKCOtAUG0M6Rf4OcM0mW9U2as3ou/d4FJfgffR9FXt02PZLRO9Tsv6bu6VLOSXxdLQGkXElc+YkQOsNxpK/+q1/5CKlDEGtC7nSXLgmjD8T1GB+SYwCafAEVEL2Ko/FTOkpH1ocK814=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Htlzz/AS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j3cdNdiP; arc=none smtp.client-ip=202.12.124.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rcbtv/DFIpCJcu2Qq0jL6UBwyXMaxfhPXV2uodFNefhuq4B/LcCixgKwbUUYi23UBZP+OfKSrG+dzqw7h3tHh7OxxEF7W9utfWUXRaaNgS4E8Q1bUICxByT6+fmJnzuWVvGFDUCAqid2b4yCbZTHpEMOdzTUqDkticbW4rV49I4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=d44tKqBJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HC5eNT3e; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Htlzz/AS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j3cdNdiP"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 850B625400DA;
-	Mon,  3 Feb 2025 00:29:34 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 03 Feb 2025 00:29:34 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="d44tKqBJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HC5eNT3e"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7CD57114011D;
+	Mon,  3 Feb 2025 00:40:32 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Mon, 03 Feb 2025 00:40:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738560574; x=1738646974; bh=Nw/6qrcO1j
-	Cx7N8n3x6QY36sW0qZdR/ezkvbsdIAOhk=; b=Htlzz/ASvVPFoGlp5nR1vWIJak
-	8LcecH4V01vh0W41cZuodvwkurH/psq0cjrlMHj6oaFvGFlk3ev/j9uOK8hmbxzj
-	pWDQeHF7KbQAxtGJNztX2P+0PsuNR43ajnZbdWWUgCwyRtP2h0pg2p9IyUeQjvzQ
-	pAGmagRnzBXl/HQHmnvKOpL3oy+GPK9kdL0v08Zeu3V9l+rjczZoK1TbWBSmvQsf
-	sIO2qp26lGYSUq9Q7swzXEhyo9qSGExYHp5F7rAknrTV6mTI8Smhr89T/XLaJTZo
-	PzjoG8Ykf+CHNNoLYBBYYIMf4WqJ+nH8nLu9jg+oSsMVGNYQGhY3at4bkdDg==
+	:subject:to:to; s=fm3; t=1738561232; x=1738647632; bh=XQuhntA0Ie
+	tA0jta+yrERWAIDp7HotiyWF5SPEQGLkQ=; b=d44tKqBJCegD4+kbhG0iwDGLkJ
+	6hJlPp9QGm3MgGxmQNhWx2VEAZKOZfPCHxEnROxoukCdskLIhMJwdK0pkPZMJieC
+	ZPPs1XoTszxs7oK+DgyrmRghXI/KeFfFUp5E0Tfa0u+bbSSnDV9kvRH9po+yZLCz
+	kmb8544oHlmb9BvFLjUuZ4JYcd4AImxCq4HlbU7ub5Zt3xPqEsfcoPzXov0n0cBF
+	+820uXT4kRsENtTnALzRbs6nr6I/w+yG3alV3JEFJ5QT/fxWNEC2c/p6mWUyWZn3
+	PeCw9wXEpmzbEpOB1Qt1OxJd+2nO2TTk4+nxbcf6sRX5QvJ2x3K/RW3L2Tqg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738560574; x=1738646974; bh=Nw/6qrcO1jCx7N8n3x6QY36sW0qZdR/ezkv
-	bsdIAOhk=; b=j3cdNdiPN8jEM36Ty/vkjg92VNs6cMcBT0kO+S4MkxviyPHRVaF
-	el1Wtc6wDo6HJn0zxOghlNyHsee88lpITN+HWXesNvVla3Kz5erQuRNuV1EIMpO4
-	lnMyM1eW7fbMDES27O/C/IiH3OvStMBCp9qDvg7PLctYLcINuBPEIXEBl+tz/q9l
-	u3tUBGrtzsANPCnNcQeMi6tzkGxjO6tzLkgikHO5jmksrAnQRE5xJSQmBT7zLtXi
-	ctqU5mxwC9VutqvNQjmaV7kBOY1E8RduTrXo8xkOLFJusrOE1YGcbN4t+AfI2e9z
-	xSknGOgd73O7U0SjqnFpr+vAi8yjIAAypQg==
-X-ME-Sender: <xms:PlSgZ3r3bSuN85j72AvGmEANol1wW3bqx65kA2ifM_DEy0ZUDL_F6A>
-    <xme:PlSgZxoXmIIE9dXEXUKM5-lzQ-rZJ_Dus-BSv9ZvZTT5S7_PF6dsTsQmWXmfuL7cn
-    gkpbYEqcSWyM5zs-A>
-X-ME-Received: <xmr:PlSgZ0OK2w6Wy4blxOgmfmUNarJcQt_3ek9WYBt7uTlns59jO3DbXrQiyLnInBhszI_C1dMex3xzHbck60fZBL9dYRWFibPL-h_LvhL7CPpHGg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieejfecutefuodetggdotefrod
+	1738561232; x=1738647632; bh=XQuhntA0IetA0jta+yrERWAIDp7HotiyWF5
+	SPEQGLkQ=; b=HC5eNT3epCxNp1dZZMlUlZH2wVYCEKDJwR6wPPNTw0KySgwIRvM
+	fTqsflvsQTBcvticdvZ3O0xoqTP+tHhThxBC+lsiG85Ns0ApzHue/W2hFZwC3oYw
+	kUol+dqNuqlVBfaBBkbqr7Jjy+2NaxF7Pu4+1+fAde1iQd55yqQZP/AX3YE1HIoc
+	Eu9cviGF4BZw7RlDEKOF49vYsSY9ClD4yJ/hLoCyCJchF09qgm/lMf8Yu2Ibnae7
+	5d3ID1dZsVghvwjjBI+2PK3FWNcKa3FRPS8qwmCdhygvsd+OUaXsDCTgR/OqgObj
+	t9JUVZMOJ7+vACpLx+pEMZ269G8Vl5/kxLQ==
+X-ME-Sender: <xms:0FagZ-xXui7_P3NliO9en_zcKyu36P9CA9LCeCoTdrbNsCyuJB7jeQ>
+    <xme:0FagZ6ST203A8E4rlJeapk4tJ7qtt4zPrrr7ETdVlA8hOgF5HfM4C8BxbRdujFlYv
+    VA-hDiayHvZOKbxtQ>
+X-ME-Received: <xmr:0FagZwWNs7cbXhEa3tEcuSK3vDKSgSAWoyOdv_MjvP0lnefAldcuG8ZnHExTRLucxHJAkkiZr2FGvRhNPSg8eR25ki4ssyDBBDbhGD41IbxxNA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieejiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:PlSgZ658WWaWPNg8Czumhzkya0OFY05o2mifq5GCY1uH16maVQsPyw>
-    <xmx:PlSgZ24uygqFKIgHSGTyPZwOK221muy1fjLcZzsS4mJ3xz0kbNqkog>
-    <xmx:PlSgZyg1G_D0qNAGWxC9lqc_Vq5NU9OHgW4YtC0gDH0N1o8gUWQgMw>
-    <xmx:PlSgZ44j1dA7SouLH-PNnZGK2WQyFRK-SvpW_SM62m1-FZaF2Uwbdg>
-    <xmx:PlSgZ2Fbl7ujPD3KEutChhtklfxXbIRDyJRWhYP2sBYZ3elyVw7-37HM>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhk
+    rddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:0FagZ0j1pCM6uDA3toG2zX4uEbDgZzqql-m24CZmhOouOUqGTQKk5w>
+    <xmx:0FagZwDkPixLU2RWYJq2Mo6FqOYdSoxgjVQiudpgzSlNfJbs48q54g>
+    <xmx:0FagZ1KwhQjIbtpfTf4cwnW6XeY0LNSB1wzrLktzVnfF0bJv8BG1lQ>
+    <xmx:0FagZ3BQi9dQHbbmI4jn1gmAp7ZS5kUObhTl3Q4Ox0vnpyzqBIkslg>
+    <xmx:0FagZzMOQXF2XOQhtMY2qOzYxKGaQ8wR4NZonWzILNM_InNFjd5-sBpo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 00:29:33 -0500 (EST)
+ 3 Feb 2025 00:40:31 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 794dafcc (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Feb 2025 05:29:31 +0000 (UTC)
-Date: Mon, 3 Feb 2025 06:29:30 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e3d43e54 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Feb 2025 05:40:28 +0000 (UTC)
+Date: Mon, 3 Feb 2025 06:40:19 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] setup: fix reinit of repos with incompatible
- GIT_DEFAULT_REF_FORMAT
-Message-ID: <Z6BUOs7k1rzGOGTN@pks.im>
-References: <20250130-b4-pks-reinit-default-ref-format-v1-0-d2769ca01207@pks.im>
- <20250130-b4-pks-reinit-default-ref-format-v1-2-d2769ca01207@pks.im>
- <xmqqv7tu623n.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Subject: Re: undefined behavior in unit tests, was Re: [PATCH v3 3/3]
+ reftable: prevent 'update_index' changes after adding records
+Message-ID: <Z6BWw0PIANPAcVA6@pks.im>
+References: <20250122-461-corrupted-reftable-followup-v3-0-ae5f88bf04fa@gmail.com>
+ <20250122-461-corrupted-reftable-followup-v3-3-ae5f88bf04fa@gmail.com>
+ <20250201022409.GA4082344@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,77 +88,82 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqv7tu623n.fsf@gitster.g>
+In-Reply-To: <20250201022409.GA4082344@coredump.intra.peff.net>
 
-On Fri, Jan 31, 2025 at 02:38:20PM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Fri, Jan 31, 2025 at 09:24:09PM -0500, Jeff King wrote:
+> On Wed, Jan 22, 2025 at 06:35:49AM +0100, Karthik Nayak wrote:
 > 
-> > Instead of retaining the current ref format, the reinitialization tries
-> > to reinitialize the repository with the different format. This action
-> > fails when git-init(1) tries to write the ".git/refs/heads" stub, which
-> > in the context of the reftable backend is always written as a file so
-> > that we can detect clients which inadvertently try to access the repo
-> > with the wrong ref format. Seems like the protection mechanism works for
-> > this case, as well.
-> >
-> > Fix the issue by ignoring the environment variable in case the repo has
-> > already been initialized with a ref storage format.
+> > +static void t_reftable_invalid_limit_updates(void)
+> > +{
+> > +	struct reftable_ref_record ref = {
+> > +		.refname = (char *) "HEAD",
+> > +		.update_index = 1,
+> > +		.value_type = REFTABLE_REF_SYMREF,
+> > +		.value.symref = (char *) "master",
+> > +	};
+> > +	struct reftable_write_options opts = {
+> > +		.default_permissions = 0660,
+> > +	};
+> > +	struct reftable_addition *add = NULL;
+> > +	char *dir = get_tmp_dir(__LINE__);
+> > +	struct reftable_stack *st = NULL;
+> > +	int err;
+> > +
+> > +	err = reftable_new_stack(&st, dir, &opts);
+> > +	check(!err);
+> > +
+> > +	reftable_addition_destroy(add);
+> > +
+> > +	err = reftable_stack_new_addition(&add, st, 0);
+> > +	check(!err);
 > 
-> It certainly is better than corrupting the repository, but if we are
-> to do this change, shouldn't we at least issue a warning to tell
-> users that (a part of) their request was ignored, instead of
-> silently ignoring the specified ref-format?
-
-I don't think we should. If this was passed on the command line then
-yes, we should flag this and already die indeed. But this is an
-environment variable that allows you to set the default format. From my
-point of view it is totally expected that this doesn't cause the format
-of existing repositories to change.
-
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  setup.c         | 4 +++-
-> >  t/t0001-init.sh | 9 +++++++++
-> >  2 files changed, 12 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/setup.c b/setup.c
-> > index 8a488f3e7c..53ffeabc5b 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -2534,7 +2534,9 @@ static void repository_format_configure(struct repository_format *repo_fmt,
-> >  		ref_format = ref_storage_format_by_name(env);
-> >  		if (ref_format == REF_STORAGE_FORMAT_UNKNOWN)
-> >  			die(_("unknown ref storage format '%s'"), env);
-> > -		repo_fmt->ref_storage_format = ref_format;
-> > +		if (repo_fmt->version < 0 ||
-> > +		    repo_fmt->ref_storage_format == REF_STORAGE_FORMAT_UNKNOWN)
-> > +			repo_fmt->ref_storage_format = ref_format;
+> Coverity complains that this function may have undefined behavior. It's
+> an issue we have in a lot of other tests that have moved to the
+> unit-test framework. I've mostly been ignoring it, but this is a pretty
+> straight-forward example, so I thought I'd write a note.
 > 
-> Perhaps something silly like this?
+> The issue is that reftable_new_stack() might fail, leaving "st" as NULL.
+> And then we feed it to reftable_stack_new_addition(), which dereferences
+> it.
 > 
-> 		if (0 <= repo_fmt->version &&
-> 		    repo_fmt->ref_storage_format != REF_STORAGE_FORMAT_UNKNOWN)
-> 			warning("ignoring the specified ref-format");
-> 		else
-> 			repo_fmt->ref_storage_format = ref_format;
+> In normal production code, we'd expect something like:
 > 
-> In the longer term, we might want to consider automatically
-> migrating the ref backend (by calling into "git ref migrate"),
-> but it is a good first move to stop damaging the repository.
+>   if (err)
+> 	return -1;
+> 
+> to avoid running the rest of the function after the first error. But the
+> test harness check() function doesn't return. It just complains to
+> stdout and keeps running!  So you'll get something like[1]:
+> 
+>   $ t/unit-tests/bin/t-reftable-stack
+>   ok 1 - empty addition to stack
+>   ok 2 - read_lines works
+>   ok 3 - expire reflog entries
+>   # check "!err" failed at t/unit-tests/t-reftable-stack.c:1404
+>   Segmentation fault
+> 
+> So...yes, we will probably notice that the test failed from the exit
+> code. But it's not great when the harness itself barfs so had. Plus a
+> compiler may be free to reorder things in a confusing way if it can see
+> that "st" must never be NULL.
+> 
+> It feels like we probably ought to return as soon as a check() fails.
+> That does create other headaches, though. E.g., we'd potentially leak
+> from an early return (which our LSan builds will complain about),
+> meaning that test code needs to start doing the usual "goto out" type of
+> cleanup.
+> 
+> So I dunno. Maybe we just live with it. But it feels pretty ugly.
 
-I think keeping migrations explicit is worthwhile. Migrations are a
-somewhat risky thing, so explicitly making the user ask for them is not
-a bad thing. I personally wouldn't expect git-init(1) to migrate data.
-After all, it is supposed to initialize stuff, not rewrite it.
+It's one of the pitfalls of our own testing framework, from my point of
+view. It's somewhat unexpected that the test would just continue running
+as this is the wrong thing to do in almost all cases. When assumptions
+fail, nothing good will come of it.
 
-This is doubly true for environment variables, where it is so extremely
-easy to accidentally still have them defined. I don't think implicitly
-converting every git-init(1) to do migrations would be a good idea there
-as it would likely do the wrong thing in many cases.
-
-So from my point of view we should treat the environment variables the
-same as we treat "init.defaultRefFormat" and "init.defaultObjectFormat".
-Those indicate defaults, but do not cause us to change the format of
-existing repostiories.
+In any case, issues like this will be fixed once we migrate those tests
+to the clar unit test framework. The default there is to abort the tests
+in case an assertion fails, which is much saner from my point of view.
+So I'm not sure if it is worth fixing this now, or whether refactoring
+the tests to use clar is the more sensible fix.
 
 Patrick
