@@ -1,144 +1,83 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B32E920B1EF
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 16:33:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580E41D5159
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 16:45:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738600415; cv=none; b=lK7GZCpZD3JIyXNFXIHaYWE09IfljfWFYdmkavua/vqdX+CnGLMFCDW4fRPuowpSlHLw5oAodUVG2TtQkAdFre5tDjBa/CkwfZNcR2rqgdVxkPvBi8aSNLc2SsCq20Ub+w8osIW3xYkIc1unBmRXCcPoAI4CQDlZv5vGIKoWSnk=
+	t=1738601151; cv=none; b=YD/coiw4Yx8moEUh9HQVGxQAA0gpgq7+BbZaZYTy729ir0BYYgiaAc634iMYDL7r62Ne1+jcpH9SOyHstLAx8+H4/XKdtPqA4BS7lg+hLUEYAYklepcYQn6MOajkSvMeWnpvp6JO5Xx9BCJ/JOjjhCETvOAypxjoiEfx60HjT9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738600415; c=relaxed/simple;
-	bh=wxcz8H8YHoVDJSe1GA31PEtqZmGEDWNM5J+nwDUJ7o8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=F3fyGnGQt9+nukl2BLWyfKAWBV++N7OwQFSJnhhQ3/neti+F+p/G3eJzOiheZ+9IE/OBL9W6pVZtPUaNbonPyOsE3Km2UBgYA35pyxEIn6alRjGdr+w3MnLsHuG8fxESB7JMcEaP8K1Ujk1DmB4oupQDdThv26a0Ccag8npagdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g7n09XMt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v0Tm8k/c; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738601151; c=relaxed/simple;
+	bh=8DZdsVCrXYVvZ2qyO0wx90fYV9UD8giapr/Xbc766LQ=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Ra4eI53jbAT6nhHD5BvilFWxYlLst2vdwvCmTf9XUa7eQwjD9M6sA5y0DD4E0LD6LYmeumJhB5+ix9MDcH6f9AUtvrTZtBxzNvqOFBrJRGq9bfn0pf/R/3HwjTigi27d9lkAsPX63JSYdwKRWE9Mzj7wwxKgOy71tVMra+IGs2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WZx02TWG; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g7n09XMt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v0Tm8k/c"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9CC3613801DD;
-	Mon,  3 Feb 2025 11:33:32 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 03 Feb 2025 11:33:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738600412; x=1738686812; bh=j9XTQ+pcQZ
-	AWMkNV4t15fwTpdLnCYzf0jb/OWHWKU7s=; b=g7n09XMthGUEa4z8P+ZPYZz+XS
-	klRKw1wJ7eEHc2f4JyV6PRQD+HP23u/8+0EySvZjGb85GbhLD9b/IttljUArxG6w
-	ifYYvFLB0YxzSxTA1v/gBNN1FMdnRwuB8dtTHiBqVX/zt1JoCDu76HQmZb3WI9fs
-	3vojcFjz4Z80Zy0EXLLNPlXbHK4YOxfYtvoxWNYyjIRQW/EbdycI+vLmQn5+A3jK
-	4/vSde/rBTKrhEt/EQvuFlxPDeJdybGNziVa3S3u4l74ujgVTaWNXeyVS2DgOKnO
-	EZth/OAWOGJJkZ1+aQoO+awUenNcWdd0COjhrx9BIeEnPcNrIVwW5qA0yPwA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738600412; x=1738686812; bh=j9XTQ+pcQZAWMkNV4t15fwTpdLnCYzf0jb/
-	OWHWKU7s=; b=v0Tm8k/cufwU/A+ZiXeYGXB0YrNu52yNfW65HT81w+SQQckRufS
-	OZHvmjF+XTl5JxNmOoEm85SDU+PYGVVVrz3R2GQU1CdMdnKYZmFlvxVd9cBpTPMI
-	Q+l9m/ZwBqY6nMmGNEsde6hfktFzIrRStSJszDqmhbbY6t4J1H5Ca0dpH6dj2n/U
-	iZNl7qPhpR+agGpFlzK6E/bxN47gDjj09N6Bxcr63I96bIU+zuPVVSUFAfMkp0/t
-	mWfHITAf7FWm9ONSsukT6w5Edh2I/SjaCrRzii0fHb+M0SjI+D35My1IK9ED/ETH
-	MGxW/wczz3AKSXHFdlNMq0cE4ih+iyqaQVw==
-X-ME-Sender: <xms:3O-gZ3GtHNvTdnR0ki0lBTQeldIzKt9RdAbxpG8f8ftlDr4rxQoCFA>
-    <xme:3O-gZ0V7KzkEI2A5t-H6tLgnMiPnYC6MD2rFu5so9W-Ra1hLpCvl6qvjuqI96xlKf
-    iZGhQ4e0iXgRlXxgw>
-X-ME-Received: <xmr:3O-gZ5LSP9lG1wXvja-O1FrJtuIr7WAmNlF5QNvVZtcMIs2iMi1nja12E0gqigFJfAdeIrM81SR3xwqUlkd8pyPmSN1KvtuuUnZK>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukedutdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehnrghsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3O-gZ1FA19bcNGzXqQSTg2Z-85pb55etAIpfRHbncXJfh3f7cG9MEA>
-    <xmx:3O-gZ9XsXqLajlGpQ5fyve0gyYFq7WGMY-w_T5gwj6lzInUf8LWExA>
-    <xmx:3O-gZwPRdPaLR-yBSH0TGNelGGm7BMbXPlDGzI6OdXKDVJv6RdqdrQ>
-    <xmx:3O-gZ81B554NJbq5n5Zy8Jy5br1YY87UcbGMliwDBztktwdVGV9UQQ>
-    <xmx:3O-gZzxdQEiZWq_2clK3HYUuAVr4ue4EnAVvfEFqcXzrtersAvQQjh8X>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 11:33:31 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Emily Shaffer <nasamuffin@google.com>
-Subject: Re: Continuous Benchmarking
-In-Reply-To: <Z6CSc_vyGkn-ozUH@pks.im> (Patrick Steinhardt's message of "Mon,
-	3 Feb 2025 10:54:59 +0100")
-References: <Z6CSc_vyGkn-ozUH@pks.im>
-Date: Mon, 03 Feb 2025 08:33:30 -0800
-Message-ID: <xmqqpljz2dk5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WZx02TWG"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2156e078563so67102125ad.2
+        for <git@vger.kernel.org>; Mon, 03 Feb 2025 08:45:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738601149; x=1739205949; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/QxN3obrx2gccde6kHYdTG7dtrTQfFQuXhB4weAamnY=;
+        b=WZx02TWGU07eNd8SoRAL5sVV7lQf6f9SM3hFIU8oIfdbyJm2963lNvs3gpzf0e5Ou0
+         rfzMCQ9Etb08d1sq4CZC6H98GA/BDM6De6Nf1rWJOhsltNKqj0oYSGYTzPCsRoUmM6Aj
+         g0nzqGdTNsyU4WFT5xUw3GAd2lhhbLy7lja8BwsgvT6TGGwt+Giwrntb/DxXcNNQcda9
+         dveQBiStU5zf6Goj4CsL3knsGAAl8I95lM8ntyAvugWskT4bQIjVax16062XDHkZzntV
+         fWR++Q/E5nq7/Z84kJ+3gmXr7pOKTpx9N6ePlBpS89DuKdiQ1kxp8WWR+RiOmemXMZ5s
+         lPPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738601149; x=1739205949;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/QxN3obrx2gccde6kHYdTG7dtrTQfFQuXhB4weAamnY=;
+        b=DsZJcfOHu4/Zaj4YI87lYE21JNyOd/eA1Z8SIOfFrUpPorzpp/CzoteBJ3sJVmjEEE
+         NFHNsGc7j5LIm3ivpAxTo0q0N3k9GDc4iyaBDWXeGKN4f56mABZY0QNe/g9R6JCaxrYN
+         jKIre4TVB8kxwltVyE7+/zVgkRaiM2hzNfRl9PM8vIgPtf/3hdVMLwJKCFRZSkQ33ME6
+         mcQ+qVs1gi2ZnWX7BscISAkos1zdNCpjOpwjR8AJp0m7sf6K9KBNgv/kRhU97kxgpfAO
+         n4MFEdUQ4M7zcMN4IM1BgqtcRGQYA7twYeK/ZJfvYTmGS4xxUwL7KBVfYhYFrcGAPq2x
+         Y+lA==
+X-Gm-Message-State: AOJu0YyIFbj+7Un56xiXlgN1R2cAeOti17A4nXR95i0Ca3cCcYhhOhej
+	d3UbVNRPSmDukhRIPbr+PSfS4YmEOAI/D7kB4aYaGJ6DNroas8hkzKOYv5zoqW5icIIjloQ3UvK
+	+I0+ruVVXeXaGnyH5nKG9LMYGqIGyG8FY
+X-Gm-Gg: ASbGnctx4Up9H3KUm6dqp1EaU/cS8pjpVVFDgKx6IRmqCbl5Vzjp4W71slDZXyKYzoT
+	Fft6c925x9LEYqs0xGPwUO2XDLIShd039XKSkcKJ51nQ2qrPDDCzRtVIoRcwhbsCkts2YdWM=
+X-Google-Smtp-Source: AGHT+IHQxMe3qn4/LSwNwgWJ3smMLUy2wzrYBVbbahxFZSaTI68+tlvw9y4NCgodFKUBHdA7w1+lieH8td1c96jlYsA=
+X-Received: by 2002:a05:6a21:6b02:b0:1e1:bf3d:a191 with SMTP id
+ adf61e73a8af0-1ed7a6b7a37mr36199597637.33.1738601147621; Mon, 03 Feb 2025
+ 08:45:47 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: =?UTF-8?Q?Manuel_Qui=C3=B1ones?= <manuel.por.aca@gmail.com>
+Date: Mon, 3 Feb 2025 13:45:36 -0300
+X-Gm-Features: AWEUYZmkFUYut-arMxI8mFRZalI2TOoW21paOjx3oQOtTKpjQu2Ym64qISWaVeM
+Message-ID: <CAPpV+OaMcViVKok5U0-4HaYyPMKEA7BBzw4t113uAaMndjs5Cg@mail.gmail.com>
+Subject: Usability issue: "Your branch is up to date"
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi,
+I've been teaching Git to a group of young learners lately. They find
+it odd that commands like `git status` or `git switch main` say "Your
+branch is up to date with 'origin/main'" even when there are changes
+that can be fetched from the remote. My proposal: Add the timestamp of
+the last fetch to the message. For example:
 
-> ... implement continuous benchmarking for the Git project. The intent is to
-> have regular (daily) benchmarking runs against Git's `master` and `next`
-> branches to be able to spot any performance regressions before they make
-> it into the next release.
+```
+$ git switch main
+Switched to branch 'main'
+Your branch is up to date with 'origin/main'. Last check was 2 hours ago.
+```
 
-This is great.
-
-> I have started with a relatively simple setup:
->
->   - I have started collection benchmarks that I myself do regularly [1].
->     These benchmarks are built on hyperfine and are thus not part of the
->     Git repository itself.
->
->   - GitLab CI runs on a nightly basis, executing a subset of these
->     benchmarks [2].
->
->   - Results are uploaded with a hyperfine adaptor to Bencher and are
->     summarized in dashboards.
->
-> This at least gives us some visibility in severe performance outliers,
-> whether these are improvements or regressions. Some statistics are
-> applied on this data to automatically generate alerts when things are
-> significantly changing.
->
-> The setup is of course not perfect. It's built on top of CI jobs, which
-> are by their very nature not really performing consistent. The scripts
-> are hosted outside of Git. And I'm the only one running this.
->
-> So I wonder whether there is a wider interest in the Git community to
-> have this infrastructure part of the Git project itself. This may
-> include steps like the following:
->
->   - Extending our performance tests we have in "t/perf" to cover more
->     benchmarks.
->
->   - Writing an adaptor that is able to upload the data generated from
->     our perf scripts to Bencher.
->
->   - Setting up proper infrastructure to do the benchmarking. We may for
->     now also continue to use GitLab CI, but as said they are quite noisy
->     overall. Dedicated servers would help here.
->
->   - Sending alerts to the Git mailing list.
->
-> I'm happy to hear your thoughts on this. Any ideas are welcome,
-> including "we're not interested at all". In that case, we'd simply
-> continue to maintain the setup ourselves at GitLab.
-
-Elsewhere Peff was talking about his adventure with Coverty running
-on 'next'.  The more eyes and tools on the topics before they hit
-'master', the less chance we have to scramble just before the
-release.
+It looks like the timestamp of file `.git/FETCH_HEAD` would be enough
+to implement it.
 
 
+-- 
+.. manuq ..
