@@ -1,152 +1,145 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9380F1D63DD
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 06:29:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433F12557C
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 06:46:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738564193; cv=none; b=baWRadP8hTo3esYCc6q4eMJuZ+sSwkVTYSKHgPkkTcUm5ogTuquPnZPytZtJUdS1Fss3Z53cuo5mp3ClzzvBjkzN4aBZEyDuPdTxhzBC9A6WMxxL45mojBzoDh2JJhwbMT7T+j6MIRLA3eQ2BXNnGxCu16luzvt52Upbkb3ahag=
+	t=1738565166; cv=none; b=juqx5iO2uf6Y6/w9jdymWL17rTVJsRmQ2/SKMuBG8bhwtYvuz7g4oT+e3xCwjPwLttmoqw9VIF0eL11zIZJVu2V5yqTBSSKwM7iC5LixB/aqDO9HQX0N/FNC1JyZi6p62y54cP7cUz5eLn14o7FhX65kYEn9EIWcdOPrqxSAJw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738564193; c=relaxed/simple;
-	bh=nFeC6BtcS+hOfHxDK3EtT6qcz0nydlJdwyNZA2ujWho=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=APe5KhuXpUm+N4FKsqjs8QvuiQdG03Un67QtWltV0bQHgdI731w8OrpebM/X0i/Y3Iy44EJwdidBrdWfqg7ooXhq/TIU0Mp8AO7wVnZoyN3D2XjPYH7oTXT0sj6N8/vg94XiMWS09g18j8YUDVla4X6f29ojn4o53HerUzRgLD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cOpSgiTi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D6tMcWuz; arc=none smtp.client-ip=103.168.172.156
+	s=arc-20240116; t=1738565166; c=relaxed/simple;
+	bh=GtbiIvNdcHg2xW8GP0G5dcu7JVNlrwt2yzBD3YTBIMA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SpNFG4wPnnI7lyus8WY0NP8KBWd89NzwhYp3Jdgbw+w9QhwbELvGG2leOzrqDeZB+qzXcpmfgDnOHtD9Ofmx9QwX1D86Tk3QRxyg31ItaSkSau3KrVMxw+jltDsI3nh+sf2aT1rpG+5zq6CRCYKJQpRlBzknJ086TfpTaDzmWuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jWqmMuid; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gv+Ztkhs; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cOpSgiTi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D6tMcWuz"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 85CD61140173;
-	Mon,  3 Feb 2025 01:29:49 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jWqmMuid";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gv+Ztkhs"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 52A071380710;
+	Mon,  3 Feb 2025 01:46:03 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 03 Feb 2025 01:29:49 -0500
+  by phl-compute-09.internal (MEProxy); Mon, 03 Feb 2025 01:46:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738564189;
-	 x=1738650589; bh=3y8btysFk6GGvvuftdxS6BVIk/hr4qyQagAbM69FupY=; b=
-	cOpSgiTiW9H3hDKm3oAAg9X+ZH1lKh9tqe1ObY6LvvoC4dCBaUgfvCNSte26jF2z
-	UWpUYfBSK2lvDUBkFBlb2estp7AAYLJoN9dH0H+R/ia5T3rRJMaEumvHMbpydlDk
-	T3hvsz/DChVawPldmfciebEkrhReaBAc+87s/Waauq8SfmnWoceR6PsU/D6MX9Np
-	5r77usA3xLmT8qvNAWrjCZF6G2hQ9Nr3r8LzeTWTcq3vAIuFFWut5b2ZlIQ/63q1
-	uEerHJPo7K0nkGCxQDBWS4EO0xrNKExWufIJHBcch6/j+7vbbM3FDI5Dm8CkLHXX
-	ANMv4Pjhab1L6eCUGAr4Vg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1738565163; x=1738651563; bh=Nzr85n8wZc
+	VwujY1opU3eiaeUcC4VAPycet9YOblqVo=; b=jWqmMuideIgpvLqpomJr1hVQOe
+	gJcRpY6IyA446FM7M9ziLhvjDuZgqaNYpWKyAUj8F09wUR5IIKX48xDG+ZnI6gCI
+	vqBD5Y1ESmfCINVNpcRqzwLF+4DbVVEl6gftNdrzmHYA30Z7dKEWUXhTgoq0v9a9
+	fF6W5ULYAtHc4f5liNaNodX7t+pnEF0rJhGyJmfEb66EyB9HSmFy+ROyDoorx1g8
+	CO3nNNl14VxifOLqQn+UW4NGYiS2PQMCBTgvin2Cv97ruhyZ18s20fXQXDUqN2G2
+	2CS5oNtoYFsBvkNTEC7NCglOXG0/SNPBv3lxZno0oIUNbRXvqH6YJt+CRyIQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738564189; x=
-	1738650589; bh=3y8btysFk6GGvvuftdxS6BVIk/hr4qyQagAbM69FupY=; b=D
-	6tMcWuzmXNAfDXy1oloDS5X2p8k9BMY5cZ/q14MEH19Jjv3CHz+Yy+OMmRkT2b4/
-	sKi8LwSSFyqbotuY2SSg/eh5t5PfCRaN1k+KmKN9ez51qZNCklo+3Hi41MWh9n9F
-	rvlMM2ZaeJjNuL70i3goktGH7M2MfAfYaACqrj+tKpBVWQT79s/zH2ocjyqLvCie
-	snpSSw48CKgYi9/V3boNgSepDvrzgj1l1+hIcjsBt6iD0t/G12hM9pTFt7Izn79F
-	avOBPOgRoiQ/k03Dd6fpczXU5r6RiyjXlka0HEw2C90GfZNMGAc6Mp2NkAyBc0li
-	2SLYE6oII1nDHyQW7L2wg==
-X-ME-Sender: <xms:XWKgZz6ckSCeUmwFbBa6gjtRVJccngf8DJb5K7FP9LgXFdrMRoZzMg>
-    <xme:XWKgZ45WfcV2r7Opo-ZZ3flOx2aIFgOYkIvmg2LHeRynlb4A5gVGxIw3EZM10nVHS
-    jVGbasBa6Bz1SLbLA>
-X-ME-Received: <xmr:XWKgZ6fGaZglU2YlSaSsoIE1LL6M1Ddtb8mpNH8DHpKXuOAphvldHoaXSchSuZ6sEuCo1yF69ASMEIWcqLI0NUBGmhusRYvqT6hCgnhnT_pxzg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieekiecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738565163; x=1738651563; bh=Nzr85n8wZcVwujY1opU3eiaeUcC4VAPycet
+	9YOblqVo=; b=Gv+Ztkhs7WFcNhYP7a/45u6rs/7MlpJCMv1CNMW+whFglHHIW4r
+	UyLD3MKwHpxAJDubyOFakJ9zGwx0sLTpaEG77XnBKyL4eAegR9d2iNSWUykyKHR1
+	uku4qbYraiJ0nvEO4W9Ab9gBNrkRylZZjAeNErMJQnKUwp+1e+zKCRnz/iOXHp3k
+	DFEaEkASkNhHoA1i96UsuJggr9B/ONvHZHczFGYoAZ/0C84bqFUmXvDXB3K4DMkp
+	YxTwLlnv59d1vXdQ12DegEfi7dtgh9BzvgsPxrByN86WRRov8DqyvxiX5YGttb7L
+	ct5mpqCfR/ul8O8JNBWcy92+xORDo8S2h0w==
+X-ME-Sender: <xms:K2agZ_XDnR5gPc669YghVexyw2PT2OgfEON8QaC8xa6KNwPTOCd4og>
+    <xme:K2agZ3mpDCu5p2z4JAkf-SUR7SZSGELb324BFpJd5P5s2u7Bp9nEu2Ygbyt5vH6c9
+    XVA9VWiwwsQ89uSKg>
+X-ME-Received: <xmr:K2agZ7Y2k9UG32PgTuFi_bJfVHBjliDyUvvQJ8OwG6nU41Jx-Gd9LfckNCHeba42x9GaUR6zGCKrxh1Swfds7pdHqF2vg1E84JtjJ2yABp5UIQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieeklecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
-    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
-    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtoh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopeiihhhihihouh
-    drjhigsegrlhhisggrsggrqdhinhgtrdgtohhm
-X-ME-Proxy: <xmx:XWKgZ0ILWyZi9VmWkKC52rxRsqNXsXlfSUwl5wnWCEPKt-hbwc28kQ>
-    <xmx:XWKgZ3Lb_Pl9fKaEh4oCSdoIIh2FWnqKxlqB05pj4Fr-BCprrLolIg>
-    <xmx:XWKgZ9x30EdCZhKQA901fzKS6mmpfHu4BIm4e2HnaFpCkAa9GFrVJQ>
-    <xmx:XWKgZzJC4JiAoCFn21oPEWZhK7WPdZ_0P43E9DuxOTRr9dqmxL3H8A>
-    <xmx:XWKgZ0ElMfLB3EEO0rjn1eWNl2agSaGo34ilAL86L5vMB314si1WoMkL>
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehmrghtthhrleegsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehmvggvthhs
+    ohhniheftddujeesghhmrghilhdrtghomhdprhgtphhtthhopehlihhurdguvghnthhonh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehjrggtohgsrdhkvghllhgvrhesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepshhhuhgshhgrmhdrkhgr
+    nhhoughirgdutdesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:K2agZ6U7gbsC0n9oQjlax_khoMDQ5ytx4pEh8FggSsqY_m9tki14iA>
+    <xmx:K2agZ5ln_D-oq2iCVS9oyB7ynWs0cZHLA8RWYorU5p8fehi6-NfIYA>
+    <xmx:K2agZ3cufrOuc-MU-BdVtpS0XRHdagTE7n5W8Abw5kGQWULa6WqlDg>
+    <xmx:K2agZzFEykQ7QXqNIlTah44F0CjJotMySIUdiQtzAJffFCSy_cT5Og>
+    <xmx:K2agZ7449aJ_k4V_U5WSA7I0PARacxQHmafW_eOSv0W-Yjj82t6j_T6e>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 01:29:48 -0500 (EST)
+ 3 Feb 2025 01:46:01 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9455b33c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Feb 2025 06:29:48 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d5e68a74 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Feb 2025 06:46:01 +0000 (UTC)
+Date: Mon, 3 Feb 2025 07:46:00 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 03 Feb 2025 07:29:37 +0100
-Subject: [PATCH v5 7/8] t5543: atomic push reports exit code failure
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org, shubham.kanodia10@gmail.com,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthew Rogers <mattr94@gmail.com>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Jacob Keller <jacob.keller@gmail.com>,
+	Denton Liu <liu.denton@gmail.com>
+Subject: Re: [PATCH v3 3/5] refactor(remote): rename query_refspecs functions
+Message-ID: <Z6BmKO-034bqOCjS@pks.im>
+References: <20250127103644.36627-1-meetsoni3017@gmail.com>
+ <20250201064202.76116-1-meetsoni3017@gmail.com>
+ <20250201064202.76116-4-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250203-pks-push-atomic-respect-exit-code-v5-7-d66481e36622@pks.im>
-References: <20250203-pks-push-atomic-respect-exit-code-v5-0-d66481e36622@pks.im>
-In-Reply-To: <20250203-pks-push-atomic-respect-exit-code-v5-0-d66481e36622@pks.im>
-To: git@vger.kernel.org
-Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>, 
- Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250201064202.76116-4-meetsoni3017@gmail.com>
 
-Add new test cases in t5543 to avoid ignoring the exit code of
-git-receive-pack(1) during atomic push with "--porcelain" flag.
+On Sat, Feb 01, 2025 at 12:12:00PM +0530, Meet Soni wrote:
+> Rename `query_refspecs()` to `find_refspec_match` for clarity, as it
+> finds a single matching refspec.
+> 
+> Rename `query_refspecs_multiple()` to `find_all_refspec_matches` to
+> better reflect that it collects all matching refspecs instead of
+> returning just the first match.
+> 
+> Rename `query_matches_negative_refspec()` to
+> `find_negative_refspec_match` for consistency with the updated naming
+> convention.
 
-We'd typically notice this case because the refs would have their error
-message set. But there is an edge case when pushing refs succeeds, but
-git-receive-pack(1) exits with a non-zero exit code at a later point in
-time due to another error. An atomic git-push(1) would ignore that error
-code, and consequently it would return successfully and not print any
-error message at all.
+Okay. The message might've read a tiny bit easier if it was a bulleted
+list of renames. E.g.:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- t/t5543-atomic-push.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+    We're about to move a couple of functions related to handling of
+    refspecs from "remote.c" into "refspec.c". In preparation for this
+    move, rename them to better reflect their intent:
 
-diff --git a/t/t5543-atomic-push.sh b/t/t5543-atomic-push.sh
-index 04b47ad84a..32181b9afb 100755
---- a/t/t5543-atomic-push.sh
-+++ b/t/t5543-atomic-push.sh
-@@ -280,4 +280,34 @@ test_expect_success 'atomic push reports (reject by non-ff)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_failure 'atomic push reports exit code failure' '
-+	write_script receive-pack-wrapper <<-\EOF &&
-+	git-receive-pack "$@"
-+	exit 1
-+	EOF
-+	test_must_fail git -C workbench push --atomic \
-+		--receive-pack="${SQ}$(pwd)${SQ}/receive-pack-wrapper" \
-+		up HEAD:refs/heads/no-conflict 2>err &&
-+	cat >expect <<-EOF &&
-+	To ../upstream
-+	 * [new branch]      HEAD -> no-conflict
-+	error: failed to push some refs to ${SQ}../upstream${SQ}
-+	EOF
-+	test_cmp expect err
-+'
-+
-+test_expect_failure 'atomic push reports exit code failure with porcelain' '
-+	write_script receive-pack-wrapper <<-\EOF &&
-+	git-receive-pack "$@"
-+	exit 1
-+	EOF
-+	test_must_fail git -C workbench push --atomic --porcelain \
-+		--receive-pack="${SQ}$(pwd)${SQ}/receive-pack-wrapper" \
-+		up HEAD:refs/heads/no-conflict-porcelain 2>err &&
-+	cat >expect <<-EOF &&
-+	error: failed to push some refs to ${SQ}../upstream${SQ}
-+	EOF
-+	test_cmp expect err
-+'
-+
- test_done
+      - `query_refspecs()` becomes `find_refspec_match()` for clarity,
+        as it finds a single matching refspec.
 
--- 
-2.48.1.502.g6dc24dfdaf.dirty
+    ...
 
+I was wondering a bit about why we rename the static functions, as we
+wouldn't have to expose them in a subsequent step anyway. Other than
+that I think we should adhere to our coding guidelines with the renamed
+public functions:
+
+    The primary data structure that a subsystem 'S' deals with is called
+    `struct S`. Functions that operate on `struct S` are named
+    `S_<verb>()` and should generally receive a pointer to `struct S` as
+    first parameter. E.g.
+
+So:
+
+  - `query_refspecs()` would be renamed to `refspec_find_match()`.
+
+  - `query_refspecs_multiple()` would be renamed to
+    `refspec_find_all_matches()`.
+
+  - `find_negative_refspec_match()` would be renamed to
+    `refspec_find_negative_match()`.
+
+Patrick
