@@ -1,68 +1,69 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8CF20C46A
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 17:11:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02CF20E010
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 17:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738602677; cv=none; b=alObb8jdevByHZosQ+mQfjrdFNLrAxhmD9lV40wqXLgP5q1jc779wN5+W0UUVEglxY/Wja/D5+WyP8PewD00ItVPvlsWe9dOr2JDGKiIR2dm5CkPb7By4keQWsPEom4YZ6A4hy1Pum0uQJ/FMV2CszV6ecPP7uFXacuavTXypf8=
+	t=1738602679; cv=none; b=XcTzDVq/hLKGlf0vyO/7f0W/ertzapInIryld00E6xMUcyFwykXTHZLKSBg4pnP2wBQPr8K1MocZMyQWPelt9TaTG3mhVRzXoVOMPd4dgD2m1AhDbYUlhtmbBIabL0rbvp+GfOpDTQljeWwyF0C2lbZWStIXd8UfSkWXBecYn/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738602677; c=relaxed/simple;
-	bh=pQ5cC/MIwIkqzfPR53W2C8+S8l8I7Vh2oWFz0IavHfc=;
+	s=arc-20240116; t=1738602679; c=relaxed/simple;
+	bh=sK5r3geJ32RRKyiwX6IU/j98CfcS15SplYsApNVP6jM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=fY0k8Nod17ZjEJojPG3xXdraXaaSTn/oMx/A5IYcDCxuRwnks0LQqKx/F2006oJPEDReIrhRoBssb699QIOJ/yGKiQT8KANAgrU32L4lAsbgqivCqavWcI67Q4X2LiFUX1YGFfBXqvAsYMOC4YTzbQZthtdRQu4UeO29THLki1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JfV2zE94; arc=none smtp.client-ip=209.85.208.44
+	 MIME-Version:To:Cc; b=pY8AJ7rR8HSoZhLahXAuLuqaIFIqfSVyRNED7oCZm6lbp2p+aolpyMhWgs9tuxcHufbIgn090zKuo4UNa7A1NJhLGCdMZYLqUIWugUJFzoP4u0/qgdfBSmGmt6KFwV0mJsU+R0fHp6gmqUBai7rVxFACLeNcJRzBWu8m9Ksu7hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VSidotxP; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JfV2zE94"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5d3f57582a2so11265351a12.1
-        for <git@vger.kernel.org>; Mon, 03 Feb 2025 09:11:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VSidotxP"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-aafc9d75f8bso932466566b.2
+        for <git@vger.kernel.org>; Mon, 03 Feb 2025 09:11:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738602672; x=1739207472; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738602675; x=1739207475; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dwmLMOg6kqF/7d4afWMf0LV6sb7oQoooYIjw5ZWsJPA=;
-        b=JfV2zE94LfNSu28ramzvq5jcGiWAEugzQHssC32L62e029Jj3qGorfyKyMZSNqChER
-         nLmhfieTRA1jnGDSfWy6QtlFZn+l8Xc4Q+IsmkLywFv3cqMfweONGVXiSDXS9XIYpVet
-         2xtry7lW+88VKC/n0Mr551IxCHtOAu2ReIubmaN8bISfwksToWB7G20GpdWhLSPwlETe
-         z8P8z2ccaF0hiDbNDXbL80ZHrPqT+/nM9FxHqYNKG0mVP82wj23zA0QRpeH6exn6BQFN
-         FjKjc/zY03pQU7qduULmTQ8mSpO3DodJgktWPIjDb8RyCTCUNfTbXnzTkbdoA+Df6Lp3
-         C1Lw==
+        bh=bCSRk67UWubQZv8ZkD5P0kmmXo+HTrEOf0+xdgcudkc=;
+        b=VSidotxPSaanHgeVWFa3OXPWODSNhmasbYlfTfw0lmqkWyu6SjidawiGVu+M8YlI8x
+         J3eZ6KDcnnkMJMOKeiiZpOjPy6VFq74ANOKt9AEj8LL/1z4ZyxXbML0iSwAImcljH+CF
+         9WR47fwT7ffUkOXgqLNofYAu9CowSr2c/LLC17eia7rWvK/nn8ZJIICk2gN3jB/pXHB7
+         Eg3YC+jRYUVWX4a2Ay8ZnZv5qI0aHwXuQ66fcSETTFLOdyj355eXE8v0RwwTmNwEo7WZ
+         4RcJ8OvBK/dn+9lUAmqktz1AQ+H11xAz99+/ADRRFW2NP8tf2shJOZtW8PoFtQDxrLiL
+         4DgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738602672; x=1739207472;
+        d=1e100.net; s=20230601; t=1738602675; x=1739207475;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dwmLMOg6kqF/7d4afWMf0LV6sb7oQoooYIjw5ZWsJPA=;
-        b=KyNqswxU5ntwHtBKauNH0QoBA69VuvXJzovcrFRmyucgQJGeJg9QkQgOPN2SRBdHic
-         VKj8iB5XJfn/uKeOkPF+lWytwd8Wdc0AGl/bWzjuRBJZMrjfKvg7fZ1Rpw7BkYZfjHqg
-         rfCG2r2gvUC/ik+GGshFGFF4r+qBP5bq29dMb3bpnNEV1rZ9o0vjqTB70LTZmYrtfIyg
-         zRQomwQZlmycP4EnE8djV9KwONgfRVccUIWZa4YM1uSOvKuw1gBOoTPQwr6Qz8NwEqqX
-         FlTbaBtxllMJWlPa4v3LtL1dGVqdfqA7OkTd8FRZoFjtMsSsUcYofePulMzloI9j/gES
-         w7gA==
-X-Gm-Message-State: AOJu0Yx8YvZchr0BC0G76gJ1oJHH+YvbAjFl5eNrG9YZr+rwKrJmS5cO
-	e+BqhCsaBajMiWeF1pYRWTcMnMewXQu6QCKsa4OLI7vH6pSjB2QC5i1MZw==
-X-Gm-Gg: ASbGncvKqtbr4Y19PqKJLDcdxyZPkS0pcoFumcBx03pEr3C+bj8dbX2n5QTdL6oOXFd
-	s7Kg0rTXEGHTjPsQqb4aE35Ei5YBiSpelosBats9I38MnW6nd39WN/kCYvkFCkmNBqBC7WORVSp
-	Qt+4vJSQ8j3pD0gkj12ENBQLBHnoSoolcSRsve+gQG66MCEA48lWVn2cGmhIJ3cKY+ASQq/ni1j
-	g5XZzObv5pBaB6x6TtZg0F2i9/ocEvukBr7dY29Yao22yfXLzGH4kKZARVY4XJhcYdBY8xqoj0e
-	+DKxoY7jrny9FGjA
-X-Google-Smtp-Source: AGHT+IEM7fDWf7SBGJ0zmuah+bMC/iFdPvRz3kgE8Go7zfkpexUsE5EYHSJmV+aSWvQ6CKc3xaRAzQ==
-X-Received: by 2002:a05:6402:254e:b0:5d9:6633:8eb1 with SMTP id 4fb4d7f45d1cf-5dcc15d5a63mr28822a12.14.1738602672438;
-        Mon, 03 Feb 2025 09:11:12 -0800 (PST)
+        bh=bCSRk67UWubQZv8ZkD5P0kmmXo+HTrEOf0+xdgcudkc=;
+        b=xAxrggWigJtIiSY7+vjzsbYJSKTJ0wtKEuvlkoGz0tCPmJOzJA4mqIym4jKi/DFvGe
+         b1PPQivfhVNgM9w9xxO4NKP9RQAX5OQEnBeaCHOwoTzbctDUjpjysnbGNu1WSYyGVw5U
+         YNLemSrydSwKtVUMidPG1Eds3oGjera+CXtsO5+jTsjUT7BRa8VWPe4uejKoVPLRjLvt
+         LMALsbniKA6aiRhg7pOm60vf8t2LuaA+M0CpgPlrdPlp8EyEdRG9EHf/kPLjfzoQrDYk
+         Gqx1dnfdJ6h3I5lsLqmz5jAA7RYjJiVzggawtSkVn2lYbqrDUtcqqcSBrbquA+s+LRuF
+         g5lg==
+X-Gm-Message-State: AOJu0YxRTsv241FT6UxqKph+DlLT/imnASL2gYWuYG/DazUn1XODD1rh
+	kle23iiQN8QHG02vusfq8LVE2RwuHDRCXDlqe5nWZLUXlmesJ8X8IL/Tcw==
+X-Gm-Gg: ASbGncumTvhYtnU5LriQXfkUa9/PE4tKU+kBph5zG/IAGc7RUB3wdGZESHgMh5CcK4/
+	Yr5uOiV/Xg0BL3WfQtwMHYNT9p+qCt6IdfOysLjwayQnpXN+M2VTAldyNG1jdXdphYyEs2JkN/w
+	GdTfkKSq5t6hVkG3BVMgccZydqT0OeiCbXureuq4eToV9lz3oqNUGxyhX7Nqvcqi37oPXUXrRiR
+	eiIqjS/+mCoAcvrnrMIEPicqoB2vzLTKHk6d/L/hguxbQjKlbm3a61LAV2c3uYzT0ZpQU8a6ep8
+	EyEF1mTEBtffRj/E
+X-Google-Smtp-Source: AGHT+IERynYy3Q3g9FTP2VFjxEBR00frOPxT8VraYWKQdpPxO8SlDBFaERhMN52rtEbCxPqEUiIFXg==
+X-Received: by 2002:a17:907:9455:b0:ab6:fd25:3c72 with SMTP id a640c23a62f3a-ab6fd253f3amr1926829466b.10.1738602674437;
+        Mon, 03 Feb 2025 09:11:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dc724c93d9sm8047041a12.68.2025.02.03.09.11.11
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab6e47a7fd9sm782252266b.34.2025.02.03.09.11.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 09:11:11 -0800 (PST)
-Message-Id: <b35c2f06b5952ff34ea52766652a3bd3c698f681.1738602667.git.gitgitgadget@gmail.com>
+        Mon, 03 Feb 2025 09:11:14 -0800 (PST)
+Message-Id: <f22cf8b34851a3ba4cd6ab1d31f0835579143c40.1738602667.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1820.v3.git.1738602667.gitgitgadget@gmail.com>
 References: <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
 	<pull.1820.v3.git.1738602667.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 03 Feb 2025 17:11:05 +0000
-Subject: [PATCH v3 3/5] backfill: add --min-batch-size=<n> option
+Date: Mon, 03 Feb 2025 17:11:07 +0000
+Subject: [PATCH v3 5/5] backfill: assume --sparse when sparse-checkout is
+ enabled
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -90,194 +91,99 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Users may want to specify a minimum batch size for their needs. This is only
-a minimum: the path-walk API provides a list of OIDs that correspond to the
-same path, and thus it is optimal to allow delta compression across those
-objects in a single server request.
+The previous change introduced the '--[no-]sparse' option for the 'git
+backfill' command, but did not assume it as enabled by default. However,
+this is likely the behavior that users will most often want to happen.
+Without this default, users with a small sparse-checkout may be confused
+when 'git backfill' downloads every version of every object in the full
+history.
 
-We could consider limiting the request to have a maximum batch size in the
-future. For now, we let the path-walk API batches determine the
-boundaries.
+However, this is left as a separate change so this decision can be reviewed
+independently of the value of the '--[no-]sparse' option.
 
-To get a feeling for the value of specifying the --min-batch-size parameter,
-I tested a number of open source repositories available on GitHub. The
-procedure was generally:
-
- 1. git clone --filter=blob:none <url>
- 2. git backfill
-
-Checking the number of packfiles and the size of the .git/objects/pack
-directory helps to identify the effects of different batch sizes.
-
-For the Git repository, we get these results:
-
-| Batch Size      | Pack Count | Pack Size | Time  |
-|-----------------|------------|-----------|-------|
-| (Initial clone) | 2          | 119 MB    |       |
-| 25K             | 8          | 290 MB    | 24s   |
-| 50K             | 5          | 290 MB    | 24s   |
-| 100K            | 4          | 290 MB    | 29s   |
-
-Other than the packfile counts decreasing as we need fewer batches, the
-size and time required is not changing much for this small example.
-
-For the nodejs/node repository, we see these results:
-
-| Batch Size      | Pack Count | Pack Size | Time   |
-|-----------------|------------|-----------|--------|
-| (Initial clone) | 2          | 330 MB    |        |
-| 25K             | 19         | 1,222 MB  | 1m 22s |
-| 50K             | 11         | 1,221 MB  | 1m 24s |
-| 100K            | 7          | 1,223 MB  | 1m 40s |
-| 250K            | 4          | 1,224 MB  | 2m 23s |
-| 500K            | 3          | 1,216 MB  | 4m 38s |
-
-Here, we don't have much difference in the size of the repo, though the
-500K batch size results in a few MB gained. That comes at a cost of a
-much longer time. This extra time is due to server-side delta
-compression happening as the on-disk deltas don't appear to be reusable
-all the time. But for smaller batch sizes, the server is able to find
-reasonable deltas partly because we are asking for objects that appear
-in the same region of the directory tree and include all versions of a
-file at a specific path.
-
-To contrast this example, I tested the microsoft/fluentui repo, which
-has been known to have inefficient packing due to name hash collisions.
-These results are found before GitHub had the opportunity to repack the
-server with more advanced name hash versions:
-
-| Batch Size      | Pack Count | Pack Size | Time   |
-|-----------------|------------|-----------|--------|
-| (Initial clone) | 2          | 105 MB    |        |
-| 5K              | 53         | 348 MB    | 2m 26s |
-| 10K             | 28         | 365 MB    | 2m 22s |
-| 15K             | 19         | 407 MB    | 2m 21s |
-| 20K             | 15         | 393 MB    | 2m 28s |
-| 25K             | 13         | 417 MB    | 2m 06s |
-| 50K             | 8          | 509 MB    | 1m 34s |
-| 100K            | 5          | 535 MB    | 1m 56s |
-| 250K            | 4          | 698 MB    | 1m 33s |
-| 500K            | 3          | 696 MB    | 1m 42s |
-
-Here, a larger variety of batch sizes were chosen because of the great
-variation in results. By asking the server to download small batches
-corresponding to fewer paths at a time, the server is able to provide
-better compression for these batches than it would for a regular clone.
-A typical full clone for this repository would require 738 MB.
-
-This example justifies the choice to batch requests by path name,
-leading to improved communication with a server that is not optimally
-packed.
-
-Finally, the same experiment for the Linux repository had these results:
-
-| Batch Size      | Pack Count | Pack Size | Time    |
-|-----------------|------------|-----------|---------|
-| (Initial clone) | 2          | 2,153 MB  |         |
-| 25K             | 63         | 6,380 MB  | 14m 08s |
-| 50K             | 58         | 6,126 MB  | 15m 11s |
-| 100K            | 30         | 6,135 MB  | 18m 11s |
-| 250K            | 14         | 6,146 MB  | 18m 22s |
-| 500K            | 8          | 6,143 MB  | 33m 29s |
-
-Even in this example, where the default name hash algorithm leads to
-decent compression of the Linux kernel repository, there is value for
-selecting a smaller batch size, to a limit. The 25K batch size has the
-fastest time, but uses 250 MB more than the 50K batch size. The 500K
-batch size took much more time due to server compression time and thus
-we should avoid large batch sizes like this.
-
-Based on these experiments, a batch size of 50,000 was chosen as the
-default value.
+Add a test of adding the '--sparse' option to a repo without sparse-checkout
+to make it clear that supplying it without a sparse-checkout is an error.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-backfill.txt | 12 +++++++++++-
- builtin/backfill.c             |  4 +++-
- t/t5620-backfill.sh            | 18 ++++++++++++++++++
- 3 files changed, 32 insertions(+), 2 deletions(-)
+ Documentation/git-backfill.txt |  3 ++-
+ builtin/backfill.c             |  7 +++++++
+ t/t5620-backfill.sh            | 13 ++++++++++++-
+ 3 files changed, 21 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-backfill.txt b/Documentation/git-backfill.txt
-index 56cbb9ffd82..136a1f1d294 100644
+index a28678983e3..95623051f78 100644
 --- a/Documentation/git-backfill.txt
 +++ b/Documentation/git-backfill.txt
-@@ -9,7 +9,7 @@ git-backfill - Download missing objects in a partial clone
- SYNOPSIS
- --------
- [synopsis]
--git backfill [<options>]
-+git backfill [--min-batch-size=<n>]
+@@ -59,7 +59,8 @@ OPTIONS
  
- DESCRIPTION
- -----------
-@@ -47,6 +47,16 @@ commit. This set can be restricted or expanded using various options.
+ `--[no-]sparse`::
+ 	Only download objects if they appear at a path that matches the
+-	current sparse-checkout.
++	current sparse-checkout. If the sparse-checkout feature is enabled,
++	then `--sparse` is assumed and can be disabled with `--no-sparse`.
  
- THIS COMMAND IS EXPERIMENTAL. ITS BEHAVIOR MAY CHANGE IN THE FUTURE.
- 
-+
-+OPTIONS
-+-------
-+
-+`--min-batch-size=<n>`::
-+	Specify a minimum size for a batch of missing objects to request
-+	from the server. This size may be exceeded by the last set of
-+	blobs seen at a given path. The default minimum batch size is
-+	50,000.
-+
  SEE ALSO
  --------
- linkgit:git-clone[1].
 diff --git a/builtin/backfill.c b/builtin/backfill.c
-index 0eca175a7fe..cfebee6e17b 100644
+index d7b997fd6f7..d7ee84692f3 100644
 --- a/builtin/backfill.c
 +++ b/builtin/backfill.c
-@@ -21,7 +21,7 @@
- #include "path-walk.h"
+@@ -1,3 +1,6 @@
++/* We need this macro to access core_apply_sparse_checkout */
++#define USE_THE_REPOSITORY_VARIABLE
++
+ #include "builtin.h"
+ #include "git-compat-util.h"
+ #include "config.h"
+@@ -5,6 +8,7 @@
+ #include "repository.h"
+ #include "commit.h"
+ #include "dir.h"
++#include "environment.h"
+ #include "hex.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+@@ -133,6 +137,9 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
  
- static const char * const builtin_backfill_usage[] = {
--	N_("git backfill [<options>]"),
-+	N_("git backfill [--min-batch-size=<n>]"),
- 	NULL
- };
+ 	repo_config(repo, git_default_config, NULL);
  
-@@ -108,6 +108,8 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
- 		.min_batch_size = 50000,
- 	};
- 	struct option options[] = {
-+		OPT_INTEGER(0, "min-batch-size", &ctx.min_batch_size,
-+			    N_("Minimum number of objects to request at a time")),
- 		OPT_END(),
- 	};
- 
++	if (ctx.sparse < 0)
++		ctx.sparse = core_apply_sparse_checkout;
++
+ 	result = do_backfill(&ctx);
+ 	backfill_context_clear(&ctx);
+ 	return result;
 diff --git a/t/t5620-backfill.sh b/t/t5620-backfill.sh
-index 64326362d80..36107a51c54 100755
+index 6b72e9d0e31..58c81556e72 100755
 --- a/t/t5620-backfill.sh
 +++ b/t/t5620-backfill.sh
-@@ -59,6 +59,24 @@ test_expect_success 'do partial clone 1, backfill gets all objects' '
+@@ -77,6 +77,12 @@ test_expect_success 'do partial clone 2, backfill min batch size' '
  	test_line_count = 0 revs2
  '
  
-+test_expect_success 'do partial clone 2, backfill min batch size' '
-+	git clone --no-checkout --filter=blob:none	\
-+		--single-branch --branch=main 		\
-+		"file://$(pwd)/srv.bare" backfill2 &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/batch-trace" git \
-+		-C backfill2 backfill --min-batch-size=20 &&
-+
-+	# Batches were used
-+	test_trace2_data promisor fetch_count 20 <batch-trace >matches &&
-+	test_line_count = 2 matches &&
-+	test_trace2_data promisor fetch_count 8 <batch-trace &&
-+
-+	# No more missing objects!
-+	git -C backfill2 rev-list --quiet --objects --missing=print HEAD >revs2 &&
-+	test_line_count = 0 revs2
++test_expect_success 'backfill --sparse without sparse-checkout fails' '
++	git init not-sparse &&
++	test_must_fail git -C not-sparse backfill --sparse 2>err &&
++	grep "problem loading sparse-checkout" err
 +'
 +
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
+ test_expect_success 'backfill --sparse' '
+ 	git clone --sparse --filter=blob:none		\
+ 		--single-branch --branch=main 		\
+@@ -105,7 +111,12 @@ test_expect_success 'backfill --sparse' '
+ 	test_trace2_data promisor fetch_count 8 <sparse-trace2 &&
+ 	test_trace2_data path-walk paths 15 <sparse-trace2 &&
+ 	git -C backfill3 rev-list --quiet --objects --missing=print HEAD >missing &&
+-	test_line_count = 24 missing
++	test_line_count = 24 missing &&
++
++	# Disabling the --sparse option (on by default) will download everything
++	git -C backfill3 backfill --no-sparse &&
++	git -C backfill3 rev-list --quiet --objects --missing=print HEAD >missing &&
++	test_line_count = 0 missing
+ '
  
+ test_expect_success 'backfill --sparse without cone mode (positive)' '
 -- 
 gitgitgadget
-
