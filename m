@@ -1,82 +1,84 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4063917993
-	for <git@vger.kernel.org>; Sun,  2 Feb 2025 23:43:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670CE1367
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 00:04:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738539835; cv=none; b=e7PAW4QQHImWZ0Ymz+xZ7qazwQL3N2CFra768WtLyinOTG/xzvGf7uV0/FfIcD5qopCssxNdD8Dll8yPkPzC+GTnqm3U9bipfqYawLIIKJ2eKd+CrVbCPcUEtPfsJjbUNtprhfWLcBGS1Liwc8fXmfNYxdDy3BG5VXVFIALLGVM=
+	t=1738541076; cv=none; b=igKvJQh46vyv6QSSs3ExxBU4RIu5w3Xq67T2YPSA5br+bRgkd1OKyirTXtrAh/7uiBNWrVw80j27ZOhs2MPq+MOL/aZbhyjPr//C6f2eZBzxcic62APbmsyFael0Mb27G9w9l/eMiCY6eOXaK72XVA0ctl8vUkLYALPEK47F7Gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738539835; c=relaxed/simple;
-	bh=gKaZ71ztcY/Nm2qoLbHiqkFj4s5WFz6GjAhhV1lUfJ4=;
+	s=arc-20240116; t=1738541076; c=relaxed/simple;
+	bh=Ct8/GTTYRyCLUqTd4xCD99BO6WFMZ7qitWzOZC+Cn+A=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aAkUfj3e7Li0SDuHxkCrBKIlr4n3cF9xqYW2awCttUFvIsqwEndvMhbOSgn1dfA5fiN6/4v/1uDhCLs510ROsc0SmhM2QCDK4SHZ52ax1v+3xLcBtXuznOxafo4kahcxP9ECJOaUhoVQG0SepsBr3VVogilK6oFhk6bz2upjZHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NHWwqRir; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f1yj7hDS; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=AnQHir2htHfCbumC5BLGUlDBaWev6WYtzrO/jCrAhiiGJQaYe2X3aiUAicenw4deO9YbnSD/BShhmvbEsZm3Bw5+K95SWH+nBPj2IpkZrZ8mBaGnDZIqyO/EA83I3ZYZit9xy1N3b7m+RDlKlXOtTeN2yU45t5Xjf09TVqL9V2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C0Y48nI6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bVndxqRu; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NHWwqRir";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f1yj7hDS"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 24B7D11400D4;
-	Sun,  2 Feb 2025 18:43:52 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Sun, 02 Feb 2025 18:43:52 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C0Y48nI6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bVndxqRu"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4685525400A4;
+	Sun,  2 Feb 2025 19:04:33 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sun, 02 Feb 2025 19:04:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738539831; x=1738626231; bh=Uu6PZobjk1
-	Ugb9JVm+SYmEcnSmlBPEikbOyoyZX4aas=; b=NHWwqRirOzKTLZujKwpAqfzYLl
-	XI5GLsOdOi/eql6KYup0lZPunTM0HHur9RUtE5TaTXEpvoLfJt7kYVLu7wG+OWyc
-	lSlqaciXqpQay4GIVQyhjnWWHSA+JkcqMmdQ3/5SKbY81GZE+3ke4jsdpGw0zBDA
-	UIXfazlsMmX+TtbwCzyzBFz/gBAHb2C7ASLs+AB+0vsl5G/w0re8lU8BipHce+5v
-	QGBfvT+qAAMWvREg7AQOVCoucLq5sZ/aLjpYyffDL40hRA0BSITU+bfJD9iynzfX
-	Vdzs30VmMzGBxr+kWm/pdbFC5pjLK/8nIP2jVPi4I4a1udeh9P5b1vY4WE3Q==
+	:subject:to:to; s=fm2; t=1738541073; x=1738627473; bh=3MgQWuVlmd
+	nqlKFd3p/PZug1NeyOTsGCRzvVwsIiRwk=; b=C0Y48nI6A/m+oTbYp+O68+WQki
+	71uDDLcnKGU7v5bihliyQd3wfd0oYEOawis+3ke5f0x8p3WuNGmwH0B2tL2P/rYm
+	nVqb/kbD/dZnA85+8kO+nSf/cbnkvAjpMTrTOfoMJcV5Q/l24lNnbFk/2m0kHrl6
+	XMKnqBJj1CWObUvh6cRYLEawNveDL/yQ6DNOvM4//8iaCcjCDWltK2wK0392BUPp
+	bS3IR9favwD9xjyRtPoB7pwRhSQjx+Rc6Bj1TjU7O5ZqeZvAcALE97b5CQUhwme9
+	yLYcPkyTJ+1WBsCHfzYczkODdKsRc6lV2vXFlQPbJuD6MfWsD6T8A12vwZsw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738539831; x=1738626231; bh=Uu6PZobjk1Ugb9JVm+SYmEcnSmlBPEikbOy
-	oyZX4aas=; b=f1yj7hDSx83tQb/LBAQQ0cmPRUBd4wpAERS2ycpsXuSmqxeZlyQ
-	4jHLorU5q5h1zGqhOwnm26vrvgFEopxelrR3h/Tvh61tpP7Z/HvVERjQJT+wC7kz
-	cb8KWnuy0IMlPhdK97a5uQ60oHpLT6F6rHCnn76XH2A/RWZNsFXN4SEBd7g7iONz
-	RzfQsvTlGATmrM7K5ZRuExMdPmpEuH3Vqr1vCxxCJoqVAO4amdLFtO9UPWyiqm6W
-	XlKYawQSy3MdQ2pI0z7t+0xxuJ9taUp483aI6eTPce8w6TW5+5ZwdSkEZ+sN45FM
-	H+FKYFCeL9hV/69VqOqneYvZU0aX12uP0hw==
-X-ME-Sender: <xms:NwOgZ0yfmSLqmllzzwAd6WTyOjfzPUR_So9QR6QZkTOEERZVYFvyHA>
-    <xme:NwOgZ4Q3jcqdSJjIp4tftBOSXJGVvb5QFPcFnE-TwdV9JDCXJx9XJMhJkm2S45Zdf
-    _MLKAX0frTiFMOt3w>
-X-ME-Received: <xmr:NwOgZ2WTEbtfYyS91v5cwvljfpJ2i-3NfIwS74efK-bn8orEepCPjlyjt7-y4eAlTZnxIVHecHCDFzDDgYAotyi28rQwG-3GElqY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedthecutefuodetggdotefrod
+	1738541073; x=1738627473; bh=3MgQWuVlmdnqlKFd3p/PZug1NeyOTsGCRzv
+	VwsIiRwk=; b=bVndxqRuDqU1NFC1LnWKPWYgrK62Fiu0xb09BQd+Gu87ikUohYI
+	sJuPdZzlEIeJ9JUsz2lg590+8sudM1amPLN9eieemmsYxrRyZaQRUlPV9aWROgL5
+	YNPLP0pIRCWuhDAgqJBy7fKV6LN48ayQiuPV19efG7rsyrwu2HceCJtADPG6iolt
+	Q0ZchcZ6CPLnTktrFiJSIq5TBJGkjQ2h7nKGiluJ/8v/TDVcRi1ylGgg6CeoY5ZW
+	Fmqj8ZWtziQzCPSm7bOT9CrPA530HJmMzlBZrOl00SLg74idc22bpgtvP3w+e+SM
+	QY8fwVjelMuFnZwGEkbGaucU2a7+dLKGG8w==
+X-ME-Sender: <xms:EAigZ9P-ShRis3qt6slLnJQADz6yaDp7vP9GCEw3qrYhczXqRY-GKQ>
+    <xme:EAigZ_8tWjGOH71gZKfsmp0F6Gz_JIVuYyQTuuw2e8Yy8M1uUBA7BFfKi_bx0AvkF
+    PNbgV1LemoFsd1POA>
+X-ME-Received: <xmr:EAigZ8QHLYlHJd3yMV8lUPxbsbe9vta5CxKM8zdFuiJ6fyuQ2Z8DNRLuOfSsQ2SHjRttLDfin6NdPI9NOQ6l88P1e_nXk1M-xR7F>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduiedtlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtreej
     necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpefgteehueekjeekffehudfhgfelgfdvvefh
+    leeludduudffjeejgfetledtieeuieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrmhgthheliedthe
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheptghhrghkrhgrvhgrrhhtthihrghmsggrrhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:NwOgZyjs5yzrydwKDyxOND5SB1pjU37FkOO2gxjRRkuKTc2VCEHUpA>
-    <xmx:NwOgZ2BBDx767LpTiqN9fi0I2LYveCd9LcKPPXC87Ke2Uh8lvu9UBQ>
-    <xmx:NwOgZzKyoYZ-EqSUV5ou5KtenhTQW6oChncMSqH3uEBcrixqQ1rgGQ>
-    <xmx:NwOgZ9Bcp63G1ziPimE97paCeCWME3oQFTkrsNPHVe8hpGnGNPXIzA>
-    <xmx:NwOgZ5-1OUT-cxgssnSgKbw3u0hJ-cL1Q3vrQLxO0WOeRD4-dEskqcO0>
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvg
+    esshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoheprgihuhdrtghhrghnuggvkhgr
+    rhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:EAigZ5vSuULQDXvfyaNVqy2ayp6PfHeQ4dWakpqpKTtwt2pz5Ki_GA>
+    <xmx:EAigZ1eyfSkNOPapKrYw-ynlUX56DQvgfnMo1hV3YLf-F0exC4qelg>
+    <xmx:EAigZ1212fPvKxpwfz0dhEToaRLycaV5uxtG16LQ8DjRVOS-4VFJxg>
+    <xmx:EAigZx9Y_bY6bkIO9hUJJNgJSSi2wLm9XQwTTR5rP1b92RyQPtKacA>
+    <xmx:EQigZ84r0ELbOK05yDvVCZrDG9DKa5KEOBuxzPH4hN1UND9ksoF6IpD2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Feb 2025 18:43:51 -0500 (EST)
+ 2 Feb 2025 19:04:32 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: ambar chakravartty <amch9605@gmail.com>
-Cc: git@vger.kernel.org,  ambar chakravartty <chakravarttyambar@gmail.com>
-Subject: Re: [PATCH 1/1] t5401: prefer test_path_is_* helper function
-In-Reply-To: <20250201071210.30509-1-amch9605@gmail.com> (ambar chakravartty's
-	message of "Sat, 1 Feb 2025 12:42:10 +0530")
-References: <20250201071210.30509-1-amch9605@gmail.com>
-Date: Sun, 02 Feb 2025 15:43:50 -0800
-Message-ID: <xmqqjza73oax.fsf@gitster.g>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: ayu-ch <ayu.chandekar@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] t6423: fix suppression of =?utf-8?Q?Git=E2=80=99s?=
+ exit code in tests
+In-Reply-To: <CAPig+cSBi05Kq1ohxQJ8BwTsis++fAAaVCd8Ep8k=8cLS74jsw@mail.gmail.com>
+	(Eric Sunshine's message of "Sun, 2 Feb 2025 08:35:45 -0500")
+References: <20250202120926.322417-1-ayu.chandekar@gmail.com>
+	<CAPig+cSBi05Kq1ohxQJ8BwTsis++fAAaVCd8Ep8k=8cLS74jsw@mail.gmail.com>
+Date: Sun, 02 Feb 2025 16:04:30 -0800
+Message-ID: <xmqq34gv3nch.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,53 +88,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-ambar chakravartty <amch9605@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> From: ambar chakravartty <chakravarttyambar@gmail.com>
+> I was curious if the project has a preference between `uniq filename`
+> and `uniq <filename`, but apparently we haven't:
 >
->     test -f does not provide a nice error message when we hit test
->     failures, so use test_path_is_file instead
+>     % git grep 'uniq <' -- t | wc -l
+>     2
+>     git grep 'uniq [a-z0-9]' -- t | wc -l
+>     2
 >
-> Signed-off-by: ambar chakravartty <amch9605@gmail.com>
-> ---
-
-Much better.  You do not have to and you should not indent the
-proposed log message, and you want the full-stop (.) at the end of
-the word "instead" at the end of the sentence, but other than that
-this looks very good.
-
-Will queue after tweaking the log message.
-
-Thanks.
-
-
->  t/t5401-update-hooks.sh | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
+> Though there does seem to be a global preference in the project to
+> specify the filename directly to the command rather than redirecting
+> from stdin. For instance:
 >
-> diff --git a/t/t5401-update-hooks.sh b/t/t5401-update-hooks.sh
-> index 723d1e17ec..17a46fd3ba 100755
-> --- a/t/t5401-update-hooks.sh
-> +++ b/t/t5401-update-hooks.sh
-> @@ -64,14 +64,14 @@ test_expect_success 'updated as expected' '
->  '
->  
->  test_expect_success 'hooks ran' '
-> -	test -f victim.git/pre-receive.args &&
-> -	test -f victim.git/pre-receive.stdin &&
-> -	test -f victim.git/update.args &&
-> -	test -f victim.git/update.stdin &&
-> -	test -f victim.git/post-receive.args &&
-> -	test -f victim.git/post-receive.stdin &&
-> -	test -f victim.git/post-update.args &&
-> -	test -f victim.git/post-update.stdin
-> +	test_path_is_file victim.git/pre-receive.args &&
-> +	test_path_is_file victim.git/pre-receive.stdin &&
-> +	test_path_is_file victim.git/update.args &&
-> +	test_path_is_file victim.git/update.stdin &&
-> +	test_path_is_file victim.git/post-receive.args &&
-> +	test_path_is_file victim.git/post-receive.stdin &&
-> +	test_path_is_file victim.git/post-update.args &&
-> +	test_path_is_file victim.git/post-update.stdin
->  '
->  
->  test_expect_success 'pre-receive hook input' '
+>     % git grep 'sort <' -- t | wc -l
+>     54
+>     % git grep 'sort [a-z0-9]' -- t | wc -l
+>     140
+
+Have you inspected the hits from these grep runs?
+
+    $ git grep -c 'sort [a-z0-9]' -- t/t7004-tag.sh
+    t/t7004-tag.sh:17
+
+Among 17 of them, 15 are on test titles.
+
+    $ git grep -c '^test_expect_[sf].*sort [a-z0-9]' -- t/t7004-tag.sh
+    t/t7004-tag.sh:15
+
+So the above numbers are totally unreliable as a guide, I am afraid.
+
+It is probably better to use sort/uniq without input redirection
+because your
+
+    $ sort/uniq input >output
+
+can be easily extended to
+
+    $ sort/uniq input-a input-b input-c >output
+
+but 
+
+    $ sort/uniq <input >output
+
+cannot be extended the same way, and you'd end up doing nonsense
+pipe like this:
+
+    $ cat input-a input-b input-c | sort >output
+
+which is a no-no.
+
+In reality, however, we are not all that logical.
+
+    $ git grep -e '^[ 	]*sort [a-z0-9][-a-z0-9]* ' -- t | wc -l
+    46
+    $ git grep -e '^[ 	]*sort <' -- t | wc -l
+    51
+
+with "s/sort/uniq/", the numbers are 0 vs 1.
+
+There are a handful of sort invocations that take their input from
+redirected <<HEREDOC included in the latter number, but the overall
+picture does not change with them excluded.
+
+
+
