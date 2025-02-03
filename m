@@ -1,87 +1,88 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58872054E8
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 13:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0940205AC3
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 13:51:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738588899; cv=none; b=apS5YN/1lXxXa7JZQpN0iTlliYZh0MHMUbQ6WOU7L65bGa5laV9k9J1XJgVjbYjpVNUEACsgJTsfiuhl2eesW8jR3VVNaYVrGu7r3xHNHPgeNLdHX6x6lGsxi2rk8VP7iQmc1Urf3RfenmCM1drwWMoIOxvJkGDMqKeB8FLkhMQ=
+	t=1738590699; cv=none; b=TOLioTk47LuPYB+tG9TxWTomTicqRsRLSdwlOpID9OzU+XKZigWLKTbPa8wB7BDEgnmvllZYY5Ypcj8SeVa9Lixc6oVmhmyZEmrTFW+G18fQel9lNlBcBW1+kcSUf6Hxr7nNFpWFaQXVM28RkVDmoYu/68wZK5SIHC7/Ag2HWdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738588899; c=relaxed/simple;
-	bh=v4D09zux9Ok1a+c7K+s3aLmRdLnIGR1MAgGAIWzMW8g=;
+	s=arc-20240116; t=1738590699; c=relaxed/simple;
+	bh=ryfaPYW4PCAG7vBGaEGgFi/CIS6UZuxMdFrTq0G0dwU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R7tqEWxz3vUjtiKtUDdEYdhVQ7V3puT0Z38Q2qeqMCkuDYPCchUAdneHtZkTG9eIzHWuI6mVATrgkNi2aOSfj96Zb/etO8XGLqFfw2rSMyigdJCKUmBooLzbGbkJyakmkwshQSWwYvhMPXCJLazucttGgRQjFyLKgI2IoMU0ymY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vyfasWwq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gDv+knPj; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=MJhgEqluUEIGxArDjB7TUH1QRn9o68DKhGhw0MWSoho8Y7G543G3C/6Y8MGHvwTON6HFI8YdP1yTxFTJhJhYf+oE9tgANhnrE0mpWg69tcfMSrTfXdGyfmjEJRYwJ2po9SrfRB+p4Kj3g+CDu6/WL61RfrDkRYHyH/je1ghR/qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vf60ZVoo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HyM8xFZN; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vyfasWwq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gDv+knPj"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id A044B13800EF;
-	Mon,  3 Feb 2025 08:21:35 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vf60ZVoo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HyM8xFZN"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 08B14138016D;
+	Mon,  3 Feb 2025 08:51:36 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Mon, 03 Feb 2025 08:21:35 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 03 Feb 2025 08:51:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738588895; x=1738675295; bh=3ZPhrwce4t
-	nRYx7NyeTGB8H9jX0ymRvPdtszvt0QAmk=; b=vyfasWwqYgrkfr5yW7Y/cqGvor
-	s951NuY2Vr/fqMMzwE4qEWctaOrXOcnnManLTEX6ZxLhEEPiAuIengRgDJysPx14
-	dZcZsX/9tjD8/chkk5smqsIBEEnHrxUfFwmHNNJeLvNjHc5+ERAlR98PeK1QLEsY
-	4uU+69G5yJnm4gq5k73gR4YK+Ouxi/KQwFa758zfQ/lZQFqpO4775V0NqziXvt9S
-	kRatg4NPDSfGkNWJmBBzI8BB5ObOyQMbsByMEApm67+IyV11UuVysEDJ07n7rtgi
-	CF9jRa8kxXrzxGWLX/SGno0Rgad7TbV/p+gUamFU3JmfL+8wPdJWCv2LvQ3Q==
+	:subject:to:to; s=fm2; t=1738590696; x=1738677096; bh=2vRmA0D6Q6
+	p2c/oK8p9UtCyWoXxZ4ZBVHF5fgQFfuhk=; b=vf60ZVooBDz/lWKq9F4gG8Sr7s
+	xF55q1ZKQIudjKznWPBW39qeHRoSw3YDdrKtJ8vppkqrHnX7tuRPOtKx+6KcusiN
+	L/6DrBhdUqPsK7nvnsXfHH8fHUq8icfJ+0Lg62zfRGwekeO/YNNU32vaSxgYAR9V
+	iujowEUe5SZXAJHn5olCJ4N8s8IAEN0CKYKJ5Zrdq/BoQVtKPf5Hn4Ur3ph+j9Ca
+	8AAkcfmf8rEyUh6QzzVqJi+xm5/4E0h5nyjwEjMBWI1Xga/KZ2pWh8gCV6Bf+cf7
+	G2FZzcIjLQxSe0OPIBlwZN+p24tP7DlPv0u76kyRHVVe3cAz1z9qLSCpGVJQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738588895; x=1738675295; bh=3ZPhrwce4tnRYx7NyeTGB8H9jX0ymRvPdts
-	zvt0QAmk=; b=gDv+knPjI3Nkq4tG+MCjwGaT8zAyNHDwae4gepzn0mXfDnfXrFg
-	r92yhpmidsn0cn+QO+tNAU3VmNNZJHEfxp3+ZwOjDbFAtSct8qRVS0ssb4joAE16
-	THcRBeIvf5/j+esfoQZKpw0Dx9rfVf8EfIrqIq2nt0uRetYXrS+adaVkIRkVi1eS
-	YPTJDpwtglMzOFq7Wy+ti/d8Sm+ZzfpxPKItO3387X1w0Ovnz5DybOpk6mdCOUY5
-	V82bRNVo5jWc2yjUxLZI7qvg85IrWCMQUZNKxtBI4wslJcdkRHOP/EBhsE/bPw7c
-	m6hNiEKZqgvUyYJ4esNL6+og/WNaiicOySg==
-X-ME-Sender: <xms:38KgZ1avY4Gm300F1Ff-Av75v4Hx3GelrJdT8U0N_CeSaZlZCkP4Ow>
-    <xme:38KgZ8YHNyYpApoijk3m1K25Qj1OfzOpc2iAZgWw-qW6_JaWcjxylpJmK2pOm_-xW
-    1A8a6Pqt4EpiUffFw>
-X-ME-Received: <xmr:38KgZ3-LUoxh2ZaLmq7zOSo3WxOlUGlbXnw6ng6h8iyNP2jLNMyUKkkSl_mWDZRzXJ8DFeKetjd_RZgXPRZVWeS1aZ1w9SsiIzxl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeejudcutefuodetggdotefrod
+	1738590696; x=1738677096; bh=2vRmA0D6Q6p2c/oK8p9UtCyWoXxZ4ZBVHF5
+	fgQFfuhk=; b=HyM8xFZNrXRQ67WxqEE1aRxiVyyjMmLGhaEbRtDPX1/3aCIFzYo
+	zshbK8NtG7nARRB+pbOeCjnu5S+oVAXnP08hxkvf/R0keqJ9m8jdkC8oE3ULJaxx
+	Qw5Tp46ViolHg9Qn44X+E9efJUGmXjYtHI8Op8k42wlIFrL8EGevLHKYtOTUL4RH
+	9arCmVPkFPAeH+hoSKfwuEZ/dJvgh4vU2NKDFUXUo3jyyQ+LpaKD730l6t/0r3f8
+	WYglpJz2L/TWR4rLC69LgMCfa3XouYHEb9vWRjFnsWj+LS4oypw9Ktt9GRPzmigD
+	O06JKA/3Sm83JtPxXdFFo+hvSIAi3pnhb0Q==
+X-ME-Sender: <xms:58mgZ5fwy7ltRrbkeABSpNqtF7ziZeD_DucFvL6cNdDfpRVOejd6hg>
+    <xme:58mgZ3M2J1v9yHC8a3pm0AC0GAqDGPPaPuIjU37KPEswBKcZmyYP48qesWBTfxJnS
+    QweqxXPR0WUnmrzzw>
+X-ME-Received: <xmr:58mgZyjZAe7Y5tGRAHyANB4HVoWFNbFd1Q_T3EOgVS5-TptA8XiauzsQsAx4lXz2wQtE8T1OuojlSbKERmh4AHmmifr8PSVCWSxW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeejiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepkhgrrghrthhitgdrshhivhgrrhgrrghmsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:38KgZzrrcOi2CcklZnl1S_T-QdR0UuQ6kRDfTTtsP3M63li-tzZD_w>
-    <xmx:38KgZwoIJs0VG2Bqqlnag5QuNnISOwZ5x1usqA_IVULYTRySbS21eQ>
-    <xmx:38KgZ5QEiRp45f-KQs6U5Rz2UXvHW1_UKVZRUe6bNGlxhBfJL8USNA>
-    <xmx:38KgZ4p8gWnshIndZvKjZLpnNX_2ZVCXlPK7jyLgC7UdwoiBf1bxgQ>
-    <xmx:38KgZ1CXA1tmJthqjesjUAJuIh5ctwu8ZfSMOKhzqZ6zWU42iVPvUoMD>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffgffkfggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
+    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepte
+    eijefgieduheffhfetgeeggedtvdefieeiuddvudetkeetgeefteejjefghfejnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:58mgZy_SpiVVsqvwB6in3oz9UawNpkoZbEi-QmbuwJGCulwE2wRdxg>
+    <xmx:58mgZ1t8daqjG9--qC0tl4WNbpW5HLxsaMFFAAGUiHjFJEMdEslpCQ>
+    <xmx:58mgZxFRijD_3Hn7EKdMvGx-y5Mmt79HYvysmuCUugqVIt7KdeRkgQ>
+    <xmx:58mgZ8NbA9wrVu5ELnu6326mDfCCxfV5cOYnNf9IiAGRRtIGw2eH5w>
+    <xmx:6MmgZ9JnS1a1Yp13A3Pmj1mwvWU_hRRD9X5zZvyHMZRq5xgw7XgeuDYW>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 08:21:35 -0500 (EST)
+ 3 Feb 2025 08:51:35 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Christian Couder <christian.couder@gmail.com>,  Kaartic Sivaraam
- <kaartic.sivaraam@gmail.com>,  Git Mailing List <git@vger.kernel.org>
-Subject: Re: Git in GSoC 2025
-In-Reply-To: <Z44u7od-mDiKcKVZ@pks.im> (Patrick Steinhardt's message of "Mon,
-	20 Jan 2025 12:09:34 +0100")
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
-	<CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
-	<Z44u7od-mDiKcKVZ@pks.im>
-Date: Mon, 03 Feb 2025 05:21:33 -0800
-Message-ID: <xmqqtt9byxia.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
+In-Reply-To: <xmqqseov3oic.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
+	02 Feb 2025 15:39:23 -0800")
+References: <xmqqbjvyv510.fsf@gitster.g>
+	<20250123003613.GA3900660@coredump.intra.peff.net>
+	<xmqq5xm6uwip.fsf@gitster.g>
+	<20250131233452.GB3544301@coredump.intra.peff.net>
+	<xmqq1pwi5yt9.fsf@gitster.g>
+	<20250201022946.GA4088801@coredump.intra.peff.net>
+	<xmqqseov3oic.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Mon, 03 Feb 2025 05:51:33 -0800
+Message-ID: <xmqqo6zjyw4a.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,42 +91,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I was wondering whether it might make sense to also move the list of
-> microprojects into the Git project itself, e.g. as something like
-> "Documentation/Projects.txt". This would make it easier for us to update
-> the list of long-running projects whenever a new project is added and
-> makes it easier for people to discover it.
+> Jeff King <peff@peff.net> writes:
+>
+>> But I have a feeling it is just putting the same on
+>> both of us as we see the same CI failures and poke at them
+>> independently.
+>
+> Certainly true.
+>
+>> I dunno. I'll try it for a while and see how it goes.
 
-I am starting to have a second thought on this.
+After seeing a few of your messages that begin with "Coverity
+complains ...", I appreciate them a lot.  Earlier I was naively
+hoping that triage-and-hand-off-to-original-author would be much
+less work but no, we very much need to somehow find a way to push
+the triaging part to individual topic authors or this thing will not
+scale.
 
-Stepping back a bit, if we were to do this, it is very likely that
-I'll let the patches (to add or update entries) sit on the mailing
-list until the discussion beats the horse to death and then apply
-the final version _directly_ on 'master', as such a document is
-really not worth spending our usual "cook in 'next' for a week to
-shake out problems" mode of operation that eats quite a lot of
-braincycles out of the maintainer and to a smaller degree, other
-authors that make overlapping contributions.  And this thing, being
-a single document, is *DESIGNED* to force all authors to make
-overlapping contributions (and an "easy to enter" contributions at
-that) that will cause conflicts.
+Perhaps I can control the rate of topics that trickle into 'jch'
+from 'seen' to keep them a bit more manageable somehow?  
 
-But if we are to have a single document that records a list
-discussion consensus *after* the consensus is reached, it does not
-really have to be _me_ the maintainer to do the record-keeper.  And
-pushing as much busywork as possible out of my plate would be a good
-thing to ensure that the project scales.  Even today, we have a lot
-more folks who generate patches than those who can process patches
-by vetting, polishing, finding problems in, making sure they play
-well with other topics, etc.
+If an iffy topic that begins its life in 'seen' gets rerolled number
+of times while there, but after the final reroll before getting
+merged to 'jch' (because it was marked as "Will merge to 'next'?" or
+better in the What's cooking draft), it never gets rerolled until it
+hits 'next', then your workload would not change compared to the
+days back when you built yours on 'next'.
 
-I wonder if this is better managed as either a separate tree (like
-the 'todo' branch that houses "What's cooking" reports among other
-things) with history disjoint from the main project, or even a
-separate Wiki?
+Of course, the question then becomes "who will vet these topics so
+that they do not need a big reroll before it hits 'jch'?", and we
+are back to square one?
+
+So, I dunno.
 
 Thanks.
-
-
