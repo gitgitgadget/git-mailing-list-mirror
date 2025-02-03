@@ -1,53 +1,53 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB162205AB8
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 08:40:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB3C1FBEB3
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 08:40:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738572034; cv=none; b=SXc/t8FMLL1w/4I/Hy9Cu3hLDp7Nlga47KHAp75J68YkuVhRrFOIIQYJV/wSBKFpdvaNC9PD6UVz374LUCBs+RNgcYwrjJt4HFIZYhWzYn9f5wrogA5fK2d5kUwqLWNOrF84hXRpStonaj8sPF0h/qmw20xKZiQ4URGt+5M6Y4M=
+	t=1738572043; cv=none; b=UzKQUj3iHaZ2wxmt5/q+bd9XdU/8HJXsh0caki1uY2VqWUXx/MUa6FJ/ER3PzMkU7l3RbLP1YEzwzYhsxUfYCjYjrG51d7jPntMQ6Gu1tv6ZxEB8J9p8WeMvi9K2aOBLcOposh6rrWiiQyktpwjLVgsmHqD1YQcqrrBBdr5cuUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738572034; c=relaxed/simple;
-	bh=S6dFwr4RLs6zQeZfoIu/F2VX0SGO/B+F4gnchDCvFiM=;
+	s=arc-20240116; t=1738572043; c=relaxed/simple;
+	bh=4h0ktHCt6txXz4m1y0XdP+R+rvlcGRblVHuoBp5ewDc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oP7ZFYHuR2FkqR6VqQrdg2iHd5XKgLmZQqQDjlSPAAzzHSPBXXBDUObZ+D+ml6pGeD4vaP/Wyvyi/s+RAddMrbtUsrTa/5rkknkK5dYCDApUfRx8CGL9yCDCSJO9rs8a1aqtgecJvik95+Ei/gnRegDCk1i6BcO+Fyl2/bxdsUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C5pGt5Kp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zyGV7zqu; arc=none smtp.client-ip=103.168.172.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=tVhwDJzcSRNHWDgv/O1UdR1YfMBXoyJCMFjVnqVZfTeY/oLsjRatmP7f2fKXDnRKcWswZiRiHSwU41agtW2LS46+cj/zv3uSblkusFGyByG5nuCb8kLQI8EyLQtn4W2zq8X7LBvOkop42LZ/izI1Grih+05vel/gtgSH4ZYans4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=haaqJVLW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vhuc+KOg; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C5pGt5Kp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zyGV7zqu"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0856C138085C;
-	Mon,  3 Feb 2025 03:40:32 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="haaqJVLW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vhuc+KOg"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 584EC1140157;
+	Mon,  3 Feb 2025 03:40:41 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 03 Feb 2025 03:40:32 -0500
+  by phl-compute-04.internal (MEProxy); Mon, 03 Feb 2025 03:40:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738572032; x=1738658432; bh=Dd6ZDq9gya
-	Hhnx45Omey8oD3t3lTW1jpiTkFmuU/wmg=; b=C5pGt5KpA3wg0JNYqrfeyMerKo
-	DIUJ1+TEXQYjMvJeX0ycQ1oh0DOflxaB5DZBniEkwv+uEwafwvmEm/OZ93m6HgHp
-	SU55z0h1080wh0hQRlzjH6lJVPm1++Nmas7k2BCbz33jK0ZekPk9cE/HdJVf9ttx
-	akHtlXHkqLsbYjnPZPaKZq45wFlj3/ztr0LFQbeUwpz6ZJAXn7sYQULfBqFY6Wfq
-	kUHrrlWQcDbnOTGIiRHwnW03zDUwKsUGLjGDd0OwpPDRLvYQNcdyKXuz/o/XXtTK
-	uyDvGiRMsKZbLdms+zWj5qppII27Pkb56W8wsr5Iu2KKdy8Pxqq147lPIG4A==
+	:subject:to:to; s=fm3; t=1738572041; x=1738658441; bh=rQOGZnil2T
+	eYhYY9KNPFDbx3Ndh7/rZOzMxkkzg+wHw=; b=haaqJVLW3krxDWC59m54i4XflR
+	sI04kD9JiT6zBAUm7I2FzBC+7BcQFaRpp/zF+cVR77bxoP9qNJROgwFh+lNcZIAt
+	huR5i2/t+WbBxuSuFye/7YNawvhbkLEOyjCbtnzaX7CVsC8SnhKFrgf876+y9DjJ
+	1b6rRfapXXrMXbnAQ4xlX9Slsz9tBXJb91NnDsmVQalo+ch+QnwUH1koKXpztS9E
+	JlYhzvKy1TGUb0rQuIvbyTjH9sHHwLgz5ZDceq8xYq+lysTS3kl/csEXuiuVh0rF
+	6BEhT4aZ6Nx8EslJsYGdJedcOV0oV62qyvO8uNIg4v1lvKgmW10rbqazC18g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738572032; x=1738658432; bh=Dd6ZDq9gyaHhnx45Omey8oD3t3lTW1jpiTk
-	FmuU/wmg=; b=zyGV7zqu13ep7vjIzvwtWEuiyCZl8RwID9o6pGt4HZN5FFzuup1
-	fDa+0IuOvn7N66I7u/Vk0RmG+9vX9R9q6yWOmSXKdeMLcEiIRZ9ZiTwyYbHmJPZf
-	A0eXiu9idzYrjBAQj16n3hXYudq2r+tlDgt8HXdGvN2KnuRL0+ndVwfmIAk0gEmU
-	Vl+20EqJl5NWYJ8RBTLHAalOnI+4j6LULJ4BKKvKXQPISEJlwPjD+UytYtu7kOcS
-	vpc7U4AnAwFxU+hgaoQWUcSZIn9St6ozeYxmGWD9TrMMIS/WIpuFx/MgIJrYEZ12
-	YLPo5ZCWmmjogs4up/kpg60uDFoV6TD5qFw==
-X-ME-Sender: <xms:_4CgZ8HWjqJjcGIAPr8ssYMMNLlVlWdPdzCZB-slj_dAwewOIRb3Yw>
-    <xme:_4CgZ1XypCvNNuFrz4AM8K-ANNw5JtF9N9Scj9h4iWvD7ZbUi3ctb39LE57mnFSB5
-    -qSvL4R5CFR9-EFzg>
-X-ME-Received: <xmr:_4CgZ2Lkr9parIgjbiOfgCjxivy14OzBIqGX63piHiLvl_lJvjDqVVsZM0TMhklk9SyLUnyzWXAmM5Dog8JLvn0--uzX5WyPyuXIBJE93l9oUQ>
+	1738572041; x=1738658441; bh=rQOGZnil2TeYhYY9KNPFDbx3Ndh7/rZOzMx
+	kkzg+wHw=; b=vhuc+KOgusyrjGir9HVfOcKCxcJpGXkx0mtnF+hHZ5NQc08uISg
+	I4aMM/FWLq12wE9oKOTdPw6Lom7037IznEmB8ltRaHMHssVzBYRCRgo3iGv2ivwS
+	w+QMjqFsUc+r7wygnjR8lXVGwz+j7A9BZPHLUb0uRKIXvggG5gdjaTCKb6xer8OT
+	tOs7G+KQm5SCl6Dj3wwShFg904CqMZFfWgE6bS7SGZExj6Y+adOvZ0++nRAMyI1s
+	mqT1Cvb/upCkKLjH+zTAxNSKBr3UzlvsXbS3I90B1mvu3GXl5naB/G8c44zUJZeP
+	6nyl42ubSAWD9rOn1in0zI3WsF1JP5qz1oA==
+X-ME-Sender: <xms:CYGgZ-Nk0HPLeFgHxuXNW9a9Bdw4q2sBWASrsT0lBOXISgmRu2qebg>
+    <xme:CYGgZ88Cma02_a-j-Pvywu9pyN3nlee4nfqDyG1v9Nb2iFAKzD9hUgl1hWjwl1O_R
+    SOXaqkOg_MEibjeUw>
+X-ME-Received: <xmr:CYGgZ1SE4HKjt9Mvse8byRKS4Mp4xGCuqkCWb3Y2ZHJTStlpEg-doPgLct5c0icpcIsp9zuhlQnMM-z1oukKyPhJqoxXY1stUDQs6Ynjjovsxg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedufecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -56,33 +56,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedufecutefuodetgg
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepmhhhrghgghgvrhesrghluhhmrdhmihhtrdgvughupdhrtghpthhtohepkhgr
-    rhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluh
-    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:_4CgZ-G1T-87BKoRyIQW0IuexHVph3ecNShfi9H7FIk59vQ6koUb2Q>
-    <xmx:_4CgZyVbCIhZhRX8s3ObwB7YDtpm_mnvXxaHTe6bMwCXswIa1bY13Q>
-    <xmx:_4CgZxOpdAoq30t2G7FX3w-VnNzteDd-qWMftVsUbOxIUP11zvOOrg>
-    <xmx:_4CgZ52gtA14WZcAxC2nm1Zp7KAH73nDY2iHfQkbipozSACrqY0YWw>
-    <xmx:AIGgZ0cR2IyD-d4mDyeSsOlYQT5_N-MPk2lVFSvZhgjtbcnVWFwwaM2i>
+    shhmthhpohhuthdprhgtphhtthhopehmhhgrghhgvghrsegrlhhumhdrmhhithdrvgguuh
+    dprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdr
+    tghomh
+X-ME-Proxy: <xmx:CYGgZ-s7z7qxw3X_Was0inQC80jLLdSlkw5NgeEfrWLkXoakSZKyNA>
+    <xmx:CYGgZ2dp-fy45UZYURYw4SNoH7ZfEWglNLy0HxMoFEzV85R-sJqRhA>
+    <xmx:CYGgZy0Hv8iy_1nT9rFP4we8t3r39PO5GKxhcTPqYGpe5plC6EhUGw>
+    <xmx:CYGgZ68N4i9VS-700oy7syn-9Q2P1gdMsnOlGii2u50skmpHTyCLRA>
+    <xmx:CYGgZzHZWJ_pf4ol2Myn2Yg9ivytV_lhKc6qdZdxmo5kvaA1b7LmfoHB>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 03:40:30 -0500 (EST)
+ 3 Feb 2025 03:40:40 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d02e28ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Feb 2025 08:40:30 +0000 (UTC)
-Date: Mon, 3 Feb 2025 09:40:29 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 72b3acb0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Feb 2025 08:40:39 +0000 (UTC)
+Date: Mon, 3 Feb 2025 09:40:38 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
 Subject: Re: [PATCH v2 7/8] packed-backend: check whether the "packed-refs"
  is sorted
-Message-ID: <Z6CA_aKlWHLwHghA@pks.im>
+Message-ID: <Z6CBBn6EW2_MXKOK@pks.im>
 References: <Z5r6ZnLH3Ee8IQnN@ArchLinux>
  <Z5r7KvL1bvSO4UQY@ArchLinux>
+ <xmqqwmecceh1.fsf@gitster.g>
+ <Z5zfx0E2neO5MNKs@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,66 +93,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z5r7KvL1bvSO4UQY@ArchLinux>
+In-Reply-To: <Z5zfx0E2neO5MNKs@ArchLinux>
 
-On Thu, Jan 30, 2025 at 12:08:10PM +0800, shejialuo wrote:
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index 271c740728..b250f987b2 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1768,6 +1774,28 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
->  	return empty_ref_iterator_begin();
->  }
->  
-> +struct fsck_packed_ref_entry {
-> +	int line_number;
+On Fri, Jan 31, 2025 at 10:35:51PM +0800, shejialuo wrote:
+> On Thu, Jan 30, 2025 at 11:02:18AM -0800, Junio C Hamano wrote:
+> > shejialuo <shejialuo@gmail.com> writes:
+> > Makes sense. It has been a source of bugs a couple years ago, and it can
+> > silently make you receive wrong results, so this is quite a sensible
+> > check to have.
+> 
+> Patrick, could you please help to explain this. I don't know whether we
+> need to check whether "packed-refs" is sorted always. It seems that we
+> truly allow refs unsorted. We need to know whether we should tighten
+> this?
 
-This should rather be a `size_t`, or at least `unsigned`.
+The context here is that packed-refs sometimes claim that they are
+sorted, but indeed they aren't. There are two sources for this that I've
+seen in the wild:
 
-> +
-> +	struct snapshot_record record;
-> +};
-> +
-> +static struct fsck_packed_ref_entry *create_fsck_packed_ref_entry(int line_number,
-> +								  const char *start)
-> +{
-> +	struct fsck_packed_ref_entry *entry = xcalloc(1, sizeof(*entry));
-> +	entry->line_number = line_number;
-> +	entry->record.start = start;
-> +	return entry;
-> +}
-> +
-> +static void free_fsck_packed_ref_entries(struct fsck_packed_ref_entry **entries, int nr)
-> +{
-> +	for (int i = 0; i < nr; i++)
+  - An invalid comparison function. I think I remember that libgit2 at
+    one point sorted them incorrectly, but not a 100% sure anymore where
+    I've seen this.
 
-Let's use `size_t` for both `i` and `nr`.
+  - A user manually edits the packed-refs file, but isn't aware of the
+    sorting.
 
-> +		free(entries[i]);
-> +	free(entries);
-> +}
-> +
->  static int packed_fsck_ref_next_line(struct fsck_options *o,
->  				     struct strbuf *packed_entry, const char *start,
->  				     const char *eof, const char **eol)
-> @@ -1893,13 +1921,60 @@ static int packed_fsck_ref_main_line(struct fsck_options *o,
->  	return 0;
->  }
->  
-> +static int packed_fsck_ref_sorted(struct fsck_options *o,
-> +				  struct ref_store *ref_store,
-> +				  struct fsck_packed_ref_entry **entries,
-> +				  int nr)
-> +{
-> +	size_t hexsz = ref_store->repo->hash_algo->hexsz;
-> +	struct strbuf packed_entry = STRBUF_INIT;
-> +	struct fsck_ref_report report = { 0 };
-> +	struct strbuf refname1 = STRBUF_INIT;
-> +	struct strbuf refname2 = STRBUF_INIT;
-> +	int ret = 0;
-> +
-> +	for (int i = 1; i < nr; i++) {
-
-Here, as well.
+So we should assert that a packed-refs file is correctly sorted, but
+only when the header claims that it should be sorted.
 
 Patrick
