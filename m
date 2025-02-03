@@ -1,143 +1,120 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4000233CA
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 14:57:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDC7208A7
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 15:02:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738594624; cv=none; b=aRMBSCii++wheGSxN/8bmYWhHLsjHdbrx0mg4g0PY/vCKDS2KQC6bs6WkN8CXYwGE+msrLdHWzm4c6A8cfksHu5Jy4l0b7wfnvZg0W5Fn2F9X+sASU9gH+uJyPIcuZxYTmIXV/Yc1oPnyT8kedhGQXFPshfeBWOB1sSxSaBmeHI=
+	t=1738594933; cv=none; b=dUZuhVoXA7HwmC9RwzWAU58D4VMNv16tUIBz4YM40ULDHvCT5rxRGHJK7NKinxrHnTahfs+cGkjb8EwRV/4bro3acYSR5CznBqdWHJlA+3fsM5Y4MYZt9niOfob1Hy0qy/fVFpxGpbi4e2ScDRLv/SdPg3B3FO3OMNEzCj7GO9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738594624; c=relaxed/simple;
-	bh=h21HOTnBQ2yedUoW7PYTorXb0ydLiDb53IoaY8jJses=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=M5QAoIUiP99aoz6baWRb87eFSEZV+V7GBQeYNCbnVWrXLwcZXF/IPzn+QAAH+89Ib1+nM58mE48tAsF/hG7ma7UJvLl6t/XLV75M2cXAaWGpDjviGzsTFfd0G86NlCgYU3ZDnYiN8mtyebkriWa51kyObh9FsO0vlRIrzDi1EkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XXHCOI6B; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738594933; c=relaxed/simple;
+	bh=Rz0GMjSzyt11VgQEus+OAzDGlUE0/hgTkU4LfVA7Lmk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SmI8gLdGGwjKiLrudh8lrOdxfi3cUDtboLkggreRdZD9eubnwg9Q+0UNWp3Ls40XT+6QbyJtkewY/KHghmvZz4nOwa4Tg8TDJAjVPx7EWq0sTKJJDJ+mUgTOQZKoMRteVep4bjpHDV6/61CsFhbSvPuzt3RrKURPnHbCoPMmSFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JWz0rSIL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dnGqbIV6; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XXHCOI6B"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-436281c8a38so32040275e9.3
-        for <git@vger.kernel.org>; Mon, 03 Feb 2025 06:57:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738594621; x=1739199421; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4oX4OxMayrikiG8h4HhvCs5KBBDN9+JzmDbNaT9zfJk=;
-        b=XXHCOI6BgAsmpZDU2DGP6SmXWFM7qVWjZw/5M+brgdFx5BIdsmoXEd4ooBZQdRpJyz
-         6/VUpgI0y8X37/i16bmr7fpcS3Q+bNNh4R9+xbCqMuK+TO0WI81dwyXNLqm1OEBEDZQo
-         2HUK2s8WxD1ctYCUf1pdH5DMoJX8FGdoPowjk4uUw9scka8Oraw64jmsAO4iC3zqSdTH
-         Bc7uylk98q9K/X9kFLjWbqXhFnvFyxd7G+IsQCmaEe+H2upOpsPh30+3bMcYAiotmPiW
-         0+SOFLuTlIJUJMlAOZoVFqXpgLhJzWx4CJml/5/U8ED2jS9fFAnvWhH/+c6WBEw2+QnE
-         T9UA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738594621; x=1739199421;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4oX4OxMayrikiG8h4HhvCs5KBBDN9+JzmDbNaT9zfJk=;
-        b=lja9I2IaRIARmSCdnMIeDsqeZc8jSQeMnOBuDzA0XBff9KlX630xzsiyi12mOFPGzq
-         aoUHhDO3p321T1+41BGBv66jHy+yUhFF02f/KPIWxz7QKyksKqvUQrpvOeoYvR0CE88K
-         vDKV3C/J1fDcl3jAW+BEMu4ibLXOF8xx1AsF3L7+Wd3KbfHaHVyF9E4tQZtT3gImGySE
-         Ls2oCYCFbJphwGxLhfRws3e8qjo+sEaADvRdHDxmfd+ey9L1KnUTbP7/ZE4r9ifwOO+5
-         DX8OPp7UT7O3APHhEzQkM3U8hno6OMVS50wzOdFSa+bomW/rWcBgkU/XjsHaabugy/eh
-         UlxA==
-X-Forwarded-Encrypted: i=1; AJvYcCXwpNee6egkPSJkggArYoddhOFtt8vCbqj3l0ACEzLbmaSdOMKlpbCb8gsfcp6JVF/7ulo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzU4PEaUvpVIu+ttuNCxTuqWKAOZLk6RJOg/CX9dq4VuS7qJEpw
-	tIXFge6Cn5unBWhXD2vocJKkDrrqLzqrm5TAmwyq3X/g3V0kp5eAVG9pYg==
-X-Gm-Gg: ASbGnctx3F+RJseNT3W0rQi8Dev22tnPycivjVsW1Ht1JmjQSiqfWQQ2XbfE9nz9epG
-	wC4zOIemFJAYr9hZCs9dFBxrtTu6O7dN7FGhCv1u505XDNv3BfnpNsWsmsChKIN4xJSk0v0JYph
-	/gimACHmreGWzCyvnKm4R1dKWNs+RIYNSVICwu+tiCgqsgSeTKzsx4Y4PbJLdk/bIspu1FNaEBp
-	lEIjerI+CLTIi+TymPFFfH52H50GFkv/rAIoHgW59WeyYd82T0jvfrGmmIEpyeRheQQ1Czym66E
-	0dKmx9VQNfNU99WCdhn++G309KV3pGstNifCcK9IAJezQnJMSMRDIQYVAFJbsyJ0CSxrLA==
-X-Google-Smtp-Source: AGHT+IHJU3QwevQWhZnG1Di8RqHsHu0QpKm3z7N/xFAQPpa8OjdhpiwKpnZ9NVi41PQehUmNEgctaw==
-X-Received: by 2002:a05:600c:1c8d:b0:431:3bf9:3ebb with SMTP id 5b1f17b1804b1-438dc3fc478mr174953915e9.24.1738594621085;
-        Mon, 03 Feb 2025 06:57:01 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438e244ef41sm160584385e9.32.2025.02.03.06.57.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Feb 2025 06:57:00 -0800 (PST)
-Message-ID: <288fbcf3-f6c1-46e4-8124-f4e566abe8af@gmail.com>
-Date: Mon, 3 Feb 2025 14:56:57 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JWz0rSIL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dnGqbIV6"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 24E8A114015A;
+	Mon,  3 Feb 2025 10:02:10 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Mon, 03 Feb 2025 10:02:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1738594930; x=1738681330; bh=nOA1HnSsc/
+	0dcKc381eRmphea2AvB4Kg8qw9JYRzlVo=; b=JWz0rSILsE09u8OV0NLtMugmVi
+	oAQI+RcdjvUHsO2WNjxhQc6AOfuIGgRv+18mZOQ0OKD1JD69m8WUZsdLr4GU/Iao
+	MHyFKnDBnewG2w+uGdyY+VQwurR4UrZtLe1/6S0dViLqekL9eF91TYXDNOGsOiFn
+	yW/mDtdqYEEWR0jN9XPHIrjijy3heQ+C1Mqcy3a1w6hKhNiAotgx5Y28oQmbKfyY
+	hjAvSMB++ILbwnaSYM7iffGB+BCt8e+qqqxXpQctga/ToSVwLYz0LBs3gXESLFIR
+	k2t7pQZo4ujekrEM5E8a+jKVo3EUEnDCGZqbiP74AcmMusdgZYy8lvSCvE6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738594930; x=1738681330; bh=nOA1HnSsc/0dcKc381eRmphea2AvB4Kg8qw
+	9JYRzlVo=; b=dnGqbIV64bRZZHcI5zAf52AAkd5XngH8xP4M5pNW4TpwLAvDgEp
+	O2V+NADm5QQbMpzFN2p7xABiDlnWsQecMn5b9AaS/pc7LFfMyKQcdWbHF7AiAgiD
+	vLt3sryku2zgbF4H6FzwbSu0g8wDwPLCgYusWDHkMgFXZapoBJ1IBh4vZ9Ev1UMy
+	QIIe5cr+6+nViHPXk8TKcoylJOqem7itMbi92EwXVYe7EYzQVW3CdcTvUUfjQcmE
+	zjcKwNrDfVuxWBM5Xeu3FnmJZGK8PGSAzNCaMRkXUEgj6bu0A512jUzZZxm0CLzQ
+	qF+4j/+l76Wmyk1Lm/PPDp3R0SuP3QLiLkg==
+X-ME-Sender: <xms:cdqgZ-0xrl9HdiHgYYP1Bm-g9iLCek_FnmCO946wWInu5GMfxp-kAQ>
+    <xme:cdqgZxFMeBLCegECx02aOkH2JUkcEZq1aTSL794cl82keB5ZrWKNAg9HnTV90SotH
+    w2TFiQT-Wlggt8rrQ>
+X-ME-Received: <xmr:cdqgZ24BnMYppz3bpsoESxLkozSi3h8FyhoGWTVd9ZBTWjXXXJEDIqVjT5gsldeB-EOMAk56jR37fbOekmfo1n_Rhi7w9SqXjjWhWYVhfviTuA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujeeludcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
+    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:cdqgZ_3bALQXJPhh8O6bQZsN3miB2RbSEKhkdsPa0QUfP8rW0o00Mw>
+    <xmx:cdqgZxG9gtleu4JohPamJEkftPWGQ92cnBqTNMKB_sZdhYOaVIk22w>
+    <xmx:cdqgZ49iGp05AhcwmO1dUNFbTJsLGxn4aIdMlleScLzrrpRcxVH0sA>
+    <xmx:cdqgZ2kCOulvbzt5w5v7z0pj0wqbyO2EYpceoY3dBybg6EqVWsP_6Q>
+    <xmx:ctqgZ2T7h9x4EpnB5PAJHhu7dbCKrToUQAlJLkkuRVPLJ-D0EeiPB4lH>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 3 Feb 2025 10:02:09 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id c5cf227e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Feb 2025 15:02:06 +0000 (UTC)
+Date: Mon, 3 Feb 2025 16:02:05 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] setup: fix reinit of repos with incompatible
+ GIT_DEFAULT_REF_FORMAT
+Message-ID: <Z6DabWZqB5QJed3F@pks.im>
+References: <20250130-b4-pks-reinit-default-ref-format-v1-0-d2769ca01207@pks.im>
+ <20250130-b4-pks-reinit-default-ref-format-v1-2-d2769ca01207@pks.im>
+ <xmqqv7tu623n.fsf@gitster.g>
+ <Z6BUOs7k1rzGOGTN@pks.im>
+ <xmqqikpryvnm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/4] t/unit-tests: convert hashmap test to use clar
- test framework
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: Seyi Kuforiji <kuforiji98@gmail.com>, git@vger.kernel.org,
- Junio C Hamano <gitster@pobox.com>
-References: <20250130091334.39922-1-kuforiji98@gmail.com>
- <20250131221420.38161-1-kuforiji98@gmail.com>
- <20250131221420.38161-2-kuforiji98@gmail.com>
- <6be977a0-4bf9-4568-9b28-cdc988a49b89@gmail.com> <Z6Bwr6hM54nu8nSS@pks.im>
-Content-Language: en-US
-In-Reply-To: <Z6Bwr6hM54nu8nSS@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqikpryvnm.fsf@gitster.g>
 
-Hi Patrick
-
-On 03/02/2025 07:30, Patrick Steinhardt wrote:
-> On Sun, Feb 02, 2025 at 11:09:25AM +0000, phillip.wood123@gmail.com wrote:
->> On 31/01/2025 22:14, Seyi Kuforiji wrote:
+On Mon, Feb 03, 2025 at 06:01:33AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
->> diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
->> index d54e4553674..16f86c952f7 100644
->> --- a/t/unit-tests/clar/clar.c
->> +++ b/t/unit-tests/clar/clar.c
->> @@ -754,7 +754,12 @@ void clar__assert_equal(
->>                                   p_snprintf(buf, sizeof(buf), "'%s' != '%s' (at byte %d)",
->>                                           s1, s2, pos);
->>                           } else {
->> -                                p_snprintf(buf, sizeof(buf), "'%s' != '%s'", s1, s2);
->> +                                const char *q1 = s1 ? "'" : "";
->> +                                const char *q2 = s2 ? "'" : "";
->> +                                s1 = s1 ? s1 : "NULL";
->> +                                s2 = s2 ? s2 : "NULL";
->> +                                p_snprintf(buf, sizeof(buf), "%s%s%s != %s%s%s",
->> +                                           q1, s1, q1, q2, s2, q2);
->>                           }
->>                   }
->>           }
+> > So from my point of view we should treat the environment variables the
+> > same as we treat "init.defaultRefFormat" and "init.defaultObjectFormat".
+> > Those indicate defaults, but do not cause us to change the format of
+> > existing repostiories.
 > 
-> Would you mind creating an upstream pull request with these changes? I'm
-> happy to review, and then we can update our embedded version of clar.
-
-I've opened a PR at https://github.com/clar-test/clar/pull/114
-
->>>    	for (size_t i = 0; i < ARRAY_SIZE(query); i++) {
->>>    		entry = get_test_entry(map, query[i][0], ignore_case);
->>> -		if (check(entry != NULL))
->>> -			check_str(get_value(entry), query[i][1]);
->>> -		else
->>> -			test_msg("query key: %s", query[i][0]);
->>
->> It is a shame that we're removing all of the helpful debugging messages
->> from this test. It would be much nicer if we could keep them by using an
->> if statement and cl_failf() as we do in u-ctype.c
+> Hmph, as somebody who often does things like
 > 
-> I honestly think that the debug messages don't add much and only add to
-> the noise. You shouldn't ever see them, and if you do something is
-> broken and you'll likely end up pulling out the debugger anyway. So I'm
-> more in the camp of writing unit tests in a concise way rather than the
-> needlessly-verbose style we previously had.
+>     $ GIT_EDITOR=: git do-something
+>     $ GIT_AUTHOR_NAME=foo GIT_AUTHOR_EMAIL=bar@baz git commit -a
+> 
+> I do not necessarily see the environment variables as replacement
+> for configured defaults.  They are, at least to me, more like a
+> single-shot override of the configured defaults, so if we were to
+> complain and error out command line options (we do do so, don't we?),
+> I would expect the environment variable that gives a single-shot
+> setting to be treated the same way.
 
-If I'm firing up the debugger I'd rather as much detail as I can about 
-what went wrong so I can see where to set my breakpoints. Otherwise I 
-need to waste time repeating the test to find out exactly what went 
-wrong before I can make any progress. My experience with debugging our 
-integration tests is that those tests that take care to print helpful 
-diagnostic messages when they fail are a lot easier to debug than those 
-that don't.
+Especially the second one is a good example though that works mostly as
+I propose: GIT_AUTHOR_NAME will impact _new_ commits, but not _existing_
+ones when you for example `--amend` the commit. So this is somewhat
+equivalent to how both GIT_DEFAULT_REF_FORMAT and GIT_DEFAULT_HASH work
+with git-init(1), isn't it?
 
-Best Wishes
-
-Phillip
-
+Patrick
