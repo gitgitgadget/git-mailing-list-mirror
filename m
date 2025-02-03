@@ -1,208 +1,102 @@
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A32201270
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 15:20:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E639209F51
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 15:33:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738596019; cv=none; b=AkPZJKGi7A858XWGmbtjXrjG/IBphZTh8sn5mY9FVVdOYKggs2YIrbEF88qNfPwyBNrJKU54gtUfanOq93apd9/B4i+O3KrVi4cHuEKPyXxMVLhx1wRoYsv1AcyT9bgK9/EPJvgjdwwm4M3PFkW+VL0tElsa53XEK+sWj4seMjw=
+	t=1738596809; cv=none; b=UI1Z4mh89jkNaIY+2P7P9/Bjmb1Ea4anxl9dANi/TyENzb/u8l4wqXI5p3Tpo3HAgrakkCNRCE5bc9zfkJTSKUD4yHwhBYizGx5vb3o+zlvF36oVF+zuvngK2NB1wqYqlb3eMybgKb5zesfZYT/mItkBpudjMiovi6+Kqa/jCpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738596019; c=relaxed/simple;
-	bh=RukQFdbqDn41omPBGcMdsDToVo4TKcMt/YzUAbwgjj8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=L4nd/NE2qEFrwwATzFzIT77RbkWBeNEeZ1aG6NTCGf3FIDxYW2IaQT9s4VjerK05qSP9mGLbhjicvcH4CoAt7EEMivj+9w/mgRMqk4elxkTQfYl0wBO+63TgtFNuRW+ZxElKgbz5IGobDm+pdgUtgBGFQyO+mZZ4/0vw870M7Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mO5hPsvK; arc=none smtp.client-ip=209.85.221.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738596809; c=relaxed/simple;
+	bh=nxlGwYnz+YNsbky/D1V3nwkE+oztNz4ETz/BtpDCk5E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e2U+dji8SQDS4kJa3/mpk4psT97KO2VZ7Su77Bq3NGOs9RcMFFCf3UxTTM17wFr6gqm9y0LFEOA59u1cOrhxof3Z48zvL+5tJu+e4g+3MD8eRiu+BrSta1b870i0DIupwLGzXi4fFyOCrKUsdFBRDkuts6YvkbI7ehxw+a+fihU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=brqnzV+3; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mO5hPsvK"
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5187cd9b8e5so1421907e0c.1
-        for <git@vger.kernel.org>; Mon, 03 Feb 2025 07:20:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738596017; x=1739200817; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sfij0MuUHCGEhzx64yWP2B+qSgSshdaDHsrufYnIMpU=;
-        b=mO5hPsvKTqlcsEebWBss9x2dW9cywiUnPsnNsW5RIDBnGjwws2nBLlpgVU87FUkPS6
-         tShmPGuEsCoDGBrSGWN0aW2NfXvexwygHpdBK5+yIyKULjzQe0uDcsCWWkFh7QTSGeF4
-         B2yDhQjRJoK1BkGH0+22A/mVKSlT1n6Vy0G02I0t/2m9z4aJK4GNvzn+IwYgRBxrVLGg
-         p0bKEixVHOCn+htC+Sx4d5A6+GvnjIizlfPMKl937g4K9SIrS6bHyRq8tWOKFt6GYvrx
-         AnpaAf/8P5nexDMwOI7qc0qX5KB1MC5jcMpRtQ9quaQHkNLXP6p8zcSI5IAcys5Mm7sb
-         jaEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738596017; x=1739200817;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Sfij0MuUHCGEhzx64yWP2B+qSgSshdaDHsrufYnIMpU=;
-        b=wxim/9hlLCyTydvE9PJqBe1JwXLRD0MAZKTCRQTM7Y5kz/wIPXV12fSHe5iELxYdKl
-         YG//Hq/rrTteMa2orOUYK78hnMHxLrYaAKUkPATetNTOlI/uvwNa9AOtAwfUv/vZFciE
-         faIYZ9mkWsW+5mjJCRzbO6SJnV05Bhbv29BzKGCq3Y4V014Eft4d8ZsY0cNFkElce4jz
-         USoQnjmcc0ef6fCTQUPhe5M3CX41XGSm9GnZtqM7K944R68CqyQSKriPulfgKPA2zCA7
-         n6zqLXrTOgTJJOwO3BYoOFykMMCdoYtbPwjdlIbqrLoXd1KkvuhfxNcqxP6JhzlbvGnd
-         t9hA==
-X-Gm-Message-State: AOJu0Yz/B4zYQ/E43p7u1XlzXmMjVMfY9BLqeYhguC/GItKnTIfntqYE
-	ySgKsIa8yiI9ypatxUav7FRsHxBzl5abrVjmx6bbx9PXVzI6zJSoyMbsFVVtFfIzn22GO2V/7el
-	MGtpIzK2AywaXL8RLniL61+cEKgZR4g==
-X-Gm-Gg: ASbGncsHzNNP1BnTVNIcucIatTzqZV3daIZuyoGk7HUNvYWUw6G1HPtLuhxWSyx29t+
-	1IAoXjtGFmP2lGhA5zgqjWj+oqvhsUL7x/QhJc29qi9sUkGXRqQXrQAEBt6Vjuzy2si6lbQHZEJ
-	y0n8mPiWxHEt3ybsW9LmEuzwBPIa/sSUQ=
-X-Google-Smtp-Source: AGHT+IGTV3fRhhx8uEDsgCA/mX9SBMQPDhRy26aJa4RjG7HGPgw4Kabq+FQLoQLmvkmJYMS5N4tqp4Gk1y854g9EkiA=
-X-Received: by 2002:a05:6122:240c:b0:51d:e6f6:deba with SMTP id
- 71dfb90a1353d-51e9e42ff16mr16095077e0c.5.1738596016922; Mon, 03 Feb 2025
- 07:20:16 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 3 Feb 2025 07:20:16 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250201022409.GA4082344@coredump.intra.peff.net>
-References: <20250122-461-corrupted-reftable-followup-v3-0-ae5f88bf04fa@gmail.com>
- <20250122-461-corrupted-reftable-followup-v3-3-ae5f88bf04fa@gmail.com> <20250201022409.GA4082344@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="brqnzV+3"
+Received: (qmail 18334 invoked by uid 109); 3 Feb 2025 15:33:20 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=nxlGwYnz+YNsbky/D1V3nwkE+oztNz4ETz/BtpDCk5E=; b=brqnzV+3v7WeGztV8KfYnKJ7AmfuIxMBybsAiNMbnAY4O7HwBYWhYuoPyGhy8KzPqHuwYuD2ne5/WZ3DHy3TMPH38ErsFcuN33Ho7IeAg3xi9Ss8gMZiUxmjEiV7LtFy3o8JqcOHb3KH8rej+Ra1k0XAZS4Qbgoa7WkTm0bPlmLcjXJLiSoejOMTZ4VkbI1L7D5rkY5IiWYVRbZU2nClGoDXs/ZquUc/UHQMA6VRsaYuviq6n/W0lA2TET06CJZ0i8oLhDW5uMxAEBgrHUqriKJtWRKju0gljoqMtKyq0HKPTuRm550iOyILQR+p9uis7Do+MwVBX94QSJX/TPdNTA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 Feb 2025 15:33:20 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 21193 invoked by uid 111); 3 Feb 2025 15:33:20 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Feb 2025 10:33:20 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 3 Feb 2025 10:33:19 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
+Message-ID: <20250203153319.GA4165842@coredump.intra.peff.net>
+References: <xmqqbjvyv510.fsf@gitster.g>
+ <20250123003613.GA3900660@coredump.intra.peff.net>
+ <xmqq5xm6uwip.fsf@gitster.g>
+ <20250131233452.GB3544301@coredump.intra.peff.net>
+ <xmqqwme73ost.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 3 Feb 2025 07:20:16 -0800
-X-Gm-Features: AWEUYZl-HQ8D1BbqDmXS-cBNoFa5QX1QtNhddsJlZDiO8zMwCJEvrT8SUD7sFbM
-Message-ID: <CAOLa=ZRCb4KHKNkW=kuGhiR7B-aV73KV32DqjX4RM0fDP1gMww@mail.gmail.com>
-Subject: Re: undefined behavior in unit tests, was Re: [PATCH v3 3/3]
- reftable: prevent 'update_index' changes after adding records
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="000000000000ff5ceb062d3e6d77"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqwme73ost.fsf@gitster.g>
 
---000000000000ff5ceb062d3e6d77
-Content-Type: text/plain; charset="UTF-8"
+On Sun, Feb 02, 2025 at 03:33:06PM -0800, Junio C Hamano wrote:
 
-Jeff King <peff@peff.net> writes:
+> Jeff King <peff@peff.net> writes:
+> 
+> >> Nice way to use extended context to show why the change makes sense.
+> >
+> > I've been tempted to support a:
+> >
+> >   Diff-options: -U10
+> >
+> > trailer, but that is probably overkill and full of annoying corner
+> > cases.
+> 
+> Do you mean to embed it in the commit log trailer and upon seeing
+> it, the log family of commands add it to their setup_revisions()
+> invocation, thusly affecting things like "format-patch" and "show"?
 
-> On Wed, Jan 22, 2025 at 06:35:49AM +0100, Karthik Nayak wrote:
->
->> +static void t_reftable_invalid_limit_updates(void)
->> +{
->> +	struct reftable_ref_record ref = {
->> +		.refname = (char *) "HEAD",
->> +		.update_index = 1,
->> +		.value_type = REFTABLE_REF_SYMREF,
->> +		.value.symref = (char *) "master",
->> +	};
->> +	struct reftable_write_options opts = {
->> +		.default_permissions = 0660,
->> +	};
->> +	struct reftable_addition *add = NULL;
->> +	char *dir = get_tmp_dir(__LINE__);
->> +	struct reftable_stack *st = NULL;
->> +	int err;
->> +
->> +	err = reftable_new_stack(&st, dir, &opts);
->> +	check(!err);
->> +
->> +	reftable_addition_destroy(add);
->> +
->> +	err = reftable_stack_new_addition(&add, st, 0);
->> +	check(!err);
->
-> Coverity complains that this function may have undefined behavior. It's
-> an issue we have in a lot of other tests that have moved to the
-> unit-test framework. I've mostly been ignoring it, but this is a pretty
-> straight-forward example, so I thought I'd write a note.
->
-> The issue is that reftable_new_stack() might fail, leaving "st" as NULL.
-> And then we feed it to reftable_stack_new_addition(), which dereferences
-> it.
->
-> In normal production code, we'd expect something like:
->
->   if (err)
-> 	return -1;
->
-> to avoid running the rest of the function after the first error. But the
-> test harness check() function doesn't return. It just complains to
-> stdout and keeps running!  So you'll get something like[1]:
->
->   $ t/unit-tests/bin/t-reftable-stack
->   ok 1 - empty addition to stack
->   ok 2 - read_lines works
->   ok 3 - expire reflog entries
->   # check "!err" failed at t/unit-tests/t-reftable-stack.c:1404
->   Segmentation fault
->
-> So...yes, we will probably notice that the test failed from the exit
-> code. But it's not great when the harness itself barfs so had. Plus a
-> compiler may be free to reorder things in a confusing way if it can see
-> that "st" must never be NULL.
->
-> It feels like we probably ought to return as soon as a check() fails.
-> That does create other headaches, though. E.g., we'd potentially leak
-> from an early return (which our LSan builds will complain about),
-> meaning that test code needs to start doing the usual "goto out" type of
-> cleanup.
->
-> So I dunno. Maybe we just live with it. But it feels pretty ugly.
->
+Yeah, exactly. Similar to the Best-viewed-with that Ben mentioned (and
+that name, while clunky, probably shows the intent more).
 
-Thanks for pointing it out, I didn't notice this, mostly as I was
-copying from existing test cases and it does seem like this (wrong)
-pattern exists in a lot of the tests.
+But...
 
-Like Phillip and Patrick mentioned, this should go away since we're
-moving to using the clar test framework. I think it makes sense to keep
-this as is to stay consistent with the rest of code in this file for
-now. It is ugly, but seems like that would be simpler while migrating.
+> As a reminder for a patch submitter (i.e., communicated by you who
+> wrote the commit to future you who will run format-patch for
+> submission), something locally maintained might be sufficient,
+> e.g. refs/notes/diffopts that is not shared by default, but still,
+> this hint probably wants to be per-path (ideally per-hunk).
+> 
+> But I think it will make it annoying if you forced those who fetched
+> from you to use "-U10" when they do "git show", as the choice would
+> be strongly affected by personal preference.  And I certainly do not
+> want to see anything less benign than "-U10" silently forced upon me.
 
-> -Peff
->
-> [1] This would happen in practice if malloc() failed, but you can
->     simulate it yourself like this, which is what I used to create the
->     output above:
->
-> diff --git a/reftable/stack.c b/reftable/stack.c
-> index 026a9f9742..fe77132102 100644
-> --- a/reftable/stack.c
-> +++ b/reftable/stack.c
-> @@ -861,6 +861,11 @@ int reftable_stack_new_addition(struct reftable_addition **dest,
->  	int err = 0;
->  	struct reftable_addition empty = REFTABLE_ADDITION_INIT;
->
-> +	if (flags & (1 << 16)) {
-> +		*dest = NULL;
-> +		return REFTABLE_OUT_OF_MEMORY_ERROR;
-> +	}
-> +
->  	REFTABLE_CALLOC_ARRAY(*dest, 1);
->  	if (!*dest)
->  		return REFTABLE_OUT_OF_MEMORY_ERROR;
-> diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
-> index c3f0059c34..73ed9792a5 100644
-> --- a/t/unit-tests/t-reftable-stack.c
-> +++ b/t/unit-tests/t-reftable-stack.c
-> @@ -1400,7 +1400,7 @@ static void t_reftable_invalid_limit_updates(void)
->
->  	reftable_addition_destroy(add);
->
-> -	err = reftable_stack_new_addition(&add, st, 0);
-> +	err = reftable_stack_new_addition(&add, st, (1 << 16));
->  	check(!err);
->
->  	/*
+Yes, this is my worry, as well. It is nice to suggest to people viewing
+the diff later that this particular case might benefit from some
+options. But I don't like the idea of forcing the view on them.
 
---000000000000ff5ceb062d3e6d77
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 53b3272f53fd01c1_0.1
+I almost wrote it as:
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lZzNxMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNzl5REFDa28yZTdGUmpFb0FYSFVXOXRjeThaQTRjVQpoYTF2Y083SFJC
-aHJVVWdXOTQ1S1ZOUEduaVZZVVh3LzF1RnB0M3NCUDJYYXRITnFMNHN1Qjl1MkRKTDZ4SFBhCmY4
-OWtnRUoxV3RFTFRJcTJWYndDdlBXdE9FdjhoditwaUlkREZDMnV3TmtGbjhPdkpEYnNuQmdLdytl
-WTlvR3oKSUVlQy8yWEhNcDRHeEhPNEtZWUJOamVJQnQ1TU1HRHp4VVVRN2szOTFOd1QwYmdiVkc1
-LzhrN0lKbzBmNkYwRgpIREdEUm9nRUlUZEJOQWNsazdZVG8vTkVVNUdudmJvWjBvM2gxM0Q1RFhp
-TDgwN2ZTUXQ1M0J6cFh5dGp4SjJQCnVkSlRTWjRvUWdYYUVLV3puMFVPWER3QjJWY0lEVTRIVnJ2
-UWhhTGRoazRIUXdHZit4SDVuM0xWK0dzZWFxYk0KaGJwS3RrM0dlaVdvNmt4VE1iYXpTRWExcXFL
-aFFqd2VDK0tuTXhiTjlTckduMFNjd0hsU25tZ2pSa3JBdk5DVQpiRHFYaXhwOFltTDFDQ0ExQ09w
-TkdGVkMwWk5TbWZRZzdJUXRuZm82bndDQzQ5K3F0WlZvNDVxNFBnWGZkTTRWCnVQOVBDcm1pLzNT
-QXFrMC9DZ1pmM1BURCtwOUtxdUZvUGV3S1FyUT0KPW11SjAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000ff5ceb062d3e6d77--
+  Diff-context: 10
+
+which would be more limited. But even that might be annoying in some
+cases. And it's probably not flexible enough (other things that are
+likely to be suggested are --color-moved, -w, and --function-context).
+
+Maybe it would be a better feature in an interactive tool like tig,
+where you could use a key to flip between your normal diff, and the diff
+as suggested by the commit author. And then the trailer just becomes a
+micro-format that some tools may respect for the feature. They'd still
+need to be careful about allowing through arbitrary options to avoid
+security problems.
+
+-Peff
