@@ -1,64 +1,64 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF11208973
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 14:44:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4000233CA
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 14:57:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738593893; cv=none; b=dxnDYiUIAmTA7kj6WxgDgGCTTT79zV+EPhoHgQxQBsZr8KVOmpjnvuU0Os2o7Lo0dX5Wl3S+DpPaNXy/tU5pY1oJDDtTfYDWGiXew7tClxtU5JEjLnpfhWOlpdE8Ditx2vnNufCqQ9MOJg5DVZfTq5112JYMj+LGE5TV5veIQxo=
+	t=1738594624; cv=none; b=aRMBSCii++wheGSxN/8bmYWhHLsjHdbrx0mg4g0PY/vCKDS2KQC6bs6WkN8CXYwGE+msrLdHWzm4c6A8cfksHu5Jy4l0b7wfnvZg0W5Fn2F9X+sASU9gH+uJyPIcuZxYTmIXV/Yc1oPnyT8kedhGQXFPshfeBWOB1sSxSaBmeHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738593893; c=relaxed/simple;
-	bh=pkRaa99Y7v7/A0Q42m+Wkp2r6959gRcIOOvQVW9H/Jg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eJmXNUhVFat3b/jl52q86uqz08o91Cu+lG+tYjDn1F+UE46k4NMRY0b3/H3FX68uwymrs2owaK7OsV77GorucfsD05u0PMuG7PSLan10en1VmLKQ0IdBubnaz2pD/Uqr7lmwE0IvFdrQgFjI7qbcktBF0e74joePDLtCG4yBIok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g0V8TLrU; arc=none smtp.client-ip=209.85.219.181
+	s=arc-20240116; t=1738594624; c=relaxed/simple;
+	bh=h21HOTnBQ2yedUoW7PYTorXb0ydLiDb53IoaY8jJses=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=M5QAoIUiP99aoz6baWRb87eFSEZV+V7GBQeYNCbnVWrXLwcZXF/IPzn+QAAH+89Ib1+nM58mE48tAsF/hG7ma7UJvLl6t/XLV75M2cXAaWGpDjviGzsTFfd0G86NlCgYU3ZDnYiN8mtyebkriWa51kyObh9FsO0vlRIrzDi1EkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XXHCOI6B; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g0V8TLrU"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e5ae3fc15acso2137123276.0
-        for <git@vger.kernel.org>; Mon, 03 Feb 2025 06:44:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XXHCOI6B"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-436281c8a38so32040275e9.3
+        for <git@vger.kernel.org>; Mon, 03 Feb 2025 06:57:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738593891; x=1739198691; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20230601; t=1738594621; x=1739199421; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=GPh3oZsRrFALMoikNZlwRO937ddeVQwO4w7tHN6QAcA=;
-        b=g0V8TLrUwz2bErBhE4Bu5hW9O0xlx8iVg2o25AW8LELmScj8ykKteXQhztzJSzCeYP
-         ar2vKkMjZhNUwNozR52+qYaSxOvYjzYOQrR0z7BugDVKU1Q0JjHewT3/iN8z8aBqNdp2
-         kBT2T4Nsr2rPt9ljV8fN5DJ4/p+QuLsqXZnY35H6w7vFWfXO9ZvsY3BUvFp9EcsBQ7EC
-         5tYg6AHlE7kuYVnZrc9NycpcbJMyd1lfR2zbvgC9W3B1fIq3cug52l51eB7rlQJgwkcy
-         CbMaJwJu4QFH++HWSKx/eDg0i8s1tRWA2WPQHesQnEDh5AyR7aQRmixXm6cx+iqPmehj
-         +Myg==
+        bh=4oX4OxMayrikiG8h4HhvCs5KBBDN9+JzmDbNaT9zfJk=;
+        b=XXHCOI6BgAsmpZDU2DGP6SmXWFM7qVWjZw/5M+brgdFx5BIdsmoXEd4ooBZQdRpJyz
+         6/VUpgI0y8X37/i16bmr7fpcS3Q+bNNh4R9+xbCqMuK+TO0WI81dwyXNLqm1OEBEDZQo
+         2HUK2s8WxD1ctYCUf1pdH5DMoJX8FGdoPowjk4uUw9scka8Oraw64jmsAO4iC3zqSdTH
+         Bc7uylk98q9K/X9kFLjWbqXhFnvFyxd7G+IsQCmaEe+H2upOpsPh30+3bMcYAiotmPiW
+         0+SOFLuTlIJUJMlAOZoVFqXpgLhJzWx4CJml/5/U8ED2jS9fFAnvWhH/+c6WBEw2+QnE
+         T9UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738593891; x=1739198691;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1738594621; x=1739199421;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GPh3oZsRrFALMoikNZlwRO937ddeVQwO4w7tHN6QAcA=;
-        b=IGB2mY5DXPANt0qdvCs5yedT/9liobodTIrvcUrXcwwQvNqSTtS/VtTGNNbjELHN5b
-         eK33VwoxUCERws7mI15y5cAMj+VHI7gNtexUwGX8VZUYIHOixx1j+gOsHQ2yfxcXfKbI
-         PRkyZB8AAoV7H37g4Nfptnxvkgi4yVPYU/Yrqi1G8bN6VQYNxomnTKkG8jAdz20Lmxl0
-         eIhIDnh9GWgvosnGsbObRXknjUGwMDzw4kZ2flADwfvlw1+qU43CIg8hsn/O16vbd6sy
-         Y9O760srLwuRS75iS9VLxc6ac+ZAGvx8kNM3cYUzz4iWuHGl1Z5qzrO/gXYH0fE/SNsV
-         P4Pg==
-X-Gm-Message-State: AOJu0YzhURIFuW6B4RzeIvR0Jq8j2hSmODy34IJeL7VdnLwx/1xtMaHT
-	X+fA7npSfPYCOUQg0GiNI4ZAl7GoAQ+oFhFURh4Rr0H9eOpzqgeT
-X-Gm-Gg: ASbGnctPL1jooMfUBr6uEP6EjwKbanjS2XYlVKMe4R2wxrjtydeHPlQiij4WA9i1sXZ
-	UXcJsIwBzefaXeqy4ldoUHW7zlY1DbGc9T97nOWouvGJtR6F2SFYTO7v64EHThsxY3dpkMqI5D8
-	wnhZDgJPPQD0dSE6II+fKGZ9m3ojR6Earcz77cZqeVGku6TGGP+NLI0/I7UpIVwIed5lgC6KlPQ
-	7tjaDfcSPmBR2lo9K64EatbdPL3ldOyU1qdXjNK/6a2FAUxSpL/AMWtzYkvYXfARm/u/XtxJjpg
-	rYIM95ss25ZuL/1Z2MyZRbpfn+fcF7feUUgEyAsNF0A487F1dPbWQm4sga1bOf3pVtl+gPNMmRt
-	27gE=
-X-Google-Smtp-Source: AGHT+IEzOu2WfZsgE5l2RwTWBNNrUqZbVc1giSMy8SvaLvs36e5OK9mdtY41K1hbjbf90hxALaQMtQ==
-X-Received: by 2002:a05:6902:2d03:b0:e57:8991:be39 with SMTP id 3f1490d57ef6-e58a4bc53bdmr13577516276.32.1738593890919;
-        Mon, 03 Feb 2025 06:44:50 -0800 (PST)
-Received: from ?IPV6:2600:1700:60ba:9810:2dfe:af96:f238:f6f1? ([2600:1700:60ba:9810:2dfe:af96:f238:f6f1])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f8c4a7e46fsm21120137b3.116.2025.02.03.06.44.50
+        bh=4oX4OxMayrikiG8h4HhvCs5KBBDN9+JzmDbNaT9zfJk=;
+        b=lja9I2IaRIARmSCdnMIeDsqeZc8jSQeMnOBuDzA0XBff9KlX630xzsiyi12mOFPGzq
+         aoUHhDO3p321T1+41BGBv66jHy+yUhFF02f/KPIWxz7QKyksKqvUQrpvOeoYvR0CE88K
+         vDKV3C/J1fDcl3jAW+BEMu4ibLXOF8xx1AsF3L7+Wd3KbfHaHVyF9E4tQZtT3gImGySE
+         Ls2oCYCFbJphwGxLhfRws3e8qjo+sEaADvRdHDxmfd+ey9L1KnUTbP7/ZE4r9ifwOO+5
+         DX8OPp7UT7O3APHhEzQkM3U8hno6OMVS50wzOdFSa+bomW/rWcBgkU/XjsHaabugy/eh
+         UlxA==
+X-Forwarded-Encrypted: i=1; AJvYcCXwpNee6egkPSJkggArYoddhOFtt8vCbqj3l0ACEzLbmaSdOMKlpbCb8gsfcp6JVF/7ulo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzU4PEaUvpVIu+ttuNCxTuqWKAOZLk6RJOg/CX9dq4VuS7qJEpw
+	tIXFge6Cn5unBWhXD2vocJKkDrrqLzqrm5TAmwyq3X/g3V0kp5eAVG9pYg==
+X-Gm-Gg: ASbGnctx3F+RJseNT3W0rQi8Dev22tnPycivjVsW1Ht1JmjQSiqfWQQ2XbfE9nz9epG
+	wC4zOIemFJAYr9hZCs9dFBxrtTu6O7dN7FGhCv1u505XDNv3BfnpNsWsmsChKIN4xJSk0v0JYph
+	/gimACHmreGWzCyvnKm4R1dKWNs+RIYNSVICwu+tiCgqsgSeTKzsx4Y4PbJLdk/bIspu1FNaEBp
+	lEIjerI+CLTIi+TymPFFfH52H50GFkv/rAIoHgW59WeyYd82T0jvfrGmmIEpyeRheQQ1Czym66E
+	0dKmx9VQNfNU99WCdhn++G309KV3pGstNifCcK9IAJezQnJMSMRDIQYVAFJbsyJ0CSxrLA==
+X-Google-Smtp-Source: AGHT+IHJU3QwevQWhZnG1Di8RqHsHu0QpKm3z7N/xFAQPpa8OjdhpiwKpnZ9NVi41PQehUmNEgctaw==
+X-Received: by 2002:a05:600c:1c8d:b0:431:3bf9:3ebb with SMTP id 5b1f17b1804b1-438dc3fc478mr174953915e9.24.1738594621085;
+        Mon, 03 Feb 2025 06:57:01 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-438e244ef41sm160584385e9.32.2025.02.03.06.57.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Feb 2025 06:44:50 -0800 (PST)
-Message-ID: <718583a4-31e6-45d4-9807-c5a07050b28f@gmail.com>
-Date: Mon, 3 Feb 2025 09:44:49 -0500
+        Mon, 03 Feb 2025 06:57:00 -0800 (PST)
+Message-ID: <288fbcf3-f6c1-46e4-8124-f4e566abe8af@gmail.com>
+Date: Mon, 3 Feb 2025 14:56:57 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,115 +66,78 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/5] backfill: basic functionality and tests
-To: Patrick Steinhardt <ps@pks.im>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
- peff@peff.net, me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com,
- christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com,
- jonathantanmy@google.com, karthik.188@gmail.com,
- Derrick Stolee <derrickstolee@github.com>
-References: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
- <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
- <e4e88794cae7edc568dd054b1376caac7fd30076.1734712193.git.gitgitgadget@gmail.com>
- <Z4jY3EQbC42scEIF@pks.im>
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 1/4] t/unit-tests: convert hashmap test to use clar
+ test framework
+To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
+Cc: Seyi Kuforiji <kuforiji98@gmail.com>, git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>
+References: <20250130091334.39922-1-kuforiji98@gmail.com>
+ <20250131221420.38161-1-kuforiji98@gmail.com>
+ <20250131221420.38161-2-kuforiji98@gmail.com>
+ <6be977a0-4bf9-4568-9b28-cdc988a49b89@gmail.com> <Z6Bwr6hM54nu8nSS@pks.im>
 Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <Z4jY3EQbC42scEIF@pks.im>
+In-Reply-To: <Z6Bwr6hM54nu8nSS@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 1/16/25 5:01 AM, Patrick Steinhardt wrote:
-> On Fri, Dec 20, 2024 at 04:29:50PM +0000, Derrick Stolee via GitGitGadget wrote:
->> diff --git a/builtin/backfill.c b/builtin/backfill.c
->> index 38e6aaeaa03..177fd4286c7 100644
->> --- a/builtin/backfill.c
->> +++ b/builtin/backfill.c
-> [snip]
->> +static int fill_missing_blobs(const char *path UNUSED,
->> +			      struct oid_array *list,
->> +			      enum object_type type,
->> +			      void *data)
->> +{
->> +	struct backfill_context *ctx = data;
->> +
->> +	if (type != OBJ_BLOB)
->> +		return 0;
->> +
->> +	for (size_t i = 0; i < list->nr; i++) {
->> +		off_t size = 0;
->> +		struct object_info info = OBJECT_INFO_INIT;
->> +		info.disk_sizep = &size;
->> +		if (oid_object_info_extended(ctx->repo,
->> +					     &list->oid[i],
->> +					     &info,
->> +					     OBJECT_INFO_FOR_PREFETCH) ||
->> +		    !size)
+Hi Patrick
+
+On 03/02/2025 07:30, Patrick Steinhardt wrote:
+> On Sun, Feb 02, 2025 at 11:09:25AM +0000, phillip.wood123@gmail.com wrote:
+>> On 31/01/2025 22:14, Seyi Kuforiji wrote:
 > 
-> So this is the object existence test? Is there a reason why we don't use
-> `repo_has_object_file()`, or its `_with_flags()` variant if we need to
-> pass `OBJECT_INFO_FOR_PREFETCH`?
-
-You make a good point, but I also notice that repo_has_object_file() has
-the following comment:
-
-  * These functions can be removed once all callers have migrated to
-  * has_object() and/or oid_object_info_extended().
-
-so I'll use has_object().
-
->> +			oid_array_append(&ctx->current_batch, &list->oid[i]);
->> +	}
->> +
->> +	if (ctx->current_batch.nr >= ctx->batch_size)
->> +		download_batch(ctx);
->> +
->> +	return 0;
->> +}
->> +
->> +static int do_backfill(struct backfill_context *ctx)
->> +{
->> +	struct rev_info revs;
->> +	struct path_walk_info info = PATH_WALK_INFO_INIT;
->> +	int ret;
->> +
->> +	repo_init_revisions(ctx->repo, &revs, "");
->> +	handle_revision_arg("HEAD", &revs, 0, 0);
->> +
->> +	info.blobs = 1;
->> +	info.tags = info.commits = info.trees = 0;
+>> diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
+>> index d54e4553674..16f86c952f7 100644
+>> --- a/t/unit-tests/clar/clar.c
+>> +++ b/t/unit-tests/clar/clar.c
+>> @@ -754,7 +754,12 @@ void clar__assert_equal(
+>>                                   p_snprintf(buf, sizeof(buf), "'%s' != '%s' (at byte %d)",
+>>                                           s1, s2, pos);
+>>                           } else {
+>> -                                p_snprintf(buf, sizeof(buf), "'%s' != '%s'", s1, s2);
+>> +                                const char *q1 = s1 ? "'" : "";
+>> +                                const char *q2 = s2 ? "'" : "";
+>> +                                s1 = s1 ? s1 : "NULL";
+>> +                                s2 = s2 ? s2 : "NULL";
+>> +                                p_snprintf(buf, sizeof(buf), "%s%s%s != %s%s%s",
+>> +                                           q1, s1, q1, q2, s2, q2);
+>>                           }
+>>                   }
+>>           }
 > 
-> Nit: this should be unnecessary as PATH_WALK_INFO_INIT already
-> initialized those fields for us, right?
+> Would you mind creating an upstream pull request with these changes? I'm
+> happy to review, and then we can update our embedded version of clar.
 
-The info.blobs is redundant, but is helpful for context. The
-other line is necessary as PATH_WALK_INFO_INIT is defined as:
+I've opened a PR at https://github.com/clar-test/clar/pull/114
 
-#define PATH_WALK_INFO_INIT {   \
-	.blobs = 1,		\
-	.trees = 1,		\
-	.commits = 1,		\
-	.tags = 1,		\
-}
-
->> +	info.revs = &revs;
->> +	info.path_fn = fill_missing_blobs;
->> +	info.path_fn_data = ctx;
->> +
->> +	ret = walk_objects_by_path(&info);
->> +
->> +	/* Download the objects that did not fill a batch. */
->> +	if (!ret)
->> +		download_batch(ctx);
->> +
->> +	backfill_context_clear(ctx);
+>>>    	for (size_t i = 0; i < ARRAY_SIZE(query); i++) {
+>>>    		entry = get_test_entry(map, query[i][0], ignore_case);
+>>> -		if (check(entry != NULL))
+>>> -			check_str(get_value(entry), query[i][1]);
+>>> -		else
+>>> -			test_msg("query key: %s", query[i][0]);
+>>
+>> It is a shame that we're removing all of the helpful debugging messages
+>> from this test. It would be much nicer if we could keep them by using an
+>> if statement and cl_failf() as we do in u-ctype.c
 > 
-> Nit: I think it's a bit funny that we're cleaning up the context over
-> here rather than in the caller.
-Cleaning up in the caller makes the "return do_backfill(&ctx);" line
-slightly more complicated, but you are right that we shouldn't be
-cleaning up something that the method "doesn't own".
+> I honestly think that the debug messages don't add much and only add to
+> the noise. You shouldn't ever see them, and if you do something is
+> broken and you'll likely end up pulling out the debugger anyway. So I'm
+> more in the camp of writing unit tests in a concise way rather than the
+> needlessly-verbose style we previously had.
 
-Thanks,
--Stolee
+If I'm firing up the debugger I'd rather as much detail as I can about 
+what went wrong so I can see where to set my breakpoints. Otherwise I 
+need to waste time repeating the test to find out exactly what went 
+wrong before I can make any progress. My experience with debugging our 
+integration tests is that those tests that take care to print helpful 
+diagnostic messages when they fail are a lot easier to debug than those 
+that don't.
+
+Best Wishes
+
+Phillip
 
