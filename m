@@ -1,55 +1,55 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E238B1FAC3E
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 08:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741D41F5428
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 08:03:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738569830; cv=none; b=vBVkJv5kTTrvlou+yZDsOW4Pk8Il4tZm7/QdNRVkqybA6EU/AyEKwhNFpGKEkjGn4DgZlWql/geZX5SGGzRwZKsBvXINfDECYR+5a6TTHSPrpJbH40MMVW3M9yTAk+fFekxZ40EsJSduqxA/a3fEt3Im56N0v8MBh2DW64fXw28=
+	t=1738569831; cv=none; b=CQv+x5aJ1gqT2TXRPeYGgHQWb4VR/5wdjBt3NSY3tCuaEqNWThzRhRj9daYSxi3BVuvxJl78SNoeC9ECvFTAzhd5MQaI64lgDmmXFGhY+uTK8+NZ/ccaxWfJ7rpbAFzXfeii8+8kvw8dVFf0XII7GSYymPvoWGjgNHGcyIcZXn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738569830; c=relaxed/simple;
-	bh=wxEI87iGTIa3+kw620bKbSDitIJdM3cdzEv2ghKd3aI=;
+	s=arc-20240116; t=1738569831; c=relaxed/simple;
+	bh=hAQU5SN39e6qduBogodBw1Ow9PHSmMAXEAh+mQ3F5fM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JX2fRp/tYYXySzPYl7UDAo1AvFCJhN06MQ9K/+qSnEZLmEhpiidwDW50lrvSUKDZ8SX8n4oMFucG7PEHyWGmiyDXbQMIjxfLNMvNzP6UTRAmCINeEBvvJSR8haMtqCgwquPVCejXHJU7w6TQL8Px8SzA4jKVpYJF7YwxxG7DuP4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=edORGTNp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D55ja2ER; arc=none smtp.client-ip=103.168.172.145
+	 In-Reply-To:To:Cc; b=SmbGaxToZaqzuzAH2lN2X0M6yv71yVen6XNTteUfMBI+uU7/9Sw4/mrqH9jAW/N2jQsyk4vHIx59D0Dl/uUzCR/G2h1fvR+Kb3jA3PRMd8L3RL8dmrRtYEIuBJ4DW9zmC/M5bQCU0rqsjvzpOZnTPwqlxh+Vq6/TEaJgi5WxqOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CFLJuPAN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tmJPOgRO; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="edORGTNp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D55ja2ER"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id F129F138084D;
-	Mon,  3 Feb 2025 03:03:47 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 03 Feb 2025 03:03:47 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CFLJuPAN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tmJPOgRO"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 59EC61380850;
+	Mon,  3 Feb 2025 03:03:48 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Mon, 03 Feb 2025 03:03:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738569827;
-	 x=1738656227; bh=/UdAJ2VcwUlfo8plhFrFpBaMwXYGrKhpXmO0teJzpsE=; b=
-	edORGTNpCdJK/P6Rq3D8rJs9I5MWKhuRGZ6rj44qAIurHXt7a2ZtOsctR+ypOwpk
-	ZGJGZjgleMrm70Sm9R5xQm+WrxUd+p2nA+tjpjGhA4Rwi4NHNkiuxyaIQD/h/XNU
-	gur7mrvXN7WPl413m9YtTScsBab9MKjwpxiEFFoAHQqsmlAKHfE6FmmB1M+TUESh
-	ktOLoCdR7xmLtXZSyviGsKEQLyhCtSgCA2VH1c5fBcbkOH6e/d6JuckxFSVC6vUx
-	U5j6ArJYLfey/TpaLeCxG0BPeGArEMxngmWJeHU3xh1wzU8sKOY+IHeov5LJJ7bQ
-	I+IwdOYXXdgJVGYTkfNjSA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738569828;
+	 x=1738656228; bh=j4yHxoV0LbAzL80S95an56qyrh58Lp57N9iHlAa7V74=; b=
+	CFLJuPANVSa4yng7lhQsV/+knh0huE2MHOUSpXCXwNv8CfzxZes/5fvkhrC8d9E3
+	VxDvmELE1KteRdeihxoCiIKKHsDWcdSg9gjsVCrFow7ieuIMiEOcGFC6O9alPlnZ
+	NghGdwgzjhxinmHWvC4ph07PElmea96a62XqWs1/wQxeO4l5VbqHu9AmzWrAnvPx
+	1zZGzvL59AgDXGRbL4lhJaLBvmETvIBuXV1AwK3wHSA1QP7m3sfozdHuQBA6JzCC
+	1Ujbt+rF/XnXOZdeeFBT0TbLSCHXfpcIidb8Ppfrz74WTqELAZ3Tnin4B6LjPN94
+	Spo0xja5WFJAfH9jBqVpRA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738569827; x=
-	1738656227; bh=/UdAJ2VcwUlfo8plhFrFpBaMwXYGrKhpXmO0teJzpsE=; b=D
-	55ja2EREMespczXq6gcTuHG+p+AoDb8sZgH61QsFcb+t16UlkWM35KK2g1MGWfoa
-	12P5JB67ijMYTtEJUPrIGg0um4NxNxLk+VuD/s2zYx56W6wjKis/InqWlzQHmi2n
-	pXbQ1kBDaZ40L3vnO9PezHRWPdocA4cAmkP/3hy//rAfzgVVF6D+3cRCerITV+km
-	cf3dcr2pG8GUhpS/HNUvTqS6E9x35N5TgoWuVM2HNTkYozmu8Hk6PJcmXrfPwipX
-	Qt5usSTmmxahDtq8cg6LFlhGXIHB2RJEiKbYwgnSUGFjdjegO++n32Uw5avCnAT8
-	V6ZOckP7OcB09cXotiYuw==
-X-ME-Sender: <xms:Y3igZ6YsSGthGJzxN0dsjfJJNoCWyG6CkVFN8I60P_NWBGPIfr-9uA>
-    <xme:Y3igZ9ZC1urwvvboXTV3tDpNP2qBqRn-ZKJGwXVdE0ocyK8ljtJ2DGBKiMBygqxSy
-    jWBGoqidZ_mJUKeNg>
-X-ME-Received: <xmr:Y3igZ08R76W2WkdQhyUUWLGI59S19ihH9IERXKZ2EEzvOWLhyKXR-3xXOWCNhIEhzgVWGWaBaSaPdAiaMbl9O_bYtAZfydHdq47z8jFPoEY83g>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738569828; x=
+	1738656228; bh=j4yHxoV0LbAzL80S95an56qyrh58Lp57N9iHlAa7V74=; b=t
+	mJPOgROVpWGK0svnEIC/dsP3k0NKAOB4AWlnsOxal7X+/ikV8Joniva/tujcXyy/
+	TODg/RV0ukV7AW5yAGp3Emm6wy75p6YaTsvi1MZw/hGtgsm0xjAb6SboYf1pL7c2
+	iC3ThSJt0uZy8dNlUcq2OX0YaaUoSfEfYfSeM/AnfVZFsjICKRSf+1nSwyLIK27Z
+	s5R0f8/IcypfZZy1fNBCZ/eG5kbG84h4d9Gt4yoGeYBgdoQ3ahy1TVY5/sgEbAGW
+	1UI2sZe8CMugX50QddZY2Ys4xwGlD4nXGWWnLAktukqCj0VIUHWsGBJX6cX5NrJx
+	olySkMjwtULXOUo0e6yDA==
+X-ME-Sender: <xms:ZHigZ44-hde3AjgUw34erBzaRzsI2Jy96yZM8JRQL1dHN9X_py99qA>
+    <xme:ZHigZ55SzZBHKyaME-GndGwhL5wsh-P1J9TprNmJfYgl_hYgEeZ02Y6JKMxaUeKSV
+    BOjty_WXqHqUWGJWw>
+X-ME-Received: <xmr:ZHigZ3d5rkQGJovy36Sx8ElNjIOwFunOY6MkmVt-y3bD2zR2yDkahsPAS98kcNt_l3p6GTCZsrHZMU60VJxbJgWa2D0lEpdENJChiSf78u6yBA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -58,24 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedtiecutefuodetgg
     himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
     heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvght
-    hhhomhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohepjhhlth
-    hosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:Y3igZ8rEDiy42aYVInd4_HCJJxXpoLsogEnJ_3WEpa1Cm5fY6qPd4Q>
-    <xmx:Y3igZ1oKk9nN86BzZ-hnUrm7-apYNXhhb-9kH_qTpEivKJrwqJ-vQw>
-    <xmx:Y3igZ6TgxtYyoWBpaMPmtyePNlQExgw1r-qpOBxoZbfM4nuvWq7R9g>
-    <xmx:Y3igZ1qPTuLCVFwMLyrXCTuB5u0jK72ZD1xxd-arbEDvSKTbXWXePA>
-    <xmx:Y3igZ2nvHOpEx_PPTK4efSJW1GnZV5IdHaitjbPbB24o2g01IrPoXWOK>
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegv
+    thhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ZHigZ9INAnDNEYtnvvGjFkmPdE2JnDbrawT71n1tikYNl590ikjwRg>
+    <xmx:ZHigZ8JSJp-RX8qGRZghbyb4QcaIjozgtTjYcr0o_ZLieB4lGTPyPg>
+    <xmx:ZHigZ-wkajkcwflgn6DNxwTYWE06iC6g7pb_R7_wWtE2uJUoXDcMCw>
+    <xmx:ZHigZwJSi_OW5BbJzxjqZcNg84NbvllHqlc9OPsALNumL7SsC4HChQ>
+    <xmx:ZHigZxFfIFrw6ti5_zyQcMq_iy4zi55Hv86UiQ9xpOtBAQWK0uE_cAUj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 03:03:46 -0500 (EST)
+ 3 Feb 2025 03:03:47 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 811f9c53 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Feb 2025 08:03:45 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id da744542 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Feb 2025 08:03:46 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 03 Feb 2025 09:03:35 +0100
-Subject: [PATCH v3 04/18] reftable/record: stop using `COPY_ARRAY()`
+Date: Mon, 03 Feb 2025 09:03:36 +0100
+Subject: [PATCH v3 05/18] reftable/record: stop using `BUG()` in
+ `reftable_record_init()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250203-pks-reftable-drop-git-compat-util-v3-4-446c9ed4ee9e@pks.im>
+Message-Id: <20250203-pks-reftable-drop-git-compat-util-v3-5-446c9ed4ee9e@pks.im>
 References: <20250203-pks-reftable-drop-git-compat-util-v3-0-446c9ed4ee9e@pks.im>
 In-Reply-To: <20250203-pks-reftable-drop-git-compat-util-v3-0-446c9ed4ee9e@pks.im>
 To: git@vger.kernel.org
@@ -92,46 +93,158 @@ Cc: Edward Thomson <ethomson@edwardthomson.com>,
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Drop our use of `COPY_ARRAY()`, replacing it with an open-coded variant
-thereof. This is done to reduce our dependency on the Git library.
+We're aborting the program via `BUG()` in case `reftable_record_init()`
+was invoked with an unknown record type. This is bad because we may now
+die in library code, and because it makes us depend on the Git codebase.
 
-While at it, guard the whole array copy logic so that we only copy it in
-case there actually is anything to be copied. Otherwise, we may end up
-trying to allocate a zero-sized array, which will return a NULL pointer
-and thus cause us to return an `REFTABLE_OUT_OF_MEMORY_ERROR`.
+Refactor the code such that `reftable_record_init()` can return an error
+code to the caller. Adapt any callers accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/record.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ reftable/block.c                 | 4 +++-
+ reftable/merged.c                | 5 ++++-
+ reftable/reader.c                | 5 ++++-
+ reftable/record.c                | 8 ++++----
+ reftable/record.h                | 4 ++--
+ t/unit-tests/t-reftable-pq.c     | 6 +++---
+ t/unit-tests/t-reftable-record.c | 2 +-
+ 7 files changed, 21 insertions(+), 13 deletions(-)
 
+diff --git a/reftable/block.c b/reftable/block.c
+index 8ac865ce78..255d566854 100644
+--- a/reftable/block.c
++++ b/reftable/block.c
+@@ -509,7 +509,9 @@ int block_iter_seek_key(struct block_iter *it, const struct block_reader *br,
+ 	it->block_len = br->block_len;
+ 	it->hash_size = br->hash_size;
+ 
+-	reftable_record_init(&rec, block_reader_type(br));
++	err = reftable_record_init(&rec, block_reader_type(br));
++	if (err < 0)
++		goto done;
+ 
+ 	/*
+ 	 * We're looking for the last entry less than the wanted key so that
+diff --git a/reftable/merged.c b/reftable/merged.c
+index e72b39e178..4156eec07f 100644
+--- a/reftable/merged.c
++++ b/reftable/merged.c
+@@ -253,7 +253,10 @@ int merged_table_init_iter(struct reftable_merged_table *mt,
+ 	}
+ 
+ 	for (size_t i = 0; i < mt->readers_len; i++) {
+-		reftable_record_init(&subiters[i].rec, typ);
++		ret = reftable_record_init(&subiters[i].rec, typ);
++		if (ret < 0)
++			goto out;
++
+ 		ret = reader_init_iter(mt->readers[i], &subiters[i].iter, typ);
+ 		if (ret < 0)
+ 			goto out;
+diff --git a/reftable/reader.c b/reftable/reader.c
+index 3f2e4b2800..de6e6dd932 100644
+--- a/reftable/reader.c
++++ b/reftable/reader.c
+@@ -360,7 +360,10 @@ static int table_iter_seek_linear(struct table_iter *ti,
+ 	struct reftable_record rec;
+ 	int err;
+ 
+-	reftable_record_init(&rec, reftable_record_type(want));
++	err = reftable_record_init(&rec, reftable_record_type(want));
++	if (err < 0)
++		goto done;
++
+ 	err = reftable_record_key(want, &want_key);
+ 	if (err < 0)
+ 		goto done;
 diff --git a/reftable/record.c b/reftable/record.c
-index 8919df8a4d..2c0cc32cbd 100644
+index 2c0cc32cbd..1e18f8dffb 100644
 --- a/reftable/record.c
 +++ b/reftable/record.c
-@@ -504,11 +504,17 @@ static int reftable_obj_record_copy_from(void *rec, const void *src_rec,
- 	if (src->hash_prefix_len)
- 		memcpy(obj->hash_prefix, src->hash_prefix, obj->hash_prefix_len);
- 
--	REFTABLE_ALLOC_ARRAY(obj->offsets, src->offset_len);
--	if (!obj->offsets)
--		return REFTABLE_OUT_OF_MEMORY_ERROR;
--	obj->offset_len = src->offset_len;
--	COPY_ARRAY(obj->offsets, src->offsets, src->offset_len);
-+	if (src->offset_len) {
-+		if (sizeof(*src->offsets) > SIZE_MAX / src->offset_len)
-+			return REFTABLE_OUT_OF_MEMORY_ERROR;
-+
-+		REFTABLE_ALLOC_ARRAY(obj->offsets, src->offset_len);
-+		if (!obj->offsets)
-+			return REFTABLE_OUT_OF_MEMORY_ERROR;
-+
-+		memcpy(obj->offsets, src->offsets, sizeof(*src->offsets) * src->offset_len);
-+		obj->offset_len = src->offset_len;
-+	}
- 
- 	return 0;
+@@ -1306,7 +1306,7 @@ reftable_record_vtable(struct reftable_record *rec)
+ 	abort();
  }
+ 
+-void reftable_record_init(struct reftable_record *rec, uint8_t typ)
++int reftable_record_init(struct reftable_record *rec, uint8_t typ)
+ {
+ 	memset(rec, 0, sizeof(*rec));
+ 	rec->type = typ;
+@@ -1315,11 +1315,11 @@ void reftable_record_init(struct reftable_record *rec, uint8_t typ)
+ 	case BLOCK_TYPE_REF:
+ 	case BLOCK_TYPE_LOG:
+ 	case BLOCK_TYPE_OBJ:
+-		return;
++		return 0;
+ 	case BLOCK_TYPE_INDEX:
+ 		reftable_buf_init(&rec->u.idx.last_key);
+-		return;
++		return 0;
+ 	default:
+-		BUG("unhandled record type");
++		return REFTABLE_API_ERROR;
+ 	}
+ }
+diff --git a/reftable/record.h b/reftable/record.h
+index c7755a4d75..e1846c294b 100644
+--- a/reftable/record.h
++++ b/reftable/record.h
+@@ -130,8 +130,8 @@ struct reftable_record {
+ 	} u;
+ };
+ 
+-/* Initialize the reftable record for the given type */
+-void reftable_record_init(struct reftable_record *rec, uint8_t typ);
++/* Initialize the reftable record for the given type. */
++int reftable_record_init(struct reftable_record *rec, uint8_t typ);
+ 
+ /* see struct record_vtable */
+ int reftable_record_cmp(struct reftable_record *a, struct reftable_record *b);
+diff --git a/t/unit-tests/t-reftable-pq.c b/t/unit-tests/t-reftable-pq.c
+index f3f8a0cdf3..d8a4c283a1 100644
+--- a/t/unit-tests/t-reftable-pq.c
++++ b/t/unit-tests/t-reftable-pq.c
+@@ -32,7 +32,7 @@ static void t_pq_record(void)
+ 	char *last = NULL;
+ 
+ 	for (i = 0; i < N; i++) {
+-		reftable_record_init(&recs[i], BLOCK_TYPE_REF);
++		check(!reftable_record_init(&recs[i], BLOCK_TYPE_REF));
+ 		recs[i].u.ref.refname = xstrfmt("%02"PRIuMAX, (uintmax_t)i);
+ 	}
+ 
+@@ -72,7 +72,7 @@ static void t_pq_index(void)
+ 	size_t N = ARRAY_SIZE(recs), i;
+ 
+ 	for (i = 0; i < N; i++) {
+-		reftable_record_init(&recs[i], BLOCK_TYPE_REF);
++		check(!reftable_record_init(&recs[i], BLOCK_TYPE_REF));
+ 		recs[i].u.ref.refname = (char *) "refs/heads/master";
+ 	}
+ 
+@@ -111,7 +111,7 @@ static void t_merged_iter_pqueue_top(void)
+ 	size_t N = ARRAY_SIZE(recs), i;
+ 
+ 	for (i = 0; i < N; i++) {
+-		reftable_record_init(&recs[i], BLOCK_TYPE_REF);
++		check(!reftable_record_init(&recs[i], BLOCK_TYPE_REF));
+ 		recs[i].u.ref.refname = (char *) "refs/heads/master";
+ 	}
+ 
+diff --git a/t/unit-tests/t-reftable-record.c b/t/unit-tests/t-reftable-record.c
+index d49d2a2729..6540bd20e3 100644
+--- a/t/unit-tests/t-reftable-record.c
++++ b/t/unit-tests/t-reftable-record.c
+@@ -17,7 +17,7 @@ static void t_copy(struct reftable_record *rec)
+ 	uint8_t typ;
+ 
+ 	typ = reftable_record_type(rec);
+-	reftable_record_init(&copy, typ);
++	check(!reftable_record_init(&copy, typ));
+ 	reftable_record_copy_from(&copy, rec, REFTABLE_HASH_SIZE_SHA1);
+ 	/* do it twice to catch memory leaks */
+ 	reftable_record_copy_from(&copy, rec, REFTABLE_HASH_SIZE_SHA1);
 
 -- 
 2.48.1.502.g6dc24dfdaf.dirty
