@@ -1,56 +1,56 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0231F9423
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 08:03:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E238B1FAC3E
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 08:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738569829; cv=none; b=FG2z36bmXJIfOu1F6F3Lh35/CiKSqAnT96mk8qdEEq8nziUcosNvZfXRhf8g3bL0sfcl6dXpNCJAVuVm+DDYBju+Z9ASeyAsjduA23Z2JZAXae9XRqjEcKt1v1ATnW7KJgrUnRBNh24GyUW+z2Z/SLiJgOKsUAUdRIIfbNw6Xck=
+	t=1738569830; cv=none; b=vBVkJv5kTTrvlou+yZDsOW4Pk8Il4tZm7/QdNRVkqybA6EU/AyEKwhNFpGKEkjGn4DgZlWql/geZX5SGGzRwZKsBvXINfDECYR+5a6TTHSPrpJbH40MMVW3M9yTAk+fFekxZ40EsJSduqxA/a3fEt3Im56N0v8MBh2DW64fXw28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738569829; c=relaxed/simple;
-	bh=aw7awK+FeMDBmkVCC68Wm6KnlbHBWmmZknDm0ef6nqY=;
+	s=arc-20240116; t=1738569830; c=relaxed/simple;
+	bh=wxEI87iGTIa3+kw620bKbSDitIJdM3cdzEv2ghKd3aI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QwSjT8ky8Im4FfHXvIT+OrrNc449ha2AErMcz2YDUGCVfmtrd42tio8XYbywKKdBGGdUEOJAoQisCuiUyDDP2ievBhwWT8QpVyKsIrbiDk7K9O6qKPiJOtGTpae2rtLrRt8+COd+SuYbEo0gMUYZo8chtTCOYIsrFOwMW9GNYp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N5ncCKd/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Prr/7gMO; arc=none smtp.client-ip=103.168.172.145
+	 In-Reply-To:To:Cc; b=JX2fRp/tYYXySzPYl7UDAo1AvFCJhN06MQ9K/+qSnEZLmEhpiidwDW50lrvSUKDZ8SX8n4oMFucG7PEHyWGmiyDXbQMIjxfLNMvNzP6UTRAmCINeEBvvJSR8haMtqCgwquPVCejXHJU7w6TQL8Px8SzA4jKVpYJF7YwxxG7DuP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=edORGTNp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D55ja2ER; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N5ncCKd/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Prr/7gMO"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 207831380848;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="edORGTNp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D55ja2ER"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id F129F138084D;
 	Mon,  3 Feb 2025 03:03:47 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 03 Feb 2025 03:03:47 -0500
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 03 Feb 2025 03:03:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm3; t=1738569827;
-	 x=1738656227; bh=X+4hnS75rB3JlUbfmzElGd9YH4Ion0KA6mqd4Ke+ABY=; b=
-	N5ncCKd/qsvUQH49zAaIGu6ajLD60cLQ9croEPwekW0YgcIBR6PFK0Yiy0nBpOlK
-	65O7bdDQxUfoyuZzsKrHY1iW1esROJsC2qQoJnpSw2Q5WG3OyuGRHo4tD/YUwm9P
-	X0IDVTUI1Ju4o2rJ0Ct1mdpQHX6IepaK3o73E+Igq31LXkuqixo9Kym3tcvFOudx
-	I4jE4eoOw2OXgkt5by1pZ+isA5sPoAh4CrO0qBFA5Yx1opVNN5G/5vJ2y9YLSxXP
-	yuUIDaQH1klrMWSp2rMxYmSeT5aF6RZot0VPt7rpB0DWLNR/Pc7/9d9GWpm+/QJ5
-	v18b2/uI7x1NBIm+eR96UA==
+	 x=1738656227; bh=/UdAJ2VcwUlfo8plhFrFpBaMwXYGrKhpXmO0teJzpsE=; b=
+	edORGTNpCdJK/P6Rq3D8rJs9I5MWKhuRGZ6rj44qAIurHXt7a2ZtOsctR+ypOwpk
+	ZGJGZjgleMrm70Sm9R5xQm+WrxUd+p2nA+tjpjGhA4Rwi4NHNkiuxyaIQD/h/XNU
+	gur7mrvXN7WPl413m9YtTScsBab9MKjwpxiEFFoAHQqsmlAKHfE6FmmB1M+TUESh
+	ktOLoCdR7xmLtXZSyviGsKEQLyhCtSgCA2VH1c5fBcbkOH6e/d6JuckxFSVC6vUx
+	U5j6ArJYLfey/TpaLeCxG0BPeGArEMxngmWJeHU3xh1wzU8sKOY+IHeov5LJJ7bQ
+	I+IwdOYXXdgJVGYTkfNjSA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738569827; x=
-	1738656227; bh=X+4hnS75rB3JlUbfmzElGd9YH4Ion0KA6mqd4Ke+ABY=; b=P
-	rr/7gMO+UEwDBePyqJzbLs9yioXck3+y1oF6cxhNDZQTZrg6cwzGUweU7NBwo/VY
-	KfVStKwdydKSeJT1LQJXeP6fLbbjkjxwk+LUgiANZKTwNxIiOi6GxfLWnYpjqvK1
-	nXSialBOfGOTUI21fSl29eDixs3DX9i1xX1XhdumzH0xCV+MYSRoGe4+3XCQg604
-	XLwCTV0LenZpo4YnBUd5VwnHx7A1kxtYVK9pQ298bBfor05gSjmwnuFMkNe7ydlV
-	Jdua1SDeSp86Kzc/KbeXzj5NCOs/NEn4I5sjRbjNgNgDO4aR5o8jOj8oMmyvNv6a
-	nrH/4XEyoB3QJAM2uybig==
-X-ME-Sender: <xms:YnigZ4i-_RFe2lBNPy4Hztfh1ubY_-cT5ollDuHICVL8eiXseCDy1Q>
-    <xme:YnigZxBsjn8eitKssqimnVD6UW2FFwHC-_NyJwibP5q3oj6twNDTcQtnGb4F1M5fN
-    piWxDNfvc5IKWzhAQ>
-X-ME-Received: <xmr:YnigZwG72rr04IOyDscibSrXM2M7Sv9e1BKSdfJPiq9jb5rbEwKzHnTFd0Xw51nNKOZHzQg2CLtMo0J9kMA17NLcDq6acaaCDOU5fFT_koBs5w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedthecutefuodetggdotefrod
+	1738656227; bh=/UdAJ2VcwUlfo8plhFrFpBaMwXYGrKhpXmO0teJzpsE=; b=D
+	55ja2EREMespczXq6gcTuHG+p+AoDb8sZgH61QsFcb+t16UlkWM35KK2g1MGWfoa
+	12P5JB67ijMYTtEJUPrIGg0um4NxNxLk+VuD/s2zYx56W6wjKis/InqWlzQHmi2n
+	pXbQ1kBDaZ40L3vnO9PezHRWPdocA4cAmkP/3hy//rAfzgVVF6D+3cRCerITV+km
+	cf3dcr2pG8GUhpS/HNUvTqS6E9x35N5TgoWuVM2HNTkYozmu8Hk6PJcmXrfPwipX
+	Qt5usSTmmxahDtq8cg6LFlhGXIHB2RJEiKbYwgnSUGFjdjegO++n32Uw5avCnAT8
+	V6ZOckP7OcB09cXotiYuw==
+X-ME-Sender: <xms:Y3igZ6YsSGthGJzxN0dsjfJJNoCWyG6CkVFN8I60P_NWBGPIfr-9uA>
+    <xme:Y3igZ9ZC1urwvvboXTV3tDpNP2qBqRn-ZKJGwXVdE0ocyK8ljtJ2DGBKiMBygqxSy
+    jWBGoqidZ_mJUKeNg>
+X-ME-Received: <xmr:Y3igZ08R76W2WkdQhyUUWLGI59S19ihH9IERXKZ2EEzvOWLhyKXR-3xXOWCNhIEhzgVWGWaBaSaPdAiaMbl9O_bYtAZfydHdq47z8jFPoEY83g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedthecutefuodetgg
     himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
     heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopegvthhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdp
-    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:YnigZ5Tx85q0juCzcjDc26V1GpSeCUPQBSvNojJraFXnv8nDJmXOOg>
-    <xmx:YnigZ1yYnG0hph8D3i6KwDGJMXPMK7uM9xPu5c4wpCEqp5P8uAYvwQ>
-    <xmx:YnigZ34jRhq4bxkrL8k91ptWc_9GOoBLhCmOGNWgoUBrcq39iELbcQ>
-    <xmx:YnigZyzihaJk00cXQYdHgV7uXKnpnyltR0w-OWYVoXswfXazjkh20g>
-    <xmx:Y3igZ3sKCXRL-PPpdjPAOQBOaAi9pn995ccmhWuX0Iuku0nxrhUtzz-G>
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvght
+    hhhomhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohepjhhlth
+    hosghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:Y3igZ8rEDiy42aYVInd4_HCJJxXpoLsogEnJ_3WEpa1Cm5fY6qPd4Q>
+    <xmx:Y3igZ1oKk9nN86BzZ-hnUrm7-apYNXhhb-9kH_qTpEivKJrwqJ-vQw>
+    <xmx:Y3igZ6TgxtYyoWBpaMPmtyePNlQExgw1r-qpOBxoZbfM4nuvWq7R9g>
+    <xmx:Y3igZ1qPTuLCVFwMLyrXCTuB5u0jK72ZD1xxd-arbEDvSKTbXWXePA>
+    <xmx:Y3igZ2nvHOpEx_PPTK4efSJW1GnZV5IdHaitjbPbB24o2g01IrPoXWOK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 03:03:45 -0500 (EST)
+ 3 Feb 2025 03:03:46 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9a89136d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Feb 2025 08:03:44 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 811f9c53 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Feb 2025 08:03:45 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 03 Feb 2025 09:03:34 +0100
-Subject: [PATCH v3 03/18] reftable/blocksource: stop using `xmmap()`
+Date: Mon, 03 Feb 2025 09:03:35 +0100
+Subject: [PATCH v3 04/18] reftable/record: stop using `COPY_ARRAY()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250203-pks-reftable-drop-git-compat-util-v3-3-446c9ed4ee9e@pks.im>
+Message-Id: <20250203-pks-reftable-drop-git-compat-util-v3-4-446c9ed4ee9e@pks.im>
 References: <20250203-pks-reftable-drop-git-compat-util-v3-0-446c9ed4ee9e@pks.im>
 In-Reply-To: <20250203-pks-reftable-drop-git-compat-util-v3-0-446c9ed4ee9e@pks.im>
 To: git@vger.kernel.org
@@ -92,59 +92,45 @@ Cc: Edward Thomson <ethomson@edwardthomson.com>,
  Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-We use `xmmap()` to map reftables into memory. This function has two
-problems:
+Drop our use of `COPY_ARRAY()`, replacing it with an open-coded variant
+thereof. This is done to reduce our dependency on the Git library.
 
-  - It causes us to die in case the mmap fails.
-
-  - It ties us to the Git codebase.
-
-Refactor the code to use mmap(3p) instead with manual error checking.
-Note that this function may not be the system-provided mmap(3p), but may
-point to our `git_mmap()` wrapper that emulates the syscall on systems
-that do not have mmap(3p) available.
-
-Fix `reftable_block_source_from_file()` to properly bubble up the error
-code in case the map(3p) call fails.
+While at it, guard the whole array copy logic so that we only copy it in
+case there actually is anything to be copied. Otherwise, we may end up
+trying to allocate a zero-sized array, which will return a NULL pointer
+and thus cause us to return an `REFTABLE_OUT_OF_MEMORY_ERROR`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/blocksource.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ reftable/record.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/reftable/blocksource.c b/reftable/blocksource.c
-index bba4a45b98..02972c46f4 100644
---- a/reftable/blocksource.c
-+++ b/reftable/blocksource.c
-@@ -98,7 +98,7 @@ static struct reftable_block_source_vtable file_vtable = {
- int reftable_block_source_from_file(struct reftable_block_source *bs,
- 				    const char *name)
- {
--	struct file_block_source *p;
-+	struct file_block_source *p = NULL;
- 	struct stat st;
- 	int fd, err;
+diff --git a/reftable/record.c b/reftable/record.c
+index 8919df8a4d..2c0cc32cbd 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -504,11 +504,17 @@ static int reftable_obj_record_copy_from(void *rec, const void *src_rec,
+ 	if (src->hash_prefix_len)
+ 		memcpy(obj->hash_prefix, src->hash_prefix, obj->hash_prefix_len);
  
-@@ -122,7 +122,12 @@ int reftable_block_source_from_file(struct reftable_block_source *bs,
- 	}
- 
- 	p->size = st.st_size;
--	p->data = xmmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-+	p->data = mmap(NULL, st.st_size, PROT_READ, MAP_PRIVATE, fd, 0);
-+	if (p->data == MAP_FAILED) {
-+		err = REFTABLE_IO_ERROR;
-+		p->data = NULL;
-+		goto out;
+-	REFTABLE_ALLOC_ARRAY(obj->offsets, src->offset_len);
+-	if (!obj->offsets)
+-		return REFTABLE_OUT_OF_MEMORY_ERROR;
+-	obj->offset_len = src->offset_len;
+-	COPY_ARRAY(obj->offsets, src->offsets, src->offset_len);
++	if (src->offset_len) {
++		if (sizeof(*src->offsets) > SIZE_MAX / src->offset_len)
++			return REFTABLE_OUT_OF_MEMORY_ERROR;
++
++		REFTABLE_ALLOC_ARRAY(obj->offsets, src->offset_len);
++		if (!obj->offsets)
++			return REFTABLE_OUT_OF_MEMORY_ERROR;
++
++		memcpy(obj->offsets, src->offsets, sizeof(*src->offsets) * src->offset_len);
++		obj->offset_len = src->offset_len;
 +	}
  
- 	assert(!bs->ops);
- 	bs->ops = &file_vtable;
-@@ -135,5 +140,5 @@ int reftable_block_source_from_file(struct reftable_block_source *bs,
- 		close(fd);
- 	if (err < 0)
- 		reftable_free(p);
--	return 0;
-+	return err;
+ 	return 0;
  }
 
 -- 
