@@ -1,88 +1,88 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FF51D86C3
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 07:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4961C695
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 07:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738567870; cv=none; b=bwKRcIpX92wmOK8+c0IdcFH0+FYjRp3BwUrvcato+NZ+ualct9ABpt2h7bqA3cuhAKthaeW2UuQkrBvhMRp8X/5YnghGTBP5uWp0mXUVZgr0fbiSHlIqyECvP10N6ay34pLUxqIJBsBApG8A/Zk/6bBXtMyXuNHwR3/3zrIKPJE=
+	t=1738569087; cv=none; b=WkP6U3Xe7ScajrUa7HPp6P64DjpLF9H+znm+6qXUZDrc7Yxm8TT6v0JjD43mB0wAQHxPacId6OioZFa/cm9F3rkQ38OsczAv9mFG+sDtYTdgEFR2ZrRw37Y3kQ2mktH2CqdsR4SV6ltV4djC9AQgp19nc9aIjodIAPQYdilkhs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738567870; c=relaxed/simple;
-	bh=/P0cDN/25S44plHOHdIsQifh67h4v3RbaomiaoNjM1g=;
+	s=arc-20240116; t=1738569087; c=relaxed/simple;
+	bh=phzFRA5FbmK2cr3C32w5P/tpAZLjQq5mau46G3srMy4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TNjn9kydE/9pSlaCQJqSsVVq8lSv/XX6tXWAqHUdX84bXpbk9M7lKiOhW9QQwtB2We0T4teSwvfW68n0+/wD+6hGobxkUj+ks7hFoInFVr1EkGWQwk1ndKf5YBOa/VwMjKFNRm4PPC90bz7bcfqqOhqDXZAA0R3kBc0a06Yph9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XADLzww1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pLB1bIzq; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=LPTReYG5kfZJCWAJjBU/0lp7MwU9Sf9ECF/Z5nqh8iDTBzAfgxFWvFRVJpdUgjXft/qX5DdQDiyfYtmEIPOt3859yEYhsq2vfL/X7Iou1IV51SSnnjQmKtb7aGQfYH/g4bomUiKW3ka+aqMcKLTupK2j3MOwiMsCoJYYODiyTZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E+UaVvG6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t9rwPNUH; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XADLzww1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pLB1bIzq"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0F70E1380843;
-	Mon,  3 Feb 2025 02:31:05 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E+UaVvG6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t9rwPNUH"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id BFC78138074E;
+	Mon,  3 Feb 2025 02:51:24 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 03 Feb 2025 02:31:05 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 03 Feb 2025 02:51:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738567865; x=1738654265; bh=rFLbSvMvHK
-	2+Z0LisM43Ow+uZ0rQZUgYD6J3fVtgetI=; b=XADLzww1fNYpEyfdTGK3WfBU3k
-	gBeP234uIgZsWwsZ3/wTkJi6Jdi6Tz6vnSvQGpdceqAeCxtsmLBCHN9N26DdJ1+x
-	Asgh5LEHuVxlGPIAabwrJ785cmJH5A8KqcojnEnSkV4q1C98Pxi0JMm16BkISnkS
-	Q+ZI1+4o6vjSHATN5gRzfR1jt/I4S91bGDUDiBxTlAMdKF70cYipu3TYTd/SiIwA
-	WypO5TOhVtG1Rwostac78HpTvUsiuOvDZkA8X0Gw0CR7kH9Le6FmSR7vgaL+cGKh
-	84MjklYbI3XbPeB1meZLOA6iYTxQtvnCEnto3RwE8gayxP6i4KyffxgmqfEg==
+	:subject:to:to; s=fm3; t=1738569084; x=1738655484; bh=vtZhVVux+J
+	g9Npfw6f6sAE4UJeFSpnNfd1l/UwpdNt0=; b=E+UaVvG6/XLXXvgereZ/GuN37R
+	pizpK/BzOhtxB02vuNW1YEC4h6aXcR468V9SYUw0sc0faERWTl/3VBolyE7gs7jZ
+	fMw/Nir+0Avlkgf/p+3Vn2RoUjIpKKaciHXns8MKTOLW4IxEaGn8r2wgHFx4Di3T
+	pFRm6zt55+doXnpCC63X/RXuK+NH8PLffs4IbQjT5OPHLhMfk4RBXkt+gNEtJI3I
+	WMXnnBgkkoC2ikhvhQSeOoopzI+sQ4tnq+j+Sc4Mh1xI/DNNSnkBtcFACzihfjsr
+	4jyDNcR7zjTwucICDNjrsDQ+OXlCJklhug6NfJhCo44/vMoNrXtCAlT/rHFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738567865; x=1738654265; bh=rFLbSvMvHK2+Z0LisM43Ow+uZ0rQZUgYD6J
-	3fVtgetI=; b=pLB1bIzq4kPHH7nLAGwouCC5rJY+BwObXb3gJs4jEfKLdSUB8Vi
-	qdqySX4yyZVgAXA/9W5S+eVFizW5eh/KqW7rTbvqpEMyeJaErAPlkb8iTfcFxmAs
-	dz3XRX/VYUCD2NQXqGgLWqWpp17QWArYbLWoaV55x0AoczmvdkEQ76M0xza6uDAO
-	yvCRaeB7jH+qnHe1r7HI0VU3RJTEJsg/9HjqDTqhcbscxjmdt09mX0BEHyWooQVg
-	ml/92xcAM8JWLl+TBVNr6bHwZRqtUx1oor8P9cbhoKVAoVtwcatM8KwWuYNUcU79
-	4EhVQJcsEC4ZdmXLH6TuVUj8U4aW5mrVslw==
-X-ME-Sender: <xms:uHCgZ84YzpKkXCoLYWOo_u08nQ0KNey-Q0g1AswjLWFwMFnZIKQlOA>
-    <xme:uHCgZ96_53Xjt2VjmcPOyTMrcYR3yaa4ysOSDcBRkoaU2BnrLT75OIQmJGehzcf-_
-    KlMkVbjzPAh2NQH8w>
-X-ME-Received: <xmr:uHCgZ7d9Fsav5e0stHC-j2ZlTb41MHVMJCAhv33D7m4fdUlqNSRVzmicocl0LdkpRQuw04kpiCtw0ZZUhIYPvxR19K2qtTdYXqfdmYr8QaC-JA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieelkecutefuodetggdotefrod
+	1738569084; x=1738655484; bh=vtZhVVux+Jg9Npfw6f6sAE4UJeFSpnNfd1l
+	/UwpdNt0=; b=t9rwPNUHVrBSsy933C32PpTn8eV1HkSs+qlpmqyYUNfawkrMoAl
+	vV1ILvoj/7psyf+6TT7HDz9aC9C7geQkKLRBZjEIk82gPa8/GWf3LzIWMTvgXF7b
+	xnATkuNUKNqXUl6/3JOyDCf+B/6RM9AYL+uppr3oOW/qkJJcaf4s0dMH+zjaOmxG
+	UQNKAEAyuttI5GAAyS6h4dWIgOrNvhAq3VVbdqwVJaVl1aIKp9Xqoode1LLlL1rw
+	ZPVIaRpTqGEqajB/RnU1Z1c2Hc8ByaTUDy8QX8vnnmmVEhZbyoyC+FbB6mqe8fM1
+	gZM93q5f7QxeSY9OQJz2VM8lB6+NgmEqzIg==
+X-ME-Sender: <xms:fHWgZ8m-BFT9R3h6m451tI8cWTI-X_gvEtm3dOutqxtGMISh2ngOWg>
+    <xme:fHWgZ73tr4DPHZ1La9PWalrv15peFS1ZvreZsArulV8BL2c5LER0pIqZtapWUO-Se
+    mYAwtb9uQV6C4mn1Q>
+X-ME-Received: <xmr:fHWgZ6pfHOL5W7c_2jnFS7x4VcVD_yOaPx3Kctd2KdiWVsiqteYWc8Tufqwqkn4RNj88qZaaIUb45A2BxmVXPPnhvWovKhNCM7w7PIVIeofDHQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddujedtvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghp
-    thhtohepkhhufhhorhhijhhileeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:uHCgZxJdHWiF97CnnzUbvBVr1Mi2H5SwDGdGoZUh050q5BgakaAhZQ>
-    <xmx:uHCgZwKR-lrDfBBM__-Uk4RcMlFAqg6Q_jQ-8qEVDdUVg6yAvy8YIw>
-    <xmx:uHCgZywmtsVPevtz3fn_HIDBFtA4aYxo91mam-UGatqrw7gguWeB0w>
-    <xmx:uHCgZ0JaB6Ba7tPtPgzNwnZVzJRcH2QTslYhdPO9chqR0wI6MJOTWw>
-    <xmx:uXCgZ1EvfZA6fVted449gKUkmOpc93TiPk5MHnjAevkIz-dImdEMu2c7>
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
+    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehmshhutghhrghnvghksehsuhhsvgdr
+    uggvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehtohhonh
+    esihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhg
+X-ME-Proxy: <xmx:fHWgZ4njoqUvZWTnULcH-UUQeqJcA0eKRvv4rGtMdClkkTxMadvyYA>
+    <xmx:fHWgZ627V6uQgYvgENXEfiikEEmT0Uh_lA4Cll006sGa6hO7Foy1JQ>
+    <xmx:fHWgZ_vyWlFjOs_3beIfm6GcGf_E-Uy8rlnLXjtG5sl7MkGhQ1QWXw>
+    <xmx:fHWgZ2WICHYcDZA3CCpv2m6FJzes3YK0rUfnfUDVfPilPmdyyg4Dkw>
+    <xmx:fHWgZ29OnMScaDdPFOPxrWgLU0q22SHp1MYirRoLoPUatUD5NlYkl8Pt>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 02:31:03 -0500 (EST)
+ 3 Feb 2025 02:51:22 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 536776ce (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Feb 2025 07:31:01 +0000 (UTC)
-Date: Mon, 3 Feb 2025 08:30:55 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3c799a45 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Feb 2025 07:51:20 +0000 (UTC)
+Date: Mon, 3 Feb 2025 08:51:15 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: Seyi Kuforiji <kuforiji98@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/4] t/unit-tests: convert hashmap test to use clar
- test framework
-Message-ID: <Z6Bwr6hM54nu8nSS@pks.im>
-References: <20250130091334.39922-1-kuforiji98@gmail.com>
- <20250131221420.38161-1-kuforiji98@gmail.com>
- <20250131221420.38161-2-kuforiji98@gmail.com>
- <6be977a0-4bf9-4568-9b28-cdc988a49b89@gmail.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 3/6] clone: refactor wanted_peer_refs()
+Message-ID: <Z6B1c1lrmK3RYzKi@pks.im>
+References: <20250131-toon-clone-refs-v4-0-2a4ff851498f@iotcl.com>
+ <20250131-toon-clone-refs-v4-3-2a4ff851498f@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,62 +91,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6be977a0-4bf9-4568-9b28-cdc988a49b89@gmail.com>
+In-Reply-To: <20250131-toon-clone-refs-v4-3-2a4ff851498f@iotcl.com>
 
-On Sun, Feb 02, 2025 at 11:09:25AM +0000, phillip.wood123@gmail.com wrote:
-> On 31/01/2025 22:14, Seyi Kuforiji wrote:
-> > -	if (check(entry != NULL))
-> > -		check_str(get_value(entry), "value3");
-> > +	cl_assert(entry != NULL);
-> > +	cl_assert_equal_s(get_value(entry), "value3");
+On Fri, Jan 31, 2025 at 04:30:31PM +0100, Toon Claes wrote:
+> The function wanted_peer_refs() is used to map the refs returned by the
+> server to refs we will save in our clone.
 > 
-> Unfortunately cl_assert_equal_s() is not equivalent to check_str()
-> because it does not handle NULL correctly. I think it would be very
-> helpful to fix that upstream. The diff below shows a possible solution
-> which avoids any ambiguity as to which pointer is NULL by only quoting
-> non-NULL values. In the long run it would be good to fix
-> cl_assert_equal_s() to properly quote control characters as check_str()
-> does.
+> Over time this function grown to be very complex. Refactor it.
 
-That's indeed something we should fix in clar.
+The diff of this commit is a bit on the harder side to read, so it would
+be nice if the message guided the reader a bit.
 
-> diff --git a/t/unit-tests/clar/clar.c b/t/unit-tests/clar/clar.c
-> index d54e4553674..16f86c952f7 100644
-> --- a/t/unit-tests/clar/clar.c
-> +++ b/t/unit-tests/clar/clar.c
-> @@ -754,7 +754,12 @@ void clar__assert_equal(
->                                  p_snprintf(buf, sizeof(buf), "'%s' != '%s' (at byte %d)",
->                                          s1, s2, pos);
->                          } else {
-> -                                p_snprintf(buf, sizeof(buf), "'%s' != '%s'", s1, s2);
-> +                                const char *q1 = s1 ? "'" : "";
-> +                                const char *q2 = s2 ? "'" : "";
-> +                                s1 = s1 ? s1 : "NULL";
-> +                                s2 = s2 ? s2 : "NULL";
-> +                                p_snprintf(buf, sizeof(buf), "%s%s%s != %s%s%s",
-> +                                           q1, s1, q1, q2, s2, q2);
->                          }
->                  }
->          }
-
-Would you mind creating an upstream pull request with these changes? I'm
-happy to review, and then we can update our embedded version of clar.
-
-> >   	for (size_t i = 0; i < ARRAY_SIZE(query); i++) {
-> >   		entry = get_test_entry(map, query[i][0], ignore_case);
-> > -		if (check(entry != NULL))
-> > -			check_str(get_value(entry), query[i][1]);
-> > -		else
-> > -			test_msg("query key: %s", query[i][0]);
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+>  builtin/clone.c | 39 +++++++++++++++------------------------
+>  1 file changed, 15 insertions(+), 24 deletions(-)
 > 
-> It is a shame that we're removing all of the helpful debugging messages
-> from this test. It would be much nicer if we could keep them by using an
-> if statement and cl_failf() as we do in u-ctype.c
+> diff --git a/builtin/clone.c b/builtin/clone.c
+> index 69d1ad029dfa84a2f7136fa4a3c4c8a594b179c4..d652682494d0d27dd73cd0585e28b23f2883786d 100644
+> --- a/builtin/clone.c
+> +++ b/builtin/clone.c
+> @@ -434,46 +434,37 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
+[snip]
+> -	if (!option_mirror && !option_single_branch && option_tags)
+> +	for (int i = 0; i < refspec->nr; i++)
 
-I honestly think that the debug messages don't add much and only add to
-the noise. You shouldn't ever see them, and if you do something is
-broken and you'll likely end up pulling out the debugger anyway. So I'm
-more in the camp of writing unit tests in a concise way rather than the
-needlessly-verbose style we previously had.
+While at it: this should be `size_t i` to match the type of
+`refspec->nr`.
 
 Patrick
