@@ -1,42 +1,42 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E639209F51
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 15:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FAB6208995
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 15:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738596809; cv=none; b=UI1Z4mh89jkNaIY+2P7P9/Bjmb1Ea4anxl9dANi/TyENzb/u8l4wqXI5p3Tpo3HAgrakkCNRCE5bc9zfkJTSKUD4yHwhBYizGx5vb3o+zlvF36oVF+zuvngK2NB1wqYqlb3eMybgKb5zesfZYT/mItkBpudjMiovi6+Kqa/jCpU=
+	t=1738597048; cv=none; b=iUiRIkk7VQYtK8Zb52E2BZcbH7k+gnDJh3AWkwjGvvSv0+o7mvXsDTJaBlx8Gqi6lc1qgZbd7rqg4iNM3Q9VmlYVS2rZ1dKobvT2xcTzhVDUk9lNMc2g9PpFrAjbAKrIiUMucQf4WZAUzSH4htow6sXbXovPEB5HMgF+A3dOyI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738596809; c=relaxed/simple;
-	bh=nxlGwYnz+YNsbky/D1V3nwkE+oztNz4ETz/BtpDCk5E=;
+	s=arc-20240116; t=1738597048; c=relaxed/simple;
+	bh=Z73zDV9JChA5FOZsG+3feExdHNIp8Ex+9vw5SNTYEDc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e2U+dji8SQDS4kJa3/mpk4psT97KO2VZ7Su77Bq3NGOs9RcMFFCf3UxTTM17wFr6gqm9y0LFEOA59u1cOrhxof3Z48zvL+5tJu+e4g+3MD8eRiu+BrSta1b870i0DIupwLGzXi4fFyOCrKUsdFBRDkuts6YvkbI7ehxw+a+fihU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=brqnzV+3; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=VyrYTnL/bHCb/raFRoODRK+YNlfRliYqfnoj5P6PyJLBERzNL8KLHJrQqKmV1BZ34E2xv1SxbiWfNVYEz74TpjWBF2K2KaX7dUZzav3wWv+ARPA71WwP6rZrPQ7ZfG3A7TAD/uLttN2UonRaxtImisvH7Ge3JlshcCC2/n5Mpwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JpMMGGbL; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="brqnzV+3"
-Received: (qmail 18334 invoked by uid 109); 3 Feb 2025 15:33:20 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=nxlGwYnz+YNsbky/D1V3nwkE+oztNz4ETz/BtpDCk5E=; b=brqnzV+3v7WeGztV8KfYnKJ7AmfuIxMBybsAiNMbnAY4O7HwBYWhYuoPyGhy8KzPqHuwYuD2ne5/WZ3DHy3TMPH38ErsFcuN33Ho7IeAg3xi9Ss8gMZiUxmjEiV7LtFy3o8JqcOHb3KH8rej+Ra1k0XAZS4Qbgoa7WkTm0bPlmLcjXJLiSoejOMTZ4VkbI1L7D5rkY5IiWYVRbZU2nClGoDXs/ZquUc/UHQMA6VRsaYuviq6n/W0lA2TET06CJZ0i8oLhDW5uMxAEBgrHUqriKJtWRKju0gljoqMtKyq0HKPTuRm550iOyILQR+p9uis7Do+MwVBX94QSJX/TPdNTA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JpMMGGbL"
+Received: (qmail 18376 invoked by uid 109); 3 Feb 2025 15:37:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Z73zDV9JChA5FOZsG+3feExdHNIp8Ex+9vw5SNTYEDc=; b=JpMMGGbLpopiZdUrLbpHlIPjXNXRGsNMgvBx7/OWydP48GibLbxECH5nV0tbojwPyofEcOHVqGciEhovI5/EEAn4glcRsb2lKsCQr8N+6038vVoVWwksIFlvsPftcSelijVkhDsdPDbB++ouQgHVK8zRVxwxRAK2zm16KdfhfajQshBil5idBw9aLKisHfzZT/vx/4IqOJ5A2maqJko/RhVwl3VA4kjnbpmW9+dyoZm4AeV/6I/LU+ZTLSUhcC+ND+gW4QlDf+oUNZ0sBsuQeTGuXvu7twKiVheUHCziSrjOq9avpauDHZSKHAPtCSAa/IBOWCZH5pQmEvXlk+1ZeQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 Feb 2025 15:33:20 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 03 Feb 2025 15:37:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21193 invoked by uid 111); 3 Feb 2025 15:33:20 -0000
+Received: (qmail 21313 invoked by uid 111); 3 Feb 2025 15:37:25 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Feb 2025 10:33:20 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 03 Feb 2025 10:37:25 -0500
 Authentication-Results: peff.net; auth=none
-Date: Mon, 3 Feb 2025 10:33:19 -0500
+Date: Mon, 3 Feb 2025 10:37:24 -0500
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2025, #06; Wed, 22)
-Message-ID: <20250203153319.GA4165842@coredump.intra.peff.net>
-References: <xmqqbjvyv510.fsf@gitster.g>
- <20250123003613.GA3900660@coredump.intra.peff.net>
- <xmqq5xm6uwip.fsf@gitster.g>
- <20250131233452.GB3544301@coredump.intra.peff.net>
- <xmqqwme73ost.fsf@gitster.g>
+To: phillip.wood@dunelm.org.uk
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: undefined behavior in unit tests, was Re: [PATCH v3 3/3]
+ reftable: prevent 'update_index' changes after adding records
+Message-ID: <20250203153724.GB4165842@coredump.intra.peff.net>
+References: <20250122-461-corrupted-reftable-followup-v3-0-ae5f88bf04fa@gmail.com>
+ <20250122-461-corrupted-reftable-followup-v3-3-ae5f88bf04fa@gmail.com>
+ <20250201022409.GA4082344@coredump.intra.peff.net>
+ <425859d1-d42e-42ee-b59c-723a519f0ad8@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,58 +45,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqwme73ost.fsf@gitster.g>
+In-Reply-To: <425859d1-d42e-42ee-b59c-723a519f0ad8@gmail.com>
 
-On Sun, Feb 02, 2025 at 03:33:06PM -0800, Junio C Hamano wrote:
+On Sat, Feb 01, 2025 at 10:33:13AM +0000, Phillip Wood wrote:
 
-> Jeff King <peff@peff.net> writes:
+> > In normal production code, we'd expect something like:
+> > 
+> >    if (err)
+> > 	return -1;
+> > 
+> > to avoid running the rest of the function after the first error. But the
+> > test harness check() function doesn't return. It just complains to
+> > stdout and keeps running!
 > 
-> >> Nice way to use extended context to show why the change makes sense.
-> >
-> > I've been tempted to support a:
-> >
-> >   Diff-options: -U10
-> >
-> > trailer, but that is probably overkill and full of annoying corner
-> > cases.
+> That is to allow the test to add more context with test_msg() or do things
+> like check all the members of a struct before returning. It is a bug in the
+> test if it does not return after finding a NULL pointer, the correct usage
+> is
 > 
-> Do you mean to embed it in the commit log trailer and upon seeing
-> it, the log family of commands add it to their setup_revisions()
-> invocation, thusly affecting things like "format-patch" and "show"?
-
-Yeah, exactly. Similar to the Best-viewed-with that Ben mentioned (and
-that name, while clunky, probably shows the intent more).
-
-But...
-
-> As a reminder for a patch submitter (i.e., communicated by you who
-> wrote the commit to future you who will run format-patch for
-> submission), something locally maintained might be sufficient,
-> e.g. refs/notes/diffopts that is not shared by default, but still,
-> this hint probably wants to be per-path (ideally per-hunk).
+> 	if (!check(ptr))
+> 		return;
 > 
-> But I think it will make it annoying if you forced those who fetched
-> from you to use "-U10" when they do "git show", as the choice would
-> be strongly affected by personal preference.  And I certainly do not
-> want to see anything less benign than "-U10" silently forced upon me.
+> As we're in the process of switching to using clar which does exit the text
+> function if a check fails (that means there may be leaks on failure but if
+> the test is failing then I don't think we should be worrying about leaks) I
+> don't know if it is worth fixing these or not. I guess it depends if there
+> are the list of targets for Seyi's Outreachy project.
 
-Yes, this is my worry, as well. It is nice to suggest to people viewing
-the diff later that this particular case might benefit from some
-options. But I don't like the idea of forcing the view on them.
+Ah, that's good to hear. I don't think there's any urgency here. These
+have been popping up since people started adding more unit-tests/ last
+summer. Waiting a few more months to switch to clar is probably not a
+big deal.
 
-I almost wrote it as:
+I'm OK with ignoring a leak in a failing test. I do suspect that
+Coverity might still complain about the leaks, because it is doing
+static analysis to show that we _can_ leak (rather than the tests, which
+are seeing if we leaked at runtime). But I'm not sure how much effort we
+want to spend on making tests do cleanup on failure. Especially in a
+language like C.
 
-  Diff-context: 10
-
-which would be more limited. But even that might be annoying in some
-cases. And it's probably not flexible enough (other things that are
-likely to be suggested are --color-moved, -w, and --function-context).
-
-Maybe it would be a better feature in an interactive tool like tig,
-where you could use a key to flip between your normal diff, and the diff
-as suggested by the commit author. And then the trailer just becomes a
-micro-format that some tools may respect for the feature. They'd still
-need to be careful about allowing through arbitrary options to avoid
-security problems.
+Anyway, I'll continue to ignore these Coverity results for now, then. ;)
 
 -Peff
