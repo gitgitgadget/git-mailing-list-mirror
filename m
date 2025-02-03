@@ -1,82 +1,82 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC0E1D63DD
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 06:29:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D987C1D86C3
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 06:29:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738564188; cv=none; b=KQyX7wTYxRuGIZwwtpF5GUzdaqRdXhohtP3mfC/3+5olpMSzwnky5YDHFQJjO2zmGMMlwyH+PwAJOyY69lmyuGRQy3jSmH6ls8AidibPtfgzVeKvEJKk/fbxtxxDnUdDQsgLbgbnVDqjDk2OQ7p0Qy39gVAi0+StNec59JvbzR8=
+	t=1738564189; cv=none; b=VBYlGSCR/oWgCCt7lUybT+ckLmYte+V7Wwu7N7hg0I1x2FQw0FEyFeX5p7JFbE+ch18hJnAztnfGeicSD0+wZhR7rS50Extu98l0ypJ6G5FDugTJDYxT4v1s/rY55zzpTnEwIGKTOlZP3X3WVB3uc0IdOEqMX2QTXHZ/kmEbaQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738564188; c=relaxed/simple;
-	bh=VGYVGVzADvFJi920HxjTNNlr/xldFe1DUy6hDcwHgfY=;
+	s=arc-20240116; t=1738564189; c=relaxed/simple;
+	bh=pKLx5AbYFplEym75aQ36nZRYMN4gAJi9rTE1bVyXkxE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=f6bT+zhUw9UJGWTG59BhScJMRY2qPGyV9s12JgrSpiGSPU+vZ5ZRVuT5NR3tvmAFp/jdnA7HNxWo9NCyOUzmeQya6jmSaNjnSoW2sKKQtZmVAOTEPxglKmmW4+oMvLT0fdGZy2fcYU8cAtMTBx9aPH2tZ9+A+jYMi3CxraJFV4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m3bSWMh2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0uTb4Yuj; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=mNEGEPAWBw4SsE/W0BWtNPMW9EZbFRetSq5q980JENPB5vxtYdW6VdY30cYV9W61dzvfXHYS84V6I/bvQ/y4lVpTiKDgKl4IixCzLSga1muzCVv3+iDxJZfF7wXPXaw3qsS1HUG8PVCOnbhzqawyInjSrRxX2F/WbhxhUjkoyhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YG4+DTvi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vz2ZDk34; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m3bSWMh2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0uTb4Yuj"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C712B1140174;
-	Mon,  3 Feb 2025 01:29:45 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 03 Feb 2025 01:29:45 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YG4+DTvi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vz2ZDk34"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id E28401380601;
+	Mon,  3 Feb 2025 01:29:46 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Mon, 03 Feb 2025 01:29:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738564185;
-	 x=1738650585; bh=2EM6yGfIcRKfHB0cAvM0gQt5x0ZGXVK55FzZP43vO/Y=; b=
-	m3bSWMh2Xr02/yZ3eZuaQ9ZeIBLvZACg2LAlWbzUfQccXgUPeIATwUSNQ3j4fyQq
-	3VcgvHAgqYXKozhJrs7xfIy4I9jmjV9wYBMg0Cm3oQP700v4xB5E6W73IodVW+BQ
-	3pb7kGGFzxU2hvH5swIZOD1xMrkGwusK9kZVvl22PgYmGBsO1ZTitdv4vyX/jI8x
-	6Fk8NY4bjrS6sBNqkDXWX7Zj+TNyB3TXTIhZFQ+wT7816kSLUjul5Nn9Bvs/SAtu
-	V2aAV6jx0lX0V1j0m5cWjQTzgbML1Ra2tC2PdUDWTseG5E3kpxnhp7USK5BEzf9n
-	prQMLW6yKGa9TtrUHpu32g==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738564186;
+	 x=1738650586; bh=8rOCIbgznNeydvWMf/Vh1x1sEOIcV6oLc7deQU33H0E=; b=
+	YG4+DTviKTd0tIMt+2XKbkVwpHBqYEAFeLGqqfOZEzYfPtQaUAeadk5mFtQV4G41
+	85bUH42aMS44WZZynIOFz7iUOUKlakbHWVWIASPCqnA8S36W2e9AalAJbdILXRzW
+	Hjl9bU2EuEpFo3b5eUbyiMIxr05a3aVPS2qad0Ko5odVsVToaYetugFccnl7cwP7
+	U5k1rg8uIbt0V+eDIzYsW/VkQxVeRK8FFu/7iO5aCjzhCR4ulEMeHwcfFbpTnUoM
+	XDDbwo/fnkgVJqFDwwYnbaVPGPeaK2PeuLGNEDgfxVl9D8rLZ0MIn9Y4WiZUejRh
+	Wu2dNz82lkC93f5SBakU5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738564185; x=
-	1738650585; bh=2EM6yGfIcRKfHB0cAvM0gQt5x0ZGXVK55FzZP43vO/Y=; b=0
-	uTb4Yuj4gpPXaCG/efUg6hAgIqBlaqQcaXyVTcm6J5xhTNWyaql1ulgSSDi6qEm2
-	9oBQ0IcEzmGQcF2R9H3Tnn99q4t60+vzLj9soUhzIcCdOOjBg1aeyZRwPX4Co/4o
-	h9uFDR4+61FT6rmFp3O2wz3DrzRcXRY6kopTaEUvFqaXMbdzZTnDD56kXa/51STW
-	/gN/HwnnhbQkBTtkkC9FBug8qbtudtEbyIfz9bPidu4/QYQThZTrl03zDx+8uS+O
-	YIFypACrO84jUsr/p7dRZ1SgkwGv6I0cHLVgqpi52/KDRPcytRc+fxVokfXYDH9w
-	TeiDw+3zHArKl/llwGP6Q==
-X-ME-Sender: <xms:WWKgZ2Hm9R8ojXcq1igYAtkvrfirK-TTaAqlYQ_9FoNE75HCBUOXng>
-    <xme:WWKgZ3VZEFBpnFQokHS8iTfnJAWmUm4GFIgKy_moHCkxiNKHRax1hkxebYMelDWNM
-    0ZPmQFQW4_-vFcXSA>
-X-ME-Received: <xmr:WWKgZwKNkay3pJYJWMRB1dkYYghMApRqHVx6-l9e41zLoSr6eY0I-Y6tbaC0buIxg38WokfBRt_P42SVEUaFXZOB_nItfVQiEotK5m07zotm9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieekiecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738564186; x=
+	1738650586; bh=8rOCIbgznNeydvWMf/Vh1x1sEOIcV6oLc7deQU33H0E=; b=V
+	z2ZDk34yxp9nFWyMp4C0sLkziCWmj9qX9RpDdwbcqKMOgAJKYEESspEbbyMdol/5
+	kzicgzamKqr6sysfeD8JyAmJWNeDTuubTkhIWMiStWnoR9f3hLqrjlehCBXZhGxC
+	+ssjMfYpYAgNdjGbZjmpq5Um2QhTCmCNkJTeYvqBdnWkwd/gunSyz6fz2vZwDYfl
+	AW3ViDkI5ihs4/DaEJI1XpJnEa6NPnawFBTyFYDfXr694ky0fVQg67i3cQWhxe0b
+	BCX3TLeON+Qxm4eaKiObK2DR2x1a8ckY5CXetXXs3+CvwPqnnEsm39B/+kyn8ekK
+	Js4wK7m+i5pgzQbGjwZZw==
+X-ME-Sender: <xms:WmKgZ5gBQXXtCyQzNS5C6xQfiHEbi7jtVdjLPPjdHUtmRLLps2oxYA>
+    <xme:WmKgZ-BZMuTVcc-rpb7YMP-E2wsU3GJoRYxhNf10wyajtyRFkDP8R-9n7XSMxyKOA
+    DTDW91G4sSRkzp2Ew>
+X-ME-Received: <xmr:WmKgZ5HcD3hMG8I2HlFpkD-apzJECtwCfP7Wv1SMnW5Fzou69R4sGnQ0mQMFii5n_V7nrrWojkfH5vC4TY1PrOJUw1uTFYHlMKyoa8XpZLlVbw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduieekhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
     jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
-    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhu
-    nhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopeiihhhihihouh
-    drjhigsegrlhhisggrsggrqdhinhgtrdgtohhm
-X-ME-Proxy: <xmx:WWKgZwFCZD1HNhiJR65u1dpFz4Aa_1N3MNyJJr9fXy4ZS1LELl6iUA>
-    <xmx:WWKgZ8XELCphkyiwOkc8PBbWha1L9CysXek6jtvxPyKjd1lXQ-DH_A>
-    <xmx:WWKgZzNiW-ofC3BoXne5-U3mLf7O27ch4VW8OyfXAOOkBENvb5vNrg>
-    <xmx:WWKgZz0zxBaqnvQcijKWxcsOe1HSU4hLXV6oPXhdExa4iT02NuormA>
-    <xmx:WWKgZ6wM4GorPelPmi5rq8EO42O59QMqR3m6PcDd3Y_q4U5fVOMzYj7n>
+    himheqnecuggftrfgrthhtvghrnhepvdejteetffehjeevledvffffffevhfffieejffel
+    iefghfevieegffdvhedtkedunecuffhomhgrihhnpehhthhtphgurdhshhenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeiihh
+    hihihouhdrjhigsegrlhhisggrsggrqdhinhgtrdgtohhmpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
+    mh
+X-ME-Proxy: <xmx:WmKgZ-SbereDvY5t4AUftOAs7vlKOrCfEacctAmVVyP4Zu04mnL7JQ>
+    <xmx:WmKgZ2z8tvFH10AxsSRkNMq4zxj0zO2-f3hr2nNUxbO9MVX157c3ng>
+    <xmx:WmKgZ04eKS7ePjB3IYEgGMhLIKbjf2Zt2oIjL6iJT4vJPO9SVWbzuA>
+    <xmx:WmKgZ7yMQZ_EtXfkPFQRTB8Zp_GwDTScpQsHqqubIeaDCqbirpJ6qg>
+    <xmx:WmKgZwt3-a0XhevNgNXAE9pXV-J4Lho2UDX-W8a7jeLzSAKMpXbX8630>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 01:29:44 -0500 (EST)
+ 3 Feb 2025 01:29:45 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id cee124e5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 3 Feb 2025 06:29:42 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6c763354 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 3 Feb 2025 06:29:43 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 03 Feb 2025 07:29:31 +0100
-Subject: [PATCH v5 1/8] t5504: modernize test by moving heredocs into test
- bodies
+Date: Mon, 03 Feb 2025 07:29:32 +0100
+Subject: [PATCH v5 2/8] t5548: refactor to reuse setup_upstream() function
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250203-pks-push-atomic-respect-exit-code-v5-1-d66481e36622@pks.im>
+Message-Id: <20250203-pks-push-atomic-respect-exit-code-v5-2-d66481e36622@pks.im>
 References: <20250203-pks-push-atomic-respect-exit-code-v5-0-d66481e36622@pks.im>
 In-Reply-To: <20250203-pks-push-atomic-respect-exit-code-v5-0-d66481e36622@pks.im>
 To: git@vger.kernel.org
@@ -93,90 +93,152 @@ Cc: Jiang Xin <zhiyou.jx@alibaba-inc.com>,
  Junio C Hamano <gitster@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
 X-Mailer: b4 0.14.2
 
-We have several heredocs in t5504 located outside of any particular test
-bodies. Move these into the test bodies to match our modern coding
-style.
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
+Refactor the function setup_upstream_and_workbench(), extracting
+create_upstream_template() and setup_upstream() from it. The former is
+used to create the upstream repository template, while the latter is
+used to rebuild the upstream repository and will be reused in subsequent
+commits.
+
+To ensure that setup_upstream() works properly in both local and HTTP
+protocols, the HTTP settings have been moved to the setup_upstream() and
+setup_upstream_and_workbench() functions.
+
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t5504-fetch-receive-strict.sh | 35 ++++++++++++++++-------------------
- 1 file changed, 16 insertions(+), 19 deletions(-)
+ t/t5548-push-porcelain.sh | 83 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 53 insertions(+), 30 deletions(-)
 
-diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
-index e273ab29c7..58074506c5 100755
---- a/t/t5504-fetch-receive-strict.sh
-+++ b/t/t5504-fetch-receive-strict.sh
-@@ -64,12 +64,6 @@ test_expect_success 'fetch with transfer.fsckobjects' '
- 	)
- '
+diff --git a/t/t5548-push-porcelain.sh b/t/t5548-push-porcelain.sh
+index 6282728eaf..1bf4d48cd9 100755
+--- a/t/t5548-push-porcelain.sh
++++ b/t/t5548-push-porcelain.sh
+@@ -54,29 +54,65 @@ format_and_save_expect () {
+ 	sed -e 's/^> //' -e 's/Z$//' >expect
+ }
  
--cat >exp <<EOF
--To dst
--!	refs/heads/main:refs/heads/test	[remote rejected] (missing necessary objects)
--Done
--EOF
--
- test_expect_success 'push without strict' '
- 	rm -rf dst &&
- 	git init dst &&
-@@ -78,6 +72,11 @@ test_expect_success 'push without strict' '
- 		git config fetch.fsckobjects false &&
- 		git config transfer.fsckobjects false
- 	) &&
-+	cat >exp <<-\EOF &&
-+	To dst
-+	!	refs/heads/main:refs/heads/test	[remote rejected] (missing necessary objects)
-+	Done
-+	EOF
- 	test_must_fail git push --porcelain dst main:refs/heads/test >act &&
- 	test_cmp exp act
- '
-@@ -94,11 +93,6 @@ test_expect_success 'push with !receive.fsckobjects' '
- 	test_cmp exp act
- '
- 
--cat >exp <<EOF
--To dst
--!	refs/heads/main:refs/heads/test	[remote rejected] (unpacker error)
--EOF
--
- test_expect_success 'push with receive.fsckobjects' '
- 	rm -rf dst &&
- 	git init dst &&
-@@ -107,6 +101,10 @@ test_expect_success 'push with receive.fsckobjects' '
- 		git config receive.fsckobjects true &&
- 		git config transfer.fsckobjects false
- 	) &&
-+	cat >exp <<-\EOF &&
-+	To dst
-+	!	refs/heads/main:refs/heads/test	[remote rejected] (unpacker error)
-+	EOF
- 	test_must_fail git push --porcelain dst main:refs/heads/test >act &&
- 	test_cmp exp act
- '
-@@ -129,15 +127,14 @@ test_expect_success 'repair the "corrupt or missing" object' '
- 	git fsck
- '
- 
--cat >bogus-commit <<EOF
--tree $EMPTY_TREE
--author Bugs Bunny 1234567890 +0000
--committer Bugs Bunny <bugs@bun.ni> 1234567890 +0000
--
--This commit object intentionally broken
--EOF
--
- test_expect_success 'setup bogus commit' '
-+	cat >bogus-commit <<-EOF &&
-+	tree $EMPTY_TREE
-+	author Bugs Bunny 1234567890 +0000
-+	committer Bugs Bunny <bugs@bun.ni> 1234567890 +0000
++create_upstream_template () {
++	git init --bare upstream-template.git &&
++	git clone upstream-template.git tmp_work_dir &&
++	create_commits_in tmp_work_dir A B &&
++	(
++		cd tmp_work_dir &&
++		git push origin \
++			$B:refs/heads/main \
++			$A:refs/heads/foo \
++			$A:refs/heads/bar \
++			$A:refs/heads/baz
++	) &&
++	rm -rf tmp_work_dir
++}
 +
-+	This commit object intentionally broken
-+	EOF
- 	commit="$(git hash-object --literally -t commit -w --stdin <bogus-commit)"
- '
++setup_upstream () {
++	if test $# -ne 1
++	then
++		BUG "location of upstream repository is not provided"
++	fi &&
++	rm -rf "$1" &&
++	if ! test -d upstream-template.git
++	then
++		create_upstream_template
++	fi &&
++	git clone --mirror upstream-template.git "$1" &&
++	# The upstream repository provides services using the HTTP protocol.
++	if ! test "$1" = "upstream.git"
++	then
++		git -C "$1" config http.receivepack true
++	fi
++}
++
+ setup_upstream_and_workbench () {
++	if test $# -ne 1
++	then
++		BUG "location of upstream repository is not provided"
++	fi
++	upstream="$1"
++
+ 	# Upstream  after setup : main(B)  foo(A)  bar(A)  baz(A)
+ 	# Workbench after setup : main(A)
+ 	test_expect_success "setup upstream repository and workbench" '
+-		rm -rf upstream.git workbench &&
+-		git init --bare upstream.git &&
+-		git init workbench &&
+-		create_commits_in workbench A B &&
++		setup_upstream "$upstream" &&
++		rm -rf workbench &&
++		git clone "$upstream" workbench &&
+ 		(
+ 			cd workbench &&
++			git update-ref refs/heads/main $A &&
+ 			# Try to make a stable fixed width for abbreviated commit ID,
+ 			# this fixed-width oid will be replaced with "<OID>".
+ 			git config core.abbrev 7 &&
+-			git remote add origin ../upstream.git &&
+-			git update-ref refs/heads/main $A &&
+-			git push origin \
+-				$B:refs/heads/main \
+-				$A:refs/heads/foo \
+-				$A:refs/heads/bar \
+-				$A:refs/heads/baz
++			git config advice.pushUpdateRejected false
+ 		) &&
+-		git -C "workbench" config advice.pushUpdateRejected false &&
+-		upstream=upstream.git
++		# The upstream repository provides services using the HTTP protocol.
++		if ! test "$upstream" = "upstream.git"
++		then
++			git -C workbench remote set-url origin "$HTTPD_URL/smart/upstream.git"
++		fi
+ 	'
+ }
  
+@@ -88,7 +124,7 @@ run_git_push_porcelain_output_test() {
+ 		;;
+ 	file)
+ 		PROTOCOL="builtin protocol"
+-		URL_PREFIX="\.\."
++		URL_PREFIX=".*"
+ 		;;
+ 	esac
+ 
+@@ -247,10 +283,8 @@ run_git_push_porcelain_output_test() {
+ 	'
+ }
+ 
+-# Initialize the upstream repository and local workbench.
+-setup_upstream_and_workbench
++setup_upstream_and_workbench upstream.git
+ 
+-# Run git-push porcelain test on builtin protocol
+ run_git_push_porcelain_output_test file
+ 
+ ROOT_PATH="$PWD"
+@@ -258,21 +292,10 @@ ROOT_PATH="$PWD"
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
+ start_httpd
+-
+-# Re-initialize the upstream repository and local workbench.
+-setup_upstream_and_workbench
+-
+-test_expect_success "setup for http" '
+-	git -C upstream.git config http.receivepack true &&
+-	upstream="$HTTPD_DOCUMENT_ROOT_PATH/upstream.git" &&
+-	mv upstream.git "$upstream" &&
+-
+-	git -C workbench remote set-url origin $HTTPD_URL/smart/upstream.git
+-'
+-
+ setup_askpass_helper
+ 
+-# Run git-push porcelain test on HTTP protocol
++setup_upstream_and_workbench "$HTTPD_DOCUMENT_ROOT_PATH/upstream.git"
++
+ run_git_push_porcelain_output_test http
+ 
+ test_done
 
 -- 
 2.48.1.502.g6dc24dfdaf.dirty
