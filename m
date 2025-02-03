@@ -1,87 +1,84 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32170182B4
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 22:14:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226FB211A3E
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 22:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738620895; cv=none; b=DZL9Fwm80G07xdS4Daei2c+/MOx81lNfrdovMoaOVlfWgMTHoO7eKqPxjet1gRGXK0XDm3iwEjg+jVFVYhFE/NTLGoq1jPphI3Nu9kWVrDTvcEnr0QGm/prSAvw+uwJ3B7MYlCe5GE5um9XZxSAQEMMzoQGe/NXSb17ztFxEUzw=
+	t=1738622029; cv=none; b=CqqiBt8kL/NXFObqlviRPRQryn7/f98OT755n+zVdJKWw/yvcN0MGZ9Yp+1G4/uFGP7jx/cukL05BPvVOlqRvqCl+mtHqbMPWcyZazD3Jx9zkkoj5SgQJa4MB/wDozzGpPrMzj3h9NT3ye8ffgf0GW+df39fcyuqh/1xb46P5Ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738620895; c=relaxed/simple;
-	bh=BPL9KiM9hzyTAhHN+BaVD8RZJOJQtkeUUWrduF+RhHY=;
+	s=arc-20240116; t=1738622029; c=relaxed/simple;
+	bh=s8m6BXH54tLsr0MIMTOmsjiVbq74Z9Y/G+wzVkmePnU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LoLTUQbdwmtpjzqHo4an65DT3HpIPCBXf28yQUpeHAzVY8O54WHQjrSr5jeAzpvd41xbUf8q8449DA/PcKlFGvMebxls5YBEzoQv/g4vBDKNq8hJcCY9Fuz2iTCY/Bcx2JbqXyfCOqhGUQm4v17fznSE9HcbNH4oi1ssaaRczOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B9y0swFS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IUl/2Gqp; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=UvC/AonMu29Wfc6scyrR07Ykuse7gG5oi4zsxvZXDfr/yRNWxF0kTHAO4uobOF660meWdiPh25cZvYnIT/GPKOsD2qnaVmJZLNGzSerxgCvNHKlGvEzWL3+gyKLYWrLO2Gnc0jTvIDZJBntbiufCdGWFPcvElcYipV6alQo0x9o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jHZjMWc7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lnO0ms6b; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B9y0swFS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IUl/2Gqp"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2AFC125401B8;
-	Mon,  3 Feb 2025 17:14:52 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jHZjMWc7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lnO0ms6b"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0B0031140147;
+	Mon,  3 Feb 2025 17:33:46 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 03 Feb 2025 17:14:52 -0500
+  by phl-compute-11.internal (MEProxy); Mon, 03 Feb 2025 17:33:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1738620892;
-	 x=1738707292; bh=gfK9858Nrb1kwp8FRkUTdS7aJ3p5L1LWTvUfql6Edj8=; b=
-	B9y0swFShH+47Us//wmqY7+fakpI5nFNHy+WId7yXLHNZ3OfCnLkVdxduw0hdXO7
-	ArQu8CskQTN8uq3VdsReKScUvumiAReaV/dRFxKrcHQU99Las8LVczY4RNSVk8/H
-	VV0V6N4SUVAHj3PB8NbOJ5y/SX7mn8Ic8zHczh21EbsOTZEU66fxoMQpA2hsDyBI
-	Zj8rBAfE5ZJJwC89Qtk/T7yP/4BcxUG/c1Y0rIKZjWcLyioNWpu7xBMshsexAFaS
-	DEu7+J5oIml+FONqpcdqfbeAnVQrsV5sk2JRj85DJWTMIAaAk6An2wjc238f7lcg
-	vfnd2k1/x41lfZLAGp3SMw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738622025; x=1738708425; bh=pG3tTXTnKu
+	djvTyxT3Ii3yYewqAk11PaFsF5Uz3fe+U=; b=jHZjMWc77763USH8uOQ8xTOYHy
+	QmSHYQC6mnvVP7hYZISxxeZrGu/d5kMd6h6TirK3iS+wCXH9USnQ+RrYzCSBnuXf
+	jP9a24z3eR3SjjZLT/7l1KtaOda6nSDRUd47xUUC6YuD6wqASyXlfcmKMcIEg9g6
+	bZ4i8zmrIJAyvdknOhVV/LFae9Oz0qomJ3npv8Dna0lnsbUDyp0beo4XHEaVW6Fg
+	oVxTJN/Xu2N5tCYIgCa0VHdYxj83xCABKnz75UP7hQUUKmuReqseEgLWQHNmvsFN
+	6eERnzS8fPGXumhgqJ8pHwcChyBXFICT7ACFPuzP0M2gitBvYndGCQOTJmtw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738620892; x=
-	1738707292; bh=gfK9858Nrb1kwp8FRkUTdS7aJ3p5L1LWTvUfql6Edj8=; b=I
-	Ul/2GqpjBrwpmBqOTNRcqx0Ut3FPY8Sx3vN6Uax4L8ETHfn7ZNJ1wWjof+Ivv2nI
-	BABTte77aL+5rHFPSyJuBvHYEjhepncrvwhnnBU8ODd+0UBGRiOvgMQ8oxS2jfd4
-	8wEGvD2JUYZDk2IBEQ+frhDlpGlHPnYDBqg9pEPtLiUQM/FuHsR/kPNh43dqBELr
-	QJFE6aKjwpFhSRn7qzi8jZYJaOkqyoCwSgNCX3kgov3YX9BnmdBIxyQOULlBusR7
-	qsHG7YghiwwL1YTMvUqiyQOQL/ZlZcn02aVerXLykrARz33cZNw6jL0bBVxKU+FQ
-	pINCRfxfRnJ9VZUE/OKQg==
-X-ME-Sender: <xms:2z-hZ4oMRAtQYloK38GfjYjGOJQ-5kEiUzQawblqTgA6RtuA8C8CvQ>
-    <xme:2z-hZ-pua3JT6wttRh-jluxvvR-isziNdd2t-gxz3Z_MFJ2FqO9g8WXOYfZmblq4Z
-    FyXHsY5Qpg2RM1JWw>
-X-ME-Received: <xmr:2z-hZ9PNfGBFQkF86OjbaJOwLh81tRMjmNXl3MixGfpWO25dbPJgw7Yc75s3JiNacpVSQ5-EDRbQSn4PuJdCIa3o0VOnPfmtPZjB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeejkecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738622025; x=1738708425; bh=pG3tTXTnKudjvTyxT3Ii3yYewqAk11PaFsF
+	5Uz3fe+U=; b=lnO0ms6bErgcC2P09+2ytbOZ1zgxn0xv58qeKmmamIUmqSIXBU8
+	f92SFMlWcVVy5jxZ9m5HsItEfiCizfiLxJUs7Kl3xN575STWZd78bGVt8aNaoP8g
+	H8eWuEzHoi0CIXfl9Qci3YkIfYlltERZEkCw2tvyzqxW2YE31vv8c1Ckco9Pgw0s
+	WWs01RewnRnz4SIqns5HrvskDCS0SRuFNk138tkO0t41N5uJk86ODT85nV8aaDBx
+	Q3mjPZySBKRCz08MjGJeJXwDIcn51eqoywXkMasytwN77GPBka0Ac7SLrKcZrSZ/
+	5yoQVNEqNaECrfBcUJrpZV0pUiumetuznPg==
+X-ME-Sender: <xms:SUShZ8T1Q5cSmy30J8fUXxrJVLe1V2acTqR52Lx71S4U2XgJAQ_iFA>
+    <xme:SUShZ5zYY0c-IREhW42eAuDKzh3pTGEgqXbBMCYDx7HRE5DYqEUV1Y_p4fK9JQJ8j
+    nx_dMb_lLCSoadZnA>
+X-ME-Received: <xmr:SUShZ526Twmqwm9UJcsexudK2897Z8n3l9C5-1qXm1NvzMlNz4u9q-Sw__kEe693vOnzRFzYikFMw8gmii5ny51gBy18W93t8wsx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddukeekfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtih
-    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghr
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2z-hZ_6gdjNa5V-v2THiPSF2bRaHpW-DiwD3DTvEvSI0Mc74fqJZFQ>
-    <xmx:2z-hZ36Ekmikilf9M3yNeI5sFCIomr9KreW8iC6IVX8Evr38BlHPDA>
-    <xmx:2z-hZ_g5ehLB4FsACkt_8NuDirTWaJ7jPtcHiXgtZ8I6_UD8gJZpXA>
-    <xmx:2z-hZx4QXaH32aoUsM87xq9dF9RDlmWRKAsDtmHazu28xC9Sm0G-Eg>
-    <xmx:2z-hZ61ESeXV5tHT-YSFLcg0SpW_wEo1Oose1r4sGX2XpO_MGP0DtqND>
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:SUShZwDvOgwQuDhO0ICZ490GYm6EQCr5R7lCAKrkMqeew5tRircH0g>
+    <xmx:SUShZ1iHFbhT-vx__bp1WzQ1p3fy8ab2L13X4XslsEU_NtoH7va0mA>
+    <xmx:SUShZ8pMyk5JVRX7Y_W6oitM45-OIryh41FiTVJQoYqsidrTuGDqJQ>
+    <xmx:SUShZ4i_9bWuBIqRsFgdkYw2GoUWTAEKrFajKPmrD98Myxwab96qfQ>
+    <xmx:SUShZ1e3PJLNNcKnUqi5anWQYVmySngN4f-B_WcUgsszWz86PMSaU_cC>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 17:14:51 -0500 (EST)
+ 3 Feb 2025 17:33:45 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com
 Subject: Re: [PATCH v3 1/4] quote: add c quote flag to ignore core.quotePath
-In-Reply-To: <CAP8UFD2y=di9iKF+-nm90bg6zVnQ10OW+bvAyxTPM+xKpMYfLA@mail.gmail.com>
-	(Christian Couder's message of "Mon, 3 Feb 2025 10:51:13 +0100")
+In-Reply-To: <20250201201658.11562-2-jltobler@gmail.com> (Justin Tobler's
+	message of "Sat, 1 Feb 2025 14:16:55 -0600")
 References: <20250110053417.2602109-2-jltobler@gmail.com>
 	<20250201201658.11562-1-jltobler@gmail.com>
 	<20250201201658.11562-2-jltobler@gmail.com>
-	<CAP8UFD2y=di9iKF+-nm90bg6zVnQ10OW+bvAyxTPM+xKpMYfLA@mail.gmail.com>
-Date: Mon, 03 Feb 2025 14:14:50 -0800
-Message-ID: <xmqqcyfy1xr9.fsf@gitster.g>
+Date: Mon, 03 Feb 2025 14:33:44 -0800
+Message-ID: <xmqq4j1a1wvr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,40 +86,45 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Justin Tobler <jltobler@gmail.com> writes:
 
-> On Sat, Feb 1, 2025 at 9:20 PM Justin Tobler <jltobler@gmail.com> wrote:
+> The output of `cq_must_quote()` is affected by `core.quotePath`. This is
+> undesirable for operations that want to ensure consistent output
+> independent of config settings.
 >
->
->> -static inline int cq_must_quote(char c)
->> +static inline int cq_must_quote(char c, int ignore_config)
->
-> I think it's a bit better to use 'unsigned int' instead of just 'int'
-> for such flags, but it's fine here to use an 'int' because both
-> `quote_path_fully` and `no_dq` below already use that type.
+> Introduce the `CQUOTE_IGNORE_CONFIG` flag for the `quote_c_style*`
+> functions which when set makes `cq_must_quote()` always follow the
+> default behavior (core.quotePath=true) regardless of how its set in the
+> config.
 
-Yup, good forward thinking to suggest using unsigned as these "this
-is just a single bit, so let's use platform natural int" tend to
-grow into "there is this another bit that is orthogonal, so pass it
-as well in the same flag word", at which point unsigned would work
-better for us.  But until that happens, plain platform natural int
-is fine.
+Hmph.  
 
->> -               for (len = 0; len < maxlen && !cq_must_quote(s[len]); len++);
->> +               for (len = 0;
->> +                    len < maxlen && !cq_must_quote(s[len], ignore_config); len++);
->
-> Micronit: If you really want to split the line into many lines, I
-> think it might be better to go all the way like this:
->
->               for (len = 0;
->                    len < maxlen && !cq_must_quote(s[len], ignore_config);
->                    len++);
+I was hoping that we can flip the default for 'core.quotePath' to
+'no' at Git 3.0 boundary, to help folks in non-ASCII locale.  If
+this is about emitting pipe-able output out of rev-list, unlike a
+patch that is to be e-mailed (and being 8-bit clean was a risky
+assumption to make in 2005) that core.quotePath was originally
+invented for, it is more so that we would not want to force the
+receiving end to unquote, no?
 
-Good style suggestion.
+So regardless of what the future default value of core.quotePath
+would be, I am not convinced that it is a good idea to octal quote
+any and all bytes outside the ASCII range in the rev-list output.
 
-Thanks.
+After all, "git rev-list --objects" would show such a path without
+quoting, no [*]?
+
+    Side note: the path in the output from "git rev-list --objects"
+    is a hack to allow receiving end to compute a path hash, and
+    does not have to be strictly reversible, so it emits verbatim
+    bytes but truncates the output at LF to preserve the one-line
+    one-object output format.
+
+We do need to quote certain bytes (e.g., LF cannot be allowed
+verbatim, when the output is line-oriented, and we use C-quote,
+which means literal double-quote needs to be also quoted), so we
+cannot mimic paths emitted by "git rev-list --objects", but I do not
+think it buys us much to quote non-ASCII bytes these days.
 
