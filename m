@@ -1,128 +1,208 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6F1420896D
-	for <git@vger.kernel.org>; Mon,  3 Feb 2025 15:11:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34A32201270
+	for <git@vger.kernel.org>; Mon,  3 Feb 2025 15:20:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738595492; cv=none; b=txX/wa67vtf2uqd8OolokiiuyOvfJC+j8l5rv6xCXUBVJPGl+bmW3YotPT0Ahjn7/cjN9hTTdGkGE3K7xYlY3JXriAv2E8s4zhxCWQ7BdXY+heaPFF5qS/fnr+tOlEGNiPWgdG5azl4FqOhDfkN+6p1ivHcr3qHhIN3epocWxY0=
+	t=1738596019; cv=none; b=AkPZJKGi7A858XWGmbtjXrjG/IBphZTh8sn5mY9FVVdOYKggs2YIrbEF88qNfPwyBNrJKU54gtUfanOq93apd9/B4i+O3KrVi4cHuEKPyXxMVLhx1wRoYsv1AcyT9bgK9/EPJvgjdwwm4M3PFkW+VL0tElsa53XEK+sWj4seMjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738595492; c=relaxed/simple;
-	bh=rVaJp2N05JIO6euoWCHvBrhBJZpDZTOvGqOH1uHiaH0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WpTonRkp8wWgfdRfjE8cqOFH8r6yEXXGI68hquqGmRmi8KXJqqIddCc13E3JRcfP/TlnPTvbWdCLmMZ8+QHKBEN1gXmQ/zN6TIed+mpZ4pBVEpNayseDDCzbOM2a8NUK6HlT29dsEFZoCDQ+eVK0sF/pOneaS6fvnS9/TjGVc8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HXRw7nwn; arc=none smtp.client-ip=209.85.128.176
+	s=arc-20240116; t=1738596019; c=relaxed/simple;
+	bh=RukQFdbqDn41omPBGcMdsDToVo4TKcMt/YzUAbwgjj8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L4nd/NE2qEFrwwATzFzIT77RbkWBeNEeZ1aG6NTCGf3FIDxYW2IaQT9s4VjerK05qSP9mGLbhjicvcH4CoAt7EEMivj+9w/mgRMqk4elxkTQfYl0wBO+63TgtFNuRW+ZxElKgbz5IGobDm+pdgUtgBGFQyO+mZZ4/0vw870M7Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mO5hPsvK; arc=none smtp.client-ip=209.85.221.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HXRw7nwn"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6f44113c101so38941607b3.1
-        for <git@vger.kernel.org>; Mon, 03 Feb 2025 07:11:30 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mO5hPsvK"
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-5187cd9b8e5so1421907e0c.1
+        for <git@vger.kernel.org>; Mon, 03 Feb 2025 07:20:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738595489; x=1739200289; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wVdFt0C/uhIsG20ZFCGFG4lngr1oFMOKTbV48BHcFu8=;
-        b=HXRw7nwndmoSVXuyzsq5V1EyO0Of4RG9AEOVaB03fjR6iOw+MEWFBbZSCQ0wyVm+G4
-         71hKFC8jokcEWoBpSDofrXCVjFzRLGRxgchIvPu584naLxzbECUQMcL0fLtRLrXJa3cy
-         zs3wlIxHkYtps++oLC1ja88+0Oyk813y6webPTc7GEWFDuMK9PxdKcBP8TNp0FJ4kA57
-         IhOfsszdUv+ZzWwfKnvtzmF3zURyyscu+VSPMliEZrE4AIko3haUDGfNj8oCquyPLEti
-         BhajLsQO5cnXC2G0IjhryMnpE7/SVhJMrcXyOoPWWDO9T/fViZoEGsyCdFYPYuVUh1GN
-         Kznw==
+        d=gmail.com; s=20230601; t=1738596017; x=1739200817; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sfij0MuUHCGEhzx64yWP2B+qSgSshdaDHsrufYnIMpU=;
+        b=mO5hPsvKTqlcsEebWBss9x2dW9cywiUnPsnNsW5RIDBnGjwws2nBLlpgVU87FUkPS6
+         tShmPGuEsCoDGBrSGWN0aW2NfXvexwygHpdBK5+yIyKULjzQe0uDcsCWWkFh7QTSGeF4
+         B2yDhQjRJoK1BkGH0+22A/mVKSlT1n6Vy0G02I0t/2m9z4aJK4GNvzn+IwYgRBxrVLGg
+         p0bKEixVHOCn+htC+Sx4d5A6+GvnjIizlfPMKl937g4K9SIrS6bHyRq8tWOKFt6GYvrx
+         AnpaAf/8P5nexDMwOI7qc0qX5KB1MC5jcMpRtQ9quaQHkNLXP6p8zcSI5IAcys5Mm7sb
+         jaEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738595489; x=1739200289;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wVdFt0C/uhIsG20ZFCGFG4lngr1oFMOKTbV48BHcFu8=;
-        b=etZG7GEseICL8Lf7aoWbKha4mXGRn7sXqeBjLHiNpMDFyAwl8dlwyrsPPFnEmjqXG3
-         UGP2qb+QRE2AH+d1F2b6hITSr0M8L8CL0eir9FLaHo/AoSrfgdv2yP3TQnbKgDhvrAjo
-         siDCvFtSKFljJ1yx9bbWF2krR2kZssSWTMFYmkzJSwxROjznaEYAJZ5GO0dXwVtVHAl2
-         +CwPFTTv4JpY0JWiE1fDzAVW+jnvLJfzc1Hl5eYBkEkKh3Pi/8viXQeKCPVjVoS6XiKW
-         QS9HkZP/1on0lqXWHqZ1zzW80BxIw9C3InLG47b44WvFXK1+/JsEYrrBtKUixGT2Ux18
-         Wb+w==
-X-Gm-Message-State: AOJu0YwjsYCjWRtw5CuRPjlaayPFIY6uOVcURfWZjBi3AzHBez0jiThl
-	FarIGPohKWCyu6YOurCoNLHOfDJQD2bhvOv/fbVeEzN4FBO5mNaS
-X-Gm-Gg: ASbGncu125FaZ5MUCq8ikGM8CTHWaCaBxLCo/10dQ1GqTa/ABnSR5jwL0vMQ47d/ZCV
-	Tsp3/6JHlS0/WKSQmjZ5ZRg8yGEB65GAVYrP/XVxXci7Dh6K6NiVDzHUk7q6gD2GaT3gw5xkPDx
-	aWfvR8IVNh6hlcyhiIzN5rdDoMnNw0eoLvpt9xSCIoFGPa+frzfOrsjn50x2XGKmrQYHwCCZCiT
-	UILa+6s3M2cT/Y+k/mfODTYP6TvZ9ZNCKmHxl5UBrMzLytMQpQARHE3wlxdfytVBU2n8KVgwJ4u
-	jBc9kt/fa0aCaUh0oNniLXjPRRRNCpx3dLOHrm4lMiTTXXqxsA3oS+qImOmir2Lm6SZ99pO0w64
-	wp38=
-X-Google-Smtp-Source: AGHT+IH1CUQ0Ze+jjSAmla9eEpYVpE5m01VQ7QFDwznqN3dS2PaZRrZSYQtzrd58C6P7P//Rds00Cw==
-X-Received: by 2002:a05:690c:45c4:b0:6ee:8363:96d3 with SMTP id 00721157ae682-6f7a8409ce3mr179620907b3.27.1738595489434;
-        Mon, 03 Feb 2025 07:11:29 -0800 (PST)
-Received: from ?IPV6:2600:1700:60ba:9810:2dfe:af96:f238:f6f1? ([2600:1700:60ba:9810:2dfe:af96:f238:f6f1])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6f8c4a79b94sm21262757b3.111.2025.02.03.07.11.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 03 Feb 2025 07:11:28 -0800 (PST)
-Message-ID: <34379f16-9da6-440b-8656-5d580056c36b@gmail.com>
-Date: Mon, 3 Feb 2025 10:11:28 -0500
+        d=1e100.net; s=20230601; t=1738596017; x=1739200817;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sfij0MuUHCGEhzx64yWP2B+qSgSshdaDHsrufYnIMpU=;
+        b=wxim/9hlLCyTydvE9PJqBe1JwXLRD0MAZKTCRQTM7Y5kz/wIPXV12fSHe5iELxYdKl
+         YG//Hq/rrTteMa2orOUYK78hnMHxLrYaAKUkPATetNTOlI/uvwNa9AOtAwfUv/vZFciE
+         faIYZ9mkWsW+5mjJCRzbO6SJnV05Bhbv29BzKGCq3Y4V014Eft4d8ZsY0cNFkElce4jz
+         USoQnjmcc0ef6fCTQUPhe5M3CX41XGSm9GnZtqM7K944R68CqyQSKriPulfgKPA2zCA7
+         n6zqLXrTOgTJJOwO3BYoOFykMMCdoYtbPwjdlIbqrLoXd1KkvuhfxNcqxP6JhzlbvGnd
+         t9hA==
+X-Gm-Message-State: AOJu0Yz/B4zYQ/E43p7u1XlzXmMjVMfY9BLqeYhguC/GItKnTIfntqYE
+	ySgKsIa8yiI9ypatxUav7FRsHxBzl5abrVjmx6bbx9PXVzI6zJSoyMbsFVVtFfIzn22GO2V/7el
+	MGtpIzK2AywaXL8RLniL61+cEKgZR4g==
+X-Gm-Gg: ASbGncsHzNNP1BnTVNIcucIatTzqZV3daIZuyoGk7HUNvYWUw6G1HPtLuhxWSyx29t+
+	1IAoXjtGFmP2lGhA5zgqjWj+oqvhsUL7x/QhJc29qi9sUkGXRqQXrQAEBt6Vjuzy2si6lbQHZEJ
+	y0n8mPiWxHEt3ybsW9LmEuzwBPIa/sSUQ=
+X-Google-Smtp-Source: AGHT+IGTV3fRhhx8uEDsgCA/mX9SBMQPDhRy26aJa4RjG7HGPgw4Kabq+FQLoQLmvkmJYMS5N4tqp4Gk1y854g9EkiA=
+X-Received: by 2002:a05:6122:240c:b0:51d:e6f6:deba with SMTP id
+ 71dfb90a1353d-51e9e42ff16mr16095077e0c.5.1738596016922; Mon, 03 Feb 2025
+ 07:20:16 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 3 Feb 2025 07:20:16 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250201022409.GA4082344@coredump.intra.peff.net>
+References: <20250122-461-corrupted-reftable-followup-v3-0-ae5f88bf04fa@gmail.com>
+ <20250122-461-corrupted-reftable-followup-v3-3-ae5f88bf04fa@gmail.com> <20250201022409.GA4082344@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] backfill: add --sparse option
-To: Patrick Steinhardt <ps@pks.im>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, johannes.schindelin@gmx.de,
- peff@peff.net, me@ttaylorr.com, johncai86@gmail.com, newren@gmail.com,
- christian.couder@gmail.com, kristofferhaugsbakk@fastmail.com,
- jonathantanmy@google.com, karthik.188@gmail.com,
- Derrick Stolee <derrickstolee@github.com>
-References: <pull.1820.git.1733515638.gitgitgadget@gmail.com>
- <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
- <2723143afb397507cbc794375525c37497046dc2.1734712193.git.gitgitgadget@gmail.com>
- <Z4jY4rELRYvS2gOk@pks.im>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <Z4jY4rELRYvS2gOk@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Mon, 3 Feb 2025 07:20:16 -0800
+X-Gm-Features: AWEUYZl-HQ8D1BbqDmXS-cBNoFa5QX1QtNhddsJlZDiO8zMwCJEvrT8SUD7sFbM
+Message-ID: <CAOLa=ZRCb4KHKNkW=kuGhiR7B-aV73KV32DqjX4RM0fDP1gMww@mail.gmail.com>
+Subject: Re: undefined behavior in unit tests, was Re: [PATCH v3 3/3]
+ reftable: prevent 'update_index' changes after adding records
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Content-Type: multipart/mixed; boundary="000000000000ff5ceb062d3e6d77"
 
-On 1/16/25 5:01 AM, Patrick Steinhardt wrote:
-> On Fri, Dec 20, 2024 at 04:29:52PM +0000, Derrick Stolee via GitGitGadget wrote:
+--000000000000ff5ceb062d3e6d77
+Content-Type: text/plain; charset="UTF-8"
 
->> +		if (ctx->info->pl) {
->> +			int dtype;
->> +			enum pattern_match_result match;
->> +			match = path_matches_pattern_list(path.buf, path.len,
->> +							  path.buf + base_len, &dtype,
->> +							  ctx->info->pl,
->> +							  ctx->repo->index);
+Jeff King <peff@peff.net> writes:
+
+> On Wed, Jan 22, 2025 at 06:35:49AM +0100, Karthik Nayak wrote:
+>
+>> +static void t_reftable_invalid_limit_updates(void)
+>> +{
+>> +	struct reftable_ref_record ref = {
+>> +		.refname = (char *) "HEAD",
+>> +		.update_index = 1,
+>> +		.value_type = REFTABLE_REF_SYMREF,
+>> +		.value.symref = (char *) "master",
+>> +	};
+>> +	struct reftable_write_options opts = {
+>> +		.default_permissions = 0660,
+>> +	};
+>> +	struct reftable_addition *add = NULL;
+>> +	char *dir = get_tmp_dir(__LINE__);
+>> +	struct reftable_stack *st = NULL;
+>> +	int err;
 >> +
->> +			if (ctx->info->pl->use_cone_patterns &&
->> +			    match == NOT_MATCHED)
->> +				continue;
->> +			else if (!ctx->info->pl->use_cone_patterns &&
->> +				 type == OBJ_BLOB &&
->> +				 match != MATCHED)
-> 
-> For my own understanding: is there as pecific reason why one of the
-> branches uses `== NOT_MATCHED` whereas the other one uses `!= MATCHED`?
+>> +	err = reftable_new_stack(&st, dir, &opts);
+>> +	check(!err);
+>> +
+>> +	reftable_addition_destroy(add);
+>> +
+>> +	err = reftable_stack_new_addition(&add, st, 0);
+>> +	check(!err);
+>
+> Coverity complains that this function may have undefined behavior. It's
+> an issue we have in a lot of other tests that have moved to the
+> unit-test framework. I've mostly been ignoring it, but this is a pretty
+> straight-forward example, so I thought I'd write a note.
+>
+> The issue is that reftable_new_stack() might fail, leaving "st" as NULL.
+> And then we feed it to reftable_stack_new_addition(), which dereferences
+> it.
+>
+> In normal production code, we'd expect something like:
+>
+>   if (err)
+> 	return -1;
+>
+> to avoid running the rest of the function after the first error. But the
+> test harness check() function doesn't return. It just complains to
+> stdout and keeps running!  So you'll get something like[1]:
+>
+>   $ t/unit-tests/bin/t-reftable-stack
+>   ok 1 - empty addition to stack
+>   ok 2 - read_lines works
+>   ok 3 - expire reflog entries
+>   # check "!err" failed at t/unit-tests/t-reftable-stack.c:1404
+>   Segmentation fault
+>
+> So...yes, we will probably notice that the test failed from the exit
+> code. But it's not great when the harness itself barfs so had. Plus a
+> compiler may be free to reorder things in a confusing way if it can see
+> that "st" must never be NULL.
+>
+> It feels like we probably ought to return as soon as a check() fails.
+> That does create other headaches, though. E.g., we'd potentially leak
+> from an early return (which our LSan builds will complain about),
+> meaning that test code needs to start doing the usual "goto out" type of
+> cleanup.
+>
+> So I dunno. Maybe we just live with it. But it feels pretty ugly.
+>
 
-With cone mode sparse-checkout, 'match' could equal MATCHED,
-MATCHED_RECURSIVE, or UNDECIDED, which we want to be considered all the
-same case: continue along this path.
+Thanks for pointing it out, I didn't notice this, mostly as I was
+copying from existing test cases and it does seem like this (wrong)
+pattern exists in a lot of the tests.
 
-When not in cone mode, we can't decide to filter by trees (hence the
-OBJ_BLOB restriction) and then the result can be MATCHED, NOT_MATCHED,
-and UNDECIDED. This rule matches the following realization:
+Like Phillip and Patrick mentioned, this should go away since we're
+moving to using the clar test framework. I think it makes sense to keep
+this as is to stay consistent with the rest of code in this file for
+now. It is ugly, but seems like that would be simpler while migrating.
 
-  * MATCHED if there is a positive pattern that matches the path.
-  * NOT_MATCHED if there is a negative pattern that matches the path.
-  * UNDECIDED if no pattern matches the path.
+> -Peff
+>
+> [1] This would happen in practice if malloc() failed, but you can
+>     simulate it yourself like this, which is what I used to create the
+>     output above:
+>
+> diff --git a/reftable/stack.c b/reftable/stack.c
+> index 026a9f9742..fe77132102 100644
+> --- a/reftable/stack.c
+> +++ b/reftable/stack.c
+> @@ -861,6 +861,11 @@ int reftable_stack_new_addition(struct reftable_addition **dest,
+>  	int err = 0;
+>  	struct reftable_addition empty = REFTABLE_ADDITION_INIT;
+>
+> +	if (flags & (1 << 16)) {
+> +		*dest = NULL;
+> +		return REFTABLE_OUT_OF_MEMORY_ERROR;
+> +	}
+> +
+>  	REFTABLE_CALLOC_ARRAY(*dest, 1);
+>  	if (!*dest)
+>  		return REFTABLE_OUT_OF_MEMORY_ERROR;
+> diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/t-reftable-stack.c
+> index c3f0059c34..73ed9792a5 100644
+> --- a/t/unit-tests/t-reftable-stack.c
+> +++ b/t/unit-tests/t-reftable-stack.c
+> @@ -1400,7 +1400,7 @@ static void t_reftable_invalid_limit_updates(void)
+>
+>  	reftable_addition_destroy(add);
+>
+> -	err = reftable_stack_new_addition(&add, st, 0);
+> +	err = reftable_stack_new_addition(&add, st, (1 << 16));
+>  	check(!err);
+>
+>  	/*
 
-This is subtle, but switching this to "match == NOT_MATCHED" will
-result in the test failing (and the test is right).
+--000000000000ff5ceb062d3e6d77
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 53b3272f53fd01c1_0.1
 
-I will make note of this in my commit message in the next version, as
-well as adding a test that has nested positive and negative patterns.
-
-Thanks,
--Stolee
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lZzNxMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNzl5REFDa28yZTdGUmpFb0FYSFVXOXRjeThaQTRjVQpoYTF2Y083SFJC
+aHJVVWdXOTQ1S1ZOUEduaVZZVVh3LzF1RnB0M3NCUDJYYXRITnFMNHN1Qjl1MkRKTDZ4SFBhCmY4
+OWtnRUoxV3RFTFRJcTJWYndDdlBXdE9FdjhoditwaUlkREZDMnV3TmtGbjhPdkpEYnNuQmdLdytl
+WTlvR3oKSUVlQy8yWEhNcDRHeEhPNEtZWUJOamVJQnQ1TU1HRHp4VVVRN2szOTFOd1QwYmdiVkc1
+LzhrN0lKbzBmNkYwRgpIREdEUm9nRUlUZEJOQWNsazdZVG8vTkVVNUdudmJvWjBvM2gxM0Q1RFhp
+TDgwN2ZTUXQ1M0J6cFh5dGp4SjJQCnVkSlRTWjRvUWdYYUVLV3puMFVPWER3QjJWY0lEVTRIVnJ2
+UWhhTGRoazRIUXdHZit4SDVuM0xWK0dzZWFxYk0KaGJwS3RrM0dlaVdvNmt4VE1iYXpTRWExcXFL
+aFFqd2VDK0tuTXhiTjlTckduMFNjd0hsU25tZ2pSa3JBdk5DVQpiRHFYaXhwOFltTDFDQ0ExQ09w
+TkdGVkMwWk5TbWZRZzdJUXRuZm82bndDQzQ5K3F0WlZvNDVxNFBnWGZkTTRWCnVQOVBDcm1pLzNT
+QXFrMC9DZ1pmM1BURCtwOUtxdUZvUGV3S1FyUT0KPW11SjAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000ff5ceb062d3e6d77--
