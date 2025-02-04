@@ -1,142 +1,107 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE74207E13
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 14:38:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40832080D2
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 14:47:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738679893; cv=none; b=Orocd/PAtdLuuudFB895jor02Mhfx9pk0ptJn2pyyWT5jS0pNicO7DTB0NJh8teXsjdVNe6so+ha4F3jSs11Ex8yxVV6J853GfqQK6EwHP2kuYomR//K+QE0c91fGcS5hh3stmC2ZydixUrQbYozjHG2tORAJCrkKWACnC/UkVo=
+	t=1738680432; cv=none; b=j3s5LbgywzLPsKs4LP2eqPtq8tHswtfHydRqa7mX4UHmOxGIyrGHcsnYaDUTvI0knLClrt7qAixrPR8WI8COmUJSER99paKZcicQmk8w4XDn0ZitlM9DsE5kg/hJpvtAW4cEcxF1/kX5O+xvlxY44cG1mo/iJ2TNrZcBp2HFRy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738679893; c=relaxed/simple;
-	bh=Yod+MxMx4WKKsB/UdGBNADv9neEMOxXpOQ6T1nxHxI4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=id12pMRti26WFF2snnKoPJ0snxaUg8UezxqRj1Hy4E+90wPyap0Ht3vSUl/RGhqKH5ORvaL3OiR7Ub7tkja4cusaaH8pH+a8dPm17zLZy39fXIWMlAY8HvxMdWLA3tM9SwqnZ3GGy0T7bD6wk2WyNaKnWxVq038kRmLBqdBu56s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fx8Lb9qr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pLE2EEYf; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738680432; c=relaxed/simple;
+	bh=OiMYi0RPt/d9AySng6V4J5qWiM8+2bCFGnBBoJsCNv4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hth11vJi312kPgaM9Z5OKVj7Z8CPqElVqI4YedZXihWGYylQoelS70/yS0jd0L3vV+L2ze0zKKisWj1QVN2hcs57+ASfRJf6CCekgXRlLz8VPna/cBsoaPKDI0e5mmXFu31jtAsAefEbqiBrnZQ1HUNlZ4oIFj5rWRSQMudibCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GOjFTprA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LTXmylX8; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fx8Lb9qr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pLE2EEYf"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id EA732114015B;
-	Tue,  4 Feb 2025 09:38:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Tue, 04 Feb 2025 09:38:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738679889; x=1738766289; bh=IaNmJ7MzdR
-	K9qwa/X6zvStSdG5E1Kb7eggT16PH+kjY=; b=fx8Lb9qruxc3VgPWSV2g94DUGt
-	v3RE8FlWHPPx4KpTCfzulzreMesmRGQbBXTaBr0Rd8/UjaehKme4YsvahQqqIAjJ
-	zZuWGQvZNFFjvVHmiywYs4NYSrhEBL/xcyvv/5jvVaim3paqcBMvAin2f7DuFQnW
-	eVoT2qdaVYpVX6QExF0xvLydRiaeKU2oWy+gfQoaBTe3UUqw0tlkmVgYsQbC2a5r
-	bZVcN32sgkJSKbB+ZRhmZZbAtdzGaPd9GrVOpGc0ef8zQ6ISADGp1Yew/91kzQBB
-	5mJcKl1TD5AuFVZjq+WtcSvHawgnwbthTLVGSVWEZKk2TwTv9M5y+HGalNmA==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GOjFTprA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LTXmylX8"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9FAB7138028A;
+	Tue,  4 Feb 2025 09:47:08 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 04 Feb 2025 09:47:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738680428;
+	 x=1738766828; bh=OiMYi0RPt/d9AySng6V4J5qWiM8+2bCFGnBBoJsCNv4=; b=
+	GOjFTprALEDcKSAlICSzNq1TEYuHdk78DbIoi+XuwVqDOegjB5S80bwwNuzdSuHO
+	fRHGv7tWi5c9eT+IYD5gOMShPnFzs+3Sk9MJhBiV0eeSzesRsnoKaTj9sIOl7lXd
+	nFMjTvp74EVKl3vWW4CukordJ41Unp5VcP4FR51sTnqfD4KuEI8h4hVLVSZiUrvh
+	KpDbGRfebTPuaI3ncwl6ltsishdUKd0Haa8lqoi9hBKDNmj7Tz6ATHxvMsjmcr1U
+	Dlu2ljSgAvaeyg5UzBOghWN0HiCF61MeioP110PY2tX6DwL2mXhNbvMAA+Ep5rYb
+	2ya9tWdkgIFu8whreFbdZw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738679889; x=1738766289; bh=IaNmJ7MzdRK9qwa/X6zvStSdG5E1Kb7eggT
-	16PH+kjY=; b=pLE2EEYfjLNsHNlHlSFm+ZIRh8GLCsp7V1OEZfjYnXzJrmRsiTz
-	THtrzMWrHSmRuEr2t5iU7OJ8yKRHpWXck7SGz6m+bXSGlj2ev2xbxEdMELE0P0D1
-	iAto+vitSPmrHdLkwv8vtwwjRxWWjlkQq1lOc2ceHgw74pr+tfvs0kezisVFe8eZ
-	YkF2AiuZIbTmmXF0D9C2XE3c6ZcPwnuWPFHNeCDq9wrPOfqvl8k2cwGuG7V0xCun
-	lqtIZbw2uyoERGV2J6zU27Mmlsn1jLhPmtpsTaugkXWRNfhKfXcFfpXQToD7dd28
-	3r8kC8AQRgYpla1VXYcF5M7gwZUo3SwWU7g==
-X-ME-Sender: <xms:USaiZ3BZ9ZDeQK5FfLpAoa4CjL5yPZM0jAy_Qw67_KXrOWSqqHiv3Q>
-    <xme:USaiZ9jQBwJYQoCXUZru-5p00lzThAxNF7CgHWC97CEpvFQz3gTsGEtosnWQ9dVDp
-    PNdkDdNpgZ2lhPuNA>
-X-ME-Received: <xmr:USaiZylUdrGc050h4R1suOfw0j6Yf0hClSJ4Wr1yA3J485PgSzeafV6cnRjcEdXcHPGxM9LUElDf0pCK9wgbJKash0tnOPqXwXkB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdejkecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738680428; x=
+	1738766828; bh=OiMYi0RPt/d9AySng6V4J5qWiM8+2bCFGnBBoJsCNv4=; b=L
+	TXmylX8CrxAAbATAchvXDS/GqcDi3Tv5bwxF87q9nNeQwkDzQ3gNxHGZ0U0yguUc
+	JXThDF2lmYZVqhPsEAPDfshUPs5EQZCkP+F4KQY3Y6ZLLiPfriS13PM/42rFq97y
+	be4akBhr3mlBZJjy52IeaKdjeGZOmp48viWGC7ysBu4SYXyxQ1eGKDIBkqf59KsT
+	J+VrNZs7otn/p2gyQFuJW0HtKPYU1RkHWfR4c62dEM+I2vEB28GOJrsr+okMGS2x
+	AEwNNM9dR/+beQB3n4ZpatW+ubPEvOi7rqXX3w9HVGPnHLtEKvwIK7363TZ+7cR9
+	GER2UgZn3gahQwSAoWkQg==
+X-ME-Sender: <xms:bCiiZ7vWeMpsC1blKUjQaM2HIrafZHKprTaV5KXB9Vzzju7Na50ERA>
+    <xme:bCiiZ8eLuSxGOAR9oZ__4E0rvXl1NMwLZqoxLMLIlC4uCbSw87ygb6EC3qfrjCojL
+    icb8Xavoe1VQ5EQFA>
+X-ME-Received: <xmr:bCiiZ-ylaSOc46pgs4NzTFafaoXPIal97Kn0FQDc2qMVAcIf1pQjL7E1fuGb5-xqQeO6jddxRCVFZQ8w-GSjAx3BN2zL_5vFE7T1dGU0wZpErg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdektdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
-    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
-    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepmhgvvghtshhonhhifedtudejsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:USaiZ5wXrkdYBmiZNUh-NczKczd2RIVt7NXJ4dk2Lje9HbcuaE2Glw>
-    <xmx:USaiZ8T5aTY8M7dLER7oCExuTyRGQIL_ICmI0nC3vhrROmfIR9xwbg>
-    <xmx:USaiZ8YMHBunfcApX89fcFth-mRYbx9mDDWq8DsMMeiF6NUrFr-dUw>
-    <xmx:USaiZ9TlkKsGW991KNRy9Vn1V5Xjh2Tf99oQ_Zkk4DktdPdzN-AYcQ>
-    <xmx:USaiZycF06I80H_oW0Zd9EtbMCrTQ_TnYROv8zOJle2FvauCkGdfaXp0>
-Feedback-ID: if26b431b:Fastmail
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
+    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
+    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhgv
+    vghtshhonhhifedtudejsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:bCiiZ6MZgeEECsNKL-LVZqFxillFmqtNwABU5-Yd1JfkNKM0x2YM7A>
+    <xmx:bCiiZ78giDkoqKJZazhiHfziGKiz6ccQDHHjj1JM45BZVGEVEdHbFA>
+    <xmx:bCiiZ6UnXB9N7fnahD0_8lQkDreRajKG-qc6-xXf6QQaHMq4EHcRKA>
+    <xmx:bCiiZ8ewlDrF5Ndmn1mHCpwNaEnLSEscCpxQo1jhG4oZrd6OweoB9w>
+    <xmx:bCiiZ-b8AWMZL8ieY-Lp2KOF1a5xHBRyEvuNIpvAhgHKGS8pz4xAHTLS>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Feb 2025 09:38:09 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
+ 4 Feb 2025 09:47:07 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id cf7333a2 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Feb 2025 14:47:04 +0000 (UTC)
+Date: Tue, 4 Feb 2025 15:47:03 +0100
+From: Patrick Steinhardt <ps@pks.im>
 To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, gitster@pobox.com
 Subject: Re: [GSoC][PATCH] remote: relocate valid_remote_name
-In-Reply-To: <20250204041430.36035-1-meetsoni3017@gmail.com> (Meet Soni's
-	message of "Tue, 4 Feb 2025 09:44:30 +0530")
+Message-ID: <Z6IoZ1_1wGiOo4Bi@pks.im>
 References: <20250204041430.36035-1-meetsoni3017@gmail.com>
-Date: Tue, 04 Feb 2025 06:38:07 -0800
-Message-ID: <xmqqr04dvkq8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <Z6HH8mWDpJUSHDd7@pks.im>
+ <CAPhwyn094ySxG8=p3_jF+Z+0g6h4hL5ELBYhOLv+Th8zX04Urg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPhwyn094ySxG8=p3_jF+Z+0g6h4hL5ELBYhOLv+Th8zX04Urg@mail.gmail.com>
 
-Meet Soni <meetsoni3017@gmail.com> writes:
-
-> Move the `valid_remote_name()` function from `refspec.h` to `remote.h` to
-> better align with the separation of concerns.
+On Tue, Feb 04, 2025 at 07:36:24PM +0530, Meet Soni wrote:
+> On Tue, 4 Feb 2025 at 13:25, Patrick Steinhardt <ps@pks.im> wrote:
+> > The change itself looks straight-forward to me. Did you happen to check
+> > whether this allows you to drop any includes for "refspec.h"?
 >
-> Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
-> ---
-> Junio mentioned in [1], the `valid_remote_name` function belongs in remote
-> header. This patch addresses that.
->
-> [1]: https://lore.kernel.org/git/xmqqikq0ruuk.fsf@gitster.g/
->  refspec.c | 10 ----------
->  refspec.h |  1 -
->  remote.c  | 10 ++++++++++
->  remote.h  |  2 ++
->  4 files changed, 12 insertions(+), 11 deletions(-)
->
-> diff --git a/refspec.c b/refspec.c
-> index 6d86e04442..83ec7d7e62 100644
-> --- a/refspec.c
-> +++ b/refspec.c
-> @@ -236,16 +236,6 @@ int valid_fetch_refspec(const char *fetch_refspec_str)
->  	return ret;
->  }
->  
-> -int valid_remote_name(const char *name)
-> -{
-> -	int result;
-> -	struct strbuf refspec = STRBUF_INIT;
-> -	strbuf_addf(&refspec, "refs/heads/test:refs/remotes/%s/test", name);
-> -	result = valid_fetch_refspec(refspec.buf);
-> -	strbuf_release(&refspec);
-> -	return result;
-> -}
-> -
->  void refspec_ref_prefixes(const struct refspec *rs,
->  			  struct strvec *ref_prefixes)
->  {
+> I think you mean refspec.c, as refspec.h doesn’t have includes.
+> Yeah, I did check -- no include drop found in refspec.c.
 
-This cuts both ways, though.  As valid_remote_name() is the only
-external caller of valid_fetch_refspec(), without this patch, the
-former function can become a file-scope static in refspec.c, but
-with this patch in place, it has to stay to be public.
+Not quite -- I meant whether any other file that previously included
+"refspec.h" now doesn't have to anymore because the function declaration
+was moved.
 
-I do see how valid_remote_name() would be useful as a public
-function, but I do not know how useful valid_fetch_refspec() is, as
-a part of external refspec API.  There is no reason other than that
-it gives us a handy way to implement valid_remote_name() for it to
-exist.
-
-So I dunno.
-
-Thanks.
-
+Patrick
