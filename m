@@ -1,125 +1,140 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7269F86330
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 02:11:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DB85588F
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 02:28:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738635094; cv=none; b=PgDN9Y0cl3SdqMT6BAqD/6/T1pguW/WIGCUwuuT+CsuYTI7Qx3rNm5G/MDHG5Joj3it7AxmaDPGELN0XjAPeFJ/Ucazzplt5ignxquEZtipRmjdC+U86jc05BByTtmH+uDmIDJTIuACyTE0eexjFnQBtdtnBLPcKw8L0qpKw79g=
+	t=1738636093; cv=none; b=C4CFYD+HRzqWRMAd4bfpGlpormjA4M0OdA7b6wegwNN6tJ2at9Gwywott8zUNIHfT9ZSNAoeMxlvPCPJmLTEARMXQtsYlczsJZ6UhhQSzRmaSkCFDGRiziX+L9+43tWytj98TEaP2xpQnaD35cq2LwnVPw4bwTEcw03gCbkd1g8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738635094; c=relaxed/simple;
-	bh=D7b6cP9zx9bLwB1xFlphGD/gzgEmBgdog0xMCdGKdto=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LvzukFXW9Tl2NDirQ+btMdloSFaGwAdC/U6eq2P1hMYAeA84AlHKh4aMahiW3VbcwpqvcSIjYEoknP5+AGW3oA9ExAy05WxquJdAuOeXOc8igEOx8R2qPGiB9SzbrWeDu4LdTZmj5+IR1xosgSjeGpB4rQ77zA207Q7JTRNMoBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WEod/na4; arc=none smtp.client-ip=209.85.218.54
+	s=arc-20240116; t=1738636093; c=relaxed/simple;
+	bh=3AG5+4fk0R1gYytZATQ7Dd7emHjxz5F4Ob9ikoBMaLs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cL21QbiGo2QNy76b3cy6hsIYNp4c2WRjRHC2/dlsZmmvuqp5zNOyg4U6JZc0MtQ/hxVktnXfed0VPJF+fouoq28rrzxg/nkGlPTC0ePr5UIrQXz31Sy0fqpMvf6T6X9nuHNrLZU32giTN0g9lBDLZIuOKScmQ/gyHE7jh2S9x+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=INhUUlx7; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WEod/na4"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ab2b29dfc65so838201266b.1
-        for <git@vger.kernel.org>; Mon, 03 Feb 2025 18:11:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="INhUUlx7"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-21f0444b478so2656495ad.0
+        for <git@vger.kernel.org>; Mon, 03 Feb 2025 18:28:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738635090; x=1739239890; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=s1rymZC3hEirThXAWvVg0G3FGaceZGQRfS2T6Bxq9L8=;
-        b=WEod/na4wxvMK6p+fBSAnuQOY7igtR26y5oK3W1F79Hd3hmCcDSrGyTGrJVOxWmVjV
-         VDS2isuAbKOA2JG7GV3sS79IXu6NltIAeGpYSp+WnA2xCdEm7t3Ehs+TjzQ7BzHR+jMU
-         ctUXIwY8CTcYOckVtYzJbVt4DJOWrDqj4pYobKTHK94p4to7ZJNTIUqO/v0Nh/q9xwaW
-         4S1tl6G6MHHJETMi2y7ngPft3VMnC4vE7IFFSjDFhM+fVPf+yRsYi6mzwa+5V2NoEApa
-         eiMvm15B/TYuxunk+6yfkyVxsWJQJLKtHze5wQq+S8wPQXjqFCMRgQDH8C+Tr6DZrPmr
-         VimA==
+        d=gmail.com; s=20230601; t=1738636091; x=1739240891; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=g3EjYOQwoAQoPz9Va6RyfDmv7lD/ikqbrn7pXltZpCg=;
+        b=INhUUlx77ddBaa0pZt7IP3un6yL1D+Ljwrnmt5fpT7jq3FqPkBYH+PoRG8RY3TUyw5
+         MnL/f9hxg86WpMPemKP+umDxyihm+3clqN/WQlTuV+WIlRRJ+GPmCXVrY/J2qHOATLPK
+         HybyFmj6LzFB1o0s98lCUAZBvjxWjh2Y26B2kYkSbacSeaj4tZ50Brb69JfZJanZwmUM
+         u31Do7AgT+Rpl3i0hmF9ya98IyR+YofiWHJhW9TBBl4fxeQLYPo0+2LMpvRpqf8kDeaK
+         i74uGQzt0CByx55TjqkByy3kCsuul6gMqa4Cx1S19N/ujH8Fw4FsQS6RIaQKdjK4y/gt
+         OlAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738635090; x=1739239890;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s1rymZC3hEirThXAWvVg0G3FGaceZGQRfS2T6Bxq9L8=;
-        b=euQz1Pt6Pp1Tj2At+6bAIbw2z8kcjAZHqxy2xIpruv0pSZ7tL2BVbg6J5vjBLai/kP
-         Hw4VpSAmLKX2hBLs8u+Ha7fSLWgocR3AMxcjii4jyLas1dFx/u1s79mkjPEDFR08OGZW
-         sZYhUivlHRSbCHpMiGj695NWOFNR6lp/2z5ERoaLijrADyOj1w05/2aGCGANiVUtBNvP
-         WdVNyERSaN9NUo+gV1N8FP9C2IjLl0UT81xEHa3FkrW/C2ANtvbmeT7UDKkdsJE8aJ7D
-         1Y7cXmfoo8o/W1Nien2L9Qpeghr3Xr7ODwOgbFLDVeuB8VuNWLbCX5pUC7qbsw3VssMq
-         9EBA==
-X-Gm-Message-State: AOJu0YyPjU+03nHV1tQDED4eGV4/W8ULG1QkAuumlcgtp+5ngVzioyEK
-	YnTSVjWK/Wgxufb9g/DJ5Ufg4vrKSMLQ7h8Z8wcgSnvyyqBVoQGh/9xIkk/HHza1wxPRWvZATN1
-	brd0VmwwNJHbbzY8PMwk00Wyzry4=
-X-Gm-Gg: ASbGncuwyhdpJAw8dA2ccbxxMg5cwF0W+RgCS4OYupaI6RR/jPBZ4cdcfBbXG+zp46Y
-	DclGV12sZ+lNKesDVv2UdBNWkG9qCOIJ+NuqX4pEyK5SzAkh3ZWZtoIp+xloBMms97JL4Gruvt6
-	krQRKUPUdRYCtVwjYOvBFZOThD9FY=
-X-Google-Smtp-Source: AGHT+IFCLWj2M2zw8Qz+9nD7p9e+uUd7bpdqku117lo+I5qyhIZv8bjrdP2nBAfi8RlqxRGNinccmQDJC2J6AkiEP90=
-X-Received: by 2002:a17:907:728c:b0:ab3:a190:6cb2 with SMTP id
- a640c23a62f3a-ab6cfd05a5cmr2621798666b.25.1738635090451; Mon, 03 Feb 2025
- 18:11:30 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738636091; x=1739240891;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g3EjYOQwoAQoPz9Va6RyfDmv7lD/ikqbrn7pXltZpCg=;
+        b=CowU13EVTyOgNaDCcfN4BEbZRmwBduDDD9vPNkVaaiZS1lHRilPWTJK+GRx9N/bGhT
+         /0CJaHLi2cUx96YEENKHyFeV8uV1u/RTIL9lJDSZqf++JLupPkWDBaw9N8EAcbU9hkaT
+         OjYr/Nee7NIRMUeaCtSVLUXjxUCYvpvyMckhQWLl25F0BChHn171Vfd7D4SZWGPFQ6g6
+         oWCJgJpJSTTkcEDb/L3rfFWiPsM5xs62JPRk0ikQdK+8quNFPHHpCkh4jLulN9IDEENJ
+         wNWIP5j5SoDPubPxHbA+rzPsJQrY0xCGyb2yBC3FTFzF2H4dRdZn1vlS3yDN0FZYyhKU
+         Oo4g==
+X-Forwarded-Encrypted: i=1; AJvYcCXfTnU/kEQ1ZX2B6LpDF8ju8vcb0+QaLYzSdvjiOQdD8uC6UUrRGZiev4AfhR823DwVaB4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYhptfpyH3CxNPMso+/ulmNCXr9BVNirwzxJv+dBzvtoiIFPWX
+	6w4wO5XHxFDk/ewLScaJEHRLL1sKq3r3KXn3fasYUqmptQt3S05LMqK+Mp71
+X-Gm-Gg: ASbGncvw55rDKbtIA9nnKQNKBgHi2LvO5GwZ40JcX3c/H25/0zap2iE9Fl7LY51rhbg
+	fama7ehwhxikVjR4DcldhpqVGL19YjSezTotz3DBtvYh10k29zCtu2ijyeCumuz3wB2maZBLFcM
+	7AtFnLaQfK9f3jNB5s6NI1rDtcv4CKb4lbrq/Cfl0FjHZpzcYQ7LSZi2PYLCC/zT3Ol+zuWAFCR
+	8X0e542Afk1L2hTf4uUshg+/sxrnNHdDYONK8kasRjwb37mWq4Jz5ZGH/m/YzmbA3A/yg==
+X-Google-Smtp-Source: AGHT+IGilN9XfQdEXxlunUjjyVLI+GS4FcFiaMNiM3+mrEDV6KYwiLslNqDdWq6rxglpS2foZCiabg==
+X-Received: by 2002:a05:6a00:2149:b0:72f:d50a:9096 with SMTP id d2e1a72fcca58-72fd50a921dmr30275001b3a.8.1738636090620;
+        Mon, 03 Feb 2025 18:28:10 -0800 (PST)
+Received: from localhost ([2604:5040:11:69e::e973])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-72fe64275dasm9254167b3a.72.2025.02.03.18.28.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Feb 2025 18:28:10 -0800 (PST)
+Date: Tue, 4 Feb 2025 10:29:50 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Christian Couder <christian.couder@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git in GSoC 2025
+Message-ID: <Z6F7ntBsp1CSflkL@ArchLinux>
+References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
+ <Z432QXJb_TfzNBa2@pks.im>
+ <c39c5424-71d0-4b6d-90b1-a6a70f2ee61b@gmail.com>
+ <cd90cf17-6113-4634-a774-6df707b73e95@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250204014652.3509928-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20250204014652.3509928-1-sandals@crustytoothpaste.net>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 3 Feb 2025 21:11:19 -0500
-X-Gm-Features: AWEUYZnw36sZJOqmpJ6LQk1P-MSel_bKv9qKzIx_9gPCEC65XBDCfTA9tLa9Dk0
-Message-ID: <CALnO6CAib-p1+1VHMfqo4VGLVvWs63z_xCjkCANJS-NLK5FpdQ@mail.gmail.com>
-Subject: Re: [PATCH] thunderbird-patch-inline: avoid bashism
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cd90cf17-6113-4634-a774-6df707b73e95@gmail.com>
 
-On Mon, Feb 3, 2025 at 8:55=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> The use of "echo -e" is not portable and not specified by POSIX.  dash
-> does not support any options except "-n", and so this script will not
-> work on operating systems which use that as /bin/sh.
->
-> Fortunately, the solution is easy: switch to printf(1), which is
-> specified by POSIX and allows the escape sequences we want to use.  This
-> will allow the script to work with any POSIX shell.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  contrib/thunderbird-patch-inline/appp.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> I noticed this in Debian bug 772238[0], while looking for any bug
-> reports that I might be able to fix.  It was reported in 2014 and has
-> gone unfixed since then, so possibly this script is seeing relatively
-> little use on Debian and Ubuntu.
->
-> I have not CC'd any of the authors because nobody's touched this in over
-> 9 years and none of those people are still active.
->
-> [0] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=3D772238
->
-> diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunderbi=
-rd-patch-inline/appp.sh
-> index 1053872eea..c55c2caa41 100755
-> --- a/contrib/thunderbird-patch-inline/appp.sh
-> +++ b/contrib/thunderbird-patch-inline/appp.sh
-> @@ -31,7 +31,7 @@ BODY=3D$(sed -e "1,/${SEP}/d" $1)
->  CMT_MSG=3D$(sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}")
->  DIFF=3D$(sed -e '1,/^---$/d' "${PATCH}")
->
-> -CCS=3D$(echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp'=
- \
-> +CCS=3D$(printf '%s\n%s' "$CMT_MSG" "$HEADERS" | sed -n -e 's/^Cc: \(.*\)=
-$/\1,/gp' \
+On Sun, Feb 02, 2025 at 05:22:05PM +0530, Kaartic Sivaraam wrote:
+> Hello Christian, Karthik, Jialuo, Patrick and all,
+> 
+> On 28/01/25 23:00, Kaartic Sivaraam wrote:
+> > 
+> > Thank you for suggesting these ideas, Patrick! I've incorporated them
+> > into a draft ideas page for now. You can see them here:
+> > 
+> > https://git.github.io/SoC-2025-Ideas/
+> > 
+> > Kindly suggest any corrections to the description, project size /
+> > difficulty as necessary. I've mentioned potential mentors based on what
+> > I'm aware of so far.
+> > 
+> > Patrick, Christian and Karthik, kindly mention the ideas that you're
+> > interested to mentor.
+> > 
+> 
+> Gentle reminder that the ideas list needs completion. Specifically, the
+> following ideas only list Patrick as a potential mentor:
+> 
 
-Looks obviously correct to me (I once wrote POSIX-compatible echos
-just to see how hard it was [1]), though I find it interesting that
-`sed` can process input lacking a final newline.
+Thanks for the reminder.
 
->         -e 's/^Signed-off-by: \(.*\)/\1,/gp')
->
->  echo "$SUBJECT" > $1
->
+>   - Refactoring in order to reduce Git’s global state
+> 
 
-[1]: https://github.com/benknoble/echocho
+Although I never code for this, I have reviewed a lot of patches others
+work on. So, I think I could co-mentor this.
 
---=20
-D. Ben Knoble
+>   - Machine-Readable Repository Information Query Tool
+> 
+> The following idea mentions Karthik and Patrick as potential
+> mentors.
+> 
+>   - Implement support for reftables in “dumb” HTTP transport
+> 
+> The following idea mentions Jialuo and Patrick as potential
+> mentors.
+> 
+>   - Consolidate ref-related functionality into git-refs
+> 
+
+I am OK wth this.
+
+> It would helpful if you all could chime in to let me know if the
+> existing allocation is fine and to what other projects you need
+> to be mentioned as potential mentors.
+> 
+
+In conclusion, I could cover two projects as a co-mentor.
+
+Thanks,
+Jialuo
+
+> --
+> Sivaraam
