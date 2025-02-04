@@ -1,82 +1,83 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EED9211A24
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 13:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD71213E7B
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 13:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738675692; cv=none; b=DfYozBh14P42vkhgaxAqtFche8H9SJ9nlFjKJUqXxRv6DChK+mhYR+wJq//EASXH2PCxSKossohc3vAPu2PHZVVqkwBXhcN6XGBBqypYShff8HQmaz/cwuxRZBnsjTT3cfs8hhN2Vp1NL+9/OC7Gf+iifEnfj8V/aO3/94rBJyA=
+	t=1738675694; cv=none; b=OLoedvTXAF4dQPUA9ZC8xofFLCsZWxcaHvzaBzIeUzULBJsIAD6FlWNrUbrZevbT7LjV9MEkto9t0tcfcud9vEmngHlKCeAU0fA8mCLLy18oudScY95Wp29ik3FQ+JACMjBr/MjcrUqX8WZIB7D9ZfqKnHDgqYOZ2dEiSRwCQ9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738675692; c=relaxed/simple;
-	bh=HQQO/EakaDDF8urWuXlHspRCQL2fV2dqUL1OG67QRkg=;
+	s=arc-20240116; t=1738675694; c=relaxed/simple;
+	bh=M06i3QloZudbBFjnrE/gxXJefqlUja5Gx4MrbeOmr9E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TVdGxr6cDq4vNCFm88Jj9hvEvENwlLP7jV1WW2wk7Pfth3Xfp6sb1C0xVKb7HIFPdLgC68zfP/ihKAKNKyaZoDB8Oyk2ctX8k+4yUvFCM9J9jM+9ewTnNtqCbuSuUrO5LBSec0LmjxFGQsTzc3GJkKrp5+Xxtgm2lHiu9LoBdZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CQLcSxxZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZU6pOngk; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=pjUg3Ph/YERbYw+zuEOauNOS2aKmHFYSUUCyGwjRJeA1gGI7KSpuxh8fj+SYeHsjDmSFVylCTuUHen2V13nMEr5KHNk3P1X2XGdpgqu33IyZrSeLpwX90lF3AihqzLgHRy6cJKo79afLicrZASzf4EL6tTeByglAcAPxYfPqCsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LCU0comr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yAZ2/mUc; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CQLcSxxZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZU6pOngk"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7896F254010D;
-	Tue,  4 Feb 2025 08:28:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Tue, 04 Feb 2025 08:28:09 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LCU0comr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yAZ2/mUc"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D3C672540126;
+	Tue,  4 Feb 2025 08:28:11 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 04 Feb 2025 08:28:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738675689; x=1738762089; bh=Ow8FJXszCZ
-	h9XVQeyQZVkFx4PArxb4OJ9Tk+yeLJGRc=; b=CQLcSxxZEYDdG/M57rmUcIHtvB
-	pZxv9Yb0n0oq6wYazVdNWhv7kTD0Wg7oObZdMBNXjFpxPnT5NYlEF6fQE3H6V3UA
-	2EdYb0BCVN0Tal8haET70J1ftX9+JpWC2m9IU9i0gsFBrkF+VsI8oWlxyFe0Bfb6
-	rmOiJL/IflpK2HxiJ81sewHeNfyejGE3lGF3/pvvC8K3jwbahQ3tzQxoRVLkOViU
-	Rjko72RuZJUE6ymf8QuQGL8Dy286zrdua8m+ExnmbQA9duYlV08zI32FBlkONE5n
-	qBlpMW5Qtf7SrP7QiMcbN+7C3KyxP1qdSJmlbPORr5fzfI9N2tYg3OdCzldQ==
+	:subject:to:to; s=fm2; t=1738675691; x=1738762091; bh=RQ5ScEaa2p
+	uXG2ZbdtApNNh9v58lGWvgXxyzypPsYIA=; b=LCU0comrPSfMotLrTSf1PAwleB
+	gR/fFnlsCG1Dcq84teUq7I4HLi9gJb6WFOJOII1eAN4F/jpFjI0KtkZ8c3Y3jEUA
+	7TGLBWTsY6VUgmno3rldtigBSYXiF7JmxqkkYHsZLwL+YnisN9OrFPvGbhhkdfMk
+	txlXVTFNDtMDo1xcbTlq6wiwQFI0AGFACcWi6KCcBB2B7cmaQdBifQixF/e+2iuW
+	uJTC6NpYi57e+A03zmK7Opp3Ez2j2VonfiAsPzzYzvtBRbfq5nkcKWe+DzXoBitM
+	OLJ1ZhHDzZpYiRe1utqOtY76V+YhZFHMRRA/EwOQQ248LmaaCUJH643O4uMw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738675689; x=1738762089; bh=Ow8FJXszCZh9XVQeyQZVkFx4PArxb4OJ9Tk
-	+yeLJGRc=; b=ZU6pOngkg3pGVKgtsZ5JEPTWFQ5tfVhhyN9VlUIsK1EYCetxqnt
-	a2WdB82eOuNO23uA26ezVstWM5CkIgOehOwRAfHY4sBDPZm2u+CNtZVAjyRnPvf8
-	MTnFgqR9uWE57PVcvRP+3/h6FmT1YHegZVkVVo7T4/ExYtTbOvP0XdnwGCHVYbEy
-	/aMbvHxVct1eLvheAugJa/NUUwRRh/vhgyBvZ0fiyREZ5VvsDm+0z9D3lECVDxYV
-	+ZM8xf27O275evMVcV5Bdy/KCiWTw8UFBhkoh9jDfPDHcAX6JL2oTfRyMLn6v5Oe
-	+L/d87FG7XwJpXKvEBjrzPWA6qBIPdusuGw==
-X-ME-Sender: <xms:6RWiZ9NRsb23Tfyuk2Wn4A8eSTOJm6lVe__xnKb7jBaIdKsy38JErA>
-    <xme:6RWiZ_-EfcStKzFGxj7BgyoUYzeA2HCSlUgp0Pu_ZOb88z_QlOHYBFXoosDlRJm4J
-    vIWhA0wuYeE1ZX5mA>
-X-ME-Received: <xmr:6RWiZ8QSYyNiozlI6LM8Ooi5vHgKe8aRl0E7ocKO6OFMljhZZTXH-9zpBFI6u8OnDaefATb1QiBJjG1bv0WA4qsGgIPCRHHd6Qg8>
+	1738675691; x=1738762091; bh=RQ5ScEaa2puXG2ZbdtApNNh9v58lGWvgXxy
+	zypPsYIA=; b=yAZ2/mUcSKv8mDl/ANnnP2I8rIFVxmx72mwdsl5O5TPIfsjlRBa
+	z7Jtf4v31fdLDWkftShrHHF7NDybM9OLf2SDMflHqU2Z986gZJEczOoi/zRLNGGR
+	RB5caWFl29GGT3CE0H+vkUSWVehBsnTWHYWbVhbLr6+DvpMvIS+NsW81G9gS/hyK
+	TWbgZeloEaEcAi1LmQFoAFMWuvA+MIoC3tAqSGgk/SZ6tNJpjvEuN3USHnmbJcNF
+	c8hm2+jXOf2mKbYyEebncs7bH8PIrA6zFPbZtQNlKWU8kIvdIbpGvqf+reYqUZtY
+	7Egh1BKzQYSf4kfCnBtrZPQJg13tqLKCoPA==
+X-ME-Sender: <xms:6xWiZ77J4D6QoS_9PJpQjSu5RvMGY95pOBHYih0ZE3-Y1hUx66ZxJg>
+    <xme:6xWiZw62FMIet4e8nEf_JLMnZH6f27Q1b_mRyy2DBBLwWqZLcKwTHPOWFuiyY1Hqj
+    SNTU7kAUeIFZhu7YA>
+X-ME-Received: <xmr:6xWiZydwqi7ihSMDR2yzY6VGzv96UmxbEuBLzOUSXTIe6yqyRkyKYwq9sIG5W7ksmYxiOmPdjpCqDpAy1XYEd23hK_61-TRVakIb>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvtdeigecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepke
-    ejjefgiedtieekteeijeffiedvudefieffheevkefglefhuedvveetgeffgeelnecuffho
-    mhgrihhnpeguvggsihgrnhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhsse
-    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:6RWiZ5uBnp1iEmUxMEemD9DIRHhwFW3sgewJ0Q6FlWqgosvUhCgmSw>
-    <xmx:6RWiZ1c1FqbasvJXfcvgXXvtXtyjH_3dATync_jwUNZGBKrqfk6hfw>
-    <xmx:6RWiZ118e8ooHSmJi9Fjab3EgVzJEsD_Ox3HrnOeXoHenCIjcdrFlA>
-    <xmx:6RWiZx8TqeYLeSJYeWcBFr4vma310ZVzd599lfy96r5P6Hf7rn9CMQ>
-    <xmx:6RWiZ54wQm5La6Tc7R7VBmmJ35Va8aIkwU8ewH5pKf0YH45be96nvfAI>
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:6xWiZ8I2LHoQQXblopNQ8p-At854ZWIQD2EcotoPNSITdX05o1hyMA>
+    <xmx:6xWiZ_JgIbG-VocmwYrg1f06H_RxSacsIdNfj_4qOysQwk9932ac9Q>
+    <xmx:6xWiZ1xPTiRKmhjdR4L3d4VEca2jG3PtVKsvW0Lh08nZTr14MrAf2w>
+    <xmx:6xWiZ7IDEjRHqr6G0ZmmGtDJuBrH5X4NOiIM6FOe2q5pt4KrzROqEg>
+    <xmx:6xWiZ33EVtOqeeRbIbeDgGXmUKWuE1EF03bdeDhVZSiImliZna8jlg5X>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Feb 2025 08:28:08 -0500 (EST)
+ 4 Feb 2025 08:28:11 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>
-Subject: Re: [PATCH] thunderbird-patch-inline: avoid bashism
-In-Reply-To: <20250204014652.3509928-1-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Tue, 4 Feb 2025 01:46:52 +0000")
-References: <20250204014652.3509928-1-sandals@crustytoothpaste.net>
-Date: Tue, 04 Feb 2025 05:28:07 -0800
-Message-ID: <xmqqed0dx2jc.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] builtin/repack: fix `--keep-unreachable` when there
+ are no packs
+In-Reply-To: <20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-2-7c4d69c5072c@pks.im>
+	(Patrick Steinhardt's message of "Mon, 03 Feb 2025 14:06:55 +0100")
+References: <20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im>
+	<20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-2-7c4d69c5072c@pks.im>
+Date: Tue, 04 Feb 2025 05:28:09 -0800
+Message-ID: <xmqq8qqlx2ja.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,44 +87,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> The use of "echo -e" is not portable and not specified by POSIX.  dash
-> does not support any options except "-n", and so this script will not
-> work on operating systems which use that as /bin/sh.
+> The "--keep-unreachable" flag is supposed to append any unreachable
+> objects to the newly written pack. This flag is explicitly documented as
+> appending both packed and loose unreachable objects to the new packfile.
+> And while this works alright when repacking with preexisting packfiles,
+> it stops working when the repository does not have any packfiles at all.
+
+Chuckle.  That's a cute corner case the developers never considered,
+it seems ;-).
+
+> The root cause are the conditions used to decide whether or not we want
+> to append "--pack-loose-unreachable" to git-pack-objects(1). There are
+> a couple of conditions here:
 >
-> Fortunately, the solution is easy: switch to printf(1), which is
-> specified by POSIX and allows the escape sequences we want to use.  This
-> will allow the script to work with any POSIX shell.
-
-Makes sense.  Will queue.  Thanks.
-
+>   - `has_existing_non_kept_packs()` checks whether there are existing
+>     packfiles. This condition makes sense to guard "--keep-pack=",
+>     "--unpack-unreachable" and "--keep-unreachable", because all of
+>     these flags only make sense in combination with existing packfiles.
+>     But it does not make sense to disable `--pack-loose-unreachable`
+>     when there aren't any preexisting packfiles, as loose objects can be
+>     packed into the new packfile regardless of that.
 >
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+>   - `delete_redundant` checks whether we want to delete any objects or
+>     packs that are about to become redundant. The documentation of
+>     `--keep-unreachable` explicitly says that `git repack -ad` needs to
+>     be executed for the flag to have an effect.
+>
+>     It is not immediately obvious why such redundant objects need to be
+>     deleted in order for "--pack-unreachable-objects" to be effective.
+>     But as things are working as documented this is nothing we'll change
+>     for now.
+>
+>   - `pack_everything & PACK_CRUFT` checks that we're not creating a
+>     cruft pack. This condition makes sense in the context of
+>     "--pack-loose-unreachable", as unreachable objects would end up in
+>     the cruft pack anyway.
+>
+> So while the second and third condition are sensible, it does not make
+> any sense to condition `--pack-loose-unreachable` on the existence of
+> packfiles.
+>
+> Fix the bug by splitting out the "--pack-loose-unreachable" and only
+> making it depend on the second and third condition. Like this, loose
+> unreachable objects will be packed regardless of any preexisting
+> packfiles.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  contrib/thunderbird-patch-inline/appp.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> I noticed this in Debian bug 772238[0], while looking for any bug
-> reports that I might be able to fix.  It was reported in 2014 and has
-> gone unfixed since then, so possibly this script is seeing relatively
-> little use on Debian and Ubuntu.
->
-> I have not CC'd any of the authors because nobody's touched this in over
-> 9 years and none of those people are still active.
->
-> [0] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772238
->
-> diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunderbird-patch-inline/appp.sh
-> index 1053872eea..c55c2caa41 100755
-> --- a/contrib/thunderbird-patch-inline/appp.sh
-> +++ b/contrib/thunderbird-patch-inline/appp.sh
-> @@ -31,7 +31,7 @@ BODY=$(sed -e "1,/${SEP}/d" $1)
->  CMT_MSG=$(sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}")
->  DIFF=$(sed -e '1,/^---$/d' "${PATCH}")
->  
-> -CCS=$(echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
-> +CCS=$(printf '%s\n%s' "$CMT_MSG" "$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
->  	-e 's/^Signed-off-by: \(.*\)/\1,/gp')
->  
->  echo "$SUBJECT" > $1
+>  builtin/repack.c  | 5 ++++-
+>  t/t7700-repack.sh | 2 +-
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+
+Nicely analized and described.  Thanks.
