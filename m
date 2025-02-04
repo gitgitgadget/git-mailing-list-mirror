@@ -1,127 +1,145 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF4A4685
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 19:03:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C555E21ADAC
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 19:43:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738695839; cv=none; b=oCC9sexRHUGcIgzbqxlC/Mi2RG6pecsXONc4mzaznUYY9zGxkpjv+mS+1izCCrLdBPMTX6NlGTZoEB2E1vsJ/imakK5S7604WVJ9OfXEj+YaFu/PQCpaZPhFg1ISokHx7qt4wCfFF6lZL4H8Cas6onL/LD13LFdVf8S49nTz/SQ=
+	t=1738698211; cv=none; b=hSz78b5DZ3m3A+sFqY96951yBGpTOZhXgxhTVW1Yosg+DaSfx5fgXfm/WDDc8aum8Q6bdzte66aS3AxZs66zZNeBaE5WPrJu6pjHriCZFVj8YBk4NGjHqzr1e4BnmjwQwKg8Wb2Com1WNvdxA6UpG3U+PJP+RKoIj/V4Ok7HesU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738695839; c=relaxed/simple;
-	bh=6IkG2FFxKfoOn/GmjQIa8FUV19eKMFilMjwGMbHqWdQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FSXms2ayiCra74TV2L7+2tKu/JeUllKNjS8SjJvX8eVCcgVhYjsKYBcynTeVp3XIHOZAoIjAxnsQLAt03PdLvS7W7mq0HcjawRtKiUz8fakytpMFYTCdzm0nHaJrXX8sArxOX5ItnC+DHFcaG1TDhCU0GaxYhakYhVov65obNbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=GY1zTUo3; arc=none smtp.client-ip=209.85.160.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
+	s=arc-20240116; t=1738698211; c=relaxed/simple;
+	bh=yVkvwtn/DS5bWyImeWaupr8+C4Hi3KQp4pUtDAQKQAM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GTejOgh0/nGt+ZgxF6gq7U8lcs+1sxrtYFf7KtVm46zX0OY8WDqCtifnG7mth2yHC69Ui8XMPth0FnZYHNKElOQuUYNWC3BLrRSpHnoYToAbg07cM9tTVmTfhA8pcKphUJXzFCr1MM21kZaUySar2diRbJcUrgm6ja5b5tc+u7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nXV0bwvr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EYnS2bbv; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="GY1zTUo3"
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-2b6d5400849so46384fac.1
-        for <git@vger.kernel.org>; Tue, 04 Feb 2025 11:03:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shopify.com; s=google; t=1738695837; x=1739300637; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vA6aHgvUCHNiipuBJKXmR6ctwuyydQlyeweLC4kxA8U=;
-        b=GY1zTUo3MsgP56Mjlg3ErG1QM1aU6k+GHOVH6Jw6ZnTMryt7l/Z3m+PCyG96C72ixw
-         HxInOgLMPbOPx2yNGc41CWgYJFxHCUgZ0FcHihYLRHZ5JoGYAf7HbGffvzIb78Lpt+42
-         /MZs+kxY/ITr+QxsOep8h5lawKaqjaihMnSz4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738695837; x=1739300637;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vA6aHgvUCHNiipuBJKXmR6ctwuyydQlyeweLC4kxA8U=;
-        b=lpbKN7dnxLtjzV0qsvjMWPT7dNPWdZsWJpHLOpUAdhBN+mvkOTjWtOn094BKsfD5Iy
-         DrzGzrrv4JfCz5JoDnxzWC1xWMW0O1xe/iS73wtaS+EsZvtD18L6Tr+fA5H/zEJpvcnk
-         yeWIWGFMWhB2g83wVBt3wr31F+mOf6x9T+w4qxDi2cNGufggFuoKkegG0B4U7n9ityAs
-         ArvYRw5zGLrbdJmhH/I3pfTSRk8FwjIRdqHzgN970QBFGLZJ18BnPBU7F3Q3mIxJapqy
-         L0DW/sFIxodxrkBcH3IZmbqpP8EgRlYTUJnlRokyt9lW/cseMgMPX1oKKrQ3rC/c1w3i
-         Re3w==
-X-Forwarded-Encrypted: i=1; AJvYcCUy8xZVND+nRv5me6qfFBVxzuFgU9rqLSzr8g5fEr1HGRy6hlkQV72ASdXTYMS4/QVREJI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwwrAvxanQ93YRgl1nL6HMUJf95so8qRgDIWr74snSl0Fk/36yt
-	N/SzDqAFokEn67Kw2UicuA7kwoOAmTRBnLIJCYwcdEUd90h9HlD97/UFRRsPNJVdTaLcYAIgC6O
-	ZdK0vPPs13Yt/gNKidU5nT9cPgWK1V9dt7P6xjUaGfndFbuGWmRYyNA==
-X-Gm-Gg: ASbGncuhsolX7BqJ4b1rzwyrajByhBVV4cR65mY4qHNs/lCM/5u2f5KiSwtHBamkY4u
-	5NWixxkUJ56mmnvSb84uQ0jzgxl4/pxpTW6ZOs5+8XjeiOBlb98UIA8zLGSy4yPTF35So/eFmWM
-	0hYqIIvYFMVBDtusUjU8cEj8p3Ph1zxg==
-X-Google-Smtp-Source: AGHT+IEBptxNXFwCWkPs2jeMczuuI1y8ioT9qz8OMNyBkmVk5THK1NP+7gQRhjjxPo5gTs0hW24TkOEdovjV2XwFWgI=
-X-Received: by 2002:a05:6871:5881:b0:29e:723c:8e9d with SMTP id
- 586e51a60fabf-2b3e5ebc0c2mr951228fac.4.1738695837179; Tue, 04 Feb 2025
- 11:03:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nXV0bwvr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EYnS2bbv"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AD82B2540133;
+	Tue,  4 Feb 2025 14:43:27 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 04 Feb 2025 14:43:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738698207; x=1738784607; bh=SIZjnragFt
+	cBGVODLnwMDyP3FBQru55zF86fU7Luz6s=; b=nXV0bwvrTkWwBKSFYIfOJU3JLW
+	kmWBKDeIn+I922LA164yCj/BOVpqLWHPbvlHLY2Sj6RXviCoc4T6qh5jxpSd9z7N
+	uTuOnbfh5iiUY2zIHMytY4omc/kOsBEbsOiqyeTkK+dxri0wqu2ywpMKXrrBd0Em
+	88ogZpbxF/LzuS/PcQBjiw9sPatvTVysEaRXTuR28cbB+WAtueWTUF1AnE+nueLV
+	4Yrmo5sWVvA2AWluxmkpITudB7S6F5GWhFqvl+FLsXz1mX9SO8np88dPpVcJpSUQ
+	Aa695WsBLPlr9Y5S/d7UvG1lB45dE4w1LQsDJpXV1MJokcr7Nc/QdgrDtNQQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738698207; x=1738784607; bh=SIZjnragFtcBGVODLnwMDyP3FBQru55zF86
+	fU7Luz6s=; b=EYnS2bbvUq7/TkWFsnV+Oz5vz1gTlDQDArjuGqCJ52FCqNKQHg5
+	rHFTquLbB/3g0ItOd1ihOhkuT45pACD5r5e7lJ/frvHaltisR65wy2mG3plGRM3C
+	Cm8sDCU6S3dQ/5v2X0aXS4TZfXe347xmEwta5AcHo9mA9xgwNjdifpQRu6wVbCZb
+	FqY0U/tH4Xtm4jqdrKDV3uk3lKdduei6yrnFbzxTnYrDI2e22XFZH2TEM4nQYxTO
+	EHeRuRRCmarXbKc55AU/c359FEoQC5Ra1br5yNWIWtlbhD0diu9vn4fVMJeKLqA8
+	pZxWjFE7N861k37IH7FP+oeIJHO5vAWxuYQ==
+X-ME-Sender: <xms:3m2iZ8WrVvMOd_pyOkfRMjb93yel6dYfTXhpyUzJiJ0AUOsE6RQdaA>
+    <xme:3m2iZwk9zPH-MPrZxxJqz9eSA1QIKNWsNEH88QB1g2N1uLAUvcWE94VxFlvhcjBP_
+    W263iYAmR9BHd9nxQ>
+X-ME-Received: <xmr:3m2iZwZreHxtAQITLW1bZIBjWwpgvUSBbEJgL_N4Hu6kwjgXW3HIIb5QPhiJZ2VQ5ID8QWdutpJqf98a2bfcXj9rs3lTLsOVi2f9>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvudegtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeholhhgrgdrphhilh
+    hiphgvnhgtohesshhhohhpihhfhidrtghomhdprhgtphhtthhopehgihhtghhithhgrggu
+    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsuhhnshhh
+    ihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrd
+    hstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheplhdrshdrrhesfigvsgdr
+    uggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:3m2iZ7Vh2FHm_GPYDeG6Iz7ZsCOLn0hPDcwh_6SgpABXiAl5P4stEg>
+    <xmx:3m2iZ2n8CYaTSfofEL-3-8hzoTo9urrV5vddut_xPZs3Lk5HJp892A>
+    <xmx:3m2iZwdruUqQsSxbGJESbkBJpUgZ8azC_ID46SlZCjEPg-vbu9U8hg>
+    <xmx:3m2iZ4FtLJbrCABWE9kSH3m9ov-Wh6vuRtIvvs7z89Cg4nHLYomKHw>
+    <xmx:322iZw4h0IEWCv4yboanWfZ_K-PUzH4l6wXMDcRYizEh-j2e0Q79VVjh>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Feb 2025 14:43:26 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Olga Pilipenco <olga.pilipenco@shopify.com>
+Cc: Olga Pilipenco via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH v3] worktree: detect from secondary worktree if main
+ worktree is bare
+In-Reply-To: <CAFLeGL4v90zArJjtCOSGUTGQTq6qQJEcNMhi4P=ucDU+9bGRHg@mail.gmail.com>
+	(Olga Pilipenco's message of "Tue, 4 Feb 2025 12:03:46 -0700")
+References: <pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com>
+	<pull.1829.v3.git.1738346881907.gitgitgadget@gmail.com>
+	<xmqqcyg294ft.fsf@gitster.g> <xmqq8qqq943u.fsf@gitster.g>
+	<CAFLeGL52tKmurpAHymk42Y9DGazbK8nRdtWAoyzW85eMDxJQhQ@mail.gmail.com>
+	<xmqq8qqq7n26.fsf@gitster.g>
+	<CAFLeGL4v90zArJjtCOSGUTGQTq6qQJEcNMhi4P=ucDU+9bGRHg@mail.gmail.com>
+Date: Tue, 04 Feb 2025 11:43:25 -0800
+Message-ID: <xmqqa5b1ts0y.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com>
- <pull.1829.v3.git.1738346881907.gitgitgadget@gmail.com> <xmqqcyg294ft.fsf@gitster.g>
- <xmqq8qqq943u.fsf@gitster.g> <CAFLeGL52tKmurpAHymk42Y9DGazbK8nRdtWAoyzW85eMDxJQhQ@mail.gmail.com>
- <xmqq8qqq7n26.fsf@gitster.g>
-In-Reply-To: <xmqq8qqq7n26.fsf@gitster.g>
-From: Olga Pilipenco <olga.pilipenco@shopify.com>
-Date: Tue, 4 Feb 2025 12:03:46 -0700
-X-Gm-Features: AWEUYZkSjMDys4lW6o2oMWF5kMNeaa_ZytRpAuIJaZJr7O24v4M_BHZRbnYw77s
-Message-ID: <CAFLeGL4v90zArJjtCOSGUTGQTq6qQJEcNMhi4P=ucDU+9bGRHg@mail.gmail.com>
-Subject: Re: [PATCH v3] worktree: detect from secondary worktree if main
- worktree is bare
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Olga Pilipenco via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Jan 31, 2025 at 1:20=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Olga Pilipenco <olga.pilipenco@shopify.com> writes:
+
+> I have 2 versions for comment:
 >
-> Olga Pilipenco <olga.pilipenco@shopify.com> writes:
+> 1. Since is_main_worktree_bare explains quite well what it does we can have
+> a shorter explanation of `!worktree->is_current` part, something like:
 >
-> >> Perhaps the logic is clear to those who diagnosed the problem, wrote
-> >> the patch, and reviewed it, in which case there is no reason to
-> >> reroll.  Perhaps it was just me to whom it was not obvious that
-> >> the purpose of "is_current" check was not about "are we looking at
-> >> the main worktree" but was about "if we are not in the main worktree,
-> >> we need this extra check".
-> >>
-> >> Thanks.
-> >
-> > You did a great job figuring it out and I agree it's confusing at
-> > first, but we tried our best to make it less confusing.
-> > `is_current` check is actually not necessary there, but having it there=
- saves
-> > extra unnecessary calculations, also describes & fixes the exact scenar=
-io
-> > that didn't work (not being able to see main worktree as bare from a
-> > secondary worktree).
->
-> If I had to do a great job there, then the code does deserve to be
-> explained a bit better for later developers who wonder why it is
-> written in the way it is, perhaps we a single-liner comment?
+> /* Additional checks are needed if main worktree is not current
+> (checking from secondary worktree) */
+> (!worktree->is_current && is_main_worktree_bare(the_repository));
 
-I have 2 versions for comment:
+For somebody who thought about the issue themselves (like me, before
+writing the message you are responding to), this shorter form would
+suffice.  I'd rephrase it more like so
 
-1. Since is_main_worktree_bare explains quite well what it does we can have
-a shorter explanation of `!worktree->is_current` part, something like:
+    /* When a secondary worktree, an extra check is needed */
 
-/* Additional checks are needed if main worktree is not current
-(checking from secondary worktree) */
-(!worktree->is_current && is_main_worktree_bare(the_repository));
+for brevity, though.
 
-2. Or a bit longer inline explanation that partially repeats the
-explanation of is_main_worktree_bare
-+ adds explanation about efficiency:
- /*
-  * When in a secondary worktree we have to also verify if the main worktre=
-e
-  * is bare in $commondir/config.worktree.
-  * This check is unnecessary if we're currently in the main worktree,
-  * as prior checks already consulted all configs of the current worktree.
- */
-(!worktree->is_current && is_main_worktree_bare(the_repository));
 
-Let me know if any of these work. Thanks.
+> 2. Or a bit longer inline explanation that partially repeats the
+> explanation of is_main_worktree_bare
+> + adds explanation about efficiency:
+>  /*
+>   * When in a secondary worktree we have to also verify if the main worktree
+>   * is bare in $commondir/config.worktree.
+>   * This check is unnecessary if we're currently in the main worktree,
+>   * as prior checks already consulted all configs of the current worktree.
+>  */
+> (!worktree->is_current && is_main_worktree_bare(the_repository));
 
-> Thanks.
+And this more extended version would have helped me by not having to
+ask
+
+    Is "this worktree does not have is_current bit set" equivalent
+    to "this worktree is the main one, so is_main_worktree_bare()
+    needs to be consulted"?  That linkage between "the is_current
+    bit unset" and "is the main worktree" is not obvious to me.
+
+in the first place.
+
+In short, both should work, and I personally find that the latter
+may be a bit more helpful to readers.
+
+THanks.
