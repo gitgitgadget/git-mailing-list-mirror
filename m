@@ -1,80 +1,67 @@
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4EC15B0EF
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 04:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 194FD15B0EF
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 04:14:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738641990; cv=none; b=sO5hXBqhjl1orHfhDGaHRERYsVcBo3H+HVckjUEI6P4lRz0nPX+wgsOPmuJUfkg0omgqyl3A5bdd9kYZAwYyYdgfjjvqG8LDPHQaHCcnDvS67NEjnF577hf14hQx/aFqnAQNwMD2GfaulBzJ7gl+3TNq2nD4jmISsFn6DVYLXjw=
+	t=1738642482; cv=none; b=PNmmhOvVEgc4c1SFHViDzmSoFLUjFK+tPtA3/LVq8hOlWTJIi5WZKGtqIBqm7c0PSKLtph+SYK1a0NBixnSFY7B4PvOd19ThRG24s1DaGGBT0+bzUju1la71F94n9sERwTtxzIN4qSHAyWaHIjijGMVlEI7uPD5skI4rTV9J9DQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738641990; c=relaxed/simple;
-	bh=hp0Y+c1DTxKSnGvyDMZhas88cHvhfU313nlyVpEayic=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Akri91SAki1V3MR4ixqUr4QyvaV/O+aabFlz9yUjAQV6Asg5DDhcZuTkp4GQBN7OwYjRtc70J97u4oI4CYRzi8XfVhf17rBDOeR/LcaE7gBr9gpWSQ3Pw5dPCJG7iAce3CwliNxbr6tZWfQPyF1vh7FXFXvsYkdhqxWVjGlxBww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D32Cid/u; arc=none smtp.client-ip=209.85.216.49
+	s=arc-20240116; t=1738642482; c=relaxed/simple;
+	bh=w+IMnUPbgPdSlyj1wAlUfFuREXKAMQth9M6sEL+3F3A=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=o3aita6vIuy1lXZOQYs/a5hgQijb+1A7MOAj3nxxjQtv2XzFeH9KvcQrXHtl7MWqRJeAv6MpPv8xXRcBxoRRJvhzZQWmSGutZgNpeSoEA56mIk7s/13enU4p+bLeGWeP4kdas79O3gMqt54rL69P0gYzV1Xl5iiIwtAl7XcaMfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WONEQehE; arc=none smtp.client-ip=209.85.214.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D32Cid/u"
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-2ef70c7efa5so6946458a91.2
-        for <git@vger.kernel.org>; Mon, 03 Feb 2025 20:06:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WONEQehE"
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-21c2f1b610dso119902745ad.0
+        for <git@vger.kernel.org>; Mon, 03 Feb 2025 20:14:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738641987; x=1739246787; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uz/Lkw/pPvD6GgKWN7JRL6zgGJcri82lQpkMJTV+Foc=;
-        b=D32Cid/uXHa5RDh9Tzay9SuYpUkjryLSN/Ia+5lyGBBmUD+Is+mpNKWk7bmQ26otSk
-         3qeGAed1Cfm9iIaR5plP+RdIG+Kh56fJWvunYEt7Vk+DsuAdNE4/utfOPxKf81kXCQcR
-         MoKoLIb+YlakzilzAaojVP+24b+yJoe1ion+kfYqQgup60bt7eu2yRjqCBRiE1uhOGcu
-         1FUkfdcsYXLO3f6oI5scXSNTopKpMPL6PyjVTVyKfGZtfse3UtBnt5+b75qyBsNmqgen
-         /2Z2XaMyW8na2k43skqfh2uuLGSGeVL935a3Eox9XYc1dgbW1v8BFR397P6ivkYq8wc6
-         nKqQ==
+        d=gmail.com; s=20230601; t=1738642480; x=1739247280; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WaAXsBSbN5mxDYCjqGEBXqV9IdfOiXkJtrNiGa6K7fk=;
+        b=WONEQehEV0+3Brh3KNS0R3FOfyHqv7snz9V8xIAssy5LhSobki0p62ctxg7jRP2pHz
+         Lu5wWhH31BgIxH0bNEZIZZEuuuFBOzAHKkMUxBLFWfo8OlbZVxnPFnu1oTuLsFaE0xWD
+         evpbaKRhr6jqDx04wjZDUvtaqKZ64ltmzBcujW4IJlfvyE9HCWyHE4fnZe0ITRcRq5bc
+         4SuDlJE3BdlsYjjhC0i4HjagVHdFoTC3/uHUQAyxsCdrSOvdhfBoNLpp/e+AMn0BY62b
+         jbmORRHx73i2Y9Iot+xVhUL3K/jC0RjnZkr8WWJP+jLnWocATkwg3ovpbYr9a6p4ge/A
+         Xzqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738641987; x=1739246787;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uz/Lkw/pPvD6GgKWN7JRL6zgGJcri82lQpkMJTV+Foc=;
-        b=eQ5IPI8rKuNUVokXTSp7AAmvoU4i9Qh+O8ndY3p6LO0xF6lM75Wkpw8uZsY4AoEqLF
-         uUzi+p4dMCnqq5Dia0pKKIdp7vKMLCgz1Q29xZ6CsJYXqHOYSLBphwv+MtrRgL5gWF06
-         xJ2VW74YNNhBwmiwJEJbeEBwAAKPZGX6TnBJrZwlS8w7gGgPuknoNWXLCeyP2vsskxQr
-         X5eNIkvCNjT+xDXHlNQH01ZmdYWQshEtsA5cJCSI9dEpIATJugKi6x6vY2G+Mp5lv/ea
-         tOB3W0NWsYxnmdEeyPkpPE84jYqL9P8Sz0KilKR+FzZqV1ywoJaQfdGyUi9OOpRp74wY
-         5Bnw==
-X-Gm-Message-State: AOJu0Yw8I2xkXXJUBhlap/YZcby+xXG2kN46yhfqk+ABVPt4jc/EtXWO
-	wTEo+Pe3a4oyifup2dTOuozVHyI8x8SxPjrJ5SxSSzOaEfF71W4noGCTNg==
-X-Gm-Gg: ASbGncuHSyeThY/SoWCbxp1Reb9FGMlGjmJxuFmHuvdndsXbO+TjmlMQEmYd3UkOPc7
-	UU8VXSg9feH3v7EUzEoieKqa5Ydjd7LJAArZzgDFtvw0Td2bZOXDPC6nY5R8pn3RFj3io37KqGD
-	PyhMkyQ33K1CLESY5utjlcvEacTVsVivFHOqVUnbot6uvKPK7s7FY0D+EaonhHiTyPU0sXCVbv8
-	ikMLkSefqTBDkCH6g9ZMiae+U/yKQl5ydbr3DtRv+WxADtbKFO1hPTpf1izGr7aHbXX/kXxZY5E
-	qIqwr0Wkf890Zg==
-X-Google-Smtp-Source: AGHT+IEUCC6m+mNCkcsfMnsBOWJDj2GuSTN8Tg5b/zDr1bXqFZAzcnG29pZyKQzr7+rElVd2Rko3qw==
-X-Received: by 2002:a17:90b:548e:b0:2f4:4500:bb4d with SMTP id 98e67ed59e1d1-2f83ac0a3d9mr35238959a91.20.1738641986811;
-        Mon, 03 Feb 2025 20:06:26 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738642480; x=1739247280;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WaAXsBSbN5mxDYCjqGEBXqV9IdfOiXkJtrNiGa6K7fk=;
+        b=o5C6Pu5zderJd93QoWJHb1AnsF3lCFlDByM9BjEduIeDXL7sdJBf9lGIKBathJ8Nmg
+         krk/Krqn4aNUlfjLp7BSAKebzZDHzSLGT5Cm1WmsiBZjC6t2ktd4gbimJDNqT+71X3dv
+         ZkVp964XN7o8wfoIMTzYRkwC3KZG/sboDRL+Yc1VzexFKfnj2XJBu1vqTX0eoTZMgzxE
+         dBjXvs/TJ2aRZczvpZO4yFzAt8jId1T6tDnjtCrP65R6Chfd0MqzBRXGXZjPh/nms4j3
+         5FdAXy4Jh9QguZMuiTHDmVJuFLrk8pzh6cLOXkvoyOzmYEw8vsAJedtyFOzOfZKTagi4
+         HF9w==
+X-Gm-Message-State: AOJu0YxgjujaNfGsypE3Q+FWBviWjpD+lPlgNEMkkHoDUkwyY/LWvljy
+	7UOPedVEAf1bjbd8UEYizOhZzm0SypHv2sjQx1+JDCMuX4KM+sFWxMmXQA==
+X-Gm-Gg: ASbGncv3Tlkg5lGSHJ0sjW4/M+fzmwBB/zGwFxSEKkFK3ehJecYqPISpQ6FDuVZ05fQ
+	iyA+iQu2Vv1Da9m4JTy+ssni75CRtE/o9n7clyeYMAldAYMyl129foF5BJfHmaaoo5hxn47gma4
+	9TdiM3dimpCbLesqIKRisbPjahX/LSiw18I2cN7rptnAV9wzt5UvPkk6X3pf5xVJkKhGovWgbns
+	T67W9Ob4ue59WuYYgxTt71oQA5fv5q7uZpbQ+upi/rLympH7cJdhPOCnRVq3ppqS0xbZERu0sMQ
+	5c6gUJGOh8t9wg==
+X-Google-Smtp-Source: AGHT+IHpEL4vNqmto8261+fWGRujqTUm/BLR/phDNmxCpm4ByQ1/J155jay6iu4Nab1IUg+hCbfysQ==
+X-Received: by 2002:a17:902:f548:b0:216:2bd7:1c4a with SMTP id d9443c01a7336-21dd7d73da9mr369459065ad.26.1738642479903;
+        Mon, 03 Feb 2025 20:14:39 -0800 (PST)
 Received: from meet.. ([103.240.169.233])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f83bd09cb1sm12272583a91.21.2025.02.03.20.06.22
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de31f8522sm85893465ad.89.2025.02.03.20.14.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 20:06:25 -0800 (PST)
+        Mon, 03 Feb 2025 20:14:38 -0800 (PST)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
-Cc: shubham.kanodia10@gmail.com,
-	Meet Soni <meetsoni3017@gmail.com>,
-	Jacob Keller <jacob.keller@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>,
-	Pavel Rappo <pavel.rappo@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Elijah Newren <newren@gmail.com>,
-	Matthew Rogers <mattr94@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [GSoC][PATCH v4 5/5] refspec: relocate apply_refspecs and related funtions
-Date: Tue,  4 Feb 2025 09:35:58 +0530
-Message-Id: <20250204040558.34766-6-meetsoni3017@gmail.com>
+Cc: gitster@pobox.com,
+	Meet Soni <meetsoni3017@gmail.com>
+Subject: [GSoC][PATCH] remote: relocate valid_remote_name
+Date: Tue,  4 Feb 2025 09:44:30 +0530
+Message-Id: <20250204041430.36035-1-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250204040558.34766-1-meetsoni3017@gmail.com>
-References: <20250201064202.76116-1-meetsoni3017@gmail.com>
- <20250204040558.34766-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,151 +70,85 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Move the functions `apply_refspecs()` and `apply_negative_refspecs()`
-from `remote.c` to `refspec.c`. These functions focus on applying
-refspecs, so centralizing them in `refspec.c` improves code organization
-by keeping refspec-related logic in one place.
+Move the `valid_remote_name()` function from `refspec.h` to `remote.h` to
+better align with the separation of concerns.
 
 Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
- refspec.c | 32 ++++++++++++++++++++++++++++++++
- refspec.h | 12 ++++++++++++
- remote.c  | 31 -------------------------------
- remote.h  | 11 -----------
- 4 files changed, 44 insertions(+), 42 deletions(-)
+Junio mentioned in [1], the `valid_remote_name` function belongs in remote
+header. This patch addresses that.
+
+[1]: https://lore.kernel.org/git/xmqqikq0ruuk.fsf@gitster.g/
+ refspec.c | 10 ----------
+ refspec.h |  1 -
+ remote.c  | 10 ++++++++++
+ remote.h  |  2 ++
+ 4 files changed, 12 insertions(+), 11 deletions(-)
 
 diff --git a/refspec.c b/refspec.c
-index cab0b0d127..0dbbd1e799 100644
+index 6d86e04442..83ec7d7e62 100644
 --- a/refspec.c
 +++ b/refspec.c
-@@ -9,6 +9,7 @@
- #include "strvec.h"
- #include "refs.h"
- #include "refspec.h"
-+#include "remote.h"
- #include "strbuf.h"
- 
- /*
-@@ -447,3 +448,34 @@ int refspec_find_match(struct refspec *rs, struct refspec_item *query)
- 	}
- 	return -1;
+@@ -236,16 +236,6 @@ int valid_fetch_refspec(const char *fetch_refspec_str)
+ 	return ret;
  }
-+
-+struct ref *apply_negative_refspecs(struct ref *ref_map, struct refspec *rs)
-+{
-+	struct ref **tail;
-+
-+	for (tail = &ref_map; *tail; ) {
-+		struct ref *ref = *tail;
-+
-+		if (refname_matches_negative_refspec_item(ref->name, rs)) {
-+			*tail = ref->next;
-+			free(ref->peer_ref);
-+			free(ref);
-+		} else
-+			tail = &ref->next;
-+	}
-+
-+	return ref_map;
-+}
-+
-+char *apply_refspecs(struct refspec *rs, const char *name)
-+{
-+	struct refspec_item query;
-+
-+	memset(&query, 0, sizeof(struct refspec_item));
-+	query.src = (char *)name;
-+
-+	if (refspec_find_match(rs, &query))
-+		return NULL;
-+
-+	return query.dst;
-+}
+ 
+-int valid_remote_name(const char *name)
+-{
+-	int result;
+-	struct strbuf refspec = STRBUF_INIT;
+-	strbuf_addf(&refspec, "refs/heads/test:refs/remotes/%s/test", name);
+-	result = valid_fetch_refspec(refspec.buf);
+-	strbuf_release(&refspec);
+-	return result;
+-}
+-
+ void refspec_ref_prefixes(const struct refspec *rs,
+ 			  struct strvec *ref_prefixes)
+ {
 diff --git a/refspec.h b/refspec.h
-index be20ba53ab..2a28d043be 100644
+index 69d693c87d..dc428f86f2 100644
 --- a/refspec.h
 +++ b/refspec.h
-@@ -96,4 +96,16 @@ void refspec_find_all_matches(struct refspec *rs,
- 				    struct refspec_item *query,
- 				    struct string_list *results);
+@@ -61,7 +61,6 @@ void refspec_appendn(struct refspec *rs, const char **refspecs, int nr);
+ void refspec_clear(struct refspec *rs);
  
-+/*
-+ * Remove all entries in the input list which match any negative refspec in
-+ * the refspec list.
-+ */
-+struct ref *apply_negative_refspecs(struct ref *ref_map, struct refspec *rs);
-+
-+/*
-+ * Search for a refspec that matches the given name and return the
-+ * corresponding destination (dst) if a match is found, NULL otherwise.
-+ */
-+char *apply_refspecs(struct refspec *rs, const char *name);
-+
- #endif /* REFSPEC_H */
+ int valid_fetch_refspec(const char *refspec);
+-int valid_remote_name(const char *name);
+ 
+ struct strvec;
+ /*
 diff --git a/remote.c b/remote.c
-index 4c5940482f..7f27c59a5b 100644
+index 0f6fba8562..3d451570cb 100644
 --- a/remote.c
 +++ b/remote.c
-@@ -907,37 +907,6 @@ void ref_push_report_free(struct ref_push_report *report)
- 	}
+@@ -3003,3 +3003,13 @@ char *relative_url(const char *remote_url, const char *url,
+ 	free(out);
+ 	return strbuf_detach(&sb, NULL);
  }
- 
--struct ref *apply_negative_refspecs(struct ref *ref_map, struct refspec *rs)
--{
--	struct ref **tail;
--
--	for (tail = &ref_map; *tail; ) {
--		struct ref *ref = *tail;
--
--		if (refname_matches_negative_refspec_item(ref->name, rs)) {
--			*tail = ref->next;
--			free(ref->peer_ref);
--			free(ref);
--		} else
--			tail = &ref->next;
--	}
--
--	return ref_map;
--}
--
--char *apply_refspecs(struct refspec *rs, const char *name)
--{
--	struct refspec_item query;
--
--	memset(&query, 0, sizeof(struct refspec_item));
--	query.src = (char *)name;
--
--	if (refspec_find_match(rs, &query))
--		return NULL;
--
--	return query.dst;
--}
--
- int remote_find_tracking(struct remote *remote, struct refspec_item *refspec)
- {
- 	return refspec_find_match(&remote->fetch, refspec);
++
++int valid_remote_name(const char *name)
++{
++	int result;
++	struct strbuf refspec = STRBUF_INIT;
++	strbuf_addf(&refspec, "refs/heads/test:refs/remotes/%s/test", name);
++	result = valid_fetch_refspec(refspec.buf);
++	strbuf_release(&refspec);
++	return result;
++}
 diff --git a/remote.h b/remote.h
-index 516ba7f398..b4bb16af0e 100644
+index bda10dd5c8..0c14d665b6 100644
 --- a/remote.h
 +++ b/remote.h
-@@ -261,17 +261,6 @@ int resolve_remote_symref(struct ref *ref, struct ref *list);
-  */
- struct ref *ref_remove_duplicates(struct ref *ref_map);
+@@ -461,4 +461,6 @@ void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
+ char *relative_url(const char *remote_url, const char *url,
+ 		   const char *up_path);
  
--int refname_matches_negative_refspec_item(const char *refname, struct refspec *rs);
--
--/*
-- * Remove all entries in the input list which match any negative refspec in
-- * the refspec list.
-- */
--struct ref *apply_negative_refspecs(struct ref *ref_map, struct refspec *rs);
--
--int refspec_find_match(struct refspec *rs, struct refspec_item *query);
--char *apply_refspecs(struct refspec *rs, const char *name);
--
- int check_push_refs(struct ref *src, struct refspec *rs);
- int match_push_refs(struct ref *src, struct ref **dst,
- 		    struct refspec *rs, int flags);
++int valid_remote_name(const char *name);
++
+ #endif
+
+base-commit: 58b5801aa94ad5031978f8e42c1be1230b3d352f
 -- 
 2.34.1
 
