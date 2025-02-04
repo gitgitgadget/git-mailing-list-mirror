@@ -1,247 +1,124 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7283A78F4A
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 18:15:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90D821771A
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 18:33:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738692936; cv=none; b=LbZ9VcJKXgEKRQI2ptuRCG2I0rz2dkQ+Rooj/GZyp44VZVidEAl9ZiyeyLqXv9FNXddhjZxXITEEGqg3uP5K0lL/hZ3NcKxD15MMyoB1WOizQ1RRH52qBEc6fCOnllvoZOrlDeqfsKYDtipOCKdJCOW7DSBLuvy7pwhrYmfmbcw=
+	t=1738694041; cv=none; b=g9IWhZCAsJ6+uOBSTzH/MEpTooMRLVkgPBHrZ4HMOfw4reA690DU5f5DPTomV1HDY0+LPjZSWl/iKraTJHfob/F5fqJRIYhq3MdhrrdQw5OW34AyFmXKC+wKANdzMFuFzvJqTeN4Ij+XygDvuaQtnDl0QXCXWqlFND1ehKSWI18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738692936; c=relaxed/simple;
-	bh=Z2jW3OxeMELSdYgJnCWV1IL1pwb2An4//k2TMY0hjj4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GFvzValmQv8902bPxoK3/iIUs07m3UZh7COttvmGFmbON1NPMgBRyyQKl9ASWfA3YFBwoL466exab9++tBRbF3VnswMt7VSOUWPYHG+sIgNi9aeW5kYa1qC9rhnsOOdB6ofj6xXMBiFokirPiL5N6sozKHqNsMN1wQ9dKYWB/Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gsKgJeVR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KXg/F+zq; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738694041; c=relaxed/simple;
+	bh=g6C83kUbzn5EVqT5ikOKL+0qIOiCh1gVr+/GTyONCBs=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=IeYvv2EM8N7PfUuDU5RAwGbEFkZStzhANWKbxvgaRXIWiznGIKdX98l13N14XtZgfeoI5TEGfPULCPGi0oU/DKmHG+6nR1PG4NRUsRPNdjpzWsxerPWgZygcI582sshywKRly8uFbgO0SDgg/Ro2Bib0cFeNHKEPW9mAk0ZLqb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HDPr8g4U; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gsKgJeVR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KXg/F+zq"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5E67A2540122;
-	Tue,  4 Feb 2025 13:15:33 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 04 Feb 2025 13:15:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738692933; x=1738779333; bh=MzgACVYbWP
-	N2OXJvI+n/Vte146kEkUaBSvfrCsrAF3w=; b=gsKgJeVREjV6AWtaSTLU+ICaG5
-	Egf9eh12N5nkG0BiawLQ4FayboU7NB5CnKEXmDZV1cs5nSN19a7KrTzP4H8tKQAA
-	BCbRJNQorXppXAZ4zvdzckrJUxhaFBRkj3p7NGPw5MKLKz+30ZwTmSV5ib6wwq2y
-	9NCPGy6dEtkVa+7g5blUypi/KzUwxUZmokVQou2/MSSjqVd+4uDMOpjLY7sZ3qbz
-	OBdYh0P+ENLGGJ+kjb4boClABWJBNrwFNNTpZNj6fLU6kAMIF6vzEKzRck0ztq+j
-	Av9YMpivfSEr7cAG9uVezN/XKxHXyifyPTKSjuxaiR5pAaEoDZuDEzWKOUPg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738692933; x=1738779333; bh=MzgACVYbWPN2OXJvI+n/Vte146kEkUaBSvf
-	rCsrAF3w=; b=KXg/F+zq5ouvXk/XvCFZKh4ucY6xCsj21QT1TgMZVXr7LJxxjd6
-	RAkV/WqpbpmCT0m28zl6dQQfFbaOeHnet8dtN7IZEmZwzW9UF7qgBiHbpZ30UAxg
-	w+RWFPlqvVIPn9oZvvN0tAdpLboIbzHr15Ul7Ni3EN9fnq1+osbXB+MSG/ypKrmY
-	fOHqdM/71zR79Q5j2WGD8r3md6MsCv6ZbfnTKG+aNdsWXbMeJkmZuZKUqQt9ml9d
-	aQXgvLPBAVFVe79HiEg6YgGkYIDOPxLqjLhAUT+OlCJaDgbL27IFX5qD+CTsDp5c
-	RHfFzfg3aCrh3dTP2EinvveYmMO+AGfu89g==
-X-ME-Sender: <xms:RFmiZzv7HvmFALdFc9V2gpzAoicgusa_IqkP-mIYbk42OjHNItPPGw>
-    <xme:RFmiZ0cWQvRUw7xnaCqvTxQH2erLOzU4bwbb_NBI4yRwVzr5iTB5BWA8eKFpzroIn
-    rfiKRKeCOy_m2vxOA>
-X-ME-Received: <xmr:RFmiZ2ye-3Lp4ph7HBNJSIfQp1DB-a3a8jDBLfuh52AxQHpRdvNkhEkyMOVA0JZ6uH0Qy9Q6-obZPBKkyjm1SXLH_fNWJAW2QL6Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvuddvvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtth
-    hopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheprggulhhtvghrnhgrthhivhgv
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:RFmiZyPo6v22yJVmqG7gQoUneADUghWr3cv2Z4O3ByLOJB58MFHxCg>
-    <xmx:RFmiZz8NHMBmZ2-vHXxRnNrmvojw9CjdHx-3d6XF_KX_Va8OSAu3Dw>
-    <xmx:RFmiZyXa0ljnWVbkYKTiLqzWLQfitTQVFG59b0LubtepPz4t-95FCw>
-    <xmx:RFmiZ0exfeQqlKrDXtpVRyYhO7iMV4WvMV0bsiOskEC93zlE3Qj4nw>
-    <xmx:RVmiZzyl_SBTmpKxPICccI9EV0iIeKOkhBXN1K_EWH_m-6XOgp626OHS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Feb 2025 13:15:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  me@ttaylorr.com,  peff@peff.net,  ZheNing Hu
- <adlternative@gmail.com>
-Subject: Re: [PATCH v4] gc: add `--expire-to` option
-In-Reply-To: <pull.1843.v4.git.1737704954987.gitgitgadget@gmail.com> (ZheNing
-	Hu via GitGitGadget's message of "Fri, 24 Jan 2025 07:49:14 +0000")
-References: <pull.1843.v3.git.1736994932003.gitgitgadget@gmail.com>
-	<pull.1843.v4.git.1737704954987.gitgitgadget@gmail.com>
-Date: Tue, 04 Feb 2025 10:15:30 -0800
-Message-ID: <xmqqh659tw3h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HDPr8g4U"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2161eb94cceso75195795ad.2
+        for <git@vger.kernel.org>; Tue, 04 Feb 2025 10:33:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738694039; x=1739298839; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ZLmJNZK95ZDyyCPNRyiAv5pIjFdZXcGgoOUvG3C9Jg0=;
+        b=HDPr8g4UlsHSS+LSAxUy49vnhnaCWd71B6vnEOM1sKXRC6bJza6ywLPFTTEHrfiO6X
+         47TLC2tFSB//KKVhu42BGIWw5f/N+zBCa5WFnlhK4a21Iwxbl19MHi9D5ETWeiaq1rPC
+         gX7zkMoLQ+m03u5big7APJWrgBiodI20n58eTfjriiOrvSjkpMyq6zKLYbmiMKyJPD9I
+         86ckT1cXca1Eo+j9tJA3shyjKACKDq+jNlHKkk4I1RHf5w5QXNDg3YYSViInstlf1/qN
+         KvNDBpmvhDxhE/eSLsqtL8zWJtOVVIybBFc62XmizyTAExktDSlAPxgMICpF04ehqhZc
+         lX2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738694039; x=1739298839;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZLmJNZK95ZDyyCPNRyiAv5pIjFdZXcGgoOUvG3C9Jg0=;
+        b=YiblQULZlVoKnVVB6Qbw7z48Cw5lgucRUeCw5bhI8AYOJZeoOnoB7I4B/BRDRWrGAu
+         rs/YptSbLko203Ga92XGcHJUlN708fGyvoYuG6D97zC2PW6nVayu+PsUxZkgWH5tJvbM
+         haiBoaen0XhdnJ57D12c23sfb6ib5T4/KHuqZC8V3Kq+BX9ipaVjHG400xdVXYnge6YG
+         tEQejOjgYBXghHSgEPym4k5Vr38npePSwMgoq/xSTXs2TnQ4bRef1IwW64HB/pMTAZVB
+         O2Qi1qVtIaviqwUr1fOtm6f6zWOhvwi6yRqyV4ik4uwx1+jOddSxF7OWR0xjGfnAOHuG
+         QwxQ==
+X-Gm-Message-State: AOJu0Yz1VAlsyqynyLtpMVmVUoMTFDOYaa1S+vz+4hQZu1t4A105iq1j
+	m0AVBjSynUHE1aGM5Ta3/PRdCc9qY9bjMmPqr2WHay7ptGvS6hLH
+X-Gm-Gg: ASbGnctnxrBkrfByamS6falyxK+1xrZoZYEFiq0jDkZ0VbM2Revx9SK/ErEoTFuSV4V
+	DE8iMj/9Vlu1UdINybFrL0oIs7ga9biCgJw+ghpERMYbrGXl0enPbhww/koKKrhn66w/pLgX0Sc
+	h+Ddr5EwM6XluezytCsEMbz1g0ZYY04rozmPpD1CD9WEhhIuMFnW5ELE4VETlJj7wkO1t3pJt48
+	SV7b+dOfM8/4Y3c9keB5Ej5smV18y3ofyT+5zMfhnrEGWBSzMKl5eYbsYM1fQM2ApZP1TZryOAd
+	PUOxl1sbScEFrQBhQHCLlRXT
+X-Google-Smtp-Source: AGHT+IErYCevJAbeKvuCgv96c4mfO1n88C+hpISoogQ5GBR2EVao5MgKUeqpR0EhRDujHiDF5CqOxA==
+X-Received: by 2002:a05:6a00:4642:b0:725:f1b1:cbc5 with SMTP id d2e1a72fcca58-72fd0bc26c1mr47695788b3a.3.1738694038622;
+        Tue, 04 Feb 2025 10:33:58 -0800 (PST)
+Received: from [192.168.0.7] ([106.51.24.86])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72fe631c039sm10945375b3a.25.2025.02.04.10.33.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 04 Feb 2025 10:33:58 -0800 (PST)
+Message-ID: <d5cba1a9-fe51-4f3f-970b-3ef8a7a2e459@gmail.com>
+Date: Wed, 5 Feb 2025 00:03:34 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git in GSoC 2025
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>,
+ Christian Couder <christian.couder@gmail.com>,
+ Karthik Nayak <karthik.188@gmail.com>, Jialuo She <shejialuo@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
+ <Z432QXJb_TfzNBa2@pks.im> <c39c5424-71d0-4b6d-90b1-a6a70f2ee61b@gmail.com>
+ <cd90cf17-6113-4634-a774-6df707b73e95@gmail.com>
+Content-Language: en-US
+In-Reply-To: <cd90cf17-6113-4634-a774-6df707b73e95@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Patrick, Karthik, Jialuo and all,
 
-> From: ZheNing Hu <adlternative@gmail.com>
->
-> This commit extends the functionality of `git gc`
-> by adding a new option, `--expire-to=<dir>`. Previously,
-> this feature was implemented in 91badeba32 (builtin/repack.c:
-> implement `--expire-to` for storing pruned objects, 2022-10-24),
-> which allowing users to specify a directory where unreachable
-> and expired cruft packs are stored during garbage collection.
-> However, users had to run `git repack --cruft --expire-to=<dir>`
-> followed by `git prune` to achieve similar results within `git gc`.
->
-> By introducing `--expire-to=<dir>` directly into `git gc`,
-> we simplify the process for users who wish to manage their
-> repository's cleanup more efficiently. This change involves
-> passing the `--expire-to=<dir>` parameter through to `git repack`,
-> making it easier for users to set up a backup location for cruft
-> packs that will be pruned.
->
-> Due to the original `git gc --prune=now` deleting all unreachable
-> objects by passing the `-a` parameter to git repack. With the
-> addition of the `--cruft` and `--expire-to` options, it is necessary
-> to modify this default behavior: instead of deleting these
-> unreachable objects, they should be merged into a cruft pack and
-> collected in a specified directory. Therefore, we do not pass `-a`
-> to the repack command but instead pass `--cruft`, `--expire-to`,
-> and `--cruft-expiration=now` to repack.
->
-> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> ---
+On 02/02/25 17:22, Kaartic Sivaraam wrote:
+> 
+> Gentle reminder that the ideas list needs completion. 
 
-This hasn't seen any reaction for a while.
+Thank you for your responses! The updated assignment is as
+follows:
 
-Does anybody have further comments?  Otherwise let's mark it for
-'next'.
+- Consolidate ref-related functionality into git-refs
 
-Thanks.
+   Possible mentors:
+   * Patrick Steinhardt
+   * Jialuo She
 
->  Documentation/git-gc.txt |  7 +++++++
->  builtin/gc.c             |  9 +++++++--
->  t/t6500-gc.sh            | 33 +++++++++++++++++++++++++++++++++
->  3 files changed, 47 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-> index 370e22faaeb..0eac8e85f08 100644
-> --- a/Documentation/git-gc.txt
-> +++ b/Documentation/git-gc.txt
-> @@ -69,6 +69,13 @@ be performed as well.
->  	the `--max-cruft-size` option of linkgit:git-repack[1] for
->  	more.
->  
-> +--expire-to=<dir>::
-> +	When packing unreachable objects into a cruft pack, write a cruft
-> +	pack containing pruned objects (if any) to the directory `<dir>`.
-> +	This option only has an effect when used together with `--cruft`.
-> +	See the `--expire-to` option of linkgit:git-repack[1] for
-> +	more information.
-> +
->  --prune=<date>::
->  	Prune loose objects older than date (default is 2 weeks ago,
->  	overridable by the config variable `gc.pruneExpire`).
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index d52735354c9..8656e1caff0 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -136,6 +136,7 @@ struct gc_config {
->  	char *prune_worktrees_expire;
->  	char *repack_filter;
->  	char *repack_filter_to;
-> +	char *repack_expire_to;
->  	unsigned long big_pack_threshold;
->  	unsigned long max_delta_cache_size;
->  };
-> @@ -432,7 +433,8 @@ static int keep_one_pack(struct string_list_item *item, void *data UNUSED)
->  static void add_repack_all_option(struct gc_config *cfg,
->  				  struct string_list *keep_pack)
->  {
-> -	if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now"))
-> +	if (cfg->prune_expire && !strcmp(cfg->prune_expire, "now")
-> +		&& !(cfg->cruft_packs && cfg->repack_expire_to))
->  		strvec_push(&repack, "-a");
->  	else if (cfg->cruft_packs) {
->  		strvec_push(&repack, "--cruft");
-> @@ -441,6 +443,8 @@ static void add_repack_all_option(struct gc_config *cfg,
->  		if (cfg->max_cruft_size)
->  			strvec_pushf(&repack, "--max-cruft-size=%lu",
->  				     cfg->max_cruft_size);
-> +		if (cfg->repack_expire_to)
-> +			strvec_pushf(&repack, "--expire-to=%s", cfg->repack_expire_to);
->  	} else {
->  		strvec_push(&repack, "-A");
->  		if (cfg->prune_expire)
-> @@ -675,7 +679,6 @@ struct repository *repo UNUSED)
->  	const char *prune_expire_sentinel = "sentinel";
->  	const char *prune_expire_arg = prune_expire_sentinel;
->  	int ret;
-> -
->  	struct option builtin_gc_options[] = {
->  		OPT__QUIET(&quiet, N_("suppress progress reporting")),
->  		{ OPTION_STRING, 0, "prune", &prune_expire_arg, N_("date"),
-> @@ -694,6 +697,8 @@ struct repository *repo UNUSED)
->  			   PARSE_OPT_NOCOMPLETE),
->  		OPT_BOOL(0, "keep-largest-pack", &keep_largest_pack,
->  			 N_("repack all other packs except the largest pack")),
-> +		OPT_STRING(0, "expire-to", &cfg.repack_expire_to, N_("dir"),
-> +			   N_("pack prefix to store a pack containing pruned objects")),
->  		OPT_END()
->  	};
->  
-> diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-> index ee074b99b70..74f7bd09046 100755
-> --- a/t/t6500-gc.sh
-> +++ b/t/t6500-gc.sh
-> @@ -339,6 +339,39 @@ test_expect_success 'gc.maxCruftSize sets appropriate repack options' '
->  	test_subcommand $cruft_max_size_opts --max-cruft-size=3145728 <trace2.txt
->  '
->  
-> +test_expect_success '--expire-to sets repack --expire-to' '
-> +	rm -rf expired &&
-> +	mkdir expired &&
-> +	expire_to="$(pwd)/expired/pack" &&
-> +	GIT_TRACE2_EVENT=$(pwd)/trace2.txt git -C cruft--max-size gc --cruft --expire-to="$expire_to" &&
-> +	test_subcommand $cruft_max_size_opts --expire-to="$expire_to" <trace2.txt
-> +'
-> +
-> +test_expect_success '--expire-to with --prune=now sets repack --expire-to' '
-> +	rm -rf expired &&
-> +	mkdir expired &&
-> +	expire_to="$(pwd)/expired/pack" &&
-> +	GIT_TRACE2_EVENT=$(pwd)/trace2.txt git -C cruft--max-size gc --cruft --prune=now --expire-to="$expire_to" &&
-> +	test_subcommand git repack -d -l --cruft --cruft-expiration=now --expire-to="$expire_to" <trace2.txt
-> +'
-> +
-> +
-> +test_expect_success '--expire-to with --no-cruft sets repack -A' '
-> +	rm -rf expired &&
-> +	mkdir expired &&
-> +	expire_to="$(pwd)/expired/pack" &&
-> +	GIT_TRACE2_EVENT=$(pwd)/trace2.txt git -C cruft--max-size gc --no-cruft --expire-to="$expire_to" &&
-> +	test_subcommand git repack -d -l -A --unpack-unreachable=2.weeks.ago <trace2.txt
-> +'
-> +
-> +test_expect_success '--expire-to with --no-cruft sets repack -a' '
-> +	rm -rf expired &&
-> +	mkdir expired &&
-> +	expire_to="$(pwd)/expired/pack" &&
-> +	GIT_TRACE2_EVENT=$(pwd)/trace2.txt git -C cruft--max-size gc --no-cruft --prune=now --expire-to="$expire_to" &&
-> +	test_subcommand git repack -d -l -a <trace2.txt
-> +'
-> +
->  run_and_wait_for_gc () {
->  	# We read stdout from gc for the side effect of waiting until the
->  	# background gc process exits, closing its fd 9.  Furthermore, the
->
-> base-commit: 92999a42db1c5f43f330e4f2bca4026b5b81576f
+- Refactoring in order to reduce Git's global state
+
+   Possible mentors:
+   * Patrick Steinhardt
+   * Karthik Nayak
+   * Jialuo She
+
+- Machine-Readable Repository Information Query Tool
+
+   Possible mentors:
+   * Patrick Steinhardt
+   * Karthik Nayak
+
+- Implement support for reftables in "dumb" HTTP transport
+
+   Possible mentors:
+   * Patrick Steinhardt
+   * Karthik Nayak
+
+Note that I haven't assigned any mentors / co-mentors for each project. 
+I suppose we could assign that based on the applications we receive and 
+the ideas that we end up selecting.
+
+Based on Christian's inputs, we should be able to distribute
+projects among mentors well.
+
+--
+Sivaraam
