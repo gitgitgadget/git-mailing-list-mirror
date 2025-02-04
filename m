@@ -1,154 +1,162 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE85910E4
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 00:18:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F575684
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 00:28:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738628329; cv=none; b=hjO1TC9CuFZ4A9VKI/8D4JmT5TGcvJCIpS9gHf4O/XZvsPAClo/pO/Q+6ktv2FiBqMY3eaZPRlPBRgxR4RSgkE8kfHySpi/iAQGXr+WCOgGdZhyUkiYkU2Ac1IekqjejHOOZ+mbV0GlFvfFFIA2rdg55hRTEcxlnMVS1AkUyr4E=
+	t=1738628921; cv=none; b=ow5jkRRqqZWIzb4uPiRrki713s3dslrCXC04f8V3fvgxJ1WbQbZf60cDOWoddmAi1PljAY/m34xvRCfjH5/s/F+gw1V6LcQu+k/XjZPAVTlcMagpbVT4ElTT81Wx34X4Xyy1l9T1HD7Gr/R+/KpPWLPcMzuYkNnsbRm7FVgGmkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738628329; c=relaxed/simple;
-	bh=iBqi6CYdz+I2Ys25oeL/Jb0AqOeIysZ5hgwjtKASgGM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SJ2SrcaPJnLVWI3g8iJdTfbNRBT76dkXpOp/Svv6AMiLnicyIx5EJe+H/vrR9Lmx8u2d4L85xPWrW+tnmM9MnLI7YXUh2rO7CRZZxILEJfPZ/UkyuF3o2F4TBAPNb+mCUf1ZonNEj6lYot8z47Zgz+MvkSztC6zVMdvDiUcHlYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OSzy8kpP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DFDffZ+k; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738628921; c=relaxed/simple;
+	bh=sRq0YPRK0Aaj2fBY4iIuN31ZRbUDY2V74GJQYbtck6o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JLIQnToeOCN8QFsK03RYCRzyp5bs6QHh8cU60WDu5IRU6wQrrZfVE2acVCS3lAlndGIeVE4Ej8DZROWgC6GWpoS/SSw2KugIZDIRWmVBrg6NBm3/Sy++CMCpc+glZ1WPnpBmDf/fzaiFdaI2FNmEgsVpUq8oILiwL8J029luWx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZQFtf6sE; arc=none smtp.client-ip=209.85.160.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OSzy8kpP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DFDffZ+k"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B136211401D0;
-	Mon,  3 Feb 2025 19:18:46 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 03 Feb 2025 19:18:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738628326; x=1738714726; bh=slS0QT9Yyn
-	sE80m2dcKoZTtinxt4ZiS2F2U2XodaBP0=; b=OSzy8kpPkXoSVDbUu41+ma9c74
-	AluL/E3V2aMpeTYMruV2UA6VDRdI4k2/laaohxeOVBHS0KqOmdYuj2l8hsJ1VL71
-	ylmvmmTjgLadxTGQDBsQEVbyhnpwSQdKVopeQdyawHGH0ixZjPOrYSE3MiwfkBTG
-	wPgEmFIsVDw8JAKGRjHuVjKw7dzmPoftDs/CvHaKNjla+qBPMdYXNPYEMzahCVIS
-	TcFIi1spLxHMcCVYz78mtgjVBSHC8QmEMbNh2n04nGCYXYVtqhhiQLcRz9mTCoE1
-	zrOlQPZC+X6vYsPmUwFeqSC93Li6qFyrSZAnNRNT/9b9uyroW3v5dzACWy0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738628326; x=1738714726; bh=slS0QT9YynsE80m2dcKoZTtinxt4ZiS2F2U
-	2XodaBP0=; b=DFDffZ+kFeCigjp2CUp0eyrgI5BGGtkDD9CryZUtJvOkGshgA5F
-	M0mAIIDDAz9sxp993o7gXZUNfXJq1ah7C4RneP83/M6Z+NBbFSukRyI8agnfTu6d
-	NceWeva39JRyElAoxJYa8L2Y+ZjzXnf1ixt9O8w45x3B9dQtHGNA2/ZpHq+lgZRo
-	1rKA04JBGXDUb/6OOb049Mtop19r6mOEyT4dzQSBBnQ1oMdIUVh2GR9VHd4LIpoA
-	XnSz199hsHCpYYCn9xPYqxCCF6cjSQH4LUJxcV3mngnNB/0gCJ1Lc9XDXy42NfzP
-	DTyvm0EFFX71Wbu5XbFYDj5GYEcznI7hIhw==
-X-ME-Sender: <xms:5lyhZ5KNbz8Wd2KCbrLXr4vQcj-nnOnMunBuKsyXuqt-Aeym4zTVQA>
-    <xme:5lyhZ1KPPqKCTapPp5fii3vK3LG_0GAwZ4VOgug4QS8DxWbdfZMYTLoUZiF-jRI34
-    s-b5i2YNp-6vTZVIg>
-X-ME-Received: <xmr:5lyhZxsKX3yVaV0MFAy4gBO1YZYJl5chtMNFmtXGf4ej38QVtWxyOiS3HygnK2rH546V1gDdhJSXuSLkGN41J0nIuUumugVeSJfs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduledtfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeduhedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
-    hgmhigrdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohep
-    phhssehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
-    hpthhtohepjhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthhopehnvgif
-    rhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuug
-    gvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:5lyhZ6b7Ulf-r9juJ9NoIeWQZLP850-Y2lS-IkwMp5repG6HOhBQZw>
-    <xmx:5lyhZwYOuOnb4QqyiGKSaLw_qlYfIR95yVkYoqvMS1TcK6XZ14lkvQ>
-    <xmx:5lyhZ-D4ZYKfqTACWdcnbqlNbKrnc9V7QzUg2wPF0nMCGR6r0MpcrQ>
-    <xmx:5lyhZ-bIIUTwjDG8LQAnR3m7qq4AuGKr3RVFFk-e2rl8cXma7fxQeQ>
-    <xmx:5lyhZ9KRf4MvorNALiNKjwFDyckM228EvoyQXVjH8dYcNsv4Q4r2_Qjd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 3 Feb 2025 19:18:46 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  peff@peff.net,
-  ps@pks.im,  me@ttaylorr.com,  johncai86@gmail.com,  newren@gmail.com,
-  christian.couder@gmail.com,  kristofferhaugsbakk@fastmail.com,
-  jonathantanmy@google.com,  karthik.188@gmail.com,  =?utf-8?Q?Jean-No?=
- =?utf-8?Q?=C3=ABl?= AVILA
- <jn.avila@free.fr>,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 0/5] PATH WALK III: Add 'git backfill' command
-In-Reply-To: <pull.1820.v3.git.1738602667.gitgitgadget@gmail.com> (Derrick
-	Stolee via GitGitGadget's message of "Mon, 03 Feb 2025 17:11:02
-	+0000")
-References: <pull.1820.v2.git.1734712193.gitgitgadget@gmail.com>
-	<pull.1820.v3.git.1738602667.gitgitgadget@gmail.com>
-Date: Mon, 03 Feb 2025 16:18:44 -0800
-Message-ID: <xmqqwme6y32z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZQFtf6sE"
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-2aa17010cbcso1929136fac.3
+        for <git@vger.kernel.org>; Mon, 03 Feb 2025 16:28:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738628918; x=1739233718; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UgUYk80Jq0KxAavh1l0alwVmGB5qjP/A2AZEeNZSbyg=;
+        b=ZQFtf6sEyslMo0sSal+w64N86+ZlLYBI9EVcQHaU1YDx6TF1SPKL1kd9Df54Bqn1PU
+         S5U01ZXTK/oZms9e4Gk7fISR+HwweZgcYHy29MnJxAukKd4A7jD5lZO5g8cS1Y5wZgMB
+         Hc4V0lTB/fCaDkr2nvtGO4IKDDf1peDmt0z5ce234AwfXXd/LGsHn1nTD/I/L1fS6bzK
+         gf42CTDvXX8A2I8s30HFtEkKPHpVEbNirLis5cY68qwQGEqW1cBNbwcsAsoq69CGVQuA
+         fDTMqLsqxSmLcC/SoMtI+qO5Xw4Z9js1vE4Ie6hc5PViJj+7cDwn53jQ8H6C92wmrNSy
+         igkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738628918; x=1739233718;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UgUYk80Jq0KxAavh1l0alwVmGB5qjP/A2AZEeNZSbyg=;
+        b=LIJvXEIwzV+jTP7wIOspW1Ec5ZP6zq9/GHjgbCg26c3e3bSGmr7vtSbCvjP77ecbCi
+         YrUn0A7Fn07P3Q5R/o2kJyAY0LVETleq8yvD482oORAfGUXecIK1K7Vzs2lVrb/vjllq
+         14ZsmtU/Y7ux3C7+aseKYjclcWLCpjvadnqr9HNFpWhbZRlRsBpkjqJ5wlEp3hmZ3GlJ
+         mxuHVMWFgg76Gx6tMgBNBowwR17xpipyl7hjvuyw91m4S67xe7yeQX/Y2mxDukzilLYB
+         2o8MWz/Nysy2PQKRq8jfQ0Z6m41xzmsey2Gh/7Mun8d+ZxiSVhEt9uPRtGYyBlAofbmQ
+         Uzlw==
+X-Forwarded-Encrypted: i=1; AJvYcCX+IGT0BDb29EXNrzgOFA30kJN/SoZLyBHdw/9LHbvflqwAFJu8fxhMFXsydINqlwIdAoE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7dM6WkFZSbhyc8+fXFxjMUb0PTDySMwvQ2UK+F0ke0R3QnP/Z
+	3q9MrGon+LWHi9IGOW5T0GtH1Rw8mwUQQNrHJaCovU9tbs821hRfwsWHSQErd3P+HVkVidkuP5G
+	xHBSjyNz1RJ34L34BCaKNgAOlAAc=
+X-Gm-Gg: ASbGncv6GE5Vnytks3nVmpTYKV6mdNxaY8t1cQiBgPAP5IRO1D6XQ9l/DlLW+TfhewD
+	AOqTRz+DZDeqS6AvleH2Fdag9wQ8x0sYpjU0z8D/u3ciTTq+AgBG6OvuD3rpYycYu6JQ7WKL4Ow
+	==
+X-Google-Smtp-Source: AGHT+IGwQrthu4d5rehry1tNxeEbjM0eNluffDst2rucKnSGY9u/v89RNCb2zpVSYY474rFY91u/daciHCIyXHEPakg=
+X-Received: by 2002:a05:6871:a9cc:b0:29e:2d18:2718 with SMTP id
+ 586e51a60fabf-2b32f26194dmr14581942fac.28.1738628918629; Mon, 03 Feb 2025
+ 16:28:38 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAPpV+OaMcViVKok5U0-4HaYyPMKEA7BBzw4t113uAaMndjs5Cg@mail.gmail.com>
+ <xmqqh65b2ci3.fsf@gitster.g> <xmqq34guzi0f.fsf@gitster.g>
+In-Reply-To: <xmqq34guzi0f.fsf@gitster.g>
+Reply-To: bram@van-oosterhout.org
+From: Bram van Oosterhout <adriaanbram0712@gmail.com>
+Date: Tue, 4 Feb 2025 11:28:26 +1100
+X-Gm-Features: AWEUYZlYcNwpyA37jkWifv84yP4uBvn6v4IuZ9K404gEREVP53tl4PPC8cxPtuA
+Message-ID: <CAMoUM6+9SHybvWVp3SKDD4RWesruh=nmMacXn_oL893CPCn39g@mail.gmail.com>
+Subject: Re: Usability issue: "Your branch is up to date"
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Manuel_Qui=C3=B1ones?= <manuel.por.aca@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Ahhhh, this thread explains my confusion when, even though git locally
+tells me my branch is "up to date", a fetch demonstrates the branch is
+not up to date.
 
-> Updates in v3
-> =============
+Which begs the question: Why does git say: "Your branch is up to date
+..." if at best it can say: "Your
+branch MIGHT BE up to date with ..."?
+
+I have learned not to rely on the message and come to expect
+(sometimes nasty) surprises when I return to a project after a few
+months,
+
+Bram
+
+On Tue, Feb 4, 2025 at 11:11=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
->  * Rebased onto 'master' now that the path-walk API is merged.
-
-I was going to object to this rebase, as the same path-walk was
-contained already while building the base of the series for the
-previous rounds.  IOW, "now that the path-walk API is merged" is not
-a good excuse to rebase onto 'master'.
-
-But then I forgot that there are other topics, like 'meson based
-build' and 'synopsis formatting', that were in flight at the same
-time that have been merged to 'master'.  They are good reasons why
-we may want to rebase the updated version to 'master'.
-
-IOW ...
-
->  * New builtin boilerplate is updated with new standards, including:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->  * Doc formatting uses [synopsis] formatting.
->  * Add builtin/backfill.c to meson.build.
->  * Add Documentation/git-backfill.txt to Documentation/meson.build.
->  * Add t/t5620-backfill.sh to t/meson.build.
->  * Update handling of -h due to f66d1423f5 (builtin: send usage() help text
->    to standard output, 2025-01-16).
-
-... these are all good reasons, even if path-walk were still cooking
-in 'next' (in which case, we'd prepare a custom base by merging path-walk
-into 'master' and then apply these patches).
-
->  * Doc formatting is updated to use back-ticks on options and mark the
->    builtin as experimental.
+> > Manuel Qui=C3=B1ones <manuel.por.aca@gmail.com> writes:
+> >
+> >> that can be fetched from the remote. My proposal: Add the timestamp of
+> >> the last fetch to the message. For example:
+> >>
+> >> ```
+> >> $ git switch main
+> >> Switched to branch 'main'
+> >> Your branch is up to date with 'origin/main'. Last check was 2 hours a=
+go.
+> >> ```
+> >>
+> >> It looks like the timestamp of file `.git/FETCH_HEAD` would be enough
+> >> to implement it.
+> >
+> > Not generally.  Your last fetch may not have been about origin/main
+> > (e.g., "git fetch origin next"), or it may even have been about a
+> > totally different remote (e.g., "git fetch elsewhere").
+> >
+> > The timestamp of the last entry of the reflog of origin/main may be
+> > a lot better place to look for the information, if available.
 >
->  * The batch_size member of 'struct backfill_context' is now named
->    'min_batch_size' in all patches.
+> Unfortunately, this is not quite enough.
 >
->  * Some mentions of '--batch-size' are updated to '--min-batch-size'.
+> I do not think a "git fetch" that noticed that the remote-tracking
+> branch is up-to-date updates the reflog of the remote-tracking
+> branch, so if you observed that their 'main' is at certain value 10
+> hours ago, and if your more recent fetch done two hours ago found
+> that they haven't made any progress, the reflog says "You observed
+> that their 'main' is at this commit as of 10 hours ago" and not the
+> number you want.
 >
->  * An additional test is included for non-cone-mode sparse-checkout patterns
->    to further check the return values of path_matches_pattern_list() within
->    the path-walk API with sparse mode.
+> However, as I said, the fetch that touched the FETCH_HEAD file may
+> not have been about the ref in question, so while a two-hour old
+> FETCH_HEAD can guarantee that update of any ref by fetching
+> (including a fetch done as part of "git pull") did not happen in the
+> last two hours, it does not really mean what you have in your
+> remote-tracking branch is not stale from reality by more than two
+> hours.
 >
->  * A use of oid_object_info_extended() is replaced with has_object().
+> You could inspect the contents of FETCH_HEAD to see if the source of
+> the remote-tracking branch is listed there, and when it appears in
+> the file, can use the timestamp of the file.  If you did this:
 >
->  * The backfill_context_clear() method is called by the proper owner of the
->    struct.
+>     $ git fetch origin main
 >
-> Thanks, -Stolee
-
-Everything looked great from a quick look.  I'll have a more
-detailed look later, but this round looks quite promising.
-
-Thanks.
+> and it left something like
+>
+>         f93ff170b... branch 'main' of https://www.kernel.org/...
+>
+> in the file, you can reverse map the URL and the branch using the
+> remote.*.URL and the remote.*.fetch configuration variables to
+> figure out that it must have been stored at our 'origin/main'.
+> At that point, you know that the timestamp of FETCH_HEAD would be
+> when we observed that value in the 'origin/main'.
+>
+> But even then, because the FETCH_HEAD file is not versioned, if you
+> did
+>
+>     $ git fetch elsewhere main
+>
+> then the file gets overwritten, and you would no longer know when
+> was the last time you observed the value of 'origin/main'.
+>
+> In short, there is not enough information kept anywhere to compute
+> the number you want to show reliably.
+>
