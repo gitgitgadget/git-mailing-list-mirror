@@ -1,114 +1,127 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC51D217707
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 18:36:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF4A4685
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 19:03:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738694223; cv=none; b=JkLsYXoWo/WXFqIBqodluYeo9HdMpwff1Ucgc5N9lLZqAmKrqS5d+HnDZAFtBanQOXI6kj0GMs+6+EIZ33DwWOJgLZ+DmXBpw/BUcftRMCYGLWiAK975yW+7F//GbGMuXYOYhScv4DBdvJpavvwlIccuKliM0kzwlTWciiibqsI=
+	t=1738695839; cv=none; b=oCC9sexRHUGcIgzbqxlC/Mi2RG6pecsXONc4mzaznUYY9zGxkpjv+mS+1izCCrLdBPMTX6NlGTZoEB2E1vsJ/imakK5S7604WVJ9OfXEj+YaFu/PQCpaZPhFg1ISokHx7qt4wCfFF6lZL4H8Cas6onL/LD13LFdVf8S49nTz/SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738694223; c=relaxed/simple;
-	bh=5drYGDCpy1HdX7brNmT9cFmZq3DYDCU+RdfIlJEpCUc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gZ5u8U6MPOtzMJxQidtN9wJjVGEGGcUkvmeWZnoJctXp7ZHNQua4vWNUwtVcNEFZX4T+pIXXkO4RPAKKXWREu5l0LshwFkv7ZXWRPz1lIcCSuwxLtatWEEoLg3mbkf6crGFuI/nwMfqjN1krj+UfLKJgYsTlAKX3FBuI4YlYXCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=By/6JFgx; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738695839; c=relaxed/simple;
+	bh=6IkG2FFxKfoOn/GmjQIa8FUV19eKMFilMjwGMbHqWdQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FSXms2ayiCra74TV2L7+2tKu/JeUllKNjS8SjJvX8eVCcgVhYjsKYBcynTeVp3XIHOZAoIjAxnsQLAt03PdLvS7W7mq0HcjawRtKiUz8fakytpMFYTCdzm0nHaJrXX8sArxOX5ItnC+DHFcaG1TDhCU0GaxYhakYhVov65obNbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=GY1zTUo3; arc=none smtp.client-ip=209.85.160.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="By/6JFgx"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-216426b0865so104098005ad.0
-        for <git@vger.kernel.org>; Tue, 04 Feb 2025 10:36:56 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="GY1zTUo3"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-2b6d5400849so46384fac.1
+        for <git@vger.kernel.org>; Tue, 04 Feb 2025 11:03:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738694216; x=1739299016; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8G9+p/niippjYjfW6ca8hp3EViD7vLgHSjRB3rIMZBs=;
-        b=By/6JFgxunCjeu2wvQwwLoOCMVA416yrks+JKiiTkmJV5eCcXiUdQ4a0M7M64p+gKA
-         som06KmahOuzEsEVvSR2Lzxc35wcfcoQn9DLVkWrQkDn6Wo2G0MiwpbZQmU+63HAtcsD
-         4NR1GvAjgqtYEotNB5j2xOfEfwV9bOgpw76cf1ujzCZlT8LBajH8XB38eVzfGl85vqib
-         vcSn02/TiE6hGxA95kDy3A9XMZFQDLBdUVv0ZB5tn0JvWgbtk+xwg1N7zYKGJdf+gaDG
-         taZfsrvwcq0IH4ciX4D60x3XMJ3LOj+WU0X5JFUdwAhuce7h/7e8/opChRSJoO65792b
-         jENw==
+        d=shopify.com; s=google; t=1738695837; x=1739300637; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vA6aHgvUCHNiipuBJKXmR6ctwuyydQlyeweLC4kxA8U=;
+        b=GY1zTUo3MsgP56Mjlg3ErG1QM1aU6k+GHOVH6Jw6ZnTMryt7l/Z3m+PCyG96C72ixw
+         HxInOgLMPbOPx2yNGc41CWgYJFxHCUgZ0FcHihYLRHZ5JoGYAf7HbGffvzIb78Lpt+42
+         /MZs+kxY/ITr+QxsOep8h5lawKaqjaihMnSz4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738694216; x=1739299016;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8G9+p/niippjYjfW6ca8hp3EViD7vLgHSjRB3rIMZBs=;
-        b=gH3IPHrWoIYM5ovbofJu9rir6+8CF5KOVdI7+hkUW4NbY1Ppl0oQ1HU0HSKrx0EmJ0
-         y3W+HB8vVspiIErcAv2SJU6ovaqxZYNllBhmdf/2U6bcOJ1kwGnpVqjkKwxfWX5uo7G1
-         N6VnwuKhBu+ru2SXjS6Pr5a9FDSgS0IEzIj/KTjig1fFe0nOcYLM0ulZYqxo3OBBrmmj
-         vB/9iKgkpT0A+peiDPWkMB6Q2An1lsoN2fA4M7Fhcufd8w0OB3FA2/0eWXIdXtlhb3Gq
-         PoFYjLCSRfy0cpAW1xgODEfHBIULlikIQDkPwhJYpsuDIg3MYgpws+EuKebW9ALvRsLC
-         Jr4A==
-X-Forwarded-Encrypted: i=1; AJvYcCXN8ClmopilK5a01YeZEyl7LJBDJ5+slQRLcdKBFqsm3GZj3fVQFloX7pnt+8Ibjn/KqGk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJ8LoZ5xEOX9pOgC3Ln/yBRTrqwAivFEXbJuEoXxiQ27SC0tlT
-	BDwDoJtdSKVEnFbiQ5THR3Sj97UiDsHBqOSt2gJhZd34NF3tVh03
-X-Gm-Gg: ASbGncsz5VCKgodB3mPccC64mFs23hh1sLs+ruTGJfLNlYCFx0lEAEaMK9ds7LTRZY0
-	0YPuzHzScJgMU5ar2IXjxjPOC3ZTAm5ZY+sE4DNImQ8WukZsg3wsCBOeRWRLDZFUsOSZwXZ/OBF
-	T5bq4Ka+2KkEUD+xky7pfsSxeDr3vN4jbJlX02NjzmE6PAHLeg+Me4lknEuOQqlIuEaLpfJJFUf
-	/5gScTULwmLKLXHxCoyEBCLF1GmNhq7zVOlAXuLzKElBUmTUnskx7+vinL+63tiWktj86IzeLii
-	ap8v76ymMAs4eNvSWyl1KEcQ
-X-Google-Smtp-Source: AGHT+IEP3DBRbsLOl6383aiGRWZaBQyD+uQm7GDhxOgnXwyt4VdCXIozfG+mqNTrbJvDjXX1382EEQ==
-X-Received: by 2002:a05:6a21:3406:b0:1e1:a576:aec with SMTP id adf61e73a8af0-1ed7a462f1dmr46023127637.8.1738694215939;
-        Tue, 04 Feb 2025 10:36:55 -0800 (PST)
-Received: from [192.168.0.7] ([106.51.24.86])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-acec0a666ddsm8674390a12.73.2025.02.04.10.36.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 04 Feb 2025 10:36:55 -0800 (PST)
-Message-ID: <cde4132d-fd6f-4f83-adb4-7ea124b6f09f@gmail.com>
-Date: Wed, 5 Feb 2025 00:06:32 +0530
+        d=1e100.net; s=20230601; t=1738695837; x=1739300637;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vA6aHgvUCHNiipuBJKXmR6ctwuyydQlyeweLC4kxA8U=;
+        b=lpbKN7dnxLtjzV0qsvjMWPT7dNPWdZsWJpHLOpUAdhBN+mvkOTjWtOn094BKsfD5Iy
+         DrzGzrrv4JfCz5JoDnxzWC1xWMW0O1xe/iS73wtaS+EsZvtD18L6Tr+fA5H/zEJpvcnk
+         yeWIWGFMWhB2g83wVBt3wr31F+mOf6x9T+w4qxDi2cNGufggFuoKkegG0B4U7n9ityAs
+         ArvYRw5zGLrbdJmhH/I3pfTSRk8FwjIRdqHzgN970QBFGLZJ18BnPBU7F3Q3mIxJapqy
+         L0DW/sFIxodxrkBcH3IZmbqpP8EgRlYTUJnlRokyt9lW/cseMgMPX1oKKrQ3rC/c1w3i
+         Re3w==
+X-Forwarded-Encrypted: i=1; AJvYcCUy8xZVND+nRv5me6qfFBVxzuFgU9rqLSzr8g5fEr1HGRy6hlkQV72ASdXTYMS4/QVREJI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwwrAvxanQ93YRgl1nL6HMUJf95so8qRgDIWr74snSl0Fk/36yt
+	N/SzDqAFokEn67Kw2UicuA7kwoOAmTRBnLIJCYwcdEUd90h9HlD97/UFRRsPNJVdTaLcYAIgC6O
+	ZdK0vPPs13Yt/gNKidU5nT9cPgWK1V9dt7P6xjUaGfndFbuGWmRYyNA==
+X-Gm-Gg: ASbGncuhsolX7BqJ4b1rzwyrajByhBVV4cR65mY4qHNs/lCM/5u2f5KiSwtHBamkY4u
+	5NWixxkUJ56mmnvSb84uQ0jzgxl4/pxpTW6ZOs5+8XjeiOBlb98UIA8zLGSy4yPTF35So/eFmWM
+	0hYqIIvYFMVBDtusUjU8cEj8p3Ph1zxg==
+X-Google-Smtp-Source: AGHT+IEBptxNXFwCWkPs2jeMczuuI1y8ioT9qz8OMNyBkmVk5THK1NP+7gQRhjjxPo5gTs0hW24TkOEdovjV2XwFWgI=
+X-Received: by 2002:a05:6871:5881:b0:29e:723c:8e9d with SMTP id
+ 586e51a60fabf-2b3e5ebc0c2mr951228fac.4.1738695837179; Tue, 04 Feb 2025
+ 11:03:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git in GSoC 2025
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: Christian Couder <christian.couder@gmail.com>,
- Git Mailing List <git@vger.kernel.org>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <CAP8UFD3PkyaQBLYPryePk=e54VtsQwjbyvvTsKEBFJnns_jZyg@mail.gmail.com>
- <Z44u7od-mDiKcKVZ@pks.im> <xmqqtt9byxia.fsf@gitster.g>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <xmqqtt9byxia.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com>
+ <pull.1829.v3.git.1738346881907.gitgitgadget@gmail.com> <xmqqcyg294ft.fsf@gitster.g>
+ <xmqq8qqq943u.fsf@gitster.g> <CAFLeGL52tKmurpAHymk42Y9DGazbK8nRdtWAoyzW85eMDxJQhQ@mail.gmail.com>
+ <xmqq8qqq7n26.fsf@gitster.g>
+In-Reply-To: <xmqq8qqq7n26.fsf@gitster.g>
+From: Olga Pilipenco <olga.pilipenco@shopify.com>
+Date: Tue, 4 Feb 2025 12:03:46 -0700
+X-Gm-Features: AWEUYZkSjMDys4lW6o2oMWF5kMNeaa_ZytRpAuIJaZJr7O24v4M_BHZRbnYw77s
+Message-ID: <CAFLeGL4v90zArJjtCOSGUTGQTq6qQJEcNMhi4P=ucDU+9bGRHg@mail.gmail.com>
+Subject: Re: [PATCH v3] worktree: detect from secondary worktree if main
+ worktree is bare
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Olga Pilipenco via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 03/02/25 18:51, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
->> I was wondering whether it might make sense to also move the list of
->> microprojects into the Git project itself, e.g. as something like
->> "Documentation/Projects.txt". This would make it easier for us to update
->> the list of long-running projects whenever a new project is added and
->> makes it easier for people to discover it.
-> 
-> I wonder if this is better managed as either a separate tree (like
-> the 'todo' branch that houses "What's cooking" reports among other
-> things) with history disjoint from the main project, or even a
-> separate Wiki?
+On Fri, Jan 31, 2025 at 1:20=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
+> Olga Pilipenco <olga.pilipenco@shopify.com> writes:
+>
+> >> Perhaps the logic is clear to those who diagnosed the problem, wrote
+> >> the patch, and reviewed it, in which case there is no reason to
+> >> reroll.  Perhaps it was just me to whom it was not obvious that
+> >> the purpose of "is_current" check was not about "are we looking at
+> >> the main worktree" but was about "if we are not in the main worktree,
+> >> we need this extra check".
+> >>
+> >> Thanks.
+> >
+> > You did a great job figuring it out and I agree it's confusing at
+> > first, but we tried our best to make it less confusing.
+> > `is_current` check is actually not necessary there, but having it there=
+ saves
+> > extra unnecessary calculations, also describes & fixes the exact scenar=
+io
+> > that didn't work (not being able to see main worktree as bare from a
+> > secondary worktree).
+>
+> If I had to do a great job there, then the code does deserve to be
+> explained a bit better for later developers who wonder why it is
+> written in the way it is, perhaps we a single-liner comment?
 
-Just to cross-check this, isn't the current home for this file,
-http://git.github.io, already a separate wiki of sorts? The site's
-description literally says something along the same lines:
+I have 2 versions for comment:
 
- > These pages are intended to be edited collaboratively (i.e., it is an
- > alternative to us having a wiki, but one that is edited entirely via
- > Git pushes. The repository could be found on GitHub.
+1. Since is_main_worktree_bare explains quite well what it does we can have
+a shorter explanation of `!worktree->is_current` part, something like:
 
-So, do you think if it would be fine to leave it where it currently is?
+/* Additional checks are needed if main worktree is not current
+(checking from secondary worktree) */
+(!worktree->is_current && is_main_worktree_bare(the_repository));
 
+2. Or a bit longer inline explanation that partially repeats the
+explanation of is_main_worktree_bare
++ adds explanation about efficiency:
+ /*
+  * When in a secondary worktree we have to also verify if the main worktre=
+e
+  * is bare in $commondir/config.worktree.
+  * This check is unnecessary if we're currently in the main worktree,
+  * as prior checks already consulted all configs of the current worktree.
+ */
+(!worktree->is_current && is_main_worktree_bare(the_repository));
 
-[[ References ]]
+Let me know if any of these work. Thanks.
 
-[1]: https://git.github.io/
-
---
-Sivaraam
-
+> Thanks.
