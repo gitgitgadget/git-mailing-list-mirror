@@ -1,35 +1,35 @@
 Received: from out-170.mta1.migadu.com (out-170.mta1.migadu.com [95.215.58.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7347B21A94F
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 21:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF22121D5A6
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 21:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738704880; cv=none; b=tIsn+8/TUUbG8IQUmn+u/mdlUbXtd++voqS/3yzm/R3fTU/6w6HAeQHu1IjEcdxz1R8DftOFJTnQgXwSl89K12SiOnExlWg+GgqfWJ7Nq2BnpqrqHTYjxp8LV3UAVTjKO+vtdM8GXeBpx9hSspPaDjOxnGfZUg/sGm7DBKr2r2A=
+	t=1738704879; cv=none; b=BLvozFNrJ/Fdi1RurTHcOwjG+fbUP+hzhbqnuGywI4UaoWRRspE+knlMqM7Sbm0Wxjoa9sp68cq2Yv2a7wGzye0pECtvELXmzKUkP2b97VXMknK3s+ftYv4AFckODWy5ewiyDx7D5duGepDa50/j4icoRmP3OQFQv5nLiGabHFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738704880; c=relaxed/simple;
-	bh=tUnRtj8/LDYFMykWUhbQGewNnZEcJHZ1ERsxlpMkCUQ=;
+	s=arc-20240116; t=1738704879; c=relaxed/simple;
+	bh=WPIfQUijgkgLnVirjLfDKr8BCdS5wGqpyEK65MIiQTs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NTNo3KyEsHUuzjghiH24HKNnZEH5q2XQIxkMtbe41mRxPSU7r6CgAk2krH7a9U7/yluvPkgznwXafEGV6Kft/OWvdVTrbXQHXjl7jzGlmf6ndir7jItnNAoTYDefdMJtgv2HVfvSB8/iVMQtMpmthRqtNfH66Wo+EnkXbz/EqWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=LTUogD6e; arc=none smtp.client-ip=95.215.58.170
+	 In-Reply-To:To:Cc; b=SIx1VMCWHUxN1vMl86vJlqBuaup49mDOtMKzT0h2F3Ao3jLqZtaMLB09qNFiaq2e4G67gyfmULQySbnFTjVBlYPJZNqBFRYyDf4scTYFaUeBV8ZyuCQ8BD0DJh+Dl4cfAHEUEa7isM7mNr59PtiFFm81lBZTI0vcKFG69Svrp+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=oEVJ+9/x; arc=none smtp.client-ip=95.215.58.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="LTUogD6e"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="oEVJ+9/x"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1738704863;
+	t=1738704869;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=uAcsC8dqdAPyNFqywfsdUkFSTvPozPyX/NhH/fdUWeM=;
-	b=LTUogD6eiPd0MxwqpVj60R7jD/0OABMl1BokRTS1fEWldQRCnm7vQxQJHs2WkZ66hqrj0j
-	oNsekJSV0a0XWcQwQFn7pTpiW1EYEUcGLotRDOFLy65PbSH1YmAOMW0xh0blRCPrDfdNcp
-	VUQ1npGx0nDM+77CiARBjcyitbv65jc=
+	bh=GhiBbp0As8MrORVTe77mTMEMF+yFM7KnVjyaDRbeK40=;
+	b=oEVJ+9/xKYGWh4DtPdQZSqXlx3zvFoq55IXUiupdKWcF4LGqnAqJ5/LyMeHNiVFm13xtYz
+	hW+m8k+mf42IDh3TK+iOOgD0+qVMlIeZTDtsetbVfQBl5e6WK7Er4Z83bo3zyl3OsQso7y
+	WSWWTw08hIHj/fsEC8ME350Lx6IKbcM=
 From: Toon Claes <toon@iotcl.com>
-Date: Tue, 04 Feb 2025 22:34:00 +0100
-Subject: [PATCH v5 1/7] clone: cut down on global variables in clone.c
+Date: Tue, 04 Feb 2025 22:34:02 +0100
+Subject: [PATCH v5 3/7] clone: refactor wanted_peer_refs()
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,7 +38,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250204-toon-clone-refs-v5-1-37e34af283c8@iotcl.com>
+Message-Id: <20250204-toon-clone-refs-v5-3-37e34af283c8@iotcl.com>
 References: <20250204-toon-clone-refs-v5-0-37e34af283c8@iotcl.com>
 In-Reply-To: <20250204-toon-clone-refs-v5-0-37e34af283c8@iotcl.com>
 To: git@vger.kernel.org
@@ -48,279 +48,89 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
 X-Migadu-Flow: FLOW_OUT
 
-In clone.c the `struct option` which is used to parse the input options
-for git-clone(1) is a global variable. Due to this, many variables that
-are used to parse the value into, are also global.
+The function wanted_peer_refs() is used to map the refs returned by the
+server to refs we will save in our clone.
 
-Make `builtin_clone_options` a local variable in cmd_clone() and carry
-along all variables that are only used in that function.
+Over time this function grown to be very complex. Refactor it.
+
+Previously, there was a separate code path for when
+`option_single_branch` was set. It resulted in duplicated code and
+deeper nested conditions. After this refactor the code path for when
+`option_single_branch` is truthy modifies `refs` and then falls through
+to the common code path. This approach relies on the `refspec` being set
+correctly and thus only mapping refs that are relevant.
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- builtin/clone.c | 195 +++++++++++++++++++++++++++++---------------------------
- 1 file changed, 101 insertions(+), 94 deletions(-)
+ builtin/clone.c | 39 +++++++++++++++------------------------
+ 1 file changed, 15 insertions(+), 24 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index fd001d800c635e46bbc7027a8fdda2a8c9fbf069..5ed0802f1d0ddebaf512aac93bf8c8b340494323 100644
+index 69d1ad029dfa84a2f7136fa4a3c4c8a594b179c4..5efa2bbceb42b230f723660ea963ca1253888235 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -56,42 +56,22 @@
-  *  - dropping use-separate-remote and no-separate-remote compatibility
-  *
-  */
--static const char * const builtin_clone_usage[] = {
--	N_("git clone [<options>] [--] <repo> [<dir>]"),
--	NULL
--};
- 
- static int option_no_checkout, option_bare, option_mirror, option_single_branch = -1;
- static int option_local = -1, option_no_hardlinks, option_shared;
- static int option_no_tags;
- static int option_shallow_submodules;
--static int option_reject_shallow = -1;    /* unspecified */
- static int config_reject_shallow = -1;    /* unspecified */
--static int deepen;
--static char *option_template, *option_depth, *option_since;
--static char *option_origin = NULL;
- static char *remote_name = NULL;
- static char *option_branch = NULL;
--static struct string_list option_not = STRING_LIST_INIT_NODUP;
--static const char *real_git_dir;
--static const char *ref_format;
--static const char *option_upload_pack = "git-upload-pack";
- static int option_verbosity;
--static int option_progress = -1;
--static int option_sparse_checkout;
--static enum transport_family family;
--static struct string_list option_config = STRING_LIST_INIT_NODUP;
- static struct string_list option_required_reference = STRING_LIST_INIT_NODUP;
- static struct string_list option_optional_reference = STRING_LIST_INIT_NODUP;
--static int option_dissociate;
- static int max_jobs = -1;
- static struct string_list option_recurse_submodules = STRING_LIST_INIT_NODUP;
- static struct list_objects_filter_options filter_options = LIST_OBJECTS_FILTER_INIT;
--static int option_filter_submodules = -1;    /* unspecified */
- static int config_filter_submodules = -1;    /* unspecified */
--static struct string_list server_options = STRING_LIST_INIT_NODUP;
- static int option_remote_submodules;
--static const char *bundle_uri;
- 
- static int recurse_submodules_cb(const struct option *opt,
- 				 const char *arg, int unset)
-@@ -107,78 +87,6 @@ static int recurse_submodules_cb(const struct option *opt,
- 	return 0;
- }
- 
--static struct option builtin_clone_options[] = {
--	OPT__VERBOSITY(&option_verbosity),
--	OPT_BOOL(0, "progress", &option_progress,
--		 N_("force progress reporting")),
--	OPT_BOOL(0, "reject-shallow", &option_reject_shallow,
--		 N_("don't clone shallow repository")),
--	OPT_BOOL('n', "no-checkout", &option_no_checkout,
--		 N_("don't create a checkout")),
--	OPT_BOOL(0, "bare", &option_bare, N_("create a bare repository")),
--	OPT_HIDDEN_BOOL(0, "naked", &option_bare,
--			N_("create a bare repository")),
--	OPT_BOOL(0, "mirror", &option_mirror,
--		 N_("create a mirror repository (implies --bare)")),
--	OPT_BOOL('l', "local", &option_local,
--		N_("to clone from a local repository")),
--	OPT_BOOL(0, "no-hardlinks", &option_no_hardlinks,
--		    N_("don't use local hardlinks, always copy")),
--	OPT_BOOL('s', "shared", &option_shared,
--		    N_("setup as shared repository")),
--	{ OPTION_CALLBACK, 0, "recurse-submodules", &option_recurse_submodules,
--	  N_("pathspec"), N_("initialize submodules in the clone"),
--	  PARSE_OPT_OPTARG, recurse_submodules_cb, (intptr_t)"." },
--	OPT_ALIAS(0, "recursive", "recurse-submodules"),
--	OPT_INTEGER('j', "jobs", &max_jobs,
--		    N_("number of submodules cloned in parallel")),
--	OPT_STRING(0, "template", &option_template, N_("template-directory"),
--		   N_("directory from which templates will be used")),
--	OPT_STRING_LIST(0, "reference", &option_required_reference, N_("repo"),
--			N_("reference repository")),
--	OPT_STRING_LIST(0, "reference-if-able", &option_optional_reference,
--			N_("repo"), N_("reference repository")),
--	OPT_BOOL(0, "dissociate", &option_dissociate,
--		 N_("use --reference only while cloning")),
--	OPT_STRING('o', "origin", &option_origin, N_("name"),
--		   N_("use <name> instead of 'origin' to track upstream")),
--	OPT_STRING('b', "branch", &option_branch, N_("branch"),
--		   N_("checkout <branch> instead of the remote's HEAD")),
--	OPT_STRING('u', "upload-pack", &option_upload_pack, N_("path"),
--		   N_("path to git-upload-pack on the remote")),
--	OPT_STRING(0, "depth", &option_depth, N_("depth"),
--		    N_("create a shallow clone of that depth")),
--	OPT_STRING(0, "shallow-since", &option_since, N_("time"),
--		    N_("create a shallow clone since a specific time")),
--	OPT_STRING_LIST(0, "shallow-exclude", &option_not, N_("ref"),
--			N_("deepen history of shallow clone, excluding ref")),
--	OPT_BOOL(0, "single-branch", &option_single_branch,
--		    N_("clone only one branch, HEAD or --branch")),
--	OPT_BOOL(0, "no-tags", &option_no_tags,
--		 N_("don't clone any tags, and make later fetches not to follow them")),
--	OPT_BOOL(0, "shallow-submodules", &option_shallow_submodules,
--		    N_("any cloned submodules will be shallow")),
--	OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
--		   N_("separate git dir from working tree")),
--	OPT_STRING(0, "ref-format", &ref_format, N_("format"),
--		   N_("specify the reference format to use")),
--	OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
--			N_("set config inside the new repository")),
--	OPT_STRING_LIST(0, "server-option", &server_options,
--			N_("server-specific"), N_("option to transmit")),
--	OPT_IPVERSION(&family),
--	OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
--	OPT_BOOL(0, "also-filter-submodules", &option_filter_submodules,
--		    N_("apply partial clone filters to submodules")),
--	OPT_BOOL(0, "remote-submodules", &option_remote_submodules,
--		    N_("any cloned submodules will use their remote-tracking branch")),
--	OPT_BOOL(0, "sparse", &option_sparse_checkout,
--		    N_("initialize sparse-checkout file to include only files at root")),
--	OPT_STRING(0, "bundle-uri", &bundle_uri,
--		   N_("uri"), N_("a URI for downloading bundles before fetching from origin remote")),
--	OPT_END()
--};
--
- static const char *get_repo_path_1(struct strbuf *path, int *is_bundle)
+@@ -434,46 +434,37 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
  {
- 	static const char *suffix[] = { "/.git", "", ".git/.git", ".git" };
-@@ -989,10 +897,103 @@ int cmd_clone(int argc,
- 	int hash_algo;
- 	enum ref_storage_format ref_storage_format = REF_STORAGE_FORMAT_UNKNOWN;
- 	const int do_not_override_repo_unix_permissions = -1;
-+	int option_reject_shallow = -1; /* unspecified */
-+	int deepen = 0;
-+	char *option_template = NULL, *option_depth = NULL, *option_since = NULL;
-+	char *option_origin = NULL;
-+	struct string_list option_not = STRING_LIST_INIT_NODUP;
-+	const char *real_git_dir = NULL;
-+	const char *ref_format = NULL;
-+	const char *option_upload_pack = "git-upload-pack";
-+	int option_progress = -1;
-+	int option_sparse_checkout = 0;
-+	enum transport_family family = TRANSPORT_FAMILY_ALL;
-+	struct string_list option_config = STRING_LIST_INIT_DUP;
-+	int option_dissociate = 0;
-+	int option_filter_submodules = -1; /* unspecified */
-+	struct string_list server_options = STRING_LIST_INIT_NODUP;
-+	const char *bundle_uri = NULL;
+ 	struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
+ 	struct ref *local_refs = head;
+-	struct ref **tail = head ? &head->next : &local_refs;
++	struct ref **tail = local_refs ? &local_refs->next : &local_refs;
+ 	struct refspec_item tag_refspec;
++	struct ref *to_free = NULL;
  
- 	struct transport_ls_refs_options transport_ls_refs_options =
- 		TRANSPORT_LS_REFS_OPTIONS_INIT;
+ 	refspec_item_init(&tag_refspec, TAG_REFSPEC, 0);
  
-+	struct option builtin_clone_options[] = {
-+		OPT__VERBOSITY(&option_verbosity),
-+		OPT_BOOL(0, "progress", &option_progress,
-+			 N_("force progress reporting")),
-+		OPT_BOOL(0, "reject-shallow", &option_reject_shallow,
-+			 N_("don't clone shallow repository")),
-+		OPT_BOOL('n', "no-checkout", &option_no_checkout,
-+			 N_("don't create a checkout")),
-+		OPT_BOOL(0, "bare", &option_bare, N_("create a bare repository")),
-+		OPT_HIDDEN_BOOL(0, "naked", &option_bare,
-+				N_("create a bare repository")),
-+		OPT_BOOL(0, "mirror", &option_mirror,
-+			 N_("create a mirror repository (implies --bare)")),
-+		OPT_BOOL('l', "local", &option_local,
-+			 N_("to clone from a local repository")),
-+		OPT_BOOL(0, "no-hardlinks", &option_no_hardlinks,
-+			 N_("don't use local hardlinks, always copy")),
-+		OPT_BOOL('s', "shared", &option_shared,
-+			 N_("setup as shared repository")),
-+		{ OPTION_CALLBACK, 0, "recurse-submodules", &option_recurse_submodules,
-+		  N_("pathspec"), N_("initialize submodules in the clone"),
-+		  PARSE_OPT_OPTARG, recurse_submodules_cb, (intptr_t)"." },
-+		OPT_ALIAS(0, "recursive", "recurse-submodules"),
-+		OPT_INTEGER('j', "jobs", &max_jobs,
-+			    N_("number of submodules cloned in parallel")),
-+		OPT_STRING(0, "template", &option_template, N_("template-directory"),
-+			   N_("directory from which templates will be used")),
-+		OPT_STRING_LIST(0, "reference", &option_required_reference, N_("repo"),
-+				N_("reference repository")),
-+		OPT_STRING_LIST(0, "reference-if-able", &option_optional_reference,
-+				N_("repo"), N_("reference repository")),
-+		OPT_BOOL(0, "dissociate", &option_dissociate,
-+			 N_("use --reference only while cloning")),
-+		OPT_STRING('o', "origin", &option_origin, N_("name"),
-+			   N_("use <name> instead of 'origin' to track upstream")),
-+		OPT_STRING('b', "branch", &option_branch, N_("branch"),
-+			   N_("checkout <branch> instead of the remote's HEAD")),
-+		OPT_STRING('u', "upload-pack", &option_upload_pack, N_("path"),
-+			   N_("path to git-upload-pack on the remote")),
-+		OPT_STRING(0, "depth", &option_depth, N_("depth"),
-+			   N_("create a shallow clone of that depth")),
-+		OPT_STRING(0, "shallow-since", &option_since, N_("time"),
-+			   N_("create a shallow clone since a specific time")),
-+		OPT_STRING_LIST(0, "shallow-exclude", &option_not, N_("ref"),
-+				N_("deepen history of shallow clone, excluding ref")),
-+		OPT_BOOL(0, "single-branch", &option_single_branch,
-+			 N_("clone only one branch, HEAD or --branch")),
-+		OPT_BOOL(0, "no-tags", &option_no_tags,
-+			 N_("don't clone any tags, and make later fetches not to follow them")),
-+		OPT_BOOL(0, "shallow-submodules", &option_shallow_submodules,
-+			 N_("any cloned submodules will be shallow")),
-+		OPT_STRING(0, "separate-git-dir", &real_git_dir, N_("gitdir"),
-+			   N_("separate git dir from working tree")),
-+		OPT_STRING(0, "ref-format", &ref_format, N_("format"),
-+			   N_("specify the reference format to use")),
-+		OPT_STRING_LIST('c', "config", &option_config, N_("key=value"),
-+				N_("set config inside the new repository")),
-+		OPT_STRING_LIST(0, "server-option", &server_options,
-+				N_("server-specific"), N_("option to transmit")),
-+		OPT_IPVERSION(&family),
-+		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
-+		OPT_BOOL(0, "also-filter-submodules", &option_filter_submodules,
-+			 N_("apply partial clone filters to submodules")),
-+		OPT_BOOL(0, "remote-submodules", &option_remote_submodules,
-+			 N_("any cloned submodules will use their remote-tracking branch")),
-+		OPT_BOOL(0, "sparse", &option_sparse_checkout,
-+			 N_("initialize sparse-checkout file to include only files at root")),
-+		OPT_STRING(0, "bundle-uri", &bundle_uri,
-+			   N_("uri"), N_("a URI for downloading bundles before fetching from origin remote")),
-+		OPT_END()
-+	};
-+
-+	const char * const builtin_clone_usage[] = {
-+		N_("git clone [<options>] [--] <repo> [<dir>]"),
-+		NULL
-+	};
-+
- 	packet_trace_identity("clone");
- 
- 	git_config(git_clone_config, NULL);
-@@ -1138,8 +1139,8 @@ int cmd_clone(int argc,
- 		for_each_string_list_item(item, &option_recurse_submodules) {
- 			strbuf_addf(&sb, "submodule.active=%s",
- 				    item->string);
--			string_list_append(&option_config,
--					   strbuf_detach(&sb, NULL));
-+			string_list_append(&option_config, sb.buf);
-+			strbuf_reset(&sb);
+ 	if (option_single_branch) {
+-		struct ref *remote_head = NULL;
+-
+ 		if (!option_branch)
+-			remote_head = guess_remote_head(head, refs, 0);
++			refs = to_free = guess_remote_head(head, refs, 0);
+ 		else {
+ 			free_one_ref(head);
+ 			local_refs = head = NULL;
+ 			tail = &local_refs;
+-			remote_head = copy_ref(find_remote_branch(refs, option_branch));
+-		}
+-
+-		if (!remote_head && option_branch)
+-			warning(_("Could not find remote branch %s to clone."),
+-				option_branch);
+-		else {
+-			int i;
+-			for (i = 0; i < refspec->nr; i++)
+-				get_fetch_map(remote_head, &refspec->items[i],
+-					      &tail, 0);
+-
+-			/* if --branch=tag, pull the requested tag explicitly */
+-			get_fetch_map(remote_head, &tag_refspec, &tail, 0);
++			refs = to_free = copy_ref(find_remote_branch(refs, option_branch));
  		}
- 
- 		if (!git_config_get_bool("submodule.stickyRecursiveClone", &val) &&
-@@ -1161,6 +1162,8 @@ int cmd_clone(int argc,
- 			string_list_append(&option_config,
- 				"submodule.alternateErrorStrategy=info");
- 		}
-+
-+		strbuf_release(&sb);
+-		free_refs(remote_head);
+-	} else {
+-		int i;
+-		for (i = 0; i < refspec->nr; i++)
+-			get_fetch_map(refs, &refspec->items[i], &tail, 0);
  	}
  
- 	/*
-@@ -1578,6 +1581,10 @@ int cmd_clone(int argc,
- 	err = checkout(submodule_progress, filter_submodules,
- 		       ref_storage_format);
- 
-+	string_list_clear(&option_not, 0);
-+	string_list_clear(&option_config, 0);
-+	string_list_clear(&server_options, 0);
+-	if (!option_mirror && !option_single_branch && option_tags)
++	for (size_t i = 0; i < refspec->nr; i++)
++		get_fetch_map(refs, &refspec->items[i], &tail, 0);
 +
- 	free(remote_name);
- 	strbuf_release(&reflog_msg);
- 	strbuf_release(&branch_top);
++	/*
++	 * Grab all refs that match the TAG_REFSPEC. Any tags we don't care
++	 * about won't be present in `refs` anyway.
++	 * Except with option --mirror, where we grab all refs already.
++	 */
++	if (!option_mirror)
+ 		get_fetch_map(refs, &tag_refspec, &tail, 0);
+ 
++	free_one_ref(to_free);
+ 	refspec_item_clear(&tag_refspec);
++
+ 	return local_refs;
+ }
+ 
 
 -- 
 2.48.1.447.gc0086e9015
