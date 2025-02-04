@@ -1,86 +1,82 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48354213E82
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 17:43:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 951E318A6D4
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 17:48:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738690995; cv=none; b=SqJiq6Y3IY7B8wPa/eywBWkKIRYGMMRCBO1zgUZdySgZboGxcmnm1Rd6mmiy2ojKJ5O9P6tWpRhK7egJTnldI34P6QxjKmYieM7n4ZaxxMc1hHJ9VsNJ6yMO8Q3Laaa0Td3betuyr/0br8727p4PQvKovvVv7a1Y3OhEGRZrURI=
+	t=1738691293; cv=none; b=gbJx9ilTa9f23TuWjvmZX3H8sVV7wT3mQJ5V1UX2io4qCoUmg7tm4Ae7aKkwoxxZvihm9Cr54AVXV3lS8IKlhG1ViDG3i8C2C35/bmDC57NPZMnF4qcIvbKIWE1kIjQvs1hWIuj7ww4aOr7DBt6v8axFfJlalXpnazQo5t2sojk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738690995; c=relaxed/simple;
-	bh=tPK6bTZ/Yx7QTYB82QxQl1ncaC+frKHozEiZB7C2Zlg=;
+	s=arc-20240116; t=1738691293; c=relaxed/simple;
+	bh=a6QvXcb65eDASKdmoSbtktGDuEM8QyBjkaXAcIXvHF0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nN6CTXOrzjMx/ebGtzk6fp4M9iDix7V/A9TTAAtWk7h641naUQZBhk+BukdDVdMoDqR+WK54e+BHYq3HAWDsQAZZZrFVofRMvookHCNKTIdEyfRdUfzP4vASVR2IkIv4eHGQ77HEC8g7LEzZHDLA697LpFWg//OfFCVDhXMfvNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TTVsOs76; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=O7shO0Tj; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=qVObdp4vePytMPKZFilvHUvY1EU3+SNow0y4+pRZqqUFKECVcBhgR+II6Gdrm/fyAX5oMt0khda+w+oYZp3VFVlI+PjBA7Q45OAOXdMi4kpM3unTvBC/xogvKPTUUkuWApPtPhr+jp7z+/0hZGgI5EjbnQ6ItKeusf5UIHX58ZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=H9tX3s0Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GDxl47e/; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TTVsOs76";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="O7shO0Tj"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 39AB325400A4;
-	Tue,  4 Feb 2025 12:43:12 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="H9tX3s0Z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GDxl47e/"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A5DF32540161;
+	Tue,  4 Feb 2025 12:48:10 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 04 Feb 2025 12:43:12 -0500
+  by phl-compute-11.internal (MEProxy); Tue, 04 Feb 2025 12:48:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1738690992;
-	 x=1738777392; bh=VhKydg3VyaXfKXvK1s69gz4DEMobDFxzAuBAK8tDtrk=; b=
-	TTVsOs76NuAfEXek7Ig+NzQt+LshQLDX+2eByyrJ6VOQ8XOHvhN/q+l/krdJTvuY
-	sMTdTul1oLnGsK0jw4me7kZrtYppGzaNbea8t3nKccn0s2wqbAL1wcBvmWqwb3Y4
-	HIGQQREgHEUNfTE+fd/y/OONK+OgYefrya4U0ExQf9rgpiA7zshYdKipGpSgv7Kr
-	iAqKQ5G6PK4omXkXAN4PtNIN6MTMFPDpBzCeCPG+7MKNzDTy5zdVvWokw3wM4MCu
-	lP1jVTA7UA6aADLEjGIj7LXg6+Mg9BVFIosCMqZsFSb3tcA7Yx4LMTMOqsx98dSJ
-	347+O0njFv6IPzemSEOahw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738691290; x=1738777690; bh=tiZqVUIZII
+	/+0pYdEot6hwM4c3xBAm1DCynGQPALJEA=; b=H9tX3s0ZSX3OAE66Rs/aPjRb4X
+	JmVPXy+rOeqFtnwrToR3iulRCzNHmVc5JwAhVUQ47ZwTwigS3jsK3v07nNgqA7K7
+	R9DLCQ+JplOy10qozkzIkAi8dXwJc8M/7EtSeCh1g88Up4eC4/jOz6/AEUiXMvRV
+	opmih1n2oeCdFUoLIJt/UDp6Lk75ydek5c5+Ykh7OMUwIuknyZzwuuKDThnaampW
+	xQdWUpIJdnMYRi5nC6iwwS/LqCgz34Zi/OqbTO8NiPSGKWypt8sndQT/jIra5LBA
+	+INo/whB3v039+idAgmY9//5WTP1xn8DdhETA5Tz/XEz8Ol932jvr6MiwD2w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738690992; x=
-	1738777392; bh=VhKydg3VyaXfKXvK1s69gz4DEMobDFxzAuBAK8tDtrk=; b=O
-	7shO0TjU2ws3zTcqirdYwqb4+WNfjXcQvEzus4hpzDjvBE3FV3LTJXRkz/XLPYLo
-	coVv76m3Fmv80F82/3MN2ePubMs4MenSVzdSX4E7KugUq2B1Pnz4cvJ7Df2on2+V
-	7VoN78r1gJhmvg2+WU15eGsTmVsKZn5uqAPirP+l9mqQqGXSSLQz6Lf7+lZzXuRo
-	9EbLQsLB0vEbhh1DqEZDZrKsHoVdPDMyl0zyLmnHXmrZ/SFBWJxR2vXzybSY80kS
-	S9m6UgzeBHrD2MWoVHcp5HA8GpHcPSKKiF1TEYA6fsjpvz62meTDAK5AuYU6XJzZ
-	kf/MKLY8I77pitLPeY40g==
-X-ME-Sender: <xms:r1GiZxmwih2dafFjGKXVB3Wk5VRBN42N6Bu_p5uLPyfWgd_B8AC35w>
-    <xme:r1GiZ82MRXu3o6K9W7iXiBWg71kLU2qruQEeqgDyTUUhKIknzpsIJyMAAv7hR4cYE
-    ai_6Dr-uilrz80J7A>
-X-ME-Received: <xmr:r1GiZ3p5eYMPWmqQkaqCSwtBNamEm8MA5s37XRt3BFD1g4FhNZArZ_DRjL8Tue_yO_nTELOFo54Af2ACnh6pQ_bR0BOK1FDAarJq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvudduhecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738691290; x=1738777690; bh=tiZqVUIZII/+0pYdEot6hwM4c3xBAm1DCyn
+	GQPALJEA=; b=GDxl47e/xwqIwh48T0swd4BFnVu+AYOVi8pwNodZQCdE/vG4iLz
+	tkF7HojRTq1KHJQBzPisi6PtPc7jwFRec1EGXaWIfpPO78LAfc1Bs40E0CSlQlwj
+	ouARe6SzB2tfcXnrCFORDbbidMBA8gRzTlMmqxFlyPreagYkXtvEPWU1VMwcOGcv
+	7b7LhBuHlJRcUt1VjjOWzt1mCzanfPs4Ul3+vesWrwRUFKkLgPc7i4tVfrv3RIrl
+	Pm09zc3NIZsivv5sxsTBCvYrsSNdHwRQu2pbPaJfkn3uHp2v0d+lWT8XQq/xuQZD
+	ASlOUXtwQ1eXUqW8m2J2w9p5u8DIpf1bMZw==
+X-ME-Sender: <xms:2lKiZ7DY-gg48tGu0xmFQie2NQYcf4NVsrdcgkFIrNa11ijcNxF7_g>
+    <xme:2lKiZxh_stvDbWucqL0D6RqnlMzULD6a5_r-uzMbLC4fzbC8spg0nIHhcdoTlTzDJ
+    F1ZzdrwiEduNUu-9Q>
+X-ME-Received: <xmr:2lKiZ2kFsNqbPjTsw0ogSljlQpJ70CVgRfS263ndcf2Y11VgTcj4Q5fQXSz2STCU0CALOfxs2r7cDBfqP-_ervTcTyuXvBx8p9_R>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvudduiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    ehveeiieefheeuvddvvdfghfehudetfffhudelvdetudevgedvgfefieduledtvdenucff
-    ohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrnhhuvghlrd
-    hpohhrrdgrtggrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:r1GiZxnBNyuU2QxJJUn2OysUaSKo3CdSrIT3DyaPzw709QIB03XuYg>
-    <xmx:r1GiZ_1xiWsm9B8pbqWh-TxgE-0Z2G2_M1X3ujTp2lQJeBx2wKnmcw>
-    <xmx:r1GiZwtzEUIqZvFmcGZbKYMJfgIGlDH3MykqADfbFrU3do45wiCwEQ>
-    <xmx:r1GiZzVvi9npEdgAo8-jFHmx9X5Xe6axlAMd0QHG20qfvzy47V7hyQ>
-    <xmx:sFGiZwwP87XmEcnGqdaxt1yHFK0tCooV7HzmI1g6ydJWHhDLsdfrltqo>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:2lKiZ9wPfpEhQpwOGK5e4lyZzblchHCw-sWJgqVT5H0MurD_kPbv1g>
+    <xmx:2lKiZwQtANgTpYS86H79Hi4Bc2E_kqsOIz4SGucPvU4-5Gk61z9r9A>
+    <xmx:2lKiZwZfG5mYkKDlwtYS9H9PTBy7IcCPRxE3uLjjuIEnT0hWJq6Pfw>
+    <xmx:2lKiZxRrLAhcysLEH6fJ_XvzBClW7gR6ayTOyZwjYoBecXbPPoWIKw>
+    <xmx:2lKiZ2dfEhjbcXKzMyJIfr5Dvd0Q54_Xp3y-rpY-65ajBBVZ6CbKb5m8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Feb 2025 12:43:11 -0500 (EST)
+ 4 Feb 2025 12:48:09 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Manuel =?utf-8?Q?Qui=C3=B1ones?= <manuel.por.aca@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: Usability issue: "Your branch is up to date"
-In-Reply-To: <CAPpV+Oaq3d3oNE-V3pnpQRNrGCoZr52uY91QtWYxcu1tgG_QXg@mail.gmail.com>
-	("Manuel =?utf-8?Q?Qui=C3=B1ones=22's?= message of "Tue, 4 Feb 2025
- 09:38:30 -0300")
-References: <CAPpV+OaMcViVKok5U0-4HaYyPMKEA7BBzw4t113uAaMndjs5Cg@mail.gmail.com>
-	<xmqqh65b2ci3.fsf@gitster.g> <xmqq34guzi0f.fsf@gitster.g>
-	<CAPpV+Oaq3d3oNE-V3pnpQRNrGCoZr52uY91QtWYxcu1tgG_QXg@mail.gmail.com>
-Date: Tue, 04 Feb 2025 09:43:10 -0800
-Message-ID: <xmqqseottxld.fsf@gitster.g>
+Subject: Re: What's cooking in git.git (Jan 2025, #09; Fri, 31)
+In-Reply-To: <CAOLa=ZSoiEeJqP8GDdyStOjNaw6itAHjJH=t28jp1tssjAun5Q@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 4 Feb 2025 02:07:58 -0800")
+References: <xmqq5xlu4bt6.fsf@gitster.g>
+	<CAOLa=ZSoiEeJqP8GDdyStOjNaw6itAHjJH=t28jp1tssjAun5Q@mail.gmail.com>
+Date: Tue, 04 Feb 2025 09:48:08 -0800
+Message-ID: <xmqqo6zhtxd3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,90 +84,21 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Manuel Quiñones <manuel.por.aca@gmail.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> Thanks for the insightful explanation Junio! Looking forward, do you
-> think that it could be possible to record the timestamp that the
-> remote-tracking branch has been updated with the remote branch? In
-> order to make such information available to the end user.
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> [snip]
+>
+>> * kn/reflog-migration-fix (2025-01-15) 1 commit
+> ...
+> So all in all, this can be moved from 'on hold'.
 
-The time at which each remote-tracking branch was updated is already
-recorded in the reflog.  What is missing is the timestamp that a
-fetch checked if a remote-tracking branch needs updating, found that
-the branch at the remote hasn't changed, and did not update the
-remote-tracking branch.
-
-You'd need to first design where to store that information and how.
-
-It does not have to be in the reflog, but as a thought experiment,
-let's take how the design would go if we decided to use reflog to
-store that information.
-
-What a reflog entry records, in textual form, looks like
-
-<old-object-name> <new-object-name> <user-ident> <timestamp> <comment>
-
-We can imagine adding a new reflog entry whenever "git fetch" finds
-that the branch at the remote hasn't been updated, with the same
-value in <old-object-name> and <new-object-name>.
-
-A reflog file I randomly picked as a sample is ~5k long with 34
-entries (it keeps track of my fetching from and pushing to
-https://git.kernel.org/pub/scm/git/git.git/#master), so a reflog
-costs around 150 bytes per entry, and if you fetch once every hour
-that would be like ~3k per branch per day.
-
-While that is a trivial and insignificant number from storage cost
-point of view, if you are monitoring the progress of the remote with
-"git reflog origin/main", I suspect that such a change would make it
-unusably noisy, so "git reflog" command may need to grow an option
-that tells it to skip these no-op entries.
-
-As to required change to "git fetch", this may be a bit tricky.
-
-IIRC (I am writing from the memory without looking at the code),
-when you say "git fetch [<remote> [<refspec>...]]", what it does
-is roughly to:
-
- - figure out what <remote> and <refspec>... to use from the
-   configuration, if omitted on the command line.
-
- - connect to the remote, and ask the current value of their refs.
-
- - drop any refspec <src>:<dst> whose <dst> side already has the
-   value the remote has.
-
- - drive the object transfer machinery to receive the pack data from
-   the remote and store it locally.
-
- - update the remote-tracking branches.
-
-And the last step is where the remote-tracking branches are updated,
-together with their reflog (if enabled).  Because that step does not
-even see the remote-tracking branches whose value do not need to
-change (filtered out earlier to help reduce the number of refs fed
-to the object transfer machinery), the "drop no-op early" part need
-to be designed differently (e.g. mark them as no-op, so that the 
-object tranfer machinery can notice them and ignore) and then the
-"update refs" step can see these no-op updates.
-
-I do not think writing the "no-op" reflog entries should be done at
-a step separate from the step that writes the real ref updates, as I
-suspect that such a separate update scheme would have a funny
-interactions with "git fetch --atomic".
-
-So, do I think it could be possible?  Sure.  Do I think it would be
-too hard as a rocket surgery?  No.  Will I jump up and down excited
-and start coding?  I am not interested all that much, but I can help
-reviewing patches if somebody else works on it.
-
-There may be some other downsides (other than the cost of storage
-and making the reflog noisy) I haven't thought about, which need to
-be considered if somebody decides to work on this.
+This was on hold until the kn/reflog-migration-fix-fix topic
+you did around "max_index" on top of this solidified.  That
+other topic needed to be in 'master' if this were to be, and
+I think we already have them in 'master' as of the seventh batch.
 
 Thanks.
-
-
