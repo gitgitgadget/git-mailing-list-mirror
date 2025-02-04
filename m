@@ -1,130 +1,347 @@
-Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6EA203710
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 20:33:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F24B21B182
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 21:34:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738701216; cv=none; b=J8FRWPET4PEAG0ojVJykhkHzjpngOTEO8I60IfvOw9faz4/LPKDQ0wNRn/0TuGWeiV7DGT2Sfv6SgxuNK8sVSf26HgDV9DXi2qYz9DjI7e+5bJYgz+HnJ9F625z5bAhYhqNV4ONmuVCRG9ATnwRFwQQcAS0KYq1el2DeILeEHek=
+	t=1738704874; cv=none; b=H9rvzCg1yStjn+neQ2vanhtgw5IWamiJBbGb7ljXkYoWoz+DXgs7zM+jkj9y8DHHROVij4scbSz8lsz9ApHvJcXyYGvLjkUyb5/Koxm4ScvOSYOykDZhFa49LNzJFpJYIwFhaCYmMZVdv8K8CdY89KtOQv3bXeGkZW56EGbTfj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738701216; c=relaxed/simple;
-	bh=9N3udgs4EqUEP/EDsG1+H8wfSe49bKiTCcJZbG2pqLE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=I2dZYCpqZ3dFDf2AFWjA/OyUlo4I5rCkulG/Tv+DZkXVj10MGzvR8R4CmT9fbPg0EZCKl9gUQ067x/jPil2wJd7tC+BKjfRe8BTOhnGSe0A1qLWYra7mC5WkSeO8dFdY7FOqX1ywGUJ6FvRhEksNE7N/xkRjfuIJ9PmRUTxUrU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com; spf=pass smtp.mailfrom=shopify.com; dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b=VBDvlzlC; arc=none smtp.client-ip=209.85.210.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=shopify.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shopify.com
+	s=arc-20240116; t=1738704874; c=relaxed/simple;
+	bh=I8KtZm02pjRYhTMBh+9JdQFR4WfEa1II8TAtGs17BSI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=YT2wakpKljsnNWEqxFcIc7u6ay5K+sHbcVrWaHi/jJRJlRDoQkOVMcRmEF+7fHQDNsSdDp7OVyhp1cv3/bNx+5SM1pXAzQBK/yC9vdqI9mRpXZSL/+y1F8mRLue/DuiOYjkSRiKzyJIdf7mLQiqP2bQTJLFwo8uVISBpZ/yu6Pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=0iAjVOYW; arc=none smtp.client-ip=91.218.175.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=shopify.com header.i=@shopify.com header.b="VBDvlzlC"
-Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-71e42e0ae0dso856916a34.1
-        for <git@vger.kernel.org>; Tue, 04 Feb 2025 12:33:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=shopify.com; s=google; t=1738701213; x=1739306013; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OK9fnOIyXQIYbv1ubQyjr2ppXEiaKApY1MSRPj3ejGM=;
-        b=VBDvlzlCPEvZ32YAKosuxs25Wu+U1esHPXnOemD3XA89t83QanBl5WjMPWokU968w3
-         dH3eco7iNIAzCqZFZbpKjguDU+0ycVekh0Fkn1hTI+u/YnUFXzZZgbyg/Z9gt6D1TyIA
-         7Pn1AUbxVyGiQ9Ju/HC4dG/ydfiax3WPn7Uu8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738701213; x=1739306013;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OK9fnOIyXQIYbv1ubQyjr2ppXEiaKApY1MSRPj3ejGM=;
-        b=fSgXQLbQmy7OY1ZdMDbRL/UQhME3Hg505IHW1jtANoLb2HCpvBJNDV4t/epsry3P93
-         72jhY5Vw2+8WF4detmvNEscSoPwCbuO05BRzauwEgOqT+hep6PsFIaKGUnpLrj+asWq1
-         G3TJEJIw99Kh3hDKCmilm3u9Vj4rHJCGlQwdpUHpNyJ5JkNoUB6bvTKGDDYk75N4NMxr
-         JC90iNn52CtsCetzXvIw+/3U2pwZsuK+H/CC+Qzsh9W7Re31zQdSIahBKGRleesCzK8r
-         jegTqMeQzEXo3pE/1OUyQO4IYt4kEf2q70waAKoGUqvyKSsxyd/JUaOdci8DkfOxSsGa
-         vl5w==
-X-Forwarded-Encrypted: i=1; AJvYcCXQCaPl3JO3AvqJoN877Ct21O6bIiqppSUUcenUdRNtAmoLBiztRkzvj5zuifengDOc8Is=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxb2IWTM/3kCuh1H0url6QoQEWDvnZBRPyS9M7B1JpVt99Iq5i2
-	6nkI5hHi7OzI8L8iDLS+N4wsKjyNEcLyTc5B4osPfG39J4Gl6Y3LwGiZIadivumT4j8FPHrJMWP
-	dpn5edt2WDeWjMfETNDJtKilXEDjrioDToM6doZMzZXr6IqL3ODI=
-X-Gm-Gg: ASbGncvXNh4kEDFuZbuYHO5oYK3Jexegd4AQaw9vkUJlx4Vm6raS/IxIOxW3w/UUuHD
-	RS0I/hds4ocn+STIYkJrvUk0RI8wMID9n+UsmTEcwsqzrRfx4Pqo7pCIrd5AdhZq7nxC1P+mzwT
-	q/E5/lMRZHSwu0dOQ1AwmQGjnrMeR8Ew==
-X-Google-Smtp-Source: AGHT+IEz0YU+gqy4XyV7NvrmE8ZuvH3OpsdKU0WSa4+cgj9u227c5VAJLmne/JL5lDjlYzF0RXrXSUcngAo/gChRb14=
-X-Received: by 2002:a05:6808:2101:b0:3eb:3bcc:a9dd with SMTP id
- 5614622812f47-3f37c196871mr28333b6e.7.1738701213449; Tue, 04 Feb 2025
- 12:33:33 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="0iAjVOYW"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1738704854;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=hxQYcySHCtmsTFR1KnTRyi9V3atyVTCNO+Z5+xAQD84=;
+	b=0iAjVOYWWGrXHl/tktVBf29TuymN+FZCBjr4/tCnmoSHCz8RhA5f37XErjp14M0/KI1Vzy
+	N+t37QdMSRELgrw7z57zruFl6Z0xFcVf82/Bqkq6jPS6ghwBcp1hxmpWrPO6WUHtTUEDV4
+	J/VxpoNjJu5ZoY4prYJeknRgW44CO5M=
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH v5 0/7] Enable doing a shallow clone of a specific git
+ revision
+Date: Tue, 04 Feb 2025 22:33:59 +0100
+Message-Id: <20250204-toon-clone-refs-v5-0-37e34af283c8@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1829.v2.git.1737063335673.gitgitgadget@gmail.com>
- <pull.1829.v3.git.1738346881907.gitgitgadget@gmail.com> <xmqqcyg294ft.fsf@gitster.g>
- <xmqq8qqq943u.fsf@gitster.g> <CAFLeGL52tKmurpAHymk42Y9DGazbK8nRdtWAoyzW85eMDxJQhQ@mail.gmail.com>
- <xmqq8qqq7n26.fsf@gitster.g> <CAFLeGL4v90zArJjtCOSGUTGQTq6qQJEcNMhi4P=ucDU+9bGRHg@mail.gmail.com>
- <xmqqa5b1ts0y.fsf@gitster.g>
-In-Reply-To: <xmqqa5b1ts0y.fsf@gitster.g>
-From: Olga Pilipenco <olga.pilipenco@shopify.com>
-Date: Tue, 4 Feb 2025 13:33:22 -0700
-X-Gm-Features: AWEUYZlVb9GKa6S1AziZlOSJzCbNqVh1lSD9YOJenjqODj_EmmUod9gAj8WSUdU
-Message-ID: <CAFLeGL7aewQTECw3sUPSgysaWCcS+U_7vf=uHDuuvKDkQUHfxA@mail.gmail.com>
-Subject: Re: [PATCH v3] worktree: detect from secondary worktree if main
- worktree is bare
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Olga Pilipenco via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMiHomcC/23NzWoCMRwE8FeRnBv5f6WbePI9ioeQTWrAbmSzL
+ BXZd29caCvqcQZ+M1dV45hjVbvNVY1xzjWXoQXztlHh6IfPqHPfsiIgQSSnp1IGHU5liHqMqWr
+ f8ztx11FypJo6tzZ/r4sfh5aPuU5lvKwHM97adQscdWCNsN0iIAijxnV7n8sUTttQvtSNz/RHX
+ t7P1FwfvAR0ng3Co+d/T/jCc/MoVpKPngHso5dfbwAZn71o0OQlJWtQnE33flmWH8iAQnRhAQA
+ A
+X-Change-ID: 20241129-toon-clone-refs-ad3623772f92
+In-Reply-To: <20250131-toon-clone-refs-v4-0-2a4ff851498f@iotcl.com>
+References: <20250131-toon-clone-refs-v4-0-2a4ff851498f@iotcl.com>
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+ =?utf-8?q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>, 
+ Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
+ Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-On Tue, Feb 4, 2025 at 12:43=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Olga Pilipenco <olga.pilipenco@shopify.com> writes:
->
-> > I have 2 versions for comment:
-> >
-> > 1. Since is_main_worktree_bare explains quite well what it does we can =
-have
-> > a shorter explanation of `!worktree->is_current` part, something like:
-> >
-> > /* Additional checks are needed if main worktree is not current
-> > (checking from secondary worktree) */
-> > (!worktree->is_current && is_main_worktree_bare(the_repository));
->
-> For somebody who thought about the issue themselves (like me, before
-> writing the message you are responding to), this shorter form would
-> suffice.  I'd rephrase it more like so
->
->     /* When a secondary worktree, an extra check is needed */
->
-> for brevity, though.
->
->
-> > 2. Or a bit longer inline explanation that partially repeats the
-> > explanation of is_main_worktree_bare
-> > + adds explanation about efficiency:
-> >  /*
-> >   * When in a secondary worktree we have to also verify if the main wor=
-ktree
-> >   * is bare in $commondir/config.worktree.
-> >   * This check is unnecessary if we're currently in the main worktree,
-> >   * as prior checks already consulted all configs of the current worktr=
-ee.
-> >  */
-> > (!worktree->is_current && is_main_worktree_bare(the_repository));
->
-> And this more extended version would have helped me by not having to
-> ask
->
->     Is "this worktree does not have is_current bit set" equivalent
->     to "this worktree is the main one, so is_main_worktree_bare()
->     needs to be consulted"?  That linkage between "the is_current
->     bit unset" and "is the main worktree" is not obvious to me.
->
-> in the first place.
->
-> In short, both should work, and I personally find that the latter
-> may be a bit more helpful to readers.
->
-> THanks.
+The goal of this series is to add an option `--revision` to
+git-clone(1).
 
-Perfect, I'll add the latter one then. Thank you!
+This series starts with a handful of preparatory refactoring commits
+that make it more straight-forward to add this new option. In the last
+commit we're actually adding the feature.
+
+This series sets an example on how I think we can further refactor
+builtin/clone.c to increase the maintainability of the code.
+
+---
+Changes in v5:
+- Add separate commit to introduce die_for_incompatible_opt2()
+- Small tweaks in documentation about `--[no-]tags` and `--revision`.
+- Better explain the refactoring of wanted_peer_refs() in the commit
+  message.
+- Change type from `int` to `size_t` in wanted_peer_refs().
+- Use lookup_commit_or_die() instead lookup_commit_reference() to avoid
+  checking the result ourself.
+- Add a few code comments to explain some things.
+- Stylish cleanups like removal of unneeded empty lines, commented out
+  test-code and remarks.
+- Link to v4: https://lore.kernel.org/r/20250131-toon-clone-refs-v4-0-2a4ff851498f@iotcl.com
+
+Changes in v4:
+- Introduce a new commit to reduce the use of global variables.
+- Introduce a new commit to invert the flag --no-tags to --tags.
+- Introduce a new commit to refactor wanted_peer_refs() in
+  builtin/clone.c.
+- Introduce a new commit to shuffle the handling of tags refspec.
+- Introduce a new commit to introduce a `struct clone_opts`.
+- Link to v3: https://lore.kernel.org/r/20241219-toon-clone-refs-v3-1-1484faea3008@iotcl.com
+
+Changes in v3:
+- Fail early when the revision was not found on the remote, instead of
+  creating a clone that's in an invalid state.
+- State more clearly in the commit message adding this option is useful
+  for a not uncommon use-case.
+- Be explicit in the documentation the ref needs to peel down to a
+  commit.
+- Die in case we try to update_head() to an object that's not a commit.
+- Allow combining `--revision` with `--bare`.
+- Add die_for_incompatible_opt2() to parse-options.h and use it for the
+  options that are not compatible with the new `--revision` option.
+- Small tweaks to the added tests.
+- Small touchups on commit messages.
+- Link to v2: https://lore.kernel.org/r/20241129-toon-clone-refs-v2-1-dca4c19a3510@iotcl.com
+
+---
+Toon Claes (7):
+      clone: cut down on global variables in clone.c
+      clone: make it possible to specify --tags
+      clone: refactor wanted_peer_refs()
+      clone: add tags refspec earlier to fetch refspec
+      clone: introduce struct clone_opts in builtin/clone.c
+      parse-options: introduce die_for_incompatible_opt2()
+      builtin/clone: teach git-clone(1) the --revision= option
+
+ Documentation/git-clone.txt |  17 ++-
+ builtin/clone.c             | 350 +++++++++++++++++++++++++-------------------
+ builtin/replay.c            |   3 +-
+ parse-options.h             |   9 ++
+ remote.c                    |   2 +-
+ remote.h                    |   5 +
+ t/meson.build               |   1 +
+ t/t5621-clone-revision.sh   | 123 ++++++++++++++++
+ 8 files changed, 351 insertions(+), 159 deletions(-)
+---
+
+Range-diff versus v4:
+
+1:  a563ae1023 = 1:  43fbfe2a1c clone: cut down on global variables in clone.c
+2:  031fec1961 ! 2:  68bbf04606 clone: make it possible to specify --tags
+    @@ Documentation/git-clone.txt: git clone [--template=<template-directory>]
+      	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+      	  [--dissociate] [--separate-git-dir <git-dir>]
+     -	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
+    -+	  [--depth <depth>] [--[no-]single-branch] [--[no-]-tags]
+    ++	  [--depth <depth>] [--[no-]single-branch] [--[no-]tags]
+      	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+      	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reject-shallow]
+      	  [--filter=<filter-spec>] [--also-filter-submodules]] [--] <repository>
+    @@ Documentation/git-clone.txt: corresponding `--mirror` and `--no-tags` options in
+     -`--no-tags`::
+     -	Don't clone any tags, and set
+     +`--[no-]tags`::
+    -+	By default tags are cloned, and passing `--tags` doesn't change that.
+     +	With `--no-tags`, no tags are cloned, and set
+      	`remote.<remote>.tagOpt=--no-tags` in the config, ensuring
+      	that future `git pull` and `git fetch` operations won't follow
+      	any tags. Subsequent explicit tag fetches will still work,
+    + 	(see linkgit:git-fetch[1]).
+    ++	By default tags are cloned, and passing `--tags` doesn't change that.
+    + +
+    + Can be used in conjunction with `--single-branch` to clone and
+    + maintain a branch with no references other than a single cloned
+     
+      ## builtin/clone.c ##
+     @@
+3:  b926bcc1df ! 3:  ac0babfc2a clone: refactor wanted_peer_refs()
+    @@ Commit message
+     
+         Over time this function grown to be very complex. Refactor it.
+     
+    +    Previously, there was a separate code path for when
+    +    `option_single_branch` was set. It resulted in duplicated code and
+    +    deeper nested conditions. After this refactor the code path for when
+    +    `option_single_branch` is truthy modifies `refs` and then falls through
+    +    to the common code path. This approach relies on the `refspec` being set
+    +    correctly and thus only mapping refs that are relevant.
+    +
+         Signed-off-by: Toon Claes <toon@iotcl.com>
+     
+      ## builtin/clone.c ##
+    @@ builtin/clone.c: static struct ref *wanted_peer_refs(const struct ref *refs,
+      	}
+      
+     -	if (!option_mirror && !option_single_branch && option_tags)
+    -+	for (int i = 0; i < refspec->nr; i++)
+    ++	for (size_t i = 0; i < refspec->nr; i++)
+     +		get_fetch_map(refs, &refspec->items[i], &tail, 0);
+     +
+     +	/*
+4:  2201b996b3 ! 4:  8a98961fd5 clone: add tags refspec earlier to fetch refspec
+    @@ Commit message
+     
+         In clone.c we call refspec_ref_prefixes() to copy the fetch refspecs
+         from the `remote->fetch` refspec into `ref_prefixes` of
+    -    `transport_ls_refs_options`. Afterward we add the tags prefix
+    +    `transport_ls_refs_options`. Afterwards we add the tags prefix
+         `refs/tags/` prefix as well. At a later point, in wanted_peer_refs() we
+         process refs using both `remote->fetch` and `TAG_REFSPEC`.
+     
+    @@ builtin/clone.c: static struct ref *wanted_peer_refs(const struct ref *refs,
+      		if (!option_branch)
+      			refs = to_free = guess_remote_head(head, refs, 0);
+     @@ builtin/clone.c: static struct ref *wanted_peer_refs(const struct ref *refs,
+    - 	for (int i = 0; i < refspec->nr; i++)
+    + 	for (size_t i = 0; i < refspec->nr; i++)
+      		get_fetch_map(refs, &refspec->items[i], &tail, 0);
+      
+     -	/*
+    @@ builtin/clone.c: int cmd_clone(int argc,
+      	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
+     +
+     +	if (option_tags || option_branch)
+    ++		/*
+    ++		 * Add tags refspec when user asked for tags (implicitly) or
+    ++		 * specified --branch, which argument might be a tag.
+    ++		 */
+     +		refspec_append(&remote->fetch, TAG_REFSPEC);
+     +
+      	refspec_ref_prefixes(&remote->fetch,
+5:  14fb827c41 ! 5:  b338eec186 clone: introduce struct clone_opts in builtin/clone.c
+    @@ builtin/clone.c: static struct ref *find_remote_branch(const struct ref *refs, c
+     +		struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
+     +		if (head)
+     +			tail_link_ref(head, &tail);
+    -+
+     +		if (option_single_branch)
+      			refs = to_free = guess_remote_head(head, refs, 0);
+     -		else {
+    @@ builtin/clone.c: static struct ref *find_remote_branch(const struct ref *refs, c
+     -			tail = &local_refs;
+     -			refs = to_free = copy_ref(find_remote_branch(refs, option_branch));
+     -		}
+    -+	}
+    -+
+    -+	else if (option_single_branch) {
+    ++	} else if (option_single_branch) {
+     +		local_refs = NULL;
+     +		tail = &local_refs;
+     +		refs = to_free = copy_ref(find_remote_branch(refs, option_branch));
+      	}
+      
+    - 	for (int i = 0; i < refspec->nr; i++)
+    + 	for (size_t i = 0; i < refspec->nr; i++)
+     @@ builtin/clone.c: int cmd_clone(int argc,
+      	struct string_list server_options = STRING_LIST_INIT_NODUP;
+      	const char *bundle_uri = NULL;
+    @@ remote.h: struct ref *alloc_ref(const char *name);
+      struct ref *copy_ref(const struct ref *ref);
+      struct ref *copy_ref_list(const struct ref *ref);
+      int count_refspec_match(const char *, struct ref *refs, struct ref **matched_ref);
+    ++/*
+    ++ * Put a ref in the tail and prepare tail for adding another one.
+    ++ * *tail is the pointer to the tail of the list of refs.
+    ++ */
+     +void tail_link_ref(struct ref *ref, struct ref ***tail);
+      
+      int check_ref_type(const struct ref *ref, int flags);
+-:  ---------- > 6:  d312865d63 parse-options: introduce die_for_incompatible_opt2()
+6:  d87d155dfc ! 7:  8ddbc6eb41 builtin/clone: teach git-clone(1) the --revision= option
+    @@ Documentation/git-clone.txt: objects from the source repository into a pack in t
+      	`--branch` can also take tags and detaches the `HEAD` at that commit
+      	in the resulting repository.
+      
+    -+`--revision` _<rev>_::
+    ++`--revision=<rev>`::
+     +	Create a new repository, and fetch the history leading to the given
+     +	revision _<rev>_ (and nothing else), without making any remote-tracking
+     +	branch, and without making any local branch, and point `HEAD` to
+    @@ builtin/clone.c: static void update_remote_refs(const struct ref *refs,
+      		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", our->name, NULL) < 0)
+      			die(_("unable to update HEAD"));
+     @@ builtin/clone.c: static void update_head(const struct ref *our, const struct ref *remote,
+    + 			install_branch_config(0, head, remote_name, our->name);
+    + 		}
+      	} else if (our) {
+    - 		struct commit *c = lookup_commit_reference(the_repository,
+    - 							   &our->old_oid);
+    -+
+    -+		if (!c)
+    -+			die(_("couldn't look up commit object for '%s'"), our->name);
+    +-		struct commit *c = lookup_commit_reference(the_repository,
+    +-							   &our->old_oid);
+    ++		struct commit *c = lookup_commit_or_die(&our->old_oid,
+    ++						        our->name);
+     +
+      		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
+      		refs_update_ref(get_main_ref_store(the_repository), msg,
+    @@ builtin/clone.c: int cmd_clone(int argc,
+     +				  !!option_branch, "--branch");
+     +	die_for_incompatible_opt2(!!option_rev, "--revision",
+     +				  option_mirror, "--mirror");
+    -+	// TODO --no-single-branch
+     +
+      	if (reject_shallow)
+      		transport_set_option(transport, TRANS_OPT_REJECT_SHALLOW, "1");
+    @@ builtin/clone.c: int cmd_clone(int argc,
+     -	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
+     +	if (option_rev) {
+     +		option_tags = 0;
+    -+		option_branch = 0;
+     +		option_single_branch = 0;
+     +		opts.wants_head = 0;
+     +		opts.detach = 1;
+    @@ builtin/clone.c: int cmd_clone(int argc,
+     +	}
+      
+      	if (option_tags || option_branch)
+    - 		refspec_append(&remote->fetch, TAG_REFSPEC);
+    + 		/*
+     @@ builtin/clone.c: int cmd_clone(int argc,
+      		expand_ref_prefix(&transport_ls_refs_options.ref_prefixes,
+      				  option_branch);
+    @@ builtin/clone.c: int cmd_clone(int argc,
+     +		if (!our_head_points_at)
+     +			die(_("Remote revision %s not found in upstream %s"),
+     +			    option_rev, remote_name);
+    -+		//mapped_refs->name[0] = 0;
+      	} else if (remote_head_points_at) {
+      		our_head_points_at = remote_head_points_at;
+      	} else if (remote_head) {
+    @@ builtin/clone.c: int cmd_clone(int argc,
+      	/*
+      	 * We want to show progress for recursive submodule clones iff
+     
+    - ## parse-options.h ##
+    -@@ parse-options.h: static inline void die_for_incompatible_opt3(int opt1, const char *opt1_name,
+    - 				  0, "");
+    - }
+    - 
+    -+static inline void die_for_incompatible_opt2(int opt1, const char *opt1_name,
+    -+					     int opt2, const char *opt2_name)
+    -+{
+    -+	die_for_incompatible_opt4(opt1, opt1_name,
+    -+				  opt2, opt2_name,
+    -+				  0, "",
+    -+				  0, "");
+    -+}
+    -+
+    - /*
+    -  * Use these assertions for callbacks that expect to be called with NONEG and
+    -  * NOARG respectively, and do not otherwise handle the "unset" and "arg"
+    -
+      ## t/meson.build ##
+     @@ t/meson.build: integration_tests = [
+        't5617-clone-submodules-remote.sh',
+
+
+---
+
+base-commit: bc204b742735ae06f65bb20291c95985c9633b7f
+change-id: 20241129-toon-clone-refs-ad3623772f92
+
+Thanks
+--
+Toon
+
