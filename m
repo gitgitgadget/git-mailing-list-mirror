@@ -1,71 +1,70 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A2114A095
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 04:26:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2882227462
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 05:30:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738643187; cv=none; b=DAHwy0m+XnhtQ/RiCRs6rT4xBXfFW1hK5pO3j/Ad6RMORL51BG3+bHNegclA2ovl0pBrZZSgHJddISYM+gLT6bZORHUYGd+Pr3s2soMIA5mwHupkfuSWTENDPWY0hrnopjj+lGKqxoBrlHLRqcD++ZXoopm+kB+/PDt8ytsYqbg=
+	t=1738647025; cv=none; b=SLwBuizZJog25f05bzDd1nuup3rZBYGlZLdy1u2uZaMSMPm2s56x43OV4tUrt/LdU2jGUOcRl/kPtLe6nvjD+K+FwuAmdxLaFlqffytF4GeRtOLNQ2ydSeXZL5ftVDWR/UrLfU7Pf959wpScAgOwpq/41sIpw3Kw6sV86yqu1MM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738643187; c=relaxed/simple;
-	bh=bKTDgBrKgD9rE8vrHZMsa/KZT0HFmeWfmSU3RtDlZE8=;
+	s=arc-20240116; t=1738647025; c=relaxed/simple;
+	bh=w5bxOWxqimgJ+qFIaEVO0kn543GxDfvQ1Fl3FHmP3zQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=stk7fohDJ56H+J3mYzTrnKT/JCtiAMmhQfPeJVyXxlOPKQlm6Ok24yetMZiQNIFlOhQoDzEjIbE56Ji3gY37xpFBlHv9pqoLDlQ28qwELgX4POyR8EMmv9BdchCRZh06ivk5c/6h+AlgXR0tlEB9VRIh/4q+FDgNRX4BqGGAIis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T5AmK52W; arc=none smtp.client-ip=209.85.214.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=D8p5DS0q6xs8FTR3lmigh5PC3w6PDuvbyAIn15x65GnGSO2ij1v/I01YS1296zo7QXJxZz9eCY5C1MlA+z4NwYpggF+j4eTXarqNRmdz9fn30HJ1HHb2frhYSoo4RkpDv90LjhXEYRwa1zRAGAC4zGLJmpcd7CRUTy+1U0ouczk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SwcY4IoY; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T5AmK52W"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-21634338cfdso27023025ad.2
-        for <git@vger.kernel.org>; Mon, 03 Feb 2025 20:26:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SwcY4IoY"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2ee9a780de4so6643930a91.3
+        for <git@vger.kernel.org>; Mon, 03 Feb 2025 21:30:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738643184; x=1739247984; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738647023; x=1739251823; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8TjspGMlMTActZmOIeA9TEzAQ8MRC8iFlFICfDZudIk=;
-        b=T5AmK52WAQjsf+0yNeCsdFcF90hLOTinT2opXinle3zfGWxIszrQrwzPrKJQKOGBci
-         Sq3UbXmxvFKltZ6ko18Sx7vN6pjkgkjY/ATIez31zciUGbmmJqz4sJAxAhi5pBmPgOsF
-         droyBqdodJcTyJhqLs1ENfRg9PxSM5AA8CTmKjhDHcBpcvP2yQOrS7m2OCTaRp+QX5VM
-         +z5f2GZ6js7IulKiiwdPCjkDBartLCOCrc5KggD3n9tEYdK7HrPFUfS8TaZWWT7D+7Qn
-         p/MNE1r/XjFJzLR1bXguQ1DnyzE21R/vTwVEiB8cMf5vtIMhk5XZs3p/GUofgLl63UxY
-         DygQ==
+        bh=XWGFg1+gm7mHsEhgi0scRJdoOeldf01HiPravuN7Ido=;
+        b=SwcY4IoYWrKnGnOaOtsM3+yDmuf9QmBNKvW6i1zRa9jyqNLzpuuXlSgRJGanK6MZoP
+         xRPpJo4wUdD7KRE2g+5TMR3ZwOPJ/yBylHNbFYuhUku4oCAu+Mj+EV5/WT6w0DaCkwg9
+         ly0CN2bm4w1B+DLsfPAIXL9aUA5GeBtj03u+1Tt6Z8AfFQH1ajnfSdc2UerU4HCGopD/
+         HqGiXDGZ/T3FiPWb8MsckwydHdPXarUXuSadtPOjQ2pUGQNC56/h6fteSLLOJbVq7g76
+         4vIq5jzLtR5sjfCUiY9DKHPEgBdoyyfRkruaMxOJdGGywQYTgnsPJP30Kai+csnjGyLI
+         ibrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738643184; x=1739247984;
+        d=1e100.net; s=20230601; t=1738647023; x=1739251823;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8TjspGMlMTActZmOIeA9TEzAQ8MRC8iFlFICfDZudIk=;
-        b=noQHjwwiVpYwPbeuWrwzy59w8s1BN4n0gZepAitSZ5yRKXM8os2OXnjdMOG1wnln+9
-         LKGBdLtqyuzpH0vzqVJEnTeXRCosojfropkpeRr+3NKWMuKtwawbnUp0/qHcZXoBCHIb
-         xe6WzGsSD8hKg3ws61KlWi47AooROJQr9sE9nFfU0J1BjxJxY/t3xz06hBByu3wUL8MZ
-         33zQpmDXEzwMmpkyQ1HrYmhWlc5DyiE7M7bqbHf0Q7qrfDbAc19PGt0AcON1U5EQk03N
-         pML/ZQVCENjwX3Mwtak6mbvdFq2Xlg2nE12FvcKM4lpTocmKLSVXqU40P0BfgI2H1tgU
-         DOpQ==
-X-Gm-Message-State: AOJu0Yze5xgQNEQl+aF5F+gaG+yBphAwAySYWTbUC2vKyPZP+P3/f3SH
-	2vpjGrQLtG77CvWb3IFgnq2wCR/BQ/LHk5XILqOk+MCx59U2Z+Ly
-X-Gm-Gg: ASbGnctVwWgB4NfIhOBpYO2uD/8lRP19ozH8QYQjyOMt+AqJgOHlhzIbcKrQvFfnoTG
-	D7pSEIjsx55GvUCK5LxhKKLKJwmhY21GILlliRmb7NkDZqzckMDFJj4ghDl5MyKmGUCynEjP+N3
-	/HNzqqb3SOjW5pUz8f2hgJ1Yt6HUv+XhJFdcosQdXi4+jU6o5Gk1TcSUJooGMILsspypCR5az+v
-	1SVzZ5el9lYhJp++KVqoT29ZKatTuvU3sfc0AaqevtK6lCwiKFnJWIoegi36LFeHxXkfg==
-X-Google-Smtp-Source: AGHT+IHy0xB0WO33eBGqOfW26YwyjghHdALlR705xDs5xV/XxgEciEx5wBFTnSrY3t4xnfipnwoe6Q==
-X-Received: by 2002:a05:6a21:202:b0:1ed:a4ae:31d6 with SMTP id adf61e73a8af0-1eda4ae3264mr15570103637.18.1738643184322;
-        Mon, 03 Feb 2025 20:26:24 -0800 (PST)
+        bh=XWGFg1+gm7mHsEhgi0scRJdoOeldf01HiPravuN7Ido=;
+        b=BUpe9gNECBQQSWwieQ79g2VKnOS4CHSDGfLlrrOisvoF6XGx50RbyOlVBE90CWluZO
+         BmaERaATul1uYqP20lGcbUJIvBQ+nbb5iiW2Uo04m4GqpfkBaDJf6lZiWG2nVbIccWlX
+         SJSviqWfdLfirycr/1fKO2JZSYc4I54Lg452hepslMTAGlDjy9ORYJvG6WNqEy1okDIP
+         BjX/AU2g/4xLfZU82HCY/MVu0GfQD4MD/BjcS8IeB5s6bpOV1dblTieek6rWY8ptI9XG
+         i0U5vaE+NgHRYsL1yAbLOo3Av2xkx4VAkeWy/IivWjc5VSYjct4Ux7cKuQeegbnoofgE
+         uADQ==
+X-Gm-Message-State: AOJu0Yx9IOnzUsGVvTSnGyznY00zDWDxjP26+5MP99pY5HehNe1E9Bv7
+	JLnMBPSyEZOG+ysY5zJ08N8JJO0oT3g++LPYDtcNGOx7OPvivblCiqKx9Dsd
+X-Gm-Gg: ASbGncvhoBHzwc2icZxHoSmlL3V2CbUpRb5wCR6xxGnAOUkd8T/Td3wtJy+dBeCTtWr
+	8tY+OaEng079bKDROBaM2/lrlu9nWw9Xd6D1cxytBB1QdDu+0VYJdctnPAPujeVG6beW1nJcY+i
+	9l5R8dV9A1Wyvtond/5GQNVMHlma/KB6V8t1cGuRjhjLpBBT8E6yQFtVcOW1ojPhmGQjY1uvQ9C
+	bKZRRvLuwJsnKErBwjYdUUyXwpfOOUMHVTDnAEr9uUtIKVIDFAoNJ4PS1qHAsihujgx6g==
+X-Google-Smtp-Source: AGHT+IEupj/WWlq/20jFPP3VeZeraaZUnRp35RckjIbAIPfF+J4C+cb6UL7hUFeCUa63NH7PNrokUQ==
+X-Received: by 2002:a05:6a00:2d8e:b0:725:cfa3:bc76 with SMTP id d2e1a72fcca58-72fd0bce05cmr36755921b3a.4.1738647023101;
+        Mon, 03 Feb 2025 21:30:23 -0800 (PST)
 Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-acec0477a9dsm8857641a12.50.2025.02.03.20.26.23
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-72fe6426d3asm9508832b3a.48.2025.02.03.21.30.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 20:26:23 -0800 (PST)
-Date: Tue, 4 Feb 2025 12:28:02 +0800
+        Mon, 03 Feb 2025 21:30:22 -0800 (PST)
+Date: Tue, 4 Feb 2025 13:32:01 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 6/8] packed-backend: add "packed-refs" entry
- consistency check
-Message-ID: <Z6GXUisyfjvp1Dpn@ArchLinux>
+Subject: Re: [PATCH v2 8/8] builtin/fsck: add `git refs verify` child process
+Message-ID: <Z6GmUSgkZF1rWQgP@ArchLinux>
 References: <Z5r6ZnLH3Ee8IQnN@ArchLinux>
- <Z5r7Hlk_VS0jYU74@ArchLinux>
- <Z6CA-aj7cgAxLTUI@pks.im>
+ <Z5r7NnzvirWEljwV@ArchLinux>
+ <Z6CBC5kyvIhBuLk6@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,115 +73,107 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z6CA-aj7cgAxLTUI@pks.im>
+In-Reply-To: <Z6CBC5kyvIhBuLk6@pks.im>
 
-On Mon, Feb 03, 2025 at 09:40:25AM +0100, Patrick Steinhardt wrote:
-> On Thu, Jan 30, 2025 at 12:07:58PM +0800, shejialuo wrote:
-> > "packed-backend.c::next_record" will parse the ref entry to check the
-> > consistency. This function has already checked the following things:
-> > 
-> > 1. Parse the main line of the ref entry, if the oid is not correct. It
-> >    will die the program. And then it will check whether the next
-> >    character of the oid is space. Then it will check whether the refname
-> >    is correct.
-> > 2. If the next line starts with '^', it will continue to parse the oid
-> >    of the peeled oid content and check whether the last character is
-> >    '\n'.
-> > 
-> > We can iterate each line by using the "packed_fsck_ref_next_line"
-> > function. Then, create a new fsck message "badPackedRefEntry(ERROR)" to
-> > report to the user when something is wrong.
-> > 
-> > Create two new functions "packed_fsck_ref_main_line" and
-> > "packed_fsck_ref_peeled_line" for case 1 and case 2 respectively. Last,
-> > update the unit test to exercise the code.
-> 
-> I think this message is going into too much detail about _how_ you are
-> doing things compared to _what_ you are doing and what the intent is.
-> 
-
-I think I have caused some confusion here. The reason why I mention what
-"next_record" does is that I want to port these two checks. Let me
-improve this in the next version. I will highlight more about the
-motivation.
-
-> > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> > index 870c8e7aaa..271c740728 100644
-> > --- a/refs/packed-backend.c
-> > +++ b/refs/packed-backend.c
-> > @@ -1819,10 +1819,86 @@ static int packed_fsck_ref_header(struct fsck_options *o, const char *start, con
-> >  	return 0;
+On Mon, Feb 03, 2025 at 09:40:43AM +0100, Patrick Steinhardt wrote:
+> On Thu, Jan 30, 2025 at 12:08:22PM +0800, shejialuo wrote:
+> > diff --git a/builtin/fsck.c b/builtin/fsck.c
+> > index 7a4dcb0716..9a8613d07f 100644
+> > --- a/builtin/fsck.c
+> > +++ b/builtin/fsck.c
+> > @@ -905,6 +905,34 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
+> >  	return res;
 > >  }
 > >  
-> > +static int packed_fsck_ref_peeled_line(struct fsck_options *o,
-> > +				       struct ref_store *ref_store,
-> > +				       struct strbuf *packed_entry,
-> > +				       const char *start, const char *eol)
+> > +static void fsck_refs(struct repository *r)
 > > +{
-> > +	struct fsck_ref_report report = { 0 };
-> > +	struct object_id peeled;
-> > +	const char *p;
+> > +	struct child_process refs_verify = CHILD_PROCESS_INIT;
+> > +	struct progress *progress = NULL;
+> > +	uint64_t progress_num = 1;
 > > +
-> > +	report.path = packed_entry->buf;
+> > +	if (show_progress)
+> > +		progress = start_progress(r, _("Checking ref database"),
+> > +					  progress_num);
+> 
+> Hm. I don't really think that this progress meter adds anything right
+> now. It only shows either 0 or 1, so it basically only tells you when
+> you're done. And that is something that the user can tell without a
+> progress meter.
+> 
+
+You are correct in the functionality part. Actually, my very initial
+implementation is what you have said. I simply used the following way to
+indicate the user that we are going to check ref database.
+
+    fprintf_ln(stderr, _("Checking ref database"));
+
+However, it will break a test in "t/t1050-large.sh::fsck large blobs". I
+cite the shell script below:
+
+	test_expect_success 'fsck large blobs' '
+		git fsck 2>err &&
+		test_must_be_empty err
+	'
+
 > > +
-> > +	start++;
-> 
-> It's a bit weird that we increment `start` here, as it is very intimate
-> with how the caller calls us. Might be easier to reason about when the
-> caller did this for us.
-> 
+> > +	if (verbose)
+> > +		fprintf_ln(stderr, _("Checking ref database"));
+> > +
 
-For each ref entry, we have two pointers, one is the `start` which is
-used to indicate the start of the line and `eol` is the end of the line.
+That's the reason why we need to use `verbose` to control the behavior
+here. Put it futhermore, We either use `process` or `verbose` to print
+the message to the user. This is a pattern widely used in "git-fsck(1)".
+For example "builtin/fsck.c::fsck_object_dir", we have the following
+code:
 
-Let's see how we call this function:
+	if (verbose)
+		fprintf_ln(stderr, _("Checking object directory"));
 
-		if (start < eof && *start == '^') {
-			strbuf_reset(&packed_entry);
-			strbuf_addf(&packed_entry, "packed-refs line %d", line_number);
-			ret |= packed_fsck_ref_next_line(o, &packed_entry, start, eof, &eol);
-			ret |= packed_fsck_ref_peeled_line(o, ref_store, &packed_entry,
-							   start, eol);
-			start = eol + 1;
-			line_number++;
-		}
+	if (show_progress)
+		progress = start_progress(the_repository,
+					  _("Checking object directories"), 256);
 
-The reason why we do this is that we need to skip the '^' character. I
-don't do this in the `if` statement. This is because I want to make the
-semantics of the `start` variable unchanged.
+So, that's why I use progress here. We need this to print the
+information to the user. I have also tried to print to the stdout like
+the following
 
-I would add a comment here to explain why we need to execute "start++".
+	fprintf_ln(stdout, _("Checking ref database"));
 
-> > +	if (parse_oid_hex_algop(start, &peeled, &p, ref_store->repo->hash_algo)) {
-> > +		return fsck_report_ref(o, &report,
-> > +				       FSCK_MSG_BAD_PACKED_REF_ENTRY,
-> > +				       "'%.*s' has invalid peeled oid",
-> > +				       (int)(eol - start), start);
-> > +	}
-> 
-> All the braces around those single-line return statements can go away.
-> 
+It will also break the test.
 
-I see. So, I have misunderstanding here. I have thought that we should
-add braces because we have split this single statement into multiple
-lines. Let me update this in the next version.
-
-> > @@ -1843,6 +1919,26 @@ static int packed_fsck_ref_content(struct fsck_options *o,
-> >  				       "missing header line");
-> >  	}
+> > +	child_process_init(&refs_verify);
+> > +	refs_verify.git_cmd = 1;
+> > +	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
+> > +	if (verbose)
+> > +		strvec_push(&refs_verify.args, "--verbose");
+> > +	if (check_strict)
+> > +		strvec_push(&refs_verify.args, "--strict");
+> > +
+> > +	if (run_command(&refs_verify))
+> > +		errors_found |= ERROR_REFS;
+> > +
+> > +	display_progress(progress, 1);
+> > +	stop_progress(&progress);
+> > +}
+> > +
+> >  static char const * const fsck_usage[] = {
+> >  	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
+> >  	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
+> > @@ -970,6 +998,8 @@ int cmd_fsck(int argc,
+> >  	git_config(git_fsck_config, &fsck_obj_options);
+> >  	prepare_repo_settings(the_repository);
 > >  
-> > +	while (start < eof) {
-> > +		strbuf_reset(&packed_entry);
-> > +		strbuf_addf(&packed_entry, "packed-refs line %d", line_number);
-> > +		ret |= packed_fsck_ref_next_line(o, &packed_entry, start, eof, &eol);
-> > +		ret |= packed_fsck_ref_main_line(o, ref_store, &packed_entry, &refname, start, eol);
+> > +	fsck_refs(the_repository);
 > 
-> Don't we have to stop in case `next_line()` returns an error?
+> I think there needs to be a way to disable this. How about we add an
+> option `--[no-]references` to do so? I was briefly wondering whether we
+> also want to have `--only-references`, but if a user wants to do that
+> they can simply execute `git refs verify` directly.
 > 
 
-No, we don't have to stop. We will continue to check the last ref entry,
-this is intentional, we still need to check the last ref entry even
-though there is no newline. I don't think we should ignore this part.
+Good idea, let me improve this in the next version.
 
 Thanks,
 Jialuo
+
+> Patrick
