@@ -1,88 +1,119 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF1125A640
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 01:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BF425A655
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 02:08:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738634135; cv=none; b=J3WJhY6Ck3LlvKMa3gYlfalRLpF5O6aBXic5SFiPahfBPGJhPvSVCfz8PH/f4WIw93c1Mm8aZkg5ZpbtLNJzoBy2ae3mn20oJy+sQWwBpZc7V0VVvMCVHL8FEIev52ACl3lWXc+JafnjTz2/keueQSYYC5csEdnNNyHYbnAFinI=
+	t=1738634907; cv=none; b=DPfDHWxohunWPt2TGoP5V86eB192taXFBpt98zQNGfutNwmoPW9Ao1TDzTmdAs9+4onUGSJxavd/u9LVaETj7hxOmeK2fG/yv/P0GWnp6VmKFqk1JplprjB78bWA0wylFfeq14C1Vgv/EFPI3ilBpWjMrDTLSJ4fqkInHpAK0B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738634135; c=relaxed/simple;
-	bh=sDIUjbq18K7BmnjNivthhj/Ype5h4SH4ZRs1Yw96s3Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZhHmUPufxsWiHgT9ponuLkJxKc5ldBh9syA2fzlAv10BQLk+6vPk7NDchdsNcVp5dNzZowNefP8dYbxq/AyRG2M5Ha+0AicCT0UI+EBQTWvUrYcAd4FpFU8e65tRQsbw4C6xN1MmGqo7bYYKlDIHCOUnLmYeE8l47wTUE1VRB5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=RnMN9OYg; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1738634907; c=relaxed/simple;
+	bh=4PUrktJiUoIqhaX15ksGpIM8ULsd8z6bBqFoOqUcgaM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bfewXKpwGjush+1ZFXp+NmmrAN41ctER477/yYPyr+Cy4amUb8fdbYZnqoUkdOc1o75GtMHnfNKEtVIvXs7OFenNgGKB6gpXcJqSIF25ggOhHQbl1nyuE6t1t5xz9aZws/yyssHZWHCSkWYh9EdbGpqHM9y2qRZH18V0BKM+ZjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M5KV2AxW; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="RnMN9OYg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1738633619;
-	bh=sDIUjbq18K7BmnjNivthhj/Ype5h4SH4ZRs1Yw96s3Y=;
-	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=RnMN9OYgwMvMJLHpLEyhNqauBKCVSpGRLW8m5yftlYNUM+uU0NK1Y28e8OFjDUMd8
-	 BWWdme01GWGRoKs6aFoEY85jbr3/9Cz7B2bE3a3wPRGFLHogNU1C9Sz9H+LSCOqUS1
-	 TtOCtP7Ky7XmSnALQPNLZtotSfC6CAQ6e1aVnqJnl3Ls1FXnLvrq77ngMcaJTVXUKJ
-	 y9/19UA+oaC6kCCSIt1m1A0SlA/AHDhLpIEvXr9EywdRU9iqUlK8uF3N3EF6jkfSjx
-	 s/LlVsRb0/lSX2PIqNmY40NTk6ODpuRrTNpavSLMrDUq3LYen3drWxFJbdqkbORxE3
-	 3+bBQHFgWonOWJFDj/X+HelbCPCwDz3XrWlxqf05wfVvAMO1W/P38mjyDkY4BbAKFi
-	 nqlt9eAtrfJJoCu+yDKwekrsCvuukXP2N4NrIGgWPHDgpkwqAg/54O6wBSfnvM2WS2
-	 vKthRCeo8TtCY98SlolHl5NSM7mPpsFyWm65pojkQaTvQc6uMJt
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9895220067;
-	Tue,  4 Feb 2025 01:46:58 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] thunderbird-patch-inline: avoid bashism
-Date: Tue,  4 Feb 2025 01:46:52 +0000
-Message-ID: <20250204014652.3509928-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.48.0.rc1.219.gb6b6757d772
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M5KV2AxW"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-5d0d32cd31aso7266951a12.0
+        for <git@vger.kernel.org>; Mon, 03 Feb 2025 18:08:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738634904; x=1739239704; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4PUrktJiUoIqhaX15ksGpIM8ULsd8z6bBqFoOqUcgaM=;
+        b=M5KV2AxWeZ/ifRWTEaiphb4vGJLyS81bILRWpT+Q3Ivh0JIBanowDmuwEhR1X+1vgd
+         hsI5nVJ+qo8cDxYm3KXnfdfwU/RGgQ4bC5bHW5tprEKCNOldd4+k97eJ6yjx8mv+TY/1
+         jT48kZ6XnquOC+v2ReweCfYUCeUrQAg7Uspd99Vp85VcqW4fFR7AXE+ORtuYbU+4g2wo
+         xpdXcTgqX2rY1AP/eii1HDlhK9TXEhKbtC0XQXVnThX2cPjl0kmNsrPyCtUNPq7Pwbj0
+         hGbqPIIDao/b+1rI2eKjBUN7daP7YeXDnHtVZb630d1POumBTBP219gpRs0JjNugjGnW
+         2gOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738634904; x=1739239704;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4PUrktJiUoIqhaX15ksGpIM8ULsd8z6bBqFoOqUcgaM=;
+        b=rA4rYYX0KwNOQHmCRK7hwowO2sE3zKe19WoSB7BqubhGOfeKHYvYfI9vj4fia4q0Vk
+         T1nzKpgMj+Km7vX06yQC7OZcATFSQ5lEJqWekk5PBPHuCpLZQdUuCwBEbGB32XuzJkpa
+         GZ4EtTMap/pDAX9c19uoPvgoS6OnYcdcZdLrJ7jhBgElGT6Dzki+/OMotdUUeDHmt8UN
+         tzL9pCyzc+vPeGhmvDCdn0wCmIlClurRNRdhwkU7PKKCUymR9KKJUk6O1hAlnAlD/f9N
+         uiud0YrKmE1GqkQk+EjSie8efuOKkjbcJDRtFlhJGX+6iobz+0htCJJt9RA7sbNI2waP
+         fOFA==
+X-Forwarded-Encrypted: i=1; AJvYcCU7ZdEkNCKoFsrawWvOE6IaX04tEHyuwyjDYJBDH5CnqAZL2xq219Xv7ylJOQ0k+VjK1Qg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKS4WhXnz8TZT7FJ1ZpsJ3cSYgkDPE3bgTwnb9IzAknjth4ua4
+	oNnfJYomql/ZbghzR1iS1/CItbCqLUaaURBBtFK59S7iAflPsnMBV79hnEKlOn5Rl3peeJsyHWh
+	bQ9lZh4iDQysmPIL/JiT6SoI6+ek=
+X-Gm-Gg: ASbGnct2XaNvpw8w3usvg6zfTUNwDTpfUbByZqqFznoR85SHXNV3XlMHvgmr4Wm+NV+
+	Ax3a0QG3ppSaX9ytMzeQ+qYUnacITbkJkLr9ZbeNy7v45nq/Dj/mvjiZ30tUNi/eEnMZEjvY/fs
+	rmqrqVPWjHpH5m8MLf6/bJcMC+wCM=
+X-Google-Smtp-Source: AGHT+IHKDzYwXeWTnbnyPRX2BOWdCsBUoeHTux4KiuA77Bwlqt51yGh/uBVLvOsmWxe2lSK2UHFOvP6BM4AOisLPZHg=
+X-Received: by 2002:a05:6402:268d:b0:5dc:740b:3cdb with SMTP id
+ 4fb4d7f45d1cf-5dc740b3efcmr52884914a12.29.1738634903429; Mon, 03 Feb 2025
+ 18:08:23 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAPpV+OaMcViVKok5U0-4HaYyPMKEA7BBzw4t113uAaMndjs5Cg@mail.gmail.com>
+ <xmqqh65b2ci3.fsf@gitster.g> <xmqq34guzi0f.fsf@gitster.g> <CAMoUM6+9SHybvWVp3SKDD4RWesruh=nmMacXn_oL893CPCn39g@mail.gmail.com>
+In-Reply-To: <CAMoUM6+9SHybvWVp3SKDD4RWesruh=nmMacXn_oL893CPCn39g@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 3 Feb 2025 21:08:12 -0500
+X-Gm-Features: AWEUYZnYQulzEJIDxCJqjAmTjWs2efeKua9pgayf-8iPkTqoiSgekVpW9bjgU4o
+Message-ID: <CALnO6CB2TjwRWr0=c2nWY5DnwLeqXiaA5fCiEeF85zivmLggjA@mail.gmail.com>
+Subject: Re: Usability issue: "Your branch is up to date"
+To: bram@van-oosterhout.org
+Cc: Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Manuel_Qui=C3=B1ones?= <manuel.por.aca@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The use of "echo -e" is not portable and not specified by POSIX.  dash
-does not support any options except "-n", and so this script will not
-work on operating systems which use that as /bin/sh.
+On Mon, Feb 3, 2025 at 7:28=E2=80=AFPM Bram van Oosterhout
+<adriaanbram0712@gmail.com> wrote:
+>
+> Ahhhh, this thread explains my confusion when, even though git locally
+> tells me my branch is "up to date", a fetch demonstrates the branch is
+> not up to date.
+>
+> Which begs the question: Why does git say: "Your branch is up to date
+> ..." if at best it can say: "Your
+> branch MIGHT BE up to date with ..."?
 
-Fortunately, the solution is easy: switch to printf(1), which is
-specified by POSIX and allows the escape sequences we want to use.  This
-will allow the script to work with any POSIX shell.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- contrib/thunderbird-patch-inline/appp.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Well, the branch _is_ up to date with your remote-tracking branch [1]
+origin/main; that doesn't mean the tracking branch is up-to-date with
+the repository origin's branch main!
 
-I noticed this in Debian bug 772238[0], while looking for any bug
-reports that I might be able to fix.  It was reported in 2014 and has
-gone unfixed since then, so possibly this script is seeing relatively
-little use on Debian and Ubuntu.
+I find it helpful to break the notion for newcomers early on that
+origin/main somehow is "equal to" the repository named by origin's
+main branch. Git (mostly) only communicates with remote repos when you
+fetch, push, or, pull=E2=80=94in other words (and this bit may be more for
+Manuel), try to reinforce that things Git knows locally are only local
+and not inherently tied to other repositories. Learning this
+distributed lesson proves hard in my experience but explains a lot
+about the reality of how Git operates.
 
-I have not CC'd any of the authors because nobody's touched this in over
-9 years and none of those people are still active.
+Exceptions to the "remote communication" rule I can think of that
+probably don't need to clutter things for beginners:
+- git-maintenance has pre-fetching as a default task
+- git ls-remote lists remote refs by communicating with the remote
 
-[0] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=772238
+> I have learned not to rely on the message and come to expect
+> (sometimes nasty) surprises when I return to a project after a few
+> months,
+>
+> Bram
 
-diff --git a/contrib/thunderbird-patch-inline/appp.sh b/contrib/thunderbird-patch-inline/appp.sh
-index 1053872eea..c55c2caa41 100755
---- a/contrib/thunderbird-patch-inline/appp.sh
-+++ b/contrib/thunderbird-patch-inline/appp.sh
-@@ -31,7 +31,7 @@ BODY=$(sed -e "1,/${SEP}/d" $1)
- CMT_MSG=$(sed -e '1,/^$/d' -e '/^---$/,$d' "${PATCH}")
- DIFF=$(sed -e '1,/^---$/d' "${PATCH}")
- 
--CCS=$(echo -e "$CMT_MSG\n$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
-+CCS=$(printf '%s\n%s' "$CMT_MSG" "$HEADERS" | sed -n -e 's/^Cc: \(.*\)$/\1,/gp' \
- 	-e 's/^Signed-off-by: \(.*\)/\1,/gp')
- 
- echo "$SUBJECT" > $1
+And thus `git fetch [--all]` because a part of your typical workflow,
+or something like `git pull --rebase [origin [main]]` before pushing.
+
+[1]: https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aid=
+defremotetrackingbrancharemote-trackingbranch
+
+--=20
+D. Ben Knoble
