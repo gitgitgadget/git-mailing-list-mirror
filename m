@@ -1,207 +1,114 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067D74CB5B
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 07:00:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1A24CB5B
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 07:01:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738652456; cv=none; b=r5knJXwMk0KnyxXrg6yFG5BjOefWzN6tBghUYpnpr3m/b81gDJkFFqSZ8v3v4eoCsPurx+M5+1aZEpH8f0Z8mdEZ9lFGYqj1cJGj9Z8PeVcxSgbhiR2W/cS3eU/8eeHDBv/llceJMCDb79zSiqC8dIhssKxWP8UBe0mhJZD75Gc=
+	t=1738652463; cv=none; b=EzZSQPnWrZOUsPa5V6zuwrLvx5YG9+gzrKq16UcHf2RWZ7DSj3aZgQ9vKr3y2i1NO+mgl2CcDQlxi9c63ohtJX7Utl7HERV57cZS7doJyxEgfXDb4g1lNnlrK1XSwdYiHucpvn2Qv+HFMG60B1SW0Ue5vHYILoVlyIvfI2++aJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738652456; c=relaxed/simple;
-	bh=+XL2E+JZsNaImZEavT3UU1/44voM/m0HeGWFAEoutu8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
-	 In-Reply-To:References:To:Cc; b=uJJBqBpr7aNAXB1eJu7mURHA1gZTyRzmuS4dIMTSItcL5dgumcBSj5eEW1cR+4vq8FCHEYOMnQaRxYHnFLowt7A+3XvdltJy0kfl5ATMDSklCIf9HOktVqZ9RxOlmJ+CZIoCod7nfJ7Ov6ESYJFtFE7lQpTggleCgHU2IipcJoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H5C7lvnY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XZs843RC; arc=none smtp.client-ip=103.168.172.151
+	s=arc-20240116; t=1738652463; c=relaxed/simple;
+	bh=Du8YTcOoIhA6RV5dZ+XOReozFnD06gGeS9rTsvuLppY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WWhbPtvaZhWFobnXX1vED2l8f955NownJ/7XUwbORzPPItda/fiORPXXr9uzOAUSwz4lPrSxfcdZuX3Btww2nK1ZuNWZMjJFUJuu8UkpNlrnKrWL7wz+rbF5y3bas3kxClxY9pVOsipl1ML9VituVQm3B2amwtXf7Ng/1MEI2jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R9KQV5rQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IdINdnd3; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H5C7lvnY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XZs843RC"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id E1B081380279;
-	Tue,  4 Feb 2025 02:00:51 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R9KQV5rQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IdINdnd3"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0B1D51140154;
+	Tue,  4 Feb 2025 02:01:00 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 04 Feb 2025 02:00:51 -0500
+  by phl-compute-09.internal (MEProxy); Tue, 04 Feb 2025 02:01:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738652451;
-	 x=1738738851; bh=OF1sHHKADvkzADiFYFxeXm5U9C9UDiSEHJFvyeXBfes=; b=
-	H5C7lvnYXS51fdPN6/AgUZbhkNw+gFZtrKqOouVRnDyHTarluaOw6FF6vg4ViY3b
-	ikTGflp0ErgFDFoToDP0A6DoWGWTxNX7ifoztLxSt8KPpNtcjhmCY8WSlak6Gd8D
-	rJz4C0V61gXf4bw2NM8hJX2qw76w3dCsSK6+8DaFxaGk38Z0yVUUnkk9fRZ/vqZZ
-	4kN/T+iVZ51dfN2k0axrRPgbxyGbPRjHgRnhXJA0fmsweJ9xI6UX4h9mLkmR/wL6
-	Ayf+C+6Qren9PPu9A0+l17jQmPOQaacQZCKipo2Rnstwx+u8tTUnOKSQx4i1+0EB
-	wyyxrOfie6NWf6sXyiT6YA==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1738652460; x=1738738860; bh=tJfSvJHF5P
+	gx5ALNnIisGn+rXc2bN5S/zKLRweIVQPM=; b=R9KQV5rQGX7YGTNUnWxMaN8g5R
+	Tu6vcYEqxIp++F+WXiKOhOuNPluQkym71czd5QpipfRieV2+T2zl+Qt9pyL5dn4H
+	mTkhvv21OIBs6A6GTEd9OX3o1du/JyC2tJdlYKbWp5ZwjtgbXBzqrLDgYDXEYTb0
+	W11SESiCHLPHwt1ABmHN3ShSlpl91n7Wu0cpmCunD0PCpxfsKN/emO1DaVL4OiML
+	xJn8+5QIrxouLa8x5elXqiJFUSdtr5iDKWgneDFhN9M94UZxgfWYK8AYKuBe+Ej2
+	jXswqd6MffY2wTl3R8NfupOrjCLptNGtP2W5hNBX3DiimN8iUL5zcaA2YAQg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738652451; x=
-	1738738851; bh=OF1sHHKADvkzADiFYFxeXm5U9C9UDiSEHJFvyeXBfes=; b=X
-	Zs843RC+pGvMyuXOo3Jo+MwFGyMWqqmlXWItqk/+Po//iCEeQVWX7PA9zK4MZaWo
-	kTauNtfZ+dbSIrSqFzhUZRHTx9Q5f2jxK1yoelHm/T0h8ybj54KVAhjKUyEe0Q/l
-	2756bGbEKrtIGDIu/sjWlkAzQ98oVL6kM5iExl6amMe+2AQoJK83TSQrIAh07zKG
-	WsvE1LH+0asA/7lOODLpGxA/kJ3HMqW2h6axZfqvzNh9Ct1AcHTQfn2B02QfcOIJ
-	He36vd+HcvJUNKbIKwohPsgeE9qL3DDClCsTJYCBp1vM2appjQfrv+//o0Zh/1Dv
-	uRCZRM7sVDmyvCNBwoPRw==
-X-ME-Sender: <xms:I7uhZ8je7DocT7mhTOt8yHJ-hXIflFHS2FHFtGyHnm11Asiq2VEtUQ>
-    <xme:I7uhZ1CnWP9xxHoJryX2KX9av_lhSjPHoAZ4rzK3z1685vVRSd_hIzKqRRm5B47ki
-    OcWBXcIoOcqP_SnNw>
-X-ME-Received: <xmr:I7uhZ0F1MfRdtCsDQ8CaAaPnDs29PaAXTJQo1iYzimJXtbd3PW7pOl6mtK4Dr_Zikq9-shRu7MKLPRyXozXVRchll6LXu7yK941hch9tTx4GrA>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738652460; x=1738738860; bh=tJfSvJHF5Pgx5ALNnIisGn+rXc2bN5S/zKL
+	RweIVQPM=; b=IdINdnd3JpG4esJOs3+Y8A5A8FEGKOBJfVxggdHF5LQAt7v3koJ
+	e+nKxB0+o7CyRcOCjMzX1bauMqoqKKZG+h5lyGYtBo325AOc5o39NejcqHQstTJW
+	dK1WczB1b5JzyTRPcYXSIFcR/oZ5uDiXjn9mGup/NujSrwZTMhBvepWCyN4D+BlL
+	+RRCEhj8OHnPLo5wpEZ0Nu9xmwxqY4VR52er9LzFUwooMa/dbUtH29bp2oQIftLP
+	Sewbag4hgBKahuK6KEnDzbFcy2TlH48HjhryZteolJPiMvxjyC9yYjU5M1OIK0wD
+	5wyXt72VXT7woVnIyHLs5/fvvLw2+JSxeKQ==
+X-ME-Sender: <xms:K7uhZ6cQJQee1Jj9zvCLa0rtSqNxL8nP-H3LvnSu2EAV1nXcwC9c0w>
+    <xme:K7uhZ0M9qMuLdKzIVK9unGJ9tpqGl-bcGIMZpaYROshedtD7Jz8UCkNOSjHDjspwc
+    rTILuxwAgWQcbEREw>
+X-ME-Received: <xmr:K7uhZ7if0GizG03WBVYhHpadPwBHLqURTVgtxntiVBv6dvS5DSxjvRn5C5u0d-ijpSvuTPz1OjENya2yhBQudQzEOMo-QZa3JRWrWGCJU3yUwA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduleekhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffuf
-    ggtgfgkfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeiuddvvd
-    efgeduhfetgeeuffejlefhkeehfeekteeuteelhedutdeifeektedtieenucffohhmrghi
-    nhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgv
-    fhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:I7uhZ9S-NiOvP_iD-KQa_5kbMfIxm1fpGYXNl8Kd3fuyJyJsXyOYGA>
-    <xmx:I7uhZ5x8dS2DV3RRaIAoRzc6BvKivxUtqPMlQ-FOfFbJIdQap0TgPg>
-    <xmx:I7uhZ77SsJFlJR8mlyvOXY9CR-g7VARO117Fe35f1rL8DPmziwngrw>
-    <xmx:I7uhZ2wAZmN8mnK7FbVc_kZ-lBPncxDKYllbeI27CgWjmpQIF9kOCA>
-    <xmx:I7uhZx-SzfevZCovri8hck6lMI3C30FR2ffQbJjS5rgtp6Qr7QxkVjb9>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
+    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:K7uhZ3-91iKhHiZiWKmfCtEKGjEup8gFFiC_u1tt1oOOPisvHSV_Dw>
+    <xmx:K7uhZ2uNBtN5j8aOsvCQrkieKlVCd2kQ_spK82WtITfCiF4nXcfhjw>
+    <xmx:K7uhZ-H0YmY9s1lyMf0mU2cwO6gntsi9dfoBUVUUx3JPUlnoCqoSWQ>
+    <xmx:K7uhZ1P7LdBjdPnqB3oMQLKP-VTm7GFVRYyn7iVha_lmCpZcw--RUg>
+    <xmx:LLuhZ6K1BrKlG2k7wiDt513JSdGNjea4tkiAxkavTRkIdPtPiP3M1onR>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 4 Feb 2025 02:00:50 -0500 (EST)
+ 4 Feb 2025 02:00:59 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 0ae7c765 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 4 Feb 2025 07:00:47 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 59ff0e6d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Feb 2025 07:00:58 +0000 (UTC)
+Date: Tue, 4 Feb 2025 08:00:57 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 04 Feb 2025 08:00:41 +0100
-Subject: [PATCH v2] builtin/repack: fix `--keep-unreachable` when there are
- no packs
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/2] t7700: add tests for `--keep-unreachable`
+Message-ID: <Z6G7KSCAGKeHP060@pks.im>
+References: <20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im>
+ <20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-1-7c4d69c5072c@pks.im>
+ <20250203183224.GA4183065@coredump.intra.peff.net>
+ <xmqqcyfyzit1.fsf@gitster.g>
+ <20250204023538.GB23954@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250204-b4-pks-repack-unreachable-objects-wo-packfiles-v2-1-1eae23366711@pks.im>
-X-B4-Tracking: v=1; b=H4sIABm7oWcC/52NQQ6CMBBFr0K6dkxpoURX3sOwgGGQEaSkg6gh3
- N3iEVy+P//PW5VQYBJ1TlYVaGFhP0Ywh0RhV403Am4iK6NNro22UGcw9QKBpgp7eI6BqlisBwJ
- f3wlngZeH/dbyQALWonHaOcrRqvh0CtTy+ye8lpE7ltmHz8+/pHv6t2pJQUOBWeNOmOvC4CWuj
- /xQ5bZtX0nJ4NTpAAAA
-X-Change-ID: 20250203-b4-pks-repack-unreachable-objects-wo-packfiles-33c26066e5c3
-In-Reply-To: <20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im>
-References: <20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250204023538.GB23954@coredump.intra.peff.net>
 
-The "--keep-unreachable" flag is supposed to append any unreachable
-objects to the newly written pack. This flag is explicitly documented as
-appending both packed and loose unreachable objects to the new packfile.
-And while this works alright when repacking with preexisting packfiles,
-it stops working when the repository does not have any packfiles at all.
+On Mon, Feb 03, 2025 at 09:35:38PM -0500, Jeff King wrote:
+> On Mon, Feb 03, 2025 at 03:53:46PM -0800, Junio C Hamano wrote:
+> 
+> > Jeff King <peff@peff.net> writes:
+> > 
+> > > On Mon, Feb 03, 2025 at 02:06:54PM +0100, Patrick Steinhardt wrote:
+> > >
+> > >> We don't have any tests for `git repack --keep-unreachable`. Add three
+> > >> tests that exercise its behaviour with different packed states for the
+> > >> unreachable object.
+> > >
+> > > There are a few in t7701. It's spelled "-k" there, so a grep for
+> > > "--keep-unreachable" would not find them.
+> > 
+> > Ahh, good eyes.  Thanks.
+> 
+> I got to cheat a little as the original author of the flag. ;)
 
-The root cause are the conditions used to decide whether or not we want
-to append "--pack-loose-unreachable" to git-pack-objects(1). There are
-a couple of conditions here:
-
-  - `has_existing_non_kept_packs()` checks whether there are existing
-    packfiles. This condition makes sense to guard "--keep-pack=",
-    "--unpack-unreachable" and "--keep-unreachable", because all of
-    these flags only make sense in combination with existing packfiles.
-    But it does not make sense to disable `--pack-loose-unreachable`
-    when there aren't any preexisting packfiles, as loose objects can be
-    packed into the new packfile regardless of that.
-
-  - `delete_redundant` checks whether we want to delete any objects or
-    packs that are about to become redundant. The documentation of
-    `--keep-unreachable` explicitly says that `git repack -ad` needs to
-    be executed for the flag to have an effect.
-
-    It is not immediately obvious why such redundant objects need to be
-    deleted in order for "--pack-unreachable-objects" to be effective.
-    But as things are working as documented this is nothing we'll change
-    for now.
-
-  - `pack_everything & PACK_CRUFT` checks that we're not creating a
-    cruft pack. This condition makes sense in the context of
-    "--pack-loose-unreachable", as unreachable objects would end up in
-    the cruft pack anyway.
-
-So while the second and third condition are sensible, it does not make
-any sense to condition `--pack-loose-unreachable` on the existence of
-packfiles.
-
-Fix the bug by splitting out the "--pack-loose-unreachable" and only
-making it depend on the second and third condition. Like this, loose
-unreachable objects will be packed regardless of any preexisting
-packfiles.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi,
-
-this small patch series fixes `git repack -ad --keep-unreachable` when
-there aren't any preexisting packfiles.
-
-Changes in v2:
-  - Merge tests into t7701.
-  - Link to v1: https://lore.kernel.org/r/20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im
-
-Thanks!
+The file is even *named* "unpack-unreachable". I didn't figure to grep
+for "-k" though. Thanks for the pointer!
 
 Patrick
----
- builtin/repack.c                     |  5 ++++-
- t/t7701-repack-unpack-unreachable.sh | 16 ++++++++++++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 81d13630ea..8194344b04 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1370,9 +1370,12 @@ int cmd_repack(int argc,
- 					    "--unpack-unreachable");
- 			} else if (keep_unreachable) {
- 				strvec_push(&cmd.args, "--keep-unreachable");
--				strvec_push(&cmd.args, "--pack-loose-unreachable");
- 			}
- 		}
-+
-+		if (keep_unreachable && delete_redundant &&
-+		    !(pack_everything & PACK_CRUFT))
-+			strvec_push(&cmd.args, "--pack-loose-unreachable");
- 	} else if (geometry.split_factor) {
- 		strvec_push(&cmd.args, "--stdin-packs");
- 		strvec_push(&cmd.args, "--unpacked");
-diff --git a/t/t7701-repack-unpack-unreachable.sh b/t/t7701-repack-unpack-unreachable.sh
-index 5715f4d69a..5559d4ccb4 100755
---- a/t/t7701-repack-unpack-unreachable.sh
-+++ b/t/t7701-repack-unpack-unreachable.sh
-@@ -195,4 +195,20 @@ test_expect_success 'repack -k packs unreachable loose objects' '
- 	git cat-file -p $sha1
- '
- 
-+test_expect_success 'repack -k packs unreachable loose objects without existing packfiles' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+
-+		oid=$(echo would-be-deleted-loose | git hash-object -w --stdin) &&
-+		objpath=.git/objects/$(echo $sha1 | sed "s,..,&/,") &&
-+		test_path_is_file $objpath &&
-+
-+		git repack -ad --keep-unreachable &&
-+		test_path_is_missing $objpath &&
-+		git cat-file -p $oid
-+	)
-+'
-+
- test_done
-
----
-base-commit: 3b0d05c4a79d0e441283680a864529b02dca5f08
-change-id: 20250203-b4-pks-repack-unreachable-objects-wo-packfiles-33c26066e5c3
-
