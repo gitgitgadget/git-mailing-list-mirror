@@ -1,179 +1,207 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2882227462
-	for <git@vger.kernel.org>; Tue,  4 Feb 2025 05:30:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067D74CB5B
+	for <git@vger.kernel.org>; Tue,  4 Feb 2025 07:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738647025; cv=none; b=SLwBuizZJog25f05bzDd1nuup3rZBYGlZLdy1u2uZaMSMPm2s56x43OV4tUrt/LdU2jGUOcRl/kPtLe6nvjD+K+FwuAmdxLaFlqffytF4GeRtOLNQ2ydSeXZL5ftVDWR/UrLfU7Pf959wpScAgOwpq/41sIpw3Kw6sV86yqu1MM=
+	t=1738652456; cv=none; b=r5knJXwMk0KnyxXrg6yFG5BjOefWzN6tBghUYpnpr3m/b81gDJkFFqSZ8v3v4eoCsPurx+M5+1aZEpH8f0Z8mdEZ9lFGYqj1cJGj9Z8PeVcxSgbhiR2W/cS3eU/8eeHDBv/llceJMCDb79zSiqC8dIhssKxWP8UBe0mhJZD75Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738647025; c=relaxed/simple;
-	bh=w5bxOWxqimgJ+qFIaEVO0kn543GxDfvQ1Fl3FHmP3zQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D8p5DS0q6xs8FTR3lmigh5PC3w6PDuvbyAIn15x65GnGSO2ij1v/I01YS1296zo7QXJxZz9eCY5C1MlA+z4NwYpggF+j4eTXarqNRmdz9fn30HJ1HHb2frhYSoo4RkpDv90LjhXEYRwa1zRAGAC4zGLJmpcd7CRUTy+1U0ouczk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SwcY4IoY; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738652456; c=relaxed/simple;
+	bh=+XL2E+JZsNaImZEavT3UU1/44voM/m0HeGWFAEoutu8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=uJJBqBpr7aNAXB1eJu7mURHA1gZTyRzmuS4dIMTSItcL5dgumcBSj5eEW1cR+4vq8FCHEYOMnQaRxYHnFLowt7A+3XvdltJy0kfl5ATMDSklCIf9HOktVqZ9RxOlmJ+CZIoCod7nfJ7Ov6ESYJFtFE7lQpTggleCgHU2IipcJoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=H5C7lvnY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XZs843RC; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SwcY4IoY"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2ee9a780de4so6643930a91.3
-        for <git@vger.kernel.org>; Mon, 03 Feb 2025 21:30:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738647023; x=1739251823; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XWGFg1+gm7mHsEhgi0scRJdoOeldf01HiPravuN7Ido=;
-        b=SwcY4IoYWrKnGnOaOtsM3+yDmuf9QmBNKvW6i1zRa9jyqNLzpuuXlSgRJGanK6MZoP
-         xRPpJo4wUdD7KRE2g+5TMR3ZwOPJ/yBylHNbFYuhUku4oCAu+Mj+EV5/WT6w0DaCkwg9
-         ly0CN2bm4w1B+DLsfPAIXL9aUA5GeBtj03u+1Tt6Z8AfFQH1ajnfSdc2UerU4HCGopD/
-         HqGiXDGZ/T3FiPWb8MsckwydHdPXarUXuSadtPOjQ2pUGQNC56/h6fteSLLOJbVq7g76
-         4vIq5jzLtR5sjfCUiY9DKHPEgBdoyyfRkruaMxOJdGGywQYTgnsPJP30Kai+csnjGyLI
-         ibrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738647023; x=1739251823;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XWGFg1+gm7mHsEhgi0scRJdoOeldf01HiPravuN7Ido=;
-        b=BUpe9gNECBQQSWwieQ79g2VKnOS4CHSDGfLlrrOisvoF6XGx50RbyOlVBE90CWluZO
-         BmaERaATul1uYqP20lGcbUJIvBQ+nbb5iiW2Uo04m4GqpfkBaDJf6lZiWG2nVbIccWlX
-         SJSviqWfdLfirycr/1fKO2JZSYc4I54Lg452hepslMTAGlDjy9ORYJvG6WNqEy1okDIP
-         BjX/AU2g/4xLfZU82HCY/MVu0GfQD4MD/BjcS8IeB5s6bpOV1dblTieek6rWY8ptI9XG
-         i0U5vaE+NgHRYsL1yAbLOo3Av2xkx4VAkeWy/IivWjc5VSYjct4Ux7cKuQeegbnoofgE
-         uADQ==
-X-Gm-Message-State: AOJu0Yx9IOnzUsGVvTSnGyznY00zDWDxjP26+5MP99pY5HehNe1E9Bv7
-	JLnMBPSyEZOG+ysY5zJ08N8JJO0oT3g++LPYDtcNGOx7OPvivblCiqKx9Dsd
-X-Gm-Gg: ASbGncvhoBHzwc2icZxHoSmlL3V2CbUpRb5wCR6xxGnAOUkd8T/Td3wtJy+dBeCTtWr
-	8tY+OaEng079bKDROBaM2/lrlu9nWw9Xd6D1cxytBB1QdDu+0VYJdctnPAPujeVG6beW1nJcY+i
-	9l5R8dV9A1Wyvtond/5GQNVMHlma/KB6V8t1cGuRjhjLpBBT8E6yQFtVcOW1ojPhmGQjY1uvQ9C
-	bKZRRvLuwJsnKErBwjYdUUyXwpfOOUMHVTDnAEr9uUtIKVIDFAoNJ4PS1qHAsihujgx6g==
-X-Google-Smtp-Source: AGHT+IEupj/WWlq/20jFPP3VeZeraaZUnRp35RckjIbAIPfF+J4C+cb6UL7hUFeCUa63NH7PNrokUQ==
-X-Received: by 2002:a05:6a00:2d8e:b0:725:cfa3:bc76 with SMTP id d2e1a72fcca58-72fd0bce05cmr36755921b3a.4.1738647023101;
-        Mon, 03 Feb 2025 21:30:23 -0800 (PST)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-72fe6426d3asm9508832b3a.48.2025.02.03.21.30.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 03 Feb 2025 21:30:22 -0800 (PST)
-Date: Tue, 4 Feb 2025 13:32:01 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v2 8/8] builtin/fsck: add `git refs verify` child process
-Message-ID: <Z6GmUSgkZF1rWQgP@ArchLinux>
-References: <Z5r6ZnLH3Ee8IQnN@ArchLinux>
- <Z5r7NnzvirWEljwV@ArchLinux>
- <Z6CBC5kyvIhBuLk6@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="H5C7lvnY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XZs843RC"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id E1B081380279;
+	Tue,  4 Feb 2025 02:00:51 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 04 Feb 2025 02:00:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738652451;
+	 x=1738738851; bh=OF1sHHKADvkzADiFYFxeXm5U9C9UDiSEHJFvyeXBfes=; b=
+	H5C7lvnYXS51fdPN6/AgUZbhkNw+gFZtrKqOouVRnDyHTarluaOw6FF6vg4ViY3b
+	ikTGflp0ErgFDFoToDP0A6DoWGWTxNX7ifoztLxSt8KPpNtcjhmCY8WSlak6Gd8D
+	rJz4C0V61gXf4bw2NM8hJX2qw76w3dCsSK6+8DaFxaGk38Z0yVUUnkk9fRZ/vqZZ
+	4kN/T+iVZ51dfN2k0axrRPgbxyGbPRjHgRnhXJA0fmsweJ9xI6UX4h9mLkmR/wL6
+	Ayf+C+6Qren9PPu9A0+l17jQmPOQaacQZCKipo2Rnstwx+u8tTUnOKSQx4i1+0EB
+	wyyxrOfie6NWf6sXyiT6YA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738652451; x=
+	1738738851; bh=OF1sHHKADvkzADiFYFxeXm5U9C9UDiSEHJFvyeXBfes=; b=X
+	Zs843RC+pGvMyuXOo3Jo+MwFGyMWqqmlXWItqk/+Po//iCEeQVWX7PA9zK4MZaWo
+	kTauNtfZ+dbSIrSqFzhUZRHTx9Q5f2jxK1yoelHm/T0h8ybj54KVAhjKUyEe0Q/l
+	2756bGbEKrtIGDIu/sjWlkAzQ98oVL6kM5iExl6amMe+2AQoJK83TSQrIAh07zKG
+	WsvE1LH+0asA/7lOODLpGxA/kJ3HMqW2h6axZfqvzNh9Ct1AcHTQfn2B02QfcOIJ
+	He36vd+HcvJUNKbIKwohPsgeE9qL3DDClCsTJYCBp1vM2appjQfrv+//o0Zh/1Dv
+	uRCZRM7sVDmyvCNBwoPRw==
+X-ME-Sender: <xms:I7uhZ8je7DocT7mhTOt8yHJ-hXIflFHS2FHFtGyHnm11Asiq2VEtUQ>
+    <xme:I7uhZ1CnWP9xxHoJryX2KX9av_lhSjPHoAZ4rzK3z1685vVRSd_hIzKqRRm5B47ki
+    OcWBXcIoOcqP_SnNw>
+X-ME-Received: <xmr:I7uhZ0F1MfRdtCsDQ8CaAaPnDs29PaAXTJQo1iYzimJXtbd3PW7pOl6mtK4Dr_Zikq9-shRu7MKLPRyXozXVRchll6LXu7yK941hch9tTx4GrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdduleekhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffuf
+    ggtgfgkfgjfhfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeeiuddvvd
+    efgeduhfetgeeuffejlefhkeehfeekteeuteelhedutdeifeektedtieenucffohhmrghi
+    nhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgv
+    fhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:I7uhZ9S-NiOvP_iD-KQa_5kbMfIxm1fpGYXNl8Kd3fuyJyJsXyOYGA>
+    <xmx:I7uhZ5x8dS2DV3RRaIAoRzc6BvKivxUtqPMlQ-FOfFbJIdQap0TgPg>
+    <xmx:I7uhZ77SsJFlJR8mlyvOXY9CR-g7VARO117Fe35f1rL8DPmziwngrw>
+    <xmx:I7uhZ2wAZmN8mnK7FbVc_kZ-lBPncxDKYllbeI27CgWjmpQIF9kOCA>
+    <xmx:I7uhZx-SzfevZCovri8hck6lMI3C30FR2ffQbJjS5rgtp6Qr7QxkVjb9>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 4 Feb 2025 02:00:50 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0ae7c765 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 4 Feb 2025 07:00:47 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Tue, 04 Feb 2025 08:00:41 +0100
+Subject: [PATCH v2] builtin/repack: fix `--keep-unreachable` when there are
+ no packs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z6CBC5kyvIhBuLk6@pks.im>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250204-b4-pks-repack-unreachable-objects-wo-packfiles-v2-1-1eae23366711@pks.im>
+X-B4-Tracking: v=1; b=H4sIABm7oWcC/52NQQ6CMBBFr0K6dkxpoURX3sOwgGGQEaSkg6gh3
+ N3iEVy+P//PW5VQYBJ1TlYVaGFhP0Ywh0RhV403Am4iK6NNro22UGcw9QKBpgp7eI6BqlisBwJ
+ f3wlngZeH/dbyQALWonHaOcrRqvh0CtTy+ye8lpE7ltmHz8+/pHv6t2pJQUOBWeNOmOvC4CWuj
+ /xQ5bZtX0nJ4NTpAAAA
+X-Change-ID: 20250203-b4-pks-repack-unreachable-objects-wo-packfiles-33c26066e5c3
+In-Reply-To: <20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im>
+References: <20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im>
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.2
 
-On Mon, Feb 03, 2025 at 09:40:43AM +0100, Patrick Steinhardt wrote:
-> On Thu, Jan 30, 2025 at 12:08:22PM +0800, shejialuo wrote:
-> > diff --git a/builtin/fsck.c b/builtin/fsck.c
-> > index 7a4dcb0716..9a8613d07f 100644
-> > --- a/builtin/fsck.c
-> > +++ b/builtin/fsck.c
-> > @@ -905,6 +905,34 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
-> >  	return res;
-> >  }
-> >  
-> > +static void fsck_refs(struct repository *r)
-> > +{
-> > +	struct child_process refs_verify = CHILD_PROCESS_INIT;
-> > +	struct progress *progress = NULL;
-> > +	uint64_t progress_num = 1;
-> > +
-> > +	if (show_progress)
-> > +		progress = start_progress(r, _("Checking ref database"),
-> > +					  progress_num);
-> 
-> Hm. I don't really think that this progress meter adds anything right
-> now. It only shows either 0 or 1, so it basically only tells you when
-> you're done. And that is something that the user can tell without a
-> progress meter.
-> 
+The "--keep-unreachable" flag is supposed to append any unreachable
+objects to the newly written pack. This flag is explicitly documented as
+appending both packed and loose unreachable objects to the new packfile.
+And while this works alright when repacking with preexisting packfiles,
+it stops working when the repository does not have any packfiles at all.
 
-You are correct in the functionality part. Actually, my very initial
-implementation is what you have said. I simply used the following way to
-indicate the user that we are going to check ref database.
+The root cause are the conditions used to decide whether or not we want
+to append "--pack-loose-unreachable" to git-pack-objects(1). There are
+a couple of conditions here:
 
-    fprintf_ln(stderr, _("Checking ref database"));
+  - `has_existing_non_kept_packs()` checks whether there are existing
+    packfiles. This condition makes sense to guard "--keep-pack=",
+    "--unpack-unreachable" and "--keep-unreachable", because all of
+    these flags only make sense in combination with existing packfiles.
+    But it does not make sense to disable `--pack-loose-unreachable`
+    when there aren't any preexisting packfiles, as loose objects can be
+    packed into the new packfile regardless of that.
 
-However, it will break a test in "t/t1050-large.sh::fsck large blobs". I
-cite the shell script below:
+  - `delete_redundant` checks whether we want to delete any objects or
+    packs that are about to become redundant. The documentation of
+    `--keep-unreachable` explicitly says that `git repack -ad` needs to
+    be executed for the flag to have an effect.
 
-	test_expect_success 'fsck large blobs' '
-		git fsck 2>err &&
-		test_must_be_empty err
-	'
+    It is not immediately obvious why such redundant objects need to be
+    deleted in order for "--pack-unreachable-objects" to be effective.
+    But as things are working as documented this is nothing we'll change
+    for now.
 
-> > +
-> > +	if (verbose)
-> > +		fprintf_ln(stderr, _("Checking ref database"));
-> > +
+  - `pack_everything & PACK_CRUFT` checks that we're not creating a
+    cruft pack. This condition makes sense in the context of
+    "--pack-loose-unreachable", as unreachable objects would end up in
+    the cruft pack anyway.
 
-That's the reason why we need to use `verbose` to control the behavior
-here. Put it futhermore, We either use `process` or `verbose` to print
-the message to the user. This is a pattern widely used in "git-fsck(1)".
-For example "builtin/fsck.c::fsck_object_dir", we have the following
-code:
+So while the second and third condition are sensible, it does not make
+any sense to condition `--pack-loose-unreachable` on the existence of
+packfiles.
 
-	if (verbose)
-		fprintf_ln(stderr, _("Checking object directory"));
+Fix the bug by splitting out the "--pack-loose-unreachable" and only
+making it depend on the second and third condition. Like this, loose
+unreachable objects will be packed regardless of any preexisting
+packfiles.
 
-	if (show_progress)
-		progress = start_progress(the_repository,
-					  _("Checking object directories"), 256);
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
 
-So, that's why I use progress here. We need this to print the
-information to the user. I have also tried to print to the stdout like
-the following
+this small patch series fixes `git repack -ad --keep-unreachable` when
+there aren't any preexisting packfiles.
 
-	fprintf_ln(stdout, _("Checking ref database"));
+Changes in v2:
+  - Merge tests into t7701.
+  - Link to v1: https://lore.kernel.org/r/20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im
 
-It will also break the test.
+Thanks!
 
-> > +	child_process_init(&refs_verify);
-> > +	refs_verify.git_cmd = 1;
-> > +	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
-> > +	if (verbose)
-> > +		strvec_push(&refs_verify.args, "--verbose");
-> > +	if (check_strict)
-> > +		strvec_push(&refs_verify.args, "--strict");
-> > +
-> > +	if (run_command(&refs_verify))
-> > +		errors_found |= ERROR_REFS;
-> > +
-> > +	display_progress(progress, 1);
-> > +	stop_progress(&progress);
-> > +}
-> > +
-> >  static char const * const fsck_usage[] = {
-> >  	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
-> >  	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
-> > @@ -970,6 +998,8 @@ int cmd_fsck(int argc,
-> >  	git_config(git_fsck_config, &fsck_obj_options);
-> >  	prepare_repo_settings(the_repository);
-> >  
-> > +	fsck_refs(the_repository);
-> 
-> I think there needs to be a way to disable this. How about we add an
-> option `--[no-]references` to do so? I was briefly wondering whether we
-> also want to have `--only-references`, but if a user wants to do that
-> they can simply execute `git refs verify` directly.
-> 
+Patrick
+---
+ builtin/repack.c                     |  5 ++++-
+ t/t7701-repack-unpack-unreachable.sh | 16 ++++++++++++++++
+ 2 files changed, 20 insertions(+), 1 deletion(-)
 
-Good idea, let me improve this in the next version.
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 81d13630ea..8194344b04 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -1370,9 +1370,12 @@ int cmd_repack(int argc,
+ 					    "--unpack-unreachable");
+ 			} else if (keep_unreachable) {
+ 				strvec_push(&cmd.args, "--keep-unreachable");
+-				strvec_push(&cmd.args, "--pack-loose-unreachable");
+ 			}
+ 		}
++
++		if (keep_unreachable && delete_redundant &&
++		    !(pack_everything & PACK_CRUFT))
++			strvec_push(&cmd.args, "--pack-loose-unreachable");
+ 	} else if (geometry.split_factor) {
+ 		strvec_push(&cmd.args, "--stdin-packs");
+ 		strvec_push(&cmd.args, "--unpacked");
+diff --git a/t/t7701-repack-unpack-unreachable.sh b/t/t7701-repack-unpack-unreachable.sh
+index 5715f4d69a..5559d4ccb4 100755
+--- a/t/t7701-repack-unpack-unreachable.sh
++++ b/t/t7701-repack-unpack-unreachable.sh
+@@ -195,4 +195,20 @@ test_expect_success 'repack -k packs unreachable loose objects' '
+ 	git cat-file -p $sha1
+ '
+ 
++test_expect_success 'repack -k packs unreachable loose objects without existing packfiles' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++
++		oid=$(echo would-be-deleted-loose | git hash-object -w --stdin) &&
++		objpath=.git/objects/$(echo $sha1 | sed "s,..,&/,") &&
++		test_path_is_file $objpath &&
++
++		git repack -ad --keep-unreachable &&
++		test_path_is_missing $objpath &&
++		git cat-file -p $oid
++	)
++'
++
+ test_done
 
-Thanks,
-Jialuo
+---
+base-commit: 3b0d05c4a79d0e441283680a864529b02dca5f08
+change-id: 20250203-b4-pks-repack-unreachable-objects-wo-packfiles-33c26066e5c3
 
-> Patrick
