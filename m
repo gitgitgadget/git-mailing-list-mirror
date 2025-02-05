@@ -1,87 +1,84 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62A22227BB7
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 06:54:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9EA79FE
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 07:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738738500; cv=none; b=E+540ODX8p16h2gWh8XFxErUamQkNexy5in6fQytRYmHSrhXL8iBpSz34w3Dt9TYriplcIJuyQ/buUaHr51T4Fii/5U+PnVmm0Tpw5qRiGywtKpQXtbbJd7loIRDRomz/Yc2twUZ5jW8yTpYCCwEZNub+MiYJ2P5FZYKuVb4Jr0=
+	t=1738739021; cv=none; b=hBXkbUtwd85Hzd8plmxNMahLh0451DbYvzP6BsQiMgwMJ306yTaEVOVqOmmlzCINuezo31jf4jsaZcgxTAoMZLj/qdzCziGFZxB6pEHV2jp3SLrwJd5bgOYPjaFHJEzuq/hvp/I7QH9rak46Ot2aq62ZW7ZHdg5TKi5/HWj3q0w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738738500; c=relaxed/simple;
-	bh=BiyCFOvFuHQIrxttcqmaHU8fO1vLYg3ufoIne4eapjU=;
+	s=arc-20240116; t=1738739021; c=relaxed/simple;
+	bh=M9B5fMDO9mNviUbJMDF7z0IRz7s4XTSt9jEaD4GyHKY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=j/ZFq781OMCmQdTSyKXb8+oakYu4Cq54rXGWieLjL+f1cdPOVqT5y0UyDy82XZeSaltLog+zPA2/dUOUXW7CBLYuKpsi5asduMGt1BT+y85RrYBfUyrUtMXcGtiWU+oHBj+uQQylcbHMV4Mv8cMH7/iPvJ/Anvizsq4tlLk2ABk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=nutpyUgq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0EqBkY+u; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=prpX8wK9qAcAI1B8oh+YOu3gg1hevXGZIRii3nCFDpph8pS3gs+i0K4MVgMNRKR+xKjqjHkZpTjDx0fcnKvyS5vpxvaGg602kAfZual7vfvlAgE/ocPN6KqDBgkl2/vGu1JnADs270juU0gLeJar564E5AnPQDZet1UI2/wl2Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qxwWPZPT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W389/tcM; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="nutpyUgq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0EqBkY+u"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5705C13801CF;
-	Wed,  5 Feb 2025 01:54:57 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 05 Feb 2025 01:54:57 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qxwWPZPT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W389/tcM"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 21D3713801A9;
+	Wed,  5 Feb 2025 02:03:38 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Wed, 05 Feb 2025 02:03:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738738497; x=1738824897; bh=aJ577kDIPm
-	n/Axdrt72cMfRELVOrb/1n5WoCPg1HSlA=; b=nutpyUgqs/UbOFAjOPt5Kbmtdh
-	7F3VdnB68yxRoY4vGSedNc9heKSAwrsLM5QH74InOw28K2O/GHXHqk6jGWV39oik
-	5MogmL/kslJg1HZmKdYcTrCkuErhaTbIRsocKxV2ZYj738y9TVEtHdezz1bQRwB/
-	b0QU5n2mxQNkyOkLvQcrJCMlw3P7XRKVKn3BMxp/Tx2+6aeBs5k4EhCY0huTKUnX
-	wiIlD2wJOux1fgyLctw5++VUBe9rOfWRUcWEu+vkB+1tquM0KENP0WfBNb16YSHh
-	GV2M27r1VJjum0JTSW4QZOkP9Qb1Cnpvnx4CpSDt1+RMN9woivUEFvbH1ZtA==
+	:subject:to:to; s=fm3; t=1738739018; x=1738825418; bh=3iuRPgdrth
+	P4P6W7yblhoUb636fEz1AomjuW2sIOFJw=; b=qxwWPZPT8VIVOlUTrCFY3y1vNe
+	GkwV7gY+ZNjimzeF/R4hkuTy/zR2l5yrY0uLJ1ZU/lyA4cdx7xOMH2/b8otGnbPX
+	3FyLAZtNM79pAUv6CqXR2/Cna2CueUtg10xBUQisy0kikUv7C+3Ab4Yxcs5v6C7d
+	2V5uKUzWfRhhciOy+KDNEMUVlcAizjYbydd76zc8s4PyQPPwalFRMZU/RQjDJY0O
+	xRq+0wsVGrztYCMUB2fHQQBOfeQ+ERj5OQeFyWRVnTEEJ6jvO2xTlMXY4D/yHGmz
+	k1vDr0nRd1XLssRmxlmPptzJUFiV+g98f96dGNFVTbWYRx5YvOnQVnuqewUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738738497; x=1738824897; bh=aJ577kDIPmn/Axdrt72cMfRELVOrb/1n5Wo
-	CPg1HSlA=; b=0EqBkY+ureJeTewdD7vgMtpyZc57Kg/TJZbL56a4p9tATiZLgG3
-	nDnMGwCOoEO7s94y9FcF0lBQHTf3hVy607yRYhKqFRj1niuc1ms3BNeLqeZpH95F
-	u4CGMT0vHWfduXlQUB76pe25uQglx75Y5qTrn+1NEoAw3d1uB5qy5ie+nYZ1CUpk
-	N+I3teUTLRCa6j8YYI1XNKKyKrVy1cJMt0x6qyfHXPAF0TUpPQSIjHsZOONsAnZj
-	Q//dJiVQ6PAL6RKcG6CFl+tcSXsedoKdgtkJ97tAv6oV1lVP0e0kQhRLWqwGj9HH
-	XOc7tw/Bz7QdM48tnay14XTOGWbRMJxh0Ng==
-X-ME-Sender: <xms:QQujZ7kXsaqkbnIl1yBQWkxg8rIX8yR_dKLJ64vrSl0IBtNo9kkDRg>
-    <xme:QQujZ-1rOV2xkFchMINNUZ_Zupt2Nr2T_fAqhZ3VUt4d2bkMV44_0eohrIibtlLx2
-    6I4LVmJoADSxYhSdw>
-X-ME-Received: <xmr:QQujZxo6RkTmJfBNTcDkSWDRohI01ObvCnlwyT2fvrhFqoL7-jKMiRFl0_9XtRhmYVSAPh8fN3PA9f4CsOWdFxrEkESCum1fFcMJMyxLwB7RHQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdejiecutefuodetggdotefrod
+	1738739018; x=1738825418; bh=3iuRPgdrthP4P6W7yblhoUb636fEz1Aomju
+	W2sIOFJw=; b=W389/tcMcylNd/PrWdzs00Iio5unhgTeGqkStVBSQYe9CeQI6vu
+	LQ/3JoSuNnhBOeIAK6uzByLtIAsn22kCTl4fHP7L/01M+LOvHHWYkKPWrVw3V6t6
+	16FY5xLK58L9EcFAPTKkWcxj4DXSqK642MGgFvOFXfAMG3V7aQ/j5WsJPlK/sDhX
+	FMwKsHR/UY+HgjErTdht/qLmoun+BLV+6ez8EdZaAWK4iz/Z8QAegieHrJkTv6tv
+	VMF4jqyKZcVn+l4C6CKe2DM9ZhBJKUdj5FnPW3AgvKn2oHGsKyGIKeIwJZhMZV6/
+	Y7omDOCtp7D6/XJnvw0D+docCEubY6LSe8A==
+X-ME-Sender: <xms:SQ2jZwJp7yqwkwDkXuD4WKK7t0oeSUngf8Uv361PM4hPR436_ipeLw>
+    <xme:SQ2jZwKeFTJM0OX6Um0Xb0bPlbmoTQ7l7B6p3a9l4ZDlSCeHDEspnjqJYao6u1RiP
+    egxtKz2n8LTE62IMw>
+X-ME-Received: <xmr:SQ2jZwtrYhx0gUYFxYrxT6oMPofRGfjjz4FpWoYHYFlInVBy9EtcwY3lqcuDtt_MyPWx6J_S4qbNRYrmOcSVut87cWbQ98UAkrYDMkZytjOx5g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdektdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrnhhu
-    vghlrdhpohhrrdgrtggrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhg
-X-ME-Proxy: <xmx:QQujZzmF9Yp4TtfYjxZDC2CETbc9dEGM9Jj6324gT_ylvVrtfDY0dw>
-    <xmx:QQujZ52zCjt-3pR5WAssKdjT4zYLNpEKih8vx3Dd1XSz6IiuxZVhxA>
-    <xmx:QQujZyskkPzbTc4ifQebE5pge6q_HWpc5SL-4sC5LRRxufngSuaWVg>
-    <xmx:QQujZ9WZHx40T4CQc9pHmedUFblvNF2m5drzGpJW-r4UFz3rP4N6yA>
-    <xmx:QQujZyzE6ukHao5iCM3RM6aTSU0f5wlr-HgTHx0NA-UoyuxOfbI34emr>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpefgueeugedtgfffudetuddtueeffffhhfefvdfgvdfg
+    tdduvdffffektdetkefhhfenucffohhmrghinhepthhhvghmrdhknhdpmhgvrhhgvggurd
+    gsfhdprhgvrgguhidrphhsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
+    rghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpe
+    hsmhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:SQ2jZ9bhGv81iwraUEiViZShiWJ2qOy9kdlkjGKFNLf8wnwblmg6Dg>
+    <xmx:SQ2jZ3Yw5MaUok8FjzY-3baYlY_jg9EjyVGOv1iN75_DEFSE1-HF8Q>
+    <xmx:SQ2jZ5BCYTR-Ivp8t604kU27IXdZzfhVwX4rdyTxtBUHTRnqYMSfoQ>
+    <xmx:SQ2jZ9ZIlF7eUTnStusv59_rfiWn8f1L4ih1ve4slkbtVLe-RS7Oxw>
+    <xmx:Sg2jZ2XcORApPDo6bUX2wovovDSMwJs7vnG72GkBblJ31HK7Y6BAI55G>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Feb 2025 01:54:56 -0500 (EST)
+ 5 Feb 2025 02:03:36 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7382a062 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 5 Feb 2025 06:54:53 +0000 (UTC)
-Date: Wed, 5 Feb 2025 07:54:48 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 43974043 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 5 Feb 2025 07:03:34 +0000 (UTC)
+Date: Wed, 5 Feb 2025 08:03:33 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Manuel =?utf-8?B?UXVpw7FvbmVz?= <manuel.por.aca@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: Usability issue: "Your branch is up to date"
-Message-ID: <Z6MLOA3mJGbPFBae@pks.im>
-References: <CAPpV+OaMcViVKok5U0-4HaYyPMKEA7BBzw4t113uAaMndjs5Cg@mail.gmail.com>
- <xmqqh65b2ci3.fsf@gitster.g>
- <xmqq34guzi0f.fsf@gitster.g>
- <CAPpV+Oaq3d3oNE-V3pnpQRNrGCoZr52uY91QtWYxcu1tgG_QXg@mail.gmail.com>
- <xmqqseottxld.fsf@gitster.g>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+Subject: Re: What's cooking in git.git (Feb 2025, #01; Tue, 4)
+Message-ID: <Z6MNRVrhw3Nxz6Iw@pks.im>
+References: <xmqqldulrvly.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,41 +87,127 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqseottxld.fsf@gitster.g>
+In-Reply-To: <xmqqldulrvly.fsf@gitster.g>
 
-On Tue, Feb 04, 2025 at 09:43:10AM -0800, Junio C Hamano wrote:
-> And the last step is where the remote-tracking branches are updated,
-> together with their reflog (if enabled).  Because that step does not
-> even see the remote-tracking branches whose value do not need to
-> change (filtered out earlier to help reduce the number of refs fed
-> to the object transfer machinery), the "drop no-op early" part need
-> to be designed differently (e.g. mark them as no-op, so that the 
-> object tranfer machinery can notice them and ignore) and then the
-> "update refs" step can see these no-op updates.
+On Tue, Feb 04, 2025 at 06:08:57PM -0800, Junio C Hamano wrote:
+> * tc/clone-single-revision (2025-02-04) 7 commits
+>  - builtin/clone: teach git-clone(1) the --revision= option
+>  - parse-options: introduce die_for_incompatible_opt2()
+>  - clone: introduce struct clone_opts in builtin/clone.c
+>  - clone: add tags refspec earlier to fetch refspec
+>  - clone: refactor wanted_peer_refs()
+>  - clone: make it possible to specify --tags
+>  - clone: cut down on global variables in clone.c
 > 
-> I do not think writing the "no-op" reflog entries should be done at
-> a step separate from the step that writes the real ref updates, as I
-> suspect that such a separate update scheme would have a funny
-> interactions with "git fetch --atomic".
+>  "git clone" learned to make a shallow clone for a single commit
+>  that is not necessarily be at the tip of any branch.
 > 
-> So, do I think it could be possible?  Sure.  Do I think it would be
-> too hard as a rocket surgery?  No.  Will I jump up and down excited
-> and start coding?  I am not interested all that much, but I can help
-> reviewing patches if somebody else works on it.
-> 
-> There may be some other downsides (other than the cost of storage
-> and making the reflog noisy) I haven't thought about, which need to
-> be considered if somebody decides to work on this.
+>  Will merge to 'next'?
+>  source: <20250204-toon-clone-refs-v5-0-37e34af283c8@iotcl.com>
 
-One thing to consider is that some remotes tend to have many thousands
-or even hundreds of thousands of references. Updating timestamps for all
-of them could be quite inefficient depending on where exactly that data
-is store. If it was in the form of no-op reflog entries, the "files"
-backend would have to touch as many files as the remote has references.
-Consequently, even if only a single remote ref changed, we'd potentially
-have to update metadata on hundreds of thousands of files.
+I'll do another review today.
 
-So I'm not sure whether such a schema would scale well enough in the
-general case for large repos.
+> * ps/reftable-sans-compat-util (2025-02-03) 19 commits
+>  - Makefile: skip reftable library for Coccinelle
+>  - reftable: decouple from Git codebase by pulling in "compat/posix.h"
+>  - git-compat-util.h: split out POSIX-emulating bits
+>  - compat/mingw: split out POSIX-related bits
+>  - reftable/basics: stop using `UNUSED` annotation
+>  - reftable/basics: stop using `SWAP()` macro
+>  - reftable/stack: stop using `sleep_millisec()`
+>  - reftable/system: introduce `reftable_rand()`
+>  - reftable/reader: stop using `ARRAY_SIZE()` macro
+>  - reftable/basics: provide wrappers for big endian conversion
+>  - reftable/basics: stop using `st_mult()` in array allocators
+>  - reftable: stop using `BUG()` in trivial cases
+>  - reftable/record: don't `BUG()` in `reftable_record_cmp()`
+>  - reftable/record: stop using `BUG()` in `reftable_record_init()`
+>  - reftable/record: stop using `COPY_ARRAY()`
+>  - reftable/blocksource: stop using `xmmap()`
+>  - reftable/stack: stop using `write_in_full()`
+>  - reftable/stack: stop using `read_in_full()`
+>  - Merge branch 'ps/reftable-sign-compare' into ps/reftable-sans-compat-util
+> 
+>  Make the code in reftable library less reliant on the service
+>  routines it used to borrow from Git proper, to make it easier to
+>  use by external users of the library.
+> 
+>  Will merge to 'next'?
+>  source: <20250203-pks-reftable-drop-git-compat-util-v3-0-446c9ed4ee9e@pks.im>
+
+From my POV it's ready, but I'd like to get an Ack from Justin and
+Johannes, as they both had comments on the last round. I've Cc'd them.
+
+> * kn/reflog-migration-fix-followup (2025-01-22) 4 commits
+>  - reftable: prevent 'update_index' changes after adding records
+>  - refs: use 'uint64_t' for 'ref_update.index'
+>  - refs: mark `ref_transaction_update_reflog()` as static
+>  - Merge branch 'kn/reflog-migration-fix' into kn/reflog-migration-fix-followup
+> 
+>  Code clean-up.
+> 
+>  On hold.
+>  cf. <Z5DgxQuc2j_-5GHg@pks.im>
+>  source: <20250122-461-corrupted-reftable-followup-v3-0-ae5f88bf04fa@gmail.com>
+
+I think this topic should now be unblocked as all the preceding fixes
+and fixes of fixes have been merged.
+
+> * bf/fetch-set-head-fix (2025-01-27) 2 commits
+>  - fetch set_head: fix non-mirror remotes in bare repositories
+>  - fetch set_head: refactor to use remote directly
+> 
+>  Fetching into a bare repository incorrectly assumed it always used
+>  a mirror layout when deciding to update remote-tracking HEAD, which
+>  has been corrected.
+> 
+>  Will merge to 'next'?
+>  source: <Z5Mrk02wMdABtrVZ@pks.im>
+
+Yup, I think this series is ready.
+
+> * ds/backfill (2025-02-03) 7 commits
+>  - backfill: assume --sparse when sparse-checkout is enabled
+>  - backfill: add --sparse option
+>  - backfill: add --min-batch-size=<n> option
+>  - backfill: basic functionality and tests
+>  - backfill: add builtin boilerplate
+>  - Merge branch 'master' into ds/backfill
+>  - Merge branch 'ds/path-walk-1' into ds/backfill
+> 
+>  Lazy-loading missing files in a blobless clone on demand is costly
+>  as it tends to be one-blob-at-a-time.  "git backfill" is introduced
+>  to help bulk-download necessary files beforehand.
+> 
+>  Will merge to 'next'?
+>  source: <pull.1820.v3.git.1738602667.gitgitgadget@gmail.com>
+
+I'll do another review today, but think it should be close or ready.
+
+> * ps/send-pack-unhide-error-in-atomic-push (2025-02-03) 8 commits
+>  - send-pack: gracefully close the connection for atomic push
+>  - t5543: atomic push reports exit code failure
+>  - send-pack: new return code "ERROR_SEND_PACK_BAD_REF_STATUS"
+>  - t5548: add porcelain push test cases for dry-run mode
+>  - t5548: add new porcelain test cases
+>  - t5548: refactor test cases by resetting upstream
+>  - t5548: refactor to reuse setup_upstream() function
+>  - t5504: modernize test by moving heredocs into test bodies
+> 
+>  "git push --atomic --porcelain" used to ignore failures from the
+>  other side, losing the error status from the child process, which
+>  has been corrected.
+> 
+>  Will merge to 'next'?
+>  source: <20250203-pks-push-atomic-respect-exit-code-v5-0-d66481e36622@pks.im>
+
+I think so.
+
+One topic that I miss in the cover letter is [1]. You probably forgot to
+pick it up :)
+
+Thank you, as always!
+
+[1]: <20250125-b4-pks-reftable-win32-in-use-errors-v1-1-356dbc783b4f@pks.im>
 
 Patrick
