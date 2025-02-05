@@ -1,35 +1,36 @@
-Received: from out-184.mta1.migadu.com (out-184.mta1.migadu.com [95.215.58.184])
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693941DC998
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 16:47:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E361FCCE0
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 16:47:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738774071; cv=none; b=CUjgaC/Z+JavN2pdYV3Uj97i/Gxbnv1YonkrChhZ9LsAPzfsiHrBbtztpJU+RCUguu2A7O8AXFZS+WZcQvjDCIeWfNEFG3tfIsa6M8rKvBgEcp6oU8+4aIS/Lbo2u0eBriqCW1rE9uWdZpFPV10kvugF6XuldCGCrHxpGiA2tQA=
+	t=1738774079; cv=none; b=Cyo2IM/2i21qjkbGiqZ6q1zCaPubm17eLmXpVW6szyaK5V5F4dsFWs/OrlmPYp16pflU6dn/v/FkeKPcX6RQ+QHy+LgEjNmfoMZ2mmrWqrYoQuo5ZFSi3vROJnDJA64M5niPW0vfgcgiP/vJnlMksWKPlun7SO1s3UHCkXfGB+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738774071; c=relaxed/simple;
-	bh=lgBLB697+FvzKO4KojqRjDrIjd1KI0R1zccyQDFF91s=;
+	s=arc-20240116; t=1738774079; c=relaxed/simple;
+	bh=bs1gkyPkUfDNeLh45zXl4dcXDQ809hJu4bxdlyHU8uo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=K3zVz89e6fKMIWjSkLyWAyokSq5JcVPUQiZVJkodSbCXlc/4cGSrS6Lq6NC1FL/fnfiSVVgp62d9pKwb3FWO4IXZvlYsGO4XpyB7geYjguNbQ525yC53IVgqyhXNnt+PMZLHxhJjs4FJlXOokdhgesMauh4yN1umEvbSTL5Lt0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=FDXzirK/; arc=none smtp.client-ip=95.215.58.184
+	 In-Reply-To:To:Cc; b=UlxOzxUAtcu4EVWiVXQDagnSxZbWOn8aVnHu7LQzjwfY7y59apU8cO/jrbt6A12zzldIzrWQKZf5g+5Wq1dWQbSqk1GOA5oWbfWrEOWRXDFvORKrK4rfvckgqZkLz9WAnpn8KjxyQPxIjOnt/KWPd19Jd9VBppguBNqsHSjOvfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=bKXGBbz7; arc=none smtp.client-ip=91.218.175.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="FDXzirK/"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="bKXGBbz7"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1738774067;
+	t=1738774070;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=psL1avMTJ1yHFAPZmmDLfT8J+X1MaflHkvHAuR1+WVY=;
-	b=FDXzirK/WDNiVnGilOubKGsCUDmPoSQknj80jf4kJPTPvOqoU/ndHJvhN0eHAEAA4yBSLc
-	mrqQsAE4jWTD5KtIwJdYp7WeoJFZ2kDHp+xV7MUq2jMh3W5IvVmhghXg3m0ohTWv3KcnPQ
-	+mSbSkqa9/dtKZYQnlVagpVwC4HLfXk=
+	bh=fzv5Ko9hQst6aa/WKkKw4GXaTzJEI0Kmorzo5IwTop4=;
+	b=bKXGBbz7vIzjrkprkb4Xsd8tQKADEy9qPlaN2MTgh4mh40e8at2dWcpoBxJf1+A8xflCv1
+	s040T6ugP8I22S+nS3G/Uy+rxVvDRuweSdYC1D+wAT5Tf5tV3XCW5srZyEOs5Ilr0PNSQx
+	BBm2QvQa+UBucEIou2lHsBvWFtymxmU=
 From: Toon Claes <toon@iotcl.com>
-Date: Wed, 05 Feb 2025 17:47:19 +0100
-Subject: [PATCH v6 4/7] clone: add tags refspec earlier to fetch refspec
+Date: Wed, 05 Feb 2025 17:47:20 +0100
+Subject: [PATCH v6 5/7] clone: introduce struct clone_opts in
+ builtin/clone.c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,7 +39,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250205-toon-clone-refs-v6-4-0bbc8e6d89fd@iotcl.com>
+Message-Id: <20250205-toon-clone-refs-v6-5-0bbc8e6d89fd@iotcl.com>
 References: <20250205-toon-clone-refs-v6-0-0bbc8e6d89fd@iotcl.com>
 In-Reply-To: <20250205-toon-clone-refs-v6-0-0bbc8e6d89fd@iotcl.com>
 To: git@vger.kernel.org
@@ -48,91 +49,144 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
 X-Migadu-Flow: FLOW_OUT
 
-In clone.c we call refspec_ref_prefixes() to copy the fetch refspecs
-from the `remote->fetch` refspec into `ref_prefixes` of
-`transport_ls_refs_options`. Afterwards we add the tags prefix
-`refs/tags/` prefix as well. At a later point, in wanted_peer_refs() we
-process refs using both `remote->fetch` and `TAG_REFSPEC`.
+There is a lot of state stored in global variables in builtin/clone.c.
+In the long run we'd like to remove many of those.
 
-Simplify the code by appending `TAG_REFSPEC` to `remote->fetch` before
-calling refspec_ref_prefixes().
+Introduce `struct clone_opts` in this file. This struct will be used to
+contain all details needed to perform the clone. The struct object can
+be thrown around to all the functions that need these details.
 
-To be able to do this, we set `option_tags` to 0 when --mirror is given.
-This is because --mirror mirrors (hence the name) all the refs,
-including tags and they do not need to be treated separately.
+The first field we're adding is `wants_head`. In some scenarios
+(specifically when both `--single-branch` and `--branch` are given) we
+are not interested in `HEAD` on the remote. The field `wants_head` in
+`struct clone_opts` will hold this information. We could have put
+`option_branch` and `option_single_branch` into that struct instead, but
+in a following commit we'll be using `wants_head` as well.
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- builtin/clone.c | 27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ builtin/clone.c | 44 +++++++++++++++++++++++++++++---------------
+ remote.c        |  2 +-
+ remote.h        |  5 +++++
+ 3 files changed, 35 insertions(+), 16 deletions(-)
 
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 5efa2bbceb42b230f723660ea963ca1253888235..ef4af1f3e6bf0a33c13ed874587b35aba14fe43c 100644
+index ef4af1f3e6bf0a33c13ed874587b35aba14fe43c..1d421c8f758e37a7219d2da680c7ef8699016171 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -435,11 +435,8 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
- 	struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
- 	struct ref *local_refs = head;
- 	struct ref **tail = local_refs ? &local_refs->next : &local_refs;
--	struct refspec_item tag_refspec;
+@@ -57,6 +57,13 @@
+  *
+  */
+ 
++struct clone_opts {
++	int wants_head;
++};
++#define CLONE_OPTS_INIT { \
++	.wants_head = 1 /* default enabled */ \
++}
++
+ static int option_no_checkout, option_bare, option_mirror, option_single_branch = -1;
+ static int option_local = -1, option_no_hardlinks, option_shared;
+ static int option_tags = 1; /* default enabled */
+@@ -429,23 +436,24 @@ static struct ref *find_remote_branch(const struct ref *refs, const char *branch
+ 	return ref;
+ }
+ 
+-static struct ref *wanted_peer_refs(const struct ref *refs,
+-		struct refspec *refspec)
++static struct ref *wanted_peer_refs(struct clone_opts *opts,
++				    const struct ref *refs,
++				    struct refspec *refspec)
+ {
+-	struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
+-	struct ref *local_refs = head;
+-	struct ref **tail = local_refs ? &local_refs->next : &local_refs;
++	struct ref *local_refs = NULL;
++	struct ref **tail = &local_refs;
  	struct ref *to_free = NULL;
  
--	refspec_item_init(&tag_refspec, TAG_REFSPEC, 0);
--
- 	if (option_single_branch) {
- 		if (!option_branch)
+-	if (option_single_branch) {
+-		if (!option_branch)
++	if (opts->wants_head) {
++		struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
++		if (head)
++			tail_link_ref(head, &tail);
++		if (option_single_branch)
  			refs = to_free = guess_remote_head(head, refs, 0);
-@@ -454,16 +451,7 @@ static struct ref *wanted_peer_refs(const struct ref *refs,
- 	for (size_t i = 0; i < refspec->nr; i++)
- 		get_fetch_map(refs, &refspec->items[i], &tail, 0);
- 
--	/*
--	 * Grab all refs that match the TAG_REFSPEC. Any tags we don't care
--	 * about won't be present in `refs` anyway.
--	 * Except with option --mirror, where we grab all refs already.
--	 */
--	if (!option_mirror)
--		get_fetch_map(refs, &tag_refspec, &tail, 0);
--
- 	free_one_ref(to_free);
--	refspec_item_clear(&tag_refspec);
- 
- 	return local_refs;
- }
-@@ -1011,8 +999,10 @@ int cmd_clone(int argc,
- 			die(_("unknown ref storage format '%s'"), ref_format);
+-		else {
+-			free_one_ref(head);
+-			local_refs = head = NULL;
+-			tail = &local_refs;
+-			refs = to_free = copy_ref(find_remote_branch(refs, option_branch));
+-		}
++	} else if (option_single_branch) {
++		local_refs = NULL;
++		tail = &local_refs;
++		refs = to_free = copy_ref(find_remote_branch(refs, option_branch));
  	}
  
--	if (option_mirror)
-+	if (option_mirror) {
- 		option_bare = 1;
-+		option_tags = 0;
+ 	for (size_t i = 0; i < refspec->nr; i++)
+@@ -893,6 +901,8 @@ int cmd_clone(int argc,
+ 	struct string_list server_options = STRING_LIST_INIT_NODUP;
+ 	const char *bundle_uri = NULL;
+ 
++	struct clone_opts opts = CLONE_OPTS_INIT;
++
+ 	struct transport_ls_refs_options transport_ls_refs_options =
+ 		TRANSPORT_LS_REFS_OPTIONS_INIT;
+ 
+@@ -1343,9 +1353,13 @@ int cmd_clone(int argc,
+ 	if (option_not.nr)
+ 		transport_set_option(transport, TRANS_OPT_DEEPEN_NOT,
+ 				     (const char *)&option_not);
+-	if (option_single_branch)
++	if (option_single_branch) {
+ 		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
+ 
++		if (option_branch)
++			opts.wants_head = 0;
 +	}
- 
- 	if (option_bare) {
- 		if (real_git_dir)
-@@ -1375,14 +1365,19 @@ int cmd_clone(int argc,
- 		transport->smart_options->check_self_contained_and_connected = 1;
- 
- 	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
 +
-+	if (option_tags || option_branch)
-+		/*
-+		 * Add tags refspec when user asked for tags (implicitly) or
-+		 * specified --branch, whose argument might be a tag.
-+		 */
-+		refspec_append(&remote->fetch, TAG_REFSPEC);
-+
- 	refspec_ref_prefixes(&remote->fetch,
- 			     &transport_ls_refs_options.ref_prefixes);
- 	if (option_branch)
- 		expand_ref_prefix(&transport_ls_refs_options.ref_prefixes,
- 				  option_branch);
--	if (option_tags)
--		strvec_push(&transport_ls_refs_options.ref_prefixes,
--			    "refs/tags/");
+ 	if (option_upload_pack)
+ 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
+ 				     option_upload_pack);
+@@ -1454,7 +1468,7 @@ int cmd_clone(int argc,
+ 	}
  
- 	refs = transport_get_remote_refs(transport, &transport_ls_refs_options);
+ 	if (refs)
+-		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
++		mapped_refs = wanted_peer_refs(&opts, refs, &remote->fetch);
+ 
+ 	if (mapped_refs) {
+ 		/*
+diff --git a/remote.c b/remote.c
+index 1779f0e7bbb8b88965f2fedf407e50ed20ea7a13..69d8c43ea694f1b9a7699e5d5a49bfc169058b8e 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1260,7 +1260,7 @@ int count_refspec_match(const char *pattern,
+ 	}
+ }
+ 
+-static void tail_link_ref(struct ref *ref, struct ref ***tail)
++void tail_link_ref(struct ref *ref, struct ref ***tail)
+ {
+ 	**tail = ref;
+ 	while (ref->next)
+diff --git a/remote.h b/remote.h
+index a19353f68999f5440db7bf5f91dd4be8bcc1d8a5..ce3e7c8512981d0ac5db2da508c4fbe64cede961 100644
+--- a/remote.h
++++ b/remote.h
+@@ -221,6 +221,11 @@ struct ref *alloc_ref(const char *name);
+ struct ref *copy_ref(const struct ref *ref);
+ struct ref *copy_ref_list(const struct ref *ref);
+ int count_refspec_match(const char *, struct ref *refs, struct ref **matched_ref);
++/*
++ * Put a ref in the tail and prepare tail for adding another one.
++ * *tail is the pointer to the tail of the list of refs.
++ */
++void tail_link_ref(struct ref *ref, struct ref ***tail);
+ 
+ int check_ref_type(const struct ref *ref, int flags);
  
 
 -- 
