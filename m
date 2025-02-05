@@ -1,142 +1,147 @@
-Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81872135A5
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 03:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60212F46
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 05:36:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738727730; cv=none; b=KcEwcSzlXrosrItmD8IUy4CrJrNd2TCrSU+cXvY/ZPix/OTKIquBQfZaFNIpFW2SaE0tAasH28ZI49tZKuTWwxm201bYDaSO4Iz2iZilGLs0uJgqEel1c7XceRbMY1V9r/+zZcAnD4wbLapGNmGGR2hRQlilDRcQuM+KVyt7A7o=
+	t=1738733773; cv=none; b=VmmhYzzoBshFr2hRZ3CRBxg9N6UuqfS1fVD1D5mbMUUyRuOYJgAoc9DZGa+1n+9UONx1/rOeGDlbtjCFCTrYyKHILGSLg3YdiD3t0DfKuRpQ4Jj6TlvFlHBpaBoEIiL1zpxqjZcGju9TEaZQRwi+suFIC8jcQtahWRCbTeE7UoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738727730; c=relaxed/simple;
-	bh=IjqdGNX+vF49vsOqcBCQljTMkKyZlAxIddb52L0IjXU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TxA/Q3TY0IrsnmY7WuL7VXB1rueXud7VSZcohAU2nOy+wgg3L13If8IxvEdA6Xlyib/3t+kxZ4P1yxLbbLSvsHxTYHcSB8uB4WOnPBhxaJsSfg35L1EuXT9OolS7HOK75GJhnvo8OfRSFzoUlEFaGU+IfJIJzcYnhegdrjC51vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mVUnlAwf; arc=none smtp.client-ip=209.85.160.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738733773; c=relaxed/simple;
+	bh=4fOo5H6Ce6CPTvAuR7KiSHY9RIuhNIRbrGGGtfbXDSs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZczQQlaXTyt4+n+fwT+Ild03qJW32C4LxlRVXBII50XbYw3wVNT64BLRGKQ0GEjPZ9mXw5R+TuwUc25KxN5pmhcY4jCrRmXa4si7Urz6EqkIyQIzj4jJuMxiefFDk1RUv4xmWD+cB3YoHk+6krtQHCJIxM76h3zdUGvU7ouI64k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aHyoBGzc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sLtLjlFH; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mVUnlAwf"
-Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-29fe7ff65e6so2077601fac.0
-        for <git@vger.kernel.org>; Tue, 04 Feb 2025 19:55:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738727728; x=1739332528; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=IjqdGNX+vF49vsOqcBCQljTMkKyZlAxIddb52L0IjXU=;
-        b=mVUnlAwfY/yN5sdcTBOfS/2PINx1zaCvdn07fmN1ytrp7IMmFVUjtzsVKWf3NlBi+E
-         BmB7jIN/yYWH9CyEflBMY8mp4DqH8yGGCYPlNLmfM3ijPAD7K7TbOdnl1NRaAcDSYev4
-         1umMo/vpfV9v28UnQ61esOz7RdYZouNZl5R0N3KY4K6HvOrZV7t0xSAXFG5gGT7NJlDL
-         3cvuiiuWm67IUzwle34nSLT+N0n77jmowIsULWOWHdO5avVkeK5Isv/XXp6p4LbqTYgF
-         1hJ35ylaZLGguiQZSZqWPPss/u7mTqDW1ZbI7hBRIiLlATaSyMyCdBrv6VyHZ6w9TneT
-         2i2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738727728; x=1739332528;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IjqdGNX+vF49vsOqcBCQljTMkKyZlAxIddb52L0IjXU=;
-        b=dNCQ9FiCtY7Q95gMDCJUiQ0/nZ2vBVAlrh4A8c5bVCIE764Msa5HQCdozb3h0vEmrv
-         akf8j8zJC4GWqBDsgbLqjnMk+7OhGAumgDn69YBD9eFGi/nUDArQE10YABPY+BXzz4de
-         0/k9jxoh8+glfOxzI0MGmQ04xqQLb7z+osSEWRJ/GWC74LzUgykP7UJ3pM1uNH+sVqWx
-         zg3DVYK7RuZP387eI3L/wgkCL+5Xw8RZMI1qjin2S2ufM2wY2l37HqaF9LrH9yusxodq
-         Tv56C9cO6K9CzIpavlrnhTjomzK9Stq4qmC7LzHivr7lS51lpOCnr/hF52ivG0hi1lSN
-         9YuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUCcQe9DkBqOFk6nREh7tD+TqnFsTB4w9Ts8Esc30B1yw4e0ykuICXK0pmLr1roAKqzAUY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzr2isjmvf9k6p7QVozQavzriUFWxHrknITW7tALeRwFax433pr
-	/AOaZFzdzPtYbWirqd36JPYfBGaYqyib0J2GPk3JvEu8nPDzbtvjHl7UL3hLSzKpx7HEVt6wZbv
-	2hrreH+Tz6LT5t/C43iJzyPrPeR0=
-X-Gm-Gg: ASbGncsY+QtQfk+YasCH95wWV1dpdgxD+aAf+rn0dfZc53YDLt1SBEUun+mgxiLWa/u
-	b8mG76OS/YuJFQUHqsnhoMtXC85JdgKB/i1jpmI7o0gECVcB/Zt1mUYJwiCEoYT2uz/URcqNFIw
-	==
-X-Google-Smtp-Source: AGHT+IEcSD23y2wCfohKriMLVySQimBEdaX1sTIpRMO85FrPL8gZo69FPXXa0xYA0VESSvcVmsXP5NmnRd6mms4Mjh8=
-X-Received: by 2002:a05:6870:ac23:b0:288:5ae1:7318 with SMTP id
- 586e51a60fabf-2b804fe5299mr880554fac.22.1738727727699; Tue, 04 Feb 2025
- 19:55:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aHyoBGzc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sLtLjlFH"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 95302114010A;
+	Wed,  5 Feb 2025 00:36:09 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 05 Feb 2025 00:36:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1738733769; x=1738820169; bh=bJJfhwttau
+	S53zTPd/93DPUTJXwtWootKacRCarVvXc=; b=aHyoBGzcMdIbJ+Jjmnb5savDtt
+	/wKlH3PMw7lGU61Nn4USTxTKz5caTGnhn8Ew7g9PNPmbqNU19kUW7vc+gusq/sXh
+	g6kfmU3GAlK4pau6oRESkZUTbjTOtMoUjftqB4fOphvjwHT5Bj5/zYro/p2FxtEC
+	b5oJuGbln9f3gQMeWDji1xi3MARbLIVAREbyt9U8HWa2aT/XibrHSAQl5vc+VJeJ
+	TIK7MLDz3zAUI0L2361V8qtRbNZ2gaiD5TxICsg81Y4xI3O7lVzeamKAUA4riBTj
+	JN4YTRr4ScwBsyEmaKhVdwbwcoN/UPiNq8jQvOCXQ7kL53HL3WMFabD0VAtA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738733769; x=1738820169; bh=bJJfhwttauS53zTPd/93DPUTJXwtWootKac
+	RCarVvXc=; b=sLtLjlFHpiyC7Fuiy2obBa2U9muQvLsf8PImhTsFsv7tAl3KRhW
+	+EuD0g04sA0jHlEIrgWfCPhQ5M5iu8IMxoguQs/62L+Vf8OZfZaGVjaDp+LZjeJu
+	5P+iaOkzI30sE2fOVAn9tDoc14uTlMA1C80WAd1kp+95z7TL7jh8niHVGmtSBvQT
+	mgn+OmdFwtaBKsf53WPfJihMri/+zaphmdzu9SDtixWulWEmJcAajkZEPv0I7Sry
+	7uYUDeBu+OZXx6tZAWWaogP3oM317JnW1qWdkArmsGkoxe5/PjojYurJ2tuLyfvG
+	jRIkAKX4+/7RwaT/P1cZLP49n73Up+hEfeA==
+X-ME-Sender: <xms:yfiiZ5mI1MkiHJDSSNK8CgIOGgDD9gwh7219X167nhFPVCBz3VEV0w>
+    <xme:yfiiZ027OcVS3sD-MMC1QhfBNSpD72OPMWmlXy7i8MRjUu-3gCcrhZ5VyJEsaNeml
+    0H7HwggBvQp78Jpzg>
+X-ME-Received: <xmr:yfiiZ_pFOECqUlpe58T9Ci80jq7hZ_kjix3bP42eazry0Pipl4DjvL05YbpRuKvJCWDvJ1XWbZLp5wP3KiwrcT9TTHmugvBqVttMfIwLzJPEdA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeiudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepjeevudeggf
+    ffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecuffhomhgrihhn
+    pehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:yfiiZ5nTL3pqkf6Casci85arKZfqA5QrCOp1WsHLC7YlgJFl1toF1g>
+    <xmx:yfiiZ31SyPl2Cd3WXOpqHZ7aV3S4cG85SvF_yuZvvkf_0hEG97bhnA>
+    <xmx:yfiiZ4sJikYGib5Nwx3eOp9E1Sa0bSD2Dp5xUIEer-0QrC3QTEoRCQ>
+    <xmx:yfiiZ7WDGtav-ze1umlTSpJY7GkDSp4Jh3pZVCvFZYnXFf6OFEH6EQ>
+    <xmx:yfiiZ4z1d28mAQiHrlsE6ZZWJFjZU4B_bZcUURm3nMLqU26t6C2cpLII>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 5 Feb 2025 00:36:08 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5f30fde1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 5 Feb 2025 05:36:05 +0000 (UTC)
+Date: Wed, 5 Feb 2025 06:36:04 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] builtin/repack: fix `--keep-unreachable` when there
+ are no packs
+Message-ID: <Z6L4xDMqc6aXEA8A@pks.im>
+References: <20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im>
+ <20250204-b4-pks-repack-unreachable-objects-wo-packfiles-v2-1-1eae23366711@pks.im>
+ <20250204152236.GB620055@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPpV+OaMcViVKok5U0-4HaYyPMKEA7BBzw4t113uAaMndjs5Cg@mail.gmail.com>
- <xmqqh65b2ci3.fsf@gitster.g> <xmqq34guzi0f.fsf@gitster.g> <CAMoUM6+9SHybvWVp3SKDD4RWesruh=nmMacXn_oL893CPCn39g@mail.gmail.com>
- <CALnO6CB2TjwRWr0=c2nWY5DnwLeqXiaA5fCiEeF85zivmLggjA@mail.gmail.com>
-In-Reply-To: <CALnO6CB2TjwRWr0=c2nWY5DnwLeqXiaA5fCiEeF85zivmLggjA@mail.gmail.com>
-Reply-To: bram@van-oosterhout.org
-From: Bram van Oosterhout <adriaanbram0712@gmail.com>
-Date: Wed, 5 Feb 2025 14:55:15 +1100
-X-Gm-Features: AWEUYZlb9p0DM83RF8nLko8_95p53hCKGg6YLuvOW417c89DV0gDA5ME8jUQkfw
-Message-ID: <CAMoUM6JfUGM2RGS_QtTS2XLF89iTt9L-8oOz6h4oWFMc+QMcDg@mail.gmail.com>
-Subject: Re: Usability issue: "Your branch is up to date"
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: bram@van-oosterhout.org, Junio C Hamano <gitster@pobox.com>, 
-	=?UTF-8?Q?Manuel_Qui=C3=B1ones?= <manuel.por.aca@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250204152236.GB620055@coredump.intra.peff.net>
 
-On Tue, Feb 4, 2025 at 1:08=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com>=
- wrote:
->
-> On Mon, Feb 3, 2025 at 7:28=E2=80=AFPM Bram van Oosterhout
-> <adriaanbram0712@gmail.com> wrote:
-> >
-> > Ahhhh, this thread explains my confusion when, even though git locally
-> > tells me my branch is "up to date", a fetch demonstrates the branch is
-> > not up to date.
-> >
-> > Which begs the question: Why does git say: "Your branch is up to date
-> > ..." if at best it can say: "Your
-> > branch MIGHT BE up to date with ..."?
->
->
-> Well, the branch _is_ up to date with your remote-tracking branch [1]
-> origin/main; that doesn't mean the tracking branch is up-to-date with
-> the repository origin's branch main!
->
-> I find it helpful to break the notion for newcomers early on that
-> origin/main somehow is "equal to" the repository named by origin's
-> main branch. Git (mostly) only communicates with remote repos when you
-> fetch, push, or, pull=E2=80=94in other words (and this bit may be more fo=
-r
-> Manuel), try to reinforce that things Git knows locally are only local
-> and not inherently tied to other repositories. Learning this
-> distributed lesson proves hard in my experience but explains a lot
-> about the reality of how Git operates.
->
-> Exceptions to the "remote communication" rule I can think of that
-> probably don't need to clutter things for beginners:
-> - git-maintenance has pre-fetching as a default task
-> - git ls-remote lists remote refs by communicating with the remote
->
-> > I have learned not to rely on the message and come to expect
-> > (sometimes nasty) surprises when I return to a project after a few
-> > months,
-> >
-> > Bram
->
-> And thus `git fetch [--all]` because a part of your typical workflow,
-> or something like `git pull --rebase [origin [main]]` before pushing.
+On Tue, Feb 04, 2025 at 10:22:36AM -0500, Jeff King wrote:
+> On Tue, Feb 04, 2025 at 08:00:41AM +0100, Patrick Steinhardt wrote:
+> 
+> > this small patch series fixes `git repack -ad --keep-unreachable` when
+> > there aren't any preexisting packfiles.
+> > 
+> > Changes in v2:
+> >   - Merge tests into t7701.
+> >   - Link to v1: https://lore.kernel.org/r/20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im
+> 
+> This looks good to me.
+> 
+> One interesting thing I did notice:
+> 
+> > +test_expect_success 'repack -k packs unreachable loose objects without existing packfiles' '
+> > +	test_when_finished "rm -rf repo" &&
+> > +	git init repo &&
+> > +	(
+> > +		cd repo &&
+> > +
+> > +		oid=$(echo would-be-deleted-loose | git hash-object -w --stdin) &&
+> > +		objpath=.git/objects/$(echo $sha1 | sed "s,..,&/,") &&
+> > +		test_path_is_file $objpath &&
+> > +
+> > +		git repack -ad --keep-unreachable &&
+> > +		test_path_is_missing $objpath &&
+> > +		git cat-file -p $oid
+> > +	)
+> > +'
+> 
+> In the test in v1, we had reachable commits to pack. And here we don't.
+> So before your patch, the behavior in the v1 test was that we'd create a
+> new pack, but it wouldn't pick up the loose object. But the behavior of
+> this test is that we say "Nothing new to pack".
+> 
+> I originally thought that output meant that we were not running
+> pack-objects at all. But looking at builtin/repack.c, we do run it, and
+> it simply chooses not to make a pack (which makes sense; how would
+> repack even realize if there was stuff to pack, since pack-objects is
+> what does the traversal).
+> 
+> So the two outcomes are both the result of the same bug. In both cases
+> we do not correctly pack the loose objects, so whether we make a pack is
+> just a question of whether there was other reachable stuff to pack. And
+> since your patch is fixing the bug at its root, both outcomes are fixed.
+> 
+> And when I suggested in my response to v1 that "Nothing new to pack" in
+> an empty repo was a separate bug, I was just wrong. ;) There is nothing
+> else to fix after your patch.
+> 
+> Thanks for finding and fixing.
 
-Thanks all for the education.
+Thanks for your thorough review!
 
-I have always read the message "Your branch is up to date with
-'origin/main'." as
-"Your branch is up to date with _main_ at _origin_", with _origin_
-being the remote repo.
-
-I now understand it says:
-Your branch is up to date _according to_ the information available at
-.git/refs/remotes/origin/main.
-Since that is a local file , I can reasonably expect the info to be
-stale when I return to my repo after 6 months and I should do a git
-fetch to assess the situation
-
-Thanks again. Bram
->
-> [1]: https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-a=
-iddefremotetrackingbrancharemote-trackingbranch
->
-> --
-> D. Ben Knoble
+Patrick
