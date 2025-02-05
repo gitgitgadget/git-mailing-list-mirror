@@ -1,53 +1,53 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AFDA229B12
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 08:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA4A229B15
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 08:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738742616; cv=none; b=MC+X/5f3HMAn9QwDBT16kiO6N43q4sQNGWM3hr1KqG52F/KZoAOmiYzK6LxJKj7C2hIwLaoi0LWIkacFQVVGNb62z/Ntrx7WWj7fjqFjW90UML5LmQoUHttVEo2pEEya3UkjJxH1VinfNnts4F7ZrCO0BR+lhMxhEp/ln+DoCZs=
+	t=1738742618; cv=none; b=SmFRT4DL3d/wiQ+pfr5umQs98GMg49VIcNikHBBUNQ7eBjKs6mk+hAscQ2IcCXVo59yy7F+X6MIixPqWeCXweLpR3nAy3ZjMLuGiqs3GPUGPs5JB9W7AzKW6Mn915Vm3vBSwhn5AZ/YgL+foJLyCji4zhjXHPx19JUNhsb6Eyy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738742616; c=relaxed/simple;
-	bh=ic9rhE1qZXYHtZp32sPhSWL/xDgq3MD52ZuRm+lL2gU=;
+	s=arc-20240116; t=1738742618; c=relaxed/simple;
+	bh=9QI7NdvwFIxqf9tzvSwyQH6e5sg16LUeq0XhBZYXFVc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nLgj9CuWkKAkyvIkJODR+TYJ5LUJiqHWBzW/MEIIpWqreA6kbh0V2JTTJNI2mJjKVmnnhNnAhjclie/HUKK+klDVVQeCJaBzNqaM0qkN34MpDVNyMnPWZUywKzxE8mf9jdbgHAHLk8xiKdyDILjtTKndBajP7qkchXeMQ8DjmkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cTDyu/FC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YtfSBFob; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=dXzEKXAW9SHqGFjxQNBIjGYw8oWh0w0Fu5TzTt/eu3R22/KlUwKvIqpbipP9/LXf2gqCmCdzqh/1jz0HdQLz7MyGnivhEZ1rDu0tF8R+q4fQ0pnJeb+HL08wvVWTIKv6LNYxjZuioF1SFxPXEyqp3AS1crF2y/IFsGhywsqmtuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BHxmCK3Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nv2oIv/U; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cTDyu/FC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YtfSBFob"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 51B9B114013D;
-	Wed,  5 Feb 2025 03:03:33 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BHxmCK3Q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nv2oIv/U"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C55061140141;
+	Wed,  5 Feb 2025 03:03:35 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Wed, 05 Feb 2025 03:03:33 -0500
+  by phl-compute-04.internal (MEProxy); Wed, 05 Feb 2025 03:03:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738742613; x=1738829013; bh=/li3NTPmvQ
-	5ydZMAYMmWuWpAzF/dkIbQi2+80df7vu0=; b=cTDyu/FCkwqcMYEUN6QbK5XoHx
-	tJWingNoRVRgTRyse9qKgsi8bJ70QYhng/0hIIL9jJoBS+l7iuFPNIjBKRFPznHU
-	Ha1XYjG4BwB218Sm2XOTj8Q8HkAP2NMro/UpK+O6681UdbNskvX7gAZY7s4W51th
-	kWgRTrk/LIZQFsFvZyFMaoaYzhqtClvaGl3Pf6VkYIQPpYeI+5SsN67dnTaGHY6j
-	D1S/S5w4tkPgIkHENnTKknAdbq9XdmpxokErs/QpF2RhZjvWnzj3hVCvoLjQUcaZ
-	/ahkH7JP+rH6ql0CExIbeGi7jzxmNzkMp7F09heoUSpvC60W49DNlUlVDdVw==
+	:subject:to:to; s=fm3; t=1738742615; x=1738829015; bh=zbCwrrT4cA
+	Bi7A35kqeyHk+pm+1jjcUE8QANZG8DIDQ=; b=BHxmCK3QYZE11OPJ75jgjWNjXk
+	At/MVlZhFzV123CNwe5uGA1w1A24iXCCPt0wGIYBLAoI85W75rHG7x8aLKFgIr1U
+	89qRI4P/NMsW0nOIHGrbYHCzppOt8poduFIT0cXDzPZt0dHKySV1CbGnjJQV5w8t
+	FzaWCQOmrSWsyDqUyIG3Yd5Z672yO8JcLg2FIC7qihHtY/dGNIwuHJFcO6/8UPjR
+	f8u/dbYVsZU0vGWkR4G2oi35GWQgYIKbXYzsWwVdpp8P2RKIQ/uwSCvgUiiSNgkY
+	vigDptGc3VSkt+EUyXumieGerdqX/AY5i5VDuF7f2mMolY7Tlaxee5gpCXCQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738742613; x=1738829013; bh=/li3NTPmvQ5ydZMAYMmWuWpAzF/dkIbQi2+
-	80df7vu0=; b=YtfSBFobOBeXdtXKh/FrxtuBtSYsStx4v0+YEFJNS5eUDLkV8li
-	OiJ0pNQ58MfQq1fu4cYxwy+IdcpTr/gGKlEh6zaSn4aGAPx6vCf8wStGrKbrLdex
-	HChqaEydez0S1wzd45SHFJPrqbgyS/UhRm+j1ov0250HeEuOrmFLxah4aKIto0/Q
-	qytthtI0YcpaPWm3kFlrp9FJtirsfHLRW2etVVgQPsLn69gpHAwMuUyF+h8XFwjR
-	tBMjS1xtbksVNEiEjITjp4u10Sl3qxVB5twqUaYVqXzMRGH7CjIqaG0aiUSH6PCW
-	IGqmEdd54sTRgjF+NLt+H60oCYxG+EE55uA==
-X-ME-Sender: <xms:VBujZ-93ZRpxNYej5r3ygbLoSSQd4Rl_jCISA8gmExQnHUVxGoXLAw>
-    <xme:VBujZ-vmPoFLXJ-1wbW_m9UrPEyhAnttCxFpDK7zulPhxoassw_GrV7S2rhUX8ELC
-    fHhMZ23sSkEduDj4Q>
-X-ME-Received: <xmr:VBujZ0DMQy12ZCnu73yIXtlGmSvnftMWYqG577J7fdQF9RXKX9eSPDK4zPLHNsAczi2_CfRXUyWE9-em8NR5ZVkDJIrIx6dXJPN2Mt56Bf_eCg>
+	1738742615; x=1738829015; bh=zbCwrrT4cABi7A35kqeyHk+pm+1jjcUE8QA
+	NZG8DIDQ=; b=Nv2oIv/UGYCKxPAjmKszggvnbH69QAf8MD9LgpY5WwiVHo+MyzS
+	/dwD+XlCn7gAHN1nDRXgdHldLMW8+ACpyU3jDwrJlou732PXiUFzv4vmz0JaRnCz
+	d7UyYsc6NJ0ZDxahCdYxi0OgcV+VaI5FDrm1n3l6elqgjqtM3LTMEuTF5bhjXKOJ
+	sVXipyU+81N4n1rvSk4gHpewlrlIJCQIlsF4XLpsqhMmOd65Lv+IwVkPjbt9DCHy
+	JPupkecSR6k4sSJtGZG21zQvc9EwcrOWpkGL4DTtvinyeHOCKhK2niqAJqRqF3dH
+	7n+5GH34PeSFLiOMSMlmxUTUwteTI6l4wVw==
+X-ME-Sender: <xms:VxujZ05_GhCP3FYT0uNMV6VZ-N-UagIGpbLfHETlu-7sk2MtfTTBFw>
+    <xme:VxujZ15khvFVAANCxxlZlWEc9E0OIzneVvkCXxBJkNGQ66cp1XSrtbIwbQxdkRDRy
+    6j9qBgBadkiRibXDw>
+X-ME-Received: <xmr:VxujZzeIbZaPQzGS4ggi6rtuMBfTvG1BWeSgWC4qpY4umW6U_k_lZib-mc8nMFJk-ydL4i2S1pE2aZN-GImYIOMHlEIG4bo0IWG5OHe_iOLxtg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -56,34 +56,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdelvdcutefuodetgg
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghf
-    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhhsuhgthhgrnhgvkhesshhushgvrdguvg
-    dprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehkrhhishht
+    shhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepmhhsuhgthhgrnhgv
+    khesshhushgvrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehkrhhishht
     ohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomh
-X-ME-Proxy: <xmx:VBujZ2fjQj9B11Rz0NXTgzs24kLJ8nBEGED8VWNzi0kfmasx1puKQA>
-    <xmx:VBujZzMhATkTAlDdEuMHcTwSskYvGxmjVn-sCqjnZp1aqTa8LHBCTw>
-    <xmx:VBujZwmROZ-ZcVn66AKWSuKyBzswbZfthWACcxWisnv5b0miRQ_nVg>
-    <xmx:VBujZ1tounh3xvtWyIiJj4GF72GkXkgdMC4bx6a8uBiACcLf35zxTg>
-    <xmx:VRujZ_C2bCLKsPZLFvBhlYVblTgM066V3VmLVuKhF7f4eSF2cAekx8nP>
+X-ME-Proxy: <xmx:VxujZ5LVm_6MeV5dExw7AEeQp1vGxFgvpSnxhx9aeOGWbS9t9BwG3A>
+    <xmx:VxujZ4LfFiWt1l6hhgAXl1BGaHxOTZGuSjP65UjegohvffbIKbvX-Q>
+    <xmx:VxujZ6ySSqCEnaYCyXtAaxrOcM-i5Fh7sQywdqXumOGOPQPZlfQ_pg>
+    <xmx:VxujZ8KMtBDXrZXZM-gyZO5EYXj69O-vMr2QgeBOZio0cSbHqg8QqQ>
+    <xmx:VxujZw9UfuYNGkK_oSVmDxrBsDX_5ddX-u8YCQGtkjqvPkR3hSjMf2Od>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Feb 2025 03:03:31 -0500 (EST)
+ 5 Feb 2025 03:03:34 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7746bf92 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 5 Feb 2025 08:03:30 +0000 (UTC)
-Date: Wed, 5 Feb 2025 09:03:29 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id a8d9f169 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 5 Feb 2025 08:03:33 +0000 (UTC)
+Date: Wed, 5 Feb 2025 09:03:32 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 	Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 7/7] builtin/clone: teach git-clone(1) the --revision=
- option
-Message-ID: <Z6MbUbi1A6pTmRdx@pks.im>
+Subject: Re: [PATCH v5 6/7] parse-options: introduce
+ die_for_incompatible_opt2()
+Message-ID: <Z6MbVAwn15_h8Sxy@pks.im>
 References: <20250204-toon-clone-refs-v5-0-37e34af283c8@iotcl.com>
- <20250204-toon-clone-refs-v5-7-37e34af283c8@iotcl.com>
+ <20250204-toon-clone-refs-v5-6-37e34af283c8@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,25 +92,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250204-toon-clone-refs-v5-7-37e34af283c8@iotcl.com>
+In-Reply-To: <20250204-toon-clone-refs-v5-6-37e34af283c8@iotcl.com>
 
-On Tue, Feb 04, 2025 at 10:34:06PM +0100, Toon Claes wrote:
-> @@ -580,8 +581,9 @@ static void update_head(const struct ref *our, const struct ref *remote,
->  			install_branch_config(0, head, remote_name, our->name);
->  		}
->  	} else if (our) {
-> -		struct commit *c = lookup_commit_reference(the_repository,
-> -							   &our->old_oid);
-> +		struct commit *c = lookup_commit_or_die(&our->old_oid,
-> +						        our->name);
-> +
->  		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
->  		refs_update_ref(get_main_ref_store(the_repository), msg,
->  				"HEAD", &c->object.oid, NULL, REF_NO_DEREF,
+On Tue, Feb 04, 2025 at 10:34:05PM +0100, Toon Claes wrote:
+> diff --git a/builtin/replay.c b/builtin/replay.c
+> index 1afc6d1ee0cb738fa7fa3f2b5c8ce0dd7802e7da..03d93afd77290ab556565f05bd424956b66ff01c 100644
+> --- a/builtin/replay.c
+> +++ b/builtin/replay.c
+> @@ -164,7 +164,8 @@ static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
+>  	if (!rinfo.positive_refexprs)
+>  		die(_("need some commits to replay"));
+>  	if (onto_name && *advance_name)
+> -		die(_("--onto and --advance are incompatible"));
+> +		die_for_incompatible_opt2(!!onto_name, "--onto",
+> +					  !!*advance_name, "--advance");
 
-I wonder: is this fixing a potential segfault? If so, it might make
-sense to split this out into a separate commit and provide a test that
-demonstrates the issue. If it doesn't, then the change shouldn't be
-necessary, unless I misunderstand.
+The condition isn't needed anymore, is it? As far as I know,
+`die_for_incompatible_opt*()` handle the condition internally.
 
 Patrick
