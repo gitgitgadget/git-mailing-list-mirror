@@ -1,129 +1,107 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70349214A61
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 20:47:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224B8214A6F
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 21:14:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738788468; cv=none; b=TSlYHFlVvcfqovLIpp0TRsRn6gM8VDLdq1TyXBiTOeBx4dL60IZ9xTcU2j6+JcrEsheqqTNdWBrEtyZ9xVXi9sa3uiCC60HNryjZMwYg/UVGbCB0asvNeJg30NmUltn6jk0YL7ExVN7yb58GqSE043e1at2g9gJp7jqfs470wP0=
+	t=1738790076; cv=none; b=ivT//8ae+VsEasPikVHFREMN5t4lG6MA+MUnRj3WmutPE3lK6Vo9eOShWCu8RegUlKQWUAsn6keNy+B/U3ewbLNDTiwRL5v2UxDUM3rMbDBkKwTwBwJi5bHtfJG5ar9vwpEaNA0EDdJ92kdboTB01nTdQcm5gRyUkvkAsJP70mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738788468; c=relaxed/simple;
-	bh=8kACLy6o4hjvrbkplrTanaY8lr4mFtp373CMre+BSRU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=e8flZuOJmD4y9fi7KywStXugpv8JdCx8kOu/vC3laWb1CgLT093lmQlSVEs1x+sbRQNfCZRRhHOFUaaN8rm/O0bzHdBtgP4fPCj6b9X5hH2YyXTbhU6RZM+6tZMIcBNosiEJpo4yDU6d75XZeCAg0cMDM2E3EnzVcs2DYKfHfpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MKgAvlIB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YLOKNxie; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738790076; c=relaxed/simple;
+	bh=kyuyRwo41PG7rxuSxEOQ4Bhq5tQNBDRWNO1mXBtcVOM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=i7VJZQdJ5CibRAS+Nq5tRsM57+5TVYHFfIJKtHJf4wL3/NE/DTb4D5fgaDSGb9o+SObLokXf22iYmOiHiHUyiQuRd8UGKwpoQkNsGMPYNKAx1740cSUOW6fk9TxmnZBkZ62ZJIugS1uOt4RkN0SHuAmh2CXlrCJ/B+v3ZxwrbIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fhGLWpPg; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MKgAvlIB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YLOKNxie"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 571A5138020A;
-	Wed,  5 Feb 2025 15:47:45 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 05 Feb 2025 15:47:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1738788465;
-	 x=1738874865; bh=72aNNHub2QPGG7Gkse7HfpimDUw7Mf5rH6XfbnWJWbw=; b=
-	MKgAvlIBZo3xtbkXAklcaWscCtZbGET7OBHzwXerHkbMWXi8XX+TsPbYiKCyPkRk
-	OZLpnSNyFVXOSknGQ6BkMvr/XDOA1lREks+Q96s6MFa384UXVbe4LM56rV3hPl+t
-	zy+L9ERGEl37ExcvcTmlsRJvHIJWORc76l7z+wGF4KoVDozNPlOeH2MOQpj34Lh2
-	1CHSSai0WI/xwu7vhZa7LFH8luENgDcBKkApD33bnYIQNEUK6yiWVihEarif9Zgy
-	sz0HyMwG/d5vH6k9LTuhtsFtT4xAhoDFhvntpGo/9VHbuCtW5+qD+yoGh7Q/zck2
-	t1474EwqQnqrVNcsBPthxA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738788465; x=
-	1738874865; bh=72aNNHub2QPGG7Gkse7HfpimDUw7Mf5rH6XfbnWJWbw=; b=Y
-	LOKNxie+eskZrwX3A+ozQlzKXAxhPL6IOsYOlW46YVfiLD5kFg9TApT8ihWt2vyO
-	y1PsJECcytt47S6g2UH7Lbzy3gIRflI5EjzdiRX2jLJdR2M0uG1LUo6hVEui1Mw4
-	KGv/CbBXfKGmE5Ms8zUeM3bxB5V62k+vlCtBwJTNPtJ0MKgbKKLk+bhzVPTded3R
-	AOM5AjJbIgALJDYO34ahUMHEpxLX78ZZtwDwmsNA3ssq4N3z3K20q6pSea6xhb7w
-	JGgVB+t+Ya/kpEYOCcITUN6hK5rxGB5ME2Vh7eoVAawI0u//ye1Li1oU6lv3ybzZ
-	EE7jVCLDhBBjVPSoQYIcg==
-X-ME-Sender: <xms:cc6jZyqyjbg4YtRPBiB6sh_9FtINY0LjR8D4KQGm16850bEC9SoSrQ>
-    <xme:cc6jZwq0FNXwvAFZx91Q6yksquo6uvH0ZsFevcxcoz-ybUKsqM2iIZcWCXXzNQDml
-    lr8xegwXk7Q8lSO4w>
-X-ME-Received: <xmr:cc6jZ3P8KfBJ8vbRCQ4TEHku8dxNqpFIJqkr_N_3y4f8SZj-A0Nyrpp3my6fh-XQMONUVDpyuFL4Zb2JRd_YB8v8VsU5Dgqnt4rl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeegiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprgihuhdrtghhrg
-    hnuggvkhgrrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtoh
-    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:cc6jZx47l7OJB19PAQXhbjOuZuFuMLSYcRw9Pzmn27ILJjJvZgGHoQ>
-    <xmx:cc6jZx7kbBaQKHv08qzjZbUGzMCI0REzku29nuwYstTkIJD-x7sbxg>
-    <xmx:cc6jZxix3jFFgLzVskd-giMouHJjOJlikI5GKntSQ2IQkDArZmfR7Q>
-    <xmx:cc6jZ76IqtNHYDswUi0YV0ZXN-jeXNuI7wz-AycLmsZDwlVE9gmg-A>
-    <xmx:cc6jZ00xUU63t6c9E60S6QEb8qTEREc6VDmggEd2YQtUYRPtCWUGf9LK>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Feb 2025 15:47:44 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-Cc: git@vger.kernel.org,  sunshine@sunshineco.com
-Subject: Re: [GSOC][PATCH v2] t6422: avoid suppressing =?utf-8?Q?Git?=
- =?utf-8?Q?=E2=80=99s?= exit code in tests
-In-Reply-To: <20250205142817.42117-1-ayu.chandekar@gmail.com> (Ayush
-	Chandekar's message of "Wed, 5 Feb 2025 19:58:17 +0530")
-References: <xmqqjza5x3go.fsf@gitster.g>
-	<20250205142817.42117-1-ayu.chandekar@gmail.com>
-Date: Wed, 05 Feb 2025 12:47:43 -0800
-Message-ID: <xmqqh658m840.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fhGLWpPg"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ab698eae2d9so49238566b.0
+        for <git@vger.kernel.org>; Wed, 05 Feb 2025 13:14:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738790073; x=1739394873; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZmehUGusLeZYhqCElL6InBKl4WTaQ24aU3ofEHrp1+U=;
+        b=fhGLWpPgUusWyWNCQT8amomRBkqpth/fJKR0Z29pnIfZkXezi2tpFN1bmiE48jxu/C
+         lHY90c3SU6wMhIh6IH75EAcC/Q18ToEbN02kJRt6FAF0Q6ZFToKxNX0M99Bl5qDhOE28
+         2cpvt1P9TbZCIZMmw7o3SCI1KpoBJPi9+od57y/zappIRJxqTnF60PrGsHa8OsFUQpGs
+         KbzlOBBO+MPQ8qg5EeO+0S8EABRe9vSA6YVkBt0FkxEQbDYfrvOUD+xHl4xWRrdoB/nP
+         XC5/PmZqGB7xuxTWto5r1axtSOa3FSaOtvnPGmpPvq0M6i2sB4OnifMK1GbyGF+g5nTT
+         v0ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738790073; x=1739394873;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZmehUGusLeZYhqCElL6InBKl4WTaQ24aU3ofEHrp1+U=;
+        b=IRDpeDowJyjCZEDPwcl3WZrgx2Q+dZEEz7jw0yIrhyDxo1y49LbrKp7fyYbq3WeFPl
+         BHLWyTE5s9fTuh+7vEC2H0+/4K/+zCaTKsAhBwKc5WkigVooF1MmGM8+zDG2lRPq+reE
+         WIksQDhQBuQI6KmC+PlNk0IkjNmM+qdbqx4JcQZFrA8RZUdDp5RjI/DWY9lG5TfRRGAh
+         mwcVb28wHM88FszW+3U1lSTTR26x2+yABAdc8MNZyzGLqxl/JNi/8OB3hLAxArVX6q0k
+         Erm8ORJO/yICN9MFteGUMV0+VfjzTvUcO3shYLML+AterQWYSofTq5jsq5305GEVg0zy
+         q0eg==
+X-Gm-Message-State: AOJu0YwHSUkHdgYTSWK2NkZc5HPbaBNc6F1sutToTyTdRj3hJ+O6L3KR
+	du6QvetozVYSiv3Vx/jVbJbvjtvCxYIB5yL9RimJMAWSJDhWWBvi5HVPJvOeubrm41qKUB5RIfE
+	iiD72LMD3Hy6vSr8AzNEjDNVJdEXZIAvb
+X-Gm-Gg: ASbGncuFrtblnRXdgfis3Vfrv5MTQxwCPWCHb47zJK2b9eEtyqR+vg6sjTYqkqmhN0O
+	B0nOPM4AjjXuRxQngRFp4WpU4PKD9nwIg5QMjVCDzUNgYiQ7y6NQUineZYxnaxWIufkZMyfGstf
+	DjmEpDb/ZXuTBCu3QbcST5f4YoJaA=
+X-Google-Smtp-Source: AGHT+IH9otJxwYpeg3fegEzqhpRaV+qBzprMK4LPiizgRYNfAayj075nSZMSiJszVICMz3/Vw2mqwMDRn0si2Y7v2CQ=
+X-Received: by 2002:a17:907:7711:b0:ab7:5f0e:87e8 with SMTP id
+ a640c23a62f3a-ab75f0e898bmr402279066b.3.1738790073095; Wed, 05 Feb 2025
+ 13:14:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20250205030642.95252-1-ben.knoble+github@gmail.com>
+ <xmqqbjvgr11y.fsf@gitster.g> <CALnO6CA_vF4huxMx6jSS4SVjS4+EO9K16Msco-vMUDzSoYRDOg@mail.gmail.com>
+ <xmqq34gsp9tr.fsf@gitster.g>
+In-Reply-To: <xmqq34gsp9tr.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Date: Wed, 5 Feb 2025 16:14:21 -0500
+X-Gm-Features: AWEUYZncaSSjVaVuYUAE83SYowUQcA8eN0lT928kYsIYa0ZJwpsdGB0WlUpHp2c
+Message-ID: <CALnO6CC71A_Bn+RhyXfmhiNCn2vFGJ+WCs8+dAnpQvGFyNZyfA@mail.gmail.com>
+Subject: Re: [PATCH] pull: allow branch.<name>.rebase to override pull.ff=only
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Alex Henrie <alexhenrie24@gmail.com>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Felipe Contreras <felipe.contreras@gmail.com>, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ayush Chandekar <ayu.chandekar@gmail.com> writes:
-
-Thanks for practicing yet another iteration.  I am not going to
-actually replace the previous one with this one, as the previous one
-is just OK, but let's pretend I would to complete the "simulated"
-iteration.
-
-Below, pretend that we will discard the previous one and replace it
-with this one, and plan to merge the result to 'next', but that is
-only for practice.
-
----
-
-> Subject: Re: [GSOC][PATCH v2] t6422: avoid suppressing Git’s exit code in tests
-
-This is about 6423 ;-)  I'll amend while applying the patch.
-
-> Some test in t6423 supress Git's exit code, which can cause test
-> failures go unnoticed. Specifically using git <subcommand> |
-> <other-command> masks potential failures of the Git command.
+On Wed, Feb 5, 2025 at 12:42=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Instead of executing a Git command as the upstream component of
-> a pipe, which can result in the exit status being lost, redirect
-> its output to a file and then process that file in two steps to
-> ensure the exit status is properly preserved.
+> "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 >
-> Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-> ---
->  t/t6423-merge-rename-directories.sh | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
+> >> So, I dunno.
+> >
+> > Agreed that if pull.ff=3Donly is supposed to override all other options
+> > (except those on the command-line), this might be wrong. And `git pull
+> > --rebase` works in the scenario I described.
+>
+> Yeah, I view --ff-only as a safety measure for the user to say "my
+> workflow is to make sure I do not have anything locally cooking on
+> my branch when integrating with the other side, and stop me if I
+> somehow made a mistake".  If rebase or other options override, the
+> folks in the rebasing camp, unlike in the merging camp, cannot
+> benefit from such safety measure, which worries me.
 
-OK.  And the change to the test body to lose input redirection into
-"uniq" look OK, too.
+Is there, then, an existing combination that means roughly to treat
+`git pull` with no other options like this:
+- if not rebasing, forbid merging and be equivalent to --ff-only
+- if rebasing is requested (because of branch.name.rebase or --rebase
+or =E2=80=A6?), allow it
 
-Thanks.  Let's replace it and mark the topic for 'next'.
+In other words, something like a pull.merge=3Dff (or ff-only) meaning to
+apply the rules I've attempted to describe, in which case I would
+leave pull.ff unset?
 
+I suppose pull.rebase=3Dtrue is close, but is not quite the same for me
+(I'd like to be warned when this would imply a non-fast-forward for a
+main branch, though the "rebasing" logs might be sufficient)=E2=80=A6
