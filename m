@@ -1,36 +1,36 @@
-Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+Received: from out-175.mta0.migadu.com (out-175.mta0.migadu.com [91.218.175.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E361FCCE0
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 16:47:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391981FCCFE
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 16:47:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738774079; cv=none; b=Cyo2IM/2i21qjkbGiqZ6q1zCaPubm17eLmXpVW6szyaK5V5F4dsFWs/OrlmPYp16pflU6dn/v/FkeKPcX6RQ+QHy+LgEjNmfoMZ2mmrWqrYoQuo5ZFSi3vROJnDJA64M5niPW0vfgcgiP/vJnlMksWKPlun7SO1s3UHCkXfGB+c=
+	t=1738774082; cv=none; b=ToKzfwxrTSMXC+pGkN4o5UmAjHUgSBjglgsMRYh+qn+4vbpbM7ZB8Fx7XIzwjzFb5z+ZqCCIX3wbidpOAQpivFL2vflxdvgWcyIovR92p9bQPorQeqL9tQxQSo7XxWOVw+a8q8dxlYT8t4M0bJp43+Oc2EgwJtRHUsjSGP6R+PY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738774079; c=relaxed/simple;
-	bh=bs1gkyPkUfDNeLh45zXl4dcXDQ809hJu4bxdlyHU8uo=;
+	s=arc-20240116; t=1738774082; c=relaxed/simple;
+	bh=WxC5JRLtG3mnKIGr/yhqPYVJD/jif99bS962f2VCCcs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UlxOzxUAtcu4EVWiVXQDagnSxZbWOn8aVnHu7LQzjwfY7y59apU8cO/jrbt6A12zzldIzrWQKZf5g+5Wq1dWQbSqk1GOA5oWbfWrEOWRXDFvORKrK4rfvckgqZkLz9WAnpn8KjxyQPxIjOnt/KWPd19Jd9VBppguBNqsHSjOvfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=bKXGBbz7; arc=none smtp.client-ip=91.218.175.170
+	 In-Reply-To:To:Cc; b=AfjfYKn/2adF8EtsbpSTwp93WAmbBu8fVI//1eyB4nWTTZHyIQ2JkBJscvpsGhGhyk56RxlVMiYxXuw5QWS7nFOHfptrj3Ug0enlUfuIvNNuEXCiAORA62nyaQ6lYDnqjWyVU/c7bzol58IQhQ1mSjdguRGhx3yOjlugB5BjoS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=WvqwTLK1; arc=none smtp.client-ip=91.218.175.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="bKXGBbz7"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="WvqwTLK1"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1738774070;
+	t=1738774078;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=fzv5Ko9hQst6aa/WKkKw4GXaTzJEI0Kmorzo5IwTop4=;
-	b=bKXGBbz7vIzjrkprkb4Xsd8tQKADEy9qPlaN2MTgh4mh40e8at2dWcpoBxJf1+A8xflCv1
-	s040T6ugP8I22S+nS3G/Uy+rxVvDRuweSdYC1D+wAT5Tf5tV3XCW5srZyEOs5Ilr0PNSQx
-	BBm2QvQa+UBucEIou2lHsBvWFtymxmU=
+	bh=TQuMm0VceDjoTQnImSzjoHHrHcGqYqPtkv28jATe10I=;
+	b=WvqwTLK1/zF287K+j940wmpq3CQNJ3NAoucV9PRnVZJj7hwpWqk9ZH0KwOvxsQrWkibGAP
+	PVtWrnczgE9JDPmEEZgIcD3ejI5XGE8tCB0eWGodX2sTfuPxA+eNDHKOuV+yMojY1GWGSc
+	cOL+PwCcEQxxosDQxhPWwsy2tLlUBa0=
 From: Toon Claes <toon@iotcl.com>
-Date: Wed, 05 Feb 2025 17:47:20 +0100
-Subject: [PATCH v6 5/7] clone: introduce struct clone_opts in
- builtin/clone.c
+Date: Wed, 05 Feb 2025 17:47:21 +0100
+Subject: [PATCH v6 6/7] parse-options: introduce
+ die_for_incompatible_opt2()
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -39,7 +39,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250205-toon-clone-refs-v6-5-0bbc8e6d89fd@iotcl.com>
+Message-Id: <20250205-toon-clone-refs-v6-6-0bbc8e6d89fd@iotcl.com>
 References: <20250205-toon-clone-refs-v6-0-0bbc8e6d89fd@iotcl.com>
 In-Reply-To: <20250205-toon-clone-refs-v6-0-0bbc8e6d89fd@iotcl.com>
 To: git@vger.kernel.org
@@ -49,145 +49,57 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
  Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
 X-Migadu-Flow: FLOW_OUT
 
-There is a lot of state stored in global variables in builtin/clone.c.
-In the long run we'd like to remove many of those.
+The functions die_for_incompatible_opt3() and
+die_for_incompatible_opt4() already exist to die whenever a user
+specifies three or four options respectively that are not compatible.
 
-Introduce `struct clone_opts` in this file. This struct will be used to
-contain all details needed to perform the clone. The struct object can
-be thrown around to all the functions that need these details.
-
-The first field we're adding is `wants_head`. In some scenarios
-(specifically when both `--single-branch` and `--branch` are given) we
-are not interested in `HEAD` on the remote. The field `wants_head` in
-`struct clone_opts` will hold this information. We could have put
-`option_branch` and `option_single_branch` into that struct instead, but
-in a following commit we'll be using `wants_head` as well.
+Introduce die_for_incompatible_opt2() which dies when two options that
+are incompatible are set.
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- builtin/clone.c | 44 +++++++++++++++++++++++++++++---------------
- remote.c        |  2 +-
- remote.h        |  5 +++++
- 3 files changed, 35 insertions(+), 16 deletions(-)
+ builtin/replay.c | 7 ++++---
+ parse-options.h  | 9 +++++++++
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index ef4af1f3e6bf0a33c13ed874587b35aba14fe43c..1d421c8f758e37a7219d2da680c7ef8699016171 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -57,6 +57,13 @@
-  *
-  */
+diff --git a/builtin/replay.c b/builtin/replay.c
+index 1afc6d1ee0cb738fa7fa3f2b5c8ce0dd7802e7da..032c172b65ece4e2c3b275ffdde22a54c55a3933 100644
+--- a/builtin/replay.c
++++ b/builtin/replay.c
+@@ -163,9 +163,10 @@ static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
+ 	get_ref_information(cmd_info, &rinfo);
+ 	if (!rinfo.positive_refexprs)
+ 		die(_("need some commits to replay"));
+-	if (onto_name && *advance_name)
+-		die(_("--onto and --advance are incompatible"));
+-	else if (onto_name) {
++
++	die_for_incompatible_opt2(!!onto_name, "--onto",
++				  !!*advance_name, "--advance");
++	if (onto_name) {
+ 		*onto = peel_committish(onto_name);
+ 		if (rinfo.positive_refexprs <
+ 		    strset_get_size(&rinfo.positive_refs))
+diff --git a/parse-options.h b/parse-options.h
+index 39f088625494f20dea96b9a9cbe986916773bf60..fca944d9a93d643d984c58de2ead9154c8b16c94 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -436,6 +436,15 @@ static inline void die_for_incompatible_opt3(int opt1, const char *opt1_name,
+ 				  0, "");
+ }
  
-+struct clone_opts {
-+	int wants_head;
-+};
-+#define CLONE_OPTS_INIT { \
-+	.wants_head = 1 /* default enabled */ \
++static inline void die_for_incompatible_opt2(int opt1, const char *opt1_name,
++					     int opt2, const char *opt2_name)
++{
++	die_for_incompatible_opt4(opt1, opt1_name,
++				  opt2, opt2_name,
++				  0, "",
++				  0, "");
 +}
 +
- static int option_no_checkout, option_bare, option_mirror, option_single_branch = -1;
- static int option_local = -1, option_no_hardlinks, option_shared;
- static int option_tags = 1; /* default enabled */
-@@ -429,23 +436,24 @@ static struct ref *find_remote_branch(const struct ref *refs, const char *branch
- 	return ref;
- }
- 
--static struct ref *wanted_peer_refs(const struct ref *refs,
--		struct refspec *refspec)
-+static struct ref *wanted_peer_refs(struct clone_opts *opts,
-+				    const struct ref *refs,
-+				    struct refspec *refspec)
- {
--	struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
--	struct ref *local_refs = head;
--	struct ref **tail = local_refs ? &local_refs->next : &local_refs;
-+	struct ref *local_refs = NULL;
-+	struct ref **tail = &local_refs;
- 	struct ref *to_free = NULL;
- 
--	if (option_single_branch) {
--		if (!option_branch)
-+	if (opts->wants_head) {
-+		struct ref *head = copy_ref(find_ref_by_name(refs, "HEAD"));
-+		if (head)
-+			tail_link_ref(head, &tail);
-+		if (option_single_branch)
- 			refs = to_free = guess_remote_head(head, refs, 0);
--		else {
--			free_one_ref(head);
--			local_refs = head = NULL;
--			tail = &local_refs;
--			refs = to_free = copy_ref(find_remote_branch(refs, option_branch));
--		}
-+	} else if (option_single_branch) {
-+		local_refs = NULL;
-+		tail = &local_refs;
-+		refs = to_free = copy_ref(find_remote_branch(refs, option_branch));
- 	}
- 
- 	for (size_t i = 0; i < refspec->nr; i++)
-@@ -893,6 +901,8 @@ int cmd_clone(int argc,
- 	struct string_list server_options = STRING_LIST_INIT_NODUP;
- 	const char *bundle_uri = NULL;
- 
-+	struct clone_opts opts = CLONE_OPTS_INIT;
-+
- 	struct transport_ls_refs_options transport_ls_refs_options =
- 		TRANSPORT_LS_REFS_OPTIONS_INIT;
- 
-@@ -1343,9 +1353,13 @@ int cmd_clone(int argc,
- 	if (option_not.nr)
- 		transport_set_option(transport, TRANS_OPT_DEEPEN_NOT,
- 				     (const char *)&option_not);
--	if (option_single_branch)
-+	if (option_single_branch) {
- 		transport_set_option(transport, TRANS_OPT_FOLLOWTAGS, "1");
- 
-+		if (option_branch)
-+			opts.wants_head = 0;
-+	}
-+
- 	if (option_upload_pack)
- 		transport_set_option(transport, TRANS_OPT_UPLOADPACK,
- 				     option_upload_pack);
-@@ -1454,7 +1468,7 @@ int cmd_clone(int argc,
- 	}
- 
- 	if (refs)
--		mapped_refs = wanted_peer_refs(refs, &remote->fetch);
-+		mapped_refs = wanted_peer_refs(&opts, refs, &remote->fetch);
- 
- 	if (mapped_refs) {
- 		/*
-diff --git a/remote.c b/remote.c
-index 1779f0e7bbb8b88965f2fedf407e50ed20ea7a13..69d8c43ea694f1b9a7699e5d5a49bfc169058b8e 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1260,7 +1260,7 @@ int count_refspec_match(const char *pattern,
- 	}
- }
- 
--static void tail_link_ref(struct ref *ref, struct ref ***tail)
-+void tail_link_ref(struct ref *ref, struct ref ***tail)
- {
- 	**tail = ref;
- 	while (ref->next)
-diff --git a/remote.h b/remote.h
-index a19353f68999f5440db7bf5f91dd4be8bcc1d8a5..ce3e7c8512981d0ac5db2da508c4fbe64cede961 100644
---- a/remote.h
-+++ b/remote.h
-@@ -221,6 +221,11 @@ struct ref *alloc_ref(const char *name);
- struct ref *copy_ref(const struct ref *ref);
- struct ref *copy_ref_list(const struct ref *ref);
- int count_refspec_match(const char *, struct ref *refs, struct ref **matched_ref);
-+/*
-+ * Put a ref in the tail and prepare tail for adding another one.
-+ * *tail is the pointer to the tail of the list of refs.
-+ */
-+void tail_link_ref(struct ref *ref, struct ref ***tail);
- 
- int check_ref_type(const struct ref *ref, int flags);
- 
+ /*
+  * Use these assertions for callbacks that expect to be called with NONEG and
+  * NOARG respectively, and do not otherwise handle the "unset" and "arg"
 
 -- 
 2.48.1.447.gc0086e9015
