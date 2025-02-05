@@ -1,54 +1,54 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88261DF242
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 17:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F511519AD
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 17:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738776288; cv=none; b=EoBzwX+nxC4wjq+pXKNCdhQzT60ag9GhhZh3Nc/i+rA/MfTNRTBKiyQP452jzbIcGBJsRvxUcJU/fwNb9iiV+cxONSqRacBYdMvlzTo7JA4E5bbB3km+YvpsSw++5/vsjs2+Id179XZu6DsYLoLQEoXNC/yJnNNqBzu58KW05/0=
+	t=1738776646; cv=none; b=goUZQ//Mrmj5yItOGXp3hegTNEu35uhMa5ZEnqCSwCFiOgOAvL9Mpst0ikHyQ9vIsSPUGFnu6yaIvEnocc8xZDvk+/TDQn1hgH5N+Tb3PRQw9b7MHtyoFRccFv00q1KqoVjN+/9aV+Ud+pZvzYojks4+bXGCck0HpMgIueNmvk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738776288; c=relaxed/simple;
-	bh=kXNx3fSOTyTW/WsXolP3PKuLj8JDGCnDpwYpqGnZHy0=;
+	s=arc-20240116; t=1738776646; c=relaxed/simple;
+	bh=j9gpzjik0cml4oFg6fwSsdcmFKKsi2z/u5ZRLIWCT8U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q6XxYjCjI1MFzEj3fYC4lZvLSEafT9uSMQT0JRVQEY7jpbmbVu1AA/i90v4gt2E8i/SBfAiDRQEPIBiLF0SOXJUeAMr4QtCUQ8esusxtbgV3/lWzub92SMQ618q0Iz3cKbBjFI3uEu80f04c24sIBAmnVrU632REDQUS91jCJT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Kl8K/0h1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZZwwuc70; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=I/3eKGuuGHjgHgdc/Y2IF4bWhgyl1cR15Ec4w9sAqKwF43XR/hgNyACn6juUYVxRj2TUUaZz6jZnN5a4c/4/qeiCKy6ds1ih9ObH/SjPVugEyU1J+OpJiw4XnwLpMj0w/9Qp4Rt4ijCFHeSH8YXzZAQsSJQIzH7NUioUsOArnYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F74ikqIb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=yeM75NZU; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Kl8K/0h1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZZwwuc70"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BA2D825401BA;
-	Wed,  5 Feb 2025 12:24:44 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 05 Feb 2025 12:24:44 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F74ikqIb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="yeM75NZU"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AB30825401CA;
+	Wed,  5 Feb 2025 12:30:43 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 05 Feb 2025 12:30:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738776284; x=1738862684; bh=frTVwb3XDP
-	3ee3v1mEfK1R3pO/5VROCfdJQFbxwOvk8=; b=Kl8K/0h1TWexSqGel1c/YZDrO4
-	zRukNqReimgWNVOV8NvJQjgk54lQbi0ezikt68T+ThBMyGFWvioWn2fyNo0IbTDj
-	1nc7exHt9dCu9tcPL9kGpQoW9rWr2M5vW1LiOUIaxUvqwH+3xGor2tbGxsOwgMfp
-	FYbuemOpBeqxk3Iz/Gygr5REYJNiu8gDEDs0lMM36F/CUA7480Q2H4Mpx8jW9mom
-	Mq+90fcOFFb75Heurz1TCR5GKzhOVsGe1NOVPM3uiBm+4N1aKWxE41Qu+0JD++gr
-	H4Shy+aMfy9vt/w9fhYoNk6Lwiu+O24OMtTu4PHSfHrEp9FZgzfG/cYp0QqA==
+	:subject:to:to; s=fm2; t=1738776643; x=1738863043; bh=Q4PPzLlCbJ
+	o+OIJA0QysOsI/NZzfk7jNOTfKYuuTc8M=; b=F74ikqIb/y3dW8ZTP5McfGOveH
+	HmzsddFUMRktPUAd/z5gfvmPmmK6FGUv/XDaua8f13lSX3W8wvJSHs00t1ibjyO5
+	9H939bkGcuZFPLmdFnysMjsLcFmKm/EHmbkbcX8I+nYYmfEAE96kgMvtfb6iVf75
+	QESKrq3+LzwJNxxXN056oOpvFudw/VXIYEiegqYwUvgU8UyKwtFettEQAMpOJk3Z
+	Ddi8ww0m1BDGNws3D7vA5BU5WW7GSZe4uft6irnT1AgicD4ZyALfWcHHDu94s91O
+	lmP0DzqGr2z7+zobrWdasFtcjnOxtHnF0ULv4Cm5P1C249GJNPDZyIXaaorQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738776284; x=1738862684; bh=frTVwb3XDP3ee3v1mEfK1R3pO/5VROCfdJQ
-	FbxwOvk8=; b=ZZwwuc70QA0LllDiXv9J9HTbHoiqFyboeAv2q3QaGR6Y03T8ZEl
-	YCBQbjqpYx951lj4uJA2lO4mQbK6lNNbwtE3wUyAT9++MqGRvwEPpvn3KWwQITFd
-	kdxPbYBcgTzKITHxMm3ePRwjfBJ6RexCUur0qMEmIQf/lCtFskbki5nwM2ifmRzm
-	QZeh8VVVL+ZmrO06RMD3nmvLxrd8efcm8vtpaVlP3FqTTIM3IRWq7HWtieLwE0zF
-	uN4RK0S2K8ztwBPOHHh5cI4UXXLDrOaRKqv069T9XDRRjL2x3gQdfraLGE+lf4my
-	dIyo2l+ieVDIen5evgz2Pp4JkQJ0p/DHiUg==
-X-ME-Sender: <xms:3J6jZ2mK0vBnrE5jh7qTp2neSzJBXjBN3MLvSxWOycNTOUgjnTYENQ>
-    <xme:3J6jZ91gwaDIVMXYtqVupFyp4EOIKdW-Zip8rgs4N5lhMG_h8k7cuMAMUJyq94eIj
-    PMpMRv1qj0kD-wy1Q>
-X-ME-Received: <xmr:3J6jZ0okeRgyZUjL54yA0eCp39w4q2X6qBj62rteNnYWxAdXDeU8EbxmP7vlN_HAfbTB1lxvAk_MMi_d8g-qi48wlpUw9vL5Qdh2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgedthecutefuodetggdotefrod
+	1738776643; x=1738863043; bh=Q4PPzLlCbJo+OIJA0QysOsI/NZzfk7jNOTf
+	KYuuTc8M=; b=yeM75NZUxhNea5e0gaGPOkN4jhpL3SFqJ9zL9Wclr8+Rb/wH0sA
+	yG96I4nBk83qKj837y3hZSxfzpSOLj4WmwO9jnmDLsp8iKHB+jiIk0iSrSVTv6SD
+	EInNbOg39fNpniyiPm1G4S1ZGtLe/VfR47oYEaOGsT2LMPNff3iuSDzPsyBZ+/AY
+	smQ69fBqfYchRtpmyTVp8tStfJutrjY/G+ZsMb0HCostn0ofzsmiCH7c7Yw35KEV
+	1X7oHc4BSiIuHtkrTHsB/Inive/hP5fpgNR6PbZ0yGYjJvz8h1vUKSDeJDWB+u2x
+	TelFiAvEvGRQpw4SqfIyoZfjcPNAiC23Q2A==
+X-ME-Sender: <xms:Q6CjZyFjEkoh0O4RiWHF2QGDZxF6BstSt9dOR4e63JaK49I4haJ1Ug>
+    <xme:Q6CjZzX3RVfSxVNih4mOCITbFwZy1gVXfrEhp7q5gFW67CzedbUvyPBHcmQKHw90p
+    GzDRuXjJOb5Ww4Mog>
+X-ME-Received: <xmr:Q6CjZ8I3INcVw2z_CfzMXCF9arDI4pRe4iybjpMQtXZW_lo3kvvuLQqjtiCuRzNeDEd25pRErWwtHlFac9-l9UWVIN79j5FoLzCU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgedtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,34 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgedthecutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhoth
-    gtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrd
-    gtohhmpdhrtghpthhtohepmhhsuhgthhgrnhgvkhesshhushgvrdguvgdprhgtphhtthho
-    pehpshesphhkshdrihhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:3J6jZ6lbSidN15MfMXNGGwKL7lOynhHnQQmhxvbD_8XvwJjmPzcrVQ>
-    <xmx:3J6jZ02hEtNWA4zhH-xi7IaUEW8RWMS_A43CJRkBJOEFeOH96K8grg>
-    <xmx:3J6jZxt4vJX6qrg6pZe_1qQ_rMXFKDDM7ZaTHrHPwAdE1YUjc_cgEw>
-    <xmx:3J6jZwX3qKrA3sKMv1GbgtZk6m3Ha_ik1J6HlN9xkFfKHSNNLwykqg>
-    <xmx:3J6jZ1ncaAo7EL6vQs0c3zqQKXQydn5BU2UIUhyEp3s7_bvuVccd5EU0>
+    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepuggrvhhvihgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhho
+    hhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepnhgvfi
+    hrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Q6CjZ8F1i3IqKvaffJcBamLGk47lW0zx_QUKzZAwEwB5AI6bAAYBhQ>
+    <xmx:Q6CjZ4VNXDneZrD8Gchh4bPtfqsuf49jRPO6C__RcJf4xuvn9m1d8g>
+    <xmx:Q6CjZ_MbdaetfDJXD0SrieZKhYPlLRvT3Wh6ETs70c3WWfJbnChfZQ>
+    <xmx:Q6CjZ_3JmnQBqE50lJtjJ0SbIckCwZhJUoflZNj1uVDUyNcD2tMrtQ>
+    <xmx:Q6CjZ7G4H4t0w_-8NxyjCzxMPOK18cYzvZoFdDzgcR8NJd-i2MOm_WR9>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Feb 2025 12:24:43 -0500 (EST)
+ 5 Feb 2025 12:30:42 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Michal =?utf-8?Q?Such=C3=A1nek?=
- <msuchanek@suse.de>,
-  Patrick Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6 7/7] builtin/clone: teach git-clone(1) the
- --revision= option
-In-Reply-To: <20250205-toon-clone-refs-v6-7-0bbc8e6d89fd@iotcl.com> (Toon
-	Claes's message of "Wed, 05 Feb 2025 17:47:22 +0100")
-References: <20250205-toon-clone-refs-v6-0-0bbc8e6d89fd@iotcl.com>
-	<20250205-toon-clone-refs-v6-7-0bbc8e6d89fd@iotcl.com>
-Date: Wed, 05 Feb 2025 09:24:42 -0800
-Message-ID: <xmqqbjvgpan9.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: David Aguilar <davvid@gmail.com>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Elijah Newren <newren@gmail.com>,
+  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH] difftool: eliminate use of global variables
+In-Reply-To: <Z6MThg8oEEtx5xur@pks.im> (Patrick Steinhardt's message of "Wed,
+	5 Feb 2025 08:30:14 +0100")
+References: <20250204225501.597873-1-davvid@gmail.com>
+	<Z6MThg8oEEtx5xur@pks.im>
+Date: Wed, 05 Feb 2025 09:30:41 -0800
+Message-ID: <xmqq7c64pada.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,56 +92,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Toon Claes <toon@iotcl.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> The git-clone(1) command has the option `--branch` that allows the user
-> to select the branch they want HEAD to point to. In a non-bare
-> repository this also checks out that branch.
+>> +struct difftool_state {
+>> +	int has_symlinks;
+>> +	int symlinks;
+>> +	int trust_exit_code;
+>> +};
 >
-> Option `--branch` also accepts a tag. When a tag name is provided, the
-> commit this tag points to is checked out and HEAD is detached. Thus
-> `--branch` can be used to clone a repository and check out a ref kept
-> under `refs/heads` or `refs/tags`. But some other refs might be in use
-> as well. For example Git forges might use refs like `refs/pull/<id>` and
-> `refs/merge-requests/<id>` to track pull/merge requests. These refs
-> cannot be selected upon git-clone(1).
+> Why do we have both `has_symlinks` and `symlinks`? The latter gets set
+> to `has_symlinks` anyway, so it's a confusing to have both.
 
-These examples made the motivation a lot easier to see.  Very nice
-compared to a much earlier edition.
+I had the same reaction, but one aspect of the topic is about
+"encapsulate the existing globals into a state structure", and since
+these two are there in the original as globals, it would be easier
+to validate the correctness of the conversion to have both in the
+struct to keep the rewrite more faithful to the original.  It would
+be more appropriate to do it in a separate step to turn them into
+one, if (I haven't thought about it, so this is still an "if" to me)
+it makes the results easier to follow.
 
-> +`--revision=<rev>`::
-> +	Create a new repository, and fetch the history leading to the given
-> +	revision _<rev>_ (and nothing else), without making any remote-tracking
-> +	branch, and without making any local branch, and point `HEAD` to
-> +	_<rev>_. When creating a non-bare repository, the revision is checked
-> +	out on a detached `HEAD`. The argument can be a ref name
+The other aspect to lose the reference to the_repository indeed can
+be presented as a separate and independent change, and that may make
+the patch easier to view.
 
-Micronit.  I think the resulting repository, even when it is bare,
-would have its HEAD detached (i.e., instead of being a symbolic ref
-to a local branch, points directly at a commit object).
+> Also, I think it would make sense to rename the struct to
+> `difftool_options`, as it tracks options rather than state.
 
-	... branch, and detach the `HEAD` to _<rev>_.  When creating
-	a non-bare repository, the revision is checked out.  The
-	argument can be a ref name ...
-
-But then "When ... checked out" probably goes without saying.  There
-is nothing special wrt to bare/non-bare this option affects the
-behaviour of the command.
-
-> @@ -580,8 +581,9 @@ static void update_head(const struct ref *our, const struct ref *remote,
->  			install_branch_config(0, head, remote_name, our->name);
->  		}
->  	} else if (our) {
-> -		struct commit *c = lookup_commit_reference(the_repository,
-> -							   &our->old_oid);
-> +		struct commit *c = lookup_commit_or_die(&our->old_oid,
-> +						        our->name);
-> +
-
-.git/rebase-apply/patch:62: indent with spaces.
-						        our->name);
-warning: 1 line applied after fixing whitespace errors.
-
-Other than that, looking good.
+Great suggestion.
 
 Thanks.
