@@ -1,408 +1,141 @@
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409621FCF79
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 16:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709CA1FC7D5
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 16:50:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738774091; cv=none; b=W3QqvKf3x9U66PB/wcYhENQo67p1gpqRWZOTKjpVvfLGkU6RjNtES8Q1KnkRav8U4+duNc+RcycIQUp9HHSjTQJ2saP67Z9VrTHKUFocVQKEHLr9F1XMTmpkMqmrjh89JOuCJLIIIpFUPPnpl+1vNiAK5jzCzioJXFcn45m5UMA=
+	t=1738774235; cv=none; b=Yee6FAqBDesThphMSREdtPge+7DQnbnZsmPODFZ8FmsK4swuxOWFuE8wCfZKbrIVuu5Jfhqm6gBHc/8LLcrzT/Rku4hRkf8R8DrBnnACSx3gFsDJcWIGD1WgTnkKVJ5Minc4i+ufEiXDRIqZExyol5t46VaupzFDwMwi8CSI8Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738774091; c=relaxed/simple;
-	bh=pD+1AR/0JxaiRvhnp/piK+n2MfE05LVjUT4ni24yL7E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=srHh1I2LWnFMNhDy5U8IKDQhO5Nz3QqhVBn0qMv1Ohe0ECeVkJA2wOvV0JaiJjz/p5iUHjUxxI2meKdcagaEYOUsQGHqXsTLHdHv1Vc6NsQqC+TZ2lca5K1PJ6yhfp+7kiv71l4qNlLnyliGHNperL8JP0kaeHLojQTFR+iJqC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=EpCU/wPl; arc=none smtp.client-ip=91.218.175.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1738774235; c=relaxed/simple;
+	bh=0WZXRl9u3dVi/0brAAPBh4JOB34Qkxoqjt1r8cbze5Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Mb2vR3Ngb/SzPUWB024B9+CYZ9earBlLUNStaJ7OuYCugYZsBfWHg/Fqhndlhaba0sZNBhmdll/GTHthigtVwYsnkhEc2AaeB1A7JGKp8eaPesjDEg26rlQAjIy9wEsfXTBC4m9fHKIIOA5lw7sCxk7I09194+DqSkC7td13Vrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UOEL1Qnk; arc=none smtp.client-ip=209.85.214.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="EpCU/wPl"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1738774081;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tU4OZW9s52oMITzbi/i2/oUlNuH2jS1DEX95x35Oc88=;
-	b=EpCU/wPlO9njuLh8WqBlzNnCjPksIsl7NM4csxoLPX1wYS/NqDDiWOziENm5iusftVWDgZ
-	+v4APeZY8QyGDqqMIQ2OoTGM5/yFHJqqsIChgV8bNT5qqeyPhO3O1n4uOSL0Dpp+m9lnLn
-	mcYB4gC6fnBFp89S1zNpL473JfL12fM=
-From: Toon Claes <toon@iotcl.com>
-Date: Wed, 05 Feb 2025 17:47:22 +0100
-Subject: [PATCH v6 7/7] builtin/clone: teach git-clone(1) the --revision=
- option
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UOEL1Qnk"
+Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-21f1d4111d4so576695ad.0
+        for <git@vger.kernel.org>; Wed, 05 Feb 2025 08:50:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738774232; x=1739379032; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sBI63KubmDApz6Owy+FAYbDekd05oMeysl32ttxvTjY=;
+        b=UOEL1Qnk9KPI54z1bSAvLF6v5Cg05KfDRt/3JPyfJa0sv/JTT60W2oEYIpB8a48dmv
+         /n1yK0cbWBuw8Ay45mvQcTlVrzQ/dLcFXdMC4Dg+51VPq+DrrUXcswvPSnAQbScFzQ8s
+         JbBA3nak5wFx1yVU5kAt9wctG7dXnuGO2zGD8cMGAtn+pqP5n+1W9r87lvL12cnP3TB8
+         wDjRrDMq8xjPZ2VdaQF9qLggl1qpGi2NqRvJxYNzotVBCoyavyOB/8OooWaPUaaYX+Pt
+         K+l8d2Mvu3189Lf/8BziMHoinMLKnh3olhgUjXzQ/mf5zfzMyO2wwmqsKWh3jEVxu+pN
+         DTvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738774232; x=1739379032;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sBI63KubmDApz6Owy+FAYbDekd05oMeysl32ttxvTjY=;
+        b=OmbISSj8dOoJJ5ijhdGjFkQ2peie9OiRk9a32jJQwiquVMbAiGTO+h24lh4t8ajGIL
+         gYqeImr3XHyluKD2UtGwbRd9sx0mLYlTqSt4DibhawUY344Ty6oe4WgK1PSmIMzsnbM8
+         Kz62ATbNjLVJLprUsyAktGYhi0y6cNIUb3maZTJeFbIAERNsGqPCM3j0c8AbyFVAIz3q
+         GjoAyxMDP27MhiDhv5emDIYHVwrQKyC/BcUZg12JUjPDY+uChd4y0TIr1Zzobt0IOVNO
+         kwbmJJIgaFos1qRwz4rICKuzdoB6jJEUmWUSxXlqSfLDkTs0iC8KA+MZGB82ziW0U1Jq
+         p9YA==
+X-Gm-Message-State: AOJu0YyfH0skErvutb4DvbdQVYzwkWn1EBcGF5SO4MfHw3fpTd+dPnVm
+	+UeHmT5K8sXpNaxZIHrRPEaqllKLZcJGcC/ef9R9UGSd1O2oA8fE
+X-Gm-Gg: ASbGncuL6Jf0OZS7ToX3/Kg6aIXzEwuGysihymvdr4d3Og8+wEDEIM4w/3zUYJ1Y/Hj
+	vfH+p8ejoRAaZ6UjfeF86CAgTgPQ0zov5ARUnHUiP9bt1ayxdwRQokLU1k7Rqtw4MGZPf4OPtrG
+	SmdfThwecZ0H4bzQ8myKPKBPHOoibaTSqrQAlf95QNJEGSKAjgnCxPb34t+SKGUn6wYrfq1MH+x
+	2pjGXTleaOMa7uEQ/9a+giuj1s/PlkDs+ESSe1x3yexYmQePm/hxIUV1neBJC0Wzc8yG9CIIT7u
+	ferE1rIUGvBwL9p2u622xLMo+LdwHO0WjRHRdukzTzgM8em5WYelXXirch7jBNc38HU9Dq2Gh+b
+	h429gaz54qXRexFODTDH4T3GS5KLFhaM=
+X-Google-Smtp-Source: AGHT+IGyMeg97cDqimCKkL7ErRmAEdbmwLJ90jJuk20dTFoaly9c8+vsezJU17bHJqcb+ppkf95o6g==
+X-Received: by 2002:a17:903:2346:b0:215:a179:14d2 with SMTP id d9443c01a7336-21f17ed2e02mr44549315ad.50.1738774232422;
+        Wed, 05 Feb 2025 08:50:32 -0800 (PST)
+Received: from Ubuntu-ROG-Strix-G512LV.. (ec2-18-162-44-43.ap-east-1.compute.amazonaws.com. [18.162.44.43])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21de331f8easm115949055ad.218.2025.02.05.08.50.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Feb 2025 08:50:31 -0800 (PST)
+From: Zejun Zhao <jelly.zhao.42@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	jelly.zhao.42@gmail.com,
+	newren@gmail.com,
+	ps@pks.im
+Subject: Re: [GSOC][PATCH] apply: address -Wsign-comparison warnings
+Date: Wed,  5 Feb 2025 16:49:47 +0000
+Message-ID: <20250205164947.281934-1-jelly.zhao.42@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <xmqqh658r1im.fsf@gitster.g>
+References: <xmqqh658r1im.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250205-toon-clone-refs-v6-7-0bbc8e6d89fd@iotcl.com>
-References: <20250205-toon-clone-refs-v6-0-0bbc8e6d89fd@iotcl.com>
-In-Reply-To: <20250205-toon-clone-refs-v6-0-0bbc8e6d89fd@iotcl.com>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- =?utf-8?q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>, 
- Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
- Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-The git-clone(1) command has the option `--branch` that allows the user
-to select the branch they want HEAD to point to. In a non-bare
-repository this also checks out that branch.
+Thank you for reviewing this patch.
 
-Option `--branch` also accepts a tag. When a tag name is provided, the
-commit this tag points to is checked out and HEAD is detached. Thus
-`--branch` can be used to clone a repository and check out a ref kept
-under `refs/heads` or `refs/tags`. But some other refs might be in use
-as well. For example Git forges might use refs like `refs/pull/<id>` and
-`refs/merge-requests/<id>` to track pull/merge requests. These refs
-cannot be selected upon git-clone(1).
+On Wed, Feb 05 2025 04:58:57 -0800, Junio C Hamano wrote,
+> > @@ -1087,11 +1086,11 @@ static int gitdiff_index(struct gitdiff_data *state,
+> >  	 * and optional space with octal mode.
+> >  	 */
+> >  	const char *ptr, *eol;
+> > -	int len;
+> > -	const unsigned hexsz = the_hash_algo->hexsz;
+> > +	size_t len;
+> > +	const size_t hexsz = the_hash_algo->hexsz;
+> 
+> I thought that I already saw this discussed in another thread.
+> 
+> The .hexsz of any hash algorithm would never be larger than what a
+> platform natural "unsigned" integer type can hold, so using size_t
+> for the member _is_ the wrong thing to do and the fix may be the
+> other way around, no?
 
-Add option `--revision` to git-clone(1). This option accepts a fully
-qualified reference, or a hexadecimal commit ID. This enables the user
-to clone and check out any revision they want. `--revision` can be used
-in conjunction with `--depth` to do a minimal clone that only contains
-the blob and tree for a single revision. This can be useful for
-automated tests running in CI systems.
+Sorry I didn't saw the comment at [1]. You are right about this. I 
+prefer changing types of the `git_hash_algo::*sz` family to `unsigned`.
 
-Using option `--branch` and `--single-branch` together is a similar
-scenario, but serves a different purpose. Using these two options, a
-singlet remote tracking branch is created and the fetch refspec is set
-up so git-fetch(1) will receive updates on that branch from the remote.
-This allows the user work on that single branch.
+[1] https://lore.kernel.org/git/xmqqttaqw2eb.fsf@gitster.g/
 
-Option `--revision` on contrary detaches HEAD, creates no tracking
-branches, and writes no fetch refspec.
 
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- Documentation/git-clone.txt |  10 ++++
- builtin/clone.c             |  57 ++++++++++++++++----
- t/meson.build               |   1 +
- t/t5621-clone-revision.sh   | 123 ++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 180 insertions(+), 11 deletions(-)
+> >  	ptr = strchr(line, '.');
+> > -	if (!ptr || ptr[1] != '.' || hexsz < ptr - line)
+> > +	if (!ptr || ptr[1] != '.' || hexsz < (size_t) (ptr - line))
+> 
+> Is this about -Wsign-compare complaining about size_t vs ptrdiff_t?
+> 
+> > @@ -1207,7 +1206,7 @@ static char *git_header_name(int p_value,
+> >  		cp = skip_tree_prefix(p_value, second, line + llen - second);
+> >  		if (!cp)
+> >  			goto free_and_fail1;
+> > -		if (line + llen - cp != first.len ||
+> > +		if ((size_t) (line + llen - cp) != first.len ||
+> 
+> Ditto.
+> 
+> > -			if (len < second - name &&
+> > +			if (len < (size_t) (second - name) &&
+> 
+> Ditto.
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 8d0476f6dcaf6fed7ccd48a20398556dd4e20722..f9cefbf2f643415be11ed0c7f9b460517830bc0f 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -221,6 +221,16 @@ objects from the source repository into a pack in the cloned repository.
- 	`--branch` can also take tags and detaches the `HEAD` at that commit
- 	in the resulting repository.
- 
-+`--revision=<rev>`::
-+	Create a new repository, and fetch the history leading to the given
-+	revision _<rev>_ (and nothing else), without making any remote-tracking
-+	branch, and without making any local branch, and point `HEAD` to
-+	_<rev>_. When creating a non-bare repository, the revision is checked
-+	out on a detached `HEAD`. The argument can be a ref name
-+	(e.g. `refs/heads/main` or `refs/tags/v1.0`) that peels down to a
-+	commit, or a hexadecimal object name.
-+	This option is incompatible with `--branch` and `--mirror`.
-+
- `-u` _<upload-pack>_::
- `--upload-pack` _<upload-pack>_::
- 	When given, and the repository to clone from is accessed
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 1d421c8f758e37a7219d2da680c7ef8699016171..6ad041e288bc7a926413124442d4f285eea7ad95 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -59,6 +59,7 @@
- 
- struct clone_opts {
- 	int wants_head;
-+	int detach;
- };
- #define CLONE_OPTS_INIT { \
- 	.wants_head = 1 /* default enabled */ \
-@@ -565,11 +566,11 @@ static void update_remote_refs(const struct ref *refs,
- 	}
- }
- 
--static void update_head(const struct ref *our, const struct ref *remote,
-+static void update_head(struct clone_opts *opts, const struct ref *our, const struct ref *remote,
- 			const char *unborn, const char *msg)
- {
- 	const char *head;
--	if (our && skip_prefix(our->name, "refs/heads/", &head)) {
-+	if (our && !opts->detach && skip_prefix(our->name, "refs/heads/", &head)) {
- 		/* Local default branch link */
- 		if (refs_update_symref(get_main_ref_store(the_repository), "HEAD", our->name, NULL) < 0)
- 			die(_("unable to update HEAD"));
-@@ -580,8 +581,9 @@ static void update_head(const struct ref *our, const struct ref *remote,
- 			install_branch_config(0, head, remote_name, our->name);
- 		}
- 	} else if (our) {
--		struct commit *c = lookup_commit_reference(the_repository,
--							   &our->old_oid);
-+		struct commit *c = lookup_commit_or_die(&our->old_oid,
-+						        our->name);
-+
- 		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
- 		refs_update_ref(get_main_ref_store(the_repository), msg,
- 				"HEAD", &c->object.oid, NULL, REF_NO_DEREF,
-@@ -900,6 +902,7 @@ int cmd_clone(int argc,
- 	int option_filter_submodules = -1; /* unspecified */
- 	struct string_list server_options = STRING_LIST_INIT_NODUP;
- 	const char *bundle_uri = NULL;
-+	char *option_rev = NULL;
- 
- 	struct clone_opts opts = CLONE_OPTS_INIT;
- 
-@@ -943,6 +946,8 @@ int cmd_clone(int argc,
- 			   N_("use <name> instead of 'origin' to track upstream")),
- 		OPT_STRING('b', "branch", &option_branch, N_("branch"),
- 			   N_("checkout <branch> instead of the remote's HEAD")),
-+		OPT_STRING(0, "revision", &option_rev, N_("rev"),
-+			   N_("clone single revision <rev> and check out")),
- 		OPT_STRING('u', "upload-pack", &option_upload_pack, N_("path"),
- 			   N_("path to git-upload-pack on the remote")),
- 		OPT_STRING(0, "depth", &option_depth, N_("depth"),
-@@ -1279,7 +1284,7 @@ int cmd_clone(int argc,
- 		strbuf_addstr(&branch_top, src_ref_prefix);
- 
- 		git_config_set("core.bare", "true");
--	} else {
-+	} else if (!option_rev) {
- 		strbuf_addf(&branch_top, "refs/remotes/%s/", remote_name);
- 	}
- 
-@@ -1298,8 +1303,9 @@ int cmd_clone(int argc,
- 
- 	remote = remote_get_early(remote_name);
- 
--	refspec_appendf(&remote->fetch, "+%s*:%s*", src_ref_prefix,
--			branch_top.buf);
-+	if (!option_rev)
-+		refspec_appendf(&remote->fetch, "+%s*:%s*", src_ref_prefix,
-+				branch_top.buf);
- 
- 	path = get_repo_path(remote->url.v[0], &is_bundle);
- 	is_local = option_local != 0 && path && !is_bundle;
-@@ -1342,6 +1348,11 @@ int cmd_clone(int argc,
- 
- 	transport_set_option(transport, TRANS_OPT_KEEP, "yes");
- 
-+	die_for_incompatible_opt2(!!option_rev, "--revision",
-+				  !!option_branch, "--branch");
-+	die_for_incompatible_opt2(!!option_rev, "--revision",
-+				  option_mirror, "--mirror");
-+
- 	if (reject_shallow)
- 		transport_set_option(transport, TRANS_OPT_REJECT_SHALLOW, "1");
- 	if (option_depth)
-@@ -1378,7 +1389,14 @@ int cmd_clone(int argc,
- 	if (transport->smart_options && !deepen && !filter_options.choice)
- 		transport->smart_options->check_self_contained_and_connected = 1;
- 
--	strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
-+	if (option_rev) {
-+		option_tags = 0;
-+		option_single_branch = 0;
-+		opts.wants_head = 0;
-+		opts.detach = 1;
-+
-+		refspec_append(&remote->fetch, option_rev);
-+	}
- 
- 	if (option_tags || option_branch)
- 		/*
-@@ -1393,6 +1411,17 @@ int cmd_clone(int argc,
- 		expand_ref_prefix(&transport_ls_refs_options.ref_prefixes,
- 				  option_branch);
- 
-+	/*
-+	 * As part of transport_get_remote_refs() the server tells us the hash
-+	 * algorithm, which we require to initialize the repo. But calling that
-+	 * function without any ref prefix, will cause the server to announce
-+	 * all known refs. If the argument passed to --revision was a hex oid,
-+	 * ref_prefixes will be empty so we fall back to asking about HEAD to
-+	 * reduce traffic from the server.
-+	 */
-+	if (opts.wants_head || transport_ls_refs_options.ref_prefixes.nr == 0)
-+		strvec_push(&transport_ls_refs_options.ref_prefixes, "HEAD");
-+
- 	refs = transport_get_remote_refs(transport, &transport_ls_refs_options);
- 
- 	/*
-@@ -1501,6 +1530,11 @@ int cmd_clone(int argc,
- 		if (!our_head_points_at)
- 			die(_("Remote branch %s not found in upstream %s"),
- 			    option_branch, remote_name);
-+	} else if (option_rev) {
-+		our_head_points_at = mapped_refs;
-+		if (!our_head_points_at)
-+			die(_("Remote revision %s not found in upstream %s"),
-+			    option_rev, remote_name);
- 	} else if (remote_head_points_at) {
- 		our_head_points_at = remote_head_points_at;
- 	} else if (remote_head) {
-@@ -1539,8 +1573,9 @@ int cmd_clone(int argc,
- 		free(to_free);
- 	}
- 
--	write_refspec_config(src_ref_prefix, our_head_points_at,
--			remote_head_points_at, &branch_top);
-+	if (!option_rev)
-+		write_refspec_config(src_ref_prefix, our_head_points_at,
-+				     remote_head_points_at, &branch_top);
- 
- 	if (filter_options.choice)
- 		partial_clone_register(remote_name, &filter_options);
-@@ -1556,7 +1591,7 @@ int cmd_clone(int argc,
- 			   branch_top.buf, reflog_msg.buf, transport,
- 			   !is_local);
- 
--	update_head(our_head_points_at, remote_head, unborn_head, reflog_msg.buf);
-+	update_head(&opts, our_head_points_at, remote_head, unborn_head, reflog_msg.buf);
- 
- 	/*
- 	 * We want to show progress for recursive submodule clones iff
-diff --git a/t/meson.build b/t/meson.build
-index 35f25ca4a1d960564190288e9456620a46ccc80a..b5f917926b61de379b6cef45e5f750912422a7d1 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -721,6 +721,7 @@ integration_tests = [
-   't5617-clone-submodules-remote.sh',
-   't5618-alternate-refs.sh',
-   't5619-clone-local-ambiguous-transport.sh',
-+  't5621-clone-revision.sh',
-   't5700-protocol-v1.sh',
-   't5701-git-serve.sh',
-   't5702-protocol-v2.sh',
-diff --git a/t/t5621-clone-revision.sh b/t/t5621-clone-revision.sh
-new file mode 100755
-index 0000000000000000000000000000000000000000..d4889a954e6300e0e327ebe7dfcf73569d966829
---- /dev/null
-+++ b/t/t5621-clone-revision.sh
-@@ -0,0 +1,123 @@
-+#!/bin/sh
-+
-+test_description='tests for git clone --revision'
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	test_commit --no-tag "initial commit" README "Hello" &&
-+	test_commit --annotate "second commit" README "Hello world" v1.0 &&
-+	test_commit --no-tag "third commit" README "Hello world!" &&
-+	git switch -c feature v1.0 &&
-+	test_commit --no-tag "feature commit" README "Hello world!" &&
-+	git switch main
-+'
-+
-+test_expect_success 'clone with --revision being a branch' '
-+	test_when_finished "rm -rf dst" &&
-+	git clone --revision=refs/heads/feature . dst &&
-+	git rev-parse refs/heads/feature >expect &&
-+	git -C dst rev-parse HEAD >actual &&
-+	test_must_fail git -C dst symbolic-ref -q HEAD >/dev/null &&
-+	test_cmp expect actual &&
-+	git -C dst for-each-ref refs >expect &&
-+	test_must_be_empty expect &&
-+	test_must_fail git -C dst config remote.origin.fetch
-+'
-+
-+test_expect_success 'clone with --depth and --revision being a branch' '
-+	test_when_finished "rm -rf dst" &&
-+	git clone --no-local --depth=1 --revision=refs/heads/feature . dst &&
-+	git rev-parse refs/heads/feature >expect &&
-+	git -C dst rev-parse HEAD >actual &&
-+	test_must_fail git -C dst symbolic-ref -q HEAD >/dev/null &&
-+	test_cmp expect actual &&
-+	git -C dst for-each-ref refs >expect &&
-+	test_must_be_empty expect &&
-+	test_must_fail git -C dst config remote.origin.fetch &&
-+	git -C dst rev-list HEAD >actual &&
-+	test_line_count = 1 actual
-+'
-+
-+test_expect_success 'clone with --revision being a tag' '
-+	test_when_finished "rm -rf dst" &&
-+	git clone --revision=refs/tags/v1.0 . dst &&
-+	git rev-parse refs/tags/v1.0^{} >expect &&
-+	git -C dst rev-parse HEAD >actual &&
-+	test_must_fail git -C dst symbolic-ref -q HEAD >/dev/null &&
-+	test_cmp expect actual &&
-+	git -C dst for-each-ref refs >expect &&
-+	test_must_be_empty expect &&
-+	test_must_fail git -C dst config remote.origin.fetch
-+'
-+
-+test_expect_success 'clone with --revision being HEAD' '
-+	test_when_finished "rm -rf dst" &&
-+	git clone --revision=HEAD . dst &&
-+	git rev-parse HEAD >expect &&
-+	git -C dst rev-parse HEAD >actual &&
-+	test_must_fail git -C dst symbolic-ref -q HEAD >/dev/null &&
-+	test_cmp expect actual &&
-+	git -C dst for-each-ref refs >expect &&
-+	test_must_be_empty expect &&
-+	test_must_fail git -C dst config remote.origin.fetch
-+'
-+
-+test_expect_success 'clone with --revision being a raw commit hash' '
-+	test_when_finished "rm -rf dst" &&
-+	oid=$(git rev-parse refs/heads/feature) &&
-+	git clone --revision=$oid . dst &&
-+	echo $oid >expect &&
-+	git -C dst rev-parse HEAD >actual &&
-+	test_must_fail git -C dst symbolic-ref -q HEAD >/dev/null &&
-+	test_cmp expect actual &&
-+	git -C dst for-each-ref refs >expect &&
-+	test_must_be_empty expect &&
-+	test_must_fail git -C dst config remote.origin.fetch
-+'
-+
-+test_expect_success 'clone with --revision and --bare' '
-+	test_when_finished "rm -rf dst" &&
-+	git clone --revision=refs/heads/main --bare . dst &&
-+	oid=$(git rev-parse refs/heads/main) &&
-+	git -C dst cat-file -t $oid >actual &&
-+	echo "commit" >expect &&
-+	test_cmp expect actual &&
-+	git -C dst for-each-ref refs >expect &&
-+	test_must_be_empty expect &&
-+	test_must_fail git -C dst config remote.origin.fetch
-+'
-+
-+test_expect_success 'clone with --revision being a short raw commit hash' '
-+	test_when_finished "rm -rf dst" &&
-+	oid=$(git rev-parse --short refs/heads/feature) &&
-+	test_must_fail git clone --revision=$oid . dst 2>err &&
-+	test_grep "fatal: Remote revision $oid not found in upstream origin" err
-+'
-+
-+test_expect_success 'clone with --revision being a tree hash' '
-+	test_when_finished "rm -rf dst" &&
-+	oid=$(git rev-parse refs/heads/feature^{tree}) &&
-+	test_must_fail git clone --revision=$oid . dst 2>err &&
-+	test_grep "error: object $oid is a tree, not a commit" err
-+'
-+
-+test_expect_success 'clone with --revision being the parent of a ref fails' '
-+	test_when_finished "rm -rf dst" &&
-+	test_must_fail git clone --revision=refs/heads/main^ . dst
-+'
-+
-+test_expect_success 'clone with --revision and --branch fails' '
-+	test_when_finished "rm -rf dst" &&
-+	test_must_fail git clone --revision=refs/heads/main --branch=main . dst
-+'
-+
-+test_expect_success 'clone with --revision and --mirror fails' '
-+	test_when_finished "rm -rf dst" &&
-+	test_must_fail git clone --revision=refs/heads/main --mirror . dst
-+'
-+
-+test_done
+Yes it's comparing unsigned (`size_t`) with signed (`ptrdiff_t`).
 
--- 
-2.48.1.447.gc0086e9015
+> I said this before, but I am not sure if being strict about
+> "-Wsign-compare" is really buying us much.  If we are getting so
+> many false positives that need to be squelched by churning the code
+> with so many typecasts in order to find a new and real problem,
+> is it really worth it?
 
+Well, I contributed most before to a Rust OS kernel project so 
+honestly I'm used to the idea of explicit type casting when necessary 
+to avoid possible bugs. However, this is non-trivial. People should 
+understand each relevant variable's semantics to decide what its type 
+should be and do typecast on top of that. Even if it's already made a 
+gradual process, it may still cost much from both the contributors and 
+the reviewers but brings benefits that do not match up. Maybe a clear 
+commit message that states why each type cast/change makes sense can 
+help with the iteration? I'm not quite sure about that.
