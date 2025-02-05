@@ -1,130 +1,162 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF12155A30
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 14:29:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B41F017C7CA
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 15:45:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738765760; cv=none; b=f0rNR0lmo4zU4sfVpis/oRHoGBWtCweH95dgcbqJdWu6zdD+tj3eZhmdwJFBdc/74kdw3+pKn60hUdRXXEE9KhBaRr+O75hQo6vxe2doFGwqGmlNz969sZXQMbOpUIeCJvhZqYaS9kl1j1mkjz8XSMc18QujEPvrtQacXuwPE4w=
+	t=1738770350; cv=none; b=WOyfLTyztPKU616V9lZ3c+y8Bkl9zBIo95uChHSYzIWyJqyNDOv4BBQEeYikRl7XDhcsZthQinDW/H+VqFQkFj36iO9RlsKtr3FmofZ/nqNzAdsRSXARMH2enMZ5TIWBce7aYG8eNiqzy6ySfOcc8rKdvZYLWgu703T1Y9zWURk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738765760; c=relaxed/simple;
-	bh=yHG28fCt+9Btk5ijZufpPHSNXRwx6P83QynAVKZoiXQ=;
+	s=arc-20240116; t=1738770350; c=relaxed/simple;
+	bh=sJLbqoqa2lza+CrZWKhKqXlneKNQj1aln6Yjs0L13uM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dsIs8hk0hODJI3xpEkw0LuM5tV9Ga4i5P1aWlP2Q7k37jXUyVNTnerlw7wL98SPrTw4Z2KF9xxQHj1XdVphlKDB/baen9vcMncYk5s3expA+V9NKU8g3NGUmRAA3fvwIDzxRPp5GV7S5p0v6n0Vh+feA53ov7bcv82s96SZdwBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kwuJ4B5j; arc=none smtp.client-ip=209.85.216.51
+	 MIME-Version; b=lZauAF/qhjkrtGa8v0pIrQkEuV0wFce9q/eTwwmRfkcK1CyRHSaR+dtUaFHU53M+YAJ6/fhFU7bQnlLNXmLjTaNUuGHhHKyDcZWiNg8niZHcaQZvz3YPpFmywC/PcS/Zfo7fKGbTDYkwJBoGvMa1tQRnNn8lAUIJaVzchNPsqko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LRm1yUkx; arc=none smtp.client-ip=209.85.214.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kwuJ4B5j"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2f9d9f14a74so2315444a91.0
-        for <git@vger.kernel.org>; Wed, 05 Feb 2025 06:29:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LRm1yUkx"
+Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-21f2cfd821eso3560165ad.3
+        for <git@vger.kernel.org>; Wed, 05 Feb 2025 07:45:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738765758; x=1739370558; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738770348; x=1739375148; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tI4O2/QHXP6PE+KP3P7PJJllEiGcG7EeLUoAtyWpahQ=;
-        b=kwuJ4B5jQceTTOPrsMVaTlOKyM/mQJazJZ6g3hJpdZ3hP8uJW5W1siWDIiN3w3PIRj
-         sJ9qpdNcj2iPpn+bGX0197qL0f0cHtq76Wo5UDBKqFNz5IhtI93bJcRqeR+z62QL1l59
-         vjDzQrckTB2XO4VxufAyGfzt4pKUF8w+CdKd17ObAr1lYw92v9tnbLMXkOEhqoONUmLn
-         fUXML5Y9lwqKv4HCbpYLw2XYgqfJnwfL32b0Uym0c249tet86r5zAmo98SZTcbcjcqv/
-         oKIj9xvD0VNMTkhG6x3xDMj75kh2azNgcJCmYFPwkTrWVKHulWZJiwuXnroh0vVjZtbu
-         9dIw==
+        bh=q/ruw86WEQvbJgMoEL3p3FZmwiXl8PAH3WWryolZSks=;
+        b=LRm1yUkxcpg8rXPsnruvZHh7Mt7DlxyKQMNnmJ6jvKFGiSnX7SKxgxRMCbmHfFkqPL
+         xsU5GBO/mb1DaX9nMSS4i81m7CdQtsjpXwSekiyP9D0hhLn5fm4DXtHf4if3VBuCjdhy
+         NbXX/m36a0HgbhQ2IWDvb1varCdpLbaPVGR2V7TJia4OYTF1AIG0JzfjuJZc3ecDSoLB
+         lRVdMmovkDxmk//PxZDoa6NbD1JW1UHj8wKEN1i/d4jVdf2m3JZD1Soy02b3mCDZODl0
+         EdXACO79V00Gk0L2G4ZGGW32t4nw9icoGGVGeDCDhuG8jmUAtpJw6+KNpp0LBslqSQaD
+         Ywaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738765758; x=1739370558;
+        d=1e100.net; s=20230601; t=1738770348; x=1739375148;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tI4O2/QHXP6PE+KP3P7PJJllEiGcG7EeLUoAtyWpahQ=;
-        b=JpTpu/SRj0uAndPZ9eD0zCWkGLFCGQsocsmyZG7MrDuSXQKjdgUICJzWMxTrZE+KaG
-         BMmdcCTFYkSwHAzpZ1Gs6SHdCvwkwk7k0oTdQySk2TeDbhJbOKehYN2MyWbAAbCiJSdL
-         6kxLvXuL3N5UGTYxYMCTSTWZR4DE/YsX2ATnY3l0k1YfEqTOaIo3uvNcZq/YPLK9yq87
-         zhJ/0QHQFdaJqxEcNInbhQkLiQ6SaFXrbSvprec/d1SL6lNJFGeKpljV0MYH7xtug37u
-         1liR9r7tCDnXLVICvkLp+wm+XU57PIWOvyV+zKZnzEQRbRP3q76SR2mlpH/sJFtM4G9H
-         kirA==
-X-Forwarded-Encrypted: i=1; AJvYcCWJPoL7o9pZ/bxS2x9sSwUQqKCsbHorCtN0XWgKOb4UjODEme/waTUd++WCHAVZZRW2Ym0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQkwHwFFNU3TFa360/eY3mkem4tFQ5S3jIzsUXurom93R1zUAz
-	9aFe3wBropkaeeIRDU1kqccAtxHnjkdumUy0S18TkDEnPN0p79Qa
-X-Gm-Gg: ASbGncs85TeXsz3i4zT0USjCLHgnVsa+1+34t9PkrZXXeRzQlVSf2EvsBPWyNh3vQBX
-	2XfeAdRRDQvJU9CSNIjnBQib9HEV5Jn3P5kJ8KD9hM4eLMz9bQWdpgjF0bPtLe6O5wmm4nq81cx
-	q2H8uzm+/8iDDdbzlgG84f8z8BtS8E2+ksHuJtdXkthVp5b3QEuCwhlK4gjsj/GngQO24XI+aQo
-	YfByMNW1uvc70NazEZ/jhXViKsg/qe6vb4YUTLPNFnn1Y890qqAwiwpEih7CepxJQSeIwlJr7Qo
-	rI0JGVKk7lyIoMk4F0e8WFPnst3QWTem
-X-Google-Smtp-Source: AGHT+IEbGcuMYvExGoiNSY9QA/M/tI3uE+Dr6z/emqCCKJGbPJoOu0gutwGUNQQfN6Bo/RDUxSr+7w==
-X-Received: by 2002:a05:6a00:140e:b0:725:e309:7110 with SMTP id d2e1a72fcca58-73035108059mr4392001b3a.5.1738765757855;
-        Wed, 05 Feb 2025 06:29:17 -0800 (PST)
-Received: from bl4ze-rig.iitr.ac.in ([103.37.201.226])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72fe6427abdsm13043820b3a.59.2025.02.05.06.29.16
+        bh=q/ruw86WEQvbJgMoEL3p3FZmwiXl8PAH3WWryolZSks=;
+        b=ZolCunTRvs5eEbc/HS/QshPwlC7OCoo0SoRxrki8GBixhuwg7+MsDKMpfSdhzmDQK5
+         3sX2sux9G9kO82yKdk9Lq/XjYwz1/7D15/tJZMPRwPLki0nl+swnQfAWlTwTCQZoS/pC
+         YK91acyZ502QDgXuH/fujqtuZ+3xKTzm2ALupBKMDoL1gwc4TeE3urGZMxTZdIg1zUAk
+         sHfvpBl3Miqnp1oZplaEKoCJGAF+mQdLwGiftbszJiY2oI2uuswEvz++v8wdiqSvxZii
+         C+lRoBWFK2py8+k/fffHLPLe26d0WQhya4NYAs6ydDXSFPUzrQx1oI4Khm8W0FQU+Hpc
+         uOpQ==
+X-Gm-Message-State: AOJu0Yx/F8T+KE++wJDOCK2wpKbzVDKohtlToRL1d5XjegKMLwkGPiqB
+	jTJcui0w9RGAQb9cWLbQ3O419UlHD41IhXIZmbqiRXAjYM+rK8Zj
+X-Gm-Gg: ASbGnctt38z8FcCD8CVc/oSVINcdE7aV76MsOiImPm9c9L1FAEf1vGcvcPSp69mFRXk
+	ZaI2jXOJxQHCJQXw6JQ8ts1YyeQ2HtPV+U8aA0CNqdSoJTFlTs/rylZj6nKJR8Fmha5Kl3qXzt7
+	+u50d4uRRNr2YJnUTS8fC4g7sjX/edPAaRJ95B+xpbEK3e3+OJt7sYwOXcm3bDP+0i6GcuFFUqz
+	0MCrHFGyppbl8Pa5b9M7pfK9AmfVycHMTLahxI8cWVG1Lwk+mcrtkN4jKNsTw08Sr2y4mVQ2rOs
+	gpj8yfMtQA8+NS1Xs0VZ9a8HHfhOEiRK0nh7apsR4hekzC91xcHxTtmTm3nSNZBQCDYCcDIjYp+
+	IItppn2Q5bv3FCpT4yI52Z5+ZUuLbJbs=
+X-Google-Smtp-Source: AGHT+IETd+HGZKQGs1+jkTveQH/zE8ykZO1H8sQkqCyA6Zv+CrJBA4YsNZT2pouDeoMGbt4a8ltgxA==
+X-Received: by 2002:a05:6a00:4648:b0:725:db34:6a7d with SMTP id d2e1a72fcca58-7303521c76dmr4967191b3a.23.1738770347844;
+        Wed, 05 Feb 2025 07:45:47 -0800 (PST)
+Received: from Ubuntu-ROG-Strix-G512LV.. (ec2-18-162-44-43.ap-east-1.compute.amazonaws.com. [18.162.44.43])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-72fe631c021sm12526091b3a.6.2025.02.05.07.45.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Feb 2025 06:29:17 -0800 (PST)
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-To: gitster@pobox.com
-Cc: ayu.chandekar@gmail.com,
-	git@vger.kernel.org,
-	sunshine@sunshineco.com
-Subject: [GSOC][PATCH v2] =?UTF-8?q?t6422:=20avoid=20suppressing=20Git=E2=80=99s=20?= =?UTF-8?q?exit=20code=20in=20tests?=
-Date: Wed,  5 Feb 2025 19:58:17 +0530
-Message-ID: <20250205142817.42117-1-ayu.chandekar@gmail.com>
-X-Mailer: git-send-email 2.48.GIT
-In-Reply-To: <xmqqjza5x3go.fsf@gitster.g>
-References: <xmqqjza5x3go.fsf@gitster.g>
+        Wed, 05 Feb 2025 07:45:47 -0800 (PST)
+From: Zejun Zhao <jelly.zhao.42@gmail.com>
+To: ps@pks.im
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	jelly.zhao.42@gmail.com,
+	newren@gmail.com
+Subject: Re: [GSOC][PATCH] apply: address -Wsign-comparison warnings
+Date: Wed,  5 Feb 2025 15:42:32 +0000
+Message-ID: <20250205154232.237380-1-jelly.zhao.42@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <Z6MXevArKhRLacAb@pks.im>
+References: <Z6MXevArKhRLacAb@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Some test in t6423 supress Git's exit code, which can cause test
-failures go unnoticed. Specifically using git <subcommand> |
-<other-command> masks potential failures of the Git command.
+Thank you for reviewing this patch.
 
-Instead of executing a Git command as the upstream component of
-a pipe, which can result in the exit status being lost, redirect
-its output to a file and then process that file in two steps to
-ensure the exit status is properly preserved.
+On Wed, Feb 05, 2025 08:47:06 +0100, Patrick Steinhardt wrote:
+> You should split up this patch into a series, as it is really hard to
+> follow what's going on. There are a couple of things happening:
+> 
+>   - You change types in `struct apply_state`, which bubbles up.
+> 
+>   - You adapt `git_hdr_len()` to receive different inputs, which bubbles
+>     up.
+> 
+>   - You perform small fixes in several places.
+> 
+> It might also be a good idea to split out the loop counters into a
+> separate commit, as those are trivially correct.
 
-Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
----
- t/t6423-merge-rename-directories.sh | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+Sure I'll come up with a v2 patch series, in which each kind of fixes 
+will be put in a single commit and I'll state why I believe the type 
+cast/change is safe for every single fix in the commit message.
 
-diff --git a/t/t6423-merge-rename-directories.sh b/t/t6423-merge-rename-directories.sh
-index 88d1cf2cde..a6c5b5a494 100755
---- a/t/t6423-merge-rename-directories.sh
-+++ b/t/t6423-merge-rename-directories.sh
-@@ -5071,7 +5071,8 @@ test_expect_success '12i: Directory rename causes rename-to-self' '
- 		test_path_is_file source/bar &&
- 		test_path_is_file source/baz &&
- 
--		git ls-files | uniq >tracked &&
-+		git ls-files >actual &&
-+		uniq actual >tracked &&
- 		test_line_count = 3 tracked &&
- 
- 		git status --porcelain -uno >actual &&
-@@ -5129,7 +5130,8 @@ test_expect_success '12j: Directory rename to root causes rename-to-self' '
- 		test_path_is_file bar &&
- 		test_path_is_file baz &&
- 
--		git ls-files | uniq >tracked &&
-+		git ls-files >actual &&
-+		uniq actual >tracked &&
- 		test_line_count = 3 tracked &&
- 
- 		git status --porcelain -uno >actual &&
-@@ -5187,7 +5189,8 @@ test_expect_success '12k: Directory rename with sibling causes rename-to-self' '
- 		test_path_is_file dirA/bar &&
- 		test_path_is_file dirA/baz &&
- 
--		git ls-files | uniq >tracked &&
-+		git ls-files >actual &&
-+		uniq actual >tracked &&
- 		test_line_count = 3 tracked &&
- 
- 		git status --porcelain -uno >actual &&
--- 
-2.48.GIT
+> > @@ -1087,11 +1086,11 @@ static int gitdiff_index(struct gitdiff_data *state,
+> >  	 * and optional space with octal mode.
+> >  	 */
+> >  	const char *ptr, *eol;
+> > -	int len;
+> > -	const unsigned hexsz = the_hash_algo->hexsz;
+> > +	size_t len;
+> > +	const size_t hexsz = the_hash_algo->hexsz;
+> 
+> The change to `hexsz` shouldn't be needed, even if it makes us match the
+> type of `hexsz` as declared in `git_hash_algo`.
 
+Yes it's not necessary here to change the type. And for the `hexsz` stuff,
+on Wed, Feb 05 2025 04:58:57 -0800, Junio C Hamano wrote,
+> I thought that I already saw this discussed in another thread.
+> 
+> The .hexsz of any hash algorithm would never be larger than what a
+> platform natural "unsigned" integer type can hold, so using size_t
+> for the member _is_ the wrong thing to do and the fix may be the
+> other way around, no?
+
+I found the discussion mentioned at [1]. It seems like the change here 
+only makes things worse so I'll see if I'd leave it untouched or change 
+the type of `.hexsz` member to `int` or something.
+
+[1] https://lore.kernel.org/git/xmqqttaqw2eb.fsf@gitster.g/
+
+> > @@ -2185,7 +2182,7 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+> >  			};
+> >  			int i;
+> 
+> This may arguably be `size_t`, as well.
+
+It's OK for me to use a `size_t` loop count everywhere but I tried to 
+keep the changes in this patch minimal (forget about the `hexsz` thing).
+I could apply this change if you insist.
+
+> > @@ -2257,12 +2255,12 @@ static void show_stats(struct apply_state *state, struct patch *patch)
+> >  	}
+> >  
+> >  	if (patch->is_binary) {
+> > -		printf(" %-*s |  Bin\n", max, qname.buf);
+> > +		printf(" %-*s |  Bin\n", (int) max, qname.buf);
+> >  		strbuf_release(&qname);
+> >  		return;
+> >  	}
+> >  
+> > -	printf(" %-*s |", max, qname.buf);
+> > +	printf(" %-*s |", (int) max, qname.buf);
+> >  	strbuf_release(&qname);
+> >  
+> >  	/*
+> 
+> Do we _know_ that `max` fits into an `int`?
+
+Yep we've set an upper bound for `max` before:
+> /*
+>  * "scale" the filename
+>  */
+> max = state->max_len;
+> if (max > 50)
+> 	      max = 50;
+so it must fit into an `int`.
