@@ -1,223 +1,142 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+Received: from mail-oa1-f51.google.com (mail-oa1-f51.google.com [209.85.160.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B703520C028
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 03:11:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81872135A5
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 03:55:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738725103; cv=none; b=rlg/Mga3MxI4k1zSIuRJM7cIxidjIjnAZdGW+fWHuEj+WgpvNffE/nCvu43pPG9zYHG5JtddhDl6hqjBKPAXBa9U+ilYR3YZA/og0aMlY36FGjePo/RusdynDrwlccUzRCNPsTRvzcPlScbx35bA/B+aLWRvQvWgazHJ73yC6Kg=
+	t=1738727730; cv=none; b=KcEwcSzlXrosrItmD8IUy4CrJrNd2TCrSU+cXvY/ZPix/OTKIquBQfZaFNIpFW2SaE0tAasH28ZI49tZKuTWwxm201bYDaSO4Iz2iZilGLs0uJgqEel1c7XceRbMY1V9r/+zZcAnD4wbLapGNmGGR2hRQlilDRcQuM+KVyt7A7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738725103; c=relaxed/simple;
-	bh=0HH1THeI/fpux0y//ZfvFjfTk+9RCZnqOgBUe315UJA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=B1AUP90sD5iRLis0w5h6rA7isigIxJr8DMFbNQQgW9at6EYM9mlWiXLjr3T/EX9vrZwGsIVeyVom8BRWslZYFBH7bunNye9x8Pv/ydSgGGwNZ4X8b96Jvj5zzeDz64FBy+QFT1sHMHuhapicJxngFvMwzdNV4of5xekgXQco0NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X0MIxUa4; arc=none smtp.client-ip=209.85.160.176
+	s=arc-20240116; t=1738727730; c=relaxed/simple;
+	bh=IjqdGNX+vF49vsOqcBCQljTMkKyZlAxIddb52L0IjXU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TxA/Q3TY0IrsnmY7WuL7VXB1rueXud7VSZcohAU2nOy+wgg3L13If8IxvEdA6Xlyib/3t+kxZ4P1yxLbbLSvsHxTYHcSB8uB4WOnPBhxaJsSfg35L1EuXT9OolS7HOK75GJhnvo8OfRSFzoUlEFaGU+IfJIJzcYnhegdrjC51vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mVUnlAwf; arc=none smtp.client-ip=209.85.160.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X0MIxUa4"
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-467918c360aso73536981cf.0
-        for <git@vger.kernel.org>; Tue, 04 Feb 2025 19:11:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mVUnlAwf"
+Received: by mail-oa1-f51.google.com with SMTP id 586e51a60fabf-29fe7ff65e6so2077601fac.0
+        for <git@vger.kernel.org>; Tue, 04 Feb 2025 19:55:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738725100; x=1739329900; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=DMrdxy3dX7KnwygN7qZC1OVLKXo5Xk9wV+b9S1AF2M0=;
-        b=X0MIxUa4yVZyD19WxYaB2xNhbYnidjv/4g5C0YW0fGOrSNndmf+N3iUGCr7n84wKte
-         SPGEunsVjzi2ERer3yB/8dV2sJzFnHFE/nsWvmPMhN3QKCIRk8lk/mH48uf9bWge96JB
-         f4NT7LxAYGA5tay+b69yWQDXDyfhFuWHmpYtf7fGnQGTjbWYe9+A8X88Y4+IzQ+9jR/Z
-         2GLcEX60RDpMuysmZFQL5s66z1dl3G3s9kvXAhZEgmbgfGs2pzIEHDsoMPz1NkWgj6Vj
-         tJUzltn1HgPOprSOYH7MKZ9pwQ9VF+3j9MyCil20dhAWnzM18Xa4MXNNrCJGxKJFu4rz
-         8d9g==
+        d=gmail.com; s=20230601; t=1738727728; x=1739332528; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=IjqdGNX+vF49vsOqcBCQljTMkKyZlAxIddb52L0IjXU=;
+        b=mVUnlAwfY/yN5sdcTBOfS/2PINx1zaCvdn07fmN1ytrp7IMmFVUjtzsVKWf3NlBi+E
+         BmB7jIN/yYWH9CyEflBMY8mp4DqH8yGGCYPlNLmfM3ijPAD7K7TbOdnl1NRaAcDSYev4
+         1umMo/vpfV9v28UnQ61esOz7RdYZouNZl5R0N3KY4K6HvOrZV7t0xSAXFG5gGT7NJlDL
+         3cvuiiuWm67IUzwle34nSLT+N0n77jmowIsULWOWHdO5avVkeK5Isv/XXp6p4LbqTYgF
+         1hJ35ylaZLGguiQZSZqWPPss/u7mTqDW1ZbI7hBRIiLlATaSyMyCdBrv6VyHZ6w9TneT
+         2i2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738725100; x=1739329900;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DMrdxy3dX7KnwygN7qZC1OVLKXo5Xk9wV+b9S1AF2M0=;
-        b=lDNxvkCCDIBYNE9nj2ZUbLqXf0p0FR2MyfFpiSEmgyqrULc6Dxl1rxkyR9szwpP2+P
-         4mZW2sGyrEVlQkL/wnBOFJNtWSsm9vjbWN2Wq/w0qha6+uuZMeepisRwuTXr++545zFu
-         R/eC6E5e05nCi1uzXArmmWY5FN3t/MvpsmfFcFrop8pAdwGooA6wuC3X6X6W+CQkljPd
-         SOvedkRCzGFmD7BG49arcdxtXORnwDCB5TgRoAVoo8LwLFc2sFVPgJxfYMRdA2pLWHtc
-         rI7sKRzDoHrPeW2Z9zs7og7xYpZhfOto5/7DWTEkPkcW7OtaJJehNeEC2fgwYeaNMUY9
-         P1xg==
-X-Gm-Message-State: AOJu0Yx2elvZOlsnN3tHjehuLKSO81DbLx73r8SHmleBVFi6BLFEwTaQ
-	/aW4otn3EmTndQ4rr6Yr9Om5JWppSLpUSa8UmEVIRm2sP0eKE2LSfVuf6aUk
-X-Gm-Gg: ASbGncv+izxLI1dVq/iXPNtoIspPQ4+5HIEL+78y/jxUfSGvBTYyho+UHE7meXkn8ym
-	TU/GH4fzTeifu2d10+wbUeWgndYz9vSBGG6WyniPsNR6ITUmgH2Kp6dHXVUiMGg2seLLFI/DLhq
-	yutuwh0Kc/IhetbDnxH26Ew09CnX0c0YNC7BiHmpDDNTAFUMji2aTeyTNnBtI2G/+hWLmB3E4i3
-	j1VC0VBt6io84E2YfW2Jrrz0uXPJmDdaYYtA+YCgTAmiMs88U0/sfTyWAUl2RYiomQtyLlfuEZr
-	MPPe9GLuzhDkYw+MGVnkUxAtjKGIonSyxF+5qu7299apwUpfkeE7SAJj
-X-Google-Smtp-Source: AGHT+IGl5rF1Ns1nhWAEPIifrEuJOK7R6LLGxfIYAJR49cY/9w9dBK3ZtfuOJBhHqMR7dOYHnZEGxQ==
-X-Received: by 2002:ac8:59cc:0:b0:45d:82a0:5028 with SMTP id d75a77b69052e-47028168d41mr20951671cf.1.1738725099662;
-        Tue, 04 Feb 2025 19:11:39 -0800 (PST)
-Received: from localhost.localdomain ([2601:5c1:8380:760:919d:4af2:9abc:5db])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-46fdf172734sm67802771cf.49.2025.02.04.19.11.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 04 Feb 2025 19:11:38 -0800 (PST)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>
-Subject: [PATCH] pull: allow branch.<name>.rebase to override pull.ff=only
-Date: Tue,  4 Feb 2025 22:06:28 -0500
-Message-ID: <20250205030642.95252-1-ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.47.0
+        d=1e100.net; s=20230601; t=1738727728; x=1739332528;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IjqdGNX+vF49vsOqcBCQljTMkKyZlAxIddb52L0IjXU=;
+        b=dNCQ9FiCtY7Q95gMDCJUiQ0/nZ2vBVAlrh4A8c5bVCIE764Msa5HQCdozb3h0vEmrv
+         akf8j8zJC4GWqBDsgbLqjnMk+7OhGAumgDn69YBD9eFGi/nUDArQE10YABPY+BXzz4de
+         0/k9jxoh8+glfOxzI0MGmQ04xqQLb7z+osSEWRJ/GWC74LzUgykP7UJ3pM1uNH+sVqWx
+         zg3DVYK7RuZP387eI3L/wgkCL+5Xw8RZMI1qjin2S2ufM2wY2l37HqaF9LrH9yusxodq
+         Tv56C9cO6K9CzIpavlrnhTjomzK9Stq4qmC7LzHivr7lS51lpOCnr/hF52ivG0hi1lSN
+         9YuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUCcQe9DkBqOFk6nREh7tD+TqnFsTB4w9Ts8Esc30B1yw4e0ykuICXK0pmLr1roAKqzAUY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzr2isjmvf9k6p7QVozQavzriUFWxHrknITW7tALeRwFax433pr
+	/AOaZFzdzPtYbWirqd36JPYfBGaYqyib0J2GPk3JvEu8nPDzbtvjHl7UL3hLSzKpx7HEVt6wZbv
+	2hrreH+Tz6LT5t/C43iJzyPrPeR0=
+X-Gm-Gg: ASbGncsY+QtQfk+YasCH95wWV1dpdgxD+aAf+rn0dfZc53YDLt1SBEUun+mgxiLWa/u
+	b8mG76OS/YuJFQUHqsnhoMtXC85JdgKB/i1jpmI7o0gECVcB/Zt1mUYJwiCEoYT2uz/URcqNFIw
+	==
+X-Google-Smtp-Source: AGHT+IEcSD23y2wCfohKriMLVySQimBEdaX1sTIpRMO85FrPL8gZo69FPXXa0xYA0VESSvcVmsXP5NmnRd6mms4Mjh8=
+X-Received: by 2002:a05:6870:ac23:b0:288:5ae1:7318 with SMTP id
+ 586e51a60fabf-2b804fe5299mr880554fac.22.1738727727699; Tue, 04 Feb 2025
+ 19:55:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAPpV+OaMcViVKok5U0-4HaYyPMKEA7BBzw4t113uAaMndjs5Cg@mail.gmail.com>
+ <xmqqh65b2ci3.fsf@gitster.g> <xmqq34guzi0f.fsf@gitster.g> <CAMoUM6+9SHybvWVp3SKDD4RWesruh=nmMacXn_oL893CPCn39g@mail.gmail.com>
+ <CALnO6CB2TjwRWr0=c2nWY5DnwLeqXiaA5fCiEeF85zivmLggjA@mail.gmail.com>
+In-Reply-To: <CALnO6CB2TjwRWr0=c2nWY5DnwLeqXiaA5fCiEeF85zivmLggjA@mail.gmail.com>
+Reply-To: bram@van-oosterhout.org
+From: Bram van Oosterhout <adriaanbram0712@gmail.com>
+Date: Wed, 5 Feb 2025 14:55:15 +1100
+X-Gm-Features: AWEUYZlb9p0DM83RF8nLko8_95p53hCKGg6YLuvOW417c89DV0gDA5ME8jUQkfw
+Message-ID: <CAMoUM6JfUGM2RGS_QtTS2XLF89iTt9L-8oOz6h4oWFMc+QMcDg@mail.gmail.com>
+Subject: Re: Usability issue: "Your branch is up to date"
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: bram@van-oosterhout.org, Junio C Hamano <gitster@pobox.com>, 
+	=?UTF-8?Q?Manuel_Qui=C3=B1ones?= <manuel.por.aca@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When running "git pull" with the following configuration options, we
-fail to merge divergent branches:
+On Tue, Feb 4, 2025 at 1:08=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com>=
+ wrote:
+>
+> On Mon, Feb 3, 2025 at 7:28=E2=80=AFPM Bram van Oosterhout
+> <adriaanbram0712@gmail.com> wrote:
+> >
+> > Ahhhh, this thread explains my confusion when, even though git locally
+> > tells me my branch is "up to date", a fetch demonstrates the branch is
+> > not up to date.
+> >
+> > Which begs the question: Why does git say: "Your branch is up to date
+> > ..." if at best it can say: "Your
+> > branch MIGHT BE up to date with ..."?
+>
+>
+> Well, the branch _is_ up to date with your remote-tracking branch [1]
+> origin/main; that doesn't mean the tracking branch is up-to-date with
+> the repository origin's branch main!
+>
+> I find it helpful to break the notion for newcomers early on that
+> origin/main somehow is "equal to" the repository named by origin's
+> main branch. Git (mostly) only communicates with remote repos when you
+> fetch, push, or, pull=E2=80=94in other words (and this bit may be more fo=
+r
+> Manuel), try to reinforce that things Git knows locally are only local
+> and not inherently tied to other repositories. Learning this
+> distributed lesson proves hard in my experience but explains a lot
+> about the reality of how Git operates.
+>
+> Exceptions to the "remote communication" rule I can think of that
+> probably don't need to clutter things for beginners:
+> - git-maintenance has pre-fetching as a default task
+> - git ls-remote lists remote refs by communicating with the remote
+>
+> > I have learned not to rely on the message and come to expect
+> > (sometimes nasty) surprises when I return to a project after a few
+> > months,
+> >
+> > Bram
+>
+> And thus `git fetch [--all]` because a part of your typical workflow,
+> or something like `git pull --rebase [origin [main]]` before pushing.
 
-- pull.ff=only
-- pull.rebase (unset)
-- branch.<current_branch>.rebase=true
+Thanks all for the education.
 
-Yet it seems that the user intended to make rebase the default for the
-current branch while using --ff-only for non-rebase pulls. Since this
-case appears uncovered by existing tests, changing the behavior here
-might be safe: it makes what was an error into a successful rebase.
+I have always read the message "Your branch is up to date with
+'origin/main'." as
+"Your branch is up to date with _main_ at _origin_", with _origin_
+being the remote repo.
 
-Add a test for the behavior and make it pass: this requires knowing from
-where the rebase was requested. Previous commits (e4dc25ed49 (pull:
-since --ff-only overrides, handle it first, 2021-07-22), adc27d6a93
-(pull: make --rebase and --no-rebase override pull.ff=only, 2021-07-22))
-took care to differentiate that --rebase overrides pull.ff=only, but
-don't distinguish which config setting requests the rebase. Split
-config_get_rebase into 2 parts so that we know where the rebase comes
-from, since we only want to allow branch-config to override pull.ff=only
-(like --rebase does); pull.rebase should still be overridden by
-pull.ff=only or --ff-only.
+I now understand it says:
+Your branch is up to date _according to_ the information available at
+.git/refs/remotes/origin/main.
+Since that is a local file , I can reasonably expect the info to be
+stale when I return to my repo after 6 months and I should do a git
+fetch to assess the situation
 
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
-Notes:
-    - I also looked at ea1954af77 (pull: should be noop when already-up-to-date,
-      2021-11-17) when trying to understand how some options override others,
-      but it didnt' seem germane to the final version.
-    - I think I've got the right test script, since it's the one that started
-      failing before I added the "else" branch to the new code (which also
-      confirms that it's necessary to preserve current behavior); the only new
-      behavior should be the one mentioned by the new test.
-    - A possible #leftoverbits: it would be good to document more clearly the
-      interplay of --ff[-only], --rebase, pull.ff, pull.rebase, and
-      branch.<name>.rebase, particularly when they override each other.
-      Confusingly, branch.<name>.merge has nothing to do with whether pull will
-      merge or rebase ;) lest you think I'd forgotten something that _looks_
-      parallel to pull.rebase.
-
- builtin/pull.c               | 39 ++++++++++++++++++++++++++++--------
- t/t7601-merge-pull-config.sh |  8 ++++++++
- 2 files changed, 39 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 9c4a00620a..c30f233dcc 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -326,13 +326,13 @@ static const char *config_get_ff(void)
- }
- 
- /**
-- * Returns the default configured value for --rebase. It first looks for the
-+ * Returns the default configured value for --rebase. It looks for the
-  * value of "branch.$curr_branch.rebase", where $curr_branch is the current
-  * branch, and if HEAD is detached or the configuration key does not exist,
-- * looks for the value of "pull.rebase". If both configuration keys do not
-- * exist, returns REBASE_FALSE.
-+ * considers the result unspecified. Follow up by checking
-+ * config_get_rebase_pull.
-  */
--static enum rebase_type config_get_rebase(int *rebase_unspecified)
-+static enum rebase_type config_get_rebase_branch(int *rebase_unspecified)
- {
- 	struct branch *curr_branch = branch_get("HEAD");
- 	const char *value;
-@@ -349,11 +349,22 @@ static enum rebase_type config_get_rebase(int *rebase_unspecified)
- 		free(key);
- 	}
- 
-+	*rebase_unspecified = 1;
-+	return REBASE_INVALID;
-+}
-+
-+/*
-+ * Looks for the value of "pull.rebase". If it does not exist, returns
-+ * REBASE_FALSE.
-+ */
-+static enum rebase_type config_get_rebase_pull(int *rebase_unspecified)
-+{
-+	const char *value;
-+
- 	if (!git_config_get_value("pull.rebase", &value))
- 		return parse_config_rebase("pull.rebase", value, 1);
- 
- 	*rebase_unspecified = 1;
--
- 	return REBASE_FALSE;
- }
- 
-@@ -1026,7 +1037,7 @@ int cmd_pull(int argc,
- 		 * are relying on the next if-condition happening before
- 		 * the config_get_rebase() call so that an explicit
- 		 * "--rebase" can override a config setting of
--		 * pull.ff=only.
-+		 * pull.ff=only. [continued…]
- 		 */
- 		if (opt_rebase >= 0 && opt_ff && !strcmp(opt_ff, "--ff-only")) {
- 			free(opt_ff);
-@@ -1034,8 +1045,20 @@ int cmd_pull(int argc,
- 		}
- 	}
- 
--	if (opt_rebase < 0)
--		opt_rebase = config_get_rebase(&rebase_unspecified);
-+	if (opt_rebase < 0) {
-+		/*
-+		 * […continued] But, if the config requests rebase *for this
-+		 * branch*, override --ff-only, which otherwise takes precedence
-+		 * over pull.rebase=true.
-+		 */
-+		opt_rebase = config_get_rebase_branch(&rebase_unspecified);
-+		if (opt_rebase >= 0 && opt_ff && !strcmp(opt_ff, "--ff-only")) {
-+			free(opt_ff);
-+			opt_ff = xstrdup("--ff");
-+		} else {
-+		    opt_rebase = config_get_rebase_pull(&rebase_unspecified);
-+		}
-+	}
- 
- 	if (repo_read_index_unmerged(the_repository))
- 		die_resolve_conflict("pull");
-diff --git a/t/t7601-merge-pull-config.sh b/t/t7601-merge-pull-config.sh
-index 199a1d5db3..fd99f46aad 100755
---- a/t/t7601-merge-pull-config.sh
-+++ b/t/t7601-merge-pull-config.sh
-@@ -113,6 +113,14 @@
- 	test_grep ! "You have divergent branches" err
- '
- 
-+test_expect_success 'pull.rebase not set and pull.ff=only and branch.<name>.rebase=true (not-fast-forward)' '
-+	git reset --hard c2 &&
-+	test_config pull.ff only &&
-+	git switch -c bc2 &&
-+	test_config branch.bc2.rebase true &&
-+	git pull . c1
-+'
-+
- test_expect_success 'pull.rebase not set and --rebase given (not-fast-forward)' '
- 	git reset --hard c2 &&
- 	git pull --rebase . c1 2>err &&
--- 
-2.47.0
-
+Thanks again. Bram
+>
+> [1]: https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-a=
+iddefremotetrackingbrancharemote-trackingbranch
+>
+> --
+> D. Ben Knoble
