@@ -1,177 +1,137 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586C222A808
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 10:37:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DBFBA42
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 12:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738751848; cv=none; b=Nk5pRYnnzadNtYVDy427T52rLGRTBK0M9oW5hCGkZjg81Y3pIfEbrDEcONZcCIpYjnYA3Je1fkhmMKUxBVvmUSuUD0vbQZnmXH2s8VzIRxogu3/pa9+N2rqXY8kBnA13rxhAl92NNd4MJg96DCWhh3clAXkvfzzgQ9/DNOLECSo=
+	t=1738760343; cv=none; b=MxQHmrQfTqjM7Sco4uZTMXs35YhXc3j3szYha3JcGO0A6JL2dGan8dGLSmqbBLfzcFF6Ztigxnl1i0ZE4vKCFssITQ7oxHX7PQWkdUxkKMV/qevDbOghnlndkFNaazFBQV2mZeneoq+uNakxFBYLcXAmO8/DgVXDbuDmDPUotMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738751848; c=relaxed/simple;
-	bh=5rAJgXvsapit/HkKz+3m2LAra9/zo3RCJAGgWeOoa7I=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=fbODbtKqVnM+wHGzjn3ecwnqbFR3mZS5eVCWNIVhwgteAyDn260m7xt810NqIr0mnwrZ7kXjo4hz613HAE27w3NsUQRDqZBo72Hm0YGueDxpfdxY24JsRVgDBv9Zz9XGviK37nksBKwwdaSNZiku9OrByk40uYcvRrMxXT50aUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fbbpapul; arc=none smtp.client-ip=209.85.218.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738760343; c=relaxed/simple;
+	bh=pXCcgMBm91VprnzPkTaJ/FAHK655QuJx3BUp5Mseovk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YVSc6AR0Hf5tFJ08ysT7w/G1BbVLc/jD0ZrjCEVFgXZ+K9nKC45MOYM4tF7nAVrsucYTV2GOBK7zsELiVbjwDUWCl7ho5Xwp7nCoPn7KMPHmvkBKO2YD83sM3OOparEf6yxqAWiiZbTNQM0kaC+p+nOS4kdUzDF/3c1z28+ycAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MXQrbeVW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zXt/uDQA; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fbbpapul"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ab744d5e567so150093366b.1
-        for <git@vger.kernel.org>; Wed, 05 Feb 2025 02:37:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738751842; x=1739356642; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=3khEsYN3K1B7E8YmS9p1u7Wl4uz09XaF8MuLLCNRF5E=;
-        b=Fbbpapule4vqhyBIpoasj3uIxIxBDr6dA0rCZLEavLSRC05VNt+4kO7lWWqIAu3TNQ
-         xf505AzU3T8I2oKDaTxZBJjC9iuiWSWYFS/sVrMup515ISw6YyRexwiESbwsTcg4rEY3
-         two9uC+XtsCbxqdSkVKeudPqij66pq1viDHJZnGaLnZPlnUnSvzK5Ejnorj/hhVrcsCW
-         rznjnRni99R0VY9aHONHvsHx0Bjr+yzVejrYNm7o5WvB7LKrsBs6UR4LhcoeTf9CiJ+r
-         eAhK1FMeYMJ0jCEChim1n+9lwDUwc45IL+w/c9h6aOCopl+iR6S9fv4o76HFWYRBWAtu
-         0g+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738751842; x=1739356642;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3khEsYN3K1B7E8YmS9p1u7Wl4uz09XaF8MuLLCNRF5E=;
-        b=R5XAyjtJxL4XUI76icppXkXhry3zeFLhEXdhcP8x7Aq4j2NQBnAQTfDDZ8Tx0d0SFc
-         rxxn74q6AoSTJeUfXPEUqMiSUu4laxYsIjhMmvcURVQCHn7Lt314BX+a54jKY7dxonL5
-         /i15sIK9H52MzRE/19KaEpAm6PInzU0ck89nrujhE6sZ2G84ZEEABvEUkqFHDhZjBlem
-         SGh4GI0G9whHBLUMFW8c/2r8+muk8Hu91x4VbvKhSNJbI+j03i2oxmXYlhVmagRqmKzc
-         mhgpmhDNw+8Jrm2/tcDLs7eOsl6Q+wYJ0Sl5IuBdSjeyPCbReTDlp+nS+iASmRgoVwGo
-         rM4w==
-X-Gm-Message-State: AOJu0YwQWChssUUDPvG+naM+RUFihyqY96Pfrh/xtCg/Whn1FKnaDQXu
-	UAFepPCFYMwQtOGWyRQtllll7YXFkH/m8uoUUFldyCANLGm6/Y24aEx6HQ==
-X-Gm-Gg: ASbGncv09Ao4KQTQ87/1s3Oa4AP87QGXjwFx+E1BP3Zn5t2GB6TE26r4bB6sKoM31Vv
-	0ZrVPVF0Z5hdWKQ0txRGfKGO+IKprIK/d2CksKJI5BhGn6wrd69PdtjQKkKkF4HTvV02TLa5zAG
-	TsNtDkuFt7xKPoYBoXhnR+/ugaOwiPXfuMfQjj+IHX3STiKPoMWrebTKzX24X0KckFtxMElyj9R
-	T3r3raioCUwfUIc/eYF43gTJtVJ0Wz3fje8nhgBIjJieDsEaewABp4sExImNMuNDc2HQAX3+RVu
-	0EosA9xSy9N2eHoZ
-X-Google-Smtp-Source: AGHT+IF+BlZUbstxLf6BGEAnEFo1wuRdE6ohFpEwQy0GnDzzLPrV0FNDqmtLWzVrIQzO0STYifL6Tw==
-X-Received: by 2002:a17:907:2ce1:b0:aa6:7ff9:d248 with SMTP id a640c23a62f3a-ab7483fba47mr688390066b.8.1738751841939;
-        Wed, 05 Feb 2025 02:37:21 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ab75f70ac64sm89000866b.99.2025.02.05.02.37.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Feb 2025 02:37:21 -0800 (PST)
-Message-Id: <pull.1860.git.1738751840816.gitgitgadget@gmail.com>
-From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 05 Feb 2025 10:37:20 +0000
-Subject: [PATCH] rebase -i: reword empty commit after fast-forward
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MXQrbeVW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zXt/uDQA"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EDE28254019F;
+	Wed,  5 Feb 2025 07:58:59 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 05 Feb 2025 07:59:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738760339; x=1738846739; bh=qdRm/XJsAd
+	dWeK6cffdms7LSYRMv0MhC39TN3jtYNug=; b=MXQrbeVW1kltEN6a+LwIZgQyhk
+	enlppBzwDyGo2LZLmxfOJvNdLzYaQmVgN5bGuFRXgkUDEJn8Z92kCnqKlyJYggwb
+	4j6QLA4gYLeSG8VzWrykcdagCNE2MMSPdu1t3gqXG10nYaEWSmtiGs6Xw20ooAYp
+	8aS7P2Nywu/Kik93172MHD5s7OxtKTt2m3q7uzLyJr9iNY8JVKa0tCx3ju8wouRe
+	1wnFJruvz9FswyLWq36NfGPdk2VDgqYPQmgW7IKL27jLEQSRP3kxtvco6P17tIj6
+	eyQw7nmc00UJod+BJe5sNDm1NE39bCQ/ya4QeUG+CDRhi/lLY7TB30a6c9XQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738760339; x=1738846739; bh=qdRm/XJsAddWeK6cffdms7LSYRMv0MhC39T
+	N3jtYNug=; b=zXt/uDQAj65EEORSV9PVzyiKKsA6wMlSeVv9QdX/IG8e426bB7s
+	FANFi8qArw/h3DB0NYY0UJSrElHfazfhniFFEEqpTp5abrldbLGcxP0XLkRAoV2l
+	m3RBYwJv5G0IzuwFkmJEvHF4TyosLmW4AQ055ME25vUjn1bohwZzU2gZS8ciKOxt
+	WyhKyUCbctFkdAy7ybM++eLOet5gpfvm1a9LMar19ew+FFv7kV1IYxSYd3bxaV1K
+	kGk41ZGkAfbi5qG7WqhBrJqoKxUUtU92v9xwoRpT+TJpn6uP3EJ4pg5NutLwTnMH
+	ZpUzaN4jueF1olYhbWkG1ARWqPdDZXwb9WA==
+X-ME-Sender: <xms:k2CjZ1tjhjLNyyjTATVnOHTm1R73nDd1dy2GtwlfQzfLR4iqL77zzQ>
+    <xme:k2CjZ-crVgpZu3qgJSDz60BjI5pA01qxIYXmtd8Z4NMy4Zgbw5PP87Tu3Xi_sw32g
+    j-iqxq0-vFgoQlLPg>
+X-ME-Received: <xmr:k2CjZ4yTdpRPmA5liVc_E_jHAMSIw319tMSltJV-Ak1UiSUVHUCeWXzC34_upIQIBm0dgwAMe5NmgEvj7bCc2dxs3HBtFG9_pcIo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvfeehvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjvghllhihrdiihh
+    grohdrgedvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:k2CjZ8MGAHGapLJhkQKeg_Cayve7-tDtlQD6IYv63e843AVoDdOFFQ>
+    <xmx:k2CjZ1_XHbXDmAt0dqxtAFw8PpOMBXZ6-4vK5JGAVxmtOkR-0bPo3g>
+    <xmx:k2CjZ8WprlsZnYqZqXEugjQ92x0GLkcdSYW8OpdkIgH2QfAH8Zyovg>
+    <xmx:k2CjZ2fYHsCspM-jKipmT5fr8D147iZWDu5fwO9Qt1vXoJBjx15y9A>
+    <xmx:k2CjZ4ksv8KUTD38QHeccPEQxioL05QvBqCWCPLULLxGRgpI7y-m8ds4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 5 Feb 2025 07:58:58 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Zejun Zhao <jelly.zhao.42@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [GSOC][PATCH] apply: address -Wsign-comparison warnings
+In-Reply-To: <20250205014055.737190-1-jelly.zhao.42@gmail.com> (Zejun Zhao's
+	message of "Wed, 5 Feb 2025 01:40:55 +0000")
+References: <20250205014055.737190-1-jelly.zhao.42@gmail.com>
+Date: Wed, 05 Feb 2025 04:58:57 -0800
+Message-ID: <xmqqh658r1im.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When rebase rewords a commit it picks the commit and then runs "git
-commit --amend" to reword it. When the commit is picked the sequencer
-tries to reuse existing commits by fast-forwarding if the parents are
-unchanged. Rewording an empty commit that has been fast-forwarded fails
-because "git commit --amend" is called without "--allow-empty". This
-happens because when a commit is fast-forwarded the logic that checks
-whether we should pass "--allow-empty" is skipped. Fix this by always
-passing "--allow-empty" when rewording a commit. This is safe because we
-are amending a commit that has already been picked so if it had become
-empty when it was picked we'd have already returned an error.
+> @@ -1087,11 +1086,11 @@ static int gitdiff_index(struct gitdiff_data *state,
+>  	 * and optional space with octal mode.
+>  	 */
+>  	const char *ptr, *eol;
+> -	int len;
+> -	const unsigned hexsz = the_hash_algo->hexsz;
+> +	size_t len;
+> +	const size_t hexsz = the_hash_algo->hexsz;
 
-As "git commit" will happily create empty merge commits without
-"--allow-empty" we do not need to pass that flag when rewording merge
-commits.
+I thought that I already saw this discussed in another thread.
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
-    rebase -i: reword empty commit after fast-forward
+The .hexsz of any hash algorithm would never be larger than what a
+platform natural "unsigned" integer type can hold, so using size_t
+for the member _is_ the wrong thing to do and the fix may be the
+other way around, no?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1860%2Fphillipwood%2Frebase-reword-empty-commit-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1860/phillipwood/rebase-reword-empty-commit-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1860
+There are genuinely good changes (correcting assigned variable from
+int to size_t when the value ultimately came from a system function
+that returns size_t) in this patch, but there are other annoying
+ones like these, so I am not sure.
 
- sequencer.c                   |  5 ++---
- t/t3404-rebase-interactive.sh | 14 ++++++++++++++
- t/t3430-rebase-merges.sh      | 20 ++++++++++++++++++++
- 3 files changed, 36 insertions(+), 3 deletions(-)
+>  	ptr = strchr(line, '.');
+> -	if (!ptr || ptr[1] != '.' || hexsz < ptr - line)
+> +	if (!ptr || ptr[1] != '.' || hexsz < (size_t) (ptr - line))
 
-diff --git a/sequencer.c b/sequencer.c
-index 407ee4e90fe..763bef1c898 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2510,9 +2510,8 @@ static int do_pick_commit(struct repository *r,
- 		*check_todo = !!(flags & EDIT_MSG);
- 		if (!res && reword) {
- fast_forward_edit:
--			res = run_git_commit(NULL, opts, EDIT_MSG |
--					     VERIFY_MSG | AMEND_MSG |
--					     (flags & ALLOW_EMPTY));
-+			flags = EDIT_MSG | VERIFY_MSG | AMEND_MSG | ALLOW_EMPTY;
-+			res = run_git_commit(NULL, opts, flags);
- 			*check_todo = 1;
- 		}
- 	}
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index ecfc02062cd..2aee9789a2f 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -791,6 +791,20 @@ test_expect_success 'reword' '
- 	grep "C changed" actual
- '
- 
-+test_expect_success 'reword fast-forwarded empty commit' '
-+	git commit --allow-empty -m "empty commit" --only &&
-+	(
-+		set_fake_editor &&
-+		FAKE_COMMIT_AMEND=edited FAKE_LINES="reword 1" \
-+			git rebase -i HEAD^
-+	) &&
-+	test_commit_message HEAD <<-\EOF
-+	empty commit
-+
-+	edited
-+	EOF
-+'
-+
- test_expect_success 'no uncommitted changes when rewording and the todo list is reloaded' '
- 	git checkout E &&
- 	test_when_finished "git checkout @{-1}" &&
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 2593711fecd..b84d68c4b96 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -610,4 +610,24 @@ test_expect_success 'truncate label names' '
- 	grep "label 0123456789-$" out
- '
- 
-+test_expect_success 'reword fast-forwarded empty merge commit' '
-+	oid="$(git commit-tree -m "D1" -p A D^{tree})" &&
-+	oid="$(git commit-tree -m "empty merge" -p D -p $oid D^{tree})" &&
-+
-+	write_script sequence-editor.sh <<-\EOF &&
-+	sed /^merge/s/-C/-c/ "$1" >"$1.tmp"
-+	mv "$1.tmp" "$1"
-+	EOF
-+
-+	(
-+		test_set_sequence_editor "$(pwd)/sequence-editor.sh" &&
-+		GIT_EDITOR="echo edited >>" git rebase -i -r D $oid
-+	) &&
-+	test_commit_message HEAD <<-\EOF
-+	empty merge
-+
-+	edited
-+	EOF
-+'
-+
- test_done
+Is this about -Wsign-compare complaining about size_t vs ptrdiff_t?
 
-base-commit: 58b5801aa94ad5031978f8e42c1be1230b3d352f
--- 
-gitgitgadget
+> @@ -1207,7 +1206,7 @@ static char *git_header_name(int p_value,
+>  		cp = skip_tree_prefix(p_value, second, line + llen - second);
+>  		if (!cp)
+>  			goto free_and_fail1;
+> -		if (line + llen - cp != first.len ||
+> +		if ((size_t) (line + llen - cp) != first.len ||
+
+Ditto.
+
+> -			if (len < second - name &&
+> +			if (len < (size_t) (second - name) &&
+
+Ditto.
+
+I said this before, but I am not sure if being strict about
+"-Wsign-compare" is really buying us much.  If we are getting so
+many false positives that need to be squelched by churning the code
+with so many typecasts in order to find a new and real problem,
+is it really worth it?
