@@ -1,131 +1,184 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6C91FDE00
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 18:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B932E1885BE
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 18:52:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738780846; cv=none; b=tJIAkwQqi+gj0CfKMomEBwywaormi4Jg1XWjmDSNWEi2MiwGzXdrJRXBgIWmGvALCnIAezBY0TZwCxqhgfOAcnIZTahuH0mjcbae6+tI0gDxTLHw2sB7GKCqLgUIg72c4YFapKZ+Gul2PK2Vw0cMyqL3sbHwZKmXcSpQq+aLiDM=
+	t=1738781575; cv=none; b=Imd0Fg1FH19RQIBSUl9+xB49iHJWabu/IjtPSaS/tSRK5UgnDFW2zuqfURnWdDmvkvzxz68vxkpN3EKQuS7AWkiMFLZmJQ6auTG9oQ6l437qVEwJr8GMJKef9+6QiXoAHnjtkejgXKft+BktXh/lojLEDp8pE0+ofIpfPVF4w3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738780846; c=relaxed/simple;
-	bh=kuaPgMBGa2styEWe4YTi9Q0Z8oNyraSt6zmlLcJuNQg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kIzWGg47XFZtK9FloI7um8DWEVuvnHSFnXq9PgczOej70/KeNUUSQHrjryWe4+/SV+vvC+PF4LKBEQ8K4B8lplSgyUR1wR/aCC/iDd2CGb7sOfCbuZ5nl0gR7DN48K78gvs/t7BKZ5w1zu6i5JrNWsFy8hGpsp8OhnMRqaHpusA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cC6ISDdS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E40rCUsR; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738781575; c=relaxed/simple;
+	bh=T1yNL0DBvjDMdXecfDeTgbzPspTWpzyfachVPEU3wP4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EY3EeMpJ33i/h1Q0uhMIBgR6M0/u5zzyRWM0bFHOz+8XZ160M7M3pxsHfWK/Q0tgzJB8nB73/d1i6yvDEKX/fwvO/bsO0CUjXJMtMVQ2loNdXZUgkd9PibJaqMnyZd1mK4k4uMo5GOxgbUwvzhiqCG4gye2m8hHVChoIzw2Ey5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iFazC+g4; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cC6ISDdS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E40rCUsR"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8EACD13800CF;
-	Wed,  5 Feb 2025 13:40:43 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Wed, 05 Feb 2025 13:40:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738780843; x=1738867243; bh=pVYkY+kdHa
-	UPc5teLSkV1o3FRUxoMxiDyg76/IbxX8o=; b=cC6ISDdSJjlu1ZOn3c0jxZ3xbU
-	nmqDjsCCrNZk8SYEJX7kvkXaMdGNxANhygM1xXwLT10C7rvkycSHRmQtOQg3CAvz
-	I/eE3bbix4AJCIfz/YUdQGQRjg4ddyz4/JpchJf48iM5vYrg2fZoHDoWmvOclLsY
-	ycQ+2pVEZX99FG9VDpJB9koxWANXVGhmLnvRXdpiryZhFa7qNyzdG+tbACvNntN+
-	pkYoWeMQfMg/UEaluIckLkl/HreVy0gjs6nWhzUjHlFHfqE8/zsP0PjPx7Hg8B2f
-	OD5Xq7nLmAMGgI3u/W6R2Xl6T/iqj8lMt5AYh2C6R6UeK6gJcGBCvu9zvjBg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738780843; x=1738867243; bh=pVYkY+kdHaUPc5teLSkV1o3FRUxoMxiDyg7
-	6/IbxX8o=; b=E40rCUsRqwllBy20307Syz04R8VAYgxrPSM/4PzP7J+o1w5dtuQ
-	gdnYBwZ3ggpLmHFU+pfgwcWLiyEzPISSRsbbcusO+a6B1KXtXQ5e6BH5sxAfuBeN
-	io7LvztZoi24uWGIPyPNsUX0JgZYqUCF1RS1JzkPb0ZQbfp/GbxiLYvmrbEdveM9
-	DbAojOvJHs2iqZF2X0JTbA/SbREEQ6q4juT0s4xRUv15zDwtwZZtIxHaztMp3sXM
-	iv+xRn0lGlwa6DndMRrTyHtbglNrgVvLi/WGu4KX6tesLAZTaZHkOcTh8Mm8iBEo
-	oGbDB+kkf5MWzV5/Q67onNrKOEExrdSPpYA==
-X-ME-Sender: <xms:q7CjZ8rL2QCkqETK_8IQE4NZfjIg-ibQ3-1pfTyOKv8foToG1uCV7Q>
-    <xme:q7CjZypdAVz2vMr5aYIkuYyGE4oM4XJBwg13-yLSr7OLJgVq6zswtfq8KbrU08dJq
-    FowWiCtfOMgSODD9Q>
-X-ME-Received: <xmr:q7CjZxO_YKxVpXkowgXIf6VjkSO7JYUIkgRSVFaa7ljPGalrXFsR3y_xNvfpWToX69HsqIOedCMYUauhKkSwAPSj4cJxN7gwGlNm>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgedvudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepmhgrnhhuvghlrdhpohhrrdgrtggrsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:q7CjZz7ZQzW_eW9UtneiXd4BC3WJ73e_3zA2g1HAGKrHhSstQ8KwNw>
-    <xmx:q7CjZ773fOgcofoBLIeK6_nIvsZX7YbrVaMd20WyGrEBu88xqIKRAA>
-    <xmx:q7CjZzjM2OtJRyppdWaLVB_JAhd4rhMTgpRkCXV5tOkU1FVFLKCH0w>
-    <xmx:q7CjZ17VBnnMTy6_43Ofi65T1MtDNVD3Cn6huS6sTMqFtYoXDRHdVA>
-    <xmx:q7CjZ-1x7mXpOEB3U8jHg5nP6Mt2EbErkf7TVxu1NhDQkeO9RNvGgsTt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Feb 2025 13:40:42 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Manuel =?utf-8?Q?Qui=C3=B1ones?= <manuel.por.aca@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: Usability issue: "Your branch is up to date"
-In-Reply-To: <Z6MLOA3mJGbPFBae@pks.im> (Patrick Steinhardt's message of "Wed,
-	5 Feb 2025 07:54:48 +0100")
-References: <CAPpV+OaMcViVKok5U0-4HaYyPMKEA7BBzw4t113uAaMndjs5Cg@mail.gmail.com>
-	<xmqqh65b2ci3.fsf@gitster.g> <xmqq34guzi0f.fsf@gitster.g>
-	<CAPpV+Oaq3d3oNE-V3pnpQRNrGCoZr52uY91QtWYxcu1tgG_QXg@mail.gmail.com>
-	<xmqqseottxld.fsf@gitster.g> <Z6MLOA3mJGbPFBae@pks.im>
-Date: Wed, 05 Feb 2025 10:40:41 -0800
-Message-ID: <xmqqikponsk6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iFazC+g4"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-2f9d5f8a4b9so52395a91.0
+        for <git@vger.kernel.org>; Wed, 05 Feb 2025 10:52:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738781573; x=1739386373; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IqmZtH1UjlpT5uLhAfNXFKGP/8r3GiAZyVPMQ6micTM=;
+        b=iFazC+g45vgjYZyt0D96ZdUgdgZ8zPkGbsA5IVHxxVuFtiAwU1gPal9/zIiXwsal+c
+         iXfnakVeX9BhhOT244MBIPtfdCd3grGXBcAs8m9F0ooG4SpnvciM0jkEVudOFBM5978P
+         rAyn5JbAgG9CbuLUegcD4kO11/K/QwNQCKhwzPvrrae4oILhxsplqbcnT5eGvbLgJDpu
+         S+2D/FE/nY/tpNeOCxM+HZCjZntcjXCRaR93nPpwirfbQ9sI69dAi5EfgrBWiAv0d1OL
+         QgLbz//b8pQ+3WWMZpkvThPwIjM/quAdcBXtsm8s+qMs8LnvY7Vfo/HiK6z6qMViL7OY
+         hZaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738781573; x=1739386373;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IqmZtH1UjlpT5uLhAfNXFKGP/8r3GiAZyVPMQ6micTM=;
+        b=oeYW5SyqMsQKMws4es74BN4R6Q100hbT+5KZDTOrfeededhflE9Qnq23DK0OAu4qUu
+         wxrjPmbFrdaGsTcNLHAcm7NnkFsJaxKPng40VvOV3ienq6jnGHLg3m+xMchPr3tUX+EV
+         RCNRT4295WHtrsDGi1J++N1mREqeBJ9/6cN9iLFjEIVzMrs1ClEdaeGpukjctEhcrKkZ
+         wG4nlq5LJUAgAj/bIiAONB2s0ar+SL9/wyBuJOxgZ/r4RJfgDTFotCxj0JhacF0+fHJL
+         +NrjPm/qY1v21MSSvD1q9X/2cOHL6F+Pwr1khbwWbMLoG4zQ9Lt8a0frGLhAox/YigrQ
+         58fg==
+X-Gm-Message-State: AOJu0Yx5Z3LA7fwV9V5h0VqSLH438zl2ME5PWKtihy2aoZBji69d5g7c
+	DdYK+PXc4+bmSyacb16hnH6k6RUe/6XmFMgvrNe33Fit4Zf5RDcCvfvN9p5k+Vs=
+X-Gm-Gg: ASbGncv/Z0iUeRSupEpB9BwyIwp90h3yUWKZ2ZR5tbF1spimPhGaZRvICIxcUNmClqP
+	aih1+0yJoOnuSzMaje444pLFLUhlIP40A/6nkdNxtF/xV9Rl8D/cjCLUnqRBSp3uDBJnbrQt2R5
+	f3M8NAGFLZdyCp2BnP0aG1bgq4J4IGXwSV/gLSisQ87ZYWJ2NwkdFB/moN4AkLHNWatSStrcwys
+	xDdKv1uylntWZNncag/L/HHFwks0GFjXo4ReNmUcwJEJl8LESkWpfbzCaOSt5riaUXm6a0FBBGT
+	phXtElKRD3MpOdiELEKB6M8ne5gzrge+czPEpWOG
+X-Google-Smtp-Source: AGHT+IFBNVOzWXTIN7pRLW8400SBR37QpqkICBvR9v3u2N4vbmVV9J0edRzTESp3rweuRCA/p9nH5Q==
+X-Received: by 2002:a17:90b:1943:b0:2ef:19d0:2261 with SMTP id 98e67ed59e1d1-2f9e078374bmr6914557a91.16.1738781572602;
+        Wed, 05 Feb 2025 10:52:52 -0800 (PST)
+Received: from archlinux.plaksha.edu.in ([182.75.25.162])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21f1e9f3ebbsm13754285ad.190.2025.02.05.10.52.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Feb 2025 10:52:52 -0800 (PST)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: git@vger.kernel.org,
+	=christian.couder@gmail.com
+Cc: gitster@pobox.com,
+	Johannes.Schindelin@gmx.de,
+	johncai86@gmail.com,
+	me@ttaylorr.com,
+	phillip.wood@dunelm.org.uk,
+	ps@pks.im,
+	rsbecker@nexbridge.com,
+	sunshine@sunshineco.com,
+	usmanakinyemi202@gmail.com
+Subject: [PATCH v4 0/6][Outreachy] extend agent capability to include OS name
+Date: Thu,  6 Feb 2025 00:22:30 +0530
+Message-ID: <20250205185246.111447-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250124122217.250925-7-usmanakinyemi202@gmail.com>
+References: <20250124122217.250925-7-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+For debugging, statistical analysis, and security purposes, it can
+be valuable for Git servers to know the operating system the clients
+are using.
 
-> One thing to consider is that some remotes tend to have many thousands
-> or even hundreds of thousands of references. Updating timestamps for all
-> of them could be quite inefficient depending on where exactly that data
-> is store. If it was in the form of no-op reflog entries, the "files"
-> backend would have to touch as many files as the remote has references.
-> Consequently, even if only a single remote ref changed, we'd potentially
-> have to update metadata on hundreds of thousands of files.
->
-> So I'm not sure whether such a schema would scale well enough in the
-> general case for large repos.
+For example:
+- A server noticing that a client is using an old Git version with
+security issues on one platform, like macOS, could verify if the
+user is indeed running macOS before sending a message to upgrade."
+- Similarly, a server identifying a client that could benefit from
+an upgrade (e.g., for performance reasons) could better customize the
+message it sends to nudge the client to upgrade.
 
-I actually view that as quite an orthogonal issue.
+Our current agent capability is in the form of "package/version" (e.g.,
+"git/1.8.3.1"). Let's extend it to include the operating system name (os)
+i.e in the form "package/version os" (e.g., "git/1.8.3.1 Linux").
+The operating system name is retrieved using the 'sysname' field of 
+he `uname(2)` system call or its equivalent.
 
-Recording the fact that you checked the state of thousands of refs
-at the remote and found them unchanged is probably a very small part
-of a larger problem that checking the state of thousands of refs is
-already expensive.  People have solved it at the protocol level to
-limit the ref advertisement to only the relevant refs (as opposed to
-the original protocol where the server end unconditionally
-advertises the state of all of its refs at the beginning of the
-conversation), so when you are only pulling a single branch from
-there, you do not even observe the state of other unrelated refs
-(like other branches or pull/*/ hierarchy), hence you would not
-create these no-op reflog entries.
+Including OS details in the agent capability simplifies implementation,
+maintains backward compatibility, avoids introducing a new capability,
+encourages adoption across Git-compatible software, and enhances
+debugging by providing complete environment information without affecting
+functionality.
 
-If the user, on the other hand, is interested in keeping track of
-all these thousands of refs, "git fetch" would have to ask and
-receive advertisement for all these thousands of refs anyway, and
-at that point, recording the no-op update would be a very small
-part of the problem, I suspect.  Besides, we have reftable that
-would make this kind of problem easier to solve, no? ;-)
+Due to privacy issues and concerns, let's add the `transfer.advertiseOSVersion`
+config option. It defaults to `true` and can be changed to `false`. When `true`,
+both the client and server independently append their operating system name(os)
+to the `agent` capability value. The `agent` capability will now be in form of
+"package/version os" (e.g., "git/1.8.3.1 Linux"). When `false`, the `agent`
+capability will be in the form of "package/version" e.g "git/1.8.3.1". The server's
+configuration is independent of the client's. Defaults to `true`. 
 
+Note that, due to differences between `uname(1)` (command-line
+utility) and `uname(2)` (system call) outputs on Windows,
+`transfer.advertiseOSVersion` is set to false on Windows during
+testing. See the message part of patch 5/6 for more details.
 
+My mentor, Christian Couder, sent a previous patch series about this
+before. You can find it here
+https://lore.kernel.org/git/20240619125708.3719150-1-christian.couder@gmail.com/
 
+Changes since v3
+================
+ - Dropped the last patch which introduced `os-version` capability. This
+   was as a result of discussion on the mailing list on why adding the
+   operating system name to the existing agent capability might be better.
+   I stated the reasons above and you can also check the discussion
+   here.
+   https://public-inbox.org/git/xmqqed0sxdiz.fsf@gitster.g/
+ - Extend the agent capability to include the operating system name.
 
+Usman Akinyemi (6):
+  version: replace manual ASCII checks with isprint() for clarity
+  version: refactor redact_non_printables()
+  version: refactor get_uname_info()
+  version: extend get_uname_info() to hide system details
+  t5701: add setup test to remove side-effect dependency
+  agent: advertise OS name via agent capability
 
+ Documentation/config/transfer.txt |  8 ++++
+ Documentation/gitprotocol-v2.txt  | 15 ++++--
+ builtin/bugreport.c               | 13 +----
+ t/t5555-http-smart-common.sh      | 10 +++-
+ t/t5701-git-serve.sh              | 19 ++++++--
+ t/test-lib-functions.sh           |  8 ++++
+ version.c                         | 79 +++++++++++++++++++++++++++++--
+ version.h                         | 22 +++++++++
+ 8 files changed, 149 insertions(+), 25 deletions(-)
+
+Range-diff versus v3:
+
+1:  82b62c5e66 = 1:  82b62c5e66 version: replace manual ASCII checks with isprint() for clarity
+2:  0a7d7ce871 = 2:  0a7d7ce871 version: refactor redact_non_printables()
+3:  0187db59a4 = 3:  0187db59a4 version: refactor get_uname_info()
+4:  d3a3573594 = 4:  d3a3573594 version: extend get_uname_info() to hide system details
+5:  d9edd2ffc8 ! 5:  3e0e98f23d t5701: add setup test to remove side-effect dependency
+    @@ t/t5701-git-serve.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+      
+     -test_expect_success 'test capability advertisement' '
+     +test_expect_success 'setup to generate files with expected content' '
+    -+	printf "agent=git/%s\n" "$(git version | cut -d" " -f3)" >agent_and_osversion &&
+    ++	printf "agent=git/%s\n" "$(git version | cut -d" " -f3)" >agent_capability &&
+     +
+      	test_oid_cache <<-EOF &&
+      	wrong_algo sha1:sha256
+    @@ t/t5701-git-serve.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+      	cat >expect.base <<-EOF &&
+      	version 2
+     -	agent=git/$(git version | cut -d" " -f3)
+    -+	$(cat agent_and_osversion)
+    ++	$(cat agent_capability)
+      	ls-refs=unborn
+      	fetch=shallow wait-for-done
+      	server-option
+6:  351d1eeddb < -:  ---------- connect: advertise OS version
+-:  ---------- > 6:  67a2767026 agent: advertise OS name via agent capability
+
+-- 
+2.48.1
 
