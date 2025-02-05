@@ -1,147 +1,115 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60212F46
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 05:36:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55D021D58F
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 05:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738733773; cv=none; b=VmmhYzzoBshFr2hRZ3CRBxg9N6UuqfS1fVD1D5mbMUUyRuOYJgAoc9DZGa+1n+9UONx1/rOeGDlbtjCFCTrYyKHILGSLg3YdiD3t0DfKuRpQ4Jj6TlvFlHBpaBoEIiL1zpxqjZcGju9TEaZQRwi+suFIC8jcQtahWRCbTeE7UoA=
+	t=1738733960; cv=none; b=N6HqQL2yaQaJAINF6+faNPrl5tNh75xiydor5Og2C3Cb3kcqp2Pvm7Z0s9cOWR5RZg9c/XbzfADA/wkj4mwhly0BuARef3khKXRVnSpTuvym4yDKJspBuRlel545rvpi+JMFjDxVCa+4KPYD1InAW6LOqoVqyVm4ZcHuvyY1iQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738733773; c=relaxed/simple;
-	bh=4fOo5H6Ce6CPTvAuR7KiSHY9RIuhNIRbrGGGtfbXDSs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZczQQlaXTyt4+n+fwT+Ild03qJW32C4LxlRVXBII50XbYw3wVNT64BLRGKQ0GEjPZ9mXw5R+TuwUc25KxN5pmhcY4jCrRmXa4si7Urz6EqkIyQIzj4jJuMxiefFDk1RUv4xmWD+cB3YoHk+6krtQHCJIxM76h3zdUGvU7ouI64k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aHyoBGzc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sLtLjlFH; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1738733960; c=relaxed/simple;
+	bh=2nRAqPf0LjPMVHMhbuck/2USexo1pRfX/GomQRnSqKw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=J/R+NHrzXdyQbtj76YsHZb/PtXnVk77gfq0EaATh9iLVQ3HeKqkLVniteN38mWGTwqX7bSJfJEZ+FaYdQFCMCu5bnCKvUD+/yjcmRJkJ96q+ca4tTszqa6yLmZaAA+ZZturTjLyblICsmeLkTNk0gYXC/OVJLq+cKFNGzgHBBM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=emailcarter.com; spf=none smtp.mailfrom=carter.tools; dkim=pass (2048-bit key) header.d=carter-tools.20230601.gappssmtp.com header.i=@carter-tools.20230601.gappssmtp.com header.b=CWtlAMOa; arc=none smtp.client-ip=209.85.161.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=emailcarter.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=carter.tools
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aHyoBGzc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sLtLjlFH"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 95302114010A;
-	Wed,  5 Feb 2025 00:36:09 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 05 Feb 2025 00:36:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738733769; x=1738820169; bh=bJJfhwttau
-	S53zTPd/93DPUTJXwtWootKacRCarVvXc=; b=aHyoBGzcMdIbJ+Jjmnb5savDtt
-	/wKlH3PMw7lGU61Nn4USTxTKz5caTGnhn8Ew7g9PNPmbqNU19kUW7vc+gusq/sXh
-	g6kfmU3GAlK4pau6oRESkZUTbjTOtMoUjftqB4fOphvjwHT5Bj5/zYro/p2FxtEC
-	b5oJuGbln9f3gQMeWDji1xi3MARbLIVAREbyt9U8HWa2aT/XibrHSAQl5vc+VJeJ
-	TIK7MLDz3zAUI0L2361V8qtRbNZ2gaiD5TxICsg81Y4xI3O7lVzeamKAUA4riBTj
-	JN4YTRr4ScwBsyEmaKhVdwbwcoN/UPiNq8jQvOCXQ7kL53HL3WMFabD0VAtA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738733769; x=1738820169; bh=bJJfhwttauS53zTPd/93DPUTJXwtWootKac
-	RCarVvXc=; b=sLtLjlFHpiyC7Fuiy2obBa2U9muQvLsf8PImhTsFsv7tAl3KRhW
-	+EuD0g04sA0jHlEIrgWfCPhQ5M5iu8IMxoguQs/62L+Vf8OZfZaGVjaDp+LZjeJu
-	5P+iaOkzI30sE2fOVAn9tDoc14uTlMA1C80WAd1kp+95z7TL7jh8niHVGmtSBvQT
-	mgn+OmdFwtaBKsf53WPfJihMri/+zaphmdzu9SDtixWulWEmJcAajkZEPv0I7Sry
-	7uYUDeBu+OZXx6tZAWWaogP3oM317JnW1qWdkArmsGkoxe5/PjojYurJ2tuLyfvG
-	jRIkAKX4+/7RwaT/P1cZLP49n73Up+hEfeA==
-X-ME-Sender: <xms:yfiiZ5mI1MkiHJDSSNK8CgIOGgDD9gwh7219X167nhFPVCBz3VEV0w>
-    <xme:yfiiZ027OcVS3sD-MMC1QhfBNSpD72OPMWmlXy7i8MRjUu-3gCcrhZ5VyJEsaNeml
-    0H7HwggBvQp78Jpzg>
-X-ME-Received: <xmr:yfiiZ_pFOECqUlpe58T9Ci80jq7hZ_kjix3bP42eazry0Pipl4DjvL05YbpRuKvJCWDvJ1XWbZLp5wP3KiwrcT9TTHmugvBqVttMfIwLzJPEdA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdeiudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepjeevudeggf
-    ffffeigeethffgieekveeffeehvedvgeeiteegueejleeihfeitdeunecuffhomhgrihhn
-    pehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:yfiiZ5nTL3pqkf6Casci85arKZfqA5QrCOp1WsHLC7YlgJFl1toF1g>
-    <xmx:yfiiZ31SyPl2Cd3WXOpqHZ7aV3S4cG85SvF_yuZvvkf_0hEG97bhnA>
-    <xmx:yfiiZ4sJikYGib5Nwx3eOp9E1Sa0bSD2Dp5xUIEer-0QrC3QTEoRCQ>
-    <xmx:yfiiZ7WDGtav-ze1umlTSpJY7GkDSp4Jh3pZVCvFZYnXFf6OFEH6EQ>
-    <xmx:yfiiZ4z1d28mAQiHrlsE6ZZWJFjZU4B_bZcUURm3nMLqU26t6C2cpLII>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Feb 2025 00:36:08 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5f30fde1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 5 Feb 2025 05:36:05 +0000 (UTC)
-Date: Wed, 5 Feb 2025 06:36:04 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] builtin/repack: fix `--keep-unreachable` when there
- are no packs
-Message-ID: <Z6L4xDMqc6aXEA8A@pks.im>
-References: <20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im>
- <20250204-b4-pks-repack-unreachable-objects-wo-packfiles-v2-1-1eae23366711@pks.im>
- <20250204152236.GB620055@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=carter-tools.20230601.gappssmtp.com header.i=@carter-tools.20230601.gappssmtp.com header.b="CWtlAMOa"
+Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5fc0c7b391fso1542552eaf.3
+        for <git@vger.kernel.org>; Tue, 04 Feb 2025 21:39:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=carter-tools.20230601.gappssmtp.com; s=20230601; t=1738733957; x=1739338757; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lD5QorgCZVSP3f2EYlQ2BPcAg4IzYtpYSoC/525BQ0Q=;
+        b=CWtlAMOauS7XxnQVNJ0RE+8Lie0L0uVmAB9NjR7WDEzrluivFSXI1UUKHhDqAjE7Df
+         ezm/xDoSr1AznigyMrndODoz3KYABXn+ROKGQjIImKhwRW5KG99vp9Zl9SHSbTs3Qo/Y
+         7EIx8Q7p6KjiI+oHMWrmKptNcDnJMYKFLfOuPJV9RuHgH28aWB955NIQryeCVflckIqy
+         lUHEu8FBXRJDeKRKGjDxmj34cwOUL9A4DIX7QVIYiFkXM+hygAl7QzuOXii///z06EJ3
+         ksMBiS6UgPySo3exw0QPIMAj6KeK8y7nkUi2/0fh8Tdt5D3aRGiG1bQZqH6nkaqB4yUX
+         Q+CA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738733957; x=1739338757;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lD5QorgCZVSP3f2EYlQ2BPcAg4IzYtpYSoC/525BQ0Q=;
+        b=KGVurV6Biu/3ZVxfogEPRaKIGCQMFDJmV/cndhG2lRj3rNqjsPmhZNSLh5dAmkJXZI
+         ZOmCOmNMePG/gHV2ILmN9wPVK2ijHbTKRVzW0JtA64ZsxN7m5zFSDmrti0k78xJnVWFF
+         WXk/kORaL32N9RvMzEGqJvU4Bzh5L4Sp6gn/pEIZ33CPeIWu+UyO2QSwm6k6VYfOGcxm
+         n0GUCz1S5231Z1k1avuECPDDpmvDEuJ9UleTlzqQGZVebOwbTCDu08G+aZZjSRSZeXDO
+         Sskxj2caJXps8chcdjUArq2V3HCPK8NVnQ1r759qbhwY0vpUAh2/Unn7aeONvWNirsAd
+         pyhw==
+X-Gm-Message-State: AOJu0Yy9t+pTOoiLI7tuu4pZ6JnnDZ8RyquRLZhbWLjr+O2obC9mAHtk
+	lAzf/BniByr2fa8fyxOpcGOtw7zFEP+SUsHaBmunsGus4a517v5bD1hi1d6n2Y2a6g5f7vXPNXI
+	/yW9/nV/A
+X-Gm-Gg: ASbGncvYBY/FYQVW2cJzFX90Ptx2PGYXTe6vnBpCLxzGjxR5A00EY8rSA/B/EZOfTy5
+	uK3Ki6krAAV66SJx6MyIiszMauEGczhZH99O5ClDIIQ6tj7fdya7R62wBj4i3qttkOm47GREbi5
+	BppX6zwGHZ/HPH0pk0JDrD7Cs4fvNAFLsd4XkZXE51ZGKtE+JdDmhRQPiNORLppp6axHZ11Njzp
+	NsDOg1K9DjDLZ56jrnhERwMrXKfFn/eGV0jSgQN30CANEk7CaYjJm5CFXSBb28OKZHwxe5YFywG
+	oAFdYpj/8ixCps7AcZUwWk51YRahnw4hZQ4=
+X-Google-Smtp-Source: AGHT+IHE/pukvQ6L1kmWYdbFugU7RK17ZUcXa4E7MOMkNIScgtby5eVD2KqBw7dCEbGf5fUFWpb3Dg==
+X-Received: by 2002:a05:6820:618:b0:5f9:b840:6bb0 with SMTP id 006d021491bc7-5fc479d82b7mr1057762eaf.6.1738733956783;
+        Tue, 04 Feb 2025 21:39:16 -0800 (PST)
+Received: from localhost.localdomain ([2605:a601:a5d6:1800::19af])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5fc104b31aesm3566947eaf.5.2025.02.04.21.39.14
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 04 Feb 2025 21:39:15 -0800 (PST)
+From: Andrew Carter <andrew@emailcarter.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Andrew Carter <andrew@emailcarter.com>
+Subject: [PATCH v2] docs: indicate http.sslCertType and sslKeyType
+Date: Tue,  4 Feb 2025 23:38:56 -0600
+Message-Id: <20250205053856.72723-1-andrew@emailcarter.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <pull.1854.git.1737591366672.gitgitgadget@gmail.com>
+References: 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250204152236.GB620055@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Feb 04, 2025 at 10:22:36AM -0500, Jeff King wrote:
-> On Tue, Feb 04, 2025 at 08:00:41AM +0100, Patrick Steinhardt wrote:
-> 
-> > this small patch series fixes `git repack -ad --keep-unreachable` when
-> > there aren't any preexisting packfiles.
-> > 
-> > Changes in v2:
-> >   - Merge tests into t7701.
-> >   - Link to v1: https://lore.kernel.org/r/20250203-b4-pks-repack-unreachable-objects-wo-packfiles-v1-0-7c4d69c5072c@pks.im
-> 
-> This looks good to me.
-> 
-> One interesting thing I did notice:
-> 
-> > +test_expect_success 'repack -k packs unreachable loose objects without existing packfiles' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	(
-> > +		cd repo &&
-> > +
-> > +		oid=$(echo would-be-deleted-loose | git hash-object -w --stdin) &&
-> > +		objpath=.git/objects/$(echo $sha1 | sed "s,..,&/,") &&
-> > +		test_path_is_file $objpath &&
-> > +
-> > +		git repack -ad --keep-unreachable &&
-> > +		test_path_is_missing $objpath &&
-> > +		git cat-file -p $oid
-> > +	)
-> > +'
-> 
-> In the test in v1, we had reachable commits to pack. And here we don't.
-> So before your patch, the behavior in the v1 test was that we'd create a
-> new pack, but it wouldn't pick up the loose object. But the behavior of
-> this test is that we say "Nothing new to pack".
-> 
-> I originally thought that output meant that we were not running
-> pack-objects at all. But looking at builtin/repack.c, we do run it, and
-> it simply chooses not to make a pack (which makes sense; how would
-> repack even realize if there was stuff to pack, since pack-objects is
-> what does the traversal).
-> 
-> So the two outcomes are both the result of the same bug. In both cases
-> we do not correctly pack the loose objects, so whether we make a pack is
-> just a question of whether there was other reachable stuff to pack. And
-> since your patch is fixing the bug at its root, both outcomes are fixed.
-> 
-> And when I suggested in my response to v1 that "Nothing new to pack" in
-> an empty repo was a separate bug, I was just wrong. ;) There is nothing
-> else to fix after your patch.
-> 
-> Thanks for finding and fixing.
+0a01d41ee4 (http: add support for different sslcert and sslkey types.,
+2023-03-20) added useful SSL config options, but did not document them.
 
-Thanks for your thorough review!
+Signed-off-by: Andrew Carter <andrew@emailcarter.com>
+---
+ Documentation/config/http.txt | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-Patrick
+diff --git a/Documentation/config/http.txt b/Documentation/config/http.txt
+index a14371b5c9..22a8803dea 100644
+--- a/Documentation/config/http.txt
++++ b/Documentation/config/http.txt
+@@ -216,6 +216,21 @@ http.sslBackend::
+ 	This option is ignored if cURL lacks support for choosing the SSL
+ 	backend at runtime.
+ 
++http.sslCertType::
++	Type of client certificate used when fetching or pushing over HTTPS.
++	"PEM", "DER" are supported when using openssl or gnutls backends. "P12"
++	is supported on "openssl", "schannel", "securetransport", and gnutls 8.11+.
++	See also libcurl `CURLOPT_SSLCERTTYPE`. Can be overridden by the
++	`GIT_SSL_CERT_TYPE` environment variable.
++
++http.sslKeyType::
++	Type of client private key used when fetching or pushing over HTTPS. (e.g.
++	"PEM", "DER", or "ENG"). Only applicable when using "openssl" backend. "DER"
++	is not supported with openssl. Particularly useful when set to "ENG" for
++	authenticating with PKCS#11 tokens, with a PKCS#11 URL in sslCert option.
++	See also libcurl `CURLOPT_SSLKEYTYPE`. Can be overridden by the
++	`GIT_SSL_KEY_TYPE` environment variable.
++
+ http.schannelCheckRevoke::
+ 	Used to enforce or disable certificate revocation checks in cURL
+ 	when http.sslBackend is set to "schannel". Defaults to `true` if
+-- 
+2.39.5 (Apple Git-154)
+
