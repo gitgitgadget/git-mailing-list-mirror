@@ -1,88 +1,84 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E925038F82
-	for <git@vger.kernel.org>; Wed,  5 Feb 2025 07:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3887D21421D
+	for <git@vger.kernel.org>; Wed,  5 Feb 2025 07:47:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738740625; cv=none; b=E2vCgXSFanOGCuzJaTIEX1/L1357ywI8yi0lWvShyzp4zMcltzbQ++EzFeoR11lPaWhhZg1pJ9JsyGQLcnVxGMrYAeoLf7dEV4LgYm7OGHswSE5hx3aXkczCFnVRT0P/QegQHT0VMqTQhyfJo0SrUbHeUlcryGtiVUlyvnDMDg0=
+	t=1738741639; cv=none; b=G8M+loZz6VA/OioTu0UP1CX9O8S88w6PfH73xEnBwz9DM/+7AA9padaZxnhVAT9fNpr/dZbvBzBubfCDtLEipgAmfp9soYWdHutc4yMiOuIQRFXO/CGU87ekdRIHlOsIcbD0F/oxylsfJ0UMqJ0pnTDG50rfW7NN6pj3cW0pMa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738740625; c=relaxed/simple;
-	bh=UA+T6o/otY2ydrs/6elcq+HdjINTVBzliRNgBoYBck4=;
+	s=arc-20240116; t=1738741639; c=relaxed/simple;
+	bh=06N0D8AKpaG9LvFEfMo++K5WuQaWByANTVf8xRY6fFU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UQSHEm/OzbU8L3zae0C/6YXdhyiT3LdIFTjyq62nq1gqs3vu3w24+9dkzDIv4lutJpDqPSQmR3D6dV5R3lgjH/0nvVleYPZpFDHAwg9WGdg9BHBDUS0iw9NQDHEnFFfhUbggzDq8NrqOc2MV61xYN1gwfpxxfqpKwadmY4120cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=siiOFpia; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=imnrUaPb; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=tZefFW79VyjP7LZwI65JUW8a+tPIVcMlIjF9OshhjO96Q6GwBPVlTxhfx/QgJ8g7wo8L083qkTxzoyyEkdRj2XJ0sLXsjRjyLIgQAXNFdziG2ZebdQPbgzkVmn4lguCokr6vzaFBRzIBqBywHCs+O1bzfyAExRdFC/IELXujcmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UkjCMW5y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kL2zCrmj; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="siiOFpia";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="imnrUaPb"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E4600114017B;
-	Wed,  5 Feb 2025 02:30:22 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UkjCMW5y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kL2zCrmj"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3A46B11400EF;
+	Wed,  5 Feb 2025 02:47:15 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 05 Feb 2025 02:30:22 -0500
+  by phl-compute-05.internal (MEProxy); Wed, 05 Feb 2025 02:47:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738740622; x=1738827022; bh=sChMCtxTYI
-	psRmKx2VtB3EYBNsSby+sHbf9QP+iNdvc=; b=siiOFpiaMns+2An++xbRJ8uVjy
-	LpYTHryVoHG/tCQkYVhH++b60JE1Pijo51lFyA6EFQ9iiKuVPL51VfwryUQk3t6v
-	IVBU7oqxc6SeQiBYErLTvflW0m60arlrLJ75kBzKCexFn0kHEEQVAN+H2tovgBk3
-	3lY1FdVMEFiL7ALRhq4Ly/RmibZaqskhH9GpEHs2CNLdsKv1xm/1z2Wh7Su4pLUf
-	Zahs5s6/pKM29RfrEo1Zz0PBq1TFocAGmwHzr1S8nikOlqyzobzigto0vAxMtHq/
-	Y6OoIjY4jdu9wAknjk3cuTsNhCzs6aeQtRbm/5fziLwxjYCynOp0YYWlOrvA==
+	:subject:to:to; s=fm3; t=1738741635; x=1738828035; bh=32c90tDNtO
+	6DWNiSY7q0VoGGCHuKFuoGhAUXmPPfNyQ=; b=UkjCMW5yG/rg1F/32rKg/y7ZjT
+	JKLB9mHXWMXUkfhBkqUDrvL/SsUZ17OlnCMQ+EeioQsZ7Jo7tQRqxDGQHv8VSiGg
+	5qU7NDJsJO7BesVe9se1eTlRRM2Zr0XPvusQe1C2CKimZnpnynnpqxjmdLh6Bkyl
+	dwrW6/Yx4dXO4CJnWb8KHnk7WHqGvIOBaHwqa4+QO9LYtUXsj2qR/pwf2F3nSOQ9
+	RaeV1UPAft6POXdpoLTSeVgny8x75XSSS7zbpwOv5QHXW8iuUkM5EaG4DimClSGL
+	M0gE4meeEnUlQCKIqYX9oRDCMA6PIZ+0i0zCxKlGgzWnJ1Yrf/QyFy47AE3w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738740622; x=1738827022; bh=sChMCtxTYIpsRmKx2VtB3EYBNsSby+sHbf9
-	QP+iNdvc=; b=imnrUaPbVUokdcEdw4rBSl9YQamFph2LT2fZKezPu8/PRqvT7ga
-	jrqtVJlMUP/WWyrccc/rtmpU9aadllV/X4+9iwntIOQ7ndm+6KOnmv34NAPb+Eb8
-	JQ0vfk0EFe4hS1uZGzR0npii/HhR+ZXhhOoj+/A1t8OSBX6Nf1Xl4lj1twXxfRsU
-	4hQjms/qsVa3JMxjWqdYrC1hGT7a4FOGxVJe1nI9BNLcPxMYvZd+9Qp6t2M1ujhz
-	NkgmZgNnmpWN/twJ7zILt/6ZRjxD+0/t9NvSOPtQkAq4kwEEXYnpbU4ra+WERwl1
-	dXBC1VlMr22LMaW6dLPYAkaOS/0AX4/v52g==
-X-ME-Sender: <xms:jhOjZ-g6KozL_ciliPwcUdDSgo99B7wwZXzI4_ohPCnZkNuQDyvAqA>
-    <xme:jhOjZ_CgvWRPqGCFuuMVld2JxRFOlyM4G26L5E6oBoG8s5qAbN0xzhyFrN_l5c5VI
-    e7oI8tD3eKD8NMhCQ>
-X-ME-Received: <xmr:jhOjZ2F-9bfUlov_j6wlHHQX5wTPDgb2LPcNUqrMwC3_tQ-uaXHjT02nLdulhHvLXSLmc6jfNHNScS0XM9rBPAw9NzOWoBOigsrXwzSwlRBC9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdekgecutefuodetggdotefrod
+	1738741635; x=1738828035; bh=32c90tDNtO6DWNiSY7q0VoGGCHuKFuoGhAU
+	XmPPfNyQ=; b=kL2zCrmjBvw3Y0nzDuvXpVNitVFF7nvTbNu8wmh1T/Jmchs4g48
+	80MmcRRiB+1NG+J8Z58nKcVlgmxV6qScs7sI2164/bC+/ZropkBq7XfxSjr6oAxj
+	0z1S495lM3XgiBlQaT7gGsDPScfNR2okiIrqRlvK0czIVDyHRIvmjYcc2FCZOocs
+	I6F/8D05PkFgqpmYegViy0CxL14DcJPDgdFQFuCENb5/5qx1aggF5fWLkKQKMmE+
+	TAtJ3Zydcfo71wDZtXg6X3yZ+rCVKeG/BlgMD9ynTtTIX/cj3lfqaX0M8GYoLV6S
+	vzLRyeM7q0Fwpf1GX8Yf6KiRXTcsKG56INg==
+X-ME-Sender: <xms:gxejZzCjpo644UQoHte9xA7Jw8BU45S8JyAOfQagdqSwlM7Dt35aIw>
+    <xme:gxejZ5i3xsvvAhvMJVgQhNj-sbJ85Po1a_UQ0lMS4Dv5T4Uv0dEjNtrRi3PQQkZKI
+    PhwQsY11Wfea7q5bQ>
+X-ME-Received: <xmr:gxejZ-kTD1QbcUrc65tkS5PqpzlIpfjwVHSkS765BmFzFGEeZ7fS5snuAvdRNJDRSrZDfmxOUTo2TYtKvfnijZDqqz_6fDWJqVkoo66g5oNpdg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvvdekkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
-    hgmhigrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomhdprhgtphhtthhopegurghvvhhiugesghhmrghilhdrtgho
-    mhdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:jhOjZ3RhYccaidOR5LJeXcSWMzPG8ePDmYDNa4Z7F64nKL5pV4HzeA>
-    <xmx:jhOjZ7x6OA1yIB78jdOyzngruj1Svf_lxlfKlAMPBNCRQcGNsOWfbg>
-    <xmx:jhOjZ17Ghw1a8haJDKyttVcT2OpCnynWKNrzl3SMIb3-pVxwSVIM4A>
-    <xmx:jhOjZ4x7TZTuWxsCPvD4HrQEJ_U7KHfJgq6VsvVdYQFcCSpj8rCyFQ>
-    <xmx:jhOjZykqvEcAWMl0Q9L-3JmD-_qqj38f46KWMWEckKwzzRmfxt0Kme4K>
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehjvghllhihrdiihhgrohdrgedvsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gxejZ1w8_gM-kcK_XRKyjXKbNLojBmFsKE_fjb5vYHlugBhzswuKBg>
+    <xmx:gxejZ4QfjsYR_0pZZWHzzeuL6qYRjw8t-PLtzaos-DfOV6Mf7g5qnQ>
+    <xmx:gxejZ4afakGCXCM_OvOxN_5Ka4wytvrUAJqzCmupP0Shb23d-ZeNDA>
+    <xmx:gxejZ5Th3Vtb35wrUpYlh3UyjzOssyikKiqSLXd1u75IaSiSBUHs3w>
+    <xmx:gxejZ-OOCoILN-TaPdOByNAkjdmChWbc59f_RXq70eNQAMODRRE1X43S>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Feb 2025 02:30:21 -0500 (EST)
+ 5 Feb 2025 02:47:14 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e5914d78 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 5 Feb 2025 07:30:19 +0000 (UTC)
-Date: Wed, 5 Feb 2025 08:30:14 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e88829f5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 5 Feb 2025 07:47:11 +0000 (UTC)
+Date: Wed, 5 Feb 2025 08:47:06 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: David Aguilar <davvid@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Elijah Newren <newren@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] difftool: eliminate use of global variables
-Message-ID: <Z6MThg8oEEtx5xur@pks.im>
-References: <20250204225501.597873-1-davvid@gmail.com>
+To: Zejun Zhao <jelly.zhao.42@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [GSOC][PATCH] apply: address -Wsign-comparison warnings
+Message-ID: <Z6MXevArKhRLacAb@pks.im>
+References: <20250205014055.737190-1-jelly.zhao.42@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,104 +87,183 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250204225501.597873-1-davvid@gmail.com>
+In-Reply-To: <20250205014055.737190-1-jelly.zhao.42@gmail.com>
 
-On Tue, Feb 04, 2025 at 02:55:00PM -0800, David Aguilar wrote:
-> Remove the 'USE_THE_REPOSITORY_VARIABLE' macro now that all state is
-> passed to each function from callers.
+On Wed, Feb 05, 2025 at 01:40:55AM +0000, Zejun Zhao wrote:
+> There are several -Wsign-comparison warnings in "apply.c", which can be
+> classified into the following three types:
+> 
+>   1. comparing a `length` of `size_t` type with a result of pointer
+>   arithmetic of `int` type
+> 
+>   2. comparing a `length` of `size_t` type with a `length` of `int` type
+> 
+>   3. comparing a loop count `i` of `int` type with an unsigned loop
+>   bound
+> 
+> Fix these warnings following one basic principle: do not touch the
+> relevant logics and keep the behaviors of the code. Adopt three
+> different strategies for each of the above three types:
+> 
+>   1. cast the result of pointer arithmetic to `size_t` type
+> 
+>   2. try to change the type of the `length` to `size_t` (may fall back
+>   to Strategy 1 if the variable is not guaranteed to be unsigned)
+> 
+>   3. use a loop count `i` of `size_t` type
 
-I think this patch deserves to be split up into multiple patches, as
-you're doing multiple things at once:
+You should split up this patch into a series, as it is really hard to
+follow what's going on. There are a couple of things happening:
 
-  - You remove global state located in "builtin/difftool.c", which is
-    itself not required to drop `USE_THE_REPOSITORY_VARIABLE`.
+  - You change types in `struct apply_state`, which bubbles up.
 
-  - You introduce `struct difftool_state` to encapsulate state.
+  - You adapt `git_hdr_len()` to receive different inputs, which bubbles
+    up.
 
-  - You replace callsites for interfaces that depend on
-    `the_repository`.
+  - You perform small fixes in several places.
 
-All of these changes are great from my point of view, but it's a bit
-hard to follow. It doesn't necessarily have to be three commits, but it
-would be great to split up the refactorings that introduce the struct
-and the refactorings that adapt users of `the_repository`.
+It might also be a good idea to split out the loop counters into a
+separate commit, as those are trivially correct.
 
-> diff --git a/builtin/difftool.c b/builtin/difftool.c
-> index 03a8bb92a9..cd1e5882e3 100644
-> --- a/builtin/difftool.c
-> +++ b/builtin/difftool.c
-> @@ -12,8 +12,6 @@
->   * Copyright (C) 2016 Johannes Schindelin
+> Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
+> ---
+>  apply.c | 73 +++++++++++++++++++++++++++------------------------------
+>  apply.h |  6 ++---
+>  2 files changed, 38 insertions(+), 41 deletions(-)
+> 
+> diff --git a/apply.c b/apply.c
+> index 4a7b6120ac..0c7b89dc3a 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -8,7 +8,6 @@
 >   */
 >  
-> -#define USE_THE_REPOSITORY_VARIABLE
-> -
->  #include "builtin.h"
+>  #define USE_THE_REPOSITORY_VARIABLE
+> -#define DISABLE_SIGN_COMPARE_WARNINGS
 >  
+>  #include "git-compat-util.h"
 >  #include "abspath.h"
-> @@ -36,18 +34,27 @@
->  #include "entry.h"
->  #include "setup.h"
+> @@ -540,7 +539,7 @@ static size_t date_len(const char *line, size_t len)
+>  	    !isdigit(*p++) || !isdigit(*p++))	/* Not a date. */
+>  		return 0;
 >  
-> -static int trust_exit_code;
-> -
->  static const char *const builtin_difftool_usage[] = {
->  	N_("git difftool [<options>] [<commit> [<commit>]] [--] [<path>...]"),
->  	NULL
->  };
+> -	if (date - line >= strlen("19") &&
+> +	if ((size_t) (date - line) >= strlen("19") &&
+
+We know that `date` is always bigger than or equal to `line`, so this is
+correct.
+
+> @@ -1087,11 +1086,11 @@ static int gitdiff_index(struct gitdiff_data *state,
+>  	 * and optional space with octal mode.
+>  	 */
+>  	const char *ptr, *eol;
+> -	int len;
+> -	const unsigned hexsz = the_hash_algo->hexsz;
+> +	size_t len;
+> +	const size_t hexsz = the_hash_algo->hexsz;
+
+The change to `hexsz` shouldn't be needed, even if it makes us match the
+type of `hexsz` as declared in `git_hash_algo`.
+
+>  	ptr = strchr(line, '.');
+> -	if (!ptr || ptr[1] != '.' || hexsz < ptr - line)
+> +	if (!ptr || ptr[1] != '.' || hexsz < (size_t) (ptr - line))
+
+`ptr` is the reline of `strrchr(line)`, so it must be either `NULL` or
+greater than or equal to `line`, so this cast is fine.
+
+> @@ -1158,7 +1157,7 @@ static const char *skip_tree_prefix(int p_value,
+>   */
+>  static char *git_header_name(int p_value,
+>  			     const char *line,
+> -			     int llen)
+> +			     size_t llen)
+>  {
+>  	const char *name;
+>  	const char *second = NULL;
+
+It would make sense to split this change out into a separate commit, as
+it bubbles up into calling functions, as well.
+
+> @@ -1207,7 +1206,7 @@ static char *git_header_name(int p_value,
+>  		cp = skip_tree_prefix(p_value, second, line + llen - second);
+>  		if (!cp)
+>  			goto free_and_fail1;
+> -		if (line + llen - cp != first.len ||
+> +		if ((size_t) (line + llen - cp) != first.len ||
+>  		    memcmp(first.buf, cp, first.len))
+>  			goto free_and_fail1;
+>  		return strbuf_detach(&first, NULL);
+
+This cast should be fine, too.
+
+> @@ -1240,7 +1239,7 @@ static char *git_header_name(int p_value,
+>  				goto free_and_fail2;
 >  
-> +struct difftool_state {
-> +	int has_symlinks;
-> +	int symlinks;
-> +	int trust_exit_code;
-> +};
+>  			len = sp.buf + sp.len - np;
+> -			if (len < second - name &&
+> +			if (len < (size_t) (second - name) &&
+>  			    !strncmp(np, name, len) &&
+>  			    isspace(name[len])) {
+>  				/* Good */
 
-Why do we have both `has_symlinks` and `symlinks`? The latter gets set
-to `has_symlinks` anyway, so it's a confusing to have both.
+This one, too. `second` is iterating through `name`, so it's always
+greater or equal to `name`.
 
-Also, I think it would make sense to rename the struct to
-`difftool_options`, as it tracks options rather than state.
-
-> @@ -734,8 +750,9 @@ int cmd_difftool(int argc,
->  	};
->  	struct child_process child = CHILD_PROCESS_INIT;
+> @@ -1371,14 +1370,13 @@ int parse_git_diff_header(struct strbuf *root,
+>  			{ "index ", gitdiff_index },
+>  			{ "", gitdiff_unrecognized },
+>  		};
+> -		int i;
 >  
-> -	git_config(difftool_config, NULL);
-> -	symlinks = has_symlinks;
-> +	if (repo)
-> +		repo_config(repo, difftool_config, &dt_state);
-> +	dt_state.symlinks = dt_state.has_symlinks;
+>  		len = linelen(line, size);
+>  		if (!len || line[len-1] != '\n')
+>  			break;
+> -		for (i = 0; i < ARRAY_SIZE(optable); i++) {
+> +		for (size_t i = 0; i < ARRAY_SIZE(optable); i++) {
+>  			const struct opentry *p = optable + i;
+> -			int oplen = strlen(p->str);
+> +			size_t oplen = strlen(p->str);
+>  			int res;
+>  			if (len < oplen || memcmp(p->str, line, oplen))
+>  				continue;
+
+Makes sense.
+
+> @@ -1592,7 +1590,7 @@ static int find_header(struct apply_state *state,
+>  								size, patch);
+>  			if (git_hdr_len < 0)
+>  				return -128;
+> -			if (git_hdr_len <= len)
+> +			if ((size_t) git_hdr_len <= len)
+>  				continue;
+>  			*hdrsize = git_hdr_len;
+>  			return offset;
+
+We've asserted that `git_hdr_len` isn't negative, so the cast is fine.
+
+> @@ -2185,7 +2182,7 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+>  			};
+>  			int i;
+
+This may arguably be `size_t`, as well.
+
+> @@ -2257,12 +2255,12 @@ static void show_stats(struct apply_state *state, struct patch *patch)
+>  	}
 >  
->  	argc = parse_options(argc, argv, prefix, builtin_difftool_options,
->  			     builtin_difftool_usage, PARSE_OPT_KEEP_UNKNOWN_OPT |
-
-Okay, you're being careful in the case where we don't have a repository,
-good.
-
-> @@ -749,8 +766,8 @@ int cmd_difftool(int argc,
+>  	if (patch->is_binary) {
+> -		printf(" %-*s |  Bin\n", max, qname.buf);
+> +		printf(" %-*s |  Bin\n", (int) max, qname.buf);
+>  		strbuf_release(&qname);
+>  		return;
+>  	}
 >  
->  	if (!no_index){
->  		setup_work_tree();
-> -		setenv(GIT_DIR_ENVIRONMENT, absolute_path(repo_get_git_dir(the_repository)), 1);
-> -		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(repo_get_work_tree(the_repository)), 1);
-> +		setenv(GIT_DIR_ENVIRONMENT, absolute_path(repo_get_git_dir(repo)), 1);
-> +		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(repo_get_work_tree(repo)), 1);
-
-Okay. Here you unconditionall deref the repository, but we would have
-exited already if we had no repo with `!!no_index`.
-
-> @@ -799,6 +816,6 @@ int cmd_difftool(int argc,
->  	strvec_pushv(&child.args, argv);
+> -	printf(" %-*s |", max, qname.buf);
+> +	printf(" %-*s |", (int) max, qname.buf);
+>  	strbuf_release(&qname);
 >  
->  	if (dir_diff)
-> -		return run_dir_diff(extcmd, symlinks, prefix, &child);
-> +		return run_dir_diff(repo, &dt_state, extcmd, prefix, &child);
+>  	/*
 
-This one is a bit curious. We never assert that we have a repo when
-`dir_diff` is set. But we make `no_index` and `dir_diff` exclusive with
-one another, and thus we know that we'll have called `setup_work_tree()`
-at an earlier point, which causes us to die in case there is none.
-
-Thanks for working on this!
+Do we _know_ that `max` fits into an `int`?
 
 Patrick
