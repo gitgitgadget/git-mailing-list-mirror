@@ -1,103 +1,120 @@
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3872C1514EE
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 08:31:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87FE2144BE
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 09:53:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738830687; cv=none; b=etaGmABETj/nY6dojNGXO6MnOPNw4PYHErE5K0vxKU2JFgMXTEEEzkd60C+oGAQqa8hS2FiMyrJ0r6IqCySGZEgEyjcKfYdlZs90MpIqBM3oJy8f4/9aSOk25YdjH8/xjctMKIM0qJlHBl2xXH2xYVNEEZSANZhKi9b+SAvS4Kc=
+	t=1738835605; cv=none; b=mCWV2Af83S/WesolpVyfd76mqvED8rz5Bu0gGjmroCjXj3fc0SXyXCboTeJYmBvmpcyckzreLyTJ/ZB+YsvdsAeQiZcFiQ1UP9a1r0S+cJYDK95t4NS2aXGX77jPy7slnePHYvEjJ6KtBqFMcKzr4/hV72Fr2A8rriDYAuSVG0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738830687; c=relaxed/simple;
-	bh=KV2AdffQOZAipp+iApOkBcTxufat2wZfdgfD50ix5sI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FKGBetyX+MExZ/4mJmc+u9SFfuK5LTL/B+fRUCOAUkZFUBGsRzOw4cbigal5sZg5mK4NzkU4JO81Tg5oDgx8d6BEwk5FQJfETz8FHhD/KvkJsa0hqV02ZNnpVbiPtN5rp3xBVG+MtshFj9tai6pNTXGn0HSmgWbCDjzpTlCDooc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U5JFr5HD; arc=none smtp.client-ip=209.85.166.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738835605; c=relaxed/simple;
+	bh=4E5vVgXIWSyLSJog3HjbNUXXUvxf8jh07+Xby5CRiaQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fzvBly/IEHxf+g1CLJo9G2grtT+oSaSAtOtv6Y13pOLl0lStuun/GnlNkwA3YXzdDd02dh88K9oUT8lKJRF9L5dSSAIEqBhYZ09uMtKqAO9m6OwEJuPgQqY1xQpBng+zJyhUiXk7ch7jJx6X/ZPXCGpRtpCYhnBNi9h856Az7hs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Br6KSJuR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yy3Cj9+P; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U5JFr5HD"
-Received: by mail-io1-f48.google.com with SMTP id ca18e2360f4ac-844ee166150so19543439f.2
-        for <git@vger.kernel.org>; Thu, 06 Feb 2025 00:31:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738830685; x=1739435485; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vao3POX5D/h+wxwuBixRDFIPGNVihd9avr3HbfPSz3I=;
-        b=U5JFr5HDI8okYNytBrGpLTxUrxnHJjKIJeRgRymXJ6tgeMQAt+JbUpGbKi077rmlit
-         EzQdPOy+fWHSK/oPaeIUCEGWtuO2lTgMcU5DygQIwkBjOlflTBuvfWQfd65iMWYzJw+U
-         OpZgEpSEZPKYEL8w7FahgR+syBiNY/kqNRCuoByfTJL/AVf1ZnR62NDgZzWQ8dQlv36b
-         BMf+noUlnqOl3nOWCQOapru+3oEUbjNkKwAAXZDjhNYd/+bSd5UISwzowucFJSnJjG0P
-         5P2RmF6dvfkFrY0CC5NipRww3a6s7a5l6tb3pMKK2ERDRzo+RGUHVm4o4s5+AZs2RuV+
-         /CsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738830685; x=1739435485;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vao3POX5D/h+wxwuBixRDFIPGNVihd9avr3HbfPSz3I=;
-        b=vh275TiJ3mETenFaDya/kWypnYJE57MVsRWJBSSsjj7m+xOPwRC2c+1NHQ9QsMiusO
-         53/ZE7ErREUT6C0b0FqNmht4ajMvOxnY2XDxnas3JV/rOLwk7b1nUgj2JXt9I7+MKFUk
-         UpygNYcyu1LJ1s89mcQlIW2xOPaWe/JPuWYeai9M9fAnL1u/8II6Cwq3wZRDi+oQMd3A
-         2goZTIwa5xDQ1I1cN892ohfNBnjD9bFC6TBoiY4QKI6dAbk13+wOAYrJ6jg7hQD/Stda
-         GCmvH2zFt8waUJmLSYC7iKY9HTYIrfC+xRVm4q0QIUrSd3oUjXV76WkUSes236StGHnZ
-         RY5w==
-X-Gm-Message-State: AOJu0YzaaSwagwhwytrZOzfghPE+XDz8YfAlHtFRqsSw6wS9aaMQXD3p
-	qJoOnKZAib8Mt+WKXn6hu6SLOEJa6aPxbjl1U/2muhzhaqH7v4wSB1vzbXwMB5K6XOjrHUUSRj5
-	kPJwQoo7f1sq5NjkXwy97fXNoink=
-X-Gm-Gg: ASbGncvFw0hUi7xIuSlT1HHe1SZVHSClZ0DlzTTEccJKYXwPctvDLiDiogoRt7gZ3Il
-	AeWX/RUoZi88wHXKFu67Vbe3tYtBw3LnX7a1JvCMnsAQwC5lxBRiEe4THjGxdqonkJcXjuB8Z3l
-	U9XuMDxGGH9pE=
-X-Google-Smtp-Source: AGHT+IHji372lNd60Te6y/h08pA4iHfquIwzBvwMkXvMtXNad+Wjs1GO9Uyb5RqnymRE9TG0OccBOS/vsGt+RhjeWkY=
-X-Received: by 2002:a05:6602:3892:b0:84f:2929:5ec0 with SMTP id
- ca18e2360f4ac-854ea44048emr700585239f.4.1738830685335; Thu, 06 Feb 2025
- 00:31:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Br6KSJuR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yy3Cj9+P"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id C0E731380139;
+	Thu,  6 Feb 2025 04:53:21 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-09.internal (MEProxy); Thu, 06 Feb 2025 04:53:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1738835601; x=1738922001; bh=42xflh70pL
+	bdt7tWpaCRD/A7wbEfGF66LPHJUXTwcZw=; b=Br6KSJuRT8N+F8imjN/qCUfrcS
+	KBhmEY/oo0dSLhPjs91oj08ud+/MVaOVbyYjLVih8hEBNKtSqM38hPkWmFmO1FsP
+	enrXot93WDVBsGLNON1g1zuXlgrNsl/3YEr19gwrvdT0WQ9dTN1HyTN/V2wASVTS
+	l9vE9NTNJLla5euRAbUqJixOumXv7AD844AyHBP511XjpWhgVFo6c5G5HOCta4zt
+	xlC/WoiOdXN7EHoh3ZTm1pjGnMO5w1MbqDEI20NCumRGgzc4PtOs6qUVW8urus1h
+	vyK4VLT1tVQUNVn6oxNIpsxjA66gW4dQEdBkZ9NX121taaJthvZeSSROCpAw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738835601; x=1738922001; bh=42xflh70pLbdt7tWpaCRD/A7wbEfGF66LPH
+	JUXTwcZw=; b=Yy3Cj9+PnjhzjYHISMpYvcKi4AuOuf0ixKLXkKSRwxAYCLT2Txj
+	jE0TW23dwp6d9wkEAfAEOSUD0pOuquF3risrJWhkXv4kHjOQmcAF21k0CpnRn6ES
+	hHzCAVjkYlq/gSudFz6M3/90xNs/c6wKz8rlug3NzHVc8VdB/jvr+akoVIFHrCCf
+	EYg7GJA1EJKCQ6eoepSXi99H0X9mIBoKuepqVhq0NyApVvFqdRm409/ELftskJEo
+	r8wK77AMdIjv8pkU2OGpYbPgJ/wUBj+rE9oK7lzcB/HfnsYEc0O+k4zPOsfFKjm5
+	Y7USEgXioGpf0tJ0OpzosdvKTZTwhxO2YxQ==
+X-ME-Sender: <xms:kYakZ8zUP8z-XV_eWu4j3sRfOdCx0jiPSRObA8WeKZzxHFM8KfEGBw>
+    <xme:kYakZwT_Yqzep8dGsJXO1FFmUbcRdQ2wwtegeNg3p08rVLs2k9NH4Fx-oZ-mmD7ul
+    As0PUHHNRA4ex8KAg>
+X-ME-Received: <xmr:kYakZ-WEVN41mxnykRDAJJkAv0Vym_C7VTqjsK5Fr7quyPlOmeJCn0Hit_dcrw5lT1o4Cy5H5YV1NU7mSVDrfLFF728Xmo5P-Y41gZQQ-Zfv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedtjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgrnhhuvghlrdhpoh
+    hrrdgrtggrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:kYakZ6i_YfeSRXzL6BzP4bg4JRm9-7hSfXwb3e1ShY5GfKWNRyjmiQ>
+    <xmx:kYakZ-BO88Gph2NYXkcNFJKNrwB7BG5ummnBef-f9xEIkjVERsoTWQ>
+    <xmx:kYakZ7Jx3KQUmxygsL8JlZwASDbUHVJEIoS_k2DCjohMNB9TBTz2UA>
+    <xmx:kYakZ1Dmt97t8AJjneIr7ukbbhP91hrnoGimqgsNwVrmiOn3bWSlKA>
+    <xmx:kYakZx_vQTwEWjyDf3ZqglOfiHOdjcDsFgt4KqE60KaELHfv6dacYUNx>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Feb 2025 04:53:20 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3aa0a9f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Feb 2025 09:53:18 +0000 (UTC)
+Date: Thu, 6 Feb 2025 10:53:17 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Manuel =?utf-8?B?UXVpw7FvbmVz?= <manuel.por.aca@gmail.com>,
+	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: Usability issue: "Your branch is up to date"
+Message-ID: <Z6SGjSik-rRsAGUU@pks.im>
+References: <CAPpV+OaMcViVKok5U0-4HaYyPMKEA7BBzw4t113uAaMndjs5Cg@mail.gmail.com>
+ <xmqqh65b2ci3.fsf@gitster.g>
+ <xmqq34guzi0f.fsf@gitster.g>
+ <CAPpV+Oaq3d3oNE-V3pnpQRNrGCoZr52uY91QtWYxcu1tgG_QXg@mail.gmail.com>
+ <xmqqseottxld.fsf@gitster.g>
+ <Z6MLOA3mJGbPFBae@pks.im>
+ <xmqqikponsk6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250206042010.865947-1-davvid@gmail.com> <20250206042010.865947-3-davvid@gmail.com>
-In-Reply-To: <20250206042010.865947-3-davvid@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 6 Feb 2025 00:31:14 -0800
-X-Gm-Features: AWEUYZnH5JaK6c1VUoFRKToDDcC8yAcJBzEsVvqbUDFrLd9rZ2XNsa7HaAUH8Aw
-Message-ID: <CABPp-BGi51EQvPOgaz8p0RjAJ0zDDeTpMDp__puz_wQH5wowXw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] difftool: eliminate use of USE_THE_REPOSITORY_VARIABLE
-To: David Aguilar <davvid@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqikponsk6.fsf@gitster.g>
 
-On Wed, Feb 5, 2025 at 8:20=E2=80=AFPM David Aguilar <davvid@gmail.com> wro=
-te:
->
-> Remove the USE_THE_REPOSITORY_VARIABLE #define now that all
-> state is passed to each function from callers.
->
-> Signed-off-by: David Aguilar <davvid@gmail.com>
-> ---
->  builtin/difftool.c | 2 --
->  1 file changed, 2 deletions(-)
->
-> diff --git a/builtin/difftool.c b/builtin/difftool.c
-> index 81d733dfdf..41cd00066c 100644
-> --- a/builtin/difftool.c
-> +++ b/builtin/difftool.c
-> @@ -12,8 +12,6 @@
->   * Copyright (C) 2016 Johannes Schindelin
->   */
->
-> -#define USE_THE_REPOSITORY_VARIABLE
-> -
->  #include "builtin.h"
->
->  #include "abspath.h"
-> --
-> 2.48.1.461.g612e419e04
+On Wed, Feb 05, 2025 at 10:40:41AM -0800, Junio C Hamano wrote:
+> If the user, on the other hand, is interested in keeping track of
+> all these thousands of refs, "git fetch" would have to ask and
+> receive advertisement for all these thousands of refs anyway, and
+> at that point, recording the no-op update would be a very small
+> part of the problem, I suspect.  Besides, we have reftable that
+> would make this kind of problem easier to solve, no? ;-)
 
+Yeah, I was pondering whether to bring up reftables or not :) But
+indeed, with them it would be way more efficient, at least assuming that
+we write everything in a single transaction and not via multiple
+transactions. Which we generally don't in git-fetch(1) unless the user
+asks for `--atomic` because we allow for a subset of the updates to
+fail. Consequently, even with reftables we'd end up writing N separate
+updates, where N is the number of advertised refs.
 
-Nice; thanks for working on this.
+This is a known problem that we actually plan to fix. Karthik is working
+on support for "partial" transactions, where it is allowed that a subset
+of ref updates fails without impacting other refs where the update would
+succeed. With this in place we could then refactor git-fetch(1) to write
+the update with a single transaction, only, even in the non-atomic case.
+
+Patrick
