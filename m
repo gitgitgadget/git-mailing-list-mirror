@@ -1,111 +1,145 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FED6213240
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 10:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD923213240
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 10:13:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738836829; cv=none; b=j2kYlpSJBQIUr95cE8UgVw8tZPSXsnffYU8ZY9taH31vVMvWf541z2x04w0/NXIpGM5t840o88ejqaDJcpkYXAQevKlRmRtqUqigcJcZ+NhDthgCOvmESnxvK2yszdjXt47Qvt8vx7l/FdmetZFUC+d7wK6xMLemjz1FmA3403s=
+	t=1738836835; cv=none; b=saWH4xyjsvZ1m+yUxHsdx9vATx1FRMm0AJsE5T0EKIkdlzV8UhIqWVZmeaiHFVxa1X2Ziie6xt4/8UfvUvnuovfY5Atcz/BJ4N1VI0IgCj4mZXRty3+8m/h9icRk6hF99LhHajL73Ebb01ztqUkTfgdeoHZR8GnIzv5PAuS/KWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738836829; c=relaxed/simple;
-	bh=yPejLFDv1b+Mr4C1z3k8kKivcwo8MfA5rHEDiLXUlR8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=otUahPUngqyn/qt5cU9hSOWVY2T6+A99vFds9suYHWRgPibir61KVwr/oSXXGGAA9f7ExiBkghBOjLAtbzBNJkBkSJOTWff9SFBzDB48ZxqCCwmY5G86WFHxrbx6pTiThD7GuiboApGHoK0ooTIPqjwo14Z1kDcJbphaHB8rCiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=faiBMGbA; arc=none smtp.client-ip=209.85.221.52
+	s=arc-20240116; t=1738836835; c=relaxed/simple;
+	bh=XBhjdwVNjyeVE1FJbDfGxw3L6d4jfYOT+ZYNRoMJ6XM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ZdGD0ixI2iRqFS7Yxd7b3lvqG6N6fWglXudkhNHMi08Gs1KKdiae4eDktT95H1ZCVsQtavsFwDniMghmMi3XhurcmOmXuyxjwkEewQoP45gH1r1kA+kPS90QEyxoISY2G0Bea38uxCSoyfX0rNH8cXeWS5cNO6WjJSj0U7kVSd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U+8O42GS; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="faiBMGbA"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-38be3bfb045so1128550f8f.0
-        for <git@vger.kernel.org>; Thu, 06 Feb 2025 02:13:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U+8O42GS"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2f9c3ef6849so1269462a91.3
+        for <git@vger.kernel.org>; Thu, 06 Feb 2025 02:13:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738836826; x=1739441626; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=KLhSoZsB7wfZAU5uCVT2wffKM/RqUhBiH02bS3S5fd8=;
-        b=faiBMGbAGV8WL+8PVaH5v64BjRiP+zK8n2ahoM5cuE0zscmr6vAJZr5t9y5Rv3tmYR
-         8H63AVN0wBQXtQSpOrjGZYjn9D3WtiHmwUrWrBh6ifdymTo5yrSnm1izMB1m5gRo20Qd
-         p3jK6333r6kGbUilNqOCv9ZHjhZqe4ibnK/wqsTK20G/qzcP3xoEMle3EGtJwdrBOFEm
-         SugiLoNmibABuA67ExR9ZIrrvQmkeBdgQPETVnglRK7LPTPxY/A/og29j9EMt55dcEUy
-         /z1u3OjJiUjJ2imWF6Z5Hz8QPmPolJKU27y6Lxvv4HkL4s7jQtOEmjpqUPACeoYJeefM
-         9KGg==
+        d=gmail.com; s=20230601; t=1738836833; x=1739441633; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sAf4nXpa4fdBBck3p9Xxb6RSUnNyuRD7yZvSkAL1Yto=;
+        b=U+8O42GSMFAJKJEXjV1YW2lNHMaBGLJl4MPdSFH5Cd9ITT54heddQWYaoL10qF8gsh
+         VtC9gZVLTTpzmDXBaRG2GgscDMLzbXLy1MaCpw42zM4wGkq7DAeFuPzEiocCK+U62Ypx
+         IbPM8aLYtxBdgEO5FaW3n61bQ5SrOwJSUB3re5t3JrmuIkfBxkkmdH0VuV8DtxLj6IE0
+         49ub8qGE19n8JRNk0egXS9ibI2jyh4A8y8MawgJTKr1FlRkoV1Xem6OCzXPYl2ePuQVu
+         Cz4z3JXPjnmXbbtr1JYM0doxQp8doL3QzaIQ+BHZcSSUHGMP0jlvwaQ7vA5m749BZZfc
+         WJVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738836826; x=1739441626;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KLhSoZsB7wfZAU5uCVT2wffKM/RqUhBiH02bS3S5fd8=;
-        b=CN/SZIjR0uh/btvE76bT1gKh/XgMLckpv4VgItS1iW0qUoLLJKkjAH3q5cfDLSgl0K
-         wvFHqQMXl4J+fjZ+lK83i8PCBP39HhnK3A/4At/pqKaeuvlVTF60TjQbgduTxYPHzAvs
-         7YAMQN3uIfwzOMLqCLnDEH2WFoVSaguXwQEeQFNXZ5FObPg4glTZMQ73ktVIaEneQwn2
-         IUe+iVe0lhNBNf5hVJlkIOjDK8hftc0Qf8juIgDRMGB9gCdoukhj0/8cXlsB37F+/H2m
-         dKul+om4sk1gaDQcVHPmOlEaGZFpwPcWebdWInQKUDWJh1gnj6jFFEeUHiO7cBtykx41
-         vRmg==
-X-Forwarded-Encrypted: i=1; AJvYcCU4kf/8AoYpotZBz8RIkRaycQMDvbKQXMZMhoVMez36pTr33RVKKRIoG0eAcSAx/hBZtr4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwlSAvwlfWuTMu05/efKjpKGzigOI0O6fHbM8pMLrdSa9vTH37e
-	txPSdAde5sARKwH5PFC1wBqLfZ3OxdW44/y6o7Ga22RAna/tOYh5
-X-Gm-Gg: ASbGncvx+FhAN3BFhk6yf3DUk1cOvNOCAPrGLQ4aPnyV14CKzFbeahHl455qdDckw2b
-	Fq/ugFtGmU1VnifzmHx7aEryllB0EyBMSnFMBZIX8KZQjzMzHJ8/Lp7TUePgj8EbmfHNT+ipwZe
-	C87c+h83DLeHs84MIQ0SXucnUHEDX0G15s45H7Rjws5ReREf/iYSEUWt7MUlQW22MYNWApXlBaj
-	z0Ik6zgSqIgIOelVV772vYNhypg1XK7kQd8m05TlsgIxyRMaO8xxIdrU9SeLZ1SGDJKgpjkFIR6
-	RjNJmJWydWyNi89MEQ1V2eXNMHrty8ufGXZ+Dp+bkA8bXQAZNw4Xyg1yWCxYC1ASHM5KuA==
-X-Google-Smtp-Source: AGHT+IHOFpy0p5VyLQhWXc4NCwg2idf7PREsaLovwskvuQ79gIY6iSN2d1JkypNMujAHkQtrh6OZHw==
-X-Received: by 2002:a5d:6da4:0:b0:38a:4df5:a08 with SMTP id ffacd0b85a97d-38dbb2d56c6mr2076492f8f.22.1738836825405;
-        Thu, 06 Feb 2025 02:13:45 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4391dfd7d7asm13856485e9.36.2025.02.06.02.13.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Feb 2025 02:13:45 -0800 (PST)
-Message-ID: <c88b7b54-d032-4d91-95f8-2f139ec45b78@gmail.com>
-Date: Thu, 6 Feb 2025 10:13:43 +0000
+        d=1e100.net; s=20230601; t=1738836833; x=1739441633;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sAf4nXpa4fdBBck3p9Xxb6RSUnNyuRD7yZvSkAL1Yto=;
+        b=K9EGxmdwEgRMUkxxfxquAWR3dlbPnBCa6RiE1XBGDCbt9RpjTgFtvmQ4y+579sXjzS
+         p/XX76fpVfN7lN6ZhcVG7sd8n0gtlZ2Eb3GyokNsevDsSyqtQiZBZJwIFewoOBeG6SR3
+         E35unb3hhZIdEzi/hgTeMDaV0+W3l5p7yy2I3R8a3dbsiIyv2upMcA2SnJuwLG63fjko
+         Di9Ml0Zs74UqazYVtQcPDp0+bZGUxZtFzIduWCNX+TxJHm36wnqbNe42hTYr+elrVZWi
+         8pQ6/24UzzEzjrdskvtVa0JVP6MDGjidBHn0I2vIrk2aodSga5BrEMAYY3e0QmSIkVGC
+         bRAA==
+X-Gm-Message-State: AOJu0YwxH5ssWtfCkjPlJnsw+R8iFZO1z7i1NBRHIwjKAhnFnJirzaNR
+	TAlz0vDqVo011RVy6iqGhlOLLDUZSSOxvfCkmgwuVLLZ2ioLpVu/vQrfO2xgrEQeJHiNEe1agOn
+	MFoZpSVw42DiETHN2AZrdh0wZtFc=
+X-Gm-Gg: ASbGncs9g2SeNW1hw3fgQiBzdDz1Zow4BGm/UmmrKlc9o8Xe0KqcXgk3dEgoM3TlFD6
+	KgSfJYwS3yIOZ3PsktQPTA45826xxgq4jLMx7ZttCvK95gmT94NEpXbAzz97QGdO2o8HAwkQamA
+	JPxsgsunDdMhtcDk2X/P0IthyFTHF5ow==
+X-Google-Smtp-Source: AGHT+IHLz+16OOIPeC0J1DoIINT6SFF5kQqtVpZt1d8EcP2ashLRorrb/SymYwNWJZx3sAczAtik8Uqp5g3wKvtuz+4=
+X-Received: by 2002:a17:90b:2782:b0:2ee:b26c:10a0 with SMTP id
+ 98e67ed59e1d1-2f9e0810f41mr10453797a91.24.1738836832962; Thu, 06 Feb 2025
+ 02:13:52 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Feb 2025 02:13:50 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CAPhwyn32CmjtKu5ivxS9=AJ-h+5GskDUp=rUGvofv-aWLhH8Ng@mail.gmail.com>
+References: <20250201064202.76116-1-meetsoni3017@gmail.com>
+ <20250204040558.34766-1-meetsoni3017@gmail.com> <20250204040558.34766-2-meetsoni3017@gmail.com>
+ <CAOLa=ZShqCkyabVK2PU-XXpx9QS3_W=9QMH6ioJB=t8Ec2NYqg@mail.gmail.com> <CAPhwyn32CmjtKu5ivxS9=AJ-h+5GskDUp=rUGvofv-aWLhH8Ng@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: renormalize histroy with smudge/clean-filter
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Elijah Newren <newren@gmail.com>
-References: <20250205214726.GA30202@raven.inka.de>
- <Z6PsXGnxM3UBR3nM@tapette.crustytoothpaste.net>
- <20250205235931.GB30202@raven.inka.de>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20250205235931.GB30202@raven.inka.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Thu, 6 Feb 2025 02:13:50 -0800
+X-Gm-Features: AWEUYZk22Had_3_PVI1vm-mPTw4lUNWh6_JTbh44b5POwEbxJfOVI4-UlmDIP5g
+Message-ID: <CAOLa=ZQmALUCY1CiJZG-S3fgRvD_wj8ZwSj5dV-9X=f5NpLVfw@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v4 1/5] remote: rename function omit_name_by_refspec
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org, shubham.kanodia10@gmail.com, 
+	Jacob Keller <jacob.e.keller@intel.com>, Junio C Hamano <gitster@pobox.com>, 
+	Pavel Rappo <pavel.rappo@gmail.com>, Jacob Keller <jacob.keller@gmail.com>, 
+	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>, Matthew Rogers <mattr94@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000c06172062d767f16"
 
-Hi Josef
+--000000000000c06172062d767f16
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 05/02/2025 23:59, Josef Wolf wrote:
-> 
->> git rebase --root -x 'git add --renormalize . && git commit --amend --no-edit'
-> 
-> Unfortunately, this runs the command on every commit and gives a warning when
-> a cmmit don't touch a filtered file:
-> 
->    $ git rebase --root -x 'git add --renormalize . && git commit --amend --no-edit'
->    [ ... ]
->    No changes
->    You asked to amend the most recent commit, but doing so would make
->    it empty. You can repeat your command with --allow-empty, or you can
->    remove the commit entirely with "git reset HEAD^".
-> 
-> Is there a way to run the command only when rebase halts?
+Meet Soni <meetsoni3017@gmail.com> writes:
 
-You could try using "git diff --cached --quiet" to avoid running "git 
-commit" if there are no changes.
+> On Tue, 4 Feb 2025 at 14:30, Karthik Nayak <karthik.188@gmail.com> wrote:
+>>
+>> Meet Soni <meetsoni3017@gmail.com> writes:
+>>
+>> > diff --git a/remote.h b/remote.h
+>> > index bda10dd5c8..66ee53411d 100644
+>> > --- a/remote.h
+>> > +++ b/remote.h
+>> > @@ -261,11 +261,7 @@ int resolve_remote_symref(struct ref *ref, struct=
+ ref *list);
+>> >   */
+>> >  struct ref *ref_remove_duplicates(struct ref *ref_map);
+>> >
+>> > -/*
+>> > - * Check whether a name matches any negative refspec in rs. Returns 1=
+ if the
+>> > - * name matches at least one negative refspec, and 0 otherwise.
+>> > - */
+>> > -int omit_name_by_refspec(const char *name, struct refspec *rs);
+>> > +int refname_matches_negative_refspec_item(const char *refname, struct=
+ refspec *rs);
+>> >
+>>
+>> Nit: The first sentence is now duplicated by the function name as
+>> mentioned in the commit message. But aren't we loosing information by
+>> removing the second sentence?
+>>
+> Correct. I considered keeping the second sentence for clarity, but that o=
+ther
+> function signatures in the codebase don=E2=80=99t include comments solely=
+ describing
+> return values. To maintain consistency with the existing style, I
+> opted to remove
+> it. Let me know if you think an alternative approach would be better!
 
-     git rebase --root -x 'git add --renormalize . && { git diff --quiet 
---cached || git commit --amend --no-edit; }'
+I think its okay as-is for now :)
 
-Best Wishes
+>> >  /*
+>> >   * Remove all entries in the input list which match any negative refs=
+pec in
+>> > --
+>> > 2.34.1
 
-Phillip
+--000000000000c06172062d767f16
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: a3109dc39dea63f3_0.1
 
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1la2kxc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNXdLREFDZWF3ZGc4MXNjWWVhQ1dSQ2NQV1d5OG9XNgpIdGE2eG5IMkV6
+TXFqam9lVnpjOElRSXMzQ3dycEJFQlNyR3U3amVDNmRneEUxNHI4YVcwZVlrVy8rcXNLc1VNCk5Y
+blNsV0FDcDhQeGNsRjAzRy9vWXB0dkdJNDJ1QjQzZWl4R0F2czhWQzI4b2h2cW5RazJyblo3eUMz
+Tm1sUkMKWXVOR3lsN2RuenZCc0R1YnZiQVl4amNPdmlDVFJSR0wyRXp6MFp1VGVSck5kUERMb08v
+ejVMT0pRYVlhZ0RMTQpZK05KOGU5T1d5OVNnV0Y5MmY1cG1nNTBrQ25TOW9HSE9WckJMQkMvM1oy
+RjREbFkyRnZTV05TOFNTSjBhOS9YCk5YeXVLczVkWi80c3BCdnBWYUczUzF1R1BDbkVTQkIyWG00
+bEFXenNyQnRtdGJqU2c0aGhyQnBxa2RxWmNZWGQKendaUWs5NVlmRnc1eDFhYXBpQ1cwTGMwNEpO
+cnl4QkluSUpuV1lWcGUyRE0yS3JOVjhvaWVpZGs1a2V1SlI3ZgpUTi9PaW8ySDV0RDFzOEluMFVC
+OFluV1RFUjgyeDZTU3JCcjZtUmhXR3pJcjF0ZzBLWjZiTS80YnlkMjhKSG0rCktSekpaQU1lMjRU
+UXBDdE80UXFmUWRUaWZwWDJyZlJaSW5IOVNyOD0KPVBoVHIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000c06172062d767f16--
