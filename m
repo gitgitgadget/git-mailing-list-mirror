@@ -1,198 +1,183 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-170.mta0.migadu.com (out-170.mta0.migadu.com [91.218.175.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8B913C80E
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 05:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC86A19BBA
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 06:33:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738821509; cv=none; b=en9j9B9NrG/PjjCzcvgV45rqxTXeBRqPf8Qp7aQ0iCQkmRSsMHFe16tDZcP2xnW3iXl7izvyL+m9KAdK6q8S3OO1WNt5rupVzhT/w1k0Z0J866irLLRS0MO9Wvok2yIBld1P/6UlHc4Dal79kRXxUcrOgcsy6b/J8ouULLnrqeE=
+	t=1738823634; cv=none; b=kv0ABsqfjVlzt6UDfnhHO3qNG+5SS1MLIuBmAfwExlWbcNLXzff/5i08yx8j80TCNQBMK9AANt9t/TDt/GtNn4oZZEKYpq4IFYjSxYJOq/CpVuIIuyx8lE81C3+qFKu+Mx6mgNN9VHr2V4h7x2LTuDgCLle3pNF1/T2UQUvx+HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738821509; c=relaxed/simple;
-	bh=sCHTY907ZcUJdidd3z1mE+0s0riA1TYdk6sIyEuL+OI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LuE3QXIwrZ419RlFt4+kjpS0N7jTD4dQp+frEUPjduML7yxnkaomsaHGK6ygN6oZWQK0gKLHXmB9ZgxlOszhYySiLo8l6onRGXfbc0Cq93ZopA9C04iDkBGK/aVbpQG21JuI7IHIQRreWPqsVeNUbS5PZQWJ+C28+o4iimGJnKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dok0tPLu; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738823634; c=relaxed/simple;
+	bh=sx+GFGWVUK29BiZ7d4mdYorLs9qqGiJ3TjcLKcurIxk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=Y+fHuR8PgPzaLTehUBaIxVu0sDrE5P+anwSwiqv7h+baWuB2UqT22XZziViwILrgXHrF/GyKv7q9pyDi2EnXqf25sf6fMJFinc6oLAOp3iyuKZYLWfS//Bz2c3mOaw9noQvo0buu2MprHGScRQI234Z/mecONZVIb5O7tWChQ1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=P5kF+oP5; arc=none smtp.client-ip=91.218.175.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dok0tPLu"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-21628b3fe7dso9918305ad.3
-        for <git@vger.kernel.org>; Wed, 05 Feb 2025 21:58:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738821507; x=1739426307; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=RKzLIbC2fKixEovH6wh792J66Eu8I7gLyeAj7XJqT1Y=;
-        b=dok0tPLumFLYyCVGMmswbzwakGhKnkdMD+Twee87qP/mRv8TEiAOUx/Pa44YWEjnXM
-         cMltoLSWDVyKmManrnN3Banlhop752k0lCUbRdFNByAMaYeioAk2ub+Bilyhd//Mpi7Q
-         wEI02HsogIgIf3Rj0JwaObTLbLuQCPmfP/68phq+HFrV8CJMQ/va0Kva+3WMGGoqlJ93
-         m1PdeppdXOqyx1Ak5hnPT4OrAQbS3r4zce8U0C0cJy7+udaMFDC2fKNrggBzj956S3f1
-         EdU8cvgpoTHewUNLj+JeU7cqoya4oyBIjK/roRB/8WrLFuK06p6KuDxlVsr6fercQ10T
-         Mnhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738821507; x=1739426307;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RKzLIbC2fKixEovH6wh792J66Eu8I7gLyeAj7XJqT1Y=;
-        b=OrXLw2BtaBJtf9K7xFmKHfTAT3bLOmFhtzyIVsTkjauXIFiVhLH3P7GrCewPEHxq39
-         9xiXF1E7x4KpoxhkFt1HL8Bnx902gLK7U7NvIljksXVdIOaLHSgtgKz1kPfEpv97wXCE
-         AmuPl+hLpvXCspIfIXV2Rmo+pjAhyB0Oyy1u6HrRhAXEJcC0DbZBz3jzQJNGVzFFRqrP
-         4NK3kRHYXuwro1InHxEk/z2vHMPIxprjM4wdoSYeIH7Ab6M2/ZVQ+EiFy+qZJngiah5s
-         jlloiUiHk4AdoZuFbimWaU/5ao7X4qsqJVnOzXumJhlcy5hSuiqsZAXbKzKKVtahR4As
-         Onrw==
-X-Gm-Message-State: AOJu0Yyx/LsVPv4UfIXuWvrpWFxFUHvPTrH98i14KTfBGnMjGtmkrIeI
-	ZeDU4yt+vXdqJ9ZfL082Q9jd6tt4JPZFhJxBwV5VSvcog4rglmVlW5d6Sg==
-X-Gm-Gg: ASbGnctnWrET7TgC/EWLpZNj6iPuV7AV/ndEpN3mjqN1HzBbCI5t+RL245yZyIyu/ke
-	LztmTC6GNWyjGtNYxZkqnIR++1JjWsdOe8i9YLLPNs44tgk5TnHo7hZCZ4KQO7J72XoTdSvLfRG
-	PL94+pPnAArAvfDtvKlwPQcpCjxP6ayN+jfVXIz3MCtoWO48pqdx+midJihHFqZN5dMcbaJITsE
-	Z5PgXxwAGn+SblxFICrbxBN2m10er2ONLcJ8+TJ3zzkDeCjvZY7RE2OALTapn1RUWQrHA==
-X-Google-Smtp-Source: AGHT+IGh6zRH/rPGEFLUFt/7shixQXeooq8PTxHqTSp8nkBb4JW+EG9dViIq8TcYXguaAXw2MFVxWQ==
-X-Received: by 2002:a17:902:d508:b0:215:9379:4650 with SMTP id d9443c01a7336-21f17edf7d4mr86479155ad.42.1738821506710;
-        Wed, 05 Feb 2025 21:58:26 -0800 (PST)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-21f3650ce93sm4107345ad.51.2025.02.05.21.58.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Feb 2025 21:58:26 -0800 (PST)
-Date: Thu, 6 Feb 2025 14:00:07 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v3 8/8] builtin/fsck: add `git refs verify` child process
-Message-ID: <Z6RP50d7eRsKRCG6@ArchLinux>
-References: <Z6RPJI10-2QkwyqH@ArchLinux>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="P5kF+oP5"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1738823621;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=g7rxnwKIi6f0W+Ua3z7ZF0CRim0QKCZotuBSI5Ac9zQ=;
+	b=P5kF+oP5ZX9Oer5OJ4tAbbB6Id5VTZwUeb3c7d4DmMrzAfOVNntlSkAEpESvAzPCgUMQkr
+	NB8ROXnftY6zt4ToV+sBunRuV/Skq44X9JcSpxTba6T36rsM4A7H30MEICrLpa0HjkTGQ6
+	uy+E5fHXUipTkOOUq29m0qvJjMNnu9M=
+From: Toon Claes <toon@iotcl.com>
+Subject: [PATCH v7 0/7] Enable doing a shallow clone of a specific git
+ revision
+Date: Thu, 06 Feb 2025 07:33:28 +0100
+Message-Id: <20250206-toon-clone-refs-v7-0-4622b7392202@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z6RPJI10-2QkwyqH@ArchLinux>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALhXpGcC/23NS2rDMBgE4KsEravwv2RLXfUepQtFlhpBagXbm
+ Jbgu1cxtAlxljPwzVzUGIccR/W6u6ghznnMpa+hfdmpcPT9Z9S5q1kRkCCS01MpvQ6n0kc9xDR
+ q33FD3LaUHKmqzrXN3+vi+0fNxzxOZfhZD2a8tusWOGrBGmG7R0AQRo3r9lsuUzjtQ/lSVz7TP
+ 3l6P1N1XfAS0Hk2CI+eb57wiefqUawkHz0D2Ecvf94AMm69aNDkJSVrUJxNj97cPIFsvame28j
+ iE1kOm//m3putb6qHwyHY2HTWpe7eL8vyCzsEkX7hAQAA
+X-Change-ID: 20241129-toon-clone-refs-ad3623772f92
+In-Reply-To: <20250205-toon-clone-refs-v6-0-0bbc8e6d89fd@iotcl.com>
+References: <20250205-toon-clone-refs-v6-0-0bbc8e6d89fd@iotcl.com>
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+ =?utf-8?q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>, 
+ Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
+ Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
+X-Migadu-Flow: FLOW_OUT
 
-At now, we have already implemented the ref consistency checks for both
-"files-backend" and "packed-backend". Although we would check some
-redundant things, it won't cause trouble. So, let's integrate it into
-the "git-fsck(1)" command to get feedback from the users. And also by
-calling "git refs verify" in "git-fsck(1)", we make sure that the new
-added checks don't break.
+The goal of this series is to add an option `--revision` to
+git-clone(1).
 
-Introduce a new function "fsck_refs" that initializes and runs a child
-process to execute the "git refs verify" command. In order to provide
-the user interface create a progress which makes the total task be 1.
-It's hard to know how many loose refs we will check now. We might
-improve this later.
+This series starts with a handful of preparatory refactoring commits
+that make it more straight-forward to add this new option. In the last
+commit we're actually adding the feature.
 
-Then, introduce the option to allow the user to disable checking ref
-database consistency. Put this function in the very first execution
-sequence of "git-fsck(1)" due to that we don't want the existing code of
-"git-fsck(1)" which would implicitly check the consistency of refs to
-die the program.
+This series sets an example on how I think we can further refactor
+builtin/clone.c to increase the maintainability of the code.
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- Documentation/git-fsck.txt |  6 +++++-
- builtin/fsck.c             | 33 ++++++++++++++++++++++++++++++++-
- 2 files changed, 37 insertions(+), 2 deletions(-)
+Changes in v7:
+- Further enhance documentation of option --revision on git-clone(1).
+- Indentation fix in builtin/clone.c.
+- Link to v6: https://lore.kernel.org/r/20250205-toon-clone-refs-v6-0-0bbc8e6d89fd@iotcl.com
 
-diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-index 5b82e4605c..9bd433028f 100644
---- a/Documentation/git-fsck.txt
-+++ b/Documentation/git-fsck.txt
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
- 	 [--[no-]full] [--strict] [--verbose] [--lost-found]
- 	 [--[no-]dangling] [--[no-]progress] [--connectivity-only]
--	 [--[no-]name-objects] [<object>...]
-+	 [--[no-]name-objects] [--[no-]references] [<object>...]
- 
- DESCRIPTION
- -----------
-@@ -104,6 +104,10 @@ care about this output and want to speed it up further.
- 	progress status even if the standard error stream is not
- 	directed to a terminal.
- 
-+--[no-]references::
-+	Control whether to check the references database consistency
-+	via 'git refs verify'. See linkgit:git-refs[1] for details.
-+
- CONFIGURATION
- -------------
- 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 7a4dcb0716..f4f395cfbd 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -50,6 +50,7 @@ static int verbose;
- static int show_progress = -1;
- static int show_dangling = 1;
- static int name_objects;
-+static int check_references = 1;
- #define ERROR_OBJECT 01
- #define ERROR_REACHABLE 02
- #define ERROR_PACK 04
-@@ -905,11 +906,37 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
- 	return res;
- }
- 
-+static void fsck_refs(struct repository *r)
-+{
-+	struct child_process refs_verify = CHILD_PROCESS_INIT;
-+	struct progress *progress = NULL;
-+
-+	if (show_progress)
-+		progress = start_progress(r, _("Checking ref database"), 1);
-+
-+	if (verbose)
-+		fprintf_ln(stderr, _("Checking ref database"));
-+
-+	child_process_init(&refs_verify);
-+	refs_verify.git_cmd = 1;
-+	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
-+	if (verbose)
-+		strvec_push(&refs_verify.args, "--verbose");
-+	if (check_strict)
-+		strvec_push(&refs_verify.args, "--strict");
-+
-+	if (run_command(&refs_verify))
-+		errors_found |= ERROR_REFS;
-+
-+	display_progress(progress, 1);
-+	stop_progress(&progress);
-+}
-+
- static char const * const fsck_usage[] = {
- 	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
- 	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
- 	   "         [--[no-]dangling] [--[no-]progress] [--connectivity-only]\n"
--	   "         [--[no-]name-objects] [<object>...]"),
-+	   "         [--[no-]name-objects] [--[no-]references] [<object>...]"),
- 	NULL
- };
- 
-@@ -928,6 +955,7 @@ static struct option fsck_opts[] = {
- 				N_("write dangling objects in .git/lost-found")),
- 	OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
- 	OPT_BOOL(0, "name-objects", &name_objects, N_("show verbose names for reachable objects")),
-+	OPT_BOOL(0, "references", &check_references, N_("check reference database consistency")),
- 	OPT_END(),
- };
- 
-@@ -970,6 +998,9 @@ int cmd_fsck(int argc,
- 	git_config(git_fsck_config, &fsck_obj_options);
- 	prepare_repo_settings(the_repository);
- 
-+	if (check_references)
-+		fsck_refs(the_repository);
-+
- 	if (connectivity_only) {
- 		for_each_loose_object(mark_loose_for_connectivity, NULL, 0);
- 		for_each_packed_object(the_repository,
--- 
-2.48.1
+Changes in v6:
+- Rewrite the documentation for git-clone(1) --[no-]tags.
+- Remove unneeded conditional around die_for_incompatible_opt2() in
+  builtin/replay.c.
+- Fix typo in code comment in builtin/clone.c.
+- Link to v5: https://lore.kernel.org/r/20250204-toon-clone-refs-v5-0-37e34af283c8@iotcl.com
+
+Changes in v5:
+- Add separate commit to introduce die_for_incompatible_opt2()
+- Small tweaks in documentation about `--[no-]tags` and `--revision`.
+- Better explain the refactoring of wanted_peer_refs() in the commit
+  message.
+- Change type from `int` to `size_t` in wanted_peer_refs().
+- Use lookup_commit_or_die() instead lookup_commit_reference() to avoid
+  checking the result ourself.
+- Add a few code comments to explain some things.
+- Stylish cleanups like removal of unneeded empty lines, commented out
+  test-code and remarks.
+- Link to v4: https://lore.kernel.org/r/20250131-toon-clone-refs-v4-0-2a4ff851498f@iotcl.com
+
+Changes in v4:
+- Introduce a new commit to reduce the use of global variables.
+- Introduce a new commit to invert the flag --no-tags to --tags.
+- Introduce a new commit to refactor wanted_peer_refs() in
+  builtin/clone.c.
+- Introduce a new commit to shuffle the handling of tags refspec.
+- Introduce a new commit to introduce a `struct clone_opts`.
+- Link to v3: https://lore.kernel.org/r/20241219-toon-clone-refs-v3-1-1484faea3008@iotcl.com
+
+Changes in v3:
+- Fail early when the revision was not found on the remote, instead of
+  creating a clone that's in an invalid state.
+- State more clearly in the commit message adding this option is useful
+  for a not uncommon use-case.
+- Be explicit in the documentation the ref needs to peel down to a
+  commit.
+- Die in case we try to update_head() to an object that's not a commit.
+- Allow combining `--revision` with `--bare`.
+- Add die_for_incompatible_opt2() to parse-options.h and use it for the
+  options that are not compatible with the new `--revision` option.
+- Small tweaks to the added tests.
+- Small touchups on commit messages.
+- Link to v2: https://lore.kernel.org/r/20241129-toon-clone-refs-v2-1-dca4c19a3510@iotcl.com
+
+---
+Toon Claes (7):
+      clone: cut down on global variables in clone.c
+      clone: make it possible to specify --tags
+      clone: refactor wanted_peer_refs()
+      clone: add tags refspec earlier to fetch refspec
+      clone: introduce struct clone_opts in builtin/clone.c
+      parse-options: introduce die_for_incompatible_opt2()
+      builtin/clone: teach git-clone(1) the --revision= option
+
+ Documentation/git-clone.txt |  26 +++-
+ builtin/clone.c             | 350 +++++++++++++++++++++++++-------------------
+ builtin/replay.c            |   7 +-
+ parse-options.h             |   9 ++
+ remote.c                    |   2 +-
+ remote.h                    |   5 +
+ t/meson.build               |   1 +
+ t/t5621-clone-revision.sh   | 123 ++++++++++++++++
+ 8 files changed, 358 insertions(+), 165 deletions(-)
+---
+
+Range-diff versus v6:
+
+1:  14e4210ef9 = 1:  e9d0d1bb4e clone: cut down on global variables in clone.c
+2:  f85beed07e = 2:  5c570e08f6 clone: make it possible to specify --tags
+3:  92b998a173 = 3:  bb5d206ee6 clone: refactor wanted_peer_refs()
+4:  3fb2766728 = 4:  344a2f143c clone: add tags refspec earlier to fetch refspec
+5:  d0341cad24 = 5:  93d074d17e clone: introduce struct clone_opts in builtin/clone.c
+6:  d42f291e48 = 6:  457f21943e parse-options: introduce die_for_incompatible_opt2()
+7:  3f332971dc ! 7:  fb4f05547e builtin/clone: teach git-clone(1) the --revision= option
+    @@ Documentation/git-clone.txt: objects from the source repository into a pack in t
+     +`--revision=<rev>`::
+     +	Create a new repository, and fetch the history leading to the given
+     +	revision _<rev>_ (and nothing else), without making any remote-tracking
+    -+	branch, and without making any local branch, and point `HEAD` to
+    -+	_<rev>_. When creating a non-bare repository, the revision is checked
+    -+	out on a detached `HEAD`. The argument can be a ref name
+    -+	(e.g. `refs/heads/main` or `refs/tags/v1.0`) that peels down to a
+    -+	commit, or a hexadecimal object name.
+    ++	branch, and without making any local branch, and detach `HEAD` to
+    ++	_<rev>_. The argument can be a ref name (e.g. `refs/heads/main` or
+    ++	`refs/tags/v1.0`) that peels down to a commit, or a hexadecimal object
+    ++	name.
+     +	This option is incompatible with `--branch` and `--mirror`.
+     +
+      `-u` _<upload-pack>_::
+    @@ builtin/clone.c: static void update_head(const struct ref *our, const struct ref
+     -		struct commit *c = lookup_commit_reference(the_repository,
+     -							   &our->old_oid);
+     +		struct commit *c = lookup_commit_or_die(&our->old_oid,
+    -+						        our->name);
+    ++							our->name);
+     +
+      		/* --branch specifies a non-branch (i.e. tags), detach HEAD */
+      		refs_update_ref(get_main_ref_store(the_repository), msg,
+
+
+---
+
+base-commit: bc204b742735ae06f65bb20291c95985c9633b7f
+change-id: 20241129-toon-clone-refs-ad3623772f92
+
+Thanks
+--
+Toon
 
