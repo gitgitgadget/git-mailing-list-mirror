@@ -1,92 +1,161 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450B31624C3
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 14:10:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB7F15B10D
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 14:19:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738851057; cv=none; b=XOM2c9c5ckblS+yY9+hVzsARwcYD1jIFt8EQM7DrkhqftP/XJS57t475kpqYX9IPCnBgajupgWkqvQvYZqnPhSwGiD5IrqKLVAP6rxCKyvyMtYsJgj9Kd/vJKSn0qVXXdzw9haQ0dtnOh2D9JnOvUoz9QyS8Vy7k2MnRlR1vgw0=
+	t=1738851584; cv=none; b=gy0LZwZofNM+AAJ+TvjxwWTBhsY25B4n31+zXANixGj9LFuXcZpxGvmRSGgjPlfr1PyWdrAUn3+28U6g3CKY2z2y7BZwjuemmBAql4xoPVpT+Zrs3m4YMNV0YGpMVvSIaGJHb9WlrI58zAHHaztYBbzjlnIMxUZz1wl+zjgWJfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738851057; c=relaxed/simple;
-	bh=wNPIyBBcFYGRd9+1def4R7d1mtUPAPTXB/7ZJ8gPINo=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=NoNy+BbmaQ7egwEoMIpLS4A2f7aFNcpsKuZ6sxcy/x87PCauJYB1YZL3q9mq5pOfXFdkf3lWEEKcOZcuvBERpMqLU7+4Wup05fVYSJf4q2Oov/zzOWTxFlG47wiyOG9aTNFiXewpkVIBSm5avZugq5yKijE3A019zRJVZ5pbEy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J2EcjwCH; arc=none smtp.client-ip=209.85.160.182
+	s=arc-20240116; t=1738851584; c=relaxed/simple;
+	bh=zBlYsOkuGD9k+k/Zyb82ISwCCxvDBNDyYT8IWvEqwEI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AWatSfiGrx+nwaFtLzoUE3Nc8tJ5Ok/3tgIDo5JXOx1IFSYJi6F03HM3rQ3rSEEg8RUG1VSFg2y40gdC1LsbPOaYOluAW2KCTm/8/xqSALDANn1jiTMuilsmMFlHxEHMjOqWoXDvjyGoHV8Sxv7yHQrsTgB9SHxbNPkDlZdafdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tne+XKrF; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J2EcjwCH"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-467918c360aso11794331cf.0
-        for <git@vger.kernel.org>; Thu, 06 Feb 2025 06:10:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tne+XKrF"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21f16af1f71so15223125ad.3
+        for <git@vger.kernel.org>; Thu, 06 Feb 2025 06:19:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738851055; x=1739455855; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=wNPIyBBcFYGRd9+1def4R7d1mtUPAPTXB/7ZJ8gPINo=;
-        b=J2EcjwCH2rZ0AHnVPPb74YLAJNgXhu00LAVQ7m32exzPBMofbYWyRm8D7HEwniV+mJ
-         /rbUDL52APpwqM+5M/aLaR0CHENiLDNuc9Cqs2hJBQx/Ze+3gIGB2ew0wYfuerhWi1jo
-         Ya3ZIUOS3GqSLZt028IXqXmcmi1NzpdKWFAIOWF1WlglDQlmlX+4comkJfornMcCMCtG
-         M+nPWg2O2eF914QZDlhw9riVty6V8bJfHE5a7D298r0E9+DUNEthiyCm7/GZ1wNTe0mL
-         yFyCg4OHWQ7nlMKlKfMd/KpKFhuRwg2zuYJSXERiP9tl/RannjAwLga9FbQCltQ9v2U1
-         H0xg==
+        d=gmail.com; s=20230601; t=1738851582; x=1739456382; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+/r5tsWsH2vHMaqbQEhBuvCakbseugMWygdNcbaP74Y=;
+        b=Tne+XKrFwNox7H8AFy1kM6WolJMvcGVk/VgxgDIufqmt7d1A+Kk4sgLzzPp5w7V3yQ
+         d/xrVLm2nwdvWIbEc7c5heiQ8IjttFz6Uec0s2L7cLImuT7mRSX7r4Oo/YC6kAXA3gPK
+         zppBW8S1h7NncoH+RGYeQ/aaJt5Xup7Qw/pwRj3mypp+CtreS/CbAhrry5dD7sbwK4Of
+         GjJrJ2krXWcjHg36t6imhiLfg/YfPy5AcStbqyoSA5EZt9RPvqdQWKj0zEAAa5NuIPbF
+         fmJmInXpQqjhDVBAV3+RXZEChsnFFXY1yvfqj+mBMS7J8Js/wy99HLSB7R9MKDhsdpvG
+         ltXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738851055; x=1739455855;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wNPIyBBcFYGRd9+1def4R7d1mtUPAPTXB/7ZJ8gPINo=;
-        b=B+ZbaC0dW14nx+PYNBq3s1vbWBitNc7vuGUjQT9G47TzRyhD+PEUzz1VUv5qcNXo/f
-         +P6sNFgL7F8ILRQeOryMeMah9kAEbBpMa/t3PrawT971H+2K08/mFcLRbOKGPJmOcmDM
-         5nj8JMe4Pxv9dUNxz4VDJAyRNcsCeiK04+PzsinPN8Gg7xPz8h+FMF+PCXzJnWp6yD+R
-         TNvfEIIFNkW9vcf0e07yDlXptTdaMlql0Ojm9IvJ2fdjPADkBBfQep2Opho1YPt9YjmM
-         NQoZfRQ2t+SXoFwD5WmxR67iOMXb3IKJBH9C4TecbJmqKTZTNft0TW/EyzhbNf6LNIFC
-         OXHQ==
-X-Gm-Message-State: AOJu0YxFiU/MeRfaP4DAdS0gpmOBy4rKlCTEk24t462YhUTS2HoxdIa0
-	nOvsP1kCfXyJQTRgKRbrnHH4ykipwIwQ8A020oUdslSIQxUG0gNQfOz6jdqCtbNTTIuh3D6hlhn
-	C7eGC3Cz/GP5lUWGKPu0Ukgt2GkoIiH4y
-X-Gm-Gg: ASbGncs/Y4obrfPeLAPzDO96mBObqmwUINk5PXT1SUx78lFLLdBI3Ydqo6x4sHXyIsH
-	/VLLRb2q+qsz6B2RWemKTHh2WT36XsOIPqGPrytah6NF9SpTXsHjCSfkzJ+xxyH03qAea3Jg=
-X-Google-Smtp-Source: AGHT+IEu3UZeSti6V6zB41oTwq0TXnABO0FRuXwJOwbI1aabYCjKb3VUdF0AwfuLCeCHbrRCTfk7HAAHkQLObmR+714=
-X-Received: by 2002:ac8:7d0e:0:b0:461:646c:b8fc with SMTP id
- d75a77b69052e-470281bbd39mr97527521cf.23.1738851054873; Thu, 06 Feb 2025
- 06:10:54 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738851582; x=1739456382;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+/r5tsWsH2vHMaqbQEhBuvCakbseugMWygdNcbaP74Y=;
+        b=acIC9A6QmjEcJKInhfoTmvzfBXZjucczsHilJG4HN1GL9GH6ksnlk5+YHmGI4r0Zwt
+         0HhFEgrr8Z6NNkCcpcpC5EgsgewqIQP1xnLM5Qo+XkkbBiw1qinWAadCoyFz01FvW8IQ
+         pI7q8KtfTTWXByZTKtgu0S/C6OjQvZaojMFSZxEnTH9bnF4e4QGrEk4/VZmyXAlGlSI7
+         PaEuUbrqCKRB9SP9dThduMTRRGYWFXrbZ32IQrq8+zPu8gvxuvUpk3qB+exWFmMU3AHo
+         iTcpNPm/ZWPIGHl9IRRF/jRc7+7POgujcvROc4lSEJhTK/8Q2EsZ82KR0012KwbcQs0z
+         4iXQ==
+X-Gm-Message-State: AOJu0Yy3filw2JiN+JQfo9DM8F7DZz8JkpxNLlw4G/kUrWG6pGpYTHjB
+	uzbuTMgxGFJbL3cDy18idf6Yd8e22EEU7EdhAYLFZ6KQKeQcH440ZkyHsw==
+X-Gm-Gg: ASbGncvquacOlV77UCZcMsvM0FiHecZh32TM0pZFPnavkElV0u2injeRrRlLISN4pGW
+	x4LmRmDUb040sJnRrF0elbk0c0dkVksuMpXpxZfWn+GEFL6/eElqf1fsuRnHZ65YCRhCab6V9NR
+	Z/s2UltfY3tPBFXkXs8dUz1THQ9yFD7IzGuFbAIPbchfFvcqgPFtsVz7O8ham54MngqSZLhyjhI
+	h4DAcaWlvAgpJzLKMO/dg7275Kh0KzgxJ2mh4vwCicmqPIIeeEzThKO2HprxZY7lYd59A==
+X-Google-Smtp-Source: AGHT+IEPgAAkbCl880bru7KgzcRDMsZSDbqzC802fL4tJBFm5PYkT2WhYR3vE3nFSJL3Fr2XvNiWOQ==
+X-Received: by 2002:a17:902:ce86:b0:21f:123b:8f84 with SMTP id d9443c01a7336-21f17ed30f3mr127367725ad.46.1738851582281;
+        Thu, 06 Feb 2025 06:19:42 -0800 (PST)
+Received: from localhost ([2604:5040:11:69e::e973])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-21f3683dab0sm13149325ad.139.2025.02.06.06.19.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Feb 2025 06:19:41 -0800 (PST)
+Date: Thu, 6 Feb 2025 22:21:24 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/16] path: refactor `repo_common_path()` family of
+ functions
+Message-ID: <Z6TFZGNjs3Xfkh9x@ArchLinux>
+References: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
+ <20250206-b4-pks-path-drop-the-repository-v1-1-4e77f0313206@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: USA Linux UAE <usasoftwareengineer@gmail.com>
-Date: Thu, 6 Feb 2025 14:10:44 +0000
-X-Gm-Features: AWEUYZkItW9c46D9GiWpMseAEAJDl-Pnm-vtjf5B9Vee3EAR7gSliNtKUbux_bg
-Message-ID: <CAOXJ2J-StZYg4E9eGug=wHNjBu3aPdoy0x17aS9jLn14SyfJkA@mail.gmail.com>
-Subject: Managing one github repo with Gitignore and Submodules for two
- different remotes
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250206-b4-pks-path-drop-the-repository-v1-1-4e77f0313206@pks.im>
 
-Hi everyone,
+On Thu, Feb 06, 2025 at 08:57:57AM +0100, Patrick Steinhardt wrote:
+> The functions provided by the "path" subsystem to derive repository
+> paths for the commondir, gitdir, worktrees and submodules are quite
+> inconsistent. Some functions have a `strbuf_` prefix, others have
+> different return values, some don't provide a variant working on top of
+> `strbuf`s.
+> 
+> We're thus about to refactor all of these family of functions so that
+> they follow a common pattern:
+> 
+>   - `repo_*_path()` returns an allocated string.
+> 
+>   - `repo_*_path_append()` appends the path to the caller-provided
+>     buffer while returning a constant pointer to the buffer. This
+>     clarifies whether the buffer is being appended to or rewritten,
+>     which otherwise wasn't immediately obvious.
+> 
+>   - `repo_*_path_replace()` replaces contents of the buffer with the
+>     computed path, again returning a pointer to the buffer contents.
+> 
 
-I'm hoping to get some advice on managing a GitHub repository with a
-slightly complex setup. We have a main repo that utilizes both a
-.gitignore file and submodules. Our goal is to push this repo to two
-different remote repositories (let's call them remote_A and remote_B),
-but with a key difference:
+I want to ask a design question about this. Why do we need to return the
+raw pointer to the `struct strbuf` for the last two cases? I somehow
+understand why you want to do this. You want to follow a common pattern
+for those three functions. But I wonder should we let the caller to
+decide whether they want to use the raw pointer?
 
-remote_A should respect the .gitignore file as usual, excluding the
-files and directories specified within it.
-remote_B should effectively ignore the .gitignore file, and include
-all files and directories, even those listed in .gitignore.
-Essentially, we want the opposite behavior of .gitignore for remote_B.
+And in this patch, the return value of the last two cases has never been
+used. Until I read the next patch, I have seen the usage of the return
+value thus I could understand your motivation.
 
-Additionally, we need to ensure the submodules are handled correctly
-for both remotes. Ideally, the submodule pointers should remain
-consistent, regardless of which remote we're pushing to.
+> diff --git a/path.h b/path.h
+> index 5f6c85e5f8..3c75495e1a 100644
+> --- a/path.h
+> +++ b/path.h
+> @@ -25,22 +25,20 @@ char *mkpathdup(const char *fmt, ...)
+>  	__attribute__((format (printf, 1, 2)));
+>  
+>  /*
+> - * The `strbuf_git_common_path` family of functions will construct a path into a
+> + * The `repo_common_path` family of functions will construct a path into a
+>   * repository's common git directory, which is shared by all worktrees.
+>   */
+> -
+> -/*
+> - * Constructs a path into the common git directory of repository `repo` and
+> - * append it in the provided buffer `sb`.
+> - */
+> -void strbuf_git_common_path(struct strbuf *sb,
+> -			    const struct repository *repo,
+> -			    const char *fmt, ...)
+> +char *repo_common_path(const struct repository *repo,
+> +		       const char *fmt, ...)
+> +	__attribute__((format (printf, 2, 3)));
+> +const char *repo_common_path_append(const struct repository *repo,
+> +				    struct strbuf *sb,
+> +				    const char *fmt, ...)
+> +	__attribute__((format (printf, 3, 4)));
+> +const char *repo_common_path_replace(const struct repository *repo,
+> +				     struct strbuf *sb,
+> +				     const char *fmt, ...)
+>  	__attribute__((format (printf, 3, 4)));
+> -void repo_common_pathv(const struct repository *repo,
+> -		       struct strbuf *buf,
+> -		       const char *fmt,
+> -		       va_list args);
+>  
+>  /*
+>   * The `repo_git_path` family of functions will construct a path into a repository's
+> @@ -243,6 +241,12 @@ struct strbuf *get_pathname(void);
+>  #  include "strbuf.h"
+>  #  include "repository.h"
+>  
+> +/* Internal implementation detail that should not be used. */
+> +void repo_common_pathv(const struct repository *repo,
+> +		       struct strbuf *buf,
+> +		       const char *fmt,
+> +		       va_list args);
+> +
 
+If we decide to make this as internal implementation, why we don't just
+delete this declaration in the header file? Do I miss out something
+here?
 
-Could anyone offer advice on the best approach for this scenario? Are
-there any recommended workflows or tools specifically designed for
-this type of setup? Any insights regarding submodule management in
-this context would be greatly appreciated.
-
-Thanks in advance for your help!
-
-Amjad
+Thanks,
+Jialuo
