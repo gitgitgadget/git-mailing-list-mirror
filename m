@@ -1,121 +1,136 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDA315B99E
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 22:23:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8232417E2
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 23:17:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738880625; cv=none; b=G25JLAV4jX98jl2vHoBAWMKEqdI0wJpvJOk0nRN+vfbfdxXJcHu7FjmKr8MaJZgu4qiiCLK+kawNDz9/okuPZyW5uDknYScXBwyKoY8DV6dStwGd2vHHTZFeO1l1LjBMzsJEJCWSGfBUpvm7GECuk+L8AHaLjj0iTFvpvTN+EME=
+	t=1738883840; cv=none; b=WDAo85aLVouhKbEL3kzbO3OaQp3oTkO60Pu0DpFQDZxQ6UqoyIG7fw4wGRYLvf8b/1BHTMTnbXalWpEGSSgwB2TAalq9aKDgwjBk8fiEkmHsCoSbHPkpzQJCTLf3D1udXRpjc6RNya0UIu5nTn5pjS7HBCevyKiFkw2ucvkVymE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738880625; c=relaxed/simple;
-	bh=Qhp7XJYLd33m3VsTrjIB3E312+U7pmnwwsEY780uFgQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=on8sN/4dTmQopwGQ2jKNr7thB/9b4BqTkZ0K+lWn8Bong4jtP1aHxPy/ePbW71ESWDuFaCddV1G8zXu+sK2lbYgame7Iy7s915Hz/gKAEe/GmkWf97B82EqnwwOKjchqC/EBAbuDuq0Ddq8C/7YwIgrxeIx5TSA8Pnl+XBS0g20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZY8LfZVq; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1738883840; c=relaxed/simple;
+	bh=iY7fOeq8NcheBoM6RPQdCO8zojDvVJOVHfEihhOpU24=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PvRWof7AHQtxk2emslCBZNhU9VetgsaFY1xFHnAohMgRwAc2GrTwP5Kur8vuzvsUQWyvrNz/Zoeirfvc6ZFtg9CeEvy1YLvcpke5hFZGYjFS75udxe3vu7QJJy3eyjtuxQiUm8qrPgojLLM2JNdpTMo5DUZpjSy4uP45AZaFinM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u8hklwgC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=smjsH8BQ; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZY8LfZVq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1738880620;
-	bh=Qhp7XJYLd33m3VsTrjIB3E312+U7pmnwwsEY780uFgQ=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ZY8LfZVqdzJ1+0eIOIY7vrvMutkCkbCqEaQip3Sb0914Xxq9PHuQnfge1DKgLHRoh
-	 AC/uRRBBzGY7TR6GeKm3COmK1WXie3xZO+xGd6Duw0Beiq3ycWycfVTiOwVgfenVXF
-	 FJWAWdNifk6UQrfe9VQ4WDaO+86K8i6vuRkC/kNKup6ln/HBOerRhRAjZUTib0HVsI
-	 PCHo1su6s3AGaj4gu9a91ENJbiM5xp+HIFjNxOfVYfouLgR04FMiTlhM5/I7IjQB5b
-	 o26ZELFlaJZYsjy2+P/RM3RNOiD02/L3DEJquhq2iGLewajOBipncCnHuNBz0zb4Yo
-	 8AfuzU/sPfEdwk0dagcQnNr2fD6SvTT+ELvbfg+YKWuxnkAoqJHaI0IlOYim8tjAAV
-	 cIxEQ0YkdF8jJKRDaMeNqU+NcuWRjODUBZIoKmDUaIpwU40rn0za3xtMNogVpwzR8n
-	 fTVMzfTIufL1/FqPCwZP8wiqUnX5B5Wo0y6ut7xPFazTf1QD2JS
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D109B20076;
-	Thu,  6 Feb 2025 22:23:40 +0000 (UTC)
-Date: Thu, 6 Feb 2025 22:23:39 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: USA Linux UAE <usasoftwareengineer@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Managing one github repo with Gitignore and Submodules for two
- different remotes
-Message-ID: <Z6U2a0l0kX0MmNFN@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	USA Linux UAE <usasoftwareengineer@gmail.com>, git@vger.kernel.org
-References: <CAOXJ2J-StZYg4E9eGug=wHNjBu3aPdoy0x17aS9jLn14SyfJkA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u8hklwgC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="smjsH8BQ"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id B1E6D1140114;
+	Thu,  6 Feb 2025 18:17:15 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 06 Feb 2025 18:17:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738883835; x=1738970235; bh=2y4WlrhVw1
+	ctQr2IvQzE9HTnSmMjuLlDhx2FykvukXI=; b=u8hklwgCU7OJzYgFokcn1kIPot
+	qHTJpcasK2q43JeU2ylar8CDJcNFa8hGB3pLRza9K1Hs7EmFUUcCcREfMcvEKnGe
+	FW9OAUbpWf4x6zeJR4uV0Nx9gpgyJFzNk/bzdaWDgu/cMtCOp+iGZKg+y0J62R6X
+	7+jAck62mfJiogrvbEhJxcYDAMERTmorHQIlqj6jpF2NvfdA46GoSDDSbEvxQKmh
+	tazlPRM+bD2q3uVhuGDshfnrxMTcxthlm/cjShPX2HkxADnY4XxTYWy+EZphhrQz
+	QUuXL72JwCkgQ37NKBfkFCDh4WWSB39HUeKKwrEA4JI9R0c3jx8/GA10WoFw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738883835; x=1738970235; bh=2y4WlrhVw1ctQr2IvQzE9HTnSmMjuLlDhx2
+	FykvukXI=; b=smjsH8BQQv9XSPs3QWHj/wCU+awUHtnv4HL4OkmaY9nl/RcEicG
+	087BTnHQWltE7xsG4eSFL2viXyKEj+5gTBBJ5ujtGlFV+WKq0u85gu3a23m3LWxo
+	ad4UDzkwy2DbYBJTamW1TIXoz6hDmgRcD1NlTR9HE2TC9S7HskL8pZY+QuJ+uv5A
+	JTCERVQ4HQ5Hl2N3qiadU/6kdnPRzz11fMyUmdF7I4VUBIyj/2MABjjz8uFIBmWk
+	27HYVgcOu/pzYhMU46nUc+H59qc6BmGJFs6PRB7l3doxImSuBvwdG+WjZpDwNnZJ
+	XffZ6x+t48wQRvGCxNeS7El9zLpA/eJECCw==
+X-ME-Sender: <xms:-0KlZ6Dc4JLpBtQ4oi5x4YE7ao0PcCag24gwCk-l01c5KBs7h7gGmw>
+    <xme:-0KlZ0jMa_t1hdMf_qEKTTik62sipdkr0hIaUFZ_UJ4tHwaxmkYEty4QPT2R9xMqP
+    J1_AivOfJnIY7XbNw>
+X-ME-Received: <xmr:-0KlZ9kCL6AneUXPW5Dz5QOphQbW8up12O4MqImtkz_Wiqk7Zq8x3ryFf5lXxWh6H13uL_mBBpDwD1Uv4CEArx16MTyvTTte0q2b>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeeikecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
+    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhsse
+    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehkmhhsohhmrghn
+    ihesrghluhhmnhhirdhntghsuhdrvgguuhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-0KlZ4yYgoMi4Ndpcbpr7f6IruRMYjuKJR9WDUGU4nb0FHpS0-A45g>
+    <xmx:-0KlZ_R__JgiyuMYC_m58pWhJwV69e38adGip_73wEtfygoXRsT7pQ>
+    <xmx:-0KlZzZPTgwVJBlpSrpVq2MgXaGqkOOM1xlyG0Y2qF5WNXxNVAUz2w>
+    <xmx:-0KlZ4TP5-TQA2VqSzQn8bh5L3zXWB43Yawme7VfAFVsXJfTNpRqlw>
+    <xmx:-0KlZ9NKysp_7cBhnqaTEqSNt-QGHTDXRk-z9LVVZ_Dq5UpXVSOtM7Ck>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Feb 2025 18:17:14 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Kapil Somani <kmsomani@alumni.ncsu.edu>,  git@vger.kernel.org
+Subject: Re: `git p4` broken on machines which do not have python on path
+In-Reply-To: <Z6U1GoGVA7IiPg3A@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 6 Feb 2025 22:18:02 +0000")
+References: <CANF_+=4dG7bVF5n+s4ezHR=HneeMgvYNhsOjsz7e7bFapG2f2w@mail.gmail.com>
+	<Z6QUeaoH_tV2ncwn@tapette.crustytoothpaste.net>
+	<CANF_+=7hM7QqLNE3d4=UO-8erYoeQwYG5SrsDTXtgqZq3AKJwg@mail.gmail.com>
+	<Z6U1GoGVA7IiPg3A@tapette.crustytoothpaste.net>
+Date: Thu, 06 Feb 2025 15:17:13 -0800
+Message-ID: <xmqqmseyhddy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="P7dS4CdBvyW0mLiL"
-Content-Disposition: inline
-In-Reply-To: <CAOXJ2J-StZYg4E9eGug=wHNjBu3aPdoy0x17aS9jLn14SyfJkA@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---P7dS4CdBvyW0mLiL
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On 2025-02-06 at 02:12:02, Kapil Somani wrote:
+>> Thanks for quick response Brian
+>> 
+>> Yes, our team compiles git for use within our organization.
+>> I'll reach out to them and see if they can provide path during build.
+>> 
+>> Meanwhile, I was able to update copy of the git (compiled by my team) to
+>> use python3 on shebang line.
+>> It appears that the git-p4 is compatible with Python3. Is git team planning
+>> to update it near future?
+>
+> It's my understanding that it's designed to work with both Python 2 and
+> 3.  It's unlikely that the shebang will be updated until it's no longer
 
-On 2025-02-06 at 14:10:44, USA Linux UAE wrote:
-> Hi everyone,
->=20
-> I'm hoping to get some advice on managing a GitHub repository with a
-> slightly complex setup. We have a main repo that utilizes both a
-> .gitignore file and submodules. Our goal is to push this repo to two
-> different remote repositories (let's call them remote_A and remote_B),
-> but with a key difference:
->=20
-> remote_A should respect the .gitignore file as usual, excluding the
-> files and directories specified within it.
-> remote_B should effectively ignore the .gitignore file, and include
-> all files and directories, even those listed in .gitignore.
-> Essentially, we want the opposite behavior of .gitignore for remote_B.
+Correct.  The CI has jobs to try git-p4 with both python2 and python3
+since Mar 2020.
 
-Unfortunately, there is no easy way to do what you want because you
-essentially have two separate, independent, and diverging histories.
-Git doesn't offer functionality to push only part of the history, and
-`.gitignore` is honoured when files are added, not when pushing.  Once
-files have been added, `.gitignore` has no effect.
+> guaranteed to work with Python 2, since `python` is more generic than
+> `python3`.  When that is, I don't know, since I don't use Perforce and
+> don't maintain git-p4, which has a separate maintainer.
 
-> Additionally, we need to ensure the submodules are handled correctly
-> for both remotes. Ideally, the submodule pointers should remain
-> consistent, regardless of which remote we're pushing to.
->=20
->=20
-> Could anyone offer advice on the best approach for this scenario? Are
-> there any recommended workflows or tools specifically designed for
-> this type of setup? Any insights regarding submodule management in
-> this context would be greatly appreciated.
+I am not sure what story about shebang is discussed here.
 
-The best way to do what you want is to put the extra files from the
-second case in a separate submodule, which can be pushed to server B but
-not server A.  You may want to add a script to handle the case where
-they do or don't exist and place them in the proper place via copy or
-symlink if they're present.  You'll want to ignore them in the main
-repo, though, since you don't want them to be checked in accidentally.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+If the complaint is "your script says '/usr/bin/env python', but my
+users don't have 'python' on their $PATH", I think that is barking
+up a wrong tree.  As a general principle, we try not to rely on
+"env".
 
---P7dS4CdBvyW0mLiL
-Content-Type: application/pgp-signature; name="signature.asc"
+Just like other scripts, we munge git-p4.py script to replace the
+shebang line to use the path to the python binary specified by the
+builder into resulting git-p4 "executable" file that is installed.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
+We do this (not specifically for git-p4 but as a general principle)
+because we do not want to get affected by random customized versions
+of stuff end-users install on their $PATH that overrides the ones
+from the system that builders determined to be used by Git.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ6U2awAKCRB8DEliiIei
-gVKFAPwN0MLMd58U369AT4daqu954U/aPI2jMhuZ9/7E5GemHAD/fKB0Lx1NrQRu
-DuWoaKD2XLFQ4bl7QmcF0/ehMaZzJAk=
-=Wcv+
------END PGP SIGNATURE-----
+Is the complaint that "on my system there are /usr/bin/python2 and
+/usr/bin/python3 but no vanilla /usr/bin/python installed"?  
 
---P7dS4CdBvyW0mLiL--
+So it is your responsibility to tell the build procedure that you
+want to use "/usr/bin/python3", as the build procedure defaults to
+"/usr/bin/python" when you do not specify any.
