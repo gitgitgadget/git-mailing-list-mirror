@@ -1,185 +1,101 @@
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FAA72288D0
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 12:05:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F134F21CFF7
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 13:04:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738843517; cv=none; b=t0pkOA2c9P5cFiTQ6tcvwYidz8fyA5B7JtHkQRSUex3u9/8toRCMiuAYbqjHoIBWDpbStO/vmVx+jwobtiF31dFbU9HbAZpZoR2m9Ba5aI3Qfmi5IneYZuljH+k5PP4c8Fr0S8s6U1hrq8Xkma3T5yggW4FaGPUoXcy9FgOqAX8=
+	t=1738847093; cv=none; b=TyIUkP33zwYBfeV/a9Vgw0QQr3gfKSOMepGLNBOp+3noYCHLW+9zGjmEcEKfvANy/XtqStJCyNWrULV82K6YW4jAfZZO7vUm3cVzSgMeNH6PeXvSUPw6UyAVu1+gxGxcXE2kVU2/E0ncDjdfEOOoDOWzFpJpE9NI7noyzRoIXow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738843517; c=relaxed/simple;
-	bh=Mvmu1ner0mz0WXG/MpxwQId8RvH1VgGQ2GFkXPwEk7Y=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=f8fvKf1mCpVgTJDZF69DvGubQXFP+aekHSVHplzUdSz+0B7LUpZZS4YFTBeILetqBJ5V9nXKs1mFvXBthbCJgkkO1E27AJxjMhX0apeZMj7Vl/FZOeJNZ7X4fgkP/gcy6GhMH88g2rITMiS4/LUFAoQ+3q4rZWf9jnh+9D5yTKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OWbkP466; arc=none smtp.client-ip=209.85.221.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738847093; c=relaxed/simple;
+	bh=mZWVG2NM+wqWCaGslbgRDpaJNVZ8s3EOLHUSe9SAWr8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q729pc+7lPidKWOA9rALOOls/CwUfbTbLgXnpPyX/56IXWsrD/a5lpuvLru89PVpxSQ0lQ7LXErMDoB7c9FBgX5gieHLdjtidbVlM4Zo3Vs9QG45P0rovZU9JuYWtLrMgzwWiJ2Z4AoTVUF2Hi0cb90R2aF97feD5HIsOTZPdic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RGdGiOdb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f3w1rokF; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OWbkP466"
-Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-51f2a8fd0e6so44057e0c.0
-        for <git@vger.kernel.org>; Thu, 06 Feb 2025 04:05:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738843514; x=1739448314; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=409E27dZKpbN8frRhUh0OcHnWOl1cfCCC8Kt9pIObnQ=;
-        b=OWbkP466bigYPcwB6jK8iu7fXiUo323ikIiXjiNxKDEON5HszsHRbztow0U+mBrKO3
-         7S1Rv0L7DVKnr74ViaY311babEPZx66pgCU83AgMYgR8p2bnPUkPIWzDP7wqTwbKNKEp
-         Px7BNHI28yQ6lzua+sLme+bvav0+o9TDBI/FoQtgk0DwvovtnTGgQkF6eG1cMw76Z3HN
-         M0wi4JhzWNPI4aPE9enLB4A6eNHVq1lRDzpE9kWu3EHxyqHyVN09raUvIUbiWt/KBTym
-         x6qYfb3gFy5Jiq5G1XJwHDhYAD2W/09fQbpsGgNNHyYGERdzv0x5M5WoRihHRqoSeHmw
-         MLtg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738843514; x=1739448314;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=409E27dZKpbN8frRhUh0OcHnWOl1cfCCC8Kt9pIObnQ=;
-        b=bm0CYE6VM6Wr5igpqGS7N1H5X303vqE4KDDwJxsuTwdX4YYw2vqGDApE7N7x7Rbej+
-         1mU8tJkcRQ8Yw1iHlGEiOZfzborWeO789G+xqiEuZq/9fE/z1n6G9EaxYgL2X/Wkn2Oc
-         0Ll3CZiRXJC+yUle8JjFn8HxzRkhuGFmskP5XSwoYjxDw2R0ilLn7+VbL1WWtwHNFM8Z
-         XuSik2SIRCIbrUVOK58Q7kv6Aoea3U5fxJ0kIrIzW9eZvmPURpbCUmk+tawUadL6UgRQ
-         pgIDoFjwuQwyfG5aj7UTD39on2+PzSuasVG15Leq4TNjH59Alc6A6dSoN8GpwvK+1BHC
-         1rxw==
-X-Forwarded-Encrypted: i=1; AJvYcCWlZRCa2n7zlI6JZm6s3X9AUSwOirMkCJavbtGHv2NlYlxaVK1utHnQqbegSZdP4r07Mvo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yytw2e3njoGnqUmYloGQ0AdYs02jdkF6EwKkn0Q0M2Zse/j2Dfw
-	vQKNmu/TMCgAswEQrwgmYrhRr+qv5ig8b5lCdy0mHlIuUQuyCmC9yNRTehAZWSKKI4Tk87sfjbd
-	bmyYJrc4It5o6MIhPxtt5uLN7ryIP/+Qs
-X-Gm-Gg: ASbGncsbwy4JSwJjv0CEZRLTAdqYhILTnBWG51JYODLBwOzkWtEoZ9N3Ie4B6UKO7Wg
-	zmz29ppmwTIp5R2A2rthdLqDNneDbUw0QcbKnpKsnwHvWGKMG/UedrcU0fDMUjdgTpd98tW16iD
-	aTZmmWNgLV+9XsEEex80D+qAe8Bmy67VY=
-X-Google-Smtp-Source: AGHT+IFpWG5aHUgvrViIzj43Ae1RDrLCxSnu52ToADa3Bf4G4GS57fy04/EOq8ol4zHWTHLVkhlEl226AuQML/NXd9M=
-X-Received: by 2002:a05:6122:190b:b0:517:4fca:86e2 with SMTP id
- 71dfb90a1353d-51f0c528362mr3573925e0c.10.1738843514108; Thu, 06 Feb 2025
- 04:05:14 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 6 Feb 2025 04:05:13 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250206-b4-pks-path-drop-the-repository-v1-5-4e77f0313206@pks.im>
-References: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
- <20250206-b4-pks-path-drop-the-repository-v1-5-4e77f0313206@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RGdGiOdb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f3w1rokF"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id BC04011400F7;
+	Thu,  6 Feb 2025 08:04:49 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 06 Feb 2025 08:04:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738847089; x=1738933489; bh=mZWVG2NM+w
+	qWCaGslbgRDpaJNVZ8s3EOLHUSe9SAWr8=; b=RGdGiOdbUmn4J3KAxMfHQQQ4+A
+	GH2SoP9qODLQmoMCHOpwhJYQx3oTMFhRoyL+WVm9onE9Wc2KLpHL1ZGe+75DOZAY
+	H84Lm1+IVwJKCaJBdSQdrjy04m+pl8hiUePbyLQxhAS5JNqXhNKHhgTD65q/no1w
+	iLgGgoqofd88JodZjOWhEkOICC984hk8ca3tAQMIYPqW+pLbMz3nLXuokUp1kxA4
+	cfKFGWurVt3o3xDmYqdwfD1AZ0vcjo7kcyXvWK4cQyLKlm7/9aWjwS+ajz2AjtvD
+	+QHi8hrRsF671O1BOkW4e66Ih5WMty9ovlMnr9ZrtqDTQF/jORgRpsg10QMA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738847089; x=1738933489; bh=mZWVG2NM+wqWCaGslbgRDpaJNVZ8s3EOLHU
+	Se9SAWr8=; b=f3w1rokFhHGWXzhK3bmniBdj5QsgrDpSVdlF86fywqyB+6ddxnI
+	vt7CJKqG7y9369WLNRwuDizP4Qbfx8a/uiC/KzD6FVHOT2oZZOQROaZt++cYcIms
+	sFCLun5OR9JQPMsKKadwIALHLDZonNZpacuCeAO28koyphOf6gdBtQSOyLhDzxL4
+	/7brXHfpnZg1mFDBoW1o9MPmhPxT480zh52tY8JVeJi1BTeatGs73mnx1cDDim8/
+	0E6ACOvSBV1gZFOnYDCf/lZ4SBJ41pUisVzGxsrqZc5WX//f3PjRrj6Mt1uLw0IS
+	xzRTb+F+6FqoMIQRPiZbUy+KwpFrJQBUJDQ==
+X-ME-Sender: <xms:cbOkZ8z1JLz6DRVxnFF2d8QPT7M0-Y4MZZFY8ApKQ69wqGf4_-RQbg>
+    <xme:cbOkZwQMmBjfj7YAw_CH9U7PAJnpL4EEaTiQJoKpWP3NXFgv9fVze2bu3Jw2utOJh
+    VHIPVhB4NF9PkKJww>
+X-ME-Received: <xmr:cbOkZ-UNmZYzt0GG7Ic4qPtxyZbh8um5N0gCLL14U0iBluOf3XKrNbFiwDr5mfHc45h14kWyzGYeU-I5oz7Vhv9_xankmbsMwnT3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehilhhlihgrrdgsoh
+    gshihrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
+    rhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:cbOkZ6gUpktt-EUpEAHUwEm_NkrC_yLgiVelUy7u4EbAndCH1nhxHw>
+    <xmx:cbOkZ-B_aWPJsgCb8-9Q3iVwGJFOzE2CSRkBukDGBcMC8IghwAeX5g>
+    <xmx:cbOkZ7JONcCpex-BDQOIrV3WTbCRZoJiGiPZ_6MNIx7BVUau8g-nrA>
+    <xmx:cbOkZ1D_GxYm4TJVJaVGPvpWxrlh7T_FXMrjyTYFDQv63eDB5ykbXw>
+    <xmx:cbOkZ17l6amnxKuxQWG6K2uZgpGath6_UCx0U8f8PQIZrbsfgPvkEqWL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Feb 2025 08:04:48 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Illia Bobyr <illia.bobyr@gmail.com>
+Cc: Jeff King <peff@peff.net>,  Johannes Sixt <j6t@kdbg.org>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v3 0/1] Long names for `git log -S` and `git log -G`
+In-Reply-To: <20250206014324.1839232-1-illia.bobyr@gmail.com> (Illia Bobyr's
+	message of "Wed, 5 Feb 2025 17:43:15 -0800")
+References: <20250206014324.1839232-1-illia.bobyr@gmail.com>
+Date: Thu, 06 Feb 2025 05:04:47 -0800
+Message-ID: <xmqq4j17kyvk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 6 Feb 2025 04:05:13 -0800
-X-Gm-Features: AWEUYZlw6wD3Jx1H9cOGeMwwa7BoAywb-XnhUm_Cyg2_yrOgWSC6JHvgPzuwAqM
-Message-ID: <CAOLa=ZTJ7ef9rP3fQfNwSCD54zeVPL1Rd_hQfzDpEpFiStx_PQ@mail.gmail.com>
-Subject: Re: [PATCH 05/16] path: refactor `repo_submodule_path()` family of functions
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000fa9eff062d780de6"
+Content-Type: text/plain
 
---000000000000fa9eff062d780de6
-Content-Type: text/plain; charset="UTF-8"
+Illia Bobyr <illia.bobyr@gmail.com> writes:
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-[snip]
-
-> diff --git a/path.c b/path.c
-> index d918d0409e..d721507be8 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -560,14 +560,15 @@ const char *repo_worktree_path_replace(const struct repository *repo,
->  }
+> Same as PATCH v2[1], but removed gitk changes, as suggested by Johannes Sixt.
 >
->  /* Returns 0 on success, negative on failure. */
-> -static int do_submodule_path(struct strbuf *buf, const char *path,
-> +static int do_submodule_path(struct repository *repo,
-> +			     struct strbuf *buf, const char *path,
->  			     const char *fmt, va_list args)
->  {
->  	struct strbuf git_submodule_common_dir = STRBUF_INIT;
->  	struct strbuf git_submodule_dir = STRBUF_INIT;
->  	int ret;
->
-> -	ret = submodule_to_gitdir(the_repository, &git_submodule_dir, path);
-> +	ret = submodule_to_gitdir(repo, &git_submodule_dir, path);
->  	if (ret)
->  		goto cleanup;
->
-> @@ -586,13 +587,14 @@ static int do_submodule_path(struct strbuf *buf, const char *path,
->  	return ret;
->  }
->
-> -char *git_pathdup_submodule(const char *path, const char *fmt, ...)
-> +char *repo_submodule_path(struct repository *repo,
+> I'll send a separate patch for gitk, should this patch be accepted.
+> Or, I could include gitk changes into this chain, but just as a separate patch?
 
-To stay consistent with the other repo_* functions, should we change
-`struct repository *repo` to `const struct repository *repo`?
-
-> +			  const char *path, const char *fmt, ...)
->  {
->  	int err;
->  	va_list args;
->  	struct strbuf buf = STRBUF_INIT;
->  	va_start(args, fmt);
-> -	err = do_submodule_path(&buf, path, fmt, args);
-> +	err = do_submodule_path(repo, &buf, path, fmt, args);
->  	va_end(args);
->  	if (err) {
->  		strbuf_release(&buf);
-> @@ -601,16 +603,35 @@ char *git_pathdup_submodule(const char *path, const char *fmt, ...)
->  	return strbuf_detach(&buf, NULL);
->  }
->
-> -int strbuf_git_path_submodule(struct strbuf *buf, const char *path,
-> -			      const char *fmt, ...)
-> +const char *repo_submodule_path_append(struct repository *repo,
-> +				       struct strbuf *buf,
-> +				       const char *path,
-> +				       const char *fmt, ...)
->  {
->  	int err;
->  	va_list args;
->  	va_start(args, fmt);
-> -	err = do_submodule_path(buf, path, fmt, args);
-> +	err = do_submodule_path(repo, buf, path, fmt, args);
->  	va_end(args);
-> +	if (err)
-> +		return NULL;
-> +	return buf->buf;
-> +}
->
-> -	return err;
-> +const char *repo_submodule_path_replace(struct repository *repo,
-> +					struct strbuf *buf,
-> +					const char *path,
-> +					const char *fmt, ...)
-> +{
-> +	int err;
-> +	va_list args;
-> +	strbuf_reset(buf);
-> +	va_start(args, fmt);
-> +	err = do_submodule_path(repo, buf, path, fmt, args);
-> +	va_end(args);
-> +	if (err)
-> +		return NULL;
-> +	return buf->buf;
->  }
->
->  void repo_common_pathv(const struct repository *repo,
-
-[snip]
-
---000000000000fa9eff062d780de6
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: e21b5ba019f7530a_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1la3BYWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMnh5Qy85QnNPZ0QxNzlaVzZXbXdrOWM2ZGUxWnp2YwpZalR2bnVkRDBs
-WGNLckFJOVVXTGx4K3M4bWRackdpU2YyaUs5bFNhZEFQejFPNi9rWmxseGNrNGc4ZzdQTU9QCm5w
-eStpdUZpbmMyVTN1SlI2NnJ5RllWT3lkN2NDUjN6WnBsa0xsY2FnRjlxRkV4QU9XWHg5VlNzK0t1
-S3hDQ0gKRmdjZVgrU1pFa21ESVlJQzNFd1JlRWp1bDZOQ0xzamZ4Skh0NDdhQzZ1aHFNQzBGaUU2
-YU9USmY1Um8yWmF3Tgp2RDlhaTJMWURWcUxtRm9UbzVkQTN6L2lFZVJZaW1adk9GK3ZVTGNSUitz
-TFJmRkdLRnZMOXA3ZEN3NE1hak04CjlQWDlaWnNtWTMrclR0Y0xlQUQ1SWE4cmx1ZGMrZ0hNM0Na
-N1RRZ24rSTV5TTAzZWFMZ3JBcEJjNWdSZTZieU8KL0JudzJ2NVB4QzhEY0pWazVwKzBqMW9XMmRz
-TVQxZXh1bHlUVzJNcnRhZjFSczdZNlUvSWFXV2FmeE16cG1xcwo2TE14R0l6U0NScHNOVlpPc1ht
-dVpJYlhkNytiWVAyKzR6RStvaU9rUHNrRVZWdlpramtvSWs0bUdPcGZTallsCk9BT3RDR0lVZ0pl
-aHdlczA0RFcxaXFjSTRxRkVQdWtBSXo2UDFSaz0KPVJNQmoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000fa9eff062d780de6--
+They are technically separate codebases so the changes to the core
+would become prerequisite for the same changes to gitk, so from that
+point of view the former may be more kosher, but I would expect that
+the latter is fine in practice.
