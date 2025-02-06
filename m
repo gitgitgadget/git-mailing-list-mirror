@@ -1,641 +1,111 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA9522618B
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 07:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268E01F1537
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 08:07:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738828702; cv=none; b=NPmlh8tWSOvdYtlyKOxMhnTQWZ+nlTBOpiQaVCF7iCC64eo6Uh+3ZtBcdHQcMvEMFcs3sSwwF0lIYcAr9AgLhaQRzcJR09bq3d38oSy497AkjchDYCI428TNHEmcaJarhZKW517Oeod+Habz0zZCal4rBMwhCxdOM3QQ4OgsQ1A=
+	t=1738829233; cv=none; b=sPkZPGT+5Tt2TiFilPttqX0X8vN4tF5wLfkqMMBXhUN5lj1JXLdLQ5/bWoHAvyYZctN3ZL3b/EpH5QrtYWPhGPmEbGqiySbwfj6zlq0uiA+GF5u09ta1re6bha/LZ4e/EVc2SGhrgztWFV2vCXrCr2BcagO2HVKyqoi7xjQNftI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738828702; c=relaxed/simple;
-	bh=gC9bGrnoxRh3xJq8vVwblIC0dmhxPSsTUYu6K9EksOs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gLWFadU9YlLCrxEyJZiZN1f8Q2yPfTkte5DIFPRGRi1IUhKJykG0/rRlXZWhFhkBhvZmIUrZMHP0O2YQtrQ5DI8ES/VrhiSEdrftsJ2CnJeO0MeqKzht63mcAMncHwUoWxgGX1q2aNTgHFel+BYHtZvPjGf6FBp46cGBbavsjNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=n5lDjoOa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kp6v0z9t; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1738829233; c=relaxed/simple;
+	bh=Y8r3wni4iiqDwKrBj1UjOkqSTZ8LY9PLqk+qQ+JltNo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=L8isKOqMtg+Kf0aX6jZocqfARVj6OJUv/PKCZMkuwhbsALq9tNfYJQObDEiWkvvelYYe+K81Tvq+Z5r8mGudm+fwL3o8YkjNBG6Qdfn7zl04FQZXUXmsZfUvAyIhpTrPCV/BsV7lXorO3eR9qrtygSGYO/P2d11DfBQjjd4h2vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MrqTMaTm; arc=none smtp.client-ip=209.85.166.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="n5lDjoOa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kp6v0z9t"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 38B4E1140191
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 02:58:19 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 06 Feb 2025 02:58:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738828699;
-	 x=1738915099; bh=PtZ675bexJbw7XP7ZUuRVQoKqNiFs7NF4CJGpEhMbnk=; b=
-	n5lDjoOaJn3Cu0G6x6ePeyveGpGqUM/2rJVoqU0dLmlP2A94sy9sEhu+hy4mKLeO
-	IQ0CqnZNwly9PWYU4ip/ANMr3GTjly58F4yRSKdX2N1nDlMvzsYhELpcLRDiwkNq
-	96BBhYrLCNXhw8oh21HmI45PFlSF8zbh79zIh1FoB00T0ZA51K5wgXdMRP6yGrO1
-	PKqGuQ5BgppXEj9L9ENlRJFOgac5AkMgLSkK8CiJEixtV0xZLE0fwy+4XIoMGu5Q
-	KeIJPhCsTuscwy7vxrJQqfpvwGDHuHsAR8hTMR3S9nO47xi6+0rc+987+ssOZJNQ
-	Abxor/r1UvWek7aag+s6ag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738828699; x=
-	1738915099; bh=PtZ675bexJbw7XP7ZUuRVQoKqNiFs7NF4CJGpEhMbnk=; b=K
-	p6v0z9tU0kWzDjI/En7iSrPZO+ydpxTcdzoyxQYkczKdjnwnU54ef4hUY/NQcoyR
-	XBp9g+k5xdUfz4NknAmyGpOQxCGax7J6rMac3z/UT/QZBNVV2y1ueJxYLeOjhpo6
-	kLu/EbiM2s6WU3z7460yhPWkz8FQdK926hcsgF4Flltkb15FNzHQKWPbdxFhFOI/
-	C5LclvaBFnsDqieF0qQFEWs6f+1sr+mTl2BS5wLuR4uqDBTTFmnlcJbudBqZMWIL
-	/sTfRa27TYgeupB/ZZT2bfHR5S36YEBKDjFAbL1Hq8XZIbSYXNLg+VNqkdBrzrjE
-	TaYPA0zWoqjbj1C/H2GRQ==
-X-ME-Sender: <xms:m2ukZyd6pm_AvyOcyBXv8suMeLsJFVxyCcRl6OGVA4UZOazOVxCjIg>
-    <xme:m2ukZ8Moi9E1P6bS_MbQPmURwQfdB4G-nb3qpwsLitP2R4HCe61PLFVGaajzkbh9U
-    SAwHyVKRbXpRHjXEA>
-X-ME-Received: <xmr:m2ukZzjlA-TU4g44azxyX5iaAcvmtGTOrsMivRtJxhe7a8bvmzGLfR7-oRi2qHEM39MeB2oOK2jLR8E0QqW7uepAzFOImSKEJwIC491I1UWS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvheekgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffuf
-    ggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiud
-    ejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushht
-    vghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:m2ukZ_9UHLoKzApFuZx4xQ-IGTdIRaMjWlMVZDVmx1IL2efqPCxp4Q>
-    <xmx:m2ukZ-sOxWsoLCxz9Lss7Mpvy0SSx58TVGPczXEXbEUcewdtKk74mA>
-    <xmx:m2ukZ2EY2flDoPwac4gSjUupjaaqnwX_uvXqqnUvtR5TcM_iM_KBIQ>
-    <xmx:m2ukZ9MYYHf-ff1c5ObAASzpceQFNyM2IofO53k9jR9_koMIdG25CQ>
-    <xmx:m2ukZzVho1tqZMERkYnEsM0ETO0GIGv3dysZJF9bsDBQpEaYFexm_Z6c>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 6 Feb 2025 02:58:18 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 3a320e4e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <git@vger.kernel.org>;
-	Thu, 6 Feb 2025 07:58:17 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 06 Feb 2025 08:58:12 +0100
-Subject: [PATCH 16/16] path: adjust last remaining users of
- `the_repository`
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MrqTMaTm"
+Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-854a68f5afcso16765039f.0
+        for <git@vger.kernel.org>; Thu, 06 Feb 2025 00:07:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738829231; x=1739434031; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nAgrREB73a+qEOVEEsU5SCUxEWq0vAEna75+JFYedHg=;
+        b=MrqTMaTmbuEDzQ1XNy+Spq5MTz9ZbveCQzSD98s/nQ9iaj3QUWWHxjSs2d2R6Ax4Ws
+         YlfZF8YRWis4ctkIZ/Y6kWqf15InSdI/TUsWEsuQ94lIjOrhIUTNXh6k0359HLTAwtkY
+         EvwTVSXHU6yQ+155FAcX2fLaGqT2bK46vdX8vBKa621pvCuHeerxA6WQEH4abN6pXe5c
+         ZDh3puyAxS4U2EcATdJo7wuBf3aL1OJrwotanvN0hVq4eZOjmM088XHHtegokDJCUkaU
+         5Wt0vGM2YlN/Wo7Hzju5rdxqmis+eHBLBNKWEuV057eOK0msK8kq7buaHLqMwbACnBFT
+         F7VA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738829231; x=1739434031;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nAgrREB73a+qEOVEEsU5SCUxEWq0vAEna75+JFYedHg=;
+        b=dO6pPStKctNpsZQGNdb4hu2TMr2qMVPcWVHgsywtrI70J8OLX0hWaOKwZbteV4DVJt
+         JYRgcu+Q+S2uyt5/5F/4W3hK3wF1t8Ga4PvTLHZIP1RFcQn3qSqqqKL3opNqdor7MW4c
+         ssnjKmAI5Rd1VBss1Yx/E5tcknyFVttvguouImUz/KbQCOu68+J2FIILDL/wl3bIOG2n
+         3ZbgZmxwWJNV0mTlIjQN7WFqLAf9vZqgKgYKqA8eGDGPC6RpFiQ3V3ZAduZB+cZx2TMa
+         Bl1Osg5pG4VD+rqdsU/pUZ9hVi1vgK5eDuac6haNOvEPqvurQ7EeZu3os/hw1k9TGaHI
+         qQpA==
+X-Forwarded-Encrypted: i=1; AJvYcCVPx65Bj1kMxAvfFI9gPsfNCbaPMcoi5pOH4MNEr774TItmR+Z47otJ224BtAlueXJ1sxA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwH2YXktroQpd4N167PQJHe5cX7Z/Vv8koH1eAFIZHC5w5MF4jL
+	9zYdRPT8ZQBMCYtjQAcTQLMtV1uYFTePEXaVX+0/+6TTzMAU25Mt5iDND7iKjYCKMexsD95We40
+	ulJRE1Kk+ppDmHH3HLvuDzt4zIjU=
+X-Gm-Gg: ASbGncvsCWIxuuPe6P67PSW5SHeFtJ7fEaM+dhM46UjUJ9HRmtysnyqR2tIWGXO1pSB
+	2grawS0+yVEO13HhCGKdonLWO1Ql3wzHk/UqxXnedfD7Pbgy8xekizLCGBTSYU/VCi1vhY08xEX
+	q2omVviu2Rlew=
+X-Google-Smtp-Source: AGHT+IF3iy60O6EK7B602Q7jXVmblyaL3bYpTHj+DkzDw26SXGHFdRAMC+DpixHRcbqm0thPrboOckR3VhL+76Km1c4=
+X-Received: by 2002:a05:6602:4192:b0:844:cbd0:66ca with SMTP id
+ ca18e2360f4ac-854ea411c82mr614542339f.1.1738829231212; Thu, 06 Feb 2025
+ 00:07:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250206-b4-pks-path-drop-the-repository-v1-16-4e77f0313206@pks.im>
-References: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
-In-Reply-To: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
-To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.2
+References: <20250205214726.GA30202@raven.inka.de> <Z6PsXGnxM3UBR3nM@tapette.crustytoothpaste.net>
+ <20250205235931.GB30202@raven.inka.de> <Z6QCX1QZxxwC7RVQ@tapette.crustytoothpaste.net>
+In-Reply-To: <Z6QCX1QZxxwC7RVQ@tapette.crustytoothpaste.net>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 6 Feb 2025 00:07:00 -0800
+X-Gm-Features: AWEUYZnNWbGkYFmLoQrjv8Gc3p0a6CejvXIZlJij04zS0MaILflw3z3q4UWBFXU
+Message-ID: <CABPp-BFZ3oyKiryKMPph+nfokC=sFa7wn1wdas863273bzy7pA@mail.gmail.com>
+Subject: Re: renormalize histroy with smudge/clean-filter
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-With the preceding refactorings we now only have a couple of implicit
-users of `the_repository` left in the "path" subsystem, all of which
-depend on global state via `calc_shared_perm()`. Make the dependency on
-`the_repository` explicit by passing the repo as a parameter instead and
-adjust callers accordingly.
+On Wed, Feb 5, 2025 at 4:29=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2025-02-05 at 23:59:31, Josef Wolf wrote:
+> > > > BTW: It does not make any difference whether I add "-c merge.renorm=
+alze=3Dtrue"
+> > >
+> > > That option also does not exist.
+> >
+> > Well, this is described in git(1) manpage:
+> >
+> >    [ ... ]
+> >    SYNOPSIS
+> >        git [-v | --version] [-h | --help] [-C <path>] [-c <name>=3D<val=
+ue>]
+> >    [ ... ]                                            ^^^^^^^^^^^^^^^^^=
+^^
+> >
+>
+> The -c option does exist, and apparently the merge.renormalize option
+> does as well, so I apologize.  It looks like it's only used in
+> merge-recursive and not merge-ort.c, so I'm not sure if it's still
+> effective.  Elijah would know for certain, since he's the author of
+> merge-ort as well.
 
-Note that this change bubbles up into a couple of subsystems that were
-previously declared as free from `the_repository`. Instead of marking
-all of them as `the_repository`-dependent again, we instead use the
-repository that is available in the calling context. There are three
-exceptions though with "copy.c", "pack-write.c" and "tempfile.c".
-Adjusting these would require us to adapt callsites all over the place,
-so this is left for a future iteration.
-
-Mark "path.c" as free from `the_repository`.
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/clone.c         |  2 +-
- commit-graph.c          |  2 +-
- copy.c                  |  4 +++-
- loose.c                 |  2 +-
- midx-write.c            |  2 +-
- object-file.c           |  8 ++++----
- pack-bitmap-write.c     |  2 +-
- pack-write.c            | 10 ++++++----
- path.c                  | 25 ++++++++++++-------------
- path.h                  |  6 +++---
- read-cache.c            |  2 +-
- refs/files-backend.c    | 10 +++++-----
- refs/reftable-backend.c | 10 +++++-----
- server-info.c           |  2 +-
- setup.c                 | 12 ++++++------
- tempfile.c              |  4 +++-
- tmp-objdir.c            | 17 ++++++++++-------
- 17 files changed, 64 insertions(+), 56 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 5ae6ee9db9..23eeb782aa 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1220,7 +1220,7 @@ int cmd_clone(int argc,
- 
- 	strbuf_reset(&buf);
- 	strbuf_addf(&buf, "%s/refs", git_dir);
--	safe_create_dir(buf.buf, 1);
-+	safe_create_dir(the_repository, buf.buf, 1);
- 
- 	/*
- 	 * additional config can be injected with -c, make sure it's included
-diff --git a/commit-graph.c b/commit-graph.c
-index 2a2999a6b8..1021ccb983 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -2084,7 +2084,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 			return -1;
- 		}
- 
--		if (adjust_shared_perm(get_tempfile_path(graph_layer))) {
-+		if (adjust_shared_perm(the_repository, get_tempfile_path(graph_layer))) {
- 			error(_("unable to adjust shared permissions for '%s'"),
- 			      get_tempfile_path(graph_layer));
- 			return -1;
-diff --git a/copy.c b/copy.c
-index d9d2092012..b668209b6c 100644
---- a/copy.c
-+++ b/copy.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "copy.h"
- #include "path.h"
-@@ -57,7 +59,7 @@ int copy_file(const char *dst, const char *src, int mode)
- 	if (close(fdo) != 0)
- 		return error_errno("%s: close error", dst);
- 
--	if (!status && adjust_shared_perm(dst))
-+	if (!status && adjust_shared_perm(the_repository, dst))
- 		return -1;
- 
- 	return status;
-diff --git a/loose.c b/loose.c
-index 51ef490f93..bb602aaa36 100644
---- a/loose.c
-+++ b/loose.c
-@@ -190,7 +190,7 @@ static int write_one_object(struct repository *repo, const struct object_id *oid
- 		goto errout;
- 	if (close(fd))
- 		goto errout;
--	adjust_shared_perm(path.buf);
-+	adjust_shared_perm(repo, path.buf);
- 	rollback_lock_file(&lock);
- 	strbuf_release(&buf);
- 	strbuf_release(&path);
-diff --git a/midx-write.c b/midx-write.c
-index 61b59d557d..48d6558253 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -1336,7 +1336,7 @@ static int write_midx_internal(struct repository *r, const char *object_dir,
- 			return -1;
- 		}
- 
--		if (adjust_shared_perm(get_tempfile_path(incr))) {
-+		if (adjust_shared_perm(r, get_tempfile_path(incr))) {
- 			error(_("unable to adjust shared permissions for '%s'"),
- 			      get_tempfile_path(incr));
- 			return -1;
-diff --git a/object-file.c b/object-file.c
-index dc9fcaf3e9..5d782417e3 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -388,7 +388,7 @@ int mkdir_in_gitdir(const char *path)
- 		}
- 		strbuf_release(&sb);
- 	}
--	return adjust_shared_perm(path);
-+	return adjust_shared_perm(the_repository, path);
- }
- 
- static enum scld_error safe_create_leading_directories_1(char *path, int share)
-@@ -437,7 +437,7 @@ static enum scld_error safe_create_leading_directories_1(char *path, int share)
- 				ret = SCLD_VANISHED;
- 			else
- 				ret = SCLD_FAILED;
--		} else if (share && adjust_shared_perm(path)) {
-+		} else if (share && adjust_shared_perm(the_repository, path)) {
- 			ret = SCLD_PERMS;
- 		}
- 		*slash = slash_character;
-@@ -2105,7 +2105,7 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
- 	}
- 
- out:
--	if (adjust_shared_perm(filename))
-+	if (adjust_shared_perm(the_repository, filename))
- 		return error(_("unable to set permission to '%s'"), filename);
- 	return 0;
- }
-@@ -2181,7 +2181,7 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
- 		strbuf_add(tmp, filename, dirlen - 1);
- 		if (mkdir(tmp->buf, 0777) && errno != EEXIST)
- 			return -1;
--		if (adjust_shared_perm(tmp->buf))
-+		if (adjust_shared_perm(the_repository, tmp->buf))
- 			return -1;
- 
- 		/* Try again */
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index a06a1f35c6..34e86d4994 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -1072,7 +1072,7 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
- 	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
- 			  CSUM_HASH_IN_STREAM | CSUM_FSYNC | CSUM_CLOSE);
- 
--	if (adjust_shared_perm(tmp_file.buf))
-+	if (adjust_shared_perm(the_repository, tmp_file.buf))
- 		die_errno("unable to make temporary bitmap file readable");
- 
- 	if (rename(tmp_file.buf, filename))
-diff --git a/pack-write.c b/pack-write.c
-index a2faeb1895..c3f4e66f02 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -1,3 +1,5 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "environment.h"
- #include "gettext.h"
-@@ -287,7 +289,7 @@ char *write_rev_file_order(const struct git_hash_algo *hash_algo,
- 	write_rev_index_positions(f, pack_order, nr_objects);
- 	write_rev_trailer(hash_algo, f, hash);
- 
--	if (adjust_shared_perm(path) < 0)
-+	if (adjust_shared_perm(the_repository, path) < 0)
- 		die(_("failed to make %s readable"), path);
- 
- 	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
-@@ -350,7 +352,7 @@ static char *write_mtimes_file(const struct git_hash_algo *hash_algo,
- 	write_mtimes_objects(f, to_pack, objects, nr_objects);
- 	write_mtimes_trailer(hash_algo, f, hash);
- 
--	if (adjust_shared_perm(mtimes_name) < 0)
-+	if (adjust_shared_perm(the_repository, mtimes_name) < 0)
- 		die(_("failed to make %s readable"), mtimes_name);
- 
- 	finalize_hashfile(f, NULL, FSYNC_COMPONENT_PACK_METADATA,
-@@ -565,12 +567,12 @@ void stage_tmp_packfiles(const struct git_hash_algo *hash_algo,
- 	char *rev_tmp_name = NULL;
- 	char *mtimes_tmp_name = NULL;
- 
--	if (adjust_shared_perm(pack_tmp_name))
-+	if (adjust_shared_perm(the_repository, pack_tmp_name))
- 		die_errno("unable to make temporary pack file readable");
- 
- 	*idx_tmp_name = (char *)write_idx_file(hash_algo, NULL, written_list,
- 					       nr_written, pack_idx_opts, hash);
--	if (adjust_shared_perm(*idx_tmp_name))
-+	if (adjust_shared_perm(the_repository, *idx_tmp_name))
- 		die_errno("unable to make temporary index file readable");
- 
- 	rev_tmp_name = write_rev_file(hash_algo, NULL, written_list, nr_written,
-diff --git a/path.c b/path.c
-index a2f402baec..910756c8b3 100644
---- a/path.c
-+++ b/path.c
-@@ -2,8 +2,6 @@
-  * Utilities for paths and pathnames
-  */
- 
--#define USE_THE_REPOSITORY_VARIABLE
--
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "environment.h"
-@@ -840,21 +838,22 @@ const char *enter_repo(const char *path, unsigned flags)
- 	return NULL;
- }
- 
--int calc_shared_perm(int mode)
-+int calc_shared_perm(struct repository *repo,
-+		     int mode)
- {
- 	int tweak;
- 
--	if (repo_settings_get_shared_repository(the_repository) < 0)
--		tweak = -repo_settings_get_shared_repository(the_repository);
-+	if (repo_settings_get_shared_repository(repo) < 0)
-+		tweak = -repo_settings_get_shared_repository(repo);
- 	else
--		tweak = repo_settings_get_shared_repository(the_repository);
-+		tweak = repo_settings_get_shared_repository(repo);
- 
- 	if (!(mode & S_IWUSR))
- 		tweak &= ~0222;
- 	if (mode & S_IXUSR)
- 		/* Copy read bits to execute bits */
- 		tweak |= (tweak & 0444) >> 2;
--	if (repo_settings_get_shared_repository(the_repository) < 0)
-+	if (repo_settings_get_shared_repository(repo) < 0)
- 		mode = (mode & ~0777) | tweak;
- 	else
- 		mode |= tweak;
-@@ -862,17 +861,17 @@ int calc_shared_perm(int mode)
- 	return mode;
- }
- 
--
--int adjust_shared_perm(const char *path)
-+int adjust_shared_perm(struct repository *repo,
-+		       const char *path)
- {
- 	int old_mode, new_mode;
- 
--	if (!repo_settings_get_shared_repository(the_repository))
-+	if (!repo_settings_get_shared_repository(repo))
- 		return 0;
- 	if (get_st_mode_bits(path, &old_mode) < 0)
- 		return -1;
- 
--	new_mode = calc_shared_perm(old_mode);
-+	new_mode = calc_shared_perm(repo, old_mode);
- 	if (S_ISDIR(old_mode)) {
- 		/* Copy read bits to execute bits */
- 		new_mode |= (new_mode & 0444) >> 2;
-@@ -891,7 +890,7 @@ int adjust_shared_perm(const char *path)
- 	return 0;
- }
- 
--void safe_create_dir(const char *dir, int share)
-+void safe_create_dir(struct repository *repo, const char *dir, int share)
- {
- 	if (mkdir(dir, 0777) < 0) {
- 		if (errno != EEXIST) {
-@@ -899,7 +898,7 @@ void safe_create_dir(const char *dir, int share)
- 			exit(1);
- 		}
- 	}
--	else if (share && adjust_shared_perm(dir))
-+	else if (share && adjust_shared_perm(repo, dir))
- 		die(_("Could not make %s writable by group"), dir);
- }
- 
-diff --git a/path.h b/path.h
-index 373404dd9d..65fe968a13 100644
---- a/path.h
-+++ b/path.h
-@@ -141,8 +141,8 @@ const char *git_path_shallow(struct repository *r);
- 
- int ends_with_path_components(const char *path, const char *components);
- 
--int calc_shared_perm(int mode);
--int adjust_shared_perm(const char *path);
-+int calc_shared_perm(struct repository *repo, int mode);
-+int adjust_shared_perm(struct repository *repo, const char *path);
- 
- char *interpolate_path(const char *path, int real_home);
- 
-@@ -219,7 +219,7 @@ char *xdg_cache_home(const char *filename);
-  * directories under $GIT_DIR.  Don't use it for working tree
-  * directories.
-  */
--void safe_create_dir(const char *dir, int share);
-+void safe_create_dir(struct repository *repo, const char *dir, int share);
- 
- # ifdef USE_THE_REPOSITORY_VARIABLE
- #  include "strbuf.h"
-diff --git a/read-cache.c b/read-cache.c
-index 66ad0015a7..900738e7a8 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3290,7 +3290,7 @@ static int write_shared_index(struct index_state *istate,
- 
- 	if (ret)
- 		return ret;
--	ret = adjust_shared_perm(get_tempfile_path(*temp));
-+	ret = adjust_shared_perm(the_repository, get_tempfile_path(*temp));
- 	if (ret) {
- 		error(_("cannot fix permission bits on '%s'"), get_tempfile_path(*temp));
- 		return ret;
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 29f08dced4..6c6e67dc1c 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -1831,7 +1831,7 @@ static int log_ref_setup(struct files_ref_store *refs,
- 	}
- 
- 	if (*logfd >= 0)
--		adjust_shared_perm(logfile);
-+		adjust_shared_perm(the_repository, logfile);
- 
- 	free(logfile);
- 	return 0;
-@@ -3488,8 +3488,8 @@ static int files_ref_store_create_on_disk(struct ref_store *ref_store,
- 	 *   they do not understand the reference format extension.
- 	 */
- 	strbuf_addf(&sb, "%s/refs", ref_store->gitdir);
--	safe_create_dir(sb.buf, 1);
--	adjust_shared_perm(sb.buf);
-+	safe_create_dir(the_repository, sb.buf, 1);
-+	adjust_shared_perm(the_repository, sb.buf);
- 
- 	/*
- 	 * There is no need to create directories for common refs when creating
-@@ -3501,11 +3501,11 @@ static int files_ref_store_create_on_disk(struct ref_store *ref_store,
- 		 */
- 		strbuf_reset(&sb);
- 		files_ref_path(refs, &sb, "refs/heads");
--		safe_create_dir(sb.buf, 1);
-+		safe_create_dir(the_repository, sb.buf, 1);
- 
- 		strbuf_reset(&sb);
- 		files_ref_path(refs, &sb, "refs/tags");
--		safe_create_dir(sb.buf, 1);
-+		safe_create_dir(the_repository, sb.buf, 1);
- 	}
- 
- 	strbuf_release(&sb);
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index d39a14c5a4..9c54e2c173 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -380,7 +380,7 @@ static struct ref_store *reftable_be_init(struct repository *repo,
- 	default:
- 		BUG("unknown hash algorithm %d", repo->hash_algo->format_id);
- 	}
--	refs->write_options.default_permissions = calc_shared_perm(0666 & ~mask);
-+	refs->write_options.default_permissions = calc_shared_perm(the_repository, 0666 & ~mask);
- 	refs->write_options.disable_auto_compact =
- 		!git_env_bool("GIT_TEST_REFTABLE_AUTOCOMPACTION", 1);
- 	refs->write_options.lock_timeout_ms = 100;
-@@ -470,21 +470,21 @@ static int reftable_be_create_on_disk(struct ref_store *ref_store,
- 	struct strbuf sb = STRBUF_INIT;
- 
- 	strbuf_addf(&sb, "%s/reftable", refs->base.gitdir);
--	safe_create_dir(sb.buf, 1);
-+	safe_create_dir(the_repository, sb.buf, 1);
- 	strbuf_reset(&sb);
- 
- 	strbuf_addf(&sb, "%s/HEAD", refs->base.gitdir);
- 	write_file(sb.buf, "ref: refs/heads/.invalid");
--	adjust_shared_perm(sb.buf);
-+	adjust_shared_perm(the_repository, sb.buf);
- 	strbuf_reset(&sb);
- 
- 	strbuf_addf(&sb, "%s/refs", refs->base.gitdir);
--	safe_create_dir(sb.buf, 1);
-+	safe_create_dir(the_repository, sb.buf, 1);
- 	strbuf_reset(&sb);
- 
- 	strbuf_addf(&sb, "%s/refs/heads", refs->base.gitdir);
- 	write_file(sb.buf, "this repository uses the reftable format");
--	adjust_shared_perm(sb.buf);
-+	adjust_shared_perm(the_repository, sb.buf);
- 
- 	strbuf_release(&sb);
- 	return 0;
-diff --git a/server-info.c b/server-info.c
-index 31c3fdc118..1ca0e00d51 100644
---- a/server-info.c
-+++ b/server-info.c
-@@ -125,7 +125,7 @@ static int update_info_file(struct repository *r, char *path,
- 	uic.cur_fp = NULL;
- 
- 	if (uic_is_stale(&uic)) {
--		if (adjust_shared_perm(get_tempfile_path(f)) < 0)
-+		if (adjust_shared_perm(r, get_tempfile_path(f)) < 0)
- 			goto out;
- 		if (rename_tempfile(&f, path) < 0)
- 			goto out;
-diff --git a/setup.c b/setup.c
-index aa65b93f53..71a3d66f05 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2088,7 +2088,7 @@ static void copy_templates_1(struct strbuf *path, struct strbuf *template_path,
- 	 * with the way the namespace under .git/ is organized, should
- 	 * be really carefully chosen.
- 	 */
--	safe_create_dir(path->buf, 1);
-+	safe_create_dir(the_repository, path->buf, 1);
- 	while ((de = readdir(dir)) != NULL) {
- 		struct stat st_git, st_template;
- 		int exists = 0;
-@@ -2352,7 +2352,7 @@ static int create_default_files(const char *template_path,
- 	 * shared-repository settings, we would need to fix them up.
- 	 */
- 	if (repo_settings_get_shared_repository(the_repository)) {
--		adjust_shared_perm(repo_get_git_dir(the_repository));
-+		adjust_shared_perm(the_repository, repo_get_git_dir(the_repository));
- 	}
- 
- 	initialize_repository_version(fmt->hash_algo, fmt->ref_storage_format, reinit);
-@@ -2413,15 +2413,15 @@ static void create_object_directory(void)
- 	strbuf_addstr(&path, repo_get_object_directory(the_repository));
- 	baselen = path.len;
- 
--	safe_create_dir(path.buf, 1);
-+	safe_create_dir(the_repository, path.buf, 1);
- 
- 	strbuf_setlen(&path, baselen);
- 	strbuf_addstr(&path, "/pack");
--	safe_create_dir(path.buf, 1);
-+	safe_create_dir(the_repository, path.buf, 1);
- 
- 	strbuf_setlen(&path, baselen);
- 	strbuf_addstr(&path, "/info");
--	safe_create_dir(path.buf, 1);
-+	safe_create_dir(the_repository, path.buf, 1);
- 
- 	strbuf_release(&path);
- }
-@@ -2588,7 +2588,7 @@ int init_db(const char *git_dir, const char *real_git_dir,
- 	 */
- 	git_config(platform_core_config, NULL);
- 
--	safe_create_dir(git_dir, 0);
-+	safe_create_dir(the_repository, git_dir, 0);
- 
- 	reinit = create_default_files(template_dir, original_git_dir,
- 				      &repo_fmt, init_shared_repository);
-diff --git a/tempfile.c b/tempfile.c
-index ed88cf8431..82dfa3d82f 100644
---- a/tempfile.c
-+++ b/tempfile.c
-@@ -42,6 +42,8 @@
-  * file created by its parent.
-  */
- 
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "abspath.h"
- #include "path.h"
-@@ -148,7 +150,7 @@ struct tempfile *create_tempfile_mode(const char *path, int mode)
- 		return NULL;
- 	}
- 	activate_tempfile(tempfile);
--	if (adjust_shared_perm(tempfile->filename.buf)) {
-+	if (adjust_shared_perm(the_repository, tempfile->filename.buf)) {
- 		int save_errno = errno;
- 		error("cannot fix permission bits on %s", tempfile->filename.buf);
- 		delete_tempfile(&tempfile);
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index 0ea078a5c5..31d16a4c2c 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -207,10 +207,12 @@ static int read_dir_paths(struct string_list *out, const char *path)
- 	return 0;
- }
- 
--static int migrate_paths(struct strbuf *src, struct strbuf *dst,
-+static int migrate_paths(struct tmp_objdir *t,
-+			 struct strbuf *src, struct strbuf *dst,
- 			 enum finalize_object_file_flags flags);
- 
--static int migrate_one(struct strbuf *src, struct strbuf *dst,
-+static int migrate_one(struct tmp_objdir *t,
-+		       struct strbuf *src, struct strbuf *dst,
- 		       enum finalize_object_file_flags flags)
- {
- 	struct stat st;
-@@ -219,11 +221,11 @@ static int migrate_one(struct strbuf *src, struct strbuf *dst,
- 		return -1;
- 	if (S_ISDIR(st.st_mode)) {
- 		if (!mkdir(dst->buf, 0777)) {
--			if (adjust_shared_perm(dst->buf))
-+			if (adjust_shared_perm(t->repo, dst->buf))
- 				return -1;
- 		} else if (errno != EEXIST)
- 			return -1;
--		return migrate_paths(src, dst, flags);
-+		return migrate_paths(t, src, dst, flags);
- 	}
- 	return finalize_object_file_flags(src->buf, dst->buf, flags);
- }
-@@ -233,7 +235,8 @@ static int is_loose_object_shard(const char *name)
- 	return strlen(name) == 2 && isxdigit(name[0]) && isxdigit(name[1]);
- }
- 
--static int migrate_paths(struct strbuf *src, struct strbuf *dst,
-+static int migrate_paths(struct tmp_objdir *t,
-+			 struct strbuf *src, struct strbuf *dst,
- 			 enum finalize_object_file_flags flags)
- {
- 	size_t src_len = src->len, dst_len = dst->len;
-@@ -255,7 +258,7 @@ static int migrate_paths(struct strbuf *src, struct strbuf *dst,
- 		if (is_loose_object_shard(name))
- 			flags_copy |= FOF_SKIP_COLLISION_CHECK;
- 
--		ret |= migrate_one(src, dst, flags_copy);
-+		ret |= migrate_one(t, src, dst, flags_copy);
- 
- 		strbuf_setlen(src, src_len);
- 		strbuf_setlen(dst, dst_len);
-@@ -283,7 +286,7 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
- 	strbuf_addbuf(&src, &t->path);
- 	strbuf_addstr(&dst, repo_get_object_directory(t->repo));
- 
--	ret = migrate_paths(&src, &dst, 0);
-+	ret = migrate_paths(t, &src, &dst, 0);
- 
- 	strbuf_release(&src);
- 	strbuf_release(&dst);
-
--- 
-2.48.1.538.gc4cfc42d60.dirty
-
+init_*merge_options() are defined in merge-recursive.c, and these call
+merge_recursive_config() which is also in merge-recursive.c, but the
+parsed options are shared between the two backends; you'll note that
+merge-ort.h includes merge-recursive.h to get all these.  And
+merge-ort does have the necessary code to use and understand the
+merge.renormalize option.  (Of course, the fact that renormalization
+*requires* an index made it a bit nasty, because merge-ort was written
+to avoid the index as a data structure, so I had to do some ugly
+shenanigans in order to support that option --
+https://lore.kernel.org/git/CABPp-BE1TvFJ1eOa8Ci5JTMET+dzZh3m3NxppqqWPyEp1U=
+eAVg@mail.gmail.com/.
+But that's beside the point here.)
