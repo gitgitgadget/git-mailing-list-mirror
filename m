@@ -1,188 +1,120 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E353E1624D4
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 15:01:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D447E13BADF
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 15:13:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738854081; cv=none; b=XStUQyQGrp4QrOTVsniSY7VcreLXejPZJ0CxItP7gVTzpwSUPOzjM3Lfg5BxTz802iEP0cGLvi0Au24riI6TFpj95XYYraZyTRla8LLi3BMRrBZ8XspAVGDeB7RJ9QGkfRbUd5rpa/7ga7xOyRIIGYS3jzG7RuBEAkKTCc3ZZGg=
+	t=1738854833; cv=none; b=h++mMlB3hqer7coxJgptpnUcV5Pq19aXzlZLISjGHbewAH3RMV3O0ZRTdd235xUU4AO2ZzqJQTY+v6i5jiBNqpVLiaKQeRsvkUMTnQgH5O77X06LifMcBojwJyZILIGv23Fc3+di2emHSgGzE1OZleYtq8V7/ZyNCvl1GjwjSSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738854081; c=relaxed/simple;
-	bh=b7cR/gd6HWgk35Ty4+RkXnK9hgKWn9EBxIGTlkCuttg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eOy4ucDInuzu8lH9nXAVMzkR0e9shN10O+2R9w9L38boiDLe5ocjE786NDx6IT3Ta/wKsUQbA56o7HC8oELvKw3HBG7EHL/kT+19I9ojB6xIPoKMWj1uLsaqwD4iC0YaxlEv1eT0wbHLXGHpS0aFSk5b5yEBD1ORmw8OlPl141M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dRPo4D8o; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738854833; c=relaxed/simple;
+	bh=6q6fGeYfO/DssvQhnillsO4MqgY5YMkRAVlx4GR3NmA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VVNtBGQNmEat15QHEkDbQhz3WbKWsxM1D2c4ks/v6+Eyad7J9Em2esW1gahd4hPWstrGs5hyRcAFVijAuMFnQk/ByznciMdRvXS9BfIu2ChbPhsRL7gIArHdJek1uKu4lcrxXV34yboQO3dPHzFUF7H/DLTfwxeBXehTkb9oVUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uK4bwXKk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WBs4BC0W; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dRPo4D8o"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-21f0c4275a1so16084485ad.2
-        for <git@vger.kernel.org>; Thu, 06 Feb 2025 07:01:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738854079; x=1739458879; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kBI+ObF4TRzzQKLRAUZSASgMF/1RgDkYNJY8Cm9QgWc=;
-        b=dRPo4D8oi6jlqemTbv5LtJxAD1KdiBFbi0VAXBpi7JXOR+21Aa8Y/8idhN5G706NNT
-         RJo8Ltx/iUDrVzuDxUsshz8ie7XS9dNMDJNWOkGPqc+cMREPkshMCCGXvaLetPt4UYtv
-         +zbgo8rFY4PBw0A/8ucVBEt6xl8qIKW9RsulkXMRKo/4ZSWA0jXe/QQzoEgWXXnfqxgv
-         c7U5rUk53RaOR0nAwkDFxFXbRbnYQs7gA5DsNuHP/v8X+bcTVCq9vj6efam6TSBXiCAA
-         x0GQC+SiWzHjC17Zh+6yu3Z+xqeWO/fNaT7HHbCAS7Dj7tPC+EkMfORNwWeMLIhSob2D
-         y9Pw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738854079; x=1739458879;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kBI+ObF4TRzzQKLRAUZSASgMF/1RgDkYNJY8Cm9QgWc=;
-        b=aw8uV16haVcVGjeAt766rZmh4V3lSzjg1OfEooJ6JT8aBEXJHDnT9QaXRyNSp/AcF9
-         aMasUWqZKzNzSgwKlsIvGF1vlxoi4gpsp2AEilzmclV+QB2hzRmiiE+C9z4ihLqXUhIi
-         2sxAGXUMEpG2xIxmeEnX70BWW/bMs/jk4U/O7xqn6f7bVzWueSwCXF76rKFR+QQTcEA0
-         dge3ajDUOe/YwrsYXfSmMIBtKtPdb2K8RmjFS7xSf2rLzNeFvP+lnHGZEtQcqteX8sgx
-         A675J+vyM/oq22dUPmHsn1v1sUdyuGz+1LHyNLCghUvjLee7qLQ5pks/CL+3yrBtbbgs
-         Ngcw==
-X-Gm-Message-State: AOJu0Yw2IDNu1CWHsV/kGo8is4DKjq7BdMHs8y6EtbmeJ206mU0i5tlV
-	G9n5Qq4hTKtiO0Cv2M/GEGIAIcHWkY1DLdpqBw5/D8ATNAhv0kEa
-X-Gm-Gg: ASbGncuNE/3Zr0pihRkvSg8z/VR1Qq03XhUmFHpKr6z/naLQoK2jtmxwL7EVGjVY7CQ
-	ts+5v8M2UI2u7dUEXGkGMKdmSiHZeG2vWWvzRGECScqdyHWmlbwOZdOHOBpB2VT6i/ottywV2ou
-	fBG40kJJ+Yc+dcKzuPmNrFptLkhIp30cbbT9G8wKPGuK07e1LgQUlOaqHRnHCqMiRhpnAstrOyZ
-	vcxS+uP3GBMWYIslD2AvKWsBNnJPrbu8DJMhyCKxrNxM7E8B81BR5cltXjscX9L313mcg==
-X-Google-Smtp-Source: AGHT+IE1WuNCbYd95IQfckM5rnXh7oYPA4Jt3gHn4t1U/cE4sQsi3EDeoivb4MQG2vcIpkbqs5QNWw==
-X-Received: by 2002:a05:6a21:9184:b0:1e1:b1bb:87a0 with SMTP id adf61e73a8af0-1ede88af2cbmr16250752637.34.1738854078888;
-        Thu, 06 Feb 2025 07:01:18 -0800 (PST)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-ad51aee3d3esm1389830a12.32.2025.02.06.07.01.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Feb 2025 07:01:18 -0800 (PST)
-Date: Thu, 6 Feb 2025 23:03:00 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 05/16] path: refactor `repo_submodule_path()` family of
- functions
-Message-ID: <Z6TPJIy1yRnNI2PP@ArchLinux>
-References: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
- <20250206-b4-pks-path-drop-the-repository-v1-5-4e77f0313206@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uK4bwXKk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WBs4BC0W"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7A6AA1140115;
+	Thu,  6 Feb 2025 10:13:49 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Thu, 06 Feb 2025 10:13:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738854829; x=1738941229; bh=uK9QCCiun8
+	zvZyrjNe2YuYPSc6p4ovBGP4GDL27CKF0=; b=uK4bwXKkcPizcnZu+ofczplZpL
+	Ka5xS7rE06fDjdBN1b4zmxruRLUc65Oi8gdT1Xm9DOxDBenX2f3MM2/7spp+0eAg
+	m+2/SpmQF9U0/bwFqBDCHfEmGmJG4IqY7NAz8yNDuI00dITnQNUVvORdl7qynJvm
+	XOxJy27CEiAyPFCP5LD156C10b8TO9DLpQN2H9O0n7gebQvIQgB7WhsPQYoxIjoV
+	0HybdKuCvCwvWZ7FNmHY5sM0F5fqIeA1eHnKffR9yaJeYz/bQre/kJ+6K1NIQf37
+	JN9LzG5yBm/CROmna00VU5YYVWFuE051sG92OcqauLfk8P4D+nvOf8nGNHww==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738854829; x=1738941229; bh=uK9QCCiun8zvZyrjNe2YuYPSc6p4ovBGP4G
+	DL27CKF0=; b=WBs4BC0WOjZtnpjWWFAL+Tym4s9w2AMlLCdsFzWLRYiMLPUm81v
+	xq8ceXk/2Ljh/TBgu8bHHxeU3LPlO9nO/RcPTFLmlzlRY8AmVWXWKC1uTTGTSX5i
+	nTLn2W7Lp8EjWka+pM3YpArFjsMtzjnWaTmFILlN4QWqnDpiOPGAtC33Ush/xqHw
+	2xF6B+olBXhFGL984Ri9dbA9htICwNssppqLOt/8LrHv/Hv20mF6K0vPw9YfcHtb
+	fnErtYY1fDG2oA4jVO14OVvH4tkKrMMlhUqnNc4nP38DcBp7PCBXucRI8FHKk2HP
+	mpctLOWlqHyRMtCzfantOyP2gr5oQr+7Wmw==
+X-ME-Sender: <xms:rNGkZ6XSM8iTkO_oHt5HGZSXZfg15NcMnHxA5M3rIl1iKadShU2wwQ>
+    <xme:rNGkZ2kKY1vY458JVEtaLGdU9N_G9-tl1H4B7UOs39uQ4VcJxuJuKSXre7rLHOObT
+    Akbb9Qk-IQ9ExjjTw>
+X-ME-Received: <xmr:rNGkZ-YcsoL8giOB5375tHWA4sq6Vp7EAP9sTDDNqzhTaRGuenRKqmmtnP5TcomZATzYLzxpjMVeVVr6kqzOJ97N0_WYoEIYQVoH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieejfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkh
+    hinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
+    ihhnsehgmhigrdguvgdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhi
+    lhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehpshesph
+    hkshdrihhmpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhm
+X-ME-Proxy: <xmx:rNGkZxVeuAh0LvK24nWkJGpw13kDmRhKYJKek2yvY6gzfCosUZUO2g>
+    <xmx:rNGkZ0mxpohJNj-P9t8pVxN6AkiI-VXoMefWhjwk0Azby-DJvRVPMw>
+    <xmx:rNGkZ2euczDeRrcK7LtOE82OmwM1Zo_jukZFor5blq5CNnSB6HaESQ>
+    <xmx:rNGkZ2Fdgxvu97ZHWxxdu9z4Kg47htSoiaG4Of7UtWXNgUJvWxOs8w>
+    <xmx:rdGkZ_93tVk3z_Itx9m8YoOh6p_LxXVlAcj3i92v9euodnPtciCxUlNX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Feb 2025 10:13:47 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  Johannes.Schindelin@gmx.de,  johncai86@gmail.com,  me@ttaylorr.com,
+  phillip.wood@dunelm.org.uk,  ps@pks.im,  rsbecker@nexbridge.com,
+  sunshine@sunshineco.com,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v4 6/6] agent: advertise OS name via agent capability
+In-Reply-To: <CAPSxiM9Yejt+Cgu_ekuQwhduf=JEmS1s+T+nc--SvNQqkQE82g@mail.gmail.com>
+	(Usman Akinyemi's message of "Thu, 6 Feb 2025 12:07:20 +0530")
+References: <20250124122217.250925-7-usmanakinyemi202@gmail.com>
+	<20250205185246.111447-1-usmanakinyemi202@gmail.com>
+	<20250205185246.111447-7-usmanakinyemi202@gmail.com>
+	<xmqqy0ykkqqc.fsf@gitster.g>
+	<CAPSxiM9Yejt+Cgu_ekuQwhduf=JEmS1s+T+nc--SvNQqkQE82g@mail.gmail.com>
+Date: Thu, 06 Feb 2025 07:13:46 -0800
+Message-ID: <xmqqo6zfjec5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250206-b4-pks-path-drop-the-repository-v1-5-4e77f0313206@pks.im>
+Content-Type: text/plain
 
-On Thu, Feb 06, 2025 at 08:58:01AM +0100, Patrick Steinhardt wrote:
-> As explained in an earlier commit, we're refactoring path-related
-> functions to provide a consistent interface for computing paths into the
-> commondir, gitdir and worktree. Refactor the "submodule" family of
-> functions accordingly.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/submodule--helper.c |  2 +-
->  path.c                      | 37 +++++++++++++++++++++++++++++--------
->  path.h                      | 30 ++++++++++++++++++------------
->  t/helper/test-ref-store.c   |  7 +++----
->  worktree.c                  |  3 ++-
->  5 files changed, 53 insertions(+), 26 deletions(-)
-> 
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 3a64f7e605..c1a8029714 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1826,7 +1826,7 @@ static int clone_submodule(const struct module_clone_data *clone_data,
->  
->  	connect_work_tree_and_git_dir(clone_data_path, sm_gitdir, 0);
->  
-> -	p = git_pathdup_submodule(clone_data_path, "config");
-> +	p = repo_submodule_path(the_repository, clone_data_path, "config");
->  	if (!p)
->  		die(_("could not get submodule directory for '%s'"), clone_data_path);
->  
-> diff --git a/path.c b/path.c
-> index d918d0409e..d721507be8 100644
-> --- a/path.c
-> +++ b/path.c
-> @@ -560,14 +560,15 @@ const char *repo_worktree_path_replace(const struct repository *repo,
->  }
->  
->  /* Returns 0 on success, negative on failure. */
-> -static int do_submodule_path(struct strbuf *buf, const char *path,
-> +static int do_submodule_path(struct repository *repo,
-> +			     struct strbuf *buf, const char *path,
->  			     const char *fmt, va_list args)
->  {
->  	struct strbuf git_submodule_common_dir = STRBUF_INIT;
->  	struct strbuf git_submodule_dir = STRBUF_INIT;
->  	int ret;
->  
-> -	ret = submodule_to_gitdir(the_repository, &git_submodule_dir, path);
-> +	ret = submodule_to_gitdir(repo, &git_submodule_dir, path);
->  	if (ret)
->  		goto cleanup;
->  
-> @@ -586,13 +587,14 @@ static int do_submodule_path(struct strbuf *buf, const char *path,
->  	return ret;
->  }
->  
-> -char *git_pathdup_submodule(const char *path, const char *fmt, ...)
-> +char *repo_submodule_path(struct repository *repo,
-> +			  const char *path, const char *fmt, ...)
->  {
->  	int err;
->  	va_list args;
->  	struct strbuf buf = STRBUF_INIT;
->  	va_start(args, fmt);
-> -	err = do_submodule_path(&buf, path, fmt, args);
-> +	err = do_submodule_path(repo, &buf, path, fmt, args);
->  	va_end(args);
->  	if (err) {
->  		strbuf_release(&buf);
-> @@ -601,16 +603,35 @@ char *git_pathdup_submodule(const char *path, const char *fmt, ...)
->  	return strbuf_detach(&buf, NULL);
->  }
->  
-> -int strbuf_git_path_submodule(struct strbuf *buf, const char *path,
-> -			      const char *fmt, ...)
-> +const char *repo_submodule_path_append(struct repository *repo,
-> +				       struct strbuf *buf,
-> +				       const char *path,
-> +				       const char *fmt, ...)
->  {
->  	int err;
->  	va_list args;
->  	va_start(args, fmt);
-> -	err = do_submodule_path(buf, path, fmt, args);
-> +	err = do_submodule_path(repo, buf, path, fmt, args);
->  	va_end(args);
-> +	if (err)
-> +		return NULL;
-> +	return buf->buf;
-> +}
->  
-> -	return err;
-> +const char *repo_submodule_path_replace(struct repository *repo,
-> +					struct strbuf *buf,
-> +					const char *path,
-> +					const char *fmt, ...)
-> +{
-> +	int err;
-> +	va_list args;
-> +	strbuf_reset(buf);
-> +	va_start(args, fmt);
-> +	err = do_submodule_path(repo, buf, path, fmt, args);
-> +	va_end(args);
-> +	if (err)
-> +		return NULL;
-> +	return buf->buf;
->  }
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-By reading through the patches from 1 to this. I gradually understand
-your design now. For every refactor, we will provide three kinds of
-functions. All of these functions will return `const char *` and we
-could elegantly use `NULL` to indicate the error.
+>> I obviously agree with the benefits enumerated in the above
+>> paragraph.  The simpler, the better.
+>>
+>> I however wonder ...
+>>
+>> > Add the `transfer.advertiseOSInfo` config option to address privacy
+>> > concerns. It defaults to `true` and can be changed to `false`.
+>>
+>> ... if this configuration knob is at the right granularity.
+>
+> The conclusion now is that we should not add any config option since
+> the GIT_USER_AGENT could actually allow the user to hide whatever
+> info they do not want to share ?
 
-Thanks,
-Jialuo
+I wouldn't call that a conclusion (as you and I are the only people
+who expressed their opinion on this so far), but that is my take on
+it---tweaking only the (os) part in the agent string with a config
+smells like the tweakability is at a wrong level.
+
