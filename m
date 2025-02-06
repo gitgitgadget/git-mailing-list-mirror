@@ -1,120 +1,102 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58C93194094
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 21:14:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EDB323C390
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 22:18:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738876453; cv=none; b=Ej1m+pvyRNxIvFosorEoKL+RM2Q63wY9t2NV6ZKezdiKt4SzQXa2Crikmv1BWrvIGY4Vy3b1WYQtH5Fu0XOWkCFz7tpWZy+qcRYVyoJrykCJGdziFZY7RAMR/+DsYKt7IZdui7c9KGi5LmH7xiROZXli1ALzBxUQBtd5pqh5V14=
+	t=1738880288; cv=none; b=fDnvNkJLg+obQODgVKr01z2GEXYsJXpuvVsojA+UrBv8+cbBnEJg4TFFQZxRHeHLsFAxKCOv1MVpcs9EKKr7JEx6tyiNjsp6je6hrT6Evyw/G3QqTM1MbecIg/GCD4NQUAugYxbQ4K3k60x7wVhJe4tUOaS5hwxCLkFWj9Q319c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738876453; c=relaxed/simple;
-	bh=35mipoRNBN6UR1uPuIlC8AL3+nMTEnxz4HI2GeuJZn0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ia9I1lvZZiBKo2mYuVXeJKr8f8JO393mKHo64GPBZZregbvJB6uFxrp7k/LpYLH8xHyFaOy2vpxSfjGpmHzoaiv5fb+Mk8Na81vFXd1d3TDszmvgS6rjE716k3T3ivYmtmhwfhXV1undHH1oy9OX7Nmz3nGWAxobTSWLen4bWcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PrvWA6Or; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WxRCK0my; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738880288; c=relaxed/simple;
+	bh=A/RNyfNtfN8fjmJbR+UBYJQtCcm39cDUIvVupFnlXGM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O4HG0kDmihtPThQom0jxR1ck/5UDsqY0zB2uNxo9USjTxhntA7+N0ofkkHEs3SLBw1mxWnzuWYl2EQOUzdYHXde1uYFyqD4IGJo+xz8nXtlHPEM4iVLTBBfN/MuwskYR/evW52mT4Qzf2F2RYkvN7a2bRhudE7sSECDYBLY5ztI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kcjskLM+; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PrvWA6Or";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WxRCK0my"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1D80D2540150;
-	Thu,  6 Feb 2025 16:14:09 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 06 Feb 2025 16:14:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738876448; x=1738962848; bh=DevA5pi1nR
-	iPhbQMXrxYnD4EL4kWm9m/vnAHyUjS4SM=; b=PrvWA6OrCGxEJr6cd6qtLBPEzR
-	9RFtviqWUt9gSUdriyArQPdv7LjQwe6X+H+YUQH2O3gAG2eRwcq7QooN5feDY166
-	Qh4Q611RvRPA3wDLG6h/PAZfYbGGsy+WqEuLbHdsvwJWxH597DHe5B+xulkjUeAm
-	dxSqQxmAQEJS269Gk0RAdamo199lJAxtVF6Y8yB720fCC85ub27M6d6NlRPe4cPA
-	N/nU19Gr5/gSTIz9CBKfAzDIO08mQ9Go90qnPMlB+p/hVtR1DKGqYxne/WF91IkP
-	XSDF74EHCBKKjc86vdjbviJ/C1B/jpe6iwdnWduzEM5BcYtztH1HE+UDWWhw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738876448; x=1738962848; bh=DevA5pi1nRiPhbQMXrxYnD4EL4kWm9m/vnA
-	HyUjS4SM=; b=WxRCK0my6TgcC3ekclw7yrXGvAxuheA+2V+A7tzdP1XDLZH3Xce
-	ieTTtrRhzrKKMSezZfmuoX/QNfk5w0WBuQ+EQJRZwnNUDVG3pTVI78SdkL8DNWET
-	mdLtbK9FYZTMsyxKn5vK6kpb5m2x5VxlPl4GQuzNHs4EBJJSiz5M47uBp+KhFXNL
-	WNv5x//CXLFedmgnwWwki48EdprNtzjXIpYFrubWGOFIW/If2FVdLV/zLAGBEy9p
-	6Rrwk42KIlsyOdlBKeSHKa55L5/vy/Mbp8hMewwMWzX0KETrCoxQFJhLih9ldoJV
-	gUW2aB+QaSbN8wPh2HGTOAUqafqOn7cvsJw==
-X-ME-Sender: <xms:ICalZ98ivknXen1FMp0Wi2HuHdMR8wIqcpMOeECbOmtP4_Nfk4GNZw>
-    <xme:ICalZxtP0whDhKYvY06vadOSDzKR1Xx4njPF_HuX2fqC58CCaJ_kNAEy2RqoDlfiP
-    QZUqVqv7Xk9JZHwRw>
-X-ME-Received: <xmr:ICalZ7BIT-n9JzQGnLYYyAk8pZnVm2b5EFVAB-8qGedpT4O2cXUHjvndxmRU8CiDr6bsqsTB1Jimim6-SOliEKO7aoimnFlXAxMw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeegfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmihhrthhhrdhhih
-    gtkhhfohhrugesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhu
-    shhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ICalZxd_M3mLP61YW2GbNGE3YsFl23Jya_2T84xfSd8w6PjRDZNACg>
-    <xmx:ICalZyOLkzYxjXrvun9potb1Oc7QMLtuYqWaJLstLuv-lWe1RolGpw>
-    <xmx:ICalZzlM_up21k6-6QvPYs8Hm3yHKdhhW_tBk0t-ahnl60ImcJegww>
-    <xmx:ICalZ8s766svKx8Zuvknos5n8Uyn4nm0XbRt9uapbFt3IHu7Qu8Z3w>
-    <xmx:ICalZ_pYvlGLBO1QxyZRXcvnea_QFw55Y2bgb3DkADj8zhHv9N7K9_mN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Feb 2025 16:14:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: M Hickford <mirth.hickford@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org
-Subject: Re: [PATCH 4/5] doc: use .adoc extension for AsciiDoc files
-In-Reply-To: <CAGJzqsnFNfK6DEcbRQsUB4S8qVBnQ2PcJBgbvCPYLd-xAVVQBA@mail.gmail.com>
-	(M. Hickford's message of "Thu, 6 Feb 2025 20:33:00 +0000")
-References: <20250120015603.1980991-1-sandals@crustytoothpaste.net>
-	<20250120015603.1980991-5-sandals@crustytoothpaste.net>
-	<CAGJzqsnFNfK6DEcbRQsUB4S8qVBnQ2PcJBgbvCPYLd-xAVVQBA@mail.gmail.com>
-Date: Thu, 06 Feb 2025 13:14:07 -0800
-Message-ID: <xmqqo6zeixnk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kcjskLM+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1738880284;
+	bh=A/RNyfNtfN8fjmJbR+UBYJQtCcm39cDUIvVupFnlXGM=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=kcjskLM+pXkvV8TDToLYM+608BxiOMqRkjgidOzui9mtGl+CqgooYU48M2N0aXqGT
+	 T0rOv7cQxXmP2ylefQWu8LBFoBsz84iaiAFpYMB6Eggydg9UzYFjmgB1XrnTrhpxpq
+	 JHSm2vAtVdY2he3DJFgWIMQwdyobAha3Ft3CyhwtEWLPceLcbxvmhZFEIU01ivvkfY
+	 2fokdLxF2kDvQRnGAb0yj3vB+GwY3jCu0XbohzVKdWnkOFEX5Nid/N2dCidDv9xl+q
+	 sR9hf/9vcgN7mcnuUrsfj3xaGY+mgGo+FpH+beYOKs/VBdtc1pbQfXg2zIiwbf1CoK
+	 BiUhMJ3p9CWIdxqr+gsiNxTMRbFPJtSJKtsnWTXF23t08dXqgShCIxdBotuTNue1wy
+	 8sxPRIgveHj9AdfBq/Kj0vT9yQADbrJ+lxV5VLSopWSaAFWMdu5mq/i0t47FlN5uue
+	 k6p9n4MdeuhEMm6mYFY34HlDwEGYAFVYAbFVZeb0Sfmbru8KwG+
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 052C720076;
+	Thu,  6 Feb 2025 22:18:04 +0000 (UTC)
+Date: Thu, 6 Feb 2025 22:18:02 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Kapil Somani <kmsomani@alumni.ncsu.edu>
+Cc: git@vger.kernel.org
+Subject: Re: `git p4` broken on machines which do not have python on path
+Message-ID: <Z6U1GoGVA7IiPg3A@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Kapil Somani <kmsomani@alumni.ncsu.edu>, git@vger.kernel.org
+References: <CANF_+=4dG7bVF5n+s4ezHR=HneeMgvYNhsOjsz7e7bFapG2f2w@mail.gmail.com>
+ <Z6QUeaoH_tV2ncwn@tapette.crustytoothpaste.net>
+ <CANF_+=7hM7QqLNE3d4=UO-8erYoeQwYG5SrsDTXtgqZq3AKJwg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="KB+bf0mUmZfM8btC"
+Content-Disposition: inline
+In-Reply-To: <CANF_+=7hM7QqLNE3d4=UO-8erYoeQwYG5SrsDTXtgqZq3AKJwg@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-M Hickford <mirth.hickford@gmail.com> writes:
 
-> On Mon, 20 Jan 2025 at 01:56, brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
->>
->> We presently use the ".txt" extension for our AsciiDoc files.  While not
->> wrong, most editors do not associate this extension with AsciiDoc,
->> meaning that contributors don't get automatic editor functionality that
->> could be useful, such as syntax highlighting and prose linting.
->>
->> It is much more common to use the ".adoc" extension for AsciiDoc files,
->> since this helps editors automatically detect files and also allows
->> various forges to provide rich (HTML-like) rendering.  Let's do that
->> here, renaming all of the files and updating the includes where
->> relevant.  Adjust the various build scripts and makefiles to use the new
->> extension as well.
->
-> Hi Brian. How about also renaming SubmittingPatches to
-> SubmittingPatches.adoc? This is AsciiDoc according to 049e64aa50
-> (Documentation: convert SubmittingPatches to AsciiDoc, 2017-11-12).
+--KB+bf0mUmZfM8btC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Do we pass SubmittingPatches (and CodingGuidelines for that matter)
-through AsciiDoc?  They do not even have .txt suffix, so I suspect
-it is not.
+On 2025-02-06 at 02:12:02, Kapil Somani wrote:
+> Thanks for quick response Brian
+>=20
+> Yes, our team compiles git for use within our organization.
+> I'll reach out to them and see if they can provide path during build.
+>=20
+> Meanwhile, I was able to update copy of the git (compiled by my team) to
+> use python3 on shebang line.
+> It appears that the git-p4 is compatible with Python3. Is git team planni=
+ng
+> to update it near future?
 
-I would prefer to see the general rule to be to rename s/txt/adoc/
-ONLY for files that we actually use AsciiDoc to convert to HTML or
-manpages, and leave other sleeping dogs unmolested.
+It's my understanding that it's designed to work with both Python 2 and
+3.  It's unlikely that the shebang will be updated until it's no longer
+guaranteed to work with Python 2, since `python` is more generic than
+`python3`.  When that is, I don't know, since I don't use Perforce and
+don't maintain git-p4, which has a separate maintainer.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-Thanks.
+--KB+bf0mUmZfM8btC
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ6U1GgAKCRB8DEliiIei
+gY92AQC9dA7ECbHqD00gHCPug8HcbAYk+6JHNh5Hq0JM5JKmhQD/T8H/ZgBClW7F
+g7L3OIpdpxPZiRJJmBncsRIS44F+lA0=
+=2qh1
+-----END PGP SIGNATURE-----
+
+--KB+bf0mUmZfM8btC--
