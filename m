@@ -1,92 +1,119 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8A02253F6
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 10:14:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D816322D4C7
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 11:17:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738836878; cv=none; b=aE2H1oqSNvoidV4d/GzSN3LdtKD445GyPETGIGP4/msMycfVc2BnmH4oWiC+mWXocSf6f4Pe9q07wdyy60AoAX3rF3XBywHELZgoOehJqgQqhrkAjlE9sNt1KIWO8shGZSdlu017lbKBaKFOj8mlaHCL2BOsocInRgCNVwejJWk=
+	t=1738840636; cv=none; b=e1MXR1DdhXqY5lukFCd0gqpKBf3ctcHZ1iXBWIBQH4vFbUOFNr+7dndzMJnILkQCp/gmuPT5HqDobYLtfzfMBaOVnST70P7huxJFq2HfOmUrlDg3KWGiVHOiQg0eYcXq4l1aIJ2wPEdEXeN59OSqYnwvun4zgTzIZpPFIYbmT2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738836878; c=relaxed/simple;
-	bh=r0O64bwvcVAUgRPGPW6Fzkao9zYMJab3NnliUERAjQE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qKBOs9Lz56dtfgB5sA0TmpRmUFIu8rtCGnKy5kUGQipuQn+IfcxWEbneMcRho3pDlDkc0paQobX3BLG4+pw1WxkadawvADK0ZXu47R9ZtJlhsyiyXYhVtpkyFgTrFGIz5JIGajaXKDz32Y0dB+j6fFo0roeeEOAksCt/fZX5IFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lBU/cEl5; arc=none smtp.client-ip=209.85.208.175
+	s=arc-20240116; t=1738840636; c=relaxed/simple;
+	bh=Vo39VL0fDe8Z4BnzspDSlX+pj+OVybkyazZwLMAInvY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=iCnJNDbzuDw/yOo6u5dcLSDPi0qC0QgBObGsK92hf68yQvgopc+3c5AjYk7k2V86RcZc/5dnX2IrKMcaepAMxNTF9qatWsStddI81wSGCYlOlT6WQuJup7x0GXZ23lIqz1eeCnqy4PriwReuq6DVJSyaU2nDVFdv0CmmcyF/dfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K5TelAQp; arc=none smtp.client-ip=209.85.222.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lBU/cEl5"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-306007227d3so6878981fa.0
-        for <git@vger.kernel.org>; Thu, 06 Feb 2025 02:14:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K5TelAQp"
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-864e4f5b253so218658241.1
+        for <git@vger.kernel.org>; Thu, 06 Feb 2025 03:17:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738836875; x=1739441675; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r0O64bwvcVAUgRPGPW6Fzkao9zYMJab3NnliUERAjQE=;
-        b=lBU/cEl5wRZR6pZ/KAwVA0+K7PeyLWveuYKbfBGW4pP3L39cw8KXrtGgVLmYkLtc+M
-         h4luvxGoGHupig2vpgz7S9DlpaVVK158ct4dvd3CEWcSdBevwT3STYxREK6O7fHYBuvq
-         EqM+yQAhzHrPE5RuushZMPxbFXeT1LcbCXVd1T5Gaxj7/YqRs1Pe5OvUxm7xYorS06uW
-         bCyLhg/9NYBaPM+OiJdTAoalvvexQjIuneLRfMW4Ec0fj7gnfqisfsWH4dcG5qulJ9Ip
-         8xbwrwgkxP5tk0hX3QJbjq7qdveSu6i9iorBWy7leBkYc+8aPCMMi9TwKG6tYpspylA6
-         LDIA==
+        d=gmail.com; s=20230601; t=1738840633; x=1739445433; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MCx8c6FIZouTYR+dx2wrsyEL4qXw9rW8KBnEZC4m70Y=;
+        b=K5TelAQpNrZT0o1uGYg3lFEfd/QTw5hEnigNhnej4hoI3DQGZWXwBk8MWAJ56Kpm2k
+         P9CrNYr1I/hfy7jUV/K7iHAOKfEkX0VYbkDVWseB6sXb5DJhO4AZaSTvw0/4n8E8jq2r
+         HAUx5J4142xheWqTyiyOOwIK3E2OLomZ3FbYcThZlNHG6D5ZVnxueWf6ue2A1e+iyCtP
+         ahtvRMAzcWQuSvQi/reAiRFjcSHeA348//tvwpPmL6ox77RWK8hdgCJa5ENGCQq0qccg
+         aULVIulvS6EuP8Wr4SU1bAbihxqbx7ry7cwLUSeGAjGikwpu/sJtDY+cgcaU/ebiw8yH
+         2W+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738836875; x=1739441675;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=r0O64bwvcVAUgRPGPW6Fzkao9zYMJab3NnliUERAjQE=;
-        b=nWxAg/c/5Rhs4wenkyvb9yyYCQzUI50lGw5k3gX/zKb5zElIRBN91parqp2Cvm2QPO
-         ngifb11u0TpnQtiLtjP3eXrnK4Nr56gEI+FGR4rcWgWK3S2KF3Z3btc9hC5Nm4fBGeM7
-         EYA7NICOEYqGNrb2iUr2A9ahzIPlicQZNQitHmBt8HXKxv2udaSi+TEhn631uk9SNxEH
-         9/W9f8QhDnc1ogG7oZR+hOnwK7B/iVCOFfVQCOe9Nf4clbaWHiKZM/TLkOc6bYz0fdIp
-         wSKzhgyF4QGIJ19jjx5lXddy/0lOpvlE9l4cvGwwT8KHGp5xMbrK04DwL1q12BZ9h4XA
-         fiww==
-X-Gm-Message-State: AOJu0YzB25GvzjPuUPoU1Mv0RR2XAMJpQKVwr8tUhSuge/9gKchnBeYH
-	7kMCI2Cm56jOBZTxR0F/p/GYsoRmBbMbj/Vr1cnoAad+Px1h6Vlg3YHlvBmi9wtcOJ7bfphzUWY
-	19YEtUSSdSESC6b9/Tw+QIZeL/QXs520C
-X-Gm-Gg: ASbGnctaOtkWHd9mEpKKsTaERmgVKCX2kl2TraBP26H8NgerYhR9i2bepcbNmWH7wMU
-	yj/+RdiLjMlmhAxkOBT1rfWWvawR47Y4mzEDH0Uid6NxFm4YmM5chAFh2LeT3EmJ1I/A1Fo8HLS
-	k=
-X-Google-Smtp-Source: AGHT+IGF1wN0H/ALG4EULRAaikvcp0vo075GkeAz5qYvKRJodWeZjHaS3TkBvluoT4zBgIHbPnsg/QA9sWN+7nWHJT0=
-X-Received: by 2002:a2e:b8ce:0:b0:306:10d6:28b3 with SMTP id
- 38308e7fff4ca-307cf2f0ab0mr22043051fa.1.1738836874987; Thu, 06 Feb 2025
- 02:14:34 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738840633; x=1739445433;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MCx8c6FIZouTYR+dx2wrsyEL4qXw9rW8KBnEZC4m70Y=;
+        b=Er6blNDyw/zCojCSH65WmA4uQSgAuCLZXxulki0bwRcHnacWRPs7Ckec2a5lyqNygf
+         m/hp3sEJdQECOVBPzMDXWqHX0wWLjIF9v0Jd3sFtUctwUFkq4rUeBHVDO9SVU4AFFoSn
+         5wAA3GLqhB+dKoyUatBQsNEFkNmeNDNvFttsFb53LAIy8BRtZBgJ/VYaJvQFIG1AaX19
+         w0g4Dls3UfhXnSD4NEPR1VXaLV//b02A8mkvZpl5YPfvQ/QWr1CxLQvCxjPdZU+zZZfU
+         fEyvuRJP0hyeVGB9ftmLnA6qGjycYm4TUvcGYQMUIjyK0gw6Nyj+TPjWwzc0APnRZ1/e
+         wtYg==
+X-Forwarded-Encrypted: i=1; AJvYcCWRYvHvMiw82Gh8imkjBseL7SYLR2LLrILl5L3fOsiRDcp/jchmsqv9GNMH6MMCohHRdSQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw4dGD9YC1Nt+Rp329U3c3Ov78/QVYhD7QwQRJoHxvn/zrbQ8Mh
+	EYywdaNd+coQzeYtT+YfAbMfpOzoCEgMkWSqbERFgo+KmgP0ppXm6SpD9wp5Bk0dQvuMnamCKLe
+	o60jL/kq4b9lT18x1shZwBG2+0cm4F749
+X-Gm-Gg: ASbGnctZGVTuuoiJY3o1U9ZnhStOoaQwNvUxrXbPFnzbwgCPNDhjwTvTs23GaYmml7i
+	gNV9jv52Kn6v05s/G+u4wRQLNPFV0ZgX5RnVweIMEbjzxbl+9PnLto2qvU0F8GOdEHzYtL55sUd
+	tWUyS7bvsxECt4I63XZ6pqYw4ElnY9CA4=
+X-Google-Smtp-Source: AGHT+IEJDwY1ezDLWduK7mhGUcd+zXbuZqbV4bpm+j54Uqp9VlQ6VILfRLYUwIIj58kKaY+M4ws5OhvkRSfenX3Xxf4=
+X-Received: by 2002:a05:6102:d93:b0:4b9:c326:f992 with SMTP id
+ ada2fe7eead31-4ba47a694fcmr3656347137.20.1738840633582; Thu, 06 Feb 2025
+ 03:17:13 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 6 Feb 2025 03:17:12 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250206-b4-pks-path-drop-the-repository-v1-1-4e77f0313206@pks.im>
+References: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
+ <20250206-b4-pks-path-drop-the-repository-v1-1-4e77f0313206@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250204041430.36035-1-meetsoni3017@gmail.com>
- <Z6HH8mWDpJUSHDd7@pks.im> <CAPhwyn094ySxG8=p3_jF+Z+0g6h4hL5ELBYhOLv+Th8zX04Urg@mail.gmail.com>
- <Z6IoZ1_1wGiOo4Bi@pks.im>
-In-Reply-To: <Z6IoZ1_1wGiOo4Bi@pks.im>
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Thu, 6 Feb 2025 15:44:23 +0530
-X-Gm-Features: AWEUYZkbr_ANEqOjs5QNBgbYMI9afh_7mCVoSZ8igqH-pagPrIEELNBSl4DMh1A
-Message-ID: <CAPhwyn1_tMtZzMeNY3LhHxaVyLaD=nhWk8d-YNPHFq5ouJU7Hw@mail.gmail.com>
-Subject: Re: [GSoC][PATCH] remote: relocate valid_remote_name
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com
+Date: Thu, 6 Feb 2025 03:17:12 -0800
+X-Gm-Features: AWEUYZmmsv2XGHlJ35HmEJGDs3Ro9o9mKZMvycLj-d498XxbEAlOaAG9mSXfrfM
+Message-ID: <CAOLa=ZRSSnqRO_=N-sVrYSRpCZkyW0KFh5=rwX0NY_VqyzKz3A@mail.gmail.com>
+Subject: Re: [PATCH 01/16] path: refactor `repo_common_path()` family of functions
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000494c80062d776241"
+
+--000000000000494c80062d776241
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, 4 Feb 2025 at 20:17, Patrick Steinhardt <ps@pks.im> wrote:
->
-> On Tue, Feb 04, 2025 at 07:36:24PM +0530, Meet Soni wrote:
-> > On Tue, 4 Feb 2025 at 13:25, Patrick Steinhardt <ps@pks.im> wrote:
-> > > The change itself looks straight-forward to me. Did you happen to che=
-ck
-> > > whether this allows you to drop any includes for "refspec.h"?
-> >
-> > I think you mean refspec.c, as refspec.h doesn=E2=80=99t have includes.
-> > Yeah, I did check -- no include drop found in refspec.c.
->
-> Not quite -- I meant whether any other file that previously included
-> "refspec.h" now doesn't have to anymore because the function declaration
-> was moved.
-Oh, I misunderstood. I checked again, but I didn't find any includes that
-could be dropped.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Meet
+[snip]
+
+> diff --git a/path.c b/path.c
+> index 07964f5d32..273b649e00 100644
+> --- a/path.c
+> +++ b/path.c
+> @@ -414,7 +414,7 @@ static void strbuf_worktree_gitdir(struct strbuf *buf,
+>  	else if (!wt->id)
+>  		strbuf_addstr(buf, repo->commondir);
+>  	else
+> -		strbuf_git_common_path(buf, repo, "worktrees/%s", wt->id);
+> +		repo_common_path_append(repo, buf, "worktrees/%s", wt->id);
+
+This is the only place we replace `strbuf_git_common_path` with
+`repo_common_path_append`, whereas other places it is
+`repo_common_path_replace`. I assume that is because in those places the
+buf is newly initialized.
+
+[snip]
+
+Rest of the patch looks good!
+
+--000000000000494c80062d776241
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 816a976185064152_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1la21qWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meGZtQy80eTk4U1Q0L3l4RlJYVmZVTGdycmJPQWNBUwpFbnNsV3hJWlZF
+SDNiTGJHeDNoRytUN1NqQlp5QU9uYlliaFlPUHJJQmtXc1kvMHNlVDlMcEp3Rlk2U2ZTclM5CkpB
+NzM1UjVYZkVrWnBoVTFGWjVNRkNLN3RHc1ZGQTRIQVc4Vmt5Yy96TGkwcWxtL1hlS040NnFqMVQz
+VkRScnoKeGllWGxxZzB1WVMrbUcxc1pKZkl1dkwvR3FmRGQ4ZTc3QkhtS0tOekc1alFibDM1K3BJ
+YWFKU1N4ajZiQ1dHTwpkVkZKTURES0dnam1MU2VFdmhUaEhYM1hrZlZIWWpIUHgzODlsYkxmQWZj
+WEFlejRlQzRyeWJjcFFCbW5CTmtYCmRIUldUelJGeFQrek9jeHY0MFM0SFpvS3lObTBPUTFodFR2
+U2h5OE93bVBlVU9uVTBLMms5WFNHNktCUXpiVXMKU2gvU1BQaDdOOTkrM0xoaGcyQlpOVWJlYnUv
+V1RHNStHU2p2NFRaMDJrekZ4Z0dTLzB1VmFNVmFKRms1d0NpZgpzVjltTHVneE1nREJ3YmZNU0xW
+a2t5clpGRjNHaXluV0lsdVZyWnpEWGpBQVEzMmJjQ3MvS2g3OC8xSFlrQ0tOClJvdEdQMElCOFhw
+ZkJNdkw0N3AvMFlOR2prNjV1ZXQ2dVZTVU5LMD0KPTNiakwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000494c80062d776241--
