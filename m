@@ -1,59 +1,61 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A93246BF
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 04:20:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FE0152196
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 04:20:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738815616; cv=none; b=S/NSTQ6v2chQXth0ryEjtX28OdCI3H07LrNfWD7FIar+0UolCp54v5IPgoE7pq9WdiAKE8ZaR2d8gfy00iuzWYELpBLVgAv+7vfpgvvLlWIW5Tyf4/HCZ4+HnPexrqetpWa0ZSllcg6A9oQrNmGjX76rT7rk9JKLr0d9hVgrFoc=
+	t=1738815618; cv=none; b=KGTGMcJ2NrnCZmgPZKZTPqL5IJvPF2P005ToeJ9eWYbLp8X5bPKWPflP9kYBYplmtiXnt0J0Oty0URTLXff7ebH8tuYbZjdHmHcWI2ijES75Qz5md5isMV4J1agDXuop2LTKwdCw9HSPzGuFhniDi87oq6IGgDYGoea/AvmOvqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738815616; c=relaxed/simple;
-	bh=cV0IG1531Qdul9tGxMibARyOuYzM/quZBYdQzCHdx+Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=G9Wdpa+/q23COd0ZNiiGXp10hwcBoCZEH+nil83Og3bGuhoatShbYRm+cozG8zi2ezZhkAo9f/IvYebHxzoBhD8PBQBVszNN0BaGcIzEiJsYQ2Wh4g65HCyiIkICw0Mn+pp9abwIK9eZ45FGsP38KMWOx5FHuY50jlgPdilIB6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FSNABhFP; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1738815618; c=relaxed/simple;
+	bh=KMf7nDGg5XmYLlcO1PYAGKcIwIaFW8ClgiEHMB16I/o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=QvqC0k/6yeYJSu1YkvpXjrbkZ1LM1xXwXvHjOUeT5f2fFFeTArSw2rT3dghPO2sL6p44XqVEvUrjkLSUWEHS7hf5Wqz+LWvMTG6P9OsRocJVRm1hQGsE9WEtwTCWs5n+A9Sha2+rCsXeonqkkeS0PaSjAMsjFbvirZeeRVL4l9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D4McR0YK; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FSNABhFP"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21f3c119fe6so570945ad.0
-        for <git@vger.kernel.org>; Wed, 05 Feb 2025 20:20:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D4McR0YK"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-21f2339dcfdso6718715ad.1
+        for <git@vger.kernel.org>; Wed, 05 Feb 2025 20:20:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738815614; x=1739420414; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IF+HkbO76EORDYaxAwvziXpXpimHkSHw/ZIRdNlFzt0=;
-        b=FSNABhFPruyvFFUnOLDoByvT7W6/9OSpTRe7q0CZIxBwbywul2OzKfgc+wfjem8mI+
-         t84qxT3PVlDyWYLSw1MsZCnkWZDqaNAlY1Hf5Tt3t+HgDlZHm5vybRChaOEJWFzj1LoS
-         hnRHTRGGhL4FKu6eLqkDBTETMEdjWtaSLO2J8UcMkGf167rQidNMeeZKktPzyaEJ7j9b
-         ziOXaR1koo/87wrIbLjCy9k22uGBwx6xrFZ9XicZZ64WXDIf5Fj04WF5jmLNGZbTn2ms
-         3zrXG3IH/gozguYGKBUuzrQyhfq3q9KgwYD7BgSQhhOXuUlettoZlXjwiqJLcJPlt4/t
-         1peA==
+        d=gmail.com; s=20230601; t=1738815616; x=1739420416; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+RdokglLNGU4GDISJ30LyP07aU9kqp1gBENXSdxaiXk=;
+        b=D4McR0YKxH86QQ7HxYWgOrhhRueMcK+35q8mH5YQkfLW/bJF2/vk/jV8BvXVFCsC9c
+         fsUj+khixNnKen4UrdVeAf+6+2p0cLwV9z81hpGlXY/PWKIvO1Cu4PKrY5NoKUbuKjvv
+         x2L1WaTHN2yGOjMBQZe2FDg1k68azFNvbuUzqYMLLz6jh015gPMC35wH7JdfAeXmtr1H
+         fK8mQnidObmu+4S/hx23ybnm8q5edjRZyMO6fU2N73+zf4CGk2GU/96pEzWda1Cq48fy
+         znw0toSPNNUkxM8q0MoCx9JCC7rI4gAzTNABuSldrXmeX/pdxzJLfTN2FUZMcJuJTYWF
+         ajsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738815614; x=1739420414;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IF+HkbO76EORDYaxAwvziXpXpimHkSHw/ZIRdNlFzt0=;
-        b=ABAW5NqegqpVNhf3SG9QwNK9Rbwo18N3oXrtyGPyxZI8Q/2ZqH58Bx0rlZZevnf3g7
-         2i0FzaQAkj1wq9qt83Ufdb0P3G1U9ZVNbGxPbFLk7e1QuNC+k3Nj62IInkAvaQfAcT44
-         mAhnqFysae8w5Fn7OzmGTt720heyaWqQvLHZGDZ6bmHODMXklVf2pxe0XmA5ipCsSR1E
-         suKgDynTZhBu8MghBKKux4S4QdRl9+tShz3sbfc/vScMDCFpUmr1N0i1WhnssZevDwcH
-         Wtz8UNQlRi+C//Cv6d1n7hNPEMzDkYBGzJewVdqJJyLs3jP3sEcsOF3aIYjiMgWTYpq+
-         jZQQ==
-X-Gm-Message-State: AOJu0YwpyBl2gB43tgNzEllqL1pxdkHSSDgTkjNUeQJPAj9asSxDoMa7
-	p8UfZMF0DIkZIjA7PUAvkSSOd/TA03/BQgbi7q8DuE2Bkk1lUNhGAXCdfA==
-X-Gm-Gg: ASbGncscjGKwxbUaGdk8CTUHlbqah0H5EWlAr/jCwEqjo40nLYNfZJ2vAGkxUsSWV24
-	jWCJvm4w3Tnk4HNwpkrgC9Md8kKUNmkLFeA8lSjGYcDDX6Km3wW0HTNIK29K+/kOa389xBu3qGR
-	e/T6TlKUO+YGat3XJgy4FNcnjt7AUweU0drFrjcYsxea92kczazBBP0XeQ3wonJ5gu+qirRDVK5
-	t2BjGrolMk19zyKA70/QLXpra6/pM0HYfaKVfrkklzFNM84a7YcJD6tr5PZaffCkX0QGoT0q4G+
-	YGsDctUtMzpr5ssCxsEE5asPrQ==
-X-Google-Smtp-Source: AGHT+IGCoAqnt60RE+Uy1qs2DqJjf+E8tJbR/V6CLXJM291Pmh+4V8sHD73ZXRb7MkygQPidUYTOgQ==
-X-Received: by 2002:a17:903:22cd:b0:21f:dbb:20a6 with SMTP id d9443c01a7336-21f17ef0184mr90642315ad.33.1738815614169;
-        Wed, 05 Feb 2025 20:20:14 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738815616; x=1739420416;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+RdokglLNGU4GDISJ30LyP07aU9kqp1gBENXSdxaiXk=;
+        b=Aqgh2sIlQG2dSV1jD6kEzBkNDdepddKEuwQtFZMm4hJq10QsPqiB9C103+Hl+cGvD8
+         HeXfu/ArNZD0bwjIO9CGUKmisk5fldbKCNJJ54R8vc3gptio6XeIKPrkV/Ei48MCsoXI
+         3UICXnDUadjdnJzhtAyGWWWg90fDQ2jv5XugFgZ2MgQwMe4ntvRY6A7hQFDXxMdwshLD
+         v/+QZQ9Gc5Zf/mI4YURwPiLQbuWRXI2RQVWtl6pNFwdc3eP7EZgVOz2cXS8+3W4ggg9z
+         r5QLbocEnklo7NNRRW7YFPExdi8xliqzGK/9QnHE3bEPYMU9WWpOG2HgrpC4Q6PFOhIr
+         jU8g==
+X-Gm-Message-State: AOJu0YylMVWdMp65BPA1o4lh68KRv3rCqHX+cFYejfPC/IetMSX8cchd
+	kdAF7bN2cJyJaXYMyHsYAkkXp66fm+GpArbarZEOKxkcvA58+yjtzBCVZA==
+X-Gm-Gg: ASbGncu14i3FvRHvC5mcw3emPKDN8gz95YDvTvDmxpRQyrAl6SCqtqhuQZhcYvN4MQ2
+	Mc5L7j8kW+5CAljObjnclu4cMu0omCxIjqD/s416c5gxpetRoWPXYQwnfNyJRlcdW8yICPaZGJO
+	uxGqNhTWY0EqHPSgFImsahpAQCe9uL2+6991xH771p6lYTgpXedreD6nyJqMrxZOR7jG8BSVnDg
+	l5BzhkfdH8lIGWYQu/5AYZGi4CWfFdH2ExgJFdzxn0ABgogoysZIvYpNzWYMqHkrLZejYqeB9vM
+	SsiwEKeoJMbCXZpS9LEt6SEtFw==
+X-Google-Smtp-Source: AGHT+IF4FplxmlAyXkhJ1OLgI0IAktQOgB9Z6yqiUm6cWWqKKZjs9lS0VdGybgxD+pav+dJ5RCxH0Q==
+X-Received: by 2002:a17:902:fc8d:b0:215:44fe:163d with SMTP id d9443c01a7336-21f2f1a7664mr29983205ad.17.1738815615795;
+        Wed, 05 Feb 2025 20:20:15 -0800 (PST)
 Received: from localhost.localdomain ([172.56.121.6])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21f3650e63fsm2384045ad.41.2025.02.05.20.20.12
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21f3650e63fsm2384045ad.41.2025.02.05.20.20.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 05 Feb 2025 20:20:13 -0800 (PST)
+        Wed, 05 Feb 2025 20:20:15 -0800 (PST)
 From: David Aguilar <davvid@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -61,10 +63,12 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Elijah Newren <newren@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: [PATCH v2 1/3] difftool: eliminate use of global variables
-Date: Wed,  5 Feb 2025 20:20:08 -0800
-Message-ID: <20250206042010.865947-1-davvid@gmail.com>
+Subject: [PATCH v2 2/3] difftool: eliminate use of the_repository
+Date: Wed,  5 Feb 2025 20:20:09 -0800
+Message-ID: <20250206042010.865947-2-davvid@gmail.com>
 X-Mailer: git-send-email 2.48.1.461.g612e419e04
+In-Reply-To: <20250206042010.865947-1-davvid@gmail.com>
+References: <20250206042010.865947-1-davvid@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,169 +77,209 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Move difftool's global variables into a difftools_option struct
-in preparation for removal of USE_THE_REPOSITORY_VARIABLE.
+Make callers pass a repository struct into each function instead
+of relying on the global the_repository variable.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- builtin/difftool.c | 51 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 33 insertions(+), 18 deletions(-)
+ builtin/difftool.c | 54 +++++++++++++++++++++++++---------------------
+ 1 file changed, 29 insertions(+), 25 deletions(-)
 
 diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 03a8bb92a9..0b6b92aee0 100644
+index 0b6b92aee0..81d733dfdf 100644
 --- a/builtin/difftool.c
 +++ b/builtin/difftool.c
-@@ -36,18 +36,27 @@
- #include "entry.h"
- #include "setup.h"
+@@ -72,7 +72,8 @@ static int print_tool_help(void)
+ 	return run_command(&cmd);
+ }
  
--static int trust_exit_code;
--
- static const char *const builtin_difftool_usage[] = {
- 	N_("git difftool [<options>] [<commit> [<commit>]] [--] [<path>...]"),
- 	NULL
- };
- 
-+struct difftool_options {
-+	int has_symlinks;
-+	int symlinks;
-+	int trust_exit_code;
-+};
-+
- static int difftool_config(const char *var, const char *value,
- 			   const struct config_context *ctx, void *cb)
+-static int parse_index_info(char *p, int *mode1, int *mode2,
++static int parse_index_info(struct repository *repo,
++			    char *p, int *mode1, int *mode2,
+ 			    struct object_id *oid1, struct object_id *oid2,
+ 			    char *status)
  {
-+	struct difftool_options *dt_options = (struct difftool_options *)cb;
- 	if (!strcmp(var, "difftool.trustexitcode")) {
--		trust_exit_code = git_config_bool(var, value);
-+		dt_options->trust_exit_code = git_config_bool(var, value);
-+		return 0;
-+	}
-+	if (!strcmp(var, "core.symlinks")) {
-+		dt_options->has_symlinks = git_config_bool(var, value);
- 		return 0;
- 	}
+@@ -84,11 +85,11 @@ static int parse_index_info(char *p, int *mode1, int *mode2,
+ 	*mode2 = (int)strtol(p + 1, &p, 8);
+ 	if (*p != ' ')
+ 		return error("expected ' ', got '%c'", *p);
+-	if (parse_oid_hex(++p, oid1, (const char **)&p))
++	if (parse_oid_hex_algop(++p, oid1, (const char **)&p, repo->hash_algo))
+ 		return error("expected object ID, got '%s'", p);
+ 	if (*p != ' ')
+ 		return error("expected ' ', got '%c'", *p);
+-	if (parse_oid_hex(++p, oid2, (const char **)&p))
++	if (parse_oid_hex_algop(++p, oid2, (const char **)&p, repo->hash_algo))
+ 		return error("expected object ID, got '%s'", p);
+ 	if (*p != ' ')
+ 		return error("expected ' ', got '%c'", *p);
+@@ -115,7 +116,8 @@ static void add_path(struct strbuf *buf, size_t base_len, const char *path)
+ /*
+  * Determine whether we can simply reuse the file in the worktree.
+  */
+-static int use_wt_file(const char *workdir, const char *name,
++static int use_wt_file(struct repository *repo,
++		       const char *workdir, const char *name,
+ 		       struct object_id *oid)
+ {
+ 	struct strbuf buf = STRBUF_INIT;
+@@ -130,7 +132,7 @@ static int use_wt_file(const char *workdir, const char *name,
+ 		int fd = open(buf.buf, O_RDONLY);
  
-@@ -291,13 +300,14 @@ static int ensure_leading_directories(char *path)
+ 		if (fd >= 0 &&
+-		    !index_fd(the_repository->index, &wt_oid, fd, &st, OBJ_BLOB, name, 0)) {
++		    !index_fd(repo->index, &wt_oid, fd, &st, OBJ_BLOB, name, 0)) {
+ 			if (is_null_oid(oid)) {
+ 				oidcpy(oid, &wt_oid);
+ 				use = 1;
+@@ -221,13 +223,14 @@ static int path_entry_cmp(const void *cmp_data UNUSED,
+ 	return strcmp(a->path, key ? key : b->path);
+ }
+ 
+-static void changed_files(struct hashmap *result, const char *index_path,
++static void changed_files(struct repository *repo,
++			  struct hashmap *result, const char *index_path,
+ 			  const char *workdir)
+ {
+ 	struct child_process update_index = CHILD_PROCESS_INIT;
+ 	struct child_process diff_files = CHILD_PROCESS_INIT;
+ 	struct strbuf buf = STRBUF_INIT;
+-	const char *git_dir = absolute_path(repo_get_git_dir(the_repository));
++	const char *git_dir = absolute_path(repo_get_git_dir(repo));
+ 	FILE *fp;
+ 
+ 	strvec_pushl(&update_index.args,
+@@ -300,7 +303,8 @@ static int ensure_leading_directories(char *path)
   * to compare the readlink(2) result as text, even on a filesystem that is
   * capable of doing a symbolic link.
   */
--static char *get_symlink(const struct object_id *oid, const char *path)
-+static char *get_symlink(struct difftool_options *dt_options,
-+			 const struct object_id *oid, const char *path)
+-static char *get_symlink(struct difftool_options *dt_options,
++static char *get_symlink(struct repository *repo,
++			 struct difftool_options *dt_options,
+ 			 const struct object_id *oid, const char *path)
  {
  	char *data;
- 	if (is_null_oid(oid)) {
- 		/* The symlink is unknown to Git so read from the filesystem */
- 		struct strbuf link = STRBUF_INIT;
--		if (has_symlinks) {
-+		if (dt_options->has_symlinks) {
- 			if (strbuf_readlink(&link, path, strlen(path)))
- 				die(_("could not read symlink %s"), path);
- 		} else if (strbuf_read_file(&link, path, 128))
-@@ -355,7 +365,8 @@ static void write_standin_files(struct pair_entry *entry,
+@@ -317,8 +321,7 @@ static char *get_symlink(struct difftool_options *dt_options,
+ 	} else {
+ 		enum object_type type;
+ 		unsigned long size;
+-		data = repo_read_object_file(the_repository, oid, &type,
+-					     &size);
++		data = repo_read_object_file(repo, oid, &type, &size);
+ 		if (!data)
+ 			die(_("could not read object %s for symlink %s"),
+ 				oid_to_hex(oid), path);
+@@ -365,7 +368,8 @@ static void write_standin_files(struct pair_entry *entry,
  		write_file_in_directory(rdir, rdir_len, entry->path, entry->right);
  }
  
--static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
-+static int run_dir_diff(struct difftool_options *dt_options,
-+			const char *extcmd, const char *prefix,
+-static int run_dir_diff(struct difftool_options *dt_options,
++static int run_dir_diff(struct repository *repo,
++			struct difftool_options *dt_options,
+ 			const char *extcmd, const char *prefix,
  			struct child_process *child)
  {
- 	struct strbuf info = STRBUF_INIT, lpath = STRBUF_INIT;
-@@ -469,13 +480,13 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+@@ -386,7 +390,7 @@ static int run_dir_diff(struct difftool_options *dt_options,
+ 	struct hashmap symlinks2 = HASHMAP_INIT(pair_cmp, NULL);
+ 	struct hashmap_iter iter;
+ 	struct pair_entry *entry;
+-	struct index_state wtindex = INDEX_STATE_INIT(the_repository);
++	struct index_state wtindex = INDEX_STATE_INIT(repo);
+ 	struct checkout lstate, rstate;
+ 	int err = 0;
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+@@ -394,7 +398,7 @@ static int run_dir_diff(struct difftool_options *dt_options,
+ 	struct hashmap tmp_modified = HASHMAP_INIT(path_entry_cmp, NULL);
+ 	int indices_loaded = 0;
+ 
+-	workdir = repo_get_work_tree(the_repository);
++	workdir = repo_get_work_tree(repo);
+ 
+ 	/* Setup temp directories */
+ 	tmp = getenv("TMPDIR");
+@@ -449,8 +453,7 @@ static int run_dir_diff(struct difftool_options *dt_options,
+ 			       "not supported in\n"
+ 			       "directory diff mode ('-d' and '--dir-diff')."));
+ 
+-		if (parse_index_info(info.buf, &lmode, &rmode, &loid, &roid,
+-				     &status))
++		if (parse_index_info(repo, info.buf, &lmode, &rmode, &loid, &roid, &status))
+ 			break;
+ 		if (strbuf_getline_nul(&lpath, fp))
+ 			break;
+@@ -480,13 +483,13 @@ static int run_dir_diff(struct difftool_options *dt_options,
  		}
  
  		if (S_ISLNK(lmode)) {
--			char *content = get_symlink(&loid, src_path);
-+			char *content = get_symlink(dt_options, &loid, src_path);
+-			char *content = get_symlink(dt_options, &loid, src_path);
++			char *content = get_symlink(repo, dt_options, &loid, src_path);
  			add_left_or_right(&symlinks2, src_path, content, 0);
  			free(content);
  		}
  
  		if (S_ISLNK(rmode)) {
--			char *content = get_symlink(&roid, dst_path);
-+			char *content = get_symlink(dt_options, &roid, dst_path);
+-			char *content = get_symlink(dt_options, &roid, dst_path);
++			char *content = get_symlink(repo, dt_options, &roid, dst_path);
  			add_left_or_right(&symlinks2, dst_path, content, 1);
  			free(content);
  		}
-@@ -528,7 +539,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 					goto finish;
- 				}
- 				add_path(&wtdir, wtdir_len, dst_path);
--				if (symlinks) {
-+				if (dt_options->symlinks) {
- 					if (symlink(wtdir.buf, rdir.buf)) {
- 						ret = error_errno("could not symlink '%s' to '%s'", wtdir.buf, rdir.buf);
- 						goto finish;
-@@ -614,7 +625,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
- 		if (lstat(rdir.buf, &st))
- 			continue;
+@@ -511,7 +514,7 @@ static int run_dir_diff(struct difftool_options *dt_options,
+ 			}
+ 			hashmap_add(&working_tree_dups, &entry->entry);
  
--		if ((symlinks && S_ISLNK(st.st_mode)) || !S_ISREG(st.st_mode))
-+		if ((dt_options->symlinks && S_ISLNK(st.st_mode)) || !S_ISREG(st.st_mode))
- 			continue;
- 
- 		if (!indices_loaded) {
-@@ -704,9 +715,13 @@ int cmd_difftool(int argc,
+-			if (!use_wt_file(workdir, dst_path, &roid)) {
++			if (!use_wt_file(repo, workdir, dst_path, &roid)) {
+ 				if (checkout_path(rmode, &roid, dst_path,
+ 						  &rstate)) {
+ 					ret = error("could not write '%s'",
+@@ -637,9 +640,9 @@ static int run_dir_diff(struct difftool_options *dt_options,
+ 				ret = error("could not write %s", buf.buf);
+ 				goto finish;
+ 			}
+-			changed_files(&wt_modified, buf.buf, workdir);
++			changed_files(repo, &wt_modified, buf.buf, workdir);
+ 			strbuf_setlen(&rdir, rdir_len);
+-			changed_files(&tmp_modified, buf.buf, rdir.buf);
++			changed_files(repo, &tmp_modified, buf.buf, rdir.buf);
+ 			add_path(&rdir, rdir_len, name);
+ 			indices_loaded = 1;
+ 		}
+@@ -713,7 +716,7 @@ static int run_file_diff(int prompt, const char *prefix,
+ int cmd_difftool(int argc,
+ 		 const char **argv,
  		 const char *prefix,
- 		 struct repository *repo UNUSED)
+-		 struct repository *repo UNUSED)
++		 struct repository *repo)
  {
--	int use_gui_tool = -1, dir_diff = 0, prompt = -1, symlinks = 0,
--	    tool_help = 0, no_index = 0;
-+	int use_gui_tool = -1, dir_diff = 0, prompt = -1, tool_help = 0, no_index = 0;
+ 	int use_gui_tool = -1, dir_diff = 0, prompt = -1, tool_help = 0, no_index = 0;
  	static char *difftool_cmd = NULL, *extcmd = NULL;
-+	struct difftool_options dt_options = {
-+		.has_symlinks = 1,
-+		.symlinks = 1,
-+		.trust_exit_code = 0
-+	};
- 	struct option builtin_difftool_options[] = {
- 		OPT_BOOL('g', "gui", &use_gui_tool,
- 			 N_("use `diff.guitool` instead of `diff.tool`")),
-@@ -717,14 +732,14 @@ int cmd_difftool(int argc,
- 			0, PARSE_OPT_NONEG),
- 		OPT_SET_INT_F(0, "prompt", &prompt, NULL,
- 			1, PARSE_OPT_NONEG | PARSE_OPT_HIDDEN),
--		OPT_BOOL(0, "symlinks", &symlinks,
-+		OPT_BOOL(0, "symlinks", &dt_options.symlinks,
- 			 N_("use symlinks in dir-diff mode")),
- 		OPT_STRING('t', "tool", &difftool_cmd, N_("tool"),
- 			   N_("use the specified diff tool")),
- 		OPT_BOOL(0, "tool-help", &tool_help,
- 			 N_("print a list of diff tools that may be used with "
- 			    "`--tool`")),
--		OPT_BOOL(0, "trust-exit-code", &trust_exit_code,
-+		OPT_BOOL(0, "trust-exit-code", &dt_options.trust_exit_code,
- 			 N_("make 'git-difftool' exit when an invoked diff "
- 			    "tool returns a non-zero exit code")),
- 		OPT_STRING('x', "extcmd", &extcmd, N_("command"),
-@@ -734,8 +749,8 @@ int cmd_difftool(int argc,
+@@ -749,7 +752,8 @@ int cmd_difftool(int argc,
  	};
  	struct child_process child = CHILD_PROCESS_INIT;
  
--	git_config(difftool_config, NULL);
--	symlinks = has_symlinks;
-+	git_config(difftool_config, &dt_options);
-+	dt_options.symlinks = dt_options.has_symlinks;
+-	git_config(difftool_config, &dt_options);
++	if (repo)
++		repo_config(repo, difftool_config, &dt_options);
+ 	dt_options.symlinks = dt_options.has_symlinks;
  
  	argc = parse_options(argc, argv, prefix, builtin_difftool_options,
- 			     builtin_difftool_usage, PARSE_OPT_KEEP_UNKNOWN_OPT |
-@@ -783,7 +798,7 @@ int cmd_difftool(int argc,
- 	}
+@@ -764,8 +768,8 @@ int cmd_difftool(int argc,
  
- 	setenv("GIT_DIFFTOOL_TRUST_EXIT_CODE",
--	       trust_exit_code ? "true" : "false", 1);
-+	       dt_options.trust_exit_code ? "true" : "false", 1);
+ 	if (!no_index){
+ 		setup_work_tree();
+-		setenv(GIT_DIR_ENVIRONMENT, absolute_path(repo_get_git_dir(the_repository)), 1);
+-		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(repo_get_work_tree(the_repository)), 1);
++		setenv(GIT_DIR_ENVIRONMENT, absolute_path(repo_get_git_dir(repo)), 1);
++		setenv(GIT_WORK_TREE_ENVIRONMENT, absolute_path(repo_get_work_tree(repo)), 1);
+ 	} else if (dir_diff)
+ 		die(_("options '%s' and '%s' cannot be used together"), "--dir-diff", "--no-index");
  
- 	/*
- 	 * In directory diff mode, 'git-difftool--helper' is called once
-@@ -799,6 +814,6 @@ int cmd_difftool(int argc,
+@@ -814,6 +818,6 @@ int cmd_difftool(int argc,
  	strvec_pushv(&child.args, argv);
  
  	if (dir_diff)
--		return run_dir_diff(extcmd, symlinks, prefix, &child);
-+		return run_dir_diff(&dt_options, extcmd, prefix, &child);
+-		return run_dir_diff(&dt_options, extcmd, prefix, &child);
++		return run_dir_diff(repo, &dt_options, extcmd, prefix, &child);
  	return run_file_diff(prompt, prefix, &child);
  }
 -- 
