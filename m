@@ -1,133 +1,92 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E041624F0
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 14:04:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450B31624C3
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 14:10:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738850694; cv=none; b=dooNHJhVZTepJyx3US3qSgEN1TJwQIyNuGcOyHTW2VtPLATYLhqVzaxAFLYLIEkQzZ+fDU5cCIo/XBBkP9DR8rz+5AfX4IwyxlrhDOQqonztZJ/3agRRBzbA28yBi85/i4fsaJH2fckE0r167FzrjbzfDb2g663GRTIIwJtNMN4=
+	t=1738851057; cv=none; b=XOM2c9c5ckblS+yY9+hVzsARwcYD1jIFt8EQM7DrkhqftP/XJS57t475kpqYX9IPCnBgajupgWkqvQvYZqnPhSwGiD5IrqKLVAP6rxCKyvyMtYsJgj9Kd/vJKSn0qVXXdzw9haQ0dtnOh2D9JnOvUoz9QyS8Vy7k2MnRlR1vgw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738850694; c=relaxed/simple;
-	bh=yUhfq/hfkIsDhvJGOnzXPWMrx7oo24B/N11hQgcPolA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ldD2UpObxeOoevHyXp7oC/SH1LnvI2wtyAFLkLZOIOp08iAhgtn3RcFFo6ZMH/kvu+bD7Bp9jMg9On5Wr7oxaFB5/Tbi5r1rmUW5jtBXrH5how+s0uMMoKsN/VzUmz0CnvObi2w4cjXDFT6o/w0M7E2t0LF0OxIZEQGtolMHYBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ttKRjiDM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MvTDW9Ht; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738851057; c=relaxed/simple;
+	bh=wNPIyBBcFYGRd9+1def4R7d1mtUPAPTXB/7ZJ8gPINo=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=NoNy+BbmaQ7egwEoMIpLS4A2f7aFNcpsKuZ6sxcy/x87PCauJYB1YZL3q9mq5pOfXFdkf3lWEEKcOZcuvBERpMqLU7+4Wup05fVYSJf4q2Oov/zzOWTxFlG47wiyOG9aTNFiXewpkVIBSm5avZugq5yKijE3A019zRJVZ5pbEy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J2EcjwCH; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ttKRjiDM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MvTDW9Ht"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DD85C25400EC;
-	Thu,  6 Feb 2025 09:04:50 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 06 Feb 2025 09:04:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738850690; x=1738937090; bh=JkU0lPdcac
-	9XMwHBqegxh7JWU8+GZhaCShik7iHJDRs=; b=ttKRjiDM03hxc+GwZTffMUodYY
-	pxquCuVb0/oR9jvAqL/WzymlZa8M+eJfujbqLReOz1uY23cbLUwF3+lOyB/jAPdY
-	Uo8mTV1BGyJioRVwxrf5W6U3gTghgD1YwwvCHxG5Vyd06btzCgQh+PQ2MsysSq0c
-	k3kr0R8UNanKUnnVcJBH04FDfpD7ienGQov7yNCkML6eDNfV+2WcM4HpFWrdixBw
-	CmzsBZxtMeXb2MV0C9tHYKrqHz1laSRI/DIptpbFBgXuj5B8vYFZMBXZ6FWuoF4m
-	ZXGJowQyY75JE4ASPIw4XOxlUWx4eHfbC31dld8PjIrD5+uDHi/uwGpk2WDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738850690; x=1738937090; bh=JkU0lPdcac9XMwHBqegxh7JWU8+GZhaCShi
-	k7iHJDRs=; b=MvTDW9Hta/pPNdnZnZFCiCUtnyOl30o1cYNNWs11Bv5lor042ff
-	S1YMv5jvLtr/Boo1VtOwFAiENGhxVpaKGxsEjnHbiPPLljMYkKanqkXyLqcgX/k6
-	5I4y3ecV4k5H40dGXOldsmDHqRQPHJip0Y7dR8TcUnNhuvSIKETfVu11PeVF7DXm
-	9Ml+Am5uSanPeWI0Oa1VftslIS3eifodXKJiSYFO6U/v2KL1JC6zp1pwBCj+2+zA
-	49qH6JxrwuECqkFj3SwIDwoTQ4y4yeqi0HmAzlugtOPBxVbXq1ZZs3IKp5/Gevz5
-	HFTkNUJ29hPI9wbA9caWor+8wO0jfu8F8Xw==
-X-ME-Sender: <xms:gcGkZ2C_j3-iZhoTrpA73jP3GfsPzJj78wvmmkUE4n6EIz5Yictjfw>
-    <xme:gcGkZwjYmmq9v6o_e1mQf7dajLk72RQQZeR9Wo8IUi-HXMNRermBnW28KtpdazJhN
-    DpRdy1quqMJuVEabw>
-X-ME-Received: <xmr:gcGkZ5mDxZDts8YvCCn6D2X4RCD3_lAoI8eSsnGk4wa_VFRvhVYCXZ28MfXi5By9wBWHDtS3pdh1n2YO6M1Gr3LfNQ_ZVTaXqsXq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieehlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeefgeduiedvueehtedvjeelhfekheej
-    keevieegkeehvdfhvdehueelfeffueenucffohhmrghinhephhhtthhpshhprhhothhotg
-    holhhsrdhithdptghonhhfihhguhhrrghtihhonhhvrghrihgrsghlvghsshhomhgvhhho
-    fihtohguohgtuhhmvghnthgrthhiohhntghonhhfihhgrdguihhrvggtthhorhihnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgv
-    rhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeiihhhihi
-    houhdrjhigsegrlhhisggrsggrqdhinhgtrdgtohhmpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopehpihhothhrrdhsiihlrgiirghksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:gcGkZ0zqQ1yXesDgzG9zrjW8mFlNe0O8njqcCPvnkBWrb0Wceo6aFQ>
-    <xmx:gcGkZ7TOvm-YR4Pof7Q4jvk08z-hREbrNSA5Gsgn43ydmmN7fXjW8g>
-    <xmx:gcGkZ_ZWyijhPcvs0rtiPug8KNm_1yiL6gNKTAMUphqiyOzTpil-kg>
-    <xmx:gcGkZ0ScrRmmb2t74Ix_vB8AbQ2uVL_Zz4eJIqVtMZTPbXzRCn3qGA>
-    <xmx:gsGkZ0R0Ch0l6pYYYhlepftxyYYO8t4Kbi7UPX_keIbzXY4J2PNDhoLn>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Feb 2025 09:04:48 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Piotr Szlazak via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jiang Xin <zhiyou.jx@alibaba-inc.com>,  Jeff King
- <peff@peff.net>,  Piotr Szlazak <piotr.szlazak@gmail.com>
-Subject: Re: [PATCH] doc: documentation for http.uploadarchive config option
-In-Reply-To: <pull.1885.git.git.1738790425046.gitgitgadget@gmail.com> (Piotr
-	Szlazak via GitGitGadget's message of "Wed, 05 Feb 2025 21:20:24
-	+0000")
-References: <pull.1885.git.git.1738790425046.gitgitgadget@gmail.com>
-Date: Thu, 06 Feb 2025 06:04:47 -0800
-Message-ID: <xmqqseorjhj4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J2EcjwCH"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-467918c360aso11794331cf.0
+        for <git@vger.kernel.org>; Thu, 06 Feb 2025 06:10:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738851055; x=1739455855; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=wNPIyBBcFYGRd9+1def4R7d1mtUPAPTXB/7ZJ8gPINo=;
+        b=J2EcjwCH2rZ0AHnVPPb74YLAJNgXhu00LAVQ7m32exzPBMofbYWyRm8D7HEwniV+mJ
+         /rbUDL52APpwqM+5M/aLaR0CHENiLDNuc9Cqs2hJBQx/Ze+3gIGB2ew0wYfuerhWi1jo
+         Ya3ZIUOS3GqSLZt028IXqXmcmi1NzpdKWFAIOWF1WlglDQlmlX+4comkJfornMcCMCtG
+         M+nPWg2O2eF914QZDlhw9riVty6V8bJfHE5a7D298r0E9+DUNEthiyCm7/GZ1wNTe0mL
+         yFyCg4OHWQ7nlMKlKfMd/KpKFhuRwg2zuYJSXERiP9tl/RannjAwLga9FbQCltQ9v2U1
+         H0xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738851055; x=1739455855;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wNPIyBBcFYGRd9+1def4R7d1mtUPAPTXB/7ZJ8gPINo=;
+        b=B+ZbaC0dW14nx+PYNBq3s1vbWBitNc7vuGUjQT9G47TzRyhD+PEUzz1VUv5qcNXo/f
+         +P6sNFgL7F8ILRQeOryMeMah9kAEbBpMa/t3PrawT971H+2K08/mFcLRbOKGPJmOcmDM
+         5nj8JMe4Pxv9dUNxz4VDJAyRNcsCeiK04+PzsinPN8Gg7xPz8h+FMF+PCXzJnWp6yD+R
+         TNvfEIIFNkW9vcf0e07yDlXptTdaMlql0Ojm9IvJ2fdjPADkBBfQep2Opho1YPt9YjmM
+         NQoZfRQ2t+SXoFwD5WmxR67iOMXb3IKJBH9C4TecbJmqKTZTNft0TW/EyzhbNf6LNIFC
+         OXHQ==
+X-Gm-Message-State: AOJu0YxFiU/MeRfaP4DAdS0gpmOBy4rKlCTEk24t462YhUTS2HoxdIa0
+	nOvsP1kCfXyJQTRgKRbrnHH4ykipwIwQ8A020oUdslSIQxUG0gNQfOz6jdqCtbNTTIuh3D6hlhn
+	C7eGC3Cz/GP5lUWGKPu0Ukgt2GkoIiH4y
+X-Gm-Gg: ASbGncs/Y4obrfPeLAPzDO96mBObqmwUINk5PXT1SUx78lFLLdBI3Ydqo6x4sHXyIsH
+	/VLLRb2q+qsz6B2RWemKTHh2WT36XsOIPqGPrytah6NF9SpTXsHjCSfkzJ+xxyH03qAea3Jg=
+X-Google-Smtp-Source: AGHT+IEu3UZeSti6V6zB41oTwq0TXnABO0FRuXwJOwbI1aabYCjKb3VUdF0AwfuLCeCHbrRCTfk7HAAHkQLObmR+714=
+X-Received: by 2002:ac8:7d0e:0:b0:461:646c:b8fc with SMTP id
+ d75a77b69052e-470281bbd39mr97527521cf.23.1738851054873; Thu, 06 Feb 2025
+ 06:10:54 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: USA Linux UAE <usasoftwareengineer@gmail.com>
+Date: Thu, 6 Feb 2025 14:10:44 +0000
+X-Gm-Features: AWEUYZkItW9c46D9GiWpMseAEAJDl-Pnm-vtjf5B9Vee3EAR7gSliNtKUbux_bg
+Message-ID: <CAOXJ2J-StZYg4E9eGug=wHNjBu3aPdoy0x17aS9jLn14SyfJkA@mail.gmail.com>
+Subject: Managing one github repo with Gitignore and Submodules for two
+ different remotes
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"Piotr Szlazak via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi everyone,
 
-> From: Piotr Szlazak <piotr.szlazak@gmail.com>
->
-> In Git v2.44.0 support for 'git archive' over HTTP protocol
-> was added, but it was nowhere documented how it should be
-> enabled in git-http-backend.
+I'm hoping to get some advice on managing a GitHub repository with a
+slightly complex setup. We have a main repo that utilizes both a
+.gitignore file and submodules. Our goal is to push this repo to two
+different remote repositories (let's call them remote_A and remote_B),
+but with a key difference:
 
-Good eyes
+remote_A should respect the .gitignore file as usual, excluding the
+files and directories specified within it.
+remote_B should effectively ignore the .gitignore file, and include
+all files and directories, even those listed in .gitignore.
+Essentially, we want the opposite behavior of .gitignore for remote_B.
 
-> This commit adds needed information.
+Additionally, we need to ensure the submodules are handled correctly
+for both remotes. Ideally, the submodule pointers should remain
+consistent, regardless of which remote we're pushing to.
 
-It is more customary to say something like:
 
-    Add missing documentation.
+Could anyone offer advice on the best approach for this scenario? Are
+there any recommended workflows or tools specifically designed for
+this type of setup? Any insights regarding submodule management in
+this context would be greatly appreciated.
 
-around here.
+Thanks in advance for your help!
 
-> diff --git a/Documentation/git-http-backend.txt b/Documentation/git-http-backend.txt
-> index f37ddaded82..1dea4268520 100644
-> --- a/Documentation/git-http-backend.txt
-> +++ b/Documentation/git-http-backend.txt
-> @@ -56,6 +56,10 @@ http.receivepack::
->  	disabled by setting this item to `false`, or enabled for all
->  	users, including anonymous users, by setting it to `true`.
->  
-> +http.uploadarchive::
-> +	This serves 'git archive' clients for remote archive over HTTP/HTTPS
-> +	protocols. It is disabled by default. It only works in protocol v2.
-
-The description looks good, from the correctness point-of-view,
-and its style is in line with other entries before it.
-
-We may want to later consider moving these four http.* configuration
-variables somehow to Documentation/config/. directory so that it is
-shared across git-http-backend.1 and git-config.1 pages, but that is
-something we should leave outside the current effort.
-
-Thanks.
+Amjad
