@@ -1,119 +1,301 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738F11F1537
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 08:13:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6744D2248B2
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 08:29:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738829593; cv=none; b=tQIukJGDBpOogdJZfziq+X9GjtsiPVNsCH9LYTgNT0GDA6dvjjb6FfDqICLilt4c/9F2f5R5n6dfVwOoDq/KD9kejChIhcfSUqDNDw8Tv0YLPNi/V1D+r0FncOVZ+jwYkltbb5WfLtzMvZzq6WhodbQ+oPTXh+TFowX/ExAw/+U=
+	t=1738830600; cv=none; b=Qque2eCWlctq8ePx7p+pMdbroWPZS2WkEs+xcL2etqugWuCm44yr83z2/pyjpqqdl+5zn19WE6WigRpi1yGrYjKOPez5Gi/vho4/C74uUtpV2uHxmIrInEwJnCrdhGYE/hTiiBk4UlwisRbKo4QN8pe6Fv41FmtsvSz2zM3B5P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738829593; c=relaxed/simple;
-	bh=vO52R7y7+5u9Z34cvotGAAzPmPYtFTX8Jd3sFTUBvC4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K0HfZ+TZMrbYwLApLcms21DaQzs4dfZc9iuSp+NOtBbfMa8xTgFWQkRNiS8EYa1ngH882bfNOGEnizzV6kx2pXjFgKFkc85zP3EBswvTZVkkndFb2lZoRPm2DsspARchwDP3fJzURU1T5wJoooF1j6sZdKO/3Y++ld1SU9Wbqs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FN+X3KT6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PHkuc4d3; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1738830600; c=relaxed/simple;
+	bh=BlKsNyiCxa+cjz5Ey6uWBmK5abZZ/TcW/8La0Bn4AFA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pFRTbyo6UdLSkyLVzEZohkXWeArBYHpFnB/5XcGQ6ogwxVOWsg2Yr9ETyZnEi0pHk3MZre0kNpdkJjqAjZb0ha4X4FHxiC/suCt+TC0lpZ5JuLYhREsajCxu/V5RXZMO6TNtA8/nDDhXl40HyYDWYCJTXd5b8L2rKyMiYeHBAb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FeuAxpJ8; arc=none smtp.client-ip=209.85.166.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FN+X3KT6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PHkuc4d3"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 43B9913801DC;
-	Thu,  6 Feb 2025 03:13:09 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Thu, 06 Feb 2025 03:13:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738829589; x=1738915989; bh=vO52R7y7+5
-	u9Z34cvotGAAzPmPYtFTX8Jd3sFTUBvC4=; b=FN+X3KT6LGwbtzm/y9j6Txxvh2
-	77gjKOoctBl6pVYiAokwupEYPMuoGTgffZeo6EESzWn+0Fil4f59X/4IOHRU8349
-	gHNkIzi0B7C3u4nsZ1MadPL1111Ps/4ftoRU3RdheSLAJAJeh5Hoz2QvQS1xsqe9
-	23ox4x5NZ1vIx5ycaPqjNRKEIfr75tbyglO4M6uP9B1BP8KhjlSf1RSJJwmw5Dlu
-	Comhue/43vmjciBUmI/u0zLnYTxMNXIsQ72j9Xed3TxOHIEEApSa1DxQptTANRww
-	ixlFPs7idZM2j9/6+6Nh2NhH4S4xOR2Fi5qVn3YWvW4UJSdrY/7g9p2WZ70w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738829589; x=1738915989; bh=vO52R7y7+5u9Z34cvotGAAzPmPYtFTX8Jd3
-	sFTUBvC4=; b=PHkuc4d3KieHnip1jqjGZGoFe4D8LQ/c+u/A3fYmn/bxcsXtDv+
-	tIqZjdGVEBwOmuv1aEt8CjQIlVjMkqSMpvaGrkO1s8RiDmhmTcYDuZAruYsZj83n
-	W+PTuh/WPtLYuVr+wR+jJ+KIakD4dSIlpWPwWrozH8db1uUGMc8wEbVfmh11gHyo
-	07mvNS8zzchNsbBnOPTQWxfSOFKh0rp+v0nYphIBftCRYA4u/YiUsxVPNDqeozfU
-	gnJgkiA3QcjOrdztpTkOor1/AfFVWKO9bAQA83LG6FnbnFdus0eJ7cewDkXqndcQ
-	PemHKjwcygWOnb6xPg13ETNCa9CAVCoRO8Q==
-X-ME-Sender: <xms:FG-kZ8xgizmJFGe_hsD0VdwaORlXCjvZuiCdMb3v0hAzuPQ0YMjQLw>
-    <xme:FG-kZwSbVSXMoQSIzNCBdjP4mtA2VC-p-5GseJdQOwCLhYPHzmkQ_iknokIcrOnJX
-    kqtl-ZSwEzOCkRZJA>
-X-ME-Received: <xmr:FG-kZ-XwyCW_JS-9WCcgUsp_dWuQi-OkSxZIaUUt8Uaqy9WfhqcB-MBPKkrWWQ9UjzR5mmdlcLtYODQEOHn19OqY1ZtW0z_OPB2lFN4qgdb5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvheekjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepkhhrihhsthho
-    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmh
-    hsuhgthhgrnhgvkhesshhushgvrdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhn
-    vghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:FG-kZ6i7-4zLYKiJBVxtoJB86X2rwrGYDivK7ier_JZwjQfmefZa0w>
-    <xmx:FG-kZ-Ca6xwk3V5GLNJN-Nd-bc00y0gYP_bupv4asy_dnXeU8bHW2w>
-    <xmx:FG-kZ7LN3ISeGIh1K-2m6aLtmB-PkHIA-P0XasDX72qkCTBBua7eRQ>
-    <xmx:FG-kZ1ASh2HthaNLvbdhYZHzmw6u9bsLRbhSuRgUubtQoQ4rEDGpbQ>
-    <xmx:FW-kZw2RAruoOZ-Uk5D-DX1LfE67QGn71MOBlMMRMyf_x0fDfQ9fjCuv>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Feb 2025 03:13:07 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7e898116 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 6 Feb 2025 08:13:04 +0000 (UTC)
-Date: Thu, 6 Feb 2025 09:13:03 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v7 7/7] builtin/clone: teach git-clone(1) the --revision=
- option
-Message-ID: <Z6RvD4FtfXIk4Pa3@pks.im>
-References: <20250206-toon-clone-refs-v7-0-4622b7392202@iotcl.com>
- <20250206-toon-clone-refs-v7-7-4622b7392202@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FeuAxpJ8"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-844e10ef3cfso55197039f.2
+        for <git@vger.kernel.org>; Thu, 06 Feb 2025 00:29:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738830597; x=1739435397; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yIx+v2vx8JSagVkuQ5oz974nWT1yRGcfgI/SbXjDUt0=;
+        b=FeuAxpJ86C718X1cvUZPpaj3nBU9kjaGFqiX7w5PlfCjkqmrH8c97pJXeKHGcuuT+k
+         oxWGWdo85iokepwoInvXPaXybLorEqerxmu3soh1tSpM5y0iC3kbaWW3CMY+AJuetMrT
+         j4iy4VAlerRE8HFjZs5kMwKIQYLeT8JaiQEJJlkf2ishiUl3lW8FXw5RyHLHu4+BChKt
+         JEdDY42U1JbBwsW9EzZV8cfRsl7QDQwESZXB2LWfuEyQzYIMLXNEMx5xZRd1XbElaA3A
+         NbtEF+FefG8ClebabliciJiQZMgGaA7/dQSI9+lwQC/pfcOiZO0DaUr37zp+hsIsTOzw
+         gr/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738830597; x=1739435397;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yIx+v2vx8JSagVkuQ5oz974nWT1yRGcfgI/SbXjDUt0=;
+        b=aS1t04g63qQXrGQF5hAQOuMmQ9ZuWRSkHi+VrVia+56LxKnQ9Thctluxt5+b5n54Zw
+         kVXlm5Q8KaAXIrMY5TeXpKdOpdBniWNzfQH42H9w/z2GdeFN0FXlSuP8POIVM6dsm80B
+         ud1NYc8xgZuBeaz0M2DBZccpLmk1ZED8OczupV537I4dv4xxTTBaCUD5K9OGVhCwaySX
+         jXEPnY6BQAI/1RKPAJCU6ltRgsqB8c13o+fKTIZsTtCzWwvCnb2Lj5Uq0jpXFR6VQ6gY
+         0O+/k2ESfK9yI4VX4b4jGta6w0ReSinVdeQ8yEjgcVy/iaYUeoLwAjZG/drOj8iVkFQY
+         zaSw==
+X-Gm-Message-State: AOJu0YwaI18n0OBb1hHlv93nfOZsTLucdw+lf68ECGFh41d1y/DxQFdb
+	vWzqLajGfhICzJUx4yjfHXPjyA/6NoR8VS0qrDTwgyYyMupHZcKTjukaajMyMy4AFtlE96454E5
+	Srx/ZLn4zxK/R7CMYXmTAXBAc27E=
+X-Gm-Gg: ASbGnctDLpV86RCavrol7RhB/3PvWD3wutuNK2xzbmgGsHqDrKUA1S+WYSg/2EyIFCk
+	NrezvkzSX0yPJ3rcrBJp6mctMR+Vbf4V2z6E/1GSrRL/QUz/uZUbZ43MMnEisydl80kfXoGdiLL
+	Fd9ErfBMmlqo4=
+X-Google-Smtp-Source: AGHT+IFghtaTkjilRdaT2ejRQGJBOdeH2Mrf9kwpnS4IjhifFxUHtZ8Gj/ULFaUfcAqkaVXoiHiWz7BlrKuRVkKKu3E=
+X-Received: by 2002:a05:6602:6cc2:b0:843:e8d0:a728 with SMTP id
+ ca18e2360f4ac-854ea4401ebmr803319139f.4.1738830597381; Thu, 06 Feb 2025
+ 00:29:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250206-toon-clone-refs-v7-7-4622b7392202@iotcl.com>
+References: <20250206042010.865947-1-davvid@gmail.com>
+In-Reply-To: <20250206042010.865947-1-davvid@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 6 Feb 2025 00:29:46 -0800
+X-Gm-Features: AWEUYZnIqpZq4wkV_cxggrmwWKk5lgREbRnuv0iQau4pCAUsUJCQ3TbmwCX8Ihs
+Message-ID: <CABPp-BGnRgDxwgfagyvhwjso_kWVgcR-NxOUwUSJve5RHwyFZQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] difftool: eliminate use of global variables
+To: David Aguilar <davvid@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Patrick Steinhardt <ps@pks.im>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Feb 06, 2025 at 07:33:35AM +0100, Toon Claes wrote:
-> diff --git a/t/t5621-clone-revision.sh b/t/t5621-clone-revision.sh
-> new file mode 100755
-> index 0000000000000000000000000000000000000000..d4889a954e6300e0e327ebe7dfcf73569d966829
-> --- /dev/null
-> +++ b/t/t5621-clone-revision.sh
-> @@ -0,0 +1,123 @@
-> +#!/bin/sh
+On Wed, Feb 5, 2025 at 8:20=E2=80=AFPM David Aguilar <davvid@gmail.com> wro=
+te:
+>
+> Move difftool's global variables into a difftools_option struct
+> in preparation for removal of USE_THE_REPOSITORY_VARIABLE.
+
+Thanks for splitting these out.
+
+> Signed-off-by: David Aguilar <davvid@gmail.com>
+> ---
+>  builtin/difftool.c | 51 ++++++++++++++++++++++++++++++----------------
+>  1 file changed, 33 insertions(+), 18 deletions(-)
+>
+> diff --git a/builtin/difftool.c b/builtin/difftool.c
+> index 03a8bb92a9..0b6b92aee0 100644
+> --- a/builtin/difftool.c
+> +++ b/builtin/difftool.c
+> @@ -36,18 +36,27 @@
+>  #include "entry.h"
+>  #include "setup.h"
+>
+> -static int trust_exit_code;
+> -
+>  static const char *const builtin_difftool_usage[] =3D {
+>         N_("git difftool [<options>] [<commit> [<commit>]] [--] [<path>..=
+.]"),
+>         NULL
+>  };
+>
+> +struct difftool_options {
+> +       int has_symlinks;
+> +       int symlinks;
+> +       int trust_exit_code;
+> +};
 > +
-> +test_description='tests for git clone --revision'
-> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> +
-> +TEST_PASSES_SANITIZE_LEAK=true
+>  static int difftool_config(const char *var, const char *value,
+>                            const struct config_context *ctx, void *cb)
+>  {
+> +       struct difftool_options *dt_options =3D (struct difftool_options =
+*)cb;
+>         if (!strcmp(var, "difftool.trustexitcode")) {
+> -               trust_exit_code =3D git_config_bool(var, value);
+> +               dt_options->trust_exit_code =3D git_config_bool(var, valu=
+e);
+> +               return 0;
+> +       }
+> +       if (!strcmp(var, "core.symlinks")) {
+> +               dt_options->has_symlinks =3D git_config_bool(var, value);
 
-One last nit: this line is not needed anymore, as tests are required to
-pass with the leak sanitizer by default now. Other than that this series
-looks good to me, and this change alone does not warrant a reroll from
-my point of view.
+It appears that the only use for has_symlinks....
 
-Thanks!
+>                 return 0;
+>         }
+>
+> @@ -291,13 +300,14 @@ static int ensure_leading_directories(char *path)
+>   * to compare the readlink(2) result as text, even on a filesystem that =
+is
+>   * capable of doing a symbolic link.
+>   */
+> -static char *get_symlink(const struct object_id *oid, const char *path)
+> +static char *get_symlink(struct difftool_options *dt_options,
+> +                        const struct object_id *oid, const char *path)
+>  {
+>         char *data;
+>         if (is_null_oid(oid)) {
+>                 /* The symlink is unknown to Git so read from the filesys=
+tem */
+>                 struct strbuf link =3D STRBUF_INIT;
+> -               if (has_symlinks) {
+> +               if (dt_options->has_symlinks) {
 
-Patrick
+Why is this based on dt_options->has_symlinks rather than dt_options->symli=
+nks?
+
+(I guess this question is equivalent to asking why the preimage code
+was using has_symlinks, instead of the symlinks parameter set from the
+command line option.  As far as I can see, has_symlinks is supposed to
+merely function as a default value for symlinks in the case no command
+line parameter is passed...but this is the one counter-example.  But
+was it an intentional counter-example, or an accident?)
+
+That said, fixing this, if fixing is needed, doesn't belong in this
+patch; it'd probably be better as a preparatory patch.  But, it trips
+up reviewers (looks like Patrick was wondering about the same thing on
+v1 of your series), so it at least would probably be helpful to
+mention in the commit message if no other cleanup is needed with
+these.
+
+>                         if (strbuf_readlink(&link, path, strlen(path)))
+>                                 die(_("could not read symlink %s"), path)=
+;
+>                 } else if (strbuf_read_file(&link, path, 128))
+> @@ -355,7 +365,8 @@ static void write_standin_files(struct pair_entry *en=
+try,
+>                 write_file_in_directory(rdir, rdir_len, entry->path, entr=
+y->right);
+>  }
+>
+> -static int run_dir_diff(const char *extcmd, int symlinks, const char *pr=
+efix,
+> +static int run_dir_diff(struct difftool_options *dt_options,
+> +                       const char *extcmd, const char *prefix,
+>                         struct child_process *child)
+>  {
+>         struct strbuf info =3D STRBUF_INIT, lpath =3D STRBUF_INIT;
+> @@ -469,13 +480,13 @@ static int run_dir_diff(const char *extcmd, int sym=
+links, const char *prefix,
+>                 }
+>
+>                 if (S_ISLNK(lmode)) {
+> -                       char *content =3D get_symlink(&loid, src_path);
+> +                       char *content =3D get_symlink(dt_options, &loid, =
+src_path);
+>                         add_left_or_right(&symlinks2, src_path, content, =
+0);
+>                         free(content);
+>                 }
+>
+>                 if (S_ISLNK(rmode)) {
+> -                       char *content =3D get_symlink(&roid, dst_path);
+> +                       char *content =3D get_symlink(dt_options, &roid, =
+dst_path);
+>                         add_left_or_right(&symlinks2, dst_path, content, =
+1);
+>                         free(content);
+>                 }
+> @@ -528,7 +539,7 @@ static int run_dir_diff(const char *extcmd, int symli=
+nks, const char *prefix,
+>                                         goto finish;
+>                                 }
+>                                 add_path(&wtdir, wtdir_len, dst_path);
+> -                               if (symlinks) {
+> +                               if (dt_options->symlinks) {
+>                                         if (symlink(wtdir.buf, rdir.buf))=
+ {
+>                                                 ret =3D error_errno("coul=
+d not symlink '%s' to '%s'", wtdir.buf, rdir.buf);
+>                                                 goto finish;
+> @@ -614,7 +625,7 @@ static int run_dir_diff(const char *extcmd, int symli=
+nks, const char *prefix,
+>                 if (lstat(rdir.buf, &st))
+>                         continue;
+>
+> -               if ((symlinks && S_ISLNK(st.st_mode)) || !S_ISREG(st.st_m=
+ode))
+> +               if ((dt_options->symlinks && S_ISLNK(st.st_mode)) || !S_I=
+SREG(st.st_mode))
+>                         continue;
+>
+>                 if (!indices_loaded) {
+> @@ -704,9 +715,13 @@ int cmd_difftool(int argc,
+>                  const char *prefix,
+>                  struct repository *repo UNUSED)
+>  {
+> -       int use_gui_tool =3D -1, dir_diff =3D 0, prompt =3D -1, symlinks =
+=3D 0,
+> -           tool_help =3D 0, no_index =3D 0;
+> +       int use_gui_tool =3D -1, dir_diff =3D 0, prompt =3D -1, tool_help=
+ =3D 0, no_index =3D 0;
+>         static char *difftool_cmd =3D NULL, *extcmd =3D NULL;
+> +       struct difftool_options dt_options =3D {
+> +               .has_symlinks =3D 1,
+> +               .symlinks =3D 1,
+> +               .trust_exit_code =3D 0
+> +       };
+>         struct option builtin_difftool_options[] =3D {
+>                 OPT_BOOL('g', "gui", &use_gui_tool,
+>                          N_("use `diff.guitool` instead of `diff.tool`"))=
+,
+> @@ -717,14 +732,14 @@ int cmd_difftool(int argc,
+>                         0, PARSE_OPT_NONEG),
+>                 OPT_SET_INT_F(0, "prompt", &prompt, NULL,
+>                         1, PARSE_OPT_NONEG | PARSE_OPT_HIDDEN),
+> -               OPT_BOOL(0, "symlinks", &symlinks,
+> +               OPT_BOOL(0, "symlinks", &dt_options.symlinks,
+>                          N_("use symlinks in dir-diff mode")),
+>                 OPT_STRING('t', "tool", &difftool_cmd, N_("tool"),
+>                            N_("use the specified diff tool")),
+>                 OPT_BOOL(0, "tool-help", &tool_help,
+>                          N_("print a list of diff tools that may be used =
+with "
+>                             "`--tool`")),
+> -               OPT_BOOL(0, "trust-exit-code", &trust_exit_code,
+> +               OPT_BOOL(0, "trust-exit-code", &dt_options.trust_exit_cod=
+e,
+>                          N_("make 'git-difftool' exit when an invoked dif=
+f "
+>                             "tool returns a non-zero exit code")),
+>                 OPT_STRING('x', "extcmd", &extcmd, N_("command"),
+> @@ -734,8 +749,8 @@ int cmd_difftool(int argc,
+>         };
+>         struct child_process child =3D CHILD_PROCESS_INIT;
+>
+> -       git_config(difftool_config, NULL);
+> -       symlinks =3D has_symlinks;
+> +       git_config(difftool_config, &dt_options);
+> +       dt_options.symlinks =3D dt_options.has_symlinks;
+
+If the get_symlink() function should have been using
+dt_options.symlinks instead of dt_options.has_symlinks, then
+dt_options.has_symlinks is merely functioning as a default, but would
+actually be superfluous.  A follow-up patch could remove that extra
+field.
+
+>
+>         argc =3D parse_options(argc, argv, prefix, builtin_difftool_optio=
+ns,
+>                              builtin_difftool_usage, PARSE_OPT_KEEP_UNKNO=
+WN_OPT |
+> @@ -783,7 +798,7 @@ int cmd_difftool(int argc,
+>         }
+>
+>         setenv("GIT_DIFFTOOL_TRUST_EXIT_CODE",
+> -              trust_exit_code ? "true" : "false", 1);
+> +              dt_options.trust_exit_code ? "true" : "false", 1);
+>
+>         /*
+>          * In directory diff mode, 'git-difftool--helper' is called once
+> @@ -799,6 +814,6 @@ int cmd_difftool(int argc,
+>         strvec_pushv(&child.args, argv);
+>
+>         if (dir_diff)
+> -               return run_dir_diff(extcmd, symlinks, prefix, &child);
+> +               return run_dir_diff(&dt_options, extcmd, prefix, &child);
+>         return run_file_diff(prompt, prefix, &child);
+>  }
+> --
