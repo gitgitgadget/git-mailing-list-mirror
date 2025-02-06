@@ -1,111 +1,119 @@
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268E01F1537
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 08:07:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738F11F1537
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 08:13:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738829233; cv=none; b=sPkZPGT+5Tt2TiFilPttqX0X8vN4tF5wLfkqMMBXhUN5lj1JXLdLQ5/bWoHAvyYZctN3ZL3b/EpH5QrtYWPhGPmEbGqiySbwfj6zlq0uiA+GF5u09ta1re6bha/LZ4e/EVc2SGhrgztWFV2vCXrCr2BcagO2HVKyqoi7xjQNftI=
+	t=1738829593; cv=none; b=tQIukJGDBpOogdJZfziq+X9GjtsiPVNsCH9LYTgNT0GDA6dvjjb6FfDqICLilt4c/9F2f5R5n6dfVwOoDq/KD9kejChIhcfSUqDNDw8Tv0YLPNi/V1D+r0FncOVZ+jwYkltbb5WfLtzMvZzq6WhodbQ+oPTXh+TFowX/ExAw/+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738829233; c=relaxed/simple;
-	bh=Y8r3wni4iiqDwKrBj1UjOkqSTZ8LY9PLqk+qQ+JltNo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=L8isKOqMtg+Kf0aX6jZocqfARVj6OJUv/PKCZMkuwhbsALq9tNfYJQObDEiWkvvelYYe+K81Tvq+Z5r8mGudm+fwL3o8YkjNBG6Qdfn7zl04FQZXUXmsZfUvAyIhpTrPCV/BsV7lXorO3eR9qrtygSGYO/P2d11DfBQjjd4h2vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MrqTMaTm; arc=none smtp.client-ip=209.85.166.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738829593; c=relaxed/simple;
+	bh=vO52R7y7+5u9Z34cvotGAAzPmPYtFTX8Jd3sFTUBvC4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K0HfZ+TZMrbYwLApLcms21DaQzs4dfZc9iuSp+NOtBbfMa8xTgFWQkRNiS8EYa1ngH882bfNOGEnizzV6kx2pXjFgKFkc85zP3EBswvTZVkkndFb2lZoRPm2DsspARchwDP3fJzURU1T5wJoooF1j6sZdKO/3Y++ld1SU9Wbqs4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FN+X3KT6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PHkuc4d3; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MrqTMaTm"
-Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-854a68f5afcso16765039f.0
-        for <git@vger.kernel.org>; Thu, 06 Feb 2025 00:07:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738829231; x=1739434031; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nAgrREB73a+qEOVEEsU5SCUxEWq0vAEna75+JFYedHg=;
-        b=MrqTMaTmbuEDzQ1XNy+Spq5MTz9ZbveCQzSD98s/nQ9iaj3QUWWHxjSs2d2R6Ax4Ws
-         YlfZF8YRWis4ctkIZ/Y6kWqf15InSdI/TUsWEsuQ94lIjOrhIUTNXh6k0359HLTAwtkY
-         EvwTVSXHU6yQ+155FAcX2fLaGqT2bK46vdX8vBKa621pvCuHeerxA6WQEH4abN6pXe5c
-         ZDh3puyAxS4U2EcATdJo7wuBf3aL1OJrwotanvN0hVq4eZOjmM088XHHtegokDJCUkaU
-         5Wt0vGM2YlN/Wo7Hzju5rdxqmis+eHBLBNKWEuV057eOK0msK8kq7buaHLqMwbACnBFT
-         F7VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738829231; x=1739434031;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nAgrREB73a+qEOVEEsU5SCUxEWq0vAEna75+JFYedHg=;
-        b=dO6pPStKctNpsZQGNdb4hu2TMr2qMVPcWVHgsywtrI70J8OLX0hWaOKwZbteV4DVJt
-         JYRgcu+Q+S2uyt5/5F/4W3hK3wF1t8Ga4PvTLHZIP1RFcQn3qSqqqKL3opNqdor7MW4c
-         ssnjKmAI5Rd1VBss1Yx/E5tcknyFVttvguouImUz/KbQCOu68+J2FIILDL/wl3bIOG2n
-         3ZbgZmxwWJNV0mTlIjQN7WFqLAf9vZqgKgYKqA8eGDGPC6RpFiQ3V3ZAduZB+cZx2TMa
-         Bl1Osg5pG4VD+rqdsU/pUZ9hVi1vgK5eDuac6haNOvEPqvurQ7EeZu3os/hw1k9TGaHI
-         qQpA==
-X-Forwarded-Encrypted: i=1; AJvYcCVPx65Bj1kMxAvfFI9gPsfNCbaPMcoi5pOH4MNEr774TItmR+Z47otJ224BtAlueXJ1sxA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwH2YXktroQpd4N167PQJHe5cX7Z/Vv8koH1eAFIZHC5w5MF4jL
-	9zYdRPT8ZQBMCYtjQAcTQLMtV1uYFTePEXaVX+0/+6TTzMAU25Mt5iDND7iKjYCKMexsD95We40
-	ulJRE1Kk+ppDmHH3HLvuDzt4zIjU=
-X-Gm-Gg: ASbGncvsCWIxuuPe6P67PSW5SHeFtJ7fEaM+dhM46UjUJ9HRmtysnyqR2tIWGXO1pSB
-	2grawS0+yVEO13HhCGKdonLWO1Ql3wzHk/UqxXnedfD7Pbgy8xekizLCGBTSYU/VCi1vhY08xEX
-	q2omVviu2Rlew=
-X-Google-Smtp-Source: AGHT+IF3iy60O6EK7B602Q7jXVmblyaL3bYpTHj+DkzDw26SXGHFdRAMC+DpixHRcbqm0thPrboOckR3VhL+76Km1c4=
-X-Received: by 2002:a05:6602:4192:b0:844:cbd0:66ca with SMTP id
- ca18e2360f4ac-854ea411c82mr614542339f.1.1738829231212; Thu, 06 Feb 2025
- 00:07:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FN+X3KT6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PHkuc4d3"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 43B9913801DC;
+	Thu,  6 Feb 2025 03:13:09 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Thu, 06 Feb 2025 03:13:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1738829589; x=1738915989; bh=vO52R7y7+5
+	u9Z34cvotGAAzPmPYtFTX8Jd3sFTUBvC4=; b=FN+X3KT6LGwbtzm/y9j6Txxvh2
+	77gjKOoctBl6pVYiAokwupEYPMuoGTgffZeo6EESzWn+0Fil4f59X/4IOHRU8349
+	gHNkIzi0B7C3u4nsZ1MadPL1111Ps/4ftoRU3RdheSLAJAJeh5Hoz2QvQS1xsqe9
+	23ox4x5NZ1vIx5ycaPqjNRKEIfr75tbyglO4M6uP9B1BP8KhjlSf1RSJJwmw5Dlu
+	Comhue/43vmjciBUmI/u0zLnYTxMNXIsQ72j9Xed3TxOHIEEApSa1DxQptTANRww
+	ixlFPs7idZM2j9/6+6Nh2NhH4S4xOR2Fi5qVn3YWvW4UJSdrY/7g9p2WZ70w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738829589; x=1738915989; bh=vO52R7y7+5u9Z34cvotGAAzPmPYtFTX8Jd3
+	sFTUBvC4=; b=PHkuc4d3KieHnip1jqjGZGoFe4D8LQ/c+u/A3fYmn/bxcsXtDv+
+	tIqZjdGVEBwOmuv1aEt8CjQIlVjMkqSMpvaGrkO1s8RiDmhmTcYDuZAruYsZj83n
+	W+PTuh/WPtLYuVr+wR+jJ+KIakD4dSIlpWPwWrozH8db1uUGMc8wEbVfmh11gHyo
+	07mvNS8zzchNsbBnOPTQWxfSOFKh0rp+v0nYphIBftCRYA4u/YiUsxVPNDqeozfU
+	gnJgkiA3QcjOrdztpTkOor1/AfFVWKO9bAQA83LG6FnbnFdus0eJ7cewDkXqndcQ
+	PemHKjwcygWOnb6xPg13ETNCa9CAVCoRO8Q==
+X-ME-Sender: <xms:FG-kZ8xgizmJFGe_hsD0VdwaORlXCjvZuiCdMb3v0hAzuPQ0YMjQLw>
+    <xme:FG-kZwSbVSXMoQSIzNCBdjP4mtA2VC-p-5GseJdQOwCLhYPHzmkQ_iknokIcrOnJX
+    kqtl-ZSwEzOCkRZJA>
+X-ME-Received: <xmr:FG-kZ-XwyCW_JS-9WCcgUsp_dWuQi-OkSxZIaUUt8Uaqy9WfhqcB-MBPKkrWWQ9UjzR5mmdlcLtYODQEOHn19OqY1ZtW0z_OPB2lFN4qgdb5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvheekjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepkhhrihhsthho
+    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepmh
+    hsuhgthhgrnhgvkhesshhushgvrdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhn
+    vghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:FG-kZ6i7-4zLYKiJBVxtoJB86X2rwrGYDivK7ier_JZwjQfmefZa0w>
+    <xmx:FG-kZ-Ca6xwk3V5GLNJN-Nd-bc00y0gYP_bupv4asy_dnXeU8bHW2w>
+    <xmx:FG-kZ7LN3ISeGIh1K-2m6aLtmB-PkHIA-P0XasDX72qkCTBBua7eRQ>
+    <xmx:FG-kZ1ASh2HthaNLvbdhYZHzmw6u9bsLRbhSuRgUubtQoQ4rEDGpbQ>
+    <xmx:FW-kZw2RAruoOZ-Uk5D-DX1LfE67QGn71MOBlMMRMyf_x0fDfQ9fjCuv>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 6 Feb 2025 03:13:07 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7e898116 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 6 Feb 2025 08:13:04 +0000 (UTC)
+Date: Thu, 6 Feb 2025 09:13:03 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 7/7] builtin/clone: teach git-clone(1) the --revision=
+ option
+Message-ID: <Z6RvD4FtfXIk4Pa3@pks.im>
+References: <20250206-toon-clone-refs-v7-0-4622b7392202@iotcl.com>
+ <20250206-toon-clone-refs-v7-7-4622b7392202@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250205214726.GA30202@raven.inka.de> <Z6PsXGnxM3UBR3nM@tapette.crustytoothpaste.net>
- <20250205235931.GB30202@raven.inka.de> <Z6QCX1QZxxwC7RVQ@tapette.crustytoothpaste.net>
-In-Reply-To: <Z6QCX1QZxxwC7RVQ@tapette.crustytoothpaste.net>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 6 Feb 2025 00:07:00 -0800
-X-Gm-Features: AWEUYZnNWbGkYFmLoQrjv8Gc3p0a6CejvXIZlJij04zS0MaILflw3z3q4UWBFXU
-Message-ID: <CABPp-BFZ3oyKiryKMPph+nfokC=sFa7wn1wdas863273bzy7pA@mail.gmail.com>
-Subject: Re: renormalize histroy with smudge/clean-filter
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org, 
-	Elijah Newren <newren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250206-toon-clone-refs-v7-7-4622b7392202@iotcl.com>
 
-On Wed, Feb 5, 2025 at 4:29=E2=80=AFPM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2025-02-05 at 23:59:31, Josef Wolf wrote:
-> > > > BTW: It does not make any difference whether I add "-c merge.renorm=
-alze=3Dtrue"
-> > >
-> > > That option also does not exist.
-> >
-> > Well, this is described in git(1) manpage:
-> >
-> >    [ ... ]
-> >    SYNOPSIS
-> >        git [-v | --version] [-h | --help] [-C <path>] [-c <name>=3D<val=
-ue>]
-> >    [ ... ]                                            ^^^^^^^^^^^^^^^^^=
-^^
-> >
->
-> The -c option does exist, and apparently the merge.renormalize option
-> does as well, so I apologize.  It looks like it's only used in
-> merge-recursive and not merge-ort.c, so I'm not sure if it's still
-> effective.  Elijah would know for certain, since he's the author of
-> merge-ort as well.
+On Thu, Feb 06, 2025 at 07:33:35AM +0100, Toon Claes wrote:
+> diff --git a/t/t5621-clone-revision.sh b/t/t5621-clone-revision.sh
+> new file mode 100755
+> index 0000000000000000000000000000000000000000..d4889a954e6300e0e327ebe7dfcf73569d966829
+> --- /dev/null
+> +++ b/t/t5621-clone-revision.sh
+> @@ -0,0 +1,123 @@
+> +#!/bin/sh
+> +
+> +test_description='tests for git clone --revision'
+> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> +
+> +TEST_PASSES_SANITIZE_LEAK=true
 
-init_*merge_options() are defined in merge-recursive.c, and these call
-merge_recursive_config() which is also in merge-recursive.c, but the
-parsed options are shared between the two backends; you'll note that
-merge-ort.h includes merge-recursive.h to get all these.  And
-merge-ort does have the necessary code to use and understand the
-merge.renormalize option.  (Of course, the fact that renormalization
-*requires* an index made it a bit nasty, because merge-ort was written
-to avoid the index as a data structure, so I had to do some ugly
-shenanigans in order to support that option --
-https://lore.kernel.org/git/CABPp-BE1TvFJ1eOa8Ci5JTMET+dzZh3m3NxppqqWPyEp1U=
-eAVg@mail.gmail.com/.
-But that's beside the point here.)
+One last nit: this line is not needed anymore, as tests are required to
+pass with the leak sanitizer by default now. Other than that this series
+looks good to me, and this change alone does not warrant a reroll from
+my point of view.
+
+Thanks!
+
+Patrick
