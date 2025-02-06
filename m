@@ -1,115 +1,97 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B433C29CE7
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 01:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8894832C85
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 01:43:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738805282; cv=none; b=ZBugqIdIzAPQve324wWHGVFr0YTPk2yv6rjYBISwU5x+BaLBL0OVP0oVsplztbAlk8g0SogGjqlGf9gAiiaLICzmS9sv1oaT92E0lDrjK8+uYBVeVwb9APUXJjAH7ACdB5Q7S+F1H2cvD2auUYUAisOIIFPdH+C/11jTN1hroSs=
+	t=1738806221; cv=none; b=POD/UDGkDTkVJ9yX/iuoKNhiyXH+RBdhwXwh0ix5e1tFumarHFw5s10XCNXOOwQs08iMhLygA6i+Gvt8mPAMmktVpCNjLELrLzoWH9HMWGEnzcKxOdJcsZlZT/6a6vcKZCA9lPM2ZX0INeLxl5wACY12J+lJHWCIsIGlRwez2Xw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738805282; c=relaxed/simple;
-	bh=I3UsbOKVmjHj4yFHgiR3rhOH6cat0OChVKc86JkO59w=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=COvlLZUtNjkGdNe/SdHA10SwaDPqXD6xzjofJCWIoTq7nkne2NNHO5qObMigQCkJxc123GG+7u/4JYo0aLVjuDomYSS/EMeKrLQT+XnARYFmrgzLX7qm8f3d+GW2/MgiY8FygX/CgYCVgPpvwZXJYVb/KAZzZ+ol6KVm5pBRESQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=alumni.ncsu.edu; spf=pass smtp.mailfrom=alumni.ncsu.edu; dkim=pass (2048-bit key) header.d=alumni.ncsu.edu header.i=@alumni.ncsu.edu header.b=g/yW94E1; arc=none smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=alumni.ncsu.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alumni.ncsu.edu
+	s=arc-20240116; t=1738806221; c=relaxed/simple;
+	bh=Iw8Ay6nGEszhp2p6Gp8/bkPArTiWMWj+4KTCpmlW5iI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=I9FjsDr04dDdOZaDxYzu9IWGy7mFFAY9FaOpx81Eeb/OIJO1tyn6grOzI0q97YXJb2kIeGCra5wIG5ggAGBkcu1JZNgB3eBNT+raP33RSvFEmFR+jGIcCluFqpGZWIl83aTneuFSG4ihDKL6lTPqkptqrOKFoASsYs0cXf2G0u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XWS8W3Ak; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=alumni.ncsu.edu header.i=@alumni.ncsu.edu header.b="g/yW94E1"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6e1b11859a7so3190436d6.1
-        for <git@vger.kernel.org>; Wed, 05 Feb 2025 17:28:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XWS8W3Ak"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2f9bac7699aso471761a91.1
+        for <git@vger.kernel.org>; Wed, 05 Feb 2025 17:43:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=alumni.ncsu.edu; s=google; t=1738805279; x=1739410079; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=I3UsbOKVmjHj4yFHgiR3rhOH6cat0OChVKc86JkO59w=;
-        b=g/yW94E1b8NB/gamYaPA4htOfCBbnBJ/k0gF+sx4MtFL82kM0s1aAdJ1aokLQjDpsL
-         1N2GPrzJbVjr/k5v+N/T2W0AKgNTBiLxnjCEg5bcvLr3WUUZsGSHFHARSaFupW+jC3tq
-         LJUZ1HdRP76PDZez9ew1pl8Ovz/E/SX+IkgyTAjb4zGph3TT2ycMweJttJXc+MB0SZe3
-         gUgYn1QVMz8HykgcR967xnTxqNnggh6yKJjttL8GJ2EjyROYNGeFuf3DgrRB2VRNmpbS
-         maf1dty3Ib5XmW21g9PimhFo9vdIJurQbdMPChhRv4/qR+cuDDCD1WOPJy+CZSWOVX3g
-         TtzQ==
+        d=gmail.com; s=20230601; t=1738806220; x=1739411020; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bxyHbx8gHGtWcfJ4/nndNyYutDOnzGrQwn9U1D81eZI=;
+        b=XWS8W3Ak4BxYgXvTyBxuInpyVuaEHQUbv1thAhz0m3Jd6Balg7uVMyJr1f5tSH1FRm
+         t1qNaycSFnZulxWHrVCx0ODiElWseI8PEYfUdBx/AAyxNWpx3DoozkNrB/1/K36/t07V
+         bxwTDVKlXAbJk/FNhvf1XmlhKHz9bipTbn2aujPbegfGVz3eZDHgnik8E/IHRCAV5xwm
+         CWakvlj74Ic94bhrEyKlN181Go3JwRCp14Jy0E4rCtLbfB2daIsUZfF8fNRdsLuFcS6g
+         kiFgWhXhpv/3Dc63PrvntLy5KS3Dtb2qLo45hCH6xMvza42oB1DbwVBs6187Fw4hil6b
+         ANQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738805279; x=1739410079;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I3UsbOKVmjHj4yFHgiR3rhOH6cat0OChVKc86JkO59w=;
-        b=cLbOViUupNmkeRv7kO9EC9T77sifvQCN+0Q4PLz0FhwzCZLvctQAnbe11iJXlHa1Q8
-         IFGnp0Ya5QfkTpW/hgNoEbH2F7RD80fXhxHxUVIJEzgKqAaPAJwD7O3lpZv3jaY5v4Fe
-         hK26jggMHOwOB9s90/1E+m9pi4M7JwURKk27Di2cXwnwJ6MkY/cSQJd5KyTed/tS9yX/
-         LDVKB/ZYX7Yx6PcLnmR6fqFegicpUkqv4BbG9VlVo/vDzu/wmFdLCc9MAlSuq9bYJwGG
-         unl+Pt3EQsZD98U3jJSEKPzfTsyxlBFCYu+AFiNk8WpQcLIuJzDAQ6XxYoCvxkDte2pq
-         cm7A==
-X-Gm-Message-State: AOJu0YyD0srfdRMtkoOSPLl/svaJHAnLyKC3ZFklfNCMbqik4Bx8ArZF
-	BoIY/ibrh+/K1VULoQONOumKcvGmU6aosD5zEPuX5URpmB+XP4ggfQE94mOFkcRSC4R8iZESx0a
-	gDjiUa7qp5B/WneE5HD8c7nTW0NxwLxHbKusMVh6UTW7FxTmPomY=
-X-Gm-Gg: ASbGncsKsseMZ1eWNWeS/Yf30fYQVQWk1MZXFQYYIdTizYYYe2NPyf9mj3yIYz3hqSd
-	6V3eutnDUSpDcsz1uifZPuWSVU8Myslnm2YdwVVhZxfvWale5GVnH6bL09dR2hUW0KtY5HZyRQg
-	==
-X-Google-Smtp-Source: AGHT+IGLVJrlNyrOvJrD9JcThakW+Bf/9vRrfEM30pV5EswG/8WgoPd/5B13XFsO/WZMochSYi6QrHa8owjFc4gLufw=
-X-Received: by 2002:ad4:5f45:0:b0:6e4:2551:7bd6 with SMTP id
- 6a1803df08f44-6e42fc05836mr69431026d6.26.1738805279394; Wed, 05 Feb 2025
- 17:27:59 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738806220; x=1739411020;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bxyHbx8gHGtWcfJ4/nndNyYutDOnzGrQwn9U1D81eZI=;
+        b=jFYB4GomTQTLUb2hQRriYxb58qIT0t943ttgVCvEkOLOSprz0j/xUt9wYeMHA6cygz
+         Cvm/GOVLcdXoD5v6ydLjpMGi/0qYdViwDMUVA2SAtXdbtNv52FEbYjUmcP626ipdy5nC
+         B2CfCgFvIPPima9SLbWcDwX6/B3SUVyovuVCwMFvpF7xFGIznpQG+mUGjpfXeRDv7sSc
+         TFgOrovvoed8wwQ4Kty1RARhea6hm+hWHj4+PLgkkSXXJgTsa12SlZ9j8CRXjX+3CNLy
+         OGLoUAsMfbu8Kf40Qa4KIYkjidEBCGDiF/DQBt5syMO8uagdL+hb/V76k1bB6Sm7/OqX
+         NvNg==
+X-Forwarded-Encrypted: i=1; AJvYcCXGPT6F4U62bj7JnXrLi3kHRyzv83RoAmMEDANzhHY82IT4Gw0tNCG9g896SvS0nxRdDjU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyyuB/wpzfP8z/1XrZ/GpeLk8VIdbyZwEEWAWCJgHim7ONcz5Yu
+	7VKNhAFCv3ibdPyMGWIvbhAA1MPd0h1HNDwrv96kJe+UlAdVuKyd
+X-Gm-Gg: ASbGncvS8aAUWn+J1WJn2rulb3TEZOOYSCur/ejyKeukAnMsDlxvWbD2RdBrSXaG8Q3
+	xOtozJiSKhCI+48PYleuJ/tlPprLHSLe2dDH8U9lov6h79s63RSuH7iXcfWL8wL2C5uhF+mlS+3
+	5EJ7xPPyeGYYf+E1FDfRPM993xBxVJtZzVwXqGG1LjP3LbphnNVM5z8I9tun40oPleXLcTrW7eh
+	KY2gO7xm3jTd1OCqSqSD77ps1nZaG+511+pM/5QnDg+TAKDEzBbZGGaTIOjYGvMACsjB5Be326N
+	nfep100VMtVqsmwlaEblzPBM8aGPPSoJvD43xXs=
+X-Google-Smtp-Source: AGHT+IFT/7aRkA22KPnxJyIMMZVP8czuaR//RcuuijSIWtIuWcBYrTVzIo9BHBlrj0m0j73TgeS8KQ==
+X-Received: by 2002:a05:6a00:8d6:b0:72f:d36e:7f4a with SMTP id d2e1a72fcca58-730351361c3mr8054581b3a.13.1738806219680;
+        Wed, 05 Feb 2025 17:43:39 -0800 (PST)
+Received: from gamma.hsd1.ca.comcast.net ([2601:647:5580:5760:c1bf:72b5:6aa3:f684])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73048ae7e54sm130111b3a.76.2025.02.05.17.43.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 05 Feb 2025 17:43:39 -0800 (PST)
+From: Illia Bobyr <illia.bobyr@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	Johannes Sixt <j6t@kdbg.org>
+Cc: Illia Bobyr <illia.bobyr@gmail.com>,
+	git@vger.kernel.org
+Subject: [PATCH v3 0/1] Long names for `git log -S` and `git log -G`
+Date: Wed,  5 Feb 2025 17:43:15 -0800
+Message-ID: <20250206014324.1839232-1-illia.bobyr@gmail.com>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Kapil Somani <kmsomani@alumni.ncsu.edu>
-Date: Wed, 5 Feb 2025 20:27:48 -0500
-X-Gm-Features: AWEUYZlRXmAWCk9V_vnV29ys3aNaqbaMDDPz9A3NLgTOfwQVdOmIB4kOS4AcQGo
-Message-ID: <CANF_+=4dG7bVF5n+s4ezHR=HneeMgvYNhsOjsz7e7bFapG2f2w@mail.gmail.com>
-Subject: `git p4` broken on machines which do not have python on path
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Same as PATCH v2[1], but removed gitk changes, as suggested by Johannes Sixt.
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-Run `git p4 clone //path/to/p4/depot --destination=/tmp/localcopy`
+I'll send a separate patch for gitk, should this patch be accepted.
+Or, I could include gitk changes into this chain, but just as a separate patch?
 
+[1]: https://lore.kernel.org/git/20250205022422.2019929-1-illia.bobyr@gmail.com/
 
-What did you expect to happen? (Expected behavior)
-The command should have imported perforce depot to a git repository
+Illia Bobyr (1):
+  diff: --patch-{modifies,grep} arg names for -S and -G
 
+ Documentation/diff-options.txt |  36 +++++------
+ Documentation/git-blame.txt    |   2 +-
+ Documentation/gitdiffcore.txt  |  48 ++++++++-------
+ diff.c                         |  18 +++---
+ diff.h                         |  11 +++-
+ t/t4062-diff-pickaxe.sh        |   8 +--
+ t/t4209-log-pickaxe.sh         | 106 +++++++++++++++++++++++----------
+ 7 files changed, 142 insertions(+), 87 deletions(-)
 
-What happened instead? (Actual behavior)
-The command threw error
-fatal: 'p4' appears to be a git command, but we were not
-able to execute it. Maybe git-p4 is broken?
+-- 
+2.45.2
 
-
-What's different between what you expected and what actually happened?
-The command did not perform desired operation
-
-
-Anything else you want to add:
-The machine does not have python on path
-I noticed `git-p4`'s shebang line points to python.
-On my local git installation, i was able to update shebang line on
-git-p4 to python3 and
-the command worked as expected.
-With python3 now being default should be update git-p4 to run using python3 ?
-
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.30.2
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.10.0-33-amd64 #1 SMP Debian 5.10.226-1 (2024-10-03) x86_64
-compiler info: gnuc: 10.2
-libc info: glibc: 2.31
-$SHELL (typically, interactive shell): /bin/tcsh
-
-
-[Enabled Hooks]
-not run from a git repository - no hooks to show
