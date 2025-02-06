@@ -1,123 +1,88 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C722188CB1
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 20:26:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C511CEAD3
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 20:34:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738873580; cv=none; b=l9N8katSyg+YSR2Vacg6SPaw3ufAOhQEgqSGa6PelIs0a43JXGtgWS9Wae+eXyHLDleo6oneXfamkS2Oq3Gn6q4te1AqLXM8/MUirC69ivbHcBmt/2n96wU39RGkRiOH41BtXK6SdBqORpqSWpnYcacb/2WL3qlQkF9tgzuQEAM=
+	t=1738874088; cv=none; b=S0Xce2Ccm8v8dijAiFx+5rv6gy5/84s+6aJ6cPYG6oE/QS3jSlJQpeBOo+kvKC1uM8AdKAXmu9qoeSO4PacGj5WxTCTsmocTiSdQ5nGrCqwykHv3tSbpVqlZaU/Jpcr3ucaPts7CCmsBYGvhZjroQUevAC85opvu0Y3DT2yTemQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738873580; c=relaxed/simple;
-	bh=e6T2olfJmJDlEiLl1f89S6RLD098bqcn/AdkugNZDDA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ib+36ajUCANX0GEtQA9j6vfP/265ygCQfsBIMyLAizyyP0ilCUJrD/vrOxbfWJq83BZg4rMKeOPk21JuJdVQHuNCu7YUW/G4JmUbscqDABiZFP+kk0ZCTt0PVUAevgkoAquI/vMFkfJ78KOx/0aRVI12GIuCsTnO2TOQSNzeo5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B9b199Ny; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IQJbwV5D; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738874088; c=relaxed/simple;
+	bh=ed7o4ey4MGraErwTgZKZbJ8XNq+0sG31U/nDd/gaasI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uJY4X0WzokUo1Z4xNmN+f7nUeT2NA5UnmE7y2CWlq6IaETSjvmxL8ASnVUBFlFP05CwH7wQeCBXHWPseHFr+R26mpCsY5pVxzu2trokNAMadH0zAo9WgTv3baFBoNc7hqQh99v/HF7bj3luVmULq1ClzKWQUkbc4EGnaSE3vxT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QS594GqH; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B9b199Ny";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IQJbwV5D"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5E2A71140130;
-	Thu,  6 Feb 2025 15:26:16 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 06 Feb 2025 15:26:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738873576; x=1738959976; bh=e6T2olfJmJ
-	DlEiLl1f89S6RLD098bqcn/AdkugNZDDA=; b=B9b199NyQSpA5/D8zsz4tts+GF
-	kD/WG0ObZlK4tAyNLsjabLDa97oUu6FkMfIGfn2Aolf7xs/ZGhVgr/iFSbwMGrvp
-	91GfAavyvdaqMw9ZCTnxIRr/rwAA4bub33iAX8F9PO9EAxZLFBI3gwlxQx0RJ9YQ
-	tuwBeO8ydsHWh4wrnKlsETM3xC+57ztaei7/33iN3ZgDg8yj16JxfNyMlREhQxtl
-	3n+kUiSSrPPgmYdeYB7IevhiSaG6KtgsvFuxI4ZKyJLrMkhrDGmqqPYg7sYJbtbo
-	6KRH5l96ey4KbceNTfvrhGIx6all1vVyFoYyCUUfpJ3wHfAxYXL6CRFjfFTQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738873576; x=1738959976; bh=e6T2olfJmJDlEiLl1f89S6RLD098bqcn/Ad
-	kugNZDDA=; b=IQJbwV5DopRN9qUuuFAu3AvCQLtSjOEVhNQ0DfG1Gel9ewZnv/J
-	QPnC2roZhjZyzC3aCs0RV8/8pf7siKXzNKABq3PyFVJDHYhNeJsNnCh8MNj/kmB8
-	QV/m/77Fkgmc8ZgIBZjL4/8w1iLCT4OvZLE/4dDcUbGnK1hSvjADB0FiTHFUp481
-	Vb5rBU6ob8IO+yHTr87II+mKHtND7ccDwbRq9it/VwsaB0JUlScZDrV0gqQIbiBF
-	d8xNyIyqwY3LSCLIhhcf9qq0mTyXwuZ65lC2dOopPkyOvEbXhbP+yZYp+q8pxBnJ
-	URoRBtTChHQCKN3KvwflKpaE5dVYS6/kEfQ==
-X-ME-Sender: <xms:5hqlZz5PBw4PEsIN4dD_rMYaxH2Icnrm9ufGWdPDOLhO9OEsdHF5Iw>
-    <xme:5hqlZ46NbKOgwltgB6iyj2QheeV2AulvjAkQefThWgdak7HBd-_io7wx5ANap1kPA
-    WF1BZRU5b1g4-9q0A>
-X-ME-Received: <xmr:5hqlZ6cxrrZKGyfOIficEbOtwBvSJqI4FRTtUkHtD7WevvqG5YHuKJQAYO1TvNwcCGAGrsQWzmJcNxm81BgGa57WGRJgUG3TafdS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrg
-    hughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehmshhutghhrghn
-    vghksehsuhhsvgdruggvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:5hqlZ0KaniVOa0BNjwjiNQd52uRY1FzCzgWUDGoNlAHvOG_JgAbf_g>
-    <xmx:5hqlZ3K-OjDnc9NLjPH_Kk06rDB_Y95yV3y-C6NuLBLw_NU1XoIA9Q>
-    <xmx:5hqlZ9weHD6RgWwbeOvtWyUg6s0-C3GmWnJCNv8hLb05k6M_0Bo17g>
-    <xmx:5hqlZzJdIGPY2-GjSUqg4mqMPPlLK-MG9DfJ9m38tE3Mfa15SEFAAg>
-    <xmx:6BqlZ0qXbK6oCdASJm-2TZWnVAX8_SQRfQG3g4WTtZctUN3iwfSJ805x>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 6 Feb 2025 15:26:14 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Michal =?utf-8?Q?Such=C3=A1nek?=
- <msuchanek@suse.de>,
-  Jeff King <peff@peff.net>
-Subject: Re: [PATCH v7 7/7] builtin/clone: teach git-clone(1) the
- --revision= option
-In-Reply-To: <Z6RvD4FtfXIk4Pa3@pks.im> (Patrick Steinhardt's message of "Thu,
-	6 Feb 2025 09:13:03 +0100")
-References: <20250206-toon-clone-refs-v7-0-4622b7392202@iotcl.com>
-	<20250206-toon-clone-refs-v7-7-4622b7392202@iotcl.com>
-	<Z6RvD4FtfXIk4Pa3@pks.im>
-Date: Thu, 06 Feb 2025 12:26:13 -0800
-Message-ID: <xmqq4j16kefu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QS594GqH"
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-aa680fafb3eso18965766b.3
+        for <git@vger.kernel.org>; Thu, 06 Feb 2025 12:34:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738874085; x=1739478885; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=GHkXy0NbHQ2xLNn6CuDdjry/8jdZwdb1YxMwTgLhAR4=;
+        b=QS594GqHh7qhFS3Aur2i/R1IIecpshyVTyv4pRg/t7g2LJ3N7imu2nV4dcfq24NsK5
+         0/aGWv9BXTuNRH+mV3H6de2vfPnzxjbvW7ojaEApsRCyi4vxC7rdMQ4G84QdHGZ14U5m
+         eLFLOqSDcxWczhMs8FckNtKS7lEtAdVmuX2GV7AIUAvylTWJZGImRYblou3zTuXsaxr3
+         xWcV8Pz+wM7KUjUQaL6mk42tzc/N7+wME0GvjIHjQmkTprvhVZZUkFBXQmMOR1rWbRyO
+         1YhYK0zyhsmtcPN3F9hlS9pq1XvH8+VwgSkBderB+7vw7j4vzM2Nrqt5BXMBvzD/BuAc
+         YMcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738874085; x=1739478885;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GHkXy0NbHQ2xLNn6CuDdjry/8jdZwdb1YxMwTgLhAR4=;
+        b=hT0t0jVwGRsccg+EYUciXg6KaMBbooaROU7XnAHdA8p1BgO83gpultwntVZPy2+l7A
+         W/TzA41Bnn+JBFVcUWj58MliXIjEpvsDu2rhopPm3xOhL5I04tsQginEe8B54+vVLjk/
+         XhkncDQFdUanMU7ENWUSgTVQaXkxmhVOpYVmmt+AYBNrGuZJT/LP7lZPrMjWN549K4Ww
+         RxO6Ewibrj+G3OFinIVsAsrs9PXA4xHo2SzRnVtScOK2y+q8V5wUcSUMQSM1ybajiGbI
+         onosirvTQNZfQ0HNG7qBGwB7DkTSFYrcIR8vK/r46zu5pUQV1tNwhIqjBDNoo206IIPA
+         Vs+w==
+X-Gm-Message-State: AOJu0Yywnbgd+eVh+Rqu2MfYmGpIpFS+z8/2f33QaqU808KIangB0Gzs
+	aM4QF2aYHvgIi8jAOCKf26PtUvlXdTSM4i6WUhOXzvPDbmUosntiA/ui1r6my34jICBZexVFX2W
+	F5ny6CQs89Db/Rja3oTzkNUHBmx9vstat
+X-Gm-Gg: ASbGnct3YEVnptsik1X5G36/aak9nWuA1e03R3D7LOrnYCc0WdkBPP+Y49FZoJHi3qt
+	/AW4OgJGkGrC1KO3BLeIXrC6dwKH0EjhA0WD5sqbT3EMCJK8sctVyZLn8cGoKhJGvpL9kSQzr
+X-Google-Smtp-Source: AGHT+IHx7HZxPq5VdOAe72JnmDZ2/cvY4PnOu62+bPSg6XTfFClJRUbUk+KAo6SjgcT7TGTcKASd2qk0BySWiCFekNk=
+X-Received: by 2002:a17:907:7b87:b0:ab3:7812:b3c2 with SMTP id
+ a640c23a62f3a-ab789a65a3bmr16418266b.2.1738874085051; Thu, 06 Feb 2025
+ 12:34:45 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250120015603.1980991-1-sandals@crustytoothpaste.net> <20250120015603.1980991-5-sandals@crustytoothpaste.net>
+In-Reply-To: <20250120015603.1980991-5-sandals@crustytoothpaste.net>
+From: M Hickford <mirth.hickford@gmail.com>
+Date: Thu, 6 Feb 2025 20:33:00 +0000
+X-Gm-Features: AWEUYZkH_x4OwXncOhbnJssASsxyQ0Mwyfx3Qm-fO0yI11a89gIqpEuZc7oJIH8
+Message-ID: <CAGJzqsnFNfK6DEcbRQsUB4S8qVBnQ2PcJBgbvCPYLd-xAVVQBA@mail.gmail.com>
+Subject: Re: [PATCH 4/5] doc: use .adoc extension for AsciiDoc files
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Thu, Feb 06, 2025 at 07:33:35AM +0100, Toon Claes wrote:
->> diff --git a/t/t5621-clone-revision.sh b/t/t5621-clone-revision.sh
->> new file mode 100755
->> index 0000000000000000000000000000000000000000..d4889a954e6300e0e327ebe7dfcf73569d966829
->> --- /dev/null
->> +++ b/t/t5621-clone-revision.sh
->> @@ -0,0 +1,123 @@
->> +#!/bin/sh
->> +
->> +test_description='tests for git clone --revision'
->> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->> +
->> +TEST_PASSES_SANITIZE_LEAK=true
+On Mon, 20 Jan 2025 at 01:56, brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
-> One last nit: this line is not needed anymore, as tests are required to
-> pass with the leak sanitizer by default now. Other than that this series
-> looks good to me, and this change alone does not warrant a reroll from
-> my point of view.
+> We presently use the ".txt" extension for our AsciiDoc files.  While not
+> wrong, most editors do not associate this extension with AsciiDoc,
+> meaning that contributors don't get automatic editor functionality that
+> could be useful, such as syntax highlighting and prose linting.
 >
-> Thanks!
+> It is much more common to use the ".adoc" extension for AsciiDoc files,
+> since this helps editors automatically detect files and also allows
+> various forges to provide rich (HTML-like) rendering.  Let's do that
+> here, renaming all of the files and updating the includes where
+> relevant.  Adjust the various build scripts and makefiles to use the new
+> extension as well.
 
-I'll touch it up while queuing, and mark the topic for 'next', then.
-
-Thanks.
+Hi Brian. How about also renaming SubmittingPatches to
+SubmittingPatches.adoc? This is AsciiDoc according to 049e64aa50
+(Documentation: convert SubmittingPatches to AsciiDoc, 2017-11-12).
