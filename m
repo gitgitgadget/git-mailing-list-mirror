@@ -1,133 +1,115 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0071EB2A
-	for <git@vger.kernel.org>; Thu,  6 Feb 2025 00:29:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B433C29CE7
+	for <git@vger.kernel.org>; Thu,  6 Feb 2025 01:28:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738801766; cv=none; b=CMajYnjiCcG753QjqOK4HXpf7SoFs50bNUMtGEkkOoK1IYo1XLUAUm5VGnQoWdp1+/dWO2aNhy28jZS7QmbVPiwcLGniB33xprIzl9Ud/6q4SxHN9q7xjnqtcZ/gq31LkWIi5ndBTgYONh5GOVVo52eFo6sml5eCzXtkjblplR4=
+	t=1738805282; cv=none; b=ZBugqIdIzAPQve324wWHGVFr0YTPk2yv6rjYBISwU5x+BaLBL0OVP0oVsplztbAlk8g0SogGjqlGf9gAiiaLICzmS9sv1oaT92E0lDrjK8+uYBVeVwb9APUXJjAH7ACdB5Q7S+F1H2cvD2auUYUAisOIIFPdH+C/11jTN1hroSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738801766; c=relaxed/simple;
-	bh=clNoyd+a6lMA6Ts9fAyrtFLkIhI4a9FkvuOj/EnydbA=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=beT4TJwtaR2Y2oirNzL/T8sQ268eOU3/Nnjw5ma0c6+Dh8nhhvPo3e8eF3AczNQN/4YVKQPft3eKGoZfyXgfE5MVAeTF0syV++9R8RmPTCmbJ1bHxHzOAIiqmFBdqNjM0WhTUciUdzLFSMJclKze2Qdw5CY0PgBE9A1dNJwVl+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=V9PyFSlA; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1738805282; c=relaxed/simple;
+	bh=I3UsbOKVmjHj4yFHgiR3rhOH6cat0OChVKc86JkO59w=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=COvlLZUtNjkGdNe/SdHA10SwaDPqXD6xzjofJCWIoTq7nkne2NNHO5qObMigQCkJxc123GG+7u/4JYo0aLVjuDomYSS/EMeKrLQT+XnARYFmrgzLX7qm8f3d+GW2/MgiY8FygX/CgYCVgPpvwZXJYVb/KAZzZ+ol6KVm5pBRESQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=alumni.ncsu.edu; spf=pass smtp.mailfrom=alumni.ncsu.edu; dkim=pass (2048-bit key) header.d=alumni.ncsu.edu header.i=@alumni.ncsu.edu header.b=g/yW94E1; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=alumni.ncsu.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=alumni.ncsu.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="V9PyFSlA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1738801762;
-	bh=clNoyd+a6lMA6Ts9fAyrtFLkIhI4a9FkvuOj/EnydbA=;
-	h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
-	 In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
-	 Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=V9PyFSlA8EbVX5LxqefJ82Ty08tnm7xmI3W23UWUlDRWAwiQlkjBKY+wWnU49IbFi
-	 ztf8N6CUbkv9wkSQp/0QDfFhWscixB/nbKOnD4wa33iZwWSvda1Rp4uIII2SmSHdHq
-	 vqkqwP/OPRusvX657S0mV2ywh+FrbiCVK9ERtq/3YDF4YVJpOE1LDa2miS5tdr/8fo
-	 9xRyS2Ju3VswP9eZpCsSotBkOw9BjBDadsiuXoCVjwjOPYvt9zIC8xf2PBfX9+Mj1n
-	 xi6DG+bgF2RVbAIIs3rbokIfPT9Y2Jq0gjMLiVUt6tL/k+/N4ovSylUKQMZWSe8yeb
-	 EWItj10nrm3L9P75i91zRjreMHbtsIK1d1q2boLiBNR8NNXN6stsDOzfhn1I7uzZeN
-	 M1GdbNwa2n9ti9m8epaJdTEKEupaEtCB0ilTrIynClJ+sahQf+xzFVZJahffQXCFQV
-	 baa9YiTZlOHAXEeCRkLwf0hEKOjioqRTO1v6CV80uinr+DswDZU
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C1E7E20067;
-	Thu,  6 Feb 2025 00:29:21 +0000 (UTC)
-Date: Thu, 6 Feb 2025 00:29:19 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>
-Subject: Re: renormalize histroy with smudge/clean-filter
-Message-ID: <Z6QCX1QZxxwC7RVQ@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>
-References: <20250205214726.GA30202@raven.inka.de>
- <Z6PsXGnxM3UBR3nM@tapette.crustytoothpaste.net>
- <20250205235931.GB30202@raven.inka.de>
+	dkim=pass (2048-bit key) header.d=alumni.ncsu.edu header.i=@alumni.ncsu.edu header.b="g/yW94E1"
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6e1b11859a7so3190436d6.1
+        for <git@vger.kernel.org>; Wed, 05 Feb 2025 17:28:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=alumni.ncsu.edu; s=google; t=1738805279; x=1739410079; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=I3UsbOKVmjHj4yFHgiR3rhOH6cat0OChVKc86JkO59w=;
+        b=g/yW94E1b8NB/gamYaPA4htOfCBbnBJ/k0gF+sx4MtFL82kM0s1aAdJ1aokLQjDpsL
+         1N2GPrzJbVjr/k5v+N/T2W0AKgNTBiLxnjCEg5bcvLr3WUUZsGSHFHARSaFupW+jC3tq
+         LJUZ1HdRP76PDZez9ew1pl8Ovz/E/SX+IkgyTAjb4zGph3TT2ycMweJttJXc+MB0SZe3
+         gUgYn1QVMz8HykgcR967xnTxqNnggh6yKJjttL8GJ2EjyROYNGeFuf3DgrRB2VRNmpbS
+         maf1dty3Ib5XmW21g9PimhFo9vdIJurQbdMPChhRv4/qR+cuDDCD1WOPJy+CZSWOVX3g
+         TtzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738805279; x=1739410079;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=I3UsbOKVmjHj4yFHgiR3rhOH6cat0OChVKc86JkO59w=;
+        b=cLbOViUupNmkeRv7kO9EC9T77sifvQCN+0Q4PLz0FhwzCZLvctQAnbe11iJXlHa1Q8
+         IFGnp0Ya5QfkTpW/hgNoEbH2F7RD80fXhxHxUVIJEzgKqAaPAJwD7O3lpZv3jaY5v4Fe
+         hK26jggMHOwOB9s90/1E+m9pi4M7JwURKk27Di2cXwnwJ6MkY/cSQJd5KyTed/tS9yX/
+         LDVKB/ZYX7Yx6PcLnmR6fqFegicpUkqv4BbG9VlVo/vDzu/wmFdLCc9MAlSuq9bYJwGG
+         unl+Pt3EQsZD98U3jJSEKPzfTsyxlBFCYu+AFiNk8WpQcLIuJzDAQ6XxYoCvxkDte2pq
+         cm7A==
+X-Gm-Message-State: AOJu0YyD0srfdRMtkoOSPLl/svaJHAnLyKC3ZFklfNCMbqik4Bx8ArZF
+	BoIY/ibrh+/K1VULoQONOumKcvGmU6aosD5zEPuX5URpmB+XP4ggfQE94mOFkcRSC4R8iZESx0a
+	gDjiUa7qp5B/WneE5HD8c7nTW0NxwLxHbKusMVh6UTW7FxTmPomY=
+X-Gm-Gg: ASbGncsKsseMZ1eWNWeS/Yf30fYQVQWk1MZXFQYYIdTizYYYe2NPyf9mj3yIYz3hqSd
+	6V3eutnDUSpDcsz1uifZPuWSVU8Myslnm2YdwVVhZxfvWale5GVnH6bL09dR2hUW0KtY5HZyRQg
+	==
+X-Google-Smtp-Source: AGHT+IGLVJrlNyrOvJrD9JcThakW+Bf/9vRrfEM30pV5EswG/8WgoPd/5B13XFsO/WZMochSYi6QrHa8owjFc4gLufw=
+X-Received: by 2002:ad4:5f45:0:b0:6e4:2551:7bd6 with SMTP id
+ 6a1803df08f44-6e42fc05836mr69431026d6.26.1738805279394; Wed, 05 Feb 2025
+ 17:27:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="qQcOvIiYgIdMF/B3"
-Content-Disposition: inline
-In-Reply-To: <20250205235931.GB30202@raven.inka.de>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+From: Kapil Somani <kmsomani@alumni.ncsu.edu>
+Date: Wed, 5 Feb 2025 20:27:48 -0500
+X-Gm-Features: AWEUYZlRXmAWCk9V_vnV29ys3aNaqbaMDDPz9A3NLgTOfwQVdOmIB4kOS4AcQGo
+Message-ID: <CANF_+=4dG7bVF5n+s4ezHR=HneeMgvYNhsOjsz7e7bFapG2f2w@mail.gmail.com>
+Subject: `git p4` broken on machines which do not have python on path
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
+
+What did you do before the bug happened? (Steps to reproduce your issue)
+Run `git p4 clone //path/to/p4/depot --destination=/tmp/localcopy`
 
 
---qQcOvIiYgIdMF/B3
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What did you expect to happen? (Expected behavior)
+The command should have imported perforce depot to a git repository
 
-On 2025-02-05 at 23:59:31, Josef Wolf wrote:
-> > > BTW: It does not make any difference whether I add "-c merge.renormal=
-ze=3Dtrue"
-> >=20
-> > That option also does not exist.
->=20
-> Well, this is described in git(1) manpage:
->=20
->    [ ... ]
->    SYNOPSIS
->        git [-v | --version] [-h | --help] [-C <path>] [-c <name>=3D<value=
->]
->    [ ... ]                                            ^^^^^^^^^^^^^^^^^^^
->=20
 
-The -c option does exist, and apparently the merge.renormalize option
-does as well, so I apologize.  It looks like it's only used in
-merge-recursive and not merge-ort.c, so I'm not sure if it's still
-effective.  Elijah would know for certain, since he's the author of
-merge-ort as well.
+What happened instead? (Actual behavior)
+The command threw error
+fatal: 'p4' appears to be a git command, but we were not
+able to execute it. Maybe git-p4 is broken?
 
-> > git rebase --root -x 'git add --renormalize . && git commit --amend --n=
-o-edit'
->=20
-> Unfortunately, this runs the command on every commit and gives a warning =
-when
-> a cmmit don't touch a filtered file:
->=20
->   $ git rebase --root -x 'git add --renormalize . && git commit --amend -=
--no-edit'
->   [ ... ]
->   No changes
->   You asked to amend the most recent commit, but doing so would make
->   it empty. You can repeat your command with --allow-empty, or you can
->   remove the commit entirely with "git reset HEAD^".
 
-Yeah, that's a problem with a rebase in general here.  You could try
-`git rebase --root -X renormalize` here, which will use the
-`renormalize` option, but you may run into the same problem.  I _think_
-with the default merge strategy in rebase that it will keep the empty
-commits, so your linear parts of history won't be changed, although
-you'll probably drop the merge commits (and any conflict resolutions)
-unless you use `--rebase-merges`.
+What's different between what you expected and what actually happened?
+The command did not perform desired operation
 
-If this is a small project, that may not be a problem, but I would
-recommend `git filter-repo` here if that's an option because it will
-preserve your history in a nicer way.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
 
---qQcOvIiYgIdMF/B3
-Content-Type: application/pgp-signature; name="signature.asc"
+Anything else you want to add:
+The machine does not have python on path
+I noticed `git-p4`'s shebang line points to python.
+On my local git installation, i was able to update shebang line on
+git-p4 to python3 and
+the command worked as expected.
+With python3 now being default should be update git-p4 to run using python3 ?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ6QCXwAKCRB8DEliiIei
-gUV1AP4+NTzeG81uTgu3HPXZgr5XIIB0GLtzdSglVnp+biDrXwD9FtB0QKIuUTYm
-XR7pfzvwlNntqBLkAfXEVFGm7cFB2g0=
-=n5KX
------END PGP SIGNATURE-----
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
---qQcOvIiYgIdMF/B3--
+
+[System Info]
+git version:
+git version 2.30.2
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.10.0-33-amd64 #1 SMP Debian 5.10.226-1 (2024-10-03) x86_64
+compiler info: gnuc: 10.2
+libc info: glibc: 2.31
+$SHELL (typically, interactive shell): /bin/tcsh
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
