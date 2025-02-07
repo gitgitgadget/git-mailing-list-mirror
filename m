@@ -1,158 +1,166 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B06C19047F
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 07:32:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EE61A00FE
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 07:37:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738913573; cv=none; b=ctVPIAhCJSm0yuNzb7PdcWnCJ+1esf0HKN3ws3Htw7FJrsOM7jSEWJPGi0J8lBPL5D9DBCvERHl1lJDTuUNUyqi5P5E5u0Gtf8IH/JU/jsy805G/D8AtVcr7ntF8myDDZ8stgUbRefHkueQ0anw7/Zi7TLsvKDZknX+vsEYGFx0=
+	t=1738913824; cv=none; b=pXssnZgQe293O02JRxTK9V7dr5/KAP7qKzICxGXB4hiCZ5dfBjN3ZV4Ea7uWMUr8d31y8wTrhSR4Fl+vtGfminDBJ7IrlO1Y+cF3IWUIzGbdsUnSppCDFpSTuccM3iHUDacNipzzg+91UbcV6mhHgdqd1XupHymg8g4HXSbD8rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738913573; c=relaxed/simple;
-	bh=ngDWrsDEOw6iVtTy6v8PeaG0QqNS9CLvgCLIQ3VzcXc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TH0oNq/6sqarztEkiSl8/zCo9PwfVLxD0vvaDJawUmB1BCFtCWkKzUnWVpspIOnURdADdtyNwAVK04JQYklnw9lEIBL2dCq8n5hO2/aL8TdsQTvwybEDn9T15E7xMn2oZsUmeu2cVccYOymBkyvVYxW2lGTtguJNZcxAJqgi33E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E72+IBZN; arc=none smtp.client-ip=209.85.214.171
+	s=arc-20240116; t=1738913824; c=relaxed/simple;
+	bh=oLeZo3SdKIxrSDzhqDAvNEdDk8c/aNdOlk4ohCgskAI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Lsaw3J4mX2alm4UdbtVOuTRD1anks22TlyqbLK8yhMEPppmJFtaJLsyMePB7qM1bhEgQg94EKuVXRQmnjiSsI5QpyrPfHqc3R/AyUiY1Slf6sqCz3AGjcmy0BZCo5by7JagQtam43ziJlEWGD6tiEX4091rV2d2BHAYpFpIojmQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BlINYNCP; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E72+IBZN"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-21f3c119fe6so33942225ad.0
-        for <git@vger.kernel.org>; Thu, 06 Feb 2025 23:32:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BlINYNCP"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-21ddab8800bso24924305ad.3
+        for <git@vger.kernel.org>; Thu, 06 Feb 2025 23:37:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738913571; x=1739518371; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SuVzvLq8H8SDzIYf2kkFvBBm1ZdJPm9Et23HvotV5TY=;
-        b=E72+IBZN66qHyTvNPL3xGLDJFihisJzaTbYTGVkb4qprGY2OGOSjpwQRq6LdsovTYP
-         1E9O5BILCvHGpGboD7Qiq0LMcGyfZdReOTTMaziihDCdCG15WjjdJFUwSJIK4O0Vx09c
-         mWKsXaTElZYKQe2pufAuqbPK8rKA5CSy0Szz9JqnmOZLudiSRmY4CTdVIPw604E92Arh
-         sjfaAJeY8nFv78UQ3EU2P/bDd0khBMU02eLUwu33l9ZUcN/0lKXFNe8Zkt3ihIe5KskL
-         yCcq2kmwjZ2MJSgDkh58o+ftXDvru8n2DLVDIPyF2rfo/kyVNg6z76wCy3cDIp6UpAeR
-         vuzA==
+        d=gmail.com; s=20230601; t=1738913822; x=1739518622; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HSpCJ8RnIrjODVwSlSZsxywiPJ3oFm2+PCdTC9ui45I=;
+        b=BlINYNCPE1jQCjh4AHvKRZdrIfnTY8LXpsafRW1DG5N/zg7f+TOraqyGTV1PoiLrOH
+         g/y+Xx4z25cSL2ZROwYcPV8UqKGWm9xLHaMgWLrqY91OfvXwFUyxThiGn7M2gePJl0Pu
+         aOppKVWIDuszDklPTKDEhtRUqndxmd1+BS6pMhWat5kPj5Igd/wEFd1XFctSKJBgEL7y
+         6NQGJhfiMZXu3TGFxjUq/hl70Ksn42cEBI8ZgVwvObq2Pm0u94UMHWyetEWKZOaLN+8c
+         htR9QuA1mifyoVqTJgXtbF9QK/ALnmL1D8QRpTkw2T4L9qRsqHqddWH9rYpvqZpkmj1b
+         440g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738913571; x=1739518371;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SuVzvLq8H8SDzIYf2kkFvBBm1ZdJPm9Et23HvotV5TY=;
-        b=eICyH8ajijsM1qc6Ct4UltBb3r5ruuWuy9IjkmSZ1NqJapsS7YoMSFtpXJZWezNS/+
-         3AfYhzU7mQpxzkrITmH9EuVOBHhFinYZ5KsOEFMYdxaJluam+3/910rQjaDrNLoyAqfI
-         8NInlbW3L+ajkxQQU6TIajUD2dqO+4yb2DSktikZCDihwAoLX5d8oCapHBiygQOlAtho
-         yFwiybyfpp2uEuzPwdRi9WIDWQWHWFoSZghJHmOC3rL0cM7Z+EHsZRqiOf5X7ZAfLp7Y
-         EMfVnitLpZge83BANgzHlXluFC3ppG4wiEk5dc0l1bIdwRei51ht+RTpZXII2jYQ0CvE
-         RwAw==
-X-Forwarded-Encrypted: i=1; AJvYcCUkvxsIY0TcpVjvv66WKLpV7TLDe08rN0Wsv+jN53XaOrXQCD208H5Z5VahtBeJT6V2h9o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXF7wqWiGvxKjQXs3cuQIGsbcNcy2BjWRiJSAjDM8ImfW7jHHe
-	pZeQrlNtQMthARjPBX7AlG1A6X6xJ2TeuZvHeVEMj6q4qTJd7NzW
-X-Gm-Gg: ASbGncsy0ag+ZgSDl1O7nAhQpqiOZW2biMp0IGLFtJJIPKD4aIUd26D4S3UxwvqHhfM
-	o1Xo65TnlM7rtXwj5NxsQLC3Lx+2/IGzXBnEp7pfm/iZ0qvI+bOI1+0xYzqNjcwZI8ZkQqgZ0oU
-	bw+pXakrkEBkkaIT4xrL1DE/Z3MMO9KlHGpXAkeNk+H2cgfiQyLCBEBut7UL06pkOheGL/FJvsI
-	Nsn87lC1094TRY2fV07ZBrms7lWAPT25Et3sS941BzWJvy1h1ZZUbN4sHsvZGJs435qHjq6ba/k
-	5Nc3FPIz2iHJKhYXiymliW98GH94
-X-Google-Smtp-Source: AGHT+IHR11tvQoRYx5Pk3UzsLf4ldL3UEQ81LIqcCCD2EAdkEnRBbpq+1qTphza0lFjY6HU/IVcojg==
-X-Received: by 2002:a05:6a20:cf83:b0:1e1:9fef:e960 with SMTP id adf61e73a8af0-1ee03a24b89mr4375435637.6.1738913571276;
-        Thu, 06 Feb 2025 23:32:51 -0800 (PST)
-Received: from [192.168.1.106] ([59.92.193.252])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73048ad25e0sm2464862b3a.54.2025.02.06.23.32.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 06 Feb 2025 23:32:50 -0800 (PST)
-Message-ID: <a2a76725-5778-4b7d-a266-c3a1431316ce@gmail.com>
-Date: Fri, 7 Feb 2025 13:02:25 +0530
+        d=1e100.net; s=20230601; t=1738913822; x=1739518622;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HSpCJ8RnIrjODVwSlSZsxywiPJ3oFm2+PCdTC9ui45I=;
+        b=R1zBiMT3mxCjDxDIOAYpuCMwp00UPnXojb5mZGcBkk/VFsqK95IYWrIRjbLpEplamj
+         /W8P76ElERrUMA7K+tLye6LbUQrCMEBlntcLHhlh5Qg6e6sEeWeodpIicE2SQs94L/aY
+         vup2q3m0NotOo1cvnIZ0XyFKkH7PEGXViiWXpsRhiRg/fd2QEovXfGj8atLrcTqZVdWs
+         fa8ytmv+Z2K3mTcNKDIV9LwRhPwlZKVRfkn95xdZ3nxXSkEOcHz+CO7JJUqKDYVZx1dH
+         pdkimi/E0vQKupzJB7LCzjuJEqfjxpfHIeRzitNdCgC4HT3LWqGfKjOJeQzDnJUfQVi5
+         qAbQ==
+X-Gm-Message-State: AOJu0YzUk1EdaRHf6CX8TKogJRvFwYzcVwDIjR8dcz3Ndpf54/XWRLaY
+	FAWMqgLwzdJykzeIXa67Ecx+TvRDmQGgPr6ItUpNgNJfAvCGVrNSZNC7kHyR
+X-Gm-Gg: ASbGncsktls9KsZVUhzaZKaGzP4mGLiH+2eg2ZGpzE3zZlrAbyaTj0kRQ4iXypsGL4W
+	SnYQykGcOtWIuL4C6cTzJtWZ4RvKFe93bk9/JoZy5srAj505rQZK21xKskoEqyw+4dhnvxDLL8j
+	YAVGbbXxF+DBOHIKX0XvTUFqwTzwMyoTKA7B7XnvTCf+WmBEpdqBrFRzbY0Ltq9ET5q2uLqWx3I
+	kI+KM/EYs+9JuXG02EmJotXM/ANi6WKD92NkIPU8DAY/So6cgmLrCUk53cl844bwzzUdfJmeWfH
+	npiYkmX7MWsMlMMoRkLaeg==
+X-Google-Smtp-Source: AGHT+IH3ULGlOY0/lszoS1UytjJGzCy5VzYkmxVHBaxYXKWVmr/0fZUpmFXzn1tbSiGhRpES9mM/GQ==
+X-Received: by 2002:a05:6a21:9205:b0:1e0:c8c5:9b1c with SMTP id adf61e73a8af0-1ee03a2395fmr4525896637.9.1738913821953;
+        Thu, 06 Feb 2025 23:37:01 -0800 (PST)
+Received: from [127.0.0.2] ([2401:4900:33b7:4cb0:4dd3:85f0:5c4b:b677])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ad51aee79casm2115063a12.44.2025.02.06.23.36.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Feb 2025 23:37:01 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH 0/6] refs: introduce support for partial reference
+ transactions
+Date: Fri, 07 Feb 2025 08:34:35 +0100
+Message-Id: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git in GSoC 2025
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
- Jialuo She <shejialuo@gmail.com>, Git Mailing List <git@vger.kernel.org>,
- Junio C Hamano <gitster@pobox.com>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <Z432QXJb_TfzNBa2@pks.im> <c39c5424-71d0-4b6d-90b1-a6a70f2ee61b@gmail.com>
- <cd90cf17-6113-4634-a774-6df707b73e95@gmail.com>
- <d5cba1a9-fe51-4f3f-970b-3ef8a7a2e459@gmail.com>
- <CAP8UFD0GEmsJDFzVAV1bgBNeD6K3auH4paWEKE6=f0=_E6gifA@mail.gmail.com>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <CAP8UFD0GEmsJDFzVAV1bgBNeD6K3auH4paWEKE6=f0=_E6gifA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIu3pWcC/x2NywqEMAwAf0VyNlC7VdRfEQ/ZGjXgo7RVdhH/3
+ eJxGJi5ILAXDtBmF3g+Jci+JSjyDOxM28QoQ2LQSptCqwq1KdGRj0LL8keK+yoWPY94uIEiB2x
+ Grr+qVh9TWkgZl6T83kXX3/cDvjX69nIAAAA=
+X-Change-ID: 20241206-245-partially-atomic-ref-updates-9fe8b080345c
+To: git@vger.kernel.org
+Cc: ps@pks.im, jltobler@gmail.com, Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3337; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=oLeZo3SdKIxrSDzhqDAvNEdDk8c/aNdOlk4ohCgskAI=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeluBoBa1+IrwLY6uuEORq+Eem8wu1/ZX41G
+ KiOr20uAqnAY4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnpbgaAAoJED7VnySO
+ Rox/OIkL/12yvZD4fNVaW3EJo5jU9XHYBPmnTqkJYlV0acF4pGZMXgNTYrtd7j2cGuBpTfgmJJW
+ fzdttRnVUyEAZNqF1MTHmGH2xH+3c+FPU7efNKLrn1cN++m382WycPZG5BoGD9NFl8aCMGseyAp
+ k92iOjFW2EInkimX88kjcv1mZaTokJUdazftbZTjTMwd12kHTdKw9MOxLx4W+D36LT0Vk8nRb4S
+ eb8UqdhSuEK0zfte1afR4eEnrOeuPbKjwP75DnArAD/MtvgcKlyTsaVhnxaoaBWi6sJy6gDqusc
+ nE/n9Y7NkW2/EwUlcHLVZOAXKXw7QJNCLHJWdnDWZZ2vI/iTvEJFKliZxvjVoO0fuLvyBunmtVB
+ wjWGaGtBa/F75Wc7oNtvhKdgsAJEeWD0Zv/d2hlpJoC+hF8O8+cjb3uQ+yBOvYvWSPJOjVBWUYD
+ gqA9TjXP02nNoy1PDJ2xZ3tRJuiO6iD19h08LmOsa9kpbsWkghTPQU5TVzn9UsCAE9O/gFHGuu8
+ VM=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Hi Christian, Karthik, Patrick, Jialuo and all,
+Git's reference updates are traditionally atomic - when updating
+multiple references in a transaction, either all updates succeed or none
+do. While this behavior is generally desirable, it can be limiting in
+certain scenarios, particularly with the reftable backend where batching
+multiple reference updates is more efficient than performing them
+sequentially.
 
-On 05/02/25 18:50, Christian Couder wrote:
-> Hi Kaartic and all,
-> 
-> On Tue, Feb 4, 2025 at 7:33 PM Kaartic Sivaraam
-> <kaartic.sivaraam@gmail.com> wrote:
-> 
-> I have just added myself as a possible mentor. If possible I'd like to
-> just co-mentor this project and someone else to be the main mentor for
-> this project.
-> 
- > ...
-> 
-> I have just added myself as a possible mentor. If possible I'd like to
-> be the main mentor for this project.
-> 
+This series introduces support for partial reference transactions,
+allowing individual reference updates to fail while letting others
+proceed. This capability is exposed through git-update-ref's
+`--allow-partial` flag, which can be used in `--stdin` mode to batch
+updates and handle failures gracefully.
 
-Thank you for adding yourself as a potential mentor!
+The changes are structured to carefully build up this functionality:
 
-With this, it seems to me like we could at the max. accept 3 students
+First, we clean up and consolidate the reference update checking logic.
+This includes removing duplicate checks in the files backend and moving
+refname tracking to the generic layer, which simplifies the codebase and
+prepares it for the new feature.
 
->> Note that I haven't assigned any mentors / co-mentors for each project.
->> I suppose we could assign that based on the applications we receive and
->> the ideas that we end up selecting.
->>
->> Based on Christian's inputs, we should be able to distribute
->> projects among mentors well.
-> 
-> Yeah, I hope it will be possible to distribute projects among mentors well.
->
+We then restructure the reftable backend's transaction preparation code,
+extracting the update validation logic into a dedicated function. This
+not only improves code organization but sets the stage for implementing
+partial transaction support.
 
-Indeed. From all of your inputs I was able to come to the following
-allocation of mentor / co-mentor.
+With this groundwork in place, we implement the core partial transaction
+support in the refs subsystem. This adds the necessary infrastructure to
+track and report rejected updates while allowing transactions to proceed.
+All reference backends are modified to support this behavior when enabled.
 
--- 8< --
+Finally, we expose this functionality to users through
+git-update-ref(1)'s `--allow-partial` flag, complete with test coverage
+and documentation. The flag is specifically limited to `--stdin` mode
+where batching multiple updates is most relevant.
 
-Consolidate ref-related functionality into git-refs
+This enhancement improves Git's flexibility in handling reference
+updates while maintaining the safety of atomic transactions by default.
+It's particularly valuable for tools and workflows that need to handle
+reference update failures gracefully without abandoning the entire batch
+of updates.
 
-- Mentor: Patrick
-- Co-mentor: Jialuo / Christian
+This series is based on top of bc204b7427 (The seventh batch, 2025-02-03).
+There were no conflicts noticed with topics in 'seen' or 'next'.
 
-Refactoring in order to reduce Git’s global state
+---
+Karthik Nayak (6):
+      refs/files: remove duplicate check in `split_symref_update()`
+      refs: move duplicate refname update check to generic layer
+      refs/files: remove duplicate duplicates check
+      refs/reftable: extract code from the transaction preparation
+      refs: implement partial reference transaction support
+      update-ref: add --allow-partial flag for stdin mode
 
-- Mentor: Christian
-- Co-mentor: Karthik / Jialuo
-
-Machine-Readable Repository Information Query Tool
-
-- Mentor: Karthik
-- Co-mentor: Patrick
-
-Implement support for reftables in “dumb” HTTP transport
-
-- Mentor: Patrick
-- Co-mentor: Karthik
-
--- >8 --
-
-Let me know if this sounds fine to all of you. So, I suppose we could
-pick a maximum of 3 projects but we cannot pick both "Consolidate
-ref-related functionality into git-refs" and "Implement support
-for reftables in “dumb” HTTP transport" at the same time as Patrick
-only prefers to be mentor in one project.
-
-Based on this, I'll tweak the ideas page to mention that we could
-pick a max of 3 candidates.
+ Documentation/git-update-ref.txt |  12 +-
+ builtin/update-ref.c             |  53 ++++-
+ refs.c                           |  58 ++++-
+ refs.h                           |  22 ++
+ refs/files-backend.c             |  97 ++------
+ refs/packed-backend.c            |  49 ++--
+ refs/refs-internal.h             |  19 +-
+ refs/reftable-backend.c          | 494 +++++++++++++++++++--------------------
+ t/t1400-update-ref.sh            | 191 +++++++++++++++
+ 9 files changed, 633 insertions(+), 362 deletions(-)
+---
 
 
-BTW, I've just submitted Git's application for GSoC. We should know
-by February 26 about the selection result.
 
---
-Sivaraam
+---
+
+base-commit: bc204b742735ae06f65bb20291c95985c9633b7f
+change-id: 20241206-245-partially-atomic-ref-updates-9fe8b080345c
+
+Thanks
+- Karthik
+
