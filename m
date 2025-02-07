@@ -1,103 +1,114 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99449238D52
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 15:25:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C612451CF
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 15:39:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738941947; cv=none; b=rYjx/XKGnUm64ss2a/g1Owb0q07PuMS6wwk/g2ZHRGLqgCBVx0oQ9rDY67W2glHrjrsJT+1LvCSh0aTv5c7Oq+C3sZZY3YLlMTz+66R8Mt12L9KYw5SIH3szru5ScCbACu7YkiiTynONT7DaoZk/PXnm6it7w7bopujaznMpWHE=
+	t=1738942777; cv=none; b=XJl5Ote1Myrhwf3mayyKoBoi0tNGbc4xwCyqye+EL8oOmRk+l+hek2bm9a9GMHRIuByjwvZ4aQr3Hz+KaXWTCm8sSa8l/RZVAfOH3e/km2VwPiCZIb3fpfxSVwmY8pbaU1T4S2ZS9Kscb9HzMjxmVn6LvmDrQCp5YswosK3+0r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738941947; c=relaxed/simple;
-	bh=iE0F8mhqUD/Pwxh82VLjX9wfJH2GMrLaNSiWpHiqGQU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RczcSxHTo3Nmk5QF07boOxPLFEMxP2+Uco5XvT8+j/jFjGR3SKyYoD9sjW4LWYygEI5w+s4Onp5WPf/1ePzBKFsMA6Uht1CzipeFMtCz16uGNrMNg3V458elZkJW7OrJ5R55UVJDb0Fb1JayfN/DB4bSv+MlwtySPykqAKF1E1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iay5TeYm; arc=none smtp.client-ip=209.85.167.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738942777; c=relaxed/simple;
+	bh=95wPyPNwkFpcqNWh9SLAfIBtSuaqUReuNHur5jdfyFQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G0qpLZl4WfhDVo65hL6+Ps5UUvPQrRW2xTANXMYS4C1RaP9WfIg24tSwSR2PQjH7n9kyINlHd0aTzcYenR33sHD7852JU8L1jDt4h4LUZA6dVd4i6aH10ed81R1yg4BVzSOpWegKj4YpTC1e6bmGWWo3kl19Fqvs3b6Ch05Kqyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JDSTQLHs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xrKNFvRR; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iay5TeYm"
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3eb7ecc3c54so1122069b6e.0
-        for <git@vger.kernel.org>; Fri, 07 Feb 2025 07:25:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738941944; x=1739546744; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fgwzu1uh7CjPCfFBrQLo8QcWfZFCdhAhszCF1WKxUoI=;
-        b=iay5TeYmSTnqPguzs+bkovDf1xC5OIecc1L+872ZeeNeEJga30JwMeNhDSsfUFaxNz
-         2Am22zyDdOxT6ld4AKcGzbnmtd7ye826ZCt3jtRw5HAPMr1UWvnUTe7lu8RwWdDYsLNI
-         fdeMG50xCeUZz+bYGdKSwG8RxyDhKeM6nGbFWntScJ9pm/dUWpapSYLWgxNubnMQcg+K
-         tj3I+CCtsIXUlb3Ob6KULee6Pj3hJ+HMvEMmr9jl/3TofteXx2ISAypfxmCDOunkuGTL
-         75wGooXAf2UKkqM/vlVF8NC2BIM9KAzj+vmd9BEeaMvA/aLLAoYGyCxIq+mR/s+6jsqB
-         0vHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738941944; x=1739546744;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fgwzu1uh7CjPCfFBrQLo8QcWfZFCdhAhszCF1WKxUoI=;
-        b=F+zwsj2TKA84s/unG1UlLYE1lSlrMP/25YcUYt0vM7rH+nlJuXk8aZY4rZ37pL2cPo
-         g5OFXD9rLDuKAcsuIJS/ObS2NKH/6rFAxkB8CJQ5TXkT3VAZFTdDxp+fPFx9msueV3Dn
-         SxidfI3QtXSwjgaoqxAJ+rVNTmF5qhOEoG81sCAKWTvPKjf4x1aoeZYr+8l9qZX1Rk0Y
-         VuNe2tDgJArGy/3EDJI4J6cDlbUUHcPH+xHMHjn5Zuaq8DWsNnKfSfQ9PwRUVspII0Mt
-         Izha8G8f8ZxUGrdw/K00rJienuFzc8uYJu5MbKHjRvt7+7KylwVjOoOjjvvPYobSLNht
-         D0ng==
-X-Gm-Message-State: AOJu0YxeRmb4NIeUs9IkjXpajmcOC+rYj2geLC5FBp8omOF5E9cAANew
-	BIuB7C2qIW2LR6Ogm7ez7RMWRt4tFLgReuQjkI07XKRag5+jU9+TdmGHzw==
-X-Gm-Gg: ASbGncsNpEyPaNi2Bpr9SNs6GNXxfVLAEeoLr3BRbPLL90O/nuPYkDx9IxYMlfDpGm9
-	orXs2279a3yH9ySmJFBnY5wEJLM4cQ5cTfrBLFWt4vYMu3BHbVb2KXg8Ghuxv6s6hka9sKQJ1EA
-	weY4pyxK4dnWxRObYUci3p5syLQnp/NJ0ey5AE3dOsgNDmWcnwdXDQ20973cHMj3oau2rqWbSXD
-	8vVz2mrZ6MBKje73Fhn21AG0I3hMEv2bn+oBCtCemZJtkV86ipi/jm9g0eRaooRlF6JVcX+2V9y
-	u+M9UEfl
-X-Google-Smtp-Source: AGHT+IHqNDDkom9oBkz77RCkaF8fOFPt7a77Ru7bQfzEq7l2TdRYggaShF3CuPSX7NXt9XvQEzD8qw==
-X-Received: by 2002:a05:6808:18a6:b0:3f1:b0db:3f99 with SMTP id 5614622812f47-3f391ff2433mr2131417b6e.0.1738941943081;
-        Fri, 07 Feb 2025 07:25:43 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3f389fd6712sm721808b6e.45.2025.02.07.07.25.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 07 Feb 2025 07:25:42 -0800 (PST)
-Date: Fri, 7 Feb 2025 09:22:42 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JDSTQLHs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xrKNFvRR"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id E007A1140193;
+	Fri,  7 Feb 2025 10:39:33 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Fri, 07 Feb 2025 10:39:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1738942773; x=1739029173; bh=4RWi/jS9eZ
+	qWoCxplQN8sf3ZLZVoEzCy0v6kV4oQ+88=; b=JDSTQLHs2kpxPOcx92QDDo1oSK
+	SITcCungJ+VRIpYAJiiq5t4luD8m5Sg8g9OmUtNbV61aD+yCAJJS3c508hKvai9q
+	r0v9vAODHkWpRIqCqvq2iCdSYs/61S/yQS2QGtETo09lUxAKxI1VJuPgs0uJbzkK
+	nFxrbTch8vxxG7k9LCBjvGdrXr7GKkJCK8+1WA2snTXEQBiOrcxKtcDLeTuUHtXR
+	wlZV/3ShoHkOg0QA7FwCsM7sPEdJf78XX1BZ6LwGhIZ2J4yeKTE/IBA9ogqC1FLN
+	1GL4faaC4Ox59bINmUdc4il680nRVfpLPj+uNshjNVWNUIghkSGqYTNMqbgQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738942773; x=1739029173; bh=4RWi/jS9eZqWoCxplQN8sf3ZLZVoEzCy0v6
+	kV4oQ+88=; b=xrKNFvRRtkeoGY95cznpVZoDhumIppnMRDl3ofbCSWPNg3IDfLN
+	IobpuvY63ZmToE3GWBuQ3Kel7Vb4sz2uj1Gl9S7dDQiapSGksIXVFq9s6XJJYydp
+	hSD8MEYU/Ml8+SHW6tbynw9xi0BaqiOjyqYw2AKMTxYsUPpEJUqahn7MewxNKh+i
+	suZXTaU0aPfszNYeWuuGTXI5LOidzOgt46vizgvhujCQhxUd+JBa4h6AehT+JhDl
+	wj82xERzJb4D8Q4dxOrtRcZsSXAWyfHBQhbl3VbjjrfZm023gqJhQhfHTzkTYDIf
+	7RCDh1PqaDXPltnNkufacU22BpuoThy5U1Q==
+X-ME-Sender: <xms:NCmmZ0ZeWy0fDvGBDCkpdsktjmeQAxpEP2CgcH0o87k-XUHjguY-8g>
+    <xme:NCmmZ_YjGEuZAVHTtovq7uPT1GofH9fOYSdVx9sfbifrP3oFnf4er1eK4sQ9NszWL
+    i63qQc9iLxtneCOXQ>
+X-ME-Received: <xmr:NCmmZ--rvhv0ro6D-x9J3Rp4DpX0tRMYWaNK54ushOulJvfFGKdAXwIbGiHaH5noCf2dLMmrfbHEdHNDYcCAYbjH3YKCh8VxNj1A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleeijecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjfiesrhgrvhgvnh
+    drihhnkhgrrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:NSmmZ-pa3yUimmflnr1zNrnFWeZtMq1Rk7zZWx0ueiaHxoLB2cCYCA>
+    <xmx:NSmmZ_q1w8NyF93hTjUwdE5Bhvq0GpLhCOMvCmK_tkc-_2Q09CoUYw>
+    <xmx:NSmmZ8SzMT9Fakas0AiYH7kszP5Jw7W-f9AADyJVow1lWlNslf52Dg>
+    <xmx:NSmmZ_oz-bKTbmROyS_E1XLW1PPv7-IMkbFtboGVwT3ks4KCogHYMw>
+    <xmx:NSmmZ-VNC6H_-WnsMXm-WtjbhhVuUrH33O8gVTtgDlL_yjqNU0Aytt1I>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Feb 2025 10:39:32 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Josef Wolf <jw@raven.inka.de>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 00/13] meson: cleanups, improvements, smallish fixes
-Message-ID: <bmwazsiuhhf2dk2hxyl76ubpsdtzk5thxohsjry7qwr2cnow53@cm4wqrrqjqu4>
-References: <20250129-b4-pks-meson-improvements-v1-0-ab709f0be12c@pks.im>
- <20250130-b4-pks-meson-improvements-v2-0-2f05581ffb44@pks.im>
+Subject: Re: renormalize histroy with smudge/clean-filter
+In-Reply-To: <20250207104510.GE30202@raven.inka.de> (Josef Wolf's message of
+	"Fri, 7 Feb 2025 11:45:10 +0100")
+References: <20250205214726.GA30202@raven.inka.de>
+	<Z6PsXGnxM3UBR3nM@tapette.crustytoothpaste.net>
+	<20250205235931.GB30202@raven.inka.de>
+	<Z6QCX1QZxxwC7RVQ@tapette.crustytoothpaste.net>
+	<CABPp-BFZ3oyKiryKMPph+nfokC=sFa7wn1wdas863273bzy7pA@mail.gmail.com>
+	<20250206134006.GC30202@raven.inka.de>
+	<20250206200418.GD30202@raven.inka.de>
+	<CAPx1Gvc2piLT=p+dvzcJPTMDQAAjQfz__O4KiRWs-fOMg8dpTw@mail.gmail.com>
+	<20250207104510.GE30202@raven.inka.de>
+Date: Fri, 07 Feb 2025 07:39:31 -0800
+Message-ID: <xmqqcyfthih8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250130-b4-pks-meson-improvements-v2-0-2f05581ffb44@pks.im>
+Content-Type: text/plain
 
-On 25/01/30 03:43PM, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this patch series contains a mostly-random set of smallish improvements,
-> simplifications and fixes to the Meson build instructions.
-> 
-> Changes in v2:
->   - Redo the two commits regarding PATH handling. We now only prepend
->     system-specific paths to PATH and handle the `-Dsane_tool_path`
->     option the same.
->   - Continue to propagate libcurl include directories into libgit, as we
->     need it for "help.c" to resolve LIBCURL_VERSION. Reorder the patch
->     to minimize the required changes.
->   - Fix a commit message typo.
->   - Include another commit that fixes the OpenSSL fallback on Windows.
->   - Include another commit to fix linker errors due to out-of-memory
->     situations on Windows with GitLab CI.
->   - Link to v1: https://lore.kernel.org/r/20250129-b4-pks-meson-improvements-v1-0-ab709f0be12c@pks.im
-> 
-> I have furthermore pulled in ps/build-meson-fixes at 7304bd2bc3 (ci:
-> wire up Visual Studio build with Meson, 2025-01-22) as a dependency of
-> this series. This is due to a semantic conflict with 28911f7dca (meson:
-> wire up fuzzers, 2025-01-22).
+Josef Wolf <jw@raven.inka.de> writes:
 
-Thanks Patrick! I've reviewed the changes in this version and tested
-building locally. This version looks good to me.
+> I completely fail to understand why git insists to operate on smudged files in
+> many situations.
+>
+> IIUC, once clean/smudge are installed, all internal operations should be done
+> on clean files. So why do I need this "git add --renormalize ." at all and (in
+> the case of cherry-pick) there is not even any way to renormalize before
+> picking.
+>
+> But maybe my understanding is too simplicistic here...
 
--Justin
+Nah, I suspect that the reason is much simpler.  
+
+Many tools in Git toolset (like cherry-pick) were written long
+before clean-smudge got popular, and they were written by those who
+did not need clean-smudge.  Those capable of updating them still
+have not felt the need for clean-smudge for themselves.  Motivate
+them and we may see responses ;-)
