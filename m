@@ -1,51 +1,59 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2F623C8C7
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 22:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA721B040E
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 22:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738968435; cv=none; b=ZG9QKy+ieiLbUpWhd8JtlahCrHl+LRcmUPqDtVgrYbt9RNiAnkHNz6lNuDHygfWriJTHI/1q8Ba6dRwwo2adLsFwzdnz9rBtgoL7BtQH8uIAODDMHfEuUGvr/247iQPrYTuAt0bASnlsIFUcygjYN6O7g1zJf7TGRakj7EQttBU=
+	t=1738968889; cv=none; b=ujRBxpjZDwfg1MSn6S2qLvP79mlXwUSvGJtgpaYWlQ+1hFdpZaCoEkO1We2uxrRh1oOX6hSW4uXTSqlcTSgGV3insXvWBq3H6bl0IY8XvyQ3TEPjxsNwlIrjhdPLsirssl0JS7a0eRi1uV9bWyIBZw5DmRNeIFPjnEG57lidnHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738968435; c=relaxed/simple;
-	bh=QzZ24IpxCUSpvGjvJWd+L31bC8eNfLV5Lz7pEcj+LDk=;
+	s=arc-20240116; t=1738968889; c=relaxed/simple;
+	bh=lpHNWFr8WM1ihLaGaBVO+UNKZo4Y+KoWOAdKQLwgs9w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SS0+jBE3r5rhSM66i2zZd/MxbUIE4oQKvR5Y6yo9PpYk+dXYNx+nS4hJ4/ONPWubG1lGEd+wOgzxRn033rFpmjnyodJODyC0XnEIskQvN46XkgifeKELQ8YCxZO6xLZbb/tDx7tiJHz6HFWLzeReqe9SA0G3JT6rooUNyODEyFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=urIGKnGx; arc=none smtp.client-ip=172.105.7.114
+	 Content-Type:Content-Disposition:In-Reply-To; b=nzqRWTTt0W0DC+PZMDDM3K62to10BTVwpzDtwcjQE+pwtnCKspYSEMhz1j9D4KJkQdcitFCPFO5FlnfUZYtdLMKDwx7Aq5dwlNmdXVu4gAH6CsM9+xd+xvxnotp4yJkS0JBAZ+zYPUZL/m7+sjQ3HXiceXZ7/tSXTUBJeNS+Kuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=H9hrU6O9; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="urIGKnGx"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="H9hrU6O9"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1738968425;
-	bh=QzZ24IpxCUSpvGjvJWd+L31bC8eNfLV5Lz7pEcj+LDk=;
+	s=default; t=1738968885;
+	bh=lpHNWFr8WM1ihLaGaBVO+UNKZo4Y+KoWOAdKQLwgs9w=;
 	h=Date:From:To:Cc:Subject:References:Content-Type:
 	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
 	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
 	 Content-Type:Content-Disposition;
-	b=urIGKnGxyjqpIztrx6mq3Jy6S0eO2Dx8bvv5o632s1W+ZyWO4EaN3+qrEDxhhM16I
-	 MCc0FQECYaf8QvbtwxkUAgcHqUn1UGi5Z+32EdQ+yXGjnLtp0Ppl3CojTkSan3lQK2
-	 lakTy6zV2x47uqZjoT0MsApzuM8zESQaI4MUZQKAOe2tYwp6tEUwWgwTNcCBQ+cxbs
-	 DuG0J24N17h60AxbVNkcoqgUFMymrZre8PFsqLGG6A/YVfyThtMIV0mBLzYOWbJH5x
-	 Ki1MkTgaeG65KrMiqFIaxRu7MX6BC9SEexoixnbKG/Q69fpggPllCGzfJ8nhkHfYgY
-	 8PFlykF5orVFMRbmK45sByJBiCNXxONYc88XPlVNwxmrT4AwEdI7etipprZTOP7A2k
-	 5z5kWsbuOYZBJsASwEWXYAtKm8P4csUPNaAXSqJKuth6SFLpOk+G0KryliwdINiUnB
-	 kpYo0moen1PZgcDJIwJhg5pUXRo8anKqMqUAROEyWMuQeh9X/3g
+	b=H9hrU6O9XU9W4Bs0X5/rfUhsOvMoNbxNNSPctOYc4TDCfJJlAC4IhQruJs/Jh0bgu
+	 Qsy34eXIGZaHMGULZMIRG1hW2541HWNQeSDyU3TovA9GCoGLfHjrHIgmZ32A7cERP4
+	 R/XQ5SA8tk4lcx8LPmzqqInV926easKb4+bWhjM/0rh3Wj1vLcyuj2rN6YiMvJQ/0g
+	 cn/rGGf0lZPK+Qv+YXVoGHTfUiNz8YNLdrqkqZeZB0MsovtNjfzVPrhui/iT34Caeu
+	 DtPVy/Lh2eLRs3v4xUK2SCFmMOyOrjFmLACB4U5tToVs0xclZYtzDDPeHgmAREdjIz
+	 cO3NAtfcH4xlKZ33iYhImWtxX16HtWUzs6qeN9kMMA5BxzqfA/Y25b9gHwnudINjQh
+	 NfjWHFZl/b6V4aivThSFGCdYieXoRQps8FdHIyecMWRrs6TVqTvwZEWLlKQVdEk5U4
+	 REVZazH0C7RieoYzqRAAljjgdk9o8FJ5BSvm2xOJw1Wike5LA5P
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0736220076;
-	Fri,  7 Feb 2025 22:47:05 +0000 (UTC)
-Date: Fri, 7 Feb 2025 22:47:03 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 802A220076;
+	Fri,  7 Feb 2025 22:54:45 +0000 (UTC)
+Date: Fri, 7 Feb 2025 22:54:44 +0000
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Devste Devste <devstemail@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Config timezone to prevent chaos when DST/changing timezone
-Message-ID: <Z6aNZ3qM1qsD5ZcG@tapette.crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+	M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 4/5] doc: use .adoc extension for AsciiDoc files
+Message-ID: <Z6aPNL0R99FL2_2k@tapette.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Devste Devste <devstemail@gmail.com>, git@vger.kernel.org
-References: <CANM0SV3DXQeNinmy1Spj7n6G=5s3jMcFrAb0Ayun6ago7F3qWw@mail.gmail.com>
+	Junio C Hamano <gitster@pobox.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org
+References: <20250120015603.1980991-1-sandals@crustytoothpaste.net>
+ <20250120015603.1980991-5-sandals@crustytoothpaste.net>
+ <CAGJzqsnFNfK6DEcbRQsUB4S8qVBnQ2PcJBgbvCPYLd-xAVVQBA@mail.gmail.com>
+ <xmqqo6zeixnk.fsf@gitster.g>
+ <CALnO6CAa+6xx885TdKFrpruxHbN80S3RE=STaswnaUz_3QZQ=Q@mail.gmail.com>
+ <xmqqtt95fx62.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,106 +61,53 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IPpge7aHGBstQfoJ"
+	protocol="application/pgp-signature"; boundary="xX46rEMqG5E8NhbP"
 Content-Disposition: inline
-In-Reply-To: <CANM0SV3DXQeNinmy1Spj7n6G=5s3jMcFrAb0Ayun6ago7F3qWw@mail.gmail.com>
+In-Reply-To: <xmqqtt95fx62.fsf@gitster.g>
 User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
---IPpge7aHGBstQfoJ
+--xX46rEMqG5E8NhbP
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-02-07 at 22:02:19, Devste Devste wrote:
-> Issue:
-> With DST or manual timezone changes (e.g. travelling) you can end up
-> with commits that are illogically sorted - newer commits have an
-> author/committer date that is older than older commits.
+On 2025-02-07 at 18:05:09, Junio C Hamano wrote:
+> I was wondering why we remove SubmittingPatches.txt with "make
+> clean" there the other day.  There is a Documentation/Makefile
+> target to create %.txt from % applied for SubmittingPatches.
 
-First of all, if the date and time displayed as local, it is very easy
-already, without traveling, to end up with one time of a later commit
-before the other (ignoring the time zone) simply because different
-people are in different time zones.  I'm sure I could give you a large
-number of examples in a variety of projects.
+Some time back I converted SubmittingPatches to AsciiDoc with a variety
+of anchors because it's easier to link to the portions of the document
+=66rom the website.  For example, many projects want to use our advice to
+use logically separate commits or to describe changes well, and it's
+much easier (and honours the license better) to just link to our
+documentation than to copy it elsewhere.
 
-Second, Git doesn't guarantee a strict ordering of author or committer
-date in timestamps.  It is very possible with a rebase to place commits
-with newer author timestamps before ones with older timestamps because
-they logically go in that order.  And we don't force users to contact an
-NTP server or other reliable time source, so some people just have bad
-timestamps altogether.
-
-> I found the discussion about user.hideTimezone
-> https://public-inbox.org/git/CAEOYnAQYMrNAe9s1V-0DVLdL-B_KpHMDP5e=3DyRnbC=
-kMWdrvFHQ@mail.gmail.com/T/#u
-> and
-> https://git.github.io/rev_news/2023/08/31/edition-102/
+> > for CodingGuidelines, though. (We also package
+> > ReviewingGuidelines.{html,txt}, but it has a .txt extension.)
 >=20
-> While there are workarounds, these aren't possible in all cases (e.g.
-> "export TZ=3DUTC0" won't work with many IDEs since they run git in a
-> separate shell and has side-effects on non-git commands. Using
-> pre/post-commit/rewrite/merge hooks won't guarantee it's correct e.g.
-> if bypassing them if there checks in there that should be skipped)
->=20
-> There should be an easy way to force a specific timezone - or in
-> absence of that at least force UTC - to prevent this
+> Thanks for noticing an annoying inconsistency that must be rectified
+> independent of brian's topic to help it easier for Editors to
+> identify the files that are written in AsciiDoc.  If we are shipping
+> documents that are exclusively meant for Git developers, we should
+> be shipping all of them together.
 
-The standard way to set the timezone is setting `TZ`.  You can set it in
-your `GIT_EDITOR` environment variable, which will be passed to the
-shell, like so:
-
-  export GIT_EDITOR=3D"TZ=3DUTC vi"
-
-(or the `core.editor` value, or any other approach).  This will invoke
-the editor with the appropriate value so it works correctly.
-
-Part of the problem with setting it in Git is that Git doesn't actually
-have a way to set the timezone other than the `TZ` environment variable
-because POSIX doesn't offer other approaches for doing so (or, for that
-matter, enumerating valid values or verifying a value).  In addition,
-Windows uses a different, completely incompatible set of time zone names
-=66rom everyone else on the planet, so such a setting would not work
-gracefully in a cross-platform way for arbitrary time zones.
-
-For these reasons, reading an arbitrary time zone from the configuration
-would require setting `TZ` internally and then calling `tzset`, but that
-function is not thread safe, which substantially restricts the places
-configuration parsing and handling can be done in our code.  It would
-also create a bunch of headaches if we tried to load submodules
-repository data in the same process (which is an eventual goal), leading
-to hard-to-reproduce problems.
-
-In my case, I always set `TZ=3DUTC` in my `.zshenv` and I specifically
-invoke my shell in `~/.Xsession` before starting the session manager.
-For instance:
-
-  zsh -c 'mate-session'
-
-This ensures that all programs are started with the `PATH`, `TZ`, and
-locale values I want for them, including graphical programs.  If you
-don't do that, then graphical programs you start outside of a terminal
-also don't honor `PATH` or locale settings (for instance, I always force
-`LC_TIME=3Den_DK.UTF_8`, which I want for graphical programs as well).
-
-As for hooks not working, if you have a policy requirement to use UTC,
-then check for that in your server `pre-receive` hook or CI system,
-where those can be used as an effective control, as the Git FAQ
-mentions.
+I agree.  My apologies for missing that.
 --=20
 brian m. carlson (they/them or he/him)
 Toronto, Ontario, CA
 
---IPpge7aHGBstQfoJ
+--xX46rEMqG5E8NhbP
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.46 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ6aNZwAKCRB8DEliiIei
-gXT+AP0aHWkKN2vFj6o/ZGsp7C+LTT37irY9Jr+Gsc3L6YHFaAEAuFuywMIe0E4d
-7y4pEfRKF2BeFJl4pmoFJjrO2OnwJAY=
-=gilE
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ6aPMwAKCRB8DEliiIei
+gefgAP0ZKMxoKq7q2oPjBz17hdrN7mho7Tbz0cd2sllLkqyuVwD+IwGAe1jdDFMu
+JJ9K+i++Z4Ym08lOvrv5ulP+0zmApA8=
+=/UQB
 -----END PGP SIGNATURE-----
 
---IPpge7aHGBstQfoJ--
+--xX46rEMqG5E8NhbP--
