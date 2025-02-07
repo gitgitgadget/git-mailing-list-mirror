@@ -1,65 +1,64 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE102343B3
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 07:37:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E45C91A76DA
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 07:37:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738913835; cv=none; b=h6F5TJH3qIrsyg20Ou+05nl6p/AYz1zK9bXDRH5WRBw54huniUtdxFXnWDrWbp9bgaeRmryWadiVoaPCrm6N2HPJa7zXKGFfRGrSTS3Ia0YJ3Dh8z6oKwnw5k7QrPq0eXydLstm4MYLgQSYOdSzcW6KuImMaeJQm6Sn/l0uD72k=
+	t=1738913837; cv=none; b=bErd420RMIDRYtR5NzD9212Ch7o15JYSSKEBBXWRWw4Upteb30SfsxqMcYXTocO4UbaYe34qN36wv1h+C3L+tF4g+mvTl6tHPkB5PaqOC4DR8tZQx1VT8nVsY6m0hCA3/coQ7leDCUyuyEoKREkKNOWSbB3e3tL97PdptC0ngRo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738913835; c=relaxed/simple;
-	bh=gmDuid9pZZ+vsVgXtewSbqqp3CYMorAr0xWDnqVtqHw=;
+	s=arc-20240116; t=1738913837; c=relaxed/simple;
+	bh=8KO6JLLgnSt4/pEIUCAwehohejZEpruazEGuJAKD4cg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=inQ6X1n0Oh6aDVUxblhrFJL70UDBPL5u0ijJI6zFT0P272QYdB1i8LEAQmIzBUJuM7CqC4iYW0TGag5E9qDYkbtKwVmtxBtCG8JV/kBga1eWYS3rL2lR86pwgC3J8y78UgJAM9Iv5NodtWkYk4yfgm2030nQZFgQ2PZpve1413Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TlsKu87M; arc=none smtp.client-ip=209.85.214.176
+	 In-Reply-To:To:Cc; b=XR9audvZl1R+FYq1k43yF67ZzrHrMSfAqtiy23SOeVJ2wI7D9vHcCewrK6v2Qxk4O2K+iZpQpo0Io1OXnvTDQXyqw8g0qNF0yGOhU84Lnm11jqmLGKUST6m6284K4lZURzq9XInKCWJBcrxQsyPKFWUVqlplkbaXnlCQIOHsOj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CqGNaNWW; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TlsKu87M"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2166360285dso32001475ad.1
-        for <git@vger.kernel.org>; Thu, 06 Feb 2025 23:37:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CqGNaNWW"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-21634338cfdso43131015ad.2
+        for <git@vger.kernel.org>; Thu, 06 Feb 2025 23:37:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738913832; x=1739518632; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1738913835; x=1739518635; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Z9ptp5AUmnHfbqn1TSEj+23gY/vjbG1oL+MNziJusaY=;
-        b=TlsKu87Md4Mm2Ef9peaWNncn282iuNBEvdV8S13PVmSsqH2RUi+MDHcdTFRFMWl7E/
-         YBztzERp9exHQx1ClOYwogI7DSmontvKfUdpZyFbl2vdqLku9sjlDi4prSAEJsE1SiI4
-         C2B2KtI/8MIyaOVT/S8nCZC8to9vmsofk7cdMkNqRl7rvXIE0tMe0B70xYt/mNOPl9IE
-         Hn+volLPZ8RncJV38qCd6Gvhp2uOVmllMak0oN9IPlqtbbxwgI2x3eICBZ6sOI/mKYPd
-         OYQ5neC4BEiwsq0NRi2IjdDF0NqenhY5/YK3OUN8XVNIv6bZIyUsi5/7I/SBILBvzaQi
-         tqrQ==
+        bh=QYM49T1CDiI0W8ah27wSJFisbd8NjikRgzTr+rQqP3k=;
+        b=CqGNaNWW6ZL71v11+saoZCbDvnmQHbk0myQSWdtc/jLxodpOXADPe8qv7BuRy3Ng+V
+         Onu33HmTVuxKlqF1rZyAWlFhB7oZ1I6Ia+rCojiBMaTd9ApUPDO3SSBVTlstowfn3aYT
+         PbrSni84xm21KOmdA0hvvIUo5fBt7L+9mgEoOcWAxJ/YPFCHHxXGNK1GSCym9Ao+Y0+e
+         iQ/D6U1PhB/xsCe/itzj8Pmxj+NPZ7gB2Gxy3RfOAMsjCX3o9Vi0nZTiQEvJycxZ5WM5
+         BPZu8ckAkZLCaNFGn7yMRxjnk08Fos/SHkLxYjTzjFgNA+maKuX+Ll9H3nIo+WS3inyC
+         Irog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738913832; x=1739518632;
+        d=1e100.net; s=20230601; t=1738913835; x=1739518635;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Z9ptp5AUmnHfbqn1TSEj+23gY/vjbG1oL+MNziJusaY=;
-        b=NA5yb6DCVA13bfwL/sJgoUYV6z02YPPPsjwWZLqtQdKryOcTACCqE/EYp6IHbieMc3
-         xTiA3z2FpNJEETCiX2KHPijcZLZ/lBPzzjxVYJTizPNaBVe5Ns1CxcIz5lCqK56zooZw
-         KRA5LH7kwL7XEFB0S424SN1EJKqWcSo+uaaAgZ9Rlw/3S/PG42mdq2l5pBCPRc7mIoIr
-         6zvWdG8xq066UyfzZHx7TPWkPqmAm2hKcN+GoxjJDqdF/iJezBsT2UP0l7UKNeqXoU/D
-         Pbrtgki+OK5JJhj5lzzMWF00ttTZJJxqB4rZCni19JsPVBRbB2Quctjza/dqybtCUEV4
-         YxUw==
-X-Gm-Message-State: AOJu0Yz+BskRhE8afojsqmGsiZsQiqsQpTcsEZASitLbt57ciIZvsZpS
-	hi190RBdXb5aHJoV77cmXvmYrNA0uT3lfInZE4EaPCZ9uVfLkGc5OuokYLZw
-X-Gm-Gg: ASbGncuhs9vKowmLyMALQpHZPhivbMIwREPPYCjVQis74CvSvC4KpB12mn+8qHzXFVd
-	KHvkez5mJ3Pxo+R9WjgGErikDA5jMwgHB1GdkBY1d41PnUTlM+XzfexPGcMLRBIV1nmGsrhFhoz
-	efk9n9cdkADv4o9iUU5+nl/TOVFEBoIXg2Etx1FUhdf5KZL6PEH2JTyhXutg7wf3zJab9X0WWGq
-	m1dcWp1OIzaLONj2d6lWLfs2y/DJM52WzTq2AfOPdTGFfXrTABjccpuMHuv+66mSLeK1R57SjLQ
-	3qiqz8m8aBlzdAGbcFoo7g==
-X-Google-Smtp-Source: AGHT+IGasue6tbgXGvrIufjPt7lVV8OUrfN+pwdaMAWtgDlGIHPie3J6LqGgmM5fz9Jmg0wEq0SGjA==
-X-Received: by 2002:a05:6a21:170f:b0:1ea:eca7:10ee with SMTP id adf61e73a8af0-1ee03a21d5cmr4542732637.6.1738913831799;
-        Thu, 06 Feb 2025 23:37:11 -0800 (PST)
+        bh=QYM49T1CDiI0W8ah27wSJFisbd8NjikRgzTr+rQqP3k=;
+        b=r//U/V5WOks3Pqu1s3kPBzzRK4enRjuLp9Di6eroYNr755tUYqR4iWAum4xCQ1g43A
+         SSV+XtAl4SHsou4x3d7m2vsLQHBzdja1DcgKZfYUtPmoaXm1/zYkX/5Ei9wB7qh2ZqQE
+         do4Kk+9VxVwZPydnCD3XVMHSwyEnGASq1ysH91ld10sFgpMAYeBCJGmaaPgsRJZin9Es
+         MqVDj519PLcvHyghyAQpruYkWv0Z/RVnQIsc+XcuIYW8VJ5Nw4Plbd4C6aZ8aDnhmTpJ
+         PrirHLhjyubG6Yd97nK0ZXolQugt4+w/CqDLLtF0HT/42+75CDrqmqMkTpvlvlTmU+SC
+         zG2A==
+X-Gm-Message-State: AOJu0YyRy3BkhOuBBI6JzcPia5et7U4a0/qIDGolNjcD+CsMfa1egjJx
+	WIDaT04iBRc3aMKoq+EN0Tx5U5+/30JO50w9+SwnwIm7jPpq5FlkGxjVoulZ
+X-Gm-Gg: ASbGncuWit/d/AjRsUe79x4kaPaV47J8UmjOduNab6XaAC31aCjVSvm/MVwT/JJQKMd
+	3zbu+RcQ3upqtyFN3o3cwfcLiFSiLqtYo/TCG5KQD/y74mnwP6HsWyIWD4YpxYhSIly4t+fyJSv
+	z5EtjHZ9cgWiQEJ0A9t9dna8W1TsCS0/u3nzXUH9s1rxM1hDHayiAWv8052trGyYP4jROrbwvOI
+	dB5yJ3uu+WJNvlhRQFKc74WfaAXXgsjSxQzYnMkSz+4bAAXFcguyQwl84AV7gSNhWLLVDpot7pd
+	KSrngmO91AuAy2jVP9Bebw==
+X-Google-Smtp-Source: AGHT+IEuK7XpAF7G0BzB9zau/IVhn18iFUPQmu1QsGqct1unSf4/jeW3zxHSWtnTD2GouvE7HgdPJA==
+X-Received: by 2002:a05:6a00:807:b0:725:f282:1f04 with SMTP id d2e1a72fcca58-7305d4eff53mr4226404b3a.18.1738913834718;
+        Thu, 06 Feb 2025 23:37:14 -0800 (PST)
 Received: from [127.0.0.2] ([2401:4900:33b7:4cb0:4dd3:85f0:5c4b:b677])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ad51aee79casm2115063a12.44.2025.02.06.23.37.09
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ad51aee79casm2115063a12.44.2025.02.06.23.37.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 06 Feb 2025 23:37:11 -0800 (PST)
+        Thu, 06 Feb 2025 23:37:14 -0800 (PST)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 07 Feb 2025 08:34:39 +0100
-Subject: [PATCH 4/6] refs/reftable: extract code from the transaction
- preparation
+Date: Fri, 07 Feb 2025 08:34:40 +0100
+Subject: [PATCH 5/6] refs: implement partial reference transaction support
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,536 +67,325 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250207-245-partially-atomic-ref-updates-v1-4-e6a3690ff23a@gmail.com>
+Message-Id: <20250207-245-partially-atomic-ref-updates-v1-5-e6a3690ff23a@gmail.com>
 References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
 In-Reply-To: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im, jltobler@gmail.com, Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=17774;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10840;
  i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=gmDuid9pZZ+vsVgXtewSbqqp3CYMorAr0xWDnqVtqHw=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeluBtm6fk8Ey9Y7k94ZIglAEXruQIb1zzTj
- ykhppIxxHqYYIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnpbgbAAoJED7VnySO
- Rox/BKQL/0HB4HHGdLCFkl0AYTtJgQy2gAxRvInb/9EtpkLg8jHVI6RjKcq0kFJqz7HP47BCVOO
- RR8/wJOnrSQbp4YaJrlDGRuQfJFB8S+MRaZG4oWbz79BSzlLDVOQoOTbGOHIydc9sXWayUehwe9
- 7UINH4exfLIwrqMqvBJySb3qhWnBePr14gbo1vQBYyGAup92X3iUf6cv47dWDfIq43W9I7bKQJX
- rgRqxHhMCruOaKt7h6oC9OilJhSgdy3EVBGvht13JyElSeCw/0a/iT1q9esapXQwJ4K+wFDB3yh
- EfguD/syoeZkL/3w03PSPoTDp2ARE1ZeqIuOomdAniUkiNUR5GxA3bIgZfjxJwtwbpadNFlzaxx
- Jig6cXv2ILm3mK1Qx9/uBjGYlzd8a6iue1/KO262VjTe3coZMMEqLWpGFMGuJxhgjnjTD9Q16y9
- Mq/yKU/26iWoMM2dhHNCZ2qg/KWIwpbh6+VPFDid7JhowLbInZGSsXArUeL9EbySUZ/IBhOjXa5
- mQ=
+ bh=8KO6JLLgnSt4/pEIUCAwehohejZEpruazEGuJAKD4cg=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGeluBu7beVH660nOoWKktK4/05yoldUMiBuN
+ EWYliKdJaWg+okBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJnpbgbAAoJED7VnySO
+ Rox/iQML/2MGog05l1TnSMHm5X5KYAWuP8Bvp7o3xbHbfvNtjcCz1SuwSdJ68DMvEJjVE/x1Uyr
+ /8+cW8qaJPrO6mtivFEeAt+AzTmjWew2IRBlBzY88V8oPk9n37xAmOVrASVZ74CApp8M7t1qUgD
+ WH/5oTd1EVQ90X01jaAfoQ+e8lXkGDBiEQ0YCfqfuPjlisnIpmxnZtYtpYZzcRAm7qiA2Mts1qy
+ R3zPEjBQ1Xjs7KJXd3q/s6NGfEwhwGfX1RvYxFwsF525s+asXRifAdRYGU5mtSqDfcxaahwVRYU
+ JYm2hhQqftKHlYB3H5lPASxmFTeIoMXzTr+8QmE3MXlEUujABESZVpiVC58ExK5HnNLLzSpBUJC
+ 8mcSiRPzYV5p6geDa+e3g0633IF99XRoaq0SK+5q2xtPjmbcSl0qzYdynQXTyDkhIURo9/jGfc9
+ fkldFy2JBxYEHd/MbNGH4OP0WrCDeVx9yALjyZWOBsXJuTFhyjsJs3WybCJJgFGgpcD6AZ5X8l5
+ wQ=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-Extract the core logic for preparing individual reference updates from
-`reftable_be_transaction_prepare()` into `prepare_single_update()`. This
-dedicated function now handles all validation and preparation steps for
-each reference update in the transaction, including object ID
-verification, HEAD reference handling, and symref processing.
+Git's reference transactions are all-or-nothing: either all updates
+succeed, or none do. While this atomic behavior is generally desirable,
+it can be suboptimal when using the reftable backend, where batching
+multiple reference updates into a single transaction is more efficient
+than performing them sequentially.
 
-The refactoring consolidates all reference update validation into a
-single logical block, which improves code maintainability and
-readability. More importantly, this restructuring lays the groundwork
-for implementing partial transaction support in the reftable backend,
-which will be introduced in the following commit.
+Introduce partial transaction support through a new flag
+`REF_TRANSACTION_ALLOW_PARTIAL`. When this flag is set, individual
+reference updates that would normally fail the entire transaction are
+instead marked as rejected while allowing other updates to proceed. This
+provides more flexibility while maintaining transactional integrity
+where needed.
 
-No functional changes are included in this commit - it is purely a code
-reorganization to support future enhancements.
+The implementation introduces several key components:
+
+  - Add 'rejected' and 'rejection_err' fields to struct `ref_update` to
+    track failed updates and their failure reasons.
+
+  - Modify reference backends (files, packed, reftable) to handle
+    partial transactions by using `ref_transaction_add_rejection()`
+    instead of failing the entire transaction when
+    `REF_TRANSACTION_ALLOW_PARTIAL` is set.
+
+  - Add `ref_transaction_for_each_rejected_update()` to let callers
+    examine which updates were rejected and why.
+
+This foundational change enables partial transaction support throughout
+the reference subsystem. The next commit will expose this capability to
+users by adding a `--allow-partial` flag to 'git-update-ref(1)',
+providing both a user-facing feature and a testable implementation.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs/reftable-backend.c | 471 ++++++++++++++++++++++++------------------------
- 1 file changed, 240 insertions(+), 231 deletions(-)
+ refs.c                  | 32 ++++++++++++++++++++++++++++++++
+ refs.h                  | 22 ++++++++++++++++++++++
+ refs/files-backend.c    | 12 +++++++++++-
+ refs/packed-backend.c   | 26 ++++++++++++++++++++++++--
+ refs/refs-internal.h    | 15 +++++++++++++++
+ refs/reftable-backend.c | 12 +++++++++++-
+ 6 files changed, 115 insertions(+), 4 deletions(-)
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index dd2099d94948a4f23fd9f7ddc06bf3d741229eba..5533acfaf9027765d5a270abfce96225e42cc823 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -1061,6 +1061,242 @@ static int queue_transaction_update(struct reftable_ref_store *refs,
- 	return 0;
+diff --git a/refs.c b/refs.c
+index b420a120102b3793168598b885bba68e4f5f5f03..75dbd84acbc41658d4b8b6b5e7763c04e78d0061 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1204,6 +1204,7 @@ void ref_transaction_free(struct ref_transaction *transaction)
+ 		free(transaction->updates[i]->committer_info);
+ 		free((char *)transaction->updates[i]->new_target);
+ 		free((char *)transaction->updates[i]->old_target);
++		strbuf_release(&transaction->updates[i]->rejection_err);
+ 		free(transaction->updates[i]);
+ 	}
+ 	string_list_clear(&transaction->refnames, 0);
+@@ -1211,6 +1212,14 @@ void ref_transaction_free(struct ref_transaction *transaction)
+ 	free(transaction);
  }
  
-+static int prepare_single_update(struct ref_store *ref_store,
-+				 struct reftable_ref_store *refs,
-+				 struct reftable_transaction_data *tx_data,
-+				 struct ref_transaction *transaction,
-+				 struct reftable_backend *be,
-+				 struct ref_update *u,
-+				 unsigned int head_type,
-+				 struct strbuf *head_referent,
-+				 struct strbuf *referent,
-+				 struct strbuf *err)
++void ref_transaction_add_rejection(struct ref_transaction *transaction,
++				   size_t update_idx, struct strbuf *err)
 +{
-+	struct object_id current_oid = {0};
-+	const char *rewritten_ref;
-+	int ret = 0;
-+
-+	/*
-+	 * There is no need to reload the respective backends here as
-+	 * we have already reloaded them when preparing the transaction
-+	 * update. And given that the stacks have been locked there
-+	 * shouldn't have been any concurrent modifications of the
-+	 * stack.
-+	 */
-+	ret = backend_for(&be, refs, u->refname, &rewritten_ref, 0);
-+	if (ret)
-+		return ret;
-+
-+	/* Verify that the new object ID is valid. */
-+	if ((u->flags & REF_HAVE_NEW) && !is_null_oid(&u->new_oid) &&
-+	    !(u->flags & REF_SKIP_OID_VERIFICATION) &&
-+	    !(u->flags & REF_LOG_ONLY)) {
-+		struct object *o = parse_object(refs->base.repo, &u->new_oid);
-+		if (!o) {
-+			strbuf_addf(err,
-+				    _("trying to write ref '%s' with nonexistent object %s"),
-+				    u->refname, oid_to_hex(&u->new_oid));
-+			return -1;
-+		}
-+
-+		if (o->type != OBJ_COMMIT && is_branch(u->refname)) {
-+			strbuf_addf(err, _("trying to write non-commit object %s to branch '%s'"),
-+				    oid_to_hex(&u->new_oid), u->refname);
-+			return -1;
-+		}
-+	}
-+
-+	/*
-+	 * When we update the reference that HEAD points to we enqueue
-+	 * a second log-only update for HEAD so that its reflog is
-+	 * updated accordingly.
-+	 */
-+	if (head_type == REF_ISSYMREF &&
-+	    !(u->flags & REF_LOG_ONLY) &&
-+	    !(u->flags & REF_UPDATE_VIA_HEAD) &&
-+	    !strcmp(rewritten_ref, head_referent->buf)) {
-+		/*
-+		 * First make sure that HEAD is not already in the
-+		 * transaction. This check is O(lg N) in the transaction
-+		 * size, but it happens at most once per transaction.
-+		 */
-+		if (string_list_has_string(&transaction->refnames, "HEAD")) {
-+			/* An entry already existed */
-+			strbuf_addf(err,
-+				    _("multiple updates for 'HEAD' (including one "
-+				      "via its referent '%s') are not allowed"),
-+				    u->refname);
-+			return TRANSACTION_NAME_CONFLICT;
-+		}
-+
-+		ref_transaction_add_update(
-+			transaction, "HEAD",
-+			u->flags | REF_LOG_ONLY | REF_NO_DEREF,
-+			&u->new_oid, &u->old_oid, NULL, NULL, NULL,
-+			u->msg);
-+	}
-+
-+	ret = reftable_backend_read_ref(be, rewritten_ref,
-+					&current_oid, referent, &u->type);
-+	if (ret < 0)
-+		return ret;
-+	if (ret > 0 && !ref_update_expects_existing_old_ref(u)) {
-+		/*
-+		 * The reference does not exist, and we either have no
-+		 * old object ID or expect the reference to not exist.
-+		 * We can thus skip below safety checks as well as the
-+		 * symref splitting. But we do want to verify that
-+		 * there is no conflicting reference here so that we
-+		 * can output a proper error message instead of failing
-+		 * at a later point.
-+		 */
-+		ret = refs_verify_refname_available(ref_store, u->refname,
-+						    &transaction->refnames, NULL,
-+						    transaction->flags & REF_TRANSACTION_FLAG_INITIAL,
-+						    err);
-+		if (ret < 0)
-+			return ret;
-+
-+		/*
-+		 * There is no need to write the reference deletion
-+		 * when the reference in question doesn't exist.
-+		 */
-+		if ((u->flags & REF_HAVE_NEW) && !ref_update_has_null_new_value(u)) {
-+			ret = queue_transaction_update(refs, tx_data, u,
-+						       &current_oid, err);
-+			if (ret)
-+				return ret;
-+		}
-+
-+		return 0;
-+	}
-+	if (ret > 0) {
-+		/* The reference does not exist, but we expected it to. */
-+		strbuf_addf(err, _("cannot lock ref '%s': "
-+				   "unable to resolve reference '%s'"),
-+			    ref_update_original_update_refname(u), u->refname);
-+		return -1;
-+	}
-+
-+	if (u->type & REF_ISSYMREF) {
-+		/*
-+		 * The reftable stack is locked at this point already,
-+		 * so it is safe to call `refs_resolve_ref_unsafe()`
-+		 * here without causing races.
-+		 */
-+		const char *resolved = refs_resolve_ref_unsafe(&refs->base, u->refname, 0,
-+							       &current_oid, NULL);
-+
-+		if (u->flags & REF_NO_DEREF) {
-+			if (u->flags & REF_HAVE_OLD && !resolved) {
-+				strbuf_addf(err, _("cannot lock ref '%s': "
-+						   "error reading reference"), u->refname);
-+				return -1;
-+			}
-+		} else {
-+			struct ref_update *new_update;
-+			int new_flags;
-+
-+			new_flags = u->flags;
-+			if (!strcmp(rewritten_ref, "HEAD"))
-+				new_flags |= REF_UPDATE_VIA_HEAD;
-+
-+			if (string_list_has_string(&transaction->refnames, referent->buf)) {
-+				strbuf_addf(err,
-+					    _("multiple updates for '%s' (including one "
-+					      "via symref '%s') are not allowed"),
-+					    referent->buf, u->refname);
-+				return TRANSACTION_NAME_CONFLICT;
-+			}
-+
-+			/*
-+			 * If we are updating a symref (eg. HEAD), we should also
-+			 * update the branch that the symref points to.
-+			 *
-+			 * This is generic functionality, and would be better
-+			 * done in refs.c, but the current implementation is
-+			 * intertwined with the locking in files-backend.c.
-+			 */
-+			new_update = ref_transaction_add_update(
-+				transaction, referent->buf, new_flags,
-+				u->new_target ? NULL : &u->new_oid,
-+				u->old_target ? NULL : &u->old_oid,
-+				u->new_target, u->old_target,
-+				u->committer_info, u->msg);
-+
-+			new_update->parent_update = u;
-+
-+			/*
-+			 * Change the symbolic ref update to log only. Also, it
-+			 * doesn't need to check its old OID value, as that will be
-+			 * done when new_update is processed.
-+			 */
-+			u->flags |= REF_LOG_ONLY | REF_NO_DEREF;
-+			u->flags &= ~REF_HAVE_OLD;
-+		}
-+	}
-+
-+	/*
-+	 * Verify that the old object matches our expectations. Note
-+	 * that the error messages here do not make a lot of sense in
-+	 * the context of the reftable backend as we never lock
-+	 * individual refs. But the error messages match what the files
-+	 * backend returns, which keeps our tests happy.
-+	 */
-+	if (u->old_target) {
-+		if (!(u->type & REF_ISSYMREF)) {
-+			strbuf_addf(err, _("cannot lock ref '%s': "
-+					   "expected symref with target '%s': "
-+					   "but is a regular ref"),
-+				    ref_update_original_update_refname(u),
-+				    u->old_target);
-+			return -1;
-+		}
-+
-+		if (ref_update_check_old_target(referent->buf, u, err)) {
-+			return -1;
-+		}
-+	} else if ((u->flags & REF_HAVE_OLD) && !oideq(&current_oid, &u->old_oid)) {
-+		if (is_null_oid(&u->old_oid)) {
-+			strbuf_addf(err, _("cannot lock ref '%s': "
-+					   "reference already exists"),
-+				    ref_update_original_update_refname(u));
-+			return TRANSACTION_CREATE_EXISTS;
-+		}
-+		else if (is_null_oid(&current_oid))
-+			strbuf_addf(err, _("cannot lock ref '%s': "
-+					   "reference is missing but expected %s"),
-+				    ref_update_original_update_refname(u),
-+				    oid_to_hex(&u->old_oid));
-+		else
-+			strbuf_addf(err, _("cannot lock ref '%s': "
-+					   "is at %s but expected %s"),
-+				    ref_update_original_update_refname(u),
-+				    oid_to_hex(&current_oid),
-+				    oid_to_hex(&u->old_oid));
-+		return TRANSACTION_NAME_CONFLICT;
-+	}
-+
-+	/*
-+	 * If all of the following conditions are true:
-+	 *
-+	 *   - We're not about to write a symref.
-+	 *   - We're not about to write a log-only entry.
-+	 *   - Old and new object ID are different.
-+	 *
-+	 * Then we're essentially doing a no-op update that can be
-+	 * skipped. This is not only for the sake of efficiency, but
-+	 * also skips writing unneeded reflog entries.
-+	 */
-+	if ((u->type & REF_ISSYMREF) ||
-+	    (u->flags & REF_LOG_ONLY) ||
-+	    (u->flags & REF_HAVE_NEW && !oideq(&current_oid, &u->new_oid)))
-+		return queue_transaction_update(refs, tx_data, u,
-+					       &current_oid, err);
-+
-+	return 0;
++	struct ref_update *update = transaction->updates[update_idx];
++	update->rejected = 1;
++	strbuf_addbuf(&update->rejection_err, err);
 +}
 +
- static int reftable_be_transaction_prepare(struct ref_store *ref_store,
- 					   struct ref_transaction *transaction,
- 					   struct strbuf *err)
-@@ -1124,239 +1360,12 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
- 	ret = 0;
+ struct ref_update *ref_transaction_add_update(
+ 		struct ref_transaction *transaction,
+ 		const char *refname, unsigned int flags,
+@@ -1237,6 +1246,8 @@ struct ref_update *ref_transaction_add_update(
  
- 	for (i = 0; i < transaction->nr; i++) {
--		struct ref_update *u = transaction->updates[i];
--		struct object_id current_oid = {0};
--		const char *rewritten_ref;
--
--		/*
--		 * There is no need to reload the respective backends here as
--		 * we have already reloaded them when preparing the transaction
--		 * update. And given that the stacks have been locked there
--		 * shouldn't have been any concurrent modifications of the
--		 * stack.
--		 */
--		ret = backend_for(&be, refs, u->refname, &rewritten_ref, 0);
-+		ret = prepare_single_update(ref_store, refs, tx_data,
-+					    transaction, be,
-+					    transaction->updates[i], head_type,
-+					    &head_referent, &referent, err);
- 		if (ret)
+ 	update->flags = flags;
+ 
++	strbuf_init(&update->rejection_err, 0);
++
+ 	update->new_target = xstrdup_or_null(new_target);
+ 	update->old_target = xstrdup_or_null(old_target);
+ 	if ((flags & REF_HAVE_NEW) && new_oid)
+@@ -2676,6 +2687,27 @@ void ref_transaction_for_each_queued_update(struct ref_transaction *transaction,
+ 	}
+ }
+ 
++void ref_transaction_for_each_rejected_update(struct ref_transaction *transaction,
++					      ref_transaction_for_each_rejected_update_fn cb,
++					      void *cb_data)
++{
++	if (!(transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL))
++		return;
++
++	for (size_t i = 0; i < transaction->nr; i++) {
++		struct ref_update *update = transaction->updates[i];
++
++		if (!update->rejected)
++			continue;
++
++		cb(update->refname,
++		   (update->flags & REF_HAVE_OLD) ? &update->old_oid : NULL,
++		   (update->flags & REF_HAVE_NEW) ? &update->new_oid : NULL,
++		   update->old_target, update->new_target,
++		   &update->rejection_err, cb_data);
++	}
++}
++
+ int refs_delete_refs(struct ref_store *refs, const char *logmsg,
+ 		     struct string_list *refnames, unsigned int flags)
+ {
+diff --git a/refs.h b/refs.h
+index a0cdd99250e8286b55808b697b0a94afac5d8319..a0f15fdea024527fcfdb478f78cbf6fd6568a25b 100644
+--- a/refs.h
++++ b/refs.h
+@@ -638,6 +638,13 @@ enum ref_transaction_flag {
+ 	 * either be absent or null_oid.
+ 	 */
+ 	REF_TRANSACTION_FLAG_INITIAL = (1 << 0),
++
++	/*
++	 * The transaction mechanism by default fails all updates if any conflict
++	 * is detected. This flag allows transactions to partially apply updates
++	 * while rejecting updates which do not match the expected state.
++	 */
++	REF_TRANSACTION_ALLOW_PARTIAL = (1 << 1),
+ };
+ 
+ /*
+@@ -889,6 +896,21 @@ void ref_transaction_for_each_queued_update(struct ref_transaction *transaction,
+ 					    ref_transaction_for_each_queued_update_fn cb,
+ 					    void *cb_data);
+ 
++/*
++ * Execute the given callback function for each of the reference updates which
++ * have been rejected in the given transaction.
++ */
++typedef void ref_transaction_for_each_rejected_update_fn(const char *refname,
++							 const struct object_id *old_oid,
++							 const struct object_id *new_oid,
++							 const char *old_target,
++							 const char *new_target,
++							 const struct strbuf *reason,
++							 void *cb_data);
++void ref_transaction_for_each_rejected_update(struct ref_transaction *transaction,
++					      ref_transaction_for_each_rejected_update_fn cb,
++					      void *cb_data);
++
+ /*
+  * Free `*transaction` and all associated data.
+  */
+diff --git a/refs/files-backend.c b/refs/files-backend.c
+index 9fc5454678340dd7c72539bfa0f15ee7eb24b1ff..99ec29164fbd30635125cc2325aab3d300cf906c 100644
+--- a/refs/files-backend.c
++++ b/refs/files-backend.c
+@@ -2852,8 +2852,18 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+ 
+ 		ret = lock_ref_for_update(refs, update, transaction,
+ 					  head_ref, err);
+-		if (ret)
++		if (ret) {
++			if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL) {
++				ref_transaction_add_rejection(transaction, i, err);
++
++				strbuf_setlen(err, 0);
++				ret = 0;
++
++				continue;
++			}
+ 			goto cleanup;
++		}
++
+ 
+ 		if (update->flags & REF_DELETING &&
+ 		    !(update->flags & REF_LOG_ONLY) &&
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 6e7acb077e81435715a1ca3cc928550147c8c56a..cb9b6f0a620eaa59941f6fbc653600304f2bae8c 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -1313,9 +1313,10 @@ static int packed_ref_store_remove_on_disk(struct ref_store *ref_store,
+  * remain locked when it is done.
+  */
+ static int write_with_updates(struct packed_ref_store *refs,
+-			      struct string_list *updates,
++			      struct ref_transaction *transaction,
+ 			      struct strbuf *err)
+ {
++	struct string_list *updates = &transaction->refnames;
+ 	struct ref_iterator *iter = NULL;
+ 	size_t i;
+ 	int ok;
+@@ -1393,6 +1394,13 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 					strbuf_addf(err, "cannot update ref '%s': "
+ 						    "reference already exists",
+ 						    update->refname);
++
++					if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL) {
++						ref_transaction_add_rejection(transaction, i, err);
++						strbuf_setlen(err, 0);
++						continue;
++					}
++
+ 					goto error;
+ 				} else if (!oideq(&update->old_oid, iter->oid)) {
+ 					strbuf_addf(err, "cannot update ref '%s': "
+@@ -1400,6 +1408,13 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 						    update->refname,
+ 						    oid_to_hex(iter->oid),
+ 						    oid_to_hex(&update->old_oid));
++
++					if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL) {
++						ref_transaction_add_rejection(transaction, i, err);
++						strbuf_setlen(err, 0);
++						continue;
++					}
++
+ 					goto error;
+ 				}
+ 			}
+@@ -1434,6 +1449,13 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 					    "reference is missing but expected %s",
+ 					    update->refname,
+ 					    oid_to_hex(&update->old_oid));
++
++				if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL) {
++					ref_transaction_add_rejection(transaction, i, err);
++					strbuf_setlen(err, 0);
++					continue;
++				}
++
+ 				goto error;
+ 			}
+ 		}
+@@ -1657,7 +1679,7 @@ static int packed_transaction_prepare(struct ref_store *ref_store,
+ 		data->own_lock = 1;
+ 	}
+ 
+-	if (write_with_updates(refs, &transaction->refnames, err))
++	if (write_with_updates(refs, transaction, err))
+ 		goto failure;
+ 
+ 	transaction->state = REF_TRANSACTION_PREPARED;
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 434362b6099a35f92906a04ddd65365140147572..6b8f5b2bd83baa22480083e1002daba9300f1b70 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -3,6 +3,7 @@
+ 
+ #include "refs.h"
+ #include "iterator.h"
++#include "strbuf.h"
+ #include "string-list.h"
+ 
+ struct fsck_options;
+@@ -123,6 +124,13 @@ struct ref_update {
+ 	 */
+ 	unsigned int index;
+ 
++	/*
++	 * Used in partial transactions to mark a given update as rejected,
++	 * with rejection reason.
++	 */
++	unsigned int rejected;
++	struct strbuf rejection_err;
++
+ 	/*
+ 	 * If this ref_update was split off of a symref update via
+ 	 * split_symref_update(), then this member points at that
+@@ -142,6 +150,13 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
+ 		      struct object_id *oid, struct strbuf *referent,
+ 		      unsigned int *type, int *failure_errno);
+ 
++/*
++ * Mark a given update as rejected with a given reason. To be used in conjuction
++ * with the `REF_TRANSACTION_ALLOW_PARTIAL` flag to allow partial transactions.
++ */
++void ref_transaction_add_rejection(struct ref_transaction *transaction,
++				   size_t update_idx, struct strbuf *err);
++
+ /*
+  * Add a ref_update with the specified properties to transaction, and
+  * return a pointer to the new object. This function does not verify
+diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
+index 5533acfaf9027765d5a270abfce96225e42cc823..a2d86d1c5098b30bd212fc12a3708d2c0a60c677 100644
+--- a/refs/reftable-backend.c
++++ b/refs/reftable-backend.c
+@@ -1364,8 +1364,18 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
+ 					    transaction, be,
+ 					    transaction->updates[i], head_type,
+ 					    &head_referent, &referent, err);
+-		if (ret)
++
++		if (ret) {
++			if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL) {
++				ref_transaction_add_rejection(transaction, i, err);
++
++				strbuf_setlen(err, 0);
++				ret = 0;
++
++				continue;
++			}
  			goto done;
--
--		/* Verify that the new object ID is valid. */
--		if ((u->flags & REF_HAVE_NEW) && !is_null_oid(&u->new_oid) &&
--		    !(u->flags & REF_SKIP_OID_VERIFICATION) &&
--		    !(u->flags & REF_LOG_ONLY)) {
--			struct object *o = parse_object(refs->base.repo, &u->new_oid);
--			if (!o) {
--				strbuf_addf(err,
--					    _("trying to write ref '%s' with nonexistent object %s"),
--					    u->refname, oid_to_hex(&u->new_oid));
--				ret = -1;
--				goto done;
--			}
--
--			if (o->type != OBJ_COMMIT && is_branch(u->refname)) {
--				strbuf_addf(err, _("trying to write non-commit object %s to branch '%s'"),
--					    oid_to_hex(&u->new_oid), u->refname);
--				ret = -1;
--				goto done;
--			}
--		}
--
--		/*
--		 * When we update the reference that HEAD points to we enqueue
--		 * a second log-only update for HEAD so that its reflog is
--		 * updated accordingly.
--		 */
--		if (head_type == REF_ISSYMREF &&
--		    !(u->flags & REF_LOG_ONLY) &&
--		    !(u->flags & REF_UPDATE_VIA_HEAD) &&
--		    !strcmp(rewritten_ref, head_referent.buf)) {
--			/*
--			 * First make sure that HEAD is not already in the
--			 * transaction. This check is O(lg N) in the transaction
--			 * size, but it happens at most once per transaction.
--			 */
--			if (string_list_has_string(&transaction->refnames, "HEAD")) {
--				/* An entry already existed */
--				strbuf_addf(err,
--					    _("multiple updates for 'HEAD' (including one "
--					    "via its referent '%s') are not allowed"),
--					    u->refname);
--				ret = TRANSACTION_NAME_CONFLICT;
--				goto done;
--			}
--
--			ref_transaction_add_update(
--				transaction, "HEAD",
--				u->flags | REF_LOG_ONLY | REF_NO_DEREF,
--				&u->new_oid, &u->old_oid, NULL, NULL, NULL,
--				u->msg);
--		}
--
--		ret = reftable_backend_read_ref(be, rewritten_ref,
--						&current_oid, &referent, &u->type);
--		if (ret < 0)
--			goto done;
--		if (ret > 0 && !ref_update_expects_existing_old_ref(u)) {
--			/*
--			 * The reference does not exist, and we either have no
--			 * old object ID or expect the reference to not exist.
--			 * We can thus skip below safety checks as well as the
--			 * symref splitting. But we do want to verify that
--			 * there is no conflicting reference here so that we
--			 * can output a proper error message instead of failing
--			 * at a later point.
--			 */
--			ret = refs_verify_refname_available(ref_store, u->refname,
--							    &transaction->refnames, NULL,
--							    transaction->flags & REF_TRANSACTION_FLAG_INITIAL,
--							    err);
--			if (ret < 0)
--				goto done;
--
--			/*
--			 * There is no need to write the reference deletion
--			 * when the reference in question doesn't exist.
--			 */
--			 if ((u->flags & REF_HAVE_NEW) && !ref_update_has_null_new_value(u)) {
--				 ret = queue_transaction_update(refs, tx_data, u,
--								&current_oid, err);
--				 if (ret)
--					 goto done;
--			 }
--
--			continue;
--		}
--		if (ret > 0) {
--			/* The reference does not exist, but we expected it to. */
--			strbuf_addf(err, _("cannot lock ref '%s': "
--				    "unable to resolve reference '%s'"),
--				    ref_update_original_update_refname(u), u->refname);
--			ret = -1;
--			goto done;
--		}
--
--		if (u->type & REF_ISSYMREF) {
--			/*
--			 * The reftable stack is locked at this point already,
--			 * so it is safe to call `refs_resolve_ref_unsafe()`
--			 * here without causing races.
--			 */
--			const char *resolved = refs_resolve_ref_unsafe(&refs->base, u->refname, 0,
--								       &current_oid, NULL);
--
--			if (u->flags & REF_NO_DEREF) {
--				if (u->flags & REF_HAVE_OLD && !resolved) {
--					strbuf_addf(err, _("cannot lock ref '%s': "
--						    "error reading reference"), u->refname);
--					ret = -1;
--					goto done;
--				}
--			} else {
--				struct ref_update *new_update;
--				int new_flags;
--
--				new_flags = u->flags;
--				if (!strcmp(rewritten_ref, "HEAD"))
--					new_flags |= REF_UPDATE_VIA_HEAD;
--
--				if (string_list_has_string(&transaction->refnames, referent.buf)) {
--					strbuf_addf(err,
--						    _("multiple updates for '%s' (including one "
--						    "via symref '%s') are not allowed"),
--						    referent.buf, u->refname);
--					ret = TRANSACTION_NAME_CONFLICT;
--					goto done;
--				}
--
--				/*
--				 * If we are updating a symref (eg. HEAD), we should also
--				 * update the branch that the symref points to.
--				 *
--				 * This is generic functionality, and would be better
--				 * done in refs.c, but the current implementation is
--				 * intertwined with the locking in files-backend.c.
--				 */
--				new_update = ref_transaction_add_update(
--					transaction, referent.buf, new_flags,
--					u->new_target ? NULL : &u->new_oid,
--					u->old_target ? NULL : &u->old_oid,
--					u->new_target, u->old_target,
--					u->committer_info, u->msg);
--
--				new_update->parent_update = u;
--
--				/*
--				 * Change the symbolic ref update to log only. Also, it
--				 * doesn't need to check its old OID value, as that will be
--				 * done when new_update is processed.
--				 */
--				u->flags |= REF_LOG_ONLY | REF_NO_DEREF;
--				u->flags &= ~REF_HAVE_OLD;
--			}
--		}
--
--		/*
--		 * Verify that the old object matches our expectations. Note
--		 * that the error messages here do not make a lot of sense in
--		 * the context of the reftable backend as we never lock
--		 * individual refs. But the error messages match what the files
--		 * backend returns, which keeps our tests happy.
--		 */
--		if (u->old_target) {
--			if (!(u->type & REF_ISSYMREF)) {
--				strbuf_addf(err, _("cannot lock ref '%s': "
--					   "expected symref with target '%s': "
--					   "but is a regular ref"),
--					    ref_update_original_update_refname(u),
--					    u->old_target);
--				ret = -1;
--				goto done;
--			}
--
--			if (ref_update_check_old_target(referent.buf, u, err)) {
--				ret = -1;
--				goto done;
--			}
--		} else if ((u->flags & REF_HAVE_OLD) && !oideq(&current_oid, &u->old_oid)) {
--			ret = TRANSACTION_NAME_CONFLICT;
--			if (is_null_oid(&u->old_oid)) {
--				strbuf_addf(err, _("cannot lock ref '%s': "
--						   "reference already exists"),
--					    ref_update_original_update_refname(u));
--				ret = TRANSACTION_CREATE_EXISTS;
--			}
--			else if (is_null_oid(&current_oid))
--				strbuf_addf(err, _("cannot lock ref '%s': "
--						   "reference is missing but expected %s"),
--					    ref_update_original_update_refname(u),
--					    oid_to_hex(&u->old_oid));
--			else
--				strbuf_addf(err, _("cannot lock ref '%s': "
--						   "is at %s but expected %s"),
--					    ref_update_original_update_refname(u),
--					    oid_to_hex(&current_oid),
--					    oid_to_hex(&u->old_oid));
--			goto done;
--		}
--
--		/*
--		 * If all of the following conditions are true:
--		 *
--		 *   - We're not about to write a symref.
--		 *   - We're not about to write a log-only entry.
--		 *   - Old and new object ID are different.
--		 *
--		 * Then we're essentially doing a no-op update that can be
--		 * skipped. This is not only for the sake of efficiency, but
--		 * also skips writing unneeded reflog entries.
--		 */
--		if ((u->type & REF_ISSYMREF) ||
--		    (u->flags & REF_LOG_ONLY) ||
--		    (u->flags & REF_HAVE_NEW && !oideq(&current_oid, &u->new_oid))) {
--			ret = queue_transaction_update(refs, tx_data, u,
--						       &current_oid, err);
--			if (ret)
--				goto done;
--		}
++		}
  	}
  
  	transaction->backend_data = tx_data;
