@@ -1,174 +1,105 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1F92253A4
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 16:12:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1980718DB0C
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 17:11:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738944780; cv=none; b=mmkSMwTuLdqNOZ+ZvIxeZEHm8SUTaBOchQHVeEiraDE9CnpgLnqEGtCxxufpuZWsURiSjet627hUFtpaXE9Mf1xFI0YWBFFiZiOGlWtQSCxX1pA67eBD3PL6ROWcF3qFIeEaBxDgOgRzLqw9C+utOy7ozxBDn4kKiVJXZaNR0R0=
+	t=1738948271; cv=none; b=cqAz1mzpbj3UxCKeSDIO2z+4aPxVQigfCrfwugSYldsKTrN32GZ/0PUMn8t8pTrw0960jl28DtJV566ET2ItZMcWyC38oGzLeB2RMilIo2nsA6goK3reK7W8Mb8868kR14yVJCE9D31n7GI3VdoTE/esoWPC63pXnXlWfnYPlQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738944780; c=relaxed/simple;
-	bh=O3Rs+Dxrp0plFcMAE577zbz4+LvpUo6t55R1UlhXHLY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AiZvqwvcnexGfEkBFuARvIkjmFvaqn4Oe97Y/Okyc6hLq9ldMz0Udw2D4FnR594GmiiLb5Ts4tEpVIDetWsW3nAnpTWGa/RwWEeQw9D/QXHgQQAPayO+bYdEFEFbD7KoSsoSx4thGD6C2nhUIw8V5wWE0PC1d5JJ+l1k6wA98wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b+7qT0EI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hxnmJbFn; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1738948271; c=relaxed/simple;
+	bh=tEc18rtkKpVLkKzZ2aRS+arkO5ys56JTw63S/hUeYX0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nFWXCDKnx17stpV14R8KYHZ3pR58yGn4im49q/EP2IlJ12bFSuYIw9CYGSGEkZ0roKla4AKgHLdt5NDN0vewPP8TDIJNgtRAhBfNrGTeiCfu2lICa9RgMPWHc9DdC1VZj1IDtZUmqYj06hOxeoQh3S/+xYwRMDH8aheV0hfq4kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qeiyR3IB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wdEx7tOl; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b+7qT0EI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hxnmJbFn"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 40B652540143;
-	Fri,  7 Feb 2025 11:12:58 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Fri, 07 Feb 2025 11:12:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qeiyR3IB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wdEx7tOl"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2831325401A3;
+	Fri,  7 Feb 2025 12:11:08 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Fri, 07 Feb 2025 12:11:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738944778; x=1739031178; bh=HXT+qs4tRn
-	ec/lL8yd3DQLlacrWF7we8l2nt8xx1ABo=; b=b+7qT0EIX6E0hu2Fr52yUTcQLe
-	Sl7myxWC1TK355p16UuOlOahBjnZ2n3mSqSUXDjN8YHtoImrICW0JvWtUia8l0Lf
-	bl37r4b9S8rsMx+Ul0018xFLFe6NDakuxrahD9X+Krt309v1M1OaFYZo4V9Cp8kb
-	NpTiM7xiO6IOuY7Izh+UdlqYcufgU8Z2THBoglg2Fm3efzY9dGs+CbFQrq474cwL
-	BDRQs2rZFg3IWF9RLUu5ngaXFrPb2g8R9YP94BLCGhqPIkBNIsNCpgEoDtTnGj9D
-	c9nvfdIkSgaLOXcZDNtEEjUvLALZQD80oVk/fBwo29PgaxGIEWFVNL8n6MJQ==
+	:subject:to:to; s=fm2; t=1738948267; x=1739034667; bh=q4krvrCN44
+	tO6ytKljrFnwmiqQ9V0pr4UQNWuQRIgxo=; b=qeiyR3IBc+OcBO2lHZZP/IVmky
+	VxIPxEhblhXhM31pTI99+GHOCfglcjuQjtivFl0ATTSNh5Qv50HzreOAA9DtDlmm
+	KR6tKOFq47ngrd5OnddC0jSnDJFqalYhSfwUlXN2A2GAMXwfGcF9SLiPNgQ9wZD4
+	r1MecPI6cfTtoynnlJUBQKbs9DOO7yt055VNgveCVoyj7weqTB80hPJX5KLYSr7G
+	jJUy7A2XVPyqpyVUf5OTZkZcGb/rSYM9CkYgan39CcGcc8pwjnuihOuNW6AzUR1+
+	6pYAO/5KqLV3u/sSgFYH6PWBwUmkq3kcLaBkvbirJxSh2WcPnM/MvCQ4F07g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738944778; x=1739031178; bh=HXT+qs4tRnec/lL8yd3DQLlacrWF7we8l2n
-	t8xx1ABo=; b=hxnmJbFnOB0AUGK1GvqZnY4yl2+0OdLprcIc9kZkd1TeG0Ij6OX
-	jwliJ7f+gcGo2t2wQ612q57+rTUTGOKGbjGXZfrYtDbGG79uV7KulJWUwHwVLvLs
-	vtye/eDlpQFJlYXO1dpkvaC7ijzxedyWOrdeGtiwO2Jv2vBoayoaT7OrGtIcnDSZ
-	VMCpw0X5SDaheG3Mhgxl6tAhc8q9CZ0QhuJvLtQCgHEfZT60zSgTB2/c9mkXr8qJ
-	0i4R1bpjnixWa9QXBiQnN0DqxvGgnqEI2ZgSnWESzuXp3EIhhQOrDm48gE5kanse
-	3mCNT/NiiSH/k1tPyKray0j4LayS0fPHymg==
-X-ME-Sender: <xms:CTGmZ5mMtePJ3vZATzTIHdBSNWeN6VumvavOVVWDXZob3We1dtKddQ>
-    <xme:CTGmZ01voKPxflmUniF0DlHOJUH8No6gXViCr37kngGfALhLdHsE7d0BBfjZFQS24
-    g3drg6wIhlLPFScXg>
-X-ME-Received: <xmr:CTGmZ_rpqicZ1g1awv6X41zNZz8v5kUnhNN1ZgtkCqUORWYx7YJNOpM_IJdB6mogzweCLT5fBZIl2WP0_bL1JCg4g9gTe12yf8g8juQoPTbhx62H>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleejgecutefuodetggdotefrod
+	1738948267; x=1739034667; bh=q4krvrCN44tO6ytKljrFnwmiqQ9V0pr4UQN
+	WuQRIgxo=; b=wdEx7tOlkwOH50580kR/5XxVIOPi7A7D62ejhFjIZfCQv3cdPyT
+	dUNrKDEp1Hu+6uPh5pNxSueguxSuZbacsnx/5hXy4WXHJE9+k5VpTVMphw+3lEBS
+	//sX7TpqKtL2wAZX0+FNKm4wVXnMTE1aWDsT5f/QtlboR+W7gzUTu52JH9IDJqOS
+	bEt6Ls9WHSeQxJsodm/rE6OnrfWRDeP/+Dyb2A0iZkYmxt450O4vqy2OJ+o+sZJr
+	sy3XVJU080pGHtV2gGtQSSXyQd5ks7HYakhsTBdfYbi401D4Bn2ewIe/C5xmLd0F
+	Y9zJ35y7/OPQmzp+4sdg4hct71P/u8ey1Gg==
+X-ME-Sender: <xms:qz6mZ_Z9iTw5kiEHmgx4NVgwhoQQ6KJg9_rKqfNv-7PNGJ5RWO5pmg>
+    <xme:qz6mZ-bBcwgOaOc-pP7Jt1DDuR_xQESa2BNEVFvkwbH_xrxRjWPdmlladNfZL0YqZ
+    mK6eVBbdgPblEI1PQ>
+X-ME-Received: <xmr:qz6mZx-L5sSH1GTWdP9CLcDF059RMTFaHJK17pdnaZZ3FEVMoCHzUU0zikfgkrCXiXh1WnIsRUgIVR2Lcc6uW8BFMVBw4sYkmowL>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleekhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthho
-    pehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:CTGmZ5mnVzUG2-_T_vDNqqh5lUTLzvDmhiyQtMi_foNZUZX1n8CsFg>
-    <xmx:CTGmZ32WNeIEMobjKOpHSUjZTL3KYlzFUbSzaVohkaFClMZMMAQyLQ>
-    <xmx:CTGmZ4v9Jxj22cq5r6hE4MC5SxLvkPGZh9YOAZBRuixCjWr8DMHd-w>
-    <xmx:CTGmZ7Vnk--QC6EVFkFaIJwPf6x4gm__OobymAKXkiLRZxsfAWOpew>
-    <xmx:CjGmZ4xpYNPpcCNliw7XNdhfxaQjyqH27R7Xp9zIAqXBLHDyFaBc8RDo>
-Feedback-ID: i197146af:Fastmail
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhoth
+    gtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:qz6mZ1qCnl7CKiuC53YMsz2eTdQJUeR8wK5fFP6bKBx2OE7OsDhoxQ>
+    <xmx:qz6mZ6og1iXsDK3NkopN5UdkrJHR4IT8fuJVc9mJorbNWydfl54sqg>
+    <xmx:qz6mZ7RAI4dVnw1bTO7-ksvsA0T6KHLD7fyIXO_AwTgLNPieUurcjA>
+    <xmx:qz6mZyrWsWYu8r4XxnUqn4-4mRlczUdnjwPOY4CDyYg-GEJ0RILMvg>
+    <xmx:qz6mZ9WIZ1zFMafLSVEPg87zgSHgmiXHBeZSdkaY_5B0vLA-G3-eN6KA>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Feb 2025 11:12:57 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5d8f95b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Feb 2025 16:12:56 +0000 (UTC)
-Date: Fri, 7 Feb 2025 17:12:55 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com
-Subject: Re: [PATCH 6/6] update-ref: add --allow-partial flag for stdin mode
-Message-ID: <Z6YxB6qL8WQFZyWW@pks.im>
-References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
- <20250207-245-partially-atomic-ref-updates-v1-6-e6a3690ff23a@gmail.com>
+ 7 Feb 2025 12:11:07 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Feb 2025, #01; Tue, 4)
+In-Reply-To: <875xlm3vzt.fsf@iotcl.com> (Toon Claes's message of "Fri, 07 Feb
+	2025 11:11:18 +0100")
+References: <xmqqldulrvly.fsf@gitster.g> <875xlm3vzt.fsf@iotcl.com>
+Date: Fri, 07 Feb 2025 09:11:05 -0800
+Message-ID: <xmqq8qqhhe8m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250207-245-partially-atomic-ref-updates-v1-6-e6a3690ff23a@gmail.com>
+Content-Type: text/plain
 
-On Fri, Feb 07, 2025 at 08:34:41AM +0100, Karthik Nayak wrote:
-> diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
-> index 9e6935d38d031b4890135e0cce36fffcc349ac1d..529d3c15404cdc13216219fba6f56dde91f4909c 100644
-> --- a/Documentation/git-update-ref.txt
-> +++ b/Documentation/git-update-ref.txt
-> @@ -8,7 +8,7 @@ git-update-ref - Update the object name stored in a ref safely
->  SYNOPSIS
->  --------
->  [verse]
-> -'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] | [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z])
-> +'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] | [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z] [--allow-partial])
+Toon Claes <toon@iotcl.com> writes:
 
-I think it's time that we start to split this line into multiple lines :)
+>> * ps/reftable-sans-compat-util (2025-02-03) 19 commits
+>>  ...
+>>  - reftable/basics: stop using `UNUSED` annotation
+>>  ...
+>>  Will merge to 'next'?
+>>  source: <20250203-pks-reftable-drop-git-compat-util-v3-0-446c9ed4ee9e@pks.im>
+>
+> I gave v4 a round of review, and besides one question/possible
+> suggestion these changes look good.
 
-> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
-> index 4d35bdc4b4b57937112e6c4c9740420b1f1771e5..83dcb7d8d73f423226c36b61374c86c6b29ec756 100644
-> --- a/builtin/update-ref.c
-> +++ b/builtin/update-ref.c
-> @@ -562,6 +563,30 @@ static void parse_cmd_abort(struct ref_transaction *transaction,
->  	report_ok("abort");
->  }
->  
-> +static void print_rejected_refs(const char *refname,
-> +				const struct object_id *old_oid,
-> +				const struct object_id *new_oid,
-> +				const char *old_target,
-> +				const char *new_target,
-> +				const struct strbuf *reason,
-> +				void *cb_data UNUSED)
-> +{
-> +	struct strbuf sb = STRBUF_INIT;
-> +	char space = ' ';
-> +
-> +	if (!line_termination)
-> +		space = line_termination;
-> +
-> +	strbuf_addf(&sb, "rejected%c%s%c%s%c%c%s%c%s%c", space,
+Yeah, I saw them.  Very much appreciated.
 
-Whew, that's a lot of placeholders.
+Patrick's latest (i.e., v5) addresses the UNUSED one, so assuming
+that one looks reasonable to everybody, we are in very good shape.
 
-> @@ -723,7 +754,8 @@ int cmd_update_ref(int argc,
->  	const char *refname, *oldval;
->  	struct object_id oid, oldoid;
->  	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0;
-> -	int create_reflog = 0;
-> +	int create_reflog = 0, allow_partial = 0;
-> +
->  	struct option options[] = {
->  		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
->  		OPT_BOOL('d', NULL, &delete, N_("delete the reference")),
-> @@ -732,6 +764,7 @@ int cmd_update_ref(int argc,
->  		OPT_BOOL('z', NULL, &end_null, N_("stdin has NUL-terminated arguments")),
->  		OPT_BOOL( 0 , "stdin", &read_stdin, N_("read updates from stdin")),
->  		OPT_BOOL( 0 , "create-reflog", &create_reflog, N_("create a reflog")),
-> +		OPT_BOOL('0', "allow-partial", &allow_partial, N_("allow partial transactions")),
-
-You can use `OPT_BIT()` to set a specific bit in a flags field..
-
-> @@ -749,13 +782,19 @@ int cmd_update_ref(int argc,
->  	}
->  
->  	if (read_stdin) {
-> +		unsigned int flags = 0;
-> +
-> +		if (allow_partial)
-> +			flags |= REF_TRANSACTION_ALLOW_PARTIAL;
-> +
->  		if (delete || argc > 0)
->  			usage_with_options(git_update_ref_usage, options);
->  		if (end_null)
->  			line_termination = '\0';
-> -		update_refs_stdin();
-> +		update_refs_stdin(flags);
->  		return 0;
-> -	}
-> +	} else if (allow_partial)
-> +		die("--allow-partial can only be used with --stdin");
->  
->  	if (end_null)
->  		usage_with_options(git_update_ref_usage, options);
-
-The implementation is quite simple, nice.
-
-Patrick
+Thanks.
