@@ -1,125 +1,122 @@
-Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725501F4183
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 14:01:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C59F1F4E56
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 14:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738936916; cv=none; b=JQfD03PEJxYL6xTn1hxPD49SrI2xisp2Mf00IPcZkw/R4gyqMvW44nwps+99Gufvp2AXPF/n2wzdzOQ4cWpZ83eJFyf+8sLWkF1uuv7SbpyVUkqaL8806yKwuEvV6UvMpg4LPIZ97H9pf3qNiJj4vKRxTDo9D/BIxia6JsSpnyg=
+	t=1738938562; cv=none; b=Gk9WdD2JHZhmrxpU8gv2A5ESLmFBiDqzHwVXE5U/a4nOOL23giF8Ii82KJhFcP3dILvsdIa7qCwqF+kpbUF+vDm98rKSRj+MjCOeov8DRnKugj11C2UXqbwWj3ZXXq2J9PUZz9Uu6hmB5crOZ+o6nn7BKNgT4YG9cnhpxXvFJ+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738936916; c=relaxed/simple;
-	bh=qntkBsQ4AvxNt5UoHE+kRgE1OW/wRDXs36LIUbErbFU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=spL2gKG5Gp8ZjGDCCZIX1vWHKPdxItnULwIAERtd317T3aMjbX1CzH8SmjdRpBK7YftnmBQfeMc7A9eQpiS0awB2c+6qglstixuOxVQQYtMoRWJTFHVRTIYdbkYTTY0jt2MnoGDlEuPfqT4Pqsq6Kl1iulM/rVRzdUXI3KmU6lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NAOFsfBp; arc=none smtp.client-ip=209.85.166.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738938562; c=relaxed/simple;
+	bh=n6KuDlRYYKu8g/uqr1ii92FFGGgpwOFF4Xhs4HwmTMo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OFY6Pa56fmTvEbsbkI66y+7rZpr4pNsVIrDB6mDD6S2wnM89y+CFLj5p9K2Ve3hEvCUKFTWh56LILS3o6fDo8nXY/ss7g3c5qw1Rm44ObjnM3AS+uEYx6G2fKaExvJfGv23wowjRfC+yNVkI1pAEHHJkr01Hj+qxMsnCOb/jJ0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ewnSnQji; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qbz5MyA3; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NAOFsfBp"
-Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3d14811cabfso746285ab.1
-        for <git@vger.kernel.org>; Fri, 07 Feb 2025 06:01:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738936914; x=1739541714; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=puStE1tu7cNtjImrqIEvv4KJXAK1Uc14wmQdfIAcqss=;
-        b=NAOFsfBp1NU+LCUrCtRYt/j/UxFVTt8sjAW5AsFiay8Kk8DR/WG5MRn7gRlZdSxhH7
-         Ip8z7Fk1Q+0DTHgKysCTTCY+Ddyo1EEmQE+e5HKaq7sBsCDCbXEgRpl5hPziLPKRgh/o
-         kleEwBW4hxfvBpgvbVUy3+nlv2akK8Q0CGfFi7bvgx+gj+Asc8Skjc32RgzWMYh76sG5
-         7jCdGrZIV2sft08fDF6tL0dxOzpdIFLx66H2EAXyxG247STr33X12agn3teYP5nKhWQd
-         RWd07dQeP8icTdIajqdCI0m+rurVrEJxlmJWRV3hCLxp3TioAJBL07CUeFajGbrMfrWq
-         k+Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738936914; x=1739541714;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=puStE1tu7cNtjImrqIEvv4KJXAK1Uc14wmQdfIAcqss=;
-        b=QiTULJUfOv4PVevNq2vZasdxd/yF3CL1/PGLMVtM1hEFY+58gBq74xKzp4ZSbDUa++
-         oWrr/d3yMrYhFFbNCkZ/08yVsJUJ9dMl3hbWdd+4iYerbxr/op7uRPTgvbpivWBe/AyT
-         LgphUwJJBB+D4v3k670RHeIkVlqoTzswN/o9dJmc6POL5BpxXpiscMTkpRByiItr2SJ8
-         nRbpXs3xeOrWctT/SajxvUAnD3rSWtpZw5Q+yeHjl2fbpRffnHMgqQUh4Ff3rEwm+pwO
-         EAaZfNpnZ0KCy8DovFzmUOeyy/DcHHJNMbLGKTuxvBzWZVNN0IDbyIZbQbSg+/I92673
-         XNvA==
-X-Forwarded-Encrypted: i=1; AJvYcCXk26Vlh0aiwC0PMh+RhNDSPw32ddRB0zIOZ1Af3yibNoibIoU3/+h1K7LSc7fV5zXeSoo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDN0ZdOwZ8OX57NU9XlsyZ9Um3mkQ74ioKa1V9ox4JNQ5hiFa4
-	IxIu72NWa+9DiS160dDoRFi71VvI3nISdyP8HZql79srXpsruLz0Uha7b8uAt+K14RGaX4//zZG
-	Ds4BGU/mvO50hIgtBuw89UX4WnKfC+ypo
-X-Gm-Gg: ASbGnct8Dldkw9DxPOF63hwic3Yg5j1KxRySktnAoVHqXTSb+u7kIDIMTeKQK8lN9LF
-	8XYS3d2rnhwDzgRlVRiy01A7jRR+8EQGPYdDhZ/uhz7aVPWrYEtP0tAs2oDuCD6O0Hvy6bEteNO
-	hGEYr7kA0RM9JylYEkQqIiiDUBcrRK
-X-Google-Smtp-Source: AGHT+IFNsF+wAL3ui9KsZs9bk1UsIyVeI+VdagIDY03esd+XahyRYncFQoZmtEgVl3QGhYSD5at5lPpTsdnXurDvHko=
-X-Received: by 2002:a05:6e02:1cad:b0:3d0:fe8:6076 with SMTP id
- e9e14a558f8ab-3d13df1be70mr30367565ab.21.1738936914289; Fri, 07 Feb 2025
- 06:01:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ewnSnQji";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qbz5MyA3"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5E6F011401B3;
+	Fri,  7 Feb 2025 09:29:18 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Fri, 07 Feb 2025 09:29:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1738938558; x=1739024958; bh=ldawXFBDx2
+	uQ08zb0KqR8t16Yt3N76F9EGM/IY6mlXw=; b=ewnSnQji1Hdy66Rni6mcWe8d0Z
+	+jlChtdFGeV6MMIb+QDwuHNeCz9uy9By15m0qjoKyEb54vcCXqfh9nKYJOH1soSn
+	suW/b8QWQOMtXa+t81e4A/7BWGaiNnkXq/UO62Y76ANMaMCKFPU3lWlnpt+6SSXh
+	g8e6pvhLkMGn9sZrG3vGmijrR2J7hiNk+NtMtzgTWjJgu2nhV5E3+POmZXtZo7CF
+	W+jV+YDS/zSStaX/5yxSkXuPHu5kX8cPLy7I7JP81wObTkBQuVbMNJe3wSgTil/3
+	G9BWd97zwuHZRb3LzENOpfEHijSYV++NF8o3iv6Rjp+fb1beKy0xW5yjFzDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738938558; x=1739024958; bh=ldawXFBDx2uQ08zb0KqR8t16Yt3N76F9EGM
+	/IY6mlXw=; b=qbz5MyA3FjUy093lgyaQtlun5RNHTr/+rDmTCEMU7mEH7jPJ9XJ
+	nDExNF3NpELyo8o9gqbRwYI5/kkTRHBxK2bDJrlwKtX5XMA3MeAxvzesRCc7Ke1M
+	rIlAFkbnSWUJ8RwweIH2Mrhmqgi7Q/3kvk4JZr/g/zBLS9tF3fRTlR68lzF1Z/6f
+	IMC4zyMewF2rSXw5fk2UIWPwjYYm7hz3cPNFSzVSSx+1zo4Cd8kx2jGGUulFvTpo
+	lxDmELfqasTTRoM/1gJdWoa39JXRa/mp3HPfAG31OfmaG4QqGMm4hAfROJNWo5Wj
+	//YwwsYcbH+Yl/aXFq80JKhr8m1j0YUo3Bg==
+X-ME-Sender: <xms:vRimZ7bUz4FfKg_W7JxkQKXpRyC5SqLNSEYGPMTTkzlMD95wCxIgmg>
+    <xme:vRimZ6YxVzK7579NrVQAdyH846gGul7YqBeDtu2FQOhvwXr3qt0ulnQG8FvLc_EG0
+    vQIly4xNT0DtDO1TQ>
+X-ME-Received: <xmr:vRimZ9-fI3Ytdosssoa6oTNJtCONyAJw9cEMdmOhgXwN1q3XiLQDkoE3g42GFA0sviPJEDVoXamjbVZYjRF-i4zy9zv2JORW5UgdrWdFhMs7yCcq>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleehfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthho
+    ohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:vRimZxrYRFdWkcvrzumr_gdrLYWp9tjInRG6136S90DKSH8jXpFqSw>
+    <xmx:vRimZ2ojswL8rWL5o7WXMUU2eFIHdJ9G0qd3CchqdUWS1EFlJlnHRA>
+    <xmx:vRimZ3TstSqNti9gT1onEP9I4ql6h4OkAcw8KjPiBwfwIAb2DUj4Gg>
+    <xmx:vRimZ-p2c6d10Zsw_cynkg7vn4ywjB9Ahb-XAcc5CNEufaSVLfzYug>
+    <xmx:vhimZ5Xsu5263v49GTUVPDn0Yqg4QrAQEQg4zdUz-eDgfhMbwEzrmgye>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Feb 2025 09:29:16 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 2c80714f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Feb 2025 14:29:14 +0000 (UTC)
+Date: Fri, 7 Feb 2025 15:29:13 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 09/13] meson: improve handling of `sane_tool_path`
+ option
+Message-ID: <Z6YYufqOOAGWru9r@pks.im>
+References: <20250130-b4-pks-meson-improvements-v2-0-2f05581ffb44@pks.im>
+ <20250130-b4-pks-meson-improvements-v2-9-2f05581ffb44@pks.im>
+ <87zfix3lwn.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250205214726.GA30202@raven.inka.de> <Z6PsXGnxM3UBR3nM@tapette.crustytoothpaste.net>
- <20250205235931.GB30202@raven.inka.de> <Z6QCX1QZxxwC7RVQ@tapette.crustytoothpaste.net>
- <CABPp-BFZ3oyKiryKMPph+nfokC=sFa7wn1wdas863273bzy7pA@mail.gmail.com>
- <20250206134006.GC30202@raven.inka.de> <20250206200418.GD30202@raven.inka.de>
- <CAPx1Gvc2piLT=p+dvzcJPTMDQAAjQfz__O4KiRWs-fOMg8dpTw@mail.gmail.com>
- <20250207104510.GE30202@raven.inka.de> <CAPx1GvcyaZqYK+SvgtfsajqtkMty1jOcVAtwfmam-LpOjyd0jw@mail.gmail.com>
-In-Reply-To: <CAPx1GvcyaZqYK+SvgtfsajqtkMty1jOcVAtwfmam-LpOjyd0jw@mail.gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 7 Feb 2025 06:01:43 -0800
-X-Gm-Features: AWEUYZki_oiuTgAiPXB1nbzJKgkRdaN5p0UOD-0ZvuJHbHikfq5n_-NFZ2u1N-o
-Message-ID: <CABPp-BFnx2m75jsa3_kTPet97HY+xwb_6JmPiKM5+OARPy=mGA@mail.gmail.com>
-Subject: Re: renormalize histroy with smudge/clean-filter
-To: Chris Torek <chris.torek@gmail.com>
-Cc: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87zfix3lwn.fsf@iotcl.com>
 
-On Fri, Feb 7, 2025 at 3:13=E2=80=AFAM Chris Torek <chris.torek@gmail.com> =
-wrote:
->
-> > and (in the case of cherry-pick) there is not even any way to
-> > renormalize before picking.
->
-> That's mostly correct. The problem here is that while `git merge`
-> (both recursive and the new ort) has a renormalize option
-> internally, it's not exposed to cherry-pick.
+On Fri, Feb 07, 2025 at 02:49:12PM +0100, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> > The `sane_tool_path` option can be used to override the PATH variable
+> > from which the build process, tests and ultimately Git will end up
+> > picking programs from. It is currently lacking though because we only
+> > use it to populate the PATH environment variable for executed scripts
+> > and for the `BROKEN_PATH_FIX` mechanism, but we don't use it to find
+> > programs used in the build process itself.
+> >
+> > Fix this issue by treating it similar to the Windows-specific paths,
+> > which will make us use it both to find programs and to populate the PATH
+> > environment variable.
+> >
+> > To help with this fix, change the type of the option to be an array of
+> > paths, which makes the handling a bit easier for us. It's also the
+> > correct thing to do as the input indeed is a list of paths.
+> 
+> Should we consider this a breaking change, or aren't we because using
+> Meson is still not the "official" installation method? I've noticed it
+> breaks my "build" directory which was set up before this change and now
+> am trying to use these changes on:
 
-Perhaps not as a config option, but it can be selected via -Xrenormalize .
+Meson is still marked as experimental right now, so I don't think this
+needs to be explicitly called out. We should start to be more mindful of
+any backwards-incompatible changes once Meson support has matured a bit,
+say for example starting with Git v2.49 or v2.50. But until then it's
+kind of expected that we'll still have to iterate a bit.
 
-However, whether it is exposed or used doesn't matter.
-Renormalization in the merge machinery (this is the same for both the
-recursive and ort backends) is something passed to xdiff[1], for doing
-3-way content merges of individual files. If a
-merge/rebase/cherry-pick/revert doesn't need to do a 3-way content
-merge for some file, then no normalization will be done for it.  This
-could happen, for example, if one side of history being merged
-modified a file and the other side of history being merged didn't
-touch that file.  And as a special case, that includes when one side
-of history adds the file and the other side of history doesn't have
-the file.
-
-In particular, for the cherry-picks or rebasing that Josef is doing
-going back to the root of history, that is simply doing merges against
-a side of history that hasn't modified any of his files, so there
-isn't going to be any automatic renormalization.
-
-The rest of what you write about optimizations is spot on, though.
-This isn't a bug in cherry-pick (or merge or rebase); renormalizing
-all files proactively in the merge machinery whenever a merge or
-cherry-pick is done would be orders of magnitude slower for any
-decently sized repository; it's simply out of the question.  I think
-Phillip's suggestion elsewhere in this thread (git rebase --root -x
-'git add --renormalize . && { git diff --quiet --cached || git commit
---amend --no-edit; }') would be what Josef needs to run, ASSUMING the
-history Josef is operating on is linear.
-
-Hope that helps,
-Elijah
-
-[1] Okay, technically renormalization is also used to turn
-modify/delete conflicts into simple deletes, when the only
-modification was a normalization of the file contents.  I don't think
-that's relevant to Josef's case, though, so I elided it in the
-explanation.
+Patrick
