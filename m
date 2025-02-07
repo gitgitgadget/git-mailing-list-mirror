@@ -1,54 +1,54 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117F6191F62
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 17:57:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122CA19EEC2
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 18:05:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738951030; cv=none; b=B/12zug+yJc4UIKe/IRoRDo6BCVciv0IzkxOwEr4qGBwL6wYeeROoP754t1rkdaYQ+tB00i0z1XqfiGmkEkQbVBiZAM4M+xyw5lkTuF6FuLa/wAYe8oOh7Q0Ikkes6VC7U5GfqQ/mLZ+OrtzbiKokODN0OpDVCWeC/5G7GPcuxI=
+	t=1738951513; cv=none; b=sTc0rAMlR7a4h8b4evMCLWVVLTzGzzMMfLrRMhU116tPQe833hsizj1yMAaUcLL8p5oDu2NZAdTvjxyn12t3ddl1PqHZ/7TZwgexK8lo9cjOLpGwkZ5Z3hH+t2mtHxw8b9vu3OHEJL8I41dujsw8sYcMP8na+aCKfrYZdZ0FRmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738951030; c=relaxed/simple;
-	bh=6sPDCVGV53YJV/zkaNtdazrPbg7G1L78SJbTMNmRsio=;
+	s=arc-20240116; t=1738951513; c=relaxed/simple;
+	bh=qalDj1sBcoh2ukvSwbfhwjWcR2BCdSia+c5hcBlhKRg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UJQVgt/p1hz0cIFj7NQHreYYiMywzTPyducdYHJ94IjyrcVwJfMzWiwXj18F6nni0UrEJqgz1HzOCK0+fLNZX7aCWZYdSyO9vuiGq2FD42IIDRoh4DpuNbKFtGo33skR/SmBvHbO9x8UAY1U3C3IOSctVTvwh57W8aH5Fqx9K/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DveS8Lk+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AHVnXK4y; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=VaYcACPNF/JVWjdrzW5Dnxla2zxDjQaUKSzK9420un+Ei6uX6ZiDFooJhOyTX0QHgmEepYYAXVPpRPjQk232K5kmF16DlBlkY7lRajgkdFtA5w7vOjpyzICplV3uo3DTUzXsOHe5B3DUjhyfpQHn5t1a5IvGeiwTMSfqepcY9cU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k7nWByfU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GpoiTnQK; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DveS8Lk+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AHVnXK4y"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A36FC25401C7;
-	Fri,  7 Feb 2025 12:57:07 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 07 Feb 2025 12:57:07 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k7nWByfU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GpoiTnQK"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 17C3F1380166;
+	Fri,  7 Feb 2025 13:05:11 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 07 Feb 2025 13:05:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738951027; x=1739037427; bh=5PhYZHdwrD
-	UU0UMOl+ab67KzyvrsgWOJYdzmX/9AN9g=; b=DveS8Lk+QfvunAknCpH1XwpCou
-	vrobrLYKC3t0s/PSkur0b16kNC8cwDd/TeLif24quDolCC3/UlRJhYf347cNlUaC
-	bQTuaEKvz8xLeVlEEuKC6GF2dt5LUFUeDIo6dSkaMMaTDWJL1Ae/sxWsoAwOktkW
-	5Z2PWbhNm88ox0oGstNG+H4sFSPut5AEXRv7mskOB5DxbTl/zP5zG+QrGWxwOEpO
-	oMUQgkKHrC4oyrDXG8OY123Km5V5vF+szvlN+Ty2PFZLYsPn6z2SaqZ15V9KREPh
-	lJ5VEYblRLD/6a6WuZ0Pfg2K7miUxjLMVZpCR6h7nLL6XbmR5e6vZ5SfdPiA==
+	:subject:to:to; s=fm2; t=1738951511; x=1739037911; bh=iFtUsa9xKH
+	8g7i6vNTjhdMRyjy2hO0C/ka89Tg3KBog=; b=k7nWByfUddmd83JT0w4+FBHBR2
+	o3szlY3tHUb+GoA+pu7RSQz1UebNB2ucrFyW/hYICmjKSWxCotNX+ZVv1LDNer0b
+	fi/CQbkVckJay+/wxewWyqYqHzODsSK/OkgSdlpV5WCXTLTVCAEm+xakYXyL7obd
+	6u7Skpaj7RNPnZi5AcXYGvElP4HsjjoxBmJmRPB8ixlgcaPolE4gmquhD+gr5wi4
+	Hx8LuOZpVWCXUNJzKZOYn5BJBHktErtJZdm6Y3jMNzw7zghMFAxDoyzoyOT/RrJb
+	gKcbbgxztlY6MGe4bEC1gE9j1nDdqiaUtN/55LHEOX1fJqPKqP5FY/7nquVg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738951027; x=1739037427; bh=5PhYZHdwrDUU0UMOl+ab67KzyvrsgWOJYdz
-	mX/9AN9g=; b=AHVnXK4yTWCA72BIrH8hlOLnTRPCtVU9mK5l1qy4JhABuJPe0vf
-	gbjm/qmw66xCsYw2wUHtjWWQyOZRMUQLGkV4co4ocXkV2aq36m4MwQDgT6JOIIzE
-	7ZTtaAfh8dIbqNkut/2RM2Vgo6ieMQmbHybLaQMpWMBWbzkGircM8TC7My5MR6zW
-	TC3PhopJ78DzwiaK89hsmdxcKUlJv2+MWR1mZ2IfQBpD8PLCgwZTe05I/D+DmQ6o
-	jRH8aWECCT9cWgDGx1WULzVQg/FyFC4jeJpq7fkrPAa8aesdkv3Mv2iqAZysoEbo
-	fru0dP2aBeAKkb0mWfpRUDIUihBuDNK2sBA==
-X-ME-Sender: <xms:ckmmZ7X4-7QYvh3jGbK6S8mGm0zU-mfkQN7FFSk0CtIgnVOuiRjBVw>
-    <xme:ckmmZzmfjfU3URVMGtqVtOGPP53AhMaFZdxlPrAA9rpOvyEYT7UuRMG-y4avr3h0R
-    oLpORX1Ll_ZRr9o9A>
-X-ME-Received: <xmr:ckmmZ3ZZRviM-eUtmZPtQNIuBaZ9DEuJnkwuWQpT5NcJR6fLDG4r2Sic0pwXrK0AHcMOdnnNHP-MU5LcHmt88S7pnc9qww2zQ_FR>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleelgecutefuodetggdotefrod
+	1738951511; x=1739037911; bh=iFtUsa9xKH8g7i6vNTjhdMRyjy2hO0C/ka8
+	9Tg3KBog=; b=GpoiTnQKHpgCjz1SZ2FPmZFLSZBGjVQ+ktKVhKtja59bkNsqIk7
+	sczCvcSSSalsGFx7HMJcqhA2pgaAcph+zB+WLekWR1AkXhScZlIeJBnPDbP0UY6f
+	cuCLf4Lkr73zleLwnfVoIE1BlkEkhaE/J8YDAxdQzybeRFqdZsLR7IiVRrhfzYX2
+	3Tk0pa8uVdo3eBpo1wLJ6sUPYyJbz8tqje3kBGO1cZZbSsWSlz2huo9lngwD2Hxm
+	eSIUrUEPYLjSrwOL7kGtizZouGqjR4RNCRZcju9p18N+sYLCX8q7X8IAsptJI72F
+	Pqaz7SEzPHZsapHQKGwjmcoT9ghihSeAszw==
+X-ME-Sender: <xms:VkumZ0yBfT_PVONcVdi0-h1NH8ywjHzGd8MH-C571A8b2fa3QvCFxA>
+    <xme:VkumZ4RxoCyLp-73Ncp9YgbiOJVaqPocT6obgyR802CrkwDR0sbkdZWcg28TMzvfT
+    gBwQ6_8JgM0JIsC-g>
+X-ME-Received: <xmr:VkumZ2VFXTu5RDbGBVxvB0jl9fAT1c40gsS9sk5PkH0kRiATYPh-xw2ck4RWPpdCX1F8bpD-YNT5GWPvQg3is_61HW6-cX9Wv2qH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleelhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,40 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleelgecutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkh
-    hinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
-    ihhnsehgmhigrdguvgdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhi
-    lhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhm
-X-ME-Proxy: <xmx:ckmmZ2WH__vGZGY6xU2XuBDwNoZes_I4hiERQiC-yxygawzmt0sFBA>
-    <xmx:ckmmZ1ko0YJCzMt09lzWQUtD9JxymaAgSUqjilI5E-XAcn-hI-gs4w>
-    <xmx:ckmmZzfAQH63F3UAPaNo9siqMat5xUAWipagB4KVDvihXILJIJfFKA>
-    <xmx:ckmmZ_HSlEUR4K4TV7v1yXBfRg7CCFmkWj-pA1rXG4Ce7xmD4OKX7A>
-    <xmx:c0mmZ49xT3AnClXJr6nvy5mOD9Scbtzirqdehtj8XvgKQuxs3bmo-Q2m>
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosg
+    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopehmihhrthhhrdhhihgtkhhfohhruges
+    ghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhoth
+    hhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:VkumZyi2DudiG293K0sR66mWzfvk4THFe8eBaJrvItKJ4ZLwFc_yZA>
+    <xmx:VkumZ2BDD3LF5IR7NkOaiVdZWolqXCNP-33RgJKfPFNXvTgaDKVQFA>
+    <xmx:VkumZzKMbiT-RjvDqJW7ccJx_Hmpphi2pJJp_tf3yiGcUPVdW_R48Q>
+    <xmx:VkumZ9AuvOHJsjcUSohhubLyYtz6lMRs8b6-FIQWbemH0AAaBfiGRg>
+    <xmx:VkumZ97OKMB_Z2m2QD14xRxZVjYVYfySOFWkfVp17ocrw9b5oncTHCbH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Feb 2025 12:57:05 -0500 (EST)
+ 7 Feb 2025 13:05:09 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: git@vger.kernel.org,  christian.couder@gmail.com,
-  Johannes.Schindelin@gmx.de,  johncai86@gmail.com,  me@ttaylorr.com,
-  phillip.wood@dunelm.org.uk,  ps@pks.im,  rsbecker@nexbridge.com,
-  sunshine@sunshineco.com,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4 6/6] agent: advertise OS name via agent capability
-In-Reply-To: <CAPSxiM_y6gUQVNt8kZXfrn2dxpM7RNNg5LZz0dZy+9nYy=hcgg@mail.gmail.com>
-	(Usman Akinyemi's message of "Fri, 7 Feb 2025 22:57:19 +0530")
-References: <20250124122217.250925-7-usmanakinyemi202@gmail.com>
-	<20250205185246.111447-1-usmanakinyemi202@gmail.com>
-	<20250205185246.111447-7-usmanakinyemi202@gmail.com>
-	<xmqqy0ykkqqc.fsf@gitster.g>
-	<CAPSxiM9Yejt+Cgu_ekuQwhduf=JEmS1s+T+nc--SvNQqkQE82g@mail.gmail.com>
-	<xmqqo6zfjec5.fsf@gitster.g>
-	<CAPSxiM_y6gUQVNt8kZXfrn2dxpM7RNNg5LZz0dZy+9nYy=hcgg@mail.gmail.com>
-Date: Fri, 07 Feb 2025 09:57:04 -0800
-Message-ID: <xmqqy0yhfxjj.fsf@gitster.g>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: M Hickford <mirth.hickford@gmail.com>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  git@vger.kernel.org
+Subject: Re: [PATCH 4/5] doc: use .adoc extension for AsciiDoc files
+In-Reply-To: <CALnO6CAa+6xx885TdKFrpruxHbN80S3RE=STaswnaUz_3QZQ=Q@mail.gmail.com>
+	(D. Ben Knoble's message of "Fri, 7 Feb 2025 12:51:48 -0500")
+References: <20250120015603.1980991-1-sandals@crustytoothpaste.net>
+	<20250120015603.1980991-5-sandals@crustytoothpaste.net>
+	<CAGJzqsnFNfK6DEcbRQsUB4S8qVBnQ2PcJBgbvCPYLd-xAVVQBA@mail.gmail.com>
+	<xmqqo6zeixnk.fsf@gitster.g>
+	<CALnO6CAa+6xx885TdKFrpruxHbN80S3RE=STaswnaUz_3QZQ=Q@mail.gmail.com>
+Date: Fri, 07 Feb 2025 10:05:09 -0800
+Message-ID: <xmqqtt95fx62.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,27 +92,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-> I was actually thinking about this inside the bathroom when it
-> occurred to me that,
-> according to the current implementation, GIT_USER_AGENT will not allow the user
-> to specify an empty string at all. It is either you specify some value
-> or we decide for
-> you.
+>> Do we pass SubmittingPatches (and CodingGuidelines for that matter)
+>> through AsciiDoc?  They do not even have .txt suffix, so I suspect
+>> it is not.
+>
+> I don't know how (I didn't dig), but we do build and package
+> HTML-ified SubmittingPatches as both $(git
+> --html-path)/SubmittingPatches.{html,txt}. I don't see a build output
 
-Yes.  GIT_USER_AGENT=ImNotTellingYou would work just fine for
-privacy concious folks.
+I was wondering why we remove SubmittingPatches.txt with "make
+clean" there the other day.  There is a Documentation/Makefile
+target to create %.txt from % applied for SubmittingPatches.
 
-> I think we can add the config at a level that can disable the
-> agent capability completely
-> instead of only tweaking the (os) part.
+> for CodingGuidelines, though. (We also package
+> ReviewingGuidelines.{html,txt}, but it has a .txt extension.)
 
-Yes, go back to a few messages you received from me earlier; it is
-already there ;-)
+Thanks for noticing an annoying inconsistency that must be rectified
+independent of brian's topic to help it easier for Editors to
+identify the files that are written in AsciiDoc.  If we are shipping
+documents that are exclusively meant for Git developers, we should
+be shipping all of them together.
 
-    If we were to give them an improvement in the area for privacy
-    features, I would think it would be to add a configuration variable
-    to turn the agent off, instead of having to leave GIT_USER_AGENT
-    environment variable set in the environment of their processes.
+Thanks.
+
 
