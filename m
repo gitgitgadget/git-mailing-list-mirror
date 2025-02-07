@@ -1,157 +1,173 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228B91AE003
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 18:29:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FDA19D072
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 19:26:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738952954; cv=none; b=f1KTqUsjZtgy7CRPGsXPWV/zKr5toC4+t7CHAwiQpOoceVL/+u7NqpaNbldJbtANUfvHQ4so7R0+CKmnnLj5tnBnMYAcV5yO81lrKYCcKZ9bCzxSrbp+IUMeTozTMe5W60QNvZslDx21+Y3naZcXsKlZlIGDFJTmcg/Vckt/d9E=
+	t=1738956371; cv=none; b=VCDjh7nDnsLabes+o5eVNZd+CtrhFcfZsKOP50Ma80OCNVWG8pXg0OPO/89P68GitxM2sMhYnn8IKwxNFo9h39fryXlTdkZlAaOOJ34eL8l4VR90BXL2JTCuu/ApQrmUqf2sAeELHDrAJrqbDN2DAjq12tqE+dvBwDNz9XqHY6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738952954; c=relaxed/simple;
-	bh=42mjlQc61V/HInSLCjqqNhH6ZOKj9YZjrJPDMVYdzPc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=g8rq5l96nSL2tIJ+hy1eKCKsSTZ7HqDRtV0lj2XvJ/DifGI97x9+K+RGJZWqv6sfX9p46aixG7eScCufZfIpNNkKmXTvJHV1ZyCTssVr6rcz0AiXJV8fWuGCZAgsrJS0LPjzFy3cvaV3oIC5ZspVutkPR5l/AAr/m5k7RT5t2BE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IPC+vHu7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PQvDQMef; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738956371; c=relaxed/simple;
+	bh=e4k03LpHPfA+3BtA3J86j+qGR+PmtdsSPu8lQwaRXCw=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=aC+XpbMFcUsehV9yikclHeQASncF8KnAIqUber4zO8S41Fcjm9qd4vDN+oOLZYnYf79iUMAcL4Rvq8V4UPhJApu8q440di+oaN4CxEy3zPgD3W3PGM1jYEXWV0BH/THuFlnsFyKGSj7Z/1Gpm7yztUViU/AVX0y7GMos2im/88Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L6hheIWp; arc=none smtp.client-ip=209.85.217.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IPC+vHu7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PQvDQMef"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 089871140135;
-	Fri,  7 Feb 2025 13:29:11 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 07 Feb 2025 13:29:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738952951; x=1739039351; bh=+ZfYpFsxx9
-	K171GBhgEIN+OZY8L84d/R5pbhZ1poT5E=; b=IPC+vHu7pHHZkk9VmxH+Ntu5Bj
-	iJGlSzGgEFd8Q4pM30gXIvWE0KN7ZucJOR5Zexrm9gS4Lj/FworZ14Ncy47AfAnl
-	pr6wgYFYsQK+tB6DgSxF7LYaf0fG7oAzTOPd8xDB9ZrZsHsxt7GbgWsxldj34l05
-	JQOtBbZU+1Fw2X+MruPEkSi/KASesUAei8C30jGYSV7QpoJYISSq6+7abLuNltDR
-	6r+8YYBRACyptm6E9NKn+ZxSKG/k9iW76L64kkEJWfhHsqiYBbg/2N5eyECORQXk
-	G5+0wmmdb/3Vuaa1UaDKFxUetjDB2hrhj/1Jx8Hs5ELTTuACvVhUOd0xp4zg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738952951; x=1739039351; bh=+ZfYpFsxx9K171GBhgEIN+OZY8L84d/R5pb
-	hZ1poT5E=; b=PQvDQMefShoDjDeEJ8U8QLxPgv4qTV8RNXnOfzAccWrDv0G1sRD
-	u9kZ88Vun7aHOAMwLXbWs8I3aLBM9jWVqo6JWDoksLI0jzmRdq2U/cRgstNqQdtF
-	hv96D0inbubo54dikPzE741CIKA1aqs2pbOQjfly6lUMwxVkneLb/zndoQo7krmh
-	c6gqPgoxuJMzn4PRKDDlLm/YeG6sG3GDGWiDB4m+ye1qKvyuYtW+BcsTPiUtyNrm
-	zlsGoQWIx0sjVn6UDjHmn1SFV2kFcUVTCxMXsKSIse1eDLOCdW1uDZK6WtwxwaY0
-	hhmV5flQ1ra9LuuQFLIUv4WYQ83Ka94UKSw==
-X-ME-Sender: <xms:9lCmZzmYKQq3ZiXe_Rpce6WK_v9-F0ReIQneZ_f6lAng9zwfKRbssA>
-    <xme:9lCmZ20i-7xhT9sbZ2YNdVc6tzZbdNJ64FQdmDBqxkiLz3wZQJ-t5WzzubdS9FmpU
-    0g3k1igcRGZuv3P-g>
-X-ME-Received: <xmr:9lCmZ5rut1F6ku4L8p0cpYAM0S_WYua5bL1Wnfk_wj03dlnxYdTv1ItgUWovzQxjUhpsUPB2qntHeI6l-El3K1l337O4HMT5X0OY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddttdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosg
-    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopehmihhrthhhrdhhihgtkhhfohhruges
-    ghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhoth
-    hhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:9lCmZ7lfitK2laHquBTUNfO_pmv-CZzMiRNyQNS2pGIADvHzzrLSQg>
-    <xmx:9lCmZx28ut829R4wQNK15WPGpI6ZMHcyo9yd3yNQucEREeUgFJTiRA>
-    <xmx:9lCmZ6vCJhnBswePY8UEAtRnsI5aKkcV5hAcUekC-v483f0qwYq43Q>
-    <xmx:9lCmZ1UWqLoxiTtZNFwhjVAU7TEQFRex6X61QjeD0bNiz0EyIH2jdw>
-    <xmx:91CmZ58TUhwcKtL_xwRYsSgrHTCqbZ07JqdjUtnMdSR8xQ6nRePX1EZ8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Feb 2025 13:29:10 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: M Hickford <mirth.hickford@gmail.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  git@vger.kernel.org
-Subject: Re: [PATCH 4/5] doc: use .adoc extension for AsciiDoc files
-In-Reply-To: <xmqqtt95fx62.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	07 Feb 2025 10:05:09 -0800")
-References: <20250120015603.1980991-1-sandals@crustytoothpaste.net>
-	<20250120015603.1980991-5-sandals@crustytoothpaste.net>
-	<CAGJzqsnFNfK6DEcbRQsUB4S8qVBnQ2PcJBgbvCPYLd-xAVVQBA@mail.gmail.com>
-	<xmqqo6zeixnk.fsf@gitster.g>
-	<CALnO6CAa+6xx885TdKFrpruxHbN80S3RE=STaswnaUz_3QZQ=Q@mail.gmail.com>
-	<xmqqtt95fx62.fsf@gitster.g>
-Date: Fri, 07 Feb 2025 10:29:08 -0800
-Message-ID: <xmqqh655fw23.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L6hheIWp"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4ba88477ffaso436396137.2
+        for <git@vger.kernel.org>; Fri, 07 Feb 2025 11:26:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738956368; x=1739561168; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0XCsjR+evxPJCpSSg1Yyq7j8q4jXNfxQzQn5Z/zN/xU=;
+        b=L6hheIWpBsD81O6RtNQiX99VkjIkUuIRjEjynyKw478gKiAwJzJD05GJc4JK7ic8Fq
+         xFb+sAGIFmgPXDCMCQmPFfhKqzFb7qSZ2OmMx/0VgOwClCNeIb9VPsW3+aGCUEDVG4Bj
+         2HE0mlkZa26JPqT1IvtjKP8gRchjNWzL+BY0ybjndm4ZTAatf8nDFh9sLHBj2xA0NQAi
+         J4jPiTWFNnS1YHpaecmgPVKP4N0+/T3VGfEsWrSIOM1oauwQiTvHCGD7mjMRhpSudHIC
+         yaD8iilVHg9/VOALxNHHVX5S1qa2KPSvBc4q3KfkeS+lm7vjcYg2v5ifh3H4zTz6pgbh
+         4ByQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738956368; x=1739561168;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0XCsjR+evxPJCpSSg1Yyq7j8q4jXNfxQzQn5Z/zN/xU=;
+        b=YThhl30ofQpAoT7xaGuriLVAP/KSrZOmAl5JL5zw5hOtgWRMVFVH68DA14M7Mwrc7A
+         ORQu3kntpUxpm8YB5nJn0doMPAsL2O8PMHMO3MMhNbUTfXTxiivcStptnu9j6MPoYqi+
+         ZD5kQSVRas4yy5A/YsTjXs1zEhm1EdD6thKjEMe1dAD8IsrOq2qzR3jr0MUO7rKURUFf
+         I5z1+fL4vKkSW+bt4QVVKRR5H6dedoLgs/bfS339To1Tu3n97paA59/vGXC0Mh1dnN9P
+         4oz5zjxN1B5NUDEMv6OaDgn2sj5QkixW2iIfpHU+xfk2Ut1odHdMFR/LW0MxdbKc0E2X
+         XZsg==
+X-Gm-Message-State: AOJu0YzRiMs31UOSzEj0csGbE9JStyeLsCnEu4FpTN0OQm0HYBVRqjSz
+	fson2XhrxVTf9wgFu4RrPombykLrB/2Z8bJn64H7xC8qesbvbM2AQDsgNnfTZOsXteAew5OaR79
+	Dyik56Kmrk2MgKZOBROl3LJqLMEo=
+X-Gm-Gg: ASbGnctNVA6qQdGwO+LRf0wj6U8KiLBYRbPeujz14/cYsglbYqOW2u8ZCCL5EkTG1D1
+	CpLzOAuSDDTjWYZ13DRpk64vDeepNV9KROytOg2BfpwJF8y6W0Vh6GUIHzHyRHbUXDu3ivWeR
+X-Google-Smtp-Source: AGHT+IFgRkEb+rWUPH+zzPiGx9czrsda+Vpq5m0tQa3okt3YFtirgxY/f/2jj4txRNYi5PYsiDPoIxisgtE81zN4qIA=
+X-Received: by 2002:a05:6102:f94:b0:4b2:bc6b:c845 with SMTP id
+ ada2fe7eead31-4ba85de9dcamr3509224137.6.1738956368420; Fri, 07 Feb 2025
+ 11:26:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250124122217.250925-7-usmanakinyemi202@gmail.com>
+ <20250205185246.111447-1-usmanakinyemi202@gmail.com> <20250205185246.111447-7-usmanakinyemi202@gmail.com>
+ <xmqqy0ykkqqc.fsf@gitster.g>
+In-Reply-To: <xmqqy0ykkqqc.fsf@gitster.g>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Sat, 8 Feb 2025 00:55:57 +0530
+X-Gm-Features: AWEUYZmNJ52vNozjwasYUZxjlbsfIKijmxahud5rM9CEUnvuIZUNYzGXDcY2fvU
+Message-ID: <CAPSxiM_TUyZqrKEaDBz6AXBg3hamPOaVvY5RryUUMUE7RDU1cg@mail.gmail.com>
+Subject: Re: [PATCH v4 6/6] agent: advertise OS name via agent capability
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, 
+	Johannes.Schindelin@gmx.de, johncai86@gmail.com, me@ttaylorr.com, 
+	phillip.wood@dunelm.org.uk, ps@pks.im, rsbecker@nexbridge.com, 
+	sunshine@sunshineco.com, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> "D. Ben Knoble" <ben.knoble@gmail.com> writes:
+On Thu, Feb 6, 2025 at 3:18=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
->>> Do we pass SubmittingPatches (and CodingGuidelines for that matter)
->>> through AsciiDoc?  They do not even have .txt suffix, so I suspect
->>> it is not.
->>
->> I don't know how (I didn't dig), but we do build and package
->> HTML-ified SubmittingPatches as both $(git
->> --html-path)/SubmittingPatches.{html,txt}. I don't see a build output
+> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 >
-> I was wondering why we remove SubmittingPatches.txt with "make
-> clean" there the other day.  There is a Documentation/Makefile
-> target to create %.txt from % applied for SubmittingPatches.
+> > As some issues that can happen with a Git client can be operating syste=
+m
+> > specific, it can be useful for a server to know which OS a client is
+> > using. In the same way it can be useful for a client to know which OS
+> > a server is using.
+> >
+> > Our current agent capability is in the form of "package/version" (e.g.,
+> > "git/1.8.3.1"). Let's extend it to include the operating system name (o=
+s)
+> > i.e in the form "package/version os" (e.g., "git/1.8.3.1 Linux").
+> >
+> > Including OS details in the agent capability simplifies implementation,
+> > maintains backward compatibility, avoids introducing a new capability,
+> > encourages adoption across Git-compatible software, and enhances
+> > debugging by providing complete environment information without affecti=
+ng
+> > functionality.
+>
+> I obviously agree with the benefits enumerated in the above
+> paragraph.  The simpler, the better.
+>
+> I however wonder ...
+>
+> > Add the `transfer.advertiseOSInfo` config option to address privacy
+> > concerns. It defaults to `true` and can be changed to `false`.
+>
+> ... if this configuration knob is at the right granularity.
+>
+> For privacy concious folks, I would imagine that the distinction
+> between "git/1.8.3.1" vs "git/2.48.1" would be something they do not
+> want to reveal equally as, if not more than, which Operating System
+> they are on.  Such a privacy concious user may already be using
+> GIT_USER_AGENT environment variable to squelch it already, anyway.
+>
+> If we were to give them an improvement in the area for privacy
+> features, I would think it would be to add a configuration variable
+> to turn the agent off, instead of having to leave GIT_USER_AGENT
+> environment variable set in the environment of their processes.
+>
+> On the other hand, for the rest of us who think "git/1.8.3.1 Linux"
+> is not too much of a secret, we do not need a knob to configure it
+> between "git/1.8.3.1" and "git/1.8.3.1 Linux".
+>
+> So, while I view some parts of the series would have been a good
+> exercise to use various features (like config subsystem) from our
+> API, I prefer if we kept the end-user interface not overly
+> customizable (iow, without a config-knob, we do not need to add a
+> code to inspect the new configuration variable).
+Hi Junio,
 
-Interesting.  I very much am sympathetic to the original reasoning
-why Documentation/Makefile is set up this way at 049e64aa
-(Documentation: convert SubmittingPatches to AsciiDoc, 2017-11-12).
+Yeah, I believe appending the (os) to the agent might attract the attention
+of some set of privacy conscious users who might not really be worried
+about the agent when it was just a string like "git/1.8.3.1". While
+GIT_USER_AGENT
+can be used to suppress it, I believe having a dedicated config option to
+completely disable the agent is a more user-friendly and persistent approac=
+h
+than relying solely on environment variables.
+Requiring users to manually set GIT_USER_AGENT (since it cannot be empty)
+can feel cumbersome, making a config option a cleaner and more
+intuitive alternative.
+Additionally, having a config option would provide a consistent
+mechanism in case
+similar privacy-related features are introduced in the future.
 
-Here is what its commit log message says:
+This is me convincing you that having a config option to disable the
+agent is more user friendly than having only the environment variable for
+users who do not want to share anything at all.
 
-    Since the makefile needs a .txt extension in order to build with the
-    rest of the documentation, simply copy the file.  Ignore the temporary
-    file so it doesn't get checked in accidentally, and remove it as part of
-    the clean process.  Do this instead of renaming the file so that people
-    who have already linked to the documentation (who we're trying to help)
-    don't find their links broken.  Avoid symlinking since Windows will not
-    like that.
+What do you think ? Or maybe there is strong reason for having the
+GIT_USER_AGENT in the first place and not having a config to disable
+the agent capability?
 
-One could argue that we made a lot more damage when we renamed all
-the .txt files to .adoc to external links people have had forever,
-but I guess SubmittingPatches is more special than say git-add.txt
-or git.txt for that matter, as the latter class have preformatted
-".html" copies people would link to rather than the original ".txt".
+We could also wait for input from other community members.
 
-Before the "let's avoid renaming and instead copy to a temporary
-.txt file to run AsciiDoc on it" commit, it seems that we kept the
-file in our source tree without copying anywhere else?  It is very
-much understandable as the target audiences are those who want to
-work on our code, so it is a fair assumption that they have local
-copies at hand, without others having to give them public URLs to
-read on the Web.
+Thanks,
+Usman
 
-"CodingGuidelines" is still treated that way, which is probably what
-we want to fix, by exposing it on the Web.  I'd imagine that it is
-sufficient to just rename it to "CodingGuidelines.adoc" without
-worrying about those who "have already linked to the documentation",
-but others may feel differently.  And if we do decide to rename it,
-we may want to rethink what we do to "SubmittingPatches" as well.
-
-We've had ".html" versions of the document out there for very long,
-so hopefully people would already have updated their links to point
-them, not the one without any suffix, in which case we can stop
-special casing "SubmittingPatches".
-
-Thanks.
-
-
-
-
-
+>
+> After all, GIT_USER_AGENT let's you hide not just the OS part but
+> any other things from the user-agent string already.
+>
+> I notice that unlike user_agent() vs user_agent_sanitized(), you
+> only have a single function for os_info(), which I think is a good
+> design.  But if we were to go that route, shouldn't we call the
+> function os_info(), not os_info_sanitized()?  The idea behind a
+> single function is that you cannot obtain unsanitized version of
+> os_info() out of the system at all, so what _sanitized() returns
+> would be what os_info() without _sanitized suffix would return to
+> the caller anyway.
+>
+> Thanks.
