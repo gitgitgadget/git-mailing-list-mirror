@@ -1,55 +1,55 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F81F1DF73E
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 11:03:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD5C1DFE13
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 11:03:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738926221; cv=none; b=ba+ssL2dPR4NrHZ9TFfV2oUkGrQYT0FtLVl8KRaEPfcCSdSKAdcQZ+OwTJQI/wO6wt4nA08FkKZMPwTReunQvRoWUyXDD+xlIVc1Z4ElqZI+ohIPt4o/1ativTuFTGpY75abZ0jzjfu+1VfAe8yDL0tSTI7L7rI8FO6CkaiWY70=
+	t=1738926222; cv=none; b=YqADDjCzE30+a++Wjee8sAFrmTV/gQ0M2y3uoIx76jJeHy0Rb1Ruz18OMKvJn0XVcRA0r9a6A6qpM67QW2Hcd7hvY5W+fdddIjCdQUJj0dWBqrMIWzbkgsUScwhMRvasQb2cQ95fKvCx6FSLX54dTNd8XxKAkvLolmJH9Y54UuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738926221; c=relaxed/simple;
-	bh=TNdn/8zW3ZPqk7eQoJ76KFfnDdZZ7klBnnSoEHcoXs4=;
+	s=arc-20240116; t=1738926222; c=relaxed/simple;
+	bh=eJZxn1sWEzfa6bDkcJ+hh9WCkgS5lrl5kDdR8LoQFm8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nUW8FJQ35lHW9ZxOSn7SzwsVFsE+sxImBjuSwiqszrQ6zWkzkkWCqUXo55UctS+DXiRvE++Dr4c6hPwGK//R3MMFIiPgThW5Uohycas8wkRk6a0kfGeIl81aVgk4nSpS/pxnSbX+QnCLx6jAICpWiT1tvSca/kYzMIupHql3Hos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BlWeERPi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BrKpVpG9; arc=none smtp.client-ip=103.168.172.153
+	 In-Reply-To:To:Cc; b=oV89nQufba+AXz0kBqU8YntwCMdzM+GMnRx+XpGSP0HCJv7omwFocFu61A4QjODqy3Tmjtq74GejB/vmh3EM6Y0v0mq6TkX1z71Kq6fsQZX7+Ff73KdTv23VPLDdfH7rGcQu0/md9lIv+GVX5j1d7TCtpGw1JimajsHrBFYj9uI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O49kI9Ed; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fzlDiyeN; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BlWeERPi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BrKpVpG9"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 924CB1140120;
-	Fri,  7 Feb 2025 06:03:38 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O49kI9Ed";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fzlDiyeN"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id BD9A91380111;
+	Fri,  7 Feb 2025 06:03:39 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 07 Feb 2025 06:03:38 -0500
+  by phl-compute-11.internal (MEProxy); Fri, 07 Feb 2025 06:03:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738926218;
-	 x=1739012618; bh=SiGCfHrc9FVKF9PXlxyADN2g6y0Do9oyhurkTi+mwLI=; b=
-	BlWeERPiY8f3cGYyFoW/FSbK9FblASuh9H+5pKb4PjjFFBmJaUAT6PIArtaAyW4N
-	5r+Dede9UEMk+rp3eHGAaWZy0QOwWCuDITjwHJhHguWtZD1zNwLdHjw7M7dECnpX
-	+eYxfbthNjwI6V04/tM2nARxzE7OyabEQ8rWRFcJA/rBzhSada2IgYwePWhc6OP/
-	w2nAo+5YNTy1zbtfMWLfgNyO/Nh0P3tG5AgLWWQY19nhPXSQ+pi+kNvJfzkBv+7J
-	v09n5B39lmxuXixxInijnBMxBZtIf/fv6rApej3ojPJ3Ku0R98ubrIZRfKgLpBj3
-	IVnFmSIbtVIrHFMcFOJGog==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738926219;
+	 x=1739012619; bh=jPO99lXy+54Z0k2dql5Y1Fld1lcKSAp2AznZB/MaXUI=; b=
+	O49kI9Edff22lzgxZzgd9awP0KhDa3qJSJyFP1eO/MRc6brOFAeAa5zYwvY+ndEJ
+	Jg08g8Ur8SMKgWFC6GtweSA2a6eJpsaxVlFYYLhYCtsvW+hsJrX3NIaop15mNwuk
+	ydze/XVKANnWPdQUEJhNTygi7Zr8jd/3DHUh4w6p/VonZyKhcD2MTVpPAgUjRf+U
+	fqkpTV+lSXGEOb0RIgpF6SHw+8HKXadedwdAswrMmP3+29J7LGdWwYGFkgRC1N2H
+	Xa5LdCTmKmBNQGxjw0i2IugsjTZTzWAx4T7RWzxyhZlwHLYGaKgEL59bpfAikpxY
+	RedcZ1lWzTRmyPyX3LGbjQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738926218; x=
-	1739012618; bh=SiGCfHrc9FVKF9PXlxyADN2g6y0Do9oyhurkTi+mwLI=; b=B
-	rKpVpG9MPrNU0p8N49OpBOz2GRvXt8j/NociMXqEqrPiTWMdCG5H92ErUKPpamLs
-	8tGt/f/JI3w3v46xb0kSbPp+34t1AV4FhCMoZIfQN+N4r5ZUijhoC+69TTh2gH63
-	bUf7CoXkQ5n2P6kDZDx/o4hWGsB2LqyVhT3yQ49/+LUirXgUNpusOoqs5uI8l//V
-	QXSYl7NfR9USsUaHl3zJ3cPJdu5NKisOqIMPquUSN5jNqITkgbL/sNFHD39QXO3v
-	VVFXcP0WC/1ZVav0XSDVerhhnOqAeMkWkiXqyFi/PvoB8eMXgPc2uDMGSUD4tbGi
-	HSkDGR+lyT6VUs2M4//+Q==
-X-ME-Sender: <xms:iuilZ-sUqM9yO3F2lGzzLc9szucNU-LJ7lM8Yer5tMGfGf1VFtY4eg>
-    <xme:iuilZzcm9sfgQvExsNWPMg41bFsGACVEkebOUDFFdPBejzXcwvyhGtkznFZnhCDZ3
-    n3xRcG2HtEjlXvGwg>
-X-ME-Received: <xmr:iuilZ5wHOC5-HZrHc25kr_Pu6Wp7746tr7ZdPQxfTT-FBEZmnTzhuAeR4OsvOpbmLAP1C4H896yqBrBSMSx5pVGgw8C1eHKvZCGCSyOA7F6dTQ9y>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738926219; x=
+	1739012619; bh=jPO99lXy+54Z0k2dql5Y1Fld1lcKSAp2AznZB/MaXUI=; b=f
+	zlDiyeNMJfzi7qxSNRuU2j4Jv1Yb2y8IWMXg1/YautPu95WbEXE1LYK7ZqBZnt+o
+	Jhu0RCygDmMp9pW1SS9BGz+WtpTTMZpsXjLltsQUjugkKPWq764uT0I50LAvBCT4
+	DxdKOaZSWy7WzqYwDMFGiwhLs3XDpnpgZ7L1BTq6vXhyPqNYBSH9V5BzKSO2Y3uh
+	rvs1X/o3S3hSrWCnmfCGuwVFcmoIyr6b/O4l+E3fzNqDgHXog1SZ7G7zFNDXizAC
+	6g5siaL15pgv3mGpC9Rz3SvKfyUQXAOIpnFT97sc5so6Ox+enRxEdWkumqo/wNrj
+	WRXGwtC5e5D5xKqMJmueg==
+X-ME-Sender: <xms:i-ilZ1nk2g5R7i1o05Y5uW5TKKmif9h0UxuPOzCAdEFTNzkxrkdxXQ>
+    <xme:i-ilZw1MXfQFCmMtW_nHB5ork-hjyVfvAmbXKrg_pf7ek1jQolLv9PwS-Z37qC8Mq
+    UYmnJ43Nqz57ka1JA>
+X-ME-Received: <xmr:i-ilZ7pnaTd9cn98HiMcD03zD8ZQc7O7jh6v6dFCQ0RWtgUlcIzRunkxgyOu0zccmialQOTjCTcuEV3q6-hPiYvt1iI-TCAitoTvH04re1kJJ0Lf>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleduvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -61,21 +61,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleduvdcutefuodetgg
     pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
     dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
     ohepshhhvghjihgrlhhuohesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:iuilZ5PRZJWCzJdlOzzQb6U-K63tlpflEQBcIv3qLqtkyAhllY6wug>
-    <xmx:iuilZ-8R_xnM1k6PsglG5TvQpfsmXzGu6pJ-s_JuExhRgrLxR98qbg>
-    <xmx:iuilZxX58YYkC_rEN5lJxRcm8CTP6iO5WUJAu-2EmQtEyzi7yYADvA>
-    <xmx:iuilZ3d9ySLTbbi2yV9HCnzFbsl_RIiJ-tYKI9HWgypiiWAjrC3mLw>
-    <xmx:iuilZ1aMlp9DWwo2eGoOabmr9SeW8ZRkh9Wt9sZ0NtxLQ7EuVGXNgsnS>
+X-ME-Proxy: <xmx:i-ilZ1mybXuTEZm1Z0UbfjxVEpAEL-UXvnaJZY0X4egg-3-YDU7eiw>
+    <xmx:i-ilZz2qQPBjeD_hjXsN4JkrERE7yYZQZqHdUzvNnQd0OjBDFM90JQ>
+    <xmx:i-ilZ0vmnbsP1FH4dvMQ-KbEz6g48k1WOafpPOqNMlIRf5CdimVx6w>
+    <xmx:i-ilZ3UB5IhFuw7GGDYKVX0aBXNMtOxTKcq66pEBh31Q2M9fT5G-XA>
+    <xmx:i-ilZ-RpJnjqK92i3pUBmXYN91gjfBBm73Y-OsvOjGmwqRNml1bggUQ7>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Feb 2025 06:03:37 -0500 (EST)
+ 7 Feb 2025 06:03:38 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e4881afb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Feb 2025 11:03:37 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id c8547d22 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Feb 2025 11:03:38 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 07 Feb 2025 12:03:34 +0100
-Subject: [PATCH v2 09/16] worktree: return allocated string from
- `get_worktree_git_dir()`
+Date: Fri, 07 Feb 2025 12:03:35 +0100
+Subject: [PATCH v2 10/16] path: drop `git_common_path()` in favor of
+ `repo_common_path()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,288 +84,278 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250207-b4-pks-path-drop-the-repository-v2-9-13cad3c11b8a@pks.im>
+Message-Id: <20250207-b4-pks-path-drop-the-repository-v2-10-13cad3c11b8a@pks.im>
 References: <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
 In-Reply-To: <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, shejialuo <shejialuo@gmail.com>
 X-Mailer: b4 0.14.2
 
-The `get_worktree_git_dir()` function returns a string constant that
-does not need to be free'd by the caller. This string is computed for
-three different cases:
+Remove `git_common_path()` in favor of the `repo_common_path()` family
+of functions, which makes the implicit dependency on `the_repository` go
+away.
 
-  - If we don't have a worktree we return a path into the Git directory.
-    The returned string is owned by `the_repository`, so there is no
-    need for the caller to free it.
+Note that `git_common_path()` used to return a string allocated via
+`get_pathname()`, which uses a rotating set of statically allocated
+buffers. Consequently, callers didn't have to free the returned string.
+The same isn't true for `repo_common_path()`, so we also have to add
+logic to free the returned strings.
 
-  - If we have a worktree, but no worktree ID then the caller requests
-    the main worktree. In this case we return a path into the common
-    directory, which again is owned by `the_repository` and thus does
-    not need to be free'd.
-
-  - In the third case, where we have an actual worktree, we compute the
-    path relative to "$GIT_COMMON_DIR/worktrees/". This string does not
-    need to be released either, even though `git_common_path()` ends up
-    allocating memory. But this doesn't result in a memory leak either
-    because we write into a buffer returned by `get_pathname()`, which
-    returns one out of four static buffers.
-
-We're about to drop `git_common_path()` in favor of `repo_common_path()`,
-which doesn't use the same mechanism but instead returns an allocated
-string owned by the caller. While we could adapt `get_worktree_git_dir()`
-to also use `get_pathname()` and print the derived common path into that
-buffer, the whole schema feels a lot like premature optimization in this
-context. There are some callsites where we call `get_worktree_git_dir()`
-in a loop that iterates through all worktrees. But none of these loops
-seem to be even remotely in the hot path, so saving a single allocation
-there does not feel worth it.
-
-Refactor the function to instead consistently return an allocated path
-so that we can start using `repo_common_path()` in a subsequent commit.
+This refactoring also allows us to remove `repo_common_pathv()` from the
+public interface.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- branch.c               |  7 +++++--
- builtin/fsck.c         |  8 ++++++--
- builtin/receive-pack.c |  4 +++-
- builtin/worktree.c     | 10 ++++++++--
- reachable.c            |  6 +++++-
- revision.c             |  7 ++++++-
- worktree.c             | 11 ++++++-----
- worktree.h             |  2 +-
- 8 files changed, 40 insertions(+), 15 deletions(-)
+ builtin/worktree.c | 16 ++++++++++++----
+ path.c             |  8 ++++----
+ path.h             | 19 -------------------
+ worktree.c         | 32 ++++++++++++++++++++++++--------
+ 4 files changed, 40 insertions(+), 35 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 77716966fe..91297d55ac 100644
---- a/branch.c
-+++ b/branch.c
-@@ -397,7 +397,7 @@ static void prepare_checked_out_branches(void)
- 	worktrees = get_worktrees();
- 
- 	while (worktrees[i]) {
--		char *old;
-+		char *old, *wt_gitdir;
- 		struct wt_status_state state = { 0 };
- 		struct worktree *wt = worktrees[i++];
- 		struct string_list update_refs = STRING_LIST_INIT_DUP;
-@@ -437,7 +437,8 @@ static void prepare_checked_out_branches(void)
- 		}
- 		wt_status_state_free_buffers(&state);
- 
--		if (!sequencer_get_update_refs_state(get_worktree_git_dir(wt),
-+		wt_gitdir = get_worktree_git_dir(wt);
-+		if (!sequencer_get_update_refs_state(wt_gitdir,
- 						     &update_refs)) {
- 			struct string_list_item *item;
- 			for_each_string_list_item(item, &update_refs) {
-@@ -448,6 +449,8 @@ static void prepare_checked_out_branches(void)
- 			}
- 			string_list_clear(&update_refs, 1);
- 		}
-+
-+		free(wt_gitdir);
- 	}
- 
- 	free_worktrees(worktrees);
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index c12203e012..eea1d43647 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -1057,7 +1057,7 @@ int cmd_fsck(int argc,
- 			struct worktree *wt = *p;
- 			struct index_state istate =
- 				INDEX_STATE_INIT(the_repository);
--			char *path;
-+			char *path, *wt_gitdir;
- 
- 			/*
- 			 * Make a copy since the buffer is reusable
-@@ -1065,9 +1065,13 @@ int cmd_fsck(int argc,
- 			 * while we're examining the index.
- 			 */
- 			path = xstrdup(worktree_git_path(the_repository, wt, "index"));
--			read_index_from(&istate, path, get_worktree_git_dir(wt));
-+			wt_gitdir = get_worktree_git_dir(wt);
-+
-+			read_index_from(&istate, path, wt_gitdir);
- 			fsck_index(&istate, path, wt->is_current);
-+
- 			discard_index(&istate);
-+			free(wt_gitdir);
- 			free(path);
- 		}
- 		free_worktrees(worktrees);
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index b7ea774609..d65a441f32 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1435,7 +1435,8 @@ static const char *push_to_checkout(unsigned char *hash,
- 
- static const char *update_worktree(unsigned char *sha1, const struct worktree *worktree)
- {
--	const char *retval, *git_dir;
-+	const char *retval;
-+	char *git_dir;
- 	struct strvec env = STRVEC_INIT;
- 	int invoked_hook;
- 
-@@ -1453,6 +1454,7 @@ static const char *update_worktree(unsigned char *sha1, const struct worktree *w
- 		retval = push_to_deploy(sha1, &env, worktree->path);
- 
- 	strvec_clear(&env);
-+	free(git_dir);
- 	return retval;
- }
- 
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 7959b10d26..2cea9441a6 100644
+index 2cea9441a6..761e302a36 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -657,8 +657,9 @@ static int can_use_local_refs(const struct add_opts *opts)
- 		if (!opts->quiet) {
- 			struct strbuf path = STRBUF_INIT;
- 			struct strbuf contents = STRBUF_INIT;
-+			char *wt_gitdir = get_worktree_git_dir(NULL);
+@@ -151,7 +151,7 @@ static int delete_git_dir(const char *id)
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int ret;
  
--			strbuf_add_real_path(&path, get_worktree_git_dir(NULL));
-+			strbuf_add_real_path(&path, wt_gitdir);
- 			strbuf_addstr(&path, "/HEAD");
- 			strbuf_read_file(&contents, path.buf, 64);
- 			strbuf_stripspace(&contents, NULL);
-@@ -670,6 +671,7 @@ static int can_use_local_refs(const struct add_opts *opts)
- 				  path.buf, contents.buf);
- 			strbuf_release(&path);
- 			strbuf_release(&contents);
-+			free(wt_gitdir);
- 		}
- 		return 1;
+-	strbuf_addstr(&sb, git_common_path("worktrees/%s", id));
++	repo_common_path_append(the_repository, &sb, "worktrees/%s", id);
+ 	ret = remove_dir_recursively(&sb, 0);
+ 	if (ret < 0 && errno == ENOTDIR)
+ 		ret = unlink(sb.buf);
+@@ -1102,6 +1102,7 @@ static int lock_worktree(int ac, const char **av, const char *prefix,
+ 		OPT_END()
+ 	};
+ 	struct worktree **worktrees, *wt;
++	char *path;
+ 
+ 	ac = parse_options(ac, av, prefix, options, git_worktree_lock_usage, 0);
+ 	if (ac != 1)
+@@ -1122,9 +1123,11 @@ static int lock_worktree(int ac, const char **av, const char *prefix,
+ 		die(_("'%s' is already locked"), av[0]);
  	}
-@@ -1157,6 +1159,9 @@ static void validate_no_submodules(const struct worktree *wt)
- 	struct index_state istate = INDEX_STATE_INIT(the_repository);
- 	struct strbuf path = STRBUF_INIT;
- 	int i, found_submodules = 0;
-+	char *wt_gitdir;
-+
-+	wt_gitdir = get_worktree_git_dir(wt);
  
- 	if (is_directory(worktree_git_path(the_repository, wt, "modules"))) {
- 		/*
-@@ -1166,7 +1171,7 @@ static void validate_no_submodules(const struct worktree *wt)
- 		 */
- 		found_submodules = 1;
- 	} else if (read_index_from(&istate, worktree_git_path(the_repository, wt, "index"),
--				   get_worktree_git_dir(wt)) > 0) {
-+				   wt_gitdir) > 0) {
- 		for (i = 0; i < istate.cache_nr; i++) {
- 			struct cache_entry *ce = istate.cache[i];
- 			int err;
-@@ -1185,6 +1190,7 @@ static void validate_no_submodules(const struct worktree *wt)
- 	}
- 	discard_index(&istate);
- 	strbuf_release(&path);
-+	free(wt_gitdir);
- 
- 	if (found_submodules)
- 		die(_("working trees containing submodules cannot be moved or removed"));
-diff --git a/reachable.c b/reachable.c
-index ecf7ccf504..9ee04c89ec 100644
---- a/reachable.c
-+++ b/reachable.c
-@@ -65,8 +65,10 @@ static void add_rebase_files(struct rev_info *revs)
- 	struct worktree **worktrees = get_worktrees();
- 
- 	for (struct worktree **wt = worktrees; *wt; wt++) {
-+		char *wt_gitdir = get_worktree_git_dir(*wt);
+-	write_file(git_common_path("worktrees/%s/locked", wt->id),
+-		   "%s", reason);
++	path = repo_common_path(the_repository, "worktrees/%s/locked", wt->id);
++	write_file(path, "%s", reason);
 +
- 		strbuf_reset(&buf);
--		strbuf_addstr(&buf, get_worktree_git_dir(*wt));
-+		strbuf_addstr(&buf, wt_gitdir);
- 		strbuf_complete(&buf, '/');
- 		len = buf.len;
- 		for (size_t i = 0; i < ARRAY_SIZE(path); i++) {
-@@ -74,6 +76,8 @@ static void add_rebase_files(struct rev_info *revs)
- 			strbuf_addstr(&buf, path[i]);
- 			add_one_file(buf.buf, revs);
- 		}
-+
-+		free(wt_gitdir);
- 	}
- 	strbuf_release(&buf);
  	free_worktrees(worktrees);
-diff --git a/revision.c b/revision.c
-index 474fa1e767..c4390f0938 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1874,15 +1874,20 @@ void add_index_objects_to_pending(struct rev_info *revs, unsigned int flags)
- 	for (p = worktrees; *p; p++) {
- 		struct worktree *wt = *p;
- 		struct index_state istate = INDEX_STATE_INIT(revs->repo);
-+		char *wt_gitdir;
- 
- 		if (wt->is_current)
- 			continue; /* current index already taken care of */
- 
-+		wt_gitdir = get_worktree_git_dir(wt);
-+
- 		if (read_index_from(&istate,
- 				    worktree_git_path(the_repository, wt, "index"),
--				    get_worktree_git_dir(wt)) > 0)
-+				    wt_gitdir) > 0)
- 			do_add_index_objects_to_pending(revs, &istate, flags);
-+
- 		discard_index(&istate);
-+		free(wt_gitdir);
- 	}
- 	free_worktrees(worktrees);
++	free(path);
+ 	return 0;
  }
+ 
+@@ -1135,6 +1138,7 @@ static int unlock_worktree(int ac, const char **av, const char *prefix,
+ 		OPT_END()
+ 	};
+ 	struct worktree **worktrees, *wt;
++	char *path;
+ 	int ret;
+ 
+ 	ac = parse_options(ac, av, prefix, options, git_worktree_unlock_usage, 0);
+@@ -1149,8 +1153,12 @@ static int unlock_worktree(int ac, const char **av, const char *prefix,
+ 		die(_("The main working tree cannot be locked or unlocked"));
+ 	if (!worktree_lock_reason(wt))
+ 		die(_("'%s' is not locked"), av[0]);
+-	ret = unlink_or_warn(git_common_path("worktrees/%s/locked", wt->id));
++
++	path = repo_common_path(the_repository, "worktrees/%s/locked", wt->id);
++	ret = unlink_or_warn(path);
++
+ 	free_worktrees(worktrees);
++	free(path);
+ 	return ret;
+ }
+ 
+diff --git a/path.c b/path.c
+index 0d81e9fc32..2d07ba723d 100644
+--- a/path.c
++++ b/path.c
+@@ -634,10 +634,10 @@ const char *repo_submodule_path_replace(struct repository *repo,
+ 	return buf->buf;
+ }
+ 
+-void repo_common_pathv(const struct repository *repo,
+-		       struct strbuf *sb,
+-		       const char *fmt,
+-		       va_list args)
++static void repo_common_pathv(const struct repository *repo,
++			      struct strbuf *sb,
++			      const char *fmt,
++			      va_list args)
+ {
+ 	strbuf_addstr(sb, repo->commondir);
+ 	if (sb->len && !is_dir_sep(sb->buf[sb->len - 1]))
+diff --git a/path.h b/path.h
+index cdc26acb74..bed0a4c6f9 100644
+--- a/path.h
++++ b/path.h
+@@ -233,29 +233,10 @@ struct strbuf *get_pathname(void);
+ #  include "repository.h"
+ 
+ /* Internal implementation details that should not be used. */
+-void repo_common_pathv(const struct repository *repo,
+-		       struct strbuf *buf,
+-		       const char *fmt,
+-		       va_list args);
+ void repo_git_pathv(const struct repository *repo,
+ 		    const struct worktree *wt, struct strbuf *buf,
+ 		    const char *fmt, va_list args);
+ 
+-/*
+- * Return a statically allocated path into the main repository's
+- * (the_repository) common git directory.
+- */
+-__attribute__((format (printf, 1, 2)))
+-static inline const char *git_common_path(const char *fmt, ...)
+-{
+-	struct strbuf *pathname = get_pathname();
+-	va_list args;
+-	va_start(args, fmt);
+-	repo_common_pathv(the_repository, pathname, fmt, args);
+-	va_end(args);
+-	return pathname->buf;
+-}
+-
+ /*
+  * Return a statically allocated path into the main repository's
+  * (the_repository) git directory.
 diff --git a/worktree.c b/worktree.c
-index 8f4fc10c44..3b94535963 100644
+index 3b94535963..d5d07d7a84 100644
 --- a/worktree.c
 +++ b/worktree.c
-@@ -59,8 +59,9 @@ static void add_head_info(struct worktree *wt)
- static int is_current_worktree(struct worktree *wt)
- {
- 	char *git_dir = absolute_pathdup(repo_get_git_dir(the_repository));
--	const char *wt_git_dir = get_worktree_git_dir(wt);
-+	char *wt_git_dir = get_worktree_git_dir(wt);
- 	int is_current = !fspathcmp(git_dir, absolute_path(wt_git_dir));
-+	free(wt_git_dir);
- 	free(git_dir);
- 	return is_current;
- }
-@@ -175,14 +176,14 @@ struct worktree **get_worktrees(void)
- 	return get_worktrees_internal(0);
- }
- 
--const char *get_worktree_git_dir(const struct worktree *wt)
-+char *get_worktree_git_dir(const struct worktree *wt)
- {
- 	if (!wt)
--		return repo_get_git_dir(the_repository);
-+		return xstrdup(repo_get_git_dir(the_repository));
+@@ -183,7 +183,7 @@ char *get_worktree_git_dir(const struct worktree *wt)
  	else if (!wt->id)
--		return repo_get_common_dir(the_repository);
-+		return xstrdup(repo_get_common_dir(the_repository));
+ 		return xstrdup(repo_get_common_dir(the_repository));
  	else
--		return git_common_path("worktrees/%s", wt->id);
-+		return xstrdup(git_common_path("worktrees/%s", wt->id));
+-		return xstrdup(git_common_path("worktrees/%s", wt->id));
++		return repo_common_path(the_repository, "worktrees/%s", wt->id);
  }
  
  static struct worktree *find_worktree_by_suffix(struct worktree **list,
-diff --git a/worktree.h b/worktree.h
-index 38145df80f..16368588a0 100644
---- a/worktree.h
-+++ b/worktree.h
-@@ -39,7 +39,7 @@ int submodule_uses_worktrees(const char *path);
-  * Return git dir of the worktree. Note that the path may be relative.
-  * If wt is NULL, git dir of current worktree is returned.
-  */
--const char *get_worktree_git_dir(const struct worktree *wt);
-+char *get_worktree_git_dir(const struct worktree *wt);
+@@ -314,6 +314,7 @@ int validate_worktree(const struct worktree *wt, struct strbuf *errmsg,
+ {
+ 	struct strbuf wt_path = STRBUF_INIT;
+ 	struct strbuf realpath = STRBUF_INIT;
++	struct strbuf buf = STRBUF_INIT;
+ 	char *path = NULL;
+ 	int err, ret = -1;
  
- /*
-  * Search for the worktree identified unambiguously by `arg` -- typically
+@@ -343,7 +344,7 @@ int validate_worktree(const struct worktree *wt, struct strbuf *errmsg,
+ 	if (!is_absolute_path(wt->path)) {
+ 		strbuf_addf_gently(errmsg,
+ 				   _("'%s' file does not contain absolute path to the working tree location"),
+-				   git_common_path("worktrees/%s/gitdir", wt->id));
++				   repo_common_path_replace(the_repository, &buf, "worktrees/%s/gitdir", wt->id));
+ 		goto done;
+ 	}
+ 
+@@ -365,14 +366,16 @@ int validate_worktree(const struct worktree *wt, struct strbuf *errmsg,
+ 		goto done;
+ 	}
+ 
+-	strbuf_realpath(&realpath, git_common_path("worktrees/%s", wt->id), 1);
++	strbuf_realpath(&realpath, repo_common_path_replace(the_repository, &buf, "worktrees/%s", wt->id), 1);
+ 	ret = fspathcmp(path, realpath.buf);
+ 
+ 	if (ret)
+ 		strbuf_addf_gently(errmsg, _("'%s' does not point back to '%s'"),
+-				   wt->path, git_common_path("worktrees/%s", wt->id));
++				   wt->path, repo_common_path_replace(the_repository, &buf,
++								      "worktrees/%s", wt->id));
+ done:
+ 	free(path);
++	strbuf_release(&buf);
+ 	strbuf_release(&wt_path);
+ 	strbuf_release(&realpath);
+ 	return ret;
+@@ -384,11 +387,13 @@ void update_worktree_location(struct worktree *wt, const char *path_,
+ 	struct strbuf path = STRBUF_INIT;
+ 	struct strbuf dotgit = STRBUF_INIT;
+ 	struct strbuf gitdir = STRBUF_INIT;
++	char *wt_gitdir;
+ 
+ 	if (is_main_worktree(wt))
+ 		BUG("can't relocate main worktree");
+ 
+-	strbuf_realpath(&gitdir, git_common_path("worktrees/%s/gitdir", wt->id), 1);
++	wt_gitdir = repo_common_path(the_repository, "worktrees/%s/gitdir", wt->id);
++	strbuf_realpath(&gitdir, wt_gitdir, 1);
+ 	strbuf_realpath(&path, path_, 1);
+ 	strbuf_addf(&dotgit, "%s/.git", path.buf);
+ 	if (fspathcmp(wt->path, path.buf)) {
+@@ -400,6 +405,7 @@ void update_worktree_location(struct worktree *wt, const char *path_,
+ 	strbuf_release(&path);
+ 	strbuf_release(&dotgit);
+ 	strbuf_release(&gitdir);
++	free(wt_gitdir);
+ }
+ 
+ int is_worktree_being_rebased(const struct worktree *wt,
+@@ -585,6 +591,7 @@ static void repair_gitfile(struct worktree *wt,
+ 	struct strbuf backlink = STRBUF_INIT;
+ 	char *dotgit_contents = NULL;
+ 	const char *repair = NULL;
++	char *path = NULL;
+ 	int err;
+ 
+ 	/* missing worktree can't be repaired */
+@@ -596,7 +603,8 @@ static void repair_gitfile(struct worktree *wt,
+ 		goto done;
+ 	}
+ 
+-	strbuf_realpath(&repo, git_common_path("worktrees/%s", wt->id), 1);
++	path = repo_common_path(the_repository, "worktrees/%s", wt->id);
++	strbuf_realpath(&repo, path, 1);
+ 	strbuf_addf(&dotgit, "%s/.git", wt->path);
+ 	strbuf_addf(&gitdir, "%s/gitdir", repo.buf);
+ 	dotgit_contents = xstrdup_or_null(read_gitfile_gently(dotgit.buf, &err));
+@@ -626,6 +634,7 @@ static void repair_gitfile(struct worktree *wt,
+ 
+ done:
+ 	free(dotgit_contents);
++	free(path);
+ 	strbuf_release(&repo);
+ 	strbuf_release(&dotgit);
+ 	strbuf_release(&gitdir);
+@@ -657,11 +666,13 @@ void repair_worktree_after_gitdir_move(struct worktree *wt, const char *old_path
+ 	struct strbuf gitdir = STRBUF_INIT;
+ 	struct strbuf dotgit = STRBUF_INIT;
+ 	int is_relative_path;
++	char *path = NULL;
+ 
+ 	if (is_main_worktree(wt))
+ 		goto done;
+ 
+-	strbuf_realpath(&gitdir, git_common_path("worktrees/%s/gitdir", wt->id), 1);
++	path = repo_common_path(the_repository, "worktrees/%s/gitdir", wt->id);
++	strbuf_realpath(&gitdir, path, 1);
+ 
+ 	if (strbuf_read_file(&dotgit, gitdir.buf, 0) < 0)
+ 		goto done;
+@@ -680,6 +691,7 @@ void repair_worktree_after_gitdir_move(struct worktree *wt, const char *old_path
+ done:
+ 	strbuf_release(&gitdir);
+ 	strbuf_release(&dotgit);
++	free(path);
+ }
+ 
+ void repair_worktrees_after_gitdir_move(const char *old_path)
+@@ -871,7 +883,11 @@ int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath,
+ 	ssize_t read_result;
+ 
+ 	*wtpath = NULL;
+-	strbuf_realpath(&repo, git_common_path("worktrees/%s", id), 1);
++
++	path = repo_common_path(the_repository, "worktrees/%s", id);
++	strbuf_realpath(&repo, path, 1);
++	FREE_AND_NULL(path);
++
+ 	strbuf_addf(&gitdir, "%s/gitdir", repo.buf);
+ 	if (!is_directory(repo.buf)) {
+ 		strbuf_addstr(reason, _("not a valid directory"));
 
 -- 
 2.48.1.538.gc4cfc42d60.dirty
