@@ -1,83 +1,81 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3541E008E
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 11:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2F81E0086
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 11:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738929137; cv=none; b=RSNzowZq+Ufvedx0ZqBmpPEYO4kSSPyyaYwcNEPH2xMlESaGcCLWc2O9qccM8TIQUzHc68MPc+odHr/T//dG6hML801t1ypnx0JUw6rxcmt6+PQGemvkEW2ruM+y4mA5e9o2pvgC7vMjxTwXX4x8oRy5AAd3EH4kH95ZBfZGa5c=
+	t=1738929138; cv=none; b=c3dfN/rjeNQefz+7PPNEmNKz36+sYFgD+ay4PdRZC1ELbrxckDTJX/dwYGUcjo2/CxcKLAvyLJpR8PB2khtnMY4eGxuUcKcWEu9mnBCEIq9TAzpidQJnTucQhnRT5oGvybCOG/mYfsiS34jdVuZYfxUJvp9KwkLWazlf7+de70Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738929137; c=relaxed/simple;
-	bh=x2mGm07+izREe8Y0rddoQtlUiQhuo+VxiYb4e+FX7Jw=;
+	s=arc-20240116; t=1738929138; c=relaxed/simple;
+	bh=kPKuX8zhwCLYorG3555jZ8E4+OmEvwNW9Za2IYdBUhM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Zz6ufZSp8VvJ1yL8LrlEXUUKbFKV9gEXyOUtEG7RJZvGPNVKPuhLr4BGRs2asxIWcd1DqGItYuhN0DSMLHLAEhyXpfqdH6AMvx1dWOAsqpwQC2NMD4RZaN/z1yNRqa6vf2T6UqsW4YWHVPMNfWJlkLPf5b3lnNY1kZb8nyiLmYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=p45EiuTM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HBuoBnxP; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=I3ABMsWMjRYGEF3QYsll73pGa9DOK2V85uo+JGonuHyVYCJo5bXuVC0GHNFDBgDc/U4VMpjG8OGEs70A4wVI8QfhjVCr0pMmfldTIMzHyqWcdXT6smohI8EOoRjY92KM+Hf8+yyPERwU0ywWhT9G78Dn6fDbyOgv+EdteC/Fyuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=O6MAEb27; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kpTejGof; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="p45EiuTM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HBuoBnxP"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id E78A013801AE;
-	Fri,  7 Feb 2025 06:52:14 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="O6MAEb27";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kpTejGof"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7E9BA13801A7;
+	Fri,  7 Feb 2025 06:52:13 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 07 Feb 2025 06:52:14 -0500
+  by phl-compute-08.internal (MEProxy); Fri, 07 Feb 2025 06:52:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738929134;
-	 x=1739015534; bh=TyhVGiG6cUdrBF7vCZTrX0L7pOhpAOfn6lX/mnSvmW4=; b=
-	p45EiuTMGxEr9W+onziv61gOad4xqrPwbgBjjQNAjRT7oynjml/i6AABGUHCmp7c
-	8wh844OcwZfrFN3doZkP4vwvPZxUYdDx8uaga3P1LpHm1NuaJVBjacyTyydQzw7z
-	hcNeYLhe8ymkPYyIW2EpdBD0LqnIPiM4Qt4rQnoaa7IB9Udcf5OsQMPA7PY8/Xr5
-	ZK63sgIdx7YdbALb45UpdDvQ6PX3uRrP6AKKlaYLbFhNfwEm4NNHuYFqZHhjQ/7C
-	tyjiP/xcTMwbN724nYeyMu2cHxXN0bbVyzll4T1+i8hHy4L5xPFkbqDm8L7mQrfZ
-	BNK4JIxOH+J8gOJZf3ghnw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738929133;
+	 x=1739015533; bh=mM1aJiXiGx/mftefjDbbDUQyfUe75piBTX7KwSqp554=; b=
+	O6MAEb27ocA5GmXhREVXWD5MzDV3XicSMlFLQ5SC7ncNgnIPuWehtWNJzo252p39
+	4XcSa6sn+DgV88T+JsASNqyGrouHr6gkkJIb5gTvG/HDyqxObQLajFVvgp5FyNLL
+	bDDoZiVTiyLY9EKQaxhMNgiQLHnsrLYEizeQ3L9ZmTIOItc3zy2+HjYgAWqUaqUq
+	vvT97g9b0rPm3RZnNQAbBSQTpznL+QxiOFn51Uy50q5kSxDqEruq1extC/qooFY6
+	ok3OW8w5IFuMb8acFnVATYd/Iho+7xeBc+G4X+VwfUGxvmu0vm7D+P+QQosdZQsI
+	sqkygkqdVa2mEpyKupoj9g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738929134; x=
-	1739015534; bh=TyhVGiG6cUdrBF7vCZTrX0L7pOhpAOfn6lX/mnSvmW4=; b=H
-	BuoBnxPGp82/V/1sjw0jWEb8EdF+38oIpzWQx9Y/emmFqE/J6g1IS4oKEcVl3vq9
-	DuCc3Mt0ZtuJb3W0RJqpEsvDDsSIB/hiT+FfZrAnA1+i5iU/ot+pRsIDhRkxUcB+
-	6lCgmxDfKv7h/Ct0XY/wveC73vOkjDaB2gCjfO4QvNuY4pCYwBtsfIxO3YuxDpzC
-	UWeMJ+53fHxHcSvbiKPd5iOWLmDFl39qGguOrnkNbWWj9j7U+PoL+hXgFubIzUMW
-	VUocJ7DkGejWslrqM5ZPMpjkEJxZuLbpQ+kYkpJSNN4hZVWU6F229ySpadVjQn8h
-	Ak5oSU0Dsh8EF8I0STgaw==
-X-ME-Sender: <xms:7vOlZzGlZ9uW74RJlrfiTd_eIHDQ0oaO65Gljx2WgIBV97CHfJ5gYQ>
-    <xme:7vOlZwV4rZjBpz8oQLySViUAi4pgbggjHCtXlcfYYt_yh84DB_fxSMuitInpoPLYy
-    5S1yrFWN5zrepUTxw>
-X-ME-Received: <xmr:7vOlZ1LwrM3SQLyH5YxABQk-lsp7noJoeVE1GalLCncslrwJdBkSyrgWLMPJnZOA89_PNcj6gnnRnLQY2zIweeam4KQpdzSmGeKBLzB09mOJXwTE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvudcutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738929133; x=
+	1739015533; bh=mM1aJiXiGx/mftefjDbbDUQyfUe75piBTX7KwSqp554=; b=k
+	pTejGofGgZATxNQ0fk7gjZtCZjKLFllLLfLGiEdlRqi3mbPhSH5ihn4D1Vf7De2/
+	Gncbst3qMayURTI5fPjQhJX9NyToFpicxF0CkPPymhwM4hczfkkcAGTmcSKKILn+
+	NmhxsUPgV7yXYU5CENaqUkJ+vmBipXWlvAPxE6OMQLcTOkXyM/Rz9vYXnOKCHx3z
+	C3FTcu5DDJ3Qi+K01ihvHZAl6VRV6w9jbSCGLRjsaxebSSPvuXE5f8wIXaobRsSV
+	NvZazQ28riT9p60rGIdDolZSKcHoMZRPF9oszvS9LT91H/ggpOPEgictuCqizw0I
+	wV8HZZomrZvU7+WX5UB3Q==
+X-ME-Sender: <xms:7fOlZycJEDVUdbYBI4lPNXufM44JUH95pMVcc3Iu5gkV4hrGqwyNkg>
+    <xme:7fOlZ8ML94lNmQLyzlsVSxrO4_GFURxX6XaJEhHff1ob6Vpd7NGS30NwEKoABFGzB
+    XAIYWk1s2z3Bja8Mw>
+X-ME-Received: <xmr:7fOlZziM5Zss60RGlpJbjAjxLaTxXAT-ZECV0K1JNksSOVexurnJN7xZPgjecg0SFjauB63s2_wz5cSGK7D0I767qRUCkA7bal-E87cLQJvMxdmQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
     jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhephfefieevffduhfejvdevfffhudekhfdvkeevveeg
-    ueeiteetveeglefghfevtdfgnecuffhomhgrihhnpehuphgurghtvgdrthiinecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjh
-    hlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghthhhomhhsohhnsegv
-    ugifrghrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohepjheitheskhgusghgrdhorh
-    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:7vOlZxFrB9_j0Ie_GiMBYLSyYnhj5gMWmvreGJ1VaQSru_XfsldRxA>
-    <xmx:7vOlZ5WgSU7qYPA38cH53xvMGa_crZBxEPBqHEQY461ogLsmwGX_Sg>
-    <xmx:7vOlZ8PZ4TtYjCMbwtlRMcdRLFXpUFdMRMa1C4sQpRv4WBOKm0T8Fg>
-    <xmx:7vOlZ417MLXk5lyXdEgMJCoGEKJSt-ir-7BWcCbxiF29BZsRTN8Qxg>
-    <xmx:7vOlZ3e_uNQUKdNUO3yTQQHOz3C0DutL_bFX70lLU2CXxUG-ZrJQZ5yP>
+    himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
+    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghthhhomhhsohhnsegvug
+    ifrghrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohepjheitheskhgusghgrdhorhhg
+X-ME-Proxy: <xmx:7fOlZ_9vOrUBCBQlSH-80CE_17wEfZ59JJ98exnOryv2VtO96uKfIg>
+    <xmx:7fOlZ-uN2EdFfgyphFbMdjxg-92fplAlykh2jZpZWqruc6bcCBdmjg>
+    <xmx:7fOlZ2ErQEb8_l0xCuPT3GXtUJe6uzxmorBpRCSVWbgWhpXwFWMqow>
+    <xmx:7fOlZ9MvVR4belGNeBNoH61FK5M1Lyq1G1CIXxD0YjnjDtP6hhCgow>
+    <xmx:7fOlZwURjmzo1SleFek0kUK9wGahLMBPuIkAie-XFnB0345DFKLUfeL2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Feb 2025 06:52:13 -0500 (EST)
+ 7 Feb 2025 06:52:12 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 55f11561 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Feb 2025 11:52:09 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 09611234 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Feb 2025 11:52:07 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 07 Feb 2025 12:52:04 +0100
-Subject: [PATCH v5 09/18] reftable/basics: provide wrappers for big endian
- conversion
+Date: Fri, 07 Feb 2025 12:52:02 +0100
+Subject: [PATCH v5 07/18] reftable: stop using `BUG()` in trivial cases
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250207-pks-reftable-drop-git-compat-util-v5-9-ba2adc79110f@pks.im>
+Message-Id: <20250207-pks-reftable-drop-git-compat-util-v5-7-ba2adc79110f@pks.im>
 References: <20250207-pks-reftable-drop-git-compat-util-v5-0-ba2adc79110f@pks.im>
 In-Reply-To: <20250207-pks-reftable-drop-git-compat-util-v5-0-ba2adc79110f@pks.im>
 To: git@vger.kernel.org
@@ -95,395 +93,82 @@ Cc: Edward Thomson <ethomson@edwardthomson.com>,
  Johannes Sixt <j6t@kdbg.org>
 X-Mailer: b4 0.14.2
 
-We're using a mixture of big endian conversion functions provided by
-both the reftable library, but also by the Git codebase. Refactor the
-code so that we exclusively use reftable-provided wrappers in order to
-untangle us from the Git codebase.
+Stop using `BUG()` in the remaining trivial cases that we still have in
+the reftable library. Instead of aborting the program, we'll now bubble
+up a `REFTABLE_API_ERROR` to indicate misuse of the calling conventions.
+
+Note that in both `reftable_reader_{inc,dec}ref()` we simply stop
+calling `BUG()` altogether. The only situation where the counter should
+be zero is when the structure has already been free'd anyway, so we
+would run into undefined behaviour regardless of whether we try to abort
+the program or not.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/basics.c                | 19 ----------
- reftable/basics.h                | 76 ++++++++++++++++++++++++++++++++++++++--
- reftable/block.c                 | 12 +++----
- reftable/reader.c                | 22 ++++++------
- reftable/record.c                |  8 ++---
- reftable/writer.c                | 20 +++++------
- t/unit-tests/t-reftable-basics.c | 28 ++++++++++++---
- 7 files changed, 127 insertions(+), 58 deletions(-)
+ reftable/iter.c   | 3 +--
+ reftable/reader.c | 4 ----
+ reftable/writer.c | 5 ++---
+ 3 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/reftable/basics.c b/reftable/basics.c
-index 3b5ea27bbd..8c4a4433e4 100644
---- a/reftable/basics.c
-+++ b/reftable/basics.c
-@@ -147,25 +147,6 @@ char *reftable_buf_detach(struct reftable_buf *buf)
- 	return result;
+diff --git a/reftable/iter.c b/reftable/iter.c
+index 86e801ca9f..b2ffb09c16 100644
+--- a/reftable/iter.c
++++ b/reftable/iter.c
+@@ -146,8 +146,7 @@ static int indexed_table_ref_iter_next_block(struct indexed_table_ref_iter *it)
+ static int indexed_table_ref_iter_seek(void *p UNUSED,
+ 				       struct reftable_record *want UNUSED)
+ {
+-	BUG("seeking indexed table is not supported");
+-	return -1;
++	return REFTABLE_API_ERROR;
  }
  
--void put_be24(uint8_t *out, uint32_t i)
--{
--	out[0] = (uint8_t)((i >> 16) & 0xff);
--	out[1] = (uint8_t)((i >> 8) & 0xff);
--	out[2] = (uint8_t)(i & 0xff);
--}
--
--uint32_t get_be24(uint8_t *in)
--{
--	return (uint32_t)(in[0]) << 16 | (uint32_t)(in[1]) << 8 |
--	       (uint32_t)(in[2]);
--}
--
--void put_be16(uint8_t *out, uint16_t i)
--{
--	out[0] = (uint8_t)((i >> 8) & 0xff);
--	out[1] = (uint8_t)(i & 0xff);
--}
--
- size_t binsearch(size_t sz, int (*f)(size_t k, void *args), void *args)
- {
- 	size_t lo = 0;
-diff --git a/reftable/basics.h b/reftable/basics.h
-index 646f8d67f2..c1ddbaec3f 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -76,9 +76,79 @@ char *reftable_buf_detach(struct reftable_buf *buf);
- 
- /* Bigendian en/decoding of integers */
- 
--void put_be24(uint8_t *out, uint32_t i);
--uint32_t get_be24(uint8_t *in);
--void put_be16(uint8_t *out, uint16_t i);
-+static inline void reftable_put_be16(void *out, uint16_t i)
-+{
-+	unsigned char *p = out;
-+	p[0] = (uint8_t)((i >> 8) & 0xff);
-+	p[1] = (uint8_t)((i >> 0) & 0xff);
-+}
-+
-+static inline void reftable_put_be24(void *out, uint32_t i)
-+{
-+	unsigned char *p = out;
-+	p[0] = (uint8_t)((i >> 16) & 0xff);
-+	p[1] = (uint8_t)((i >>  8) & 0xff);
-+	p[2] = (uint8_t)((i >>  0) & 0xff);
-+}
-+
-+static inline void reftable_put_be32(void *out, uint32_t i)
-+{
-+	unsigned char *p = out;
-+	p[0] = (uint8_t)((i >> 24) & 0xff);
-+	p[1] = (uint8_t)((i >> 16) & 0xff);
-+	p[2] = (uint8_t)((i >>  8) & 0xff);
-+	p[3] = (uint8_t)((i >>  0) & 0xff);
-+}
-+
-+static inline void reftable_put_be64(void *out, uint64_t i)
-+{
-+	unsigned char *p = out;
-+	p[0] = (uint8_t)((i >> 56) & 0xff);
-+	p[1] = (uint8_t)((i >> 48) & 0xff);
-+	p[2] = (uint8_t)((i >> 40) & 0xff);
-+	p[3] = (uint8_t)((i >> 32) & 0xff);
-+	p[4] = (uint8_t)((i >> 24) & 0xff);
-+	p[5] = (uint8_t)((i >> 16) & 0xff);
-+	p[6] = (uint8_t)((i >>  8) & 0xff);
-+	p[7] = (uint8_t)((i >>  0) & 0xff);
-+}
-+
-+static inline uint16_t reftable_get_be16(const void *in)
-+{
-+	const unsigned char *p = in;
-+	return (uint16_t)(p[0]) << 8 |
-+	       (uint16_t)(p[1]) << 0;
-+}
-+
-+static inline uint32_t reftable_get_be24(const void *in)
-+{
-+	const unsigned char *p = in;
-+	return (uint32_t)(p[0]) << 16 |
-+	       (uint32_t)(p[1]) << 8 |
-+	       (uint32_t)(p[2]) << 0;
-+}
-+
-+static inline uint32_t reftable_get_be32(const void *in)
-+{
-+	const unsigned char *p = in;
-+	return (uint32_t)(p[0]) << 24 |
-+	       (uint32_t)(p[1]) << 16 |
-+	       (uint32_t)(p[2]) <<  8|
-+	       (uint32_t)(p[3]) <<  0;
-+}
-+
-+static inline uint64_t reftable_get_be64(const void *in)
-+{
-+	const unsigned char *p = in;
-+	return (uint64_t)(p[0]) << 56 |
-+	       (uint64_t)(p[1]) << 48 |
-+	       (uint64_t)(p[2]) << 40 |
-+	       (uint64_t)(p[3]) << 32 |
-+	       (uint64_t)(p[4]) << 24 |
-+	       (uint64_t)(p[5]) << 16 |
-+	       (uint64_t)(p[6]) <<  8 |
-+	       (uint64_t)(p[7]) <<  0;
-+}
- 
- /*
-  * find smallest index i in [0, sz) at which `f(i) > 0`, assuming that f is
-diff --git a/reftable/block.c b/reftable/block.c
-index 255d566854..373908807e 100644
---- a/reftable/block.c
-+++ b/reftable/block.c
-@@ -148,13 +148,13 @@ int block_writer_add(struct block_writer *w, struct reftable_record *rec)
- int block_writer_finish(struct block_writer *w)
- {
- 	for (uint32_t i = 0; i < w->restart_len; i++) {
--		put_be24(w->block + w->next, w->restarts[i]);
-+		reftable_put_be24(w->block + w->next, w->restarts[i]);
- 		w->next += 3;
- 	}
- 
--	put_be16(w->block + w->next, w->restart_len);
-+	reftable_put_be16(w->block + w->next, w->restart_len);
- 	w->next += 2;
--	put_be24(w->block + 1 + w->header_off, w->next);
-+	reftable_put_be24(w->block + 1 + w->header_off, w->next);
- 
- 	/*
- 	 * Log records are stored zlib-compressed. Note that the compression
-@@ -216,7 +216,7 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
- {
- 	uint32_t full_block_size = table_block_size;
- 	uint8_t typ = block->data[header_off];
--	uint32_t sz = get_be24(block->data + header_off + 1);
-+	uint32_t sz = reftable_get_be24(block->data + header_off + 1);
- 	int err = 0;
- 	uint16_t restart_count = 0;
- 	uint32_t restart_start = 0;
-@@ -300,7 +300,7 @@ int block_reader_init(struct block_reader *br, struct reftable_block *block,
- 		full_block_size = sz;
- 	}
- 
--	restart_count = get_be16(block->data + sz - 2);
-+	restart_count = reftable_get_be16(block->data + sz - 2);
- 	restart_start = sz - 2 - 3 * restart_count;
- 	restart_bytes = block->data + restart_start;
- 
-@@ -355,7 +355,7 @@ int block_reader_first_key(const struct block_reader *br, struct reftable_buf *k
- 
- static uint32_t block_reader_restart_offset(const struct block_reader *br, size_t idx)
- {
--	return get_be24(br->restart_bytes + 3 * idx);
-+	return reftable_get_be24(br->restart_bytes + 3 * idx);
- }
- 
- void block_iter_seek_start(struct block_iter *it, const struct block_reader *br)
+ static int indexed_table_ref_iter_next(void *p, struct reftable_record *rec)
 diff --git a/reftable/reader.c b/reftable/reader.c
-index 36a5633ede..bf07a0a586 100644
+index de6e6dd932..36a5633ede 100644
 --- a/reftable/reader.c
 +++ b/reftable/reader.c
-@@ -101,18 +101,18 @@ static int parse_footer(struct reftable_reader *r, uint8_t *footer,
- 	}
+@@ -677,8 +677,6 @@ int reftable_reader_new(struct reftable_reader **out,
  
- 	f++;
--	r->block_size = get_be24(f);
-+	r->block_size = reftable_get_be24(f);
- 
- 	f += 3;
--	r->min_update_index = get_be64(f);
-+	r->min_update_index = reftable_get_be64(f);
- 	f += 8;
--	r->max_update_index = get_be64(f);
-+	r->max_update_index = reftable_get_be64(f);
- 	f += 8;
- 
- 	if (r->version == 1) {
- 		r->hash_id = REFTABLE_HASH_SHA1;
- 	} else {
--		switch (get_be32(f)) {
-+		switch (reftable_get_be32(f)) {
- 		case REFTABLE_FORMAT_ID_SHA1:
- 			r->hash_id = REFTABLE_HASH_SHA1;
- 			break;
-@@ -127,24 +127,24 @@ static int parse_footer(struct reftable_reader *r, uint8_t *footer,
- 		f += 4;
- 	}
- 
--	r->ref_offsets.index_offset = get_be64(f);
-+	r->ref_offsets.index_offset = reftable_get_be64(f);
- 	f += 8;
- 
--	r->obj_offsets.offset = get_be64(f);
-+	r->obj_offsets.offset = reftable_get_be64(f);
- 	f += 8;
- 
- 	r->object_id_len = r->obj_offsets.offset & ((1 << 5) - 1);
- 	r->obj_offsets.offset >>= 5;
- 
--	r->obj_offsets.index_offset = get_be64(f);
-+	r->obj_offsets.index_offset = reftable_get_be64(f);
- 	f += 8;
--	r->log_offsets.offset = get_be64(f);
-+	r->log_offsets.offset = reftable_get_be64(f);
- 	f += 8;
--	r->log_offsets.index_offset = get_be64(f);
-+	r->log_offsets.index_offset = reftable_get_be64(f);
- 	f += 8;
- 
- 	computed_crc = crc32(0, footer, f - footer);
--	file_crc = get_be32(f);
-+	file_crc = reftable_get_be32(f);
- 	f += 4;
- 	if (computed_crc != file_crc) {
- 		err = REFTABLE_FORMAT_ERROR;
-@@ -214,7 +214,7 @@ static int32_t extract_block_size(uint8_t *data, uint8_t *typ, uint64_t off,
- 
- 	*typ = data[0];
- 	if (reftable_is_block_type(*typ)) {
--		result = get_be24(data + 1);
-+		result = reftable_get_be24(data + 1);
- 	}
- 	return result;
+ void reftable_reader_incref(struct reftable_reader *r)
+ {
+-	if (!r->refcount)
+-		BUG("cannot increment ref counter of dead reader");
+ 	r->refcount++;
  }
-diff --git a/reftable/record.c b/reftable/record.c
-index b39d99fcc7..3552bafa99 100644
---- a/reftable/record.c
-+++ b/reftable/record.c
-@@ -689,7 +689,7 @@ static int reftable_log_record_key(const void *r, struct reftable_buf *dest)
- 		return err;
  
- 	ts = (~ts) - rec->update_index;
--	put_be64(&i64[0], ts);
-+	reftable_put_be64(&i64[0], ts);
- 
- 	err = reftable_buf_add(dest, i64, sizeof(i64));
- 	if (err < 0)
-@@ -814,7 +814,7 @@ static int reftable_log_record_encode(const void *rec, struct string_view s,
- 	if (s.len < 2)
- 		return -1;
- 
--	put_be16(s.buf, r->value.update.tz_offset);
-+	reftable_put_be16(s.buf, r->value.update.tz_offset);
- 	string_view_consume(&s, 2);
- 
- 	n = encode_string(
-@@ -846,7 +846,7 @@ static int reftable_log_record_decode(void *rec, struct reftable_buf key,
- 	}
- 
- 	memcpy(r->refname, key.buf, key.len - 8);
--	ts = get_be64(key.buf + key.len - 8);
-+	ts = reftable_get_be64((unsigned char *)key.buf + key.len - 8);
- 
- 	r->update_index = (~max) - ts;
- 
-@@ -937,7 +937,7 @@ static int reftable_log_record_decode(void *rec, struct reftable_buf key,
- 		goto done;
- 	}
- 
--	r->value.update.tz_offset = get_be16(in.buf);
-+	r->value.update.tz_offset = reftable_get_be16(in.buf);
- 	string_view_consume(&in, 2);
- 
- 	n = decode_string(scratch, in);
+@@ -686,8 +684,6 @@ void reftable_reader_decref(struct reftable_reader *r)
+ {
+ 	if (!r)
+ 		return;
+-	if (!r->refcount)
+-		BUG("cannot decrement ref counter of dead reader");
+ 	if (--r->refcount)
+ 		return;
+ 	block_source_close(&r->source);
 diff --git a/reftable/writer.c b/reftable/writer.c
-index 155863ee5f..5961698311 100644
+index 91d6629486..155863ee5f 100644
 --- a/reftable/writer.c
 +++ b/reftable/writer.c
-@@ -99,9 +99,9 @@ static int writer_write_header(struct reftable_writer *w, uint8_t *dest)
+@@ -158,7 +158,7 @@ int reftable_writer_new(struct reftable_writer **out,
+ 		opts = *_opts;
+ 	options_set_defaults(&opts);
+ 	if (opts.block_size >= (1 << 24))
+-		BUG("configured block size exceeds 16MB");
++		return REFTABLE_API_ERROR;
  
- 	dest[4] = writer_version(w);
- 
--	put_be24(dest + 5, w->opts.block_size);
--	put_be64(dest + 8, w->min_update_index);
--	put_be64(dest + 16, w->max_update_index);
-+	reftable_put_be24(dest + 5, w->opts.block_size);
-+	reftable_put_be64(dest + 8, w->min_update_index);
-+	reftable_put_be64(dest + 16, w->max_update_index);
- 	if (writer_version(w) == 2) {
- 		uint32_t hash_id;
- 
-@@ -116,7 +116,7 @@ static int writer_write_header(struct reftable_writer *w, uint8_t *dest)
- 			return -1;
- 		}
- 
--		put_be32(dest + 24, hash_id);
-+		reftable_put_be32(dest + 24, hash_id);
+ 	reftable_buf_init(&wp->block_writer_data.last_key);
+ 	reftable_buf_init(&wp->last_key);
+@@ -289,8 +289,7 @@ static int writer_add_record(struct reftable_writer *w,
  	}
  
- 	return header_size(writer_version(w));
-@@ -717,19 +717,19 @@ int reftable_writer_close(struct reftable_writer *w)
- 	}
+ 	if (block_writer_type(w->block_writer) != reftable_record_type(rec))
+-		BUG("record of type %d added to writer of type %d",
+-		    reftable_record_type(rec), block_writer_type(w->block_writer));
++		return REFTABLE_API_ERROR;
  
- 	p += writer_write_header(w, footer);
--	put_be64(p, w->stats.ref_stats.index_offset);
-+	reftable_put_be64(p, w->stats.ref_stats.index_offset);
- 	p += 8;
--	put_be64(p, (w->stats.obj_stats.offset) << 5 | w->stats.object_id_len);
-+	reftable_put_be64(p, (w->stats.obj_stats.offset) << 5 | w->stats.object_id_len);
- 	p += 8;
--	put_be64(p, w->stats.obj_stats.index_offset);
-+	reftable_put_be64(p, w->stats.obj_stats.index_offset);
- 	p += 8;
- 
--	put_be64(p, w->stats.log_stats.offset);
-+	reftable_put_be64(p, w->stats.log_stats.offset);
- 	p += 8;
--	put_be64(p, w->stats.log_stats.index_offset);
-+	reftable_put_be64(p, w->stats.log_stats.index_offset);
- 	p += 8;
- 
--	put_be32(p, crc32(0, footer, p - footer));
-+	reftable_put_be32(p, crc32(0, footer, p - footer));
- 	p += 4;
- 
- 	err = w->flush(w->write_arg);
-diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-basics.c
-index 9ba7eb05ad..c9e751e49e 100644
---- a/t/unit-tests/t-reftable-basics.c
-+++ b/t/unit-tests/t-reftable-basics.c
-@@ -128,12 +128,30 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
- 		reftable_buf_release(&b);
- 	}
- 
--	if_test ("put_be24 and get_be24 work") {
-+	if_test ("reftable_put_be64 and reftable_get_be64 work") {
-+		uint64_t in = 0x1122334455667788;
-+		uint8_t dest[8];
-+		uint64_t out;
-+		reftable_put_be64(dest, in);
-+		out = reftable_get_be64(dest);
-+		check_int(in, ==, out);
-+	}
-+
-+	if_test ("reftable_put_be32 and reftable_get_be32 work") {
-+		uint32_t in = 0x11223344;
-+		uint8_t dest[4];
-+		uint32_t out;
-+		reftable_put_be32(dest, in);
-+		out = reftable_get_be32(dest);
-+		check_int(in, ==, out);
-+	}
-+
-+	if_test ("reftable_put_be24 and reftable_get_be24 work") {
- 		uint32_t in = 0x112233;
- 		uint8_t dest[3];
- 		uint32_t out;
--		put_be24(dest, in);
--		out = get_be24(dest);
-+		reftable_put_be24(dest, in);
-+		out = reftable_get_be24(dest);
- 		check_int(in, ==, out);
- 	}
- 
-@@ -141,8 +159,8 @@ int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
- 		uint32_t in = 0xfef1;
- 		uint8_t dest[3];
- 		uint32_t out;
--		put_be16(dest, in);
--		out = get_be16(dest);
-+		reftable_put_be16(dest, in);
-+		out = reftable_get_be16(dest);
- 		check_int(in, ==, out);
- 	}
- 
+ 	/*
+ 	 * Try to add the record to the writer. If this succeeds then we're
 
 -- 
 2.48.1.538.gc4cfc42d60.dirty
