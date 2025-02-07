@@ -1,82 +1,68 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4BA1F76B4
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 15:23:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99449238D52
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 15:25:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738941823; cv=none; b=NqbyXU6mha89uL4kK/wjUNEDKP8COkmUHRQNCHTtx/MXGov8vRSQ0XuuMFPe+x8GtjeIJY09yuNngP0B60lU8YvUJ0hAdrkD32rKr8HgWlp2IKTbo7iWNcKzPveWNImie96GY+T1J5tQqIzL62ll9bIAn+7razfMmSdS/y7s2ss=
+	t=1738941947; cv=none; b=rYjx/XKGnUm64ss2a/g1Owb0q07PuMS6wwk/g2ZHRGLqgCBVx0oQ9rDY67W2glHrjrsJT+1LvCSh0aTv5c7Oq+C3sZZY3YLlMTz+66R8Mt12L9KYw5SIH3szru5ScCbACu7YkiiTynONT7DaoZk/PXnm6it7w7bopujaznMpWHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738941823; c=relaxed/simple;
-	bh=umEucqNwcYk84uT6i4bnTkTsamOn/nrKindL8tkQG8U=;
+	s=arc-20240116; t=1738941947; c=relaxed/simple;
+	bh=iE0F8mhqUD/Pwxh82VLjX9wfJH2GMrLaNSiWpHiqGQU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TbqBN6dY+t9r/CnNlcUgx119CF5FoL+dLZ65PJaDQkhAohVnaKYOLXoZtDY9LNTojdXoluPxECDBce30ZqGHldnNDDqAbnPPNHJ44sS53Vz3/PA4xJhVNMz+rGfER5hbpthIrA4eY/Hrds8biUZ6/TdxGmLMkpn29DhlVQP0ZlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YmK4aDnb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hWDt6zdJ; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=RczcSxHTo3Nmk5QF07boOxPLFEMxP2+Uco5XvT8+j/jFjGR3SKyYoD9sjW4LWYygEI5w+s4Onp5WPf/1ePzBKFsMA6Uht1CzipeFMtCz16uGNrMNg3V458elZkJW7OrJ5R55UVJDb0Fb1JayfN/DB4bSv+MlwtySPykqAKF1E1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iay5TeYm; arc=none smtp.client-ip=209.85.167.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YmK4aDnb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hWDt6zdJ"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3026625401BF;
-	Fri,  7 Feb 2025 10:23:40 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 07 Feb 2025 10:23:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738941820; x=1739028220; bh=e2idxGmsW4
-	CLeTJmF6Gi3dl1cb7QMsjj8G+C6/PvxJE=; b=YmK4aDnb4NP+vd8ZaRdUnxzmNl
-	Rac+65ex17ctcnJPEmCshKubmhAWFrMx7XTzWPeZllqGEAaXO55P4xHKwYRCKI/f
-	5EFuMVucogOPRLQ6r5/zmFWH/dW0PYdhVThsibZyx0AzClRS9YJ0Vzj+S+E7lIe9
-	8kSpt2OTkDApTqMRIACAmO8cjKQCHA4JPQ3ZuWaE3y4YqoBobOwfh8uqUtCiaF0R
-	28gOSy7fM1lplVMCj7GHvAdmeRWNwZu+xZYEqo0TuMHllOu8myK4pCk3H0EXqShi
-	qMNN7Heo9SRzLEYTJj8ZlqtyjIoA7QPZs3OpdkU5XeBHvcZvYA3qZQ1MUz6g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738941820; x=1739028220; bh=e2idxGmsW4CLeTJmF6Gi3dl1cb7QMsjj8G+
-	C6/PvxJE=; b=hWDt6zdJgEpetf9iHbRyrrYttFGNpqd98RqAPpoZhms0fH30cCH
-	fvaB0N/s7Qbxww1SJo0tCiM/sft0n4UwpOuWRD8oaSUpHLt4vT0EeYTp/lekhTVC
-	LVVfX3l2/E2wuRmY+Zh8KKPfZvHvay63SK2dRB46qj3tUgxYl8X0hcecsBa61CD0
-	n0Vo+E5lnACuqjpbNCFkSnEZiihFSO8Ou49zzguGIF5undp9Av8iKvPZwnxb8T7/
-	wy9X04haLjxnYKZu8BIROFdpcadLjsJmIm+XMZiv1S1b347BDSNFBQZ32NXFckPC
-	4WL43IgTGmQhVIWcEZnGTBr4Bpl+77ZAyUQ==
-X-ME-Sender: <xms:eyWmZxb03cOOscSLysgeksVcrcCzZ8O-iTTxvizL_7-NKwkx5Mz-Dg>
-    <xme:eyWmZ4bNCi_sOI8EwQ3UgZhlYnQ2N2VPYzhofXI79LuLzCpfQAWoFbtXRVa1Nz3Cl
-    TwbFNOkBHtDxuTwHw>
-X-ME-Received: <xmr:eyWmZz8-KF_6URhIY22Uwnq4EqByeVxIshnBA3YIHx2xW-r2yLMk2aXpWLv-SZ1GAxbyz6B_4LoHVH9ZcDmcRHL7d5JsRQ-M8eSjAoXXqcYnFTIE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleeigecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:eyWmZ_qGBvVmdr7t75kdMDnEh5x5pfwgyXT-I8LeuWJK1oDdSGJ4fQ>
-    <xmx:eyWmZ8rYx6f6f_5M_bzEqEaBTksLkWO9PINGrtvAkI3Xb5LjP8Uk4g>
-    <xmx:eyWmZ1Rm-4MzT-SYbUrNP-8G4J0vLsPzD9s_ZetMReR5AVQgQ6h17A>
-    <xmx:eyWmZ0qbB7CDeoMGTNrVv7l-9JvS2IzkPj7mx80Z03-Ztgi-y-T5TQ>
-    <xmx:fCWmZz11ZUgvAXkxmebFsuOsRCGlacVHXNdhy66r3sboHJK_zVTcOjgg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Feb 2025 10:23:39 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 29525e79 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Feb 2025 15:23:36 +0000 (UTC)
-Date: Fri, 7 Feb 2025 16:23:30 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iay5TeYm"
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-3eb7ecc3c54so1122069b6e.0
+        for <git@vger.kernel.org>; Fri, 07 Feb 2025 07:25:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738941944; x=1739546744; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=fgwzu1uh7CjPCfFBrQLo8QcWfZFCdhAhszCF1WKxUoI=;
+        b=iay5TeYmSTnqPguzs+bkovDf1xC5OIecc1L+872ZeeNeEJga30JwMeNhDSsfUFaxNz
+         2Am22zyDdOxT6ld4AKcGzbnmtd7ye826ZCt3jtRw5HAPMr1UWvnUTe7lu8RwWdDYsLNI
+         fdeMG50xCeUZz+bYGdKSwG8RxyDhKeM6nGbFWntScJ9pm/dUWpapSYLWgxNubnMQcg+K
+         tj3I+CCtsIXUlb3Ob6KULee6Pj3hJ+HMvEMmr9jl/3TofteXx2ISAypfxmCDOunkuGTL
+         75wGooXAf2UKkqM/vlVF8NC2BIM9KAzj+vmd9BEeaMvA/aLLAoYGyCxIq+mR/s+6jsqB
+         0vHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738941944; x=1739546744;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fgwzu1uh7CjPCfFBrQLo8QcWfZFCdhAhszCF1WKxUoI=;
+        b=F+zwsj2TKA84s/unG1UlLYE1lSlrMP/25YcUYt0vM7rH+nlJuXk8aZY4rZ37pL2cPo
+         g5OFXD9rLDuKAcsuIJS/ObS2NKH/6rFAxkB8CJQ5TXkT3VAZFTdDxp+fPFx9msueV3Dn
+         SxidfI3QtXSwjgaoqxAJ+rVNTmF5qhOEoG81sCAKWTvPKjf4x1aoeZYr+8l9qZX1Rk0Y
+         VuNe2tDgJArGy/3EDJI4J6cDlbUUHcPH+xHMHjn5Zuaq8DWsNnKfSfQ9PwRUVspII0Mt
+         Izha8G8f8ZxUGrdw/K00rJienuFzc8uYJu5MbKHjRvt7+7KylwVjOoOjjvvPYobSLNht
+         D0ng==
+X-Gm-Message-State: AOJu0YxeRmb4NIeUs9IkjXpajmcOC+rYj2geLC5FBp8omOF5E9cAANew
+	BIuB7C2qIW2LR6Ogm7ez7RMWRt4tFLgReuQjkI07XKRag5+jU9+TdmGHzw==
+X-Gm-Gg: ASbGncsNpEyPaNi2Bpr9SNs6GNXxfVLAEeoLr3BRbPLL90O/nuPYkDx9IxYMlfDpGm9
+	orXs2279a3yH9ySmJFBnY5wEJLM4cQ5cTfrBLFWt4vYMu3BHbVb2KXg8Ghuxv6s6hka9sKQJ1EA
+	weY4pyxK4dnWxRObYUci3p5syLQnp/NJ0ey5AE3dOsgNDmWcnwdXDQ20973cHMj3oau2rqWbSXD
+	8vVz2mrZ6MBKje73Fhn21AG0I3hMEv2bn+oBCtCemZJtkV86ipi/jm9g0eRaooRlF6JVcX+2V9y
+	u+M9UEfl
+X-Google-Smtp-Source: AGHT+IHqNDDkom9oBkz77RCkaF8fOFPt7a77Ru7bQfzEq7l2TdRYggaShF3CuPSX7NXt9XvQEzD8qw==
+X-Received: by 2002:a05:6808:18a6:b0:3f1:b0db:3f99 with SMTP id 5614622812f47-3f391ff2433mr2131417b6e.0.1738941943081;
+        Fri, 07 Feb 2025 07:25:43 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3f389fd6712sm721808b6e.45.2025.02.07.07.25.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Feb 2025 07:25:42 -0800 (PST)
+Date: Fri, 7 Feb 2025 09:22:42 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH] builtin/refs: add '--skip-reflog' flag to bypass reflog
- migration
-Message-ID: <Z6YlcpKp2U2V8Yd3@pks.im>
-References: <20250207-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v1-1-7d40f3b4e30b@gmail.com>
+Subject: Re: [PATCH v2 00/13] meson: cleanups, improvements, smallish fixes
+Message-ID: <bmwazsiuhhf2dk2hxyl76ubpsdtzk5thxohsjry7qwr2cnow53@cm4wqrrqjqu4>
+References: <20250129-b4-pks-meson-improvements-v1-0-ab709f0be12c@pks.im>
+ <20250130-b4-pks-meson-improvements-v2-0-2f05581ffb44@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,118 +71,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250207-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v1-1-7d40f3b4e30b@gmail.com>
+In-Reply-To: <20250130-b4-pks-meson-improvements-v2-0-2f05581ffb44@pks.im>
 
-On Fri, Feb 07, 2025 at 12:57:31PM +0100, Karthik Nayak wrote:
-> The 'git-refs(1)' migrate subcommand, which transfers repositories
-> between reference backends, currently migrates reflogs by default as of
-> In 246cebe320 (refs: add support for migrating reflogs, 2024-12-16).
+On 25/01/30 03:43PM, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this patch series contains a mostly-random set of smallish improvements,
+> simplifications and fixes to the Meson build instructions.
+> 
+> Changes in v2:
+>   - Redo the two commits regarding PATH handling. We now only prepend
+>     system-specific paths to PATH and handle the `-Dsane_tool_path`
+>     option the same.
+>   - Continue to propagate libcurl include directories into libgit, as we
+>     need it for "help.c" to resolve LIBCURL_VERSION. Reorder the patch
+>     to minimize the required changes.
+>   - Fix a commit message typo.
+>   - Include another commit that fixes the OpenSSL fallback on Windows.
+>   - Include another commit to fix linker errors due to out-of-memory
+>     situations on Windows with GitLab CI.
+>   - Link to v1: https://lore.kernel.org/r/20250129-b4-pks-meson-improvements-v1-0-ab709f0be12c@pks.im
+> 
+> I have furthermore pulled in ps/build-meson-fixes at 7304bd2bc3 (ci:
+> wire up Visual Studio build with Meson, 2025-01-22) as a dependency of
+> this series. This is due to a semantic conflict with 28911f7dca (meson:
+> wire up fuzzers, 2025-01-22).
 
-s/In//
+Thanks Patrick! I've reviewed the changes in this version and tested
+building locally. This version looks good to me.
 
-> While this behavior is desirable for most client-side repositories,
-> server-side repositories typically don't use reflogs and the migration
-> of these entries is unnecessary overhead.
-
-Nit: if the server-side repository doesn't _have_ reflogs, then there
-cannot be any overhead caused by their migration either, right? I still
-think that the flag makes sense (well, I proposed it). But to me the
-argument is rather that we don't _expect_ there to be any reflogs, but
-due to historic reasons there actually _might_ be some. This could for
-example be caused by a bugs, misconfiguration, or an admin who has
-enabled reflogs on the server-side to debug something.
-
-So even if there are some reflogs, we don't want to migrate them. Which
-coincidentally helps us to improve performance, but the real value-add
-here is that it makes the result match our expectations.
-
-> Add a '--skip-reflog' flag to the migrate subcommand to make reflog
-> migration optional. This is particularly useful for server-side
-> migrations where reflogs are not needed, improving migration performance
-> in these scenarios.
-
-The second sentence of this paragraph feels duplicated with what you
-have already been saying in the preceding paragraph.
-
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
-> ---
-
-Another thing to teach b4: skip the comment in a single-patch patch
-series in case you don't supply a cover letter :)
-
-> diff --git a/refs.c b/refs.c
-> index f4094a326a9f88f979654b668cc9c3d27d83cb5d..5e8f5c06fa68d16c93ee11edd9742995eea994b6 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -3035,9 +3035,11 @@ int repo_migrate_ref_storage_format(struct repository *repo,
->  	if (ret < 0)
->  		goto done;
->  
-> -	ret = refs_for_each_reflog(old_refs, migrate_one_reflog, &data);
-> -	if (ret < 0)
-> -		goto done;
-> +	if (!(flags & REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG)) {
-> +		ret = refs_for_each_reflog(old_refs, migrate_one_reflog, &data);
-> +		if (ret < 0)
-> +			goto done;
-> +	}
->  
->  	ret = ref_transaction_commit(transaction, errbuf);
->  	if (ret < 0)
-
-Nice and simple, as expected.
-
-> diff --git a/t/t1460-refs-migrate.sh b/t/t1460-refs-migrate.sh
-> index a6d9b35a46eb59350aa0d59d982a2fbfaecf1448..9059d4c4121842a9d2e77dc4e54c537eeff8afab 100755
-> --- a/t/t1460-refs-migrate.sh
-> +++ b/t/t1460-refs-migrate.sh
-> @@ -9,14 +9,16 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  
->  # Migrate the provided repository from one format to the other and
->  # verify that the references and logs are migrated over correctly.
-> -# Usage: test_migration <repo> <format> <skip_reflog_verify>
-> +# Usage: test_migration <repo> <format> <skip_reflog_verify> <...options>
->  #   <repo> is the relative path to the repo to be migrated.
->  #   <format> is the ref format to be migrated to.
->  #   <skip_reflog_verify> (true or false) whether to skip reflog verification.
-> +#   <...options> are other options be passed directly to 'git refs migrate'.
->  test_migration () {
->  	repo=$1 &&
->  	format=$2 &&
->  	skip_reflog_verify=${3:-false} &&
-> +	shift $(( $# >= 3 ? 3 : 2 )) &&
-
-I honestly have no idea whether this works with all supported shells. If
-it does it's a bit funky, but should work alright for our purpose. I was
-thinking a bit about how to improve this, but ultimately came to the
-conclusion that there isn't really a need to overengineer this simple
-test function.
-
-> @@ -241,6 +243,17 @@ do
->  				test_cmp expect.reflog actual.reflog
->  			)
->  		'
-> +
-> +		test_expect_success "$from_format -> $to_format: skip reflog with --skip-reflog" '
-> +			test_when_finished "rm -rf repo" &&
-> +			git init --ref-format=$from_format repo &&
-> +			test_commit -C repo initial &&
-> +			# we see that the repository contains reflogs.
-> +			test 2 = $(git -C repo reflog --all | wc -l) &&
-
-Nit: we don't want to have Git on the left-hand side of a pipe, as it
-might make use lose its exit code. This could instead be:
-
-    git -C repo reflog --all >reflogs &&
-    test_line_count = 2 reflogs
-
-> +			test_migration repo "$to_format" true --skip-reflog &&
-> +			# there should be no reflogs post migration.
-> +			test 0 = $(git -C repo reflog --all | wc -l)
-
-And here we could use `test_must_be_empty`.
-
-Thanks!
-
-Patrick
+-Justin
