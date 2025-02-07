@@ -1,123 +1,134 @@
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8DE02417F5
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 08:17:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34287189F39
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 08:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738916239; cv=none; b=pfEg+32QSvuoR0IPU2RLfcRIC7aVTgnjIDaX8BMltX+7ZtPiW7Y1zufOnLVNyKXM3H2F2noQjwQugtqU6GLyICh3HizioEN+I8oDpQVj+GntyApd4jU2ajztJbpfFV9hfB8u0hCZ8fhDFvziZXaboEq/INbnTDs1G9qq44DVm1c=
+	t=1738916440; cv=none; b=okjB4++7pzwbXngDAZpFgmL10j8vk2kTJfpWTtLPNo4Pg+6MF/QlosG66m0ybcuIy31IV869F8ecSV5bXlIDnu+6grpWFTH7+5hlJsv21y0hUUfyY6ThsjTvoRmY//Aao9RR9FF4dP1IL8/4fH3bnfcq9Eb/h5EOenE7KkkWAGg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738916239; c=relaxed/simple;
-	bh=8jX4dI9i/2usTOptbZeLzQwmnM7KmMfvZURkLlvSYw0=;
+	s=arc-20240116; t=1738916440; c=relaxed/simple;
+	bh=8UHDfxkJ6Q4B/Sv/4HMo+bx+4cy8zzxE8iOCxmKwkRY=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=Vg0OgbVl0GGUv+SSpDqoXNAplgO1UN4eLo8QajVtEB1VS+MCoGVn1SJTXJD7NYOPBL88MYTruH597Ms58ID6t4vHc9d8V28p2OqNkjDRP08j7dP/dPbHDYjRRasqPbQ3scrK3TrUK4K5KWweA2CX3mQOd0ECC1VpzyqB3M+ih5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gOZVXx/w; arc=none smtp.client-ip=209.85.222.53
+	 To:Cc:Content-Type; b=eQWz4W0NgEgHMUVIE/uXCM530/5iwwGmgr5xrLojeEE38SVhzHm8Ao2Cl9mJympHJVe3cRQIE4jkA83n5HcMU61F2YPJYX7f7Kx7yXyFYQqVmBHI02zciE31SqmrSDdngbqKQWjEX+tf7QYMN4I0MktVLtyzpgD12UuODS3gEh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XlE8yaL0; arc=none smtp.client-ip=209.85.221.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gOZVXx/w"
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-866f2f6ffb8so480527241.2
-        for <git@vger.kernel.org>; Fri, 07 Feb 2025 00:17:15 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XlE8yaL0"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-51f2a445df3so442541e0c.1
+        for <git@vger.kernel.org>; Fri, 07 Feb 2025 00:20:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738916234; x=1739521034; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rzy7IHyYGfGzMlM2muY1kJYgAP8eE/bgxzBXhXDPqyg=;
-        b=gOZVXx/woBM85YGcwh78bL//4cPJ6oW+kxGJiMgzZ2SHE5bqInKJFVpMaWDkc10No1
-         1Zp3hPCBFzh4WOt8KhYEh96ESCd2NVAW0PxUHmvZgu/AH6nX0vxvXmF+mHiIRJHGJrGl
-         jmt90s87C7TqWH5sqdtlF9ac3eCNnxIPIiq5DFjm6W+1NwtSP8TmlFSg/G05HkXJDaqQ
-         iWabWhihrJDwfLsIklJA28hCbYHobAeTvWzizX/8Q2Y43UX1Q5hlun79uSvFmY6i4t3x
-         R8imbHQXcPivBwOb7ACqYIOIeL403hn1lvZNJT05KqeRu+B2JRClIw8meeEvpJba0l3t
-         x1Jw==
+        d=gmail.com; s=20230601; t=1738916438; x=1739521238; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=E3tkKR17HYxycPx1PnU1C6JZoj1hgKpRZaQpZtNPY6U=;
+        b=XlE8yaL0IC0fATdn9rJEtGQ+aKyxP5gDc0ai67GLvZSEA+RKKi8BKGF3dDylJQSqLy
+         ktrXX61T+MWGImYlt+1z5jQmJAE5lEopyJ01hjKvhoGwWNxlA+2W35ljSwsSAY3Xykzi
+         GK5dp3kspGXC3psqBiE8rxWaJEKRqxnzxjcQ87ofAlSqjkg/+++VLELyIQwJ4ZJWVO9Z
+         YJT9Ztkt9tXbYUY/KO1QJ/PCqeIWm6xqK4N/eUevtPIk588t9oQChnJx7oN2AYfDgzcl
+         l72qlMQLb23W0Y7QtYRi2RsP20GJF8HJqgmhXxlN6mYXB+HmvP2oXKRuykZvQZcD+4Qo
+         Ajow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738916234; x=1739521034;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rzy7IHyYGfGzMlM2muY1kJYgAP8eE/bgxzBXhXDPqyg=;
-        b=CaLwtQJtktgZLOTPPnU7BY4Nj5CSVEie+BS7Rn1ohW9p9bFYQg7NNgUi53sBQyDBn+
-         z9lbiVqYLg2S+umZino0vwDB6dL9RwAE5Dfr3W2TzVfX4LsLPSP6eicrtZSVizI6JaVY
-         FMQHkSKz1V7Pk9XubKC2zaSwbxrCq+I8zlEwiF4YzT4iVKlyz/8xwdQtFL+6BBuekQpE
-         KHkOoUft+eCvPRV9uDjbQIID8a/p/QUUvVe3NIU7PZwq26PmR3HpqEX7H3Uoa9sr2ubq
-         4rIiPyUgphjUB8mxsGzxSzzS5bEv/rFmhctM4AgOyaGKCu1P8lEZDjZS2I+YEZwelQvF
-         Lo8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWHs5ysPEsQpDFPoB9AeHyhnLI/nZf0ZAU/OVMrz+20lAsJsPvBN+eYwz7BBEHsi4si/gs=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw7bj0fje84on57JHq8MV0L+0aNyl6KRl3d9GTB88Y3TS5h4rsE
-	U9odXtzQ7omWiiuZphXJs3Qih8pzBlFzXrbI6RLM4LBVBqIefuE3LX3EE7BEMIcx4pqJhUGVRkc
-	p3AmUKwm0VNBkUKdkuqWmWsR4pl4MbnIK
-X-Gm-Gg: ASbGnctxY00HTYpNa32YyEyhLyg4TjqWMtTrrYVN+rT1utTAMwKZh6+wlBfdxW/ZZzP
-	B9GER2ZgIhBM8ACtxciOr0WBCB5+Mu2qx9cFcfWrUKN/x2TCNc9p7kveuLJOOjf7fcVspmhNFmq
-	NjlF9mSU29cJyIVH3/lM9cX3lDKBfctdo=
-X-Google-Smtp-Source: AGHT+IHESXfaFEI9A4plDC1cRF5ChnQEDfQn2oxfVtyFNJ3ns6ZQ0OKT36NafeCEvvcvTREcGd4qxetuQ9/lKBAIto8=
-X-Received: by 2002:a05:6102:f0f:b0:4b2:5d10:29db with SMTP id
- ada2fe7eead31-4ba85dea287mr1286314137.7.1738916234536; Fri, 07 Feb 2025
- 00:17:14 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738916438; x=1739521238;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E3tkKR17HYxycPx1PnU1C6JZoj1hgKpRZaQpZtNPY6U=;
+        b=bpvDjiWtC1yu/A7g+U92pZqE1CcYIV9kmiRq/kcvB5i6JdFphR0LVMUhOJQbupiVl0
+         PH6lbnbcQtvqyI4gDO9lvNGyS8eoJ0F5snKkBNB6uYq/MeAwxvvjOynEx6bcoIVQficL
+         pf2h0mV+rsrH80ZFrmp27G28T55hRjGx0b8TRrXw7hKbA/0bwlkkmuWIgvbVCNQzWTIA
+         KJUBiRBwAp+1c9gnKzSaEacKg5RUpo1ij2F1t/hNuX8rNEDURwu3aAi1vvoyGoe9v34B
+         7H+8/QNqQijyw0ITk98IJZOaTSDUyytJkGxfAWdalCopJu2cAgtDg0Il/PrMloIo3HQi
+         ngQg==
+X-Forwarded-Encrypted: i=1; AJvYcCXalwQvx6+Gts7no+74sTSERAJHlpbp8HRb+klK/AXwG7CXykaVSGBCZB/GGP6lNhTA7P8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzx3ljUbxxtGvuShHJajU1BHo9PHWpKfCn+fIe8gulCgVTyeox3
+	hzkQUR+JfWdoAYBjqMzb2+iOLijle2UWg8E6EStGJYINERQYpVgPdFlCajJWB9C7WwNDIH0DeYI
+	stge+rqjOaY/8Oq/w2JlDo1qKDpE=
+X-Gm-Gg: ASbGncs1MvsMbX9TzmN1+FwWCQj2Pc59TKd4GQ1J16dxs3MCiYGG7WYtfzdTQbb2PRp
+	vP3u5xJileg/TfNGMJKmX6sDHm+vmkt5fef9H0yUWieG/vAJaPRHaTksoHUJr5tX5JFWAgk3Gt1
+	gag+vAu0WX/nykpPO7lNQ43dDLQRIbS9w=
+X-Google-Smtp-Source: AGHT+IGy8QudwOKZH3wdRZ603wx2RR5Heujv5zxNNaV1DIMCJxSK9eHJrpYnv8HuvzPiD3/9lvsXF6qBs4iX0weIdwI=
+X-Received: by 2002:a05:6102:149e:b0:4b1:20b1:bff3 with SMTP id
+ ada2fe7eead31-4ba85efdc86mr1203066137.16.1738916438036; Fri, 07 Feb 2025
+ 00:20:38 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 7 Feb 2025 00:17:13 -0800
+ HTTPREST; Fri, 7 Feb 2025 02:20:37 -0600
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
-References: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
+In-Reply-To: <Z6SGjSik-rRsAGUU@pks.im>
+References: <CAPpV+OaMcViVKok5U0-4HaYyPMKEA7BBzw4t113uAaMndjs5Cg@mail.gmail.com>
+ <xmqqh65b2ci3.fsf@gitster.g> <xmqq34guzi0f.fsf@gitster.g> <CAPpV+Oaq3d3oNE-V3pnpQRNrGCoZr52uY91QtWYxcu1tgG_QXg@mail.gmail.com>
+ <xmqqseottxld.fsf@gitster.g> <Z6MLOA3mJGbPFBae@pks.im> <xmqqikponsk6.fsf@gitster.g>
+ <Z6SGjSik-rRsAGUU@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 7 Feb 2025 00:17:13 -0800
-X-Gm-Features: AWEUYZk7_BZKDeZF4TtFX8GDmjof4dNn9ad8GsIYjhav5aWNEZPJIBWHDyWl05E
-Message-ID: <CAOLa=ZSScTrK1RH6+VgHv+P-eLsQ2uXwP_ZKN-rwObca1aTa=A@mail.gmail.com>
-Subject: Re: [PATCH 00/16] path: remove dependency on `the_repository`
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000074cd62062d88fceb"
+Date: Fri, 7 Feb 2025 02:20:37 -0600
+X-Gm-Features: AWEUYZm1DB9tAqFXJ7Jcjp23RjJrnt_obov9nNDskfyQ7Y5XUn0ALLdhwOt5fX8
+Message-ID: <CAOLa=ZRz0dFB46y6RtxMuwAdY=u8xh1msp2pscT_4hwUuBk7Dg@mail.gmail.com>
+Subject: Re: Usability issue: "Your branch is up to date"
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Manuel_Qui=C3=B1ones?= <manuel.por.aca@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000956bc4062d890805"
 
---00000000000074cd62062d88fceb
+--000000000000956bc4062d890805
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Hi,
+> On Wed, Feb 05, 2025 at 10:40:41AM -0800, Junio C Hamano wrote:
+>> If the user, on the other hand, is interested in keeping track of
+>> all these thousands of refs, "git fetch" would have to ask and
+>> receive advertisement for all these thousands of refs anyway, and
+>> at that point, recording the no-op update would be a very small
+>> part of the problem, I suspect.  Besides, we have reftable that
+>> would make this kind of problem easier to solve, no? ;-)
 >
-> this patch series removes the dependency on `the_repository` from the
-> "path" subsystem. The series is structured as follows:
+> Yeah, I was pondering whether to bring up reftables or not :) But
+> indeed, with them it would be way more efficient, at least assuming that
+> we write everything in a single transaction and not via multiple
+> transactions. Which we generally don't in git-fetch(1) unless the user
+> asks for `--atomic` because we allow for a subset of the updates to
+> fail. Consequently, even with reftables we'd end up writing N separate
+> updates, where N is the number of advertised refs.
 >
->   - Patches 1 to 5 unifyf the interfaces that can be used to retrieve
->     repository paths (gitdir, commondir, workdir and submodule paths)
->     and adapts callers accodringly.
+> This is a known problem that we actually plan to fix. Karthik is working
+> on support for "partial" transactions, where it is allowed that a subset
+> of ref updates fails without impacting other refs where the update would
+> succeed. With this in place we could then refactor git-fetch(1) to write
+> the update with a single transaction, only, even in the non-atomic case.
 >
->   - Patches 6 to 12 drop repository path functions that had an implicit
->     dependency on `the_repository`.
->
->   - Patches 13 to 16 refactor "path.c"-internal code to stop depending
->     on `the_repository`.
->
-> Thanks!
->
+
+You've played my hand here, I've posted the series now [1] and agree
+with everything you've said here. It should really help with optimizing
+reftables.
+
+[1]: https://lore.kernel.org/git/20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com/T/#t
+
+Thanks
+
 > Patrick
->
 
-I've reviewed the series, apart from some small nits, the series looks
-great. Thanks for working on this.
-
-Karthik
-
-[snip]
-
---00000000000074cd62062d88fceb
+--000000000000956bc4062d890805
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 6ef7b83f4b50be63_0.1
+X-Attachment-Id: b15179204ba7ec08_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lbHdZY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOEw5REFDa3hZZnk5QkVvQnpSdDZpYnFnZGtiZ3E5Zwo2ZDVTc0k0L29C
-QUJuUkxNUDZZaUxKOXBXeUxOQW56NzZuSmNYaUNZVitFNHI4R214T0JvUkN2bUU2S1phK3dLCkpO
-V3k0WVN1dmxLZ2FpcTRna1ZMNy9STlhyNTQ3R3JaZE5OWlB0RWNIVUpxYnpzTjdjd0t6MVRzaWhT
-di8zZHAKVmhIaWZuZlNnY2loNDRBcFdTckpyUXg5NUR5dlkvQXBqTURPcXhVY2RNbGxKQzlOUkZU
-U1lkbzJHSHFxK2h6NgpJWWtmQWljd1VQSmFONXBid24xNGNsRDZxWm04T3NJNFFwWlI4ckloZ0xJ
-ZjkvWWNZRGZ0UmlXaVR1eWRPajhqCnlCV1NVVkxNaldoMjhraksxRnd5K2VtTVBqTFhOK3JuTngr
-aHJZSzBkQ1RsZmNWQWg1Q2RaREhxaVVCMWVJSmgKdEhBb1BIVmwrSGhJT3JGdVkrNnh3RE5mZDBV
-dmVSTmExRXVzVHZrWHhuK1NqQ3BDVWhZYXpXMmZVU1owUkV2UgpoRFBkc1JTQ3p1MGQzZnl4TDFV
-d0J0eVdpeHRxSkNjZXBoSHlPSlpDRE1EWXhHRzRRRmRKckhIREZLaUpac3U2ClVjZ0ZMaFRBcWJt
-UTNZWUlqMEl5Vzk4bVhqTm16SFVMajZJN1Zxaz0KPXoyTEsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lbHdsTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNC9IREFDaDFUVHJlMHljYU52eTVmVTAvSlU2ZkZZUgpJenZBdHhZTlZy
+MFhHODM2VHFldUxCZ1V0WmE5TDNvMkhvNjh3RXRsWEFhb3A4SEViNS9NcTdzZjNqSFFsM05TCkFp
+YVFiMnB0R3BybTgyUld2OUJQRUR1Wk40aEo2RHd5ZlhKUW9qUlQrOTJnNDQ2THdiNnI1Q1E3VWpx
+eVB3bGYKS1ovSTJHOE92N2ptN2ZRZzljaG1QVTBiamlUck5GM2RuQXJVb09QS1VmYnp4SnowQlVi
+OENUOXE2WDMvMHIxbwpFN041NnNCYzVYWGJnS052c1pxMmYyZ2VDN3RxZHJPNS9jVVcyYVMyUEhq
+VnFyTmZFZFIwajA1TnE5cHFnTy8rCnlhWkZORUJPUkpYeDFJeXlpNHVZcDlaSUdwZ1hadTVoZy9X
+QWNLZTVzSXQ4K002M082SVlGVCsreWZXYzRVT2gKVUg4c3g3QTc1eFFHdGVqZXZzR0NIWWxlMko1
+dkVuYkVBb3BpcmdoR3hha3JnNmQvaTUvQitKWHpXQngxZzQzZwpNRGFxRndpUXBGRGg5YXpmK0or
+UnB6dmpkVG9tVXREcDZlV1VRakRpVEtSSkE1SXg1OVJrRjI3RlVJcytZYytzCktWbHk1aVJxNWFq
+NWVqWmlUcnRRWE90MC9zVlZ0eWxLcmdFU2QyMD0KPVkxWkEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000074cd62062d88fceb--
+--000000000000956bc4062d890805--
