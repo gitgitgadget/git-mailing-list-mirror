@@ -1,83 +1,83 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985EF22539B
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 16:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1F92253A4
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 16:12:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738944777; cv=none; b=afMhMOQ8kEdRZ17mi8LGtR53iPX48TLEY9oCocwdbyGXzp/KlAWWXNrfdxOqIZsEoYIAg7+2SY/RKWFNebrr/miT6WK/wQvwYdmk/Gkie3p1MEzcJi7qdsS9Oj1jdv4+qfhPdM7StUKBjkUOA0M9t4jUziMx7o/WM+ZOzROcv+c=
+	t=1738944780; cv=none; b=mmkSMwTuLdqNOZ+ZvIxeZEHm8SUTaBOchQHVeEiraDE9CnpgLnqEGtCxxufpuZWsURiSjet627hUFtpaXE9Mf1xFI0YWBFFiZiOGlWtQSCxX1pA67eBD3PL6ROWcF3qFIeEaBxDgOgRzLqw9C+utOy7ozxBDn4kKiVJXZaNR0R0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738944777; c=relaxed/simple;
-	bh=lb7v8YPJAm0V3p0fueA6qzgQPA+KkUjWubqirzGNwsE=;
+	s=arc-20240116; t=1738944780; c=relaxed/simple;
+	bh=O3Rs+Dxrp0plFcMAE577zbz4+LvpUo6t55R1UlhXHLY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sfY6w0P2PH7HulxxkzqWLspO1GWwrPuufj10pfVPX2R6Je43iHBmEyb4u8/lrQxSUsM0SbqX2vbWly6S/h9thbkhhv8lhw5EsE0w6N7Z0yOH4cdF5I4G57p1p4ZvBAd38DcJJkf/QHJe1psU+2ejfeJAY++3EtxxY4Ac+NRnsfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=k+hJLA7q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FOPBTurd; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=AiZvqwvcnexGfEkBFuARvIkjmFvaqn4Oe97Y/Okyc6hLq9ldMz0Udw2D4FnR594GmiiLb5Ts4tEpVIDetWsW3nAnpTWGa/RwWEeQw9D/QXHgQQAPayO+bYdEFEFbD7KoSsoSx4thGD6C2nhUIw8V5wWE0PC1d5JJ+l1k6wA98wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b+7qT0EI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hxnmJbFn; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="k+hJLA7q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FOPBTurd"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id CD1621140186;
-	Fri,  7 Feb 2025 11:12:54 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b+7qT0EI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hxnmJbFn"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 40B652540143;
+	Fri,  7 Feb 2025 11:12:58 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 07 Feb 2025 11:12:54 -0500
+  by phl-compute-12.internal (MEProxy); Fri, 07 Feb 2025 11:12:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1738944774; x=1739031174; bh=Hzrf+p2msl
-	M/sdG+gwjrDCbgYyKy/G9TjqdbL9wLIEE=; b=k+hJLA7qIyV1LYtM18tZ4YHiTq
-	SbhEpJ0wKT3UHZlpXxkNDG/7oq6mKyIPHvJP7snWYU7RU6+0l3kkEIfk5XjUPy5Z
-	vMkCek13xp08bK10OMm+ACpEiv+xJsS9bY3ryIMeaaAy/+AQIwtWgECJffd1H6EG
-	VdBkO9UvWfjAtTu2nSNdEcYYQ9wZ35D/HCm3wynIonKklzWPaf6mhekiEfXB70hM
-	6te080kNLXV0dnn4O+iVdd+V4XxvzSCW7ucVZDZhCb4OiQDta5hMvk2uF0E0fUtr
-	xnGSx0IsQcymDMGlUEyQ3M1ht2Zik5RXnZYyOp8h/7N3606l5oIK6Wnr+uAQ==
+	:subject:to:to; s=fm3; t=1738944778; x=1739031178; bh=HXT+qs4tRn
+	ec/lL8yd3DQLlacrWF7we8l2nt8xx1ABo=; b=b+7qT0EIX6E0hu2Fr52yUTcQLe
+	Sl7myxWC1TK355p16UuOlOahBjnZ2n3mSqSUXDjN8YHtoImrICW0JvWtUia8l0Lf
+	bl37r4b9S8rsMx+Ul0018xFLFe6NDakuxrahD9X+Krt309v1M1OaFYZo4V9Cp8kb
+	NpTiM7xiO6IOuY7Izh+UdlqYcufgU8Z2THBoglg2Fm3efzY9dGs+CbFQrq474cwL
+	BDRQs2rZFg3IWF9RLUu5ngaXFrPb2g8R9YP94BLCGhqPIkBNIsNCpgEoDtTnGj9D
+	c9nvfdIkSgaLOXcZDNtEEjUvLALZQD80oVk/fBwo29PgaxGIEWFVNL8n6MJQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738944774; x=1739031174; bh=Hzrf+p2mslM/sdG+gwjrDCbgYyKy/G9Tjqd
-	bL9wLIEE=; b=FOPBTurdP9K1olMtUm3K/F/XYZL+3TJVsf6claLGDJyxgCaA8fl
-	wf67SqwOdjTKlQ5Vxtkbhn8BWkkbcYx4Fi74omaFH+RIgtHetanmUjTuX7KgOEOw
-	rhFNbb9VpHPN7GKw5ceExE0obWfCGbI2ZoWCg1FQewDdAWI4B3BWtESfTvScjQEj
-	fUL2b+3KQQET+3Z+b64hkRju7RJZ0fP85abLcU+k9TCK/wtIllhTcjAUAMUI8pEE
-	0aAryJou3h9Rv+KwW1dY4DDxmhp05tG9RfIkrdKxAN/TWSF+2AI/gVFmArv1id4l
-	qrY7tWQNHC7N04IkwhB4mo7yk+PkJ9OTBcg==
-X-ME-Sender: <xms:BjGmZ8lPp1LltPbNT1xwpjEF9ztqu0XxobtJ7YruLJrsM7PBuJ49lg>
-    <xme:BjGmZ72qLaa10565WHotA1yoIyD-q4Gx25WAQSybw-2W-MEOlU4S_qET-DG147oVf
-    DSfcjjwtKvcAyBVvw>
-X-ME-Received: <xmr:BjGmZ6rYcwwyPnW5x5MhKtWubLOmiuZoKC-zi3UIfC_wwAhL4eAk7WOnEPrR1mfd5uDOljgGw3V9SXfRyvFZoS1-uOZ2dW0RvXxprFC1JR2jvw7z>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleejfecutefuodetggdotefrod
+	1738944778; x=1739031178; bh=HXT+qs4tRnec/lL8yd3DQLlacrWF7we8l2n
+	t8xx1ABo=; b=hxnmJbFnOB0AUGK1GvqZnY4yl2+0OdLprcIc9kZkd1TeG0Ij6OX
+	jwliJ7f+gcGo2t2wQ612q57+rTUTGOKGbjGXZfrYtDbGG79uV7KulJWUwHwVLvLs
+	vtye/eDlpQFJlYXO1dpkvaC7ijzxedyWOrdeGtiwO2Jv2vBoayoaT7OrGtIcnDSZ
+	VMCpw0X5SDaheG3Mhgxl6tAhc8q9CZ0QhuJvLtQCgHEfZT60zSgTB2/c9mkXr8qJ
+	0i4R1bpjnixWa9QXBiQnN0DqxvGgnqEI2ZgSnWESzuXp3EIhhQOrDm48gE5kanse
+	3mCNT/NiiSH/k1tPyKray0j4LayS0fPHymg==
+X-ME-Sender: <xms:CTGmZ5mMtePJ3vZATzTIHdBSNWeN6VumvavOVVWDXZob3We1dtKddQ>
+    <xme:CTGmZ01voKPxflmUniF0DlHOJUH8No6gXViCr37kngGfALhLdHsE7d0BBfjZFQS24
+    g3drg6wIhlLPFScXg>
+X-ME-Received: <xmr:CTGmZ_rpqicZ1g1awv6X41zNZz8v5kUnhNN1ZgtkCqUORWYx7YJNOpM_IJdB6mogzweCLT5fBZIl2WP0_bL1JCg4g9gTe12yf8g8juQoPTbhx62H>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleejgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:BjGmZ4lol891Gg8RA9rPIIyQU6XjMYw6ckY9yW8lAA1mp39AyWCaTw>
-    <xmx:BjGmZ61c8tP1gyFrVpcUiKd5xGV6Q-PfEKeg2F5AhJRKgI0jBXvxJg>
-    <xmx:BjGmZ_t_1_MHBCdiGRhZQYyX3KWZYPqjPKX71xyWApyWZr1Zkj8e9Q>
-    <xmx:BjGmZ2WRvodqoDFYNEAyNoeGR2226MKdx3dmPySYkvFIjN7aWSIJXA>
-    <xmx:BjGmZ_zJM5HPz1FertSMcS4et0u6cpixa_tUtwJe9EFpswrqzDzOijey>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:CTGmZ5mnVzUG2-_T_vDNqqh5lUTLzvDmhiyQtMi_foNZUZX1n8CsFg>
+    <xmx:CTGmZ32WNeIEMobjKOpHSUjZTL3KYlzFUbSzaVohkaFClMZMMAQyLQ>
+    <xmx:CTGmZ4v9Jxj22cq5r6hE4MC5SxLvkPGZh9YOAZBRuixCjWr8DMHd-w>
+    <xmx:CTGmZ7Vnk--QC6EVFkFaIJwPf6x4gm__OobymAKXkiLRZxsfAWOpew>
+    <xmx:CjGmZ4xpYNPpcCNliw7XNdhfxaQjyqH27R7Xp9zIAqXBLHDyFaBc8RDo>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Feb 2025 11:12:53 -0500 (EST)
+ 7 Feb 2025 11:12:57 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8bce7d46 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Feb 2025 16:12:52 +0000 (UTC)
-Date: Fri, 7 Feb 2025 17:12:51 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5d8f95b6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Feb 2025 16:12:56 +0000 (UTC)
+Date: Fri, 7 Feb 2025 17:12:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, jltobler@gmail.com
-Subject: Re: [PATCH 5/6] refs: implement partial reference transaction support
-Message-ID: <Z6YxA4BlhNwbeYk-@pks.im>
+Subject: Re: [PATCH 6/6] update-ref: add --allow-partial flag for stdin mode
+Message-ID: <Z6YxB6qL8WQFZyWW@pks.im>
 References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
- <20250207-245-partially-atomic-ref-updates-v1-5-e6a3690ff23a@gmail.com>
+ <20250207-245-partially-atomic-ref-updates-v1-6-e6a3690ff23a@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,73 +86,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250207-245-partially-atomic-ref-updates-v1-5-e6a3690ff23a@gmail.com>
+In-Reply-To: <20250207-245-partially-atomic-ref-updates-v1-6-e6a3690ff23a@gmail.com>
 
-On Fri, Feb 07, 2025 at 08:34:40AM +0100, Karthik Nayak wrote:
-> Git's reference transactions are all-or-nothing: either all updates
-> succeed, or none do. While this atomic behavior is generally desirable,
-> it can be suboptimal when using the reftable backend, where batching
-> multiple reference updates into a single transaction is more efficient
-> than performing them sequentially.
+On Fri, Feb 07, 2025 at 08:34:41AM +0100, Karthik Nayak wrote:
+> diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
+> index 9e6935d38d031b4890135e0cce36fffcc349ac1d..529d3c15404cdc13216219fba6f56dde91f4909c 100644
+> --- a/Documentation/git-update-ref.txt
+> +++ b/Documentation/git-update-ref.txt
+> @@ -8,7 +8,7 @@ git-update-ref - Update the object name stored in a ref safely
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] | [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z])
+> +'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] | [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z] [--allow-partial])
 
-In fact it's even inefficient for the "files" backend. The whole
-machinery around creating a new transaction, preparing it, committing it
-and then cleaning up its state does bring a bunch of overhead with it.
-But true, for the "reftable" backend it's way more impactful.
+I think it's time that we start to split this line into multiple lines :)
 
-> diff --git a/refs.c b/refs.c
-> index b420a120102b3793168598b885bba68e4f5f5f03..75dbd84acbc41658d4b8b6b5e7763c04e78d0061 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1211,6 +1212,14 @@ void ref_transaction_free(struct ref_transaction *transaction)
->  	free(transaction);
+> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+> index 4d35bdc4b4b57937112e6c4c9740420b1f1771e5..83dcb7d8d73f423226c36b61374c86c6b29ec756 100644
+> --- a/builtin/update-ref.c
+> +++ b/builtin/update-ref.c
+> @@ -562,6 +563,30 @@ static void parse_cmd_abort(struct ref_transaction *transaction,
+>  	report_ok("abort");
 >  }
 >  
-> +void ref_transaction_add_rejection(struct ref_transaction *transaction,
-> +				   size_t update_idx, struct strbuf *err)
-
-"add" to me sounds like you're adding a new thingy to the transaction,
-but you rather update something. How about `ref_update_set_rejected()`
-or `ref_transacton_set_rejected()`?
-
+> +static void print_rejected_refs(const char *refname,
+> +				const struct object_id *old_oid,
+> +				const struct object_id *new_oid,
+> +				const char *old_target,
+> +				const char *new_target,
+> +				const struct strbuf *reason,
+> +				void *cb_data UNUSED)
 > +{
-> +	struct ref_update *update = transaction->updates[update_idx];
+> +	struct strbuf sb = STRBUF_INIT;
+> +	char space = ' ';
+> +
+> +	if (!line_termination)
+> +		space = line_termination;
+> +
+> +	strbuf_addf(&sb, "rejected%c%s%c%s%c%c%s%c%s%c", space,
 
-Do we want to `BUG()` in case `update_idx >= transaction->nr`?
+Whew, that's a lot of placeholders.
 
-> +	update->rejected = 1;
-> +	strbuf_addbuf(&update->rejection_err, err);
-> +}
+> @@ -723,7 +754,8 @@ int cmd_update_ref(int argc,
+>  	const char *refname, *oldval;
+>  	struct object_id oid, oldoid;
+>  	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0;
+> -	int create_reflog = 0;
+> +	int create_reflog = 0, allow_partial = 0;
+> +
+>  	struct option options[] = {
+>  		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
+>  		OPT_BOOL('d', NULL, &delete, N_("delete the reference")),
+> @@ -732,6 +764,7 @@ int cmd_update_ref(int argc,
+>  		OPT_BOOL('z', NULL, &end_null, N_("stdin has NUL-terminated arguments")),
+>  		OPT_BOOL( 0 , "stdin", &read_stdin, N_("read updates from stdin")),
+>  		OPT_BOOL( 0 , "create-reflog", &create_reflog, N_("create a reflog")),
+> +		OPT_BOOL('0', "allow-partial", &allow_partial, N_("allow partial transactions")),
 
-Do we really need a string as rejection error? I'd expect that the set
-of failures that lead to rejection should be rather limited, which means
-that we could use an enum instead. This would unify the errors across
-backends and also allows us to figure out the root cause of rejection in
-other subsystems.
+You can use `OPT_BIT()` to set a specific bit in a flags field..
 
-If we introduced an enum, we could eventually even iterate a bit on the
-mechanism and rather trivially tell the backends which kind of failures
-are acceptable. As an example, a conflicting ref update may for example
-be ignored and not cause failure, a conflicting path name might cause
-failure.
-
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 9fc5454678340dd7c72539bfa0f15ee7eb24b1ff..99ec29164fbd30635125cc2325aab3d300cf906c 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2852,8 +2852,18 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+> @@ -749,13 +782,19 @@ int cmd_update_ref(int argc,
+>  	}
 >  
->  		ret = lock_ref_for_update(refs, update, transaction,
->  					  head_ref, err);
-> -		if (ret)
-> +		if (ret) {
+>  	if (read_stdin) {
+> +		unsigned int flags = 0;
+> +
+> +		if (allow_partial)
+> +			flags |= REF_TRANSACTION_ALLOW_PARTIAL;
+> +
+>  		if (delete || argc > 0)
+>  			usage_with_options(git_update_ref_usage, options);
+>  		if (end_null)
+>  			line_termination = '\0';
+> -		update_refs_stdin();
+> +		update_refs_stdin(flags);
+>  		return 0;
+> -	}
+> +	} else if (allow_partial)
+> +		die("--allow-partial can only be used with --stdin");
+>  
+>  	if (end_null)
+>  		usage_with_options(git_update_ref_usage, options);
 
-I wonder whether we want to accept all failures. Some failures are
-certainly benign, like for example mismatching expected OIDs or a
-conflict due to a preexisting ref that blocks the path. But other kinds
-of failures which are unexpected might be a bit more on the dangerous
-side to accept, so I think we should be careful here.
-
-The same comment also applies to the other backends.
+The implementation is quite simple, nice.
 
 Patrick
