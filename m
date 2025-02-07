@@ -1,55 +1,55 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6E51DED66
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 11:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BAE91DEFE9
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 11:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738926219; cv=none; b=k08WfXDookRwKRxegS5dae8qZ5Yy9znauDBId4p16zBhBFMCMG38efZc2W+sEzzwSL0aPljMJXPErR5DjiaBVHPI68LtTqpx5jWdRGUXssVePas+f+dUeXYeqzMhNqzQq9RnBK6+FZKlI6ZqVMJFR7ApKBt7XAn7qWwWqlqGu/s=
+	t=1738926219; cv=none; b=S4iHJrfSBxlJRv3kbJE+sYQHu5+Wn/1lN7OqaovdhLf528XvA2D4rsUf5FCqWu4mLPfmD9K8/nEP+BEHtDASYAtOEsVhyDcBZ5XVIosZgy4TgY5oYkQITXCHEi4Hl2jh91lS+lAaH8gv6WB1Qfe0UtvXSA7TCsacyrHDXSGhc48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1738926219; c=relaxed/simple;
-	bh=JFhkGskwZaVG6pDkym4HV/BlqFuV4L3Af4A3FI86IAw=;
+	bh=WxV2OV2NYIrIGkcqu4Tk7brx08niqOCnPfKK87Y5GX8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gh7suNd3J4plGLgRbwiazTk723GBP1w7kzxdNMv4rTr0Tgn0Rh6Z46ytcscaA6WzXm6Vsh8Lmt4idCIxRPkzPzRYPyu3Fku7IC83/1UjFm0Xf312u6LEgYa3a/Hzqpng9fnqJrQjorM3MoyfZSEr2GdQnz2OdGUvvgLUGzzQHZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SJZvpZjS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zywUaY8K; arc=none smtp.client-ip=103.168.172.153
+	 In-Reply-To:To:Cc; b=aVQN9kbdatq1ZmkQ3dxXUQHhaFLccZdJI5VidodaZZrzUSys4MMSE5/Zjj3VOuTe4PeVdrv3xK5Pp+5vWEbrArYpS2L+6m4rMjZ+VDTQ/cvf0ffJ5wcQm8KaTXvIc7RoLgj2UgckEbd0tamIygbmm8cSXEGSLxElrNFTE0h0Pe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ASTDK4ib; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ExEVB3qq; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SJZvpZjS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zywUaY8K"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ASTDK4ib";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ExEVB3qq"
 Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 87243114015D;
-	Fri,  7 Feb 2025 06:03:36 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 07 Feb 2025 06:03:36 -0500
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 73B991140170;
+	Fri,  7 Feb 2025 06:03:37 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 07 Feb 2025 06:03:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738926216;
-	 x=1739012616; bh=XwA5cSbdfqATYz4Radqe2qSEizI927o+8pQluYPTVd0=; b=
-	SJZvpZjS6cYOmbB2cfmAe9Hi++/cVLq7BLVN2Qe2jtoMWEl/2RfGzVfqQUAyKERh
-	lJyE+lRiPU5kLruYSIeyxLW187SJSkYhCJ/0vz60evyxv7I92mPBsaHnlVms6rYx
-	LxE/dBrVttC0Wp1UmnpR2jO0JcZNxq4SlDOLaHwt55tT6+wBnN0HGOppvWMZ5Fb9
-	v2bhMB9BQ1XKyHu+a6taakCbohCqhF7D7j77OcnFH0GVsFwMP8yXuIrQ0oAsjOEZ
-	6x3SApFkp3smuArdA4NMsioQ80mzj5n2X58qaX+wCt1xFNbod1Cx7xEfamA+QpoR
-	qU+CqE50s3jhmZYAHZwcAg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738926217;
+	 x=1739012617; bh=ZGEFEayo8z5q7IFKqKuiUYZfctv4L5Q4clyWUTuzA0E=; b=
+	ASTDK4ibotHiO52mLvvqcC/h7lfV1ZdIlgulZAlA/v5CECUWr6juDbhFDeiKgKfG
+	AFnqpsO1wjtjjkKVtc0lNV9ojwun78EqyjhP7PR4fXZQ96EDVOaMIz2aSuKRmUPk
+	UF2/NtireWLMMMiLi70nfNwou+Pgk7ch8PKf6cTQnQKtKpAAwudIzzWoiqN7vIjA
+	E7gzSDvDoZaYLJoD8pGUKCj2RznaBarZxrXfypdOyrxOm7rXOsj0e3Cihm5gm0rJ
+	O5m7xWPHy96/KTn5sSzqhxdR/HFA5lju/iUmA1PMzt1vsUV3PGnt3ewyuF6TBfLx
+	esPzNu6se/tlf3ZlKSGsCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738926216; x=
-	1739012616; bh=XwA5cSbdfqATYz4Radqe2qSEizI927o+8pQluYPTVd0=; b=z
-	ywUaY8Kto/IBmUGNiVA6BfOBhFGNE+z4JzHd81K/9OM16OwcwJecP7DHtP+sE/bI
-	wm8RxmGXAXKBvPt1JYkQLeknzG6vAw0H8aqVbCiISbHjokm2rOsqmawE30kykaB6
-	KkEU1YWyfWxqFpUMxPdyjJyuGBKVzEg5ddU8/8/ekGhAY1cmB8vWBoT3W9JebSC5
-	p57xV5yfz1uGJhoaqlshJm78NJY18XIumGF1zznVMEQ+U4rfhafq2nDLxL9QN93A
-	BsnU2rr48GJUPljf/N3lbxzugV90IWrEjxLsMMMBxrMaDYZOv7n2T6Hd72XAi1//
-	Q5XYGCQPF5GRTzIqHjJKA==
-X-ME-Sender: <xms:iOilZ_x1zTi-sw0rXIvfTLBSJoIMVT2DpgPnID4pp4sWEF2tU5skwQ>
-    <xme:iOilZ3TAwVu9DFC_P5MuDEZG9G2BTLyHsNHfP1VEYkosUgOOwJNUP2hLDyKXRQcVg
-    GlcrnCIk3k2n5ukDQ>
-X-ME-Received: <xmr:iOilZ5WBtx6P3sONu4TNnA0tbPs4UObLjaDx0OcW5rZ0apuHhAJ05UM2G45WE9dzE7E2rq8NojR49s_U-pvtZVkrRRMwKxcC9s4JeluJEOLwmRQV>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738926217; x=
+	1739012617; bh=ZGEFEayo8z5q7IFKqKuiUYZfctv4L5Q4clyWUTuzA0E=; b=E
+	xEVB3qq4N8KhPq2juZriWXQIdre4OWH5eKtyX0DWDNFwG3jreiPDkHGvCdtDohVT
+	gBRGE7tb+crom7SnQ65uhQq85vpRp8EMf+K/67LvrqZfVdfiFdJw3ETFnwlLO1vw
+	7JlS+81YoOHq3ZnLfoU19A4Ki9Mu+0teJm9FEz8RWGsA7/L8BgU6y1dRHas9kRAE
+	OGH8bhB2o8e+WChrAHfR4nJBj6iLEvsSe8CxEMTsf2DWt79cbbb5UYtbk+ZS5CSX
+	7HzXJ+XMrsIwT2PJpPg8KjBe7QT5FnnS2jVYNQEMZgexVeVmHbXKTXvCZZdmr1u1
+	UbpZMpOX/YRDIE/Okhp2A==
+X-ME-Sender: <xms:ieilZ5F0DQYgldLIkpNK_72NceBI6QcDHozl31bLmBx4M8OT9yMwpg>
+    <xme:ieilZ-UDFybIFABSZknziwhflXkNJPmVwZXfU-cAkcTrDi2QV4xwnO3QD_XDCTLsq
+    Es4E9ItwcdbnJRKRw>
+X-ME-Received: <xmr:ieilZ7K-yAnuNmgp8Dd3IXylZ9VwkAppw60xAthT4WFrT9mD3aCbLW4GnFvzaFwd5GL6lpSe2rn5U7QgpYkSuNNTf5yuXL4_1QKoSLu8rB8TkWRJ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleduvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleduvdcutefuodetgg
     himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
     heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:iOilZ5h2zeIjev0tYMfc307JbZdGfQ9a-rXcQ-2nZQv_Tz14n_nUvA>
-    <xmx:iOilZxDTa4qk56JDoZZz3sAIWDdvg7DUpAg5ZmAKVdL3qPrBa1RwfA>
-    <xmx:iOilZyLaL8N4er-coH3EAjscUl12SmKD4hk5BmhhK9YbHnsWKNrG2A>
-    <xmx:iOilZwD-Tx8RW0bdFga2eEFNjWARqebsmtLLNo7FNqP0ixEV1kbLiQ>
-    <xmx:iOilZwOiOGwTRE31u2rWn4f_EOD14xwZ5GK0THkc9rdnP_aKhj8vhib5>
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    khgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:ieilZ_GJyPJvk-xC7rK_vKsyrQ3osCPvCJwGgW7cmKTO_kz_pOTGDQ>
+    <xmx:ieilZ_UFwe9aZWuyTHkKUoHIxNmH_cS0-Z6iXMHHdlehP46oEk1YRA>
+    <xmx:ieilZ6NDTPXm1CB98lvUjHxtZnZiFkniwEt0zvZSn2hQiIqto2VtRg>
+    <xmx:ieilZ-3PHh3eTidzwum2iaPiXoLkCVV3qqMMdZGbXPt-kJLFlz3Hag>
+    <xmx:ieilZ6RaDuZYRXeWfGhWygR-dIWgx4jst-gPukYK5AQKHbF8pVzSR6so>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Feb 2025 06:03:35 -0500 (EST)
+ 7 Feb 2025 06:03:36 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id af719ee6 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Feb 2025 11:03:35 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7dccdc09 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Feb 2025 11:03:36 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 07 Feb 2025 12:03:32 +0100
-Subject: [PATCH v2 07/16] path: drop `git_pathdup()` in favor of
- `repo_git_path()`
+Date: Fri, 07 Feb 2025 12:03:33 +0100
+Subject: [PATCH v2 08/16] path: drop `git_path_buf()` in favor of
+ `repo_git_path_replace()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,314 +84,210 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250207-b4-pks-path-drop-the-repository-v2-7-13cad3c11b8a@pks.im>
+Message-Id: <20250207-b4-pks-path-drop-the-repository-v2-8-13cad3c11b8a@pks.im>
 References: <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
 In-Reply-To: <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, shejialuo <shejialuo@gmail.com>
 X-Mailer: b4 0.14.2
 
-Remove `git_pathdup()` in favor of `repo_git_path()`. The latter does
-essentially the same, with the only exception that it does not rely on
-`the_repository` but takes the repo as separate parameter.
+Remove `git_path_buf()` in favor of `repo_git_path_replace()`. The
+latter does essentially the same, with the only exception that it does
+not rely on `the_repository` but takes the repo as separate parameter.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bisect.c              |  2 +-
- builtin/am.c          |  2 +-
- builtin/clone.c       |  2 +-
- builtin/config.c      |  8 ++++----
- builtin/fast-import.c |  4 ++--
- builtin/fsck.c        |  2 +-
- builtin/gc.c          |  4 ++--
- builtin/notes.c       |  2 +-
- builtin/replace.c     |  2 +-
- builtin/tag.c         |  2 +-
- builtin/worktree.c    |  4 ++--
- dir.c                 |  2 +-
- http-backend.c        |  2 +-
- notes-merge.c         |  2 +-
- object-file.c         |  2 +-
- path.h                | 16 +---------------
- 16 files changed, 22 insertions(+), 36 deletions(-)
+ builtin/worktree.c       |  2 +-
+ compat/precompose_utf8.c |  6 +++---
+ notes-merge.c            |  4 ++--
+ object-file.c            |  4 ++--
+ path.h                   | 16 ----------------
+ setup.c                  | 33 ++++++++++++++++-----------------
+ 6 files changed, 24 insertions(+), 41 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 7a3c77c6d8..269a98bf97 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -930,7 +930,7 @@ static enum bisect_error check_good_are_ancestors_of_bad(struct repository *r,
- 	if (!current_bad_oid)
- 		return error(_("a %s revision is needed"), term_bad);
- 
--	filename = git_pathdup("BISECT_ANCESTORS_OK");
-+	filename = repo_git_path(the_repository, "BISECT_ANCESTORS_OK");
- 
- 	/* Check if file BISECT_ANCESTORS_OK exists. */
- 	if (!stat(filename, &st) && S_ISREG(st.st_mode))
-diff --git a/builtin/am.c b/builtin/am.c
-index 390b463144..2921bb89ef 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -158,7 +158,7 @@ static void am_state_init(struct am_state *state)
- 
- 	memset(state, 0, sizeof(*state));
- 
--	state->dir = git_pathdup("rebase-apply");
-+	state->dir = repo_git_path(the_repository, "rebase-apply");
- 
- 	state->prec = 4;
- 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index fd001d800c..5ae6ee9db9 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -938,7 +938,7 @@ static void write_refspec_config(const char *src_ref_prefix,
- 
- static void dissociate_from_references(void)
- {
--	char *alternates = git_pathdup("objects/info/alternates");
-+	char *alternates = repo_git_path(the_repository, "objects/info/alternates");
- 
- 	if (!access(alternates, F_OK)) {
- 		struct child_process cmd = CHILD_PROCESS_INIT;
-diff --git a/builtin/config.c b/builtin/config.c
-index 16e6e30555..53a90094e3 100644
---- a/builtin/config.c
-+++ b/builtin/config.c
-@@ -775,13 +775,13 @@ static void location_options_init(struct config_location_options *opts,
- 		opts->source.file = opts->file_to_free = git_system_config();
- 		opts->source.scope = CONFIG_SCOPE_SYSTEM;
- 	} else if (opts->use_local_config) {
--		opts->source.file = opts->file_to_free = git_pathdup("config");
-+		opts->source.file = opts->file_to_free = repo_git_path(the_repository, "config");
- 		opts->source.scope = CONFIG_SCOPE_LOCAL;
- 	} else if (opts->use_worktree_config) {
- 		struct worktree **worktrees = get_worktrees();
- 		if (the_repository->repository_format_worktree_config)
- 			opts->source.file = opts->file_to_free =
--				git_pathdup("config.worktree");
-+				repo_git_path(the_repository, "config.worktree");
- 		else if (worktrees[0] && worktrees[1])
- 			die(_("--worktree cannot be used with multiple "
- 			      "working trees unless the config\n"
-@@ -790,7 +790,7 @@ static void location_options_init(struct config_location_options *opts,
- 			      "section in \"git help worktree\" for details"));
- 		else
- 			opts->source.file = opts->file_to_free =
--				git_pathdup("config");
-+				repo_git_path(the_repository, "config");
- 		opts->source.scope = CONFIG_SCOPE_LOCAL;
- 		free_worktrees(worktrees);
- 	} else if (opts->source.file) {
-@@ -1087,7 +1087,7 @@ static int show_editor(struct config_location_options *opts)
- 	git_config(git_default_config, NULL);
- 	config_file = opts->source.file ?
- 			xstrdup(opts->source.file) :
--			git_pathdup("config");
-+			repo_git_path(the_repository, "config");
- 	if (opts->use_global_config) {
- 		int fd = open(config_file, O_CREAT | O_EXCL | O_WRONLY, 0666);
- 		if (fd >= 0) {
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index a6a84058cd..c6f5147e8b 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -328,7 +328,7 @@ static void write_branch_report(FILE *rpt, struct branch *b)
- 
- static void write_crash_report(const char *err)
- {
--	char *loc = git_pathdup("fast_import_crash_%"PRIuMAX, (uintmax_t) getpid());
-+	char *loc = repo_git_path(the_repository, "fast_import_crash_%"PRIuMAX, (uintmax_t) getpid());
- 	FILE *rpt = fopen(loc, "w");
- 	struct branch *b;
- 	unsigned long lu;
-@@ -3280,7 +3280,7 @@ static char* make_fast_import_path(const char *path)
- {
- 	if (!relative_marks_paths || is_absolute_path(path))
- 		return prefix_filename(global_prefix, path);
--	return git_pathdup("info/fast-import/%s", path);
-+	return repo_git_path(the_repository, "info/fast-import/%s", path);
- }
- 
- static void option_import_marks(const char *marks,
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 7a4dcb0716..c12203e012 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -326,7 +326,7 @@ static void check_unreachable_object(struct object *obj)
- 				  printable_type(&obj->oid, obj->type),
- 				  describe_object(&obj->oid));
- 		if (write_lost_and_found) {
--			char *filename = git_pathdup("lost-found/%s/%s",
-+			char *filename = repo_git_path(the_repository, "lost-found/%s/%s",
- 				obj->type == OBJ_COMMIT ? "commit" : "other",
- 				describe_object(&obj->oid));
- 			FILE *f;
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 0bf3533494..57f6aee174 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -546,7 +546,7 @@ static const char *lock_repo_for_gc(int force, pid_t* ret_pid)
- 	if (xgethostname(my_host, sizeof(my_host)))
- 		xsnprintf(my_host, sizeof(my_host), "unknown");
- 
--	pidfile_path = git_pathdup("gc.pid");
-+	pidfile_path = repo_git_path(the_repository, "gc.pid");
- 	fd = hold_lock_file_for_update(&lock, pidfile_path,
- 				       LOCK_DIE_ON_ERROR);
- 	if (!force) {
-@@ -607,7 +607,7 @@ static int report_last_gc_error(void)
- 	int ret = 0;
- 	ssize_t len;
- 	struct stat st;
--	char *gc_log_path = git_pathdup("gc.log");
-+	char *gc_log_path = repo_git_path(the_repository, "gc.log");
- 
- 	if (stat(gc_log_path, &st)) {
- 		if (errno == ENOENT)
-diff --git a/builtin/notes.c b/builtin/notes.c
-index d051abf6df..18bcbb2f91 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -197,7 +197,7 @@ static void prepare_note_data(const struct object_id *object, struct note_data *
- 		struct strbuf buf = STRBUF_INIT;
- 
- 		/* write the template message before editing: */
--		d->edit_path = git_pathdup("NOTES_EDITMSG");
-+		d->edit_path = repo_git_path(the_repository, "NOTES_EDITMSG");
- 		fd = xopen(d->edit_path, O_CREAT | O_TRUNC | O_WRONLY, 0600);
- 
- 		if (d->msg_nr)
-diff --git a/builtin/replace.c b/builtin/replace.c
-index a4eaadff91..15ec0922ce 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -345,7 +345,7 @@ static int edit_and_replace(const char *object_ref, int force, int raw)
- 	}
- 	strbuf_release(&ref);
- 
--	tmpfile = git_pathdup("REPLACE_EDITOBJ");
-+	tmpfile = repo_git_path(the_repository, "REPLACE_EDITOBJ");
- 	if (export_object(&old_oid, type, raw, tmpfile)) {
- 		free(tmpfile);
- 		return -1;
-diff --git a/builtin/tag.c b/builtin/tag.c
-index e8a344b926..d3e0943b73 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -667,7 +667,7 @@ int cmd_tag(int argc,
- 	if (create_tag_object) {
- 		if (force_sign_annotate && !annotate)
- 			opt.sign = 1;
--		path = git_pathdup("TAG_EDITMSG");
-+		path = repo_git_path(the_repository, "TAG_EDITMSG");
- 		create_tag(&object, object_ref, tag, &buf, &opt, &prev, &object,
- 			   &trailer_args, path);
- 	}
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index c043d4d523..c84e6aa2cb 100644
+index c84e6aa2cb..7959b10d26 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -337,7 +337,7 @@ static void check_candidate_path(const char *path,
- 
- static void copy_sparse_checkout(const char *worktree_git_dir)
- {
--	char *from_file = git_pathdup("info/sparse-checkout");
-+	char *from_file = repo_git_path(the_repository, "info/sparse-checkout");
- 	char *to_file = xstrfmt("%s/info/sparse-checkout", worktree_git_dir);
- 
- 	if (file_exists(from_file)) {
-@@ -353,7 +353,7 @@ static void copy_sparse_checkout(const char *worktree_git_dir)
- 
- static void copy_filtered_worktree_config(const char *worktree_git_dir)
- {
--	char *from_file = git_pathdup("config.worktree");
-+	char *from_file = repo_git_path(the_repository, "config.worktree");
- 	char *to_file = xstrfmt("%s/config.worktree", worktree_git_dir);
- 
- 	if (file_exists(from_file)) {
-diff --git a/dir.c b/dir.c
-index 5b2181e589..4122f6513d 100644
---- a/dir.c
-+++ b/dir.c
-@@ -3455,7 +3455,7 @@ void setup_standard_excludes(struct dir_struct *dir)
- 
- char *get_sparse_checkout_filename(void)
- {
--	return git_pathdup("info/sparse-checkout");
-+	return repo_git_path(the_repository, "info/sparse-checkout");
- }
- 
- int get_sparse_checkout_patterns(struct pattern_list *pl)
-diff --git a/http-backend.c b/http-backend.c
-index 33cf378282..50b2858fad 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -183,7 +183,7 @@ static void send_strbuf(struct strbuf *hdr,
- static void send_local_file(struct strbuf *hdr, const char *the_type,
- 				const char *name)
- {
--	char *p = git_pathdup("%s", name);
-+	char *p = repo_git_path(the_repository, "%s", name);
- 	size_t buf_alloc = 8192;
- 	char *buf = xmalloc(buf_alloc);
- 	int fd;
+@@ -457,7 +457,7 @@ static int add_worktree(const char *path, const char *refname,
+ 		BUG("How come '%s' becomes empty after sanitization?", sb.buf);
+ 	strbuf_reset(&sb);
+ 	name = sb_name.buf;
+-	git_path_buf(&sb_repo, "worktrees/%s", name);
++	repo_git_path_replace(the_repository, &sb_repo, "worktrees/%s", name);
+ 	len = sb_repo.len;
+ 	if (safe_create_leading_directories_const(sb_repo.buf))
+ 		die_errno(_("could not create leading directories of '%s'"),
+diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
+index f7cc7b3be5..12e38e0ea3 100644
+--- a/compat/precompose_utf8.c
++++ b/compat/precompose_utf8.c
+@@ -50,15 +50,15 @@ void probe_utf8_pathname_composition(void)
+ 	int output_fd;
+ 	if (precomposed_unicode != -1)
+ 		return; /* We found it defined in the global config, respect it */
+-	git_path_buf(&path, "%s", auml_nfc);
++	repo_git_path_replace(the_repository, &path, "%s", auml_nfc);
+ 	output_fd = open(path.buf, O_CREAT|O_EXCL|O_RDWR, 0600);
+ 	if (output_fd >= 0) {
+ 		close(output_fd);
+-		git_path_buf(&path, "%s", auml_nfd);
++		repo_git_path_replace(the_repository, &path, "%s", auml_nfd);
+ 		precomposed_unicode = access(path.buf, R_OK) ? 0 : 1;
+ 		git_config_set("core.precomposeunicode",
+ 			       precomposed_unicode ? "true" : "false");
+-		git_path_buf(&path, "%s", auml_nfc);
++		repo_git_path_replace(the_repository, &path, "%s", auml_nfc);
+ 		if (unlink(path.buf))
+ 			die_errno(_("failed to unlink '%s'"), path.buf);
+ 	}
 diff --git a/notes-merge.c b/notes-merge.c
-index 8d701ed428..c997c0c1e3 100644
+index c997c0c1e3..8c22a171c1 100644
 --- a/notes-merge.c
 +++ b/notes-merge.c
-@@ -309,7 +309,7 @@ static void write_buf_to_worktree(const struct object_id *obj,
- 				  const char *buf, unsigned long size)
- {
- 	int fd;
--	char *path = git_pathdup(NOTES_MERGE_WORKTREE "/%s", oid_to_hex(obj));
-+	char *path = repo_git_path(the_repository, NOTES_MERGE_WORKTREE "/%s", oid_to_hex(obj));
- 	if (safe_create_leading_directories_const(path))
- 		die_errno("unable to create directory for '%s'", path);
+@@ -695,7 +695,7 @@ int notes_merge_commit(struct notes_merge_options *o,
+ 	const char *msg = strstr(buffer, "\n\n");
+ 	int baselen;
  
+-	git_path_buf(&path, NOTES_MERGE_WORKTREE);
++	repo_git_path_replace(the_repository, &path, NOTES_MERGE_WORKTREE);
+ 	if (o->verbosity >= 3)
+ 		printf("Committing notes in notes merge worktree at %s\n",
+ 			path.buf);
+@@ -757,7 +757,7 @@ int notes_merge_abort(struct notes_merge_options *o)
+ 	struct strbuf buf = STRBUF_INIT;
+ 	int ret;
+ 
+-	git_path_buf(&buf, NOTES_MERGE_WORKTREE);
++	repo_git_path_replace(the_repository, &buf, NOTES_MERGE_WORKTREE);
+ 	if (o->verbosity >= 3)
+ 		printf("Removing notes merge worktree at %s/*\n", buf.buf);
+ 	ret = remove_dir_recursively(&buf, REMOVE_DIR_KEEP_TOPLEVEL);
 diff --git a/object-file.c b/object-file.c
-index 6ce1caacae..335cc2a5da 100644
+index 335cc2a5da..dc9fcaf3e9 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -717,7 +717,7 @@ static void read_info_alternates(struct repository *r,
- void add_to_alternates_file(const char *reference)
- {
- 	struct lock_file lock = LOCK_INIT;
--	char *alts = git_pathdup("objects/info/alternates");
-+	char *alts = repo_git_path(the_repository, "objects/info/alternates");
- 	FILE *in, *out;
- 	int found = 0;
+@@ -476,14 +476,14 @@ int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
+ 	 * restrictive except to remove write permission.
+ 	 */
+ 	int mode = 0444;
+-	git_path_buf(temp_filename, "objects/%s", pattern);
++	repo_git_path_replace(the_repository, temp_filename, "objects/%s", pattern);
+ 	fd = git_mkstemp_mode(temp_filename->buf, mode);
+ 	if (0 <= fd)
+ 		return fd;
  
+ 	/* slow path */
+ 	/* some mkstemp implementations erase temp_filename on failure */
+-	git_path_buf(temp_filename, "objects/%s", pattern);
++	repo_git_path_replace(the_repository, temp_filename, "objects/%s", pattern);
+ 	safe_create_leading_directories(temp_filename->buf);
+ 	return xmkstemp_mode(temp_filename->buf, mode);
+ }
 diff --git a/path.h b/path.h
-index 8798db7469..65a8f21c4c 100644
+index 65a8f21c4c..cdc26acb74 100644
 --- a/path.h
 +++ b/path.h
-@@ -292,24 +292,10 @@ static inline const char *git_path(const char *fmt, ...)
- 	{ \
- 		static char *ret; \
- 		if (!ret) \
--			ret = git_pathdup(filename); \
-+			ret = repo_git_path(the_repository, filename); \
- 		return ret; \
- 	}
+@@ -256,22 +256,6 @@ static inline const char *git_common_path(const char *fmt, ...)
+ 	return pathname->buf;
+ }
  
 -/*
-- * Return a path into the main repository's (the_repository) git directory.
+- * Construct a path into the main repository's (the_repository) git directory
+- * and place it in the provided buffer `buf`, the contents of the buffer will
+- * be overridden.
 - */
--__attribute__((format (printf, 1, 2)))
--static inline char *git_pathdup(const char *fmt, ...)
+-__attribute__((format (printf, 2, 3)))
+-static inline char *git_path_buf(struct strbuf *buf, const char *fmt, ...)
 -{
--	struct strbuf path = STRBUF_INIT;
 -	va_list args;
+-	strbuf_reset(buf);
 -	va_start(args, fmt);
--	repo_git_pathv(the_repository, NULL, &path, fmt, args);
+-	repo_git_pathv(the_repository, NULL, buf, fmt, args);
 -	va_end(args);
--	return strbuf_detach(&path, NULL);
+-	return buf->buf;
 -}
 -
- # endif /* USE_THE_REPOSITORY_VARIABLE */
+ /*
+  * Return a statically allocated path into the main repository's
+  * (the_repository) git directory.
+diff --git a/setup.c b/setup.c
+index 74b5ba5325..30889386f7 100644
+--- a/setup.c
++++ b/setup.c
+@@ -2264,7 +2264,7 @@ static int is_reinit(void)
+ 	char junk[2];
+ 	int ret;
  
- #endif /* PATH_H */
+-	git_path_buf(&buf, "HEAD");
++	repo_git_path_replace(the_repository, &buf, "HEAD");
+ 	ret = !access(buf.buf, R_OK) || readlink(buf.buf, junk, sizeof(junk) - 1) != -1;
+ 	strbuf_release(&buf);
+ 	return ret;
+@@ -2316,8 +2316,7 @@ static int create_default_files(const char *template_path,
+ 				int init_shared_repository)
+ {
+ 	struct stat st1;
+-	struct strbuf buf = STRBUF_INIT;
+-	char *path;
++	struct strbuf path = STRBUF_INIT;
+ 	int reinit;
+ 	int filemode;
+ 	const char *work_tree = repo_get_work_tree(the_repository);
+@@ -2358,14 +2357,14 @@ static int create_default_files(const char *template_path,
+ 	initialize_repository_version(fmt->hash_algo, fmt->ref_storage_format, reinit);
+ 
+ 	/* Check filemode trustability */
+-	path = git_path_buf(&buf, "config");
++	repo_git_path_replace(the_repository, &path, "config");
+ 	filemode = TEST_FILEMODE;
+-	if (TEST_FILEMODE && !lstat(path, &st1)) {
++	if (TEST_FILEMODE && !lstat(path.buf, &st1)) {
+ 		struct stat st2;
+-		filemode = (!chmod(path, st1.st_mode ^ S_IXUSR) &&
+-				!lstat(path, &st2) &&
++		filemode = (!chmod(path.buf, st1.st_mode ^ S_IXUSR) &&
++				!lstat(path.buf, &st2) &&
+ 				st1.st_mode != st2.st_mode &&
+-				!chmod(path, st1.st_mode));
++				!chmod(path.buf, st1.st_mode));
+ 		if (filemode && !reinit && (st1.st_mode & S_IXUSR))
+ 			filemode = 0;
+ 	}
+@@ -2384,24 +2383,24 @@ static int create_default_files(const char *template_path,
+ 
+ 	if (!reinit) {
+ 		/* Check if symlink is supported in the work tree */
+-		path = git_path_buf(&buf, "tXXXXXX");
+-		if (!close(xmkstemp(path)) &&
+-		    !unlink(path) &&
+-		    !symlink("testing", path) &&
+-		    !lstat(path, &st1) &&
++		repo_git_path_replace(the_repository, &path, "tXXXXXX");
++		if (!close(xmkstemp(path.buf)) &&
++		    !unlink(path.buf) &&
++		    !symlink("testing", path.buf) &&
++		    !lstat(path.buf, &st1) &&
+ 		    S_ISLNK(st1.st_mode))
+-			unlink(path); /* good */
++			unlink(path.buf); /* good */
+ 		else
+ 			git_config_set("core.symlinks", "false");
+ 
+ 		/* Check if the filesystem is case-insensitive */
+-		path = git_path_buf(&buf, "CoNfIg");
+-		if (!access(path, F_OK))
++		repo_git_path_replace(the_repository, &path, "CoNfIg");
++		if (!access(path.buf, F_OK))
+ 			git_config_set("core.ignorecase", "true");
+ 		probe_utf8_pathname_composition();
+ 	}
+ 
+-	strbuf_release(&buf);
++	strbuf_release(&path);
+ 	return reinit;
+ }
+ 
 
 -- 
 2.48.1.538.gc4cfc42d60.dirty
