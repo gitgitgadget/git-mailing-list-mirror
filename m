@@ -1,105 +1,119 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1980718DB0C
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 17:11:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E28C191F95
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 17:27:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738948271; cv=none; b=cqAz1mzpbj3UxCKeSDIO2z+4aPxVQigfCrfwugSYldsKTrN32GZ/0PUMn8t8pTrw0960jl28DtJV566ET2ItZMcWyC38oGzLeB2RMilIo2nsA6goK3reK7W8Mb8868kR14yVJCE9D31n7GI3VdoTE/esoWPC63pXnXlWfnYPlQQ=
+	t=1738949254; cv=none; b=NxW+QzWI0zojNoRVYSbVu3PF5sPLjmlJvUqCBU/44uLiqR9MrI1jP72jy12KPfk5Tpjzd8jVlc0n8KinMRmZd1aq73WDiIxJq2kpmwLBjxEgS9UH5fO8Aa7MIcWHcll5idDC7EzgOmXtOGlBoXwvV+MK5LLcPRCHcZhgyGEFS6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738948271; c=relaxed/simple;
-	bh=tEc18rtkKpVLkKzZ2aRS+arkO5ys56JTw63S/hUeYX0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nFWXCDKnx17stpV14R8KYHZ3pR58yGn4im49q/EP2IlJ12bFSuYIw9CYGSGEkZ0roKla4AKgHLdt5NDN0vewPP8TDIJNgtRAhBfNrGTeiCfu2lICa9RgMPWHc9DdC1VZj1IDtZUmqYj06hOxeoQh3S/+xYwRMDH8aheV0hfq4kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qeiyR3IB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wdEx7tOl; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1738949254; c=relaxed/simple;
+	bh=NumOYRMQ9Uw/1jb9eVM31y8pIUth0bNAIu3EcRauZmI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=s3EuuNZWAu9QrN++8/bquHN7d9h4yqPsSH6cq+ZbkVB3OdVmzvH1LaacvnSKF+NY6keer3sv3qiwzWWJruLxzMezdi535k5MW01vDm+A1tMQcWLb41F5rIXDHyN7rHt+3dzs6AYgfYpmsjP5C3CGPtOzWtXSnCzFED9DDUpB1JM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YGvOo1KC; arc=none smtp.client-ip=209.85.222.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qeiyR3IB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wdEx7tOl"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2831325401A3;
-	Fri,  7 Feb 2025 12:11:08 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-09.internal (MEProxy); Fri, 07 Feb 2025 12:11:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1738948267; x=1739034667; bh=q4krvrCN44
-	tO6ytKljrFnwmiqQ9V0pr4UQNWuQRIgxo=; b=qeiyR3IBc+OcBO2lHZZP/IVmky
-	VxIPxEhblhXhM31pTI99+GHOCfglcjuQjtivFl0ATTSNh5Qv50HzreOAA9DtDlmm
-	KR6tKOFq47ngrd5OnddC0jSnDJFqalYhSfwUlXN2A2GAMXwfGcF9SLiPNgQ9wZD4
-	r1MecPI6cfTtoynnlJUBQKbs9DOO7yt055VNgveCVoyj7weqTB80hPJX5KLYSr7G
-	jJUy7A2XVPyqpyVUf5OTZkZcGb/rSYM9CkYgan39CcGcc8pwjnuihOuNW6AzUR1+
-	6pYAO/5KqLV3u/sSgFYH6PWBwUmkq3kcLaBkvbirJxSh2WcPnM/MvCQ4F07g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1738948267; x=1739034667; bh=q4krvrCN44tO6ytKljrFnwmiqQ9V0pr4UQN
-	WuQRIgxo=; b=wdEx7tOlkwOH50580kR/5XxVIOPi7A7D62ejhFjIZfCQv3cdPyT
-	dUNrKDEp1Hu+6uPh5pNxSueguxSuZbacsnx/5hXy4WXHJE9+k5VpTVMphw+3lEBS
-	//sX7TpqKtL2wAZX0+FNKm4wVXnMTE1aWDsT5f/QtlboR+W7gzUTu52JH9IDJqOS
-	bEt6Ls9WHSeQxJsodm/rE6OnrfWRDeP/+Dyb2A0iZkYmxt450O4vqy2OJ+o+sZJr
-	sy3XVJU080pGHtV2gGtQSSXyQd5ks7HYakhsTBdfYbi401D4Bn2ewIe/C5xmLd0F
-	Y9zJ35y7/OPQmzp+4sdg4hct71P/u8ey1Gg==
-X-ME-Sender: <xms:qz6mZ_Z9iTw5kiEHmgx4NVgwhoQQ6KJg9_rKqfNv-7PNGJ5RWO5pmg>
-    <xme:qz6mZ-bBcwgOaOc-pP7Jt1DDuR_xQESa2BNEVFvkwbH_xrxRjWPdmlladNfZL0YqZ
-    mK6eVBbdgPblEI1PQ>
-X-ME-Received: <xmr:qz6mZx-L5sSH1GTWdP9CLcDF059RMTFaHJK17pdnaZZ3FEVMoCHzUU0zikfgkrCXiXh1WnIsRUgIVR2Lcc6uW8BFMVBw4sYkmowL>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleekhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhoth
-    gtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:qz6mZ1qCnl7CKiuC53YMsz2eTdQJUeR8wK5fFP6bKBx2OE7OsDhoxQ>
-    <xmx:qz6mZ6og1iXsDK3NkopN5UdkrJHR4IT8fuJVc9mJorbNWydfl54sqg>
-    <xmx:qz6mZ7RAI4dVnw1bTO7-ksvsA0T6KHLD7fyIXO_AwTgLNPieUurcjA>
-    <xmx:qz6mZyrWsWYu8r4XxnUqn4-4mRlczUdnjwPOY4CDyYg-GEJ0RILMvg>
-    <xmx:qz6mZ9WIZ1zFMafLSVEPg87zgSHgmiXHBeZSdkaY_5B0vLA-G3-eN6KA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Feb 2025 12:11:07 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2025, #01; Tue, 4)
-In-Reply-To: <875xlm3vzt.fsf@iotcl.com> (Toon Claes's message of "Fri, 07 Feb
-	2025 11:11:18 +0100")
-References: <xmqqldulrvly.fsf@gitster.g> <875xlm3vzt.fsf@iotcl.com>
-Date: Fri, 07 Feb 2025 09:11:05 -0800
-Message-ID: <xmqq8qqhhe8m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YGvOo1KC"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-866d97710faso1114731241.3
+        for <git@vger.kernel.org>; Fri, 07 Feb 2025 09:27:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1738949251; x=1739554051; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PF48L8LOFkJwhTnkMOSLnwmQWSPAVvuIVrWGtMAEOdg=;
+        b=YGvOo1KCnqpSm1N5DoTK2Nh2rzbZuoUi3kLPnJ6nK106zNXhXnTX+qvx48AlxHEmuQ
+         oObO3RmN0xlAEJIzJ51HNtrM8oU2SPEhEfpOr/VoeCHtzBoFr6NlnCAJoVa0pukKWpho
+         zoWfRrJM6dkLg1wbof1SZS4p7c+TTRyL6VXFSEaM0Gg23T2O4sifDBCIziDBwe+u4num
+         598XRDUvQbCQF9KCvhc/Uc1zOKIheWze4Q/1+ix7u9fwmrSrx+ksp3Mc4wSgLhoHKyC1
+         9SerpspukoIMNwA6dYA9+OXJyamKzgXyb7ZY3+21uRufCl41pXKqSmllJWLxFvDokAus
+         jz6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1738949251; x=1739554051;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PF48L8LOFkJwhTnkMOSLnwmQWSPAVvuIVrWGtMAEOdg=;
+        b=uFEv8s6YZ2ttVUx0PncgQfnA3LWeSy59Z6oMa0EUkGQtEULKKZuiEfAvAsY0BWg0Uq
+         pOOytJHVL5aFWc+2MPBmZUORs6iodf4nbEKwsvVRP2fOJ0B877bVgbld8G76J+3fRfsq
+         BC5qSMii+RD72ZfRTy45thpWmq7qF5r/NEwzTf18YNkRIEApIae6QQnKs78piDI10kE9
+         +2/HcQ+inV9HW7/wVrrl14Dw5emi/gQexzBRJ1LXmuRf5zTrCkLQFe1695oQFUEEld66
+         Uz9WqNVvDkZgnp3mcXpb3p6cqyA8qjj/5CoA7LwtkXoHjpEA3uxSqqkR0psNZueDVnBV
+         ffzg==
+X-Gm-Message-State: AOJu0YzMlHmSXCKJ6zPCs614spkdrxXuR30fWWVZYMF1Ybw6Bl5bC+dq
+	CeouObdC5BzmgYNO6ynrCkx29MshkrIivN33zmHQCppbaVdTHdopOAHevLiV3m9QoJagKsynr/I
+	SmWwQT/rmewqwzUHa/G3jbbo4BjI=
+X-Gm-Gg: ASbGncuDeR6XAY2iSEUtNAf9mbkiCem2IQtUqm8THFrShrlxkosJFFrGmY/gRu0mcM3
+	N26DHLEImSmM6tm/ML+AzAiAmBzcYd3+b2Zb2TPttrzuV7NZh1U0n8zWlFBmzT/Bfsfx9XTGD
+X-Google-Smtp-Source: AGHT+IEf3ot1LQqEzDVCMEWLjv5oWLI/5Uzv6+8f7Iq8ih0Khq2ESMbTYjunu7ZWCizxbNkSM3ZSxSw/dllUbSoGPfQ=
+X-Received: by 2002:a05:6102:9d4:b0:4b6:20a5:8a13 with SMTP id
+ ada2fe7eead31-4ba85e4338emr3403863137.13.1738949251411; Fri, 07 Feb 2025
+ 09:27:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250124122217.250925-7-usmanakinyemi202@gmail.com>
+ <20250205185246.111447-1-usmanakinyemi202@gmail.com> <20250205185246.111447-7-usmanakinyemi202@gmail.com>
+ <xmqqy0ykkqqc.fsf@gitster.g> <CAPSxiM9Yejt+Cgu_ekuQwhduf=JEmS1s+T+nc--SvNQqkQE82g@mail.gmail.com>
+ <xmqqo6zfjec5.fsf@gitster.g>
+In-Reply-To: <xmqqo6zfjec5.fsf@gitster.g>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Fri, 7 Feb 2025 22:57:19 +0530
+X-Gm-Features: AWEUYZmL4QqODSnihRqUoYhL-l6f7qjsE-A0ewI8HCMglLRhYRo-lD6xUrU8W2c
+Message-ID: <CAPSxiM_y6gUQVNt8kZXfrn2dxpM7RNNg5LZz0dZy+9nYy=hcgg@mail.gmail.com>
+Subject: Re: [PATCH v4 6/6] agent: advertise OS name via agent capability
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, 
+	Johannes.Schindelin@gmx.de, johncai86@gmail.com, me@ttaylorr.com, 
+	phillip.wood@dunelm.org.uk, ps@pks.im, rsbecker@nexbridge.com, 
+	sunshine@sunshineco.com, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Toon Claes <toon@iotcl.com> writes:
-
->> * ps/reftable-sans-compat-util (2025-02-03) 19 commits
->>  ...
->>  - reftable/basics: stop using `UNUSED` annotation
->>  ...
->>  Will merge to 'next'?
->>  source: <20250203-pks-reftable-drop-git-compat-util-v3-0-446c9ed4ee9e@pks.im>
+On Thu, Feb 6, 2025 at 8:43=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
 >
-> I gave v4 a round of review, and besides one question/possible
-> suggestion these changes look good.
+> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+>
+> >> I obviously agree with the benefits enumerated in the above
+> >> paragraph.  The simpler, the better.
+> >>
+> >> I however wonder ...
+> >>
+> >> > Add the `transfer.advertiseOSInfo` config option to address privacy
+> >> > concerns. It defaults to `true` and can be changed to `false`.
+> >>
+> >> ... if this configuration knob is at the right granularity.
+> >
+> > The conclusion now is that we should not add any config option since
+> > the GIT_USER_AGENT could actually allow the user to hide whatever
+> > info they do not want to share ?
+>
+> I wouldn't call that a conclusion (as you and I are the only people
+> who expressed their opinion on this so far), but that is my take on
+> it---tweaking only the (os) part in the agent string with a config
+> smells like the tweakability is at a wrong level.
+>
+Hi Junio,
 
-Yeah, I saw them.  Very much appreciated.
+I was actually thinking about this inside the bathroom when it
+occurred to me that,
+according to the current implementation, GIT_USER_AGENT will not allow the =
+user
+to specify an empty string at all. It is either you specify some value
+or we decide for
+you. I think we can add the config at a level that can disable the
+agent capability completely
+instead of only tweaking the (os) part.
 
-Patrick's latest (i.e., v5) addresses the UNUSED one, so assuming
-that one looks reasonable to everybody, we are in very good shape.
+With this, the user can disable the agent  capability completely,
+share whatever string they want using the GIT_USER_AGENT.
+
+What do you think ?
 
 Thanks.
