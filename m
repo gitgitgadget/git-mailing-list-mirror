@@ -1,56 +1,56 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231231DEFF4
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 11:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231821DEFF7
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 11:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738929128; cv=none; b=gizNMsIp2+5F1IZEM2r0KCCmlg/zEwD03Fnh6XYvBp9fZpVt/PZWEy3UlRRmh7SedIMJdT1g8+i9InnrE1V3wqaz+5uE3X9aFaTkR7W1EiJdepmFuv1eOiBKte6l2iHFfURCuKj0G6lc64uZHVf9rd+h5Xok//HSh8j5gsRmoOA=
+	t=1738929129; cv=none; b=ct6ZBXUlO9TtrlKS9FEYnNiYtBNsCXUPlsYkeIgGt075X+i8nMGwwl1q82okAZpaBT/hHpp0sRztRxQ2R49y5I7IK/tig//k2KZmbSfC4kYSehTnhrLFYk30K/0OACjoUKyPmQ0FMsO+7WNq+t/04DFTl0c4oydpROpSollj9vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738929128; c=relaxed/simple;
-	bh=81LTn7UZRORPY2teFOFZFj1OqCLhZ9jWJcErZRHzdVE=;
+	s=arc-20240116; t=1738929129; c=relaxed/simple;
+	bh=DRli0EDBg6LEhX0SobEDNZwu4aBVnUCI6NfiuJLblnk=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=C1OpzqP1NLrRPtgi8orNLfZ2QKtZlgC7SOF8uyYyV5o/B89qCOr3i6K8i3ly2B7KpOtX0HV5s1Mgpqv5Y0TWMOI0+cGol0IhvZQVRpAI61+w1rSlje9xSr30oi9AQjFQQELHGa8QP6YFn6WcxfbiLjZ/11h7SC4bXv/56qU4NNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JbOjvOIa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MnML3KLR; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=ZXCe+A0jTBPCDYHzNuPcA20+2+fct3CB6/s9bzn8NM1lgXX5nfPTxmKy5kcOf/IeIfesxW+tf+F2Y0OXrgOjKlbe4OtPBhDP/eV4oYNgqXKrNQ/MnEvUgz/l7Luv27pKjrMCiRA7gc/FrA1rm2ul5KtKqoHFTAfSHY+9sdaPTXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h7/Q5dYq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nwcbj+ww; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JbOjvOIa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MnML3KLR"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 65533138016B;
-	Fri,  7 Feb 2025 06:52:04 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h7/Q5dYq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nwcbj+ww"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 165B713801B4;
+	Fri,  7 Feb 2025 06:52:06 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 07 Feb 2025 06:52:04 -0500
+  by phl-compute-09.internal (MEProxy); Fri, 07 Feb 2025 06:52:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1738929124;
-	 x=1739015524; bh=nIlvnYQGf294FuH8JnUpltKC/aiSknWtZvi3roloRoU=; b=
-	JbOjvOIadfOjqRVJTsAV7zcrFc1comRmTBgyXGv8ud8nlIJEn+SBr8zczkzmLBgG
-	4A+RekK9WbUe3KBLYH/Qy88+theD8SHnBuU84WmCS0hkFQQapH9atPsmABeWiotj
-	8w8CEWjWMkiaqtlIzBUy5lPi8438EwpL/ahj5ZPrkA+C5Rncun8D7LImAaaEixo4
-	mU0rsXXnR7rkFRaX5tj4kv1CZv0MZGOgnBgigMbX7jGRICW8KyMQ0Fz/y+mFvgP2
-	yW94Lkzj/Ms5Rav9pJfYqtwNv445bEOxndFiVQARyacWpqKQiAnjnrNQU59MbrsF
-	ud0hOuUMzUNvvwbOR/lryQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1738929126;
+	 x=1739015526; bh=0gV166oCJt0XD15OCQi4cHbM6whojCeNI4Y8xLFoMoY=; b=
+	h7/Q5dYq3h1vEuAh8hZqWVT/xn08gSSsmCYDqHTUJ1wBnNBm+kP4h1vD7KbQtd8e
+	Tjva843dUkq22wBj8dLfeyO8vGnAVin4R0rXdhZIwkzzZFzxgIJLhT9uXM0ND8b2
+	4qEGb3U+3z5rHACR5/XP/0MS4F918Sf/KQ3h2EVYw5ftIMJndDhVvVXLpr0662pm
+	/9XcSF6PIxb49g8RgHVNuXSxUgPk/4Dcq2jz2z5MO2zXqMij4GSlZvhpTdchM1WE
+	mAlzGW30sBNh76n0KbxeFOM4MBvaJjj8P77gPqNpOJFNOI0gz4AbJep0OExtA2KJ
+	/gQs7x2f3iGc57EEY8byGQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738929124; x=
-	1739015524; bh=nIlvnYQGf294FuH8JnUpltKC/aiSknWtZvi3roloRoU=; b=M
-	nML3KLR/goLb4vPj9iUaPbG3WM9DYe3TuR/AdX6SDr83qq0zIBxR3WQ/oGhMzbEd
-	oC0ykhPp4JWEaXTRwzbxmKfhP/Bu248rgynAjFNsNQpp0M2HF9+W/mV9NrqUmxJ4
-	sO4Lo54isqBM7LS8hK5Z1NoepN8sd72HCyDxzXjmxGtQJwLblGs4zuRdIavhJbbq
-	6COZODg4JZRt3tD7kUX9lSIirVSNiD57sJf9g6WPHPFp1kvVOrsCYD9iSie/SY5a
-	oFfL50rIZGbwZhb1KEQSSl3a6PxpQwV8gwZjsmgFPVGxjlvomeq7wB3NmR1CyG0F
-	5AV77T3xTk8Uvf+ypKbQQ==
-X-ME-Sender: <xms:5POlZ8EdKd-BIkmpTxXv-zDh0evoE29snqoCB5DMNqLGVRFHUnFNKA>
-    <xme:5POlZ1UtHwl7uH_VgIVYLfsdcJ69yrYervjoF89TCkPqxc9A6UmDHHckvIc_1kKFa
-    yLQ-jUlEA6xAkih5A>
-X-ME-Received: <xmr:5POlZ2IDvVz2qYMKeehrQjaN-209wKugqIbWBwOVjcQ2OCjgZk9XbNFuKiIkpPZ1L1nALHDr9A15Qdg6i44fxtc9Ms5pPa6WrX3gqBU7C3Tr4bIe>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvtdcutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1738929126; x=
+	1739015526; bh=0gV166oCJt0XD15OCQi4cHbM6whojCeNI4Y8xLFoMoY=; b=N
+	wcbj+ww9PKU2f5Br4bNwrbHH6K9oNUgZ2R9Y9QFxTQ6BHvGW6mjNs2UL4YuHo12O
+	eDQEosM+zQ13fobElOgnm6cCk0iiUdGnKBR+vbnmJOPpMZ2fPt7+jnkJD2iwyVV9
+	dOHBN4biEPQ4NUygU+LtdjeuosDOsmMRqgFMxDOfJ+8x/OknGbl4C1Ws81+c5OcL
+	LSF/JealIn142SD0kI9mBlRofw4Dmlrk49RV4Saap+ivuXeZd1e2OmAcCPZheQbi
+	M95zMkJRgFt3nIHdviLc8fipE54KJ+YnaGviucbTvJKIsN5b1w7LXJFstqZleI2U
+	WMT5nt7MXpUUFlLX2HOcQ==
+X-ME-Sender: <xms:5fOlZwh_p2Oh_QYCkygSD6_X-_to2xXsfVucmfOO0885Q6lHUF7hDw>
+    <xme:5fOlZ5BiyD0APqkUCeS_os3fZZAOfn6VIWSxLnoVjtowtXWeImxT6Dq2nxVFOx27-
+    uEcBKX4hGWbl8hrcA>
+X-ME-Received: <xmr:5fOlZ4Gv_wrjdTj78OgFDipnx1rPb-VIfo5TQT8oFymNXonVeZkS5r0BUvke_-mToKsORi4w8pPRlc_WZ_B-ZopTS-SFbrw6GD0xln8bAFCpwt6e>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
@@ -58,24 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvtdcutefuodetgg
     himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
     heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegv
-    thhhohhmshhonhesvggufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjheitheskhgusghgrdhorhhg
-X-ME-Proxy: <xmx:5POlZ-Hov6x8LfUlIFTfEsjVZwymAlrT98PmzN42Y6FKWlRk4NxnHQ>
-    <xmx:5POlZyUSoAIkOteCIHOBAuqoxPXrKgIEqHSxgu6uUjkQR8gFx3V5Pw>
-    <xmx:5POlZxOUdz_cfhM6NSeOD7SZJ38VjVhFZvA_sf9MhmCLddsVVR3FTQ>
-    <xmx:5POlZ52vFOOlvZKS969Qwe_t0yaTB7c7r8tt_7swgISbLs9_p-HbxA>
-    <xmx:5POlZ0fUwSA0h67W3uD3Id1zYdgTRwyyNnPLbnIp8umo-A3SY0hiknJQ>
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopegvthhhohhmshhonhes
+    vggufigrrhguthhhohhmshhonhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:5fOlZxQMW1S2VSxqQciroriWord88-FK91lMFdQW0bOevKeF9B2ZmQ>
+    <xmx:5fOlZ9zgUW4LZmrsLTLF78RJHj7SN0gzz8mq8XUe1fyPo0t3DbhHBw>
+    <xmx:5fOlZ_4BmRxJqnOL_Im2eao-DJcI5YVp_JX2p7WCx55UMqYkxPsGQA>
+    <xmx:5fOlZ6yetTFFLdBHUMBYlLCNOkfTmq8Cbc1mVUa6u2qeHA8O7_DTzA>
+    <xmx:5vOlZwoBNR1WDLljnG9phbFA6GgOuB2KlG8JK0n2BrhtYtPegj3gkyBM>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 7 Feb 2025 06:52:02 -0500 (EST)
+ 7 Feb 2025 06:52:04 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 73103caa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 7 Feb 2025 11:52:01 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 122e2f1b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Feb 2025 11:52:02 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 07 Feb 2025 12:51:56 +0100
-Subject: [PATCH v5 01/18] reftable/stack: stop using `read_in_full()`
+Date: Fri, 07 Feb 2025 12:51:57 +0100
+Subject: [PATCH v5 02/18] reftable/stack: stop using `write_in_full()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250207-pks-reftable-drop-git-compat-util-v5-1-ba2adc79110f@pks.im>
+Message-Id: <20250207-pks-reftable-drop-git-compat-util-v5-2-ba2adc79110f@pks.im>
 References: <20250207-pks-reftable-drop-git-compat-util-v5-0-ba2adc79110f@pks.im>
 In-Reply-To: <20250207-pks-reftable-drop-git-compat-util-v5-0-ba2adc79110f@pks.im>
 To: git@vger.kernel.org
@@ -93,62 +93,75 @@ Cc: Edward Thomson <ethomson@edwardthomson.com>,
  Johannes Sixt <j6t@kdbg.org>
 X-Mailer: b4 0.14.2
 
-There is a single callsite of `read_in_full()` in the reftable library.
-Open-code the function to reduce our dependency on the Git library.
-
-Note that we only partially port over the logic from `read_in_full()`
-and its underlying `xread()` helper. Most importantly, the latter also
-knows to handle `EWOULDBLOCK` via `handle_nonblock()`. This logic is
-irrelevant for us though because the reftable library never sets the
-`O_NONBLOCK` option in the first place.
+Similar to the preceding commit, drop our use of `write_in_full()` and
+implement a new wrapper `reftable_write_full()` that handles this logic
+for us. This is done to reduce our dependency on the Git library.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ reftable/stack.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
 diff --git a/reftable/stack.c b/reftable/stack.c
-index f7c1845e15..d57acd9540 100644
+index d57acd9540..46abf51ec5 100644
 --- a/reftable/stack.c
 +++ b/reftable/stack.c
-@@ -115,13 +115,16 @@ int reftable_new_stack(struct reftable_stack **dest, const char *dir,
+@@ -48,6 +48,25 @@ static int stack_fsync(const struct reftable_write_options *opts, int fd)
+ 	return fsync(fd);
+ }
  
- static int fd_read_lines(int fd, char ***namesp)
++static ssize_t reftable_write_data(int fd, const void *data, size_t size)
++{
++	size_t total_written = 0;
++	const char *p = data;
++
++	while (total_written < size) {
++		ssize_t bytes_written = write(fd, p, size - total_written);
++		if (bytes_written < 0 && (errno == EAGAIN || errno == EINTR))
++			continue;
++		if (bytes_written < 0)
++			return REFTABLE_IO_ERROR;
++
++		total_written += bytes_written;
++		p += bytes_written;
++	}
++
++	return total_written;
++}
++
+ struct fd_writer {
+ 	const struct reftable_write_options *opts;
+ 	int fd;
+@@ -56,7 +75,7 @@ struct fd_writer {
+ static ssize_t fd_writer_write(void *arg, const void *data, size_t sz)
  {
--	off_t size = lseek(fd, 0, SEEK_END);
- 	char *buf = NULL;
- 	int err = 0;
-+	off_t size;
-+
-+	size = lseek(fd, 0, SEEK_END);
- 	if (size < 0) {
- 		err = REFTABLE_IO_ERROR;
- 		goto done;
+ 	struct fd_writer *writer = arg;
+-	return write_in_full(writer->fd, data, sz);
++	return reftable_write_data(writer->fd, data, sz);
+ }
+ 
+ static int fd_writer_flush(void *arg)
+@@ -784,7 +803,8 @@ int reftable_addition_commit(struct reftable_addition *add)
+ 			goto done;
  	}
-+
- 	err = lseek(fd, 0, SEEK_SET);
+ 
+-	err = write_in_full(add->tables_list_lock.fd, table_list.buf, table_list.len);
++	err = reftable_write_data(add->tables_list_lock.fd,
++				  table_list.buf, table_list.len);
+ 	reftable_buf_release(&table_list);
  	if (err < 0) {
  		err = REFTABLE_IO_ERROR;
-@@ -134,9 +137,16 @@ static int fd_read_lines(int fd, char ***namesp)
- 		goto done;
+@@ -1468,8 +1488,8 @@ static int stack_compact_range(struct reftable_stack *st,
+ 			goto done;
  	}
  
--	if (read_in_full(fd, buf, size) != size) {
--		err = REFTABLE_IO_ERROR;
--		goto done;
-+	for (off_t total_read = 0; total_read < size; ) {
-+		ssize_t bytes_read = read(fd, buf + total_read, size - total_read);
-+		if (bytes_read < 0 && (errno == EAGAIN || errno == EINTR))
-+			continue;
-+		if (bytes_read < 0 || !bytes_read) {
-+			err = REFTABLE_IO_ERROR;
-+			goto done;
-+		}
-+
-+		total_read += bytes_read;
- 	}
- 	buf[size] = 0;
- 
+-	err = write_in_full(tables_list_lock.fd,
+-			    tables_list_buf.buf, tables_list_buf.len);
++	err = reftable_write_data(tables_list_lock.fd,
++				  tables_list_buf.buf, tables_list_buf.len);
+ 	if (err < 0) {
+ 		err = REFTABLE_IO_ERROR;
+ 		unlink(new_table_path.buf);
 
 -- 
 2.48.1.538.gc4cfc42d60.dirty
