@@ -1,97 +1,124 @@
-Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C29015445D
-	for <git@vger.kernel.org>; Fri,  7 Feb 2025 06:10:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C898342AB4
+	for <git@vger.kernel.org>; Fri,  7 Feb 2025 06:16:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738908642; cv=none; b=g7C8DvcxrOe06DIKmK1cbusl3ENGi/fTQICFbXk6+c03II51T1/DXsNIlHzI+Dr202ib2tBO2c8zOBJyJw06XzuwqdF/UZabhD1gIE4HcINQb3EXEpMhHXuCCHMOAzaTkzcl4w9Oahw3fn8OtdmSoZCoROUZohCLo6AT+IP66Z0=
+	t=1738908971; cv=none; b=q3VBkZXlaG1hNL82mZ5okVEW+Zvxd8b+vGR2S8LupNufHEDTi9XUSuzfkYXzrQuA/APdndy7td//0yBemZ06vhSmKf5QK4yOInApenSpzWuUCxUNBMqgiU+HpPN0zHBnajqYYwRQx9vH5sFiu2nmJZXDqnKTNFTpwwejQoTEm5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738908642; c=relaxed/simple;
-	bh=BqJgocwbH7Uyrh8sSJwW5MLtH+tw/JpZcezomC7XaKg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=BHMAMl0pstgrBhV7mGx6grFh/0rhoCEdnu27hMO51XXiU6+Ka74REmyJpwJVQ7fbytWhhWzWSmEu7clYKuOhMy6t8as0z5pHegn5I2SnOjlY611z2jKUE+TlNyyKHC8lJJIo7ze4dWwA09hZF0OYcSchoHHWd95LB6h3K5/VDpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gmTCXbkP; arc=none smtp.client-ip=209.85.167.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1738908971; c=relaxed/simple;
+	bh=mq2g19Q5TbTLyjE3aej5DVTyu2t617Pc1IwN6PEalT4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EpuDTURW72rqPjuhuPzotImB957qiaT1WoCDrDqGnM608uV9S97Yps71RvNhlQce2yJFSUlE1GfYJ5VEv32T5Tvd0ZHPy706iuyQOKv5QrSflg2qudrU+CyOS19GEB30Rj2c2ZsQfvz5cB1l8CGRS2fjVO70CuRx84u+O8ZuvP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gjdV1t++; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uWUpkNl2; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gmTCXbkP"
-Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-5440efe97baso1836493e87.3
-        for <git@vger.kernel.org>; Thu, 06 Feb 2025 22:10:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738908639; x=1739513439; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SI815lltv8ZnEU5QdAkLaA6rlPq+BS2hPbwPvqrJbwU=;
-        b=gmTCXbkP3Nj470V4Fm36W0ISz65qZvs/rDa/9ChZ5/6uIOW0zx87Z9OFGMzziTPTRG
-         1Th3DY6dOIKuegA5Obs0nQc/JRg+3KhJWX14/5oOk+DntgVY323ggkeYki6bdV0JSo6R
-         hEyUTqGogOGvnPXBVHvLEGzMdAJvIIyWni3IX+wE91rDmDKn9pFElvtYeMzqQ5mJVXMB
-         xTYJW45rJtO+VaSwWv8yGE0YKVGmlyrQb82oruwRfQphejDzkEfOdIGLermhrFt9Mm7V
-         MDmQMgouTuE1ougX91Tc1lQi8eb77bEz8DL7O0v3nnTnLNyfOG3c1TRc/TpGnx+3XV0c
-         jdPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738908639; x=1739513439;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SI815lltv8ZnEU5QdAkLaA6rlPq+BS2hPbwPvqrJbwU=;
-        b=Y2kmSWS91tEeFW+ly1c8yvrjXek2MMY0DxqgsuJjGL/Fqjg9MliOAdjg/mvF4XxmCE
-         Et3fXzckYVxM0w2lvQ19xPxNSwLiRP8VbEEVXAht9Mk59BWF/slFvqdEzcwG7km/2Jrn
-         0wAY9BkCt+ZkTPLbGVjQaNTyQITkHd1a4DwwfI6CluePM3FaQR/u7ZYLCpDzoKvaHVHb
-         jAISkd9EFfT7+4Ynw8Mpua1p0ao9CN4fRMN6Y3sOlqbfwXQtkT1u839xRu2DJDQq9oYe
-         mtv4+BuVOf8eddSMc8mnp2Tmaijk1ZXBP2pxCIa0yOI+96eKTWxu3rZ5+wpe8umsCQ16
-         3jMw==
-X-Forwarded-Encrypted: i=1; AJvYcCU4pt/l+6eiHEvssvTcO7EN1KwOm6qPgHwSoMHMy0YZAVHN+xHLL2AEdJ7XWt4IRNgwspU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzN3wWlF/rxMTHWgkHbInzTxYaEf9BS6FozUisxkmujutm38Ghi
-	Morpm3YsildInM6PamJXqjqltPnlVTuwEe2aoKBqdHPMFqr3YQaH/qNe5tDexdBlEQPC+4os/FA
-	bWhMUHNZ4jXet1MTj1iCkMRlVd2NT9w==
-X-Gm-Gg: ASbGncutzoAMYiNjNkRpWB+DH0N2+guu1nzlc9D7JAI8XVEsuhBM7mtZIGCQ5BhLupG
-	vsZUbkIk9WS3JTD+toVwbKAdQUXNuFbh68C3U7hbAL1AeqKrlxUOrZmbFMFMfI8ZMz4I7hzKwxA
-	==
-X-Google-Smtp-Source: AGHT+IGtJMFaxvTNI6a2N4/EHB2ZWvE40lkSTQmIUPV6+TkMQSNRVDEQCceymMGUneYmXIbPif6FTIH6mGHrw1bJ+0Q=
-X-Received: by 2002:a05:6512:39cf:b0:544:f8e:ff98 with SMTP id
- 2adb3069b0e04-54414adfa4bmr425781e87.42.1738908638362; Thu, 06 Feb 2025
- 22:10:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gjdV1t++";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uWUpkNl2"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id B81D813801C4;
+	Fri,  7 Feb 2025 01:16:06 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 07 Feb 2025 01:16:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1738908966; x=1738995366; bh=TnbkXgA4Pd
+	5BDQ+ZZLfCjSK33sdf8XpcQ4pWGt3AC0g=; b=gjdV1t++9T4QrQdzVGjyfXOW26
+	ixICPAztGfUxYhoo1an/Un5wRa+2dp1KBx3JT4aWwOOsrvOsqNOx37XUhJKSVImW
+	P43/BRPbiELzUPMt6cUD9b/BIqz3zeSOvGa/5yCu2WuAGl62n3uRs2ER2nrT5FdE
+	adz5LgEoqpfGiTM7z/4uGpUDoTjMM25I0cq1C0qn5bzyHbe3Z3O2sbvzeHQARXUQ
+	eeRk8uOqOpd83zvOicoPGj6OZk97Vu2b/7uXZy1DCD0kuOKd9Dk3szBett/0AcwF
+	HlLrzQHw8tV0AxnbazDgKYgLetJp+jnW0YZ3i0VDs1rUYgQqYWFmOjHh7d+Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1738908966; x=1738995366; bh=TnbkXgA4Pd5BDQ+ZZLfCjSK33sdf8XpcQ4p
+	WGt3AC0g=; b=uWUpkNl2iYhPL/pgCVJlN4Dv3yJVTLMVmUxOpYQDyddktdxvplp
+	ca/NVSVjP6vkqGPSjxZq6QR4JiRg6r+D3PygnMkEztMZNIaDB9FSLM5l2cqDnJ7t
+	UJMaa1Ljvbov38ceaUJJ5iWerI0yI82r/2pwey7zxbZbomHiMapriiENuX3uz9m5
+	kWfR4tjbmKZjdiYupxCCDF9RHHEwSBDrEst2TPC6K/zrlUlQYYaOwBvMc2Rc1+kM
+	SIsKuqT3e/yafQAtHC66SYaLkJp0j30q7kb+VHjUnO2COMnSANy0Ri+mwE2K5Zd+
+	S4BXaFYZifQsvgTG1Bpt+7rY+xSMP1cx5aA==
+X-ME-Sender: <xms:JqWlZ6F_8jh9wMx9kn9r8RjuX-nSABllPmuyzAdPP313w-euUbJ0mA>
+    <xme:JqWlZ7UZTay6H77J8DKHBV-_SpKtVoHRH6xSzQ0fT2BZyjgBB_NGxBNn8guNgwAqE
+    gB2XJMSKlabbobdIA>
+X-ME-Received: <xmr:JqWlZ0LoKEJlzl3-hjFLZCKx6wU-HTVAkcMVmPKXDUGihjWcalYoaA5eJ5m7rkDogM50EMSvZcA5idPk33lu-SnD2my4T98vmB1EZrj2Dpi4gLAy>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeehudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:JqWlZ0Gc0YnQIXnYu9tvN75A1Bggo4BolHE90Fq7DDSTK0heVkiWiQ>
+    <xmx:JqWlZwWy0abv-Me2ChgLy-lUjAZdSj-ydNhI3ujEnhyBluxmjYTPEw>
+    <xmx:JqWlZ3Pmu2CikMvPFQgwy3orCDyKebb3bKVg08u-jDggqE4heOoM6A>
+    <xmx:JqWlZ30Crp9hnqOEuzaSiikeMaAGHrI2dkUFtcL63v9fvfSZzU6LZA>
+    <xmx:JqWlZ9gaHVGdpA7A0L5iEJKKAbC3KNGDu872qnoyIZs_rnnKkWvGTfYz>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 7 Feb 2025 01:16:05 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 0eccc1e3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 7 Feb 2025 06:16:02 +0000 (UTC)
+Date: Fri, 7 Feb 2025 07:15:38 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/16] path: refactor `repo_git_path()` family of
+ functions
+Message-ID: <Z6WlCg8rP_JCKulR@pks.im>
+References: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
+ <20250206-b4-pks-path-drop-the-repository-v1-2-4e77f0313206@pks.im>
+ <CAOLa=ZT8CrZA7Se98XBwS1CZjgvFFtKj5SBQfJNkG48QCvB=JQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250205214726.GA30202@raven.inka.de> <Z6PsXGnxM3UBR3nM@tapette.crustytoothpaste.net>
- <20250205235931.GB30202@raven.inka.de> <Z6QCX1QZxxwC7RVQ@tapette.crustytoothpaste.net>
- <CABPp-BFZ3oyKiryKMPph+nfokC=sFa7wn1wdas863273bzy7pA@mail.gmail.com>
- <20250206134006.GC30202@raven.inka.de> <20250206200418.GD30202@raven.inka.de>
-In-Reply-To: <20250206200418.GD30202@raven.inka.de>
-From: Chris Torek <chris.torek@gmail.com>
-Date: Thu, 6 Feb 2025 22:10:26 -0800
-X-Gm-Features: AWEUYZliLLr8d-Lsf4exkMNKxsAXtWSir8ajrBv0_zaoMnGSUiA3Om0CAyhKbfQ
-Message-ID: <CAPx1Gvc2piLT=p+dvzcJPTMDQAAjQfz__O4KiRWs-fOMg8dpTw@mail.gmail.com>
-Subject: Re: renormalize histroy with smudge/clean-filter
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZT8CrZA7Se98XBwS1CZjgvFFtKj5SBQfJNkG48QCvB=JQ@mail.gmail.com>
 
-[First]
+On Thu, Feb 06, 2025 at 03:53:59AM -0800, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> [snip]
+> 
+> > @@ -241,11 +228,14 @@ struct strbuf *get_pathname(void);
+> >  #  include "strbuf.h"
+> >  #  include "repository.h"
+> >
+> > -/* Internal implementation detail that should not be used. */
+> > +/* Internal implementation details that should not be used. */
+> >  void repo_common_pathv(const struct repository *repo,
+> >  		       struct strbuf *buf,
+> >  		       const char *fmt,
+> >  		       va_list args);
+> > +void repo_git_pathv(struct repository *repo,
+> > +		    const struct worktree *wt, struct strbuf *buf,
+> > +		    const char *fmt, va_list args);
+> >
+> 
+> The only thing that stood out to me was that we loose the `const` here
+> for `repository`, I couldn't really find a reason why we do that,
+> especially since `repo_common_pathv()` right above still has it.
+> Everything else looks good in this patch.
 
-> On Thu, Feb 06, 2025 at 02:40:06PM +0100, Josef Wolf wrote:
->
-> >    foreach $commit original-branch-commits
-> >        git cherry-pick $commit
+You're right, there is none yet over here, so it's pointless to adapt
+`repo_git_pathv()`. Later on this'll change because we're converting the
+"core.hooksPath" variable to be stored in `struct repo_settings`, and
+that'll require us to pass in a non-const pointer.
 
-[then]
+I'll shuffle this around a bit.
 
->On Thu, Feb 6, 2025 at 12:07=E2=80=AFPM Josef Wolf <jw@raven.inka.de> wrot=
-e:
-> I've done a lot of try and error with this approach and have come to the
-> conclusion, that cherry-pick totally mis-behaves in the presence of
-> clean/smudge filters.
-
-I suspect, actually, that the biggest problem here is that cherry-pick
-defaults to working by using merge. Given that you want to create
-a new linear set of "cleaned" commits, you don't want to use
-`git cherry-pick` at all. Just restore the files from the original
-commit, then add and commit.
-
-Chris
+Patrick
