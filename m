@@ -1,100 +1,76 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABFE15098A
-	for <git@vger.kernel.org>; Sat,  8 Feb 2025 06:17:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C65E1A9B4F
+	for <git@vger.kernel.org>; Sat,  8 Feb 2025 09:38:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.18.0.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738995435; cv=none; b=GcZQstNiG+pwEqh950Cgt2X3Dh/aosZSSYBSe9pHK2d7Or6mZ3CJM7IaUunv7aoBdIhOEddbTDvt3x7g1hJDsn0BpR9HzCvatE8/HA8f41k9ei1ED4C7FwD7J0OyeuD97Y3ApIpzVFRxB6bXIq1R9SafEDw/6eFDH2UxvNVHHEE=
+	t=1739007494; cv=none; b=NstESx0NsCtKHARKcr355j7c5h+pZlET+KKhFpwWB3e+bAIudLRSdhYkYBd9ysi96/zflrywuwEDyYBvh3Wovb3V5t+TZOzMEA0p2mkcEtJX2ojHY+cYy+++E1q9FMUZ4i7ny+XwbCqi3mDTDPZdNW1mtirhXDQZVxkKljYptHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738995435; c=relaxed/simple;
-	bh=kTGI9yXjJwKs9N6AyDQ+0oTfMsxjZYbZSEp7jCMQwX8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DiDqDgF+DL92z+myj5zLGgtg0TiLXim8/ysJ53IpqLP97+JsIzM3jWn4PYt1dTKHjrGMJpwnECsqXkp5xWbamGxSzxm0DqkxIQxHD/Mo6IEY1HZLryEjJSr62S6asKcfhiZKmaN36U2NmEulu1rHWmlfbBjfrS5ktp/lou+eTZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f5K7XYtN; arc=none smtp.client-ip=209.85.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f5K7XYtN"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-21f40f2bafdso33158965ad.3
-        for <git@vger.kernel.org>; Fri, 07 Feb 2025 22:17:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738995433; x=1739600233; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=v6OHz98FhZfJZPOZHWSgPd7qxU3wcHRo1PvQvZ7YjwQ=;
-        b=f5K7XYtNXeALPpMm81xK/7hFnQXikj8KIhCkV2084B0wScYWxy74YpIYYRoq8faT44
-         W5C5MjZxCFW+cgL/NFIsxgp2d8INIOZjqh9DSX+uD6qTu+W+afw13iORGbRchlBDnW0d
-         fbIViWoEnMKdot7SW7pMAZohnQhjskkADC57P1Kl3ZsT/O72NvWqRugqmv3wBp1b3RG+
-         xi9IvDLbh3+NZYuxkNyKVsOe27GDBaa3YcgaSnq34NdwuKlI2RaCIFplBXhH+1QWe3Zy
-         6DINTihIwXnSHPzP/PsQRTYoY+ns/pFQarsq7TpclR3ecOefILl/559pp41XMJ0o+bew
-         GomA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738995433; x=1739600233;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=v6OHz98FhZfJZPOZHWSgPd7qxU3wcHRo1PvQvZ7YjwQ=;
-        b=ojyj1urzKo73DX6+Jo3UmYUaemBdV9uQjCCG4owxrmv5sv5cTVN2syM8FxT1PMwtIL
-         S6o19SxLnz0lrpwdD0DB2uwP7X3LmmGzS+enkm7QLdyQ1G7QF9rYBvp5yadH3kpPt0ua
-         KQoae7nDrqwBWmimR1PCbl9DszVOMTO3ix8lw/HK4p9LT5+UXIfamJ5r4XT60MrC8Iuy
-         /MwgU8YYSJcg9428P1VfQmn3ZLuhAiuIbdJTXrFQS+nvYKBzqvu21psG+1S6cKN6b4yW
-         ylngHyxxH8+exYPg7p3Gj5HPYV/ZwJGgMGOgEhcuQx6Yr/SetN4HGm5IfB3yk9OtU18w
-         JSHw==
-X-Gm-Message-State: AOJu0Yz5XgOmMmwGLs1gKLKHw5VW8DN+z4/udJ8gljLQ1T5noKALdVoy
-	u+egPw8iHADh30cL9hNUHtkqiSyNxcOfGgwtlzYJ/d/xjuXJ6+hiUU6Hsw==
-X-Gm-Gg: ASbGncu4/4LWjrvp8qXCEN2eFw+68bWZETlfUwGORI1w/tES+QRbqVPo4DxqzOEei3Y
-	o2MjdCoSQr8Q3ORpvJj1Xo/M//9zBNCSvWAOjsVmN9xszNdAomU0Io6NQ5PybnMdLekIAlXds4d
-	DA06vroNsPX3A99coIiy6gg7xi1YGMNC+uNwosqLeiPTp7hAy3KqF2N4ZnBLFVuEwdqrdN2wQMn
-	Z5bwEciDuzNYOzVBYZyNKIjlN1//sE5OHLQfpG3vg0MAxgbpFX0WF159m6U5Q/XNTeM88ZmTSQC
-	laKYf1L3C86G8HuQVoXhySYsISNRSmHAklxQQ36OaivYKw==
-X-Google-Smtp-Source: AGHT+IE5gf7Shyc1b1A9LpL0HaYKTVXzWP2U3kzx/VWgP0ldqXw9ZKPx1dMgcc8dTItl/dxKrCUuTQ==
-X-Received: by 2002:a17:903:2309:b0:20d:cb6:11e with SMTP id d9443c01a7336-21f4e700863mr98153845ad.26.1738995433149;
-        Fri, 07 Feb 2025 22:17:13 -0800 (PST)
-Received: from localhost.localdomain ([2001:569:5254:8400:f8d7:c9fc:3743:17e])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-21f3650ce16sm40616765ad.9.2025.02.07.22.17.12
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Fri, 07 Feb 2025 22:17:12 -0800 (PST)
-From: Emily M Klassen <forivall@gmail.com>
-To: git@vger.kernel.org
-Cc: Emily M Klassen <forivall@gmail.com>
-Subject: [PATCH] revision: fix missing null for freed memory
-Date: Fri,  7 Feb 2025 22:17:02 -0800
-Message-ID: <20250208061702.88469-1-forivall@gmail.com>
-X-Mailer: git-send-email 2.48.1
+	s=arc-20240116; t=1739007494; c=relaxed/simple;
+	bh=LtJpE0ARPACKmbxEEIDsovyxGSuqUXkHP74Rp1ZBNjw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=e63vV4XpyLUgvCqzLgz0ccX/t9R3A8otLxMdLodWJR8PErvJZmGMCVMqMQwtsnXB1Qk/gmIEy23Mh4ZLnvRWTyJQI9tF9wmoyIb9+/NcDxcnyngcWko2BeqT1l9BfZ/zzjblXY89/tdMOr+7BMKTbTbh/lPm6ORwdXvIS86xMWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=nefkom.net; arc=none smtp.client-ip=212.18.0.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nefkom.net
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 4YqlsJ2HYZz1sB7f;
+	Sat,  8 Feb 2025 10:29:08 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 4YqlsJ257Dz1qqlS;
+	Sat,  8 Feb 2025 10:29:08 +0100 (CET)
+X-Virus-Scanned: amavis at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+ by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
+ with ESMTP id 5Ma4u5_3tzsy; Sat,  8 Feb 2025 10:28:58 +0100 (CET)
+X-Auth-Info: c45JKX6IhmK+Cdqx5W5gwQ7QyFXfT10+vsiMCg5PhLtdjfKGcYU26feDjZnzqyVB
+Received: from tiger.home (aftr-82-135-83-7.dynamic.mnet-online.de [82.135.83.7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.mnet-online.de (Postfix) with ESMTPSA;
+	Sat,  8 Feb 2025 10:28:58 +0100 (CET)
+Received: by tiger.home (Postfix, from userid 1000)
+	id D7A8432F1FB; Sat,  8 Feb 2025 10:28:57 +0100 (CET)
+From: Andreas Schwab <schwab@linux-m68k.org>
+To: Devste Devste <devstemail@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Config timezone to prevent chaos when DST/changing timezone
+In-Reply-To: <CANM0SV3DXQeNinmy1Spj7n6G=5s3jMcFrAb0Ayun6ago7F3qWw@mail.gmail.com>
+	(Devste Devste's message of "Fri, 7 Feb 2025 23:02:19 +0100")
+References: <CANM0SV3DXQeNinmy1Spj7n6G=5s3jMcFrAb0Ayun6ago7F3qWw@mail.gmail.com>
+X-Yow: ..  Once upon a time, four AMPHIBIOUS HOG CALLERS attacked a family
+ of DEFENSELESS, SENSITIVE COIN COLLECTORS and brought DOWN their
+ PROPERTY VALUES!!
+Date: Sat, 08 Feb 2025 10:28:57 +0100
+Message-ID: <87seooss2u.fsf@linux-m68k.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"git log --graph --no-graph" missed cleaning up the output_prefix and
-output_prefix_data pointers. This resulted in a segfault when using "--patch",
-"--name-status" or "--name-only", as the output_prefix_data continued to be in
-use after free()
+On Feb 07 2025, Devste Devste wrote:
 
-Signed-off-by: Emily M Klassen <forivall@gmail.com>
----
-I previously reported this a few hours ago, and ended up digging in and figuring
-it out. I'll make sure to bottom reply in the follow ups to this patch.
+> With DST or manual timezone changes (e.g. travelling) you can end up
+> with commits that are illogically sorted - newer commits have an
+> author/committer date that is older than older commits.
 
- revision.c | 2 ++
- 1 file changed, 2 insertions(+)
+The time stamps in commits are recorded in Universal Time, so neither
+DST nor timezone changes (both are essentially equivalent) have an
+influence on how the time stamp is interpreted as a point in time.
 
-diff --git a/revision.c b/revision.c
-index 474fa1e767..84cb028e11 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2615,6 +2615,8 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		graph_clear(revs->graph);
- 		revs->graph = graph_init(revs);
- 	} else if (!strcmp(arg, "--no-graph")) {
-+		revs->diffopt.output_prefix = NULL;
-+		revs->diffopt.output_prefix_data = NULL;
- 		graph_clear(revs->graph);
- 		revs->graph = NULL;
- 	} else if (!strcmp(arg, "--encode-email-headers")) {
+> There should be an easy way to force a specific timezone - or in
+> absence of that at least force UTC - to prevent this
+
+You can use --date=local to show all dates in your local time zone,
+instead of the recorded time zone of the author/committer.
+
 -- 
-2.48.1
-
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
