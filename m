@@ -1,140 +1,106 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCBA15575C
-	for <git@vger.kernel.org>; Sat,  8 Feb 2025 03:34:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B6F3194C86
+	for <git@vger.kernel.org>; Sat,  8 Feb 2025 04:45:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1738985664; cv=none; b=nMMuTfDsGwjpcE3QctFLN+ybud5Krrs3Hf9NDOo9iMIhUwxF+a2dy6l4LDHZziWB1P5bskSEbjTz96/kSFIRcfip3UKsWu9pqijvoeltLlW6c9TFs5PK4MH1KsxrAM/ZXQMS43QNMrpTScN24KYCJGzXaRb9z4sIvnI4NvtclAw=
+	t=1738989904; cv=none; b=gcix3gHqzfDvCWEqtp9XGy3hL0KQL6CoTEz/L0XWAPnSJq7CBGbvH3mrt6RONgP+WTJCeAoMKxnEbnbXtO8BsBcgSgru3afK+6cG2QEZMwUn34dKiZD5sXiwN2MLN6OXhryYdXm5iArgt6WKPjjfpyeQ6Kw/qtGMHw04mtNAMPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1738985664; c=relaxed/simple;
-	bh=nh/J2jZiDtjSmGh3cII1khpT2pPR4wvoCE5DV46g2qw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=Ts1FAYwmLflAgqllvfcxLeJJSb8DAKOHgOnTcL8b3IGV92u+qHPSk4CZOjo/os4PBhlWa4+nHGDuUrrs+U6Xo8+Fhsx53As4hPtb7nB6a4pEmpCK4H4+mS0LDwDQdTfCpGF2/Ac6G3BBMyej2FvdUZQP/gUErnHvtABmjwsZtPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gITTWogZ; arc=none smtp.client-ip=209.85.216.45
+	s=arc-20240116; t=1738989904; c=relaxed/simple;
+	bh=JUrWRLQFl4ZP9GQrWudqqSKBNRMj6Tvz4H/XoamB4t8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ei1kgT+pXbY4MEOKM+KPRFGmMwtR6r8xwifABt7DOSPsXQRIXgKX9OTU7H43KFSdvuCMQWYoaNJqeUsVnQqg/QXepKRZ7jRu6xpV0XPtVkTwy55OH+sO5dePi1Wbypg5iRRhNPzSu4YAeNk85mmMYxH55pZ90S5fF4FDMKQtxXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kOnb8BG+; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gITTWogZ"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-2fa19e1d027so2924017a91.0
-        for <git@vger.kernel.org>; Fri, 07 Feb 2025 19:34:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kOnb8BG+"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2166f1e589cso71610605ad.3
+        for <git@vger.kernel.org>; Fri, 07 Feb 2025 20:45:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1738985662; x=1739590462; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8MBWZujSIc4Lz6oB+mgt33O30A8MhIAbOO2CMJaRU5U=;
-        b=gITTWogZGGs3BbJkkrumO+96GgxrB8ik39UQC86ej4PCjoYnTIdKMK2fvlJqOH51im
-         iQdRusHz6Z+aXWKgd8JsootfbeKmEtodhxmTgQoekWjZDyggqQqEQy6LIe44EknjJBrd
-         V1d0jhGkZfLc1bghxBUBPfdU8ps7ghPGVZdDRsvtyOt8dgEwhH+fgYq8y9Oe4725df4y
-         BRkDLEG20mZ2zdMsdgcfSjgsH0NXGArtFknk6YkxtsB1kVT+zNQeZeJwhm4KtQRnZ18i
-         Yi4DGGp0nXiSwMD9LC/mslUJQueRA5Tnscf4lAy1KBAhYrtfWcw68hBxhAFjnfYmiHd3
-         G+2Q==
+        d=gmail.com; s=20230601; t=1738989902; x=1739594702; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=q2xf9uJyyjiL2pGLulxw38ecebpHj0G9aSYL9UafZco=;
+        b=kOnb8BG+mL9TP+8eGuB21CvlPoT1xmpaASFAvPm/KB2UiGMvQsHqlppOyutofUpHpv
+         cZ3rs++nKyFawaJW8f7KV2/fVTyaOcoWdKbNmsoqB6qyQThfGLRQwWPbNsk/dobSL8O3
+         C44MLnWJci0N4VaI2OsXdEKhDas/l45D8cOYkGuVIquj/9lyAe7FmMWCfi+mnU7HMwOh
+         yWBIJj63uhkrmPnTpDlWPQaJrZxkwQsMEnZvzrKKkm7FkF0TB2UA4il01cW3mNBLptFq
+         cJqvwd/EpgnCquDWMWiklPaxn2Zt84a5sAd2xSV4Q5WibeHB+HMG6YjVf/hufhmWIPel
+         sWSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1738985662; x=1739590462;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8MBWZujSIc4Lz6oB+mgt33O30A8MhIAbOO2CMJaRU5U=;
-        b=sdP50p842Gpiyi0lhLHXgW+sCLyQ8WzHt1NdvYC4smiJvMsY690Yi5CcOl/cYc+VyA
-         ps6JUJtyQHc/EmFL1NWjbC3nLzNizcx+UbA2xuC5IO2D4pQBPav9b4csWjUphqUakPlj
-         VVxjjGWIw+RyuumeQk5lI3l/FWB4RGfJCsEShmHve5TEnS31m/H05oupR0Dc8VPUid8U
-         iqVrXnsBmZhZqePNt9nrhI92U4ZBdRvZqSMJXwAbInVqShA44hwBEBjzmDIgQMx1QmIb
-         6KTz4c9s01wZcq2XO7ovSlzsc/9PKWevQJFcZj38ayxgFRJw9ynYUhw4G6bBGflCDOaz
-         bP9Q==
-X-Gm-Message-State: AOJu0YxqTbaKPPWMUL7tJGSB4Qdxu3POn9oOXMJKfxBSxcE8lWVkIN+G
-	poODJfj6YOQITCqTNO/RbiWt8LEYqV1RPmdQdiEnWgefabbpZWPmZZCihHT3wBevhnFuGFU4/bC
-	rJsO6OzbtutPgaLcEiYa/R1hh+sGVmu3i
-X-Gm-Gg: ASbGncsbOBbeWMhRKhDw+WYTapMqtwUKVRbtDRomlZQ+wtbzZPx4HKFH4S8Z4l0i/lU
-	HX24dNNI/5oWY9XIpYP1N1UujBv38tH5msseMCd/Er/JMXIhwAb8Bv8/hhfaxXSIXJRi9zrWs3m
-	jUXkaGTnt3EuxFJR+bnrYqAA6NDVMh
-X-Google-Smtp-Source: AGHT+IEfMxTAUPfcygszbzgvNFhM0tl119EYCY+YWek25hFNKiMGNPhvfCWR/WJP6GAmOAL0hJuw8HNLT/haPWOUUpo=
-X-Received: by 2002:a17:90a:f94e:b0:2f2:a664:df19 with SMTP id
- 98e67ed59e1d1-2fa23f436d6mr8749066a91.7.1738985662285; Fri, 07 Feb 2025
- 19:34:22 -0800 (PST)
+        d=1e100.net; s=20230601; t=1738989902; x=1739594702;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q2xf9uJyyjiL2pGLulxw38ecebpHj0G9aSYL9UafZco=;
+        b=EwGko5/Zhk8sDKHdBs6/70IxpM+Wy6wCIGiYCSMfwVcZe1eFHbHjmCOYnNi0tj35YW
+         q9gsM7KjwFhVUQg9etlKXeY4mJ+THxUMYLYdfcf9NUw/wwIZ/xX25xRvaV8dgsLb+hKv
+         GA5BbNNGoMHIUxCEaMBF0K6PtOG3LTjZj1gttyRbDpePOy+7Att00U3f7PVbpR32DilY
+         5q+OumL2m05YSVP7GiJpvDQlayFJ98yyvebqb40mkOPkxY3bC8pCSC5+ZOS2FJmkXnrh
+         CsidFz8lbFQjdg3NYC2t3jWCRkke8fZfrsFBp8ufBoyA1j0JAzedXZzj7bpBiNsPeuCz
+         CrAA==
+X-Gm-Message-State: AOJu0YwTPWAisSWWKsE4FOHu/WemmBZuqZ8iiLfuMK4CuRnitlmvDaOv
+	6ZYuGnu5W3ou+wVnzgPhAFCDFP2ytJ5Sw7G2KA9ur2LfF2dDVbU5
+X-Gm-Gg: ASbGncs9Oyd2XvEJjuhrRMC2cbGMu8EuswTPONYvU4kOdP2Ha1erEpDyj8Otb2ikgWN
+	9wPRdB5dlw4M33F63nmXMQ+wVB0tEfcXstfghsrNM/U1WrOKftNrRalZNFzi38QUHQsmpPLGHJE
+	mdZ9SgQ0+ISHyudzSc8X46mzz01538l+I3ZMBEWCnHgA/TVh3PXnZXsT+D+c4Gumj28gjxTO1Iv
+	zSKNpGXfRWoop6ni2+7sYz2GZ+Tp2cGdvSATA3TKy4biJucOF+GpL1tW2tFIaOsi9HP7izJGmqs
+	wGzIGH/jGJ+Obg==
+X-Google-Smtp-Source: AGHT+IGjTZjSoDdbZuduOyvSUsGrcKpuVb03VKmiOOzWz965tIfgeaB/qsYmgz4U+VZeyKxkTY2woQ==
+X-Received: by 2002:a05:6a00:807:b0:725:f282:1f04 with SMTP id d2e1a72fcca58-7305d4eff53mr10006916b3a.18.1738989902232;
+        Fri, 07 Feb 2025 20:45:02 -0800 (PST)
+Received: from localhost ([14.191.220.105])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-73048c16259sm3813373b3a.153.2025.02.07.20.45.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 07 Feb 2025 20:45:01 -0800 (PST)
+Date: Sat, 8 Feb 2025 11:44:59 +0700
+From: =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
+To: Emily Klassen <forivall@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: git log --graph --no-graph can cause segfault
+Message-ID: <Z6bhS7THkV2ovXfQ@danh.dev>
+References: <CADY4h_qagYhSP2kz=zNSjfskN1ODxLf1DjEME6BdYw6j-JEAhA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Emily Klassen <forivall@gmail.com>
-Date: Fri, 7 Feb 2025 19:34:11 -0800
-X-Gm-Features: AWEUYZlGbKfCNW7SO5GyPuP3REmLNLRjV-Ok7W81Ho42RcLozNn8V35viVksD0s
-Message-ID: <CADY4h_qagYhSP2kz=zNSjfskN1ODxLf1DjEME6BdYw6j-JEAhA@mail.gmail.com>
-Subject: git log --graph --no-graph can cause segfault
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CADY4h_qagYhSP2kz=zNSjfskN1ODxLf1DjEME6BdYw6j-JEAhA@mail.gmail.com>
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
+On 2025-02-07 19:34:11-0800, Emily Klassen <forivall@gmail.com> wrote:
+> > What did you do before the bug happened? (Steps to reproduce your issue)
+> 
+> $ git config --get alias.l
+> log --pretty=oneline --abbrev-commit --decorate --graph
+> 
+> $ git --no-pager l --reverse --no-graph --name-status
+> e83c516331 Initial revision of "git", the information manager from hell
+> error: git died of signal 11
+> 
+> > What did you expect to happen? (Expected behavior)
+> 
+> I expect the commit listing to display successfully.
+> 
+> > What happened instead? (Actual behavior)
+> 
+> Git seems to have crashed. My best guess is that some state gets set with the
+> first `--graph` flag which is not cleared with the `--no-graph` flag.
+> 
+> > What's different between what you expected and what actually happened?
+> 
+> Git crashed.
 
-$ git config --get alias.l
-log --pretty=oneline --abbrev-commit --decorate --graph
+Given commands yields: "fatal: Out of memory, realloc failed" in my
+system. But it's fixed by jk/combine-diff-cleanup, which is merged
+into master.
 
-$ git --no-pager l --reverse --no-graph --name-status
-e83c516331 Initial revision of "git", the information manager from hell
-error: git died of signal 11
+Would you try to run from master branch to see if your problem has
+been fixed?
 
-> What did you expect to happen? (Expected behavior)
-
-I expect the commit listing to display successfully.
-
-> What happened instead? (Actual behavior)
-
-Git seems to have crashed. My best guess is that some state gets set with the
-first `--graph` flag which is not cleared with the `--no-graph` flag.
-
-> What's different between what you expected and what actually happened?
-
-Git crashed.
-
-> Anything else you want to add:
-
-I also tried to manually expand the alias with
-
-$ git --no-pager log --pretty=oneline --abbrev-commit --decorate
---graph HEAD --reverse --no-graph --name-status
-e83c516331 Initial revision of "git", the information manager from hell
-
-$ echo $?
-139
-
-Which indicates a segfault.
-
-The below command works properly
-
-$ git log --pretty=oneline --abbrev-commit --decorate HEAD --reverse
---name-status
-
-but obviously, the intent is to be able to use my `l` alias with the
-`--reverse` flag by disabling `--graph`. My workaround is to create a `lr`
-alias which replaces `--graph` with `--reverse`.
-
-I also tested "git log --graph --no-graph --name-only" and "--patch"
-and "--name-status", and all of those failed, without even specifying
-"--reverse"
-
-Also verified by building `git` from the `next` branch.
-
-> Please review the rest of the bug report below.
-> You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.48.1
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.7.1
-zlib: 1.2.12
-uname: Darwin 24.3.0 Darwin Kernel Version 24.3.0: Thu Jan  2 20:24:16
-PST 2025; root:xnu-11215.81.4~3/RELEASE_ARM64_T6000 arm64
-compiler info: clang: 16.0.0 (clang-1600.0.26.6)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
-
-~ Emily Marigold Klassen
+-- 
+Danh
