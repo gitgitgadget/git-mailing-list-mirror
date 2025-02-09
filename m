@@ -1,114 +1,151 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBB1243370
-	for <git@vger.kernel.org>; Sun,  9 Feb 2025 10:41:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3801E190661
+	for <git@vger.kernel.org>; Sun,  9 Feb 2025 11:14:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739097687; cv=none; b=XEs3y4cAOBMAFyvzfMe7cKha/wkjddxrg54qER5EZlYiST8klTtt47nqlvp190E8BSq6+JzTGpbf78SIJFMTs2CQP7RfwsQA1hMhVg9hyV+t5RjO6cz3g7Y/jK0qdIULMUH9Sa8oDXso9CXJ5suzolaSgrnqHWnRwqXPYfavTwc=
+	t=1739099652; cv=none; b=b0ZncqIEt5S/1q7zQYiVWRgbO2gr+/ObZ0JkDuUH1sN+2/tKm0pfX7r2F0xolOVJTIgtwBkFlHrejbDtwBlOVLjes2PN3Rtfvuvb9RJuH1515wCb9Sau6MEtnS/gGb9pkvwaVVgBnNzSOrciMw/Or/40FE1zlxPHmcUEGiKczHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739097687; c=relaxed/simple;
-	bh=VqA5cZaHKEqYrfmeZNfPXGCeICwWC9mWSpYtBgY6jWA=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=pSTogc3ODih/TvtPH6mXIHWbJkLONYbNKCIwGj+Cs7CeeWP0Zza/jdNeQ+oJH+Ruws3GC1lRXzDfcbb5XTQhwH93e7/wwlvkiBQmC2Il08E4zWhY9om5CjmFQtIgm+TClNzUtlTUwrK3UaRCzoF+WKxdTx+MuPBAc+R4HDW8gB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=P8E1Y15V; arc=none smtp.client-ip=212.227.17.11
+	s=arc-20240116; t=1739099652; c=relaxed/simple;
+	bh=FYFVFWZwf+u8DHYBHlhEg8JH4fYjJV6vKmp2Fu24Npw=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lvt53Kmq4qwEV+bv0J5k05WUz/bMJpdOYJpUoCk+sF8Y/7VzMK3scCAbF/S5GrptM6OyRb3ZvRnQyj5y7onZx0jOKRpgtsUBy9Kg2ZMsHvnRHVA9qzpwG35ukvGtIhgFqN+sIzSutcyqkomGYizBmGxtaY5kGGO4Uw6nB7a/xfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=ZEJyDubj; arc=none smtp.client-ip=217.72.192.78
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="P8E1Y15V"
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="ZEJyDubj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1739097676; x=1739702476; i=l.s.r@web.de;
-	bh=86wD+x6DJAGgUe+r2MxCqzSTdr3wdlCEVe4L36uELkk=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
+	s=s29768273; t=1739099647; x=1739704447; i=tboegi@web.de;
+	bh=rg7aAMWKiHXqA8ywgzzewjcrC09mrll7Phms7cwL7uU=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=P8E1Y15Vo0VRiByfJBAEW+OGeXZBN1ZqqozyQzeoCLgN1d30otEa64ZoNJR2ZJHz
-	 MwqH5iHIE83IMc5iGvq+3fvzCb3rtOne7fsG3TpUhZ9qD5YKxCiBCbvLtGq2XG2GA
-	 GrG/ivm5eDmMnqS2M1FQOsO8b4LXFVC9QdT27cW5gMbWwfFIoSa/2lTNu29xXY7GC
-	 OVXg23ckU4YY1OsbUV9hbSW1ipE25b03JoqqmQudcdr5xxg/DKDm/HUNZ2M2pCqp6
-	 eSE0SlJI4ms5eKENHOke2ZYcSu+ABrcN4PzRjBPhePetyeyRA4mSiqSOoi0EF2hPz
-	 wxB652HdqX142rLNTQ==
+	b=ZEJyDubjAdjmz9C2zfuOX3rYM7TiyW//UYvVJKx49sjPNwwjVtZqBO+kMtD2Y6Au
+	 b5xCWNdvlT7Mz7VggnupKBy0vHfkBSaadCxfQcEpMwA8inGXXqyjpg08r9LPJ/U7P
+	 FXrZXrvGpl6vzLbENoTJpa88YwFUY6upcoTOiwoukqLcwQl4dvKlpLlVfFm1KldWJ
+	 zJdpDeRygzzfUjVY0S2maIpTMYuTmSRmeKK976Bl5HyR0BxPImy6vjAvgbqQf+Ff0
+	 rgxD1xcMMSuhfVxtingJhRV4HVGrMGvxAv/5wbHdmt0ZH/0A7mNHgJAE1B/Scmzd5
+	 /In6yXEWueGuq1SQFg==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.17.38]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MumJF-1tQESF0AyJ-012rwU for
- <git@vger.kernel.org>; Sun, 09 Feb 2025 11:41:16 +0100
-Message-ID: <16a7b572-0a3d-4707-9034-0dac69ea99ac@web.de>
-Date: Sun, 9 Feb 2025 11:41:15 +0100
+Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MumJF-1tQF242KV1-012rvn; Sun, 09
+ Feb 2025 12:14:07 +0100
+Date: Sun, 9 Feb 2025 12:14:06 +0100
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+Subject: Re: renormalize histroy with smudge/clean-filter
+Message-ID: <20250209111406.GA12069@tb-raspi4>
+References: <20250206134006.GC30202@raven.inka.de>
+ <20250206200418.GD30202@raven.inka.de>
+ <CAPx1Gvc2piLT=p+dvzcJPTMDQAAjQfz__O4KiRWs-fOMg8dpTw@mail.gmail.com>
+ <20250207104510.GE30202@raven.inka.de>
+ <CAPx1GvcyaZqYK+SvgtfsajqtkMty1jOcVAtwfmam-LpOjyd0jw@mail.gmail.com>
+ <CABPp-BFnx2m75jsa3_kTPet97HY+xwb_6JmPiKM5+OARPy=mGA@mail.gmail.com>
+ <20250207203248.GG30202@raven.inka.de>
+ <CABPp-BFGUa_DRBe1WLVfCOKh53+F15KxW_c_OZAMwZCxuAQCiw@mail.gmail.com>
+ <20250208205709.GH30202@raven.inka.de>
+ <20250209092514.GM30202@raven.inka.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Git List <git@vger.kernel.org>
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] commit: avoid parent list buildup in
- clear_commit_marks_many()
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Di6BrUdHaW2D25bHreCo4CVm8ns68jd+EXJNg1NgefUP5rR4I94
- YfNg/gxOeVB2Kd1WAp1gYckXY8bQS6Q5I1S3Ivge7KxyEAR4iJTM5Tfxxl6g6b/oXaY3Kv8
- rI4t2NFFB8PviqJ+JqKZpBlFwJ1dDuH/yMH/mD7EryuLE/gSnEXdkix9ISJZz5crmX3Kvri
- ko4DwrL8DUBs9sXIATi5w==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250209092514.GM30202@raven.inka.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:KWSsDAtGFGwejgK1XoBVnieXPGwUXrNoqmTGxBSS+mL5G8tQF0I
+ Z9X0oSyYUE3YXdhwzEsGmnig/kg2D6chPn4hC7sYZlML4k7oNJHWhPBEU5VSqGDIGP//bIw
+ HbKuSmtS/PytDrjP4/twO/yuR4YZ4FT7kmg+TN3wxwwPLSQLUdIyUURJPZOxdbuDyTEbLXP
+ 9ryiHJqQc4LV8H6tq0DaQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:pvOV0x+BD6E=;VQY4NYS58rWqmnxmGiuA031XfgY
- VOIbDtbeXRH4OfEvEHXyxgcQpc/wvo4vpzG1GTjBeME1xi0kZggjhy6DWQ9dKnpQ3icAY3sJs
- 9UDct/3ZokUw9YrA7bCNLyezqgY3CnKoetAsuC6jWGRLUDd2kmeVZORMcJoU20YS/dqoCsvGR
- AixsFVf1YUa/UR6MPGVuT1l3hP+1B2mh77oZ0wSxIC5wsNtHzbf5kJOYODjEy7OxunjPXPDRS
- FOZtuJfxwaDPlCEYoZgMEkkTOM/DiswvLUF7caO8fxv6kX6L1ky53cxDwfivyq54jahrSibxe
- yqalgYJTB6bXszZL2duY+nd8rq0UUV2H3ECAAylpnG9BAC6uBIVUin11ChwNR0pGwzyBSIjt4
- 0IyRlnBMjgDJs7MF/MW7GARCDxFe//KPyFbOIbJh+KsdwhjkexBXjJ9X1FrrVa7dgEioYQXzJ
- WdjFUvLTRf3clB8GeGb3jpdqPdZVTe9GlHnH68BAP89X/azNpxVahcwI3qrinfg8jGHLaH1xj
- CJKXJ9iSbcNw1Hyu65Kz5G2c8vdtVNg0Gl1WEmvhtxrOY+7tCJ6GqmkHl+tez9SsdbroLWMtl
- D80Y4y7gC2+zS4sBWIxEAtQlV87GF3AignIUYAXiq32YBrbKC2opaRKHOvn3Ol465WeCebrDO
- NF15qxfE5FMrVYlO73gTupu8oOFIn2p4LrF0IOPUq/yk9LijM7LRWkGVPVRq9pbUYO2uT9G25
- 4+ipBs0uFQK4BoWOsTXuieZXEBabAqlKmgtd4TVIbJ431j0dOZ8pwW8MVP0igEbzzfBJqg1Mf
- 4X0ies5C+sRPdFJTgRZzij2vBkoHYyY1mPGJCOhNPPqly+5XL2066RzV7MpFQNMgj7bduW7M1
- 7EnrI82cS08qRWDnsvvXosJ8Fce3gwHiS7EE0krcVP3kfo9qoohe9+81sLWdHss64RjgCueUv
- gAJUMjyGk0TB396m316hxSrC2qFqLHen/4+hpN0BbO/a43F7WaoQPrY3L79AV9OdCRq7YMDQR
- JK+Kblu/0YE1mUm10LS6jvzL+5yhMIH8+dgylzfXVnHrm15ZZ3IKMxX0Zo9/9EFff1ktZAR1j
- JDwxPtbBeuTu0MibKuUXiMDZVtsuMf2EujDFSihQD2ReOQXnI82/YnBPCqOgmnJjfRxjbRyBP
- PfZDHYby6MXUPHm62323YicuqGxdAew9ygEt2zTTEG23vROMg0rGrebHpNYts71pKNwqXGagf
- RuEX/xJSif8v4CQ7PbqGEME+5vvo1Eaz2Phs8I+oTRvRrbl8q5ywbjSaFAxOPGtBaQfqRe8ER
- xhC183O747XtJ5pdB1DzGy2qHI5Gso/JgDrEcas2EOhmz+nCs2k2LYDi3pCSgbca121WLpvoH
- e1FBrM23P9+M8EX4VCWTbEUa+e0D+YDNoB1yU=
+UI-OutboundReport: notjunk:1;M01:P0:JaDhKd+EdMk=;19FKtbOzQJZYitw5K3e8b139BJJ
+ 7bAjtdA/VvolBMHipAcyGsMRaHOG5Lry4KvwtGeb7rAwflsmBC7b6UUcP8EtuvczTxkp1dNDN
+ SH4+0Mr/mRD/DEStnTgszs6nSS5j82DNykPIRtXVgdcrwUBMDR8pN3LRqOPRL2E+kWQxixcbg
+ g2NmROymaT+ZeOCuqEtU2YrWl4Rb6v8PBkGlYSc1onVe/DXigxVh+bQfCKJh8bsV8qpLJp7S3
+ pMJRnBa5vTv7uadWoFHy5IPGUDsE89w5/XSkUea15oHJ8lNDoZTrDKgduoq7dezef6oGV7wG1
+ uKmtDZA2Ux+4OtvwFv5KPd1EZVCbPxb/0H8b73leD+lh1Tyz/MDEo2NbD2dMvvhFLYwW0KMly
+ SQAYuNdsJhbvqjmQLFjHoa2EPAgdK11ChgOi2O8bjRf0W++CLIttu+4mhVA+ST1RUMRxW1i6j
+ GxAJ5SH1Q7TU9M7S4VrQuYq5JluMzlLQwQmBHFqEPw0gdDb8T/JTdV9CG4BepF3bYhp64iRdn
+ 8x/U61/c7rHJzAz5a4XbZGHojyBQue+Ywfq0shlQyUeqXYFNInocc3kvcVNEkbIowA5R/OWYh
+ fEzoHNoVCxE8DDiV1mF/384PgG1KcbOsOBA45La796V50k1zhl0Xb7bYM8jd5y0npJ0czd2Hb
+ /yvvZtz8O+q9pDaNTsrzR/S8f0dMbCqZD4UREx+BiagMY9Qm966oa+SKBgsCdfl8/vlF71l5J
+ 8rBcZMd9HKpxf5RwqU1a9z/iOfsgJcsCp+yoiIKubwhZ3/Nqh1x+aBnAkVU9gJvl/HByYDbK0
+ xT+v82dwEl+gv0zg51sQTPCuG6wddnX2E8WojuPVUhU7AWDImQimZH9RL2t7USfeArmW7N36J
+ Jd/YyDj+sFZXe4INBto/bqfM4v6x7nCmmeIJQkxdFnrSMc4ebAUAXr9Bdjq0cOlr0qOojWqVP
+ euQq9J41J3QKSGbhp9JbPSQuZ7ihjaAGMBHioTay1OuBDnSoCDyEosmuRr4SDithsNDcbIzmC
+ XpskQFYCN+GvJKUn7WIFPlF9mrWRplShNbDFMriuoyYxu0GdZ8L8dFVR7bDipP1VBxN79+WEn
+ SAkER4AMWCDticDVyfMeJOzC1dscRJrN4NYqtuTK26CMxnGIPqiLouGQDBTiVgrbrfwgAEtCR
+ RUddt8izv1Fs0dSInCSufhvzch5+Wb65uK1kEfS/Jh0bHCyg66fpHTqOUNpq/anxYkz8Or0Z1
+ iOQnaERp3r60NrBay8INGGYZwx7sMtv/8JQq/Q3GhZFnBuwGYLH6wcx20XjbmthNsWe5XEnny
+ 08ioNcU2845wrfjx3rqPGCipncyuLj+5IaLQBDjiDo0n0kz1jeGXIX8AN8tIHoucEcmuxYa4w
+ S9GhRZDQwXU/7n2kKh1m6fsGf+S5yL05n9QB6zF25f/KpA/8I1kBU3KrZ/
+Content-Transfer-Encoding: quoted-printable
 
-clear_commit_marks_1() clears the marks of the first parent and its
-first parent and so on, and saves the higher numbered parents in a list
-for later.  There is no benefit in keeping that list growing with each
-handled commit.  Clear it after each run to reduce peak memory usage.
+On Sun, Feb 09, 2025 at 10:25:14AM +0100, Josef Wolf wrote:
+> On Sat, Feb 08, 2025 at 09:57:09PM +0100, Josef Wolf wrote:
+>
+> I just stumbled over another wirdeness:
+>
+> > Oh, have I mentioned that I am not only about line endings? Yes, I men=
+tioned
+> > it in the very first mail. In addition to line endings, I am also abou=
+t XML
+> > files from a proprietary application which reorders the XML-elements i=
+nto a
+> > random order every time it ist run. So the clean-filter needs to sort =
+the
+> > XML elements into some "canonical" order.
+>
+> This application stores the bulk of the data as text files and XML files=
+ with
+> CRLF. But there are also some binary files. So I set gitattributes like =
+this:
+>
+>    # Catch bulk as text=3Dcrlf, rely on git to detect binary
+>    */*     text=3Dauto eol=3Dcrlf
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- commit.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+This looks a little bit strange to me.
+What happens if you replace "*/*" with "*" like this.
+*     text=3Dauto eol=3Dcrlf
 
-diff --git a/commit.c b/commit.c
-index 540660359d..6efdb03997 100644
-=2D-- a/commit.c
-+++ b/commit.c
-@@ -780,14 +780,14 @@ static void clear_commit_marks_1(struct commit_list =
-**plist,
 
- void clear_commit_marks_many(size_t nr, struct commit **commit, unsigned =
-int mark)
- {
--	struct commit_list *list =3D NULL;
--
- 	for (size_t i =3D 0; i < nr; i++) {
-+		struct commit_list *list =3D NULL;
-+
- 		clear_commit_marks_1(&list, *commit, mark);
-+		while (list)
-+			clear_commit_marks_1(&list, pop_commit(&list), mark);
- 		commit++;
- 	}
--	while (list)
--		clear_commit_marks_1(&list, pop_commit(&list), mark);
- }
+>    #
+>    # those are known to be text=3Dcrlf
+>    */B     text eol=3Dcrlf
+>    */P-*   text eol=3Dcrlf
+Same here. What is B ? Is it a directory ?
 
- void clear_commit_marks(struct commit *commit, unsigned int mark)
-=2D-
-2.48.1
+>    #
+>    # smudge-clean filter
+>    */B     filter=3Detsfile
+>    */P-*   filter=3Detsfile
+>    #
+>    # files I dont't want to touch (mostly binaries)
+>    */*.dll       -filter -text
+>    */*.ver       -filter -text
+>    */*.lang      -filter -text
+>    */*.store     -filter -text
+>    */*.ets5hash  -filter -text
+*.dll       -filter -text
+(and the same for everything else)
+
+>
+> But "git ls-files --eol" gives me this:
+>
+>      i/lf    w/lf    attr/text eol=3Dcrlf      gt8/ETS/Projekte/P-0113/B
+>
+> Why is git ignoring my explicit CRLF setting?
+>
+> This is on linux and on Windows+MSYS2. I don't have $GIT_DIR/info/attrib=
+utes
+> and ~/.gitconfig also doesn't specify any line ending things
+>
+> --
+> Josef Wolf
+> jw@raven.inka.de
+>
