@@ -1,70 +1,70 @@
-Received: from mail-pj1-f67.google.com (mail-pj1-f67.google.com [209.85.216.67])
+Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E64288DB
-	for <git@vger.kernel.org>; Sun,  9 Feb 2025 08:13:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59954288DB
+	for <git@vger.kernel.org>; Sun,  9 Feb 2025 08:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739088818; cv=none; b=V5NFyorWZtdl1cXe0VfEZeboAoJ+h9wn+QzRtA0V+rEUFGYr0sO8upVHigOYW3+oQMrptm7xNdKazk1ahRAVTK3DVljnjr7FvEIjnf0LeuP1+z1Ng2rM242uiQk3TzIDQxaLu1QfsnMeBXigeG6fCDljse7mEruZOtNpzj+SUQo=
+	t=1739088822; cv=none; b=MOpDZEmBRKYWldWj1FYK/olZNeytF6AZjl1vFWZfAFvqli95IkkP0oRDgot7VwSGXre38DTfCND5NJi64u8Sy12sLv9s87wezbqu+JJPwRPKTu0GZkL8a6h7gvMBHmdEzP97NmbgRL93RJHOSnjn9Z8SbtEAzQrCVx3K14/3g0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739088818; c=relaxed/simple;
-	bh=0/3eSsWfMjhpw9FQS+Nj0sPH1rccMPdvo9Nbw3ZWoMs=;
+	s=arc-20240116; t=1739088822; c=relaxed/simple;
+	bh=HG3v2LaxzyHMchCC7wLKSOVktI6lDxs7n45A3wG3rZA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nOWrVzUUEUPFDcfgbcrdAETkSS6b43QMRbE9R6moryjPKNw+cUYZi5lhAixSFPSZgIJwmpfyCgLDZ/2Qxj/YwqxNvQYm6J70+PsYtsVGrxKVgDRIZkbUkYVV7ICsFpbbW1I2WOnXAqXgcMgOKD+gpkAJtH+EOTCs3uEXv60xvfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fQbKs5hN; arc=none smtp.client-ip=209.85.216.67
+	 MIME-Version; b=jmxz0Hz3uTjKChJCXyh5CMsnINMvCxtQNpHJL79CSsuhSF2TeutBxqHDF+LN3GEAYvecxzrJeKIt3F1abK/n6Aun5s5csxvjQSBhyeWXAq62eTGCp242fenaiDbW5cYbUkXF3a5X+uMrIbQ6XEZcQkOsKOfP5MSZNRhmt88zlwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bGNX24+K; arc=none smtp.client-ip=209.85.214.196
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fQbKs5hN"
-Received: by mail-pj1-f67.google.com with SMTP id 98e67ed59e1d1-2fa2eb7eb45so2675707a91.1
-        for <git@vger.kernel.org>; Sun, 09 Feb 2025 00:13:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bGNX24+K"
+Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-21f44e7eae4so49574555ad.2
+        for <git@vger.kernel.org>; Sun, 09 Feb 2025 00:13:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739088816; x=1739693616; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739088820; x=1739693620; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bO/R53160RWn0GnpXvWnlIBN30qIt/TQWpLL1/oGE8Y=;
-        b=fQbKs5hNDQ/uGcr5SQWeCVQYd91K2hFFsyCwkK2oP1NQ0qZnC610M5M1uzbOiZpRY5
-         hv8NZDygeAH87gj/B17XY1RBj6UsIOWU+CeB9p3j1+DopdwI3f1bdd1jKx/TWztc/ZNp
-         KhcW8xf0pe7HnLTWb+okzNi22EOBrpNDoZ6KH7/1EUOVcqroaAXWSnc6pSDagH27mlS4
-         C2Nt5k2JQ37PgSxEdJJSBnIjsuE0eeykQXTu0VX45AwBdQoMtkuK7ebEOybdGbfw4I7h
-         QIxUmm1YZ3lTfcMK4XS6/lKupRV54WFW8hNdSX/MCWnYHlZczry6FnV59pmhAdVbF2DJ
-         R4Bw==
+        bh=r6PUmiovXZsbWjwJTrd/5cRAqKcF0hslGXrZuwN6gcg=;
+        b=bGNX24+KxCpZtZaEneLF1j1DJl+P/6W0H8Bv9w2KzsDXogGe/gEFwGEZH0dTdyNTOi
+         1Z4vN+4SsHbNMXsV3r68WTSmfUFbI2cbxE6N1nTWkUJtT/3VUUTWjwUXQjo0zb/1L9Dx
+         A/yeg3x42cLbrXnfwLU1gVh4EbWmBqeOG+QYLADPUOTskQWpZ8TGP8MwuzA1vs2wdQTM
+         nVzDcleAuN4cZj0cnod77JYodpXtggwVGp0OFjb7pTnMEn8yLQN4+jBNP8wSIKCW/ONL
+         c71naGY1/EkNEbcFcQppbBIwT4GyZia2E+xpqhZg+fGwLy4Kgz6GAizUqUuRPWjt2DfX
+         UdiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739088816; x=1739693616;
+        d=1e100.net; s=20230601; t=1739088820; x=1739693620;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bO/R53160RWn0GnpXvWnlIBN30qIt/TQWpLL1/oGE8Y=;
-        b=JN2fySgZ/fwHGXw03ujcgx5pv3zpBDs98W/Zc64yT2spkMoIhIqXxwfukhRa3pHR78
-         LDPomE8SeDExXmp5CufYpSMnzQ0WY0i1Zw3AkqEyXv2hIK/gHqSyn8jxzc1/2m+yuTGN
-         Kq2OAju0pV6vcLZ8RawcUiX9EuFBAD1Pkee+AtxyXpS1ErQFlG/F0EBzttlx4aFjiaiH
-         H+WFjUqe9AtYO8FjAQLk3FJz61+dY9moEorHV/KEGtzy+N0A/jIL1janJRydrsrrBkc3
-         AH+d3bquwpLXU/feNU4OpJ6b5Z2PsvO16Fr9wUDWjJzmo9Sgb/AIkQQePnq0uGsFVbqM
-         Eh5w==
-X-Gm-Message-State: AOJu0YwifPxsyNiDhZW+j3jsNFz2DWxE/z4YYl7+UI2Rm55ELr5bxsjl
-	1UfRneDlh5YzOHmPt6rR6d/gU+02EmXSGO6I4CdMTHe6XVrUGUn0
-X-Gm-Gg: ASbGncuxM70NybaaT5VoaQzYNlN6JUiLmeBthY2qLIUXlNPrYLlhgaiD94UzD/zlnK2
-	kGbvEcr4uoFOj8Hy2I9AaaN6gorYsFabl7qTUoogqy3vkC5hHvT835MOk83LN9Ra6XRd4ZYtGrc
-	OCJ+u8416JTyebeZDilCp5P58WryQo7bBQbyibKVKtc3UNTJbhuW2G7jrCfvcN33L52FD0oU+o0
-	xMhJdCXwTSeuayMLgZOPUFWQS8OGAmPF6YSGOl13Fg9vAR5heLi0/geUJ099So3oF+nCcgJ+BhR
-	IiW3q/AXcjZgteYnMq9OP5sDfdWgy9LUcnBrsKkTY6VeMN9opgqYIQ==
-X-Google-Smtp-Source: AGHT+IG0qja+J0joEhurj5CZx5FKaGs7cpEBCjK2lCwZ8azRlSlwfcmr3VCKcD63EaRXPW6aAzW3Zw==
-X-Received: by 2002:a05:6a00:3910:b0:725:4915:c10 with SMTP id d2e1a72fcca58-73042cb59c1mr26936290b3a.10.1739088815714;
-        Sun, 09 Feb 2025 00:13:35 -0800 (PST)
+        bh=r6PUmiovXZsbWjwJTrd/5cRAqKcF0hslGXrZuwN6gcg=;
+        b=L1LDFPTLBMFS8oQK0NJ8ka2rGp2laCHBo1I7e/JYv6uBVKt8NmPmQq51Xo763UnHC5
+         T+Go4Z+13laKEbH39Bklf+KWbLELO4cua6DOB0UfmMwkjVWVuvnRUAePTmNZtm2iKQ0A
+         gFFZYjnVYR6GyA3wYBJ6fGU1ex9AH9z7tGpkIeoawvm1P/u/DwBQL7W1pB+7baAErBC6
+         15X6kB1Uz/IFEPRVGDmLCS5fMnpm9KgcBA+sw0X4eQlqKJOz1oKCmOYeivH/mGk1nKKO
+         lw/YaMZJyEd5PCxohEepHf53gxkGfwhTdWvNDhKQgEjTvaf5k6TJoTlQ0XQaYhFP3FmF
+         THLg==
+X-Gm-Message-State: AOJu0YwvcAU9Y347sbCZLhz+cn27CSMKwQD78Irlnl/sQjck0O7GxrHT
+	4GslG+Ps4zC70O313Is7v4EVleNLsSK9HDtiDgXag2wUt7pEjHko
+X-Gm-Gg: ASbGnctU9n1rulDngxdVdWa2iRkjxAmapvANLMWZjBfDa+E7/YLmVq6Y4H2YbaQck4U
+	Eub8RWzyok2/JeoodHtJUOs2+JvBcHAZo1g3jxOd5Ae8H+ni1db1+0HwYh4FF3DiN3/R0T4mMIr
+	nXoLSIyFWlqJVopYjgl6NP3Cb0Nwmafx+ic4K9sB1osKPvk/ZblmKTtefJexdNbs+zzZTTzVSXA
+	oNOmLcZxNazLRDIvPf5uV4ZQLNW/9z6myh2+WgMLdtyvJiFPghHjyF9k038Vh7/FMEVKVEHbRdT
+	yPtK6CnBh8+rInpFZp4OW2Eom5CiSkxrMY0Z5iMa9hkocGvYdzm8bw==
+X-Google-Smtp-Source: AGHT+IEoux/9CaeaWpY1xCthA93f8AeGHgnoPaV5TH6x5/FF3weQI0no9SbeLrZL758KCVvjUddrHw==
+X-Received: by 2002:a05:6a00:2e27:b0:725:db34:6a7d with SMTP id d2e1a72fcca58-7305d5931cdmr14221790b3a.23.1739088820532;
+        Sun, 09 Feb 2025 00:13:40 -0800 (PST)
 Received: from Ubuntu-ROG-Strix-G512LV.. ([103.116.72.131])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-730889e0c5fsm466308b3a.119.2025.02.09.00.13.33
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-730889e0c5fsm466308b3a.119.2025.02.09.00.13.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2025 00:13:35 -0800 (PST)
+        Sun, 09 Feb 2025 00:13:40 -0800 (PST)
 From: Zejun Zhao <jelly.zhao.42@gmail.com>
 To: jelly.zhao.42@gmail.com
 Cc: git@vger.kernel.org,
 	gitster@pobox.com,
 	newren@gmail.com,
 	ps@pks.im
-Subject: [GSOC][PATCH v2 2/6] apply: change some variables from `int` to `size_t`
-Date: Sun,  9 Feb 2025 08:12:12 +0000
-Message-ID: <20250209081216.241350-3-jelly.zhao.42@gmail.com>
+Subject: [GSOC][PATCH v2 3/6] apply: do a typecast to eliminate warnings
+Date: Sun,  9 Feb 2025 08:12:13 +0000
+Message-ID: <20250209081216.241350-4-jelly.zhao.42@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250209081216.241350-1-jelly.zhao.42@gmail.com>
 References: <20250205014055.737190-1-jelly.zhao.42@gmail.com>
@@ -77,114 +77,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some assigned variables are mistyped as `int`, including
+`git_hdr_len` is an `int` variable that can be negative and is used to
+compare against a `len` of `size_t`, which will trigger
+-Wsign-comparison warnings
 
-  - those whose values come from a system function returning `size_t`,
-
-  - those that are used for array indexing,
-
-  - those that represent length/size/distance,
-
-some of which will trigger -Wsign-comparison warnings.
-
-Change some of them to `size_t`/`unsigned`.
+Cast `git_hdr_len` to `size_t` after an above-zero check.
 
 Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
 ---
- apply.c | 21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ apply.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/apply.c b/apply.c
-index 831b338155..b4ae74a5fb 100644
+index b4ae74a5fb..605a0aa2e3 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -1087,7 +1087,7 @@ static int gitdiff_index(struct gitdiff_data *state,
- 	 * and optional space with octal mode.
- 	 */
- 	const char *ptr, *eol;
--	int len;
-+	size_t len;
- 	const unsigned hexsz = the_hash_algo->hexsz;
- 
- 	ptr = strchr(line, '.');
-@@ -2185,7 +2185,7 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
- 			};
- 			int i;
- 			for (i = 0; binhdr[i]; i++) {
--				int len = strlen(binhdr[i]);
-+				size_t len = strlen(binhdr[i]);
- 				if (len < size - hd &&
- 				    !memcmp(binhdr[i], buffer + hd, len)) {
- 					state->linenr++;
-@@ -2320,7 +2320,8 @@ static void update_pre_post_images(struct image *preimage,
- {
- 	struct image fixed_preimage = IMAGE_INIT;
- 	size_t insert_pos = 0;
--	int i, ctx, reduced;
-+	int i, reduced;
-+	size_t ctx;
- 	const char *fixed;
- 
- 	/*
-@@ -2492,7 +2493,7 @@ static int match_fragment(struct apply_state *state,
- 	struct strbuf fixed = STRBUF_INIT;
- 	char *fixed_buf;
- 	size_t fixed_len;
--	int preimage_limit;
-+	size_t preimage_limit;
- 	int ret;
- 
- 	if (preimage->line_nr + current_lno <= img->line_nr) {
-@@ -2706,7 +2707,7 @@ static int find_pos(struct apply_state *state,
- {
- 	int i;
- 	unsigned long backwards, forwards, current;
--	int backwards_lno, forwards_lno, current_lno;
-+	size_t backwards_lno, forwards_lno, current_lno;
- 
- 	/*
- 	 * When running with --allow-overlap, it is possible that a hunk is
-@@ -2791,7 +2792,7 @@ static int find_pos(struct apply_state *state,
-  */
- static void update_image(struct apply_state *state,
- 			 struct image *img,
--			 int applied_pos,
-+			 size_t applied_pos,
- 			 struct image *preimage,
- 			 struct image *postimage)
- {
-@@ -2803,7 +2804,7 @@ static void update_image(struct apply_state *state,
- 	size_t remove_count, insert_count, applied_at = 0;
- 	size_t result_alloc;
- 	char *result;
--	int preimage_limit;
-+	size_t preimage_limit;
- 
- 	/*
- 	 * If we are removing blank lines at the end of img,
-@@ -4288,19 +4289,19 @@ static void summary_patch_list(struct patch *patch)
- 
- static void patch_stats(struct apply_state *state, struct patch *patch)
- {
--	int lines = patch->lines_added + patch->lines_deleted;
-+	unsigned lines = patch->lines_added + patch->lines_deleted;
- 
- 	if (lines > state->max_change)
- 		state->max_change = lines;
- 	if (patch->old_name) {
--		int len = quote_c_style(patch->old_name, NULL, NULL, 0);
-+		size_t len = quote_c_style(patch->old_name, NULL, NULL, 0);
- 		if (!len)
- 			len = strlen(patch->old_name);
- 		if (len > state->max_len)
- 			state->max_len = len;
- 	}
- 	if (patch->new_name) {
--		int len = quote_c_style(patch->new_name, NULL, NULL, 0);
-+		size_t len = quote_c_style(patch->new_name, NULL, NULL, 0);
- 		if (!len)
- 			len = strlen(patch->new_name);
- 		if (len > state->max_len)
+@@ -1592,7 +1592,7 @@ static int find_header(struct apply_state *state,
+ 								size, patch);
+ 			if (git_hdr_len < 0)
+ 				return -128;
+-			if (git_hdr_len <= len)
++			if ((size_t) git_hdr_len <= len)
+ 				continue;
+ 			*hdrsize = git_hdr_len;
+ 			return offset;
 -- 
 2.43.0
 
