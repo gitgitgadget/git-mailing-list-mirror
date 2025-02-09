@@ -1,122 +1,116 @@
-Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0718924339E
-	for <git@vger.kernel.org>; Sun,  9 Feb 2025 07:21:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C557288DB
+	for <git@vger.kernel.org>; Sun,  9 Feb 2025 08:13:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739085686; cv=none; b=uY0ZDzr8CfdOZs7+OGSMiKFFuihunFD9+ZEUXlutSKjEQMpxmHRgwD9NrdsQwP3Xc2Ddd5PlnIU9GSPDoXhaKHBNFhekIJttrhT3Za1d8IHWxveRXTOL8JzTGbwOFQFBpY+V0PmsI4gAQ/lPbjhqJd9LeK689R7kypjBR+Q0/8k=
+	t=1739088787; cv=none; b=YZOlzjNiQcqpXxK4jALNkGKeFluZom151Fd4/7ZTn/DKs7L5noorm5HXwj6org+tHzmq19fiPaqSlD1kiuXcT0kzGpn/mPnEfHxBLiOWGbrOCXnx3Xtpqf/qMGWlBV5M5m3EfCMQI6kDZq+x09g14D1+EPAb2WBnNts3F/cb4u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739085686; c=relaxed/simple;
-	bh=yL+zb8qJotFDKNpKDgbTMj2W1Lxtbq+fxVSWWPgvfFs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=o1PW6bp0IoNzAzDfO8F0H8Nt0I0xkEgYWkFuAo2CpmVkSLrqP8HdYnqD99+J3ZHrlebc3XljWFh/1PVik02pZWfNCjzX0fuHDQHjiRfJMkFmv+K3zW73mf4SaSjRR0kRyrveanTnjdZCvSAuQuud7mo1OOKy5s0uHQbA4GBeQdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2RkRCGH; arc=none smtp.client-ip=209.85.166.170
+	s=arc-20240116; t=1739088787; c=relaxed/simple;
+	bh=wgofJdopnAMzbK8Q78ccaYTrtOyWymWPfVjfbTlF698=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SJMfiN1K8hjznIU0gGULs3Xnoo0iP4sCoMQCOHI4zwyikcnOp/D4N+RayEptW/ySNyOvcFEEC+LMHaa8T7Ui3sD1iCu4YpAyjU3E17hILpB5VNvZxMw/hD0KoVrNZVai3w0CXdIR7FO3xZJE8QrfIw12APySHoE7L3s311uHDto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KNw5JjjC; arc=none smtp.client-ip=209.85.216.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2RkRCGH"
-Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-3d13e4dd0f2so19246495ab.3
-        for <git@vger.kernel.org>; Sat, 08 Feb 2025 23:21:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KNw5JjjC"
+Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-2f833af7a09so4720409a91.2
+        for <git@vger.kernel.org>; Sun, 09 Feb 2025 00:13:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739085684; x=1739690484; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1739088785; x=1739693585; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9Bgy0zGLiKWO9AMZi6lXT/bpJi3wIhcK8bQz+Lrjye8=;
-        b=A2RkRCGHacJ3zjxYMIHiWHEMdbsFjdWIxuc79cQshe/5PiOQYvSncjKiZXjqEoFcUK
-         9+0J6fTsdcXLelgTdFk1WsnXmP3LpmmXXRq03WEw45Xt81kqkQP1nXFvmtFc/kvvNTnc
-         L0jMoiIu+ZF2VTqWyizWoeim1S3E6YzvkRANk5thJxwjbunM7kqzs8DNjUZG7bEw/7p1
-         Gu9GBWiKFLBhnRGK/QGOA/8ZtUMzszRG5C4JGwkzAVxuef89FBfitblIlvTY3vJUM03W
-         bI7edGRbTsMBMeyAk427YEYW7vDChQp9fYZchLP/MpkuIfE8x31uTTNjrzQFJh/esOka
-         kRzA==
+        bh=XA3FSq8KPwplF5jdhKBd2Empuz41L4QKvdcdu6Sb/RY=;
+        b=KNw5JjjC2AWCyRy4+17NVOcjaG2T4eTCesAOZ4b7usILB3zuVdjgiyRu6FhTUiZDHf
+         qH27GFn2YU8F8UUk+67DLB3iWoEeYnY1MXHeK3UiwJy1VQjJrndYWaPmE6YqrP4Hsj2z
+         zPUZqDkj6gxsw7xO3PZ13Q3Q8teEWuPnhhtNwelzz75ZHgxr2xdeP3T1eVZNi7ZqqEy3
+         DryV3gKrxD6MUu2mUWcmrO2sq6HrvU7nvVUg0cfghx+ck7XIczfm1USWeSUNN0wR5+qu
+         OPscMKhkYL4RufgofNx4/ofq5Jpp5JbuNesFCSkvRzYCA9Vnnbt9sGBRNnl2uV9d9ho+
+         qsWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739085684; x=1739690484;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1739088785; x=1739693585;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9Bgy0zGLiKWO9AMZi6lXT/bpJi3wIhcK8bQz+Lrjye8=;
-        b=HFCJVJcI+OIchUc5c1152HdtfNqBm7JE1w8gv+nn4abkbvLS0DiWP62+gR/Cs127TS
-         cQYcKyDovs4HZr48lFagf09B2Mtthwkn/Q+AyKaF9XnRGgyzzOnlc2SW6zwZZ95IrqtT
-         KcuGQMynYkFembjEYpJCPyRsHXd2/ddFC3JPYd6RhmAb7fQ1J6HooLXX/UA3l4fDpp1o
-         Q5/T+qTNcf42HgJX3CoyegqbDN7rPD6M/C4NHlZ7AOxyk/+vUlZWnUukwtmD7/BWItHs
-         qfzSnfl/Yt4tKkNt6pxvLMUpzbfBZJ6KC4kNAkfJIOldsfSTmfChTzO+h+qpR58yPWf2
-         +5EA==
-X-Forwarded-Encrypted: i=1; AJvYcCWRIaG94qSXT3ZuRbwxaEA+b29Idr9s20SbtE2G75DShBLWFJla9wLw8wwMCT/M50w3Z9c=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyFqh2iiyK8hMkKMq87/DdN7MlrRysQULhJRvdrapcQTkzWVNoV
-	E+piwAPTrqbbcoKJwkdnFkY4KvSBXGZDLgCJCN/pi1T3dd7CN6SRGOn+Wpz5nAMxp78fPgRzNgC
-	4pGYIQseWVW+4JZStGtVm3V0BGQqUQA==
-X-Gm-Gg: ASbGncuNoWdCIjlGOk4p9y5RFvj1nHARpSxHp+KXudXaYwxPkAxFvSVU8WJ2fkDMb59
-	vPvOd2VNuI0kxDSgxws6s8WGU5pu283r825YuUewYJIR8LWZgGU5gE8Y91rsSuaU2HVBB/9OYRQ
-	==
-X-Google-Smtp-Source: AGHT+IGJvHxZHcZKEskbwYPtKwGquF4566PFUCxZ41JKzu6aatHvVzyJmEpqB4FOZhHLfNUUnCsADbXmAutOugh4Kqc=
-X-Received: by 2002:a05:6e02:b49:b0:3d0:4bce:cfa8 with SMTP id
- e9e14a558f8ab-3d13dd0a69amr78193745ab.3.1739085683955; Sat, 08 Feb 2025
- 23:21:23 -0800 (PST)
+        bh=XA3FSq8KPwplF5jdhKBd2Empuz41L4QKvdcdu6Sb/RY=;
+        b=XfUJJ8BElEXoonJ//fBFHUCzZmKuTEF9v7rqt9zXnAD6of0o1dJD4Jo5RsC4OeiXow
+         IxqnUF9QLr2F3mW+gkALz8dmWeMD6CFenQa1E0mBxAenMAPT0K7psOxwY/4L2k4wchcA
+         FWtRJmJ7SsKFCAVw36PNKmpSeTLUFXDNIhdw7Z7Yx71F+EW/Fz19pHdO7JsKHyutExw8
+         JuRmxi+cCBVs87jzb/TIloMMRB9ow5BiP3pq+w8B6GTfCcMqZiHVATXxumyMeCdIpRhI
+         0tVmGDTFVpvxq6iXEE3ZxK9PZGqrCWz9UT++se0ue8mhSPIh1SbquDnMTOBkq/M/DB4U
+         mLYg==
+X-Gm-Message-State: AOJu0Yxl+QQj+CYUATGDsf1Ry9YIrrAesnYbiUi+sqAggOEP+dZrzo1C
+	rUrAzrcSECK6kNb8LDODRsPGx5PiIqfhxRuzGWE0w5JlfwNKXVHS
+X-Gm-Gg: ASbGncs1eTWT7WgPBDu+Qz1R6mQn2picdXOuWbL7tGqO5KsmGcsUxtauHyHtEumWCzs
+	2dFp1dBhHNyK9MXke3qE6zUgXVa49VzaliX0iuRgKEf9Xqt9Il5uK/5VeLBa2XgBgHfVd1xby1t
+	7GFDl2tY26YdbDVirNAgv+mUK8BDm7q96vOjG8Wb+CUOkIBwNrNrehA3oDDo70ZASAZQFZNcHb/
+	8lAs0fepEpuITOebT4JqK6U1VxsF7jF40Ee+uy2uD6R/bpNBQ46MclacYdysJr9KB4I0z9nwqag
+	wzLkgrgRCKE1zMRLAZdAlaebBqzLl/w4I3sfSsHPayPosqP4cKhSIw==
+X-Google-Smtp-Source: AGHT+IFek0yXF5agbNQGmWPq+nm8XCHV86D2H1kwWnJ9EEVoRsaQWNPagU1Pr7uDiqEQoqIK1eoacA==
+X-Received: by 2002:a05:6a00:91d1:b0:730:76a1:392c with SMTP id d2e1a72fcca58-73076a14371mr6825086b3a.9.1739088785569;
+        Sun, 09 Feb 2025 00:13:05 -0800 (PST)
+Received: from Ubuntu-ROG-Strix-G512LV.. ([103.116.72.131])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-730889e0c5fsm466308b3a.119.2025.02.09.00.13.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 09 Feb 2025 00:13:05 -0800 (PST)
+From: Zejun Zhao <jelly.zhao.42@gmail.com>
+To: jelly.zhao.42@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	newren@gmail.com,
+	ps@pks.im
+Subject: [GSOC][PATCH v2 0/6] apply: address -Wsign-comparison warnings
+Date: Sun,  9 Feb 2025 08:12:10 +0000
+Message-ID: <20250209081216.241350-1-jelly.zhao.42@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250205014055.737190-1-jelly.zhao.42@gmail.com>
+References: <20250205014055.737190-1-jelly.zhao.42@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250206134006.GC30202@raven.inka.de> <20250206200418.GD30202@raven.inka.de>
- <CAPx1Gvc2piLT=p+dvzcJPTMDQAAjQfz__O4KiRWs-fOMg8dpTw@mail.gmail.com>
- <20250207104510.GE30202@raven.inka.de> <CAPx1GvcyaZqYK+SvgtfsajqtkMty1jOcVAtwfmam-LpOjyd0jw@mail.gmail.com>
- <CABPp-BFnx2m75jsa3_kTPet97HY+xwb_6JmPiKM5+OARPy=mGA@mail.gmail.com>
- <20250207203248.GG30202@raven.inka.de> <CABPp-BFGUa_DRBe1WLVfCOKh53+F15KxW_c_OZAMwZCxuAQCiw@mail.gmail.com>
- <ba65ce17-8768-4d60-aec6-badd12930b81@gmail.com> <CABPp-BGwZ029Y8Kfr2kkGiUDZ613kxS81JXzk36V85=77KcYfA@mail.gmail.com>
- <20250208232651.GJ30202@raven.inka.de>
-In-Reply-To: <20250208232651.GJ30202@raven.inka.de>
-From: Elijah Newren <newren@gmail.com>
-Date: Sat, 8 Feb 2025 23:21:12 -0800
-X-Gm-Features: AWEUYZmrbHL_eQfGzFI4K8-7z3k2tK3BEJatlHFrmgMpxAEYrJXylhwpehd691c
-Message-ID: <CABPp-BEzOWVa5zqOMuUSH5xCJ+CUk6sJnLhE5OdnDiNR0U9jfA@mail.gmail.com>
-Subject: Re: renormalize histroy with smudge/clean-filter
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Feb 8, 2025 at 3:28=E2=80=AFPM Josef Wolf <jw@raven.inka.de> wrote:
->
-> Hi Elijah,
->
-> On Sat, Feb 08, 2025 at 01:43:05PM -0800, Elijah Newren wrote:
->
-> > Ooh, nice catch.  If folks had an appropriate .gitattributes file in
-> > place in older versions of history, they probably wouldn't have gotten
-> > into the mess.
->
-> Well, you can't assume that paople get it right from the very start. An
-> important use case of git is fixing errors made in the past, right?
-[...]
+There are several -Wsign-comparison warnings in "apply.c", which can be
+classified into the following three types:
 
-Sorry if it sounded like that was passing judgement; that was not what
-I intended.  I've been in a lot of messes too.  I mean, I wrote
-git-filter-repo because of how many things there were to clean up.  I
-get it, life is messy.  Hindsight is 20/20.  You can't let perfect be
-the enemy of the good.  You can't prioritize "everything", you have to
-pick your battles.  Iterative improvement, etc.
+  1. comparing a length of `size_t` type with a `ptrdiff_t` value
 
-> > ahah, so it is passed via environment variable to the subprocess.
->
-> I find this to be confusing: the primary call should not need this parame=
-ter,
-> since it is invoked from HEAD anyway.
+  2. comparing a length of `size_t` type with a length of `int` type
 
-No, the primary call I think would need the parameter too; it changes
-HEAD immediately when it starts rebasing, and continues changing it
-with each commit it rebases; since it's operating on older versions,
-by default it'd likely pick the .gitattributes from those older
-versions as it goes.
+  3. comparing a loop counter `i` of `int` type with an unsigned loop
+  bound
 
-> Everything else gets it via env-vars.
-> I'd assume this variable will also be passed to the commands which are in=
-voked
-> by the -x switch?
+Fix these warnings following one basic principle: do not touch the
+relevant logics and keep the behaviors of the code. Adopt three
+different strategies for each of the above three types:
 
-Yes, I was surprised Phillip's command with --attr-source on the
-outer-level git invocation worked until I discovered that the code
-indeed sets the environment variable (which subprocesses, like those
-created by the --exec/-x switch, will inherit).  So, yes, the -x
-switch stuff seems to inherit that environment variable that the
-primary call sets in response to that parameter.
+  1. cast the `ptrdiff_t` values to `size_t` type
+
+  2. try to change the type of the `int` length to `size_t` (may fall 
+  back to Strategy 1 if the variable is not guaranteed to be unsigned)
+
+  3. use a loop counter `i` of `size_t` type
+
+Zejun Zhao (6):
+  apply: change fields in `apply_state` to unsigned
+  apply: change some variables from `int` to `size_t`
+  apply: do a typecast to eliminate warnings
+  apply: cast some ptrdiff_t's to size_t's
+  apply: use `size_t` loop counters
+  apply: enable -Wsign-comparison checks
+
+ apply.c | 69 +++++++++++++++++++++++++++------------------------------
+ apply.h |  4 ++--
+ 2 files changed, 35 insertions(+), 38 deletions(-)
+
+
+base-commit: bc204b742735ae06f65bb20291c95985c9633b7f
+-- 
+2.43.0
+
