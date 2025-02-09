@@ -1,32 +1,31 @@
 Received: from mail.inka.de (quechua.inka.de [193.197.184.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3150BF9FE
-	for <git@vger.kernel.org>; Sun,  9 Feb 2025 15:10:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4781D934D
+	for <git@vger.kernel.org>; Sun,  9 Feb 2025 17:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.197.184.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739113812; cv=none; b=APYhoO53q54abAKj3X8sRSsy6NAeoJ/R3zHKYsMSyPnzGh8WJhUnvZZ0xR2K/ezutgawsCT5j1lsj7yPykUwYWD0ci4ou5yVnbyxlHeVDKMMPOZthFbCWpktVwxDAekYU6hB7TkiiZN/EULBM4wigUeU8dA06T3Gu5q6K+HGnXE=
+	t=1739123774; cv=none; b=OxspbMLAuKgXaFv7KUJ4ABIp8AQFe+hs7nABba8FwoUdlf/UA7MaQkhdSvp2RMbyCmvl+k/iqFsXh4Z1EkjhELIthEH38TZFso6H/2luK0wP1f/0lOo/gNvBAnDYfr1eRJz2jrkPnWWL7nXkB4csYixJJJkybUyifbKT+cQQOd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739113812; c=relaxed/simple;
-	bh=DdFoa069VAvm88zmXsKHpshTD+za27SoKR1FArvIvCw=;
+	s=arc-20240116; t=1739123774; c=relaxed/simple;
+	bh=KzNmxowGagupWr63sIEk8fJISONZC61US8Mhd/sum1A=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=anMHhHYEycnQhE8unPmLy4ll0tAK2KnkDGiRLlJ7NK4XyOpB4iB0nTqz83mS09PSCW35ydmNyBvTNnQbmFgHI8+T3w5rhg8kwxvCr0zvUNND47DnrTRyJxkaOVda7G/CwKmAO1YB0s6j+xzqqvhplyauUfA5vbH+OO9LX70i8b8=
+	 Content-Type:Content-Disposition:In-Reply-To; b=TbaT/zSQRvzVLpJTOz1lRdM8xaHVQxm8lV3mB+w4XqKo7Lx0/cRLyGaO464HXlgfS7HBPnt10gWN9IHao0+7P9NxAgI1brKue2NnQZhHaluis0pPHkwkxneJs4FCqlpnnUkxOW/ZoXiaQPIG328Sk6IxfByzn5r09Z5hJCby7XQ=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de; spf=pass smtp.mailfrom=raven.inka.de; arc=none smtp.client-ip=193.197.184.2
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=raven.inka.de
 Received: from raven.inka.de (uucp@[127.0.0.1])
 	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1th8we-005P0t-Lb; Sun, 09 Feb 2025 16:10:04 +0100
+	id 1thBXL-005Saj-0k; Sun, 09 Feb 2025 18:56:07 +0100
 Received: by raven.inka.de (Postfix, from userid 1000)
-	id 499BA60117; Sun,  9 Feb 2025 16:09:24 +0100 (CET)
-Date: Sun, 9 Feb 2025 16:09:24 +0100
+	id B1C5E60117; Sun,  9 Feb 2025 18:54:50 +0100 (CET)
+Date: Sun, 9 Feb 2025 18:54:50 +0100
 From: Josef Wolf <jw@raven.inka.de>
 To: git@vger.kernel.org
 Subject: Re: renormalize histroy with smudge/clean-filter
-Message-ID: <20250209150924.GN30202@raven.inka.de>
+Message-ID: <20250209175450.GO30202@raven.inka.de>
 Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-References: <20250206200418.GD30202@raven.inka.de>
- <CAPx1Gvc2piLT=p+dvzcJPTMDQAAjQfz__O4KiRWs-fOMg8dpTw@mail.gmail.com>
+References: <CAPx1Gvc2piLT=p+dvzcJPTMDQAAjQfz__O4KiRWs-fOMg8dpTw@mail.gmail.com>
  <20250207104510.GE30202@raven.inka.de>
  <CAPx1GvcyaZqYK+SvgtfsajqtkMty1jOcVAtwfmam-LpOjyd0jw@mail.gmail.com>
  <CABPp-BFnx2m75jsa3_kTPet97HY+xwb_6JmPiKM5+OARPy=mGA@mail.gmail.com>
@@ -35,58 +34,84 @@ References: <20250206200418.GD30202@raven.inka.de>
  <20250208205709.GH30202@raven.inka.de>
  <20250209092514.GM30202@raven.inka.de>
  <20250209111406.GA12069@tb-raspi4>
+ <20250209150924.GN30202@raven.inka.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250209111406.GA12069@tb-raspi4>
+In-Reply-To: <20250209150924.GN30202@raven.inka.de>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Hello Torsten,
+Uh! It starts getting real wired.
 
-On Sun, Feb 09, 2025 at 12:14:06PM +0100, Torsten B�gershausen wrote:
-> On Sun, Feb 09, 2025 at 10:25:14AM +0100, Josef Wolf wrote:
+After one more change to .gitattributes, one of the files marked as binary
+checks out as an EMPTY file and I can't find any git command to fix the
+situation:
 
-> > This application stores the bulk of the data as text files and XML files with
-> > CRLF. But there are also some binary files. So I set gitattributes like this:
-> >
-> >    # Catch bulk as text=crlf, rely on git to detect binary
-> >    */*     text=auto eol=crlf
-> > 
-> This looks a little bit strange to me.
+  $ cat .gitattributes
+  # Most files in ETS ProjectStore are XML with CRLF
+  #
+  * text=auto eol=crlf
+  
+  .gitignore     text
+  .gitattributes text
+  
+  # Binary files
+  #
+  *.dat       -filter -text
+  *.dll       -filter -text
+  *.ver       -filter -text
+  *.lang      -filter -text
+  *.store     -filter -text  # <--- this is the problematic file
+  *.ets5hash  -filter -text
+  
+  # Smudge/clean filter
+  #
+  */B     filter=etsfile
+  */D     filter=etsfile
+  */G     filter=etsfile
+  */I     filter=etsfile
+  */P     filter=etsfile
+  */U     filter=etsfile
+  */P-*   filter=etsfile
 
-This should match all files in directories one level deeper than the directory
-where .gitattributes live:
-
-   If there is a separator at the beginning or middle (or both) of the pattern,
-   then the pattern is relative to the directory level of the particular
-   .gitignore file itself.
-
-> What happens if you replace "*/*" with "*" like this.
-> *     text=auto eol=crlf
-
-Same result, but when I commit .gitattributes, I get a warning that git will
-do lf->crl conversion. But even after commit, no conversion is done and
-git-ls-files still shows:
-
-   i/lf    w/lf    attr/text=auto eol=crlf gt8/ETS/Projekte/.gitignore
-
-Only after removal followed by "git reset --hard", I get:
-
-   i/lf    w/lfcr  attr/text=auto eol=crlf gt8/ETS/Projekte/.gitignore
-
-> >    #
-> >    # those are known to be text=crlf
-> >    */B     text eol=crlf
-> >    */P-*   text eol=crlf
-> Same here. What is B ? Is it a directory ?
-
-No. It is one of the XML files I want to smudge+clean
+  $ git diff
+  diff --git a/gt8/ETS/Projekte/P-0113/P-0113.store b/gt8/ETS/Projekte/P-0113/P-0113.store
+  index c33a5239..e69de29b 100755
+  --- a/gt8/ETS/Projekte/P-0113/P-0113.store
+  +++ b/gt8/ETS/Projekte/P-0113/P-0113.store
+  @@ -1 +0,0 @@
+  -﻿4TamRjepVNV8F+bC4nBcBwXIymvb2IQdu0qEuMSB0o0=
+  \ No newline at end of file
+  $ git reset --hard
+  HEAD is now at 6fba03d9 Fix .gitattributes again
+  $ git diff
+  diff --git a/gt8/ETS/Projekte/P-0113/P-0113.store b/gt8/ETS/Projekte/P-0113/P-0113.store
+  index c33a5239..e69de29b 100755
+  --- a/gt8/ETS/Projekte/P-0113/P-0113.store
+  +++ b/gt8/ETS/Projekte/P-0113/P-0113.store
+  @@ -1 +0,0 @@
+  -﻿4TamRjepVNV8F+bC4nBcBwXIymvb2IQdu0qEuMSB0o0=
+  \ No newline at end of file
+  $ rm -rf P-0113/ ; git checkout P-0113/
+  Updated 382 paths from the index
+  $ git diff
+  diff --git a/gt8/ETS/Projekte/P-0113/P-0113.store b/gt8/ETS/Projekte/P-0113/P-0113.store
+  index c33a5239..e69de29b 100755
+  --- a/gt8/ETS/Projekte/P-0113/P-0113.store
+  +++ b/gt8/ETS/Projekte/P-0113/P-0113.store
+  @@ -1 +0,0 @@
+  -﻿4TamRjepVNV8F+bC4nBcBwXIymvb2IQdu0qEuMSB0o0=
+  \ No newline at end of file
+  $ git ls-files --eol |grep P-0113.store
+  i/none  w/none  attr/-text              P-0113/P-0113.store
+  i/lf    w/crlf  attr/text=auto eol=crlf P-0113/storeVersion
+  $
 
 -- 
 Josef Wolf
