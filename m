@@ -1,71 +1,93 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from mail.inka.de (quechua.inka.de [193.197.184.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D2E1DFE1
-	for <git@vger.kernel.org>; Sun,  9 Feb 2025 13:14:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3150BF9FE
+	for <git@vger.kernel.org>; Sun,  9 Feb 2025 15:10:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.197.184.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739106894; cv=none; b=uJCnm5lOkS11Wa3x6yncCcxxWG9V91RhtlkG+D06z5onpnCezJeF619X2V1D43/OCrzRhMfXgXjm5r1fUq3a5jDQbVwHMaR1WlSjogZHEZLTvqe+Y0zrVdILonEBFASM+wjDn3YATpCd2Ggx00YqtSOFoQKiIak/WiZVi5TzX6M=
+	t=1739113812; cv=none; b=APYhoO53q54abAKj3X8sRSsy6NAeoJ/R3zHKYsMSyPnzGh8WJhUnvZZ0xR2K/ezutgawsCT5j1lsj7yPykUwYWD0ci4ou5yVnbyxlHeVDKMMPOZthFbCWpktVwxDAekYU6hB7TkiiZN/EULBM4wigUeU8dA06T3Gu5q6K+HGnXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739106894; c=relaxed/simple;
-	bh=uGXsAFhO1rLUZCEN9a60iiAWzcVMvkmlbjAhK+y1o5E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P8x0Z9bfRuEPnbPmqAqtF2GGK0iYiT2JNB3gLabApxopSyZtwPqiae11EmjA4aK6ScO0jibSHygAwLwqqBZvGZjZP/5evYpqMRUyEbouFBurcGtW94D+wQfne0y0tdnu7Y68r/f3j6Qd18N88WQzif9j1XBpURIpJkc06w7lOJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp.bon.at (unknown [192.168.181.101])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4YrSq950j9z7QRDH
-	for <git@vger.kernel.org>; Sun,  9 Feb 2025 14:14:45 +0100 (CET)
-Received: from [192.168.0.100] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4YrSq20JtJzRpKf;
-	Sun,  9 Feb 2025 14:14:37 +0100 (CET)
-Message-ID: <c48e8fa2-cca4-4abc-95d2-234fa5c69b8d@kdbg.org>
-Date: Sun, 9 Feb 2025 14:14:37 +0100
+	s=arc-20240116; t=1739113812; c=relaxed/simple;
+	bh=DdFoa069VAvm88zmXsKHpshTD+za27SoKR1FArvIvCw=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=anMHhHYEycnQhE8unPmLy4ll0tAK2KnkDGiRLlJ7NK4XyOpB4iB0nTqz83mS09PSCW35ydmNyBvTNnQbmFgHI8+T3w5rhg8kwxvCr0zvUNND47DnrTRyJxkaOVda7G/CwKmAO1YB0s6j+xzqqvhplyauUfA5vbH+OO9LX70i8b8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de; spf=pass smtp.mailfrom=raven.inka.de; arc=none smtp.client-ip=193.197.184.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=raven.inka.de
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1th8we-005P0t-Lb; Sun, 09 Feb 2025 16:10:04 +0100
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 499BA60117; Sun,  9 Feb 2025 16:09:24 +0100 (CET)
+Date: Sun, 9 Feb 2025 16:09:24 +0100
+From: Josef Wolf <jw@raven.inka.de>
+To: git@vger.kernel.org
+Subject: Re: renormalize histroy with smudge/clean-filter
+Message-ID: <20250209150924.GN30202@raven.inka.de>
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+References: <20250206200418.GD30202@raven.inka.de>
+ <CAPx1Gvc2piLT=p+dvzcJPTMDQAAjQfz__O4KiRWs-fOMg8dpTw@mail.gmail.com>
+ <20250207104510.GE30202@raven.inka.de>
+ <CAPx1GvcyaZqYK+SvgtfsajqtkMty1jOcVAtwfmam-LpOjyd0jw@mail.gmail.com>
+ <CABPp-BFnx2m75jsa3_kTPet97HY+xwb_6JmPiKM5+OARPy=mGA@mail.gmail.com>
+ <20250207203248.GG30202@raven.inka.de>
+ <CABPp-BFGUa_DRBe1WLVfCOKh53+F15KxW_c_OZAMwZCxuAQCiw@mail.gmail.com>
+ <20250208205709.GH30202@raven.inka.de>
+ <20250209092514.GM30202@raven.inka.de>
+ <20250209111406.GA12069@tb-raspi4>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 15/18] compat/mingw: split out POSIX-related bits
-Content-Language: en-US
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Edward Thomson <ethomson@edwardthomson.com>,
- Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>,
- git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <20250207-pks-reftable-drop-git-compat-util-v5-0-ba2adc79110f@pks.im>
- <20250207-pks-reftable-drop-git-compat-util-v5-15-ba2adc79110f@pks.im>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20250207-pks-reftable-drop-git-compat-util-v5-15-ba2adc79110f@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250209111406.GA12069@tb-raspi4>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
-Am 07.02.25 um 12:52 schrieb Patrick Steinhardt:
-> Split out the POSIX-related bits from "compat/mingw.h". This is in
-> preparation for splitting up "git-compat-utils.h" into a header that
-> provides POSIX-compatibility and a header that provides common wrappers
-> used by the Git project.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  compat/{mingw.c => mingw/compat-util.c} |  28 ++--
->  compat/mingw/compat-util.h              | 220 ++++++++++++++++++++++++++++++++
->  compat/{mingw.h => mingw/posix.h}       | 216 +------------------------------
->  compat/msvc.c                           |   6 -
->  compat/msvc/compat-util.c               |   6 +
->  compat/msvc/compat-util.h               |   7 +
->  compat/{msvc.h => msvc/posix.h}         |   8 +-
->  config.mak.uname                        |   6 +-
->  contrib/buildsystems/CMakeLists.txt     |   2 +-
->  git-compat-util.h                       |   4 +-
->  meson.build                             |   8 +-
->  11 files changed, 266 insertions(+), 245 deletions(-)
+Hello Torsten,
 
-I can agree with this rearrangement of compat/mingw.c. But the
-Git-for-Windows repository has much higher stakes with all the
-additional changes. I put Dscho on Cc.
+On Sun, Feb 09, 2025 at 12:14:06PM +0100, Torsten Bögershausen wrote:
+> On Sun, Feb 09, 2025 at 10:25:14AM +0100, Josef Wolf wrote:
 
--- Hannes
+> > This application stores the bulk of the data as text files and XML files with
+> > CRLF. But there are also some binary files. So I set gitattributes like this:
+> >
+> >    # Catch bulk as text=crlf, rely on git to detect binary
+> >    */*     text=auto eol=crlf
+> > 
+> This looks a little bit strange to me.
 
+This should match all files in directories one level deeper than the directory
+where .gitattributes live:
+
+   If there is a separator at the beginning or middle (or both) of the pattern,
+   then the pattern is relative to the directory level of the particular
+   .gitignore file itself.
+
+> What happens if you replace "*/*" with "*" like this.
+> *     text=auto eol=crlf
+
+Same result, but when I commit .gitattributes, I get a warning that git will
+do lf->crl conversion. But even after commit, no conversion is done and
+git-ls-files still shows:
+
+   i/lf    w/lf    attr/text=auto eol=crlf gt8/ETS/Projekte/.gitignore
+
+Only after removal followed by "git reset --hard", I get:
+
+   i/lf    w/lfcr  attr/text=auto eol=crlf gt8/ETS/Projekte/.gitignore
+
+> >    #
+> >    # those are known to be text=crlf
+> >    */B     text eol=crlf
+> >    */P-*   text eol=crlf
+> Same here. What is B ? Is it a directory ?
+
+No. It is one of the XML files I want to smudge+clean
+
+-- 
+Josef Wolf
+jw@raven.inka.de
