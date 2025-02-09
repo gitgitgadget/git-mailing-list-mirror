@@ -1,151 +1,139 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3801E190661
-	for <git@vger.kernel.org>; Sun,  9 Feb 2025 11:14:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6531E502
+	for <git@vger.kernel.org>; Sun,  9 Feb 2025 12:30:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739099652; cv=none; b=b0ZncqIEt5S/1q7zQYiVWRgbO2gr+/ObZ0JkDuUH1sN+2/tKm0pfX7r2F0xolOVJTIgtwBkFlHrejbDtwBlOVLjes2PN3Rtfvuvb9RJuH1515wCb9Sau6MEtnS/gGb9pkvwaVVgBnNzSOrciMw/Or/40FE1zlxPHmcUEGiKczHc=
+	t=1739104232; cv=none; b=mSFi5Gko71geTUztenr4exTcMG0bxybVATkyD1fX4DMwSQwWVaWZ7+W9t2gqZ3IQun9MrCKHC1QnUQCUqztvESDU/4aEGJGFQPzjqgTDew0cyqp2Le15W1v06JuGlGeKk34WkwU5Pfon6TkLg2Xwvvz8dF9xbGaJnuiXlzoks1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739099652; c=relaxed/simple;
-	bh=FYFVFWZwf+u8DHYBHlhEg8JH4fYjJV6vKmp2Fu24Npw=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lvt53Kmq4qwEV+bv0J5k05WUz/bMJpdOYJpUoCk+sF8Y/7VzMK3scCAbF/S5GrptM6OyRb3ZvRnQyj5y7onZx0jOKRpgtsUBy9Kg2ZMsHvnRHVA9qzpwG35ukvGtIhgFqN+sIzSutcyqkomGYizBmGxtaY5kGGO4Uw6nB7a/xfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=ZEJyDubj; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1739104232; c=relaxed/simple;
+	bh=grZXCO/hy6l4xJxI/turfMcsB+KXiq9G3gqgS5Atlzw=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type; b=mmfSHDLzOhPHxS58+yjEHVBqD8o+9laSOaMtRkWg6lrXrBwG0cIKQe0zBUqebzHfEFvm4qlf8yjXIkwwVsbL10GpgYD0J1wyfhvT8qucBP+nqQtvYPsY9RBCy8QK3TNZO5pdGmfvVfmOhZvpx3G7OPQUss6FDpbnGDvhjAC95FQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=ps.report@gmx.net header.b=PgQitvP3; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="ZEJyDubj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1739099647; x=1739704447; i=tboegi@web.de;
-	bh=rg7aAMWKiHXqA8ywgzzewjcrC09mrll7Phms7cwL7uU=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	dkim=pass (2048-bit key) header.d=gmx.net header.i=ps.report@gmx.net header.b="PgQitvP3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+	s=s31663417; t=1739104227; x=1739709027; i=ps.report@gmx.net;
+	bh=48WFdHWqGiIRk2pHXDPgeJ3BlXII3q9Y7grnmJJzBFU=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:Message-ID:MIME-Version:
+	 Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=ZEJyDubjAdjmz9C2zfuOX3rYM7TiyW//UYvVJKx49sjPNwwjVtZqBO+kMtD2Y6Au
-	 b5xCWNdvlT7Mz7VggnupKBy0vHfkBSaadCxfQcEpMwA8inGXXqyjpg08r9LPJ/U7P
-	 FXrZXrvGpl6vzLbENoTJpa88YwFUY6upcoTOiwoukqLcwQl4dvKlpLlVfFm1KldWJ
-	 zJdpDeRygzzfUjVY0S2maIpTMYuTmSRmeKK976Bl5HyR0BxPImy6vjAvgbqQf+Ff0
-	 rgxD1xcMMSuhfVxtingJhRV4HVGrMGvxAv/5wbHdmt0ZH/0A7mNHgJAE1B/Scmzd5
-	 /In6yXEWueGuq1SQFg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MumJF-1tQF242KV1-012rvn; Sun, 09
- Feb 2025 12:14:07 +0100
-Date: Sun, 9 Feb 2025 12:14:06 +0100
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Subject: Re: renormalize histroy with smudge/clean-filter
-Message-ID: <20250209111406.GA12069@tb-raspi4>
-References: <20250206134006.GC30202@raven.inka.de>
- <20250206200418.GD30202@raven.inka.de>
- <CAPx1Gvc2piLT=p+dvzcJPTMDQAAjQfz__O4KiRWs-fOMg8dpTw@mail.gmail.com>
- <20250207104510.GE30202@raven.inka.de>
- <CAPx1GvcyaZqYK+SvgtfsajqtkMty1jOcVAtwfmam-LpOjyd0jw@mail.gmail.com>
- <CABPp-BFnx2m75jsa3_kTPet97HY+xwb_6JmPiKM5+OARPy=mGA@mail.gmail.com>
- <20250207203248.GG30202@raven.inka.de>
- <CABPp-BFGUa_DRBe1WLVfCOKh53+F15KxW_c_OZAMwZCxuAQCiw@mail.gmail.com>
- <20250208205709.GH30202@raven.inka.de>
- <20250209092514.GM30202@raven.inka.de>
+	b=PgQitvP30NEjh36dK101w0GUXvcRiynYL1oYSJjWq8vgXKQiimoWR0uyrAKuhMZg
+	 Vs1wVFdx2+2QRVO50cr4CP0mCubru7BVA1I2lLglsLzFFm2YwOAZxOUObmEO93zkT
+	 FZLHXY/nmUjU9JUdrCbg6Jh09UvVvGKHLv+92vpsYnr2lco8Ro2ezslP9WrGriSl/
+	 IuFvKWmA6ZMCeZhbu9HYZkUmxAzEXjxakZximS9g7UBTXgOp3zlZ1V+XyzqOQhL+o
+	 QRFGi58g9dZJqlLoAJ608mG+MsCRdDUfa33sOiYtLcmA+KYpOuEvO/q59guxlaT2B
+	 K7NwrnKx39USYY/FXg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from localhost ([82.135.81.219]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MBlxW-1tXE1H3GSy-00FwbH for
+ <git@vger.kernel.org>; Sun, 09 Feb 2025 13:30:27 +0100
+Date: Sun, 9 Feb 2025 13:30:27 +0100
+From: Peter Seiderer <ps.report@gmx.net>
+To: git@vger.kernel.org
+Subject: Meson build leaks host 'sh' path to target build when
+ cross-compiled
+Message-ID: <20250209133027.64a865aa@gmx.net>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-suse-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250209092514.GM30202@raven.inka.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:KWSsDAtGFGwejgK1XoBVnieXPGwUXrNoqmTGxBSS+mL5G8tQF0I
- Z9X0oSyYUE3YXdhwzEsGmnig/kg2D6chPn4hC7sYZlML4k7oNJHWhPBEU5VSqGDIGP//bIw
- HbKuSmtS/PytDrjP4/twO/yuR4YZ4FT7kmg+TN3wxwwPLSQLUdIyUURJPZOxdbuDyTEbLXP
- 9ryiHJqQc4LV8H6tq0DaQ==
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:aXJTU9du4qmQ5bwT/OxKz8kLv9Fh1lpFzAp7JeG86VGrdFuojrw
+ NQUOTF2qqEc2T1h0mBsuTTi6j1SZ3ISTAo+7zvePGto0rZaK64tHLKzhpW+RXN0wTUFzACT
+ aocXGIYlSOqLeOHK8wpP+ZaoXPsgfmLS5JA0Yn+l3MfLxL8b7BuYXUg0grvhDDS16ecuKEW
+ 8kInKnC8KSblHqHRn0YBw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:JaDhKd+EdMk=;19FKtbOzQJZYitw5K3e8b139BJJ
- 7bAjtdA/VvolBMHipAcyGsMRaHOG5Lry4KvwtGeb7rAwflsmBC7b6UUcP8EtuvczTxkp1dNDN
- SH4+0Mr/mRD/DEStnTgszs6nSS5j82DNykPIRtXVgdcrwUBMDR8pN3LRqOPRL2E+kWQxixcbg
- g2NmROymaT+ZeOCuqEtU2YrWl4Rb6v8PBkGlYSc1onVe/DXigxVh+bQfCKJh8bsV8qpLJp7S3
- pMJRnBa5vTv7uadWoFHy5IPGUDsE89w5/XSkUea15oHJ8lNDoZTrDKgduoq7dezef6oGV7wG1
- uKmtDZA2Ux+4OtvwFv5KPd1EZVCbPxb/0H8b73leD+lh1Tyz/MDEo2NbD2dMvvhFLYwW0KMly
- SQAYuNdsJhbvqjmQLFjHoa2EPAgdK11ChgOi2O8bjRf0W++CLIttu+4mhVA+ST1RUMRxW1i6j
- GxAJ5SH1Q7TU9M7S4VrQuYq5JluMzlLQwQmBHFqEPw0gdDb8T/JTdV9CG4BepF3bYhp64iRdn
- 8x/U61/c7rHJzAz5a4XbZGHojyBQue+Ywfq0shlQyUeqXYFNInocc3kvcVNEkbIowA5R/OWYh
- fEzoHNoVCxE8DDiV1mF/384PgG1KcbOsOBA45La796V50k1zhl0Xb7bYM8jd5y0npJ0czd2Hb
- /yvvZtz8O+q9pDaNTsrzR/S8f0dMbCqZD4UREx+BiagMY9Qm966oa+SKBgsCdfl8/vlF71l5J
- 8rBcZMd9HKpxf5RwqU1a9z/iOfsgJcsCp+yoiIKubwhZ3/Nqh1x+aBnAkVU9gJvl/HByYDbK0
- xT+v82dwEl+gv0zg51sQTPCuG6wddnX2E8WojuPVUhU7AWDImQimZH9RL2t7USfeArmW7N36J
- Jd/YyDj+sFZXe4INBto/bqfM4v6x7nCmmeIJQkxdFnrSMc4ebAUAXr9Bdjq0cOlr0qOojWqVP
- euQq9J41J3QKSGbhp9JbPSQuZ7ihjaAGMBHioTay1OuBDnSoCDyEosmuRr4SDithsNDcbIzmC
- XpskQFYCN+GvJKUn7WIFPlF9mrWRplShNbDFMriuoyYxu0GdZ8L8dFVR7bDipP1VBxN79+WEn
- SAkER4AMWCDticDVyfMeJOzC1dscRJrN4NYqtuTK26CMxnGIPqiLouGQDBTiVgrbrfwgAEtCR
- RUddt8izv1Fs0dSInCSufhvzch5+Wb65uK1kEfS/Jh0bHCyg66fpHTqOUNpq/anxYkz8Or0Z1
- iOQnaERp3r60NrBay8INGGYZwx7sMtv/8JQq/Q3GhZFnBuwGYLH6wcx20XjbmthNsWe5XEnny
- 08ioNcU2845wrfjx3rqPGCipncyuLj+5IaLQBDjiDo0n0kz1jeGXIX8AN8tIHoucEcmuxYa4w
- S9GhRZDQwXU/7n2kKh1m6fsGf+S5yL05n9QB6zF25f/KpA/8I1kBU3KrZ/
-Content-Transfer-Encoding: quoted-printable
+UI-OutboundReport: notjunk:1;M01:P0:Ppn4wdd4r0c=;E2CI/UHCXu06LPWRbHf3fS/RzCy
+ JlwK84mS2s/RY+3Ddq9V4N7QBZCLqOFf2o8zHB1ON5qPKPyQWj0aKPwnZ0vnZiUt8gfFSEL1C
+ KDcxzJhzaBEX1bHqxymj8mLlce7chb4rmf0HUEwc8LBlOVDknCdWWIh3HSnSwpoV0tZYXftVw
+ AUlcu4FQT9m04DXpqtAmRiunxW+a5xCbcQQFATVmY3fsMee3qBITwnvF8TArssBKILB8icnTO
+ rw2otVbziuZlez4wgAfbpA3tE3bfsAZp7cnO64DpfwY1zDEPuCifAmcM4kKPCMJVExsMJUFFd
+ M+xBh8S3OUdhbAF6ms6sMSzLEXRNXwBsYNJY4inUowhxcoDuoYlEuUfbTBznEjjmP/KL+1N+Y
+ +vSjQCzuuQhD7vJhrJXOIMjvPhOcOeZJNIosQpNan1LTB58KfrDoCJGNiwpKxn2D5OGygRYCJ
+ B/X+2NaGqr/dSvFHAQ3HukfZ1DST458VTFWJg8sWAdVHQmbqNzQ7aUmCyL3u1GN1Jt3APPhLg
+ AQ55dD/uz/XnQTik6OOWFjCA/tIYK35uYfgJaVkBhkhOtn/An9ZuQoBox3VDoMNzjdZjHTGj7
+ RUaUhrCcH4oOeDFvv1r3TkoEpPYSnWA2m2/mh+T6WwbTo5rSg+8JXVGuJX5ZywTpfmPuOaLHb
+ uLeUszd+aBeapqqCFQVIewFGx8ZamhT1ou/9TZH21XGcYmVx5JbDrMUI33Z0gYAtKOgGe4Cwy
+ f/acIh3lY7Ct41LQ4idQJ8QS14sBk4irmp+T/aw69xncN/bEL7Xbi+FIBs0vFsDrD11feOK7i
+ BA8v2zi5suLulUzM9r1AKx/K04/tr7J4DfRYwo0UT6WY8zRLxLdMXN2Xx4TxqiRPFx8tvxirI
+ UU2mkPh1TjPt7bkFN5U9YKmAGxwoTkTbw7lsaP7zjsPKpZPuIC1B9qbNKYxvarvEAfcfxGrjS
+ KcZLtXVZCHsIPK07Fbg/cucHcpYcj2XzQ/3OHobo4DUdjLhAbbrwIQSlWI7fcTT72z4TDBTLM
+ RJFWwyXmLTOOSbfEoitKO3AoFsYg/zv1VLjJk/wIG7yzF9q4LQFpRHFe9mKHvjPLtCCmESrVJ
+ hmPtK7hqmP2lgVvRFRmqCHshjms7yzPhz2qS5Jowru1LRvLEGhcJmUZbZnNbr9cdoWpdx6ruJ
+ i2VknWOIz+aIIzxddZ2obGoO/9aV4aIbgBqHBCFOgz3X08rgWzjU3W1hiljkX0DMZmiQw6Mln
+ Pdl6tvmXiFkkegABXcfjv6hr6USus3PHDFdvrZM6SsqVcquhHc5QP2OGnbfJlVnGUcBPndCSb
+ avsBUYHoNoct9SAehT/x8sxBWD1kXG/2w1XMywHNy+XxM5b9g+MLtsCo2Yvl9NB6zIJATCR9z
+ Jh9QaRMiQUqiAbNl3hSaJlb+fJLBtyKG/yRRWpudQy+BrupYFC5tIxcMhr
 
-On Sun, Feb 09, 2025 at 10:25:14AM +0100, Josef Wolf wrote:
-> On Sat, Feb 08, 2025 at 09:57:09PM +0100, Josef Wolf wrote:
->
-> I just stumbled over another wirdeness:
->
-> > Oh, have I mentioned that I am not only about line endings? Yes, I men=
-tioned
-> > it in the very first mail. In addition to line endings, I am also abou=
-t XML
-> > files from a proprietary application which reorders the XML-elements i=
-nto a
-> > random order every time it ist run. So the clean-filter needs to sort =
-the
-> > XML elements into some "canonical" order.
->
-> This application stores the bulk of the data as text files and XML files=
- with
-> CRLF. But there are also some binary files. So I set gitattributes like =
-this:
->
->    # Catch bulk as text=3Dcrlf, rely on git to detect binary
->    */*     text=3Dauto eol=3Dcrlf
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-This looks a little bit strange to me.
-What happens if you replace "*/*" with "*" like this.
-*     text=3Dauto eol=3Dcrlf
+  Cross compile git from source (git-2.48.1) using the meson build system
+  (Buildroot package experimental converted from autoconf to meson).
+
+What did you expect to happen? (Expected behavior)
+
+  Execute command 'git fetch' on the target without failure.
+
+What happened instead? (Actual behavior)
+
+  Command 'git fetch' on the target failed.
+
+What's different between what you expected and what actually happened?
+
+  Debug with strace showed the following difference:
+
+  - o.k (autoconf):
+
+    679   execve("/bin/sh", ["/bin/sh", "-c", "git-upload-pack '/home/git-repo"..., "git-upload-pack '/home/git-repo"...], 0x55c342ce4420 /* 17 vars */ <unfinished ...>
+
+  - failure (meson build):
+
+    6861  execve("/usr/bin/sh", ["/usr/bin/sh", "-c", "git-upload-pack '/home/git-repo"..., "git-upload-pack '/home/git-repo"...], 0x5639ab382210 /* 17 vars */) = -1 ENOENT (No such file or directory)
+
+  The meson build tries to execute the non-existent '/usr/bin/sh' (instead of
+  '/bin/sh' as the autoconf build), 'which sh' on the host returns
+  '/usr/bin/sh'...
+
+  From meson.build
+
+   [...]
+   186 shell = find_program('sh', dirs: program_path)
+   [...]
+   685   '-DSHELL_PATH="' + fs.as_posix(shell.full_path()) + '"',
+
+  Do not use the result of 'find_program('sh',...)' for '-DSHELL_PATH='
+  (at least not for cross-compile), use fix '/bin/sh' instead or make it
+  configurable via a meson option?
+
+Regards,
+Peter
 
 
->    #
->    # those are known to be text=3Dcrlf
->    */B     text eol=3Dcrlf
->    */P-*   text eol=3Dcrlf
-Same here. What is B ? Is it a directory ?
+[System Info]
+git version:
+git version 2.48.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 8.11.1
+OpenSSL: OpenSSL 3.2.3 3 Sep 2024
+zlib: 1.3.1
+uname: Linux 6.13.1-1-default #1 SMP PREEMPT_DYNAMIC Mon Feb  3 05:33:25 UTC 2025 (1918d13) x86_64
+compiler info: gnuc: 14.2
+libc info: glibc: 2.40
+$SHELL (typically, interactive shell): /bin/bash
 
->    #
->    # smudge-clean filter
->    */B     filter=3Detsfile
->    */P-*   filter=3Detsfile
->    #
->    # files I dont't want to touch (mostly binaries)
->    */*.dll       -filter -text
->    */*.ver       -filter -text
->    */*.lang      -filter -text
->    */*.store     -filter -text
->    */*.ets5hash  -filter -text
-*.dll       -filter -text
-(and the same for everything else)
 
->
-> But "git ls-files --eol" gives me this:
->
->      i/lf    w/lf    attr/text eol=3Dcrlf      gt8/ETS/Projekte/P-0113/B
->
-> Why is git ignoring my explicit CRLF setting?
->
-> This is on linux and on Windows+MSYS2. I don't have $GIT_DIR/info/attrib=
-utes
-> and ~/.gitconfig also doesn't specify any line ending things
->
-> --
-> Josef Wolf
-> jw@raven.inka.de
->
+[Enabled Hooks]
+not run from a git repository - no hooks to show
