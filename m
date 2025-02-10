@@ -1,82 +1,87 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E12256C6A
-	for <git@vger.kernel.org>; Mon, 10 Feb 2025 16:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A739F256C88
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 16:59:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739206555; cv=none; b=ah5xtRp5kqP6s9Ho8Nq6lTE/F3IhFc1UGP0I/YJ7ucx67rHz6rBg2b7U01wtgy4o0KPA4LhfVmhP3NOZ73woB+19Y/GZXHGE6uh1fyLYvtn30AVWx77v92yAoxtEG8jMPNyBgSC8m0dMjeiLrh2DlGm6Ja9rZ+s21cu+Oi1S5DY=
+	t=1739206780; cv=none; b=gsRiCtzekYNJu79ONC2lKMNWoB2P2tAMx2bW5v5JHCG+IQG+FqLyH/PGoeKoUM6cBMer3uNzIGm32DSnwmH//MeJ8Qw1ol+aDwkGWbFId4SSyCz7/zDdL5/s9wnxtqbQkifqwr/EzbypaHVA9INJmW/XiIgMaQKYpdnIFd9qqGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739206555; c=relaxed/simple;
-	bh=C426wCBFGUECsl8gi1Z2+NWn55tFGvmW5dMozc6/+4o=;
+	s=arc-20240116; t=1739206780; c=relaxed/simple;
+	bh=dPo5J399z55Q2I+DAQqr/rl1pD78Cq/NzoQrMkeD7LM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SXmbdHc7lw4O51bnfCYmKnmBbOI2ZMDebRx4i0vXCmY1kNNw1THePCUSLGuwJFvtq4yunaJzFYXUdbAcmnv05atIEGQsWMaal1cYKfagflbXQzYmDmm0ISachDERtrVMW10IeqZ4Ti7EVKsCtWGVDSaDkbJUvN1v+KvwUxa1G/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hhTshS07; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MVq6nLzT; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=fCgaJ6CR295NQajhgajqH77U79ylefzMCYK9z5XGU59REFqRUNyz8MouFa45dgTgSmERPplWnNi213RvvJFDN5/TELVzpOhoH1xvOSaqo5F6Vzp2rsc7utsW2e7Pn37ioQ1Kihzz9UpgejN0EsLjUrC7VnHfoGMvWQYloWvNtCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JHhhVEYZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0LbyA9Cg; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hhTshS07";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MVq6nLzT"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 165BD1140268;
-	Mon, 10 Feb 2025 11:55:52 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JHhhVEYZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0LbyA9Cg"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B50EC1140219;
+	Mon, 10 Feb 2025 11:59:37 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 10 Feb 2025 11:55:52 -0500
+  by phl-compute-06.internal (MEProxy); Mon, 10 Feb 2025 11:59:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739206552; x=1739292952; bh=rYUa68eb6/
-	IE8tDFiVPf0NR1n3Y9RoftWb0nDWVMPBM=; b=hhTshS07fFZhBPQSdlIy3Qiqui
-	00IESzzM7xHo8VBlXW0eyufc8pIAJYOian1nP+h5zlx4112oxorZ2nVgfsyTF6gN
-	vtS2zP9lkmzwl4nsNLomt5JHP/4Lu205oF8iZOtyB6n+WuRcJ8iAE2nmcw25ALV1
-	pu4QAQKdkuBqg4DYIp47iNkaWdu08RK4FNAreDWZcaXahcxhIIPfZUaxgyG1wc+J
-	N29TJwMMDFUx0lmQ9s0t27XL56sGXQmvUDbl6ZEqYKH6Wp9m1ilERL+S2UeAt1hp
-	mUhlnJ/wtyVTMh5Ge3m6MmjxEV5oY4jHxgK9s6PFyV1VI36twj+beMzbtPsQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1739206777;
+	 x=1739293177; bh=o21AdAD8jOO8niB9f/5SD8k5Y6jJc2FOFYrsROdebZI=; b=
+	JHhhVEYZIYk8Jrs6VpMCxZ9By5579zAFFoZh+UWqxrQfNuFJe7NyDxoglsztzABe
+	heNLm7Lk9W/rOadLxcNgFDWcjdOe349wLhsVlNBXfPWzHgssg9swkDG5l1Q2FEK8
+	PXlV78DRq4dChZB1jHs9OVvrwYHehOD+uPDqXQwDnAmF7IWkJh2v5Kyo+ngBQ5/+
+	uTm7c1yUNbGxk1iLJit2wJ3cMGQnFOIniIf1VHkrvatudHMbaju5++F0rDCkW3p1
+	d4SvtuCM2zhaXv+G6rvOKJB0O8kpBohwDe8mucUsyu0gYQxH+XVlGCRO9FYvA5FE
+	p5aOzM3D2U/JnsaHwlrZWA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739206552; x=1739292952; bh=rYUa68eb6/IE8tDFiVPf0NR1n3Y9RoftWb0
-	nDWVMPBM=; b=MVq6nLzTxdswoQbcCPML1Axa3gKcBf6rf5u/VsILoa+N1hg4+VP
-	ChwWEhRTgB/Ytx9cuiT9dPBwFBkRNGkgJB3choJi5Lf070UIIzYuv3AhY92V+tdF
-	OdFL/n4tEYLRpdaEvujVLx8MmU2cU1J2mSAZdnD70U4lGi6qtOQ+HHnv/Ga4+wti
-	aNzWFM7aqSBD9RcnjPeTCfIP1yZ13hhycE/YnHc8VMyYAKAyuXhAbMOFppisvFgw
-	E1DJ8fSG5x2YusH07psCgUIKPE+zK5FIHQxhbpgnsIanYKyP1t+PmlKWzuH0PJ3s
-	1Az+dak6En0nrFvfmapBETKcV2sGo/FzVkA==
-X-ME-Sender: <xms:ly-qZ63NudQqc7HUG55shskbbFtN69_rjYWCSADQUooxiiB2_D16lA>
-    <xme:ly-qZ9EcWGuMcXZS8AbIC_JWiwnJpjP661wXz738J68pGGBAB-x-4tCKg7zXUtDa4
-    TkJx0N2sEZT7X4Lvw>
-X-ME-Received: <xmr:ly-qZy5jdKRzceWmxRhk0xUmkxh3_kexpPVwZKG1OGya7cCQYwDRsZEt5midnQp87gl0FI9JWbkCrzzhxWWskm9NPLALy3C9nTDN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefkeeitdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739206777; x=
+	1739293177; bh=o21AdAD8jOO8niB9f/5SD8k5Y6jJc2FOFYrsROdebZI=; b=0
+	LbyA9CgrseYwHj0ZoshQSk5xwVMz05adPh5F6AfFpc7xzx58+71HWNDE9pd1IjkW
+	g78ySnu1t+JHUBWd2R1z5HAwY/6vFxDzGoOO4hxfu/OwxKjlNlh1E4+Dcnv7mbhf
+	9Cymew2uXkL4uYh2mBSSt3MESpTiYHvNh0hqVqzeaD0+xsbhmARhpcSR3CQM3FN/
+	OEKLlq5Ris4TBNzB7MFFdQM8vGCtUM2KsMvEhv8EfU00+ZrO5M7+N8GYpVbvGT74
+	wHhloQRtVV2V1tnyCvaf9CWO+N+GDfZlhHgEirtmRMwFNKmAwQfsDVNFTu9etO6+
+	R49rNih8TTzZeOvpmrY1A==
+X-ME-Sender: <xms:eTCqZ212_qms20WZPlxn5MM6_mwLtufx9vlOsIXNfcyPzKwwqMT9oA>
+    <xme:eTCqZ5F2MPo1RGiWbIjnw_Igu1iVju2zig0Chzdvlm8KQYo2yoZEEgAn27zZrR_B3
+    xOcVAnWczx9s6D8Hg>
+X-ME-Received: <xmr:eTCqZ-4ZNRTuq9zmSXUPnqV48KLZ6-VucCleBcqilSZpIHR7EhhrcBIGf3HmzKjAQ1P1NCkBUFBSsrI2yfI1KnB4Ox49sTex-Rnr>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefkeeiudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrhihurdgthhgrnh
-    guvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ly-qZ7369C0MRS1GElj1YpkHqgJxaOKnnfkkYysQLkPgRI3hxvPdWQ>
-    <xmx:ly-qZ9FUFPOCWTigZrfxtZUaEcHegNUIOnJr6PCzyX3-KWu8RD3UfA>
-    <xmx:ly-qZ09_brPDieoVq0zOjcRJzwH_ZHWWKu9YRLekmvQi_2Imd4VGVQ>
-    <xmx:ly-qZynA3v3H-Na1scNavo3KXV-0LfGD2YsKDrr4bYFZRZcaBkvGYg>
-    <xmx:mC-qZ9DfYx-aGJYwm2JilMnOq9MBOLWZrd1yONlHVsKkjq2RqqcxugF1>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    dtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedtheenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopegsjhhouhhrnhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
+    hhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:eTCqZ31KM-CS18dI85HYwTPtkLOIs0cV6peJyY3cXTsotDUgf_4N3Q>
+    <xmx:eTCqZ5HJQtjh4V02YduIQh76Id_y8FURF21yvhc_u5vW5UW4j1GTEg>
+    <xmx:eTCqZw-1GiZB_Kn8e2eL9QyQzfCs_K-2VbNosHEayUDbvzEn3VAsqA>
+    <xmx:eTCqZ-kifJaTWPGyasAQ4f4VlZOrUYGvFomcf52tzzGcTdzNvpTWsg>
+    <xmx:eTCqZ9jFTZc0dKaB-VhjVaFkEDgixO4JPoKm4Ab1zr6OJeA7z8UF-ScJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Feb 2025 11:55:51 -0500 (EST)
+ 10 Feb 2025 11:59:36 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/2] midx: show progress during QSORT operation
-In-Reply-To: <20250210074623.136599-2-ayu.chandekar@gmail.com> (Ayush
-	Chandekar's message of "Mon, 10 Feb 2025 13:16:22 +0530")
-References: <20250210074623.136599-1-ayu.chandekar@gmail.com>
-	<20250210074623.136599-2-ayu.chandekar@gmail.com>
-Date: Mon, 10 Feb 2025 08:55:50 -0800
-Message-ID: <xmqqzfitbuy1.fsf@gitster.g>
+To: =?utf-8?Q?Bj=C3=B6rn?= Lindqvist <bjourne@gmail.com>
+Cc: phillip.wood@dunelm.org.uk,  git@vger.kernel.org
+Subject: Re: git rebase --continue error message is misleading
+In-Reply-To: <CALG+76erpDGFinXsockB8=+GPEoEtd+xw=xVN1HCzv7=aFymoA@mail.gmail.com>
+	(=?utf-8?Q?=22Bj=C3=B6rn?= Lindqvist"'s message of "Mon, 10 Feb 2025
+ 11:19:47 +0100")
+References: <CALG+76eJL5dC3o+yq7zreoRDQan1MPgfNXB42k5f2iq2bZEbNw@mail.gmail.com>
+	<534e8534-a9bd-428b-87f9-a512c9378b19@gmail.com>
+	<CALG+76erpDGFinXsockB8=+GPEoEtd+xw=xVN1HCzv7=aFymoA@mail.gmail.com>
+Date: Mon, 10 Feb 2025 08:59:34 -0800
+Message-ID: <xmqqv7thburt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,73 +89,17 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Ayush Chandekar <ayu.chandekar@gmail.com> writes:
+Björn Lindqvist <bjourne@gmail.com> writes:
 
-> Add progress reporting during the QSORT operation in multi-pack-index
-> verification. This helps users track the progress of large sorting
-> operations.
+> Here, I don't think assuming the user has vi installed is correct.
 
-Hmph.  If the implementation is correct (which I cannot tell), this
-needs to explain why it is a bit better than saying nothing.
+Exporting GIT_EDITOR that points at the editor of your choice is
+exactly for those who choose to use something else.  Instead of
+erroring out with "You haven't told me what editor you want to use",
+editor.c has a fallback default to use DEFAULT_EDITOR that can be
+configured at the compile time, and if the builder does not configure
+it, then it falls back to "vi".  We'd need to stop somewhere ;-)
 
-> +/*
-> + * Limit calls to display_progress() for performance reasons.
-> + * The interval here was arbitrarily chosen.
-> + */
-> +#define SPARSE_PROGRESS_INTERVAL (1 << 12)
-> +#define midx_display_sparse_progress(progress, n) \
-> +	do { \
-> +		uint64_t _n = (n); \
-> +		if ((_n & (SPARSE_PROGRESS_INTERVAL - 1)) == 0) \
-> +			display_progress(progress, _n); \
-> +	} while (0)
-> +
->  struct pair_pos_vs_id
->  {
->  	uint32_t pos;
->  	uint32_t pack_int_id;
->  };
->  
-> +static struct progress *sort_progress;
-> +static uint64_t last_max_pos;
-> +
->  static int compare_pair_pos_vs_id(const void *_a, const void *_b)
->  {
->  	struct pair_pos_vs_id *a = (struct pair_pos_vs_id *)_a;
->  	struct pair_pos_vs_id *b = (struct pair_pos_vs_id *)_b;
-
-This is a compar callback function used by the sorting machinery,
-which is called QSORT but system-provided qsort() implementations
-are not necessarily quick-sort [*].
-
-> +	
-> +	if (sort_progress) {
-> +		uint64_t max_pos = (a->pos > b->pos) ? a->pos : b->pos;
-> +		if (max_pos > last_max_pos) {
-> +			last_max_pos = max_pos;
-> +			midx_display_sparse_progress(sort_progress, last_max_pos);
-> +		}
-> +	}
-
-So I do not quite understand the assumption this implementation of
-the progress meter makes.  
-
-The assumption seems to be that the element in the array with the
-highest index MUST not be summoned for comparison until the very end
-of the sorting process, but what guarantees that?  Even if we assume
-that the qsort() implementation supplied by the system implements
-the divide and conquer plain vanilla quicksort, it may divide the
-array into half, and then sort the top half first before it sorts
-the bottom half, and doing so recursively will give you the
-comparison between elements near the end of the array with the
-highest index fairly early in the process, no?
-
-And the standard does not even specify what algorithm should
-internally be used to implement qsort(3), which our QSORT() macro
-eventually calls, so making any assumption on the order the elements
-of the array is fed to the compar callback function sounds doubly a
-frigile deal.
-
-Thanks.
