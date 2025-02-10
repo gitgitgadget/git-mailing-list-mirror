@@ -1,156 +1,151 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DB71F460C
-	for <git@vger.kernel.org>; Mon, 10 Feb 2025 16:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D296A2580D8
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 16:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739204931; cv=none; b=e3dBu2CAm6b3g1jWMXpdCuU4VXuH0NuOVoRXiHzkQ7B+PX0IMzQkyaij8xpXuqjdodC+Nxe2mzTxmnLx/qgRcpcgjK5lfFh1LlRqyyzNZDWkQtq6NtfLgfbkHazlWq6bPs1J35Oul8L+ifbf3GiJwbc3EdItwDvaAHR5dhDilDI=
+	t=1739205826; cv=none; b=CjZe5+Whf0xCLIrkLNj8woGfVaOS9qCMQQK/zB7A19JfSqEqsMj4vCjQwV6JT4IrbVGWuzzamOzaONRKXSdFPV5nAFZL0YQxbt35G7MdWoi3poJeVFmKJvXjUo2Rg4Oj7l7m+RDwPMjQohVatDCYcE/G2SqRDB3fxpjsMYKFifw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739204931; c=relaxed/simple;
-	bh=39NKhFtSosFzUESHIHwMxbM1PQEfsBS9fmkIX9NnKjc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sSnRiF5MYWD2Z+zD5iyfB2UrVKvtCnPd+jDb5Euj6oi9uhRlK7nK3YX4oSIubVYg1mdKTidzGk64qEizqf2rrrC+94pSfgkAmTFUTbTDfxr8744KLdzqcxbJkZY3TH/L0uMleqwlGJV4PGUlQkAKKrq2qhFt5j5obY/pmKAlEKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g8p4Ggqh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B6CC4vo4; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739205826; c=relaxed/simple;
+	bh=XFCQr1cY7TdAJFTK8c9+ZuO+fYv7b2axZDIP272GmYc=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GWBqWAwm5DHDlqfZfOYSxQw+Id1jmmH9N9Na07rEqjl7HJXA2HlwQ7kFoyrGgjne2mKbg1EtK+MplCRLcEoAS9XwIXr2NqUVdH6zj0PQ2gmto+mkEKXeIGcdpS9Ob9fOJPIbSDKHjZTMb0rW7xxkQPa4nWdyrGymY6RQ60kWoLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=ps.report@gmx.net header.b=VHlT8Pp3; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g8p4Ggqh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B6CC4vo4"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BA5831140272;
-	Mon, 10 Feb 2025 11:28:48 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 10 Feb 2025 11:28:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739204928; x=1739291328; bh=bXPyjRIIOx
-	nyCt4PGwUMoXWn/as9HacDK64EE/O6D6A=; b=g8p4GgqhKVD4gb7KZEMUYoajRq
-	nCJarhABjpc8DtOZDxlV8auRr+AddOsbyC3vJmSdKlNkTj56BKYdKK/y7eXSfeOt
-	vZWFeKj+/XD/meSXILgOMgQsEqG7aS48IHc+rTOE+sYc2+WNk8Bkyrx3/pLDEWcV
-	sgKTg6SZDm+lhGymVLOiG9ENrD/NE/fplvKeznO8wkrQy137nHsu5uMOcaINhKnD
-	veWGo8DuwxREGmkIT9QJVrcNztzVLHetDpJExnPYeGlgynhVgVVPLGYl5cQiDLCL
-	mVpvi+w/KITr4Llnt/zi32p2wUMVXGIhVH5CKO2EL5Cqhp41rWn54yC2qK7w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739204928; x=1739291328; bh=bXPyjRIIOxnyCt4PGwUMoXWn/as9HacDK64
-	EE/O6D6A=; b=B6CC4vo45FB0yqiM9R43Hk8VTf3qH+tZOlBWVb82NGEgwucZRXz
-	A23qRw4uEMlpYMQ6IbT6RxL9yo7Rn1en0W0CpGOmqQCRDiYBmHhhucMwhlHIoZQM
-	GkXTiTS67wrQI88XVnZh+NCLCppMW0GOTDTY+oFzJivCG8wUdz4vdQO32/wNltW1
-	jKPwMoHXakfEP83JExU8u+SZMmIdg6nPnAF25wiwrDn6DVPAFepoOhPqaCV4e/tD
-	SHg33Ll3IEcqWThJhhpQwwJV7smng1CkjjMF0JrnEXa2ntDp4TAopTQng8tpP6FJ
-	mzveV+VhTJqL0FzkJ5EZXOIiWlm462njDWA==
-X-ME-Sender: <xms:QCmqZ-7wffkA7GZxhr-FyVrcJCBYZxOKttkf9_AIgAMMAmjHKMH78A>
-    <xme:QCmqZ36FcygMR4q2URGnwKY7JQ2OP4dMmvLVbeIeKufOQRZ_v4JuATHdgoWmGV4Xt
-    7ZIPBJ6LDZLZf5frA>
-X-ME-Received: <xmr:QCmqZ9dip07vZhqxqQ9B8fv1G_708ASPEihViqtwdy2MzIWAXYZKOssZgEHtN5pozLo4GmmZhI9gvRL1p0CkjsNqGdqPXHNJV0ae>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefkeehhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
-    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepgihtvgigsegvnhhvshdrnhgvthdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgihtvgigsegrohhstgdrihhopdhr
-    tghpthhtoheprghpvghnfigrrhhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:QCmqZ7KrKbULQvaqSwVbJJsjkPVrp_EMjFgo8c_d3cZSiMcsoRnGCA>
-    <xmx:QCmqZyLLW3M3YewqZX3m_A6JFF1hl_hH9LDd4TVkxevsk6cWKlEaqg>
-    <xmx:QCmqZ8yl1NZWqaEvp90R1H1q_VEmka7lg1TK8cMyrOC8mSO2uHdjwQ>
-    <xmx:QCmqZ2JxLbgcO3yFpQZ2ydzDnyogC-0EZJVv3_mrC6Pf9OaK8i7rnQ>
-    <xmx:QCmqZ0juAQFQKe8y3mGPXZ5p-LuwhGgBoI1gMo2_9uuk0nBZpcBD9gp7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Feb 2025 11:28:47 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Bingwu Zhang <xtex@envs.net>
-Cc: git@vger.kernel.org,  Bingwu Zhang <xtex@aosc.io>,  apenwarr@gmail.com
-Subject: Re: [PATCH] contrib/subtree: verify HEAD is valid before adding a
- subtree
-In-Reply-To: <20250210021128.31083-2-xtex@envs.net> (Bingwu Zhang's message of
-	"Mon, 10 Feb 2025 10:11:26 +0800")
-References: <20250210021128.31083-2-xtex@envs.net>
-Date: Mon, 10 Feb 2025 08:28:46 -0800
-Message-ID: <xmqq8qqddarl.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.net header.i=ps.report@gmx.net header.b="VHlT8Pp3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+	s=s31663417; t=1739205816; x=1739810616; i=ps.report@gmx.net;
+	bh=fFdwwfIUz98jUWD0F/wrDXytrIT2An0+ghKLz1AFwJU=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=VHlT8Pp3UdE6R+FECX9nyTlrY5kr539flAnxeIV4wSqMrqnju5q2HCG3zWlfRRZI
+	 DvjpsgWrYGgRNa5KftifoD2fZmP4qZ1q5RBYANN2/+r3C2krh9yhyBduh2fJgUZgo
+	 /4SZJkj7gl4ZgZGMCbZMzPHh+4XRLpZVGiH9AUs1wa7trBUETZaGt1QEa8RdUtcOE
+	 lbWBQNlcdVC/7DVjCYj/R7R9apK26o7G01Zi5GtM4stNvqC0lfZxZnYq+g5Cno3fw
+	 aoRG1juwajo7GbzRKjfEFfxJrEUGcoDn7RtYGCnRSeplWKQl+aE2LLSz+r0KaUWUO
+	 Gf+OA8KkcH0b4MHcUw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from localhost ([82.135.81.18]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MK3Rm-1txXKY1lq2-00TXjN; Mon, 10
+ Feb 2025 17:43:36 +0100
+Date: Mon, 10 Feb 2025 17:43:35 +0100
+From: Peter Seiderer <ps.report@gmx.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: Meson build leaks host 'sh' path to target build when
+ cross-compiled
+Message-ID: <20250210174335.6d6d2af2@gmx.net>
+In-Reply-To: <xmqqlduddb8b.fsf@gitster.g>
+References: <20250209133027.64a865aa@gmx.net>
+	<Z6mtnmvKMsIOEVz5@pks.im>
+	<xmqqlduddb8b.fsf@gitster.g>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-suse-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:I5Rm8aMdU8GsylDrEJvWgEMGWylwuYdCcEYY3JovEWnemXUzn8h
+ gXbuB8M98q1qO0GqAwxKMpHoYjQJJgarJEtnunq4dRsbCLgfHn4Xyp0hUN881IOuDYdBCM1
+ SnNT3z5sjB0rXLK+sbOEhQJ3a5C8iu1mQbtXFCO88yd279svqGIAGMZBZd5/X258v4fWmoB
+ HGCTYPtn96eo14qnvoRmg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:MISOtL0dA3I=;ohCKtWmRQvh6VM2Xx562XB9G+/p
+ o1nCAMfgrFM06s0MbFDcaa8dPm8nG9q3JmQ6pn+bnkwVxmrhlMV0gOFJL+uj01rSfoMp5WSLH
+ 1lbjUhN1EuZzgApF2h5pBrFexkEBUHB9WaCuD+P0v/ouv6QCJKW1WGrYyWHbZy+gk3z5hqhar
+ nF5EEZcNzw5YTNZbIGclx+vcORjPuDWF/rpLCQHKJiv52/rAlu5pVq8IOr0zGGv8xsODZki76
+ Uxx/FcTag17/bfgw1U0HGgaw/zfA4zCCHlDEQ7oGwczX5j+yrvr6iWIYawURtfLLarwpy1oWZ
+ B1FIFnkb14tZmyxxrtzvcVQKJ9W4z7AnNLMuXHIKfpwmqcaGWkxdJ8LZgtL2zuCQ616rsO5UL
+ CeuwXLH9tC9Wfb5NV7fAVynEHtxTHxQ6OICxXipWm4yhTLCIVCu0PIJ+RKE6WkPaBKU/NMr14
+ ncP+Vm26nNnpWrvovKmg+lQ5zb2nnykl0DSLnKvg/K0HUw3kR88fql/LO0EyJfnjgNwvJkbWM
+ DZaM7RQOUiD7TJVKyx0pGx5Jm4EBfzpIWj/rxWCfyS5BzYY3AA+h++/TQxcJf5lGfxHilr0na
+ fwmc9HGDbVr9jWnDdvm2QsNOmHstyujL+UN29AwARLETzmOqeSr0NYaB7gKfnVMtNS7N5A9oP
+ uN2FftC389NkI1Yzxbzr1W3UjSMRSM/uJAccwMxBac1gB3MYa3lOhnWgjXeFIEZaqO4Qs9n76
+ /RDGPbyuQuHg5EwpPjOgJThF9MogbOuBekkzAja4Bm7vsx/ITiIsVXurJT6fJMB3F+s7wVqgo
+ pzuyM5Q9KWjizFT2JjhGSgXzZIlBuiQ6Wc3uvM4hsbikOuBxcfJtKHSmCIRX2tMt92aBfQM/p
+ +WbnfxSyMNgDrabhhvOD3yVeqMbxpN5cWiLZwAw7w9Bh1EAYWTRlP/GxH47/0+FpaLTNTipMq
+ BqCslO0ZVzdFMy2KbSa+1a7zHEzY9o2R9oTbquPtmODEEFoj+W3fnEPa0ZcfeH85mHH2uB3LX
+ km0ZYmkvIf70M9JbZXgYAYlz6OljiJi5RHnMTo+DdWYtQa7A4fvDad38VkM0HouM8s52tuCuc
+ 7NrgX59JdOJ/K+Bm0cJHO03Q04xlkhOxZ/z9XAGoE9hWMi7AOrg1cazBhOqgX2O6e/fwviZmF
+ jgY8LiA+Dl/5ma+Cqk7j3+SN2Q4w0ZGvK7Hy+F58udZfRieuQ4NmK8F69dTFvZOsjmj1Lce7D
+ 2PC/KSZL7uWwg12Y0HaRwqEQ388Ya5caqRPY7tc6N5eAIIFon+d1YAryda/US6B7Wh5OQTu4i
+ G9UCumFingpWKGrDLy/uB+4pk4yaGne/Km4GQEsKBkRE5kCiS8fbT2UZ9j2BvBVhkG08lQnbk
+ wjE7dWvkGMppas/MlkkaTCioKsda/DVsbPyBu6RiBbObasbsH7O6bSrSlU
 
-Bingwu Zhang <xtex@envs.net> writes:
+Hello Junio,
 
-> From: Bingwu Zhang <xtex@aosc.io>
+On Mon, 10 Feb 2025 08:18:44 -0800, Junio C Hamano <gitster@pobox.com> wro=
+te:
+
+> Patrick Steinhardt <ps@pks.im> writes:
 >
-> After initializing a new repository or switching to a orphan branch,
-> HEAD is a symbolic reference to refs/heads/xxx while the pointed branch
-> head does not exist until a initial commit.
+> > On Sun, Feb 09, 2025 at 01:30:27PM +0100, Peter Seiderer wrote:
+> > [snip]
+> >>   The meson build tries to execute the non-existent '/usr/bin/sh' (in=
+stead of
+> >>   '/bin/sh' as the autoconf build), 'which sh' on the host returns
+> >>   '/usr/bin/sh'...
+> >>
+> >>   From meson.build
+> >>
+> >>    [...]
+> >>    186 shell =3D find_program('sh', dirs: program_path)
+> >>    [...]
+> >>    685   '-DSHELL_PATH=3D"' + fs.as_posix(shell.full_path()) + '"',
+> >>
+> >>   Do not use the result of 'find_program('sh',...)' for '-DSHELL_PATH=
+=3D'
+> >>   (at least not for cross-compile), use fix '/bin/sh' instead or make=
+ it
+> >>   configurable via a meson option?
+> >
+> > Hm, very true. We're mixing up concerns here by treating the build
+> > environment and the target environment the same.
+> > ...
+> > The patch should look somewhat like the attached patch, but it conflic=
+ts
+> > with my in-flight patch series at [1]. I'll wait for that series to be
+> > merged to `next` before sending out the fix.
 >
-> "git subtree add" will try to ensure that working tree and index are
-> clean, but as HEAD is invalid, diff-index always fails:
->   fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
->   Use '--' to separate paths from revisions, like this:
->   'git <command> [<revision>...] -- [<file>...]'
->   fatal: working tree has modifications.  Cannot add.
-
-[Disclaimer.  I do not use "git subtree" at all myself, and I may be
-missing the usual expectation of end-users of that command in the
-following description.]
-
-Good finding.  I can see that an unborn HEAD would cause the command
-fail.
-
-> It says "working tree has modifications" but it is not the case.
-
-I am not sure if "it is not the case" is true, though.  If the index
-is empty (i.e. nothing has been added yet) and the HEAD is unborn,
-shouldn't that state be considered that working tree has no
-modifications?  IOW, wouldn't this part of the code that uses
-"diff-index HEAD" want to consider that an unborn HEAD equivalent to
-an empty tree for the purpose of the comparison?
-
-In short, "is not" -> "may not be", perhaps?
-
-> Add a check using "git show-ref --verify" to ensure that HEAD is a valid
-> reference and give a clearer error message.
-
-And if we want to treat an unborn HEAD equivalent to an empty tree,
-then dying upon seeing "show-ref" fail would not be a good solution
-to the problem, no?  Shouldn't the updated logic to deal with an
-unborn HEAD be more like "if we see that the HEAD is unborn, then we
-are happy iff the index is empty; if HEAD already points at a
-commit, then we are happy iff the working tree has no changes
-relative to it"?
-
-> Signed-off-by: Bingwu Zhang <xtex@aosc.io>
-> ---
->  contrib/subtree/git-subtree.sh | 5 +++++
->  1 file changed, 5 insertions(+)
+> Interesting.  When we did our make-based build, we never seriously
+> considered cross building into a platform where the path to the
+> basic tools differed between the host and target hosts.  At least in
+> our build procedure in olden times, I think we used to assume that
+> what we just built can be run inside the build procedure on the host
+> platform even outside the tests, which would make cross building
+> impossible.
 >
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index 15ae86db1b27..41eb816e454a 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -770,6 +770,11 @@ copy_or_skip () {
->  # Usage: ensure_clean
->  ensure_clean () {
->  	assert test $# = 0
-> +	# verify HEAD, or else "git diff-index HEAD" will fail
-> +	if ! git show-ref --verify --quiet HEAD 2>&1
-> +	then
-> +		die "fatal: HEAD is not a valid reference.   Subtree cannot be committed as the first commit of a branch."
-> +	fi
->  	if ! git diff-index HEAD --exit-code --quiet 2>&1
->  	then
->  		die "fatal: working tree has modifications.  Cannot add."
+> Now, since we are "fixing" this aspect of the build for meson-based
+> build, should we also make the same fix for make-based build as well?
 >
-> base-commit: f93ff170b93a1782659637824b25923245ac9dd1
+> I'd have to say that I prefer to see it done out of pure principle
+> (i.e. we earlier declared that meson is not yet replacing make, so
+> adding new shinies only to meson-world is like making the make-world
+> bitrot as if we do not care).
+>
+> But on the other hand, nobody complained that they cannot cross
+> build with make-based build seriously enough to cause us consider
+> doing something about it for the past 20 years, so the pragmast in
+> me tells me that it is not worth it doing it in make-based build.
+
+Maybe all doing (autoconf) cross builds where happy with the defaults
+from the Makefile (SHELL_PATH =3D /bin/sh, PERL_PATH =3D /usr/bin/perl)
+on host and target (as the buildroot autoconf package since 2013) and
+only users doing native builds fiddled around with non-default values?
+
+Regards,
+Peter
+
+>
+> > Thanks for your report!
+>
+> Yup, thanks.
+
