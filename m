@@ -1,63 +1,90 @@
-Received: from mail.inka.de (quechua.inka.de [193.197.184.2])
+Received: from mail.envs.net (mail.envs.net [5.199.136.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F641DED7B
-	for <git@vger.kernel.org>; Sun,  9 Feb 2025 18:02:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.197.184.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B69525A4D5
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 02:11:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.199.136.28
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739124141; cv=none; b=ju4MpCmEUOQaZzMVK9KaaapO1c6JlUt4zqVXsVpGHjI0mYYcWCPwPA5XFXekoAWSvkCy0q7qqCxWMNlKR3hNYKdG3nDZju0/uzPO/xsctp7NJmCzaiDM/ko5Vs79ylDMcoYEheffKgH5kJXsa3Ynnq1Ky34GKx9h6dZSYodTPos=
+	t=1739153523; cv=none; b=O7Uxn5r7D7qyAbtbOMlHDHi3WO/Z4dLj7APXZEcIgBcJJAI2WcyC1Z9E+15zL59oQW9e/Rp2b46ymCOsHhTZXdtRunBO3HATg02fRqWNFgvpognS/npDG7MwPbwo8DStsW8n2cnRjT54BFPs+A02MV+VpAjyDIizyQ0eO7Ilf9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739124141; c=relaxed/simple;
-	bh=s2hggFDt7s7xy2H4d+OrftWTkUFGEUVrbweCBcDPlcM=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qppkEdRZoxOXjl3WuLf3j4RYdVZJfyV+li6vel/yUbgotrxgfirnRiyJ/HsEt4u6UKOaaOWG6HpaRnHQu292u/Q3AlrEz87H+TQ5Cq91kCSiPan5YHhMyx85WGg5slW5lixiOPHjrLp9OoHW8LJH6o83hMz3kITew5HaE+yKax8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de; spf=pass smtp.mailfrom=raven.inka.de; arc=none smtp.client-ip=193.197.184.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=raven.inka.de
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1thBdI-005She-Oz; Sun, 09 Feb 2025 19:02:16 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id C4DE460117; Sun,  9 Feb 2025 19:01:50 +0100 (CET)
-Date: Sun, 9 Feb 2025 19:01:50 +0100
-From: Josef Wolf <jw@raven.inka.de>
-To: git@vger.kernel.org
-Subject: Re: renormalize histroy with smudge/clean-filter
-Message-ID: <20250209180150.GP30202@raven.inka.de>
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-References: <20250207104510.GE30202@raven.inka.de>
- <CAPx1GvcyaZqYK+SvgtfsajqtkMty1jOcVAtwfmam-LpOjyd0jw@mail.gmail.com>
- <CABPp-BFnx2m75jsa3_kTPet97HY+xwb_6JmPiKM5+OARPy=mGA@mail.gmail.com>
- <20250207203248.GG30202@raven.inka.de>
- <CABPp-BFGUa_DRBe1WLVfCOKh53+F15KxW_c_OZAMwZCxuAQCiw@mail.gmail.com>
- <20250208205709.GH30202@raven.inka.de>
- <20250209092514.GM30202@raven.inka.de>
- <20250209111406.GA12069@tb-raspi4>
- <20250209150924.GN30202@raven.inka.de>
- <20250209175450.GO30202@raven.inka.de>
+	s=arc-20240116; t=1739153523; c=relaxed/simple;
+	bh=hwem6d/GNlCV7VPZEpsiZdPg407MF3yQTRpGPIpFbSU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=XryWen112dp86PIbaV3Puh+Js4utP5X39uBiHaaY0rYK6NAmeZ5IbA9a8CCzsjAcMV+17Ye9rbJdbgWEGCPl2FEvEmMsllz0AqPcNcwEnQo8qqwzeKx95MKcnX6/116qoyLyrbsR2Om73juyAqO18BZZn6sEIdw4aVv/fgysUzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=envs.net; spf=pass smtp.mailfrom=envs.net; arc=none smtp.client-ip=5.199.136.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=envs.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=envs.net
+Received: from localhost (mail.envs.net [127.0.0.1])
+	by mail.envs.net (Postfix) with ESMTP id D844C38A3ED4;
+	Mon, 10 Feb 2025 02:11:49 +0000 (UTC)
+X-Virus-Scanned: Debian amavisd-new at mail.envs.net
+Received: from mail.envs.net ([127.0.0.1])
+	by localhost (mail.envs.net [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id FVNTnLkoQ-iW; Mon, 10 Feb 2025 02:11:47 +0000 (UTC)
+Received: from xtexx.eu.org (unknown [120.230.227.202])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.envs.net (Postfix) with ESMTPSA;
+	Mon, 10 Feb 2025 02:11:47 +0000 (UTC)
+From: Bingwu Zhang <xtex@envs.net>
+To: Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+Cc: Bingwu Zhang <xtex@aosc.io>,
+	apenwarr@gmail.com
+Subject: [PATCH] contrib/subtree: verify HEAD is valid before adding a subtree
+Date: Mon, 10 Feb 2025 10:11:26 +0800
+Message-ID: <20250210021128.31083-2-xtex@envs.net>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250209175450.GO30202@raven.inka.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1608; i=xtex@aosc.io; h=from:subject; bh=zS2GL+08mZGijujVIxoowkGtNpvpWEYJ9Ym64zrIgsc=; b=owGbwMvMwCW2U4Ij7wZL9ETG02pJDOkrEwIcWk/lrPz38o8dk3vmZ3OrzoW39101niC7m+PpP 7EGodgfHaUsDGJcDLJiiixFhg3erDrp/KLLymVh5rAygQxh4OIUgIm87GZkOOomUVaygodn54k+ 05hdimGeCavz1G3FxdkVVJ+uNp8dwfC/dLNI/ak4q8zD6az3GOMeKrz8G37SaPrXd0xxO2Z0HlV gAgA=
+X-Developer-Key: i=xtex@aosc.io; a=openpgp; fpr=7231804B052C670F15A6771DB918086ED8045B91
+Content-Transfer-Encoding: 8bit
 
-On Sun, Feb 09, 2025 at 06:54:50PM +0100, Josef Wolf wrote:
+From: Bingwu Zhang <xtex@aosc.io>
 
-Upps. That's probably an ordering problem:
+After initializing a new repository or switching to a orphan branch,
+HEAD is a symbolic reference to refs/heads/xxx while the pointed branch
+head does not exist until a initial commit.
 
->   *.store     -filter -text  # <--- this is the problematic file
-> [ ... ]
->   */P-*   filter=etsfile
+"git subtree add" will try to ensure that working tree and index are
+clean, but as HEAD is invalid, diff-index always fails:
+  fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
+  Use '--' to separate paths from revisions, like this:
+  'git <command> [<revision>...] -- [<file>...]'
+  fatal: working tree has modifications.  Cannot add.
+It says "working tree has modifications" but it is not the case.
 
-Later line overrides first line.
+Add a check using "git show-ref --verify" to ensure that HEAD is a valid
+reference and give a clearer error message.
 
-Please ignore my last mail.
+Signed-off-by: Bingwu Zhang <xtex@aosc.io>
+---
+ contrib/subtree/git-subtree.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 15ae86db1b27..41eb816e454a 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -770,6 +770,11 @@ copy_or_skip () {
+ # Usage: ensure_clean
+ ensure_clean () {
+ 	assert test $# = 0
++	# verify HEAD, or else "git diff-index HEAD" will fail
++	if ! git show-ref --verify --quiet HEAD 2>&1
++	then
++		die "fatal: HEAD is not a valid reference.   Subtree cannot be committed as the first commit of a branch."
++	fi
+ 	if ! git diff-index HEAD --exit-code --quiet 2>&1
+ 	then
+ 		die "fatal: working tree has modifications.  Cannot add."
+
+base-commit: f93ff170b93a1782659637824b25923245ac9dd1
 -- 
-Josef Wolf
-jw@raven.inka.de
+2.48.1
+
