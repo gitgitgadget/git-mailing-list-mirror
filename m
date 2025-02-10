@@ -1,70 +1,68 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4194E257458
-	for <git@vger.kernel.org>; Mon, 10 Feb 2025 19:15:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C7F25E475
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 19:16:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739214952; cv=none; b=VxazUuW+k44BSQiSMWhIXhY/L/1lO8seu+PZQ6Q6bdNWdzFdzBNd8MqKjIchF9nshVgL5bvRL7Ae7gQH+WNxShAp405bdV7vmMpeMS+PVzNrSyol76TdAWH6xBamMKSpIE2eXHTsn6ZsSwwunAUSdt1teTpLRu1H8M39KOWknYw=
+	t=1739215021; cv=none; b=JAkmDqCU9/s1ju/d9Ukdpvmiy4O9jnOKACMVdztRkome3t461c39BV6BM14CZN6mArfcCPR81T7zzbc3HPnHgIwpBxv8pCBUxGfb1ef4DNQCTsgFP1WsZTtylXsitAJH6Ea9wHFYFmZduWPxkR7e2ykZ0Ewh8z8nsUqXYCVEPLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739214952; c=relaxed/simple;
-	bh=oeEGsG+i0iiLaqKZqyD7SS847ZwCTX9NEQfUxbp0CjM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ioJRKWi1R8qyZKOW2UXV/iSC7WtPrJDhlydtnDsDYCvxgAt59ZPp4AgNW3jnwgILIla/Lxl0AyVjX5JX8R8pMmDRLUxLXXdH/qpUSHbrFNzkhPfuFQR7hWKYP4A5BvVyJTTJVkYWhjxUh1McovF+aQ2Hlx56B+gFl9vq9fNwT2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name; spf=pass smtp.mailfrom=intelfx.name; dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b=XqIf6omA; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1739215021; c=relaxed/simple;
+	bh=XRNpoVgZN7Y85Fd7LH50hhO+VUq1rIsufxKiAwrj0js=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ASFYcvkdeUCGdHatiXzEoO4hFWiH9o6Ca+5Nmdn1mwM5wDPLj++54UHP0NR0EFglml92V1c4xnPEraeCLT6ntmcpVYrU6+pcOqZOdOuVgje2I2uBXBwufZVhWV3/ikf+Gc7cZ2SM4M5r+1tkJ3zj1EB/Ko+E9m+tSYdH2SgsyMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name; spf=pass smtp.mailfrom=intelfx.name; dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b=UChm0vDk; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intelfx.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b="XqIf6omA"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-38dc73cc5acso2178756f8f.0
-        for <git@vger.kernel.org>; Mon, 10 Feb 2025 11:15:49 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b="UChm0vDk"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43948f77f1aso6599865e9.0
+        for <git@vger.kernel.org>; Mon, 10 Feb 2025 11:16:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intelfx.name; s=google; t=1739214948; x=1739819748; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=beeVlPqLpm7tn2I9D9dConSLD30jKUzQ93SY3OCsk9o=;
-        b=XqIf6omAV+JSuTnsKS3SS82anAI3QE8zXHcv6hQd/cdS/xu0hkLiD5BkXE0R91zRtb
-         lqpiEAmmUIELQghQ3i1Odw/KbBb+O6TFx+sPRf0bOrO3hVT+Z2+rYoaeS6HS78VTxFnI
-         +4QLlfDCEFjbtxI90KaQ356cX7BgpzD9EJFdc=
+        d=intelfx.name; s=google; t=1739215017; x=1739819817; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Kpm+O33Q6Fi/GRTYgnu9cj2/JwIwx7aVh5WZd6m8X+Q=;
+        b=UChm0vDkb/sKg63DDuL92ayDzUz2BVjjm0IS7eXZgLfNOxuhezRGrznYh0j/K9gQgc
+         0K9aB9ueIu9QEZEU2b/IUyuuXdDUgydHZbJu0O8vW+KXYzLeIcbsyWHkQOWDrSSAfYva
+         62XPAfW02DlNIJXAMnRMmLUk6XnSpSIz7ORSg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739214948; x=1739819748;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=beeVlPqLpm7tn2I9D9dConSLD30jKUzQ93SY3OCsk9o=;
-        b=HAu1gaZoS0gD3DUqr3GWSAa+tTOgcjVB+o+ogLhXzb180he68o49LqzMBldYXqDFUg
-         WVbnNP3/DAy6r7/KdBY5jZMq8+FFDQX8qIyCpll9pWA+qkz+RCcyKSvI5D90IrvPayuD
-         +yRby98t0w70uG5wTgio14vOPJjZ9TorPO53mV5WIqdsz9rb8OInq0m1UovbwImsTM1Z
-         TUglw74wubjfBXoBtMf3sA9s7Ev4Ofytxl3q7Vi28ypvjPc5Q8sqIkkTb2g3/pkApx3c
-         Ex9jfQthaRsLi1Rr08+Vlao42a4/YbWjPcwZj7e2RohEiS46nYa8IW8kFDunt7snLb5T
-         70Jw==
-X-Gm-Message-State: AOJu0YxEr/CNk2nHcmaEbJZnCl+Q8fqFAFokZ/QV1tYwe3l2ngZLc2x2
-	v+4AhjtXSvOfwRmgty5dpDREstB4p+LvktmsUZWEEWl6Whtgsxe1/kE1hrl6Xne4SvqopHrg8ic
-	zRyMJeQ==
-X-Gm-Gg: ASbGncsxHU8uw26/nP2XAopUi0y2rUNkUa9hdQcgSyWdc+TSd7ukW+h0LNz/Q9vZgXI
-	9NiYP9pTY9TtP8gztRc/RAd2irOPf+EYASOItMxcx1DzgwclDN2v5qWf0i6vPQZNx+ab2r65017
-	PR4cJu3iCGG+Jg42hRYM95/OluqZg2P6TSA76VoyVAh1n+cMfXCeRmjineMVngUhk0WOJrP5xwN
-	ZQSlZVYU/mCPMAPbt02W0eTDc0BEOZ4cHdi2i/IPRpqobVXQdo+y8zSzCZvyoap1E6qIcx6Wdcn
-	Je1YGinc5h7Sehr3yRkcOVDriNxsJExSfQ==
-X-Google-Smtp-Source: AGHT+IG4/qjF46hZny6U098hnwCqfceogLYzzjWyqX2ztAocRGeEPBoQa8rpf1z6kgHTmkm6OzEhhA==
-X-Received: by 2002:a5d:598d:0:b0:38a:8b34:76b0 with SMTP id ffacd0b85a97d-38de43ec4b6mr472900f8f.27.1739214948173;
-        Mon, 10 Feb 2025 11:15:48 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739215017; x=1739819817;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Kpm+O33Q6Fi/GRTYgnu9cj2/JwIwx7aVh5WZd6m8X+Q=;
+        b=sakM6E/w4mCLIV+B2B+RcN5HaO1WTtIMF6Qv9f1Qct3ShSL2FkqVMYkJ+85Isr3yx/
+         2ROpf3V7QSlVrXYDz4tvSpTCapu3R9fEC7N2UPdNWtRCZBslem9tBGY7Ql7iNUyA+Lbj
+         7PLs8WGRclZtQtAj6ffrVNJZNBO69GEIcpMfPdq0Bs99JzU8u3Te48RcvsockhO595O9
+         Z9/1pLYRx39WNEUF3PRDYSAwvGgdC4xxYxAUcyVeNYPB8742qXZ1+NlfGi1fM06O9yxH
+         415vHqEKdFONyMS0gudbsxB768U2nqvdLJFy/J8kTWXvXKvLvixRXjCRep6kYaflLAWB
+         rbpg==
+X-Gm-Message-State: AOJu0YxBRVaiED4c7rOD8nO3kZwlcUQmaeX6i00Q6kHIVEER3aDGmFCi
+	1zyvrGMEjgcNk5v5+xCClKyNQGOG9d9yj/v3JgLj6gtZ4WCTvBhzfgAbNxlYnfvxnGU9kWLSNm9
+	PDlLlSw==
+X-Gm-Gg: ASbGncvT5YMv8HTDOSPhnzqVc+jHdZvA2vK8ITU8uO6zLYA9vpI3dBGkuAHk0zFsl7/
+	G07BNT/0GiV7EorpVBDsgu2KSvLCDU3ABHZPLRRiM++TSMvEVHbpoTuUJ/NsBNy/PDoCzJnzFJj
+	nX/W3h40wPFUgmsmyPL/OjLcAAZSjIeQyutADzVS9/mrDA9gUimn7Te3r6vUqile+KeiFbb/mZe
+	/6XeoQ7MsnWEceknPO62YJ650txWfS18HMG5XYJ1aUVwhPuWSrD90oh/J6jRg0gx6JXXFZzefjC
+	x4SOUH0FFd6D9Fz7liKxNAWQfkzZqM4RJQ==
+X-Google-Smtp-Source: AGHT+IHdnTmuyafE2JRM3bxlAVPoijUDWrS1QXFLioz63iwMoCQOSRAvuBGdJYYS78UGBl3JOKJ2XQ==
+X-Received: by 2002:a05:600c:3593:b0:438:e231:d342 with SMTP id 5b1f17b1804b1-4392497dbe7mr101402985e9.1.1739215017178;
+        Mon, 10 Feb 2025 11:16:57 -0800 (PST)
 Received: from able.tailbefcf.ts.net ([91.151.136.114])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43946bff4d4sm30477055e9.3.2025.02.10.11.15.46
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-439492affe2sm21407905e9.28.2025.02.10.11.16.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Feb 2025 11:15:46 -0800 (PST)
+        Mon, 10 Feb 2025 11:16:55 -0800 (PST)
 From: Ivan Shapovalov <intelfx@intelfx.name>
 To: git@vger.kernel.org
 Cc: Ivan Shapovalov <intelfx@intelfx.name>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/3] clean: add `config.exclude` and `--remove-excluded`
-Date: Mon, 10 Feb 2025 23:14:39 +0400
-Message-ID: <20250210191504.309661-4-intelfx@intelfx.name>
+	Elijah Newren <newren@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Alex Henrie <alexhenrie24@gmail.com>
+Subject: [PATCH] rebase: add `--update-refs=interactive`
+Date: Mon, 10 Feb 2025 23:16:44 +0400
+Message-ID: <20250210191650.316329-1-intelfx@intelfx.name>
 X-Mailer: git-send-email 2.48.1.5.g9188e14f140
-In-Reply-To: <20250210191504.309661-1-intelfx@intelfx.name>
-References: <20250210191504.309661-1-intelfx@intelfx.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,159 +71,207 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add `config.exclude` to configure "always excluded" files (same as `-e`
-on the command line), and `--remove-excluded` (intentionally without a
-short form) to "REALLY remove everything, dammit!"
+In rebase-heavy workflows involving multiple interdependent feature
+branches, typing out `--update-refs` quickly becomes tiring, which
+can be mitigated with setting the `rebase.updateRefs` git-config option
+to perform update-refs by default.
 
-This might seem like euphemism treadmill, but there is a specific
-use-case for all of the exclusion methods and options:
+However, the utility of `rebase.updateRefs` is somewhat limited because
+you rarely want it in a non-interactive rebase (as it does not give you
+the chance to review the update-refs candidates, likely leading to
+updating refs that you didn't want updated -- I made quite an amount
+of mess by setting this option and subsequently forgetting about it).
 
-.gitignore:     files that _the project_ does not want to track or touch
-                (build artifacts)
-clean.exclude:  files that _the user_ does not want to track or touch
-                (IDE configuration)
-git clean -x:   remove build artifacts, but keep precious files
-                (when a pristine build is desired)
-git clean -x --remove-excluded:
-                remove everything, including precious files
-                (e.g. for redistribution)
+Try to find a middle ground by introducing a third value,
+`--update-refs=interactive` (and `rebase.updateRefs=interactive`)
+which means `--update-refs` when starting an interactive rebase and
+`--no-update-refs` otherwise. This option is primarily intended to be
+used in the gitconfig, but is also accepted on the command line
+for completeness.
 
 Signed-off-by: Ivan Shapovalov <intelfx@intelfx.name>
 ---
- Documentation/config/clean.txt | 11 +++++++++++
- Documentation/git-clean.txt    | 22 +++++++++++++++-------
- builtin/clean.c                | 19 ++++++++++++++++---
- 3 files changed, 42 insertions(+), 10 deletions(-)
+ Documentation/config/rebase.txt |  7 +++-
+ Documentation/git-rebase.txt    |  8 +++-
+ builtin/rebase.c                | 72 +++++++++++++++++++++++++++++----
+ 3 files changed, 77 insertions(+), 10 deletions(-)
 
-diff --git a/Documentation/config/clean.txt b/Documentation/config/clean.txt
-index c0188ead4e..eb64ad26fa 100644
---- a/Documentation/config/clean.txt
-+++ b/Documentation/config/clean.txt
-@@ -1,3 +1,14 @@
- clean.requireForce::
- 	A boolean to make git-clean refuse to delete files unless -f
- 	is given. Defaults to true.
-+
-+clean.exclude::
-+	Additional exclude patterns that have higher priority than the standard
-+	linkgit:gitignore[5] rules and will be honored in (almost) all cases,
-+	even if the `-x` or `-X` options are given. These patterns are intended
-+	to be used for user-specific "precious" files such as IDE configuration
-+	that must not be removed even if a pristine build is desired. This list
-+	has the same priority and semantics as the `-e` command line option.
-+
-+	The `--remove-excluded` command line option can be used to disregard
-+	these exclude patterns (intentionally no short form).
-diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
-index fd17165416..33d6fb7228 100644
---- a/Documentation/git-clean.txt
-+++ b/Documentation/git-clean.txt
-@@ -59,15 +59,10 @@ OPTIONS
- 	Be quiet, only report errors, but not the files that are
- 	successfully removed.
+diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
+index c6187ab28b..d8bbaba69a 100644
+--- a/Documentation/config/rebase.txt
++++ b/Documentation/config/rebase.txt
+@@ -24,7 +24,12 @@ rebase.autoStash::
+ 	Defaults to false.
  
---e <pattern>::
----exclude=<pattern>::
--	Use the given exclude pattern in addition to the standard ignore rules
--	(see linkgit:gitignore[5]).
--
- -x::
- 	Don't use the standard ignore rules (see linkgit:gitignore[5]), but
--	still use the ignore rules given with `-e` options from the command
--	line.  This allows removing all untracked
-+	still use the ignore rules given with the `-e` command line option or the
-+	`clean.exclude` configuration variable.  This allows removing all untracked
- 	files, including build products.  This can be used (possibly in
- 	conjunction with 'git restore' or 'git reset') to create a pristine
- 	working directory to test a clean build.
-@@ -76,6 +71,19 @@ OPTIONS
- 	Remove only files ignored by Git.  This may be useful to rebuild
- 	everything from scratch, but keep manually created files.
+ rebase.updateRefs::
+-	If set to true enable `--update-refs` option by default.
++	If set to true, enable the `--update-refs` option of
++	linkgit:git-rebase[1] by default. When set to 'interactive',
++	only enable `--update-refs` by default for interactive mode
++	(equivalent to `--update-refs=interactive`).
++	This option can be overridden by specifying any form of
++	`--update-refs` on the command line.
  
-+-e <pattern>::
-+--exclude=<pattern>::
-+	Use the given exclude pattern in addition to the standard ignore rules
-+	(see linkgit:gitignore[5]). Exclude patterns can also be configured
-+	using the `clean.exclude` configuration variable. These patterns have
-+	higher priority than the `-x` or `-X` options and will be honored
-+	even in their presence.
-+
-+--remove-excluded::
-+	Disregard the additional exclude patterns provided by `-e` or the
-+	configuration variable `clean.exclude`. This flag has the highest
-+	priority and intentionally does not have a short form.
-+
- Interactive mode
- ----------------
- When the command enters the interactive mode, it shows the
-diff --git a/builtin/clean.c b/builtin/clean.c
-index ec58338049..eae22a1ec7 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -29,6 +29,7 @@
- static int require_force = -1; /* unset */
- static int interactive;
- static struct string_list del_list = STRING_LIST_INIT_DUP;
-+static struct string_list config_exclude_list = STRING_LIST_INIT_DUP;
- static unsigned int colopts;
+ rebase.missingCommitsCheck::
+ 	If set to "warn", git rebase -i will print a warning if some
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index b18cdbc023..ae6939588d 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -647,12 +647,18 @@ rebase --continue` is invoked. Currently, you cannot pass
  
- static const char *const builtin_clean_usage[] = {
-@@ -133,6 +134,11 @@ static int git_clean_config(const char *var, const char *value,
+ --update-refs::
+ --no-update-refs::
++--update-refs=interactive::
+ 	Automatically force-update any branches that point to commits that
+ 	are being rebased. Any branches that are checked out in a worktree
+ 	are not updated in this way.
+ +
++If `--update-refs=interactive` is specified, the behavior is equivalent to
++`--update-refs` if the rebase is interactive and `--no-update-refs` otherwise.
++(This is mainly useful as a configuration setting, although it might also be
++of use in aliases.)
+++
+ If the configuration variable `rebase.updateRefs` is set, then this option
+-can be used to override and disable this setting.
++can be used to override or disable the configuration.
+ +
+ See also INCOMPATIBLE OPTIONS below.
+ 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 6c9eaf3788..57b456599b 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -129,10 +129,17 @@ struct rebase_options {
+ 	int reschedule_failed_exec;
+ 	int reapply_cherry_picks;
+ 	int fork_point;
+-	int update_refs;
++	// UPDATE_REFS_{UNKNOWN,NO,ALWAYS} numeric values must never
++	// change as post-option-parsing code works with {,config_}update_refs
++	// as if they were ints
++	enum {
++		UPDATE_REFS_UNKNOWN = -1,
++		UPDATE_REFS_NO = 0,
++		UPDATE_REFS_ALWAYS = 1,
++		UPDATE_REFS_INTERACTIVE,
++	} update_refs, config_update_refs;
+ 	int config_autosquash;
+ 	int config_rebase_merges;
+-	int config_update_refs;
+ };
+ 
+ #define REBASE_OPTIONS_INIT {			  	\
+@@ -150,8 +157,8 @@ struct rebase_options {
+ 		.autosquash = -1,                       \
+ 		.rebase_merges = -1,                    \
+ 		.config_rebase_merges = -1,             \
+-		.update_refs = -1,                      \
+-		.config_update_refs = -1,               \
++		.update_refs = UPDATE_REFS_UNKNOWN,     \
++		.config_update_refs = UPDATE_REFS_UNKNOWN, \
+ 		.strategy_opts = STRING_LIST_INIT_NODUP,\
+ 	}
+ 
+@@ -412,6 +419,18 @@ static void imply_merge(struct rebase_options *opts, const char *option)
+ 	}
+ }
+ 
++static int coerce_update_refs(const struct rebase_options *opts, int update_refs)
++{
++	/* coerce "=interactive" into "no" rather than "not set" when not interactive
++	 * this way, `git -c rebase.updateRefs=yes rebase --update-refs=interactive [without -i]`
++	 * will not inherit the "yes" from the config */
++	if (update_refs == UPDATE_REFS_INTERACTIVE)
++		return (opts->flags & REBASE_INTERACTIVE_EXPLICIT)
++		       ? UPDATE_REFS_ALWAYS
++		       : UPDATE_REFS_NO;
++	return update_refs;
++}
++
+ /* Returns the filename prefixed by the state_dir */
+ static const char *state_dir_path(const char *filename, struct rebase_options *opts)
+ {
+@@ -779,6 +798,17 @@ static void parse_rebase_merges_value(struct rebase_options *options, const char
+ 		die(_("Unknown rebase-merges mode: %s"), value);
+ }
+ 
++static int parse_update_refs_value(const char *value, const char *desc)
++{
++	int v = git_parse_maybe_bool(value);
++	if (v >= 0)
++		return v ? UPDATE_REFS_ALWAYS : UPDATE_REFS_NO;
++	else if (!strcmp("interactive", value))
++		return UPDATE_REFS_INTERACTIVE;
++
++	die(_("bad %s value '%s'; valid values are boolean or \"interactive\""), desc, value);
++}
++
+ static int rebase_config(const char *var, const char *value,
+ 			 const struct config_context *ctx, void *data)
+ {
+@@ -821,7 +851,8 @@ static int rebase_config(const char *var, const char *value,
+ 	}
+ 
+ 	if (!strcmp(var, "rebase.updaterefs")) {
+-		opts->config_update_refs = git_config_bool(var, value);
++		opts->config_update_refs = parse_update_refs_value(value,
++			"rebase.updateRefs");
  		return 0;
  	}
  
-+	if (!strcmp(var, "clean.exclude")) {
-+		string_list_append(&config_exclude_list, value);
-+		return 0;
-+	}
-+
- 	if (git_color_config(var, value, cb) < 0)
- 		return -1;
- 
-@@ -925,6 +931,7 @@ int cmd_clean(int argc,
- 	int i, res;
- 	int dry_run = 0, remove_directories = 0, quiet = 0, remove_ignored = 0;
- 	int ignored_only = 0, force = 0, errors = 0, gone = 1;
-+	int remove_excluded = 0;
- 	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
- 	struct strbuf abs_path = STRBUF_INIT;
- 	struct dir_struct dir = DIR_INIT;
-@@ -940,11 +947,13 @@ int cmd_clean(int argc,
- 		OPT_BOOL('i', "interactive", &interactive, N_("interactive cleaning")),
- 		OPT_BOOL('d', NULL, &remove_directories,
- 				N_("remove whole directories")),
--		OPT_CALLBACK_F('e', "exclude", &exclude_list, N_("pattern"),
--		  N_("add <pattern> to ignore rules"), PARSE_OPT_NONEG, exclude_cb),
- 		OPT_BOOL('x', NULL, &remove_ignored, N_("remove ignored files, too")),
- 		OPT_BOOL('X', NULL, &ignored_only,
- 				N_("remove only ignored files")),
-+		OPT_CALLBACK_F('e', "exclude", &exclude_list, N_("pattern"),
-+				N_("always exclude <pattern> from cleaning (overrides -x)"), PARSE_OPT_NONEG, exclude_cb),
-+		OPT_BOOL(0, "remove-excluded", &remove_excluded,
-+				N_("remove excluded files, too (overrides -e and clean.exclude)")),
- 		OPT_END()
- 	};
- 
-@@ -1016,7 +1025,10 @@ int cmd_clean(int argc,
- 	if (repo_read_index(the_repository) < 0)
- 		die(_("index file corrupt"));
- 
--	add_patterns_from_string_list(&dir, EXC_CMDL, "--exclude option", &exclude_list);
-+	if (!remove_excluded) {
-+		add_patterns_from_string_list(&dir, EXC_CMDL, "--exclude option", &exclude_list);
-+		add_patterns_from_string_list(&dir, EXC_CMDL, "clean.exclude", &config_exclude_list);
-+	}
- 
- 	parse_pathspec(&pathspec, 0,
- 		       PATHSPEC_PREFER_CWD,
-@@ -1091,6 +1103,7 @@ int cmd_clean(int argc,
- 	strbuf_release(&buf);
- 	string_list_clear(&del_list, 0);
- 	string_list_clear(&exclude_list, 0);
-+	string_list_clear(&config_exclude_list, 0);
- 	clear_pathspec(&pathspec);
- 	return (errors != 0);
+@@ -1042,6 +1073,19 @@ static int parse_opt_rebase_merges(const struct option *opt, const char *arg, in
+ 	return 0;
  }
+ 
++static int parse_opt_update_refs(const struct option *opt, const char *arg, int unset)
++{
++	struct rebase_options *options = opt->value;
++
++	if (arg)
++		options->update_refs = parse_update_refs_value(arg,
++			"--update-refs");
++	else
++		options->update_refs = unset ? UPDATE_REFS_NO : UPDATE_REFS_ALWAYS;
++
++	return 0;
++}
++
+ static void NORETURN error_on_missing_default_upstream(void)
+ {
+ 	struct branch *current_branch = branch_get(NULL);
+@@ -1187,9 +1231,11 @@ int cmd_rebase(int argc,
+ 		OPT_BOOL(0, "autosquash", &options.autosquash,
+ 			 N_("move commits that begin with "
+ 			    "squash!/fixup! under -i")),
+-		OPT_BOOL(0, "update-refs", &options.update_refs,
+-			 N_("update branches that point to commits "
+-			    "that are being rebased")),
++		OPT_CALLBACK_F(0, "update-refs", &options,
++			N_("(bool|interactive)"),
++			N_("update branches that point to commits "
++			   "that are being rebased"),
++			PARSE_OPT_OPTARG, parse_opt_update_refs),
+ 		{ OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id"),
+ 			N_("GPG-sign commits"),
+ 			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+@@ -1528,6 +1574,16 @@ int cmd_rebase(int argc,
+ 	if (isatty(2) && options.flags & REBASE_NO_QUIET)
+ 		strbuf_addstr(&options.git_format_patch_opt, " --progress");
+ 
++	/* coerce --update-refs=interactive into yes or no.
++	 * we do it here because there's just too much code below that handles
++	 * {,config_}update_refs in one way or another and modifying it to
++	 * account for the new state would be too invasive.
++	 * all further code uses {,config_}update_refs as a tristate. */
++	options.update_refs =
++		coerce_update_refs(&options, options.update_refs);
++	options.config_update_refs =
++		coerce_update_refs(&options, options.config_update_refs);
++
+ 	if (options.git_am_opts.nr || options.type == REBASE_APPLY) {
+ 		/* all am options except -q are compatible only with --apply */
+ 		for (i = options.git_am_opts.nr - 1; i >= 0; i--)
 -- 
 2.48.1.5.g9188e14f140
 
