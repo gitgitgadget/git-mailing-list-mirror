@@ -1,101 +1,127 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE3C25B67E
-	for <git@vger.kernel.org>; Mon, 10 Feb 2025 17:51:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3E71C302C
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 18:03:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739209899; cv=none; b=FxGY1tasSLLWvarYy7D8mAqSS5stcmLcw1jLbCZUuqzSekQax0HmVZ/HkyGindQyEnoM7nnAoMnPiXm2GSjcOb7MwD+GLHfahKntZDOdm6+okpCD1secia8i2fWpVZZqAYhAPi2gCOtl8CCwONmYkbLJ9P3kJk5rSwykXIIN/4s=
+	t=1739210623; cv=none; b=gtqEDzipA04z4EPBHoK0ievGkdxw8soe6IUgwo6cAg2lRgbAVyh8PJ2PcROAYwY+9Y+EmveLSXG9hvEalxZHoLxGnTOABomoK/Tc9L578BCcgkkpoa79W8rBLIY/NyQRi32+E8XF7wg6n3ozBQXrsorAKK8cb2pWJHS0SY1Xm+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739209899; c=relaxed/simple;
-	bh=dwF0vvemD5VdR30vfJuz9vH9ZxQY/HiNZ+gmnkYA2sM=;
+	s=arc-20240116; t=1739210623; c=relaxed/simple;
+	bh=GKIJMbW4psXc2rh3l011sSOsvudtPhrlHAj+Y3tp1ek=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=glVAiyycna6Y43fSELIkhqQnrYnAxfUYq1rliElXijMxILxC0ZVUwvy4fNCaGQXQPYt5YR8iMCZAgzu01cEp2CnoMM21gfhi1nkmFklYkAX6Qyb1hgxEvwNAayyHsznVb8XN0YQA/E/+1sDI7q9d818MuVhK3JKFHcesy3B4Uzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=el2N4ylC; arc=none smtp.client-ip=209.85.218.41
+	 To:Cc:Content-Type; b=WALJTFUlRS2+wk/RzZjgNJJkUwAQZg+oYpTQcXUzByWu4zgmXNUW61hIXj3NZWQw299i7ai4EI42GQ0jRP5ow223KJ99v7HyABzoq+RWth96D3lcinHNTnvfaPoSZBGRQFmJzRYimL7OtBuXPUP1e+pTiV5veoicxoFqoWve1j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GJpAym+/; arc=none smtp.client-ip=209.85.217.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="el2N4ylC"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ab7b80cc3d2so206223266b.3
-        for <git@vger.kernel.org>; Mon, 10 Feb 2025 09:51:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GJpAym+/"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4bbd554fe87so322295137.0
+        for <git@vger.kernel.org>; Mon, 10 Feb 2025 10:03:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739209896; x=1739814696; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1739210621; x=1739815421; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UGmnEp7UEbdNcyugf9FG4fRiMoF4BYMqt7/vZ7HOWeU=;
-        b=el2N4ylCJ8NmDsQmPOAz42qMy1uGSFEeXKORc+S36HoG4TeUNBmqmqKe8rgHjV16Gp
-         8H6MBHMTc8Cl/0zxIFMr2Lu1bimZMyMUL+00cFPBj6rdbMaUCnuJFcdakSTco2/EOcQ/
-         LHLGfJVlw1rzKImGxEXUAuOpRP2/dh+LmGk2bIw9nUPbSpjd4rl2y9YK2cpjf1CFUMoo
-         tXo/v32JreD8oJuxuP4nacrt5g/mB4vXOGiw+grl+HxYrjUMK4f2+O52qk2Amr9Tdtpl
-         f3k/L6oL2jDNvfWoQnx3ghlDzQyuhhugJmX/7e0ZcOt74+7pxc9OcwCswa4FsoU/TRfK
-         3aKw==
+        bh=P4XtxJNMWlO2wR2LXt1RN7YGCixWBczuO4MOdGEFiBM=;
+        b=GJpAym+/p6VEIQKu3e0ETvoUcGCW1mg+sXf0Ez4NRZuFDxoLONt77uElK5JlounQ2w
+         3HJWsK0I/GCltIfrQds12Tgm5hfbEAkNhxGtz0/KApTSHLlJ06wg7q4Fl5X0cFjDPKwv
+         ByVWPAhw/0qnzcrO48e+TCt+m4yTqwkCgnjo/rO8RXFG9Nzzek9X1Fx7QMpfES3ppiFI
+         rvfa7iSUUdZBblFK8/qBLcoxLYGYUBBtxqQhmAOMG8gsN37QLstAVSjSi1s4L2VQYeQR
+         1WloJjGvYn6dei0h60A67+3MwDIe4lmZiwBYX3dqlmp4TpzATXvbBgpQjks2XfLUeWSI
+         iQVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739209896; x=1739814696;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1739210621; x=1739815421;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UGmnEp7UEbdNcyugf9FG4fRiMoF4BYMqt7/vZ7HOWeU=;
-        b=oRXPe/dhIHcjlNkTDwBTAdsTgRNBknz1SDTKGJufyyF+KUvqKFELBh4i4S66DYudmd
-         thelSuxdmVC8MnjtIvN6BQ4X1Wzjk90PM649ImH2cMHOtAB3S25iUeW2wURxoo6e+2WH
-         K3CZu5znv+1LL7K+EpTjWV504l3mAYzbinWrcmlot+ZOVARZQpXIR2qsBxzSCu6Ha1ds
-         Nk1lemKrG3tSXLMmuwvt07bUzhGk0knO6NnTR0Gm4xjDJaUtVh7+OVs+tdahRhG3ByVy
-         Rlh9qy8unaEzTZScjLMARmUMOoOeDHHQTUoAQ/HcUs9laU1/MV8buPFOC12QkGITLeuW
-         mv2w==
-X-Forwarded-Encrypted: i=1; AJvYcCUlhJkxiNs4Ta2ETj4Wv11zPMxxIizfzBsJ0yOWjeYCLB18j/C5TmInKADsupCH/ZJF9wc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwaDvIBSaT+L0UW61ZU+A7E+xlrGmVmNQDTW6V8LcXv9XyJj970
-	wbrb2oO/LLFZ9x6cVV1MAfNX6aOOtwV2hc+igEUbbskPzI9JUo34Q9MuEVPDXP6iL3c0Fmpevmg
-	CXZn+MGK/ZzVRFZWxkGmjxn5P1KL9utFP
-X-Gm-Gg: ASbGncv0jDRtdJ9cvSVRp1IW/U/8k31pIZKNXrFDxXEtbBmDe15lPWoNU62Lb+u1RnK
-	+5O7KPtQhWycFaJwBaG2Vp/Z73v/kRYzcU9CVc7LO9E60ovlFg0UtrSUb7jc+PY7Z9DKo5qrzqI
-	mGhxJD21LYhBdWo7sjTddW2yE0Z5I=
-X-Google-Smtp-Source: AGHT+IHdMtkvx9XYn2stsP1r99hCl+avhw+6yiudf5JiK5OzdCsm94la/NUjRVv/gqgOBkzCJL/sZCkOsTaSbl8YhNs=
-X-Received: by 2002:a05:6402:2383:b0:5dc:9589:9f64 with SMTP id
- 4fb4d7f45d1cf-5de450036dcmr40005032a12.13.1739209895832; Mon, 10 Feb 2025
- 09:51:35 -0800 (PST)
+        bh=P4XtxJNMWlO2wR2LXt1RN7YGCixWBczuO4MOdGEFiBM=;
+        b=plT2BmmvZeEKWVEHXa5rfnd96wQo94Mu4ar8NWYxwpOZnPCWUFtyt39tsp3h4ItfdJ
+         +Ja8GoAsh1zTJv6Q8lUcevbeFcnnzxPIqHXQ2JgbdsjwydTfdWNd9yW8d9Yy9Al7YdmP
+         u/fYSUsF7eQrXhqcVL1h4OxyUl9/7Ssns87q/KP9dx4QjOYsXLN4MngITvIQSuAWQijo
+         ElK0Gn1pJNqfPy+fEmhRs82lMukaabbVUIEdLTlI1XxOvUmZTCBOUXb3DzbwYr9Gsdsv
+         lYjh7LreRu/ncNzPRiyOWvtqGlR6yTXGpq0rgJS3nPiq1zdO4vUUzwCc/qFyNhlUctam
+         yVbA==
+X-Gm-Message-State: AOJu0Yx7kATLpJ/ZyzgjCp2DmGHCzeomVHkEeo+XUAbRLtmWrK+PhChe
+	XSE0oFYi0cxbJhwMiPwRyCO6NFbBproIuCEKgMbKRx0ijZq0YY9v7Oeo0nY4e6zQB/FpQVEWa/I
+	6EuRv08oTi0vn3s9MfQHnCGSr1/F1plew
+X-Gm-Gg: ASbGncu8y7oPpz0u5JFO8Lbz1QST9k1Eo918bxOUqTf8xMdI788pSptoJM+VNkJxyJx
+	csbosQ8nNRN9RvRBk8iu+Kscpkr6D5S+LCgEO9+a0aBpiUh9IzJr/2W5KQPQWxixCmjO3v1TZ
+X-Google-Smtp-Source: AGHT+IG4eZ84vl3miWlULW9yP8AWJS6/RqBxInwOKALoKbeqXlLMVR9dQ7oF2FT41ux1ZGn8wk7UBy2g4vR/O1P8VrY=
+X-Received: by 2002:a05:6122:1d55:b0:520:4539:4b4c with SMTP id
+ 71dfb90a1353d-520453960cfmr2917593e0c.9.1739210620887; Mon, 10 Feb 2025
+ 10:03:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAPx1Gvc2piLT=p+dvzcJPTMDQAAjQfz__O4KiRWs-fOMg8dpTw@mail.gmail.com>
- <20250207104510.GE30202@raven.inka.de> <CAPx1GvcyaZqYK+SvgtfsajqtkMty1jOcVAtwfmam-LpOjyd0jw@mail.gmail.com>
- <CABPp-BFnx2m75jsa3_kTPet97HY+xwb_6JmPiKM5+OARPy=mGA@mail.gmail.com>
- <20250207203248.GG30202@raven.inka.de> <CABPp-BFGUa_DRBe1WLVfCOKh53+F15KxW_c_OZAMwZCxuAQCiw@mail.gmail.com>
- <ba65ce17-8768-4d60-aec6-badd12930b81@gmail.com> <CABPp-BGwZ029Y8Kfr2kkGiUDZ613kxS81JXzk36V85=77KcYfA@mail.gmail.com>
- <20250208232651.GJ30202@raven.inka.de> <CABPp-BEzOWVa5zqOMuUSH5xCJ+CUk6sJnLhE5OdnDiNR0U9jfA@mail.gmail.com>
- <20250209085756.GL30202@raven.inka.de>
-In-Reply-To: <20250209085756.GL30202@raven.inka.de>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 10 Feb 2025 12:51:23 -0500
-X-Gm-Features: AWEUYZkUWjSqcAwA0vcuF85eYe6mysOEKPGGwpxteh-QRNDr-nqgeMHo5S22C68
-Message-ID: <CALnO6CBh0UDSeR4Q1VfU7vdSvHFYuO=j_rijVpAE-YH9V=Cqew@mail.gmail.com>
-Subject: Re: renormalize histroy with smudge/clean-filter
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+References: <20250210142820.3588250-1-usmanakinyemi202@gmail.com> <xmqqikphbu6b.fsf@gitster.g>
+In-Reply-To: <xmqqikphbu6b.fsf@gitster.g>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Mon, 10 Feb 2025 23:33:30 +0530
+X-Gm-Features: AWEUYZlKicstpt8negxbBsahmE4Pry8zN0iWC_Q8cLJNuMiatw_l4QcT0hpKXSc
+Message-ID: <CAPSxiM8XOH9ueeYwhdQx6PKUWkRbzZh77ZxAmNjSjXrR0gd9_A@mail.gmail.com>
+Subject: Re: [Outreachy][PATCH] builtin/update-server-info: remove
+ the_repository global variable
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, ps@pks.im, 
+	shejialuo@gmail.com, johncai86@gmail.com, 
+	Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Feb 9, 2025 at 3:58=E2=80=AFAM Josef Wolf <jw@raven.inka.de> wrote:
+On Mon, Feb 10, 2025 at 10:42=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
 >
-> On Sat, Feb 08, 2025 at 11:21:12PM -0800, Elijah Newren wrote:
-> > Yes, I was surprised Phillip's command with --attr-source on the
-> > outer-level git invocation worked until I discovered that the code
-> > indeed sets the environment variable (which subprocesses, like those
-> > created by the --exec/-x switch, will inherit).  So, yes, the -x
-> > switch stuff seems to inherit that environment variable that the
-> > primary call sets in response to that parameter.
+> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 >
-> Umm... OK... This means that specifying --attr-source to the commands for=
- the
-> -x switch is wrong, since they have a different HEAD?
-
-Not quite: the command actually did
-
-> git --attr-source=3D$(git rev-parse HEAD) [=E2=80=A6]
-
-So the subprocesses will see the attributes source as a full-length
-commit hash, not "HEAD"
-
---=20
-D. Ben Knoble
+> > Remove the_repository global variable in favor of the repository
+> > argument that gets passed in "builtin/upload-server-info.c".
+>
+> update? upload?
+>
+> I somehow thought that dumb HTTP walker support was on the chopping
+> list for Git 3.0 but apparently it isn't, so updating this remote
+> corner of the system I thought nobody cared about is a good thing.
+Luckily, there are some other files that have similar structure. I
+will be sending
+patches soon for those also.
+>
+> I personally feel that from here ...
+>
+> > The RUN_SETUP macro is used in "git.c" when the 'update-server-info'
+> > command is wired to the 'cmd_update_server_info()' function."
+> > This means we can be sure that the `run_builtin()` function inside
+> > "git.c" will always pass a valid `repo` variable to `cmd_update_server_=
+info()`
+> > when the `update-server-info` command is run inside a Git repository.
+> >
+> > When the command is run outside a Git repository without the `-h`
+> > option, the command will fail (`die`) inside the `run_builtin()` functi=
+on
+> > when the `setup_git_directory()` is called. So, the `cmd_update_server_=
+info()`
+> > would not be called at all.
+>
+> ... to here are way too verbose and unnecessary.
+>
+> > When `-h` is passed to the command outside a
+> > Git repository, the `run_builtin()` will call the `cmd_update_server_in=
+fo()`
+> > function with `repo` set as NULL.
+>
+> "set as NULL" -> "set to NULL"?
+>
+>    ... and then early in the function, "parse_options()" call will give
+>    the options help and exit, without having to consult much of the
+>    configuration file.  So it is safe to omit reading the config
+>    when `repo` argument the caller gave us is NULL.
+>
+> and that would be sufficient.  All the rest of the proposed commit
+> log message can also be removed, I think.
+Yeah, thanks for the review. I will send the updated version.
+Thanks.
+>
+> Thanks.
