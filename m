@@ -1,131 +1,125 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FB225B66E
-	for <git@vger.kernel.org>; Mon, 10 Feb 2025 18:11:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01AC025B668
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 18:32:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739211071; cv=none; b=qRP1wgBbWe7cxp1ENuaXavkWZhAbBmpUoG1VsGvWoSsHdIjsbhusQdQcUVmk5LZb3yRQOoUXCJk9qCD8ov16yDklOQYHZAWNHsv0CI+jDmhCOVax3oA1C2h2o023ScfHipB6YoTIz4A12eH2KNpsb4ixEsg6QHlaMQgxuGfSPvw=
+	t=1739212342; cv=none; b=thnyF/iKQGf0oCa/A3QSyDD5hGTkYR0Qz7bbyI11KWhJX3njZ5oAFfJNCDz4DqufejPvQwRzM6l+Sp9S60EVG0o2tat8n521ChkafFnf/6g8bcZDC+x40/Fye8+tk/+obROYmazjvCpeyzT/nUl2czrSl5MhYbmyFvamNUDiK8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739211071; c=relaxed/simple;
-	bh=zOgTXQYZIKvBiMNOoOWGdz9au7hRDl9/Vu6LWeE7LXU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4Zgpdr3+j7gcPQo0rAASLiPXs0yN2N0dIkMV8XufYWMW0oLCdgsgX5b1ALxxDMswHndS/uQ7DLQ3gm6ieZ1nib1MgUqaXGNCpVkC7bwBfE93LOoVsP7JzEPaSz+9r36KEdPeVH+d7YxkpDA5p7bRMzcnfCsZbrf13dOmq+8nag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=StANaWzy; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739212342; c=relaxed/simple;
+	bh=PZRJP8k6+jLsb/Ql0/jgOXApANxhgWGPw8y7s7ceuJ4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RdkSWHl3BqbQWV02w39z4pSimCF+Zvqi60V5OKOGI8GA3LjK42HQIBHwrW+h0T/c33wVvBd2i1+Wjud14V4rqbjrrO417Gs4WuMD2VrdhA9K2gnIuY7VU3h8N6v0BzI0e0tVaWXW18ITZShvDk2/i0r0C6511O+NwgUPpyJibTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fp8Tdtm2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DK1OQvwC; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="StANaWzy"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-21f7f03d856so33061445ad.1
-        for <git@vger.kernel.org>; Mon, 10 Feb 2025 10:11:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739211069; x=1739815869; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LExtHvwUeR+o1wx5LBgwz14cSaSG7W6ya0Jt3Vr28ls=;
-        b=StANaWzy9eZmXvXJGvfrNeMO/jcxPo5H3WqID3LV1mgPhC2isCF7c4t4IStOiDzzMf
-         hBBsT0pnKdrynZua8NSC2A7dz8q1eJSkNVONkIgG9BOE3vf2jaw5sBYuoVf+/8g5I9Ao
-         YP4oqJ08M3lYL7OI+xItsTOsx+MSkq3/R8alTG1J6DLw6yFWPcUI8sbM9khI5bxPXEOJ
-         9b4NsOe7HNkahlBtwvwesEtocO4gMMNejIaFj4/e7k8NbOgefOLCtagwZP0kbgPGuUVf
-         zlAsUHtnO7J/rDxFL+ttnU4VYb31X+/eBDYHRtpcpyGdLDVunG1JbiHbATIEML5eemOW
-         BFHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739211069; x=1739815869;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LExtHvwUeR+o1wx5LBgwz14cSaSG7W6ya0Jt3Vr28ls=;
-        b=GnR4JddcJTJOBZh2MPvJ4NpGFokk37EB2azhzxK6fuxl4k93Qhxi8Lg8CKzSUyn85r
-         wai2D/1b8v131a6aYuWOdrAJi3TuZDOAvXLWgCgeq1prrABGEFBRe/nV8CUx0WdB/1Ep
-         1GYD8pxSDXnPLar3qLnTZLt6zDbjE4yUySiomuwZFQTbP1ZPGkaK5tzng4iEVDkuunv7
-         CWOcqbp0hMsTJ6GvuQRGoDjyEmSb38j03Ucd1TT3zFKjlfIxpvtpRNrUEskA27fGcmMA
-         kK2rQ1aaRxuCYOyQWk96d0yUAMgEWpyrIga0hYNUORzq5jKzz8gNwkpRpQPqftndUxOk
-         Usxw==
-X-Gm-Message-State: AOJu0Yy9okit3cxiBcxaU9Nf2EkIeS5mCAILns9Kdhkg5yjFc4alMObc
-	O+OjAYSIfZovNWscRfmN7mr6oRLCjpCoKf6EFKRiLFLdNQytw/X3Tx+D1/Ag
-X-Gm-Gg: ASbGncs7vd9SM+0hecHvc0FALRscNeXkJJtWi1qJNalKc6VrwE4jQfH1erUa4IsXlhI
-	V8AEPezDY4KwJ6nlDc5y5x6HDym6FwWSAVIkcjLpG9BPphugraa4OkWIY5npJ92DLdF+GhgH4Xs
-	I8961cNJ45VFLCxDZhgG1GU00s0pXqQXZdBXjKLl8TkKs/tdRaiRSP/efYqyYzeCh+UoTHiRwQB
-	xWJCZFQx3E8GvptoHciro0LCA/EvthH7OI3Jiju6HeCk+Um9KgyF47YDKKiFBdqBmmW1cOpcnzl
-	f3ftaNlDJ1OIHjCXC14pIu4n97gC6QrqtRORQ1zB
-X-Google-Smtp-Source: AGHT+IHgzUVpHEv8QHymcDdwSkCyvoYwRuWZZJZuUXkfZAR6JIqxUzZIPdVFLg1pKQnQPV6fUsDy6w==
-X-Received: by 2002:a05:6a00:882:b0:71e:6b8:2f4a with SMTP id d2e1a72fcca58-7305d47c9d1mr23627173b3a.12.1739211069093;
-        Mon, 10 Feb 2025 10:11:09 -0800 (PST)
-Received: from archlinux.plaksha.edu.in ([182.75.25.162])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7307cf77a3asm3974540b3a.68.2025.02.10.10.11.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Feb 2025 10:11:08 -0800 (PST)
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-To: git@vger.kernel.org,
-	christian.couder@gmail.com
-Cc: ps@pks.im,
-	shejialuo@gmail.com,
-	johncai86@gmail.com,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [Outreachy][PATCH v2] builtin/update-server-info: remove the_repository global variable
-Date: Mon, 10 Feb 2025 23:40:30 +0530
-Message-ID: <20250210181103.3609495-1-usmanakinyemi202@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250210142820.3588250-1-usmanakinyemi202@gmail.com>
-References: <20250210142820.3588250-1-usmanakinyemi202@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fp8Tdtm2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DK1OQvwC"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EEDE8254012C;
+	Mon, 10 Feb 2025 13:32:18 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 10 Feb 2025 13:32:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739212338; x=1739298738; bh=lnr056V6T2
+	tM0iwzIKpjTFyVZxdgi/g4BY7xLIOV3f4=; b=Fp8Tdtm29siuHwch/LWMCfO2yc
+	Zkmra+Cpr4Go71e1f8rxpieECzPdW3g7Cz2jxYTYHjZhxYU89eXq8UzvaZOGEpSS
+	OyGjQf7UQmypZwVf1C4uqjmY7anzhBoRS1iKRmjlYjjC3tsveCigM14yCGB1bT71
+	YxsFtmZ7jhKRG9Ie9FbxpcY9qKM/FHdXYiT3CdVeTb7xyCcb3hRxmiZigUCajmLn
+	C0pxa8nAreiBKPPIfSfMpVT6YQD8AVZrxfpGfRMs/GAdNsku4EqrTE0tt7I5RTjJ
+	Ndcss5apJtsEBWVlEQHt7nzbgt9a8j4u61kp/sbc3tYh4SiDSNTGPhfG9jOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739212338; x=1739298738; bh=lnr056V6T2tM0iwzIKpjTFyVZxdgi/g4BY7
+	xLIOV3f4=; b=DK1OQvwC/YXn8qbiitLXHz6+yQKWWmybptd/6ZQfgpNQKUQXVWh
+	Qp61ZCzE+MxkTz+45aAKPbj54P8R18yQxfy7RWUH1NFKORvPP42H6H/8BQQc6vHg
+	EEmExiDDI4gOtUjbjOsckAuJFXXXHB6zYH+U1t0XnyKz1rwFYAXpbeJeZt5wBYI7
+	8h0vcIvTzNFpsvjuUH+hxLkTNHVMEoc4W4rYkIQrBZdz0a1hw7nedFVJmpDbdgCD
+	OR2aR7aWEPefI0RrZyMx3k5kYCHJR4oLuOB/VWUO2so1EpgZ+d3Nlg9xIIPPYIQQ
+	nFqhTWw+8P0WP5I8xW3rVdIW9GcqFTbqI+Q==
+X-ME-Sender: <xms:MkaqZ8wwgKZ3HbBdKZCv7aOPOEj1WgWfMkVU863c-SZpXKqGzqIF9g>
+    <xme:MkaqZwQrcjz3t2wx6P2uy8IFHncjTL_BH5TRx77msuVfoR_R2dDDd6dkjTyQr8qSt
+    cNbau6_QcVSI9jTeQ>
+X-ME-Received: <xmr:MkaqZ-VAUma0XQRmfzMxu9mLKeyVWIt1oAmJcDwAM4bY-x0fN_Dc2hpAONxpmYW2WyhVMIb4034kvNr7WK2kWb6eE_Wp1P_LSS6o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefkeektdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
+    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
+    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphht
+    thhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:MkaqZ6jLUiVEX7pK_PIXDwEvoDYPGTw5Ozh6aJ41J_kmal9epn2VuA>
+    <xmx:MkaqZ-BqXfLeLFicZD2iJD1hPqaG6OjJFLkTyZxe7vPF__OTZOzZlA>
+    <xmx:MkaqZ7JdMmeTl-o4EfZI8fY9EUv1xIbG5EE3TC_MwVI864NlxAGg0Q>
+    <xmx:MkaqZ1BiVV8OBfOTB1s2n1ytFrsI34e59nLP_bwiAu1cHDaeUuH45A>
+    <xmx:MkaqZ17sqLCouRLbAJ7lTBLfbPObdGQ2-irej_q9J3AhJiKIYOi5IPsz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Feb 2025 13:32:17 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 00/16] path: remove dependency on `the_repository`
+In-Reply-To: <Z6d41SYoyavqcei-@ArchLinux> (shejialuo@gmail.com's message of
+	"Sat, 8 Feb 2025 23:31:33 +0800")
+References: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
+	<20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
+	<Z6d41SYoyavqcei-@ArchLinux>
+Date: Mon, 10 Feb 2025 10:32:16 -0800
+Message-ID: <xmqq8qqdbqhb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Remove the_repository global variable in favor of the repository
-argument that gets passed in "builtin/update-server-info.c".
+shejialuo <shejialuo@gmail.com> writes:
 
-When `-h` is passed to the command outside a Git repository, the
-`run_builtin()` will call the `cmd_update_server_info()` function
-with `repo` set to NULL and then early in the function, "parse_options()"
-call will give the options help and exit, without having to consult much
-of the configuration file. So it is safe to omit reading the config when
-`repo` argument the caller gave us is NULL.
+> On Fri, Feb 07, 2025 at 12:03:25PM +0100, Patrick Steinhardt wrote:
+>> Hi,
+>> 
+>> this patch series removes the dependency on `the_repository` from the
+>> "path" subsystem. The series is structured as follows:
+>> 
+>>   - Patches 1 to 5 unifyf the interfaces that can be used to retrieve
+>>     repository paths (gitdir, commondir, workdir and submodule paths)
+>>     and adapts callers accodringly.
+>> 
+>>   - Patches 6 to 12 drop repository path functions that had an implicit
+>>     dependency on `the_repository`.
+>> 
+>>   - Patches 13 to 16 refactor "path.c"-internal code to stop depending
+>>     on `the_repository`.
+>> 
+>> Changes in v2:
+>>   - Rename variable to `wt_gitdir` for the sake of consistency.
+>>   - Improve several commit messages.
+>>   - Link to v1: https://lore.kernel.org/r/20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im
+>> 
+>
+> My questions for v1 are all answered. Thanks for your explanation. The
+> range-diff looks good to me.
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- builtin/update-server-info.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Thanks, all.
 
-diff --git a/builtin/update-server-info.c b/builtin/update-server-info.c
-index 47a3f0bdd9..d7467290a8 100644
---- a/builtin/update-server-info.c
-+++ b/builtin/update-server-info.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #include "builtin.h"
- #include "config.h"
- #include "gettext.h"
-@@ -13,7 +12,7 @@ static const char * const update_server_info_usage[] = {
- int cmd_update_server_info(int argc,
- 			   const char **argv,
- 			   const char *prefix,
--			   struct repository *repo UNUSED)
-+			   struct repository *repo)
- {
- 	int force = 0;
- 	struct option options[] = {
-@@ -21,11 +20,12 @@ int cmd_update_server_info(int argc,
- 		OPT_END()
- 	};
- 
--	git_config(git_default_config, NULL);
-+	if (repo)
-+		repo_config(repo, git_default_config, NULL);
- 	argc = parse_options(argc, argv, prefix, options,
- 			     update_server_info_usage, 0);
- 	if (argc > 0)
- 		usage_with_options(update_server_info_usage, options);
- 
--	return !!update_server_info(the_repository, force);
-+	return !!update_server_info(repo, force);
- }
--- 
-2.48.1
+By the way, shejialuo, this may textually conflict with your
+get_worktrees_without_reading_head() thing, but the resolution
+should be obvious.
 
