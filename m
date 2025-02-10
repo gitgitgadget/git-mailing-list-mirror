@@ -1,176 +1,107 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A1CC1BC064
-	for <git@vger.kernel.org>; Mon, 10 Feb 2025 07:46:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3622D7DA9C
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 10:19:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739173621; cv=none; b=VJgqcOmCJjD+ElON2JHaq/LbB7a7k7GboQgzmXKZ4TAoHmu6+34zXEAT9fD2V+Mi6JuK73tYpJ5ffJOyVH86cjk+IuEpNu6ecYLHpFcyG7Q0vunCHNlNdkH0mF5RLW348bVQFntRuAxBm9dQha1eaK9NZVyu+sEgw27ge0WHTe8=
+	t=1739182801; cv=none; b=QVEZgaQxTbZxaHt75P7Ug5L+8es/zeJEvWHvEFkoO8zqHoNCHizPoEmJk4Pc+36xdQNcRv47lC8rFpbIZmSVU3sWRW5cgC4jKXMLQbszuoDp1wTW7mO/HMULEHNCItI4KTWJpP0QG9nGcw109ED1cStbO+04BhDllMOcNoh72Oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739173621; c=relaxed/simple;
-	bh=O60XW27YkcTeAfBC9/iH5xZ+M4XjZGwGL1m3KYYD3I0=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OI3DcYkn07re/QF41ZUWzWTtL7lAUBsy4POmGDeZi1J3usrJuwBd+EVfpwBJ53GQ4ewTcn/thLcOFc0PrQZNpyJR0JxvbNFMSj7c53PAHy6EdaY//gOQzoeb1QhKQl//cttUetWXzFXopN99JFYbJMfjrn5qhpz9m1G2n9esnzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OfmEjGyc; arc=none smtp.client-ip=209.85.216.52
+	s=arc-20240116; t=1739182801; c=relaxed/simple;
+	bh=qmkPRo6CfkaidXBm2VTI/n00vI318pjPoHvUpUK0B+I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=fLNlDn2W8e5sQJrwSsyVaEUvYHgsyW+zMynASJ3EtbywJKr/a6eki5eh1ikAVbZeeqxLlj0SODS2m1AgJXxkAsupFWx1wfFdvAaN2fdwVXKsIQvu/4537uEgKLsRVVzkNSYIj4+xcdlKG8rALgExltxh75BGBuKFF56ZIxUtkQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mtkKGrB8; arc=none smtp.client-ip=209.85.217.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OfmEjGyc"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2fa51743d80so1825713a91.2
-        for <git@vger.kernel.org>; Sun, 09 Feb 2025 23:46:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mtkKGrB8"
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-4ba86dee27bso910766137.3
+        for <git@vger.kernel.org>; Mon, 10 Feb 2025 02:19:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739173619; x=1739778419; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dVYfJ7nsLEA+C4cK1MZ96Kfrb2h2Otbnwco0uOTGXOs=;
-        b=OfmEjGyc/et0mtEHwfM7nqMMZ9x2n0NcHgfdIgQgP3xfsK8Z2bYcUJ9VI0KUvpk5pe
-         yWiptDFV6XnHcH3GlGQYcj+8BGhsDMi/or7e74CySFfw8294VdL6qtejRotT+8JmchK/
-         Zo0Tv/xCRHtBvUudQelZdYQi17aQ5eAWTBFtvDW4gzK3V4p+aCBkvVFjLN7FlGUdPhfq
-         O+k1G92GTXTXDLkWjw4y8tC90v2xS67aznY4tM4gzkHt7VisoeJSqrdBCq4tGq1OC/o/
-         zApY/e2lZ0sIBSJ1w1nc4S82U+wCoJohOmqtarEMRvRKibQ6qRVVIdpDIcelEOQk5e6B
-         T3SQ==
+        d=gmail.com; s=20230601; t=1739182799; x=1739787599; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qmkPRo6CfkaidXBm2VTI/n00vI318pjPoHvUpUK0B+I=;
+        b=mtkKGrB8qS59dNRCDqLagZd5iabWzQoox6KB/4QAZ41mOAz/x0HAmTsdu5NrUuzxkN
+         jdh6RjE7CBjxsYI3UrF5Sz6Us+lWCb1E48VFlg6Z9jkGVdhPYSzwfPGhvfohs9jQm74c
+         pwDbkMWfdw1ArO1iVdFdSAKRFbP5tgXAb8i6744M/vapGvFkoGU1t9oY3vDQAci1DXuM
+         +pG0dBooCj4LRXqgJMQsUjdwLJEcqboENRPra3A6exsJAmT81wvZgcYs6xkrj5wa/jDm
+         3nntgUZSAjlD1TE/OK0jxrZ6mfVF7lFpS2t4yPBSaxF5FKutib6vfPAzwKE+vgslwQd1
+         dscQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739173619; x=1739778419;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1739182799; x=1739787599;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dVYfJ7nsLEA+C4cK1MZ96Kfrb2h2Otbnwco0uOTGXOs=;
-        b=CketeabO9HSMDPWDIMiv+SvtEOHeChmUsJW4lHQwzQzhCexWWDfLj8oj1ix99mskur
-         5m5NWZMm5PlmsAYHUnBKRdpf+yHMyOQXiKQ1sgUsMasf6R8mapcb0PzQSnkLIVGhY7Rq
-         K3urDiDb6SZMcpaO67xl16bfF5QcfjtPwlHgLsSbZlZWC8OhXKhiW56HPk0NkfPizD2P
-         50gebcxTdT0Dr1JjxP8F8S6M2+vj+Jecc8eSPTLl0xBkWSSM135XedS9qJjHvUbiC401
-         GjutEZT/YIfeaaIhfaplfgzfJmfuCO2T2DiL6zPwqY6uGIwjOQEmVkgkjS+CiBp8Ui4D
-         8RKw==
-X-Gm-Message-State: AOJu0Yxx/PFvyFir85XyRw5SbwUBds7Ga9/WuKiVabphTAxszq8lwQ2H
-	thMqweoEyjoj8mzReJ5PWqgr4LQuwTa3VYl3/JQ47NXrX6etx4oXFaPDpwlD2Jc=
-X-Gm-Gg: ASbGncsJffBuOXY0EQEhvRl0KqZQD08+LDluHZivaDcnF8y6yPaYWWhq6X4QlRKRe6m
-	9x754mezovFaJ6QQieT1e+APBJhT0Ot0GXoEXRQ6K7NiMoOSwWLmBrD2OvUHq1GNeHz6JbEn+dU
-	6wSW+9ibBxFGHf9GCDUXdBaO0U40CsGb5fUQor5cAYmhEDbiglZf+4Pj8Ai48XuW6Fm2YjPUuiJ
-	IRzUKY/uFoPsEbdFK3He4uX1XaFA5KWVnCmA4Fr+6XihEdklaUroOaXcQfK/pse80WV9BaxZXP4
-	1Lpyz+0sN7Zl6bNkZaWdGKlc4s/c7jeb
-X-Google-Smtp-Source: AGHT+IF5WH1NzqBnzsH4zEZ4UQOnuv1dFU4LNWkPqOU/OT8Pv/lmnP0BCblxPPPUC5ORXvfI199M3w==
-X-Received: by 2002:a17:90b:1d52:b0:2fa:137f:5c5c with SMTP id 98e67ed59e1d1-2fa23f44beemr17814512a91.1.1739173617150;
-        Sun, 09 Feb 2025 23:46:57 -0800 (PST)
-Received: from bl4ze-rig.iitr.ac.in ([103.37.201.226])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2f9e1e239eesm10187721a91.30.2025.02.09.23.46.56
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 09 Feb 2025 23:46:56 -0800 (PST)
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-To: git@vger.kernel.org
-Subject: [PATCH 1/2] midx: show progress during QSORT operation
-Date: Mon, 10 Feb 2025 13:16:22 +0530
-Message-ID: <20250210074623.136599-2-ayu.chandekar@gmail.com>
-X-Mailer: git-send-email 2.48.GIT
-In-Reply-To: <20250210074623.136599-1-ayu.chandekar@gmail.com>
-References: <20250210074623.136599-1-ayu.chandekar@gmail.com>
+        bh=qmkPRo6CfkaidXBm2VTI/n00vI318pjPoHvUpUK0B+I=;
+        b=Ll2K9MWnuM0oWA9qIH3T1O9ZoUz5RT/hcdQlqBHZFCEt/8udcspZq1KJ9EJJc9z7ZR
+         0w6YbU2n3FcogZXcb4kDl1sgKTw+2hnBfvP7TfehSaKxRa0rgNzzBwvfohkeM5KrrX2H
+         3S6Gpgt1ncp+7fpRHDmq07WNkbbSUSABpt4E24EN6MhRlvd1vBNjqr1Qh+YkhY2JH85/
+         YzSCzJ/rjRYMV5yKwtuYFmXcPBSNg+d/L9PutCejNuoMzagJLWrsg68tKpLSUA9zKOen
+         RcnA7V632nfN+lCr5cTU/kl5Lr7ICoRHwvPJ/eq020SgKnAHSTJWSZGH3D55Dn2z5bgp
+         PGTA==
+X-Gm-Message-State: AOJu0Yz4nUWeHhP/+Hw1PGWELb4e2mKlzrt4uyCH244/Dqf2awLOzUZJ
+	CURO99Ys+ycW9L/pHSAyCVgViGNVfI4yIjB7sMutufBYZj73IeC4tqnQXd2cj0XtCLQ9PY6cm1u
+	6DbuJhM8gio7BnCJZW4scsE7Y+CJGEl+D
+X-Gm-Gg: ASbGncvGWb2VQYA/VPrvAULe6un5OiRjQw4ikPCWq5I7f+DS6o9KsfgPZMMe6z8Tvrn
+	S4oB2VVxl7ySj9SA7cANBfcHYrGOnLW6Zvqrt1R6CHegrzPUjdinx6EGFCO61m1te4odPE3Z0fk
+	JHQry9HOj6yFZBJHIioOhpLE3X
+X-Google-Smtp-Source: AGHT+IHrd6vUXFWcYEYaxaIrol6L/jlgFUpoibAnYwi7ovIU6cl+8P0eiM4hP0rNIVjb3q3GvmM4YYud0gr4bwosZho=
+X-Received: by 2002:a05:6102:38cc:b0:4bb:cdc0:5dd7 with SMTP id
+ ada2fe7eead31-4bbcdc05ed4mr1320223137.16.1739182799098; Mon, 10 Feb 2025
+ 02:19:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CALG+76eJL5dC3o+yq7zreoRDQan1MPgfNXB42k5f2iq2bZEbNw@mail.gmail.com>
+ <534e8534-a9bd-428b-87f9-a512c9378b19@gmail.com>
+In-Reply-To: <534e8534-a9bd-428b-87f9-a512c9378b19@gmail.com>
+From: =?UTF-8?Q?Bj=C3=B6rn_Lindqvist?= <bjourne@gmail.com>
+Date: Mon, 10 Feb 2025 11:19:47 +0100
+X-Gm-Features: AWEUYZmM-GGXcjMl6rbkZWotzWvVcO02syyAnWbl8-ZG0pcUPM2rfdk6YNCDwaA
+Message-ID: <CALG+76erpDGFinXsockB8=+GPEoEtd+xw=xVN1HCzv7=aFymoA@mail.gmail.com>
+Subject: Re: git rebase --continue error message is misleading
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Add progress reporting during the QSORT operation in multi-pack-index
-verification. This helps users track the progress of large sorting
-operations.
+Den fre 13 dec. 2024 kl 15:38 skrev Phillip Wood <phillip.wood123@gmail.com=
+>:
+> On 09/12/2024 13:02, Bj=C3=B6rn Lindqvist wrote:
+> > $ LANG=3DC git rebase --continue
+> > hint: Waiting for your editor to close the file... error: cannot run
+> > vi: No such file or directory
+> > error: unable to start editor 'vi'
+> > Please supply the message using either -m or -F option.
+>
+> This line comes from "git commit" whenever launch_editor() fails. I
+> wonder if we'd be better to recommend that the user sets up a working
+> editor instead. The message is certainly unhelpful when we run "git
+> commit" from "git cherry-pick/merge/rebase/revert" where we want to seed
+> the message that the user edits.
 
-In previous versions, the progress would jump directly from 0% to 100%
-without any intermediate updates.
+Here, I don't think assuming the user has vi installed is correct.
 
-Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
----
- midx.c | 43 +++++++++++++++++++++++++++++--------------
- 1 file changed, 29 insertions(+), 14 deletions(-)
+> I don't think that is a good idea when "git commit" is being run from
+> "git rebase". In that case we want to preserve the original message and
+> authorship and using '-F' or '-m' would not do that.
 
-diff --git a/midx.c b/midx.c
-index d91088efb8..69937f5ca8 100644
---- a/midx.c
-+++ b/midx.c
-@@ -14,6 +14,7 @@
- #include "pack-bitmap.h"
- #include "pack-revindex.h"
- 
-+
- int midx_checksum_valid(struct multi_pack_index *m);
- void clear_midx_files_ext(const char *object_dir, const char *ext,
- 			  const char *keep_hash);
-@@ -853,32 +854,43 @@ static void midx_report(const char *fmt, ...)
- 	va_end(ap);
- }
- 
-+/*
-+ * Limit calls to display_progress() for performance reasons.
-+ * The interval here was arbitrarily chosen.
-+ */
-+#define SPARSE_PROGRESS_INTERVAL (1 << 12)
-+#define midx_display_sparse_progress(progress, n) \
-+	do { \
-+		uint64_t _n = (n); \
-+		if ((_n & (SPARSE_PROGRESS_INTERVAL - 1)) == 0) \
-+			display_progress(progress, _n); \
-+	} while (0)
-+
- struct pair_pos_vs_id
- {
- 	uint32_t pos;
- 	uint32_t pack_int_id;
- };
- 
-+static struct progress *sort_progress;
-+static uint64_t last_max_pos;
-+
- static int compare_pair_pos_vs_id(const void *_a, const void *_b)
- {
- 	struct pair_pos_vs_id *a = (struct pair_pos_vs_id *)_a;
- 	struct pair_pos_vs_id *b = (struct pair_pos_vs_id *)_b;
-+	
-+	if (sort_progress) {
-+		uint64_t max_pos = (a->pos > b->pos) ? a->pos : b->pos;
-+		if (max_pos > last_max_pos) {
-+			last_max_pos = max_pos;
-+			midx_display_sparse_progress(sort_progress, last_max_pos);
-+		}
-+	}
- 
- 	return b->pack_int_id - a->pack_int_id;
- }
- 
--/*
-- * Limit calls to display_progress() for performance reasons.
-- * The interval here was arbitrarily chosen.
-- */
--#define SPARSE_PROGRESS_INTERVAL (1 << 12)
--#define midx_display_sparse_progress(progress, n) \
--	do { \
--		uint64_t _n = (n); \
--		if ((_n & (SPARSE_PROGRESS_INTERVAL - 1)) == 0) \
--			display_progress(progress, _n); \
--	} while (0)
--
- int verify_midx_file(struct repository *r, const char *object_dir, unsigned flags)
- {
- 	struct pair_pos_vs_id *pairs = NULL;
-@@ -960,12 +972,15 @@ int verify_midx_file(struct repository *r, const char *object_dir, unsigned flag
- 		pairs[i].pack_int_id = nth_midxed_pack_int_id(m, i);
- 	}
- 
--	if (flags & MIDX_PROGRESS)
-+	if (flags & MIDX_PROGRESS) {
- 		progress = start_sparse_progress(r,
- 						 _("Sorting objects by packfile"),
- 						 m->num_objects);
--	display_progress(progress, 0); /* TODO: Measure QSORT() progress */
-+		last_max_pos = 0;
-+		sort_progress = progress;
-+	}
- 	QSORT(pairs, m->num_objects, compare_pair_pos_vs_id);
-+	sort_progress = NULL;
- 	stop_progress(&progress);
- 
- 	if (flags & MIDX_PROGRESS)
--- 
-2.48.GIT
+The error should tell you about that, I think. Right now I get:
 
+LANG=3DC git commit
+hint: Waiting for your editor to close the file... error: cannot run
+vi: No such file or directory
+error: unable to start editor 'vi'
+Please supply the message using either -m or -F option.
+
+The only solution I've found is git commit -m "blah".
+
+
+--=20
+mvh/best regards Bj=C3=B6rn Lindqvist
