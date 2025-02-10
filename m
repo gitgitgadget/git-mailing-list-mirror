@@ -1,67 +1,67 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96723257420
-	for <git@vger.kernel.org>; Mon, 10 Feb 2025 19:15:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4194E257458
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 19:15:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739214948; cv=none; b=ZeIE7v6dUrxOD8JP6fNVJ/PX3DmxuaU5ugNBAFupPrxOOxXmkFfSFOxTocQOYVn/7LyVXJ30DnXPR1uZ1OPOUUNIAiqFhL0u832YstwOqv2o/N3BNbW6lftG6DRJWViExG0Z8DvEjg9Enw2Rb8BciaAxXTI7qdx9f8DqF2zON0Y=
+	t=1739214952; cv=none; b=VxazUuW+k44BSQiSMWhIXhY/L/1lO8seu+PZQ6Q6bdNWdzFdzBNd8MqKjIchF9nshVgL5bvRL7Ae7gQH+WNxShAp405bdV7vmMpeMS+PVzNrSyol76TdAWH6xBamMKSpIE2eXHTsn6ZsSwwunAUSdt1teTpLRu1H8M39KOWknYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739214948; c=relaxed/simple;
-	bh=M3ZGKqLwRNlH1HnMEqvvYG2nVGzPEzzwPKujRnPxR/4=;
+	s=arc-20240116; t=1739214952; c=relaxed/simple;
+	bh=oeEGsG+i0iiLaqKZqyD7SS847ZwCTX9NEQfUxbp0CjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plIXlJrbdfrt3QsGr0UDDbhU9vp2+IBMDsKKElr0qVnhBla1e/TZuBhI0WTI/Xjz6bJwy4CkUxwb5imG8SH7EtfRymgh11V2OL5apzOc6TzGFhekJF91bWUl8mgyiP6PnB4sVF7poZgtfXARQF57Mlem8mddY+SlWw5fqoNIoko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name; spf=pass smtp.mailfrom=intelfx.name; dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b=bee4my4X; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version; b=ioJRKWi1R8qyZKOW2UXV/iSC7WtPrJDhlydtnDsDYCvxgAt59ZPp4AgNW3jnwgILIla/Lxl0AyVjX5JX8R8pMmDRLUxLXXdH/qpUSHbrFNzkhPfuFQR7hWKYP4A5BvVyJTTJVkYWhjxUh1McovF+aQ2Hlx56B+gFl9vq9fNwT2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name; spf=pass smtp.mailfrom=intelfx.name; dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b=XqIf6omA; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intelfx.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b="bee4my4X"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4361f664af5so53200115e9.1
-        for <git@vger.kernel.org>; Mon, 10 Feb 2025 11:15:46 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b="XqIf6omA"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-38dc73cc5acso2178756f8f.0
+        for <git@vger.kernel.org>; Mon, 10 Feb 2025 11:15:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intelfx.name; s=google; t=1739214944; x=1739819744; darn=vger.kernel.org;
+        d=intelfx.name; s=google; t=1739214948; x=1739819748; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=t8SFhBCAeXmdQYFE+XynSX0Rq1Q0vE/j9sWqj/YvvQs=;
-        b=bee4my4Xo/fxLGqZDGsnsj08weLTsKA8wtEfZUdDXJdfw1WDRFB31eWK0qM2+MZ2Kj
-         r9fJb7/SxgdhX7K+VNpMTLeGKd/E18AvDZ/hsysN8hRo1IcjwrcjcOMmxryZae2Sf2sq
-         RU2QN8yOl7QH5kouizRqFVKipSA4lcHIFU0s4=
+        bh=beeVlPqLpm7tn2I9D9dConSLD30jKUzQ93SY3OCsk9o=;
+        b=XqIf6omAV+JSuTnsKS3SS82anAI3QE8zXHcv6hQd/cdS/xu0hkLiD5BkXE0R91zRtb
+         lqpiEAmmUIELQghQ3i1Odw/KbBb+O6TFx+sPRf0bOrO3hVT+Z2+rYoaeS6HS78VTxFnI
+         +4QLlfDCEFjbtxI90KaQ356cX7BgpzD9EJFdc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739214944; x=1739819744;
+        d=1e100.net; s=20230601; t=1739214948; x=1739819748;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=t8SFhBCAeXmdQYFE+XynSX0Rq1Q0vE/j9sWqj/YvvQs=;
-        b=Cb/WKbYn4NuP3b5pt5d9MVQ+Sn4gQ9frTHYV+BGbyFndkfKNRDxQ+M5WzI3FEh9Ys2
-         NoTPBcJ+Dx3gwWag1lEnsDJWfR+qlamm5d0FB6TAGSMymhqWArwMblu08zPDZVNrPIAL
-         M0DEKTF34ms7+E5bV+ZKZMEeXJnx5HOcN6hhJRv1CqrGZawhh4yhuiXCIKLa9e01/siS
-         vws1T15Lax82V0/B1MLPq+H8Cx7g/2yU/NvcPWsKgDfWmVpl+sJiNPEIiph3PRQyNhzp
-         uOfFDHwRls+28sU8KOpfJqPCGJmEv6rVfq3GK5+CJlBSiS91TIwX7oEmt5Zz4q0BBVo+
-         9vdg==
-X-Gm-Message-State: AOJu0Ywnr6Z+ym/KxeE4Le6z6JId/9xjGl6XR5+q1prL/y/DryZYBz8B
-	OmMmyIvFaK8Y0X2F1bXNUoCoPhVMs1G8dHvNQyjjFzssijAI9Pp7oAHjEfRXEik9+TqfWF/1EzG
-	GSs54Rg==
-X-Gm-Gg: ASbGnct/P7XwPb68LZ8ubvGAwKp5pTd/lH9/nq0I95q8lJJT7p1ZXMv0i9jsYP6tk4Y
-	vngaZjCnNFmTprvkK5/Vl6mSF7nOwjRhFsIZS4K+X5hFyl8C75A1cyD9/GVeuVK84pEOGgb0OUt
-	EVb3UdijusHWwtkryqxbduOkJkTE8DJ50TwtBjHkx5zwwwJux5gRUCs3XWpTSOxZHlPxMLqyMX7
-	jzncVswodSE1M2sGCm9cqPt3YAfoAya5HSOnJgj7Tx2rS//BYGZD1rgSHFivv3VHYZXBlqeTwGz
-	FvVgVjEQrxF7qFLLXxwDU7jJCRDEaTAEQw==
-X-Google-Smtp-Source: AGHT+IG7UiNp96cgaAqH4Ar2FYBsDePhpQM8YrQoyaGLqQQZtWO5EUtFvMaqK+lFbz58bwLKSZzVqA==
-X-Received: by 2002:a05:6000:1848:b0:38d:d3f7:74b0 with SMTP id ffacd0b85a97d-38dd3f777acmr8078440f8f.20.1739214944483;
-        Mon, 10 Feb 2025 11:15:44 -0800 (PST)
+        bh=beeVlPqLpm7tn2I9D9dConSLD30jKUzQ93SY3OCsk9o=;
+        b=HAu1gaZoS0gD3DUqr3GWSAa+tTOgcjVB+o+ogLhXzb180he68o49LqzMBldYXqDFUg
+         WVbnNP3/DAy6r7/KdBY5jZMq8+FFDQX8qIyCpll9pWA+qkz+RCcyKSvI5D90IrvPayuD
+         +yRby98t0w70uG5wTgio14vOPJjZ9TorPO53mV5WIqdsz9rb8OInq0m1UovbwImsTM1Z
+         TUglw74wubjfBXoBtMf3sA9s7Ev4Ofytxl3q7Vi28ypvjPc5Q8sqIkkTb2g3/pkApx3c
+         Ex9jfQthaRsLi1Rr08+Vlao42a4/YbWjPcwZj7e2RohEiS46nYa8IW8kFDunt7snLb5T
+         70Jw==
+X-Gm-Message-State: AOJu0YxEr/CNk2nHcmaEbJZnCl+Q8fqFAFokZ/QV1tYwe3l2ngZLc2x2
+	v+4AhjtXSvOfwRmgty5dpDREstB4p+LvktmsUZWEEWl6Whtgsxe1/kE1hrl6Xne4SvqopHrg8ic
+	zRyMJeQ==
+X-Gm-Gg: ASbGncsxHU8uw26/nP2XAopUi0y2rUNkUa9hdQcgSyWdc+TSd7ukW+h0LNz/Q9vZgXI
+	9NiYP9pTY9TtP8gztRc/RAd2irOPf+EYASOItMxcx1DzgwclDN2v5qWf0i6vPQZNx+ab2r65017
+	PR4cJu3iCGG+Jg42hRYM95/OluqZg2P6TSA76VoyVAh1n+cMfXCeRmjineMVngUhk0WOJrP5xwN
+	ZQSlZVYU/mCPMAPbt02W0eTDc0BEOZ4cHdi2i/IPRpqobVXQdo+y8zSzCZvyoap1E6qIcx6Wdcn
+	Je1YGinc5h7Sehr3yRkcOVDriNxsJExSfQ==
+X-Google-Smtp-Source: AGHT+IG4/qjF46hZny6U098hnwCqfceogLYzzjWyqX2ztAocRGeEPBoQa8rpf1z6kgHTmkm6OzEhhA==
+X-Received: by 2002:a5d:598d:0:b0:38a:8b34:76b0 with SMTP id ffacd0b85a97d-38de43ec4b6mr472900f8f.27.1739214948173;
+        Mon, 10 Feb 2025 11:15:48 -0800 (PST)
 Received: from able.tailbefcf.ts.net ([91.151.136.114])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43946bff4d4sm30477055e9.3.2025.02.10.11.15.42
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43946bff4d4sm30477055e9.3.2025.02.10.11.15.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Feb 2025 11:15:44 -0800 (PST)
+        Mon, 10 Feb 2025 11:15:46 -0800 (PST)
 From: Ivan Shapovalov <intelfx@intelfx.name>
 To: git@vger.kernel.org
 Cc: Ivan Shapovalov <intelfx@intelfx.name>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: [PATCH 2/3] clean: rename `ignored` -> `remove_ignored`
-Date: Mon, 10 Feb 2025 23:14:38 +0400
-Message-ID: <20250210191504.309661-3-intelfx@intelfx.name>
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 3/3] clean: add `config.exclude` and `--remove-excluded`
+Date: Mon, 10 Feb 2025 23:14:39 +0400
+Message-ID: <20250210191504.309661-4-intelfx@intelfx.name>
 X-Mailer: git-send-email 2.48.1.5.g9188e14f140
 In-Reply-To: <20250210191504.309661-1-intelfx@intelfx.name>
 References: <20250210191504.309661-1-intelfx@intelfx.name>
@@ -73,56 +73,159 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-No behavior change.
+Add `config.exclude` to configure "always excluded" files (same as `-e`
+on the command line), and `--remove-excluded` (intentionally without a
+short form) to "REALLY remove everything, dammit!"
+
+This might seem like euphemism treadmill, but there is a specific
+use-case for all of the exclusion methods and options:
+
+.gitignore:     files that _the project_ does not want to track or touch
+                (build artifacts)
+clean.exclude:  files that _the user_ does not want to track or touch
+                (IDE configuration)
+git clean -x:   remove build artifacts, but keep precious files
+                (when a pristine build is desired)
+git clean -x --remove-excluded:
+                remove everything, including precious files
+                (e.g. for redistribution)
 
 Signed-off-by: Ivan Shapovalov <intelfx@intelfx.name>
 ---
- builtin/clean.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ Documentation/config/clean.txt | 11 +++++++++++
+ Documentation/git-clean.txt    | 22 +++++++++++++++-------
+ builtin/clean.c                | 19 ++++++++++++++++---
+ 3 files changed, 42 insertions(+), 10 deletions(-)
 
+diff --git a/Documentation/config/clean.txt b/Documentation/config/clean.txt
+index c0188ead4e..eb64ad26fa 100644
+--- a/Documentation/config/clean.txt
++++ b/Documentation/config/clean.txt
+@@ -1,3 +1,14 @@
+ clean.requireForce::
+ 	A boolean to make git-clean refuse to delete files unless -f
+ 	is given. Defaults to true.
++
++clean.exclude::
++	Additional exclude patterns that have higher priority than the standard
++	linkgit:gitignore[5] rules and will be honored in (almost) all cases,
++	even if the `-x` or `-X` options are given. These patterns are intended
++	to be used for user-specific "precious" files such as IDE configuration
++	that must not be removed even if a pristine build is desired. This list
++	has the same priority and semantics as the `-e` command line option.
++
++	The `--remove-excluded` command line option can be used to disregard
++	these exclude patterns (intentionally no short form).
+diff --git a/Documentation/git-clean.txt b/Documentation/git-clean.txt
+index fd17165416..33d6fb7228 100644
+--- a/Documentation/git-clean.txt
++++ b/Documentation/git-clean.txt
+@@ -59,15 +59,10 @@ OPTIONS
+ 	Be quiet, only report errors, but not the files that are
+ 	successfully removed.
+ 
+--e <pattern>::
+---exclude=<pattern>::
+-	Use the given exclude pattern in addition to the standard ignore rules
+-	(see linkgit:gitignore[5]).
+-
+ -x::
+ 	Don't use the standard ignore rules (see linkgit:gitignore[5]), but
+-	still use the ignore rules given with `-e` options from the command
+-	line.  This allows removing all untracked
++	still use the ignore rules given with the `-e` command line option or the
++	`clean.exclude` configuration variable.  This allows removing all untracked
+ 	files, including build products.  This can be used (possibly in
+ 	conjunction with 'git restore' or 'git reset') to create a pristine
+ 	working directory to test a clean build.
+@@ -76,6 +71,19 @@ OPTIONS
+ 	Remove only files ignored by Git.  This may be useful to rebuild
+ 	everything from scratch, but keep manually created files.
+ 
++-e <pattern>::
++--exclude=<pattern>::
++	Use the given exclude pattern in addition to the standard ignore rules
++	(see linkgit:gitignore[5]). Exclude patterns can also be configured
++	using the `clean.exclude` configuration variable. These patterns have
++	higher priority than the `-x` or `-X` options and will be honored
++	even in their presence.
++
++--remove-excluded::
++	Disregard the additional exclude patterns provided by `-e` or the
++	configuration variable `clean.exclude`. This flag has the highest
++	priority and intentionally does not have a short form.
++
+ Interactive mode
+ ----------------
+ When the command enters the interactive mode, it shows the
 diff --git a/builtin/clean.c b/builtin/clean.c
-index eaddf6a06e..ec58338049 100644
+index ec58338049..eae22a1ec7 100644
 --- a/builtin/clean.c
 +++ b/builtin/clean.c
-@@ -923,7 +923,7 @@ int cmd_clean(int argc,
- 	      struct repository *repo UNUSED)
- {
+@@ -29,6 +29,7 @@
+ static int require_force = -1; /* unset */
+ static int interactive;
+ static struct string_list del_list = STRING_LIST_INIT_DUP;
++static struct string_list config_exclude_list = STRING_LIST_INIT_DUP;
+ static unsigned int colopts;
+ 
+ static const char *const builtin_clean_usage[] = {
+@@ -133,6 +134,11 @@ static int git_clean_config(const char *var, const char *value,
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "clean.exclude")) {
++		string_list_append(&config_exclude_list, value);
++		return 0;
++	}
++
+ 	if (git_color_config(var, value, cb) < 0)
+ 		return -1;
+ 
+@@ -925,6 +931,7 @@ int cmd_clean(int argc,
  	int i, res;
--	int dry_run = 0, remove_directories = 0, quiet = 0, ignored = 0;
-+	int dry_run = 0, remove_directories = 0, quiet = 0, remove_ignored = 0;
+ 	int dry_run = 0, remove_directories = 0, quiet = 0, remove_ignored = 0;
  	int ignored_only = 0, force = 0, errors = 0, gone = 1;
++	int remove_excluded = 0;
  	int rm_flags = REMOVE_DIR_KEEP_NESTED_GIT;
  	struct strbuf abs_path = STRBUF_INIT;
-@@ -942,7 +942,7 @@ int cmd_clean(int argc,
+ 	struct dir_struct dir = DIR_INIT;
+@@ -940,11 +947,13 @@ int cmd_clean(int argc,
+ 		OPT_BOOL('i', "interactive", &interactive, N_("interactive cleaning")),
+ 		OPT_BOOL('d', NULL, &remove_directories,
  				N_("remove whole directories")),
- 		OPT_CALLBACK_F('e', "exclude", &exclude_list, N_("pattern"),
- 		  N_("add <pattern> to ignore rules"), PARSE_OPT_NONEG, exclude_cb),
--		OPT_BOOL('x', NULL, &ignored, N_("remove ignored files, too")),
-+		OPT_BOOL('x', NULL, &remove_ignored, N_("remove ignored files, too")),
+-		OPT_CALLBACK_F('e', "exclude", &exclude_list, N_("pattern"),
+-		  N_("add <pattern> to ignore rules"), PARSE_OPT_NONEG, exclude_cb),
+ 		OPT_BOOL('x', NULL, &remove_ignored, N_("remove ignored files, too")),
  		OPT_BOOL('X', NULL, &ignored_only,
  				N_("remove only ignored files")),
++		OPT_CALLBACK_F('e', "exclude", &exclude_list, N_("pattern"),
++				N_("always exclude <pattern> from cleaning (overrides -x)"), PARSE_OPT_NONEG, exclude_cb),
++		OPT_BOOL(0, "remove-excluded", &remove_excluded,
++				N_("remove excluded files, too (overrides -e and clean.exclude)")),
  		OPT_END()
-@@ -963,9 +963,9 @@ int cmd_clean(int argc,
+ 	};
  
- 	dir.flags |= DIR_SHOW_OTHER_DIRECTORIES;
+@@ -1016,7 +1025,10 @@ int cmd_clean(int argc,
+ 	if (repo_read_index(the_repository) < 0)
+ 		die(_("index file corrupt"));
  
--	if (ignored && ignored_only)
-+	if (remove_ignored && ignored_only)
- 		die(_("options '%s' and '%s' cannot be used together"), "-x", "-X");
--	if (!ignored)
-+	if (!remove_ignored)
- 		setup_standard_excludes(&dir);
- 	if (ignored_only)
- 		dir.flags |= DIR_SHOW_IGNORED;
-@@ -995,7 +995,7 @@ int cmd_clean(int argc,
- 		 * recursing into a directory which is itself ignored.
- 		 */
- 		dir.flags |= DIR_SHOW_IGNORED_TOO;
--		if (!ignored)
-+		if (!remove_ignored)
- 			dir.flags |= DIR_SHOW_IGNORED_TOO_MODE_MATCHING;
+-	add_patterns_from_string_list(&dir, EXC_CMDL, "--exclude option", &exclude_list);
++	if (!remove_excluded) {
++		add_patterns_from_string_list(&dir, EXC_CMDL, "--exclude option", &exclude_list);
++		add_patterns_from_string_list(&dir, EXC_CMDL, "clean.exclude", &config_exclude_list);
++	}
  
- 		/*
+ 	parse_pathspec(&pathspec, 0,
+ 		       PATHSPEC_PREFER_CWD,
+@@ -1091,6 +1103,7 @@ int cmd_clean(int argc,
+ 	strbuf_release(&buf);
+ 	string_list_clear(&del_list, 0);
+ 	string_list_clear(&exclude_list, 0);
++	string_list_clear(&config_exclude_list, 0);
+ 	clear_pathspec(&pathspec);
+ 	return (errors != 0);
+ }
 -- 
 2.48.1.5.g9188e14f140
 
