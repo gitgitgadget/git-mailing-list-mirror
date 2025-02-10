@@ -1,90 +1,146 @@
-Received: from ext7.scm.com (ext7.scm.com [49.12.148.225])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD77381741
-	for <git@vger.kernel.org>; Mon, 10 Feb 2025 13:01:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.148.225
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780F72528E6
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 14:28:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739192517; cv=none; b=gKhpGqydH46J+jj6O+PK7e20+/2jknRhfGQ72Qu3/0FleVmeBsJz7enQdVeVXSYM4qZZW4S05k6UuWKtni3n1z4lKEEag6cGs4pGQS1o1VcDn5wDs4otlsK5xfL6TUEP5GclsxTSy5XYbWgnFjn4QQwphjO5QYi3MoNCIe95ej8=
+	t=1739197709; cv=none; b=f9sowJyyjh+9Fq1BBXANC8Gc5y0cDWhK61elnpA9hSURbIS3mB7/FvY1Tpf5N0mEvXqBH2de+dnYbhhxEN5cL4pvcKb49KCbBPgcFe7Fks9cM46RG2+pMdNOFmluEVGL+W9MKrJ2J8YBoymKeAuMk5+mxmN/gg1EzMr0gpdKzQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739192517; c=relaxed/simple;
-	bh=epMqHT0Dlv6lNrJuTmF+qnQ+in9g73QtVlxOB201s0k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fk41CtiLMDX9rb6nj8lqzLE7Q24cMBIXCnoRWPe3cBgZBSBbvpC3UxVa5j0FPxn4YIN5iACgiBaBekXDWzN9sA+BwQnNN0WsoI5OnaBV45UMFKhia3gyssDR9gvgQiq5MelDEhnk/uMR6ir4EAK4MNd0P6gV2kZhpAv+5P8EExM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scm.com; spf=pass smtp.mailfrom=scm.com; dkim=pass (4096-bit key) header.d=scm.com header.i=@scm.com header.b=jy43I5dY; arc=none smtp.client-ip=49.12.148.225
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scm.com
+	s=arc-20240116; t=1739197709; c=relaxed/simple;
+	bh=JuVBvcfEUx0kSGTY2Z10wL6xXqiiB1iWYsmgEqZytQk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DFVRH7P3fYRVHUe4JEWrZcY/ueQLzYjywcnGfyM1vUhrRW359QqQHGNRwGL62H/o2xwZW1Z8h+pnELLNuhDPrn0ofaGBzwK71QeqCIdyLxm60nS4H+9AxYhz3kRKIo8VSsLXAO+degXC/3MH9B0RdXTaLmI8X3V+rzHPsG8G+5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nLJTbCwN; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=scm.com header.i=@scm.com header.b="jy43I5dY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scm.com;
-	s=ext7dkim24; t=1739191966;
-	bh=SyCG8A+l50eSZeZrLcHw85OjsRZxIOSW5IDc6YReNvA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jy43I5dYYCrUlbY4TJATXr85npoR5n9hvfoZdI3iic9CY/VKOCOMyZ9DBlTj2CcKd
-	 xGAK87HA1uKS5m+hQcsW3jI6TlVbZlywXoa5gIVeGMmPnRp6z1msCWE/BhmGfp8SvQ
-	 DxGFXqH0SssaZO/SsETeuE3qIIQc9cJuutSGu1ar1k8AOWoJOnCzX3YDZmJK/MS9HC
-	 W5WEUCTYtr/gdMg7PQDx6unHGKOIWdYuAGsWxxCOiO+jN/37wp/jxgy3SNu6q6jKgX
-	 Itbr9dW9aOHPForCOHpOt6pBq+GecBMeMBQCAdIoNwphrECcivUBF0F9It5brxpa4x
-	 6nLkyb7zF5yeVUSlwemRCBZyrxrrZ5iKIcMVrAlpl71vldzNnQAKnI7byX9+bqlqPH
-	 4ACAXJRw0Pfx2Rrk1Fh9Pfd0FkQGHF6X8zBJAKEWJtKRK6XuuSZWNgQvwPBF4H6d0P
-	 J2hANIB1HPt9IfrF7d1sQPlonsKTUcK1RkTkPPUCDQtX1SQAsDhBU9kKW8WHBd0JH9
-	 y1kg0r7j1NWgwjIbuOHA/mgqZtj2Pnrgsa+Jzhc5qn3n5TGpv7gEFPP3/+HBc22Wah
-	 FKV1bKzMOXRWcuBsprlEANPLg6fol2RKV8Y2BZI/kCoh6witWJhIvjeF/CkNsPMptV
-	 C/0vU9+7/c16/MBhvlc+5cfQ=
-X-Virus-Scanned: Debian amavisd-new at ext7.scm.com
-From: =?UTF-8?B?VG9tw6HFoQ==?= Trnka <trnka@scm.com>
-To: Han Young <hanyang.tony@bytedance.com>
-Cc: git@vger.kernel.org
-Subject:
- Re: [RFC PATCH resend] builtin/repack: Honor --keep-pack and .keep when
- repacking promisor objects
-Date: Mon, 10 Feb 2025 13:52:40 +0100
-Message-ID: <2289498.vFx2qVVIhK@electra>
-In-Reply-To:
- <CAG1j3zH1xngk0NZUjHA9Akx526yfEiQ=KsdfyRjE9XAewWV=Sg@mail.gmail.com>
-References:
- <2728513.vuYhMxLoTh@mintaka.ncbr.muni.cz>
- <CAG1j3zH1xngk0NZUjHA9Akx526yfEiQ=KsdfyRjE9XAewWV=Sg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nLJTbCwN"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-21f464b9a27so71865965ad.1
+        for <git@vger.kernel.org>; Mon, 10 Feb 2025 06:28:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739197706; x=1739802506; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0qXPNdCu7RzNZlwAky/vZr2OHKBIZFrnnDOpKgPK2cQ=;
+        b=nLJTbCwN9lRkdo+z4gLSwtTdN4i6VbiB+MKNYu+XREnI5lxZL++VgK8xMJB3rFmNzx
+         S9jNRiSejrXZc9VYMrXUmkEbwdOEhy416pqyAQvswvx+eXnjYijdyupNS2NEn/3EJn1J
+         O2BD93OJyKUTGoQ1fLDkCESdywtMOwAtn6+i2xBNlhZoV7hCPV2mPsvP3615FTiVlyFg
+         5mYaioh64bC/P/ss6MaBgZE7VBYPthR6QgHKBgQQX/aPaBKGLhEZ0gKe0QbDa+CWzgrO
+         aPAfNypQgHa/gQHSaSwLphXeGxYNCcDQL894ki79C6Xx2cmMZa+E+tD+1Qx61da+VuXO
+         pi+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739197706; x=1739802506;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0qXPNdCu7RzNZlwAky/vZr2OHKBIZFrnnDOpKgPK2cQ=;
+        b=eQQWnCjwkg3UDHZHIyhiY5Y/kLLVi1Bf4j0+bfhn2THSUKjCRgPeLQi2NgWe5Fx6vb
+         w4cfA8YIRFSCbCeXCHKnLWvASIiqpHVFPQZ1/xJWQD5oeTJEkKxEIWP9Ij46tnN1UF9n
+         a6wJlQhOE8BLZOOUFY6qlHhGly+R0AWkY8f62NsLYEmfg+nRknJHSPQqt8zwaXM7DOLZ
+         mo6IE2dsNmFJKs3gChIo4LVpB1JVKiG7MZX7NizL0w75AjUQ+Bp6WX+tv0lYfoW0E0xH
+         9IydN5UK29stJqzbt4hFtIb4yvvXol3Yo0JKLOKrrC6ZVANiWSBsd3kT9O0sCcUjCUpK
+         qUIQ==
+X-Gm-Message-State: AOJu0YzJovlFhVx+8xNswbEP8mg0ZgwwZ/wKJ4IOkQmqCXiU6ZjkEaBA
+	aD1viA3HjOtgRoDNVLrSOl/o5nZSJX66l/lzXPl+uLOxBQUKtZDQfWYyc6l9
+X-Gm-Gg: ASbGncuaei3PdJ6cAmrDTbsSpNY/Um4Y4hmGWSVaVuFhMWlKvOqoIhjsbbgBQAwsPtm
+	6l3Tmzjlm6/P+CbVhvo/SCd/wBPWekir8cXaKI7tlkURRMqupkQvk4P5SAgxLJH0XiaaKShCN/Z
+	qxsqdlmdIgS7CZSvGd47J+cCxs77ePrNudlW5g7eYDzaIZjPHeJSGaVhVW5etm15sttkGFUMBwP
+	5A1ptiY2eSXmCUeolpdnkjSUjgk/wXrm0OKg45awRIxxHhcPTmZv6qJTYFjxsjldklf57P5gPYj
+	ZZsK3H3/iVv/dUXBfRxL9TA0CaKoQZXBUSIH0YuO
+X-Google-Smtp-Source: AGHT+IGY1R6uARwr6/4tcCBZ5VrnajEydWKfjvR303UuTmG/leiGLai2mIXk4XrykGN7+A2U5XH7KA==
+X-Received: by 2002:a17:903:1c8:b0:210:fce4:11ec with SMTP id d9443c01a7336-21f4e1cb33emr200796575ad.1.1739197706122;
+        Mon, 10 Feb 2025 06:28:26 -0800 (PST)
+Received: from archlinux.plaksha.edu.in ([182.75.25.162])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ad558af9ae2sm1284589a12.54.2025.02.10.06.28.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Feb 2025 06:28:25 -0800 (PST)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: git@vger.kernel.org,
+	christian.couder@gmail.com
+Cc: ps@pks.im,
+	shejialuo@gmail.com,
+	johncai86@gmail.com,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [Outreachy][PATCH] builtin/update-server-info: remove the_repository global variable
+Date: Mon, 10 Feb 2025 19:58:10 +0530
+Message-ID: <20250210142820.3588250-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Monday, 10 February 2025 12:38:17, CET Han Young wrote:
-> We repack promisor packs by reading all the objects in promisor packs
-> (in repack.c), and send them to pack-objects. pack-objects then write a
-> single pack containing all the promisor objects. The actual old promisor
-> pack deletion happens in repack.c
-> 
-> So just simply copying the keep-pack logic to repack_promisor_objects()
-> does not prevent the keep promisor packs from being repacked.
+Remove the_repository global variable in favor of the repository
+argument that gets passed in "builtin/upload-server-info.c".
 
-I don't know much about the internals so maybe I misinterpreted what I saw, 
-but the patch seems to fix the issue I observed:
+The RUN_SETUP macro is used in "git.c" when the 'update-server-info'
+command is wired to the 'cmd_update_server_info()' function."
+This means we can be sure that the `run_builtin()` function inside
+"git.c" will always pass a valid `repo` variable to `cmd_update_server_info()`
+when the `update-server-info` command is run inside a Git repository.
 
-I have two 40 GiB promisor packs, and as soon as I accumulated 50 additional 
-small packs (due to fetches), gc triggered a repack including the two big 
-packs, despite them being above the bigPackThreshold so they could be kept. 
-Repacking them is very disruptive, both because of the CPU and RAM load this 
-produces, and also because this is on btrfs with snapshots, so rewriting those 
-80 GiB into a new file means consuming that much extra disk space for no good 
-reason.
+When the command is run outside a Git repository without the `-h`
+option, the command will fail (`die`) inside the `run_builtin()` function
+when the `setup_git_directory()` is called. So, the `cmd_update_server_info()`
+would not be called at all. When `-h` is passed to the command outside a
+Git repository, the `run_builtin()` will call the `cmd_update_server_info()`
+function with `repo` set as NULL.
 
-With my patch, gc did not touch these two big packs but still collected all 
-the small ones into one new pack as expected. Everything else also seems to 
-work fine.
+It is certain that the `update_server_info()` function would not be
+called when the `repo` config is `NULL` since this only happens when the
+`-h` option is used and the command would exit with code 129 before
+getting to the `update_server_info()` function inside the
+`usage_with_options()` function.
 
-According to the man page for git-pack-objects, it seems to me that this is 
-how it's meant to work, because the description for --keep-pack says "This 
-flag causes an object already in the given pack to be ignored, even if it 
-would have otherwise been packed." (and something similar for --honor-pack-
-keep). To my untrained eyes, it looks like that's also how 
-want_found_object()/add_object_entry() in pack-objects.c handle it.
+To prevent accessing a `NULL` value `repo`, it is necessary to check if
+the `repo` has a valid value before calling the `repo_config` option
+inside "update-server-info.c" since it comes before the
+`usage_with_options()` function.
 
-2T
+So, this change is safe and would not lead to any breakage.
 
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+---
+ builtin/update-server-info.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/builtin/update-server-info.c b/builtin/update-server-info.c
+index 47a3f0bdd9..d7467290a8 100644
+--- a/builtin/update-server-info.c
++++ b/builtin/update-server-info.c
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+ #include "builtin.h"
+ #include "config.h"
+ #include "gettext.h"
+@@ -13,7 +12,7 @@ static const char * const update_server_info_usage[] = {
+ int cmd_update_server_info(int argc,
+ 			   const char **argv,
+ 			   const char *prefix,
+-			   struct repository *repo UNUSED)
++			   struct repository *repo)
+ {
+ 	int force = 0;
+ 	struct option options[] = {
+@@ -21,11 +20,12 @@ int cmd_update_server_info(int argc,
+ 		OPT_END()
+ 	};
+ 
+-	git_config(git_default_config, NULL);
++	if (repo)
++		repo_config(repo, git_default_config, NULL);
+ 	argc = parse_options(argc, argv, prefix, options,
+ 			     update_server_info_usage, 0);
+ 	if (argc > 0)
+ 		usage_with_options(update_server_info_usage, options);
+ 
+-	return !!update_server_info(the_repository, force);
++	return !!update_server_info(repo, force);
+ }
+-- 
+2.48.1
 
