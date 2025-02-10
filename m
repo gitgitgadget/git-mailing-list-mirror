@@ -1,97 +1,90 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from ext7.scm.com (ext7.scm.com [49.12.148.225])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409301DF255
-	for <git@vger.kernel.org>; Mon, 10 Feb 2025 11:38:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD77381741
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 13:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=49.12.148.225
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739187511; cv=none; b=R+vuBKl+E8uPoGFzU3JwLWWdaam6C984SYvi93PT4LlWasXPeR+ggak0gMKDbQlyDRdabNY8EWxrq/byHd+p3S5mUqbRPSR+sLyboYj0JnAkKbinYT5S2TukedTybvaQJBfb3HRAlrglYIcdzozHgeebqaWYNvCiJKGhNe12nUE=
+	t=1739192517; cv=none; b=gKhpGqydH46J+jj6O+PK7e20+/2jknRhfGQ72Qu3/0FleVmeBsJz7enQdVeVXSYM4qZZW4S05k6UuWKtni3n1z4lKEEag6cGs4pGQS1o1VcDn5wDs4otlsK5xfL6TUEP5GclsxTSy5XYbWgnFjn4QQwphjO5QYi3MoNCIe95ej8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739187511; c=relaxed/simple;
-	bh=DocwIzzQ5wBeN4xD6DyicKZSx92N2jdvtJGNRpTBFno=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Z3fS1gw79+L3B24GFjIdXVwhNZ7c3rxyEzEu/IBh3vt8Uy0BlXx97Z4CCq2vpSLZjK82bf0Pe+LHzw2z7VBIKFAy8SQm6IgzElG6xRWxg1GsGrx37/7vi2Pl5E436pGE8s9uf40srorUH2uBqbzOSHGmGal4goPsEisrFYLI1pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=M4d9twqB; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1739192517; c=relaxed/simple;
+	bh=epMqHT0Dlv6lNrJuTmF+qnQ+in9g73QtVlxOB201s0k=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=fk41CtiLMDX9rb6nj8lqzLE7Q24cMBIXCnoRWPe3cBgZBSBbvpC3UxVa5j0FPxn4YIN5iACgiBaBekXDWzN9sA+BwQnNN0WsoI5OnaBV45UMFKhia3gyssDR9gvgQiq5MelDEhnk/uMR6ir4EAK4MNd0P6gV2kZhpAv+5P8EExM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scm.com; spf=pass smtp.mailfrom=scm.com; dkim=pass (4096-bit key) header.d=scm.com header.i=@scm.com header.b=jy43I5dY; arc=none smtp.client-ip=49.12.148.225
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=scm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=scm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="M4d9twqB"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-21f3e2b4eceso77861245ad.2
-        for <git@vger.kernel.org>; Mon, 10 Feb 2025 03:38:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1739187508; x=1739792308; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DocwIzzQ5wBeN4xD6DyicKZSx92N2jdvtJGNRpTBFno=;
-        b=M4d9twqB8cfd8WvQWSIC1jqEZv5ZLq7bCgBYrRESSgZ7AXWRd6eYHZk4Mlp0S7kUIi
-         lIkUIgsUIIe0BV5n9NA9fbo/GAiubTZt+Ky8QCyLW25+erAQMY8Z1Re0hDjuYKATbneB
-         y7DOPz/o9doJibxH5nMolACq6pczzbg8Q8vu+SUBw6qj0agdAkrfIhyFtSCwmgH4bWkv
-         sq3RLTsKI8F4tHlNBmhAolI0L8aaC9tMAuRapFd9Rwn4Jly+qDCg0aiAoedarbXXvkMF
-         /ZBQB07HMHKjAnPG8LnYQWLkbTNafNSNtYc7jNfb8EOv3D4XPCSAiQ+0F4dsfoJ/soh6
-         Ueaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739187508; x=1739792308;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DocwIzzQ5wBeN4xD6DyicKZSx92N2jdvtJGNRpTBFno=;
-        b=AXAAlLM/6LrLQ2m5dwhdtw366hQFF+a7Ya3gWVpu/y0NBMAYgdjvHgkD0l0c36VNUN
-         7hepnDqK9ThS5dfgonnuY03BcwYjODFJiUXAdALcric/rdg4kquiBCG4CsK+vFiDLtTL
-         LHzPeloUsEIP5k6eFGudnunYvOcb4qqk3m/g6B9l5DHmZTYag8ZHfbvin8qKwiEKY0Uz
-         ZQCt5o1vhVbgyfNeDfpNM8b79rchqFntR1gqlXbv7RPpMw5bszykTrGpmp/GdSwdjanp
-         QfbaS/E4CeUO/+HDvHsUkfpuEkcRjLsgln8m+lzOzi7dg6AExUfb7Q8bUZKrALXxGCbE
-         0MAA==
-X-Gm-Message-State: AOJu0YwS2h6dxQ3g8CZbbh2oZ7Bt2wM1ezMSFuiH4in0fYCtP4EA3oFa
-	XjxwLlyQXO0Q8pEMYTu4n3RMtjDkq5jyisS2eSCVLeUE72IrEF1pojbMPxsljdCYaoAM4907JMW
-	apVSv0A06dZD1YNiUadtZdD6rCskEmURDpA+J9kxhH3QBGOQSe4SV5Q==
-X-Gm-Gg: ASbGncvYUO759/C3Jd3sEJfn6IytOiPwndoqeWiVugFVmZUy6zXMGF0bpN/oJWcRyPE
-	wLehMeQMlAACDZpid94GItXOp34rnEWQFEA/ERiz0lJCiqlc210OiWWnvc0dwj9txGh13gaKKMw
-	==
-X-Google-Smtp-Source: AGHT+IFrmyjS3fER0bihrzlOHgI6qWCQqxH7x5Ml3mw4NZXS5xH9TSCvzeHrfxo1meMpXw8T8ALKXvtb/zW6IrG26Gs=
-X-Received: by 2002:a17:903:1250:b0:216:4016:5aea with SMTP id
- d9443c01a7336-21f4e7059damr218821285ad.29.1739187508468; Mon, 10 Feb 2025
- 03:38:28 -0800 (PST)
+	dkim=pass (4096-bit key) header.d=scm.com header.i=@scm.com header.b="jy43I5dY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scm.com;
+	s=ext7dkim24; t=1739191966;
+	bh=SyCG8A+l50eSZeZrLcHw85OjsRZxIOSW5IDc6YReNvA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=jy43I5dYYCrUlbY4TJATXr85npoR5n9hvfoZdI3iic9CY/VKOCOMyZ9DBlTj2CcKd
+	 xGAK87HA1uKS5m+hQcsW3jI6TlVbZlywXoa5gIVeGMmPnRp6z1msCWE/BhmGfp8SvQ
+	 DxGFXqH0SssaZO/SsETeuE3qIIQc9cJuutSGu1ar1k8AOWoJOnCzX3YDZmJK/MS9HC
+	 W5WEUCTYtr/gdMg7PQDx6unHGKOIWdYuAGsWxxCOiO+jN/37wp/jxgy3SNu6q6jKgX
+	 Itbr9dW9aOHPForCOHpOt6pBq+GecBMeMBQCAdIoNwphrECcivUBF0F9It5brxpa4x
+	 6nLkyb7zF5yeVUSlwemRCBZyrxrrZ5iKIcMVrAlpl71vldzNnQAKnI7byX9+bqlqPH
+	 4ACAXJRw0Pfx2Rrk1Fh9Pfd0FkQGHF6X8zBJAKEWJtKRK6XuuSZWNgQvwPBF4H6d0P
+	 J2hANIB1HPt9IfrF7d1sQPlonsKTUcK1RkTkPPUCDQtX1SQAsDhBU9kKW8WHBd0JH9
+	 y1kg0r7j1NWgwjIbuOHA/mgqZtj2Pnrgsa+Jzhc5qn3n5TGpv7gEFPP3/+HBc22Wah
+	 FKV1bKzMOXRWcuBsprlEANPLg6fol2RKV8Y2BZI/kCoh6witWJhIvjeF/CkNsPMptV
+	 C/0vU9+7/c16/MBhvlc+5cfQ=
+X-Virus-Scanned: Debian amavisd-new at ext7.scm.com
+From: =?UTF-8?B?VG9tw6HFoQ==?= Trnka <trnka@scm.com>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: git@vger.kernel.org
+Subject:
+ Re: [RFC PATCH resend] builtin/repack: Honor --keep-pack and .keep when
+ repacking promisor objects
+Date: Mon, 10 Feb 2025 13:52:40 +0100
+Message-ID: <2289498.vFx2qVVIhK@electra>
+In-Reply-To:
+ <CAG1j3zH1xngk0NZUjHA9Akx526yfEiQ=KsdfyRjE9XAewWV=Sg@mail.gmail.com>
+References:
+ <2728513.vuYhMxLoTh@mintaka.ncbr.muni.cz>
+ <CAG1j3zH1xngk0NZUjHA9Akx526yfEiQ=KsdfyRjE9XAewWV=Sg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <2728513.vuYhMxLoTh@mintaka.ncbr.muni.cz>
-In-Reply-To: <2728513.vuYhMxLoTh@mintaka.ncbr.muni.cz>
-From: Han Young <hanyang.tony@bytedance.com>
-Date: Mon, 10 Feb 2025 19:38:17 +0800
-X-Gm-Features: AWEUYZnGbhrH--6neGpap_UppcJHR5rR4SCOyhwd-OeVZiiMTsUFt4AfnPwobH4
-Message-ID: <CAG1j3zH1xngk0NZUjHA9Akx526yfEiQ=KsdfyRjE9XAewWV=Sg@mail.gmail.com>
-Subject: Re: [External] [RFC PATCH resend] builtin/repack: Honor --keep-pack
- and .keep when repacking promisor objects
-To: =?UTF-8?B?VG9tw6HFoSBUcm5rYQ==?= <trnka@scm.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
 
-On Wed, Jan 29, 2025 at 6:12=E2=80=AFPM Tom=C3=A1=C5=A1 Trnka <trnka@scm.co=
-m> wrote:
->
-> git-repack currently does not pass --keep-pack or --honor-pack-keep to
-> the git-pack-objects handling promisor packs. This means that settings
-> like gc.bigPackThreshold are completely ignored for promisor packs.
->
-> The simple fix is to just copy the keep-pack logic into
-> repack_promisor_objects(), although this could possibly be improved by
-> making prepare_pack_objects() handle it instead.
->
+On Monday, 10 February 2025 12:38:17, CET Han Young wrote:
+> We repack promisor packs by reading all the objects in promisor packs
+> (in repack.c), and send them to pack-objects. pack-objects then write a
+> single pack containing all the promisor objects. The actual old promisor
+> pack deletion happens in repack.c
+> 
+> So just simply copying the keep-pack logic to repack_promisor_objects()
+> does not prevent the keep promisor packs from being repacked.
 
-We repack promisor packs by reading all the objects in promisor packs
-(in repack.c), and send them to pack-objects. pack-objects then write a
-single pack containing all the promisor objects. The actual old promisor
-pack deletion happens in repack.c
+I don't know much about the internals so maybe I misinterpreted what I saw, 
+but the patch seems to fix the issue I observed:
 
-So just simply copying the keep-pack logic to repack_promisor_objects()
-does not prevent the keep promisor packs from being repacked.
+I have two 40 GiB promisor packs, and as soon as I accumulated 50 additional 
+small packs (due to fetches), gc triggered a repack including the two big 
+packs, despite them being above the bigPackThreshold so they could be kept. 
+Repacking them is very disruptive, both because of the CPU and RAM load this 
+produces, and also because this is on btrfs with snapshots, so rewriting those 
+80 GiB into a new file means consuming that much extra disk space for no good 
+reason.
 
-One way to achieve what you wanted would be to filter the keep packs
-in repack_promisor_objects's for_each_packed_object().
+With my patch, gc did not touch these two big packs but still collected all 
+the small ones into one new pack as expected. Everything else also seems to 
+work fine.
 
-Thanks.
+According to the man page for git-pack-objects, it seems to me that this is 
+how it's meant to work, because the description for --keep-pack says "This 
+flag causes an object already in the given pack to be ignored, even if it 
+would have otherwise been packed." (and something similar for --honor-pack-
+keep). To my untrained eyes, it looks like that's also how 
+want_found_object()/add_object_entry() in pack-objects.c handle it.
+
+2T
+
+
