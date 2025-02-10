@@ -1,107 +1,349 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3622D7DA9C
-	for <git@vger.kernel.org>; Mon, 10 Feb 2025 10:19:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AAB1E04AE
+	for <git@vger.kernel.org>; Mon, 10 Feb 2025 11:26:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739182801; cv=none; b=QVEZgaQxTbZxaHt75P7Ug5L+8es/zeJEvWHvEFkoO8zqHoNCHizPoEmJk4Pc+36xdQNcRv47lC8rFpbIZmSVU3sWRW5cgC4jKXMLQbszuoDp1wTW7mO/HMULEHNCItI4KTWJpP0QG9nGcw109ED1cStbO+04BhDllMOcNoh72Oc=
+	t=1739186769; cv=none; b=JyE296Ltmbuo6OFvGSECMZdxoLRtlfF9NCLh5ZgYo/5EGVertjxQl5YfoQ8R4t04BVUBBYz/2S6eqC8E0+E1QGE77ZhdA39FdhsDzAkgL7zQxF+QTAU8/qIBcvF+Xq6ULDRuvifXlXKlJeyb8NkoFNXqhZpeAvBk1EvY9CZJ8wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739182801; c=relaxed/simple;
-	bh=qmkPRo6CfkaidXBm2VTI/n00vI318pjPoHvUpUK0B+I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=fLNlDn2W8e5sQJrwSsyVaEUvYHgsyW+zMynASJ3EtbywJKr/a6eki5eh1ikAVbZeeqxLlj0SODS2m1AgJXxkAsupFWx1wfFdvAaN2fdwVXKsIQvu/4537uEgKLsRVVzkNSYIj4+xcdlKG8rALgExltxh75BGBuKFF56ZIxUtkQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mtkKGrB8; arc=none smtp.client-ip=209.85.217.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739186769; c=relaxed/simple;
+	bh=WvknAMsBtEfCwHDccpQRmiyliOg1Cv7GJK+AEeQ8k58=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=GyJMmZ9OLye81Mq2455IpLynS4w4m4T9MUODOUZNxmQgqutcgl9MebEJEWxBw/ZQHzdM5ETQ/UGYYx3V/1xGeCCVtb6UQiGiZUi6qSYpFZQWrQVt8qlFuW2vtQV4ZV+blA+xyL+KiuOWZnUT4CcXLw9ePGULPC9EmjmiTowKrvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=ps.report@gmx.net header.b=eo8A2q9u; arc=none smtp.client-ip=212.227.15.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mtkKGrB8"
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-4ba86dee27bso910766137.3
-        for <git@vger.kernel.org>; Mon, 10 Feb 2025 02:19:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739182799; x=1739787599; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qmkPRo6CfkaidXBm2VTI/n00vI318pjPoHvUpUK0B+I=;
-        b=mtkKGrB8qS59dNRCDqLagZd5iabWzQoox6KB/4QAZ41mOAz/x0HAmTsdu5NrUuzxkN
-         jdh6RjE7CBjxsYI3UrF5Sz6Us+lWCb1E48VFlg6Z9jkGVdhPYSzwfPGhvfohs9jQm74c
-         pwDbkMWfdw1ArO1iVdFdSAKRFbP5tgXAb8i6744M/vapGvFkoGU1t9oY3vDQAci1DXuM
-         +pG0dBooCj4LRXqgJMQsUjdwLJEcqboENRPra3A6exsJAmT81wvZgcYs6xkrj5wa/jDm
-         3nntgUZSAjlD1TE/OK0jxrZ6mfVF7lFpS2t4yPBSaxF5FKutib6vfPAzwKE+vgslwQd1
-         dscQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739182799; x=1739787599;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qmkPRo6CfkaidXBm2VTI/n00vI318pjPoHvUpUK0B+I=;
-        b=Ll2K9MWnuM0oWA9qIH3T1O9ZoUz5RT/hcdQlqBHZFCEt/8udcspZq1KJ9EJJc9z7ZR
-         0w6YbU2n3FcogZXcb4kDl1sgKTw+2hnBfvP7TfehSaKxRa0rgNzzBwvfohkeM5KrrX2H
-         3S6Gpgt1ncp+7fpRHDmq07WNkbbSUSABpt4E24EN6MhRlvd1vBNjqr1Qh+YkhY2JH85/
-         YzSCzJ/rjRYMV5yKwtuYFmXcPBSNg+d/L9PutCejNuoMzagJLWrsg68tKpLSUA9zKOen
-         RcnA7V632nfN+lCr5cTU/kl5Lr7ICoRHwvPJ/eq020SgKnAHSTJWSZGH3D55Dn2z5bgp
-         PGTA==
-X-Gm-Message-State: AOJu0Yz4nUWeHhP/+Hw1PGWELb4e2mKlzrt4uyCH244/Dqf2awLOzUZJ
-	CURO99Ys+ycW9L/pHSAyCVgViGNVfI4yIjB7sMutufBYZj73IeC4tqnQXd2cj0XtCLQ9PY6cm1u
-	6DbuJhM8gio7BnCJZW4scsE7Y+CJGEl+D
-X-Gm-Gg: ASbGncvGWb2VQYA/VPrvAULe6un5OiRjQw4ikPCWq5I7f+DS6o9KsfgPZMMe6z8Tvrn
-	S4oB2VVxl7ySj9SA7cANBfcHYrGOnLW6Zvqrt1R6CHegrzPUjdinx6EGFCO61m1te4odPE3Z0fk
-	JHQry9HOj6yFZBJHIioOhpLE3X
-X-Google-Smtp-Source: AGHT+IHrd6vUXFWcYEYaxaIrol6L/jlgFUpoibAnYwi7ovIU6cl+8P0eiM4hP0rNIVjb3q3GvmM4YYud0gr4bwosZho=
-X-Received: by 2002:a05:6102:38cc:b0:4bb:cdc0:5dd7 with SMTP id
- ada2fe7eead31-4bbcdc05ed4mr1320223137.16.1739182799098; Mon, 10 Feb 2025
- 02:19:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmx.net header.i=ps.report@gmx.net header.b="eo8A2q9u"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+	s=s31663417; t=1739186764; x=1739791564; i=ps.report@gmx.net;
+	bh=33DPZs0ey3ZJF7rJ7xRMsx43vxPviX9esn8uqUK6D8o=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=eo8A2q9uhNQ0GQOfo5BE7m84wIQ7ueTt5TbXErTPP3YpXvXDylbf7dnOmZZtDUEU
+	 cl64TJBZjEI5k1MXWbtV2vidXHwuHTaSqJzinuBlO4P65uDYE+oF5welDl12bHPoS
+	 uKBkxgOSfdN18FFucb0IyCQWKy+SIFGtBgkDAi00hoBboWozRywJ2WuLtYrAea29y
+	 0XvRua8tYCQIGGsZybmzfOaCTkQ4mXo1Y9W65H18p/ODwybDmhc5F6euYIAHji7qi
+	 o3a9lKVhgQctJTzxZrVwQC5z90kf42SF6wJV4fDVsc7AM0Ym/L8PI3AMSACO7XgjH
+	 ZgIHcdkb02Gt9QUq9A==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from localhost ([82.135.81.18]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M9Wys-1tmyEq23XQ-003sfH; Mon, 10
+ Feb 2025 12:26:04 +0100
+Date: Mon, 10 Feb 2025 12:26:03 +0100
+From: Peter Seiderer <ps.report@gmx.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: Meson build leaks host 'sh' path to target build when
+ cross-compiled
+Message-ID: <20250210122603.5130e309@gmx.net>
+In-Reply-To: <Z6mtnmvKMsIOEVz5@pks.im>
+References: <20250209133027.64a865aa@gmx.net>
+	<Z6mtnmvKMsIOEVz5@pks.im>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-suse-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CALG+76eJL5dC3o+yq7zreoRDQan1MPgfNXB42k5f2iq2bZEbNw@mail.gmail.com>
- <534e8534-a9bd-428b-87f9-a512c9378b19@gmail.com>
-In-Reply-To: <534e8534-a9bd-428b-87f9-a512c9378b19@gmail.com>
-From: =?UTF-8?Q?Bj=C3=B6rn_Lindqvist?= <bjourne@gmail.com>
-Date: Mon, 10 Feb 2025 11:19:47 +0100
-X-Gm-Features: AWEUYZmM-GGXcjMl6rbkZWotzWvVcO02syyAnWbl8-ZG0pcUPM2rfdk6YNCDwaA
-Message-ID: <CALG+76erpDGFinXsockB8=+GPEoEtd+xw=xVN1HCzv7=aFymoA@mail.gmail.com>
-Subject: Re: git rebase --continue error message is misleading
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:9RtmCvtWtlpPh/9uirwXYl1CcyJSEq69etip/dvdUaI2lVRA7Tz
+ enqwL2cesSS8gc+snID/7az1K1O+VL0zscKrutPED42IEZHirX6PZs/k5h9Na8YG8inJdCv
+ WkHHrIyl/tf01KBp/MG89JcxJViA08QgUg4KF9numU3m/SRUMKzVj1ihbycMRt2xzPs96oc
+ rEJXfcM3xPW4Y2YYeUf6g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:nbT9WScZyXM=;w2M3tQMLwB5R6MvSHsYrA2JBH8A
+ I/UtAff2L4+UxF2kBLhPFLp4rzzLG8e8ZoyGDJDUlMLOAt0upLVOjG5EgdMkS2xHor38w8WA5
+ GS1cL7YAgaAFHKowSl1MMjCdAIrAmqsAxh66tNzlfmGS8vcr+DZy3loRwz8gykwfdLTClZ08U
+ d2tQ22CUw0NyS59iTrhwU11fRuZxH8Cy5O97IE3J5uZhYga5E4gNEt4imkJCW4mJSbaz6QBZo
+ iE62dp8/aNrt1y6TzkMuZ2Gigl23AmJVGQggsFF1xLxXJqQvpBbxmZZKq/NhykEdhXuwnSakC
+ PIB3VO3tA5GcGEDY2dK7kO41QBfuzr3vQ+sQBEuRnalqu+7PS8b95avzCndk73wMAICExaT4W
+ GoiytR4l+0SnS0tk30edkNgZxUE6Ie7ggv5QnpBiFryDZwFkO56PFpdxPKU7VBipJa1OdpGZN
+ 3qv81LsLVMoqMmr+VW7rqWqHKR5HRsj7YfNAGUXI3TWfvxJpHsEABBkBz0Bcxydc3a6/0RJMH
+ vBxifsVV6cw7LIarFfh0M97Lln5/LVZrdh0b1dUmYv62LxxabVeyDJCvO1j+JAwo7AcY7Y8OU
+ xTQe0loiO/LXkziVmzfrt3886/S7pNjGDfOpUMcZNCNe7kop9J6Deb+vOyDBJsaWVF2HP2P1D
+ vKZaYjlgro0pQ+GvgceKRTRMCg0W2Q9XJBw31w/h4ayii9p9Ja30XFayMZyo3kmLcitV4xN5H
+ 4HHDnxyFqRxw+hXBFFpCrVwyV8avkP/FpjszSngKOA+JmAHal/CvTBK4UUjwmvnwy4LbnTYvv
+ wW3/Ca2aGpQ6SJ0QJ/rm2wygsvy3e9lRTiqJA9/Vpr2x3aemnRndyLh4lyMPZ4aHZI7F7ECV5
+ ZUyPbSCB928bjhFJ2cOJulhlF1w14WbFRVkTOgyDBTpOStYsRWmk5+M7q9zUOrpy17V8rX6Xr
+ A8RlNWht8OUKyPRfXtESkUXWmCeS/X26un658pK1wjY5S0BTiEAPYpb9xYRjX8GI3bPL2D3lp
+ fRFrKarGbH2UlluMf4HdoyjMK4OVTpI06osZzcZpj+jIAWjl2GZ/TZzUr6alY+/FOnVJkvgrK
+ BoVnxP28mFf2J5f6EeVfhqRmTAi/3xftIReF1qwpj4yQZ4rho/xUH2nK9YIKKVA/uIj0pzJxX
+ Jo3Mf0iYdpDHHkrtvXW8LJaa8J7rISNHUq84516EAWJ//HeGqGqJeg7J47HkLi4GXEE317oTi
+ /XgniFPYtbpALiuOgf6ulfqiR4zo7NKxfYq6ImWwMPAygzJijP9QJ9K7jaWkgvK/S2kxegBAL
+ h/TU06wy7IkqAcBwjxD37+B2jS/811wusF3LaqKLCLgbMElxMssY0unV38/0R4tZ5sEYBwPaR
+ oIHjmJ6MCD9e+wC46ynW+UGCcknEWGIOw1fFAB6ZhfQpp2ny/VDfx049Cu
 
-Den fre 13 dec. 2024 kl 15:38 skrev Phillip Wood <phillip.wood123@gmail.com=
->:
-> On 09/12/2024 13:02, Bj=C3=B6rn Lindqvist wrote:
-> > $ LANG=3DC git rebase --continue
-> > hint: Waiting for your editor to close the file... error: cannot run
-> > vi: No such file or directory
-> > error: unable to start editor 'vi'
-> > Please supply the message using either -m or -F option.
+Hello Patrick,
+
+On Mon, 10 Feb 2025 08:41:18 +0100, Patrick Steinhardt <ps@pks.im> wrote:
+
+> On Sun, Feb 09, 2025 at 01:30:27PM +0100, Peter Seiderer wrote:
+> [snip]
+> >   The meson build tries to execute the non-existent '/usr/bin/sh' (ins=
+tead of
+> >   '/bin/sh' as the autoconf build), 'which sh' on the host returns
+> >   '/usr/bin/sh'...
+> >
+> >   From meson.build
+> >
+> >    [...]
+> >    186 shell =3D find_program('sh', dirs: program_path)
+> >    [...]
+> >    685   '-DSHELL_PATH=3D"' + fs.as_posix(shell.full_path()) + '"',
+> >
+> >   Do not use the result of 'find_program('sh',...)' for '-DSHELL_PATH=
+=3D'
+> >   (at least not for cross-compile), use fix '/bin/sh' instead or make =
+it
+> >   configurable via a meson option?
 >
-> This line comes from "git commit" whenever launch_editor() fails. I
-> wonder if we'd be better to recommend that the user sets up a working
-> editor instead. The message is certainly unhelpful when we run "git
-> commit" from "git cherry-pick/merge/rebase/revert" where we want to seed
-> the message that the user edits.
+> Hm, very true. We're mixing up concerns here by treating the build
+> environment and the target environment the same.
+>
+> I guess the proper fix is to wire up the "native:" parameter when we
+> call `find_program()`, which allows us to tell Meson whether it should
+> find an executable for the build or the target host. And then, for those
+> binaries where we actually need to know about both the build and target
+> host's locations, we'd end up calling `find_program()` twice.
+>
+> For executables that are supposed to be used on the target host Meson
+> would then know to first consult the cross file, which could look like
+> this:
+>
+>     [binaries]
+>     sh =3D '/target/path/to/sh'
+>     perl =3D '/target/path/to/perl'
+>
+> Meson would then pick up that file via `meson setup --cross-file
+> <CROSSFILE_PATH> <BUILDDIR>`.
 
-Here, I don't think assuming the user has vi installed is correct.
+Sorry, I believe this will not work..., the description of the native
+parameter in find_program ([2]) on the first sight sounds like doing the
+right thing, but as far as I read the 'Cross compilation' page ([3], [4]) =
+the
+tools under the '[binaries]' section are the tools used while cross-compil=
+ing
+(running on the build machine) and not the paths/tools on the target
+(or as meson nomenclature host/target)...
 
-> I don't think that is a good idea when "git commit" is being run from
-> "git rebase". In that case we want to preserve the original message and
-> authorship and using '-F' or '-m' would not do that.
+One tiny finding below...
 
-The error should tell you about that, I think. Right now I get:
+>
+> The patch should look somewhat like the attached patch, but it conflicts
+> with my in-flight patch series at [1]. I'll wait for that series to be
+> merged to `next` before sending out the fix.
+>
+> Thanks for your report!
+>
+> Patrick
+>
+> [1]: <20250129-b4-pks-meson-improvements-v1-0-ab709f0be12c@pks.im>
+>
+> -- >8 --
+>
+> diff --git a/Documentation/meson.build b/Documentation/meson.build
+> index c6117366ff..b033f4a93a 100644
+> --- a/Documentation/meson.build
+> +++ b/Documentation/meson.build
+> @@ -206,9 +206,9 @@ manpages =3D {
+>
+>  docs_backend =3D get_option('docs_backend')
+>  if docs_backend =3D=3D 'auto'
+> -  if find_program('asciidoc', dirs: program_path, required: false).foun=
+d()
+> +  if find_program('asciidoc', dirs: program_path, native: true, require=
+d: false).found()
+>      docs_backend =3D 'asciidoc'
+> -  elif find_program('asciidoctor', dirs: program_path, required: false)=
+.found()
+> +  elif find_program('asciidoctor', dirs: program_path, native: true, re=
+quired: false).found()
+>      docs_backend =3D 'asciidoctor'
+>    else
+>      error('Neither asciidoc nor asciidoctor were found.')
+> @@ -216,7 +216,7 @@ if docs_backend =3D=3D 'auto'
+>  endif
+>
+>  if docs_backend =3D=3D 'asciidoc'
+> -  asciidoc =3D find_program('asciidoc', dirs: program_path)
+> +  asciidoc =3D find_program('asciidoc', native: true, dirs: program_pat=
+h)
+>    asciidoc_html =3D 'xhtml11'
+>    asciidoc_docbook =3D 'docbook'
+>    xmlto_extra =3D [ ]
+> @@ -245,7 +245,7 @@ if docs_backend =3D=3D 'asciidoc'
+>      asciidoc_conf,
+>    ]
+>  elif docs_backend =3D=3D 'asciidoctor'
+> -  asciidoctor =3D find_program('asciidoctor', dirs: program_path)
+> +  asciidoctor =3D find_program('asciidoctor', native: true, dirs: progr=
+am_path)
+>    asciidoc_html =3D 'xhtml5'
+>    asciidoc_docbook =3D 'docbook5'
+>    xmlto_extra =3D [
+> @@ -283,7 +283,7 @@ elif docs_backend =3D=3D 'asciidoctor'
+>    ]
+>  endif
+>
+> -xmlto =3D find_program('xmlto', dirs: program_path)
+> +xmlto =3D find_program('xmlto', dirs: program_path, native: true)
+>
+>  cmd_lists =3D [
+>    'cmds-ancillaryinterrogators.txt',
+> @@ -404,7 +404,7 @@ if get_option('docs').contains('html')
+>      pointing_to: 'git.html',
+>    )
+>
+> -  xsltproc =3D find_program('xsltproc', dirs: program_path)
+> +  xsltproc =3D find_program('xsltproc', dirs: program_path, native: tru=
+e)
+>
+>    user_manual_xml =3D custom_target(
+>      command: asciidoc_common_options + [
+> diff --git a/gitweb/meson.build b/gitweb/meson.build
+> index 89b403dc9d..88a54b4dc9 100644
+> --- a/gitweb/meson.build
+> +++ b/gitweb/meson.build
+> @@ -1,5 +1,5 @@
+>  gitweb_config =3D configuration_data()
+> -gitweb_config.set_quoted('PERL_PATH', perl.full_path())
+> +gitweb_config.set_quoted('PERL_PATH', target_perl.full_path())
+>  gitweb_config.set_quoted('CSSMIN', '')
+>  gitweb_config.set_quoted('JSMIN', '')
+>  gitweb_config.set_quoted('GIT_BINDIR', get_option('prefix') / get_optio=
+n('bindir'))
+> diff --git a/meson.build b/meson.build
+> index e153a43918..5a5662bc02 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -173,7 +173,7 @@ project('git', 'c',
+>    # The version is only of cosmetic nature, so if we cannot find a shel=
+l yet we
+>    # simply don't set up a version at all. This may be the case for exam=
+ple on
+>    # Windows systems, where we first have to bootstrap the host environm=
+ent.
+> -  version: find_program('sh', required: false).found() ? run_command(
+> +  version: find_program('sh', native: true, required: false).found() ? =
+run_command(
+>      'GIT-VERSION-GEN', meson.current_source_dir(), '--format=3D@GIT_VER=
+SION@',
+>      capture: true,
+>      check: true,
+> @@ -198,16 +198,18 @@ elif host_machine.system() =3D=3D 'windows'
+>    program_path =3D [ 'C:/Program Files/Git/bin', 'C:/Program Files/Git/=
+usr/bin' ]
+>  endif
+>
+> -cygpath =3D find_program('cygpath', dirs: program_path, required: false=
+)
+> -diff =3D find_program('diff', dirs: program_path)
+> -git =3D find_program('git', dirs: program_path, required: false)
+> -sed =3D find_program('sed', dirs: program_path)
+> -shell =3D find_program('sh', dirs: program_path)
+> -tar =3D find_program('tar', dirs: program_path)
+> +cygpath =3D find_program('cygpath', dirs: program_path, native: true, r=
+equired: false)
+> +diff =3D find_program('diff', dirs: program_path, native: true)
+> +git =3D find_program('git', dirs: program_path, native: true, required:=
+ false)
+> +sed =3D find_program('sed', dirs: program_path, native: true)
+> +shell =3D find_program('sh', dirs: program_path, native: true)
+> +tar =3D find_program('tar', dirs: program_path, native: true)
+> +
+> +target_shell =3D find_program('sh', dirs: program_path, native: false)
+>
+>  # Sanity-check that programs required for the build exist.
+>  foreach tool : ['cat', 'cut', 'grep', 'sort', 'tr', 'uname']
+> -  find_program(tool, dirs: program_path)
+> +  find_program(tool, dirs: program_path, native: true)
+>  endforeach
+>
+>  script_environment =3D environment()
+> @@ -758,6 +760,7 @@ endif
+>  build_options_config.set_quoted('X', executable_suffix)
+>
+>  python =3D import('python').find_installation('python3', required: get_=
+option('python'))
+> +target_python =3D find_program('python3', native: false, required: pyth=
+on.found())
+>  if python.found()
+>    build_options_config.set('NO_PYTHON', '')
+>  else
+> @@ -775,7 +778,8 @@ endif
+>
+>  # Note that we only set NO_PERL if the Perl features were disabled by t=
+he user.
+>  # It may not be set when we have found Perl, but only use it to run tes=
+ts.
+> -perl =3D find_program('perl', version: '>=3D5.8.1', dirs: program_path,=
+ required: perl_required)
+> +perl =3D find_program('perl', version: '>=3D5.8.1', dirs: program_path,=
+ native: true, required: perl_required)
+> +target_perl =3D find_program('perl', version: '>=3D5.8.1', native: fals=
+e, required: perl.found())
+>  perl_features_enabled =3D perl.found() and get_option('perl').allowed()
+>  if perl_features_enabled
+>    build_options_config.set('NO_PERL', '')
+> @@ -825,7 +829,7 @@ else
+>    build_options_config.set('NO_PTHREADS', '1')
+>  endif
+>
+> -msgfmt =3D find_program('msgfmt', dirs: program_path, required: false)
+> +msgfmt =3D find_program('msgfmt', dirs: program_path, native: true, req=
+uired: false)
+>  gettext_option =3D get_option('gettext').disable_auto_if(not msgfmt.fou=
+nd())
+>  if not msgfmt.found() and gettext_option.enabled()
+>    error('Internationalization via libintl requires msgfmt')
+> @@ -1954,9 +1958,9 @@ foreach key, value : {
+>    'GIT_TEST_TEMPLATE_DIR': meson.project_build_root() / 'templates',
+>    'GIT_TEST_TEXTDOMAINDIR': meson.project_build_root() / 'po',
+>    'PAGER_ENV': get_option('pager_environment'),
+> -  'PERL_PATH': perl.found() ? perl.full_path() : '',
+> -  'PYTHON_PATH': python.found () ? python.full_path() : '',
+> -  'SHELL_PATH': shell.full_path(),
+> +  'PERL_PATH': target_perl.found() ? target_perl.full_path() : '',
+> +  'PYTHON_PATH': target_python.found () ? target_python.full_path() : '=
+',
+> +  'SHELL_PATH': target_shell.full_path(),
+>    'TAR': tar.full_path(),
+>    'TEST_OUTPUT_DIRECTORY': test_output_directory,
+>    'TEST_SHELL_PATH': shell.full_path(),
+> diff --git a/templates/meson.build b/templates/meson.build
+> index 1faf9a44ce..986c2e03be 100644
+> --- a/templates/meson.build
+> +++ b/templates/meson.build
+> @@ -1,6 +1,6 @@
+>  template_config =3D configuration_data()
+> -template_config.set('PERL_PATH', perl.found() ? fs.as_posix(perl.full_p=
+ath()) : '')
+> -template_config.set('SHELL_PATH', fs.as_posix(shell.full_path()))
+> +template_config.set('PERL_PATH', perl.found() ? fs.as_posix(target_perl=
+.full_path()) : '')
 
-LANG=3DC git commit
-hint: Waiting for your editor to close the file... error: cannot run
-vi: No such file or directory
-error: unable to start editor 'vi'
-Please supply the message using either -m or -F option.
+Above should read (perl.found() vs. target_perl.found()):
 
-The only solution I've found is git commit -m "blah".
+   +template_config.set('PERL_PATH', target_perl.found() ? fs.as_posix(tar=
+get_perl.full_path()) : '')
 
+> +template_config.set('SHELL_PATH', fs.as_posix(target_shell.full_path())=
+)
+>  template_config.set('GITWEBDIR', fs.as_posix(get_option('prefix') / get=
+_option('datadir') / 'gitweb'))
+>
+>  configure_file(
 
---=20
-mvh/best regards Bj=C3=B6rn Lindqvist
+Regards,
+Peter
+
+[2] https://mesonbuild.com/Reference-manual_functions.html#find_program
+[3] https://mesonbuild.com/Cross-compilation.html
+[4] https://mesonbuild.com/Machine-files.html
+
