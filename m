@@ -1,182 +1,167 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B1F22331E
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 17:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2291D261380
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 17:20:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739293441; cv=none; b=sJauhxDx5qc+awphKhLnRTYK34uqEJlG4cYKXhjaj1NzRgJxCQ7yNu5dlS3HLggK+wkE17TcI2X+nsBGbq5QRDck6gXF5sn1pwk0pzGktyXKbYt9dWAawSlbwVSDRCGyYCkyaJ5/agne2Zv1Frl9QhlnfzJUitUD+IvUavAaemc=
+	t=1739294413; cv=none; b=BPhVZQteBF7PJUCW8ByX7cfr2ws9aG0crh5e+6trpx282ezGfAsNR49DgrrHMS02ecmm+Lx0MUeeH5EAC1n7XDLHuTIj7vcfHcnsSyUB8j121++aGAFWN/6OZMnlJjVF9elyeqULvMSrcpKnaSYI4VkX8RpSTC7wE5s9pb2gQ3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739293441; c=relaxed/simple;
-	bh=ndNWZi+SaPHrdDhgbO28Yd6wTwQVsFTUXct0CpXyTbw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t07+12erxyx4mOhp89/dNAw5ccSn6cQGY7OyFmbhvY4WoHw0JFk9hze6H6PqgBY3wKkhEaw0d8pIkdECAvxjB4N3n0rPr/LEl8mmW8XsV/G/Fzk3I99IaZwQlxoUmpbXxumCg1klyOtSxao8fGyTnd7O2Nb0EjfP7CBDH4b3qHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZM0z2ha6; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739294413; c=relaxed/simple;
+	bh=1aHAWQ9c6RCIFHMfUw/qsqQ32N9w5nkMNm9XGlyBVPU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mer80r6hkEhY+pQDdMKXHjnL10CTR6q+CSivIe19Zu1X57f53+SMeh+uqUbeKp3+udM6Qkw+TQQql/TllStpq/uVJfd5hgdOV39kYGlvwHlyKFqUfcrOz/zsnTaEuZyKXgTi3XLijnj6hP6psdMoubjfHbCGMjutjF+B4EWJ/H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mng8oRbH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0cbRZ15V; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZM0z2ha6"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-38dd93a6f0aso2159345f8f.0
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 09:03:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739293438; x=1739898238; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9tgOXfFK16M7iWSbC2I/IvN9gQudjt9jZKQRkNudNG8=;
-        b=ZM0z2ha6X32VZ1vI2kHzbzO977l+EmfkxU3MmXGzYmLqHBaOLkiC43s4fCFzHQWXAm
-         ijChni9M4Q+77LUkuhrx4PipUlNbszw3aANonAko383HwDC47Jhl1lf3HaFtJjTR1Jlf
-         M2ijgdRPOKKhoyC6cqNHptSTYc1Pd1piKnd3vE6/+8SZiKvkjYBAAjtWetqrafgVT0lQ
-         neQfn663u5OVNCFd+9DYqC00VJ+RtaKVyUbWj4LI3WTL/sDI/MUDYyo0T8wPcRilYRaq
-         oJQ/+UdRiWR1oSK4kYjpjUTXXwEOonCvLGMtXIUmZtl7DnR78nk2IkqBdthsyKdaUgif
-         Z5PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739293438; x=1739898238;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9tgOXfFK16M7iWSbC2I/IvN9gQudjt9jZKQRkNudNG8=;
-        b=L8qfFIR7FKU2HBTLyxcKlKmPsxK6oMu4HXvFXYyK8KYOcLUMMicINEAf218MnOL0Rq
-         Ya4dw1mo0fhqnSF64/2U2pHNqXEyLXH8XOJoN0c0DLv+owayAOQrCgYFKTV1CZUAK8og
-         8BJlkzbXcyyRynZu2rrcS3K0P2xDoMGHfKbzGH5zVrILO7c0JaHDMv9c/Z/n/mbHKkSI
-         iUZcVOCWHHFkIlXz8OXMgZ3AUiPKEniJkxG0Azw3C/Eo77cVE4o+MyoQRavqko+gJfpu
-         7pNuSJg9JqAddBsuJ7GiKY5qUt2Fio/ZvKP4mIYEinGYwik9hldfqiS/aOAQUQ8k1NIr
-         v2nA==
-X-Forwarded-Encrypted: i=1; AJvYcCWEE8Bq325a4mMHXxsmkTatCw9+wRSEhgLgydojAsCMbIJF78oypiEqzOjf75ZCwswz6Do=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzteluCN/4urWcM3mJktYxMRh7AqR3CvMYaT4i3ynMs9PJMFbeY
-	Qd4IO5d8hopgGUnH9gAAL6mETtgkGHAdAwii8Vmcr/vzd6UFNcm13y8Tbw==
-X-Gm-Gg: ASbGnctBqvzY075CgUMiDNh9+ms3mimQWAzvZpe0t9a4SXmiAk44jIfOVQv6cHaEJn6
-	GivcqvvfieTFLHqOHTbnk6+hInvvma+sn857xxKvFj1e9V8hPpO20effZYkaUKOQEhGBuEduzZP
-	ERUnF52BbZC0eyWIk10QYYPCA4t3WD/jc/h/Vqxwpr6uCc0fOdV8fZAykaHAkUJXX4QYVq6Zj7E
-	mzbmJ6bLnVt+Hqrk2JzYbwOj/rp0MJHLkXK7zoANf3YcyMuZVBYqK5uCsfxbDHPTa7DKtNjgopD
-	iFtJXpnWdhiTgSMsK0GpDkQRVa8XBR9q7BRXymR0WOtesNSVJAGISOszX6dGFzUM5Vhs6Q==
-X-Google-Smtp-Source: AGHT+IFUJe0YhSP+R6O5DlbBpI++JTytugD+BQcfHj6vD6sT1q2/yigOmrkAvonhn2lvfOoejcGMUg==
-X-Received: by 2002:a05:6000:4029:b0:38d:de92:adad with SMTP id ffacd0b85a97d-38dde92ae6cmr8488478f8f.22.1739293437453;
-        Tue, 11 Feb 2025 09:03:57 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43941ddc8e9sm76313355e9.26.2025.02.11.09.03.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 11 Feb 2025 09:03:57 -0800 (PST)
-Message-ID: <4beb0359-763d-425d-b416-ac40bda59e2e@gmail.com>
-Date: Tue, 11 Feb 2025 17:03:56 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mng8oRbH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0cbRZ15V"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 27CA71140196;
+	Tue, 11 Feb 2025 12:20:09 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 11 Feb 2025 12:20:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1739294409; x=1739380809; bh=GmTkGrvESCULxATui0eBJAix4i8pSpRg
+	dnywDXtx3Vc=; b=mng8oRbHrpD42hMcdZojwoZTMPmxsdXWc7J40ZlHPIzhvkOR
+	9D63dWrGfcyEXcb5XrNwCCyxdB+f8Y0DUinBxHhXM04u7puV0E7txQaTIzaIKKHq
+	pkqsRyBL5yN2k83I2fvNlN+hpV90Gznkbh+lJHDIG9Q86rMeUNPhgVXA3iuYkX8f
+	eo17ffbC0feCGGa8Y+JFY4Lii8MfjMSBzQO+oVi9VKjhnk3Ds8DdruTI6lxadp1v
+	oQraaSS/hCDZcf6veC1NQk+UECT+SeOhISXW7VgOUmXdFPJ6cXsLxFXxTKHfQnNh
+	E7FQIpc85xb0AhXWKStEolv2Ao1McDsCuSwyOw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739294409; x=
+	1739380809; bh=GmTkGrvESCULxATui0eBJAix4i8pSpRgdnywDXtx3Vc=; b=0
+	cbRZ15VEoT/ZTWrBAVly30HTGa7zD52msBqlUy5quWVnb6PGBZZe/kz79KLGfpvc
+	OjyAsJb9+thSpmb5vmhxuGa+4L0XiXCHMq/J3CMrBdi7/zFWE2CwWGeFNpGO4Bjn
+	ZoSsSbYjo/C2ffcckGPGCNJpU/HebMv/7kQTfx+PSGARBdEiRvGTGYczzHpyrvOQ
+	k8xQIIPFIjPwrgyADdlQFd3uA+D/Zf2TmwF83OpdH9EDFu4XubZjqNNPun5BBGJc
+	AOWtyaiD5K6FS61nGyd3kpMtDUL3rft51tn9KyQoI6FPeJBvLZyBn3odeVRCp51K
+	BABIBTNOLV/f48m4rfdYw==
+X-ME-Sender: <xms:yIarZwB0oMdvqqsAkgCHcZsxjnF3QBEUvG0-69t68cQ4kzpKwH3TIw>
+    <xme:yIarZyiAf1-fBGQivS7XxwKq9LKSMrTJbnynJeDP5kIpsJPXydveuIDo0_aHGcB5v
+    yrx5JJ4F0UOt41WBw>
+X-ME-Received: <xmr:yIarZznZrQKtcCKZowIYgzPAYe-oyMein4CJxMJVnS_VzRWJHUIS7cftTs02JSdqJ9boLZBcyYus2oAdvPqyuYwRl8PvSI_ueb1m4E8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegudehkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fufffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
+    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepjefhgf
+    efvdekfedthfejgeffieevieeifeegueeihfejleeufeffjeetkeffffejnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
+    hosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehinh
+    htvghlfhigsehinhhtvghlfhigrdhnrghmvgdprhgtphhtthhopehmvgesthhtrgihlhho
+    rhhrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:yIarZ2wfnkj1q9w9PE2GiT4byjVxGvpRg9uVU_AA0dCUheEA6FPqbg>
+    <xmx:yIarZ1QtYtd-H2ZDa755m_fWGZqRdnbZWgH-Rapr4NeUkVdYOqIC2g>
+    <xmx:yIarZxZh3Qvv-Aldw-w7Q3754bOYDu35U09oUUKmzEd9JZHSTYXLGA>
+    <xmx:yIarZ-SrYfmQzQkLnEEibzu4K8ckq0xmq9yqEqa3ThqCt85Xx1_8RQ>
+    <xmx:yYarZzNTP5hrnaPRdmhcQ3d1O6CmS9UDHbrTJMTeQaFsJUcIjTpAPXxJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Feb 2025 12:20:08 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Ivan Shapovalov <intelfx@intelfx.name>,
+    Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH] doc: centrally document various ways spell `true` and `false`
+Date: Tue, 11 Feb 2025 09:20:07 -0800
+Message-ID: <xmqqy0ycz9dk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/6] refs: introduce support for partial reference
- transactions
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im, jltobler@gmail.com
-References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Karthik
+We do not seem to centrally document exhaustively ways to spell
+Boolean values.
 
-On 07/02/2025 07:34, Karthik Nayak wrote:
-> Git's reference updates are traditionally atomic
+The description in the Environment Variables of git(1) section
+assumes that the reader is already familiar with how "Boolean valued
+configuration variables" are specified, without referring to
+anything, so there is no way for the readers to find out more.
 
-I'm nitpicking but the updates aren't actually atomic, if a transaction 
-updates two refs then it is possible for another process to see the one 
-ref pointing to the new value and the other pointing to the old value.
+The description of `bool` in the section on "--type
+<type>" in "git config --help" might be the place to do so, but it
+is not telling us all that much.
 
-> - when updating
-> multiple references in a transaction, either all updates succeed or none
-> do. While this behavior is generally desirable,
+The description of Boolean valued placeholders in the pretty formats
+section of "git log --help" enumerates the possible values with "etc."
+implying there may be other synonyms; shrink the list of samples and
+instead refer to the canonical and authoritative source of truth, which
+now is git-config(1).
 
-Isn't that the whole point of transactions?
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-> it can be limiting in> certain scenarios, particularly with the reftable backend where batching
-> multiple reference updates is more efficient than performing them
-> sequentially.
->  
-> This series introduces support for partial reference transactions,
-> allowing individual reference updates to fail while letting others
-> proceed.
+ * Noticed while writing <xmqqfrkk1l4i.fsf@gitster.g>, a review for
+   <bc0de52b59f289e1388f1581fcfa49453365e21a.camel@intelfx.name>
 
-This sounds like it's abusing ref transactions to implement a 
-performance optimization. I wonder if it would be better to provide that 
-via a different interface than shares the same underling implementation 
-as transactions. That would make it clear to someone reading the code 
-that individual ref updates can fail without affecting the rest. Burying 
-that detail in a flag makes it rather easy to miss.
+ Cc'ed Taylor, as the author of fb0dc3ba (builtin/config.c: support
+ `--type=<type>` as preferred alias for `--<type>`, 2018-04-18) this
+ patch butchers.
 
-Best Wishes
+ Documentation/git-config.txt     | 4 +++-
+ Documentation/git.txt            | 5 +++--
+ Documentation/pretty-formats.txt | 8 ++++----
+ 3 files changed, 10 insertions(+), 7 deletions(-)
 
-Phillip
-
-> This capability is exposed through git-update-ref's
-> `--allow-partial` flag, which can be used in `--stdin` mode to batch
-> updates and handle failures gracefully.
-> The changes are structured to carefully build up this functionality:
-> 
-> First, we clean up and consolidate the reference update checking logic.
-> This includes removing duplicate checks in the files backend and moving
-> refname tracking to the generic layer, which simplifies the codebase and
-> prepares it for the new feature.
-> 
-> We then restructure the reftable backend's transaction preparation code,
-> extracting the update validation logic into a dedicated function. This
-> not only improves code organization but sets the stage for implementing
-> partial transaction support.
-> 
-> With this groundwork in place, we implement the core partial transaction
-> support in the refs subsystem. This adds the necessary infrastructure to
-> track and report rejected updates while allowing transactions to proceed.
-> All reference backends are modified to support this behavior when enabled.
-> 
-> Finally, we expose this functionality to users through
-> git-update-ref(1)'s `--allow-partial` flag, complete with test coverage
-> and documentation. The flag is specifically limited to `--stdin` mode
-> where batching multiple updates is most relevant.
-> 
-> This enhancement improves Git's flexibility in handling reference
-> updates while maintaining the safety of atomic transactions by default.
-> It's particularly valuable for tools and workflows that need to handle
-> reference update failures gracefully without abandoning the entire batch
-> of updates.
-> 
-> This series is based on top of bc204b7427 (The seventh batch, 2025-02-03).
-> There were no conflicts noticed with topics in 'seen' or 'next'.
-> 
-> ---
-> Karthik Nayak (6):
->        refs/files: remove duplicate check in `split_symref_update()`
->        refs: move duplicate refname update check to generic layer
->        refs/files: remove duplicate duplicates check
->        refs/reftable: extract code from the transaction preparation
->        refs: implement partial reference transaction support
->        update-ref: add --allow-partial flag for stdin mode
-> 
->   Documentation/git-update-ref.txt |  12 +-
->   builtin/update-ref.c             |  53 ++++-
->   refs.c                           |  58 ++++-
->   refs.h                           |  22 ++
->   refs/files-backend.c             |  97 ++------
->   refs/packed-backend.c            |  49 ++--
->   refs/refs-internal.h             |  19 +-
->   refs/reftable-backend.c          | 494 +++++++++++++++++++--------------------
->   t/t1400-update-ref.sh            | 191 +++++++++++++++
->   9 files changed, 633 insertions(+), 362 deletions(-)
-> ---
-> 
-> 
-> 
-> ---
-> 
-> base-commit: bc204b742735ae06f65bb20291c95985c9633b7f
-> change-id: 20241206-245-partially-atomic-ref-updates-9fe8b080345c
-> 
-> Thanks
-> - Karthik
-> 
-> 
-
+diff --git c/Documentation/git-config.txt w/Documentation/git-config.txt
+index 3e420177c1..76042581ec 100644
+--- c/Documentation/git-config.txt
++++ w/Documentation/git-config.txt
+@@ -213,7 +213,9 @@ See also <<FILES>>.
+ +
+ Valid `<type>`'s include:
+ +
+-- 'bool': canonicalize values as either "true" or "false".
++- 'bool': canonicalize values `true`, `yes`,`on`, and positive
++  numbers as "true", and values `false`, `no`, `off` and `0` as
++  "false".
+ - 'int': canonicalize values as simple decimal numbers. An optional suffix of
+   'k', 'm', or 'g' will cause the value to be multiplied by 1024, 1048576, or
+   1073741824 upon input.
+diff --git c/Documentation/git.txt w/Documentation/git.txt
+index e89a91dd0d..c029a297db 100644
+--- c/Documentation/git.txt
++++ w/Documentation/git.txt
+@@ -472,8 +472,9 @@ Environment Variables
+ ---------------------
+ Various Git commands pay attention to environment variables and change
+ their behavior.  The environment variables marked as "Boolean" take
+-their values the same way as Boolean valued configuration variables, e.g.
+-"true", "yes", "on" and positive numbers are taken as "yes".
++their values the same way as Boolean valued configuration variables, i.e.,
++"true", "yes", "on" and positive numbers are taken as "yes", while "false",
++"no", "off", and "0" are taken as "no".
+ 
+ Here are the variables:
+ 
+diff --git c/Documentation/pretty-formats.txt w/Documentation/pretty-formats.txt
+index 8ee940b6a4..07475de8c3 100644
+--- c/Documentation/pretty-formats.txt
++++ w/Documentation/pretty-formats.txt
+@@ -339,10 +339,10 @@ insert an empty string unless we are traversing reflog entries (e.g., by
+ decoration format if `--decorate` was not already provided on the command
+ line.
+ 
+-The boolean options accept an optional value `[=<bool-value>]`. The values
+-`true`, `false`, `on`, `off` etc. are all accepted. See the "boolean"
+-sub-section in "EXAMPLES" in linkgit:git-config[1]. If a boolean
+-option is given with no value, it's enabled.
++The boolean options accept an optional value `[=<bool-value>]`. The
++values taken by `--type=bool` git-config[1], like `yes` and `off`,
++are all accepted.  Giving a boolean option without `=<value>` is
++equivalent to giving it with `=true`.
+ 
+ If you add a `+` (plus sign) after '%' of a placeholder, a line-feed
+ is inserted immediately before the expansion if and only if the
