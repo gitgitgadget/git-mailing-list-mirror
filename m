@@ -1,145 +1,155 @@
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB362641CA
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 20:59:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5272726563F
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 21:01:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739307580; cv=none; b=EtS/CglJlJdbxnymfeDeR3IBjpD0KLRfi/nAEJudpVe3hTIc/3XsmBAr69f1PVEL6WM3mgYa6aMFjP85rKO3z1BZ9NHZXrCyiD/c/zuI/cXzIUmecqtuEqt2qxcF6eETNd0Do1IcLzXi8PvxCL30y6pcRiHusZZwHoJ7HvlP11w=
+	t=1739307719; cv=none; b=oiRCZQj5VfNAvNAaj2YI+o5ZHruXJN2MkWEKp19wqMUeUv2xNcj5OJaU1RgYDFMzUQX+uSKbCdGj7YkpdKIJgV1fC6s8M/jLtbKLVCDI7BSqaytnairsLAXrBkJNlZS794dujXvme8Mvd21RK4NKIm7XFUijQASxvHMLjnSrjp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739307580; c=relaxed/simple;
-	bh=oxl9VMCPfop3XrbE4X65AUpCzB6nb8k+35GPyYZKH3I=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sNrw5X8tJevJaA08V/wSq+ZA/tDMg3cfd3l0L8aZpHrYAB6tpYHX/S1Cc4D4xCLSCLvJ4GA2w8J7Sr297m+D34FGpP+c8MfoChmJ+sXjBmRMNwHPVP1ajap3NSSYnKzPxHH0Y7/1UIPcbNdMpOo4pyB2U5jnw79LNQCf8v2o2qI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FpKASPAB; arc=none smtp.client-ip=209.85.166.44
+	s=arc-20240116; t=1739307719; c=relaxed/simple;
+	bh=1t5VtcitBofBlcv7P/tw5vGznwNY+yWQqEbhhnbEPCM=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=COb3gfUgfj5ogEMIPjvB2Sn/y2CGnm6mXrEL6NuYZX80XuNIhyaakFLL4VqtwG+eNGVntcdkQak9bnuVPDhmu0YF1YkwRAPKDvXPWN+gkFx/UhqD2T5Jas8DhK6gminZDyBe2UwOTSNMHGfYKPVAz3cxjEqGKo+iAXyJqWfH3+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SKCR9Taf; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FpKASPAB"
-Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-8551c57cb8aso81572339f.3
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 12:59:38 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SKCR9Taf"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4395560cc13so10300795e9.3
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 13:01:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739307577; x=1739912377; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f/kZqX78ho9ypYoC9wcXCLnPlqyHB+iCjaq6KdZzn4U=;
-        b=FpKASPABMsKUwrabY/6DbOtiE7yA8E8QcGA689kQHWvT9HmDsTJfnBinV2hzYMfYYB
-         +yut7kVqvVQQO79yy2OpAdNv08D7TNV7nSFaL+AelIxRyVrpu/858g//zs/krm4JtDSk
-         Uz8D7KAeuOcIM4IccAu6bLi3UL8nQZXbLj3SRxXnQiDvMt7PUMmPghmrz6NE+GgJmZJ2
-         2NGTsO/X0AY9Lcl0TGGI88mWiE6hbIY8DT03pRsOcWUpmB/VVRlEPswsKTrIgyswwHwV
-         CGLcYPRuhy/1yG25pG+7u57u5g9n+KJJ0cqhwGUtHcwpP/tsvrkdkmhBkzX8JRx56KgE
-         Sr5Q==
+        d=gmail.com; s=20230601; t=1739307714; x=1739912514; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9s/fvN1TqwNV8SuTVjp84xzi8PTMNSfZqzBMI5BnNJ4=;
+        b=SKCR9Tafz0jVRq2tZJf4Im2Mf2W/H/cv0/br7leuOSIMjntmLDXbxQqzrMH68ZReXj
+         5WQ6x5UqCWNa5kxq7c+zQ6LsXL/L22CuUd5ASmBCeSSeW/lDUDSPv4U9exaT4P03GeMo
+         bkvBTnru0FH1SVyde08bd/4kmnchDxzAhSvu7jRh4s/HCYl+yxwDyuScnmY8Eb3J/GQN
+         sietrSQUdz1ssG6EXjD05PNRCHTHesp5z4PjSIGWOYxezlHM+jQstH2jf+i0ZL5utWLK
+         xGhOh20dcULz7iYc/Dx9vFGpETCr1O3B5eXifLcxRyqHbshyykJ5Em37iY+C/igcdj9S
+         hRhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739307577; x=1739912377;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f/kZqX78ho9ypYoC9wcXCLnPlqyHB+iCjaq6KdZzn4U=;
-        b=hfCcgfdgj0NYXHmTa1mZKPi0GS4hwnA5Ys2LnAENAqrZkr2lBRZb3+L4SFiEsy6CCz
-         r36oxrIfmKGrcuhRx1giBeKrjAwuRs0mO5jzGPzuN/s5UPM8EIJZbXmIwNn9tv2NS8YT
-         LHG5XJbk+hv89sHjL79E2y1bvps3wWYZdo6Qs3k2HGjtsyvUzcq5WWJ51vIcB/DI4oQ2
-         4G1UNhH7oKwxkLieSREhaKytc65FUl+d4LczmyIMHPR43QSYvMai+ZsQA5V+ZqOyw9GF
-         LReDScH+U/kCm9KpcsYacMsr3PvRHreVBkD9T003WBzmLrKVO0EmslZgWbGqx23o0g8T
-         1EfA==
-X-Gm-Message-State: AOJu0YwoOoiViItio7GSr/SULAnKuC3k5wUghVkWuqrdKTt96MzMy7Fa
-	xzuXNwXLXZKdAa40w+t7O8vrl82pZI6wRgGMOKy7yrZeMa44Pl4Y99jaFtx1tCLh0QcXKXsDfE5
-	vEyavECg61ptJXbqI80ZFUeCNqyk=
-X-Gm-Gg: ASbGnctroxASycKLsfJPD+GveZZAMyzINTwrRHoP0dAGqN30OCXQ7GmGni24Y2Fo3lr
-	0Y/Q6v8Thesre/oho7SQj+IgK2vKAO8iCKSvftfBkmsw9n550URXeLFw/+ZoY0CBVlOkSPhuPT4
-	llYCR/kCkdEgwHRT1/hvy5KDWoe2kq
-X-Google-Smtp-Source: AGHT+IF+OQHudcOmIsly2L9rBLzGIQ9f8eTYWL0ameS6Mf/UUwGJu7sIkOrt4J6POxaShzysepdCt/qSh70Q7VBIPEI=
-X-Received: by 2002:a05:6e02:19cb:b0:3d0:2331:f809 with SMTP id
- e9e14a558f8ab-3d17be0ce1amr8699305ab.2.1739307577456; Tue, 11 Feb 2025
- 12:59:37 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739307714; x=1739912514;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9s/fvN1TqwNV8SuTVjp84xzi8PTMNSfZqzBMI5BnNJ4=;
+        b=EN2O2n+Ct8nIjL2D14DID2tKlDOTiGD2w1tHapukx+Uvt1QENn6BX0zMTL84257WaS
+         NTxbmWOxszYXXVduZG9dYLs7OLJm4TIeBQy8C/eky7VBXhKqBPhftDoonhHeX9LN1oyZ
+         U8pyRb7UUtjSnt7wOwAzF8/d31FMIoFD7yOdj3YFpkwhSOkRbaq6+SfLBWJQbd8flsP3
+         Nt3irYp2leID3A5a1y2sEkol6OMRgwc/OWmc8r9SGN9vB+urnmwe/Yam4Nd3ybPzWcw1
+         rR54vBxSjnuGTH/yzx56k5NHpvSgWKi3lM7pB8CQY9gGtYt3WVMvubppjLPR0C/C/AEq
+         E4Pg==
+X-Gm-Message-State: AOJu0Yy3pbOPwtsqEreBx28jwgn/HxqM58IS6kcQ2ugWYuSt0UpqosTI
+	9RCUF/fxCyX8A/1h3d11oGIDtLKNaDEAHDYEHEUI4P8M7CSFq7IqiH+gYQ==
+X-Gm-Gg: ASbGncvMmWQ25b4LVGHsuRCMrF5RcGm0ZFS/0R0ikC2P5tKl36CqTemvlkkQhNMLIGA
+	7Om7qdKhXVXXVU5LJLxY86COVDOo2Xd6Gqkx+lyDlD2e1cqkTzcSIyiXZbT2kIoUYI2pdQkzeYg
+	H2/yO8btwVxwTLiH0AD4m5I4a0KQzl29H1oqyRIPwXY8vyyniYad0hOPrhXcROhBxWPmm2cypP5
+	1VSDBdMVjR7G6a+nSKnAVA/pzwtHCZLaraLOGK9ARVAW4aMot14cJHhVQAE5mEx61Y88RE6SD6w
+	3tz6q1mcBovYnqeV
+X-Google-Smtp-Source: AGHT+IEReHvQv42crmcc0rzv7nvNb2dHeTi5OSPDIsRYtu/r689ca4orP8Mjwhmv8n1S4hqfwkLWKQ==
+X-Received: by 2002:a5d:468e:0:b0:38d:c616:ab0 with SMTP id ffacd0b85a97d-38dea29020amr319283f8f.32.1739307713677;
+        Tue, 11 Feb 2025 13:01:53 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38ddaf333c5sm7778913f8f.36.2025.02.11.13.01.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 13:01:53 -0800 (PST)
+Message-Id: <pull.1861.git.1739307712372.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 11 Feb 2025 21:01:52 +0000
+Subject: [PATCH] doc: clarify the intent of the renormalize option in the
+ merge machinery
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250211194334.20710-1-meetsoni3017@gmail.com>
-In-Reply-To: <20250211194334.20710-1-meetsoni3017@gmail.com>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
+
 From: Elijah Newren <newren@gmail.com>
-Date: Tue, 11 Feb 2025 12:59:26 -0800
-X-Gm-Features: AWEUYZksGkXRFSEZc8092D0Li2VNFl0XEy3Z1N_0qp2hJP5astRLNw8_Otti09M
-Message-ID: <CABPp-BHMgTX2J4pRM=DjU-Ye46JtVZJsi95VUqcPHTcrzJgwOg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH] merge-recursive: optimize string_list construction
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Feb 11, 2025 at 11:43=E2=80=AFAM Meet Soni <meetsoni3017@gmail.com>=
- wrote:
->
-> Avoid O(n^2) complexity when building a sorted `string_list` by
-> constructing it unsorted and sorting it afterward, reducing the
-> complexity to O(n log n).
+The -X renormalize (or merge.renormalize config) option is intended to
+reduce conflicts due to normalization of newer versions of history.  It
+does so by renormalizing files that it is about to do a three-way
+content merge on.  Some folks thought it would renormalize all files
+throughout the tree, and the previous wording wasn't clear enough to
+dispell that misconception.  Update the docs to make it clear that the
+merge machinery will only apply renormalization to files which need a
+three-way content merge.
 
-I'm tempted to say merge-recursive.[ch] is nearly dead and planned for
-removal, so there's not much value in messing with it, but...it's not
-dead yet, so I guess this is worthwhile.
+(Technically, the merge machinery also does renormalization on
+modify/delete conflicts, in order to see if the modification was merely
+a normalization; if so, it can accept the delete and not report a
+conflict.  But it's not clear that this piece needs to be explained to
+users, and trying to distinguish it might feel like splitting hairs and
+overcomplicating the explanation, so we leave it out.)
 
-> Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
-> ---
->  merge-recursive.c | 14 ++++----------
->  1 file changed, 4 insertions(+), 10 deletions(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 5dfaf32b2c..c43b79e6ef 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -2757,24 +2757,18 @@ static int process_renames(struct merge_options *=
-opt,
->         struct string_list b_by_dst =3D STRING_LIST_INIT_NODUP;
->         const struct rename *sre;
->
-> -       /*
-> -        * FIXME: As string-list.h notes, it's O(n^2) to build a sorted
-> -        * string_list one-by-one, but O(n log n) to build it unsorted an=
-d
-> -        * then sort it.  Note that as we build the list, we do not need =
-to
-> -        * check if the existing destination path is already in the list,
-> -        * because the structure of diffcore_rename guarantees we won't
-> -        * have duplicates.
-> -        */
->         for (i =3D 0; i < a_renames->nr; i++) {
->                 sre =3D a_renames->items[i].util;
-> -               string_list_insert(&a_by_dst, sre->pair->two->path)->util
-> +               string_list_append(&a_by_dst, sre->pair->two->path)->util
->                         =3D (void *)sre;
->         }
->         for (i =3D 0; i < b_renames->nr; i++) {
->                 sre =3D b_renames->items[i].util;
-> -               string_list_insert(&b_by_dst, sre->pair->two->path)->util
-> +               string_list_append(&b_by_dst, sre->pair->two->path)->util
->                         =3D (void *)sre;
->         }
-> +       string_list_sort(&a_by_dst);
-> +       string_list_sort(&b_by_dst);
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    doc: clarify the intent of the renormalize option in the merge machinery
+    
+    cf.
+    https://lore.kernel.org/git/CABPp-BGQ0pc=AZ0fdXcqDbhMLbm2xBvi71g0mXAVDagz19NkEg@mail.gmail.com/
+    and the thread there
 
-If the original source had duplicates, this would change behavior (the
-insert function checks for duplicates while append does not).
-Granted, the comment above the block points out why there aren't
-duplicates, but will that be obvious to future readers now that you've
-removed the whole comment?
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1861%2Fnewren%2Fclarify-renormalize-docs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1861/newren/clarify-renormalize-docs-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1861
 
-Also, are the sources already sorted?  If so, we can avoid the manual
-sort calls at the end, and drop this from O(n log n) to O(n).  Digging
-through the code...it appears these are setup in get_renames() and are
-sorted but by pair->one->path rather than pair->two->path, so we do
-need the sorts here.
+ Documentation/config/merge.txt     | 3 ++-
+ Documentation/gitattributes.txt    | 4 ++--
+ Documentation/merge-strategies.txt | 2 +-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
-Of course, get_renames() itself utilizes string_list_insert() rather
-than string_list_append. and there are a number of other
-string_list_insert calls in the code (though some of the others might
-be hard to restructure) -- perhaps the first line of your commit
-message should have a "in process_renames" qualifier, since it's only
-addressing one case?
+diff --git a/Documentation/config/merge.txt b/Documentation/config/merge.txt
+index 82554d65a0a..f6e50542baa 100644
+--- a/Documentation/config/merge.txt
++++ b/Documentation/config/merge.txt
+@@ -69,7 +69,8 @@ merge.renormalize::
+ 	Tell Git that canonical representation of files in the
+ 	repository has changed over time (e.g. earlier commits record
+ 	text files with CRLF line endings, but recent ones use LF line
+-	endings).  In such a repository, Git can convert the data
++	endings).  In such a repository, for each file where a
++	three-way content merge is needed, Git can convert the data
+ 	recorded in commits to a canonical form before performing a
+ 	merge to reduce unnecessary conflicts.  For more information,
+ 	see section "Merging branches with differing checkin/checkout
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index e6150595af8..9ae81173003 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -701,8 +701,8 @@ where the attribute is not in place would normally cause merge
+ conflicts.
+ 
+ To prevent these unnecessary merge conflicts, Git can be told to run a
+-virtual check-out and check-in of all three stages of a file when
+-resolving a three-way merge by setting the `merge.renormalize`
++virtual check-out and check-in of all three stages of each file that
++needs a three-way content merge, by setting the `merge.renormalize`
+ configuration variable.  This prevents changes caused by check-in
+ conversion from causing spurious merge conflicts when a converted file
+ is merged with an unconverted file.
+diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
+index 5fc54ec060b..a5dc95a3783 100644
+--- a/Documentation/merge-strategies.txt
++++ b/Documentation/merge-strategies.txt
+@@ -56,7 +56,7 @@ ignore-cr-at-eol;;
+ 
+ renormalize;;
+ 	This runs a virtual check-out and check-in of all three stages
+-	of a file when resolving a three-way merge.  This option is
++	of any file which needs a three-way merge.  This option is
+ 	meant to be used when merging branches with different clean
+ 	filters or end-of-line normalization rules.  See "Merging
+ 	branches with differing checkin/checkout attributes" in
 
-Anyway, other than perhaps tweaking the first line of the commit
-message, and not removing the whole comment, the patch looks good to
-me.
+base-commit: fbe8d3079d4a96aeb4e4529cc93cc0043b759a05
+-- 
+gitgitgadget
