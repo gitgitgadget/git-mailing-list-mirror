@@ -1,127 +1,100 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6130924FC04
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 16:50:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22F2260A31
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 16:51:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739292626; cv=none; b=LfJjDKvAuPcwoB7Ri6jYCfU8Sa+D9jiULQyD+rijKmlLFu4TbG5bh4RB2P+DC0EGga0Ze8vhQ6hFExDG8JqkAeek0f9cRtaqfqUaAyMziorZ9INpMBhV+LKqT7CE+63emUdRe3W/SIQer0eWOrvAVKcd+VQBH/IYC3C3HMQK7LY=
+	t=1739292715; cv=none; b=lIR3v77cJ6C+IG6SY8Sui1bRMyTq8DldqcPHmLRslzaZZj590+B/QPLO2vwv0J957AZ+25Di68qEARHwK3tkYw8OpOkv0ahM0GkCYC/crPOdb/djMBD2Htt8HgLQd9kNlaW21InIRo2qKoR8j9D8x921DpM6ldPaTeoFC3hVojw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739292626; c=relaxed/simple;
-	bh=UwceUnjHYtu3TzxUd/aPKC5t2cVGj/rJIeAOOJ92rjg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M1OqEo93pGRsQA33pEJUD7Jw32MpzyPvZniwMElq5AHWLSJdPtsCIh6ipG9WiQL8VY26q8yqeothKPRAibtxR3420G+nnltyJobRXhnk6bwi+SLChTw6Jw/JVfdksPHIsYKs4HXuY2mBvcg1TPzY2Sg/uOiOOG2/WbWbhIIpQx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mxRKyOCH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fc6R3Gw1; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739292715; c=relaxed/simple;
+	bh=ZoFWrF7onSkuKI64a42dFIqnS/VKT+mjMTQhrmbSZAg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WXeYJ1fToVwDjCmX2qaBrQ7RPnsokqbVu1vSMaGpylUNceji9sZAgmHw+LpMCYxnh+nVdmhPwacnR1rKq5CwG55tGgIq1VBber+BxTW02umAh2+1BiuGonOzyUUrl8p+AvzQy6O8nqYOnm/V1VG8qWAhSl4KRJ98YrfPT7rkato=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j8RE2qrK; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mxRKyOCH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fc6R3Gw1"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 52A4C1140196;
-	Tue, 11 Feb 2025 11:50:23 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 11 Feb 2025 11:50:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739292623; x=1739379023; bh=sHxCM6BS9V
-	r5s1WTuxhsZxKScyfnlhFBwA5YmslZTGc=; b=mxRKyOCH6EArJ0mIDobtys1pNR
-	n5T0XjVQRwezdYqoKCImbgzfPG4sGglUcYJodhJqn3W8WgESS3OtSGrwet2lXihi
-	7N8/ar4/CKxahqolpcqAW0o9r/YC020u3Tjgk0MyErNhEOQy6cstNQ87IPoxRT8L
-	2G0Y1q1tQW/vILm9SAaHHQ+hq0DcIiGIN4PLXrLIf5w+WIO/4M0xFWdcPcGnj5lH
-	gqSQ1B2hWRhTrk5MPMxmwSIqQTOkTuQn5n35lxxIfsLyye+slK1OaYNetkoY4p5k
-	Kg911YGT7Aq/KD7cF5+sq51j6efrDPKqwdKNFWkbASsdx5/j+V8leajVJMzw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739292623; x=1739379023; bh=sHxCM6BS9Vr5s1WTuxhsZxKScyfnlhFBwA5
-	YmslZTGc=; b=Fc6R3Gw182L2WmLNuqbpjILqzEs3vN8aZ72+da249NyR5Tb5lbO
-	oH82//b/Sl/rYLXCNEFRkEOUns1f3djWlrjGoDN09LNeuj1p2oKbYmoOQ9m3xoiv
-	F4sjRTcWuP0ZxdyU3ZtIue0fdDjOIsn2DXQtPO/t0eqt2KQ3ExV2n+rnIN8bILPA
-	PDgdyti3nKZQen/OF9lYaDHaRUeROre95luHX0ZOAAo5VDCy1ZubgfCPDowdDVcl
-	gD2EFoMpN+/tjv7ztEBhkZPvFCnMtG6MQGzPYVqre7VSQ6nzYUJ6FCypkvVkwj4R
-	DCggWtgz51/a7ZREYJIV9ZN9A0gq7bbbJtw==
-X-ME-Sender: <xms:z3-rZyoYjiTDLCs23-m3EDL1VGu_TpAwOr4KoCHdQGHfJVXZwWZjLA>
-    <xme:z3-rZwoi5DTAvS3LfIHB8awHxgyhRxoraAZK9xOla4ta43IvVyj0yq3780tyIjg2i
-    hFgqYd0EP0N14U8VQ>
-X-ME-Received: <xmr:z3-rZ3PST4CvBbaDGT5PGYuEijasIZn-QQODUfpz6QPptXmaMRjIdj_eGz9mlhP67mbQpt6ajbxQdALnOVCibIKmn5RCRjgsDdfAOQQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegudehvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehinhhtvghlfhigse
-    hinhhtvghlfhigrdhnrghmvgdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggv
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtoheprghlvgighhgvnhhrihgvvdegsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:z3-rZx5Z91kDsLQN3J5nwVlhpCJSrkYJGOQW3xKQpCDNYSpTEVQrQA>
-    <xmx:z3-rZx6qTfCXu_TYOijrANiHEPVX0aAmPpvtUeYWuzFXXmIrtP2fTA>
-    <xmx:z3-rZxj_dnCOy76SZrlHKffUf66ljHY01wZCTGPzw1I9W7aOzNfvyQ>
-    <xmx:z3-rZ76-lzg7-9eTh5Dgng9B5xgKdNDM1J-SWz-ZHtEnlp0DNlqlOA>
-    <xmx:z3-rZ8ZCIlWlr6I0fMrFnGj8qz5GLNGFGK6uln7TdhMHix-kjmopGZFS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Feb 2025 11:50:22 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ivan Shapovalov <intelfx@intelfx.name>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  git@vger.kernel.org,  Elijah
- Newren <newren@gmail.com>,  Derrick Stolee <stolee@gmail.com>,  Alex
- Henrie <alexhenrie24@gmail.com>
-Subject: Re: [PATCH] rebase: add `--update-refs=interactive`
-In-Reply-To: <bc0de52b59f289e1388f1581fcfa49453365e21a.camel@intelfx.name>
-	(Ivan Shapovalov's message of "Tue, 11 Feb 2025 15:33:15 +0400")
-References: <20250210191650.316329-1-intelfx@intelfx.name>
-	<CALnO6CAM7WCOJV8s8ZARi3BAFwkh0TNTCod_YH9s+EpO7t-Qtg@mail.gmail.com>
-	<bc0de52b59f289e1388f1581fcfa49453365e21a.camel@intelfx.name>
-Date: Tue, 11 Feb 2025 08:50:21 -0800
-Message-ID: <xmqqfrkk1l4i.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j8RE2qrK"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-438a39e659cso40686045e9.2
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 08:51:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739292712; x=1739897512; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/lZHcVFyEIkA9RS2vyh7wLWNCBs8hlOs27DP+5pb4HA=;
+        b=j8RE2qrKR3SqwQV4rgcmyEy3J42d+J3qjKsTeb9pjsImvbJGavMIPBGEk/+Js/h/4m
+         n9X70awn2VCVwk64LcL0O+FCd7Svxi3wLeRnXmY9L6bex1GbGTP44ehwZhFFZ08BazE9
+         HjGiK0cxJ1vRbFIWt10Es3MlB3jOXqpOAUEJBygDYD7g8H9lNKMLqdPTOp/CuCihCROg
+         KwfmHO/04OSNhQl6CER+XCdABEcxTOAholdrePNY/6/3YNn5CX99uI3VoI/C1RMyMJCZ
+         Su1wtMZrKOjPrfTXKOwaLnDEsiQPgmNlzd+6M+A9XIaPUSDrWMndg9umIIibOOLdK0TR
+         s/Vw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739292712; x=1739897512;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/lZHcVFyEIkA9RS2vyh7wLWNCBs8hlOs27DP+5pb4HA=;
+        b=dmmIdGrXGnZ5HW3TO24KDlSDR0jCf5tK71prHPsQ0U7lfvIlZ0Re+SmOvSN5oU0AWD
+         8pfffJzROyNVr0CsZVgTPQ5ov9livr9c8cEc5IMO2FE8v4i0gbwEh0OFbAsLBwszAxAH
+         Y4xZYzFWb5pWONEgDh3sdjGJ5RPFwHHPHa1drwcWxQHsllnlVuuEft01lS3Noib1jSGo
+         sSmgDYW/w4oMz3CpYdbTI5wJDYcPxUNZKsV+fEJUHtgLVJrjXESxNPoFu7QjER//ukHK
+         VstaRSzUGgpGnxARl07FH8UC+WBXZZuspBbFWwSHsxwdTVHcvQ5pBmnMf7ypPz4yi3Zl
+         Zg8g==
+X-Gm-Message-State: AOJu0YwUFp4m+CEkHY1cWL7OoIeSBy4wDQGwSQItFQ8SUJeNY+OtaYiC
+	XUjN9c8cbnrudF9hWjiJrgI/M0Ix5NEqd0liSfrFmXCV94hWqx/S
+X-Gm-Gg: ASbGnctIzjZqJc7FYrlGZNmSdyPQDcxZw50kK+rtOdN2Qo0gpUg64o9uiX6z9+KJHW6
+	49bhRCysEcwU5aHK/TjtNci3nVNLQlwpAaM+bDecMR8dUq94AkAw1JPTaA2FD/yaI4hX1+4s3MD
+	2sk+shSW2RAKzeZFYe8CS2UNPsyxE3z+n9nk/flYXEuDi0ydr9mQmxuNuS8aAQd/1JZX68fYy9K
+	AkGIOxF8esQ6aYlZL8zwyoZbdyJt5EKDTx2uu8AzaIoMC9HMOGtCEDcLUFEUNRZxRO597teJPEj
+	reoL5Bw49w/UuiM2HElOYxYex2WgDNwaZjJaMOJESklZvnONnWROmRZo8ZTaWnlHgDM6dQ==
+X-Google-Smtp-Source: AGHT+IGVX33pvNncU5LapW/aPbKJtlTXFJ7rXALpmsVzXW8c9H2Se0wQwXFVh/J37slv8g88kp4TZA==
+X-Received: by 2002:adf:f702:0:b0:38b:d9a3:6cff with SMTP id ffacd0b85a97d-38de917fb9bmr524903f8f.16.1739292711816;
+        Tue, 11 Feb 2025 08:51:51 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38dd4ebdb8csm9721882f8f.55.2025.02.11.08.51.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Feb 2025 08:51:51 -0800 (PST)
+Message-ID: <1c6e6e0e-5d99-4842-b76d-b57f7c6855a5@gmail.com>
+Date: Tue, 11 Feb 2025 16:51:49 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 2/4] quote: add quote_path() flag to ignore config
+To: Justin Tobler <jltobler@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, christian.couder@gmail.com
+References: <20250110053417.2602109-2-jltobler@gmail.com>
+ <20250201201658.11562-1-jltobler@gmail.com>
+ <20250201201658.11562-3-jltobler@gmail.com>
+ <76390e3b-e749-4d28-98a5-05db7c5fbcd3@gmail.com>
+ <ksta3edbxwkl62u36xif63q4ebux5hdaxkbme6v6li5v3sgndb@nuu5yyp5clbk>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <ksta3edbxwkl62u36xif63q4ebux5hdaxkbme6v6li5v3sgndb@nuu5yyp5clbk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Ivan Shapovalov <intelfx@intelfx.name> writes:
+Hi Justin
 
->> >  --update-refs::
->> >  --no-update-refs::
->> > +--update-refs=interactive::
->> 
->> Based on `git grep -e '--.*\[=' Documentation/git-*.txt`, I think this
->> should be more like
->> 
->>     --update-refs[=interactive]::
->>     --no-update-refs::
->> 
->> But maybe that unintentionally suggests that `=interactive` is the default?
->
-> Perhaps --update-refs[=(yes|no|interactive)] then? Or is that too
-> verbose?
+On 04/02/2025 22:39, Justin Tobler wrote:
+> 
+> You are correct that it isn't neccesary. From a previous discussion, I
+> initally thought it would preferrable to have consistent output for this
+> plumbing operation, but as you pointed out other plumbing commands
+> respect core.quotePath. I'll drop these first two patches in the next
+> version.
 
-If `--update-refs` does take values that the git_parse_maybe_bool()
-helper parses as a Boolean value, I do not think the above is
-verbose at all.  Rather, it is a disservice to the users if the
-documentation does not mention yes/no in such a case.  I'd say
-listing other Boolean synonyms like yes/true/on/no/false/off is
-too verbose, though ;-).
+That's great, I'm afraid I don't know enough about the rev-list 
+machinery to comment on the meat of this series.
 
-> Anyway, I don't have a preference, I'll just do what I'm told
+Best Wishes
 
-That is not quite in line with how we'd like to operate.
+Phillip
 
-It is your itch.  Others may give suggestions to help you polish it,
-but ultimately, we would not want to accept a patch that the author
-does not agree with.
-
-Thanks.
