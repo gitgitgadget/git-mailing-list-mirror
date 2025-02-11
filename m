@@ -1,167 +1,122 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2291D261380
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 17:20:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A47261562
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 17:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739294413; cv=none; b=BPhVZQteBF7PJUCW8ByX7cfr2ws9aG0crh5e+6trpx282ezGfAsNR49DgrrHMS02ecmm+Lx0MUeeH5EAC1n7XDLHuTIj7vcfHcnsSyUB8j121++aGAFWN/6OZMnlJjVF9elyeqULvMSrcpKnaSYI4VkX8RpSTC7wE5s9pb2gQ3c=
+	t=1739295383; cv=none; b=fZExv6qdNd12EYI8eaS/tb50wS+Cxo88JVTXxyRnKruYyP9Mo5ibTNIDbMbW/Aj7KWn0kZ+d0FO2plJAaEEWCrMZJCs8tL0qWzAML36kq1JAISS0YDMAVuQlwi7vezg/1dsXZ6WJvZdJ7ZcQDAnq8Dy1bjYU2PaiFX9rYk7Taiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739294413; c=relaxed/simple;
-	bh=1aHAWQ9c6RCIFHMfUw/qsqQ32N9w5nkMNm9XGlyBVPU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mer80r6hkEhY+pQDdMKXHjnL10CTR6q+CSivIe19Zu1X57f53+SMeh+uqUbeKp3+udM6Qkw+TQQql/TllStpq/uVJfd5hgdOV39kYGlvwHlyKFqUfcrOz/zsnTaEuZyKXgTi3XLijnj6hP6psdMoubjfHbCGMjutjF+B4EWJ/H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mng8oRbH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=0cbRZ15V; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739295383; c=relaxed/simple;
+	bh=RRYzSpH9zAjqD64dy4ZKJPFrBXvwfFCd+DV8NkR0QBY=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=JE0ahz1dUhcZ9Xr30nziuQoRGUuyZeR8aGzM8N9oIO6WgxZn/0LWeJ/WPHiQU/VI/ve75RfosszOmBhivEwd1FxCb2u3fLat56cfvk7pRbwXfzRreQCG8AjR93xq9OKkUyQHOccYclK9jKeTwtxFCBOZuKlsXY6Onlosl4wxGAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name; spf=pass smtp.mailfrom=intelfx.name; dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b=KG62ltcc; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intelfx.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mng8oRbH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="0cbRZ15V"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 27CA71140196;
-	Tue, 11 Feb 2025 12:20:09 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 11 Feb 2025 12:20:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1739294409; x=1739380809; bh=GmTkGrvESCULxATui0eBJAix4i8pSpRg
-	dnywDXtx3Vc=; b=mng8oRbHrpD42hMcdZojwoZTMPmxsdXWc7J40ZlHPIzhvkOR
-	9D63dWrGfcyEXcb5XrNwCCyxdB+f8Y0DUinBxHhXM04u7puV0E7txQaTIzaIKKHq
-	pkqsRyBL5yN2k83I2fvNlN+hpV90Gznkbh+lJHDIG9Q86rMeUNPhgVXA3iuYkX8f
-	eo17ffbC0feCGGa8Y+JFY4Lii8MfjMSBzQO+oVi9VKjhnk3Ds8DdruTI6lxadp1v
-	oQraaSS/hCDZcf6veC1NQk+UECT+SeOhISXW7VgOUmXdFPJ6cXsLxFXxTKHfQnNh
-	E7FQIpc85xb0AhXWKStEolv2Ao1McDsCuSwyOw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739294409; x=
-	1739380809; bh=GmTkGrvESCULxATui0eBJAix4i8pSpRgdnywDXtx3Vc=; b=0
-	cbRZ15VEoT/ZTWrBAVly30HTGa7zD52msBqlUy5quWVnb6PGBZZe/kz79KLGfpvc
-	OjyAsJb9+thSpmb5vmhxuGa+4L0XiXCHMq/J3CMrBdi7/zFWE2CwWGeFNpGO4Bjn
-	ZoSsSbYjo/C2ffcckGPGCNJpU/HebMv/7kQTfx+PSGARBdEiRvGTGYczzHpyrvOQ
-	k8xQIIPFIjPwrgyADdlQFd3uA+D/Zf2TmwF83OpdH9EDFu4XubZjqNNPun5BBGJc
-	AOWtyaiD5K6FS61nGyd3kpMtDUL3rft51tn9KyQoI6FPeJBvLZyBn3odeVRCp51K
-	BABIBTNOLV/f48m4rfdYw==
-X-ME-Sender: <xms:yIarZwB0oMdvqqsAkgCHcZsxjnF3QBEUvG0-69t68cQ4kzpKwH3TIw>
-    <xme:yIarZyiAf1-fBGQivS7XxwKq9LKSMrTJbnynJeDP5kIpsJPXydveuIDo0_aHGcB5v
-    yrx5JJ4F0UOt41WBw>
-X-ME-Received: <xmr:yIarZznZrQKtcCKZowIYgzPAYe-oyMein4CJxMJVnS_VzRWJHUIS7cftTs02JSdqJ9boLZBcyYus2oAdvPqyuYwRl8PvSI_ueb1m4E8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegudehkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fufffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepjefhgf
-    efvdekfedthfejgeffieevieeifeegueeihfejleeufeffjeetkeffffejnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehinh
-    htvghlfhigsehinhhtvghlfhigrdhnrghmvgdprhgtphhtthhopehmvgesthhtrgihlhho
-    rhhrrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:yIarZ2wfnkj1q9w9PE2GiT4byjVxGvpRg9uVU_AA0dCUheEA6FPqbg>
-    <xmx:yIarZ1QtYtd-H2ZDa755m_fWGZqRdnbZWgH-Rapr4NeUkVdYOqIC2g>
-    <xmx:yIarZxZh3Qvv-Aldw-w7Q3754bOYDu35U09oUUKmzEd9JZHSTYXLGA>
-    <xmx:yIarZ-SrYfmQzQkLnEEibzu4K8ckq0xmq9yqEqa3ThqCt85Xx1_8RQ>
-    <xmx:yYarZzNTP5hrnaPRdmhcQ3d1O6CmS9UDHbrTJMTeQaFsJUcIjTpAPXxJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Feb 2025 12:20:08 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Ivan Shapovalov <intelfx@intelfx.name>,
-    Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH] doc: centrally document various ways spell `true` and `false`
-Date: Tue, 11 Feb 2025 09:20:07 -0800
-Message-ID: <xmqqy0ycz9dk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b="KG62ltcc"
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5450d56199cso2211525e87.1
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 09:36:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=intelfx.name; s=google; t=1739295379; x=1739900179; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=9g9kOZsW+Tf8RDpnGKwFjICx7yconMX4JvmCR6RfeZ8=;
+        b=KG62ltccy2BEgCMwSmJCC2Qdxej72j2b/FGkA/LzdjkHuxtijYpCZi0r6FO0mkS2+O
+         mL7mV6zaNyk59vxmS7355MFfMpyOE8QXV19hnKj4yh1I84RXnVwVr80Ft1gb4jEwRBWV
+         egAHb02mJuG5lIQqKrXtgNk7yiIUJok/FAMBs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739295379; x=1739900179;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9g9kOZsW+Tf8RDpnGKwFjICx7yconMX4JvmCR6RfeZ8=;
+        b=h7/27QV0rF63oWXjbAaEmKkgKLFXzp4flgMPunG+zu/i5NBelK4puWnutAosUL/zp+
+         gOS4ISaZ7h2dELeYV/qZanKpdSm8/NUUXyPDZ8eohLmfSmVKzfRd2+coeB66sj11fMeB
+         bxTQYA4u1w+G+a6TBxyC65hCb5GVB0ENDG8tAK3XnCNo53D2Uu435MB5bbl+K1L6/mOy
+         mTk1XJg5yg0k52Irjne9FgiezcHQBDRSoikAwIlXcDzFVprYq2baEcuF+m3tC1x6spJc
+         poqNbvPWJAKsYRgQEAO5tgqtRCUc4CQpP/xIr8oqGeINGhu0u9a2FSsh/inQyCa9HRVT
+         hnXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUqLQe5RyCDnDdClKIB2H9IAFe3Hx/xEP2PSofxwZKd3oKZAkrUHvANOdrYK/ltvRRVi5w=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVwam+1xddd08hHNhi9eWA4LDsN8ofgzwzdHKSfCXKMUVzn9A3
+	b0MvZYpw9qQ5jPb1FHc/dN6j+2RRiBw5JFjsmSgWJGFksJrgMYC4cxeCCN2WYh6DJx5Hu/m9l9b
+	2Asg=
+X-Gm-Gg: ASbGnctbdHp0bvrJ6oesYedfAu8+h9qjhv554RA9+p0absfdAATzh1ndosZk48pYGRS
+	9rdc8p61FH5ApO++9J74jHP5h4Z0IINV4E4EeiZw4DqJ4fR76rUKTbqCaIZ3k1OHHXOqlQQYKl8
+	KHpPYx/MxTQW6TJ/Fi475VN99h51UDsiqKQwXsKgaFbM9Gh5wiVYg5A3O/9U94nVx00VYKQ6DDa
+	DJ2MWMeLch+z031DYNAmP70WhpuftHjByWWcZL8VAgCOGzdOj4GwWNsZbVpwFtNs6FelfKcPxos
+	aUrFpmq/Pz8rDVpN2wEbhc0QBb/otht35Ac5JKZ3pOOFh+8sNg==
+X-Google-Smtp-Source: AGHT+IHwN4710Afxcld/I9nh0Qeio4U2neTRrYgOTR8SWk7SFLDNuZTm1ECI6oLQ92EEmV7+oxjmnQ==
+X-Received: by 2002:a05:6512:2347:b0:545:17b:5755 with SMTP id 2adb3069b0e04-54511c8149fmr1347136e87.23.1739295378712;
+        Tue, 11 Feb 2025 09:36:18 -0800 (PST)
+Received: from able.exile.i.intelfx.name ([188.129.244.140])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-545004c07e4sm1190222e87.132.2025.02.11.09.36.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 09:36:17 -0800 (PST)
+Message-ID: <a761826ddafbadac6d2932f145316493298da33c.camel@intelfx.name>
+Subject: Re: [PATCH] rebase: add `--update-refs=interactive`
+From: Ivan Shapovalov <intelfx@intelfx.name>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org, Elijah
+ Newren	 <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>, Alex Henrie	
+ <alexhenrie24@gmail.com>
+Date: Tue, 11 Feb 2025 21:36:13 +0400
+In-Reply-To: <xmqqfrkk1l4i.fsf@gitster.g>
+References: <20250210191650.316329-1-intelfx@intelfx.name>
+		<CALnO6CAM7WCOJV8s8ZARi3BAFwkh0TNTCod_YH9s+EpO7t-Qtg@mail.gmail.com>
+		<bc0de52b59f289e1388f1581fcfa49453365e21a.camel@intelfx.name>
+	 <xmqqfrkk1l4i.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.3 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
 
-We do not seem to centrally document exhaustively ways to spell
-Boolean values.
+On 2025-02-11 at 08:50 -0800, Junio C Hamano wrote:
+> Ivan Shapovalov <intelfx@intelfx.name> writes:
+>=20
+> > > >  --update-refs::
+> > > >  --no-update-refs::
+> > > > +--update-refs=3Dinteractive::
+> > >=20
+> > > Based on `git grep -e '--.*\[=3D' Documentation/git-*.txt`, I think t=
+his
+> > > should be more like
+> > >=20
+> > >     --update-refs[=3Dinteractive]::
+> > >     --no-update-refs::
+> > >=20
+> > > But maybe that unintentionally suggests that `=3Dinteractive` is the =
+default?
+> >=20
+> > Perhaps --update-refs[=3D(yes|no|interactive)] then? Or is that too
+> > verbose?
+>=20
+> If `--update-refs` does take values that the git_parse_maybe_bool()
+> helper parses as a Boolean value, I do not think the above is
+> verbose at all.  Rather, it is a disservice to the users if the
+> documentation does not mention yes/no in such a case.  I'd say
+> listing other Boolean synonyms like yes/true/on/no/false/off is
+> too verbose, though ;-).
+>=20
+> > Anyway, I don't have a preference, I'll just do what I'm told
+>=20
+> That is not quite in line with how we'd like to operate.
+>=20
+> It is your itch.  Others may give suggestions to help you polish it,
+> but ultimately, we would not want to accept a patch that the author
+> does not agree with.
 
-The description in the Environment Variables of git(1) section
-assumes that the reader is already familiar with how "Boolean valued
-configuration variables" are specified, without referring to
-anything, so there is no way for the readers to find out more.
+Of course, I care about the patch and the feature; what I wanted to say
+is that I do not care (comparatively) about the formatting of the help
+text: I couldn't figure it out on my own, so whatever you tell me is
+the proper way of formatting it, I'll do.
 
-The description of `bool` in the section on "--type
-<type>" in "git config --help" might be the place to do so, but it
-is not telling us all that much.
-
-The description of Boolean valued placeholders in the pretty formats
-section of "git log --help" enumerates the possible values with "etc."
-implying there may be other synonyms; shrink the list of samples and
-instead refer to the canonical and authoritative source of truth, which
-now is git-config(1).
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
- * Noticed while writing <xmqqfrkk1l4i.fsf@gitster.g>, a review for
-   <bc0de52b59f289e1388f1581fcfa49453365e21a.camel@intelfx.name>
-
- Cc'ed Taylor, as the author of fb0dc3ba (builtin/config.c: support
- `--type=<type>` as preferred alias for `--<type>`, 2018-04-18) this
- patch butchers.
-
- Documentation/git-config.txt     | 4 +++-
- Documentation/git.txt            | 5 +++--
- Documentation/pretty-formats.txt | 8 ++++----
- 3 files changed, 10 insertions(+), 7 deletions(-)
-
-diff --git c/Documentation/git-config.txt w/Documentation/git-config.txt
-index 3e420177c1..76042581ec 100644
---- c/Documentation/git-config.txt
-+++ w/Documentation/git-config.txt
-@@ -213,7 +213,9 @@ See also <<FILES>>.
- +
- Valid `<type>`'s include:
- +
--- 'bool': canonicalize values as either "true" or "false".
-+- 'bool': canonicalize values `true`, `yes`,`on`, and positive
-+  numbers as "true", and values `false`, `no`, `off` and `0` as
-+  "false".
- - 'int': canonicalize values as simple decimal numbers. An optional suffix of
-   'k', 'm', or 'g' will cause the value to be multiplied by 1024, 1048576, or
-   1073741824 upon input.
-diff --git c/Documentation/git.txt w/Documentation/git.txt
-index e89a91dd0d..c029a297db 100644
---- c/Documentation/git.txt
-+++ w/Documentation/git.txt
-@@ -472,8 +472,9 @@ Environment Variables
- ---------------------
- Various Git commands pay attention to environment variables and change
- their behavior.  The environment variables marked as "Boolean" take
--their values the same way as Boolean valued configuration variables, e.g.
--"true", "yes", "on" and positive numbers are taken as "yes".
-+their values the same way as Boolean valued configuration variables, i.e.,
-+"true", "yes", "on" and positive numbers are taken as "yes", while "false",
-+"no", "off", and "0" are taken as "no".
- 
- Here are the variables:
- 
-diff --git c/Documentation/pretty-formats.txt w/Documentation/pretty-formats.txt
-index 8ee940b6a4..07475de8c3 100644
---- c/Documentation/pretty-formats.txt
-+++ w/Documentation/pretty-formats.txt
-@@ -339,10 +339,10 @@ insert an empty string unless we are traversing reflog entries (e.g., by
- decoration format if `--decorate` was not already provided on the command
- line.
- 
--The boolean options accept an optional value `[=<bool-value>]`. The values
--`true`, `false`, `on`, `off` etc. are all accepted. See the "boolean"
--sub-section in "EXAMPLES" in linkgit:git-config[1]. If a boolean
--option is given with no value, it's enabled.
-+The boolean options accept an optional value `[=<bool-value>]`. The
-+values taken by `--type=bool` git-config[1], like `yes` and `off`,
-+are all accepted.  Giving a boolean option without `=<value>` is
-+equivalent to giving it with `=true`.
- 
- If you add a `+` (plus sign) after '%' of a placeholder, a line-feed
- is inserted immediately before the expansion if and only if the
+--=20
+Ivan Shapovalov / intelfx /
