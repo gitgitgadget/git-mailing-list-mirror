@@ -1,125 +1,171 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7674D272905
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 22:46:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A39B27293C
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 23:00:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739313988; cv=none; b=dCtr0K98AkYCodVpKP2zxAqEUo8buz/r6TOeM+1mS+4pbPBPSgxCaszlTw+sAhfwK05JnYJZomXwVjR0nK6astOhiLicR23k3Xp737JOvgshC1ziyPin6cnNTFhyLbzL6fhZO/X3AVeVxEnKiDzBSznPxeFO1/0XUFbarq5UlOE=
+	t=1739314819; cv=none; b=ckrCrW++Q1X4HeOcp6eo5wSnQPqJcHbq6gh6+OEDXATE5PRZnlcnoJm0cM+A4G4+VeRgbK0FqkeHnAVyoSmrGuyWD7YVQRrNYsGjb7V+kwZURGdGCp0S83VYArD7Fvh6anLqEwOLY7OdjqUk3OHe/SI25o2CilrfAqQcFk36c1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739313988; c=relaxed/simple;
-	bh=XbkkKNQTl5S3391yKgm9tAhp82Gj2fyXbydY6DU+Ktw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cm7T9/xd74rYfJPl2GgqzU68scL1pHR6bnNrnGvuT5pZO1+J1N2dwwvLhM8vdTestt+XPsHveMeqyf0m0AwWAST8MVfciLczPZgme1Vu8mCP9DP59Nw6jNtRaq/Ew4Wc6hQ6B//WbL87HNKlZNlqMdNDBX0jyABm6yL6T2UBI+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ddgeKqE1; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1739314819; c=relaxed/simple;
+	bh=w8VciQ+M19HxcTSBU2gndZ87H40SPcIkMDXXGqeq4E4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=g7zoAvQSpF1dT+69fjwbASEDuaib/qyP/oaeufV+4oFairVs5ta2C5HNKQwIv368Y1FdPgZ7+oivhGTaGyOaD8ojfT1rpeDpJbGzzF/xETAv/tjczo0HQzhLTPzVGjFSt/JHQZf84BYk+3eAFMy5fCiGGVq4Ioj1BKjK3LU2EN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gu5itZjW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f4T3uac3; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ddgeKqE1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1739313977;
-	bh=XbkkKNQTl5S3391yKgm9tAhp82Gj2fyXbydY6DU+Ktw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ddgeKqE1wdPv2UAtdAndq/Y8BUcvcETkmSirY96in8XGPx8ZE5DnueL3klwiR5vuQ
-	 xtvrq7U3nMH1UGjJQIo5PfL1QtaxJ/31RnjoeEPO51G2TaP8xkRX+uuEfLBOGm5QOi
-	 UZpGDhFxouOFxLIJ/Asn3vziY8ygEBXuSs+QHkWb3xBo5s5zwzwLvK/rH75PkFYagT
-	 AheMEajE9EfS0gpO9oGY1yeCXcLjwj+hvWTM1w4TjNs6otOb/YsJHls3YuF0+p9i2J
-	 cG8nx782T+71p6IaSyqSoOAejC9RRR0TpqHjr4Aw9B4Rq6AEACQazoqQJ9rq/OzcsN
-	 00wp/r2D8bGEEu3RBNYV/or8kDUpE0bRFvQbAPVgIqczGy37yySZBfi6w/GYcC5Udd
-	 VqlXedNzvxNvz7+ZuWWkd49VMMWAbgLEDg8q1swe7UzLCEWekxj6aug82ZWvuChgAf
-	 F64La8Uvoc8hS8ZYq5fC/lb22ItHrXaOtCIXzbWFbnT1mRwWQHU
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A48E320076;
-	Tue, 11 Feb 2025 22:46:16 +0000 (UTC)
-Date: Tue, 11 Feb 2025 22:46:13 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: "Maloney, Bryan" <bryanhm@amazon.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"Perry, Daniel" <dtperry@amazon.com>,
-	"Das, Satabdi" <dsatabdi@amazon.com>,
-	"Damojipurapu, Deepika" <deedam@amazon.com>
-Subject: Re: [Bug] Git ReadOnly Temp Packfile Causes "Bad file descriptor"
- And -13 Access Error With NFSv4
-Message-ID: <Z6vTNW9Dz4jiJvXO@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, "Maloney, Bryan" <bryanhm@amazon.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"Perry, Daniel" <dtperry@amazon.com>,
-	"Das, Satabdi" <dsatabdi@amazon.com>,
-	"Damojipurapu, Deepika" <deedam@amazon.com>
-References: <18589D54-5E7F-434D-A890-B39102ECB293@amazon.com>
- <17DE42DF-D2A3-4E25-9198-5AF3CA516E35@amazon.com>
- <Z6p-eIxzrFepC3py@tapette.crustytoothpaste.net>
- <20250211213940.GB3113114@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gu5itZjW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f4T3uac3"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7312911401BA;
+	Tue, 11 Feb 2025 18:00:13 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 11 Feb 2025 18:00:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739314813; x=1739401213; bh=pCbL5CkcjV
+	2odkaPXWFMcro5zn7Cwk+BM9rBjH8NC3w=; b=Gu5itZjWMPXz5T8q2v2LeBgTDw
+	f7sDwijtMoqNI3POMnXwl+xKIoUMdek43JZE4c7mQGVcvyieJULSxtKqeB8q4wPM
+	6l6Q5c0Ak+ojHNjTOVEIqdD73Ue4OV8pLo80/xChrD3G7XnnZe2uvO+krhOkCoHH
+	qOAxqrrwp1uBCEUd9TdTi3G4q20udTVg1v60+OLzQdCu7/6jeePL/3HZcZwfPoyN
+	ZhZocAtTXMXI+qDlsNZ13TUuJKeQZPIpVYpwj14/3VVOsZdJAEHNeloD8srE8tLD
+	6cHe8NCmjpQpqF9OJxITrjrDH4/fyL+H0c2F9Lp9jCJtYnafTlEwnaXBeErw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739314813; x=1739401213; bh=pCbL5CkcjV2odkaPXWFMcro5zn7Cwk+BM9r
+	BjH8NC3w=; b=f4T3uac36SexnmsRioXOFh8GAOlIl+WZ06bYqOc1tH+EICFqLWn
+	b/0u069x6VrVK6V/5+R8m6cX9zF8/coYYWo0lEnkybhvFFm5ufLnPnRMPx2ynI7F
+	ODYh0SSiDzrLvSTIMiqGFETd1eD46zoG5kResvDXwd1vGkk0MpOvvYeCqdy4q44n
+	ZV0ksfg5IREGfCjIc7WZtXpkBMunL2SzpVFQ49TBGsG0ovtNUIJVnpGUakdbKkx3
+	42kOrSiEEU6jgiMJc1H6MwO7gGfeW+IHFnjP+9AUOzji3QNRAxqToQNxWVr8X/vh
+	ROFlwID7YvrI5FdXs/Sa/wU4ehmw9NpTwBQ==
+X-ME-Sender: <xms:fdarZ-4WhVGQ8wvZ1s9Y2B1i9Nga8B9DV75SsyYpwl1Mq_aRNucBtg>
+    <xme:fdarZ36zohcHA6kpKJnRdS9WcJOzBw50h5e42IWYyzD6yjVo9XCZPIr8oy2Z9Ad9b
+    irfCcRNTlp4SSWTYA>
+X-ME-Received: <xmr:fdarZ9f4EfFjlUuYoCHfn4s3nimqDTgeaYxRvotaCVhxv80knqy6Wible6pZLUHVpz7Gq2TeMEyDIqKNQp5IPoLGzvjWccW8br-uX_I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegvddviecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
+    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
+    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepihhnthgvlhhfgiesihhnthgvlhhfgidrnhgrmhgvpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrvhgrrhgrsges
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:fdarZ7KJT-eMp8CwsHNSwsV2Fe01qcZ9ZZf7YxVn_EEUrPZDLyb2ug>
+    <xmx:fdarZyJR73qbQEL-odlDPiFZkvsmOV5M5TE2CxJtqdwk1lcA8GGVyw>
+    <xmx:fdarZ8yzCCN9-xasZYx927BbYVEJffHzqu8tEehBP3ADOBVaTg-sAg>
+    <xmx:fdarZ2Jn69bgZhKvRBEB5AKmR_8hV2NaP_kCQ9I8fvGth3NKwD8VkQ>
+    <xmx:fdarZ3HAqQ0PQ1DJ-eAcSwBWcK53GHSy0aVJWDVqE6X00uaG5-mW2xT_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 11 Feb 2025 18:00:12 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ivan Shapovalov <intelfx@intelfx.name>
+Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH 3/3] clean: add `config.exclude` and `--remove-excluded`
+In-Reply-To: <20250210191504.309661-4-intelfx@intelfx.name> (Ivan Shapovalov's
+	message of "Mon, 10 Feb 2025 23:14:39 +0400")
+References: <20250210191504.309661-1-intelfx@intelfx.name>
+	<20250210191504.309661-4-intelfx@intelfx.name>
+Date: Tue, 11 Feb 2025 15:00:11 -0800
+Message-ID: <xmqqseokw0hw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0M5kjWIR1AcVzQxo"
-Content-Disposition: inline
-In-Reply-To: <20250211213940.GB3113114@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Ivan Shapovalov <intelfx@intelfx.name> writes:
 
---0M5kjWIR1AcVzQxo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Add `config.exclude` to configure "always excluded" files (same as `-e`
+> on the command line), and `--remove-excluded` (intentionally without a
+> short form) to "REALLY remove everything, dammit!"
+>
+> This might seem like euphemism treadmill, but there is a specific
+> use-case for all of the exclusion methods and options:
+>
+> .gitignore:     files that _the project_ does not want to track or touch
+>                 (build artifacts)
+> clean.exclude:  files that _the user_ does not want to track or touch
+>                 (IDE configuration)
+> git clean -x:   remove build artifacts, but keep precious files
+>                 (when a pristine build is desired)
+> git clean -x --remove-excluded:
+>                 remove everything, including precious files
+>                 (e.g. for redistribution)
+>
+> Signed-off-by: Ivan Shapovalov <intelfx@intelfx.name>
+> ---
+>  Documentation/config/clean.txt | 11 +++++++++++
+>  Documentation/git-clean.txt    | 22 +++++++++++++++-------
+>  builtin/clean.c                | 19 ++++++++++++++++---
+>  3 files changed, 42 insertions(+), 10 deletions(-)
 
-On 2025-02-11 at 21:39:40, Jeff King wrote:
-> We could probably create and write the tempfile as 0644, and then switch
-> it to 0444 before renaming it into place. We already do something
-> similar with adjust_shared_perm(), I think.
->=20
-> I don't know if it's worth doing it that way or not. It should just work
-> even on systems that are happy with the current code, so I think the
-> only downside would be a few extra lines of code and an extra chmod()
-> syscall.
+A few comments on the proposed semantics.
 
-That may work here for this instance.  My concern is that we'll find
-some other weird, hard-to-reproduce behaviour because files are silently
-getting reopened and permissions are getting re-checked.  This bug is
-much worse than the standard NFS/CIFS implementation bug where open with
-O_RDWR and 0444 just fails up front, because it can happen in the middle
-of an operation we thought was going to be successful.
+ - It is questionable to throw paths that match command line "-e"
+   patterns into the 'precious' class.  It breaks backward
+   compatibility and established end-user expectations, doesn't it?
 
-I'm not completely opposed to a small workaround here (although, as I
-mentioned, a decent amount of other software would also need patching
-for such a system, which argues against it), but I don't want us to have
-lots of workarounds scattered all over the code to patch one flaky set
-of NFS servers, so we'd want to limit it to this one spot, especially
-since this won't be easy to test.
+ - It is nice to see that an effort is made to sift "excluded" into
+   two classes.  The traditional "ignored/excluded are expendable,
+   so "git clean" will remove them, "git switch", when path F is
+   excluded and there is a file F, would remove it when it needs to
+   check out a tree that has paths under directory F.  "git add F"
+   and "git add ." would not add it unless forced.  We would want
+   another class of files `precious` that are ignored in the same
+   sense by "git add", but yet excempt from removal by "git clean"
+   and things like "git switch".
 
-I will also mention that this NFS server will also break lots of
-proprietary software.  One of my former employers had software that
-would do lots of open/fchmod in quick succession (for good and valuable
-reasons that are too long to fit in this parenthetical), and I'm pretty
-sure that won't work properly on this server based on the described
-behaviour.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+ - On the other hand, it is a good idea to use a new source of
+   patterns that the command never paid attention to, like a new
+   configuration variable.  Since nobody has ever used it for
+   "excluded and expendable", there is no risk of breaking end-user
+   expectations.
 
---0M5kjWIR1AcVzQxo
-Content-Type: application/pgp-signature; name="signature.asc"
+ - This particular implementation falls far short of the ideal of
+   "precious files" class, though.  Since "git clean" is the only
+   thing that pays attention to clean.exclude, "git add ." would
+   happily add those paths that match the pattern, and "git switch"
+   to check out a directory whose pathname matches the pattern would
+   happily nuke a precious file that is in the working tree at that
+   path.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
+Earlier discussions proposed extended syntax added to .gitignore
+mechanism and relevant codepaths, not just "git clean", all pay
+attention to the new "precious" paths, but one idea proposed by
+this series that is much better than the previous designs is the
+use of separate sources of patterns---we do not have to worry about
+backward compatibility issues at all with that design.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ6vTNQAKCRB8DEliiIei
-gU9UAQC9ZL+KjyLZ6CgPNi4M3mGHFQrrvXtbCUi858L8/T+VtAD9H/7kbyQ6thRi
-ckVXybD2gl2ziylJHS0tOkVldhSI1QM=
-=RNi0
------END PGP SIGNATURE-----
+In my earlier review, I said it was clever to recognize that
+precious would be of personal nature, but I now realize that there
+are valid reasons why projects may _know_ what paths are precious
+and would want to distribute that knowledge to its participants.
+For example, our project would benefit from having config.mak marked
+as precious for everybody, so that nobody commits such a file by
+mistake and then ask us to pull from them.
 
---0M5kjWIR1AcVzQxo--
+As a configuration variable does not propagate across repositories
+by design, it would not work as a way for the project to share its
+idea of what paths are in the "precious" class, so in addition to
+the clean.exclude (which probably is a bad name, as (1) we want not
+just clean but things like add and switch also pay attention to it,
+and (2) the class it defines is distinct from "exclude", and would
+want to have the word "precious" in it) variable, we'd probably need
+to have a way to record them in tracked files, either in .gitignore
+files using some extended syntax, or separate .gitprecious files.
+
+Thanks.
