@@ -1,386 +1,341 @@
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97ABF1F4295
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 10:33:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAEC41DD526
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 11:33:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739270009; cv=none; b=uDvj4mPvIPKSwQPVxY/6LkofQXmSIcYWxTicY6PQdlMJgL9AXgPN9W5/VUo47yXsu5Oq+8h5fwX4ozu2/ROvSzk2Hk8VS153pS6yZ7fUAgyODl5yOrUeTFV6kQMREHWMpPofc7pZK3mPwdUY1dwzyzeXlb8IaS69gki+vQpXhCg=
+	t=1739273603; cv=none; b=U9/3H4ZWFuqQtb7vDYpXiODOSYJ4kZ/zvqmEw7mhlfkznSmepTsd1LgmUvndiAk5YZY/sxVs3sl3Ivn6SHBBTlvzyfI/UlyLe8JQDjTbetEAiLfgy3ivy9ah0VW1HpmKfXGe9erkP4vVeJ+FDdDKwVkiah+DGrLZnyFmOAzSeBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739270009; c=relaxed/simple;
-	bh=bViFZhIG7GxKtpBFolW/uh/pERu5lRXXtcWEiBQWXWg=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hUKn+YggUb3Cm9z03QKIgvgz2nt4CjvJl4UEaO739ahz90lXS6YHnvUprQyVuEhAogq/y2/FNq/jLOqoUkbUZU+JRTcUTXBzEdvsxid5oL2MkPKqs6iF7Rxu3pFJggdyBZaJBAWYxC/FziKI49M2V4/sY0qKU4gklMc1e+L4a0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ba1HbWYp; arc=none smtp.client-ip=209.85.217.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739273603; c=relaxed/simple;
+	bh=QsVafd71PnBeJI/kUJowUS9XZ88ktGLkJ+C6WVY3jcU=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=mB4UWhMgZTqR3LeIBwLb45jjrSM7vewNX5A835lhFKtEfHSfPxM6hbBbqSE39xQo9fM+7u0RdnsBEqnLYArVeTDiWoUtI6TRaHtV8LfA2/lCJHtx1z1CZtzXuAR2ABFAFWWiMN1FZCLiuc9xkt83IkQLSpYYN/6hiLZRuolUxhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name; spf=pass smtp.mailfrom=intelfx.name; dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b=R+f1H9DV; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intelfx.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ba1HbWYp"
-Received: by mail-vs1-f45.google.com with SMTP id ada2fe7eead31-4bbc047a3c3so1487494137.1
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 02:33:27 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b="R+f1H9DV"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-38dc73cc5acso2557052f8f.0
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 03:33:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739270006; x=1739874806; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mdI9XLRLDbpX//zGEAbMEcLfqLPAjsQjmmALxBDSMDE=;
-        b=ba1HbWYp1eogjGgada68a5yQDkVvrwx1ndLBEUqA730PLiHHPA/0DEG4WlmUogtcfk
-         mT2uQurVSWZRgeer9+BU/WOYA36at4Wz2ZUbSiDsYgVN9vuiszQagoVfdis3TkP56KOW
-         oAiqsVJI7Ma+5Y3/lJcQR113sDMXiV9g2myrw4sKSNfTiFaTgdHh7L/AV4H4JlTxPpWC
-         rn+xUUyIvVnIalIqXq4rqquYzHyRrgE7tZPJJ5TwqjkshpfBhY3zZ0QkJ6iI47+nfcC+
-         4ZvhERmQ9RJUPgq+kvMnjvUjamtYa1wFhhfpLNpVR+2x/CpjeSxpUmY6YpoopxvRlKjj
-         iZLw==
+        d=intelfx.name; s=google; t=1739273599; x=1739878399; darn=vger.kernel.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=hBoAApiQkXhfgxmLK/tBQaH8K4gk2DOSKwWzeFWL3vk=;
+        b=R+f1H9DVwKTJd0jlFCGq6aMy6Okj+TsRQg3vjpPvVjRkfGatIdrlF2A4UfpaEyj+Ct
+         9maSFOo+410wslpaWgcKqrFQBa6D3my+wi44lr2B2QGO85PNBxGXeK5imTAFwIDG6zIN
+         uvAE/+z+195XSRV7TxeVnJHxZ4itNQJ3XVYqk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739270006; x=1739874806;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mdI9XLRLDbpX//zGEAbMEcLfqLPAjsQjmmALxBDSMDE=;
-        b=TrpmEbPljM2JvRV82eLc/+e5jcVIqzmpIbmsqbSYxNLmzZZCilf3uVcQLYoXy/5DnW
-         6S/v5lzzXKVlKJnbYIks4b0dWQU17lgMrh5rawsTE/5Alm9EKooLkcfZKPjOObcbSxhW
-         MmZM1ydFw1b8oYVvB9WTB9dR8udyK6lxt3GX41xczv85N/Y4/uCfssPNJKPEpApE2aEw
-         djLquW6sUmrgNCMbcOvMb1OBd1TIC9jtSECJKFLdWHvxM+tXHVrV4lsAsrAHHCPj5bho
-         1OFsouorBUgP/FyzvURp/GCXimYdWgH4vNaH+s9CeN6aOXp3AXDCPy5lDGz/3yzIhFDc
-         XVAw==
-X-Gm-Message-State: AOJu0YzPlxCvYQKhw/Jl8Z3Yy+8epIOSgiu8hktbl6qR/3cDWKLX+aCQ
-	kjiOxB6jZhfRYaZMT8Pmjz2j7t8KQC2HeIqir3q4k2oKq4V/QLvMDl6gEgAGawGNKnMkFr1QkDE
-	iLB4fSzV0KGNjzy78j5cZCJKfv4UjHxNA
-X-Gm-Gg: ASbGnct1KtW9qXlnQbLL1WeGO+WZMrx7SfoS9vGnZms/zi/wDmru15AKy9rzvQQvrJp
-	yCunjOsOFC82BrOb0bB2a2AE/704dpRkK4xicHmGwK96oeTfc2sljZyRg+X+Hwb/sletZ8ulJUK
-	IwEFXI2o0IfLNFE8VAw7kcewkEM12Pzm0=
-X-Google-Smtp-Source: AGHT+IEfOuz07QBATXbKOSF458SbNPfh8BF7uOraC4PV9FjWpEJA7TtXPO89Ve6cZLYy5CH8rCoQ7erwyTkqWHbacoc=
-X-Received: by 2002:a05:6102:c8b:b0:4bb:e1c9:80b4 with SMTP id
- ada2fe7eead31-4bbe1c983ecmr1505909137.0.1739270006241; Tue, 11 Feb 2025
- 02:33:26 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 11 Feb 2025 05:33:25 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z6Yw_f6PGJ2X_Iue@pks.im>
-References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
- <20250207-245-partially-atomic-ref-updates-v1-2-e6a3690ff23a@gmail.com> <Z6Yw_f6PGJ2X_Iue@pks.im>
+        d=1e100.net; s=20230601; t=1739273599; x=1739878399;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hBoAApiQkXhfgxmLK/tBQaH8K4gk2DOSKwWzeFWL3vk=;
+        b=pS3/By9lopCRscp8cnN7LDPyfblOsaOup2JeaarxBO4iyzmbQ7FhQhmOjoBcYesE//
+         aMUGMZJH9eSa8GFjDVUHJA95A6blLnMxk7/MQJ0H/ui3p7tMOOIw2MwfhjB2bnZqRP9W
+         DYzWyBQj28AIu3GI+ZDznFj5C5BFPA9WaV276L8uuGJ6Tl29NJyHqyguG52SpB54m457
+         iuD3sdbOlCQrvfrj5/a5Sjbo556chzyseyy9j6SbeT6Q0nTa6Bg16LWGT7su/a5HyAV3
+         /IFLVlL1F7tAxhLR/kXGB4NaszWKHFIKyapyr5Ur5v9iAGSAzx/Xak0XzUbhvhcuOweo
+         6q5A==
+X-Gm-Message-State: AOJu0YzdpB8BbuvWaC9OR2OgZvu+K3zWLlYVoaywatXjpMuqWnO7JxJU
+	eieTYQc+Fmw5zw3wpxcT47XkCrqIcqacBF1j7Mh6ydcA4yF+5JxHWSrwS9xMFhA=
+X-Gm-Gg: ASbGncupukrihrLHuRh6uKtSUhgWZOrZSRQ4dMqNRq9NyIP7nVqEQbMR/y/XkcicGdb
+	3QalueXxfPVFVeLWLPsMVih1ObPa+blcVyqaFGK6nSXSQV2Z2VrvGtp1BSfhynpSD306Xv6LjRS
+	aVEErtVJVNuemHhVfVvmUa2I2VmHP++AEhrej7gxxyBll3MFYE2R+rHfGRVHBjS9Roge3r0h4r7
+	upAyZe5/4BINq7rKz84Ek/fOFIDW4yq7hOApnQQXAuz1l1GDkt+jd4zW3tDh2f8oeVuIIcyr06R
+	u9SBwGvxsyXgCLcjzFtPPWM+qsFimqUPSni5c5KNYEeVf2KJUgnx
+X-Google-Smtp-Source: AGHT+IGVWxoQgIoEcd05XUDQKaSu5rcQmxbOvJy/0jnZ6lfFQi4ZWr04BhRnAiTUE0IyEcsWT9bDdg==
+X-Received: by 2002:a5d:5985:0:b0:38d:d274:4537 with SMTP id ffacd0b85a97d-38de439d615mr2379528f8f.7.1739273598528;
+        Tue, 11 Feb 2025 03:33:18 -0800 (PST)
+Received: from [10.0.0.21] (94-43-143-139.dsl.utg.ge. [94.43.143.139])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38ddaf333c5sm6664546f8f.36.2025.02.11.03.33.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 03:33:18 -0800 (PST)
+Message-ID: <bc0de52b59f289e1388f1581fcfa49453365e21a.camel@intelfx.name>
+Subject: Re: [PATCH] rebase: add `--update-refs=interactive`
+From: Ivan Shapovalov <intelfx@intelfx.name>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, Derrick Stolee
+	 <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>, Alex Henrie
+	 <alexhenrie24@gmail.com>
+Date: Tue, 11 Feb 2025 15:33:15 +0400
+In-Reply-To: <CALnO6CAM7WCOJV8s8ZARi3BAFwkh0TNTCod_YH9s+EpO7t-Qtg@mail.gmail.com>
+References: <20250210191650.316329-1-intelfx@intelfx.name>
+	 <CALnO6CAM7WCOJV8s8ZARi3BAFwkh0TNTCod_YH9s+EpO7t-Qtg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.54.3 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 11 Feb 2025 05:33:25 -0500
-X-Gm-Features: AWEUYZkxYYrgXNjb9fIcA3GoRECuKyFYBbZJgALSiSo4PfiGEllDAmr5Yrcfkj0
-Message-ID: <CAOLa=ZT+uFOCDR1nJpOoCneBVT=fKDLMhmSwVHJxVOPeaX3W2w@mail.gmail.com>
-Subject: Re: [PATCH 2/6] refs: move duplicate refname update check to generic layer
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000e420e5062ddb5a87"
 
---000000000000e420e5062ddb5a87
-Content-Type: text/plain; charset="UTF-8"
+On 2025-02-10 at 15:22 -0500, D. Ben Knoble wrote:
+> On Mon, Feb 10, 2025 at 2:17=E2=80=AFPM Ivan Shapovalov <intelfx@intelfx.=
+name> wrote:
+> >=20
+> > In rebase-heavy workflows involving multiple interdependent feature
+> > branches, typing out `--update-refs` quickly becomes tiring, which
+> > can be mitigated with setting the `rebase.updateRefs` git-config option
+> > to perform update-refs by default.
+> >=20
+> > However, the utility of `rebase.updateRefs` is somewhat limited because
+> > you rarely want it in a non-interactive rebase (as it does not give you
+> > the chance to review the update-refs candidates, likely leading to
+> > updating refs that you didn't want updated -- I made quite an amount
+> > of mess by setting this option and subsequently forgetting about it).
+> >=20
+> > Try to find a middle ground by introducing a third value,
+> > `--update-refs=3Dinteractive` (and `rebase.updateRefs=3Dinteractive`)
+> > which means `--update-refs` when starting an interactive rebase and
+> > `--no-update-refs` otherwise. This option is primarily intended to be
+> > used in the gitconfig, but is also accepted on the command line
+> > for completeness.
+> >=20
+> > Signed-off-by: Ivan Shapovalov <intelfx@intelfx.name>
+> > ---
+> >  Documentation/config/rebase.txt |  7 +++-
+> >  Documentation/git-rebase.txt    |  8 +++-
+> >  builtin/rebase.c                | 72 +++++++++++++++++++++++++++++----
+> >  3 files changed, 77 insertions(+), 10 deletions(-)
+> >=20
+> > diff --git a/Documentation/config/rebase.txt b/Documentation/config/reb=
+ase.txt
+> > index c6187ab28b..d8bbaba69a 100644
+> > --- a/Documentation/config/rebase.txt
+> > +++ b/Documentation/config/rebase.txt
+> > @@ -24,7 +24,12 @@ rebase.autoStash::
+> >         Defaults to false.
+> >=20
+> >  rebase.updateRefs::
+> > -       If set to true enable `--update-refs` option by default.
+> > +       If set to true, enable the `--update-refs` option of
+> > +       linkgit:git-rebase[1] by default. When set to 'interactive',
+> > +       only enable `--update-refs` by default for interactive mode
+> > +       (equivalent to `--update-refs=3Dinteractive`).
+> > +       This option can be overridden by specifying any form of
+> > +       `--update-refs` on the command line.
+> >=20
+> >  rebase.missingCommitsCheck::
+> >         If set to "warn", git rebase -i will print a warning if some
+> > diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
+t
+> > index b18cdbc023..ae6939588d 100644
+> > --- a/Documentation/git-rebase.txt
+> > +++ b/Documentation/git-rebase.txt
+> > @@ -647,12 +647,18 @@ rebase --continue` is invoked. Currently, you can=
+not pass
+> >=20
+> >  --update-refs::
+> >  --no-update-refs::
+> > +--update-refs=3Dinteractive::
+>=20
+> Based on `git grep -e '--.*\[=3D' Documentation/git-*.txt`, I think this
+> should be more like
+>=20
+>     --update-refs[=3Dinteractive]::
+>     --no-update-refs::
+>=20
+> But maybe that unintentionally suggests that `=3Dinteractive` is the defa=
+ult?
 
-Patrick Steinhardt <ps@pks.im> writes:
+Perhaps --update-refs[=3D(yes|no|interactive)] then? Or is that too
+verbose? Anyway, I don't have a preference, I'll just do what I'm told
+here.
 
-> On Fri, Feb 07, 2025 at 08:34:37AM +0100, Karthik Nayak wrote:
->> Move the tracking of refnames in `affected_refnames` from individual
->> backends into the generic layer in 'refs.c'. This centralizes the
->> duplicate refname detection that was previously handled separately by
->> each backend.
->
-> Exciting, this has been on my TODO list for quite a while already.
->
+>=20
+> >         Automatically force-update any branches that point to commits t=
+hat
+> >         are being rebased. Any branches that are checked out in a workt=
+ree
+> >         are not updated in this way.
+> >  +
+> > +If `--update-refs=3Dinteractive` is specified, the behavior is equival=
+ent to
+> > +`--update-refs` if the rebase is interactive and `--no-update-refs` ot=
+herwise.
+> > +(This is mainly useful as a configuration setting, although it might a=
+lso be
+> > +of use in aliases.)
+> > ++
+> >  If the configuration variable `rebase.updateRefs` is set, then this op=
+tion
+> > -can be used to override and disable this setting.
+> > +can be used to override or disable the configuration.
+> >  +
+> >  See also INCOMPATIBLE OPTIONS below.
+> >=20
+> > diff --git a/builtin/rebase.c b/builtin/rebase.c
+> > index 6c9eaf3788..57b456599b 100644
+> > --- a/builtin/rebase.c
+> > +++ b/builtin/rebase.c
+> > @@ -129,10 +129,17 @@ struct rebase_options {
+> >         int reschedule_failed_exec;
+> >         int reapply_cherry_picks;
+> >         int fork_point;
+> > -       int update_refs;
+> > +       // UPDATE_REFS_{UNKNOWN,NO,ALWAYS} numeric values must never
+> > +       // change as post-option-parsing code works with {,config_}upda=
+te_refs
+> > +       // as if they were ints
+> > +       enum {
+> > +               UPDATE_REFS_UNKNOWN =3D -1,
+> > +               UPDATE_REFS_NO =3D 0,
+> > +               UPDATE_REFS_ALWAYS =3D 1,
+> > +               UPDATE_REFS_INTERACTIVE,
+> > +       } update_refs, config_update_refs;
+> >         int config_autosquash;
+> >         int config_rebase_merges;
+> > -       int config_update_refs;
+> >  };
+> >=20
+> >  #define REBASE_OPTIONS_INIT {                          \
+> > @@ -150,8 +157,8 @@ struct rebase_options {
+> >                 .autosquash =3D -1,                       \
+> >                 .rebase_merges =3D -1,                    \
+> >                 .config_rebase_merges =3D -1,             \
+> > -               .update_refs =3D -1,                      \
+> > -               .config_update_refs =3D -1,               \
+> > +               .update_refs =3D UPDATE_REFS_UNKNOWN,     \
+> > +               .config_update_refs =3D UPDATE_REFS_UNKNOWN, \
+> >                 .strategy_opts =3D STRING_LIST_INIT_NODUP,\
+> >         }
+> >=20
+> > @@ -412,6 +419,18 @@ static void imply_merge(struct rebase_options *opt=
+s, const char *option)
+> >         }
+> >  }
+> >=20
+> > +static int coerce_update_refs(const struct rebase_options *opts, int u=
+pdate_refs)
+> > +{
+> > +       /* coerce "=3Dinteractive" into "no" rather than "not set" when=
+ not interactive
+> > +        * this way, `git -c rebase.updateRefs=3Dyes rebase --update-re=
+fs=3Dinteractive [without -i]`
+> > +        * will not inherit the "yes" from the config */
+> > +       if (update_refs =3D=3D UPDATE_REFS_INTERACTIVE)
+> > +               return (opts->flags & REBASE_INTERACTIVE_EXPLICIT)
+> > +                      ? UPDATE_REFS_ALWAYS
+> > +                      : UPDATE_REFS_NO;
+> > +       return update_refs;
+> > +}
+> > +
+> >  /* Returns the filename prefixed by the state_dir */
+> >  static const char *state_dir_path(const char *filename, struct rebase_=
+options *opts)
+> >  {
+> > @@ -779,6 +798,17 @@ static void parse_rebase_merges_value(struct rebas=
+e_options *options, const char
+> >                 die(_("Unknown rebase-merges mode: %s"), value);
+> >  }
+> >=20
+> > +static int parse_update_refs_value(const char *value, const char *desc=
+)
+> > +{
+> > +       int v =3D git_parse_maybe_bool(value);
+> > +       if (v >=3D 0)
+> > +               return v ? UPDATE_REFS_ALWAYS : UPDATE_REFS_NO;
+> > +       else if (!strcmp("interactive", value))
+> > +               return UPDATE_REFS_INTERACTIVE;
+> > +
+> > +       die(_("bad %s value '%s'; valid values are boolean or \"interac=
+tive\""), desc, value);
+> > +}
+> > +
+> >  static int rebase_config(const char *var, const char *value,
+> >                          const struct config_context *ctx, void *data)
+> >  {
+> > @@ -821,7 +851,8 @@ static int rebase_config(const char *var, const cha=
+r *value,
+> >         }
+> >=20
+> >         if (!strcmp(var, "rebase.updaterefs")) {
+> > -               opts->config_update_refs =3D git_config_bool(var, value=
+);
+> > +               opts->config_update_refs =3D parse_update_refs_value(va=
+lue,
+> > +                       "rebase.updateRefs");
+> >                 return 0;
+> >         }
+> >=20
+> > @@ -1042,6 +1073,19 @@ static int parse_opt_rebase_merges(const struct =
+option *opt, const char *arg, in
+> >         return 0;
+> >  }
+> >=20
+> > +static int parse_opt_update_refs(const struct option *opt, const char =
+*arg, int unset)
+> > +{
+> > +       struct rebase_options *options =3D opt->value;
+> > +
+> > +       if (arg)
+> > +               options->update_refs =3D parse_update_refs_value(arg,
+> > +                       "--update-refs");
+> > +       else
+> > +               options->update_refs =3D unset ? UPDATE_REFS_NO : UPDAT=
+E_REFS_ALWAYS;
+> > +
+> > +       return 0;
+> > +}
+> > +
+> >  static void NORETURN error_on_missing_default_upstream(void)
+> >  {
+> >         struct branch *current_branch =3D branch_get(NULL);
+> > @@ -1187,9 +1231,11 @@ int cmd_rebase(int argc,
+> >                 OPT_BOOL(0, "autosquash", &options.autosquash,
+> >                          N_("move commits that begin with "
+> >                             "squash!/fixup! under -i")),
+> > -               OPT_BOOL(0, "update-refs", &options.update_refs,
+> > -                        N_("update branches that point to commits "
+> > -                           "that are being rebased")),
+> > +               OPT_CALLBACK_F(0, "update-refs", &options,
+> > +                       N_("(bool|interactive)"),
+> > +                       N_("update branches that point to commits "
+> > +                          "that are being rebased"),
+> > +                       PARSE_OPT_OPTARG, parse_opt_update_refs),
+> >                 { OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id=
+"),
+> >                         N_("GPG-sign commits"),
+> >                         PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+> > @@ -1528,6 +1574,16 @@ int cmd_rebase(int argc,
+> >         if (isatty(2) && options.flags & REBASE_NO_QUIET)
+> >                 strbuf_addstr(&options.git_format_patch_opt, " --progre=
+ss");
+> >=20
+> > +       /* coerce --update-refs=3Dinteractive into yes or no.
+> > +        * we do it here because there's just too much code below that =
+handles
+> > +        * {,config_}update_refs in one way or another and modifying it=
+ to
+> > +        * account for the new state would be too invasive.
+> > +        * all further code uses {,config_}update_refs as a tristate. *=
+/
+> > +       options.update_refs =3D
+> > +               coerce_update_refs(&options, options.update_refs);
+> > +       options.config_update_refs =3D
+> > +               coerce_update_refs(&options, options.config_update_refs=
+);
+> > +
+> >         if (options.git_am_opts.nr || options.type =3D=3D REBASE_APPLY)=
+ {
+> >                 /* all am options except -q are compatible only with --=
+apply */
+> >                 for (i =3D options.git_am_opts.nr - 1; i >=3D 0; i--)
+> > --
+> > 2.48.1.5.g9188e14f140
+> >=20
+> >=20
+>=20
+> Should we add a test for this?
+>=20
 
-Yeah, I saw that you left a TODO in the reftable backend too. This
-change was not really needed for partial transactions. But it does make
-things a bit nicer and easier.
+Any suggestions what exactly I should test here? I don't have much
+experience testing interactive CLI tools, so I'd appreciate some hints.
 
->> Make some changes to accommodate this move:
->>
->>   - Add a `string_list` field `refnames` to `ref_transaction` to contain
->>     all the references in a transaction. This field is updated whenever
->>     a new update is added.
->>
->>   - Modify the backends to use this field internally as needed. The
->>     backends need to check if an update for refname already exists when
->>     splitting symrefs or adding an update for 'HEAD'.
->
-> Okay. Is this actually necessary to be handled by the backends? I
-> would've expected that it is possible to split up symref updates so that
-> we insert both symref and target into the list. I wouldn't be surprised
-> if this wasn't easily possible though -- the logic here is surprisingly
-> intricate.
-
-It is a bit intricate and requires a bit of unwinding to move it to the
-generic layer. But it is possible, I tried to timebox it for this patch
-series, but unfortunately it needs a lot more time. So perhaps,
-something for later.
-
->
->>   - In the reftable backend, in `reftable_be_transaction_prepare()`,
->>     move the instance of `string_list_has_string()` above
->>     `ref_transaction_add_update()` to check before the reference is
->>     added.
->>
->> This helps reduce duplication of functionality between the backends and
->> makes it easier to make changes in a more centralized manner.
->
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  refs.c                  | 17 ++++++++++++
->>  refs/files-backend.c    | 69 ++++++++++---------------------------------------
->>  refs/packed-backend.c   | 25 +-----------------
->>  refs/refs-internal.h    |  2 ++
->>  refs/reftable-backend.c | 53 ++++++++++++-------------------------
->>  5 files changed, 50 insertions(+), 116 deletions(-)
->
-> Nice.
->
->> diff --git a/refs.c b/refs.c
->> index f4094a326a9f88f979654b668cc9c3d27d83cb5d..4c9b706461977995be1d55e7667f7fb708fbbb76 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -1175,6 +1175,7 @@ struct ref_transaction *ref_store_transaction_begin(struct ref_store *refs,
->>  	CALLOC_ARRAY(tr, 1);
->>  	tr->ref_store = refs;
->>  	tr->flags = flags;
->> +	string_list_init_dup(&tr->refnames);
->
-> Do we actually have to duplicate strings? I would've expected that we
-> keep strings alive via the `ref_update`s anyway during the transaction's
-> lifetime.
->
-
-True. I was more thinking along the lines of the keeping the memory
-concerns separate. Also, I  sure if there are any scenario's that
-a `ref_transaction` could outlive a `ref_update`.
-
-> It might also be interesting to check whether using a strset for this
-> is more efficient. But that is certainly outside the scope of your patch
-> series and can be done at a later point. #leftoverbit
->
-
-Agreed.
-
->> @@ -1245,6 +1248,16 @@ struct ref_update *ref_transaction_add_update(
->>  		update->msg = normalize_reflog_message(msg);
->>  	}
->>
->> +	/*
->> +	 * This list is generally used by the backends to avoid duplicates.
->> +	 * But we do support multiple log updates for a given refname within
->> +	 * a single transaction.
->> +	 */
->> +	if (!(update->flags & REF_LOG_ONLY)) {
->> +		item = string_list_append(&transaction->refnames, refname);
->> +		item->util = update;
->> +	}
->> +
->>  	return update;
->>  }
->> @@ -2397,6 +2410,10 @@ int ref_transaction_prepare(struct ref_transaction *transaction,
->>  		return -1;
->>  	}
->>
->> +	string_list_sort(&transaction->refnames);
->> +	if (ref_update_reject_duplicates(&transaction->refnames, err))
->> +		return TRANSACTION_GENERIC_ERROR;
->> +
->>  	ret = refs->be->transaction_prepare(refs, transaction, err);
->>  	if (ret)
->>  		return ret;
->
-> Okay, we keep the list unserted initially, but sort it later before
-> passing it to the backends so that `string_list_has_string()` works
-> correctly. Good.
->
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index c6a3f6d6261a894e1c294bb1329fdf8079a39eb4..18da30c3f37dc5c09f7d81a9083d6b41d0463bd5 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -2425,7 +2423,6 @@ static int split_head_update(struct ref_update *update,
->>  	 */
->>  	if (strcmp(new_update->refname, "HEAD"))
->>  		BUG("%s unexpectedly not 'HEAD'", new_update->refname);
->> -	string_list_insert(affected_refnames, new_update->refname);
->>
->>  	return 0;
->>  }
->
-> Previously we would've inserted "HEAD" into the list of affected
-> refnames even if it wasn't directly updated. Why don't we have to do
-> that now anymore?
->
-
-We still do, right above this code, there is a call to
-`ref_transaction_add_update()`. So any ref_update added to the
-transaction via `ref_transaction_add_update()` will also add the refname
-to `transaction->refnames`.
-
->> @@ -2441,7 +2438,6 @@ static int split_head_update(struct ref_update *update,
->> @@ -2491,15 +2487,6 @@ static int split_symref_update(struct ref_update *update,
->>  	update->flags |= REF_LOG_ONLY | REF_NO_DEREF;
->>  	update->flags &= ~REF_HAVE_OLD;
->>
->> -	/*
->> -	 * Add the referent. This insertion is O(N) in the transaction
->> -	 * size, but it happens at most once per symref in a
->> -	 * transaction. Make sure to add new_update->refname, which will
->> -	 * be valid as long as affected_refnames is in use, and NOT
->> -	 * referent, which might soon be freed by our caller.
->> -	 */
->> -	string_list_insert(affected_refnames, new_update->refname);
->> -
->>  	return 0;
->>  }
->
-> Same question here, but for symref updates.
->
-
-Same as above. In summary, the need for adding new refnames to the list
-is now centralized and a part of adding a ref update to the transaction.
-
-It's a good question, so I'll also add a hint in the commit message.
-
->
->> @@ -3030,13 +2995,8 @@ static int files_transaction_finish_initial(struct files_ref_store *refs,
->>  	if (transaction->state != REF_TRANSACTION_PREPARED)
->>  		BUG("commit called for transaction that is not prepared");
->>
->> -	/* Fail if a refname appears more than once in the transaction: */
->> -	for (i = 0; i < transaction->nr; i++)
->> -		if (!(transaction->updates[i]->flags & REF_LOG_ONLY))
->> -			string_list_append(&affected_refnames,
->> -					   transaction->updates[i]->refname);
->> -	string_list_sort(&affected_refnames);
->> -	if (ref_update_reject_duplicates(&affected_refnames, err)) {
->> +	string_list_sort(&transaction->refnames);
->> +	if (ref_update_reject_duplicates(&transaction->refnames, err)) {
->>  		ret = TRANSACTION_GENERIC_ERROR;
->>  		goto cleanup;
->>  	}
->
-> Can't we also make this check generic for initial transactions?
->
-
-This one is handled in the next commit, I mostly separated them out
-because I was not sure why this needs to be here and to draw attention
-if I'm missing something when removing this.
-
->> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
->> index a7b6f74b6e35f897f619c540cbc600bbd888bc67..6e7acb077e81435715a1ca3cc928550147c8c56a 100644
->> --- a/refs/packed-backend.c
->> +++ b/refs/packed-backend.c
->> @@ -1653,34 +1648,16 @@ static int packed_transaction_prepare(struct ref_store *ref_store,
->>  	 */
->>
->>  	CALLOC_ARRAY(data, 1);
->> -	string_list_init_nodup(&data->updates);
->>
->>  	transaction->backend_data = data;
->>
->> -	/*
->> -	 * Stick the updates in a string list by refname so that we
->> -	 * can sort them:
->> -	 */
->> -	for (i = 0; i < transaction->nr; i++) {
->> -		struct ref_update *update = transaction->updates[i];
->> -		struct string_list_item *item =
->> -			string_list_append(&data->updates, update->refname);
->> -
->> -		/* Store a pointer to update in item->util: */
->> -		item->util = update;
->> -	}
->> -	string_list_sort(&data->updates);
->> -
->> -	if (ref_update_reject_duplicates(&data->updates, err))
->> -		goto failure;
->> -
->>  	if (!is_lock_file_locked(&refs->lock)) {
->>  		if (packed_refs_lock(ref_store, 0, err))
->>  			goto failure;
->>  		data->own_lock = 1;
->>  	}
->>
->> -	if (write_with_updates(refs, &data->updates, err))
->> +	if (write_with_updates(refs, &transaction->refnames, err))
->>  		goto failure;
->>
->>  	transaction->state = REF_TRANSACTION_PREPARED;
->
-> This change is a lot more straight-forward because the packed backend
-> does not support symrefs at all. Nice.
->
-
-Yes indeed.
-
->> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
->> index d39a14c5a469d7d219362e9eae4f578784d65a5b..dd2099d94948a4f23fd9f7ddc06bf3d741229eba 100644
->> --- a/refs/reftable-backend.c
->> +++ b/refs/reftable-backend.c
->> @@ -1202,12 +1184,11 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->>  				goto done;
->>  			}
->>
->> -			new_update = ref_transaction_add_update(
->> -					transaction, "HEAD",
->> -					u->flags | REF_LOG_ONLY | REF_NO_DEREF,
->> -					&u->new_oid, &u->old_oid, NULL, NULL, NULL,
->> -					u->msg);
->> -			string_list_insert(&affected_refnames, new_update->refname);
->> +			ref_transaction_add_update(
->> +				transaction, "HEAD",
->> +				u->flags | REF_LOG_ONLY | REF_NO_DEREF,
->> +				&u->new_oid, &u->old_oid, NULL, NULL, NULL,
->> +				u->msg);
->>  		}
->>
->>  		ret = reftable_backend_read_ref(be, rewritten_ref,
->
-> Equivalent question as for the files backend.
->
-
-I hope my answer earlier helps, especially since the diff here shows the
-call to `ref_transaction_add_update()`.
-
->> @@ -1277,6 +1258,15 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->>  				if (!strcmp(rewritten_ref, "HEAD"))
->>  					new_flags |= REF_UPDATE_VIA_HEAD;
->>
->> +				if (string_list_has_string(&transaction->refnames, referent.buf)) {
->> +					strbuf_addf(err,
->> +						    _("multiple updates for '%s' (including one "
->> +						    "via symref '%s') are not allowed"),
->> +						    referent.buf, u->refname);
->> +					ret = TRANSACTION_NAME_CONFLICT;
->> +					goto done;
->> +				}
->> +
->>  				/*
->>  				 * If we are updating a symref (eg. HEAD), we should also
->>  				 * update the branch that the symref points to.
->
-> This change surprised me a bit. You mention it in the commit message,
-> but don't state a reason why you do it.
->
-
-When a `ref_update` is added to the `transaction` via
-`ref_transaction_add_update()`, the refname is automatically added to
-`transaction->refnames`. As a result, checking for the refname in this
-list will always return true. I'll clarify this in the commit message.
-
-> Patrick
-
---000000000000e420e5062ddb5a87
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: e78bb5a520ecfcba_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lckozTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNmt1Qy80NndYejhnTXpOQlFnZHZLRVpFQTdCa2x2dwp4L3BDdkNGQ2xS
-VFdYMEtKd1c5bmdaNE9ENjBQYUF3R016Mkx4RUNzc0RwNWZmMXFFVHY4WjNoakoveUc3YVY5Ckoy
-NDAwc1dTVUxyR1dPOU1PM2U0SXIweGVMSlFMbmRhckhQVWZVc29VU0FRUGw2OVZRa1JhbC9PQkcw
-dUQ4dy8KY0drWENSeWdtRTdFeCtOa3QxVjJRNjVQZFlEczdpUGg1TGpzb3lTSlovaGxZYWUrekoy
-WXpwZ0loN1VReURyYQpxR0FuMWQ1ZFZaYWNINnlRcjdMakFEY1E3MGtKc1hzV2NXamp6SWdjaXU3
-ZDVlNUR6T2ExTTBTekRCTll0RW04Cnlqb0tzTDhSZVNzYkwxaDJRaDVPbnBmUkhWRGNmU2hHRm5q
-WG5GR2QweWk3VEJyU3E1aTYyQTFod1Yzb3l5bmoKVVc4djBXZXZXdDB2WGNkeFRoamlSMHlNb3ZU
-YzBtZ1NlYnNvWHBlUTlSY0tGUGVxZUlKQVdMWkFiQVZFOEs1WAovbG5oL0xYTzFuYUtreldpYVZq
-TnhPVVhuKzByK3hVb2RZcnhva0ZWYmx3YnhPK1J6NHZYZW1XUDMwNzk4K2ExCitxZFU4OUwxZGxq
-dEczY3dBL1hQVzRQRExFbmpEYXo2SmZQR2lBMD0KPVY3VG4KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000e420e5062ddb5a87--
+--=20
+Ivan Shapovalov / intelfx /
