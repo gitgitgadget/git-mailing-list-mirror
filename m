@@ -1,122 +1,96 @@
-Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A47261562
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 17:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB28261571
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 17:40:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739295383; cv=none; b=fZExv6qdNd12EYI8eaS/tb50wS+Cxo88JVTXxyRnKruYyP9Mo5ibTNIDbMbW/Aj7KWn0kZ+d0FO2plJAaEEWCrMZJCs8tL0qWzAML36kq1JAISS0YDMAVuQlwi7vezg/1dsXZ6WJvZdJ7ZcQDAnq8Dy1bjYU2PaiFX9rYk7Taiw=
+	t=1739295640; cv=none; b=TQPv6yqFidH4q6th7ZgtDIZrkSI+aAhyWT80oGXrSXRBfiKR4BZ5bbnPz+S9WQBiw6WZTZZrvHqQYa2CQXGrSPfC19ft+7q66yiQd82ImBCvexIWtl+v3C3v5ClIqXSBmChp9yOv6/6upD47qIzdcrHoflk6wLAuJa02F7qSGGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739295383; c=relaxed/simple;
-	bh=RRYzSpH9zAjqD64dy4ZKJPFrBXvwfFCd+DV8NkR0QBY=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=JE0ahz1dUhcZ9Xr30nziuQoRGUuyZeR8aGzM8N9oIO6WgxZn/0LWeJ/WPHiQU/VI/ve75RfosszOmBhivEwd1FxCb2u3fLat56cfvk7pRbwXfzRreQCG8AjR93xq9OKkUyQHOccYclK9jKeTwtxFCBOZuKlsXY6Onlosl4wxGAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name; spf=pass smtp.mailfrom=intelfx.name; dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b=KG62ltcc; arc=none smtp.client-ip=209.85.167.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=intelfx.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intelfx.name
+	s=arc-20240116; t=1739295640; c=relaxed/simple;
+	bh=eUGs4ln3NSSuguLW5VbZ3dJAH3ZusO8nvJTEcMa44Gc=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Zgsl+Rd7HbhWEDAuSgKicKebzSEaC/zaZSBXcC7W3/NCovrBrp6koWE1MWasDavoKy++H429ErrHhWnuZjy5tpODtkM8GCjwK9nu9xdQhoL3480YQXC19+G0lHSmUgqlFeFDT+3PxkLtm3BgQTQ+R0EPqCtYmWH7PldMpQO/l58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lpBNNyaq; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=intelfx.name header.i=@intelfx.name header.b="KG62ltcc"
-Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-5450d56199cso2211525e87.1
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 09:36:20 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lpBNNyaq"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43948021a45so21306665e9.1
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 09:40:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=intelfx.name; s=google; t=1739295379; x=1739900179; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=9g9kOZsW+Tf8RDpnGKwFjICx7yconMX4JvmCR6RfeZ8=;
-        b=KG62ltccy2BEgCMwSmJCC2Qdxej72j2b/FGkA/LzdjkHuxtijYpCZi0r6FO0mkS2+O
-         mL7mV6zaNyk59vxmS7355MFfMpyOE8QXV19hnKj4yh1I84RXnVwVr80Ft1gb4jEwRBWV
-         egAHb02mJuG5lIQqKrXtgNk7yiIUJok/FAMBs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739295379; x=1739900179;
-        h=mime-version:user-agent:content-transfer-encoding:references
-         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+        d=gmail.com; s=20230601; t=1739295636; x=1739900436; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=9g9kOZsW+Tf8RDpnGKwFjICx7yconMX4JvmCR6RfeZ8=;
-        b=h7/27QV0rF63oWXjbAaEmKkgKLFXzp4flgMPunG+zu/i5NBelK4puWnutAosUL/zp+
-         gOS4ISaZ7h2dELeYV/qZanKpdSm8/NUUXyPDZ8eohLmfSmVKzfRd2+coeB66sj11fMeB
-         bxTQYA4u1w+G+a6TBxyC65hCb5GVB0ENDG8tAK3XnCNo53D2Uu435MB5bbl+K1L6/mOy
-         mTk1XJg5yg0k52Irjne9FgiezcHQBDRSoikAwIlXcDzFVprYq2baEcuF+m3tC1x6spJc
-         poqNbvPWJAKsYRgQEAO5tgqtRCUc4CQpP/xIr8oqGeINGhu0u9a2FSsh/inQyCa9HRVT
-         hnXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUqLQe5RyCDnDdClKIB2H9IAFe3Hx/xEP2PSofxwZKd3oKZAkrUHvANOdrYK/ltvRRVi5w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwVwam+1xddd08hHNhi9eWA4LDsN8ofgzwzdHKSfCXKMUVzn9A3
-	b0MvZYpw9qQ5jPb1FHc/dN6j+2RRiBw5JFjsmSgWJGFksJrgMYC4cxeCCN2WYh6DJx5Hu/m9l9b
-	2Asg=
-X-Gm-Gg: ASbGnctbdHp0bvrJ6oesYedfAu8+h9qjhv554RA9+p0absfdAATzh1ndosZk48pYGRS
-	9rdc8p61FH5ApO++9J74jHP5h4Z0IINV4E4EeiZw4DqJ4fR76rUKTbqCaIZ3k1OHHXOqlQQYKl8
-	KHpPYx/MxTQW6TJ/Fi475VN99h51UDsiqKQwXsKgaFbM9Gh5wiVYg5A3O/9U94nVx00VYKQ6DDa
-	DJ2MWMeLch+z031DYNAmP70WhpuftHjByWWcZL8VAgCOGzdOj4GwWNsZbVpwFtNs6FelfKcPxos
-	aUrFpmq/Pz8rDVpN2wEbhc0QBb/otht35Ac5JKZ3pOOFh+8sNg==
-X-Google-Smtp-Source: AGHT+IHwN4710Afxcld/I9nh0Qeio4U2neTRrYgOTR8SWk7SFLDNuZTm1ECI6oLQ92EEmV7+oxjmnQ==
-X-Received: by 2002:a05:6512:2347:b0:545:17b:5755 with SMTP id 2adb3069b0e04-54511c8149fmr1347136e87.23.1739295378712;
-        Tue, 11 Feb 2025 09:36:18 -0800 (PST)
-Received: from able.exile.i.intelfx.name ([188.129.244.140])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-545004c07e4sm1190222e87.132.2025.02.11.09.36.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 09:36:17 -0800 (PST)
-Message-ID: <a761826ddafbadac6d2932f145316493298da33c.camel@intelfx.name>
-Subject: Re: [PATCH] rebase: add `--update-refs=interactive`
-From: Ivan Shapovalov <intelfx@intelfx.name>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org, Elijah
- Newren	 <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>, Alex Henrie	
- <alexhenrie24@gmail.com>
-Date: Tue, 11 Feb 2025 21:36:13 +0400
-In-Reply-To: <xmqqfrkk1l4i.fsf@gitster.g>
-References: <20250210191650.316329-1-intelfx@intelfx.name>
-		<CALnO6CAM7WCOJV8s8ZARi3BAFwkh0TNTCod_YH9s+EpO7t-Qtg@mail.gmail.com>
-		<bc0de52b59f289e1388f1581fcfa49453365e21a.camel@intelfx.name>
-	 <xmqqfrkk1l4i.fsf@gitster.g>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.54.3 
+        bh=JL9C/EmJ0+2CZ+//Cgakhvk7L7N+diwHYIIxtiKkM5o=;
+        b=lpBNNyaq4enmIL9hIC/INZmJBsbnDaIjKSNgWsK9d4na4vPEeeypfr1cs+kDfPOMDb
+         T1qzl3IJLHxgvdWXGxWNlSH1773FJfKMBRhDe20T3kRuoTy4bvb7+hVMtGRLbLrFJlEr
+         CSwONjVIbpgD+0h4JP4q1IBSxjbqoZvI6Mv18njqJXFwU8WCXqwWmn1zjNvwc33qbUQB
+         lV+aWFiS8sl0nSwDhq1CNadxMYldvber95z1LmJMlPoETRYTffUQwCosSm2F283LrUaG
+         Aoc0gmOv0G5gFDvJviR3uVyIsQ/yR1o0Ve+Fg4KJEZkPvmSfsGvfr6NUrCDD365gqCwN
+         wi0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739295636; x=1739900436;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:reply-to:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JL9C/EmJ0+2CZ+//Cgakhvk7L7N+diwHYIIxtiKkM5o=;
+        b=BvMWrgttFbvBrVedLKOzUqQWDX+uOdE6mZVFwHBMctsfnK/1Yvaj+yqpAAqK3y7Bfl
+         VcPuE2Jw/u+NwsyBHIpQY3xv2sP09/S5AzOYmH0x5nJQSAoM7xWrM17S9LOq92UPBqrp
+         YgkT+H4gtJGKFlsusW/bejtQrM7+TA6p9KWHPLLgLcibS5koQu2CoddSi5M7e8UM3gud
+         1DleUd+dJ6t0w6QZ3RSBRnqWL2Be5aMdYpTiozRj9k8lS4CIBkWhr9wZXdt/au4VK2Qa
+         x990DHOfUB+4pz2lSvt9vwBUrEWucn0kDwoLyQVPvn+27eBDARoGRbVhSJUj4DMXAbYv
+         oRTA==
+X-Forwarded-Encrypted: i=1; AJvYcCXShYQneggwTPSK30CZAgvL30cz7PF0gjTOtqaytTD1/AoyKsCTYJ2LpgM3cs6yb10qAE0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywnb6u+ijUwRU79Vfg6C8xS5mvw6qn3IML+JxiRl9iFTUpOzxz4
+	WfpoQ/8rL2do5ZaOatKFG9kAscI1YPbYQX92lAjGBuXYDePnwtQd
+X-Gm-Gg: ASbGncvjwCZ4xUXZavn/c5dI2emwypIO2sXJmZWpEP6vTv887pyykoGY1M4BDfV9qeW
+	803pxUM/s5qb6nox/aUtujDht0GiZ1JCdIY4rpKXuv7dWdGv0Zp8/y6LW49J4vjsm7IBQluq4Xd
+	EaVibwwsDc0/AJo8frrBNcGgV8sdkglloUjcdwGHmEDRVnHZtst2Jmjm7feSAVIG94x0oGsyXMt
+	4DXiZFAwZGHi8GOmmz36R3hRgsmvGPKnLrUO3zkYNYBiFpS1gek0xMOf9eDbCocLfzOsG31z3pB
+	WoXsVVOp3WtUeCNy/VIk8j/o7/viCoPU5XKXV4RpvUY/rHtSsbqWOJA6uhXMx/U3CMHYQg==
+X-Google-Smtp-Source: AGHT+IFblJhgt2LcC7k/HAdD0/CkvrLa4EZKn4Kd9Dyz+LQM1xfG5gO96b1kJnBw5IIVh4ZRi58hXw==
+X-Received: by 2002:a05:600c:4f41:b0:439:30bd:7df9 with SMTP id 5b1f17b1804b1-439581665a3mr1451265e9.9.1739295636517;
+        Tue, 11 Feb 2025 09:40:36 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43946bff4d4sm59298885e9.3.2025.02.11.09.40.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 11 Feb 2025 09:40:36 -0800 (PST)
+Message-ID: <786eef7b-94e5-4f92-a82c-aeea69b5c103@gmail.com>
+Date: Tue, 11 Feb 2025 17:40:35 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/6] refs: introduce support for partial reference
+ transactions
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im, jltobler@gmail.com
+References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
+ <4beb0359-763d-425d-b416-ac40bda59e2e@gmail.com>
+Content-Language: en-US
+In-Reply-To: <4beb0359-763d-425d-b416-ac40bda59e2e@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 2025-02-11 at 08:50 -0800, Junio C Hamano wrote:
-> Ivan Shapovalov <intelfx@intelfx.name> writes:
->=20
-> > > >  --update-refs::
-> > > >  --no-update-refs::
-> > > > +--update-refs=3Dinteractive::
-> > >=20
-> > > Based on `git grep -e '--.*\[=3D' Documentation/git-*.txt`, I think t=
-his
-> > > should be more like
-> > >=20
-> > >     --update-refs[=3Dinteractive]::
-> > >     --no-update-refs::
-> > >=20
-> > > But maybe that unintentionally suggests that `=3Dinteractive` is the =
-default?
-> >=20
-> > Perhaps --update-refs[=3D(yes|no|interactive)] then? Or is that too
-> > verbose?
->=20
-> If `--update-refs` does take values that the git_parse_maybe_bool()
-> helper parses as a Boolean value, I do not think the above is
-> verbose at all.  Rather, it is a disservice to the users if the
-> documentation does not mention yes/no in such a case.  I'd say
-> listing other Boolean synonyms like yes/true/on/no/false/off is
-> too verbose, though ;-).
->=20
-> > Anyway, I don't have a preference, I'll just do what I'm told
->=20
-> That is not quite in line with how we'd like to operate.
->=20
-> It is your itch.  Others may give suggestions to help you polish it,
-> but ultimately, we would not want to accept a patch that the author
-> does not agree with.
+On 11/02/2025 17:03, Phillip Wood wrote:
+> On 07/02/2025 07:34, Karthik Nayak wrote:
+ >
+>> This series introduces support for partial reference transactions,
+>> allowing individual reference updates to fail while letting others
+>> proceed.
 
-Of course, I care about the patch and the feature; what I wanted to say
-is that I do not care (comparatively) about the formatting of the help
-text: I couldn't figure it out on my own, so whatever you tell me is
-the proper way of formatting it, I'll do.
+Thinking about this some more it is possible to skip the checking the 
+current value of the ref so what is making the transaction fail? Is it 
+D/F conflicts or something else?
 
---=20
-Ivan Shapovalov / intelfx /
+Best Wishes
+
+Phillip
+
