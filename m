@@ -1,113 +1,175 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4051E2848
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 05:18:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C722C9A
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 06:09:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739251133; cv=none; b=dXdaUaFB6CDqz1jiDSPx8BcErBs9jCeHPcOeX0cundKwspHxGUywBqS4gRSCzzjGvV3doT/Z2DsqcLGjJEtN7h8sIsbzTSGKpg124ucmsYghTWgsZrznvnOT/j4LdWhm51MbzNOv1gKdx94pLPUhRVAaUG+SuMgNjfBo07OViOc=
+	t=1739254160; cv=none; b=e6qPhfJERPJSORl2qqJlY4ujKhgIACR3LcuA/52gd3SkmeSWDx+yMSmuhNnOzDU5F1VdqxmbKRqk9YOdwuNq7kGzpnB9td2fBGty875LQj18712HnXAiZVzV3U2KL+SdGUnpBY/D3PARrUrl38r+/RbGeFfZUm83GHAeJ3iBxGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739251133; c=relaxed/simple;
-	bh=oc/06JdobrzXJbRXKMDzT2HRfeACNL7wPzXTuxjm6hs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gKnR9TdW0WFqtzuvjoCHMXCgPoy0NqWloU5a2uiAQJGA15XN+XpBmgr1kH5FqicVln7uCdtKPa96Dm47t735kl9BF9/0Nl6nhO6GrfJi3Qw2VICAozMARLjIUAlvzF38UI7OlI4MzgsF2s1gbO2x2zjTLlJI/Hldsm5sdgg8mJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KrX/Ehw2; arc=none smtp.client-ip=209.85.214.171
+	s=arc-20240116; t=1739254160; c=relaxed/simple;
+	bh=86YlGr83bq0agNwrAQgVdtRu5s4qtbTnNYwQuTdiSo4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=F97asdTW5/1sSv52y/4gyEhUKFMm3Q2FkLo1TT/dXlyROssKCQ6YhYTN7eNY9hZQft+r1iNv/wKh0FOWimYoQ9il5Q/nEHjNOXIOH0jOSHY/FZS3C5GJQVOrVW5/H6RzSFnjw/QvFu6YvL26mMAVGOir+jCpSbloMtaKWZBUnzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U921VKfM; arc=none smtp.client-ip=209.85.221.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KrX/Ehw2"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-21f3e2b4eceso96784445ad.2
-        for <git@vger.kernel.org>; Mon, 10 Feb 2025 21:18:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U921VKfM"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-520349fc3ddso801685e0c.1
+        for <git@vger.kernel.org>; Mon, 10 Feb 2025 22:09:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739251131; x=1739855931; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7I6KR4WqFDkZatA/J5dFWvkaZKQtmA7tDmbCZIqMceE=;
-        b=KrX/Ehw2Sgxlg0GWFjia903DS1R4OEcpviVJJCOoDAVApln4llgz7eTt5ko2o7HF1y
-         ArJ6wi3kBf6l9Xdez3VLGuUaX+fmCpiTiNH6b+ILdQrfjKLTtH6zvwIefK9fej1fKvFr
-         Q7bX3ZKBSBQERkOrP0QzEfMbViqjap5Cryfyi3xTupaie51SSvPxSo0J9vBktJ3lfOkL
-         S7KUxYU9lGCYPJGUHLUx7a/R0H+VJGpjWBwB2vnRz/qSV2xr65IxM2xlJkXP1nlnUJ2/
-         S0q5laOov4t93s122scufDnH1AdjYbOHPlVJSyY0w/BHuVyqRCupvgtlCWLuDz14SGDG
-         v6jw==
+        d=gmail.com; s=20230601; t=1739254157; x=1739858957; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ciBWl8l9H+tRmRT59uxXT2TFhlnOzSwSwlKTQp73n2I=;
+        b=U921VKfM/OqqyA0MAc61hbsHBDXPn9orsrw1H5yKTpyqlkNt2UEkXLwN0RIY4NtkeU
+         AJ98zpbanZmFkrS9Iy5wj3n91La73XkKUYLr7SmEUdnWFmhSb/11XMEfNJDKTSeQG+4H
+         uX5pYr+zEAlOJgvixLVtxm8GT2BTK9+kfhO04l+t9nR+C2qOnVHshB9wjyj9gGtAaQkU
+         iOC+MPbabLYic3nYgRiqWHYillqtNsxmg6B1N8oS/x1pkF9i24khFHq08roWljN5tSXn
+         sy10ngt8eswTVha+m47IhhFA4W2RZmQMOYCs5xFxuD8SFaJXIoDQop7O1ug2C9fYv/0X
+         0I5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739251131; x=1739855931;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7I6KR4WqFDkZatA/J5dFWvkaZKQtmA7tDmbCZIqMceE=;
-        b=qeVCByMKogCO/gjyds6ticjGyx5IKBCnbdb46CHcZU5kS0quPgT7LLBNRzggDMUWFd
-         J3skQnbWDi4M4j4K7Og/quK+ItJ7AwDuDZ0YNVq/eeIXWeGDa+xrf9P1TAoXNKe21ELY
-         YKm+oV0v5sFL+MVz7SjSfdyhZdxm3Q26UFV+HBMvc7664IncDcI5kaNo2CAlB9vpTpcb
-         e365duUddPj2FnAyptQ4iKGu18sepzFoV+nILqKUmi5SBOq42s4K18nlUs9cZXFsV6RE
-         Fr4B/GapXM1HMLtew5K9U0oWxaJlfKWPShT/hupAu0op98B1nzwz/lkCbhD38seqbWTR
-         5ROw==
-X-Forwarded-Encrypted: i=1; AJvYcCXYp37x1APWq3VZIFM0R2vVxvNp2Bst2GGDYPpXNzt832OoHxTpMAtInrofjOh1kY+hKuc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxr5R0SxCzsYl4RDamOGssTNNCRDcazywDGTWq+DlQEya413ovT
-	UkrXbp/hlLgqc1Ysu2dPaIxZYoQ7p/ClOuXoEwKXmQtWq1aX0wGd
-X-Gm-Gg: ASbGncsu7sKO/Xg1zSU3suk/IYd+sBRej56AwrhbfNmRgr8VufzR+0Tl7y0GBUec06l
-	CzdLYNU6GzG7t12xe7CGWWbQtfeCAE53k6SkerzQhqb8eN7JI51lyAvzWN964dcT5gg6X9du/AG
-	EPmivICKCmpE3tYpPBG5S2AMyOqLslx3zj16YUrkAQ1RoHd4ErnbW2OqlmOvZg371QaCXmg26C3
-	9tnEvnvFj8HQs0A+QPTxM3Dz7xRZa59dIr1Ff777hEYCthSBX04JXK7jK8siN3wlFIeK5V5bqEs
-	HvqJg/rwCi9bQWH6S3g8WSVzV2XkICSXi+9cEOpeK2H6wlXv+jFJB0BEQrHBnN/XK5M7
-X-Google-Smtp-Source: AGHT+IHeT8kHGB05ukuNKV4KUthOnf+auqN0teEHboDDNbPijeZXC9AGWu36ettPWap+AUyHg9+gNA==
-X-Received: by 2002:a17:902:ce03:b0:219:eb2a:dfa5 with SMTP id d9443c01a7336-21f4e75e6femr260058805ad.39.1739251130937;
-        Mon, 10 Feb 2025 21:18:50 -0800 (PST)
-Received: from ?IPV6:2401:4900:4c12:fe76:547:fc92:af40:dfb? ([2401:4900:4c12:fe76:547:fc92:af40:dfb])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fa4ee2ebb4sm6225198a91.12.2025.02.10.21.18.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 10 Feb 2025 21:18:50 -0800 (PST)
-Message-ID: <fa9ad3c6-3b3c-4f3c-89c6-101ed1b51eb6@gmail.com>
-Date: Tue, 11 Feb 2025 10:48:22 +0530
+        d=1e100.net; s=20230601; t=1739254157; x=1739858957;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ciBWl8l9H+tRmRT59uxXT2TFhlnOzSwSwlKTQp73n2I=;
+        b=Sc6x5B1qpzj8AjuCVkP2vl+Xcj63+cdkLtZCLr/CqeMafModXbPObW+oTwnnXsBpSO
+         jYJFeKQyLum7CbZJjUFulXtSynvTtUqCu9lHaiv+C1KGPZAk/0jxWSHhXd59ePK8NgKF
+         iTDVi4O2sa6FqwJ3ucRBWPwUn4hn40hpbBoAcfC33gU1HSfb3eKTfmoqT87OdzZ83PV1
+         eJxjSWjpPdD86thAE+g2GxIYXurIFnrvPn2/hBe/yW86rxi32LZ6wzg5etsdgz3dQDUs
+         JPZHYJ2NixdTCvfH5Zt9cxfqQri8O3t8OBMv9fBKwNx1xNubIuxSl8SSl+zDthLPJfPE
+         lMQg==
+X-Gm-Message-State: AOJu0Yx8d+VY1aere/ZEa1hEBRZGu/49lDOkEE4j3b/Zh6eYlK5Sn7to
+	X3TgFWktZYCWmsiusMVzLa+hlpcUMv2biExec/x04/5QQhN9+kllpyfx2x6YxVm3WF0uV0pvBnt
+	Aa7a56E+m3bFtl16NEsimzM4foSZsHKFk
+X-Gm-Gg: ASbGncuV7ckpF+/HJ3AqlfmjAbPvu3Cho2an3vxuW2hQGOKpeMRbAomJn7tDh0mrfO8
+	b4wwl4UePzRwZBLoCTLfft1A+yh2TiTnF+Jn0LdcbBz1bRgnYkvGWmDHASm+ayjWsYhJehWu+3s
+	nfgp0dS4gtaNlbewHe1UzgBVJ/ZprDiQ==
+X-Google-Smtp-Source: AGHT+IFuBIo9LV2i/lFFX4lPLrSIaQ4rMrvfNVY6C0BbQci1VQ8YLrreNW4ICrGFQJe4rqgi2egiPekyY01L0q3k3GY=
+X-Received: by 2002:a05:6122:251d:b0:519:fcf2:ef51 with SMTP id
+ 71dfb90a1353d-51f2e12026dmr10212478e0c.5.1739254157454; Mon, 10 Feb 2025
+ 22:09:17 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 10 Feb 2025 22:09:16 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <llz32al6tgghs73odbryc2324vks2pf3uyawp5dls5wgop7or2@bumahbjibtgz>
+References: <20250207-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v1-1-7d40f3b4e30b@gmail.com>
+ <llz32al6tgghs73odbryc2324vks2pf3uyawp5dls5wgop7or2@bumahbjibtgz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git in GSoC 2025
-To: Patrick Steinhardt <ps@pks.im>,
- Christian Couder <christian.couder@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, Jialuo She <shejialuo@gmail.com>,
- Git Mailing List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <Z432QXJb_TfzNBa2@pks.im> <c39c5424-71d0-4b6d-90b1-a6a70f2ee61b@gmail.com>
- <cd90cf17-6113-4634-a774-6df707b73e95@gmail.com>
- <d5cba1a9-fe51-4f3f-970b-3ef8a7a2e459@gmail.com>
- <CAP8UFD0GEmsJDFzVAV1bgBNeD6K3auH4paWEKE6=f0=_E6gifA@mail.gmail.com>
- <a2a76725-5778-4b7d-a266-c3a1431316ce@gmail.com> <Z6Xmrfut7jdsVAfg@pks.im>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <Z6Xmrfut7jdsVAfg@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Mon, 10 Feb 2025 22:09:16 -0800
+X-Gm-Features: AWEUYZng5zuGyiF7cbioaGw7kFk1LrPe7LHy4ifeScHsTmvVnGLs2cyI069OqIg
+Message-ID: <CAOLa=ZTGTr_3Xe2mLZ9wYB6oo++TuLUN-OQ2Cpv9Fokgc77UcQ@mail.gmail.com>
+Subject: Re: [PATCH] builtin/refs: add '--skip-reflog' flag to bypass reflog migration
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000003adf6e062dd7aa75"
 
-Hi Patrick, Christian and all,
+--0000000000003adf6e062dd7aa75
+Content-Type: text/plain; charset="UTF-8"
 
-On 07/02/25 16:25, Patrick Steinhardt wrote:
-> One thought: From my point of view I'd strongly favor extending
-> git-refs(1) over reftable support in the dumb HTTP transport. So if I
-> had two applications, one for each topic, I'd lean towards applications
-> for the former topic. That might easily cause unfairness in case
-> students aren't aware of that.
-> 
-> So unless somebody else wants to be main-mentor in that project, I think
-> we should either drop the HTTP transport tropic, or communicate our
-> priorities clearly.
+Justin Tobler <jltobler@gmail.com> writes:
 
-That makes sense. I've added a note to convey this clearly. Kindly check 
-if the change in the following PR looks fine.
+> On 25/02/07 12:57PM, Karthik Nayak wrote:
+>> The 'git-refs(1)' migrate subcommand, which transfers repositories
+>> between reference backends, currently migrates reflogs by default as of
+>> In 246cebe320 (refs: add support for migrating reflogs, 2024-12-16).
+>
+> s/In 246cebe320/246cebe320/
+>
 
-   https://github.com/git/git.github.io/pull/750/files
+Thanks.
 
+>> While this behavior is desirable for most client-side repositories,
+>> server-side repositories typically don't use reflogs and the migration
+>> of these entries is unnecessary overhead.
+>>
+>> Add a '--skip-reflog' flag to the migrate subcommand to make reflog
+>> migration optional. This is particularly useful for server-side
+>> migrations where reflogs are not needed, improving migration performance
+>> in these scenarios.
+>
+> Just to clarify, does a repository already without reflogs see improved
+> migration performance with this `--skip-reflog` flag? Or is the improved
+> performance soley due to repositories with reflogs skipping that part of
+> the migration?
+>
 
-On 07/02/25 13:37, Christian Couder wrote:
- > Yeah, but we have time to decide on this. It seems to me that we can
- > still come up with new project ideas and possibly new mentors or
- > co-mentors until it's time for applicants to send their.application.
+Since we iterate over all reflogs and add them, the perf gain would only
+be for repositories which already have reflogs. Will modify accordingly.
 
-Indeed. More volunteer mentors and ideas are always welcome :-)
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>> ---
+>>  builtin/refs.c          |  3 +++
+>>  refs.c                  |  8 +++++---
+>>  refs.h                  |  5 ++++-
+>>  t/t1460-refs-migrate.sh | 17 +++++++++++++++--
+>>  4 files changed, 27 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/builtin/refs.c b/builtin/refs.c
+>> index a29f19583474518ee0942ea53c39cbdf9661c5e2..30be0254c14dd3d07693d70c25dddc9990756e9c 100644
+>> --- a/builtin/refs.c
+>> +++ b/builtin/refs.c
+>> @@ -30,6 +30,9 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
+>>  		OPT_BIT(0, "dry-run", &flags,
+>>  			N_("perform a non-destructive dry-run"),
+>>  			REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN),
+>> +		OPT_BIT(0, "skip-reflog", &flags,
+>> +			N_("skip migrating reflogs"),
+>> +			REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG),
+>>  		OPT_END(),
+>>  	};
+>>  	struct strbuf errbuf = STRBUF_INIT;
+>> diff --git a/refs.c b/refs.c
+>> index f4094a326a9f88f979654b668cc9c3d27d83cb5d..5e8f5c06fa68d16c93ee11edd9742995eea994b6 100644
+>> --- a/refs.c
+>> +++ b/refs.c
+>> @@ -3035,9 +3035,11 @@ int repo_migrate_ref_storage_format(struct repository *repo,
+>>  	if (ret < 0)
+>>  		goto done;
+>>
+>> -	ret = refs_for_each_reflog(old_refs, migrate_one_reflog, &data);
+>> -	if (ret < 0)
+>> -		goto done;
+>> +	if (!(flags & REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG)) {
+>> +		ret = refs_for_each_reflog(old_refs, migrate_one_reflog, &data);
+>> +		if (ret < 0)
+>> +			goto done;
+>> +	}
+>
+> When the `REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG` flag is set, we
+> now skip over all the logs to perform the reflog migration. Makes sense.
+>
 
---
-Sivaraam
+Yup, thanks for the review.
+
+> -Justin
+>
+
+--0000000000003adf6e062dd7aa75
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: fc3604b1d4c56389_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lcTZZa1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md1I1Qy80bGxXaEUvNldFbXAwdVhVYWpGNmFtTHJxaword2N5OUEzUkV1
+SEpSOFplS091S0RzckN1MVhGT3N6REdJTFVzSm5IZHBYTzhJMFJaQzBQRWV1YmJXZkx5TnZKCnZT
+a09yUWp2MlpVek40T28xQ0xOejA0dVdGZW5FTEVQOE1qcFhvaGlnZVlRcmdMVUd2YTJ2a1d6Tkhm
+T29hQkYKRkRWMlZMY1NLU1FsSTRpU0d2YXd3WEQwWFlKSWx2R2QyME03V1NMVVI1WGZaZXl6SDRY
+ZDRzd2VqV3BaNEVCZwppZFBiYlFBZEltM1VQOWdMQ0ZrQjNIdFJORlZLV1Z1V3JuMjFOczZ3eEps
+U0F0cGdQV3VieFpNZDBFMldGY1hoCkllejV6eG0ycEUwTTBjdDZVQzNlSTdpZGJhSG9VOExFQjdJ
+QU12aHVUc1B6aUpzNUtVSjBMYnRsclFNbVdpaVAKL0prdDJWRWpSdHBKUitJMVcvejA2NmhZOGlS
+alQ5dERyV21TSkJVRkxncWEvdUlLU1VUVndvR25FaFBLaUVzMwp1SEllRkRoOTNOWVlnQkRhQmhD
+UXRCalBDaHNwOHNtMGxHaHM2RmRHNUFyQjYzWUZ3K0FnTVQyaFhlNmpISjFLCnpVTFdIOWFMT0dj
+MUk3NUpuNmF5dHNYUmNqcVduc0xuMXBxN2RvWT0KPUdpYVkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000003adf6e062dd7aa75--
