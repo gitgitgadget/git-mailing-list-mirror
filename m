@@ -1,104 +1,327 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5779E1EE7B7
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 07:56:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C0C1EE7B7
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 08:50:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739260565; cv=none; b=aoKve1Zx38GDH3G/PbVS0NuOQ6RpYConvsmnLsl79Lm/l78PD6L2WjL20qbmGBIqLbAHQhDCKIMZb2zYRKqG+gODYQBeSMzqwTApYM3aDFixJ/PcV6cD7H+0z6Ks1r8bf3FXlvTgcWmXFpnA82SaHJq1YgCIEiTMR+yCuRVRmBg=
+	t=1739263846; cv=none; b=AtmCwv58Nut+PvKwUvfOoyJapPnGJk3Z2a/TOBKFZ0Qm8pYtxa5g7MIeWZ407TrWlzi+rwiVc926Yv75xL6eiLRzccjbbY7yo6qWas7Kxdte8Tt8TwBmqanXiijjEg59YLH2QnlT2Nkhu0m/lOAWor3OFa7wraTnP2w43HtdoxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739260565; c=relaxed/simple;
-	bh=NaaJ4LnwjdcjojJY3lLinXKDayV1+6jNG/uuYfF8epc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=STHqvoMvvKw7ALRl/1gCTjRrD3CX/NeLbPnJyg2TgEkix9wnJk59rP/GEWxkyQw+3fqEnIm4OFRxaEu08DQDzQqFrrHfzQWHDdLXiBdRaIlRqgxhfQ80RJV7WH2g9gRkIcwkNpREvvj3y25XbLYn6yoxR0FxCg2iTDHLSpe73NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=oZGn0/BQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OwYRVYFt; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1739263846; c=relaxed/simple;
+	bh=scw3f+MW/nn+D/R8xxceRmg7ks0NyD08XiXkHLQQVKU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Ymm6gtUGNBkPE4cLTIWD+mpUubWfRcItnrJt6tqTYqRsIonspqjgAe3SlloBE3bKG8Dt3gdfX/mBBUz7kVwUCRgjbSis+tEploYKH0fCWiQW5F+8mYZLEz7CW2o4bQsn1YlVHsYKU/FvjkX7j/Au46orm99XsEq8ZGvHhEzHytU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E+CNCGk3; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="oZGn0/BQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OwYRVYFt"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3E4C1114018B;
-	Tue, 11 Feb 2025 02:56:02 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 11 Feb 2025 02:56:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1739260562; x=1739346962; bh=257J2dvC4W
-	aywz/5hZ5bZalFlAORmcOgSF3UpEtHO94=; b=oZGn0/BQrNsxMlkXWoXm7b18BZ
-	8hQnw3yGhKEr82A3lLLFK/GHAhhMPoxwLthaA9anvL1YphGEF+q6DCvbsf3gkqig
-	USAiuGnezIKelQORyQRDHbtLZHXGirRP465ut+AO9oMHT0XjibgoToAud0Ugu+zz
-	tBA9JpenE6UOx3ZZp13vGW9d3HzWczrw6z2xuB+/gYv3Jm+voiI0trjVgQSj2mu3
-	b83Lh/fn02g+oJC2jZIDodJDhEzemNHy2P03aot7wDdeMyHmfxO6AU7ulejWennC
-	DvnKwRWF/xwFIa4dKXRGWwanEgx28iH4bDtUk8OuCAun9fObFdUyPnU9uArg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739260562; x=1739346962; bh=257J2dvC4Waywz/5hZ5bZalFlAORmcOgSF3
-	UpEtHO94=; b=OwYRVYFt6pESjIbyNa09fFNpfwIXsgbQqdxMdsPLrdIfacBOv78
-	IERRRSaHGSn4/QzO+m4moZYmHrcKrOHuXopEkhkqfEGpXNTah9X7tBF20o8H4dAE
-	Krt6s9B7f5xXaYGI/gx8W0O5Rhq8idvgSySd+EmPPQofdLg3qTNrPE/jPoPU+GgJ
-	yWjfXwir1r/PcHfOeMogZ08pKikDaGFXkvb8gOgP4CKhfYdDy/X9Yi2ofaACYYY/
-	K/pLb6urzBQ4r7q/98LN6fVJr/asB8qHgVJ8b/kYadanX2TwnXyYlPQ4xEszd8Y/
-	sk7cfS3ER9MOoquctL+bHbTsx5HWxsenrWA==
-X-ME-Sender: <xms:kQKrZ8TPJ1_flLIcFcA3bKgf5wiKvECrdkJBl7-eRkFc9YuMrstxhw>
-    <xme:kQKrZ5yqQxFxjpuDpCxbgDgoP-no6B6RQC5w-_UrdKztgDWQ4RsV3Y3IkPpKZKGMk
-    4QzZM9PE21iTuwqwg>
-X-ME-Received: <xmr:kQKrZ50kSKznzGHDpst8Nf7Uq-Kznc_danJ6Krf_rVap7CbQ8kUb5bBO6Zexcweh6iM9Ck6UbOS-zG3otAsUngGSUtTj8MVx1V-7W96uYnv6CKw7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegtdeghecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehfohhrihhvrghllhesghhmrg
-    hilhdrtghomh
-X-ME-Proxy: <xmx:kQKrZwARPFeHfl5ZECtTRAup5apFT75WJQ0A2d0XljkHC9VzXDytew>
-    <xmx:kQKrZ1gBHQR2SGl6142UUHbohDFvdvM_5SYLqh12Ghu52mWIxssF_w>
-    <xmx:kQKrZ8o-ld1Ut6b-DciksbG8oJXgAx_9deqVBekjE-uyhevwspRw3g>
-    <xmx:kQKrZ4jJyu9zm1FVpeBtWIpT8MTZMzzC1LcrNuncXul18mxIDjUrTA>
-    <xmx:kgKrZ4vhFSLzuEohKTbVxlMUw6j7OBhjAAX0eZyd5YX2OArUFScq6P_D>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Feb 2025 02:56:01 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id dfb14913 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 11 Feb 2025 07:55:59 +0000 (UTC)
-Date: Tue, 11 Feb 2025 08:55:54 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Emily M Klassen <forivall@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] revision: fix missing null for freed memory
-Message-ID: <Z6sCeYmljrqWRFnS@pks.im>
-References: <20250208061702.88469-1-forivall@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E+CNCGk3"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2f9bac7699aso7744287a91.1
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 00:50:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739263844; x=1739868644; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=MnbHqRaT49qRQlMkRZBXJFZMcE9IOmmuwum3AmgemOk=;
+        b=E+CNCGk3jTYfjnkVxXOgcnVN16BPlfMqYY/D+XMZkdx93foz3kExDyBB0twTcRMT8Z
+         8EiW3DNu6ZBglCV2WtBOYadXCK11oI2iS4RIpd5M5CJkss0Gx21+6jfeD4SvOovMZLbV
+         vUHPsuFfWu6wnGF+xlaSV2kT6fiah4rOIJKjZCG71I8rbN1z1syIepx1BsyQiRawsSlM
+         ZoEezOAQhC1gtEHHROYoIEuaRSq+Hcn4evswbWLsm995n3g4dkl7MvE1dNAj7dTFGwBS
+         p+clrJSQlHh6ccP9FmvjgXaiCCM4BN+VJwMK+6RmP99duAZkRBsT0qRsBWnBy5hhnr0b
+         rt9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739263844; x=1739868644;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MnbHqRaT49qRQlMkRZBXJFZMcE9IOmmuwum3AmgemOk=;
+        b=aZfvDPDHYgU2eh28CnKb/C9fWMt7/DWy/t33jV7y1LZiqo7CTF+BNQfNU5Qvj9LINR
+         t87N0eDdSnbctfWTu1klAJ4TtZnXI2V4LkLidprOo94GYpEwGplTS6KIPZ4hAFssqnbO
+         2q9FNv2HKwaXlsORX5FDoBMCLj1jpy5iku++BrRNVUwSUrHRQA2AbNFzca3ZD7gIk9Js
+         FshRWdjWAv/ElO8ZF6qXELd908e9x6+KNDzEbIaESB71zaE1dg641e61E3jchhPBuME2
+         U6sqgTRXvc+2jkmjTnC1bSFP+0dAH5XjD0nOrEU17N0tFqR0wJMm6st2x31YR9T5KQ8s
+         fVyg==
+X-Forwarded-Encrypted: i=1; AJvYcCWnsqGAXi8MFxaqE9o3dlJUcNiySObEZQt7K0dRAgM8608zrTNe51vqmypCZc9C3sOX5zc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzALF98bn4bFClXXv35h91mpvpPXXz0/KSLhE1piChE87Hd1Yxe
+	2kDXosVNe3XugJ1fFVl+epScM1joZX/JxtvJEF/x2W77y8zxvw1m
+X-Gm-Gg: ASbGnctO/JgyBcc574kEMjJXLpHFKurwOa/Ua1icZKRbVDvTMwlGdxgg33OBYiOQUVE
+	Ki375F5OxS1BvWKz2hg9fH1q5s0s+y6OVZUbySeaG+VYfBmr12PPtrdBmLwQbN52AMlfdyCiS0z
+	+gxUY3q4/VXbQYig2KuB9b1tia3rpNXotM7a8izrCE3SSmLOW8p7tIyBT6P/3C9I3szuXVelG9X
+	03ItNd8BMgVluEi/PoeG+DKTNB5J2brBIelD0zB0iccr7hbRw8xo4TwVnr31O5l61BMk48ZkIff
+	iFk9F/07LOTU0LXruBK/1Az7HZSiOTecoKtx5zk=
+X-Google-Smtp-Source: AGHT+IEGxbqPO8Myh3SgKMgim0tO0nc8BJJg5KWpYBGvlOUZCCtRGMpJr0beShXiXSWTTg94sGE+iQ==
+X-Received: by 2002:a17:90b:3b44:b0:2ee:ead6:6213 with SMTP id 98e67ed59e1d1-2fa9eda537amr3529391a91.19.1739263843884;
+        Tue, 11 Feb 2025 00:50:43 -0800 (PST)
+Received: from gamma.hsd1.ca.comcast.net ([2601:647:5580:5760:3858:1e16:caad:e1d4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fa09a46534sm10201701a91.21.2025.02.11.00.50.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 00:50:43 -0800 (PST)
+From: Illia Bobyr <illia.bobyr@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Illia Bobyr <illia.bobyr@gmail.com>,
+	git@vger.kernel.org
+Subject: [PATCH v4 0/10] Long names for `git log -S` and `git log -G`
+Date: Tue, 11 Feb 2025 00:50:12 -0800
+Message-ID: <20250211085028.3923875-1-illia.bobyr@gmail.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20250206014324.1839232-1-illia.bobyr@gmail.com>
+References: <20250206014324.1839232-1-illia.bobyr@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250208061702.88469-1-forivall@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Feb 07, 2025 at 10:17:02PM -0800, Emily M Klassen wrote:
-> "git log --graph --no-graph" missed cleaning up the output_prefix and
-> output_prefix_data pointers. This resulted in a segfault when using "--patch",
-> "--name-status" or "--name-only", as the output_prefix_data continued to be in
-> use after free()
-> 
-> Signed-off-by: Emily M Klassen <forivall@gmail.com>
-> ---
-> I previously reported this a few hours ago, and ended up digging in and figuring
-> it out. I'll make sure to bottom reply in the follow ups to this patch.
+I've split the big change from v3 [1] into multiple, mostly independent patches
+to make it easier to review and merge each one separately.
 
-Do we know when this bug was introduced? Is it a recent regression or a
-long-standing issue? Might be nice to point out in the commit message if
-we do know.
+[1] https://lore.kernel.org/git/20250206014324.1839232-1-illia.bobyr@gmail.com/
 
-Patrick
+Patches 1 through 4 are fixing minor bugs and inconsistencies.
+
+Patch 5 contains updates gitdiffcore to use same placeholder names as the rest
+of the code.
+
+Patch 6 contains a minimum change to add long versions of -S and -G.
+
+Patch 7 adds bash completion support.
+
+Patches 8 through 10 increase usage of the long argument versions in tests, CLI
+help and docs respectively.
+
+Please, let me know if you prefer it split in a different way, or reorder the
+changes.
+
+---
+
+I was not sure if I should include a reference to the previous version of the
+patch into the next reroll.  It seems that
+`Documentation/MyFirstContribution.adoc` suggests so.  But it creates very long
+threads.  And I've noticed that not everyone is doing it.
+
+---
+
+Reply to review notes from Junio C Hamano:
+
+On 2/6/25 12:59, Junio C Hamano wrote:
+> Illia Bobyr <illia.bobyr@gmail.com> writes:
+>
+>> Most arguments have both short and long versions.  Long versions are
+>> easier to read, especially in scripts and command history.
+>>
+>> Tests that check just the option parsing are duplicated to check both
+>> short and long argument options.  But more complex tests are updated to
+>> use the long argument in order to improve the test readability.
+>
+> While checking both may be a prudent thing to do, because the "-S"
+> option and the "-G" option have been there with us almost since the
+> beginning of time, the swapping all existing use of them with the
+> longhand is rather unwelcome and needless churn, I would have to
+> say.
+
+My thinking is that as long version names improve readability, it also applies
+to the test code.  When I see a short option I often have to check the manual to
+remember what exactly does it do.  Even for "-S"/"-G" I find myself sometimes
+confused as to which of the two does what exactly.  While the "grep" mnemonic
+helps, I do not always remember it.
+
+But, I think, I understand your point of view as well.
+
+In v4 patch 5 contains a relatively minimum amount of changes that add long
+alternatives for "-S" and "-G" just to the command line parsing.
+
+I do not have your experience with assessing the churn, but if my argument about
+the readability changes your mind, I've moved the rest of the updates into
+separate patches, at the end of the chain.  Patches 8 through 10.  Making it
+easier to discuss them in smaller chunks, if you wish so.  But also, I assume,
+it should be easy for you to ignore those, if you do not want to include them?
+
+> [...]
+>> @@ -657,18 +658,19 @@ renamed entries cannot appear if detection for those types is disabled.
+>>  It is useful when you're looking for an exact block of code (like a
+>>  struct), and want to know the history of that block since it first
+>>  came into being: use the feature iteratively to feed the interesting
+>> -block in the preimage back into `-S`, and keep going until you get the
+>> -very first version of the block.
+>> +block in the preimage back into `--patch-modifies`, and keep going until
+>> +you get the very first version of the block.
+>
+> If this paragraph _were_ written with the longhand from the
+> beginning, I would not have minded too much, but I personally find
+> it unnecessary to churn the existing document like this.
+>
+>>  `-G<regex>`::
+>> +`--patch-grep=<regex>`::
+>
+> Same two paragraphs from the above apply here, and ...
+>
+>>  `--find-object=<object-id>`::
+>>  `--pickaxe-all`::
+>>  `--pickaxe-regex`::
+>
+> ... all of the above.
+>
+>> diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+>
+> Ditto.
+>
+>> diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+>> index 642c5..e4b18 100644
+>> --- a/Documentation/gitdiffcore.txt
+>> +++ b/Documentation/gitdiffcore.txt
+>> @@ -245,33 +245,35 @@ diffcore-pickaxe: For Detecting Addition/Deletion of Specified String
+>>  
+>>  This transformation limits the set of filepairs to those that change
+>>  specified strings between the preimage and the postimage in a certain
+>> -way.  -S<block-of-text> and -G<regular-expression> options are used to
+>> +way.  --patch-modifies=<block-of-text> and
+>> +--patch-grep=<regular-expression> options are used to specify
+>> +different ways these strings are sought.
+>
+> This is worse.  Here is the first part that describes the pickaxe,
+> so mentioning both may be more appropriate; showing only the
+> longhand nobody is familiar with (yet) does not make any sense.
+>
+>     ... certain way.  `--patch-modifies=<block-of-text>`
+>     (`-S<block-of-text>` for short) and `--patch-grep=<regular-expression>`
+>     (`-G<regular-expression>` for short) are used to ...
+>
+> Once establishing the equivalence between the longhand and the
+> shorthand for these two options, we do not have to churn the
+> existing text at all.
+
+Applied your suggestion.
+
+I guess one difference in the way you look at it, is that you default to the
+short version when you can.  While I default to the long one, as I assume it is
+easier to understand.  Someone not that intimately familiar with git might need
+to go to the previous paragraph to recall what "-S" and "-G" are, while if they
+are spelled as "--patch-modifies" and "--patch-grep", it might be less
+necessary.  So, the argument is that while we are reducing the diff, we might
+also be reducing the improvement in readability.
+
+Being the author, I could also be biased when assessing how much more readable
+"--patch-modifies" and "--patch-grep" are compared to "-S" and "-G".
+
+>> diff --git a/diff.c b/diff.c
+>> index d28b41..09beb 100644
+>> --- a/diff.c
+>> +++ b/diff.c
+>> @@ -4877,15 +4877,17 @@ void diff_setup_done(struct diff_options *options)
+>>  
+>>  	if (HAS_MULTI_BITS(options->pickaxe_opts & DIFF_PICKAXE_KINDS_MASK))
+>>  		die(_("options '%s', '%s', and '%s' cannot be used together"),
+>> -			"-G", "-S", "--find-object");
+>> +			"-G/--patch-grep", "-S/--patch-modifies", "--find-object");
+>>  
+>>  	if (HAS_MULTI_BITS(options->pickaxe_opts & DIFF_PICKAXE_KINDS_G_REGEX_MASK))
+>>  		die(_("options '%s' and '%s' cannot be used together, use '%s' with '%s'"),
+>> -			"-G", "--pickaxe-regex", "--pickaxe-regex", "-S");
+>> +			"-G/--patch-grep", "--pickaxe-regex",
+>> +                        "--pickaxe-regex", "-S/--patch-modifies");
+>>  
+>>  	if (HAS_MULTI_BITS(options->pickaxe_opts & DIFF_PICKAXE_KINDS_ALL_OBJFIND_MASK))
+>>  		die(_("options '%s' and '%s' cannot be used together, use '%s' with '%s' and '%s'"),
+>> -			"--pickaxe-all", "--find-object", "--pickaxe-all", "-G", "-S");
+>> +			"--pickaxe-all", "--find-object",
+>> +                        "--pickaxe-all", "-G/--patch-grep", "-S/--patch-modifies");
+>
+> The message change looks fine; the indentation is broken.
+>
+> .git/rebase-apply/patch:184: indent with spaces.
+>                         "--pickaxe-regex", "-S/--patch-modifies");
+> .git/rebase-apply/patch:190: indent with spaces.
+>                         "--pickaxe-all", "-G/--patch-grep", "-S/--patch-modifies");
+> warning: 2 lines applied after fixing whitespace errors.
+> Applying: diff: --patch-{modifies,grep} arg names for -S and -G
+>
+> These alone do not require a new iteration, as "git am --whitespace=fix"
+> already corrected them.
+
+Sorry about this.  I did check the indentation manually, but did not use a
+tool.  Reconfigured my editor to use tabs now.
+
+>> -		OPT_CALLBACK_F('S', NULL, options, N_("<string>"),
+>> +		OPT_CALLBACK_F('S', "patch-modifies", options, N_("<string>"),
+>> -		OPT_CALLBACK_F('G', NULL, options, N_("<regex>"),
+>> +		OPT_CALLBACK_F('G', "patch-grep", options, N_("<regex>"),
+>
+> OK.  NOte that this says <regex>.  We may want to have a separate clean-up
+> patch so that Documentation/gitdifcore.txt that used <regular-expression>
+> and the placeholder used here match.
+
+Makes sense.
+I've added this fix as patch 5.
+I've reformatted paragraphs in gitdifcore.adoc that were affected.
+Let me know if you do not want me to reformat it, and just keep shorter lines as
+is.
+
+>> -			       N_("look for differences that change the number of occurrences of the specified regex"),
+>> +			       N_("look for differences where a patch contains the specified regex"),
+>
+> This is an unrelated change that should not be in this patch.  If
+> you want to modify it, please do it in a separate clean-up patch,
+> just like the above <regex> vs <regular-expression> change.
+
+Split it into patch 2.
+
+>> -			  N_("show all changes in the changeset with -S or -G"),
+>> +			  N_("show all changes in the changeset with -S/--patch-modifies or -G/--patch-grep"),
+>
+> This line is meant to be shown when the user requests list of
+> options and their meanings.  Growing the message from 47 columns or
+> so to 78 columns would make it wider than terminals when these
+> messages are indented.  Because earlier entries in this array have
+> already established the equivalence between the shorthand and the
+> longhand, I do not think the output is understandable without this
+> change.
+
+A description for "-S" is already 81 characters long:
+
+N_("look for differences that change the number of occurrences of the specified regex"),
+
+So I was assuming if I grow another description to 77 characters it is still OK.
+While one can find the correspondence between "-S" and "--patch-modifies" by
+reading the "-S" description, in my mind, the same argument applies as to the
+test readability - it just makes it a bit easier for the reader.
+
+This change is now part of a much smaller patch 9, which is only about adding
+longer alternatives to the CLI help messages that currently contain only "-G"
+and "-S".  This way you can decide if you want it or not as a complete unit.  Or
+if you want me to change it in some way, we can discuss it separately from the
+rest of the changes.
+
+By the way, I must admit I can not find a way to look at a help message
+generated from these strings.  Running `git diff -h` shows a message from
+`diff.h` and running `git diff --help` shows the man page.
+
+---
+
+Illia Bobyr (10):
+  t/t4209-log-pickaxe: Naming typo: -G takes a regex
+  diff: -G description: Correct copy/paste error
+  diff: short help: Correct -S description
+  diff: short help: Add -G and --pickaxe-grep
+  docs: gitdiffcore: -G and -S: Use regex/string placeholders
+  diff: --patch-{grep,modifies} arg names for -G and -S
+  completion: Support --patch-{grep,modifies}
+  diff: test: Use --patch-{grep,modifies} over -G/-S
+  diff: --pickaxe-{all,regex} help: Add --patch-{grep,modifies}
+  diff: docs: Use --patch-{grep,modifies} over -G/-S
+
+ Documentation/diff-options.adoc        |  36 +++++----
+ Documentation/git-blame.adoc           |   2 +-
+ Documentation/gitdiffcore.adoc         |  55 ++++++-------
+ contrib/completion/git-completion.bash |  11 ++-
+ diff.c                                 |  18 +++--
+ diff.h                                 |  11 ++-
+ t/t4062-diff-pickaxe.sh                |   8 +-
+ t/t4209-log-pickaxe.sh                 | 106 +++++++++++++++++--------
+ 8 files changed, 155 insertions(+), 92 deletions(-)
+
+-- 
+2.45.2
+
