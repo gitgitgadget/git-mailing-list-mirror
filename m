@@ -1,253 +1,133 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0E81F1531
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 08:51:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005741EF085
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 08:55:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739263866; cv=none; b=dIhpyqKSRjpgyfZLfVEXm4NEx5S7ouvjzJ9gOj4FJEPogFbCGYbRijkxzd+hOE7poE3O/SXk0+79tWmIdXGmIZNgEtqnm2DVufnRj5C/G3ylV4nvwp/lnHxkrdKieQdjz2qtBCrF/LIW2Chq/90VsaQ4BFekIfKJfkx1qV7HAAA=
+	t=1739264152; cv=none; b=Znjj7p6d7zmfhJbJU7ljSUSiXA7fMexiNN2b+w+RVMGijKDjo4fJvNiDcazcoBCuE/5dCdPopfI8QNZ+G3wQ+BzHb8HVtIr4FwOOcvA8nSbHJTTXnQQvzbrlTcI7kT6bOpVd62ucO+QKZdJeiu/6hoEtqt5HiJ/vSWSArjmoDfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739263866; c=relaxed/simple;
-	bh=ZsWjGimXpmQn9cPBe7u+bT9hy9pA5OSNwTrDWZ4GmKc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hEZcFduaf9EIESCMD9jt41Fm9mIK8gF5GJGVLjmSZ9aculH2+2WJkRZDC+ugjEyqn0vPefc5RIJWP9aXngVZ7AAazfPG6kBdpFQ7LhjD302yRbr57cxk4WSt21yjoeD7wBD817fN9W3PfiQr75VMR3fT15TD++MYs2vwqIcpIMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KBGfy5Sm; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739264152; c=relaxed/simple;
+	bh=baYn8zL6Q9WM/V5M4zASW8KE8Vn62cXIA4DezhdgYos=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=hloyQ2tPoe/y9ViVGloUM7fO8GQ2tRN0pmGIwbGbwghvFDj59/WgHydNURYTYXjz/3tXkEEiYLoQsrj02qOadJeVnqcTJkzZeLfO0UJ5zcuSrk8KERemOoCq5r6mHCm+Dk8DnglJL5jFMvROBTKM84xfbw0nzif2lDUcshMStPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=ps.report@gmx.net header.b=YDLIkhx4; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KBGfy5Sm"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2f42992f608so8033805a91.0
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 00:51:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739263864; x=1739868664; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yDX88l6a351yJl4J67+MLD3V7wGrx+WJItQnoPZae5s=;
-        b=KBGfy5SmKEJtAGNzDb2WeMbvSPQqIDFe0cqs9oMuwm5V8Y00fW9vBmrIdEJl4C1TX9
-         UTNP0GBeIAjAM2TA0DS6zV5ZyGnUlqTvFi3BujFEkYiS5t/vqa1YoHawDVCrkB/cA+VO
-         T+mN4TmEVC8xo1WLB+b91onFhWC8Xr/Bk1znlMOVdxinGhnQdAcnEKFdwGB8GnCwOe6c
-         2p2YGf9dTFqeJP7Q5GwaByvKsgR3OAhIB9jSgtUUZ74UhaAzeSVipsz5Fcetf1vWkOlb
-         jvkjD4qQQdQsef3zz4MyTtUGeOcKVTivcQmew4prPysWeiKsU5IYFBkyi22OhMzSRriY
-         2RFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739263864; x=1739868664;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yDX88l6a351yJl4J67+MLD3V7wGrx+WJItQnoPZae5s=;
-        b=Qp/GGvt1QSgtjiraicpJLNjH/rew/mQKTn28GE1kt5xjODov4UlNAHSzLOiC3o8f3T
-         RQ4dytzB/RQLMfghX8awjCi+ViGEzxbWiok8XIAMNWtmxGfPkSG+ODgnZ7wK9nxzyH0H
-         DU37cqzEaTNJIes0i38q+JMiSuCoyHDRBQXixe31/XA0i+Fmy293P23d5ETXObc/sIJ/
-         x1QVWL8KwAfOgtQ7VqeOA7ELaE61mYq2e+1PTzbtIx3EOR1UFqf2LTxt7iDlJnq4Xwo0
-         B6Uh4bTGCSQNVIwK5she+fCy6dJKknCxSLAYoy6WMJ6dmaxS0xveE0PEKGfn0lAJkuC8
-         sRGQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWKSPxZIEzkNm/XLGSolcEtDg3w/oVTb8/ReXQyNdDliNJK0hM6/twYl1wZUrRL4uYPPmY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRZZiJSFl9X6c9sxDOn5gosY7+GN4oLBb5dATMAOowhzVbso7f
-	48gjSSvh7irPc168fFuLqEHAs3PyWQmK8jEX98e5GLNfVWYgSE0f
-X-Gm-Gg: ASbGncvClba7jwtnfc4HnjALOI38El9rcMggKsl1WtxJ7pQ8ARM8wKKnEjAIxSED/Vu
-	apCCHc194kLQXXt93fpAFWzhtV15U/oYPWt19/EJtbxxfna/r6s/YsLOWgF+s8gRmzDlr1dJwdc
-	EYpDlkVqpenMjNMk1gECSW3RP6ZoNFXVnTVJvao7HBCy/VZ9cuCoTEJ+w8th98qSCuzl0k4VVIS
-	sq2sbstIGLq9UHjx70qFeIQSiXfSlN85hobpzEI+u+TbfHFEM9VDm5sjZXjTNQJe8N1awoDioHv
-	tlRI0r2O/vxlS8C7mh6dK0kNPSGZhr5/UKd/aj0=
-X-Google-Smtp-Source: AGHT+IGtztw2BiPIDW6cnXq6xkfl6L7Z8UhhhYhU+uoTm8dgJibI3vSry5Y+/WcwDk0CEhxwNJhT2w==
-X-Received: by 2002:a17:90b:1d52:b0:2ee:aa28:79aa with SMTP id 98e67ed59e1d1-2fa23f423e4mr21066957a91.6.1739263864284;
-        Tue, 11 Feb 2025 00:51:04 -0800 (PST)
-Received: from gamma.hsd1.ca.comcast.net ([2601:647:5580:5760:3858:1e16:caad:e1d4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fa09a46534sm10201701a91.21.2025.02.11.00.51.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 00:51:03 -0800 (PST)
-From: Illia Bobyr <illia.bobyr@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.net header.i=ps.report@gmx.net header.b="YDLIkhx4"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+	s=s31663417; t=1739264145; x=1739868945; i=ps.report@gmx.net;
+	bh=w8FgCvq7opdCLlixJEzHH+wDLAMeB4VGLgqbxHekvp4=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=YDLIkhx4O0dxZLCnkwWaPt5GudKOhP3AeJKfwONXQGPKy+sBOzfwnxnDYDwhuowv
+	 qHAIAhjDm9O71/Nl61l7rI8McKP5kA1F4Mn4GhRmYB3/r/0ywGCvZmCLInd+a29uP
+	 LqxA3APZPUOsxp/s8LOAcs4YKjGahSxQ6oCMKV5M2sBFlg5pO+5xE4ZQMC5YDIDcf
+	 oqfHPyg6uCvasdb7iC7o+iagmSwyZYcYCYOR8Dx0L3/txsumD3/yjeyfpCnHhG3Gj
+	 vPOPKCebCZAQo857zn2E8pPL4AeReCnPRnug8RVecE1c3d48wJvwFhN4MyQMxIUB7
+	 yfsWYEybF8eVMVzeLQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from localhost ([82.135.81.30]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mkpex-1sy2WM1gP1-00cCVH; Tue, 11
+ Feb 2025 09:55:45 +0100
+Date: Tue, 11 Feb 2025 09:55:44 +0100
+From: Peter Seiderer <ps.report@gmx.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Illia Bobyr <illia.bobyr@gmail.com>,
-	git@vger.kernel.org
-Subject: [PATCH v4 10/10] diff: docs: Use --patch-{grep,modifies} over -G/-S
-Date: Tue, 11 Feb 2025 00:50:22 -0800
-Message-ID: <20250211085028.3923875-11-illia.bobyr@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20250206014324.1839232-1-illia.bobyr@gmail.com>
-References: <20250206014324.1839232-1-illia.bobyr@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Subject: Re: Meson build leaks host 'sh' path to target build when
+ cross-compiled
+Message-ID: <20250211095544.66226abc@gmx.net>
+In-Reply-To: <xmqqpljpa83y.fsf@gitster.g>
+References: <20250209133027.64a865aa@gmx.net>
+	<Z6mtnmvKMsIOEVz5@pks.im>
+	<xmqqlduddb8b.fsf@gitster.g>
+	<20250210174335.6d6d2af2@gmx.net>
+	<xmqqpljpa83y.fsf@gitster.g>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-suse-linux-gnu)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:cGuXqOIgbvTbrEPXG0e4nAQr+BJ1WSJMu8ILNdYoGPeHLujqTD6
+ EfexiXK7ByUVHyi2SlZFMjIjt3re7ptfF1uvz5XZyUpgwsGjGFN5oFkN7DfND0zFmT8bZA4
+ usjONqrPGhxYHZYQsn7ZKH1YszWy0SWbliIKhBWzim2sAWRz37gxC1DcmRNtidI4lwZCXZh
+ S6ZJ5cKJ2EzH1E41DoR0g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:sHRuRzTWHpg=;r9AJb6rQfb+6qRwioJ9j7yftIu+
+ Es+esBrzEVjgVDpcskn3kLhpzLLaxunUxrSKKlJz39UNhi/7rctU1YzmBqdd2uVbUSgM6XrJ9
+ LO01dYszNgvIjD9w9TAZ51YHjvjeqM6AaOECTV1NhZpY2x03Cs9t4qvmx98wYprBvCk3fYxA+
+ BB4fPMJKwLITFvdx5gYWa2GkSczloL08rrQm44nsIJzKJ8t3wANb8nRUAiDVEso0eRfVjP271
+ N5inLQ9qy7jb0crWhl6BhBQpGfa6WglfKcPrlUuowEUahbB5kBNKEVsQyUZ9t4jYUa+wj6BiF
+ He7uPEZmEpt/lNw+ZD2hF5xWjruJT00dn6gpBhbRry+uPzP6NTEdbOxRURnbWbbfbtS10QgSL
+ udnh6cDtNO0tidsKpPLHk8LjDAPzy4gwoAtuDJLYbMAHKp7pEG1WNwrm+zhp2pYStxdUUZlOH
+ eUsJ+LbH17koicED2dbHbJmFabXDjMkD/bTt/w0nqAq0Rkob/y9sRaEJoBQ+k+6OLGSAFc1DV
+ z+vTAgXqzgmJtGvbjqLK6f/F44+Khdk0MmbWlsrvZtXOPW2Lanf+nipHjuvgeozy+GfrBHyhX
+ ZQ7FUwD4rwLbY7Hy4rrrtxVXCYDTUtn6d5tVzXRPKNIWP+ZxU98whH74spQCsC8o84fSCue1N
+ GLjQTZyxoK1bZmUbMHLN73I3DGD1FT7ygr5yC0sAIE5b/s6wgoTnqPjqRQBC0olxHfP5D4bf+
+ C40ltCIYL2wDHqGBIOVxdLXAYahV5+9iIdQtbH2YISW6I0X3xewrdPp13kjzKW6/eyGuyIWzC
+ X+JJUufUPb+mwLPjbUQkg6pxqeCUIDjFq3/cqS0sq0w+iLAyS8uN3xZsaPtv4c6b0DlnM2q63
+ kG51VxDijEYpPz8EPIl5BDt4GzoJaEonKIF90mTweA6pUm/2lhWdQvUlJ3q2123dpeazEKu+D
+ wFw1eTwRDC/AYET1194YrY6mACuoO+5Fd/SRj5lxpZTSM2ynf3ht7oBb8ZmKJnkArFUdRX5LC
+ RPMxpzlmr2JU6ohzurVAGEjzb5ogTIFNSrW8eqRVFuKmzgVOqJ55QLE10j2Yw5DPYKWtMTUN7
+ WoKU0z7ei/PlxUO09PCcH3sXmZf/tijlVbhQ3jhk8IXsJluPLpH8t4E6xgEY0/mtHhfQEEn7B
+ uYOtUaFYg8gR+PMXezXMS/XZ3bTnhLLMjh0ZvWRZ2DLCsyopfKgg9mk37VObv7sotm/QJu4rS
+ So1YIl2EFvuWuQ1PN/nqYT1gNyiFOFOW6LVRE5txwUNc/KHa9Y87Cf8dC9eutwR0A65aVdhxe
+ 4z3JhymPbuUWbYuY/X+qigq+yT9kNjPdUNo5SVOcV5o8/LNmWeh2/COiWlq0L+AulfjoT949n
+ mC+kN1Wd4oEDFMaWNKZIsegGfUcMqgpGnDmcn1kKKlCaCEsHYUStXggxeJ
 
-Long argument names are easier to read, compared to short ones.  So
-while short arguments are great when you want to type a command quickly,
-the documentation readability is improved if we use long argument names.
+Hello Junio,
 
-Note for reviewers:  All changes are just a replacement of `-G` with
-`--patch-grep` and `-S` with `--patch-modifies`.  But as the text was
-reformatted to fit the same width in a few places it might look like
-there are more changes, if the diff is only line-wise and not word-wise.
+On Mon, 10 Feb 2025 11:54:25 -0800, Junio C Hamano <gitster@pobox.com> wro=
+te:
 
-The only an exception are changes in `gitdiffcore.adoc`, where I did
-rephrase a sentence.  I've moved introduction of the short versions of
-the `--patch-{grep,modifies}` into a subsequent paragraph.  The reason
-is that I wanted to keep a note on the `-G` mnemonic, and it was awkward
-if I would repeat the short definition twice over a span of two
-paragraphs.
----
- Documentation/diff-options.adoc | 34 ++++++++++----------
- Documentation/git-blame.adoc    |  2 +-
- Documentation/gitdiffcore.adoc  | 55 +++++++++++++++++----------------
- 3 files changed, 46 insertions(+), 45 deletions(-)
+> Peter Seiderer <ps.report@gmx.net> writes:
+>
+> > Maybe all doing (autoconf) cross builds where happy with the defaults
+> > from the Makefile (SHELL_PATH =3D /bin/sh, PERL_PATH =3D /usr/bin/perl=
+)
+> > on host and target (as the buildroot autoconf package since 2013) and
+> > only users doing native builds fiddled around with non-default values?
+>
+> I somehow doubt it.
+>
+> The problem I see is that there is no distinction between "this is
+> the path for the shell on the target system" vs "this is the shell
+> we run on the host while building the package" in the Makefile.  Use
+> of autoconf would not magically change it; the Makefile that
+> includes the config.mak.autogen needs to be aware of the
+> distinction.
 
-diff --git a/Documentation/diff-options.adoc b/Documentation/diff-options.adoc
-index 07413d..c9f7c 100644
---- a/Documentation/diff-options.adoc
-+++ b/Documentation/diff-options.adoc
-@@ -658,8 +658,8 @@ renamed entries cannot appear if detection for those types is disabled.
- It is useful when you're looking for an exact block of code (like a
- struct), and want to know the history of that block since it first
- came into being: use the feature iteratively to feed the interesting
--block in the preimage back into `-S`, and keep going until you get the
--very first version of the block.
-+block in the preimage back into `--patch-modifies`, and keep going until
-+you get the very first version of the block.
- +
- Binary files are searched as well.
- 
-@@ -668,9 +668,9 @@ Binary files are searched as well.
- 	Look for differences whose patch text contains added/removed
- 	lines that match _<regex>_.
- +
--To illustrate the difference between `-S<regex>` `--pickaxe-regex` and
--`-G<regex>`, consider a commit with the following diff in the same
--file:
-+To illustrate the difference between `--patch-modifies=<regex>
-+--pickaxe-regex` and `--patch-grep=<regex>`, consider a commit with the
-+following diff in the same file:
- +
- ----
- +    return frotz(nitfol, two->ptr, 1, 0);
-@@ -678,9 +678,9 @@ file:
- -    hit = frotz(nitfol, mf2.ptr, 1, 0);
- ----
- +
--While `git log -G"frotz\(nitfol"` will show this commit, `git log
---S"frotz\(nitfol" --pickaxe-regex` will not (because the number of
--occurrences of that string did not change).
-+While `git log --patch-grep="frotz\(nitfol"` will show this commit, `git
-+log --patch-modifies="frotz\(nitfol" --pickaxe-regex` will not (because the
-+number of occurrences of that string did not change).
- +
- Unless `--text` is supplied patches of binary files without a textconv
- filter will be ignored.
-@@ -689,22 +689,22 @@ See the 'pickaxe' entry in linkgit:gitdiffcore[7] for more
- information.
- 
- `--find-object=<object-id>`::
--	Look for differences that change the number of occurrences of
--	the specified object. Similar to `-S`, just the argument is different
--	in that it doesn't search for a specific string but for a specific
--	object id.
-+	Look for differences that change the number of occurrences of the
-+	specified object. Similar to `--patch-modifies`, just the argument
-+	is different in that it doesn't search for a specific string but
-+	for a specific object id.
- +
- The object can be a blob or a submodule commit. It implies the `-t` option in
- `git-log` to also find trees.
- 
- `--pickaxe-all`::
--	When `-S` or `-G` finds a change, show all the changes in that
--	changeset, not just the files that contain the change
--	in _<string>_.
-+	When `--patch-modifies` or `--patch-grep` finds a change, show all
-+	the changes in that changeset, not just the files that contain the
-+	change in _<string>_.
- 
- `--pickaxe-regex`::
--	Treat the _<string>_ given to `-S` as an extended POSIX regular
--	expression to match.
-+	Treat the _<string>_ given to `--patch-modifies` as an extended
-+	POSIX regular expression to match.
- 
- endif::git-format-patch[]
- 
-diff --git a/Documentation/git-blame.adoc b/Documentation/git-blame.adoc
-index f75ed..10736a 100644
---- a/Documentation/git-blame.adoc
-+++ b/Documentation/git-blame.adoc
-@@ -41,7 +41,7 @@ a text string in the diff. A small example of the pickaxe interface
- that searches for `blame_usage`:
- 
- -----------------------------------------------------------------------------
--$ git log --pretty=oneline -S'blame_usage'
-+$ git log --pretty=oneline --patch-modifies='blame_usage'
- 5040f17eba15504bad66b14a645bddd9b015ebb7 blame -S <ancestry-file>
- ea4c7f9bf69e781dd0cd88d2bccb2bf5cc15c9a7 git-blame: Make the output
- -----------------------------------------------------------------------------
-diff --git a/Documentation/gitdiffcore.adoc b/Documentation/gitdiffcore.adoc
-index e934b9..e7f98 100644
---- a/Documentation/gitdiffcore.adoc
-+++ b/Documentation/gitdiffcore.adoc
-@@ -245,33 +245,34 @@ diffcore-pickaxe: For Detecting Addition/Deletion of Specified String
- 
- This transformation limits the set of filepairs to those that change
- specified strings between the preimage and the postimage in a certain
--way.  `--patch-modifies=<string>` (`-S<string>` for short) and
--`--patch-grep=<regex>` (`-G<regex>` for short) are used to specify
--different ways these strings are sought.
--
--`-S<string>` detects filepairs whose preimage and postimage
--have different number of occurrences of the specified _<string>_.
--By definition, it will not detect in-file moves.  Also, when a
--changeset moves a file wholesale without affecting the interesting
--string, diffcore-rename kicks in as usual, and `-S` omits the filepair
--(since the number of occurrences of that string didn't change in that
--rename-detected filepair).  When used with `--pickaxe-regex`, treat
--the _<string>_ as an extended POSIX regular expression to match,
--instead of a literal string.
--
--`-G<regex>` (mnemonic: grep) detects filepairs whose textual diff has
--an added or a deleted line that matches the given _<regex>_.  This
--means that it will detect in-file (or what rename-detection considers
--the same file) moves, which is noise.  The implementation runs diff
--twice and greps, and this can be quite expensive.  To speed things up,
--binary files without textconv filters will be ignored.
--
--When `-S` or `-G` are used without `--pickaxe-all`, only filepairs
--that match their respective criterion are kept in the output.  When
--`--pickaxe-all` is used, if even one filepair matches their respective
--criterion in a changeset, the entire changeset is kept.  This behavior
--is designed to make reviewing changes in the context of the whole
--changeset easier.
-+way.  `--patch-modifies=<string>` and `--patch-grep=<regex>` are used
-+to specify different ways these strings are sought.
-+
-+`--patch-modifies=<string>` (`-S<string>` for short) detects filepairs
-+whose preimage and postimage have different number of occurrences of
-+the specified _<string>_.  By definition, it will not detect in-file
-+moves.  Also, when a changeset moves a file wholesale without
-+affecting the interesting string, diffcore-rename kicks in as usual,
-+and `--patch-modifies` omits the filepair (since the number of
-+occurrences of that string didn't change in that rename-detected
-+filepair).  When used with `--pickaxe-regex`, treat the _<string>_ as
-+an extended POSIX regular expression to match, instead of a literal
-+string.
-+
-+`--patch-grep=<regex>` (`-G<regex>` for short, mnemonic: grep) detects
-+filepairs whose textual diff has an added or a deleted line that
-+matches the given regular expression.  This means that it will detect
-+in-file (or what rename-detection considers the same file) moves,
-+which is noise.  The implementation runs diff twice and greps, and
-+this can be quite expensive.  To speed things up, binary files without
-+textconv filters will be ignored.
-+
-+When `--patch-modifies` or `--patch-grep` are used without
-+`--pickaxe-all`, only filepairs that match their respective criterion
-+are kept in the output.  When `--pickaxe-all` is used, if even one
-+filepair matches their respective criterion in a changeset, the entire
-+changeset is kept.  This behavior is designed to make reviewing
-+changes in the context of the whole changeset easier.
- 
- diffcore-order: For Sorting the Output Based on Filenames
- ---------------------------------------------------------
--- 
-2.45.2
+Found no problem/special-handling in buildroot ([1]) or yocto ([2]) for
+SHELL_PATH, but you are right regarding the PERL_PATH in yocto using
 
+  38 EXTRA_OECONF =3D "--with-perl=3D${STAGING_BINDIR_NATIVE}/perl-native/=
+perl \
+
+and
+
+  49 EXTRA_OEMAKE +=3D "'PERL_PATH=3D/usr/bin/env perl'"
+
+and a fixup for the resulting files
+
+  76 perl_native_fixup () {
+  77 	sed -i -e 's#${STAGING_BINDIR_NATIVE}/perl-native/#${bindir}/#' \
+  78 	       -e 's#${libdir}/perl-native/#${libdir}/#' \
+  79 	    ${@d.getVar("PERLTOOLS").replace(' /',d.getVar('D') + '/')}
+
+Yes, doing a distinct handling for host/target path for sh/perl for
+meson/autoconf is for sure the right thing ;-)
+
+Regards,
+Peter
+
+[1] https://gitlab.com/buildroot.org/buildroot/-/blob/master/package/git/g=
+it.mk
+[2] https://git.yoctoproject.org/poky/tree/meta/recipes-devtools/git/git_2=
+.48.1.bb
