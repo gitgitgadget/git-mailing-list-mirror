@@ -1,75 +1,113 @@
-Received: from mail.envs.net (mail.envs.net [5.199.136.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F309155336
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 01:13:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.199.136.28
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA4051E2848
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 05:18:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739236429; cv=none; b=pawDtM+BKrWQQkmH+JQR3Bw8viY1rkFWg8gA4Nx8ELElVjdsNiE79CLmHd4USQ3E8mmOd9vNYRnBnI2xY6mItCKOQl4MxRktF/HxZHlYTXFJgyaJ+3p/jzEfKgSm79PKxLeGhrvoonhHGez0zY5tNpkWbmkGzlROStjKSCLJuc0=
+	t=1739251133; cv=none; b=dXdaUaFB6CDqz1jiDSPx8BcErBs9jCeHPcOeX0cundKwspHxGUywBqS4gRSCzzjGvV3doT/Z2DsqcLGjJEtN7h8sIsbzTSGKpg124ucmsYghTWgsZrznvnOT/j4LdWhm51MbzNOv1gKdx94pLPUhRVAaUG+SuMgNjfBo07OViOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739236429; c=relaxed/simple;
-	bh=DdO28ngjOx3YREJ7PqxmElC2FHeCQehhFJ7T5wvWrbo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=baf7n4bHrj/an3NehRGrulaell3JlHuRMr6ZH5kJUPY7u5RAQbMOkKlDZJ4zgq5wgMiPF5qAQ0bkFIzl3QQ47eFATP0VpyTNGH/v1EBQ8uUayJPO+ibzkFRxp2UPNE/ILJu0Jawr0Cd3oV5L7pyMxcpaEEBJJf0wRem86W/pfeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=envs.net; spf=pass smtp.mailfrom=envs.net; arc=none smtp.client-ip=5.199.136.28
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=envs.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=envs.net
-Received: from localhost (mail.envs.net [127.0.0.1])
-	by mail.envs.net (Postfix) with ESMTP id 82FA738A3EBD;
-	Tue, 11 Feb 2025 01:13:41 +0000 (UTC)
-X-Virus-Scanned: Debian amavisd-new at mail.envs.net
-Received: from mail.envs.net ([127.0.0.1])
-	by localhost (mail.envs.net [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id zqPtIM7YQwUX; Tue, 11 Feb 2025 01:13:39 +0000 (UTC)
-Received: from xtex1.localnet (unknown [120.230.227.202])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.envs.net (Postfix) with ESMTPSA;
-	Tue, 11 Feb 2025 01:13:39 +0000 (UTC)
-From: Bingwu Zhang <xtex@envs.net>
-To: Junio C Hamano <gitster@pobox.com>, apenwarr@gmail.com
-Cc: git@vger.kernel.org
-Subject:
- Re: [PATCH] contrib/subtree: verify HEAD is valid before adding a subtree
-Date: Tue, 11 Feb 2025 09:13:26 +0800
-Message-ID: <12606159.O9o76ZdvQC@xtex1>
-In-Reply-To: <xmqq8qqddarl.fsf@gitster.g>
-References:
- <20250210021128.31083-2-xtex@envs.net> <xmqq8qqddarl.fsf@gitster.g>
+	s=arc-20240116; t=1739251133; c=relaxed/simple;
+	bh=oc/06JdobrzXJbRXKMDzT2HRfeACNL7wPzXTuxjm6hs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gKnR9TdW0WFqtzuvjoCHMXCgPoy0NqWloU5a2uiAQJGA15XN+XpBmgr1kH5FqicVln7uCdtKPa96Dm47t735kl9BF9/0Nl6nhO6GrfJi3Qw2VICAozMARLjIUAlvzF38UI7OlI4MzgsF2s1gbO2x2zjTLlJI/Hldsm5sdgg8mJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KrX/Ehw2; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KrX/Ehw2"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-21f3e2b4eceso96784445ad.2
+        for <git@vger.kernel.org>; Mon, 10 Feb 2025 21:18:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739251131; x=1739855931; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7I6KR4WqFDkZatA/J5dFWvkaZKQtmA7tDmbCZIqMceE=;
+        b=KrX/Ehw2Sgxlg0GWFjia903DS1R4OEcpviVJJCOoDAVApln4llgz7eTt5ko2o7HF1y
+         ArJ6wi3kBf6l9Xdez3VLGuUaX+fmCpiTiNH6b+ILdQrfjKLTtH6zvwIefK9fej1fKvFr
+         Q7bX3ZKBSBQERkOrP0QzEfMbViqjap5Cryfyi3xTupaie51SSvPxSo0J9vBktJ3lfOkL
+         S7KUxYU9lGCYPJGUHLUx7a/R0H+VJGpjWBwB2vnRz/qSV2xr65IxM2xlJkXP1nlnUJ2/
+         S0q5laOov4t93s122scufDnH1AdjYbOHPlVJSyY0w/BHuVyqRCupvgtlCWLuDz14SGDG
+         v6jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739251131; x=1739855931;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7I6KR4WqFDkZatA/J5dFWvkaZKQtmA7tDmbCZIqMceE=;
+        b=qeVCByMKogCO/gjyds6ticjGyx5IKBCnbdb46CHcZU5kS0quPgT7LLBNRzggDMUWFd
+         J3skQnbWDi4M4j4K7Og/quK+ItJ7AwDuDZ0YNVq/eeIXWeGDa+xrf9P1TAoXNKe21ELY
+         YKm+oV0v5sFL+MVz7SjSfdyhZdxm3Q26UFV+HBMvc7664IncDcI5kaNo2CAlB9vpTpcb
+         e365duUddPj2FnAyptQ4iKGu18sepzFoV+nILqKUmi5SBOq42s4K18nlUs9cZXFsV6RE
+         Fr4B/GapXM1HMLtew5K9U0oWxaJlfKWPShT/hupAu0op98B1nzwz/lkCbhD38seqbWTR
+         5ROw==
+X-Forwarded-Encrypted: i=1; AJvYcCXYp37x1APWq3VZIFM0R2vVxvNp2Bst2GGDYPpXNzt832OoHxTpMAtInrofjOh1kY+hKuc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxr5R0SxCzsYl4RDamOGssTNNCRDcazywDGTWq+DlQEya413ovT
+	UkrXbp/hlLgqc1Ysu2dPaIxZYoQ7p/ClOuXoEwKXmQtWq1aX0wGd
+X-Gm-Gg: ASbGncsu7sKO/Xg1zSU3suk/IYd+sBRej56AwrhbfNmRgr8VufzR+0Tl7y0GBUec06l
+	CzdLYNU6GzG7t12xe7CGWWbQtfeCAE53k6SkerzQhqb8eN7JI51lyAvzWN964dcT5gg6X9du/AG
+	EPmivICKCmpE3tYpPBG5S2AMyOqLslx3zj16YUrkAQ1RoHd4ErnbW2OqlmOvZg371QaCXmg26C3
+	9tnEvnvFj8HQs0A+QPTxM3Dz7xRZa59dIr1Ff777hEYCthSBX04JXK7jK8siN3wlFIeK5V5bqEs
+	HvqJg/rwCi9bQWH6S3g8WSVzV2XkICSXi+9cEOpeK2H6wlXv+jFJB0BEQrHBnN/XK5M7
+X-Google-Smtp-Source: AGHT+IHeT8kHGB05ukuNKV4KUthOnf+auqN0teEHboDDNbPijeZXC9AGWu36ettPWap+AUyHg9+gNA==
+X-Received: by 2002:a17:902:ce03:b0:219:eb2a:dfa5 with SMTP id d9443c01a7336-21f4e75e6femr260058805ad.39.1739251130937;
+        Mon, 10 Feb 2025 21:18:50 -0800 (PST)
+Received: from ?IPV6:2401:4900:4c12:fe76:547:fc92:af40:dfb? ([2401:4900:4c12:fe76:547:fc92:af40:dfb])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fa4ee2ebb4sm6225198a91.12.2025.02.10.21.18.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Feb 2025 21:18:50 -0800 (PST)
+Message-ID: <fa9ad3c6-3b3c-4f3c-89c6-101ed1b51eb6@gmail.com>
+Date: Tue, 11 Feb 2025 10:48:22 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Git in GSoC 2025
+To: Patrick Steinhardt <ps@pks.im>,
+ Christian Couder <christian.couder@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, Jialuo She <shejialuo@gmail.com>,
+ Git Mailing List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
+ <Z432QXJb_TfzNBa2@pks.im> <c39c5424-71d0-4b6d-90b1-a6a70f2ee61b@gmail.com>
+ <cd90cf17-6113-4634-a774-6df707b73e95@gmail.com>
+ <d5cba1a9-fe51-4f3f-970b-3ef8a7a2e459@gmail.com>
+ <CAP8UFD0GEmsJDFzVAV1bgBNeD6K3auH4paWEKE6=f0=_E6gifA@mail.gmail.com>
+ <a2a76725-5778-4b7d-a266-c3a1431316ce@gmail.com> <Z6Xmrfut7jdsVAfg@pks.im>
+Content-Language: en-US
+From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
+In-Reply-To: <Z6Xmrfut7jdsVAfg@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tuesday, February 11, 2025 12:28:46=E2=80=AFAM GMT+8 Junio C Hamano wrot=
-e:
-> In short, "is not" -> "may not be", perhaps?
+Hi Patrick, Christian and all,
 
-Yes, thank you!
+On 07/02/25 16:25, Patrick Steinhardt wrote:
+> One thought: From my point of view I'd strongly favor extending
+> git-refs(1) over reftable support in the dumb HTTP transport. So if I
+> had two applications, one for each topic, I'd lean towards applications
+> for the former topic. That might easily cause unfairness in case
+> students aren't aware of that.
+> 
+> So unless somebody else wants to be main-mentor in that project, I think
+> we should either drop the HTTP transport tropic, or communicate our
+> priorities clearly.
 
-> And if we want to treat an unborn HEAD equivalent to an empty tree,
-> then dying upon seeing "show-ref" fail would not be a good solution
-> to the problem, no?  Shouldn't the updated logic to deal with an
-> unborn HEAD be more like "if we see that the HEAD is unborn, then we
-> are happy iff the index is empty; if HEAD already points at a
-> commit, then we are happy iff the working tree has no changes
-> relative to it"?
+That makes sense. I've added a note to convey this clearly. Kindly check 
+if the change in the following PR looks fine.
 
-I did consider treating an unborn HEAD as a empty tree and test if index is=
-=20
-empty. However I searched and failed to find out a git subcommand to do tha=
-t=20
-test (:
-Do you have any suggestions?
-
-=2D-=20
-Bingwu Zhang
-xtex @ Tue, 11 Feb 2025 01:10:17 +0000
+   https://github.com/git/git.github.io/pull/750/files
 
 
+On 07/02/25 13:37, Christian Couder wrote:
+ > Yeah, but we have time to decide on this. It seems to me that we can
+ > still come up with new project ideas and possibly new mentors or
+ > co-mentors until it's time for applicants to send their.application.
 
+Indeed. More volunteer mentors and ideas are always welcome :-)
+
+--
+Sivaraam
