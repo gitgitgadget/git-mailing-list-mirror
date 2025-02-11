@@ -1,133 +1,89 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005741EF085
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 08:55:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D07C1F238F
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 10:01:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739264152; cv=none; b=Znjj7p6d7zmfhJbJU7ljSUSiXA7fMexiNN2b+w+RVMGijKDjo4fJvNiDcazcoBCuE/5dCdPopfI8QNZ+G3wQ+BzHb8HVtIr4FwOOcvA8nSbHJTTXnQQvzbrlTcI7kT6bOpVd62ucO+QKZdJeiu/6hoEtqt5HiJ/vSWSArjmoDfE=
+	t=1739268107; cv=none; b=rfYdWn3oANljTXbtbyxOaklSAIX9c3aofHxBXWx9AtrquzaFCcKdQrcXg179K8YDqIWpDk7McSTPKRKRstyGh/p6e55yTZTIPxQ/c74dVLu9Lm7eOKUDvawWKZ3uMaMEMITI/BGIYDoHROswELR4EAIBXxNnX/Tcu8x1sQm6+hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739264152; c=relaxed/simple;
-	bh=baYn8zL6Q9WM/V5M4zASW8KE8Vn62cXIA4DezhdgYos=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hloyQ2tPoe/y9ViVGloUM7fO8GQ2tRN0pmGIwbGbwghvFDj59/WgHydNURYTYXjz/3tXkEEiYLoQsrj02qOadJeVnqcTJkzZeLfO0UJ5zcuSrk8KERemOoCq5r6mHCm+Dk8DnglJL5jFMvROBTKM84xfbw0nzif2lDUcshMStPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net; spf=pass smtp.mailfrom=gmx.net; dkim=pass (2048-bit key) header.d=gmx.net header.i=ps.report@gmx.net header.b=YDLIkhx4; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.net
+	s=arc-20240116; t=1739268107; c=relaxed/simple;
+	bh=q6ELfuIdzxNG0wrl3ZZPoa4HB3Gfpt84ni/zxcBi9w8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NgXNyh47Ebztrd5ASUWts0IqWV+cIqSKSF6WhR+x4+qqDUmR/+QtO3bPh15iZbHA8ie3wsOSqn0Vn5buwLATefamAnh+fYwsAeRw8I9/q8dolOqkIJG/9T3wlz+LqQtiuSH+Z9gQaeWM2f6KT8AAfLj4sIcP34uo2fjeVIC74qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b9hlXHMS; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.net header.i=ps.report@gmx.net header.b="YDLIkhx4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
-	s=s31663417; t=1739264145; x=1739868945; i=ps.report@gmx.net;
-	bh=w8FgCvq7opdCLlixJEzHH+wDLAMeB4VGLgqbxHekvp4=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=YDLIkhx4O0dxZLCnkwWaPt5GudKOhP3AeJKfwONXQGPKy+sBOzfwnxnDYDwhuowv
-	 qHAIAhjDm9O71/Nl61l7rI8McKP5kA1F4Mn4GhRmYB3/r/0ywGCvZmCLInd+a29uP
-	 LqxA3APZPUOsxp/s8LOAcs4YKjGahSxQ6oCMKV5M2sBFlg5pO+5xE4ZQMC5YDIDcf
-	 oqfHPyg6uCvasdb7iC7o+iagmSwyZYcYCYOR8Dx0L3/txsumD3/yjeyfpCnHhG3Gj
-	 vPOPKCebCZAQo857zn2E8pPL4AeReCnPRnug8RVecE1c3d48wJvwFhN4MyQMxIUB7
-	 yfsWYEybF8eVMVzeLQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from localhost ([82.135.81.30]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mkpex-1sy2WM1gP1-00cCVH; Tue, 11
- Feb 2025 09:55:45 +0100
-Date: Tue, 11 Feb 2025 09:55:44 +0100
-From: Peter Seiderer <ps.report@gmx.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b9hlXHMS"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-21f464b9a27so88242895ad.1
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 02:01:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739268105; x=1739872905; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1MyIexXLxt8ezMKLYr2d3jB/dbF0osQZsLUSeo3qypE=;
+        b=b9hlXHMSGJ3UWStfuFBNVYedjQurLp+lK2hGPzsTDSkGv92yY4YMsoRmnIe5YM0vWT
+         m1CdYjvgM7/SX7A1mcNpe1kDOilA6JEsmhWKMbUCv+syp7/pLTNSRdSPl2bmhH7IE/PU
+         qui7zgGMIQAE3UZgUEEa+lIKYQzjXhx4vitjx4O6prCvD03r865KppTpglxTvfZiPMVT
+         R2VWHXTkV6HSnrpC0MSMh1QYWMtsMwMLw0TCa85ZOb5cgszM1pVCh2k0L6MTJXTl5r2X
+         AGJyRFPaoeAWzLvJazMFYqVWlSytFVyRjwVokTa8wNENHzM3zRcVda4o1vXuLoRvgTXy
+         3wTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739268105; x=1739872905;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1MyIexXLxt8ezMKLYr2d3jB/dbF0osQZsLUSeo3qypE=;
+        b=UyQ+5/P4OMQYDHNukOQBJhXmJvUpiW1EPZn2X7ERrPtlVXS8us2QX+OrJCWsVMAJki
+         p5PtUmAMw4J9tw0ypx+fjnLRoJGhnz5wuRVZ8WffOimC7zcORzi2s4JGhvXqxke4wfxV
+         O7rBdn3DTMrqjBfAGMGSMR0/KZzdmJXIjjZQWoEKPCz8UzqWYkKcXzjTw8ojSdA4M708
+         cUPbu9M2BBVd1zmgfh5OnhdI9oMyNtnvSEjAhF7JzLtQ4bBc23Yg9XuNVKo6GUeTo6rw
+         qG6opSnHSzKgAvVzFmvqjmjAo+4YeH1fpHzHbKIIztCjeRpKsNClzzJB7I3FxxE5As7y
+         mK9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXOkoc8MqvvQ1zY3rN/foDmZtfsORjYmduX15GjR1DWTEFGygHDSvG36eO2jc+j8AIHj+o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoTPOTvi6dWodHhMaqsAu21h8oMMkdFublniJqs4QC/e+UvjH2
+	/ByIygNMas9Ei7CkT80rvOUxsYTijbjxL0Ci+/HfT84qsguv4gDXe+GcKg==
+X-Gm-Gg: ASbGnctYABIk0TMTpi9/Ub/HDIHnzaqzeEoKK2bqARDGZMbl7W9LHuTnmI/59j+gL7R
+	gglT31wQNFADS3cm19sOWIm+b+qgy2qzCM9wP8GadxOeuCfyL3cco8anorCwpjJlx7xuGiwlW6B
+	JCC4bj3ND0zopEk3wS/a7IFmROYCr7iSM2GiQnVjn3Jwe1W2x+nBFGP91ODlbDzjbMstR0pMkvF
+	BO5HLQYvhdLFaBoELus5T2wh5v0j2Ll3HS1pl4n1rStPSQ+tNeC9o64se+D088el+vlaw==
+X-Google-Smtp-Source: AGHT+IGXdaqt195gaq267FU+QAh3qABO+B6SKr4klazaZ7DD00rCFwRmw6Sk5ErP7PS2j3FuBl17cw==
+X-Received: by 2002:a17:902:c941:b0:21f:8099:72de with SMTP id d9443c01a7336-21f809974b2mr130632985ad.45.1739268105056;
+        Tue, 11 Feb 2025 02:01:45 -0800 (PST)
+Received: from localhost ([2604:5040:11:69e::e973])
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2fab011be14sm145434a91.28.2025.02.11.02.01.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 02:01:44 -0800 (PST)
+Date: Tue, 11 Feb 2025 18:03:34 +0800
+From: shejialuo <shejialuo@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: Meson build leaks host 'sh' path to target build when
- cross-compiled
-Message-ID: <20250211095544.66226abc@gmx.net>
-In-Reply-To: <xmqqpljpa83y.fsf@gitster.g>
-References: <20250209133027.64a865aa@gmx.net>
-	<Z6mtnmvKMsIOEVz5@pks.im>
-	<xmqqlduddb8b.fsf@gitster.g>
-	<20250210174335.6d6d2af2@gmx.net>
-	<xmqqpljpa83y.fsf@gitster.g>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.48; x86_64-suse-linux-gnu)
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 00/16] path: remove dependency on `the_repository`
+Message-ID: <Z6sgdtsnBV9g9UQX@ArchLinux>
+References: <20250206-b4-pks-path-drop-the-repository-v1-0-4e77f0313206@pks.im>
+ <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
+ <Z6d41SYoyavqcei-@ArchLinux>
+ <xmqq8qqdbqhb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:cGuXqOIgbvTbrEPXG0e4nAQr+BJ1WSJMu8ILNdYoGPeHLujqTD6
- EfexiXK7ByUVHyi2SlZFMjIjt3re7ptfF1uvz5XZyUpgwsGjGFN5oFkN7DfND0zFmT8bZA4
- usjONqrPGhxYHZYQsn7ZKH1YszWy0SWbliIKhBWzim2sAWRz37gxC1DcmRNtidI4lwZCXZh
- S6ZJ5cKJ2EzH1E41DoR0g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:sHRuRzTWHpg=;r9AJb6rQfb+6qRwioJ9j7yftIu+
- Es+esBrzEVjgVDpcskn3kLhpzLLaxunUxrSKKlJz39UNhi/7rctU1YzmBqdd2uVbUSgM6XrJ9
- LO01dYszNgvIjD9w9TAZ51YHjvjeqM6AaOECTV1NhZpY2x03Cs9t4qvmx98wYprBvCk3fYxA+
- BB4fPMJKwLITFvdx5gYWa2GkSczloL08rrQm44nsIJzKJ8t3wANb8nRUAiDVEso0eRfVjP271
- N5inLQ9qy7jb0crWhl6BhBQpGfa6WglfKcPrlUuowEUahbB5kBNKEVsQyUZ9t4jYUa+wj6BiF
- He7uPEZmEpt/lNw+ZD2hF5xWjruJT00dn6gpBhbRry+uPzP6NTEdbOxRURnbWbbfbtS10QgSL
- udnh6cDtNO0tidsKpPLHk8LjDAPzy4gwoAtuDJLYbMAHKp7pEG1WNwrm+zhp2pYStxdUUZlOH
- eUsJ+LbH17koicED2dbHbJmFabXDjMkD/bTt/w0nqAq0Rkob/y9sRaEJoBQ+k+6OLGSAFc1DV
- z+vTAgXqzgmJtGvbjqLK6f/F44+Khdk0MmbWlsrvZtXOPW2Lanf+nipHjuvgeozy+GfrBHyhX
- ZQ7FUwD4rwLbY7Hy4rrrtxVXCYDTUtn6d5tVzXRPKNIWP+ZxU98whH74spQCsC8o84fSCue1N
- GLjQTZyxoK1bZmUbMHLN73I3DGD1FT7ygr5yC0sAIE5b/s6wgoTnqPjqRQBC0olxHfP5D4bf+
- C40ltCIYL2wDHqGBIOVxdLXAYahV5+9iIdQtbH2YISW6I0X3xewrdPp13kjzKW6/eyGuyIWzC
- X+JJUufUPb+mwLPjbUQkg6pxqeCUIDjFq3/cqS0sq0w+iLAyS8uN3xZsaPtv4c6b0DlnM2q63
- kG51VxDijEYpPz8EPIl5BDt4GzoJaEonKIF90mTweA6pUm/2lhWdQvUlJ3q2123dpeazEKu+D
- wFw1eTwRDC/AYET1194YrY6mACuoO+5Fd/SRj5lxpZTSM2ynf3ht7oBb8ZmKJnkArFUdRX5LC
- RPMxpzlmr2JU6ohzurVAGEjzb5ogTIFNSrW8eqRVFuKmzgVOqJ55QLE10j2Yw5DPYKWtMTUN7
- WoKU0z7ei/PlxUO09PCcH3sXmZf/tijlVbhQ3jhk8IXsJluPLpH8t4E6xgEY0/mtHhfQEEn7B
- uYOtUaFYg8gR+PMXezXMS/XZ3bTnhLLMjh0ZvWRZ2DLCsyopfKgg9mk37VObv7sotm/QJu4rS
- So1YIl2EFvuWuQ1PN/nqYT1gNyiFOFOW6LVRE5txwUNc/KHa9Y87Cf8dC9eutwR0A65aVdhxe
- 4z3JhymPbuUWbYuY/X+qigq+yT9kNjPdUNo5SVOcV5o8/LNmWeh2/COiWlq0L+AulfjoT949n
- mC+kN1Wd4oEDFMaWNKZIsegGfUcMqgpGnDmcn1kKKlCaCEsHYUStXggxeJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8qqdbqhb.fsf@gitster.g>
 
-Hello Junio,
+On Mon, Feb 10, 2025 at 10:32:16AM -0800, Junio C Hamano wrote:
+> Thanks, all.
+> 
+> By the way, shejialuo, this may textually conflict with your
+> get_worktrees_without_reading_head() thing, but the resolution
+> should be obvious.
 
-On Mon, 10 Feb 2025 11:54:25 -0800, Junio C Hamano <gitster@pobox.com> wro=
-te:
+Thanks for reminding me to notice this. I will take care.
 
-> Peter Seiderer <ps.report@gmx.net> writes:
->
-> > Maybe all doing (autoconf) cross builds where happy with the defaults
-> > from the Makefile (SHELL_PATH =3D /bin/sh, PERL_PATH =3D /usr/bin/perl=
-)
-> > on host and target (as the buildroot autoconf package since 2013) and
-> > only users doing native builds fiddled around with non-default values?
->
-> I somehow doubt it.
->
-> The problem I see is that there is no distinction between "this is
-> the path for the shell on the target system" vs "this is the shell
-> we run on the host while building the package" in the Makefile.  Use
-> of autoconf would not magically change it; the Makefile that
-> includes the config.mak.autogen needs to be aware of the
-> distinction.
-
-Found no problem/special-handling in buildroot ([1]) or yocto ([2]) for
-SHELL_PATH, but you are right regarding the PERL_PATH in yocto using
-
-  38 EXTRA_OECONF =3D "--with-perl=3D${STAGING_BINDIR_NATIVE}/perl-native/=
-perl \
-
-and
-
-  49 EXTRA_OEMAKE +=3D "'PERL_PATH=3D/usr/bin/env perl'"
-
-and a fixup for the resulting files
-
-  76 perl_native_fixup () {
-  77 	sed -i -e 's#${STAGING_BINDIR_NATIVE}/perl-native/#${bindir}/#' \
-  78 	       -e 's#${libdir}/perl-native/#${libdir}/#' \
-  79 	    ${@d.getVar("PERLTOOLS").replace(' /',d.getVar('D') + '/')}
-
-Yes, doing a distinct handling for host/target path for sh/perl for
-meson/autoconf is for sure the right thing ;-)
-
-Regards,
-Peter
-
-[1] https://gitlab.com/buildroot.org/buildroot/-/blob/master/package/git/g=
-it.mk
-[2] https://git.yoctoproject.org/poky/tree/meta/recipes-devtools/git/git_2=
-.48.1.bb
+Thanks,
+Jialuo
