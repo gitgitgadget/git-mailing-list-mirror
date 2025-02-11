@@ -1,138 +1,166 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87811D5161
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 06:36:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098811E9B1D
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 06:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739255763; cv=none; b=ouGGEk77kTupofD+w19ctgyE9VlNFq8k1dt9It26nSdoBjLaTDqmiY7l+Jw9RoNene/AA6AuEPT9SGAqoniF4vEDpA+ODJ3GITf1syf98YZ8GOzYouQOatqZHTTWEyHUgGmBNjnI7t7PzPE4hxqCyQSZ7Um6J60vU8VJmboycUU=
+	t=1739257004; cv=none; b=QqQl1iBpxmGqsd1zpYlvwdvWu3xq89e6qT/r7y4JdFaMsbivKbN+9+0VLiB/2ZRlnPkdCtCMF0PibDSeQOFzs687RYEk8/PP9bhtfNUVvUY00cGZzqWsn3a7RlUMaboUQBR1IJeaON4XabmXyZZbbJ2vjU9HE0U2W5lGBFE4kiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739255763; c=relaxed/simple;
-	bh=pgjFoYCdWPwHekqZDvrx3SYqO2BVHxsEd/g6bmt5B8I=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FdmJLJq4OdmTO9s2RXKjCNFwDvhuFE3vAfZYQbqvNS41s8P+anI3A4RZgMGXA2JH6Ph1NwHRrQdsVfMB8F1ASwRBeMQWZNOMYDMrkRb/zAwN3M/DQiBIsDkpc0J43gmzTA1bf+NxcvVUDDaoGv5bvVYwAiKebRPBxL29eMtFi+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mWLNBift; arc=none smtp.client-ip=209.85.217.50
+	s=arc-20240116; t=1739257004; c=relaxed/simple;
+	bh=vanoeJ/gf1NUVWPsrZ7HQtOfPOLIF+4hGjB7xEZttBA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LYycqfPH9qJ4O97zTrhX0tkPjCeDYDklrCsGnPbgoMvjQX27NX1yd4TMRVpDxFrBqdkrIJxnfA3iU7K21MENPqaxb34iGUTQgJyFBXJm7krw+UspKO4dLew1s48q8r773V7PaDpOVwS9Ajo+r6Df8oFujHHWWQ8tjsn4ftNzbeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XNfkLLIz; arc=none smtp.client-ip=209.85.219.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mWLNBift"
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4bbc047a3c3so1384162137.1
-        for <git@vger.kernel.org>; Mon, 10 Feb 2025 22:36:01 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XNfkLLIz"
+Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e4419a47887so4084997276.0
+        for <git@vger.kernel.org>; Mon, 10 Feb 2025 22:56:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739255760; x=1739860560; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eRByw5IeUcoeQl+0y7f3xbpXDhabhp8W+JU05AwJr9c=;
-        b=mWLNBiftmDv8T9YjecUcsXvk9K34SXDplatNu0oEIhfaaa9CGZuhPZC3D3bddretnU
-         nB3lQii5DpWgPrK+1CWO17HhJ8biLq22Dl2lVapfuZ3iCshgIo/OCMUTVauVqpEGi/cM
-         sm79dXNjbTgeGNLfo6iea47LJlDHfTYtA+R5EGOm6mIeM/MorBvJQSH8zn05HLO3iDv8
-         ahl8b05UYGzPRGgT0rxhbyodZI53SUwBJEFE1LeekeyIaWlKEIpAfte/0zYT+fWfE518
-         WIxJWHyVmyjTyCkHdgqPrDNP9nzpeN0IgDl61EpGAFh0JeX3RvshwFkpE/F7fV0E8ZQM
-         IwSQ==
+        d=gmail.com; s=20230601; t=1739257001; x=1739861801; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vanoeJ/gf1NUVWPsrZ7HQtOfPOLIF+4hGjB7xEZttBA=;
+        b=XNfkLLIzB8oKcJD6f86LI+hz8eFIQbkyM0QEZjK9JCMOdqjR94djj3MNg7PctgAlv0
+         0FoxNbmlAe0U5jvB9UKN34ajSiWYw1JbeENd6qBdm1csc810DPZZlCppV96Y9kAD4sN9
+         w9CnHdQ9/b2ZV/yTchUXB2z0uK4eU6BkfPj7yeFCA0xnMrxAbKmNJyw6zgd8dJf4Ebm5
+         VhW8dLoTnKPAhhj6bwDRedgWqZR6wTwmEvR0M8IgyuiOV5KsPWoELm70jPxEfpnPcIRH
+         fkLUiH2PLki3kSwkGCR/WCF7OFOlFyQu1HrS9DMtAIMlLLw3b09iGtI3zEQMDJCLR22V
+         UKMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739255760; x=1739860560;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eRByw5IeUcoeQl+0y7f3xbpXDhabhp8W+JU05AwJr9c=;
-        b=YrETui1iU2fFM00/3sxLQylBKNTSi+oAsk8cA/+rR0a2lmGW+TOp7+m1c70uh+OaxU
-         avmvoTrjYzb+Wlihcx1ndR3bWmPCpFecHXsyCDiBGSQjgQON2MYFI+mzs9CbQ0bYjZfn
-         xgZdf+mHOpAMSvjJy4vH7Edtwj3PDQ9Fy9vfjzLldBMTDd3/iyGQTKmANJnPMP7JDCQm
-         dEvJJnPyR9KtLBw8WuGxVXZVPjKdR+CKx+Q4V+lC/VLhAUi1UdT1WIGkRxiRA6FJ/rhh
-         R6abUET8jG/CYiEK5gW2oBkm/DtSsi4JOIlSLTeJFkn1E+KD4tktKBZFeyuDMZ6Surdm
-         DOBA==
-X-Gm-Message-State: AOJu0YwVEcGHJ5BaKd6HuAUNfPElSsrOVM/RUqrwszMyTQZaT1AO2o1n
-	Q0rK0ix2R18xKfPxg5J5ib66xN48gd/sfW8pJJtxSNeEg1v46ju5hUN+2HqT27c+cJ7xrnocVq8
-	LHOx4dgh/bYZbRe+S0HoKd7q2mAE=
-X-Gm-Gg: ASbGnct/ht0F8nmiGEEaG+ies0fTzicWGmPFKjrlutE7sHv8xAgC3ayHe545dQn/vNn
-	PO6JubuVXrShSNDUuIuqYCRRMRT8fj0bXcGBmJtjI6Lv0paSLvV6aMNOb7i7X6SuLxDONyuHj8h
-	6eY7E8zCBrfGrmTa0dJHbbBdbSaScHcA==
-X-Google-Smtp-Source: AGHT+IGe3Uha5dIeiLWnWNYA3uPM3tZR0AOZBnfCC4itzh9HskvebUVjPkm1IEHtLi/bkGX35VfmFXVuQGpFeW/2Vrs=
-X-Received: by 2002:a05:6102:942:b0:4bb:dfd8:4175 with SMTP id
- ada2fe7eead31-4bbdfd846damr2426734137.19.1739255760511; Mon, 10 Feb 2025
- 22:36:00 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 10 Feb 2025 22:35:59 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z6Yw9RK6JRKERmn9@pks.im>
-References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
- <20250207-245-partially-atomic-ref-updates-v1-1-e6a3690ff23a@gmail.com> <Z6Yw9RK6JRKERmn9@pks.im>
+        d=1e100.net; s=20230601; t=1739257001; x=1739861801;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vanoeJ/gf1NUVWPsrZ7HQtOfPOLIF+4hGjB7xEZttBA=;
+        b=sBkQEOVcVJQwSCzy2fliXf4jlDMBytJxq2orOQyYOiMbRGfpf9z0f7y+3vq9U/NdBh
+         SG0lac2aM+F6ykY4pVa376JFafonh3M+pDFnfpa5Fj8qth7QEXWPWhuKZhU68b4233j5
+         cUdIGSaNQ3n7KJbjm97rjiKf7rGwqnlKJ9sFQmStmU7m4CBVlWS0O/X462lbvYCgGR4T
+         3qEubTThraLt5XZvVGQLlymwZDS+im/M+rL3YdK8g3fNg+N5MkQWY76I0Y+nfQKLtpdM
+         GjXOUvggugFC+aL/DC9ML+P5Isuge23nhR/K1apxHCZOIyLtB5p8dc3HBtBkMMKZFHtf
+         EMvA==
+X-Forwarded-Encrypted: i=1; AJvYcCWhIj1uzHh05895E8N2cKG7im2hugupSguukuV01/gnHbW9YS6H4kd2IVY+b5ppPr/BDQw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyPlDTVDE/ozgycSxGIYMi+FNsU4DkX72Tmznu/L+A/1I2pVmn9
+	6Ck0cO6Iyf8tzNKTAx0LtmZdf1I5PMMzC8fQ9TDQwMuNnMkTNStjKX52Dz5BsHjTptVPMagg7XM
+	UdppOc/7S8yuU2HXji28DnQEHMag=
+X-Gm-Gg: ASbGnctgvhdxBEAEzmEcCOVl/GCS101mI6z0mKccnzN4Xh4H9hX4mivlMP5zoEzSElG
+	1Ts9VLEd4RUlbA6zNA9vI9nxDPwNtyA8t982J1qq1Qksn6zZ9sK7Yr6d0cvKl6NLRId8WUR0rGO
+	wonl/FKX7J7tUbMz1njA/WjLbXSlg5
+X-Google-Smtp-Source: AGHT+IHZNBBqJJeH2pSYcssvTKZyHB8DsTVYPntBRSN7gl0K3Tcu5+61jj2dCxm5RNFLkifkIEZVQIkyzO8KSyGgcAA=
+X-Received: by 2002:a05:6902:3487:b0:e5d:929f:773a with SMTP id
+ 3f1490d57ef6-e5d929f77cemr3656788276.25.1739257000967; Mon, 10 Feb 2025
+ 22:56:40 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 10 Feb 2025 22:35:59 -0800
-X-Gm-Features: AWEUYZlZJ-GI75kNwpOr7h4n7NTCLC-q4PcyTMrx1uYoiMsHn0NXQiSkxvIkqM4
-Message-ID: <CAOLa=ZRYvLAEbaxMf=P2euh+QO00W5RAhDTF1v4YYj29yH0YHQ@mail.gmail.com>
-Subject: Re: [PATCH 1/6] refs/files: remove duplicate check in `split_symref_update()`
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000c78539062dd80917"
-
---000000000000c78539062dd80917
+References: <20250205030642.95252-1-ben.knoble+github@gmail.com>
+ <xmqqbjvgr11y.fsf@gitster.g> <CALnO6CA_vF4huxMx6jSS4SVjS4+EO9K16Msco-vMUDzSoYRDOg@mail.gmail.com>
+ <xmqq34gsp9tr.fsf@gitster.g> <CALnO6CC71A_Bn+RhyXfmhiNCn2vFGJ+WCs8+dAnpQvGFyNZyfA@mail.gmail.com>
+ <CAMMLpeQvJUZJuwvK-H=M_FFedpgazGOPH=7wvPCg3U8RrxEtkA@mail.gmail.com> <CALnO6CDZ=rq_eZESzi++VFk081ddosHMpKQV4QHNFJbnsOMAzg@mail.gmail.com>
+In-Reply-To: <CALnO6CDZ=rq_eZESzi++VFk081ddosHMpKQV4QHNFJbnsOMAzg@mail.gmail.com>
+From: Alex Henrie <alexhenrie24@gmail.com>
+Date: Mon, 10 Feb 2025 23:55:00 -0700
+X-Gm-Features: AWEUYZmAeRLcEJwcL5bfDsQtf_uaO3vMwuipsaKx8OjSVrJ86HRLwXVMY7x9IqM
+Message-ID: <CAMMLpeSgSTU+SVeU6A_9LJvjVbho+QC8HpNQtKJvFic98xKvJQ@mail.gmail.com>
+Subject: Re: [PATCH] pull: allow branch.<name>.rebase to override pull.ff=only
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Felipe Contreras <felipe.contreras@gmail.com>, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Fri, Feb 07, 2025 at 08:34:36AM +0100, Karthik Nayak wrote:
->> In split_symref_update(), there were two redundant checks:
->>    - At the start: checking if refname exists in `affected_refnames`.
->>    - After adding refname: checking if the item added to
->>      `affected_refnames` contains the util field.
+On Mon, Feb 10, 2025 at 1:26=E2=80=AFPM D. Ben Knoble
+<ben.knoble+github@gmail.com> wrote:
 >
-> Okay, it took me a bit longer to understand what's going on here. What
-> you're saying is that we already use `string_list_has_string()` at the
-> start of `split_symref_update()`, and if that returns true then we would
-> bail out. Consequently, it is impossible for `string_list_insert()` to
-> find a preexisting values.
+> On Thu, Feb 6, 2025 at 9:36=E2=80=AFPM Alex Henrie <alexhenrie24@gmail.co=
+m> wrote:
+> >
+> > On Tue, Feb 4, 2025 at 8:11=E2=80=AFPM D. Ben Knoble
+> > <ben.knoble+github@gmail.com> wrote:
+> > >
+> > > When running "git pull" with the following configuration options, we
+> > > fail to merge divergent branches:
+> > >
+> > > - pull.ff=3Donly
+> > > - pull.rebase (unset)
+> > > - branch.<current_branch>.rebase=3Dtrue
+> > >
+> > > Yet it seems that the user intended to make rebase the default for th=
+e
+> > > current branch while using --ff-only for non-rebase pulls.
+> >
+> > You make an interesting point. The idea is that more specific options
+> > override less specific options. In this case, "fast-forward only" is
+> > more specific than "rebase" (because rebasing might or might not
+> > fast-forward), but "my branch" is also more specific than "all
+> > branches". So which option should win? =F0=9F=A4=94
 >
-> Makes sense, but I think that could be explained a bit better.
+> Precisely! I think "my branch" is most specific here, but Junio's
+> argument is (if I understand it) that pull.ff=3Donly is _stronger_,
+> regardless of specificity.
+
+I can see it both ways here, though in general when the user's intent
+is ambiguous, I think Git should default to the more conservative
+operation.
+
+> > On Wed, Feb 5, 2025 at 2:14=E2=80=AFPM D. Ben Knoble
+> > <ben.knoble+github@gmail.com> wrote:
+> >
+> > > Is there, then, an existing combination that means roughly to treat
+> > > `git pull` with no other options like this:
+> > > - if not rebasing, forbid merging and be equivalent to --ff-only
+> > > - if rebasing is requested (because of branch.name.rebase or --rebase
+> > > or =E2=80=A6?), allow it
+> >
+> > I think what we're missing is a branch.<name>.ffOnly option to make a
+> > particular branch fast-forward only. Such an option would be
+> > especially useful for the master branch, but you could set it on all
+> > of your branches except the ones that you want to rebase. We could
+> > even have a branch.autoSetupFfOnly option to turn on ffOnly
+> > automatically for new branches.
 >
-
-That's correct.
-
-I'll rewrite it to make it clearer. Thanks.
-
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 29f08dced40418eb815072c6335e0c3d1a45c7d8..c6a3f6d6261a894e1c294bb1329fdf8079a39eb4 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -2846,13 +2838,7 @@ static int files_transaction_prepare(struct ref_store *ref_store,
->>  		if (update->flags & REF_LOG_ONLY)
->>  			continue;
->>
->> -		item = string_list_append(&affected_refnames, update->refname);
->> -		/*
->> -		 * We store a pointer to update in item->util, but at
->> -		 * the moment we never use the value of this field
->> -		 * except to check whether it is non-NULL.
->> -		 */
->> -		item->util = update;
->> +		string_list_append(&affected_refnames, update->refname);
+> That is probably something that is missing, and might solve the
+> problem, but I don't know that these in particular are something I
+> need (read: want to implement).
 >
+> How do you (and Junio, and others) feel about
+> pull.ff=3DonlyUnlessOverridden? The meaning would be "like --ff-only
+> except when branch.<name>.rebase says otherwise."
 >
-> Nice to see this and other code removed.
+> The name of the value can be workshopped (I initially thought of
+> "override" as a short value, but it may be too short to convey its
+> intended meaning). Perhaps "onlyOr[Branch]Rebase"?
 >
-> Patrick
+> I think this would be a smaller change that meets my needs without
+> changing the meaning of ff=3Donly.
 
---000000000000c78539062dd80917
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 9d77390daa61d6bf_0.1
+In my opinion, the matrix of which pull options override which pull
+options is already too hard to understand. Rather than add a new
+dimension to pull.ff, I would much prefer to fill in the gap that is
+the lack of a per-branch fast-forward setting. It might be more work
+in the short term, but it's an investment:
+pull.ff=3DonlyUnlessOverridden would only address your particular use
+case, but a per-branch setting could address many others. For example,
+the user could set branch.autoSetupRebase=3Dtrue to make every branch
+rebase by default, but override it with branch.master.ff=3Donly to make
+the master branch fast-forward only. Or the user could have
+branch.<name>.rebase set to either true or false as appropriate for
+each branch, but temporarily set branch.<name>.ff=3Donly when they are
+in the middle of work on a branch and don't want to accidentally bring
+in upstream changes that would interrupt their work.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lcTc4MFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOXZnQy85YWpjQUNqOEwzTTBpWW1abXdCemQzRXh6ZQpkZ2JSOGVzRXNW
-Mm9XMWd1REt1amF5ZkdpUU9MSHhJbVNkNm1EMTZNSStmRnd0STMxTTlobGs4MnJHV25aNFhICmo1
-bkFRNExPTFNtazZYZjNSQk9ydmhKTWE0Y2EzN1ZURXJ5aVdTYVJKUEJwWVFJQTJ0amM0WFFmc1hi
-aXFIRncKMWR6RFowNDVaN1NZSEt2STV5MlRybnZsM2kvT3NwK1YvclV6QzZHQ0dkY1NFZWNDUzBZ
-aDJ4T1JZQkNDczMzSQp1Y2tjVVNVMS8vSXFUMEc3MHczWjBURUVQdmNnZ3AzbWlsd1NJa2VkbDh1
-UHJ5RDh6V3JBM3JhUkdXZGhhWjNNCjNtN045SGFxcnNVOVBidFFJV2UzZjAvWlZNbmxmZGVxMzBO
-QS9rSndPSnlDN3o0RGhqcERSVnR2QWg4SURFM0kKNWlyVElYeVRHU0J2bi83YkVVQnlDanlaVjZL
-QnY0YnZXd0xoclUwbWswWS9nM0pibngvay9EdjlwSTBaTVBoZApuOHY3MFZLalVVU2dRNHdFMU01
-eStMYVQvNlF1bFhqaG9iM2hkcEcyL08wK1dYUktDaDl6ZlNFWlQ1eG5JNVVRCkZiMWFTdXJRRFZt
-M2QyWUNSTXh2NjRKYm42bDZoMUE4UmtTeTNTcz0KPW95b0wKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000c78539062dd80917--
+If you think that you can write the patch to implement
+pull.ff=3DonlyUnlessOverridden on your own, I think you're capable of
+implementing branch.<name>.ff=3D(true|false|only) and
+branch.autoSetupFf=3D(true|false|only). Use the code for the existing
+branch.<name>.rebase and branch.autoSetupRebase options as a guide,
+and people like me are available on the mailing list to support you.
+
+-Alex
