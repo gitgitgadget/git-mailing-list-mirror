@@ -1,69 +1,69 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFF81F0E2C
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 08:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61D41F0E5C
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 08:50:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739263852; cv=none; b=fwzKBwW/7wzx0oZjZgEInBDaNaAX0p/3ucKZhgbYb9VNdVx9w6anZkmTbYJoNdqrA211yz+axKrpnvKwdsVWrc8PnfIh1S9NxpGCBdHUig5YGqbYp2vYGGsunByGi0TNW7lLDWY9D+QJZ3cni5XOkzk29vPBDLKdEe3+jzmCV5w=
+	t=1739263855; cv=none; b=ZUrZSMTqvQztxOEz6xP/G0K3fGLH5UuLJtxIDWzckHOGt+u9TKWAgDrwL8R3ovebhKhPpkFvZdK8V4Osu8tiuKihQhCmT4Yx8FKjlGwFRPi7dAi3jrgRyQGOpDAaqzR7Lw7BJKTfFeNgLzINQLVvf7x0iVT6vFF5wlezXpbp1Ok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739263852; c=relaxed/simple;
-	bh=Rr6m/A9IQb396HWEa+1Qnky1V1CFb9AfduJm2EFAYOo=;
+	s=arc-20240116; t=1739263855; c=relaxed/simple;
+	bh=65jF1Kbg8pmJoPHIj9oX2H0kaQiQ1E4nXq89L/GPzWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hQTFSBi9mwwS3GMEuyFcb2REi3/apu7h3syWkWWhM1hbF1x+v2quTYAdxWsYrVFuYPCEoV3BmI0Kta9NJsl6Fys3B2DPk0H4jdevlWybGem9WEo7aUpxyMiNQSp1bJeuqXJAbDgJfmEhEncprs8OCiteyj/ElAVX19gjMZMsrVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ok+a05Nr; arc=none smtp.client-ip=209.85.216.41
+	 MIME-Version; b=mbJuVWkGuSyxV4VrljBIQEXDxNpFMbLzZr0uG4QVt2n0NtY8cuUDZ1/l0uiCoXUYvcQX0b121eBM2Bl04irv3wKQCRXTxEiUdB2YGvZvyxidqIMLgHcAedby9iyDa6bx62y2eSFeubupnHaY+AGi128aNzaUnZ9osUWssiC0SOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CGxRKKgy; arc=none smtp.client-ip=209.85.216.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ok+a05Nr"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2fa19e1d027so6746251a91.0
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 00:50:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CGxRKKgy"
+Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2ee9a780de4so8121387a91.3
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 00:50:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739263850; x=1739868650; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739263853; x=1739868653; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VKzQoKAngCs6HWu9yDO+usfiXV22m58qAkD3sftzJCg=;
-        b=Ok+a05NrNNtmXETnc7yrS7YWyN9j7nNfL6w4KgGXYCnmPBiJG1lI5Und4xs8o+hZTk
-         HOuqpJIBuX93Tyysr6n9nN1AmH3gzLBGvTpv7fNTtbwlunjQq6mOdhzQmXfLUgO36pOJ
-         axMyrhILszNqRnYrlvhnrjaqolPwzMYtmhhswJIrvJv1b/Q21Cg6jXUAvskwkb7Pm0kx
-         QeIYLEJI5g0EcBMxGNsZfN7W9+vqRzDS/CLaupK86TPukXIf1VbERl4ebz8TiU8PYHRQ
-         DhSircik8QxglamWYke6+wq5w288VkbuIkagolC0QqI75m0ZsUpQIjusy3l6KhxN+rjc
-         enBw==
+        bh=RUVxVdfdEGtwV6OWjbDz6WqfhYfQoLL9SeacMktxfpA=;
+        b=CGxRKKgyDBhOcarxcUuAu5ds1tR/CWVsm1U7XZbwyNSOOAwohAeGDkI0GtYBlyS70D
+         YE9e+cmBPYZCsmHJ7jN2XL1dO2vnGX6KYrXw/IemUOXD9D59uXHJtIEhhwtovtRyrZ3D
+         CRJsea+OZDpmI8vETIjWo7rtzxifEIaRHwRq0H+EUhcrxu0wbUcBbgKfnNOzQsWFJl2U
+         K4vDkWWS7Cmg56CiPN1qploATAYQtVAaXJPAd+Of0ihJXIcmAd6F7iowybNGiw5a1XJ9
+         QZ/dgYG2NLeAZYS+VNNZfNnbiWTgkagwi708t0JitM1Vvx0O44fmIgRHhShuVWkO5r2F
+         Y9Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739263850; x=1739868650;
+        d=1e100.net; s=20230601; t=1739263853; x=1739868653;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VKzQoKAngCs6HWu9yDO+usfiXV22m58qAkD3sftzJCg=;
-        b=TSY2gMIRJyQaGoGeHvDDz21HXGfDtgG7R+Bvk2mO+vFJNagQCns2U+N8wVTaSycAXE
-         wtgFk5DNMymOqomKtlFIrPoBjuBj9Jh7W5CbJDqSpLquAKTCHKxc+mqbHCwuWsRAiWUq
-         2nOHx7KMn0PxMjAH/YebA61BiIkDOMbIDnaoa9J4Nqbp8I/73Pb1wTSUbh3NK72aMfYs
-         UU2FAYYQbe95bqGHePhh2F4p9V5y5Kko25gePZwH9SU1fj2StB1IobORbdbkslIcaJ0U
-         ftz1kzB3dQj4IlIMIkN/qTYyLysu0WoTuIir+GzeDc52FLDk3Ezn8bumiZ514a1UBAq+
-         W7pw==
-X-Forwarded-Encrypted: i=1; AJvYcCWEps92Tfqfd0yqEnUiIuDu5HGkzEcvABziEGFXyxoiqH0R89LiQOG6InN9iDcR6Ul/1yI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyYiL0fvWCqPP+2iAOo6stgg9issXnJ+z1BjcszJ2JTPs2fb4SB
-	8t+8cZxJiFt9i9cG7yUFX6JofW+eOSx8RovIKHfjiAFOmcJbSNo5
-X-Gm-Gg: ASbGncvRUrBtMY468NsjXIZBlVgcOm6Jp0m6p/ldbJTAHCqhwE6ZkrMBKo0kckhhWtO
-	IhAE1M4Papf7+76JvysjDLJeYowicRXQHtDkgIuPo4O/yAYtH71EfDs3UJUtbaSLrzpJSWLzpqL
-	hj6UnOFIYR4OcrWxJVcMI5gY8BZgCaUt2JJXZPvTK92SvoSgI6w0Psf9xoqVsMM0sqh+iSGBHeP
-	Oie+NLl9BkCjPs0mZ9xMysA2Mbt+0bnRz3LgY5sNu8WXoocFEVx+1wmrcAajltqYWARh1qpC18y
-	dkLAjqspGz0JlI+7jMGZHTB6p3ctBOWido0AW6k=
-X-Google-Smtp-Source: AGHT+IG44WLRqyYkX2F8zCOG+NaUwe69xnS05CCE46Rx2BU52FjZ06IoSQSoLt1PxZgj27QRP80XvQ==
-X-Received: by 2002:a17:90b:358e:b0:2ee:e18b:c1fa with SMTP id 98e67ed59e1d1-2fa242e5c8cmr25005704a91.28.1739263850360;
-        Tue, 11 Feb 2025 00:50:50 -0800 (PST)
+        bh=RUVxVdfdEGtwV6OWjbDz6WqfhYfQoLL9SeacMktxfpA=;
+        b=YdZjTycWUAn+wfEeD1fG6e+rXSXEEt9CuEomrNRPY6oh+MYm2wKxmhp4Hr6eQKiIQv
+         upw/snfjMiM5w/cSYsYjpITmo7gwefW8AA77u5LOu9wK292o3bhGyoj4fTdWuNZa4hn2
+         TmPyNxYaF/I3QyLmMPj19ZYcBDnLOxoO3sGNUAfOLpciAW9COiflVXFYNOAauxfVd8iS
+         4FWpZWQafwIV0Kfnu1pMGd0edDZ+tcu6to71USJjwHxAWCOP1TLyzQ03ulFGOVdCkzAW
+         AcWLs9MGLRp1rR4jIMM02cSoG0eHCC3RWHDEFIm9wbg/9KNEPRIu1ba0UyzLeVgnb7tV
+         /1Bw==
+X-Forwarded-Encrypted: i=1; AJvYcCV+V/UfrivGmcGx9N34fW0YZ+qpar2LpZrMJypUGdIgcg0lyh2OyA9pPRVxYIi1lyQ7+Is=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxQVfcY/6GnQ+gydmdJ8yYc2b6tfsbo1RPpYE5HXh/hcO4Ikeep
+	kVvUQl3h5Fh+adwMLHMCzUCc0S3RpbNlvH8e82j2OQG5gzcxwc61
+X-Gm-Gg: ASbGncuWrgeBsDI5zNVux9/oQ+1qk5qYvDuCw83XVjY/BMB8d1twwcrM9EAE9+dKXn1
+	4Y5RlzRSk4JlnrBcEzchNXFQlLZ+hceiQ8h47dO7WFjPXCcOeaH/WbQ3OjD3/Yx3x5nFlfjHnIH
+	wzTH3vboungIx1xfhbPAqMWL5BT9eOz/7uW1rdUFX5oJULoH7+mUG4wqo502b7EZHjouL+QkZFR
+	nbxxlismk4nQFrmmKTv2z51IwWxLU/9Unb6ZHUEuAHFKfdwJXDI1SSeVSYyU9QSQl6UGUzaH97N
+	7iAQObz+H6Bl+RFlDoA4BIbMcBhxqJtzIGBE49s=
+X-Google-Smtp-Source: AGHT+IGyCDGGUN+WVCFChNziMxg5bdr/ReMXAFmXj0cu+gMW68GwmAk39RxLSMrh6nli7AwfYOlZ5Q==
+X-Received: by 2002:a17:90b:1946:b0:2ee:a04b:92ce with SMTP id 98e67ed59e1d1-2fa243ee3f5mr22154665a91.32.1739263852905;
+        Tue, 11 Feb 2025 00:50:52 -0800 (PST)
 Received: from gamma.hsd1.ca.comcast.net ([2601:647:5580:5760:3858:1e16:caad:e1d4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fa09a46534sm10201701a91.21.2025.02.11.00.50.49
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fa09a46534sm10201701a91.21.2025.02.11.00.50.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 00:50:50 -0800 (PST)
+        Tue, 11 Feb 2025 00:50:52 -0800 (PST)
 From: Illia Bobyr <illia.bobyr@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Illia Bobyr <illia.bobyr@gmail.com>,
 	git@vger.kernel.org
-Subject: [PATCH v4 01/10] t/t4209-log-pickaxe: Naming typo: -G takes a regex
-Date: Tue, 11 Feb 2025 00:50:13 -0800
-Message-ID: <20250211085028.3923875-2-illia.bobyr@gmail.com>
+Subject: [PATCH v4 02/10] diff: -G description: Correct copy/paste error
+Date: Tue, 11 Feb 2025 00:50:14 -0800
+Message-ID: <20250211085028.3923875-3-illia.bobyr@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20250206014324.1839232-1-illia.bobyr@gmail.com>
 References: <20250206014324.1839232-1-illia.bobyr@gmail.com>
@@ -75,27 +75,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Not effect on the test logic, but as "-G" argument is a regex it is more
-accurate to use "regex" as a dummy argument value rather than "string".
-In all the other case when "-G" is passed a dummy value it is spelled as
-"regex" rather than as "string".
+Current description for -G is incorrect, seems like it was copied from
+the description for -S.
 ---
- t/t4209-log-pickaxe.sh | 2 +-
+ diff.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
-index a675ac..ed70c 100755
---- a/t/t4209-log-pickaxe.sh
-+++ b/t/t4209-log-pickaxe.sh
-@@ -89,7 +89,7 @@ test_expect_success 'usage: --no-pickaxe-regex' '
- 	test_expect_code 128 git log -Sstring --no-pickaxe-regex 2>actual &&
- 	test_cmp expect actual &&
- 
--	test_expect_code 128 git log -Gstring --no-pickaxe-regex 2>err &&
-+	test_expect_code 128 git log -Gregex --no-pickaxe-regex 2>err &&
- 	test_cmp expect actual
- '
- 
+diff --git a/diff.c b/diff.c
+index 019fb..bd9db 100644
+--- a/diff.c
++++ b/diff.c
+@@ -5866,7 +5866,7 @@ struct option *add_diff_options(const struct option *opts,
+ 			       N_("look for differences that change the number of occurrences of the specified string"),
+ 			       0, diff_opt_pickaxe_string),
+ 		OPT_CALLBACK_F('G', NULL, options, N_("<regex>"),
+-			       N_("look for differences that change the number of occurrences of the specified regex"),
++			       N_("look for differences where a patch contains the specified regex"),
+ 			       0, diff_opt_pickaxe_regex),
+ 		OPT_BIT_F(0, "pickaxe-all", &options->pickaxe_opts,
+ 			  N_("show all changes in the changeset with -S or -G"),
 -- 
 2.45.2
 
