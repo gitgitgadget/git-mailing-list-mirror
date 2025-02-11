@@ -1,106 +1,62 @@
-Received: from mail.inka.de (quechua.inka.de [193.197.184.2])
+Received: from ci74p00im-qukt09082302.me.com (ci74p00im-qukt09082302.me.com [17.57.156.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C7B27180D
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 23:58:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.197.184.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661B02641F8
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 21:02:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=17.57.156.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739318310; cv=none; b=rS7pDIDqvT4A4fsebb2TlIwJpS+EXxm1IJLrueyVfQcI6oQ16ouCKEm+R58/FPJh3xL/ckWANeQMkt9YQYg3qwOEzQq4l8QOaxcD51bRiHGpvRoxRWbcxP5u0eYrqHYL1TDxe/B2c6eone/cp+oEfug35Q70OBlQye1tJsdJzIc=
+	t=1739307752; cv=none; b=VVRT6J8HJd7kv7aYPOj/spH7U3CJ8DLtT+FDSBJQt/bjdGOvr6tD2ZMS0Hbofckv4fpVToFJ3c4rhH03qzjpLzbNP+Pmyx3ezBfpl2diYck3zHUr6rrhinx0hQdD5OYuV2/6CC1n74qpPNvKYiegdYLcITgVffvmWjag981p6Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739318310; c=relaxed/simple;
-	bh=TUAQHji8GHMx8BxSSElhb1ZsPL8jCp3EyBfgsS2Ub3g=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZwRFHS6XapC1iBuNrja0g4wgpG9kxkXgL2qupihRmgIWKgpYfJioqfTAj9xLo4kzDzGWQTwBzw1YPffnWtyS1U8VsB3vcdnxN9v4LdQZ1gwrufxDJHi1G5fphqHLmIyGROxvsO02QoQVmsqoZx7b6QktswsKtEzrdhEekH115vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de; spf=pass smtp.mailfrom=raven.inka.de; arc=none smtp.client-ip=193.197.184.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=raven.inka.de
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1ti08v-006oHZ-7W; Wed, 12 Feb 2025 00:58:17 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 88F0A60117; Wed, 12 Feb 2025 00:57:07 +0100 (CET)
-Date: Wed, 12 Feb 2025 00:57:07 +0100
-From: Josef Wolf <jw@raven.inka.de>
-To: git@vger.kernel.org
-Subject: Re: renormalize histroy with smudge/clean-filter, again
-Message-ID: <20250211235707.GQ30202@raven.inka.de>
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-References: <20250205214726.GA30202@raven.inka.de>
+	s=arc-20240116; t=1739307752; c=relaxed/simple;
+	bh=NJ2dsXU/ehIYXy/H8IKqBiQ4qukCp1wPgXfRpQusINM=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To; b=hnRT2O2susvpBrqbXl1UaX0oZgIFuIvznlWmgLDQE2uKQ9wleT6JH7U6aKaYO7nlfvaTiJ5oHCwJa3Bb8r6TuQO2Bsj7v6fARyYGchLSgFVNNDfWwQzVtcn92VLorSusTiwml4MrnUApcS79J3PJGMtt2pFEY6CWcnCEoaGcUz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=HGrsCxot; arc=none smtp.client-ip=17.57.156.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="HGrsCxot"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
+	s=1a1hai; bh=NJ2dsXU/ehIYXy/H8IKqBiQ4qukCp1wPgXfRpQusINM=;
+	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme;
+	b=HGrsCxotkg2u+vWQ/HURFfv3qfhsqVdq2XwqG/0nTo6k88REPiC6l+lHTtDTz21l6
+	 +l1RKWnsWSnzzZMzJEp4xb0aBeovq4I/IWmI9BsjeuWJSJ7FP0xQ4YFK5Q31mk/QGP
+	 UjeqnFHshRLB6xQwZR9qImBaYrD1U4d8LEECeHEp1UH3ExY9MIwX9ArWBEvL6mfla4
+	 LxTeTBZRMKYu98z9I6iZIHqwFhTJPmIhCJi2zUSLcVYCgdcnRR2bVvmcEyrScmZuOe
+	 C4jTXz4BpLejGWfuuCYeq1zy74oRnKP3yA64zhp+/NF6WUAlFIuqOx6aB9wbkBvWZd
+	 yo44lVzB634Dg==
+Received: from smtpclient.apple (ci77p00im-dlb-asmtp-mailmevip.me.com [17.57.156.26])
+	by ci74p00im-qukt09082302.me.com (Postfix) with ESMTPSA id 6BF2A2FC0180
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 21:02:29 +0000 (UTC)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Denise Sornsin <denise.sornsin@icloud.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250205214726.GA30202@raven.inka.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Mime-Version: 1.0 (1.0)
+Date: Tue, 11 Feb 2025 15:02:17 -0600
+Subject: Trent Herman needs to be put in prison 
+Message-Id: <126F9C95-D2BD-4DDC-8EC2-41A1D642D3D5@icloud.com>
+To: git@vger.kernel.org
+X-Mailer: iPhone Mail (22C161)
+X-Proofpoint-ORIG-GUID: tvpVCRcDS9QdRId0G0q-N8bIxOtEpEbB
+X-Proofpoint-GUID: tvpVCRcDS9QdRId0G0q-N8bIxOtEpEbB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2025-02-11_09,2025-02-11_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0 bulkscore=0
+ mlxlogscore=436 suspectscore=0 malwarescore=0 spamscore=0 clxscore=1011
+ mlxscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2308100000 definitions=main-2502110138
 
-Still struggling with my filter problem.
+Leave me fucking alone!
 
-Here is what I do:
+I swear he=E2=80=99s going to prison for the terrorizing and harassment he h=
+as put me through for 6 1/2 years
 
-- Set up a clean filter which enforces CRLF (yes, for this specific use
-  case I want CRLF even on linux)
-
-- Smudge filter does not modify the file at all
-
-- Set up git to fail when filter fails, so I can double-check that the
-  filter is actually runnning:
-
-   $ grep -A3 filter..etsfile ~/.gitconfig
-   [filter "etsfile"]
-      required = true
-      clean = ets-utils -c
-      smudge = ets-utils -s %f
-
-- Specify file as non-text and install the filter:
-
-    $ grep etsfile .gitattributes
-    */P -text filter=etsfile
-    $ git commit .gitattributes
-
-- Check that git gets attributes as I want them:
-
-    $ git --attr-source=$(git rev-parse HEAD) check-attr -a P-0113/P
-    P-0113/P: text: unset
-    P-0113/P: filter: etsfile
-    $ git ls-files --eol P-0113/P
-    i/lf    w/      attr/-text              P-0113/P
-
-- Create helper for renormalization
-
-    $ cat renormalization-helper
-    #! /bin/sh -e
-    git add --renormalize .
-    git diff --quiet --cached || \
-        git commit --amend --no-edit
-    
-- Run the renormalization for the linear history:
-
-    $ git --attr-source=$(git rev-parse HEAD) \
-         rebase --root -X renormalize \
-         -x $(dirname $0)/renormalize-helper
-
-So at this point, I'd expect the falie to have CRLF line endings. But it
-doesn't, so I do:
-
-    $ rm -rf P-0113
-    git checkout  --attr-source=$(git rev-parse HEAD) P-0113
-
-Still no CRLF, so I look at what is stored by git:
-
-    $ git --attr-source=$(git rev-parse HEAD) show 873a9b:P-0113/P |less -U
-
-Again, no CRLF.
-
-So I check all revisions in the history. Resut: no revision has CRLF.
-
-So the renormalization process does not work for me at all.
-
-Any ideas?
-
--- 
-Josef Wolf
-jw@raven.inka.de
+Denise Sornsin
+701-412-7723
+6516 Copper Ridge Lane
+Bismarck ND=20=
