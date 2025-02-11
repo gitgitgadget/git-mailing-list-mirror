@@ -1,109 +1,103 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECE61FCFC2
-	for <git@vger.kernel.org>; Tue, 11 Feb 2025 12:22:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2B341F3FCB
+	for <git@vger.kernel.org>; Tue, 11 Feb 2025 12:24:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739276524; cv=none; b=FppTDDWksdAOOEPkSKjePM59oMhD+YNbrlhxDBeuM1/Oi1xlMAgHVvaNfUtZOym+4XQocMzM8o79KFdPAR/iI7aBsAbiQHJkLGZXn/jKwtmy70/xuO2f9vCulzGX0SvJ2it6oU/0LMXNadm/ji6vStbyWREiquCnmPx0dLhPE5M=
+	t=1739276652; cv=none; b=fkLgRYovEeW81X3hLJoSdXD+t0TZ6OrGPBshL8pIInQGWNBwhkxe00nqsCkyehtLALDyaqmkj9XmUdVH9vA/qqG15J9MkFRMJz5k7UXpAvUrmHQVwe+YDmX6tzaiR+gVeCqNP6SLNWTCUmxjmx/dTs2m+xhHXBXUUM+DEL6CeiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739276524; c=relaxed/simple;
-	bh=BfIXfczMgZy7nn9Q+vl9/VGEEF/yZHOnQ1Ua/6Z9a/s=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mf3Hjtkye+DoYd7KFe1hmfN8uFuX6nHt6jLeQfdf0amrfpTs2LvRcNDFGzDR3NGy1Nh//QIFi/JSKhBQ6citX8JJCK5jxN3wTMcESp0bAmmAo1B8jrROReMPck9rIRQgiyj+zUb9dLSJR+hD1ry4WdQn1RaFK9pRi27yrQMLRZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mSJzK9Bq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JNTqlzA9; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1739276652; c=relaxed/simple;
+	bh=uXAFJ/LwzYRrcDtUQE209CGj2/5uQ8Eys/gwI2mdgVA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bkDfVmawbWYCAFpmOs/HPxBOuaMVVxPNshidCFxl/5hxwN+pyXumigRYQL9h2dYZ9k4T2DMmT3qHi4N2j/jpwVpr2kdD2YOMgbQ7IhCut132xkDSNcxKmEIyC4xZPT85dYWJ3/uUMX7/wdiy61NcHzuXPo5Js0shcAN2aqZNjZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eal9mzv8; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mSJzK9Bq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JNTqlzA9"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C89462540139;
-	Tue, 11 Feb 2025 07:22:00 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 11 Feb 2025 07:22:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1739276520; x=1739362920; bh=rWRxD4Z4si
-	kQpyRMcfqhvWQLTrjAolV1vpZjdaQQTTw=; b=mSJzK9BqhrMg0uGxcmbpDJnK5g
-	xXG7DzckJKFptLz0WHo9IP2lggneQC1mqhGVtXkkBbmA6HNQY7JydXP61E+oWh2r
-	FBj9i9zwWt+9sda+LmMOxbFuqdzqBwnyyXxDh6XvRkYD5q9hRs0BONWakIPQjJmV
-	xqhoASEuBHQJOZNKaE3hJl5zPo+e47XgGAYg2O83Z3rdNimMgjHyWc7LY7raSyLd
-	XQUPHdy9/nnWa5MqfGdcG+qD3n5+o5+vM1QmN9gmoJN79ZU0hX6Nx+ZXiRUgy8XZ
-	PesLlfj9PU3xsSPJUI/pQuJtHklfvIVXGlG+QBs3S2RHIgsZH5ql+B7KFiUA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739276520; x=1739362920; bh=rWRxD4Z4sikQpyRMcfqhvWQLTrjAolV1vpZ
-	jdaQQTTw=; b=JNTqlzA9tPWsHUqc+6FKOvg7UBmYCAz/kNOBSwgnHcvYz5z0VJw
-	22J0vuGjkeXKapnrSKQikkN//sw2n7x2jByoaKsX1MfM8jwxxb1Ai8JUWErYY9zH
-	IppnOXB3KWP4fGLcPxtNkzFCqfQsYFBBWxJbooXLC7uBLEfiyyqFjXH0AKX1p7Td
-	kdWK/ElbUSMahX2d6c5vYGeLX5xgid3ugtoYHgSJCoFn6CNkXyvGvcssT+XD8PnZ
-	YF9xGj+zHXmJRonhdfjM8kndnXzpzODsO6hECWrBGpLwy+ZvaXPGFVDuB4yor+XU
-	ZX2doEafS1EWaBQybcBvaUXSnB7je4W9U2g==
-X-ME-Sender: <xms:6ECrZ6sEqDLNr6LwfdZTrYqquQhXNLi3Bm6DoRuMyfwwwYc3BAPKWA>
-    <xme:6ECrZ_e6VWWc07XIZmV7T1f9ncsSaWYgAc39L8TWH-rh3oCIRI1ITcSrHUiyMQ-Rw
-    64MPQYB7gIeMmIZaQ>
-X-ME-Received: <xmr:6ECrZ1zdjrC_IpKpTWBtY8XZoPpZfDp_394Q84iznNL4up9-h4hrw3iko6_olG38nM9LWnA2MDLltxDvOB5oMWya9fpgno9UxWOnhUA1A5auKrUh>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegtdellecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:6ECrZ1NUaKXhzGJRQQHJCtFTaCPY_RYTZC7mhQUMDRo9VAgjekXBUQ>
-    <xmx:6ECrZ6899htEtjjN8ilbcq5nI584cLwtijc26aRPNa0BnnC0MB_pHQ>
-    <xmx:6ECrZ9UZfkOoPUcq5mGDrILIzKrShT0HEJgsuBbO5G2k6gVMdNkdog>
-    <xmx:6ECrZzfv3wBBtHIqA7BMp2-rqsnQOMnWfulkNIYi4ten9wWLf2_HnA>
-    <xmx:6ECrZxYFvvFmFYJa4SfQEtBssp3wOpxoweczTSZ3JU9V4aHY9RU3JJUN>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 11 Feb 2025 07:21:59 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 01b2d97d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 11 Feb 2025 12:21:56 +0000 (UTC)
-Date: Tue, 11 Feb 2025 13:21:55 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com
-Subject: Re: [PATCH v2] builtin/refs: add '--skip-reflog' flag to bypass
- reflog migration
-Message-ID: <Z6tA4zC4WhdAVbPD@pks.im>
-References: <20250207-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v1-1-7d40f3b4e30b@gmail.com>
- <20250211-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v2-1-991a2ec9a796@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eal9mzv8"
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6e4505134c4so47452176d6.2
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 04:24:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739276650; x=1739881450; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=B3oNWs2MiL26yq/YqypcX7QGm4I/zgQmYWtPVT/9vUk=;
+        b=eal9mzv851F/m0hx1t14xlb0q9bZ9dpHjyUrjLqBNBCENurTl48mYVWALBzsSZAt87
+         2mRMXORSbDsLz0w+hAeH13QIVLh+wyZjMSt2WJMK+ZeIT+m0KbqXbqJEh63sdaA8NrND
+         tMeR3K7IT6BnLdFrqR2X7DJ8mcimZ2xbr+zcoZ8DhAhMU6/onTwDVRZY2P+qJ4k3wRdC
+         TZAYNeKKWZN5QQMpPeJi0c63lKXedmVJRyJykTwJqJaGDKlqh/ApT2OKcOLfponZmSfc
+         l0LU/DK+W3W2M7h7d6vZeUEyM4i08gaqXA2fz6yLci9APvQ1a7Y/j0eGQrDdYABhG/es
+         t5AQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739276650; x=1739881450;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B3oNWs2MiL26yq/YqypcX7QGm4I/zgQmYWtPVT/9vUk=;
+        b=QZv0SaJibmYnnsQAeCQfGZazon19VjsiFFniYxIdzNquJLUpkIVAvDSm93/T/g94dP
+         GGbFAN0ay0u/WmRFaV1E0MA8CyBDioL0PYhSeDe+LIDwA7oq36zQUQk6jOHXr26rlllY
+         XjRGrAh4GjuJy6Sa83A9l+qb3XaH59DYUn/8wImFbSohU/oL4522fhLeQBFKYoHV2es2
+         K7A55RSmGmIyzjK08Iwu+ImBLRT8wB3QdQaM5/hDiu8bsOYGBLk3a9RRddXG3Gp73IM3
+         t689N1jGy2c131xRj+vFgh81DCWUMaEGxM3GccTsjsLczzOytQE91fhyVI5sIYEchz5N
+         bKww==
+X-Gm-Message-State: AOJu0YwyB5iSYxWHdJTtjC7blWYA4kPpEP2pCIjSVsTQR7my5aEXfihX
+	MadyG+feTGxuNOgOk+Z/teZPiWwnKzcz8NGntcIitImEm3WQu6M/8UV9HBUNOIhzSt8lDYg+3GI
+	s62hMVLriabrxss3mhTTVOELnRojt9ihcBkpM0A==
+X-Gm-Gg: ASbGncu769QNGogzdhsxw9BKid24OLZDBRp7nM8zZPQqL07SBNpqnuamwXbBeZkhN1h
+	ZTkVeI4oZp9Z2VLsXq0SU/rATvmkugG2JdGi2i6nQDPQqV3D44foc+O55737gIRWg8nNxIBFrbQ
+	==
+X-Google-Smtp-Source: AGHT+IHr/8KmuFzQI8BNHSGyUzghh2qcSqQhxSBu7iLH6SW3IG9yH6/McXb2Tqr9JNylxVzGFxQd/SMUXVXbDIXrZp8=
+X-Received: by 2002:a05:6214:1c09:b0:6d8:b3a7:75ba with SMTP id
+ 6a1803df08f44-6e4457776bdmr270984976d6.45.1739276649741; Tue, 11 Feb 2025
+ 04:24:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250211-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v2-1-991a2ec9a796@gmail.com>
+References: <20250210074623.136599-1-ayu.chandekar@gmail.com>
+ <20250210074623.136599-2-ayu.chandekar@gmail.com> <xmqqzfitbuy1.fsf@gitster.g>
+In-Reply-To: <xmqqzfitbuy1.fsf@gitster.g>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Tue, 11 Feb 2025 17:53:58 +0530
+X-Gm-Features: AWEUYZmhCMNfzjtHLf0dFBfyGB37779LiA-05bkErsCiCMXsHc8kAkW2iVs7uiY
+Message-ID: <CAE7as+YPKuBd+ztBerim6e1kZXZwUHdb_qjcMfZSBa4LkiyJow@mail.gmail.com>
+Subject: Re: [PATCH 1/2] midx: show progress during QSORT operation
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Feb 11, 2025 at 12:42:18PM +0100, Karthik Nayak wrote:
-> The 'git-refs(1)' migrate subcommand, which transfers repositories
-> between reference backends, currently migrates reflogs by default as of
-> 246cebe320 (refs: add support for migrating reflogs, 2024-12-16).
-> 
-> While this behavior is desirable for most client-side repositories,
-> server-side repositories are not expected to contain reflogs. However,
-> due to historical reasons, some may still have them. This could be
-> caused, for example, by bugs, misconfiguration, or an administrator
-> enabling reflogs on the server for debugging purposes.
-> 
-> To address this, introduce the --skip-reflog flag, allowing users to
-> bypass reflog migration. This ensures that the repository ends up in the
-> expected state after migration.
+> Hmph.  If the implementation is correct (which I cannot tell), this
+> needs to explain why it is a bit better than saying nothing.
+While going through the code, I noticed the TODO comment: "Measure
+QSORT() progress", and I thought it might be interesting to explore.
+For big codebases, being stuck at zero would make it feel like there's
+no progress happening and that is why putting a progress might be
+better.
 
-Thanks, this version looks good to me.
+> >  static int compare_pair_pos_vs_id(const void *_a, const void *_b)
+> >  {
+> >       struct pair_pos_vs_id *a = (struct pair_pos_vs_id *)_a;
+> >       struct pair_pos_vs_id *b = (struct pair_pos_vs_id *)_b;
+>
+> This is a compar callback function used by the sorting machinery,
+> which is called QSORT but system-provided qsort() implementations
+> are not necessarily quick-sort [*].
+Oh.
 
-Patrick
+Initially, I was unsure how to approach it, but I believed that
+tracking the highest pos value seen in comparisons could give a rough
+estimate of progress.
+However, as you pointed out, this assumes that qsort() processes
+elements in a structured way where the highest-indexed element isn't
+compared until later in the sort.
+I now see that this isn't a safe assumption Since there's no guarantee
+that progress would be reflected meaningfully, this approach isn't
+good.
+
+Let me know if you have any suggestions/comments:)
+
+Thanks,
+Ayush
