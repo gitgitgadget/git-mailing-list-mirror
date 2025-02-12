@@ -1,130 +1,146 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BF21DC075
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 17:29:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8E320E310
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 17:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739381396; cv=none; b=uomxBzyvwmg5GZcF875lfBbfAacIFzLLQy09WR5Yd/huPhGjsqh1prIecRdG3YVL6yRa7M3rrho/y1Nb5uV8BIOFzw3hqowSCfcW5x0HNnyK002+WMzZQ3UULucWcHm8DQluty4Ou2YbwMoLRj/f/dcmoExJHh9numLM25MZdjA=
+	t=1739381904; cv=none; b=GQYGmgOzNhfrCa/NSa82adABviyOCw4HfoD61XZAT31tUcqqF4ifNkOOSYxxAl3r7hrm10XQAl9y+UzQAMKMwEqGKyP4LzNDRTo8aapKk/OraV/aguk+LYe2hhYWDV3EnBqR7lNOWU0yQnTIr5E2Okmh8jEF35BWAtjDyHwtV1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739381396; c=relaxed/simple;
-	bh=S7iIbL/iclM4m74klZ/DzgAiyHJSo6TkkwKx+lTpOHc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fAgt+I+oRra5zSr4ZUHfm1+sraF/TWpXEyZgmPKBJChalQiyHCW8t8R+NnYYhnXwPOs9AfqtjIhqQ/6xKTmTOKLKdDXvVVPF8fgXUloGnUkcrp7PmXi33TcJL+0qxC4XKJHuUtl09nzZL90rDR7urzGPwsFnw2PChzsevKLmtqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gKcw+5P9; arc=none smtp.client-ip=209.85.216.46
+	s=arc-20240116; t=1739381904; c=relaxed/simple;
+	bh=qmTuMjcjIYPBagq8NuFgUls8JIMkxA/zavtnifIjhfg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ob83xa7S0WwZdOIjloop+1auIwILt1zg83E1joqkujRPYBduXz+CWrYCuPmASSgqJGwjTd4heVmCLIoGNUxwxLEhCodzCJqCr0/sCHJloi4IsXuFWHLDcuNPEIgW9223BJa01JuI8BpjmOlDPLfFi2zgBlZTuQUymQG9Sy1CSSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gUaPu2bi; arc=none smtp.client-ip=209.85.161.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gKcw+5P9"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2fa2c456816so45747a91.1
-        for <git@vger.kernel.org>; Wed, 12 Feb 2025 09:29:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gUaPu2bi"
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5fc84b7b971so660362eaf.0
+        for <git@vger.kernel.org>; Wed, 12 Feb 2025 09:38:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739381393; x=1739986193; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=R1JbapwZ3DqT4kd3zv5fU2G+7mQDGvo04g6CkoGRAww=;
-        b=gKcw+5P94exeSmkn+0bjIMEOKiPYP/grmT1ekbSAftT+GlQ4nwpOdBvAshd0xnGgeq
-         yd6cxMXXJtY3qq50BW0nIQwWQSgpd4SgFONjos5Uznok8/eGZudRydthQWCIZg3aGXsz
-         ABmr+2iuFBi60kFj4KZiVKVHFhMe7TA9oYsn2Qeoeq+ml56TONlfSD1n1xF/4foOMnBX
-         igdNy9gdDjCVc88lBPFznN8dr11I0zdsWAXSTCCKFVpbk8KrE9aSN6KiVgMZcVr+nqr3
-         0CifIa4x53e66S0mgNSU4MXxoAL8kXaD0RwQ/021whNArvphsvQI5VnaqZAeRGJLDCIi
-         7lmg==
+        d=gmail.com; s=20230601; t=1739381902; x=1739986702; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zIeXvefNHPckCa8UlOskMtwURIz9kaPCK9b8JLQhm9M=;
+        b=gUaPu2biSzhqpH64awqdA/uucKCyepNW4bixPND91d0MHdRnsTE8/E2kM2tlgsnXIQ
+         ekNs38vQLnybZmUuTnGt54yzgrGpePpNC3ZYa4XeV4Sd/SQavnr953CtZFnLTmYCCL1a
+         +yhxnl5O6RJoits4lxFUNhVYYoIKVeKQw0F7zApyX348iXuR/TmO1dyl6I7ajGtOCSdF
+         CLW+Ti7uz+BEFWrLqiy3l4qzKBngMl+qW9Jr0Uy/dcO61vy5/rZJzmGkPMZT6ldIxEoE
+         e/nfWCSb71o0BW69G+3pOjwJWX9+Ln/0oU/2gIGTcX9oS88s0nMH3cLSwsVXPrSi7hI0
+         Q7LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739381393; x=1739986193;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=R1JbapwZ3DqT4kd3zv5fU2G+7mQDGvo04g6CkoGRAww=;
-        b=pBFHxK2UXYwfgc/YeAXZAj60z1TFyTAxH+HKR+OaT0hoJ8DUMpDqbuetqZa3U2woQS
-         LPdU0SvqaYXmnRrJ3USTBlwgt3D4GaemaZwIkIgF+/7c34HBk0pJ+wPVOobsWx7Q+7zi
-         EndXc4UkfhiuXvHRnGpNw5VB9Jc94gq5yy1x2A9oHDkwxPVN5z80Fua+SNmoXghkHJWh
-         s+BcNOeytumT4fTcq20qpeGWKh8Jn4cGsZDvM0BmTkrO8sWr4U/3M6ElBj2kdvaDxqon
-         iUkWoiCuv3WA7fu/WU92la41V0C/5L6NjZmboIGfL8gt5nSNEJ1K1rU9WLBKJX65WgD2
-         pGzw==
-X-Gm-Message-State: AOJu0YxsFHsQ716UiIehxRJJ7Qbryj3RuQ2Sg9fsaWZghZBl9z60WUQb
-	OAO7+hWyoziNdDF19Quue+FKukXuEn4baNx7D2nqJMUnilrbG89KnJSZf1nk
-X-Gm-Gg: ASbGncsmsziIkEAB2nLce71P/7FdXf5eJvFJmKGEGRrPoxrpsKcGtK9SLpmiC927Tsh
-	RSvsSXsJRLZCawoh4ZnyuZ6nvZxE7HMPii//ql93lO1D56/GBrLOGdPL8DgMZ+K7Tv+Osqlh2Xm
-	4Ze/RS36P/a9+HNlGNAqkN9gkxlnTB4pkOZ/3N9UbL1Hn26VHRR33FLIQMdHHN9kdYg+wKImrSU
-	fUMaJ8/LUf5uR4YHF24rEVRXE5UE2/YVdosfh9CHIY+JINQAlGNp1CEXmIi7D4122HJ6qOCKNyB
-	GzR3ES4LCYmv9SlKu8Ff0w01qRcHc0o=
-X-Google-Smtp-Source: AGHT+IHjtOq4ZbYXGe594MZ8o/t2c19m1B35cisUAkZJ/IjlD9ZA0ZoqeMCmpwVkW+r84J5+HpEnew==
-X-Received: by 2002:a05:6a00:6c8f:b0:732:2170:b68b with SMTP id d2e1a72fcca58-7322c0947ffmr7059117b3a.0.1739381393114;
-        Wed, 12 Feb 2025 09:29:53 -0800 (PST)
-Received: from auto.semfio.usp.br ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ad54bca7d0csm6265668a12.58.2025.02.12.09.29.51
+        d=1e100.net; s=20230601; t=1739381902; x=1739986702;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zIeXvefNHPckCa8UlOskMtwURIz9kaPCK9b8JLQhm9M=;
+        b=CtlxO6F+DsSjzXyMr9nOV6j4hqb0uxsdY/6i2T0iAqdftpSPD7VTbY9+/Yk/jjNUNl
+         R8gURK20XmgfSpCEXIf0hPA59MxHgh2m//F7gipO6QLwlIVtxsk56pqI/eqH8k/e1jlJ
+         BlGRKjn0b5vS1xgGuiSNtx+kpAKiJPgReVdaWpShtMEmFZMiOh/V0eSUGpaEoIpci/+t
+         Er2AXaMDQunUIURwObRPiX8uzVQdFgV7dsbIDj0dGrfPbG+SeDXcNyLtlLUKJ7B8o/DZ
+         757hhYTzY1RYaU/H0zSTpqPRDdap84flZpIRHkAYLfMaAgWlNU3c9Hru3JBm3Pkf/R8r
+         rZrQ==
+X-Gm-Message-State: AOJu0Yy7LGfLHYeloR9gAYi/sZii04I5TmP/VXFtlNsFBn7KaZT6KYM7
+	xzDpy9VJJlSL1t09+zcZuPRmv7+B8Y22kjmcFBiSdtTurFA0K8JfliFIjg==
+X-Gm-Gg: ASbGncvYZtqJp3GHEUBMN26wgZpHjVJYTPwbwGvcXDo3vj/g156zfH0zIoeL39JBTVn
+	pqQ2xN7sk6MJRkCOJNMYXTfRST1z2Mwys4j1OwtapVZ+nzvr6eUsDTbpIiA3n20KCd4L0DzAhlM
+	LDyBLk0zkA6ROGkAvpq+imEEUlxn8s81ga/fEOzoclXGv41TES+9KjckN9zRnmrXTWlnrVBHJVY
+	futmBHF3qiALG02/6tNk9btpfliKiot2+DTEVW/LwlfuN5aUou+uY2IU84TrCrYhXREJjrcGa+J
+	VRAiQjYw
+X-Google-Smtp-Source: AGHT+IFA3gEPL3kGt0cukMwTSGj/VyfbIzFEos6pbgBkJYNDDeQoMtyAc8fEOsD5Mty7QehuJoRt7A==
+X-Received: by 2002:a05:6820:403:b0:5fa:69fa:a098 with SMTP id 006d021491bc7-5fcafd012bfmr84370eaf.2.1739381902430;
+        Wed, 12 Feb 2025 09:38:22 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-5fc7ecf380asm2889819eaf.19.2025.02.12.09.38.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Feb 2025 09:29:52 -0800 (PST)
-From: Lucas Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	Lucas Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC][PATCH v2] t7603: replace test -f by test_path_is_file
-Date: Wed, 12 Feb 2025 14:28:16 -0300
-Message-ID: <20250212172909.21257-1-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.48.1
+        Wed, 12 Feb 2025 09:38:21 -0800 (PST)
+Date: Wed, 12 Feb 2025 11:35:18 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v2 1/3] diff: return diff_filepair from diff queue helpers
+Message-ID: <6we74f5rgmhgu2gfv3x5qi6xdyad3erdgcjaxt6tb4czxbko45@b6b6iq6uo445>
+References: <20241213042312.2890841-1-jltobler@gmail.com>
+ <20250212041825.2455031-1-jltobler@gmail.com>
+ <20250212041825.2455031-2-jltobler@gmail.com>
+ <CAOLa=ZRssYP8U+kyTYdUY_-WGCLLk4mVxQRbgu87g7AdxPJbZw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZRssYP8U+kyTYdUY_-WGCLLk4mVxQRbgu87g7AdxPJbZw@mail.gmail.com>
 
-`test_path_is_file` provides a better output when asserting whether a
-file exists. Replace the occurrences of `test -f` in t7603 by it,
-facilitating the trace of possible test fails.
+On 25/02/12 01:06AM, Karthik Nayak wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > The `diff_addremove()` and `diff_change()` functions setup and queue
+> > diffs, but do not return the `diff_filepair` added to the queue. In a
+> > subsequent commit, modifications to `diff_filepair` need to take place
+> > in certain cases after being queued.
+> >
+> > Split out the queuing operations into `diff_filepair_addremove()` and
+> > `diff_filepair_change()` which also return a handle to the queued
+> > `diff_filepair`.
+> >
+> 
+> This patch keeps `diff_addremove()` and `diff_change()` while
+> introducing two new functions which return the `diff_filepair`. Just a
+> thought, why not replace them? The users `diff_addremove()` and
+> `diff_change()` could simply call the new functions and ignore the
+> return value?
 
-Signed-off-by: Lucas Oshiro <lucasseikioshiro@gmail.com>
----
+This was mostly to avoid changing the `add_remove_fn_t` and
+`change_fn_t` types that store `diff_addremove()` and `diff_change()` in
+`diff_options`. The `file_add_remove()` and `file_change()` functions,
+which also can be set in `diff_options`, do not ever queue file pairs so
+I don't think returning `diff_filepair` makes much sense there.
 
-The only difference from v1 is a little typo, missing the t before the
-test name.
+> This would be messy if there were a lot of users of `diff_addremove()`
+> and `diff_change()`, but I only see a few callers. Wouldn't it be
+> cleaner to just replace?
 
- t/t7603-merge-reduce-heads.sh | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+Patrick has suggested we avoid using the global `diff_queue_struct`
+implicitly. Currently, in the next version I'm planning to keep the
+separate functions as `diff_queue_addremove()` and
+`diff_queue_change()`, but also accept `diff_queue_struct` as an
+argument.
 
-diff --git a/t/t7603-merge-reduce-heads.sh b/t/t7603-merge-reduce-heads.sh
-index 4887ca705b..1f8c3b7ccb 100755
---- a/t/t7603-merge-reduce-heads.sh
-+++ b/t/t7603-merge-reduce-heads.sh
-@@ -52,12 +52,12 @@ test_expect_success 'merge c1 with c2, c3, c4, c5' '
- 	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)" &&
- 	test "$(git rev-parse c5)" = "$(git rev-parse HEAD^4)" &&
- 	git diff --exit-code &&
--	test -f c0.c &&
--	test -f c1.c &&
--	test -f c2.c &&
--	test -f c3.c &&
--	test -f c4.c &&
--	test -f c5.c &&
-+	test_path_is_file c0.c &&
-+	test_path_is_file c1.c &&
-+	test_path_is_file c2.c &&
-+	test_path_is_file c3.c &&
-+	test_path_is_file c4.c &&
-+	test_path_is_file c5.c &&
- 	git show --format=%s -s >actual &&
- 	! grep c1 actual &&
- 	grep c2 actual &&
-@@ -75,12 +75,12 @@ test_expect_success 'pull c2, c3, c4, c5 into c1' '
- 	test "$(git rev-parse c3)" = "$(git rev-parse HEAD^3)" &&
- 	test "$(git rev-parse c5)" = "$(git rev-parse HEAD^4)" &&
- 	git diff --exit-code &&
--	test -f c0.c &&
--	test -f c1.c &&
--	test -f c2.c &&
--	test -f c3.c &&
--	test -f c4.c &&
--	test -f c5.c &&
-+	test_path_is_file c0.c &&
-+	test_path_is_file c1.c &&
-+	test_path_is_file c2.c &&
-+	test_path_is_file c3.c &&
-+	test_path_is_file c4.c &&
-+	test_path_is_file c5.c &&
- 	git show --format=%s -s >actual &&
- 	! grep c1 actual &&
- 	grep c2 actual &&
--- 
-2.48.1
+> The patch looks good to me otherwise.
+> 
+> [snip]
+> 
+> > diff --git a/diff.h b/diff.h
+> > index 0a566f5531..6ea63f01e7 100644
+> > --- a/diff.h
+> > +++ b/diff.h
+> > @@ -508,6 +508,21 @@ void diff_set_default_prefix(struct diff_options *options);
+> >
+> >  int diff_can_quit_early(struct diff_options *);
+> >
+> > +struct diff_filepair *diff_filepair_addremove(struct diff_options *,
+> > +					      int addremove, unsigned mode,
+> > +					      const struct object_id *oid,
+> > +					      int oid_valid, const char *fullpath,
+> > +					      unsigned dirty_submodule);
+> > +
+> > +struct diff_filepair *diff_filepair_change(struct diff_options *,
+> > +					   unsigned mode1, unsigned mode2,
+> > +					   const struct object_id *old_oid,
+> > +					   const struct object_id *new_oid,
+> > +					   int old_oid_valid, int new_oid_valid,
+> > +					   const char *fullpath,
+> > +					   unsigned dirty_submodule1,
+> > +					   unsigned dirty_submodule2);
+> > +
+> 
+> Nit: would be nice to have some comments to describe what these
+> functions do.
 
+I'll add in the next version. Thanks
+
+-Justin
