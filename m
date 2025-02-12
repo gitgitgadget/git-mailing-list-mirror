@@ -1,45 +1,46 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
+Received: from mout.web.de (mout.web.de [212.227.15.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E22B2D600
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 06:17:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F8E35973
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 06:18:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739341074; cv=none; b=rY3jytyWOvFGCs4/eF/u45YVNQYdnT+Phs5sjbnnWkuao8RQ17buYX6aWSe6Dl0KEPil4imDQoFCkJUrMK5xjKGXAw57QNOVmc0bBfFHCMBRZ1AJfGgIZd5K/hQgxB6pYITtjJWBO9xPNMyWUYGvpOUIvugqDCSLGSf/+MZHnGA=
+	t=1739341110; cv=none; b=ubr2+k1Lyi5HCBZSk0eaxGNB6vmN4TIeSZZ0RwxHGjf10jpXW0UYm0sFMw2g493oefS6xbjjefatXLrzD3MBX6Ms1SK6MXxEDqooUh12vByasFL28zj0SZfomAJnaTXxi3NPaA09vsIK/d6DBatbKKKF3kJNuwRerbjciuVOgfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739341074; c=relaxed/simple;
-	bh=aMdss6F2EpwsBculbfOvzbRRfiiwk2D7tIGKYVL7kVQ=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OSw57pd29U6MOm4fUsL0fDSviyW814Zm1HnHyOxoD1nXHXUHwdhzWAKO36Dm1qBr9CcbXBddn1V8NjGdLbRvUe3DOF3RobD7hXoI4su7LwG0iJ/lAjs04hp34Ha4Qe4CbSiP+Lq4CUNu7VwE2qwAX68GAFH0ssQlmK2A8Z+Tx6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=lAuYGJyY; arc=none smtp.client-ip=212.227.17.12
+	s=arc-20240116; t=1739341110; c=relaxed/simple;
+	bh=xlJsAvyNQcND2kjIXq+V+ENdBcGSWANbalk5toBicEI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UEgBhefkvkskge+CeQ2lAsP5CKeL4NBAOORL4llYj3DQZwH2ntLMy25Rhf610jGHcRwDfu5nwiNzatWm7ydSORS/SoTreDxA8Rgk/l3LqhTJGDE47MIptichGs1wBxYkeNBl1ChItAyvOc3G3CGCMc9nGvypEXyg/uCIKoG/v1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=KTmuBF0d; arc=none smtp.client-ip=212.227.15.3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="lAuYGJyY"
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="KTmuBF0d"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1739341069; x=1739945869; i=tboegi@web.de;
-	bh=sAOGUqYb18Q6UJv+OLhYMG6I95zSdw0ZH5M7aGG196A=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:Message-ID:References:
+	s=s29768273; t=1739341100; x=1739945900; i=tboegi@web.de;
+	bh=xtvYqhO+cXOeL5zlF8sEg4Xtp0mLMjEkZVg86+a7HWs=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
 	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=lAuYGJyYt35zwNmnswBMQ0GJEQ8Im1vy7GCdjNmisTUBLNxbx5M4BehSkG6EYfNL
-	 ZfZDzGOsSdYMgg0bN7UMFNEMuNDrM4N/pmTU+i5h4mISg0lv4kS0FczhIWgVyh49J
-	 T+kYV4hlct4Hu3U7T38W0QU6UGXbrplto7we/U9DCDTYXRxB51MSXDh8BbLthWmAH
-	 fq5L4J6thKSkbGmt/HURjnXdz7FbFqf7Vqrg+RR4rGHW6L8Qqx4+eMu3P4nwKoPnH
-	 1Ga/FvTCJEnYMKywqvHqOAHP11dUoMQWe+li+oN32k7tnkTqBC4u6rZ5WSiN0F4eI
-	 RPDSNkrbiEIt1MxjFQ==
+	b=KTmuBF0d2jWLNwvBGncr2ETx02Y4CpkcZS2YOjzBmTrvyfARZOcTuhxP9D5LQKKM
+	 dZQRikDf+oM21c3bejJLoOzWZ3FQL4AEM8Dd+AdbicGS4B9pSen7Cp4PyvyB3IbFi
+	 rSBqxlyomIO3LiJn0x9bjvt22jz0or0HXc74+i3w9RFYaN9GqQ+0znUJNezL+uwhy
+	 qenRdgUeJj+pfV/wYmgcqMCN2JNcCl6sPD5BXHs/7cfSsPMoOXd+nAEk7Bf1aX318
+	 4ZcVUAK1T/m78S0i54eNYdsKDMHOlappKM6Y7/7pp0dn9pI1x42r9OfKmtHO1D2sB
+	 Vh+6ZRb+rJagWHQkKw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M1rTG-1tft412EWW-008qQJ; Wed, 12
- Feb 2025 07:12:37 +0100
-Date: Wed, 12 Feb 2025 07:12:36 +0100
+Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Ml4B6-1swtHM1qiy-00a6X5; Wed, 12
+ Feb 2025 07:18:20 +0100
+Date: Wed, 12 Feb 2025 07:18:19 +0100
 From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-Subject: Re: renormalize histroy with smudge/clean-filter, again
-Message-ID: <20250212061236.GA990@tb-raspi4>
-References: <20250205214726.GA30202@raven.inka.de>
- <20250211235707.GQ30202@raven.inka.de>
+To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] doc: clarify the intent of the renormalize option in the
+ merge machinery
+Message-ID: <20250212061819.GB990@tb-raspi4>
+References: <pull.1861.git.1739307712372.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -48,134 +49,73 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250211235707.GQ30202@raven.inka.de>
+In-Reply-To: <pull.1861.git.1739307712372.gitgitgadget@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:U8aYUQcZXDQIXszhVR6vwHwKXU/6ZGNQSZBZSapoQMEN1O6Z8t3
- bymf4hxlDEcJjVZS7eU26894BtVDpDHZDB2+Gyj2N6X5A5Pr0Q6ko2akdSWiNDYCFzmep4T
- 0DpQE4C7ekllGLrdmgPveZ08v1Q2f0H2bEOzd5N6Z5F9xmfes+qlZAAnI522+XqT76G7tSS
- b05i2w6rs6H6niA0sqOmQ==
+X-Provags-ID: V03:K1:/I3jOd9nqLdWDFunmEZlvO9cBWRLmax+/ea7BRs+sz+9OKfPq8I
+ dCBFVI22YOBQe0HrAOjvulAlk/NwsLePYZvcd8p7gZdGG/qr+qs5CUx9yWmXPWSq+Yg7KXQ
+ lk/VJ8+lC5q2TwtmMktliFIFrNL2+khhqqFRyfe1CCbAfPE4URUPq1veHG1+PtRR8fZIV7N
+ 5rFVrPwh1atG2wIv/AysQ==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:ijKMs0Gfpd0=;q739f3s/mE9lPQeOxz/yOqXBGn1
- TLJRuvv0hlRD/6svyuN/a32KAIlu134opRQE00U9+xUkN2NpSHbKygKwdY3cJd0O/LmqnEPbU
- Wf5vLzg2CX+kbCm3mLM1MogFrqSTwPyHag7d24YJ8sIbPcjC94a8yWuwdo2+oBKx1MB7IeU+4
- 0RTIJQoBmQzRU6fBU3Tkzp+9jFrK9QMXlcJI0ZY7RW6bnHhgFss8587IcFyj1q7WNPnntUj0L
- XYrt9JE3lXTXhVVaO8pMiDZ63KuKODZhjdbgYDJGOkA1f8znSYHu+ADYGq/Dh8NgmrAZyZyKz
- X3i7PiQxXl9/4UcLlpMOH1GJ3Xgw/yQ+HPSYk2m+/1Vo8i2Lw/6vSk1oqCw1YB3fso+RH+gEz
- nfQpwJkDNuUhCkjxHg8X1LZHEFYxDcNdlvfkY0f6344VXq+iqhrqPWHrGknYoQPFNGg9++Nox
- TZSPZNJuwZ17oDVAxyKn8rywIm68A92JWtWVY3Eiqu4cuLdTGQrr6g8IpmSCZft8PX6nqgs+i
- SKt72bLFLXnldYPviD8xftnxfqrVnQaiA8ziz1tihJz2TFzxUwTG5u7QgPix30LrPsDwsYYG/
- ezZ21SAd86v5JQYO9XDSpCbJjm3gmU8akuq04U4049iY5Y/setXwrNZ1tlkS7TyQ5CrxW4gHM
- syfJVvvTkzr3vMYHyfyZPEs1rHLwCafrGz/g/E4tVtuDIAUMDeThLhiKL8qSQVSno7eRaW8cj
- F5kd2uoqoBf4Zt7EdZ0Eb+8hVTJL15Yfz/M8Zm1XPkYAd5ST5jIwcka25gqlUQ6KbegpfZKcr
- hR8ETN8M5wvorDCJElwlDRtBzSpwIi9zhQ/QiyACleIkhfLQgDLuwE2k4ToCQU/gEqvwOdWTB
- hPqyLGJI3hr4iHVdyx5Zf3H4VzUiVO9jAtgmSdB1yOLWfPpEhGxOwROlYibrgxpVg59sK7OsR
- 6DXA8gdZsFqcIo+WmaWnAUoPcE8LvWB5yD3kOLOeJlnSafBFhrpyLSoOKMrgMvlBmKLKuIIy5
- oiUqNdEiaOIzG8hqWwzE6YF99FwerY3X3ZpI1O3YPQYAJPMNWcuJK5v9G5GZo/HC2XCNLWxRJ
- wZkTvMK/bfs+/E+pwXATUOLq0S9QUrh0zO67Lxr1v2nHKREvTLKihPdWystNbKMs66da0LOOO
- OSZpXmb1G504cLaRduFB6wZp61W/un0HAWB2+wRuRWJkFULj2diP89QR2M9IZHYFw8IhkJCFi
- fXreRV3XzCGIV3Td68A0woTp40dJJXm8iaefaJBSk+cA/A3oWJYTJyrQAu8VDgtNOiyBqtzNG
- f+CIcW39nnaJJ4kvnI8o2snBjtwRYUPCvg57g180AgKyPZj9yXHNaR/VTar8SxRuSp8NxTJL6
- b+uVKpWj/RLYnCCJyzOgRr4PrAeVt5qmchLYs=
+UI-OutboundReport: notjunk:1;M01:P0:r0rMB3Lfqas=;n4KGRBBf4gxD1+Pxpihodvzqeug
+ mNUTOq+Q9wtbNtGtwsRfEO9JWqrotWHjdByUFHCeK+JAsrP3ykBdyZanLvmskKDVYomrUnj0E
+ elxYbvpctojbRBqg5WgVM3yBLfQXJ9sh+JlOPEpXq+VftqEupOF/EzDXrkyzH+jPPqpGCgPMM
+ ZAsBSnkW/DTbvUX41AaOXOxiAZojYqmvp/qYg4GU88r071kLtQvZk4X+2k7GGJHp7Y21Y95vs
+ F6/RbvKnZjYBL/aI/uHmXppOGJBL1OIZNEYzgMXRRa6Kmsz7csaNtWoLFi6I1nJVIof5P1+LF
+ qvi24Jx1q3et+DlAadr6wJs1UeWJnTppTaQTFXKZVrL5HSPVrKEHlTvdAw7v8377DHA7hYtiC
+ tpOaO0qmYC+dLRgMELP6e7jIlIqLC41/AJ3Jynsv9/OafIF09MP+IcdMWoYuQDWCRI5gKPKXW
+ MUvvFFWU2rfb9F4An++MXJ8t9liA1lpUlHSGGhFcPUzzDPnJyY/3AlNhC07eDy/DCDM65QTIE
+ w/ZKXd8ynrPJCDQEtLZwrpJ0wue0ylkJuE1pxi3UToDXB8+JSy6ktRC0jgH+Atsx67N4Gg7a1
+ pm8Y6U70unzt+EH0hRwX6qbPAA3oM4pKdDnmPZOVYoBQcyNAMyCjJFE9Q3MItEgNmqc9lqiyr
+ xrmU3uVavD1Bwcz3MBHh9BFtTy3Mmoc2GKnqeKxSTW1GWUXNNmOzZmc33QMVe2YKdG4MLwtBZ
+ jC/E8DORwRmObPBfpGQpI2MWXWTEDWlvFhIZXZtFwABzMeIpai+lWV1kCCn2jJCTt+vHvOZ67
+ CR/B54m9JUwC8oe0/pCi89ISoA91l75duuoDl5Xo3KYxiVhOl34M8jqDyenyrkPKX2qX9KVpB
+ OG6YJ8WvklwHMbBYcn68V3QWAPi3IUkZozbnBuHvaGx6N4+n6Xgedyvvj1Sdm2J7PbjXloY5S
+ qYqim1al4O+/mfh1ewnFkqzGyzDEiZ7glkFvr1tt/H+TEe2iBLJt14/LfXJHxIClRlcnfoQim
+ iN5pMACsdrBVXBHoQzRD79wqAbx+pTCo1oFY6/Ksy3m5Z7YJxVhd1+UyBvRMstqPTh0wESTsK
+ wcQSnObJrFWcg6F6JzPEg/pEpPtnCDnct74AVvtPmisNukpM29NnZjLuiWKvEgX0XKpQOueyd
+ FxP99TN35MXki1FOT7ASVL6yHfxUMDrMBz4NLw55wXC7jKi94GNlusgvyPJR74dKtd8OXXRp5
+ No9Mggb/pzdYF0qREaD6/76t1KdQIQhsZ8FmjSellqgSpuhfAyhDA8sT2NwBojrurbsF0X8CM
+ Zuita5Vey6RHNjXHCsqZNb7O39bbOiByejut7Vyo7ugEGWZU7CZYLztJPcJTgvRsn4yPhL2do
+ x7miFoYgUSyT4pt4mEkk980e8rHLdgkKsuMZxzwP4/SnooN35yxmKiIQ2Q
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 12, 2025 at 12:57:07AM +0100, Josef Wolf wrote:
-> Still struggling with my filter problem.
+On Tue, Feb 11, 2025 at 09:01:52PM +0000, Elijah Newren via GitGitGadget w=
+rote:
+> From: Elijah Newren <newren@gmail.com>
 >
-> Here is what I do:
+> The -X renormalize (or merge.renormalize config) option is intended to
+> reduce conflicts due to normalization of newer versions of history.  It
+> does so by renormalizing files that it is about to do a three-way
+> content merge on.  Some folks thought it would renormalize all files
+> throughout the tree, and the previous wording wasn't clear enough to
+> dispell that misconception.  Update the docs to make it clear that the
+> merge machinery will only apply renormalization to files which need a
+> three-way content merge.
 >
-> - Set up a clean filter which enforces CRLF (yes, for this specific use
->   case I want CRLF even on linux)
+> (Technically, the merge machinery also does renormalization on
+> modify/delete conflicts, in order to see if the modification was merely
+> a normalization; if so, it can accept the delete and not report a
+> conflict.  But it's not clear that this piece needs to be explained to
+> users, and trying to distinguish it might feel like splitting hairs and
+> overcomplicating the explanation, so we leave it out.)
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>     doc: clarify the intent of the renormalize option in the merge machi=
+nery
+>
+>     cf.
+>     https://lore.kernel.org/git/CABPp-BGQ0pc=3DAZ0fdXcqDbhMLbm2xBvi71g0m=
+XAVDagz19NkEg@mail.gmail.com/
+>     and the thread there
 
-In general, clean filters do their work when 'git add' or 'git commit file=
-'
-is run.
-Does the filter do the CRLF conversion ?
-Or is it done in .gitattributes ?
+My first impression after reading this:
+Thanks, that makes sense.
+The second one: Do we need to explain how a merge works here in this
+part of the documenatation ?
 
->
-> - Smudge filter does not modify the file at all
->
-> - Set up git to fail when filter fails, so I can double-check that the
->   filter is actually runnning:
->
->    $ grep -A3 filter..etsfile ~/.gitconfig
->    [filter "etsfile"]
->       required =3D true
->       clean =3D ets-utils -c
->       smudge =3D ets-utils -s %f
->
-> - Specify file as non-text and install the filter:
->
->     $ grep etsfile .gitattributes
->     */P -text filter=3Detsfile
->     $ git commit .gitattributes
->
-> - Check that git gets attributes as I want them:
->
->     $ git --attr-source=3D$(git rev-parse HEAD) check-attr -a P-0113/P
->     P-0113/P: text: unset
->     P-0113/P: filter: etsfile
->     $ git ls-files --eol P-0113/P
->     i/lf    w/      attr/-text              P-0113/P
->
-> - Create helper for renormalization
->
->     $ cat renormalization-helper
->     #! /bin/sh -e
->     git add --renormalize .
->     git diff --quiet --cached || \
->         git commit --amend --no-edit
->
-> - Run the renormalization for the linear history:
->
->     $ git --attr-source=3D$(git rev-parse HEAD) \
->          rebase --root -X renormalize \
->          -x $(dirname $0)/renormalize-helper
+The third round after re-reading and re-thinking:
 
-That will change the index, the repo, but not the working tree on disk,
-right ?
+Yes, this makes sense and lloks good.
 
->
-> So at this point, I'd expect the falie to have CRLF line endings. But it
-> doesn't, so I do:
->
->     $ rm -rf P-0113
->     git checkout  --attr-source=3D$(git rev-parse HEAD) P-0113
->
-> Still no CRLF, so I look at what is stored by git:
->
->     $ git --attr-source=3D$(git rev-parse HEAD) show 873a9b:P-0113/P |le=
-ss -U
->
-> Again, no CRLF.
 
-Just to make sure:
-You want to see the CRLF in the files on disk ?
-Do you have a valid .gitattributes file on disk now ?
-If yes, what does 'git ls-files --eol P-0113' say ?
-What does 'git status' say ?
-
->
-> So I check all revisions in the history. Resut: no revision has CRLF.
-> So the renormalization process does not work for me at all.
-
-In general, renormalization is about the content inside the repo.
-If a filter is applied, or .gitattributes are changed, the files
-on disk are not updated automatically.
-'mv -f P-0113 /tmp && git checkout P-0113' may be needed.
-
->
-> Any ideas?
-
-Yes. The best thing to do (tm) would be to create a dummy repo,
-do all all the operations from scratch and post the stuff here.
-In other words, write a shell script that creates an empty repo,
-fills it with content, and does all the operations.
-That would enable people to reproduce it and look what is going on.
-Hope that make sense.
-
->
-> --
-> Josef Wolf
-> jw@raven.inka.de
->
