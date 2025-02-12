@@ -1,69 +1,69 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECD81DB154
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 03:27:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BBB1E7C0B
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 03:27:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739330843; cv=none; b=Lr/8zpWD5p0/AL/ySp9kScAfY8foGTL0UgLMvFUlVK9mJ55+RjQssSJ+xfNHTuJU5LYDhnmSFcF1YmVedcFQ5UHYLWP2FrcoCLWKwTbRmoPUKdf7kgz5fGxGHWr7hiyOyhGsvJj7a5gLIm2yQpjzc6kNHD1acm9XzlU9kzj5oC8=
+	t=1739330845; cv=none; b=ZfE4U/t2IuOWDzqKWuTSK1szaQTSFW2iBE3I7LJtPwBMjT6ngYuQZGzUw631fEwGKtwtCkEM4D6mau1zAN51eMk/f68VU1m5Pu0MHGKjqvk79wMlPskFa5nPMSEV2ovF3/+ob4i2sO1IV7bUN9ZoIyzsD6vqqJYiqIda5diqhco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739330843; c=relaxed/simple;
-	bh=sA2Fl6EaZ/yJyhqVWnSlz2kiXbSnEIokifLfU1UBcuw=;
+	s=arc-20240116; t=1739330845; c=relaxed/simple;
+	bh=1k6sZFd5SlI1tRrsIV2iTwLP+8Q3ipcVpAKF+jzh+uQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ag5ZnzopDfkPFnv40zk4o3bgP2Jj3huue1dIQ8xB/VSYAuGyDtI3AYKTrVV1u7DhFpKMwJpfBUt7nehu4Yu7P06tNa/FWBGyflaoVMKH4/oJW7JU5ket6n3vJ6KazlEG1b+77XYNhRGY4LBHD0Q340JQUpvimhs0KYZVjWkfGDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bIM1P4Y9; arc=none smtp.client-ip=209.85.216.51
+	 MIME-Version; b=OYeo9DQE53HQMkxQiUFdvg+2tlxY0ogQr2IoISkjODNLFCLb6Xj9/HTmfquwHsoHHbtjaaT6bVWpUbhgZtkQs08IRYYbhGjNuJos2hHqID3Gha14uUMkOwKM9Qr15Zn8w4SiHYmxBOO3XcK2EdAjMfDEXFZaZFXYgJXfOs+P7NA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ae92/Vqu; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bIM1P4Y9"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2fa51743d80so5434481a91.2
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 19:27:21 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ae92/Vqu"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-21f62cc4088so76171905ad.3
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 19:27:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739330841; x=1739935641; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739330843; x=1739935643; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oShxNFBA2whHNuM0znTUdxztBoBluLeuiQwSYo49ZOQ=;
-        b=bIM1P4Y9cGEqBB1CxUC0POHWD5t0MkRrOpg1j8RT1lOcxO9cOK2HQLk1zCFunVfo7a
-         ZzC/oMPMB+lXqs22v2YR07r+7S882KS6HkowDhgmiTlbcWS6XiwkA3M9wSacAKDeEE0w
-         fNg16RiD6AInpsPy6WI1MIWLM6IWAEOxNS5fDCsfYIPtCI458Uz+AucGulQOX0jRPTI5
-         vWd5vlB5N/ew7gUxaEj1IsGGSan1SDI88ekU7h8DVYxz616r+/hG+hmpWE5gKGsMvnq7
-         LVCWk/HkR4AfOS5vAxD4OOi8wbUqC7IhZLMb4xj7d5mAeBsluMr1NzyElWKaI1RUK08/
-         mkaQ==
+        bh=8yLM0t6bi/COjCWc8nMIU3KttU+/DAqFPI83g6CJ4i4=;
+        b=Ae92/Vqujx02Z8ocWVE4lRfkyU5CJcObmekNcAUzF062jWhd71xpweLpL1AON7TOM4
+         rhbhN87WTF1W7iuFB/4aHMK5dILDFz9hTaNE2fi6Qha8fwt/yv8JkzzL1SYESwYxlhAG
+         f2OGdpsCiOLJk9r9T/9Z8Ox47dagKt7JWNniKruRqXdVpnNncG55KicDqwdsFeDKGpF1
+         g1V2bZ5KZHI0DbuaC1OBeSVUEr0CXuMfmb2t3gctSkoLVMyZGaw12noen+srQyxrr5Ff
+         5H1/Xg0IY9B7KFecggICSxB8VpMEHzBt2nV6AiX04zqlGHZ8p4vXbMXxdrVPOHQS5jgs
+         LsPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739330841; x=1739935641;
+        d=1e100.net; s=20230601; t=1739330843; x=1739935643;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oShxNFBA2whHNuM0znTUdxztBoBluLeuiQwSYo49ZOQ=;
-        b=mB7CUMs1/IXniMT/W38/JM8hRvNjEgfIhwHefq+a6mIg0PVDpGAxIR6kQ7Bnnl2R89
-         fpEGe5iTaX1hcyKdRm6SbuxlvC6Kt6DmrZEEOzrR+rYHwtfznDv5baOuLeSnKPsTvBZh
-         8UiPplebLO0afrvbzqDjZmGqyTwgFqs00rTV54LP2pT76q0/a7BrCZzvilBQ43bg0DUS
-         Y0N0AW1GDbvESFlCfwn0Rv6AOGSaVG0YwxNYoJCW1b4DFKqNKpkQJXPVOX43gIZdy07T
-         ajMXbMCFxuHXNIQEMHZan1Ggh83T1QZP0vx9jcZ/E8X0xDHEWVFqOEkV4uKGKkzYm+g1
-         956w==
-X-Forwarded-Encrypted: i=1; AJvYcCV2okToigSH38k4xg6cfHLxH4yFBwzaEbqghBKfG2Q6oUFtw1lTG99I3EMh4kKHYuia8N0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUvr7rXJyWk3xrOhm/UTLCm0rn/f3abF2h0EkmjyNrS1Nbps53
-	MvKM6hs2PT2J60bicRwArJnqEJ77RvwrBcel5wALJzKi/37YaXn4
-X-Gm-Gg: ASbGnctmecioAomiwKkAEOydveL5qYIlESbof8DfrUt3+Pzf6p1mc2a0NgRYw9UPWLx
-	O8fUGGLCYDrhpFUtAarrxkMYRMIJBfMrkCgMy2uPmp4oq8iJDgrKuRmbUFHSp8+nHbyQRCfPn9j
-	ipSB0DNpwMxOFM8XBr9YhLB9zfzXwg01d0h+xvSbpXNjR2SZ+2P+l3WzCpiP5NucttrGsVZUuib
-	V5q05uK0Ipfth6usywUwLk69Z1Eo8rzJj5R8cT3Mu5TB0BgEvrZiXJfMFOokk775euCuxpVKifM
-	CiFVyhrfPKt/mqOJ6T5D2xWjR5d2NcwL6chzrtU=
-X-Google-Smtp-Source: AGHT+IE3NqvCAA6xeQ4EYVYxr7zJtQrY5SIjErltw2xXnScnUSHmK/5N1NU3dW0DNQGuAqmbRSP4jg==
-X-Received: by 2002:a05:6a00:181a:b0:732:1840:8389 with SMTP id d2e1a72fcca58-7322c0a0194mr2425171b3a.0.1739330841077;
-        Tue, 11 Feb 2025 19:27:21 -0800 (PST)
+        bh=8yLM0t6bi/COjCWc8nMIU3KttU+/DAqFPI83g6CJ4i4=;
+        b=R9iV6VqLpGU0ZpWuPnuyHp51W33I9rZGFM30ji5R7zPgKHVZMyJB0DFLPj33trWLX5
+         HQhCs/4POLOmodWsC/TJVJrmdYj4oeV7dJ+Vid0LbLH+HuHlT8eRbhMyd+1xH6Se3w2y
+         48zrpOP8jvjAsZcQ/TBvuaL3S946OU4I9GWuZs7Ol3tOIFUNCnRXfqt8IF55ZtkBijUr
+         ronSRStz42vZoLva4QP6XveQwJVgrYvQOXejwA9Vkd9kIOkD5ySHKYscoDI3Cqd8vY6H
+         RxEQzOoIXpiuGuXANGr7aCk+aRrA9FunduBGQzsDJT+k3NYkkL0kNZ5cvQYQyL+YRmPA
+         q3MQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXV4CgsatyEnvkpoBvLwaypdinutZQV3S8WMGvgKUluZTGNtf3CMkjijfRuiFuwzQPvN0Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyrRkyYlYLPNSBpxNgTuEdSEru6DuPrMYuPz827Z+2QvbROXu2x
+	YJtnXsOK8TCDr4Sw9u7kHtM0sGC9e3/ZJe8XTxAsIpOgzsif/lJuUmG27qTeEVQ=
+X-Gm-Gg: ASbGncsa9pR4BWr6SrpCKKEeKmlQ5nfEZ9uUGNJFdZjE3q4Q/gP9WPn/ha86h3Nufw0
+	e2RJRu21j0McBkjLea1jYdy4ODYwhRfDWPMh0OO+mrbw3WcugnsGCxFEqx6hV6BittWGUDkPkUO
+	XDza7C3juEM0+qtUOspRxQHkY0anAPxVFXkxNXOZs4hQQ7gx2psRZaa+9EJILsi/a/chmKupw2f
+	ubcmHEU1EgFhFfQH7bEEfNsNARkcSKDj0MiD+IG1RiJfzT2ZpakSsk/z9J2LM3zkieHzmM0P6Lx
+	INzjRltnKbj/jbo8NwbQn+e52QMm4WlqNPZii1g=
+X-Google-Smtp-Source: AGHT+IGxvxvChSCF+EodxS7ZWkAiq4e7NNvt2Bn9FEbHB7ZsBeQumRDJ/OV6p/KR8ocv2mkLNjRdSA==
+X-Received: by 2002:a05:6a00:2e84:b0:730:888a:252e with SMTP id d2e1a72fcca58-7322c411a33mr2355622b3a.17.1739330842570;
+        Tue, 11 Feb 2025 19:27:22 -0800 (PST)
 Received: from gamma.hsd1.ca.comcast.net ([2601:647:5580:5760:508a:741e:539b:1c5c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73048ae7f6esm10129577b3a.74.2025.02.11.19.27.19
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73048ae7f6esm10129577b3a.74.2025.02.11.19.27.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 19:27:20 -0800 (PST)
+        Tue, 11 Feb 2025 19:27:21 -0800 (PST)
 From: Illia Bobyr <illia.bobyr@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: Illia Bobyr <illia.bobyr@gmail.com>,
 	git@vger.kernel.org
-Subject: [PATCH v5 07/10] completion: Support --patch-{grep,modifies}
-Date: Tue, 11 Feb 2025 19:26:51 -0800
-Message-ID: <20250212032657.1807939-8-illia.bobyr@gmail.com>
+Subject: [PATCH v5 08/10] diff: test: Use --patch-{grep,modifies} over -G/-S
+Date: Tue, 11 Feb 2025 19:26:52 -0800
+Message-ID: <20250212032657.1807939-9-illia.bobyr@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20250212032657.1807939-1-illia.bobyr@gmail.com>
 References: <20250206014324.1839232-1-illia.bobyr@gmail.com>
@@ -76,46 +76,190 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
----
- contrib/completion/git-completion.bash | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+Long argument names are easier to read, compared to short ones.  So
+while short arguments are great when you want to type a command quickly,
+tests are more readable if we use long argument names.
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 41391..daf335 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1900,6 +1900,7 @@ __git_diff_common_options="--stat --numstat --shortstat --summary
- 			--output= --output-indicator-context=
- 			--output-indicator-new= --output-indicator-old=
- 			--ws-error-highlight=
-+			--patch-grep= --patch-modifies=
- 			--pickaxe-all --pickaxe-regex --patch-with-raw
- "
+There are still test that verify that both short and long arguments work
+interchangeably when parsing the arguments.
+
+Tests where the focus is not on the argument names are updated to use
+long argument names.
+---
+ t/t4062-diff-pickaxe.sh |  8 +++---
+ t/t4209-log-pickaxe.sh  | 62 ++++++++++++++++++++---------------------
+ 2 files changed, 35 insertions(+), 35 deletions(-)
+
+diff --git a/t/t4062-diff-pickaxe.sh b/t/t4062-diff-pickaxe.sh
+index 8ad3d7..805e0f 100755
+--- a/t/t4062-diff-pickaxe.sh
++++ b/t/t4062-diff-pickaxe.sh
+@@ -16,13 +16,13 @@ test_expect_success setup '
+ '
  
-@@ -2216,7 +2217,7 @@ __git_complete_log_opts ()
- 		__git_complete_symbol --cur="${cur#:}" --sfx=":"
- 		return
- 		;;
--	-G,*|-S,*)
-+	-G,*|--patch-grep,*|-S,*|--patch-modifies,*)
- 		__git_complete_symbol
- 		return
- 		;;
-@@ -2239,6 +2240,14 @@ __git_complete_log_opts ()
- 		__gitcomp "$__git_diff_algorithms" "" "${cur##--diff-algorithm=}"
- 		return
- 		;;
-+	--patch-grep=*)
-+		__git_complete_symbol --pfx="--patch-grep=" --cur="${cur#--patch-grep=}"
-+		return
-+		;;
-+	--patch-modifies=*)
-+		__git_complete_symbol --pfx="--patch-modifies=" --cur="${cur#--patch-modifies=}"
-+		return
-+		;;
- 	--submodule=*)
- 		__gitcomp "$__git_diff_submodule_formats" "" "${cur##--submodule=}"
- 		return
+ # OpenBSD only supports up to 255 repetitions, so repeat twice for 64*64=4096.
+-test_expect_success '-G matches' '
+-	git diff --name-only -G "^(0{64}){64}$" HEAD^ >out &&
++test_expect_success '--patch-grep matches' '
++	git diff --name-only --patch-grep "^(0{64}){64}$" HEAD^ >out &&
+ 	test 4096-zeroes.txt = "$(cat out)"
+ '
+ 
+-test_expect_success '-S --pickaxe-regex' '
+-	git diff --name-only -S0 --pickaxe-regex HEAD^ >out &&
++test_expect_success '--patch-modifies --pickaxe-regex' '
++	git diff --name-only --patch-modifies 0 --pickaxe-regex HEAD^ >out &&
+ 	test 4096-zeroes.txt = "$(cat out)"
+ '
+ 
+diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+index ab14b..5f4d6 100755
+--- a/t/t4209-log-pickaxe.sh
++++ b/t/t4209-log-pickaxe.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='log --grep/--author/--regexp-ignore-case/-S/-G'
++test_description='log --grep/--author/--regexp-ignore-case/--patch-{modifies,grep}'
+ 
+ . ./test-lib.sh
+ 
+@@ -142,15 +142,15 @@ test_log_icase	expect_nomatch	--patch-grep pickle
+ test_log_icase	expect_second	-G picked
+ test_log_icase	expect_second	--patch-grep picked
+ 
+-test_expect_success 'log -G --textconv (missing textconv tool)' '
++test_expect_success 'log --patch-grep --textconv (missing textconv tool)' '
+ 	echo "* diff=test" >.gitattributes &&
+-	test_must_fail git -c diff.test.textconv=missing log -Gfoo &&
++	test_must_fail git -c diff.test.textconv=missing log --patch-grep foo &&
+ 	rm .gitattributes
+ '
+ 
+-test_expect_success 'log -G --no-textconv (missing textconv tool)' '
++test_expect_success 'log --patch-grep --no-textconv (missing textconv tool)' '
+ 	echo "* diff=test" >.gitattributes &&
+-	git -c diff.test.textconv=missing log -Gfoo --no-textconv >actual &&
++	git -c diff.test.textconv=missing log --patch-grep foo --no-textconv >actual &&
+ 	test_cmp expect_nomatch actual &&
+ 	rm .gitattributes
+ '
+@@ -173,20 +173,20 @@ test_log_icase	expect_second	--patch-modifies p.cked --pickaxe-regex
+ test_log_icase	expect_nomatch	-S p.ckle --pickaxe-regex
+ test_log_icase	expect_nomatch	--patch-modifies p.ckle --pickaxe-regex
+ 
+-test_expect_success 'log -S --textconv (missing textconv tool)' '
++test_expect_success 'log --patch-modifies --textconv (missing textconv tool)' '
+ 	echo "* diff=test" >.gitattributes &&
+-	test_must_fail git -c diff.test.textconv=missing log -Sfoo &&
++	test_must_fail git -c diff.test.textconv=missing log --patch-modifies foo &&
+ 	rm .gitattributes
+ '
+ 
+-test_expect_success 'log -S --no-textconv (missing textconv tool)' '
++test_expect_success 'log --patch-modifies --no-textconv (missing textconv tool)' '
+ 	echo "* diff=test" >.gitattributes &&
+-	git -c diff.test.textconv=missing log -Sfoo --no-textconv >actual &&
++	git -c diff.test.textconv=missing log --patch-modifies foo --no-textconv >actual &&
+ 	test_cmp expect_nomatch actual &&
+ 	rm .gitattributes
+ '
+ 
+-test_expect_success 'setup log -[GS] plain & regex' '
++test_expect_success 'setup log --patch{-modifies,-grep} plain & regex' '
+ 	test_create_repo GS-plain &&
+ 	test_commit -C GS-plain --append A data.txt "a" &&
+ 	test_commit -C GS-plain --append B data.txt "a a" &&
+@@ -201,31 +201,31 @@ test_expect_success 'setup log -[GS] plain & regex' '
+ 	git -C GS-plain log >full-log
+ '
+ 
+-test_expect_success 'log -G trims diff new/old [-+]' '
+-	git -C GS-plain log -G"[+-]a" >log &&
++test_expect_success 'log --patch-grep trims diff new/old [-+]' '
++	git -C GS-plain log --patch-grep "[+-]a" >log &&
+ 	test_must_be_empty log &&
+-	git -C GS-plain log -G"^a" >log &&
++	git -C GS-plain log --patch-grep "^a" >log &&
+ 	test_cmp log A-to-B-then-E-log
+ '
+ 
+-test_expect_success 'log -S<pat> is not a regex, but -S<pat> --pickaxe-regex is' '
+-	git -C GS-plain log -S"a" >log &&
++test_expect_success 'log --patch-modifies <pat> is not a regex, but --patch-modifies <pat> --pickaxe-regex is' '
++	git -C GS-plain log --patch-modifies "a" >log &&
+ 	test_cmp log A-to-B-then-E-log &&
+ 
+-	git -C GS-plain log -S"[a]" >log &&
++	git -C GS-plain log --patch-modifies "[a]" >log &&
+ 	test_must_be_empty log &&
+ 
+-	git -C GS-plain log -S"[a]" --pickaxe-regex >log &&
++	git -C GS-plain log --patch-modifies "[a]" --pickaxe-regex >log &&
+ 	test_cmp log A-to-B-then-E-log &&
+ 
+-	git -C GS-plain log -S"[b]" >log &&
++	git -C GS-plain log --patch-modifies "[b]" >log &&
+ 	test_cmp log D-then-E-log &&
+ 
+-	git -C GS-plain log -S"[b]" --pickaxe-regex >log &&
++	git -C GS-plain log --patch-modifies "[b]" --pickaxe-regex >log &&
+ 	test_cmp log C-to-D-then-E-log
+ '
+ 
+-test_expect_success 'setup log -[GS] binary & --text' '
++test_expect_success 'setup log --patch{-modifies,-grep} binary & --text' '
+ 	test_create_repo GS-bin-txt &&
+ 	test_commit -C GS-bin-txt --printf A data.bin "a\na\0a\n" &&
+ 	test_commit -C GS-bin-txt --append --printf B data.bin "a\na\0a\n" &&
+@@ -233,36 +233,36 @@ test_expect_success 'setup log -[GS] binary & --text' '
+ 	git -C GS-bin-txt log >full-log
+ '
+ 
+-test_expect_success 'log -G ignores binary files' '
+-	git -C GS-bin-txt log -Ga >log &&
++test_expect_success 'log --patch-grep ignores binary files' '
++	git -C GS-bin-txt log --patch-grep a >log &&
+ 	test_must_be_empty log
+ '
+ 
+-test_expect_success 'log -G looks into binary files with -a' '
+-	git -C GS-bin-txt log -a -Ga >log &&
++test_expect_success 'log --patch-grep looks into binary files with -a' '
++	git -C GS-bin-txt log -a --patch-grep a >log &&
+ 	test_cmp log full-log
+ '
+ 
+-test_expect_success 'log -G looks into binary files with textconv filter' '
++test_expect_success 'log --patch-grep looks into binary files with textconv filter' '
+ 	test_when_finished "rm GS-bin-txt/.gitattributes" &&
+ 	(
+ 		cd GS-bin-txt &&
+ 		echo "* diff=bin" >.gitattributes &&
+-		git -c diff.bin.textconv=cat log -Ga >../log
++		git -c diff.bin.textconv=cat log --patch-grep a >../log
+ 	) &&
+ 	test_cmp log full-log
+ '
+ 
+-test_expect_success 'log -S looks into binary files' '
+-	git -C GS-bin-txt log -Sa >log &&
++test_expect_success 'log --patch-modifies looks into binary files' '
++	git -C GS-bin-txt log --patch-modifies a >log &&
+ 	test_cmp log full-log
+ '
+ 
+-test_expect_success 'log -S --pickaxe-regex looks into binary files' '
+-	git -C GS-bin-txt log --pickaxe-regex -Sa >log &&
++test_expect_success 'log --patch-modifies --pickaxe-regex looks into binary files' '
++	git -C GS-bin-txt log --pickaxe-regex --patch-modifies a >log &&
+ 	test_cmp log full-log &&
+ 
+-	git -C GS-bin-txt log --pickaxe-regex -S"[a]" >log &&
++	git -C GS-bin-txt log --pickaxe-regex --patch-modifies "[a]" >log &&
+ 	test_cmp log full-log
+ '
+ 
 -- 
 2.45.2
 
