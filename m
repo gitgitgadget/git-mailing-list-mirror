@@ -1,161 +1,128 @@
-Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07641E8850
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 04:22:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA2E154457
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 05:30:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739334142; cv=none; b=iX85Osl0nYmqiMz50JsSaEHIs1ILxFmenYE8p7RKukb+PKffWWQpvBR53mB58wcChBLheMsCiqpWITjOsCER50XWAhuHM+vSUMDDUmNfjSZmqg4tzcXBgtYRhz7PDSsFgOhXMbFu/EP7R4Hb/PW52YAERHr3hmtYFx+VHxguBT8=
+	t=1739338216; cv=none; b=DVA6y79aK5jnLNqj2gBJ/rLm1LMgOhmEEVHYg6VW+HGOSYWr5XzOz39NVu+IBId0PHSSslfuZuX3MCNaKs24L+av8PkSugrq3/XXzrgdJM7r3wPWbQgoVWBwqfZy+S0Eo4Ncm/ZLhOoaz3IUHL9knjFsxe9P8PQUyBQymSR0154=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739334142; c=relaxed/simple;
-	bh=IDbtOoCNJsb4qfIxsmL/FuuieLx+knaYxhiM2974oX0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aXR7sTSMSQ56r2QIvIz0MJYH11Om093qV6eXfeM2vy1ul1pUEUhUSpXMChizs0/Ql61ux+5ZZm16eoftOPuJtxAkMUJ58ZJH8CEmDhMkDaQFsgtDxw2JtVeJvhotGTnMoDG9S77uK4+MntB1c35ulHFirs6OFYeyqNVfgN5W+Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U/j6NotQ; arc=none smtp.client-ip=209.85.161.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739338216; c=relaxed/simple;
+	bh=9p5ggLyBKfWVLOKFGo6gS9jEefMhpvWLHRTNeLPCrmM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lC6HLK6kswuqZoSz7u434K2Cq/Nxhv9ohDHkDUQ+E8l1nXfp3NV6TETuNz38FEdwbZny4BTjG6ZTIf02uEhYT3rs3fwyP7I5xtOyCUJRsOh/XeUU5GhjZSV7X5C2bysF2n8NOzXURHC8/WTdeOinq2iXk2tumwCEIx6nJWs3qms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OdbPTfon; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BxKcUzXY; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U/j6NotQ"
-Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-5fc7ff13fb8so994620eaf.3
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 20:22:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739334139; x=1739938939; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XkUvrzZAPY22kY5GLlkusdDEMTSSiz/WD/gHvy005RY=;
-        b=U/j6NotQpevDzua79nGvjiJL0jY/xGrBgVVQ+aDHLeusnavn9eDzr+UQUkNzDsIAd7
-         QaJdIFehuLKer7/cEz6W9HdeVqZFtcU8ZOoTyyL/XP2WVBNhMIu1IbxO/yFN81Bn/45C
-         Fp87PK2RIFxpzhyWKOdLDTyQIvUiU7CiSIdg7Z77qVoSa2PfdvvLiMBOnC/e25tO1k5u
-         3iCdvJnrtTj8qpkAG6RKhu2ZyvRFDUR4d6eC9yMvIM+SP2/Z7l7m619qxdT/MDBXSRxQ
-         yVR78c05Cri1o8WNlly4UNgFlqJzvNxCtqU8orrHRLWqxWRbFIWMfuaHwPo/OQ14YVMX
-         L0zA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739334139; x=1739938939;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XkUvrzZAPY22kY5GLlkusdDEMTSSiz/WD/gHvy005RY=;
-        b=A0tEsYSMZctpsf3DHnEaHHSe1X/Y1I7QSffkI5+Re4fjMTpWNBOq3+ppeiyzk0c8Eq
-         jC6eP+vDfksTxqylcqaJGeeE29VHKhxjmGvab5ReqpLdgqI2BGPeqmW6J/HDI+LMZE8h
-         paD5gReko5rGVlUabxsrqnXjJq3vRlK81dRAYoFnidLMRt7Kx0xt1cjjTXyJ9CHj99zk
-         8wARuk+SR4v1lkpxT47gBWInP/YDkdywfLNl7a9rzTfu9246eVtZF+bMZHRilC6nwQUt
-         YPSH9FvA7WpPfkS+Iji/09WOIP+XFiyDDgp0b6EkiWVPX9IFgk7CmISvthVmynWBcrai
-         FdiA==
-X-Gm-Message-State: AOJu0YxoeXN5/MOEzcxkWHlqIybjhzdCFF1P/WVQUQSUl1YAkGjRtiZm
-	TNr+spv7OOv3gy1FPmPaLmqflf2idW4Rhq283x3so5p+zlNPCbh8vT77Qg==
-X-Gm-Gg: ASbGnctMvW+b+D5eOV7t1iwIxFkwTIYETVcKT5nJHAXcdyH2xCNG0zmfwhrM1A4YdvX
-	LjkuqIgU8dTqcJJeld2Bkpoho6luowM4QWaBM3e2aVuER6Qy8U9okRBrOURVvpULTzY/sVPdHlA
-	UV0owng+I84uVCeFRo8l7oFef5NxDbQY8eGLlLReMsIJQi8dvh+z9qtshv3hr6W+csPu+yS7uFu
-	vZdSFXMQts2lRzJVUXXfTjOaJXt27ugbYGu9bhVxC8BRZQ9uAbaLUO/CvmNSK9L2j2Z2XZ1o4OS
-	88DDyxTD/AbupATpckcliNc=
-X-Google-Smtp-Source: AGHT+IFVajISnyysux2Z5T5pMKHOrcY8uTlsKxFDTG3zW3Kfgg7GPMUxmvjBIYVqNN8wYUzHtmVvfw==
-X-Received: by 2002:a05:6870:548d:b0:29e:61cd:d3b2 with SMTP id 586e51a60fabf-2b8d683cc95mr1319053fac.38.1739334138819;
-        Tue, 11 Feb 2025 20:22:18 -0800 (PST)
-Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2b8a0bb67fesm2293392fac.39.2025.02.11.20.22.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 20:22:18 -0800 (PST)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: peff@peff.net,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 3/3] builtin/diff-pairs: allow explicit diff queue flush
-Date: Tue, 11 Feb 2025 22:18:25 -0600
-Message-ID: <20250212041825.2455031-4-jltobler@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250212041825.2455031-1-jltobler@gmail.com>
-References: <20241213042312.2890841-1-jltobler@gmail.com>
- <20250212041825.2455031-1-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OdbPTfon";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BxKcUzXY"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5FB5F1140245;
+	Wed, 12 Feb 2025 00:30:12 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Wed, 12 Feb 2025 00:30:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1739338212; x=1739424612; bh=0c5F1YIOYh
+	n2KJl1Ag/H1hjR729ylDvtjLlWO23At0o=; b=OdbPTfonVUG6I4uZnZuT07iOR3
+	rl91w8oNYdun/xuAKqt08xkeN6n8B9V6v1h9rUkm22aQZCRTjnrXevw2g+y01G1V
+	2s+W6gDqh2Bd5VYq9fWM5AsJxqFgTLhbRHYVP8kkKJxCWENs5ul2tm5XWPeTKCsu
+	iN2l68k95lbsUG2K4ayKGz6WYeEoRuW9uqjGTCnHVlL2sLGZIDvD2TJ1ymQpW2d9
+	sZdMw4Jj0Ldluxi1HsqcZ6xtnfbcacghS2AURuFXp2YYHWh7UeW1miLKa2nlUNSp
+	3Dx92SpSlhflY9szoXMHrVFf9c3vGnU8d2Xegv6/bSb83gmwt/RzYzbWWhaQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739338212; x=1739424612; bh=0c5F1YIOYhn2KJl1Ag/H1hjR729ylDvtjLl
+	WO23At0o=; b=BxKcUzXYWOO4HZR9CTvs6cYGdX606ArPzPjlLjA+/ORxryFi01y
+	BPldw9R6/ufWhae1x9QoDrzM/2YbDtqhuLSxXOMj+5h7PBp8Uwzu+ssCYuVUqGWM
+	OKfkgoPNJ2MR/WyNLwFkIdokvVKiAiQJ/yXw46ceB7mbhIl/3wAMwVB8AFrsJsCr
+	p64/+wu/WWxq47eir+YSagPabVoep6qT4kG2+HIvzRcfthyWMZxcJDUkeCQxVeLg
+	LZGUmuT1E1V7zZN2ViABFB2NTwiE4q47y7LWmfj+q/lsCmCAaR8EsdCf8Vzzt6Cx
+	lj0EPifZ/fmwq7JIFbABhjkww5I6kTwrRLw==
+X-ME-Sender: <xms:5DGsZ8An8hcWmdSkESO4M2mf005ysKHYo4uy7PCsRGr4jOUoBlq6eQ>
+    <xme:5DGsZ-iIxy6v58sbJDFxPlH2Fy69t2g8fkq_89lZG0FT5HE-pmeyLU_VsdO-L142d
+    roWfn1Gdx9hYXThVg>
+X-ME-Received: <xmr:5DGsZ_kSNo2Vx9_aBfUsTHh1SlJ1nAl4yBkuFye7PuhwQ9WODL-O6xfvI8lKjPHBVmD-yoSuuE2kibUUmicCzG20lG5SnZj5o7p8RJjx_9mVKOs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegfedthecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhho
+    sghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehfohhrihhvrghllhesghhmrghilh
+    drtghomh
+X-ME-Proxy: <xmx:5DGsZyw2gWXqIxgqzYEwkuZUMc8f8Ah4MuZdH3WU73JmcuYvYnU5_g>
+    <xmx:5DGsZxRdg6PfyxGtu4isJiE3C8f3SLyzgngOqE1JyHWwG63ZNuRnhg>
+    <xmx:5DGsZ9Y15Utnp5w2EonZ3vFihDZho9Sc1vvrqDV-Go2w8SKjAN5eJg>
+    <xmx:5DGsZ6TB2-aobe8UAwJg_2_bNmqEJltWWdzlsRnQvwoPKGAsvIpv2Q>
+    <xmx:5DGsZ_NgPm08jW6WoGnegGgj6iPAuHLH-IbewaBKLdhk4mo3PpC42mgS>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Feb 2025 00:30:10 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7e7fd140 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Feb 2025 05:30:07 +0000 (UTC)
+Date: Wed, 12 Feb 2025 06:30:01 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Emily M Klassen <forivall@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] revision: fix missing null for freed memory
+Message-ID: <Z6wx2a4LUcOjU79p@pks.im>
+References: <20250208061702.88469-1-forivall@gmail.com>
+ <Z6sCeYmljrqWRFnS@pks.im>
+ <CALnO6CDHZerHKaWwGc-9CmwEMiFVY+Ds5-GNWYKUi1yO7=U_Rg@mail.gmail.com>
+ <CALnO6CDdJ4abqxZKMaevPO+aCzSqriM98JuVOX068gQrxWZt5Q@mail.gmail.com>
+ <20250211212909.GA3113114@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250211212909.GA3113114@coredump.intra.peff.net>
 
-The diffs queued from git-diff-pairs(1) stdin are not flushed EOF is
-reached. To enable greater flexibility, allow control over when the diff
-queue is flushed by writing a single nul byte on stdin between input
-file pairs. Diff output between flushes is separated by a single line
-terminator.
+On Tue, Feb 11, 2025 at 04:29:09PM -0500, Jeff King wrote:
+> On Tue, Feb 11, 2025 at 03:22:28PM -0500, D. Ben Knoble wrote:
+> 
+> > 2.{30,35}.0 fails to recognize --no-graph, so I checked "git log --grep no-graph
+> > origin/master" with "git describe --contains" and decided that 2.36.0 was first
+> > release recognizing --no-graph, but it didn't build for me (possibly an issue on
+> > my end). I got 2.37.0 built, and it was "good," so that's where I started.
+> > 
+> > Here's my "bisect run" script.
+> > 
+> >     #! /bin/sh -x
+> >     make || exit 125
+> >     # segfault has exit >128
+> >     ./bin-wrappers/git --no-pager log -2 --graph --no-graph --patch
+> > --cc || exit 1
+> 
+> I don't think this is quite enough. The problem is a use-after-free, so
+> the behavior is undefined. Depending on whether that heap block is
+> reused, it might work just fine, or output garbage data, or segfault.
+> 
+> I'd have _thought_ it would usually just segfault, but it almost always
+> just output garbage for me. Building with:
+> 
+>   make SANITIZE=address,undefined
+> 
+> is a good way to get reliable results for this kind of memory error.
+> Doing that shows that v2.37.0 is actually bad. And bisecting shows that
+> it has been broken since 087c745833 (log: add a --no-graph option,
+> 2022-02-11), which is not too surprising.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- Documentation/git-diff-pairs.adoc |  4 ++++
- builtin/diff-pairs.c              | 11 +++++++++++
- t/t4070-diff-pairs.sh             | 22 ++++++++++++++++++++++
- 3 files changed, 37 insertions(+)
+Thanks all for bisecting :)
 
-diff --git a/Documentation/git-diff-pairs.adoc b/Documentation/git-diff-pairs.adoc
-index e9ef4a6615..33c0d702f0 100644
---- a/Documentation/git-diff-pairs.adoc
-+++ b/Documentation/git-diff-pairs.adoc
-@@ -32,6 +32,10 @@ compute diffs progressively over the course of multiple invocations of
- Each blob pair is fed to the diff machinery individually queued and the output
- is flushed on stdin EOF.
- 
-+To explicitly flush the diff queue, a single nul byte can be written to stdin
-+between filepairs. Diff output between flushes is separated by a single line
-+terminator.
-+
- OPTIONS
- -------
- 
-diff --git a/builtin/diff-pairs.c b/builtin/diff-pairs.c
-index 08f3ee81e5..2436ce3013 100644
---- a/builtin/diff-pairs.c
-+++ b/builtin/diff-pairs.c
-@@ -99,6 +99,17 @@ int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
- 			break;
- 
- 		p = meta.buf;
-+		if (!*p) {
-+			flush_diff_queue(&revs.diffopt);
-+			/*
-+			 * When the diff queue is explicitly flushed, append an
-+			 * additional terminator to separate batches of diffs.
-+			 */
-+			fprintf(revs.diffopt.file, "%c",
-+				revs.diffopt.line_termination);
-+			continue;
-+		}
-+
- 		if (*p != ':')
- 			die("invalid raw diff input");
- 		p++;
-diff --git a/t/t4070-diff-pairs.sh b/t/t4070-diff-pairs.sh
-index e0a8e6f0a0..aca228a8fa 100755
---- a/t/t4070-diff-pairs.sh
-+++ b/t/t4070-diff-pairs.sh
-@@ -77,4 +77,26 @@ test_expect_success 'split input across multiple diff-pairs' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'diff-pairs explicit queue flush' '
-+	git diff-tree -r -M -C -C -z base new >input &&
-+	printf "\0" >>input &&
-+	git diff-tree -r -M -C -C -z base new >>input &&
-+
-+	git diff-tree -r -M -C -C base new >expect &&
-+	printf "\n" >>expect &&
-+	git diff-tree -r -M -C -C base new >>expect &&
-+
-+	git diff-pairs <input >actual &&
-+	test_cmp expect actual
-+'
-+j
-+test_expect_success 'diff-pairs explicit queue flush null terminated' '
-+	git diff-tree -r -M -C -C -z base new >expect &&
-+	printf "\0" >>expect &&
-+	git diff-tree -r -M -C -C -z base new >>expect &&
-+
-+	git diff-pairs -z <expect >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.48.1
-
+Patrick
