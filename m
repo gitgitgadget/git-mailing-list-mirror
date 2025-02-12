@@ -1,128 +1,160 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DA2E154457
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 05:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA882B9BC
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 06:04:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739338216; cv=none; b=DVA6y79aK5jnLNqj2gBJ/rLm1LMgOhmEEVHYg6VW+HGOSYWr5XzOz39NVu+IBId0PHSSslfuZuX3MCNaKs24L+av8PkSugrq3/XXzrgdJM7r3wPWbQgoVWBwqfZy+S0Eo4Ncm/ZLhOoaz3IUHL9knjFsxe9P8PQUyBQymSR0154=
+	t=1739340263; cv=none; b=MOkETAicDHaKPt329+5mXIW4KRMd0lcKIX0E3//p2jjWIeo7rqHo3koRFNx8WCXacjmSpc3D+oh+ysTtwFxFHUzhAr95N8IGSHo/UMMdIox0cwnbyZHBjXSXyQ16FqdU27hA/GkJlfndEfiA6ox57F44UE0df4Ryig4tdGLnUTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739338216; c=relaxed/simple;
-	bh=9p5ggLyBKfWVLOKFGo6gS9jEefMhpvWLHRTNeLPCrmM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lC6HLK6kswuqZoSz7u434K2Cq/Nxhv9ohDHkDUQ+E8l1nXfp3NV6TETuNz38FEdwbZny4BTjG6ZTIf02uEhYT3rs3fwyP7I5xtOyCUJRsOh/XeUU5GhjZSV7X5C2bysF2n8NOzXURHC8/WTdeOinq2iXk2tumwCEIx6nJWs3qms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OdbPTfon; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BxKcUzXY; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1739340263; c=relaxed/simple;
+	bh=mvvpIQKQZLDYaZGZ9yTcLnMRMD3JCdleA9XiB1f4Chs=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Xrt6eBPQf4NG9e9Hq6DJeLiHoypx0SXgTiG5OViBYm7DXJyjrqmLJXpP5tWR/1ooWj1eNejk0B9HUUrBp6xT4jT3F1izKaztEEtw7VAxzZdKLgqh+3sk4RQvVXImJwI0uO16CKnnu49bVGQ5n31Q5n2ue9KZqpHYiVO+noZ7k5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I/c21jzy; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OdbPTfon";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BxKcUzXY"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5FB5F1140245;
-	Wed, 12 Feb 2025 00:30:12 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 12 Feb 2025 00:30:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1739338212; x=1739424612; bh=0c5F1YIOYh
-	n2KJl1Ag/H1hjR729ylDvtjLlWO23At0o=; b=OdbPTfonVUG6I4uZnZuT07iOR3
-	rl91w8oNYdun/xuAKqt08xkeN6n8B9V6v1h9rUkm22aQZCRTjnrXevw2g+y01G1V
-	2s+W6gDqh2Bd5VYq9fWM5AsJxqFgTLhbRHYVP8kkKJxCWENs5ul2tm5XWPeTKCsu
-	iN2l68k95lbsUG2K4ayKGz6WYeEoRuW9uqjGTCnHVlL2sLGZIDvD2TJ1ymQpW2d9
-	sZdMw4Jj0Ldluxi1HsqcZ6xtnfbcacghS2AURuFXp2YYHWh7UeW1miLKa2nlUNSp
-	3Dx92SpSlhflY9szoXMHrVFf9c3vGnU8d2Xegv6/bSb83gmwt/RzYzbWWhaQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739338212; x=1739424612; bh=0c5F1YIOYhn2KJl1Ag/H1hjR729ylDvtjLl
-	WO23At0o=; b=BxKcUzXYWOO4HZR9CTvs6cYGdX606ArPzPjlLjA+/ORxryFi01y
-	BPldw9R6/ufWhae1x9QoDrzM/2YbDtqhuLSxXOMj+5h7PBp8Uwzu+ssCYuVUqGWM
-	OKfkgoPNJ2MR/WyNLwFkIdokvVKiAiQJ/yXw46ceB7mbhIl/3wAMwVB8AFrsJsCr
-	p64/+wu/WWxq47eir+YSagPabVoep6qT4kG2+HIvzRcfthyWMZxcJDUkeCQxVeLg
-	LZGUmuT1E1V7zZN2ViABFB2NTwiE4q47y7LWmfj+q/lsCmCAaR8EsdCf8Vzzt6Cx
-	lj0EPifZ/fmwq7JIFbABhjkww5I6kTwrRLw==
-X-ME-Sender: <xms:5DGsZ8An8hcWmdSkESO4M2mf005ysKHYo4uy7PCsRGr4jOUoBlq6eQ>
-    <xme:5DGsZ-iIxy6v58sbJDFxPlH2Fy69t2g8fkq_89lZG0FT5HE-pmeyLU_VsdO-L142d
-    roWfn1Gdx9hYXThVg>
-X-ME-Received: <xmr:5DGsZ_kSNo2Vx9_aBfUsTHh1SlJ1nAl4yBkuFye7PuhwQ9WODL-O6xfvI8lKjPHBVmD-yoSuuE2kibUUmicCzG20lG5SnZj5o7p8RJjx_9mVKOs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegfedthecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhho
-    sghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehfohhrihhvrghllhesghhmrghilh
-    drtghomh
-X-ME-Proxy: <xmx:5DGsZyw2gWXqIxgqzYEwkuZUMc8f8Ah4MuZdH3WU73JmcuYvYnU5_g>
-    <xmx:5DGsZxRdg6PfyxGtu4isJiE3C8f3SLyzgngOqE1JyHWwG63ZNuRnhg>
-    <xmx:5DGsZ9Y15Utnp5w2EonZ3vFihDZho9Sc1vvrqDV-Go2w8SKjAN5eJg>
-    <xmx:5DGsZ6TB2-aobe8UAwJg_2_bNmqEJltWWdzlsRnQvwoPKGAsvIpv2Q>
-    <xmx:5DGsZ_NgPm08jW6WoGnegGgj6iPAuHLH-IbewaBKLdhk4mo3PpC42mgS>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Feb 2025 00:30:10 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 7e7fd140 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 12 Feb 2025 05:30:07 +0000 (UTC)
-Date: Wed, 12 Feb 2025 06:30:01 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Emily M Klassen <forivall@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] revision: fix missing null for freed memory
-Message-ID: <Z6wx2a4LUcOjU79p@pks.im>
-References: <20250208061702.88469-1-forivall@gmail.com>
- <Z6sCeYmljrqWRFnS@pks.im>
- <CALnO6CDHZerHKaWwGc-9CmwEMiFVY+Ds5-GNWYKUi1yO7=U_Rg@mail.gmail.com>
- <CALnO6CDdJ4abqxZKMaevPO+aCzSqriM98JuVOX068gQrxWZt5Q@mail.gmail.com>
- <20250211212909.GA3113114@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I/c21jzy"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-21f4a4fbb35so7428995ad.0
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 22:04:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739340261; x=1739945061; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BQQRwUIEOndeYcTZat/PjSa8e43oGu1aHp2pJorluDw=;
+        b=I/c21jzyM+E6y4x8fWyaiecgBgKUYaW3eCh0RfoVN6BDDxqrr3sJBv4x30j3MOFJex
+         y/iBROd4UnVg3mGk28+fIdQOUMtSPvTpVhI8d6EgQsHRJPR/njkSEU2eGtEOnxZNCLXS
+         3iySrCNgun/CDRIC6XqVf+SFXgmc4of2ETod6bgGAY3ZpfhFkIEmjcfNSteE5JyXlnB7
+         NJhKN1UXsk8GswX7xe+e19ASLYgbwlukvpoZmOP+TsT4l4H1Gx7AXiAQQCo6w0FLBSUw
+         ji2FY0QiHYZbKO/DNs34E106gEcTkiX/ed8c/8Bps/CFF2WvC3CqGtROQEOutnYs3+TF
+         4GKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739340261; x=1739945061;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BQQRwUIEOndeYcTZat/PjSa8e43oGu1aHp2pJorluDw=;
+        b=DtZysmmMFHpuBPA8FIawnLz0dJ8Pt0u/Lj/D48I+mYrldl+rmad+QseqAH2sJ4DQPa
+         RpCSqV4pjCKuVxQ+Ltr7AxpmM6sgI+n8Mc46U06RahqGEuotQ9d9giCfNxhrx16K0xKf
+         ZgYBoSQkcSRyfnqdtcCVNczpngDFNoa1LKB3gzza+oY+PRcTrgqN1TgQdFKkZi0LGU+B
+         e4Xz7BbXH2Q4G1iHRbQPIObdT5PNfqWR7pWZInfsNDjujru+58Srb3S9ysVSzmaq2NXs
+         qX15SqqUkx2DlCGJ2NZmQRTbesR9vCGVRAEUPEzgghO5JmlZC5whFTSsXzWRuwE35R37
+         7Ouw==
+X-Gm-Message-State: AOJu0Yz7P0cYOQVF5qElmfHIAuyAePdjo7yfcnXHmzAtCXt88ROw8khe
+	Mr0dcE79mdurcx/r4W6/uuTsSc0QqTTsIt/HK9LZFykxYv/+r1RxgStkBA==
+X-Gm-Gg: ASbGncvsD+DcVvGpbOd/WEQlp4DxVCdw77ExSK7ELUlHKTY11/Lu1bl5KCOChU0Uwo5
+	aEGpwANOMI17EBbiuiEMjmLTm82pnpf6U15W5ZBUAOXp9tmDkVtWTXtlU3nuRXpzbcbJYE7+2x8
+	dHeHLXVxxXiKQqMQRqiiH4k9uWfuvux2yPnNGQYXzt4gmfSFdgLBACyK48ohwGN9zn+hawW4nEq
+	+oVfcy38nnbSJzyxN/nytLISVrUMTir9uJG1FIDzjuvVPoYV9E4q+4Zi9K4vcwzuENLFa9cSfZL
+	XIzDtOi6pPZckR7wXzd4BR3JKg==
+X-Google-Smtp-Source: AGHT+IEBRowUOOcw2FUytCSWqvcXdgEYCwO1QwlZjc4BFFKAHdOlPwGXSgQ/mVo/13Me+vu1/eqJXg==
+X-Received: by 2002:a17:902:f14d:b0:21f:81cf:454a with SMTP id d9443c01a7336-21fb6f54a04mr65988345ad.22.1739340261184;
+        Tue, 11 Feb 2025 22:04:21 -0800 (PST)
+Received: from localhost.localdomain ([172.56.121.6])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ad53f6e2633sm5747411a12.16.2025.02.11.22.04.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Feb 2025 22:04:20 -0800 (PST)
+From: David Aguilar <davvid@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH 1/6] xdiff: move sign comparison warning guard into each file
+Date: Tue, 11 Feb 2025 22:04:13 -0800
+Message-ID: <20250212060418.1645241-1-davvid@gmail.com>
+X-Mailer: git-send-email 2.48.1.643.g32d702c6e8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250211212909.GA3113114@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
 
-On Tue, Feb 11, 2025 at 04:29:09PM -0500, Jeff King wrote:
-> On Tue, Feb 11, 2025 at 03:22:28PM -0500, D. Ben Knoble wrote:
-> 
-> > 2.{30,35}.0 fails to recognize --no-graph, so I checked "git log --grep no-graph
-> > origin/master" with "git describe --contains" and decided that 2.36.0 was first
-> > release recognizing --no-graph, but it didn't build for me (possibly an issue on
-> > my end). I got 2.37.0 built, and it was "good," so that's where I started.
-> > 
-> > Here's my "bisect run" script.
-> > 
-> >     #! /bin/sh -x
-> >     make || exit 125
-> >     # segfault has exit >128
-> >     ./bin-wrappers/git --no-pager log -2 --graph --no-graph --patch
-> > --cc || exit 1
-> 
-> I don't think this is quite enough. The problem is a use-after-free, so
-> the behavior is undefined. Depending on whether that heap block is
-> reused, it might work just fine, or output garbage data, or segfault.
-> 
-> I'd have _thought_ it would usually just segfault, but it almost always
-> just output garbage for me. Building with:
-> 
->   make SANITIZE=address,undefined
-> 
-> is a good way to get reliable results for this kind of memory error.
-> Doing that shows that v2.37.0 is actually bad. And bisecting shows that
-> it has been broken since 087c745833 (log: add a --no-graph option,
-> 2022-02-11), which is not too surprising.
+Allow each file to fix the warnings guarded by the macro separately by
+moving the definition from the shared xinclude.h into each file that
+needs it.
 
-Thanks all for bisecting :)
+xmerge.c and xprepare.c do not contain any signed vs. unsigned
+comparisons so the definition was not included in these files.
 
-Patrick
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ xdiff/xemit.c      | 2 ++
+ xdiff/xhistogram.c | 2 ++
+ xdiff/xinclude.h   | 2 --
+ xdiff/xpatience.c  | 3 +++
+ xdiff/xutils.c     | 2 ++
+ 5 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+index 75f0fe4986..2b394a4806 100644
+--- a/xdiff/xemit.c
++++ b/xdiff/xemit.c
+@@ -20,6 +20,8 @@
+  *
+  */
+ 
++#define DISABLE_SIGN_COMPARE_WARNINGS
++
+ #include "xinclude.h"
+ 
+ static long xdl_get_rec(xdfile_t *xdf, long ri, char const **rec) {
+diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
+index 16a8fe2f3f..3d2b190fa6 100644
+--- a/xdiff/xhistogram.c
++++ b/xdiff/xhistogram.c
+@@ -41,6 +41,8 @@
+  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  */
+ 
++#define DISABLE_SIGN_COMPARE_WARNINGS
++
+ #include "xinclude.h"
+ 
+ #define MAX_PTR	UINT_MAX
+diff --git a/xdiff/xinclude.h b/xdiff/xinclude.h
+index 7e56542526..a4285ac0eb 100644
+--- a/xdiff/xinclude.h
++++ b/xdiff/xinclude.h
+@@ -23,8 +23,6 @@
+ #if !defined(XINCLUDE_H)
+ #define XINCLUDE_H
+ 
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+-
+ #include "git-compat-util.h"
+ #include "xmacros.h"
+ #include "xdiff.h"
+diff --git a/xdiff/xpatience.c b/xdiff/xpatience.c
+index a2d8955537..b0ba421b28 100644
+--- a/xdiff/xpatience.c
++++ b/xdiff/xpatience.c
+@@ -19,6 +19,9 @@
+  *  Davide Libenzi <davidel@xmailserver.org>
+  *
+  */
++
++#define DISABLE_SIGN_COMPARE_WARNINGS
++
+ #include "xinclude.h"
+ 
+ /*
+diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+index 9e36f24875..169edff5ab 100644
+--- a/xdiff/xutils.c
++++ b/xdiff/xutils.c
+@@ -20,6 +20,8 @@
+  *
+  */
+ 
++#define DISABLE_SIGN_COMPARE_WARNINGS
++
+ #include "xinclude.h"
+ 
+ 
+-- 
+2.48.1.643.g61982db19f
+
