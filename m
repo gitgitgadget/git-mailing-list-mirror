@@ -1,70 +1,90 @@
-Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0097C207A2C
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 10:19:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984C2208966
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 10:42:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739355554; cv=none; b=dHWJZcTCzZJSpZbliAtJ9eTq55S8RxA5Yl6W6c/C8PkkPBH3Btbcg6UMZF2ecyzBhf0ie1N7DBWwtx9TpNaJ0m4thqkC0HqwsJIJiark36ETkRQPW0p98WzxebQU25olVgQp6bo+M8jlGdkQtxu2cQLFsS+8X8ydW4eFMd7mug8=
+	t=1739356950; cv=none; b=a/JEEk102MZ/7UIPDsmhD62LNN5IV7EGidPcKyVABiEwtlfb91SOZlxn2gwQgpiyhrFiVCnOSRtaPGrYxrPiRe/4LIQPJUB+ZXrsF0mfOjJt3wa9DLzTFT0axl850pN4Nf5GtJx4LDGWZqJUOhyhjj3347SfGGS1zrpkI3LSr3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739355554; c=relaxed/simple;
-	bh=upnZgjPUDIVOf+m8Wk9DSXSt1R8O1MBXMs0xt0B/07k=;
+	s=arc-20240116; t=1739356950; c=relaxed/simple;
+	bh=imlcO81ARK9PLKwrn82PnY1yc8/vqvvZlPieX77qB4U=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PCUeK2fiAe/qeNnQYsbOPRaiIGf1LZIa7BePX8T84FB5UI+8iLQfpRSfw3/hLt0Dy1UjEHp/A/m15L1MZUpwylFgqkyUc+tDi8RGIRa0lWV0NOoKu+7e1YJRhAGomyVq8zZTpfUIoPsEG+rh2MTc3Nan3dMvCSPb6OeYRszl3yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=axudIHUX; arc=none smtp.client-ip=209.85.222.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=VLYzCx0T9ZwzACjXlylG0SpS/GRmxHYEAOY+z2omeQ/cDBMX3fwED0O4I/uwZ1KPnNed0qaR75qxcCddoFTb0lLWYVSfEn0GFWlzIAZM1uz2+q3vF9Nn2liV+HyuiSuWoPfMGcbDCQc+v5AtpPd5QnCkinbhJdm4rQFfYubv48Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Qup5GQNB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LWf+Purq; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="axudIHUX"
-Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7c053a2118fso373155685a.2
-        for <git@vger.kernel.org>; Wed, 12 Feb 2025 02:19:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739355552; x=1739960352; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=xAoKYuB8HFUJb0Y6ZtEkwIorehkevX0FRh4+5F+fPo0=;
-        b=axudIHUXRAbddE15zYWWCMAlOtIPkscoF7W0QSPEmfph6uzrinR4Lj7Xf6UhFR9YNn
-         IDgjhAw/b8qgmqdXSzo3wHAwM3h+nkYMV/LHVMMA9hdgcd7dd8FEPoa5GTa/Cz3DAfne
-         O8MQDznJrRzxZmlh2GI+iyAU+xIZQttBqxn6e6VT/lhcnVO6vg1N1EWr6M7kK1Ao5F1p
-         4ukbhq35UQF7YEPHj6WPYevZeF3csEOXIc5YR9eWb9gYrXw5F+y2+REdxbrbZLD+5WJh
-         lMIigeyil+BWmS/B5fRU0MC2ZHOO5aB3rI8DvYMQfLFBE06sHDsI4S+EIuAq+9a4zh5/
-         JDJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739355552; x=1739960352;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xAoKYuB8HFUJb0Y6ZtEkwIorehkevX0FRh4+5F+fPo0=;
-        b=L0acaRXWGPeX4WoKbKSLe3Ivu9wWyAhG5aD/OygU04pNWekc/nk7+zCLu2yOBIfA6B
-         t0SSZjCo8335jHrMxI9PAfX8MKgGddKnVimvxQOGKj3ug0HRHYEFyB/ys3T1bN9hJ+fT
-         L3/k78sNQ/VEZWbeQX/Sim0WQGlQUqX8tgHrisYGJ5go/pgQGiRTTTqu/bSx8zXSMgLk
-         idagALwz+waSRBgJAckGwIbWw9mM46UPUPLEpsqP6CQtmXb61Z5XVhq+h8zBLEl9DZZJ
-         tDV4YfrcrNXwYsoSrtcx9DFNKKW71zddU3wxAngcSTRxfpwyb8+3NczPQBGRcDfbjP7E
-         6AaQ==
-X-Gm-Message-State: AOJu0YwD2k3msl5u7KzZOI/Bt+qE5zlFUwnvsj34/T7y9vVhkRYDSUP1
-	WEVoMCkOF4DgiAnGFVelr9hjnhc8nfJdXTsD9DBZ/hjSO2kG8cOnSguhnA==
-X-Gm-Gg: ASbGncuwdDbeAwiBdRMw9l7/cCxBmxBWr6NHBwtGPYqWw57nov77c05YkwVOjwN+XZE
-	LnocntsjmZWSF4dmOOD1P48RVUtRUlXxrkMTM8CxfnoY/pogueodaFutEQGUZ4xQty7soDn3Csq
-	5yE1xhxbqXY4u7bhv1f089Fsjh61dFXJtqLBQwUt1q7BxWZsfccwwDPdXgOBMPcwD2nffSg462v
-	gh92/hhFBXofXaHK1N6mjPMX4MrwhLEXK7jgAo1P1EhAuFBTIlyd7VE4vA6/vnMkwE4Xw==
-X-Google-Smtp-Source: AGHT+IEY1laGu+FtLoEuksHbK98MmZNEwrDtgQ7HFHpmhCQwoYRu+OtZybieEyagqHHnGInzwjTOQA==
-X-Received: by 2002:a05:620a:3947:b0:7b6:d97a:2608 with SMTP id af79cd13be357-7c07071b394mr335992685a.17.1739355551795;
-        Wed, 12 Feb 2025 02:19:11 -0800 (PST)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7c041ded0e7sm831264385a.8.2025.02.12.02.19.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 12 Feb 2025 02:19:11 -0800 (PST)
-Date: Wed, 12 Feb 2025 18:21:04 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qup5GQNB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LWf+Purq"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8B99C114027D;
+	Wed, 12 Feb 2025 05:42:27 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Wed, 12 Feb 2025 05:42:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1739356947; x=1739443347; bh=Hv7RmaJxk7
+	0mGi5zNGYrVO38tF8OjUCNW5A8dWNjdf4=; b=Qup5GQNBZMU2mR7aK5xMjs0nln
+	ZC99/ZYYIG8hWRFe4+W3gSG8meyI5xi9z9JTBz6YZ1ZNMN/Ex0K3a/NZsX1va3uc
+	TfWTwUU8o1zzhMz9IiMDZ6PLbLUWY/62DxoppXZTRsyCl9iAWmUI5zLF72YG9dDU
+	WfSr3BPk2eWfAcg45bsp85VB4cPabQSzuwuSSgKnoDqX1iko2j4uSNZfOgzKPkEY
+	BYyS0VFpuINipG2LGNBfW0IwXy1Hh8kOV4gt+KJ4wJS07w+6Vu2JfVq/79kiKTay
+	noe7hYf3kS/b3Umqi28K2StMPXsIWVfmyhCfuuTaKdrR0q+kB2I0GFsFcgaA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739356947; x=1739443347; bh=Hv7RmaJxk70mGi5zNGYrVO38tF8OjUCNW5A
+	8dWNjdf4=; b=LWf+Purqp49tSj4zWvcluA3mWhCBbwx+Qv4Vl5PWXV/5ikAa5I+
+	YwREIQkL/qeaJ1mgOdGnJbeM8n+3lrm0r1uZkHLaClwAqkmwTJEJN0M6LhOcaSdB
+	wt30/g2DHe3pIjYBLvdTtAMLzZQbCQ/sH/h8Q+vuUIIgX4xK25SnHQiWboxqy2na
+	eqGiE378nayncmueqyg/Z5kAFrWdoRz8KMQgopuwNeMc2wAkBxsfkrbo+/+4IdZx
+	IWMYU6BQ4Qq7fgIk1PTgJYTmD8MnxhnuDy0/YhkH9Iw58sHSAGXBjMsdLovMC+/8
+	G6GThJpB9ff7zslAFJqBOEMev8DU0vqnzAQ==
+X-ME-Sender: <xms:E3usZ2_qaCC9Coaf9jG7rf_cxbKh4YTvMTJ80WrLzIiJm99Q3dKxzg>
+    <xme:E3usZ2unlbdiOXFBpz5t6dkIMdE4IBjxTzSMWfD4BKtQK6PsDRuMJGLKBTuRH4jFi
+    we73ky93aGYbwsLYA>
+X-ME-Received: <xmr:E3usZ8DCJrf8dWZ8hUG2tMV6SP8n8q3rs7VM7PWRhCr7ojGwurBiPslWah2-62c1bQ9V0aLo8qrjJ1QqDdaQvOFBWVHuuP69tzdaH5enp17KFAs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegfeeijecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehmhhgrghhgvghrsegrlhhumhdrmhhithdrvgguuh
+    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:E3usZ-fXXBwKCi4KL5WgV-UbCL8r0_pQev8UTESuCnDC-aE2lEVuRw>
+    <xmx:E3usZ7M7uRQ9bKrgg1Fp7tEKq_rTDMqQXLj9dl5ZO1L0VP8zO13pmw>
+    <xmx:E3usZ4nZawK6jQ8zR05CG4tZNSe8lxXcJ6P1-1E2UwQt_GFPEoSHQQ>
+    <xmx:E3usZ9tGRrhyHv-0Tbz9AVMTdG1kiqwaFQCqW-Tdg2q3sjgBmRE_fQ>
+    <xmx:E3usZ210UJkPgNagg3Zztj_sbnACfYMRw5e4XYQOSbb14pSZjZcJzbdW>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Feb 2025 05:42:26 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 379fe598 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 12 Feb 2025 10:42:24 +0000 (UTC)
+Date: Wed, 12 Feb 2025 11:42:23 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 8/8] builtin/fsck: add `git refs verify` child process
-Message-ID: <Z6x2EN3ZVikLh4ne@ArchLinux>
+Subject: Re: [PATCH v3 7/8] packed-backend: check whether the "packed-refs"
+ is sorted
+Message-ID: <Z6x7DwERuCKET77c@pks.im>
 References: <Z6RPJI10-2QkwyqH@ArchLinux>
- <Z6RP50d7eRsKRCG6@ArchLinux>
- <Z6xwZaYLfmWUVNNR@pks.im>
+ <Z6RP2_wL1gjsWpkR@ArchLinux>
+ <Z6xwaMIUx_x6QVrU@pks.im>
+ <Z6x10U4HUwMYKUDh@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -73,41 +93,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z6xwZaYLfmWUVNNR@pks.im>
+In-Reply-To: <Z6x10U4HUwMYKUDh@ArchLinux>
 
-On Wed, Feb 12, 2025 at 10:56:53AM +0100, Patrick Steinhardt wrote:
-> On Thu, Feb 06, 2025 at 02:00:07PM +0800, shejialuo wrote:
-> > diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-> > index 5b82e4605c..9bd433028f 100644
-> > --- a/Documentation/git-fsck.txt
-> > +++ b/Documentation/git-fsck.txt
-> > @@ -12,7 +12,7 @@ SYNOPSIS
-> >  'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
-> >  	 [--[no-]full] [--strict] [--verbose] [--lost-found]
-> >  	 [--[no-]dangling] [--[no-]progress] [--connectivity-only]
-> > -	 [--[no-]name-objects] [<object>...]
-> > +	 [--[no-]name-objects] [--[no-]references] [<object>...]
-> >  
-> >  DESCRIPTION
-> >  -----------
-> > @@ -104,6 +104,10 @@ care about this output and want to speed it up further.
-> >  	progress status even if the standard error stream is not
-> >  	directed to a terminal.
-> >  
-> > +--[no-]references::
-> > +	Control whether to check the references database consistency
-> > +	via 'git refs verify'. See linkgit:git-refs[1] for details.
+On Wed, Feb 12, 2025 at 06:20:01PM +0800, shejialuo wrote:
+> On Wed, Feb 12, 2025 at 10:56:56AM +0100, Patrick Steinhardt wrote:
+> > On Thu, Feb 06, 2025 at 01:59:55PM +0800, shejialuo wrote:
+> > > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> > > index 658f6bc7da..0fbdc5c3fa 100644
+> > > --- a/refs/packed-backend.c
+> > > +++ b/refs/packed-backend.c
+> > > -	return 0;
+> > > +	string_list_split_in_place(&traits, p, " ", -1);
+> > > +	*sorted = unsorted_string_list_has_string(&traits, "sorted");
+> > 
+> > I think we call them capabilities, not traits.
+> > 
 > 
-> I think we should note the default, which is to check them.
-> 
+> Yes, capabilities will be more semantic. But the original code in
+> "packed-backend.c" uses "traits". Let us follow the original style to
+> make sure consistency.
 
-OK, let me improve the documentation in the next version.
+Interesting, TIL. But yeah, in that case we should continue to call them
+traits.
 
-> It would also be nice to have a couple of tests to verify that the flag
-> does what it is intended to do.
-> 
-
-Good idea, we could test via trailing contents to do this. Let me
-improve this.
-
-> Patrick
+Patrick
