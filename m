@@ -1,234 +1,147 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF11209669
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 14:26:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F72B254B0F
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 16:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739370418; cv=none; b=cHX/+L1OFjEF9IcrAdvGNdpbZJNsKoGNVLz9bOOrAjHyL1g3+uE+A36zoM3Gp7r1qjQAmJJ8S7Cr2zLaBL+be67POdpkcCUh946c75xTkiIy3LfWauKa8l4f5rv1zIu5Am5McgiE6mnnQrTpjfx8qV/WxPebFPUOxoHWNDimtpI=
+	t=1739379059; cv=none; b=gnCyaMLLNpUr5WpFqaHd3Z4i7aISJnDx2HvusKuP/3WdvBZYfCK4SLPN42DnFaRBDsYgZG9/Oj0fls+GTPl3IM9cvDxllDGiKRescdo003QLvpS5EZvSPfj4bL3MKL1cu3fJL+Q3N3148qZkefX3R93v8olyMuEkTsdwIqGWepI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739370418; c=relaxed/simple;
-	bh=9Ak29deNXWiFh0mu5P+lhC+KPCEDkiwbCYsS1mVGaRM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=SHQipeHUiYBJQLbt+i063zgwDVa3SUYig+oJ4qg/MEbefrIkXZeiCk2b5GDvW6AaEk93gbyIT9uzAM0l/b5BmKK6SCpsQKtRHO/zjvAUXfKDsi7heOBDGxuWG5HXToutrzq9O2GSnR3KWKGMbC6vPvSz9TOr3wFxUMSxCpx7iyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kReB2lK5; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739379059; c=relaxed/simple;
+	bh=LCpfFZKMy2quY0v1LnTawHMtN20Hg3jsqVTkcFJSbXA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WIJSug7BRuoyy2J/I990qFmd4qHffXS4CH59ixif+sA1uWc8OIxprYzz2tMbiTxXj8LxWoY0be2ttQhcYcOM5xas1/TqXU+pbsMnME5L7+gYln3eG9ydpxbxlkTr+6p6s/JylundZAkKLgUiZ2/k8qCTvaRhwhSF3sZo0O6Z6qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=m2QADI6r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=K9aXjGhA; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kReB2lK5"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-4394820123dso21027455e9.2
-        for <git@vger.kernel.org>; Wed, 12 Feb 2025 06:26:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739370414; x=1739975214; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YGDP42YqCZsdmtD4QbvhAaCk2a/Lb2XAO9ZrHZqUo1w=;
-        b=kReB2lK55+XFIoQ/hU0Kj9YiEOjdTupsnab3DYH2FwMBS/OBi0kuTZuU9jpk1zfW0+
-         WH2NejI9Nhh2kS3lsWo/f0nyw9UoPr4T6w0D9GsHq8mCwF20pjuYQGLv7WyLOGzkKyuH
-         hyMcWUL0TKgKBJDG3KnAiRKWBskoUO5pAype1ZXA6qZOs80gOeQ5SQr4LNtCePf0Na+5
-         MhxAwzN34FD8vDcZsadrgqfaR69fJ9gWz9V2jDx2WXSTY0iVJXZxpf+98pYwo4KgpTFO
-         Q6FkrwQCz+75nie5EXEQQSUBuD41maTx3FjP9aussiBxu7YhdFnQKFIEkhDvLqex2eeA
-         LUHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739370414; x=1739975214;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YGDP42YqCZsdmtD4QbvhAaCk2a/Lb2XAO9ZrHZqUo1w=;
-        b=RjJ9LT//yXDEkeCtcDLPupNXzt2ZIW5f1s4GLIeldJYApwj8kAqLXz//rwSxYedXoj
-         zFk1OUsCNDt302FcvFl6MjNKw9dcrx8vmjmtmguSRpAs0jUENUgvxs51BlX/zdt9mk7D
-         CO2s3Y7iYL+rH67zCVYl2RynqCvJlYpthU+IKaabRTicRGsb0i+61I7NxTEDqm6f1bV1
-         8jGDyfb4hgdDPLb1a0RldmsaKcCm6FMjDgvyG+PW6WsBc4jhQaW3UPt+o21fMrYfTAwa
-         uSD5x15O37DdfsymjoxIIAicmXCToCgDTzrUkbTD0iC92/dfn4oT2SF5pQegcu2rdVwD
-         Sgcw==
-X-Forwarded-Encrypted: i=1; AJvYcCUVNDiMTQrHXKBincbORDzZKGBpKwsmK9uK9VYO7JVsm5DYa01NycG+1BfPLhaNiM8SJf4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCWm2HU1lBBgLUaDAmmUoikX+kHxKY64K7X/K4uPuH9U2QP9OO
-	hOpOKmvBScoq85BVE7I1xMwoqQuLboUzIcwwOa6Q7wapqz7TPgAv
-X-Gm-Gg: ASbGncuXS6JsdvAtcAPCSlhJjiGfwOyLDKi0+b7/neVgx1oa8n++u3q2F183dSOyZcw
-	apdTbaM5lU2OJEPLndTq5q3BApjpyKNnMWr7mTczpPKFeea/RS9gZm/Zw+tgLsxx/OAvymnEBWD
-	MWnFmo2dTPRTzjanX3t3gVBHMK1BdLHioz1nbbtOJ9pUg0wHyBWad2UvqO1/AuY4OzZNP22Y1kv
-	RDoUSbwdFFOii3piecCYiPfhJcINHqAAZECIOi4837oeJjDwSPxEa25nUCcM5n9tzJ3vuIbyK2n
-	g0h8NtorS+pGOcNrEQPp7o0XILw7weM6SRegktX63uOAzxcP/bZrsjveZQ/gTrxqr/4xEA==
-X-Google-Smtp-Source: AGHT+IHb12Y328l8ZZxsiM4LVGu7lGZEsIoF+LcQwMf/aPsR28YnGFR/xYkqbIJp8LIEzk80TE049Q==
-X-Received: by 2002:a05:600c:1547:b0:434:f335:83b with SMTP id 5b1f17b1804b1-4395815f911mr38009555e9.5.1739370414065;
-        Wed, 12 Feb 2025 06:26:54 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4395a055c7esm21789695e9.14.2025.02.12.06.26.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 12 Feb 2025 06:26:53 -0800 (PST)
-Message-ID: <5b605c3e-ef6a-433a-9637-1e8f277dfde9@gmail.com>
-Date: Wed, 12 Feb 2025 14:26:52 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="m2QADI6r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="K9aXjGhA"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 19F5A11401CA;
+	Wed, 12 Feb 2025 11:50:55 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 12 Feb 2025 11:50:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739379055; x=1739465455; bh=eDO6/d7U2Y
+	8vMTh8YB7J3atoGJZUKuUUL/eNdEnbc4U=; b=m2QADI6rLHOa4LL/Xe3C8mvx8u
+	NN55vbH+I8LFpxlQXwj9RNuHkumSl46IMj8iXb134c8NxuDH1whw3KK60Da/fdgt
+	qi8Vo9ijGJm0LSlk93x8QR9SGB0/cmflWpPsoF+E4I9skcngwxlVNjbQnjd5mcf4
+	tfDs+rtETLraFLXJ+424DoZSJGEMGTRb5bxyUkhH8L3sXhuWhGaa95+YT3o/U1Pf
+	OFyscfqVsefShsJ8gguTSY6OJ/HAovfXVN08dPm3eQJvX0XDTWkXmo6/kkdAvi7t
+	WKEfaht82bVUYTrd5/oBHsCMM1xbIzlR4yhr9+AKLn6K4Rl4L1+XjZ2w2V4Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739379055; x=1739465455; bh=eDO6/d7U2Y8vMTh8YB7J3atoGJZUKuUUL/e
+	NdEnbc4U=; b=K9aXjGhAMQqu6KSiGOTrDTaGIu4PBXRwLAsred+3nDFslp8QzNH
+	bJ56f0shWj3i7uEpbaa8Ym0sd8Fei3bjozDtyL/hNYTKTTcaW/kb7rQgExoiy3t5
+	xgx6di/BC/IZo4VDPWPFzltMB5ZMmynLcpZVhccEZQrUyH/qg9jyB2KAZaypcFhY
+	tE2VmV6/T21wlQBffZYbWAcwmB46W97QB4l2zwYABOYUv4iNOkZNyp5Ejo1SlLNk
+	Mgddvv+n2R+zcCJ+RN8/2jRZtn1262kXv4gOXMWYzVPlFodV0gAl63o4be9hmWnS
+	bIyWVh9AX0Gdpqso/nFDvX9mrK03hGuC+YA==
+X-ME-Sender: <xms:btGsZzBhHH7GtcF2z62Dwq3WPp29V4IBaIxNNtd37kfTCjh9CI8LjA>
+    <xme:btGsZ5idnLEInt2IXwTRtIRJ4JOy9dO07E5MrTM7qGuykiYewTNWt1Z6yKQoOao2L
+    Dzl3vorEcIMqbqBeQ>
+X-ME-Received: <xmr:btGsZ-kBxmQn8hwI_Jil6fnejImrM-sWTDpgvzqyO29PxEVUlTOgJ12mNkMU_fhZe7-zl_ezexYrmfULdwyyqzuHdkgw-FmUXqSAhfo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeggeegudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
+    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:btGsZ1ySteMk9YY6gKESUgCVBK07Sv6cETr6ukeXXeKx0sdvxh5iBA>
+    <xmx:btGsZ4S94QbM1B3-q59OGqaRqkW2qaiskmyin8ntiCZzCFtzj8ppcw>
+    <xmx:btGsZ4bl-Gzbx1akUStOthMsorYoAkXm_Kq96whLZZd7U6IPz2Yoqg>
+    <xmx:btGsZ5SvVUKlX-6CDSZ2-wB36GEsjRJYkTJyegXxS_oQZxjtIw3UMA>
+    <xmx:b9GsZ-McbmZQWcg7LnuU0g20RiHrq30nV1lqbdAqq2139VhpcAw2TBcS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Feb 2025 11:50:54 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  peff@peff.net
+Subject: Re: [PATCH v2 2/3] builtin: introduce diff-pairs command
+In-Reply-To: <20250212041825.2455031-3-jltobler@gmail.com> (Justin Tobler's
+	message of "Tue, 11 Feb 2025 22:18:24 -0600")
+References: <20241213042312.2890841-1-jltobler@gmail.com>
+	<20250212041825.2455031-1-jltobler@gmail.com>
+	<20250212041825.2455031-3-jltobler@gmail.com>
+Date: Wed, 12 Feb 2025 08:50:52 -0800
+Message-ID: <xmqqldubumxf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase: add `--update-refs=interactive`
-To: Ivan Shapovalov <intelfx@intelfx.name>, phillip.wood@dunelm.org.uk,
- git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>,
- Junio C Hamano <gitster@pobox.com>, Alex Henrie <alexhenrie24@gmail.com>
-References: <20250210191650.316329-1-intelfx@intelfx.name>
- <1279671f-4063-4347-b153-9f6ff079bd77@gmail.com>
- <f689c263ead8104ec42f63f1e9ed10350a27ae1d.camel@intelfx.name>
-Content-Language: en-US
-In-Reply-To: <f689c263ead8104ec42f63f1e9ed10350a27ae1d.camel@intelfx.name>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Ivan
+Justin Tobler <jltobler@gmail.com> writes:
 
-On 11/02/2025 18:11, Ivan Shapovalov wrote:
-> On 2025-02-11 at 14:36 +0000, Phillip Wood wrote:
->> On 10/02/2025 19:16, Ivan Shapovalov wrote:
->>
->> I'm a bit surprised by this - I'd have thought there is more scope for
->> messing things up by making a mistake when editing the todo list that
->> for the non-interactive case. Are you able to explain a in a bit more
->> detail the problem you have been experiencing please?
-> 
-> I often find myself managing multiple interdependent downstream patch
-> branches, rebasing them en masse from release to release. Eventually,
-> I found myself typing `git rebase -i --update-refs` more often than
-> not, so I just stuck it into the config as `rebase.updateRefs=true`.
-> 
-> However, sometimes I also maintain those patch branches for multiple
-> releases. Consider a (hypothetical) situation:
-> 
-> - tag v1
-> - tag v2
-> - branch work/myfeature-v1 that is based on tag v1
-> 
-> Now, I want to rebase myfeature onto v2, so I do this:
-> 
-> $ git checkout work/myfeature-v1
-> $ git checkout -b work/myfeature-v2
-> $ git rebase --onto v2 v1 work/myfeature-v2
-> 
-> With `rebase.updateRefs=true`, this ends up silently updating _both_
-> work/myfeature-v2 and work/myfeature-v1.
+> +NOTES
+> +----
+> +
+> +`diff-pairs` should handle any input generated by `diff-tree --raw -z`.
+> +It may choke or otherwise misbehave on output from `diff-files`, etc.
+> +
+> +Here's an incomplete list of things that `diff-pairs` could do, but
+> +doesn't (mostly in the name of simplicity):
+> +
+> + - Only `-z` input is accepted, not normal `--raw` input.
+> +
+> + - Abbreviated sha1s are rejected in the input from `diff-tree`; if you
+> +   want to abbreviate the output, you can pass `--abbrev` to
+> +   `diff-pairs`.
+> +
+> + - Pathspecs are not handled by `diff-pairs`; you can limit the diff via
+> +   the initial `diff-tree` invocation.
 
-Thanks for the explanation. So this is about copying a branch and then 
-rebasing the copy without updating the original. A while ago there was a 
-discussion[1] about excluding branches that match HEAD from 
-"--update-refs". Maybe we should revisit that with a view to adding a 
-config setting that excludes copies of the current branch from 
-"--update-refs".
+Which of the above limitations are fundamental, and which are merely
+due to incomplete implementation that could be improved in the
+future iterations?  Without reading the code deeply, a lot of them
+look like merely due to this iteration being at a WIP state and not
+quite ready for the general public.
 
-Maintaining multiple versions of the same branch sounds like a lot of 
-work - whats the advantage over merging a single branch into each release?
+What is especially curious is the reason why it is limited to
+diff-tree (by the way, don't you require '-r' if you are fed
+'diff-tree' output, or are you prepared to expand tree objects in
+the input yourself?).
 
-[1] 
-https://lore.kernel.org/git/adb7f680-5bfa-6fa5-6d8a-61323fee7f53@haller-berlin.de/
+I can guess that the 0{40} object names in the postimage to signal
+paths with working tree changes unadded to the index is something
+this fundamentally cannot work with, but you should be able to grok
+'diff-index --cached', which does not have that issue, just fine.
 
-> With this in mind, I wrote this patch such that update-refs only
-> happens for interactive rebases, when I have the chance to inspect the
-> todo list and prune unwanted update-refs items.
-> 
-> Does this make sense? I made an attempt to explain this motivation in
-> the commit message, so if this does make sense but the commit message
-> doesn't, please tell me how to improve/expand the latter.
+> diff --git a/Documentation/meson.build b/Documentation/meson.build
+> index ead8e48213..e5ee177022 100644
+> --- a/Documentation/meson.build
+> +++ b/Documentation/meson.build
+> @@ -41,6 +41,7 @@ manpages = {
+>    'git-diagnose.adoc' : 1,
+>    'git-diff-files.adoc' : 1,
+>    'git-diff-index.adoc' : 1,
+> +  'git-diff-pairs.adoc' : 1,
+>    'git-difftool.adoc' : 1,
+>    'git-diff-tree.adoc' : 1,
+>    'git-diff.adoc' : 1,
 
-I think having the example in the commit message would help - I feel 
-like I've now got a clear idea of the problem you are facing whereas I 
-didn't understand what the issue was just from the commit message.
+This apparently does not apply to 'master' and the base at least
+needs to contain 1f010d6b (doc: use .adoc extension for AsciiDoc
+files, 2025-01-20).  Please clearly mark the series as such in the
+cover letter if the series is not built on top of recent 'master'
+(or 'maint' if it is a series to fix breakage, but it does not apply
+to this series).
 
->>> Try to find a middle ground by introducing a third value,
->>> `--update-refs=interactive` (and `rebase.updateRefs=interactive`)
->>> which means `--update-refs` when starting an interactive rebase and
->>> `--no-update-refs` otherwise. This option is primarily intended to be
->>> used in the gitconfig, but is also accepted on the command line
->>> for completeness.
->>
->> I'm not convinced allowing "--update-refs=interactive" on the
->> commandline improves the usability - why wouldn't I just say
->> "--update-refs" if I want to update all the branches or
->> "--no-update-refs" if I don't? I also think supporting
->> --update-refs=(true|false) is verbose and unnecessary as the user can
->> already specify their intent with the existing option.
-> 
-> I make heavy use of aliases for various workflows, which invoke one
-> another (making use of the ability to override earlier command-line
-> options with the latter ones), and the ability to spell out
-> `alias.myRebase = rebase ... --update-refs=interactive ...` was useful.
-
-You can write your alias as
-
-    alias.myRebase = -c rebase.updaterefs=interactive rebase ...
-
-instead. It is not quite as convenient but it means we don't have to add 
-complexity to the command line interface that is only useful for aliases 
-(I can't think of a use for "--update-refs=interactive" outside of an 
-alias definition).
-
-> Re: specifying `=(true|false)`, the intention was to avoid unnecessary
-> divergence, both in UX and code (and reuse the parser to simplify said
-> code). If you think it will be harmful, I'll remove that.
-
-It would be even simpler if we didn't change the command line interface ;)
-
->>>    rebase.updateRefs::
->>> -	If set to true enable `--update-refs` option by default.
->>> +	If set to true, enable the `--update-refs` option of
->>> +	linkgit:git-rebase[1] by default. When set to 'interactive',
->>
->> Our existing documentation is inconsistent in how it formats config
->> values. rebase.backend uses "apply", rebase.rebaseMerges uses
->> `rebase-cousins` which I think matches other commands and is therefore
->> what we should use here and rebase.missingCommitCheck uses a mixture
->> with "warn" and `drop`.
-> 
-> Apologies, I'm not sure I understood what exactly you were suggesting
-> here. Did you mean to suggest wrapping "interactive" in backticks
-> instead of single quotes?
-
-Sorry that wasn't very clear. Yes that is what I was trying to say.
-
->>> +	if (v >= 0)
->>> +		return v ? UPDATE_REFS_ALWAYS : UPDATE_REFS_NO;
->>> +	else if (!strcmp("interactive", value))
->>> +		return UPDATE_REFS_INTERACTIVE;
->>> +
->>> +	die(_("bad %s value '%s'; valid values are boolean or \"interactive\""), desc, value);
->>
->> I think we normally say "invalid" or "unknown" rather than "bad" in our
->> error messages. It'd be clearer just to list the possible values as
->> there are only three of them.
-> 
-> It's not just three (see other review from Junio), otherwise OK
-
-As this is a hint in a error message I don't think we need to 
-exhaustively list all the possible synonyms git accepts for "true" and 
-"false"
-
->>> +	/* coerce --update-refs=interactive into yes or no.
->>> +	 * we do it here because there's just too much code below that handles
->>> +	 * {,config_}update_refs in one way or another and modifying it to
->>> +	 * account for the new state would be too invasive.
->>> +	 * all further code uses {,config_}update_refs as a tristate. */
->>
->> I think we need to find a cleaner way of handling this. There are only
->> two mentions of options.config_update_refs below this point - is it
->> really so difficult for those to use the enum?
-> 
-> See above; I opted to make this change as non-invasive as possible and
-> keep the complex argument validation logic (lines 1599, 1606-1609)
-> intact because I'm not even sure I understand it right.
-> 
-> Besides, even if I convert those uses to use enumerators, I still
-> wouldn't want to deal with non-tristate values beyond this point.
-
-We could add a new boolean variable which is initalized here and use 
-that instead in the code below. Of the code below could just call 
-should_update_refs() to convert the enum to a boolean.
-
-Best Wishes
-
-Phillip
-
-
+Thanks.
