@@ -1,159 +1,155 @@
-Received: from mail.inka.de (quechua.inka.de [193.197.184.2])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4C81DF27D
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 08:20:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.197.184.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842751D86F2
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 09:07:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739348412; cv=none; b=tTyRZLCXFNzFpnECgBVigRp+dq9FWpZkYKB+MNpUaYf444BdRiVosHpEOSk0Rj/RySL6DYS15ZHhTvT8cvX18HqHYqIUoEe0OXU4NjvyVbUnh2eLAdyInVMexmHrLHVrQJta6J/H3rezELn5+P1BmfdIciS5UnfHWgF1IVdw8lI=
+	t=1739351223; cv=none; b=QiindgOmKWHOPmrTfDPEUv2q9v5vZUsnnmWIQxciieK5DSU0uQmWJr0ThkrblDXk/edlVNQFt0XqcrIoxVYlBYbnfIAhidWVU+2/DOen8seJC3IXIobMA6aq2I5zuc+DzLGn/ufRTAFbofwQP+jYZNwIRyeHRb/KVMKaIwd5E9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739348412; c=relaxed/simple;
-	bh=+1aEvbb5o5HOtE80RxVFis/Xr/wdzm+uDbRQIJzUCJg=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FUo+7L5Ofco70zE2jH+hzZHxlZebTXjIw0moRd4cdmsvQbSK0/n6MRFniA4XDvxmAc62WfiCjkTNKfzaNB7b3DWR8dY+V7vXnSqxUbuKdw+jawGx6MZhttsdh/0QpZqig6ZrZO4/QZj4Y8y33IF1jPoQUBOffrs0YpvufoCQ+bQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de; spf=pass smtp.mailfrom=raven.inka.de; arc=none smtp.client-ip=193.197.184.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=raven.inka.de
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1ti7yW-006zzr-NH; Wed, 12 Feb 2025 09:20:04 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 9040B60117; Wed, 12 Feb 2025 09:18:42 +0100 (CET)
-Date: Wed, 12 Feb 2025 09:18:42 +0100
-From: Josef Wolf <jw@raven.inka.de>
-To: git@vger.kernel.org
-Subject: Re: renormalize histroy with smudge/clean-filter, again
-Message-ID: <20250212081842.GR30202@raven.inka.de>
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-References: <20250205214726.GA30202@raven.inka.de>
- <20250211235707.GQ30202@raven.inka.de>
- <20250212061236.GA990@tb-raspi4>
+	s=arc-20240116; t=1739351223; c=relaxed/simple;
+	bh=P2Yz3BVkAEy+OKo23SmaHSP29BxjNmATPsZ+j2G+teQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rw5jHBMSyNTc8a4Kp32i0JO/nBK5bu/jkWva72FInyMOXLYqonbHxr7lUT960co/yQ+hZNeabVD+BbSS9tiurM6xivTObxLyyJnXb2gNSeA43ubVB+mEy3Zhx6mo8QVVkW82BxnupQO9+e1r9ppXGup7RwruCo+GzteMwNmiOYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JGayAJFi; arc=none smtp.client-ip=209.85.217.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JGayAJFi"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4b68cb2abacso1679537137.3
+        for <git@vger.kernel.org>; Wed, 12 Feb 2025 01:07:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739351220; x=1739956020; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=MdWqanWDhwSyHwcJ+Rq64BS+aZXo/6ra3BODaxqw3Uo=;
+        b=JGayAJFiGqVsjgUN/ujs8FTASXDI8BTzoJoX+F0OZphPDBaZZp9v4dJKkmWmYAbvbV
+         BBFv8DKWbeg1MxEmKfBaAdCW289AfbhOno1Zn/CuCRQutXxWkEKWcHXw6P9jOHWwDl+H
+         bhSQelgzKQ3ITud/nH63R0SxgxsS7aA+KuBqC1dAZn1AOwdoIk5uto/8KUIAaGS3Fyfi
+         LZbWPjFQE0RbAI1lyqoo+GNVdiQg8wKQV8RclNkSVwt7RF531FygayA1CAymET2B0tf3
+         QmEo/laBoIGiVa6mkmcJLAoBVlHbSzQQyHJNw2jFTBKsb40Z333Yf3ePPGQJci21c5/R
+         Tk/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739351220; x=1739956020;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=MdWqanWDhwSyHwcJ+Rq64BS+aZXo/6ra3BODaxqw3Uo=;
+        b=k6OHk8OZkzhpUiSh/D99GyuIfUYlsPNzHezvL1fpu0GoT2Q0Vot7wD1XE39FehDUc4
+         +LL5xTtt6+jWo7YOxrq76RKaJnRoNzAiAd5bDZGzrX8zHgmuNPjZ1i0iTaswsuTRSbJT
+         EHTM2oKOmKETT+xLS+cl6TRNOqcjBs+JRq40cmIj/TYvfwwufHxQaTm7G5WTbwgLSkX6
+         T1LVOcjglRtNf09Lfcx01GR2V+0sAFbNnhu2ZC3xo7WYa4j8xJv5ctYp3RXG1nITAMC1
+         pW88Bxg1Yy4W8XPuNx4Bs7AwVZTLSB/oQ600Ztj1+Vuemfxck07Q8F1um6HVzW23WFOA
+         JWSA==
+X-Forwarded-Encrypted: i=1; AJvYcCVcwh7srvNOeMUKSx3E2UBbcrgkB8JtiqmwW/v2j0wSvFGozPlsW926nUDxzfuKMgOT2b8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWAmK9Wuj/OblMOZQqL2kvrQiRDAdExMfbQU/C+y+VuPypBdvD
+	F1c4Lzv8Mp1B5oulHHdKq1CgVv1pXSvD6YtpgPr0vKyRytzGtnm0HNcEcsJKXnMg/lGb14DKuKv
+	eF21eNKR//F1JjchsrRS1C2YAnOc=
+X-Gm-Gg: ASbGncshTJn4+TgutSsOWtLqr7xOgGbDm7o091OtZ8CO4zFmpqwD9ouZzAtqKART9Pe
+	s6Z4dJ3Z9WWYtc+3O0YRrmw4ZPMXAhHJaQX/0fmLNy1seeITC2iJ3/6EYbWQxpRH+vOmFzfy4Uj
+	ZmWS4wQW/pVRI6/A0kLFVad0fLRQqDjbs=
+X-Google-Smtp-Source: AGHT+IFHr1i3IKtD48/XCWeNXAMsIS2NN5/y2VpRRVWR/B6gakj7pa6+nVwhpTqcIqUZ8Jmh0UA/dM+i45twgw+jdyc=
+X-Received: by 2002:a05:6102:2ad1:b0:4bb:ecb9:b34f with SMTP id
+ ada2fe7eead31-4bbf22267e8mr1794375137.14.1739351220271; Wed, 12 Feb 2025
+ 01:07:00 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 12 Feb 2025 01:06:59 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250212041825.2455031-2-jltobler@gmail.com>
+References: <20241213042312.2890841-1-jltobler@gmail.com> <20250212041825.2455031-1-jltobler@gmail.com>
+ <20250212041825.2455031-2-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250212061236.GA990@tb-raspi4>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Date: Wed, 12 Feb 2025 01:06:59 -0800
+X-Gm-Features: AWEUYZk8fGerY_fckNvvSEdyObQWJ0ia5OsYRHsf-wlglUkT9H0fb5ppTDKTCKk
+Message-ID: <CAOLa=ZRssYP8U+kyTYdUY_-WGCLLk4mVxQRbgu87g7AdxPJbZw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] diff: return diff_filepair from diff queue helpers
+To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Cc: peff@peff.net
+Content-Type: multipart/mixed; boundary="0000000000009fe813062dee4329"
 
-Hi Torsten,
+--0000000000009fe813062dee4329
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Feb 12, 2025 at 07:12:36AM +0100, Torsten Bögershausen wrote:
+Justin Tobler <jltobler@gmail.com> writes:
 
-> > - Set up a clean filter which enforces CRLF (yes, for this specific use
-> >   case I want CRLF even on linux)
-> 
-> In general, clean filters do their work when 'git add' or 'git commit file'
-> is run.
+> The `diff_addremove()` and `diff_change()` functions setup and queue
+> diffs, but do not return the `diff_filepair` added to the queue. In a
+> subsequent commit, modifications to `diff_filepair` need to take place
+> in certain cases after being queued.
+>
+> Split out the queuing operations into `diff_filepair_addremove()` and
+> `diff_filepair_change()` which also return a handle to the queued
+> `diff_filepair`.
+>
 
-Yes. This is done in the renormalise-helper shell script, which I included
-into my description below:
+This patch keeps `diff_addremove()` and `diff_change()` while
+introducing two new functions which return the `diff_filepair`. Just a
+thought, why not replace them? The users `diff_addremove()` and
+`diff_change()` could simply call the new functions and ignore the
+return value?
 
-> >     $ cat renormalization-helper
-> >     #! /bin/sh -e
-> >     git add --renormalize .
-> >     git diff --quiet --cached || \
-> >         git commit --amend --no-edit
+This would be messy if there were a lot of users of `diff_addremove()`
+and `diff_change()`, but I only see a few callers. Wouldn't it be
+cleaner to just replace?
 
-> Does the filter do the CRLF conversion ?
+The patch looks good to me otherwise.
 
-As I wrote above: yes, the clean filter enforces CRLF
+[snip]
 
-> Or is it done in .gitattributes ?
+> diff --git a/diff.h b/diff.h
+> index 0a566f5531..6ea63f01e7 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -508,6 +508,21 @@ void diff_set_default_prefix(struct diff_options *options);
+>
+>  int diff_can_quit_early(struct diff_options *);
+>
+> +struct diff_filepair *diff_filepair_addremove(struct diff_options *,
+> +					      int addremove, unsigned mode,
+> +					      const struct object_id *oid,
+> +					      int oid_valid, const char *fullpath,
+> +					      unsigned dirty_submodule);
+> +
+> +struct diff_filepair *diff_filepair_change(struct diff_options *,
+> +					   unsigned mode1, unsigned mode2,
+> +					   const struct object_id *old_oid,
+> +					   const struct object_id *new_oid,
+> +					   int old_oid_valid, int new_oid_valid,
+> +					   const char *fullpath,
+> +					   unsigned dirty_submodule1,
+> +					   unsigned dirty_submodule2);
+> +
 
-No. .gitattributes states that git should not modify the file since I have set
-it -text, as I wrote:
+Nit: would be nice to have some comments to describe what these
+functions do.
 
-> >     */P -text filter=etsfile
+>  void diff_addremove(struct diff_options *,
+>  		    int addremove,
+>  		    unsigned mode,
+> --
+> 2.48.1
 
+--0000000000009fe813062dee4329
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 51b814b8a62ac8fc_0.1
 
-> > - Run the renormalization for the linear history:
-> >
-> >     $ git --attr-source=$(git rev-parse HEAD) \
-> >          rebase --root -X renormalize \
-> >          -x $(dirname $0)/renormalize-helper
-> 
-> That will change the index, the repo, but not the working tree on disk,
-> right ?
-
-"git reset --hard" or even "rm -rf P-0113; git checkout P-0113", also do not
-bring the CRLF into the file, see below.
-
-> > So at this point, I'd expect the falie to have CRLF line endings. But it
-> > doesn't, so I do:
-> >
-> >     $ rm -rf P-0113
-> >     git checkout  --attr-source=$(git rev-parse HEAD) P-0113
-> >
-> > Still no CRLF, so I look at what is stored by git:
-> >
-> >     $ git --attr-source=$(git rev-parse HEAD) show 873a9b:P-0113/P |less -U
-> >
-> > Again, no CRLF.
-> 
-> Just to make sure:
-> You want to see the CRLF in the files on disk ?
-
-In the first place I want to see them in the repo. And a fresh checkout should
-bring them into the files on disk, since -text is in effect.
-
-> Do you have a valid .gitattributes file on disk now ?
-
-git recognizes my setting -text and filter=etsfile, as I wrote:
-
-> >     $ git --attr-source=$(git rev-parse HEAD) check-attr -a P-0113/P
-> >     P-0113/P: text: unset
-> >     P-0113/P: filter: etsfile
-
-> If yes, what does 'git ls-files --eol P-0113' say ?
-
-As I wrote above:
-
-> >     $ git ls-files --eol P-0113/P
-> >     i/lf    w/      attr/-text              P-0113/P
-
-> What does 'git status' say ?
-
-Nothing, since
-
-  git add --renormalize . && git commit --amend --no-edit
-
-have been done by the helper script on every commit of the history
-
-> > So I check all revisions in the history. Resut: no revision has CRLF.
-> > So the renormalization process does not work for me at all.
-> 
-> In general, renormalization is about the content inside the repo.
-> If a filter is applied, or .gitattributes are changed, the files
-> on disk are not updated automatically.
-
-This is why I checkd the contents which are stored in the repo:
-
-> >     $ git --attr-source=$(git rev-parse HEAD) show 873a9b:P-0113/P |less -U
-
-> 'mv -f P-0113 /tmp && git checkout P-0113' may be needed.
-
-Well, I did this instead:
-
-> >     $ rm -rf P-0113
-> >     git checkout  --attr-source=$(git rev-parse HEAD) P-0113
-
-> Yes. The best thing to do (tm) would be to create a dummy repo,
-> do all all the operations from scratch and post the stuff here.
-> In other words, write a shell script that creates an empty repo,
-> fills it with content, and does all the operations.
-> That would enable people to reproduce it and look what is going on.
-> Hope that make sense.
-
-Well, if I _knew_ what triggers the problem, I could create such a script.
-
-As long as I can not figure what triggers the problem, I have to dig into
-internals of this old repo with long-running history.
-
--- 
-Josef Wolf
-jw@raven.inka.de
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lc1pMSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMTFrQy85MWpvaWZkbTZXN1dlcklzQWFCWEh0QWx4TQo3OEhkR3hWTm9q
+TmR1MFpDTXJaOE5ZZE1CNWJqY09wWVhoRXEyaWNQYWF2d21SSzZGWkRqZFpsZG50d2Y0ZnZnCmVk
+eWovajFsZ2cva3pvRGNubWxRN1Qza2Fpc1YxZC82S25FcEJKcDRuZVJCcTFVWExYS2VyZC9OaTVL
+ODBqVUEKTTRhTzVmUkd0eHRXZVhWRzFuN0o2NFRwY0oyclFBSkFnbDIwNy9HY2E5OEJ1eDlhTXM1
+YU5hYTE2SGlvSlZkTAprdDc4Nmc2eTRDZFNOUVNzbVBCeUU3dGxPOVBTMHpmQmptMVM0ZHNpbnVv
+MzdjNkRHL2lYd1c1L2RvTnVYU3FxCkl4Y1B2dGJPZnRPNStucG9nNWxDN2xMUTVjQ0JESjNJamhu
+N29QeC9xQUt1MGFQU3grVFpIV2h1ZlJoZUxWMk4KVE5HcWQvMCtsRGhlaStGd1FaL0cwdXNXNkNn
+b0htR2diQkl3UEVTUjdQMEVMdE9iY1hUeS9QazhQM2RWWDhkZQpyblFwblM2ZSt2S1hwaTN2bk1s
+d081WG0xcEcrU0VzaEVHbTFWblJqSXdQVngvVC9sMzRGSmsxcGRlQmx0dEdTClZISjNQajROeGlE
+aEdDSHhSZE5tUTZUayt5aDdGTUdNcG9tcmk3Yz0KPWhiSmwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009fe813062dee4329--
