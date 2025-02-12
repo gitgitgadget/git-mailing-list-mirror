@@ -1,120 +1,181 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3833D1FBCA6
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 06:04:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E22B2D600
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 06:17:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739340270; cv=none; b=JFZeFvYWioZ7jhetCu7XwY+vDfNr2wx12BRRK/KWRcZ1rn2w8XU/2GvFi5U/5qV88nZBuuMoU7EpXeGqE99ByhtO17Ca60i5FZHadY9ftcAuLQZLtkp8qNx95Ni1sD9LLwgCnS42OVhIwstwxsXJVIvjgdvq7uYZj7t5cJ3BNoc=
+	t=1739341074; cv=none; b=rY3jytyWOvFGCs4/eF/u45YVNQYdnT+Phs5sjbnnWkuao8RQ17buYX6aWSe6Dl0KEPil4imDQoFCkJUrMK5xjKGXAw57QNOVmc0bBfFHCMBRZ1AJfGgIZd5K/hQgxB6pYITtjJWBO9xPNMyWUYGvpOUIvugqDCSLGSf/+MZHnGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739340270; c=relaxed/simple;
-	bh=z4oOteuTsO1wfDjhO0EUSRFQSuyfmqb1+GOFK6v7sC8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4vEBAUnUo6qV8gRlKdA/JyjOqvq5gfYOsbKfwyGiFsXbLdIaP0sea/ANzLb+/bXHBnnhGfaA95gbJVpWxhKPDP+BmpLmM6bPKbeXJN3wJytVeMYEvVeAlfV3/lXRCjfJIsdbRPNq0GkItg7+oR4gBq50PPpchXb6NBet7LmyMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SX0Ls9p6; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739341074; c=relaxed/simple;
+	bh=aMdss6F2EpwsBculbfOvzbRRfiiwk2D7tIGKYVL7kVQ=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OSw57pd29U6MOm4fUsL0fDSviyW814Zm1HnHyOxoD1nXHXUHwdhzWAKO36Dm1qBr9CcbXBddn1V8NjGdLbRvUe3DOF3RobD7hXoI4su7LwG0iJ/lAjs04hp34Ha4Qe4CbSiP+Lq4CUNu7VwE2qwAX68GAFH0ssQlmK2A8Z+Tx6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=lAuYGJyY; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SX0Ls9p6"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-21f7f1e1194so90223165ad.2
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 22:04:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739340268; x=1739945068; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+n4MkGwwSrn9iOloBqOG2El9mfylZ8I2utSNPtiLQrw=;
-        b=SX0Ls9p6ND8V3weIUm9aRXmr99Z8yG2n4zOJlaIj0u8PkvHdndLvF1JDzfBD4a709N
-         i3pg1Li46Y+RdoaAEOL568X6uRjJDT3r29ecuzJgZAg4953FMD8UN/s7Gi+2dFFSrrbY
-         uTF5K8HeM0O6AlaoLYEs1Nt0rlXj9LuQar6MU79YdpTfysNG+vO38TTrw0ydiERGIDlt
-         KuYkErZn4KNRUxkW5K90uRcf3fJpbKnU4FPXBnTaN5jNJHBFavqaGqniZh1YpHETfpVZ
-         DJIfQbBwIeQJg/wVy8lAEi2KqdLWmgBT3YwpBRO7EjTv6T6aNpLZwvoc2r53D5IMBdlh
-         N/Gg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739340268; x=1739945068;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+n4MkGwwSrn9iOloBqOG2El9mfylZ8I2utSNPtiLQrw=;
-        b=SUBYjrUvURgXmm9XoY+SJnpByEzdzVEVIK+5g0d9SFvraQs2zAzPq4Pul0Rd0k0LSU
-         SIYNQr3YE93r3SwN2tQzBg+mYTfA1ELYhlS4EdRDO6z1yr20CifG4XhucdviMkjZtI1K
-         RSMiin1/osUNJiLkURKlz+eG/b3yqPzleuOAyVGQsISw/ReZ2vNKX8iG4Ptkv2z+S8pp
-         FL6QwU7fIIx9mlv4BxSZvqoSgd1p3fyWGInj0zWP2uFntDqnFb9r5qQvmP2o41Wxgf4f
-         ivaiHYYtFRYJY0b9EZ7cfBxfWUKTBiB4lOLghYvSywQ8S7ATzK07NRboyEgWkX5qcEXm
-         +7dw==
-X-Gm-Message-State: AOJu0YxTl1LGeDHi4Qtg4L3tEam1Et/3q+WJ6ju44Wya+2UpncLshSFu
-	mUIND9aKp9I5aIsRRHppo7O8o81allRkiwbD9wAxpjmqdLdwUK3JHnCUAg==
-X-Gm-Gg: ASbGncvpvPfu1917pXufD8iY70sx6EdMiNX8ooB/Y44Org5dQrG6mrBLbSpF/LenZc7
-	6SVByqRhYpqLo1fV5Rgk7maC6bx024AGw9Oe204f50b4CHfeetiisDmHnuTjJaIUkAn9mhapPII
-	QC+YsQ/4UcvKQsIIp2Wvb9usRizJvtLTTy72TUABwjzc/fb5pAlm9fRxHEUU6zJdENYy8UtpGgD
-	YBKPxwc2aVhEhye0tJzDYjT4IpBzrcdkF1oau4ZNqtF/jvr4mK3HjUbSw8oZWbj192nHzHaXBSB
-	7CY+wWotgLgWWtsBZRiAFwr0pA==
-X-Google-Smtp-Source: AGHT+IGtPuGkXwMo7gEEixZKESDt9WObsF67tINp+DlkiodVNgNei8rxRx0Oh7HHa2AcJGqgvw1cpw==
-X-Received: by 2002:a05:6a20:a10d:b0:1ed:a6d8:3439 with SMTP id adf61e73a8af0-1ee5c790a1dmr3851198637.22.1739340268402;
-        Tue, 11 Feb 2025 22:04:28 -0800 (PST)
-Received: from localhost.localdomain ([172.56.121.6])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ad53f6e2633sm5747411a12.16.2025.02.11.22.04.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 22:04:27 -0800 (PST)
-From: David Aguilar <davvid@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 6/6] xdiff: avoid signed vs. unsigned comparisons in xutils.c
-Date: Tue, 11 Feb 2025 22:04:18 -0800
-Message-ID: <20250212060418.1645241-6-davvid@gmail.com>
-X-Mailer: git-send-email 2.48.1.643.g32d702c6e8
-In-Reply-To: <20250212060418.1645241-1-davvid@gmail.com>
-References: <20250212060418.1645241-1-davvid@gmail.com>
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="lAuYGJyY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1739341069; x=1739945869; i=tboegi@web.de;
+	bh=sAOGUqYb18Q6UJv+OLhYMG6I95zSdw0ZH5M7aGG196A=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=lAuYGJyYt35zwNmnswBMQ0GJEQ8Im1vy7GCdjNmisTUBLNxbx5M4BehSkG6EYfNL
+	 ZfZDzGOsSdYMgg0bN7UMFNEMuNDrM4N/pmTU+i5h4mISg0lv4kS0FczhIWgVyh49J
+	 T+kYV4hlct4Hu3U7T38W0QU6UGXbrplto7we/U9DCDTYXRxB51MSXDh8BbLthWmAH
+	 fq5L4J6thKSkbGmt/HURjnXdz7FbFqf7Vqrg+RR4rGHW6L8Qqx4+eMu3P4nwKoPnH
+	 1Ga/FvTCJEnYMKywqvHqOAHP11dUoMQWe+li+oN32k7tnkTqBC4u6rZ5WSiN0F4eI
+	 RPDSNkrbiEIt1MxjFQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M1rTG-1tft412EWW-008qQJ; Wed, 12
+ Feb 2025 07:12:37 +0100
+Date: Wed, 12 Feb 2025 07:12:36 +0100
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+Subject: Re: renormalize histroy with smudge/clean-filter, again
+Message-ID: <20250212061236.GA990@tb-raspi4>
+References: <20250205214726.GA30202@raven.inka.de>
+ <20250211235707.GQ30202@raven.inka.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250211235707.GQ30202@raven.inka.de>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:U8aYUQcZXDQIXszhVR6vwHwKXU/6ZGNQSZBZSapoQMEN1O6Z8t3
+ bymf4hxlDEcJjVZS7eU26894BtVDpDHZDB2+Gyj2N6X5A5Pr0Q6ko2akdSWiNDYCFzmep4T
+ 0DpQE4C7ekllGLrdmgPveZ08v1Q2f0H2bEOzd5N6Z5F9xmfes+qlZAAnI522+XqT76G7tSS
+ b05i2w6rs6H6niA0sqOmQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:ijKMs0Gfpd0=;q739f3s/mE9lPQeOxz/yOqXBGn1
+ TLJRuvv0hlRD/6svyuN/a32KAIlu134opRQE00U9+xUkN2NpSHbKygKwdY3cJd0O/LmqnEPbU
+ Wf5vLzg2CX+kbCm3mLM1MogFrqSTwPyHag7d24YJ8sIbPcjC94a8yWuwdo2+oBKx1MB7IeU+4
+ 0RTIJQoBmQzRU6fBU3Tkzp+9jFrK9QMXlcJI0ZY7RW6bnHhgFss8587IcFyj1q7WNPnntUj0L
+ XYrt9JE3lXTXhVVaO8pMiDZ63KuKODZhjdbgYDJGOkA1f8znSYHu+ADYGq/Dh8NgmrAZyZyKz
+ X3i7PiQxXl9/4UcLlpMOH1GJ3Xgw/yQ+HPSYk2m+/1Vo8i2Lw/6vSk1oqCw1YB3fso+RH+gEz
+ nfQpwJkDNuUhCkjxHg8X1LZHEFYxDcNdlvfkY0f6344VXq+iqhrqPWHrGknYoQPFNGg9++Nox
+ TZSPZNJuwZ17oDVAxyKn8rywIm68A92JWtWVY3Eiqu4cuLdTGQrr6g8IpmSCZft8PX6nqgs+i
+ SKt72bLFLXnldYPviD8xftnxfqrVnQaiA8ziz1tihJz2TFzxUwTG5u7QgPix30LrPsDwsYYG/
+ ezZ21SAd86v5JQYO9XDSpCbJjm3gmU8akuq04U4049iY5Y/setXwrNZ1tlkS7TyQ5CrxW4gHM
+ syfJVvvTkzr3vMYHyfyZPEs1rHLwCafrGz/g/E4tVtuDIAUMDeThLhiKL8qSQVSno7eRaW8cj
+ F5kd2uoqoBf4Zt7EdZ0Eb+8hVTJL15Yfz/M8Zm1XPkYAd5ST5jIwcka25gqlUQ6KbegpfZKcr
+ hR8ETN8M5wvorDCJElwlDRtBzSpwIi9zhQ/QiyACleIkhfLQgDLuwE2k4ToCQU/gEqvwOdWTB
+ hPqyLGJI3hr4iHVdyx5Zf3H4VzUiVO9jAtgmSdB1yOLWfPpEhGxOwROlYibrgxpVg59sK7OsR
+ 6DXA8gdZsFqcIo+WmaWnAUoPcE8LvWB5yD3kOLOeJlnSafBFhrpyLSoOKMrgMvlBmKLKuIIy5
+ oiUqNdEiaOIzG8hqWwzE6YF99FwerY3X3ZpI1O3YPQYAJPMNWcuJK5v9G5GZo/HC2XCNLWxRJ
+ wZkTvMK/bfs+/E+pwXATUOLq0S9QUrh0zO67Lxr1v2nHKREvTLKihPdWystNbKMs66da0LOOO
+ OSZpXmb1G504cLaRduFB6wZp61W/un0HAWB2+wRuRWJkFULj2diP89QR2M9IZHYFw8IhkJCFi
+ fXreRV3XzCGIV3Td68A0woTp40dJJXm8iaefaJBSk+cA/A3oWJYTJyrQAu8VDgtNOiyBqtzNG
+ f+CIcW39nnaJJ4kvnI8o2snBjtwRYUPCvg57g180AgKyPZj9yXHNaR/VTar8SxRuSp8NxTJL6
+ b+uVKpWj/RLYnCCJyzOgRr4PrAeVt5qmchLYs=
+Content-Transfer-Encoding: quoted-printable
 
-The comparisons all involve comparisons against unsigned values.
+On Wed, Feb 12, 2025 at 12:57:07AM +0100, Josef Wolf wrote:
+> Still struggling with my filter problem.
+>
+> Here is what I do:
+>
+> - Set up a clean filter which enforces CRLF (yes, for this specific use
+>   case I want CRLF even on linux)
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- xdiff/xutils.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+In general, clean filters do their work when 'git add' or 'git commit file=
+'
+is run.
+Does the filter do the CRLF conversion ?
+Or is it done in .gitattributes ?
 
-diff --git a/xdiff/xutils.c b/xdiff/xutils.c
-index 169edff5ab..444a108f87 100644
---- a/xdiff/xutils.c
-+++ b/xdiff/xutils.c
-@@ -20,8 +20,6 @@
-  *
-  */
- 
--#define DISABLE_SIGN_COMPARE_WARNINGS
--
- #include "xinclude.h"
- 
- 
-@@ -377,7 +375,7 @@ static int xdl_format_hunk_hdr(long s1, long c1, long s2, long c2,
- 	nb += 3;
- 	if (func && funclen) {
- 		buf[nb++] = ' ';
--		if (funclen > sizeof(buf) - nb - 1)
-+		if ((size_t)funclen > sizeof(buf) - nb - 1)
- 			funclen = sizeof(buf) - nb - 1;
- 		memcpy(buf + nb, func, funclen);
- 		nb += funclen;
-@@ -439,7 +437,7 @@ void* xdl_alloc_grow_helper(void *p, long nr, long *alloc, size_t size)
- {
- 	void *tmp = NULL;
- 	size_t n = ((LONG_MAX - 16) / 2 >= *alloc) ? 2 * *alloc + 16 : LONG_MAX;
--	if (nr > n)
-+	if ((size_t)nr > n)
- 		n = nr;
- 	if (SIZE_MAX / size >= n)
- 		tmp = xdl_realloc(p, n * size);
--- 
-2.48.1.643.g61982db19f
+>
+> - Smudge filter does not modify the file at all
+>
+> - Set up git to fail when filter fails, so I can double-check that the
+>   filter is actually runnning:
+>
+>    $ grep -A3 filter..etsfile ~/.gitconfig
+>    [filter "etsfile"]
+>       required =3D true
+>       clean =3D ets-utils -c
+>       smudge =3D ets-utils -s %f
+>
+> - Specify file as non-text and install the filter:
+>
+>     $ grep etsfile .gitattributes
+>     */P -text filter=3Detsfile
+>     $ git commit .gitattributes
+>
+> - Check that git gets attributes as I want them:
+>
+>     $ git --attr-source=3D$(git rev-parse HEAD) check-attr -a P-0113/P
+>     P-0113/P: text: unset
+>     P-0113/P: filter: etsfile
+>     $ git ls-files --eol P-0113/P
+>     i/lf    w/      attr/-text              P-0113/P
+>
+> - Create helper for renormalization
+>
+>     $ cat renormalization-helper
+>     #! /bin/sh -e
+>     git add --renormalize .
+>     git diff --quiet --cached || \
+>         git commit --amend --no-edit
+>
+> - Run the renormalization for the linear history:
+>
+>     $ git --attr-source=3D$(git rev-parse HEAD) \
+>          rebase --root -X renormalize \
+>          -x $(dirname $0)/renormalize-helper
 
+That will change the index, the repo, but not the working tree on disk,
+right ?
+
+>
+> So at this point, I'd expect the falie to have CRLF line endings. But it
+> doesn't, so I do:
+>
+>     $ rm -rf P-0113
+>     git checkout  --attr-source=3D$(git rev-parse HEAD) P-0113
+>
+> Still no CRLF, so I look at what is stored by git:
+>
+>     $ git --attr-source=3D$(git rev-parse HEAD) show 873a9b:P-0113/P |le=
+ss -U
+>
+> Again, no CRLF.
+
+Just to make sure:
+You want to see the CRLF in the files on disk ?
+Do you have a valid .gitattributes file on disk now ?
+If yes, what does 'git ls-files --eol P-0113' say ?
+What does 'git status' say ?
+
+>
+> So I check all revisions in the history. Resut: no revision has CRLF.
+> So the renormalization process does not work for me at all.
+
+In general, renormalization is about the content inside the repo.
+If a filter is applied, or .gitattributes are changed, the files
+on disk are not updated automatically.
+'mv -f P-0113 /tmp && git checkout P-0113' may be needed.
+
+>
+> Any ideas?
+
+Yes. The best thing to do (tm) would be to create a dummy repo,
+do all all the operations from scratch and post the stuff here.
+In other words, write a shell script that creates an empty repo,
+fills it with content, and does all the operations.
+That would enable people to reproduce it and look what is going on.
+Hope that make sense.
+
+>
+> --
+> Josef Wolf
+> jw@raven.inka.de
+>
