@@ -1,68 +1,68 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6530927182D
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 04:22:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8B527182D
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 04:22:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739334136; cv=none; b=cJMtxqBHfzKGrUOW4tNoz6H8zKN4jLbyDq4Slim+cebqEHMbEf8Dztr/Wu/jeI8WfD57lWJV3z/ejD1nIQzqgcBCQjjCmkRkjMsp4Q5b5lysuXAB8I9UXI0xvTqNJN2UnhTBZEN1eN9P6zSMFko3evYd3yY4oNbkYDsLKytJ5rM=
+	t=1739334140; cv=none; b=C3J/8N2GnMLhm4uwViKDaJywkazgZJT7zbl18TamujVHdpfh16RwWcPSNojWsDwFgRYLkAq2qHQPZt87jyifp8tFGI/7QZqtfqbZ3Ecf7My2d14E14eyHY2QqsFfRFeVdwbquXvwz/J8/HGxoHeOZJQEAoKWYbQQwlFxfIy16RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739334136; c=relaxed/simple;
-	bh=e/CczNF1l4UyZLEUBQL8RsQUdOxAmksqCa4amXrpasM=;
+	s=arc-20240116; t=1739334140; c=relaxed/simple;
+	bh=MiqikVEC4W883oHo0g1IyCjcl5uc2MrdSAitsbir3og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SboGnz2bLIvGKK38vHi7dLh1MUHjVFq+9/MzlO5YgO1GYUDIBiBwtfMAUuoG52LhV4qpzAzo+tmrNzZOtPbr5RzSQNUPerMRXnVb/azyR8K7bADPaxydZdrxlNR8sUV6VTTL/K6N0/+1UN/ymbLwmMCxijUHGMeddsauO+mVjAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y7iPaIou; arc=none smtp.client-ip=209.85.160.42
+	 MIME-Version; b=BvJ7jeZBEJTws5jf9HxLf/+NaqGWJb9z9s4lgDCkcnu7w1GveJXVZeffEURFZh9hqjnfbtcuMCX4al9piAOtd1r6LYS6GtvGcQGF61LHmFLzfPjzOpk2orDxsgJ7HZn0g2b2D7WuQfYgdg1cWAPQFxMS/ERwi1L3wRtpb2sDJvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i9r3VKU5; arc=none smtp.client-ip=209.85.210.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y7iPaIou"
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-2b8d6040598so260073fac.1
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 20:22:14 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i9r3VKU5"
+Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-726819aa651so1756330a34.1
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 20:22:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739334133; x=1739938933; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739334137; x=1739938937; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gaUmfXwbibB4wwFe6uLV7f9+xKiVxydehJ+z5ibKjo0=;
-        b=Y7iPaIousTaa13HEaubT4koXzvG8x8r4qxpNZ/KI3KWDu3L4Ld7vsQodZxT6J9wDa3
-         UJixrICgCEVSgFQn4DeOM7Huv9n0++unQU1VYt18LP+QShFz24ZPYZ0umS8BSTU6ZF/3
-         ZvNO3bmYZQyKJ/wiwYyav65m+t3CMSwcozOgJfWYltQWk9mAE579aDBXmicDwMkA69np
-         ROFJfz2VY8zct8tw+0pZugL3BUPjLpSR3iM1ksUAsQPvpwQqSh/1zqf2jLb65qH6Rjgw
-         5qh/Mj2xdGFytiCcZOx4PD7TMflpJXe+R7150MBQXHgNWCBZ8GRYKidYh4LyRuMq4Nez
-         ocUQ==
+        bh=Yv7q8EP0K/g2PbhTJ4bMYfbqMlYut/xuC8p+c856jRw=;
+        b=i9r3VKU53nl+/dqE2XWLBL6N/MOFzHCLSUPARCTGxBtRlf+p1xpkZSSfZAdtln1pJS
+         NsWfrfk3TTx1VYWEiT0jWEe8w8i8rl48e/BaPkXKgdjTvdpZhNTgiOKVhEO45nqQWj1Z
+         FL9wfR95MVgi07IigATM3ttMcRvTOR87cM3JgBOnTXz18n5LeRMSpNZ1YBaxcujEnjua
+         J4oJMQzO+tK5Q9kvsMb1F+XNG12csODP2bfCJIZgV4uhGR2H0DgEiyyijCsxEE8qzcXR
+         SV5EbJzEiUuwR3UeG24s/G+MXUkRx2qkBuwz+i/sAvBttS8X6l8z4PUC9CKsjBcFT8xD
+         w+7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739334133; x=1739938933;
+        d=1e100.net; s=20230601; t=1739334137; x=1739938937;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gaUmfXwbibB4wwFe6uLV7f9+xKiVxydehJ+z5ibKjo0=;
-        b=lUCQBEBMuFj6YAU7a/YI4G1pdorAiaeGhe4Vo+UZhC87rYI2RSCbPXfWhKBjetbsDq
-         +hQrvU/SVDd4sgeVYnDWg5Pb9NtGoVXTOWFrNszOddRta0/2kzOAAEnyBuBpU4oG3cF4
-         g8PRM8BdvNwAKu0LyMwHQ3XkEue4OQxD2x9b1OJAVGbkYk9j2BynqPLhsshhnbZXWGhr
-         3n48OG9MM3kIt+UhFLvCy344UjPvtAAbG3r9snn2a3bKg32YT8QZZ+geJFYwglVToBlZ
-         bVDmwvUzmr3gSHufrrQEK0LelYGXQlIt+YeQg+kNZR5fl4oRoPURivXIWUlTQ2yooIoj
-         r6Ng==
-X-Gm-Message-State: AOJu0Yy+RVSdEF19GsGBtVQAtj42zPevH3Mbt6QgwMOO8Cmn7sCj6/ys
-	q+ahZ55IACTsv4QjdyY/RkX1cnQ4Cc7a1V1mt2GCs1+x9auP6Say062Hiw==
-X-Gm-Gg: ASbGncvmUJ3bERf14AcfZiwnrpufFWVHnHv7bpBPNcRTbs/JlngchVQGKIMaIDYjoEk
-	vnqkgGWt0FXi+Hadr5jD8zcK8yExc0hp36EZHoWH7Y8DwFP60ItUoAdCrC2kumVHgHqRcfT/OcP
-	7v64UN7U2NNFStRZL5yqXuILz6xDRdHLx8JRlrzZ/4pncb+YTCPOzujAh2bhPPz88VNXxcYmad/
-	7S5JVRf+NcX3G7grTjp/HpRELRD3qET/FXTASzTCmJykWld5lvr85IKh1j1UIeDYnedXsNYCsRP
-	NAT9QOXv6IZMePtMmZimHns=
-X-Google-Smtp-Source: AGHT+IEML/RQS9AT9nXlYVKGM5krqtKo5iECOvqJKzwkhiILGHVnY/m3xWPUs3qFAeGqIiGEdlpzaQ==
-X-Received: by 2002:a05:6870:2253:b0:297:683:8b5b with SMTP id 586e51a60fabf-2b8b6e3082amr4037991fac.10.1739334132903;
-        Tue, 11 Feb 2025 20:22:12 -0800 (PST)
+        bh=Yv7q8EP0K/g2PbhTJ4bMYfbqMlYut/xuC8p+c856jRw=;
+        b=PNdeureiS1vLKXCbo6xZXP0ukcXhxCa5RaFNzzmOQEkThvEpDYC79Jre73qGzq31xC
+         n5bsBR1JpgZS6AxwGF+fuZWz6RcmCjO5ZlUca3KzlNzKjOL/DOMReId0qWT3D9NZOofu
+         onxRHDwCVcpo2eAQZpbkLf1ZiMjQrF6KmjOQbzj7X2XzdLTUHdtH7p1D4DrLsFB9pNhF
+         E5SXc6DOhAdqsa5FLdj22WqQbPhgfSIE8SPXMkCf5bJvedkALDv4MzHogfjFig52HOWr
+         us9J8eytOL8YcjYweAMASNi2aH4cj+KJjvD8guOap/HDsSFK8IBVNqrClPmqGYNWLUyz
+         lGRg==
+X-Gm-Message-State: AOJu0YycY3yuV3Cfh05QWSE3qrj1MMj3+pMYPOWE0ayMMXQ7Ponk8Pkb
+	cNf0WfDHvaRODMzyNkXDJYjJ+A4tib2CiQocIc+tYLPKYbzEtQu34bzkkA==
+X-Gm-Gg: ASbGncuAuES/X8lerxTT/ygaa4ifIs8o6FUQbpKVqAvNsYeYfw8Tajvq7RXdpzq7FkY
+	A/zDchc4s2+IqYuweWGHSZ133WWEfJX7BGJH2lX1xM5SgXmOdGrUg0zT1OJfvC8ta0GUE3T5Gy8
+	1zKxQgeZrU9R3TamSA/f2nVuLQ5fB/noHW1Y0eMZH2my1Mm88fA4MIQGdIrytg6BH/+0ukZpkf5
+	bSHd1RwX5Oi8kbeP+VOvQizn04G9EVA4x+OCS94FV+eujHN3btQCDdR83zBTU2duvOQ6biy28Um
+	qn5v/kbfjcpwDxiZ/AbymMg=
+X-Google-Smtp-Source: AGHT+IGWoDXpFYR9eUyxfCfCFqQFtT96p8LpOTPGjCgxyYMUoHVIETGq46MqgPcwTiLGKxfUF9MJvQ==
+X-Received: by 2002:a05:6870:d1c9:b0:29e:2caf:8cc with SMTP id 586e51a60fabf-2b8d68cbe5bmr1156637fac.37.1739334136634;
+        Tue, 11 Feb 2025 20:22:16 -0800 (PST)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2b8a0bb67fesm2293392fac.39.2025.02.11.20.22.12
+        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2b8a0bb67fesm2293392fac.39.2025.02.11.20.22.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 20:22:12 -0800 (PST)
+        Tue, 11 Feb 2025 20:22:16 -0800 (PST)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: peff@peff.net,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v2 1/3] diff: return diff_filepair from diff queue helpers
-Date: Tue, 11 Feb 2025 22:18:23 -0600
-Message-ID: <20250212041825.2455031-2-jltobler@gmail.com>
+Subject: [PATCH v2 2/3] builtin: introduce diff-pairs command
+Date: Tue, 11 Feb 2025 22:18:24 -0600
+Message-ID: <20250212041825.2455031-3-jltobler@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250212041825.2455031-1-jltobler@gmail.com>
 References: <20241213042312.2890841-1-jltobler@gmail.com>
@@ -75,174 +75,479 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The `diff_addremove()` and `diff_change()` functions setup and queue
-diffs, but do not return the `diff_filepair` added to the queue. In a
-subsequent commit, modifications to `diff_filepair` need to take place
-in certain cases after being queued.
+Through git-diff(1), a single diff can be generated from a pair of blob
+revisions directly. Unfortunately, there is not a mechanism to compute
+batches of specific file pair diffs in a single process. Such a feature
+is particularly useful on the server-side where diffing between a large
+set of changes is not feasible all at once due to timeout concerns.
 
-Split out the queuing operations into `diff_filepair_addremove()` and
-`diff_filepair_change()` which also return a handle to the queued
-`diff_filepair`.
+To facilitate this, introduce git-diff-pairs(1) which takes the
+null-terminated raw diff format as input on stdin and produces diffs in
+other formats. As the raw diff format already contains the necessary
+metadata, it becomes possible to progressively generate batches of diffs
+without having to recompute rename detection or retrieve object context.
+Something like the following:
 
+	git diff-tree -r -z -M $old $new |
+	git diff-pairs -p
+
+should generate the same output as `git diff-tree -p -M`. Furthermore,
+each line of raw diff formatted input can also be individually fed to a
+separate git-diff-pairs(1) process and still produce the same output.
+
+Based-on-patch-by: Jeff King <peff@peff.net>
 Signed-off-by: Justin Tobler <jltobler@gmail.com>
 ---
- diff.c | 66 +++++++++++++++++++++++++++++++++++++++++-----------------
- diff.h | 15 +++++++++++++
- 2 files changed, 62 insertions(+), 19 deletions(-)
+ .gitignore                        |   1 +
+ Documentation/git-diff-pairs.adoc |  62 +++++++++++
+ Documentation/meson.build         |   1 +
+ Makefile                          |   1 +
+ builtin.h                         |   1 +
+ builtin/diff-pairs.c              | 178 ++++++++++++++++++++++++++++++
+ command-list.txt                  |   1 +
+ git.c                             |   1 +
+ meson.build                       |   1 +
+ t/meson.build                     |   1 +
+ t/t4070-diff-pairs.sh             |  80 ++++++++++++++
+ 11 files changed, 328 insertions(+)
+ create mode 100644 Documentation/git-diff-pairs.adoc
+ create mode 100644 builtin/diff-pairs.c
+ create mode 100755 t/t4070-diff-pairs.sh
 
-diff --git a/diff.c b/diff.c
-index 019fb893a7..afbb892c26 100644
---- a/diff.c
-+++ b/diff.c
-@@ -7157,16 +7157,18 @@ void compute_diffstat(struct diff_options *options,
- 	options->found_changes = !!diffstat->nr;
- }
- 
--void diff_addremove(struct diff_options *options,
--		    int addremove, unsigned mode,
--		    const struct object_id *oid,
--		    int oid_valid,
--		    const char *concatpath, unsigned dirty_submodule)
-+struct diff_filepair *diff_filepair_addremove(struct diff_options *options,
-+					      int addremove, unsigned mode,
-+					      const struct object_id *oid,
-+					      int oid_valid,
-+					      const char *concatpath,
-+					      unsigned dirty_submodule)
- {
- 	struct diff_filespec *one, *two;
-+	struct diff_filepair *pair;
- 
- 	if (S_ISGITLINK(mode) && is_submodule_ignored(concatpath, options))
--		return;
-+		return NULL;
- 
- 	/* This may look odd, but it is a preparation for
- 	 * feeding "there are unchanged files which should
-@@ -7186,7 +7188,7 @@ void diff_addremove(struct diff_options *options,
- 
- 	if (options->prefix &&
- 	    strncmp(concatpath, options->prefix, options->prefix_length))
--		return;
-+		return NULL;
- 
- 	one = alloc_filespec(concatpath);
- 	two = alloc_filespec(concatpath);
-@@ -7198,25 +7200,28 @@ void diff_addremove(struct diff_options *options,
- 		two->dirty_submodule = dirty_submodule;
- 	}
- 
--	diff_queue(&diff_queued_diff, one, two);
-+	pair = diff_queue(&diff_queued_diff, one, two);
- 	if (!options->flags.diff_from_contents)
- 		options->flags.has_changes = 1;
+diff --git a/.gitignore b/.gitignore
+index e82aa19df0..03448c076a 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -54,6 +54,7 @@
+ /git-diff
+ /git-diff-files
+ /git-diff-index
++/git-diff-pairs
+ /git-diff-tree
+ /git-difftool
+ /git-difftool--helper
+diff --git a/Documentation/git-diff-pairs.adoc b/Documentation/git-diff-pairs.adoc
+new file mode 100644
+index 0000000000..e9ef4a6615
+--- /dev/null
++++ b/Documentation/git-diff-pairs.adoc
+@@ -0,0 +1,62 @@
++git-diff-pairs(1)
++=================
 +
-+	return pair;
- }
- 
--void diff_change(struct diff_options *options,
--		 unsigned old_mode, unsigned new_mode,
--		 const struct object_id *old_oid,
--		 const struct object_id *new_oid,
--		 int old_oid_valid, int new_oid_valid,
--		 const char *concatpath,
--		 unsigned old_dirty_submodule, unsigned new_dirty_submodule)
-+struct diff_filepair *diff_filepair_change(struct diff_options *options,
-+					   unsigned old_mode, unsigned new_mode,
-+					   const struct object_id *old_oid,
-+					   const struct object_id *new_oid,
-+					   int old_oid_valid, int new_oid_valid,
-+					   const char *concatpath,
-+					   unsigned old_dirty_submodule,
-+					   unsigned new_dirty_submodule)
- {
- 	struct diff_filespec *one, *two;
- 	struct diff_filepair *p;
- 
- 	if (S_ISGITLINK(old_mode) && S_ISGITLINK(new_mode) &&
- 	    is_submodule_ignored(concatpath, options))
--		return;
-+		return NULL;
- 
- 	if (options->flags.reverse_diff) {
- 		SWAP(old_mode, new_mode);
-@@ -7227,7 +7232,7 @@ void diff_change(struct diff_options *options,
- 
- 	if (options->prefix &&
- 	    strncmp(concatpath, options->prefix, options->prefix_length))
--		return;
-+		return NULL;
- 
- 	one = alloc_filespec(concatpath);
- 	two = alloc_filespec(concatpath);
-@@ -7238,16 +7243,39 @@ void diff_change(struct diff_options *options,
- 	p = diff_queue(&diff_queued_diff, one, two);
- 
- 	if (options->flags.diff_from_contents)
--		return;
-+		return p;
- 
- 	if (options->flags.quick && options->skip_stat_unmatch &&
- 	    !diff_filespec_check_stat_unmatch(options->repo, p)) {
- 		diff_free_filespec_data(p->one);
- 		diff_free_filespec_data(p->two);
--		return;
-+		return p;
- 	}
- 
- 	options->flags.has_changes = 1;
++NAME
++----
++git-diff-pairs - Compare blob pairs generated by `diff-tree --raw`
 +
-+	return p;
++SYNOPSIS
++--------
++[verse]
++'git diff-pairs' [diff-options]
++
++DESCRIPTION
++-----------
++
++Given the output of `diff-tree -z` on its stdin, `diff-pairs` will
++reformat that output into whatever format is requested on its command
++line.  For example:
++
++-----------------------------
++git diff-tree -z -M $a $b |
++git diff-pairs -p
++-----------------------------
++
++will compute the tree diff in one step (including renames), and then
++`diff-pairs` will compute and format the blob-level diffs for each pair.
++This can be used to modify the raw diff in the middle (without having to
++parse or re-create more complicated formats like `--patch`), or to
++compute diffs progressively over the course of multiple invocations of
++`diff-pairs`.
++
++Each blob pair is fed to the diff machinery individually queued and the output
++is flushed on stdin EOF.
++
++OPTIONS
++-------
++
++include::diff-options.adoc[]
++
++include::diff-generate-patch.adoc[]
++
++NOTES
++----
++
++`diff-pairs` should handle any input generated by `diff-tree --raw -z`.
++It may choke or otherwise misbehave on output from `diff-files`, etc.
++
++Here's an incomplete list of things that `diff-pairs` could do, but
++doesn't (mostly in the name of simplicity):
++
++ - Only `-z` input is accepted, not normal `--raw` input.
++
++ - Abbreviated sha1s are rejected in the input from `diff-tree`; if you
++   want to abbreviate the output, you can pass `--abbrev` to
++   `diff-pairs`.
++
++ - Pathspecs are not handled by `diff-pairs`; you can limit the diff via
++   the initial `diff-tree` invocation.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Documentation/meson.build b/Documentation/meson.build
+index ead8e48213..e5ee177022 100644
+--- a/Documentation/meson.build
++++ b/Documentation/meson.build
+@@ -41,6 +41,7 @@ manpages = {
+   'git-diagnose.adoc' : 1,
+   'git-diff-files.adoc' : 1,
+   'git-diff-index.adoc' : 1,
++  'git-diff-pairs.adoc' : 1,
+   'git-difftool.adoc' : 1,
+   'git-diff-tree.adoc' : 1,
+   'git-diff.adoc' : 1,
+diff --git a/Makefile b/Makefile
+index 896d02339e..3b8e1ad15e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1232,6 +1232,7 @@ BUILTIN_OBJS += builtin/describe.o
+ BUILTIN_OBJS += builtin/diagnose.o
+ BUILTIN_OBJS += builtin/diff-files.o
+ BUILTIN_OBJS += builtin/diff-index.o
++BUILTIN_OBJS += builtin/diff-pairs.o
+ BUILTIN_OBJS += builtin/diff-tree.o
+ BUILTIN_OBJS += builtin/diff.o
+ BUILTIN_OBJS += builtin/difftool.o
+diff --git a/builtin.h b/builtin.h
+index f7b166b334..b2d2e9eb07 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -152,6 +152,7 @@ int cmd_diagnose(int argc, const char **argv, const char *prefix, struct reposit
+ int cmd_diff_files(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_diff_index(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_diff(int argc, const char **argv, const char *prefix, struct repository *repo);
++int cmd_diff_pairs(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_diff_tree(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_difftool(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_env__helper(int argc, const char **argv, const char *prefix, struct repository *repo);
+diff --git a/builtin/diff-pairs.c b/builtin/diff-pairs.c
+new file mode 100644
+index 0000000000..08f3ee81e5
+--- /dev/null
++++ b/builtin/diff-pairs.c
+@@ -0,0 +1,178 @@
++#include "builtin.h"
++#include "commit.h"
++#include "config.h"
++#include "diff.h"
++#include "diffcore.h"
++#include "gettext.h"
++#include "hex.h"
++#include "object.h"
++#include "parse-options.h"
++#include "revision.h"
++#include "strbuf.h"
++
++static unsigned parse_mode_or_die(const char *mode, const char **endp)
++{
++	uint16_t ret;
++
++	*endp = parse_mode(mode, &ret);
++	if (!*endp)
++		die("unable to parse mode: %s", mode);
++	return ret;
 +}
 +
-+void diff_addremove(struct diff_options *options, int addremove, unsigned mode,
-+		    const struct object_id *oid, int oid_valid,
-+		    const char *concatpath, unsigned dirty_submodule)
++static void parse_oid(const char *p, struct object_id *oid, const char **endp,
++		      const struct git_hash_algo *algop)
 +{
-+	diff_filepair_addremove(options, addremove, mode, oid, oid_valid,
-+				concatpath, dirty_submodule);
++	if (parse_oid_hex_algop(p, oid, endp, algop) || *(*endp)++ != ' ')
++		die("unable to parse object id: %s", p);
 +}
 +
-+void diff_change(struct diff_options *options,
-+		 unsigned old_mode, unsigned new_mode,
-+		 const struct object_id *old_oid,
-+		 const struct object_id *new_oid,
-+		 int old_oid_valid, int new_oid_valid,
-+		 const char *concatpath,
-+		 unsigned old_dirty_submodule, unsigned new_dirty_submodule)
++static unsigned short parse_score(const char *score)
 +{
-+	diff_filepair_change(options, old_mode, new_mode, old_oid, new_oid,
-+			     old_oid_valid, new_oid_valid, concatpath,
-+			     old_dirty_submodule, new_dirty_submodule);
- }
- 
- struct diff_filepair *diff_unmerge(struct diff_options *options, const char *path)
-diff --git a/diff.h b/diff.h
-index 0a566f5531..6ea63f01e7 100644
---- a/diff.h
-+++ b/diff.h
-@@ -508,6 +508,21 @@ void diff_set_default_prefix(struct diff_options *options);
- 
- int diff_can_quit_early(struct diff_options *);
- 
-+struct diff_filepair *diff_filepair_addremove(struct diff_options *,
-+					      int addremove, unsigned mode,
-+					      const struct object_id *oid,
-+					      int oid_valid, const char *fullpath,
-+					      unsigned dirty_submodule);
++	unsigned long ret;
++	char *endp;
 +
-+struct diff_filepair *diff_filepair_change(struct diff_options *,
-+					   unsigned mode1, unsigned mode2,
-+					   const struct object_id *old_oid,
-+					   const struct object_id *new_oid,
-+					   int old_oid_valid, int new_oid_valid,
-+					   const char *fullpath,
-+					   unsigned dirty_submodule1,
-+					   unsigned dirty_submodule2);
++	errno = 0;
++	ret = strtoul(score, &endp, 10);
++	ret *= MAX_SCORE / 100;
++	if (errno || endp == score || *endp || (unsigned short)ret != ret)
++		die("unable to parse rename/copy score: %s", score);
++	return ret;
++}
 +
- void diff_addremove(struct diff_options *,
- 		    int addremove,
- 		    unsigned mode,
++static void flush_diff_queue(struct diff_options *options)
++{
++	/*
++	 * If rename detection is not requested, use rename information from the
++	 * raw diff formatted input. Setting found_follow ensures diffcore_std()
++	 * does not mess with rename information already present in queued
++	 * filepairs.
++	 */
++	if (!options->detect_rename)
++		options->found_follow = 1;
++	diffcore_std(options);
++	diff_flush(options);
++}
++
++int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
++		   struct repository *repo)
++{
++	struct strbuf path_dst = STRBUF_INIT;
++	struct strbuf path = STRBUF_INIT;
++	struct strbuf meta = STRBUF_INIT;
++	struct rev_info revs;
++	int ret;
++
++	const char * const usage[] = {
++		N_("git diff-pairs [diff-options]"),
++		NULL
++	};
++	struct option options[] = {
++		OPT_END()
++	};
++
++	show_usage_with_options_if_asked(argc, argv, usage, options);
++
++	repo_init_revisions(repo, &revs, prefix);
++	repo_config(repo, git_diff_basic_config, NULL);
++	revs.disable_stdin = 1;
++	revs.abbrev = 0;
++	revs.diff = 1;
++
++	argc = setup_revisions(argc, argv, &revs, NULL);
++
++	/* Don't allow pathspecs at all. */
++	if (revs.prune_data.nr)
++		usage_with_options(usage, options);
++
++	if (!revs.diffopt.output_format)
++		revs.diffopt.output_format = DIFF_FORMAT_RAW;
++
++	while (1) {
++		struct object_id oid_a, oid_b;
++		struct diff_filepair *pair;
++		unsigned mode_a, mode_b;
++		const char *p;
++		char status;
++
++		if (strbuf_getline_nul(&meta, stdin) == EOF)
++			break;
++
++		p = meta.buf;
++		if (*p != ':')
++			die("invalid raw diff input");
++		p++;
++
++		mode_a = parse_mode_or_die(p, &p);
++		mode_b = parse_mode_or_die(p, &p);
++
++		parse_oid(p, &oid_a, &p, repo->hash_algo);
++		parse_oid(p, &oid_b, &p, repo->hash_algo);
++
++		status = *p++;
++
++		if (strbuf_getline_nul(&path, stdin) == EOF)
++			die("got EOF while reading path");
++
++		switch (status) {
++		case DIFF_STATUS_ADDED:
++			pair = diff_filepair_addremove(&revs.diffopt, '+',
++						       mode_b, &oid_b,
++						       1, path.buf, 0);
++			if (pair)
++				pair->status = status;
++			break;
++
++		case DIFF_STATUS_DELETED:
++			pair = diff_filepair_addremove(&revs.diffopt, '-',
++						       mode_a, &oid_a,
++						       1, path.buf, 0);
++			if (pair)
++				pair->status = status;
++			break;
++
++		case DIFF_STATUS_TYPE_CHANGED:
++		case DIFF_STATUS_MODIFIED:
++			pair = diff_filepair_change(&revs.diffopt,
++						    mode_a, mode_b,
++						    &oid_a, &oid_b, 1, 1,
++						    path.buf, 0, 0);
++			if (pair)
++				pair->status = status;
++			break;
++
++		case DIFF_STATUS_RENAMED:
++		case DIFF_STATUS_COPIED:
++			{
++				struct diff_filespec *a, *b;
++
++				if (strbuf_getline_nul(&path_dst, stdin) == EOF)
++					die("got EOF while reading destination path");
++
++				a = alloc_filespec(path.buf);
++				b = alloc_filespec(path_dst.buf);
++				fill_filespec(a, &oid_a, 1, mode_a);
++				fill_filespec(b, &oid_b, 1, mode_b);
++
++				pair = diff_queue(&diff_queued_diff, a, b);
++				pair->status = status;
++				pair->score = parse_score(p);
++				pair->renamed_pair = 1;
++			}
++			break;
++
++		default:
++			die("unknown diff status: %c", status);
++		}
++	}
++
++	flush_diff_queue(&revs.diffopt);
++	ret = diff_result_code(&revs);
++
++	strbuf_release(&path_dst);
++	strbuf_release(&path);
++	strbuf_release(&meta);
++	release_revisions(&revs);
++
++	return ret;
++}
+diff --git a/command-list.txt b/command-list.txt
+index e0bb87b3b5..bb8acd51d8 100644
+--- a/command-list.txt
++++ b/command-list.txt
+@@ -95,6 +95,7 @@ git-diagnose                            ancillaryinterrogators
+ git-diff                                mainporcelain           info
+ git-diff-files                          plumbinginterrogators
+ git-diff-index                          plumbinginterrogators
++git-diff-pairs                          plumbinginterrogators
+ git-diff-tree                           plumbinginterrogators
+ git-difftool                            ancillaryinterrogators          complete
+ git-fast-export                         ancillarymanipulators
+diff --git a/git.c b/git.c
+index b23761480f..12bba872bb 100644
+--- a/git.c
++++ b/git.c
+@@ -540,6 +540,7 @@ static struct cmd_struct commands[] = {
+ 	{ "diff", cmd_diff, NO_PARSEOPT },
+ 	{ "diff-files", cmd_diff_files, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "diff-index", cmd_diff_index, RUN_SETUP | NO_PARSEOPT },
++	{ "diff-pairs", cmd_diff_pairs, RUN_SETUP | NO_PARSEOPT },
+ 	{ "diff-tree", cmd_diff_tree, RUN_SETUP | NO_PARSEOPT },
+ 	{ "difftool", cmd_difftool, RUN_SETUP_GENTLY },
+ 	{ "fast-export", cmd_fast_export, RUN_SETUP },
+diff --git a/meson.build b/meson.build
+index fbb8105d96..66ce3326e8 100644
+--- a/meson.build
++++ b/meson.build
+@@ -537,6 +537,7 @@ builtin_sources = [
+   'builtin/diagnose.c',
+   'builtin/diff-files.c',
+   'builtin/diff-index.c',
++  'builtin/diff-pairs.c',
+   'builtin/diff-tree.c',
+   'builtin/diff.c',
+   'builtin/difftool.c',
+diff --git a/t/meson.build b/t/meson.build
+index 4574280590..7ff17c6d29 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -500,6 +500,7 @@ integration_tests = [
+   't4067-diff-partial-clone.sh',
+   't4068-diff-symmetric-merge-base.sh',
+   't4069-remerge-diff.sh',
++  't4070-diff-pairs.sh',
+   't4100-apply-stat.sh',
+   't4101-apply-nonl.sh',
+   't4102-apply-rename.sh',
+diff --git a/t/t4070-diff-pairs.sh b/t/t4070-diff-pairs.sh
+new file mode 100755
+index 0000000000..e0a8e6f0a0
+--- /dev/null
++++ b/t/t4070-diff-pairs.sh
+@@ -0,0 +1,80 @@
++#!/bin/sh
++
++test_description='basic diff-pairs tests'
++. ./test-lib.sh
++
++# This creates a diff with added, modified, deleted, renamed, copied, and
++# typechange entries. That includes one in a subdirectory for non-recursive
++# tests, and both exact and inexact similarity scores.
++test_expect_success 'create commit with various diffs' '
++	echo to-be-gone >deleted &&
++	echo original >modified &&
++	echo now-a-file >symlink &&
++	test_seq 200 >two-hundred &&
++	test_seq 201 500 >five-hundred &&
++	git add . &&
++	test_tick &&
++	git commit -m base &&
++	git tag base &&
++
++	echo now-here >added &&
++	echo new >modified &&
++	rm deleted &&
++	mkdir subdir &&
++	echo content >subdir/file &&
++	mv two-hundred renamed &&
++	test_seq 201 500 | sed s/300/modified/ >copied &&
++	rm symlink &&
++	git add -A . &&
++	test_ln_s_add dest symlink &&
++	test_tick &&
++	git commit -m new &&
++	git tag new
++'
++
++test_expect_success 'diff-pairs recreates --raw' '
++	git diff-tree -r -M -C -C base new >expect &&
++	git diff-tree -r -M -C -C -z base new |
++	git diff-pairs >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'diff-pairs can create -p output' '
++	git diff-tree -p -M -C -C base new >expect &&
++	git diff-tree -r -M -C -C -z base new |
++	git diff-pairs -p >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'non-recursive --raw retains tree entry' '
++	git diff-tree base new >expect &&
++	git diff-tree -z base new |
++	git diff-pairs >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'split input across multiple diff-pairs' '
++	write_script split-raw-diff "$PERL_PATH" <<-\EOF &&
++	$/ = "\0";
++	while (<>) {
++	  my $meta = $_;
++	  my $path = <>;
++	  # renames have an extra path
++	  my $path2 = <> if $meta =~ /[RC]\d+/;
++
++	  open(my $fh, ">", sprintf "diff%03d", $.);
++	  print $fh $meta, $path, $path2;
++	}
++	EOF
++
++	git diff-tree -p -M -C -C base new >expect &&
++
++	git diff-tree -r -z -M -C -C base new |
++	./split-raw-diff &&
++	for i in diff*; do
++		git diff-pairs -p <$i || return 1
++	done >actual &&
++	test_cmp expect actual
++'
++
++test_done
 -- 
 2.48.1
 
