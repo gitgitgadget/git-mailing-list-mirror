@@ -1,61 +1,61 @@
-Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51B11FBC8D
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 06:04:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256081FBCA6
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 06:04:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739340266; cv=none; b=cMfeGjEr32H4nBmBcGytUjVNKPjJczIEQdZMtz+53xiobQ5DYhegfWB2W7N3Aks3eooJ4kKM7jdtMMwW42WAoXxNgVvRp+RL4vTn3680wbOeAmBnEL2atvlqRrEVyt5bzSHd2ltCCZU9nQVbm7H4DWuvbAXOSw31mX8XzFdJehU=
+	t=1739340267; cv=none; b=o71axp8i3rt5/4mfFtnKJUIYj57Q5KYXTZ5lPQbJ1ri79sLhHRSDFuxpIb0+J8pZ7F1dfZ0+hDt1H282WGxTA4swhUhOdI1Ke+tBkDI2Dhy8yxI1WE/kIYrS18s5mHEPqzH0tBBmjo2WqT/pU5Vqmo3QFdDTaMwB6FHQPxTqz/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739340266; c=relaxed/simple;
-	bh=2YbnX057ksrUFupptxYjHaoI0YSWx3mP0ofvPPL2WdA=;
+	s=arc-20240116; t=1739340267; c=relaxed/simple;
+	bh=fL69pxwvzP1JuwaqSjCtAJGgN5QWXwwmepS/hBbaCMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rOhJEeZrtrOIyqnRKpFnp60N2H5SHtfYtd8bD7b/mVOb7Sxhxwe4cRSYTABa0aqLvg7qWd0ydJU7xGY8wQCJK9O5xQYwTZfRM8bN0jbPI8Dmh1R48g8WyoE02Yklg8CV7P3ZtpSmneE5XbxFSNooUQebgP82WGe1AdLUF2CnMHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SZdFi56A; arc=none smtp.client-ip=209.85.216.52
+	 MIME-Version; b=pwafTb0Z3Knc9sBQWj5TLeE4nkWYqVg1UKhzKN4HeLNjrzxMzPErhg432RQSlOpfsXY86C+V0F0KGlVW85lxmsMHtZNpibHQPwaUUJ93XEj+IjHdo0XwK2uBlQAIvSpu/Olw7fyI/wYhyWM2vlteq26XTgtOfc9figBTV/UbfRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JtElrf+9; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SZdFi56A"
-Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-2f9d3d0f55dso9770035a91.1
-        for <git@vger.kernel.org>; Tue, 11 Feb 2025 22:04:24 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JtElrf+9"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-220bfdfb3f4so6117785ad.2
+        for <git@vger.kernel.org>; Tue, 11 Feb 2025 22:04:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739340264; x=1739945064; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739340265; x=1739945065; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oSH6w65KvivlXhnzYBx6S3vXnUds5Fc46isCh2g+ZeQ=;
-        b=SZdFi56AXgpXKCheZ4Z3CCGYO/xWR4umccBWcDEFyau+MflEm/m/T9NeAPSHDQwMvi
-         wcRAEESONAGXhHKHX1PrhcrQPFhvYPqJIpiFVtzghKGVwrk+6DGXV4KYTib4Ik4xwXiO
-         CHtBaaJOtFtUaQzkHNbAgtUYQp/Z7e/VoqLK8r6r8V0a8hnmN6jjAWjRvsZ7TSONgLiK
-         jwvVllm+gG11PEnKGFUcm3HO33Ptxr4X11DlePw2dKOU4sXeFLlYG+7FaliSt2VNxoDF
-         v0A5w9VZQOriA9wYK1RxcfjGpJ5Ehc/eUVzvlbu5ljLwYAn0jqwMOLJ0IewHfXHFjLLz
-         CaJw==
+        bh=d0rNeT5/m+hw80f6bZRvSzGIuOL+13rI13gR1BLQ1y8=;
+        b=JtElrf+94GQeDSUMkpqeK+4HAA6UxqrEbKjs4lRDLQw2bc9lwVODHBVkAplqxS/bCT
+         JPGFo4ZB7+PfopiXPYpXJkR1cD/H78cUTmmbkgegCiohnP7Da/H5B3axy+ixTsvtUMin
+         ucRVXFz9hgvXhw6pfTBCSSfAHPba0XWaQinyiV9P6SCIuFZH22hD5vwPfz6dpJghccxl
+         4TfR+Ooz38RZxmuQlL7cCSlZKCrzUJ9f5xMRjQ/NowdLWUdA/xtUdvXyhDiNZ5kMZ2kW
+         UO93Jrm+vCRH2PbiXzjs4lr5bxWrzhxU6eRaDqaOUf2n9f0D1bRPxIXdZp5wM8kvoux9
+         +81A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739340264; x=1739945064;
+        d=1e100.net; s=20230601; t=1739340265; x=1739945065;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oSH6w65KvivlXhnzYBx6S3vXnUds5Fc46isCh2g+ZeQ=;
-        b=Uyvh5EiBYX2j+/l9oyAgEPdjlxB96aJj0kNSb5ojnkrjmSjCbGJ+q3Tmj5lzCa+vLc
-         lyNx7rbpRmCYUF6559dAoBkQqNDuY/GAQpOERo3vWa7V5W4cLwTTv26ULAMs9HIhzSFh
-         E2H9/Rst04qo6S+H0LljuiowYPI/QuasO/sOJKEM30+vuWHK9GJw8N8EEjNf7rmwL14V
-         omF2rXags/PLU/ouun5igSQanWzH45nQ83x41OnjdaE6tOkNz/w/L1Beq2xzJndWTz8N
-         KMDvCpR4P9WLQcoZrpfwIK66/WcxAl/ZP0h8KfbdCAhv4w0RfwWujtkP8Wsgn2sdnxz9
-         Ctsw==
-X-Gm-Message-State: AOJu0YxCpjxzXW/fjJOi2Myg9YizHfRFgFFWlLwuV6eh7l0RrpBG4Yc+
-	wmE0UrN7/uTgANTSNvsSBv/K9CpJFH/xvvWK+y/Luos7fOKjtlpOvEkw8g==
-X-Gm-Gg: ASbGncvfCwIOKCPxnhunwO2WXHgsN4IM0eusuzo3SSJrWRyXujQZdcDx6G8K/AsvncA
-	UJC/85lsbf7XGiD0CZ2XgJN2YHzsc+CezzIBgosBfYTufQKf6PQpU5u/dWxsbjlMfl6cjwRAjGq
-	rdK24X5H6PyNH9CwCUJ10rYpAH3qjXPiYHm3m9vDFftnxZwiLFMq5ygzr7IsYNKselDcbq0e08O
-	80lDeAKGoRv9brl7sDcLvH0mqU/R2qMnTBMP8gWfqIl0x5e04dU4el6S+q7MaWZKI7L+Lrkg8BH
-	kIx20LPqdCzjpyn3VcS1wRbs2Q==
-X-Google-Smtp-Source: AGHT+IG98viJjrZQiPBQdwCRg1+aM5tRV04j1AXzs7YGy+p9nm1j8+gUrQU6pZTsvsNbyljkPVPEiw==
-X-Received: by 2002:a05:6a00:1802:b0:730:87cf:a7cd with SMTP id d2e1a72fcca58-7322c3889bdmr3873426b3a.8.1739340263990;
-        Tue, 11 Feb 2025 22:04:23 -0800 (PST)
+        bh=d0rNeT5/m+hw80f6bZRvSzGIuOL+13rI13gR1BLQ1y8=;
+        b=ZIJrgspZTCtdIL4j4aDRykQVlB+qrQb6XgRcVnWu4L8leCr3WMIxLYigHcXWJvHrFu
+         ms83c/EYGBvYMm2cJs8tlUtXq8KUGucfMo/Hl5afczmHYGX1N1dyCaDDV4ODns3KBgUi
+         r5JU8Jcm28L61idB1dZbSdFYfr+4LrJF0XXkd1ovzgjeH7VlQ4YE/fde+JpSCeQL0Y23
+         qsDp/exaCKCnOetX/Z8TTx4gVaCOIdzxqrNJvtj/VdYoy/59LFJNJm8qQexlb5WWXznQ
+         fJqTp3GhQOlT4gwmqNRSOfqb4zHpYocQjM3xSlX/7ljq6kQ2TcLbOAzMBYdjUYDhrvOE
+         XMmw==
+X-Gm-Message-State: AOJu0YwV351F+oMcEuB/VFgYNdA+iQW4GhuQxKBfMvOLnrsq1tOMWKIz
+	ILaxjmcewQK+9QK8/eBlUPZNnS+EdAAOtdY2UdAgL9wO+xnjnizpONj7zw==
+X-Gm-Gg: ASbGncuKYe9QM5nTUwRg7vhp1KVU1zl6+mtpq5Gh0U8SE6Jqvop2d+b6N23AmMhhC/Z
+	NJPenUdrcBI1yKnPpd2FSS8XU9pRErb0hfgAWrZKedolRyekYsbJrPzG03BEPGIyqI0+Jm8C0z9
+	IPi0+/oOu8/iaCJoE5ZNRhg+XprlC+cRCqVpQrysQmYn52s+2CFcHOgstFXab8P4x7ok2V9g3P4
+	cU5MVgzsczif1RhzV7dOxc9KX+k4Og/j5hyiJ/Lt9AqhNVS7tFzIEd59tQn3dk/D3iZQZxw2woU
+	kMSFxLPkvE7P3QS9YzOlCEswUg==
+X-Google-Smtp-Source: AGHT+IFSa1DfYD5pEuD28CdGciRJRdUUr0wgkBkf3PGN4qyTKcENcPbn1m+UzehggOGK1rCoyvxjZg==
+X-Received: by 2002:a05:6a20:4307:b0:1e0:c77c:450d with SMTP id adf61e73a8af0-1ee5c733a3amr3675166637.1.1739340265444;
+        Tue, 11 Feb 2025 22:04:25 -0800 (PST)
 Received: from localhost.localdomain ([172.56.121.6])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ad53f6e2633sm5747411a12.16.2025.02.11.22.04.22
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-ad53f6e2633sm5747411a12.16.2025.02.11.22.04.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 11 Feb 2025 22:04:23 -0800 (PST)
+        Tue, 11 Feb 2025 22:04:24 -0800 (PST)
 From: David Aguilar <davvid@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
@@ -63,9 +63,9 @@ Cc: Patrick Steinhardt <ps@pks.im>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>,
 	Jeff King <peff@peff.net>,
 	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH 3/6] xdiff: avoid signed vs. unsigned comparisons in xemit.c
-Date: Tue, 11 Feb 2025 22:04:15 -0800
-Message-ID: <20250212060418.1645241-3-davvid@gmail.com>
+Subject: [PATCH 4/6] xdiff: avoid signed vs. unsigned comparisons in xhistogram.c
+Date: Tue, 11 Feb 2025 22:04:16 -0800
+Message-ID: <20250212060418.1645241-4-davvid@gmail.com>
 X-Mailer: git-send-email 2.48.1.643.g32d702c6e8
 In-Reply-To: <20250212060418.1645241-1-davvid@gmail.com>
 References: <20250212060418.1645241-1-davvid@gmail.com>
@@ -77,36 +77,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The unsigned `ignored` variable causes expressions to promote to
-unsigned. Use a signed value to make comparisons use the same types.
+The comparisons all involve unsigned variables. Cast the comparison
+to unsigned to eliminate the mismatch.
 
 Signed-off-by: David Aguilar <davvid@gmail.com>
 ---
- xdiff/xemit.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ xdiff/xhistogram.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/xdiff/xemit.c b/xdiff/xemit.c
-index 2b394a4806..f8e3f25b03 100644
---- a/xdiff/xemit.c
-+++ b/xdiff/xemit.c
-@@ -20,8 +20,6 @@
-  *
+diff --git a/xdiff/xhistogram.c b/xdiff/xhistogram.c
+index 3d2b190fa6..040d81e0bc 100644
+--- a/xdiff/xhistogram.c
++++ b/xdiff/xhistogram.c
+@@ -41,8 +41,6 @@
+  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   */
  
 -#define DISABLE_SIGN_COMPARE_WARNINGS
 -
  #include "xinclude.h"
  
- static long xdl_get_rec(xdfile_t *xdf, long ri, char const **rec) {
-@@ -56,7 +54,7 @@ xdchange_t *xdl_get_hunk(xdchange_t **xscr, xdemitconf_t const *xecfg)
- 	xdchange_t *xch, *xchp, *lxch;
- 	long max_common = 2 * xecfg->ctxlen + xecfg->interhunkctxlen;
- 	long max_ignorable = xecfg->ctxlen;
--	unsigned long ignored = 0; /* number of ignored blank lines */
-+	long ignored = 0; /* number of ignored blank lines */
+ #define MAX_PTR	UINT_MAX
+@@ -108,7 +106,7 @@ static int scanA(struct histindex *index, int line1, int count1)
+ 	unsigned int chain_len;
+ 	struct record **rec_chain, *rec;
  
- 	/* remove ignorable changes that are too far before other changes */
- 	for (xchp = *xscr; xchp && xchp->ignore; xchp = xchp->next) {
+-	for (ptr = LINE_END(1); line1 <= ptr; ptr--) {
++	for (ptr = LINE_END(1); (unsigned int)line1 <= ptr; ptr--) {
+ 		tbl_idx = TABLE_HASH(index, 1, ptr);
+ 		rec_chain = index->records + tbl_idx;
+ 		rec = *rec_chain;
+@@ -183,14 +181,14 @@ static int try_lcs(struct histindex *index, struct region *lcs, int b_ptr,
+ 			be = bs;
+ 			rc = rec->cnt;
+ 
+-			while (line1 < as && line2 < bs
++			while ((unsigned int)line1 < as && (unsigned int)line2 < bs
+ 				&& CMP(index, 1, as - 1, 2, bs - 1)) {
+ 				as--;
+ 				bs--;
+ 				if (1 < rc)
+ 					rc = XDL_MIN(rc, CNT(index, as));
+ 			}
+-			while (ae < LINE_END(1) && be < LINE_END(2)
++			while (ae < (unsigned int)LINE_END(1) && be < (unsigned int)LINE_END(2)
+ 				&& CMP(index, 1, ae + 1, 2, be + 1)) {
+ 				ae++;
+ 				be++;
+@@ -315,7 +313,7 @@ static int histogram_diff(xpparam_t const *xpp, xdfenv_t *env,
+ 	if (count1 <= 0 && count2 <= 0)
+ 		return 0;
+ 
+-	if (LINE_END(1) >= MAX_PTR)
++	if ((unsigned int)LINE_END(1) >= MAX_PTR)
+ 		return -1;
+ 
+ 	if (!count1) {
 -- 
 2.48.1.643.g61982db19f
 
