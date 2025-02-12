@@ -1,111 +1,93 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E490209663
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 18:05:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9575720E039
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 18:32:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739383503; cv=none; b=pC8GJ0rfooEHx3NXJtK52k9dD4sg+HeZ/kurBbZS2zdiSCFe9z05n2Xf40ZSCprSU7F/7d6So2nrGoe+JAUso/q4Gl2GoiWEjMCjNwsYRktNJeRWQ6yQFkBVneSrMs2DPzLkkec+TDUDTNK4Tn7dh9BTdm5rEJYcgNf7Lr1kPFg=
+	t=1739385128; cv=none; b=C9Lb1TTwSUDdbdiLbQ2yv6zgO+V59eVlOlf4f1Mc5bEXS2ZGLBR28jPMv83xgvwjlNDtyrPlj4zbNra8aoaNe7dP6oToAM/GmqdUAph7IQz3EReTtUdHnJckYi/1qnQc+K6KKKRUEkuBRN72ieIXU8vXPkHT0YNoTE88sd7SOOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739383503; c=relaxed/simple;
-	bh=oM+d/53l7k3+c9tmLxeeuZ4ZufkFAy2axx8SX6OvGYA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ot8q4WjuKv8v3cgwAoU/NLpLUjnZnVTLn8dCXldUKNyX224oOrS/uMlitWnM8+ku99Gymygdn0gia6uD1fbSc8dpledLCeVvNTAQqW0QVu/el5abOmUHbLhivusaxhHKrm/qsSwr+VVQg7+zjHiy8XtoVJ1JsTC3fx48oENn+gE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hGCfDQqB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QkMK5zL5; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739385128; c=relaxed/simple;
+	bh=Ji+lz6sRPqZhGQTaQEo6wQECEBhu543pMnb1jS2Sghg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Yeg1igtJNVK1n/i65yDs6bV4l24/YJHxOaE0W/umcaA2qyrakbZUezRZrl3WlbWz5WVrHNk8w/ISNijPJU0p35UK3MTfGc/qxR5aSYn08ytwgATUgG/8bmMolEl7mFxAAY8OgpFig+Atc+cu0N1TdsrzAL6TE5OXSQK9IFNEXRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eFuWZQDi; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hGCfDQqB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QkMK5zL5"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1007725401BF;
-	Wed, 12 Feb 2025 13:05:00 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 12 Feb 2025 13:05:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739383499; x=1739469899; bh=oM+d/53l7k
-	3+c9tmLxeeuZ4ZufkFAy2axx8SX6OvGYA=; b=hGCfDQqBNGyWyTDfQvQO4knaW5
-	b1RrSWWdC87W6PmfdjBJSd7+uffFClEiElWr4noH6BC/HOzK8QbIY1Q4fJVwWYMO
-	ks/mKbXSHHmWO/+I8Jfc8ZSBNxLXbZA2w7Zi56qsL37cUYJ6lNBpmOaD4Gy6YX0Z
-	J+qiIYHeCPalyvg8LbX+41FwHVVWtfb9S1k7Xx9tHY6Oirgq/4jTccludKLIn1W+
-	WxgnvlT7Vkovm4hGoeSM3rH7c/8RH0gCfhE8KbJ/+Gd7B6ZopfUW0QhsEKDMno2A
-	6JpKl3YXdSIJRT+XB15MHpr8cZXVhab3cH3bp2huq736aYBtcJ6Z0CnSvOAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739383499; x=1739469899; bh=oM+d/53l7k3+c9tmLxeeuZ4ZufkFAy2axx8
-	SX6OvGYA=; b=QkMK5zL5KSp3UaM/JMIjUAkBU+Nij2lwqD1T/iJBysdnXXOcQoN
-	FcsXJ5797mLrat/pxZikVOmlF/rPU6anbYmNjpkyBXuelSvkBq/zZDEypXzw/Qrd
-	s3DeD+Qyghz5i5lqu0NRUb74OzqSZZPTj++Z15SF936DuGw3Y2hGcZJL2cYz5TgN
-	1h9NtbQe012Hmn/9lsHoyD9q4lNCvVvAm81qofVNu8bshRw3q9xiba5KVA6BWtr5
-	hj33TXDVFDYxE6RLBtyyf2tRvGkY544xox2/w1yhH3WcTDx26MjQgvfSnPi558JM
-	gFZ2ullIoyAXlmT5tKZj6185l2QfpNhM73g==
-X-ME-Sender: <xms:y-KsZ6VupMEbfheFHW8-Wfa5lYFCWziIr_RsdbqbVGHqP7xlwfNVOQ>
-    <xme:y-KsZ2l2fYyu7iCgtRE1GoplR3v6Y42SCcy6UrkRl3indpNuVjU7G5wsj7qBpmFM-
-    rFoEumm2dDTT0nAvg>
-X-ME-Received: <xmr:y-KsZ-YY-rf4J-CBj4sGManENrWADbAt8rKihNbSII5BCdJpt-t4PKxRlQg2mLCW5kQ_9f6_zOk-XX-5WIND5DW3hy2yBVxu1qwQdAc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeggeehhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
-    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
-    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
-    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
-    hopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:y-KsZxWqxrRbmyl8aE-GX5d-Kf_j0QjyD0vm5wptxymrgDU5j9RGag>
-    <xmx:y-KsZ0kNBbPjgFU7UDPxAfVYQzPYBVmBtq5u77TRdtVYgEBfUdBVzQ>
-    <xmx:y-KsZ2faSNH3j4oeYk9yUHZWDgHrnGpqdFCqJaYr7YvnRqmxDr_y2g>
-    <xmx:y-KsZ2EZz6v4Zf0UY5HGxn8ecTkg3KIJ5JnxzLPvKz-sWURd3aEtRA>
-    <xmx:y-KsZ1ATbAXJVKGlhbs0Y2n2_n8y-RflQKL8pm1gPfLi0asqeOvFZnnW>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 12 Feb 2025 13:04:59 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [GSoC][PATCH v2] t7603: replace test -f by test_path_is_file
-In-Reply-To: <20250212172909.21257-1-lucasseikioshiro@gmail.com> (Lucas
-	Oshiro's message of "Wed, 12 Feb 2025 14:28:16 -0300")
-References: <20250212172909.21257-1-lucasseikioshiro@gmail.com>
-Date: Wed, 12 Feb 2025 10:04:57 -0800
-Message-ID: <xmqqy0ybt4xi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eFuWZQDi"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-21f55fbb72bso96406385ad.2
+        for <git@vger.kernel.org>; Wed, 12 Feb 2025 10:32:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739385127; x=1739989927; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ji+lz6sRPqZhGQTaQEo6wQECEBhu543pMnb1jS2Sghg=;
+        b=eFuWZQDisffFJK8ONk2fG8Qdv+rlsN6eXzVvA7x62CVSfP0qO/+LZi+WDvKPox0Yg5
+         XgmIlrJ4J5QKh3Y/TGNbxOCz8gHsR5AyjacfReXwLL6VOme7fwglrpP2tjSmriOxgBnD
+         mWMcOkqnHHSp/tLEbObU9r2SBhdxV1THr5w2DYDHW8g+Y4XsFb6jFf0Vg06I0EswLAic
+         MFIeZLDpxYIFwlYfE2t1J2EcCOtyZBosiSBaerAOs89Q8A/m1FkuweOkJYzJRa1WaAav
+         BG8hkh2h7Wn1IDuiKXJGNrebV/u0b8OsZsCu91xyT2AoHu1DvYx4R8Hf4aDXD00jd6Qc
+         UXag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739385127; x=1739989927;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ji+lz6sRPqZhGQTaQEo6wQECEBhu543pMnb1jS2Sghg=;
+        b=EnqW6ovrjEDN0y80L1k0rylgZP4uL4xqzEFPjuPXDxcYV2D8PMhuMdEuyKn9W/MnrL
+         /UYght660P//r3h5QltwGHbLa+UYUAz+5uFQN4UqOVSV/mgrd0neXgryzkbv107bl1HD
+         DvCCoabBt2Hi4DsnQwZeg8PFDWJ9ktOCctqGWdzlxLCunO2lxgHsJUowr1JVTL5MivDT
+         sWSNHHyHJ75ORbmFSo3wC6hht8+3SD0RV0GfrvIZ+VGNIqLEtF/FRVjIldqRIDZ3vcVa
+         qrnxLWcbx5KJ20DLCBcEkFK7sBAC6JnRNlxqe4OdJK45BqQMzk4HI6P4alBCavuQPEYm
+         9Pqg==
+X-Gm-Message-State: AOJu0YzkC+WpF+Z4eFqlolCcpTN+9JoMNmhZU46XYU4Cp7gygMc6VuvA
+	kejhI18J0mnccwEEdCM/uUz7vbwy2u7MocL8cCdNKRrRTyKiOZzlq9La0g==
+X-Gm-Gg: ASbGncvq01o+vEOXJ4F3NSelhZZTCXJJlmrfNOKcVfPk/qibBdDEpoE9BqO88OZSu9M
+	H4nOm/qjQ0PzwFVD/dKS+PMLLqwnshYyqxlsffCKfF/NYB2E1/jb/pHnY9BJszkLJqjIIfpwgS/
+	WIyDTwU1+ti5grP4JXTyGiISPZnfQ3kYu6L9tT8F8NcKVlSt07ULUB31ucdeG1dFKLu3xmQ7bAh
+	7tTLxsK5G/fDfaosUGYGRM7H7v/qv2nIy5/Xsf0MLuV/unG/0XWcmNgapSIonkru0r1z4yNrRzE
+	vLi9jarh1quAKKaj0TWzNxPGaF/6WVM8ReEC5au6VehorHdmNAMS8g==
+X-Google-Smtp-Source: AGHT+IHsFd3ndibD7/awq0BX9GUwMjss7AeaRXz663auE0q7Vp6ZrVXU9/OzbcjPhSgXqziqadYMsA==
+X-Received: by 2002:a05:6a20:d80b:b0:1ee:615c:6c8e with SMTP id adf61e73a8af0-1ee6b2e1251mr924593637.9.1739385126855;
+        Wed, 12 Feb 2025 10:32:06 -0800 (PST)
+Received: from [192.168.1.105] (23-93-96-117.fiber.dynamic.sonic.net. [23.93.96.117])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73097569a1csm4953634b3a.154.2025.02.12.10.32.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 12 Feb 2025 10:32:06 -0800 (PST)
+Message-ID: <09049b05-ed3f-4673-9d10-34870a70e2b3@gmail.com>
+Date: Wed, 12 Feb 2025 10:32:05 -0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: Using Visual Studio Code to Debug/Trace Git?
+To: Patrick Steinhardt <ps@pks.im>, Ben Knoble <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org
+References: <vlrkbd$a0r$1@ciao.gmane.io>
+ <A53D82B2-4F5F-4BCA-9C85-88B2A89139DC@gmail.com> <Z4TJIzVc4Ib2QyPV@pks.im>
+Content-Language: en-US
+From: Jon Forrest <nobozo@gmail.com>
+In-Reply-To: <Z4TJIzVc4Ib2QyPV@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Lucas Oshiro <lucasseikioshiro@gmail.com> writes:
+Just to follow up on this, I've had surprising success by
+simply building git the normal way (e.g. make),
+having VSCode open the directory contain the Git source
+code, opening common-main.c, and then executing "Start Debugging".
+I'm able to do full source-level debugging this way.
 
-> `test_path_is_file` provides a better output when asserting whether a
-> file exists. Replace the occurrences of `test -f` in t7603 by it,
-> facilitating the trace of possible test fails.
->
-> Signed-off-by: Lucas Oshiro <lucasseikioshiro@gmail.com>
-> ---
->
-> The only difference from v1 is a little typo, missing the t before the
-> test name.
+I'm not entirely sure why this works but it's good enough
+for me.
 
+I'll be interested in seeing if the new Meson build system
+works any better in VSCode.
 
-I think I fixed that while queueing the v1 iteration already.
+Cordially,
+Jon Forrest
 
-You can check what happened to your patch by observing
-https://git.kernel.org/pub/scm/git/git.git/log/?h=seen and
-https://git.kernel.org/pub/scm/git/git.git/log/?h=next; other
-hosting sites may have similar lists, but I find the one at k.org
-the handiest to view.
-
-Thanks.
