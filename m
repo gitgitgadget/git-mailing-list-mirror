@@ -1,122 +1,98 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA052F4FA
-	for <git@vger.kernel.org>; Wed, 12 Feb 2025 12:36:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1466D20F089
+	for <git@vger.kernel.org>; Wed, 12 Feb 2025 14:07:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.77.79.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739363820; cv=none; b=szt7xlW3GY4Sc2jssXeo5cV1BBtv0MciqnpOWcxrDIJt+2/+SJPP+ds++94b9zRzV1K6QFxTPcOfte4tSi+Fi5qCaHLzPgRYfWTA2rY8Ke2ox9d6jNUHWhZSZUGv7FSVPMXrdUp4FWNymgQ3H4W8x3UpQ6dx3acla1Q8G3+a4N8=
+	t=1739369259; cv=none; b=TujEBlBLeupFRn0wcqfW+uUeJF1WiD3bc4LwrG+j6jUkJ9t7k8ct6NlcVY3COud8yq2f7JS2uEfFuLQR960D04Em0fW1zJbfS+PHkKFSL6O1Vt4W13ziiC78lJ3PMi0sKy7w8cQk6Sc3lM4bXbUlwU0bQuIX+OrA4Po5viClEe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739363820; c=relaxed/simple;
-	bh=EPu6yOdIxm6hneNPuuVOsaE2FqGWaDH8MqxVpShlnAE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YWiUNCTizPsgplU9zygIkDpjfyjorrwY6kQbh/TVRgFVDiV6UEwBJ/t0Ggeh223XYA8TZqMV5joIYxX0wslz2f1BPOykF9OpPPLcl0rlnxEJe+D7GbZ2Bv+UuPgmrJN7cNYFnQkIDXH26OpOP3XFmPy/teJqM/l5lpV6DG764FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MCOZKwFb; arc=none smtp.client-ip=209.85.221.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739369259; c=relaxed/simple;
+	bh=pFPTUpAu7HDkogStwXqNUjSBYCD7zqJeZe5auY5s1cw=;
+	h=Date:To:From:Subject:Message-ID:MIME-Version:Content-Type; b=ax2ihzDQATt6ZuLlq80lgP6nOrm3DidQPMqIaCN+W0Tb9i25jrb5GVTctHC0Caagg0BF/aC5u9xQFhkNShr2vaiDMxpRd8oqyPN2omtms82m04aVq1e2vNEnwAIlIF7Q/zsVlYpnTnrJF7vOHIm8+wvIG1hy1us7bPUOQ5IY0ag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=hC5iGQfK; arc=none smtp.client-ip=51.77.79.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MCOZKwFb"
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-51eb181331bso1919081e0c.0
-        for <git@vger.kernel.org>; Wed, 12 Feb 2025 04:36:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739363817; x=1739968617; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WjF1J0DzYHQ9YEhmpMl+VaJAc3/gZNtSmO1Y0yoYTUM=;
-        b=MCOZKwFbDtOcW+RYjkJiroyqW50MKHTVPN+0AdsDRuf/VCjx+MBpybzFzL69ryC6kq
-         rykMdzw+4RU6P+NGL277qORTAIOFKlSliSSWZUJYkurZKtAg1lJ9pKPJPLxUJvlHmx+m
-         KmP+xN7RU4kBNxXz0rtp+aF3YdO/uIiIyLp/xNMpYJAAiAcq1wCafBnggj7CI+BikRN7
-         VXSz5Jk52inuaO7bGSk3Jw2RXAD2axwFUhBQmTyk8GxeF5yLPGvxl/gTrkCCnSSPqgNT
-         NnRc+lKJMW8SNGF+2WeoyXQ3sp8Tg1U2iOYnInro6xvIffULGUENDWh1RKSozbxo9Os4
-         KMDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739363817; x=1739968617;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WjF1J0DzYHQ9YEhmpMl+VaJAc3/gZNtSmO1Y0yoYTUM=;
-        b=F1z4bmnq0kQ9rX1iuzwjM3iFFEIWsKX9ULXi125pnBFx1Ywd0QkCA6B08k+AAIaTYb
-         /XpdkVOYxPlCy5Hh5ckPne4K9RTQ6oB5Q49k2LJtc5iINsM5MiJqTwS8ThhXGuJGEa4u
-         0mGgRfqzjTRIYFq+oAt8MCoi/hdcNpjBBvm8NXuKaINbSjPfCZDUy1MphtLBjux8I01M
-         rxJN2WvRpPvUBpk6LRGFgZ+hOcvIr4raPVL8N2lD41xeTxIzoXubrgNN8LRbfPRvNhU8
-         W1m5O1dCgbC7podjF26RxgJAyOcZo1xqyzuJxCCBpcszLSRUUvGtJKPrGrq+5y25evbw
-         WGBw==
-X-Forwarded-Encrypted: i=1; AJvYcCXoe7dYj9lv41w3EdDLAtVhUNdMiYEPsZESAc/4lpCDefs016MX9BslG+UGqE1wblnsvzc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxtZSVeR0V2MisqPQ2ZU69fioQPEBLYoJjq3DKYm2ESfUqspwo7
-	VYk4QZZNo/NqKrMXp9WHyKFLn/mvF0Dcl3CflaUEv3+1+4r7TeLUZpKfs8d22GwSVTAVoBkTJHu
-	cK8p8oJzq0pBqX2+1bcihSGNcS2Q=
-X-Gm-Gg: ASbGncu+HsHR+kgLz48SKPz/mNF5GDXwqVr4xJe0VpsG4i97Gm3GpopNyIxy0pTbXDa
-	gv03k8CeHa31aPdaqV+8Dsfl6XPD9J8cVe4nleaym6kzK39DtXqm0dwOul49zsJZCW61jRibGg1
-	4VMYqEzm8IFk9PAlSXlcG5li+rR57lTYE=
-X-Google-Smtp-Source: AGHT+IH4ShJuLffadEHgRtLuOkaL/0nuJ/HNjvkG+cvpSJm37ZVi6EvmsHuFUnZCvilasvruSdZzIMrDntyhpLbHPAY=
-X-Received: by 2002:a05:6122:1783:b0:51f:3e67:75df with SMTP id
- 71dfb90a1353d-52067cd3575mr1999036e0c.10.1739363817516; Wed, 12 Feb 2025
- 04:36:57 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 12 Feb 2025 12:36:56 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <786eef7b-94e5-4f92-a82c-aeea69b5c103@gmail.com>
-References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
- <4beb0359-763d-425d-b416-ac40bda59e2e@gmail.com> <786eef7b-94e5-4f92-a82c-aeea69b5c103@gmail.com>
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="hC5iGQfK"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1739369247; x=1739628447;
+	bh=pFPTUpAu7HDkogStwXqNUjSBYCD7zqJeZe5auY5s1cw=;
+	h=Date:To:From:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=hC5iGQfKdQkSpCVkgNOY6XWWRBrpWa58RIbkRwx9jP5PhjuwbyLKrd+PylKr+YRa3
+	 eWMBbTz7z7rM8dYHIsVXcSZFQMwTg/2QeIpuwde/iQPstPbye/PCj+MdQAQjkcuIrn
+	 Hy/hTWvj/67CiKgS8LbM7ObPDlgRLWC0RlZR2gpHo642/iapd/x3c+R5/mrtucLBCp
+	 YZdl1QNKzPpckMVirtVPd48SzxDJXOiCwW75Nh2W4AplrJ+bsn2QFceLG3FHoXCEUa
+	 ac38h0MGPkGs2YQ35pVhnRh91pDP2UHrERIQlHwUhS1FSak6oBeO9UUwQuI97BBhBF
+	 YY/8XZLACtX9A==
+Date: Wed, 12 Feb 2025 14:07:21 +0000
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+From: blg666 <blg666.exp@proton.me>
+Subject: (No Subject)
+Message-ID: <fe9Iwrv_23AEDcZTwgLtxcI9kwmrvo4UDUDaERgLLQ5ctg63zsRYyu3Y4waNOIDtdPZqAvc0gl4dABq1nRtvrAXdwYFDrXxUNnYNI2HnyFs=@proton.me>
+Feedback-ID: 131415852:user:proton
+X-Pm-Message-ID: e18b0c430abfb014af2f5f936d07574efc34bf8f
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 12 Feb 2025 12:36:56 +0000
-X-Gm-Features: AWEUYZn5Ed2eTQ5OCoR2Pn4orZLCOdL5gAOHtx_IcQ7yu0CdQ9geMdeEF3HcYw8
-Message-ID: <CAOLa=ZREofXJnyFEzQLoAKk-A1_==wqBy3YyCCgLeXT8qhdGHg@mail.gmail.com>
-Subject: Re: [PATCH 0/6] refs: introduce support for partial reference transactions
-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc: ps@pks.im, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="0000000000007a9245062df1325e"
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha256; boundary="------93162653d62347a0115a1e11b89c5009f938f35b977b007bfc10f17a2901b24d"; charset=utf-8
 
---0000000000007a9245062df1325e
-Content-Type: text/plain; charset="UTF-8"
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------93162653d62347a0115a1e11b89c5009f938f35b977b007bfc10f17a2901b24d
+Content-Type: multipart/mixed; boundary=-------------------8207003364d959df1dc0a4a419d844a8
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+---------------------8207003364d959df1dc0a4a419d844a8
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
 
-> On 11/02/2025 17:03, Phillip Wood wrote:
->> On 07/02/2025 07:34, Karthik Nayak wrote:
->  >
->>> This series introduces support for partial reference transactions,
->>> allowing individual reference updates to fail while letting others
->>> proceed.
->
-> Thinking about this some more it is possible to skip the checking the
-> current value of the ref so what is making the transaction fail? Is it
-> D/F conflicts or something else?
->
-
-It could be a multitude of issues, to name a some:
-  - D/F conflicts
-  - Unexpected old oid/target
-  - dangling symrefs
-
-So this gives a hatch to partially commit parts of a transaction while
-also notifying the user about parts which failed.
-
-> Best Wishes
->
-> Phillip
-
---0000000000007a9245062df1325e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
+=0A=0ADikirim dari Proton Mail Android
+---------------------8207003364d959df1dc0a4a419d844a8
 Content-Transfer-Encoding: base64
-X-Attachment-Id: d1a2c54f0898f11d_0.1
+Content-Type: application/pgp-keys; filename="=?UTF-8?B?cHVibGlja2V5IC0gYmx
+ nNjY2LmV4cEBwcm90b24ubWUgLSAweEVBNUQxRUFGLmFzYw==?="; name="=?UTF-8?B?cHVi
+ bGlja2V5IC0gYmxnNjY2LmV4cEBwcm90b24ubWUgLSAweEVBNUQxRUFGLmFzYw==?="
+Content-Disposition: attachment; filename="=?UTF-8?B?cHVibGlja2V5IC0gYmxnNj
+ Y2LmV4cEBwcm90b24ubWUgLSAweEVBNUQxRUFGLmFzYw==?="; name="=?UTF-8?B?cHVibGl
+ ja2V5IC0gYmxnNjY2LmV4cEBwcm90b24ubWUgLSAweEVBNUQxRUFGLmFzYw==?="
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lc2xlY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNlREQy8wU3ZuTmZ2YnMweEQyK1VRTUhHcjlPSVA1NQpPblUySXVNRkZk
-STl5V1hDckxwUEQvazVFMWJBdXBGYTZPa1djb3lZcSs0WDYrWjduREtjQnJHNXdWckhrK2g5Ckxp
-TXlkM292MzJoVHB4b2ozOVhwcDFjYjJnV01GamErTFgxVktTbjFxZGdpMjdnbGFKVVJ0R1A3bUpq
-UWJLemcKMlZSWjIwQzNmVHJRdllVWE5GRnFpTG91Y0R2bFhPWTZxbjRxcnVxbVV1ckNuTDA3Zk91
-QmQxVTVHcythUlBaRwp3UXZpTTRYV3pXNnlMcVYxOUZyNXBxNVBzT3dpQXNBaTBsdmpPMk0veWQz
-eVUvMVRROC9wL01RTGdiTUcvak5QCmN0RW9TVDZvNmthOHc1YUpDRzd0SW1DTXVsd0tkQWphWk5k
-aEkyM2M4ZDA1Z0ExYjFOWVphSVpFMXZOSkRHTjMKUmJXY1diM21SUnJxWm0yeUJLYWlyK0hBUWFV
-Q2RhaTFrMDBnZ2VyaEVsQkFBZ1BnVmNYeUlYZlZNaC9JMCtaSgpBa1YwZEtVd2EzSDZHdGJqT1o4
-ZnoxbDZBWEdqcnpmUDlYaEFIT0w3MkpERlFDZHg0WVdHblBUblZ2a3BHWHp4CmdQaDBQRllHRnM4
-Y1BVK2YvRndsSkFOQTMwL2h6ZlZOZjFvVHljWT0KPXZJUmQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000007a9245062df1325e--
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tClZlcnNpb246IEdvcGVuUEdQIDI
+ uOC4wCkNvbW1lbnQ6IGh0dHBzOi8vZ29wZW5wZ3Aub3JnCgp4ak1FWjRsS0J4WUpLd1lCQkFIY
+ VJ3OEJBUWRBWElCVzFmaGFFQ0szVXR1OXNrWjVRdEhDVmo4Q0xmMnJwSFY1CjdadjBwOVROSzJ
+ Kc1p6WTJOaTVsZUhCQWNISnZkRzl1TG0xbElEeGliR2MyTmpZdVpYaHdRSEJ5YjNSdmJpNXQKW
+ lQ3Q3dCRUVFeFlLQUlNRmdtZUpTZ2NEQ3drSENaQi9RSXE0L2kvN2tFVVVBQUFBQUFBY0FDQnp
+ ZV3gwUUc1dgpkR0YwYVc5dWN5NXZjR1Z1Y0dkd2FuTXViM0pueEt3ekdKZ0tzeEVZTGZpRW5zM
+ FhtMzVDREEwV1VSTnJTSnpQCmcyaW9ncGtERlFvSUJCWUFBZ0VDR1FFQ213TUNIZ0VXSVFUcVh
+ SNnZpWlRPOEN4eFJTbC9RSXE0L2kvN2tBQUEKK2ZvQS9SNzhTTGZQdlJ3M1p3emI4RWMvbkVWR
+ W0rZm9CekxuOFNRUXBkcWQwOUczQVFDek8zVFc1TlB2OUJLQgpoQmFIcCt4Sk9JU25renBXRDE
+ 1Z0h6NEhNbE5BQU00NEJHZUpTZ2NTQ2lzR0FRUUJsMVVCQlFFQkIwREJ2TnNxCkwzc1ZKSEhaT
+ EFBV2dFK2Vxai9pc3VMVkx0d3FEWE1lSHFGZURBTUJDQWZDdmdRWUZnb0FjQVdDWjRsS0J3bVE
+ KZjBDS3VQNHYrNUJGRkFBQUFBQUFIQUFnYzJGc2RFQnViM1JoZEdsdmJuTXViM0JsYm5CbmNHc
+ HpMbTl5WjVDNgpLTy8vZEZ5WVF4TVFHRnBOa0NNYS8wdzRSVXMxcHZHOE5QcW5VYWgvQXBzTUZ
+ pRUU2bDBlcjRtVXp2QXNjVVVwCmYwQ0t1UDR2KzVBQUFIbktBUDljV3RFUENhRjF0aTV4UXh5Z
+ zdJK1JRbVNpUTBJcmxSOEZmTzJnS3pNZWNRRC8KWG5sREZSNGRUb28wbDlDcFBoTzR5VDR4RUh
+ 4WUg3cGVsalZScmFpM3BBND0KPWFaMXYKLS0tLS1FTkQgUEdQIFBVQkxJQyBLRVkgQkxPQ0stL
+ S0tLQ==
+---------------------8207003364d959df1dc0a4a419d844a8--
+--------93162653d62347a0115a1e11b89c5009f938f35b977b007bfc10f17a2901b24d
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wqsEARYIAF0FgmesqxgJkH9Airj+L/uQNRQAAAAAABwAEHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmf/cAXSRwa5R5ehdVEspyIhFiEE6l0er4mUzvAs
+cUUpf0CKuP4v+5AAAKg/AQDKUyKtl//d6d5GIY66LkDBtgToGhxxk9B4xN0h
+79RtOwEA3YT2QnUykS00i3oAJuOHbZJfi+Mt8LXN1/hRvb9CzQU=
+=0vxp
+-----END PGP SIGNATURE-----
+
+
+--------93162653d62347a0115a1e11b89c5009f938f35b977b007bfc10f17a2901b24d--
+
