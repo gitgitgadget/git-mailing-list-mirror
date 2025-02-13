@@ -1,122 +1,134 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CDEE245025
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 18:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A3C14AD20
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 18:23:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739469982; cv=none; b=acpsJp00gG6Asx51WOoqzDRr2DVgkkn/7+pdEIBLGVimjhzKNMj0UY40gfQX4hGIwUTnXRh863S5KxkmLCXMOQwlbP/b+nM6ysSOPeSqBaDecYPJF0iRK2Per5HQx1FlHnNMMKWykzrrLQdvFD/fNXFTXH7R/K2r7AMeeqGsgSY=
+	t=1739470986; cv=none; b=MJpdOL0riBSjJdIrnvoZ0U6rEn5A22nCPIzJBL00Mx5oDD7rgj/KsDCgO6K0tqn10XQy5s2xBNBuZrjP0DigdHI475gMb1GaWhBeJ2wZqz2RbVhRrVkBlXOsLO4Blaj57gk3ynhfhQ+V1/CV5XdkQoNJ0BneLOooMOKPfNhO1Us=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739469982; c=relaxed/simple;
-	bh=Xxj5lvSbmIlXiEgPMfs/rzCvkEE9LNpLh9H6Yp5qdpQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=svbu3VfYxxkqlug99Oc6FXixngbkwjo6ulJexHXdQMoNFGvOYHiTANA39n7Gs4HfSDkp/8o5QrroG9roQEhhKIAD20mbpzf2a6/8geXk6Bs4IMoH7TF0C7/1u6bix2uXhdU09rw7Zm/ARcMYFVcZRGL0boXl4A7JQG7yAaKxODE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CejZ27XF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jfk+Fml4; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739470986; c=relaxed/simple;
+	bh=3KBXYEta5HGgg14ggZkbR799LQQbt+8eKiWtDgA0f/s=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=e5SP8+mMxD+BaHvJS/drKstB57Io4gs9qEKvZMqP9tmtWrbkVw6bvbmW4pCMOlCo4lS9LeU1Oeq8E1D3A+d3BOFF64dxaXVqLAHJxth3/JCu/T1aTMIRY7ZVzWgH3MyjPjxvFWXo0lHI6tKVVUvSwqthIYkCEIO9Aumbhd59u4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=qZmyfCjJ; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CejZ27XF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jfk+Fml4"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 34AF8114017B;
-	Thu, 13 Feb 2025 13:06:19 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 13 Feb 2025 13:06:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739469979; x=1739556379; bh=DPcnHNCxYB
-	1QZ+UtJGhNlhOVXdO2r31TjUX2HEB0cjM=; b=CejZ27XFAhQgkiVSm0zDKFxJLZ
-	07Xc62OFoDgLdqVzCNUJXPPUwBUZ7gTWiFb/RzDsKaeKlHV6jK4sHSZOhjSrCqio
-	cCioSHKUCamOBbMYfk6T452eHIf6nwflF3SM/lm9pVt9K50jM4SXTMtfRQxwhacl
-	sx6jtMs4h48OpFpQA3JyKUnQ2xJo5XEtZEp/1z0j+syDfE1tZEEI5zgP+4br2uw/
-	bgnT9PQz0uTfkgirPfPuNdJ7gWJdPFaejTTqW7GoNWyyXf7EheQfZIwbX12OabAE
-	cY2eV1ttbREV6af8pnfEILPJV0ZIYtLnzybc1vfgWRXVhK4DmYHSAX+s3F8g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739469979; x=1739556379; bh=DPcnHNCxYB1QZ+UtJGhNlhOVXdO2r31TjUX
-	2HEB0cjM=; b=Jfk+Fml4VbwkMG23aactaixrZ1518iEipbOz+jXekqUkmjQ55u4
-	84gbpRBSrBY1EiVraWZCKEp8ohZg8UlXW3D8JgLPnFnXp5nY6ga5Sgm473GkkYNb
-	fZWMyq3kgnIT1w/a9I2FqgtyQabNfB8hk/asxapkEbUrajyx3nIlM0lc/Id/tQrz
-	TMPrbS1ywW33HXPW3jDqIxU5JfrQq2pq+z35oFu+VsA8LYsXC0C3Apft+X9WmID7
-	orVcDaq1Dpe5pwz8At0V17cx9nElaJQMU/v8jVfl01fBrFiCWB3XpitDOxfieykY
-	XBzKBHXDxQs7zHWrLJlZIWWAiSBqEM352Iw==
-X-ME-Sender: <xms:mjSuZ_C25XbizgakkrVjnbs-zYERH5O_ymu60bEIcjKS8lzYD8HA1w>
-    <xme:mjSuZ1igYA8VbwbtGvvj8rTXShLLxk3DzdhAHaA7nlKTRo0fCiB4flXpAvsTNT7ar
-    rJCgsGpZ2ubwktBbA>
-X-ME-Received: <xmr:mjSuZ6mts3TxtzkhDj0cF6iHdU218Ig-rP64fP2ByVhqqhw2_3IVG601patM-Hx4LbEov5jCvVD791C3U1y3xFeWHHUg6QXReRJyAAo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegjeeghecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
-    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhlthhosg
-    hlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:mjSuZxwzNgkQgDcKvYbfx9mcmKa_ibRFvou-FnQQh9webGmS7Uiy0Q>
-    <xmx:mjSuZ0SvEkDia9BVRG1TX_CV62VIVKsQHSq3nFwk0LmCtv2yizbfkg>
-    <xmx:mjSuZ0ZUAh2jX84X0xfGWqdALWPAPocWTwX96INMpXgp__CkffqRTw>
-    <xmx:mjSuZ1RX2kiaGaCvlc3YK3Pb-Xvet8hsIJsEzweLtWk95zgS1hcOEA>
-    <xmx:mzSuZ5L5nRRrr1A2no1hYFa4Zjm217aH1MPEHl9hZcO1RyE3loWtSTRP>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Feb 2025 13:06:18 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com
-Subject: Re: [PATCH v3] builtin/refs: add '--skip-reflog' flag to bypass
- reflog migration
-In-Reply-To: <CAOLa=ZSDLNLYQ=zsoOqJW6KhcUqeDahNfhG-n9k1t0O6B40OnA@mail.gmail.com>
-	(Karthik Nayak's message of "Thu, 13 Feb 2025 09:22:40 +0000")
-References: <20250211-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v2-1-991a2ec9a796@gmail.com>
-	<20250212-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v3-1-98b2c4d2bb0c@gmail.com>
-	<xmqqa5aqu7g9.fsf@gitster.g>
-	<CAOLa=ZSDLNLYQ=zsoOqJW6KhcUqeDahNfhG-n9k1t0O6B40OnA@mail.gmail.com>
-Date: Thu, 13 Feb 2025 10:06:17 -0800
-Message-ID: <xmqq4j0xpvmu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="qZmyfCjJ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1739470977; x=1740075777;
+	i=johannes.schindelin@gmx.de;
+	bh=9WTubkY7bzFpq0QUUUj0nB3BfE5ECUCzn1lqHDjfWec=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=qZmyfCjJBMbFrk9XLRb822QMiNEBwoxUnBmxORmZeU9ZQEYkJkNfpLebkOkjlGoI
+	 +C6l4pkb1YoxEb3GFFvtP4/3lsOzzoV5SsxGblfiqjrS+fLZbXVFrw2wwAa6b8yn3
+	 wZkG15YhjpxBovU97D2+Q8nmqkTdIdat8fxbGrAUgVZmgh5XveRxseImVTSriFfeC
+	 ufV2n8pRwKUgTEpflm5qS1g+biQ02ReXlT/LKyxJjlLXuGZckN5Ze4yUfURHw6se8
+	 dAgBvLdkro2GOnR07PnYh+Ecxu415v/AH0Y8db7oqPLzEA9nIydfkiGz+hTtHYPLE
+	 g2YcE/KX/7U0lSD1dw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.213.128]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mk0JM-1syXU12Ixc-00dFCz; Thu, 13
+ Feb 2025 19:22:57 +0100
+Date: Thu, 13 Feb 2025 19:22:57 +0100 (CET)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+cc: Patrick Steinhardt <ps@pks.im>, 
+    Edward Thomson <ethomson@edwardthomson.com>, 
+    Justin Tobler <jltobler@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+    git@vger.kernel.org
+Subject: Re: [PATCH v5 15/18] compat/mingw: split out POSIX-related bits
+In-Reply-To: <c48e8fa2-cca4-4abc-95d2-234fa5c69b8d@kdbg.org>
+Message-ID: <e202a870-921b-8f38-58af-3d44e94c447d@gmx.de>
+References: <20250207-pks-reftable-drop-git-compat-util-v5-0-ba2adc79110f@pks.im> <20250207-pks-reftable-drop-git-compat-util-v5-15-ba2adc79110f@pks.im> <c48e8fa2-cca4-4abc-95d2-234fa5c69b8d@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:agLuaZhpUq5iqx6XffvN0qdzpWXU5xWImSrBxc3b7t98Q+p4Y+p
+ zlBgqHP13jBQL1Kbm1RrBxvK6hbkEcXMCxsjbiUyBxtv3eW14SDgLfDQ1DxPgejFGnmz8f7
+ zVIsvSY+Qk3QzP29ITLV++se0gCXmz7u2GhPXnPNTAmyLOTXpXkWlZVjaYjPpZo4p+i+C6R
+ 9l+7m9CN0dJLM5MeiOv+g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:s8gn2Qvch8k=;A26/lobK2UqMSE4AJGvc3YxRuCb
+ 3ZyItKJLmPrFiBRP27w0j9JUAbd/SAwDTKxQiax4eQ5FGZwvqSr1FO8XSLaNUzgNXLVZIv/M+
+ 2sTMQoEtk1KpqApWQpbDY6mahBMa3RY8YjKPDdf+bJ6Kseao/Ru12no46w60NAiwT4ktYvu6O
+ LvJ2V2BV17PnQJ09wSsx0kb8QpzDgPOWhUfg9a9Rg4k0EC4gjuNobp7f+WJzgr+o4lvvy3+bm
+ pvB0dvJQpopMuHq6TFQ5bQSSbZ30U5fYrFergYQcTZXnenN0D0M13pvBdBUsZrBGdKTt8hIYx
+ j2WVbUXLQHZbUqBYd0uAEdJxoGdTnKZ3gv4RAntO66aa1UDzzhDOfuK4SfQYdyb74fbybjRpo
+ 5MpWdSTGMtSQeOG4CmazEVpxOGvP6U0Hex+wnKZtIy3hhaBfN3IUWdO+YglAZiTvDOn/5IO42
+ GCb/WwNY/+eznmxnc3cVPJcJhkipDNTsXkvg4nFri+D+/Ec1fgUGtwLe8IeIzTrI7QaoIXaim
+ LUO/WdR1JiLZIxPa9dp+pRJJTO7+Pnh8tXxklKRO4usXcl+Z44rux0Emz6LKKnN6FhbWL7Jm6
+ wxWSPR+o2fTn8h6hq0Bto92CiUXFdLsUAeJYEgl3rp90tgS7YjvZk/NQ656X5XE6gtfqjuSvK
+ bLRL0zIbsy/MEQDX0kalYJh8Njggs02XQEZl95NgnSnt7/ubykvyokLd7JwrEt0+fA2xrTMFh
+ xIK+knfOz00/rL3snSN4hHWokYCIl/GlYxJIg9hdQOO+Ein0z3a3m4udwn5fudyz2I0Q+pTzY
+ we3MDNXDfVDOGW66GDzDipoXNNXN4pWA0coVJo64I0owUgC092h4qRwxduoysDV/+mzhARjqZ
+ JBFNcWFgpsCx49lqdVUezKxpANTz9Ubo180Pvt5/OzYEif1N/Zr1cjJlY4jXOMQCGIVVn6uzS
+ FmbEGxjTZXEhj9377qa6bKnxLZDFR94vvESPdmYQz3UCN1luyKGCxjlPWFqtsgZmrrvHWgFAw
+ Qd81sZ5wxuc9g6bm95+xxzf4BxDkTzUOIvr//UN1R7bKIsp94GfS3/giNcqJhMFhyFelPgdRS
+ 2BozzK5CLhAfDjR4LzMbY+4IocwP86bFga5zsMlpRbLhU7UWiPM6t3n4EJW82Gb5LZu1TCNwl
+ yp72qnJZSXlTJC/eo/reuFwbc4DwP/5C8rG9s73T4Ciprdb1wdek7qPFMd+o2lPjX3LAQ27ER
+ p9CH66K3RYSrAigM/X2ePvlTRegM7nsF0LMsIHN4gznP3CSWe0nx+pWVm/ZHoyTOps6VwhVXl
+ QZibH2887Tk0tFKpV2TgFp3Whl6zOC/U65pNzvShwCaD32iWZCiqtYlcNf8SNyNYQCmcaAlB/
+ WhnEEVpnv+X/QE5o/mJjxuU1MqTgLe6U+cxihiCn0QXUICQzuhyr5BkwWeHJIqF0WWUlKShbb
+ nkYp/+Gc7NlEeJw6G0Kn5c+6d7RlQII8P+Q2mSTbnmQGUiNZn
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Hi Hannes,
 
-> To just get rid of reflogs from a repository, I think 'git reflog drop'
-> or something similar would indeed be a better way to go about it. As you
-> stated, with this patch, we could still face the issue wherein the
-> administartor could re-enable reflog and we're back to square one.
+thank you for looping me in.
 
-Exactly.
+On Sun, 9 Feb 2025, Johannes Sixt wrote:
 
-> Why I think this patch is important, is because while there could be
-> existing reflogs in a repository, if one doesn't care about _reflogs_
-> there could be significant performance gains while migrating repos from
-> one backend to the other, while also leaving the reflogs behind.
+> Am 07.02.25 um 12:52 schrieb Patrick Steinhardt:
+> > Split out the POSIX-related bits from "compat/mingw.h". This is in
+> > preparation for splitting up "git-compat-utils.h" into a header that
+> > provides POSIX-compatibility and a header that provides common wrapper=
+s
+> > used by the Git project.
+> >
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  compat/{mingw.c =3D> mingw/compat-util.c} |  28 ++--
+> >  compat/mingw/compat-util.h              | 220 +++++++++++++++++++++++=
++++++++++
+> >  compat/{mingw.h =3D> mingw/posix.h}       | 216 +--------------------=
+----------
+> >  compat/msvc.c                           |   6 -
+> >  compat/msvc/compat-util.c               |   6 +
+> >  compat/msvc/compat-util.h               |   7 +
+> >  compat/{msvc.h =3D> msvc/posix.h}         |   8 +-
+> >  config.mak.uname                        |   6 +-
+> >  contrib/buildsystems/CMakeLists.txt     |   2 +-
+> >  git-compat-util.h                       |   4 +-
+> >  meson.build                             |   8 +-
+> >  11 files changed, 266 insertions(+), 245 deletions(-)
+>
+> I can agree with this rearrangement of compat/mingw.c. But the
+> Git-for-Windows repository has much higher stakes with all the
+> additional changes. I put Dscho on Cc.
 
-Sure.  It could be done with a combination of "git reflog drop &&
-git refs migrate" (or "git refs migrate && git reflog drop", if the
-migrated-to backend performs better when it drops reflogs).
+This indeed causes massive friction. See for example
+https://github.com/git-for-windows/git/actions/workflows/main.yml?query=3D=
+branch%3Ashears%2Fseen,
+which should ideally be updated with green builds as frequently as `seen`
+is updated. It's dark red, and there are tons of gaps (which means that I
+was not able to finish adapting to these changes).
 
-With "git refs migrate --skip-reflog" alone, we are very limited.
-We can lose reflogs _only_ when we are migrating.
+Another problem introduced by this series is that now the same filename is
+used in multiple directories, which makes it unnecessarily hard e.g. when
+setting breakpoints in `gdb`, or when trying to follow `#include`s.
 
-Doing it _during_ migration may very well be more efficient than
-dropping first and then migrate (or the other way around), so I do
-not have much against the "migrate --skip-reflog" existing.  But I
-find it backwards to add it first _before_ we have a tool that is
-more generally applicable to wider situations, i.e., "reflog drop".
+Granted, the problem already exists, e.g. with range-diff.c vs
+builtin/range-diff.c, but I would hope that Git's source code would be
+changed away from duplicate filenames instead of adding more.
 
-IOW, it feels as if we are worried about icing on the cake long
-before we actually bake the cake.
+Ciao,
+Johannes
