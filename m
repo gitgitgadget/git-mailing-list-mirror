@@ -1,122 +1,92 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D651419A9
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 18:30:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EAC245033
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 18:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739471455; cv=none; b=ox3KPgWTCbwBSSSiVzTGlu7gjUtJRZKo+ffuK6TC5UV+Ky3hFcf/E3dSYDcfQmKnlrGfT3u9x0R6tcMjSxq8i5/aKBwWRTvWTnjXIbUwwRKoxhGtSRRgbb+XxmHfg2k4cFDPKFpR0UU7fnvHxadRGkO65TcRM1Pddv9TAKFFgks=
+	t=1739471470; cv=none; b=S4oGLPhxfvt6cpsW0jSBYeHz2X1RQE6eMdBaULk5wbdNL4oy600bIwr/VDw48B6wEws891u6wPEkN5jz+mr0QadhdaDifvz9fgDmQSzB9YtrW0e1gjJ0cYb2GP5eREvxYGa2mgea7QLmCd54JWrP68+7eU2lfi84etmFfDIwHQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739471455; c=relaxed/simple;
-	bh=QobPBXbr8zgua0rsDmz1gX3aDbVGQ+RN3g/BL5q8bYc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MY/FNLgHinaswqkxQqlZTE0G38m9pFUs3/OEyO8lJmmoUVlgNSSFHNNple4jRlnEO92tbC7yxeaTARBO7rX2Fqm113p+qjNdVedBm/87I6LdGUGNa3US6dc5OYEDQBJm5ujKKneXn91UaFwwdTyd7LEJdldvWtps4s/hdFD1yfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=l1t1ft5M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hY+Zn0kK; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739471470; c=relaxed/simple;
+	bh=5bGe6a6YcyA7yyqfP3iToR9AqUTETrQ48mvHFmMOA+A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=sbuKupf6edLkZCA/IV7xOiV7vl/9r0IEFpSJMF082qPHNd32H7hj0HkKeM9youvIjqt+BmGOdIkfS7AiAJI0GhppBpwNZxVKyhyxXoZ9RMwc0k1WUAinSgTWFrb3zTmMwkwPiPBQCwKoblJ3VN4Zrw3k439nkT/o27sYuAXhxtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DUAfSG6C; arc=none smtp.client-ip=209.85.166.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="l1t1ft5M";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hY+Zn0kK"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 68ADD1140187;
-	Thu, 13 Feb 2025 13:30:52 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 13 Feb 2025 13:30:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739471452; x=1739557852; bh=KrA/18TiD1
-	2KQejvrLMQ/HQnAfYsq03nK+QjKWki02E=; b=l1t1ft5Mn6qK01ALu3cnABn2mL
-	haVpVw4d8hojGMLHQK4AlV2/9kdwo8/0ej802+6o+P1S1LDDLRk/V1Rzmg5icoox
-	vDg9cCWaLNIHz/cP3pfnxE1l0bNPSsGM50ZdDCdxkwMIDAoz8DJMcqoASMrr710t
-	N/KpcUfjcp+hW55GFIsb7ehNiwBDZScObZJIgwvaOAJfBctjMdmuqoc+vm0CIbqi
-	qcZv88uzhGd8PYgksJBZc8sunxdMVX2McgWSEyPv1Kl7ihVmuMg+9lKSFQNKZOWH
-	Dl5LAfWoF6qFkVk7TrXGsyFhZsO0rZUWku53GUHvFcK7/cq6ypH62DI+MaoQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739471452; x=1739557852; bh=KrA/18TiD12KQejvrLMQ/HQnAfYsq03nK+Q
-	jKWki02E=; b=hY+Zn0kKlxjJans+ZOQJqgfLDYHKWad9zT5uASlocY44pm+A3ZP
-	yomuiR+MSa584F/S4p5ZY4JnFeAjQU8SiNBPKXY8Uu1sFfYzmNY/PiPW2yaC3O82
-	V8WaWe7n9e7bIGchhuZMJHdQWTFE2+u1Btd0VHPQJsOFGbqrNdBUOkeGdc4nJldV
-	uI/NY48tYQwmX5kgvZBGUSpKN+JhAxqkqQcpb/hjD06dDgay5zdFITOjeXYo8R1+
-	s+tEQUo3oCAzoDmjlcMLrDOYb6V0IphzivgQEbxWT5TGqC3I+onHvB6kcR+uFt93
-	wp24xDaHtXIlntA2uEJXdCmnmBrTk7B9Arg==
-X-ME-Sender: <xms:XDquZyCmgkKLyYxxYuf0jzkdxznEpoQvfZKT24cZf8De7DvWb2fIXQ>
-    <xme:XDquZ8iXV-AaCVTHq3KaVA-6pl4SapbJBZZup6VVPv1xpU6KmBe0zJguFKKfgDH64
-    qyC-dC1X77D7yBt9Q>
-X-ME-Received: <xmr:XDquZ1moaYvdi2WmnxHyTuTfLd_wmAjhOAPP1U7ahnojzS-JiSPJdZ9I6_Ahc7PCa9nq6GKZctpqV4G82uxAhkJCKWYO5l43SRKrdCc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegjeeglecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
-    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehmvggvthhsohhniheftddujeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:XDquZwwQLO5Y0TTxY4l3KMCRY4R2RI3XJxNr0YbuELhSngTobp8zqw>
-    <xmx:XDquZ3RhgW5A66IsekqTlfOEnnk_75neukc_5tR2dyJY5v5DCxyG8g>
-    <xmx:XDquZ7ZSezo-elyjjOM9SqnoKkb34Ad9UEDnfIaUAHGJS6MzGSPuyA>
-    <xmx:XDquZwRNNzkydW_aDHJJTajzUGajz6GNSYU-7wcqpDh0KUzrRuXPow>
-    <xmx:XDquZ1P4e6v5adsfZ_ELSubC0DcfEGOvO2aqn8TvksVQwY_9psXlpui8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Feb 2025 13:30:51 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Meet Soni <meetsoni3017@gmail.com>,  git@vger.kernel.org
-Subject: Re: [RFC PATCH 2/2] merge-recursive: optimize time complexity for
- get_unmerged
-In-Reply-To: <CABPp-BGqihkPq3o4jnqp2aGdqw12F8a8nOModuAB-5N7BQ1t0w@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 13 Feb 2025 09:11:33 -0800")
-References: <20250211194334.20710-1-meetsoni3017@gmail.com>
-	<20250213090040.16133-1-meetsoni3017@gmail.com>
-	<20250213090040.16133-3-meetsoni3017@gmail.com>
-	<CABPp-BGqihkPq3o4jnqp2aGdqw12F8a8nOModuAB-5N7BQ1t0w@mail.gmail.com>
-Date: Thu, 13 Feb 2025 10:30:50 -0800
-Message-ID: <xmqqwmdtofxh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DUAfSG6C"
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-8553108e7a1so92586039f.2
+        for <git@vger.kernel.org>; Thu, 13 Feb 2025 10:31:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739471468; x=1740076268; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kdPz1rwte9dLad6OlGFusAr6o9PG71F9JOBhuOr/Zak=;
+        b=DUAfSG6C3zm9d9PL7SofdBSPHaa30D/f6mQpK0HLnY7FnxXNV6sAgp/2+SOgMYTRFX
+         gsxK8jYrAd6t0qu+oUjLHw+uPu9ygPlrMouM1M7//dnZwIAfpSeERzgbIRTGmbEamA5Y
+         DR8A0ArHDp5ZEtX4auplxaASIltzp8YEnBr+erMZ88odPZgciZI4FUlneTOUcMj+waYj
+         jtmK/Df66Qcuus5p1bhMc6YGVD3zs+HUM/9vZWHSKSOSpDC7Dy+nkWrSsab1Krftqgh4
+         7EOTfRfFA1TCqP2k1WYaxzUi++OERGGX2xwLKB5t9PWsOrpGLmjmYAXRwf/gNmtd5GQt
+         89Ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739471468; x=1740076268;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kdPz1rwte9dLad6OlGFusAr6o9PG71F9JOBhuOr/Zak=;
+        b=MWloq3d3ucvGporWkVoV1bEFTiW+GGsaYv+hWBwCqvY2LYXNvaAPuSpU6gJHKaAAXa
+         sUYHSD+yzDnM/50w+8xaOis3lQ1yyPYscnu0rLpVljaZgVNqsWx90OLgLkgUit7CKCo+
+         ewTJlAafoAD3cd6lvew9MRXIh99/mV4P9i6YQHaTdBTQogL5jbG/3haR6tk9q04GHtey
+         Nb2T1KQebZn6MXapkGMpNNxPQuJGiF4LYpxSkpZW5IuduvJG2vwHdXdnTHlywQahh85Y
+         JQXSyy2Fb4y7CVwu5MIOvGhAYSNlUDqmLixeHN3isnedeozW1U5WFaQzdQiwvLOIqEJE
+         VceQ==
+X-Gm-Message-State: AOJu0YzjsKjQ1/IGhQu7SoU8HhS/awASq4UkA2CXmo0qv9tniUQ96q5t
+	AqJFkbXzccCPrCazoBtCx/LRWY8UeH65usNnS88SZWu1fjvjGcxNDbOIKLTJ5Pi+xv6RS34eYrB
+	YPDvOTObXLpSuDQtTKnczXVUb7FRHZw==
+X-Gm-Gg: ASbGncs3YqGDn/nQOeXwqYkD5+wDrgSqS4m33H9EjJQVkODBCxCgJAFs0/uqLDs/JpG
+	ioIAkSw48vsIJSN6hMneOX6Rb3l3/mSIgiUPcdiIyDiyoCwACKSQm2FyRwD1JHDcCeCc4041nrv
+	ehsNcXEw34MhxLhQp/vQ5fdeYxbuImag==
+X-Google-Smtp-Source: AGHT+IGqg/ZsJZpBWjEZ+ih8pah6DJQNfyxZakPQjf0NaOvpP5MY0FHIBzWTETxh0nm06OYUVsfWxkPnfrEbtT05v7s=
+X-Received: by 2002:a6b:f312:0:b0:855:670a:e687 with SMTP id
+ ca18e2360f4ac-855670ae7c3mr262596639f.3.1739471467783; Thu, 13 Feb 2025
+ 10:31:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250211194334.20710-1-meetsoni3017@gmail.com> <20250213090040.16133-1-meetsoni3017@gmail.com>
+In-Reply-To: <20250213090040.16133-1-meetsoni3017@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 13 Feb 2025 10:30:55 -0800
+X-Gm-Features: AWEUYZl8SItVCmSvnbY2K7P9h7eEi3S3JfO5f5Uey0ctwVkzHEjutdYOp50PVdA
+Message-ID: <CABPp-BEC3UVQcJfXLia6+XrmNCnozNdHtGhGOTUr4A9J=Xo1Ow@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/2] merge-recursive: optimize time complexity
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Elijah Newren <newren@gmail.com> writes:
+Hi,
 
-> (As a side note, due to the specialized structure of the input, I
-> suspect this code could be modified to run in O(n), i.e. we could skip
-> the string_list_lookup and the string_list_sort and the
-> string_list_remove_duplicates...
+On Thu, Feb 13, 2025 at 1:01=E2=80=AFAM Meet Soni <meetsoni3017@gmail.com> =
+wrote:
+>
+> changes in this version:
+>     - Updated comment and commit message as per review.
+>     - Added another commit implementing optimization logic.
+>     - added an RFC tag since, if the changes in 2nd commit are
+>       appropriate, we can apply similar logic in other places as
+>       well.
 
-Are you talking about the input being already sorted so we can just
-walk the multiple input and merge them into a single stream?  In the
-cost analysis you did earlier in the message I am responding to,
-being able to go down to O(n) sounds really like a great thing ;-)
-
-> But, it'd make the code trickier, so
-> it'd need to be carefully commented, the change would need to be
-> justified, and it'd need to be carefully tested.  
-
-... and measured.
-
-> Even if we weren't
-> planning to delete this entire file, I suspect it's not possible to
-> find a case justifying such a change without optimizing several other
-> things in merge-recursive first, but optimizing those things probably
-> results in a significant rewrite...which we've already done with
-> merge-ort.)
-
-Sounds like unless the performance issues are shared between the
-two, it may not be worth to spend too much brain cycles only on the
-"recursive" one?
-
-Thanks.
+The 1st patch looks good.  The 2nd appears to have some problems, as
+per comments I left on it -- it might be easier to drop the second
+patch and just apply the first.  I don't think merge-recursive is
+worth putting much effort into (there's value in providing feedback on
+patches by new contributors, because new contributors are valuable,
+but there's really not much value in tweaking this particular file),
+so I'd advise against adding more patches to this series that
+transform more of merge-recursive.
