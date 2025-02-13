@@ -1,89 +1,138 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA0220CCD6
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 09:27:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848C520D508
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 09:43:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739438874; cv=none; b=PVLRPQrpZpVF2QypacpHXHFDPU/wpxbnlJqyhDvy9CkWGGUgh9L53k642Nj9HVKXnoqBhvBk1hnZea9iJZwwzGVdk9VZNpB/gDjllUq0b4VY4V0hlkR8f9z/237YSdGalbnDsFr63zhTlXc5/GElCycU3DsdNcANV5p+ho3K9PI=
+	t=1739439794; cv=none; b=hqqul5A7QfG5/5Cr7xMG2DGUb65YN68A/874bB7t0K4rKmEotqKwFhnU5vFRIthK75b3JsX94qHhOgZuGVNtwzt+g65N+odfEeZ/c0dgJRbzcby2aw0Bqz/8Ow2MvwhTxUCGIqbiLcDC9Cl6aHUDfxQt2JFuvXeLh4bqMfDHHUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739438874; c=relaxed/simple;
-	bh=IqRBrVBD6+5OT6EKC7kHkdjIe7ripmDtvxG5T9yAwJo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YTYB3V7hzNEqZLm9ChkXGS/hYsvQbPC6G3Fs1CIQUFu7rb9RmHxPkeB1b3QPdk4eoGw3J4cEYw2MhuAbsrZy+tSpcJXdMlKGXD4Bk8sqrU7+pOGUSS1WkogANERB4e7GWW+RIOqP/o3VJTvpw6rjbG7h+0mPRQZzx09HSWraYsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AZU11cTP; arc=none smtp.client-ip=209.85.208.49
+	s=arc-20240116; t=1739439794; c=relaxed/simple;
+	bh=e0ttb8ObuWt7YobOWpnTA/NcHJFH1gW+jie0Z/ilrKo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=oLfLZD3E/Sh+3De72NKk+VntedT9lXMrYNr7LXm+F2Hdg1x3qaUq5i6/0BTFeEJKHxPrST4R3cxqjQLYZqENAkp7n8J2uVlU9XzbMqfQ/2wzlQVb+IhrVDrylES9lqTLM6gHTq8Tyjvc4oVD6fYV2Fo74KV4uQRcbMM5XnECqWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=irQOviD2; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AZU11cTP"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5dec817f453so954530a12.2
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 01:27:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="irQOviD2"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4395b367329so3880045e9.3
+        for <git@vger.kernel.org>; Thu, 13 Feb 2025 01:43:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739438871; x=1740043671; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IqRBrVBD6+5OT6EKC7kHkdjIe7ripmDtvxG5T9yAwJo=;
-        b=AZU11cTPGGNz2NXMYKUnBkmzSRlkB/mG9z9Qdc9r7cmN9uRGOE0yrj2tM6/qpa2mZW
-         VJTa87pKSmH5yBAfW3SCGRjQ/npJtsNtTiq+rvcTaxw594un4k3sbW8etnd/rGECqb/k
-         lQAojr9GZani6/J0ljI6YS1sNor3u3MhGsoy0G56tobwwhwhFUdZYlnvmdZrElwZzXgG
-         0q4B9VrvEw3AfQAzlU7xfdIA+ctd/ZioNJJt3/o2R37rxgH+cAeqVOzvbbpoo/TW/qqE
-         s57uMMEAet1Upo5csaSvtAAt8BAR4bxnC5MMj5PyWOIGCWLh0rlipdVU7lelJIQf4YZH
-         H8fw==
+        d=gmail.com; s=20230601; t=1739439791; x=1740044591; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=e/ZbD0D7lGrjlwC5yLmDwpnGCbwZTgSLasixoue7TLM=;
+        b=irQOviD2oJWleH8UMa0CpDyhnfOEjotNcID68h62+5aHoNOUgpVbvWPMFB6eyYHoKy
+         R3R3CcBccxLUAZrlNBBC0eQSPihgALXoaFKTzcPQFnc6Ip53sK0TPX22NR9LgvUBmlWs
+         6EtXE/6jAZ4xhwP4laz5eNVOlQWV/iVYcn2P1UchsWX9zQOK70ojW3ss3wTA4yKH/nXn
+         z7HRqbu75NQ4Wx3TMTbkTcXQ3798i07Z7T1fbgE5yBxAZHzgA4BEDXPAGkiTTz+q0Z6w
+         jBpFFq7mPf/p0QP+vgzd9HV79SRZO90S4akQO+Us4XMPuHzF8dGuQMUAECJVT4DdD2mU
+         8hCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739438871; x=1740043671;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IqRBrVBD6+5OT6EKC7kHkdjIe7ripmDtvxG5T9yAwJo=;
-        b=db9IjgLEeFfiocGRjYk2zHGOcwE4xe42TxIn5pu7JMMpKZN3GdpD55TAvIoaL0MmF7
-         WAAPeHmkbeNqgnh2PpJ24i+SSzo8OuWwvk5l9iqfkE83x8zgg+6GI4z0Cp9tEBRfq46F
-         hsLM+qmCrgYhtBqJtHR98/9PqnBWpy8aynfHd3PgKZCWNc8mjzYEh79dMWHMv/yoz4Tg
-         a81HEm/B3j+q5SD98zstJQczZmoJ2T1+kzU5Y1q8zUCRcyRElsn4aS0jSAQfE8JF5hex
-         vkv7YDf79ppnWmgxpStp7b1737gSxk7W3r1fEFmUIT18HAGIFuIqwgXkfFts3QodvRIF
-         EBcw==
-X-Forwarded-Encrypted: i=1; AJvYcCXvTjQXzdz7HeOLjMAqshVfCbQ8pOYed8mYxhMil9dDN29825YrNzGiX8hrssGgRmV2Ej4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYF7J1eGAI80bnPcraVHDY+JYcd4zSCXwmM/xW34VMdQ8nfsjQ
-	+09cqFXXI3I1g/gAqp7BAMtfdXNc2eKzVMVb1HKYHNCvyr9Qhjr6vTIYXab8lz7EbZSO5uO/DXD
-	YH2sv6hRqnNGz3zdbn8zszwh1o/uHE6y8
-X-Gm-Gg: ASbGncuJSh0RqRbz2ToSpZ2WohPvRcO9yYL3ufr4bn0sHBbhxloDUqJ45gcw8OnWnt1
-	IHtalSj6tPEUVv84ClaHYbkGglXJbkbk9T98zp61c3u8TfKSmM8MLNEELZNnCFjAmZsv7eW8ElG
-	A=
-X-Google-Smtp-Source: AGHT+IFx9o7I2LJF/I+eRp4UFaolO+zqj6oCB0V+4TzhHMETi4z33qsACbKDNR3l+MahJzI3i+AO275VM8J1ZJP1tvE=
-X-Received: by 2002:a05:6402:a001:b0:5de:c9d0:672a with SMTP id
- 4fb4d7f45d1cf-5dec9d067edmr1397130a12.10.1739438870975; Thu, 13 Feb 2025
- 01:27:50 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739439791; x=1740044591;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=e/ZbD0D7lGrjlwC5yLmDwpnGCbwZTgSLasixoue7TLM=;
+        b=lI+/AhvDjVyL1fk/9J8FG9GOWCpWUosMc2h1iS7/7qJnOBWTVsXXLs+0lSPUNW9AX3
+         EuzCFIvtqDz3hsJuQVFzx8A0xrefUJcyxPh2QQ4YXcfnke/vFNDYT/BzLYr4PGnoqXSa
+         7uzeFcBOZFAHJMRT1h2azZQxWLfoR1iDkdiigJAsEbadlfezLUbxheM3nlgpNEuhXMmO
+         1YiWieBop9mRHocW0/hz9K/sEwLAkCbCd4K347K8MWm5ADpdvKmjEKDTXoGTXckc6KeS
+         kIbnkB84aIs3MkFu4gdqQ/Om6Vnqf6qG7e/HeCCe+xNs8obadBRBvMUbzSm3l9EXewgw
+         tBsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVBh9ItqO3CWnDDsFxfYebGiJWh+TSjaOAp5Zrulnc2VvgfTYwXYGeB6xie4haVJdn5d7s=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMXz6kKKgssu6DVFOeO2GXWaxqOwoJDOjhws8WHQsnSve7Voys
+	yQa8JD5skijngVK2UbtftXUkTyIvaadm7IeX6ZkB0o69FzO7QS/1
+X-Gm-Gg: ASbGncuQkcMl3IUB1QoJMXQmE0evx54BwhfAxZuhHYi7sjUuzpEW6v3hJB/IvcoGvC5
+	r3jETVInaCdLdtmqKplt88LBpM/Ll1c04C0XpobOKDvUJDYwlhQLi2Z84I/3d5ftD76EHJPbk5A
+	pdjtLJfZyAdHC/LilYxUXj+UNtiD9oINvjJeZU74sNa2BBFCQFKyz8pLdLuoMU5HKc5pvp3fl9l
+	fxtXTPRdpinOXk8V2XWhwXIs6HnhvZAEelWX50qIhz44NbDkWsKBCwz6nn8u0gBgpjOVDCVoca8
+	gM1AHAPD/GlWOCQ+CvnovWqko7fLTowaoFTfeJxrepjmdEwdOSD6n5VtlTsSYpRIx6t2FA==
+X-Google-Smtp-Source: AGHT+IETmwAsLm0ChCEcCi81DnffuL/KSmjjDZg4G4UmyhQcvBEXAOHLBOJqgqh+kVvPgBA9W5RRPg==
+X-Received: by 2002:a05:600c:698d:b0:439:574c:bf76 with SMTP id 5b1f17b1804b1-43960179b7amr33153135e9.7.1739439790468;
+        Thu, 13 Feb 2025 01:43:10 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4396180f231sm12311865e9.16.2025.02.13.01.43.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 13 Feb 2025 01:43:10 -0800 (PST)
+Message-ID: <8a259585-97f7-4756-a126-17a982da58d7@gmail.com>
+Date: Thu, 13 Feb 2025 09:43:07 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <Z602dzQggtDdcgCX@tapette.crustytoothpaste.net>
- <Z62NFXja4CkrxSil@pks.im> <Z62booOOXODOl_sZ@pks.im>
-In-Reply-To: <Z62booOOXODOl_sZ@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 13 Feb 2025 10:27:39 +0100
-X-Gm-Features: AWEUYZmzYXsfQvGCxPbbBNRqAouBeeWJXKOWg9Ouusbm9s8cZC25SyVLZeBbljo
-Message-ID: <CAP8UFD3E8_mTwneUgNkC_hZbkaeznAT-dG9njT5wjnm-=iMmcw@mail.gmail.com>
-Subject: Re: Poor performance using reftable with many refs
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	Karthik Nayak <karthik.188@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] rebase: add `--update-refs=interactive`
+To: Ivan Shapovalov <intelfx@intelfx.name>, phillip.wood@dunelm.org.uk,
+ git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>, Derrick Stolee <stolee@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>, Alex Henrie <alexhenrie24@gmail.com>
+References: <20250210191650.316329-1-intelfx@intelfx.name>
+ <1279671f-4063-4347-b153-9f6ff079bd77@gmail.com>
+ <f689c263ead8104ec42f63f1e9ed10350a27ae1d.camel@intelfx.name>
+ <5b605c3e-ef6a-433a-9637-1e8f277dfde9@gmail.com>
+ <f0fa961084281b1d5948f59c42cf0c87e731d9bc.camel@intelfx.name>
+Content-Language: en-US
+In-Reply-To: <f0fa961084281b1d5948f59c42cf0c87e731d9bc.camel@intelfx.name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Thu, Feb 13, 2025 at 8:13=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+Hi Ivan
 
-> We end up with two tables: the first one has been created when cloning
-> the repository and contains all references. The second one has been
-> created when deleting all references, so it only contains ref deletions.
-> Because deletions don't have to carry an object ID, the resulting table
-> is also much smaller. This has the effect that auto-compaction does not
-> kick in, because we see that the geometric sequence is still intact.
+On 12/02/2025 17:18, Ivan Shapovalov wrote:
+> On 2025-02-12 at 14:26 +0000, Phillip Wood wrote:
+>>
+>> Thanks for the explanation. So this is about copying a branch and then
+>> rebasing the copy without updating the original. A while ago there was a
+>> discussion[1] about excluding branches that match HEAD from
+>> "--update-refs". Maybe we should revisit that with a view to adding a
+>> config setting that excludes copies of the current branch from
+>> "--update-refs".
+> 
+> This idea stops working once you have a bunch of interdependent feature
+> branches (consider two branches work/myfeatureA and work/myfeatureB,
+> with the latter based on the former, with each having two versions as
+> described above, and then you rebase work/myfeatureB-v2 from v1 onto v2
+> and expect to update work/myfeatureA-v2 but not work/myfeatureA-v1).
+> Excluding branches that match HEAD is a very narrow workaround that
+> only fixes one particular instance of one particular workflow.
 
-Not that I think we should work on this right now, but theoretically,
-could we "just" count the number of entries in each file and base the
-geometric sequence on the number of entries in each file instead of
-file size?
+Good point
+
+> I don't understand the opposition, really — in my understanding, an
+> ability to restrict update-refs to interactive runs is a significantly
+> useful mechanism that does not impose any particular policy. It answers
+> the question of "I want git to _suggest_ updating refs by default, but
+> only if I have a chance to confirm/reject each particular update".
+
+I'm not opposed, I'm just trying to understand the problem and see if 
+there are synergies with other issues people have brought to the list in 
+the past. You've convinced me that supporting 
+"rebase.updateRefs=interactive" is worthwhile but I do not think we want 
+to change the commandline interface. I'd much rather reserve the 
+optional argument to support filtering in the future so that
+
+    git rebase --update-refs='*-v2' --update-refs=^not-me-v2
+
+would update all the branches ending in "-v2" except "not-me-v2". We'd 
+want configure any default patterns separately to whether 
+"--update-refs" was enabled by default which means we can add "rebase 
+.updateRefs=interactive" without boxing ourselves into a corner.
+
+>> Maintaining multiple versions of the same branch sounds like a lot of
+>> work - whats the advantage over merging a single branch into each release?
+> 
+> Different people, different workflows.
+
+Fair enough, from what Junio said it may actually be less work anyway.
+
+Best Wishes
+
+Phillip
+
