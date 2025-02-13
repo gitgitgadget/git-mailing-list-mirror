@@ -1,133 +1,187 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 991FB23F439
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 13:32:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17122281343
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 14:31:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739453582; cv=none; b=AjYjntuVLOV/SSsd1FAolahH9ydinjDp4RleplB2tU4JPNJq8NgVA+EXMaeayfhJFq4lnfrXO24W+sTDMdW/tmvVoMcNcTUDrORHCycfuYp3Vx5NUKIp8AM5gENXJyloUZK7JKvVR0r6sBPWscWDoDSacdZKhRgmWPObKsxuDkU=
+	t=1739457120; cv=none; b=Gn4/GnSXPLxHGDi9HjzYt/Mu6QpCI3Al/ZKGE3nkP2qck1VbBB++yQOLmeWCYomivEzuTe1srJ4urk5hKiiM+zPhmVXGLGNN9xEMnzKwzDp0EzQfArzsbpD8S4AV3KV6qZAmDh+qhicQpDg1BSfUTTUJsjTijDXrFOaqMeU/6V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739453582; c=relaxed/simple;
-	bh=uqhWKgDYj38LJXFr62mB+YsoSNDHT93DHYoFRW8Yj7k=;
-	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=JgrcNyAaItOZwuZbpPvoZ9EwCDJFnLJmNc7n6CCd2nA8TxiInK1/HMCMvHW3q2zsq0JJT1wZZEXwDuvi5RUZ2ZfPzBxK2J73qb5BaZzawEu2Ckm1gwAmstDun0c2CCdeqBD1zw3nWqYARrpet8euJO9IZd/9eCf3/4HRPpul48U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=jHn/fmZ0; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1739457120; c=relaxed/simple;
+	bh=ex2EWze3xtxNtWz9doVKAnIyB7/WMSM+cN2pukN99Ws=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UmmfyUaU4TQwpbWtVLFWpJ1YZo8u+eA++0vJJwigO4TVFrGhwFmLy8M/WJkZNEgn/I1BA4aDFZwzWYUrTQx8KVqQPqZxQkZTU9+1rcD5ZoyhHTghty/8ymUgRAvQ/0j6AieG/5sghLX9AbGYEzGHtLJO+f1VXfO40XI0v4sf7lA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ets2LNe3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p7zVaNWc; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="jHn/fmZ0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1739453576; x=1740058376;
-	i=johannes.schindelin@gmx.de;
-	bh=1A86Rk2+OvdUEgMsz1NX/imglGUsYHLMa732C9Zv6So=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
-	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
-	 message-id:mime-version:reply-to:subject:to;
-	b=jHn/fmZ0K6KJkYaHtwO1PffrQXcDt1E58889UVtl54RDlmpwzvVnH0WJRyL7crBf
-	 aNZenSH4unrU7rC8+VNjynZ+CUJpLuTggWhm+AGPrDRFFV83sm7tfKI23bzL/8bIT
-	 G3lx6vTQs0s3j03h7yncvCH7L6T1qWOnaYIKGRl4oFNNFJd9J6//8MzzqfreLK0p3
-	 WwUwcgZ/1PbzpK0xgkk1uAFwsfYXK+gBZ+RbkbSFxc/MPFjGdwZScFI2eq9+z8wqa
-	 60Npx98SbM8W0+x6AQg2DypPdHJWoqr0vOal1ut7OYwTnuaHdwF2uGN0SedHNtbvt
-	 m7+/PVURVRtR4vrNUQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.213.128]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MA7GM-1tY61C31wo-003MQK; Thu, 13
- Feb 2025 14:32:56 +0100
-Date: Thu, 13 Feb 2025 14:32:56 +0100 (CET)
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com, git@vger.kernel.org, 
-    git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.48.1
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ets2LNe3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p7zVaNWc"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0DDCE11400F5;
+	Thu, 13 Feb 2025 09:31:57 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Thu, 13 Feb 2025 09:31:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1739457116; x=1739543516; bh=kHeXPqEZay
+	gMnwF+zRe293you0IgPAzMLZGcvhdx7vo=; b=Ets2LNe3v2WGW+TUyxJOtmZD4W
+	+aBuL7sVnoM6YHHbuK2Slvh00WOP/hpC9tOaNKph8HSgMU6FNd6Xn5Cr8ZvWiv9K
+	5malv3VtM6P4hlVt8U9UAvI7TG15Yp3i41vdI9GBHKvjFSv84bGmhZPTS4gdz8k2
+	l+2KVnAkJ5cxHIL5k406hHbsj1ohTP/Y+NgNj7pODbUnc4umlf5z4wCzuT1qWJEv
+	YYkbcL7OvR2lO4iUOkglSSZzuzlQIM1j2250gLdZDe61hGbKWCcoO6EFDiSruTN0
+	cM97WnvUSWPCII3J5k3aEyjs8aKUmtPNDkrnu+BKYedwLj0xbuvVURBFZbNw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739457116; x=1739543516; bh=kHeXPqEZaygMnwF+zRe293you0IgPAzMLZG
+	cvhdx7vo=; b=p7zVaNWcRIO0KrepIFO8Htz3Ks/KK1+YnLFH7R7DJIai3yENrHM
+	BRPD68a9DEehzaOcR8CQzvLXGGqD9pMqgkM5oPPCWabJxzHVfwt7uqYRcCJ+qq/7
+	UOhGoZbroHjCCre26tdRqG8bKY0wMWdVyenbYuTAFnFt+TLiT6BpLdFOqtkgqfT1
+	QMncvHpDpc0s7V1XVkF4b9/AEkn7tg+ifAYNk7GTg9y3wa0DOXA3T1NRHp3hfr6S
+	d79ZfZ40vN/dGFRG/52LXAsqgUzrW4I6NJ9A+0lKwp4d8aYX9I4CB8MDVDrqYR2T
+	xS52HhW3b3XeiSYJ+stEwj3fG5/wMj+5BbQ==
+X-ME-Sender: <xms:XAKuZ3Eps5ccrsOZh0dDJl5Z-b7y6kpTm3ACDN2n-xWH9wloXf48rw>
+    <xme:XAKuZ0VHpgjE2hZIPlsBTqT0im0SHuojUcEpuEbrjxvFSg9i2ETq2Nt3HhKUlY-kA
+    GFrR_dd8t5b3Yx3uQ>
+X-ME-Received: <xmr:XAKuZ5Ku0JM-mtV66S7njeZmCgkL9SoVOHR2HRON3ENSkPSjkFtjlBsuCM_--K6c2rR5vC0-lO_Uhg_RR9_D0_6DrvCUTRKiRG5VKHfTseuUmA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegjedtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhph
+    grshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:XAKuZ1HsLDzrtc7JmQsIKZrRuqsBk8cDufFqO2ad2UGUBzoj72QZCg>
+    <xmx:XAKuZ9UoYVBqklkBfyTqZpWZV3VdSCszwInVcnM-A7_JRc2oY8P3RA>
+    <xmx:XAKuZwNdUF-z-MZ--sb290NZoCdWd2tGZZojZEdFKIjh9mVgCCAapA>
+    <xmx:XAKuZ83dKZSVnkJOLUvvuoDvNPxD9VME3lNY4DCQFT7QmoL0n98Qww>
+    <xmx:XAKuZzx5utDWgNMErnyEyvGtHKbeK416_YMQY4ZGEcrDz6feP8_mqc3i>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Feb 2025 09:31:55 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 4fecb55a (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 13 Feb 2025 14:31:52 +0000 (UTC)
+Date: Thu, 13 Feb 2025 15:31:47 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: Poor performance using reftable with many refs
+Message-ID: <Z64CU1sG4B1o52uA@pks.im>
+References: <Z602dzQggtDdcgCX@tapette.crustytoothpaste.net>
+ <Z62NFXja4CkrxSil@pks.im>
+ <Z62booOOXODOl_sZ@pks.im>
+ <20250213082221.GA916028@coredump.intra.peff.net>
+ <Z63VY_wa7Z6lrUfY@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Message-ID: <1MVeI8-1tqA4S3Dsq-00IHDK@mail.gmx.net>
-X-Provags-ID: V03:K1:DXGKF4pBWlNFvSs2VETJgFQxoIvL+IgEPri/P5p56n133oAW0R8
- oTDyHhojz0/aQkFbYtMslB31SDd0b0QBq7vPxxf3XfpHwKM2t/uIH8sO406hEbt3gbV9O9n
- PJCKQdTaLGXt9poCLnTn/sbB9nTSV9R9b0q7sSI/zyzjXYPtNw4SiEMtRodwyw2LN6ckYL7
- xCRh3rarn3tWoLgv7nQCw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:uak+NqoI4PI=;R6QhG2gft2tjZLWuK8YOe7GAnYi
- y47g5g24yPajRkM64CtuzR2Y8N2QM1WQ2TUfwS7qeEwO00xpYzBDg9UaBKBCpOdVrQy9p/loV
- D9NUBFVFnRa/TUbu+U014w/tBBoDZ4bNwMFdHRxAL4GOQTOngWFiCQNYB8KybpgzSjciB1Dez
- 8rwE7OQ0YOcXDnEjp6GpLKFLtuJYueje24yttXj2Ji+AvkDA+1oqG5+Ad3cTuKhdwfHswv/Ue
- 2KXlkjY+MOztfXMb1SylsjF2hzTHzISSYRCDb6qqVyBgmvtuOg/7/ZKfRESOBYm00Pf1Uh3Et
- yKw/GyZ6F9VflK61yTcU7FsKRxttKVQrR7kCKsPissjnFoLOVXdZ0+KWArGtAHLHoPuN2sY1p
- yfBu4HcZxrJzhxgFXptcapdsMvU37jrg6uWnbvbZ8mHlJfTOqNnHsMQ1EBJM94fQcJfvnieR5
- Xx6yxODICiI9sDWAkSKanypLZFJUuVwUCfa/9v0N4C3eYdtjznCWrZnoOfoM4jiNIMnGLmTnN
- ZgBykCQJmnbPNYjXv/+aHzlhzHfokLf/LBykMsjYtu/8rA44HprBbd/MgTruRJJK58XA39Uyk
- rD+3dBv02PUsF3y/In7cqUQQHPf5x/EUUBdDyLEzDjDNQDAuAYHSCF9+hEakqilNpR/N3HSTU
- YAzd6oVEXrosDKZn8W0uq8uaniSoZRA467vdDVGiad4IgRuwdzM0wBECRJCjneky2TTYs81Lo
- GGpHAKLbVLyfRNiZb/Y2yLuOP+N9F9Cfkag1zGsEEFh9RHGzf593CAzF234LcVnWWkfF0qFVy
- Nr0y3A8wW7NOAV5e/lZlC6gCt1xsK8qqtEPLIlKsfuzoN56cbSAYFCLblBLFWMKTandlIL1LX
- DHio8/vkFdZRxbhnPUcBl/Zbi4Nbr/gxKRBEKJZaflNbMRfG2xro2rzKUfwZIHAB0xQPvGork
- 7R5POn8lWNQ4YiN+2iOByQYXw4wJ/nCpSafJ6DQ3X8aDxQKiStSINDwiwH/WlkkB3byb/k8kY
- Hgi4XR056m/KmHcYwfaakDMY74rzE6WuvC7KweCFTPpGQOqBjNly0kg4VjoLHQtXtPffdaQ7B
- Xs+D1VqUwUnV13QQNaG7XbDG+UI0aNnEnYCrMzjvPuZgFD2COAVuoXCmHJDtKEkmwCjFziHMf
- O7NNNaipFgNakwUZHrEMlEFsdL/i+IQLwHxpyUqpP+bjr1HGagfjzeL0YSfLBVlQd8FxQvgI4
- shmCbL0JJvrAt6acUOz7sheZ3PCvsZeiXqfXw9SLPuzANbKAHIynYCSEu25yi+AyYryiqK4TO
- 306pomSnNK5mzyV6EzL7EadtCiRysF3eV0LWpqwuEDv+qB++9cX4uEznYX5/7NyDSqGzNK2LP
- ypxrgyUb5M7ERjJXeFQpKtNK6kxTTkTyUO/8PHSiIUnMI64GHVEKdX/gALvoaYbRWpAQT9liK
- Pphhxqw==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z63VY_wa7Z6lrUfY@pks.im>
 
-Dear Git users,
+On Thu, Feb 13, 2025 at 12:20:03PM +0100, Patrick Steinhardt wrote:
+> On Thu, Feb 13, 2025 at 03:22:21AM -0500, Jeff King wrote:
+> > On Thu, Feb 13, 2025 at 08:13:38AM +0100, Patrick Steinhardt wrote:
+> > 
+> > > Turns out that you're hitting quite a funny edge case: the issue comes
+> > > from you first deleting all preexisting refs in the target repository
+> > > before recreating them. With "packed-refs", this leads to a repository
+> > > that has neither a "packed-refs" file nor any loose ref, except for HEAD
+> > > of course. But with "reftables" it doesn't:
+> > > 
+> > >     total 368
+> > >     -rw-r--r-- 1 pks users 332102 Feb 13 08:00 0x000000000001-0x000000000001-d8285c7c.ref
+> > >     -rw-r--r-- 1 pks users  32941 Feb 13 08:00 0x000000000002-0x000000000003-f1a8ebf9.ref
+> > >     -rw-r--r-- 1 pks users     86 Feb 13 08:00 tables.list
+> > > 
+> > > We end up with two tables: the first one has been created when cloning
+> > > the repository and contains all references. The second one has been
+> > > created when deleting all references, so it only contains ref deletions.
+> > > Because deletions don't have to carry an object ID, the resulting table
+> > > is also much smaller. This has the effect that auto-compaction does not
+> > > kick in, because we see that the geometric sequence is still intact. And
+> > > consequently, all the checks that we perform when recreating the refs
+> > > are way more expensive now because we have to search for conflicts.
+> > 
+> > That makes sense. But that's only 360k of reftables. Why does it take so
+> > long to process?
+> > 
+> > It's been a while since I looked at reftables, but I'd think for a
+> > normal lookup we should be able to binary-search or similar in each
+> > table, find the relevant entries, and be done.
+> > 
+> > But I guess we can't easily do that for finding write conflicts, because
+> > writing "foo/bar" means we need to care about "foo" and "foo/bar/baz" as
+> > well. Finding "foo" is easy; we just break apart the proposed refname
+> > and look for each leading path. But "foo/bar/baz" is harder; we have to
+> > merge the tables to get an authoritative sorted list of the current
+> > state, and then look for the entries adjacent to where our proposed ref
+> > goes. Looking at a profiling output, we're spending a lot of time in
+> > merged_iter_next_void() and its children, which supports that.
+> > 
+> > But the run-time scales linearly with the number of refs we're adding,
+> > which implies that we're doing this iteration independently once per ref
+> > we're adding. Instead, if we're given a list of N refs to write, we
+> > should be able to sort that list and walk it in parallel with the
+> > merged_iter result, making a single pass over the lists.
+> > 
+> > So I guess we'd need a version of refs_verify_refname_available() that
+> > takes a list of refs rather than a single name. And then you could do
+> > that single-pass walk. And as a bonus, you'd be able to de-dup the
+> > leading prefixes you're looking for (e.g., most of your refs will start
+> > with "refs/heads/", so we only need to check it once).
+> 
+> Yes, `refs_verify_refname_available()` is exactly the problem. We spend
+> ~80% of the time in that function after the optimization I have pointed
+> out for `repo_get_oid()`. I assume that we'd see similar performance for
+> the "files" backend if we had 360k refs and inserted 360k other refs,
+> but haven't verified this claim.
+> 
+> I've already noticed multiple times that this function is a significant
+> slowdown in lots of cases. I've already started looking at it a bit, and
+> will think about ways to fix this.
 
-I hereby announce that Git for Windows 2.48.1 is available from:
+This turns out to be harder to implement than anticipated. While
+iterating through refnames and the ref iterator in tandem sounds nice,
+it would cause problems when the ref iterator yields millions of refs.
+You don't want to fully iterate through all of them.
 
-    https://gitforwindows.org/
+What we really want to do is to reuse the iterator and have it skip
+entries: we'd basically create the iterator and re-seek it for every
+refname we want to check for collisions. This allows us to reuse some of
+the data structures, and in the best case the underlying backend knows
+to optimize.
 
-Changes since Git for Windows v2.47.1(2) (January 14th 2025)
+This is something that I have spent a significant time on to implement
+in the last couple months for the reftable backend. But while we have
+reseekable iterators there, which already got us a bit of a performance
+improvement due to more reuse of data structures, we don't yet know to
+specifically optimize for some specific seeks. We could e.g. easily skip
+re-reading a block if we already know that it will contain the reference
+we're searching for.
 
-Git for Windows v2.48.1 is the last version to ship with the i686
-("32-bit") variant of the installer, portable Git and archive. Only
-32-bit MinGit will be built for future versions, until April 2029.
+But the bigger problem is that the generic reftable iterator does not
+yet have this capability. We first have to revamp their lifetime in the
+same way that I revamped the lifetime of reftable iterators. A generic
+iterator that has hit its end is currently getting free'd immediately,
+which I always found to be a bit awkward. But because of this it's
+impossible to reseek them, as they have lost all their state.
 
-Due to persistent maintenance challenges and the community's limited
-engagement and usage, git svn support in Git for Windows will be phased
-out over the next few months.
+Oh, well, I guess that's what I'll be working on now then. But please,
+somebody stop me if I'm not seeing the forest for the trees.
 
-New Features
-
-  * Comes with Git v2.48.1.
-  * Comes with MinTTY v3.7.7.
-  * New Git for Windows installation now default to the Windows-native
-    HTTPS transport backend.
-  * Comes with the MSYS2 runtime (Git for Windows flavor) based on
-    Cygwin v3.5.7 (Git for Windows skipped v3.5.5 because it failed to
-    pass Git's test suite, and Cygwin v3.5.6 was superseded too
-    quickly).
-  * Comes with Tig v2.5.12.
-  * Comes with cURL v8.12.1.
-  * Comes with OpenSSL v3.2.4.
-
-Bug Fixes
-
-  * The installer now correctly blocks the installation on Windows 7
-    and Windows 8 as these versions of Windows are no longer supported
-    since Git for Windows v2.47.0
-  * When using the cache credential helper, it could error out with
-    "fatal: unable to connect to cache daemon: Unknown error" under
-    certain circumstances; This was fixed.
-  * Git for Windows used to issue a misleading warning when .gitignore
-    was a directory, which has been fixed.
-
-Git-2.48.1-64-bit.exe | ce45e23275049f4b36edd90d5fd986a1e230efb6c511e9260a90176ce8e825df
-Git-2.48.1-arm64.exe | 09e3b2e844c3186567fbdbc16f0e6b483571dc7f964dea1c66357f585df454d9
-Git-2.48.1-32-bit.exe | fdf9be6795afd911b4ed87417f2d5ac547798b5b47441b9f71984cddef943c3a
-PortableGit-2.48.1-64-bit.7z.exe | a4335111b3363871cac632be93d7466154d8eb08782ff55103866b67d6722257
-PortableGit-2.48.1-arm64.7z.exe | 095c68dd2d64d05415534c1b98c9d8b1b661c1a5e553a7aa83381fa136fa9454
-PortableGit-2.48.1-32-bit.7z.exe | 63ddbc7ea11ea8a1375f39f45d38f928dbec564360ad12dd11d0d649474063a0
-MinGit-2.48.1-64-bit.zip | 11e8f462726827acccc7ecdad541f2544cbe5506d70fef4fa1ffac7c16288709
-MinGit-2.48.1-arm64.zip | 601b8b780669636577ad1eb821019d101f640b65075f34e1701a55a94e86a3a5
-MinGit-2.48.1-32-bit.zip | 6a8c7acd63e2f0e7c901082c287ac3f0f94ebd1598cc02440979f411cb7de81a
-MinGit-2.48.1-busybox-64-bit.zip | 9b628f0eac45ede891f9aeb2ef9247f29331db3b8f1dad36a93119e61323ac4b
-MinGit-2.48.1-busybox-32-bit.zip | 4c5ffdeba8228ec89ab1b2f18569faf67345bfe1b619b8c431f87680f3c787e9
-Git-2.48.1-64-bit.tar.bz2 | ec46b07acc431dcbe64ef5665582b934530b09b8f7ef3b39ad912832a3fefa6b
-Git-2.48.1-arm64.tar.bz2 | a20498913b1c68ca491a8565789e2862ca7894276f2200d577404d7b9c919afb
-Git-2.48.1-32-bit.tar.bz2 | 41af3c80fd618855ad20b441f5f47763cece1ed07f6849ecbdb43066d0aa1dfd
-
-Ciao,
-Johannes
+Patrick
