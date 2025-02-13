@@ -1,94 +1,128 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 044AE245B05
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 19:53:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F6228A2CF
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:05:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739476399; cv=none; b=XFhMjsNtiRPBadVoXT6qge4E98tqYWwYugiytQMDYjpF1mnjciN8IbzKQWgNbKz0s27Ae5rk5gxeoJiskU1LkE47Wdg7bZvpUN/9BcSD6vxpniwTQpmGvBXcoPPYHxjo0cXp6liYTJxN19Gk9rL0soObhNqWJ3FSWA5P0+z+T0A=
+	t=1739477123; cv=none; b=ET0WAOZPzNsI7MvN/ITK60BEm/TcjMx7WPhN6WMn9/vC3C88tC44U7KZ8XyY3e1Qk3EsAli+EHTTwjat72Zu3LFkfj6TaIy2GY4el1ne0MNv5r8JdV5oLEt7K6MJCF2GJda5hJmpaPpMAtnJmbadf6toNo1Bj6YyTCpBzWp8KOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739476399; c=relaxed/simple;
-	bh=3NkkSiLe2GvZkVPu9PRtBuAGp9goOxyQK/ndpc+H93A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KLk5dQ2F/GE0uxlHcTnhMDECwHFdDwy3e+K/GXaYcuzDUh8aRk+3Bkz5zeic8ZGs+lKztk8oSxDKbX+DT/Sueau4ZYhAOVYBgMOdOrVqulc7gpW9alNeKxQ4HbYQzfNzzOGRgi7xtTvzfWMI1cDeJY7e+GaKRifrp4/A3EDSs3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MGk3eumS; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1739477123; c=relaxed/simple;
+	bh=7tJHZxNsuEnwbXylWamkyCmb/s72dkRnIu6JnkE8My8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=r8VeAXpbfkrwVfzB4KO/U4POLGrAxzQfnaHV4v5sta4qxvf1yPShoqZSfP2bprRUWwBlGmXfuTocnkYqev6sZ+0DAEW4wnu9dXDy+rmdI5kSdzK023vTyd5YQIsIQtDpddaseaFeKAUIV3uud5STvKp/Cr9zkXto5awe+Rd1Qgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WYRvIVwy; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MGk3eumS"
-Received: (qmail 1451 invoked by uid 109); 13 Feb 2025 19:53:17 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3NkkSiLe2GvZkVPu9PRtBuAGp9goOxyQK/ndpc+H93A=; b=MGk3eumSpXuySqA2ryUkSQVu3k+Ta+O4VQ+a3J9m5Wu0nKytehkT1rwMtqlWyiJELJZdD5+bKt10Xzhwsnoll5OSS1DbjBbm0a/5jPNnivxkFRflvRH0kABUYRrxB3MDgalWuf7BF0Uttucz5wCZbWfgSkBJ2RHf9Bn3lxsSyxO+AXIdyEE4acu2EwGJeEznljgFqOo8LgLBOZzqTZHfmml1Wo6CEJ+81bufO05tf0fbibyT1WsYe7mLirw4J5WXhN4XMWlEFabyrE236GVdat8kHigH/s2JGdYeNOKxZH0I+RKTBrghemXtc9Xl5IhM//vEH9EKxUaMkvh8WlonRg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Feb 2025 19:53:17 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 526 invoked by uid 111); 13 Feb 2025 19:53:16 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Feb 2025 14:53:16 -0500
-Authentication-Results: peff.net; auth=none
-Date: Thu, 13 Feb 2025 14:53:16 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: Poor performance using reftable with many refs
-Message-ID: <20250213195316.GB934256@coredump.intra.peff.net>
-References: <Z602dzQggtDdcgCX@tapette.crustytoothpaste.net>
- <Z62NFXja4CkrxSil@pks.im>
- <Z62booOOXODOl_sZ@pks.im>
- <20250213082221.GA916028@coredump.intra.peff.net>
- <Z63VY_wa7Z6lrUfY@pks.im>
- <Z64CU1sG4B1o52uA@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WYRvIVwy"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43965592e1bso6991205e9.2
+        for <git@vger.kernel.org>; Thu, 13 Feb 2025 12:05:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739477120; x=1740081920; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=nQDUD3oWPDuAgoWKh5VaWfHbWHyLVu4X0xmOofWQWVI=;
+        b=WYRvIVwy1xt9E97yNC7+hNHIJ3PqO/EnmF4ONcnGlUgm25hD8dthMMtHBeiCxTAcF+
+         m6aFBHRomsMsewfzCj65sfQiHJX2MkkwQWpKxYSJfFYnm0kw5wux/1KkfjD4j5+sNk7V
+         CpDtqBs+UdfWMV6i93OSwWVjXJzcxEacWKcWwF19NA+GUooBpNBNmjkykhaHaV2rhZDL
+         Z+4Sdl75vJDmUAVc+jTTDvejo76FQtv4AE3+QwQS+1O4me2OmF5i+1EdbIMcNgVW51Zo
+         CHligZLyHJXDDyGDNiZHSp+b2olTtwom+waaGUfqeBwFXagD2F0Gk7YEFoNpCJaLyXwD
+         63rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739477120; x=1740081920;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nQDUD3oWPDuAgoWKh5VaWfHbWHyLVu4X0xmOofWQWVI=;
+        b=INII+nvh3LiWVjbn3rgqNroEmXjC8eb6+XbDzkGoLE2m+tFMLqK4faiLp0jeHsfyJM
+         LB3hSJjyR9BmnGdTKIt3rCsksfWOtXOG0MoNJdmDLHx6mhLDVxm5pzqenJkz1lUGyhGt
+         vAO8W44F2tLCOdbt7XUDI/iDhn6ANJPRSqAO8eA1KkpB0syMhFqkPcpEUvU+ngWBWYfd
+         NHGLy39V9wK93rxji5UXEgf1OSO5OK/8VRJKKVEVqSRdys5LZ92joIO76Do2moHFPdLn
+         qEpfG8glJ6rp+n9RGG47K8kO48ahQB2uVjY9uicNeyVPL+pPneP06I9X+S9hfwo+QJPf
+         6CAQ==
+X-Gm-Message-State: AOJu0YyK0bRMV89DZMesi+Ddc355QFfGEh519Lu5DOxE0jiAeoMFjksE
+	yZr4OQryvpcLp4qbTRWg+FV14HZGweb5Zn/ftXrzHxmBl3XZ6Spx1Y1wOQ==
+X-Gm-Gg: ASbGnctNzIQ7RFuyDcxRGWgsO6G0ZOcO+qSHBEdbLY4IF+94oYJiOillpfkqBq1zp0y
+	DR+DMMqZrHhpBLT6fkZPfE5Czn0kDvfCFQtwAd9alOKccY2Eu4xrIE3nvlOJiTT67701M+o/FIe
+	4aXofDTW4b4PC9DSEGGW2Uqz4FDn6x0OvfTR5xWTKt+n0ghoav/tTGXaIAZnxBIyNg1aLSbRcSB
+	ztcGUlowVRFFV5fk/9Qi/iZCEBdGcAyfqOq7CwsfDNe1jnGQxp729NOcfjxUcNmMJ5AD0Y6y78/
+	Io97xFZ5wBq5EZE0
+X-Google-Smtp-Source: AGHT+IF+CTQbgRbbHEjS7kQCyR3I82x+bjIo5sX8shv/ihcFHKIYG7BtDiSMDuSjfO9soqTPeAu9ew==
+X-Received: by 2002:a05:600c:c06:b0:439:6101:5440 with SMTP id 5b1f17b1804b1-43961015529mr55553025e9.8.1739477119735;
+        Thu, 13 Feb 2025 12:05:19 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258b41b5sm2778247f8f.14.2025.02.13.12.05.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Feb 2025 12:05:19 -0800 (PST)
+Message-Id: <pull.1893.git.git.1739477118350.gitgitgadget@gmail.com>
+From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 13 Feb 2025 20:05:18 +0000
+Subject: [PATCH] doc: use 'title' consistently
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z64CU1sG4B1o52uA@pks.im>
+To: git@vger.kernel.org
+Cc: M Hickford <mirth.hickford@gmail.com>,
+    M Hickford <mirth.hickford@gmail.com>
 
-On Thu, Feb 13, 2025 at 03:31:47PM +0100, Patrick Steinhardt wrote:
+From: M Hickford <mirth.hickford@gmail.com>
 
-> This turns out to be harder to implement than anticipated. While
-> iterating through refnames and the ref iterator in tandem sounds nice,
-> it would cause problems when the ref iterator yields millions of refs.
-> You don't want to fully iterate through all of them.
-> 
-> What we really want to do is to reuse the iterator and have it skip
-> entries: we'd basically create the iterator and re-seek it for every
-> refname we want to check for collisions. This allows us to reuse some of
-> the data structures, and in the best case the underlying backend knows
-> to optimize.
+The first line of a commit message is variously called 'title' or
+'subject'.
 
-Not having looked at the reftable code much, I'll take your word that it
-isn't easy. ;)
+Prefer 'title' unless discussing email.
 
-I suspect the files backend isn't very good at this either. It knows to
-take a starting point in ref_iterator_begin(), and should binary-search
-the packed-refs file to the right point. But if you want to then ask it
-"OK, now skip ahead until you see entry 'foo'", it would just walk
-linearly to get there. I.e., there is no real seeking. So I guess the
-best it could do is restart that same binary-search, and the order in
-which we feed the refnames is not even really important.
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    doc: use 'title' consistently
 
-And I don't know how seeking works with reftables, since "skip ahead"
-requires merging all of the tables.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1893%2Fhickford%2Ftitle-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1893/hickford/title-v1
+Pull-Request: https://github.com/git/git/pull/1893
 
-> But the bigger problem is that the generic reftable iterator does not
-> yet have this capability. We first have to revamp their lifetime in the
-> same way that I revamped the lifetime of reftable iterators. A generic
-> iterator that has hit its end is currently getting free'd immediately,
-> which I always found to be a bit awkward. But because of this it's
-> impossible to reseek them, as they have lost all their state.
+ Documentation/git-commit.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-I do think if you feed the refnames in sorted order your seeks would
-always be forward. So if you hit the end of iteration, there should be
-nothing left to check.
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index 602e2f1200b..70a5e4a181c 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -98,8 +98,8 @@ OPTIONS
+ 	replaces the log message of _<commit>_ with its own log message
+ 	but makes no changes to the content of _<commit>_.
+ +
+-The commit created by plain `--fixup=<commit>` has a subject
+-composed of "fixup!" followed by the subject line from _<commit>_,
++The commit created by plain `--fixup=<commit>` has a title
++composed of "fixup!" followed by the title of _<commit>_,
+ and is recognized specially by `git rebase --autosquash`. The `-m`
+ option may be used to supplement the log message of the created
+ commit, but the additional commentary will be thrown away once the
+@@ -107,7 +107,7 @@ commit, but the additional commentary will be thrown away once the
+ `git rebase --autosquash`.
+ +
+ The commit created by `--fixup=amend:<commit>` is similar but its
+-subject is instead prefixed with "amend!". The log message of
++title is instead prefixed with "amend!". The log message of
+ _<commit>_ is copied into the log message of the "amend!" commit and
+ opened in an editor so it can be refined. When `git rebase
+ --autosquash` squashes the "amend!" commit into _<commit>_, the
+@@ -128,7 +128,7 @@ See linkgit:git-rebase[1] for details.
+ 
+ `--squash=<commit>`::
+ 	Construct a commit message for use with `git rebase --autosquash`.
+-	The commit message subject line is taken from the specified
++	The commit message title is taken from the specified
+ 	commit with a prefix of "squash! ".  Can be used with additional
+ 	commit message options (`-m`/`-c`/`-C`/`-F`). See
+ 	linkgit:git-rebase[1] for details.
 
-> Oh, well, I guess that's what I'll be working on now then. But please,
-> somebody stop me if I'm not seeing the forest for the trees.
-
-No, I think it's actually a hard problem. :)
-
--Peff
+base-commit: e2067b49ecaef9b7f51a17ce251f9207f72ef52d
+-- 
+gitgitgadget
