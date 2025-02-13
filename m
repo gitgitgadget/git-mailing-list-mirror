@@ -1,128 +1,107 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F6228A2CF
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:05:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0CD24A078
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:12:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739477123; cv=none; b=ET0WAOZPzNsI7MvN/ITK60BEm/TcjMx7WPhN6WMn9/vC3C88tC44U7KZ8XyY3e1Qk3EsAli+EHTTwjat72Zu3LFkfj6TaIy2GY4el1ne0MNv5r8JdV5oLEt7K6MJCF2GJda5hJmpaPpMAtnJmbadf6toNo1Bj6YyTCpBzWp8KOU=
+	t=1739477568; cv=none; b=qjNEM/bR6haZ52aMOn6OpmokAAyrPfwq02p5ITHVrfkUiIVGBx4t7WIk06syvjBCoTW1uB7Slzu7ooUmb9Jp9Q7mx7Y/v65Jd9MQZmJVzhT3fsMcK7lcSitRh4O5ct6iVgh2r3+6j8lDoa+4OhGVQ43M9L+irWsZF1/pikr3nUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739477123; c=relaxed/simple;
-	bh=7tJHZxNsuEnwbXylWamkyCmb/s72dkRnIu6JnkE8My8=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=r8VeAXpbfkrwVfzB4KO/U4POLGrAxzQfnaHV4v5sta4qxvf1yPShoqZSfP2bprRUWwBlGmXfuTocnkYqev6sZ+0DAEW4wnu9dXDy+rmdI5kSdzK023vTyd5YQIsIQtDpddaseaFeKAUIV3uud5STvKp/Cr9zkXto5awe+Rd1Qgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WYRvIVwy; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739477568; c=relaxed/simple;
+	bh=YBCIuoHKE94i5y6DZBqW1cwTYYkdKg/0J88wiscb0nc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ik404IphJw06Fi2Om1ydJXIiwQbsRcOPv244EHon2EHGND9kELBDuzbCiGxR7E8kQaZu0jowmMjIo4V7I95lr1QMMKmCCaZP3BQQ1M8TTlCg+0A8a6NComEYc0BBmC+YHAySMrzjSnRd6jaNt8vwYTxamHrXsWN7Y4cYvKGydgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BYlILsnt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=an5U91sW; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WYRvIVwy"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43965592e1bso6991205e9.2
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 12:05:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739477120; x=1740081920; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=nQDUD3oWPDuAgoWKh5VaWfHbWHyLVu4X0xmOofWQWVI=;
-        b=WYRvIVwy1xt9E97yNC7+hNHIJ3PqO/EnmF4ONcnGlUgm25hD8dthMMtHBeiCxTAcF+
-         m6aFBHRomsMsewfzCj65sfQiHJX2MkkwQWpKxYSJfFYnm0kw5wux/1KkfjD4j5+sNk7V
-         CpDtqBs+UdfWMV6i93OSwWVjXJzcxEacWKcWwF19NA+GUooBpNBNmjkykhaHaV2rhZDL
-         Z+4Sdl75vJDmUAVc+jTTDvejo76FQtv4AE3+QwQS+1O4me2OmF5i+1EdbIMcNgVW51Zo
-         CHligZLyHJXDDyGDNiZHSp+b2olTtwom+waaGUfqeBwFXagD2F0Gk7YEFoNpCJaLyXwD
-         63rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739477120; x=1740081920;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nQDUD3oWPDuAgoWKh5VaWfHbWHyLVu4X0xmOofWQWVI=;
-        b=INII+nvh3LiWVjbn3rgqNroEmXjC8eb6+XbDzkGoLE2m+tFMLqK4faiLp0jeHsfyJM
-         LB3hSJjyR9BmnGdTKIt3rCsksfWOtXOG0MoNJdmDLHx6mhLDVxm5pzqenJkz1lUGyhGt
-         vAO8W44F2tLCOdbt7XUDI/iDhn6ANJPRSqAO8eA1KkpB0syMhFqkPcpEUvU+ngWBWYfd
-         NHGLy39V9wK93rxji5UXEgf1OSO5OK/8VRJKKVEVqSRdys5LZ92joIO76Do2moHFPdLn
-         qEpfG8glJ6rp+n9RGG47K8kO48ahQB2uVjY9uicNeyVPL+pPneP06I9X+S9hfwo+QJPf
-         6CAQ==
-X-Gm-Message-State: AOJu0YyK0bRMV89DZMesi+Ddc355QFfGEh519Lu5DOxE0jiAeoMFjksE
-	yZr4OQryvpcLp4qbTRWg+FV14HZGweb5Zn/ftXrzHxmBl3XZ6Spx1Y1wOQ==
-X-Gm-Gg: ASbGnctNzIQ7RFuyDcxRGWgsO6G0ZOcO+qSHBEdbLY4IF+94oYJiOillpfkqBq1zp0y
-	DR+DMMqZrHhpBLT6fkZPfE5Czn0kDvfCFQtwAd9alOKccY2Eu4xrIE3nvlOJiTT67701M+o/FIe
-	4aXofDTW4b4PC9DSEGGW2Uqz4FDn6x0OvfTR5xWTKt+n0ghoav/tTGXaIAZnxBIyNg1aLSbRcSB
-	ztcGUlowVRFFV5fk/9Qi/iZCEBdGcAyfqOq7CwsfDNe1jnGQxp729NOcfjxUcNmMJ5AD0Y6y78/
-	Io97xFZ5wBq5EZE0
-X-Google-Smtp-Source: AGHT+IF+CTQbgRbbHEjS7kQCyR3I82x+bjIo5sX8shv/ihcFHKIYG7BtDiSMDuSjfO9soqTPeAu9ew==
-X-Received: by 2002:a05:600c:c06:b0:439:6101:5440 with SMTP id 5b1f17b1804b1-43961015529mr55553025e9.8.1739477119735;
-        Thu, 13 Feb 2025 12:05:19 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258b41b5sm2778247f8f.14.2025.02.13.12.05.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2025 12:05:19 -0800 (PST)
-Message-Id: <pull.1893.git.git.1739477118350.gitgitgadget@gmail.com>
-From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 13 Feb 2025 20:05:18 +0000
-Subject: [PATCH] doc: use 'title' consistently
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BYlILsnt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="an5U91sW"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6CB762540164;
+	Thu, 13 Feb 2025 15:12:45 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Thu, 13 Feb 2025 15:12:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739477565; x=1739563965; bh=3UBhQy7ZJN
+	tG0bJBrnT6wPjiFdlsA9PrPC6+TUY0cfs=; b=BYlILsntuHUSDD0mESNdJkUiAI
+	0waliwD8H+il6DFg5y+zLuP5ePtFd7mUNIHSINQE4t+MiMFrQDmtLh0Psn1Geyqj
+	ZpJLqzzw7ngEBfvdASEBvWgZACjQil2ZXcrN9H5AHkqlTfLBpP9vVaId0yp3CzRN
+	wNUBpd4xfZgUqgmZlzO4L9Zn/3brm+r6VYnkyTQ+1FohL0PN3KWcXo1n7fgHfkEr
+	hmz/I2NEkomF6LQ82R9NITHnmc5wZen1HwfiHUd4gbUvAXT47HqmN8aXdgf8eV85
+	Jxzh3mpywHKuySLJTErPAmfj1JVJt62g92rV1okG0Z5W0yfdJFm7+uJLtg6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739477565; x=1739563965; bh=3UBhQy7ZJNtG0bJBrnT6wPjiFdlsA9PrPC6
+	+TUY0cfs=; b=an5U91sWdNTa9OjFIpJyOMaY3od8gULRuTaoKQTcHs4o1pPobB5
+	xI1oAYXVsxtg0LkD4fdbNQmI3fditQBPAurH2Uj++Ve78ihSXxiRdYJ2O+cs7xRQ
+	0ggINq+aKe7iL9wsBC8riqF9so4Ao9W782rsMi407EyPJp4JzDGljGCiWEdADCYB
+	1LnVxTuvqdwKr+P/YkPru64/r6EOJWGSKfvAfh+nOOqk+/OOE5YYgozX7PkHqWZP
+	Ou3i1aecgVpvWF0HbgpTSo/PMKCwTBpSAXnGWR+LGMfHADVj8+XRU25lhLvkdpog
+	nTrkrVpBlrVY9KJObdZQlVWh0SFoSMafLew==
+X-ME-Sender: <xms:PFKuZ_NUuf9nEchfZHMF-VEjzzsQ-tcjcnxe7rK4qOTiVNlgLc174A>
+    <xme:PFKuZ5-ZNbY37FbpM8tTVMdIGyz4NQgHrt9m28qzouXdQx9q98EcPFnlCHn-6C67S
+    tUQqO--bTG4Ee2LaA>
+X-ME-Received: <xmr:PFKuZ-SayzQ8Fq4RYaC6T-fkXUGO3QAy8SFv0JfqsJj44itMcc0DCZiv_YDi0rVFEqiMbqp4wgmuQnRUJiTtN0c2ALcREn28C5BkGag>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegjeeilecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
+    hfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsrghnuggr
+    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkees
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:PFKuZzs37S5glZ0LwBWd9cPbdNz0F1q-GrzAlOMbMbNQqR2DgWuJIQ>
+    <xmx:PFKuZ3dKR2vHXVTs29Ku6c7_IW8RIKnNbNwnnRCzUr5W65bpDmEcpA>
+    <xmx:PFKuZ_063BImK2jByYRCz99Q6CFOr79ai5XC5RAc2fGuiJROhE3v4A>
+    <xmx:PFKuZz_9nR5ZGkELADrJCeo9ApjqoaC2rjfFHvJojlpLw7GqOXGwWA>
+    <xmx:PVKuZ_TcQarABbuaQA32QdF1ERZ4Cif2fD-ghTQJVyLs3wqiI5JjgqPo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Feb 2025 15:12:44 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>
+Subject: Re: Poor performance using reftable with many refs
+In-Reply-To: <20250213194256.GA934256@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 13 Feb 2025 14:42:56 -0500")
+References: <Z602dzQggtDdcgCX@tapette.crustytoothpaste.net>
+	<Z62NFXja4CkrxSil@pks.im> <Z62booOOXODOl_sZ@pks.im>
+	<20250213082221.GA916028@coredump.intra.peff.net>
+	<Z63VY_wa7Z6lrUfY@pks.im>
+	<20250213194256.GA934256@coredump.intra.peff.net>
+Date: Thu, 13 Feb 2025 12:12:42 -0800
+Message-ID: <xmqqed01ob7p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: M Hickford <mirth.hickford@gmail.com>,
-    M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain
 
-From: M Hickford <mirth.hickford@gmail.com>
+Jeff King <peff@peff.net> writes:
 
-The first line of a commit message is variously called 'title' or
-'subject'.
+> ... I have trouble
+> imagining it helping much beyond something like:
+>
+>   git branch $some_oid
+>
+> which creates refs/heads/$some_oid. But we probably would be better off
+> warning about that at the time of writing rather than checking for
+> ambiguity on each read.
 
-Prefer 'title' unless discussing email.
-
-Signed-off-by: M Hickford <mirth.hickford@gmail.com>
----
-    doc: use 'title' consistently
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1893%2Fhickford%2Ftitle-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1893/hickford/title-v1
-Pull-Request: https://github.com/git/git/pull/1893
-
- Documentation/git-commit.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 602e2f1200b..70a5e4a181c 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -98,8 +98,8 @@ OPTIONS
- 	replaces the log message of _<commit>_ with its own log message
- 	but makes no changes to the content of _<commit>_.
- +
--The commit created by plain `--fixup=<commit>` has a subject
--composed of "fixup!" followed by the subject line from _<commit>_,
-+The commit created by plain `--fixup=<commit>` has a title
-+composed of "fixup!" followed by the title of _<commit>_,
- and is recognized specially by `git rebase --autosquash`. The `-m`
- option may be used to supplement the log message of the created
- commit, but the additional commentary will be thrown away once the
-@@ -107,7 +107,7 @@ commit, but the additional commentary will be thrown away once the
- `git rebase --autosquash`.
- +
- The commit created by `--fixup=amend:<commit>` is similar but its
--subject is instead prefixed with "amend!". The log message of
-+title is instead prefixed with "amend!". The log message of
- _<commit>_ is copied into the log message of the "amend!" commit and
- opened in an editor so it can be refined. When `git rebase
- --autosquash` squashes the "amend!" commit into _<commit>_, the
-@@ -128,7 +128,7 @@ See linkgit:git-rebase[1] for details.
- 
- `--squash=<commit>`::
- 	Construct a commit message for use with `git rebase --autosquash`.
--	The commit message subject line is taken from the specified
-+	The commit message title is taken from the specified
- 	commit with a prefix of "squash! ".  Can be used with additional
- 	commit message options (`-m`/`-c`/`-C`/`-F`). See
- 	linkgit:git-rebase[1] for details.
-
-base-commit: e2067b49ecaef9b7f51a17ce251f9207f72ef52d
--- 
-gitgitgadget
+Certainly.  Thanks for a well thought-out analysis.
