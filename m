@@ -1,143 +1,131 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8981D28A2D5
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 18:39:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82F428A2D4
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 18:45:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739471963; cv=none; b=iZq3GZBKEf/CizcCrz4Fw/l08L5wihtLuf81blDOjZeXExnWaYph8rbKgwVaH1z/11noowmFQWnMPMsc9XIJnv7PneRWXyjI+Z609Ssyvb6Z/wyKRU/cs/qQYMgN+2/yqQAE0h2GAZumva/ftqfEKlz1/v/dJwYK/T3fXBF+gk0=
+	t=1739472340; cv=none; b=OA5O7Wx6wLktxnucACmqp6peSVE/RUihRS5WOl2oKSN2MAE7AFII7EcU7vNgPMEl4yi2NsZpJ8EpZKpLNy36vuepBd5hqqx6ikYL1bvMR7CjPMgSfA1jiLx0wvLWHQGwJLTSrvXUCTdBR2nCXEoNsmlwNRU53r/eisommVeAiPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739471963; c=relaxed/simple;
-	bh=CjqgVd2TsU6sBS9xgswk3OMk7Pmr0lhtIUh5DOAHXRY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dgpBmgs13XugTFQnGbb8xMRjhhXq9jiYn5TMi+wnaCWy37cqlI9pZiHK0Cg+BlElt7hlO1hCeTCUOStTEF68kpCVcES1/yclQxu22D4m91aza2pbPr72F17pAwSe7/90b+Afn9P9JoTfVXYY3aSXGSkXBmXanLwpoKwbN9eJgBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=tyINYPvF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sNGJXi+f; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739472340; c=relaxed/simple;
+	bh=T2vWcFinv2pEg+nxSMssPa0Z7A6hDMM0F6UAJl9WCF8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FXbRyVFkZSlJdauDMKZE6+R2fPR7TCyqPsRl5VZTtFriNh2zoCQB7E/0B2EfBP+hywnSgNWP2mJXLhkC1xKwFlXGtv/UkuCkNgDj0k1ju0315/a5dBFidCNf7VzAJmRCXOmW6lPR61ecT7HaynppW3qB3ovNdWzs0u4/ACqY3fM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QatFyfO9; arc=none smtp.client-ip=209.85.166.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="tyINYPvF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sNGJXi+f"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 61F4811401BF;
-	Thu, 13 Feb 2025 13:39:20 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 13 Feb 2025 13:39:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739471960; x=1739558360; bh=YvqrT+Dvmk
-	1x4mpWnb1KdrCP4giBLuMixQQwyMdbTwk=; b=tyINYPvFnA2fOgptT6O000MuAO
-	NEsP5d9vpvg+y2DOUBD4dXO0YAavMyu0C3qGwdl/AAeCfkyawRHXthuC9AbRM0YX
-	4mOezeTWu+Eu4zcnlUrYppoCP8O1ppw636NU6gOCZ0hJ0jfkh5pCht8BUCdg60LH
-	e+NDEudwBItBvma1ctfJGcuEjyIMlV3XVP9w7oJpWyqzwrsarAJCt3Gl06zdShCc
-	jg8aLMa2c6my7a0nIvdSTRnN2jppfmj4CzweSOL2YC6wjVRYyHC4iz010iaiOSr6
-	bhVYWYF8P2OUy0BdWpErLaP4/W0fVAiqCzvqBcRbDUCjRQs0bUHuPeMl6ztw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739471960; x=1739558360; bh=YvqrT+Dvmk1x4mpWnb1KdrCP4giBLuMixQQ
-	wyMdbTwk=; b=sNGJXi+f0jlK+MyfyQS+X68J2ZucYEq6YMSDSpWbb2eJ7SiMVhe
-	uY/K4sNaMcrP5BCxVyaMoOEbc4GA+WNJIpNxuw9Ei3AxqH2l6cscwKeSlviIZlPO
-	q1H6cBWCbsRI3VrACucPm1RdtWtXmLhPh/OLv1+BsdRlMpVHE8r/Q08g3Hs6s681
-	rWT1th6OdG/yzk8g7XN4o6CLU50X9zWSeNisakCETWskKL5sccz562Jup31vzcuj
-	GIbvpyE+e0Thxf/0ZioG15mT+0QaY78F57iNEAY0ObLpFQkhMjtaXcLGZBO5/vrg
-	6fHn2qul7XSKVHTzzlM0PF0RtYo2zLpM0Ug==
-X-ME-Sender: <xms:WDyuZ5mRv_RhcwdZbdKKWx-fCmp4jDGanm6oO9BIHUj-FlIUmdx_eg>
-    <xme:WDyuZ02QYoEW0DAQw02IsylvWGjsn4ozYumh3oREIy0b036BzYSSadCCAAfeS08iq
-    mrtcmIyTBkq_I8SlQ>
-X-ME-Received: <xmr:WDyuZ_r2-GhQuE7znJ3cJiroq6iIv6GN3_ILp9ZfVFSKhmbpsAfuw_E6GTiEsyJlljujMgOhAMmNFIuvl2x1a-Ww9gnVoQVB3Ss7whI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegjeehvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
-    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
-    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhgvlhhlhidriihhrghordegvdes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhs
-    sehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:WDyuZ5kwQR-dtt2pleglHlnzCuefygd5LEfLKUkf-hLGZrJyZJc2Cg>
-    <xmx:WDyuZ33rupeVlxZdXIn0fW-C9NVw_bNn5vO-T7QUZjHqgxJwYHOLAw>
-    <xmx:WDyuZ4suS4j57kRsvboTWlv8x41YYY0sz33hWWW1ftXoKKvgOoAgMw>
-    <xmx:WDyuZ7VElXgtgjbJ4JoEa_bi_Rw-so2hurdWl4ykhdCUHmtkC9mawA>
-    <xmx:WDyuZxqPiKi6AzMHSqgp4VJb9ro9aTo4Q398QCXGvOASjSpczK_mGHNt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Feb 2025 13:39:19 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Zejun Zhao <jelly.zhao.42@gmail.com>,  git@vger.kernel.org,
-  newren@gmail.com,  ps@pks.im
-Subject: Re: [GSOC][PATCH v2 1/6] apply: change fields in `apply_state` to
- unsigned
-In-Reply-To: <CAOLa=ZQbVBmGnsvWUz0ByW8z5NMgLY2oZZ1RLJeoWJST9PGAvQ@mail.gmail.com>
-	(Karthik Nayak's message of "Thu, 13 Feb 2025 04:51:12 -0500")
-References: <20250205014055.737190-1-jelly.zhao.42@gmail.com>
-	<20250209081216.241350-1-jelly.zhao.42@gmail.com>
-	<20250209081216.241350-2-jelly.zhao.42@gmail.com>
-	<CAOLa=ZQbVBmGnsvWUz0ByW8z5NMgLY2oZZ1RLJeoWJST9PGAvQ@mail.gmail.com>
-Date: Thu, 13 Feb 2025 10:39:18 -0800
-Message-ID: <xmqqikpdofjd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QatFyfO9"
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3d0465a8d34so9380045ab.0
+        for <git@vger.kernel.org>; Thu, 13 Feb 2025 10:45:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739472338; x=1740077138; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XYzKAvumf24a4t7HKxVmdIetb18TBLlj1D4zYvPZi9A=;
+        b=QatFyfO9meN2e1j1xmmX6c9O28FYyQJO4/0jIQ1/Z3hxRDj3mz3Zamjyxv8cmpfWw0
+         mOn7nmLYxWfHAnJLK/vayYUFid3Jn7nHxBtDDPyYKs13osv8JQ1+4c1/EFASi2zNrhnq
+         5drLFFlIZewvowxlFzX3uzvN1YFuwDFkaGVxu9GFY3lMgsOEyHkfsGRPf+TjHjgLjWiz
+         7NtuM06PV33cD+KPIjd3Bu7cKA76SlaY/FZ8IyytOZ79Qal43abCntCEQ3lcRCAHrc5E
+         5cCb852j4ALteHKvBXy4yYqhmVuu+t/j9xrxrce/Ttp2bYJzfe/V0z1Zq0kXYt9x4sHR
+         oYdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739472338; x=1740077138;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XYzKAvumf24a4t7HKxVmdIetb18TBLlj1D4zYvPZi9A=;
+        b=oPze8njhgXguJpyQ8j91sSi6KB8R3EgA0P2VKtOoC52A5GWQc/ugQauYeFtoFSIX25
+         tsxl49IAKtGEMxB4dg/67OqJq6JWoJA5Ig6ZDhS3j5LCQsxPxpz+BpoO2RlsIiXXMZOc
+         feWsV42HKTYoRB2R8mDqt2Bkzt/UhJyjkIzE3RWud4rjDkiqb3WJCy3yeogSjf4/YbZN
+         yb9p9l8tHY5CjnI5eg7Qj086DHNLnPX5wESWsd2gaTGD1QrXUBcLQ5KXeE78ufAlc7uv
+         /2DKyMnmGncgkxmUsV5N0tboyg9vint9sw+I5XHW2lX6x4ZVnvRKIlxCeVLUg24+t7Xx
+         WyGg==
+X-Forwarded-Encrypted: i=1; AJvYcCV0g2ID27+LE2BBcX8GpJEyvYy3XJnub0axfyn6a0R3uPoSwL3b5654zrJZRul2oxP0Yk4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqODmyXPEeT6uIQBb/YtvCo3rlWAwt88q15eBXE8ObTsHs6MuU
+	tbSgiRoVxTKGAbpl/kyo1LtWmzC3xxVngFAQkEoF+j/Rat53kjNg5e3kb5Z85GX7fSGM3aKBOy/
+	mgWsTBIkyH6idb5hNxqCffdaZER8=
+X-Gm-Gg: ASbGncsL7iwUEHG8VdvANLc8ZGKInGega5DrpxeeKMyaTvKAMMVfZyb1cqodF8F9euR
+	1rMreYPnOc9QJ3lP4DuJn2JKUMBg21Qc4nVQ7AkjAIXoQlP/Tig8vZxGe7B8z+P+3+UAFAV1YfL
+	ZBAw8g+RdYn5igohQ9IBLOBQ9ThWbKVA==
+X-Google-Smtp-Source: AGHT+IEPa7e9RWudcnRdP7dQoSyoOxqji2IjFbS+rbtdtlAnGTxXsUTpg7YcPAWvBKzaGaJMoua1O8kgJRRejIcD824=
+X-Received: by 2002:a05:6e02:308d:b0:3d0:1932:7695 with SMTP id
+ e9e14a558f8ab-3d17d092d3cmr77770155ab.8.1739472337846; Thu, 13 Feb 2025
+ 10:45:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250211194334.20710-1-meetsoni3017@gmail.com>
+ <20250213090040.16133-1-meetsoni3017@gmail.com> <20250213090040.16133-3-meetsoni3017@gmail.com>
+ <CABPp-BGqihkPq3o4jnqp2aGdqw12F8a8nOModuAB-5N7BQ1t0w@mail.gmail.com> <xmqqwmdtofxh.fsf@gitster.g>
+In-Reply-To: <xmqqwmdtofxh.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 13 Feb 2025 10:45:26 -0800
+X-Gm-Features: AWEUYZmy-jQzPtkvdOeCNCW3Gqhaaqt7QE17EC52UKJMANoyWP57fCQBQ6ZASB4
+Message-ID: <CABPp-BGkWsq9tKk1ytHfP=GP6z90dioqDVgKuDB+N2EzjtWfDA@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] merge-recursive: optimize time complexity for get_unmerged
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Meet Soni <meetsoni3017@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Thu, Feb 13, 2025 at 10:30=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > (As a side note, due to the specialized structure of the input, I
+> > suspect this code could be modified to run in O(n), i.e. we could skip
+> > the string_list_lookup and the string_list_sort and the
+> > string_list_remove_duplicates...
+>
+> Are you talking about the input being already sorted so we can just
+> walk the multiple input and merge them into a single stream?  In the
 
-> Zejun Zhao <jelly.zhao.42@gmail.com> writes:
->
->> `.max_change` and `.max_len` of `apply_state` are only used as unsigned
->> integers. Misuse of `int` type would cause -Wsign-comparison warnings.
->>
->> Fix this by
->>
->>   - change `.max_change`'s type to `unsigned` since it's just a counter
->>
->
-> Looking at `.max_change` it seems like this is only assigned in
-> `patch_stats()` where we do
->
->   int lines = patch->lines_added + patch->lines_deleted;
->
->   if (lines > state->max_change)
->      state->max_change = lines;
->
-> In this case shouldn't we first convert `.lines_added` `.lines_deleted`
-> to also be 'unsigned int' in the first place?
+I'm not sure what you mean by "merge them into a single stream".  I
+think you have the right idea that we are creating a string list of
+information about unmerged entries, and since we're taking information
+from the index which is already sorted, we can just either modify the
+last entry in the list if it matches or append a new entry to it; no
+need to walk, insert, or binary search the list at all.
 
-Surely.  Or if any of the internal API uses a calling convention
-that yields number of lines on success and negative number to signal
-errors, we could also unify them to signed integer instead.  In
-either case, using types consistently is good, and thanks for sharp
-eyes spotting this instance.
+> cost analysis you did earlier in the message I am responding to,
+> being able to go down to O(n) sounds really like a great thing ;-)
 
->> @@ -2257,12 +2258,12 @@ static void show_stats(struct apply_state *state, struct patch *patch)
->>  	}
->>
->>  	if (patch->is_binary) {
->> -		printf(" %-*s |  Bin\n", max, qname.buf);
->> +		printf(" %-*s |  Bin\n", (int) max, qname.buf);
->>  		strbuf_release(&qname);
->>  		return;
->>  	}
->>
->> -	printf(" %-*s |", max, qname.buf);
->> +	printf(" %-*s |", (int) max, qname.buf);
->>  	strbuf_release(&qname);
->>
+Note first that we aren't going from O(n^2) -> O(n), we're only going
+from O(n log n) -> O(n).  That's still great, but:
 
-This is the kind of fallout that makes the resulting code harder to
-read.  How bad would the code churn be if we instead unify to the
-signed integer type, instead of using size_t, and making sure we
-use the range-checking versions of arithmetic when needed, I have to
-wonder?
+  * n is typically pretty small (number of unmerged files)
+  * there's things in merge-recursive that are O(m^2), where typically
+m >> n (number of files in repo, or number of lines in big files in
+the repo)
+  * merge-recursive is used by almost no one
+  * we are planning to delete merge-recursive
+
+So, although O(n) is great....
+
+> > But, it'd make the code trickier, so
+> > it'd need to be carefully commented, the change would need to be
+> > justified, and it'd need to be carefully tested.
+>
+> ... and measured.
+
++1
+
+> > Even if we weren't
+> > planning to delete this entire file, I suspect it's not possible to
+> > find a case justifying such a change without optimizing several other
+> > things in merge-recursive first, but optimizing those things probably
+> > results in a significant rewrite...which we've already done with
+> > merge-ort.)
+>
+> Sounds like unless the performance issues are shared between the
+> two, it may not be worth to spend too much brain cycles only on the
+> "recursive" one?
+
+...yep, exactly, and this is not a performance issue shared with the
+ort backend; it's unique to the recursive one.
