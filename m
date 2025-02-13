@@ -1,180 +1,190 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4CA2661B9
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 22:38:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3E1280A4B
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 22:47:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739486303; cv=none; b=leDUp+PrCL45xbTuVCKqxsSqY93TvL35/1FySzrV0voZNKEtG+sKzfb5uABFvVbo+d0Qrxw0iny/J12g6GRDy83BA789G/RVuDLvBiwHFD6Inc5+pvoRbDDwxRmDXBRyCn874WQAyw4Ei8Jz9wfXt4Qi8M+8zAnJHf7g5yiDoJY=
+	t=1739486852; cv=none; b=hYPM7e3J+g/P6R0KAJplP6omHUW3YpHIRdm01iU3ZS60LgYVFwnFLpYA6HGipThGEeZHgTjluvWswMfNXZQdtq/yvwYatGp3zsJsqQXE1XmF8h4IVi+V8+0ODE+Y3B9ZmkO0yz4wMxa3yQY0D1vVt1sZyVgIm9CffvQG21E8DVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739486303; c=relaxed/simple;
-	bh=XYJ/0LMJdUButuyHbbyjm7xL69+KdPVjWYAiq3rrZNo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YEwqfu95wLQrdY5VzsqI5DFdcme1BI65PSACjmLcTzg3ODANNF3RPROzHQA0a3uFh0zSwruqqmON9/fSjIgWUzXxenS5zT6xPv15rxrYuGXHwa6JyEVaG82fea43JGiLFLg5SxDqgjtmKXD8fBHOy5ARruoNBk6m/s5b9KS8kFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=UFmmqzPN; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1739486852; c=relaxed/simple;
+	bh=d3DeJPucJcYNDXnZ5BBx5/jt7PdSFNKeCPhJG6ZoQ0I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ubThfghlA9ugv54Rfj0c5i69D6WbETWK6AnyRjhyUFxKQDpIOUDK0YSadWvJPRFn9DHqk/P1FWQiHrUrrS08uU5jzMohOjVG5Jy/kqySEih2b51GFl2NLb+vqI5ORFF7sIejZ5Zg7vNrSXZ9s9qOtcDg7Ss7JUPR9s3jPJLIjMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ZkSqomlv; arc=none smtp.client-ip=192.198.163.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="UFmmqzPN"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6f88509dad2so13474197b3.3
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 14:38:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1739486301; x=1740091101; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=EoQPZQPT3R4oaDeSWREbazn8JDb5eNEgbVJfyQSiJXY=;
-        b=UFmmqzPN3elPR1/4v+JieuyJ7D8F8fGtvnA0rIOpGrXC4yyWT+iQ2KqWj+KMnAkufe
-         4RcacCa3uGHVeKHwahxGZvuqw7ig2ycJoUYA2jdz1MMAUPr2uqsw8UdgsyMkCMz0tujf
-         UFiMFA1g2CIXxCIxZWqWWp84FBO5t8tnqpI2cOI2/f85zL0b9C2r+cCUhoowYVq6ixb+
-         JT40+8kx+4b0e0qgcndi1BHKvQrGRORupH2C4mLSYx9EvAWqXttSF2P0B5jj/MMv6hKv
-         /mTLsk4MiFnWaVSv1f6EGdLQe8fzRuVqaiURCEHXofswbIGygRswFBDFOouPE8SXfAu7
-         4CjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739486301; x=1740091101;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EoQPZQPT3R4oaDeSWREbazn8JDb5eNEgbVJfyQSiJXY=;
-        b=krp+pj61aFi1jMhbtU21O7u05hupFF9dFDChWfAowCLGIVbeJ3t9UtsvReO3prW13A
-         l5oLrbBq4FaM+fTwFOtPvqMy7fgU4v86ugtGC3M4ZqF+Oz31dY/fk+kBnW5c7F8KYQbT
-         9aHjfQKX1BVhyuzjphn1SYjifmt32wAw4fOXoYavsW5BVPuf6F3bfnu4zHLUH7S/HlLq
-         Jzqvj0KxW9eUIz3J20Jb7jIEn1Xda43hPZocbq33yR4v2T9r4FQ7ai0SH5b9V1w6vLxR
-         5sdBrKH9xpSBuL7JLa54sbywEwX1oEQbgc8oVa1y4VMBZNAESUSy++QzxuOZ2vRSHVYL
-         KJDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWyERqNujzvtu5qiGeua7DlMQPAFf1dlX/TNEQsQcwbec4N8sbVBNJLkL3Fpk6tXei71XE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxupVafA4SxyOkQonwOx76DZH/fA36j3sjJMAmBgtIW3319pYiS
-	2z73naVpTkTGjWUebF4n200+0BSvKi6NpWSX9Dqt+FA6bxsBFqojB4IZqKPhalU=
-X-Gm-Gg: ASbGncvecKeQs64TnMkD1kV5XL6C+8mSmXL4l6+bcZopzPrY3fgXvR0qQ/rUMTMkh4b
-	1bvyA7TulCIKQJw7realFC7E3DMfHR6vF6MIbtVsKOiKHjH7OBn03BuqUswiO6WsqkKChilHrOK
-	mJk/+Wm+NdX+bO/bFwyf9wljMPWkefKl3Xihx4X87q+1CpFVLJ7G9P/GqprA/aE52VXd8cyvGBz
-	o017ZbWKR/bweBJVMnBRrMVAoM+ZxceMpjLtgKK6ABRTkCrrU1tL2uD9Z0ZfZxgwdVFErGqfwRe
-	HAKsVmPGshuuc71vciJhlPwnGDD1cIt3u90v8GKMYc+/qE7EVE0URWzUwczJSZw=
-X-Google-Smtp-Source: AGHT+IF0oRbA5tRO/kgHN43S6H2k7pPqa9voW8ymqXKpfj9xCYNTqzvjmTnx+snjtH7rMVydpwJeoA==
-X-Received: by 2002:a05:690c:31e:b0:6f9:48c6:6a17 with SMTP id 00721157ae682-6fb1f681b61mr97595507b3.26.1739486300711;
-        Thu, 13 Feb 2025 14:38:20 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fb3df74a0asm3368387b3.116.2025.02.13.14.38.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2025 14:38:20 -0800 (PST)
-Date: Thu, 13 Feb 2025 17:38:18 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Igor Todorovski <itodorov@ca.ibm.com>
-Cc: Bence Ferdinandy <bence@ferdinandy.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Tan <jonathantanmy@google.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Tags are no longer fetched when fetching specific commit
-Message-ID: <Z650WoqFwCSo6svH@nand.local>
-References: <71075837-D0AA-4F01-9F5D-CA10BFE93B63@ca.ibm.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ZkSqomlv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1739486851; x=1771022851;
+  h=from:date:subject:mime-version:content-transfer-encoding:
+   message-id:to:cc;
+  bh=d3DeJPucJcYNDXnZ5BBx5/jt7PdSFNKeCPhJG6ZoQ0I=;
+  b=ZkSqomlv3g2WjKQr3huJ2Q8BaYfprwi1bXGiz6Wt82yjnrmCtv2vSl7l
+   6re9TCQ1L/AkUerZE28WTxtBjmBZ6uVKJeP3UAe62yFWNPYMkXafQh3KH
+   X5YZu7tRORWknQPP+l/HgPD+FPltGgKmmgR7ZNry3HPy50ZVnXm1H2MHn
+   BCL2j2GoEIUrsRAaW0BlC3BBRKFD+64hLPSe7D5K9ayWpyaBej2ii0FO5
+   H3t0CsQxFlqxfi7fYp4ty9Awx4ucx6yEQ72/5PdURrAb7G6UQIhiGd7K6
+   N7+VNxArg/8YYQzNv202v1noMsTUdpL0T+14cjr7BEdjKavlPPuqJhGVL
+   g==;
+X-CSE-ConnectionGUID: lwmJk5JURLSXIMc5ED6jHA==
+X-CSE-MsgGUID: Keg6ShB5QY28aOr7KNXujw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11344"; a="40092439"
+X-IronPort-AV: E=Sophos;i="6.13,284,1732608000"; 
+   d="scan'208";a="40092439"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 14:47:30 -0800
+X-CSE-ConnectionGUID: 7z3sbMxXSHmcxWit0rk7VQ==
+X-CSE-MsgGUID: zl6QCxx0QO6W7XrL0Q7G3g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; 
+   d="scan'208";a="136516050"
+Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
+  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Feb 2025 14:47:30 -0800
+From: Jacob Keller <jacob.e.keller@intel.com>
+Date: Thu, 13 Feb 2025 14:47:22 -0800
+Subject: [PATCH RFC] mailmap: fix check-mailmap with full mailmap line
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <71075837-D0AA-4F01-9F5D-CA10BFE93B63@ca.ibm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250213-jk-fix-sendemail-mailinfo-v1-1-c0b06c215f21@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAHl2rmcC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDI0Nj3axs3bTMCt3i1LyU1NzEzBxdEJGZl5ava2yUZmBknmSYZJlqrgT
+ UX1CUClQJNjtaKcjNWSm2thYA3S+iR3AAAAA=
+X-Change-ID: 20250213-jk-fix-sendemail-mailinfo-32f027b1b9e7
+To: git <git@vger.kernel.org>
+Cc: Jacob Keller <jacob.keller@gmail.com>
+X-Mailer: b4 0.14.2
 
-On Thu, Jan 30, 2025 at 03:49:20AM +0000, Igor Todorovski wrote:
-> Hi, we have noticed a change in behaviour with commit 3f763ddf28d28fe63963991513c8db4045eabadc.
->
-> Here’s the steps to reproduce:
->
-> mkdir git-test-dir
-> cd git-test-dir
-> git init --bare
-> git remote add origin -- https://github.com/golang/go
-> git -c protocol.version=2 fetch -f --depth=1 origin 16afa6a740fac7442e94dcd2ec5ea4a4853e45dc:refs/dummy
-> git -c log.showsignature=false log --no-decorate -n1 --format="format:%H %ct %D" 16afa6a740fac7442e94dcd2ec5ea4a4853e45dc --
->
-> # Expected:
-> # 16afa6a740fac7442e94dcd2ec5ea4a4853e45dc 1734108730 grafted, tag: go1.24rc1, refs/dummy
->
-> # Tags are not fetch when using 2.48.1:
-> # 16afa6a740fac7442e94dcd2ec5ea4a4853e45dc 1734108730 grafted
->
-> ---
->
-> git bisect revealed 3f763ddf28d28fe63963991513c8db4045eabadc as the culprit:
->
-> commit 3f763ddf28d28fe63963991513c8db4045eabadc
-> Author: Bence Ferdinandy
-> Date:   Fri Nov 22 13:28:50 2024 +0100
->
->     fetch: set remote/HEAD if it does not exist
->
->     When cloning a repository remote/HEAD is created, but when the user
->     creates a repository with git init, and later adds a remote, remote/HEAD
->     is only created if the user explicitly runs a variant of "remote
->     set-head". Attempt to set remote/HEAD during fetch, if the user does not
->     have it already set. Silently ignore any errors.
->
->     Signed-off-by: Bence Ferdinandy bence@ferdinandy.com
->     Signed-off-by: Junio C Hamano gitster@pobox.com
->
+From: Jacob Keller <jacob.keller@gmail.com>
 
-Thanks for the report and bisection recipe. I was able to bisect the
-same issue myself, and also found myself at 3f763ddf28 (fetch: set
-remote/HEAD if it does not exist, 2024-11-22).
+I recently had reported to me a crash from a coworker using the recently
+added sendemail mailmap support:
 
-> Is this intended?
+  3724814 Segmentation fault      (core dumped) git check-mailmap "bugs@company.xx"
 
-I don't think this was intentional, though the commit's author Bence
-(CC'd) can confirm.
+This appears to happen because of the NULL pointer name passed into
+map_user(). Fixing this, by assigning the name to be the empty string I
+still saw somewhat unexpected results.
 
-I suspect what's going on here is that in 3f763ddf28 and onwards we are
-explicitly adding "HEAD" to the list of ref_prefixes, which causes the
-server to respond only to the prefixes being asked for. In a
-pre-3f763ddf28 world, the ref_prefixes list would be empty (if invoked
-according to your script above), which allowed us to learn about any
-tags pointing at that commit.
+With a mailmap file containing:
 
-One way to fix it is to move adding the "HEAD" prefix to above where we
-check
+A <a@domain.com> B <b@domain.com>
 
-    if (tags == TAGS_SET || tags == TAGS_DEFAULT)
+I get the following unexpected result:
 
-, which would allow us to enter the inner-most conditional which guards
-us actually adding the refs/tags prefix to our list.
+$ git check-mailmap b@domain.com
+<b@domain.com>
 
-But I don't love that solution, and I think even that is incomplete
-since as of 6c915c3f85 (fetch: do not ask for HEAD unnecessarily,
-2024-12-06) we only ask for "HEAD" if we have a remote in the first
-place.
+Based on my interpretation of the mailmap documentation, I would have
+expected this to translate to "A <a@domain.com>".
 
-I think the real culprit is that we can no longer hold the same
-assumption from e70a3030e7 (fetch: do not list refs if fetching only
-hashes, 2018-09-27), which is that we can avoid asking for refs/tags as
-an explicit prefix if we're (a) fetching literal hashes, (b) tag
-following wasn't requested, and (c) the fetch is done with protocol v2.
+I checked the map_user implementation, and noticed that it has a block
+to perform a name lookup with lookup_prefix on the subitems under the
+email. This appears to fail when given the empty string, as it somehow
+doesn't consider the empty string as a valid prefix for any of the
+names. It then defaults to using the "simple" entry of the map.
 
-So I think the right fix would really be something like:
+This doesn't make sense, because "full" mailmap entries (those with both
+an email and an old name) don't store anything in the
+mailmap_entry->name and mailmap_entry->email. At least, not without a
+shortform entry filling that in.
 
---- 8< ---
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index fe2b26c74a..0e63621e6c 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1770,9 +1770,8 @@ static int do_fetch(struct transport *transport,
+This results in the item having a NULL name and email, which triggers
+the early return and results in failure to update the return parameters.
 
- 	if (tags == TAGS_SET || tags == TAGS_DEFAULT) {
- 		must_list_refs = 1;
--		if (transport_ls_refs_options.ref_prefixes.nr)
--			strvec_push(&transport_ls_refs_options.ref_prefixes,
--				    "refs/tags/");
-+		strvec_push(&transport_ls_refs_options.ref_prefixes,
-+			    "refs/tags/");
+I tried my hand at fixing this with a new check to select the only entry
+in a mailmap entry with a single subitem. This fixed my test case, but
+resulted in a different test case failure, which I don't quite
+understand. The whitespace syntax test now seems to fail expectations by
+translating a previously untranslated name.
+
+I suspect this isn't the most elegant solution to the situation, and I
+don't fully grasp the mailmap code, so help would be appreciated in
+finding a good solution.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ builtin/check-mailmap.c |  2 +-
+ mailmap.c               |  9 ++++++++-
+ t/t4203-mailmap.sh      | 12 ++++++++++++
+ 3 files changed, 21 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/check-mailmap.c b/builtin/check-mailmap.c
+index df00b5ee13adb87881b8c1e92cac256e6ad319d1..be2cebe12152e38d3bb8cf12948823c8d710bdda 100644
+--- a/builtin/check-mailmap.c
++++ b/builtin/check-mailmap.c
+@@ -35,7 +35,7 @@ static void check_mailmap(struct string_list *mailmap, const char *contact)
+ 		mail = ident.mail_begin;
+ 		maillen = ident.mail_end - ident.mail_begin;
+ 	} else {
+-		name = NULL;
++		name = "";
+ 		namelen = 0;
+ 		mail = contact;
+ 		maillen = strlen(contact);
+diff --git a/mailmap.c b/mailmap.c
+index f35d20ed7fd1ef251e65419805fec49a3c30bcbb..7237ceef8a32a66183e4bbbe4ea01c4ea0264cd4 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -297,7 +297,7 @@ int map_user(struct string_list *map,
+ 	item = lookup_prefix(map, *email, *emaillen);
+ 	if (item) {
+ 		me = (struct mailmap_entry *)item->util;
+-		if (me->namemap.nr) {
++		if (me->namemap.nr > 1) {
+ 			/*
+ 			 * The item has multiple items, so we'll look up on
+ 			 * name too. If the name is not found, we choose the
+@@ -307,6 +307,13 @@ int map_user(struct string_list *map,
+ 			subitem = lookup_prefix(&me->namemap, *name, *namelen);
+ 			if (subitem)
+ 				item = subitem;
++		} else if (me->name == NULL && me->email == NULL &&
++			   me->namemap.nr == 1) {
++			/*
++			 * The item has one subitem, but no simple entry. Use
++			 * the full entry.
++			 */
++			item = &me->namemap.items[0];
+ 		}
  	}
+ 	if (item) {
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 24214919312777b76e4d3b2b784bcb953583750a..2aab735d2b326caf0d904cb6eee3d602fad96997 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -113,6 +113,18 @@ test_expect_success 'check-mailmap --stdin simple address: no mapping' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'check-mailmap name and address: mapping' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-EOF &&
++	Bug Reports <bugs-new@company.xx> Bugs <bugs@company.xx>
++	EOF
++	cat >expect <<-EOF &&
++	Bug Reports <bugs-new@company.xx>
++	EOF
++	git check-mailmap "bugs@company.xx" >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'No mailmap' '
+ 	cat >expect <<-EOF &&
+ 	$GIT_AUTHOR_NAME (1):
 
- 	if (uses_remote_tracking(transport, rs)) {
---- >8 ---
+---
+base-commit: 5ffbd7fcf84b313bb07e91246eb9419ebd94a7e7
+change-id: 20250213-jk-fix-sendemail-mailinfo-32f027b1b9e7
 
-But I'm unfamiliar enough with this area that I'd appreciate comments
-from the authors of these various commits, all of whom have been CC'd.
-Does this seem right to you, or am I totally down the wrong path?
+Best regards,
+-- 
+Jacob Keller <jacob.keller@gmail.com>
 
-Thanks,
-Taylor
