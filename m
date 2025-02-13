@@ -1,131 +1,303 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82F428A2D4
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 18:45:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C1361FFC59
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 19:42:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739472340; cv=none; b=OA5O7Wx6wLktxnucACmqp6peSVE/RUihRS5WOl2oKSN2MAE7AFII7EcU7vNgPMEl4yi2NsZpJ8EpZKpLNy36vuepBd5hqqx6ikYL1bvMR7CjPMgSfA1jiLx0wvLWHQGwJLTSrvXUCTdBR2nCXEoNsmlwNRU53r/eisommVeAiPQ=
+	t=1739475782; cv=none; b=e4KNDUMYRFHmM9UgRlODq0+hHNE7fx5aTX2eyqtOSwghoYPNbw+A0WPvvkiqXNQv2iBVzYGcGs+x5WOFU5Y1KcdXL7ZQPAQBfpVpmfSVuwpkApiOcJfxA7dBEjGIs7tNCvaoC4bLxTky5yQTtTotPvyJpHaPXjjsA8qIBkadftQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739472340; c=relaxed/simple;
-	bh=T2vWcFinv2pEg+nxSMssPa0Z7A6hDMM0F6UAJl9WCF8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FXbRyVFkZSlJdauDMKZE6+R2fPR7TCyqPsRl5VZTtFriNh2zoCQB7E/0B2EfBP+hywnSgNWP2mJXLhkC1xKwFlXGtv/UkuCkNgDj0k1ju0315/a5dBFidCNf7VzAJmRCXOmW6lPR61ecT7HaynppW3qB3ovNdWzs0u4/ACqY3fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QatFyfO9; arc=none smtp.client-ip=209.85.166.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739475782; c=relaxed/simple;
+	bh=7NJ/FwfR6bYObkYs4kKrh0ghKy/K3usHxfsIK+nSmPA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u/mnA14L6q9U//3QH6YQkdmuxWwCO7/A/3q+FV/zxfgHdxPgJ7/CN6yVaEvgKhYnFgAoEapzDvqXXjvCOo5/C00e/luoaqRVW9puPRJJxm7RgixduhgdyzzlQqekOAWOjGHWNEWhLLy6zyT7yT3VAK4qArqwgowwXkDwv5+0l4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dwrBIH+Z; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QatFyfO9"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3d0465a8d34so9380045ab.0
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 10:45:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739472338; x=1740077138; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XYzKAvumf24a4t7HKxVmdIetb18TBLlj1D4zYvPZi9A=;
-        b=QatFyfO9meN2e1j1xmmX6c9O28FYyQJO4/0jIQ1/Z3hxRDj3mz3Zamjyxv8cmpfWw0
-         mOn7nmLYxWfHAnJLK/vayYUFid3Jn7nHxBtDDPyYKs13osv8JQ1+4c1/EFASi2zNrhnq
-         5drLFFlIZewvowxlFzX3uzvN1YFuwDFkaGVxu9GFY3lMgsOEyHkfsGRPf+TjHjgLjWiz
-         7NtuM06PV33cD+KPIjd3Bu7cKA76SlaY/FZ8IyytOZ79Qal43abCntCEQ3lcRCAHrc5E
-         5cCb852j4ALteHKvBXy4yYqhmVuu+t/j9xrxrce/Ttp2bYJzfe/V0z1Zq0kXYt9x4sHR
-         oYdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739472338; x=1740077138;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XYzKAvumf24a4t7HKxVmdIetb18TBLlj1D4zYvPZi9A=;
-        b=oPze8njhgXguJpyQ8j91sSi6KB8R3EgA0P2VKtOoC52A5GWQc/ugQauYeFtoFSIX25
-         tsxl49IAKtGEMxB4dg/67OqJq6JWoJA5Ig6ZDhS3j5LCQsxPxpz+BpoO2RlsIiXXMZOc
-         feWsV42HKTYoRB2R8mDqt2Bkzt/UhJyjkIzE3RWud4rjDkiqb3WJCy3yeogSjf4/YbZN
-         yb9p9l8tHY5CjnI5eg7Qj086DHNLnPX5wESWsd2gaTGD1QrXUBcLQ5KXeE78ufAlc7uv
-         /2DKyMnmGncgkxmUsV5N0tboyg9vint9sw+I5XHW2lX6x4ZVnvRKIlxCeVLUg24+t7Xx
-         WyGg==
-X-Forwarded-Encrypted: i=1; AJvYcCV0g2ID27+LE2BBcX8GpJEyvYy3XJnub0axfyn6a0R3uPoSwL3b5654zrJZRul2oxP0Yk4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyqODmyXPEeT6uIQBb/YtvCo3rlWAwt88q15eBXE8ObTsHs6MuU
-	tbSgiRoVxTKGAbpl/kyo1LtWmzC3xxVngFAQkEoF+j/Rat53kjNg5e3kb5Z85GX7fSGM3aKBOy/
-	mgWsTBIkyH6idb5hNxqCffdaZER8=
-X-Gm-Gg: ASbGncsL7iwUEHG8VdvANLc8ZGKInGega5DrpxeeKMyaTvKAMMVfZyb1cqodF8F9euR
-	1rMreYPnOc9QJ3lP4DuJn2JKUMBg21Qc4nVQ7AkjAIXoQlP/Tig8vZxGe7B8z+P+3+UAFAV1YfL
-	ZBAw8g+RdYn5igohQ9IBLOBQ9ThWbKVA==
-X-Google-Smtp-Source: AGHT+IEPa7e9RWudcnRdP7dQoSyoOxqji2IjFbS+rbtdtlAnGTxXsUTpg7YcPAWvBKzaGaJMoua1O8kgJRRejIcD824=
-X-Received: by 2002:a05:6e02:308d:b0:3d0:1932:7695 with SMTP id
- e9e14a558f8ab-3d17d092d3cmr77770155ab.8.1739472337846; Thu, 13 Feb 2025
- 10:45:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dwrBIH+Z"
+Received: (qmail 1230 invoked by uid 109); 13 Feb 2025 19:42:58 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=7NJ/FwfR6bYObkYs4kKrh0ghKy/K3usHxfsIK+nSmPA=; b=dwrBIH+ZJI0IrfxmYjyW9ip7rW5yx2ovilpTgEqhk2wTE/r3TQ+C0H8bc/YEenoOoxGJSdiLvdilDJxYApdOxBozziYYoDR3QBtW64OnF7liQALprfaj1RgMoFpq7/Pf0SyZxJe+So2GxfqOJo+a7YJBoq6wQj1I1WgMvFiPkXgTqd1xT45yNvdOZthWd5+Jh+KQD0syBTgN9ZtejH77nqXzXfUhCh0R/KAJTxkOpvIhG/N5aaCZRQMs1Z+94J4LHRybA20eny3UQ4WZQv3Jrm7y9S/JmCdV5pvKkfXV4tQOeu6BJOqhmvamH75nL66aj/kQLWrBeU8fsc2lP63cqA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 13 Feb 2025 19:42:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 422 invoked by uid 111); 13 Feb 2025 19:42:57 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 13 Feb 2025 14:42:57 -0500
+Authentication-Results: peff.net; auth=none
+Date: Thu, 13 Feb 2025 14:42:56 -0500
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: Poor performance using reftable with many refs
+Message-ID: <20250213194256.GA934256@coredump.intra.peff.net>
+References: <Z602dzQggtDdcgCX@tapette.crustytoothpaste.net>
+ <Z62NFXja4CkrxSil@pks.im>
+ <Z62booOOXODOl_sZ@pks.im>
+ <20250213082221.GA916028@coredump.intra.peff.net>
+ <Z63VY_wa7Z6lrUfY@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250211194334.20710-1-meetsoni3017@gmail.com>
- <20250213090040.16133-1-meetsoni3017@gmail.com> <20250213090040.16133-3-meetsoni3017@gmail.com>
- <CABPp-BGqihkPq3o4jnqp2aGdqw12F8a8nOModuAB-5N7BQ1t0w@mail.gmail.com> <xmqqwmdtofxh.fsf@gitster.g>
-In-Reply-To: <xmqqwmdtofxh.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 13 Feb 2025 10:45:26 -0800
-X-Gm-Features: AWEUYZmy-jQzPtkvdOeCNCW3Gqhaaqt7QE17EC52UKJMANoyWP57fCQBQ6ZASB4
-Message-ID: <CABPp-BGkWsq9tKk1ytHfP=GP6z90dioqDVgKuDB+N2EzjtWfDA@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/2] merge-recursive: optimize time complexity for get_unmerged
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Meet Soni <meetsoni3017@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z63VY_wa7Z6lrUfY@pks.im>
 
-On Thu, Feb 13, 2025 at 10:30=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > (As a side note, due to the specialized structure of the input, I
-> > suspect this code could be modified to run in O(n), i.e. we could skip
-> > the string_list_lookup and the string_list_sort and the
-> > string_list_remove_duplicates...
->
-> Are you talking about the input being already sorted so we can just
-> walk the multiple input and merge them into a single stream?  In the
+On Thu, Feb 13, 2025 at 12:20:03PM +0100, Patrick Steinhardt wrote:
 
-I'm not sure what you mean by "merge them into a single stream".  I
-think you have the right idea that we are creating a string list of
-information about unmerged entries, and since we're taking information
-from the index which is already sorted, we can just either modify the
-last entry in the list if it matches or append a new entry to it; no
-need to walk, insert, or binary search the list at all.
+> Yes, `refs_verify_refname_available()` is exactly the problem. We spend
+> ~80% of the time in that function after the optimization I have pointed
+> out for `repo_get_oid()`. I assume that we'd see similar performance for
+> the "files" backend if we had 360k refs and inserted 360k other refs,
+> but haven't verified this claim.
 
-> cost analysis you did earlier in the message I am responding to,
-> being able to go down to O(n) sounds really like a great thing ;-)
+Yeah. I didn't test it, but reading your analysis, I similarly thought
+that having non-deleted refs might cause the same problem.
 
-Note first that we aren't going from O(n^2) -> O(n), we're only going
-from O(n log n) -> O(n).  That's still great, but:
+> > Try:
+> > 
+> >   git -c core.warnAmbiguousRefs=false update-ref --stdin
+> > 
+> > to disable that. Internally there's a warn_on_object_refname_ambiguity
+> > flag that some code (like cat-file) sets when it knows it may be asked
+> > to do a resolve a lot of entries that are likely to be oids.
+> > 
+> > I kind of wonder if we should ditch that warning. But if we wanted to
+> > keep it, maybe adding a flag to get_oid_with_context() would be a less
+> > hacky way of disabling that warning on a per-call basis.
+> 
+> Ah, that makes a lot of sense. I don't really think the warning makes
+> sense for git-update-ref(1), so introducing a flag is probably the best
+> way to go about this.
 
-  * n is typically pretty small (number of unmerged files)
-  * there's things in merge-recursive that are O(m^2), where typically
-m >> n (number of files in repo, or number of lines in big files in
-the repo)
-  * merge-recursive is used by almost no one
-  * we are planning to delete merge-recursive
+So I think the core of my suggestion is to just turn off the existing
+flag, like:
 
-So, although O(n) is great....
+diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+index 4d35bdc4b4..00e340a53b 100644
+--- a/builtin/update-ref.c
++++ b/builtin/update-ref.c
+@@ -618,6 +618,8 @@ static void update_refs_stdin(void)
+ 	if (!transaction)
+ 		die("%s", err.buf);
+ 
++	warn_on_object_refname_ambiguity = 0; /* XXX should also restore after */
++
+ 	/* Read each line dispatch its command */
+ 	while (!strbuf_getwholeline(&input, stdin, line_termination)) {
+ 		const struct parse_cmd *cmd = NULL;
 
-> > But, it'd make the code trickier, so
-> > it'd need to be carefully commented, the change would need to be
-> > justified, and it'd need to be carefully tested.
->
-> ... and measured.
+which would solve the immediate problem, and is what we do elsewhere for
+stdin modes.
 
-+1
+But I'm not sure if my suggestion to do a per-call flag makes sense. A
+patch for that is below, but it gets weird for commands like rev-list.
+There we turn off the warning for --stdin, but leave it on for arguments
+on the command line. But they both end up in handle_revision(), so if we
+convert that global into a per-call flag, they'll both be affected. You
+could mitigate that by passing the flags down to handle_revision(), but
+it gets even weirder with stuff like collect_changed_submodules(), which
+puts a potentially large number of entries into a fake argv to call
+setup_revisions().
 
-> > Even if we weren't
-> > planning to delete this entire file, I suspect it's not possible to
-> > find a case justifying such a change without optimizing several other
-> > things in merge-recursive first, but optimizing those things probably
-> > results in a significant rewrite...which we've already done with
-> > merge-ort.)
->
-> Sounds like unless the performance issues are shared between the
-> two, it may not be worth to spend too much brain cycles only on the
-> "recursive" one?
+So the patch below, which illustrates the idea, probably weakens the
+warning to the point of being useless, as commands that use revision.c
+would never warn at all. So probably we're better off with the hacky
+global, or just getting rid of the warning entirely. I have trouble
+imagining it helping much beyond something like:
 
-...yep, exactly, and this is not a performance issue shared with the
-ort backend; it's unique to the recursive one.
+  git branch $some_oid
+
+which creates refs/heads/$some_oid. But we probably would be better off
+warning about that at the time of writing rather than checking for
+ambiguity on each read.
+
+-Peff
+
+---
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index b13561cf73..ad7a0a6407 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -526,7 +526,7 @@ static void batch_one_object(const char *obj_name,
+ {
+ 	struct object_context ctx = {0};
+ 	int flags =
+-		GET_OID_HASH_ANY |
++		GET_OID_HASH_ANY | GET_OID_SKIP_OBJREF |
+ 		(opt->follow_symlinks ? GET_OID_FOLLOW_SYMLINKS : 0);
+ 	enum get_oid_result result;
+ 
+@@ -781,7 +781,6 @@ static int batch_objects(struct batch_options *opt)
+ 	struct strbuf input = STRBUF_INIT;
+ 	struct strbuf output = STRBUF_INIT;
+ 	struct expand_data data;
+-	int save_warning;
+ 	int retval = 0;
+ 
+ 	/*
+@@ -850,16 +849,6 @@ static int batch_objects(struct batch_options *opt)
+ 		return 0;
+ 	}
+ 
+-	/*
+-	 * We are going to call get_sha1 on a potentially very large number of
+-	 * objects. In most large cases, these will be actual object sha1s. The
+-	 * cost to double-check that each one is not also a ref (just so we can
+-	 * warn) ends up dwarfing the actual cost of the object lookups
+-	 * themselves. We can work around it by just turning off the warning.
+-	 */
+-	save_warning = warn_on_object_refname_ambiguity;
+-	warn_on_object_refname_ambiguity = 0;
+-
+ 	if (opt->batch_mode == BATCH_MODE_QUEUE_AND_DISPATCH) {
+ 		batch_objects_command(opt, &output, &data);
+ 		goto cleanup;
+@@ -886,7 +875,6 @@ static int batch_objects(struct batch_options *opt)
+  cleanup:
+ 	strbuf_release(&input);
+ 	strbuf_release(&output);
+-	warn_on_object_refname_ambiguity = save_warning;
+ 	return retval;
+ }
+ 
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 58a9b16126..128cc39860 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4190,17 +4190,13 @@ static void get_object_list(struct rev_info *revs, int ac, const char **av)
+ 	};
+ 	char line[1000];
+ 	int flags = 0;
+-	int save_warning;
+ 
+ 	save_commit_buffer = 0;
+ 	setup_revisions(ac, av, revs, &s_r_opt);
+ 
+ 	/* make sure shallows are read */
+ 	is_repository_shallow(the_repository);
+ 
+-	save_warning = warn_on_object_refname_ambiguity;
+-	warn_on_object_refname_ambiguity = 0;
+-
+ 	while (fgets(line, sizeof(line), stdin) != NULL) {
+ 		int len = strlen(line);
+ 		if (len && line[len - 1] == '\n')
+@@ -4227,8 +4223,6 @@ static void get_object_list(struct rev_info *revs, int ac, const char **av)
+ 			die(_("bad revision '%s'"), line);
+ 	}
+ 
+-	warn_on_object_refname_ambiguity = save_warning;
+-
+ 	if (use_bitmap_index && !get_object_list_from_bitmap(revs))
+ 		return;
+ 
+diff --git a/environment.c b/environment.c
+index e5b361bb5d..b619d0c2b8 100644
+--- a/environment.c
++++ b/environment.c
+@@ -36,7 +36,6 @@ int minimum_abbrev = 4, default_abbrev = -1;
+ int ignore_case;
+ int assume_unchanged;
+ int is_bare_repository_cfg = -1; /* unspecified */
+-int warn_on_object_refname_ambiguity = 1;
+ int repository_format_precious_objects;
+ char *git_commit_encoding;
+ char *git_log_output_encoding;
+diff --git a/environment.h b/environment.h
+index 2f43340f0b..87f71807b7 100644
+--- a/environment.h
++++ b/environment.h
+@@ -156,7 +156,6 @@ extern int has_symlinks;
+ extern int minimum_abbrev, default_abbrev;
+ extern int ignore_case;
+ extern int assume_unchanged;
+-extern int warn_on_object_refname_ambiguity;
+ extern char *apply_default_whitespace;
+ extern char *apply_default_ignorewhitespace;
+ extern char *git_attributes_file;
+diff --git a/hash.h b/hash.h
+index 4367acfec5..e9d881c06e 100644
+--- a/hash.h
++++ b/hash.h
+@@ -204,6 +204,7 @@ struct object_id {
+ #define GET_OID_ONLY_TO_DIE    04000
+ #define GET_OID_REQUIRE_PATH  010000
+ #define GET_OID_HASH_ANY      020000
++#define GET_OID_SKIP_OBJREF   040000
+ 
+ #define GET_OID_DISAMBIGUATORS \
+ 	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
+diff --git a/object-name.c b/object-name.c
+index 945d5bdef2..516f214562 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -961,7 +961,8 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 	int fatal = !(flags & GET_OID_QUIETLY);
+ 
+ 	if (len == r->hash_algo->hexsz && !get_oid_hex(str, oid)) {
+-		if (repo_settings_get_warn_ambiguous_refs(r) && warn_on_object_refname_ambiguity) {
++		if (repo_settings_get_warn_ambiguous_refs(r) &&
++		    !(flags & GET_OID_SKIP_OBJREF)) {
+ 			refs_found = repo_dwim_ref(r, str, len, &tmp_oid, &real_ref, 0);
+ 			if (refs_found > 0) {
+ 				warning(warn_msg, len, str);
+diff --git a/revision.c b/revision.c
+index 474fa1e767..5c8e80a0c2 100644
+--- a/revision.c
++++ b/revision.c
+@@ -2184,7 +2184,7 @@ static int handle_revision_arg_1(const char *arg_, struct rev_info *revs, int fl
+ 	int local_flags;
+ 	const char *arg = arg_;
+ 	int cant_be_filename = revarg_opt & REVARG_CANNOT_BE_FILENAME;
+-	unsigned get_sha1_flags = GET_OID_RECORD_PATH;
++	unsigned get_sha1_flags = GET_OID_RECORD_PATH | GET_OID_SKIP_OBJREF;
+ 	int ret;
+ 
+ 	flags = flags & UNINTERESTING ? flags | BOTTOM : flags & ~BOTTOM;
+@@ -2914,12 +2914,8 @@ static void read_revisions_from_stdin(struct rev_info *revs,
+ 	struct strbuf sb;
+ 	int seen_dashdash = 0;
+ 	int seen_end_of_options = 0;
+-	int save_warning;
+ 	int flags = 0;
+ 
+-	save_warning = warn_on_object_refname_ambiguity;
+-	warn_on_object_refname_ambiguity = 0;
+-
+ 	strbuf_init(&sb, 1000);
+ 	while (strbuf_getline(&sb, stdin) != EOF) {
+ 		if (!sb.len)
+@@ -2952,7 +2948,6 @@ static void read_revisions_from_stdin(struct rev_info *revs,
+ 		read_pathspec_from_stdin(&sb, prune);
+ 
+ 	strbuf_release(&sb);
+-	warn_on_object_refname_ambiguity = save_warning;
+ }
+ 
+ static void NORETURN diagnose_missing_default(const char *def)
+diff --git a/submodule.c b/submodule.c
+index b361076c5b..e63019a6f5 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -916,16 +916,12 @@ static void collect_changed_submodules(struct repository *r,
+ {
+ 	struct rev_info rev;
+ 	const struct commit *commit;
+-	int save_warning;
+ 	struct setup_revision_opt s_r_opt = {
+ 		.assume_dashdash = 1,
+ 	};
+ 
+-	save_warning = warn_on_object_refname_ambiguity;
+-	warn_on_object_refname_ambiguity = 0;
+ 	repo_init_revisions(r, &rev, NULL);
+ 	setup_revisions(argv->nr, argv->v, &rev, &s_r_opt);
+-	warn_on_object_refname_ambiguity = save_warning;
+ 	if (prepare_revision_walk(&rev))
+ 		die(_("revision walk setup failed"));
+ 
