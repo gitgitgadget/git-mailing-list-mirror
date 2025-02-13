@@ -1,138 +1,137 @@
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99ACF266B55
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 21:07:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152E828A2C1
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 21:17:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739480857; cv=none; b=Yp96pWoQMfEhDg7uCY87MEtkvn3Sc9fSjndf72RCl867qZ5hAWLgPIT7NAsWU6lhRRYcTjXUHDstoSoeRzBws4ZHhvM2cfcjFcYK/p7BPxjHJjgRcgB2ZqM6gAafptEqOQ2IKYLM8D5XKx1aglqSyM6+X8RVHMvHRovED41WOrw=
+	t=1739481461; cv=none; b=ewJP5teKqcgM/RzHfeHR7R+2Sd3txRPEPg7209dewgKmp4BJjNJYvGdvfa5K/IKBP8Ij8IWMapP2LXR36DVC658Vj+rYyCKhIHIiE0T0QQHT+Ha1tdI4eCHWb6cMmm+EBtHIcBrEEito+OAnwGesnznCeN6DEgXYYzeHGlVNUcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739480857; c=relaxed/simple;
-	bh=RNy1Fs0n7l9MyI2JOX/2FVZ+sWMpLnbS9OxFnTffEH0=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=hQhNJy0K8SCQWzmxWK1mlpPtFmk8gCheIDq7wLyEm9R3q5gRJR7FceQRwvgjcVukytWmGgn74QMiBDKqdh11q4mxplya8tfecizjM23wwSVOem9DCyHeVT7ufZbzSYiO8cOv9978VXhJShOaV/l7muG0YiS+eFhe74+VKvvtWG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=amRPjBQR; arc=none smtp.client-ip=209.85.160.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739481461; c=relaxed/simple;
+	bh=+Z2L+eWBEJ4V2+Djzey2MfdHXarNvmYs4KIlWug9zlA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VDMskRizNbtVaPUtyiOI0Y+HFD//ZPjWkvhHVQD/FVkZh3w5/cRAwZ8I3nHtpEwz85nMn+iGfIFvqu1YTfdTc2xZUnKaEJrOAiP1qIJDciZG+XEQZWYJEUYO8oAMuYBnM3yZQ+rJDAHoDBsyZDCLmvLfu+8oFxtDJBBAMZMu3xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GINx/i/c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WQZocS1i; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="amRPjBQR"
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-471a25753a4so11494241cf.0
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 13:07:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739480854; x=1740085654; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ND0AolxWZDcg8jkrKiLBL857CaR1eEl91UWit5U1Q6U=;
-        b=amRPjBQRp4NNz7LYOKyMhBjZHUUjpRirm1gRTLMzHznTVOgcEJxTbhGyqKRBF4csjl
-         ZbKlRcPLcRHmmv59bRcTmP4qBXC2KeHLVT8H7676CxuGXcXPtBpx3ncGQftFWsmMDojn
-         Qcmwol5R3Cp0pafc+HBYmq91ioaCidy7XH+IYeICccXPTwNTmH1S+m2YLm8AvpG5/8NR
-         ysKTB60hnG4HMEfcfOKa01Ii3RlgF06GfO7pp5zB46sC5AjziTys82pWmiRl3m/4HG3P
-         W69ZbUDcCPCr7UQDPgiJHylfA4ma5DXWcKSKUlgdDR1zwI/g6IGSg41t7mVHimgRt8Sl
-         u/XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739480854; x=1740085654;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ND0AolxWZDcg8jkrKiLBL857CaR1eEl91UWit5U1Q6U=;
-        b=ipso6p3CL7DvdvFzA7HT38VmSOlV5dehowRq2X++xGk/rMP8jW03eIlGIUNr9yh43E
-         HZ3izhAU9aYQ3x2+m96lzEwKznVWsUN+leZVD4ohXnvamyXjsGxmo34GDZCLgtgjFkD8
-         yUxxcEqg0DrNs5xXP+2axlrJmKwNVwD2MV0wV3G87Xyt7vHNhzUIGTIsINELZmQlwy4E
-         yqxALU16vhkrAsq9+X3caYaGvzJml1rpbR9v6I6uV0IiMe1XMgjLltYMYOzDybdvtcOl
-         9PRBhFBbx6iNctEbFSB3Pj21R+tE0HD27vixdJb4gnInbcS1F9Hz8V7vTYF1PXpMCSYw
-         CqPw==
-X-Forwarded-Encrypted: i=1; AJvYcCWjHLHUokkhAwlmVdvyfGjB/wa9hDtlIsb4+WPi2Q46St0hfYJibZQqkI9xi3AOXgvouK0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxO78UXUCrH3GGd5xcCkygyxXGHvj2Uha3iPdxoCtRX7oFmODsR
-	DMlsXmhrWMfQMbZgWtSmcErkAkq3EUHqdyfCCdzg3xm6vr3Dvy+DOK017Q==
-X-Gm-Gg: ASbGncvt2pAYTj7wwVpCfbagm8+vYg8OGzlVrou+EAstMNqht/6WHKKI1TbBFTegQjo
-	y+CYHaGXu+TKThId+YhlU6/BMbkWw4bTY95WETTzvdwvslI+n3/oSw+Xo1SWsW65GuZfUyFfCtW
-	BmC/jmHp5qWtpH2T0OvXpwF0g/AHhnJar+D4XNUWbsoqJ351NS132jxhPClyrUUtVJzPFpZlA9B
-	I9MDvXZM2nKavRJMvanolawf0NaYashmmo0tt3/rATQdmZJ+q6EBJ252NKIa2KrN7Z0ooJabA2F
-	kTP41xj0GhESzEBnqlM748crR3wBxwUfEF1ZOXaTjA==
-X-Google-Smtp-Source: AGHT+IHO8frk+M2UDY45cNPnDIk8ILlIWfsK4lWxiju8GrKRUhjF6zXeGkFk4FPQeGM3pR3WvqK9/Q==
-X-Received: by 2002:a05:6214:495:b0:6d8:916b:1caa with SMTP id 6a1803df08f44-6e46f898fd5mr160901266d6.27.1739480854474;
-        Thu, 13 Feb 2025 13:07:34 -0800 (PST)
-Received: from smtpclient.apple ([2601:5c1:8380:760:9da3:a1b1:61fb:9b52])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6e65d7a3d2esm13695776d6.55.2025.02.13.13.07.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 13 Feb 2025 13:07:34 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GINx/i/c";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WQZocS1i"
+Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
+	by mailfout.stl.internal (Postfix) with ESMTP id DC95D1140155;
+	Thu, 13 Feb 2025 16:17:37 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-13.internal (MEProxy); Thu, 13 Feb 2025 16:17:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739481457; x=1739567857; bh=AfKFceJrXz
+	iauuo+vDKjVxR8EiLmEfUZY2QOvgHiQiY=; b=GINx/i/c6nzP+ANr7jYhqjj45z
+	C2KmTfev8FsiB+RNWqYVjJGZ9GZ2Hxdnmo7ItjMwGEGJ88d/K0W0IeuG9iHH6/lh
+	Q3/2ElRg5ciVOvglOmiHMqkrlUujGrOQn1A3/WZsNfenwLj/SPncWEaGWlxJA+UI
+	fVxUQ2ocC1cwKIlYr9FtqFQHmRMEyqXCS9AmO7eaixfb6aiAkIb4M+CLbpmXL4PD
+	s8RNQF5nb0n+qOCAomFcWm0TXYDJOX4iNc3O1lh/0PP/JIaHBIQY9zIgIzDF6yiF
+	F46F+VWYQNwKd7VtycLkMF56DH+54aabLzWFwlsiL0mXJ8v0u2YLLcGyewlw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739481457; x=1739567857; bh=AfKFceJrXziauuo+vDKjVxR8EiLmEfUZY2Q
+	OvgHiQiY=; b=WQZocS1ipu2qpMF6eHIyauA8UpnNb0HD/ORz088PKjZ5/zWw3CN
+	wdl5NcdHjMhi4TsUon3LgaO+kGTRpm2M08AJs8WIRg/QtbJAyCTHfIDODkuljhuO
+	F2LnDcMrwWHbbshynsqfJV77s271i0t4v3NpyaTjsPUIgYMbottIqE+Ij77JRi/q
+	Uni569yEfJubzgzS8e/V8sid1BIpGk8MRlzcUznGXTu5ztoIbiaIkshUVj+0UhwV
+	vvfAVYOmSXPqKOOx795Ka6fJk9ZfYw5lEbXjsv3x5zWkTpl3Famk5LsuYLBVvMIg
+	aeC0UAbkP2APHXXpF2wA6FybfYS8ocYh2xg==
+X-ME-Sender: <xms:cWGuZ6UTwiiv3eM2WQQzGc5atDyTig2W2yrz5JAl3O6FOtkCvT_srw>
+    <xme:cWGuZ2m3WjIktxkjKAL5GgcYWOwUrOhKbfAsMMgaIEnsjwwe18Ly9NuLIXk4k-iGv
+    a7xf4ypGswvKj1yuw>
+X-ME-Received: <xmr:cWGuZ-bFlAtLVRguy3UN3lyJIeIsOOTn3HeaVLk8iLaJYw3kncAt0XZlaeLflLDBwvICfLYFXTLgbeCbwm6LzFvRh1aM_NYXiepuDRk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegjeekfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlh
+    horhhrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:cWGuZxVTEMGlNnvS2iCIbtFRQ6cFAxG7PsGITXD8VpS_Sk40DFLOAw>
+    <xmx:cWGuZ0kCOOi1FlM0ZizFuU7yc5ag2rwZXuM_BremWPCgfstzE8VGLQ>
+    <xmx:cWGuZ2crGRx1zt7RWhdWlrAM-QO-IPxO5uCwU_dc4mAuRqq7bkRsPw>
+    <xmx:cWGuZ2GWR1v45OQl2EYyadgzdLiYhsMQxZ5KcV55bYo_tCLnXMIUlg>
+    <xmx:cWGuZ1Awl4pAlZ8ILH6crTNZCAmcy2FuyaNrVjgTvZ-TgwkOF10mF7n6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Feb 2025 16:17:37 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] Makefile: remove accidental recipe prefix in conditional
+In-Reply-To: <a79e9e9f50410721d85747b03559d55be98bca20.1739478347.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Thu, 13 Feb 2025 15:25:50 -0500")
+References: <a79e9e9f50410721d85747b03559d55be98bca20.1739478347.git.me@ttaylorr.com>
+Date: Thu, 13 Feb 2025 13:17:35 -0800
+Message-ID: <xmqq1pw1o87k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] revision: fix missing null for freed memory
-Date: Thu, 13 Feb 2025 16:07:23 -0500
-Message-Id: <40281952-B43E-493C-A092-63768C708C8A@gmail.com>
-References: <20250211212909.GA3113114@coredump.intra.peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>, Emily M Klassen <forivall@gmail.com>,
- git@vger.kernel.org
-In-Reply-To: <20250211212909.GA3113114@coredump.intra.peff.net>
-To: Jeff King <peff@peff.net>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Taylor Blau <me@ttaylorr.com> writes:
 
->=20
-> Le 11 f=C3=A9vr. 2025 =C3=A0 16:29, Jeff King <peff@peff.net> a =C3=A9crit=
- :
->=20
-> =EF=BB=BFOn Tue, Feb 11, 2025 at 03:22:28PM -0500, D. Ben Knoble wrote:
->=20
->> 2.{30,35}.0 fails to recognize --no-graph, so I checked "git log --grep n=
-o-graph
->> origin/master" with "git describe --contains" and decided that 2.36.0 was=
- first
->> release recognizing --no-graph, but it didn't build for me (possibly an i=
-ssue on
->> my end). I got 2.37.0 built, and it was "good," so that's where I started=
-.
->>=20
->> Here's my "bisect run" script.
->>=20
->>    #! /bin/sh -x
->>    make || exit 125
->>    # segfault has exit >128
->>    ./bin-wrappers/git --no-pager log -2 --graph --no-graph --patch
->> --cc || exit 1
->=20
-> I don't think this is quite enough. The problem is a use-after-free, so
-> the behavior is undefined. Depending on whether that heap block is
-> reused, it might work just fine, or output garbage data, or segfault.
->=20
-> I'd have _thought_ it would usually just segfault, but it almost always
-> just output garbage for me. Building with:
->=20
->  make SANITIZE=3Daddress,undefined
->=20
-> is a good way to get reliable results for this kind of memory error.
-> Doing that shows that v2.37.0 is actually bad. And bisecting shows that
-> it has been broken since 087c745833 (log: add a --no-graph option,
-> 2022-02-11), which is not too surprising.
+> Back in 728b9ac0c3 (Makefile(s): avoid recipe prefix in conditional
+> statements, 2024-04-08), we prepared our Makefiles for a forthcoming
+> change in upstream Make that would ban the recipe prefix within a
+> conditional statement by replacing tabs (the prefix) with eight spaces.
+>
+> In b9d6f64393 (compat/zlib: allow use of zlib-ng as backend,
+> 2025-01-28), a handful of recipe prefix characters were introduced in a
+> conditional statement ('ifdef ZLIB_NG'), causing 'make' to fail on my
+> system, which uses GNU Make 4.4.90.
 
-Ah, fun, that=E2=80=99s more like what I was expecting. And thanks for the a=
-dvice!
+Yikes.  Thanks for fixing it so quickly.
 
->=20
->> The --cc is important, since this repro logs from where the bisect is! Wi=
-thout
->> it, if the head commits are both merges (likely), the repro will accident=
-ally
->> mark the commit as good when looking further for a commit with a patch wi=
-ll
->> fail. Omitting -2 might work, too, but that makes "git log" take longer.
->=20
-> I've also run into non-determinism when bisecting like this, because my
-> test command depends on the value of HEAD. The best solution here is to
-> just feed a stable tip to git-log. I bisected on:
->=20
->  git log --graph --no-graph --patch origin >/dev/null
->=20
-> (I didn't need "-2" because good commits failed with "unrecognized
-> argument" and bad ones were killed by ASan immediately ;) ).
->=20
-> -Peff
+> Remove the recipe prefix characters by replacing them with the same
+> script as is mentioned in 728b9ac0c3.
+>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> ---
+>  Makefile | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/Makefile b/Makefile
+> index 90c9662ad3..5b98a9d12f 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -1703,16 +1703,16 @@ IMAP_SEND_LDFLAGS += $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+>  
+>  ifdef ZLIB_NG
+>  	BASIC_CFLAGS += -DHAVE_ZLIB_NG
+> -	ifdef ZLIB_NG_PATH
+> +        ifdef ZLIB_NG_PATH
+>  		BASIC_CFLAGS += -I$(ZLIB_NG_PATH)/include
+>  		EXTLIBS += $(call libpath_template,$(ZLIB_NG_PATH)/$(lib))
+> -	endif
+> +        endif
+>  	EXTLIBS += -lz-ng
+>  else
+> -	ifdef ZLIB_PATH
+> +        ifdef ZLIB_PATH
+>  		BASIC_CFLAGS += -I$(ZLIB_PATH)/include
+>  		EXTLIBS += $(call libpath_template,$(ZLIB_PATH)/$(lib))
+> -	endif
+> +        endif
+>  	EXTLIBS += -lz
+>  endif
+>  
+>
+> base-commit: e2067b49ecaef9b7f51a17ce251f9207f72ef52d
