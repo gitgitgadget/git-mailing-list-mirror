@@ -1,140 +1,148 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3886635947
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 02:49:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53152205502
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 04:06:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739414985; cv=none; b=MlqM9VcW8bu1Hg/kr7Dy1dHUcOdsWC4LfPnmssM7LmvHeiDGcISi6f8Tp59uIfsSPPpcSeCDG29WIsCE4/vy0++CkTGC4/A7Z/L3ha8cK9vRYEGt0GmW0wcr7E763CCHQ/92Or/yHcQhhlOe0md3dZpAHuNUg/yGXQNtwoWlrYA=
+	t=1739419581; cv=none; b=YexVp7xqUDHmGe5wjDiHEUF6qQ4WH9RdAsM9wC0ZirFOnLPZUcn/wDkC9GyNd6XEYjYq0ydKBZGMPfEg5i0Ofjt+TPE/kNfWxQfObZNEhPhah2ttcfNDXuuVPEnQQprRgai9OK6fuOcRvmT6KiScHYeNnmeB9aA4qw+Q4Rdct8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739414985; c=relaxed/simple;
-	bh=DHyCmpJkh7fCtQqqLEpxFMxCTfyj6w7WDI131c01Pcg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uTZ2Nmyk1o1Nz2gZKy6p766XAbUlemwUt/NTOGawjv1kHcyhQbOpAXLPVGNAKreX1I2C891n7qoNxuA3OruePL9nUdMFoBYeP893UwpOfkYb6MBvuialqr4zihhgSL9Qr0tvr6a67GihMB6kijaF//LKxFe2FYf8q0/aRnAEDnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Eq28f6Hf; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1739419581; c=relaxed/simple;
+	bh=3uo5kcynq34yg+abFDvPd2IUfXrd5y70nkDE3zn46nw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Sl9QttLvzE3CO2/LogcGE7fystR6FM5vPCTGhhSpWZ61FfgiEXJPcLsQlhwSFIKkwv5PaTw77XO1nvKhPP+g0m75Eplfx23NaNxRHTLwMIIQ+VvKc8yUNvMhp2G/NpepUmddgZRbYLmDx4u0vGljeb58T8EDoFkbqcaVXomEU0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dggzOcwy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mTepcVj7; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Eq28f6Hf"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1739414980;
-	bh=DHyCmpJkh7fCtQqqLEpxFMxCTfyj6w7WDI131c01Pcg=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Eq28f6HfCoZchq56s6XWFVchT9vJe+R6um7xt27hhC8hDj4K62C7mJJCzBYRdNaI3
-	 bVTrxbRaiOaD9gVwh3hMxQCkDQZbJzB7CD0hWryQljGed981rOpX3LTjmnk7qy6uev
-	 Om7XjV0hr8UDPVEaKb9gePMmme1SzIZ75plMb3ghH8bkEiMp4Se0GlJXF1ONalqvcg
-	 T27w1HalBf8GM53WOFR20cUhVMWQzbdtV5h6u5mIny6EMX5fooiD3DopRmqBIU3aS8
-	 SUDdCxkFHGXYfBb3j5SkmtBr6TJLmakampia5MtXBjIvjzwMiHWBHUayKg5RJ/l0yJ
-	 yDZPizqef2HpSkE+d5aWvi3whnhrziZcsqJbOF6H1XJi7b7LKwLiH77ucu2rzWq1gb
-	 93kU2ur2hpsGq945C0Kx4SmGi9bz9aveMJ0xRgRt5bflhAePjxjj0G7OHX8MX6D87p
-	 T7wrq1gmaA5iRBJFOi6H+3RHI5QpHtusK51KUB91pBQugsSrWo4
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B192F20078;
-	Thu, 13 Feb 2025 02:49:40 +0000 (UTC)
-Date: Thu, 13 Feb 2025 02:49:39 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jayce Cao <jaycecao520@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dggzOcwy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mTepcVj7"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 48E80114012C;
+	Wed, 12 Feb 2025 23:06:18 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 12 Feb 2025 23:06:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739419578; x=1739505978; bh=/CBqGI6JOh
+	y/6iP5HpuOXPDW/6lij2+8cFTMc/SaJuo=; b=dggzOcwyt7Smt+bgsFvYzTeQD6
+	yj+DFoSSorV7y7m7USYfgks1QQvOn3zJsLcq+mjYu1fXuJN5YM8JKlXMtq7sLBD8
+	+/dnAD5NEgYo+YSga9/dRmCQ8ofQuCD9i5bXRrzAonPBZg61ROxn1cneYkk4TqJC
+	l51yHp/BKCh6xn/mcaO+B2GNgltyGNHBvPV6C9JoviIv7S4ESCA5wYbEUrJqhEOW
+	IB7w1f/6I8OHrjPawevGsOa4rCdghbEE2b3Ign8+CO85qOK+AimVxTHHg/sZtkir
+	mf2b6PBlLzMMFyYi5ffcWGR53HSBU+feMEjn25hy63+BfuY+Ak7cICW2iZkw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739419578; x=1739505978; bh=/CBqGI6JOhy/6iP5HpuOXPDW/6lij2+8cFT
+	Mc/SaJuo=; b=mTepcVj7Au2bCu2roufvhVv0ElehR7i7qpFX295WQoyQGN56q3S
+	ZCj9ZvHFiXIy0XL9pXc5PvCtBKQ1E0LdANgOQaPgUdgAw+lbuirEvkFcyEvzGUrH
+	uMLFc584ZeTYP+5CqXtKYfEW8o7WB3WovOFz8ZyJeKjq04glKdtb7lKjMT0bx2xT
+	R2vA2PqBXcj/ZreAv/VnAsUssKd6VG6P0ZqVN1zXsPR8HxpV9uedwmWC69ltp3PB
+	tRXPncSdI9alUzUSCt9stO1+evpNK9i97r3Pe2hahjV75LsPqmMRlwGete3uYk5B
+	PhGC2Ci8KiiP4DrSSKLI2bC+LQ95gfNxeRQ==
+X-ME-Sender: <xms:uW-tZzy-LskNj28JqxClnGffWg-7yPKQoyBDtZH0klrBg3KzcPMyHw>
+    <xme:uW-tZ7QDF1cZBtBkP9YYGjYppsHQJXgsCOS5XNY5o3KQEPcoZJUplwrG8VEAxXT2L
+    EvgwmzYgscpy8lZDw>
+X-ME-Received: <xmr:uW-tZ9WjcDu90xhR9jcHtAICwTDTJkjbvmc0V1N6DHESi0sDJfO1KUL66NRVNwGbo0oG1f-XCBfjHBonVprgqiohApBARJQGiObo18Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegheejjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehilhhlihgrrdgsoh
+    gshihrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:uW-tZ9iLZoUTwFZVjCV5Q2HNxgpbn6OfWzJR5h690_h5_CsE9Y1PpQ>
+    <xmx:um-tZ1BfsWXn7VzccCBu8bMJkOFMcY5xjb5NuiGW5Tm6JG-yvoXI4w>
+    <xmx:um-tZ2IRzmYeU9R_uO5nm0e6Uyo7APmJMjX4mFICfvDPKOcFjLfEmA>
+    <xmx:um-tZ0AEUV7W3cdJTP1xo2d1sJ_M9PJUuo8Gt2zpYpQ94EHlbhz9JQ>
+    <xmx:um-tZ0OBLoTqUMGqAZiaowbIKktgeTZKkWv6vC7bz9jL5XGEFF8DLQ4y>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 12 Feb 2025 23:06:17 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Illia Bobyr <illia.bobyr@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: Get the commits to be pushed accurately in pre-push hook
-Message-ID: <Z61dw-pzJKgs7U-v@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jayce Cao <jaycecao520@gmail.com>, git@vger.kernel.org
-References: <CAGwx5_8wNzE51Z7pYA_skimZZ29b8C_Bxk_58kPOqcWAmSQpHw@mail.gmail.com>
+Subject: Re: [PATCH v5 01/10] t/t4209-log-pickaxe: Naming typo: -G takes a
+ regex
+In-Reply-To: <20250212032657.1807939-2-illia.bobyr@gmail.com> (Illia Bobyr's
+	message of "Tue, 11 Feb 2025 19:26:45 -0800")
+References: <20250206014324.1839232-1-illia.bobyr@gmail.com>
+	<20250212032657.1807939-1-illia.bobyr@gmail.com>
+	<20250212032657.1807939-2-illia.bobyr@gmail.com>
+Date: Wed, 12 Feb 2025 20:06:16 -0800
+Message-ID: <xmqqbjv6qyiv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="RRCa916yrnDmwrLa"
-Content-Disposition: inline
-In-Reply-To: <CAGwx5_8wNzE51Z7pYA_skimZZ29b8C_Bxk_58kPOqcWAmSQpHw@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Illia Bobyr <illia.bobyr@gmail.com> writes:
 
---RRCa916yrnDmwrLa
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Subject: Re: [PATCH v5 01/10] t/t4209-log-pickaxe: Naming typo: -G takes a regex
 
-On 2025-02-13 at 02:05:47, Jayce Cao wrote:
-> My goal is to check the commits to be pushed in pre-push hook to see
-> if they contain sensitive data or not.
-> I have an assumption that those commits which already exist in remote
-> repos have no need to check.
+"Naming" -> "naming".  It is even more preferable if you can avoid
+introducing the second colon.  E.g.
 
-You will probably want to read
-https://git-scm.com/docs/gitfaq#restrict-with-hooks.  It's very easy to
-bypass the `pre-push` hook locally by using `--no-verify` without any
-way to detect that, so assuming you want to have an effective control,
-you'll want a different approach.   Note also that I don't believe
-libgit2 or other library-based Git engines invoke hooks at all, which is
-also going to lend itself to probably adopting a different approach.
+    Subject: t/t4209: call the value given to -G <regex>, not <string>
 
-> So I read the Git doc and pre-push.sample file, I know that if we push
-> to a new branch that the remote does not have,
-> $remote_oid weil be zero, so we need to examine all commits in this
-> branch. We can run `git rev-list $local_oid` to
-> get all commits to be examined.
->=20
-> But consider this case, if I'm developing a huge project which has
-> millions of commits.
-> I create a new branch (we call it feat/awesome-feat) based on the
-> master branch on my local repo, and create three commits.
-> Then I run the `git push --set-upstream origin feat/awesome-feat`
-> command to push the three commits to the remote.
-> But when the pre-push hook is called, `git rev-list $local_oid` will
-> print millions of commits. The commits except the new three
-> already exist in the remote repo. And the `git push` command will send
-> data only in the new commits to the remote, instead of all
-> history commits.
->=20
-> So I mean we've no idea which commits will be sent to the remote
-> indeed in the pre-push hook when pushing to a new branch
-> that the remote doesn't have. I found a workaround:
-> * Run `git ls-remote -q -h` command to get the commits the remote has.
-> * Run `git rev-list $local_oid ^$haves` command to get the commits to
-> be pushed.($haves are the commits obtained from the previous step).
->=20
-> But this workaround seems to be stupid when the remote has many
-> branches. I wonder if there is any better way to get the commits
-> to be pushed accurately in the pre-push hook.
+This applies to the titles of all the patches in the series, I suspect?
 
-Git LFS has an optimization where it uses `git rev-list --not
---remotes=3Dorigin` (or whatever the remote is).  This excludes objects
-reachable from remote-tracking refs for the origin in question.
+> Not effect on the test logic, but as "-G" argument is a regex it is more
+> accurate to use "regex" as a dummy argument value rather than "string".
+> In all the other case when "-G" is passed a dummy value it is spelled as
+> "regex" rather than as "string".
 
-However, this has some limitations.  For instance, if the remote is
-specified as a URL and not a remote name, then there will never be any
-remote-tracking branches, and this optimization cannot be used.
-Notably, I believe EGit (and maybe JGit) _always_ specify the remote as
-a URL and never as a remote name, so this will not work there.
+I guess the -G tests are copied-and-pasted from existing tests for
+the -S option when the -G option was introduced much later.  This
+makes me wonder if we try to see what happens when a malformed
+regular expression is fed to the -G option (I didn't check---if we
+have no test for it, we might want to add one).
 
-You may wish to inspect that project's source code for more details.
+> ---
 
-I am not aware of a better way to do this, but as I mentioned above, you
-may not want to do this at all.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Missing sign-off.
 
---RRCa916yrnDmwrLa
-Content-Type: application/pgp-signature; name="signature.asc"
+Having said all that, I'd prefer to see the changes in one topic
+focused only to give --patch-grep and --patch-modifies synonyms
+to the existing option and do nothing else.  Certainly a change
+like this is a distraction we do not have to discuss at the same
+time.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
+If you can group all these "preliminary clean-up" changes together
+into a separate series, without including any change to add the
+longhand to -S/-G, that is also a viable alternative approach.  Once
+such a series graduates to 'master', then you'd do the longhand on
+top.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ61dwwAKCRB8DEliiIei
-gSU2AP91UeuPh6p9dJnYa0NrXAYIx5ldjl+Aq1ZF3NxLt/jfqgD/YMVpxJh/XNgv
-qgAmNPuzq1auHBCi+4/giiuKLBWrVwI=
-=j7GT
------END PGP SIGNATURE-----
+What we do not want is to see changes that are not directly
+necessary to add the longhand intermixed in the same series.
 
---RRCa916yrnDmwrLa--
+>  t/t4209-log-pickaxe.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+> index a675ac..ed70c 100755
+> --- a/t/t4209-log-pickaxe.sh
+> +++ b/t/t4209-log-pickaxe.sh
+> @@ -89,7 +89,7 @@ test_expect_success 'usage: --no-pickaxe-regex' '
+>  	test_expect_code 128 git log -Sstring --no-pickaxe-regex 2>actual &&
+>  	test_cmp expect actual &&
+>  
+> -	test_expect_code 128 git log -Gstring --no-pickaxe-regex 2>err &&
+> +	test_expect_code 128 git log -Gregex --no-pickaxe-regex 2>err &&
+>  	test_cmp expect actual
+>  '
+
+Thanks.
