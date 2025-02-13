@@ -1,92 +1,98 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EAC245033
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 18:31:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DC8245011
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 18:37:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739471470; cv=none; b=S4oGLPhxfvt6cpsW0jSBYeHz2X1RQE6eMdBaULk5wbdNL4oy600bIwr/VDw48B6wEws891u6wPEkN5jz+mr0QadhdaDifvz9fgDmQSzB9YtrW0e1gjJ0cYb2GP5eREvxYGa2mgea7QLmCd54JWrP68+7eU2lfi84etmFfDIwHQM=
+	t=1739471864; cv=none; b=RpFB0iFlJOpxRKbOotJ++DLCOS8BfOOV+6L1hiOBiL27rH7Bq1cTki//fT++euBYpbTAdirz1m5IwbNBnwQWruABleG43ZLlbQGtFoHzZ3u9yL4Yu9buVhzqeGuUt0u4fRu8Fn0U49b+/MI4O2KIa5QJnMZc7EYqIY71UU5sHKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739471470; c=relaxed/simple;
-	bh=5bGe6a6YcyA7yyqfP3iToR9AqUTETrQ48mvHFmMOA+A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sbuKupf6edLkZCA/IV7xOiV7vl/9r0IEFpSJMF082qPHNd32H7hj0HkKeM9youvIjqt+BmGOdIkfS7AiAJI0GhppBpwNZxVKyhyxXoZ9RMwc0k1WUAinSgTWFrb3zTmMwkwPiPBQCwKoblJ3VN4Zrw3k439nkT/o27sYuAXhxtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DUAfSG6C; arc=none smtp.client-ip=209.85.166.51
+	s=arc-20240116; t=1739471864; c=relaxed/simple;
+	bh=RVomXlwQJKX61/D9b92qPJG+bf902FGFyKYZ96blsBI=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=i4hi7LtGWkeATZh0axjugHBCKG+oJvh7ED+s+EQ+j9GZ3F+e4IBViql0ph62guP5WJiSwoFYbnGOptu/Yw+6bm9dqRlHAclQl0fgWRApbUGEabFNRyuyAa3bojRN/i9ocrKPNTyBJMFGbitknDaYXp7jGs5mCbK5t5oyR52DowI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oog2bfrR; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DUAfSG6C"
-Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-8553108e7a1so92586039f.2
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 10:31:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oog2bfrR"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43955067383so9106595e9.0
+        for <git@vger.kernel.org>; Thu, 13 Feb 2025 10:37:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739471468; x=1740076268; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kdPz1rwte9dLad6OlGFusAr6o9PG71F9JOBhuOr/Zak=;
-        b=DUAfSG6C3zm9d9PL7SofdBSPHaa30D/f6mQpK0HLnY7FnxXNV6sAgp/2+SOgMYTRFX
-         gsxK8jYrAd6t0qu+oUjLHw+uPu9ygPlrMouM1M7//dnZwIAfpSeERzgbIRTGmbEamA5Y
-         DR8A0ArHDp5ZEtX4auplxaASIltzp8YEnBr+erMZ88odPZgciZI4FUlneTOUcMj+waYj
-         jtmK/Df66Qcuus5p1bhMc6YGVD3zs+HUM/9vZWHSKSOSpDC7Dy+nkWrSsab1Krftqgh4
-         7EOTfRfFA1TCqP2k1WYaxzUi++OERGGX2xwLKB5t9PWsOrpGLmjmYAXRwf/gNmtd5GQt
-         89Ig==
+        d=gmail.com; s=20230601; t=1739471860; x=1740076660; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=habvQk8CZIIyjyn/ixFSspZN+u43Ke16xQZA8Nxrs9w=;
+        b=Oog2bfrRkoQUyU4A+SKc0VLolxZooXX2IjyZq/9yUOQHSoI0ldco13GYlf1WqDAruH
+         lv2LjqfDM7KIwjZxlPtgJAjc+ODA/mjTl+uGisCKlrCrbJI7Q6tW4bMJs/G2izNBTjJf
+         6ZXKcEIQH/XevRu4pkC8fXErKMBcO2gDLXdudrRS+9pFyX/yXrkgCDuvkjIWcZZgbc/O
+         8LSMJeBbRdoGR38q4oAojaAwh7oXnsvAwhjvcbplLEiIE5+UwthnG1JJLq8PtPA4jUPt
+         YwrgvRaCTK3I1/+HYUCa6wM9nS4ek/yie5ZcNQZGqFm88JEYr/bLX2ezPfpqAmiMoDxd
+         1dlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739471468; x=1740076268;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kdPz1rwte9dLad6OlGFusAr6o9PG71F9JOBhuOr/Zak=;
-        b=MWloq3d3ucvGporWkVoV1bEFTiW+GGsaYv+hWBwCqvY2LYXNvaAPuSpU6gJHKaAAXa
-         sUYHSD+yzDnM/50w+8xaOis3lQ1yyPYscnu0rLpVljaZgVNqsWx90OLgLkgUit7CKCo+
-         ewTJlAafoAD3cd6lvew9MRXIh99/mV4P9i6YQHaTdBTQogL5jbG/3haR6tk9q04GHtey
-         Nb2T1KQebZn6MXapkGMpNNxPQuJGiF4LYpxSkpZW5IuduvJG2vwHdXdnTHlywQahh85Y
-         JQXSyy2Fb4y7CVwu5MIOvGhAYSNlUDqmLixeHN3isnedeozW1U5WFaQzdQiwvLOIqEJE
-         VceQ==
-X-Gm-Message-State: AOJu0YzjsKjQ1/IGhQu7SoU8HhS/awASq4UkA2CXmo0qv9tniUQ96q5t
-	AqJFkbXzccCPrCazoBtCx/LRWY8UeH65usNnS88SZWu1fjvjGcxNDbOIKLTJ5Pi+xv6RS34eYrB
-	YPDvOTObXLpSuDQtTKnczXVUb7FRHZw==
-X-Gm-Gg: ASbGncs3YqGDn/nQOeXwqYkD5+wDrgSqS4m33H9EjJQVkODBCxCgJAFs0/uqLDs/JpG
-	ioIAkSw48vsIJSN6hMneOX6Rb3l3/mSIgiUPcdiIyDiyoCwACKSQm2FyRwD1JHDcCeCc4041nrv
-	ehsNcXEw34MhxLhQp/vQ5fdeYxbuImag==
-X-Google-Smtp-Source: AGHT+IGqg/ZsJZpBWjEZ+ih8pah6DJQNfyxZakPQjf0NaOvpP5MY0FHIBzWTETxh0nm06OYUVsfWxkPnfrEbtT05v7s=
-X-Received: by 2002:a6b:f312:0:b0:855:670a:e687 with SMTP id
- ca18e2360f4ac-855670ae7c3mr262596639f.3.1739471467783; Thu, 13 Feb 2025
- 10:31:07 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739471860; x=1740076660;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=habvQk8CZIIyjyn/ixFSspZN+u43Ke16xQZA8Nxrs9w=;
+        b=fOSq3LRzvdhVcVP5ek5UDxFNWFLGncbUpa02Wv/C+vyaNnF+xBjHwlVfe0vRsVdUfe
+         R6N+SWsdlc9FX1x/yNE6FqA02pDW9WTYDSj+tAzxm6NDSXvg266RzKnZ1ojhJVmWO3xL
+         L38jAAEzDiu20hirn7c0kV9kwla4qPGrcJbyunxogvrWymMq5JhtvOu8iRBn/FPUROvB
+         0yN6w2l6diWJOx0hVgOHA2N3KCtwpaUYixiOK2/o/2nhOQPGLyOWfj6R+UwCEGNxk/jK
+         tKK0bG96k6Lu5YeLGd5ktjPp8r6zbUtyuHT1u+kDMLTjeJv9PYmjkdcHlk4vAoqKlnVu
+         TM4A==
+X-Gm-Message-State: AOJu0YyQp7PKHd25ALCwXNfK6Mf7IPJnoW8yOARhZhCsumEVwmtYTuzi
+	NOAcnkJlT7MnTg8faefoQAi2d0q/lCF+CuKQY5/mIAMMkKWCs1B3p83YRg==
+X-Gm-Gg: ASbGncvO10WouXKfaj0L23uFsDAXzWhsKjPyqNRJP/Mo2YqOugGW5OlH4J8A1P3rGt0
+	E7UESKlr/uTc6dMOd74BGbdp7fNkHiPBk9zF1bknmxD7GCFI9kOd68kOWPp+aoYv8K8AHDEluc+
+	742jNzf9lXLbPuoDGnFpQgwDCXQZxGuwr7q4NVB3NhmofWllXvSoZonU9Lv4a7lw7WTN1DXqH0a
+	cVVaLrCOYBVXnbzUV6dBQSWkKQRgzNj+TDXbnQxdGtSyHKRGDyamJhKAEUqPj/9fCl4Y2viwXja
+	q+ztmhtl2jjT4iv6
+X-Google-Smtp-Source: AGHT+IEjWjW+Aw9tChufF+dB74JL5Zi/VemTlIZm/PS3QqKrDL77pJKTWciyp9L+/+uTJT1BUQqpjg==
+X-Received: by 2002:a05:6000:1565:b0:38d:c99a:c1de with SMTP id ffacd0b85a97d-38dea3d017dmr8818977f8f.19.1739471860224;
+        Thu, 13 Feb 2025 10:37:40 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f2580fe7dsm2594257f8f.0.2025.02.13.10.37.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Feb 2025 10:37:39 -0800 (PST)
+Message-Id: <pull.1859.git.1739471859.gitgitgadget@gmail.com>
+From: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 13 Feb 2025 18:37:37 +0000
+Subject: [PATCH 0/2] meson: wire up contrib/credential
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250211194334.20710-1-meetsoni3017@gmail.com> <20250213090040.16133-1-meetsoni3017@gmail.com>
-In-Reply-To: <20250213090040.16133-1-meetsoni3017@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 13 Feb 2025 10:30:55 -0800
-X-Gm-Features: AWEUYZl8SItVCmSvnbY2K7P9h7eEi3S3JfO5f5Uey0ctwVkzHEjutdYOp50PVdA
-Message-ID: <CABPp-BEC3UVQcJfXLia6+XrmNCnozNdHtGhGOTUr4A9J=Xo1Ow@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/2] merge-recursive: optimize time complexity
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    M Hickford <mirth.hickford@gmail.com>
 
-Hi,
+It would be neat to also run test t0303-credential-external with
+GIT_TEST_CREDENTIAL_HELPER=wincred but I couldn't figure out how to do this.
 
-On Thu, Feb 13, 2025 at 1:01=E2=80=AFAM Meet Soni <meetsoni3017@gmail.com> =
-wrote:
->
-> changes in this version:
->     - Updated comment and commit message as per review.
->     - Added another commit implementing optimization logic.
->     - added an RFC tag since, if the changes in 2nd commit are
->       appropriate, we can apply similar logic in other places as
->       well.
+M Hickford (2):
+  meson: wire up credential-wincred
+  meson: wire up credential-libsecret
 
-The 1st patch looks good.  The 2nd appears to have some problems, as
-per comments I left on it -- it might be easier to drop the second
-patch and just apply the first.  I don't think merge-recursive is
-worth putting much effort into (there's value in providing feedback on
-patches by new contributors, because new contributors are valuable,
-but there's really not much value in tweaking this particular file),
-so I'd advise against adding more patches to this series that
-transform more of merge-recursive.
+ contrib/credential/libsecret/meson.build            | 3 +++
+ contrib/credential/meson.build                      | 6 ++++++
+ contrib/credential/wincred/git-credential-wincred.c | 2 ++
+ contrib/credential/wincred/meson.build              | 1 +
+ contrib/meson.build                                 | 1 +
+ meson_options.txt                                   | 4 ++++
+ 6 files changed, 17 insertions(+)
+ create mode 100644 contrib/credential/libsecret/meson.build
+ create mode 100644 contrib/credential/meson.build
+ create mode 100644 contrib/credential/wincred/meson.build
+
+
+base-commit: e2067b49ecaef9b7f51a17ce251f9207f72ef52d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1859%2Fhickford%2Fmeson-credential-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1859/hickford/meson-credential-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1859
+-- 
+gitgitgadget
