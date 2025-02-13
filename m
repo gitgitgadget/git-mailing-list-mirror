@@ -1,158 +1,116 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1FE1487FA
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 21:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279B444C7C
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 22:17:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739482742; cv=none; b=s42DRM4qiwyZbJnfx22Mss2swNqDUicH65GHAjPN7TpexwSX0tZDCu3DQZn35j2DJYEhBJioV2HadLnKlUcFz0ECh/U+gJD/j76wz9dCdmGi8o7CyPxa4T1T/zdp05fekHClZB1V47CNsR7C1MzybD6hnz77td5sr6x5X/rrmTA=
+	t=1739485066; cv=none; b=Z/ZOPjh9HpIBnwjm38SbMJ44Dn6x5T7Z9wz5s7w9h7eYn/UeFsXkrt2z3GozWX9CaDOvLDMsJaHroXA14a80BE4vzEuK1xoe97F9QtbXJJ6hSQ3igGDV35/QRnQVYiWlZCX2B50Y3UhQSzckqRyOiTof9hlXV6W4jHAqIBeWfiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739482742; c=relaxed/simple;
-	bh=XMYcKd0H+AlBMu5BSFHEu3fnzETpPZLfndEOFqx5POo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=EeWZXsQoDpcHh9ISbYrNwVtpCl7C9i3CzIKiY7RN2tGEjBTQJJvaGzXt9i8YgH66qX+bT6xfD1qn/QCjzYHl9qZyRqueGbz5mZAnjMAeZp9MBjH6yPiq66HnMpt4HikiVj7O3u+0J88brbOFXeMRw97qPvgvP+Qwmucd2z/Pwn4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=lLVP6M0S; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1739485066; c=relaxed/simple;
+	bh=ySRJxKULN2vKoBfO/FFVAR2nuW5EhuehWBvwxQChLd8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VbyGK58CPPgBKsFQcIja5bPnbDkNy18i0+u58+V8NRbbCpcNq4Gk2JYNpdNnkRQL92Kff8Vi4fZt9qw8xkRK6LxF6+nWa8kqnQjnaBAAZnQ5l1CBI3zTwpIbr/8aAWyJMV6kDAxccWq+UMSHFHbDlK2aoa2NBCNSKSml/EpSNvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=UInoaFd+; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="lLVP6M0S"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1739482732; x=1740087532; i=l.s.r@web.de;
-	bh=wHoZHaPNXsXZU8uLqRwPVvaai8lkPoQMN9NqKT0soPw=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:From:Subject:To:
-	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=lLVP6M0SpTgPbfn0w84wSLLsDaZ9o3BG9vTu43Hh0pL0OYUWJ4xR0znjM3Z1z0Ue
-	 k1xEwhbQPTrmSgZ5iGrc8z/JlXcNilk5Xup8Yk+Gf0LfHhgTFfbM4nS/9iLJuCibK
-	 XCS7X4uX14iX+Ugqo8o2/JtM05PS4YqG16eHbWa3wg0XYfooRBg01jEMQINTsqzYw
-	 V+Ie3Iqtzz1iiT+fXl32YdaNO5CH/nIU+RpDpKVri3KwUqR0xelUimle+36H5c361
-	 Ibpyzj8MsuQnsi+X4PqDsmXOuI2tKSvbkVesDaz75dULWLEx4fV0GADhsgyhiluD+
-	 +CZ52huDeBWB6QtfrA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.154.101]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N2BMA-1tEToI0Ygw-00r7fE; Thu, 13
- Feb 2025 22:38:52 +0100
-Message-ID: <69909785-7f7a-4164-bdcb-bed61d006cc8@web.de>
-Date: Thu, 13 Feb 2025 22:38:51 +0100
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="UInoaFd+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1739485060;
+	bh=ySRJxKULN2vKoBfO/FFVAR2nuW5EhuehWBvwxQChLd8=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=UInoaFd+z4RJxbBvTojC6PTgjToSUFOQ77RqICA1JjVNtJD3ZTgPKqdGmL1OmpP4F
+	 wxGSd4TnsAnpLg7ml5HfvcUpgrheh263JwNhegtWScGS3yrmtfHNLk0a9rCFQZGmUy
+	 wGIkXgU9kaoHm0YcoxeuFKCId5MjvYPlDluBdlsPzn1pOjrE2QCc5HZyw8FbulffRi
+	 sHMmXptiCvKiFZ35Zsp0kXLFa9N9kxY5GzpBrWnx+kE/pFrrLV0rhHdxMNxiCCwP55
+	 I6OPhaEya6UvsmNcKEsl6r8jki8OOoJyzaBJLq35h1tHBSvvWiKtVUY9ztHfhHBYYT
+	 A2c6BzotZY/5EvTJKdzUY2H9FKCIit8krThYB4b9VVsAKc2MUeGNSbgZMbcb1Crm3n
+	 KVw1JAv9RSvAXLlYxD09G4zfZz/1YHxmbnTBwYhoMX+AXfsB6IFtSqgCEVql3ABBQ7
+	 9Qd5bxuFeMBXJ48ghJzh19V6gDjTe3hpUOFYIScsqHMEY7hchNa
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 90FE220078;
+	Thu, 13 Feb 2025 22:17:40 +0000 (UTC)
+Date: Thu, 13 Feb 2025 22:17:38 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: Poor performance using reftable with many refs
+Message-ID: <Z65vgud7t3qRMD1a@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+References: <Z602dzQggtDdcgCX@tapette.crustytoothpaste.net>
+ <Z62NFXja4CkrxSil@pks.im>
+ <Z62booOOXODOl_sZ@pks.im>
+ <20250213082221.GA916028@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Subject: Re: [PATCH] commit: avoid parent list buildup in
- clear_commit_marks_many()
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Git List <git@vger.kernel.org>
-References: <16a7b572-0a3d-4707-9034-0dac69ea99ac@web.de>
- <Z6xIPowXnL-awm6g@pks.im>
-Content-Language: en-US
-In-Reply-To: <Z6xIPowXnL-awm6g@pks.im>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="QAgg56iLi23hr1Yu"
+Content-Disposition: inline
+In-Reply-To: <20250213082221.GA916028@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--QAgg56iLi23hr1Yu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0LTijPePbSbPGDxCorPhu9uiWUD3ZRxlXuoE0dsMxIdl6FnC749
- H8KIrHClS+M1cR/rfoz7rFiDdSR1NaPLjqQljmo9qjm3I6y0I7YuwfmIYYq+7HxwQHcTuAh
- qU6JGVH2OfLrfRNXnwRJ1Ti0BY8FePVxdfelLbnvVpAJQsUJaFdLYWiV0GfeItiMrcbXaqF
- t+ZmnumKXOsuRRHT0jR4w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:F6yryazsKVI=;i+2GZm4FEx+7FItCvTK//zIWDde
- BsDIpSyHoo2wt3Cu+nb4zIHf+dAiNNjMijASj+XH//ZTmrOtzaFZ0CGY4GGi4dcWUiypFYWVK
- B63f3SxB61S76A658aTfnBYvxvBIPlifnOnt6mAcZ83n6HM1zI8cxu6U0BlVVvl7Cubu81ugJ
- brsBZnmLDJ4e/19bK+QV6WoeYmpwcDWtefvuzshqq8wqc8Hevzg5DrnkxMx0ICDJc9ah9vUo0
- SqO0rUvvCYNa5wd00r7aYiqaRnuYiYPPWjflfGPdMEh9l8MjY8S0lFsdDeogudgCfSpuuJc4E
- W/COfxJnzgcYisYSt8BbNL0OEag5CEOXJ5xXW+BPX2DhGK+mWJqUoaQk/7Bn4aTIQd1tY0qVt
- CWnsZCw/X5A40tZKiWEqUXe5aaEUIA5VjSX/xqbbaLdHgfxUNh54zpKMxWVmgqTsAFky5Bswb
- EbEdvamg8qGY+abju75Qk4+ICzHC5hJI6XXsYcBE3QY2KUs92lcg2MdlMBW3WS0RCNOZls9yp
- F3MSr8F1PdEDstROdCx7kiYllTEhCDvzVOL7rV1rlyzf8Nx+hbNIuPULMPccrg9UwTwzUR7WZ
- UPqAY+YJDHDvZIuyOifvYl1i6KiBRRUtQAdsEaJeqkd8Lt5GmDglwqmDGyWU9Vx8IC6XiY7P4
- 5UvxWwdhMyBRMJ0F/br78xHICGQ8KpGT7YOiOaCqQFEjba8DnlVJvei0GOB1oTSIITCjK4RKp
- WbcfqTOd37/obgDfk96cROBZd15vFO2rldSTrO+IjSjL47R+aqukpQEYI8ea6npgsPPm1Yhaw
- iiFk7YuECYIdOLIdDz/5pv7Fs1I2NcB+8zr7XG0OJNj9gqO0sSX86nAniuJg4ozzFkLObUsdd
- h5GTD4z2aUmOgl76KLWNrwDjORBgBCOLS4IiFieYdX/OKm7n/Zer+nAxKg1JPGEx0Wk4wklb6
- Kker9AxVb52eFJp7w0zUnWNhywyYc4t3CS7XVBsKfjvLyaVgdChy5Cy9wFKvS9OW4T2Rx6SRK
- OTOqxHCEAUotgePzZ9bhlrsw1BDBjwpfSaJswq+OsUcMlUhdQhqNe0Ea3X5lx8Nkm4/NLn6wb
- e7FnrmgDKR9epSOnWZVtJkmRvOiuwn394lgjMR2r5zbNMO06PAGsdpER8AB0VgOS//ZaqcytJ
- ZRrSlbHJjsAwmEeYvP3jVW2purlYntPhtYA+unZzuAiHBeUuFyaKWegwSPPYi8B48Eo6Da6IO
- WOXuUXDsiM3SID73CYY8hEPQ934JlZ0cVDwV+ALxz5T/t6107R1oIzQS/BSadIIc+l2xECsDC
- 0HYwHJpvQamv+SUpMpq9+QiQFfckuXUnqtrEQlkqI4nIJFTbLpTYzHpfs3gcpylZNdJ62j29f
- D/1merjZJhp71X+52Z4gzKEbDik8wUwbK2DDmOj1MAKM3SRetez9P6T3KP
 
-Am 12.02.25 um 08:05 schrieb Patrick Steinhardt:
-> On Sun, Feb 09, 2025 at 11:41:15AM +0100, Ren=C3=A9 Scharfe wrote:
->> clear_commit_marks_1() clears the marks of the first parent and its
->> first parent and so on, and saves the higher numbered parents in a list
->> for later.  There is no benefit in keeping that list growing with each
->> handled commit.  Clear it after each run to reduce peak memory usage.
->
-> Okay. So the issue here is that `clear_commit_marks_1()` only processes
-> the first-parent chain of commits, and any other commits will be added
-> to the `struct commit_list` backlog. Consequently, merge-heavy histories
-> are very likely to build up quite a backlog of non-first-parent commits.
->
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->> ---
->>  commit.c | 8 ++++----
->>  1 file changed, 4 insertions(+), 4 deletions(-)
->>
->> diff --git a/commit.c b/commit.c
->> index 540660359d..6efdb03997 100644
->> --- a/commit.c
->> +++ b/commit.c
->> @@ -780,14 +780,14 @@ static void clear_commit_marks_1(struct commit_li=
-st **plist,
->>
->>  void clear_commit_marks_many(size_t nr, struct commit **commit, unsign=
-ed int mark)
->>  {
->> -	struct commit_list *list =3D NULL;
->> -
->>  	for (size_t i =3D 0; i < nr; i++) {
->> +		struct commit_list *list =3D NULL;
->> +
->>  		clear_commit_marks_1(&list, *commit, mark);
->> +		while (list)
->> +			clear_commit_marks_1(&list, pop_commit(&list), mark);
->>  		commit++;
->>  	}
->> -	while (list)
->> -		clear_commit_marks_1(&list, pop_commit(&list), mark);
->>  }
->
-> And this is fixed by immediately processing all commits that we
-> currently have in the list. As `clear_commit_marks_1()` only processes
-> immediate children of the handed-in commit we know that it will have
-> processed the first parent, and `list` will contain remaining commits,
-> if any.
+On 2025-02-13 at 08:22:21, Jeff King wrote:
+> Yes, we do similarly spend a lot of time there. But the problem isn't
+> quite that repo_get_oid() also parses revisions. When we see a full
+> object id we return it quickly. But you can fall afoul of 798c35fcd8
+> (get_sha1: warn about full or short object names that look like refs,
+> 2013-05-29), which does a full dwim_ref() lookup for each one!
+>=20
+> Try:
+>=20
+>   git -c core.warnAmbiguousRefs=3Dfalse update-ref --stdin
+>=20
+> to disable that. Internally there's a warn_on_object_refname_ambiguity
+> flag that some code (like cat-file) sets when it knows it may be asked
+> to do a resolve a lot of entries that are likely to be oids.
 
-clear_commit_marks_1() processes the whole ancestral chain of first
-parents down to the root or first clean ancestor.
+Yeah, I think both of these would be great improvements.  The kind of
+case I'm interested in is reference updates in the context of pushes or
+various API calls, where we're always going to have a full object ID and
+there is never a human connected to the output of Git.  I expect that is
+the case for a lot of users.
 
-> We also end up adding grandchildren to the list, so this change
-> essentially converts the algorithm from depth-first to breadth-first.
+I also think it's unlikely that even the general scripter who's working
+with `git update-ref` is going to want that warning.  Most users of that
+command are GUIs, APIs, server backends, or the like, and even if I used
+the command in my Git aliases or some custom commands, I still wouldn't
+really care for that kind of extra output.  I _do_ always want screaming
+performance in `git update-ref` though, since I frequently, even in my
+everyday scripting, work with large numbers of refs.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-It's still depth-first, but all second and higher numbered parents added
-to the list are cleaned before starting to clean the next commit from
-the input list.  So we go from "clean straight down for each input
-commit first and clean their side branches later" to "clean all
-ancestors for each input commit".
+--QAgg56iLi23hr1Yu
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> I bet we can construct cases where this will perform _worse_ than the
-> current algorithm, e.g. when you have branch thickets where every commit
-> is a merge: But I assume that for the most common cases this might be an
-> improvement indeed.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
 
-I won't bet, but I'd like to see such a case.  Can't imagine one.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ65vggAKCRB8DEliiIei
+gQtbAP9dchpQ5lJ82+8dT1Oat6OajQIxS0f3G/ocAjF4M7PQyQD+I+1PHQRbSLFO
+Yy+UuNUMAhP4sqZjQifHYHq1I9h9eg4=
+=lqpa
+-----END PGP SIGNATURE-----
 
-> The question to me is: does this actually matter in the real world? It
-> would be nice to maybe get some numbers that demonstrate the improvement
-> in a repository.
-
-Well, the maximum list length for clear_commit_marks_many() calls with
-nr > 1 in the test suite goes from 12 in t6600 to 4 with the patch.  Not
-that exciting.  The question to me is: Why pile up parents in the list
-when we can clean them earlier with no downside?  Or is there any?
-
-Ren=C3=A9
+--QAgg56iLi23hr1Yu--
