@@ -1,172 +1,122 @@
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DE21632DD
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 17:11:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CDEE245025
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 18:06:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739466707; cv=none; b=nfu29q9r3eMJyaZ5Nkzux73ZA735w+dHQincGHwTNF4wo+sfjQOtmIPilzYk/Gl7jNSQDCZ16MdYrJyAH6XUmyJN8gwFXvoWJ2alZBSLdismr30y+iZnsyte75bpITXJ7wk5DJlpPUjy6x/wmQy2/rBWo4Hrtyl38X4YCea0Yik=
+	t=1739469982; cv=none; b=acpsJp00gG6Asx51WOoqzDRr2DVgkkn/7+pdEIBLGVimjhzKNMj0UY40gfQX4hGIwUTnXRh863S5KxkmLCXMOQwlbP/b+nM6ysSOPeSqBaDecYPJF0iRK2Per5HQx1FlHnNMMKWykzrrLQdvFD/fNXFTXH7R/K2r7AMeeqGsgSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739466707; c=relaxed/simple;
-	bh=MRas81PxBht2Vd20FddfmQE1en1/ND+50J82MbXR4bs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mr01pkJPAiH7P+uiKcHLlxqTlvt3nyPfQcXHVzw/+ZDRvbZRrX295Q/lEL9YBjs0nn+33ft0srwTMz+v5m9QdgIO1qA0si5C+CkQ6ZPDubabP+aSjr5BKv5w1Hlnwo/lqkc4MibiXcfEPDyWlPcbwBRcAyJo7xE5hSSeqliVHfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FUTDVYA4; arc=none smtp.client-ip=209.85.166.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739469982; c=relaxed/simple;
+	bh=Xxj5lvSbmIlXiEgPMfs/rzCvkEE9LNpLh9H6Yp5qdpQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=svbu3VfYxxkqlug99Oc6FXixngbkwjo6ulJexHXdQMoNFGvOYHiTANA39n7Gs4HfSDkp/8o5QrroG9roQEhhKIAD20mbpzf2a6/8geXk6Bs4IMoH7TF0C7/1u6bix2uXhdU09rw7Zm/ARcMYFVcZRGL0boXl4A7JQG7yAaKxODE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CejZ27XF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jfk+Fml4; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FUTDVYA4"
-Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-85532c7220cso84617939f.1
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 09:11:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739466705; x=1740071505; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZInnFM27zgkQkpm1HXcg56sa/0HmNakjGVBN2b//Ioo=;
-        b=FUTDVYA4mT4cnmoig2Ecq9hcEPbx0FHgcXPdJ8enmrhXbOzH4MCrv3iUJoUgpdOD9v
-         xTpmn7f8bF6oxuXPn5Hvef4gd7u5duKm1TU9GAvHbGYONh+wjcHCUT2RH8wnbLl3qGQ2
-         R6bUK7a+bbcTrpR4Y64jVA97rXMgjxHMsAJL2d8/27jHG1V8uf2FFg5PgJbxXPdDrpCg
-         CQ83aTwz/do2IMWFyWurJ7PCGR6QDmccUBkAwO5hTCISeWcteQvUOotuRnbl727J0PHv
-         V9w2R2al2HVuLSb5TFSMTFiNk474sPLFh74xpmZ5NEOebQFUq+1puPjk5WXwYwrtxuhd
-         Zizw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739466705; x=1740071505;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZInnFM27zgkQkpm1HXcg56sa/0HmNakjGVBN2b//Ioo=;
-        b=L9C+puUD0t4zehamDVeN2ZcLzvftqGkIKgWjXxTxWRo+AEYwgNYY8ynu3bLSjejm8M
-         9W7KxkBenDqN59lBGj1GOJfSR4IcpEz+MybC84e6EhiThqq1EVoh2iIjPWaqvkXQ2JrT
-         QOipQCRazu2A0IeUiSKpxgLde6njAVO7xeXTVHPooiesoFEUXvyZCq0EPS+uZJ3+eoYa
-         vCqsZUqthW5SAjyTJPU+XmxQCFONK3WkictCfEwBUhqf3tThX3eSBF4QQchthddbaJQl
-         v9RsrUV1e/AnKQfVCSmuk/NJG0oTvsbYCBvlVzCXQvvS5J7bdLfu3lsHC6+cnXTXPo9H
-         +qZA==
-X-Gm-Message-State: AOJu0YxJ32LAPI8VUgq+uBa/8WnSd4nnuOh3VNwoDXUuMk3pk5zUqemL
-	m0+G+qQPX0hp97zdvwVUdTrcW02HAebzoRd8JDEMES6eKR8ER9vD8zUCE0YPsSbywYXwAgflkar
-	tsYQvu7jDm/I7CQJG9SdelCfq0I8=
-X-Gm-Gg: ASbGncv+9O+CAsNoruSfLR8w53/7mCgCFWjiLeWq6NKp16Oq3Dz+aFMPLWXYHl1kCoC
-	QAv8W4fDCi/eMapw/Sgnqt6iWbQkeERykZuqlD1ha9WKw5v372xnPw6eTWnsiV42xcIpChsvsu3
-	cYOo1CUO22gZDEAeM+VEm20B7vLPTyAA==
-X-Google-Smtp-Source: AGHT+IFsgMHz5/coXfNsscw19kyGpwYirVEOMk4AaWkVxm9cVlNTKslX0lY288e0oDBHhqJEXn+g+vPpVmVR76R13SI=
-X-Received: by 2002:a05:6602:15d5:b0:855:6fa2:c324 with SMTP id
- ca18e2360f4ac-8556fa2ccc1mr10907539f.4.1739466704747; Thu, 13 Feb 2025
- 09:11:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CejZ27XF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jfk+Fml4"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 34AF8114017B;
+	Thu, 13 Feb 2025 13:06:19 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 13 Feb 2025 13:06:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739469979; x=1739556379; bh=DPcnHNCxYB
+	1QZ+UtJGhNlhOVXdO2r31TjUX2HEB0cjM=; b=CejZ27XFAhQgkiVSm0zDKFxJLZ
+	07Xc62OFoDgLdqVzCNUJXPPUwBUZ7gTWiFb/RzDsKaeKlHV6jK4sHSZOhjSrCqio
+	cCioSHKUCamOBbMYfk6T452eHIf6nwflF3SM/lm9pVt9K50jM4SXTMtfRQxwhacl
+	sx6jtMs4h48OpFpQA3JyKUnQ2xJo5XEtZEp/1z0j+syDfE1tZEEI5zgP+4br2uw/
+	bgnT9PQz0uTfkgirPfPuNdJ7gWJdPFaejTTqW7GoNWyyXf7EheQfZIwbX12OabAE
+	cY2eV1ttbREV6af8pnfEILPJV0ZIYtLnzybc1vfgWRXVhK4DmYHSAX+s3F8g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739469979; x=1739556379; bh=DPcnHNCxYB1QZ+UtJGhNlhOVXdO2r31TjUX
+	2HEB0cjM=; b=Jfk+Fml4VbwkMG23aactaixrZ1518iEipbOz+jXekqUkmjQ55u4
+	84gbpRBSrBY1EiVraWZCKEp8ohZg8UlXW3D8JgLPnFnXp5nY6ga5Sgm473GkkYNb
+	fZWMyq3kgnIT1w/a9I2FqgtyQabNfB8hk/asxapkEbUrajyx3nIlM0lc/Id/tQrz
+	TMPrbS1ywW33HXPW3jDqIxU5JfrQq2pq+z35oFu+VsA8LYsXC0C3Apft+X9WmID7
+	orVcDaq1Dpe5pwz8At0V17cx9nElaJQMU/v8jVfl01fBrFiCWB3XpitDOxfieykY
+	XBzKBHXDxQs7zHWrLJlZIWWAiSBqEM352Iw==
+X-ME-Sender: <xms:mjSuZ_C25XbizgakkrVjnbs-zYERH5O_ymu60bEIcjKS8lzYD8HA1w>
+    <xme:mjSuZ1igYA8VbwbtGvvj8rTXShLLxk3DzdhAHaA7nlKTRo0fCiB4flXpAvsTNT7ar
+    rJCgsGpZ2ubwktBbA>
+X-ME-Received: <xmr:mjSuZ6mts3TxtzkhDj0cF6iHdU218Ig-rP64fP2ByVhqqhw2_3IVG601patM-Hx4LbEov5jCvVD791C3U1y3xFeWHHUg6QXReRJyAAo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegjeeghecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhlthhosg
+    hlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:mjSuZxwzNgkQgDcKvYbfx9mcmKa_ibRFvou-FnQQh9webGmS7Uiy0Q>
+    <xmx:mjSuZ0SvEkDia9BVRG1TX_CV62VIVKsQHSq3nFwk0LmCtv2yizbfkg>
+    <xmx:mjSuZ0ZUAh2jX84X0xfGWqdALWPAPocWTwX96INMpXgp__CkffqRTw>
+    <xmx:mjSuZ1RX2kiaGaCvlc3YK3Pb-Xvet8hsIJsEzweLtWk95zgS1hcOEA>
+    <xmx:mzSuZ5L5nRRrr1A2no1hYFa4Zjm217aH1MPEHl9hZcO1RyE3loWtSTRP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 13 Feb 2025 13:06:18 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  jltobler@gmail.com
+Subject: Re: [PATCH v3] builtin/refs: add '--skip-reflog' flag to bypass
+ reflog migration
+In-Reply-To: <CAOLa=ZSDLNLYQ=zsoOqJW6KhcUqeDahNfhG-n9k1t0O6B40OnA@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 13 Feb 2025 09:22:40 +0000")
+References: <20250211-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v2-1-991a2ec9a796@gmail.com>
+	<20250212-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v3-1-98b2c4d2bb0c@gmail.com>
+	<xmqqa5aqu7g9.fsf@gitster.g>
+	<CAOLa=ZSDLNLYQ=zsoOqJW6KhcUqeDahNfhG-n9k1t0O6B40OnA@mail.gmail.com>
+Date: Thu, 13 Feb 2025 10:06:17 -0800
+Message-ID: <xmqq4j0xpvmu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250211194334.20710-1-meetsoni3017@gmail.com>
- <20250213090040.16133-1-meetsoni3017@gmail.com> <20250213090040.16133-3-meetsoni3017@gmail.com>
-In-Reply-To: <20250213090040.16133-3-meetsoni3017@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 13 Feb 2025 09:11:33 -0800
-X-Gm-Features: AWEUYZkPKFU2rBFHXYylfUA532uI3RbmrZWle13d_vp8ecxRQU1O8sHlemcl3Ss
-Message-ID: <CABPp-BGqihkPq3o4jnqp2aGdqw12F8a8nOModuAB-5N7BQ1t0w@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/2] merge-recursive: optimize time complexity for get_unmerged
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Feb 13, 2025 at 1:01=E2=80=AFAM Meet Soni <meetsoni3017@gmail.com> =
-wrote:
->
-> Previously, `get_unmerged()` used `string_list_insert()`, which has an
-> O(n^2) complexity due to shifting elements on each insertion. It also
-> called `string_list_lookup()` before insertion, which performs a binary
-> search in O(log n).
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Okay.
+> To just get rid of reflogs from a repository, I think 'git reflog drop'
+> or something similar would indeed be a better way to go about it. As you
+> stated, with this patch, we could still face the issue wherein the
+> administartor could re-enable reflog and we're back to square one.
 
-> This combination made insertion costly, especially
-> for large index states, as each new entry required both a search and
-> potentially shifting many elements.
+Exactly.
 
-Why does the combination make it costly?  O(log n) + O(n^2) is still
-O(n^2), so I don't see why it matters to mention the combination.
-Could you clarify?
+> Why I think this patch is important, is because while there could be
+> existing reflogs in a repository, if one doesn't care about _reflogs_
+> there could be significant performance gains while migrating repos from
+> one backend to the other, while also leaving the reflogs behind.
 
-Also, does it actually make it costly, or do you only suspect that it
-does?  O(n^2) worst case sometimes behaves O(n) or O(n log n) in some
-cases.  Since your commit message says "made insertion costly" instead
-of "might make insertion costly", I think that would suggest you have
-some performance numbers to back this up on some interesting real
-world repository.  Do you?  Can you share them?
+Sure.  It could be done with a combination of "git reflog drop &&
+git refs migrate" (or "git refs migrate && git reflog drop", if the
+migrated-to backend performs better when it drops reflogs).
 
-> Replace `string_list_insert()` with `string_list_append()` to achieve
-> O(n) insertion. After all entries are added, sort the list in O(n log n)
-> and remove duplicates in O(n), reducing the overall complexity to
-> O(n log n).
+With "git refs migrate --skip-reflog" alone, we are very limited.
+We can lose reflogs _only_ when we are migrating.
 
-Okay.
+Doing it _during_ migration may very well be more efficient than
+dropping first and then migrate (or the other way around), so I do
+not have much against the "migrate --skip-reflog" existing.  But I
+find it backwards to add it first _before_ we have a tool that is
+more generally applicable to wider situations, i.e., "reflog drop".
 
-> This improves performance significantly for large datasets
-
-That's a big claim; it may be true, but without evidence I don't
-believe it for three reasons : (1) n here is the number of conflicts,
-not the number of files in the repo or the number of lines being
-merged.  Thus, n is typically small.  (2) Other O(n^2) behavior in
-merge-recursive likely drowns this particular codepath out, so any
-gains here just aren't going to be noticed, (3) After looking at the
-code and knowing the specialized structure of the index, I think that
-while string_list_insert() for n items in general is going to be
-O(n^2), it will likely functionally be O(n log n) for this particular
-code path, meaning you haven't actually improved the performance.
-
-> while maintaining correctness.
-
-More on that below.
-
-
-> Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
-> ---
->  merge-recursive.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/merge-recursive.c b/merge-recursive.c
-> index 884ccf99a5..6165993429 100644
-> --- a/merge-recursive.c
-> +++ b/merge-recursive.c
-> @@ -547,15 +547,15 @@ static struct string_list *get_unmerged(struct inde=
-x_state *istate)
->                 if (!ce_stage(ce))
->                         continue;
->
-> -               item =3D string_list_lookup(unmerged, ce->name);
-> -               if (!item) {
-> -                       item =3D string_list_insert(unmerged, ce->name);
-> -                       item->util =3D xcalloc(1, sizeof(struct stage_dat=
-a));
-> -               }
-> +               item =3D string_list_append(unmerged, ce->name);
-> +               item->util =3D xcalloc(1, sizeof(struct stage_data));
-> +
->                 e =3D item->util;
->                 e->stages[ce_stage(ce)].mode =3D ce->ce_mode;
->                 oidcpy(&e->stages[ce_stage(ce)].oid, &ce->oid);
-
-Did you run any tests?  I'm not sure you maintained correctness here.
-
->         }
-> +       string_list_sort(unmerged);
-> +       string_list_remove_duplicates(unmerged, 1);
->
->         return unmerged;
->  }
-> --
-> 2.34.1
-
-(As a side note, due to the specialized structure of the input, I
-suspect this code could be modified to run in O(n), i.e. we could skip
-the string_list_lookup and the string_list_sort and the
-string_list_remove_duplicates...  But, it'd make the code trickier, so
-it'd need to be carefully commented, the change would need to be
-justified, and it'd need to be carefully tested.  Even if we weren't
-planning to delete this entire file, I suspect it's not possible to
-find a case justifying such a change without optimizing several other
-things in merge-recursive first, but optimizing those things probably
-results in a significant rewrite...which we've already done with
-merge-ort.)
+IOW, it feels as if we are worried about icing on the cake long
+before we actually bake the cake.
