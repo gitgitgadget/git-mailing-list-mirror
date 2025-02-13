@@ -1,107 +1,119 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0CD24A078
-	for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:12:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D15224BC19
+	for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:25:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739477568; cv=none; b=qjNEM/bR6haZ52aMOn6OpmokAAyrPfwq02p5ITHVrfkUiIVGBx4t7WIk06syvjBCoTW1uB7Slzu7ooUmb9Jp9Q7mx7Y/v65Jd9MQZmJVzhT3fsMcK7lcSitRh4O5ct6iVgh2r3+6j8lDoa+4OhGVQ43M9L+irWsZF1/pikr3nUQ=
+	t=1739478355; cv=none; b=RIld4+iInvLj/LSLN/z1cTiC2MXeYLTXdS4ICVBnR4D5HlSwsrql1m6gnpzN+NGQbTcEpgNgYtdbmTEcAGrbb0jWYBS9UqdsU3JSj37F9IUPNyuPTCQdVYKg20+EdDM1uPf75jwgp9PN4MblEsaWMsLzSkQ91AGSwvGBaRcP2tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739477568; c=relaxed/simple;
-	bh=YBCIuoHKE94i5y6DZBqW1cwTYYkdKg/0J88wiscb0nc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ik404IphJw06Fi2Om1ydJXIiwQbsRcOPv244EHon2EHGND9kELBDuzbCiGxR7E8kQaZu0jowmMjIo4V7I95lr1QMMKmCCaZP3BQQ1M8TTlCg+0A8a6NComEYc0BBmC+YHAySMrzjSnRd6jaNt8vwYTxamHrXsWN7Y4cYvKGydgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BYlILsnt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=an5U91sW; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739478355; c=relaxed/simple;
+	bh=wd33tyzx4VGkO6mgzfPH2HQbkgN8zElNSsdDgNi8DbY=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=qcTCECEsvPJ3ib+SZacr4r81HeLKSKHN6umsKzc6yGDRgB9E9Sobvh7GCzUhIEQkrGf9PzpwO7AOVRKvWydP8LA7rJcBMd20zNSZhJuK6KSr3NmKm4gVCPh4QoWdut1Nf9RJpjBCwfFjLS4CQlHCIhORvIyupvLg+XhnPWm0bwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=1SwpBDf/; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BYlILsnt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="an5U91sW"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6CB762540164;
-	Thu, 13 Feb 2025 15:12:45 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 13 Feb 2025 15:12:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739477565; x=1739563965; bh=3UBhQy7ZJN
-	tG0bJBrnT6wPjiFdlsA9PrPC6+TUY0cfs=; b=BYlILsntuHUSDD0mESNdJkUiAI
-	0waliwD8H+il6DFg5y+zLuP5ePtFd7mUNIHSINQE4t+MiMFrQDmtLh0Psn1Geyqj
-	ZpJLqzzw7ngEBfvdASEBvWgZACjQil2ZXcrN9H5AHkqlTfLBpP9vVaId0yp3CzRN
-	wNUBpd4xfZgUqgmZlzO4L9Zn/3brm+r6VYnkyTQ+1FohL0PN3KWcXo1n7fgHfkEr
-	hmz/I2NEkomF6LQ82R9NITHnmc5wZen1HwfiHUd4gbUvAXT47HqmN8aXdgf8eV85
-	Jxzh3mpywHKuySLJTErPAmfj1JVJt62g92rV1okG0Z5W0yfdJFm7+uJLtg6A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739477565; x=1739563965; bh=3UBhQy7ZJNtG0bJBrnT6wPjiFdlsA9PrPC6
-	+TUY0cfs=; b=an5U91sWdNTa9OjFIpJyOMaY3od8gULRuTaoKQTcHs4o1pPobB5
-	xI1oAYXVsxtg0LkD4fdbNQmI3fditQBPAurH2Uj++Ve78ihSXxiRdYJ2O+cs7xRQ
-	0ggINq+aKe7iL9wsBC8riqF9so4Ao9W782rsMi407EyPJp4JzDGljGCiWEdADCYB
-	1LnVxTuvqdwKr+P/YkPru64/r6EOJWGSKfvAfh+nOOqk+/OOE5YYgozX7PkHqWZP
-	Ou3i1aecgVpvWF0HbgpTSo/PMKCwTBpSAXnGWR+LGMfHADVj8+XRU25lhLvkdpog
-	nTrkrVpBlrVY9KJObdZQlVWh0SFoSMafLew==
-X-ME-Sender: <xms:PFKuZ_NUuf9nEchfZHMF-VEjzzsQ-tcjcnxe7rK4qOTiVNlgLc174A>
-    <xme:PFKuZ5-ZNbY37FbpM8tTVMdIGyz4NQgHrt9m28qzouXdQx9q98EcPFnlCHn-6C67S
-    tUQqO--bTG4Ee2LaA>
-X-ME-Received: <xmr:PFKuZ-SayzQ8Fq4RYaC6T-fkXUGO3QAy8SFv0JfqsJj44itMcc0DCZiv_YDi0rVFEqiMbqp4wgmuQnRUJiTtN0c2ALcREn28C5BkGag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegjeeilecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehsrghnuggr
-    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkees
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:PFKuZzs37S5glZ0LwBWd9cPbdNz0F1q-GrzAlOMbMbNQqR2DgWuJIQ>
-    <xmx:PFKuZ3dKR2vHXVTs29Ku6c7_IW8RIKnNbNwnnRCzUr5W65bpDmEcpA>
-    <xmx:PFKuZ_063BImK2jByYRCz99Q6CFOr79ai5XC5RAc2fGuiJROhE3v4A>
-    <xmx:PFKuZz_9nR5ZGkELADrJCeo9ApjqoaC2rjfFHvJojlpLw7GqOXGwWA>
-    <xmx:PVKuZ_TcQarABbuaQA32QdF1ERZ4Cif2fD-ghTQJVyLs3wqiI5JjgqPo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Feb 2025 15:12:44 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  git@vger.kernel.org,  Karthik Nayak
- <karthik.188@gmail.com>
-Subject: Re: Poor performance using reftable with many refs
-In-Reply-To: <20250213194256.GA934256@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 13 Feb 2025 14:42:56 -0500")
-References: <Z602dzQggtDdcgCX@tapette.crustytoothpaste.net>
-	<Z62NFXja4CkrxSil@pks.im> <Z62booOOXODOl_sZ@pks.im>
-	<20250213082221.GA916028@coredump.intra.peff.net>
-	<Z63VY_wa7Z6lrUfY@pks.im>
-	<20250213194256.GA934256@coredump.intra.peff.net>
-Date: Thu, 13 Feb 2025 12:12:42 -0800
-Message-ID: <xmqqed01ob7p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="1SwpBDf/"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6dd01781b56so14897316d6.0
+        for <git@vger.kernel.org>; Thu, 13 Feb 2025 12:25:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1739478352; x=1740083152; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4wnB1KSLJK65kdBkVoTkyLNi38eugfTY8nHqfsoxDJY=;
+        b=1SwpBDf/855WBmr0vroP6SLMr0xXM6drtO/30DnD4Qw4q+47WtzZPj6hjpPrt4URkY
+         +UQfgKRsKBDAv6FNtG9ehm+L+5BHBRh909ylFarKKf+qIf7pWFvI0U/NxrtwjkSS8M32
+         +voOSQflJDF5AN7o9pGLjxoGUSfd7vkMAxMLgSFNqcU3MOm75uPiNOODn6kxIHt67tAK
+         /bP7m7k+XvAcn86Z7fOZKLze0P4Xiu4ScjTVfy3+NOokEDjcV9NHL/6ZuQ9xVfnnADj5
+         bmJwIUAeDl3yoLMnMmXS/J/VGP3R5Ni7+I3pRX41OU6hRsLrt5nV2Be4NdhXX5Cj37Tg
+         izBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739478352; x=1740083152;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4wnB1KSLJK65kdBkVoTkyLNi38eugfTY8nHqfsoxDJY=;
+        b=FhCvuflS6cDCNj7GlWT2h6in4Me5TlWuNnc6qFkBIlJh78GgvZef2UgxrIo1PQy3qL
+         euFz/ruhFzDwo1OH9y23LVO3w/ExZ4DTCKNY3uMbZNG42VftXHeT0uQfJdkRU51F0L8O
+         pB0eu/+SYDf+fbUf1c/ROF4EwwltZ/JMdE5URaxO8fJAT7/zcHiYLZ6H7RieD7J43wDW
+         i8PpyPmlTyGhS6V4m81rszRh8P/jXCw4sUnC8sQhPGfGhikL/80yPRosk5HHHS8X4HnV
+         RuHeV1fxUQhN7kfUAfh1dbyl3/ul9mQAMACR3fLzFA3nskstr8oebPd1UUOHrbARnqN5
+         zjRA==
+X-Gm-Message-State: AOJu0YzFpUA4AzKPow3BfyDWLYkide5icUceDY1bNne2srn2DMm+0oRC
+	0tjS5VSNVwwSWek9Mt2wdXX7rMgjUpOXD678UtQUupcloQMOdpuDTmrUIpa6WWCTEO5dhPMrhdE
+	m
+X-Gm-Gg: ASbGncvwl27jKnJ/IXZa3OUZ36qeB6uvPF9ji5yZYQpEvPKxeFrLix3epiHCjqaQa2z
+	1+IWwVk/9PhH+TNsKzw0yLkzYpL4MhfmGPjp/lvqlsfUQgJy2mwM9K6gh4RzupHG/KT2RoY8uN5
+	qri38+I+3jr6Zs2V+thByNFqwSlMvDXV/FtXWfhKhoJ5e0fwW4500n3xeYnsHKKHebCk6oP/Lsc
+	c/cP85VQ/3h3BAdkrbKcGjnwNv8t9zK/CWF107SnPC4YuHLJz6Y/Kmpxs4sdbxAzcnytHR296SY
+	JgSzL7h8pHo7yyvAJfSbeLswYHX9oAjoLQmp4MKbk8Du+c43VD0OlZs6rx3yg9I=
+X-Google-Smtp-Source: AGHT+IEtMXTc8U4Lg7IWqq5GHkN2Wa+cVS6/606cGQ/bwSkrP9zCfSnRzP9vpaO/pow1fNevynUj/A==
+X-Received: by 2002:ad4:5fcf:0:b0:6e4:3eb1:2bdf with SMTP id 6a1803df08f44-6e65c1aab2amr59923266d6.44.1739478351990;
+        Thu, 13 Feb 2025 12:25:51 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-471c2af31f0sm11318501cf.58.2025.02.13.12.25.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Feb 2025 12:25:51 -0800 (PST)
+Date: Thu, 13 Feb 2025 15:25:50 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH] Makefile: remove accidental recipe prefix in conditional
+Message-ID: <a79e9e9f50410721d85747b03559d55be98bca20.1739478347.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Jeff King <peff@peff.net> writes:
+Back in 728b9ac0c3 (Makefile(s): avoid recipe prefix in conditional
+statements, 2024-04-08), we prepared our Makefiles for a forthcoming
+change in upstream Make that would ban the recipe prefix within a
+conditional statement by replacing tabs (the prefix) with eight spaces.
 
-> ... I have trouble
-> imagining it helping much beyond something like:
->
->   git branch $some_oid
->
-> which creates refs/heads/$some_oid. But we probably would be better off
-> warning about that at the time of writing rather than checking for
-> ambiguity on each read.
+In b9d6f64393 (compat/zlib: allow use of zlib-ng as backend,
+2025-01-28), a handful of recipe prefix characters were introduced in a
+conditional statement ('ifdef ZLIB_NG'), causing 'make' to fail on my
+system, which uses GNU Make 4.4.90.
 
-Certainly.  Thanks for a well thought-out analysis.
+Remove the recipe prefix characters by replacing them with the same
+script as is mentioned in 728b9ac0c3.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
+---
+ Makefile | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 90c9662ad3..5b98a9d12f 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1703,16 +1703,16 @@ IMAP_SEND_LDFLAGS += $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+ 
+ ifdef ZLIB_NG
+ 	BASIC_CFLAGS += -DHAVE_ZLIB_NG
+-	ifdef ZLIB_NG_PATH
++        ifdef ZLIB_NG_PATH
+ 		BASIC_CFLAGS += -I$(ZLIB_NG_PATH)/include
+ 		EXTLIBS += $(call libpath_template,$(ZLIB_NG_PATH)/$(lib))
+-	endif
++        endif
+ 	EXTLIBS += -lz-ng
+ else
+-	ifdef ZLIB_PATH
++        ifdef ZLIB_PATH
+ 		BASIC_CFLAGS += -I$(ZLIB_PATH)/include
+ 		EXTLIBS += $(call libpath_template,$(ZLIB_PATH)/$(lib))
+-	endif
++        endif
+ 	EXTLIBS += -lz
+ endif
+ 
+
+base-commit: e2067b49ecaef9b7f51a17ce251f9207f72ef52d
+-- 
+2.48.0.25.g629188ede7e
