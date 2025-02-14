@@ -1,87 +1,82 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9167623A9
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 18:35:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A46F134AB
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 18:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739558120; cv=none; b=OhE/W1eOtw+SmNZBwissMO1kLVckByd95oV4ZymhntZsjvFN+vEg9b9WI0WgRHta3tDMj2pa2PrIQowfJ85tzXxvlt9ovm/XhK4xtLpYvU7DTIlML2RihsDGjWHh5Ev4mscd7siGo4/qWd23gK049Bfm0zx/SAWrK0M/gfzK+qU=
+	t=1739559414; cv=none; b=GBnGFqHKZPl5f8CyF7Uw8sm/bRzPesDc375Xp+9OKCUjYOZwRVvyhU/GuvbBEjb7Il4/wMq+00hSk4p6OEmotaRNQc/t+xH1OXgy+xEZWCVoU97IHJMZ8KhLwkYHTEuNGtEEr8g35EZ7KdgRacFQdiedglJodUPPWXAjLrWZ36Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739558120; c=relaxed/simple;
-	bh=crS2vnl4kxuQops6eHyAcRQ0/MZgTSt0OnSAV9zZ7iM=;
+	s=arc-20240116; t=1739559414; c=relaxed/simple;
+	bh=5Uh/qmu1+WxEEd0KDraVNWkl0DuMSLbTxfEZ5eEaHeI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Lt/+TNPink5IkSw/x+pR+cK2mndqSzz6+nHdZDBtAbxu6fehsBfdPwkX1dnrlvTmkE0CvTVixej0tS4HYDMJi08hJ7IKHZDp7aXqgV2qlj/1GN4fRYVEpAQr9aeH+GnFEPWWU9i5CVxeH0tT/f7Aqp2cCoa7sWg7Xgvp56tT6xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cbbs3vm1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sS5qaQuO; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=AXcJapVkWgv5ogq1rgeYDuc0G/fqjTxjwe/RMiLubXDKF5aCDQifWnr76Vrt2I1NC4B5ig4fyeCPA8qoTRAe8r695/WEl0K/zEk305K8j4udvZD66sWCuTocNM/ZidV68AI1Ik+G7Q1tvRD/pDW1WEeANqMIjtEKcA6iUBVU1h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=he4mZJSP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SPRD5Gfy; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cbbs3vm1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sS5qaQuO"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8C92311400DD;
-	Fri, 14 Feb 2025 13:35:16 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="he4mZJSP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SPRD5Gfy"
+Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7E1CF13808B7;
+	Fri, 14 Feb 2025 13:56:51 -0500 (EST)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 14 Feb 2025 13:35:16 -0500
+  by phl-compute-13.internal (MEProxy); Fri, 14 Feb 2025 13:56:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739558116; x=1739644516; bh=NwG4zVLk7J
-	nepZwv12/NSQIBLlX7lej75DDK9ymuuBg=; b=cbbs3vm1tRLS8WyFbZn8OKL/JC
-	hLpe/5Wjm22dtWLYLMHeBdqHp33HH5mtCjYJtje6Y20+/HjM7Xq+996cKg4a6be0
-	6/dm7btL9A8AWrxIc9qb6YXzB96pEcjr2LsWXFkgPaEHvk3vD9ue88lv0kNZCsOv
-	bfWo0OKkRBb/OA5nsPAiSZh7A1g/8HUcINBLiq8eMa1ai69ABAUvT0eWL+0dLIAc
-	6vxqn9ZlL29frYn5Pi5CLp9U0dd4iY4kDMVcYIhj5ZwvLr95AHrM4uQTTOqE4LfD
-	aQ16xPnkduYh6ECIGlZG3dHz7k/FHDdyxx6ascVJNsFfP7C1skYtgQwC3K3Q==
+	:subject:to:to; s=fm2; t=1739559411; x=1739645811; bh=Scovc73kUx
+	2oSYcNYDq2vlBJYw59mtWL+G7Zgtdj63M=; b=he4mZJSP1Mfl2u7hkrIe/PSTNJ
+	gFZcukOtFpfyLL0/f+dzAvV6SjI2VXfYMGzYp5dJArgQWjMVZCRdMkBCkIWoJKr5
+	k1QqQMRl7dbLKYqu8QOjHOnK2Zx2fQuV1phF+k7rumfTo7kKbZRkElwugID6B8MJ
+	C/QmgYW6Vc6PRRm3U4ADH6m5E/o3RmEm0Q74yTjsG1ES7SvxLORSoIsKCW8QZrmH
+	m2Wo9PzbLhZWdrRY2eS91k+xDTYAE/mSKbb4eMC+f9QZ4XPmK4KAxsNpjKqaZn+Q
+	TCvtCQHPsJedi8qhkeeoKhCELBiJeGK5U7WliLHBVvNDWM5tU+2t2cB34Nvg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739558116; x=1739644516; bh=NwG4zVLk7JnepZwv12/NSQIBLlX7lej75DD
-	K9ymuuBg=; b=sS5qaQuOP8fhCanC0A4QWnnt9F3Wm2nTvPTeSRYBddnbKVJu/GN
-	c7i1Gqmek9UXyQbrrku5kyRa7mA1raj2BUAj5LYr65Ww227RSOnIk99Z+SZNLllw
-	Y2WinupK6CD8VmY9ZCrPM2M94xjyvkxe8mSH0ElShUWkFmIgop4C0RFt360/iOoA
-	6OtkeHB3vn/6+OJ/4xAtTn6HTwvEvFBiPOpwZj+fobvw9IFNHi6zRFvCbGS4ZjHu
-	OfLLIWdQBVlET7k7KyeralM0XZAdBTOhL+PSDo7iW0Ejs1GS7g23jHwETLvOO4AC
-	Uv70jIRf4HZzFVB6e8EB1HenShQDojxUchw==
-X-ME-Sender: <xms:44yvZ4O2f2hHA4WlgCn2Ke1HrIILy5imkoOV8ieY8xclbR7eO8Ifpg>
-    <xme:44yvZ--DFF-T9EAJaxwCM2H5mQgJfV_IVZ4FdjSTPZ9FalaGmbXHYilqr_WVqvitN
-    yVLnnvc5B_CMzhwiw>
-X-ME-Received: <xmr:44yvZ_Q--cPqJ_fIexh4RnePwB52uyBfAANzIDQeEGorNYk4BMZCN-t6zAaTpfneu4fG7FdSWhdOj6KE5X_p9Pmh-svYDHYR33vri6w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehtdefkecutefuodetggdotefrod
+	1739559411; x=1739645811; bh=Scovc73kUx2oSYcNYDq2vlBJYw59mtWL+G7
+	Zgtdj63M=; b=SPRD5GfybejF4XBTgG3wAkTkMGr8dA93vu0wylovruRB7YFB4xp
+	HIKD7P/r3m1ittBUSblykuN8c5I+8pB54gUoiG2RhxehCWspv1qwyjTk9PtpR/UQ
+	562dHdw9Wpxmkh53u7x8NGVOFPMOuUHTM0zFpHOZyWbcnuI3qJlPxszPRof3ybw1
+	V4gcnC3tj5gNUpe1i9pmk6Dk5u+Kr8SjOPxVuXtalAQ0P1OOJed0W15Jvb6nZA9y
+	2gMCaDVxPYsC7z7qMBAvxQVMRhfktJ5QXISOvibGPxs/F1reKA7hgSA6hkC96cn3
+	ck3qSVedUk7AHUeDktgbZziM4E/oFGA8t0A==
+X-ME-Sender: <xms:85GvZ7md4w_5WdjHy2HiuIMfmR9mdAolu5qdd8Pb4jXl9wg8pzf_zA>
+    <xme:85GvZ-15IGBsBGZMbun1EW2sdmM2ieZXXrXyX4cqRtRdbJJXxYj6K-uXf2ajBhfSE
+    L1AtKYnKONG-Pa07g>
+X-ME-Received: <xmr:85GvZxowO_85JZl3cNGzulT8ErPlCYNdjSsAbSU7gMIl83JO_Ya4WAb00UTqv4kCGq5HxHXe6xkbDuAMUziayb4__wkmpJPBHtv9v3s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehtdegfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
     necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpefhledvheeuieegudefgefhkeefleevjeef
-    leduudekgeevffefgfekffefvefgtdenucffohhmrghinheprhgvfhgpphhrvghfihigvg
-    hsrdhnrhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghp
-    thhtohepihhtohguohhrohhvsegtrgdrihgsmhdrtghomhdprhgtphhtthhopegsvghntg
-    gvsehfvghrughinhgrnhguhidrtghomhdprhgtphhtthhopehjohhnrghthhgrnhhtrghn
-    mhihsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:5IyvZwtygkU1Gifwa1v6WmIAYi4AeCnjrw_FhC4rtaslBwZkNT9CIQ>
-    <xmx:5IyvZwc1aLOpv7vvikGZGgfsJaDBPHWl0G_Wx9hBstABM42tcU-BkA>
-    <xmx:5IyvZ016XXgn6r4ebjqs8ZsyBwnlndRd0qOxxHoox9UETG3Y52WtqQ>
-    <xmx:5IyvZ0_SRzPmQvyWBcoxEA-4_HbY0FAb6E68BRwHxKwVsL_oBnn0LA>
-    <xmx:5IyvZ4TCowaZPkJUknpSfnDWwJv96X-a2e2etjYut1r3LxPZhfmMaWPs>
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
+    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
+    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepmhgvvghtshhonhhifedtudejsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:85GvZzlDRgImH_LXTW7PrB-bI_q_thdK0zfrm78Z9AUN6_10Sd_coA>
+    <xmx:85GvZ52ZH7tfG_iLFZpoIOV62cODUvXxWeqBiUEbVZp9xIXRtc_4AA>
+    <xmx:85GvZysSGlQ7Zj8R0RfTY2pwh4_r4qeBC5fYvRcnGfw27x3Mu6Mi8w>
+    <xmx:85GvZ9XvrbfJ0bnwNqEo9HgFi-QonmBv8qHD7GHiM503mqEKj-nSiQ>
+    <xmx:85GvZyxyhEMpnWwQTOqX4brCliNYVpOxv1KCQIVZnXyOikGUqwO04NbO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Feb 2025 13:35:15 -0500 (EST)
+ 14 Feb 2025 13:56:50 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Igor Todorovski <itodorov@ca.ibm.com>,  Bence Ferdinandy
- <bence@ferdinandy.com>,  Jonathan Tan <jonathantanmy@google.com>,
-  "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Tags are no longer fetched when fetching specific commit
-In-Reply-To: <Z650WoqFwCSo6svH@nand.local> (Taylor Blau's message of "Thu, 13
-	Feb 2025 17:38:18 -0500")
-References: <71075837-D0AA-4F01-9F5D-CA10BFE93B63@ca.ibm.com>
-	<Z650WoqFwCSo6svH@nand.local>
-Date: Fri, 14 Feb 2025 10:35:14 -0800
-Message-ID: <xmqqv7tcl6hp.fsf@gitster.g>
+To: Meet Soni <meetsoni3017@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [GSoC][PATCH] refspec: clarify function naming and documentation
+In-Reply-To: <20250214053938.26807-1-meetsoni3017@gmail.com> (Meet Soni's
+	message of "Fri, 14 Feb 2025 11:09:38 +0530")
+References: <20250214053938.26807-1-meetsoni3017@gmail.com>
+Date: Fri, 14 Feb 2025 10:56:49 -0800
+Message-ID: <xmqqldu8l5hq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,68 +86,74 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Taylor Blau <me@ttaylorr.com> writes:
+Meet Soni <meetsoni3017@gmail.com> writes:
 
-> So I think the right fix would really be something like:
+> Rename `match_name_with_pattern()` to `match_refname_with_pattern()` to
+> better reflect its purpose and improve documentation comment clarity.
+> The previous function name and parameter names were inconsistent, making
+> it harder to understand their roles in refspec matching.
 >
-> --- 8< ---
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index fe2b26c74a..0e63621e6c 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -1770,9 +1770,8 @@ static int do_fetch(struct transport *transport,
+> - Rename parameters:
+>   - `key` -> `src_pattern` (source globbing pattern)
+>   - `name` -> `refname` (refname to check)
+>   - `value` -> `dst_pattern` (destination mapping pattern)
 >
->  	if (tags == TAGS_SET || tags == TAGS_DEFAULT) {
->  		must_list_refs = 1;
-> -		if (transport_ls_refs_options.ref_prefixes.nr)
-> -			strvec_push(&transport_ls_refs_options.ref_prefixes,
-> -				    "refs/tags/");
-
-I guess the original "if we are giving prefixes already, then make
-sure we learn about tags" is because the semantics of the ref-prefix
-is peculiar, in that without _any_, there is no limitation and the
-remote end would advertise all its refs, but if there is even one,
-the remote end would advertise only the ones that match any prefix?
-
-> +		strvec_push(&transport_ls_refs_options.ref_prefixes,
-> +			    "refs/tags/");
-
-So this change would make sure that, even if somebody else already
-added a prefix earlier, we would always ask about tags if we come
-into this block.  It also means when nobody has added a prefix
-before we reach here, we still add prefix to ask about tags.  The
-implication of which may be rather grave.  If a later code relied
-on us _not_ asking for tags here (because nobody is limiting the
-ls-refs request with prefix), after this change, that code will
-now see that there is some prefix requested already, and if we
-wanted to retain what that code does, we would need to adjust that
-code (and then the need for similar modification cascades X-<).
-
->  	}
+> Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+> ---
+> This change was previously discussed in an earlier patch series [1], where
+> Junio suggested making this update after the dust settled there.
 >
->  	if (uses_remote_tracking(transport, rs)) {
-> --- >8 ---
->
-> But I'm unfamiliar enough with this area that I'd appreciate comments
-> from the authors of these various commits, all of whom have been CC'd.
-> Does this seem right to you, or am I totally down the wrong path?
+> [1]: https://lore.kernel.org/git/xmqqa5bctbnx.fsf@gitster.g/
 
-I have no idea without doing a deep dive myself, for which I have
-failed to find time for so far.
+Yeah, and the dust settled a few days ago when the
+ms/refspec-cleanup topic graduated to the 'master' branch.
 
-I have to wonder if the first thing we should do is to update the
-logic to decide what ref prefixes to use, so that it does not do
-such an incremental strvec_push().  There are multiple questions in
-the form "Do we need to know about X?" the code path need to ask
-before deciding what prefixes to use, and before Bence's "We need to
-know about HEAD, because we want to know about its symref value",
-refs/tags hierarchy was one (and only?) thing we needed to ask
-about.  The bug under discussion smells like the result of how
-brittle the code's assumption about what prefixes other parts would
-want to ask.  This code did not assume there is anybody else, and
-that is why it broke when we started asking about HEAD.  Now we have
-two possible X's in that question (refs/tags and HEAD).  We may want
-to make sure the code is robust enough when we add the third one.
+Thanks for that work.
+
+The tldr is that I like two things in the above rename, and find two
+things problematic.  "name->refname" is very good, adding "pattern"
+is very good.  using "src" and "dst" is problematic.
+
+One thing to note is that match_refname_with_pattern() can also be
+used to reverse map.
+
+A refspec that says "refs/heads/*:refs/remotes/origin/*" can be used
+to answer these two questions:
+
+ * I see what they call "refs/heads/master", where should I store it?
+
+ * I have "refs/remotes/origin/main", where did it come from?
+
+The src/dst distinction you updated the parameters to the function
+only reflects the first usage, and it is a bit confusing when the
+code asks the other question.
+
+    Find the "refname" in A and replace the same glob part in B when
+    it finds a match
+
+is what the function does, and we used to call A=key and B=value,
+which were not great.  With "pattern" in their names, the new names
+"src/dst_pattern" are improvement, but src/dst hints as if they are
+directly related to src/dst sides of a refspec, which is the source
+of possible confusion when we talk about the "please map from our
+remote-tracking branch name to the branch name at the origin" use
+case.
+
+So, I very much have problems with the "(*source* globbing pattern)"
+you state as the reasoning beind the new name in the proposed log
+message and "src/dst" in these names.
+
+What do other people who wrote tools that do something very similar
+call these two things?  For example, "sed -e 's/A/B/'" command does
+"find A and replace with B".  They call A=RE and B=replacement
+
+Perhaps "key -> pattern" and "value -> replacement" would be a
+better pair of names that are easier to understand?  I dunno.
+
+> -int match_name_with_pattern(const char *key, const char *name,
+> -				   const char *value, char **result)
+> +int match_refname_with_pattern(const char *src_pattern, const char *refname,
+> +				   const char *dst_pattern, char **result)
+>  {
 
 Thanks.
-
