@@ -1,72 +1,116 @@
-Received: from mail.inka.de (quechua.inka.de [193.197.184.2])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0857818BBBB
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 20:56:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.197.184.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC616AAD
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 21:49:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739566573; cv=none; b=Vs6OUGNaub2JC3pCNSQLQl839ABnpKAaykK6ydP9rSMoSDxS9zeX63RSyW9w5CRb4XFioVeHKbBgRWNhgj82i93aELXc3f3vr7TU2nB14Li9p8/POhgRyMEC5tmQJe+fKS0VQchuN0q4tIfGur5/JvaZ+gR+tNYPEHcWveCBbgU=
+	t=1739569789; cv=none; b=UC6Ax8AOvBVImZ3KpY3jxKWal/bTA/m1yJB+5rbpMV1TrOB7A3OXmYLIyYSqCKUxjFPvGtBA53RneDqYRuvEs6JONtxdA5NVPhuVOykfA+hWma8pwGUAYrdia1mVzC1kLMXltdH+aiGCcbCDXlDUIHgbH728JedoVd/GKjmJlx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739566573; c=relaxed/simple;
-	bh=5yniUHeKHBjGwUucL++MkUfEofXcWDicoZULAFMdTy0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Mu9nbq+WsndSYnStVh1Gjz+lE1Xm86d13rI4N1qfZMkpE5RoJdOAG/ZJsvDY26lQqasJr3WO35L+kyrrwGdl6nWCIluSFJ00u+PdkPEw07ep2/rZY55LW4kNcRxSI5fhIheICcjA9gRI8l9GgUw5E6iuhW1YooHx3QMNjf6vWLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de; spf=pass smtp.mailfrom=raven.inka.de; arc=none smtp.client-ip=193.197.184.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=raven.inka.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=raven.inka.de
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1tj2jG-008LjP-GR; Fri, 14 Feb 2025 21:56:06 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 9076160117; Fri, 14 Feb 2025 21:55:13 +0100 (CET)
-Date: Fri, 14 Feb 2025 21:55:13 +0100
-From: Josef Wolf <jw@raven.inka.de>
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: renormalize histroy with smudge/clean-filter, again
-Message-ID: <20250214205513.GU30202@raven.inka.de>
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-References: <20250205214726.GA30202@raven.inka.de>
- <20250211235707.GQ30202@raven.inka.de>
- <Z6-lyJNvXHhrVXhg@tapette.crustytoothpaste.net>
+	s=arc-20240116; t=1739569789; c=relaxed/simple;
+	bh=qQj35NuaP9hBlo34pM1ogGEBY23Cv8R5y2qdihFvNCY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OpNkqGWmZnQBowahgmLnZYtV7HHsQngID9CVw2aFBrnvimnw+rbZ7MH+SXFk55DtbLpEZqe4sm0ysG9/9oSk5C/EHbH68CQu6d2UCqD822qJlhN+4NfZaO5OirdjPqIhzQbWJX212yvCCLz6YXkzOBInug9Aqn+Tp8n4WTp6J2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JzY7DeUh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SSChm1KC; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JzY7DeUh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SSChm1KC"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id C901C13801CD;
+	Fri, 14 Feb 2025 16:49:46 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 14 Feb 2025 16:49:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739569786; x=1739656186; bh=Yv5hBRyQVx
+	aztorQMLSkw/lx3s5wv8dtuNTDtdBV+OA=; b=JzY7DeUh39qyWGxSrp4LUubYSC
+	AdUljnP0OESAIqZpcQmRgHDMiefKYl2nFyf5bDCrR89goFIRzTRCcFZYGc6DQGgz
+	mEoaFQpoiAcI8M1QN+QWSUuu4NvU1ED7G1MbCTF6QySV+CtpKxnaGP7mIhXvby3p
+	cg8inqpVbbdYrkhLpw7eXYWoZodb7womVpXeCngR2XZIaaBY2VyX+J0wPYJgoPxg
+	R0z2uzBjfzUpGN+24hCznsM0SqU/6rNT1N8Tzg09NGjeJFqSxDXLxSiF+1QZgUGU
+	FLIxEIv2iyP6A4YyfJ6z0AJuBYqvgicUJ7bAyLlMem8wUEg9x89eXtQ1/sHQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739569786; x=1739656186; bh=Yv5hBRyQVxaztorQMLSkw/lx3s5wv8dtuNT
+	DtdBV+OA=; b=SSChm1KCw0hbWi+uNv2a2lILwutXe7enNvrLb0hMDyx+323ol8u
+	M6eCpKQz4WCWqHj9MqTNlBT92k8yggkwedB0qPvyDpwDfTXuHYqpLKHLIZtNK7kI
+	5VTn2fhn23wmVQEpxPWZThgxt7X+OCuijb2S22YqC6QxsM35g2bFeY8Dcuo+vb0z
+	fGShcAjBtcl3WA5yAim9do0Li+XH1ZVrvBnF/Oh8anaEjoahWv256Gn0wXmFfMg7
+	mF9KvZ5ikmzfODVTqVLDlI9EkOkjX2xNIXhwhxSrkAs36IRue7FjBiCcM9x1FPZZ
+	WA416xur0dZtGKsXbn06d2ruyu9d6Wr4i4w==
+X-ME-Sender: <xms:ebqvZ95KixJ4LNA6MOtKBTYKOlcO162vLEldJ_lBRRG0npH98H-lIw>
+    <xme:ebqvZ65wMNvKLYZXzSAwfWqbtmiWy5JNIpzddTrWaXHgUYdnxrQOBe9drHxs3Fprr
+    Gv4zHS-OyOlKOqr3g>
+X-ME-Received: <xmr:ebqvZ0empJR5hl6Kcs_RFl1vhtcmTixPPcyuUJJ5rYIx_BiCgxmsa-peayVgST043Pew6vMDWpiswf6p53HsvblOBPrk86IYPu5A2lg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehtdejjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkh
+    hinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgr
+    nhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
+    ihhnsehgmhigrdguvgdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhi
+    lhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehpshesph
+    hkshdrihhmpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhm
+X-ME-Proxy: <xmx:ebqvZ2IC1lcUdVOav1K3NH3XqwpcizB5bwtGnx4HAm0_NgYU_FMwpQ>
+    <xmx:ebqvZxLU3hYdTzeIadZoCcr7V8iOjK_zoCvTZAEIdnQ7ZwBLWbyZGA>
+    <xmx:ebqvZ_wT54wMH4AK_bpj6xXJWKbiLqDRYJc3BMeOIfmRnU_ljAgUfw>
+    <xmx:ebqvZ9J7RQGEpvvAQ00kNNIGN9ZXqsUHhOo8w4zpvEguSKOhxkPGkA>
+    <xmx:erqvZ7AUcF-i9ntlmdfFAHHw7X7zspHTW3Yi6kQXQyagyQb8b-noWMh->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 14 Feb 2025 16:49:44 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,
+  Johannes.Schindelin@gmx.de,  johncai86@gmail.com,  me@ttaylorr.com,
+  phillip.wood@dunelm.org.uk,  ps@pks.im,  rsbecker@nexbridge.com,
+  sunshine@sunshineco.com,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 5/6] t5701: add setup test to remove side-effect
+ dependency
+In-Reply-To: <20250214123734.1403120-6-usmanakinyemi202@gmail.com> (Usman
+	Akinyemi's message of "Fri, 14 Feb 2025 18:06:15 +0530")
+References: <20250205185246.111447-1-usmanakinyemi202@gmail.com>
+	<20250214123734.1403120-1-usmanakinyemi202@gmail.com>
+	<20250214123734.1403120-6-usmanakinyemi202@gmail.com>
+Date: Fri, 14 Feb 2025 13:49:43 -0800
+Message-ID: <xmqqa5aokxhk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z6-lyJNvXHhrVXhg@tapette.crustytoothpaste.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 
-On Fri, Feb 14, 2025 at 08:21:28PM +0000, brian m. carlson wrote:
-> On 2025-02-11 at 23:57:07, Josef Wolf wrote:
-> > Still struggling with my filter problem.
-> > 
-> > Here is what I do:
-> > 
-> > - Set up a clean filter which enforces CRLF (yes, for this specific use
-> >   case I want CRLF even on linux)
-> 
-> Is there a reason you can't use `eol=crlf` instead of a smudge/clean
-> filter?  That looks like this in the Git repo:
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-Yes. Most of the data files of this (proprietary) application are XML files
-using mostly CRLF, but there is also LF ancoded content. Like this:
+> Currently, the "test capability advertisement" test creates some files
+> with expected content which are used by other tests below it.
+>
+> To remove that side-effect from this test, let's split up part of
+> it into a "setup"-type test which creates the files with expected content
+> which gets reused by multiple tests. This will be useful in a following
+> commit.
+>
+> Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+> ---
+>  t/t5701-git-serve.sh | 12 +++++++++---
+>  1 file changed, 9 insertions(+), 3 deletions(-)
 
-[ ... ]
- <foo>^M
-  <bar>
-  fonly LF in contents of bar
-  </bar>^M
- </foo>^M
+Up to this step, everything looked very good.
 
-In addition, it randomly shuffles the XML elements at every startup, even if
-no changes are done. To prevent conflocts from this, I need to sort the XML
-elements into a canonical ordering in the clean filter.
-
--- 
-Josef Wolf
-jw@raven.inka.de
