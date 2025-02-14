@@ -1,290 +1,160 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3BF261567
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 12:38:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EEB263F3B
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 12:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739536688; cv=none; b=rGCOGsirXYuxdtpvRCc2A7jXIkz5JFv2RPVGqtKBXKcHoadd/8D4t4iyzuxyWsFIY8DAqhrcRbmBcW4HlB1JpKkshW6SdGgXHe6qJxaweRwwO1A+34yI8v+RmvnNy5k89RqJbXRU4Gbm41gB0gzPb9vdxS3WX5+a7y9pZ/59EM8=
+	t=1739536927; cv=none; b=T77mjK9CB1wKq64+cKHjidgtsjJsdddFMWq9cRYpkdOy4N+AKa1QSpReu5VGDl7Cg0ZotPrB1Nh1XK6l8dY0+jkQfF3u/G8CIOkxuT1BxUdhOtMFo4UHZ609BrYDqyfqacBgM3uouKeXlza+LCri6gJ60KzXyOoAetTy8v9+vpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739536688; c=relaxed/simple;
-	bh=cZCsJbKV44wNeeDhMqFj7Ji/afYTEqUgmHdChGuznYA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FkXkMg7RybFypYL7L918JQg5wUHtEDHXd3n2wwkrnySe73EcqbU2+itQLP5sBK7jaMb30Dcg0Ek2TgE3Lz3GiTeCLMQxU9xtBS97rCyUvLsxt4aeM3vH2tN4ou6ZemmdUQwRLWa3roteT+u8jEZvEMZV9yTioTHG9JTH2qqT5eU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=byVpy/qH; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1739536927; c=relaxed/simple;
+	bh=YNtsEd/GwEeb2JqmOwdlsc38Y8awqafyZNBxYvNrR70=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tDxFLOQYCQgVKRet2xllIJMXe6u3/FMSrW3HNYh9MuuT4/jRI5gDS0PcgqDeK7+SG4zWOQAP+QXkfeirOcRNgbpRGtV5qLmCo6MPeim/GKKJgKsI41pZNpP4a5b99ki7EqfkCEMIoggVFYRVhYJyf65aDhXLlZMnpAhIaGUF+sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ViSQnE2P; arc=none smtp.client-ip=209.85.128.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="byVpy/qH"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-21f3c119fe6so46874865ad.0
-        for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:38:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ViSQnE2P"
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6f7031ea11cso18344177b3.2
+        for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:42:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739536686; x=1740141486; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LMhluq5TYdN6ZdVsPOcx2eT0BsU3zGlAUrHr/mRBZBQ=;
-        b=byVpy/qHqsi/ozaUtNP13CwwZGEtuoQbzoj7LApfBePeZacBTHm/Nm44ukrrRXzqbm
-         cE163Kxzl1THHWzkJ6w2+S598t53FE6mFz37zD0gvps81d7g7xlw9ljUQtD5dZCpZFjh
-         nmM6ohTQwMTgAhMR77eg01cY5Z4wrd+pgoRuOFH90V9rWvIbkh8Sa2oeCkkEMDS0NvY6
-         F9hImcfi+FIHgjVkkod0Few6FV2A0Rk2OmxcekO7RTxyq75wNPqDejIm5mFH6fKS/G8J
-         iGC9hsVZ1vfxe18WIaEjriX8IZKW+rhjsggjc/hNONexeCTQBwRxVofrr/HPWvbcXjIb
-         pLTg==
+        d=gmail.com; s=20230601; t=1739536925; x=1740141725; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=r0F7NeVwtYmuXlPTJgBKX503C9zZ2mi0swFN5aCC7bM=;
+        b=ViSQnE2PL3GjUVlKzOzCJsBna5WrUQ0u4gXUhgjM+vX4bO4F2lbeFFiYF139rsi2GI
+         2LlfixqBCPr4RN8nat0A75vupPscya2vnJueW9v8VNh3AvJ+/Qx8Fb/BJEp8jGOh9L45
+         s/pyRlrFto7UWG39PezXTXfRP0WZ/ZVyWp0+2BGU4XmoATRniWGpWMHQ0NSzEsC+bZeR
+         TB701Tnw+suYiGoOD6KJnArmM1HhXdRLlqLjlFMGIIgOcQcuqWUWamxoPvkhqEB9g+MX
+         4AVgROCpJQS5puyvOojBr2p4f4el4L2K9ucRfLA7usn67mtqGeFmI8xvvOYtrWXsEUI3
+         nj8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739536686; x=1740141486;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LMhluq5TYdN6ZdVsPOcx2eT0BsU3zGlAUrHr/mRBZBQ=;
-        b=GPnbGWr1Upxk9BIaCQgYG00xwD1OmHdpGi2K9IE5ewHguj52wKkyU4/bII98U1bXjL
-         wN1dqFqZZN/P3Q9frwkFW5Tk9FpI11cwT9QmZbfOnMZGXvzUvRPWi5e62YpTe6FsXXaa
-         QuAcNoYA83Y9yJsjP417rrFf3JuxInukABEf5b93G5zkKQUWmzReIQKa7FIHWfSTRP31
-         f00Vu8PzbGrmqH5xYUVoGvjWhJqt2cGHhJ8gfUrWG12BjzsS+Se6oXvEhMqRDPVpGa4o
-         wN6jXrFooyaZ40Nw5aOm0yDzw6rMtlnG7HRSz2PfwK/alCChw5KO6t914fvqwQ+KvMSg
-         IOCw==
-X-Forwarded-Encrypted: i=1; AJvYcCVbp0TCI83adEc7R+XVf56qIzOiVDUwSf09VWNfkvDmFXWOKzl+WqCG+nyPQCWcTQT+Swk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzwdu9ei/V8OuXxG14X6xtFO9iNaHb8bcslU+g1QLQ33pvSXHu9
-	ckkTNpTzXZwVoYwdrN6lAHgwu0vKJqVmuB/CxDeFpZLK24j6pEj+
-X-Gm-Gg: ASbGncvzzaf4+Lvrwx/+fXpK/ouV+uJB6A0F8kna//UAi5XJNDP8TKZFDqD1o9DDJPt
-	9PFvkKO/bD2UUO3ZfEG3gusUfcsSobH2fKzTvNHeSFzddi+8ep/h5atVXFXKhhuaGm/rnJqdn6M
-	w0ly84HDhkmLHE+HDjM6aSn7BbbggYaTez/hW1puiu7EAqD9BuKXHXPmTNl9lXjac6IPrPtZhY8
-	8b8dg5QnRWuRb5+yMEfkNdHlXHNajxeI4qzWMt75Hs9m2KKWvL98EHgRFRoa7xsdICXe+tFVcZ1
-	1uADFolFXl4a5t9PeqhKUdYDJPpMa2AKOKksepys
-X-Google-Smtp-Source: AGHT+IE8v0YewJfC5ITCzURqq16A81VvJZA1hozGY9zvqtkIY3u/FZcX4p5rnjUK8s3nQgsZDFxaeQ==
-X-Received: by 2002:a17:902:e544:b0:220:f795:5f14 with SMTP id d9443c01a7336-220f7955fc0mr19092365ad.27.1739536686306;
-        Fri, 14 Feb 2025 04:38:06 -0800 (PST)
-Received: from archlinux.plaksha.edu.in ([182.75.25.162])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d545d09esm27814775ad.112.2025.02.14.04.38.02
+        d=1e100.net; s=20230601; t=1739536925; x=1740141725;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r0F7NeVwtYmuXlPTJgBKX503C9zZ2mi0swFN5aCC7bM=;
+        b=wCLEUEHYCYLdd3wiDV+kl54mi2qf0uW1QXa0Rs4GwOydPuz1JLX/UPbm7pjv7+vjLQ
+         55a4ZCTymeY0HTtCFm1oeGAMeSvW1B7uGDa3cfkvMiRtISE+CZ4yRXGk1qHuzjuA1Phv
+         XkUXHbAsG8rJxpT8nAICZW6uQCS6iE42sCPeVcLcDIIU00w6l0ufOvCWM6cG8v6VNmps
+         uPu7rmZvnO3w1dXWqhfXM36k+fthAnwFwTKAbc/1+bVs55XpUmLnzqE7EnoSly5hPrFK
+         JHN3An3AKgFXy8nYGmt1x5NipqCk55WnAg324b/U3E1xZ6oRMtlwlPasgBh8VxyTv+me
+         z5iQ==
+X-Gm-Message-State: AOJu0YwDpT08o1lV8ZKN7c9f1lXHWjMnpeN5alM0lhSEkU7p/Oo8mB04
+	dQ1+lBAzAsHf46gHwRp654Xl2nOvA/BTLSran9ZCXAbc7whLan+2
+X-Gm-Gg: ASbGncvOsL5z7elXWR6quvc1IN/X8Kyr2Gd8LlkdUfzl8uU8efDuig3Pq9IGYfiSnWx
+	x/awyP3KumOJJwgSQU3+xp2ObrzT6nmtFJSe4EBCdeOvz705puAq8HfjCjz5+V4uKFnUZ26X0pi
+	BHJ7vqngOUSJf8Lr60ZxFcsUYroAqnVH3nTZERsn9jm1dx4/JrrF3jzbnjMEiZBfC+EEQyW9pHt
+	1uIGmZFfu2Fa5VRTOM8/WQS76brlqMVDFO7vPJ7kVLnjx33ytgtSALg3GydOO9lbiwrOQ==
+X-Google-Smtp-Source: AGHT+IEkqglslqivzn2z9aLJVZsWMKGnup9ccqE9x0pGfiELyDlqkSSiwN/xoqr4w4LpFtyHSODpdQ==
+X-Received: by 2002:a05:690c:5983:b0:6fb:24e1:2d03 with SMTP id 00721157ae682-6fb24e132bemr65746697b3.10.1739536925264;
+        Fri, 14 Feb 2025 04:42:05 -0800 (PST)
+Received: from localhost ([2604:5040:11:69e::e973])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fb5359d663sm385577b3.96.2025.02.14.04.42.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2025 04:38:05 -0800 (PST)
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-To: christian.couder@gmail.com,
-	git@vger.kernel.org
-Cc: Johannes.Schindelin@gmx.de,
-	gitster@pobox.com,
-	johncai86@gmail.com,
-	me@ttaylorr.com,
-	phillip.wood@dunelm.org.uk,
-	ps@pks.im,
-	rsbecker@nexbridge.com,
-	sunshine@sunshineco.com,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 6/6] agent: advertise OS name via agent capability
-Date: Fri, 14 Feb 2025 18:06:16 +0530
-Message-ID: <20250214123734.1403120-7-usmanakinyemi202@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250214123734.1403120-1-usmanakinyemi202@gmail.com>
-References: <20250205185246.111447-1-usmanakinyemi202@gmail.com>
- <20250214123734.1403120-1-usmanakinyemi202@gmail.com>
+        Fri, 14 Feb 2025 04:42:04 -0800 (PST)
+Date: Fri, 14 Feb 2025 20:43:59 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v4 4/8] packed-backend: add "packed-refs" header
+ consistency check
+Message-ID: <Z686jytnvdzdG6HJ@ArchLinux>
+References: <Z67LkxAFIAeaYr0U@ArchLinux>
+ <Z67MG8utrQfUrakz@ArchLinux>
+ <CAOLa=ZQTJhs+s+4y1DUpGDn7CnM5qwAgicgkcjA6ngmkbhwZyA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQTJhs+s+4y1DUpGDn7CnM5qwAgicgkcjA6ngmkbhwZyA@mail.gmail.com>
 
-As some issues that can happen with a Git client can be operating system
-specific, it can be useful for a server to know which OS a client is
-using. In the same way it can be useful for a client to know which OS
-a server is using.
+On Fri, Feb 14, 2025 at 02:30:45AM -0800, Karthik Nayak wrote:
+> shejialuo <shejialuo@gmail.com> writes:
 
-Our current agent capability is in the form of "package/version" (e.g.,
-"git/1.8.3.1"). Let's extend it to include the operating system name (os)
-i.e in the form "package/version os" (e.g., "git/1.8.3.1 Linux").
+[snip]
 
-Including OS details in the agent capability simplifies implementation,
-maintains backward compatibility, avoids introducing a new capability,
-encourages adoption across Git-compatible software, and enhances
-debugging by providing complete environment information without affecting
-functionality. The operating system name is retrieved using the 'sysname'
-field of the `uname(2)` system call or its equivalent.
+> > 2. If the header content does not start with "# packed-ref with: ", we
+> >    should report an error just like what "create_snapshot" does. So,
+> >    create a new fsck message "badPackedRefHeader(ERROR)" for this.
+> > 3. If the header content is not the same as the constant string
+> >    "PACKED_REFS_HEADER". This is expected because we make it extensible
+> >    intentionally. So, there is no need to report.
+> 
+> Do you think it's worthwhile adding a warning/info here? This would
+> allow users to re-run 'git pack-refs' to ensure that they have a more
+> up-to date version of 'packed-refs'.
+> 
 
-However, there are differences between `uname(1)` (command-line utility)
-and `uname(2)` (system call) outputs on Windows. These discrepancies
-complicate testing on Windows platforms. For example:
-  - `uname(1)` output: MINGW64_NT-10.0-20348.3.4.10-87d57229.x86_64\
-  .2024-02-14.20:17.UTC.x86_64
-  - `uname(2)` output: Windows.10.0.20348
+I somehow agree with you here. But Junio worries about the
+compatibility. You could see [1] about this discussion:
 
-On Windows, uname(2) is not actually system-supplied but is instead
-already faked up by Git itself. We could have overcome the test issue
-on Windows by implementing a new `uname` subcommand in `test-tool`
-using uname(2), but except uname(2), which would be tested against
-itself, there would be nothing platform specific, so it's just simpler
-to disable the tests on Windows.
+[1] https://lore.kernel.org/git/xmqq1pwkdt7r.fsf@gitster.g/
 
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- Documentation/gitprotocol-v2.txt | 13 ++++++++-----
- t/t5701-git-serve.sh             | 16 +++++++++++++++-
- t/test-lib-functions.sh          |  8 ++++++++
- version.c                        | 29 ++++++++++++++++++++++++++++-
- version.h                        |  3 +++
- 5 files changed, 62 insertions(+), 7 deletions(-)
+[snip]
 
-diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotocol-v2.txt
-index 1652fef3ae..f4831a8787 100644
---- a/Documentation/gitprotocol-v2.txt
-+++ b/Documentation/gitprotocol-v2.txt
-@@ -184,11 +184,14 @@ form `agent=X`) to notify the client that the server is running version
- the `agent` capability with a value `Y` (in the form `agent=Y`) in its
- request to the server (but it MUST NOT do so if the server did not
- advertise the agent capability). The `X` and `Y` strings may contain any
--printable ASCII characters except space (i.e., the byte range 32 < x <
--127), and are typically of the form "package/version" (e.g.,
--"git/1.8.3.1"). The agent strings are purely informative for statistics
--and debugging purposes, and MUST NOT be used to programmatically assume
--the presence or absence of particular features.
-+printable ASCII characters (i.e., the byte range 31 < x < 127), and are
-+typically of the form "package/version os" (e.g., "git/1.8.3.1 Linux")
-+where `os` is the operating system name (e.g., "Linux"). `X` and `Y` can
-+be configured using the GIT_USER_AGENT environment variable and it takes
-+priority. The `os` is retrieved using the 'sysname' field of the `uname(2)`
-+system call or its equivalent. The agent strings are purely informative for
-+statistics and debugging purposes, and MUST NOT be used to programmatically
-+assume the presence or absence of particular features.
- 
- ls-refs
- ~~~~~~~
-diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-index 4c24a188b9..4f0b053c4a 100755
---- a/t/t5701-git-serve.sh
-+++ b/t/t5701-git-serve.sh
-@@ -8,13 +8,19 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./test-lib.sh
- 
- test_expect_success 'setup to generate files with expected content' '
--	printf "agent=git/%s\n" "$(git version | cut -d" " -f3)" >agent_capability &&
-+	printf "agent=git/%s" "$(git version | cut -d" " -f3)" >agent_capability &&
- 
- 	test_oid_cache <<-EOF &&
- 	wrong_algo sha1:sha256
- 	wrong_algo sha256:sha1
- 	EOF
- 
-+	if test_have_prereq WINDOWS
-+	then
-+		printf "agent=FAKE\n" >agent_capability
-+	else
-+		printf " %s\n" $(uname -s | test_redact_non_printables) >>agent_capability
-+	fi &&
- 	cat >expect.base <<-EOF &&
- 	version 2
- 	$(cat agent_capability)
-@@ -31,6 +37,10 @@ test_expect_success 'setup to generate files with expected content' '
- test_expect_success 'test capability advertisement' '
- 	cat expect.base expect.trailer >expect &&
- 
-+	if test_have_prereq WINDOWS
-+	then
-+		GIT_USER_AGENT=FAKE && export GIT_USER_AGENT
-+	fi &&
- 	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
- 		--advertise-capabilities >out &&
- 	test-tool pkt-line unpack <out >actual &&
-@@ -361,6 +371,10 @@ test_expect_success 'test capability advertisement with uploadpack.advertiseBund
- 	    expect.extra \
- 	    expect.trailer >expect &&
- 
-+	if test_have_prereq WINDOWS
-+	then
-+		GIT_USER_AGENT=FAKE && export GIT_USER_AGENT
-+	fi &&
- 	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
- 		--advertise-capabilities >out &&
- 	test-tool pkt-line unpack <out >actual &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 78e054ab50..3465904323 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -2007,3 +2007,11 @@ test_trailing_hash () {
- 		test-tool hexdump |
- 		sed "s/ //g"
- }
-+
-+# Trim and replace each character with ascii code below 32 or above
-+# 127 (included) using a dot '.' character.
-+# Octal intervals \001-\040 and \177-\377
-+# correspond to decimal intervals 1-32 and 127-255
-+test_redact_non_printables () {
-+    tr -d "\n\r" | tr "[\001-\040][\177-\377]" "."
-+}
-diff --git a/version.c b/version.c
-index d95221a72a..027ebc82b4 100644
---- a/version.c
-+++ b/version.c
-@@ -1,8 +1,9 @@
-+#define USE_THE_REPOSITORY_VARIABLE
-+
- #include "git-compat-util.h"
- #include "version.h"
- #include "version-def.h"
- #include "strbuf.h"
--#include "sane-ctype.h"
- #include "gettext.h"
- 
- const char git_version_string[] = GIT_VERSION;
-@@ -34,6 +35,27 @@ const char *git_user_agent(void)
- 	return agent;
- }
- 
-+/*
-+  Retrieve, sanitize and cache operating system info for subsequent
-+  calls. Return a pointer to the sanitized operating system info
-+  string.
-+*/
-+static const char *os_info(void)
-+{
-+	static const char *os = NULL;
-+
-+	if (!os) {
-+		struct strbuf buf = STRBUF_INIT;
-+
-+		get_uname_info(&buf, 0);
-+		/* Sanitize the os information immediately */
-+		redact_non_printables(&buf);
-+		os = strbuf_detach(&buf, NULL);
-+	}
-+
-+	return os;
-+}
-+
- const char *git_user_agent_sanitized(void)
- {
- 	static const char *agent = NULL;
-@@ -43,6 +65,11 @@ const char *git_user_agent_sanitized(void)
- 
- 		strbuf_addstr(&buf, git_user_agent());
- 		redact_non_printables(&buf);
-+
-+		if (!getenv("GIT_USER_AGENT")) {
-+			strbuf_addch(&buf, ' ');
-+			strbuf_addstr(&buf, os_info());
-+		}
- 		agent = strbuf_detach(&buf, NULL);
- 	}
- 
-diff --git a/version.h b/version.h
-index 5eb586c0bd..bbde6d371a 100644
---- a/version.h
-+++ b/version.h
-@@ -1,6 +1,8 @@
- #ifndef VERSION_H
- #define VERSION_H
- 
-+struct repository;
-+
- extern const char git_version_string[];
- extern const char git_built_from_commit_string[];
- 
-@@ -14,4 +16,5 @@ const char *git_user_agent_sanitized(void);
- */
- int get_uname_info(struct strbuf *buf, unsigned int full);
- 
-+
- #endif /* VERSION_H */
--- 
-2.48.1
+> > +static int packed_fsck_ref_content(struct fsck_options *o,
+> > +				   const char *start, const char *eof)
+> > +{
+> > +	unsigned long line_number = 1;
+> > +	const char *eol;
+> > +	int ret = 0;
+> > +
+> > +	ret |= packed_fsck_ref_next_line(o, line_number, start, eof, &eol);
+> > +	if (*start == '#') {
+> > +		ret |= packed_fsck_ref_header(o, start, eol);
+> > +
+> > +		start = eol + 1;
+> > +		line_number++;
+> 
+> Why do we increment `line_number` here? There is no usage beyond this.
+> 
 
+We will use this variable when iterating the next line (ref entries). It
+will be used in next patch.
+
+> > +	}
+> > +
+> > +	return ret;
+> > +}
+> > +
+> >  static int packed_fsck(struct ref_store *ref_store,
+> >  		       struct fsck_options *o,
+> >  		       struct worktree *wt)
+> >  {
+> >  	struct packed_ref_store *refs = packed_downcast(ref_store,
+> >  							REF_STORE_READ, "fsck");
+> > +	struct strbuf packed_ref_content = STRBUF_INIT;
+> >  	int ret = 0;
+> >  	int fd;
+> >
+> > @@ -1786,7 +1850,16 @@ static int packed_fsck(struct ref_store *ref_store,
+> >  		goto cleanup;
+> >  	}
+> >
+> > +	if (strbuf_read(&packed_ref_content, fd, 0) < 0) {
+> > +		ret = error_errno(_("unable to read %s"), refs->path);
+> > +		goto cleanup;
+> > +	}
+> > +
+> 
+> So we want to parse the whole ref content to a buffer, wonder if it
+> makes more sense to use `strbuf_read_line()` here instead. But let's
+> carry on.
+> 
+
+We may use `strbuf_read_line`. But I don't want to do this. My check
+logic is the same as the parse logic ("create_snapshot" and "next_record").
+I want to keep the logic nearly the same. So maybe one day, we may
+refactor the code to make the parse and check use the same code. But at
+now, this is difficult.
+
+Thanks,
+Jialuo
