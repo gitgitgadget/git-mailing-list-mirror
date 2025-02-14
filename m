@@ -1,68 +1,67 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B441322071
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:59:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F04B5155335
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 05:00:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739509174; cv=none; b=kc2iKmvYTMhaJmA61MgotPKoZ3z6xyq5mC7BKMZEmPeZaLr+Xlq9fwxu8pAffuzIpyTco7MgM6BH3QqsCTYtsjJbohoyShjWvdu1eT+mrFgYXwKFfqTc+82cq4/2JMKgQbQuvph3AaurJavUqIxxWqe5udsDD4SXk0L71UVRpes=
+	t=1739509208; cv=none; b=dhV0o0VLQIyLys5C+5kOb8t2wmyqoB9qWKsbiOkDkOJM2PJr7dCIictpW2VjGxIfYW9s/nmrhdDatFD2GFdI83Cqdlq3yiEc+h19TL4EC24TC0BPVGSNEJtGTBp7IUpSxVIhXvZYwmg7nS2HObzZ5ad9bGLNQ23gR8V5UqAB+dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739509174; c=relaxed/simple;
-	bh=GyRDBQRu8dqqQsFxIEBdlzUpxxgK4m9X0l9krBfTdr8=;
+	s=arc-20240116; t=1739509208; c=relaxed/simple;
+	bh=bOH8EXS/qoID+eTMIaUS5T2Cf4HXM1yFX6eN6nldINI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=glk9qovcBDor1H/q5q0vfu4O3WFRugc0pFwGKM6OiwZZ4pTC0u+4RmCtWVvG+gKaUG/6/NgzombTNsN/WtbJcb5+2070ylzEZ/e4D4ivefkrShJyWjijMu2fZnaawK7CLpkvgrONbOzc2kXk6ecvQJfMkHWKS3+MjPNpi/h9pu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K+MY5kOL; arc=none smtp.client-ip=209.85.128.174
+	 Content-Type:Content-Disposition:In-Reply-To; b=emwyxYVykTCVuzTIzv1bWg0MWpquMnZCxY5w8fIhSSqrmRBOXdL2z/wgHKVwbm/itzCdrIWOTw1TQYcBe+Aq91fl0GPiC+ku6UiC7GNmMupW+829icM6a163JJ+z9v0pnB1KEnAbSkQ2siffONE4j/93HKXTpOlal8hcU9xCTrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A+DsoX5t; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K+MY5kOL"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-6fb2a6360efso12277797b3.0
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:59:32 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A+DsoX5t"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6ef7c9e9592so14069297b3.1
+        for <git@vger.kernel.org>; Thu, 13 Feb 2025 21:00:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739509171; x=1740113971; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739509205; x=1740114005; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rgoFDMJFqLrwpEy5c7lw++17FKEsQAjW/XXdnX8ba/g=;
-        b=K+MY5kOLddLCTq3w+rn78QoH76K2esY2zySBO3H3G53dpeA8INCqiRX+11oR5ZEkIN
-         zL889UkaAckEH2Kjp6FwXHmOkR2no3s6szMr/kvPWxEz+BPMt8XsanlFwEP44tpZo1Jo
-         ScrW5ngaj6LxKgZZ7QZ5l+CNBAkbF9JGY7lMXgjdV/2stcfiIiu+nK5o6U3wo6SyrGAu
-         lDZ+kyqp1MVzBEgmtSfFvBIDHH+l2Cg8NCUEt19al/b4QWZD0uln4hQz5lN3a6K7SvKv
-         BXd/A6OEgylJBs1/GpeRYka+JgMxzM6a1Vqiun3/JpPm3asXD2VDwRyiuAjw18cYb14j
-         K/FA==
+        bh=PFe8USlvzqm0SFaL8IfMaARwBqQYjT6+vEiHsm5EcBI=;
+        b=A+DsoX5tp+9502e9wllaJtWuL4tDkH/AMUoO2nR9gk5KNumJx5M4ZYu3yGW72s+i1N
+         791GeC7xk0jfvXcF9oL+6Ff3Yin4CCHqEsmCEJcoJs4Xc/WUiPAVQ4CSq55kaOi7EF8V
+         sq9jPO6jzT9pYXt/Fp9YoUY0/GKdU9dhiyaDuqfXMTpfmQD1XRSH6zQwc13Yu+hcJytd
+         aTU09DN/aRQ0Unr2VvNLAioGyBZ6V2vlWEw78UV1Drm/LoQuUzmoJiY6mlqjmyShxklm
+         RMJJNmJydC26LoeT4ywzN4QbtG6/9PavHtXsNs7voDuYqXtb6l5rf6coK4gdLwlV4Rnb
+         F8gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739509171; x=1740113971;
+        d=1e100.net; s=20230601; t=1739509205; x=1740114005;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rgoFDMJFqLrwpEy5c7lw++17FKEsQAjW/XXdnX8ba/g=;
-        b=OWxGtw19TbAvfDaJ1f2OlDT4IYZNKCnVN8jCxRe8JXt8gSfj530qc6cnGVxgxvVfQ/
-         cryaQ7+1Gjs4fyOl/GWm0FtMKqi5ZLbZv3UjUIFfmVv6cfL3+Q8e8Z3UyO/lvjd7t+e2
-         4sM1fiA5LFfiQQanMvfIJxk30iAZB7Ml6CR4BSW5HHXyc/7a4pTuDvErUISZ52rrYQmG
-         7+D6gbVUPua7mVmuWTmScp6dofg8CDvbdypKCZVBPh8B4p/QCwr8/9Nmnx5vhNHsRLYg
-         LOCM6YAEXZEBR5RVX5W9D2P0b3EA8LvQNiuJ0kCP0BQ7qE2i2YyrkgKJggcGtQZxwzEr
-         fgEg==
-X-Gm-Message-State: AOJu0YwYkSZTo+8Kd+c49+MtFpzQrlKmSJipPpXNxHx0+SRFjnTeR421
-	I5pS0JgIRqp/4JEv8i5ueiuXLY7+Z/FiPztkkY6BeegWP/6vU60cWGibXr4W
-X-Gm-Gg: ASbGncurmA1qc3wTBMLMYX6LSCgWY2vx2Zsa3VMaz/jRVeNqTG+MXCVPKf77sFEUABd
-	0mj2HohJc5qdF8/l8erjs4epCtiNxyYDhCfAKeIO0RXsVJKRR5twlt+3nLGO2vrxaYNlOfP64p5
-	zaot/rJcS40e9Xv2+1IEFjepQP1Ijb5DF9Rs7opKc9PNajj28qg2X/4mRNmU51bbV9Pq5ao30tT
-	xkq8csfe8zfwo+8ZNDRIY/MK/HAWBe1SKvg3+gKofgiWEdKxB3D/toRuCulm+EMDhUORg==
-X-Google-Smtp-Source: AGHT+IH7Jb2q8eVxkdCP+hFSHXhMW/nuae/OBIncmB6CwZtPzP/iPe9WxVZxkApHUQ1wXy2yKpySjw==
-X-Received: by 2002:a05:6902:1107:b0:e57:3a77:99b9 with SMTP id 3f1490d57ef6-e5da04b35a1mr7754278276.41.1739509170717;
-        Thu, 13 Feb 2025 20:59:30 -0800 (PST)
+        bh=PFe8USlvzqm0SFaL8IfMaARwBqQYjT6+vEiHsm5EcBI=;
+        b=uOMqnIKpyShFoQTtU2S1erdiSMwCZocdAbGVhBDzmdONKc9B1SgmCPo5KrN8Gw0peI
+         L8JEEOATQEGNJOsxvPOfTwSKXzkDL4s9DldgCqZEzSAbe9c/UF3hZkFAva+oMRuClgBg
+         FdFVOtR74cQfHeZ87xSWmjkQ0hH1YDoIxi4W+5nAEH+lmj65poXirtApNGQSnyaZ3/55
+         8eVdANhvrjHmC952F0GYXyX5dXFfzjV1wGjpYXzNPG6IyRGrikCk6t1GxbriIMs+XMRP
+         0GRHXcBlex9cxYkCQHaTurFyzyc3HKm43/45+A+i/WoqBCg6iwOM3fQSQDzFMcPfy5I6
+         WRMw==
+X-Gm-Message-State: AOJu0Ywxn2Uwyx9kXzo6L8/IpQufC0QZvbT7IBKoBquGdDWzMN17a7wn
+	8gYKswm3oVajmqeKiItBoveDnb8HK2e4w9AKzG8DR6UG9UIEV90Z0m0VFwsP
+X-Gm-Gg: ASbGnctmKuhSDFjAbafebSALQ3/QY5S2rFA4Shhuvd0fQ33v3VHn1qWuXAz22XQfCn+
+	vwUyX01Knjy7Eg9svl3yhMKzqyv9mHi6sdobAqVbf4q6qDGJoh4rkvAVf25uGonQ2DSv/tWXdNx
+	8Zy6jIE/foL0AqD/NggwSR16p0Qd8SCh1/oVkmWz+H8fnSpsa3MNWtHd5iFMEODY6WImBUmC6W4
+	wh4u9raRaJ5rYL+R7J6wep3RzUeY3SCZMUXMrR+iPJ6ACNUUuIBKdcCFg0SjOudPwY6IA==
+X-Google-Smtp-Source: AGHT+IFS5W3LxvxUUJ5MEBX8v9p3H7xemezSvLFgVtfVC9WFACBcDi9IgNwCOsQjD6ucpwZg+/Y2Gg==
+X-Received: by 2002:a05:690c:700e:b0:6ef:64e8:c708 with SMTP id 00721157ae682-6fb32ca520amr56914427b3.17.1739509205482;
+        Thu, 13 Feb 2025 21:00:05 -0800 (PST)
 Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e5dadeca97bsm789537276.32.2025.02.13.20.59.28
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fb361d037esm6083857b3.118.2025.02.13.21.00.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2025 20:59:29 -0800 (PST)
-Date: Fri, 14 Feb 2025 12:59:24 +0800
+        Thu, 13 Feb 2025 21:00:04 -0800 (PST)
+Date: Fri, 14 Feb 2025 12:59:59 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v4 7/8] packed-backend: check whether the "packed-refs" is
- sorted
-Message-ID: <Z67NrPT9j5C6pzP8@ArchLinux>
+Subject: [PATCH v4 8/8] builtin/fsck: add `git refs verify` child process
+Message-ID: <Z67Nz4GwAVS3fEds@ArchLinux>
 References: <Z67LkxAFIAeaYr0U@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,337 +73,174 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <Z67LkxAFIAeaYr0U@ArchLinux>
 
-When there is a "sorted" trait in the header of the "packed-refs" file,
-it means that each entry is sorted increasingly by comparing the
-refname. We should add checks to verify whether the "packed-refs" is
-sorted in this case.
+At now, we have already implemented the ref consistency checks for both
+"files-backend" and "packed-backend". Although we would check some
+redundant things, it won't cause trouble. So, let's integrate it into
+the "git-fsck(1)" command to get feedback from the users. And also by
+calling "git refs verify" in "git-fsck(1)", we make sure that the new
+added checks don't break.
 
-Update the "packed_fsck_ref_header" to know whether there is a "sorted"
-trail in the header. It may seem that we could record all refnames
-during the parsing process and then compare later. However, this is not
-a good design due to the following reasons:
+Introduce a new function "fsck_refs" that initializes and runs a child
+process to execute the "git refs verify" command. In order to provide
+the user interface create a progress which makes the total task be 1.
+It's hard to know how many loose refs we will check now. We might
+improve this later.
 
-1. Because we need to store the state across the whole checking
-   lifetime, we would consume a lot of memory if there are many entries
-   in the "packed-refs" file.
-2. We cannot reuse the existing compare function "cmp_packed_ref_records"
-   which cause repetition.
+Then, introduce the option to allow the user to disable checking ref
+database consistency. Put this function in the very first execution
+sequence of "git-fsck(1)" due to that we don't want the existing code of
+"git-fsck(1)" which would implicitly check the consistency of refs to
+die the program.
 
-Because "cmp_packed_ref_records" needs an extra parameter "struct
-snaphost", extract the common part into a new function
-"cmp_packed_ref_records" to reuse this function to compare.
-
-Then, create a new function "packed_fsck_ref_sorted" to parse the file
-again and user the new fsck message "packedRefUnsorted(ERROR)" to report
-to the user if the file is not sorted.
+Last, update the test to exercise the code.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- Documentation/fsck-msgids.txt |   3 +
- fsck.h                        |   1 +
- refs/packed-backend.c         | 116 +++++++++++++++++++++++++++++-----
- t/t0602-reffiles-fsck.sh      |  87 +++++++++++++++++++++++++
- 4 files changed, 191 insertions(+), 16 deletions(-)
+ Documentation/git-fsck.txt |  7 ++++++-
+ builtin/fsck.c             | 33 +++++++++++++++++++++++++++++++-
+ t/t0602-reffiles-fsck.sh   | 39 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 77 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-index 02a7bf0503..9601fff228 100644
---- a/Documentation/fsck-msgids.txt
-+++ b/Documentation/fsck-msgids.txt
-@@ -187,6 +187,9 @@
- 	(ERROR) The "packed-refs" file contains an entry that is
- 	not terminated by a newline.
+diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
+index 5b82e4605c..5e71a29c3b 100644
+--- a/Documentation/git-fsck.txt
++++ b/Documentation/git-fsck.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
+ 	 [--[no-]full] [--strict] [--verbose] [--lost-found]
+ 	 [--[no-]dangling] [--[no-]progress] [--connectivity-only]
+-	 [--[no-]name-objects] [<object>...]
++	 [--[no-]name-objects] [--[no-]references] [<object>...]
  
-+`packedRefUnsorted`::
-+	(ERROR) The "packed-refs" file is not sorted.
+ DESCRIPTION
+ -----------
+@@ -104,6 +104,11 @@ care about this output and want to speed it up further.
+ 	progress status even if the standard error stream is not
+ 	directed to a terminal.
+ 
++--[no-]references::
++	Control whether to check the references database consistency
++	via 'git refs verify'. See linkgit:git-refs[1] for details.
++	The default is to check the references database.
 +
- `refMissingNewline`::
- 	(INFO) A loose ref that does not end with newline(LF). As
- 	valid implementations of Git never created such a loose ref
-diff --git a/fsck.h b/fsck.h
-index 14d70f6653..19f3cb2773 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -56,6 +56,7 @@ enum fsck_msg_type {
- 	FUNC(MISSING_TYPE_ENTRY, ERROR) \
- 	FUNC(MULTIPLE_AUTHORS, ERROR) \
- 	FUNC(PACKED_REF_ENTRY_NOT_TERMINATED, ERROR) \
-+	FUNC(PACKED_REF_UNSORTED, ERROR) \
- 	FUNC(TREE_NOT_SORTED, ERROR) \
- 	FUNC(UNKNOWN_TYPE, ERROR) \
- 	FUNC(ZERO_PADDED_DATE, ERROR) \
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 5d1dcfec6f..391efced54 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -300,14 +300,9 @@ struct snapshot_record {
- 	size_t len;
+ CONFIGURATION
+ -------------
+ 
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 7a4dcb0716..f4f395cfbd 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -50,6 +50,7 @@ static int verbose;
+ static int show_progress = -1;
+ static int show_dangling = 1;
+ static int name_objects;
++static int check_references = 1;
+ #define ERROR_OBJECT 01
+ #define ERROR_REACHABLE 02
+ #define ERROR_PACK 04
+@@ -905,11 +906,37 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
+ 	return res;
+ }
+ 
++static void fsck_refs(struct repository *r)
++{
++	struct child_process refs_verify = CHILD_PROCESS_INIT;
++	struct progress *progress = NULL;
++
++	if (show_progress)
++		progress = start_progress(r, _("Checking ref database"), 1);
++
++	if (verbose)
++		fprintf_ln(stderr, _("Checking ref database"));
++
++	child_process_init(&refs_verify);
++	refs_verify.git_cmd = 1;
++	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
++	if (verbose)
++		strvec_push(&refs_verify.args, "--verbose");
++	if (check_strict)
++		strvec_push(&refs_verify.args, "--strict");
++
++	if (run_command(&refs_verify))
++		errors_found |= ERROR_REFS;
++
++	display_progress(progress, 1);
++	stop_progress(&progress);
++}
++
+ static char const * const fsck_usage[] = {
+ 	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
+ 	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
+ 	   "         [--[no-]dangling] [--[no-]progress] [--connectivity-only]\n"
+-	   "         [--[no-]name-objects] [<object>...]"),
++	   "         [--[no-]name-objects] [--[no-]references] [<object>...]"),
+ 	NULL
  };
  
--static int cmp_packed_ref_records(const void *v1, const void *v2,
--				  void *cb_data)
--{
--	const struct snapshot *snapshot = cb_data;
--	const struct snapshot_record *e1 = v1, *e2 = v2;
--	const char *r1 = e1->start + snapshot_hexsz(snapshot) + 1;
--	const char *r2 = e2->start + snapshot_hexsz(snapshot) + 1;
+@@ -928,6 +955,7 @@ static struct option fsck_opts[] = {
+ 				N_("write dangling objects in .git/lost-found")),
+ 	OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
+ 	OPT_BOOL(0, "name-objects", &name_objects, N_("show verbose names for reachable objects")),
++	OPT_BOOL(0, "references", &check_references, N_("check reference database consistency")),
+ 	OPT_END(),
+ };
  
-+static int cmp_packed_refname(const char *r1, const char *r2)
-+{
- 	while (1) {
- 		if (*r1 == '\n')
- 			return *r2 == '\n' ? 0 : -1;
-@@ -322,6 +317,17 @@ static int cmp_packed_ref_records(const void *v1, const void *v2,
- 	}
- }
+@@ -970,6 +998,9 @@ int cmd_fsck(int argc,
+ 	git_config(git_fsck_config, &fsck_obj_options);
+ 	prepare_repo_settings(the_repository);
  
-+static int cmp_packed_ref_records(const void *v1, const void *v2,
-+				  void *cb_data)
-+{
-+	const struct snapshot *snapshot = cb_data;
-+	const struct snapshot_record *e1 = v1, *e2 = v2;
-+	const char *r1 = e1->start + snapshot_hexsz(snapshot) + 1;
-+	const char *r2 = e2->start + snapshot_hexsz(snapshot) + 1;
++	if (check_references)
++		fsck_refs(the_repository);
 +
-+	return cmp_packed_refname(r1, r2);
-+}
-+
- /*
-  * Compare a snapshot record at `rec` to the specified NUL-terminated
-  * refname.
-@@ -1797,19 +1803,33 @@ static int packed_fsck_ref_next_line(struct fsck_options *o,
- }
- 
- static int packed_fsck_ref_header(struct fsck_options *o,
--				  const char *start, const char *eol)
-+				  const char *start, const char *eol,
-+				  unsigned int *sorted)
- {
--	if (!starts_with(start, "# pack-refs with: ")) {
-+	struct string_list traits = STRING_LIST_INIT_NODUP;
-+	char *tmp_line;
-+	int ret = 0;
-+	char *p;
-+
-+	tmp_line = xmemdupz(start, eol - start);
-+	if (!skip_prefix(tmp_line, "# pack-refs with: ", (const char **)&p)) {
- 		struct fsck_ref_report report = { 0 };
- 		report.path = "packed-refs.header";
- 
--		return fsck_report_ref(o, &report,
--				       FSCK_MSG_BAD_PACKED_REF_HEADER,
--				       "'%.*s' does not start with '# pack-refs with: '",
--				       (int)(eol - start), start);
-+		ret = fsck_report_ref(o, &report,
-+				      FSCK_MSG_BAD_PACKED_REF_HEADER,
-+				      "'%.*s' does not start with '# pack-refs with: '",
-+				      (int)(eol - start), start);
-+		goto cleanup;
- 	}
- 
--	return 0;
-+	string_list_split_in_place(&traits, p, " ", -1);
-+	*sorted = unsorted_string_list_has_string(&traits, "sorted");
-+
-+cleanup:
-+	free(tmp_line);
-+	string_list_clear(&traits, 0);
-+	return ret;
- }
- 
- static int packed_fsck_ref_peeled_line(struct fsck_options *o,
-@@ -1914,8 +1934,68 @@ static int packed_fsck_ref_main_line(struct fsck_options *o,
- 	return ret;
- }
- 
-+static int packed_fsck_ref_sorted(struct fsck_options *o,
-+				  struct ref_store *ref_store,
-+				  const char *start, const char *eof)
-+{
-+	size_t hexsz = ref_store->repo->hash_algo->hexsz;
-+	struct strbuf packed_entry = STRBUF_INIT;
-+	struct fsck_ref_report report = { 0 };
-+	struct strbuf refname1 = STRBUF_INIT;
-+	struct strbuf refname2 = STRBUF_INIT;
-+	unsigned long line_number = 1;
-+	const char *former = NULL;
-+	const char *current;
-+	const char *eol;
-+	int ret = 0;
-+
-+	if (*start == '#') {
-+		eol = memchr(start, '\n', eof - start);
-+		start = eol + 1;
-+		line_number++;
-+	}
-+
-+	for (; start < eof; line_number++, start = eol + 1) {
-+		eol = memchr(start, '\n', eof - start);
-+
-+		if (*start == '^')
-+			continue;
-+
-+		if (!former) {
-+			former = start + hexsz + 1;
-+			continue;
-+		}
-+
-+		current = start + hexsz + 1;
-+		if (cmp_packed_refname(former, current) >= 0) {
-+			const char *err_fmt =
-+				"refname '%s' is less than previous refname '%s'";
-+
-+			eol = memchr(former, '\n', eof - former);
-+			strbuf_add(&refname1, former, eol - former);
-+			eol = memchr(current, '\n', eof - current);
-+			strbuf_add(&refname2, current, eol - current);
-+
-+			strbuf_addf(&packed_entry, "packed-refs line %lu", line_number);
-+			report.path = packed_entry.buf;
-+			ret = fsck_report_ref(o, &report,
-+					      FSCK_MSG_PACKED_REF_UNSORTED,
-+					      err_fmt, refname2.buf, refname1.buf);
-+			goto cleanup;
-+		}
-+		former = current;
-+	}
-+
-+cleanup:
-+	strbuf_release(&packed_entry);
-+	strbuf_release(&refname1);
-+	strbuf_release(&refname2);
-+	return ret;
-+}
-+
- static int packed_fsck_ref_content(struct fsck_options *o,
- 				   struct ref_store *ref_store,
-+				   unsigned int *sorted,
- 				   const char *start, const char *eof)
- {
- 	struct strbuf refname = STRBUF_INIT;
-@@ -1925,7 +2005,7 @@ static int packed_fsck_ref_content(struct fsck_options *o,
- 
- 	ret |= packed_fsck_ref_next_line(o, line_number, start, eof, &eol);
- 	if (*start == '#') {
--		ret |= packed_fsck_ref_header(o, start, eol);
-+		ret |= packed_fsck_ref_header(o, start, eol, sorted);
- 
- 		start = eol + 1;
- 		line_number++;
-@@ -1956,6 +2036,7 @@ static int packed_fsck(struct ref_store *ref_store,
- 	struct packed_ref_store *refs = packed_downcast(ref_store,
- 							REF_STORE_READ, "fsck");
- 	struct strbuf packed_ref_content = STRBUF_INIT;
-+	unsigned int sorted = 0;
- 	int ret = 0;
- 	int fd;
- 
-@@ -1992,8 +2073,11 @@ static int packed_fsck(struct ref_store *ref_store,
- 		goto cleanup;
- 	}
- 
--	ret = packed_fsck_ref_content(o, ref_store, packed_ref_content.buf,
-+	ret = packed_fsck_ref_content(o, ref_store, &sorted, packed_ref_content.buf,
- 				      packed_ref_content.buf + packed_ref_content.len);
-+	if (!ret && sorted)
-+		ret = packed_fsck_ref_sorted(o, ref_store, packed_ref_content.buf,
-+					     packed_ref_content.buf + packed_ref_content.len);
- 
- cleanup:
- 	strbuf_release(&packed_ref_content);
+ 	if (connectivity_only) {
+ 		for_each_loose_object(mark_loose_for_connectivity, NULL, 0);
+ 		for_each_packed_object(the_repository,
 diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index 058a783cb7..f305428f12 100755
+index f305428f12..22bd847782 100755
 --- a/t/t0602-reffiles-fsck.sh
 +++ b/t/t0602-reffiles-fsck.sh
-@@ -735,4 +735,91 @@ test_expect_success 'packed-refs content should be checked' '
+@@ -822,4 +822,43 @@ test_expect_success 'packed-ref without sorted trait should not be checked' '
  	)
  '
  
-+test_expect_success 'packed-ref with sorted trait should be checked' '
++test_expect_success '--[no-]references option should apply to fsck' '
 +	test_when_finished "rm -rf repo" &&
 +	git init repo &&
++	branch_dir_prefix=.git/refs/heads &&
 +	(
 +		cd repo &&
 +		test_commit default &&
-+		git branch branch-1 &&
-+		git branch branch-2 &&
-+		git tag -a annotated-tag-1 -m tag-1 &&
-+		branch_1_oid=$(git rev-parse branch-1) &&
-+		branch_2_oid=$(git rev-parse branch-2) &&
-+		tag_1_oid=$(git rev-parse annotated-tag-1) &&
-+		tag_1_peeled_oid=$(git rev-parse annotated-tag-1^{}) &&
-+		refname1="refs/heads/main" &&
-+		refname2="refs/heads/foo" &&
-+		refname3="refs/tags/foo" &&
++		for trailing_content in " garbage" "    more garbage"
++		do
++			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
++			git fsck 2>err &&
++			cat >expect <<-EOF &&
++			warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
++			EOF
++			rm $branch_dir_prefix/branch-garbage &&
++			test_cmp expect err || return 1
++		done &&
 +
-+		cat >.git/packed-refs <<-EOF &&
-+		# pack-refs with: peeled fully-peeled sorted
-+		EOF
-+		git refs verify 2>err &&
-+		rm .git/packed-refs &&
-+		test_must_be_empty err &&
++		for trailing_content in " garbage" "    more garbage"
++		do
++			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
++			git fsck --references 2>err &&
++			cat >expect <<-EOF &&
++			warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
++			EOF
++			rm $branch_dir_prefix/branch-garbage &&
++			test_cmp expect err || return 1
++		done &&
 +
-+		cat >.git/packed-refs <<-EOF &&
-+		# pack-refs with: peeled fully-peeled sorted
-+		$branch_2_oid $refname1
-+		EOF
-+		git refs verify 2>err &&
-+		rm .git/packed-refs &&
-+		test_must_be_empty err &&
-+
-+		cat >.git/packed-refs <<-EOF &&
-+		# pack-refs with: peeled fully-peeled sorted
-+		$branch_2_oid $refname1
-+		$branch_1_oid $refname2
-+		$tag_1_oid $refname3
-+		EOF
-+		test_must_fail git refs verify 2>err &&
-+		cat >expect <<-EOF &&
-+		error: packed-refs line 3: packedRefUnsorted: refname '\''$refname2'\'' is less than previous refname '\''$refname1'\''
-+		EOF
-+		rm .git/packed-refs &&
-+		test_cmp expect err &&
-+
-+		cat >.git/packed-refs <<-EOF &&
-+		# pack-refs with: peeled fully-peeled sorted
-+		$tag_1_oid $refname3
-+		^$tag_1_peeled_oid
-+		$branch_2_oid $refname2
-+		EOF
-+		test_must_fail git refs verify 2>err &&
-+		cat >expect <<-EOF &&
-+		error: packed-refs line 4: packedRefUnsorted: refname '\''$refname2'\'' is less than previous refname '\''$refname3'\''
-+		EOF
-+		rm .git/packed-refs &&
-+		test_cmp expect err
-+	)
-+'
-+
-+test_expect_success 'packed-ref without sorted trait should not be checked' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit default &&
-+		git branch branch-1 &&
-+		git branch branch-2 &&
-+		git tag -a annotated-tag-1 -m tag-1 &&
-+		branch_1_oid=$(git rev-parse branch-1) &&
-+		branch_2_oid=$(git rev-parse branch-2) &&
-+		tag_1_oid=$(git rev-parse annotated-tag-1) &&
-+		tag_1_peeled_oid=$(git rev-parse annotated-tag-1^{}) &&
-+		refname1="refs/heads/main" &&
-+		refname2="refs/heads/foo" &&
-+		refname3="refs/tags/foo" &&
-+
-+		cat >.git/packed-refs <<-EOF &&
-+		# pack-refs with: peeled fully-peeled
-+		$branch_2_oid $refname1
-+		$branch_1_oid $refname2
-+		EOF
-+		git refs verify 2>err &&
-+		test_must_be_empty err
++		for trailing_content in " garbage" "    more garbage"
++		do
++			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
++			git fsck --no-references 2>err &&
++			rm $branch_dir_prefix/branch-garbage &&
++			test_must_be_empty err || return 1
++		done
 +	)
 +'
 +
