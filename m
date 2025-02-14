@@ -1,200 +1,250 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A1321CA02
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 09:19:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7ECF245AFE
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 09:50:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739524797; cv=none; b=BPuFsvSu8iQHZiZldUDf2kLhd+BTclrR4jQ3uUEYFzWRCa7xEtUIvmIbjh1b4SOe4EWB4gdaC20NTAPbTRydO49kB+dip9nkctW2YGhLwmFeyazahYNKHGJDHVEKNyqhuXliuzTQG93lrOFTqP0DZbH0u7JEeBkQVWZ3UcAYU6Y=
+	t=1739526631; cv=none; b=tLNeZI4GWiUh5QBccXY3L2paYbE54T6eLxTWQW86mkGSAAQyqygdNEflKLcaD3mU3PQtg2amlGsMf+3Fqv9WTNvTQf1q7qXfK8PHtYB/BHYLJLsYeKeh5nXCkCc0sQJEQ6w5YydPVSs6uOWLmXtdTdGRWMYHm3Hc4w/l8JGW/Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739524797; c=relaxed/simple;
-	bh=2lj8zb+BLQWszTun3CYV68KjH97nc5VvfUNQnuwS3BU=;
+	s=arc-20240116; t=1739526631; c=relaxed/simple;
+	bh=uoAMPg+RvJ5fq85tV4hvV1ofjrDUKu9gCnCU6LtxZcs=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IlhHEhVYQOvoKt+ffRMoJN83+KScqQM3HMKopksBcTTjAF8AroI0Ucfr7K6Hl4iFH98tcbQFw6MI5yT8DYUQLqu1TZ4r9WJcsN8QOPITXeZVQjeOxZmRxIzpW3SFe+DXJiel+yUJJl9VSx08Rapf7pwanxURfc9mIAaGpYsoVss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jz4BKulR; arc=none smtp.client-ip=209.85.221.174
+	 To:Cc:Content-Type; b=Tl7XlsXZeTwz+7nroW+erQ43SoJTFEuhsDjzlpPVuYV5So9Uk9KsyArY15cD0qyDo/ROvMdOTed68DWXSqNywlxfcndDSac6IhIyMgPE5Gxtj8ltLByu8FpPMvcGHGZeLD4d/SSio9+nIs+PklxlFKG6U9AWnvvjeGM55eOgQag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fc/oIWmA; arc=none smtp.client-ip=209.85.222.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jz4BKulR"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-51f405fce23so559694e0c.0
-        for <git@vger.kernel.org>; Fri, 14 Feb 2025 01:19:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fc/oIWmA"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-868ddc4c6b6so618923241.2
+        for <git@vger.kernel.org>; Fri, 14 Feb 2025 01:50:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739524794; x=1740129594; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739526628; x=1740131428; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dChpWPcGw3K9pCKGYYWQ6317gn3R+zIg54rGnV3owC0=;
-        b=jz4BKulRR91R6r9Sixa/s8x1IxxfxgifGhYT7vqEXFOWcKDYlSfmosOYx3H+aCL6kd
-         8AbE5oUiKFaYa0edPF/TnKoIyIHvTfQFoL/jWo0/Eii5LH3nv6e9KcOXTgSeEIwUSett
-         /wlHmQNaQ34bcLU/pGU6VooT+W0DXAt66q6Uc3X45lMxXukOia3sDsi0K3nHWtQoFO0u
-         /xi+mYE4lntTBvA3GlzdeBrRXZuzKwyu5yECsNlUS90rWzKHsgrKwKrAARfvi/lvCrpy
-         gNYa4DAvsq3wPmZsmn2jipm13ZJqxQwtjk6ckOTByg4qA4LHz7uqKihzAWlmuEBpYthK
-         +P4Q==
+        bh=GoOqmocpvqfPvgm6idQ1BcJP5q0TCuTH8GcH5ZZlUIg=;
+        b=fc/oIWmABLoGt8f/echa2NYnOdkffbdeDAs/Q9349cMFzQSTh6IMVWDjfGlFXjaM15
+         aaLjIbWAdk9QPqkIBYwgAGHWOo4ATaM3Jm5yO7zvgAIBaAapKKiiACvifnp3ugdGZae3
+         hdHJII8jI3GkcH5HHXgo4i4w0Y6oaFbRtl68FFmhGrlwX1LfLItDRA3cNB1CM33AumTL
+         GVXRPW/e/KJcCsvJh63yXLOqxbl999THurFKoO7/AHegfW78kNxin0pMbjswmDSehhjT
+         PaXVEBlYdk6h56HFepF8KTPlR/SjY+10NJE6huM2NcLeDWqcO0KvzIvXZbypPNRdNJxU
+         9myg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739524794; x=1740129594;
+        d=1e100.net; s=20230601; t=1739526628; x=1740131428;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dChpWPcGw3K9pCKGYYWQ6317gn3R+zIg54rGnV3owC0=;
-        b=PyEp4JJIH3+OryaOZ+kJMbqKlasj5qFSeKluVqhxQsiJFuXz9Z6GcFgcpsf9kOMWWI
-         Z9Zlg4jMwqc3BG5ZSgdRYbknkdh5vj5KTduXp/C2pxfh0B3gbp6Bs156Vm1mGcefPgc2
-         HpQVIhqVDE5qo4eOMyJ+X/Nk+3acyWvl62i04y9jxYAN5DqHWyv/rJO3TSP7nJqlgcoA
-         eUfQ/XVK2nPTO4VdLFNGLQPPzoHY/hDW1R8yhEwB2mnFFFOCO6+Az9Onx8iB7tyB2xo2
-         rZu4AW1R2Zyy9LRU/SdUsibN0te7TsjBkbt+8SqmfVeq0MLqwFhRyxC4BnHtobz5K6E2
-         wbaw==
-X-Forwarded-Encrypted: i=1; AJvYcCXxK0J0cMEaY9hBKHqGWNLER3y5TWf1Zqz8aFmxVIBy/GkytKoOur6ah8oPq56TSro+djw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxIBUSlyW4uk48SrSqMHj0d6o8bGnVYfgpCY8sMLhjCJ1ZxtX8J
-	Psvq9nusfajiqaN12GBeG9l8EAVPzguMGRCdG/VBUnp+Y8vOz9C2ejxWA9f10CGr4H4XNoCpGI/
-	SBpKB6sLzfFs83N6LhnKilpdH+28=
-X-Gm-Gg: ASbGncuOEuEqXy8IkxwU79QZ6WeSh9gYlfypeFvPLa+YmpUXHkV0jKVT0OA7QJtjyvS
-	xco9N0GrrMETELuuzQgI37KHWMNI30wYREsA90ZPSBfNFQ34RYp9+OjIC2eG/vIaAU0yNadiLqQ
+        bh=GoOqmocpvqfPvgm6idQ1BcJP5q0TCuTH8GcH5ZZlUIg=;
+        b=GpycJjYCJUCz1wQNEr9Jyjcm4afIqdj2yFc/A7D3tAtW7nmMldd86KGyCqdcdHqccE
+         ERRMoopl2zORZatjpbNJVQjO3sRFrt/RXkswHJ51xrnOqS02WlY6jPMVY720M4bovV3D
+         yUl3ozGou1SpKKSI5ru8JycC4Wk9S2FCSy3EskOH6Q3z6VwIX5Fpzc2TBwK1v6rmurNs
+         lzVxKs3x/WSmZ1Zn77281mmvEQFmdLryE6k2+XFRlUA34hMxFdGqYY6+W3g4GbKDinOM
+         QPa2UyiWUpfM/e6j8YvDr3bPmymuNBio2GqsmVohUFxx6jv0977Jj3WOijAFW02U3Msj
+         q4mw==
+X-Forwarded-Encrypted: i=1; AJvYcCXpRRXenzBn3YjVjEVGXXxxmFMgBDOONjaezpaZZa5FrZzi1NaEGfRsbNNPiI1lZhMgeqw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YypdchoMcWp7riXssNTGEBEuZYseYLWItWGBtLCWQTWRIDENr2J
+	HLaB0RvX+kyX/cLmCe8NwR76V/WuNeE3MkfjGUn7MSc6SDoNIW1NzcvsWVAMYonHRDWOFu4cVY0
+	VtWwM759DvSRC/1SsBVY4t67tMYmhv0as
+X-Gm-Gg: ASbGnctHuSFbgZoCx7bF5WJ4o2Lb0bGDCszitCYy5n8F+wqzycJ1fwmM1NVjQO5OhVI
+	WywmLYbGvzTo8io8smU5FTERQDoikrGltTh6DdvDRyqraM1CbuPQXoXKRq2tWKhIjiPY6U4dH1w
 	==
-X-Google-Smtp-Source: AGHT+IFDsxAmsMvOlaj1uYLoHmJh0403Tb3rJG9zvjjnCbN7krBJtyE9IPQPLFwf3zBTkBJxFGnbPOjSYsLFpzQMzRw=
-X-Received: by 2002:a05:6122:202a:b0:520:3536:feac with SMTP id
- 71dfb90a1353d-52077fbe78bmr4420912e0c.11.1739524794196; Fri, 14 Feb 2025
- 01:19:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGfPdk3/cFrKbXj+Qr69Dm6b4xOvPE8Z6js/FhTpzDHkYMLsFqvBNK3APVq1M+CnqFBcPLqiZ+AzHgy6mPLt/4=
+X-Received: by 2002:a05:6102:c8b:b0:4bb:9b46:3f8a with SMTP id
+ ada2fe7eead31-4bc034e99d5mr5290072137.2.1739526628468; Fri, 14 Feb 2025
+ 01:50:28 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 14 Feb 2025 01:19:53 -0800
+ HTTPREST; Fri, 14 Feb 2025 01:50:26 -0800
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z67L_lmCd6NNXpWZ@ArchLinux>
-References: <Z67LkxAFIAeaYr0U@ArchLinux> <Z67L_lmCd6NNXpWZ@ArchLinux>
+In-Reply-To: <Z67MDPtjoXQB2sGB@ArchLinux>
+References: <Z67LkxAFIAeaYr0U@ArchLinux> <Z67MDPtjoXQB2sGB@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 14 Feb 2025 01:19:53 -0800
-X-Gm-Features: AWEUYZk0CnkXNjsGM_jWJTRq7j8cZKKNgXUJ7kso4BqpX8JhAUBICIWT_oHFvdc
-Message-ID: <CAOLa=ZS3w3KkEoQksXZtLYCT6BJVs6o2+nmpVUapbnqVA4zfng@mail.gmail.com>
-Subject: Re: [PATCH v4 2/8] builtin/refs: get worktrees without reading head information
+Date: Fri, 14 Feb 2025 01:50:26 -0800
+X-Gm-Features: AWEUYZlrZAJK-P8p6E3HwF6zr-ClntulGl_RJG60msCOc1N3fZCHD3O1xIWokpw
+Message-ID: <CAOLa=ZQ7CAXP-bYzTv3GJhauwtaL+pFj-2_QPWBh7SMiMsa6bQ@mail.gmail.com>
+Subject: Re: [PATCH v4 3/8] packed-backend: check whether the "packed-refs" is
+ regular file
 To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
 	Michael Haggerty <mhagger@alum.mit.edu>
-Content-Type: multipart/mixed; boundary="0000000000006fd664062e16ad36"
+Content-Type: multipart/mixed; boundary="000000000000c48ad3062e171acd"
 
---0000000000006fd664062e16ad36
+--000000000000c48ad3062e171acd
 Content-Type: text/plain; charset="UTF-8"
 
 shejialuo <shejialuo@gmail.com> writes:
 
-> In "packed-backend.c", there are some functions such as "create_snapshot"
-> and "next_record" which would check the correctness of the content of
-> the "packed-ref" file. When anything is bad, the program will die.
->
-> It may seem that we have nothing relevant to above feature, because we
-> are going to read and parse the raw "packed-ref" file without creating
-> the snapshot and using the ref iterator to check the consistency.
->
-> However, when using "get_worktrees" in "builtin/refs", we would parse
-> the "HEAD" information. If the referent of the "HEAD" is inside the
-> "packed-ref", we will call "create_snapshot" function to parse the
-> "packed-ref" to get the information. No matter whether the entry of
-> "HEAD" in "packed-ref" is correct, "create_snapshot" would call
-> "verify_buffer_safe" to check whether there is a newline in the last
-> line of the file. If not, the program will die.
+> Although "git-fsck(1)" and "packed-backend.c" will check some
+> consistency and correctness of "packed-refs" file, they never check the
+
+Because you say 'some' here, it made me more curious. Could you state
+exactly what checks are being done here?
+
+> filetype of the "packed-refs". The user should always use "git
+> pack-refs" command to create the raw regular "packed-refs" file, so we
+> need to explicitly check this in "git refs verify".
 >
 
-Nit: while the second paragraph above makes sense in the context of what
-we're trying to achieve in this patch series. It doesn't make much sense
-for this patch in isolation. Perhaps we want to give some more context
-around what we're trying to solve for in the upcoming patches and hence
-how it hinders that.
+Not sure I understand how the start of this last sentence correlates to
+the end of it. Is the intention to say that we want to explicitly check
+the filetype to ensure that the 'packed-refs' file was only created via
+'git pack-refs'? If so, perhaps:
 
-> Although this behavior has no harm for the program, it will
-> short-circuit the program. When the users execute "git refs verify" or
-> "git fsck", we should avoid reading the head information, which may
-> execute the read operation in packed backend with stricter checks to die
-> the program. Instead, we should continue to check other parts of the
-> "packed-refs" file completely.
+    Verify that the 'packed-refs' file has the expected filetype,
+    confirming it was created by 'git pack-refs'.
+
+> We could use "open_nofollow" wrapper to open the raw "packed-refs" file.
+> If the returned "fd" value is less than 0, we could check whether the
+> "errno" is "ELOOP" to report an error to the user.
 >
-> Fortunately, in 465a22b338 (worktree: skip reading HEAD when repairing
-> worktrees, 2023-12-29), we have introduced a function
-> "get_worktrees_internal" which allows us to get worktrees without
-> reading head information.
->
-> Create a new exposed function "get_worktrees_without_reading_head", then
-> replace the "get_worktrees" in "builtin/refs" with the new created
-> function.
+> Reuse "FSCK_MSG_BAD_REF_FILETYPE" fsck message id to report the error to
+> the user if "packed-refs" is not a regular file.
 >
 > Mentored-by: Patrick Steinhardt <ps@pks.im>
 > Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 > Signed-off-by: shejialuo <shejialuo@gmail.com>
 > ---
->  builtin/refs.c | 2 +-
->  worktree.c     | 5 +++++
->  worktree.h     | 6 ++++++
->  3 files changed, 12 insertions(+), 1 deletion(-)
+>  refs/packed-backend.c    | 39 +++++++++++++++++++++++++++++++++++----
+>  t/t0602-reffiles-fsck.sh | 22 ++++++++++++++++++++++
+>  2 files changed, 57 insertions(+), 4 deletions(-)
 >
-> diff --git a/builtin/refs.c b/builtin/refs.c
-> index a29f195834..55ff5dae11 100644
-> --- a/builtin/refs.c
-> +++ b/builtin/refs.c
-> @@ -88,7 +88,7 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix,
->  	git_config(git_fsck_config, &fsck_refs_options);
->  	prepare_repo_settings(the_repository);
->
-> -	worktrees = get_worktrees();
-> +	worktrees = get_worktrees_without_reading_head();
->  	for (size_t i = 0; worktrees[i]; i++)
->  		ret |= refs_fsck(get_worktree_ref_store(worktrees[i]),
->  				 &fsck_refs_options, worktrees[i]);
-> diff --git a/worktree.c b/worktree.c
-> index 248bbb39d4..89b7d86cef 100644
-> --- a/worktree.c
-> +++ b/worktree.c
-> @@ -175,6 +175,11 @@ struct worktree **get_worktrees(void)
->  	return get_worktrees_internal(0);
+> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> index a7b6f74b6e..6401cecd5f 100644
+> --- a/refs/packed-backend.c
+> +++ b/refs/packed-backend.c
+> @@ -4,6 +4,7 @@
+>  #include "../git-compat-util.h"
+>  #include "../config.h"
+>  #include "../dir.h"
+> +#include "../fsck.h"
+>  #include "../gettext.h"
+>  #include "../hash.h"
+>  #include "../hex.h"
+> @@ -1748,15 +1749,45 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
+>  	return empty_ref_iterator_begin();
 >  }
 >
-> +struct worktree **get_worktrees_without_reading_head(void)
-> +{
-> +	return get_worktrees_internal(1);
-> +}
-> +
->  const char *get_worktree_git_dir(const struct worktree *wt)
+> -static int packed_fsck(struct ref_store *ref_store UNUSED,
+> -		       struct fsck_options *o UNUSED,
+> +static int packed_fsck(struct ref_store *ref_store,
+> +		       struct fsck_options *o,
+>  		       struct worktree *wt)
 >  {
->  	if (!wt)
-> diff --git a/worktree.h b/worktree.h
-> index 38145df80f..1ba4a161a0 100644
-> --- a/worktree.h
-> +++ b/worktree.h
-> @@ -30,6 +30,12 @@ struct worktree {
->   */
->  struct worktree **get_worktrees(void);
+> +	struct packed_ref_store *refs = packed_downcast(ref_store,
+> +							REF_STORE_READ, "fsck");
+> +	int ret = 0;
+> +	int fd;
 >
-> +/*
-> + * Like `get_worktrees`, but does not read HEAD. This is useful when checking
-> + * the consistency, as reading HEAD may not be necessary.
-
-Checking what consistency? We should be a bit more verbose here. You can
-mention that skipping HEAD allows to get the worktree without worrying
-about failures pertaining to parsing the HEAD ref.
-
-> + */
-> +struct worktree **get_worktrees_without_reading_head(void);
+>  	if (!is_main_worktree(wt))
+> -		return 0;
+> +		goto cleanup;
+>
+> -	return 0;
+> +	if (o->verbose)
+> +		fprintf_ln(stderr, "Checking packed-refs file %s", refs->path);
 > +
->  /*
->   * Returns 1 if linked worktrees exist, 0 otherwise.
->   */
+> +	fd = open_nofollow(refs->path, O_RDONLY);
+> +	if (fd < 0) {
+> +		/*
+> +		 * If the packed-refs file doesn't exist, there's nothing
+> +		 * to check.
+> +		 */
+> +		if (errno == ENOENT)
+> +			goto cleanup;
+> +
+> +		if (errno == ELOOP) {
+> +			struct fsck_ref_report report = { 0 };
+> +			report.path = "packed-refs";
+> +			ret = fsck_report_ref(o, &report,
+> +					      FSCK_MSG_BAD_REF_FILETYPE,
+> +					      "not a regular file");
+> +			goto cleanup;
+> +		}
+> +
+> +		ret = error_errno(_("unable to open %s"), refs->path);
+> +		goto cleanup;
+
+The paragraph in the commit message:
+
+    Reuse "FSCK_MSG_BAD_REF_FILETYPE" fsck message id to report the error to
+    the user if "packed-refs" is not a regular file.
+
+Gave me the indication that any error would be reported via
+'fsck_report_ref()', but it seems like we are only reporting for
+symbolic links. Why is that being singled out?
+
+> +	}
+> +
+> +cleanup:
+> +	return ret;
+>  }
+>
+>  struct ref_storage_be refs_be_packed = {
+> diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
+> index cf7a202d0d..42c8d4ca1e 100755
+> --- a/t/t0602-reffiles-fsck.sh
+> +++ b/t/t0602-reffiles-fsck.sh
+> @@ -617,4 +617,26 @@ test_expect_success 'ref content checks should work with worktrees' '
+>  	)
+>  '
+>
+> +test_expect_success SYMLINKS 'the filetype of packed-refs should be checked' '
+> +	test_when_finished "rm -rf repo" &&
+> +	git init repo &&
+> +	(
+> +		cd repo &&
+> +		test_commit default &&
+> +		git branch branch-1 &&
+> +		git branch branch-2 &&
+> +		git branch branch-3 &&
+> +		git pack-refs --all &&
+> +
+> +		mv .git/packed-refs .git/packed-refs-back &&
+> +		ln -sf packed-refs-bak .git/packed-refs &&
+
+This still doesn't make sense to me. 'packed-refs-bak' doesn't exist, is
+the intention to symlink '.git/packed-refs' -> something which doesn't
+exist?
+
+In that case why even make the effort to build a packed-refs file, could
+we simply do 'ln -sf packed-refs-bak .git/packed-refs' in an empty repo?
+
+If not, then 'packed-refs-bak' is definitely a typo and needs to be made
+'packed-refs-back' which would go in hand with how we setup the test...
+
+> +		test_must_fail git refs verify 2>err &&
+> +		cat >expect <<-EOF &&
+> +		error: packed-refs: badRefFiletype: not a regular file
+> +		EOF
+> +		rm .git/packed-refs &&
+> +		test_cmp expect err
+> +	)
+> +'
+> +
+>  test_done
 > --
 > 2.48.1
 
---0000000000006fd664062e16ad36
+--000000000000c48ad3062e171acd
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: bee92e81b0bec1ec_0.1
+X-Attachment-Id: 9a9a752b00217614_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ldkNyZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNlRMQy85bm9KS2JvZXhKNXk3OTlPSm5vTlVRY292dApTd2N6bSt2UEtV
-NGZ6Qmx2RmdpSVRCd0V6aEw1UWowQWlGYm85WHdwYmVVbzFnZmNoQktEY1h5VG1hZU0zRE96Ck9w
-K1hTd1BFc0lGNnFDUlJmK01hWURSNk8vUGY1QlZrSjVMSEpBeDgybVM4Ky8xeGpVelRhdXF0Y3hr
-bEgxeTcKRkVabkpKWURiaGVKNnBZdVoveExST3BsZ3Vyc2cyemlnSm9iZVV0SU1CKzRIdzZHZkpj
-MEZMY1pTc0hxREloTwpkM08rcFNqdlVZMXIwa3ljUXIzZTJYTytMM2QyZzdVSlRRT3ZISk9OWnhu
-MldTM25Gb2RZYldQL2o5Umthd3U4CklmRDRHZ1ByZFlYcks5ejk1YVRwU2xXVlBVSVAvY05EVUZr
-M05tNitONTBUblhJQ3NwcTg0d3Q5TFRvUll2ZUwKWXEvZmhScHBiaGZtaVJzQ1FITXFJcEI3Q20r
-M2xUZkpoN0dxbGdPa0k2YVU5OTFmdUJQdGhJaC9Rb2UxWnlqagpDRjl1OExkVXJ0YXRtYTlnSjVh
-TWtWZENYN2pvejRTSU01L2JTTWNmV1dQUHg5N2llUWhnd1JKZjBQS3V1L0xPCmlER2F5cUhZakVL
-RUJHVWFHSHVudnp3RTQ4L2RHODMyL2haTHIwbz0KPUF3d3gKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ldkVlRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mM3k0Qy80cG9QVlo5NG5YalFlZjk4cEpZMUVZaUZ5Rwp1eDlHaWVLeEI0
+b2wxVXhqRmcwNUl0SVZtZEV3TWFWZ1hOeTViNzhiMFB1bkcwd0RESlFSbzJGRHdRY2c2azJCCm5I
+cWFUNTVpdHNnUjVudXJ2UDV4Z1hCbnpnUEZsZkNMQTBFeHdFb3B6T2dJSVpvb09tV1FuemlMSlEr
+aTdTNW4KY3F5alpjNDVRWERTTU9wKzloWDFKeEZkMUxvOXFXWm9OOFhjYVovQjZWY3Fpa3UxKzNN
+b2swbnIrSGF2RmZmKwpkZnpxYTdVc21xSUpvTGZxRUlvN1BEeGhZazRzd1dXazM3YXpWdW4wSjhl
+cko1eUpoVUJTVHRzYStpV0xjTG5mCjEwTnZtQXpFR0d4NXBGVjF3dW1YVGs4K2p3OVJUL3NyQTVI
+MUc4bllUTi81bFlDZENMU1hod3h6dWR2NDJ0NTYKdFpoVjVKeHU0YThBbnM4S1hDdzFtSmtqZFBN
+WkZCeE5BV25MdXowRDl1NlRKQkRqYkhvejBvU1NHOERxZHRsSQpiT2dVRzhQTG9ybVdFcnNLVU5r
+NnZqZG5CZzlwK1pYQUJOZW8yM3EyaWwvZkd0OUhpanFyUXZhbk93RkFSL2t6CjdNWVJha1BNM1JG
+ZDdZR3JFbThuQk1sZUZ5ZGZ1VHdTOUxKUGQxQT0KPUR4WmMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000006fd664062e16ad36--
+--000000000000c48ad3062e171acd--
