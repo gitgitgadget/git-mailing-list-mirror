@@ -1,139 +1,120 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9E31591E3
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 22:50:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D8E1A83F2
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 23:02:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739573453; cv=none; b=ksGOEnaPl61Xl5Yi7p4l/KK92ZO8k2lKX7Y/0Pr15wKPmNup27z/rO2s2kjF2K7xs7vG/cJN8bKqInwsp45mCxUVXwoh0BSjDjlJDKXuO+SpN4vWMNn5C1zIfVBnBlmaW4UwNTh+Xxs3MlLQ1+aHERg4mghot4+E4b3dTllncnc=
+	t=1739574140; cv=none; b=eG4psUgAyopkXhmibzYEAAFG3pFzNEi5iZ6j2T15Ms85lEmQxoVR+d/NZWfC4aWOCyvCWRlrB6Sji+vG39j8tT4R278pZg8m6sTJaWjA7cj5SZoDXAlJV2Qj53OueXvynoWnbnvD7zqlFYJlIfhPylUY1j95k48i+gv7Sy9tjP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739573453; c=relaxed/simple;
-	bh=d8qZ8pqz5aNzRursTicjdQb1uu8H+JbE6TfYM1FYn3o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rFoRfwqYfj2mxQ/2qJZEgTp6vT0f1OKogIjuScawbIzk80+8OyF5zwoCGN9GYJ8lchsEN8d7mvD5kCWwikoIlrQfUjbesZXwBUdFBGiJjcsjtZmFJhrdvPqCgY4125YhorDH7KYkRMbYdECv1efBDyU/8NnqCKIqdhml3IMFZ8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=o0JlE/eq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YfST0O/+; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739574140; c=relaxed/simple;
+	bh=uZGtDtTkrBFYUS49ieBLNbZFZOpJ499X2dZQHbAoVbk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NGy9tVUUFaT/nDxZNceicxrZL3sHXKjsgAXFk6a44N8ZDXdeXj4z2+G7PebyVv0QOFz+5W/zUwoSuMRyuYFWoVYFNIdKQ7mqhUN55clcXcFAm02yJILVNnp9J789R299A3fO377cs/ndty5bh5QQI3uPRnIGn/1PvqgLs21g5GM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V0/9sTDz; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="o0JlE/eq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YfST0O/+"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 035A1114019B;
-	Fri, 14 Feb 2025 17:50:50 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 14 Feb 2025 17:50:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739573449; x=1739659849; bh=3oY/zlMRyo
-	N6OLGImJO52Uk3zSOf+0LjYoTjWuR543s=; b=o0JlE/eqkRICfagtWFd5ersj+0
-	Pij0PRluTxzB1MSo8NMA/mARIbSUcDuw2ViuB/BDW2LKs24nd6GKcceLlvNnvqI3
-	X1Ot3SkKIEUtSF9kG8Je+IGj71PbwlhvKEVbHLBMMIeR10LO6tLmGC6d96blZukM
-	6h5QXUI0TAmu5u7nDjTb2iP8PbnVUpA68rd+pXDGL3gQxP6zR6hTiD1PJ6OagLe1
-	DBC3vNqfYzlIJNGRehEx72OF0NV0qzRqfMRr8Rch7QjFRZBnNyOEQoEKSzhBZAM3
-	bFMRydCK8ibYu5XdgaXo6+DOD9IqrDc/QQxG8uOgXnRQ6YgJnZRQkgJRaVcA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739573449; x=1739659849; bh=3oY/zlMRyoN6OLGImJO52Uk3zSOf+0LjYoT
-	jWuR543s=; b=YfST0O/+1OqQQBN4MkvDk/UaRVWoV09YfHqf1TGp3UEWLNPSSPU
-	yFLOG1CAJ3ONX8StEqm3/1468DGcZnND29jr+1SWAgt50TCD0ArFHOOejSIYT21s
-	BQe+QSJe67VdzGe0y0lqgrHE9Cnp0oCMo+VgfzHnsuW2qwSN+Ho/63rhWIPSVDu6
-	eqI6+E9ecl1pTrJZ/wLF2U164412hYBcmB5aHX/r4y+otjps6mE7VOwRxIsZBioN
-	KSUzOTkKQ4d80Gz/+R2vKvrstRDsl18zXEKeirzlcxBWVG7wOGyj1FGs8qzmWO8u
-	vvRAph45cQ3Ec9eo3F9VHof0nldEZUOMENQ==
-X-ME-Sender: <xms:ycivZ9KY8fPwNzXpqKaHo17RFvOZQgPeJNlWF-KpMXUY0HKjjwB8nw>
-    <xme:ycivZ5LZuDLmrLugsOZ1RUUfR3o_ag25DGrhZloLjdr4Kc-fCUCc17r1agZMdE-xb
-    89gUD6pDK9DUBN5ZQ>
-X-ME-Received: <xmr:ycivZ1snJtLQoUDpakDJcdOLljMSSG22brC6gdrp9blVPjgaxe_uNJ7y8w_lRdYhpLj14xPeF2VciDDlR2jmX8ZPXMBHs6RmX-EJIiM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehtdeltdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegruggrmhesughinh
-    ifohhoughivgdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepph
-    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ycivZ-bvYTjFmk3x2tZNMbNe4-Y8YrrH4t0TYtAeCEBLG9b0uC6qYg>
-    <xmx:ycivZ0aNh9cwIa_nHfTE7GCKGWuLm5mAEz_8n7aftniAPx8RuyskYA>
-    <xmx:ycivZyCnEv8b0zPyTUaAUMIyqrX6XSfHPnhOVqy6RDJTI8afsOANIw>
-    <xmx:ycivZyZ6NaEGWDupS_y8HmC592TOjOxvTBEJMkv6A4o1wvs7auExaQ>
-    <xmx:ycivZzw8kSFhu53QyTcEquGeCIAIF3c9zLwD4B6OIJLcJ0NgMIWSf2iE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Feb 2025 17:50:49 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Adam Dinwoodie <adam@dinwoodie.org>
-Cc: git@vger.kernel.org,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>,
-  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] Makefile: correct default docs build target
-In-Reply-To: <xmqq34gg172x.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	14 Feb 2025 14:42:46 -0800")
-References: <20250214215717.2854453-1-adam@dinwoodie.org>
-	<xmqq34gg172x.fsf@gitster.g>
-Date: Fri, 14 Feb 2025 14:50:48 -0800
-Message-ID: <xmqqy0y8ywc7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V0/9sTDz"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-220c8cf98bbso51511465ad.1
+        for <git@vger.kernel.org>; Fri, 14 Feb 2025 15:02:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739574137; x=1740178937; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PPuyWmnkNmqm9XmNul1Nbxl2pfwJ44GQo7Hl5MjiLXs=;
+        b=V0/9sTDzLGjR6lpz/BJU/JnMpb1/IOTZZ8yy9MoBXIQtBoxx81q2L28pdEMzsa7+SP
+         ucho7aMX9EtXZGGxfezddPmsPrH0dGtDYMYRU3uYNi/Ds9KpN5ghj/MtVwBfuJqMPNlQ
+         GWM+KSINDZRl7oaodZjAz/KSzmdcAf+0o3YfVhWTP98wFV7VZhEjA6OyBbnHyrrbXGeU
+         SNRvYgINSlOLth1YRx6M9GHHa3jZLMpNP+F9V7EzPxWEMKDzAUqSxO6Ux3M6pOas7fWo
+         pWJCwxGC/pK6/07d60Z3e0bVwAVrnoidZHhykZacr9vhb+rwwDDQ59W60XRozo/7H2+T
+         Z+Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739574137; x=1740178937;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PPuyWmnkNmqm9XmNul1Nbxl2pfwJ44GQo7Hl5MjiLXs=;
+        b=km25SfyCaMw+VSFh4X++vq418urT2RcDfbxUaQE4RkV6jrAFz7Ybr40tUQB8+AxAiS
+         uEh1UtuZHrCSShQ5pijFhZg4O+i6q5E8qiGG4/fzWkD51cxp8aGx3QU2yMixQGUgDyB6
+         NFbYZCfqCHnVF7GMhTqcwN+NTaCGagJf3viOFeYgJjfBpOwSHv0hy14zR4VjwMGRUmiJ
+         bmxGhicY9kUUKwTTjU929PNiXIWWHww3Q1Y8k+zBGvkRCQKQXAQK+gDFrHfhUTDBI5PQ
+         wue8ru8TE14g8RlpwBmYI12nF6mddRXzt6kTgdjUyyHOlK+tEL+0bZNMO2m3mUVlYezA
+         Ej4g==
+X-Gm-Message-State: AOJu0YzwZwP0DmckRzHraatRzdAn3XGh955MnmIXtXx+44UROFniE18I
+	pd4agoq+ixGJr9SUsmJbPqrdV6Ha13+K/Lu9UXj3HDHpcfk0KUdIDTNjvUQH
+X-Gm-Gg: ASbGncuj8py0p9WT1f152NBYwRRtDf8qf5hsTJZuWVtGihoVAE5r1ynf8SGimFUfVX1
+	oKt17TUhAJKdK+R+9B/k/GaPNsduO31iXHEnA2uKyDiBMtZo6A0OtDE6E7KUR+lkrC6KtPFTdgG
+	1XvKJojutZrOWQJtby7Y7WfBPHxgXfoSTGObrQrhCMnIbi2xzLmNF4qRaX4QD+i96TzH/bxIlCm
+	P2p5MAs83+bhuSYRMXtnOAzht5D1lmAD2+TsXEi0s1Y/csnO9DZCC7c0EyreVuP0c14AKNs0NYB
+	0Sp7l6WlrLDH2ITL9zqqWJinghtdpvGM+evAwhy8
+X-Google-Smtp-Source: AGHT+IF6c0TIJNeOdoW1a3CbrwH5XFhb/HguYUamURWQnpElx/luWpyKs3r3rmYj72t3vaoueenaeA==
+X-Received: by 2002:a17:903:2341:b0:21a:8d8c:450d with SMTP id d9443c01a7336-221040d11e4mr16406025ad.53.1739574136479;
+        Fri, 14 Feb 2025 15:02:16 -0800 (PST)
+Received: from archlinux.plaksha.edu.in ([182.75.25.162])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22105174c73sm1495245ad.216.2025.02.14.15.02.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 14 Feb 2025 15:02:16 -0800 (PST)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: git@vger.kernel.org
+Cc: chriscool@tuxfamily.org,
+	christian.couder@gmail.com,
+	johncai86@gmail.com,
+	ps@pks.im,
+	shejialuo@gmail.com
+Subject: [PATCH 0/7][Outreachy] stop using the_repository global variable. 
+Date: Sat, 15 Feb 2025 04:27:16 +0530
+Message-ID: <20250214230210.1460111-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+Remove `the_repository` global variable in favor of the repository
+argument that gets passed in builtin commands. 
 
-> Adam Dinwoodie <adam@dinwoodie.org> writes:
->
->> Put the "all" target definition near the top of Documentation/Makefile,
->> so that attempts to run make in the documentation directory actually
->> build the documentation.
->
-> Good eyes.  To make the intent even more clear, please adopt the
-> trick (or "convention") used by t/Makefile and our main Makefile to
-> have an empty "all::" at the very beginning of the file, instead of
-> moving things around, to avoid this kind of mistake to ever enter
-> the repository again.
->
-> Thanks.
->
->
-> [Footnote]
->
-> * If existing "all" targets are single-colon rules by mistake, they
->   need to be corrected.  There is no reason why these phony targets
->   should be anything but double-colon rules).
+These sets of commands are commands that use only RUN_SETUP macro in "git.c".
+Basically, When `-h` is passed to any of this command outside a Git repository,
+the `run_builtin()` will call the `cmd_x()` function (where `x` is any
+of the command from the sets of builtin commands that `the_repository` is removed
+from) with `repo` set to NULL and then early in the function, `parse_options()`
+or show_usage_with_options_if_asked() call will give the options help and exit,
+without having to consult much of the configuration file.
 
-Yikes, it turns out this is needed, but because there is only one
-place right now, fixing it is easy.  Something like this, perhaps.
+As there exist some builtin commands where the `repository` variable is accessed
+before options is given exit and fail, we should check if the `repository` variable
+is not NULL in such scenerio.
 
+Some, functions also uses `the_repository` global internally, so, let's
+let's refactor them and pass `struct repo` as one of the argument. 
 
+I picked some of this files based on the above explanation, how easy they are to
+resolve and how easy easy to review. 
 
-diff --git c/Documentation/Makefile w/Documentation/Makefile
-index aedfe99d1d..ddf3aa8fac 100644
---- c/Documentation/Makefile
-+++ w/Documentation/Makefile
-@@ -1,3 +1,6 @@
-+# The default target of this Makefile is...
-+all::
-+
- # Import tree-wide shared Makefile behavior and libraries
- include ../shared.mak
- 
-@@ -238,7 +241,7 @@ DEFAULT_EDITOR_SQ = $(subst ','\'',$(DEFAULT_EDITOR))
- ASCIIDOC_EXTRA += -a 'git-default-editor=$(DEFAULT_EDITOR_SQ)'
- endif
- 
--all: html man
-+all:: html man
- 
- html: $(DOC_HTML)
- 
+[1]: https://public-inbox.org/git/20250210181103.3609495-1-usmanakinyemi202@gmail.com/
+*** BLURB HERE ***
+
+Usman Akinyemi (7):
+  builtin/verify-tag: stop using `the_repository`
+  builtin/verify-commit.c: stop using `the_repository`
+  builtin/send-pack.c: stop using `the_repository`
+  builtin/pack-refs: stop using `the_repository`
+  builtin/ls-files: stop using `the_repository`
+  builtin/for-each-ref: stop using `the_repository`
+  builtin/checkout-index.c: stop using `the_repository`
+
+ builtin/checkout-index.c | 43 ++++++++++++++++++++--------------------
+ builtin/for-each-ref.c   |  6 +++---
+ builtin/ls-files.c       | 32 +++++++++++++++---------------
+ builtin/pack-refs.c      |  9 ++++-----
+ builtin/send-pack.c      |  8 ++++----
+ builtin/verify-commit.c  | 14 ++++++-------
+ builtin/verify-tag.c     |  8 ++++----
+ 7 files changed, 59 insertions(+), 61 deletions(-)
+
+-- 
+2.48.1
+
