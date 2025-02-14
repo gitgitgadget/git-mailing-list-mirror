@@ -1,153 +1,192 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600FB1519A1
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 03:53:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203161519AB
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:28:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739505201; cv=none; b=f4SPBARPhk9XBb/n9PkVpI0xaJ/al1kLjho4WPI04i8ccPCoA58AmHt7MeVFqh0xpsZa8BHguh8YkBPCm2FjIihge6gxPetEmJSlNGHdpZfwH8FFJXO+uS5YLil6VrCMNe9sWVJKf/UkEbzsmMfMtlJEs5e9PN2QrBkJa2KWQVA=
+	t=1739507324; cv=none; b=cx/KZ91qqBPiJo4AtffrJmtlv0Ei8hlk8VUdC9YMoArng0WYCX6vGrP9A5itA4j2uDpCHXbpgIhR1V/MwvRZ/sk0BRJbPPJGVU7MVwDs2LKxe3oqZh4FLOPDcySS2B4hkxD87bXEV61ryox/QEv7afrgvFhgCEGmxSn26PlBPaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739505201; c=relaxed/simple;
-	bh=nGlMQgW5qCAC0jBUdlDIjsQWaCNpTnfiykw+p7Tv2UY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ou+iOjGyzMH4d+opDLjkLWNxFKIVUrGZvcomlJSV1g9kf80AYQO1yF2JCqI4uO/Oeyiiy4SDVIRGWsXsZwM0jVyhj4D+xk8YobStNyaDI07PWwuA6ndoaE9AuoAq84EPfm6hXU3PlK0F91uSG2uSQAvJd6akVK0Wi+VrwInsZLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KHMYB1fM; arc=none smtp.client-ip=209.85.219.173
+	s=arc-20240116; t=1739507324; c=relaxed/simple;
+	bh=LHl0S0T0QrP4DvYSMkMZVJh7nwG7u3ECSFSizef1Dp4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OMaLw0UDJaWV5oFDmtBP737ommghIN6PHa8LPjl7okAp6OaD5yIliRooqbMrZoeo+UUfpG91PKuMKifnSkSh17ZqNWxDYVftUTB1Dl/Bjn4Ia+zJ9sFaKCMYd6JxuNJpi2OvYEclUNk0vjYaCJxzVxpf1+QW7DeqrUQ5mZTcPy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TDYCtcaA; arc=none smtp.client-ip=209.85.208.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KHMYB1fM"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e5dab3f372aso1281774276.1
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 19:53:19 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TDYCtcaA"
+Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-307c13298eeso15900941fa.0
+        for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:28:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739505198; x=1740109998; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fDLx181elDyE14U8jt/lwpp/wsavjJE/sem3ULM2Kak=;
-        b=KHMYB1fMUe8TtA1+TgP08h/idK6wvzXqzR8+edNvChe6aIHv0RVZzbH+eV2njqNznt
-         oTc+PjsfMnzIyP2Ie9cGCLxQGyelwfzitVsokiixBoaQJhzs5B9Km9bxzx122t1fDGI1
-         uWO+sl3gEOBXv0X4VifAcAJ+FvnKrouCBt6PlOtru9js6hb8ajZDedXwCY1PHDFgoGKM
-         C/khmHLqJoXFOvVDNKC9ayYYg5nJ25DXwgdDiTOu/BG+zHJyEn9UBgbU6/boCwE3LzMI
-         gOQDtf03q4xwMlBptaqWh4YEWCewqvm8JcbJyLFnEkJnDZoxVCGlj0fAZoJPXBSQbKV0
-         xL1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739505198; x=1740109998;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1739507320; x=1740112120; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fDLx181elDyE14U8jt/lwpp/wsavjJE/sem3ULM2Kak=;
-        b=gadeaW39DMnoYpbCkk9IhQapJxZKsC46B/RGhqFXAqhkVcxCOCbCkMftQp15rjEKgY
-         2kqZBR+05NQ53FuMKIJnXdb6cpuAmvf7+lPWnDDDrTxb7YByMeMQeTi7YJoZ1/vHaVxp
-         WpvZopyUBSBDY+RzkkaAPuc1741BJeqo/YbzA+rzQPy3SVfFbk4D7MfmZ4UuaKeDhKgr
-         TCQqqK1c7gH0cZDC0pFddQ7ZkwKOY965RzTeyxbzBAOo5vqVHI/9TE9gYcJIF9vevcr+
-         C1wAExIbchZR+IoASwuj7NDpHdYwawl5sKKckT/0WQFGrfF7S7l91ZcutdLyeqaZBneI
-         bz0A==
-X-Forwarded-Encrypted: i=1; AJvYcCUCclDM3GmG9fHXKZGicFTc1CnBYJIlDcmeGHlONUFMmHLD1d/A6oObCoX+2Fy9TtWIgOs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyeSjBeCMYWY7RsRexDSYrskeQpi4EbEWaief4F481cVW1WVPMv
-	il25UVnCQa2M7v5C6xzKxL3z6JLA11sdu+Efd1wMd5LsXErdwMZkf5ads19g
-X-Gm-Gg: ASbGncvd4+oVs6YxIgAXeepNoAhMCBudoJ6Tq0JH4qai4SZ5J/9l+J5Old0Q2w6rwGk
-	kOqPB9eJtnptLgrHb8npd9udqWPkWR3qLTvluRLW2R1p00xsMUFWkVFRH6XsgEflUalaDc85Kft
-	OsibFQtird9lnzXIzhMZAz70uMbbRzShuQnNykXtBPErvyu8UIgxo/Op44QI97QKCeID9AjYNgj
-	gcF+4DF59IgLkEWvVMu60BJ2sHULz6VKYWqzRdsrddTHkyAZbKSwHXAOKcgSdQfeg8b/w==
-X-Google-Smtp-Source: AGHT+IFpnui4egFL3JalsDxglSnFWIlCPpUym0j4nt9VSRoakGElQNaaQbcmlZ2yKw2MVNmVEDZe7Q==
-X-Received: by 2002:a05:6902:1007:b0:e5d:c1b9:4a7 with SMTP id 3f1490d57ef6-e5dc1b90599mr86966276.23.1739505198149;
-        Thu, 13 Feb 2025 19:53:18 -0800 (PST)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e5dae10e0dcsm775521276.53.2025.02.13.19.53.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2025 19:53:16 -0800 (PST)
-Date: Fri, 14 Feb 2025 11:53:12 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v3 4/8] packed-backend: add "packed-refs" header
- consistency check
-Message-ID: <Z66-KHC4SP4yqmnW@ArchLinux>
-References: <Z6RPJI10-2QkwyqH@ArchLinux>
- <Z6RPqE64ScsjzUg7@ArchLinux>
- <Z6xwW0N7GG4NhCzZ@pks.im>
- <xmqq4j0zuk9y.fsf@gitster.g>
+        bh=32Qu8UOOIrTL+acmnPU9TAvsC8kdjPZYcxOhczear2E=;
+        b=TDYCtcaA13RdrmCzSGOm/vcJR8Ts0q+drfXVx2Fu1uN/ecYS57NBiBgdJtnVNtM5oq
+         +fsGmYbvOj7PFcWRFtp6A1AE3NMg1x1n46mCXjWAELTBqQptUmhZoH1wPAjHLg2N5M1R
+         Gti7ZIoi2mqtfN6XkX/p94eXeTT9RE6PaCeg9g1nrLJmcWD+UMT5BJTmQ/MMsx5OrOtc
+         XgxvndI88wsANdYbZbD1/ykUX36Bj0PscDhO3Et4gHzrXmcvo7SOc5J0gWOkmj3Ek466
+         c/beHmZqZgFFBEZmF2YghPWLt6Pj1+X7L2c6kFtIeLUFZUayolN1kT1jVEDDjV8pjZRY
+         8Hvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739507320; x=1740112120;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=32Qu8UOOIrTL+acmnPU9TAvsC8kdjPZYcxOhczear2E=;
+        b=cygwZzgzpJCN5DPBh35MBIqiq4TLNe7r6GKpLX1Bv7tRnl6zUCUhe3ly2D8bseYQ01
+         wdEbJSGgOro8zncByHqcRf1PTtovIAZr186bzK0szVOatBepR8Mj0X2G0aaSY6/qY7Js
+         hlUeCsE58EcTrtrbENvMDLBOGtvTO3xqIvQJN04Bl5MqC6uQb+Zs4qyFUCN+G1yJXW5m
+         C3g7pUZYH33YhVh7mU/nwtJSzcBStdrG2W53bKNhhLoOk8Qg+1t4iJmxrMkXlTBDYKmz
+         4g/XYDmz7jcMjEepL04JSvIB1WEmE3qIs2P9QBhzHvKjTVjV7TuUEdBDcNmjWzhE/igE
+         8+mA==
+X-Gm-Message-State: AOJu0Yy5IeI9QHgPm6yVW6NzSfU3il8g4+kIxEc4vSz79Adzi/ekk4Zz
+	eLoqwjeU2R/WS6xLDpuxWpWjqx2HnK4IzndlWcqtPmaRDwlUPjU1uahCPgwPv3Zq53/gkayEy8C
+	WD0CecA77IysttvatvqoeqXp6PiY=
+X-Gm-Gg: ASbGnctQw42iQsOV4QZTQFSvDmXkAqiC1uIDv0jtoE5mrNujFGiLcWz0UC+D7b7TP6f
+	Y0g6vHyMWwlB9Y/+STZYIhvAkwyXKKuvQ0p7uqgul6ETpD6gaLr5hsmJFo3lPKUuI3qo4vVgSKu
+	8=
+X-Google-Smtp-Source: AGHT+IECg0JaMnE4v/xl/5iU4oN/EYM8k78DX8IYOjTnLeLshwI42yHDJS/TPgXwQuErNkaFsvvcgTnvqT59YmsL4vI=
+X-Received: by 2002:a2e:b285:0:b0:308:e521:591 with SMTP id
+ 38308e7fff4ca-3090f3ab62fmr14528091fa.16.1739507319748; Thu, 13 Feb 2025
+ 20:28:39 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4j0zuk9y.fsf@gitster.g>
+References: <20250211194334.20710-1-meetsoni3017@gmail.com>
+ <20250213090040.16133-1-meetsoni3017@gmail.com> <20250213090040.16133-3-meetsoni3017@gmail.com>
+ <CABPp-BGqihkPq3o4jnqp2aGdqw12F8a8nOModuAB-5N7BQ1t0w@mail.gmail.com>
+In-Reply-To: <CABPp-BGqihkPq3o4jnqp2aGdqw12F8a8nOModuAB-5N7BQ1t0w@mail.gmail.com>
+From: Meet Soni <meetsoni3017@gmail.com>
+Date: Fri, 14 Feb 2025 09:58:28 +0530
+X-Gm-Features: AWEUYZmv2ZhQwk_M3FNkDmCdHN08dcXiyqngdVUYf5WVjHo5Go7_cZUiNyBTjaA
+Message-ID: <CAPhwyn0hz16mZ-UoVAczC4qDLx2i0LwfFhhDjdTahe0=4TO57g@mail.gmail.com>
+Subject: Re: [RFC PATCH 2/2] merge-recursive: optimize time complexity for get_unmerged
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 12, 2025 at 09:48:09AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > On Thu, Feb 06, 2025 at 01:59:04PM +0800, shejialuo wrote:
-> >> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> >> index 6401cecd5f..683cfe78dc 100644
-> >> --- a/refs/packed-backend.c
-> >> +++ b/refs/packed-backend.c
-> >> @@ -1749,12 +1749,76 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
-> >> +static int packed_fsck_ref_header(struct fsck_options *o,
-> >> +				  const char *start, const char *eol)
-> >> +{
-> >> +	if (!starts_with(start, "# pack-refs with:")) {
-> >> +		struct fsck_ref_report report = { 0 };
-> >> +		report.path = "packed-refs.header";
-> >> +
-> >> +		return fsck_report_ref(o, &report,
-> >> +				       FSCK_MSG_BAD_PACKED_REF_HEADER,
-> >> +				       "'%.*s' does not start with '# pack-refs with:'",
-> >> +				       (int)(eol - start), start);
-> >> +	}
-> >> +
-> >> +	return 0;
-> >> +}
+On Thu, 13 Feb 2025 at 22:41, Elijah Newren <newren@gmail.com> wrote:
+>
+> On Thu, Feb 13, 2025 at 1:01=E2=80=AFAM Meet Soni <meetsoni3017@gmail.com=
+> wrote:
 > >
-> > Okay. We still complain about bad headers, but only if there is a line
-> > starting with "#" and only if the prefix doesn't match. This addresses
-> > Junio's comment that packfiles don't have to have a header, and that
-> > they may contain capabilities that we don't understand.
-> 
-> We'd want to also ensure that there is a single trailing whitespace
-> after that colon, which we have always written after "with:", no?
-> 
+> > Previously, `get_unmerged()` used `string_list_insert()`, which has an
+> > O(n^2) complexity due to shifting elements on each insertion. It also
+> > called `string_list_lookup()` before insertion, which performs a binary
+> > search in O(log n).
+>
+> Okay.
+>
+> > This combination made insertion costly, especially
+> > for large index states, as each new entry required both a search and
+> > potentially shifting many elements.
+>
+> Why does the combination make it costly?  O(log n) + O(n^2) is still
+> O(n^2), so I don't see why it matters to mention the combination.
+> Could you clarify?
+>
+> Also, does it actually make it costly, or do you only suspect that it
+> does?  O(n^2) worst case sometimes behaves O(n) or O(n log n) in some
+> cases.  Since your commit message says "made insertion costly" instead
+> of "might make insertion costly", I think that would suggest you have
+> some performance numbers to back this up on some interesting real
+> world repository.  Do you?  Can you share them?
+>
+Sorry, I should've specified, this patch is purely theoretical, I was
+aiming for a trial
+and error kind of approach.
 
-As you have commented below, I don't add this check due to the reason
-that "create_snapshot" method does _not_ check this.
-
-> >> diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-> >> index 42c8d4ca1e..da321f16c6 100755
-> >> --- a/t/t0602-reffiles-fsck.sh
-> >> +++ b/t/t0602-reffiles-fsck.sh
-> >> @@ -639,4 +639,29 @@ test_expect_success SYMLINKS 'the filetype of packed-refs should be checked' '
-> >>  	)
-> >>  '
-> >>  
-> >> +test_expect_success 'packed-refs header should be checked' '
-> >> +	test_when_finished "rm -rf repo" &&
-> >> +	git init repo &&
-> >> +	(
-> >> +		cd repo &&
-> >> +		test_commit default &&
-> >> +
-> >> +		git refs verify 2>err &&
-> >> +		test_must_be_empty err &&
-> >> +
-> >> +		for bad_header in "# pack-refs wit: peeled fully-peeled sorted " \
-> >> +				  "# pack-refs with traits: peeled fully-peeled sorted " \
-> >> +				  "# pack-refs with a: peeled fully-peeled"
+> > Replace `string_list_insert()` with `string_list_append()` to achieve
+> > O(n) insertion. After all entries are added, sort the list in O(n log n=
+)
+> > and remove duplicates in O(n), reducing the overall complexity to
+> > O(n log n).
+>
+> Okay.
+>
+> > This improves performance significantly for large datasets
+>
+> That's a big claim; it may be true, but without evidence I don't
+> believe it for three reasons : (1) n here is the number of conflicts,
+> not the number of files in the repo or the number of lines being
+> merged.  Thus, n is typically small.  (2) Other O(n^2) behavior in
+> merge-recursive likely drowns this particular codepath out, so any
+> gains here just aren't going to be noticed, (3) After looking at the
+> code and knowing the specialized structure of the index, I think that
+> while string_list_insert() for n items in general is going to be
+> O(n^2), it will likely functionally be O(n log n) for this particular
+> code path, meaning you haven't actually improved the performance.
+>
+> > while maintaining correctness.
+>
+> More on that below.
+>
+>
+> > Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+> > ---
+> >  merge-recursive.c | 10 +++++-----
+> >  1 file changed, 5 insertions(+), 5 deletions(-)
 > >
-> > Instead of verifying thrice that we complain about bad header prefixes,
-> > should we maybe replace two of these with instances where we check a
-> > packed-refs file _without_ a header and one with capabilities that we
-> > don't understand?
-> 
-> Yup.  I also notice that refs/packed-backend.c:create_snapshot()
-> would accept "# pack-refs with:peeled" if I am not reading it
-> correctly, which is an unrelated bug.
-> 
+> > diff --git a/merge-recursive.c b/merge-recursive.c
+> > index 884ccf99a5..6165993429 100644
+> > --- a/merge-recursive.c
+> > +++ b/merge-recursive.c
+> > @@ -547,15 +547,15 @@ static struct string_list *get_unmerged(struct in=
+dex_state *istate)
+> >                 if (!ce_stage(ce))
+> >                         continue;
+> >
+> > -               item =3D string_list_lookup(unmerged, ce->name);
+> > -               if (!item) {
+> > -                       item =3D string_list_insert(unmerged, ce->name)=
+;
+> > -                       item->util =3D xcalloc(1, sizeof(struct stage_d=
+ata));
+> > -               }
+> > +               item =3D string_list_append(unmerged, ce->name);
+> > +               item->util =3D xcalloc(1, sizeof(struct stage_data));
+> > +
+> >                 e =3D item->util;
+> >                 e->stages[ce_stage(ce)].mode =3D ce->ce_mode;
+> >                 oidcpy(&e->stages[ce_stage(ce)].oid, &ce->oid);
+>
+> Did you run any tests?  I'm not sure you maintained correctness here.
 
-Yes, you are correct. Let me fix this in the next version.
+I didn't run any tests -- I wanted to, but I wasn=E2=80=99t sure how to do =
+it
+for this change. Since you suggested dropping this patch from the
+series, I=E2=80=99ll do that. But for similar changes in the future, how sh=
+ould I go
+about testing them?
+>
+> >         }
+> > +       string_list_sort(unmerged);
+> > +       string_list_remove_duplicates(unmerged, 1);
+> >
+> >         return unmerged;
+> >  }
+> > --
+> > 2.34.1
+>
+> (As a side note, due to the specialized structure of the input, I
+> suspect this code could be modified to run in O(n), i.e. we could skip
+> the string_list_lookup and the string_list_sort and the
+> string_list_remove_duplicates...  But, it'd make the code trickier, so
+> it'd need to be carefully commented, the change would need to be
+> justified, and it'd need to be carefully tested.  Even if we weren't
+> planning to delete this entire file, I suspect it's not possible to
+> find a case justifying such a change without optimizing several other
+> things in merge-recursive first, but optimizing those things probably
+> results in a significant rewrite...which we've already done with
+> merge-ort.)
+Makes sense.
 
-Thanks,
-Jialuo
+Thankyou for reviewing,
+Meet
