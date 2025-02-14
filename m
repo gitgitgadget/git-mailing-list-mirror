@@ -1,192 +1,130 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203161519AB
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:28:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9132753E8
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:41:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739507324; cv=none; b=cx/KZ91qqBPiJo4AtffrJmtlv0Ei8hlk8VUdC9YMoArng0WYCX6vGrP9A5itA4j2uDpCHXbpgIhR1V/MwvRZ/sk0BRJbPPJGVU7MVwDs2LKxe3oqZh4FLOPDcySS2B4hkxD87bXEV61ryox/QEv7afrgvFhgCEGmxSn26PlBPaE=
+	t=1739508100; cv=none; b=dBYnbo0lnCzMA7GaW4HvTiDBLyd5R629T63I3XRpiKJVIj3tMB97BF+Vtk5vFFcvY9Q7Qwiwhn9U1PocFGbUFBDZkSR2RtjTyEBPKNC+VccxHFdWaH52yro3aUiZfA5NsRqnRcH3EdFW0hFLIa7iultOGry/YBS9CZn+y244e6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739507324; c=relaxed/simple;
-	bh=LHl0S0T0QrP4DvYSMkMZVJh7nwG7u3ECSFSizef1Dp4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OMaLw0UDJaWV5oFDmtBP737ommghIN6PHa8LPjl7okAp6OaD5yIliRooqbMrZoeo+UUfpG91PKuMKifnSkSh17ZqNWxDYVftUTB1Dl/Bjn4Ia+zJ9sFaKCMYd6JxuNJpi2OvYEclUNk0vjYaCJxzVxpf1+QW7DeqrUQ5mZTcPy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TDYCtcaA; arc=none smtp.client-ip=209.85.208.178
+	s=arc-20240116; t=1739508100; c=relaxed/simple;
+	bh=V8mGPS/ZBsxelMKIjDLXofsUz30r9/luGQSztZPGSDc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=ZLpsOuoQRwyCbBp92ywQzng0qmbrwvyE+ftbb2PfSxjoFO5q/iTejEd0Mt9L0sRdroQyKnJigMWDQol4MUej4lr3rFXNu2KtCWN84q7tEtse2frCHFYKwic3ceyGBHz6tU01+C/ZuwHuvPgsAon9Je5C6GFChBBlnMph098fqAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BnBRGQov; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TDYCtcaA"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-307c13298eeso15900941fa.0
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:28:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BnBRGQov"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-2fc042c9290so2667888a91.0
+        for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:41:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739507320; x=1740112120; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1739508098; x=1740112898; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=32Qu8UOOIrTL+acmnPU9TAvsC8kdjPZYcxOhczear2E=;
-        b=TDYCtcaA13RdrmCzSGOm/vcJR8Ts0q+drfXVx2Fu1uN/ecYS57NBiBgdJtnVNtM5oq
-         +fsGmYbvOj7PFcWRFtp6A1AE3NMg1x1n46mCXjWAELTBqQptUmhZoH1wPAjHLg2N5M1R
-         Gti7ZIoi2mqtfN6XkX/p94eXeTT9RE6PaCeg9g1nrLJmcWD+UMT5BJTmQ/MMsx5OrOtc
-         XgxvndI88wsANdYbZbD1/ykUX36Bj0PscDhO3Et4gHzrXmcvo7SOc5J0gWOkmj3Ek466
-         c/beHmZqZgFFBEZmF2YghPWLt6Pj1+X7L2c6kFtIeLUFZUayolN1kT1jVEDDjV8pjZRY
-         8Hvw==
+        bh=Mnhd8o+8SelZVUEMQ6vs3sA29vLnDZQBpYCXt8nNARI=;
+        b=BnBRGQovB6Nt0GtTQ47YCC0ewodrZIUXfMmHojBJ3YkDxP96Puca9XxJi3Hc1USXA/
+         oOIhrj60FlQIBAFye/vce2t01s8a2RfT9xPPYfO14QyVfdmlduoxI4PF28vo3aMXk5Gw
+         e/Ib9NV5hqaKGiHnDIEusRg4KDaHetFqGsSgrb3f2uwKt1G1sj1y9HHiGziIIN/lYVKH
+         tT5i69Q1O0w/TbxvryGNo0xR2w45TXsdU14cUzPgC+Gi2CDtnMdsCg1JuOrOfBf4LVJU
+         D2SMX73kjltDEy5mnsDefqBBU/IQqSKPs3ExDI8GICU7DvhxyLETjBM8M96qS3+O6Eyl
+         xMpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739507320; x=1740112120;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1739508098; x=1740112898;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=32Qu8UOOIrTL+acmnPU9TAvsC8kdjPZYcxOhczear2E=;
-        b=cygwZzgzpJCN5DPBh35MBIqiq4TLNe7r6GKpLX1Bv7tRnl6zUCUhe3ly2D8bseYQ01
-         wdEbJSGgOro8zncByHqcRf1PTtovIAZr186bzK0szVOatBepR8Mj0X2G0aaSY6/qY7Js
-         hlUeCsE58EcTrtrbENvMDLBOGtvTO3xqIvQJN04Bl5MqC6uQb+Zs4qyFUCN+G1yJXW5m
-         C3g7pUZYH33YhVh7mU/nwtJSzcBStdrG2W53bKNhhLoOk8Qg+1t4iJmxrMkXlTBDYKmz
-         4g/XYDmz7jcMjEepL04JSvIB1WEmE3qIs2P9QBhzHvKjTVjV7TuUEdBDcNmjWzhE/igE
-         8+mA==
-X-Gm-Message-State: AOJu0Yy5IeI9QHgPm6yVW6NzSfU3il8g4+kIxEc4vSz79Adzi/ekk4Zz
-	eLoqwjeU2R/WS6xLDpuxWpWjqx2HnK4IzndlWcqtPmaRDwlUPjU1uahCPgwPv3Zq53/gkayEy8C
-	WD0CecA77IysttvatvqoeqXp6PiY=
-X-Gm-Gg: ASbGnctQw42iQsOV4QZTQFSvDmXkAqiC1uIDv0jtoE5mrNujFGiLcWz0UC+D7b7TP6f
-	Y0g6vHyMWwlB9Y/+STZYIhvAkwyXKKuvQ0p7uqgul6ETpD6gaLr5hsmJFo3lPKUuI3qo4vVgSKu
-	8=
-X-Google-Smtp-Source: AGHT+IECg0JaMnE4v/xl/5iU4oN/EYM8k78DX8IYOjTnLeLshwI42yHDJS/TPgXwQuErNkaFsvvcgTnvqT59YmsL4vI=
-X-Received: by 2002:a2e:b285:0:b0:308:e521:591 with SMTP id
- 38308e7fff4ca-3090f3ab62fmr14528091fa.16.1739507319748; Thu, 13 Feb 2025
- 20:28:39 -0800 (PST)
+        bh=Mnhd8o+8SelZVUEMQ6vs3sA29vLnDZQBpYCXt8nNARI=;
+        b=dwTKw353sXWtJhS7oxSflTIABa4qjV7hQ8W7vZMgsWBanmyRwukkWFuZiFjT3MwKqZ
+         Ke4cLYIHg6lWeOom/9z2035rWprRDXxp0DtQymrW2tk1goEVaxW5Pm2v2aJrs4USNC7E
+         YxosN34kxW+I3427nUCYwkTb2QwJFewi+CLLfAdSz+iRfBMWhvn9tDZ6RcozZOKyzVD0
+         XmVXD3WXFRNtCjz0ghigHxhU7+eejGtaI6mIPJpYqYDEntkW3xOSnRUzeFIGuoxipb4W
+         lMOSWJkAam60HH02Onml9j3sKdEa62PxJVxS7ArKhYbZjIpFHnk9ESAsXuPFFPZNX/h+
+         rGNw==
+X-Gm-Message-State: AOJu0YzdlQdC/BYjtl3ZU00dsIeBIDqrUFn3dkrMhCZ2rpwDVj8KPGs1
+	xzXNXNQl5ISeyDcl4Omdhj1pf2WEDS1dKRtVhc0ZYhPTKi5VAqaRveKuWg==
+X-Gm-Gg: ASbGncsnr5e10vlMkEiQb8bdDo8OjYhD/oCwmMW0LKmNlHJWdvE/px97VJDCB3xm+op
+	WhuhFa7moOHoYXXgszcruChxofCSRI8x/RaMMttx+Lmg4iGmJeDu+GrtMxAOvBM28zCZMyfRGyA
+	I0DTkd9V+Y6tiWm6OchmFvLWEfzK2danQq4Nh9VN8DV0d6c3ZZWwk46GY3Om45UGA/n8+iKBrmS
+	64gk19dAxlY0uClIvP25AXbM99/DH3BDbz2wtF7H4NezkefLt8V2sRL+gDEGLXYej6pQNwanZou
+	5tRBSXnwAB4P1g==
+X-Google-Smtp-Source: AGHT+IHhXop908Z/dGC607jmEkM3WDzcFyRlOGL0fJ3qKH3uQAF5tDsUxE14BK6DsytExPiDeCznPg==
+X-Received: by 2002:a05:6a21:700d:b0:1ee:68e2:8d7c with SMTP id adf61e73a8af0-1ee68e28ec5mr14048439637.25.1739508097653;
+        Thu, 13 Feb 2025 20:41:37 -0800 (PST)
+Received: from meet.. ([103.240.170.242])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-adb57c5e01asm2008367a12.1.2025.02.13.20.41.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Feb 2025 20:41:37 -0800 (PST)
+From: Meet Soni <meetsoni3017@gmail.com>
+To: git@vger.kernel.org
+Cc: peff@peff.net,
+	Meet Soni <meetsoni3017@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: [GSoC][PATCH v2] merge-recursive: optimize time complexity for process_renames
+Date: Fri, 14 Feb 2025 10:11:29 +0530
+Message-Id: <20250214044129.15282-1-meetsoni3017@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250213090040.16133-1-meetsoni3017@gmail.com>
+References: <20250213090040.16133-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250211194334.20710-1-meetsoni3017@gmail.com>
- <20250213090040.16133-1-meetsoni3017@gmail.com> <20250213090040.16133-3-meetsoni3017@gmail.com>
- <CABPp-BGqihkPq3o4jnqp2aGdqw12F8a8nOModuAB-5N7BQ1t0w@mail.gmail.com>
-In-Reply-To: <CABPp-BGqihkPq3o4jnqp2aGdqw12F8a8nOModuAB-5N7BQ1t0w@mail.gmail.com>
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Fri, 14 Feb 2025 09:58:28 +0530
-X-Gm-Features: AWEUYZmv2ZhQwk_M3FNkDmCdHN08dcXiyqngdVUYf5WVjHo5Go7_cZUiNyBTjaA
-Message-ID: <CAPhwyn0hz16mZ-UoVAczC4qDLx2i0LwfFhhDjdTahe0=4TO57g@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/2] merge-recursive: optimize time complexity for get_unmerged
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, 13 Feb 2025 at 22:41, Elijah Newren <newren@gmail.com> wrote:
->
-> On Thu, Feb 13, 2025 at 1:01=E2=80=AFAM Meet Soni <meetsoni3017@gmail.com=
-> wrote:
-> >
-> > Previously, `get_unmerged()` used `string_list_insert()`, which has an
-> > O(n^2) complexity due to shifting elements on each insertion. It also
-> > called `string_list_lookup()` before insertion, which performs a binary
-> > search in O(log n).
->
-> Okay.
->
-> > This combination made insertion costly, especially
-> > for large index states, as each new entry required both a search and
-> > potentially shifting many elements.
->
-> Why does the combination make it costly?  O(log n) + O(n^2) is still
-> O(n^2), so I don't see why it matters to mention the combination.
-> Could you clarify?
->
-> Also, does it actually make it costly, or do you only suspect that it
-> does?  O(n^2) worst case sometimes behaves O(n) or O(n log n) in some
-> cases.  Since your commit message says "made insertion costly" instead
-> of "might make insertion costly", I think that would suggest you have
-> some performance numbers to back this up on some interesting real
-> world repository.  Do you?  Can you share them?
->
-Sorry, I should've specified, this patch is purely theoretical, I was
-aiming for a trial
-and error kind of approach.
+Avoid O(n^2) complexity in `process_renames()` when building a sorted
+`string_list` by constructing it unsorted and sorting it afterward,
+reducing the complexity to O(n log n).
 
-> > Replace `string_list_insert()` with `string_list_append()` to achieve
-> > O(n) insertion. After all entries are added, sort the list in O(n log n=
-)
-> > and remove duplicates in O(n), reducing the overall complexity to
-> > O(n log n).
->
-> Okay.
->
-> > This improves performance significantly for large datasets
->
-> That's a big claim; it may be true, but without evidence I don't
-> believe it for three reasons : (1) n here is the number of conflicts,
-> not the number of files in the repo or the number of lines being
-> merged.  Thus, n is typically small.  (2) Other O(n^2) behavior in
-> merge-recursive likely drowns this particular codepath out, so any
-> gains here just aren't going to be noticed, (3) After looking at the
-> code and knowing the specialized structure of the index, I think that
-> while string_list_insert() for n items in general is going to be
-> O(n^2), it will likely functionally be O(n log n) for this particular
-> code path, meaning you haven't actually improved the performance.
->
-> > while maintaining correctness.
->
-> More on that below.
->
->
-> > Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
-> > ---
-> >  merge-recursive.c | 10 +++++-----
-> >  1 file changed, 5 insertions(+), 5 deletions(-)
-> >
-> > diff --git a/merge-recursive.c b/merge-recursive.c
-> > index 884ccf99a5..6165993429 100644
-> > --- a/merge-recursive.c
-> > +++ b/merge-recursive.c
-> > @@ -547,15 +547,15 @@ static struct string_list *get_unmerged(struct in=
-dex_state *istate)
-> >                 if (!ce_stage(ce))
-> >                         continue;
-> >
-> > -               item =3D string_list_lookup(unmerged, ce->name);
-> > -               if (!item) {
-> > -                       item =3D string_list_insert(unmerged, ce->name)=
-;
-> > -                       item->util =3D xcalloc(1, sizeof(struct stage_d=
-ata));
-> > -               }
-> > +               item =3D string_list_append(unmerged, ce->name);
-> > +               item->util =3D xcalloc(1, sizeof(struct stage_data));
-> > +
-> >                 e =3D item->util;
-> >                 e->stages[ce_stage(ce)].mode =3D ce->ce_mode;
-> >                 oidcpy(&e->stages[ce_stage(ce)].oid, &ce->oid);
->
-> Did you run any tests?  I'm not sure you maintained correctness here.
+Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+---
+Range-diff against v1:
+1:  c7dca6e971 = 1:  c7dca6e971 merge-recursive: optimize time complexity for process_renames
+2:  78a007be7d < -:  ---------- merge-recursive: optimize time complexity for get_unmerged
 
-I didn't run any tests -- I wanted to, but I wasn=E2=80=99t sure how to do =
-it
-for this change. Since you suggested dropping this patch from the
-series, I=E2=80=99ll do that. But for similar changes in the future, how sh=
-ould I go
-about testing them?
->
-> >         }
-> > +       string_list_sort(unmerged);
-> > +       string_list_remove_duplicates(unmerged, 1);
-> >
-> >         return unmerged;
-> >  }
-> > --
-> > 2.34.1
->
-> (As a side note, due to the specialized structure of the input, I
-> suspect this code could be modified to run in O(n), i.e. we could skip
-> the string_list_lookup and the string_list_sort and the
-> string_list_remove_duplicates...  But, it'd make the code trickier, so
-> it'd need to be carefully commented, the change would need to be
-> justified, and it'd need to be carefully tested.  Even if we weren't
-> planning to delete this entire file, I suspect it's not possible to
-> find a case justifying such a change without optimizing several other
-> things in merge-recursive first, but optimizing those things probably
-> results in a significant rewrite...which we've already done with
-> merge-ort.)
-Makes sense.
+ merge-recursive.c | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-Thankyou for reviewing,
-Meet
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 5dfaf32b2c..884ccf99a5 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -2758,23 +2758,22 @@ static int process_renames(struct merge_options *opt,
+ 	const struct rename *sre;
+ 
+ 	/*
+-	 * FIXME: As string-list.h notes, it's O(n^2) to build a sorted
+-	 * string_list one-by-one, but O(n log n) to build it unsorted and
+-	 * then sort it.  Note that as we build the list, we do not need to
+-	 * check if the existing destination path is already in the list,
+-	 * because the structure of diffcore_rename guarantees we won't
+-	 * have duplicates.
++	 * Note that as we build the list, we do not need to check if the
++	 * existing destination path is already in the list, because the
++	 * structure of diffcore_rename guarantees we won't have duplicates.
+ 	 */
+ 	for (i = 0; i < a_renames->nr; i++) {
+ 		sre = a_renames->items[i].util;
+-		string_list_insert(&a_by_dst, sre->pair->two->path)->util
++		string_list_append(&a_by_dst, sre->pair->two->path)->util
+ 			= (void *)sre;
+ 	}
+ 	for (i = 0; i < b_renames->nr; i++) {
+ 		sre = b_renames->items[i].util;
+-		string_list_insert(&b_by_dst, sre->pair->two->path)->util
++		string_list_append(&b_by_dst, sre->pair->two->path)->util
+ 			= (void *)sre;
+ 	}
++	string_list_sort(&a_by_dst);
++	string_list_sort(&b_by_dst);
+ 
+ 	for (i = 0, j = 0; i < a_renames->nr || j < b_renames->nr;) {
+ 		struct string_list *renames1, *renames2Dst;
+-- 
+2.34.1
+
