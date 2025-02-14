@@ -1,113 +1,138 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7E222577E
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 08:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2F1228381
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 08:50:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739521488; cv=none; b=L43hbyYxib30Bt1dtwfzRYif3rc9Ygc43QSa40WGdhVmOjt9iU7aaLhacCYouXpx88gBEiIpcT3s8clDmnop5eNaEAMHB1RhGliXjlhMq2l2AKNuWI0tnnsPxb10VoA3ZPNw6AtgwOvxuEdSWckH+/N/fDe5OMnS3CowHcgY8JM=
+	t=1739523038; cv=none; b=txkSytF2vxCpgpU9Aw1RpC903VQ4Z/35HS7bu22e/PC2C01JpxJ0UT8ej+NfzEQ/LMx0uRZbbIi5cA+tiCVRzfe8SSt1Yi2DUG3ROR6kcPAQTjBRXgtCfJBgi10E4kYdKD+QMeedgOxAw+S9MPmvOlmsYz8r95qSNw3sakK8EDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739521488; c=relaxed/simple;
-	bh=wqly4YaJPRoWXxmThOE+33eTaPvCoNLFWtluqUNWvBI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P3CnvuIYThiKkY0cfi5xl3iHWxnty7n1wSEGUJ/IROVXhGIp/y+yZ2WfdZlZJFZn1ldn+Y0peUx6NqZHb7RWplMD8HSatPjeEjdK1NXcLCrL0pHh/HcQ9fZq6g68+8vJJiJQcVwV04DZagE2M/h9RBeIonj3fAasUZLG/L95CmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cLlxFwLr; arc=none smtp.client-ip=209.85.167.42
+	s=arc-20240116; t=1739523038; c=relaxed/simple;
+	bh=Xu56v4mJKIsojHoJJQRx4DFB6wDRAvkaTfgpZI9ZkGw=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ui/z6PYZLB1pgtvFf56lr3z1jrKI6cPzC4mW/SgvO5o5zbzJmpN7BkIV0ud8J52Z4/fy3B8+o/78sSaPI9+qM+0GCVMH3pcWRaDrpeJTDt4tTpVK6lTfBhLvaLNTE/GSdnPsSFNE17grXzyjhnPJkTgmo8QpWQae7g6nRnv1P74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KMsCn/Bh; arc=none smtp.client-ip=209.85.222.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cLlxFwLr"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-54505191cdcso1763096e87.2
-        for <git@vger.kernel.org>; Fri, 14 Feb 2025 00:24:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KMsCn/Bh"
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-868f19a9421so756725241.2
+        for <git@vger.kernel.org>; Fri, 14 Feb 2025 00:50:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739521484; x=1740126284; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K8nX4zN3KhHBeTgznS1BmFgn4oP88BRMfLpEmC0uQKM=;
-        b=cLlxFwLrePadq0Al0Z+q8WtayYa1w/3C1ZcyfCxKOc6YP/BTXlHVfSXnWFXN5bhVaF
-         0dR1YvxuZ0+j2cESq7eug7CAp19Qj1pjNCYq5u1LwY0kro1jwkB+cdJdZQ9R/6VTBGwE
-         FCDnzTZHdQhQVfcB874LeIvoeiYFbECKoXiANyc30b2SHA3G0P3NyWJ3GKzKYiH7Px0+
-         gIgG0qL9JztuGjQftyZt/5C8jSaHEhtAIakTPjrjt9ZfVZ/A1MshOb+EVpGmt3pUlDyj
-         ZD4Fr7a0CC9R8rsbJ1xfjcv33artCedmycxdbW/ErywfECXC1FylMJvIWvH1vjpMUk3R
-         qwVA==
+        d=gmail.com; s=20230601; t=1739523036; x=1740127836; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y8h5Oz7IqPTbZGTQdzqwG+bXLAK4rj97LtM6gswXrqU=;
+        b=KMsCn/BhRHfyhR/D6QTSFy09taV3950BR9VzKIytYuE6wiWZUtLfvN9EjK1d2Vvw2S
+         cxOCxAJfbhy5/lE5/MswO8lUA4gUWnF8sBMCAbslxcmNV5VlBUkznxY7tuh3GSa7T5qa
+         Cv7LNT/no1kT4F37vzTMGZKYh1pvfFuyDQhu//shTP/HGDEcGNY3vOcZSr/GSg4kjXMH
+         8DWLVMqfVGA8UazzfVh+hILEBsu+lnQWql0TBMC0T19uN2l5soL0mlQXaW8UYal+XItg
+         83P9XEpclTQXWWTRy1reRsfuTVbEevjDmyfLMmKlR7ajvV9gmqdyHDivFsH+j2uj2Nto
+         UplQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739521484; x=1740126284;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=K8nX4zN3KhHBeTgznS1BmFgn4oP88BRMfLpEmC0uQKM=;
-        b=W0TjvJ5ZD0iVaV0o4YgfbcUum6C9NEVF5/fgcg9OXDO/SgnA1rstWCCmnYriql9HpQ
-         +H20Qs5uTgamK4ttRO/6g3DGHbG2uxefF/oKhwLkHrLrB8OD3CkZ/4IEoK7VX4bfilER
-         2vEXF3K6KJGZyRY0qXAV5EZ87FJD32j53PISdxaMBtzFUtZE6kZsVAF5TL48W/6lzOA5
-         s018nKovSZ2QPu48ae/KgwFKhn5/D/iT07/hBwVowo1yh0wY1RbvPyJpLb0fgWmpoZ5o
-         UzBJ0WuyOPvwff9q6w3t2i2daLu+BltaIrwXfiyj0vj/0MH/pRajzCroUenlEynKU/XF
-         lHSA==
-X-Gm-Message-State: AOJu0Yw9c8W+X+7H2ckeIUT1wkTw1pMMSQNZXBmXKhhnoHxp7x8Uw31p
-	aYuyCNcGlhLQkaGxO4e29QNlXN9ywQ2geXEy0NV7hM4AFAheVCE7qarHB5VmL4r4M9e0eEy24JZ
-	ghh6IXpuh4dt3LGHiLL56bQMtF+w=
-X-Gm-Gg: ASbGncvEaxbCz8v3aOsVtcFrPu2PR1cVGauGvjzh/9Cda8vkcS7/3rg8Q0vj/DRXj0W
-	HbH0eLkWJdGgVqVEW6QSAzFPjDTzWnwa+g8tvYzRmIHRM/RtpS8YozNbXajmDl4Obxu3Zt1ztiI
-	c=
-X-Google-Smtp-Source: AGHT+IH/3/GiZ9twqqHYIWsQYGZNNiRPQ+iOb8LZ0cilyzzzOn6JDNT+uNKoEeag8H9+sJ9oeOE8Md6Y1Imm3N7zFDo=
-X-Received: by 2002:ac2:58cb:0:b0:545:a89:4dce with SMTP id
- 2adb3069b0e04-5451ddd9e5fmr1824734e87.45.1739521484053; Fri, 14 Feb 2025
- 00:24:44 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739523036; x=1740127836;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y8h5Oz7IqPTbZGTQdzqwG+bXLAK4rj97LtM6gswXrqU=;
+        b=RnooUWfeVFWf0mILkmDQdkPJlYLff/oqXIYhE/DZfq8e8FF1v3it5b2W9EjbMou0hN
+         NISsaTZuC7zvwgwcr4FxaBZe/GQrGr4boF2jeIqmrn2HwELfWURK+2ZnCpQwvr2U05Oi
+         HjeE2/JVcrBNxgQacAWXvXY4H4Zlc6SmsXo7kLz88JPKsmKOWWGpK4AGmMR4QjEkOZCN
+         A2Tl6IlrydGTzTdh+FflXHwti6xqThd3LVBhKRuAZ5NzkLYGLbSF/xdA3qsOrAp3/DbF
+         YK4cgQJGOA7cg1kcgqJ80T0p791T7ISzorUInWoMXQe72aJ5t1pYQVNMzOsdIjUfKBGi
+         +zKw==
+X-Gm-Message-State: AOJu0YyYiYF1RU8LRQbw+mUw6fK2WTldZoeZcX74Tx7WbcZvd9+SP/zg
+	qlOrQZySXH1+/gTyuPPRDS9lKheARMZqnU0JjgVdIh5UZdahaTxMk3W7DKW1rywOtTlic2SIT15
+	V3wQZu8odtYWGIVc9V3WIR/RQa5g=
+X-Gm-Gg: ASbGnctah4jmdqgXRyrsXS8+0xTMCWXi7P6fD4CiW6UTfPqnLhWkzXYlTOTGZ+Ur9CN
+	2Cw5h1sNk67nI0mUw+7F2bKM51UANpFMZ95Ey5o5Pxb3oNklD3shPKw7XWzphLrlCswb81WT34A
+	==
+X-Google-Smtp-Source: AGHT+IGFnkdwftjnkBCEzHhjuHPPrvetDVH1CxE9REuPuJ0ZSfVwJBcSU/DXhiQGBq8w6CSoCpLWo3egyeyEsGlHFFc=
+X-Received: by 2002:a05:6102:4a8b:b0:4bb:cbbc:38 with SMTP id
+ ada2fe7eead31-4bbf2071f12mr9016464137.5.1739523035863; Fri, 14 Feb 2025
+ 00:50:35 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 14 Feb 2025 00:50:35 -0800
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqq4j0xpvmu.fsf@gitster.g>
+References: <20250211-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v2-1-991a2ec9a796@gmail.com>
+ <20250212-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v3-1-98b2c4d2bb0c@gmail.com>
+ <xmqqa5aqu7g9.fsf@gitster.g> <CAOLa=ZSDLNLYQ=zsoOqJW6KhcUqeDahNfhG-n9k1t0O6B40OnA@mail.gmail.com>
+ <xmqq4j0xpvmu.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250211194334.20710-1-meetsoni3017@gmail.com>
- <20250213090040.16133-1-meetsoni3017@gmail.com> <20250213090040.16133-3-meetsoni3017@gmail.com>
- <CABPp-BGqihkPq3o4jnqp2aGdqw12F8a8nOModuAB-5N7BQ1t0w@mail.gmail.com>
- <CAPhwyn0hz16mZ-UoVAczC4qDLx2i0LwfFhhDjdTahe0=4TO57g@mail.gmail.com> <CABPp-BGq-x9Z98scXRtEnqz7BCmPn9ONHd6wDnnm9jL4YeDHxQ@mail.gmail.com>
-In-Reply-To: <CABPp-BGq-x9Z98scXRtEnqz7BCmPn9ONHd6wDnnm9jL4YeDHxQ@mail.gmail.com>
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Fri, 14 Feb 2025 13:54:32 +0530
-X-Gm-Features: AWEUYZl3Lj7jfgrIJA4h3A2IZmxyptaLljjsYk5l2_q_qcnOSvXm1xoqCfhBlpw
-Message-ID: <CAPhwyn1oXRy5BFQBvuFsmhfVhkW8+D6Xz6OYB8LpP0O+jH1TFQ@mail.gmail.com>
-Subject: Re: [RFC PATCH 2/2] merge-recursive: optimize time complexity for get_unmerged
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Date: Fri, 14 Feb 2025 00:50:35 -0800
+X-Gm-Features: AWEUYZnz8Be3Wec-mn_ui8_J7wRIyNjIBzwefAEf6ar0blfNw6pV0je9dFwEMTM
+Message-ID: <CAOLa=ZRVPkPVwJd_Ce4krf1FzqEudh-oSCDUPkjwYAmfRMP1=A@mail.gmail.com>
+Subject: Re: [PATCH v3] builtin/refs: add '--skip-reflog' flag to bypass
+ reflog migration
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, jltobler@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000a1be77062e164488"
+
+--000000000000a1be77062e164488
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, 14 Feb 2025 at 11:35, Elijah Newren <newren@gmail.com> wrote:
->
-> > > Did you run any tests?  I'm not sure you maintained correctness here.
-> >
-> > I didn't run any tests -- I wanted to, but I wasn=E2=80=99t sure how to=
- do it
-> > for this change. Since you suggested dropping this patch from the
-> > series, I=E2=80=99ll do that. But for similar changes in the future, ho=
-w should I go
-> > about testing them?
->
-> As per Documentation/CodingGuidelines: "After any code change, make
-> sure that the entire test suite passes."  You can do that by running:
->     cd t && make
-> (You probably want to also run that before making any changes, just to
-> verify that they all pass for you.  Then, if any test fails after you
-> make changes, you know it's because of your changes rather than
-> because you missed something in building or setting up the tests.)
->
->
-> And although it doesn't matter since we're dropping this patch, the
-> issue I noticed was that if there were, say, three unmerged entries
-> with the same path, the original code would create one entry in the
-> string list and modify it 3 times (each with a different ce_stage(ce).
-> Your modification would create three different entries (each with only
-> information from one stage) and drop two of them, meaning we no longer
-> have a single string_list_item that contains information from all 3
-> unmerged entries for the same path.  I'm pretty sure running the
-> existing tests would catch that kind of bug, which is what raised the
-> question.
+Junio C Hamano <gitster@pobox.com> writes:
 
-That's the thing -- I did run make in the t/ directory, and it passed. I wa=
-s
-just wondering if there's any other way to test this in isolation, in case
-I want to verify such changes more directly in the future.
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> To just get rid of reflogs from a repository, I think 'git reflog drop'
+>> or something similar would indeed be a better way to go about it. As you
+>> stated, with this patch, we could still face the issue wherein the
+>> administartor could re-enable reflog and we're back to square one.
+>
+> Exactly.
+>
+>> Why I think this patch is important, is because while there could be
+>> existing reflogs in a repository, if one doesn't care about _reflogs_
+>> there could be significant performance gains while migrating repos from
+>> one backend to the other, while also leaving the reflogs behind.
+>
+> Sure.  It could be done with a combination of "git reflog drop &&
+> git refs migrate" (or "git refs migrate && git reflog drop", if the
+> migrated-to backend performs better when it drops reflogs).
+>
+> With "git refs migrate --skip-reflog" alone, we are very limited.
+> We can lose reflogs _only_ when we are migrating.
+>
+> Doing it _during_ migration may very well be more efficient than
+> dropping first and then migrate (or the other way around), so I do
+> not have much against the "migrate --skip-reflog" existing.  But I
+> find it backwards to add it first _before_ we have a tool that is
+> more generally applicable to wider situations, i.e., "reflog drop".
+>
+> IOW, it feels as if we are worried about icing on the cake long
+> before we actually bake the cake.
 
-Thanks for the clarification!
-Meet
+I understand and agree. I do see a lot of benefits having 'git reflog
+drop' too, so I'll pick it up and send a patch series towards the same
+next (as soon as I send in the next version of the partial transactions
+series :), which is taking me a bit of time with some other ongoing work
+at $DAYJOB).
+
+Thanks!
+
+--000000000000a1be77062e164488
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f075556650c90050_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ldkE5Y1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNHpHQy85bFZZMWpRVVZobzdoQTYwUHJ0TEc1WlZUdgp1bSs4RHpjVHI2
+NTRhNkp0VUEwTGFOcUozc1B2WVJnUFlSay8zN0Z4SG1lY0FMWkNxa05IM1VNRUhaM25oaE9KCnBu
+VkdkczZZQjhOSkJieXNjRlZGelNSU1ZIV0lmbWVYYTRiaytHSFpvejd5Z2hoZWM1anErQUwyMUor
+dWtQY2wKSS9HYnNhRWtBYVFYOGtIOUlxVVF3R3FVdlRZd2JjWG5LcGZNTmdGdXFYeHlMODByS1JQ
+TkRxN2ZIbVloMURQQgo4VS9PREpucFM1L3p3c0gwamF5cXJrQVZlWVY4OEsyeFNXY3FVbkVrak1Y
+V3I4WVdLbjJ0OHVkb2EwRjY1WVpTCnN4aHUrVnkwUTVGK3l1bUovU3RrbVpyam5JbE5OWkNWU3RX
+cHRWRzZEb0owS2xITzF6N3RRZzhjMDRxVnpURmkKZUQxekVsR0tyZFV3dVgramdsZmVlWEswYy81
+UGZQcWhEQkszeDNqSTgvT1d1a3Y3OCszV0dYWkQ5a0E3Mis4Vwp0UWg3N3oza0liYlFxVUtQY0E0
+dVViaWN2MUNSc1JkNVNiZml3SlVMTkR1UUJTRjNTQ2U1a2xiOWpUa0Fjc0hkCmdtRDdUQ0VoaXhW
+bzcyWGtsUUg5OWVYb1E5WlFzVTl3YlZYT3RXdz0KPTFiUlEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000a1be77062e164488--
