@@ -1,61 +1,61 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350EC1FDA6B
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 23:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A5F1DE2B4
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 23:02:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739574159; cv=none; b=bc+Cr0z+T9eoE1yzXwM4Rjz3X024GIwVcgQz2cONsRq/3ZRKucQ7f4Z4LllneYFi4KyoqGfpLCF/pRpvqBXJliEBI24GB57aiwMLSFJPJml+YIZnrF9ZsfBjLc3ZNYfEQkRjT8TVpoOTp3Vbj2war5Yx8jB3b2gLli1x+nC7cBQ=
+	t=1739574160; cv=none; b=Fndw23NiGcr7f/z6PIDvn9ERf85F9pOgz178HhdIpszXEOrS8JPQdP/q84/8yUki9M8HpIECermaUKA6BsVMrY1vk3yRdjXtMphqGAw1bO5Bmspd264IWaE6Y9cCCOdMXQxRgjTp6ZGwA3wcbLsE4Ko9q0Mgel4NGKMQDyTGJyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739574159; c=relaxed/simple;
-	bh=fES0sLVgmO8X/iKwKMYcyCWo4tXnIZMNKhSX5kTNmmY=;
+	s=arc-20240116; t=1739574160; c=relaxed/simple;
+	bh=QirvhC/GcH9fB/4ExWC4PwOzK4tzDTsE4MUD+GHJMEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAkeYCUbRVd8BzXKwgvZpbjgg3zBHMTqM97iDN6Iuj6+67ToKgVhfsZDTCp8Z1cbcg1jFuS4+0Eu3DWTG07/03qVYRrAMB7+eDXBrCjR0XDgJ1exWLjnXUB6bzCiQrsp9hLEsQ1Bg3CYCkMJkA89TphDl+zymTiU92NmVP6ISao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eawzWggK; arc=none smtp.client-ip=209.85.214.173
+	 MIME-Version; b=KKAdi4rckXrHf8hciLxMhDSeNznwS8qeNS1MlvWplieEOCKM/khPeWOAB3sFIVvxaz/MWfJg1Hz3VtFgslWLlCf6kTve4zt/kQL82AdcJ0/QmKnGh68tgpJ+6J5f2NXep8uViSs5K42Qs05JmpPEyP7d1w2/517YwsJ4qACWJrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MdFc5M4Y; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eawzWggK"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-220e6028214so38738495ad.0
-        for <git@vger.kernel.org>; Fri, 14 Feb 2025 15:02:35 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MdFc5M4Y"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-220ecbdb4c2so37376125ad.3
+        for <git@vger.kernel.org>; Fri, 14 Feb 2025 15:02:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739574155; x=1740178955; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739574158; x=1740178958; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2GYQuJnhBN0yvMzA1EcZP0GVgXte4QrdClxq6a7RjPY=;
-        b=eawzWggK2vKkfZQYQ5syPhIgLHh0A0mIDUClJkPJIvRKM+CeTjSBho22jyZA6MzaNe
-         0fVP/NWvWc+y4mlaVihsrHFoMCU98AxKuzZgm6AR4qTpqKy2rvL9vZkolDUVqDhNfI24
-         SCC+5HnBPtrSxIwmlkXWthNVdlBxoBAHZvRvQRPeTDaT16xsTT+b5EZgy5a4jPn4cvhg
-         qgjWNPSdkhYwwsMjrxrPqYjPEK8UTmxrjRTeHtqy9YueK5pkLna1WpLTcDFsT4iYBR8W
-         1qq+9FBInTjM3eLoC82Ran8bHOM6fIYpI9CJW7PyM0eMFzr6tut5eJyuVVkCxfIOqyrf
-         fSZA==
+        bh=L8cKSW/SlXPNJ5ybtVAZEcWFZty7EVG9+jJPYUZVC5U=;
+        b=MdFc5M4YzXXs0vnceOawZu5d+5JesdDYmVwPPVX5/Kq27YS084Dhp+dS00n3qiQI8v
+         qs/2FzDsQnPbeNkTIhMT+pzuiHcoiGd4Y+PkWap78GJXibIZs8xC16GctG8ve38L/bGL
+         /UIfGwyK7BU7IhV5ZMDOCyFtJmvEm7LSNo70nSKqPyI7EznBQnn+iDpg8pwARvhlVK3N
+         w0iteQTmixu8rauS1hE52MYP61ERxAPuzPiOEU+jFIfaB6RPgrSIDDr88oHc0PfRlyvM
+         i2Q+ayZe7VIhonIbQ1/KSeCPjLs0ZTvUOvATvPTd4zplA0ofCTHp4Jr2CpauN8MB46Jl
+         lz/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739574155; x=1740178955;
+        d=1e100.net; s=20230601; t=1739574158; x=1740178958;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2GYQuJnhBN0yvMzA1EcZP0GVgXte4QrdClxq6a7RjPY=;
-        b=xKBxiDpjPejox2TrrP1TgYyons7LuhdsU6ockeaIL2fY+QaU2cZrQODsm1pEqFCQ51
-         D4Td/Rg5L6HYHmK5MfyAFyfXPOnC64mHU9VI41BA9IpOy/6cT95Ht4uzyiFU5VLJTx2r
-         6yLdX9wm+DWQcls/PLZ/+Gw2kyZC7RxHGUDOonuH/+tDxWz6s8XjFWCCGl4M7wAC+fbd
-         dkfqK5kVwJgLG8yhIY14Wr6+CYgyQfavfOMo5uOj0avo9tIVFZsCSLITPuFx+lDslaUG
-         R+ySJAPZ+KbVv86OnKOzmIiVCQEd1XKOk2RHJiAmSkie7FFyIkMUfQIwcHauAzY1yCht
-         2xsg==
-X-Gm-Message-State: AOJu0Yyu7NhU0WVVzf8dLrF6+yxhtQ8UVkIu12mEVCqNL5jwZKAUl0+V
-	Fi9yFu3feKtqyabIWK7QDGxFJe2plQuTN6CKEDLTazr7fDxO3xNTt0YTnWS0
-X-Gm-Gg: ASbGnctF9AQNtJ28whQ+0KPJCo4hEH6pcw7uFKC/T14FMA4DuLsurRUdH8OjiVM+0Iu
-	vR3q39+lRMjyuKSoVDoaBc8xfyHlW5IJohbg7DVYZuP8n4RQ4JFx/pu2/KscCMO2mfh/Oww3rk0
-	C9ZOUp9AsQMXPT3gq2QhSsowuKcn708I+npEJrA+dleWjeJQ7nljpLQTa7mGtEAjBjKK49URTch
-	6z5t8yr5RMZySZGXR3sBI55KXmNv800H49hEYmHw9Z9JvLOw6ZM/PoRPIREVNhrTLd5YkKOIL7A
-	fOwKrYjwV+G5z/abgwfARRhCMiHgJepFka6Qhob1
-X-Google-Smtp-Source: AGHT+IGYeezf+EwceGhDOxmtRKFj7CuhL9HQM/O9XytWc4XbMtbVd8OHt4aPCqh70Vji+uldpFWwsQ==
-X-Received: by 2002:a17:903:41c3:b0:220:eade:d77e with SMTP id d9443c01a7336-221040a8e2cmr17988815ad.40.1739574155285;
-        Fri, 14 Feb 2025 15:02:35 -0800 (PST)
+        bh=L8cKSW/SlXPNJ5ybtVAZEcWFZty7EVG9+jJPYUZVC5U=;
+        b=qjg+OQG8p3k2z4ln0JMnecIyqFC+rI9ycp+KwrM8BnbFiik8622OqtkBF7bDDpGa8b
+         pEEDAQdoa1Mly14W2iDIdcKVvmJC7WUITHq/Whi7RNDL59Ggobtai+cQYABtS/MpQ231
+         nteEklJ8CwD72+DLn6oUFtow4lIrW++4x/ajVFir04/DgCrWmJUjnVqctbhSs6yE3ZOk
+         50b3rxr7gLDCwSO6zaze9jXqqDCR+GwgykD73RVBhHSsifH71U5Y6cFSSV+scSu4mRY/
+         GrbzmZiuN2cwAiFRj50fv9+93/JeB3hUF2MDrAyDY/ZBqyNf5m/up5P/3xM+7vewDvTq
+         reiA==
+X-Gm-Message-State: AOJu0Yz4XXDpJblNMDSP9g+tw02oG5y2MSr1jXdf208c263GTXamfPGR
+	8rjOjo/Q9/+E4V839MZRIJjhUHll8YqLUvxBPtwoPxP3bjgd2QzqJeyQ++6L
+X-Gm-Gg: ASbGncs+Y8+ZHiGVbxHiOGnyFcjLqpH4/pUUuLPyoTZKQXelv/ND+grODe1ITROV3Sf
+	1jWhBFl+2qgwZKp36EL+P5I5S5q/kpBDKZr4dJGtH7YoiJpe9j2y0Cz19+zMRXKIFsIR9eW8N+x
+	wuTikVOXCHzbzgol7WJhnpJgqkHfEBYevz5kFB0dxXUkHizkcm7z5zyV5DIUfKgnJsVgDDo79Em
+	XU0geFkjt4FMlcoBYurirX3ELy5K+vIpflyYZgwNSkDMgl7ZzamrJqm7wVLFtSCxYqpG0TeOwmY
+	xH3W3YPCHtnwGb1i+YbhVq2hZknPG+uO4PBk1gOg
+X-Google-Smtp-Source: AGHT+IE9PDnsNa3pA1eMOmr9ikwAD6VJovUO/3Eh9zHY+FsaI2zimWYUZqZSokRAghD8I8lK3d1mGg==
+X-Received: by 2002:a17:902:d50d:b0:220:e896:54e1 with SMTP id d9443c01a7336-221040566e6mr16731165ad.26.1739574158023;
+        Fri, 14 Feb 2025 15:02:38 -0800 (PST)
 Received: from archlinux.plaksha.edu.in ([182.75.25.162])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22105174c73sm1495245ad.216.2025.02.14.15.02.32
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22105174c73sm1495245ad.216.2025.02.14.15.02.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2025 15:02:35 -0800 (PST)
+        Fri, 14 Feb 2025 15:02:37 -0800 (PST)
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 To: git@vger.kernel.org
 Cc: chriscool@tuxfamily.org,
@@ -63,9 +63,9 @@ Cc: chriscool@tuxfamily.org,
 	johncai86@gmail.com,
 	ps@pks.im,
 	shejialuo@gmail.com
-Subject: [PATCH 6/7] builtin/for-each-ref: stop using `the_repository`
-Date: Sat, 15 Feb 2025 04:27:22 +0530
-Message-ID: <20250214230210.1460111-7-usmanakinyemi202@gmail.com>
+Subject: [PATCH 7/7] builtin/checkout-index.c: stop using `the_repository`
+Date: Sat, 15 Feb 2025 04:27:23 +0530
+Message-ID: <20250214230210.1460111-8-usmanakinyemi202@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250214230210.1460111-1-usmanakinyemi202@gmail.com>
 References: <20250214230210.1460111-1-usmanakinyemi202@gmail.com>
@@ -78,49 +78,168 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 Remove the_repository global variable in favor of the repository
-argument that gets passed in "builtin/for-each-ref.c".
+argument that gets passed in "builtin/checkout-index.c".
 
 When `-h` is passed to the command outside a Git repository, the
-`run_builtin()` will call the `cmd_for_each_ref()` function with `repo`
-set to NULL and then early in the function, `parse_options()` call will
-give the options help and exit, without having to consult much of the
-configuration file. So it is safe to omit reading the config when `repo`
-argument the caller gave us is NULL.
+`run_builtin()` will call the `cmd_checkout_index()` function with `repo`
+set to NULL and then early in the function, `show_usage_with_options_if_asked()`
+call will give the options help and exit, without having to consult much
+of the configuration file.
+
+Let's pass `repository` argument to `checkout_all()` and `checkout_file()`
+functions to remove their dependency on the global `the_repository` variable.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 ---
- builtin/for-each-ref.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/checkout-index.c | 43 ++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 22 deletions(-)
 
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 8085ebd8fe..0e9b126605 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -1,4 +1,3 @@
+diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
+index e30086c7d4..46035444eb 100644
+--- a/builtin/checkout-index.c
++++ b/builtin/checkout-index.c
+@@ -5,7 +5,6 @@
+  *
+  */
+ 
 -#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
  #include "builtin.h"
- #include "commit.h"
- #include "config.h"
-@@ -20,7 +19,7 @@ static char const * const for_each_ref_usage[] = {
- int cmd_for_each_ref(int argc,
- 		     const char **argv,
- 		     const char *prefix,
--		     struct repository *repo UNUSED)
-+		     struct repository *repo)
+@@ -68,10 +67,10 @@ static void write_tempfile_record(const char *name, const char *prefix)
+ 	}
+ }
+ 
+-static int checkout_file(const char *name, const char *prefix)
++static int checkout_file(struct repository *repo, const char *name, const char *prefix)
  {
- 	struct ref_sorting *sorting;
- 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
-@@ -63,7 +62,8 @@ int cmd_for_each_ref(int argc,
+ 	int namelen = strlen(name);
+-	int pos = index_name_pos(the_repository->index, name, namelen);
++	int pos = index_name_pos(repo->index, name, namelen);
+ 	int has_same_name = 0;
+ 	int is_file = 0;
+ 	int is_skipped = 1;
+@@ -81,8 +80,8 @@ static int checkout_file(const char *name, const char *prefix)
+ 	if (pos < 0)
+ 		pos = -pos - 1;
  
- 	format.format = "%(objectname) %(objecttype)\t%(refname)";
+-	while (pos <the_repository->index->cache_nr) {
+-		struct cache_entry *ce =the_repository->index->cache[pos];
++	while (pos < repo->index->cache_nr) {
++		struct cache_entry *ce =repo->index->cache[pos];
+ 		if (ce_namelen(ce) != namelen ||
+ 		    memcmp(ce->name, name, namelen))
+ 			break;
+@@ -137,13 +136,13 @@ static int checkout_file(const char *name, const char *prefix)
+ 	return -1;
+ }
  
+-static int checkout_all(const char *prefix, int prefix_length)
++static int checkout_all(struct repository *repo, const char *prefix, int prefix_length)
+ {
+ 	int i, errs = 0;
+ 	struct cache_entry *last_ce = NULL;
+ 
+-	for (i = 0; i < the_repository->index->cache_nr ; i++) {
+-		struct cache_entry *ce = the_repository->index->cache[i];
++	for (i = 0; i < repo->index->cache_nr ; i++) {
++		struct cache_entry *ce = repo->index->cache[i];
+ 
+ 		if (S_ISSPARSEDIR(ce->ce_mode)) {
+ 			if (!ce_skip_worktree(ce))
+@@ -156,8 +155,8 @@ static int checkout_all(const char *prefix, int prefix_length)
+ 			 * first entry inside the expanded sparse directory).
+ 			 */
+ 			if (ignore_skip_worktree) {
+-				ensure_full_index(the_repository->index);
+-				ce = the_repository->index->cache[i];
++				ensure_full_index(repo->index);
++				ce = repo->index->cache[i];
+ 			}
+ 		}
+ 
+@@ -213,7 +212,7 @@ static int option_parse_stage(const struct option *opt,
+ int cmd_checkout_index(int argc,
+ 		       const char **argv,
+ 		       const char *prefix,
+-		       struct repository *repo UNUSED)
++		       struct repository *repo)
+ {
+ 	int i;
+ 	struct lock_file lock_file = LOCK_INIT;
+@@ -253,19 +252,19 @@ int cmd_checkout_index(int argc,
+ 	show_usage_with_options_if_asked(argc, argv,
+ 					 builtin_checkout_index_usage,
+ 					 builtin_checkout_index_options);
 -	git_config(git_default_config, NULL);
-+	if (repo)
-+		repo_config(repo, git_default_config, NULL);
++	repo_config(repo, git_default_config, NULL);
+ 	prefix_length = prefix ? strlen(prefix) : 0;
  
- 	/* Set default (refname) sorting */
- 	string_list_append(&sorting_options, "refname");
+-	prepare_repo_settings(the_repository);
+-	the_repository->settings.command_requires_full_index = 0;
++	prepare_repo_settings(repo);
++	repo->settings.command_requires_full_index = 0;
+ 
+-	if (repo_read_index(the_repository) < 0) {
++	if (repo_read_index(repo) < 0) {
+ 		die("invalid cache");
+ 	}
+ 
+ 	argc = parse_options(argc, argv, prefix, builtin_checkout_index_options,
+ 			builtin_checkout_index_usage, 0);
+-	state.istate = the_repository->index;
++	state.istate = repo->index;
+ 	state.force = force;
+ 	state.quiet = quiet;
+ 	state.not_new = not_new;
+@@ -285,8 +284,8 @@ int cmd_checkout_index(int argc,
+ 	 */
+ 	if (index_opt && !state.base_dir_len && !to_tempfile) {
+ 		state.refresh_cache = 1;
+-		state.istate = the_repository->index;
+-		repo_hold_locked_index(the_repository, &lock_file,
++		state.istate = repo->index;
++		repo_hold_locked_index(repo, &lock_file,
+ 				       LOCK_DIE_ON_ERROR);
+ 	}
+ 
+@@ -304,7 +303,7 @@ int cmd_checkout_index(int argc,
+ 		if (read_from_stdin)
+ 			die("git checkout-index: don't mix '--stdin' and explicit filenames");
+ 		p = prefix_path(prefix, prefix_length, arg);
+-		err |= checkout_file(p, prefix);
++		err |= checkout_file(repo, p, prefix);
+ 		free(p);
+ 	}
+ 
+@@ -326,7 +325,7 @@ int cmd_checkout_index(int argc,
+ 				strbuf_swap(&buf, &unquoted);
+ 			}
+ 			p = prefix_path(prefix, prefix_length, buf.buf);
+-			err |= checkout_file(p, prefix);
++			err |= checkout_file(repo, p, prefix);
+ 			free(p);
+ 		}
+ 		strbuf_release(&unquoted);
+@@ -334,7 +333,7 @@ int cmd_checkout_index(int argc,
+ 	}
+ 
+ 	if (all)
+-		err |= checkout_all(prefix, prefix_length);
++		err |= checkout_all(repo, prefix, prefix_length);
+ 
+ 	if (pc_workers > 1)
+ 		err |= run_parallel_checkout(&state, pc_workers, pc_threshold,
+@@ -344,7 +343,7 @@ int cmd_checkout_index(int argc,
+ 		return 1;
+ 
+ 	if (is_lock_file_locked(&lock_file) &&
+-	    write_locked_index(the_repository->index, &lock_file, COMMIT_LOCK))
++	    write_locked_index(repo->index, &lock_file, COMMIT_LOCK))
+ 		die("Unable to write new index file");
+ 	return 0;
+ }
 -- 
 2.48.1
 
