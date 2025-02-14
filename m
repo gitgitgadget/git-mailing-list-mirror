@@ -1,132 +1,160 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [217.70.183.198])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31BD61078F
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 14:01:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7046026770A
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 16:32:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.198
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739541676; cv=none; b=RRcEQJOa2GFuPgEA2kkJ/axWjJNuIkVetecuSBdm5Za5OjspnFdKKJZs5eooKLsiiChQrIFqpkusIsVHw/r00X/HTgroVJXyeVJ9ErofNAJ6emiy7/158ebIlUzuvK4Gv97tBd4cywSQzNBIK4dmoNL5bcNz/9AaDVpOumshzAQ=
+	t=1739550753; cv=none; b=L4LiReMG0ttUxauQ+fPUNAXDi5T8hBsHoRsSQPxtJi1GQVFTkZ4bEgt0DDrvuTXf/nAEH2GgeVxy/A4PO7cqrzUWxAhW96vS+Q2g8ObDiuZUr/zhVlSFip3V/cC7iCvCUz1j0zHRrbKXd876WqmhhVGIWCxxTrn5RuLvymw+FhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739541676; c=relaxed/simple;
-	bh=zmwmE+D0gOg8Xrgch2Lud8bOGstFnEEyehQJ7AzFAl0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=g5MH2ZxguWAMhSNxSfQU4DtTS+5T+w/LNBR08NLNftb3NxuHtIh/pQh3Q4AKfgJN+8TtAv6sAj/Lg0su7NdCTz/BplAkWZ3h1N9lOZekPN9Q/Qn/cxbdlVMejy5/BYetYhfc85Tk0ElGKollpvNXaf1BcRzz4Qo8qvcXfGsXC0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AooOYbGg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sn5T7eph; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739550753; c=relaxed/simple;
+	bh=kBxRPRswLqrehMv0K9l5YEr0cXGkn/7kzOGW/hbSmmQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Q1VoW22vg191jDMsM6mrgHKtdLVsWj5HuArfW947+4GqTLUBvAJHyxXEoUg4e4CmldI11cCerbgYi1L5N9mFFCNqiaC13iEwDFshBJYF/KVjcMUhcDZ4it6+LVi+6bLagP7H3oHMjjYhTcPD5fjLDbxIa+qLLNfslbGEMwGdKL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Wvv9z2EM; arc=none smtp.client-ip=217.70.183.198
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AooOYbGg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sn5T7eph"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 047301140198;
-	Fri, 14 Feb 2025 09:01:12 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 14 Feb 2025 09:01:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739541672; x=1739628072; bh=thY1EV0hL8
-	XjnkVjo0buyKHrPx/uK6FM6ipjbEAGrMw=; b=AooOYbGgthh/r0mosThmS1cUYN
-	SISxzXiUYmWYmcgyDMXTMyXkohbJU9QPdCfzISmMl5B9todh5cdSA4pQy2N6+Xr5
-	MCReofAa6ZtXRdLGHDEly+HOg/FFmolsQD+IVO0+ydbOsLR6FVISyh7PqMnt2dSo
-	bIwOEYLYfd8x/0uV/nyZiCimaq63dxTjDXJfoVAul/klyF6zQUx1JUXU5VH07ery
-	c84OHz/PXY4J8QTjlVJ1V4iZWTv4dPDNf4Tk1/iqPwdzyLxoMCNwGEnptW6RA59q
-	paDpLDh35BoM3A0YSQt3ZNSuuhi2McQdaV4wST8mAFJqE2kNfmNGe/oStX8Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739541672; x=1739628072; bh=thY1EV0hL8XjnkVjo0buyKHrPx/uK6FM6ip
-	jbEAGrMw=; b=Sn5T7ephaOsTIqf2VoNVgvkigur5paqsvRk+JrjWwkp0a4mTCWc
-	JPLFTd9Gz9e1o/m1Sq5RqTvLkc7D2d9Zp87fjABlZ2lxh5VziAlndi7FmZjTLabJ
-	hGQ+3NH4au9VzNL5RsmTFAcn1DjOH0PaYNlUX8Zt/nChGwRTEyOXWCOh+jA2qzEG
-	MnFN0odMGp501rh7NgbbChu/ylUAmrLRSf0dDgjb4IHFPliCEHMHiFf4JyH3IZ10
-	7Rb8r3m0SaK4JDYHg/OBrljB1pGGMfLopNJsdZ1Khy36eCsgvHRiLQjUta/3A4/7
-	/LYCVEuEIWg7uOZsjt2wc7X+A2ynZoTbT/g==
-X-ME-Sender: <xms:qEyvZxE4adv5X2cWSvoMgVcKlNcVIZRBWmdoSPLqgQ9UzN3S2fgoyQ>
-    <xme:qEyvZ2VBzqlXQpPTWA0KakX3ipS1EA57-8yfrmTZ1X7Bjc028RAAt41_hDwkmjIxT
-    Sp-dH7GsIEyeXY-ew>
-X-ME-Received: <xmr:qEyvZzLuDnLkVMPk_zuzsXwJZNftoVcIuYwLM57a2Xc0chH1xi454dEci6iDVZYmwEKrnWlPzwzpJHCUNdkV_3I8l_ci2ytXtaXM5II>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegleekfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhirghluh
-    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehmhhgrghhgvghrsegrlhhumhdr
-    mhhithdrvgguuhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qEyvZ3HDVzFwaG03r85mY-7lQ7gJ5B_iYddDtRDMMvkZ-fW1O1pTSA>
-    <xmx:qEyvZ3WBZUJYMHZt2N2wycW3qwhkRxCeIbqDP8s7r_bNN40iUD7O5A>
-    <xmx:qEyvZyPZScbRbEfX9jDHeRH1xjjqJ3fRbiXFnWZYbCsQNrolldf42Q>
-    <xmx:qEyvZ213aL8jqQhvRn4yQ8vBd-g5R_Qsxouiusnos12NTvLABn3DtA>
-    <xmx:qEyvZ5LDSPuNwfKdgVxsqf2049T6Sn0oHxk8l8_nZkQ8UtXrgjSFfRw0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 14 Feb 2025 09:01:12 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
- <karthik.188@gmail.com>,  Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 4/8] packed-backend: add "packed-refs" header
- consistency check
-In-Reply-To: <Z67MG8utrQfUrakz@ArchLinux> (shejialuo@gmail.com's message of
-	"Fri, 14 Feb 2025 12:52:43 +0800")
-References: <Z67LkxAFIAeaYr0U@ArchLinux> <Z67MG8utrQfUrakz@ArchLinux>
-Date: Fri, 14 Feb 2025 06:01:10 -0800
-Message-ID: <xmqq4j0wmxqx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Wvv9z2EM"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 61E9B4429F;
+	Fri, 14 Feb 2025 16:32:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+	t=1739550745;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=1VDCkI4yWo8OCZWMd3pJjyNZkitQ8U6xPgYD2d1e0Fg=;
+	b=Wvv9z2EMJtAysJJk0K665D9kUf+PHPM7upWsL3NGGNODNXkHr/9ndnqQkVuRk0xm3q2Mql
+	wDRtRKgBksUN0NmnT2VP7Oyv8gh4iUXV+LUD/qW4GBa4Ih93+ryjEjdGO1lzXfTbOl99OV
+	Khvx0hDvvKoO/KKF0qBvmchpDWCwkGR6MNfZqZ4yo5NCiRAbBlYxO4E7f96GcLVZSFfhE+
+	daArKkbGBzS4sQf0tImn8M+hAcBYhpiBAFROrmhTyzFC9QRQSiZmvgmSH1quK7o13sw3XB
+	hIknSeW3EavdLlwGkRiA07NonDLBaDLS/03687wV6Ux/P111/ziPlrM1z7rc5A==
+From: Antonin Godard <antonin.godard@bootlin.com>
+Date: Fri, 14 Feb 2025 17:31:13 +0100
+Subject: [PATCH RFC] builtin/log: include From in git show --format=email
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250214-git-show-from-email-v1-1-df6469635454@bootlin.com>
+X-B4-Tracking: v=1; b=H4sIANBvr2cC/x3MPQqAMAxA4atIZgNp8QdcBQ/gKg5iUw2olVZUE
+ O9ucfyG9x4I7IUDVMkDnk8J4rYIlSYwzsM2MYqJBk06J6VKnOTAMLsLrXcr8jrIgoW2xBlRZko
+ Dsdw9W7n/awdtU0P/vh9FBh6/agAAAA==
+X-Change-ID: 20250117-git-show-from-email-62f0e4004d7d
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Emma Brooks <me@pluvano.com>, 
+ Patrick Steinhardt <ps@pks.im>, 
+ =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>, 
+ Daniel Li <dan@danielyli.com>, Antonin Godard <antonin.godard@bootlin.com>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2802;
+ i=antonin.godard@bootlin.com; h=from:subject:message-id;
+ bh=kBxRPRswLqrehMv0K9l5YEr0cXGkn/7kzOGW/hbSmmQ=;
+ b=owEBbQKS/ZANAwAIAdGAQUApo6g2AcsmYgBnr3AZjm32YawOpRk+7SYk6gTrnmXBTIz3ohkFG
+ nmLvSKw8ZSJAjMEAAEIAB0WIQSGSHJRiN1AG7mg0//RgEFAKaOoNgUCZ69wGQAKCRDRgEFAKaOo
+ NnSzEAC3Nq249kK0/IvHMgaOXDO0AyGyZGcM/Yh0Wpknpn4v9nsf7/WV83iDxv6ihbiYWGt0wPc
+ 8lgnnzu8TN0Y7SUqohjnXP8TkvfVOKBuchtmshxqj8armbD3nl1Psv5p0MmkTbyXpJSYENCT2ef
+ TsECwCY/AnprTMkdq7sXLo/88QRH1SMQLWce9zSlORoTu9ebfJYFEdvh2ZnVriwjr02GS71u/vf
+ JrGh4XLg/MCxaLg/X0kOF/fpWmSHB2E7PsF6181oferWDQWSSCOyoSSe/wUqavWTX+915vx5Xur
+ nMEeF3GtivdvxdFzxJsWKSlwh+UGFZ2LEGqAiML6Ti09tZ3QjNBuZeHvJTkBsPI8HjLyr/9Oqzv
+ 0gmmS3LDSOkMLhI4C3QlZjrEFsbS4F6NlvcOKGTLCY4Di6a960P8ftpxYmpHAdPp+bPHxxIHC3q
+ me+F/Bq7EYueZZL32H+IwUDYJ+/AEjNrS6pEEtvJ/Zfaau0LQHONgPIXLhkw9GLRCu/9tqi/uUG
+ vhLukFgVT6zd0EHt4zNnWhT69lqUxY2TmJ/GRAxu97uQRoa3Ca0zlna/sVozzW73NTsxjNj/eMV
+ AxYD2MTYdYCWsSt8ifTaHWBhvfpxYGQd/ddu5R+qq8zZHBM4Awqyl2leq3epXyE8Z1QTEmghKSh
+ IO/lAAIR72z1tCA==
+X-Developer-Key: i=antonin.godard@bootlin.com; a=openpgp;
+ fpr=8648725188DD401BB9A0D3FFD180414029A3A836
+X-GND-State: clean
+X-GND-Score: -100
+X-GND-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehtddugecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfitefpfffkpdcuggftfghnshhusghstghrihgsvgenuceurghilhhouhhtmecufedtudenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkffvvefosehtjeertdertdejnecuhfhrohhmpeetnhhtohhnihhnucfiohgurghrugcuoegrnhhtohhnihhnrdhgohgurghrugessghoohhtlhhinhdrtghomheqnecuggftrfgrthhtvghrnhepieefkeffteefleevvddtveetveekieeguddtudfgteethfeffeefgedvhffftdefnecuffhomhgrihhnpehfrhhomhgpihguvghnthdrihhtpdguihhffhhophhtrdhnohdpphgvnhguihhnghdrnhhrnecukfhppedvrgdtudemtggsudegmeehheeimeejrgdttdemjegthegtmeeirgguvgemjeelgeekmeegtdehleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvrgdtudemtggsudegmeehheeimeejrgdttdemjegthegtmeeirgguvgemjeelgeekmeegtdehledphhgvlhhopegluddvjedrtddruddrudgnpdhmrghilhhfrhhomheprghnthhonhhinhdrghhouggrrhgusegsohhothhlihhnrdgtohhmpdhnsggprhgtphhtthhopeejpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtp
+ hhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheprghnthhonhhinhdrghhouggrrhgusegsohhothhlihhnrdgtohhmpdhrtghpthhtohepuggrnhesuggrnhhivghlhihlihdrtghomhdprhgtphhtthhopehmvgesphhluhhvrghnohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-GND-Sasl: antonin.godard@bootlin.com
 
-shejialuo <shejialuo@gmail.com> writes:
+Currently, when the format.from and format.forceInBodyFrom options are
+configured, the command `git show --format=email <commit>` command does
+not include "From: user <email>" in the body, even though I believe it
+is expected when using this format.
 
-> In "packed-backend.c::create_snapshot", if there is a header (the line
-> which starts with '#'), we will check whether the line starts with "#
-> pack-refs with:". Before we port this check into "packed_fsck", let's
-> fix "create_snapshot" to check the prefix "# packed-ref with: " instead
-> of "# packed-ref with:" due to that we will always write a single
-> trailing space after the colon.
+While the code exists in log-tree.c to take the identity into account:
 
-A more important reason to be more strict is not "we will always
-write", but "we HAVE ALWAYS written", I think.
+  if (opt->from_ident.mail_begin && opt->from_ident.name_begin)
+    ctx.from_ident = &opt->from_ident;
 
-> However, we need to consider other situations and discuss whether we
-> need to add checks.
->
-> 1. If the header does not exist, we should not report an error to the
->    user. This is because in older Git version, we never write header in
->    the "packed-refs" file. Also, we do allow no header in "packed-refs"
->    in runtime.
+the mail_begin and name_begin would always be null pointers
+because opt->from_ident is never filled in with the identity from
+cmd_show.
 
-Yes.
+This commit adds the `from` member to struct log_config, and reads the
+user configuration to fill in rev.from_ident. It also reuses
+the existing force_in_body_from variable to take this option into
+account.
 
-> 2. If the header content does not start with "# packed-ref with: ", we
->    should report an error just like what "create_snapshot" does. So,
->    create a new fsck message "badPackedRefHeader(ERROR)" for this.
+Signed-off-by: Antonin Godard <antonin.godard@bootlin.com>
+---
+This is probably not the best solution, as we already have the from
+member in struct format_config, so adding it in struct log_config is a bit
+redundant. However, this is an RFC that hopefully will get my question
+answered: is my belief to have the From field shown with this command
+correct?
+---
+ builtin/log.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-OK.
+diff --git a/builtin/log.c b/builtin/log.c
+index e41f88945e..16a4889c01 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -113,6 +113,7 @@ struct log_config {
+ 	int fmt_patch_name_max;
+ 	char *fmt_pretty;
+ 	char *default_date_mode;
++	char *from;
+ };
+ 
+ static void log_config_init(struct log_config *cfg)
+@@ -592,6 +593,19 @@ static int git_log_config(const char *var, const char *value,
+ 		cfg->default_encode_email_headers = git_config_bool(var, value);
+ 		return 0;
+ 	}
++	if (!strcmp(var, "format.from")) {
++		int b = git_parse_maybe_bool(value);
++		FREE_AND_NULL(cfg->from);
++		if (b < 0)
++			cfg->from = xstrdup(value);
++		else if (b)
++			cfg->from = xstrdup(git_committer_info(IDENT_NO_DATE));
++		return 0;
++	}
++	if (!strcmp(var, "format.forceinbodyfrom")) {
++		force_in_body_from = git_config_bool(var, value);
++		return 0;
++	}
+ 	if (!strcmp(var, "log.abbrevcommit")) {
+ 		cfg->default_abbrev_commit = git_config_bool(var, value);
+ 		return 0;
+@@ -799,6 +813,13 @@ int cmd_show(int argc,
+ 		return ret;
+ 	}
+ 
++	if (cfg.from) {
++		if (split_ident_line(&rev.from_ident, cfg.from, strlen(cfg.from)))
++			die(_("invalid ident line: %s"), cfg.from);
++	}
++
++	rev.force_in_body_from = force_in_body_from;
++
+ 	rev.diffopt.no_free = 1;
+ 	for (i = 0; i < rev.pending.nr && !ret; i++) {
+ 		struct object *o = rev.pending.objects[i].item;
 
-> 3. If the header content is not the same as the constant string
->    "PACKED_REFS_HEADER". This is expected because we make it extensible
->    intentionally. So, there is no need to report.
+---
+base-commit: 9520f7d9985d8879bddd157309928fc0679c8e92
+change-id: 20250117-git-show-from-email-62f0e4004d7d
 
-Nor there is any need to check for literal equality with the
-constant string.  We may want to split the traits that are recorded
-on the "with:" line and see if there are ones that we do not
-recognise if only for curiosity, but because create_snapshot(), which
-is the only run-time consumer of this information, only uses the
-ones it recognises while ignoring everything else, presence of an
-unknown trait is not an error- or even warning-worthy event.  Unless
-we are curious and want to emit "info" level message, there is not
-much point in checking the remainder of the header.
+Best regards,
+-- 
+Antonin Godard <antonin.godard@bootlin.com>
+
