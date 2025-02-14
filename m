@@ -1,82 +1,81 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BE9193079
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007DB42AAF
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739508850; cv=none; b=GQelYfmVmwY5Q66sHvlcf3OxRWjRerPVSDd6JF8SS5TrXgzakwPqCUzl7ztJBxXDlou4oLjTm3Be1G56qnbR2PSYSPRyPMMdpK4m4uc0UWE4sIoyZ9sJsycJiUIbJaAU6+fh9h8GMipVrThRQjgSFsFSYi7JuynRYDFI6ef4Pss=
+	t=1739508961; cv=none; b=IKNXlARi6Ye9duKJOWSBiwP4Q7EuBy5jiTYennOFvN+EBacJlObW8KxBlUDb31qyoq4cmXvGzupYDe4fRfpjfHyaEB1X/sH8o8sulmBBfS9IVBc17DRwymXgusO04GY9AU5BkL/lodgMGNBF+GJAEXu+qAzjJxKSZjyJfP56lwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739508850; c=relaxed/simple;
-	bh=Q66cFecVFDpn4rG7i5ctY3bleMWZYMGd0/fQHL1IZCg=;
+	s=arc-20240116; t=1739508961; c=relaxed/simple;
+	bh=qu0ZhVNHfkEOlqgJ8zeua2S7/XEVlyAfNl3v4jmI7W0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f66+3DQNJlXGw+uosRFtvALn9vLqzcCnQC54BbZWvuG8LGYAUM1dlys+dAqvokDHsy5pvUEPyw08j2E2Y+zjQtgIvb07PlNBYUhckU1+P3aAFx4vafgC64VQoR9IUWICb40Q+nVAjleRyICZs3yoGCDemBRBZddf/876Tj4qBl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=snnEJZqj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i1fGGZ3j; arc=none smtp.client-ip=202.12.124.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=oVwkHgNZGE1K6uBte9zTAzz+RJBAqADYiKLw4zjk5nw+1O9qYUcOwiGlu36s7QxEFlj4IJaMIyIY8cBArQ/8rqm94WIBAN3vsIMRsSfqNq9XWeVTE1ucdsBEbF+9uI2MXkj+oQnDX/9zFbvYs2qiv85vK4FHGwzImDEzbgzfzfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=K3FwxUoJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=x5q6yA4R; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="snnEJZqj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i1fGGZ3j"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 09D4D2540193;
-	Thu, 13 Feb 2025 23:54:06 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Thu, 13 Feb 2025 23:54:06 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="K3FwxUoJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="x5q6yA4R"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CAF4A2540193;
+	Thu, 13 Feb 2025 23:55:57 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Thu, 13 Feb 2025 23:55:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1739508845; x=1739595245; bh=Q66cFecVFD
-	pn4rG7i5ctY3bleMWZYMGd0/fQHL1IZCg=; b=snnEJZqjx79z4skWj6JJE3On+6
-	i5jx4Xcb7dDRFFZt7OetrJ73xM6yPAAERI5T/uQxhpWTSisoZBzpJ2E3ou6a2CJA
-	0pPjsBGK2Ir1nAZok4MikKOzqstfM0huc/iyWad7qijF983ZwjBOxuAt0s1t486V
-	42CLN+c/TfKx4RGtj7rtm3qaJVx0Nla5XGnMiUBSGU9pl12O1qrWp1KehmYRrLDW
-	9EQdgUW1J06nzNxXFY+2g+zUDs9QEWQcqBv+d+9rf1wWYeEk9yQwR6vuJBxTysJ7
-	DEKhtLZ5D+U8x/alwOQyOvm2fE45Yj9v5Uo0rX3hgixDsuW4S2dASOpTKWbA==
+	:subject:to:to; s=fm3; t=1739508957; x=1739595357; bh=Ux+umlBON0
+	eAL+IssXa9wbTYTCUvFtjNf1AEV6bEkSA=; b=K3FwxUoJEdh9mY/c7e9ajaNZH2
+	OrU6GmJ3+vjjwlqIIuQNd/bHaBKFxP6zdum3ILGveKm+RJBHKUmVCNgvJ1tPHWgR
+	e4+YTMxAx5NE7kFSlbcMFCBE+nnRxTQaV7PgvpGhJQ75xbcgn1UAoJE5tOHDRb1H
+	QXMjPPJ0ycrOVJcx7tEOG1fr2f+CSFE3cAe6NQr9MBEq/TrDr0/HeZMWx+GWD+9S
+	nUJol9DYXO4hsbfDuTf8jOkCgZu6kMayLimLwvSR1FL8GFFVfduVp7rCydkpktIZ
+	Kwzo25TY9a2vzJoLKzbVNxV5EQA6WGxC/c0Exh+u3NE55WM6cO/MYLvd8BUA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739508845; x=1739595245; bh=Q66cFecVFDpn4rG7i5ctY3bleMWZYMGd0/f
-	QHL1IZCg=; b=i1fGGZ3jDjTapOip6+VD8CyjdpPDYvU9jTb/62hx+N3DLEoB/KA
-	pBIh3aKxzwKUKZpyPpowCFTY+gcJsOIuwyZNUvVEpDn/Zx7Fmt7JV9EcuNrMJAt1
-	jkh0zo49JCxG1NAmNKAqkCnVwd+v6QegslWo1UPDXzJTjqiOp1eoRPoyfaQTHsJ8
-	XM2x//xv1QvpSWlzThzpo1uv2Z67t3yGdsqPB365XQ2+PaRtwehbHYH//KzZfjWu
-	LItPv2ODpD0dS/ZBMzCh6+ufebXkzad1MgDIqpT3SZGCVUqoRE9SdaIsxGnO9ph8
-	Y1G9FHM1zcGqDSuEgMaqj2+FYOQh55aDeMw==
-X-ME-Sender: <xms:bcyuZ5JAofZfdCeX9mdq1cwnMdqNOHazi3n0zmuy-eI339aUPeMaFA>
-    <xme:bcyuZ1LGOU0MEpD4Hv9Ca9c7BCXFqgzqq9i0oWI7tqJ7e67J-OL8yX7ebt0f5-imK
-    SYmXZyA2mjcwkTxAw>
-X-ME-Received: <xmr:bcyuZxt1v7DpKadcwoJAlnaZqinxc03ek2wLJsm910XByfaSHrJUlTb44Evqm_1R0Ia_k696bufsjAego2a0KZJI1BradtMdbP233f9VC-woQfE>
+	1739508957; x=1739595357; bh=Ux+umlBON0eAL+IssXa9wbTYTCUvFtjNf1A
+	EV6bEkSA=; b=x5q6yA4Rl4Evlh3VwbQT8P8KA9RADg8s6jo6d3Ia3X12yTKksVM
+	ONfrVw1smxAeO0ZfDKuDskHl5uenKFKPUx1sf7CJpkza3ZetAq/l2ky0EvETC6es
+	oGxx5t9rduX8/cjnXAt+3abYs9qBuTxoCKw+o4mbRQjYzLO8IORyXQBhVcb8ItQV
+	8NWr46H9xtLKRemKhih9poMz7VGAQJD6OaBgu5rZYCxCcXUacbxfUXK3g2cDbkR9
+	N46eo2Hmaxy3e4wPzU7CmJUYCaX3C+Eg0f52oyphfY/ZLIGk3fNZ8yBM1eqgvMcW
+	oQoTwdq45lhNq+i4LeqYhQttZOtDKUsjDzA==
+X-ME-Sender: <xms:3cyuZ_DcsZcUgml-O0mYTYItw8Z9Ua_bSSdhSMPJAqsBpWTzhS5Lkw>
+    <xme:3cyuZ1jOcHg2zjx0RVAXLFjxh30PkIJQGkvphhuxZu-c6PaMOtnYXOc_uqrtc4Vlv
+    0HjJ0o2zwWrX6XEwg>
+X-ME-Received: <xmr:3cyuZ6lD6yFP_dIyIS1YGPpy3n1F3ElvqUfRAaodsWEERRZzu7P2VpEHDXOM8h9LJHoGG-pmXILt-lWDSrsj1HGLh3kZeIXAUszXEzZzkfxBuBA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdegkeejgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:bcyuZ6aKguhf8FW5Ds2vVzbwLKX2PHFOQWpktHi-Dlgab01MfE4hiA>
-    <xmx:bcyuZwbxcUmHZcSZvVzoMkurosXqABGMpNKpEwiN31-rsWP2EZMbJA>
-    <xmx:bcyuZ-CffYqt6iBA9RNKn6wWiOfZ9noN47acdybgzOdXI-QYUKo4AQ>
-    <xmx:bcyuZ-bjPepORUNVw6u80ggfJZgc0pEPtcvsGavqFtq4r-C5OVzflA>
-    <xmx:bcyuZ4EhhgHl9m40RW_YIkrebViRZ0xt3lslOfizpg2BNN6IV3L3DFqg>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
+    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:3cyuZxwRpQLN6BFnePfKmOWNXAkAZfoDcfDrbekIdDFr5IS5ExRVfg>
+    <xmx:3cyuZ0Q1u7f3ZDe044aIgz3N1squfUHtWnB7AGAQ9MzV7dA4bLE4cA>
+    <xmx:3cyuZ0ZiJwDmKCT1UzUqsmRRi4lRy6LiMCQ_KjQlYC5c6aBTaWuHKg>
+    <xmx:3cyuZ1RNNTITPY3xhENY3rTrOvy7WAvnuyBIVprY5knPR_MBS1KIKA>
+    <xmx:3cyuZ6eK4w6wqXw8PQxz8M2sKHMhJhdb570sOHIuBI4RclQCsNemCPsH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 13 Feb 2025 23:54:04 -0500 (EST)
+ 13 Feb 2025 23:55:56 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 94818e11 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 14 Feb 2025 04:54:01 +0000 (UTC)
-Date: Fri, 14 Feb 2025 05:53:56 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3af4de8d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 14 Feb 2025 04:55:55 +0000 (UTC)
+Date: Fri, 14 Feb 2025 05:55:54 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: M Hickford via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
-Subject: Re: [PATCH 0/2] meson: wire up contrib/credential
-Message-ID: <Z67MZJbGr0EqOMqT@pks.im>
-References: <pull.1859.git.1739471859.gitgitgadget@gmail.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: remove accidental recipe prefix in conditional
+Message-ID: <Z67M2rZ082v5j9SH@pks.im>
+References: <a79e9e9f50410721d85747b03559d55be98bca20.1739478347.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,26 +84,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <pull.1859.git.1739471859.gitgitgadget@gmail.com>
+In-Reply-To: <a79e9e9f50410721d85747b03559d55be98bca20.1739478347.git.me@ttaylorr.com>
 
-On Thu, Feb 13, 2025 at 06:37:37PM +0000, M Hickford via GitGitGadget wrote:
-> It would be neat to also run test t0303-credential-external with
-> GIT_TEST_CREDENTIAL_HELPER=wincred but I couldn't figure out how to do this.
+On Thu, Feb 13, 2025 at 03:25:50PM -0500, Taylor Blau wrote:
+> Back in 728b9ac0c3 (Makefile(s): avoid recipe prefix in conditional
+> statements, 2024-04-08), we prepared our Makefiles for a forthcoming
+> change in upstream Make that would ban the recipe prefix within a
+> conditional statement by replacing tabs (the prefix) with eight spaces.
+> 
+> In b9d6f64393 (compat/zlib: allow use of zlib-ng as backend,
+> 2025-01-28), a handful of recipe prefix characters were introduced in a
+> conditional statement ('ifdef ZLIB_NG'), causing 'make' to fail on my
+> system, which uses GNU Make 4.4.90.
+> 
+> Remove the recipe prefix characters by replacing them with the same
+> script as is mentioned in 728b9ac0c3.
 
-Thanks for working on this! I have a patch series sitting locally for a
-while that wires up all credential helpers and more, as well. It also
-wires up netrc and fixes its tests to allow out-of-tree testing, which
-doesn't work right now. What I don't have though is the patch for the
-wincred helper.
-
-The patch series is currently still blocked on [1], which is why I have
-been holding back on it. Would you mind if I picked your patch to fix
-wincred, but we then wait with wiring up remaining credential helpers
-until my follow-up patch series is unblocked?
-
-Meanwhile, I'd appreciate any feedback on [1] to help move it forward,
-if you have the time :)
+Oh, that's a change I wasn't aware of in Make. The patch looks obviously
+good to me in that context, thanks for fixing!
 
 Patrick
-
-[1]: <20250129-b4-pks-meson-improvements-v1-0-ab709f0be12c@pks.im>
