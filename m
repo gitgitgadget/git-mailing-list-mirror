@@ -1,68 +1,68 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9177D19005D
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:52:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE0919415E
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:53:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739508772; cv=none; b=Y3UGzQg2q0JrPXDXJ1QYKXZeZuxdqKYYnkkC75oxxvVVhCmgizl7bB4nxNHFg5erq4AXydu60oygBZWYkZXEHxQZts/9jvMKrlHTgEPm19tjTMk0uc2rADAXSnfsEcKWYW1YfgDenFnqLOLnEMU9B6LdAxvN+bLnyCZULvYL1ak=
+	t=1739508783; cv=none; b=eZ3jKm5pDEYTD4S6NqUYFnKd5FwKFV4SP5VicPvP4qitcsZuOpXSaWWnQt0UbrHfpcfgFVJLvjpleDrMXUrQY0stFKRLOcxu88/FvUM9l2dmPtcbOhqw80kHVIJgbg+qJbAGMgVdl/S/WcisjJRFqr8r6xnCuu3oWh+zWvOVJHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739508772; c=relaxed/simple;
-	bh=XgglGyyHVjOukLc+yaEc2H0wQABeyPTLor2XoYMAWBo=;
+	s=arc-20240116; t=1739508783; c=relaxed/simple;
+	bh=hPMn6DD0ADH4YnGuaYhRQGtOKD8bax7WYvj5uffBL1Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=M8AvwTounpFsMq2F7R2l7f7638Pzo2XOs1Fly23gbc6+dUIH7/60aA4z1l8uRj54RwLLtFq5tVHOnBxxk4C3ptH15vdUckTY+R4uBQrd+KQdGBlydu8gjpG6P/gHQJtIlmD4plIIbCAGzJUwy9J3kTSQsyi4Bf37bM6hFPnRcB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EaPDGs29; arc=none smtp.client-ip=209.85.128.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=RAwbp+djyuhmn9BDx61ia16j+H4oYR0W2IgNZPL+WTJ9ktblLJeLDFowHhpWUu6Rr7pSJ7uPLqXVl+fWeMa2/zsgG2g+14LYWi21CqRnlI/K1JA/ZXZPnCumlu1T/8j7dQR8CrzaEJoRgXODzZFNQsGXm2ER1YxEWcwdcE6ENXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ft+EYfh1; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EaPDGs29"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6f4b266d333so12704377b3.2
-        for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:52:50 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ft+EYfh1"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-6f4bc408e49so13277167b3.1
+        for <git@vger.kernel.org>; Thu, 13 Feb 2025 20:53:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739508769; x=1740113569; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739508780; x=1740113580; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rH1PScBOe9CxDRnikGkIPQKor90GpTZhqHywp/brHlY=;
-        b=EaPDGs29v/tVWe3EE5sAtytCICC9tDK7ejLvLa2S1I/4iQ61Jtf6Zsvso5VZh7lTgf
-         +H0kX+jccsCzgWzHLMiX+AXhHPH8/A5lNbOzDbtRgf99nl/ivqxXA1k93QW2R70Rk0NI
-         zpR6avYCSgu8nIDGu1JZeBnIXn20mY699JFd9aOMkiuzEqVI1KZXT6m1n3xa5OfFG1su
-         35GG3dm8ciETTI6fo/cZMVOYsumJ4i7qGzPt/yudb26J1Jw7vqkbwL4TLcEuWutjFZ4V
-         srXfr4za6b1e18itwXphLmh5BBIc+IGWhlduMahTMRP6GBJuUMzQWb/ZJP2Kp6RCJYDS
-         YxYw==
+        bh=xjJLRkmge/Qhg78bYF2NZXzaCqee1nKnJIaYhGxD6tU=;
+        b=Ft+EYfh1zGsnxthM2zKX1soCTO3NqDiF4melKDLjVPU/E5IruYmgheo3i9wIf6PHhh
+         AbWB7IxMMhJFwOZtQsI8fHr/pRu/8up4/T4RYuxvdW1BfCRt+tsGGWRG+0SPdjK/aWkr
+         lxign/BB3bN6JtdZHrVrOiC6/8wmEIZJOK8Y9bLxqoGUDTGJXk7XLlsKGcwhEZ98lqm8
+         wj5N2JgaxS6r8BaOS9v9dKftvo6ZJbALGmqF/5T/oB9DQTvHdBz95m/MGNr1i4bcU1k+
+         ZitTmDyJpMY9BcvLWNA11vzfPgRWqEP9yvyDKKSV8WQ942fBHlZ73/8B0NndyXusj+oY
+         1BKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739508769; x=1740113569;
+        d=1e100.net; s=20230601; t=1739508780; x=1740113580;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rH1PScBOe9CxDRnikGkIPQKor90GpTZhqHywp/brHlY=;
-        b=dmgRAdxP3nKxZu4k7qcYliY+zhrUrUxaZEOo7+HpC6m/kMQOfoEHllFq/l0DR+FFEU
-         6UWREs9zQ2lLxLGL0HMuKahc/LrOQKBbPD7SDQaGSbeYIU16hAgbMZeFlVTXmw6isb7u
-         JqJjMfm6g+c2ZcFzAdW0WKxn4g/re5oIQOuuiXWkjvAMItMY+K8BT4ffExP6q9NPy1RF
-         IJRTPv61BLW2C9TpiFOxyKB1B4jN5vqZM5Tm6WyiL8A9KObncGOn0y0T2kCKOVzDoOB4
-         gf2Mg9KAAwa0Rc24423MflQMKmLCEkOZcCfzievXib9SN8cNMlExessuQxDCDqQfp4iQ
-         +zYw==
-X-Gm-Message-State: AOJu0YzBWH+RgmVkYTah2nHH2SBmgiLevFMSChOeAdQU/wrPmpw3M4Dx
-	vCSxDSs6L1WoXLdok2/ZomTiovJSZKYW1HnR3QrtRy6ks20Di3JrpY4pB9Jg
-X-Gm-Gg: ASbGncssD+rhGCDz1t1f+j2EkU+MlwGB4EPUhtiTBOA4dBsGP250pMT7LfC4csw0R7U
-	KtVz4dGtTWXtohU7E7Fn3+njqfz6Adm514eKmz3zwcxkGKnYU55k7/3rK7WBGcQ0sVY7KVzUftH
-	+Ey69tybcHclkhjUVhwckX3hXnnYqd5WNBetwGORsTofsu/J2KNMrBLj/mLIzbRyU7x832Fg1Dl
-	L7pL9cJmNsbD49xh1vtiIADw/1QWxozuN0tBrAicZ1mgimwwdqIK3LxFXwa3aLa+cOuBg==
-X-Google-Smtp-Source: AGHT+IHPReLrzwMo8e6q7a44PXc7W0vg1xMyzJDPeoermgPq7xOLUvWVeM+lDC/9OumHZEN7bAZktg==
-X-Received: by 2002:a05:690c:6f0c:b0:6f9:43d4:44ee with SMTP id 00721157ae682-6fb1f683367mr115652447b3.30.1739508769008;
-        Thu, 13 Feb 2025 20:52:49 -0800 (PST)
+        bh=xjJLRkmge/Qhg78bYF2NZXzaCqee1nKnJIaYhGxD6tU=;
+        b=ajVAI3+ObFhAf6Kp127tdPJ1pM9J+9SHKGPUWCa8nJZXJwDPsH/7FWnPZe261b4DlE
+         /abobz5RGhZfvYBGE3VEOppG601+klaBbyuW9royELegI1h/zZQwHLqGQNuSX8tUUIax
+         c1SeZD4iwkNqJaBh9QSjFedDv8sD/8q63RatfZn+MtnXdgUFWfaysUD1aF++HYiZ0Ynu
+         9tk7l60G3WrNH473dE+8arzKJLr71/+mKgenzNK6iwZRPbAZ77Xfq5ZIizcGgkbaO/NX
+         9CGjIizqA7MYSzhmB7kiw5n5SlIkaTsTLvxG+OVpQC0LaykXlZJIw5sfq4uG4yvPO8U1
+         jK9Q==
+X-Gm-Message-State: AOJu0YxCKTTTVZ2P3S/YGArpQtW3pZIHq7nXjvHk7vRP/sGTXYuTHeIA
+	fjmViJaOXxeJT/7HYT6dfTaHnqmzaPU1RIGyiHqEgcUeAa04RNwPSgxwKrZw
+X-Gm-Gg: ASbGncuWhTSWrNP/rrXA1zHl/80gQiASyK5TdpfPH928wNGbaOwasA+EFacKEVDy01i
+	zSNW32VNIb9b5qdVv1ajop9yk7ytRMa7P3LM2HHUBSRB7nen6vwea/93O7x8tdrfg3QQfNqRmxk
+	r7gZoW4sppRBbmtsdulECFlnzeR5z0HDkAc2SPbZUQEm8FakaZV6FTOohrFduZNp/89OdRqSGQq
+	bv6BMX/BmqItHAR89f1PMYr7ydZ6Hq1nA8W0l7k+Vi1Dm59HGSvRHPGxaB1y2Rkbjtd2A==
+X-Google-Smtp-Source: AGHT+IHbIBbEXSY0CNUzb+xrCaPBcUk2v9WSsPC+1QPxl5RqecVVdKTjzhe9UIcWhCiYJVdajzALQw==
+X-Received: by 2002:a05:690c:6988:b0:6f6:cad6:6b5a with SMTP id 00721157ae682-6fb1f19ba28mr122491737b3.13.1739508779883;
+        Thu, 13 Feb 2025 20:52:59 -0800 (PST)
 Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fb361db9e8sm6189027b3.125.2025.02.13.20.52.46
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fb35d58720sm6229387b3.22.2025.02.13.20.52.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 13 Feb 2025 20:52:47 -0800 (PST)
-Date: Fri, 14 Feb 2025 12:52:43 +0800
+        Thu, 13 Feb 2025 20:52:58 -0800 (PST)
+Date: Fri, 14 Feb 2025 12:52:54 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v4 4/8] packed-backend: add "packed-refs" header consistency
- check
-Message-ID: <Z67MG8utrQfUrakz@ArchLinux>
+Subject: [PATCH v4 5/8] packed-backend: check whether the refname contains
+ NUL characters
+Message-ID: <Z67MJjI9coLnyi3a@ArchLinux>
 References: <Z67LkxAFIAeaYr0U@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,264 +74,79 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <Z67LkxAFIAeaYr0U@ArchLinux>
 
-In "packed-backend.c::create_snapshot", if there is a header (the line
-which starts with '#'), we will check whether the line starts with "#
-pack-refs with:". Before we port this check into "packed_fsck", let's
-fix "create_snapshot" to check the prefix "# packed-ref with: " instead
-of "# packed-ref with:" due to that we will always write a single
-trailing space after the colon.
+"packed-backend.c::next_record" will use "check_refname_format" to check
+the consistency of the refname. If it is not OK, the program will die.
+However, it is reported in [1], we cannot catch some corruption. But we
+already have the code path and we must miss out something.
 
-However, we need to consider other situations and discuss whether we
-need to add checks.
+We use the following code to get the refname:
 
-1. If the header does not exist, we should not report an error to the
-   user. This is because in older Git version, we never write header in
-   the "packed-refs" file. Also, we do allow no header in "packed-refs"
-   in runtime.
-2. If the header content does not start with "# packed-ref with: ", we
-   should report an error just like what "create_snapshot" does. So,
-   create a new fsck message "badPackedRefHeader(ERROR)" for this.
-3. If the header content is not the same as the constant string
-   "PACKED_REFS_HEADER". This is expected because we make it extensible
-   intentionally. So, there is no need to report.
+    strbuf_add(&iter->refname_buf, p, eol - p);
+    iter->base.refname = iter->refname_buf.buf
 
-As we have analyzed, we only need to check the case 2 in the above. In
-order to do this, read the "packed-refs" file via "strbuf_read". Like
-what "create_snapshot" and other functions do, we could split the line
-by finding the next newline in the buffer. When we cannot find a
-newline, we could report an error.
+In the above code, `p` is the start pointer of the refname and `eol` is
+the next newline pointer. We calculate the length of the refname by
+subtracting the two pointers. Then we add the memory range between `p`
+and `eol` to get the refname.
 
-So, create a function "packed_fsck_ref_next_line" to find the next
-newline and if there is no such newline, use
-"packedRefEntryNotTerminated(ERROR)" to report an error to the user.
+However, if there are some NUL characters in the memory range between `p`
+and `eol`, we will see the refname as a valid ref name as long as the
+memory range between `p` and first occurred NUL character is valid.
 
-Then, parse the first line to apply the checks. Update the test to
-exercise the code.
+In order to catch above corruption, create a new function
+"refname_contains_nul" by searching the first NUL character. If it is
+not at the end of the string, there must be some NUL characters in the
+refname.
 
+Use this function in "next_record" function to die the program if
+"refname_contains_nul" returns true.
+
+[1] https://lore.kernel.org/git/6cfee0e4-3285-4f18-91ff-d097da9de737@rd10.de/
+
+Reported-by: R. Diez <rdiez-temp3@rd10.de>
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- Documentation/fsck-msgids.txt |  8 ++++
- fsck.h                        |  2 +
- refs/packed-backend.c         | 75 ++++++++++++++++++++++++++++++++++-
- t/t0602-reffiles-fsck.sh      | 52 ++++++++++++++++++++++++
- 4 files changed, 136 insertions(+), 1 deletion(-)
+ refs/packed-backend.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-index b14bc44ca4..11906f90fd 100644
---- a/Documentation/fsck-msgids.txt
-+++ b/Documentation/fsck-msgids.txt
-@@ -16,6 +16,10 @@
- `badObjectSha1`::
- 	(ERROR) An object has a bad sha1.
- 
-+`badPackedRefHeader`::
-+	(ERROR) The "packed-refs" file contains an invalid
-+	header.
-+
- `badParentSha1`::
- 	(ERROR) A commit object has a bad parent sha1.
- 
-@@ -176,6 +180,10 @@
- `nullSha1`::
- 	(WARN) Tree contains entries pointing to a null sha1.
- 
-+`packedRefEntryNotTerminated`::
-+	(ERROR) The "packed-refs" file contains an entry that is
-+	not terminated by a newline.
-+
- `refMissingNewline`::
- 	(INFO) A loose ref that does not end with newline(LF). As
- 	valid implementations of Git never created such a loose ref
-diff --git a/fsck.h b/fsck.h
-index a44c231a5f..67e3c97bc0 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -30,6 +30,7 @@ enum fsck_msg_type {
- 	FUNC(BAD_EMAIL, ERROR) \
- 	FUNC(BAD_NAME, ERROR) \
- 	FUNC(BAD_OBJECT_SHA1, ERROR) \
-+	FUNC(BAD_PACKED_REF_HEADER, ERROR) \
- 	FUNC(BAD_PARENT_SHA1, ERROR) \
- 	FUNC(BAD_REF_CONTENT, ERROR) \
- 	FUNC(BAD_REF_FILETYPE, ERROR) \
-@@ -53,6 +54,7 @@ enum fsck_msg_type {
- 	FUNC(MISSING_TYPE, ERROR) \
- 	FUNC(MISSING_TYPE_ENTRY, ERROR) \
- 	FUNC(MULTIPLE_AUTHORS, ERROR) \
-+	FUNC(PACKED_REF_ENTRY_NOT_TERMINATED, ERROR) \
- 	FUNC(TREE_NOT_SORTED, ERROR) \
- 	FUNC(UNKNOWN_TYPE, ERROR) \
- 	FUNC(ZERO_PADDED_DATE, ERROR) \
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 6401cecd5f..ff74ab915e 100644
+index ff74ab915e..692e315e41 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -694,7 +694,7 @@ static struct snapshot *create_snapshot(struct packed_ref_store *refs)
- 
- 		tmp = xmemdupz(snapshot->buf, eol - snapshot->buf);
- 
--		if (!skip_prefix(tmp, "# pack-refs with:", (const char **)&p))
-+		if (!skip_prefix(tmp, "# pack-refs with: ", (const char **)&p))
- 			die_invalid_line(refs->path,
- 					 snapshot->buf,
- 					 snapshot->eof - snapshot->buf);
-@@ -1749,12 +1749,76 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
- 	return empty_ref_iterator_begin();
+@@ -494,6 +494,21 @@ static void verify_buffer_safe(struct snapshot *snapshot)
+ 				 last_line, eof - last_line);
  }
  
-+static int packed_fsck_ref_next_line(struct fsck_options *o,
-+				     unsigned long line_number, const char *start,
-+				     const char *eof, const char **eol)
++/*
++ * When parsing the "packed-refs" file, we will parse it line by line.
++ * Because we know the start pointer of the refname and the next
++ * newline pointer, we could calculate the length of the refname by
++ * subtracting the two pointers. However, there is a corner case where
++ * the refname contains corrupted embedded NUL characters. And
++ * `check_refname_format()` will not catch this when the truncated
++ * refname is still a valid refname. To prevent this, we need to check
++ * whether the refname contains the NUL characters.
++ */
++static int refname_contains_nul(struct strbuf *refname)
 +{
-+	int ret = 0;
-+
-+	*eol = memchr(start, '\n', eof - start);
-+	if (!*eol) {
-+		struct strbuf packed_entry = STRBUF_INIT;
-+		struct fsck_ref_report report = { 0 };
-+
-+		strbuf_addf(&packed_entry, "packed-refs line %lu", line_number);
-+		report.path = packed_entry.buf;
-+		ret = fsck_report_ref(o, &report,
-+				      FSCK_MSG_PACKED_REF_ENTRY_NOT_TERMINATED,
-+				      "'%.*s' is not terminated with a newline",
-+				      (int)(eof - start), start);
-+
-+		/*
-+		 * There is no newline but we still want to parse it to the end of
-+		 * the buffer.
-+		 */
-+		*eol = eof;
-+		strbuf_release(&packed_entry);
-+	}
-+
-+	return ret;
++	return !!memchr(refname->buf, '\0', refname->len);
 +}
 +
-+static int packed_fsck_ref_header(struct fsck_options *o,
-+				  const char *start, const char *eol)
-+{
-+	if (!starts_with(start, "# pack-refs with: ")) {
-+		struct fsck_ref_report report = { 0 };
-+		report.path = "packed-refs.header";
-+
-+		return fsck_report_ref(o, &report,
-+				       FSCK_MSG_BAD_PACKED_REF_HEADER,
-+				       "'%.*s' does not start with '# pack-refs with: '",
-+				       (int)(eol - start), start);
-+	}
-+
-+	return 0;
-+}
-+
-+static int packed_fsck_ref_content(struct fsck_options *o,
-+				   const char *start, const char *eof)
-+{
-+	unsigned long line_number = 1;
-+	const char *eol;
-+	int ret = 0;
-+
-+	ret |= packed_fsck_ref_next_line(o, line_number, start, eof, &eol);
-+	if (*start == '#') {
-+		ret |= packed_fsck_ref_header(o, start, eol);
-+
-+		start = eol + 1;
-+		line_number++;
-+	}
-+
-+	return ret;
-+}
-+
- static int packed_fsck(struct ref_store *ref_store,
- 		       struct fsck_options *o,
- 		       struct worktree *wt)
- {
- 	struct packed_ref_store *refs = packed_downcast(ref_store,
- 							REF_STORE_READ, "fsck");
-+	struct strbuf packed_ref_content = STRBUF_INIT;
- 	int ret = 0;
- 	int fd;
+ #define SMALL_FILE_SIZE (32*1024)
  
-@@ -1786,7 +1850,16 @@ static int packed_fsck(struct ref_store *ref_store,
- 		goto cleanup;
- 	}
+ /*
+@@ -895,6 +910,9 @@ static int next_record(struct packed_ref_iterator *iter)
+ 	strbuf_add(&iter->refname_buf, p, eol - p);
+ 	iter->base.refname = iter->refname_buf.buf;
  
-+	if (strbuf_read(&packed_ref_content, fd, 0) < 0) {
-+		ret = error_errno(_("unable to read %s"), refs->path);
-+		goto cleanup;
-+	}
++	if (refname_contains_nul(&iter->refname_buf))
++		die("packed refname contains embedded NULL: %s", iter->base.refname);
 +
-+	ret = packed_fsck_ref_content(o, packed_ref_content.buf,
-+				      packed_ref_content.buf + packed_ref_content.len);
-+
- cleanup:
-+	strbuf_release(&packed_ref_content);
- 	return ret;
- }
- 
-diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index 42c8d4ca1e..30be1982df 100755
---- a/t/t0602-reffiles-fsck.sh
-+++ b/t/t0602-reffiles-fsck.sh
-@@ -639,4 +639,56 @@ test_expect_success SYMLINKS 'the filetype of packed-refs should be checked' '
- 	)
- '
- 
-+test_expect_success 'packed-refs header should be checked' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit default &&
-+
-+		git refs verify 2>err &&
-+		test_must_be_empty err &&
-+
-+		for bad_header in "# pack-refs wit: peeled fully-peeled sorted " \
-+				  "# pack-refs with traits: peeled fully-peeled sorted " \
-+				  "# pack-refs with a: peeled fully-peeled" \
-+				  "# pack-refs with:peeled fully-peeled sorted"
-+		do
-+			printf "%s\n" "$bad_header" >.git/packed-refs &&
-+			test_must_fail git refs verify 2>err &&
-+			cat >expect <<-EOF &&
-+			error: packed-refs.header: badPackedRefHeader: '\''$bad_header'\'' does not start with '\''# pack-refs with: '\''
-+			EOF
-+			rm .git/packed-refs &&
-+			test_cmp expect err || return 1
-+		done
-+	)
-+'
-+
-+test_expect_success 'packed-refs missing header should not be reported' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit default &&
-+
-+		printf "$(git rev-parse HEAD) refs/heads/main\n" >.git/packed-refs &&
-+		git refs verify 2>err &&
-+		test_must_be_empty err
-+	)
-+'
-+
-+test_expect_success 'packed-refs unknown traits should not be reported' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit default &&
-+
-+		printf "# pack-refs with: peeled fully-peeled sorted foo\n" >.git/packed-refs &&
-+		git refs verify 2>err &&
-+		test_must_be_empty err
-+	)
-+'
-+
- test_done
+ 	if (check_refname_format(iter->base.refname, REFNAME_ALLOW_ONELEVEL)) {
+ 		if (!refname_is_safe(iter->base.refname))
+ 			die("packed refname is dangerous: %s",
 -- 
 2.48.1
 
