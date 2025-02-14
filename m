@@ -1,251 +1,367 @@
-Received: from mail-yb1-f172.google.com (mail-yb1-f172.google.com [209.85.219.172])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D1B22B8CF
-	for <git@vger.kernel.org>; Fri, 14 Feb 2025 12:36:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973C525A627
+	for <git@vger.kernel.org>; Fri, 14 Feb 2025 12:37:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739536567; cv=none; b=XwyOQCXbZ5Sa+boHlj/5oz4KsHQdvLEaTd/sAMJm+Qm4DZVYP0pLojB4Zvm7b+0fw5e1afzda7WwMeuF/u/WDFMlCp7PIut2EHC0JJsiUN7Rhk1zDda4PRSVsoK9M8lmHoxNpKodMpNnO6d24SfPry0C4Qcboc/nR8y2riq8iGI=
+	t=1739536663; cv=none; b=iAnBD7DxOCceo+vacuHMpbeB+ZeT4d9daJOdzaNU2byNNdswSOjxQcZCWpzldV6+0KZENeKPBlFLqHgwMgmK4Ybisfsq+l7JKI3RH+iThXWJezpZPdxDHEhHwBo83WX+OgLChrBs8iDrzzWUrXiHexEhspAl+4AHQevcuiEGrPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739536567; c=relaxed/simple;
-	bh=A6GrvlfD8urrVLTctGUXiORAOCSZwWJYYOs5Dj93nRI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CsGmwwJ3XuLWRd4u/hRlWYPguk9Sech8ddUe0SzBf5lnnUatc0C1Qih/Ij7Wbdr6ds8honuhrSTm/EsVb7//j1fdmNcxnU4hd9wj7sh+errlb78hiVaHu9DY6Y35U6ZnBAVsQbrx/Rz0Zm5hPxF+KJpaeWjSfB10VK9BwYEM5Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Je2vO4eI; arc=none smtp.client-ip=209.85.219.172
+	s=arc-20240116; t=1739536663; c=relaxed/simple;
+	bh=YJMLkC++QO3E1AJwGzh5BhfSCgU1oWYLsSlMTkExN2c=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=b2qm/VHVkk3xInlpffhGyD6j+af4D70DQJKf+Iqlbz4XzVwd/sGAUfVCgay/ELGDzUto2yanKtZycEKC9xaeSs0wlvMqCe8KymPes6iFUzH5uUKBPqlg6A/ssdukPC+qZ6UPviIfJq8R1qnEQTeqZYgEdTR1lt2h40M4IW/jvyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=buoX9X0Y; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Je2vO4eI"
-Received: by mail-yb1-f172.google.com with SMTP id 3f1490d57ef6-e479e529ebcso1524082276.3
-        for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:36:05 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="buoX9X0Y"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-220c2a87378so28020485ad.1
+        for <git@vger.kernel.org>; Fri, 14 Feb 2025 04:37:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739536565; x=1740141365; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=sSVifD8SikBjt9FLrQqfBy3KkEshYPHcyUboXoUgE6Q=;
-        b=Je2vO4eI1nPj+zGFFInaTUkHfh4cTxJ/xXIQx7PmiJraCPcI8fu+rexSjWqeK8HLgd
-         gqO+R3tW6O72q4etQxYIW74kRCP4KQ77qNzFG44LEqDiDFKl7nTq81E2zJ4ty6gTHCw9
-         5hqTpE9g3s7hgJ5lhpblAGW5tU3UgazNQ5WQIoaL06tKfat0TyHjUfhg6V3yOanmJ5Ck
-         GvqVn0kfjGrae/CwQzjjRyfxmPa/J1pi0y8/fzHQay+HsKLQkvVEHrI23Gea/LGleslo
-         3vAK2UqMNQNDfZmsudyuHrt6yVRO785uuAJMllvXB/vdt/rAyqZPRJlYK46utgR81dpj
-         +TxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739536565; x=1740141365;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1739536661; x=1740141461; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=sSVifD8SikBjt9FLrQqfBy3KkEshYPHcyUboXoUgE6Q=;
-        b=bugPvJW1ew1c9W3ZjC9SysIIopxLiPdFf7tZBmnkJKwxbCe/XkMv9G7S+hvF0JmXrA
-         /r+Nz3eibQL+mCR5vTMuR7S/zXfVm8KAV+M6KLfqVXhIUj6vzDoOpQsyDUnwSHH/tIQN
-         CJfYInqlpeA/jAAw7BBKU2s/9r2NL7MoicowarXJ/9pTFlLNwae1KJBBCsV77Q1Esm2h
-         bDSRdUos8L6IRPwDfTwOliD70qiFrL7JG0IwJSzM5ZbRdfI5GrHaMXRJNK5TrvG9uLZx
-         2Nu449b7QJnnwU7i3/KZPh8u6nfwZkzkHMaRjTU6P0DLL2XzD4KqILUkcqdYo4+ck9qJ
-         Lzag==
-X-Gm-Message-State: AOJu0YwLrwbSEg6Ad5I9l2Rax0rZU9Iicy5R7FIjUj9zRl0KWFS/qag+
-	axRKihnjNaN3SRVf8uA8zqTIHvJQrZhx7tyUx9TUAzbc3CZ5TAu1
-X-Gm-Gg: ASbGncvkQj6XVwOIAzTkD1KleGO9lDHcCzOXHJpL0iVZui3wk0ZKMgiSDZhW5xeoEVQ
-	9Dy0vP6LkrN/uDpjlrt1E+U4ob4Zrk+zsUwB7wbUMCDwHSvE9l+6t76pvO89hzhh028NCv0arXl
-	zCq3e8GbLzBzJgF/L7BQOjNKgu+Vkgzz6+lNtlWaE6nOVe1AiSQ+GWDllEdz3xXs0iHgGlmVK/A
-	IhTiovEJhEqcp/4a5FSN/yE0u4HcUwIJ3bbpHbsIlIMqU74QiazgBy8W7gXfQU9xwiR8Q==
-X-Google-Smtp-Source: AGHT+IHU+LaF5Hk3/DKuvlgLDAOamtRYVbNJQLn+jEaSDIhie1ySo39VC+muA+Ghu88A52+e2Yg0Xg==
-X-Received: by 2002:a05:6902:2289:b0:e5d:c11c:3494 with SMTP id 3f1490d57ef6-e5dc11c3b5amr714641276.30.1739536564825;
-        Fri, 14 Feb 2025 04:36:04 -0800 (PST)
-Received: from localhost ([2604:5040:11:69e::e973])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e5dadfc0919sm954998276.34.2025.02.14.04.36.01
+        bh=1n6FYvgtOe1zdv/qKlgQ5mrFxxcxl9l59DKRAVK9R5w=;
+        b=buoX9X0YgrS8zdxIRF2R8UNYdrdXR37pCZlb/RcZKrlLNpiqF8EJsS+use5bYUgS1b
+         Gce79VWPWN0kRMCyrnF3dHXYez+nNx2ZPA3yji1TQumpXzPh0tWB3akWqWovBdWTAgZD
+         NLqo9qZLHAOZIRcJYROT/Zv9xzC/2u0aKXYawTS/aEeFiw4ct5RusgLB2d4xN03tPSRJ
+         HefBLwkEIoyy5ho5gL8AoOJ+RN4TkykajicO/65quKb7rlozk0DcSuVhBTWOM6owPJX/
+         ebkgtWKUmgwB96s92HbozuQhNmZTm3UeUNLhrtEGY2JvFX+lva4JTYm90QmudMEqxiBW
+         sTtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739536661; x=1740141461;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1n6FYvgtOe1zdv/qKlgQ5mrFxxcxl9l59DKRAVK9R5w=;
+        b=W8kiWI+YvIUH1MtotZ7oFYEp72sL1ScGEOlH1IOC+hnIy2H3k+nJ9SSh+Gf6H6VGGf
+         gOEaqyYJBlGELTHZhKvtS+kbHblKh9VFAhUYVLZgEsfwWOieL5g2O3teVgBOa/hXroSf
+         CKnIBWddyjt8ruhGNg3XPa6PI5QWRlZ5JiQl4dfVoMu6gBx0VZGViSbHC45IXuTEhS/3
+         pM9vNGHpP9b6OiQcW2kmm431H34P6fX7DSvOwY3GgDB27UjncT0Pwy9oewiYhaFD7bay
+         UjVEWGBkVyoDCmtA6AgKLgkde3u2lkjvrWI/LhDPQ/+AP2dFSXt9MaSrAbvI/Im/Wlun
+         xacA==
+X-Forwarded-Encrypted: i=1; AJvYcCUHK7mzZqNjEUTjCJGNDiToAe2mcIlBGxFbyfske0GiKq1oPjwlOkDYaIyUezg7F88OuWA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwUXi7TxmNvu89UGTL34QZX/4fNbCtyWQg4ALlIp3yGHJu5igE4
+	SCh9S/836HgNDMP/Z7zsjrPySNVWz/KaSHPZkzPnuCDvkcClrQzM
+X-Gm-Gg: ASbGncv81JxZ0BVvDFeeO8Ef1D2DIiEm8NOO503Gd6fMWiwhQpnzzPFgM5rt+dW6JFq
+	xoekg7EfICFvheTuZQmAUiPCo7lc12ROhEMdJfATcOyDqAyrll8k7UvfbRVQu4Ve4RzUVkb0q72
+	uni3zmKkmaR0rGWzzIewpa7CM95tF3jcOe8Arpy6riraI8yP08M73qxUfenJYQNWgD+a4Z9eQiE
+	tbspsEonA9TUerHZmhZV1z7BQAn7A2QtZo5IOUF8WveWwh58UhzEGWmSkh3B1lF0mTA4E7l7c4i
+	aD4PFY+PrUx6e8XNE8h0DUOURSzEficubNxj3V/O
+X-Google-Smtp-Source: AGHT+IFdv/G6lhNUlik9FM+chU2oFaDFq/fHD2xc5dxSKl6NFKaSr+yaAZMRfMxcUgLXLGGAAzYSxw==
+X-Received: by 2002:a17:902:ec83:b0:220:ce37:e31f with SMTP id d9443c01a7336-220ce37e53fmr94910965ad.17.1739536660589;
+        Fri, 14 Feb 2025 04:37:40 -0800 (PST)
+Received: from archlinux.plaksha.edu.in ([182.75.25.162])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d545d09esm27814775ad.112.2025.02.14.04.37.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 14 Feb 2025 04:36:02 -0800 (PST)
-Date: Fri, 14 Feb 2025 20:37:57 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v4 3/8] packed-backend: check whether the "packed-refs"
- is regular file
-Message-ID: <Z685JSRGeZA2fuFq@ArchLinux>
-References: <Z67LkxAFIAeaYr0U@ArchLinux>
- <Z67MDPtjoXQB2sGB@ArchLinux>
- <CAOLa=ZQ7CAXP-bYzTv3GJhauwtaL+pFj-2_QPWBh7SMiMsa6bQ@mail.gmail.com>
+        Fri, 14 Feb 2025 04:37:40 -0800 (PST)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: christian.couder@gmail.com,
+	git@vger.kernel.org
+Cc: Johannes.Schindelin@gmx.de,
+	gitster@pobox.com,
+	johncai86@gmail.com,
+	me@ttaylorr.com,
+	phillip.wood@dunelm.org.uk,
+	ps@pks.im,
+	rsbecker@nexbridge.com,
+	sunshine@sunshineco.com
+Subject: [PATCH v5 0/6][Outreachy] extend agent capability to include OS name
+Date: Fri, 14 Feb 2025 18:06:10 +0530
+Message-ID: <20250214123734.1403120-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250205185246.111447-1-usmanakinyemi202@gmail.com>
+References: <20250205185246.111447-1-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQ7CAXP-bYzTv3GJhauwtaL+pFj-2_QPWBh7SMiMsa6bQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Feb 14, 2025 at 01:50:26AM -0800, Karthik Nayak wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > Although "git-fsck(1)" and "packed-backend.c" will check some
-> > consistency and correctness of "packed-refs" file, they never check the
-> 
-> Because you say 'some' here, it made me more curious. Could you state
-> exactly what checks are being done here?
-> 
+For debugging, statistical analysis, and security purposes, it can
+be valuable for Git servers to know the operating system the clients
+are using.
 
-Well, I don't think we need to elaborate on this at now for the
-following two reasons:
+For example:
+- A server noticing that a client is using an old Git version with
+security issues on one platform, like macOS, could verify if the
+user is indeed running macOS before sending a message to upgrade."
+- Similarly, a server identifying a client that could benefit from
+an upgrade (e.g., for performance reasons) could better customize the
+message it sends to nudge the client to upgrade.
 
-1. We will explain this in the later patches.
-2. Here I just want to emphasis that it does not check the filetype.
+Our current agent capability is in the form of "package/version" (e.g.,
+"git/1.8.3.1"). Let's extend it to include the operating system name (os)
+i.e in the form "package/version os" (e.g., "git/1.8.3.1 Linux").
+The operating system name is retrieved using the 'sysname' field of 
+he `uname(2)` system call or its equivalent.
 
-> > filetype of the "packed-refs". The user should always use "git
-> > pack-refs" command to create the raw regular "packed-refs" file, so we
-> > need to explicitly check this in "git refs verify".
-> >
-> 
-> Not sure I understand how the start of this last sentence correlates to
-> the end of it. Is the intention to say that we want to explicitly check
-> the filetype to ensure that the 'packed-refs' file was only created via
-> 'git pack-refs'? If so, perhaps:
-> 
->     Verify that the 'packed-refs' file has the expected filetype,
->     confirming it was created by 'git pack-refs'.
-> 
+Including OS details in the agent capability simplifies implementation,
+maintains backward compatibility, avoids introducing a new capability,
+encourages adoption across Git-compatible software, and enhances
+debugging by providing complete environment information without affecting
+functionality.
 
-Thanks for the suggestion, I will improve this in the next version.
+Note that, due to differences between `uname(1)` (command-line
+utility) and `uname(2)` (system call) outputs on Windows,
+`transfer.advertiseOSVersion` is set to false on Windows during
+testing. See the message part of patch 5/6 for more details.
 
-> > We could use "open_nofollow" wrapper to open the raw "packed-refs" file.
-> > If the returned "fd" value is less than 0, we could check whether the
-> > "errno" is "ELOOP" to report an error to the user.
-> >
-> > Reuse "FSCK_MSG_BAD_REF_FILETYPE" fsck message id to report the error to
-> > the user if "packed-refs" is not a regular file.
-> >
-> > Mentored-by: Patrick Steinhardt <ps@pks.im>
-> > Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> > Signed-off-by: shejialuo <shejialuo@gmail.com>
-> > ---
-> >  refs/packed-backend.c    | 39 +++++++++++++++++++++++++++++++++++----
-> >  t/t0602-reffiles-fsck.sh | 22 ++++++++++++++++++++++
-> >  2 files changed, 57 insertions(+), 4 deletions(-)
-> >
-> > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> > index a7b6f74b6e..6401cecd5f 100644
-> > --- a/refs/packed-backend.c
-> > +++ b/refs/packed-backend.c
-> > @@ -4,6 +4,7 @@
-> >  #include "../git-compat-util.h"
-> >  #include "../config.h"
-> >  #include "../dir.h"
-> > +#include "../fsck.h"
-> >  #include "../gettext.h"
-> >  #include "../hash.h"
-> >  #include "../hex.h"
-> > @@ -1748,15 +1749,45 @@ static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
-> >  	return empty_ref_iterator_begin();
-> >  }
-> >
-> > -static int packed_fsck(struct ref_store *ref_store UNUSED,
-> > -		       struct fsck_options *o UNUSED,
-> > +static int packed_fsck(struct ref_store *ref_store,
-> > +		       struct fsck_options *o,
-> >  		       struct worktree *wt)
-> >  {
-> > +	struct packed_ref_store *refs = packed_downcast(ref_store,
-> > +							REF_STORE_READ, "fsck");
-> > +	int ret = 0;
-> > +	int fd;
-> >
-> >  	if (!is_main_worktree(wt))
-> > -		return 0;
-> > +		goto cleanup;
-> >
-> > -	return 0;
-> > +	if (o->verbose)
-> > +		fprintf_ln(stderr, "Checking packed-refs file %s", refs->path);
-> > +
-> > +	fd = open_nofollow(refs->path, O_RDONLY);
-> > +	if (fd < 0) {
-> > +		/*
-> > +		 * If the packed-refs file doesn't exist, there's nothing
-> > +		 * to check.
-> > +		 */
-> > +		if (errno == ENOENT)
-> > +			goto cleanup;
-> > +
-> > +		if (errno == ELOOP) {
-> > +			struct fsck_ref_report report = { 0 };
-> > +			report.path = "packed-refs";
-> > +			ret = fsck_report_ref(o, &report,
-> > +					      FSCK_MSG_BAD_REF_FILETYPE,
-> > +					      "not a regular file");
-> > +			goto cleanup;
-> > +		}
-> > +
-> > +		ret = error_errno(_("unable to open %s"), refs->path);
-> > +		goto cleanup;
-> 
-> The paragraph in the commit message:
-> 
->     Reuse "FSCK_MSG_BAD_REF_FILETYPE" fsck message id to report the error to
->     the user if "packed-refs" is not a regular file.
-> 
-> Gave me the indication that any error would be reported via
-> 'fsck_report_ref()', but it seems like we are only reporting for
-> symbolic links. Why is that being singled out?
-> 
+My mentor, Christian Couder, sent a previous patch series about this
+before. You can find it here
+https://lore.kernel.org/git/20240619125708.3719150-1-christian.couder@gmail.com/
 
-IIRC, when Patrick told me in first version that if I first stat the
-file type and then use the `strbuf_read_file` to read the content, there
-is a corner case that the file could be converted into symlink between
-the `stat` and read.
+Changes since v4
+================
+ - Remove the implementation of transfer.advertiseOSInfo config. 
+ - Update the documentation.
+ - Move the `os_info()` function into "version.c" file.
 
-So, I use `open_nofollow` to avoid this situation. (Actually, this could
-not be avoided because in Windows, we would first stat the file and
-then open the file due to that there is no "O_NOFOLLOW" flag for Windows).
+Usman Akinyemi (6):
+  version: replace manual ASCII checks with isprint() for clarity
+  version: refactor redact_non_printables()
+  version: refactor get_uname_info()
+  version: extend get_uname_info() to hide system details
+  t5701: add setup test to remove side-effect dependency
+  agent: advertise OS name via agent capability
 
-I will find a solution to do this in the next version.
+ Documentation/gitprotocol-v2.txt | 13 +++---
+ builtin/bugreport.c              | 13 +-----
+ t/t5701-git-serve.sh             | 26 ++++++++++--
+ t/test-lib-functions.sh          |  8 ++++
+ version.c                        | 69 +++++++++++++++++++++++++++++---
+ version.h                        | 10 +++++
+ 6 files changed, 115 insertions(+), 24 deletions(-)
 
-> > +	}
-> > +
-> > +cleanup:
-> > +	return ret;
-> >  }
-> >
-> >  struct ref_storage_be refs_be_packed = {
-> > diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-> > index cf7a202d0d..42c8d4ca1e 100755
-> > --- a/t/t0602-reffiles-fsck.sh
-> > +++ b/t/t0602-reffiles-fsck.sh
-> > @@ -617,4 +617,26 @@ test_expect_success 'ref content checks should work with worktrees' '
-> >  	)
-> >  '
-> >
-> > +test_expect_success SYMLINKS 'the filetype of packed-refs should be checked' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	(
-> > +		cd repo &&
-> > +		test_commit default &&
-> > +		git branch branch-1 &&
-> > +		git branch branch-2 &&
-> > +		git branch branch-3 &&
-> > +		git pack-refs --all &&
-> > +
-> > +		mv .git/packed-refs .git/packed-refs-back &&
-> > +		ln -sf packed-refs-bak .git/packed-refs &&
-> 
-> This still doesn't make sense to me. 'packed-refs-bak' doesn't exist, is
-> the intention to symlink '.git/packed-refs' -> something which doesn't
-> exist?
-> 
-> In that case why even make the effort to build a packed-refs file, could
-> we simply do 'ln -sf packed-refs-bak .git/packed-refs' in an empty repo?
-> 
+Range-diff versus v4:
 
-You are correct. My intention is not this. If the "packed-refs" is a
-symlink and points to file which we can successfully parse. Current Git
-won't complain. So my motivation here is to imitate this situation.
+1:  82b62c5e66 = 1:  82b62c5e66 version: replace manual ASCII checks with isprint() for clarity
+2:  0a7d7ce871 = 2:  0a7d7ce871 version: refactor redact_non_printables()
+3:  0187db59a4 = 3:  0187db59a4 version: refactor get_uname_info()
+4:  d3a3573594 = 4:  d3a3573594 version: extend get_uname_info() to hide system details
+5:  3e0e98f23d = 5:  3e0e98f23d t5701: add setup test to remove side-effect dependency
+6:  67a2767026 ! 6:  bcd1130aa1 agent: advertise OS name via agent capability
+    @@ Commit message
+         maintains backward compatibility, avoids introducing a new capability,
+         encourages adoption across Git-compatible software, and enhances
+         debugging by providing complete environment information without affecting
+    -    functionality.
+    -
+    -    Add the `transfer.advertiseOSInfo` config option to address privacy
+    -    concerns. It defaults to `true` and can be changed to `false`.
+    -    When `true`, both the client and server independently append their
+    -    operating system name(os) to the `agent` capability value. The `agent`
+    -    capability will now be in form of "package/version os" (e.g.,
+    -    "git/1.8.3.1 Linux"). When `false`, the `agent` capability will be
+    -    in the form of "package/version" e.g "git/1.8.3.1". The server's
+    -    configuration is independent of the client's. Defaults to `true`.
+    -    The operating system name is retrieved using the 'sysname' field of
+    -    the `uname(2)` system call or its equivalent.
+    +    functionality. The operating system name is retrieved using the 'sysname'
+    +    field of the `uname(2)` system call or its equivalent.
+     
+         However, there are differences between `uname(1)` (command-line utility)
+         and `uname(2)` (system call) outputs on Windows. These discrepancies
+    @@ Commit message
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+     
+    - ## Documentation/config/transfer.txt ##
+    -@@ Documentation/config/transfer.txt: transfer.bundleURI::
+    - transfer.advertiseObjectInfo::
+    - 	When `true`, the `object-info` capability is advertised by
+    - 	servers. Defaults to false.
+    -+
+    -+transfer.advertiseOSInfo::
+    -+	When `true`, both the client and server independently append their
+    -+	operating system name (os) to the `agent` capability value. The `agent`
+    -+	capability will now be in form of "package/version os" (e.g.,
+    -+	"git/1.8.3.1 Linux"). When `false`, the `agent` capability will be
+    -+	in the form of "package/version" e.g "git/1.8.3.1". The server's
+    -+	configuration is independent of the client's. Defaults to `true`.
+    -
+      ## Documentation/gitprotocol-v2.txt ##
+     @@ Documentation/gitprotocol-v2.txt: form `agent=X`) to notify the client that the server is running version
+      the `agent` capability with a value `Y` (in the form `agent=Y`) in its
+    @@ Documentation/gitprotocol-v2.txt: form `agent=X`) to notify the client that the
+     -"git/1.8.3.1"). The agent strings are purely informative for statistics
+     -and debugging purposes, and MUST NOT be used to programmatically assume
+     -the presence or absence of particular features.
+    -+printable ASCII characters (i.e., the byte range 32 < x < 127), and are
+    ++printable ASCII characters (i.e., the byte range 31 < x < 127), and are
+     +typically of the form "package/version os" (e.g., "git/1.8.3.1 Linux")
+     +where `os` is the operating system name (e.g., "Linux"). `X` and `Y` can
+     +be configured using the GIT_USER_AGENT environment variable and it takes
+    -+priority. If `transfer.advertiseOSInfo` is `false` on the server, the server
+    -+omits the `os` from X. If it is `false` on the client, the client omits the
+    -+`os` from `Y`. The `os` is retrieved using the 'sysname' field of the `uname(2)`
+    ++priority. The `os` is retrieved using the 'sysname' field of the `uname(2)`
+     +system call or its equivalent. The agent strings are purely informative for
+     +statistics and debugging purposes, and MUST NOT be used to programmatically
+     +assume the presence or absence of particular features.
+    @@ Documentation/gitprotocol-v2.txt: form `agent=X`) to notify the client that the
+      ls-refs
+      ~~~~~~~
+     
+    - ## t/t5555-http-smart-common.sh ##
+    -@@ t/t5555-http-smart-common.sh: test_expect_success 'git receive-pack --advertise-refs: v1' '
+    - '
+    - 
+    - test_expect_success 'git upload-pack --advertise-refs: v2' '
+    -+	printf "agent=FAKE" >agent_capability &&
+    -+	if test_have_prereq WINDOWS
+    -+	then
+    -+		printf "\n" >>agent_capability &&
+    -+		git config transfer.advertiseOSInfo false
+    -+	else
+    -+		printf " %s\n" $(uname -s | test_redact_non_printables) >>agent_capability
+    -+	fi &&
+    - 	cat >expect <<-EOF &&
+    - 	version 2
+    --	agent=FAKE
+    -+	$(cat agent_capability)
+    - 	ls-refs=unborn
+    - 	fetch=shallow wait-for-done
+    - 	server-option
+    -
+      ## t/t5701-git-serve.sh ##
+     @@ t/t5701-git-serve.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+      . ./test-lib.sh
+    @@ t/t5701-git-serve.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+      
+     +	if test_have_prereq WINDOWS
+     +	then
+    -+		printf "\n" >>agent_capability &&
+    -+		git config transfer.advertiseOSInfo false
+    ++		printf "agent=FAKE\n" >agent_capability
+     +	else
+     +		printf " %s\n" $(uname -s | test_redact_non_printables) >>agent_capability
+     +	fi &&
+      	cat >expect.base <<-EOF &&
+      	version 2
+      	$(cat agent_capability)
+    +@@ t/t5701-git-serve.sh: test_expect_success 'setup to generate files with expected content' '
+    + test_expect_success 'test capability advertisement' '
+    + 	cat expect.base expect.trailer >expect &&
+    + 
+    ++	if test_have_prereq WINDOWS
+    ++	then
+    ++		GIT_USER_AGENT=FAKE && export GIT_USER_AGENT
+    ++	fi &&
+    + 	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
+    + 		--advertise-capabilities >out &&
+    + 	test-tool pkt-line unpack <out >actual &&
+    +@@ t/t5701-git-serve.sh: test_expect_success 'test capability advertisement with uploadpack.advertiseBund
+    + 	    expect.extra \
+    + 	    expect.trailer >expect &&
+    + 
+    ++	if test_have_prereq WINDOWS
+    ++	then
+    ++		GIT_USER_AGENT=FAKE && export GIT_USER_AGENT
+    ++	fi &&
+    + 	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
+    + 		--advertise-capabilities >out &&
+    + 	test-tool pkt-line unpack <out >actual &&
+     
+      ## t/test-lib-functions.sh ##
+     @@ t/test-lib-functions.sh: test_trailing_hash () {
+    @@ version.c
+      #include "version.h"
+      #include "version-def.h"
+      #include "strbuf.h"
+    - #include "sane-ctype.h"
+    +-#include "sane-ctype.h"
+      #include "gettext.h"
+    -+#include "config.h"
+      
+      const char git_version_string[] = GIT_VERSION;
+    - const char git_built_from_commit_string[] = GIT_BUILT_FROM_COMMIT;
+    -@@ version.c: const char *git_user_agent_sanitized(void)
+    - 
+    - 		strbuf_addstr(&buf, git_user_agent());
+    - 		redact_non_printables(&buf);
+    -+		/* Add os name if the transfer.advertiseosinfo config is true */
+    -+		if (advertise_os_info()) {
+    -+			/* Add space to space character after git version string */
+    -+			strbuf_addch(&buf, ' ');
+    -+			strbuf_addstr(&buf, os_info_sanitized());
+    -+		}
+    - 		agent = strbuf_detach(&buf, NULL);
+    - 	}
+    - 
+    -@@ version.c: int get_uname_info(struct strbuf *buf, unsigned int full)
+    - 	     strbuf_addf(buf, "%s\n", uname_info.sysname);
+    - 	return 0;
+    +@@ version.c: const char *git_user_agent(void)
+    + 	return agent;
+      }
+    -+
+    -+const char *os_info_sanitized(void)
+    + 
+    ++/*
+    ++  Retrieve, sanitize and cache operating system info for subsequent
+    ++  calls. Return a pointer to the sanitized operating system info
+    ++  string.
+    ++*/
+    ++static const char *os_info(void)
+     +{
+     +	static const char *os = NULL;
+     +
+    @@ version.c: int get_uname_info(struct strbuf *buf, unsigned int full)
+     +	return os;
+     +}
+     +
+    -+int advertise_os_info(void)
+    -+{
+    -+	static int transfer_advertise_os_info= -1;
+    + const char *git_user_agent_sanitized(void)
+    + {
+    + 	static const char *agent = NULL;
+    +@@ version.c: const char *git_user_agent_sanitized(void)
+    + 
+    + 		strbuf_addstr(&buf, git_user_agent());
+    + 		redact_non_printables(&buf);
+     +
+    -+	if (transfer_advertise_os_info == -1) {
+    -+		repo_config_get_bool(the_repository, "transfer.advertiseosinfo", &transfer_advertise_os_info);
+    -+		/* enabled by default */
+    -+		transfer_advertise_os_info = !!transfer_advertise_os_info;
+    -+	}
+    -+	return transfer_advertise_os_info;
+    -+}
+    ++		if (!getenv("GIT_USER_AGENT")) {
+    ++			strbuf_addch(&buf, ' ');
+    ++			strbuf_addstr(&buf, os_info());
+    ++		}
+    + 		agent = strbuf_detach(&buf, NULL);
+    + 	}
+    + 
+     
+      ## version.h ##
+     @@
+    @@ version.h: const char *git_user_agent_sanitized(void);
+      */
+      int get_uname_info(struct strbuf *buf, unsigned int full);
+      
+    -+/*
+    -+  Retrieve, sanitize and cache operating system info for subsequent
+    -+  calls. Return a pointer to the sanitized operating system info
+    -+  string.
+    -+*/
+    -+const char *os_info_sanitized(void);
+    -+
+    -+/*
+    -+  Retrieve and cache transfer.advertiseosinfo config value. Return 1
+    -+  if true, 0 if false.
+    -+*/
+    -+int advertise_os_info(void);
+     +
+      #endif /* VERSION_H */
 
-> If not, then 'packed-refs-bak' is definitely a typo and needs to be made
-> 'packed-refs-back' which would go in hand with how we setup the test...
-> 
+-- 
+2.48.1
 
-Thanks for noticing this problem. I definitely made a mistake to type the
-"packed-refs-back" to "packed-refs-bak".
-
-Jialuo
