@@ -1,172 +1,266 @@
-Received: from mail-vk1-f171.google.com (mail-vk1-f171.google.com [209.85.221.171])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C3942AA5
-	for <git@vger.kernel.org>; Sat, 15 Feb 2025 15:29:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD31AB672
+	for <git@vger.kernel.org>; Sat, 15 Feb 2025 15:51:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739633396; cv=none; b=I5Xeaa/90SjeSLETJFCfyAGC8AP6Mp6igz4iIFJGiz/j8ee9/H5XMJUIGfscQ21MWxXf3pj8zcgp9azgKVEX6L1fLJg5fInZDdVL/MS6A0/ZtON6gTvjGtlP5yFQMFh6uEaPdiH9mS8obHz97Nn+Pqce0VzIICf3PuUYLLSfimY=
+	t=1739634699; cv=none; b=HOdm+r7GTrYWxvnSn6QzE2BHUna7GeJ1RTSEhtekyMb0+blQLizjv0rHnqv6UuFTzL6kCL+qSHx4DrapblQN2wwoWzRwTM4qHAxlzOp2YATmOeDVRW661F8vYkKNBtFq117vqVP5f2R2nqlPF6T2VM9oAUGfsicMLyG1MtqiIN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739633396; c=relaxed/simple;
-	bh=TQMEoURZDtaKjbodir0zUglkZJUs2V2CfcGSKr+OMsI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GTbc0F3HihP6ldDsbvoPQjpcEaVxjK9GyjYFtpWMIrQ28cf33p3aKf0jxPC/Oyifp8DdDndw7edj9Bkjc6lIyrdE5e3+ryQDkXM/xyB8a38gy/W8MaEsVemFMmCrh5csrv3ZmvypzkspvEH0Alf7ya4LXl74mCFkFcwpSuXASag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F2ieiU7e; arc=none smtp.client-ip=209.85.221.171
+	s=arc-20240116; t=1739634699; c=relaxed/simple;
+	bh=tXxsFrj6bbxULLFMtyOFhoKqhIYdzMlXYVpHpCc4M8w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=LUSmYA2mUtocZPp//FDHvAQRK9KHsE06eMz5hhf/JRQkdx/hYWSXUg3KBopWhluIdRv8pfdlARwxSrOdGfFZMUrsoGMm2RfbQVPQSJ6CqMDCusDSD65NgL27QU5rKJYRaFHSVQufpGaq/NTfRLN/3ZAredqx3nVZf1HVA+PHB6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hHbmymTx; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F2ieiU7e"
-Received: by mail-vk1-f171.google.com with SMTP id 71dfb90a1353d-5205276bdb8so968794e0c.3
-        for <git@vger.kernel.org>; Sat, 15 Feb 2025 07:29:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hHbmymTx"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-220c4159f87so40873925ad.0
+        for <git@vger.kernel.org>; Sat, 15 Feb 2025 07:51:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739633393; x=1740238193; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1739634697; x=1740239497; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GnMeTVTBJBPfoaTFeivUbJoeZ9/63yrQprGAVTKozaM=;
-        b=F2ieiU7evlBlleTf76h4Wfqz9uyNBcHV5qhg2fbZ8qrLnW6KFOs44v+lrk1Ry586d4
-         jNEB6sw4rxd0Wnu7SK7kgFO2dnjydkVZMgQG7TC4q/vfftnyvPVohODSQokVZUpPW5Db
-         HP8BWOpe56tYj8/QzX5M32/eLXzxgcUAiVe5lY8lVkKPUnaZxdot1G+9CeykDopaGS8U
-         06o5eztn5njs87r3xOwjfaYcM+xOW3JD3t1KVuZfrXvWkfk3wRvhZZZu+2upAZt7wPfx
-         kPH81kny/Gg76dyG8TeLbPGvs5wrC3DoKfOMQWH03fZbXQWo0rWUSgZBprBGpQwxmjTU
-         J2Ew==
+        bh=c9SKuhmm0WcVZ60zyJSGhkKh+SMfMZtgmh6LVXvYOqk=;
+        b=hHbmymTx0yw+tiXJYQKY6KVvVwefT5WEMvD7VmOz9CmHqw1pGVIk3zMUFJpeYs66XX
+         S9WrYT+/vM5Bn9zEAe1v4XRdtqO5Srp0j0nZwFSywo6LAHI191IlTSf6/bNZSv2uTm80
+         bGq6Uo2SJOkpzG+MQf2ehxaTr5awqKuJSS+0+iLMY7SHRPhWG5STsl8REhpF47DdLf53
+         Aj/FsEJo+M5+Hi4mEo3/Au4ADcUdPrHtEKTpvMUEKB6opYCafOtNkzy/3UfGCrrfZ2ql
+         POKmeBpO5LUXc/cmcHIT0ZhxT97LdKzWK6DaanjL2LHIE2/ML/5L9+QjU6cTKggHP2jI
+         B4jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739633393; x=1740238193;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1739634697; x=1740239497;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GnMeTVTBJBPfoaTFeivUbJoeZ9/63yrQprGAVTKozaM=;
-        b=pw+XG+5u7RWbGne1gBrDi4SEQP2zuYS7VypE1Z7qRPLmmYGg+rU13xwT/wHCknG2W8
-         11Sx1KlTWrSTT9wYrjBu9TADzsiYTaWZjyKopuaNKPG5YP0SsagmcYKC0lLGbc99gyjJ
-         rKP/YkwwgFW29vtSecgebniKxJoows1bMkNA8nqmTkNNfJFKo2fUOqtKMPrGFpsGsayk
-         TYj6qjS5MyyuypYtogRu7XXTYtg2h4KgtLb931dj2de+VKBbex+5BHVFQrovUT1DFz/N
-         ByNPXOAj3ArqZMPAS9ott7T/qMcDY9UTcp9JXB0KKJ46/5LADA+jamnWvXWQoMe1dIs+
-         PSIg==
-X-Forwarded-Encrypted: i=1; AJvYcCVs8pUgyhUHnit66ImGAhErB4Rgx/ufrU8ektKlOQKoDh5Stq8XhAW265qdc4ECoFHHyTg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhQIN6j9lFLn1FBba/2mNEPzVdSElSt3Rx15Y+jJcowMRxKYVp
-	E9s4FqH8iQ7V6hdF0HgHL3PfrKzaH+zjwGjcTJejGvwP4vfne3GidccL0gn9UBAUOCY8ZCftfET
-	shed2RZ5skivIeVdK76CFyKti1bQ=
-X-Gm-Gg: ASbGncsn5Sw2tzLK22mdPLI0oYjiQfYrkwVD/G4qtGGKQgECma7c2Jh2dSk8tdkIrKk
-	1no0W2aV1ZdQyCco2MyDqG1mhovjlCUmnki9GArVuCipQvrp1MgAHcRf+9+scLg16VxlViy17
-X-Google-Smtp-Source: AGHT+IHQqxkDS8vC3Xx5fY6zc6DNJEx5Kn2QpgKSs3uF7RlapuxSWAaqJvWbnlSL0VuOL34PkNv0B3kqj0GVXLuSeNo=
-X-Received: by 2002:a05:6122:658b:b0:520:62ce:990f with SMTP id
- 71dfb90a1353d-5209de5ea3amr1283236e0c.11.1739633393095; Sat, 15 Feb 2025
- 07:29:53 -0800 (PST)
+        bh=c9SKuhmm0WcVZ60zyJSGhkKh+SMfMZtgmh6LVXvYOqk=;
+        b=ru5WO97s1+xKTDdMT+65WhYYLxZuQx7k7U/Im4OHbNz6N5VDP7xwZ6cZaQaO9ZWEuY
+         b0P68PpDyA/LcbLK9sQXv4Jg7DqRDne655COy74WSzbmz6YNYfV1QdzUJmOsPPsM2Ep9
+         b4wFt5JhIo0BHmetGDRBE1BQDKgG+FoKgIcxja22lUz2+NW8V0HxN9KYoRmEMNeewmt1
+         3hCsd5V5LHqsovKAreAZ6h3bH8x4JGZ1QsOLAhIOaGdtoCRId4efZBXp1eZLkq9hn/sL
+         JfIcxEegu+WfStCfPJ/ZlkLw8iADcn3jfjuQJKBQS5CcmXa/j/Ij66kmKoAiC3CpeLpw
+         HqmA==
+X-Forwarded-Encrypted: i=1; AJvYcCUyFnJdyNGJXdZWFuP3gEgig3K6eLMDvURZoFifTMPD8iY28SWc3j+mw8lHpEgivmGAIXk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyjTuNb2C9W6SpT34UAarf0VqTG7GasB9vbei/TwCJfltszim68
+	ib8jLLlzIW/W/fAdgaeCzlJJlHyMOTgnpF7MRTEVRTAQ+4t3DOCv
+X-Gm-Gg: ASbGncsF/sVIAvGKiUmV2vEOVXdyyNubjYGAfFRwKIGfxeyyOUqa/l57T8/kof6l62m
+	kS3CpEA3uDZsY72ir0XaLsdAgEhnO/snr/n6QNJ9ZTAS4n9GMlEPJdELm0l/ysqJryhMYR7cgcJ
+	yiRhkoH5b334hLjEhNCmKBIFbvN4BO4MWo0HU79tw6KS4wKS3L9WyqE61fD2PmTX7yNN+g7+DvA
+	ybx43bzdH09Ex79kYRsBIZZj7jeoadmeBN8CpxGV2wjsvidvxXZtr+0EmuPvCLxtFuD1SJ1oFt4
+	rJdq44zF9fbLLwUtZerjhUdc2JBUAWShQWo8IkxT
+X-Google-Smtp-Source: AGHT+IGxl/DiYiuHXTunMHdPnNnBfxVwWKeSobtyfeWppviOBCzrFo91s25ZIbqkJoUbXIUJk3cK6A==
+X-Received: by 2002:a17:903:2cb:b0:21f:6ce6:7243 with SMTP id d9443c01a7336-221040d84c0mr53137865ad.51.1739634696755;
+        Sat, 15 Feb 2025 07:51:36 -0800 (PST)
+Received: from archlinux.plaksha.edu.in ([182.75.25.162])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d559089asm45024285ad.241.2025.02.15.07.51.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 15 Feb 2025 07:51:36 -0800 (PST)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: christian.couder@gmail.com,
+	gitster@pobox.com
+Cc: Johannes.Schindelin@gmx.de,
+	git@vger.kernel.org,
+	johncai86@gmail.com,
+	me@ttaylorr.com,
+	phillip.wood@dunelm.org.uk,
+	ps@pks.im,
+	rsbecker@nexbridge.com,
+	sunshine@sunshineco.com
+Subject: [PATCH v6 0/6][Outreachy] extend agent capability to include OS name
+Date: Sat, 15 Feb 2025 21:20:46 +0530
+Message-ID: <20250215155130.1756934-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250214123734.1403120-1-usmanakinyemi202@gmail.com>
+References: <20250214123734.1403120-1-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250205185246.111447-1-usmanakinyemi202@gmail.com>
- <20250214123734.1403120-1-usmanakinyemi202@gmail.com> <20250214123734.1403120-7-usmanakinyemi202@gmail.com>
- <xmqq34ggkwnx.fsf@gitster.g>
-In-Reply-To: <xmqq34ggkwnx.fsf@gitster.g>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Sat, 15 Feb 2025 20:59:41 +0530
-X-Gm-Features: AWEUYZmZlRZOOKWB8o8lJbBFDgYER3cmLYH6KWBYt0CGs0tKxSQmht4_6QgMJyg
-Message-ID: <CAPSxiM8t1TdvKwXuX1XZq_ms6WeJNBMMfhryY-x=835Z8zyHdQ@mail.gmail.com>
-Subject: Re: [PATCH v5 6/6] agent: advertise OS name via agent capability
-To: Junio C Hamano <gitster@pobox.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, 
-	Johannes.Schindelin@gmx.de, johncai86@gmail.com, me@ttaylorr.com, 
-	phillip.wood@dunelm.org.uk, ps@pks.im, rsbecker@nexbridge.com, 
-	sunshine@sunshineco.com, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sat, Feb 15, 2025 at 3:37=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
-Hi Junio,
->
-> > As some issues that can happen with a Git client can be operating syste=
-m
-> > specific, it can be useful for a server to know which OS a client is
-> > using. In the same way it can be useful for a client to know which OS
-> > a server is using.
-> >
-> > Our current agent capability is in the form of "package/version" (e.g.,
-> > "git/1.8.3.1"). Let's extend it to include the operating system name (o=
-s)
-> > i.e in the form "package/version os" (e.g., "git/1.8.3.1 Linux").
->
-> Shouldn't this be "git/1.8.3.1-Linux" or something to avoid SP?  The
-> capability list in protocol v1 is on a single line that is whitespace
-> separated (cf. connect.c:parse_feature_value()) without any escape
-> mechanism.
-Yeah, I almost missed this function. Thanks for pointing it out.
->
->         Side note.  Does it pose a security hole, when we can set
->         agent to any value?  I do not think so, as it controls what
->         this end sends to the other.  If you are attacker in control
->         of your own agent string to be sent to the other end, and
->         use a string with a whitespace in it after "agent=3D" to claim
->         that you support a capability you actually don't, that is
->         not a new way to attack the other side available to you---you
->         can write your own Git client to talk to the other side to
->         send such a bogus capablity list anyway.
-Thanks for this explanation.
->
-> > diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotoc=
-ol-v2.txt
-> > index 1652fef3ae..f4831a8787 100644
-> > --- a/Documentation/gitprotocol-v2.txt
-> > +++ b/Documentation/gitprotocol-v2.txt
-> > @@ -184,11 +184,14 @@ form `agent=3DX`) to notify the client that the s=
-erver is running version
-> >  the `agent` capability with a value `Y` (in the form `agent=3DY`) in i=
-ts
-> >  request to the server (but it MUST NOT do so if the server did not
-> >  advertise the agent capability). The `X` and `Y` strings may contain a=
-ny
-> > -printable ASCII characters except space (i.e., the byte range 32 < x <
-> > -127), and are typically of the form "package/version" (e.g.,
-> > -"git/1.8.3.1"). The agent strings are purely informative for statistic=
-s
-> > -and debugging purposes, and MUST NOT be used to programmatically assum=
-e
-> > -the presence or absence of particular features.
-> > +printable ASCII characters (i.e., the byte range 31 < x < 127), and ar=
-e
->
-> Patches 1 & 2 redacted non-printables and SP separately, because SP
-> is considered printable.  With this change you are allowing SP to be
-> passed without getting redacted?  I do not think it is a good idea
-> (see above).
->
-> While I'd prefer to keep the range the same as before, i.e. "any
-> printable ASCII characters except space", "33 <=3D x <=3D 126" may be
-> more readily recognisable that we are doing something unusual, as
-> "32 <=3D x <=3D 126" is fairly easily recognisable as "ASCII printable".
->
-> > +typically of the form "package/version os" (e.g., "git/1.8.3.1 Linux")
->
-> So, I'd suggest using something other than " " between "version" and
-> "os".  Dot (as if the byte there were redacted) or slash or dash or
-> whatever, anything that is not whitespace.
-Yeah, Noted. Thanks.
->
-> > +where `os` is the operating system name (e.g., "Linux"). `X` and `Y` c=
-an
-> > +be configured using the GIT_USER_AGENT environment variable and it tak=
-es
-> > +priority. The `os` is retrieved using the 'sysname' field of the `unam=
-e(2)`
-> > +system call or its equivalent. The agent strings are purely informativ=
-e for
-> > +statistics and debugging purposes, and MUST NOT be used to programmati=
-cally
-> > +assume the presence or absence of particular features.
->
-> Other than these nits, I find the above very well done.
->
-> As to the additional implementation of git_user_agent_sanitized(),
-> except for that same "do we really want SP there?" question, I see
-> nothing questionable there, either.
->
-> Overall very nicely done and presented.
-Thank you.
->
-> Thanks.
+For debugging, statistical analysis, and security purposes, it can
+be valuable for Git servers to know the operating system the clients
+are using.
+
+For example:
+- A server noticing that a client is using an old Git version with
+security issues on one platform, like macOS, could verify if the
+user is indeed running macOS before sending a message to upgrade."
+- Similarly, a server identifying a client that could benefit from
+an upgrade (e.g., for performance reasons) could better customize the
+message it sends to nudge the client to upgrade.
+
+Our current agent capability is in the form of "package/version" (e.g.,
+"git/1.8.3.1"). Let's extend it to include the operating system name (os)
+i.e in the form "package/version-os" (e.g., "git/1.8.3.1-Linux").
+The operating system name is retrieved using the 'sysname' field of 
+he `uname(2)` system call or its equivalent.
+
+Including OS details in the agent capability simplifies implementation,
+maintains backward compatibility, avoids introducing a new capability,
+encourages adoption across Git-compatible software, and enhances
+debugging by providing complete environment information without affecting
+functionality.
+
+Note that, due to differences between `uname(1)` (command-line
+utility) and `uname(2)` (system call) outputs on Windows,
+`transfer.advertiseOSVersion` is set to false on Windows during
+testing. See the message part of patch 5/6 for more details.
+
+My mentor, Christian Couder, sent a previous patch series about this
+before. You can find it here
+https://lore.kernel.org/git/20240619125708.3719150-1-christian.couder@gmail.com/
+
+Changes since v5
+================
+ - Used "-" instead of " " for seperating "version" and "os" in the agent string.
+
+Usman Akinyemi (6):
+  version: replace manual ASCII checks with isprint() for clarity
+  version: refactor redact_non_printables()
+  version: refactor get_uname_info()
+  version: extend get_uname_info() to hide system details
+  t5701: add setup test to remove side-effect dependency
+  agent: advertise OS name via agent capability
+
+ Documentation/gitprotocol-v2.txt | 13 +++---
+ builtin/bugreport.c              | 13 +-----
+ connect.c                        |  2 +-
+ t/t5701-git-serve.sh             | 26 ++++++++++--
+ t/test-lib-functions.sh          |  8 ++++
+ version.c                        | 69 +++++++++++++++++++++++++++++---
+ version.h                        | 10 +++++
+ 7 files changed, 116 insertions(+), 25 deletions(-)
+
+Range-diff versus v5:
+
+1:  82b62c5e66 = 1:  82b62c5e66 version: replace manual ASCII checks with isprint() for clarity
+2:  0a7d7ce871 = 2:  0a7d7ce871 version: refactor redact_non_printables()
+3:  0187db59a4 = 3:  0187db59a4 version: refactor get_uname_info()
+4:  d3a3573594 = 4:  d3a3573594 version: extend get_uname_info() to hide system details
+5:  3e0e98f23d = 5:  3e0e98f23d t5701: add setup test to remove side-effect dependency
+6:  8878e9c9ab ! 6:  48cf946f61 agent: advertise OS name via agent capability
+    @@ Commit message
+     
+         Our current agent capability is in the form of "package/version" (e.g.,
+         "git/1.8.3.1"). Let's extend it to include the operating system name (os)
+    -    i.e in the form "package/version os" (e.g., "git/1.8.3.1 Linux").
+    +    i.e in the form "package/version-os" (e.g., "git/1.8.3.1-Linux").
+     
+         Including OS details in the agent capability simplifies implementation,
+         maintains backward compatibility, avoids introducing a new capability,
+    @@ Documentation/gitprotocol-v2.txt: form `agent=X`) to notify the client that the
+     -"git/1.8.3.1"). The agent strings are purely informative for statistics
+     -and debugging purposes, and MUST NOT be used to programmatically assume
+     -the presence or absence of particular features.
+    -+printable ASCII characters (i.e., the byte range 31 < x < 127), and are
+    -+typically of the form "package/version os" (e.g., "git/1.8.3.1 Linux")
+    ++printable ASCII characters (i.e., the byte range 33 <= x <= 126), and are
+    ++typically of the form "package/version-os" (e.g., "git/1.8.3.1-Linux")
+     +where `os` is the operating system name (e.g., "Linux"). `X` and `Y` can
+     +be configured using the GIT_USER_AGENT environment variable and it takes
+     +priority. The `os` is retrieved using the 'sysname' field of the `uname(2)`
+    @@ Documentation/gitprotocol-v2.txt: form `agent=X`) to notify the client that the
+      ls-refs
+      ~~~~~~~
+     
+    + ## connect.c ##
+    +@@ connect.c: const char *parse_feature_value(const char *feature_list, const char *feature, s
+    + 					*offset = found + len - orig_start;
+    + 				return value;
+    + 			}
+    +-			/* feature with a value (e.g., "agent=git/1.2.3") */
+    ++			/* feature with a value (e.g., "agent=git/1.2.3-Linux") */
+    + 			else if (*value == '=') {
+    + 				size_t end;
+    + 
+    +
+      ## t/t5701-git-serve.sh ##
+     @@ t/t5701-git-serve.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+      . ./test-lib.sh
+    @@ t/t5701-git-serve.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+     +	then
+     +		printf "agent=FAKE\n" >agent_capability
+     +	else
+    -+		printf " %s\n" $(uname -s | test_redact_non_printables) >>agent_capability
+    ++		printf -- "-%s\n" $(uname -s | test_redact_non_printables) >>agent_capability
+     +	fi &&
+      	cat >expect.base <<-EOF &&
+      	version 2
+    @@ version.c
+      #include "gettext.h"
+      
+      const char git_version_string[] = GIT_VERSION;
+    -@@ version.c: const char *git_user_agent_sanitized(void)
+    - 
+    - 		strbuf_addstr(&buf, git_user_agent());
+    - 		redact_non_printables(&buf);
+    -+
+    -+		if (!getenv("GIT_USER_AGENT")) {
+    -+			strbuf_addch(&buf, ' ');
+    -+			strbuf_addstr(&buf, os_info());
+    -+		}
+    - 		agent = strbuf_detach(&buf, NULL);
+    - 	}
+    - 
+    -@@ version.c: int get_uname_info(struct strbuf *buf, unsigned int full)
+    - 	     strbuf_addf(buf, "%s\n", uname_info.sysname);
+    - 	return 0;
+    +@@ version.c: const char *git_user_agent(void)
+    + 	return agent;
+      }
+    -+
+    -+const char *os_info(void)
+    + 
+    ++/*
+    ++  Retrieve, sanitize and cache operating system info for subsequent
+    ++  calls. Return a pointer to the sanitized operating system info
+    ++  string.
+    ++*/
+    ++static const char *os_info(void)
+     +{
+     +	static const char *os = NULL;
+     +
+    @@ version.c: int get_uname_info(struct strbuf *buf, unsigned int full)
+     +
+     +	return os;
+     +}
+    ++
+    + const char *git_user_agent_sanitized(void)
+    + {
+    + 	static const char *agent = NULL;
+    +@@ version.c: const char *git_user_agent_sanitized(void)
+    + 		struct strbuf buf = STRBUF_INIT;
+    + 
+    + 		strbuf_addstr(&buf, git_user_agent());
+    ++
+    ++		if (!getenv("GIT_USER_AGENT")) {
+    ++			strbuf_addch(&buf, '-');
+    ++			strbuf_addstr(&buf, os_info());
+    ++		}
+    + 		redact_non_printables(&buf);
+    + 		agent = strbuf_detach(&buf, NULL);
+    + 	}
+     
+      ## version.h ##
+     @@
+    @@ version.h: const char *git_user_agent_sanitized(void);
+      */
+      int get_uname_info(struct strbuf *buf, unsigned int full);
+      
+    -+/*
+    -+  Retrieve, sanitize and cache operating system info for subsequent
+    -+  calls. Return a pointer to the sanitized operating system info
+    -+  string.
+    -+*/
+    -+const char *os_info(void);
+     +
+      #endif /* VERSION_H */
+
+-- 
+2.48.1
+
