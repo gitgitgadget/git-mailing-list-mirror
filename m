@@ -1,109 +1,97 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21C79450
-	for <git@vger.kernel.org>; Sun, 16 Feb 2025 13:53:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5F618024
+	for <git@vger.kernel.org>; Sun, 16 Feb 2025 16:37:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739714014; cv=none; b=plnn2L1NDtPc7QmDKQYw0Ea4pPm8FRx4i3/wsk52QjT6E69DggROMyljzbNN9s6lfgoBf8QkiOljCq8bw43s0EWUn22ePRbF1oM0etBv/bNDXbBryIRRMITFuRecdPI4IhTGLk2oVYdi73i2bJu+Bf2/YtkVFa4vzT/b9KgZAIM=
+	t=1739723835; cv=none; b=aLpwT7lXI1aaDrDJByl+g+VPaf8NvnLl1oyZUInEwgYk7M+FTJq3ZCzX3gQcd+q3ZO6IyK8oXrJPn8CGFTe1aizlkrLDqQctISjB6leXZP9AGqECwv/DWsQfL7ojQBAAhQkLCHFeclf6snsGE2Heln68aZ5b+YooWju7ebf+O9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739714014; c=relaxed/simple;
-	bh=cq1yo9CXMo7SHrPEDwUtZ8oKlViMufF6H41kcISCDJw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gIGneb1yV34cDtl9jNDJDvGRECIOKOP1Fu8lUww8J0JBXe/HHzbtLgyCJteNqD3ensrtaAJXliuCSrtGQquGj5jt0tDdaFPq0nnWfcOROnpLA6rC9eTuONstdYsBZyozAuFtuAzXIn/q1hs/8QME4PyX5fu/Nx0MoY7rlQbl6TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eFPJ2P81; arc=none smtp.client-ip=209.85.214.180
+	s=arc-20240116; t=1739723835; c=relaxed/simple;
+	bh=vSP0952DTpvH4Pn5k/+3Y+MxbxIMdPbHTz9iGX0J7QQ=;
+	h=Message-Id:From:Date:Subject:MIME-Version:Content-Type:To:Cc; b=udWo2sQe9XsptbM6cBn1VumcuPawBhpBOyJIw1zQcpHySK0KNEqs4r2TyyiR6UoQE5y9u7+3NCGy4zX7TChYDYrmh6UP/E+TvIHtcjfN8I7y+zrd4HJpcKB73cwB71GTSI9PbNQscNCm4+kWD7p4CLU3raHlM+t0jvgAgwGKbvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l2eUvNzf; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eFPJ2P81"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2210d92292eso23198545ad.1
-        for <git@vger.kernel.org>; Sun, 16 Feb 2025 05:53:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l2eUvNzf"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4394a0c65fcso39203265e9.1
+        for <git@vger.kernel.org>; Sun, 16 Feb 2025 08:37:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739714011; x=1740318811; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mtDGnxAhvZTagoULHZkAp9S1PFTd29skCF3sGmrLWwI=;
-        b=eFPJ2P815jUUzDWMRkHKy0tT8DSQt/hvAs17tUpZ/b60FhxHTkNr5CHDetu+Ijg2yX
-         HmNQv4AkhmRr4n196MF+R/+ZDTplJ/JDhtRUWrYyN68yCGya0ZWh9yK98a5HQXQAnOIY
-         AjINsPq48g588WNcimQduUbfSWZaD+QYtSdb1xg8J5qAjNlH8Zq0JaHKa2xmB8x+0bCa
-         CQoyQuwmeyGUl9M6zi1MxIUMFC417ANKCVVtfaz4JvzrdowNj/24VVRPjkWvOjvHck80
-         Ffr7Kl/BVP/N4V31ZCVhWHWQokWqDpPw9puR+0iik7yIa4RXGom1/bDV2DPoXkm1Q5lM
-         IYAg==
+        d=gmail.com; s=20230601; t=1739723831; x=1740328631; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=z9SlRvWlW1ma8qviRqJ9IY1oljE05ELRykVWigYnxO8=;
+        b=l2eUvNzfi2tN8k5SPP2IgvDmTDzeOsHTviiZ99iu4lCtUyD+cQ7hI2wg4hRnF3mObJ
+         lji/qvd2vFouY+UwVitrsB+f6AwtzjVnL31NqY0UJsW8aakw2QjwPgqzcaHS6nn1Sgk8
+         +fJKSWcrlp/Et9MOqcxPl55id+DwhBHLeKgX3hVNiJ0P5YEQcM83Mk4cbbm8RGmLNw58
+         HMEzdkI6Pvpblc8qrmw2eviZYDojDNjYfL2UuCRiFW3R5cvPFI1mpjgxv0ENSerm6za9
+         0uO3DcOWoGOVdvmnbELJPWkwCgCwVd1wCB09npbiL7PGZBrJ9dcZs1l3vXWbQohN3HNZ
+         CfvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739714011; x=1740318811;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mtDGnxAhvZTagoULHZkAp9S1PFTd29skCF3sGmrLWwI=;
-        b=L1510ruD/EGsYB2yBzIu9MdYqxet07JBVhoAlAMFfYkPkmSBRotg4n7nyaNtebv9CY
-         mlnH3iV25mR4HhoKpMcsl6ztr5FjQFTDe7lTg296FqfnZB8tYqS3nr0T/O06JY/XxDBC
-         7bsNtR6Ujsc0nNUpk04Asdfm5aUQFjX0L/EoldZ/lF0ckreeZCuaYMLuajC0aJTzPW2i
-         HM5FM5x2vEUUriA8du4Q5z3xH/X3e/zHnYdortIE8zGCwuxS45EMK+KsRnZPRrtcIaLE
-         sWYfG0W0PQ7eUrqoxgxpX6ebAFIWBO+U1/NXnDYV5ATqcVICmpFJcC8eyGOwGjsJ9sdc
-         vqdA==
-X-Forwarded-Encrypted: i=1; AJvYcCWFikMQXwziVNyi33QvoNLVQb5L7edv+0iWI6mr2+w4F3GGCtGSl5bYONQUNVtYxLGlyR8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwMu7JxWeXbFzZg7TRgsgL9ED3fFdvPtbwHNiqROsgwHmlskMIk
-	38XzHvXQTcVv8ato1stScLWkkO4br3XVHeINLGfpxUmpdzgLtIaw
-X-Gm-Gg: ASbGncuND5JCImjzfCoZ0sba8Oz6KIA3zcovqhSMpypms/u0L43oA5qLvt9FSzZGdI6
-	3227i2lVYLDyXSxrrXVBr2xUZfYLAJMmM/oG1EFqWiVAEGoBBpGbWBJoQy7i/iZBdkB2IplR9dy
-	pIbPOiJACOEp48Pu4H8XnSibxuEGkWUVuM53YaZeKe3R37kkDIyE/57dn/HaTK+nLSGI0YZ0tft
-	O6TgluV319bCc88plYEKHT5ohceNOF8ZHqjLNbGSh9EgmB1K/A/v4E5Xhkh5DHYBjG066J/9MFl
-	8uenNJJaA11kYRYW8Twt3Rdy
-X-Google-Smtp-Source: AGHT+IExdG9Uxnjj/BiT9EkySPfuH++CqrJLz226XgtbXE92nJsGiu/5UAAzoiUGSVjQqO7mnmgLmw==
-X-Received: by 2002:a17:902:f711:b0:20c:9936:f0ab with SMTP id d9443c01a7336-221040d6a6dmr93979925ad.47.1739714010942;
-        Sun, 16 Feb 2025 05:53:30 -0800 (PST)
-Received: from [192.168.0.7] ([106.51.25.53])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220ddbadcbesm53274135ad.165.2025.02.16.05.53.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 16 Feb 2025 05:53:30 -0800 (PST)
-Message-ID: <59004310-f270-468d-a248-c83c97de4a1f@gmail.com>
-Date: Sun, 16 Feb 2025 19:23:02 +0530
+        d=1e100.net; s=20230601; t=1739723831; x=1740328631;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z9SlRvWlW1ma8qviRqJ9IY1oljE05ELRykVWigYnxO8=;
+        b=hTBp4/OVbpZxpKHm31QhXWMa7F5ZwIxHYvjQp3+kxu37N4BoGWYm7Prwhlj5tcuegW
+         pM0OEL7dQPLMl5c1r3HH/arwaSYrHKVTejhuRtEhl6dk/7vNhRoxIuhe1ialqgHqXaC7
+         LfVjndi/lNTMdZ9yiN9I6mH/6KZZPpUtIDg7G3VXmlSNzDTV7a11/6peEc5jQe3fYchm
+         17yh7qrxETZZNruGheDtyboCquPD+EomHxz9hY91kIeNe/+uf3oy34WPtW2IhG5SeOuJ
+         C3HGS4IfLIE2IJJ2B8BRubsXUgCdRI2aeU4Rd5ufTix4tLfdp+U0GuagvPUxoakUbWMj
+         UbEg==
+X-Gm-Message-State: AOJu0Yz3pWLTpMUdWSmCaVXwI7y5ZIjB5v2WdIJSXbIGqwZnqiAs1E/T
+	iNK3lnZK6AyCXz9JPo11JGz5siio5QEKNYD1EH4yay8sVdHIPLpPVGN3fg==
+X-Gm-Gg: ASbGnculkxYvxXS4Ikyi2ibQLKOurAo9lMDC/DG3rBZLt55cDTCN8RSFUjFJSl0/fnX
+	ODqr3gIDQm8x7TKHUhIfet51ccgEAjl5dj5w2ID0EMyRa01c9WK/DI6+u5EkrT4yY+G2N4lxr4h
+	XTfxLY0QjQFW6LqPk38fuioHY3/AcuM+Lwo7N/pviPYY8U6MQIDNBlqd53GbR4Q+2bROjELMu3i
+	O7ZTjfOkxJ4gd996lQUBaGliq/QSAzETqyXc/fYvLQcI2mgK/RfycaDYJCkvRxsKYn28WNlQzZr
+	uEdOXdY7+1FAGD1w
+X-Google-Smtp-Source: AGHT+IF8VwznMCagR6MCsLURP/2oll9MAa/xywV8XlfxOncwxY86vlRRnMu5UpUEOT86YCcy/ZVZuA==
+X-Received: by 2002:a05:600c:19c7:b0:439:4c86:9c32 with SMTP id 5b1f17b1804b1-4396e6aa021mr64747245e9.8.1739723831302;
+        Sun, 16 Feb 2025 08:37:11 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258ccd3bsm10022208f8f.22.2025.02.16.08.37.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 16 Feb 2025 08:37:10 -0800 (PST)
+Message-Id: <pull.1862.git.1739723829.gitgitgadget@gmail.com>
+From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 16 Feb 2025 16:37:04 +0000
+Subject: [PATCH 0/5] merge-tree --stdin: flush stdout
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Git in GSoC 2025
-To: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, Jialuo She <shejialuo@gmail.com>,
- Git Mailing List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
- Christian Couder <christian.couder@gmail.com>, Patrick Steinhardt <ps@pks.im>
-References: <8c8e8797-8de9-4684-94a0-f6c17a592dc5@gmail.com>
- <Z432QXJb_TfzNBa2@pks.im> <c39c5424-71d0-4b6d-90b1-a6a70f2ee61b@gmail.com>
- <cd90cf17-6113-4634-a774-6df707b73e95@gmail.com>
- <d5cba1a9-fe51-4f3f-970b-3ef8a7a2e459@gmail.com>
- <CAP8UFD0GEmsJDFzVAV1bgBNeD6K3auH4paWEKE6=f0=_E6gifA@mail.gmail.com>
- <a2a76725-5778-4b7d-a266-c3a1431316ce@gmail.com> <Z6Xmrfut7jdsVAfg@pks.im>
- <fa9ad3c6-3b3c-4f3c-89c6-101ed1b51eb6@gmail.com>
- <D7TVXVKVWRS8.S2BJN32QHZ0O@gmail.com>
-Content-Language: en-US
-From: Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
-In-Reply-To: <D7TVXVKVWRS8.S2BJN32QHZ0O@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Hi Ghanshyam,
+I tried to squash some fixup commits with "git merge-tree --stdin" and found
+that my script deadlocked because the output of "git merge-tree" is not
+flushed after each merge. The first patch fixes that and the rest are
+cleanups I noticed while reading the code and documentation. This series is
+based on maint.
 
-On 16/02/25 18:26, Ghanshyam Thakkar wrote:
-> 
-> I can co-mentor this summer. The 'Machine-Readable Repository Information
-> Query Tool' project seems interesting to me, although I'm up for co-mentoring
-> in other projects as well. Let me know if you need any help with
-> anything else.
->
+Phillip Wood (5):
+  merge-tree --stdin: flush stdout to avoid deadlock
+  merge-tree: remove redundant code
+  merge-tree: only use basic merge config
+  merge-tree: improve docs for --stdin
+  merge-tree: fix link formatting in html docs
 
-That's great to hear! Thank you for volunteering. I've added you as
-a potential co-mentor for the project that you've mentioned. We
-could discuss about the allocation to other projects based on the
-applications that we receive. Feel free to let me know if there are
-specific projects you wish to co-mentor in.
+ Documentation/git-merge-tree.txt | 11 ++++++++---
+ builtin/merge-tree.c             | 11 +++++------
+ 2 files changed, 13 insertions(+), 9 deletions(-)
 
-Also, feel free to share if you have any other ideas that we could have
-for this GSoC.
 
---
-Sivaraam
-
+base-commit: f93ff170b93a1782659637824b25923245ac9dd1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1862%2Fphillipwood%2Fmerge-tree-flush-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1862/phillipwood/merge-tree-flush-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1862
+-- 
+gitgitgadget
