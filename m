@@ -1,62 +1,62 @@
-Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
+Received: from mail-pj1-f67.google.com (mail-pj1-f67.google.com [209.85.216.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230ADB672
-	for <git@vger.kernel.org>; Sun, 16 Feb 2025 07:29:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCAB5B672
+	for <git@vger.kernel.org>; Sun, 16 Feb 2025 07:29:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739690979; cv=none; b=rdPe1rEjqFpQA9cCzA/+7OkjZ2CzriWDbBjDb3x0iRSuC4B0lCr7JkqjZRVq4rrw5kgr51kDzfGLCy8jz2ENQiuOKpscmuKCcoonQNDvRUtmNYSM1OGvNc9wNZ+pFJTghxwepFTq6E3zbWFlmlhE2lPHrsijimt5IHdlWNjstMk=
+	t=1739690984; cv=none; b=mzW8KU4RYFdZfekWM9way/46sGcZ4MzxG33msMIxnFBqp8hhfaJ0BUNBpuypkz1j3LLz+zEHOgSqBZuL5xpDiQTmBDCRjAzmeYY+8cXkRpCJIwgxYock66YH2B453SIcZyFiM5FQb8643SKYfOLJyw2St/TT0UHQsFrHaxLEcKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739690979; c=relaxed/simple;
-	bh=vKr/pg3yMzpA+MxhU/qoGWvQSbkPnEJ/Uk6JR12KSPI=;
+	s=arc-20240116; t=1739690984; c=relaxed/simple;
+	bh=TN0ojrp51zqW8J7rcXXPeqm6uE/5AYYbdqolMrCvvkU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUNp14PcFW31B41cYRZHRe7G9/WxnVXCLz+7BYBTF1UIIPEV7uRZbx9ublMagRIW7mGoHFN2pHRNDP2z1xCSQBnW+Rl2MaRkMwcsBtKtWPAHsD+QCu6fiza8E12+qoe34y4dNtCsr/p4OO97VOD+ikjl8reay3uNJFD0tGqDqzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YTXjLQPF; arc=none smtp.client-ip=209.85.216.66
+	 MIME-Version; b=DrPtJst0LeLUcKsE+t1GrOvDM/8PoiQvWYF3pI/KS/zULDUS+3C3/AUhLdKkxKasbQ2XY7JqJNj2QVEUMrBwnb2WPjmKM3NWFjW1NGymeybSkQAB6gU5yM0pTLVnlGNDP5OEqkISFkVrk6SC4MKPOfscRbDeb+PLxqL0WmcuZd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZkBn8Sw9; arc=none smtp.client-ip=209.85.216.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YTXjLQPF"
-Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-2fc1843495eso4163589a91.1
-        for <git@vger.kernel.org>; Sat, 15 Feb 2025 23:29:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZkBn8Sw9"
+Received: by mail-pj1-f67.google.com with SMTP id 98e67ed59e1d1-2f83a8afcbbso5218742a91.1
+        for <git@vger.kernel.org>; Sat, 15 Feb 2025 23:29:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739690977; x=1740295777; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739690982; x=1740295782; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Kdamt3MdkWJuJX+63qimZmQoqWXUypM3yC0R5oiycuo=;
-        b=YTXjLQPFe0D2xbyjpXisebmIooLoohoa+UKgVoITKuWcYHJb0wFYkcF0LWfPu0ONwL
-         jAwAgGrY1FnOIqgWYdOt1ByJPn4WykXSSDjWPSjO+9sIOzNqJIL8TLRwAmAnH3Fb51XP
-         POKGlJxwTKCTViu+zysCkEPuxUqruQ5l7AewUpHTavvDo85zSNsf5KjXuLEWjkxb5uEf
-         T5snpDkwdZABSqJXwF1YNAWLuCqoUJ43cJlIl8p1EqH0eNbz+bMroak4oQCthIQZW2Nk
-         MWGGtaViXP9Z4eOFdXFojqZ9w0/LA/eO0mA4tYz56ouZuqXUlrEsnJCQFItMm2QjTv1x
-         Oheg==
+        bh=YBMa0nrONzmcDM9DptX3HzWPQVgDnRV/Ho2DYLmhzzs=;
+        b=ZkBn8Sw9QAO7diKw4waqiRud5X3FVroPDjB6gcX6ayOj6bQjIzUt+haZ48ENRQFxOr
+         nz0Jolb1qtPyik+gKBe+/W6tLNFUaexmP+mSBmeubBSY4H4Pf3z4VVAsqkamtMwMu/Qz
+         dVSKG9rMqzgvL8VgLKsLA2fpzMR83NWqGeD6e/MevqRVfpNIkda0w/MbPwHL+vOjizA1
+         ODVxTWG8YLVF9EyeQ8v3U26l2QpgvQMpnDrnQg7dfmfkmy9+sw4ZkTIaHmIhFwsH39ZZ
+         2kyJ84so8Psopva7s1EX1JyfyYoIHX5ZDReCm50NGEccxXDypIuFErLb0UWhEjOs4plB
+         8/iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739690977; x=1740295777;
+        d=1e100.net; s=20230601; t=1739690982; x=1740295782;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Kdamt3MdkWJuJX+63qimZmQoqWXUypM3yC0R5oiycuo=;
-        b=RJ+PS+femTFqBpIclTvT61rWR1Bwq4TS2mvS6cPLKviboLyW7Nfp8XY2p1hA95gCBr
-         evTKz8cRpmSgTEEY/lX+ooA5jqrCVSx+9+uY/QcrI2qWwUpu7twySpHvj3ixBlh/JFrU
-         fs2CZyS5tg+L5C+tHN36ZxaDZgmaURMYQ7mkKJFInNLuK7m7IFq7b/gx75L6ML0Zj2Ex
-         qveqcwol/833reXnZrH3qfwNguowJmLFfdfcmgNMNyJVpfSUKU4wh4ioFg5j6JvlUHGs
-         jbgh2CXWwqa77bEUmqmTeEs9av6mjjdoAIMNsDaqmTk0r8mAz0wXSuXSoZn1HX6+imS6
-         A1wg==
-X-Gm-Message-State: AOJu0YyRR7jGr+4eGxwtsIKJkFAGWMhEeB9ZqJFFjxCCrw6vf+tZ2wLk
-	QAcA8UsI3ASXsbCPt0Q3h2Z5ls7Bbuus1dKxO3Y1DgG6cmftT0ST
-X-Gm-Gg: ASbGnct0C1g3pZcB0kPcei8Wo6lDuVrb4y6OQVKYzdh6rFcQyWlNc/xDPkexYnrRc9M
-	RXvVbFK2gkMx5ry1JWlKHzMAEJgoGIF4ia0fe+YxUKfvrA1Loyn0IuMmrjF4Ip3NMxjWbv0Nevt
-	/WyNtOJj3sHfbeipibwUiokuFfazEsvOFjxqztZkvvvKhn0/6byNsi456hmp+KMD4Ppw1zG6Vho
-	xIeV7EwLxqEHf8dAW4hTdmWBdey4b9u9QA7G+hKuSzJXqEJQghkghwGioreACESH63FT92CKHYX
-	T+TT3VQNWqeU9Bl+JuoTjDV8Fi7qMXY4+c0r7UCbSdrSCoYSZ9cvxmHtlFdYayEKgrK3yqVYLS3
-	hrANdBqvQo9n6IwSMq3t1AGqZmGrOJ3btsA==
-X-Google-Smtp-Source: AGHT+IFfv8VZOSzzR6eB/3R+aznwgf96apAXumTFO2XcpypaIbpVSmjUWyX4MtVajEh6cFZJCtisug==
-X-Received: by 2002:a17:90b:1d90:b0:2fa:b84:b320 with SMTP id 98e67ed59e1d1-2fc41045081mr8644533a91.24.1739690977383;
-        Sat, 15 Feb 2025 23:29:37 -0800 (PST)
+        bh=YBMa0nrONzmcDM9DptX3HzWPQVgDnRV/Ho2DYLmhzzs=;
+        b=K6l6RHuGFTkm4S7EslCIhrOil8fez44rHKeLKhG6JtQDaLJKUQ+JP53uZcJ2fphTmv
+         M3X+7OY40BfBTrizq9G2VFxI2JJptmFXPwdemO0YkWx5xjGhunuU5dqP9Bv+xfE2wlTu
+         E219tZRTgyF0cFBI+1Pre32lxDVuBIMzVHPd/rC4BdPweKtANGgtWf1cxQlAPC10kRJb
+         Vc79BPgkVpXzK2jPd8creK5I0+/AZeCv2PXTqzt47Dozn+iB6PgnMW3wCg5VWJ87V5pZ
+         2id3Sgs19HBxkJt3qUBmigzJLJQ261Pg61yOIyYTJSF91WIXbmq4izjtD/L8P6SoeRso
+         4Fow==
+X-Gm-Message-State: AOJu0YxXed5VOhfwPhgpgVNdvjcIh8mIS/YIRYrFhO/Wzsokri9uA42L
+	kD++2CwsE8wf0mF5IgWdOuIzNPa59Axk1zfktbKANGWFfZicBgnv
+X-Gm-Gg: ASbGncsmUuCKbYDN2A8BUWv2k0aFTSG1Ad/gi4qBjIbQksWK4ovnOmcsWS5vXaN2KSK
+	00jzWb4wGNXyzWYsNAofioyaqO4uoNRSTDH25U0zV8hxyOmOsBoDDZIUkpb5At8gBYqH7YPRcD5
+	FiNW0bVJe/gp2nfDRjbuZyRayRofQ6aoIvOnQ1ebNgZIb8mgWYwO2HCWimzBb987SInfTzYiXxi
+	dtui6PDZG9F+Ro7qCp/Hk3frIrw5Mqvy8EwIDA9c98QKzqVUZtL/zpf0VGddsZC70RQJol5Uxvu
+	PDrMVWE2wZNgtu9mDX8aLSwrgHTZckyevxhy1Vz2JrPPnqifJyxNXTJhYVBxQqZPlUvj9DFQzpe
+	ZbkbJx+5BK0zWgd85nkBlt+I11uYI0/JsqQ==
+X-Google-Smtp-Source: AGHT+IF9l6jxDC1Hw1uYA9LAFw4gysHgPAI0FFGCnYvNADlwzuvdyhSuCeknhWI2jB3XbVq3l7mFEg==
+X-Received: by 2002:a17:90b:1e4e:b0:2fb:fe21:4841 with SMTP id 98e67ed59e1d1-2fc0f97535cmr23712962a91.8.1739690981986;
+        Sat, 15 Feb 2025 23:29:41 -0800 (PST)
 Received: from Ubuntu-ROG-Strix-G512LV.. (ec2-18-166-75-244.ap-east-1.compute.amazonaws.com. [18.166.75.244])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fc327a9d68sm4483243a91.1.2025.02.15.23.29.32
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fc327a9d68sm4483243a91.1.2025.02.15.23.29.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Feb 2025 23:29:36 -0800 (PST)
+        Sat, 15 Feb 2025 23:29:41 -0800 (PST)
 From: Zejun Zhao <jelly.zhao.42@gmail.com>
 To: jelly.zhao.42@gmail.com
 Cc: git@vger.kernel.org,
@@ -64,9 +64,9 @@ Cc: git@vger.kernel.org,
 	newren@gmail.com,
 	ps@pks.im,
 	karthik.188@gmail.com
-Subject: [PATCH v3 4/6] apply: cast some ptrdiff_t's to size_t's
-Date: Sun, 16 Feb 2025 07:28:41 +0000
-Message-ID: <20250216072843.72385-5-jelly.zhao.42@gmail.com>
+Subject: [PATCH v3 5/6] apply: use `size_t` loop counters
+Date: Sun, 16 Feb 2025 07:28:42 +0000
+Message-ID: <20250216072843.72385-6-jelly.zhao.42@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250216072843.72385-1-jelly.zhao.42@gmail.com>
 References: <20250205014055.737190-1-jelly.zhao.42@gmail.com>
@@ -79,60 +79,151 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-There are several -Wsign-comparison warnings in "apply.c", complaining
-about us comparing ptrdiff_t's with size_t's.
+Some `int` loop counters trigger -Wsign-comparison warnings.
 
-Fix these warnings by typecasting from ptrdiff_t to size_t. As to why
-the casts is safe,
-
-  - in function `date_len`, `date` is the starting address of a date at
-  the end of the `line` and is guaranteed to be larger than (or equal
-  to) `line`
-
-  - in function `git_header_name`, `cp` is guaranteed to be larger than
-  (or equal to) `second`, so `line + len` is greater than (or equal to)
-  `cp` since we already treat `line + len - second` as a size_t
-
-  - in function `git_header_name`, we are iterating `name` using
-  `second`, so `second` is guaranteed to be greater than (or equal to)
-  `name`
+Use `size_t` loop counters.
 
 Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
 ---
- apply.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ apply.c | 30 +++++++++++++-----------------
+ 1 file changed, 13 insertions(+), 17 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index ac3e599bdf..c554a52f28 100644
+index c554a52f28..4c26f608ee 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -540,7 +540,7 @@ static size_t date_len(const char *line, size_t len)
- 	    !isdigit(*p++) || !isdigit(*p++))	/* Not a date. */
- 		return 0;
+@@ -1371,12 +1371,11 @@ int parse_git_diff_header(struct strbuf *root,
+ 			{ "index ", gitdiff_index },
+ 			{ "", gitdiff_unrecognized },
+ 		};
+-		int i;
  
--	if (date - line >= strlen("19") &&
-+	if ((size_t) (date - line) >= strlen("19") &&
- 	    isdigit(date[-1]) && isdigit(date[-2]))	/* 4-digit year */
- 		date -= strlen("19");
+ 		len = linelen(line, size);
+ 		if (!len || line[len-1] != '\n')
+ 			break;
+-		for (i = 0; i < ARRAY_SIZE(optable); i++) {
++		for (size_t i = 0; i < ARRAY_SIZE(optable); i++) {
+ 			const struct opentry *p = optable + i;
+ 			int oplen = strlen(p->str);
+ 			int res;
+@@ -2097,7 +2096,6 @@ static void add_name_limit(struct apply_state *state,
+ static int use_patch(struct apply_state *state, struct patch *p)
+ {
+ 	const char *pathname = p->new_name ? p->new_name : p->old_name;
+-	int i;
  
-@@ -1207,7 +1207,7 @@ static char *git_header_name(int p_value,
- 		cp = skip_tree_prefix(p_value, second, line + llen - second);
- 		if (!cp)
- 			goto free_and_fail1;
--		if (line + llen - cp != first.len ||
-+		if ((size_t) (line + llen - cp) != first.len ||
- 		    memcmp(first.buf, cp, first.len))
- 			goto free_and_fail1;
- 		return strbuf_detach(&first, NULL);
-@@ -1240,7 +1240,7 @@ static char *git_header_name(int p_value,
- 				goto free_and_fail2;
+ 	/* Paths outside are not touched regardless of "--include" */
+ 	if (state->prefix && *state->prefix) {
+@@ -2107,7 +2105,7 @@ static int use_patch(struct apply_state *state, struct patch *p)
+ 	}
  
- 			len = sp.buf + sp.len - np;
--			if (len < second - name &&
-+			if (len < (size_t) (second - name) &&
- 			    !strncmp(np, name, len) &&
- 			    isspace(name[len])) {
- 				/* Good */
+ 	/* See if it matches any of exclude/include rule */
+-	for (i = 0; i < state->limit_by_name.nr; i++) {
++	for (size_t i = 0; i < state->limit_by_name.nr; i++) {
+ 		struct string_list_item *it = &state->limit_by_name.items[i];
+ 		if (!wildmatch(it->string, pathname, 0))
+ 			return (it->util != NULL);
+@@ -2183,8 +2181,7 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+ 				"Files ",
+ 				NULL,
+ 			};
+-			int i;
+-			for (i = 0; binhdr[i]; i++) {
++			for (size_t i = 0; binhdr[i]; i++) {
+ 				size_t len = strlen(binhdr[i]);
+ 				if (len < size - hd &&
+ 				    !memcmp(binhdr[i], buffer + hd, len)) {
+@@ -2320,7 +2317,7 @@ static void update_pre_post_images(struct image *preimage,
+ {
+ 	struct image fixed_preimage = IMAGE_INIT;
+ 	size_t insert_pos = 0;
+-	int i, reduced;
++	int reduced;
+ 	size_t ctx;
+ 	const char *fixed;
+ 
+@@ -2330,7 +2327,7 @@ static void update_pre_post_images(struct image *preimage,
+ 	 * free "oldlines".
+ 	 */
+ 	image_prepare(&fixed_preimage, buf, len, 1);
+-	for (i = 0; i < fixed_preimage.line_nr; i++)
++	for (size_t i = 0; i < fixed_preimage.line_nr; i++)
+ 		fixed_preimage.line[i].flag = preimage->line[i].flag;
+ 	image_clear(preimage);
+ 	*preimage = fixed_preimage;
+@@ -2339,7 +2336,7 @@ static void update_pre_post_images(struct image *preimage,
+ 	/*
+ 	 * Adjust the common context lines in postimage.
+ 	 */
+-	for (i = reduced = ctx = 0; i < postimage->line_nr; i++) {
++	for (size_t i = reduced = ctx = 0; i < postimage->line_nr; i++) {
+ 		size_t l_len = postimage->line[i].len;
+ 
+ 		if (!(postimage->line[i].flag & LINE_COMMON)) {
+@@ -2421,7 +2418,7 @@ static int line_by_line_fuzzy_match(struct image *img,
+ 				    int current_lno,
+ 				    size_t preimage_limit)
+ {
+-	int i;
++	size_t i;
+ 	size_t imgoff = 0;
+ 	size_t preoff = 0;
+ 	size_t extra_chars;
+@@ -2488,7 +2485,7 @@ static int match_fragment(struct apply_state *state,
+ 			  unsigned ws_rule,
+ 			  int match_beginning, int match_end)
+ {
+-	int i;
++	size_t i;
+ 	const char *orig, *target;
+ 	struct strbuf fixed = STRBUF_INIT;
+ 	char *fixed_buf;
+@@ -2665,12 +2662,11 @@ static int match_fragment(struct apply_state *state,
+ 	for ( ; i < preimage->line_nr; i++) {
+ 		size_t fixstart = fixed.len; /* start of the fixed preimage */
+ 		size_t oldlen = preimage->line[i].len;
+-		int j;
+ 
+ 		/* Try fixing the line in the preimage */
+ 		ws_fix_copy(&fixed, orig, oldlen, ws_rule, NULL);
+ 
+-		for (j = fixstart; j < fixed.len; j++) {
++		for (size_t j = fixstart; j < fixed.len; j++) {
+ 			if (!isspace(fixed.buf[j])) {
+ 				ret = 0;
+ 				goto out;
+@@ -2800,7 +2796,7 @@ static void update_image(struct apply_state *state,
+ 	 * remove the copy of preimage at offset in img
+ 	 * and replace it with postimage
+ 	 */
+-	int i, nr;
++	int nr;
+ 	size_t remove_count, insert_count, applied_at = 0;
+ 	size_t result_alloc;
+ 	char *result;
+@@ -2819,11 +2815,11 @@ static void update_image(struct apply_state *state,
+ 	if (preimage_limit > img->line_nr - applied_pos)
+ 		preimage_limit = img->line_nr - applied_pos;
+ 
+-	for (i = 0; i < applied_pos; i++)
++	for (size_t i = 0; i < applied_pos; i++)
+ 		applied_at += img->line[i].len;
+ 
+ 	remove_count = 0;
+-	for (i = 0; i < preimage_limit; i++)
++	for (size_t i = 0; i < preimage_limit; i++)
+ 		remove_count += img->line[applied_pos + i].len;
+ 	insert_count = postimage->buf.len;
+ 
+@@ -2852,7 +2848,7 @@ static void update_image(struct apply_state *state,
+ 			   img->line_nr - (applied_pos + preimage_limit));
+ 	COPY_ARRAY(img->line + applied_pos, postimage->line, postimage->line_nr);
+ 	if (!state->allow_overlap)
+-		for (i = 0; i < postimage->line_nr; i++)
++		for (size_t i = 0; i < postimage->line_nr; i++)
+ 			img->line[applied_pos + i].flag |= LINE_PATCHED;
+ 	img->line_nr = nr;
+ }
 -- 
 2.43.0
 
