@@ -1,62 +1,62 @@
-Received: from mail-pj1-f67.google.com (mail-pj1-f67.google.com [209.85.216.67])
+Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A02B672
-	for <git@vger.kernel.org>; Sun, 16 Feb 2025 07:29:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230ADB672
+	for <git@vger.kernel.org>; Sun, 16 Feb 2025 07:29:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739690973; cv=none; b=lY8z+uhtwDD1MdZcIqtpU0Zgi/v7jrJQnz+RkMyxVXHxmzX7agaclEg5rWOq2sm7JDP17UaipRc4L3ijCuUZ/TeWLN271QCc/zqLC9HK7jEKBQkWNpzukFuGfLjQXBd/xrzTpWWOZsqQwQ3m+O/B+SQOOMZXTfhBd72KDgHFj6I=
+	t=1739690979; cv=none; b=rdPe1rEjqFpQA9cCzA/+7OkjZ2CzriWDbBjDb3x0iRSuC4B0lCr7JkqjZRVq4rrw5kgr51kDzfGLCy8jz2ENQiuOKpscmuKCcoonQNDvRUtmNYSM1OGvNc9wNZ+pFJTghxwepFTq6E3zbWFlmlhE2lPHrsijimt5IHdlWNjstMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739690973; c=relaxed/simple;
-	bh=rciC0SW+Yr/5yaagmpTvLXzLbX5cm7lphEzEdlDe4ms=;
+	s=arc-20240116; t=1739690979; c=relaxed/simple;
+	bh=vKr/pg3yMzpA+MxhU/qoGWvQSbkPnEJ/Uk6JR12KSPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZQqS9Jko/NEX80NNy8kXakIU+rr5XTn0anohYFYKDJRI9OMrCaIqKEGr5Dc5QVIWzIY+3+n1gRGN8VCS3Vg69REQdz0CdBF6/kU4Jf+gifu7oDNos7amGkCqOnbZi1m9Cqmu+qNdWwzNARa3V94vfsGIRcQL9t68HDCu4s2DhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hnnEZKfR; arc=none smtp.client-ip=209.85.216.67
+	 MIME-Version; b=TUNp14PcFW31B41cYRZHRe7G9/WxnVXCLz+7BYBTF1UIIPEV7uRZbx9ublMagRIW7mGoHFN2pHRNDP2z1xCSQBnW+Rl2MaRkMwcsBtKtWPAHsD+QCu6fiza8E12+qoe34y4dNtCsr/p4OO97VOD+ikjl8reay3uNJFD0tGqDqzc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YTXjLQPF; arc=none smtp.client-ip=209.85.216.66
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hnnEZKfR"
-Received: by mail-pj1-f67.google.com with SMTP id 98e67ed59e1d1-2f9d3d0f55dso4847209a91.1
-        for <git@vger.kernel.org>; Sat, 15 Feb 2025 23:29:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YTXjLQPF"
+Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-2fc1843495eso4163589a91.1
+        for <git@vger.kernel.org>; Sat, 15 Feb 2025 23:29:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739690971; x=1740295771; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739690977; x=1740295777; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=q4CbWcd74Z6/kZLn+u1JJGKCW0TTt5p5nuDEp2pphoc=;
-        b=hnnEZKfRaZg3rRduGiI+NLYitE7adnDgVmUdjxhIB0oB5ICcprO8QWvgvOwE3QHl0D
-         5KFsb1X86aiSDa+kg6f32w9J0rZtVAhDhnl1I006OfLlXkM2AV++saHVITotlAgeZdZ3
-         vKRXKlK5mUcxaOemia4n6IUqbJrq9g/a2h1CZTvodl6vyzEXywhsnvLk4XtFKP1TKtfy
-         o8m8T5spWmRUAjdIniUcylssvtG0qImMbshQFXfmConNMSmHZMqptqP+/SEtp5cZJ+BV
-         yDlnZmkA9Dmjs5AyiUcffryqTahjBcHnvR95rFZONTGUbtyHjt8jUQ5la58DAiVroHYL
-         tvmQ==
+        bh=Kdamt3MdkWJuJX+63qimZmQoqWXUypM3yC0R5oiycuo=;
+        b=YTXjLQPFe0D2xbyjpXisebmIooLoohoa+UKgVoITKuWcYHJb0wFYkcF0LWfPu0ONwL
+         jAwAgGrY1FnOIqgWYdOt1ByJPn4WykXSSDjWPSjO+9sIOzNqJIL8TLRwAmAnH3Fb51XP
+         POKGlJxwTKCTViu+zysCkEPuxUqruQ5l7AewUpHTavvDo85zSNsf5KjXuLEWjkxb5uEf
+         T5snpDkwdZABSqJXwF1YNAWLuCqoUJ43cJlIl8p1EqH0eNbz+bMroak4oQCthIQZW2Nk
+         MWGGtaViXP9Z4eOFdXFojqZ9w0/LA/eO0mA4tYz56ouZuqXUlrEsnJCQFItMm2QjTv1x
+         Oheg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739690971; x=1740295771;
+        d=1e100.net; s=20230601; t=1739690977; x=1740295777;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=q4CbWcd74Z6/kZLn+u1JJGKCW0TTt5p5nuDEp2pphoc=;
-        b=buETUkeyVbZ4pFFGS0n5NqHMg0zpyxglRcivDjFCjol+VeJR3EI9gWjIpDTXCV4MWa
-         IPvBquLTGyC8Jh5lShyA7ZK8EtiNSex1fOEdvAqEkM8N2z8tcsrvBpksuD24C4I0wGAW
-         3XaOhk2uxseRaI3GSMUCpPfbsXk+8s2K7go4wHhrhJrjYMjKNRL6UWjBaLI2EIFbTlfK
-         j3T+ADuBD07IEhbmhAd4VOeG63JUEqeyQRALdnwg7gdyZk4x+3Beph2aHF9N0i0fC7ZB
-         8ig+c1Shcd4jXYkGX0bmsrmmxj0XUHcpCEXujrfK1YvhxWVI4r0226pjGMVmR08ZEzji
-         FEOw==
-X-Gm-Message-State: AOJu0YxFJ9hm0jJk8BWDxBZ6pH0OUi0OYKPfLm2crur/hsyGb8+HqsKK
-	+wApgvzTrMV+SglJwsMPNVc7E7caTbAlhG3j/vVg4+Qs2X9ddMWYDtf7Cl58SdeuwlgGa94=
-X-Gm-Gg: ASbGnctM0PVyrbHS6niSQHeUDLb51vIiniURguc3Y41iZg/4QZhXHfoE6pP7aoDm/tb
-	hbmQXZQcyLJyOqOK8F/6Y1f0E7MMWLar4NBSeM6z3VPJhBev6ujUaYV9q/QbOgHaHIaO66sTQQN
-	FOwCIwcx5VNfV0eaVxc7yVAON60vOCsyZewYMaTHcJDFbqxVf5blaFmCe+N+vGW3SFJX4OibxNj
-	JcBbbv0VbwxgaRYtZNlQuhlRl12PQuDS6zQHwqt6iGjqHRbdJP/OaWvyX2Qq4KzbVvgAIAfJbu+
-	RpUhatEiF1lgJoOeBW2TBF8CoQPrmmz0dXahHgmG0ae8Ng48HJqFnBenV3CUYQivVbBnJuUa+gs
-	5S+NroVnWd8M1cOUlKU/zascrjcGFcyN3fw==
-X-Google-Smtp-Source: AGHT+IEJ2XA5Up3Bq5p2tPnGmonZ5YhDnbdHjpIiDq+T+iCo8ccDX+0CNeFpy45GttFNmBfaMhuOiQ==
-X-Received: by 2002:a17:90b:3842:b0:2ee:5bc9:75b5 with SMTP id 98e67ed59e1d1-2fc40d13ea8mr8586866a91.4.1739690971038;
-        Sat, 15 Feb 2025 23:29:31 -0800 (PST)
+        bh=Kdamt3MdkWJuJX+63qimZmQoqWXUypM3yC0R5oiycuo=;
+        b=RJ+PS+femTFqBpIclTvT61rWR1Bwq4TS2mvS6cPLKviboLyW7Nfp8XY2p1hA95gCBr
+         evTKz8cRpmSgTEEY/lX+ooA5jqrCVSx+9+uY/QcrI2qWwUpu7twySpHvj3ixBlh/JFrU
+         fs2CZyS5tg+L5C+tHN36ZxaDZgmaURMYQ7mkKJFInNLuK7m7IFq7b/gx75L6ML0Zj2Ex
+         qveqcwol/833reXnZrH3qfwNguowJmLFfdfcmgNMNyJVpfSUKU4wh4ioFg5j6JvlUHGs
+         jbgh2CXWwqa77bEUmqmTeEs9av6mjjdoAIMNsDaqmTk0r8mAz0wXSuXSoZn1HX6+imS6
+         A1wg==
+X-Gm-Message-State: AOJu0YyRR7jGr+4eGxwtsIKJkFAGWMhEeB9ZqJFFjxCCrw6vf+tZ2wLk
+	QAcA8UsI3ASXsbCPt0Q3h2Z5ls7Bbuus1dKxO3Y1DgG6cmftT0ST
+X-Gm-Gg: ASbGnct0C1g3pZcB0kPcei8Wo6lDuVrb4y6OQVKYzdh6rFcQyWlNc/xDPkexYnrRc9M
+	RXvVbFK2gkMx5ry1JWlKHzMAEJgoGIF4ia0fe+YxUKfvrA1Loyn0IuMmrjF4Ip3NMxjWbv0Nevt
+	/WyNtOJj3sHfbeipibwUiokuFfazEsvOFjxqztZkvvvKhn0/6byNsi456hmp+KMD4Ppw1zG6Vho
+	xIeV7EwLxqEHf8dAW4hTdmWBdey4b9u9QA7G+hKuSzJXqEJQghkghwGioreACESH63FT92CKHYX
+	T+TT3VQNWqeU9Bl+JuoTjDV8Fi7qMXY4+c0r7UCbSdrSCoYSZ9cvxmHtlFdYayEKgrK3yqVYLS3
+	hrANdBqvQo9n6IwSMq3t1AGqZmGrOJ3btsA==
+X-Google-Smtp-Source: AGHT+IFfv8VZOSzzR6eB/3R+aznwgf96apAXumTFO2XcpypaIbpVSmjUWyX4MtVajEh6cFZJCtisug==
+X-Received: by 2002:a17:90b:1d90:b0:2fa:b84:b320 with SMTP id 98e67ed59e1d1-2fc41045081mr8644533a91.24.1739690977383;
+        Sat, 15 Feb 2025 23:29:37 -0800 (PST)
 Received: from Ubuntu-ROG-Strix-G512LV.. (ec2-18-166-75-244.ap-east-1.compute.amazonaws.com. [18.166.75.244])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fc327a9d68sm4483243a91.1.2025.02.15.23.29.25
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fc327a9d68sm4483243a91.1.2025.02.15.23.29.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 15 Feb 2025 23:29:29 -0800 (PST)
+        Sat, 15 Feb 2025 23:29:36 -0800 (PST)
 From: Zejun Zhao <jelly.zhao.42@gmail.com>
 To: jelly.zhao.42@gmail.com
 Cc: git@vger.kernel.org,
@@ -64,9 +64,9 @@ Cc: git@vger.kernel.org,
 	newren@gmail.com,
 	ps@pks.im,
 	karthik.188@gmail.com
-Subject: [PATCH v3 3/6] apply: do a typecast to eliminate warnings
-Date: Sun, 16 Feb 2025 07:28:40 +0000
-Message-ID: <20250216072843.72385-4-jelly.zhao.42@gmail.com>
+Subject: [PATCH v3 4/6] apply: cast some ptrdiff_t's to size_t's
+Date: Sun, 16 Feb 2025 07:28:41 +0000
+Message-ID: <20250216072843.72385-5-jelly.zhao.42@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250216072843.72385-1-jelly.zhao.42@gmail.com>
 References: <20250205014055.737190-1-jelly.zhao.42@gmail.com>
@@ -79,30 +79,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-`git_hdr_len` is an `int` variable that can be negative and is used to
-compare against a `len` of `size_t`, which will trigger
--Wsign-comparison warnings
+There are several -Wsign-comparison warnings in "apply.c", complaining
+about us comparing ptrdiff_t's with size_t's.
 
-Cast `git_hdr_len` to `size_t` after an above-zero check.
+Fix these warnings by typecasting from ptrdiff_t to size_t. As to why
+the casts is safe,
+
+  - in function `date_len`, `date` is the starting address of a date at
+  the end of the `line` and is guaranteed to be larger than (or equal
+  to) `line`
+
+  - in function `git_header_name`, `cp` is guaranteed to be larger than
+  (or equal to) `second`, so `line + len` is greater than (or equal to)
+  `cp` since we already treat `line + len - second` as a size_t
+
+  - in function `git_header_name`, we are iterating `name` using
+  `second`, so `second` is guaranteed to be greater than (or equal to)
+  `name`
 
 Signed-off-by: Zejun Zhao <jelly.zhao.42@gmail.com>
 ---
- apply.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ apply.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index 4aa47a22b9..ac3e599bdf 100644
+index ac3e599bdf..c554a52f28 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -1592,7 +1592,7 @@ static int find_header(struct apply_state *state,
- 								size, patch);
- 			if (git_hdr_len < 0)
- 				return -128;
--			if (git_hdr_len <= len)
-+			if ((size_t) git_hdr_len <= len)
- 				continue;
- 			*hdrsize = git_hdr_len;
- 			return offset;
+@@ -540,7 +540,7 @@ static size_t date_len(const char *line, size_t len)
+ 	    !isdigit(*p++) || !isdigit(*p++))	/* Not a date. */
+ 		return 0;
+ 
+-	if (date - line >= strlen("19") &&
++	if ((size_t) (date - line) >= strlen("19") &&
+ 	    isdigit(date[-1]) && isdigit(date[-2]))	/* 4-digit year */
+ 		date -= strlen("19");
+ 
+@@ -1207,7 +1207,7 @@ static char *git_header_name(int p_value,
+ 		cp = skip_tree_prefix(p_value, second, line + llen - second);
+ 		if (!cp)
+ 			goto free_and_fail1;
+-		if (line + llen - cp != first.len ||
++		if ((size_t) (line + llen - cp) != first.len ||
+ 		    memcmp(first.buf, cp, first.len))
+ 			goto free_and_fail1;
+ 		return strbuf_detach(&first, NULL);
+@@ -1240,7 +1240,7 @@ static char *git_header_name(int p_value,
+ 				goto free_and_fail2;
+ 
+ 			len = sp.buf + sp.len - np;
+-			if (len < second - name &&
++			if (len < (size_t) (second - name) &&
+ 			    !strncmp(np, name, len) &&
+ 			    isspace(name[len])) {
+ 				/* Good */
 -- 
 2.43.0
 
