@@ -1,148 +1,126 @@
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFCE28E8
-	for <git@vger.kernel.org>; Mon, 17 Feb 2025 22:18:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0086D748F
+	for <git@vger.kernel.org>; Mon, 17 Feb 2025 23:28:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739830708; cv=none; b=jRhqE7WiOzqWG2kuXlS4ooh/BxkE9eV23gCGAma23QfjGObm4m9Z3mv0TpCVGJjcfChrBmkOD0sUFqMNcRIse/80rxgSc0IiXVrrH4IIycTF34E3pX3rFSQkDcEWmqHnrY/yQJD9yLdHbiIdayQd/KJUWkzD8hLCRjUJ+HgEoR4=
+	t=1739834938; cv=none; b=OyYi7v8V6hzoAe5uSGiHw6XqzlbT7JDfctNgJxUAkU/weCi/256Dtqiuld01KtpPJr5HfOhnmvx+EXISO5m5+Kmoc3HxtUN3MnrZ9zQh9xWmaF0nX/CcO7EuBycu4kzdqQmiau3dhWVrNCPh20J+Jq5IckODYp7IiCOeV7yFi9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739830708; c=relaxed/simple;
-	bh=pOGb2q9pXMjh5XIwTd91jIugXUrZSXoFpmuNFp+m9nM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZVnJ5GEMgSyQE+LM7pcto352JL/7ERIa+ysRp8SVz17YFuj0pcdcdEAQOuc6JeUvqyk01zMhnbJSLnVVnZv41YQzMZ5vCgDyclMS5iXEcMjmC2eN3JYTixI4vMe3mxkq7MbHMzSEWfPXdyErwIIqJ3iAJ6sbmagdXt298jVRw28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DnutyPil; arc=none smtp.client-ip=209.85.166.172
+	s=arc-20240116; t=1739834938; c=relaxed/simple;
+	bh=sf+eMiMbgNoTL/ueL8lsT01PZYLnr16xtKhaFi3dr4M=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XzPOQSzhCWXmVZqU3yesJ429M+m7wcWMR3P1ZF9RnpK/yblcWiPtru8umapHKqljCQ2p6Tyf6EWi98zRmTiWtruh6nm1ScBvqjYQZyTRWyM7oqUg2DRqoZeuUzDDcesoRVTdMrTsDFUGbiCY1fDXEp/axujrLE1/fmV//3xIeiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V/JRpZYx; arc=none smtp.client-ip=209.85.217.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DnutyPil"
-Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3d284b9734fso22841205ab.2
-        for <git@vger.kernel.org>; Mon, 17 Feb 2025 14:18:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V/JRpZYx"
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4be4d72bceaso548050137.1
+        for <git@vger.kernel.org>; Mon, 17 Feb 2025 15:28:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739830706; x=1740435506; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dk7dZpw5/EpZGXZtVcFR0GjIkbJxm+RMwMf05dArF40=;
-        b=DnutyPil2s56PsmKNEdTiHnPMVDbvxir3ThJhpKgfhS7CUPspFoKfUW2jgl32ggbPT
-         VsZ6nDSxsPbQmaXusDui74RHaOVh2rp9a/G+EGGAerXYbZsW6KJkES8spv0G/VsMZC2O
-         p9uUWNzINyZK8sYt6+1MbrHsvdp4Ujwt2wz0WJFGJIM8Y+dGzBdb4VAeGcZBCPQiepOn
-         L9OnxTdgdClZ8Y7N3mDvNGNMgc643Y9ZTQmM+2p/RxhuXl+OOB4dLIu3NKjIlplLdbI7
-         EK8SpMpisouPS0bvjm3we7CAVTIgoa4AlhA3SZf3xZTSUEVKt889DzRgNgtAJgV3PurY
-         +p4A==
+        d=gmail.com; s=20230601; t=1739834935; x=1740439735; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mYS+hbne4canxxzjbEnFP0it1W7/NM+3DYkQvR1Bgqo=;
+        b=V/JRpZYxQ5m+ZvgS34G6QDAtm0C4BJrzlmmnRFQ002QXkUD3/mcEn+mg2pFVbFpHWr
+         ohy08MJHUg4IXwNHDDBM2Na6P/YjkskmtACUtwLLWtECEHpiY+UBP5pvtYeRD2RG3Qym
+         Yhd4RnRBXmIq9I/6f06FUZMTtEgnAIl49lCsrLbC5k4HYUYpcfJbhNTpAQYMLIK0RwSc
+         I5gbR1o+PwYQOebua48MEdmlogoa71u3fjjsLYrUzcPpV5gFoXDnWaVVX1xe+osDLhBm
+         3U+HRVWvaMKCN4KixWVEKF9LUYdb5n5h1z7foiQDYVfs4OKQN01os3YyBBHLvWBXkKsP
+         WNTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739830706; x=1740435506;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dk7dZpw5/EpZGXZtVcFR0GjIkbJxm+RMwMf05dArF40=;
-        b=m32Ol5CRLK/b09NTQTTAg0IEhnGZ+Ck3tdWt/FQmIFWGxLH8g7TO3fP21fDuJKK6+O
-         Uf5VcyIsuH49QGykBaH5PzppIZHkzIomlbmKX6HyrPr70VBSch505jhibFOUcm6ah9dU
-         txCC0P9zuPZXwfYhL2EpDGuLXd7ecWcfI9RSFvTuf2IZEYm9n02+c3NQZpMwCKU49tLx
-         vpQqtjq8D2Qt/r8jclADH1A8UAeBeXeGS+8mD3dcJKfkKwVZD9C96os9vPrJK1o7jCsj
-         f/f6eSu3VpGItgp6nTw4toaEhMplj7sz3reuOEd7wuoiksc5h5MjNZscO6Tps2JUnvGK
-         VQeQ==
-X-Gm-Message-State: AOJu0YysaWQWJ2Gw+weBgYmkSLXKZ4BmHsScTn6ZbN2AHnUCW5FGa4tz
-	HYw9FN259LXP02U7S3mp3S8HjWTBjTBtZvW1uf0+W7LdbBbC+3Ju3w/xpbA6do/ZbXx1VuzHSXS
-	VEGCT8XA0tqSEH96DSW5Dori2lHkhdA==
-X-Gm-Gg: ASbGnctiJHbyEz1K8egkVAdj0pR9rSeH+IGL8Q3JfAvA2jiwZ1EBTk9m1zOvvqEss0d
-	pSZ6WKTZXoPeden1508gNV8Lu4pe1eskkj3l4gyjppvy7shP630J5MKNBYzjqE4g5kyKoAtxfEk
-	Zn0Sbf4P+01Rgf9jAhRwibR7W26eHGCA==
-X-Google-Smtp-Source: AGHT+IF+cdCWnAtRy6eHD7R43dz1jjQSM1//vssSkEAl4hTXJznFGGy0gNEe/3+OAUZtsowP5t4VM1KLEpbyOy6r/Zw=
-X-Received: by 2002:a05:6e02:1a4d:b0:3d0:4bce:cfa8 with SMTP id
- e9e14a558f8ab-3d2807ab183mr110733185ab.3.1739830703715; Mon, 17 Feb 2025
- 14:18:23 -0800 (PST)
+        d=1e100.net; s=20230601; t=1739834935; x=1740439735;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mYS+hbne4canxxzjbEnFP0it1W7/NM+3DYkQvR1Bgqo=;
+        b=nlaV7Bz+cBwfNYrC7NJJmeuFv6uGsuaUsLz5d0JSkhoEEV6AjMhcInGdb2ucFzgcoG
+         F4Ix0CvXfMbsMlIhvkz9coWGafuAwIiICXVL47WYcsbnCmDJI7NtvfJn7iKxalu/gqDV
+         lWMuUQVVkxKJaiomtyZAEmmxt82uodQOWJscCsitQ9o7Mbdglq+FZUFDc1i2Wzk72m5M
+         xOlfRvRFrzSvlOc21HnP3MJUWkvjcFciLhxvf9fpIchl9aklEi8kgxPqA2J3Zqb3t6IO
+         lI8fjCVGjCQI72rYeOkQRBsqFTs/dPTgyvyPtvXf3ES+HPVfTrQApxFV4PJgX8QtmOGr
+         WWDg==
+X-Gm-Message-State: AOJu0Yy4yd3DvzIQ0SgUju5KFKKWVAGj0yM8iGcPfByjh3BNaajZ0LJ8
+	q+9TygOEJt6cU0KXAnA2PgShkXaXfddzVBQm6GD+C5bceCS/C+iPJB4IWQ==
+X-Gm-Gg: ASbGnctRUz+VN5Bv9YFDqr3ExZZgRJ+TpZ/GvqUgZYdn992mfCJljVvbGmC+ZqYAvmQ
+	sHu1YNeB6dMlBGRCP04HZJVpNXI13+H5/Pg2iIF017oDFE2s8xXn4QpbuTd7ITtHPFIANNSX5mC
+	aNQR6gNIRD1LAbZM/KQoGA8t6c2x/PGNFUtiVkpiJD80OXOX2uxh9hB1SxdSxt0dZtG6ddfoP3R
+	U4HHhfSPTpe+ESRY4xR16e/7uJ20Xx2xkdvJ2H70vd/tC/F0PQRBVmM7FPVlj/PNQ6gkdavQxNQ
+	EDzDWphKw5PqVDJ0eouSwsy69WDKS1RfmORxYuhFwBD42UyaY/Trdg==
+X-Google-Smtp-Source: AGHT+IFLJBJlI4VTvh5xPx1JasV3tMLtHpmL+2xU6YysIwxT/wi8Xdxn8mYMWq4lkLbJh/eGtRhMfA==
+X-Received: by 2002:a05:6102:2c05:b0:4bb:c490:7d88 with SMTP id ada2fe7eead31-4bd3fcfea26mr7219641137.12.1739834935421;
+        Mon, 17 Feb 2025 15:28:55 -0800 (PST)
+Received: from localhost.localdomain ([177.62.185.116])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-868e8546d00sm2161555241.1.2025.02.17.15.28.53
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 17 Feb 2025 15:28:54 -0800 (PST)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+To: git@vger.kernel.org
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Subject: [GSoC][RFC PATCH] git-merge.adoc: detail submodule merge
+Date: Mon, 17 Feb 2025 20:28:47 -0300
+Message-Id: <20250217232847.8567-1-lucasseikioshiro@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <Z7KX2y-dXaZuPrW4@tapette.crustytoothpaste.net> <20250217175759.1576684-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20250217175759.1576684-1-sandals@crustytoothpaste.net>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 17 Feb 2025 14:18:12 -0800
-X-Gm-Features: AWEUYZkf2tIo8b0zS5oMDGegKRueRM9Pz1Yi8U1sVFqRxT5pvVVXn15KIrBwZWQ
-Message-ID: <CABPp-BF01SYAr8TNxMBNvxPKseSqLH4mVC=MrrVp8w9ejEzK1g@mail.gmail.com>
-Subject: Re: [PATCH] diff: don't crash with empty argument to -G or -S
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
-	Jared Van Bortel <cebtenzzre@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Feb 17, 2025 at 9:58=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> The pickaxe options, -G and -S, need either a regex or a string to look
-> through the history for.  An empty value isn't very useful since it
-> would either match everything or nothing, and what's worse, we presently
-> crash with a BUG like so when the user provides one:
->
->     BUG: diffcore-pickaxe.c:241: should have needle under -G or -S
->
-> Since it's not very nice of us to crash and this wouldn't do anything
-> useful anyway, let's simply inform the user that they must provide a
-> non-empty argument and exit with an error if they provide an empty one
-> instead.
+Submodule merges are, in general, similar to other merges based on oid
+three-way-merge. When a conflict happens, however, Git has two special
+cases on handling the conflict before yielding it to the user. From the
+merge-ort and merge-recursive sources:
 
-Makes sense.
+- "Case #1: a is contained in b or vice versa": both strategies try to
+perform a fast-forward in the submodules if the commit referred by the
+conflicted submodule is descendant of another;
 
-> Reported-by: Jared Van Bortel <cebtenzzre@gmail.com>
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  diff.c                 |  4 ++++
->  t/t4209-log-pickaxe.sh | 16 ++++++++++++++++
->  2 files changed, 20 insertions(+)
->
-> diff --git a/diff.c b/diff.c
-> index 019fb893a7..c89c15d98e 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -5493,6 +5493,8 @@ static int diff_opt_pickaxe_regex(const struct opti=
-on *opt,
->         BUG_ON_OPT_NEG(unset);
->         options->pickaxe =3D arg;
->         options->pickaxe_opts |=3D DIFF_PICKAXE_KIND_G;
-> +       if (arg && !*arg)
-> +               return error(_("-G requires a non-empty argument"));
->         return 0;
->  }
->
-> @@ -5504,6 +5506,8 @@ static int diff_opt_pickaxe_string(const struct opt=
-ion *opt,
->         BUG_ON_OPT_NEG(unset);
->         options->pickaxe =3D arg;
->         options->pickaxe_opts |=3D DIFF_PICKAXE_KIND_S;
-> +       if (arg && !*arg)
-> +               return error(_("-S requires a non-empty argument"));
->         return 0;
->  }
+- "Case #2: There are one or more merges that contain a and b in the
+submodule.  If there is only one, then present it as a suggestion to the
+user, but leave it marked unmerged so the user needs to confirm the
+resolution."
 
-Simple fix, as expected.
+Add a small paragraph on git-merge.adoc describing this behavior.
 
-> diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
-> index a675ace081..0e2f80a268 100755
-> --- a/t/t4209-log-pickaxe.sh
-> +++ b/t/t4209-log-pickaxe.sh
-> @@ -93,6 +93,22 @@ test_expect_success 'usage: --no-pickaxe-regex' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'usage: -G and -S with empty argument' '
-> +       cat >expect <<-\EOF &&
-> +       error: -S requires a non-empty argument
-> +       EOF
-> +
-> +       test_expect_code 129 git log -S "" 2>actual &&
-> +       test_cmp expect actual &&
-> +
-> +       cat >expect <<-\EOF &&
-> +       error: -G requires a non-empty argument
-> +       EOF
-> +
-> +       test_expect_code 129 git log -G "" 2>actual &&
-> +       test_cmp expect actual
-> +'
+Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+---
 
-Looks good to me.
+Hi,
+
+This is a "scratch-my-own-itch" documentation patch. Some years ago I was
+questioned why some submodule merges on GitHub lead to conflicts while locally
+they didn't. I only could find a answer for that reading the merge-ort source
+code, then a wrote a blog post about that, which you check here:
+https://lucasoshiro.github.io/posts-en/2022-03-12-merge-submodule/
+
+Thus, this patch adds to the official documentation what I found at the time.
+I wasn't certain if this should belong to the submodule or merge documentation,
+so, by now, I'm sending it as a merge documentation patch.
+
+ Documentation/git-merge.adoc | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/Documentation/git-merge.adoc b/Documentation/git-merge.adoc
+index 64281d6d44..7b12c0d648 100644
+--- a/Documentation/git-merge.adoc
++++ b/Documentation/git-merge.adoc
+@@ -205,6 +205,13 @@ happens:
+    same and the index entries for them stay as they were,
+    i.e. matching `HEAD`.
+ 
++In the case where the path is a submodule, if the commit referred by it in HEAD
++is descendant of the one referred by it in MERGE_HEAD or vice-versa, Git
++attempts to fast-forward to the descendant, when using `ort` or `recursive`
++strategies. Otherwise, Git will treat this case as a conflict, suggesting as a
++resolution a submodule commit that is descendant of the conflicting ones, if one
++exists.
++
+ If you tried a merge which resulted in complex conflicts and
+ want to start over, you can recover with `git merge --abort`.
+ 
+-- 
+2.39.5 (Apple Git-154)
+
