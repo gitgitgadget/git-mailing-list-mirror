@@ -1,124 +1,143 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29607231C9F
-	for <git@vger.kernel.org>; Mon, 17 Feb 2025 17:58:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B1D236A9F
+	for <git@vger.kernel.org>; Mon, 17 Feb 2025 20:01:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739815093; cv=none; b=pGB08dDhptBdrZCA0cKH2neXNTmYya1j4zKutHPnryQCYj/OEV2LRop8waUAWseflDEcbXTb2fV7TJQfaXlbI+Ho0hz4fk8dZWIO5EpOkhcvu3SxmuLmZabmwGjqNbEufnI2LxVad9U3c8lgscoEpxfGKr+EP7XLMyNPBxPm+RI=
+	t=1739822512; cv=none; b=kAmSSW4TW7nl7lb2LAdPFt4stZy7TQaLc/cYKxqhtw4Mj5KN3bHOmBwTyD0JS87L6sfDzre51nNTSvhq2MZgMX/0bSvDVyvGYuw7gHuIiyOHShzEF1j9AZ39nHo3D7eJ2VzfAARrNjeKnTY4REnOsbzIh/bp8lgEyiSWypp+Tbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739815093; c=relaxed/simple;
-	bh=VgZ5lcHmdwnGgIX3QHFYVOt+N5Yc537PuMY3uDUwh34=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFCjYsNGbcGJDZp2ynJzuOfI1BC9NFSEB9PlZ3cHYUpzWgNjPlGLTPGs4Bu0wgM28T/shjObft3Hv9kpw418z+sPYwskOEf6/72plwwNWoRJnt2rwZ0n1TB6WOY7QREDFcelnewnowsl3bb6OU74EpUHajE8NYFmBWDaRSEfNhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xPl7ERkq; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1739822512; c=relaxed/simple;
+	bh=HZDaMxQVXKgWumOV86QdRK1ztny/U/PwkZEuzL5YvPs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gXD03kn/dBrqITodWwBkVahaMKM9/cSxdKjqMiQPIsW+mgNyDJrhtxv2kRTRIyBB9dGKWRInI6j/NFxz2nFEzl9YfTwgZp/uK+ZS6nm0Lfzv+a1rEG4mIi3sConxq+RDbxhr9hc+ULBsWjvjjrJqafd4VB8OvZAyTtzNSL0b2u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=naARsuOJ; arc=none smtp.client-ip=209.85.166.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xPl7ERkq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1739815089;
-	bh=VgZ5lcHmdwnGgIX3QHFYVOt+N5Yc537PuMY3uDUwh34=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=xPl7ERkqGAYbRliSw+NUPx8W8ZkDW/uTARBizW1hu08rxTaBusIJqu/WXfEFy56VV
-	 DfCgd2/NTKAicWt/DjBAAxsK7bWRAyiCKUcdRBudg8J0E06DPlxlajRAS2t8gnVU35
-	 NXb8/elO44U0jv7w8lPjdWj9/yK14BvPESJniDzDv/9z4srHsWl+MGkamsLRR6hMfE
-	 mwOKErRZRETu8pVLGCe+8O6axptS+oAv9qorQ1paV4UIHKomEcXMkLfv1iPRPnqXWT
-	 j4KvFcRApdrEAypRR9TPnQTyh4LT+lVFMRtlPFTg4ukbhSNVfSwTTnV3K8DaOv4zYH
-	 QOU+PzpIhN2TaaPFwh04Jrzh/rjMGSDz7YK87nb3/JxtBGkgnGDD7BOtnRR1lhlCVX
-	 BP2aYP/KSc3yxQTsmLt6jUTBwehiPrpbcSRi+dKhf38iDMi58j1yvSuS9BA6PI+7+X
-	 wAdkfnO7RfbGukhEsASPGVyfboaduYcjkLpW/eKdu+LUsij/UVl
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 4E1862007A;
-	Mon, 17 Feb 2025 17:58:09 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jared Van Bortel <cebtenzzre@gmail.com>
-Subject: [PATCH] diff: don't crash with empty argument to -G or -S
-Date: Mon, 17 Feb 2025 17:57:59 +0000
-Message-ID: <20250217175759.1576684-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.48.0.rc1.219.gb6b6757d772
-In-Reply-To: <Z7KX2y-dXaZuPrW4@tapette.crustytoothpaste.net>
-References: <Z7KX2y-dXaZuPrW4@tapette.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="naARsuOJ"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3ce85545983so12474665ab.0
+        for <git@vger.kernel.org>; Mon, 17 Feb 2025 12:01:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739822509; x=1740427309; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wziGFuWEjxz3vx1A6xS+US1QZiS+7berNthigNGQS18=;
+        b=naARsuOJW1uTuXqgpydB+ug0qR4knRLpzQYKlkw87O7XGclfHFXNFedLZdrpHkrdc9
+         vqe6dIGW4jrJHQqKqWMk6TRGT9aEsssDV84QVeEkwXQiz5IiCx/Ho0YgsAmhvWjX9PBG
+         cfKfBJ16ezE/c97pUpVTzrTajTEhjEIBBxsJjW3maAgJJZK/gTSl+1iPmhOeZK6WOE/s
+         7GO/juocUm6WZqQ7DGVaDyeBEp0SDj02/udIamoG3kdtsEW5flBAjzaInCVDTBT3fqpj
+         x/GUEEa8P36iWc+dkiLgVJ4L6Lt8ordsWyHRP2PX++5sKaoUVWhob78g0k3mBh6hVGNl
+         yd9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739822509; x=1740427309;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wziGFuWEjxz3vx1A6xS+US1QZiS+7berNthigNGQS18=;
+        b=Byx20B2Lfp6QqiyHxeJzXzyAEYQVPZCtTRK0/9vBoEpHJMPtLjbxh2ELfZ2Q9SV0Mh
+         NOOyV8c56lSP5shJPpha7sFbBJY+E3A6pYloIUr2Pzj+PjuIdL2yG21ufyFJ6RAsOrNR
+         PFaJg4SP+xOaihQJ6rr12vdJeetNOsoSekxhUySZPWpRyFUR1Kua0LD/A+ZGeqK6cXJV
+         pmNZSOihdtoFp6H2tmOKcLT8JuP6B5U3SYUuHcfvmCZuUX23d4vkR/NTwGm7Sk682XGq
+         qk2VmAb1mxQuqJUcCDqfPzTzosomGrNpuv4Kq9VoYpbTnP07p0finNsCLrp/DnRuG1qQ
+         XCWA==
+X-Gm-Message-State: AOJu0YxNwwqWwU6rY54bGZLn9kAxtinVU2l6I6j13FoiE5qz4+iITX4n
+	vmgyOw8rixpAhur44JCLyrE1xexMfkX+wBcGz0dNwOAMYebAXpjmiPelHqDq0mE1PYdmjB72g32
+	Sdz5ox1qYr3ZJyefQYuHUIQ5BhP+TrA==
+X-Gm-Gg: ASbGncspRSZHJnmOfJXeoiusJiT54SYuilH5rRfEtKoBix4gHTt2q2CLi+XmaiylwKY
+	nGLKq2jXtfFDjHS8hi7n3hH9zz9FuDNcCK9UMuF2AlnSEp+wYG1bH4l9JO4xDL+1byMC+esOfnf
+	puDuBZz8/ADexdWSPVXmI3a9KRTP0mFA==
+X-Google-Smtp-Source: AGHT+IFpNUflhzm3/4aWqx/x1hZ5kXxzP2/tQsTuiJOOmzZI2AzpSfqNWl52jOTDuGNvkwG1V8YY302MXL0YGEM/ETE=
+X-Received: by 2002:a05:6e02:4c1:b0:3d1:5037:c97a with SMTP id
+ e9e14a558f8ab-3d18cc66fddmr151081585ab.3.1739822509366; Mon, 17 Feb 2025
+ 12:01:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <pull.1862.git.1739723829.gitgitgadget@gmail.com> <3b3179785098580f3336bb24bdbaf0aa1366bfcd.1739723830.git.gitgitgadget@gmail.com>
+In-Reply-To: <3b3179785098580f3336bb24bdbaf0aa1366bfcd.1739723830.git.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 17 Feb 2025 12:01:38 -0800
+X-Gm-Features: AWEUYZm3E9XCIvYrAtxPl0Xy-rFiYkyM1mxPXq0igzgAIcIHvc2FC_WzvwVTyas
+Message-ID: <CABPp-BEPk+hozriBY687ELi7r-Y2JFy4rsxUCVejMt5wetHiqA@mail.gmail.com>
+Subject: Re: [PATCH 1/5] merge-tree --stdin: flush stdout to avoid deadlock
+To: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The pickaxe options, -G and -S, need either a regex or a string to look
-through the history for.  An empty value isn't very useful since it
-would either match everything or nothing, and what's worse, we presently
-crash with a BUG like so when the user provides one:
+On Sun, Feb 16, 2025 at 8:37=E2=80=AFAM Phillip Wood via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> If a process tries to read the output from "git merge-tree --stdin"
+> before it closes merge-tree's stdin then it deadlocks. This happens
+> because merge-tree does not flush its output before trying to read
+> another line of input and means that it is not possible to cherry-pick a
+> sequence of commits using "git merge-tree --stdin". Fix this by calling
+> maybe_flush_or_die() before trying to read the next line of
+> input.
 
-    BUG: diffcore-pickaxe.c:241: should have needle under -G or -S
+Makes sense.
 
-Since it's not very nice of us to crash and this wouldn't do anything
-useful anyway, let's simply inform the user that they must provide a
-non-empty argument and exit with an error if they provide an empty one
-instead.
+> Flushing the output after each merge does not seem to affect the
+> performance, any difference is lost in the noise even after increasing
+> the number of runs.
+>
+> $ git rev-list --merges --parents -n100 origin/master |
+>         sed 's/^[^ ]* //' >/tmp/merges
+> $ hyperfine -L flush 0,1 --warmup 1 --runs 30 \
+>         'GIT_FLUSH=3D{flush} ./git merge-tree --stdin </tmp/merges'
+> Benchmark 1: GIT_FLUSH=3D0 ./git merge-tree --stdin </tmp/merges
+>   Time (mean =C2=B1 =CF=83):     546.6 ms =C2=B1  11.7 ms    [User: 503.2=
+ ms, System: 40.9 ms]
+>   Range (min =E2=80=A6 max):   535.9 ms =E2=80=A6 567.7 ms    30 runs
+>
+> Benchmark 2: GIT_FLUSH=3D1 ./git merge-tree --stdin </tmp/merges
+>   Time (mean =C2=B1 =CF=83):     546.9 ms =C2=B1  12.0 ms    [User: 505.9=
+ ms, System: 38.9 ms]
+>   Range (min =E2=80=A6 max):   529.8 ms =E2=80=A6 570.0 ms    30 runs
+>
+> Summary
+>   'GIT_FLUSH=3D0 ./git merge-tree --stdin </tmp/merges' ran
+>     1.00 =C2=B1 0.03 times faster than 'GIT_FLUSH=3D1 ./git merge-tree --=
+stdin </tmp/merges'
 
-Reported-by: Jared Van Bortel <cebtenzzre@gmail.com>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- diff.c                 |  4 ++++
- t/t4209-log-pickaxe.sh | 16 ++++++++++++++++
- 2 files changed, 20 insertions(+)
+Nice; thanks for checking and providing these stats.
 
-diff --git a/diff.c b/diff.c
-index 019fb893a7..c89c15d98e 100644
---- a/diff.c
-+++ b/diff.c
-@@ -5493,6 +5493,8 @@ static int diff_opt_pickaxe_regex(const struct option *opt,
- 	BUG_ON_OPT_NEG(unset);
- 	options->pickaxe = arg;
- 	options->pickaxe_opts |= DIFF_PICKAXE_KIND_G;
-+	if (arg && !*arg)
-+		return error(_("-G requires a non-empty argument"));
- 	return 0;
- }
- 
-@@ -5504,6 +5506,8 @@ static int diff_opt_pickaxe_string(const struct option *opt,
- 	BUG_ON_OPT_NEG(unset);
- 	options->pickaxe = arg;
- 	options->pickaxe_opts |= DIFF_PICKAXE_KIND_S;
-+	if (arg && !*arg)
-+		return error(_("-S requires a non-empty argument"));
- 	return 0;
- }
- 
-diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
-index a675ace081..0e2f80a268 100755
---- a/t/t4209-log-pickaxe.sh
-+++ b/t/t4209-log-pickaxe.sh
-@@ -93,6 +93,22 @@ test_expect_success 'usage: --no-pickaxe-regex' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'usage: -G and -S with empty argument' '
-+	cat >expect <<-\EOF &&
-+	error: -S requires a non-empty argument
-+	EOF
-+
-+	test_expect_code 129 git log -S "" 2>actual &&
-+	test_cmp expect actual &&
-+
-+	cat >expect <<-\EOF &&
-+	error: -G requires a non-empty argument
-+	EOF
-+
-+	test_expect_code 129 git log -G "" 2>actual &&
-+	test_cmp expect actual
-+'
-+
- test_log	expect_initial	--grep initial
- test_log	expect_nomatch	--grep InItial
- test_log_icase	expect_initial	--grep InItial
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  builtin/merge-tree.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+> index 9a6c8b4e4cf..57f4340faba 100644
+> --- a/builtin/merge-tree.c
+> +++ b/builtin/merge-tree.c
+> @@ -18,6 +18,7 @@
+>  #include "tree.h"
+>  #include "config.h"
+>  #include "strvec.h"
+> +#include "write-or-die.h"
+>
+>  static int line_termination =3D '\n';
+>
+> @@ -623,6 +624,7 @@ int cmd_merge_tree(int argc,
+>                         } else {
+>                                 die(_("malformed input line: '%s'."), buf=
+.buf);
+>                         }
+> +                       maybe_flush_or_die(stdout, "stdout");
+>
+>                         if (result < 0)
+>                                 die(_("merging cannot continue; got uncle=
+an result of %d"), result);
+> --
+> gitgitgadget
+
+Looks good to me.
