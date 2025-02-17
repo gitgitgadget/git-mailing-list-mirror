@@ -1,69 +1,70 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08A2225388
-	for <git@vger.kernel.org>; Mon, 17 Feb 2025 15:25:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A30C7224AE2
+	for <git@vger.kernel.org>; Mon, 17 Feb 2025 15:27:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739805931; cv=none; b=qozuzDyeMEWF6JfuADm2nYNj5VqGXcj98Ami3/x7cODftDqZqbqQIdKQWbphwYq2tqPjCRGMg3A3rxGyyTiiOY9aqWnCPfnxxoF0jk6YQs3YR0Akkp+2b0UZ/beVGMTe5+Wy0kDQSpOjywG9EGTQHM1Bof4M6q+mWd/5BslvQJM=
+	t=1739806053; cv=none; b=W6Lelu0HRqqL59l69WhKOA8zBjuoRnsjoUB9smwWUzG+8tUbIsczk0xmaUN2oDIAZbInrPOU119kkbERLnj+L3VhJiU5Pu5gE5SxwHhDbwZ+KQnZEqFw55XEuCpBFdjsiRoReyW64mkbpzlmatmJwjcsEr447tVO9/olI/NKFw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739805931; c=relaxed/simple;
-	bh=1hiuoJ0G6KP+1egPZkxIXCnY+e/6eYrzb2Wu5vNtzBA=;
+	s=arc-20240116; t=1739806053; c=relaxed/simple;
+	bh=NiSz0kFXgj2oW62wBNpIa05qAzJdZQp1gZun8gTT0Hs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WgjDzXDCPJ4j42n5P53wf1i2nbIrTdCjl7sjtvk7ycQJovmpvzy7DLJT3Jjc9bMbJHIy2UIcuMvR/6kcILZOOzJ3/5gOEJM4Yh20hK3VzkmDez+MGaYbmQnAckHqtKFycQYllz9KImESQaetxD5CjsdX7/JKnUJAEPZtfq3T3nA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e96Me8mR; arc=none smtp.client-ip=209.85.216.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q8a+DWkbYUbyn6LJYEF4MAEKUYNak02EUmYZP7cE27gfYF4Dppe1OFSI+T3LOEKeVJNtvyFkSmLD9H4Pl5QVyfZqtsCasAAddtHXQY3Q832TNy4ZLK5gE4mQ8B8P+CurCdR6pEnwRHGZy5wOetXaTmK3e9cD1XlBKRyYUnS+HtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AVgW5P/4; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e96Me8mR"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-2fc292b3570so5171117a91.1
-        for <git@vger.kernel.org>; Mon, 17 Feb 2025 07:25:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AVgW5P/4"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-220dc3831e3so63191355ad.0
+        for <git@vger.kernel.org>; Mon, 17 Feb 2025 07:27:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739805928; x=1740410728; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739806049; x=1740410849; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=h06QOZUkjxhY16ldgVdL0zpnVvlqFInXp+35e1g8dHc=;
-        b=e96Me8mR8iyhl6IQ4UeyPV8z5ERo1p5lxcs7k00/i/jLS9e9KwBGv52BtQrUH1ixos
-         0jtHdH2C3Z/YD9nGAHQGE69cVEq9V9gtanckEHGAatI3GEk437EZTMXaVGvhWGHOHQZB
-         kVa4CQib4SHHIXGlU9FgefLLyEZHWXqiUY5VjrsWRhz/M1YOiHZvmkx1O+VyZpEBJEKc
-         UfReceP94S4rsBJaw4LHYu62bazRw5AT/q96ZquKcAz6SS6gRk8/AlI7CEKNkOwYMZDz
-         TnJ1bsaC5cG/sWAVjpSVQ1AlOUY4n9opmKXRsHRVd7EXHE+KvMigDMEhMXRMg1nXXqfd
-         U7rw==
+        bh=tZWI8TgIs25Erf+1G0IhxEBg80nHgq+9lTGFbSIIC1w=;
+        b=AVgW5P/4CDpSQfwyVNMdUCKVYwRAHGwo6EPiG1rxchHbH9+nt/w0pyVEWTvaaeAeUT
+         bttFnHOvQYgF6NhA/8JzWqHNM00WLfcKJWJXawMzjK2h8hhE/mPVOK+RL1YWWSsZJ6UV
+         7vEkENG9++vQ6dwYt+T/Wo3I4Bryn8le8Y561m2bQgo0MfGHTNJjVMyDW8jP+YUo0gTD
+         tEveP4L48Y2oNssN1c4lD7AscAYdcapJvfs4w3HfkcOFmYpY3q6yxwdhAlzBiBFkcGYj
+         G4XC8QjZ1UoJNUG9W4mzspoV9YcrJIBqwCKAs1oVu5XApBUQuxsCnnbKJ1M+sgE7iZev
+         Hxjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739805928; x=1740410728;
+        d=1e100.net; s=20230601; t=1739806049; x=1740410849;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=h06QOZUkjxhY16ldgVdL0zpnVvlqFInXp+35e1g8dHc=;
-        b=GSqLqhQQ8ID/1eLhE7qBFBz9RdEBAaZ2iBzFXOCweu6Y9vwQiupGIhDWD5eowJJugI
-         XBsgcRIm+AP1IeygT3mql5Zgy2Xup1DOmPH7V+pNMGhvwER6dLJ7d6zSro0bG6EO88tG
-         ZI8ANJ08gb1ugXbKlHAO9M3RaicvB2YMabvTvXzdyAgssVhVDYyQcH22WQdvcvPlKrs4
-         1gfiZM2cG19mpTH25y4Y8/xdGPveTJuDtBiMIT1fmlfj+3R2NmO1KtApAGQkJjvKu++l
-         Oy7SqU4aqgbUGoKdXuHva2cUuCRfmsJvF4WbcmMcB6pAvrhR3fUivOj1ol+Qhtm45V1k
-         2CdQ==
-X-Gm-Message-State: AOJu0Yxqa2Wu93jWwQQ3RE1BbtEXaCRDcg3V0c5EajAAVye67quie10A
-	1UYpsLmJ8vK3bLDr/wi4eCI9/Rftd7mgZUqKQnsDuY8kYuNJTMV7aOs7pQ==
-X-Gm-Gg: ASbGncsZGvREAortxLWIWwE8pOxCRoBkp2Z1XDZtUTlboTCbWoYzxEfcW7+Hx7nM8OL
-	pG2aZ8w3L5T4fLJJ2Y3Mzs7PaTu3SrfmskM4wbuh98gySJJJBRz1z9omwl/QzagUm6nHpylDB/D
-	W40DzhEEzq4zgQFh/fvX0cYweaw7GvYjittDz2BZrljqOdx1f+qtKCAG+rJdov4mrTdd4JD67Bd
-	WWViYNlsFS3nAIyU2Ar7THkbayeK5OHyVHaz+Wjij9mbnYron/IWxAxTiXyjIBTKHmmofgGvXI1
-	+Jq1VtVTBfc=
-X-Google-Smtp-Source: AGHT+IGMAeNI7vvdulWlT3833qROFM3FCmUmbwN0LXx6QZZ29DsrND9P3yyo3M4y7Ee4MoQ7jezcjg==
-X-Received: by 2002:a17:90b:3812:b0:2f9:d9fe:e72e with SMTP id 98e67ed59e1d1-2fc40f22d28mr17778626a91.16.1739805928000;
-        Mon, 17 Feb 2025 07:25:28 -0800 (PST)
+        bh=tZWI8TgIs25Erf+1G0IhxEBg80nHgq+9lTGFbSIIC1w=;
+        b=rYik0m+MRDqIGJ0Q4lXKmuE6lJQh0KKuOo+VO5Yo6rZvpZB9m62s8NmO5tsyqhJ6Cu
+         zgZa/UJnlCNz18l25kmOH239nZrOywZb+QLn6HN53Cq2+NsPdhimJIIrkydFaOeekFKk
+         FunX9yxb+ThORuyVCkKQ7CSp3p+7ilOaUnC5SddsiikGn97XlKPNhfSR6qhyAKqM0EHY
+         hSKS6+UwOac/tTr45s4k1S8Lc1+VuI18nWvCfBb/NNGgfSWccILxnoMreATtPq6gGz+a
+         BtnW7ipUwu6p6nV70bI3xXi7ZEHEtNPMLRlJOImXlAcFKPGyAeUjPZdH91r7/SJ7q+QH
+         YQSw==
+X-Gm-Message-State: AOJu0YwQxRdwiBCl72iW6PSygBZsl8Tb6aE8YOPWS6vat0hU9m4oA0do
+	hsPLgJXrbbeG8W9Dyez7VB7F4XxKVQGuYgyWNgt/0+WR8hrL0HFqzOnBsA==
+X-Gm-Gg: ASbGncvkYbBginZiu5hp4CQq4tjXuVALsks10L5uHTc4xrlWbGv4chvlZK+DGLS8H+Y
+	bT7Hes8rjIGotW0v3/zZ4ApwCFS1ZxB1UCpm5ZFlqlkjSUL0Xp7PGyCLu6MD7cZMMVhqolJQd9l
+	hGCAfuC+PQVnc3ZkaB3AoTuTmP3HDYTk0rPgDJXb4qFLM4LkqvQiRIAsE/DJlasEXGY8u7TykM4
+	qy68s3sL5riPyV0GSR+XsjrHu9slnimE+wBW3Z/s8UoV85ZW82Q/RKDF9KGx4JPyL4iDx7dyUGn
+	d/Yzj5vtJzw=
+X-Google-Smtp-Source: AGHT+IG4vKqdAt+u1nqB6iHRQdzPZFfSgel7J4Rgo6PB9u8991tCQyvtRYd5GrOErJDII4hySazaZw==
+X-Received: by 2002:a05:6a21:6b04:b0:1e1:a48f:1212 with SMTP id adf61e73a8af0-1ee8d67ee5amr18073269637.4.1739806048673;
+        Mon, 17 Feb 2025 07:27:28 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-2fbf98cfd03sm10371346a91.15.2025.02.17.07.25.26
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-addfbb144b1sm4236430a12.15.2025.02.17.07.27.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2025 07:25:27 -0800 (PST)
-Date: Mon, 17 Feb 2025 23:25:25 +0800
+        Mon, 17 Feb 2025 07:27:28 -0800 (PST)
+Date: Mon, 17 Feb 2025 23:27:25 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v5 0/8] add more ref consistency checks
-Message-ID: <Z7NU5fZfc8vfSvZ0@ArchLinux>
-References: <Z67LkxAFIAeaYr0U@ArchLinux>
+Subject: [PATCH v5 1/8] t0602: use subshell to ensure working directory
+ unchanged
+Message-ID: <Z7NVXehUfi15FA_Y@ArchLinux>
+References: <Z7NU5fZfc8vfSvZ0@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,280 +73,1109 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z67LkxAFIAeaYr0U@ArchLinux>
+In-Reply-To: <Z7NU5fZfc8vfSvZ0@ArchLinux>
 
-Hi All:
+For every test, we would execute the command "cd repo" in the first but
+we never execute the command "cd .." to restore the working directory.
+However, it's either not a good idea use above way. Because if any test
+fails between "cd repo" and "cd ..", the "cd .." will never be reached.
+And we cannot correctly restore the working directory.
 
-This changes enhances the following things:
+Let's use subshell to ensure that the current working directory could be
+restored to the correct path.
 
-1. [PATCH v5 2/8]: enhance the comment suggested by Karthik.
-2. [PATCH v5 3/8]: use lstat to check whether the filetype of
-   "packed-ref" is a regular file instead of using `open_nofollow`
-   to check. And also enhance the commit message suggested by Karthik.
-3. [PATCH v5 4/8]: move "open_nofollow" in original [PATCH v4 3/8] to
-   this.
-
-Also, I rebase due to the conflict that all *.txt files have been
-renamed to *.adoc. However, I don't know whether this is a real
-conflict. But I decide to rebase to make the life of Junio easy.
-
-Thanks,
-Jialuo
-
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
+ t/t0602-reffiles-fsck.sh | 967 ++++++++++++++++++++-------------------
+ 1 file changed, 494 insertions(+), 473 deletions(-)
 
-This series mainly does the following things:
-
-1. Fix subshell issues
-2. Add ref checks for packed-backend.
-   1. Check whether the filetype of "packed-refs" is correct.
-   2. Check whether the syntax of "packed-refs" is correct by using the
-      rules from "packed-backend.c::create_snapshot" and
-      "packed-backend.c::next_record".
-   3. Check whether the pointed object exists and whether the
-      "packed-refs" file is sorted.
-3. Call "git refs verify" for "git-fsck(1)".
-
-shejialuo (8):
-  t0602: use subshell to ensure working directory unchanged
-  builtin/refs: get worktrees without reading head information
-  packed-backend: check whether the "packed-refs" is regular file
-  packed-backend: add "packed-refs" header consistency check
-  packed-backend: check whether the refname contains NUL characters
-  packed-backend: add "packed-refs" entry consistency check
-  packed-backend: check whether the "packed-refs" is sorted
-  builtin/fsck: add `git refs verify` child process
-
- Documentation/fsck-msgids.adoc |   14 +
- Documentation/git-fsck.adoc    |    7 +-
- builtin/fsck.c                 |   33 +-
- builtin/refs.c                 |    2 +-
- fsck.h                         |    4 +
- refs/packed-backend.c          |  369 +++++++++-
- t/t0602-reffiles-fsck.sh       | 1205 +++++++++++++++++++-------------
- worktree.c                     |    5 +
- worktree.h                     |    7 +
- 9 files changed, 1161 insertions(+), 485 deletions(-)
-
-Range-diff against v4:
-1:  20889b7b18 = 1:  b3952d80a2 t0602: use subshell to ensure working directory unchanged
-2:  9d7780e953 ! 2:  3695586f58 builtin/refs: get worktrees without reading head information
-    @@ worktree.h: struct worktree {
-      struct worktree **get_worktrees(void);
-      
-     +/*
-    -+ * Like `get_worktrees`, but does not read HEAD. This is useful when checking
-    -+ * the consistency, as reading HEAD may not be necessary.
-    ++ * Like `get_worktrees`, but does not read HEAD. Skip reading HEAD allows to
-    ++ * get the worktree without worrying about failures pertaining to parsing
-    ++ * the HEAD ref. This is useful when we want to check the ref db consistency.
-     + */
-     +struct worktree **get_worktrees_without_reading_head(void);
-     +
-3:  44d26f6440 ! 3:  cbaae00e8b packed-backend: check whether the "packed-refs" is regular file
-    @@ Commit message
-     
-         Although "git-fsck(1)" and "packed-backend.c" will check some
-         consistency and correctness of "packed-refs" file, they never check the
-    -    filetype of the "packed-refs". The user should always use "git
-    -    pack-refs" command to create the raw regular "packed-refs" file, so we
-    -    need to explicitly check this in "git refs verify".
-    +    filetype of the "packed-refs". Let's verify that the "packed-refs" has
-    +    the expected filetype, confirming it is created by "git pack-refs"
-    +    command.
-     
-    -    We could use "open_nofollow" wrapper to open the raw "packed-refs" file.
-    -    If the returned "fd" value is less than 0, we could check whether the
-    -    "errno" is "ELOOP" to report an error to the user.
-    +    Use "lstat" to check the file mode. If we cannot check the file status
-    +    due to there is no such file this is OK because there is a possibility
-    +    that there is no "packed-refs" in the repo.
-     
-         Reuse "FSCK_MSG_BAD_REF_FILETYPE" fsck message id to report the error to
-         the user if "packed-refs" is not a regular file.
-    @@ refs/packed-backend.c: static struct ref_iterator *packed_reflog_iterator_begin(
-      {
-     +	struct packed_ref_store *refs = packed_downcast(ref_store,
-     +							REF_STORE_READ, "fsck");
-    ++	struct stat st;
-     +	int ret = 0;
-    -+	int fd;
-      
-      	if (!is_main_worktree(wt))
-     -		return 0;
-    @@ refs/packed-backend.c: static struct ref_iterator *packed_reflog_iterator_begin(
-     +	if (o->verbose)
-     +		fprintf_ln(stderr, "Checking packed-refs file %s", refs->path);
-     +
-    -+	fd = open_nofollow(refs->path, O_RDONLY);
-    -+	if (fd < 0) {
-    ++	if (lstat(refs->path, &st) < 0) {
-     +		/*
-     +		 * If the packed-refs file doesn't exist, there's nothing
-     +		 * to check.
-     +		 */
-     +		if (errno == ENOENT)
-     +			goto cleanup;
-    ++		ret = error_errno(_("unable to stat %s"), refs->path);
-    ++		goto cleanup;
-    ++	}
-     +
-    -+		if (errno == ELOOP) {
-    -+			struct fsck_ref_report report = { 0 };
-    -+			report.path = "packed-refs";
-    -+			ret = fsck_report_ref(o, &report,
-    -+					      FSCK_MSG_BAD_REF_FILETYPE,
-    -+					      "not a regular file");
-    -+			goto cleanup;
-    -+		}
-    -+
-    -+		ret = error_errno(_("unable to open %s"), refs->path);
-    ++	if (!S_ISREG(st.st_mode)) {
-    ++		struct fsck_ref_report report = { 0 };
-    ++		report.path = "packed-refs";
-    ++		ret = fsck_report_ref(o, &report,
-    ++				      FSCK_MSG_BAD_REF_FILETYPE,
-    ++				      "not a regular file");
-     +		goto cleanup;
-     +	}
-     +
-    @@ t/t0602-reffiles-fsck.sh: test_expect_success 'ref content checks should work wi
-     +		git pack-refs --all &&
-     +
-     +		mv .git/packed-refs .git/packed-refs-back &&
-    -+		ln -sf packed-refs-bak .git/packed-refs &&
-    ++		ln -sf packed-refs-back .git/packed-refs &&
-     +		test_must_fail git refs verify 2>err &&
-     +		cat >expect <<-EOF &&
-     +		error: packed-refs: badRefFiletype: not a regular file
-4:  976c5baba0 ! 4:  b9ce8734ac packed-backend: add "packed-refs" header consistency check
-    @@ Commit message
-            create a new fsck message "badPackedRefHeader(ERROR)" for this.
-         3. If the header content is not the same as the constant string
-            "PACKED_REFS_HEADER". This is expected because we make it extensible
-    -       intentionally. So, there is no need to report.
-    +       intentionally and runtime "create_snapshot" won't complain about
-    +       unknown traits. In order to align with the runtime behavior. There is
-    +       no need to report.
-     
-         As we have analyzed, we only need to check the case 2 in the above. In
-    -    order to do this, read the "packed-refs" file via "strbuf_read". Like
-    +    order to do this, use "open_nofollow" function to get the file
-    +    descriptor and then read the "packed-refs" file via "strbuf_read". Like
-         what "create_snapshot" and other functions do, we could split the line
-         by finding the next newline in the buffer. When we cannot find a
-         newline, we could report an error.
-    @@ Commit message
-         Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-         Signed-off-by: shejialuo <shejialuo@gmail.com>
-     
-    - ## Documentation/fsck-msgids.txt ##
-    + ## Documentation/fsck-msgids.adoc ##
-     @@
-      `badObjectSha1`::
-      	(ERROR) An object has a bad sha1.
-    @@ refs/packed-backend.c: static struct ref_iterator *packed_reflog_iterator_begin(
-      	struct packed_ref_store *refs = packed_downcast(ref_store,
-      							REF_STORE_READ, "fsck");
-     +	struct strbuf packed_ref_content = STRBUF_INIT;
-    + 	struct stat st;
-    ++	int fd;
-      	int ret = 0;
-    - 	int fd;
-      
-    + 	if (!is_main_worktree(wt))
-     @@ refs/packed-backend.c: static int packed_fsck(struct ref_store *ref_store,
-      		goto cleanup;
-      	}
-      
-    ++	/*
-    ++	 * There is a chance that "packed-refs" file is removed or converted to
-    ++	 * a symlink after filetype check and before open. So we need to avoid
-    ++	 * this race condition by opening the file.
-    ++	 */
-    ++	fd = open_nofollow(refs->path, O_RDONLY);
-    ++	if (fd < 0) {
-    ++		if (errno == ENOENT)
-    ++			goto cleanup;
-    ++
-    ++		if (errno == ELOOP) {
-    ++			struct fsck_ref_report report = { 0 };
-    ++			report.path = "packed-refs";
-    ++			ret = fsck_report_ref(o, &report,
-    ++					      FSCK_MSG_BAD_REF_FILETYPE,
-    ++					      "not a regular file");
-    ++			goto cleanup;
-    ++		}
-    ++	}
-    ++
-     +	if (strbuf_read(&packed_ref_content, fd, 0) < 0) {
-     +		ret = error_errno(_("unable to read %s"), refs->path);
-     +		goto cleanup;
-5:  b66f142d7f = 5:  9f638b3adf packed-backend: check whether the refname contains NUL characters
-6:  f68028e171 ! 6:  2c5395bdd0 packed-backend: add "packed-refs" entry consistency check
-    @@ Commit message
-         Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-         Signed-off-by: shejialuo <shejialuo@gmail.com>
-     
-    - ## Documentation/fsck-msgids.txt ##
-    + ## Documentation/fsck-msgids.adoc ##
-     @@
-      `badObjectSha1`::
-      	(ERROR) An object has a bad sha1.
-    @@ refs/packed-backend.c: static int packed_fsck_ref_header(struct fsck_options *o,
-     +				      (int)(eol - p), p);
-     +		goto cleanup;
-     +	}
-    ++
-     +cleanup:
-     +	strbuf_release(&packed_entry);
-     +	return ret;
-7:  4a7adf293f ! 7:  648404c60d packed-backend: check whether the "packed-refs" is sorted
-    @@ Commit message
-         Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-         Signed-off-by: shejialuo <shejialuo@gmail.com>
-     
-    - ## Documentation/fsck-msgids.txt ##
-    + ## Documentation/fsck-msgids.adoc ##
-     @@
-      	(ERROR) The "packed-refs" file contains an entry that is
-      	not terminated by a newline.
-    @@ refs/packed-backend.c: static int packed_fsck(struct ref_store *ref_store,
-      							REF_STORE_READ, "fsck");
-      	struct strbuf packed_ref_content = STRBUF_INIT;
-     +	unsigned int sorted = 0;
-    + 	struct stat st;
-    +-	int fd;
-      	int ret = 0;
-    - 	int fd;
-    ++	int fd;
-      
-    + 	if (!is_main_worktree(wt))
-    + 		goto cleanup;
-     @@ refs/packed-backend.c: static int packed_fsck(struct ref_store *ref_store,
-      		goto cleanup;
-      	}
-8:  2dd3437478 ! 8:  4dbbacf44b builtin/fsck: add `git refs verify` child process
-    @@ Commit message
-         Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-         Signed-off-by: shejialuo <shejialuo@gmail.com>
-     
-    - ## Documentation/git-fsck.txt ##
-    -@@ Documentation/git-fsck.txt: SYNOPSIS
-    + ## Documentation/git-fsck.adoc ##
-    +@@ Documentation/git-fsck.adoc: SYNOPSIS
-      'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
-      	 [--[no-]full] [--strict] [--verbose] [--lost-found]
-      	 [--[no-]dangling] [--[no-]progress] [--connectivity-only]
-    @@ Documentation/git-fsck.txt: SYNOPSIS
-      
-      DESCRIPTION
-      -----------
-    -@@ Documentation/git-fsck.txt: care about this output and want to speed it up further.
-    +@@ Documentation/git-fsck.adoc: care about this output and want to speed it up further.
-      	progress status even if the standard error stream is not
-      	directed to a terminal.
-      
+diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
+index d4a08b823b..cf7a202d0d 100755
+--- a/t/t0602-reffiles-fsck.sh
++++ b/t/t0602-reffiles-fsck.sh
+@@ -14,222 +14,229 @@ test_expect_success 'ref name should be checked' '
+ 	git init repo &&
+ 	branch_dir_prefix=.git/refs/heads &&
+ 	tag_dir_prefix=.git/refs/tags &&
+-	cd repo &&
+-
+-	git commit --allow-empty -m initial &&
+-	git checkout -b default-branch &&
+-	git tag default-tag &&
+-	git tag multi_hierarchy/default-tag &&
+-
+-	cp $branch_dir_prefix/default-branch $branch_dir_prefix/@ &&
+-	git refs verify 2>err &&
+-	test_must_be_empty err &&
+-	rm $branch_dir_prefix/@ &&
+-
+-	cp $tag_dir_prefix/default-tag $tag_dir_prefix/tag-1.lock &&
+-	git refs verify 2>err &&
+-	rm $tag_dir_prefix/tag-1.lock &&
+-	test_must_be_empty err &&
+-
+-	cp $tag_dir_prefix/default-tag $tag_dir_prefix/.lock &&
+-	test_must_fail git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	error: refs/tags/.lock: badRefName: invalid refname format
+-	EOF
+-	rm $tag_dir_prefix/.lock &&
+-	test_cmp expect err &&
+-
+-	for refname in ".refname-starts-with-dot" "~refname-has-stride"
+-	do
+-		cp $branch_dir_prefix/default-branch "$branch_dir_prefix/$refname" &&
+-		test_must_fail git refs verify 2>err &&
+-		cat >expect <<-EOF &&
+-		error: refs/heads/$refname: badRefName: invalid refname format
+-		EOF
+-		rm "$branch_dir_prefix/$refname" &&
+-		test_cmp expect err || return 1
+-	done &&
++	(
++		cd repo &&
+ 
+-	for refname in ".refname-starts-with-dot" "~refname-has-stride"
+-	do
+-		cp $tag_dir_prefix/default-tag "$tag_dir_prefix/$refname" &&
+-		test_must_fail git refs verify 2>err &&
+-		cat >expect <<-EOF &&
+-		error: refs/tags/$refname: badRefName: invalid refname format
+-		EOF
+-		rm "$tag_dir_prefix/$refname" &&
+-		test_cmp expect err || return 1
+-	done &&
++		git commit --allow-empty -m initial &&
++		git checkout -b default-branch &&
++		git tag default-tag &&
++		git tag multi_hierarchy/default-tag &&
+ 
+-	for refname in ".refname-starts-with-dot" "~refname-has-stride"
+-	do
+-		cp $tag_dir_prefix/multi_hierarchy/default-tag "$tag_dir_prefix/multi_hierarchy/$refname" &&
+-		test_must_fail git refs verify 2>err &&
+-		cat >expect <<-EOF &&
+-		error: refs/tags/multi_hierarchy/$refname: badRefName: invalid refname format
+-		EOF
+-		rm "$tag_dir_prefix/multi_hierarchy/$refname" &&
+-		test_cmp expect err || return 1
+-	done &&
+-
+-	for refname in ".refname-starts-with-dot" "~refname-has-stride"
+-	do
+-		mkdir "$branch_dir_prefix/$refname" &&
+-		cp $branch_dir_prefix/default-branch "$branch_dir_prefix/$refname/default-branch" &&
++		cp $branch_dir_prefix/default-branch $branch_dir_prefix/@ &&
++		git refs verify 2>err &&
++		test_must_be_empty err &&
++		rm $branch_dir_prefix/@ &&
++
++		cp $tag_dir_prefix/default-tag $tag_dir_prefix/tag-1.lock &&
++		git refs verify 2>err &&
++		rm $tag_dir_prefix/tag-1.lock &&
++		test_must_be_empty err &&
++
++		cp $tag_dir_prefix/default-tag $tag_dir_prefix/.lock &&
+ 		test_must_fail git refs verify 2>err &&
+ 		cat >expect <<-EOF &&
+-		error: refs/heads/$refname/default-branch: badRefName: invalid refname format
++		error: refs/tags/.lock: badRefName: invalid refname format
+ 		EOF
+-		rm -r "$branch_dir_prefix/$refname" &&
+-		test_cmp expect err || return 1
+-	done
++		rm $tag_dir_prefix/.lock &&
++		test_cmp expect err &&
++
++		for refname in ".refname-starts-with-dot" "~refname-has-stride"
++		do
++			cp $branch_dir_prefix/default-branch "$branch_dir_prefix/$refname" &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			error: refs/heads/$refname: badRefName: invalid refname format
++			EOF
++			rm "$branch_dir_prefix/$refname" &&
++			test_cmp expect err || return 1
++		done &&
++
++		for refname in ".refname-starts-with-dot" "~refname-has-stride"
++		do
++			cp $tag_dir_prefix/default-tag "$tag_dir_prefix/$refname" &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			error: refs/tags/$refname: badRefName: invalid refname format
++			EOF
++			rm "$tag_dir_prefix/$refname" &&
++			test_cmp expect err || return 1
++		done &&
++
++		for refname in ".refname-starts-with-dot" "~refname-has-stride"
++		do
++			cp $tag_dir_prefix/multi_hierarchy/default-tag "$tag_dir_prefix/multi_hierarchy/$refname" &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			error: refs/tags/multi_hierarchy/$refname: badRefName: invalid refname format
++			EOF
++			rm "$tag_dir_prefix/multi_hierarchy/$refname" &&
++			test_cmp expect err || return 1
++		done &&
++
++		for refname in ".refname-starts-with-dot" "~refname-has-stride"
++		do
++			mkdir "$branch_dir_prefix/$refname" &&
++			cp $branch_dir_prefix/default-branch "$branch_dir_prefix/$refname/default-branch" &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			error: refs/heads/$refname/default-branch: badRefName: invalid refname format
++			EOF
++			rm -r "$branch_dir_prefix/$refname" &&
++			test_cmp expect err || return 1
++		done
++	)
+ '
+ 
+ test_expect_success 'ref name check should be adapted into fsck messages' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+ 	branch_dir_prefix=.git/refs/heads &&
+-	cd repo &&
+-	git commit --allow-empty -m initial &&
+-	git checkout -b branch-1 &&
+-
+-	cp $branch_dir_prefix/branch-1 $branch_dir_prefix/.branch-1 &&
+-	git -c fsck.badRefName=warn refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/.branch-1: badRefName: invalid refname format
+-	EOF
+-	rm $branch_dir_prefix/.branch-1 &&
+-	test_cmp expect err &&
+-
+-	cp $branch_dir_prefix/branch-1 $branch_dir_prefix/.branch-1 &&
+-	git -c fsck.badRefName=ignore refs verify 2>err &&
+-	test_must_be_empty err
++	(
++		cd repo &&
++		git commit --allow-empty -m initial &&
++		git checkout -b branch-1 &&
++
++		cp $branch_dir_prefix/branch-1 $branch_dir_prefix/.branch-1 &&
++		git -c fsck.badRefName=warn refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: refs/heads/.branch-1: badRefName: invalid refname format
++		EOF
++		rm $branch_dir_prefix/.branch-1 &&
++		test_cmp expect err &&
++
++		cp $branch_dir_prefix/branch-1 $branch_dir_prefix/.branch-1 &&
++		git -c fsck.badRefName=ignore refs verify 2>err &&
++		test_must_be_empty err
++	)
+ '
+ 
+ test_expect_success 'ref name check should work for multiple worktrees' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+-
+-	cd repo &&
+-	test_commit initial &&
+-	git checkout -b branch-1 &&
+-	test_commit second &&
+-	git checkout -b branch-2 &&
+-	test_commit third &&
+-	git checkout -b branch-3 &&
+-	git worktree add ./worktree-1 branch-1 &&
+-	git worktree add ./worktree-2 branch-2 &&
+-	worktree1_refdir_prefix=.git/worktrees/worktree-1/refs/worktree &&
+-	worktree2_refdir_prefix=.git/worktrees/worktree-2/refs/worktree &&
+-
+-	(
+-		cd worktree-1 &&
+-		git update-ref refs/worktree/branch-4 refs/heads/branch-3
+-	) &&
+ 	(
+-		cd worktree-2 &&
+-		git update-ref refs/worktree/branch-4 refs/heads/branch-3
+-	) &&
+-
+-	cp $worktree1_refdir_prefix/branch-4 $worktree1_refdir_prefix/'\'' branch-5'\'' &&
+-	cp $worktree2_refdir_prefix/branch-4 $worktree2_refdir_prefix/'\''~branch-6'\'' &&
+-
+-	test_must_fail git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	error: worktrees/worktree-1/refs/worktree/ branch-5: badRefName: invalid refname format
+-	error: worktrees/worktree-2/refs/worktree/~branch-6: badRefName: invalid refname format
+-	EOF
+-	sort err >sorted_err &&
+-	test_cmp expect sorted_err &&
+-
+-	for worktree in "worktree-1" "worktree-2"
+-	do
++		cd repo &&
++		test_commit initial &&
++		git checkout -b branch-1 &&
++		test_commit second &&
++		git checkout -b branch-2 &&
++		test_commit third &&
++		git checkout -b branch-3 &&
++		git worktree add ./worktree-1 branch-1 &&
++		git worktree add ./worktree-2 branch-2 &&
++		worktree1_refdir_prefix=.git/worktrees/worktree-1/refs/worktree &&
++		worktree2_refdir_prefix=.git/worktrees/worktree-2/refs/worktree &&
++
+ 		(
+-			cd $worktree &&
+-			test_must_fail git refs verify 2>err &&
+-			cat >expect <<-EOF &&
+-			error: worktrees/worktree-1/refs/worktree/ branch-5: badRefName: invalid refname format
+-			error: worktrees/worktree-2/refs/worktree/~branch-6: badRefName: invalid refname format
+-			EOF
+-			sort err >sorted_err &&
+-			test_cmp expect sorted_err || return 1
+-		)
+-	done
++			cd worktree-1 &&
++			git update-ref refs/worktree/branch-4 refs/heads/branch-3
++		) &&
++		(
++			cd worktree-2 &&
++			git update-ref refs/worktree/branch-4 refs/heads/branch-3
++		) &&
++
++		cp $worktree1_refdir_prefix/branch-4 $worktree1_refdir_prefix/'\'' branch-5'\'' &&
++		cp $worktree2_refdir_prefix/branch-4 $worktree2_refdir_prefix/'\''~branch-6'\'' &&
++
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		error: worktrees/worktree-1/refs/worktree/ branch-5: badRefName: invalid refname format
++		error: worktrees/worktree-2/refs/worktree/~branch-6: badRefName: invalid refname format
++		EOF
++		sort err >sorted_err &&
++		test_cmp expect sorted_err &&
++
++		for worktree in "worktree-1" "worktree-2"
++		do
++			(
++				cd $worktree &&
++				test_must_fail git refs verify 2>err &&
++				cat >expect <<-EOF &&
++				error: worktrees/worktree-1/refs/worktree/ branch-5: badRefName: invalid refname format
++				error: worktrees/worktree-2/refs/worktree/~branch-6: badRefName: invalid refname format
++				EOF
++				sort err >sorted_err &&
++				test_cmp expect sorted_err || return 1
++			)
++		done
++	)
+ '
+ 
+ test_expect_success 'regular ref content should be checked (individual)' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+ 	branch_dir_prefix=.git/refs/heads &&
+-	cd repo &&
+-	test_commit default &&
+-	mkdir -p "$branch_dir_prefix/a/b" &&
++	(
++		cd repo &&
++		test_commit default &&
++		mkdir -p "$branch_dir_prefix/a/b" &&
+ 
+-	git refs verify 2>err &&
+-	test_must_be_empty err &&
++		git refs verify 2>err &&
++		test_must_be_empty err &&
+ 
+-	for bad_content in "$(git rev-parse main)x" "xfsazqfxcadas" "Xfsazqfxcadas"
+-	do
+-		printf "%s" $bad_content >$branch_dir_prefix/branch-bad &&
+-		test_must_fail git refs verify 2>err &&
+-		cat >expect <<-EOF &&
+-		error: refs/heads/branch-bad: badRefContent: $bad_content
+-		EOF
+-		rm $branch_dir_prefix/branch-bad &&
+-		test_cmp expect err || return 1
+-	done &&
++		for bad_content in "$(git rev-parse main)x" "xfsazqfxcadas" "Xfsazqfxcadas"
++		do
++			printf "%s" $bad_content >$branch_dir_prefix/branch-bad &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			error: refs/heads/branch-bad: badRefContent: $bad_content
++			EOF
++			rm $branch_dir_prefix/branch-bad &&
++			test_cmp expect err || return 1
++		done &&
+ 
+-	for bad_content in "$(git rev-parse main)x" "xfsazqfxcadas" "Xfsazqfxcadas"
+-	do
+-		printf "%s" $bad_content >$branch_dir_prefix/a/b/branch-bad &&
+-		test_must_fail git refs verify 2>err &&
+-		cat >expect <<-EOF &&
+-		error: refs/heads/a/b/branch-bad: badRefContent: $bad_content
+-		EOF
+-		rm $branch_dir_prefix/a/b/branch-bad &&
+-		test_cmp expect err || return 1
+-	done &&
+-
+-	printf "%s" "$(git rev-parse main)" >$branch_dir_prefix/branch-no-newline &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/branch-no-newline: refMissingNewline: misses LF at the end
+-	EOF
+-	rm $branch_dir_prefix/branch-no-newline &&
+-	test_cmp expect err &&
+-
+-	for trailing_content in " garbage" "    more garbage"
+-	do
+-		printf "%s" "$(git rev-parse main)$trailing_content" >$branch_dir_prefix/branch-garbage &&
++		for bad_content in "$(git rev-parse main)x" "xfsazqfxcadas" "Xfsazqfxcadas"
++		do
++			printf "%s" $bad_content >$branch_dir_prefix/a/b/branch-bad &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			error: refs/heads/a/b/branch-bad: badRefContent: $bad_content
++			EOF
++			rm $branch_dir_prefix/a/b/branch-bad &&
++			test_cmp expect err || return 1
++		done &&
++
++		printf "%s" "$(git rev-parse main)" >$branch_dir_prefix/branch-no-newline &&
+ 		git refs verify 2>err &&
+ 		cat >expect <<-EOF &&
+-		warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
++		warning: refs/heads/branch-no-newline: refMissingNewline: misses LF at the end
+ 		EOF
+-		rm $branch_dir_prefix/branch-garbage &&
+-		test_cmp expect err || return 1
+-	done &&
++		rm $branch_dir_prefix/branch-no-newline &&
++		test_cmp expect err &&
+ 
+-	printf "%s\n\n\n" "$(git rev-parse main)" >$branch_dir_prefix/branch-garbage-special &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/branch-garbage-special: trailingRefContent: has trailing garbage: '\''
++		for trailing_content in " garbage" "    more garbage"
++		do
++			printf "%s" "$(git rev-parse main)$trailing_content" >$branch_dir_prefix/branch-garbage &&
++			git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
++			EOF
++			rm $branch_dir_prefix/branch-garbage &&
++			test_cmp expect err || return 1
++		done &&
+ 
++		printf "%s\n\n\n" "$(git rev-parse main)" >$branch_dir_prefix/branch-garbage-special &&
++		git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: refs/heads/branch-garbage-special: trailingRefContent: has trailing garbage: '\''
+ 
+-	'\''
+-	EOF
+-	rm $branch_dir_prefix/branch-garbage-special &&
+-	test_cmp expect err &&
+ 
+-	printf "%s\n\n\n  garbage" "$(git rev-parse main)" >$branch_dir_prefix/branch-garbage-special &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/branch-garbage-special: trailingRefContent: has trailing garbage: '\''
++		'\''
++		EOF
++		rm $branch_dir_prefix/branch-garbage-special &&
++		test_cmp expect err &&
++
++		printf "%s\n\n\n  garbage" "$(git rev-parse main)" >$branch_dir_prefix/branch-garbage-special &&
++		git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: refs/heads/branch-garbage-special: trailingRefContent: has trailing garbage: '\''
+ 
+ 
+-	  garbage'\''
+-	EOF
+-	rm $branch_dir_prefix/branch-garbage-special &&
+-	test_cmp expect err
++		  garbage'\''
++		EOF
++		rm $branch_dir_prefix/branch-garbage-special &&
++		test_cmp expect err
++	)
+ '
+ 
+ test_expect_success 'regular ref content should be checked (aggregate)' '
+@@ -237,99 +244,103 @@ test_expect_success 'regular ref content should be checked (aggregate)' '
+ 	git init repo &&
+ 	branch_dir_prefix=.git/refs/heads &&
+ 	tag_dir_prefix=.git/refs/tags &&
+-	cd repo &&
+-	test_commit default &&
+-	mkdir -p "$branch_dir_prefix/a/b" &&
+-
+-	bad_content_1=$(git rev-parse main)x &&
+-	bad_content_2=xfsazqfxcadas &&
+-	bad_content_3=Xfsazqfxcadas &&
+-	printf "%s" $bad_content_1 >$tag_dir_prefix/tag-bad-1 &&
+-	printf "%s" $bad_content_2 >$tag_dir_prefix/tag-bad-2 &&
+-	printf "%s" $bad_content_3 >$branch_dir_prefix/a/b/branch-bad &&
+-	printf "%s" "$(git rev-parse main)" >$branch_dir_prefix/branch-no-newline &&
+-	printf "%s garbage" "$(git rev-parse main)" >$branch_dir_prefix/branch-garbage &&
+-
+-	test_must_fail git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	error: refs/heads/a/b/branch-bad: badRefContent: $bad_content_3
+-	error: refs/tags/tag-bad-1: badRefContent: $bad_content_1
+-	error: refs/tags/tag-bad-2: badRefContent: $bad_content_2
+-	warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\'' garbage'\''
+-	warning: refs/heads/branch-no-newline: refMissingNewline: misses LF at the end
+-	EOF
+-	sort err >sorted_err &&
+-	test_cmp expect sorted_err
++	(
++		cd repo &&
++		test_commit default &&
++		mkdir -p "$branch_dir_prefix/a/b" &&
++
++		bad_content_1=$(git rev-parse main)x &&
++		bad_content_2=xfsazqfxcadas &&
++		bad_content_3=Xfsazqfxcadas &&
++		printf "%s" $bad_content_1 >$tag_dir_prefix/tag-bad-1 &&
++		printf "%s" $bad_content_2 >$tag_dir_prefix/tag-bad-2 &&
++		printf "%s" $bad_content_3 >$branch_dir_prefix/a/b/branch-bad &&
++		printf "%s" "$(git rev-parse main)" >$branch_dir_prefix/branch-no-newline &&
++		printf "%s garbage" "$(git rev-parse main)" >$branch_dir_prefix/branch-garbage &&
++
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		error: refs/heads/a/b/branch-bad: badRefContent: $bad_content_3
++		error: refs/tags/tag-bad-1: badRefContent: $bad_content_1
++		error: refs/tags/tag-bad-2: badRefContent: $bad_content_2
++		warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\'' garbage'\''
++		warning: refs/heads/branch-no-newline: refMissingNewline: misses LF at the end
++		EOF
++		sort err >sorted_err &&
++		test_cmp expect sorted_err
++	)
+ '
+ 
+ test_expect_success 'textual symref content should be checked (individual)' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+ 	branch_dir_prefix=.git/refs/heads &&
+-	cd repo &&
+-	test_commit default &&
+-	mkdir -p "$branch_dir_prefix/a/b" &&
++	(
++		cd repo &&
++		test_commit default &&
++		mkdir -p "$branch_dir_prefix/a/b" &&
++
++		for good_referent in "refs/heads/branch" "HEAD"
++		do
++			printf "ref: %s\n" $good_referent >$branch_dir_prefix/branch-good &&
++			git refs verify 2>err &&
++			rm $branch_dir_prefix/branch-good &&
++			test_must_be_empty err || return 1
++		done &&
++
++		for bad_referent in "refs/heads/.branch" "refs/heads/~branch" "refs/heads/?branch"
++		do
++			printf "ref: %s\n" $bad_referent >$branch_dir_prefix/branch-bad &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			error: refs/heads/branch-bad: badReferentName: points to invalid refname '\''$bad_referent'\''
++			EOF
++			rm $branch_dir_prefix/branch-bad &&
++			test_cmp expect err || return 1
++		done &&
+ 
+-	for good_referent in "refs/heads/branch" "HEAD"
+-	do
+-		printf "ref: %s\n" $good_referent >$branch_dir_prefix/branch-good &&
++		printf "ref: refs/heads/branch" >$branch_dir_prefix/branch-no-newline &&
+ 		git refs verify 2>err &&
+-		rm $branch_dir_prefix/branch-good &&
+-		test_must_be_empty err || return 1
+-	done &&
++		cat >expect <<-EOF &&
++		warning: refs/heads/branch-no-newline: refMissingNewline: misses LF at the end
++		EOF
++		rm $branch_dir_prefix/branch-no-newline &&
++		test_cmp expect err &&
+ 
+-	for bad_referent in "refs/heads/.branch" "refs/heads/~branch" "refs/heads/?branch"
+-	do
+-		printf "ref: %s\n" $bad_referent >$branch_dir_prefix/branch-bad &&
+-		test_must_fail git refs verify 2>err &&
++		printf "ref: refs/heads/branch     " >$branch_dir_prefix/a/b/branch-trailing-1 &&
++		git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: refs/heads/a/b/branch-trailing-1: refMissingNewline: misses LF at the end
++		warning: refs/heads/a/b/branch-trailing-1: trailingRefContent: has trailing whitespaces or newlines
++		EOF
++		rm $branch_dir_prefix/a/b/branch-trailing-1 &&
++		test_cmp expect err &&
++
++		printf "ref: refs/heads/branch\n\n" >$branch_dir_prefix/a/b/branch-trailing-2 &&
++		git refs verify 2>err &&
+ 		cat >expect <<-EOF &&
+-		error: refs/heads/branch-bad: badReferentName: points to invalid refname '\''$bad_referent'\''
++		warning: refs/heads/a/b/branch-trailing-2: trailingRefContent: has trailing whitespaces or newlines
+ 		EOF
+-		rm $branch_dir_prefix/branch-bad &&
+-		test_cmp expect err || return 1
+-	done &&
+-
+-	printf "ref: refs/heads/branch" >$branch_dir_prefix/branch-no-newline &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/branch-no-newline: refMissingNewline: misses LF at the end
+-	EOF
+-	rm $branch_dir_prefix/branch-no-newline &&
+-	test_cmp expect err &&
+-
+-	printf "ref: refs/heads/branch     " >$branch_dir_prefix/a/b/branch-trailing-1 &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/a/b/branch-trailing-1: refMissingNewline: misses LF at the end
+-	warning: refs/heads/a/b/branch-trailing-1: trailingRefContent: has trailing whitespaces or newlines
+-	EOF
+-	rm $branch_dir_prefix/a/b/branch-trailing-1 &&
+-	test_cmp expect err &&
+-
+-	printf "ref: refs/heads/branch\n\n" >$branch_dir_prefix/a/b/branch-trailing-2 &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/a/b/branch-trailing-2: trailingRefContent: has trailing whitespaces or newlines
+-	EOF
+-	rm $branch_dir_prefix/a/b/branch-trailing-2 &&
+-	test_cmp expect err &&
+-
+-	printf "ref: refs/heads/branch \n" >$branch_dir_prefix/a/b/branch-trailing-3 &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/a/b/branch-trailing-3: trailingRefContent: has trailing whitespaces or newlines
+-	EOF
+-	rm $branch_dir_prefix/a/b/branch-trailing-3 &&
+-	test_cmp expect err &&
+-
+-	printf "ref: refs/heads/branch \n  " >$branch_dir_prefix/a/b/branch-complicated &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/a/b/branch-complicated: refMissingNewline: misses LF at the end
+-	warning: refs/heads/a/b/branch-complicated: trailingRefContent: has trailing whitespaces or newlines
+-	EOF
+-	rm $branch_dir_prefix/a/b/branch-complicated &&
+-	test_cmp expect err
++		rm $branch_dir_prefix/a/b/branch-trailing-2 &&
++		test_cmp expect err &&
++
++		printf "ref: refs/heads/branch \n" >$branch_dir_prefix/a/b/branch-trailing-3 &&
++		git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: refs/heads/a/b/branch-trailing-3: trailingRefContent: has trailing whitespaces or newlines
++		EOF
++		rm $branch_dir_prefix/a/b/branch-trailing-3 &&
++		test_cmp expect err &&
++
++		printf "ref: refs/heads/branch \n  " >$branch_dir_prefix/a/b/branch-complicated &&
++		git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: refs/heads/a/b/branch-complicated: refMissingNewline: misses LF at the end
++		warning: refs/heads/a/b/branch-complicated: trailingRefContent: has trailing whitespaces or newlines
++		EOF
++		rm $branch_dir_prefix/a/b/branch-complicated &&
++		test_cmp expect err
++	)
+ '
+ 
+ test_expect_success 'textual symref content should be checked (aggregate)' '
+@@ -337,32 +348,34 @@ test_expect_success 'textual symref content should be checked (aggregate)' '
+ 	git init repo &&
+ 	branch_dir_prefix=.git/refs/heads &&
+ 	tag_dir_prefix=.git/refs/tags &&
+-	cd repo &&
+-	test_commit default &&
+-	mkdir -p "$branch_dir_prefix/a/b" &&
+-
+-	printf "ref: refs/heads/branch\n" >$branch_dir_prefix/branch-good &&
+-	printf "ref: HEAD\n" >$branch_dir_prefix/branch-head &&
+-	printf "ref: refs/heads/branch" >$branch_dir_prefix/branch-no-newline-1 &&
+-	printf "ref: refs/heads/branch     " >$branch_dir_prefix/a/b/branch-trailing-1 &&
+-	printf "ref: refs/heads/branch\n\n" >$branch_dir_prefix/a/b/branch-trailing-2 &&
+-	printf "ref: refs/heads/branch \n" >$branch_dir_prefix/a/b/branch-trailing-3 &&
+-	printf "ref: refs/heads/branch \n  " >$branch_dir_prefix/a/b/branch-complicated &&
+-	printf "ref: refs/heads/.branch\n" >$branch_dir_prefix/branch-bad-1 &&
+-
+-	test_must_fail git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	error: refs/heads/branch-bad-1: badReferentName: points to invalid refname '\''refs/heads/.branch'\''
+-	warning: refs/heads/a/b/branch-complicated: refMissingNewline: misses LF at the end
+-	warning: refs/heads/a/b/branch-complicated: trailingRefContent: has trailing whitespaces or newlines
+-	warning: refs/heads/a/b/branch-trailing-1: refMissingNewline: misses LF at the end
+-	warning: refs/heads/a/b/branch-trailing-1: trailingRefContent: has trailing whitespaces or newlines
+-	warning: refs/heads/a/b/branch-trailing-2: trailingRefContent: has trailing whitespaces or newlines
+-	warning: refs/heads/a/b/branch-trailing-3: trailingRefContent: has trailing whitespaces or newlines
+-	warning: refs/heads/branch-no-newline-1: refMissingNewline: misses LF at the end
+-	EOF
+-	sort err >sorted_err &&
+-	test_cmp expect sorted_err
++	(
++		cd repo &&
++		test_commit default &&
++		mkdir -p "$branch_dir_prefix/a/b" &&
++
++		printf "ref: refs/heads/branch\n" >$branch_dir_prefix/branch-good &&
++		printf "ref: HEAD\n" >$branch_dir_prefix/branch-head &&
++		printf "ref: refs/heads/branch" >$branch_dir_prefix/branch-no-newline-1 &&
++		printf "ref: refs/heads/branch     " >$branch_dir_prefix/a/b/branch-trailing-1 &&
++		printf "ref: refs/heads/branch\n\n" >$branch_dir_prefix/a/b/branch-trailing-2 &&
++		printf "ref: refs/heads/branch \n" >$branch_dir_prefix/a/b/branch-trailing-3 &&
++		printf "ref: refs/heads/branch \n  " >$branch_dir_prefix/a/b/branch-complicated &&
++		printf "ref: refs/heads/.branch\n" >$branch_dir_prefix/branch-bad-1 &&
++
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		error: refs/heads/branch-bad-1: badReferentName: points to invalid refname '\''refs/heads/.branch'\''
++		warning: refs/heads/a/b/branch-complicated: refMissingNewline: misses LF at the end
++		warning: refs/heads/a/b/branch-complicated: trailingRefContent: has trailing whitespaces or newlines
++		warning: refs/heads/a/b/branch-trailing-1: refMissingNewline: misses LF at the end
++		warning: refs/heads/a/b/branch-trailing-1: trailingRefContent: has trailing whitespaces or newlines
++		warning: refs/heads/a/b/branch-trailing-2: trailingRefContent: has trailing whitespaces or newlines
++		warning: refs/heads/a/b/branch-trailing-3: trailingRefContent: has trailing whitespaces or newlines
++		warning: refs/heads/branch-no-newline-1: refMissingNewline: misses LF at the end
++		EOF
++		sort err >sorted_err &&
++		test_cmp expect sorted_err
++	)
+ '
+ 
+ test_expect_success 'the target of the textual symref should be checked' '
+@@ -370,28 +383,30 @@ test_expect_success 'the target of the textual symref should be checked' '
+ 	git init repo &&
+ 	branch_dir_prefix=.git/refs/heads &&
+ 	tag_dir_prefix=.git/refs/tags &&
+-	cd repo &&
+-	test_commit default &&
+-	mkdir -p "$branch_dir_prefix/a/b" &&
+-
+-	for good_referent in "refs/heads/branch" "HEAD" "refs/tags/tag"
+-	do
+-		printf "ref: %s\n" $good_referent >$branch_dir_prefix/branch-good &&
+-		git refs verify 2>err &&
+-		rm $branch_dir_prefix/branch-good &&
+-		test_must_be_empty err || return 1
+-	done &&
+-
+-	for nonref_referent in "refs-back/heads/branch" "refs-back/tags/tag" "reflogs/refs/heads/branch"
+-	do
+-		printf "ref: %s\n" $nonref_referent >$branch_dir_prefix/branch-bad-1 &&
+-		git refs verify 2>err &&
+-		cat >expect <<-EOF &&
+-		warning: refs/heads/branch-bad-1: symrefTargetIsNotARef: points to non-ref target '\''$nonref_referent'\''
+-		EOF
+-		rm $branch_dir_prefix/branch-bad-1 &&
+-		test_cmp expect err || return 1
+-	done
++	(
++		cd repo &&
++		test_commit default &&
++		mkdir -p "$branch_dir_prefix/a/b" &&
++
++		for good_referent in "refs/heads/branch" "HEAD" "refs/tags/tag"
++		do
++			printf "ref: %s\n" $good_referent >$branch_dir_prefix/branch-good &&
++			git refs verify 2>err &&
++			rm $branch_dir_prefix/branch-good &&
++			test_must_be_empty err || return 1
++		done &&
++
++		for nonref_referent in "refs-back/heads/branch" "refs-back/tags/tag" "reflogs/refs/heads/branch"
++		do
++			printf "ref: %s\n" $nonref_referent >$branch_dir_prefix/branch-bad-1 &&
++			git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			warning: refs/heads/branch-bad-1: symrefTargetIsNotARef: points to non-ref target '\''$nonref_referent'\''
++			EOF
++			rm $branch_dir_prefix/branch-bad-1 &&
++			test_cmp expect err || return 1
++		done
++	)
+ '
+ 
+ test_expect_success SYMLINKS 'symlink symref content should be checked' '
+@@ -399,201 +414,207 @@ test_expect_success SYMLINKS 'symlink symref content should be checked' '
+ 	git init repo &&
+ 	branch_dir_prefix=.git/refs/heads &&
+ 	tag_dir_prefix=.git/refs/tags &&
+-	cd repo &&
+-	test_commit default &&
+-	mkdir -p "$branch_dir_prefix/a/b" &&
+-
+-	ln -sf ./main $branch_dir_prefix/branch-symbolic-good &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
+-	EOF
+-	rm $branch_dir_prefix/branch-symbolic-good &&
+-	test_cmp expect err &&
+-
+-	ln -sf ../../logs/branch-escape $branch_dir_prefix/branch-symbolic &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/branch-symbolic: symlinkRef: use deprecated symbolic link for symref
+-	warning: refs/heads/branch-symbolic: symrefTargetIsNotARef: points to non-ref target '\''logs/branch-escape'\''
+-	EOF
+-	rm $branch_dir_prefix/branch-symbolic &&
+-	test_cmp expect err &&
+-
+-	ln -sf ./"branch   " $branch_dir_prefix/branch-symbolic-bad &&
+-	test_must_fail git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/branch-symbolic-bad: symlinkRef: use deprecated symbolic link for symref
+-	error: refs/heads/branch-symbolic-bad: badReferentName: points to invalid refname '\''refs/heads/branch   '\''
+-	EOF
+-	rm $branch_dir_prefix/branch-symbolic-bad &&
+-	test_cmp expect err &&
+-
+-	ln -sf ./".tag" $tag_dir_prefix/tag-symbolic-1 &&
+-	test_must_fail git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/tags/tag-symbolic-1: symlinkRef: use deprecated symbolic link for symref
+-	error: refs/tags/tag-symbolic-1: badReferentName: points to invalid refname '\''refs/tags/.tag'\''
+-	EOF
+-	rm $tag_dir_prefix/tag-symbolic-1 &&
+-	test_cmp expect err
++	(
++		cd repo &&
++		test_commit default &&
++		mkdir -p "$branch_dir_prefix/a/b" &&
++
++		ln -sf ./main $branch_dir_prefix/branch-symbolic-good &&
++		git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: refs/heads/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
++		EOF
++		rm $branch_dir_prefix/branch-symbolic-good &&
++		test_cmp expect err &&
++
++		ln -sf ../../logs/branch-escape $branch_dir_prefix/branch-symbolic &&
++		git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: refs/heads/branch-symbolic: symlinkRef: use deprecated symbolic link for symref
++		warning: refs/heads/branch-symbolic: symrefTargetIsNotARef: points to non-ref target '\''logs/branch-escape'\''
++		EOF
++		rm $branch_dir_prefix/branch-symbolic &&
++		test_cmp expect err &&
++
++		ln -sf ./"branch   " $branch_dir_prefix/branch-symbolic-bad &&
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: refs/heads/branch-symbolic-bad: symlinkRef: use deprecated symbolic link for symref
++		error: refs/heads/branch-symbolic-bad: badReferentName: points to invalid refname '\''refs/heads/branch   '\''
++		EOF
++		rm $branch_dir_prefix/branch-symbolic-bad &&
++		test_cmp expect err &&
++
++		ln -sf ./".tag" $tag_dir_prefix/tag-symbolic-1 &&
++		test_must_fail git refs verify 2>err &&
++		cat >expect <<-EOF &&
++		warning: refs/tags/tag-symbolic-1: symlinkRef: use deprecated symbolic link for symref
++		error: refs/tags/tag-symbolic-1: badReferentName: points to invalid refname '\''refs/tags/.tag'\''
++		EOF
++		rm $tag_dir_prefix/tag-symbolic-1 &&
++		test_cmp expect err
++	)
+ '
+ 
+ test_expect_success SYMLINKS 'symlink symref content should be checked (worktree)' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+-	cd repo &&
+-	test_commit default &&
+-	git branch branch-1 &&
+-	git branch branch-2 &&
+-	git branch branch-3 &&
+-	git worktree add ./worktree-1 branch-2 &&
+-	git worktree add ./worktree-2 branch-3 &&
+-	main_worktree_refdir_prefix=.git/refs/heads &&
+-	worktree1_refdir_prefix=.git/worktrees/worktree-1/refs/worktree &&
+-	worktree2_refdir_prefix=.git/worktrees/worktree-2/refs/worktree &&
+-
+ 	(
+-		cd worktree-1 &&
+-		git update-ref refs/worktree/branch-4 refs/heads/branch-1
+-	) &&
+-	(
+-		cd worktree-2 &&
+-		git update-ref refs/worktree/branch-4 refs/heads/branch-1
+-	) &&
+-
+-	ln -sf ../../../../refs/heads/good-branch $worktree1_refdir_prefix/branch-symbolic-good &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: worktrees/worktree-1/refs/worktree/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
+-	EOF
+-	rm $worktree1_refdir_prefix/branch-symbolic-good &&
+-	test_cmp expect err &&
+-
+-	ln -sf ../../../../worktrees/worktree-1/good-branch $worktree2_refdir_prefix/branch-symbolic-good &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: worktrees/worktree-2/refs/worktree/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
+-	EOF
+-	rm $worktree2_refdir_prefix/branch-symbolic-good &&
+-	test_cmp expect err &&
+-
+-	ln -sf ../../worktrees/worktree-2/good-branch $main_worktree_refdir_prefix/branch-symbolic-good &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: refs/heads/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
+-	EOF
+-	rm $main_worktree_refdir_prefix/branch-symbolic-good &&
+-	test_cmp expect err &&
+-
+-	ln -sf ../../../../logs/branch-escape $worktree1_refdir_prefix/branch-symbolic &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: worktrees/worktree-1/refs/worktree/branch-symbolic: symlinkRef: use deprecated symbolic link for symref
+-	warning: worktrees/worktree-1/refs/worktree/branch-symbolic: symrefTargetIsNotARef: points to non-ref target '\''logs/branch-escape'\''
+-	EOF
+-	rm $worktree1_refdir_prefix/branch-symbolic &&
+-	test_cmp expect err &&
+-
+-	for bad_referent_name in ".tag" "branch   "
+-	do
+-		ln -sf ./"$bad_referent_name" $worktree1_refdir_prefix/bad-symbolic &&
+-		test_must_fail git refs verify 2>err &&
++		cd repo &&
++		test_commit default &&
++		git branch branch-1 &&
++		git branch branch-2 &&
++		git branch branch-3 &&
++		git worktree add ./worktree-1 branch-2 &&
++		git worktree add ./worktree-2 branch-3 &&
++		main_worktree_refdir_prefix=.git/refs/heads &&
++		worktree1_refdir_prefix=.git/worktrees/worktree-1/refs/worktree &&
++		worktree2_refdir_prefix=.git/worktrees/worktree-2/refs/worktree &&
++
++		(
++			cd worktree-1 &&
++			git update-ref refs/worktree/branch-4 refs/heads/branch-1
++		) &&
++		(
++			cd worktree-2 &&
++			git update-ref refs/worktree/branch-4 refs/heads/branch-1
++		) &&
++
++		ln -sf ../../../../refs/heads/good-branch $worktree1_refdir_prefix/branch-symbolic-good &&
++		git refs verify 2>err &&
+ 		cat >expect <<-EOF &&
+-		warning: worktrees/worktree-1/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
+-		error: worktrees/worktree-1/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''worktrees/worktree-1/refs/worktree/$bad_referent_name'\''
++		warning: worktrees/worktree-1/refs/worktree/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
+ 		EOF
+-		rm $worktree1_refdir_prefix/bad-symbolic &&
++		rm $worktree1_refdir_prefix/branch-symbolic-good &&
+ 		test_cmp expect err &&
+ 
+-		ln -sf ../../../../refs/heads/"$bad_referent_name" $worktree1_refdir_prefix/bad-symbolic &&
+-		test_must_fail git refs verify 2>err &&
++		ln -sf ../../../../worktrees/worktree-1/good-branch $worktree2_refdir_prefix/branch-symbolic-good &&
++		git refs verify 2>err &&
+ 		cat >expect <<-EOF &&
+-		warning: worktrees/worktree-1/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
+-		error: worktrees/worktree-1/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''refs/heads/$bad_referent_name'\''
++		warning: worktrees/worktree-2/refs/worktree/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
+ 		EOF
+-		rm $worktree1_refdir_prefix/bad-symbolic &&
++		rm $worktree2_refdir_prefix/branch-symbolic-good &&
+ 		test_cmp expect err &&
+ 
+-		ln -sf ./"$bad_referent_name" $worktree2_refdir_prefix/bad-symbolic &&
+-		test_must_fail git refs verify 2>err &&
++		ln -sf ../../worktrees/worktree-2/good-branch $main_worktree_refdir_prefix/branch-symbolic-good &&
++		git refs verify 2>err &&
+ 		cat >expect <<-EOF &&
+-		warning: worktrees/worktree-2/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
+-		error: worktrees/worktree-2/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''worktrees/worktree-2/refs/worktree/$bad_referent_name'\''
++		warning: refs/heads/branch-symbolic-good: symlinkRef: use deprecated symbolic link for symref
+ 		EOF
+-		rm $worktree2_refdir_prefix/bad-symbolic &&
++		rm $main_worktree_refdir_prefix/branch-symbolic-good &&
+ 		test_cmp expect err &&
+ 
+-		ln -sf ../../../../refs/heads/"$bad_referent_name" $worktree2_refdir_prefix/bad-symbolic &&
+-		test_must_fail git refs verify 2>err &&
++		ln -sf ../../../../logs/branch-escape $worktree1_refdir_prefix/branch-symbolic &&
++		git refs verify 2>err &&
+ 		cat >expect <<-EOF &&
+-		warning: worktrees/worktree-2/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
+-		error: worktrees/worktree-2/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''refs/heads/$bad_referent_name'\''
++		warning: worktrees/worktree-1/refs/worktree/branch-symbolic: symlinkRef: use deprecated symbolic link for symref
++		warning: worktrees/worktree-1/refs/worktree/branch-symbolic: symrefTargetIsNotARef: points to non-ref target '\''logs/branch-escape'\''
+ 		EOF
+-		rm $worktree2_refdir_prefix/bad-symbolic &&
+-		test_cmp expect err || return 1
+-	done
++		rm $worktree1_refdir_prefix/branch-symbolic &&
++		test_cmp expect err &&
++
++		for bad_referent_name in ".tag" "branch   "
++		do
++			ln -sf ./"$bad_referent_name" $worktree1_refdir_prefix/bad-symbolic &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			warning: worktrees/worktree-1/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
++			error: worktrees/worktree-1/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''worktrees/worktree-1/refs/worktree/$bad_referent_name'\''
++			EOF
++			rm $worktree1_refdir_prefix/bad-symbolic &&
++			test_cmp expect err &&
++
++			ln -sf ../../../../refs/heads/"$bad_referent_name" $worktree1_refdir_prefix/bad-symbolic &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			warning: worktrees/worktree-1/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
++			error: worktrees/worktree-1/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''refs/heads/$bad_referent_name'\''
++			EOF
++			rm $worktree1_refdir_prefix/bad-symbolic &&
++			test_cmp expect err &&
++
++			ln -sf ./"$bad_referent_name" $worktree2_refdir_prefix/bad-symbolic &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			warning: worktrees/worktree-2/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
++			error: worktrees/worktree-2/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''worktrees/worktree-2/refs/worktree/$bad_referent_name'\''
++			EOF
++			rm $worktree2_refdir_prefix/bad-symbolic &&
++			test_cmp expect err &&
++
++			ln -sf ../../../../refs/heads/"$bad_referent_name" $worktree2_refdir_prefix/bad-symbolic &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			warning: worktrees/worktree-2/refs/worktree/bad-symbolic: symlinkRef: use deprecated symbolic link for symref
++			error: worktrees/worktree-2/refs/worktree/bad-symbolic: badReferentName: points to invalid refname '\''refs/heads/$bad_referent_name'\''
++			EOF
++			rm $worktree2_refdir_prefix/bad-symbolic &&
++			test_cmp expect err || return 1
++		done
++	)
+ '
+ 
+ test_expect_success 'ref content checks should work with worktrees' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
+-	cd repo &&
+-	test_commit default &&
+-	git branch branch-1 &&
+-	git branch branch-2 &&
+-	git branch branch-3 &&
+-	git worktree add ./worktree-1 branch-2 &&
+-	git worktree add ./worktree-2 branch-3 &&
+-	worktree1_refdir_prefix=.git/worktrees/worktree-1/refs/worktree &&
+-	worktree2_refdir_prefix=.git/worktrees/worktree-2/refs/worktree &&
+-
+ 	(
+-		cd worktree-1 &&
+-		git update-ref refs/worktree/branch-4 refs/heads/branch-1
+-	) &&
+-	(
+-		cd worktree-2 &&
+-		git update-ref refs/worktree/branch-4 refs/heads/branch-1
+-	) &&
++		cd repo &&
++		test_commit default &&
++		git branch branch-1 &&
++		git branch branch-2 &&
++		git branch branch-3 &&
++		git worktree add ./worktree-1 branch-2 &&
++		git worktree add ./worktree-2 branch-3 &&
++		worktree1_refdir_prefix=.git/worktrees/worktree-1/refs/worktree &&
++		worktree2_refdir_prefix=.git/worktrees/worktree-2/refs/worktree &&
+ 
+-	for bad_content in "$(git rev-parse HEAD)x" "xfsazqfxcadas" "Xfsazqfxcadas"
+-	do
+-		printf "%s" $bad_content >$worktree1_refdir_prefix/bad-branch-1 &&
+-		test_must_fail git refs verify 2>err &&
++		(
++			cd worktree-1 &&
++			git update-ref refs/worktree/branch-4 refs/heads/branch-1
++		) &&
++		(
++			cd worktree-2 &&
++			git update-ref refs/worktree/branch-4 refs/heads/branch-1
++		) &&
++
++		for bad_content in "$(git rev-parse HEAD)x" "xfsazqfxcadas" "Xfsazqfxcadas"
++		do
++			printf "%s" $bad_content >$worktree1_refdir_prefix/bad-branch-1 &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			error: worktrees/worktree-1/refs/worktree/bad-branch-1: badRefContent: $bad_content
++			EOF
++			rm $worktree1_refdir_prefix/bad-branch-1 &&
++			test_cmp expect err || return 1
++		done &&
++
++		for bad_content in "$(git rev-parse HEAD)x" "xfsazqfxcadas" "Xfsazqfxcadas"
++		do
++			printf "%s" $bad_content >$worktree2_refdir_prefix/bad-branch-2 &&
++			test_must_fail git refs verify 2>err &&
++			cat >expect <<-EOF &&
++			error: worktrees/worktree-2/refs/worktree/bad-branch-2: badRefContent: $bad_content
++			EOF
++			rm $worktree2_refdir_prefix/bad-branch-2 &&
++			test_cmp expect err || return 1
++		done &&
++
++		printf "%s" "$(git rev-parse HEAD)" >$worktree1_refdir_prefix/branch-no-newline &&
++		git refs verify 2>err &&
+ 		cat >expect <<-EOF &&
+-		error: worktrees/worktree-1/refs/worktree/bad-branch-1: badRefContent: $bad_content
++		warning: worktrees/worktree-1/refs/worktree/branch-no-newline: refMissingNewline: misses LF at the end
+ 		EOF
+-		rm $worktree1_refdir_prefix/bad-branch-1 &&
+-		test_cmp expect err || return 1
+-	done &&
++		rm $worktree1_refdir_prefix/branch-no-newline &&
++		test_cmp expect err &&
+ 
+-	for bad_content in "$(git rev-parse HEAD)x" "xfsazqfxcadas" "Xfsazqfxcadas"
+-	do
+-		printf "%s" $bad_content >$worktree2_refdir_prefix/bad-branch-2 &&
+-		test_must_fail git refs verify 2>err &&
++		printf "%s garbage" "$(git rev-parse HEAD)" >$worktree1_refdir_prefix/branch-garbage &&
++		git refs verify 2>err &&
+ 		cat >expect <<-EOF &&
+-		error: worktrees/worktree-2/refs/worktree/bad-branch-2: badRefContent: $bad_content
++		warning: worktrees/worktree-1/refs/worktree/branch-garbage: trailingRefContent: has trailing garbage: '\'' garbage'\''
+ 		EOF
+-		rm $worktree2_refdir_prefix/bad-branch-2 &&
+-		test_cmp expect err || return 1
+-	done &&
+-
+-	printf "%s" "$(git rev-parse HEAD)" >$worktree1_refdir_prefix/branch-no-newline &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: worktrees/worktree-1/refs/worktree/branch-no-newline: refMissingNewline: misses LF at the end
+-	EOF
+-	rm $worktree1_refdir_prefix/branch-no-newline &&
+-	test_cmp expect err &&
+-
+-	printf "%s garbage" "$(git rev-parse HEAD)" >$worktree1_refdir_prefix/branch-garbage &&
+-	git refs verify 2>err &&
+-	cat >expect <<-EOF &&
+-	warning: worktrees/worktree-1/refs/worktree/branch-garbage: trailingRefContent: has trailing garbage: '\'' garbage'\''
+-	EOF
+-	rm $worktree1_refdir_prefix/branch-garbage &&
+-	test_cmp expect err
++		rm $worktree1_refdir_prefix/branch-garbage &&
++		test_cmp expect err
++	)
+ '
+ 
+ test_done
 -- 
 2.48.1
 
