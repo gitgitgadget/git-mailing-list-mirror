@@ -1,251 +1,162 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7619C1494DF
-	for <git@vger.kernel.org>; Mon, 17 Feb 2025 15:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2170E1494A8
+	for <git@vger.kernel.org>; Mon, 17 Feb 2025 15:47:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739806106; cv=none; b=qkNx4B95u92TN3vMsoUZ3gdOn4ESWh8yXCPUrlhHnOw/h/myL716tVZhq+TF2SU13fAKlfvG2ISrHQ0r0yuAq11Y1oey3r7SOnEfFH+VRH2OjLsTPYFaipnRGOUnyLZA+5lz5twExagktipazXh4EIiMgc7JB5F1Cb1LGS+EYGw=
+	t=1739807255; cv=none; b=N9kPf2sEEZ0yofyc0ukUG5N/J2KnCH5rqLvA8Zrp+y+ETb1fpEsPj85f9tkUoXad54VlkOZ398MLCEhKVdJnVX0rlh3BVWJnSnXLt3UDiotskYWMNTwq9EH6L/qWtZF5Fc0UzT6ozKa1A/fIZ5u2wiAGD3p4UCS8YOHpTvOhjTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739806106; c=relaxed/simple;
-	bh=wPaIqmLHwWRvrbBUYCny4tdq5axRNe06u08RN96g8oI=;
+	s=arc-20240116; t=1739807255; c=relaxed/simple;
+	bh=SaP6lC7ns1g2gI1bZwVbv4efw77oXcAS6/tNDIOw1nQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y79GiGb/MGDkaW0ZT3Wd+nIeSUJtkD06A/SJNAjSsmpZXha7MokWVBnLsdbIkV4wRplF/2pq0WPSYVuuXBeHdWSfutF3+mcVYxy8hV4a6FKkexciQ1pjNFoCEC7ArtuLQhNlpjG9KQr+NIhU62N7maSjs8yHA23aLi2BLq22SGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZawTrMZr; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=mW/vnMfw+hKNF1vxZLehCDwdj3MJoRlJXsmtwAk3XHVN6oER5p9dYvgm6z1ZM6AnOSAoWkIg3zoOswbasQfpPJUqKKhN3FzWXEy6Cd+UtWJntTE+G+0pv9rZudXNilkvKZW3kRar4MWwnp7On6iR1AHiU7RSyqOEVXVPXTUZcT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=HHvsflhs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZV7CnqYc; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZawTrMZr"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22114b800f7so26648525ad.2
-        for <git@vger.kernel.org>; Mon, 17 Feb 2025 07:28:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739806103; x=1740410903; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZdXrc7vhpoU7P9lSCnZihSpFpzQm1O5gdN7HPnT6JKs=;
-        b=ZawTrMZreUIjfNKwncaltLR48fVNvkKooQ1o4c0UgBE03LTZbTNmsmC5m/IJq2MaFd
-         OZinlTAfQfTlpK03who81ej4bXEz70zI+OIw2Pm4qUzP9O0yo9r7sFwfVG807vpAAos6
-         xIBqgsMmnRqGt7YpF+6MBmmfaVL+lz4gY2Ojk7WqD5OPPwqoF59BxlAxSavB2znzLAQa
-         Jf/PMcoXgp4Dq2oN8EmxbDuOyS5714+LK9E3uDM5phPf/9ad4gt5wY0LGav+5k8wahnK
-         uDoGuRXYncsJ8NY9veW/VV5renxUEkoXrC4X4RjFGyrtDmnwmTER0gtdbWVxUCjCIT3V
-         VLmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739806103; x=1740410903;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZdXrc7vhpoU7P9lSCnZihSpFpzQm1O5gdN7HPnT6JKs=;
-        b=lP4IeHmHCkygr9of4IhTYgGUZ2VYTq0SKRNynCOiu+5Sxs64ulQ3KMlzZB8bcOMDOM
-         SCnH1UwJY8U+U/y8v9xs9BixFvlXnyNSI2MasiDYd2PEWv06z3hL9ltPbFhheZbUEKDN
-         VIIUOjwQqabrU2LXXAf35t+7xBRn5zR78AqPl+hsjej4UNus2upU7bZylu2xUOBcB57/
-         4hhRTyZ16NuyLM9kQJiL2xstd4UsYG37xMMRG2M10+ABHDh5GGwh7Qfb/qKk6/xaYh49
-         HlW/zJSXSLBCUfzB+3IDC/x/YTihnkvBiOXyH2ajsWks5nV2HJVVqtWaK6w6XYH3FxXS
-         Jkuw==
-X-Gm-Message-State: AOJu0YxUg0UHE7ztvHQ40IegG+COeuoauxvp8h9TwYpO3BY79tY2SoHp
-	nUoDy4Ac60tumBPVfQLHtCcLNHiwlsDvrWYJ6lDO+FWrfQZaw4mtzJW6uw==
-X-Gm-Gg: ASbGncvZ88okdhJTo3DVklGOCOVxzwEkbmyMyb2u7+M7WZfcOwPdtRdYji06gZ8ezzQ
-	M9HqIz90XSM4hcx7nGa3+8Pa4+BY0fp1mEqdtwwVcSpzTG4rjQrumI+g65iZz4pNh/gfVNxs1Oo
-	q0ajJwWayDoQz2rNTaVHAu0cvFCMhOgV7Hev2RZti3D/6m4WKI8bURhMWIj0IjJ0LXK9rmk2VyM
-	hh260DIU2c8g9/LBp9Vw6js7qrt4p+QLbcWqKhg6Pt4bL1Cx05aUABq7U1Vyqwua1Aqp3/aSkxu
-	BogFTK7wyf4=
-X-Google-Smtp-Source: AGHT+IFVensy4hbGSGnqpK2Z2myp/iYFa1jg0Db33vANDROKzWWBSwGxCiTkuCgTl6vnpxtkJXyJ+Q==
-X-Received: by 2002:a17:903:22d2:b0:220:f7a6:a02b with SMTP id d9443c01a7336-2210406aac0mr157443375ad.30.1739806102795;
-        Mon, 17 Feb 2025 07:28:22 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-220d5348f29sm72700855ad.37.2025.02.17.07.28.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Feb 2025 07:28:22 -0800 (PST)
-Date: Mon, 17 Feb 2025 23:28:20 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v5 8/8] builtin/fsck: add `git refs verify` child process
-Message-ID: <Z7NVlG0coJ9JbuiG@ArchLinux>
-References: <Z7NU5fZfc8vfSvZ0@ArchLinux>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="HHvsflhs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZV7CnqYc"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1107B1140181;
+	Mon, 17 Feb 2025 10:47:31 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Mon, 17 Feb 2025 10:47:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1739807250;
+	 x=1739893650; bh=AkNoY3+oRD5eZxHHe5+TOxOvEklZyCbWe+v2b5fv4MQ=; b=
+	HHvsflhsHLDsZBmwCpmgQS8JZbR38u8NsvOE+JxOqwyp08wcWjUYzVvqAnQeJmnT
+	oa07VWJeGHxayIn5QeUI0D2NSiw0uG+Z0Qv49rBEOBcc8Ev8SSmbexHpGH5GGzD6
+	mRCMv+cQhfgf/NRFtnzcOilMdLc8y+lhOKPqemNBuI/1XZ2HM/vdQe8Lx9J/MHy3
+	eDg88BREWyLzA1Lz5UsA4pcEbdQeGNqw6p5B3e83rNWUcsuUoRT/PXAW3whJXKXG
+	3tU3T4Ehiu0pMwli/r2+TxtPD33GGXBItAlI+wfoNBIwogPHEMHMO4uDQcHIaNmM
+	CVnd9BMqYgdZJhiHq6yRng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739807250; x=
+	1739893650; bh=AkNoY3+oRD5eZxHHe5+TOxOvEklZyCbWe+v2b5fv4MQ=; b=Z
+	V7CnqYcUZIYv6biUWIRsMT0/CJwzcYsjlVRwX6u6nS9/pkvr6tajPdh4z/2vj1xp
+	9qaz8L05zNOoIwMprLcpVjhzE84czpRDa+2/BSFOOoW2yi1BO4ZyiktC1qp8Omqw
+	ZhQeRzmlHzqDArE8bSfKhyRxExjQRCb/CMWtz5qcYgUId2zYQ8NKfeMVPDtITM9d
+	SbVtOAon8paCAKJ7Wthm5kUYTLVARxOb1y247ScLMwU/Y8ScA9NmhQDlPFYI5lC7
+	nqFIb0Ars6dsv0/FagNAUtts+g6S4wrVPtcrg8pCd9Kq1W9c8eiop7LB1L3Ckjca
+	MtpbOEaskdqoVlu2rs1pQ==
+X-ME-Sender: <xms:ElqzZ_goc0Bf3clZ-cjXrqMsxj2WWmtWVey4UeCx5xN8TyUQ9d-lAQ>
+    <xme:ElqzZ8BdbQRbX7NmlCaiDLnIxwZ85sUpCVH-AthlM7vxqM-BvZK0NtrVWOnVwWhVh
+    k6Eum7lZxAEqrgYxQ>
+X-ME-Received: <xmr:ElqzZ_HCKwnbheY_PHUTVg65o_AvCxoE3w9xZYYaR7ojMnWcEW7OFO37GbkRoBsH1vv7n65inQfmGIcqmhb5QZWULAwqMyXKrqg9MQIRCRwnhFY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehkeejlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
+    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
+    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmh
+    grihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidr
+    ohhrghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthhhrihhs
+    thhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhnhgtrg
+    hikeeisehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:ElqzZ8Ty1TE9GsxPQnKhxFpMcMQocPtBeZi_vQMkbOTREvzEejV_6A>
+    <xmx:ElqzZ8w5KHGG0CmI5mwqR2AWFW_Dqx4VVhVAM6tX3_EnYXvG0FwpRg>
+    <xmx:ElqzZy6ABAPHANCe32RM0XleQrihpYrvmT6jnLh4hk2vN2U75368Yw>
+    <xmx:ElqzZxx5GdVaF5BYjQSRIMrl9G6Xlysd8SxYBwsgMwFcR3wT7wfvlg>
+    <xmx:ElqzZzm8XH_P1LojTbOba0cHPAi_PzCkfOPUA6UOBb2QaXt-3HVtFHY4>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 17 Feb 2025 10:47:29 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 59ba5043 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 17 Feb 2025 15:47:27 +0000 (UTC)
+Date: Mon, 17 Feb 2025 16:47:26 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org, chriscool@tuxfamily.org,
+	christian.couder@gmail.com, johncai86@gmail.com,
+	shejialuo@gmail.com
+Subject: Re: [PATCH 1/7] builtin/verify-tag: stop using `the_repository`
+Message-ID: <Z7NaDvnSvwI_2ZyO@pks.im>
+References: <20250214230210.1460111-1-usmanakinyemi202@gmail.com>
+ <20250214230210.1460111-2-usmanakinyemi202@gmail.com>
+ <Z7LdauBUSfqvyvXv@pks.im>
+ <CAPSxiM8vcH_csM21vtF11APtxfNy_QC91mfYkctaSP-8TyPmyA@mail.gmail.com>
+ <Z7MN8-9rzf7h9zZi@pks.im>
+ <CAPSxiM-Bm9FtvVDJ_MggPFy_hV=h-ossk4p1z=ADGbttG=w-RA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z7NU5fZfc8vfSvZ0@ArchLinux>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPSxiM-Bm9FtvVDJ_MggPFy_hV=h-ossk4p1z=ADGbttG=w-RA@mail.gmail.com>
 
-At now, we have already implemented the ref consistency checks for both
-"files-backend" and "packed-backend". Although we would check some
-redundant things, it won't cause trouble. So, let's integrate it into
-the "git-fsck(1)" command to get feedback from the users. And also by
-calling "git refs verify" in "git-fsck(1)", we make sure that the new
-added checks don't break.
+On Mon, Feb 17, 2025 at 04:12:06PM +0530, Usman Akinyemi wrote:
+> On Mon, Feb 17, 2025 at 3:52 PM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > On Mon, Feb 17, 2025 at 03:35:05PM +0530, Usman Akinyemi wrote:
+> > > On Mon, Feb 17, 2025 at 12:25 PM Patrick Steinhardt <ps@pks.im> wrote:
+> > > >
+> > > > On Sat, Feb 15, 2025 at 04:27:17AM +0530, Usman Akinyemi wrote:
+> > > > > @@ -35,7 +34,8 @@ int cmd_verify_tag(int argc,
+> > > > >               OPT_END()
+> > > > >       };
+> > > > >
+> > > > > -     git_config(git_default_config, NULL);
+> > > > > +     if (repo)
+> > > > > +             repo_config(repo, git_default_config, NULL);
+> > > > >
+> > > >
+> > > > I recently noticed that we have `usage_with_options_if_asked()`. Should
+> > > > we use that function rather than making the call to `git_config()`
+> > > > conditional? Otherwise it's not obvious why we have the conditional in
+> > > > the first place.
+> > > Hi Patrick,
+> > >
+> > > I think the function is `show_usage_with_options_if_asked()`. The function
+> > > is quite different from `git_config()` or the `repo_config()`.  The
+> > > config function consults the configuration file for setting up config
+> > > values and it uses the `repo` variable during this. While
+> > > `show_usage_with_options_if_asked()` is used when the "-h" option is
+> > > passed to the builtin functions to display the help string.
+> > >
+> > > In a case when "-h" is passed to the builtin functions which use the
+> > > RUN_SETUP macro, the `repo` config will be NULL.
+> > >
+> > > There are some builtin commands functions that which has
+> > > the`git_config()` function comes before
+> > > `show_usage_with_options_if_asked()` or it's variant and some,
+> > > `git_config()` comes after.
+> > >
+> > > For those that have `git_config()` comes after
+> > > `show_usage_with_options_if_asked()` , no need for the check, since
+> > > the `show_usage_with_options_if_asked()`call will exit without
+> > > reaching `git_config()`. For scenario where the `git_config()` comes
+> > > earlier, we have to check the `repo` to see if it is NULL, if it is
+> > > NULL, we are sure this happens when the "-h" is passed to the function
+> > > and we do not need to setup and configuration since
+> > > `show_usage_with_options_if_asked()` will exit.
+> >
+> > Exactly, this is what my suggestion is. If we introduced new calls to
+> > `show_usage_with_options_if_asked()` before `git_config()` we wouldn't
+> > have to check for a `NULL` repository in the first place because we know
+> > that we'd have already exited if there was a "-h" parameter.
+> Yeah, that is true. Maybe having this as a preparatory patch could be better.
+> 
+> There was a previous similar patch also which has been accepted. Maybe
+> this can be done after this patch series got accepted, so, I could do
+> it together
+> with the already accepted patch.
 
-Introduce a new function "fsck_refs" that initializes and runs a child
-process to execute the "git refs verify" command. In order to provide
-the user interface create a progress which makes the total task be 1.
-It's hard to know how many loose refs we will check now. We might
-improve this later.
+Yup, that'd be great indeed. Thanks!
 
-Then, introduce the option to allow the user to disable checking ref
-database consistency. Put this function in the very first execution
-sequence of "git-fsck(1)" due to that we don't want the existing code of
-"git-fsck(1)" which would implicitly check the consistency of refs to
-die the program.
-
-Last, update the test to exercise the code.
-
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- Documentation/git-fsck.adoc |  7 ++++++-
- builtin/fsck.c              | 33 ++++++++++++++++++++++++++++++-
- t/t0602-reffiles-fsck.sh    | 39 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 77 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-fsck.adoc b/Documentation/git-fsck.adoc
-index 8f32800a83..11203ba925 100644
---- a/Documentation/git-fsck.adoc
-+++ b/Documentation/git-fsck.adoc
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
- 	 [--[no-]full] [--strict] [--verbose] [--lost-found]
- 	 [--[no-]dangling] [--[no-]progress] [--connectivity-only]
--	 [--[no-]name-objects] [<object>...]
-+	 [--[no-]name-objects] [--[no-]references] [<object>...]
- 
- DESCRIPTION
- -----------
-@@ -104,6 +104,11 @@ care about this output and want to speed it up further.
- 	progress status even if the standard error stream is not
- 	directed to a terminal.
- 
-+--[no-]references::
-+	Control whether to check the references database consistency
-+	via 'git refs verify'. See linkgit:git-refs[1] for details.
-+	The default is to check the references database.
-+
- CONFIGURATION
- -------------
- 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 7a4dcb0716..f4f395cfbd 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -50,6 +50,7 @@ static int verbose;
- static int show_progress = -1;
- static int show_dangling = 1;
- static int name_objects;
-+static int check_references = 1;
- #define ERROR_OBJECT 01
- #define ERROR_REACHABLE 02
- #define ERROR_PACK 04
-@@ -905,11 +906,37 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
- 	return res;
- }
- 
-+static void fsck_refs(struct repository *r)
-+{
-+	struct child_process refs_verify = CHILD_PROCESS_INIT;
-+	struct progress *progress = NULL;
-+
-+	if (show_progress)
-+		progress = start_progress(r, _("Checking ref database"), 1);
-+
-+	if (verbose)
-+		fprintf_ln(stderr, _("Checking ref database"));
-+
-+	child_process_init(&refs_verify);
-+	refs_verify.git_cmd = 1;
-+	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
-+	if (verbose)
-+		strvec_push(&refs_verify.args, "--verbose");
-+	if (check_strict)
-+		strvec_push(&refs_verify.args, "--strict");
-+
-+	if (run_command(&refs_verify))
-+		errors_found |= ERROR_REFS;
-+
-+	display_progress(progress, 1);
-+	stop_progress(&progress);
-+}
-+
- static char const * const fsck_usage[] = {
- 	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
- 	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
- 	   "         [--[no-]dangling] [--[no-]progress] [--connectivity-only]\n"
--	   "         [--[no-]name-objects] [<object>...]"),
-+	   "         [--[no-]name-objects] [--[no-]references] [<object>...]"),
- 	NULL
- };
- 
-@@ -928,6 +955,7 @@ static struct option fsck_opts[] = {
- 				N_("write dangling objects in .git/lost-found")),
- 	OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
- 	OPT_BOOL(0, "name-objects", &name_objects, N_("show verbose names for reachable objects")),
-+	OPT_BOOL(0, "references", &check_references, N_("check reference database consistency")),
- 	OPT_END(),
- };
- 
-@@ -970,6 +998,9 @@ int cmd_fsck(int argc,
- 	git_config(git_fsck_config, &fsck_obj_options);
- 	prepare_repo_settings(the_repository);
- 
-+	if (check_references)
-+		fsck_refs(the_repository);
-+
- 	if (connectivity_only) {
- 		for_each_loose_object(mark_loose_for_connectivity, NULL, 0);
- 		for_each_packed_object(the_repository,
-diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index 28dc8dcddc..42e8a84739 100755
---- a/t/t0602-reffiles-fsck.sh
-+++ b/t/t0602-reffiles-fsck.sh
-@@ -822,4 +822,43 @@ test_expect_success 'packed-ref without sorted trait should not be checked' '
- 	)
- '
- 
-+test_expect_success '--[no-]references option should apply to fsck' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	branch_dir_prefix=.git/refs/heads &&
-+	(
-+		cd repo &&
-+		test_commit default &&
-+		for trailing_content in " garbage" "    more garbage"
-+		do
-+			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
-+			git fsck 2>err &&
-+			cat >expect <<-EOF &&
-+			warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
-+			EOF
-+			rm $branch_dir_prefix/branch-garbage &&
-+			test_cmp expect err || return 1
-+		done &&
-+
-+		for trailing_content in " garbage" "    more garbage"
-+		do
-+			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
-+			git fsck --references 2>err &&
-+			cat >expect <<-EOF &&
-+			warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
-+			EOF
-+			rm $branch_dir_prefix/branch-garbage &&
-+			test_cmp expect err || return 1
-+		done &&
-+
-+		for trailing_content in " garbage" "    more garbage"
-+		do
-+			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
-+			git fsck --no-references 2>err &&
-+			rm $branch_dir_prefix/branch-garbage &&
-+			test_must_be_empty err || return 1
-+		done
-+	)
-+'
-+
- test_done
--- 
-2.48.1
-
+Patrick
