@@ -1,53 +1,53 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45ABA18A95A
-	for <git@vger.kernel.org>; Mon, 17 Feb 2025 06:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CCE318DB3A
+	for <git@vger.kernel.org>; Mon, 17 Feb 2025 06:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739775354; cv=none; b=WvHbuxpwkk+oefCld7dTbLUYEtfA51H3Ex/p/pdrg50gdc41DY6UxdCoNMAZcu9Y8Se0szd4+u81hOxbx9+i45EUfnrGrROlhBoe7MeDmO7aPoX/XmRvGEMXFTeAjH/3j8eLbvjKsEdbu/S44hhBC4ewOBB2m1FNvM5l6DlP/4E=
+	t=1739775355; cv=none; b=WprRENuQop9ZqK39xetlISwtZ/CwnStZD/AUU3fGl/+xLOHn7h2Ssg6Zo+s8GvllQk5jmfbPMSE0Is+MbuhnshHoDxS9l/JXnxnWlNM6AcrdYGQC5ue1X8DV4kjLUa+EOrFhUt+XYEfxoLJ5ufw0WwhQ+6R9pq9tTBteb9BX9NQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739775354; c=relaxed/simple;
-	bh=LJlo4JuaVfYzNk5NGGuMQEQ4gl1Eja3vyvoytX249vU=;
+	s=arc-20240116; t=1739775355; c=relaxed/simple;
+	bh=dgTQlE5xqirUN8Ncv+0Jut29DizHgakUI0vLF6G4WMs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a1/cWUZ8MgDzRbo5ML3MNAOAdgimUfu3JY0v316B0DAjXeQqVQHZ5x6WAAZBTQVC9gtd6v2UoQTdWVpPB6pvhwH1DrdcjdhNchEm4eYDNe+Y4f9V9ykKhLSowCGC0qA/pd+26mlwM6ZYdNviQ8bqZ+xpPQUxB3uLMKJWCg4Xxnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mIaEaTEq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SShC+Xww; arc=none smtp.client-ip=202.12.124.146
+	 Content-Type:Content-Disposition:In-Reply-To; b=SaUbZqcriViD0Q2y2tuGq/7o3BWQzONxLT1ibHAGXSHm7awWHSv+hfO8VE2Qu4T613AdmKBgiYgovAN0Nw7b86ogQYiouC6oi4oGdCBx41YE7wOEYBjZdUrMSivboHcM9DvvH1t58CohFRvjq5VM/3JdxW2pGkX4w/rzaxKE6p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P02xKaOc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PrOpV230; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mIaEaTEq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SShC+Xww"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 25FE4114011B;
-	Mon, 17 Feb 2025 01:55:51 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P02xKaOc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PrOpV230"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0E51E114011C;
+	Mon, 17 Feb 2025 01:55:53 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Mon, 17 Feb 2025 01:55:51 -0500
+  by phl-compute-04.internal (MEProxy); Mon, 17 Feb 2025 01:55:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1739775350; x=1739861750; bh=yhXtjUoDVa
-	h7zeFc9KscHNEA15mNwV8Ng3XyIYeXNnE=; b=mIaEaTEqoapLy16bW6qgjhzWMF
-	jotKV59KIA1BaUfAzTRXL7QXK4+BDjUYqvsfSBKOmtiHW+N5Db8AS4fsOCBhCWiL
-	KuXBGtZvcCiTq6oau2Lt0S5OFMY4uRNEBSnYLPm3ic7fx4ZZuLKvHmJZjOkmlKo4
-	I+OhOjyMkmcODfH8zhYgtTbXWpCbQQOI6mC7fG5axqAs+MZicIDyl9SHc7OWrUE/
-	C8VFdAnX6I0fjPPK5AaG+z3/KREMzWZu8QQLJVYV6XlGGzZEoXMCG6s87tXkzxaw
-	kY+lwxXqo4iGc9FWmT8WY2ywE4mJ1pXJuWcx0qDEvmgwFtrCTHjiTdGePLxQ==
+	:subject:to:to; s=fm3; t=1739775352; x=1739861752; bh=qCogWnIeDz
+	cWwvAcDI4M4N8DqeyxWX+jLNu4zly/YKE=; b=P02xKaOc0c7fBOQsHf9V7QxPM8
+	pLfDnBtqL1b1DraMurijbo+mekZshhKeEc0LrNaQEHR9OxuwxWLgMqFu1UqW02TZ
+	h7Gjz1/ugDz+45uVhHYiKYLWTk7GxcMZCjEzYD9CAytdHC1IJxuKdgD0OteOhqX3
+	L9oTBqgy4BvYZQLIu939EEOCZpQXeXlQ7Oa6wsoYUBNi80cEMhUwfb0bXQZyl/M3
+	/pPXsUeYc1G7ebvHu3LxDDQAwkpEWPOpPKq7qkY/JjZyaNvd/uhEfvDvTswd1Lw8
+	QZdwXNhKz5YfT1pNpzZB2bg5CyE+W8aNKQIaQ1w1oJt7F85mzIauM6vcfV4g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739775350; x=1739861750; bh=yhXtjUoDVah7zeFc9KscHNEA15mNwV8Ng3X
-	yIYeXNnE=; b=SShC+XwwCw/MBy/zrHQkXk2QAUFR9J2gTYaF06xxj5dhiUtXEjm
-	3pYCioWwWvMdUCymasrWr8CXsTPJ/qmpPI9S/V7kDSwZ2gU5eEU07/7GjSsEyhlm
-	0m2X32SQ3qX/P03AsIEpaipr9k2Cq3z2W3gaqrpw+zUBOKHwY+vCSz93Llfsq5i6
-	UnKZhzvlk5IvbZhOKECobYgY+YGfNkZfuP2Rq9vCoaGjXagPQO3ZFT55qcJf9x6t
-	dVrCHHpsb5GOXxOPUqS3vCoAOW9C9I5sCdFELvhTXYczoEN8EWnco0uB15iueTCx
-	KSBMzXVCoxsynTC/IsAptMnW13+rlT9cEeQ==
-X-ME-Sender: <xms:dt2yZy98GzbL4TVbCP_RVF_Pd__Npzk1CPTcvlRnpucc0tNQoVo3Ew>
-    <xme:dt2yZys2kEDebrTyGWKOD5XMgx8CB3xZUmnuEupW2XnUFNxfJxFMaXFj7q_UWZ-Dw
-    mYyIhFBPWO7rAVImQ>
-X-ME-Received: <xmr:dt2yZ4AKFj9BMV3AdAL6Jw_k2Yh48vnTIrrFu4wqNjGrGzAZgIQM6DVPhAaeSATSVDpGg6A3E-PxoGgl5M6UvbktJT6t_79i2bxkrR2mwLWGnh0>
+	1739775352; x=1739861752; bh=qCogWnIeDzcWwvAcDI4M4N8DqeyxWX+jLNu
+	4zly/YKE=; b=PrOpV230OYKwmX47H1/zmpkeLtWRzHuHlENt91bntVH9N1ul1t6
+	qsZ5TmI/XfmJ4Fx9gXiqPFUmWvNpwyPJb7exCAwtHXQWVyGzWbCGRIlmjgrntZzx
+	Ti7PpgVh3nfErmEPtYfXaTu71ChRuJ51zdONZpj5EOebbECH+VRRZT3zLjiuGypb
+	0h8Mg8sCHwZaMqOj2f9fo0kxWm0RmDhlMiL9oJ1bjXWi5EmtobSo3ZhTKceSVmIH
+	rVXYJWRsFqftkwwi9ZtmHOA1gNcNCksXOvjPi52Zvfux/cFelyKIqcbJE/ErpNGo
+	7ULcYJs4LoiG0rwmGjztK56zd3n+r3F0D9A==
+X-ME-Sender: <xms:eN2yZ_T_5ID84sU283HSpwILlWCck8XHHve7JF97G6-231jzd02yJA>
+    <xme:eN2yZwxPXHSnK_mmLgywlRkPBMvKiEVarHKRyFHmILkvm_pgNX9h8SzuOQC2tKpHq
+    Rg8AfNYIPzrJ9CuWg>
+X-ME-Received: <xmr:eN2yZ03Iwrjy52xEk_8tAuoWXOOJ83nmyJTsJ-KeSGsqlB3QZ1yblHRcriSBOjVsj13g-upDbcLqfINcRn327iaqCV3xWwYmlit-jHqxQg3cats>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehjeejudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -56,33 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdehjeejudcutefuodetgg
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehu
-    shhmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopegthh
-    hrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtoheptghhrhhishht
-    ihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhhvghjihgrlh
-    huohesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:dt2yZ6fktJwNTl1pbHvpwAxCpYf8vSjS0FiW-kjuAd6uwYBaZfQiTA>
-    <xmx:dt2yZ3MpqxbzI3w_mvwOJ-J9BrIIBG76kfqWeDeoc5JwrbWIY2iPVw>
-    <xmx:dt2yZ0mUCN_G15VgfgRXD6rhzReSu4G0b1XhhV52_WBZ_RjPSVhAww>
-    <xmx:dt2yZ5tKyh_7D_oeke0F4gIx49WXTH9MLLv9nJDphI0Fz2bIMQBMAw>
-    <xmx:dt2yZzBLrISPuSHV3hCgHpuFj3W1FrjXQWTSn1b0qepmCTXr3H8ybpzo>
+    shhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegthh
+    hrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepjhhohhhntggr
+    ihekieesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuug
+    gvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:eN2yZ_Diw1wk3kob8f8Ns7lSDDX8y5TswAlv2F_bOEIoBc2CkU9ahg>
+    <xmx:eN2yZ4gEzw5A9k8mKIWKw4Zt1-idIote2U_6JsJvYnL5ZhoDVRHjGw>
+    <xmx:eN2yZzq6feo3nt9Vqz-3aYwMGlbJ7tnr-MN2zvXcE2oQLPS7NHvMaw>
+    <xmx:eN2yZzj47TgJ-1caEA1x1UAL4JWWWDqoSOiaaDah8Yba3sAEpnWLSg>
+    <xmx:eN2yZzVKIqp7hBpbDSsmbuQeZYriToOr2EY3CC4_ghC9oBMUPA_3gSM0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 17 Feb 2025 01:55:49 -0500 (EST)
+ 17 Feb 2025 01:55:51 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ed6a0d1d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Mon, 17 Feb 2025 06:55:46 +0000 (UTC)
-Date: Mon, 17 Feb 2025 07:55:38 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 8d44e06c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Mon, 17 Feb 2025 06:55:50 +0000 (UTC)
+Date: Mon, 17 Feb 2025 07:55:49 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Usman Akinyemi <usmanakinyemi202@gmail.com>
 Cc: git@vger.kernel.org, chriscool@tuxfamily.org,
 	christian.couder@gmail.com, johncai86@gmail.com,
 	shejialuo@gmail.com
-Subject: Re: [PATCH 1/7] builtin/verify-tag: stop using `the_repository`
-Message-ID: <Z7LdauBUSfqvyvXv@pks.im>
+Subject: Re: [PATCH 5/7] builtin/ls-files: stop using `the_repository`
+Message-ID: <Z7Lddaa3SLSEziMx@pks.im>
 References: <20250214230210.1460111-1-usmanakinyemi202@gmail.com>
- <20250214230210.1460111-2-usmanakinyemi202@gmail.com>
+ <20250214230210.1460111-6-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,23 +91,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250214230210.1460111-2-usmanakinyemi202@gmail.com>
+In-Reply-To: <20250214230210.1460111-6-usmanakinyemi202@gmail.com>
 
-On Sat, Feb 15, 2025 at 04:27:17AM +0530, Usman Akinyemi wrote:
-> @@ -35,7 +34,8 @@ int cmd_verify_tag(int argc,
->  		OPT_END()
->  	};
->  
-> -	git_config(git_default_config, NULL);
-> +	if (repo)
-> +		repo_config(repo, git_default_config, NULL);
->  
+On Sat, Feb 15, 2025 at 04:27:21AM +0530, Usman Akinyemi wrote:
+> Remove the_repository global variable in favor of the repository
+> argument that gets passed in "builtin/ls-files.c".
+> 
+> When `-h` is passed to the command outside a Git repository, the
+> `run_builtin()` will call the `cmd_ls_files()` function with `repo` set
+> to NULL and then early in the function, `show_usage_with_options_if_asked()`
+> call will give the options help and exit, without having to consult much
+> of the configuration file.
+> 
+> Let's pass `repository` argument to `expand_objectsize()`,
+> `show_ru_info()` functions to remove their dependency on the global
+> `the_repository` variable.
 
-I recently noticed that we have `usage_with_options_if_asked()`. Should
-we use that function rather than making the call to `git_config()`
-conditional? Otherwise it's not obvious why we have the conditional in
-the first place.
+This paragraph made my reading hickup a bit. How about:
 
-The same comment also applies to subsequent commits.
+    Pass the repository available in the calling context to both
+    `expand_objectsize()` and `show_ru_info()` to remove their
+    dependency on the global `the_repository` variable.
 
 Patrick
