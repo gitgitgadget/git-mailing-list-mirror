@@ -1,137 +1,153 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96E1749A
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 21:45:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD6E1C75E2
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 21:59:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739915140; cv=none; b=sYcAiZjX4pOesPsnUx/ecLCF3q0+iPbFx5hNlLQbSzHnfesAeeE/q7x9T7p34jbU/IX0mFC++JXza86XMrseaNXmK3C3tba2j0OPwSvgBEUjZEqifwxQItLG9ufUaat1PKQdeGtCIpiKOBFAxMllM7/j3ECQCbANtAhSSo+Sw7Y=
+	t=1739915950; cv=none; b=TyUYjtC1lK0tW8PdF5ixEGYWSNB1r+Sn21OJVg1InxBFskbIxXwMeYM6UVceO02Fcg15epUosm6PdlmZzPDJtw8W83831m9a3GBYX+QZqC5uodVdsf6pVL2ND6iPVJlRXhNiaA2oHce7QtHH7PVec7qW6G7vUP7CjlYo36mgLU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739915140; c=relaxed/simple;
-	bh=xURPeLqeWmcBdQndokN8XrEqTXUgLnHg5F6pYToOg6A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mpOnG6pRKLjgAK7BcOLEAn1C/7xDkVKJcbM+p7uo2FsQvefwFv8cGqttYwJnFzsC2/TRF5u7W8Lf7xHNgosfkKEyz9sxcl/b2vWq01gFUiTODjDub5oKk1jprmRu/AzSCufZzgEdAlZng5FJFn6liblPoasZIbb3QSrx/v6hpQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lUrjb7A3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j3/Iya3+; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739915950; c=relaxed/simple;
+	bh=IaFKHjMFl9F+vKdwiBMtqJCrMV/cSr+kZn8cBVXJmAg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dCgQpSpAGfiX8YC4A5AKPVVc667suispZ5CEWh4XsXC/sCgpNah8GBIzACi6u2TBJo8EFmnImKG66SQix4Ii1Zv/nkAO7x6rNIx5nTA3KiDFXinh5iPnA0yF84frCDzEXWhOesFJnp+/8j7lIAma19bb8/9Xyq88thptem7pspo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IaPEtArA; arc=none smtp.client-ip=209.85.166.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lUrjb7A3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j3/Iya3+"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A8AB22540135;
-	Tue, 18 Feb 2025 16:45:36 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 18 Feb 2025 16:45:36 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739915136; x=1740001536; bh=Y2Kify0uaF
-	dbdaRvh5OrTbavDoFstgktU/Fc1YTX7G4=; b=lUrjb7A3p1M5oCtc4qjKVrkgyc
-	FblB7EOxKByGp8qIe8+NAY279dP2vdUefD3qmD7xVTFIWmpJtLYjRvUa+A0c2o3p
-	7v1MTLqY0zPVVWWcrg3i2loB8EeCwJSO9OJ5oFAuACeLe+at9h5luCTco/q6AjHo
-	wLoCxpUuXMI4ZySfq90Jykuk0p3OBB5GexBiHZnzSjyK3+FVRoZcu3inXzTWlHOc
-	2fv+hCCqGxql1P0YBIih33LPDEYxh5DUhRUqLv95vXoQmQksN/Ms8z6QVTMrXZh5
-	DqLbPFK9PpiQGVZPZvvEWS3id1TjcxT/hPTlvLZNwqsOr9ql671hQMpCxGfA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739915136; x=1740001536; bh=Y2Kify0uaFdbdaRvh5OrTbavDoFstgktU/F
-	c1YTX7G4=; b=j3/Iya3+MKErLbCccCV48lkt6pcrcDLehXvGnAoSRudYrLOqbD+
-	keNiwdFt9jjTlx2QIbXG14cGfJE07GzHJEv0rU5c2rkhTNJsPRhjIOwlSZqYBIpB
-	XVQUveYtbSABmYQZWoQU+T5k0axgFE1PjtHDloTpnIDL7QO3ti24FFld+s7yQPcd
-	q58nzyJ8n3sZ6Skr1hgN00Mr2MOn4cAqg4LPlIg3AbAuHvDrvuT+FJgTcBcCi6PD
-	rPikwaFMSFYK+DnyANa9nTGuJUjiQ5IUYbQRCmpmOwm4H0II4jVFBW9wGZJ0p8Gf
-	vxY0T12ryG04TFBzgZzqF2m+h3qBa7K3RTg==
-X-ME-Sender: <xms:f_-0Z9nXDPgssMr2lDyA47fIPNrLdNuo5xRaJHMKTvf1Q4SP4zWj_g>
-    <xme:f_-0Z435ZpmtRoHtQMqCuswYQyihCml4_DmRYENpAvs2PrIUwaGRKVEBY3uuOymb6
-    lA004H-Zlz_RuRInw>
-X-ME-Received: <xmr:f_-0ZzpHaSDiJ2Dqp7kbiluC_m-4Zv2vuyGaCcFXxJU1kZ7nyy5o6xfoAfvTK3_DexkLktA3Oz0p4RKit34Pu8HHp6am2XDpr6I8p7c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeivdeggecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrnhhtohhnihhnrd
-    hgohgurghrugessghoohhtlhhinhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehplhhuvhgrnhhordgtohhmpdhrtg
-    hpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdr
-    tghomhdprhgtphhtthhopegurghnsegurghnihgvlhihlhhirdgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:gP-0Z9nbLJ0t3-Wt4uiyhSISwl3GyFyPutSNYtUGOvJvrJcru-21gg>
-    <xmx:gP-0Z71V7k8UVHTyhVdi11mzEohaPz_TGWYVYKdHxC1fTWc-mv7mPg>
-    <xmx:gP-0Z8vrpJo4GL9Lm0J2wUHNYBdSlaq1ip1L8jYICNfwLQP1feogUQ>
-    <xmx:gP-0Z_VY0t-HqgwoE_FQBBngMFZoIutH-ivAeRVk2m5DXSWbou0g1A>
-    <xmx:gP-0ZwkBZqf33RbEApqfSkbp7FlZkOaTv1Ecw14IwNx4RGpX7orZlxiT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Feb 2025 16:45:35 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Antonin Godard" <antonin.godard@bootlin.com>
-Cc: <git@vger.kernel.org>,  "Emma Brooks" <me@pluvano.com>,  "Patrick
- Steinhardt" <ps@pks.im>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>,
-  "Daniel Li" <dan@danielyli.com>
-Subject: Re: [PATCH RFC] builtin/log: include From in git show --format=email
-In-Reply-To: <D7UQ9PQOTOLT.26JEMSNOV4WP6@bootlin.com> (Antonin Godard's
-	message of "Mon, 17 Feb 2025 13:42:47 +0100")
-References: <20250214-git-show-from-email-v1-1-df6469635454@bootlin.com>
-	<xmqqh64wl0wl.fsf@gitster.g> <D7UQ9PQOTOLT.26JEMSNOV4WP6@bootlin.com>
-Date: Tue, 18 Feb 2025 13:45:34 -0800
-Message-ID: <xmqqh64rj5a9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaPEtArA"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-8558f3cc093so166685339f.3
+        for <git@vger.kernel.org>; Tue, 18 Feb 2025 13:59:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739915948; x=1740520748; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=R5YK1F5CGloHe/kTfpODnI2d6vwQoESoOytrmYvywkM=;
+        b=IaPEtArAgot47ATEOBuv3JmR9jqtisyFvOn8fs421jZMyHqP3IsOfiUGaJjGluRwmN
+         E1tfzxL+7As031jre3yeZcPlWCtPlT57O6q0OJtYUP4n5q5NP/MRmsba3V1vRaKQjZut
+         s9fbxOgOTjgECRtloCS97vexTQUNgCi+Vg0BnoxJJ3BnKwWQwh3HSHstAfWKhbz+3UvQ
+         7LDThEGSmd3QBEUCk93gJPCme7E3SpIj6Nze5mV82cJFoRPh5P1dE1wzUK/DGWHx3Hv6
+         M5lbHbvuUNJITAPsBoOW0mgu5kTNMWyLLlk6x8YfYjUGI+3iqbJl19N7giYThY1rIIHV
+         0Jcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739915948; x=1740520748;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R5YK1F5CGloHe/kTfpODnI2d6vwQoESoOytrmYvywkM=;
+        b=cHRO//U/GDa0pipSE7cCE/GY99N1+yntReIp5om/h0BbTGrJa2xzdMWxrIEez1s6vU
+         Xpp8Vlu0PX+qhe/BJYLEFcK4mxsJK5vqT9xRh+j9GYYv2FOkLHpDL+r7WXDhLTbefCmX
+         kEgeeq3PHicPfbKizNBV7UkCTNVcrvIAB9rlvE396u/WySV0r5RfhTy3LuYIVut0AaU0
+         BJLD8IzDdl5oApAJN0MD1xQ1adBGz63mQWCREORtj5b9paLYKGcC/ltWc9jdcGulWdkS
+         3ImODce0MkkMKGFG8XLe7KbhvjPWIc7DyBbIf+5wjxfVI023NdL6YHjlFfzt2SF8Iqh9
+         spOQ==
+X-Gm-Message-State: AOJu0Yz0EwTFGAPCT3CKKBdHGivyI+74O3CByvbgZtAf3EunUzKqkFeV
+	f4dhPqJal76tAdaK6D2tRFyNDce9s6KBfEt+lwYZ1i0YCmW/il1HLJa8KNsbwQASoU+uFC8PN4N
+	GH653JHJCnlLDJBGVg1VOdlxTX5FtxU9T
+X-Gm-Gg: ASbGncthos2+loDiee7052lQqAJ//NDOMc17Yp9vZ1P9MeOtJY+r7azMt16EZwPBxzO
+	2IV8Wt9ycC2t4gJYhQCB/tuww9n62Ud17lmUmnS7UXc50d9xQcgYuA72fNfXNAypEWAH9A+HW/N
+	cbn3q+odrxYKB1w2a1wShXO2XI+ydKaw==
+X-Google-Smtp-Source: AGHT+IG0xS1EpjJnY2CB2m5zoq2MOxIZDyI9Wa9MriOtOMOLke7jXDOwgiMbHHETC5Cus+C8P1vIRNO3W+dcvQxajl8=
+X-Received: by 2002:a05:6602:1542:b0:855:ac69:32bb with SMTP id
+ ca18e2360f4ac-855ac6938c5mr305511039f.1.1739915948377; Tue, 18 Feb 2025
+ 13:59:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250217232847.8567-1-lucasseikioshiro@gmail.com>
+ <CABPp-BGpOi9ZqrPFwxCiRLFjozgnYKV=zbYVAA5c9Z9yDUTBGg@mail.gmail.com> <EE88CF05-9120-4CAB-A097-84CC5EA2FACE@gmail.com>
+In-Reply-To: <EE88CF05-9120-4CAB-A097-84CC5EA2FACE@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 18 Feb 2025 13:58:57 -0800
+X-Gm-Features: AWEUYZn6UbJKiVlV1e9Lqhq2WiBBQKD517roflOz-3WCqBzHuQmBENZKrohgRP8
+Message-ID: <CABPp-BHvutRL80QiTYx6gJbYiATOD32DrvXgQQtEy=u5oUZ9Zg@mail.gmail.com>
+Subject: Re: [GSoC][RFC PATCH] git-merge.adoc: detail submodule merge
+To: Lucas Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Antonin Godard" <antonin.godard@bootlin.com> writes:
+On Tue, Feb 18, 2025 at 10:55=E2=80=AFAM Lucas Oshiro
+<lucasseikioshiro@gmail.com> wrote:
+>
+> > It may be worth referencing the commit(s) that introduced the behavior
+> > for other reviewers: commit 68d03e4a6e44 (Implement automatic
+> > fast-forward merge for submodules, 2010-07-07).
+>
+> Ok! I'll inspect the codebase and reference it in a future v2.
+>
+> > "referred by it" is hard for me to parse.  Maybe something like
+> >
+> > """
+> > In the case where the path is a submodule, if the HEAD version of the
+> > submodule is a descendant of the MERGE_HEAD version of the submodule,
+> > or vice-versa, Git...
+> > """
+> > ?
+>
+> Perfect! Actually, I find submodules a little abstract to be explained
+> using only words, but your sentence is very clear.
+>
+> > Also, the references to HEAD and MERGE_HEAD do tie this documentation
+> > rather directly to `git merge`; the basic idea is applicable to all
+> > callers of the merge machinery, but none of the other callers use
+> > MERGE_HEAD (some use CHERRY_PICK_HEAD or REBASE_HEAD), and some do not
+> > assume HEAD points to one of the parents either (e.g. merge-tree and
+> > replay).  So, if we want to move this somewhere more general, we'd
+> > need to reword it a bit.
+>
+> Given your previous suggestion, what about:
+>
+> """
+> In the case where the path is a submodule, if one of the versions of
+> submodule is descendant of another, Git...
+> """
+>
+> ?
 
-> This is what the documentation seems to imply, but builtin/log.c uses these
-> configuration variables in git_log_config(), for example. In the same file,
-> cmd_show() uses git_log_config().
+That seems like the right direction, but I think "descendant of
+another" is vague/confusing.  Perhaps
 
-"imply"?  The documentation says so because the command was designed
-to work like so when the feature was added in mid 2022.
+"""
+In the case where the path is a submodule, if the submodule commit used on
+one side of the merge is a descendant of the submodule commit used on the
+other side of the merge, Git...
+"""
 
-    34bc1b10 (format-patch: allow forcing the use of in-body From: header, 2022-08-29)
-    d5fc07df (format-patch: learn format.forceInBodyFrom configuration variable, 2022-08-29)
+?
 
-Please refrain from using words that imply value-judgement from your
-analysis and stick to the facts; I'll try to do so in my messages,
-too.
 
-As the log family of commands happen to share much of the
-implementation, their code paths pass the log-config structure which
-is a mixed bag.  It does not necessarily mean all commands in the
-family use all the members in the structure.
+>
+> > Oh, maybe we could put this information in
+> > Documentation/merge-strategies.txt?  Hmm....
+>
+> Looks like a good place to put this. My only concerns are:
+>
+> 1. It would need to be documented in both `ort` and `recursive`. I don't
+> think it would be a big deal as most of the first paragraph of both
+> strategies are equal.
 
-> With this reasoning in mind, I thought "git show --format=email" should also
-> benefit from the format.from and format.forceInBodyFrom variables, to correctly
-> display the output.
+Yes, until `recursive` is deleted anyway.  (At which point we'll just
+remap `recursive` to mean `ort` and not have to have separate
+documentation for the two.)
 
-"correctly"?  
+> 2. Maybe it would detail too much on this specific case, while not
+> covering others (e.g. changing file permissions, symlinks, etc).
 
-Changing the behaviour retroactively would mean that those who have
-been relying on the fact that in-body header configuration meant for
-"git format-patch" does not affect "git log" would suddenly start to
-see their output differently.  So I'd worry how bad the downside
-would be.
+Yeah, but we don't have a way to resolve differences for those kinds
+of changes when neither side matches the base version (unless
+something like -Xours or -Xtheirs is passed, but even then that
+belongs under the -X documentation); submodules are somewhat special
+in that regard.
 
-Having said all that.
-
-In hindsight, or if we pretend we were in 2005 and starting the
-project again from scratch, if we did not have any "format.*"
-configuration variables and instead all of these were "log.*", I'd
-agree with everything you said in the message I am responding to.
-In such a hypothetical world, we may not even have added a separate
-"format-patch" command, but used "git log" with an option to spit
-out its output into an individual file for every commit.
-
+> > Thanks for sending this in.  It's always helpful to get researched
+> > documentation improvements, even if I can't help but nitpick and
+> > complicate matters here and there....  ;-)
+>
+> Thank you! Given how deeply you understand the merge machinery any nitpic=
+k
+> is immensely valuable!
