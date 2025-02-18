@@ -1,82 +1,82 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900D7237168
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 09:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8AA23A560
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 09:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739870526; cv=none; b=tZXkf1cHG0NwhYjC5LYOh3U2Dd8zTLvoffZAM/XXFe6o9IYJEk92H7QRWX/OTdVQwvQZ5U8rynrrNh3Uklk374+rkXIHfRzN2S9ACVcrFoFbdZL4jSK/XPujC3hKGK/FrHgwiDROqjAPF1TPwmQIfnsnxAmMvajnlRTeccLbBa8=
+	t=1739870528; cv=none; b=OngP18NEC9o4m6X6iEssJefVagCUIhdfNbaHghH0GKFsCYKkKMxPIFSoDTLRj2dNGcCG81eBDWrmUYM+YOV5zyf+yCeHPShApB3IEtsYOGqOEhAQ6CYp2NG6Rsc2JH/D9iIRXYE64BI/SxhWwl15FvP8t/qPf0MCC/WCtA4PsJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739870526; c=relaxed/simple;
-	bh=ZpzGdY65hEHKrcX5W16hW7WWqWUek51eTOPC5DIXvXQ=;
+	s=arc-20240116; t=1739870528; c=relaxed/simple;
+	bh=9BJGSuPcQiqT2438qAf1vYOZW8z5LQzmiNwdrD2xDFY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=rpI9bUmpyTJ90ejz/Cra4vhKZ9rlMef36hp1M2vciBFXPtWW+NxkZlYO+THg+8qQfvYr+ran/Qol0dpElIStZhWRulRlST3MIYhK6rp82YNhdUd4kpTkwK6VcrwmVreUHtB4po8pIMiHUBDm9EpGlPd8mlBcCCWJEHf9wqeTfZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mp1meG1Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ziyrq1TF; arc=none smtp.client-ip=103.168.172.155
+	 In-Reply-To:To:Cc; b=o3fNrdtgkwljxdGrHpLjXdZZmZ+TbS0dLtW01McDin6IP4J5CuYV1oXgLA6WiO1TFOJXO8isYNykyBNlpeu2hE/AuXluduLHBgh9xRpU70IhQUyLrc7rCHj0nBUo8xlN2oK03CViL+JgK4U1A7VAoDiKIwr6BwVF6crwMKuks80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MJTIUT5w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=za16d13K; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mp1meG1Z";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ziyrq1TF"
-Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 89E9B114022F;
-	Tue, 18 Feb 2025 04:22:03 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-13.internal (MEProxy); Tue, 18 Feb 2025 04:22:03 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MJTIUT5w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="za16d13K"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 41A991140270;
+	Tue, 18 Feb 2025 04:22:06 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Tue, 18 Feb 2025 04:22:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1739870523;
-	 x=1739956923; bh=0sXYiPZWX3259kZz3WP2j3CFxx+mqwtdzt20NxVskgc=; b=
-	mp1meG1ZQNIu219zQEuOUh3XwDQuaisj1Pb2ylEf9cwjT68mwVuH9ViIuTua83Mv
-	PMtQrxiK4IUIGxzfkDQL+PKIqQs6Y+90nsH5A+N2wvaUnmWsIh4Imp4BYweHaI5Y
-	+BzaASxGu9QQEWFg2k25KzRGl249jTtWuDLS0aQcsCi7uvBqznTf4gU9rSTrl5xM
-	jGYxKUlFVpg1txQR+fhhSN/OPAt0pYlzlcwF3lwzwlu8uDP4ZMF4NoCGXZrLZGrR
-	AtLgcaLFclh0L9KM0smiVkdUiMNsx26BLLTc2HLapeqB3VyF1WuLpMylhfz86nn8
-	GJjcg9oKZDZXos2tUGAHeg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1739870526;
+	 x=1739956926; bh=5f9+uE2YJo2wP8+sm4w+hYAwgSykmKHjumj8SA2AEZ4=; b=
+	MJTIUT5w+X2p5aiCAAsQLAVSiKeZAbhIZPxHvSa/wfOEJ81RgcbyKw1e0ViNHgUf
+	FvTgZNvq2SJh6MaqLBUAOhq63o6ys7oiDbVCCooBeWBGM+2KSTfFv/XaCz3uI53L
+	X/5JQQx0mydiMMRN9AU2HupMH8R9AAFHc5avsvkAogXey+5/hUFQv/OfUk2sUaUH
+	0CWbQEK+VPAW2L5qy4/Kgk76g1rISOPFMaAGIs55MLYNIpJbe2j0N7Ggs90Z75in
+	xeM9fcyD6bg7LnLsAXDEqH/mQnoK7ds+pJlFLm/p2UT6qqTQ4bHhtvCe6sq58XWJ
+	3EB1Z+hZBKme132IiArOUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739870523; x=
-	1739956923; bh=0sXYiPZWX3259kZz3WP2j3CFxx+mqwtdzt20NxVskgc=; b=z
-	iyrq1TFuxAsVB+cOl74a+ejirye4+aMS/jZR0f8CEjfA2oRVwjjKaKScBD0CPq/q
-	vWkHwfgnmpvr2KfROZc8z6zmGoMWRpezjWsUwMIbZDgCBgEh3wwLYw9iG3AGv2nL
-	GaKlI5vtr8jtReXij6tN551oRzGUamxhWL98x2ClKE7PqCDoqo6zF23mftYJMGQl
-	BS3bjePziqOfqS9YiL9szPgWcFLR8WYFOVH73v+4FLZt7cPh8IeYT/Nits9YbMoj
-	k7FwjjqqI4ZIQQSbAnbXsPjkQ9xHRPblVOIZSmLGSO5/k0XirF+/Q9gXwlotOESK
-	/L1dcc0iwpugBuRqNl/Uw==
-X-ME-Sender: <xms:O1G0ZwJaFlRAkOGleQXHERpmSVsHr-9GgW_Zy_ZDLoK1iAS59Xv7oQ>
-    <xme:O1G0ZwI7MOAGGCfRJYFPrS_WnGmiQO-H0WiS4z9kOggEKT5oEpaAWZKyaUAgakxXn
-    fZnVxu-rqTN6KY84g>
-X-ME-Received: <xmr:O1G0ZwtExeKR6T5d_C453D0WP6ba9m5KzbIhuStF9aiF-ycfJQke-yw3E2fWx9GIrPmWAa6y64NPbLVN3-f6r1kQhMS6RU0S3CNpW2kdThw3-990>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeitdelfecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739870526; x=
+	1739956926; bh=5f9+uE2YJo2wP8+sm4w+hYAwgSykmKHjumj8SA2AEZ4=; b=z
+	a16d13KHkBJ09Urjekr2vFiB7C4lgNeyYk42HqUrUdWkYAch5uz7dlqxtgGsFHYb
+	13qrHhzZMOy7pG+yHZldVXKDxuGu5z6CgHUzzH0zeO/jD2Hqu2f9ZnokaxHEO+oJ
+	7MkkOW8r8jCSpoA0k6hWSJVzf3/m/wYRn82OSi3TxDCA0yyOs+57wpFDnz1jxu1T
+	8qiNioxfoIKFVk3Ld6sXizeDbqpGjOuBWG/VXG9wXjIqzJuRSLdbPW8TYDYDFQH9
+	3mfxLA5lfkEHo+DBtgyJneu5EF5KzxJJJVLI+4500AmfgGf0Qc7jrwFNhwGysWdD
+	1SjOHeqDmPgrkj1XtSbiQ==
+X-ME-Sender: <xms:PlG0Z_jxuX1bA8mDPCpFh9jZq0f9Th2ehF7zsDINJn1levA-fGOhXg>
+    <xme:PlG0Z8DyJgBJTfhuu2AXBZk9QjAz2oKaT7fVSAUpRHJeuVoHxjPEGrs59gi7Z1FV-
+    -2kGrAcrPe5wmGU_Q>
+X-ME-Received: <xmr:PlG0Z_EzDk-zZTm4xKu-Ulh1CQYxWU7ipVv3ojCS30xDhSIF9Lsm9DfwhF5RgR_CBTxbA8CTDZvSvQC4VN4mlb3Hvy4N7DbCdN414IlnG37Zo7JO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeitdelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
     jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
     himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
-    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpe
+    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtoh
-    epvghthhhomhhsohhnsegvugifrghrughthhhomhhsohhnrdgtohhmpdhrtghpthhtohep
-    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:O1G0Z9ZGJ1LS_Zt044IiifCEzNs6UxVZMVip_i3D8eEJ2-uviGngPA>
-    <xmx:O1G0Z3Yx6WFulTem4VEOhWc39JmmbJZglhWHb0fTaPLMnCs5-yS1Aw>
-    <xmx:O1G0Z5CvaKAVtHaKLPExqRMpcRsPOJfjyfpRuTHoBLHJELo6O-GNkw>
-    <xmx:O1G0Z9axq4Ud3sitlFy-VponbeLIzulte69yCNn6laEZJcRDW9yinQ>
-    <xmx:O1G0Z8NDtrpwO4J9H0LVsu5CK5ZLGjZMxeH5iwJLouX2FDibBiM6qKK_>
+    pehsmhhtphhouhhtpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomh
+    hsohhnrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjie
+    htsehkuggsghdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:PlG0Z8QPxpB2ZFxXOZ1hpW3axAtyixpb2h3Nj5_rxQ6u94lLKquD4w>
+    <xmx:PlG0Z8ySclNu5knAfakmJ2CRDoKeip7YrfyOSsYRI0D1XIsQhkaJgQ>
+    <xmx:PlG0Zy5lojRCsITkMlNm6gmnCR5sQanEuNhmp0ykrNeD0n_DX2n3xQ>
+    <xmx:PlG0Zxz6Ee3U7siX8vznb22CNenIQXUq2a7QDfeZAo_RP5TQrHVR2Q>
+    <xmx:PlG0ZznF5680dSPDINjcqqJLTtOKdG4spBUYn0gMfumbtVwfY3lfNdiK>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Feb 2025 04:22:02 -0500 (EST)
+ 18 Feb 2025 04:22:04 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d3c2228e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 18 Feb 2025 09:22:02 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id b550cfe1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 18 Feb 2025 09:22:03 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 18 Feb 2025 10:20:47 +0100
-Subject: [PATCH v6 11/18] reftable/system: introduce `reftable_rand()`
+Date: Tue, 18 Feb 2025 10:20:49 +0100
+Subject: [PATCH v6 13/18] reftable/basics: stop using `SWAP()` macro
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250218-pks-reftable-drop-git-compat-util-v6-11-8c1f39fb4c02@pks.im>
+Message-Id: <20250218-pks-reftable-drop-git-compat-util-v6-13-8c1f39fb4c02@pks.im>
 References: <20250218-pks-reftable-drop-git-compat-util-v6-0-8c1f39fb4c02@pks.im>
 In-Reply-To: <20250218-pks-reftable-drop-git-compat-util-v6-0-8c1f39fb4c02@pks.im>
 To: git@vger.kernel.org
@@ -95,75 +95,111 @@ Cc: Edward Thomson <ethomson@edwardthomson.com>,
  Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-Mailer: b4 0.14.2
 
-Introduce a new system-level `reftable_rand()` function that generates a
-single unsigned integer for us. The implementation of this function is
-to be provided by the calling codebase, which allows us to more easily
-hook into pre-seeded random number generators.
+Stop using `SWAP()` macro in favor of an open-coded variant of it. Note
+that this also requires us to open-code the build assert that `SWAP()`
+itself uses to verify that the size of both variables matches.
 
-Adapt the two callsites where we generated random data.
+This is done to reduce our dependency on the Git codebase.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- reftable/stack.c  | 4 ++--
- reftable/system.c | 5 +++++
- reftable/system.h | 6 ++++++
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ reftable/basics.h |  9 +++++++++
+ reftable/merged.c |  2 +-
+ reftable/pq.c     |  4 ++--
+ reftable/record.c | 16 ++++++++--------
+ 4 files changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/reftable/stack.c b/reftable/stack.c
-index c33f0c3333a..08893fd454f 100644
---- a/reftable/stack.c
-+++ b/reftable/stack.c
-@@ -523,7 +523,7 @@ static int reftable_stack_reload_maybe_reuse(struct reftable_stack *st,
- 		close(fd);
- 		fd = -1;
+diff --git a/reftable/basics.h b/reftable/basics.h
+index c1ddbaec3ff..59000798f0b 100644
+--- a/reftable/basics.h
++++ b/reftable/basics.h
+@@ -266,6 +266,15 @@ static inline void *reftable_alloc_grow(void *p, size_t nelem, size_t elsize,
+ # define strdup(str) REFTABLE_BANNED(strdup)
+ #endif
  
--		delay = delay + (delay * git_rand(CSPRNG_BYTES_INSECURE)) / UINT32_MAX + 1;
-+		delay = delay + (delay * reftable_rand()) / UINT32_MAX + 1;
- 		sleep_millisec(delay);
++#define REFTABLE_SWAP(a, b) do {								\
++	void *_swap_a_ptr = &(a);								\
++	void *_swap_b_ptr = &(b);								\
++	unsigned char _swap_buffer[sizeof(a) - 2 * sizeof(a) * (sizeof(a) != sizeof(b))];	\
++	memcpy(_swap_buffer, _swap_a_ptr, sizeof(a));						\
++	memcpy(_swap_a_ptr, _swap_b_ptr, sizeof(a));						\
++	memcpy(_swap_b_ptr, _swap_buffer, sizeof(a));						\
++} while (0)
++
+ /* Find the longest shared prefix size of `a` and `b` */
+ size_t common_prefix_size(struct reftable_buf *a, struct reftable_buf *b);
+ 
+diff --git a/reftable/merged.c b/reftable/merged.c
+index 563864068c1..4ff1553772a 100644
+--- a/reftable/merged.c
++++ b/reftable/merged.c
+@@ -155,7 +155,7 @@ static int merged_iter_next_entry(struct merged_iter *mi,
  	}
  
-@@ -688,7 +688,7 @@ int reftable_stack_add(struct reftable_stack *st,
- static int format_name(struct reftable_buf *dest, uint64_t min, uint64_t max)
- {
- 	char buf[100];
--	uint32_t rnd = git_rand(CSPRNG_BYTES_INSECURE);
-+	uint32_t rnd = reftable_rand();
- 	snprintf(buf, sizeof(buf), "0x%012" PRIx64 "-0x%012" PRIx64 "-%08x",
- 		 min, max, rnd);
- 	reftable_buf_reset(dest);
-diff --git a/reftable/system.c b/reftable/system.c
-index adf8e4d30b8..e25ccc0da3c 100644
---- a/reftable/system.c
-+++ b/reftable/system.c
-@@ -4,6 +4,11 @@
- #include "../lockfile.h"
- #include "../tempfile.h"
+ 	mi->advance_index = entry.index;
+-	SWAP(*rec, *entry.rec);
++	REFTABLE_SWAP(*rec, *entry.rec);
+ 	return 0;
+ }
  
-+uint32_t reftable_rand(void)
-+{
-+	return git_rand(CSPRNG_BYTES_INSECURE);
-+}
-+
- int tmpfile_from_pattern(struct reftable_tmpfile *out, const char *pattern)
- {
- 	struct tempfile *tempfile;
-diff --git a/reftable/system.h b/reftable/system.h
-index d02eacea8f0..bb6a7e6285b 100644
---- a/reftable/system.h
-+++ b/reftable/system.h
-@@ -14,6 +14,12 @@ license that can be found in the LICENSE file or at
- #include "git-compat-util.h"
- #include "compat/zlib-compat.h"
+diff --git a/reftable/pq.c b/reftable/pq.c
+index ef8035cfd9b..82394a972db 100644
+--- a/reftable/pq.c
++++ b/reftable/pq.c
+@@ -57,7 +57,7 @@ int merged_iter_pqueue_remove(struct merged_iter_pqueue *pq, struct pq_entry *ou
  
-+/*
-+ * Return a random 32 bit integer. This function is expected to return
-+ * pre-seeded data.
-+ */
-+uint32_t reftable_rand(void);
-+
- /*
-  * An implementation-specific temporary file. By making this specific to the
-  * implementation it becomes possible to tie temporary files into any kind of
+ 		if (min == i)
+ 			break;
+-		SWAP(pq->heap[i], pq->heap[min]);
++		REFTABLE_SWAP(pq->heap[i], pq->heap[min]);
+ 		i = min;
+ 	}
+ 
+@@ -81,7 +81,7 @@ int merged_iter_pqueue_add(struct merged_iter_pqueue *pq, const struct pq_entry
+ 		size_t j = (i - 1) / 2;
+ 		if (pq_less(&pq->heap[j], &pq->heap[i]))
+ 			break;
+-		SWAP(pq->heap[j], pq->heap[i]);
++		REFTABLE_SWAP(pq->heap[j], pq->heap[i]);
+ 		i = j;
+ 	}
+ 
+diff --git a/reftable/record.c b/reftable/record.c
+index 3552bafa994..9a1edf39a02 100644
+--- a/reftable/record.c
++++ b/reftable/record.c
+@@ -237,11 +237,11 @@ static int reftable_ref_record_copy_from(void *rec, const void *src_rec,
+ 	size_t refname_cap = 0;
+ 	int err;
+ 
+-	SWAP(refname, ref->refname);
+-	SWAP(refname_cap, ref->refname_cap);
++	REFTABLE_SWAP(refname, ref->refname);
++	REFTABLE_SWAP(refname_cap, ref->refname_cap);
+ 	reftable_ref_record_release(ref);
+-	SWAP(ref->refname, refname);
+-	SWAP(ref->refname_cap, refname_cap);
++	REFTABLE_SWAP(ref->refname, refname);
++	REFTABLE_SWAP(ref->refname_cap, refname_cap);
+ 
+ 	if (src->refname) {
+ 		size_t refname_len = strlen(src->refname);
+@@ -376,11 +376,11 @@ static int reftable_ref_record_decode(void *rec, struct reftable_buf key,
+ 		return n;
+ 	string_view_consume(&in, n);
+ 
+-	SWAP(refname, r->refname);
+-	SWAP(refname_cap, r->refname_cap);
++	REFTABLE_SWAP(refname, r->refname);
++	REFTABLE_SWAP(refname_cap, r->refname_cap);
+ 	reftable_ref_record_release(r);
+-	SWAP(r->refname, refname);
+-	SWAP(r->refname_cap, refname_cap);
++	REFTABLE_SWAP(r->refname, refname);
++	REFTABLE_SWAP(r->refname_cap, refname_cap);
+ 
+ 	REFTABLE_ALLOC_GROW_OR_NULL(r->refname, key.len + 1, r->refname_cap);
+ 	if (!r->refname) {
 
 -- 
 2.48.1.666.gff9fcf71b7.dirty
