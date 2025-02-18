@@ -1,108 +1,127 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438081E51ED
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 19:12:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BBC21B9C4
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 19:29:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739905928; cv=none; b=ho/wLqTYy6f/lI2WbJuU287PDah2C8r91rCocGkh3ppn+fmF8MYAiKJVgTA37PvAq138i8tMPnBtmzNa+NIdBsXK+0TIiFGfCZrSWYqXUXw2USzfoSgphw3n1oXdiSLc4KKzsQUvyqcZIY9NG3MrLcRFyWPDkIsrQb5/uCaDWk0=
+	t=1739906949; cv=none; b=Q4/Mx9u+0oYxwGVWu56mClBT8Sok3qVlXJlSdRez4WFfwQVzaN96hooIa2GNOjDKYGfqpX8r1wlnnQu3K2Gt+a9Q6DQCn5B63aXS7uqxGsMR//A+HKHrcN0xwNdU6Ml3tdJ9bggKzzqUb/biwx+K159YVbAT4l7wYXduarwFQUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739905928; c=relaxed/simple;
-	bh=Yy5xPoqA4dEbzeqPRoS3jcS0diRvEQZIc+oRcTlwNlk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f9p1uywZbVVBOy9NYX1zIoh+5Nm05xIJ/JXcorjjpPuwUc0WsuFyyPY/u4il/7Py9hCY16mZ+7HehMMj4+s/wgqunBPZCtzOvxxROxIq3ImV/jh01/Pbe+1jheM110EpNbdx/HQJtMZ/WU2opVfLCRbzZKtgASRNhf0EiDTI8pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GbV63704; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oncFDDcz; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739906949; c=relaxed/simple;
+	bh=fQXIrveofinxT/3Gy3T6Umk6SCJUc51nShFpnO8JMR0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZsH9g4GQ9evApbJixezFuoj6QmP3/T5iiGkClXqEeI8MLoLGO/UXac5n1zuNQ5rZUYAMvI0LYcfn3ZGk23IfBW0h9w6Bv0nBQn10chKHm6wQ6cXorS1Bql+ZG5NA1E9VEoZI9PAZkoc65yWwHRT7EP/QfANXx77vh6XhetNno0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=s07y7Az+; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GbV63704";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oncFDDcz"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4A78A11401FB;
-	Tue, 18 Feb 2025 14:12:05 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Tue, 18 Feb 2025 14:12:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739905925; x=1739992325; bh=8iD9AUNTnW
-	R87A46wDiPIWJL3/UsqgnI9oczjqxtayw=; b=GbV63704ZzpqeOpLnC8Az5QYGc
-	Sqnf1lgYHPRxGGINcFSFp9uJXi94KA6LTNI/lxUmYh7yB8C9yQDRVmvzsDu6UFDk
-	m4jJo7kor2LufsjgEbkcdehmpZquZuJpmYA8/sNGbVi7ZzuUUcEQkjGgVhkEUCrz
-	O8U9opA41AOcvUo/Lxv5IQsMq51Lcb6WkXHcLMAtBmr5qAjOpfhYMc2bkF2jev7o
-	74uDKunrsX+g4b9213b5SE/T6kJKse7QLhecj43lpVWnl/cVKdpUgR0rSGNWY3cG
-	BSj5nncBkf3ObKifnToH6wsFh2cFjQ9q2rt1Ly8WHjUE4ZF4OC3koviEs+HQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739905925; x=1739992325; bh=8iD9AUNTnWR87A46wDiPIWJL3/UsqgnI9oc
-	zjqxtayw=; b=oncFDDczf9WpfqSJj0J9IMunHmTZY7B2+ysTeZ7pzR0MJd4XNKm
-	r3eNnLNN+fVcEKfZInayeH714HLKStHCqR687zRwn6WfKI+r/a/M6TK+o83r9Sss
-	5NIJEcYNEVeuJrLLExZipKlZKvNeIuoeJzE+HN6uz0+QaNFAp7AY8ZkSP8+1M5nZ
-	kh4CGGFOLu6U5qxoBNJ0EJxZDpP0O9ZwsF1H4LohYoUhUDsxTvKEP5ezhXjzOZ+8
-	QFQqPrb2RS6ADpC2j6NhmiEwUkQDnBwSK73Dd8hDIUwrXnqXIkn7MiURdU3Tq+Qc
-	86cdS3HhiTMcxHT3FdfCSulGLFnjAfBXM8Q==
-X-ME-Sender: <xms:hNu0Z1vWobkbc0CFUrj8zxRYH-LF9ZMGf7OKzMur0TOXjWhL-SUtvw>
-    <xme:hNu0Z-ciWD5_e9iXWJLQpilno0VFh_-_Kxd-5DlA4Das2wTkWLR6-4Kd98cOfVwiv
-    PpWdw8QKZwuzK9v1Q>
-X-ME-Received: <xmr:hNu0Z4y-NjE-kDvhlm80LnoTBi11h8-3f0jVfwQN9zRe8XkbpQ_rj8-vWoN6uHRU4Pm1vZDxQN7G4oTp9rl5-Lach90yNqNZ5kTMeoE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeivdduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprdgurdholhhivh
-    gvrhesmhgrvhhithdrohhrghdruhhkpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
-    esmhgrvhhithdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:hNu0Z8NVdHls9_WJHfneNQYuXigITkxxoLkveGqmLbim8pu2RPXI4g>
-    <xmx:hNu0Z196naFPob3YAxCIL_UkIAzP9nmdxUf5afNp7J_eHI8vZBB4fw>
-    <xmx:hNu0Z8UQef54SeCYq206lOf9R4uRdxX8Vz1oObSzB6zvajuwiN-Fbw>
-    <xmx:hNu0Z2ez1txoxoYFLga6XH8nGe6tP8RS24Pu4DQdXhvksMDdsMPf8w>
-    <xmx:hdu0Z4lLMikXltKI_1WcgSRrQQ4saqMXbPHMmupWijIwl0C9MMlUKRNM>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Feb 2025 14:12:04 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Peter Oliver <p.d.oliver@mavit.org.uk>
-Cc: ps@pks.im,  git@vger.kernel.org,  Peter Oliver <git@mavit.org.uk>
-Subject: Re: [PATCH v3 0/2] Fix Meson Perl version check
-In-Reply-To: <20250218153043.63535-1-git@mavit.org.uk> (Peter Oliver's message
-	of "Tue, 18 Feb 2025 15:30:41 +0000")
-References: <Z5c4OzzHWOo30Hu6@pks.im>
-	<20250218153043.63535-1-git@mavit.org.uk>
-Date: Tue, 18 Feb 2025 11:12:03 -0800
-Message-ID: <xmqq8qq3kqyk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="s07y7Az+"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1739906945;
+	bh=fQXIrveofinxT/3Gy3T6Umk6SCJUc51nShFpnO8JMR0=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=s07y7Az+T+j8oRJqVI2WZgjxX8pYEvOAIOQGSQ0B71ViPvbFSn4aVoKZwJ3bJNcng
+	 PlV3plPF3LIebJzKLvRZ93jxy2t24BW2Zg11ilVSFFH+6maosCJjeaUONKrWDAD3IC
+	 k4KAnNX7qSirLWBGWpmsqrwRn0fTMSbl0FqNx+g9ZZd9PRWQkySsJPMWJONZHA4IBX
+	 c2TGtG9GMZdl37LUAdYHit4L6MhKvM5j7wEfHPW3kDNXi1qIpsev4RiHPROoSIHd4b
+	 NmVZSWFp0KsUmrcuIzhNg7uFvDU0UmsS4R7BX65VsPIKhKTOuw3AG2ei0HEBh8Jmi1
+	 P+S+cMPWCia7nxR5SLZt4Yk+6nD7nEiq0uHPCjuWkSMd5MRvQVtMHubJ2TkVWeSR9u
+	 hZhqGUuw7y83qCSDx6jZlfIc+tltnUCCOXytl6Go2mG67LavQVUNifGwKnkyOn64jE
+	 lh56CD3Dm0cyD8Tv5+YqwiBB4+VItRgc1KptFvzRpDmGN9hQSlL
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 77D342007A;
+	Tue, 18 Feb 2025 19:29:05 +0000 (UTC)
+Date: Tue, 18 Feb 2025 19:29:03 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jared Van Bortel <cebtenzzre@gmail.com>
+Subject: Re: [PATCH] diff: don't crash with empty argument to -G or -S
+Message-ID: <Z7TffynGALJM4KfH@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jared Van Bortel <cebtenzzre@gmail.com>
+References: <Z7KX2y-dXaZuPrW4@tapette.crustytoothpaste.net>
+ <20250217175759.1576684-1-sandals@crustytoothpaste.net>
+ <xmqqbjuzxgn3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tY8VX8a1BMI1FYYo"
+Content-Disposition: inline
+In-Reply-To: <xmqqbjuzxgn3.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Peter Oliver <p.d.oliver@mavit.org.uk> writes:
 
-> Suggested comments added.
->
-> Peter Oliver (2):
->   meson: bump minimum required Perl version to 5.26.0
->   meson: fix Perl version check for Meson versions before 1.7.0
->
->  meson.build | 17 ++++++++++++++++-
->  1 file changed, 16 insertions(+), 1 deletion(-)
+--tY8VX8a1BMI1FYYo
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I wasn't involved in the review of the previous rounds (so it was a
-bit of surprise for me to be listed on the To: line), but it seems
-that Patrick and you polished these two together, so I'll see if I
-can add Patrick's acked-by/reviewed-by while queuing by waiting for
-the earth to turn one rotation.
+On 2025-02-18 at 18:16:32, Junio C Hamano wrote:
+> I agree BUG is unwelcome.  I am not sure about the value of
+> forbidding an empty string (I am sure about forbidding NULL,
+> though). =20
+>=20
+> If an empty matches everything, "git log -S" would skip changes that
+> would keep the number of lines, right?  For the history of a project
+> that keeps track of source code, such a "feature" would not be
+> useful, but I can see a complaint by somebody who may want to keep
+> track of a "list of things" one-item-per-line, if we had been
+> allowing an empty string.  It would be a regression for such a niche
+> user.
 
-Thanks.
+I actually just ran a `git grep -e ''` to see what it does, and it
+does indeed match every line, so presumably `git log -G` would do so as
+well.
+
+I do see your argument that this could be useful for a limited number of
+use cases, but as someone who often keeps track of lists of things in
+text files and therefore could be a target for that feature, I still
+feel like this would be very much a corner case.
+
+> Luckily, since we have stopped with a "BUG", we do not have to worry
+> about backward compatibility in this case ;-)
+
+I agree.  The good news is that we haven't broken anyone's workflow,
+unless their workflow involves trying to trigger bugs.
+
+> So I'd say that it may be a bit premature for us to declare
+> "anything useful", I am perfectly fine with the patch given here.
+> If somebody who wants to maintain a text file, one-item-per-line
+> that keeps track of a list of things to omit commits that do not
+> change the number of items, they can drop "&& !*arg" part, tweak the
+> message and add their own tests, once this fix lands and the dust
+> settles.
+
+Exactly.  If there's one thing I've learned, it's that there are lots of
+users who will try new things, and I'm sure we'll get a report here or
+elsewhere that they'd like to add this feature if there's actually
+interest.  Fortunately, I expect that it shouldn't be too hard to add
+such a feature.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--tY8VX8a1BMI1FYYo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ7TffwAKCRB8DEliiIei
+geZWAPsFVMPstiVHdv4jn5YsR5UnNHVyTeYnjJZnTm6PrU/gNQD7BC8I+KSbDKzB
+C61q3JrdrQpInMj7MaX9pLcrjKmldAI=
+=Cn6O
+-----END PGP SIGNATURE-----
+
+--tY8VX8a1BMI1FYYo--
