@@ -1,115 +1,132 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122AA1B6CEC
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 22:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55062862B7
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 22:52:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739918552; cv=none; b=BH6ijy7hFJ55mQmbWBqnpRdBtsHTJhANrsO7YGLy2xishaQaPyVNwpKHcbwJhins3OJPowjkw7PJZFVQcImOG+9DqIUTJ1OHMco1BvzjNyKcZgh35SeL2pJNcePGD+O5vvxvhY4KqAkzNtDxnPk8+xrLoaUspoANzCthr3XLchA=
+	t=1739919143; cv=none; b=HRXSrTOMIcKPkWS46O8E8LE/16/MMYlQO/B++uqPnAfva42iNEIPewWtSFHzUhCd1cAF30kWkdRkAEnBLB97aj7+f3XaIDPdUogu+XbNthu9xLYH5NS46m5wFzn3A+22XNOuhDswroB4ctzbQ+lHWIYbFvCZuajaTvZ4+kTpcGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739918552; c=relaxed/simple;
-	bh=PMEABU78pnGxy6tWdiZrn+Hucn2naCfsWUx8s6HnmL8=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=U7sLlEHbATOeDNZV0Jthj0/3PKh3YXXvC51qL6ri9v8tTXjaVIscXJdM2TdbW3yVoDf5blojIdrFzKx/EFof5fPRDlciJxUhzzIXUFeJj56xFKW4UDJLdOxPBgGH3ZDf+QVFxcOBZAX9DExuo7GjE5Dh6wDVkBh1TumzN0UHzcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ND88wZSY; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739919143; c=relaxed/simple;
+	bh=ftvulRgnQvTpQHoQxPLMevtHudJ9B1A6FS/xWxsqESk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uq0lEEa92PX1IjJij4gG425GYEs3ls/ef6rL1P3KY2aMFqxjHbfMcmX7y8ejBdtcGLepM7YfFaBuH/qV1qQByKDE4IYqL2V4aW5UP1HEER3mnhs7JmLe0ee9a6mVML9gVfwnkS0YIQwr6z09tQ+tvKwtY4RlsaLw0yYer4aOQSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LCSG65P/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XyqkiwXT; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ND88wZSY"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-439950a45daso7973005e9.2
-        for <git@vger.kernel.org>; Tue, 18 Feb 2025 14:42:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739918549; x=1740523349; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7faN9gFynbFl903jnO76/00Z///xrIr7/LGw1WUReXE=;
-        b=ND88wZSYkRdo592vyvoM7rZxhbfCe1d+QLny9JtAvRTGPFfKryTAqyJXyWTWRX73Uj
-         2iMSYXQU7OQqLNrOhFwPSVI6xe2pcO1V4gsrFA1d9DDGCtVlhZEE4WcLAMjaWCmkZZsU
-         +ulAAJhMPlYUxtQ95lqrdimSk8y9Qtkjak0WldaKFQ+KG1Q9jwxDgngIuMOQ02PegnBy
-         gRiza+CtX4NFC31rZTiEJTBLlBqAH0S0VSUcIkXayOQzBGqPEsDB/60kvOArsm/4GNvF
-         RxBpoRwEb/niHTJpdUNqHIEgHtHftU2MhSaykepXyhyjyXAiifUH+lo5AmdRe3kVJIPV
-         hkQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739918549; x=1740523349;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7faN9gFynbFl903jnO76/00Z///xrIr7/LGw1WUReXE=;
-        b=ekT+9mVBkzYe2zaxHMRkxz8RdJz77bbNNjYqsrUiLzuyDiLdSwyVJLuQzLzzETlPy3
-         P8BgZbRYYZcZyQD02LVoZXPhtNfxhW/bsiBA6xaHpQNH/Md/mFagoA6crRbXyqlj0Ela
-         C4DnSO2Ctpo2G5qFqchD1kDLIU1aS2PoP51oFuvFkEijfHOMJdNDvW2jdV/tBKU2n+X/
-         yUzMUkM41wRzHC3lGTemZSf02KKMjQWNWoBPLU8LYDDIXvvR3OHw7J2GH3Sn+ecEcNs6
-         DGevEV9mo7RHwf/efcwoqNMxey2A9AW+UuvIHM2uwHkApfNaHC20zIO3F2aazIJeUP3S
-         FXMQ==
-X-Gm-Message-State: AOJu0Yzh3WTmMlpGzSxBnVei0LrvZaqWJoT3Fw3wmqbBQbJYvsR0T0C2
-	YRQu9xMV34+fIIaRGK8D0B/xSbQQ9zCH2+oHb8hCS/mbkYoEYiER629+wQ==
-X-Gm-Gg: ASbGnctztHRfByyDo7A0t96ZmlhWBR8tM4yC0qUZv25eYmVgx4pD70PsTzxey/KP1Lv
-	BsFKEBDOQUZjdF9NDozMLy4pLswSwJebQsNlglrKIRrfdGKSEFkJzFC7liBnseThRMFBO6deImn
-	xIZEx65rsdrAyIi4ZFzpoenJSxtJvrbjooOqueV28e53oUCItxoG++9dOptqzXLWj2K5/HufisR
-	ln/tuuI+0gvPfQ3FtRnfBSEv2YvaoWEWbWwm713SG2mj4+rtpYyLSpVql7XoA3+Xgxfa5FQiPTD
-	/vkc9xItiQGRn+WS
-X-Google-Smtp-Source: AGHT+IEHnoaDa7N+DLxqx6a/cOOO7ZSoQXvTGD2NKgSYZte/yROUeoebqEhZ92gyyT1WnacNCe/g6Q==
-X-Received: by 2002:a05:600c:511a:b0:439:3d72:8705 with SMTP id 5b1f17b1804b1-4396e750e01mr122432785e9.20.1739918548732;
-        Tue, 18 Feb 2025 14:42:28 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258b431fsm15975998f8f.2.2025.02.18.14.42.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Feb 2025 14:42:28 -0800 (PST)
-Message-Id: <c698805f088e0643e5faf027d4eaa6de14d6c1ff.1739918546.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1886.git.git.1739918546.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LCSG65P/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XyqkiwXT"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id CBDFE11401DA;
+	Tue, 18 Feb 2025 17:52:19 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 18 Feb 2025 17:52:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739919139; x=1740005539; bh=bBOwJIrnfF
+	3b7ci/KpPzE1p1UTJ5IEotxlxB1YO5K2A=; b=LCSG65P/9mK7dDTz+whXk5VexG
+	QljDJTKrfs20Mm0l1nRa2DH/FGDAkP+RzTSGbGe92cKwshHAmwojVwuT++KS9jOk
+	f/1nXV6uoM606fs+KgNZZROAkAj+913DNZC1Pu6AR1ZcxI2yQR6Uq6O+HBfoujRa
+	TRGZdb4Pd2nA5zmMneFWrTDSSTBudzx2NOhyODbJACvn9ll45pHQfuKaTVZsL3i/
+	RiL0VEvLbtoz8vHIp1CHt5elXulFfm8+1PYP1vJVF2ajva6IYUGLBZR5zggsuNSx
+	TJs3NdM5sA+sY5I6t9aKx7JTMbcTQpDTSI+Hyy4KU78FOqNsevhTSPJaZBOg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739919139; x=1740005539; bh=bBOwJIrnfF3b7ci/KpPzE1p1UTJ5IEotxlx
+	B1YO5K2A=; b=XyqkiwXTqZEYA0kqNGCLLVzZkuJSeV5OaG8ovvfypTHetg3Hf80
+	yOMT5Qsd/zSbt5k/adi5VtPHO3Yy2QDyQRDkZY9dm8ziRwvTQcOcgn5tAsWmQOju
+	VRZhHNeBxhvm2UhVpW0vHUURWH77iD1bQtg54G/u3hlDErWuGmgFK5ziglqy6MrV
+	umvLm5+dFrP6ziWLBbFnaW1UKft6VJqj0k+xKz1E4mXJ5gfrXbp0QgxdTyYaZQ5/
+	c8glA9eP1VRDjvjVpsAhu++UD4oFpG4dOwJh0DVzJzRfu20tSenBuo0s+FnC/C8g
+	sfOMbvcNuCOaIE6AczeO+nTL2/D4un46lFQ==
+X-ME-Sender: <xms:Iw-1Z1IUhcWbhxbbWQGN4rky-NUuMJnkVnFh0V7xpQn-Va0zx2jWEw>
+    <xme:Iw-1ZxJvecmDLOEVPwNxmaF9dxGnSy9tmLnpOh32aJDMqg0RJxEDW0cpa9WUWbgKC
+    YDq1zqBzMgOMzlkXw>
+X-ME-Received: <xmr:Iw-1Z9vOdtqm3tOHf4Gg9rA81Agk1KZenSRcy7_VSSGghgCVhgTJhSGHMEQqOzuLjcw8Y99hfeczY71Xa2R4sTBdahHjLUh8nsVdM84>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeivdehjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeekkeehuedtvdelieehtdelteehleefueet
+    veehvdffleefvefgkeehueeileeiheenucffohhmrghinhepghhithhhuhgsrdgtohhmpd
+    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhope
+    ehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepkhgriihuhhhirhhordhkrghtoheshhhothhmrghilhdrtghordhj
+    phdprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Iw-1Z2ZBNqOoYCHle94gYkHFFlAonxNxZKzZEQXnXbnVN-mq-6Ba-Q>
+    <xmx:Iw-1Z8ZAJzdewjq7XUWpvUpx8h4LwHSD6XM2wFdQVuZ53lcuAfFOFw>
+    <xmx:Iw-1Z6AUV6t2Lrscpr6K1VTqimPLR2z4nS3LIjQW_WB5EZF9mGs6iA>
+    <xmx:Iw-1Z6YZuWYp9hTDqXCkliJDfoG8kVnwHuBgcS4eyqpPis9zJziomw>
+    <xmx:Iw-1Z7zVbOop8_QEE8M2pA6t3UZKg2EnFkDgB7IS8kLmvZ0O2SolbAgz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Feb 2025 17:52:19 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Kazuhiro Kato via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kazuhiro Kato <kazuhiro.kato@hotmail.co.jp>,
+    Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 0/2] gitk: Fixing file name encoding issues.
+In-Reply-To: <pull.1886.git.git.1739918546.gitgitgadget@gmail.com> (Kazuhiro
+	Kato via GitGitGadget's message of "Tue, 18 Feb 2025 22:42:24 +0000")
 References: <pull.1886.git.git.1739918546.gitgitgadget@gmail.com>
-From: "Kazuhiro Kato via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 18 Feb 2025 22:42:26 +0000
-Subject: [PATCH 2/2] fix: when resolving merge conflicts, japanese file names
- become garbled.
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Tue, 18 Feb 2025 14:52:17 -0800
+Message-ID: <xmqq7c5mj272.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kazuhiro Kato <kazuhiro.kato@hotmail.co.jp>,
-    Kazuhiro Kato <kazuhiro.kato@hotmail.co.jp>
+Content-Type: text/plain
 
-From: Kazuhiro Kato <kazuhiro.kato@hotmail.co.jp>
+"Kazuhiro Kato via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Signed-off-by: Kazuhiro Kato <kazuhiro.kato@hotmail.co.jp>
----
- gitk-git/gitk | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+> fix: file name encoding issues. fix: when resolving merge conflicts,
+> japanese file names become garbled.
+>
+> Kazuhiro Kato (2):
+>   Fixing file name encoding issues.
+>   fix: when resolving merge conflicts, japanese file names become
+>     garbled.
+>
+>  gitk-git/gitk | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 88951ed2384..f4f8dbd5fad 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -8205,12 +8205,13 @@ proc parseblobdiffline {ids line} {
- 
-         if {$type eq "--cc"} {
-             # start of a new file in a merge diff
--            set fname [string range $line 10 end]
-+            set fname_raw [string range $line 10 end]
-+            set fname [encoding convertfrom $fname_raw]
-             if {[lsearch -exact $treediffs($ids) $fname] < 0} {
-                 lappend treediffs($ids) $fname
-                 add_flist [list $fname]
-             }
--
-+            set fname $fname_raw
-         } else {
-             set line [string range $line 11 end]
-             # If the name hasn't changed the length will be odd,
-@@ -8310,6 +8311,7 @@ proc parseblobdiffline {ids line} {
-             set diffinhdr 0
-             return
-         }
-+        set line [encoding convertfrom $line]
-         $ctext insert end "$line\n" filesep
- 
-     } else {
--- 
-gitgitgadget
+Please
+
+ - base your changes to j6t's gitk repository
+
+   https://github.com/j6t/gitk
+
+   where the file your patch would touch should appear at the top
+   level of the working tree.  This "independent" history is then
+   merged into my tree with "git pull -Xsubtree=gitk-git".
+
+ - have the e-mail address of the gitk maintainer on the Cc: line,
+   i.e. "Cc: Johannes Sixt <j6t@kdbg.org>".
+
+Thanks.
+
+
+cf.
+ https://lore.kernel.org/git/b2038430-62dc-41fa-86c2-c0a14bd25e0f@kdbg.org/
+ https://lore.kernel.org/git/7b826bba-11cf-4f45-8292-937522dbaf29@kdbg.org/
+ https://lore.kernel.org/git/5ccc1943-c2a3-4896-a858-aa5fd6cdd426@kdbg.org/
+
+
+>
+>
+> base-commit: bc204b742735ae06f65bb20291c95985c9633b7f
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1886%2Fkkato233%2Ffix_filename_encoding-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1886/kkato233/fix_filename_encoding-v1
+> Pull-Request: https://github.com/git/git/pull/1886
