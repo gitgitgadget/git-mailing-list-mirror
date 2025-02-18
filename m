@@ -1,79 +1,79 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF68F1DFE05
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 07:46:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C651E0086
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 07:46:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739864776; cv=none; b=HUuJxz0e8hqXbgwQ5blBg6TXD8JMygjhvl4tiGCgzbrGMifJPJjS1Nn6LOBHgo+giF98dr06Kqu//CG9OdwV6PQ97VkcxWEYXUD736lqMI4nEmfw+vL6H4Q6VvlXmlaTFFJObHV+QpCDrhWJTO7bDMqf/TvLHFHUXLEOg0K3Fq0=
+	t=1739864779; cv=none; b=Sg/1X9p4MluLyLhfeiyCtTCh8TnKk+R813JujcqH43qsv/BnuGG/lu2O7e3fAyERVYb9+u55nBiOwgG/MDUUVlSSKzy60EXFg3AMX5pUpt6gf8cyfYE5XP084lS9W+MsMoaNmAaKgtzGICMiljRgOkAAjNBjtAPIlMYV/9yXASw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739864776; c=relaxed/simple;
-	bh=qzdMW9gLlKaqx1xxvrWg1RkxK5ZHtE/bxz5+sc8QZaI=;
+	s=arc-20240116; t=1739864779; c=relaxed/simple;
+	bh=F8bI4+RJ28DC1d5SKLWRKKTsGcQML15d0zFOD4FFi/s=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WNpcJaXC5Y/jycQ33AGnEZyXYDXEar1cZq2Z/hXhinDXDL26hRJRXaMshqq0x9tNDkI4kaxNh/SLO3Hy87UMedMb4V0p112pifs+HeJ8piKLC9PjsOio7zG6jDtt4x1IBgR+4M/bH1dgkKsquLr/GxqP/RaYb4CWW6sKQ4DKeMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ou+Q737M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XFEVv2Li; arc=none smtp.client-ip=103.168.172.151
+	 In-Reply-To:To:Cc; b=T7m4PHSiyAxQI7Hq4RNguL9l8/mqE60u7HhHSypQnrZHUl1V7mXsZe2/8uaOrsuETE6FM13mJImF2y0xJY4gfzjmkk/A3t3qJohLlMc4FJ0/E5hA/2St2u6dtyygUUnvd7PPKTOOwmDHmutryqsaGrMUooza5/d5Gxo2QqYvWzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TFsSMPCj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zB4EuzSw; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ou+Q737M";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XFEVv2Li"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 073BE1380A33;
-	Tue, 18 Feb 2025 02:46:13 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TFsSMPCj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zB4EuzSw"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 052D61140195;
+	Tue, 18 Feb 2025 02:46:14 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 18 Feb 2025 02:46:13 -0500
+  by phl-compute-04.internal (MEProxy); Tue, 18 Feb 2025 02:46:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1739864773;
-	 x=1739951173; bh=T9IDSvj5n+6tVrr9QXGJWliWfYWCq2leEg7Ebkv5F20=; b=
-	ou+Q737MnZKUEhfwIJqGIP5sKaLy8t3Umq8wR0qpf76KLpnT4E5WzTQTWJ6iv3zq
-	ZluYxEYwpjiJN/AyrnkuOwM8hemJmVLcMw6rMoeSdSzjFLJ4OpwcA6m1jw3iFZaJ
-	xAgJubRxpKXzAqNmhfnv7GuHNxZvfi/gs3LHEF5p+6WxzDTHIXRtlVl+1OgX+08X
-	i1mN+gfPZGFC4r4Y60YdqT5iaWQlodQzXAHT+SWR9vX8TQzmKiOj2BTPFqi0awvM
-	vzRF5MKX5tPQTgFtZZjL6P55Hn36imujDO0McVXz5UdF9Ewp2XfJebkVd84ri+Sx
-	Fp9+VQMOUY0vYS5LYZ60MA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1739864774;
+	 x=1739951174; bh=kffhPVLZqZ2K2dG8bURuhhVJD3XSlGoJGWNURBQ9RY0=; b=
+	TFsSMPCj+eILx6hD13PXzaS4lMwzDYwobJwE77WOGJ8dOhNQnPbN4KtE6ipEyG3K
+	ipROgynPSkRQGz3wWDhdIrFVXGrLnIlsoIXlcdzpP3N6GdPIdnorMSpsA5dJfZpR
+	mtsWOu9UE+zPfaFcjptOZHlT7oZDuLObLOA9Jv8YO3eIWoHpRSDRRTfKeBJae3e0
+	JLPAuB3xXs7RcyeDu3Pu8eRMXM6/LMlCUEGbvXmwEfWA4S0rnOdXi5taZrin8siM
+	cuKIr7JlcbT/ovurgVYAoQyAPlzHVYyaRmfi84tUVin6DLaDcSUXi2U4qRZXoMKn
+	K9KWM1pBtA+Nn6wj/06Tug==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739864773; x=
-	1739951173; bh=T9IDSvj5n+6tVrr9QXGJWliWfYWCq2leEg7Ebkv5F20=; b=X
-	FEVv2Li4gotdcxBqcLbzfKL06YaxMQIq5EFTuU9h6vAApMjB5vNhCl1iJHrHkqsO
-	H8gq08Xun8veBxEfc77PpfGOrP6BoyXzFkhFlreJHL6K2BSpVSBSWv/YlcmZsLzq
-	k/QXlKGlCosR5nMHymTQJqLtU6rwYbGzckZDVKeDOVbv6Gy6nShpBgXxmvEkIIJE
-	YwYxWEwvzz1N6b9wDUbCtuP9ZYrjclXGHSB6Q8tvKcocqWyxeKwdU70q05drqEEf
-	R/sWUV7gxT5dPA6i6H+RDDY0Ms+NtdoTleaa5fVCY8AvvNBeUTrlKd0gCD3U6pWn
-	BU81fGyVisg5C8NnsbD/Q==
-X-ME-Sender: <xms:xDq0Z5UiHv2vNanzle16oKj2anQqhe6RICwgWHiv3Kvwxq6mQujh3g>
-    <xme:xDq0Z5mzODjY-81o2YFORUDRD-RMy7a6Agr83HjkZPG9EQtOZdLRCK70HYIqXF3o7
-    YrYCA0lBCeleK1UNg>
-X-ME-Received: <xmr:xDq0Z1ZG7BfHA2sEEXNKioPlp_JuRaLqa9vobU6t5r8Rtmk3YXs-6C8L1SaB2nMauVmN6EaUm0CRFmDCSZ-cVNGou2J0SNDMksFdaH5A7v7JSLff>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739864774; x=
+	1739951174; bh=kffhPVLZqZ2K2dG8bURuhhVJD3XSlGoJGWNURBQ9RY0=; b=z
+	B4EuzSwDzJS/XTlAMKzu/Wz+pWeimalmy11QlO2GFWVVJqvqKJyW1hJtTfefTu55
+	rx8G4Jkkvybwx7MiV0FTeTQNvnfRtHfxG9Y1Kq7NkHFnjYp8ak8BhH2ctOBErNKV
+	S2FqEgN4rzWTIjUuM/JwtxMwPRGXzJm12Hi+hX4owdVOCbkOlT4/xNe92FnPm1HH
+	AlTlA/o+/EkSbQUiYN++luSfOFMj7fRquP8yIyAwd5CJMVPyRKZ/mkrauCYmVfWx
+	QK+WgGXUaTdRyWhRx+YJcbdsHZOrhF2TmuovFOVKoDDJZ4Lf26+LnZgiTetb5eLQ
+	AI02k6pINeAi8PooytRSw==
+X-ME-Sender: <xms:xTq0Z-HxcuZ4JJDR0mPnRdGrib6deqfxms7gMqN4I2ovfM57iY7zXA>
+    <xme:xTq0Z_U-o8XBYIZsu0O9PCLLJ3DAg84l0g1HaIPW7kyr1ECDCQzKcysob1LCxp3q6
+    KLCtQ1TtQFZOBe2Pw>
+X-ME-Received: <xmr:xTq0Z4JETkggJr8n1NueoFtLAAMat-qTYwaham3-75qv69Q-zG8Uwu8smSnCzqAMhjVVsKC3cJ5l2ylbVn7VgFt7Bc2-dhNp8MHfroAz2bY-LFRu>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeitdejfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
     jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
     himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
-    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehmihhrthhhrdhhihgtkhhfohhrugesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:xDq0Z8Wi9ibNBE0WJYKio0CpU6ilYmkkFezFyPaK4zllM2SwY5OmgQ>
-    <xmx:xDq0ZzkQIE2OQ-Rah6DRrEfR1CgM5_kZMopkEZ-Zi2qtCFUayxz88g>
-    <xmx:xDq0Z5e6rIhNKTFVIUTdwv-VmMKH_IwH0ztGI34v0yR9VR63fBP-Cw>
-    <xmx:xDq0Z9GtAMlLPd3cstd7tAQQQyjKtMVrfWPyUDIqU3W-bvfYjm0gwA>
-    <xmx:xDq0Z4yLPVeRRTGWYCZuDcoHd0HoyZFH-E3J5qLc3T2XaUJeAghhtGCc>
+    pehsmhhtphhouhhtpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:xTq0Z4Fjm0N0YUJ0xau4JS12JMAkuHI5JnMyKrPhveBR1y0bfaOPcA>
+    <xmx:xTq0Z0UIvzkf7tIVM1WBWJwtXmL984ton7-WVkUVBndjsdGdorXXyQ>
+    <xmx:xTq0Z7MfRy45rEPM3lGbYK7vhb1AdApJMHbXos4jWp7GHaxbFfhsdA>
+    <xmx:xTq0Z73iZICDB2gESHtu4kHLb-BM3Akm6b43Ia_TqCp_8ba_2UG9MA>
+    <xmx:xTq0Zxj5huGHF5dcHncN9X14MU_UmLOnyICq_r5cYOO9fTB5hwm4uFzs>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Feb 2025 02:46:12 -0500 (EST)
+ 18 Feb 2025 02:46:13 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 8639e6ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 18 Feb 2025 07:46:11 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5b1d529b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 18 Feb 2025 07:46:12 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 18 Feb 2025 08:45:56 +0100
-Subject: [PATCH 08/12] meson: wire up static analysis via Coccinelle
+Date: Tue, 18 Feb 2025 08:45:57 +0100
+Subject: [PATCH 09/12] gitk: extract script to build Gitk
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,149 +82,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250218-b4-pks-meson-contrib-v1-8-c3edd292beb8@pks.im>
+Message-Id: <20250218-b4-pks-meson-contrib-v1-9-c3edd292beb8@pks.im>
 References: <20250218-b4-pks-meson-contrib-v1-0-c3edd292beb8@pks.im>
 In-Reply-To: <20250218-b4-pks-meson-contrib-v1-0-c3edd292beb8@pks.im>
 To: git@vger.kernel.org
 Cc: M Hickford <mirth.hickford@gmail.com>
 X-Mailer: b4 0.14.2
 
-Wire up static analysis via Coccinelle via a new test target
-"coccicheck". This target can be executed via `meson compile coccicheck`
-and generates the semantic patch for us.
-
-Note that we don't hardcode the list of source and header files that
-shall be analyzed, and instead use git-ls-files(1) to find them for us.
-This is because we also want to analyze files that may not get built on
-the current platform, so finding all sources at configure time is easier
-than introducing a new variable that tracks all sources, including those
-which aren't being built.
+Extract the script that "builds" Gitk from our Makefile so that we can
+reuse it in Meson.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/coccinelle/meson.build | 89 ++++++++++++++++++++++++++++++++++++++++++
- contrib/meson.build            |  1 +
- meson_options.txt              |  2 +
- 3 files changed, 92 insertions(+)
+ gitk-git/Makefile        |  7 +++----
+ gitk-git/generate-tcl.sh | 11 +++++++++++
+ 2 files changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/contrib/coccinelle/meson.build b/contrib/coccinelle/meson.build
-new file mode 100644
-index 00000000000..5d76a7fee6f
+diff --git a/gitk-git/Makefile b/gitk-git/Makefile
+index e1f0aff4a19..a396eef581e 100644
+--- a/gitk-git/Makefile
++++ b/gitk-git/Makefile
+@@ -8,6 +8,7 @@ gitk_libdir   ?= $(sharedir)/gitk/lib
+ msgsdir    ?= $(gitk_libdir)/msgs
+ msgsdir_SQ  = $(subst ','\'',$(msgsdir))
+ 
++SHELL_PATH ?= /bin/sh
+ TCL_PATH ?= tclsh
+ TCLTK_PATH ?= wish
+ INSTALL ?= install
+@@ -63,10 +64,8 @@ clean::
+ 	$(RM) gitk-wish po/*.msg GIT-TCLTK-VARS
+ 
+ gitk-wish: gitk GIT-TCLTK-VARS
+-	$(QUIET_GEN)$(RM) $@ $@+ && \
+-	sed -e '1,3s|^exec .* "$$0"|exec $(subst |,'\|',$(TCLTK_PATH_SQ)) "$$0"|' <gitk >$@+ && \
+-	chmod +x $@+ && \
+-	mv -f $@+ $@
++	$(QUIET_GEN)$(RM) $@ $@+
++	$(QUIET_GEN)$(SHELL_PATH) ./generate-tcl.sh "$(TCLTK_PATH_SQ)" "$<" "$@"
+ 
+ $(PO_TEMPLATE): gitk
+ 	$(XGETTEXT) -kmc -LTcl -o $@ gitk
+diff --git a/gitk-git/generate-tcl.sh b/gitk-git/generate-tcl.sh
+new file mode 100755
+index 00000000000..46bba6d2464
 --- /dev/null
-+++ b/contrib/coccinelle/meson.build
-@@ -0,0 +1,89 @@
-+spatch = find_program('spatch', required: get_option('coccinelle'))
-+if not spatch.found()
-+  subdir_done()
-+endif
++++ b/gitk-git/generate-tcl.sh
+@@ -0,0 +1,11 @@
++#!/bin/sh
 +
-+third_party_sources = [
-+  ':!contrib',
-+  ':!compat/inet_ntop.c',
-+  ':!compat/inet_pton.c',
-+  ':!compat/nedmalloc',
-+  ':!compat/obstack.*',
-+  ':!compat/poll',
-+  ':!compat/regex',
-+  ':!sha1collisiondetection',
-+  ':!sha1dc',
-+  ':!t/unit-tests/clar',
-+  ':!t/unit-tests/clar',
-+  ':!t/t[0-9][0-9][0-9][0-9]*',
-+]
++set -e
 +
-+rules = [
-+  'array.cocci',
-+  'commit.cocci',
-+  'config_fn_ctx.pending.cocci',
-+  'equals-null.cocci',
-+  'flex_alloc.cocci',
-+  'free.cocci',
-+  'git_config_number.cocci',
-+  'hashmap.cocci',
-+  'index-compatibility.cocci',
-+  'object_id.cocci',
-+  'preincr.cocci',
-+  'qsort.cocci',
-+  'refs.cocci',
-+  'strbuf.cocci',
-+  'swap.cocci',
-+  'the_repository.cocci',
-+  'xcalloc.cocci',
-+  'xopen.cocci',
-+  'xstrdup_or_null.cocci',
-+  'xstrncmpz.cocci',
-+]
++WISH=$(echo "$1" | sed 's/|/\\|/g')
++INPUT="$2"
++OUTPUT="$3"
 +
-+concatenated_rules = custom_target(
-+  command: [
-+    'cat', '@INPUT@',
-+  ],
-+  input: rules,
-+  output: 'rules.cocci',
-+  capture: true,
-+)
-+
-+sources = [ ]
-+foreach source : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.c', third_party_sources, check: true).stdout().split()
-+  sources += source
-+endforeach
-+
-+headers = [ ]
-+foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_sources, check: true).stdout().split()
-+  headers += meson.project_source_root() / header
-+endforeach
-+
-+patches = [ ]
-+foreach source : sources
-+  patches += custom_target(
-+    command: [
-+      spatch,
-+      '--all-includes',
-+      '--sp-file', concatenated_rules,
-+      '--patch', meson.project_source_root(),
-+      '@INPUT@',
-+    ],
-+    input: meson.project_source_root() / source,
-+    output: source.underscorify() + '.patch',
-+    capture: true,
-+    depend_files: headers,
-+  )
-+endforeach
-+
-+concatenated_patch = custom_target(
-+  command: [
-+    'cat', '@INPUT@',
-+  ],
-+  input: patches,
-+  output: 'cocci.patch',
-+  capture: true,
-+)
-+
-+alias_target('coccicheck', concatenated_patch)
-diff --git a/contrib/meson.build b/contrib/meson.build
-index 569c23ee768..a88c5dfe09e 100644
---- a/contrib/meson.build
-+++ b/contrib/meson.build
-@@ -2,4 +2,5 @@ foreach feature : get_option('contrib')
-   subdir(feature)
- endforeach
- 
-+subdir('coccinelle')
- subdir('credential')
-diff --git a/meson_options.txt b/meson_options.txt
-index c51ba88d853..afa908d6c53 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -101,6 +101,8 @@ option('docs_backend', type: 'combo', choices: ['asciidoc', 'asciidoctor', 'auto
-   description: 'Which backend to use to generate documentation.')
- 
- # Testing.
-+option('coccinelle', type: 'feature', value: 'auto',
-+  description: 'Provide a coccicheck target that generates a Coccinelle patch.')
- option('tests', type: 'boolean', value: true,
-   description: 'Enable building tests. This requires Perl, but is separate from the "perl" option such that you can build tests without Perl features enabled.')
- option('test_output_directory', type: 'string',
++sed -e "1,3s|^exec .* \"\$0\"|exec $WISH \"\$0\"|" "$INPUT" >"$OUTPUT"+
++chmod a+x "$OUTPUT"+
++mv "$OUTPUT"+ "$OUTPUT"
 
 -- 
 2.48.1.666.gff9fcf71b7.dirty
