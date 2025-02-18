@@ -1,108 +1,88 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AAA21B9C7
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 19:35:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A75314A09E
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 21:28:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739907337; cv=none; b=PcPUyPnf9TJY3IqDTGc3u0XDs2iInYn9I4hxDHu+yWW7SOJsuF+x1Qf4luQTIIuxE6cGBWa4kCHljNlQZoErKv+eTUM1lSazQ4L9F728mHRBV4rckt3C3qHRwN6uXezbSSMbuP7dAwDWYP4pFUQ3VBN9ZLMuqoG0HvWWh7mxrPk=
+	t=1739914089; cv=none; b=j8vcRZR7BMpsFhrG0s5mzezWBtPZTzaOnn3MemZxNIpWIFoqD8ZSNVAj2OTsp9cUMnBrZKVhwGILnibP45OLGdq3ImKUUKrk+dIxqxKSpy7tkG59pq3jXQDp4XxJgKAebXaJd3ADOUXocLmvFOZIBLBkgXbrrgXqSZZIUetsRO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739907337; c=relaxed/simple;
-	bh=KhhELM/k5UUYCMsxu5AWDe7mq+cY0dZBWRiRH16tNpw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YcKWIytldnpIBE31EAnk+DfnJtQUx1Fegg5k0PJ1UjbzmlqBVQJpsJXpGWqMDYCrm65D/o8XCXrXWp6PjstZPwzAv6npkW5ge7GDmK3PcGcajAHibF9T0O2Nctm1wnAod5JQnsCR8BkKhnDlOwyf96e5NG4vGigLWzTSyylmWW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZLzcz5xd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WmrbFCaZ; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739914089; c=relaxed/simple;
+	bh=j80yUqCjRzQ4k7qNGwm8gytuVsFqR0yGwQUWumhcnKk=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=RAm2DQ/lpuABdvvb212arb27b3N5wmZORTtvbUcHM8r+aRPKXkJGIR1YitS5R3y/iTa+8z6AKfcrMvHHdtFXnCIfNwchqolDzlgjarL6/DJ5nXTuJ1mWIBEZQ2YFNvNLf0XC/fhFr5lwwAGDYd4z7/YA6WiFgxQGIJD686L6Ky4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AhQxyhXd; arc=none smtp.client-ip=209.85.222.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZLzcz5xd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WmrbFCaZ"
-Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5105511401A5;
-	Tue, 18 Feb 2025 14:35:34 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-13.internal (MEProxy); Tue, 18 Feb 2025 14:35:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1739907334;
-	 x=1739993734; bh=ViPtVWwKmiH8ZZwGXchEkPtyXWqKpM/QVen97qSnUWk=; b=
-	ZLzcz5xdsY2AXCFmvdU8lWN3M34P+3cPV2EQYOgTg//sfSxAJlsfqGF0XbkLdFVg
-	LwpvU0Qo394x9AWQQejC5tmCmbpmYmlPT9tssgInGOb4lb/JOJFOyfugKdpamolB
-	UvmH/hjbRHFPAfT4ECf7Ua/kBxLyPdzUw+rYVoWwJLj7kt6FsKemvGwHBM6YM6TZ
-	EccbOg+T5NeQp809PmB4t2IlF7+iAaJ0Pf8VXZYPjOMotYlKj072KVKPnZGCx63N
-	ysI7D4xZ0cnZGuMGCaw5ihNmUO3H/9gfULIz0afOrjTHMPNxL8U9ErbH67h0tqzd
-	qdBzcXJNrOdBMwTOlxUgqw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739907334; x=
-	1739993734; bh=ViPtVWwKmiH8ZZwGXchEkPtyXWqKpM/QVen97qSnUWk=; b=W
-	mrbFCaZ9F9tE9C/FjXXVsivIDYHymDBDipPP2YLMTVEYztv540a1IJhQ971TsHcZ
-	Igfc42nYKAPeT49bNK8dOQk47R/BuClyN00z2jDCA9p45+l6qH+YowxwhmONT1aR
-	5HszYEaa7oQJCDCTfM+ahy9BiiOD78FS0qSjf1YNKH0AR9fXh4z/ebCBlvfIe7A1
-	RKl+/YReVhZtWNOOgmmo/VawnQYW4AwquBNVxwlLc2In8DxlVb7T/ebv+UYT9+BN
-	s96whZ0FP7VaDZsASK+ofHQwTuljGk3RIngBLud9lzRfX6kTMv8rcHHoaDsNkSIo
-	wC1O4dbICF8qHQKZhospw==
-X-ME-Sender: <xms:BeG0Z9E2-SYmajiN3PUyu3a7zqQmU9kPa_gGBk3xjiC59i0tnYT0aQ>
-    <xme:BeG0ZyU5_o2bRDi3J81TGuojZ6Qf8-kgAzlQ-Z2ZWSV9UCPdOAUMTWvejEM-Bn1Qj
-    HQ9vGAs_wMTtH6fxw>
-X-ME-Received: <xmr:BeG0Z_LqEZjNS8JvDNns4s3eRkMayLJIhmWByiZQM5YbJpYIZ7_PHZHZ6iklr8GNLSd_TzF_sdeyLM-87fs94ETyuu2CpoMTpeGqZis>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeivdduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:BeG0ZzHhsZADjZnwg-3FX3AMJAlifnRrq4KOWXr2AJEKEH-ALfLjuA>
-    <xmx:BeG0ZzWsfr-mceS3sLUbb-MF7J7AqIzlCxtD5u8yIs54y4RwpmcjIw>
-    <xmx:BeG0Z-OMaY_TrluCi9Xo99DTxaWhaA0QVJnVoRZRA55ncAmu7NR9gg>
-    <xmx:BeG0Zy2AZhKZZo4AkjXU_2mGpSZuMMfoKQAI6hjWBRoAbntL5iE37A>
-    <xmx:BuG0Z1Ly1bmj1G6hVcjyEU-iXyXV2u67PRsvtgAaDuc31AdGRHDSCrJB>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Feb 2025 14:35:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Phillip
- Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/5] merge-tree --stdin: flush stdout
-In-Reply-To: <CABPp-BE3NtP463P4R+stzcQ_MufjobL-CX-rB=0m5gC0DzA9ww@mail.gmail.com>
-	(Elijah Newren's message of "Tue, 18 Feb 2025 08:46:50 -0800")
-References: <pull.1862.git.1739723829.gitgitgadget@gmail.com>
-	<pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
-	<CABPp-BE3NtP463P4R+stzcQ_MufjobL-CX-rB=0m5gC0DzA9ww@mail.gmail.com>
-Date: Tue, 18 Feb 2025 11:35:31 -0800
-Message-ID: <xmqqtt8rjbb0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AhQxyhXd"
+Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-867120d67baso2035675241.0
+        for <git@vger.kernel.org>; Tue, 18 Feb 2025 13:28:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739914086; x=1740518886; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=j80yUqCjRzQ4k7qNGwm8gytuVsFqR0yGwQUWumhcnKk=;
+        b=AhQxyhXdmUaGOSpf0hJH49QO9Non8P121uVszWHWj+nCQeLX/ztOBn6muKz1BtOBNf
+         e8Scn9kUKva4tuhkD+3tVBmo0l8N4C3RiHuUDoJE1Q6KOPf3lCdMIes1DOwBtGQGbrc7
+         eEmsJk5JW0tptPKRwvU4oaHN98oKtSJ0so9QGl/RxnBreFog5FIqiMc0nG5j/DdzueCZ
+         fG4PIv1IaSuHOR5zU1c6y4Pe4DNsR0r0uNCghk+HoxwS1rqwVvxZ2zuV1leFo/xckgXl
+         XT/KC+Yu6VRb5CmMBiVmP8oRw6LgZ9tOHOXiwjxq2bVCY2xJN3I07DLEzOb2uBFBGpul
+         PAKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739914086; x=1740518886;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j80yUqCjRzQ4k7qNGwm8gytuVsFqR0yGwQUWumhcnKk=;
+        b=JMsbddzyBbKzvse/HADbDKOEJJeAVsks41gvzVstfBVy5NQdtD5UH6vY8MF/vc2awP
+         qMO+qIR6kSJA3YpB6Bc7OuYtYZGDOdjnDHpFwrYAcZd2XvZFQHKTsEvyU8HRHWPhTCD8
+         h0sRWUUgFHBmiMfC9Z2Qf2aJyiUrZfntCiEPdVYXS2kUY3FHAV3jan91zzBiWEXQq0WN
+         9EZqF3HdKcab2JDVRFKqBNjFGoznZeDdMW663DayhEv/xhSn68n/HhI81ImQCOK19mJW
+         13iPZHQHiK+GtGQ5hS6Z8Zb1+f4IPrYfOhecmkIxJQ2n7i+yqp+2zdQ9Bsl+hUsJ/WQP
+         rWOw==
+X-Gm-Message-State: AOJu0YzZoatyDWGRq1UQWtpxxPTEDZPtU9Ltf17Xcud9nxv288vKcBLt
+	Rp+VVRcc0ema+2alvc1ui3N1q+DojLpFqnKsbEPLuFtUEk/8qY8uvMJtLP0RUiJv+cW/og31xH2
+	mvt8SrDSAQjtVfdr4JXreuRFWLn4tmFtx
+X-Gm-Gg: ASbGnctFqih5mstKXbYSAvRApRyM+rFnXWXDfh62yM7V7koFfarram8CiZKWwAzzZxK
+	/57Iw+dblil98mhp+6akvj/ewv3o4An7CwGfsIX/jQVXU598uae5ZjY9RF4Nx+h1AWHLNGzWQe0
+	U=
+X-Google-Smtp-Source: AGHT+IHnA6ivKx6zKK12A6a8QctGpbBu4oRCz3qmDLEJn/i8/pCDXQQTfw1KhTaQFEXgIRWjfSqexoPO/6mjJ5iNcAA=
+X-Received: by 2002:a05:6102:d94:b0:4bb:b843:95e6 with SMTP id
+ ada2fe7eead31-4bd3fc9869amr8722309137.7.1739914086265; Tue, 18 Feb 2025
+ 13:28:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From: Bede Skinner-Vennell <bedesv@gmail.com>
+Date: Wed, 19 Feb 2025 10:27:54 +1300
+X-Gm-Features: AWEUYZnovUEL5emkfcd7830Wq1xgjJilxqpiGwc-aXyessP-K7eHhRPb24dlER8
+Message-ID: <CAEiLEbOZ7vGE6U69sf5nK+G86zaeAMRTrjaCr=rF2JU1H1p8ww@mail.gmail.com>
+Subject: Incorrect URL for Release Notes on git-scm
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Elijah Newren <newren@gmail.com> writes:
+Hi Git Community,
 
-> On Tue, Feb 18, 2025 at 8:24 AM Phillip Wood via GitGitGadget
-> ...
->>  3:  bf1dc603a15 = 3:  f95a15a4203 merge-tree: only use basic merge config
->>  4:  4c416850634 = 4:  1645b0e747e merge-tree: improve docs for --stdin
->>  5:  89722894c87 = 5:  a0179820092 merge-tree: fix link formatting in html docs
->
-> This round looks good to me; thanks.
+The link to the release notes for v2.48.1 on the git-scm downloads
+page doesn't seem to be working.
 
-Thanks, both.  Queued.
+It links to: https://raw.githubusercontent.com/git/git/master/Documentation=
+/RelNotes/2.48.1.txt
+
+It looks like the master branch now uses '.adoc' extension since this
+commit: https://github.com/git/git/commit/1f010d6bdf756129db13d1367c888aa41=
+53f6d87
+
+Using either of these URLs loads the release notes correctly:
+- https://raw.githubusercontent.com/git/git/v2.48.1/Documentation/RelNotes/=
+2.48.1.txt
+- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2=
+.48.1.adoc
+
+Ng=C4=81 mihi
+
+Bede
