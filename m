@@ -1,115 +1,157 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742BB17B50A
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 17:09:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBEB26FA5C
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 17:10:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739898551; cv=none; b=R5vwROBWBAE9CTTAvJwCLAjxA4IPqg4U2xOXmlU96BTY+uC+cScqrm2umWl4KSDnEvsC7MgbsYKwuOsTL3vq4rpQyJXeXBe6JcVKVmEhgetgRXzP44zv6uyiuhHSSN+uPCQF6c6cpdUfFQcf4FGTh+FwX43+F9OTUOfC0hWSjFs=
+	t=1739898633; cv=none; b=dBsaNn3k5b5WHjZrg/285ifCA4lpAFcWC5WeA5P1bWzz0GebRmaVs16A2WdZLxjR01ZzT3lgG0FBQlE1PTpo3+M/J97ZlxCCZ/hl7De2G+YS41XloiXALMB25W8FiUtfHnYvlED2WLfKLJsF0jC8SuBBRAkvz3zME3yjkBBVY2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739898551; c=relaxed/simple;
-	bh=CvErBWgVQjVJWlC57Lpqn+mz6VlODvHylmjuUOmGqm0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hhLRh2ZQZEt1j+qfw5gdzLRQGL6hJ5SCMR7lkb04CZD4dpRXyXQc7Y7p8EAfHaBuQdJHPR+6lWjrJpqJXdFVDjCVJ/JgaUpIstCjmEz7VGoJrTcwzO8Wj+Kx7dGIcju/DcZ2XxgiwEouw5tIB6hPh5q7HJxGfl9Qs8NlvKYFthU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mG/Q8C4B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=veB7AtqP; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1739898633; c=relaxed/simple;
+	bh=vjFxmu4AenWkGqULICzTJXAde+vgoY6Y9cu5gYY2BnM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=m7g28EvoNrxbsUt3tO6VpOmOD1S1/nVgQ4SYYzxYrdO9HjE8RIO5hM4Mta65LWMYFE/zNHHhorb2VEsrISfTbRvbF4wjCkjMppHCDSjrPZLAZ0kTBCs6PNk5O4kElnGMSo0Hkj/cRk3lm/LuTlc0c09w4j/xar2GEH7PqkwZufQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Eq1MIism; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mG/Q8C4B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="veB7AtqP"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6CBB01380986;
-	Tue, 18 Feb 2025 12:09:08 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 18 Feb 2025 12:09:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739898548; x=1739984948; bh=yNLbsKZu1e
-	QpkQObMnCYN3wjLwaLRg294SvKS+Earks=; b=mG/Q8C4Bq7v+kpJBslmy4DiD1J
-	NQEI8INxjXT14jnox608wpP0jiy1BeC/dq6YC5gZsV1hOnJrAFtDAlQ0gHqg0cWF
-	RKiq10VrUuJDDwa1fUxti7VWWUdGP4isskFVLb6UocIzvks7XJyeqKSYC2JEf2m6
-	BepswTb1YmA42C2oQvw9lv03e71XaCg1cxM4LpVB9s+xGcig0zUFAnujCA38j6v2
-	Qnal7/PxnMLoj2WuCzaXO/R0Vgvw02L4gTJG/C5oSmHR2R27FLkgX7ygEtDvxl7K
-	zeop09RvqCxQCvudS7B8Oy27srnMBRaGg9Xy20iqx0b6Sd9n5nRIQYmJGR7A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739898548; x=1739984948; bh=yNLbsKZu1eQpkQObMnCYN3wjLwaLRg294Sv
-	KS+Earks=; b=veB7AtqPWrQqiVSAqy5/97zqC0fmCFgXALK5agNuIjKDWKMoqb6
-	ST8ijz04n1iU7AoNxDis5JuKCa1junHj6VKnRPfg06o94eTl8Yr3xqeKMGQEje2P
-	cAaDqDdthHzAJCKm22QKKYd7ZBaBKugXLjUSJuSUL65vZBbakOvBmsNcO3rPffev
-	DTpG/SWQ1QP6e8M2cRaonU6MaYkQ0JmFh9kAgq1/okJZF2f8ARhYU8a70SvKvg+R
-	IU1z9lP+AwK9MNB1NGHcp4bjXqR481eE9I/HuFyAr12tsPTwAjQdjPbjcEqoD9TX
-	AdvCIt+kPBczT9PICKtjguaMNs2b4DPYnwA==
-X-ME-Sender: <xms:s760Z7anM-CPOsAhlHUnyGlsV6wXswcXNHZcrrTqxXrDM3uu8KYvVQ>
-    <xme:s760Z6YIapbgwVOoPHbVE6-Kxyvd52ZQMcBkB5vyO7HISxk-q26bkUV-Q1uwy1kzj
-    tLESmXEYBr5sGM9_w>
-X-ME-Received: <xmr:s760Z98qUzO8UNmLblLvchqFX6h9vs5w__jVVZoUvvviDGHiS_MUngyEhZlf1rbXtBP1qyz71P_ngM0fr41_H4IfLWyogxLlUF8D3qc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiudekjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkh
-    hinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgr
-    nhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrd
-    hstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhi
-    lhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhm
-X-ME-Proxy: <xmx:s760ZxoHZb_nIRvlik5P8-Ct9hxHY8x1z7nOl0jGgdebTp4CdnF32Q>
-    <xmx:s760Z2omoZZhcuyhNd7dv_ntbEQb9chumuSpxhYtI3Rkjr3J1HT3CA>
-    <xmx:s760Z3Qzv8Gr-f0x_FDTVLPgUUL-vBUSPUc8auyhvIs5FOTHjlRwIw>
-    <xmx:s760Z-qxMMCwl2IS1jNdcITA1p96aAWOhbOt725fBD90fd_rVoX7tA>
-    <xmx:tL60ZzQLGb_ULn-SiPZpqmv-oV2cCDA5lhIYCDdnF40oJlmpgfWjB2Kv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Feb 2025 12:09:06 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: christian.couder@gmail.com,  Johannes.Schindelin@gmx.de,
-  git@vger.kernel.org,  johncai86@gmail.com,  me@ttaylorr.com,
-  phillip.wood@dunelm.org.uk,  ps@pks.im,  rsbecker@nexbridge.com,
-  sunshine@sunshineco.com
-Subject: Re: [PATCH v6 0/6][Outreachy] extend agent capability to include OS
- name
-In-Reply-To: <20250215155130.1756934-1-usmanakinyemi202@gmail.com> (Usman
-	Akinyemi's message of "Sat, 15 Feb 2025 21:20:46 +0530")
-References: <20250214123734.1403120-1-usmanakinyemi202@gmail.com>
-	<20250215155130.1756934-1-usmanakinyemi202@gmail.com>
-Date: Tue, 18 Feb 2025 09:09:05 -0800
-Message-ID: <xmqqa5ajyyby.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Eq1MIism"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1739898623;
+	bh=vjFxmu4AenWkGqULICzTJXAde+vgoY6Y9cu5gYY2BnM=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=Eq1MIism8cWN0lEBmLegnn6D7RvaV0NJlsAXTiqZsUpKWhCi5Cyc4qd5gtYmdFfIu
+	 KsSsQQUblsFsB9lCPOfEdtISwJ7ucw6WHjHdQXfFExp9LCqh0boJydUBqtPNf/85BB
+	 Yq9ZyDwM3yd1u8W5Rys3U7WQFsIcE6SqR9VnYQC65UuahEswJLyAgfmg7czt0claK/
+	 434092pQZm8gjbi61/9Pp+RVdF6vh3HfiQYC1hoERv5EXo8GYKAk+UVDSF+bne03xX
+	 /wXzjEFAjLuaKahmcbFID6RLMo5+nw0vlsAlQUB3iCvPp9bFbAlsSc/HW+Lg8TX9gQ
+	 2MDfKrG9eGKDsaMw3nXgsWT5wZ/EElNQIpeqSGauual6ljjhJRvwhvJV/PUzGjScuD
+	 VC8n4nP5REkxdQ0Hj9Dj+LEwk4lIgRdHuTn89YIcGg2boOXBGNfIQ+CvGWnZxDH8ZY
+	 +hPlR4IVGR+lRH5ZFFJJl5bmiB9KQVT5JSP924wGir5tMayT+xc
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A8E852007A;
+	Tue, 18 Feb 2025 17:10:23 +0000 (UTC)
+Date: Tue, 18 Feb 2025 17:10:22 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 00/14] refs: batch refname availability checks
+Message-ID: <Z7S-_iA73twblpvP@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+References: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="JAe2Qw6WR83dKv/B"
+Content-Disposition: inline
+In-Reply-To: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-> Changes since v5
-> ================
->  - Used "-" instead of " " for seperating "version" and "os" in the agent string.
->
-> Usman Akinyemi (6):
->   version: replace manual ASCII checks with isprint() for clarity
->   version: refactor redact_non_printables()
->   version: refactor get_uname_info()
->   version: extend get_uname_info() to hide system details
->   t5701: add setup test to remove side-effect dependency
->   agent: advertise OS name via agent capability
+--JAe2Qw6WR83dKv/B
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Overall everything looks good.  I spotted just one nit in the
-protocol documentation update, which I'll comment on separately.
+On 2025-02-17 at 15:50:14, Patrick Steinhardt wrote:
+> But more importantly, this refactoring also has a positive effect when
+> updating references in a repository with preexisting refs, which I
+> consider to be the more realistic scenario. The following benchmark
+> creates 10k refs with 100k preexisting refs.
+>=20
+> With the "files" backend we see a modest improvement:
+>=20
+>     Benchmark 1: update-ref: create many refs (refformat =3D files, preex=
+isting =3D 100000, new =3D 10000, revision =3D master)
+>       Time (mean =C2=B1 =CF=83):     470.1 ms =C2=B1   5.4 ms    [User: 1=
+04.5 ms, System: 363.1 ms]
+>       Range (min =E2=80=A6 max):   465.7 ms =E2=80=A6 484.3 ms    10 runs
+>=20
+>     Benchmark 2: update-ref: create many refs (refformat =3D files, preex=
+isting =3D 100000, new =3D 10000, revision =3D HEAD)
+>       Time (mean =C2=B1 =CF=83):     407.8 ms =C2=B1   5.4 ms    [User: 6=
+6.0 ms, System: 340.0 ms]
+>       Range (min =E2=80=A6 max):   399.9 ms =E2=80=A6 417.6 ms    10 runs
+>=20
+>     Summary
+>       update-ref: create many refs (refformat =3D files, preexisting =3D =
+100000, new =3D 10000, revision =3D HEAD) ran
+>         1.15 =C2=B1 0.02 times faster than update-ref: create many refs (=
+refformat =3D files, preexisting =3D 100000, new =3D 10000, revision =3D ma=
+ster)
+>=20
+> But with the "reftable" backend we see an almost 5x improvement, where
+> it's now ~15x faster than the "files" backend:
+>=20
+>     Benchmark 1: update-ref: create many refs (refformat =3D reftable, pr=
+eexisting =3D 100000, new =3D 10000, revision =3D master)
+>       Time (mean =C2=B1 =CF=83):     153.9 ms =C2=B1   2.0 ms    [User: 9=
+6.5 ms, System: 56.6 ms]
+>       Range (min =E2=80=A6 max):   150.5 ms =E2=80=A6 158.4 ms    18 runs
+>=20
+>     Benchmark 2: update-ref: create many refs (refformat =3D reftable, pr=
+eexisting =3D 100000, new =3D 10000, revision =3D HEAD)
+>       Time (mean =C2=B1 =CF=83):      32.2 ms =C2=B1   1.2 ms    [User: 2=
+7.6 ms, System: 4.3 ms]
+>       Range (min =E2=80=A6 max):    29.8 ms =E2=80=A6  38.6 ms    71 runs
+>=20
+>     Summary
+>       update-ref: create many refs (refformat =3D reftable, preexisting =
+=3D 100000, new =3D 10000, revision =3D HEAD) ran
+>         4.78 =C2=B1 0.19 times faster than update-ref: create many refs (=
+refformat =3D reftable, preexisting =3D 100000, new =3D 10000, revision =3D=
+ master)
 
-Thanks.
+I'm glad to see this performance speedup.  That's a really nice
+improvement.
+
+> The series is structured as follows:
+>=20
+>   - Patches 1 to 4 implement the logic to skip ambiguity checks in
+>     git-update-ref(1).
+>=20
+>   - Patch 5 and 6 introduce batched checks.
+>=20
+>   - Patch 7 deduplicates the ref prefix checks.
+>=20
+>   - Patch 8 to 14 implement the infrastructure to reseek iterators.
+>=20
+>   - Patch 15 starts to reuse iterators for nested ref checks.
+
+I took a look at this series and I didn't find anything that stood out
+to me as a problem.  I will say that the reftable code isn't my forte,
+so please don't take this as a formal review, but I am definitely
+positive on the series in the general sense.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
+
+--JAe2Qw6WR83dKv/B
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ7S+/gAKCRB8DEliiIei
+gTzPAQCqisukkTt1VD33wA6QlQ4dvJzfbbwwKql8VrXaW+0y6wD+IzGFsVW0qqms
+by6v6hpe0mzLZy/PkG25te8GUjTJ7gE=
+=07fu
+-----END PGP SIGNATURE-----
+
+--JAe2Qw6WR83dKv/B--
