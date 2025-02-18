@@ -1,84 +1,83 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6359D270EC3
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 18:08:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B45526F45A
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 18:16:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739902093; cv=none; b=b/hiGN3ADLbFIofHU0QLCFp9OBgqzd7tYDRjs9gIf9N2veUqd5alMNu4sBviL3r6TmHRjLgiFhKCDmPzFR22WESZQD5VEMW/wOYJ464pa9k04mMU9Y/X9rhqwHxNiq11nZKxnTBoi3RBklTR8pOwiwacnqbLxPeSr/WNiukWIwY=
+	t=1739902598; cv=none; b=TOAQpMNpHbABnSfnLr3h1ndYYFh/J3SXNkoPlRgbu6Vs4uYcNhR/nPvrShHEQqjaOdf6LskSbiU3wgehHbn5oGU7DY9o9sTrLs0XNKtfYtF0cxZBxHtG+2hdOChHwka3v4GpPOLQ8RNAF9Jjal5y73wgwoa9fD4Wb8DkGJSCWFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739902093; c=relaxed/simple;
-	bh=TVvTo4NIf0ucQ2mmHMr+JILAAhSS2iaMIDiwrq7Yx5g=;
+	s=arc-20240116; t=1739902598; c=relaxed/simple;
+	bh=PuAUyyB9Aq9PvbIdUUKzimQGxhijVU1jcYVqNJfavu0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EHDKVyck7/DnJythuUBYisd4KIRJJFsDbqN9FMPK/cTDVf5CkKRrN3kPTMAA7kE2eZ1r1H8gBTChKpnU5eCS5rSHRgph/Aa58b/72o2QS6jZslxJ0garAj6bD0Uba2W/OWwCKRB2PpZvQLW4/fUHo01I+Qxgz2BLp9esWr6yPn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Wsp1N2Lj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MgFFJB9c; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=Nj0ntcsV4UnlUzWsjBIcAuxVfDqHNnAAKqWAHhfNf9RP2RgId2J2mX335WOwnvnLAPiMzRrrazX0tjkroetOjpw0Eurlvt2CjmO1Yeuh/WXu9WyB8uY/R+y1Gw2nwHmIhEhPdvOs1skigUJM5zsn0P0GNZtDYMh0VitsjyCqcB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I9V93iQU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WxRZL+Qc; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wsp1N2Lj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MgFFJB9c"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 32383114016C;
-	Tue, 18 Feb 2025 13:08:09 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I9V93iQU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WxRZL+Qc"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1CA3C254011D;
+	Tue, 18 Feb 2025 13:16:35 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 18 Feb 2025 13:08:09 -0500
+  by phl-compute-05.internal (MEProxy); Tue, 18 Feb 2025 13:16:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739902089; x=1739988489; bh=16KMiy6kGP
-	9eBl9JY/kjNHDp2D7yRnkc98jjh71HACE=; b=Wsp1N2LjwXjsOhXTPHqnCnQ8wo
-	5FlDvXcv2lWMKUz0bNf3SymuMGMl10HBLmycid6fsS3GvBvKTqkavkgLjRbS9qNa
-	0kIopC4BXB7SYHaxPHiWKoq50mJsA7Ynw8HWmPINfjqWoE7Rwi+2zNhn/JhHm1uZ
-	RMjnLyErZb1eQVMxqMJL054HtwAZpzwNzmZsfRL+jZv1FPd8U6bTlo2tlQR9X36W
-	cOcgZhI8ZGv2Ev6mHHM6jpnaNvtmE1r6aZOIaL7TQgx6CnwcpwvRxjQWHE0/88YN
-	hIaRB3kENOmubj4CJwAZltTM3gLEUNTRRHHoNa1aX+Df/OflvvGLFPiFD/VA==
+	:subject:to:to; s=fm2; t=1739902594; x=1739988994; bh=p8gaVYWger
+	uxcknBwlWxrhscWwQTXsDrkQ88UNDp1EI=; b=I9V93iQUzYso7zuTnWfuk0xRAc
+	sZ7Ge93gw+l0sSHg4VwDhO7z12KPSzGD/CydKsqB5DEkt0hV3uS2VUP4s5NIIa5D
+	2MRCxvGXfMgoiY6R5k+dYFZMmWEO8416KA0GLQM+NIr5zagSBpPV6LUWa5Exi3JO
+	1Lxz+mK1QEWtZdx57BjWQQfr6MbvojkPc3HhN6CMbqtOMX52SP7sZZ5V71Xo5QQ/
+	joypPhFHLdUE48/myWIRkQa8yNRPHDCgO7Ncog98Oi3Y7EgRwLYLs9II/aXQmrw7
+	Ito2Ig++uucnhsGVmvoVbPwAjXvvmpGctCF8T1ORRFfZ0Iebyjm5cXZLBYjw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739902089; x=1739988489; bh=16KMiy6kGP9eBl9JY/kjNHDp2D7yRnkc98j
-	jh71HACE=; b=MgFFJB9cf//u3xGwpWXY83N4XPhcAHcTtRlNHHyJl7DjWJQnfKf
-	pYMFKksFu7EoWWoUQfzYWKldca6xfZ9trKRSrQBTrt8wpaYgN3DwY3yK8fGd6EeW
-	5h5zPAkQL46KV2wQBo/sr3zy2FFUXIGq79sa0/ZVeWrTTy6F1jrkK0Ikfk43WvDh
-	AyPfd9GuGShlC6MsVqAKXddGxW0m96tOi+REtpIGkdMx7K1Q3pbN21TnF49osoNH
-	gmJNrzIwYKxVvICsKzzDXfwinukzgwWk2j/3pbgjhosWRy982dMz0PVGbkTWw/CY
-	0WxiDiUZ7g0YilxN5qZLP1qKoCo4BdRgvdg==
-X-ME-Sender: <xms:iMy0ZxskUDlUodDi0dhLr0djTiP9JbMqGC2lbjUCWcUhhdB0cYzQtA>
-    <xme:iMy0Z6e9aWImEynAqvJUntlz2_MDM2SklLP4T30pAzvqFp6KbnjvnSRwc_p48IUuS
-    cbTp_V__0iqh_wt2A>
-X-ME-Received: <xmr:iMy0Z0wivoZ0TD92GO55uLxzrh-9Tw9L7y5P1OMvoR0wDUcvNQurMPfOSSQUTVOjGvtRErvChZF90p1Qj_BQJrFsN_Sm-3pf8LdQU1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiudellecutefuodetggdotefrod
+	1739902594; x=1739988994; bh=p8gaVYWgeruxcknBwlWxrhscWwQTXsDrkQ8
+	8UNDp1EI=; b=WxRZL+Qcd+2+aa7sctat6krikMc4I3IB/m/jVx3jUt6Radu53LM
+	+JOqAtNdmDSX7HLlqfRX5yWmixeVsxYt5RXhAkIf1pkvphZypFLkeIgk5/mWZmOR
+	hN62VKpxwNqnV7Ql4NnMLMv93oF4YWH53+PxXcTqv6GvIRYrL/7b0d4j8+c9Ihzm
+	4FAkfwbkz9wQimkVU5RH9rgDpRCKt1KXS5uHhktAm4N7fUeXnHiJJBwd+I7Eo4DQ
+	6spEnZU1obmWiPpo4YkambFO8CEPLj3FsO7EySbGa9SvxPQCwLznGGlghdFpEXQw
+	IhBW630YnZRHf0N5TyWeXmCP4MUzXkZeC8Q==
+X-ME-Sender: <xms:gs60Z1TVlZGjWlWsnS6KMAb8pET2tYLRMfrZC8FnVwg38teiaC-RwA>
+    <xme:gs60Z-xo22O3KDcXqTa2prMAg3IfKRdcfPHM37pQWYE5wkBsn43d_Gp3hskwM8iAV
+    ws9_oZqt3LkmRjFig>
+X-ME-Received: <xmr:gs60Z60MoP2NlLEbytU7qd8tLn114b_GP6D5UPTr05ux_ND_L8DGmkCEFUJIBi7zYZ47EWvBzLogBhQF-ruFED2D4smrNxDH6EoUQIg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeivddtudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrlhgvkhhsrdhtoh
-    guohhrohhvrddufeefjeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:iMy0Z4NOuPwbb8qfB2FPrx4cSiBf2bwKvrVd6hU2ibyA-V5xzaIPpw>
-    <xmx:iMy0Zx_kCmjC9HKtcHHj9LGKOM_YbGmAhI7SAA9Mcy9bb0ZYdwgvZA>
-    <xmx:iMy0Z4WXEcXWOjd-4bjNRKi8ySRSOrK6_R_pBIjRcGgsG51Vvb8lvw>
-    <xmx:iMy0ZyeT2C1EqzmxnQZiEaiLucmL7EjaFfYOgr9S-IrhwgAltF-B1Q>
-    <xmx:icy0Z8aIQbuJw9ZwbKGDNRrhIscceh8dMIuen3416aKK_uSieeyA7-w1>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
+    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
+    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvg
+    htpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegtvggsthgvnhiiiihrvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gs60Z9A_6MKckd2PTs7xuMistM7KVPjkiSSap4uHo5XF4FfUFhUVcA>
+    <xmx:gs60Z-jPOxa4at6P7yV-suEAjbEh-tlnFvPj3IsCJjJpn280zpM5fg>
+    <xmx:gs60ZxqSCI8MJXlRHUiGJ55WW16eFPm4d9tjEJPc4C8k5xk7esDx_w>
+    <xmx:gs60Z5gif0iUDcWLU1yEwn7VrUE_Cl9QQ4K8QHNwUqKhm5H1l1xWPw>
+    <xmx:gs60Z2dsyQup_6zepc9GWhCk3LNJoCnOIYvKTjelwZ2COcp6I_bG36Ab>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Feb 2025 13:08:08 -0500 (EST)
+ 18 Feb 2025 13:16:34 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Aleks Todorov <aleks.todorov.1337@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Add Commit Summary in blame?
-In-Reply-To: <CAO0eup=6NcCdBASxvAxB8moku74zpxAr+MFiV-kkXVfjY1UF=w@mail.gmail.com>
-	(Aleks Todorov's message of "Sun, 16 Feb 2025 21:13:04 +0000")
-References: <CAO0eup=KqHe68OkHqYWtDgsTx0cAwg5Y5HSqK4s_BNbZhr8hVw@mail.gmail.com>
-	<xmqqzfu7s5qg.fsf@gitster.g>
-	<CAO0eup=6NcCdBASxvAxB8moku74zpxAr+MFiV-kkXVfjY1UF=w@mail.gmail.com>
-Date: Tue, 18 Feb 2025 10:08:07 -0800
-Message-ID: <xmqqfrkbxh14.fsf@gitster.g>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Jared Van Bortel <cebtenzzre@gmail.com>
+Subject: Re: [PATCH] diff: don't crash with empty argument to -G or -S
+In-Reply-To: <20250217175759.1576684-1-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Mon, 17 Feb 2025 17:57:59 +0000")
+References: <Z7KX2y-dXaZuPrW4@tapette.crustytoothpaste.net>
+	<20250217175759.1576684-1-sandals@crustytoothpaste.net>
+Date: Tue, 18 Feb 2025 10:16:32 -0800
+Message-ID: <xmqqbjuzxgn3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,25 +87,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Aleks Todorov <aleks.todorov.1337@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> ...
-> however if the implementation is shared, that means we need a way to sanitize
-> user input to ensure they are not using flags which are not allowed, and we
-> will also need to pollute the implementation with length specifiers everywhere
-> since each field in the blame output needs to be width-aligned.
+> The pickaxe options, -G and -S, need either a regex or a string to look
+> through the history for.  An empty value isn't very useful since it
+> would either match everything or nothing, and what's worse, we presently
+> crash with a BUG like so when the user provides one:
+>
+>     BUG: diffcore-pickaxe.c:241: should have needle under -G or -S
 
-I was imagining that the aligning is responsibility of the end-users
-who give whatever random format strings to the command, if you are
-to reuse the existing helper functions out of the implementation of
-the "git log" family of commands, as %</%> and its friends would be
-available for free.  I admit that it has been forever since I looked
-at the code paths that implement wrapping and padding specifiers
-last time, and I do not know offhand how cleanly they are written
-and how reusable they are, though.
+I agree BUG is unwelcome.  I am not sure about the value of
+forbidding an empty string (I am sure about forbidding NULL,
+though).  
 
-If you are doing this to feed some GUI implementation, however, I
-suspect that a more productive way would be to make the GUI tool
-read from the "--incremental" format.  But as I do not know your
-motivation...
+If an empty matches everything, "git log -S" would skip changes that
+would keep the number of lines, right?  For the history of a project
+that keeps track of source code, such a "feature" would not be
+useful, but I can see a complaint by somebody who may want to keep
+track of a "list of things" one-item-per-line, if we had been
+allowing an empty string.  It would be a regression for such a niche
+user.
 
+Luckily, since we have stopped with a "BUG", we do not have to worry
+about backward compatibility in this case ;-)
+
+> Since it's not very nice of us to crash and this wouldn't do anything
+> useful anyway, let's simply inform the user that they must provide a
+> non-empty argument and exit with an error if they provide an empty one
+> instead.
+
+So I'd say that it may be a bit premature for us to declare
+"anything useful", I am perfectly fine with the patch given here.
+If somebody who wants to maintain a text file, one-item-per-line
+that keeps track of a list of things to omit commits that do not
+change the number of items, they can drop "&& !*arg" part, tweak the
+message and add their own tests, once this fix lands and the dust
+settles.
+
+Thanks for a quick fix.  Will queue.
+
+>
+> Reported-by: Jared Van Bortel <cebtenzzre@gmail.com>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  diff.c                 |  4 ++++
+>  t/t4209-log-pickaxe.sh | 16 ++++++++++++++++
+>  2 files changed, 20 insertions(+)
+>
+> diff --git a/diff.c b/diff.c
+> index 019fb893a7..c89c15d98e 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -5493,6 +5493,8 @@ static int diff_opt_pickaxe_regex(const struct option *opt,
+>  	BUG_ON_OPT_NEG(unset);
+>  	options->pickaxe = arg;
+>  	options->pickaxe_opts |= DIFF_PICKAXE_KIND_G;
+> +	if (arg && !*arg)
+> +		return error(_("-G requires a non-empty argument"));
+>  	return 0;
+>  }
+>  
+> @@ -5504,6 +5506,8 @@ static int diff_opt_pickaxe_string(const struct option *opt,
+>  	BUG_ON_OPT_NEG(unset);
+>  	options->pickaxe = arg;
+>  	options->pickaxe_opts |= DIFF_PICKAXE_KIND_S;
+> +	if (arg && !*arg)
+> +		return error(_("-S requires a non-empty argument"));
+>  	return 0;
+>  }
+>  
+> diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+> index a675ace081..0e2f80a268 100755
+> --- a/t/t4209-log-pickaxe.sh
+> +++ b/t/t4209-log-pickaxe.sh
+> @@ -93,6 +93,22 @@ test_expect_success 'usage: --no-pickaxe-regex' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'usage: -G and -S with empty argument' '
+> +	cat >expect <<-\EOF &&
+> +	error: -S requires a non-empty argument
+> +	EOF
+> +
+> +	test_expect_code 129 git log -S "" 2>actual &&
+> +	test_cmp expect actual &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	error: -G requires a non-empty argument
+> +	EOF
+> +
+> +	test_expect_code 129 git log -G "" 2>actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_log	expect_initial	--grep initial
+>  test_log	expect_nomatch	--grep InItial
+>  test_log_icase	expect_initial	--grep InItial
