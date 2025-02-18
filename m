@@ -1,107 +1,140 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1684826F473
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 16:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD44C26E648
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 16:47:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739895888; cv=none; b=YHckD0qZ0T20jYhrmFNP10Gvg5qaFxiCgAcOARWptZUv4ymawy6BBLWeCKhXb0sCStPXD9O+HQ9O65wRREjB6jbjwPaov9uygVCYG9/9nvhdrqUrcod/nJhOjIMb6tRJebREVOpS1SFpJfvHraQ8NNJLt+Q85RSif0PtSuyEOP0=
+	t=1739897224; cv=none; b=je24KH/JyQIfnE579vDGyhbmSSoSka+L8uZEggL6XLZOryRwvdX2iq8YiRLQrPGM6edQgyRGgfOpKIBVHB7FObW1HVzF9CeXivExFNhqSODBpam54sm/8TYkjYCrBqF2ql3Mqh2BiqqCkqQWE2ssvYRq9KYBQCjBd5fsI4EODHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739895888; c=relaxed/simple;
-	bh=+S1zg5XbCyQ7711DWFK4Erle4f9KxWiAuUlp3bpaVVM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=YdgHwTXxpTtCRLIBHKjRkyNlifpmklwv+D97rH5Kinzd/1zCww/n6RVpgQ8rzO13jGLDcP+e4HAwUbTXRmG1D+ZIGL4LWkQrhhKFrdZRMR0JEGVpx66xxeENx3sS7r6V6Qjws9YOu1Pe4NivNxkRX319iYi+N/c3ecJS2NX3RXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TeuXssF5; arc=none smtp.client-ip=209.85.221.44
+	s=arc-20240116; t=1739897224; c=relaxed/simple;
+	bh=7B6huKVgFd1eDXMIUnyV3D8NG/24bTjsGtLP6GaEL5A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=YKU+HBbhRzfSjJYVdHftQu4zsGkPSRL9YrzKPmp6AwAc7E0XTw3JgGQBwq35VEgNvg0InC2tHAk/wGkpvcEXTf4KdnQvB8GK4+/O58COKo/gzTksGsj503DobD9GnxhXhu9CGtk7nK6dTmIQkaMPl3Jk90fnRQNTYPrI22D/gGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CTNw/nSW; arc=none smtp.client-ip=209.85.166.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TeuXssF5"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-38f3913569fso1791532f8f.1
-        for <git@vger.kernel.org>; Tue, 18 Feb 2025 08:24:46 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CTNw/nSW"
+Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-8553e7d9459so144926139f.2
+        for <git@vger.kernel.org>; Tue, 18 Feb 2025 08:47:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739895885; x=1740500685; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1739897222; x=1740502022; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=a7FtHLrzUWo+GJfYTEfGjK8nJID5aIuC0/8aOGD2Gy4=;
-        b=TeuXssF5WA8JdckM2oRkLaDEHOaUO838Oh+kHpCN5dT32HKpqMSg41MYyD1KElxBKq
-         4+5xAplgfQxA3BqaH9tn+ilJ7bYTjM9wGncdpAzK2gFXqF6HkZK3e50mDJ9SQE6MQbc5
-         aF5hpMaOcBn4WGr1HR0pK2+Izd00I5DrOaKSIv3eJzHO5rnkVBj0zt5trsvhkcRCY5nN
-         XcBscJW89idDI6wBjTfGe4CuCeO5PWogs2fFofIq7EN55bp6+xC+ZMEMaPnsl99dmQ0s
-         PHPzHrOS1P5dhKUFU2JyFzMGLcHhFjzIYLl5qR0//y53X89RDstDhp5QgbdxXtFINMYB
-         mwpQ==
+        bh=IBmrRmar+2TM81P0M35U0RmuvgAbiLNqK3IQBhK9kQ4=;
+        b=CTNw/nSWz9NCFKJfRCnIkCgeG4hIGotojduU+20BhtxY2XZ7+U1JH93lO1gJUvCh3y
+         tbXjW2kMamNOTadvT9vS284bF2vnpMuQBtsyz8mPR6vZ5jNOgHT/BIZyKC+rmIIpF5ci
+         nqY+MnoZEzVPWPLfiivxaU5Y4Jl9TbavMviqLxXqC9m5DLjOlwjnjX7rBo0xL2ReSiN2
+         2rukYm7yaDXqUEERQSLJcbSrAATdqBS4Ca6VaghDxqWLrlEQclJPY/eDNPCVRhhQid07
+         cK9bKE+/dp8CidQgppIxmru70Po5CI6J8QEfVyyNqyIhutBpxebfXLbqCSwFnKrR9B1b
+         561A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739895885; x=1740500685;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1739897222; x=1740502022;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=a7FtHLrzUWo+GJfYTEfGjK8nJID5aIuC0/8aOGD2Gy4=;
-        b=MCCIoaa9kZhPRN1StKvkx62wbVVxSHNUE3/23T14tErl8vtOZA/G6gwoqREjXnL82e
-         FWCBWpjs94MwpQWE7UINwwPsfYqi8zCN2nj+57+feQdLQGI+IgQM9ThADK1De/WThBi2
-         e749dd1GZJ2fX5TjIli1jcNpC7OOuSSsQItU8l3qy0UBnP1H1hxPbrqL4jbpC60KxQcS
-         n/kboynHJP3wGIzzD38N90JgCTWsjQLPuUQn/vqo17hDhOM4B00Fv4AQY6Kt3k3XzjEz
-         sR6Y8m/kNSFuFLsOcafy5DdWjmORAJD0EREzv3lFan6ugMsjveS/awmLxvJWbVWBYaA3
-         6sbQ==
-X-Gm-Message-State: AOJu0YzQhBDKuzKeW5yVwe5kqKmW7EwxJU8Dm3aj9om2DeNDgbQHdAvy
-	wBNzFMMFO4eIY1z15O/aDp4nNSpnU7V552NE4+FznuOnHR4fYr8anrTDdQ==
-X-Gm-Gg: ASbGncs2RoeJyPMwUiGnWwcqMGhkHwwF3g9o4G+CYIcqae3d+eNAPJLjadLt9AkJ/5f
-	K5OuW2DQYodnk+mSRFHodGMOwbhd0T8SfCokbQAqRlPcVVUmKyZJs+7Pp3qTna80kVcjKXXy6ug
-	nguX2E1pvaUDl+Bb/AzRhEkOuPRe3O+flebQPi1Vn0osIF9Omg3rN60IONBuf9CT/nBq4Of3kk/
-	DdkngczofozjipD95GGAcHlR8hYJx0sFW3eAQa7RpyIS5ojTXXti1sM3fGP7o8BXe8cN6xSpDXx
-	O/wYiS+PXdFc1Y8o
-X-Google-Smtp-Source: AGHT+IFl1yP3/EdXoNtYNKq/tqB+oYzAI4WWis9diGW6wE4ybdpXo9a/BofJk8Am6yD2Tl1v69OJPA==
-X-Received: by 2002:a5d:6d83:0:b0:38f:2c10:da1e with SMTP id ffacd0b85a97d-38f57ea22c6mr377178f8f.27.1739895884933;
-        Tue, 18 Feb 2025 08:24:44 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f25914171sm15615846f8f.53.2025.02.18.08.24.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Feb 2025 08:24:44 -0800 (PST)
-Message-Id: <a017982009267da5157d314a7d3061bac60ea8af.1739895879.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
-References: <pull.1862.git.1739723829.gitgitgadget@gmail.com>
-	<pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
-From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 18 Feb 2025 16:24:39 +0000
-Subject: [PATCH v2 5/5] merge-tree: fix link formatting in html docs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=IBmrRmar+2TM81P0M35U0RmuvgAbiLNqK3IQBhK9kQ4=;
+        b=VXz4KuPCt0pT+bBMP6PJx0s3cxr/ySkWLQnqKL21zYFOCaXjubDIl4ALxEkMxj5hja
+         vUtjykbgotk50GIA1uBiS7RBGxWis5rDknVu3Zy+bzius7xxRiOXA6OztUQ6qNIQf6Na
+         0kQ1y8UDQ8b8YbDSKV4gyHw4uh1fqs08OOfs2fCRHNkDJwO25moTKrUlVcCSYV+VsmLO
+         KAODoj2AE70tM/eQdWhSSL7iCLBpb6C5XWMWTVg2llQ5uizL/rWHzsF2Tdw3vVmLnJmK
+         wLfcezZb6BbXh1Tt02dIvERo9R4ZT5TiNep3sSWcnzHOBBEaQheKjNKolBDK8G+zcy5z
+         hBLw==
+X-Gm-Message-State: AOJu0YybiMWCOsNJKY6uAjulCke/hrkydkN6KAZfHLHd5WdUI7AkjHy9
+	XqQwSgBJxdA+yYU6eiO8cFoJ0kPK3AStA8dtTjqZYWg7VwDrPKjcQuK2INqYlt92o1UrVDlroEo
+	njWZFxsRCEa/bI4bMg9RsOAKdCuSgkg==
+X-Gm-Gg: ASbGncsmceMMywpszSJoYP/Fi1wBbfErqPTgHMSqcl0tBlimLSsVDTjul6/stq9SMB7
+	fXTntCrlRwNinfBsMRxv6AohinPt9e72PzzrhGBUR5Wzd5fRQUdAJlY29SH6zxCEv9uJV+FE+rL
+	AYD3cJzKSBrf6qSMQ4WqdpRmHCiiLd2Q==
+X-Google-Smtp-Source: AGHT+IH+sQGnPV7JYPARJzSSPLbKYiCaNI2Rtsj50tCBaJnGxelUToPBoXsTPecm9cE/BBxL05u6mpOc+wsmMEKAXUo=
+X-Received: by 2002:a05:6602:6d16:b0:855:a283:8231 with SMTP id
+ ca18e2360f4ac-855b396aaa5mr11701639f.1.1739897221916; Tue, 18 Feb 2025
+ 08:47:01 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>,
-    Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1862.git.1739723829.gitgitgadget@gmail.com> <pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 18 Feb 2025 08:46:50 -0800
+X-Gm-Features: AWEUYZloDbkfDSHrDAKkg4n7KtDSzyaT1E17AQ5k9xq9eO6vK-DzRKCF369jj8E
+Message-ID: <CABPp-BE3NtP463P4R+stzcQ_MufjobL-CX-rB=0m5gC0DzA9ww@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] merge-tree --stdin: flush stdout
+To: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>, 
+	Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Tue, Feb 18, 2025 at 8:24=E2=80=AFAM Phillip Wood via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> Thanks to Elijah for his comments on V1. I've updated the commit message =
+of
+> patch 2 as he suggested. The rest of the patches are unchanged.
+>
+> V1 Cover Letter:
+>
+> I tried to squash some fixup commits with "git merge-tree --stdin" and fo=
+und
+> that my script deadlocked because the output of "git merge-tree" is not
+> flushed after each merge. The first patch fixes that and the rest are
+> cleanups I noticed while reading the code and documentation. This series =
+is
+> based on maint.
+>
+> Phillip Wood (5):
+>   merge-tree --stdin: flush stdout to avoid deadlock
+>   merge-tree: remove redundant code
+>   merge-tree: only use basic merge config
+>   merge-tree: improve docs for --stdin
+>   merge-tree: fix link formatting in html docs
+>
+>  Documentation/git-merge-tree.txt | 11 ++++++++---
+>  builtin/merge-tree.c             | 11 +++++------
+>  2 files changed, 13 insertions(+), 9 deletions(-)
+>
+>
+> base-commit: f93ff170b93a1782659637824b25923245ac9dd1
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1862%2F=
+phillipwood%2Fmerge-tree-flush-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1862/phill=
+ipwood/merge-tree-flush-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1862
+>
+> Range-diff vs v1:
+>
+>  1:  3b317978509 =3D 1:  3b317978509 merge-tree --stdin: flush stdout to =
+avoid deadlock
+>  2:  16fec87766f ! 2:  63b09dbe1b7 merge-tree: remove redundant code
+>      @@ Commit message
+>
+>           real_merge() only ever returns "0" or "1" as it dies if the mer=
+ge status
+>           is less than zero. Therefore the check for "result < 0" is redu=
+ndant and
+>      -    the result variable is not needed.
+>      +    the result variable is not needed. The return value of real_mer=
+ge() is
+>      +    ignored because exit status of "git merge-tree --stdin" is "0" =
+for both
+>      +    successful and conflicted merges (the status of each merge is w=
+ritten to
+>      +    stdout). The return type of real_merge() is not changed as it i=
+s used
+>      +    for the program's exit status when "--stdin" is not given.
+>
+>           Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+>  3:  bf1dc603a15 =3D 3:  f95a15a4203 merge-tree: only use basic merge con=
+fig
+>  4:  4c416850634 =3D 4:  1645b0e747e merge-tree: improve docs for --stdin
+>  5:  89722894c87 =3D 5:  a0179820092 merge-tree: fix link formatting in h=
+tml docs
 
-In the html documentation the link to the "OUTPUT" section is surrounded
-by square brackets. Fix this by adding explicit link text to the cross
-reference.
-
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- Documentation/git-merge-tree.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-index efb16b4f27d..cf0578f9b5e 100644
---- a/Documentation/git-merge-tree.txt
-+++ b/Documentation/git-merge-tree.txt
-@@ -49,7 +49,8 @@ OPTIONS
- 	Do not quote filenames in the <Conflicted file info> section,
- 	and end each filename with a NUL character rather than
- 	newline.  Also begin the messages section with a NUL character
--	instead of a newline.  See <<OUTPUT>> below for more information.
-+	instead of a newline.  See <<OUTPUT,OUTPUT>> below for more
-+	information.
- 
- --name-only::
- 	In the Conflicted file info section, instead of writing a list
--- 
-gitgitgadget
+This round looks good to me; thanks.
