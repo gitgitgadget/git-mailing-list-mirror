@@ -1,68 +1,68 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90E426F449
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 16:24:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA22626F469
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 16:24:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739895887; cv=none; b=jvK1oZrLz/UY5V7knM2vsfwyXk2OylFIXuYdEi5ByMqs4ZIrNUw1fgP/lOB9ohlGJ6qGUSVhR4dyXOtLFskFxT/PKuqH1+G8ifG1W2P3bh+YkP9x9vGKtLA8qGgMFIrMzjccQ9JMCXc/j10PWjXtOJEQZSLWAU4xY9rck8S5C0k=
+	t=1739895888; cv=none; b=s/Hc9FzQfm8JnQt4j7KBWjFTp0ncpzVu8tfaADpUHIsA5SFRuKrLdG8kOjXZohCIN4jvkKwwacGSJxRPP+kEMVAXORDyyeYjdewG6MDXROQqE/NDatIsWfK0wD0MsWZZMNenqW6jNdFlO9LaFWl7LGQE6IElNb4pGPbZadiCR2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739895887; c=relaxed/simple;
-	bh=fsb00xLpOxRrgT/DgrF+Cf4vGKMmdw1Ft/tXfKOD7cs=;
+	s=arc-20240116; t=1739895888; c=relaxed/simple;
+	bh=27gytcY1iCgQodLcrldIKIbF14AesUFaoltzye8Bq/M=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=RxYDJoqSJDFXQkf6carxLgM5O0GBbMOsZQZnqq6+WIXz4YTTZ9FOFNDqXbBpkM9rvyT3nsz+tzTeaD1kCZNKs48If8RgyDZq5N8QUUzLlJmAzgMFNJUiXngZdSj4GHxnwiJlFlNlp++W+/6Xs+rQShyfcTInrBdnVIuoOSJ0pFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=j4vTqNFC; arc=none smtp.client-ip=209.85.128.53
+	 MIME-Version:To:Cc; b=psgfmAwHaqcWTRsN3KjSnImHt+MCgo1pny1waH5CzphcSHSxRW2S3svaS2QAdzQiFaG7ujnFaZPX5tMWyYaj4xJR+CmmOrSOavrTswckoOjG5/Ztbf0czCcdJYnHvqo3QRU+NojJJb225dDHUxe0h+5kdnEkeloaaWGtxwLT6JQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kC8YRvgj; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="j4vTqNFC"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4398c8c8b2cso21219655e9.2
-        for <git@vger.kernel.org>; Tue, 18 Feb 2025 08:24:45 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kC8YRvgj"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4394a823036so59555715e9.0
+        for <git@vger.kernel.org>; Tue, 18 Feb 2025 08:24:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739895884; x=1740500684; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739895885; x=1740500685; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nykryX9gYlil/AYXBT+DOOFcMiqRnFeK+MsOWuNjDGI=;
-        b=j4vTqNFCh+TK5w3j2AAvxEK5sHnHPOMZFSo14ccAABARSjXnIxQR8F+zcYPyzYfGSj
-         PJ9SolByBt1V9uGeYsCewHUDKOpY5zOdbl+wIXe5CZlBn3rD7uvXXnld5dYBUIu1JlYs
-         fkkCQN2vl4uoGVrF8iBXxCqf3K3X1DTeaA0zDP5opaPZ8Hi5BkpE12v30GiXVxpPx7uK
-         7uwmjnRQqN3JaRAzaJl/T4zRhcmAQchpcuDXk2lKjvIjr8GVbIv/Sd8FPUnLlu6ifmI1
-         dU0XsUBnyQgL5FrfrEVaGQ/SnNkGEHT4CMbUQGxCY4yuipGG76TCfqKYSN9dDwdNQJOY
-         dGbw==
+        bh=wOJwhIyFoZwHfX9r8sLv4CLLdBHhe33cH5JIcOQ4Ffw=;
+        b=kC8YRvgj4v3l8MbIiXygUIcXA50IkOWnCoVY8aqMfw6C4OYL2ZyIYIBb9kS6z8UTCv
+         Ida6Sp6gekcPEKhRCnwTjiqDHjYw6rzj6SEibvSoWVVe1dwJZe7grVSX0UrKXzFaTEn/
+         ms3WoSyrG85+m5HpgUPLpkq/zaH78UR+/9ItgHTvaxSep2D7IgWXpwwndKBSXiQTJa1m
+         venpuVUetr59gkWHW8gVAtWQBW0AHIHRXO6AmrmEbeLDewSaktRU6J4SqvBuSYo3vYp7
+         n2Ovtu8/XPw2kYJ78f6IQLz5e6k5DpOy1oykBHi03IEkYt0NULbw7gkoGbvu8Q2xVT4o
+         OO1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739895884; x=1740500684;
+        d=1e100.net; s=20230601; t=1739895885; x=1740500685;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nykryX9gYlil/AYXBT+DOOFcMiqRnFeK+MsOWuNjDGI=;
-        b=oQnyOjROlP9fAvkJO8qzlseNIdcTXyE2L5IP+shAaUnx91leo1gHn+twAZA8C2UTXP
-         ynmDiL9HnaYcPQpq/Nl8G3h9SdQ0jXrMctjbCC1cHJeBg8lIiwY0EX0TftcHrGIQe3XG
-         EsJ/4kYxlFVBS9/jwOMBYRWcVrPaiL5QA1Be4BgDqMFzxQ7Q0guX/Z7HV27iT+Lov/hd
-         rbghli3CxK5PUqNLFmnX0X/Kt/+gs6kAnaxAekHoaCkQHnZ8e5mx/djjCzZ49qnwMTQb
-         ttqHtfvrpJyW7UYOOKxg2GFaqVYzuaQuRRxzUAmWMukYgZsPMKTHJvf48D/8F0AEpR3j
-         3L/Q==
-X-Gm-Message-State: AOJu0Yw+NPhdRmfw+xUXAZsbF5w7qBT+if1NgQhjer/babiAH/OAYaH7
-	LFmuN1iHQj6nEzOwZRs3DyyqbA4YwN6KbzZ3WOPBXf7pH6yB4Ez/GxHNzA==
-X-Gm-Gg: ASbGncsDmHFBEp01QX4MGBUgqTLRi+XTDJPkM+Uv10v2pc6P6SjthFJ+sqsW6L0Bi/o
-	juVy8jlFqWrWd+MSfaqpBYc6trExOb8KHsglVnJ2ycyD3+4YRPpHiBuqLK0tY//VcNWdINTH0ED
-	nXHByVIJCLLpLGEvsPaaR6Xrb3buR+A4AiqtfPP99ZBXOeKw6CKy+7H6x7U+Eaay9HQIBOWob2i
-	KJUNBJffTz+2RR5QX23+x9lMMAq+uyLbJ/8VxGQgpIhR4cvfJCYWchoD7M5/tGqwWr1PwlD1IOh
-	phcy/hr1eEiUzCDf
-X-Google-Smtp-Source: AGHT+IGlmOPFL96uGyOaQnt+k/ffipNuKKww0Hcx3GnmKMAfMzizWqnz92pz9LmkOZ9cY41KdWHwaw==
-X-Received: by 2002:a05:600c:1c86:b0:439:98ca:e39b with SMTP id 5b1f17b1804b1-43998cae5a5mr15787535e9.29.1739895883391;
-        Tue, 18 Feb 2025 08:24:43 -0800 (PST)
+        bh=wOJwhIyFoZwHfX9r8sLv4CLLdBHhe33cH5JIcOQ4Ffw=;
+        b=bLbBqTgtixuWqNuyckxomGo7ZSlPWYMIm+TSmjy2pp3SQa3jRLvCyKpnB+NklZJNsP
+         O3y2QLnP3ch6diQXq47gBDNQXBmwVhgLeN6NDkiNKzuwhg5ScH1hBDXBC3heOQEslRra
+         l0xjdiXGQGqoo2fPlZ51oOQ9UB9Lsz80yFkv3bjgpvByQQCbEfpdONdPmZiBDStJHysP
+         LpnkK/sd3XWUjppSCVyXi7eqiRNt+b/63v5fnqUhLr+45YsIZpH+FWX+i4bLEogoZ0Ep
+         s0Cw+TOxp+X0PilLz+ugWJ1qHCCb7oBLUnPVPqq/agDfN20MRQ8YsF79W/VVJVo54Nq0
+         v6lw==
+X-Gm-Message-State: AOJu0Yx3/DgPUb1lnPs7nhDsbEIebTlzb/OrQ0D5aP+aAWavX1FlszK+
+	L7ZIxHHQq5/iiA74wg/8RPwNHsz+/SCxW+toT7JURUPFu6DRUCb3Ozjc2g==
+X-Gm-Gg: ASbGncu0zkfh/FLxckiISKJoN7LzatsAiuYTLrrmnuC5Iuirg+XrnedGBuxx0LTCGDs
+	dmNzE6dF2WVhDlUNanDnZTasQ2UFRZILLSv/1T8Xaq71hIemw5yOwHESikPAB/V9XqFAb9B37jU
+	HgiYpnkbRh+Va6ET5h/bxSMIl5QZCiwcvbtWVaFuBtouPKEgr4wWw6s3JAIYOszIXRXFxhFjDYR
+	6Hi4lMygZv/s65Vi5GqORiz4uCOhHTGUJ2Zypd2U2GpVi1vYZSMh3BWA06kKrlZO4Oe1HPVMpFT
+	owiK1TGuR81Hmy7h
+X-Google-Smtp-Source: AGHT+IFZlJc0qkAI8HNz8o6+gZFwIx4B62Ebiwu2kdMQttyAcEn72kZhfYS3J6mqjTjz1aYss+hXXA==
+X-Received: by 2002:a05:600c:1c96:b0:439:98f6:8bc8 with SMTP id 5b1f17b1804b1-43998f68d3fmr9247115e9.26.1739895884270;
+        Tue, 18 Feb 2025 08:24:44 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43996b35040sm17053145e9.23.2025.02.18.08.24.42
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f258f5efdsm15225212f8f.43.2025.02.18.08.24.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 18 Feb 2025 08:24:42 -0800 (PST)
-Message-Id: <f95a15a42037ac3f523c15f460ecd325331bc5b7.1739895879.git.gitgitgadget@gmail.com>
+        Tue, 18 Feb 2025 08:24:43 -0800 (PST)
+Message-Id: <1645b0e747e9bd65147bb0bc4123cfa32ca68818.1739895879.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
 References: <pull.1862.git.1739723829.gitgitgadget@gmail.com>
 	<pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
 From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 18 Feb 2025 16:24:37 +0000
-Subject: [PATCH v2 3/5] merge-tree: only use basic merge config
+Date: Tue, 18 Feb 2025 16:24:38 +0000
+Subject: [PATCH v2 4/5] merge-tree: improve docs for --stdin
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,33 +80,49 @@ Cc: Elijah Newren <newren@gmail.com>,
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Commit 9c93ba4d0ae (merge-recursive: honor diff.algorithm, 2024-07-13)
-replaced init_merge_options() with init_basic_merge_config() for use in
-plumbing commands and init_ui_merge_config() for use in porcelain
-commands. As "git merge-tree" is a plumbing command it should call
-init_basic_merge_config() rather than init_ui_merge_config(). The merge
-ort machinery ignores "diff.algorithm" so the behavior is unchanged by
-this commit but it future proofs us against any future changes to
-init_ui_merge_config().
+Add a section for --stdin in the list of options and document that it
+implies -z so readers know how to parse the output. Also correct the
+merge status documentation for --stdin as if the status is less than
+zero "git merge-tree" dies before printing it.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/merge-tree.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/git-merge-tree.txt | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 3c73482f2b0..3ec7127b3a6 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -576,7 +576,7 @@ int cmd_merge_tree(int argc,
- 	};
+diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
+index 0b6a8a19b1f..efb16b4f27d 100644
+--- a/Documentation/git-merge-tree.txt
++++ b/Documentation/git-merge-tree.txt
+@@ -40,6 +40,11 @@ After the merge completes, a new toplevel tree object is created.  See
+ OPTIONS
+ -------
  
- 	/* Init merge options */
--	init_ui_merge_options(&o.merge_options, the_repository);
-+	init_basic_merge_options(&o.merge_options, the_repository);
++--stdin::
++	Read the commits to merge from the standard input rather than
++	the command-line. See <<INPUT,INPUT FORMAT>> below for more
++	information.  Implies `-z`.
++
+ -z::
+ 	Do not quote filenames in the <Conflicted file info> section,
+ 	and end each filename with a NUL character rather than
+@@ -116,8 +121,6 @@ This is an integer status followed by a NUL character.  The integer status is:
  
- 	/* Parse arguments */
- 	original_argc = argc - 1; /* ignoring argv[0] */
+      0: merge had conflicts
+      1: merge was clean
+-     <0: something prevented the merge from running (e.g. access to repository
+-	 objects denied by filesystem)
+ 
+ [[OIDTLT]]
+ OID of toplevel tree
+@@ -235,6 +238,7 @@ with linkgit:git-merge[1]:
+   * any messages that would have been printed to stdout (the
+     <<IM,Informational messages>>)
+ 
++[[INPUT]]
+ INPUT FORMAT
+ ------------
+ 'git merge-tree --stdin' input format is fully text based. Each line
 -- 
 gitgitgadget
 
