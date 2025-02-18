@@ -1,203 +1,129 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3ED1459F7
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 16:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D690F26E64C
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 16:24:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739895129; cv=none; b=A4aXKPREP/ZnFJ9iuHLX6r0dPgG8Jwc8806uprGanTRKcB5YdHnGWHyjL/ot/SbsuCiQ+utMxF8+Fn2RJYL5kL53nkKuNZcS4G69ZAqX5jQmvbaQmxpeTTK7BF69oqgTt49AK85fiPjs4EPOX0U6Ab6l9rIaz4y2NJL2JYsduUw=
+	t=1739895884; cv=none; b=YubHN9nKiG5tnjkXbuz4CXNm7moAOd8Ydg1GuQvJWGC0PDJeTOYADMPEi7kr9NNgLq+e3sna2MkNJz4mH3LV9zainyT1ZRv7OKoOjQiepxcZ9qqwhNVtkF4rtT83i0iB9YZFRNezqbQB1wbr5ayJ00AEXDejfGCtjsK/hODSHFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739895129; c=relaxed/simple;
-	bh=cKUPdEAMAwFNXB3QexHZmsFS3z8V99hJBQIBs6UI0WI=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aDFhVJw002b2Ndtg1NFvpJYWXvspQh01J+Wlb89r/g+l75oIf8DvLn7DtwjDWvDtRrpyfKfZDCAdvKeyPkfZwT6Dv7JxUc3h0BypEoOth+eex3OOJhKmfzREfDF7YEuvmmMa/u4UN0xTCXZ5jXqRoU8y1hrB0ld8gGweLSB9dqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TFExw7lW; arc=none smtp.client-ip=209.85.219.45
+	s=arc-20240116; t=1739895884; c=relaxed/simple;
+	bh=FN1sCKmonjZsG4xhDaIrvnEvdEHeZMGap1MYUuMmyHI=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=UuLNPQ4HWW+0tKFBpUhxwxhO5v8BhEM81SO6DbuDAP62g1YNNuBsmSseBdYDWgovh2cUX8c6QGkgMMDBLOsGv2ktIifMVwBkrtY1lxop2Zgb1qsvI5namRCKlB3Ypgi+VQQrE6Zt0lM3axjhYyDfnUBJaQXgtOKM+YuZFzHMQwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b0gBAKXg; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TFExw7lW"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6dcd4f1aaccso100586326d6.2
-        for <git@vger.kernel.org>; Tue, 18 Feb 2025 08:12:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b0gBAKXg"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-38f2c4382d1so2546055f8f.0
+        for <git@vger.kernel.org>; Tue, 18 Feb 2025 08:24:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739895126; x=1740499926; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=t7jLDtwEBp0fTLY+52z2kFGsdtWvpMYgMBTe6EGlg+c=;
-        b=TFExw7lW1KTZ5716VyQQ0qVyh13asHf5xrqfGFdQZF0dYNZIiKn66RdmoFqpkSwmqK
-         p+6ec75PPq8xtg6VpwDd1epeOfKjP5gIq0Ylrg/rugUEGE50pMf8VZBV+ZDwPalAaQ9m
-         Wc7gW/ub59Z8ixz2xKxkLiBRrFd/6pXTXUflP5xIReS3RVzyMUSHdEYg16jTt+ua8ko/
-         tmI0BFYcYuB/kUvro3Y6oCQ3Sx7Rjwyg3jPhR0RgZZfO0cUP0ew4sb/Nqxq3ksiGDK0J
-         QdWIQmbVvW9rWJDddLawqxGmPyZRStLPZebnpzPayMargJ73e2tKHAKwxCmpfQCCOdnM
-         0osg==
+        d=gmail.com; s=20230601; t=1739895881; x=1740500681; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=y1eFk4EDWrKSafhgThuIKmAZX49/0HbRt7kwmTE2luI=;
+        b=b0gBAKXgq+sMHVcpWhF2YLdAXH46aBuo1LtV2+ShxrE5XKH6P5xrQDzrZZh/42H7aw
+         +3OZr647WoaHVR4Qrwh0xGeFUTQaqcAOZ1I+sGyPfGDf8/4VGUmHCQjug5boTbU1yqfY
+         32/NpSMzug/OjaGbKZL3k31B8EJUS3y6BhYUPvG3jUW6/zkt6fAthFUh9HmAnGAY6kyc
+         KA4PlZHS3e3Xt31C3KTojg5Fz0QL1b9m/kSitfvggI2h/MktuYhYQNQOMTMQ3ELMGPQ+
+         fzi6EePPfFFZmqZKZ2U7Sx9Kjiw7d83YiqBGUUnqXcQLIuFuw73F4YCUCAE48Cd+v73l
+         Ui4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739895126; x=1740499926;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t7jLDtwEBp0fTLY+52z2kFGsdtWvpMYgMBTe6EGlg+c=;
-        b=ADqKrTdTQo/mcTMAzbUrYCpdOabg1imJOZWhvaAbSbYyQMJZmyq484HSA/QnvDMiyy
-         8e/q1u5H5xvCMq3fadtD27DmxCHWVyqcILMZ/WKfo0hdorupHD3Pf582Vexbf0K5EWBO
-         GcWb5hA8m5k7BBI+OPbdhKHF8oazYirPDhVRIgj4Bqkmm0MNr/aCH4Hyf8Dbn3TZJVUk
-         PtgZlJr/hLdZckuTZqYvwAROqEgbUY4LBYLNRR36jOuewhujvj7syZzpuEl6slxVTBai
-         bPuqQgvM6eoEZ3F18SHERwZHnljPqREY0cViT8BdR1YsTRYqbH8b7CVQ9fI5pkIW0/jZ
-         DnkA==
-X-Forwarded-Encrypted: i=1; AJvYcCV9JuziGtm/EQjTETHqnIF8V6oZiu+7niQPzxC5bcHFGGP5awcAuqZbrnlSYBSjFkKQypY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwC19iOcSsLp2Ef0yz0fVAEmiVpjsrjDAuHuZnIiyf43+1hpZr6
-	G/aM6vaf8s4neJwiZU3RNAjmzZkZFtu54VPWzTCv1jdQHSqkwGIzPzLDkQPtpXMnNBmlLLItjLc
-	nbyTL5mOz7w4mX4xzr/j5t6TjlnRKCdYn
-X-Gm-Gg: ASbGnctX8qHG0Dqcx3ioBESQy0gW14jQnnEwql506KoGge7wPoeM2cAE8AP7IHOSkkR
-	cfhq89ltnPB4Mp75LAeteYcg1cwQv2gVScEeeYfUJ5otk8ulYzjBooAxhcNTYhRXTQYgyzJk5vq
-	rrV1FnFfXOr/Wy41jjiQMSJ1uZb4Ypemw=
-X-Google-Smtp-Source: AGHT+IGBnZsN/VuNtinHzd35NuSFyff3zeIXlgbA0dV5kG1V4yF3vzDw5Hpa60hZZQp3qFsfD6VVJMVh1JFP6dGgqNs=
-X-Received: by 2002:a05:6214:1d2f:b0:6d4:1ea3:981d with SMTP id
- 6a1803df08f44-6e66ce28bdcmr213347236d6.43.1739895126273; Tue, 18 Feb 2025
- 08:12:06 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 18 Feb 2025 08:12:05 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250217-pks-update-ref-optimization-v1-6-a2b6d87a24af@pks.im>
-References: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im> <20250217-pks-update-ref-optimization-v1-6-a2b6d87a24af@pks.im>
+        d=1e100.net; s=20230601; t=1739895881; x=1740500681;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=y1eFk4EDWrKSafhgThuIKmAZX49/0HbRt7kwmTE2luI=;
+        b=C62DWUXnRmFBJ4xlqFallwSOMrnPpnQBl+yb0zCVWTeaI6jqoSNZcAn6+RL8pn3lx8
+         0hNZJ+2BtIsKvZShmhos4zo+mFCDjw4j+mHYtu+R65yL0pw803h2Ox9V4DudRqbwQo7+
+         XAC3q9Kv+YyaObgWaNJm3FvPjDtoWaH/eWZT2RE2thl7jwQ4ecaAETpgJuYuveV4kqRX
+         QytbEem7OptJiC4PTm9qD4H/GbS4mE+2g/NdjEekgVtPuYBKzRMJT8dT4LUdbjKfXYlf
+         b7qI2XUyomuyx5trjlaNhxeuenTzcAl+qnug249m6XE+W7nEoXiYKtm9vTdPXc7xKWzd
+         JtoQ==
+X-Gm-Message-State: AOJu0Yzd7lmAjsIU0vlT8p89JEKl+/iQv0R5XqXw9cDRdM0FieQq2j4s
+	LUDnqmCqye4/HH2A18ekIBpJTwfIFXUzGLKFP2V3OAzU1HDItmc12ei4TQ==
+X-Gm-Gg: ASbGncuTQM31S1hhEpB0BetcP17in+REVIKk3K0gAklFdxpyw2MGbFlohHUz8RVpwy0
+	0nPMBRNv8IqhP1XdZn/sjbUi4u7P02q1+jmja04GnkPF0+iRE4BKttApvDdCaijogZRBbToXMT6
+	53GF072Yv4C7cvACjY+Z69vEr0/X+Xj3dydjpiiYJqVT2bhUTaRTjgUjVFn47ReCr94PwPRylV/
+	ivhTakAPQxYZ6GVOKSSYlgDkHXXtMV6Rka5nSpr3N105T2e84hTGcrHqWMrVJMVnFOxFfJtO3e1
+	RldDahh8OVrpo751
+X-Google-Smtp-Source: AGHT+IFHtOBPGmV0EV1/QlBOsZk4GCAJLDaIwx80XG21cPRQsLvxMb3fEbQhg70ogUwWCvDAJYIoYA==
+X-Received: by 2002:a05:6000:1f84:b0:38d:dc03:a3d6 with SMTP id ffacd0b85a97d-38f57bce501mr349321f8f.4.1739895880638;
+        Tue, 18 Feb 2025 08:24:40 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4398ba53406sm45305315e9.14.2025.02.18.08.24.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Feb 2025 08:24:40 -0800 (PST)
+Message-Id: <pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1862.git.1739723829.gitgitgadget@gmail.com>
+References: <pull.1862.git.1739723829.gitgitgadget@gmail.com>
+From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 18 Feb 2025 16:24:34 +0000
+Subject: [PATCH v2 0/5] merge-tree --stdin: flush stdout
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 18 Feb 2025 08:12:05 -0800
-X-Gm-Features: AWEUYZlMx2DraPbvLWVZhIgF0G4uq2ceTH5O01yzC6pcrT4ES4DmILM8gxb-LNI
-Message-ID: <CAOLa=ZQC+UXQGjOqot=pTopkd8mOjduixQ=rBnsis9g_3_HOqw@mail.gmail.com>
-Subject: Re: [PATCH 06/14] refs: stop re-verifying common prefixes for availability
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, 
-	Junio C Hamano <gitster@pobox.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000f30a3b062e6ce62e"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Phillip Wood <phillip.wood@dunelm.org.uk>
 
---000000000000f30a3b062e6ce62e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks to Elijah for his comments on V1. I've updated the commit message of
+patch 2 as he suggested. The rest of the patches are unchanged.
 
-Patrick Steinhardt <ps@pks.im> writes:
+V1 Cover Letter:
 
-> One of the checks done by `refs_verify_refnames_available()` is whether
-> any of the prefixes of a reference already exists. For example, given a
-> reference "refs/heads/main", we'd check whether "refs/heads" or "refs"
-> already exist, and if so we'd abort the transaction.
->
-> When updating multiple references at once, this check is performed for
-> each of the references individually. Consequently, because references
-> tend to have common prefixes like "refs/heads/" or refs/tags/", we
-> evaluate the availability of these prefixes repeatedly. Naturally this
-> is a waste of compute, as the availability of those prefixes should in
-> general not change in the middle of a transaction. And if it would,
-> backends would notice at a later point in time.
->
-> Optimize this pattern by storing prefixes in a `strset` so that we can
-> trivially track those prefixes that we have already checked. This leads
-> to a significant speedup when creating many references that all share a
-> common prefix:
->
->     Benchmark 1: update-ref: create many refs (refformat =3D reftable, pr=
-eexisting =3D 100000, new =3D 10000, revision =3D HEAD~)
->       Time (mean =C2=B1 =CF=83):      63.1 ms =C2=B1   1.8 ms    [User: 4=
-1.0 ms, System: 21.6 ms]
->       Range (min =E2=80=A6 max):    60.6 ms =E2=80=A6  69.5 ms    38 runs
->
->     Benchmark 2: update-ref: create many refs (refformat =3D reftable, pr=
-eexisting =3D 100000, new =3D 10000, revision =3D HEAD)
->       Time (mean =C2=B1 =CF=83):      40.0 ms =C2=B1   1.3 ms    [User: 2=
-9.3 ms, System: 10.3 ms]
->       Range (min =E2=80=A6 max):    38.1 ms =E2=80=A6  47.3 ms    61 runs
->
->     Summary
->       update-ref: create many refs (refformat =3D reftable, preexisting =
-=3D 100000, new =3D 10000, revision =3D HEAD) ran
->         1.58 =C2=B1 0.07 times faster than update-ref: create many refs (=
-refformat =3D reftable, preexisting =3D 100000, new =3D 10000, revision =3D=
- HEAD~)
->
-> Note that the same speedup cannot be observed for the "files" backend
-> because it still performs availability check per reference.
->
+I tried to squash some fixup commits with "git merge-tree --stdin" and found
+that my script deadlocked because the output of "git merge-tree" is not
+flushed after each merge. The first patch fixes that and the rest are
+cleanups I noticed while reading the code and documentation. This series is
+based on maint.
 
-In the previous commit, you started using the new function in the
-reftable backend, can we not make a similar change to the files backend?
+Phillip Wood (5):
+  merge-tree --stdin: flush stdout to avoid deadlock
+  merge-tree: remove redundant code
+  merge-tree: only use basic merge config
+  merge-tree: improve docs for --stdin
+  merge-tree: fix link formatting in html docs
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
-> diff --git a/refs.c b/refs.c
-> index 5a9b0f2fa1e..eaf41421f50 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -2476,6 +2476,7 @@ int refs_verify_refnames_available(struct ref_store=
- *refs,
->  {
->  	struct strbuf dirname =3D STRBUF_INIT;
->  	struct strbuf referent =3D STRBUF_INIT;
-> +	struct strset dirnames;
->  	int ret =3D -1;
->
->  	/*
-> @@ -2485,6 +2486,8 @@ int refs_verify_refnames_available(struct ref_store=
- *refs,
->
->  	assert(err);
->
-> +	strset_init(&dirnames);
-> +
->  	for (size_t i =3D 0; i < refnames->nr; i++) {
->  		const char *refname =3D refnames->items[i].string;
->  		const char *extra_refname;
-> @@ -2514,6 +2517,14 @@ int refs_verify_refnames_available(struct ref_stor=
-e *refs,
->  			if (skip && string_list_has_string(skip, dirname.buf))
->  				continue;
->
-> +			/*
-> +			 * If we've already seen the directory we don't need to
-> +			 * process it again. Skip it to avoid checking checking
-> +			 * common prefixes like "refs/heads/" repeatedly.
-> +			 */
-> +			if (!strset_add(&dirnames, dirname.buf))
-> +				continue;
-> +
+ Documentation/git-merge-tree.txt | 11 ++++++++---
+ builtin/merge-tree.c             | 11 +++++------
+ 2 files changed, 13 insertions(+), 9 deletions(-)
 
-This was simple and neat. Nice.
 
->  			if (!initial_transaction &&
->  			    !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
->  					       &type, &ignore_errno)) {
-> @@ -2574,6 +2585,7 @@ int refs_verify_refnames_available(struct ref_store=
- *refs,
->  cleanup:
->  	strbuf_release(&referent);
->  	strbuf_release(&dirname);
-> +	strset_clear(&dirnames);
->  	return ret;
->  }
->
->
-> --
-> 2.48.1.666.gff9fcf71b7.dirty
+base-commit: f93ff170b93a1782659637824b25923245ac9dd1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1862%2Fphillipwood%2Fmerge-tree-flush-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1862/phillipwood/merge-tree-flush-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1862
 
---000000000000f30a3b062e6ce62e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: ddf7f0f17c4b2d22_0.1
+Range-diff vs v1:
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lMHNWTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOS9EREFDSVFSSmtKS2pYMDVXOHNzRko0SnpPaG9aVApyN1RYRGswL3VI
-NnZ3OXR2Qk9LQjFmVjk3MzFBWUZBbmMySTArd3RITFh6ZXo5MXlOWTB6S0p4RHYrbWRJVHZxCmVa
-bVJ2VWxsOUdlRFFpdE1GajlwV3FHWUYvTXVoSmwxM010eFJzVHdPNWE5TzE2citYcU4xNnNsNlAx
-OC9yYWkKdjlPTE5hS0grSzBRdFo3ZTdDQ01jYlBTcTRmNXlWNmpQRjYxUmFDQVJjK1NoUXRYbmFq
-eVcyRXdhMzBFcE83dAptaWJic2UwY3dJZ0FiNnc2Rk9OakhCZHFUWmpCeWlucjlsYUNrck5oR2FX
-RVhjUlBlbFNBQXpsQndyNTd0Vi9UCi93eFFuWEh6dnFNTG1kZlN1VUIwR0krQXFramp3TE1SZTZl
-QWNKZXgzcTFFRW9wdVR1dnpxUE83a3dPRnhBL1YKT0NIQTZIZG5qMTJ6ZDdZRlNBNFFHQkFLUTZM
-dkhjdDdSRXBDZ0UxTlpFWndCZERiUXBLZG9JN243TzRCdjUvQgovTkZaSWJpMTVqMTlSU2hzZldC
-MWROcEJtNlJUZytSMk9iK2NpMUNDa0VYdU16ZEVUcC84R2ZxaUpLWGRhSTVBCktkejc2Z3JqUStU
-KzJuZDlYbnJsUFdyNVVEODFzM3RLN0FyVjBFMD0KPUk0NnkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000f30a3b062e6ce62e--
+ 1:  3b317978509 = 1:  3b317978509 merge-tree --stdin: flush stdout to avoid deadlock
+ 2:  16fec87766f ! 2:  63b09dbe1b7 merge-tree: remove redundant code
+     @@ Commit message
+      
+          real_merge() only ever returns "0" or "1" as it dies if the merge status
+          is less than zero. Therefore the check for "result < 0" is redundant and
+     -    the result variable is not needed.
+     +    the result variable is not needed. The return value of real_merge() is
+     +    ignored because exit status of "git merge-tree --stdin" is "0" for both
+     +    successful and conflicted merges (the status of each merge is written to
+     +    stdout). The return type of real_merge() is not changed as it is used
+     +    for the program's exit status when "--stdin" is not given.
+      
+          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+      
+ 3:  bf1dc603a15 = 3:  f95a15a4203 merge-tree: only use basic merge config
+ 4:  4c416850634 = 4:  1645b0e747e merge-tree: improve docs for --stdin
+ 5:  89722894c87 = 5:  a0179820092 merge-tree: fix link formatting in html docs
+
+-- 
+gitgitgadget
