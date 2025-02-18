@@ -1,117 +1,81 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D077626AABB
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 17:14:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8AA91F9F5C
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 17:30:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739898845; cv=none; b=mX6QEyLNLae4w/KZYdjED+KDPoIf1J8y7jBAhv3/XYeH04Kx2O9RtOba9miTzM6zDaEMAGoDhha5VLEhXJ2Hlo+mgCIz4+fp51zO6HTHOE02ZKw3LLe9SKWDPgPbizB0QavmT+2CygKhb6zc5xXINDAXuPeOtq1A1LoKdWft7W4=
+	t=1739899860; cv=none; b=XJYSVOGJjQX+N+kktf4AZ5sRbO1zp+V6tGsGF8wNG9M4O0/ZKIg9vHTH8Mbsdxo1ElU06gB+tcRpoUG6NDGlx9kNnwAPtOZupwky36EDApRDOZYGUYQPgWBO04lEYIeHAl9fW/TQoCPBt7UYiXjmGrgE9vknOBVEGgYJYp6hXtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739898845; c=relaxed/simple;
-	bh=oLXmHp5zKaLDPFWJ960np0ClszTY72jI5E8a8IBVeME=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nPtFUPUTO9ajAu+vjCt7f0tXqSqDGX8QTj8a28dbSje+TfC4bj8+iMEKPg+YV5/RHQ/Ydj5Uqg7udSOZCx4JdPlf+QAfZ4lQsobdvJbE3YZzw0WRdUB7yRwMbRHpx94W/QJTe9JzmqgdfXvLJDOWLJgChSOPX3fnIQGMEVjH/oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eBpVpGGw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UH9t+sN5; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eBpVpGGw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UH9t+sN5"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D378C1140177;
-	Tue, 18 Feb 2025 12:14:02 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 18 Feb 2025 12:14:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739898842; x=1739985242; bh=ZxnZgomEVN
-	KN+3vujg/lKf5wFF+T1aF265lNizFSvlE=; b=eBpVpGGwQ9b7ARhCIQ1JNbTnos
-	Dd0J/cAvqNUpnhu7bsX5UiKKeYNd/c5D0wPmaI+v//GM5+sOEKZscRWh7vVLtX5s
-	bM6YEWGmtEH466Ej+H8umaOtfO6dcWwH57mXx0I1qtr/8v20115Q2zjIkIpZ2M4R
-	HECXmrn6wJkRC4q9hxhJEBDGPFgxKGgclz3G+iQ2/o8aS/nCkmNVDZ8fAEELh6V5
-	yiNT9mJ6axUdQkqMzqzzTgrC4SfMOzJyz2yGJKRD2+epdGdKWRCLSf4FWYOhL82U
-	uPH5vG+ltP0e229qWS6eYNdznJQJc3DhiVQuRkaDenC8xzmbf1A9vXE5ec1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739898842; x=1739985242; bh=ZxnZgomEVNKN+3vujg/lKf5wFF+T1aF265l
-	NizFSvlE=; b=UH9t+sN5ORwBiXyESkLwEnm+4l6OXuB+7RYM8kxwSFxYqgWp/Fm
-	GWyhfIONcUWRBjrIHZSQcvLjicIteNsURt2ig1h/xbDZaTPbVZTPMrgIrqMjXYvc
-	IQhitTlCUOv7w3A3/MAySczmEwVpsTQOxUCQk4r6tTXJ2/bXxUZATU8FAKwvxjaq
-	Ztt4oGTpP+aN8ha4NXTqXXKdeaSGSrGzs+ye9b2CLvWN7F2XSwWCurb2O1KWabFP
-	K7TyKfYwfn5FiA4ylNyK06X5dArMbjthWgP6wbRPcbJPoBHL4ZXGYUDxmdKUYWPn
-	svaY6jblgX4HJjThvKi6H202Pb7J3j7YmiQ==
-X-ME-Sender: <xms:2r-0Z-_Nw-bZyTrHbeSKlyDwNIrJbflB5iX1mYn7WZQQiewtOImVaQ>
-    <xme:2r-0Z-uErY594KU_wzauJI2Das6e6xCRCJzx25ScYvI5Jnpwng10K_5_GTwe5YPYz
-    yft28E7ropBpl8Vbg>
-X-ME-Received: <xmr:2r-0Z0ASUe8Zsw2-HaWXS0uYpFESC2PRF5TWYMXaNOc_eSZkjzl-ka7EWM8HW6vU37ohE1eG0nRQUsQ8tiset80EiL-SdjrUP8qEi9Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiudekkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeduvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuhhsmhgrnhgrkh
-    hinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgr
-    nhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrd
-    hstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehphhhi
-    lhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtoheprhhssggvtghkvghrsehnvgigsghrihgughgvrdgtohhm
-X-ME-Proxy: <xmx:2r-0Z2exzVMWgw9G8oyVMuQFCaOC8u_Hq0M_nEPM9FcAILvrcvoNsA>
-    <xmx:2r-0ZzPXLpUEOTHqkCM3QiyfReaogjuhnaaL9hBdExhnzyXQWj5p_w>
-    <xmx:2r-0ZwkPNLhD8jn3_sKd4zXuOruswH5sS6K16OFjzp4BNaJyHVBEcA>
-    <xmx:2r-0Z1sOllAvWeLXMrdePVcdPBduEpvo7lZgUg0akWGOJnXQ0O64Kw>
-    <xmx:2r-0Z3lbHuowBinnrpVqg0GhHFLmBluf2JKie-3Kw_gBYFwGYtSYs-s5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Feb 2025 12:14:01 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: christian.couder@gmail.com,  Johannes.Schindelin@gmx.de,
-  git@vger.kernel.org,  johncai86@gmail.com,  me@ttaylorr.com,
-  phillip.wood@dunelm.org.uk,  ps@pks.im,  rsbecker@nexbridge.com,
-  sunshine@sunshineco.com,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v6 6/6] agent: advertise OS name via agent capability
-In-Reply-To: <20250215155130.1756934-7-usmanakinyemi202@gmail.com> (Usman
-	Akinyemi's message of "Sat, 15 Feb 2025 21:20:52 +0530")
-References: <20250214123734.1403120-1-usmanakinyemi202@gmail.com>
-	<20250215155130.1756934-1-usmanakinyemi202@gmail.com>
-	<20250215155130.1756934-7-usmanakinyemi202@gmail.com>
-Date: Tue, 18 Feb 2025 09:14:00 -0800
-Message-ID: <xmqq5xl7yy3r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1739899860; c=relaxed/simple;
+	bh=wtVoxFuGbRz1Ix9I6yoJmTegTbzZ56F/14GpisQEhMA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gqgdLjQjje0RZwWk/o1GpbRQZDUo6Bgq7eMBQ4AzQnypeIGL1Rg+VgZh+AwFWe+9HRzTDezOzp+2fX0OH2tyCnoDd8lZ2hM3QhGgft6Giyagd2g1S0RbV18Av3tBAcEEPHu2RcNR1+8RPTpR3nEBO4kYTpHoB8V6W8G5EZ1yFV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6e4231ae149so9113296d6.2
+        for <git@vger.kernel.org>; Tue, 18 Feb 2025 09:30:58 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739899858; x=1740504658;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yxpkUho6PLSxCV6nbpH6Gb/YL0d2G+mEzGN95u/h/dk=;
+        b=I9zy+sPGTbR/cYGWBJoIoJIlFSMJ7NJ4vJVroATwYIetUIjJdYi+aFzdbDacxHWrtK
+         i7yWY5W+PiGh5g+26M4EphRwqlEMumzfkAZQxS/QNT1UAi7VuXNTmop0vqSFNGOdZ3kl
+         8QhEQQMpBTQAwKvRPaoyxcFJtEZGwWkjqJvotmHvnqC5X4RUx4zb6KCQ2PM6K3cglye9
+         ofHr5hqh7IxC+A5wFSMZqNsiEd4MIq3r2okppUa9Mr7OPQYDQd9De30nzxzWgzu4NxAx
+         V1L+2h+aqxLfPAejrn/l9GPegftxW+o4WxXsdgaPdEuzWRXQ/a54fwH2Nr1+1zB+BU+W
+         MthQ==
+X-Gm-Message-State: AOJu0YxoFZ32w6dbTCjxQC9LVDhLg4Mlus4xdG/LE7RMzHzrhAH6jqHj
+	0TWpP1W40055G1bk8ydzDHY/55ZNmPvS/9gkkYFfms0dyTnoYWX/AO+BGoWQmSEhyXOBYRc5YVk
+	J/yGZY9JYYJA04Y3vaJIp2S1ft8A=
+X-Gm-Gg: ASbGncsdqxYAkh050BrHlL9sJFL3XglksmwScs/bvcmk0AtEbsVnWHzeYGsZhe9LsSK
+	M7qPwvBfbzmJcTSCN0mbnoJx4wWbhkUA7rkcybrrLERQFW0usIh0sH85K/IZVEgQH52KzfwRCTp
+	nM/d/+xbrgyD4djq0can2673Kni/G57g==
+X-Google-Smtp-Source: AGHT+IGlDPGjEuSakK2YjAAAfDffgEkgUH9TQHYrv84Btc6n/LGYkJd7MZ5MqZC7DhTCMHekO89E0vjmH7RFlIbJMGw=
+X-Received: by 2002:a05:6214:f2d:b0:6e1:8300:54dd with SMTP id
+ 6a1803df08f44-6e66cc970f7mr79827266d6.3.1739899857827; Tue, 18 Feb 2025
+ 09:30:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250211114611.9334-1-dhar61595@gmail.com> <20250218153537.16320-1-dhar61595@gmail.com>
+In-Reply-To: <20250218153537.16320-1-dhar61595@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 18 Feb 2025 12:30:47 -0500
+X-Gm-Features: AWEUYZmgl5_9uv3XQE2obB2-i_CREXhO75pXx0j7_4ioH2wbylcBnzRsT9c1xnQ
+Message-ID: <CAPig+cStFE7r2-Kd-js_VHjuF5LGp+0Kniez61i1-Lus=gyVHQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/1] [PATCH v2 0/1] [GSOC 2025] [Newbie] userdiff: add
+ built-in pattern for shell scripts
+To: Moumita <dhar61595@gmail.com>
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>, 
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Atharva Raykar <raykar.ath@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+On Tue, Feb 18, 2025 at 10:36=E2=80=AFAM Moumita <dhar61595@gmail.com> wrot=
+e:
+> The modifications that I made were -
+> "^[ \t]*([a-zA-Z_][a-zA-Z0-9_]*)[ \t]*\\([ \t]*\\)[ \t]*"  - so that is a=
+llows foo() and foo ( ).
+> "^[ \t]*([a-zA-Z_][a-zA-Z0-9_]*)[ \t]*\\([ \t]*\\)[ \t]*(\\{|\\(|\\[\\[)"=
+ - so that it recognises {, (, or [[ as function bodies
 
-> diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotocol-v2.txt
-> ...
->  advertise the agent capability). The `X` and `Y` strings may contain any
-> -printable ASCII characters except space (i.e., the byte range 32 < x <
-> -127), and are typically of the form "package/version" (e.g.,
-> ...
-> -the presence or absence of particular features.
-> +printable ASCII characters (i.e., the byte range 33 <= x <= 126), and are
-> +typically of the form "package/version-os" (e.g., "git/1.8.3.1-Linux")
+Regarding this last point, for completeness, I had meant to respond to
+j6t's review of your patch by saying that, according to POSIX, a
+function body can be any compound command, which means the body does
+not need to be encased in braces. For instance, this works:
 
-THe above updates the way the byte range is expressed as inequality
-but the series does not change the byte range itself.  Hence, "any
-printable ASCII chavacters except space" should stay the same as-is,
-without losing "except space", I would think.
+    $ foo() echo nothing
+    $ foo
+    nothing
+    $
 
-No need to resend just to update this.
-
-Thaskn.
+That said, I doubt that this usage is common, thus is probably not
+worth worrying about.
