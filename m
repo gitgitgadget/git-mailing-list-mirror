@@ -1,125 +1,90 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636922862BC
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 22:30:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0A7286284
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 22:42:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739917851; cv=none; b=UEbwvuCOxTHnMJna1ipLW7JvwW9zxVDp4xEg6FA8tMFYlHhKw0cb4xk1j+kB55i+oN6Xvod2qG+lOHe5bokakZ4KWms6e8IkjRM/3umA6QuMNC4cp3XHIifG0opBIMnAyVHWepvlJBSw9PqltguPBFknSQyAwUZLOD+HJRiXrNQ=
+	t=1739918551; cv=none; b=eyGaydYBMedqgruj+Iqm4JNJM51rTyrhSOnLLWiCe6lXMEXNecmAR50Bk+ghDAyedDwFNrRvznEdLc6AYjUGE8jUgEW8VeC4LVe3cvBwM+vC2PEnn1PUBUvH2idPcVxwAbyDOXs65IctoVHKjDyNNrjLPZIdfrscq1gSrbkFj74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739917851; c=relaxed/simple;
-	bh=Lh5j6QnxpgnVhrPmEHfuIo6DXh2JAxGalTgBJU142LY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OGmzcKrEWa60gAPngexXzdr81sRsoFd8i5fYhRW50lZRmDGR0swnGrUMNqr1s+Ea/g28J+RsHg+kMmJZOyqvOOY0FJICxd8PjycmKyc9Nh+/xaeraykbj56J8X6BKIVlOO9Ggpn/OanWHNe9RANQIm+YwH7WorV7BXds/2R1mro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=mGx+0hW0; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1739918551; c=relaxed/simple;
+	bh=4VMHQCMth7qi2RBb1uEt9QIj3soupK6nd/TnDOkLoZ0=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=e+AeQGsxmWq1kCP8hnlr3jrNHMMzs6izMp6N0X31JhG6ZDOqd5FJgdmCszFLfZWg+r/MBUx43dUBMjwnl7wtJWT/BkCcwzDtwKozZuBmySS8mud3bI3LBCdd6tjCsSm7QLBWVnYSBcwtSMxoFLMSQDfBJeXQ/kyQwhE7znesBU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h+WLU4tC; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mGx+0hW0"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1739917847;
-	bh=Lh5j6QnxpgnVhrPmEHfuIo6DXh2JAxGalTgBJU142LY=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=mGx+0hW0ZYBFZ7xvCGfP6MIKj59qRBlSf4xweMKXv+z1B+OwuQbekqNEQnzmLvUHr
-	 9zhxSCUoKHL9AEkWDKl6/7jhorNG+d/ayUglB5VXzR0vVaV1AyMjNxmU2F1trEQCaV
-	 5xegeZdR4A7egqUG8TnRAVEUr3GkRW9ms18RKxtwWzqnED8e3+pdgXiwgt/dlzhFpI
-	 ItFPSItJ6TBchgUFW1K3DmRj8culB3SAjlRzPS1CNSq9oGr9ddqfWEQBVPmXtVB7tm
-	 v3oiKf8//VEh+5tHW4jx+Sq3zF6dcPpTrbd1XUe6gCZaSXDvwymNRUSC+mbUWQk6yA
-	 5amRTSMap8fdqMPlLNMTsXh7cwTPrT/tNFA+Ir70g48+CrPcaRjNVihI3fdO5iOHaT
-	 NPbJd9ohCTISkFnPxRh0fddDigSDgi+MYhOHVwlVVJV6krg9Ooh6+Pz4Ag8otY/Nca
-	 B4bY3Em6CNIeZm+wurYOAspsoXl3Dc25sxCviUI2WPClQggZYzp
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id F2D732007A;
-	Tue, 18 Feb 2025 22:30:46 +0000 (UTC)
-Date: Tue, 18 Feb 2025 22:30:45 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: "Maloney, Bryan" <bryanhm@amazon.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	"Perry, Daniel" <dtperry@amazon.com>,
-	"Das, Satabdi" <dsatabdi@amazon.com>,
-	"Damojipurapu, Deepika" <deedam@amazon.com>
-Subject: Re: [Bug] Git ReadOnly Temp Packfile Causes "Bad file descriptor"And
- -13 Access Error With NFSv4
-Message-ID: <Z7UKFQHHBJLfLrjY@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"Maloney, Bryan" <bryanhm@amazon.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"Perry, Daniel" <dtperry@amazon.com>,
-	"Das, Satabdi" <dsatabdi@amazon.com>,
-	"Damojipurapu, Deepika" <deedam@amazon.com>
-References: <1628B638-81DC-4116-BD7B-85D691B54331@amazon.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h+WLU4tC"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-439846bc7eeso17633905e9.3
+        for <git@vger.kernel.org>; Tue, 18 Feb 2025 14:42:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739918548; x=1740523348; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Yf7wW2P2QKL9WUcUoODnBl91cZkDyiJ9hy68kLJUsuU=;
+        b=h+WLU4tCJluiTv37d5umS1d5Bf3Z3jK12FVzx2N27hDBcJ/bR3EIQD4E4CKKlDYBV3
+         u+Cxg3OTZ8FYMZZ4Na1FGrv1aEkmK/HuIgbOnG5AEFTPSFcF8WtZ15M9A8ybiJ/6ZEwR
+         STp8oRtm6XCUybBJqqtrpZ9w5/KKdkYhG0c+nd1XSL5hiBra4eIkpmElfVp6nJgKiN3j
+         22DT6Jv0WT2SPna1rMK3LYKXtrbBkYIc27HCv5h+9cRk0h47y+aJ1YIJTNBk3WkZGATc
+         l2SfaBHucnSGiUNTmPyzDw6L/QOXM7YMIjZBXaI7S2flwIi14AtduQASS674u8A+EaXN
+         nWLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739918548; x=1740523348;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Yf7wW2P2QKL9WUcUoODnBl91cZkDyiJ9hy68kLJUsuU=;
+        b=qN8RKBP7t7ZVPqqf4H47IvddEv/fZJQfN63KFFTRH/Urw2ovRr6MYexed7Si9WuK4m
+         ZkxbVKtVLBx7NdJJFRI/d6oWnJrAn8I8bZQGAHKWaH7Nj0T8k2OJ25b60mNQ3Ei2beTX
+         REWKc/ci+m7F9oq6Af8SXBBdyy7Z5VpOfL9zYqJlSLoWo1XrXJgQdVLbyV8KeC/vFFa7
+         JGVoQ2/wfpQlBBQ03BENiNAdoxIWRkBIn+J7m20etRsSBmOUtIu9d/YQ4/mpbusHRYca
+         ofQMEB29dP4jzZFC81rNTbPDDOGMf7yo2THroWQX3+AFNm+RK9wA7eVh8Gp+UqC4za0K
+         oJ/A==
+X-Gm-Message-State: AOJu0YwcOt+HyKQyvL9T5GC6KMuZoLsjGcY7KVNwDuXyssrFJKzvkevk
+	Z2QLPjMO0SWY6fBM+5Aitb8JLqXtGSV5+AENafeHauOR5hDsCzf2D9vn2g==
+X-Gm-Gg: ASbGncvbd0xAp+Uwi1j+Qd42JtEaLl5tioiuFBbT3ycZpstXj1B077TN8sRouzVaciU
+	WS4S9SnkuhR1xVy1Upu7nXch5g+Tpv82TNXUSaFbvDRbcqWCdgLWesZi0K8EWuAWJpVE6fZIuun
+	vaf+r2XA9RR++SdfPJEwOYBHKdJ0hnS2Zg91cSWcFGWIWeRF6fjXEwRHrCz3OX2NZHWOd4tW2/8
+	Uv7OfiYiI4eVwstMDSCspliUK/LgJMDoCZxkwu6onaQeO98IitDRKWCfgEkE8CG1gpLoU0Y0Slr
+	D7/aUW635Js/+gju
+X-Google-Smtp-Source: AGHT+IFV77pa4Y5NpVdK/IXw4NCg8dg+oLRuzm5avkvQUglod1vcaPGvr7CeoobMpHg5AAZ2ITIsSw==
+X-Received: by 2002:a05:6000:185:b0:38f:2193:f8c2 with SMTP id ffacd0b85a97d-38f587ac3cbmr906881f8f.31.1739918547414;
+        Tue, 18 Feb 2025 14:42:27 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43993d297e9sm32496355e9.33.2025.02.18.14.42.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 18 Feb 2025 14:42:27 -0800 (PST)
+Message-Id: <pull.1886.git.git.1739918546.gitgitgadget@gmail.com>
+From: "Kazuhiro Kato via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 18 Feb 2025 22:42:24 +0000
+Subject: [PATCH 0/2] gitk: Fixing file name encoding issues.
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="fSdVlqfQALMTMAqy"
-Content-Disposition: inline
-In-Reply-To: <1628B638-81DC-4116-BD7B-85D691B54331@amazon.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+To: git@vger.kernel.org
+Cc: Kazuhiro Kato <kazuhiro.kato@hotmail.co.jp>
+
+fix: file name encoding issues. fix: when resolving merge conflicts,
+japanese file names become garbled.
+
+Kazuhiro Kato (2):
+  Fixing file name encoding issues.
+  fix: when resolving merge conflicts, japanese file names become
+    garbled.
+
+ gitk-git/gitk | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 
---fSdVlqfQALMTMAqy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2025-02-18 at 21:35:42, Maloney, Bryan wrote:
-> Good point on the POSIX compliance. I'd like to call out that this
-> behavior of re-opening the file during NFSv4 state recovery is
-> according to the NFS spec. So this scenario isn't something specific
-> to just this filesystem. I think it comes down to NFS not being fully
-> POSIX compliant in all situations.
-
-I haven't read the NFS spec, so I can't speak to that, but I suspect
-it's entirely possible to have the NFS server paper over this problem
-during state recovery, which is what I would recommend here.  That might
-require an in-kernel NFS server (which Linux has) or some sort of
-shenanigans under the hood of a userspace server (e.g., temporarily
-changing the permissions of the file but exposing the existing
-permissions to clients[0]), but it should be possible to do.  I can
-imagine doing this without a problem in 9P and SFTP (which I have
-implemented), for instance.
-
-In general, I'm loathe to support a file server that's going to
-spontaneously decide to produce EBADF in the middle of operating on a
-file for any reason, since that's asking for a bunch of hard-to-fix
-breakage.  That also exposes a huge race condition where we thought we
-had a valid file descriptor, but it got closed for some reason and then
-another thread opened a new file and got assigned the same number, and
-now we're writing to a file we didn't expect.  That will very likely end
-up with repository corruption, which would be really bad.
-
-As Peff said, it's possible to work around this particular problem, but
-I'm concerned we'll find more weird edge cases that will break and that
-it will lead to data loss for users if we tolerate the NFS server just
-producing an EBADF at a moment's notice.
-
-[0] This is grossly oversimplified and has a lot of edge cases, but I
-can imagine how I'd go about it.  It also depends on how you're storing
-the files and a lot of other factors.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---fSdVlqfQALMTMAqy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ7UKFQAKCRB8DEliiIei
-gX+BAQCko0qh0+MuXbRpGuCI5ZdAcbCxI9fgxD+tvlBDpqbhlwD/Xrhn8o71ahRx
-cSeNgTc0aEVHwmzpI7Znc+7HLBG8rQs=
-=ZN4D
------END PGP SIGNATURE-----
-
---fSdVlqfQALMTMAqy--
+base-commit: bc204b742735ae06f65bb20291c95985c9633b7f
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1886%2Fkkato233%2Ffix_filename_encoding-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1886/kkato233/fix_filename_encoding-v1
+Pull-Request: https://github.com/git/git/pull/1886
+-- 
+gitgitgadget
