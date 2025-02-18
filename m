@@ -1,167 +1,187 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01558234973
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 11:43:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF791154C12
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 11:47:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739878992; cv=none; b=VB6jtzs7tmGZELYbITQx0VNLfxh4uX5Iq8OKlP+bhHTHI36EAD3bleHw2U9X2KQ1+U57R0xYRK1BmdJmWIkYu+/B7fSREZb2ndvO2qSGeB9DKapnnewWSMaE1o2IN0MU9U33NGg+2xuJRarMrcE3iCYiztevo1VsDnG0dw7Xt10=
+	t=1739879242; cv=none; b=A97h3nTJO+2B6AKnZCYUTZHa5MmffIP7KGw8l3C8OHAI/Iob2/Cu+8oZKL8RsACgBhbHkbKahgqRch9rwGBXokwtnbDjTo1l3CTiCDe4MXGI7kO2HyyrlqQxoH0CeRA9B10JWI0x0kvdC2mm9V6u5Ak3kqfmRbJ/LI++LF82Z1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739878992; c=relaxed/simple;
-	bh=B1SWjPoV7uZmd2Ozc2DzuGudPOAf0i0wQk7KC4P1uJg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GdeHGhzq1JcaGGFzvRss38medG76Qh5F1vVR+dZHnic9I6NR9a0wOvjs+vNTEJ0X3l390frHmo8xqu6nno+YnHZLn3YItvKHkzhBfXGX4dlbgCkqZeRbj48GH494aw2WViqcZowTaQlIqK9IkXbSFUj5Bi5pdeTYksnOz7R3H30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RxqXzmH6; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739879242; c=relaxed/simple;
+	bh=qR2r3KZJ5fT0Tdsi/fvqlky1XhGOIJUkKjcmPgJBHF4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U9xsiCUTcaqMryDfGblm3AXvWQtJ6Mpni3uifmW6vnTwMEizQ/ZmW02fksfz3qV2D0nEVIc/BYl8/JL+BThkeTYyPpm3XKrFBpixQd0geKdrgIV6AQMZmX4KQrsKl3AMGH9uPD1LP0gOnEY5nDIKpVgSD2xvXkOABGMrlPraop0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jBgiG25x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=D50NrBed; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RxqXzmH6"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5deb956aa5eso7525456a12.2
-        for <git@vger.kernel.org>; Tue, 18 Feb 2025 03:43:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739878988; x=1740483788; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QRhTl8XJg06NbEkYpVEhGCXb5Fy0PG/py621b5hud1o=;
-        b=RxqXzmH6AUI3P21Hwua7s1YQiG7lDouTpkfqqjOLJok1MfEu9WBnTeBq/jAQhZXhC1
-         MI6wbmRSwcIlGzTOTUVt5K6BN26lQrgoeA9xTQ9j3XpFDklcV6Yw7gwxC3NpLQucdg8Y
-         mt34Q8Hk0vzT1mklCbAWBwr2hHCgNxwzSnfR+HAddjV3U0odzOnLoUzLLDUkle4vuJwx
-         3h9BEpA2zcWYoNcNacBlIRZhEh9Xe51sWlbl13a+wqTAHU5lVtYO7UAKBWexbpp8PXpN
-         Pwx0a7/9nHhSwS7s/cP0jv/FB5/cSk9HTe5gLAnqx860yknt1EKt9RGzLuD6J1ULjwEt
-         spNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739878988; x=1740483788;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QRhTl8XJg06NbEkYpVEhGCXb5Fy0PG/py621b5hud1o=;
-        b=nMe6XbXhQpBiOozGDuCg8kMuys8x/yKk8eeXoFuHVZa9rQGIyID07tMpejkUGgm+43
-         sSMyI/uwcl4anbYOt/NH1mtDF4FvZo9ZXrPqXH02XfrTBQDwMg9TODV4h0c5mx2n1/cK
-         RWPcyYi9rw+Yds5EfVXCUHA1X6Gby+xme8LZprOvA6otjAAI4/RDERDdvezudjIKKFfB
-         XB257OcWyQIveFrLbpG9gDxdV2Ayzw5G8I2Hs/PIMeU47w3NmjIsLGtJ9D4l8nIt6utv
-         +xOD9U81SC48fWlYV2uU9WuD4JeUMkjja7SCxT36IqNElaYQB3dX7bsN62V6aRFz2nn8
-         fs/w==
-X-Gm-Message-State: AOJu0YxlLQXhqpMhf8YMigDY7eXRGfLXcQMGF77XqxXMHjHcN1T4rRFv
-	USxVRDf05dh4MdDQGJ5tD1LWaQYAlSzFGmY1GoLUz04WVN0T7h71x7zLuX6fmDASzniwSm8m/GQ
-	kz2UTOtxGE7c4q4iPXcuEkoNN9cI=
-X-Gm-Gg: ASbGncsOLjX+bWM3Gf/IYABPxgRhFKGrG3J/Ae0l0dVnmUGSGoBuTBBqEOo7T0WlzEl
-	KVJd5sW9hI8EzokqkLPWsUktwzn4BvQJydqFNx7eSL1pBBwNpCbghCXSxV66jG4KcRgG1k459QU
-	o=
-X-Google-Smtp-Source: AGHT+IGdl1G1UGE1tpr8DOVVS/gdv+cyCCRzuPtRvMM1VcVTgggoPJgi0NFvnTKZxll9bRWRR00gHTZSnFuLTkS5E5c=
-X-Received: by 2002:a05:6402:2385:b0:5e0:49e4:2180 with SMTP id
- 4fb4d7f45d1cf-5e049e4233bmr18566369a12.25.1739878988131; Tue, 18 Feb 2025
- 03:43:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jBgiG25x";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="D50NrBed"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6F71B114025A;
+	Tue, 18 Feb 2025 06:47:18 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 18 Feb 2025 06:47:18 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1739879238; x=1739965638; bh=v7rkQMDf/m
+	5SwXDuWBfv/YzR64NKJ85m12VQgtcGE3A=; b=jBgiG25xlrylvl8S4EmWNJxTM2
+	bvlBPeA8qJxUaRT9BD/XiEIYTHwUX8ptju02IE3GzNCx/6ImRHgO21alrC27X7My
+	kEX5sBuVcY2z2CupffgoRVz/zH/sn2N1RvVWwehJ4IQwO8qKCQtki/NkHR6H+r9k
+	fJRb84ADzPaHDjthAKw7zZ+WnQcMTddovnpx95k/IgPX473i/TbbQUxppwzXFMQY
+	dycI4jVHzxqLpYgJ3Xv89LUx2z7Hk1l/U+9oELNZsVjRl4TnzCKbJpgprGWbOqgc
+	0gMpDRLquo71bxVkGNWRvO5PuTwN18ImkPHj1Mcnm+3vLH8QgNx5J6nT7XTQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739879238; x=1739965638; bh=v7rkQMDf/m5SwXDuWBfv/YzR64NKJ85m12V
+	QgtcGE3A=; b=D50NrBedFojs72mKYrbDGAjqcEog91irEFwfZnRWk0RKxADtZQx
+	SCwJQM5MKjS5dJNrtmZbILeGXAGmqdT37/1vstzFfWo+3UfdQzStkFeAqRwBuybZ
+	MXDWlIwJrDdKKe0jo08U+BJ3775dCFKXF4uxOV+4JZN056ksZ6zMog4bz+HthaAG
+	+i5J4Zt4up4Oq8M0elThf+6AM1WAu96ZXPPHftUuSMos28I+dUbiBBTz06w/Pmp9
+	GbEX4C067hUrUMG+TidhbqgNVXB1fb0jYlSabV2vezcvQLPPj8Ho+VXIDQZoGIEJ
+	rgHUw+rWS5A7unrFFUdAksZyPsGd4ZVNPGQ==
+X-ME-Sender: <xms:RnO0Z7BE0EKi-V1NLbvnmx-vXk9xgYv85WKs9KEsL7EgarM5TWznOA>
+    <xme:RnO0Zxh7mcobp4F2fc08jRUdFFoM0UpJGFhN_z4JbqbXMIX7_kl8WPA2IeLh2P3EA
+    IJNfyrbuc95olhFbg>
+X-ME-Received: <xmr:RnO0Z2lRcWkadMT-Qh136hgDOvaK1XfXYqSlyq9C7zGDqXYWZ6Of0qkl8cXXU5IR0QuG7U4T0JaIADm4DgAR6eyPK6I8qRGTDj3Nnq5dHqA_3hrp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiuddvfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeffgffffeduhfdvjeduudeijedtfffggedvkeeigfek
+    teevkeeghfefudeutedvheenucffohhmrghinhepmhgvshhonhgsuhhilhgurdgtohhmne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehp
+    khhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshdrrhgvphhorhhtsehgmh
+    igrdhnvght
+X-ME-Proxy: <xmx:RnO0Z9xrExQiqZyMyrXen2HhccX7IlcuS7AeJ4fkG3Q39bxPsTuJRQ>
+    <xmx:RnO0ZwRZQHLLjU1Ge3TdDb4sZu-ByxSc9zRvs_pGGdbhcZdToGbJPQ>
+    <xmx:RnO0ZwYb9n2KBduAmCI2vt3lVBUhCnBaLGsQLq5QxE7L0y3J2AL17A>
+    <xmx:RnO0ZxR3Nk6AqQRFMdqvhKTswk968VVJD1IeGNEupCjb019eDJfuNg>
+    <xmx:RnO0Z2ebCJ-FLRF4cv9sFPYZSaCQQMl2V6mtUKA9ty9H9cmQDoOxy05q>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Feb 2025 06:47:17 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3128258c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 18 Feb 2025 11:47:15 +0000 (UTC)
+Date: Tue, 18 Feb 2025 12:47:10 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Peter Seiderer <ps.report@gmx.net>
+Cc: git@vger.kernel.org, Eli Schwartz <eschwartz@gentoo.org>
+Subject: Re: Meson build leaks host 'sh' path to target build when
+ cross-compiled
+Message-ID: <Z7RzPkiBfbYPhKp_@pks.im>
+References: <20250209133027.64a865aa@gmx.net>
+ <Z6mtnmvKMsIOEVz5@pks.im>
+ <20250210122603.5130e309@gmx.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240910163000.1985723-1-christian.couder@gmail.com>
- <20241206124248.160494-1-christian.couder@gmail.com> <20241206124248.160494-6-christian.couder@gmail.com>
- <xmqqjzc7lq60.fsf@gitster.g> <CAP8UFD2Pehtk2=GkjrXga0bqsrUFauYKkPYPWgdRHsoaDvQQDA@mail.gmail.com>
- <xmqqplk8rv85.fsf@gitster.g>
-In-Reply-To: <xmqqplk8rv85.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 18 Feb 2025 12:42:55 +0100
-X-Gm-Features: AWEUYZneZjpkAraDw--IaztNHBKsz2tElIevMDzQp78BnSxFcG_WtR-VpyIlpBs
-Message-ID: <CAP8UFD17H+0nerdYkLB3VROgmU+Wnb6G=Lrd-3f4tM6z=Wv-vw@mail.gmail.com>
-Subject: Re: [PATCH v3 5/5] doc: add technical design doc for large object promisors
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, John Cai <johncai86@gmail.com>, 
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250210122603.5130e309@gmx.net>
 
-On Mon, Jan 27, 2025 at 7:02=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> >> > +In other words, the goal of this document is not to talk about all =
-the
-> >> > +possible ways to optimize how Git could handle large blobs, but to
-> >> > +describe how a LOP based solution could work well and alleviate a
-> >> > +number of current issues in the context of Git clients and servers
-> >> > +sharing Git objects.
-> >>
-> >> But if you do not discuss even a single way, and handwave "we'll
-> >> have this magical object storage that would solve all the problems
-> >> for us", then we cannot really tell if the problem is solved by us,
-> >> or by handwaved away by assuming the magical object storage.
-> >> We'd need at least one working example.
+On Mon, Feb 10, 2025 at 12:26:03PM +0100, Peter Seiderer wrote:
+> On Mon, 10 Feb 2025 08:41:18 +0100, Patrick Steinhardt <ps@pks.im> wrote:
+> > On Sun, Feb 09, 2025 at 01:30:27PM +0100, Peter Seiderer wrote:
+> > [snip]
+> > >   The meson build tries to execute the non-existent '/usr/bin/sh' (instead of
+> > >   '/bin/sh' as the autoconf build), 'which sh' on the host returns
+> > >   '/usr/bin/sh'...
+> > >
+> > >   From meson.build
+> > >
+> > >    [...]
+> > >    186 shell = find_program('sh', dirs: program_path)
+> > >    [...]
+> > >    685   '-DSHELL_PATH="' + fs.as_posix(shell.full_path()) + '"',
+> > >
+> > >   Do not use the result of 'find_program('sh',...)' for '-DSHELL_PATH='
+> > >   (at least not for cross-compile), use fix '/bin/sh' instead or make it
+> > >   configurable via a meson option?
 > >
-> > It's not magical object storage. Amazon S3, GCP Bucket and MinIO
-> > (which is open source), for example, already exist and are used a lot
-> > in the industry.
->
-> That's just "we can store bunch of bytes and ask them to be
-> retrieved".  What I said about handwaving the presence of magical
-> "object storage" is exactly the "optimize how to handle large blobs"
-> part.  I agree that we do not need to discuss _ALL_ the possible
-> ways.  But without telling what our thoughts on _how_ to use these
-> "lower cost and safe by duplication but with high latency" services
-> to store our objects efficiently enough to make it practical, I'd
-> have to call what we see in the document "magical object storage".
-
-I have added the following:
-
-Even if LOPs are used not very efficiently, they can still be useful
-and worth using in some cases because, as we will see in more details
-later in this document:
-
-  - they can make it simpler for clients to use promisor remotes and
-    therefore avoid fetching a lot of large blobs they might not need
-    locally,
-
-  - they can make it significantly cheaper or easier for servers to
-    host a significant part of the current repository content, and
-    even more to host content with larger blobs or more large blobs
-    than currently.
-
-I hope this addresses some of your concerns. I could also talk about
-remote helpers and object storage here, but this would be duplicating
-the "2) LOPs can use object storage" section. If you think that we
-should tell our thoughts about how to improve remote helpers and
-object storage performance, I think this should go into that section
-rather than here.
-
-> >> > +7) A client can offload to a LOP
-> >> > +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >> > +
-> >> > +When a client is using a LOP that is also a LOP of its main remote,
-> >> > +the client should be able to offload some large blobs it has fetche=
-d,
-> >> > +but might not need anymore, to the LOP.
-> >>
-> >> For a client that _creates_ a large object, the situation would be
-> >> the same, right?  After it creates several versions of the opening
-> >> segment of, say, a movie, the latest version may be still wanted,
-> >> but the creating client may want to offload earlier versions.
+> > Hm, very true. We're mixing up concerns here by treating the build
+> > environment and the target environment the same.
 > >
-> > Yeah, but it's not clear if the versions of the opening segment should
-> > be sent directly to the LOP without the main remote checking them in
-> > some ways (hooks might be configured only on the main remote) and/or
-> > checking that they are connected to the repo. I guess it depends on
-> > the context if it would be OK or not.
->
-> If it is not clear to us or whoever writes this document, the users
-> would have a hard time to make effective use of it, which is why I
-> am worried about the current design in this feature.
+> > I guess the proper fix is to wire up the "native:" parameter when we
+> > call `find_program()`, which allows us to tell Meson whether it should
+> > find an executable for the build or the target host. And then, for those
+> > binaries where we actually need to know about both the build and target
+> > host's locations, we'd end up calling `find_program()` twice.
+> >
+> > For executables that are supposed to be used on the target host Meson
+> > would then know to first consult the cross file, which could look like
+> > this:
+> >
+> >     [binaries]
+> >     sh = '/target/path/to/sh'
+> >     perl = '/target/path/to/perl'
+> >
+> > Meson would then pick up that file via `meson setup --cross-file
+> > <CROSSFILE_PATH> <BUILDDIR>`.
+> 
+> Sorry, I believe this will not work..., the description of the native
+> parameter in find_program ([2]) on the first sight sounds like doing the
+> right thing, but as far as I read the 'Cross compilation' page ([3], [4]) the
+> tools under the '[binaries]' section are the tools used while cross-compiling
+> (running on the build machine) and not the paths/tools on the target
+> (or as meson nomenclature host/target)...
 
-Yeah, but this feature doesn't exist at all yet, and it might not even
-be a priority, so I prefer not to promise too much.
+Quoting the documentation of `find_program()`'s `native` parameter [1]:
 
-For now, I have added:
+    Defines how this executable should be searched. By default it is set to
+    false, which causes Meson to first look for the executable in the cross
+    file (when cross building) and if it is not defined there, then from the
+    system. If set to true, the cross file is ignored and the program is
+    only searched from the system.
 
-"This should be discussed and refined when we get closer to
-implementing this feature."
+So I think this should work as expected when passing the file via
+`--cross-file`, shouldn't it? If we are cross-compiling we'd find the
+target binaries via the cross file when `native: false`, which is
+exactly what we want.
 
-just after:
+But I see what you're saying. The _intent_ is to specify the environment
+of the cross-compiling environment, and not to describe the target
+environment.
 
-"It might depend on the context if it should be OK or not for clients
-to offload large blobs they have created, instead of fetched, directly
-to the LOP without the main remote checking them in some ways
-(possibly using hooks or other tools)."
+I can think of two alternatives:
+
+  - We can introduce build options for this. If unset, we continue to
+    use the result of `find_program()`. Otherwise, we use the value
+    specified by the user.
+
+  - We can introduce properties into the cross file that allow the user
+    to specify those parameters. We can then retrieve them by calling
+    `meson.get_external_property()`, but only when cross-compiling.
+
+Let me also Cc Eli, he might have an opinion on how to do this.
+
+> > diff --git a/templates/meson.build b/templates/meson.build
+> > index 1faf9a44ce..986c2e03be 100644
+> > --- a/templates/meson.build
+> > +++ b/templates/meson.build
+> > @@ -1,6 +1,6 @@
+> >  template_config = configuration_data()
+> > -template_config.set('PERL_PATH', perl.found() ? fs.as_posix(perl.full_path()) : '')
+> > -template_config.set('SHELL_PATH', fs.as_posix(shell.full_path()))
+> > +template_config.set('PERL_PATH', perl.found() ? fs.as_posix(target_perl.full_path()) : '')
+> 
+> Above should read (perl.found() vs. target_perl.found()):
+> 
+>    +template_config.set('PERL_PATH', target_perl.found() ? fs.as_posix(target_perl.full_path()) : '')
+
+Ah, yes, indeed.
+
+Patrick
+
+[1]: https://mesonbuild.com/Reference-manual_functions.html#find_program
