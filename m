@@ -1,88 +1,152 @@
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-fw-6002.amazon.com (smtp-fw-6002.amazon.com [52.95.49.90])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A75314A09E
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 21:28:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC991CF5E2
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 21:35:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.95.49.90
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739914089; cv=none; b=j8vcRZR7BMpsFhrG0s5mzezWBtPZTzaOnn3MemZxNIpWIFoqD8ZSNVAj2OTsp9cUMnBrZKVhwGILnibP45OLGdq3ImKUUKrk+dIxqxKSpy7tkG59pq3jXQDp4XxJgKAebXaJd3ADOUXocLmvFOZIBLBkgXbrrgXqSZZIUetsRO4=
+	t=1739914546; cv=none; b=fsUpabI9wIY7gBiN1uWXIPFEQxJnsMwoYxCnA0TibMV6ppSOC+s8X7uqF97oJrM22H8K4iaa6pITuxDwiIWV90+D9B+sPtavFm1bE2X6xu32rtgOb8AnxzlGTy/Hlm0/BApaWbXkRMOPW2ELrFsi6XGdkZcY1NWSuPihv5b6Rek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739914089; c=relaxed/simple;
-	bh=j80yUqCjRzQ4k7qNGwm8gytuVsFqR0yGwQUWumhcnKk=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=RAm2DQ/lpuABdvvb212arb27b3N5wmZORTtvbUcHM8r+aRPKXkJGIR1YitS5R3y/iTa+8z6AKfcrMvHHdtFXnCIfNwchqolDzlgjarL6/DJ5nXTuJ1mWIBEZQ2YFNvNLf0XC/fhFr5lwwAGDYd4z7/YA6WiFgxQGIJD686L6Ky4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AhQxyhXd; arc=none smtp.client-ip=209.85.222.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739914546; c=relaxed/simple;
+	bh=HarLWL8ibhDdfIv5ZDG7bDO4nCLww9mdkkGMi/Y0Ypc=;
+	h=Subject:From:To:CC:Date:Message-ID:Content-Type:MIME-Version; b=Aa8WD8SiaPnS+9XSxU+9mVTB+MYL4XJC4EdTMQevk7eVxDQcSictN/Gcbq75Sy2VNuFSG+zB5dh8RWeSZM9pkCjo3QljCepNe19x6nl4Uzo72LGL7t5Ncf1DRLun0xT/fwuDsEx8f7N9nTaeTTlxK4oxYQQ+us6GmJTKhnxVtOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b=cDF9fEHh; arc=none smtp.client-ip=52.95.49.90
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AhQxyhXd"
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-867120d67baso2035675241.0
-        for <git@vger.kernel.org>; Tue, 18 Feb 2025 13:28:07 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=amazon.com header.i=@amazon.com header.b="cDF9fEHh"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739914086; x=1740518886; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=j80yUqCjRzQ4k7qNGwm8gytuVsFqR0yGwQUWumhcnKk=;
-        b=AhQxyhXdmUaGOSpf0hJH49QO9Non8P121uVszWHWj+nCQeLX/ztOBn6muKz1BtOBNf
-         e8Scn9kUKva4tuhkD+3tVBmo0l8N4C3RiHuUDoJE1Q6KOPf3lCdMIes1DOwBtGQGbrc7
-         eEmsJk5JW0tptPKRwvU4oaHN98oKtSJ0so9QGl/RxnBreFog5FIqiMc0nG5j/DdzueCZ
-         fG4PIv1IaSuHOR5zU1c6y4Pe4DNsR0r0uNCghk+HoxwS1rqwVvxZ2zuV1leFo/xckgXl
-         XT/KC+Yu6VRb5CmMBiVmP8oRw6LgZ9tOHOXiwjxq2bVCY2xJN3I07DLEzOb2uBFBGpul
-         PAKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739914086; x=1740518886;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j80yUqCjRzQ4k7qNGwm8gytuVsFqR0yGwQUWumhcnKk=;
-        b=JMsbddzyBbKzvse/HADbDKOEJJeAVsks41gvzVstfBVy5NQdtD5UH6vY8MF/vc2awP
-         qMO+qIR6kSJA3YpB6Bc7OuYtYZGDOdjnDHpFwrYAcZd2XvZFQHKTsEvyU8HRHWPhTCD8
-         h0sRWUUgFHBmiMfC9Z2Qf2aJyiUrZfntCiEPdVYXS2kUY3FHAV3jan91zzBiWEXQq0WN
-         9EZqF3HdKcab2JDVRFKqBNjFGoznZeDdMW663DayhEv/xhSn68n/HhI81ImQCOK19mJW
-         13iPZHQHiK+GtGQ5hS6Z8Zb1+f4IPrYfOhecmkIxJQ2n7i+yqp+2zdQ9Bsl+hUsJ/WQP
-         rWOw==
-X-Gm-Message-State: AOJu0YzZoatyDWGRq1UQWtpxxPTEDZPtU9Ltf17Xcud9nxv288vKcBLt
-	Rp+VVRcc0ema+2alvc1ui3N1q+DojLpFqnKsbEPLuFtUEk/8qY8uvMJtLP0RUiJv+cW/og31xH2
-	mvt8SrDSAQjtVfdr4JXreuRFWLn4tmFtx
-X-Gm-Gg: ASbGnctFqih5mstKXbYSAvRApRyM+rFnXWXDfh62yM7V7koFfarram8CiZKWwAzzZxK
-	/57Iw+dblil98mhp+6akvj/ewv3o4An7CwGfsIX/jQVXU598uae5ZjY9RF4Nx+h1AWHLNGzWQe0
-	U=
-X-Google-Smtp-Source: AGHT+IHnA6ivKx6zKK12A6a8QctGpbBu4oRCz3qmDLEJn/i8/pCDXQQTfw1KhTaQFEXgIRWjfSqexoPO/6mjJ5iNcAA=
-X-Received: by 2002:a05:6102:d94:b0:4bb:b843:95e6 with SMTP id
- ada2fe7eead31-4bd3fc9869amr8722309137.7.1739914086265; Tue, 18 Feb 2025
- 13:28:06 -0800 (PST)
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1739914545; x=1771450545;
+  h=from:to:cc:date:message-id:content-id:
+   content-transfer-encoding:mime-version:subject;
+  bh=HarLWL8ibhDdfIv5ZDG7bDO4nCLww9mdkkGMi/Y0Ypc=;
+  b=cDF9fEHhv/JwWaYIcl/g8WdOt/Mjp3CSd9jhXv2AW77fjgU1GwkoXR0Y
+   K9CerIBFFUslhpJHKJSR9WJ57f04WscRcKWO9A+Ii4lfG7+En4uq5P3Vt
+   Lr48vd01vRz2mdVQGd5b/8mm05mzFIB7bFg+0Ko69l3Gon1LCEFFJN0y/
+   Q=;
+X-IronPort-AV: E=Sophos;i="6.13,296,1732579200"; 
+   d="scan'208";a="473306306"
+Subject: Re: [Bug] Git ReadOnly Temp Packfile Causes "Bad file descriptor"And -13
+ Access Error With NFSv4
+Thread-Topic: [Bug] Git ReadOnly Temp Packfile Causes "Bad file descriptor"And -13 Access
+ Error With NFSv4
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO smtpout.prod.us-east-1.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+  by smtp-border-fw-6002.iad6.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Feb 2025 21:35:43 +0000
+Received: from EX19MTAUEB001.ant.amazon.com [10.0.29.78:60722]
+ by smtpin.naws.us-east-1.prod.farcaster.email.amazon.dev [10.0.2.187:2525] with esmtp (Farcaster)
+ id 9761a0c5-fd73-4dfe-9246-cae13e411888; Tue, 18 Feb 2025 21:35:43 +0000 (UTC)
+X-Farcaster-Flow-ID: 9761a0c5-fd73-4dfe-9246-cae13e411888
+Received: from EX19D019UEA004.ant.amazon.com (10.252.134.157) by
+ EX19MTAUEB001.ant.amazon.com (10.252.135.108) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Tue, 18 Feb 2025 21:35:43 +0000
+Received: from EX19D015UEA003.ant.amazon.com (10.252.134.165) by
+ EX19D019UEA004.ant.amazon.com (10.252.134.157) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1544.14;
+ Tue, 18 Feb 2025 21:35:42 +0000
+Received: from EX19D015UEA003.ant.amazon.com ([fe80::3d79:8155:d567:e8af]) by
+ EX19D015UEA003.ant.amazon.com ([fe80::3d79:8155:d567:e8af%3]) with mapi id
+ 15.02.1544.014; Tue, 18 Feb 2025 21:35:42 +0000
+From: "Maloney, Bryan" <bryanhm@amazon.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>, "Perry, Daniel"
+	<dtperry@amazon.com>, "Das, Satabdi" <dsatabdi@amazon.com>, "Damojipurapu,
+ Deepika" <deedam@amazon.com>
+Thread-Index: AQHbgk0P9XJmukvQi0qxnj28md0xfQ==
+Date: Tue, 18 Feb 2025 21:35:42 +0000
+Message-ID: <1628B638-81DC-4116-BD7B-85D691B54331@amazon.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <5E1C4A24A21F8345998C73044ADD0F38@amazon.com>
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Bede Skinner-Vennell <bedesv@gmail.com>
-Date: Wed, 19 Feb 2025 10:27:54 +1300
-X-Gm-Features: AWEUYZnovUEL5emkfcd7830Wq1xgjJilxqpiGwc-aXyessP-K7eHhRPb24dlER8
-Message-ID: <CAEiLEbOZ7vGE6U69sf5nK+G86zaeAMRTrjaCr=rF2JU1H1p8ww@mail.gmail.com>
-Subject: Incorrect URL for Release Notes on git-scm
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Git Community,
-
-The link to the release notes for v2.48.1 on the git-scm downloads
-page doesn't seem to be working.
-
-It links to: https://raw.githubusercontent.com/git/git/master/Documentation=
-/RelNotes/2.48.1.txt
-
-It looks like the master branch now uses '.adoc' extension since this
-commit: https://github.com/git/git/commit/1f010d6bdf756129db13d1367c888aa41=
-53f6d87
-
-Using either of these URLs loads the release notes correctly:
-- https://raw.githubusercontent.com/git/git/v2.48.1/Documentation/RelNotes/=
-2.48.1.txt
-- https://raw.githubusercontent.com/git/git/master/Documentation/RelNotes/2=
-.48.1.adoc
-
-Ng=C4=81 mihi
-
-Bede
+R29vZCBwb2ludCBvbiB0aGUgUE9TSVggY29tcGxpYW5jZS4gSSdkIGxpa2UgdG8gY2FsbCBvdXQg
+dGhhdCB0aGlzIGJlaGF2aW9yIG9mIHJlLW9wZW5pbmcgdGhlIGZpbGUgZHVyaW5nIE5GU3Y0IHN0
+YXRlIHJlY292ZXJ5IGlzIGFjY29yZGluZyB0byB0aGUgTkZTIHNwZWMuIFNvIHRoaXMgc2NlbmFy
+aW8gaXNuJ3Qgc29tZXRoaW5nIHNwZWNpZmljIHRvIGp1c3QgdGhpcyBmaWxlc3lzdGVtLiBJIHRo
+aW5rIGl0IGNvbWVzIGRvd24gdG8gTkZTIG5vdCBiZWluZyBmdWxseSBQT1NJWCBjb21wbGlhbnQg
+aW4gYWxsIHNpdHVhdGlvbnMuDQoNCu+7v09uIDIvMTAvMjUsIDU6MzMgUE0sICJicmlhbiBtLiBj
+YXJsc29uIiA8c2FuZGFsc0BjcnVzdHl0b290aHBhc3RlLm5ldCA8bWFpbHRvOnNhbmRhbHNAY3J1
+c3R5dG9vdGhwYXN0ZS5uZXQ+PiB3cm90ZToNCg0KDQpPbiAyMDI1LTAyLTEwIGF0IDE1OjU2OjU5
+LCBNYWxvbmV5LCBCcnlhbiB3cm90ZToNCj4gIyMjIEVycm9yDQo+IEtlcm5lbCBsb2dzOg0KPiBg
+YGANCj4gTkZTdjQ6IHN0YXRlIHJlY292ZXJ5IGZhaWxlZCBmb3Igb3BlbiBmaWxlIHBhY2svdG1w
+X3BhY2tfYVIwTXUzLCBlcnJvciA9IC0xMw0KPiBgYGANCj4gR2l0IGNsb25lIG91dHB1dDoNCj4g
+YGBgDQo+IGZhdGFsOiB3cml0ZSBlcnJvcjogQmFkIGZpbGUgZGVzY3JpcHRvciwgMTM3LjMxIE1p
+QiB8IDQ1Ljc3IE1pQi9zDQo+IGZhdGFsOiBmZXRjaC1wYWNrOiBpbnZhbGlkIGluZGV4LXBhY2sg
+b3V0cHV0DQo+IGBgYA0KPiANCj4gDQo+ICMjIyBDb250ZXh0DQo+IA0KPiBUaGUgZm9sbG93aW5n
+IGVycm9yIGlzIHNlZW4gd2hlbiBydW5uaW5nIGdpdCBjbG9uZSBvdmVyIE5GU3Y0IGFuZCBhIGZh
+aWxvdmVyLCBvciBzZXJ2ZXIgcmVzdGFydCwgb2NjdXJzOg0KPiBgYGANCj4gTkZTdjQ6IHN0YXRl
+IHJlY292ZXJ5IGZhaWxlZCBmb3Igb3BlbiBmaWxlIHBhY2svdG1wX3BhY2tfYVIwTXUzLCBlcnJv
+ciA9IC0xMw0KPiBgYGANCj4gVGhpcyBlcnJvciBpcyBhbiBhY2Nlc3MgZGVuaWVkIGVycm9yIHRo
+YXQgaGFwcGVucyB3aGVuIHlvdSB0cnkgdG8gb3BlbiBhIGZpbGUgd2l0aCBpbnN1ZmZpY2llbnQg
+cGVybWlzc2lvbnMuIEluIHRoaXMgY2FzZSB0aGUgZmlsZSBiZWluZyBvcGVuZWQgaXMgYSByZWFk
+IG9ubHkgZmlsZSBhbmQgaXQgaXMgYXR0ZW1wdGVkIHRvIGJlIG9wZW5lZCB3aXRoIHdyaXRlIGFj
+Y2Vzcy4NCj4gDQo+IEdpdCBvcGVucy9jcmVhdGVzIHRoaXMgZmlsZSB3aXRoIHRoZSBPX1JEV1Ig
+ZmxhZyBidXQgdGhlbiBhcHBsaWVzIHJlYWQgb25seSBwZXJtaXNzaW9ucyB0byBpdCwgMDQ0NC4g
+U2luY2UgdGhlIHBlcm1pc3Npb25zIGFyZSBjaGFuZ2VkIGFmdGVyIHRoZSBmaWxlIGlzIG9wZW5l
+ZCwgdGhlIGZpbGUgaGFuZGxlIHdvcmtzIGZpbmUuIEhvd2V2ZXIgaWYgdGhlIGZpbGUgd2FzIGF0
+dGVtcHRlZCB0byBiZSByZS1vcGVuZWQgd2l0aCB0aGF0IHNhbWUgZmlsZSBoYW5kbGUgd2Ugd291
+bGQgc2VlIGEgLTEzIGVycm9yLiBUaGlzIGlzIHdoYXQgd2Ugc2VlIGZvbGxvd2luZyBhIGZhaWxv
+dmVyIGluIE5GU3Y0LiBXaGVuIGNsaWVudHMgcmVjbGFpbSB0aGVpciBvcGVuIGZpbGVzLCB0aGUg
+TkZTIHNlcnZlciByZS1ldmFsdWF0ZXMgdGhlIGZpbGUgYWNjZXNzLg0KDQoNCllvdXIgZGVzY3Jp
+cHRpb24gb2YgdGhlIHByb2JsZW0gaXMgc3BvdCBvbi4gV2UgaW50ZW50aW9uYWxseSBzZXQgdGhl
+DQpwZXJtaXNzaW9ucyB0byAwNDQ0IGJlY2F1c2Ugd2UgbmV2ZXIgd2FudCBhbnlvbmUgdG8gY2hh
+bmdlIGxvb3NlIG9iamVjdA0KZmlsZXMgb3IgcGFja3MsIHNpbmNlIGRvaW5nIHNvIHdvdWxkIGNv
+cnJ1cHQgdGhlIHJlcG9zaXRvcnkuIFRoaXMNCmJlaGF2aW91ciBpcyBzcGVjaWZpY2FsbHkgYWxs
+b3dlZCBieSBQT1NJWFswXToNCg0KDQpUaGUgYXJndW1lbnQgZm9sbG93aW5nIHRoZSBvZmxhZyBh
+cmd1bWVudCBkb2VzIG5vdCBhZmZlY3Qgd2hldGhlciB0aGUNCmZpbGUgaXMgb3BlbiBmb3IgcmVh
+ZGluZywgd3JpdGluZywgb3IgZm9yIGJvdGguDQoNCg0KUE9TSVggZG9lcyBub3QgYWxsb3cgdGhl
+IHJlLWV2YWx1YXRpb24gb2YgZmlsZSBzeXN0ZW0gYWNjZXNzIG9uY2UgdGhlDQpmaWxlIGlzIG9w
+ZW4sIHNvIGl0IHNvdW5kcyBsaWtlIHlvdXIgZmlsZSBzeXN0ZW0gaXMgbm90IFBPU0lYIGNvbXBs
+aWFudCwNCmFuZCBHaXQgZ2VuZXJhbGx5IHJlcXVpcmVzIGxvdHMgb2YgUE9TSVgtY29tcGxpYW50
+IGZ1bmN0aW9uYWxpdHkgZnJvbQ0KdGhlIGZpbGUgc3lzdGVtLiBGb3IgaW5zdGFuY2UsIHdlIGFs
+c28gcmVxdWlyZSB0aGUgUE9TSVggY29uc2lzdGVuY3kNCmd1YXJhbnRlZXNbMV0sIGFtb25nIG15
+cmlhZCBvdGhlcnM6DQoNCg0KSWYgYSByZWFkKCkgb2YgZmlsZSBkYXRhIGNhbiBiZSBwcm92ZW4g
+KGJ5IGFueSBtZWFucykgdG8gb2NjdXIgYWZ0ZXIgYQ0Kd3JpdGUoKSBvZiB0aGUgZGF0YSwgaXQg
+bXVzdCByZWZsZWN0IHRoYXQgd3JpdGUoKSwgZXZlbiBpZiB0aGUgY2FsbHMNCmFyZSBtYWRlIGJ5
+IGRpZmZlcmVudCB0aHJlYWRzLiBBIHNpbWlsYXIgcmVxdWlyZW1lbnQgYXBwbGllcyB0bw0KbXVs
+dGlwbGUgd3JpdGUgb3BlcmF0aW9ucyB0byB0aGUgc2FtZSBmaWxlIHBvc2l0aW9uLg0KDQoNClRo
+ZSBpbXBsaWNpdCB2aW9sYXRpb24gb2YgdGhhdCBwYXJ0aWN1bGFyIHJlcXVpcmVtZW50IGlzIHdo
+eSBjbG91ZA0Kc3luY2luZyBzZXJ2aWNlcyBvZnRlbiBjb3JydXB0IHRoZSByZXBvc2l0b3J5Lg0K
+DQoNCkNvdWxkIHlvdSBhZGp1c3QgeW91ciBORlN2NCBzZXJ2ZXIgc3VjaCB0aGF0IGlzIHN5bmNo
+cm9uaXplcyBzdGF0ZSBhbW9uZw0KdGhlIHByaW1hcnkgYW5kIHJlcGxpY2FzIGluIGNhc2Ugb2Yg
+YSByZXF1aXJlZCBmYWlsb3Zlcj8gSSBrbm93IHdlIGhhdmUNCnBlb3BsZSBzdWNjZXNzZnVsbHkg
+dXNpbmcgR2l0IHdpdGggTkZTIHdpdGhvdXQgcHJvYmxlbXMsIGFsdGhvdWdoIHRoaXMNCnBhcnRp
+Y3VsYXIgaXNzdWUgZG9lcyBvZnRlbiBoaXQgbm9uLVBPU0lYLWNvbXBsaWFudCBORlMgaW1wbGVt
+ZW50YXRpb25zDQppbiBhIHZhcmlldHkgb2Ygd2F5cy4gKFRoaXMgcGFydGljdWxhciB2YXJpYW50
+IGlzIG5ldyB0byBtZSwgdGhvdWdoLikNCg0KDQo+IFRoaXMgaXMgYW4gaXNzdWUgZm9yIGFjdGl2
+ZS9wYXNzaXZlIEhBIGZpbGUgc2VydmVycy4gU2luY2UgTkZTdjQgZXZhbHVhdGVzIGZpbGUgcGVy
+bWlzc2lvbnMgYXQgdGhlIHRpbWUgb2Ygb3BlbmluZyBhIGZpbGUsIHRoaXMgRkQgd2lsbCBhbHdh
+eXMgZ2V0IGFuIGFjY2VzcyBkZW5pZWQgZXJyb3IgaWYgYSBmYWlsb3ZlciBvY2N1cnMgZHVyaW5n
+IGdpdCBjbG9uZS4NCg0KDQpJJ20gbm90IHN1cmUgdGhlcmUncyBldmVuIGEgZ29vZCB3YXkgdG8g
+c29sdmUgdGhpcyBwcm9ibGVtIG9uIHRoZSBHaXQNCnNpZGUsIHNpbmNlIEkgc3VzcGVjdCB0aGF0
+IGlmIHdlIG9wZW5lZCB0aGUgZmlsZSBhcyAwNjQ0IGFuZCB0aGVuDQppbW1lZGlhdGVseSBkaWQg
+YW4gZmNobW9kIHRvIDA0NDQsIGlmIHlvdSdkIHN0aWxsIGZhaWwgaGVyZSBpZiB0aGUgZmlsZQ0K
+aXMgcmVvcGVuZWQuIElzIHRoYXQgY29ycmVjdD8NCg0KDQpJJ2xsIGFsc28gcG9pbnQgb3V0IHRo
+YXQgdGhlcmUncyBhIHZhcmlldHkgb2Ygb3RoZXIgc29mdHdhcmUgdGhhdCBkb2VzDQp0aGUgc2Ft
+ZSB0aGluZyBhcyBHaXQgZG9lcywgaW5jbHVkaW5nIHpzaCBhbmQgRW1hY3MsIHNvIGZpeGluZyB0
+aGlzIGluDQpHaXQgZG9lc24ndCByZWFsbHkgZml4IHRoZSBlbnRpcmUgcHJvYmxlbSB0aGF0IHlv
+dXIgTkZTIHNlcnZlciBoYXMsDQpzaW5jZSBhbGwgb2YgdGhhdCBvdGhlciBzb2Z0d2FyZSB3aWxs
+IGFsc28gYmUgYnJva2VuIGluIGF0IGxlYXN0IHNvbWUNCmNhc2VzIGFuZCByZXF1aXJlIHNpbWls
+YXIgd29ya2Fyb3VuZHMuIChJIGRpc2NvdmVyZWQgdGhpcyB3aXRoIGENCnNpbXBsZSwgMzAtc2Vj
+b25kIHNlYXJjaCBvbiBHaXRIdWIgc29tZSB0aW1lIGJhY2suKSBBcyBmYXIgYXMgSSdtDQphd2Fy
+ZSwgYWxsIG90aGVyIEdpdCBpbXBsZW1lbnRhdGlvbnMgYWxzbyBkbyB0aGUgc2FtZSB0aGluZyBh
+cyBHaXQgZG9lcywNCnNvIHlvdSdkIGFsc28gbmVlZCB0byBwYXRjaCBnby1naXQsIGxpYmdpdDIs
+IGFuZCBldmVyeSBvdGhlcg0KaW1wbGVtZW50YXRpb24gYXMgd2VsbC4NCg0KDQpbMF0gaHR0cHM6
+Ly9wdWJzLm9wZW5ncm91cC5vcmcvb25saW5lcHVicy85Nzk5OTE5Nzk5L2Z1bmN0aW9ucy9vcGVu
+Lmh0bWwgPGh0dHBzOi8vcHVicy5vcGVuZ3JvdXAub3JnL29ubGluZXB1YnMvOTc5OTkxOTc5OS9m
+dW5jdGlvbnMvb3Blbi5odG1sPg0KWzFdIGh0dHBzOi8vcHVicy5vcGVuZ3JvdXAub3JnL29ubGlu
+ZXB1YnMvOTc5OTkxOTc5OS9mdW5jdGlvbnMvd3JpdGUuaHRtbCA8aHR0cHM6Ly9wdWJzLm9wZW5n
+cm91cC5vcmcvb25saW5lcHVicy85Nzk5OTE5Nzk5L2Z1bmN0aW9ucy93cml0ZS5odG1sPg0KLS0g
+DQpicmlhbiBtLiBjYXJsc29uICh0aGV5L3RoZW0gb3IgaGUvaGltKQ0KVG9yb250bywgT250YXJp
+bywgQ0ENCg0KDQoNCg==
