@@ -1,153 +1,149 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD6E1C75E2
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 21:59:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 742202862A9
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 22:25:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739915950; cv=none; b=TyUYjtC1lK0tW8PdF5ixEGYWSNB1r+Sn21OJVg1InxBFskbIxXwMeYM6UVceO02Fcg15epUosm6PdlmZzPDJtw8W83831m9a3GBYX+QZqC5uodVdsf6pVL2ND6iPVJlRXhNiaA2oHce7QtHH7PVec7qW6G7vUP7CjlYo36mgLU8=
+	t=1739917548; cv=none; b=iXrKIBPK1IsPCjlpjoVrbLIp26UglizIeZ3Ao/rqdwA+Jza6LW6CtnUzjNjlMYN4Berpt4MRyIMYKK6dqr7/EwqLDwNcyg1rVxvovX6obWaVbBXgaEM9FRJXisrKOlNGgnJskQdb0lxXy4nOVzOogWn3qGkjOLpTvKWpt6A3SNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739915950; c=relaxed/simple;
-	bh=IaFKHjMFl9F+vKdwiBMtqJCrMV/cSr+kZn8cBVXJmAg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dCgQpSpAGfiX8YC4A5AKPVVc667suispZ5CEWh4XsXC/sCgpNah8GBIzACi6u2TBJo8EFmnImKG66SQix4Ii1Zv/nkAO7x6rNIx5nTA3KiDFXinh5iPnA0yF84frCDzEXWhOesFJnp+/8j7lIAma19bb8/9Xyq88thptem7pspo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IaPEtArA; arc=none smtp.client-ip=209.85.166.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739917548; c=relaxed/simple;
+	bh=bqegViCH4nShO9rKTo1lp3nvOs99t9NUlUeMlqHKW1o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PKcY+jKmtIIhFnrFcyppClF5F6gioSU60HhemVTytdpJBGqtCxKNKJJcQMQ0O5go8B8m3OyLCDaahDjS9WPNwGCKURPykgCflvwzHIoPAf4a1df0+sZtB3EccKLOTK4Q2WIQtxIcfEOQiOAMArvcCw+ybAulOHoG3cy0K4hfgOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UYyQe/gQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ue0C0/HH; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaPEtArA"
-Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-8558f3cc093so166685339f.3
-        for <git@vger.kernel.org>; Tue, 18 Feb 2025 13:59:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739915948; x=1740520748; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R5YK1F5CGloHe/kTfpODnI2d6vwQoESoOytrmYvywkM=;
-        b=IaPEtArAgot47ATEOBuv3JmR9jqtisyFvOn8fs421jZMyHqP3IsOfiUGaJjGluRwmN
-         E1tfzxL+7As031jre3yeZcPlWCtPlT57O6q0OJtYUP4n5q5NP/MRmsba3V1vRaKQjZut
-         s9fbxOgOTjgECRtloCS97vexTQUNgCi+Vg0BnoxJJ3BnKwWQwh3HSHstAfWKhbz+3UvQ
-         7LDThEGSmd3QBEUCk93gJPCme7E3SpIj6Nze5mV82cJFoRPh5P1dE1wzUK/DGWHx3Hv6
-         M5lbHbvuUNJITAPsBoOW0mgu5kTNMWyLLlk6x8YfYjUGI+3iqbJl19N7giYThY1rIIHV
-         0Jcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739915948; x=1740520748;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=R5YK1F5CGloHe/kTfpODnI2d6vwQoESoOytrmYvywkM=;
-        b=cHRO//U/GDa0pipSE7cCE/GY99N1+yntReIp5om/h0BbTGrJa2xzdMWxrIEez1s6vU
-         Xpp8Vlu0PX+qhe/BJYLEFcK4mxsJK5vqT9xRh+j9GYYv2FOkLHpDL+r7WXDhLTbefCmX
-         kEgeeq3PHicPfbKizNBV7UkCTNVcrvIAB9rlvE396u/WySV0r5RfhTy3LuYIVut0AaU0
-         BJLD8IzDdl5oApAJN0MD1xQ1adBGz63mQWCREORtj5b9paLYKGcC/ltWc9jdcGulWdkS
-         3ImODce0MkkMKGFG8XLe7KbhvjPWIc7DyBbIf+5wjxfVI023NdL6YHjlFfzt2SF8Iqh9
-         spOQ==
-X-Gm-Message-State: AOJu0Yz0EwTFGAPCT3CKKBdHGivyI+74O3CByvbgZtAf3EunUzKqkFeV
-	f4dhPqJal76tAdaK6D2tRFyNDce9s6KBfEt+lwYZ1i0YCmW/il1HLJa8KNsbwQASoU+uFC8PN4N
-	GH653JHJCnlLDJBGVg1VOdlxTX5FtxU9T
-X-Gm-Gg: ASbGncthos2+loDiee7052lQqAJ//NDOMc17Yp9vZ1P9MeOtJY+r7azMt16EZwPBxzO
-	2IV8Wt9ycC2t4gJYhQCB/tuww9n62Ud17lmUmnS7UXc50d9xQcgYuA72fNfXNAypEWAH9A+HW/N
-	cbn3q+odrxYKB1w2a1wShXO2XI+ydKaw==
-X-Google-Smtp-Source: AGHT+IG0xS1EpjJnY2CB2m5zoq2MOxIZDyI9Wa9MriOtOMOLke7jXDOwgiMbHHETC5Cus+C8P1vIRNO3W+dcvQxajl8=
-X-Received: by 2002:a05:6602:1542:b0:855:ac69:32bb with SMTP id
- ca18e2360f4ac-855ac6938c5mr305511039f.1.1739915948377; Tue, 18 Feb 2025
- 13:59:08 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UYyQe/gQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ue0C0/HH"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 47B731140166;
+	Tue, 18 Feb 2025 17:25:45 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 18 Feb 2025 17:25:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1739917545; x=1740003945; bh=Il0b5eZ9Cx
+	y5P8/WjI9YMydMtrLn84j28weNAqldkNE=; b=UYyQe/gQPMVVEJFV7gYeyYtFjb
+	TqRKFEwpwolEKZwENyAeXzUo5m9w1E8Jsh80OXzsB56jQw7b5d/4vNyiGXp8Lfgi
+	1uw6K+8F2ul/NcY1u83Ge/f3cr6l6UGWb5cdA1h7sCuBaYMwGDJ8Y9UoUPiq4gKK
+	ZHOAjZmx5ulXS67zGOA0JUF9yxFV3mLWtxNZRtixkdHbE25ePsSze02+eEhtwibe
+	G7C0ue0qrSYD9/VUdCmoctw7U0B/Uc1RgcOp/3cW3k43KQaSdZ5xva84um0OgnpC
+	eCg/BetjE1GgVUOlR8ruZjRgEKT8mXk7+K/BtqG/MZfgSeVYKUl3ZaVske3g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739917545; x=1740003945; bh=Il0b5eZ9Cxy5P8/WjI9YMydMtrLn84j28we
+	NAqldkNE=; b=ue0C0/HHt6kO+qJ4wN6xExFOMqfw0Rh/BwI7urRF9wrvPgbnzww
+	qqW3wbLrySwuQOSkedBhjHbqlsv31zzZ/MbRmmtS1X1dcrpxsEz3kkDWQ3e0zUbp
+	LfAGqGEypJNx3QqXbRsqhZ2JrQzRVU/cv+XLeSmHo8XN0t/9gU+hxn0qu4ATMS8H
+	Kscl6bQO/c9jsh+RnNKl45Gf1Vrqa/9tmsa7M15JYdFcCpLnec8feiGVRNH0GX9V
+	j+YPtPL9DI6ZjtM95UpL5ZxjOAfpTW53jyKNMAoSwpw3rXbBuNUbP14vOPKkAsv5
+	t3+OTCXIJADgsrJAx6UF0lj3a0Gv6QQVzsg==
+X-ME-Sender: <xms:6Ai1Z0Mq4zBwhFq4_w4yZXC8z7w25-rLBQRi3HmEfiz4THug5MDXTQ>
+    <xme:6Ai1Z69Ma0DrV3bZMv8D-skQRrPMcj8xLSIrlQuXzyByKv2c6W5vLgjfJU4KwHZPn
+    Bl-Vf1VLVXwZMybgw>
+X-ME-Received: <xmr:6Ai1Z7Q4ST-Qfz3UwMnrnD3ROGR-d1QlTLU5WvJPi8aNx1HdcMdDGQVDyns79pfqA0tnI9Y9Y2v6wRdhcKwQ0jxeqh9yapZC_c1JVuY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeivdehudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmihhrthhhrdhhihgtkhhfohhrug
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:6Ai1Z8tI8l0DHHI_apzSGvhXqJTAk3Cu3bzDPx8Ys-u5Q1Ky8WQ4cw>
+    <xmx:6Ai1Z8ck9w7TzSROSQV2D7mQ9Scg9VO55-91PgrnS2Ol3imPVXyjAA>
+    <xmx:6Ai1Zw0PoGTm7Js8gN-gJCCPDKoFf4WqvVXrjOQWv9QvZN_UNrriZQ>
+    <xmx:6Ai1Zw-oRT51V8WgS2E0X0kh_j7dfyJoXHBEM9_EieIcSdBgiYNI0g>
+    <xmx:6Qi1ZxFQhCSGc3iX-FW_2HD_mGDMDzqkyXHOU1T7IRD9ZMj_anfafUHE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 18 Feb 2025 17:25:44 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,  M Hickford
+ <mirth.hickford@gmail.com>
+Subject: Re: [PATCH 09/12] gitk: extract script to build Gitk
+In-Reply-To: <20250218-b4-pks-meson-contrib-v1-9-c3edd292beb8@pks.im> (Patrick
+	Steinhardt's message of "Tue, 18 Feb 2025 08:45:57 +0100")
+References: <20250218-b4-pks-meson-contrib-v1-0-c3edd292beb8@pks.im>
+	<20250218-b4-pks-meson-contrib-v1-9-c3edd292beb8@pks.im>
+Date: Tue, 18 Feb 2025 14:25:43 -0800
+Message-ID: <xmqqeczuj3fc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250217232847.8567-1-lucasseikioshiro@gmail.com>
- <CABPp-BGpOi9ZqrPFwxCiRLFjozgnYKV=zbYVAA5c9Z9yDUTBGg@mail.gmail.com> <EE88CF05-9120-4CAB-A097-84CC5EA2FACE@gmail.com>
-In-Reply-To: <EE88CF05-9120-4CAB-A097-84CC5EA2FACE@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 18 Feb 2025 13:58:57 -0800
-X-Gm-Features: AWEUYZn6UbJKiVlV1e9Lqhq2WiBBQKD517roflOz-3WCqBzHuQmBENZKrohgRP8
-Message-ID: <CABPp-BHvutRL80QiTYx6gJbYiATOD32DrvXgQQtEy=u5oUZ9Zg@mail.gmail.com>
-Subject: Re: [GSoC][RFC PATCH] git-merge.adoc: detail submodule merge
-To: Lucas Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Feb 18, 2025 at 10:55=E2=80=AFAM Lucas Oshiro
-<lucasseikioshiro@gmail.com> wrote:
->
-> > It may be worth referencing the commit(s) that introduced the behavior
-> > for other reviewers: commit 68d03e4a6e44 (Implement automatic
-> > fast-forward merge for submodules, 2010-07-07).
->
-> Ok! I'll inspect the codebase and reference it in a future v2.
->
-> > "referred by it" is hard for me to parse.  Maybe something like
-> >
-> > """
-> > In the case where the path is a submodule, if the HEAD version of the
-> > submodule is a descendant of the MERGE_HEAD version of the submodule,
-> > or vice-versa, Git...
-> > """
-> > ?
->
-> Perfect! Actually, I find submodules a little abstract to be explained
-> using only words, but your sentence is very clear.
->
-> > Also, the references to HEAD and MERGE_HEAD do tie this documentation
-> > rather directly to `git merge`; the basic idea is applicable to all
-> > callers of the merge machinery, but none of the other callers use
-> > MERGE_HEAD (some use CHERRY_PICK_HEAD or REBASE_HEAD), and some do not
-> > assume HEAD points to one of the parents either (e.g. merge-tree and
-> > replay).  So, if we want to move this somewhere more general, we'd
-> > need to reword it a bit.
->
-> Given your previous suggestion, what about:
->
-> """
-> In the case where the path is a submodule, if one of the versions of
-> submodule is descendant of another, Git...
-> """
->
-> ?
+Patrick Steinhardt <ps@pks.im> writes:
 
-That seems like the right direction, but I think "descendant of
-another" is vague/confusing.  Perhaps
+> Extract the script that "builds" Gitk from our Makefile so that we can
+> reuse it in Meson.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  gitk-git/Makefile        |  7 +++----
+>  gitk-git/generate-tcl.sh | 11 +++++++++++
+>  2 files changed, 14 insertions(+), 4 deletions(-)
 
-"""
-In the case where the path is a submodule, if the submodule commit used on
-one side of the merge is a descendant of the submodule commit used on the
-other side of the merge, Git...
-"""
+You would want to coordinate this with Johannes Sixt, who may still
+want to maintain the subtree arrangement.
 
-?
+Thanks.
 
 
->
-> > Oh, maybe we could put this information in
-> > Documentation/merge-strategies.txt?  Hmm....
->
-> Looks like a good place to put this. My only concerns are:
->
-> 1. It would need to be documented in both `ort` and `recursive`. I don't
-> think it would be a big deal as most of the first paragraph of both
-> strategies are equal.
-
-Yes, until `recursive` is deleted anyway.  (At which point we'll just
-remap `recursive` to mean `ort` and not have to have separate
-documentation for the two.)
-
-> 2. Maybe it would detail too much on this specific case, while not
-> covering others (e.g. changing file permissions, symlinks, etc).
-
-Yeah, but we don't have a way to resolve differences for those kinds
-of changes when neither side matches the base version (unless
-something like -Xours or -Xtheirs is passed, but even then that
-belongs under the -X documentation); submodules are somewhat special
-in that regard.
-
-> > Thanks for sending this in.  It's always helpful to get researched
-> > documentation improvements, even if I can't help but nitpick and
-> > complicate matters here and there....  ;-)
->
-> Thank you! Given how deeply you understand the merge machinery any nitpic=
-k
-> is immensely valuable!
+> diff --git a/gitk-git/Makefile b/gitk-git/Makefile
+> index e1f0aff4a19..a396eef581e 100644
+> --- a/gitk-git/Makefile
+> +++ b/gitk-git/Makefile
+> @@ -8,6 +8,7 @@ gitk_libdir   ?= $(sharedir)/gitk/lib
+>  msgsdir    ?= $(gitk_libdir)/msgs
+>  msgsdir_SQ  = $(subst ','\'',$(msgsdir))
+>  
+> +SHELL_PATH ?= /bin/sh
+>  TCL_PATH ?= tclsh
+>  TCLTK_PATH ?= wish
+>  INSTALL ?= install
+> @@ -63,10 +64,8 @@ clean::
+>  	$(RM) gitk-wish po/*.msg GIT-TCLTK-VARS
+>  
+>  gitk-wish: gitk GIT-TCLTK-VARS
+> -	$(QUIET_GEN)$(RM) $@ $@+ && \
+> -	sed -e '1,3s|^exec .* "$$0"|exec $(subst |,'\|',$(TCLTK_PATH_SQ)) "$$0"|' <gitk >$@+ && \
+> -	chmod +x $@+ && \
+> -	mv -f $@+ $@
+> +	$(QUIET_GEN)$(RM) $@ $@+
+> +	$(QUIET_GEN)$(SHELL_PATH) ./generate-tcl.sh "$(TCLTK_PATH_SQ)" "$<" "$@"
+>  
+>  $(PO_TEMPLATE): gitk
+>  	$(XGETTEXT) -kmc -LTcl -o $@ gitk
+> diff --git a/gitk-git/generate-tcl.sh b/gitk-git/generate-tcl.sh
+> new file mode 100755
+> index 00000000000..46bba6d2464
+> --- /dev/null
+> +++ b/gitk-git/generate-tcl.sh
+> @@ -0,0 +1,11 @@
+> +#!/bin/sh
+> +
+> +set -e
+> +
+> +WISH=$(echo "$1" | sed 's/|/\\|/g')
+> +INPUT="$2"
+> +OUTPUT="$3"
+> +
+> +sed -e "1,3s|^exec .* \"\$0\"|exec $WISH \"\$0\"|" "$INPUT" >"$OUTPUT"+
+> +chmod a+x "$OUTPUT"+
+> +mv "$OUTPUT"+ "$OUTPUT"
