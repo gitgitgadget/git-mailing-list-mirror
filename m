@@ -1,54 +1,54 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A20FA21CC6E
-	for <git@vger.kernel.org>; Tue, 18 Feb 2025 17:59:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6359D270EC3
+	for <git@vger.kernel.org>; Tue, 18 Feb 2025 18:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739901592; cv=none; b=gQjY4u4VkISe23dscNePG3PnvY4YliRAKhwkOAYpy9NOlvB1O6nnsMl+hTtNk9oKEubKu8d6dpqFO+pqSYiClEUOHIkFFsBkiQGCYqq9/+4iZ9O2tQvFDqrYwp1RTRGoWpTR/WTijW7wlRaa5/iOFT7ivT2zMZXlJSRuIQwYsB0=
+	t=1739902093; cv=none; b=b/hiGN3ADLbFIofHU0QLCFp9OBgqzd7tYDRjs9gIf9N2veUqd5alMNu4sBviL3r6TmHRjLgiFhKCDmPzFR22WESZQD5VEMW/wOYJ464pa9k04mMU9Y/X9rhqwHxNiq11nZKxnTBoi3RBklTR8pOwiwacnqbLxPeSr/WNiukWIwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739901592; c=relaxed/simple;
-	bh=0b9otWKX6bJ6pR+vf+dITsmjVCbpSPQo+o6YZv1UhgI=;
+	s=arc-20240116; t=1739902093; c=relaxed/simple;
+	bh=TVvTo4NIf0ucQ2mmHMr+JILAAhSS2iaMIDiwrq7Yx5g=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N6Tous8YQod8TTtsHNqpNT2QhqmmUfxiih4edzQQpEMbmYnbOChLHuhV31zCM5LEZI5EfruXlcxjWth69Sl+tjb4wFd0o9lm8fiWqu/EdSki+4R2+E3JnSpFZlbtBWrKUhfp/qM8JgmIfXerylil8Oe6euK+E1NwPM4iPbb+NHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jxzgFGhe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SNJP1S6s; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=EHDKVyck7/DnJythuUBYisd4KIRJJFsDbqN9FMPK/cTDVf5CkKRrN3kPTMAA7kE2eZ1r1H8gBTChKpnU5eCS5rSHRgph/Aa58b/72o2QS6jZslxJ0garAj6bD0Uba2W/OWwCKRB2PpZvQLW4/fUHo01I+Qxgz2BLp9esWr6yPn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Wsp1N2Lj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MgFFJB9c; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jxzgFGhe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SNJP1S6s"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ACB83114017A;
-	Tue, 18 Feb 2025 12:59:49 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 18 Feb 2025 12:59:49 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Wsp1N2Lj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MgFFJB9c"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 32383114016C;
+	Tue, 18 Feb 2025 13:08:09 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 18 Feb 2025 13:08:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739901589; x=1739987989; bh=e7rnh2jRe9
-	C6jVxF2uNpoGVR/mm7Pfp0sjiJ4n+MzXI=; b=jxzgFGhe/iOhWNS1klFBr/CzQy
-	FcPjK2uHWQihFF2yfsmm473o3apizP68uVet0ZOUrlglVqtlOiknKBtNUlPX0U26
-	j0c7Tbbh+1s0ogb88mrXnbXyGNu9mI69gUsom5/UV2Fj/zWYxn1z7aQ7RQSpbzyZ
-	hMBxp0QgiM4zp1Ua3dMuiweaFhS3CK0nIqDBILkwZNuG30haENl/B6TPoy+RStgz
-	PuPMykLAoC+BhGjDtLKQ++KgJgDIEFMFEa8xajk6caWjvgilaDkkdJ2vsaY/NWXG
-	SCAzaZQG1S4/wfm0l79DxqKRlDw0RuCpheICJ9P73P6zftplErj6R6TInZjw==
+	:subject:to:to; s=fm2; t=1739902089; x=1739988489; bh=16KMiy6kGP
+	9eBl9JY/kjNHDp2D7yRnkc98jjh71HACE=; b=Wsp1N2LjwXjsOhXTPHqnCnQ8wo
+	5FlDvXcv2lWMKUz0bNf3SymuMGMl10HBLmycid6fsS3GvBvKTqkavkgLjRbS9qNa
+	0kIopC4BXB7SYHaxPHiWKoq50mJsA7Ynw8HWmPINfjqWoE7Rwi+2zNhn/JhHm1uZ
+	RMjnLyErZb1eQVMxqMJL054HtwAZpzwNzmZsfRL+jZv1FPd8U6bTlo2tlQR9X36W
+	cOcgZhI8ZGv2Ev6mHHM6jpnaNvtmE1r6aZOIaL7TQgx6CnwcpwvRxjQWHE0/88YN
+	hIaRB3kENOmubj4CJwAZltTM3gLEUNTRRHHoNa1aX+Df/OflvvGLFPiFD/VA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739901589; x=1739987989; bh=e7rnh2jRe9C6jVxF2uNpoGVR/mm7Pfp0sji
-	J4n+MzXI=; b=SNJP1S6sCBxrFW99m86fko1VN1nCnWSZczk9R6XYQ4N6upMHuOH
-	UdfuBh3gYgSVDZ8iD9AcnVPuJ2ijTOdDCuabvRgcpk8oDC6d7CQEHoEnC/xzjVXF
-	0UXM5Tcuc6vLXEPiCTma3i8Olf0TiGZcEEMXrsYvxIq4Z1TpLHangjL1cPTM1ohg
-	Sn21K9fmChZmLzmtEckMI3FeJvv9+7MKzdOCAXHgQJ1M9i/dRXgh4veHuyoY3Rxs
-	XnM1PdhFzk+KhsUYqNFN8FmC3SkZdMvMW7mW7NRzYDtupsnT0Med7vflwZD4JqXs
-	WVNgiINNXFGoOz19EP2+AsdIpAsJG05DCOg==
-X-ME-Sender: <xms:lcq0Z2J9k5xRybza7qpbZa1dYVtaCzMO8FwzTE9DtYt7mhIFygfmdw>
-    <xme:lcq0Z-KKwAeBd1qyVDFku0sq4tlQowsRlWGMeLMQwcwtNXT33mDVnryWL8_dqEH_O
-    OBSS2KsNC3covtjaA>
-X-ME-Received: <xmr:lcq0Z2uGekXtMrP3jFP_FBVX1QNU7pR3LXbc3Dz8MiNxh88o4Lz3ydXUcrgFsxEDh69aRJH15tc2dZHEAPj49wOaz4G2aWNF_NWM61o>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiudeljecutefuodetggdotefrod
+	1739902089; x=1739988489; bh=16KMiy6kGP9eBl9JY/kjNHDp2D7yRnkc98j
+	jh71HACE=; b=MgFFJB9cf//u3xGwpWXY83N4XPhcAHcTtRlNHHyJl7DjWJQnfKf
+	pYMFKksFu7EoWWoUQfzYWKldca6xfZ9trKRSrQBTrt8wpaYgN3DwY3yK8fGd6EeW
+	5h5zPAkQL46KV2wQBo/sr3zy2FFUXIGq79sa0/ZVeWrTTy6F1jrkK0Ikfk43WvDh
+	AyPfd9GuGShlC6MsVqAKXddGxW0m96tOi+REtpIGkdMx7K1Q3pbN21TnF49osoNH
+	gmJNrzIwYKxVvICsKzzDXfwinukzgwWk2j/3pbgjhosWRy982dMz0PVGbkTWw/CY
+	0WxiDiUZ7g0YilxN5qZLP1qKoCo4BdRgvdg==
+X-ME-Sender: <xms:iMy0ZxskUDlUodDi0dhLr0djTiP9JbMqGC2lbjUCWcUhhdB0cYzQtA>
+    <xme:iMy0Z6e9aWImEynAqvJUntlz2_MDM2SklLP4T30pAzvqFp6KbnjvnSRwc_p48IUuS
+    cbTp_V__0iqh_wt2A>
+X-ME-Received: <xmr:iMy0Z0wivoZ0TD92GO55uLxzrh-9Tw9L7y5P1OMvoR0wDUcvNQurMPfOSSQUTVOjGvtRErvChZF90p1Qj_BQJrFsN_Sm-3pf8LdQU1Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiudellecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,29 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiudeljecutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:lcq0Z7bJdqPhOVppenFRg_aSHIjLFx60LKwb5C9lIz9dFJNAHfMhwg>
-    <xmx:lcq0Z9Yq2VYo0cIa3C9Pn9cmY4RjvA3peQxKBCH7MpsXO9E2hdJr-Q>
-    <xmx:lcq0Z3AdIqlh7kZwq48XAfqPIMcd5GOR4w0cgU8f908FzA_g_m9e4A>
-    <xmx:lcq0Zza61l_4NWuvo9KAp-MCZkxbo85q8Rn6pxsP0svpEiVzV_QZpQ>
-    <xmx:lcq0Z8UZFYFoFt_1IFDbjY21J9UpRiJrbE55JPUfjiGyvVnHNKiSPJgl>
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrlhgvkhhsrdhtoh
+    guohhrohhvrddufeefjeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:iMy0Z4NOuPwbb8qfB2FPrx4cSiBf2bwKvrVd6hU2ibyA-V5xzaIPpw>
+    <xmx:iMy0Zx_kCmjC9HKtcHHj9LGKOM_YbGmAhI7SAA9Mcy9bb0ZYdwgvZA>
+    <xmx:iMy0Z4WXEcXWOjd-4bjNRKi8ySRSOrK6_R_pBIjRcGgsG51Vvb8lvw>
+    <xmx:iMy0ZyeT2C1EqzmxnQZiEaiLucmL7EjaFfYOgr9S-IrhwgAltF-B1Q>
+    <xmx:icy0Z8aIQbuJw9ZwbKGDNRrhIscceh8dMIuen3416aKK_uSieeyA7-w1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 18 Feb 2025 12:59:49 -0500 (EST)
+ 18 Feb 2025 13:08:08 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  M Hickford <mirth.hickford@gmail.com>
-Subject: Re: [PATCH v2] doc: use 'title' consistently
-In-Reply-To: <pull.1893.v2.git.git.1739739761445.gitgitgadget@gmail.com>
-	(M. Hickford via GitGitGadget's message of "Sun, 16 Feb 2025 21:02:41
-	+0000")
-References: <pull.1893.git.git.1739477118350.gitgitgadget@gmail.com>
-	<pull.1893.v2.git.git.1739739761445.gitgitgadget@gmail.com>
-Date: Tue, 18 Feb 2025 09:59:48 -0800
-Message-ID: <xmqqldu3xhez.fsf@gitster.g>
+To: Aleks Todorov <aleks.todorov.1337@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Add Commit Summary in blame?
+In-Reply-To: <CAO0eup=6NcCdBASxvAxB8moku74zpxAr+MFiV-kkXVfjY1UF=w@mail.gmail.com>
+	(Aleks Todorov's message of "Sun, 16 Feb 2025 21:13:04 +0000")
+References: <CAO0eup=KqHe68OkHqYWtDgsTx0cAwg5Y5HSqK4s_BNbZhr8hVw@mail.gmail.com>
+	<xmqqzfu7s5qg.fsf@gitster.g>
+	<CAO0eup=6NcCdBASxvAxB8moku74zpxAr+MFiV-kkXVfjY1UF=w@mail.gmail.com>
+Date: Tue, 18 Feb 2025 10:08:07 -0800
+Message-ID: <xmqqfrkbxh14.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,30 +88,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Aleks Todorov <aleks.todorov.1337@gmail.com> writes:
 
-> From: M Hickford <mirth.hickford@gmail.com>
->
-> The first line of a commit message is variously called 'title' or
-> 'subject'.
->
-> Prefer 'title' unless discussing email.
->
-> Signed-off-by: M Hickford <mirth.hickford@gmail.com>
-> ---
->     doc: use 'title' consistently
->     
->     Patch v2 includes git-rebase.txt
+> ...
+> however if the implementation is shared, that means we need a way to sanitize
+> user input to ensure they are not using flags which are not allowed, and we
+> will also need to pollute the implementation with length specifiers everywhere
+> since each field in the blame output needs to be width-aligned.
 
-Looking good.
+I was imagining that the aligning is responsibility of the end-users
+who give whatever random format strings to the command, if you are
+to reuse the existing helper functions out of the implementation of
+the "git log" family of commands, as %</%> and its friends would be
+available for free.  I admit that it has been forever since I looked
+at the code paths that implement wrapping and padding specifiers
+last time, and I do not know offhand how cleanly they are written
+and how reusable they are, though.
 
->  Documentation/git-commit.adoc | 8 ++++----
->  Documentation/git-rebase.adoc | 8 ++++----
->  2 files changed, 8 insertions(+), 8 deletions(-)
+If you are doing this to feed some GUI implementation, however, I
+suspect that a more productive way would be to make the GUI tool
+read from the "--incremental" format.  But as I do not know your
+motivation...
 
-Will apply with s/adoc/txt/ so that the result becomes obviously
-merge-able to 'maint' (even though currently I do not plan to do a
-Git 2.48.2 right now, I often do this to make it easy for distro
-maintainers to backport obvious fixes to their maintenance tracks).
-
-Thanks.
