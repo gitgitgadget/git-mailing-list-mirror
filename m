@@ -1,184 +1,112 @@
-Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E032E24E4B4
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 20:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60BB2586F2
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 21:37:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739998509; cv=none; b=X8j7JZTcKRIj12zXWPD4Mc+Byn7+novPgro6H88EjmlJk4dN4jB8R9FgIJuFS1icyiYlGkcnIUnJ1//ca4VCxpz/wP2wSnoutKLY2XMLBl+BGl5TICI/hauIAh+w0zUXbbWkWQsBPgwxS78s253ZfF1XUnUXyzjVOxTH0ODERRY=
+	t=1740001059; cv=none; b=Kmfi09861b6l6iTEXWyxJeW+Z+a9Wju7aRSgbiuIZQjtJiDH5lVWu6SpSaGa1dvULEbk6t7hEtE30gIRU8BESUtBzXTn3+UZdwyu/9wpz88ecdKi8s/B23HQ9d4YtENHKqEUkMmNJ54Gkrgk81YvShfvAefIUUfcFB/VXMtPSyY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739998509; c=relaxed/simple;
-	bh=xP1uLKYsnLdxSxRjbqquixuPhact/fWamgjWIDqMyus=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ahBKPnmOXfW3qd6U7LMnx6sQ53UBzrwdS6xm4qUV+bSPglXWqz1acFcriu/hBnn6mCygk7woFxae+gjTf+7jqRp6ZLP3QeXwzQ+9IwDTpE3PUQ3XYPVUlEZm5DXpS86QFkN7qwEFYQIvLvHetnfCC+NNA19iz/qxSgWN46F3gvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gk4toQyf; arc=none smtp.client-ip=209.85.210.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740001059; c=relaxed/simple;
+	bh=KqXRZSquR53EQYoAO3gPVfU2NVFOYx/SekZNfLKZSeQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Rm0CN9PZzS5R49Xr/mt8+8NdMEeQVPomepalJ4PCzIdg4mJWyBWEQgFhfa6/I4/Rpm9D08+nCjnSNovCXSFR+Nm4O2iqMFulUIFZ/uBncSGcdB3sbw1fM2NVQQ2UK5OhJ3+WjsAnSC2Z5Bquw4VyXpuBHVhinPNTMUToV1B8tBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SlCnDLgD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k4ArHAzL; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gk4toQyf"
-Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-72736498817so116739a34.1
-        for <git@vger.kernel.org>; Wed, 19 Feb 2025 12:55:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739998507; x=1740603307; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YOCC9uaee8UoUhlHGkh2stri4VlvmQiy/zzYDXewrRs=;
-        b=Gk4toQyfhsqOEn3O57ES88j1cGToJMLRK+QrWq+fiWYVvB3liK2cr42slYCddsNlT8
-         MaGbuOSrmud87fsY1JV9CUa4Ln1PN8sah/6zdnapgMFelcPc3UW0cwDrkpInoFUlOrBl
-         TdTrUAl/fS0SCy3Zjf4qoF+P3ctNzOqR3ibNZNVdK0PcvuGJYZsoqRdGKBW6GTSY3ryu
-         chi/k7+TllKr2oqFbDEd2QLAPSvZeaeRYyr7AqypGlumWOF7ZASVFPJdltKjdFDoiTFU
-         mb9zB0aa2ogTRSvrJbto6rt1LAPvuRS78iXesj0Ztg/GeLIy4mn3ZRdaBXWy/zoJefUt
-         Ce1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739998507; x=1740603307;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YOCC9uaee8UoUhlHGkh2stri4VlvmQiy/zzYDXewrRs=;
-        b=qpYuziPkZpa/f4Bfo1Asx5YlNapWd8pUOTA/5FX1GnPXunlSstkQR9/0ieE0JlQL74
-         Atmo70LJGwTb7gGjzy7uaILuIX/OYFHGT0ONd65d6QhwU6y/LufsNaN/gAXWk1bwBWd8
-         /dLuu6O3sppNd/MvBGk5JQPBBWnDjFJB1uKlzwx6znk4bw8XJolv70gg0AK0b1NwiXrF
-         XTjuDAmtpOeTVmDHVDts7fsJTrncptmvO4+OXsg6GYczpRli16Ei+2fhrPditJSzt3Q1
-         xj/Ga8RBtNu3C9UaCLPduYYd5het2iBjfENGm2NPJ4YJuc6ks1Tl4d0oJhdXBC5Jqlr4
-         FkEg==
-X-Gm-Message-State: AOJu0YwX1cPxwSEzok4LB718fsSYalymfPv5XQjPjRwt43zmS4UFr75b
-	wF/LLSMCPji9dV9Tzi1g1/exVklhgpRIz7SUZKgspZB4O07HAzfy11ExheZH
-X-Gm-Gg: ASbGncugdPxJXkOCVowYQ+FC2Amv77FxHVdlMjHEgjwn/IEk8VNPXZ3hMwPHg1PXIIR
-	WmfvCWVSN5sZumsrcm0PK17o6yukAsFvv4YfBhI8XdKb1lOr4ikYQnxEcgC8USD12lTpVEAhc++
-	L15wODlWX80vT1jy9ZVTVBmMgqnb1YcS/LFSd1XjERG7vggzXQMlVSz0imv5/dt3+PfD8KXIpaE
-	cLjvM+Pah/9cmW8pcka84v1GHwTsdt+g1kjQ83bPtxh0swecybYZuxwRlgkGZmHjd78R0Uah7cG
-	AfJwo+6H
-X-Google-Smtp-Source: AGHT+IExlBcGVdv7jzNbc+1Qd7blcqalrcJ/X/WIBL3txJjk+HIbeZZGkA71yhfQNdez7elQJEzTPQ==
-X-Received: by 2002:a05:6808:158f:b0:3f4:cb8:cf46 with SMTP id 5614622812f47-3f40cb8d2acmr5566303b6e.36.1739998506735;
-        Wed, 19 Feb 2025 12:55:06 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-72737f960dasm763833a34.39.2025.02.19.12.55.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 12:55:06 -0800 (PST)
-Date: Wed, 19 Feb 2025 14:51:57 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, peff@peff.net, Patrick Steinhardt <ps@pks.im>, 
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] builtin: introduce diff-pairs command
-Message-ID: <wv5ziveuff7iellcmjcki372m5vp6nmltyls43e4wzslcqymog@gwczuaucpkke>
-References: <20241213042312.2890841-1-jltobler@gmail.com>
- <20250212041825.2455031-1-jltobler@gmail.com>
- <20250212041825.2455031-3-jltobler@gmail.com>
- <d6d4230e-7b80-4eec-b218-37717ae2e298@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SlCnDLgD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k4ArHAzL"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8F48D13802BF;
+	Wed, 19 Feb 2025 16:37:36 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 19 Feb 2025 16:37:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1740001056; x=1740087456; bh=KqXRZSquR5
+	3EQYoAO3gPVfU2NVFOYx/SekZNfLKZSeQ=; b=SlCnDLgDkrdpxDD1HxSndIpVlj
+	vm88crwWzBSgAIKD2MOtjmrYQgc2GKvscDnLCSIclBgvRezkwvp9n6tAjeDBNGr1
+	nxKUOf0vtjS/e0mI2yzrJMT4gNFkWHEphePduTEooVilgG3XElSFs6MZ0jsGsTTt
+	NXWy4ilDJokvMU4L5L6QI+yqQx7uu2dRPE3J8zn3DbrBi+FasMpQdoDT6vodbe7O
+	yZhp9NZDOxYXvCDW4edpqQ1kUqR6jLot/+hzFp+ZCFtkSn+2DN3D0HntDwvpjIEq
+	edNZ71PvSvk8GhUDtnxMIx7Ee3exJ0bPGLO8O+p8uYJoWPuzSiQ6RUCaeaqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1740001056; x=1740087456; bh=KqXRZSquR53EQYoAO3gPVfU2NVFOYx/SekZ
+	NfLKZSeQ=; b=k4ArHAzLulSM6ksUjwOi2JZI/GLOJ63NDcm0I31yYnDf4Mh2cpx
+	34awQyidr/3GNkhPQbcYsJGyld613+US1V632U/U3TtZ35nOLqppRKwnM2SSUbwG
+	xGyreMCF0J/+wOxp67n5fsx+PZwplAohVmr25PkHWemDKHnSMTGtcsuYDB/qVuRL
+	ywLcSJWkktdrjrj1KHUwSTARzYCLrUeuNdHmy7rqjN7nc6XSgPKUCs6eqbkE8avs
+	1xLw4jbwPvs3Z4npat/nB6ftEZr/ybobt+zvcObS1Ezx4ZJYNq2sYQ52mzuMjF3B
+	f+34CRc0/CtYWeErecnMv7UD7pb3u/hkOTA==
+X-ME-Sender: <xms:H0-2Z21YYQiqKjgJz-N0gsYZJAiPbdTFoEQlRps94IewzWQrrpPHeQ>
+    <xme:H0-2Z5GwVllkbfzTc4i_RlHcXd1Dn01Q5c6aggpxd8n9PnjEjmQ2LsBp6szODfpwa
+    zIYm7UxZTR6YKotWA>
+X-ME-Received: <xmr:H0-2Z-7Ll2eQoohWVdmOXhvsYlLgEwoqLThG-WfclwHij4vwUA78Y04htTAYIwD2tVE9yWEsqK11J65fdnUpI7ZSAReUkFZFhHqktDI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiheefiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hpshesphhkshdrihhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:H0-2Z30UJSXpS6v-vzyZrr5u4jj0twh_ykTJbGJRHzsBCeLhTFZAoA>
+    <xmx:H0-2Z5HLsaZQByUIEPgrM7-fJA6tV0XFz0zSGNOzgS7qIFrHWS8xdg>
+    <xmx:H0-2Zw-PKp9wBAVserOTROBMlUOmS5zFMmic6rRysihpIPbHmFTGnw>
+    <xmx:H0-2Z-n0F1gW5B_Zoib8M6dpecIrKtOhwHZ7DS6MHnoAm5bD8UaapQ>
+    <xmx:IE-2Z-6yOYC2kHcwOyB7MTMdziGuG_PH_pU5KRum_vlUF2CAXMiobIQs>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 19 Feb 2025 16:37:35 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,  ps@pks.im,
+  jltobler@gmail.com
+Subject: Re: [PATCH v3] builtin/refs: add '--skip-reflog' flag to bypass
+ reflog migration
+In-Reply-To: <CAOLa=ZT025hWSG0JuoWTUe5aDgPg1fcHDaAhuQ+CxHQ2zvreXw@mail.gmail.com>
+	(Karthik Nayak's message of "Wed, 19 Feb 2025 12:28:02 -0800")
+References: <20250211-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v2-1-991a2ec9a796@gmail.com>
+	<20250212-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v3-1-98b2c4d2bb0c@gmail.com>
+	<87a5aiqmeq.fsf@iotcl.com> <xmqqwmdlg92k.fsf@gitster.g>
+	<CAOLa=ZT025hWSG0JuoWTUe5aDgPg1fcHDaAhuQ+CxHQ2zvreXw@mail.gmail.com>
+Date: Wed, 19 Feb 2025 13:37:34 -0800
+Message-ID: <xmqqcyfdfwf5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d6d4230e-7b80-4eec-b218-37717ae2e298@gmail.com>
+Content-Type: text/plain
 
-On 25/02/17 02:38PM, Phillip Wood wrote:
-> Hi Justin
-> 
-> On 12/02/2025 04:18, Justin Tobler wrote:
-> > Through git-diff(1), a single diff can be generated from a pair of blob
-> > revisions directly. Unfortunately, there is not a mechanism to compute
-> > batches of specific file pair diffs in a single process. Such a feature
-> > is particularly useful on the server-side where diffing between a large
-> > set of changes is not feasible all at once due to timeout concerns.
-> > 
-> > To facilitate this, introduce git-diff-pairs(1) which takes the
-> > null-terminated raw diff format as input on stdin and produces diffs in
-> > other formats. As the raw diff format already contains the necessary
-> > metadata, it becomes possible to progressively generate batches of diffs
-> > without having to recompute rename detection or retrieve object context.
-> > Something like the following:
-> > 
-> > 	git diff-tree -r -z -M $old $new |
-> > 	git diff-pairs -p
-> > 
-> > should generate the same output as `git diff-tree -p -M`. Furthermore,
-> > each line of raw diff formatted input can also be individually fed to a
-> > separate git-diff-pairs(1) process and still produce the same output.
-> 
-> I like the idea of this, I've left a few comments mainly around the UI.
-> 
-> > +Here's an incomplete list of things that `diff-pairs` could do, but
-> > +doesn't (mostly in the name of simplicity):
-> > +
-> > + - Only `-z` input is accepted, not normal `--raw` input.
-> 
-> I think only accepting NUL terminated input is fine, but if we want to
-> accept other formats we should  have a plan for how to do that in a
-> backwards compatible way as we cannot use `-z` to distinguish between input
-> formats.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-If in the future we want to support the normal format, we could introduce
-an `--input-format=normal` option or something along those lines. 
+> I share the same reaction. I didn't consider that flow of thought at
+> all. So I too agree with name change. Let me push in a new version.
+> Although I'm not sure if, Junio, you want to wait for the `git reflog
+> drop` command that we were discussing before accepting this topic [1].
+> I'll leave that to your discretion.
 
-> > +	const char * const usage[] = {
-> > +		N_("git diff-pairs [diff-options]"),
-> 
-> Normally the option summary printed by "git foo -h" is generated by the
-> option parser. In this case we don't define any options and use
-> setup_revisions() instead so we need to provide the option summary
-> ourselves. Looking at diff-files.c we can add
-> 
-> 	"\n"
-> 	COMMON_DIFF_OPTIONS_HELP;
-> 
-> to do that.
+Well, from my point of view, "reflog drop", if can be done for both
+files and reftable without too much hassle, would be a greater
+addition to the toolset than the value "you can drop while
+migrating, but you need to remember to pass that option" gives us
+;-)
 
-Would this be preferable even if git-diff-pairs doesn't support all of
-the common diff options?
+So it really depends on how involved the work to add "drop" thing
+would be.
 
-> > +	argc = setup_revisions(argc, argv, &revs, NULL);
-> 
-> I think we should check that there are no options left on the commandline
-> after setup_revisions() returns
-
-Good call, will do in the next version.
-
-> > +	/* Don't allow pathspecs at all. */
-> > +	if (revs.prune_data.nr)
-> > +		usage_with_options(usage, options);
-> 
-> It is not just pathspecs that we want to reject but all revision related
-> options. Looking at diff-files.c we can do
-> 
-> 	if (rev.pending.nr ||
-> 	    rev.min_age != -1 || rev.max_age != -1 ||
-> 	    rev.max_count != -1)
-> 		usage_with_option(usage, options);
-> 
-> To catch some of that but it still accepts things like "--first-parent",
-> "--merges" and "--ancestry-path". We may just have to live with that as I
-> don't think it is worth expanding a huge amount of effort to prevent them.
-
-Yes, we should also reject revision as well as pathspec arguments. Will
-update.
-
-> > +	if (!revs.diffopt.output_format)
-> > +		revs.diffopt.output_format = DIFF_FORMAT_RAW;
-> 
-> This matches the other diff plumbing commands but I'm not sure it is the
-> most helpful default for a command that is supposed to transform raw diffs
-> into another format. Maybe we should default to DIFF_FORMAT_PATCH?
-
-As you mentioned, defaulting to DIFF_FORMAT_RAW isn't the most useful
-behavior. I agree that it makes more sense to use DIFF_FORMAT_PATCH as
-the default. Will update in the next version.
-
-> > +test_expect_success 'split input across multiple diff-pairs' '
-> 
-> This needs a PERL prerequisite I think. I'm a bit unsure what this test adds
-> compared to the others.
-
-This test demonstrates that the raw diff input can be split across
-separate git-diff-pairs(1) processes and still produce equivilant
-output which is one of the main usecases for the command. That being
-said, this test isn't really exercising different behavior of
-git-diff-pairs(1) itself, so maybe it would be best to drop it.
-
-Thanks for the review :)
-
--Justin
+Thanks.
