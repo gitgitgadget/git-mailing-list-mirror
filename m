@@ -1,127 +1,367 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D42A23027D
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 20:28:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2088722FAD4
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 20:33:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739996886; cv=none; b=dBM41K8UTvGcED9VBLSLV4eESgFL7gk3+NLaTEZpTLmTHpFQEQmQpMnJlTVGL7Oa6BBF5xfI6seNLGPLmq6d5voUi3O1WqjJ8f0HdE7jCKdjF6sp2qZY5cAsd6CP/ZuL1igWEApZ3TbrJfrjq6oS9MJ6heMhK3F57dECwlABcgA=
+	t=1739997239; cv=none; b=lyuz4y6IhWsAm0h96ktqRp4ZwdWigw3jdK3k7EFhUzJhuX//qhbpAkNf6E7ATU2BXmMENesPOKpdMZwLBggC0BqGPBXiy628BqUukKuVyg3QkAbq4dRztOeOv2HJeRSxwyn0fyBXXM87wOuelfXYxyo5q0OKLeHWJLFbxF55jJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739996886; c=relaxed/simple;
-	bh=xieV6S94fuGZbEQDfWRPxz4nfWpFLWGpK5Rklz3xhPw=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=HhFb72VvfiTtuxWaey39ctfEgIrWXOq4IeQ/nAhTPqmg/+EenrPo+N3gpPpQyRkFvLd5cGj+IotYHnxHbPSGvbwR0xwUBwmMSmJwWDCH0rwMhiIvEctNtTv3/oanQ1IOxcbAI1gtqoZdKcI0ehEo+VmoGdJEn2/Q3FISCEVfcFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XeALFsjx; arc=none smtp.client-ip=209.85.217.51
+	s=arc-20240116; t=1739997239; c=relaxed/simple;
+	bh=wiOUSoreNaBgcgpiDe67qaYXebRQkYvDTCUHS2LxB4E=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hdyvotsvzLousVbwdWPdsZnDF0/4GlSh+RZiSpZdESSn8GjDw4oia33y+BIi6TvVngPVH4iWUK6wh+hRri7S4G0ZJtS9XFOFA2UexTvzBdhiVNYDsIkdRFI9pc4T9nt+tNlYxJJt5Qet2e1lixVjZbljMWr9liZ1WjCsCb9d8xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RBdL+nPB; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XeALFsjx"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-4b9486a15a0so800289137.0
-        for <git@vger.kernel.org>; Wed, 19 Feb 2025 12:28:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RBdL+nPB"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-221050f3f00so3131915ad.2
+        for <git@vger.kernel.org>; Wed, 19 Feb 2025 12:33:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739996883; x=1740601683; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nrDgdmcsfkna8xkag7WBaJne+XIMo1eJjeTH//H2Rwc=;
-        b=XeALFsjxlLnXMa9EkqIZSW5qAZXWHzMZHFw3hYNTfmoftKAqA2yVpBPvctd1O8KMly
-         wkVSidtwlfnR52nkAOJGhKy46DTmzZUE7ux7tG2sgZmpR5/dX8qDQsDvHpEFPOn/Ri9K
-         AZfS88VEwun2YMyU8P0WzMP5B1vwphnZjISjjVVbYAhNK9IO6q6AMV+F0lweYdr0WnNL
-         e8fWYaLIfYcmPAXs1cdmAUC89alcR5bQb2OREHJI+2PafMlvBRglRMX46d1d1arCJ+GQ
-         M6hts13Sb4xv8OXBqr9Of3O0vUdSmsCoEt8558LZ3hHn3JMCESz0RLk/nWaiSEjItyDa
-         4kHw==
+        d=gmail.com; s=20230601; t=1739997237; x=1740602037; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9vFZZLorxQaSWGiJdpPK7QbsDZw77ooz+sBw+hOKJYc=;
+        b=RBdL+nPBXZEBNhHuXgP4BXEKbeBcMbm+AIOHeGhjWrD/1IJERUEIK+vjBYwdVxpRVM
+         rt3dtQA/4YmX68AKrGsJQELlYTCIVGSMxXFcOBkqHEmgAudOJmiOMbNP2Ur/o+mzs7wu
+         FSkNNagGlTMbI987l+1JXQ280B25uMABOIYFo26sj0NCi1Beo2xEbBFFPaAx8jigCBrP
+         n7IVoFCc34qJUVafLAamdn1hcs8bpmESDTxpAG6vfOI3ajr1UFIzKiOvlxEQpjx/uwI7
+         0OogMoxf41uqE2J/Tx+sYpQu8skDIf29Fz7nci6XJtdo0MPX0DS6FMY1rxcvVhIejVK3
+         k/Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739996883; x=1740601683;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nrDgdmcsfkna8xkag7WBaJne+XIMo1eJjeTH//H2Rwc=;
-        b=dlza0QGDyAzRol75cMTu3rrkOw2qbBmdxuP5gxN6Z0PhtLteSS7LeEEiHKNipdMAcG
-         sbTPXCWAiqfYsKBYM/vlgKH2Q0WGySIInP8dS+lB2otYReUb0AmUk1kRfyKjMa3UE8Dl
-         kt7JjaLFQYG7BGbjdW2nEr1b5HTWSu83n31eBpWbBg0N3CSwaSgxHisuEp2blt9P4We/
-         +3YvftimHcSF7K6ovDHike+quvppMV7jcAK5tb/YvBRC8nPtWUk6D9BqTkTow+MuSJ5e
-         eMgsolkfsyZakfzyIogm+EIhUWYyQ5gOJqW6v28bPbAwm0svSfniIR+c65KzVoKJ0J0n
-         Ke5Q==
-X-Gm-Message-State: AOJu0Yy6hD9xb9sTxRPYt3tagU9yAMDg76AGtm5A6tU7tuL3qzRfcmMz
-	wxtCkaDYd9CoGKvKtOxRFdcqxZGwmcqBo/M229IzSaR5TFcK84cvqmyk5KpPiA1GXLNAfm5MZuz
-	ua3NxWIZoxMmgHRSWTvnuxiITMpM=
-X-Gm-Gg: ASbGnctbYzhaCv1XqmmRR/zyZw367FbxsZroPsXH/zARWD6uFu4PG4ICIhBHt7CrMQj
-	NgvfHnCF/kx8VbdFjorS4bGQEjPXK0iKpx1j7sE+K/+J4Gc2BXcG559yrlTrDa7gv39azEMZzBO
-	RgeYS2HF15SNc8L8Q5Xu2jWfMahnfsSUA=
-X-Google-Smtp-Source: AGHT+IFgvV3V5qk+Q5xLV1w1IX0qwyZI/5VJETOaVszsnvCQcoSfsbNvx8CUz9wxWJ0I6uvE5BpWg/FxvpRd+4pyem0=
-X-Received: by 2002:a05:6102:c4d:b0:4bb:c5ad:af1a with SMTP id
- ada2fe7eead31-4be992c1f10mr430658137.7.1739996883290; Wed, 19 Feb 2025
- 12:28:03 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 19 Feb 2025 12:28:02 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqwmdlg92k.fsf@gitster.g>
-References: <20250211-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v2-1-991a2ec9a796@gmail.com>
- <20250212-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v3-1-98b2c4d2bb0c@gmail.com>
- <87a5aiqmeq.fsf@iotcl.com> <xmqqwmdlg92k.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1739997237; x=1740602037;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9vFZZLorxQaSWGiJdpPK7QbsDZw77ooz+sBw+hOKJYc=;
+        b=OybqNSX9yJvqactDnEyfpNrR+KRwiqUnWFWxV/UCosTe3g/han4o1+soC+u+bJlXnb
+         8FQgBZNNdngu44Re27VGgMq2yk6wcdWtsodGXK7gUaEb52bPHGSSeVJbEZ8MJwF/8u5l
+         9D7HnNQxfKc5PKJKnHvSQ/LEh7VvoosjFG2S0Haaa+/Jo+YBwzVmae+7mkXw15sze6Rf
+         41A8Ty6waR9kDnu2ALoLMG/3aUqix5gNVMqhwHq3YI0/W3GFALKFaPqM2xxTvrf4SfjG
+         0B/57EkiYgNUDa/T4QCrC+IfjzKayjYUGZSZZo6FiZZGlwUDt3fhCDQlV3xgidSaU4qR
+         vL3w==
+X-Forwarded-Encrypted: i=1; AJvYcCXy00dl32DLX8E9tbUaOfZuH2+KnQSUOgMMlMwJePsUSrquGT5QprMGKZWgor7Z98SJJcE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3BFMq7ddpjEjAbSxeF9hrg17bd5MqT3IvLY3qRfvwU02xy8Xs
+	8EepIdMYDREgbSht5MvIrZhLusBX4Yx20RllYSnZHT6jWfoKCUuW
+X-Gm-Gg: ASbGnctclflTSjH3c/XTrCXfjhYQd+Q6HU9DEbLB2w+1oT+LiMHkIP62hokYmeWy5Ny
+	zk288oe0nR1jNlJ0XBFlvbZJaqE0yYqrL0oYvF0lldPS22txtEAV4Hlpoj4G9za2eq/o+5U7vjE
+	pXzX4KOWcZlI9nY0mnGE70TDM+t/iPILyTBWWTTHuMsvkGjjN6NwEMZ+9QflpdhY9jqyJ2Z3yPv
+	Z2LZI0QsDWUJuZsZbCIOeMsroHzTOZwIz6XgG63n0xF7jGGpR3r71SL+QadVMJgJLNHtUPcro0p
+	cKpZyZoJJhBJ+qJxWmiTaa9Ze8fhLcFCYk6ZEuHF
+X-Google-Smtp-Source: AGHT+IE0guhq8XkNmOMTqzhX2BuXe+uzUhsYqvYkFo6H4FREWUB06HnE0V4aCkAjX12jw0TnBVztrw==
+X-Received: by 2002:a17:903:2f88:b0:21f:8718:fc64 with SMTP id d9443c01a7336-221040d8187mr329606455ad.46.1739997235912;
+        Wed, 19 Feb 2025 12:33:55 -0800 (PST)
+Received: from archlinux.plaksha.edu.in ([202.164.41.66])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d53499dasm107791355ad.12.2025.02.19.12.33.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2025 12:33:55 -0800 (PST)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: gitster@pobox.com,
+	christian.couder@gmail.com,
+	git@vger.kernel.org
+Cc: me@ttaylorr.com,
+	chriscool@tuxfamily.org,
+	johncai86@gmail.com,
+	ps@pks.im,
+	shejialuo@gmail.com
+Subject: [PATCH v2 00/12][Outreachy] stop using the_repository global variable.
+Date: Thu, 20 Feb 2025 02:02:48 +0530
+Message-ID: <20250219203349.787173-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250214230210.1460111-1-usmanakinyemi202@gmail.com>
+References: <20250214230210.1460111-1-usmanakinyemi202@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 19 Feb 2025 12:28:02 -0800
-X-Gm-Features: AWEUYZlyNBFJXEdU8In6yUjxK4dcoaS4DV3KRrHYnHpvLrM5x_t5znQk_2Q0mVs
-Message-ID: <CAOLa=ZT025hWSG0JuoWTUe5aDgPg1fcHDaAhuQ+CxHQ2zvreXw@mail.gmail.com>
-Subject: Re: [PATCH v3] builtin/refs: add '--skip-reflog' flag to bypass
- reflog migration
-To: Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, ps@pks.im, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="00000000000023c0ec062e84987f"
+Content-Transfer-Encoding: 8bit
 
---00000000000023c0ec062e84987f
-Content-Type: text/plain; charset="UTF-8"
+Remove `the_repository` global variable in favor of the repository
+argument that gets passed in builtin commands. 
 
-Junio C Hamano <gitster@pobox.com> writes:
+These sets of commands are commands that use only RUN_SETUP macro in "git.c".
+Basically, When `-h` is passed to any of this command outside a Git repository,
+the `run_builtin()` will call the `cmd_x()` function (where `x` is any
+of the command from the sets of builtin commands that `the_repository` is removed
+from) with `repo` set to NULL and then early in the function, `parse_options()`
+or show_usage_with_options_if_asked() call will give the options help and exit,
+without having to consult much of the configuration file.
 
-> Toon Claes <toon@iotcl.com> writes:
->
->> So can I suggest to name the option `--no-reflog`? To me that makes it
->> more obvious the reflog won't exist no more after migrating, and is more
->> in line with the common UX of Git. Also emphasizing this more clearly in
->> the commit message and help message also would be advised.
->
-> I have always thought, until I saw the message I am responding to,
-> that everybody would expect that "migrate --skip=X --skip=Y" that
-> usually migrates X and Y and Z would lose X and Y with the
-> transition.  But I realized that it was most likely because I happen
-> to know that the choice between reftable and files backends is
-> "which one do you take, you cannot have both at the same time", and
-> it was clear that "skip and keep using the old form" is not on the
-> table.  For all others, your interpretation of the option name is
-> entirely plausible.  So I agree `--no-reflog` is really an excellent
-> suggestion, even though `--reflog` option would be a no-op, and
-> `--no-refs` would be a "Huh?" option that only logically makes sense
-> to have for completeness but nobody would want to use ;-)
+As there exist some builtin commands where the `repository` variable is accessed
+before options is given exit and fail, we will move the functions which
+accessed the `repository` below the `usage_with_options()` and it
+variants which will exit before getting to the function accessing the `repository`
+variable. We will do this in a preparatory patches.
 
-I share the same reaction. I didn't consider that flow of thought at
-all. So I too agree with name change. Let me push in a new version.
-Although I'm not sure if, Junio, you want to wait for the `git reflog
-drop` command that we were discussing before accepting this topic [1].
-I'll leave that to your discretion.
+Some, functions also uses `the_repository` global internally, so, let's
+let's refactor them and pass `struct repo` as one of the argument. 
 
-[1]: https://lore.kernel.org/all/xmqq4j0xpvmu.fsf@gitster.g/
+I picked some of this files based on the above explanation, how easy they are to
+resolve and how easy easy to review. 
 
---00000000000023c0ec062e84987f
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 2bc2b1f5d3d3e3f2_0.1
+[1]: https://public-inbox.org/git/20250210181103.3609495-1-usmanakinyemi202@gmail.com/
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lMlB0RVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNTZHQy85d1VVTkh5b1BxY0xkd2VVdXlGekphdCtBOAovaFdaOVl0S1lB
-MkFIZ2N6Z3gvTEk4cGV5ZWpwVXRSRTB3azlYbFdLeHVlK2x0TllkUC94T0pVd3ptRkZ0aWhHClFI
-bzJXMFVDenZLSjd4N2J1MEE4bG1OUXdJZEE0dDE0S2JoZkp2OXZxeWpPalduTFdiMTVrK25jTHlm
-SXBQMVAKOFZRRkpKTjd4R0VzUVRLN0NQZXBpTUdVVHdrVFdmaUlOcFFNYmEyNHdiMEJUQTE5RjJI
-azhOSGx0dm1iUE1nRApkNVlZRlZZOEVlWEFnSmNCOEptZGwzTnVWZTdULzE4M2ZpSnpHNDFERVQ5
-VVg3ZEU1cHN0NmdkT29xUzNkSDBmClUreEd5SXFRSU95NG5oZm5aNzZZTUU2aXc2UStCQTFpcEdH
-Wk9oNE1ZZHczck5Xbk5jQkZTR0NTL2VZS3BGVnAKcXpmQmNFQUk0L1pBVVMyeU15U1FMSVJxOHRj
-TWZvand6THZ1ZTB3N2g4UStjTkY2MUczWU16Q1VzQ2FTazgyUQorL0UrTU5BYSsxUFlBTGZFVjJL
-ZHpwWm1xd0VhbWwvUE13OHVUZ0lEVVBITXZlRU9UeEFVaWYxeGVwUnBQTi9yCkJzcFNGeW5JTjll
-S2QyV2g5RDhURyswSHdrdXQxbVcwbEIvSGowaz0KPUVFL20KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000023c0ec062e84987f--
+Changes since v1
+================
+- Add some new preparatory patches to move the `git_config()` below the
+`usage_with_options()`.
+- Fix some errors in the commit messages.
+
+Usman Akinyemi (12):
+  builtin/verify-tag: refactor `cmd_verify_tag()`
+  builtin/verify-tag: stop using `the_repository`
+  builtin/verify-commit: refactor `cmd_verify_commit()`
+  builtin/verify-commit: stop using `the_repository`
+  builtin/send-pack: refactor `cmd_send_pack()`
+  builtin/send-pack: stop using `the_repository`
+  builtin/pack-refs: refactor `cmd_pack_refs()`
+  builtin/pack-refs: stop using `the_repository`
+  builtin/ls-files: stop using `the_repository`
+  builtin/for-each-ref: refactor `cmd_for_each_ref()`
+  builtin/for-each-ref: stop using `the_repository`
+  builtin/checkout-index: stop using `the_repository`
+
+ builtin/checkout-index.c | 43 ++++++++++++++++++++--------------------
+ builtin/for-each-ref.c   |  6 ++----
+ builtin/ls-files.c       | 32 +++++++++++++++---------------
+ builtin/pack-refs.c      |  9 ++++-----
+ builtin/send-pack.c      |  8 ++++----
+ builtin/verify-commit.c  | 15 +++++++-------
+ builtin/verify-tag.c     |  9 ++++-----
+ 7 files changed, 58 insertions(+), 64 deletions(-)
+
+Range-diff versus v1:
+
+ -:  ---------- >  1:  ceb03199e1 builtin/verify-tag: refactor `cmd_verify_tag()`
+ 1:  3e8d11ccfe !  2:  ecfb834600 builtin/verify-tag: stop using `the_repository`
+    @@ Commit message
+         `run_builtin()` will call the `cmd_verify_tag()` function with `repo` set
+         to NULL and then early in the function, `parse_options()` call will give
+         the options help and exit, without having to consult much of the
+    -    configuration file. So it is safe to omit reading the config when `repo`
+    -    argument the caller gave us is NULL.
+    +    configuration file.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+    @@ builtin/verify-tag.c: static const char * const verify_tag_usage[] = {
+      	int i = 1, verbose = 0, had_error = 0;
+      	unsigned flags = 0;
+     @@ builtin/verify-tag.c: int cmd_verify_tag(int argc,
+    - 		OPT_END()
+    - 	};
+    + 		flags |= GPG_VERIFY_OMIT_STATUS;
+    + 	}
+      
+     -	git_config(git_default_config, NULL);
+    -+	if (repo)
+    -+		repo_config(repo, git_default_config, NULL);
+    ++	repo_config(repo, git_default_config, NULL);
+      
+    - 	argc = parse_options(argc, argv, prefix, verify_tag_options,
+    - 			     verify_tag_usage, PARSE_OPT_KEEP_ARGV0);
+    -@@ builtin/verify-tag.c: int cmd_verify_tag(int argc,
+    + 	while (i < argc) {
+      		struct object_id oid;
+      		const char *name = argv[i++];
+      
+ -:  ---------- >  3:  2f770824b1 builtin/verify-commit: refactor `cmd_verify_commit()`
+ 2:  88af56e220 !  4:  546588a6ae builtin/verify-commit.c: stop using `the_repository`
+    @@ Metadata
+     Author: Usman Akinyemi <usmanakinyemi202@gmail.com>
+     
+      ## Commit message ##
+    -    builtin/verify-commit.c: stop using `the_repository`
+    +    builtin/verify-commit: stop using `the_repository`
+     
+         Remove the_repository global variable in favor of the repository
+    -    argument that gets passed in "builtin/verify-tag.c".
+    +    argument that gets passed in "builtin/verify-commit.c".
+     
+         When `-h` is passed to the command outside a Git repository, the
+         `run_builtin()` will call the `cmd_verify_commit()` function with `repo`
+         set to NULL and then early in the function, `parse_options()` call will
+         give the options help and exit, without having to consult much of the
+    -    configuration file. So it is safe to omit reading the config when `repo`
+    -    argument the caller gave us is NULL.
+    +    configuration file.
+     
+    -    Let's pass `repository` argument to `verify_commit()` function to remove
+    -    it's dependency on the global `the_repository` variable.
+    +    Pass the repository available in the calling context to `verify_commit()`
+    +    to remove it's dependency on the global `the_repository` variable.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+    @@ builtin/verify-commit.c: static int verify_commit(const char *name, unsigned fla
+      	int i = 1, verbose = 0, had_error = 0;
+      	unsigned flags = 0;
+     @@ builtin/verify-commit.c: int cmd_verify_commit(int argc,
+    - 		OPT_END()
+    - 	};
+    + 	if (verbose)
+    + 		flags |= GPG_VERIFY_VERBOSE;
+      
+     -	git_config(git_default_config, NULL);
+    -+	if (repo)
+    -+		repo_config(repo, git_default_config, NULL);
+    ++	repo_config(repo, git_default_config, NULL);
+      
+    - 	argc = parse_options(argc, argv, prefix, verify_commit_options,
+    - 			     verify_commit_usage, PARSE_OPT_KEEP_ARGV0);
+    -@@ builtin/verify-commit.c: int cmd_verify_commit(int argc,
+    + 	/* sometimes the program was terminated because this signal
+      	 * was received in the process of writing the gpg input: */
+      	signal(SIGPIPE, SIG_IGN);
+      	while (i < argc)
+ -:  ---------- >  5:  99f10469bd builtin/send-pack: refactor `cmd_send_pack()`
+ 3:  39409ea113 !  6:  cb3886bc46 builtin/send-pack.c: stop using `the_repository`
+    @@ Metadata
+     Author: Usman Akinyemi <usmanakinyemi202@gmail.com>
+     
+      ## Commit message ##
+    -    builtin/send-pack.c: stop using `the_repository`
+    +    builtin/send-pack: stop using `the_repository`
+     
+         Remove the_repository global variable in favor of the repository
+         argument that gets passed in "builtin/send-pack.c".
+    @@ Commit message
+         `run_builtin()` will call the `cmd_send_pack()` function with `repo` set
+         to NULL and then early in the function, `parse_options()` call will give
+         the options help and exit, without having to consult much of the
+    -    configuration file. So it is safe to omit reading the config when `repo`
+    -    argument the caller gave us is NULL.
+    +    configuration file.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+    @@ builtin/send-pack.c: static int send_pack_config(const char *k, const char *v,
+      	struct refspec rs = REFSPEC_INIT_PUSH;
+      	const char *remote_name = NULL;
+     @@ builtin/send-pack.c: int cmd_send_pack(int argc,
+    - 		OPT_END()
+    - 	};
+    + 	if (!dest)
+    + 		usage_with_options(send_pack_usage, options);
+      
+     -	git_config(send_pack_config, NULL);
+    -+	if (repo)
+    -+		repo_config(repo, send_pack_config, NULL);
+    - 	argc = parse_options(argc, argv, prefix, options, send_pack_usage, 0);
+    - 	if (argc > 0) {
+    - 		dest = argv[0];
+    ++	repo_config(repo, send_pack_config, NULL);
+    + 
+    + 	args.verbose = verbose;
+    + 	args.dry_run = dry_run;
+     @@ builtin/send-pack.c: int cmd_send_pack(int argc,
+      	set_ref_status_for_push(remote_refs, args.send_mirror,
+      		args.force_update);
+ -:  ---------- >  7:  d104522e30 builtin/pack-refs: refactor `cmd_pack_refs()`
+ 4:  6fd5f4727c !  8:  7f02e48663 builtin/pack-refs: stop using `the_repository`
+    @@ Commit message
+         `run_builtin()` will call the `cmd_pack_refs()` function with `repo` set
+         to NULL and then early in the function, `parse_options()` call will give
+         the options help and exit, without having to consult much of the
+    -    configuration file. So it is safe to omit reading the config when `repo`
+    -    argument the caller gave us is NULL.
+    +    configuration file.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+    @@ builtin/pack-refs.c: static char const * const pack_refs_usage[] = {
+      	struct ref_exclusions excludes = REF_EXCLUSIONS_INIT;
+      	struct string_list included_refs = STRING_LIST_INIT_NODUP;
+     @@ builtin/pack-refs.c: int cmd_pack_refs(int argc,
+    - 			N_("references to exclude")),
+    - 		OPT_END(),
+    - 	};
+    --	git_config(git_default_config, NULL);
+    -+	if (repo)
+    -+		repo_config(repo, git_default_config, NULL);
+      	if (parse_options(argc, argv, prefix, opts, pack_refs_usage, 0))
+      		usage_with_options(pack_refs_usage, opts);
+      
+    +-	git_config(git_default_config, NULL);
+    ++	repo_config(repo, git_default_config, NULL);
+    + 	for_each_string_list_item(item, &option_excluded_refs)
+    + 		add_ref_exclusion(pack_refs_opts.exclusions, item->string);
+    + 
+     @@ builtin/pack-refs.c: int cmd_pack_refs(int argc,
+      	if (!pack_refs_opts.includes->nr)
+      		string_list_append(pack_refs_opts.includes, "refs/tags/*");
+ 5:  c58f27988b !  9:  b706fab321 builtin/ls-files: stop using `the_repository`
+    @@ Commit message
+         call will give the options help and exit, without having to consult much
+         of the configuration file.
+     
+    -    Let's pass `repository` argument to `expand_objectsize()`,
+    -    `show_ru_info()` functions to remove their dependency on the global
+    -    `the_repository` variable.
+    +    Pass the repository available in the calling context to both
+    +    `expand_objectsize()` and `show_ru_info()` to remove their
+    +    dependency on the global `the_repository` variable.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+ -:  ---------- > 10:  d2fc527d51 builtin/for-each-ref: refactor `cmd_for_each_ref()`
+ 6:  4bbca37330 ! 11:  c3a3a6cff7 builtin/for-each-ref: stop using `the_repository`
+    @@ Commit message
+         `run_builtin()` will call the `cmd_for_each_ref()` function with `repo`
+         set to NULL and then early in the function, `parse_options()` call will
+         give the options help and exit, without having to consult much of the
+    -    configuration file. So it is safe to omit reading the config when `repo`
+    -    argument the caller gave us is NULL.
+    +    configuration file.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+    @@ builtin/for-each-ref.c: static char const * const for_each_ref_usage[] = {
+      	struct ref_sorting *sorting;
+      	struct string_list sorting_options = STRING_LIST_INIT_DUP;
+     @@ builtin/for-each-ref.c: int cmd_for_each_ref(int argc,
+    - 
+    - 	format.format = "%(objectname) %(objecttype)\t%(refname)";
+    + 	if (verify_ref_format(&format))
+    + 		usage_with_options(for_each_ref_usage, opts);
+      
+     -	git_config(git_default_config, NULL);
+    -+	if (repo)
+    -+		repo_config(repo, git_default_config, NULL);
+    - 
+    - 	/* Set default (refname) sorting */
+    - 	string_list_append(&sorting_options, "refname");
+    ++	repo_config(repo, git_default_config, NULL);
+    + 	sorting = ref_sorting_options(&sorting_options);
+    + 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+    + 	filter.ignore_case = icase;
+ 7:  369008d554 ! 12:  d3a18f857e builtin/checkout-index.c: stop using `the_repository`
+    @@ Metadata
+     Author: Usman Akinyemi <usmanakinyemi202@gmail.com>
+     
+      ## Commit message ##
+    -    builtin/checkout-index.c: stop using `the_repository`
+    +    builtin/checkout-index: stop using `the_repository`
+     
+         Remove the_repository global variable in favor of the repository
+         argument that gets passed in "builtin/checkout-index.c".
+    @@ Commit message
+         call will give the options help and exit, without having to consult much
+         of the configuration file.
+     
+    -    Let's pass `repository` argument to `checkout_all()` and `checkout_file()`
+    -    functions to remove their dependency on the global `the_repository` variable.
+    +    Pass the repository available in the calling context to both `checkout_all()`
+    +    and `checkout_file()` to remove their dependency on the global
+    +    `the_repository` variable.
+     
+         Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+         Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+
+-- 
+2.48.1
+
