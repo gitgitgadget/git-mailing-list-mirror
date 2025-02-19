@@ -1,87 +1,78 @@
-Received: from mail.cendio.se (mail.cendio.se [193.12.253.120])
+Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078531C173D
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 09:47:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.12.253.120
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91771C3BFC
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 10:06:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739958447; cv=none; b=nrbFGuMG3HKb61AcxtovVnGTNnjf63xyeb0aAL3Ifs2CCdyo+NA12o9CQohngOh5+qHgLsCHPX7doo0r679HT1Xy0uqgIs9PGxTqlKcCL/5aigxfwh/UAEo4w4DSCNyuSSUl0TzXaNSZyPUrTJhhnnvrvii3OwIMHuU0KppzWVM=
+	t=1739959591; cv=none; b=eX5yjwdO1TsMz6bU6uhN+AGg2W8bYWn/vWMsUJ5EvsB43cN3ZAjaEilwWtnD+zZKZU7wqfHSl8878nrtUAS1gpR2HWibJwFlKo5uTF56oI0TljJKzd+hWYBIfDLj2akf3Jm6NHzWQcjyeX8MCYrj6aFjwsB3d7k40ja7bhb0AfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739958447; c=relaxed/simple;
-	bh=+HT1kifwzdqnHP+oZPfQ9hi6l1YxbGzUCqVBL6HQ4PY=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=BqvxiAUSTH6KC9nz9K3NxqNBlRAEQgUCjWq5jp1bVAXuoADtRGspmAX018W+uwbOasms0blvv3QjPfIXAywJjV3bnWrQzOMavrL8pDtWpKY1WaqpQ4BnPunyT9phx4WuHYJmHlRJDhwHiWMWjgMF33i4/Df2bQGo1ydCVgbrp2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cendio.se; spf=pass smtp.mailfrom=cendio.se; dkim=pass (2048-bit key) header.d=cendio.se header.i=@cendio.se header.b=diOWqeeT; arc=none smtp.client-ip=193.12.253.120
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cendio.se
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cendio.se
+	s=arc-20240116; t=1739959591; c=relaxed/simple;
+	bh=taJaP4JWG6vWVDFTUEukkSQ715SrWYk6nZTO51LCfkU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=o3lbUHYPKfEQsyoks9jMMX3bcONRSCEKXJNUh/ypdj72OTsQNP8hyrz6i+t9LDv6r7V9VaPMytdW0Eih022LQcqk6t8RtzFDrARJynWX3Nk+eII3r/UTWlZ+rfxHBjs7Ex25OgQoYl9uAl4OPLtB/Dq2pWN1ynmmk5CkfnDJbIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=rI494Msl; arc=none smtp.client-ip=95.215.58.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cendio.se header.i=@cendio.se header.b="diOWqeeT"
-Received: from [IPV6:2a00:801:107:4700:e2be:3ff:fe9d:f27] (unknown [IPv6:2a00:801:107:4700:e2be:3ff:fe9d:f27])
-	by mail.cendio.se (Postfix) with ESMTPSA id 784271835C13
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 10:38:26 +0100 (CET)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mail.cendio.se 784271835C13
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cendio.se;
-	s=20250112; t=1739957906;
-	bh=nDKjgog5kjx/F/JJMo0Qbs9xIu8zVGL4msoG8LQex08=;
-	h=Date:To:From:Subject:From;
-	b=diOWqeeTyzQQkx0UE1qhx/IJN0TKhR0CStAuVYFBiYT0djjwTmmaJjV8H7yYd9S9j
-	 bZ5h80gGnEm8ZVGLtrtDIKkUHSH0Pi56njs2cPTMAQJgf6HceUQ9qvkMU6z2uruW0E
-	 wVzArhAO/53JEocg04o3gzUEbqRdjansS5Bjkdsuz2iGiiVj9SKLc54y/2igV7ayZY
-	 9oCss2QeX2mVJjgds6pBHR0gnVEJZ77w5ZoE7cn+HjxGXiPiSlyPmcJRWwVr24lVmd
-	 7ql9q6/PWeUeCrsJEOC8TiM/VWnl9YpZqDWqm13mipPTqAn2nS0zMI5st8Lqxnsrm9
-	 Wrn9y/FYREtNg==
-Message-ID: <1524b9a5-6f8b-4537-ba6b-bdfdd4b1bdcb@cendio.se>
-Date: Wed, 19 Feb 2025 10:38:25 +0100
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="rI494Msl"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1739959584;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YsLyFUY0SZo/6q6Qgn0AJRtKXVh0qfgiq4vnb5DySFw=;
+	b=rI494MslKf10TvTvOkzXxCjslqIzjRJxe4PsbB/Q5XNkmj9YnbfgBHcvPsxnfKlHhYtVpn
+	uOcbHUDfjofdFgIfs2C/h7Rpuy1ZwXz/FjK0ft02FBKgqW6sGd+kvEpOnVkjHYc3jkC9PX
+	vep/TM41b2wnkqTz75EPxEEJ4dIf9Ik=
+From: Toon Claes <toon@iotcl.com>
+To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im, jltobler@gmail.com, gitster@pobox.com, Karthik Nayak
+ <karthik.188@gmail.com>
+Subject: Re: [PATCH v3] builtin/refs: add '--skip-reflog' flag to bypass
+ reflog migration
+In-Reply-To: <20250212-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v3-1-98b2c4d2bb0c@gmail.com>
+References: <20250211-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v2-1-991a2ec9a796@gmail.com>
+ <20250212-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v3-1-98b2c4d2bb0c@gmail.com>
+Date: Wed, 19 Feb 2025 11:06:05 +0100
+Message-ID: <87a5aiqmeq.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: en-US
-From: Pierre Ossman <ossman@cendio.se>
-Subject: git keeps recreating packs, exploding backup increments
-Organization: Cendio AB
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Hi,
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-I'm trying to understand git's repacking behaviour, as the observed 
-behaviour doesn't match how I read the documentation or the code.
+> The 'git-refs(1)' migrate subcommand, which transfers repositories
+> between reference backends, currently migrates reflogs by default as of
+> 246cebe320 (refs: add support for migrating reflogs, 2024-12-16).
+>
+> While this behavior is desirable for most client-side repositories,
+> server-side repositories are not expected to contain reflogs. However,
+> due to historical reasons, some may still have them. This could be
+> caused, for example, by bugs, misconfiguration, or an administrator
+> enabling reflogs on the server for debugging purposes.
+>
+> To address this, introduce the --skip-reflog flag, allowing users to
+> bypass reflog migration. This ensures that the repository ends up in the
+> expected state after migration.
 
-The problem we see is excessive backup increments for developer 
-directories. The cause is that pack files keep getting regenerated for 
-large repositories.
+It wasn't really obvious to me this change removes the reflog, instead
+of "skipping". So I was surprised the reflog was removed after
+migrating, instead of staying in tact using the files backend.
 
-Users are not running 'git gc' manually, so the assumption is that this 
-is caused by 'git gc --auto' being run implicitly.
+Only after reading through the test and the discussion in this thread I
+realized that's the intented behavior.
 
- From what I can see in the code, and the documentation, it should only 
-pack up objects not already found in existing packs. Or at the very 
-least, not the objects found in the largest existing pack.
+So can I suggest to name the option `--no-reflog`? To me that makes it
+more obvious the reflog won't exist no more after migrating, and is more
+in line with the common UX of Git. Also emphasizing this more clearly in
+the commit message and help message also would be advised.
 
-(at least not until gc.autoPackLimit is hit)
-
-But this isn't happening. Old packs are constantly being replaced by new 
-ones. Despite most of the objects being old and stable.
-
-We tried gc.bigPackThreshold in the hope it would force it to reuse 
-packs better. But all we got instead was duplication. It still creates 
-new packs with everything. It just stopped removing the old ones.
-
-Some guidance would be appreciated. I cannot find anything in the code 
-or documentation that explains the current behaviour.
-
-Regads,
 -- 
-Pierre Ossman           Software Development
-Cendio AB               https://cendio.com
-Teknikringen 8          https://twitter.com/ThinLinc
-583 30 Linköping        https://facebook.com/ThinLinc
-Phone: +46-13-214600
-
-A: Because it messes up the order in which people normally read text.
-Q: Why is top-posting such a bad thing?
-
+Toon
