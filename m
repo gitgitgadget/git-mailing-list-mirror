@@ -1,170 +1,176 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 081BB23DEB6
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 21:57:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A12286280
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 22:22:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740002281; cv=none; b=cqNCFhYd1UwWORzhFE00cUTwYCW+xIvIQYwLwGOxgyUFnEAWc1BaSQRGczGRBkmDy+QpMSrjmdig84A09C4JDNxdNvJ6ckn0blzhODg0C3G468mqwEvgoQaueM2c8sYndB+fL4iZvWML7nVAHqthlGLHA+8oM2I+XVYzktS2UR8=
+	t=1740003777; cv=none; b=Fkcqxp5pZ7yBgphN6G8AP75aul+J2nz7p+msXCzZ/cZ+u9CY1jGaZZt39Z9ZRhPvrlwOt9OzPyWK2PB/Rn4Z3bFnJShGoBjqq0ri5p5XCJw0YLU6pUbsiDfvvqttqSdPemShcv7dlpa1EOQ+zvsa9xXJtOgKE7Sbgj2oXdbzxjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740002281; c=relaxed/simple;
-	bh=LR7eZo1s8gzqBjWcIMfTqBJkrCTd+sN/jnM9tTqsh6Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=eKv25hHHXup1sow7tBZpiNZHMMdmRAkv9EwLTVQITnTmYEna9i449GRnqnqp8nmoJtQOHlQbLGKCZj0bq38EJLeLkjv/3sb37PQvpgJMMz71UpgVYN8Z+h8akXO/ZvqOoFKww/+JugweUEHsYd/Ckk3zv6Xb9PRktz57TpoeLmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jedrhfUD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aXALzbwj; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740003777; c=relaxed/simple;
+	bh=AICZX2YN1ZqQyVS5rFtCkCVJoc7u+yTNxWkdl3yWUsQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sWXm1bvJA5bN8G/tLrwhHDvQT8pPjRsn/8QJKo6vgZRbTCwyzsaYWKj5wM34fTKTQPXCao79cvJNOgoZg4E70fdWiGIRBo4cXto5YkMhymCd7pqr7+34cFTvmrIIJu8zNPDKsiYcAe6r9ZkopEZgYJNXrMCQLNX/Z4OoIql2GAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c7a17Sm8; arc=none smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jedrhfUD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aXALzbwj"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 16C891380993;
-	Wed, 19 Feb 2025 16:57:58 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 19 Feb 2025 16:57:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1740002278; x=1740088678; bh=Pb2xJTJUSC
-	rmBpwAg8ecQzc/fCg8U83zKEeK4Ac02MQ=; b=jedrhfUDHWYzQgmS9a3XhQ55w1
-	pI2GsdsJFwWM07k8euOydqh61zGhG0Q2w5VhcwnDUKTbregugh9B7cGhiM0nK8ph
-	TL4Kx+U7HLVPtIHCT5LoTKIAjz/xtJtlNvLLYHzQMiaKg+1vpo2k1OD6vQDfWl9q
-	dz4iDbxqpy3Og26PfGdjQawdnkvsKt2WfmzUkiyQSvHMct8GAmtQFukugqg8kP0k
-	hLaINqntFo8DblN/DfqW5/4XvSkNVxJWjqFSGgHTa5JFqHcxUFRf6behpQqt8cyi
-	dX7alrY8mu6+uizyJnxgrbOSmeI0sC6acgi3a3eHnKVf546KWTEpPfHvWhog==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1740002278; x=1740088678; bh=Pb2xJTJUSCrmBpwAg8ecQzc/fCg8U83zKEe
-	K4Ac02MQ=; b=aXALzbwjDK6pWXN4ZM9WY6+FpWx+78pF4eNGTelHgzzuXo/cHWc
-	1jG84eGydrYsp4goa3KxXwHNUbIgko1GWJkJvTmgfXw5KoWOFwdoS3hI6pbjxTU/
-	lTIKN7sHMPkJdqKV/QpGIf0a1eTqKMxMfDg1i7ArET66JkhfAYBEvgPiAhZhDvBh
-	fbsolLf/DfqMpYS1OnqwDAM4l8qXzjfMbhb5XV0GX9gSvYExcC+dIRq9/TaahQDs
-	Tkuv4BT4XPYaQ0tKXYgtitJVAfG+l/BtecCg9hDxwnR/PeTQTpagifUHuUGe5LpD
-	OjsiwvZpSWwbXnN1zTo61a9vRXhk07tRRCg==
-X-ME-Sender: <xms:5VO2Z3IpEcGm6Q_jR0kIu-kWNAELrCWpsrkUDuo7S2thkyy8K1mXtA>
-    <xme:5VO2Z7Itmfh2NfC4fVmYbIb45NC70HcWRCBWCokm4lNvvviEC3D7n2kbwqf3OA_qh
-    SEWnIYjHgf63OiyEA>
-X-ME-Received: <xmr:5VO2Z_u4vuuC_sbB0Zhw2zaFcmFV-TIS7pFWPVt8WNE0632XRFmcwGvBIXYhlkVRqDi3hfV0RftrD_Y-OEbtZZOdLmItP1iXjn4GFA4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeiheegtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeuhefgjeevgfegtddukeffieefledvieef
-    vedvfeekledvvdejvefhjeefvdejhfenucffohhmrghinhepphhruhhnvggpuggrthgrrd
-    hnrhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepsh
-    hmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgt
-    phhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhf
-    sehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:5VO2ZwaxrTBO2jromAFXR0Dd36EIuPrSbLo4q8s9MKpeL8iUOaBdwA>
-    <xmx:5VO2Z-aHy2j6TSH7gp73U7sYWyWcEAjyZfWGAc9ESDcyVhUoAjX_Sg>
-    <xmx:5VO2Z0AdsLd4zVMjEqF_5hDNUp3exS5MxdGQdPylF_-rPy2ZrkJWAQ>
-    <xmx:5VO2Z8aF4VldA7-swzQHg_jNsWbQrDvorw-20891vZSnRVCLj-7vxQ>
-    <xmx:5lO2ZzPPw1pkWLkiWlglMrJhLvEItJ-AUksbLyYlbPNxS9uHESf_1c9a>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Feb 2025 16:57:56 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  git@vger.kernel.org,  peff@peff.net,
-  Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c7a17Sm8"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3f40a38cb6bso146340b6e.1
+        for <git@vger.kernel.org>; Wed, 19 Feb 2025 14:22:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740003774; x=1740608574; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xTRSFIgK0/TPA2UTN8Hazj0X6mWtm/Y9L4WM+AtF5LI=;
+        b=c7a17Sm8RVQXtYQPrOsZ+iZd9vp82FzqIW82kVaaFK3RJQM4E380fYdLsSCvEta6Xc
+         CCjBgnrVQlvjuTv7tHQIarQXwOrqXKf2hWkrkmrfXbHZ9Zqmom/bycFJeZBeiDtj2W6m
+         3NXTHvTK5f4beoe9l5Zg349nXn1Yo/TVuqvp7fMbQa+xjubV851EWn2aJW8lAkm4lyRY
+         HUmXB55ySgsoZ80+xtj3/zY1V7VEVWR7bVIxFb+e4Rv7XYXqocZCY0J38CXTFZ95CeFA
+         mdeMe8ua67xzlJ3nADXM/V61tKhLNEqIGB1Bzv9Ti+RuqBDmeUgr43Vegh7neZqgb8I2
+         WloA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740003774; x=1740608574;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xTRSFIgK0/TPA2UTN8Hazj0X6mWtm/Y9L4WM+AtF5LI=;
+        b=eaedpk/+6G+4grnVDNJIujVJ+xbD2/hla9IwIwcJ8zyMckN2WBCa8oo/ae1OrWKtgg
+         XW/7RT8cseaY2J72qLVd+oOGkBsxbe4C6MjXmMJnDSlOQbPv2Z7w1rTj8BInJphiLDwp
+         EKUg3Edu0z3DcG5c76rT9aYOTM1lSJIaGezBeUcs0gWMwrWuLJKS76T88DjeBUxTGkw2
+         R+pqkbgnb+y9gNMBUWx/SQqMaVjTna9dOze1iksJX1tVoCI7cygp04XB7/r+179zExpu
+         OQhDD9KRd6zgILVYh24NZJrRNSd2LxPJYH5F976Pj1v9ZIkPST6RKE2pMDT5QEeW6p2D
+         1zYQ==
+X-Gm-Message-State: AOJu0YzwHUc4I/J+K3r/uY1E7GPCG210fn1AwlStPj4/cIsLKQ8/5ISd
+	jLjQJx05hwnmR6/KQIWhUysxjl42gTGyrivUdrxEtP5GJuFHzDAV
+X-Gm-Gg: ASbGncsU1LsL3zD4KTMH2xDO3EQPFgL7DOcYK3L29ihFBdXvZwtYDdthSvFBvyOZ3tT
+	EqPndY2yYj/iWOC1aUTapbDHv/8wnrThYCWEN5sVNjvrjKHEKJGj1RmXsxgU4PnSOyX/Ue5uETe
+	eiqMPacQa++smxfQmCH0rkOz4vzcBy4Dwb9CIP8vGG7UJunuEGw7u1997fcaK/1+RsuEj0s+83f
+	nUsTmcvoU/V2cCw1mVikMpq60PnWsRRMSoIpxh158BlHBZ2fPQgeqegECjLxbdxIvKyykQWSbcR
+	EEvSKsp+
+X-Google-Smtp-Source: AGHT+IHLV0xcmpfFcGVhLxCtYpp9dH42BnSEGEzLBMXJ96EBEBNeoFbLQvx+SkWqKp3KPPkE15Ht/w==
+X-Received: by 2002:a05:6808:2210:b0:3f3:e8e7:2001 with SMTP id 5614622812f47-3f40f24db67mr4510183b6e.26.1740003773972;
+        Wed, 19 Feb 2025 14:22:53 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-3f3f9319cb8sm2267959b6e.16.2025.02.19.14.22.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 19 Feb 2025 14:22:53 -0800 (PST)
+Date: Wed, 19 Feb 2025 16:19:44 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, peff@peff.net
 Subject: Re: [PATCH v2 2/3] builtin: introduce diff-pairs command
-In-Reply-To: <wv5ziveuff7iellcmjcki372m5vp6nmltyls43e4wzslcqymog@gwczuaucpkke>
-	(Justin Tobler's message of "Wed, 19 Feb 2025 14:51:57 -0600")
+Message-ID: <5uwp2vdm5tzv6n26fu77g4xys5ntjy2bj4hpgiuwpamxkij4zk@77jn55tynwse>
 References: <20241213042312.2890841-1-jltobler@gmail.com>
-	<20250212041825.2455031-1-jltobler@gmail.com>
-	<20250212041825.2455031-3-jltobler@gmail.com>
-	<d6d4230e-7b80-4eec-b218-37717ae2e298@gmail.com>
-	<wv5ziveuff7iellcmjcki372m5vp6nmltyls43e4wzslcqymog@gwczuaucpkke>
-Date: Wed, 19 Feb 2025 13:57:55 -0800
-Message-ID: <xmqq7c5lfvh8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250212041825.2455031-1-jltobler@gmail.com>
+ <20250212041825.2455031-3-jltobler@gmail.com>
+ <xmqqldubumxf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqldubumxf.fsf@gitster.g>
 
-Justin Tobler <jltobler@gmail.com> writes:
+On 25/02/12 08:50AM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > +NOTES
+> > +----
+> > +
+> > +`diff-pairs` should handle any input generated by `diff-tree --raw -z`.
+> > +It may choke or otherwise misbehave on output from `diff-files`, etc.
+> > +
+> > +Here's an incomplete list of things that `diff-pairs` could do, but
+> > +doesn't (mostly in the name of simplicity):
+> > +
+> > + - Only `-z` input is accepted, not normal `--raw` input.
+> > +
+> > + - Abbreviated sha1s are rejected in the input from `diff-tree`; if you
+> > +   want to abbreviate the output, you can pass `--abbrev` to
+> > +   `diff-pairs`.
+> > +
+> > + - Pathspecs are not handled by `diff-pairs`; you can limit the diff via
+> > +   the initial `diff-tree` invocation.
+> 
+> Which of the above limitations are fundamental, and which are merely
+> due to incomplete implementation that could be improved in the
+> future iterations?  
 
->> I think only accepting NUL terminated input is fine, but if we want to
->> accept other formats we should  have a plan for how to do that in a
->> backwards compatible way as we cannot use `-z` to distinguish between input
->> formats.
->
-> If in the future we want to support the normal format, we could introduce
-> an `--input-format=normal` option or something along those lines. 
+Thinking about this some more, I'm a bit unsure whether
+git-diff-pairs(1) should support "normal" `--raw` input. Furthermore, if
+we do want to support it, maybe it should be the default?
 
-Please don't.  Have an explicit '-z' option from the beginning, and
-if the initial version is incapable of reading from text input, then
-it is perfectly fine to have
+From my perspective, ultimately I don't think there is much additional
+value provided by supporting multiple input options for
+git-diff-pairs(1) since the end result would be the same and its just an
+intermediate format. As I see it, the benefit of the NUL delimited raw
+diff ouput format is that it is a bit simpler to parse and likely a bit
+more efficient as it wouldn't have to deal with unquoting paths with
+special characters. The benefit of the "normal" raw format is probably
+that it is the more intuitive default option.
 
-	if (!nul_termination)
-		die(_("working without -z not supported (yet)");
+I'm certainly interested in what folks think about this :)
 
-Otherwise people have to remember that unlike everybody else that
-uses "-z" to signal NUL termination, this one alone wants to use a
-"--input-format" option that nobody else uses.
+For abbreviated object IDs, supporting them would make the input format
+more flexible, but it would be simpler to just require the full OID be
+provided thus making the input format more explicit. My current thinking
+is to leave this unless others think it would be useful to support.
 
->> > +	/* Don't allow pathspecs at all. */
->> > +	if (revs.prune_data.nr)
->> > +		usage_with_options(usage, options);
+Regarding pathspec support, being that git-diff-pairs(1) operates solely
+on the provided set of file pairs produced via some other Git operation,
+I don't think further limiting would provide much additional value
+either. If we do want this though, I think support could be added in the
+future.
 
-Hmph, this is very unfortuate.
+> Without reading the code deeply, a lot of them
+> look like merely due to this iteration being at a WIP state and not
+> quite ready for the general public.
+> 
+> What is especially curious is the reason why it is limited to
+> diff-tree (by the way, don't you require '-r' if you are fed
+> 'diff-tree' output, or are you prepared to expand tree objects in
+> the input yourself?).
 
-The "--raw" format was originally designed as an interchange format
-between the frontend and backend.  
+The tree objects in the input are not expanded. With `git diff-pairs
+--raw` these objects are just printed again. With the `--patch` option,
+they are just ommitted.
 
-The frontend programs take two sets of contents stored in various
-places (like tree vs index, tree vs another tree) and express
-comparison of corresponding paths in (<from mode+contents> <to
-mode+contents> <path>) tuples" (a rough equivalent to what we
-internally have on the diff_queued_diff queue in core).
+> I can guess that the 0{40} object names in the postimage to signal
+> paths with working tree changes unadded to the index is something
+> this fundamentally cannot work with, but you should be able to grok
+> 'diff-index --cached', which does not have that issue, just fine.
 
-The "--raw" format was designed to "dump" what is in the
-diff_queued_diff list.
+I'll rework the documentation in the next version. git-diff-tree(1) is
+the command I have in mind as the common usecase to use in combination
+with git-diff-pairs(1), but it is not solely limited to it. As you
+mentioned, there are other commands that could be used to provide input
+here.
 
-And then it would be passed to the single backend, that takes
-"--raw" format, pass them through the diffcore transform machinery
-(like matching removal and addition to detect renames), and produce
-various forms of output (like patch, diffstat, etc.).
+> > diff --git a/Documentation/meson.build b/Documentation/meson.build
+> > index ead8e48213..e5ee177022 100644
+> > --- a/Documentation/meson.build
+> > +++ b/Documentation/meson.build
+> > @@ -41,6 +41,7 @@ manpages = {
+> >    'git-diagnose.adoc' : 1,
+> >    'git-diff-files.adoc' : 1,
+> >    'git-diff-index.adoc' : 1,
+> > +  'git-diff-pairs.adoc' : 1,
+> >    'git-difftool.adoc' : 1,
+> >    'git-diff-tree.adoc' : 1,
+> >    'git-diff.adoc' : 1,
+> 
+> This apparently does not apply to 'master' and the base at least
+> needs to contain 1f010d6b (doc: use .adoc extension for AsciiDoc
+> files, 2025-01-20).  Please clearly mark the series as such in the
+> cover letter if the series is not built on top of recent 'master'
+> (or 'maint' if it is a series to fix breakage, but it does not apply
+> to this series).
 
-To me, what you are writing is the output phase of that pipeline,
-i.e. the backend.  We do want to (evantually) be able to filter with
-pathspec, and all other things the current diff machinery does after
-the existing "all-in-one" "git diff" and "git diff-{files,index,tree}"
-commands do from their call to diffcore_std() and diffcore_flush().
+Will do
 
-The revisions option parsing machinery does accept options that
-would *not* make sense to expect for them to make any difference to
-the result of running "diff".  Rejecting them is a nice thing to
-have, e.g. "git diff --no-merges HEAD^ HEAD" does not error out, but
-some people may want it to barf (I don't care---I am not sick enough
-to give apparently nonsense options to random commands), but it is
-perfectly fine to start your implementation with "nonsense options
-may be ignored".
-
-But in a "git diff-* -z | git diff-pairs -z" pipeline, I do not see
-a particular reason why you would want to forbid the downstream
-command to further limit the paths it processes with its own
-pathspec, e.g.
-
-    git diff-tree -z --raw A B -- t/ | git diff-pairs -z t/helper/
-
-sounds like a perfectly sensible request to grant.
-
-My recommendation is to avoid deciding to reject things your initial
-implementation happens not to support (yet) too early.  In the end,
-we want this backend half just as powerful as, if not more than, the
-real "git diff" machinery that has both front- and backend in the
-same binary.
-
-Thanks.
+Thanks
+-Justin
