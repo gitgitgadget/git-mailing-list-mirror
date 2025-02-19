@@ -1,54 +1,54 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DE92144A0
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 18:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18451AC88B
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 18:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739988130; cv=none; b=BiVc2m55hE+Brp/51fdQdMzSHXO9v89A6yxF8bDRT6HJ1+Em89NoCD2gx7hocbwlt1kKnOpG7zFuCzoa2f3JMeld2bJaw14JqrPFHq80KXos7oUBrS1FAs6xposiB8uqNpFvyHBb1vknwDc3ef9XfvkudFnHaeBpRFtNIqr9tao=
+	t=1739988718; cv=none; b=fswvbbBF+dUJKz7bdwkF0ftkrF3VrHdr4Kz3QsnZvLaUmWpUSegnkvYaSX2TT2kzuX+VzY6rkTkub+AYdY6WBNkxGUa8L6wirbR5soIW2tvIIPoMDMF1sytcE4ZqPs1/g94OVSzlRGabl2bV475DnKWsIGwJTpxhJcv8o0wSb7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739988130; c=relaxed/simple;
-	bh=aoqCjm8xYDJhREf3hEWGXI2UI7bMjPZRacR5rpkMfB0=;
+	s=arc-20240116; t=1739988718; c=relaxed/simple;
+	bh=burvChsECQDh9H+w/zG2VSbirWoJliia/f4mdIFNaBQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XXMc1DGy42zygTeG3DSOOKRiJXWsVjk/vdy9wpNEiU+BH+Q1vrYjfSxJiRXvQshkOtHbpb2z96qSSmIZop2Ngl75xqne7p0ragkZmpj1GVykags8ORFzqPmfQXZOny339yTuG26Jbz/3BEPjZBvCqdR4P9rCyEH8X8SGJenZGnA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kVRLXILO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MJTSvOfV; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version:Content-Type; b=ArAKz99U+qI4Zl2/GRiIaf7ICz9r4gMkDJJL5JJyKwi3SOWZzWtdN/NJS8p/RH2IYdbyNAeDjcHLMMz/vb0hbHhL3t4KpEieumb82cVO0U3WOX9cPQOEBCR3ienCNveJLqRHUNhlexvcOt6kpMrlJXz3EKFTv5J2k5OfRtBU24A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hr8xd/bY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vdbT7l1T; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kVRLXILO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MJTSvOfV"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4A7A113809B9;
-	Wed, 19 Feb 2025 13:02:07 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hr8xd/bY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vdbT7l1T"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id D51E1138095E;
+	Wed, 19 Feb 2025 13:11:54 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Wed, 19 Feb 2025 13:02:07 -0500
+  by phl-compute-08.internal (MEProxy); Wed, 19 Feb 2025 13:11:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1739988127; x=1740074527; bh=sD37nRdn69
-	9VnNxtAbPuOPxNvttcJLBCCdTDP5yzXv8=; b=kVRLXILOT3HCdo5DfXK5AAKWfw
-	4Eg0nUgA3oeglTc7R3rlq7BY6ittCBonLw3UqwaV+LLKL0h0qsfxU5KNamD8JHWc
-	F/n3GCNm9k8Pu0RUHt3FE3Bbndf7YUFaXzUHOSdy/zJ5oL2Xim6l8UKhy13FCJfD
-	ORdsgpG3HnCg8eIiNJlDatZvq1SUWPPHyc1iDjS+QfLENK4VsWhOjnaFanzobj1U
-	fUEo1DAPRhyv4dpsFjTWFfW4pZaUTNjCikShGEZNldDV2EVnInummGO9uasGqhzi
-	JRxCSazXKanAFtGgV14ARCG9sYocGIclNqxJW1uYWCrVp+krUqIfK+6lQ72w==
+	:subject:to:to; s=fm2; t=1739988714; x=1740075114; bh=4bqEhr6LSk
+	l2aO5CA3H5vPjLyoPpO9cwVycA3FKq/ws=; b=Hr8xd/bYx4UJnuHfW/a8SOdHH8
+	b5OwFa1oQHhvZvH7dRWFjKxhVfKGv3aONYlSzD64bJWV/riTujn4l+n5jTvRPeuV
+	tEBtfpCEemWuQ+ddL4cwQOMv6I/reuBQsgAio+xWaTNe5AWEvauOnLz1KO44999V
+	VrzvClfAb975DXgu6YchbN4mXyvlGOo2xWk68duDH21HVyfjoSaSKKJqnV0DWAk4
+	iLwa/zc02iFwwZLh0is+TnBO+29XEnxIUtXaVIMaCWb4+deZajqlDJ8jIqbaXEB0
+	eVVPDOvY1NugadDq0PeY61/zWzf0ACAuSodG+GR+HlTTyRE9+eFCcbLiXmyg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739988127; x=1740074527; bh=sD37nRdn699VnNxtAbPuOPxNvttcJLBCCdT
-	DP5yzXv8=; b=MJTSvOfVGUTglXVkdsrxP0R7sIwXeF+BK6tTZTPWLeaD8swFpYL
-	JloDz2d5K8MtbONFd4MwNNv++JrZeq957FulfriHKSPHC/PLoLSIPYCfAbAVq+TL
-	YpcetloWjuVUFsI/t5EQa8NpCe+rAjus3kl9r9qRtzWTuzhwjBUe2Vf46I0lArxV
-	uMscpRhcVIMDza1YZzX/uzUfmAEl+vS1U5ZSqYN7OsaBxUT2TakG6zZsW6bwF6rD
-	ZZjFyWOEf29XMHns9bMFtPf1ee2Q1+1N3LYwibcmoD3NJV9hhc3pvhGnGHn9wgGl
-	sBvri84KipXGeknGoptVVUPwbhAiP5BUqXg==
-X-ME-Sender: <xms:nxy2Z3rgCzV5t2rCkmp5ZXUKRrWSps9Bhqt50fou9XbM9ill3MaDVA>
-    <xme:nxy2ZxpMKkY3XHEQgEImKdJ7Dj-SCZST07uDymhNuQuR1GXXlDo0SplCjV_drNGyL
-    Z1ParpytOIGtjzpUA>
-X-ME-Received: <xmr:nxy2Z0Mbuov7gEvZtPo99W-KzdFKGf9iyL3BOjoqmxE3cxhMas_rQPKgGQDzABqBO-33oA2rzzkzi4m2BKXvbWxhw_ibfSue56aMqmQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeelfecutefuodetggdotefrod
+	1739988714; x=1740075114; bh=4bqEhr6LSkl2aO5CA3H5vPjLyoPpO9cwVyc
+	A3FKq/ws=; b=vdbT7l1Tkk+udM39WJwkhHI/THiOImp2AaD/pJ6KL/1YLZKpeSn
+	0d3JXs7n1sSeS2dgPCir3XQXuumUjyiKG9RjGm5/kGmOMZE9ETWx2tqMlvATEyxm
+	Lil4bUohlhkdmU1+Yr73L9atsfw+C+OTSMWnW5UiC+445fGbx7gS3kpZvjczrwKZ
+	5Zlqy3ezelnMD3CYLMC+q6oecxCDn4OtRqjNjqtXiNf5Vul1OBnnh6gDnGfsLSk/
+	C7reMlOxFo2wD4qFUJjE2ACj2ahG38FjJZvjSha8tzWwMHvWNL6kL0kATxlVLSLO
+	q8+oyJt8NWPBxiNdj3CyxG6lABBXINhiEQw==
+X-ME-Sender: <xms:6h62ZxFSeJiSAYpcN94XnNmKZSyD3XnhmBF-GCu56IzuUhJyeMMKog>
+    <xme:6h62Z2VTmLJVNsroyXtJmHE4_RQvffQkpp4yC1s-eh05JORh5xhOfLu2c1WgxKZjf
+    SMfshD1TpN84Ov5Lw>
+X-ME-Received: <xmr:6h62ZzKYRFSwv2m_6PpWgJH4PiwTJp1Ixk-1yTXrouQHbWar2Wl322J2z25SbQuaVbrYdteEmoocn_CKRRuXvvzv5XgriYQkWmGziH0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeelhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,29 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeelfecutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkohhsthhigiessg
-    hsfigrphdrrhhupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehkrgiiuhhhihhrohdrkhgrthhosehhohhtmhgrihhlrdgtohdrjhhppd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:nxy2Z645YzMWAWgzagri9YkSz_fvlxX5s2XdlPgcA690wm-fXjwkUA>
-    <xmx:nxy2Z26nvVPnrywunipNxSUAOTjmU3CgU5o2uvpeCaVtQiSQOSfcVw>
-    <xmx:nxy2Zyi6e0oYL6JjIzBgFHQLXPAam5jctMFkV73OZIN1s2SkQgOfUQ>
-    <xmx:nxy2Z47Ea5-IZnz8x9WXixZGWVfOQ_mb5xAxI1c7Ya3MswE4KG3boQ>
-    <xmx:nxy2Zx0XcGuY5d72uIEI0Z_L1hVp6SsIkBei2qiZLG1aEF7EIGbNgLxI>
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
+    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepkhgriihuhhhirhhordhkrghtoheshhhothhmrghilh
+    drtghordhjphdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:6h62Z3El7XAxn-ScuyrovH2FZmAPHwE3RNIX52x7D7A27wGmScD2kA>
+    <xmx:6h62Z3U7DOMyXdtUVP6MajCdQ79_IKJhFsw2PfYkMKnaTy7jQ0-NBA>
+    <xmx:6h62ZyMLY3CH8eYotJOPE3Wl57Dy2KKZzMTXwvSG5JgA6qEYTxfRdg>
+    <xmx:6h62Z23BDuea949CG5OK1ViXpvelYnGW17arzIjR897aB28gCD8zaA>
+    <xmx:6h62Z9wwvO8m8ObXEG_qdaC-J3y9Rg8OlWXca6iXW-pSKJXXtai9E_Lh>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Feb 2025 13:02:06 -0500 (EST)
+ 19 Feb 2025 13:11:54 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Konstantin Khomoutov <kostix@bswap.ru>
+To: "Kazuhiro Kato via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Kazuhiro Kato <kazuhiro.kato@hotmail.co.jp>
-Subject: Re: [PATCH 1/2] Fixing file name encoding issues.
-In-Reply-To: <20250219173032.x5gzw6hsvsu4flba@carbon> (Konstantin Khomoutov's
-	message of "Wed, 19 Feb 2025 20:30:32 +0300")
+Subject: Re: [PATCH 2/2] fix: when resolving merge conflicts, japanese file
+ names become garbled.
+In-Reply-To: <c698805f088e0643e5faf027d4eaa6de14d6c1ff.1739918546.git.gitgitgadget@gmail.com>
+	(Kazuhiro Kato via GitGitGadget's message of "Tue, 18 Feb 2025
+	22:42:26 +0000")
 References: <pull.1886.git.git.1739918546.gitgitgadget@gmail.com>
-	<d33fb3d940cf97bdfe3dc544763a51df4874a5c0.1739918546.git.gitgitgadget@gmail.com>
-	<20250219173032.x5gzw6hsvsu4flba@carbon>
-Date: Wed, 19 Feb 2025 10:02:05 -0800
-Message-ID: <xmqqmsehg6ea.fsf@gitster.g>
+	<c698805f088e0643e5faf027d4eaa6de14d6c1ff.1739918546.git.gitgitgadget@gmail.com>
+Date: Wed, 19 Feb 2025 10:11:53 -0800
+Message-ID: <xmqqh64pg5xy.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,39 +89,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Konstantin Khomoutov <kostix@bswap.ru> writes:
+"Kazuhiro Kato via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Tue, Feb 18, 2025 at 10:42:25PM +0000, Kazuhiro Kato via GitGitGadget wrote:
->
-> [...]
->> diff --git a/gitk-git/gitk b/gitk-git/gitk
->> index 47a7c1d29c4..88951ed2384 100755
->> --- a/gitk-git/gitk
->> +++ b/gitk-git/gitk
->> @@ -12379,6 +12379,7 @@ catch {
->>  if {$gitencoding == ""} {
->>      set gitencoding "utf-8"
->>  }
->> +encoding system utf-8
->>  set tclencoding [tcl_encoding $gitencoding]
->>  if {$tclencoding == {}} {
->>      puts stderr "Warning: encoding $gitencoding is not supported by Tcl/Tk"
->
-> I'm not sure one should sensibly do this - except to implement some
-> well-understood and well-documented kludge, simply because the "system
-> encoding" is supposed to be set by the Tcl runtime.
-> ...
-> In other words, your patch (supposedly) works on UTF-8-based systems
-> which is common to Linux-based OSes and MacOS, but I'm afraid it won't work on
-> Windows.
+> From: Kazuhiro Kato <kazuhiro.kato@hotmail.co.jp>
 
-In other words, things should work without "encoding system blah"
-forcing a particular encoding that Tcl may not agree with?  Would
-this mean perhaps in a "curious" repository with paths encoded in
-something Tcl does not expect to be used (e.g., on a UTF-8 system
-somehow EUC-jp is used for paths containing Japanese characters), it
-needs to be possible to specify a "curious" encoding either with an
-end-user on-demand action (e.g., menu items) or with an repository
-configuration (e.g., gitk.pathencoding = euc-jp)?
+Here is a place to give a bit more context.  In what way the current
+code is wrong, what end-user visible symptoms are brought due to
+that wrongness, what is the correct way to implement it, etc.
+
+> Signed-off-by: Kazuhiro Kato <kazuhiro.kato@hotmail.co.jp>
+> ---
+>  gitk-git/gitk | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index 88951ed2384..f4f8dbd5fad 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -8205,12 +8205,13 @@ proc parseblobdiffline {ids line} {
+>  
+>          if {$type eq "--cc"} {
+>              # start of a new file in a merge diff
+> -            set fname [string range $line 10 end]
+> +            set fname_raw [string range $line 10 end]
+> +            set fname [encoding convertfrom $fname_raw]
+
+Is this "the Tcl read from git things as sequence of bytes, not
+characters, so somebody needs to pass the bytes to "encoding"
+function to turn them into a sequence of characters?  Unless
+everything is US-ASCII, that is.
+
+If that is the case, presumably the $line has a sequence of bytes,
+so it may be wrong to chop it at 10th position (presumably that's
+10th byte, not 10th character) when we are trying to teach the code
+to deal with non-ASCII data, no?  
+
+I am reasonably sure that [string length "diff --git"] is where 10
+comes from, and that prefix will always be in ASCII, but it feels
+safer and kosher if we converted the whole line first and then
+chopped off the prefix.
+
+The patch title says Japanese, but I would imagine this applies to
+anything non-ASCII, so it would be better to retitle the patch to
+say "non-ASCII" instead to signal that the issue the patch fixes
+applies more widely.
 
 Thanks.
