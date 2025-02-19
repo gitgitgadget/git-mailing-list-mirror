@@ -1,161 +1,114 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32331EFF81
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 13:23:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BDBA930
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 14:28:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739971435; cv=none; b=eMWVdLce2bbxLbacG0996soKXVWrDGVEa2EtfVvUQVMyRuaPVoaBWhuhbzMeqiPTN28S9385rBzcglSO+yi0CJaEfIP16s6TkZ0ldYNxJbEMbDrrZyN0Ru76nxufV/eC++K+7526dRV2c/ANpU/49RTpIgfLhPUv4trRlVN4NlY=
+	t=1739975324; cv=none; b=By2zbd7fan+ialtMHnnBK+ZEGcp2UY0UMsu57BUzxSMDkJ0iK/OoJqNCYS/C7X6WlDzhwF8Z0f7CQGrxChQTj9sCIl3ZVrrjRozx8dbbDV+gKdgVCWJRWZawTIML8AUIoNJFfbV411wvpiXHcIcDsgxzbWEdoz8XzGd8b/n7Zek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739971435; c=relaxed/simple;
-	bh=b8fJyCnS8dACcCnDWRVw5FrC+6SvVd0r+XRr2cny8m0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pkMVKmY7MnWVBNYodnmHmcTVSQDO0IpVNBvKPCmQgtDcGSXQCTJsTYrGvsqrypY+0tyYbNNNSEynYKh8FJqZ/5qcKxHQDUtMYQTSJgU7JwrV12q5EMFTOaCNG5raVtv30aCUogLBMGslw9ikS3X1Dw9Ney0zFsxs8QbNi9uIxvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JRBp6kZj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eI5W0rYg; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1739975324; c=relaxed/simple;
+	bh=kSeqnymrDib2Ga9z5KUukISTOY43V+XlWMIYiZM7qiI=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=hotjU+fSZna7fMtULG1vzCLT5xp1zEQeeWv22sb8kHmrYsWHFg2IYw4ZqKK6875oYHeYG4JWOOX6fum2YPYKQl+qKuwRFh/vsTt5lY+FFP0CubPy5Jtz9/7JY8SZbHDYvxjCAY+2DHugvV0YC3BYSmhawfPOLFRaoKiMcq1/Jk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ByLnx0ns; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JRBp6kZj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eI5W0rYg"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B917B25401E8;
-	Wed, 19 Feb 2025 08:23:52 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Wed, 19 Feb 2025 08:23:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1739971431;
-	 x=1740057831; bh=bAnEC5LEQv2KIeZSxMmvqhioX0uNPnWP4RR5gdObBNk=; b=
-	JRBp6kZj7klbyal3gVY0UIue6ActCsJHoALQEIXtI+7T1Y/xlkf8KGJULazB5rxC
-	B2A9aWOqzAevjp6BTOWqu5HMLgTC5XmnZNB2lcFbFNAe2zVA5whwGqOw9JBIB98c
-	MWKLbxGxbCVUWTgpg507RmmP0Rc6f3D/aGO9zbsb7biKxkyoJL5sJZI9ifOo6jgk
-	HFRUTttK5QzfR9cr7iWkidS7ikbcT+F3hg08pZrcI1NtgOnDnUOX/hNOeQSMTFAh
-	zk5OopVzTfFyJ1s/L4OUKoiaBSMp4JF6pMnSbDBkCvugXR0Ddxv7Svn1SMeHkRG2
-	YYy15WbTzFMVTke2cc985g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739971431; x=
-	1740057831; bh=bAnEC5LEQv2KIeZSxMmvqhioX0uNPnWP4RR5gdObBNk=; b=e
-	I5W0rYg4yt9t4fsbjqb1V+MZMnrbPUx/yd4YfVJCDtzzgYeuXAyU8GGDv2i5/LiV
-	PfIudflPnVtX/LmLQs0FcgO+Hjcx8vihHXqjHuDjliBdK0TAVW3c6pZQVJRMnPp0
-	Hvk//PJQvFrNprqE9ryHOcIDCZ8lDzimFQ6Mb6ueEbbG6DLnDHtMwKFEEk8LnX0/
-	ChhPqxlXpGuaDi7m0oPfdEqhoyvCO5EwBFbchWbCjcPL0oo88T/6R5h9nkEveyNR
-	vxiHr1sACAU6U3tOrtLGAc3ZAt+Xy9TbQWhD4PbWODMXmX4j2GuUod+J9rkbsIty
-	s6DzbTFJae64kmS8lzaBg==
-X-ME-Sender: <xms:Z9u1Z4M4120a1KbqyGe9e7KXUMuITepzz0dikBe1kR7PO-PuEwDzAg>
-    <xme:Z9u1Z-_dIhxVKrGSzLJ8XQfXnMuvL6hh7_Sf3GDfHBkUP55q95Myl_Cq-EGhrHky4
-    H4AIbcuXWsAQ6tfXA>
-X-ME-Received: <xmr:Z9u1Z_SQ8R_Ly2xq4OV-7LVbUPbiSOyJeorm94cSGQNFUVj5f9wU2LYvb5p4JQ9TwfaY55Ek3GTm7Hp2lIZYLyvD5AMOb74GlLBQL9qt3W9RlPg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeefhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
-    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
-    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthh
-    hprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhf
-    rdhnvghtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprh
-    gtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
-X-ME-Proxy: <xmx:Z9u1Zwtc6R-0jxZr0lX0-VYqZVDgM7gknQ9e13XoVB5lQFO1wWovQQ>
-    <xmx:Z9u1ZwfXdd8TOek4EivZcimGbFVBc8zlTuNYf6E8X_2gRO1D2oQ3HA>
-    <xmx:Z9u1Z010t9F6ecgM57XVy596y0WRwlYci42ll0N5gUeQnFzANt0nBg>
-    <xmx:Z9u1Z09EM40kblPYY25UnIg6HCRSHgEwDyWzFrCzyQunNIDbna9o8g>
-    <xmx:Z9u1Z-vBS40_gJi-1lab53emXA-CWoYAiJ3wFFRYffXrdWKdWJ-Wt6fy>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Feb 2025 08:23:50 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c2782e00 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Feb 2025 13:23:49 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 19 Feb 2025 14:23:42 +0100
-Subject: [PATCH v2 15/16] refs/iterator: implement seeking for "files"
- iterators
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ByLnx0ns"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-72726a65cbaso1663389a34.0
+        for <git@vger.kernel.org>; Wed, 19 Feb 2025 06:28:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739975319; x=1740580119; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kSeqnymrDib2Ga9z5KUukISTOY43V+XlWMIYiZM7qiI=;
+        b=ByLnx0nsVJuhbBihLfxtEKWzkgAi0aDK7DnlnJDG0SBHOSWoxKn3uUjRcMqgUuV07E
+         s1UdXdUoNQKYkjWiTCYqhGMCZpGVZ8GWqS4zD+sVkTwrKLnfZIBQrfnk3H2fRU29upl3
+         pvxQPPRV8hRn0EhOeuWwhJO6Y3/LOagBfsJ0dED4vxzuXXNUfhVcRKLHBBvCsWTvtnAT
+         iS8yfhqwhF0IluPPlOo8zzefFM3/AQC8ijqjXE30eMOqb/nkdSQObrpCmyZJlfQIDxTR
+         7PWk7CMSMNDP/h1EfEaLAOMKtCXynJ0ILmufjYNgHWMcOeH2P9sy5v4wSTHkDp5OVSMx
+         FP5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739975319; x=1740580119;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kSeqnymrDib2Ga9z5KUukISTOY43V+XlWMIYiZM7qiI=;
+        b=lkFBQvUh4166JJaGzyBlLQW5tqIZ0Io9/Sbm39DD7+gm6PG/PvSw7QV7MrHW+iQ3wK
+         UQ+HVedwvo6kAndXZvqFty2GFEYzD3Yu5jLoNBQ6tKhD7FeRPCOME4uUgDLqwD5oV/g4
+         /iVcVfieUtO2anbMO98DowqHB85NX1uNvFiWBMiogLZYImppBH8f0AfuHPgKigv//VSF
+         M2KQiU7yKpVsssAofCXdnpCoXv2ZNGNEgvFL5pnH1iA05gC48Z3jR2mWb2mlE0n8Hzpy
+         W0pI8F1WLteaEueGO/Xs0qheUMiH9TPoq91HKgqaU1GAB49k8npyCIalV728Zu0dn1at
+         fUWA==
+X-Gm-Message-State: AOJu0YzI/mY9HEPEhsxeFwhF/6UgbXVQGMKIN6fDlEOznV6r2UqaGny7
+	1HvmjpCijawCuOXsNqXi6LC/8FUvUOBFcrEHpF2pK0GG7+HgjmhQwplNF96t
+X-Gm-Gg: ASbGncucUYKNOUnrWae7L50vm2F9CbSutWxpeLwPieK8hbqEVGnnXN/5ixLEKEmKyuX
+	mecIK/D+ER10N7iBEl8FPQw7kMtNb3tQKDU4hk/LmKIgVOQfeheZq8bWqYBbbJ0cCNUgNiWLLCU
+	fTYbOBvFn0TfghV+gmHL8MEIlA90owmHfYQXrhcX1yBlEqEdCNQVixOETSAT3w8ccIDV8gqbJXr
+	ylznXF6HbOWK4A8GTF4i621mEgi+EXVFf0zUDZOhjOhHH2tz4EvkIFfMB6NMGXWze48sqeg/BXK
+	S18h5ixeOmev6vz1uN+UQpQfFnJEw3stuGcw7Xg=
+X-Google-Smtp-Source: AGHT+IGKTqdmAUmhlQM5YQdc1iDTpCU+/w8aiMZhYvad9govTvXiy16ycn1MQjZeuPt0zK5w8xrJiw==
+X-Received: by 2002:a05:6830:3786:b0:727:3a21:7717 with SMTP id 46e09a7af769-7273a21793bmr1733875a34.23.1739975319217;
+        Wed, 19 Feb 2025 06:28:39 -0800 (PST)
+Received: from smtpclient.apple ([143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-7273a14070esm338912a34.49.2025.02.19.06.28.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Feb 2025 06:28:38 -0800 (PST)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250219-pks-update-ref-optimization-v2-15-e696e7220b22@pks.im>
-References: <20250219-pks-update-ref-optimization-v2-0-e696e7220b22@pks.im>
-In-Reply-To: <20250219-pks-update-ref-optimization-v2-0-e696e7220b22@pks.im>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, 
- "brian m. carlson" <sandals@crustytoothpaste.net>, 
- Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>, 
- shejialuo <shejialuo@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-X-Mailer: b4 0.14.2
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.400.131.1.6\))
+Subject: Re: Possible bug: Empty magic word list in pathspec is handled
+ differently in short vs. long form
+From: Lucas Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <216a7288-b599-4333-ba62-10665d6a94d8@anselmschueler.com>
+Date: Wed, 19 Feb 2025 11:28:25 -0300
+Cc: git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <6CE51CB5-4F14-4737-83EE-05B93500BDF1@gmail.com>
+References: <216a7288-b599-4333-ba62-10665d6a94d8@anselmschueler.com>
+To: =?utf-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>
+X-Mailer: Apple Mail (2.3826.400.131.1.6)
 
-Implement seeking for "files" iterators. As we simply use a ref-cache
-iterator under the hood the implementation is straight-forward. Note
-that we do not implement seeking on reflog iterators, same as with the
-"reftable" backend.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- refs/files-backend.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+> If you run git diff for a pathspec with an empty magic word/symbol =
+list in short form (prefixed by ::) and in long form (prefixed by :():), =
+you get different results.
+>=20
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 859f1c11941..4e1c50fead3 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -918,6 +918,14 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 	return ok;
- }
- 
-+static int files_ref_iterator_seek(struct ref_iterator *ref_iterator,
-+				   const char *prefix)
-+{
-+	struct files_ref_iterator *iter =
-+		(struct files_ref_iterator *)ref_iterator;
-+	return ref_iterator_seek(iter->iter0, prefix);
-+}
-+
- static int files_ref_iterator_peel(struct ref_iterator *ref_iterator,
- 				   struct object_id *peeled)
- {
-@@ -936,6 +944,7 @@ static void files_ref_iterator_release(struct ref_iterator *ref_iterator)
- 
- static struct ref_iterator_vtable files_ref_iterator_vtable = {
- 	.advance = files_ref_iterator_advance,
-+	.seek = files_ref_iterator_seek,
- 	.peel = files_ref_iterator_peel,
- 	.release = files_ref_iterator_release,
- };
-@@ -2294,6 +2303,12 @@ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
- 	return ok;
- }
- 
-+static int files_reflog_iterator_seek(struct ref_iterator *ref_iterator UNUSED,
-+				      const char *prefix UNUSED)
-+{
-+	BUG("ref_iterator_seek() called for reflog_iterator");
-+}
-+
- static int files_reflog_iterator_peel(struct ref_iterator *ref_iterator UNUSED,
- 				      struct object_id *peeled UNUSED)
- {
-@@ -2309,6 +2324,7 @@ static void files_reflog_iterator_release(struct ref_iterator *ref_iterator)
- 
- static struct ref_iterator_vtable files_reflog_iterator_vtable = {
- 	.advance = files_reflog_iterator_advance,
-+	.seek = files_reflog_iterator_seek,
- 	.peel = files_reflog_iterator_peel,
- 	.release = files_reflog_iterator_release,
- };
+=46rom the gitglossary, pathspec section:
 
--- 
-2.48.1.683.gf705b3209c.dirty
+"""
+In the short form, the leading colon `:` is followed by zero or more
+"magic signature" letters (which optionally is terminated by another =
+colon
+:), and the remainder is the pattern to match against the path.
+"""
 
+and:
+
+"""
+In the long form, the leading colon : is followed by an open
+parenthesis `(`, a comma-separated list of zero or more "magic words", =
+and
+a close parentheses `)` , and the remainder is the pattern to match =
+against
+the path.=20
+"""
+
+Note that the long form doesn't mention that a second colon has the same
+meaning as in the short form. In the short form, the second colon is
+optionally used to separate the magic signatures from the file pattern. =
+It
+wouldn't be necessary in the long form, as the close parentheses acts =
+just
+like that.
+
+This way, "::" and ":():" doesn't have the same meaning, just like, for
+example, ":(exclude):" doesn't mean ":!" (but ":(exclude)" does).=
