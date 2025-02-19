@@ -1,136 +1,116 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B9622D7B3
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 20:10:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56770214A82
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 20:13:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739995858; cv=none; b=qychHRChKZwO3fx2YvLDEqs6wWdj7LtQnc3sf8FfKXk2VSKPHD8+Kyd4yuObiz6eXJn0THyuJeDIasyTPJ627X6ThOWoB43HCFKcnaERrqNXs1s/LfMlnsK4B6GNl+aP7sFlq0bImLJiragg0+X3VC3I7pggFmUJImuS/eywBDY=
+	t=1739996031; cv=none; b=Sk8o3zAGBlVVL+GJAeokdzv/hDZMz7JGkPhNuIls8sXyVUupTHut1JmQLNUfyz+N9jY0E8lxDawdAbD39cyboCkjB550U/2UIBbOjxwglkrO7n7hKQSUVPOzFcJInQhG1Fhtw/goX69j2cA2KKQ+GUY6CuCXQlbxcET9pM3Oq9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739995858; c=relaxed/simple;
-	bh=g6ad12gpv5RD7ecxKdnS7UUiMHjHof4e4/nRYvClZ80=;
+	s=arc-20240116; t=1739996031; c=relaxed/simple;
+	bh=eJ77Iy0gTfFq9Pclp3X2dhij8U+DoiQTZosDqs2hZ6o=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=o0b8D0aFV8V/xcu6no9Qb793Mh237xfcHhuzBrbDqpbmiry/MBZVCKDEiavSuE52BUmK0P8qNOBKk7PSQCWzT0QUUXkvE30pWSwGVG5ANxTiOtsCUUCRh85reFm6XHIkmcJp/25zN369MVovo0pgQxiHUZWHTqionACUCoYkIlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rd3wFe7R; arc=none smtp.client-ip=209.85.217.51
+	 To:Cc:Content-Type; b=DZlMTeFBQgLGuQ5x2BnvRzVcGyHg4l0TcE1bgDhJtIJ+n11jdM4s646DW3aj8xReEk2yQHjXV+ENlXgS0T4Joiaa4TseZCbFYb0tWff+GbOPE0Nkedk+AZmoaLvXp9jqVNHq/X0gqvwW7BEVhbitL9EKNkLlEB46+di1E1Ignkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MvaVk8yY; arc=none smtp.client-ip=209.85.217.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rd3wFe7R"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-4bd3763900aso72155137.2
-        for <git@vger.kernel.org>; Wed, 19 Feb 2025 12:10:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MvaVk8yY"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-4be4d72bceaso74731137.1
+        for <git@vger.kernel.org>; Wed, 19 Feb 2025 12:13:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739995855; x=1740600655; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739996029; x=1740600829; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mci2qcVOxvigfepa6pIoTK3cqzxI5a5tQkhmJoLwUF4=;
-        b=Rd3wFe7R+SsgsMMDEB8uGvidsydn4uTk695UCZ3hbL0tROtWB2tiuBRlgQglRCf3Oy
-         KSFAuWpp6Bro6jFcvx+Y3JLrZfnn7Ya3PtVM/L44tBVesW4oSWCE7TaHzwryVdACCyM8
-         nHhTx6Mok+JHCgz3DGW+O75xypPcGqGgpnz4xDYfk3VRQOU5yFPzi6CB2HUvCqR2p2BT
-         hCZtVsP9lth9lP7+f42Vx/4LGsTneaFUpi3v1j8R0p7nUkYU1E2uw7aWGmB22GLrPBWR
-         /vGKpavLTvDFIp99mvx/EaP6+mwJv6OQ7PDyjLNmoZqaAE4aZTFCunsHXQ/gI5qjhZRR
-         UUcg==
+        bh=GnBTkzKs6Gbu2+N0Oaxl0zREFd6hzJBzuVYWyjYNw7w=;
+        b=MvaVk8yYiQy8M9yxzyhzhVwjF9mc+DbUvFyxWJ+ADgNUCuZSWT3GUOWlnzTkuW3Bvk
+         1EGItOPMXV+/uIBJUIzI4gpcehVrjQidXFsfdEjZ04dPnoKlshJQAl/bldOvlwF69Sf0
+         xtHezd/dEA81PagcoiUv6p1vLdGTIFx68gArpGrolt9txijAlDreH0/n2B6EDs0pAkPA
+         2Su/L0HStxEJiwTxUSdTBLhuazSV9OsHMJbIrd8IGbYTGu8QQLgPl1H+Uk/52MCzIKU/
+         h7WAnFI5czzuq0jBFjJ+o8AATXWEcnEaQ4t2zHGpr9qiYEjT2DfgrFE+WKRYvR1ieXOZ
+         IW9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739995855; x=1740600655;
+        d=1e100.net; s=20230601; t=1739996029; x=1740600829;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mci2qcVOxvigfepa6pIoTK3cqzxI5a5tQkhmJoLwUF4=;
-        b=ileryk6d3ZaV0KV0ZZQRo33rW/wws0TlBqhBakYpFaFR/nFg2KRmEmmeBzkuDA44cX
-         tB0IAtGAsnPUQAddkrpZhYdVKC+JymKNIA7NFSSmQCPgzBLsq053AplaDHlbsvw+sUHG
-         4XYUCY37Q5nQ0MXFAIz+OmQFfm5P9BZylHeUfoJosCDNvAmlEqSmQR7b/s7dOK0CPCX0
-         T459Gkge9QgeHoQxXQHNVmcsmVqDCnJ1ElPF3qUHFnrb+NXF/14G/CRFfG9Cwml5lA/o
-         +yParjJ5QhsGqOPdJxeRcypc8v8PYpNHQU+7id0IBxPrTnixgsOnKBoHByuZRGHRVHDt
-         rnog==
-X-Forwarded-Encrypted: i=1; AJvYcCUtX5eWPT+yawq64TDnUc5U8NKa31QgDPezA1l/BiFX0pbO1RrWKz7++l3VG3Tcq4FUEWM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQIznt4SEgB5jv633vyqxPsmVJPUoo9lf5xewfvgF6xcH5uZTp
-	09steNt+6GWV9BeCHkPvSBcg1FgV37C3xXji8ASLnqsZMkXt0ofgQt2Zd1Pvd6Qo8POzaLRVbwi
-	cFLCaxhiSQEAEOEHx7So07s5VLzPHJT+8
-X-Gm-Gg: ASbGnctkOgnIp8ZVT8KwwG9kxcweqTojvYfYhIhsBl14bYe6d9uIdMFrR/CGBJ7eQZy
-	JtDfLcgkbKmqCH2TmEsd35Loh8z51jrcKWzU4Xp/QVL39wM24T4ZLhQ3VeyYp6Po8JkzfvoHq/h
-	4oyIONteUsjLRGm5RsuH2yCuyTecn66x4=
-X-Google-Smtp-Source: AGHT+IGPNNWieGQB0LAV5xPoyVPGZVJySNLw+82cRtvCoBh2HgvxA1Nx6xSuKc9cc59s/a6965TVTTe5vW7Xxt+oMUo=
-X-Received: by 2002:a05:6102:f9e:b0:4bb:d062:420 with SMTP id
- ada2fe7eead31-4be85b54f63mr3577319137.1.1739995855390; Wed, 19 Feb 2025
- 12:10:55 -0800 (PST)
+        bh=GnBTkzKs6Gbu2+N0Oaxl0zREFd6hzJBzuVYWyjYNw7w=;
+        b=WKUocU4QhJFl+KKapf8VmzsIRcum6YO6BG2/10W9ayOel35IIxCnA7GsZZpQNMCNwq
+         eoN2mzIQaDaOBeWfXMpxKLq0i0tAAgCdgDnbR4j0Wn0SFG44fvMDuKvC00KgcvYdCHi9
+         Fqlxyt0dYITT/2ccyk4XteBgTfOtFnDGYdg+NXNFoocaBn2mHmp+H/PY8kCXRx4RtLKR
+         dVTaUK5J5blMuxZu578h/GyUAM1PS3vG1YkIZMfPe05UZ7b1T20u69LHw8OWlQHPFQvI
+         KSeRAZJ+mExDH25v8uAogU7dIjUVVgQAiIzQdjcFJFRTrGWm3ii+BP/zY9rV46gXGif5
+         j/QA==
+X-Forwarded-Encrypted: i=1; AJvYcCWhKbNxTemiWvxncCDgmdyTCmfZmsxgHIjlIM1Ym6UDyiXNdZypi0qlR32/DmStDs26W0w=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmvX2gBx0nVRnDhX+NB9phGQiQyYEtiwnTPANpagFCgk6ZXr7F
+	5GJbUahmtdoR6MFDTL3FHMtELND6ZNUCXJv7qATZhPePphh7p62XhLj9YP17O9iP72JArFLz2k5
+	xpnCF49vvl8hMyQkLRGQjRzTKs/8=
+X-Gm-Gg: ASbGncuvRP7ol7esamgH4onqs1Jml3wBGh48mFw53Tl7QdK9Ivsq5CVyZ/L2jTuxq3M
+	HQUZFz3qLQDVoFO0unW7QKpJBvQ6GO9NQJh5MUsSxIQY7ouuLIs5gXgyrWdD9Bx2fVYiedZ+odB
+	opPcNZoKiZ0QTFhfVvuaN8XUh6BsGFWfs=
+X-Google-Smtp-Source: AGHT+IEGRhUTZKJ9Kl7sW03LHf3GQ4HCBVv1II0ioBu8C94W67ihrVyHEFxMh/oE9tdU3qDq6LLMY6NU7h7QdINnwXE=
+X-Received: by 2002:a05:6102:1493:b0:4ba:fdab:6b84 with SMTP id
+ ada2fe7eead31-4bd3fdfb742mr12333406137.16.1739996029214; Wed, 19 Feb 2025
+ 12:13:49 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 19 Feb 2025 12:10:54 -0800
+ HTTPREST; Wed, 19 Feb 2025 20:13:48 +0000
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250217-pks-update-ref-optimization-v1-9-a2b6d87a24af@pks.im>
-References: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im> <20250217-pks-update-ref-optimization-v1-9-a2b6d87a24af@pks.im>
+In-Reply-To: <20250217-pks-update-ref-optimization-v1-10-a2b6d87a24af@pks.im>
+References: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im> <20250217-pks-update-ref-optimization-v1-10-a2b6d87a24af@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 19 Feb 2025 12:10:54 -0800
-X-Gm-Features: AWEUYZl1VRcoVrSVLSVae-iX-yGC7OFxUfglBdqyaDVxXdPzQeLyQF00WQN32Qw
-Message-ID: <CAOLa=ZQCRrAXeucZjqMpa-Uhb+d+oxjnDpYX00Qwt6nKGyJ6Xw@mail.gmail.com>
-Subject: Re: [PATCH 09/14] refs/iterator: implement seeking for merged iterators
+Date: Wed, 19 Feb 2025 20:13:48 +0000
+X-Gm-Features: AWEUYZnoaMPGhV5xPqrvjeELQzbiJh8w1XB95wpZcfIOAwB5z0FWINHC_-Bhpt0
+Message-ID: <CAOLa=ZSgpeTCayxCs01hdVJ3FsXMPCzSg+RV5tgMc0Agz9nAqg@mail.gmail.com>
+Subject: Re: [PATCH 10/14] refs/iterator: implement seeking for reftable iterators
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, 
 	Junio C Hamano <gitster@pobox.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000df3a57062e845a08"
+Content-Type: multipart/mixed; boundary="0000000000003b7eaf062e846552"
 
---000000000000df3a57062e845a08
+--0000000000003b7eaf062e846552
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> Implement seeking on merged iterators. The implementation is rather
-> straight forward, with the only exception that we must not deallocate
-> the underlying iterators once they have been exhausted.
+> Implement seeking of reftable iterators. As the low-level reftable
+> iterators already support seeking this change is straight-forward. Two
+> notes though:
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs/iterator.c | 38 +++++++++++++++++++++++++++++---------
->  1 file changed, 29 insertions(+), 9 deletions(-)
+>   - We do not support seeking on reflog iterators.
 >
-> diff --git a/refs/iterator.c b/refs/iterator.c
-> index 757b105261a..63608ef9907 100644
-> --- a/refs/iterator.c
-> +++ b/refs/iterator.c
-> @@ -96,7 +96,8 @@ int is_empty_ref_iterator(struct ref_iterator *ref_iterator)
->  struct merge_ref_iterator {
->  	struct ref_iterator base;
->
-> -	struct ref_iterator *iter0, *iter1;
-> +	struct ref_iterator *iter0, *iter0_owned;
-> +	struct ref_iterator *iter1, *iter1_owned;
->
->  	ref_iterator_select_fn *select;
->  	void *cb_data;
-> @@ -160,13 +161,11 @@ static int merge_ref_iterator_advance(struct ref_iterator *ref_iterator)
->  	if (!iter->current) {
->  		/* Initialize: advance both iterators to their first entries */
->  		if ((ok = ref_iterator_advance(iter->iter0)) != ITER_OK) {
-> -			ref_iterator_free(iter->iter0);
->  			iter->iter0 = NULL;
 
-Okay so if advancing the iterator fails, we set the current iterator to
-NULL but the underlying pointer `iter0_owned` still holds. Okay makes sense.
+Nit: this doesn't explain the reason and it would be nice to state why
+we do not support reflog iterators here
 
-Now it's just a matter of ensuring that we reuse the original iterator
-when needed and seems like that' what we do in this patch. Looks good!
+>   - We start to check whether `reftable_stack_init_ref_iterator()` is
+>     successful.
+>
+
+The patch looks good!
 
 [snip]
 
---000000000000df3a57062e845a08
+--0000000000003b7eaf062e846552
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 58f17138208ec8f6_0.1
+X-Attachment-Id: c6e3b8ff89386e92_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lMk9za1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNXI5Qy85NkZFaTJoL3pqeVNLYUtZMlVrdkplQXRhYwpNVmxLdWNBbnR6
-eGRCMXYvVTJkRTNNR3FmOGw3UjdDZUtZNkRFMkk4c1FJVXNyWEtrcmJmbTYveHFxZkpEU1FECkJM
-ZDN3bjhEUU9qSm1BbWd1VWlyOFlzaEtIdGtqQ1lvMUVaSTRHRlBJLzRoNFdFcGNLZVdaUDJ2dGdh
-a2kzcisKQ1NoWkNEcFdSVmNPMnRMOWJNQjZLejZPdnRYTmRPbmQwVUVuZlVTRHlFRmxIcVlIN3I5
-aWRxR3E2TFZ5ZWExcApIcVpxVE5JSVNLQlBwR1pNeElBUUtzM2ZBTmtmM09zUU91c0I1YjlrcDEw
-Yi9zRFBDRnppTExjUUl0dVpmaDg4ClNzOXg5TlRNRUUzNTVuZ3VQZDlJWFJjdytwZ3NQZmVMeFBK
-b2RucUxPdFRFVnVpVkF2RUFvZTU1OFZScmhnVlgKdzBvY3NyRGxoc3dLZGtsRitCM1dQYlBubTFa
-YVpmY2NSUkEwN25lVk9QSW5IV0hkN3A0ZDBSMFhya3RCOG1BUApVVytkVXlqa1NGMW1lL2xwemV5
-S2VieU9EK01uQmk1UkxjUE9oRVF3STFBTXh2azRQZ3luS2VHMlRwTmYrVDRvCnFXdjlXTzFkb1Bw
-d1RNdDAwYkhucEFsS1I5NUxhOEdiNzduWnV6ST0KPWNucVcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lMk8zc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNEtqQy85dms1bm9FTmxTZmtSQUpscXJVVExneGNKTApzVHBnTW41b1E4
+OUI3ZVhLQ2pFN2hFVE5EdEhuc0Y1ZEI4dUJQZlJPK3I1YmZRcGR0YnhJWmFjTUpkZHdYaWEvClpj
+L0ZjeE1LYmcwbDZGbTFTQndoVUpSNy8vb1JmOGJKRzhyelJIM0dOSGY2T2MzanVTM0l6ZkZGdkQx
+ZSs3aVYKcmRxL0xRWVZRaHdZMHN4M0tEQTNQREZFVWtpSEZZd1QxbjJyZjNTZUZQYW82L2svdDBL
+WURTbWpobElmZTNKUgpycVlkNXVPZzJIbkJtOHg1dndnckNCa3Y0N0FZTmw3c0RSb3lJNmx0SXdh
+RDBNVllpWWh3YnV4QmFxMU9lbGs2CisvZTFSWE1xU0pwbUQzRFBqQXIzdkxlY3NMbUlicHJZUTFx
+aVEwL1BucjVFajRtQmFtelF3VEh1aDEzeWxDNjEKUVp1cXNOSDFndVdPSHVNS1Rzam9tc3hFQlBG
+R1dhdGxOU0RSZkY3c0ZncFNGS3FsZVlHMjlOVjFlUTh0YkRXVQpyUzBaL0pNM1h3eDNYWUdpcjFj
+bEs0ODZ3NXloRFlOS1ZjM3BiY05DcG5SZzFCZ2cybVZENVd4N29UTC9uRHhjCjhJNEpFdW4rZlBI
+Mmg3MU4vL3JjVmxqRE5IOVArNk9mZjQ5dTNrST0KPVgyNjAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000df3a57062e845a08--
+--0000000000003b7eaf062e846552--
