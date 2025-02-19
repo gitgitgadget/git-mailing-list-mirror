@@ -1,163 +1,162 @@
-Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC331F2BA7
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 14:30:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDFF1D5CFA
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 14:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739975451; cv=none; b=c1dzks4GzGR6jAgQnqUd7XlG8eJXc0mmNIN0VgINIpAQNViDJaPimHFTeL2LnNA+58rUD5wwi6osM5IjbU8ZEp/fXwnFTbkLdgz23KzsmgLi5xVEPGqSMuCvbdh3KdMdzxUkjdQJ/tA/gJfVOIOG4/vMdk3p6kyr8r19M4Qqlbo=
+	t=1739975660; cv=none; b=CG3LUNAmd2vSYpxsrDhfvjd6n2sBAITg4USPYgl7VTZ+hB+szpxelppDRsU/HCFbGYx5+t5Sn3+oruRFLJyOdYaT1MO4hz8BrIDWOKnfUaXPtmLWkRc+xQgtZGt2AVLarwIJ+tWeZx83HmRFqeI73zoE84K5tJfFfSRXjRcseEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739975451; c=relaxed/simple;
-	bh=/4sK7zh25CrrYQR3GvYRTHfdLJGeIsx7Rm+bg7jEQwk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YXIwAAM2r5h2YJltaZzRFppqyoYFOBnBnbH1wcMczZNPgI89WOO1J6kkVS60AjkdfpmdV0dgxn7S9XilQdPIEeymvgv8tLkj/MyUOrrRks8ucOULQzTuPjtMYo/v5UkZjsqcTstWJNd9lsFZleg858JzdL5h9YT406g+qXU/gKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=sIbHkt/C; arc=none smtp.client-ip=95.215.58.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1739975660; c=relaxed/simple;
+	bh=HEZvfvzWtyMHhQZTE8t+CzyO16w62y0oZPVHD7nxghw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=orLz4c38gMjcXZ9QPy5AzW1K0rfHqYUC6f1KuYSjMA8KMXTx4tuB7pW5cuT3+U+5mB9+IIKmDCZaZVxI4/6M/d7k08Wkvf7Sg/vgRWyyLQe3ud3+r254sRqt5hNluDX7uO8hoeyJ2BckC6O9fxrE72z9OAbBvNzSBffA4rKIlyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HIN+YeGg; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="sIbHkt/C"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1739975448;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=C6poHB484Uy9A9aqVi2HtVMRtKVtYU3qqD1Fgqp6DYQ=;
-	b=sIbHkt/CpM/lHzPP25ticmWB9EGMb2OiryHAOgWYh24zsI0MstRwK11+P4PbdCTQKoB10r
-	+EZC6gNHmdFevMdOJfXQMX7BAkbB1zTjUoy2k0xFIMkHJFGi4XWig+9GPakaar0dCF/bZH
-	huB3/bxrAAPBn0SO8Ec4uYVOPNkGdhs=
-From: Toon Claes <toon@iotcl.com>
-Date: Wed, 19 Feb 2025 15:30:25 +0100
-Subject: [PATCH v2 7/7] http: silence stderr when progress is enabled
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HIN+YeGg"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5dee1626093so1809888a12.1
+        for <git@vger.kernel.org>; Wed, 19 Feb 2025 06:34:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1739975657; x=1740580457; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=BMr429gwcJ+bQ9BPI4RJV3V0IAV1HJbgSZVe00E3ZCk=;
+        b=HIN+YeGgvwqatDUKPIx1C/CHgtNlV+DMk08RhMsEMp1tyiFFyV4jwsAY6hMc3Y3UTt
+         Ue/enQkSFW+g24d8D1SyZahJB9p+6PfuxKRNz2MyaxbEqs1mR0Eo18HcPsEzRsEoEgPc
+         vR0IU2ESLaHuHzLfmJD2XzFwQl4OsZv8/TBZKGxBHa9FwCyNSUpGufqohkA6RfGQhy89
+         l8YhyiRb/dUpI5cdp6OznfxDEG4BHN1SSZSsIQJ80R4ptd8iWpVPN1PCfZVEKs0Qpc5B
+         mS4dfbMfMvY41RryyymqqdI4tTCK9ONHE0lxUho2RZLEHjQXeyEVhB512tdsKKwchkB5
+         PKJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1739975657; x=1740580457;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BMr429gwcJ+bQ9BPI4RJV3V0IAV1HJbgSZVe00E3ZCk=;
+        b=M/oH90zyL/ye/m+dnUw1Sz/sjenJJALbXzQoJhkQPSdKYqGbHY+cLcnOBPNEXfEz6Z
+         hagBZ8p4mQcUy2pWhG+dJLvfRApYkZWB55yBT8qmUnssrZeNJXHTlDeIc3TZqzeOVeXj
+         XKRwceDkW6YeKbBs3nN+IxIfwzJ8Dpr7OfzUP845sNYP1VWZ+i6Y+gSpSjgCkW9k5TD1
+         ZDFiEv3xPD2Z5zxTVt7SGtyeMYvjKWVJYeXrtVmIz0vbUZ3FPeKYRsOhHAnR5HfncMfY
+         AcwnvyntQ9+YgoYhWlPgvh0dVEs7Rs2NO+MiZtxSXg0vUBKM7iN3cHZnqlrDmZFIuRZX
+         +Oug==
+X-Forwarded-Encrypted: i=1; AJvYcCVC7BFBkv0GpfdNrT7jtkcCRO4T4qTuchBx1vjTmaY712bPRWjeILVQdGtmuB+jIaXlN+0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxf+wd7cZzekjL7qe5Hj41STvnUUKPzM++/oEPMpxCqv9wwEnDz
+	9V5WBIV7mNe3eiYt0AH+QoQ4/eg8XPfw/QGqwTYMgRakQzh66vqcRK4C7fuwBo8=
+X-Gm-Gg: ASbGncvVrDsYaRwgvx97NQZWJ2uH+Qi5QCgb1AWb1xbrIRp+SPkHtjMk2wQ0GS68qBN
+	27tr4b6iy8W9rJ0MwJY1BuT9wnWCCr250/N1g3AUD4IuGpbaBLLdXWQobUwt8ecQ3Ocb1cAXNz+
+	vdgjZWu6eK9TmmtPBWphyxMNayuLp5yyjU5/aEqHGUyBX+qhmIuJ33LzISXBjEhdYzvlqPy4WF+
+	z0UXZrrwTon2Xwy3PeQEycda46kJZ069LPbI2s7UGD12SNnI5NcQgT9hJHMh342y5cSOCssJ3mc
+	NBqVixQ+Wl8PmmjByl26mAX+04AXHz35IFQxZ22O4v/ay1GD+nEwl7IV4sWLWuLPqqmomRm0hH+
+	n
+X-Google-Smtp-Source: AGHT+IEl3LNihba87Wnv8lkCdFWD5MM6GVeXY6096T/KnQc2T0l04+ruT89KLOFeW5vtUrVGZvzAaw==
+X-Received: by 2002:a17:907:9411:b0:ab6:fe30:f49e with SMTP id a640c23a62f3a-abbcc7f2de8mr446935166b.28.1739975656449;
+        Wed, 19 Feb 2025 06:34:16 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:9962:1c30:51b2:1ac5? ([2a0a:ef40:700:a501:9962:1c30:51b2:1ac5])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abb1e1bef3esm972857766b.146.2025.02.19.06.34.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 19 Feb 2025 06:34:16 -0800 (PST)
+Message-ID: <282b132e-27b0-41b7-8556-cbbdc08081bc@gmail.com>
+Date: Wed, 19 Feb 2025 14:34:15 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] refs: introduce support for partial reference
+ transactions
+To: Karthik Nayak <karthik.188@gmail.com>, phillip.wood@dunelm.org.uk,
+ git@vger.kernel.org
+Cc: ps@pks.im, jltobler@gmail.com
+References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
+ <4beb0359-763d-425d-b416-ac40bda59e2e@gmail.com>
+ <CAOLa=ZQF0=WgW-2HumRbSp4rUjXikEfecjp5Uxp+zJ+Tun5yzw@mail.gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <CAOLa=ZQF0=WgW-2HumRbSp4rUjXikEfecjp5Uxp+zJ+Tun5yzw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250219-toon-bundleuri-progress-v2-7-a84e7ffa921a@iotcl.com>
-References: <20250219-toon-bundleuri-progress-v2-0-a84e7ffa921a@iotcl.com>
-In-Reply-To: <20250219-toon-bundleuri-progress-v2-0-a84e7ffa921a@iotcl.com>
-To: git@vger.kernel.org
-Cc: Toon Claes <toon@iotcl.com>
-X-Migadu-Flow: FLOW_OUT
 
-To download bundle URI bundles over HTTP(s), git-clone(1) spawns a
-git-remote-http(1) subprocess. Because clone can continue without
-bundles, all errors sent by the child process over stderr are
-suppressed.
+Hi Karthik
 
-In previous commits, we've added progress output in the child process,
-and this happens over stderr, so we can no longer silence stderr. But in
-case a bundle could not be downloaded, the user sees the following
-messages:
+On 12/02/2025 12:34, Karthik Nayak wrote:
+>> On 07/02/2025 07:34, Karthik Nayak wrote:
+>>> Git's reference updates are traditionally atomic
+>>
+>> I'm nitpicking but the updates aren't actually atomic, if a transaction
+>> updates two refs then it is possible for another process to see the one
+>> ref pointing to the new value and the other pointing to the old value.
+>>
+> 
+> Good point. This is true in the case of the files backend, since updates
+> involve locking individual files and during the commit phase, there is a
+> possibility that one ref is updated while the other is yet to be
+> (committing of the lock is not global but rather per ref file).
+> 
+> However this is not the case with the reftable backend, there, updates
+> are written to a new table and committed at the end after locking the
+> table. So in the reftable backend, this is indeed atomic.
 
-  fatal: failed to download file at URL 'http://127.0.0.1:5558/bundle-5.bundle'
-  warning: failed to download bundle from URI 'http://127.0.0.1:5558/bundle-5.bundle'
+Ah, interesting. That explains why batching updates is so much more 
+efficient when using the reftable backend.
 
-Here the child git-remote-http(1) prints a "fatal" error and then the
-parent git-clone(1) prints a "warning". This is confusing to the user.
+>>> This series introduces support for partial reference transactions,
+>>> allowing individual reference updates to fail while letting others
+>>> proceed.
+>>
+>> This sounds like it's abusing ref transactions to implement a
+>> performance optimization.
+> 
+> I understand where you're coming from. This is definitely a stray from
+> the regular atomic behavior, that transactions promise. But I would say
+> this is more of an exception handling for the regular transaction
+> mechanism and AFAIK this is also something that some of the databases
+> support (see EXCEPTION in PostgreSQL).
+> 
+> Overall, we're adding an exception handling support to the existing
+> transaction interface.
 
-Instead of suppressing stderr from the parent process, like we did
-before, modify stderr to write to /dev/null in the child process itself,
-while keep using the original stderr for progress logging only.
+My understanding of exception handling is that if an error occurs then 
+an error handler is called (reading [1] that seems to be what PostgreSQL 
+does as well). Is that what is being proposed here? I thought this 
+series added a flag to ignore errors rather than provide a way to handle 
+them.
 
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- http.c     |  5 ++++-
- progress.c | 17 +++++++++++++----
- progress.h |  1 +
- 3 files changed, 18 insertions(+), 5 deletions(-)
+[1] 
+https://www.postgresql.org/docs/current/plpgsql-control-structures.html#PLPGSQL-ERROR-TRAPPING
 
-diff --git a/http.c b/http.c
-index 5517863808..5c0c6ef204 100644
---- a/http.c
-+++ b/http.c
-@@ -2133,7 +2133,10 @@ static int http_request(const char *url,
- 	    http_follow_config == HTTP_FOLLOW_INITIAL)
- 		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 1);
- 	if (options && options->progress) {
--		progress = start_progress(the_repository, _("Downloading via HTTP"), 0);
-+		progress = start_progress(the_repository,
-+					  _("Downloading via HTTP"), 0);
-+		progress_set_fd(progress, fileno(stderr));
-+		freopen("/dev/null", "w", stderr);
- 
- 		curl_easy_setopt(slot->curl, CURLOPT_NOPROGRESS, 0L);
- 		curl_easy_setopt(slot->curl, CURLOPT_XFERINFODATA, progress);
-diff --git a/progress.c b/progress.c
-index 89abb231ae..1955262000 100644
---- a/progress.c
-+++ b/progress.c
-@@ -40,6 +40,7 @@ struct progress {
- 	const char *title;
- 	uint64_t last_value;
- 	uint64_t total;
-+	int fd;
- 	unsigned last_percent;
- 	unsigned delay;
- 	unsigned sparse;
-@@ -144,7 +145,9 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 	}
- 
- 	if (show_update) {
--		if (is_foreground_fd(fileno(stderr)) || done) {
-+		int fd = progress->fd ? progress->fd : fileno(stderr);
-+
-+		if (is_foreground_fd(fd) || done) {
- 			const char *eol = done ? done : "\r";
- 			size_t clear_len = counters_sb->len < last_count_len ?
- 					last_count_len - counters_sb->len + 1 :
-@@ -155,17 +158,17 @@ static void display(struct progress *progress, uint64_t n, const char *done)
- 			int cols = term_columns();
- 
- 			if (progress->split) {
--				fprintf(stderr, "  %s%*s", counters_sb->buf,
-+				dprintf(fd, "  %s%*s", counters_sb->buf,
- 					(int) clear_len, eol);
- 			} else if (!done && cols < progress_line_len) {
- 				clear_len = progress->title_len + 1 < cols ?
- 					    cols - progress->title_len - 1 : 0;
--				fprintf(stderr, "%s:%*s\n  %s%s",
-+				dprintf(fd, "%s:%*s\n  %s%s",
- 					progress->title, (int) clear_len, "",
- 					counters_sb->buf, eol);
- 				progress->split = 1;
- 			} else {
--				fprintf(stderr, "%s: %s%*s", progress->title,
-+				dprintf(fd, "%s: %s%*s", progress->title,
- 					counters_sb->buf, (int) clear_len, eol);
- 			}
- 			fflush(stderr);
-@@ -287,6 +290,12 @@ void progress_set_total(struct progress *progress, uint64_t total)
- 		progress->total = total;
- }
- 
-+void progress_set_fd(struct progress *progress, int fd)
-+{
-+	if (progress)
-+		progress->fd = fd;
-+}
-+
- static int get_default_delay(void)
- {
- 	static int delay_in_secs = -1;
-diff --git a/progress.h b/progress.h
-index 2e1bd738c2..f12c82adc4 100644
---- a/progress.h
-+++ b/progress.h
-@@ -16,6 +16,7 @@ void progress_test_force_update(void);
- void display_throughput(struct progress *progress, uint64_t total);
- void display_progress(struct progress *progress, uint64_t n);
- void progress_set_total(struct progress *progress, uint64_t total);
-+void progress_set_fd(struct progress *progress, int fd);
- struct progress *start_progress(struct repository *r,
- 				const char *title, uint64_t total);
- struct progress *start_sparse_progress(struct repository *r,
+>> I wonder if it would be better to provide that
+>> via a different interface than shares the same underling implementation
+>> as transactions. That would make it clear to someone reading the code
+>> that individual ref updates can fail without affecting the rest. Burying
+>> that detail in a flag makes it rather easy to miss.
+>>
+> 
+> Thinking this out, having a different interface sound good, but I feel
+> we'd end up with the same structure as currently presented in this
+> series. Only other way is to really split the implementation to support
+> partial transactions as a entity of its own. In that case, we'd end up
+> with code duplication.
+> 
+> Do you think you can expand a little more here?
 
--- 
-2.48.1.658.g4767266eb4
+I was thinking of a function that took a list of refs to update and made 
+a best effort to update them, ignoring any updates that fail.
+
+My concern with adding a flag to ignore errors in the transaction api is 
+that a partial transaction is a contradiction in terms. I'm also 
+concerned that it seems to be ignoring all errors. I'd be happier if 
+there was someway for the caller to specify which errors to ignore or if 
+the caller could provide a callback to handle any errors. That way a 
+caller could ignore d/f conflicts but still cause the transaction to 
+fail if there was an i/o or could create a reference if it did not exist 
+but leave it unchanged if it did exist.
+
+Best Wishes
+
+Phillip
 
