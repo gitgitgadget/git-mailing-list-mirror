@@ -1,78 +1,99 @@
-Received: from out-187.mta1.migadu.com (out-187.mta1.migadu.com [95.215.58.187])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.135])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91771C3BFC
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 10:06:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BC11DE4FA
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 10:49:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.135
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739959591; cv=none; b=eX5yjwdO1TsMz6bU6uhN+AGg2W8bYWn/vWMsUJ5EvsB43cN3ZAjaEilwWtnD+zZKZU7wqfHSl8878nrtUAS1gpR2HWibJwFlKo5uTF56oI0TljJKzd+hWYBIfDLj2akf3Jm6NHzWQcjyeX8MCYrj6aFjwsB3d7k40ja7bhb0AfA=
+	t=1739962190; cv=none; b=fG7G7rABH0Iepsykn2xAsPK5eID+WfDIY3kaRqQn3T6ZGfvw17VJG1MwuGMe5pTqnELyB1QvyKDPsPAmPWpcgZocXTAG0O2pbSxZXTYhxKVWS6Dbu+2SYBF5ypRxCECZNNsy/2JgE+o5V5NxxK1D23k9NRdpTbTnOKE+IQ4yW6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739959591; c=relaxed/simple;
-	bh=taJaP4JWG6vWVDFTUEukkSQ715SrWYk6nZTO51LCfkU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o3lbUHYPKfEQsyoks9jMMX3bcONRSCEKXJNUh/ypdj72OTsQNP8hyrz6i+t9LDv6r7V9VaPMytdW0Eih022LQcqk6t8RtzFDrARJynWX3Nk+eII3r/UTWlZ+rfxHBjs7Ex25OgQoYl9uAl4OPLtB/Dq2pWN1ynmmk5CkfnDJbIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=rI494Msl; arc=none smtp.client-ip=95.215.58.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="rI494Msl"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1739959584;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=YsLyFUY0SZo/6q6Qgn0AJRtKXVh0qfgiq4vnb5DySFw=;
-	b=rI494MslKf10TvTvOkzXxCjslqIzjRJxe4PsbB/Q5XNkmj9YnbfgBHcvPsxnfKlHhYtVpn
-	uOcbHUDfjofdFgIfs2C/h7Rpuy1ZwXz/FjK0ft02FBKgqW6sGd+kvEpOnVkjHYc3jkC9PX
-	vep/TM41b2wnkqTz75EPxEEJ4dIf9Ik=
-From: Toon Claes <toon@iotcl.com>
-To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im, jltobler@gmail.com, gitster@pobox.com, Karthik Nayak
- <karthik.188@gmail.com>
-Subject: Re: [PATCH v3] builtin/refs: add '--skip-reflog' flag to bypass
- reflog migration
-In-Reply-To: <20250212-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v3-1-98b2c4d2bb0c@gmail.com>
-References: <20250211-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v2-1-991a2ec9a796@gmail.com>
- <20250212-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v3-1-98b2c4d2bb0c@gmail.com>
-Date: Wed, 19 Feb 2025 11:06:05 +0100
-Message-ID: <87a5aiqmeq.fsf@iotcl.com>
+	s=arc-20240116; t=1739962190; c=relaxed/simple;
+	bh=9XYeCDJmnRf6FmAqypBwL6pwacq4NPwrxFl9ExMoZ+I=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=qD22yh+QG77Om/JCZvGpJAZQttD7uTAklrJGqJEVRyjTSV5ID8p4IQYwsb9Jdx3DpzuTmUfRI/32GoglmRJmEmayhnCq3CWuD/lR2aJJoTGKkSZoo5LGAs+pxYv68ZwJ6yLZvHW8pvN6ALk5vLA7n2xus1BtfEAUsNJN61PAhzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com; spf=pass smtp.mailfrom=anselmschueler.com; arc=none smtp.client-ip=212.227.126.135
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=anselmschueler.com
+Received: from [141.23.193.159] ([141.23.193.159]) by mrelayeu.kundenserver.de
+ (mreue009 [213.165.67.97]) with ESMTPSA (Nemesis) id 1MPXpS-1tyV8w3IH4-00Oskt
+ for <git@vger.kernel.org>; Wed, 19 Feb 2025 11:49:41 +0100
+Message-ID: <216a7288-b599-4333-ba62-10665d6a94d8@anselmschueler.com>
+Date: Wed, 19 Feb 2025 11:49:39 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org
+From: =?UTF-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>
+Subject: Possible bug: Empty magic word list in pathspec is handled
+ differently in short vs. long form
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:56BAj3XKHpWsHot/qDKE8PBsU5kC+WV3jJLEHQ7crD/vd3F3f3h
+ CjV7mpKQjx0c4YjnhrzNCm79xMVkY4RcUGfwYDRgvwd8aKxLcqdxOAWvwkj9BZx/w76AaLd
+ hO8Ar8kd/9b6358LYMRnoWTkAxXOiHLF/zdCUVjgf6Cw42FCR4wCr7hq6aN7YWnffWvOS+M
+ fM/PHW0qsW/cBY4IQLqeg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:ja98qlFShYA=;B9/4D/TNQK25LKmSQ9GjOyNN3tZ
+ i7MX4nsVv7vcO0Bl453/wibZh2yiurM0xc4hwQFTLRNxNw2h98rC8xUpTn3Ai1LiBKPjeYfaC
+ vKAOqVijDCoYAtbcQab0NxbL9TTKS6le82WgF8V+pzLX4Wb+vCgCsnoVn08g9JyJucQJKDQOF
+ k26/NMaOVx9qiqMPwJGpeeP9UcbtftFo8RVeCANAHiQrprgKsiwyCKIMoNheEKLc69tPOQ5RJ
+ z8ef2pCB8tV9LN5WkNlgj90Ve8QFiwSGIZOnbscBOEis/yrr1pg8BNp79mHQfRopU/WMUR1ZL
+ 6cN9qJ8oYQ5kdqzKISkw389b+A2uGlLlxz4DbPs+0PEwnFoquoPUMzFVjxOH/AULK9z/JT7zb
+ yIztOi/sljg7KsnvcJ9QDFoiPEvlR/NkTOu7U23ejAbROWy84xJU9G5sOPM6Cc21qM72i24OH
+ cxTVW6rTdEE7TqHYdleu2TTBENlw0A00m+hNxqHMhYRxsxmtRfYzcV8xzgJYofH7P4Y4FS6NB
+ FVAAs7ocWYFufytn4/Z4BzEDgrYCXDSQi1zHrJsZERloO6GrNpOobkEg3Ccosmbtgsb0nkfSN
+ vzRpi9F31Jwq2gOj2EBGYy9SCCAGiawB4LwhbfhbaxM1hFxAjra7faeWoLEajOJEjjMRBCpPL
+ K/nuKcJ0VG/lMOLPA3emTaCIvQnydejiOK4PQS924uDt46soJmjv9DmF/y66+ePYSb8F6rST4
+ i0tKIMdj0FIwgISZyDrCUFs11I9GRANk2lIZEOt4l42iLv5sOh5KrTsu8F5hOQu2CDN57kAG8
+ l9elmUlzZ2A+24MoLjK8qcUa6MNOTAn+KF5sOUfCpaeQQQMWoGgmFHEPNyiQa1fI5ObYbpPbd
+ QquE8gcQW8ZC4RLfM+f3U8M5PdCbfI8t0JLyVVzHG3WiLP7742JX9Z64r9edBYySzn9hq7hfl
+ hO30a/ZqdKpiVAGfnKoR/OV77kMt2ulQIzKlt+6AHXnGaHIS9/PqMuBsQIsm3HurVTL/QzK6n
+ RbXcUoySjoXruyNxY3+Z7djgoePrYYGUI17bsTEymqTHHycwd241zaV3Ki54jqL47Y9IhX0Db
+ LrP7v0PRSEnN5cEGBbLXc7OwCusZy7xPW4gVOVjvrGEKaYvzLiRZdk02bTGtHZJAfGfsP52A0
+ kjhZdz1ANrYDw9ICPPr77SfCjC3G5SqY96+6riX8lI7Rq0sMR4YNTYo5sEIOBEw+6e7fo6bPq
+ tbXD5s09PcZXbSg7xDP8m41RTbf0cT6ufDlbjFqa7/QAYWuTfznXilxbg6tRKIGmWcKMF4tZW
+ 5ZpRxUx1qlsMlNDb+I5HeaYXY5ffR7duj3gpD/NuMIov8tadbDM2f/gKCNZHUckDyKWCVZEX5
+ Rg8hueW8qET3ZuKURxGf5kkYhLhylsX0ygsio=
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+﻿If you run git diff for a pathspec with an empty magic word/symbol list 
+in short form (prefixed by ::) and in long form (prefixed by :():), you 
+get different results.
 
-> The 'git-refs(1)' migrate subcommand, which transfers repositories
-> between reference backends, currently migrates reflogs by default as of
-> 246cebe320 (refs: add support for migrating reflogs, 2024-12-16).
->
-> While this behavior is desirable for most client-side repositories,
-> server-side repositories are not expected to contain reflogs. However,
-> due to historical reasons, some may still have them. This could be
-> caused, for example, by bugs, misconfiguration, or an administrator
-> enabling reflogs on the server for debugging purposes.
->
-> To address this, introduce the --skip-reflog flag, allowing users to
-> bypass reflog migration. This ensures that the repository ends up in the
-> expected state after migration.
+Here’s an example use of git that illustrates this:
 
-It wasn't really obvious to me this change removes the reflog, instead
-of "skipping". So I was surprised the reflog was removed after
-migrating, instead of staying in tact using the files backend.
+~☭ mkdir gittest
+~☭ y gittest/
+~/gittest☭ git init
+Initialized empty Git repository in /home/anselmschueler/gittest/.git/
+~/gittest (b0)☭ uuidgen >file
+~/gittest (b0)☭ git add file && git commit -m "$(read)"
+read> initial commit
+[b0 (root-commit) cd3bd43] initial commit
+  1 file changed, 1 insertion(+)
+  create mode 100644 file
+~/gittest (b0)☭ uuidgen >file
+~/gittest (b0)☭ git diff -- "::file"
 
-Only after reading through the test and the discussion in this thread I
-realized that's the intented behavior.
+file
+──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-So can I suggest to name the option `--no-reflog`? To me that makes it
-more obvious the reflog won't exist no more after migrating, and is more
-in line with the common UX of Git. Also emphasizing this more clearly in
-the commit message and help message also would be advised.
+───┐
+1: │
+───┘
+66d18ffa-1128-42a5-8d4e-f9d75eb86b92
+9acea2b5-50a6-4f87-ae1a-64019a93e55e
+~/gittest (b0)☭ git diff -- ":():file"
+~/gittest (b0)☭
 
--- 
-Toon
+Is there a reason for this? I couldn’t find it documented in the git 
+glossary <https://git-scm.com/docs/gitglossary>.
+
+I’m running git 2.47.2, built with Nix (nixpkgs commit 2ff53fe) from the 
+kernel.org source tarball.
+
+~Anselm Schüler ⚙️
+
