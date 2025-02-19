@@ -1,102 +1,141 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA8F1DA4E
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 14:55:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C771F37C3
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 15:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739976936; cv=none; b=YUUu6IxbPMe2iyY8OQizohBBwM8Oj+qoXa2rsLIEt93txTOpkx/OfOT4n0Puy4uPrN5uwiLszk1zSU9sMlLUGFwHORihOuX/VBZT17xtMtgLFWbTYQH+vIFwU+vFcOVfHl3eA1ybkGNlysRpPa3szP+BtBCOnZmo4j5UAOep5Ic=
+	t=1739977866; cv=none; b=AmM8pfBphEMqC/igLT4nvMvD2yxmTIjTuhRqZ9Y8gsHXCti9TeNNtLy10yBUvXm2XdJBwqd9jSPNouS/Fv3pZxVQRQS6B3xslR2I+4dpi7VANBDe5j8WsuKZqDpOOYAvTTEL3MxVkL4Rb2MulRymRPgRIJYCqoGumTxgtED97Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739976936; c=relaxed/simple;
-	bh=ibLSteIaE8AS0+l4gv5MeNLXc0W/L0yyt1ho3Kn2zcw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GRUeJC7OXnG+eB33WinPl7sYgl+W4z19SFu0RsEtGuFufZROG9FPhjPrm0yGd7uHyFXLiToeqFf42P3Gvcmoie5dkKhRsg2ohH29rINsTlqhh+2nMiaynoPOlogYCbzmO0mrx0hkUXmhm8ZE6lEgGQos5EUHD7ijx+autaoeyS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nt/wTSBe; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739977866; c=relaxed/simple;
+	bh=ooguIP43l75QL92B2V1MTlThLvykXjHymFnMShLiUOc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oKXNmFOsku4g1Ocbul0LVgZM4it7uoLHcAKMEq78cXggoVGcLURVUiISZsFIbE38IAy/RnffjvrBm4z7Fr9KUjyIoUX8Z9EaOD6+JULULwgHVXXuMMtiwTE7sIHlfDkC8WRIzd0adhBNFJEgzib0Y3qgl5gINHIWQXXE4jPX9Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AD8JJo0Z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qy0GXecJ; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nt/wTSBe"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-439846bc7eeso22817145e9.3
-        for <git@vger.kernel.org>; Wed, 19 Feb 2025 06:55:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739976933; x=1740581733; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zpQudfRSXN40QMbP4YyJRmNsFeK/48mRpE3CxrR3500=;
-        b=Nt/wTSBeEQvHHlBfI8foRDwQ4gJgl61GUJVmh1JW5nCS4vWVEexbj4zr7TYLJ+Q9eS
-         cJCobS8jNu0QP97RZN1rAJqxVQRTlyJ3gKq4ssT+6/CkGupw89rY75/TFhQzrjZkh0Pk
-         X/8+X8/2YycplcPmp+cA2QNMAfEFesCL4zgiJldoSPlO76vwPViAHQBudxW4a7oNWG2w
-         GeDaTMrtrEsSu+fqdDC38VUMrYa5AhZ9RxtX5sQmmCtKKvOOe0/1e6UoWngEo2MjQXXd
-         ciJEEiN2kL6CnvYFGzCxMXVu1XWgbeZrtSgCwJdXXVzIM4Z1+Ndhp7luOL6KNjE+xN/l
-         AmlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739976933; x=1740581733;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zpQudfRSXN40QMbP4YyJRmNsFeK/48mRpE3CxrR3500=;
-        b=Rj6IqZl/8bS291uuXDUUBpQwMCXuufgj86vu/6duPDWqTq5xMFFnPRGetfewYKZQ8+
-         hlVYIcejmucV2qbReU4IdLI3HeMUSkYIpbqywpFPtzpf+1aejNOey4E1bUDHm89NCXDN
-         dORLSU04Q5EXks5hqYR3q0zWsHu5GLeOff4i0BkKv11/hoK4+CxCM6Ny+9woBnZcK0DS
-         6SvnPzIdyNJPRGUfHjQki7Y0jmaus2R4fZaJGy5qD5VCf1L/MtTLSyyVc7ZNxbzKIeEL
-         rYNh+3jiWRYICT9DcWEOoEqjovSScfSNKXyQDeML6eSSsZko33UFxIliFdg3TrDffPiW
-         GQGg==
-X-Gm-Message-State: AOJu0Yx/joUhvwqqFt1fV9SGxvIaTsRssoxmqpbZDRh7oXD7Rp5xMJEJ
-	pLBOoFs6IHflJrGmVJBWCMvsKh4ZY3M6w1aocyX28oLfOfAd84fY
-X-Gm-Gg: ASbGncvxi+ZYWOPpzgqoJlFTlehHC7vl6+eanNy82SBx9KEyYd2jWyFesJiCOziROYL
-	4xYf8V3fEKDdB+qcrDp1lucEnSdG+klewgKM0MNueYm2WoG+wdpeW1h+ZhfQRlZJ6SYx6P8S3zB
-	lkVRHK1WlEPT8kSfYU7/P1jJyKItVE2O2iezDPLF8gJo/CysioX6Cp09N8DL7RQgQ1ba5s6gDN3
-	fdjCuLfWYTgQy4DMLdZiWCvF67Rv00+mT7tIGiUKCxA46KiFNDMLiKPVSGJSlYn+girlDPNAz5n
-	y/w3qIl7SYb8Z103zAjPJEGMqyUN1z+OUpaHX7uNHr8KOOZCOITXGA1uAtBFZju4Qboxig==
-X-Google-Smtp-Source: AGHT+IHRS9yUEGuGQX2wedt5T+00VEcHMMtsXGJf7emj2PO4X7sxEVS4DxObYiZj9ty35xXU42kUSg==
-X-Received: by 2002:a05:600c:35c2:b0:439:9698:d703 with SMTP id 5b1f17b1804b1-43999dd1187mr36887805e9.23.1739976932419;
-        Wed, 19 Feb 2025 06:55:32 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259f8273sm17670504f8f.89.2025.02.19.06.55.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 19 Feb 2025 06:55:32 -0800 (PST)
-Message-ID: <49dc31a3-bdf4-4abb-85f6-2a80dbe18cad@gmail.com>
-Date: Wed, 19 Feb 2025 14:55:29 +0000
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AD8JJo0Z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qy0GXecJ"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 57C7C25401DF;
+	Wed, 19 Feb 2025 10:11:03 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Wed, 19 Feb 2025 10:11:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1739977863; x=1740064263; bh=9S80m8Hmm5
+	/QntQ+zA28IvIslvmKi//G7OMY6Ss/CsE=; b=AD8JJo0ZdUZGxSi+Mj9GIb7i8Z
+	RqWo/Hk1KQPS20xo20bH1IVUjT8ngluNUE6dOSOLgXelx0LULxsHc7zVn4c9CD9m
+	89cbY/+fO/OBD+0i+yujhr+4R4kn75CQhscL5Nn1MB0XkiiVWuC1kYRHJfSo3smR
+	wNtXeKHCErD0zQdd9B3rgXcNg9mlY50Nq2CSmZg6p9+JomkEd8S5SJ0ju55i7myg
+	6UR1I38MXX2kGEbpj3QmBqrA0RxBP0JQCMZiFnrfxCdilGkDXDWn7iQwCTy7KUZp
+	cy4e+apoXVR4Zst/Wovis64vGNKXxplm1sfz7Aj5Gu4f8UAXyGtz7dbzji2g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1739977863; x=1740064263; bh=9S80m8Hmm5/QntQ+zA28IvIslvmKi//G7OM
+	Y6Ss/CsE=; b=Qy0GXecJGfYdqvTmdQMaeol6QGk2s+XYV0us/RiRnJa6Z4EDvOm
+	GhaASUQxI5+IyaXxNjGqOqkHXQezvIbtJ4xBqbEhcahARffZD+kgeVvGH/hEkrXb
+	g2v21AyLNrJMN94T75l/y/kIS1hAjmHMomdZd7N8gjy7/epUKBsT8O9bz23teTu1
+	7ERn09CE5KTrHiudJ5AzWGeue/8wT74jVrtx9qjouXNg627fSXMqBBFFBTe26wBg
+	3EViQRFkUoK01E3tkvpGTr8nfe21yQZlBl++fhRRR4Qj+/J3zkyBLOPuynLqhDsw
+	s5DxbF6UMpuRsUED01p5AeVLGp/95xVMp8Q==
+X-ME-Sender: <xms:hvS1Z1BudnEJh-_K6BHfolDOuMYeRRIAYpgETnYkcBoP1ljl2o4rvA>
+    <xme:hvS1Zzj0PhD6-sjNv-6ji_jCm6JJu5L0lqPMLNkJmYKCnz6uvC5fqLaGdGvXqls6W
+    A7d649scdMQmkm0jg>
+X-ME-Received: <xmr:hvS1ZwmkOCWcDoYIOKpQ3xrWwselZ5mIXEFkyUc_G3MJGabJJlaKAHOucwOOIxx4p5WwFpYGYNofdnVk3ldPPLV9HKYpn_32iY6dt2jO8TbISCk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeehkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfiho
+    ohguseguuhhnvghlmhdrohhrghdruhhk
+X-ME-Proxy: <xmx:hvS1Z_xZrQdGMkb7bAeasvPayOvqGVSH9n33uGUqzcGUDw8gNtcTLQ>
+    <xmx:hvS1Z6R8O7ym5DO2VvxZ7zN8LcF9cqQgcNZiXzBuSGBTPyQIrX9k4g>
+    <xmx:hvS1ZyYGZjepfHc-PtBuYWUku2kpaqlT03kVi3oXXS7GXvy0JPkD0g>
+    <xmx:hvS1Z7RTnFHw6do4pvn96fwZlqqJfSspSJS8j8Tk9KBcE102ssRzgA>
+    <xmx:h_S1Z3JqAhrfuf2GOwlrsqjw5Ll4g2Jnq9aCB1x24qPsEPa-VLkBO_gr>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 19 Feb 2025 10:11:01 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id ff592a8c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Feb 2025 15:10:58 +0000 (UTC)
+Date: Wed, 19 Feb 2025 16:10:57 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, phillip.wood@dunelm.org.uk,
+	git@vger.kernel.org, jltobler@gmail.com
+Subject: Re: [PATCH 0/6] refs: introduce support for partial reference
+ transactions
+Message-ID: <Z7X0ga1nmRheAQJ4@pks.im>
+References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
+ <4beb0359-763d-425d-b416-ac40bda59e2e@gmail.com>
+ <CAOLa=ZQF0=WgW-2HumRbSp4rUjXikEfecjp5Uxp+zJ+Tun5yzw@mail.gmail.com>
+ <282b132e-27b0-41b7-8556-cbbdc08081bc@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 1/5] merge-tree --stdin: flush stdout to avoid deadlock
-To: Patrick Steinhardt <ps@pks.im>,
- Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1862.git.1739723829.gitgitgadget@gmail.com>
- <pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
- <3b3179785098580f3336bb24bdbaf0aa1366bfcd.1739895879.git.gitgitgadget@gmail.com>
- <Z7V48_q3Uu9d0D3Q@pks.im>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <Z7V48_q3Uu9d0D3Q@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <282b132e-27b0-41b7-8556-cbbdc08081bc@gmail.com>
 
-Hi Patrick
-
-On 19/02/2025 06:23, Patrick Steinhardt wrote:
+On Wed, Feb 19, 2025 at 02:34:15PM +0000, Phillip Wood wrote:
+> On 12/02/2025 12:34, Karthik Nayak wrote:
+> > Thinking this out, having a different interface sound good, but I feel
+> > we'd end up with the same structure as currently presented in this
+> > series. Only other way is to really split the implementation to support
+> > partial transactions as a entity of its own. In that case, we'd end up
+> > with code duplication.
+> > 
+> > Do you think you can expand a little more here?
 > 
-> I was briefly wondering whether we should rather move this into
-> `real_merge()` itself, which is responsible for writing to stdout. But
-> the only other callsite doesn't really care as it will exit immediately
-> anyway. So this is probably fine.
+> I was thinking of a function that took a list of refs to update and made a
+> best effort to update them, ignoring any updates that fail.
+> 
+> My concern with adding a flag to ignore errors in the transaction api is
+> that a partial transaction is a contradiction in terms. I'm also concerned
+> that it seems to be ignoring all errors. I'd be happier if there was someway
+> for the caller to specify which errors to ignore or if the caller could
+> provide a callback to handle any errors. That way a caller could ignore d/f
+> conflicts but still cause the transaction to fail if there was an i/o or
+> could create a reference if it did not exist but leave it unchanged if it
+> did exist.
 
-I did wonder about that when I was writing the patch but decided it only 
-mattered when --stdin was given.
+This is a fair point I think, and it's also something that I called out
+in [1]. We shouldn't blanket-ignore all errors, but instead only ignore
+a well-known subset of errors and then record the exact failure reason.
+This allows for better and more unified error reporting, and would also
+allow us to easily build mechanisms where callers can specify that we
+are only expected to ignore a subset of those well-defined errors.
 
-> Overall the series looks good to me, thanks!
+But I also think that this is another selling point for continuing to
+build on top of the ref transaction. If we now want to record and ignore
+specific errors, only, then this falls out quite naturally from the
+current design of ref transactions. We already have all the ref updates
+in there, so we can then simply set an `enum ref_transaction_error`
+field for each of the failed updates.
 
-Thanks
+Eventually, I think we could also allow for modes where we declare only
+a subset of reference updates to be allowed to fail. I don't have a
+specific usecase for this, and don't think it needs to be implemented
+without one. But it's another thing that we could implement on top of
+transactions rather trivially.
 
-Phillip
+Patrick
 
+[1]: <Z6YxA4BlhNwbeYk-@pks.im>
