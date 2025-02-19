@@ -1,139 +1,193 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AD91D6DC5
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 13:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2233D26AF5
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 13:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739970421; cv=none; b=IxySeW7dSLVZ5HAaCHFRCBQxYxEbXMlc8LvaQ/zDsa2vl70AXslW+cdGwouzhcofCatxif4PT1yh98+oONGwlxCF0rqt7UCtHSAkBEwjM4wp2KzxiGjd46IS6P7JokyYi/B133WbmRXvEb8VnQumV6ieW5MPZdcDZRVJgyf6vNo=
+	t=1739970843; cv=none; b=ZPHhsH0St3ZKdCa8Y5a9zFEl8IMLTspjIuzd5zuP32pubyEBqD0lwJwU6Vlxw9xrhR7ymUCmlspT+xYfH2XxMaLzRm+EOR7SXj3QVlYf1uVhIzkx8Xq4r7NFWfxLEdsrNJqPKC8ex6LwH11xIfWsVo3q7nS2iL0UYGrdRMUYDHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739970421; c=relaxed/simple;
-	bh=eInjH/8xtnmDH3WFnvAtm//4oUeIxhM0atumsWhvx4c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XgYfn8kSOzvgRKoTdJHdY6F0oiaIg+FhOMO+N/bPDOTwGh1wpUnqbR8E9WBVwdPT1gFlx6UyGNh9RPBaCDGpQ+zy1L44XO1Nxh0LLEqmSxEZhd3Ni8k3elzwzefD8j0AxpnQJeUiiKEXfiN1Yt7sOek+5RsxN50CnzbWrPMczPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EnR48dF0; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1739970843; c=relaxed/simple;
+	bh=vUF7v2P62b00qmPSVbPwUQrBN2zUS3oJUtPBONQVQlU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=X7ZEW8Lib5de5N/fWXS9r2eWT5t99aBIDvurqGI7dYIAEKQNzqaUFNVf4thSbleN4N8r3hq2RI50UgGEBaOw9oEC151EhgOgT2e9qR9PBdm4Jrp7fFrwL43eVudtItzSTzND8xCkNShzeTuUJdyAsaQX8x8StejSzfW2nI/sYiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G7n2dDQp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l5G9hGYm; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EnR48dF0"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2211acda7f6so78533035ad.3
-        for <git@vger.kernel.org>; Wed, 19 Feb 2025 05:06:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739970419; x=1740575219; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ava9UsnJwXQo47G/eDoXIArUG1Q4Lm01QfVqu3I/fpU=;
-        b=EnR48dF0RfTPR33T5+hINIg8vLTZw4MaaqFPJLfsjaGuqm8tt+tV1LtQL4ZpzQpu40
-         SBjymUvLIa5NCZYKe/ZARu7gPLlad12b7isYlQkAUelW8tqKrVa3Z93eq7BmcCs3os0N
-         2Zsvh6yBZfEXxbM70JNfFsx5kA82TdN40qjK+Nz/HP64DxCwJvmZymVoU27m7gblpCIh
-         5E+humwQv1GMdu7H8xPziWOR0kirDgnBXdA3ep3P12wPXKphD+AHucmoLc3EgiDwAH59
-         HsAjWK6ZuzSOyVU6yIMwIEgIKoXEiS8Zo7aZCnOEoSuggzhXD9dfyH7xRD3oPH2GHQIh
-         3SaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739970419; x=1740575219;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ava9UsnJwXQo47G/eDoXIArUG1Q4Lm01QfVqu3I/fpU=;
-        b=mnDECo1Xqv06nFGR8VaatKu4FJgvqC/dsIi9hXqRpkvWTpUhxqORdr2mrm2FleTlBC
-         ZcF5rnL/HQt0+k9d2fywmDiEHcEpmbyr5jwssZGutgAhsjURuCyk5fXvjNaFynrAfl0r
-         bLID6xYCoMsMOYsMGMhIFYMlIlrmm7UE5DxOY5PczaYVNu396yH8cB2T2UKwZCx/dVT8
-         gfZZQy5ap8P7xQggj/kyQCZRsUXOxIyLilVDifBMKOgLP3i1csOxUCBIiX7Ouds34QFX
-         JkrtFES6Y20cs8Y46n6Ga0YMSXWgrckiBAVbMJSJWhjLOeH9Ep2kIZf3W5LV5UZhP88L
-         vS4w==
-X-Gm-Message-State: AOJu0Yz+4l6spDGYv2Qrd521qky8dKxpvXiZpBECadbMzywmtH44wntR
-	5aOGawC6USLX630z6Cs7COh5Xz0PdDcWVP9m/izezTywGr7bdKVUIp3O/w==
-X-Gm-Gg: ASbGnct+n0rfw4FjQ4bLPqrmjhckNJHhnI86AuJIx+WLVR+mOpweh4FCNseIwzjzYQm
-	K1b6U2548ZwuV1QFkOfZRHHYcwWkVFO96PlBRfm210pKZNxnpCSGLequbZQ4PlmFM2Fhmhw6bqp
-	Z+X6hb3tjwOhsSc3tkYunBI2iPWD7T5lYsCfhrNY1jtOE82PWd89jWANSxXf9IAy9H0kaBP6293
-	9W7JTUgSbxMY89T4aFUz74V43B750pYLwquZz02tG8XHGNccK6XyQbAmBbPDMUxQNwvtwz52+i5
-	CjHWSUdlMMc=
-X-Google-Smtp-Source: AGHT+IFr3cMNYjzHQtZxssW+WvZXJYabAjIdLyVBsre9oIy81qF/ldw4E61ZzGXwTJFpLie0QxjekQ==
-X-Received: by 2002:a17:903:244b:b0:220:fb23:48df with SMTP id d9443c01a7336-2217119ecd2mr66196785ad.36.1739970418708;
-        Wed, 19 Feb 2025 05:06:58 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-220d556f97dsm104693705ad.172.2025.02.19.05.06.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 05:06:58 -0800 (PST)
-Date: Wed, 19 Feb 2025 21:06:58 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 07/14] refs/iterator: separate lifecycle from iteration
-Message-ID: <Z7XXcp9o0fb7FloS@ArchLinux>
-References: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im>
- <20250217-pks-update-ref-optimization-v1-7-a2b6d87a24af@pks.im>
- <Z7S6xzmPb3lK-SdT@ArchLinux>
- <Z7XF5pGsa42jrIcN@pks.im>
- <Z7XRX1gfo942QdNR@ArchLinux>
- <Z7XVoeNMjXJnlrmX@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G7n2dDQp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l5G9hGYm"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1DBBC2540149;
+	Wed, 19 Feb 2025 08:14:00 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Wed, 19 Feb 2025 08:14:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1739970839;
+	 x=1740057239; bh=CMwI5TOGqyNh88+jMCqpzzYTGOoKt/bfnkUSpJFYddU=; b=
+	G7n2dDQpKKnvFSFBlZ2wdH5KlzjuXrdFemX9aZo8+9c7KuzPHDJvZjlwaNE25bhz
+	jBm6Lrs/jlL0nwkXCqpWrRzMMp2pxhjBTfskyYvnBdex/41orTBjwDYpwR+JclVd
+	z1UnMOqES73fayf+h6eK5kzpgMV8Hdme3iT3xUZtR5+k7tceT2mLGNW/RpZL0LDs
+	uiWV7Eg5P+X17L39ekMndw2A12IZkfMOU8UVWBfIGefoK0g9BYHYD52DVJAMdLsp
+	POqT1eondxmZ1tyVV9YjI9zuKPZmv6kVcgYOg8YDfRd0q5hkSj3qi0mDKEMTNCou
+	JQO9NszJU78Ycd/kHATIDw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739970839; x=
+	1740057239; bh=CMwI5TOGqyNh88+jMCqpzzYTGOoKt/bfnkUSpJFYddU=; b=l
+	5G9hGYmVCD/2UI68FkC+nibBzCbYdn9yo8DxfSBHSp1mgKJROcqefhjSjRQ0TFuv
+	KzLPNkveYfexZga+vpAKvOdqxcijlddoTaUNr9wMsrQh2dh8JU0XsnoL9lGuxo7B
+	IzkHxsvYV7bnavJSmyCQBxYqeIlTFI3j5YArXx2xyM2GPyKlHmfIOEUInyXl1pSQ
+	1jujXCZ5/WdgSW6G4DEIF+bwox9DP0/hptzl2P+3yFSEeEG5CK7BxpNawTQ0zFN3
+	S7vfYRp5lWe6YH+//bFRBUG07DbPhdcUwIQ9qKqpNah7fXYMpjaM4V7XUOhVGcW/
+	e4McsA0OU+CeLJKW6M/Yw==
+X-ME-Sender: <xms:F9m1ZzPJR6iBsVO_uRYMggSCDmHTA6_5Z8GfWsspI-tyE6L6qn3Elg>
+    <xme:F9m1Z9-YTiIm1B7Y0sS2pEz1zGqzuPOYBITi1dhon1MF46oGW82ByfVipdaOu0nzT
+    pUr-jz0FKFZK9xfEg>
+X-ME-Received: <xmr:F9m1ZyTJw3_M9EVThD0aX5z0JuW1g0Jki_mpDqOdNsRmyXASh4fRMZEwRlBr-VDW900cJ69uxrYHh5H6z5gZjebsIPjpzlQCMx6NC8HOx-JqRGQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeefgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhufffkfggtgfgjghfvfevofesthejredtredt
+    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepffeikeevgfeftdfhtddtfeevteeugefguefhtedu
+    teegffefgfelkeduvdeuteegnecuffhomhgrihhnpehgihhthhhusgdrtghomhdpkhgvrh
+    hnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+    rhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomhdprhgtphhtthhopehmihhrthhhrdhhihgtkhhfohhrug
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhg
+X-ME-Proxy: <xmx:F9m1Z3toJje2MnYQrt-1ViogfligekhwaA3NCptRk1Zn-oj8rvQuXw>
+    <xmx:F9m1Z7fC4DRRU0hFijFBmmCo6j24whEfkshcf2UeLPpPtqhInl1PBQ>
+    <xmx:F9m1Zz3uPSYpR3ZgRzqBWzbn2usuYM8skagJRIJowihAKyL_YAuO2A>
+    <xmx:F9m1Z3_PQuXhKQ-jIfz7L6PQtb6h3nyNidVRk7l7F9RE76l1IpHLPQ>
+    <xmx:F9m1Zy4vyT_jLtSJQlwIeGn3ROhvHKN-K1bDxujYMubERkQnQVeDgS8r>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 19 Feb 2025 08:13:58 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 5e013e34 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Feb 2025 13:13:57 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 00/10] meson: wire up bits and pieces from "contrib/"
+Date: Wed, 19 Feb 2025 14:13:40 +0100
+Message-Id: <20250219-b4-pks-meson-contrib-v2-0-1ba5d7fde0b9@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z7XVoeNMjXJnlrmX@pks.im>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAATZtWcC/22NwQ6CMBBEf4Xs2TXtIqZ48j8MB0pX2Rha0pJGQ
+ /h3K/Ho8U1m3qyQOAonuFQrRM6SJPgCdKhgGHv/YBRXGEhRo0id0Z5wfiacOAWPQ/BLFIuNa23
+ dN06ZWkGZzpHv8tq1t67wKGkJ8b2/ZP1Nf0Jt/guzRoVDzc5RS5atuZbOUSbotm37AA3vPh+1A
+ AAA
+X-Change-ID: 20250206-b4-pks-meson-contrib-5d9b3a5d0830
+In-Reply-To: <20250218-b4-pks-meson-contrib-v1-0-c3edd292beb8@pks.im>
+References: <20250218-b4-pks-meson-contrib-v1-0-c3edd292beb8@pks.im>
+To: git@vger.kernel.org
+Cc: M Hickford <mirth.hickford@gmail.com>, 
+ Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
+X-Mailer: b4 0.14.2
 
-On Wed, Feb 19, 2025 at 01:59:13PM +0100, Patrick Steinhardt wrote:
-> On Wed, Feb 19, 2025 at 08:41:03PM +0800, shejialuo wrote:
-> > But there is one thing I want to argue with. I don't think we need to
-> > rename "abort" callback to "release" and also "ref_iterator_abort" to
-> > "ref_iterator_free" for the following reasons:
-> > 
-> > 1. We never call "release" expect in the "ref_iterator_free" function.
-> > For other exposed functions "ref_iterator_advance", "ref_iterator_peel"
-> > and the original "ref_iterator_abort". We will just call the registered
-> > callback "advance", "peel" or "abort" via virtual table. I somehow think
-> > we should follow this pattern. But I don't know actually.
-> > 2. When I read the patch yesterday, I really wonder what is the
-> > difference between "release" and "free". Why do we only change the
-> > "ref_iterator_abort" to "ref_iterator_free" but for the callback, we
-> > rename "abort" to "release". I know that you want to distinguish to
-> > emphasis that we won't free the iterator but only release its resource
-> > for ref iterator. But could abort also mean this?
-> 
-> The difference between "release" and "free" is explicitly documented in
-> our CodingGuidelines. Quoting the relevant parts:
-> 
->     - `S_release()` releases a structure's contents without freeing the
->       structure.
-> 
->     - `S_free()` releases a structure's contents and frees the
->       structure.
-> 
-> So following these coding guidelines, we have to call the underlying
-> implementations that are specific to the iterators `release()` because
-> they don't free the iterator itself. And because the generic part _does_
-> free the iterator itself in addition to releasing its state, it has to
-> be called `free()`.
-> 
+Hi,
 
-Make sense.
+this patch series wires up a couple more bits and pieces, mostly from
+"contrib/". Included are:
 
-> Regarding the question why to even rename `ref_iterator_abort()` itself:
-> this is done to avoid confusion going forward. Previously it really only
-> had to be called when you actually wanted to abort an ongoing iteration
-> over its yielded references. This is not the case anymore, and now you
-> have to call it unconditionally after you're done with the iterator. So
-> while the naming previously made sense, now it doesn't anymore.
-> 
+  - The "libsecret", "netrc", "osxkeychain" and "wincred" credential
+    helpers.
 
-Good point, I didn't realise this part. Thanks for the detailed
-explanation. I will continue to review the later patches. However, I
-won't touch the oid part, because I am not familiar with this. By the
-way, I think we miss out one thing in this patch:
+  - The git-contact(1) script.
 
-We forget to free the dir iterator defined in the
-"files-backend.c::files_fsck_refs_dir". I have just remembered that I
-use dir iterator when checking the ref consistency.
+  - Coccinelle via a new "coccicheck" target that generates the semantic
+    check.
 
-Thanks,
-Jialuo
+Not a lot of stuff is missing after this small patch series, as far as I
+am aware. Omissions that I know of include "git-gui", "sparse" and perf
+tests.
 
-> Patrick
+This patch series supersedes Mirth's patch series at [1]. I have picked
+the compilation fix for MSVC from that series and retained authorship,
+but with an amended commit message. I've also forged the SOB -- Mirth,
+please let me know whether you're okay with this.
+
+Changes in v2:
+  - Dropped the gitk-related parts. I have instead created a pull
+    request for gitk at https://github.com/j6t/gitk/pull/8.
+  - Link to v1: https://lore.kernel.org/r/20250218-b4-pks-meson-contrib-v1-0-c3edd292beb8@pks.im
+
+Thanks!
+
+Patrick
+
+[1]: <pull.1859.git.1739471859.gitgitgadget@gmail.com>
+
+---
+M Hickford (1):
+      contrib/credential: fix compilation of wincred helper with MSVC
+
+Patrick Steinhardt (9):
+      GIT-BUILD-OPTIONS: propagate project's source directory
+      contrib/credential: fix "netrc" tests with out-of-tree builds
+      contrib/credential: fix compiling "libsecret" helper
+      contrib/credential: fix compilation of "osxkeychain" helper
+      meson: wire up credential helpers
+      meson: wire up git-contacts(1)
+      meson: wire up static analysis via Coccinelle
+      ci: fix propagating UTF-8 test locale in musl-based Meson job
+      ci: exercise credential helpers
+
+ .github/workflows/main.yml                         |  2 +-
+ .gitlab-ci.yml                                     |  2 +-
+ GIT-BUILD-OPTIONS.in                               |  3 +-
+ Makefile                                           |  3 +-
+ ci/install-dependencies.sh                         |  2 +-
+ ci/lib.sh                                          | 10 ++-
+ contrib/buildsystems/CMakeLists.txt                |  3 +-
+ contrib/coccinelle/meson.build                     | 89 ++++++++++++++++++++++
+ contrib/contacts/meson.build                       | 55 +++++++++++++
+ .../libsecret/git-credential-libsecret.c           | 10 +--
+ contrib/credential/libsecret/meson.build           |  9 +++
+ contrib/credential/meson.build                     |  3 +
+ contrib/credential/netrc/meson.build               | 20 +++++
+ contrib/credential/netrc/t-git-credential-netrc.sh |  2 +-
+ contrib/credential/netrc/test.pl                   |  7 +-
+ .../osxkeychain/git-credential-osxkeychain.c       |  2 +-
+ contrib/credential/osxkeychain/meson.build         |  9 +++
+ .../credential/wincred/git-credential-wincred.c    |  2 +
+ contrib/credential/wincred/meson.build             |  5 ++
+ contrib/meson.build                                |  3 +
+ meson.build                                        |  5 +-
+ meson_options.txt                                  |  6 +-
+ t/lib-gettext.sh                                   |  2 +-
+ t/t7609-mergetool--lib.sh                          |  2 +-
+ 24 files changed, 229 insertions(+), 27 deletions(-)
+
+Range-diff versus v1:
+
+ 1:  f038c1b6a45 =  1:  1cbc7a0a2e3 GIT-BUILD-OPTIONS: propagate project's source directory
+ 2:  493714b2599 =  2:  7b280db6c74 contrib/credential: fix "netrc" tests with out-of-tree builds
+ 3:  6ca34876222 =  3:  63932bfaca2 contrib/credential: fix compilation of wincred helper with MSVC
+ 4:  f8004e550e3 =  4:  6f8bdb62e00 contrib/credential: fix compiling "libsecret" helper
+ 5:  56eaee681fb =  5:  cd01c7cdb28 contrib/credential: fix compilation of "osxkeychain" helper
+ 6:  fb06e907359 =  6:  2827ed818cc meson: wire up credential helpers
+ 7:  1720a22498c =  7:  84d5d994674 meson: wire up git-contacts(1)
+ 8:  d35fe9c7f1f =  8:  9a1a44e9db8 meson: wire up static analysis via Coccinelle
+ 9:  f3756bea4d2 <  -:  ----------- gitk: extract script to build Gitk
+10:  091def75331 <  -:  ----------- meson: wire up Gitk
+11:  5a6adc0c756 =  9:  05b11300b60 ci: fix propagating UTF-8 test locale in musl-based Meson job
+12:  fdf80deb16a = 10:  92fa0c76c2b ci: exercise credential helpers
+
+---
+base-commit: 03944513488db4a81fdb4c21c3b515e4cb260b05
+change-id: 20250206-b4-pks-meson-contrib-5d9b3a5d0830
+
