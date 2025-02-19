@@ -1,140 +1,213 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4121DF986
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 11:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42701DF73A
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 11:52:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739965939; cv=none; b=cgsCHJ3WvBE9n2HaH2ofp9fPy00muEzBvJksVSjnW1I5BaNDg0mUleVKN8AVzzKFQXN5u4EH5XzbIUNHW2vu9oruvEW401dnw7rzcLq23IuKD6VgvW5T0cUN27HwHhEJm+oFE3STxoNY1TM4dKCY8Lf7FKuTAhtJEPKMxlcEBTc=
+	t=1739965942; cv=none; b=m8NRwdkrHGdbCnJANxC5DjJR2v19QQ+SCSKab8O6uEAPdfMA5p9eVEHy2NiQkH8m4pGbBL91s9FgGcQoeewodqDHdmkAkri/p+5QBZ5CtMUMb2sXITi77Cl8aLVwC6oK0QdgV+HBETXxVHG1qwJbgaDXdsLxUCBWE5w350au37Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739965939; c=relaxed/simple;
-	bh=BdeywDK0gd6L47yQkKTCe7sVuLy1TZTREi3r84q+RA8=;
+	s=arc-20240116; t=1739965942; c=relaxed/simple;
+	bh=8H+nVx5b3AODabvD/IvlWVgEFVfCsmbYKG+dUpDLvFE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IvgZ38HDtUe7Yb+B6aNZPhfMr0jQNF+lP4Pw+k4ZKCsGM1MJwJoytPdmrHb2Q3VP8Xponvw+eZMSD4HZmjeSbnIfv79AhJBFYIbjA3T8Ufnmbw61Gp9uApXFA9DJt973B5JW9ktPlOdvWrJ2irsrY3lxnUKEOdAu4Tjunsng/L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iDy5JxuS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MkEj0VbC; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=Az037e8/pxT+Xx9hx+1f3vcadSvNnRn3Fs/XEfEn6c18AxWX6VbZiIVlXDG9EI3UUW1DKUxpBuk7vJ0eyVn8SY+zB/tiwTTt9FDT6FUt6VTFsCckAOcemXffXBOzNzAZ+bVwAgOlushKtvxm/lfcCIb7Xr0XpeWEzAYI/XYaOmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ICATf/tv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VPlNApQV; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iDy5JxuS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MkEj0VbC"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4F2A31140163;
-	Wed, 19 Feb 2025 06:52:14 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ICATf/tv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VPlNApQV"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D53A41140113;
+	Wed, 19 Feb 2025 06:52:18 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 19 Feb 2025 06:52:14 -0500
+  by phl-compute-02.internal (MEProxy); Wed, 19 Feb 2025 06:52:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1739965934; x=1740052334; bh=kVOIyqg7JC
-	/lzj/AJfmMTcDsGr6sJBSS6yHEWirqANg=; b=iDy5JxuSk/EH/8Me2ctN0/vFhy
-	fKjrj5ik47jh23eEiLQW5vI7F4RIuLaBQLijLFQsZPdcxA19MjHlVUOZX4vpyoMd
-	aKcnfmR2/0VHhoytNnijelsP+Kw6dGiRz+G+nk/VgRcZ9fvO5DJjFaoDDcWVslsn
-	5lf5UkSF7nkZDq4IIqiMuX/ovUJUOFy4vCXKXPJIJClMRagdE5lu9f7UPX28wuSf
-	oMRyFjzOolkOIXGSF8GPV1ZpsiqgESIohIzPuSjO7TBwIbG13AuIF2zHVQ2EdMnE
-	3iacOS8bZaVDybNxAUMEQlOD4CYz6eRztuUTktW01SohTjwPqAjPwvVnz0zQ==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1739965938;
+	 x=1740052338; bh=RgZd/usw4Pz6JGUOgAGl+0hOwZBHWiKBIZ9PrWDBFxs=; b=
+	ICATf/tv6kRbdBI+KnW/LucDn1ElMwht1DL1cEA83JnTMt5s1asGtjYcuADcBZyr
+	B6omRaTxduyZ8dOdRl1NwHz+GToRoP55aK1ah8jcAarsVixgu/+IRPCaaSD1/v0H
+	QaF2s9PC4jWpIANFBFjT4PQE6kwEKRKjsPfiRSTGYJ2v7/V2GaTH3h4J+F0pyD8g
+	9s/Q+rMdahdAJ6WH2cmPekvyIvG6YsJW/YWF+uyqXe6p6DLDYqOOx0LAxwQqg1ef
+	cs/As9t2KeL+Fx19E21vYIOHWw9sbT+O4uXgIo561Y8jYMMcpsTleP6JWAei91Mh
+	aYy3cukMah0EUbhlJzaqVA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739965934; x=1740052334; bh=kVOIyqg7JC/lzj/AJfmMTcDsGr6sJBSS6yH
-	EWirqANg=; b=MkEj0VbCuSjBOuzsM0zwpTQHQO81O+F+lbcQuStzbHnTRRhmOPJ
-	Z1GyNmLsxiXOLK6L7gCu335kt5VzGhuNXuosjoImxkSP/erSuJ8EeQDMpN+f+pU1
-	UHsDUqJDSmbvqFucQ25MEAT+cyQ+OOflE+/APr4PwZ7eJWkAI26brxeoR1tvJ75m
-	nDBNhhOIw3yLS33kgn+IIfdQg3+v3fqrk12Zgq1EnPprFZ7bOJz7LNeDdQp+3jP/
-	b7VpWvc1HZxUoP6/TaKjGVM3SeyRcaNna5fOcJS7hX43PwAYVynKXvwE52cuyub8
-	Ki76rr7B51RoSFUCT2X2f+IVNjXlNU8RE0g==
-X-ME-Sender: <xms:7cW1ZzOsji2LvVcLXNT9JhWIdIEgDXocmzQWT_wsL7IlpJ-Zk53Hug>
-    <xme:7cW1Z98_b9WIdJp2BY7VavK9V2f3rMItOl1GgjAvQq4DPle-g7cgIbO_k30_25Xfg
-    reF_b-H1Uu3lIjaKg>
-X-ME-Received: <xmr:7cW1ZyTktA7xAh4sXT8O5CS8gz4CQofk5WFiV4FtRf6uY5HeEigVQ363QVWUaFJXQhbthpiUil4DEVYCSdcYhint1YR4Zymk0sWYsGjTYVH3BzU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigedujecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739965938; x=
+	1740052338; bh=RgZd/usw4Pz6JGUOgAGl+0hOwZBHWiKBIZ9PrWDBFxs=; b=V
+	PlNApQVg5v5Jo1gANyjAn3UdBEYqIzFxkBOj7HRguha0jR67t9MmgIH0P3EO2Itu
+	6m05tpuvCjfjZK3kx0Sb+He8jG8rsEA4TAuwSoPYmCLZ38j19dTY1f8YfldfguLb
+	Y66AYiahyB8BZmFhFkPRyopZ7cWBbvyT65phsDRWcDgpIufntr2OLp4DutcL7ASZ
+	1GvncpKlTxesfSEyquZONvTS/qdRTigD8KZCthfOahw/CuyBwMxPtFdz9e2EQ9Gr
+	5HotbNRtomIo7PfnCfHxVjSDNGbe8BVNE264bD46l+jh7lCgSUysGz9lXcSPIXM4
+	jG9HxBAyhgmkIGueLzb/g==
+X-ME-Sender: <xms:8sW1Z8nk3NnZ4_-lv9tSYWEf8rDIkcUYJZUmbBrY2WzxcrNlkUHR-g>
+    <xme:8sW1Z70b3LcyOQSpFlyJYFSqnse37_oYsrR9RTLfVyQ9x_Qskx3W2zw4YwRLddTBe
+    wxpABVb28A8_IwKMA>
+X-ME-Received: <xmr:8sW1Z6r1P3mGtq5TUiPhKHdN0A8HWzknPmubuvvKBSSDpBMsdJVmdNQwcmla7YvmlA65MYOzEM1ZnstxL6iBNBVlccAc9aQNRBHDWyAp3U21jig>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeduiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhn
-    vghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghf
-    fhdrnhgvthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorh
-    hg
-X-ME-Proxy: <xmx:7cW1Z3vnEJZIZXj1ZD0eC6CN06LJ4K1xgOxmF1ijafMFUhFSMx6oHw>
-    <xmx:7cW1Z7fV0mA6_X_2RGXa449O_8qay3Mx7rwVBmS8iq-KMcPnhCaEcw>
-    <xmx:7cW1Zz0FYt3PQH3kx0COgdoNF6vaWeHfAzPbBA78q8c9Yv3Ykx0XTA>
-    <xmx:7cW1Z3-aSoAAmG00xt0RwyQUIlFf6R7kdzLNzEe7s4F9a9Y9WIDQog>
-    <xmx:7sW1ZzSEG4FhUMQeDbttEm1T2NWtD94HMtqr8l1Vd0tAYCI8di7U9KFN>
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
+    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleehieetkeevfedtfedvheekvdev
+    teffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgv
+    fhhfrdhnvghtpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidroh
+    hrgh
+X-ME-Proxy: <xmx:8sW1Z4nBjUCY9a9hDE5mzRC7pk5LZZBsNkZbpqdSrg4B8AdSOytmFw>
+    <xmx:8sW1Z61BzEzn6gIYcSUjEHVLQQOAgIo_c32nhzMctaSS9ANbpAcGhw>
+    <xmx:8sW1Z_sAXEgMWqctxEdX6HHX4MY7qvUHHUmc9s031mIhhbZxIv0zWw>
+    <xmx:8sW1Z2V-D3yvGBv3FljJDiPMf8J_2y4os4WivG_4yDevdKxvFtBkKg>
+    <xmx:8sW1Z0oOYcEeZUIRfMH7NYDpDJ_y9XYeYXYoTw2mZX0x31KR0cy2fSqd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Feb 2025 06:52:12 -0500 (EST)
+ 19 Feb 2025 06:52:17 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 147b9622 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Feb 2025 11:52:12 +0000 (UTC)
-Date: Wed, 19 Feb 2025 12:52:11 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 26b0e73e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Feb 2025 11:52:16 +0000 (UTC)
+Date: Wed, 19 Feb 2025 12:52:15 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 07/14] refs/iterator: separate lifecycle from iteration
-Message-ID: <Z7XF6-FbetYl2AXZ@pks.im>
+Subject: Re: [PATCH 06/14] refs: stop re-verifying common prefixes for
+ availability
+Message-ID: <Z7XF77yKUgENdbA-@pks.im>
 References: <20250217-pks-update-ref-optimization-v1-0-a2b6d87a24af@pks.im>
- <20250217-pks-update-ref-optimization-v1-7-a2b6d87a24af@pks.im>
- <CAOLa=ZQzEwWci350dhhTFiG3WZB67JUB4O9L3coiXeexYGTNZw@mail.gmail.com>
+ <20250217-pks-update-ref-optimization-v1-6-a2b6d87a24af@pks.im>
+ <CAOLa=ZQC+UXQGjOqot=pTopkd8mOjduixQ=rBnsis9g_3_HOqw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQzEwWci350dhhTFiG3WZB67JUB4O9L3coiXeexYGTNZw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAOLa=ZQC+UXQGjOqot=pTopkd8mOjduixQ=rBnsis9g_3_HOqw@mail.gmail.com>
 
-On Tue, Feb 18, 2025 at 09:13:55AM -0800, Karthik Nayak wrote:
+On Tue, Feb 18, 2025 at 08:12:05AM -0800, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/builtin/clone.c b/builtin/clone.c
-> > index fd001d800c6..ac3e84b2b18 100644
-> > --- a/builtin/clone.c
-> > +++ b/builtin/clone.c
-> > @@ -426,6 +426,8 @@ static void copy_or_link_directory(struct strbuf *src, struct strbuf *dest,
-> >  		strbuf_setlen(src, src_len);
-> >  		die(_("failed to iterate over '%s'"), src->buf);
-> >  	}
-> > +
-> > +	dir_iterator_free(iter);
-> >  }
+> 
+> > One of the checks done by `refs_verify_refnames_available()` is whether
+> > any of the prefixes of a reference already exists. For example, given a
+> > reference "refs/heads/main", we'd check whether "refs/heads" or "refs"
+> > already exist, and if so we'd abort the transaction.
+> >
+> > When updating multiple references at once, this check is performed for
+> > each of the references individually. Consequently, because references
+> > tend to have common prefixes like "refs/heads/" or refs/tags/", we
+> > evaluate the availability of these prefixes repeatedly. Naturally this
+> > is a waste of compute, as the availability of those prefixes should in
+> > general not change in the middle of a transaction. And if it would,
+> > backends would notice at a later point in time.
+> >
+> > Optimize this pattern by storing prefixes in a `strset` so that we can
+> > trivially track those prefixes that we have already checked. This leads
+> > to a significant speedup when creating many references that all share a
+> > common prefix:
+> >
+> >     Benchmark 1: update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD~)
+> >       Time (mean ± σ):      63.1 ms ±   1.8 ms    [User: 41.0 ms, System: 21.6 ms]
+> >       Range (min … max):    60.6 ms …  69.5 ms    38 runs
+> >
+> >     Benchmark 2: update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD)
+> >       Time (mean ± σ):      40.0 ms ±   1.3 ms    [User: 29.3 ms, System: 10.3 ms]
+> >       Range (min … max):    38.1 ms …  47.3 ms    61 runs
+> >
+> >     Summary
+> >       update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD) ran
+> >         1.58 ± 0.07 times faster than update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD~)
+> >
+> > Note that the same speedup cannot be observed for the "files" backend
+> > because it still performs availability check per reference.
 > >
 > 
-> A bit puzzled to see `dir_iterator_*` change here, I'm assuming it's
-> linked to the 'files-backend' and perhaps similar to the changes
-> mentioned about `ref_iterator_*` in the commit message. Would be nice to
-> call out in the commit message too.
+> In the previous commit, you started using the new function in the
+> reftable backend, can we not make a similar change to the files backend?
 
-Yeah, that's the reason. I've added a note to the commit message.
+It's quite a bit more intricate in the "files" backend because the
+creation of the lockfiles and calls to `refs_verify_refname_available()`
+are intertwined with one another:
 
-> > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> > index a7b6f74b6e3..38a1956d1a8 100644
-> > --- a/refs/packed-backend.c
-> > +++ b/refs/packed-backend.c
-> > @@ -1362,8 +1355,10 @@ static int write_with_updates(struct packed_ref_store *refs,
-> >  	 */
-> >  	iter = packed_ref_iterator_begin(&refs->base, "", NULL,
-> >  					 DO_FOR_EACH_INCLUDE_BROKEN);
-> > -	if ((ok = ref_iterator_advance(iter)) != ITER_OK)
-> > +	if ((ok = ref_iterator_advance(iter)) != ITER_OK) {
-> > +		ref_iterator_free(iter);
-> 
-> Nit: Since we don't return early here, wouldn't the `ref_iterator_free`
-> at the end of the function be sufficient? I think the only early return
-> when `iter == NULL` is towards the end of the function, where it might
-> be better to add a `goto error`.
+  - `lock_raw_ref()` verifies availability when it hits either EEXISTS
+    or EISDIR to generate error messages. This is probably nothing we
+    have to care about too much, as these are irrelevant in the good
+    path.
 
-Yeah, the code here could definitely be improved with the new semantics.
-But I was aiming to keep the required refactoring work at callsites to
-the bare minimum, so I'd rather prefer to keep this unchanged.
+  - `lock_raw_ref()` also verifies availability though in the case where
+    it _could_ create the lockfile to check whether it is conflicting
+    with any packed refs. This one could potentially be batched. It's a
+    curious thing in the first place as we do not have the packed refs
+    locked at this point in time, so this check might even be racy.
+
+  - `lock_ref_oid_basic()` also checks availability with packed refs, so
+    this is another case where we might batch the checks. But the
+    function is only used when copying/renaming references or when
+    expiring reflogs, so it won't be called for many refs.
+
+  - We call it in `refs_refname_ref_available()`, which is executed when
+    copying/renaming references. Uninteresting due to the same reason as
+    the previous entry.
+
+  - We call it in `files_transaction_finish_initial()`. This one should
+    be rather trivial to batch. Again though, no locking with packed
+    refs, so the checks are racy.
+
+So... it's a bit more complicated here compared to the reftable backend,
+and I didn't feel like opening a can of worms with the potentially-racy
+checks with the packed backend.
+
+Anyway, I think we still can and probably should use the new mechanism
+in two cases:
+
+  - During normal transactions to batch the availability checks with the
+    packed backend. I will have to ignore the issue of a potential race,
+    but other than that the change is straight forward and the result is
+    a slight speedup:
+
+      Benchmark 1: update-ref: create many refs (preexisting = 100000, new = 10000, revision = HEAD~)
+         Time (mean ± σ):     393.4 ms ±   4.0 ms    [User: 64.1 ms, System: 327.5 ms]
+         Range (min … max):   387.8 ms … 398.7 ms    10 runs
+
+       Benchmark 2: update-ref: create many refs (preexisting = 100000, new = 10000, revision = HEAD)
+         Time (mean ± σ):     373.3 ms ±   3.4 ms    [User: 48.8 ms, System: 322.7 ms]
+         Range (min … max):   368.7 ms … 378.6 ms    10 runs
+
+       Summary
+         update-ref: create many refs (preexisting = 100000, new = 10000, revision = HEAD) ran
+           1.05 ± 0.01 times faster than update-ref: create many refs (preexisting = 100000, new = 10000, revision = HEAD~)
+
+  - During the initial transaction. Here the change is even more trivial
+    and we can also fix the race as we eventually lock the packed-refs
+    file anyway. This leads to a noticeable speedup when migrating from
+    the reftable backend to the files backend:
+
+      Benchmark 1: migrate reftable:files (refcount = 1000000, revision = HEAD~)
+        Time (mean ± σ):     980.6 ms ±  10.9 ms    [User: 801.8 ms, System: 172.4 ms]
+        Range (min … max):   964.7 ms … 995.3 ms    10 runs
+
+      Benchmark 2: migrate reftable:files (refcount = 1000000, revision = HEAD)
+        Time (mean ± σ):     739.7 ms ±   6.6 ms    [User: 551.9 ms, System: 181.9 ms]
+        Range (min … max):   727.9 ms … 747.2 ms    10 runs
+
+      Summary
+        migrate reftable:files (refcount = 1000000, revision = HEAD) ran
+          1.33 ± 0.02 times faster than migrate reftable:files (refcount = 1000000, revision = HEAD~)
+
+I'll include these changes in the next version, thanks for questioning
+why I skipped over the "files" backend.
 
 Patrick
