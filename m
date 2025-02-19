@@ -1,62 +1,62 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D5F23F262
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 20:34:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D12D23C8B3
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 20:34:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739997269; cv=none; b=MNbb45wzpVfoP2AdhyfO3QJdYhWMssJzPSidxanpOdHa9zKOYZTOGEudhMBRBedVPJCBlMPn8BFflnqvPr6clZw7fmueAPvq97UuPzWsWn3U/w37WJlCXBKULqgQaKFsf1WV9nn4JsIRIGbHBfmQ/NOVzHX/r87WytVHnRmUG2U=
+	t=1739997271; cv=none; b=BIUjn5zLpeLVgTAmxtnk2/T8kWgzMsXtDFX0KQPt5pZgFsQS0+jPI9wSo5iyYZaAaqkwbnTp3Z4cmlpxVGBiAD2XEKzRRDle3b4hnD3TL90xn6b9y/xiaWCS6Vqy8FPM2501h4CSNc7noWK5DG2KPuu1UqVqDJBLQmRmw8tXsG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739997269; c=relaxed/simple;
-	bh=kZjVe6dY+Cf5lPZfvjuehZJzBZ+oZA7HK2N5iUIMf2M=;
+	s=arc-20240116; t=1739997271; c=relaxed/simple;
+	bh=r/dQdrA18FPS6wqf9HgMJ8hjxkc9IynhPHZcvS46bFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxVJKdV7Nic32957iDi/rsDOwaeCVeHLpJp1eF00Be3fQTfxAdUoxG94vdBeqD9e7Kz5sDSUSCMDZQExYhCpfqMwAZm8FZQPoRTDswoQt6kVwOQJ0OGazPAqtCH33dy39ADMy/ESaXPVE1E+43ZaHPdiA47Zt8Di9irn6Hs5D/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ltPQCdaj; arc=none smtp.client-ip=209.85.214.176
+	 MIME-Version; b=bsnm79t15abGMDcNAzT/WoEa3fQGF33Vw0CFYGq9ipmPyUXnly0DWdlY2Quzx+90pPvD5arnzxhdOKD6hEGjiP6DA2XBKaOYxlx2k+8iYyTrV9VtC503X6PnLLhmd8GL9PJpto0JkqG27zSeQkIlz6/qOs45isAtK7Q93NCTO94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mtSkm8ZB; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ltPQCdaj"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-220c2a87378so2349845ad.1
-        for <git@vger.kernel.org>; Wed, 19 Feb 2025 12:34:27 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mtSkm8ZB"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-220d39a5627so2446245ad.1
+        for <git@vger.kernel.org>; Wed, 19 Feb 2025 12:34:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1739997266; x=1740602066; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1739997270; x=1740602070; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PVsytE9dVt8lgyMho7rtHuedXymLlviG1CHSX3aqwv4=;
-        b=ltPQCdajBfUYxkWaEdQwh/9Ma8EBkYaIDrYtDnTDnI876S1sHQqVpBw5laFY+ufcEv
-         QN7zDqlG79GbAtQjtTXoXCihPAaEP16GegZ+MxGs6q9R42OWqIlFhsKcNYhxsYwx42rz
-         OGdHzkG7RwHCG+tuKS03NP2RyAB4I9ZSp1y5bUq8dRs3WCJKHR/qA3+sLpDcshq8COfH
-         daW2FkHygkOSohPUDi0VhZreF+79Z6a8OH9FhvrgxA1kRQQ6uRDX7sj9Od+iRy5pj/2U
-         8lH+cLgmwFb3CxQNvuXUQRAXJEXduFdEb55giV6VRAiNmQ2YvWV+0Li2nq4OropTG2mb
-         2++Q==
+        bh=etws9vFdvPOXGxA4DQzZvLi6rQk0V++mAQK8vA0BNeM=;
+        b=mtSkm8ZB3ETNvu+6QvADscWFDLYly/fcehFNNr4+dmgeoKnKJj8Mz3GjMroi/0Z2yb
+         6iPNU3vfPhNB9FewQzGpXXAiefPBt+gq4qhoPBT/G/5fufgM8iME/NUkauCgE9lg4Fn3
+         fAQc364seX5uyAzEdWwXxvLjIb909I+DsWc/8gm1Ay1jbKfJ1BYfbcQYgSSCd/5NPR6m
+         CkeIYJLjOqHBJBVffy5i3gjLE2qhV8UX32wmCedz8AaBAqS3B8X58lidIUbDXEAZvhVn
+         DjtR6/rrqHhAIv9iKj/fMpcFkBp3QVFOX5DY/XLHs8JrIz0LOtXQzaRRADzlO3deMwVR
+         ZV9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1739997266; x=1740602066;
+        d=1e100.net; s=20230601; t=1739997270; x=1740602070;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PVsytE9dVt8lgyMho7rtHuedXymLlviG1CHSX3aqwv4=;
-        b=ksIzVgxKQSeg3NqRElnjFmDQldCd1sWzsl3V//R0rBlrFS5Rn4pMF1VzYYp9iimeet
-         rRx9E0kX0ahauD6YibBoU5ai0tIYV56uqNkO95ywzHpsoZbhkgaAGGn8nexzoQtxPxbM
-         Wth4X29v8p+UrQRB0Dr68WddSx5QnW6+9FebUjWcZDuoOQdvVUxZyUSaC5KMKwmFYoZq
-         kJrt4/PfVgNOq/l6rF0saf1lplfWuwrxiGeZ88wvzXWQ0dhdgsjGJA+mG0HUKTUGDO6P
-         ER3RWpvdR/2brwnd9XBvGAxgVaburh/mCcegMnTbf0TLZ4LTjkiEpOev+tV/irDISvqP
-         Errg==
-X-Forwarded-Encrypted: i=1; AJvYcCUFCfqqZvH7fdCol/AyWDcGmNVxw35LFTJKscNprR3c07OOXcgljYz4pKP6/i4foujC7XA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx0eUNWZvyF7CXHZ/HGjV87g6OCdyTX6fza245bREvGHRmbQgv7
-	IFeM419kHYFTz/oA/9HeM7/ubKcSRXNe8+XCseFN6LDlEffC4uWS
-X-Gm-Gg: ASbGncuYA7sJIP9Gcg/BsanoQIJFlvweM+GuuyvAwNX/J2q/APn6pqukohplrgMiBDe
-	o1fL/nqZBxMglhMbame9PeJi1nawM6fowhhrWDyQd6a1Zr1FodH4iRy7nRb5lpGxkR5CEjBv8HB
-	bSZt+egMG08WEvUTAMMDKCtjA1kzfIxCivC16OXS4DuNAdTbW8K+Zajjblrt5dA+DNcjVBdKqNa
-	OV0BMVItNJi9XvITEajv72mHmmjEruYnko4HSvL8seFlpFOC2y2LnNU+v1Pxta59dLQZadhzOvf
-	lqbn6x4/M6TVc9l4tWCdBf384m4hq3AbfeTn954i
-X-Google-Smtp-Source: AGHT+IEPsWGbG6sUoW3GIWntJeXj9lmwVTOQRgczEoP1RPmS/WQA1G18Jym/fMf5Al+OW36Etlt9QQ==
-X-Received: by 2002:a17:902:f54e:b0:220:c63b:d93c with SMTP id d9443c01a7336-221040d75a0mr338219435ad.44.1739997266511;
-        Wed, 19 Feb 2025 12:34:26 -0800 (PST)
+        bh=etws9vFdvPOXGxA4DQzZvLi6rQk0V++mAQK8vA0BNeM=;
+        b=qQpGmWkHUidmdsQK+tcqv07FWL+OjqDmlh9+eghIIcRw2x+WV9oO/Ay13vCJ+vQV1b
+         TWBN0Q0GxcUGKrWickKi9sk+roCyaeUmRrTPhHSzyMxxxwEyiS+LfIIZwBfatn/Hh5Ce
+         YIJOftuhhRnvufRPiLVJjPT2sA2dImpl6pt3qz5x5HqRJZ7cIpJfoW2Fldducia8q5v/
+         5i4wvrK4Gby9Oepc34LBxe703ot4DEPaN9NOaLwTyrqcqNVDQGZijEuHDiHA5Ds+5zV7
+         IBa+MQB7n7Ec5wxIPE78NZKknzXzIlsjp8i5QjRmGHW77NZJ46mklAaPGrbPICfN9IDU
+         w6mg==
+X-Forwarded-Encrypted: i=1; AJvYcCUaat2+4LfTTFBPAUWR4fk7quoT2gAOVeiDFmN3iDLEKng+DcHQiZVLDd5Zpz6dOoFgmEs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzaSbQt9an2qIhQTePuJjTw0cAepk0cdbOcZ5OHNCZ6X6opWb7F
+	yB521tZuJ3RNvj+gAgYeFgUxhhWrLU5g4fFLIuUqQXi0aspMtigJ
+X-Gm-Gg: ASbGncs9/WzhlqkOu3vXZx0vfJjuifykGH/ZSBez4P30F4M/YaTMNn6bbGkf4o7UUU2
+	8mnMhRRilcHeGc60ioaQo6pJBpghIqncZT0cEdzNzEmAU3k7XiYPuxc8s4hupBp9RMiYo5df1H5
+	tPkb1svjgurjdZQaD8gmgzyraJRjrCJbK0Je1wR/moQLG8RS4csINrNVYRaNQq/GB0wkjMkyi0a
+	JaToQRvFZlm2CwCkGDGf+/7+sxcPWsANCsnoUPveLigESofGbDu9rcj9J07gUXejngchy8rZ9NM
+	sj1XbbMEMuMyN186IiS2VqArY9xWdM/La46Oh0jr
+X-Google-Smtp-Source: AGHT+IFLtSU4s0iQhFVJZYJLNziRO/IBjvObxYQcsbrr4h2roSOKFM3p6KD0JO2KjhqlZD0IE3aeSA==
+X-Received: by 2002:a17:902:ec85:b0:220:c911:3f60 with SMTP id d9443c01a7336-221040bd357mr314775645ad.47.1739997269705;
+        Wed, 19 Feb 2025 12:34:29 -0800 (PST)
 Received: from archlinux.plaksha.edu.in ([202.164.41.66])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d53499dasm107791355ad.12.2025.02.19.12.34.22
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-220d53499dasm107791355ad.12.2025.02.19.12.34.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 19 Feb 2025 12:34:26 -0800 (PST)
+        Wed, 19 Feb 2025 12:34:29 -0800 (PST)
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 To: gitster@pobox.com,
 	christian.couder@gmail.com,
@@ -66,9 +66,9 @@ Cc: me@ttaylorr.com,
 	johncai86@gmail.com,
 	ps@pks.im,
 	shejialuo@gmail.com
-Subject: [PATCH v2 09/12] builtin/ls-files: stop using `the_repository`
-Date: Thu, 20 Feb 2025 02:02:57 +0530
-Message-ID: <20250219203349.787173-10-usmanakinyemi202@gmail.com>
+Subject: [PATCH v2 10/12] builtin/for-each-ref: refactor `cmd_for_each_ref()`
+Date: Thu, 20 Feb 2025 02:02:58 +0530
+Message-ID: <20250219203349.787173-11-usmanakinyemi202@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250219203349.787173-1-usmanakinyemi202@gmail.com>
 References: <20250214230210.1460111-1-usmanakinyemi202@gmail.com>
@@ -81,139 +81,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Remove the_repository global variable in favor of the repository
-argument that gets passed in "builtin/ls-files.c".
+Move `git_config()` call after `usage_with_options()` to avoid NULL `repo`
+check.
 
-When `-h` is passed to the command outside a Git repository, the
-`run_builtin()` will call the `cmd_ls_files()` function with `repo` set
-to NULL and then early in the function, `show_usage_with_options_if_asked()`
-call will give the options help and exit, without having to consult much
-of the configuration file.
+When "-h" is passed to builtins using the RUN_SETUP macro, `repo` passed
+by `run_builtin()` will be NULL. If we use the `repo` instead of the
+global `the_repository` variable. We will have to switch from `git_config()`
+to `repo_config()` which takes in `repo`. We must check for NULL `repo`
+if `repo_config()` comes before `usage_with_options()`. Moving `git_config()`
+after `usage_with_options()` eliminates this need, as `usage_with_options()`
+exit before calling `repo_config()`.
 
-Pass the repository available in the calling context to both
-`expand_objectsize()` and `show_ru_info()` to remove their
-dependency on the global `the_repository` variable.
+This will be useful in the following patch which remove `the_repository`
+global variable in favor of the `repo` passed by `run_builtin()`.
 
 Mentored-by: Christian Couder <chriscool@tuxfamily.org>
 Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 ---
- builtin/ls-files.c | 32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ builtin/for-each-ref.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index a4431429b7..70a377e9c0 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -6,7 +6,6 @@
-  * Copyright (C) Linus Torvalds, 2005
-  */
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 8085ebd8fe..649689c92c 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -63,8 +63,6 @@ int cmd_for_each_ref(int argc,
  
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
+ 	format.format = "%(objectname) %(objecttype)\t%(refname)";
  
- #include "builtin.h"
-@@ -245,12 +244,13 @@ static void show_submodule(struct repository *superproject,
- 	repo_clear(&subrepo);
- }
- 
--static void expand_objectsize(struct strbuf *line, const struct object_id *oid,
-+static void expand_objectsize(struct repository *repo, struct strbuf *line,
-+			      const struct object_id *oid,
- 			      const enum object_type type, unsigned int padded)
- {
- 	if (type == OBJ_BLOB) {
- 		unsigned long size;
--		if (oid_object_info(the_repository, oid, &size) < 0)
-+		if (oid_object_info(repo, oid, &size) < 0)
- 			die(_("could not get object info about '%s'"),
- 			    oid_to_hex(oid));
- 		if (padded)
-@@ -283,10 +283,10 @@ static void show_ce_fmt(struct repository *repo, const struct cache_entry *ce,
- 		else if (skip_prefix(format, "(objecttype)", &format))
- 			strbuf_addstr(&sb, type_name(object_type(ce->ce_mode)));
- 		else if (skip_prefix(format, "(objectsize:padded)", &format))
--			expand_objectsize(&sb, &ce->oid,
-+			expand_objectsize(repo, &sb, &ce->oid,
- 					  object_type(ce->ce_mode), 1);
- 		else if (skip_prefix(format, "(objectsize)", &format))
--			expand_objectsize(&sb, &ce->oid,
-+			expand_objectsize(repo, &sb, &ce->oid,
- 					  object_type(ce->ce_mode), 0);
- 		else if (skip_prefix(format, "(stage)", &format))
- 			strbuf_addf(&sb, "%d", ce_stage(ce));
-@@ -348,7 +348,7 @@ static void show_ce(struct repository *repo, struct dir_struct *dir,
- 	}
- }
- 
--static void show_ru_info(struct index_state *istate)
-+static void show_ru_info(struct repository *repo, struct index_state *istate)
- {
- 	struct string_list_item *item;
- 
-@@ -370,7 +370,7 @@ static void show_ru_info(struct index_state *istate)
- 			if (!ui->mode[i])
- 				continue;
- 			printf("%s%06o %s %d\t", tag_resolve_undo, ui->mode[i],
--			       repo_find_unique_abbrev(the_repository, &ui->oid[i], abbrev),
-+			       repo_find_unique_abbrev(repo, &ui->oid[i], abbrev),
- 			       i + 1);
- 			write_name(path);
- 		}
-@@ -567,7 +567,7 @@ static int option_parse_exclude_standard(const struct option *opt,
- int cmd_ls_files(int argc,
- 		 const char **argv,
- 		 const char *cmd_prefix,
--		 struct repository *repo UNUSED)
-+		 struct repository *repo)
- {
- 	int require_work_tree = 0, show_tag = 0, i;
- 	char *max_prefix;
-@@ -647,15 +647,15 @@ int cmd_ls_files(int argc,
- 	show_usage_with_options_if_asked(argc, argv,
- 					 ls_files_usage, builtin_ls_files_options);
- 
--	prepare_repo_settings(the_repository);
--	the_repository->settings.command_requires_full_index = 0;
-+	prepare_repo_settings(repo);
-+	repo->settings.command_requires_full_index = 0;
- 
- 	prefix = cmd_prefix;
- 	if (prefix)
- 		prefix_len = strlen(prefix);
 -	git_config(git_default_config, NULL);
-+	repo_config(repo, git_default_config, NULL);
+-
+ 	/* Set default (refname) sorting */
+ 	string_list_append(&sorting_options, "refname");
  
--	if (repo_read_index(the_repository) < 0)
-+	if (repo_read_index(repo) < 0)
- 		die("index file corrupt");
+@@ -80,6 +78,7 @@ int cmd_for_each_ref(int argc,
+ 	if (verify_ref_format(&format))
+ 		usage_with_options(for_each_ref_usage, opts);
  
- 	argc = parse_options(argc, argv, prefix, builtin_ls_files_options,
-@@ -724,7 +724,7 @@ int cmd_ls_files(int argc,
- 		max_prefix = common_prefix(&pathspec);
- 	max_prefix_len = get_common_prefix_len(max_prefix);
- 
--	prune_index(the_repository->index, max_prefix, max_prefix_len);
-+	prune_index(repo->index, max_prefix, max_prefix_len);
- 
- 	/* Treat unmatching pathspec elements as errors */
- 	if (pathspec.nr && error_unmatch)
-@@ -748,13 +748,13 @@ int cmd_ls_files(int argc,
- 		 */
- 		if (show_stage || show_unmerged)
- 			die(_("options '%s' and '%s' cannot be used together"), "ls-files --with-tree", "-s/-u");
--		overlay_tree_on_index(the_repository->index, with_tree, max_prefix);
-+		overlay_tree_on_index(repo->index, with_tree, max_prefix);
- 	}
- 
--	show_files(the_repository, &dir);
-+	show_files(repo, &dir);
- 
- 	if (show_resolve_undo)
--		show_ru_info(the_repository->index);
-+		show_ru_info(repo, repo->index);
- 
- 	if (ps_matched && report_path_error(ps_matched, &pathspec)) {
- 		fprintf(stderr, "Did you forget to 'git add'?\n");
++	git_config(git_default_config, NULL);
+ 	sorting = ref_sorting_options(&sorting_options);
+ 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+ 	filter.ignore_case = icase;
 -- 
 2.48.1
 
