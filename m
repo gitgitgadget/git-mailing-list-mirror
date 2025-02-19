@@ -1,55 +1,55 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FD11E8350
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 13:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316121EB198
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 13:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739970850; cv=none; b=gZw0vSTkyOU661KbejFXxUhTeWb0YXyxKZezFNJiO/Z1OEZeRVlKdtFz8XhjsjqZibE+F9Lf6Sn10ARKc087CxQMSa2BJHbJE8yCaQNXDtK+r+vSTigqK4JZGq73oRFj/wyqn9h4u17zUfHb7FV+/928sTz4eRd0dZ//d8Vn/ok=
+	t=1739970851; cv=none; b=g1/nVaIUAOi3YaK2pdxoQCzNXEJF4l73lJxo0zCYnENNUtvmegxWvLzRDFYb1xE5NpD3TyrVq9Tu1tnB+rTB3+GIx0HqyUD6zbA1Ae3aYsg6Tw2fMpKieMAjhCLa3OqBvfFoTEL3C2+GpgZgLBZQ+QsvNUJupV6lV+bx6QmxGSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739970850; c=relaxed/simple;
-	bh=qzdMW9gLlKaqx1xxvrWg1RkxK5ZHtE/bxz5+sc8QZaI=;
+	s=arc-20240116; t=1739970851; c=relaxed/simple;
+	bh=UCyGOLWcxEZz3FREqBU/HY4EuaOY6eUVKanqJx4P3LM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QFT+nOw5fVuxrNbckoNJlFRKAmEWCxMiPw57zasGb+6RoNlJxdAEx1f849Eco3YaUSJii+Lrs+gvFrJljSaC/0nl0t0cvOhTgGXAQ3NzF2/Qy+giKkfTAwpESjPZ1deoQMBFW1z6uzzQa5oaJY/ueoS0qLVByN39oTjM90INVaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qWe2OiHY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jTh5NIJ3; arc=none smtp.client-ip=202.12.124.156
+	 In-Reply-To:To:Cc; b=YMGCB3MgTJ3Pk7YisEt9Ww1d/bXkK5CLNLoJzvhGff/HLg/iRL10QB+RKGiML55eU59kcym/gJQeDZlpU0wrG376mIb8Ez9I9/4YCjzoDN1DqWNdzTaZPQgdU/exSNG+q1mEtzvPGvwpIXfWOQQEypAy87PucRlgFyqwwWLoZfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LpJgxW5K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KPj79u4q; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qWe2OiHY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jTh5NIJ3"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E6E2425401CD;
-	Wed, 19 Feb 2025 08:14:07 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LpJgxW5K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KPj79u4q"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 831F42540113;
+	Wed, 19 Feb 2025 08:14:09 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 19 Feb 2025 08:14:08 -0500
+  by phl-compute-09.internal (MEProxy); Wed, 19 Feb 2025 08:14:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1739970847;
-	 x=1740057247; bh=T9IDSvj5n+6tVrr9QXGJWliWfYWCq2leEg7Ebkv5F20=; b=
-	qWe2OiHYKMG7HhWU0iPQZf26UAwBozIKDn2X008FXZNT2t8dvfDE/gZmf0SSu1gj
-	oae7iARWiAUJjqSPYpMron43IzLSsJCrKqJLmzF7xw1uil3GRVJSNh4kyvCerY55
-	HrpHJL7r4TXvG94ldTwjA+Kd3cESX/8FGYvrd/R+Jn3LfKei1BzAkZcJSdYEBbUr
-	F8bopcD8ieffv55OWNCfTHOHfg0L98deZqzTlFp+2JcQboLZZTdViTu2x97KMaCZ
-	4XUsCj09LjMURTkQ2caK7vi9DZkyI6/peeUlvETXtf2Hz9ot3SzXF+CZioNhg/yn
-	ClbFUhHZSj2KomVzAD+dUA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1739970849;
+	 x=1740057249; bh=8qJVE1wuayywVks7MM9lL5vUp8HvipH4/qUnDTa5Js0=; b=
+	LpJgxW5KRZQvYs1lliRck9eaexRITrSVz0UGTQNDyIplhFQF8fgFoyb6dmn4lezF
+	UkYqW38XEQCdmXLtb66CeCIRI/3hsAdC4rmjg72OLT1i4oQB3KPr5Ueicp2iaG8s
+	ChC1ppDsc3alVNPa2Ct3xANVWrxiEJKfVjKrGWE6g44aGeD5pl6KhtmXBNdrfmmw
+	3Cno69iIaXtGAXu9DwCKdNTO4ImlabQn7zfrMry3Pd5/fTaQILP0ZKUaERVvDK7v
+	zafDIM6NMG9KG1My9ClUyC9UdjOQcpqVCU49biDz1Ti0xPQnY5O8ilMWSweJWyca
+	91Z+/LUmJsNqCVzq4fCBIw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739970847; x=
-	1740057247; bh=T9IDSvj5n+6tVrr9QXGJWliWfYWCq2leEg7Ebkv5F20=; b=j
-	Th5NIJ3Kh/I4cmCmPCRWMKSdWPxdh1qTCT+uS99aV8G83tDbuy+WssF/RUi2BZo0
-	SdItA/JBsyCloeBQTWZS4SBAv8B2/hThP1ZylRv8CAlEbTVS1lbBSBpQIC619pGE
-	UEVaAH6duNW8KScF8oEE6NGxX5vUE5oQlChaa/Q/ATFCIwzL9VGuIhqoCCCBep9F
-	L5AJh5jpHDFnDM2Dx8JkZ7gzeCgxNBgC+cxAk0i30cfCOxtQfaXgnIvSBgNukTzz
-	5v2DdujT9GzlwoA/OqtxsykwZX9zZpkSOLCl6AvqYpD/dRiinqhyXfrHTIcZT2eT
-	u/09zFRGYaWpBKIHSCNfw==
-X-ME-Sender: <xms:H9m1Z5iPtDadetrFQ7tbEv2bs05VPF4LTo89Dz4dZbGNpORHAf6lgw>
-    <xme:H9m1Z-DP-fsOolooQC0f74gOQYmIoksD1ZD1J9Y2XQ0TQgOgI7x4CtTYQvQ8vioZl
-    AEyAgYuUHe5QFfQew>
-X-ME-Received: <xmr:H9m1Z5EaAZQ3VKh4S8rgsgHXUae2KznKyfaKhuheXffOKgA_pIsG1HEu5samRUVUBhCeF_ShsrQXi7YtgwSFJz3BtFufxP_2Vt6_02jLMjvXaUI>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1739970849; x=
+	1740057249; bh=8qJVE1wuayywVks7MM9lL5vUp8HvipH4/qUnDTa5Js0=; b=K
+	Pj79u4qMAW2EgxjGBQBMmmM41ECufVG/l9totFRkBjGHryK5mw4/TpaEEGeJ0i0v
+	UwqSxTnGeiEmhV1vYbvh34CEKfJuVNia5V9LiT++UGZ8nuz0NLqjOPj9kSMZXgbO
+	jOAhZm2jgOh00njG70hbPReR0RMYZAHnRbWJpIXizJURurhQ9st6E8q8hpbp0OKA
+	ovk2rirbwUgACUgdG4n1UMt+e0+4vtbgLLRaTsoZDlrJHNiyR+1ZTI6CNQjZ8OYf
+	n4rrwxMl99fSHZpk8lIh7d9lgPrv0/yRJpBV3g2RIWMfYmllUxPlkj/Q5zZ5VYbn
+	kC8qUVcU7sgTJcRHFZBDg==
+X-ME-Sender: <xms:Idm1Z4Qrms1_F0fheQ4epsetS1e9F9YApMsMNS_YnGJVegCMaFAqAg>
+    <xme:Idm1Z1w7Y-t5IzGezchFxocJ6NIcTAgHzIs7Xh39b4Av8sOLecS0QjVvHa2GTZVCw
+    bk19RAf9xQYteAlew>
+X-ME-Received: <xmr:Idm1Z11GxdhschwM52wJSxz2kQQ0wuNye9RRNYUdaOTb-OwDsRNrJEAMHLfzZoMBf1F0l8ESVVlJ8KRcVeSf8CSPCFZFwJK5jseZukx4ELUlaOM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeefgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -59,23 +59,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeigeefgecutefuodetgg
     heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
     pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehmihhrthhhrdhhihgtkhhfohhrugesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjheitheskh
-    gusghgrdhorhhg
-X-ME-Proxy: <xmx:H9m1Z-QB5oKnWcRsYHv2Z7oeapmynKJI64BqzaMbg9LCaR6USzmCMg>
-    <xmx:H9m1Z2xqFRR9Rc1L5-UldZLCmssH-Mzy-lookaJaiYJa1-pb2srlag>
-    <xmx:H9m1Z070MQ_t9nOFMx6lbDZyKA1i9AJd3sNqi1XycSoMsi57C37Z-g>
-    <xmx:H9m1Z7yqSKhYysrGYiunDWXL6422uB8kSGxK-boWMWswq5-459EtRQ>
-    <xmx:H9m1ZwtVhpmbbwuguakd1WsgoRxaWbyoOWsdZ9yecocr0lBJZad4Y6AP>
+    gtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmh
+    grihhlrdgtohhm
+X-ME-Proxy: <xmx:Idm1Z8Dv1VHOTZNo1kL76bIpQKmNY8AKbjDf38FmHSMH60UFyPK9Vg>
+    <xmx:Idm1ZxhZwc4mDCPu4lDZVYWMjOxLJGubLNhc3PKlOEGiBqvDGWGYaw>
+    <xmx:Idm1Z4obZTE-BpH5Shx99m0ddSqZT2Lfv7vl8g48IOn0UXL7JvMwEQ>
+    <xmx:Idm1Z0hHoGCQFvm_hrQ4v-uMyCMbHX650_zYDCaR2nGBqFFvbTS-dQ>
+    <xmx:Idm1Zxd3SFt88umoTOFRAN--cZu-VdEW3myOp1IHWiSIW4ji2C6C-I60>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Feb 2025 08:14:06 -0500 (EST)
+ 19 Feb 2025 08:14:08 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 97c11290 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Feb 2025 13:14:04 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id d36ea361 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Feb 2025 13:14:06 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 19 Feb 2025 14:13:48 +0100
-Subject: [PATCH v2 08/10] meson: wire up static analysis via Coccinelle
+Date: Wed, 19 Feb 2025 14:13:50 +0100
+Subject: [PATCH v2 10/10] ci: exercise credential helpers
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250219-b4-pks-meson-contrib-v2-8-1ba5d7fde0b9@pks.im>
+Message-Id: <20250219-b4-pks-meson-contrib-v2-10-1ba5d7fde0b9@pks.im>
 References: <20250219-b4-pks-meson-contrib-v2-0-1ba5d7fde0b9@pks.im>
 In-Reply-To: <20250219-b4-pks-meson-contrib-v2-0-1ba5d7fde0b9@pks.im>
 To: git@vger.kernel.org
@@ -92,142 +92,80 @@ Cc: M Hickford <mirth.hickford@gmail.com>,
  Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
 X-Mailer: b4 0.14.2
 
-Wire up static analysis via Coccinelle via a new test target
-"coccicheck". This target can be executed via `meson compile coccicheck`
-and generates the semantic patch for us.
-
-Note that we don't hardcode the list of source and header files that
-shall be analyzed, and instead use git-ls-files(1) to find them for us.
-This is because we also want to analyze files that may not get built on
-the current platform, so finding all sources at configure time is easier
-than introducing a new variable that tracks all sources, including those
-which aren't being built.
+Wire up credential helpers in our CI runs so that we can rest assured
+that they compile and (if tests are available) function correctly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/coccinelle/meson.build | 89 ++++++++++++++++++++++++++++++++++++++++++
- contrib/meson.build            |  1 +
- meson_options.txt              |  2 +
- 3 files changed, 92 insertions(+)
+ .github/workflows/main.yml | 2 +-
+ .gitlab-ci.yml             | 2 +-
+ ci/install-dependencies.sh | 2 +-
+ ci/lib.sh                  | 6 ++++++
+ 4 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/contrib/coccinelle/meson.build b/contrib/coccinelle/meson.build
-new file mode 100644
-index 00000000000..5d76a7fee6f
---- /dev/null
-+++ b/contrib/coccinelle/meson.build
-@@ -0,0 +1,89 @@
-+spatch = find_program('spatch', required: get_option('coccinelle'))
-+if not spatch.found()
-+  subdir_done()
-+endif
-+
-+third_party_sources = [
-+  ':!contrib',
-+  ':!compat/inet_ntop.c',
-+  ':!compat/inet_pton.c',
-+  ':!compat/nedmalloc',
-+  ':!compat/obstack.*',
-+  ':!compat/poll',
-+  ':!compat/regex',
-+  ':!sha1collisiondetection',
-+  ':!sha1dc',
-+  ':!t/unit-tests/clar',
-+  ':!t/unit-tests/clar',
-+  ':!t/t[0-9][0-9][0-9][0-9]*',
-+]
-+
-+rules = [
-+  'array.cocci',
-+  'commit.cocci',
-+  'config_fn_ctx.pending.cocci',
-+  'equals-null.cocci',
-+  'flex_alloc.cocci',
-+  'free.cocci',
-+  'git_config_number.cocci',
-+  'hashmap.cocci',
-+  'index-compatibility.cocci',
-+  'object_id.cocci',
-+  'preincr.cocci',
-+  'qsort.cocci',
-+  'refs.cocci',
-+  'strbuf.cocci',
-+  'swap.cocci',
-+  'the_repository.cocci',
-+  'xcalloc.cocci',
-+  'xopen.cocci',
-+  'xstrdup_or_null.cocci',
-+  'xstrncmpz.cocci',
-+]
-+
-+concatenated_rules = custom_target(
-+  command: [
-+    'cat', '@INPUT@',
-+  ],
-+  input: rules,
-+  output: 'rules.cocci',
-+  capture: true,
-+)
-+
-+sources = [ ]
-+foreach source : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.c', third_party_sources, check: true).stdout().split()
-+  sources += source
-+endforeach
-+
-+headers = [ ]
-+foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_sources, check: true).stdout().split()
-+  headers += meson.project_source_root() / header
-+endforeach
-+
-+patches = [ ]
-+foreach source : sources
-+  patches += custom_target(
-+    command: [
-+      spatch,
-+      '--all-includes',
-+      '--sp-file', concatenated_rules,
-+      '--patch', meson.project_source_root(),
-+      '@INPUT@',
-+    ],
-+    input: meson.project_source_root() / source,
-+    output: source.underscorify() + '.patch',
-+    capture: true,
-+    depend_files: headers,
-+  )
-+endforeach
-+
-+concatenated_patch = custom_target(
-+  command: [
-+    'cat', '@INPUT@',
-+  ],
-+  input: patches,
-+  output: 'cocci.patch',
-+  capture: true,
-+)
-+
-+alias_target('coccicheck', concatenated_patch)
-diff --git a/contrib/meson.build b/contrib/meson.build
-index 569c23ee768..a88c5dfe09e 100644
---- a/contrib/meson.build
-+++ b/contrib/meson.build
-@@ -2,4 +2,5 @@ foreach feature : get_option('contrib')
-   subdir(feature)
- endforeach
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 5f756dfc2e2..9959b61ece2 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -265,7 +265,7 @@ jobs:
+       run: pip install meson ninja
+     - name: Setup
+       shell: pwsh
+-      run: meson setup build -Dperl=disabled
++      run: meson setup build -Dperl=disabled -Dcredential_helpers=wincred
+     - name: Compile
+       shell: pwsh
+       run: meson compile -C build
+diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
+index 3f29181708f..bb7d0c9ef1c 100644
+--- a/.gitlab-ci.yml
++++ b/.gitlab-ci.yml
+@@ -164,7 +164,7 @@ build:msvc-meson:
+   extends: .msvc-meson
+   stage: build
+   script:
+-    - meson setup build -Dperl=disabled
++    - meson setup build -Dperl=disabled -Dcredential_helpers=wincred
+     - meson compile -C build
+   artifacts:
+     paths:
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 332ba960039..0df74610d06 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -58,7 +58,7 @@ ubuntu-*|i386/ubuntu-*|debian-*)
+ 		make libssl-dev libcurl4-openssl-dev libexpat-dev wget sudo default-jre \
+ 		tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl \
+ 		libemail-valid-perl libio-pty-perl libio-socket-ssl-perl libnet-smtp-ssl-perl libdbd-sqlite3-perl libcgi-pm-perl \
+-		libpcre2-dev meson ninja-build pkg-config \
++		libsecret-1-dev libpcre2-dev meson ninja-build pkg-config \
+ 		${CC_PACKAGE:-${CC:-gcc}} $PYTHON_PACKAGE
  
-+subdir('coccinelle')
- subdir('credential')
-diff --git a/meson_options.txt b/meson_options.txt
-index c51ba88d853..afa908d6c53 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -101,6 +101,8 @@ option('docs_backend', type: 'combo', choices: ['asciidoc', 'asciidoctor', 'auto
-   description: 'Which backend to use to generate documentation.')
+ 	case "$distro" in
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 84d11452650..f561884d401 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -348,6 +348,9 @@ case "$jobname" in
+ linux32)
+ 	CC=gcc
+ 	;;
++linux-meson)
++	MESONFLAGS="$MESONFLAGS -Dcredential_helpers=libsecret,netrc"
++	;;
+ linux-musl-meson)
+ 	MESONFLAGS="$MESONFLAGS -Dtest_utf8_locale=C.UTF-8"
+ 	;;
+@@ -359,6 +362,9 @@ linux-asan-ubsan)
+ 	export NO_SVN_TESTS=LetsSaveSomeTime
+ 	MAKEFLAGS="$MAKEFLAGS NO_PYTHON=YepBecauseP4FlakesTooOften"
+ 	;;
++osx-meson)
++	MESONFLAGS="$MESONFLAGS -Dcredential_helpers=osxkeychain"
++	;;
+ esac
  
- # Testing.
-+option('coccinelle', type: 'feature', value: 'auto',
-+  description: 'Provide a coccicheck target that generates a Coccinelle patch.')
- option('tests', type: 'boolean', value: true,
-   description: 'Enable building tests. This requires Perl, but is separate from the "perl" option such that you can build tests without Perl features enabled.')
- option('test_output_directory', type: 'string',
+ MAKEFLAGS="$MAKEFLAGS CC=${CC:-cc}"
 
 -- 
 2.48.1.666.gff9fcf71b7.dirty
