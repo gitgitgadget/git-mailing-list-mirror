@@ -1,88 +1,86 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4D01BC9F4
-	for <git@vger.kernel.org>; Wed, 19 Feb 2025 06:23:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7B8179BC
+	for <git@vger.kernel.org>; Wed, 19 Feb 2025 07:18:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1739946239; cv=none; b=rvxyKYgai/rqfbb5sx7JAFq7EWvFLijxkPt7SIos2TYNdYsTQAEB8rmxctruxVXoWK9stuLZShRJo8rr1uVBwrymeD62vnua/lcfUlRO68n01ZDa9Qwgil4t70LZzBuHf5hLsCJjcQfTsNMR1tRl4i+PADuwBIY9ejhLIGhicdw=
+	t=1739949490; cv=none; b=rtQHAPiw1VqDsKNingNc7faTwSCq7Kq0UZCILix+17Tm2F2ii9o3fIfzfGZqZ1oDfCDZdl/RDG18zhSzNXfqxRQocb/JojK9NhxMcRFbFGlOUgK+h3tiTKGEGTCZt+BgRGonZR6w+qOlgbl9Tv+DN+7XxA7r/lJ1gjxk5fnERSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1739946239; c=relaxed/simple;
-	bh=8/lCPoZT04BTWK0dl5qnhbX+3OCFlISWgpy46eyNEbs=;
+	s=arc-20240116; t=1739949490; c=relaxed/simple;
+	bh=yE71Ny8WHuL2HOWtf4ovc8X+smqBQ+DpfmtdxvIneyY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KPrRSSXBFOs3GJpw45fg7h6CBgbc/nbzyxXTI8Ppts38R6T+6kIm7oE25m4nYgVr4L3StVBTUc8eR/l0COo4PbK39zzFhbVqQsykr3oF5j9QWdEvmNkzm97L00kwZUw/bgrqRyQ/R4ZMUTphHIZrVABwcYYQH+r+zSapg5zI5vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=E+wpvb/m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BSe4kV/O; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=OsccRVRw4OKrxky+tX9PpOlhx7mHUB7ZmAXai+qrmUGTPGgrg3hGUip8LlGzQaBy50+/ORnKNu6QNg/+sBKJ0rUdo3H05z9Ht/RkTcFBX9rJnf376ypRdtJj9jci09HteQaequ3cCoAD4lZmqyMJfvPKnSPrqh8iG5gWUjpTIBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DiBro8Ct; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GzKEJcr7; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="E+wpvb/m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BSe4kV/O"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8B6CD11400AD;
-	Wed, 19 Feb 2025 01:23:56 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Wed, 19 Feb 2025 01:23:56 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DiBro8Ct";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GzKEJcr7"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2B156138098C;
+	Wed, 19 Feb 2025 02:18:07 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Wed, 19 Feb 2025 02:18:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1739946236; x=1740032636; bh=5A1EJTLURU
-	N6JbKIZezEf4WwoumXtFIAok4/q/QV4Qg=; b=E+wpvb/mgrWR3lRwRkNfaICbix
-	XfLUyzsJKWrTOPExixiR2HDYIrK9K9AgSDdca8ZoVdkuxilckwfhAreVEoctLSNM
-	aJE53X2OIbloBgjqB75PDYl6cHyKVrc35ig5CZWI+l5S3lqXrNlSe3ePULzoMIuN
-	e0AzfSrt7rWsx1cWwIdzCKAYyPF4XgF8kJz3GzyT+dCIDUOvWNkIAKhmvhZugdZ0
-	Rx9rzZSVa7nqW63MnQXwl8LOPzGAa53yFmxkMMpIh1256uKFa8BE9yrl7y38rzcN
-	3oOav483fQ2DSjj6zOi7hMaaYML7wuJ7BQcupa8ljp/r4/qvX1HEXqiM3LkA==
+	:subject:to:to; s=fm3; t=1739949487; x=1740035887; bh=PLMkT6EXIJ
+	L8UwaoGv6+H61VX3L1/Yq1JHox17Bo2AI=; b=DiBro8CtsRviMnT49+oKRj4Tvy
+	e50ujMSCsI2zAe/n23rlchVBZnF7y+PargmNoie3SK0cuUNhnQ9VT/WnEAhlPy/w
+	wG5OuIjiC9ejh8hbVF1bB+khhqtLxNQwSQsM7URhjUGO7wDQkXeX7xsD6grnhC5S
+	/IRDp+LLqHTd+6xLS4nJ57FHov+/RaDlbCInM4CzOTxxU12cR8GoesNbCq9Fs4xf
+	H2ZQYQIODqfIItVxsAFWvyVTpU+7kfk3JnjsROIqvuFNWC9yuOkymQL+gvDFmyle
+	F5/stWdCPtBVbJaFdUP/hC7rJWhexwiBRHmrvHqXA9aJ6C1Jn3iuKvOqPrOw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1739946236; x=1740032636; bh=5A1EJTLURUN6JbKIZezEf4WwoumXtFIAok4
-	/q/QV4Qg=; b=BSe4kV/OG1ras7RPMYJswxatuUAUoe+ws5rivlrbv+eKHPNjuwR
-	YB9PSRMMyvqM4EPEKH0XpV4uu90+fBviUfBqrasHbBkLn1QiRtETWyBOJOxAdyMV
-	ssytZurFBJ7yAPsH/2vclIkB5VJvHg3ewf8EbGrrHERcZb+G7h/j9nYuZvj3dUEm
-	DbTMQA5TH9nsEkEEg0/1bmVcKohpyXiiCKzmQauPks/s3RRCp+1DvsxXePxOG8PR
-	LZ6K+syOa+yKwSgHAVgQTadkQKqCB+9uVccI8QyO7ru+BJx7OU+ExmVHT0EClNib
-	kyYRNcFIMV+E9iuBs3YuIIp7m3ObtR8h/aQ==
-X-ME-Sender: <xms:-3i1Zy3VnwSlDY733b78YejUwXjkKGbVtNdYyJFSvzEGaQyR45NYYQ>
-    <xme:-3i1Z1FOBmUKfr9-0PSAn1EAEMpDAcmVZWmmROEMi6aih-FGWSNkPW0lRcWn7WZ-0
-    u28jnHH_0KN96HRGQ>
-X-ME-Received: <xmr:-3i1Z652GBZatI67rO_hAZNw0SIeFPNCzt1AyNqb61OjaVTzhk_JbIRvN9NGWFQZ1DEiVN6jBtREAbl3tpPlQRFaRI7H5F_Uo-cUOeR8vRbipgQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeifeehudcutefuodetggdotefrod
+	1739949487; x=1740035887; bh=PLMkT6EXIJL8UwaoGv6+H61VX3L1/Yq1JHo
+	x17Bo2AI=; b=GzKEJcr7J1403nJDnULDFCDP8QGIpp6/zK5L3BXQffoAdwcC+ud
+	rYr/9osbopL0NMOfB+P3+u+CO+mCsJXHvBucuQiuEK71NagTu/EASOlVWoyVbwyx
+	YdQYLwo+MSzOT45/KijCyXGZT3J2HAdg8tcjaxIw4QCvL+z7Xci+BhDzbDmd2qjq
+	y0mr6v/ul6Cr9yBefHwv10EepSwxRuj6ZjWVgZgF97qg3PHdgOi16O92BbWRp1lW
+	F4aDwTEE872Poquuby0UmFrIQNFO9wLrebXvX64fPAncLCtYcNxrei5018fI0QnO
+	1/LcZlSORVLciXSj3G+OYggr9bRtqxvVhYg==
+X-ME-Sender: <xms:roW1Z6vReig5yfSw3ptKjrLSMwncAwZWSY8Ow1QkjE4KU1fLdpT3RA>
+    <xme:roW1Z_cDRXBarj1c93pc71riei2A1btISdApyWE8m7FrODpiaWax0N3qTwuhWzglG
+    PKBM8Of1Jaot5jYKg>
+X-ME-Received: <xmr:roW1Z1zyBqA7G9w1C4-FlgOXnYU-cfVdJ7GcQxNQstuHwQsFCPUZxdbADQCMb_c1F6lcEY9J-05EUMLoPZnUH3QQOzDEfKFBWOea-YJXylQLGN0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeifeeifecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
     shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhg
-    ihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfi
-    hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohho
-    ugesughunhgvlhhmrdhorhhgrdhukh
-X-ME-Proxy: <xmx:-3i1Zz1IVvQyoPXtd4LSer7-akbEgKbhf6KmeiY_EA-GbhSG5n5hww>
-    <xmx:-3i1Z1FUI0gwgeymRLs5NBcGXrtHqSQsRBEV7GRY1db9CaYaPucfmQ>
-    <xmx:-3i1Z89IXu465dV0P8NaA5Ts989yLcIqqvviNIOpotj5LkDYcP0JZg>
-    <xmx:-3i1Z6mLAEf1OWqLms4GyBYtqRQbqqYsGQHVgYSFipvOcOgrG0uppA>
-    <xmx:_Hi1Z-PUJP4XDBn6iqXyvWqA08FtQ-POCUa1sAD8l2M8yuysJws8tc1u>
+    hrtghpthhtohepghhithesmhgrvhhithdrohhrghdruhhkpdhrtghpthhtohepphdrugdr
+    ohhlihhvvghrsehmrghvihhtrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:roW1Z1NFZ9rzO8hg1kWhtT_gllJVAvuHppKxH8_8NvwCOo9B7GwmOw>
+    <xmx:roW1Z6_aCOWO4KOnxQMjrjBD89j_Ohha9KClXm-RZYKfn6ah8IFyMw>
+    <xmx:roW1Z9XyeFVALItdOIVfKBVxS0sdbLirUEXhIu4uxDYMJ5KzkaiIOQ>
+    <xmx:roW1ZzdUpBMTcA7SuKln0XB4yRhk4D4_pvfKJdEd01v_wo-Y_SFk6g>
+    <xmx:r4W1Z-aSYUKUd8k7YcEo3TozfXsGG-Ehi9bO5DAZO54zQcTA_Z_U7dYY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Feb 2025 01:23:54 -0500 (EST)
+ 19 Feb 2025 02:18:05 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id dac580db (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 19 Feb 2025 06:23:52 +0000 (UTC)
-Date: Wed, 19 Feb 2025 07:23:47 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id c5b8c99e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 19 Feb 2025 07:18:02 +0000 (UTC)
+Date: Wed, 19 Feb 2025 08:17:58 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 1/5] merge-tree --stdin: flush stdout to avoid deadlock
-Message-ID: <Z7V48_q3Uu9d0D3Q@pks.im>
-References: <pull.1862.git.1739723829.gitgitgadget@gmail.com>
- <pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
- <3b3179785098580f3336bb24bdbaf0aa1366bfcd.1739895879.git.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Peter Oliver <p.d.oliver@mavit.org.uk>, git@vger.kernel.org,
+	Peter Oliver <git@mavit.org.uk>
+Subject: Re: [PATCH v3 0/2] Fix Meson Perl version check
+Message-ID: <Z7WFpu6QEBJXwAIH@pks.im>
+References: <Z5c4OzzHWOo30Hu6@pks.im>
+ <20250218153043.63535-1-git@mavit.org.uk>
+ <xmqq8qq3kqyk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,35 +89,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3b3179785098580f3336bb24bdbaf0aa1366bfcd.1739895879.git.gitgitgadget@gmail.com>
+In-Reply-To: <xmqq8qq3kqyk.fsf@gitster.g>
 
-On Tue, Feb 18, 2025 at 04:24:35PM +0000, Phillip Wood via GitGitGadget wrote:
-> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> index 9a6c8b4e4cf..57f4340faba 100644
-> --- a/builtin/merge-tree.c
-> +++ b/builtin/merge-tree.c
-> @@ -18,6 +18,7 @@
->  #include "tree.h"
->  #include "config.h"
->  #include "strvec.h"
-> +#include "write-or-die.h"
->  
->  static int line_termination = '\n';
->  
-> @@ -623,6 +624,7 @@ int cmd_merge_tree(int argc,
->  			} else {
->  				die(_("malformed input line: '%s'."), buf.buf);
->  			}
-> +			maybe_flush_or_die(stdout, "stdout");
->  
->  			if (result < 0)
->  				die(_("merging cannot continue; got unclean result of %d"), result);
+On Tue, Feb 18, 2025 at 11:12:03AM -0800, Junio C Hamano wrote:
+> Peter Oliver <p.d.oliver@mavit.org.uk> writes:
+> 
+> > Suggested comments added.
+> >
+> > Peter Oliver (2):
+> >   meson: bump minimum required Perl version to 5.26.0
+> >   meson: fix Perl version check for Meson versions before 1.7.0
+> >
+> >  meson.build | 17 ++++++++++++++++-
+> >  1 file changed, 16 insertions(+), 1 deletion(-)
+> 
+> I wasn't involved in the review of the previous rounds (so it was a
+> bit of surprise for me to be listed on the To: line), but it seems
+> that Patrick and you polished these two together, so I'll see if I
+> can add Patrick's acked-by/reviewed-by while queuing by waiting for
+> the earth to turn one rotation.
 
-I was briefly wondering whether we should rather move this into
-`real_merge()` itself, which is responsible for writing to stdout. But
-the only other callsite doesn't really care as it will exit immediately
-anyway. So this is probably fine.
-
-Overall the series looks good to me, thanks!
+Yup, this version looks good to me, thanks Peter. So please feel free to
+add either my Acked-by or Reviewed-by, I'd be fine with either.
 
 Patrick
