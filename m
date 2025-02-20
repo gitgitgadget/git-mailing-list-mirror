@@ -1,72 +1,73 @@
-Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3032E1EDA1C
-	for <git@vger.kernel.org>; Thu, 20 Feb 2025 08:30:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F378101DE
+	for <git@vger.kernel.org>; Thu, 20 Feb 2025 09:56:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740040228; cv=none; b=tcFgI9akxsO2i1+0l3/zJVi7kQNZlz4JwnTCzJWhGkdJJKCi/w1Sq4sJ9jLkTJSTKcY1CPaWKjbpX6QyB8iSjMt8ilGecl5i5vmGaiiEEjKZuhu1C+zDsf3W+CVHlitNdos5E6lL50ZGy8TvKu/JqQw1mcVMnZBGM8jqopHuarc=
+	t=1740045385; cv=none; b=mgCub2SB9JfQMsdQqsqR7HZRKa5UJ9g8KxYR7IHXU9VD8/GQssQ/fw9UIPqgmD4q9PEpXw/iFTj34DSUoir4WbA/klKJ7lYiRCdqE7Uhl8+WPLdkgN1yQ5R6GFIzvp1vUz6iDXUVYFmWK7387n8SKb1DoiDiTeHklh2wbS+6Yw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740040228; c=relaxed/simple;
-	bh=k4BoABB5by+iiofaE/PHK7FGScfahVzUesUSAZZAYzE=;
+	s=arc-20240116; t=1740045385; c=relaxed/simple;
+	bh=SVat52AOae23BuEpAyLs8mAIh3/BOC6MB3or35U6ww4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfJI9Nj5laMzveQYtBPAOIMTTKTlc8xriZ9x6tlJ38FYaOGuEvrO3D8pG86tqLfrgZkR09jgAY1sNokq4g6PVcQ5fCkjT644mTOBflPxqXeQ39/2lStt1GCZa/rwnyuxUQ4L4Km1CkALmYyb4/aL7ASUIcXjrTpmeFH/h37O798=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YrDamdTH; arc=none smtp.client-ip=209.85.218.50
+	 MIME-Version; b=QEuWGYNh17uRPkv/vrDXbTQk0ChkSDP+4LXcvt51QJ7BLtkmjTSfw7VuhfTip/tkwTb5A8RcyuyZs02WYJpWXWOBtJ0xXore6BFfuy5cir4ohXIWtFW+HV17XxYeLl9uZ9k3ZZxW6xoa4sxUGNnvuue+mwdOh7sMqXKn2NSgGtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=izBbIQ4B; arc=none smtp.client-ip=209.85.208.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YrDamdTH"
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ab7430e27b2so119106066b.3
-        for <git@vger.kernel.org>; Thu, 20 Feb 2025 00:30:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="izBbIQ4B"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5e02eba02e8so951175a12.0
+        for <git@vger.kernel.org>; Thu, 20 Feb 2025 01:56:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740040224; x=1740645024; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740045382; x=1740650182; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=p+8q52LtX47sRUIbNGIeZa/PiPJPDFPMyNOagzmri7I=;
-        b=YrDamdTHPzHabo0dQDJEdZ3lmC6EdWvD+U2lxw3Scc/nPi1s9nglZ61RmGVJ/Ne40J
-         Cj6tq2YgJowas55TnijGlX6efziuh9sWuAxIXjwfFsm4NBX69BnA2YmP4n/AcsGpS7N7
-         BAgrLwHnkgckyFlUaI+RaWuPc8o9bM4L8NRYNTOVx1r5ukz+e0MErphYXVvQp7Rt/h4t
-         jr2352g0ySvDeNb/8gJ3j5oh4/QSveB63TOyXpWVsuHjnp8YJ2hVvSl3t3GVbBdb/8e8
-         O+BKe/AtNYijDBfmpFj6CQ99RpXov0/+Dg3aj9W70dlCqbSKSELPnmi28Ydbz1kD9okp
-         RXwA==
+        bh=XSCLve9Fc/A9vmMTsQceJKH8z9ZuHvK0jzdT/oFWJCw=;
+        b=izBbIQ4B/kW+Yv1bEQOhI8cX9N+hVEt7JvmbXvekXygsRc5O3JqkWH6kYDUDJwor1B
+         qSsupMa9m14QcCC/6HGAINRZg5mzuUCdy0GZcyBAKPyopLXV+Xd8vse9NDLnYFjuObV2
+         6FoVmSZupet8FWVM6EIeFBTLYlAn4TLPa1mSU9CjjHOxvwpaY3wEFDE/8V9rntlYSYeG
+         ZLlxEdMmmaYwiPeup9uzb5Xmo4ohCBM3eNMyPZDi3gWmzD6qZq1OJf6XHR3kKOcb+3wq
+         6FBrusCs2KM1KuILN2nOpCe4ZPWmdcmY6bsB6dNMMzLDyaYv9hZ0Lsj7TbnxDzd/E3k1
+         p/jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740040224; x=1740645024;
+        d=1e100.net; s=20230601; t=1740045382; x=1740650182;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=p+8q52LtX47sRUIbNGIeZa/PiPJPDFPMyNOagzmri7I=;
-        b=b3defNs+RgVJRx0eAw2JvQHlY+jskD30aYVAB9j9RRrlGJ78ME5PHdBHH3Oq5cyLhM
-         PsIHqUUtiZ4765Q+BS821ngpBQSZcXtxcQZbCdAsty+wkCG9iu79RAw3bOmBZfg5cZBM
-         if7MegEugJKiecf50nWc1W8qvEnjAgFt72n4TneoFGSbOnrgTId2HWRsubfOoIbKOyZO
-         T6wlf102EddaraR639C/DG73jqic/6A9l3QXPiIoUtY7vIICxIDFZBsr8iHhLCGVUwl8
-         Ew7j/fYgDJjYEimoWSSbjnFdybXrY14FpZPAB+6W5PgT8dRCZ0q1eVKo5HfNl6bzG29F
-         SCFA==
-X-Gm-Message-State: AOJu0Yy1HS3mL51M6laF5EISt8ZUbVCJrstZS8ruuqCeh57AquQ+nVbh
-	E5xW1YYhMrEKkc8/Z+833Fh3MKcLiPPS/sS0Kn+J+d71AsomRijdhDuMJBI6/hu6uA==
-X-Gm-Gg: ASbGncsn+Y4bA6ZNBcI3kp01745EgM4wqxxlKFdcugY3q3fDKUs1fX/yUf3Cvho3HDI
-	p2TjIsHbd8vnZG4R3HR2w/uJOLbiqjWUGxojOw22IzoD+Za3O+uR4yd+TSeMlCemUcX3BqCKqgH
-	8KMRHEd4UhUrHbPJojaZEOO6m9tm03oiZdJl/aU/i219br73NokW4ZhQI/9HvwvcqnR9wd7E4Zr
-	uE/KGeCSyXI7vjmsgvcaDLdfRPLXLN0tNjip0ETOJdhjXusr6AtWaTuOYhzmwIvBvsjRikGzYqu
-	1xIKncDQ4hpGamXe+TnhCXBfBVo=
-X-Google-Smtp-Source: AGHT+IFXVv2YIW3OchsbOgbI1Ftm3gUfiF8cOg/fNqYg++N/10X8rQL+MkDgwaH1BGJhldtphmqF+g==
-X-Received: by 2002:a17:907:da4:b0:ab7:6d59:3b4c with SMTP id a640c23a62f3a-abb70aa65bcmr1678631966b.21.1740040223897;
-        Thu, 20 Feb 2025 00:30:23 -0800 (PST)
-Received: from localhost.localdomain ([154.118.9.41])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abbdf53d765sm230533966b.39.2025.02.20.00.30.21
+        bh=XSCLve9Fc/A9vmMTsQceJKH8z9ZuHvK0jzdT/oFWJCw=;
+        b=IY64pdL6OhSKpHXNFSjMINXZLjIP+0yptiX4+PygRvHb12pjFsx/nPzIFaOLAYr8XK
+         9lGr9IsjdvhXG3xKqCcigcIWObY5V1wMNC8B7Qf9R0cmPA7GJXg3+fy5iHn77YGrQKDq
+         A2btkTtSkUFjcGQvexYpXH1c9m/8IKVx2bn6RFdjxY27PT1xjt1naJfKcFQMzdLycJZT
+         MkMA7DmeAL8MU8ySyJt8UWZdb920uRZRlDT7n53/i1mj/Vrbb4kKebH24Ay3thYa7Flh
+         GYeclKb6lpmXCwqQn+jeuao1PorZWN5nJLayTovCwLnbiFSbzjmuWW66GMvp7xGyB4VO
+         uvbg==
+X-Gm-Message-State: AOJu0Yy06eIom7AuTbOfiKpeZSKM/7MQdVj6dTxPoCuQtYMj6pAh89Lf
+	rywDUGq6SGFwFvY6nP3K/ljgz6NUC8URNL6z/tEFccbHl2F/sGd2
+X-Gm-Gg: ASbGncsicfgLiryESjX4AHov658uunq+PcNWBxN1mszkcpSW16bKIBHYmk38ZtYVDk1
+	MaRqyM0q6nvoStaOwduScF7YhSzDaDEkjKBanWkQpdHn6TYQgLMXRSBB7ZjEELD4AjtnoDrejQx
+	7IpQ6BRnBnMB8wPkIyjqVgRfLw2sk4E7HQ1Lq0CBJD26yxINQSPk0sdKFlOzyndYyBVyKh8VZca
+	UtPJOpX0HRb9kDbWBWFPWPpZWxIb81gqWPLxI1VC9r2pP+WwLCTRhr+RmjG5zlveKerHn2bfd9U
+	eG+eV5pO+wBW8xL4KCiYE/zSwgH9Fe7R7REK4har+Wln/mGG8g==
+X-Google-Smtp-Source: AGHT+IGnJQ7bIYhwPWMmVUpr9eQDgZfp6oMcvXfJaAGgI6bug0ym7EXUsm5UdfFmC0YPCpfGd6GrzQ==
+X-Received: by 2002:a05:6402:2689:b0:5dc:584e:853d with SMTP id 4fb4d7f45d1cf-5e089d31fa6mr6532262a12.25.1740045381193;
+        Thu, 20 Feb 2025 01:56:21 -0800 (PST)
+Received: from knayak--20220801-595b8.fritz.box ([2a02:2455:8268:bc00:be75:ad3c:ad90:b579])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece2866e7sm11760902a12.65.2025.02.20.01.56.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2025 00:30:23 -0800 (PST)
-From: Seyi Kuforiji <kuforiji98@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	phillip.wood@dunelm.org.uk,
-	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH 5/5] t/unit-tests: remove lib-oid.{c,h,o}
-Date: Thu, 20 Feb 2025 09:29:59 +0100
-Message-ID: <20250220082959.10854-6-kuforiji98@gmail.com>
-X-Mailer: git-send-email 2.47.0.86.g15030f9556
-In-Reply-To: <20250220082959.10854-1-kuforiji98@gmail.com>
-References: <20250220082959.10854-1-kuforiji98@gmail.com>
+        Thu, 20 Feb 2025 01:56:20 -0800 (PST)
+From: Karthik Nayak <karthik.188@gmail.com>
+To: karthik.188@gmail.com,
+	gitster@pobox.com
+Cc: git@vger.kernel.org,
+	ps@pks.im,
+	toon@iotcl.com
+Subject: [PATCH v4] builtin/refs: add '--no-reflog' flag to drop reflogs
+Date: Thu, 20 Feb 2025 10:56:14 +0100
+Message-ID: <20250220095614.62042-1-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250207-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v1-1-7d40f3b4e30b@gmail.com>
+References: <20250207-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v1-1-7d40f3b4e30b@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,138 +76,205 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The `lib-oid.c`, `lib-oid.h`, and `lib-oid.o files` are no longer needed
-since their equivalent functions have been implemented in unit-test.c
-and unit-test.h. This removes redundant code and ensures all unit
-test-related functionality is consolidated in a single location.
+The 'git-refs(1)' migrate subcommand, which transfers repositories
+between reference backends, currently migrates reflogs by default as of
+246cebe320 (refs: add support for migrating reflogs, 2024-12-16).
 
-Drop references to lib-oid from our `Makefile`, and `meson.build` files
-to prevent build errors due to missing files.
+While this behavior is desirable for most client-side repositories,
+server-side repositories are not expected to contain reflogs. However,
+due to historical reasons, some may still have them. This could be
+caused, for example, by bugs, misconfiguration, or an administrator
+enabling reflogs on the server for debugging purposes.
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
+To handle this, introduce the '--no-reflog' flag, which skips reflog
+migration. When this flag is used, reflogs from the original reference
+backend are not transferred, and since only the new reference backend
+remains in the repository, all previous reflogs are permanently removed.
+
+Helped-by: Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Makefile               |  1 -
- t/meson.build          |  1 -
- t/unit-tests/lib-oid.c | 52 ------------------------------------------
- t/unit-tests/lib-oid.h | 25 --------------------
- 4 files changed, 79 deletions(-)
- delete mode 100644 t/unit-tests/lib-oid.c
- delete mode 100644 t/unit-tests/lib-oid.h
+ builtin/refs.c          |  3 +++
+ refs.c                  |  8 +++++---
+ refs.h                  |  5 ++++-
+ t/t1460-refs-migrate.sh | 28 ++++++++++++++++++++++++----
+ 4 files changed, 36 insertions(+), 8 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index feb01702c7..6afa6587ba 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1381,7 +1381,6 @@ UNIT_TEST_PROGRAMS += t-trailer
- UNIT_TEST_PROGRAMS += t-urlmatch-normalization
- UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
--UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
+Changes in v4:
+- Modify the flag to `--no-reflog` to better indicate that reflogs will
+  be dropped during the migration. This is also reflected in the help text
+  and the commit message.
+
+Changes in v3:
+- Make changes to the test:
+  - Use "$@" instead of $@
+  - Mark optional arguments correctly
+  - Use <options...> instead of <...options> as the former is more widely
+    used.
+- Link to v2: https://lore.kernel.org/r/20250211-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v2-1-991a2ec9a796@gmail.com
+
+Changes in v2:
+- Fix typo in commit mesasge and clarify the intent.
+- Modify the test to use `test_line_count` and `test_must_be_empty`.
+- Link to v1: https://lore.kernel.org/r/20250207-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v1-1-7d40f3b4e30b@gmail.com
+
+Range-diff:
+
+1:  42c40d9617 ! 1:  3a02e8e526 builtin/refs: add '--skip-reflog' flag to bypass reflog migration
+    @@ Metadata
+     Author: Karthik Nayak <karthik.188@gmail.com>
+     
+      ## Commit message ##
+    -    builtin/refs: add '--skip-reflog' flag to bypass reflog migration
+    +    builtin/refs: add '--no-reflog' flag to drop reflogs
+     
+         The 'git-refs(1)' migrate subcommand, which transfers repositories
+         between reference backends, currently migrates reflogs by default as of
+    @@ Commit message
+         caused, for example, by bugs, misconfiguration, or an administrator
+         enabling reflogs on the server for debugging purposes.
+     
+    -    To address this, introduce the --skip-reflog flag, allowing users to
+    -    bypass reflog migration. This ensures that the repository ends up in the
+    -    expected state after migration.
+    +    To handle this, introduce the '--no-reflog' flag, which skips reflog
+    +    migration. When this flag is used, reflogs from the original reference
+    +    backend are not transferred, and since only the new reference backend
+    +    remains in the repository, all previous reflogs are permanently removed.
+     
+         Helped-by: Patrick Steinhardt <ps@pks.im>
+         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+    @@ builtin/refs.c: static int cmd_refs_migrate(int argc, const char **argv, const c
+      		OPT_BIT(0, "dry-run", &flags,
+      			N_("perform a non-destructive dry-run"),
+      			REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN),
+    -+		OPT_BIT(0, "skip-reflog", &flags,
+    -+			N_("skip migrating reflogs"),
+    ++		OPT_BIT(0, "no-reflog", &flags,
+    ++			N_("drop reflogs entirely during the migration"),
+     +			REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG),
+      		OPT_END(),
+      	};
+    @@ t/t1460-refs-migrate.sh: do
+     +			# we see that the repository contains reflogs.
+     +			git -C repo reflog --all >reflogs &&
+     +			test_line_count = 2 reflogs &&
+    -+			test_migration repo "$to_format" true --skip-reflog &&
+    ++			test_migration repo "$to_format" true --no-reflog &&
+     +			# there should be no reflogs post migration.
+     +			git -C repo reflog --all >reflogs &&
+     +			test_must_be_empty reflogs
+
+---
+
+diff --git a/builtin/refs.c b/builtin/refs.c
+index a29f195834..c459507d51 100644
+--- a/builtin/refs.c
++++ b/builtin/refs.c
+@@ -30,6 +30,9 @@ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
+ 		OPT_BIT(0, "dry-run", &flags,
+ 			N_("perform a non-destructive dry-run"),
+ 			REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN),
++		OPT_BIT(0, "no-reflog", &flags,
++			N_("drop reflogs entirely during the migration"),
++			REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG),
+ 		OPT_END(),
+ 	};
+ 	struct strbuf errbuf = STRBUF_INIT;
+diff --git a/refs.c b/refs.c
+index f4094a326a..5e8f5c06fa 100644
+--- a/refs.c
++++ b/refs.c
+@@ -3035,9 +3035,11 @@ int repo_migrate_ref_storage_format(struct repository *repo,
+ 	if (ret < 0)
+ 		goto done;
  
- # xdiff and reftable libs may in turn depend on what is in libgit.a
-diff --git a/t/meson.build b/t/meson.build
-index 0b412a7c16..c1c4aa32aa 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -68,7 +68,6 @@ foreach unit_test_program : unit_test_programs
-   unit_test = executable(unit_test_name,
-     sources: [
-       'unit-tests/test-lib.c',
--      'unit-tests/lib-oid.c',
-       'unit-tests/lib-reftable.c',
-       unit_test_program,
-     ],
-diff --git a/t/unit-tests/lib-oid.c b/t/unit-tests/lib-oid.c
-deleted file mode 100644
-index 8f0ccac532..0000000000
---- a/t/unit-tests/lib-oid.c
-+++ /dev/null
-@@ -1,52 +0,0 @@
--#include "test-lib.h"
--#include "lib-oid.h"
--#include "strbuf.h"
--#include "hex.h"
--
--int init_hash_algo(void)
--{
--	static int algo = -1;
--
--	if (algo < 0) {
--		const char *algo_name = getenv("GIT_TEST_DEFAULT_HASH");
--		algo = algo_name ? hash_algo_by_name(algo_name) : GIT_HASH_SHA1;
--
--		if (!check(algo != GIT_HASH_UNKNOWN))
--			test_msg("BUG: invalid GIT_TEST_DEFAULT_HASH value ('%s')",
--				 algo_name);
--	}
--	return algo;
--}
--
--static int get_oid_arbitrary_hex_algop(const char *hex, struct object_id *oid,
--				       const struct git_hash_algo *algop)
--{
--	int ret;
--	size_t sz = strlen(hex);
--	struct strbuf buf = STRBUF_INIT;
--
--	if (!check(sz <= algop->hexsz)) {
--		test_msg("BUG: hex string (%s) bigger than maximum allowed (%lu)",
--			 hex, (unsigned long)algop->hexsz);
--		return -1;
--	}
--
--	strbuf_add(&buf, hex, sz);
--	strbuf_addchars(&buf, '0', algop->hexsz - sz);
--
--	ret = get_oid_hex_algop(buf.buf, oid, algop);
--	if (!check_int(ret, ==, 0))
--		test_msg("BUG: invalid hex input (%s) provided", hex);
--
--	strbuf_release(&buf);
--	return ret;
--}
--
--int get_oid_arbitrary_hex(const char *hex, struct object_id *oid)
--{
--	int hash_algo = init_hash_algo();
--
--	if (!check_int(hash_algo, !=, GIT_HASH_UNKNOWN))
--		return -1;
--	return get_oid_arbitrary_hex_algop(hex, oid, &hash_algos[hash_algo]);
--}
-diff --git a/t/unit-tests/lib-oid.h b/t/unit-tests/lib-oid.h
-deleted file mode 100644
-index 4e77c04bd2..0000000000
---- a/t/unit-tests/lib-oid.h
-+++ /dev/null
-@@ -1,25 +0,0 @@
--#ifndef LIB_OID_H
--#define LIB_OID_H
--
--#include "hash.h"
--
--/*
-- * Convert arbitrary hex string to object_id.
-- * For example, passing "abc12" will generate
-- * "abc1200000000000000000000000000000000000" hex of length 40 for SHA-1 and
-- * create object_id with that.
-- * WARNING: passing a string of length more than the hexsz of respective hash
-- * algo is not allowed. The hash algo is decided based on GIT_TEST_DEFAULT_HASH
-- * environment variable.
-- */
--int get_oid_arbitrary_hex(const char *s, struct object_id *oid);
--/*
-- * Returns one of GIT_HASH_{SHA1, SHA256, UNKNOWN} based on the value of
-- * GIT_TEST_DEFAULT_HASH environment variable. The fallback value in the
-- * absence of GIT_TEST_DEFAULT_HASH is GIT_HASH_SHA1. It also uses
-- * check(algo != GIT_HASH_UNKNOWN) before returning to verify if the
-- * GIT_TEST_DEFAULT_HASH's value is valid or not.
-- */
--int init_hash_algo(void);
--
--#endif /* LIB_OID_H */
+-	ret = refs_for_each_reflog(old_refs, migrate_one_reflog, &data);
+-	if (ret < 0)
+-		goto done;
++	if (!(flags & REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG)) {
++		ret = refs_for_each_reflog(old_refs, migrate_one_reflog, &data);
++		if (ret < 0)
++			goto done;
++	}
+ 
+ 	ret = ref_transaction_commit(transaction, errbuf);
+ 	if (ret < 0)
+diff --git a/refs.h b/refs.h
+index a0cdd99250..ccee8fc670 100644
+--- a/refs.h
++++ b/refs.h
+@@ -1157,8 +1157,11 @@ int is_pseudo_ref(const char *refname);
+  *   - REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN: perform a dry-run migration
+  *     without touching the main repository. The result will be written into a
+  *     temporary ref storage directory.
++ *
++ *   - REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG: skip migration of reflogs.
+  */
+-#define REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN (1 << 0)
++#define REPO_MIGRATE_REF_STORAGE_FORMAT_DRYRUN      (1 << 0)
++#define REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG (1 << 1)
+ 
+ /*
+  * Migrate the ref storage format used by the repository to the
+diff --git a/t/t1460-refs-migrate.sh b/t/t1460-refs-migrate.sh
+index a6d9b35a46..2ab97e1b7d 100755
+--- a/t/t1460-refs-migrate.sh
++++ b/t/t1460-refs-migrate.sh
+@@ -9,14 +9,21 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ # Migrate the provided repository from one format to the other and
+ # verify that the references and logs are migrated over correctly.
+-# Usage: test_migration <repo> <format> <skip_reflog_verify>
++# Usage: test_migration <repo> <format> [<skip_reflog_verify> [<options...>]]
+ #   <repo> is the relative path to the repo to be migrated.
+ #   <format> is the ref format to be migrated to.
+-#   <skip_reflog_verify> (true or false) whether to skip reflog verification.
++#   <skip_reflog_verify> (default: false) whether to skip reflog verification.
++#   <options...> are other options be passed directly to 'git refs migrate'.
+ test_migration () {
+ 	repo=$1 &&
+ 	format=$2 &&
+-	skip_reflog_verify=${3:-false} &&
++	shift 2 &&
++	skip_reflog_verify=false &&
++	if test $# -ge 1
++	then
++		skip_reflog_verify=$1
++		shift
++	fi &&
+ 	git -C "$repo" for-each-ref --include-root-refs \
+ 		--format='%(refname) %(objectname) %(symref)' >expect &&
+ 	if ! $skip_reflog_verify
+@@ -25,7 +32,7 @@ test_migration () {
+ 	   git -C "$repo" reflog list >expect_log_list
+ 	fi &&
+ 
+-	git -C "$repo" refs migrate --ref-format="$2" &&
++	git -C "$repo" refs migrate --ref-format="$format" "$@" &&
+ 
+ 	git -C "$repo" for-each-ref --include-root-refs \
+ 		--format='%(refname) %(objectname) %(symref)' >actual &&
+@@ -241,6 +248,19 @@ do
+ 				test_cmp expect.reflog actual.reflog
+ 			)
+ 		'
++
++		test_expect_success "$from_format -> $to_format: skip reflog with --skip-reflog" '
++			test_when_finished "rm -rf repo" &&
++			git init --ref-format=$from_format repo &&
++			test_commit -C repo initial &&
++			# we see that the repository contains reflogs.
++			git -C repo reflog --all >reflogs &&
++			test_line_count = 2 reflogs &&
++			test_migration repo "$to_format" true --no-reflog &&
++			# there should be no reflogs post migration.
++			git -C repo reflog --all >reflogs &&
++			test_must_be_empty reflogs
++		'
+ 	done
+ done
+ 
 -- 
-2.47.0.86.g15030f9556
+2.47.2
 
