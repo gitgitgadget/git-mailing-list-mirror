@@ -1,105 +1,107 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 681BE204840
-	for <git@vger.kernel.org>; Thu, 20 Feb 2025 16:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25B0211291
+	for <git@vger.kernel.org>; Thu, 20 Feb 2025 18:44:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740068073; cv=none; b=jf0YmNKuTB6pdRf9kVZY2WK3JJvmhGRbxgbFJp6tVIFQ3WXqVcY/Os5A3jSDMCPbXdMBbizYw5tiMvtGfxognZTBj23WE5JWy1hT6jpvdiFxxFDYdAMbXZjaLuSM7ReYTtKg9EUg/kCCjGQFFD6wYAVNC8EDe0SP9Z/kz59lXXA=
+	t=1740077101; cv=none; b=oaMFlhR3y1hPSt9XCMSBxM9229lltDvOMhJpWW+P70+Xq2gZZHxgteCHBS7GOFhkZ5mQCGh1xfpCaErXro+VNarlqub9n7jp4EGQ1w6j5RXqxqmczzM7iKYn2cJ+7OI4Gc3YA7Jgit837zzcGnw+NqkBPgvpFnKRjOW5qhmJmwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740068073; c=relaxed/simple;
-	bh=mJGVw/xpXYSdRFUQmBQAPq8B0cAO+ZQV3agtl3xCy+M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=omWXMlNt2H0bNXfvBNcSgJJ4lAbjmwcn38swv0nT8BoqYL86kr9ApW1LRPQm0RQzoL0yqrGWWYH1eTuSDFPW+F2Cmgoumf5L4Ma50xBoQ/EFiXgLXxxvKr6hFKfeRNwYTSpKXK81SgsoWyqRu9xbN82qtK9MItgEZuXyvd3OvEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qRmbkICm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PFkQwIF+; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740077101; c=relaxed/simple;
+	bh=nE2HWl2ErMiWjvVAU743BbKSuZY3HWN3zYadljVjzz0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=CRzmoS8fDfNrTj37/9Icaak722GdHg5DMKT8oPSGSIdp9vXzBkV0AxCQM7ab3Cy7WxSqDuXtIkc9WaiU5MSlKB0L8wyouSlkrjmMRQ4uJkopX1chKlM4MxPcm0eB7bn0QkIV3DTvOkTZkrecD9Y93E222ut46z1n2rVJDJS6HBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B0D/ioeE; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qRmbkICm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PFkQwIF+"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 60AE411400EA;
-	Thu, 20 Feb 2025 11:14:30 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 20 Feb 2025 11:14:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1740068070; x=1740154470; bh=mJGVw/xpXY
-	SdRFUQmBQAPq8B0cAO+ZQV3agtl3xCy+M=; b=qRmbkICmMXQY9iHcDnqam7VsnI
-	OREt5qkcFYYZbrzoCAfpJEOjPyuoUi3bbM3KR/RTDVLLqRiZqz+h5vGa9ZI3wUbC
-	2lkuAG6csJhVOzcdlbhZEUdPukuImRGWT3Q99PbhzeRjS6f7q9yZ5TRl6OsoQboF
-	uXxvM6A3sKs51H6NnmG9E9H+Q/q2Fp02sm/nQqhjIEn/jNDJcC3n+jyK05TY7+vQ
-	1AgDOo+yYtu2IvXkxQV4dxT8JK0gXUEK8HPzNoLBlp/L3wdNfTzmXk0tlGXgf/kc
-	q28AxJ0ZvF90HyIeL8bHI4UUV4yMg5lOJrOLUfAx8uBtCcOR9s3z6BLtTc3w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1740068070; x=1740154470; bh=mJGVw/xpXYSdRFUQmBQAPq8B0cAO+ZQV3ag
-	tl3xCy+M=; b=PFkQwIF+uvz9fSy45bOfNXjwae4CSvWktaQmmOX68mD+r/IStt2
-	EH222WEmOwZ/gc7DMJInvVyWpq1VVx/mHV6oyqDQZhlDwANbNxw+QBaCxxxkhEaQ
-	ymrCEweDNaLCZYR5zKmFFHcUubF9y/W/OqwneNqc7EkMlRVElZ48QT8rBOk75ROX
-	Ur0MoxUvnqfGytB2rgJXr21t39Z6ZFpG3Ykt5zy8xBb3scw/7f0sudWhHwCw/55l
-	ezlW5Qwp4Gle0WQQwF/8CBBY76darrwbXLPkqe5vsdv442Fp2cdjLLtqPnquxQ19
-	aC+QPSvsKyeZyEFFPW3g+AyfOfV7bcFAjxg==
-X-ME-Sender: <xms:5lS3Z93QF50Qq9W6ZFbHFH2ZtBcmO-EXGe9ltb8kuhN6iOKpg3D4DA>
-    <xme:5lS3Z0GYfMIP9CQsx5mqmr3twcKuv5-iS6bEpl12S5Ht6h9P3XLxGM0sx0NG3L4-V
-    ChBVxIhf9kEB15jHw>
-X-ME-Received: <xmr:5lS3Z96RI3FrjOOBoFczcJdWganDTqMZLjCJfAqH-hcv5F9FMXu4rHvDY15OQjCShAmU-Y-hqgDFGaepeo1A02F4dT1hjI9bfex1AGo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeijeehjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:5lS3Z637vWJggkJ6r2UHeFWuCszvNWQ-BpR59_NLP83haCOf-RF3OQ>
-    <xmx:5lS3ZwFbwQC9YTooI-6lySK1FP2_kH5jnyWzo7y5t7shZuwlTqsmpQ>
-    <xmx:5lS3Z79B6U07ZEHjPLwnGhAZWs0uteM99tPsBAQd9jk_AytzRu2bsw>
-    <xmx:5lS3Z9kpFG5-fil5uZweuyvAa1jDZVCb-2gHHHw2LOsujzC-gJKzDg>
-    <xmx:5lS3Z8i65d6Jc4INgjmVT9RTRsYU8MULiFpIKsrNNi5PI2G9o1weOEm9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 20 Feb 2025 11:14:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net
-Subject: Re: [PATCH v2 2/3] builtin: introduce diff-pairs command
-In-Reply-To: <3bf7llbgpb25bfiuqbsyz4iibacwnfgrumfede4nebz3vw2grs@xarsh4rzohle>
-	(Justin Tobler's message of "Thu, 20 Feb 2025 08:56:02 -0600")
-References: <20241213042312.2890841-1-jltobler@gmail.com>
-	<20250212041825.2455031-1-jltobler@gmail.com>
-	<20250212041825.2455031-3-jltobler@gmail.com>
-	<xmqqldubumxf.fsf@gitster.g>
-	<5uwp2vdm5tzv6n26fu77g4xys5ntjy2bj4hpgiuwpamxkij4zk@77jn55tynwse>
-	<xmqq1pvtfrq0.fsf@gitster.g> <xmqqwmdlebua.fsf@gitster.g>
-	<4ch3hdlv23qtwi32mgilym43eqtjefgxi4yi7577xcw6df3lbv@eiemmoap22y7>
-	<3bf7llbgpb25bfiuqbsyz4iibacwnfgrumfede4nebz3vw2grs@xarsh4rzohle>
-Date: Thu, 20 Feb 2025 08:14:28 -0800
-Message-ID: <xmqqr03sd257.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B0D/ioeE"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-abbdc4a0b5aso253122666b.0
+        for <git@vger.kernel.org>; Thu, 20 Feb 2025 10:44:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740077098; x=1740681898; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/i4LhNM4Uy/CgGzEi3rL/dK7BqNjuHn2NT11gBwmtXM=;
+        b=B0D/ioeEXzIR8JNx4lxOADhjix3peGtAnIEUmVbLnUs4CHtcstcudLp09DmqbzIjHk
+         0IdWD3Gs2a8LELXcWy9Cw3Cro0jTP3xSOYNxj3QUe3p+oS3lmZz29oq0W7Pzve3Y6f3T
+         1lOf8sivoXNMMRoFCjfRokFGovc1RSMirihV+wWQBrlaBn9/nuvyj+JKhrY7ByPetj93
+         OZ4tkW/7GoTSuvgofDVdpS8ABXhxDpLMxBWiGOmXmBl6Os2Ggspk4/kcO1/3GlV3XuAV
+         qwE1HztasrS+OXXXNYZ6awHGmdYFH2Xx+K3Afkvzl9PEPiJjlcgAec2feVM9yV3ChGVO
+         SLZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740077098; x=1740681898;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/i4LhNM4Uy/CgGzEi3rL/dK7BqNjuHn2NT11gBwmtXM=;
+        b=XiQ+LbQ6MduT2pwnZ6GElnAmXuA7eFaHEC+puMGiH9z7RPYDrrOCWtjlgtcQxB2oGi
+         Gt5P5NNyH4AN1sqMbV8H3PD867VhBNOD3Rm0EqcZ2FdmArugPIHtbVkR1TcU554RbfQO
+         jtd9okYoXteh0U/6YdIzOQufvwHHFMDdlEhBPKr/12pQaYDzdC71mwtBwXErNFO8gZ8w
+         1cyWgA1yC3O+ofT8mkp3Y+R8+c7zuUzGJA1zodoVc3aAxWMKK3fuZ6ZugA+RU7habhno
+         LTVPkOmKKrHYy51fmc7tHlvIHIzDR/Bab7ec1n+WPcU10KJrQSWxcKCkpmX/zh5TVfh0
+         I3BQ==
+X-Gm-Message-State: AOJu0Yw45NqrjB3zoX3bJbJ2M3Qsqxif9p1X1/dCyYgpN7S0pkjzL6z3
+	NYDkBVF6zbj0m4/XBsMyMlS6HsURwxOqUQRFL+tuEst5tRsjjBuqNCgqMktz3sXv1yGJ3SihqYt
+	kvy15S7RmyQSUnBlwN+aGtnaoLl4=
+X-Gm-Gg: ASbGncvGwCh/4g5XyFsh/RqY89mVInXVMm6KxX/pmFTpLENC6I4A4mjAlW4PbIDgT9L
+	tUL08FV0QcJZDhIER1t6jMioNIPBuhpdZLrw6Wma1/0PLtHqaUsUyOl1lJcz/ehj3eXfidWkhoQ
+	lh8lGbTLG4zFcYxWPIgaL/ChbJvWVG
+X-Google-Smtp-Source: AGHT+IFe5rs7nE+z6Z1M4tHX9fCwGg7jeiPKKP4pFvIYaIs8pecoH4qeQEDhE7pEI+oTOq7bNuBojItCx/udH7M7PuA=
+X-Received: by 2002:a17:907:6c13:b0:ab9:d282:d42e with SMTP id
+ a640c23a62f3a-abbedeea657mr421381566b.21.1740077097990; Thu, 20 Feb 2025
+ 10:44:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <arrp2ye3kid76pwghguu5z4jkpv7xsskzdsjunbfkgmwejgby5@qh4phxwzenyp>
+In-Reply-To: <arrp2ye3kid76pwghguu5z4jkpv7xsskzdsjunbfkgmwejgby5@qh4phxwzenyp>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Thu, 20 Feb 2025 13:44:47 -0500
+X-Gm-Features: AWEUYZkBrymd1qnR1v6zfY6Hevf5s5UQKJcoW8UyYDhSWxxoSAgLAIqUaRLBybs
+Message-ID: <CALnO6CACJTKasKT9rX9w4_r9q0DPOPZhGnHt8f65oo6Q=8NxEg@mail.gmail.com>
+Subject: Re: first bisection step takes quite a while
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Justin Tobler <jltobler@gmail.com> writes:
+On Thu, Feb 20, 2025 at 9:38=E2=80=AFAM Uwe Kleine-K=C3=B6nig
+<u.kleine-koenig@baylibre.com> wrote:
+>
+> Hello,
+>
+> today I did a bisection in the kernel repository:
+>
+>         linux$ git version
+>         git version 2.47.1
+>
+>         linux$ time git bisect start 09fbf3d502050282bf47ab3babe1d4ed54dd=
+1fd8 96d8eab5d0a1a9741a4cae1b3c125d75d1aabedf
+>         Bisecting: 572238 revisions left to test after this (roughly 19 s=
+teps)
+>         [eafdca4d7010a0e019aaaace3dd71b432a69b54c] Merge tag 'staging-4.1=
+8-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/staging
+>
+>         real    18m41.374s
+>         user    27m18.306s
+>         sys     1m0.565s
+>
+> I was surprised that it took that long to find and checkout the first
+> revision to check. (That is on a 4 x Intel(R) Core(TM) i5-6440HQ CPU @
+> 2.60GHz, 16 GiB RAM with a Samsung SSD. On a different machine (56 x
+> Intel(R) Xeon(R) CPU E5-2660 v4 @ 2.00GHz, 256 GiB RAM and (I think a
+> spinning hard disk)) it took nearly an hour.
 
-> Thinking about this some more, adding support to expand trees in
-> diff-pairs would alter patch output behavior. To better enable backwards
-> compatible inclusion of this feature in the future, we may just want to
-> die() for now if any tree object is present in diff-pairs input.
+Related thread:
+https://lore.kernel.org/git/19461b87a5c.5a2ea74016716.8214238482389812984@z=
+ohomail.com/
 
-Sounds sensible.
 
-Thanks.
+
+--=20
+D. Ben Knoble
