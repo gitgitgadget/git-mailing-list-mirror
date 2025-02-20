@@ -1,119 +1,82 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907891C5D67
-	for <git@vger.kernel.org>; Thu, 20 Feb 2025 22:52:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CB51C5D67
+	for <git@vger.kernel.org>; Thu, 20 Feb 2025 22:53:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740091975; cv=none; b=AzSuQpJOlsBfyevlVVn5ffAlaDUXz2oAVatJdPPVrWMaBtRirtRpQvVr7luiAV987mTo/DhzYjIEtP6uJ3MRQxG+U0yQT6M4IyMd8hcZ9WO5DhWXlaed3ZEOp+bUer7uR8XJo/ZCJ5Gv4B+x1kdSOJ/wn+sYrVTZ0i8AFEaty+s=
+	t=1740092009; cv=none; b=OXLYRYftSv4ltgNVD0I52AqMcVowywu0BrtI3vjByM2CVCzLfXoItjkTo6LAHigSaVES6G/SoRVjYiZE8MUzUB0f4l5C3m37Gy3GM+RbCHCtGSAwTaHyDc9IDqsHFzcYPNpUqzWlsYcYU9pNnKsSPaUJyJQpCxYO9rWrK8LkvR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740091975; c=relaxed/simple;
-	bh=M0TeRaicBcmMTORhwqA1OVYKBkmF1Smn8l6FPMeh+dk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kw29BWesi4aZ+8AwnEDdAGDzw1zULqmLaOjjtwNNjEv1SEtUauuoFMVVbU3Znu1TNgGnSHHvY7Vi5GRVRLilwwEgA0CfZV8j7LriOBva9nwVUsgqXajvGaMO4McFc2wbOwWTIvvg+eUt9o0K10YuzVvuRbU1ZqgPApQZUOh3PKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XtYz16iu; arc=none smtp.client-ip=209.85.128.172
+	s=arc-20240116; t=1740092009; c=relaxed/simple;
+	bh=3OTaL3/TsTqsJ2ijxz0Lk5RIX3y1G3oIORLhlAtMMkI=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=N0Cl5uiAUkwlPni68Pq7mvp71Yth7wn/g2zy/PMMhiTDwySlfB6Q49Tsk5J9mD2/Jx3WcymVPklAyYOuSvMQG6NNsJ0QEfjBp1mxX4eTOfAQWh/wgd9fW8JKCRmqzUGgSKvtI3jJrodFzcwEiWomdABxD2W1n8PUVAHRaPVVHbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z10W8X3q; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XtYz16iu"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-6f77b9e0a34so10820177b3.2
-        for <git@vger.kernel.org>; Thu, 20 Feb 2025 14:52:53 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z10W8X3q"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-546237cd3cbso1514064e87.0
+        for <git@vger.kernel.org>; Thu, 20 Feb 2025 14:53:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740091972; x=1740696772; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dGjzG8DSwDO5OfNhy8dFMpr7p4VXeBNXvmrKvNZrTkk=;
-        b=XtYz16iuVsGSGBzXfEdsT5CuWNvgelfhtTwuceQdULPXPIkh0ZpF4ClDabRp/1BVdj
-         3TAoSRa/HNmGdUpSFXNbOsnZKl56OJsOgJM2czNuCMP4I3+Egrj0qz+PUfnf+fir1VPS
-         fXikST5GM4R6TkthsqI5tGepWf4NOAfb7SlKAlt9PZsLYYzcsfZ5V+KLz7A7X645qq6r
-         +Zj50SF9OGfxFNqitWkeNR8+IXfQ9pjFalRQawjLrHtbRAyKKknBpunVEJa0aaIhrsg9
-         Hd/GyzkTULaH/z/5mcVZ7sKlkuzOCvCOqES4qTAdwc7Mng79JrrsIqbDFTgfV2fqMkeg
-         5V/A==
+        d=gmail.com; s=20230601; t=1740092005; x=1740696805; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3OTaL3/TsTqsJ2ijxz0Lk5RIX3y1G3oIORLhlAtMMkI=;
+        b=Z10W8X3qRGuQh+CJLr6vO7GAj6GmcskkK36upK/52rxO7KkCqyDcg4H797bc79YDVx
+         JkGPH9G/cbzpprDnz7e5m5SAPEi0gQ8SWmUft+Q6PEjP6/x96wH0sBmn7Tu5ITEqx0mr
+         UQMiigKq/1HGZkqZIcThXIdgyqvbKzB4DcuCn/KJP3BFnAOXlNC4W6ky1DkRt8bM8U/E
+         d93AnerGJFuZOTUYmW6d1x7ivtVxr7loznANW4sSWDWxjHMdinsVgSVVG15sGRT+T/Du
+         dNsLvtsAvUviNWn8VxlF8zNb6px1mCxoasSR9Jjzm267QKS94vzoFstER5YBnxP63cnM
+         bcQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740091972; x=1740696772;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dGjzG8DSwDO5OfNhy8dFMpr7p4VXeBNXvmrKvNZrTkk=;
-        b=NwOt00nncfTzp50RH4Jt9WVw0Ix5jB6ucTd5Uq26P9P8tA0mpOYm2CQvG2+FglvUF5
-         837hjZ/nmQpX39f78Bdj6pETbu2BnabhthjfoQkbHgfyf/3yPnbX8+OT0gjTdJHylF2u
-         HUEDKp1GFQ//pft3OqpEctTU8MoHdatWJuTSwAcgQqNx00ZjlnztLr5mElGkiGXVEKYR
-         HbnDoYpcRY8uI8ZdjYRpRGYocMMnvcBBCHDcdD3kIqPRo6+fn+eu4GLES3crzIgfDBiu
-         o6w2t89+9RKRZDK2uXSfiBo73kjqrhha28neADszZUNY1UL4kJmDwaiD6fz3izuOjnGJ
-         gNmA==
-X-Gm-Message-State: AOJu0YyexKYFgraB547QcvVCOENuue4AdN/pj303MWOlH9R+zRhyd9OJ
-	fYr2ZalQH1bEtWO1EEWLs3Qt2g1bBXok5PzuwV1NCsgoUAPZ31pSZ2U75ENk9glOh8GQNgpLjUZ
-	Rbrj7PetESrnKt2b5j2XUAV7Ff6Y=
-X-Gm-Gg: ASbGncvJWZMJ2ilJXGxdTWyTvrumWgYw5/16vdlYiDe1aS7i4/UDMsNNs4RYmT7euwm
-	+t5XxcSNRkYG34Da0P8K9dgiEtof9Mc1NqfXi5vmQMOeJhhXQYqpaA8CPvvWaZQa6vdpxJM2n
-X-Google-Smtp-Source: AGHT+IGz/jIZ3kXuJy7MuWnFoYm78vAXw8/OZntysRc7Q0gF8cOdKVPOa9Blhf/z8StfPvkV43xgF7awAsyjmbSqL5M=
-X-Received: by 2002:a05:690c:4512:b0:6ef:57ad:9d6e with SMTP id
- 00721157ae682-6fbcc235ce9mr8725297b3.15.1740091972522; Thu, 20 Feb 2025
- 14:52:52 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740092005; x=1740696805;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3OTaL3/TsTqsJ2ijxz0Lk5RIX3y1G3oIORLhlAtMMkI=;
+        b=ZLxNTQEB1Fqhh4rn0EiG8iBsuFsCANxzBrLaDvJbMMOw01s/PAitDULo4KwriK4DYf
+         7Vnvt96dUDolZrTQ0gRg/QQn60uwC0RHNx8YlBD52FqhAGsJzJxymgjL8TUGP2/UqkJn
+         9GoN71jsC4sJUpymxCPzYMQ2pmILlEqWC4hAU8DjdS7tVWXElg8y6/2Cqiy0WwKRkFQb
+         Tfwrtr70n2fVmfaWJ6UPXiDWF2MTBZ7IfGPnwMfVDqWOnEYAJJhyeioNsExUEZJBFn6J
+         maWe+30f3h+zk3X33BK/In2UDpmx2Nz7AS8kPQ2ZuV1MOdln1WEaJOziB/td+b84XU76
+         53eA==
+X-Gm-Message-State: AOJu0Yze/kBWQ3DVld3zAKXVifHxEWJATtV20vH6IGgPFi2lDcXFA4oR
+	SRJgmGNbOTvCYQzLkVyrnj0dTTduuuO3auTHZG4cPIjhFua84SEe5uUlSsjW/Z9abnTXg2iXykj
+	T11bNuYzsYAze0qbuEGreRnkj1BwBgKws
+X-Gm-Gg: ASbGnctyhWnfEys0FKyl8ib8oxt2s+K3HYVFhJkg6NvnCZ7iIr6gDQ/YS9+sVQLCjDx
+	HdWpbApuhLhYQjrsJ7NTKmL/mor5kHkQWUIcV8WwSjnu99GNPv8fqAnc/4+xIz/1UHUtVmuAD
+X-Google-Smtp-Source: AGHT+IHGBeAhWtQUfbc81jKAdv8s9QjdWcJdZYTeGGYQuCz2B9etfxJIHr8P1fEAnxPe/v9pvmEBKLPe1OMB8ogF3aw=
+X-Received: by 2002:a05:6512:4022:b0:545:2f09:a3f6 with SMTP id
+ 2adb3069b0e04-54838edee8fmr234870e87.1.1740092004994; Thu, 20 Feb 2025
+ 14:53:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20250114021502.41499-1-eric.peijian@gmail.com> <20250114021502.41499-8-eric.peijian@gmail.com>
- <20250201020806.GA4081995@coredump.intra.peff.net>
-In-Reply-To: <20250201020806.GA4081995@coredump.intra.peff.net>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Thu, 20 Feb 2025 17:52:40 -0500
-X-Gm-Features: AWEUYZm3dXCM8JQb0UAWRVoG8WOBpXtj7SOBdW_UxF4YaFDsJh-ac8u9_KRyza4
-Message-ID: <CAN2LT1Dxd6e1q_iE7_M_yf3aAyTwasX4ehRwEK_86YPJa8bkqw@mail.gmail.com>
-Subject: Re: [PATCH v10 7/8] transport: add client support for object-info
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
-	jltobler@gmail.com
+From: Jamenson Espindula <jafesp@gmail.com>
+Date: Thu, 20 Feb 2025 19:53:06 -0300
+X-Gm-Features: AWEUYZkyRu5lw-1VAKymc3mM6_1odG2dtKsaPbHrYTlLgzBQo91cXalxoZJ2t-g
+Message-ID: <CAOW_YOkX8K=7i7w9c5oH5Cfia0kCzwC3=ok5E=eUwYgpcOKTRQ@mail.gmail.com>
+Subject: Deleting first commits; maintaining last commits
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 31, 2025 at 9:08=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Mon, Jan 13, 2025 at 09:14:59PM -0500, Eric Ju wrote:
->
-> > @@ -464,8 +465,33 @@ static int fetch_refs_via_pack(struct transport *t=
-ransport,
-> >       args.server_options =3D transport->server_options;
-> >       args.negotiation_tips =3D data->options.negotiation_tips;
-> >       args.reject_shallow_remote =3D transport->smart_options->reject_s=
-hallow;
-> > +     args.object_info =3D transport->smart_options->object_info;
-> > +
-> > +     if (transport->smart_options && transport->smart_options->object_=
-info
->
-> Coverity complains about the check for a NULL transport->smart_options
-> here. If it's NULL we'd already have segfaulted a few lines above when
-> we look at the reject_shallow flag.
->
-> Not sure if that's an existing bug in the earlier code or not. ;) Your
-> extra check can't hurt anything, in the sense that it's just being
-> overly defensive, but it does make puzzling out the expected value of
-> smart_options harder.
->
-> -Peff
+Hi all.
 
-Thank you Jeff. Sorry for the late response.
+My Git repository on GitHub <https://github.com/espindula/br-blfs> has
+about 23,500 commits. However, there are several old (before Feb, 28
+2022) commits I would like to delete and maintain the newer ones
+(after Feb, 28 2022). So, Is there any Git command (or combined
+commands) I could use?
 
-I will remove the extra check. transport->smart_options will not be
-NULL when it reaches
-`args.reject_shallow_remote =3D transport->smart_options->reject_shallow;`
+Any help will be appreciated.
 
-The call sequence is like this
+Thank you in advance.
 
-get_remote_info() in cat-file.c  =3D=3D>  transport_fetch_refs() =3D=3D>
-transport->vtable->fetch_refs =3D=3D> fetch_refs_via_pack()
-
-in get_remote_info(), we already have a check for NULL:
-
-if (gtransport->smart_options) {
-  ...
-}  else {
-        retval =3D -1;
-}
+Jamenson Ferreira Espindula de Almeida Melo
+Jaboat=C3=A3o dos Guararapes, Pernambuco, Brazil
+GNU/Linux user #166197; LFS ID 24492
+Key fingerprint: 234D 1914 4224 7C53 BD13 6855 2AE0 25C0 08A8 6180
