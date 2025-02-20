@@ -1,69 +1,69 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A741EB19A
-	for <git@vger.kernel.org>; Thu, 20 Feb 2025 08:30:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3032E1EDA1C
+	for <git@vger.kernel.org>; Thu, 20 Feb 2025 08:30:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740040224; cv=none; b=onSdwih7kNGLMjZaYzO9CDUgaaO4f2RNMTbaprQdCILOxh8VoWkhqOtO/DDDSri5PzpELgtaTH0tKkiu2SVcxUQdMzSaN9LXvAcmTsgWoTKTN4s7PiIps1+98zNaf4xSI+epc/vIon6C6nK81jWwvBK+FDHvFZKaxpCGy9YFMA4=
+	t=1740040228; cv=none; b=tcFgI9akxsO2i1+0l3/zJVi7kQNZlz4JwnTCzJWhGkdJJKCi/w1Sq4sJ9jLkTJSTKcY1CPaWKjbpX6QyB8iSjMt8ilGecl5i5vmGaiiEEjKZuhu1C+zDsf3W+CVHlitNdos5E6lL50ZGy8TvKu/JqQw1mcVMnZBGM8jqopHuarc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740040224; c=relaxed/simple;
-	bh=r08WGRJR85V8Ugbppb01qn/Cn8xBlRgMH8Qc94B5YxY=;
+	s=arc-20240116; t=1740040228; c=relaxed/simple;
+	bh=k4BoABB5by+iiofaE/PHK7FGScfahVzUesUSAZZAYzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4Dyku1S1hnC8hpFtGFudweUiJfmAQzGcqx+IdeGSKVqJlTPYsgFBpLT69nCkKuEQaGMDWVY/Qf/PX3M4IeDKCtoh91NJfEEAUhYyiyWhFAtu8OYvOzba9CO+H7AyZA86yM+AH6wXnXl9hPjCDhy5qYN4Jil3Knp2qwWGv+zmV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VVOr3yvl; arc=none smtp.client-ip=209.85.208.53
+	 MIME-Version; b=mfJI9Nj5laMzveQYtBPAOIMTTKTlc8xriZ9x6tlJ38FYaOGuEvrO3D8pG86tqLfrgZkR09jgAY1sNokq4g6PVcQ5fCkjT644mTOBflPxqXeQ39/2lStt1GCZa/rwnyuxUQ4L4Km1CkALmYyb4/aL7ASUIcXjrTpmeFH/h37O798=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YrDamdTH; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVOr3yvl"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5ded46f323fso824258a12.1
-        for <git@vger.kernel.org>; Thu, 20 Feb 2025 00:30:22 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YrDamdTH"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ab7430e27b2so119106066b.3
+        for <git@vger.kernel.org>; Thu, 20 Feb 2025 00:30:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740040221; x=1740645021; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740040224; x=1740645024; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tMNe0KNVZ0ezW/BXclTfZ4dcGv1NO3f0HWS3/rdroXA=;
-        b=VVOr3yvlPkz0lUROXG1c8AMpqKSKdVEf+w7aAlJRc0qMsSK9kx9zNueI2/0p+NKSNB
-         0N2vimOjZHd5rWdqslIGLmilo+0obOIBDVTS8Evts9US1nXlTy6XgWSDs8GO/6MCen3l
-         TSur1fQOeWbw97BpwOdJB8Y082qXAbh/xaKzvcoxP6v7q80pFynYbVHeAI71dD0kvqFX
-         p6JgDIE03RQoS9CMrY8MTXJsZ4AAbl6Q7IOhrZhvqMfZWL+JJchS3CVzPbvA7ALWAZ1K
-         BNs046P2zpjsqHf5/dvIRxhjkRYJvGR7OOuIPfUBhP17yLJU6yHkfoKf0knUQ2K49/lr
-         Nx/g==
+        bh=p+8q52LtX47sRUIbNGIeZa/PiPJPDFPMyNOagzmri7I=;
+        b=YrDamdTHPzHabo0dQDJEdZ3lmC6EdWvD+U2lxw3Scc/nPi1s9nglZ61RmGVJ/Ne40J
+         Cj6tq2YgJowas55TnijGlX6efziuh9sWuAxIXjwfFsm4NBX69BnA2YmP4n/AcsGpS7N7
+         BAgrLwHnkgckyFlUaI+RaWuPc8o9bM4L8NRYNTOVx1r5ukz+e0MErphYXVvQp7Rt/h4t
+         jr2352g0ySvDeNb/8gJ3j5oh4/QSveB63TOyXpWVsuHjnp8YJ2hVvSl3t3GVbBdb/8e8
+         O+BKe/AtNYijDBfmpFj6CQ99RpXov0/+Dg3aj9W70dlCqbSKSELPnmi28Ydbz1kD9okp
+         RXwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740040221; x=1740645021;
+        d=1e100.net; s=20230601; t=1740040224; x=1740645024;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tMNe0KNVZ0ezW/BXclTfZ4dcGv1NO3f0HWS3/rdroXA=;
-        b=P8wVWyiQa8pi1Rg8ZvbKTKjAKtAq3MLqinLcwkdTVWbPPlm0iTKncP65QGKevdID8T
-         LRHLQ9VGFCmwtJmH82t0z1HLOZggiWv/gu7OKvt8ls7tvoWk2EMU5W831B2+VEDtfFHS
-         wbLEVJ5jpbzS5MD4/hnjOhu8QWy3qzeKXI+X9k+DuEcYbUZhoPe8y92gz0ZIqXKdtuFC
-         GcJCxutoFKOIlTfIjdMjChy+Sy5PAfTTY1H1UtHWiIDDJ1HYPd9I6dNJfg7DJpyUzJMv
-         Ro+qcxiFISxRESar66LhyxEshC8nS1qLgLxwlmtvZVoFJa85BvWoAorMSHu6hvo3W2TO
-         arnw==
-X-Gm-Message-State: AOJu0YwUMz7p/y/Exlaoz2Gj+XU9UlboTBNgvxFcTIYG6cDOCCx7GR8q
-	c4VEFpTU+cjL0Okm1A9dgqyh61B2xjNxguEhgupba1rOP1z+ItGEJZiPXdlOZ9qJ4A==
-X-Gm-Gg: ASbGncvQ3RNpleXheeWIQqfr6vZdhPO/pwpsFXnsyJEgV67iLLnqJs88fjnEGCd7kZl
-	g+ptUItBZbKh0pf9kGmhWEdP1tq6FVTo0mq8w409Ek+6pbgjklaXjnHaskNR6Z0HsselD5qD5wi
-	MSVlQLhXJDEojnlD40b1BxW1UnmYW0aGY9aZCYUsWJ3vqfmfgHyQpGHcSlcWQJ58kxBjuYktHb8
-	BT4/2ARxO4BaDmuO74dxYTLJmN/sn2Jy5SzIGDWqcVLnxXBsDk0cpv2qaSiHJcB3mZNkZfWActC
-	6FSacaog97DoJ/1Al/PkRAIq6qI=
-X-Google-Smtp-Source: AGHT+IF7gA3IWByoPBDVf2DJC+w7Qn1aJ4skQ3gPfkK1T1CpPAQ7SqEkv7OSIeAv3YlxZJDzlsRUGw==
-X-Received: by 2002:a17:907:6d0a:b0:ab7:e8d6:3b12 with SMTP id a640c23a62f3a-abbccc51169mr721332366b.1.1740040220548;
-        Thu, 20 Feb 2025 00:30:20 -0800 (PST)
+        bh=p+8q52LtX47sRUIbNGIeZa/PiPJPDFPMyNOagzmri7I=;
+        b=b3defNs+RgVJRx0eAw2JvQHlY+jskD30aYVAB9j9RRrlGJ78ME5PHdBHH3Oq5cyLhM
+         PsIHqUUtiZ4765Q+BS821ngpBQSZcXtxcQZbCdAsty+wkCG9iu79RAw3bOmBZfg5cZBM
+         if7MegEugJKiecf50nWc1W8qvEnjAgFt72n4TneoFGSbOnrgTId2HWRsubfOoIbKOyZO
+         T6wlf102EddaraR639C/DG73jqic/6A9l3QXPiIoUtY7vIICxIDFZBsr8iHhLCGVUwl8
+         Ew7j/fYgDJjYEimoWSSbjnFdybXrY14FpZPAB+6W5PgT8dRCZ0q1eVKo5HfNl6bzG29F
+         SCFA==
+X-Gm-Message-State: AOJu0Yy1HS3mL51M6laF5EISt8ZUbVCJrstZS8ruuqCeh57AquQ+nVbh
+	E5xW1YYhMrEKkc8/Z+833Fh3MKcLiPPS/sS0Kn+J+d71AsomRijdhDuMJBI6/hu6uA==
+X-Gm-Gg: ASbGncsn+Y4bA6ZNBcI3kp01745EgM4wqxxlKFdcugY3q3fDKUs1fX/yUf3Cvho3HDI
+	p2TjIsHbd8vnZG4R3HR2w/uJOLbiqjWUGxojOw22IzoD+Za3O+uR4yd+TSeMlCemUcX3BqCKqgH
+	8KMRHEd4UhUrHbPJojaZEOO6m9tm03oiZdJl/aU/i219br73NokW4ZhQI/9HvwvcqnR9wd7E4Zr
+	uE/KGeCSyXI7vjmsgvcaDLdfRPLXLN0tNjip0ETOJdhjXusr6AtWaTuOYhzmwIvBvsjRikGzYqu
+	1xIKncDQ4hpGamXe+TnhCXBfBVo=
+X-Google-Smtp-Source: AGHT+IFXVv2YIW3OchsbOgbI1Ftm3gUfiF8cOg/fNqYg++N/10X8rQL+MkDgwaH1BGJhldtphmqF+g==
+X-Received: by 2002:a17:907:da4:b0:ab7:6d59:3b4c with SMTP id a640c23a62f3a-abb70aa65bcmr1678631966b.21.1740040223897;
+        Thu, 20 Feb 2025 00:30:23 -0800 (PST)
 Received: from localhost.localdomain ([154.118.9.41])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abbdf53d765sm230533966b.39.2025.02.20.00.30.17
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abbdf53d765sm230533966b.39.2025.02.20.00.30.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Feb 2025 00:30:19 -0800 (PST)
+        Thu, 20 Feb 2025 00:30:23 -0800 (PST)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood@dunelm.org.uk,
 	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH 4/5] t/unit-tests: convert oidtree test to use clar
-Date: Thu, 20 Feb 2025 09:29:58 +0100
-Message-ID: <20250220082959.10854-5-kuforiji98@gmail.com>
+Subject: [PATCH 5/5] t/unit-tests: remove lib-oid.{c,h,o}
+Date: Thu, 20 Feb 2025 09:29:59 +0100
+Message-ID: <20250220082959.10854-6-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.47.0.86.g15030f9556
 In-Reply-To: <20250220082959.10854-1-kuforiji98@gmail.com>
 References: <20250220082959.10854-1-kuforiji98@gmail.com>
@@ -75,203 +75,138 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adapt oidtree test script to clar framework by using clar assertions
-where necessary. `cl_parse_any_oid` handles the necessary checks needed
-for the test to run smoothly.
+The `lib-oid.c`, `lib-oid.h`, and `lib-oid.o files` are no longer needed
+since their equivalent functions have been implemented in unit-test.c
+and unit-test.h. This removes redundant code and ensures all unit
+test-related functionality is consolidated in a single location.
 
-Introduce 'test_oidtree__initialize` handles the to set up of the global
-oidtree variable and `test_oidtree__cleanup` frees the oidtree when all
-tests are completed.
-
-This streamlines the test suite, making individual tests self-contained
-and reducing redundant code.
+Drop references to lib-oid from our `Makefile`, and `meson.build` files
+to prevent build errors due to missing files.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- Makefile                                  |  2 +-
- t/meson.build                             |  2 +-
- t/unit-tests/{t-oidtree.c => u-oidtree.c} | 78 +++++++++--------------
- 3 files changed, 32 insertions(+), 50 deletions(-)
- rename t/unit-tests/{t-oidtree.c => u-oidtree.c} (44%)
+ Makefile               |  1 -
+ t/meson.build          |  1 -
+ t/unit-tests/lib-oid.c | 52 ------------------------------------------
+ t/unit-tests/lib-oid.h | 25 --------------------
+ 4 files changed, 79 deletions(-)
+ delete mode 100644 t/unit-tests/lib-oid.c
+ delete mode 100644 t/unit-tests/lib-oid.h
 
 diff --git a/Makefile b/Makefile
-index 58a6af1eb0..feb01702c7 100644
+index feb01702c7..6afa6587ba 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1358,6 +1358,7 @@ CLAR_TEST_SUITES += u-hashmap
- CLAR_TEST_SUITES += u-mem-pool
- CLAR_TEST_SUITES += u-oid-array
- CLAR_TEST_SUITES += u-oidmap
-+CLAR_TEST_SUITES += u-oidtree
- CLAR_TEST_SUITES += u-prio-queue
- CLAR_TEST_SUITES += u-reftable-tree
- CLAR_TEST_SUITES += u-strbuf
-@@ -1368,7 +1369,6 @@ CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
- CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
- CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+@@ -1381,7 +1381,6 @@ UNIT_TEST_PROGRAMS += t-trailer
+ UNIT_TEST_PROGRAMS += t-urlmatch-normalization
+ UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+-UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
  
--UNIT_TEST_PROGRAMS += t-oidtree
- UNIT_TEST_PROGRAMS += t-reftable-basics
- UNIT_TEST_PROGRAMS += t-reftable-block
- UNIT_TEST_PROGRAMS += t-reftable-merged
+ # xdiff and reftable libs may in turn depend on what is in libgit.a
 diff --git a/t/meson.build b/t/meson.build
-index f9e0ae15df..0b412a7c16 100644
+index 0b412a7c16..c1c4aa32aa 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -6,6 +6,7 @@ clar_test_suites = [
-   'unit-tests/u-mem-pool.c',
-   'unit-tests/u-oid-array.c',
-   'unit-tests/u-oidmap.c',
-+  'unit-tests/u-oidtree.c',
-   'unit-tests/u-prio-queue.c',
-   'unit-tests/u-reftable-tree.c',
-   'unit-tests/u-strbuf.c',
-@@ -50,7 +51,6 @@ clar_unit_tests = executable('unit-tests',
- test('unit-tests', clar_unit_tests)
- 
- unit_test_programs = [
--  'unit-tests/t-oidtree.c',
-   'unit-tests/t-reftable-basics.c',
-   'unit-tests/t-reftable-block.c',
-   'unit-tests/t-reftable-merged.c',
-diff --git a/t/unit-tests/t-oidtree.c b/t/unit-tests/u-oidtree.c
-similarity index 44%
-rename from t/unit-tests/t-oidtree.c
-rename to t/unit-tests/u-oidtree.c
-index a38754b066..de6f6bd292 100644
---- a/t/unit-tests/t-oidtree.c
-+++ b/t/unit-tests/u-oidtree.c
-@@ -1,10 +1,11 @@
+@@ -68,7 +68,6 @@ foreach unit_test_program : unit_test_programs
+   unit_test = executable(unit_test_name,
+     sources: [
+       'unit-tests/test-lib.c',
+-      'unit-tests/lib-oid.c',
+       'unit-tests/lib-reftable.c',
+       unit_test_program,
+     ],
+diff --git a/t/unit-tests/lib-oid.c b/t/unit-tests/lib-oid.c
+deleted file mode 100644
+index 8f0ccac532..0000000000
+--- a/t/unit-tests/lib-oid.c
++++ /dev/null
+@@ -1,52 +0,0 @@
 -#include "test-lib.h"
 -#include "lib-oid.h"
-+#include "unit-test.h"
- #include "oidtree.h"
- #include "hash.h"
- #include "hex.h"
- #include "strvec.h"
- 
-+static struct oidtree ot;
-+
- #define FILL_TREE(tree, ...)                                       \
- 	do {                                                       \
- 		const char *hexes[] = { __VA_ARGS__ };             \
-@@ -16,8 +17,7 @@ static int fill_tree_loc(struct oidtree *ot, const char *hexes[], size_t n)
- {
- 	for (size_t i = 0; i < n; i++) {
- 		struct object_id oid;
--		if (!check_int(get_oid_arbitrary_hex(hexes[i], &oid), ==, 0))
--			return -1;
-+		cl_parse_any_oid(hexes[i], &oid);
- 		oidtree_insert(ot, &oid);
- 	}
- 	return 0;
-@@ -27,10 +27,8 @@ static void check_contains(struct oidtree *ot, const char *hex, int expected)
- {
- 	struct object_id oid;
- 
--	if (!check_int(get_oid_arbitrary_hex(hex, &oid), ==, 0))
--		return;
--	if (!check_int(oidtree_contains(ot, &oid), ==, expected))
--		test_msg("oid: %s", oid_to_hex(&oid));
-+	cl_parse_any_oid(hex, &oid);
-+	cl_assert_equal_i(oidtree_contains(ot, &oid), expected);
- }
- 
- struct expected_hex_iter {
-@@ -44,19 +42,11 @@ static enum cb_next check_each_cb(const struct object_id *oid, void *data)
- 	struct expected_hex_iter *hex_iter = data;
- 	struct object_id expected;
- 
--	if (!check_int(hex_iter->i, <, hex_iter->expected_hexes.nr)) {
--		test_msg("error: extraneous callback for query: ('%s'), object_id: ('%s')",
--			 hex_iter->query, oid_to_hex(oid));
--		return CB_BREAK;
+-#include "strbuf.h"
+-#include "hex.h"
+-
+-int init_hash_algo(void)
+-{
+-	static int algo = -1;
+-
+-	if (algo < 0) {
+-		const char *algo_name = getenv("GIT_TEST_DEFAULT_HASH");
+-		algo = algo_name ? hash_algo_by_name(algo_name) : GIT_HASH_SHA1;
+-
+-		if (!check(algo != GIT_HASH_UNKNOWN))
+-			test_msg("BUG: invalid GIT_TEST_DEFAULT_HASH value ('%s')",
+-				 algo_name);
+-	}
+-	return algo;
+-}
+-
+-static int get_oid_arbitrary_hex_algop(const char *hex, struct object_id *oid,
+-				       const struct git_hash_algo *algop)
+-{
+-	int ret;
+-	size_t sz = strlen(hex);
+-	struct strbuf buf = STRBUF_INIT;
+-
+-	if (!check(sz <= algop->hexsz)) {
+-		test_msg("BUG: hex string (%s) bigger than maximum allowed (%lu)",
+-			 hex, (unsigned long)algop->hexsz);
+-		return -1;
 -	}
 -
--	if (!check_int(get_oid_arbitrary_hex(hex_iter->expected_hexes.v[hex_iter->i],
--					     &expected), ==, 0))
--		; /* the data is bogus and cannot be used */
--	else if (!check(oideq(oid, &expected)))
--		test_msg("expected: %s\n       got: %s\n     query: %s",
--			 oid_to_hex(&expected), oid_to_hex(oid), hex_iter->query);
-+	cl_assert(hex_iter->i < hex_iter->expected_hexes.nr);
- 
-+	cl_parse_any_oid(hex_iter->expected_hexes.v[hex_iter->i],
-+			 &expected);
-+	cl_assert_equal_s(oid_to_hex(oid), oid_to_hex(&expected));
- 	hex_iter->i += 1;
- 	return CB_CONTINUE;
- }
-@@ -75,48 +65,40 @@ static void check_each(struct oidtree *ot, const char *query, ...)
- 		strvec_push(&hex_iter.expected_hexes, arg);
- 	va_end(hex_args);
- 
--	if (!check_int(get_oid_arbitrary_hex(query, &oid), ==, 0))
--		return;
-+	cl_parse_any_oid(query, &oid);
- 	oidtree_each(ot, &oid, strlen(query), check_each_cb, &hex_iter);
- 
--	if (!check_int(hex_iter.i, ==, hex_iter.expected_hexes.nr))
--		test_msg("error: could not find some 'object_id's for query ('%s')", query);
-+	cl_assert_equal_i(hex_iter.i, hex_iter.expected_hexes.nr);
- 	strvec_clear(&hex_iter.expected_hexes);
- }
- 
--static void setup(void (*f)(struct oidtree *ot))
-+void test_oidtree__initialize(void)
- {
--	struct oidtree ot;
+-	strbuf_add(&buf, hex, sz);
+-	strbuf_addchars(&buf, '0', algop->hexsz - sz);
 -
- 	oidtree_init(&ot);
--	f(&ot);
--	oidtree_clear(&ot);
- }
- 
--static void t_contains(struct oidtree *ot)
-+void test_oidtree__cleanup(void)
- {
--	FILL_TREE(ot, "444", "1", "2", "3", "4", "5", "a", "b", "c", "d", "e");
--	check_contains(ot, "44", 0);
--	check_contains(ot, "441", 0);
--	check_contains(ot, "440", 0);
--	check_contains(ot, "444", 1);
--	check_contains(ot, "4440", 1);
--	check_contains(ot, "4444", 0);
-+	oidtree_clear(&ot);
- }
- 
--static void t_each(struct oidtree *ot)
-+void test_oidtree__contains(void)
- {
--	FILL_TREE(ot, "f", "9", "8", "123", "321", "320", "a", "b", "c", "d", "e");
--	check_each(ot, "12300", "123", NULL);
--	check_each(ot, "3211", NULL); /* should not reach callback */
--	check_each(ot, "3210", "321", NULL);
--	check_each(ot, "32100", "321", NULL);
--	check_each(ot, "32", "320", "321", NULL);
-+	FILL_TREE(&ot, "444", "1", "2", "3", "4", "5", "a", "b", "c", "d", "e");
-+	check_contains(&ot, "44", 0);
-+	check_contains(&ot, "441", 0);
-+	check_contains(&ot, "440", 0);
-+	check_contains(&ot, "444", 1);
-+	check_contains(&ot, "4440", 1);
-+	check_contains(&ot, "4444", 0);
- }
- 
--int cmd_main(int argc UNUSED, const char **argv UNUSED)
-+void test_oidtree__each(void)
- {
--	TEST(setup(t_contains), "oidtree insert and contains works");
--	TEST(setup(t_each), "oidtree each works");
--	return test_done();
-+	FILL_TREE(&ot, "f", "9", "8", "123", "321", "320", "a", "b", "c", "d", "e");
-+	check_each(&ot, "12300", "123", NULL);
-+	check_each(&ot, "3211", NULL); /* should not reach callback */
-+	check_each(&ot, "3210", "321", NULL);
-+	check_each(&ot, "32100", "321", NULL);
-+	check_each(&ot, "32", "320", "321", NULL);
- }
+-	ret = get_oid_hex_algop(buf.buf, oid, algop);
+-	if (!check_int(ret, ==, 0))
+-		test_msg("BUG: invalid hex input (%s) provided", hex);
+-
+-	strbuf_release(&buf);
+-	return ret;
+-}
+-
+-int get_oid_arbitrary_hex(const char *hex, struct object_id *oid)
+-{
+-	int hash_algo = init_hash_algo();
+-
+-	if (!check_int(hash_algo, !=, GIT_HASH_UNKNOWN))
+-		return -1;
+-	return get_oid_arbitrary_hex_algop(hex, oid, &hash_algos[hash_algo]);
+-}
+diff --git a/t/unit-tests/lib-oid.h b/t/unit-tests/lib-oid.h
+deleted file mode 100644
+index 4e77c04bd2..0000000000
+--- a/t/unit-tests/lib-oid.h
++++ /dev/null
+@@ -1,25 +0,0 @@
+-#ifndef LIB_OID_H
+-#define LIB_OID_H
+-
+-#include "hash.h"
+-
+-/*
+- * Convert arbitrary hex string to object_id.
+- * For example, passing "abc12" will generate
+- * "abc1200000000000000000000000000000000000" hex of length 40 for SHA-1 and
+- * create object_id with that.
+- * WARNING: passing a string of length more than the hexsz of respective hash
+- * algo is not allowed. The hash algo is decided based on GIT_TEST_DEFAULT_HASH
+- * environment variable.
+- */
+-int get_oid_arbitrary_hex(const char *s, struct object_id *oid);
+-/*
+- * Returns one of GIT_HASH_{SHA1, SHA256, UNKNOWN} based on the value of
+- * GIT_TEST_DEFAULT_HASH environment variable. The fallback value in the
+- * absence of GIT_TEST_DEFAULT_HASH is GIT_HASH_SHA1. It also uses
+- * check(algo != GIT_HASH_UNKNOWN) before returning to verify if the
+- * GIT_TEST_DEFAULT_HASH's value is valid or not.
+- */
+-int init_hash_algo(void);
+-
+-#endif /* LIB_OID_H */
 -- 
 2.47.0.86.g15030f9556
 
