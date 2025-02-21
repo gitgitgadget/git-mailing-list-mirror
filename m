@@ -1,100 +1,131 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D211FBC99
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 23:07:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F4F206F01
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 23:48:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740179233; cv=none; b=RLyOmYfP6umplZsptsQIVUq4P/I7cyP60KoZMdgC8dC68FsDnr6xVa4j4DLkYBjdLCvSz55WO3MUyEgQ7D8IyT4Fv4VFoSoivz17ThjJr54Bc6Grjx0NilVK1B+BC1Cor7ZLGdCr1k1d2SPVWbMl/XfZsx+SthESWVQ4CRnJfP8=
+	t=1740181717; cv=none; b=jj3dDCjTJLnraaQen7tc3op8nk8KYV28JOGKCEYebaCfBI2hcCIt4BqgDsKw8cSPAj1nj1Qg+EDrxCBhAWixQCsNZ3x3qvXpJ7/9i7UabGDvjgMqrsALfdO/sD295WrrBKOmO1Ji08juGlN5dDN/RyggpJouXgYhMdxzZY/gAY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740179233; c=relaxed/simple;
-	bh=lP79ETGgzGBeTBSbj6A5RUMrfgY40vYdfebHMg9VLOs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Jd/HLyMKOBWxReCp/fxbDRFQkGbbhBtGTMT911oOVl6GSE0fkl5RSZeLZrC1f4y6295Xy9qQaIXWOL9+BHZW5abVd9lC/2285KiACgjxhdcVldl160nyCKIdH35SdhjnplCdPWC1LP6KNdzxPlj8yrEOSUYumK8tJh3UFKbmnN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fq2XzU5V; arc=none smtp.client-ip=209.85.208.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740181717; c=relaxed/simple;
+	bh=HqNGe01NcGowBnISX/USoLb7NJpXOF31xynKsPYAHfI=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=q8A+u8si0alvcYNmpbmkKf/DUgqUbOrpO4SjyrZTsL0hvnLrBbSQAPxi8fV4T49/5Rf475ybwEEORmQ6LgU93y2nivIvWEMI1cSS1USB7UnUYB5agidg8LbQf3LcEvk/i4YApu9qEse05J+ZgpR4Pe0nFLtxFSP5Ijr1J5rIqT0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LzCFqHec; arc=none smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fq2XzU5V"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5e05780509dso3764783a12.2
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 15:07:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740179230; x=1740784030; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oSV+U0a/irl1Srz8EDL9cJ6DAJ22Ef55uybXoaF5ZsQ=;
-        b=Fq2XzU5VJDKbGzlIC0ihQy8ooEiJUsq+jAUK1EsIlZTOOt7y0f6XTP45+fyw/Yb9jC
-         SIdAv+qwusRGYjFq1FkrwRT0rVWmBY7vWy0RRM8DKmk6eAavwJVdipUFqLSJPehIAowy
-         QkJB3J5umeKMv7xMBwu7KCHqF9YURdzqbOsb7aJs9HTyVUm1uBtV+WhmscdUxY3ZTugL
-         ut/nTXuw9cuGS1ITMlF3GPXdSYG/WZKxSjP6Ru43Tx9hPHJLXRRbpOgRIgCay6gAj+E4
-         j0O2PnMljuRsLzuNJKPfQnR+TMTET7aacgOu3cU4rNMEY2wUYXbqjsHb+HilAqwZ5Qv1
-         ctWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740179230; x=1740784030;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oSV+U0a/irl1Srz8EDL9cJ6DAJ22Ef55uybXoaF5ZsQ=;
-        b=Ug1SAJOLZG6tZ5IEYymoClKd3ZoIGBIqNvLvVs2if6lrGXvMRPVAOY24X5U7bigoGa
-         Sjsl4Sw+LPdIaFM6RJPJY6xn43E6PHwhCT5/sg2vfwJxMZJRCDMUQlRE2NvDeixTpg5s
-         fhJdwJC0FJ/OQEe3wrGVZMqDp7D/plwTEio5YIxXCwR4EoczHQFNZaf0CDaw92MWj9a+
-         2K8xmYYWmWNwctyk0s/KRdd2sO3C8FOyxoc6YtDEqZxDftPMIfYnRAIyYu7CkeqIo3mN
-         0Fg6ubjgw+p0ADmq0Bhc0u/Z96zNuDZbbYt3oOzMYMdl62LqdVFgAA+AHrGA8PI56TTr
-         TeAg==
-X-Gm-Message-State: AOJu0YwjogcUccmt4OKLijuRwQhBcHnr2gSmHCpPj0JtPFAuteQHjpiP
-	f91mIkBV6NoVV99FcL07NNZVrriE8xgSs+nOO3tICUo+FzZVwyBWXO0j4eaob2T9mgznuZKhCWR
-	gpR7yTIDUIkMaLL4k4ga//EPRtQA=
-X-Gm-Gg: ASbGncvD45n/66wGVQgsq30NRQtezATxjwHF/yHzjVwogsjLUZKm2HQl5iZI1bPDdsK
-	qMMSdJ/Cw9LbfRH8qmPM2k/uu3cVZC3WjuSmnfsxysD1jyLdlHK57BI/S58uQXGndM+ZB4wH27a
-	uajBoZF/5xsw==
-X-Google-Smtp-Source: AGHT+IGHZ2hyOhPCbozRwlZmUGk/fy8/e993OolbylQUlcEmZ+sy/AsaGSWWOVoApaVNPhnQVOiWK/BUAkdLKALtrQQ=
-X-Received: by 2002:a05:6402:2688:b0:5d1:f009:925e with SMTP id
- 4fb4d7f45d1cf-5e0b7104037mr4843828a12.16.1740179230213; Fri, 21 Feb 2025
- 15:07:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LzCFqHec"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1740181716; x=1771717716;
+  h=from:date:subject:mime-version:content-transfer-encoding:
+   message-id:to:cc;
+  bh=HqNGe01NcGowBnISX/USoLb7NJpXOF31xynKsPYAHfI=;
+  b=LzCFqHeckcFLJ55d9mgcATF3MwqaEAOJeuzAlVzXF2Uqvk+izz8gfLsg
+   VmPN9DyeLJWoXtpvH6QK32U3SSJ5x9dxHI/ZMlF2595p4K44iaX7ViUgQ
+   JvORqYu+fHtE46IBLMuVmkaj1MOBkQfoRnuI7/ikvjyPutesK5jZS2Cyr
+   go5Pbi3oKt8WKxlW9CthK6Hs0H1NG6oMuePML4XmfNB2yRGffs9+xQO9o
+   Lt174rXEk3hc27TEY1bQqpgi1d0IGmir2e3IkmwPR9/locVA7NbWes13k
+   f2jdtwzR1n8lXMSXiixdxP4hF2h+yYPPfuXej2OXfoSpLLGqcjmqF14iS
+   w==;
+X-CSE-ConnectionGUID: mLksfoJcQPahgSTDNEa6EA==
+X-CSE-MsgGUID: a+b9CTtTQY+CZ1QaWbP7pA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11352"; a="51654833"
+X-IronPort-AV: E=Sophos;i="6.13,306,1732608000"; 
+   d="scan'208";a="51654833"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Feb 2025 15:48:35 -0800
+X-CSE-ConnectionGUID: +Wd/cBDlQXuTEJbOe/BxZA==
+X-CSE-MsgGUID: NlKgYfGPS96TizkEO0i5Rg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.13,306,1732608000"; 
+   d="scan'208";a="115465203"
+Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
+  by orviesa006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Feb 2025 15:48:35 -0800
+From: Jacob Keller <jacob.e.keller@intel.com>
+Date: Fri, 21 Feb 2025 15:47:58 -0800
+Subject: [PATCH v2] mailmap: fix check-mailmap with full mailmap line
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <arrp2ye3kid76pwghguu5z4jkpv7xsskzdsjunbfkgmwejgby5@qh4phxwzenyp>
- <CALnO6CACJTKasKT9rX9w4_r9q0DPOPZhGnHt8f65oo6Q=8NxEg@mail.gmail.com>
- <xmqqikp4ctoh.fsf@gitster.g> <xmqqa5agcbx6.fsf@gitster.g> <CAP8UFD3XVgJCc2Qa3wWZA54fg38jcpyiDtQOPNc8UQT9uL3vWg@mail.gmail.com>
- <xmqqcyfbb35h.fsf@gitster.g> <CAP8UFD3EpwK3edfBfqRWmcncRFG--Q-yHR=K1wZnDHJs56ZipA@mail.gmail.com>
-In-Reply-To: <CAP8UFD3EpwK3edfBfqRWmcncRFG--Q-yHR=K1wZnDHJs56ZipA@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sat, 22 Feb 2025 00:06:56 +0100
-X-Gm-Features: AWEUYZl-un9rZ_jP7b4vuJ3n3dqoo8i8DIsGfJGAWoPQ4VCTBozdLlt1t2f7k2s
-Message-ID: <CAP8UFD0xsZWDnH9kLJ4eWfzq4nvAm+qMHcdbZSf0d4-yPG9+5g@mail.gmail.com>
-Subject: Re: first bisection step takes quite a while
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	"D. Ben Knoble" <ben.knoble@gmail.com>, =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250221-jk-fix-sendemail-mailinfo-v2-1-9aca7dc05dbb@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAK0QuWcC/42NQQ6CQAxFr0K6tmZagkRX3sOwgKEDVZkxM4ZoC
+ Hd34ARumrz+39cFkkSVBJdigSizJg0+Ax8KsGPrB0HtMwMbrgxTifcHOv1gEt/L1OoTt6HeBSz
+ ZGa476s5SQ75/RcnN3X1rMo+a3iF+91czbdt/rDMhoTWdOVmmyjFdhy072jBBs67rD3qNV6XCA
+ AAA
+X-Change-ID: 20250213-jk-fix-sendemail-mailinfo-32f027b1b9e7
+To: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Cc: Jacob Keller <jacob.keller@gmail.com>
+X-Mailer: b4 0.14.2
 
-On Fri, Feb 21, 2025 at 9:24=E2=80=AFPM Christian Couder
-<christian.couder@gmail.com> wrote:
->
-> On Fri, Feb 21, 2025 at 6:47=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> > >>  * The "this is good enough" logic currently allows us to be within
-> > >>    0.1% of the real halfway point.  Until the candidate set becomes
-> > >>    small enough, we could loosen the criteria to allow larger, say
-> > >>    3%, slack.  This code is written but not enabled (with "0 &&").
-> >
-> > The above follows the same reasoning why we chose "division by 1024"
-> > in the first place.  The illustration patch postulates that we could
-> > be way more aggressive than 0.1% while the set is large by dividing
-> > 64, without wanting to loosen the criteria near the end of the
-> > bisection session when the remaining set is reasonably small like
-> > 1000 commits.  So we cannot rely on integer division truncating.
->
-> The code you posted above uses 10000 as the threshold, not 1000:
->
-> 10000 < nr && abs(diff) < nr / 64) || abs(diff) < nr / 1024)
+I recently had reported to me a crash from a coworker using the recently
+added sendemail mailmap support:
 
-Also if "division by 1024" means within 0.1% of the real halfway
-point, then division by 64 means 0.1 * 1024 / 64 =3D 1.6 % not 3%.
+  3724814 Segmentation fault      (core dumped) git check-mailmap "bugs@company.xx"
+
+This appears to happen because of the NULL pointer name passed into
+map_user(). Fix this by passing "" instead of NULL so that we have a
+valid pointer.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+Changes in v2:
+- Just fix the NULL pointer dereference, leave mailmap resolution as-is
+- Link to v1: https://lore.kernel.org/r/20250213-jk-fix-sendemail-mailinfo-v1-1-c0b06c215f21@gmail.com
+---
+ builtin/check-mailmap.c |  2 +-
+ t/t4203-mailmap.sh      | 12 ++++++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/builtin/check-mailmap.c b/builtin/check-mailmap.c
+index df00b5ee13adb87881b8c1e92cac256e6ad319d1..be2cebe12152e38d3bb8cf12948823c8d710bdda 100644
+--- a/builtin/check-mailmap.c
++++ b/builtin/check-mailmap.c
+@@ -35,7 +35,7 @@ static void check_mailmap(struct string_list *mailmap, const char *contact)
+ 		mail = ident.mail_begin;
+ 		maillen = ident.mail_end - ident.mail_begin;
+ 	} else {
+-		name = NULL;
++		name = "";
+ 		namelen = 0;
+ 		mail = contact;
+ 		maillen = strlen(contact);
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 24214919312777b76e4d3b2b784bcb953583750a..4a6242ff99b59ea1a46eb14ca812c94e5e620162 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -113,6 +113,18 @@ test_expect_success 'check-mailmap --stdin simple address: no mapping' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'check-mailmap name and address: mapping' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-EOF &&
++	Bug Reports <bugs-new@company.xx> Bugs <bugs@company.xx>
++	EOF
++	cat >expect <<-EOF &&
++	<bugs@company.xx>
++	EOF
++	git check-mailmap "bugs@company.xx" >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'No mailmap' '
+ 	cat >expect <<-EOF &&
+ 	$GIT_AUTHOR_NAME (1):
+
+---
+base-commit: b838bf1938926a7a900166136d995d86f8a00e24
+change-id: 20250213-jk-fix-sendemail-mailinfo-32f027b1b9e7
+
+Best regards,
+-- 
+Jacob Keller <jacob.keller@gmail.com>
+
