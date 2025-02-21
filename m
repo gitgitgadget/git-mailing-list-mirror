@@ -1,164 +1,155 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4411EBA0C
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 19:55:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E63E253358
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 20:25:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740167759; cv=none; b=PZdQFr4Yxh917x1tsvdwPVXT4kxvPS4Ch5XPWSw6uG7J4U1cDly+p5ZDpGTqKnxlxtCD7Bm/cFDBjiGfkFA19bQE8WYWkXMyRAGkvMjy0atx7Qewqv8L3ONRPPEd+NzikhuqpNWoR1Dcdy5YHzcXySEp225j5mjvukvyZSbrN4w=
+	t=1740169515; cv=none; b=uNXzXtUs46HKCg7bjXR/kwbhBXOOlZuPbbXJUtTRB2ieKj0+0lvMVEsChYn8m8O7YXWWKk9PyW1Hqv64XLBGs+t5kelhenskKhVC7BeQdiyBxRxrb0BizTULMqkVYNlznrCfcHvL4Eq8o2MGomz3PPcZv8uYQzlubtsbO8d48+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740167759; c=relaxed/simple;
-	bh=twKalptMKKBB2ahBc1eWAHKx36yRoKsTN4vKy15GTmw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UtGnmvrdNEIIt7Y63T/Qi9H7Tk7ord4Q3X5O7NLh9AXjB0VLLvfP4/guNdu8UPOerNpAfA9evXlCbWHrP97Xa/Pl5MCmpaFdAzgRhmrXpanjLAMJ4sQwX66Ke2w5Oy2L2vA+cUQVtazrN9jb/DBg4pDPcAYBawe+W/wVYxzcMkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EJvJy/mu; arc=none smtp.client-ip=209.85.210.46
+	s=arc-20240116; t=1740169515; c=relaxed/simple;
+	bh=mXUVsPW3VZu0eEuvAdk67ZBLX6VHutFvTZ50r41DYbc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kNTiW6usPsbWelHMxema2F4QH7ThI49OMTzRQeUIXruykEOrRpVRcm9WUEDYONlmzBqg6qda/19kzX2Z1zmljhQyCuy5zCuBm68rxZV1p6wjTPI3qp5GclplA1IuQYInxxRTjqIjHiPjKoCuAmvDG0FW+5V6fiFIQvn/ux3pdwM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l/YITwg2; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EJvJy/mu"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-71fbb0d035dso1546785a34.2
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 11:55:57 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l/YITwg2"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5dccaaca646so4503893a12.0
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 12:25:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740167756; x=1740772556; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ckTLZo2sAlwCw95zwNLBZr2+/jtxiLOnUWIlzqZQ3Bk=;
-        b=EJvJy/mug3nRk2frsLzdOgpfRQ0n+vxKAgh9E/mZrY3068qEjuxzEt5vcYI0/Jq38z
-         9L64OFiEPwWtQ+/B8HkC0zCBcDupwn+hOXwVMXg2bQPGs5z8sfycoNDypiRJk1+uRpZr
-         jfgHdwOXk3aN7kM6vatYkXd1nPla2l469w/Y8HXlX/mR6tww2g9dsNNr/tDS+6kfBrC/
-         msA7T6LJhJDvz+OHRhc+/M8r7r7Tam7tODJODZiwOSurgMLjMgAXTYibf73XeglNIFmT
-         r9BptRGFeIbhyTLNF1vxj1z9fs4QDYHQXBCtMuHiYkTr0nYZEPAHh8tBn17Eraav0k5+
-         YlwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740167756; x=1740772556;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1740169512; x=1740774312; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ckTLZo2sAlwCw95zwNLBZr2+/jtxiLOnUWIlzqZQ3Bk=;
-        b=jjMzBk8CCQ+Lo2+IHOOGXqXdjPVnSrwwmKz3jXOIt2nhbKxTJ1Fuf6953CoktDG+97
-         AufFmvx/+fA7BfbM1iyrF1Hg+f9FkYXDG/hpVnH2uFbG69bAEa1XKN4UtvnRCVCs66Ww
-         UtyQAImX2tgSXI/H7/nqscE/VL+zs4dtFPhLNST/1itydS0G5jtV7Fs+WbHMxKi1VyDD
-         QSZhel6TehAedCPKN85lBjpF/eeqzN7TkearJQBbTNql0P7I6NWNzIIDjDwBQZ9eDG/G
-         ttVwfYVE/1xMvsPj8WERHlOtAR40/7zEtcHm/3L9/IL8tmc3OIgMHufu9GIM1Qjm+BVV
-         UvKA==
-X-Gm-Message-State: AOJu0Yxz5o/xOyh0MoaH1oKZjKTFIPv3o2EB2zAWzSng91dnjPuqUOhv
-	XQXVlnkT5Lz3rFesAoh+JDzwUg1bZtGDEJ99iMB6Liho8ax4Hwm1iTM54A==
-X-Gm-Gg: ASbGncsOexzS+z9pE/clBj5L01yrTG9CLg+Zqe4BTczrVbky/ydCmSTTPL5NnjW1EGb
-	zltSj+kOk1ViF4FjwJt2kf4/hUQHh6uFB19QBZeK9I5jYwB4ahzNdVHgEUPf56GAvWnrylajecO
-	DvdfVgnt6BYz5GsLlwgqKqRwHa4ZoMGZxvNxHwCFTSYDq+XDLQPszGRHfetzkx3nEjRKfvN/S8x
-	GmCpPlUORbhfA1EOO4LkUuZBFjTATQPZKzfEsTfHkGUYn9Y7FlQq/lmvI3W/hLEbZAWhbFakEMm
-	tiwDZk2zqMkigTS1IWo=
-X-Google-Smtp-Source: AGHT+IFDMY+9zD0o44Lii4gc4aFrmstNalK/c+MbKT7HutSqzZAQL9DQ+Fcj8LL65Y675RE7hfJhkg==
-X-Received: by 2002:a05:6830:6585:b0:727:3746:816b with SMTP id 46e09a7af769-7274c24391dmr3931884a34.26.1740167756408;
-        Fri, 21 Feb 2025 11:55:56 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-727378237e4sm1650752a34.47.2025.02.21.11.55.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Feb 2025 11:55:55 -0800 (PST)
-Date: Fri, 21 Feb 2025 13:52:45 -0600
-From: Justin Tobler <jltobler@gmail.com>
-To: Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 1/2] add -p: mark split hunks as undecided
-Message-ID: <yaovhzc7obyk5oz5f3q4oa532vgwu7e3gffgbviazt2bjl4r6u@3pf5tj6exdg2>
-References: <pull.1863.git.1740149837.gitgitgadget@gmail.com>
- <43a0592a462cf68bcfdc54373da2319431c3c1ca.1740149837.git.gitgitgadget@gmail.com>
+        bh=IupgRh9JsSphGLhSwYA2QNOdbHvsNalDPi1IAmNKt80=;
+        b=l/YITwg2B/e6+JCAbUXZLy2QYPBD0N50AMiT0AI8iR1eskSeupayfqRehBUUVxPN9n
+         Oaw54VVwr9QP3X4Qh2DV+IwILZcOyQttQdYFF1lPEw93LNg1iXj0bt1KFefPWYPFEA49
+         iZPsXWqfsR2z2SC5pxYwowNGrQ1duqhcdnMlPo7gVBSHBBd0xkEtgVo1c2p/y4hRCewF
+         dCvkJ/g8u5FOphF2LIksqCZNGmWmS8Kz+piM9Z5BKm8/WO/0O7Ofcp/dCI8sqhvBrO02
+         d+9jbFf6bhc7iDkHqO2hBfY+iBKdYrK/KFGQfslS74fIV3eUTa0a7rRc/7q+8f/kjcnY
+         3JNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740169512; x=1740774312;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=IupgRh9JsSphGLhSwYA2QNOdbHvsNalDPi1IAmNKt80=;
+        b=DFd1co05VcgRKs+R9N2Da3b9Lc10JQDNLf5KdQJt8W1/cCADJcCQzJ+p1LuC5sBxyK
+         HvQylBxEg4XtG+13jbmZZXg8J5Qa8A4JS3R90QeeDd8guOWWXII/nL+MXfy38xPmSoxl
+         1/xcb4biYQeUBz1+JGMgSFwOvjNnK85E/jw0h2PPwFBTP4GcfFviIiY3uay+dxn6v7ZN
+         ke0shnwtzolw/BpQ1bkEmLRf+YzKzz5i/lxizJADQbF5HodChkAowZjSRBEv0Lf2V+9O
+         EU/sZDTCwJTeHD3Nyz7QSel0J+fXfnh2FW9rxJBIIvZg4SSPwmBe2Sfz0RdbvennRdO1
+         qvtQ==
+X-Gm-Message-State: AOJu0Yypiycf3YSzakEZchuXqZT3NA++6dys48jE3ZFiT1pj1X0I5v2y
+	ggjXnSK9b2V4QMGchNxJfoNqAY1dzpGcKs/tZD3vFBWpUXlQKcaiZ7fKD10gjZHkQk8Bi7lBAf1
+	+7I8PslBj1Zetz8drcDqTpJJZ7N84WiJS
+X-Gm-Gg: ASbGncvV7gcgh2zgUL7LQcFB7Y7xK6m4JurfdkhOeL6o1tglPXvdc7Q6ZM10ddmbURt
+	6CPgf5o+VEgH5YjfhA7k52ckdpeYtRLlbMY/r82sAQiZ7PdJue9KRhvgUNlovdozwu7O4MH2zZ4
+	vBISh8mm5gUw==
+X-Google-Smtp-Source: AGHT+IFHXrxYXwAr/Dgs2ZQ+KeEwgcxLRmp+ze4FNpl8TXPS516fvZkXXQT/RxsRYc+OWHB3dNWxUKMIAEMualUmKfg=
+X-Received: by 2002:a05:6402:3491:b0:5de:5e08:babd with SMTP id
+ 4fb4d7f45d1cf-5e0a12b9c7amr9054784a12.11.1740169510865; Fri, 21 Feb 2025
+ 12:25:10 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <43a0592a462cf68bcfdc54373da2319431c3c1ca.1740149837.git.gitgitgadget@gmail.com>
+References: <arrp2ye3kid76pwghguu5z4jkpv7xsskzdsjunbfkgmwejgby5@qh4phxwzenyp>
+ <CALnO6CACJTKasKT9rX9w4_r9q0DPOPZhGnHt8f65oo6Q=8NxEg@mail.gmail.com>
+ <xmqqikp4ctoh.fsf@gitster.g> <xmqqa5agcbx6.fsf@gitster.g> <CAP8UFD3XVgJCc2Qa3wWZA54fg38jcpyiDtQOPNc8UQT9uL3vWg@mail.gmail.com>
+ <xmqqcyfbb35h.fsf@gitster.g>
+In-Reply-To: <xmqqcyfbb35h.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 21 Feb 2025 21:24:59 +0100
+X-Gm-Features: AWEUYZkVNU-ZaXaGaLH4_B7DIbDS9CwyvxTQMJStRIznfMVLPQ4mU-GlVycE4X0
+Message-ID: <CAP8UFD3EpwK3edfBfqRWmcncRFG--Q-yHR=K1wZnDHJs56ZipA@mail.gmail.com>
+Subject: Re: first bisection step takes quite a while
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	"D. Ben Knoble" <ben.knoble@gmail.com>, =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25/02/21 02:57PM, Phillip Wood via GitGitGadget wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 
-> When a hunk is split each of the new hunks inherits whether it is
-> selected or not from the original hunk. This means that if a selected
-> hunk is split all of the new hunks are selected and the user is not asked
-> whether or not they want to select the new hunks. This is unfortunate as
-> the user is presumably splitting the original hunk because they only
-> want to select some sub-set of it. Fix this by marking all the new hunks
-> as "undecided" so that we prompt the user to decide whether to select
-> them or not.
+On Fri, Feb 21, 2025 at 6:47=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > Yeah, it seems to me that in practice this is a bit like bisecting on
+> > the first parents first. It would be nice if we had added an option to
+> > bisect on the first parents first, so that we could compare your
+> > improvement and that option.
+>
+> Unless you are talking about something entirely different, I am
+> afraid you are confused.  We added first-parent bisection in mid
+> 2020.
 
-Ok, each hunk may have {UNDECIDED,SKIP,USE}_HUNK set to denote its
-current "use" state. When splitting a hunk, the new hunks always use the
-previous hunk's value. This means that, if the hunk being split is
-already set to skip or use, the new hunks from the split will inherit
-the same value.
+Yeah, I know that. But I don't think there is a mode which performs
+first-parent bisection first and then continues bisecting normally (so
+not only on the first parents). That's why I called it an option that
+does "first parents first" and not just "first parent".
 
-If a user wants to split a hunk, they likely intend to select only a
-portion of the hunk. Setting each of the new hunks to same value may not
-be the most intuitive behavior in this case. Resetting the hunk "use"
-value results the user being prompted for each of these hunks again.
+> And the first-parent bisection does make things easy, by making it
+> totally unnecessary to call the "truly stupid" count_distance() at
+> all.  We can pretend as if we have a single-strand-of-pearls, give
+> the "good" end of the history "1" as its weight, its direct
+> descendant (and there is only one direct descendant when we are
+> doing first-parent bisection, since there always is only one active
+> "bad" end of the range in our bisection session) "2" as its weight,
+> and so on.  The commit that gets N/2 weight is the midway and we
+> need O(N) computation.
 
-If you have a very large hunk that would get split into many smaller
-hunks, this does mean that you will have to explicitly set the value for
-each now. If the user only wanted to change a small portion, this could
-be a bit tedious. I'm not sure this is a big setback though.
+Yeah, that's why a mode that does first parent bisection and then
+continues to bisect normally would likely perform well. Because when
+first-parent bisection is done, then hopefully the set of commits to
+bisect has been reduced enough that further bisection is fast.
 
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  add-patch.c                |  3 ++-
->  t/t3701-add-interactive.sh | 10 ++++++++++
->  2 files changed, 12 insertions(+), 1 deletion(-)
-> 
-> diff --git a/add-patch.c b/add-patch.c
-> index 95c67d8c80c..f44f98275cc 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -953,6 +953,7 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
->  			* sizeof(*hunk));
->  	hunk = file_diff->hunk + hunk_index;
->  	hunk->splittable_into = 1;
-> +	hunk->use = UNDECIDED_HUNK;
+> Unfortunatly Uwe's original problem description was not about
+> first-parent bisection being slow.
+>
+> >>  * The "this is good enough" logic currently allows us to be within
+> >>    0.1% of the real halfway point.  Until the candidate set becomes
+> >>    small enough, we could loosen the criteria to allow larger, say
+> >>    3%, slack.  This code is written but not enabled (with "0 &&").
+> >
+> > If we want to do this, I think we could loosen the criteria even if
+> > the candidate set is small. Weights are integers so when the number of
+> > candidates is around 33 or less, a 3% criteria will mean an exact
+> > match. Then the last 5 steps or so (as 2^5 =3D 32) would still be
+> > performed in the same way (with an exact match).
+>
+> The above follows the same reasoning why we chose "division by 1024"
+> in the first place.  The illustration patch postulates that we could
+> be way more aggressive than 0.1% while the set is large by dividing
+> 64, without wanting to loosen the criteria near the end of the
+> bisection session when the remaining set is reasonably small like
+> 1000 commits.  So we cannot rely on integer division truncating.
 
-Ok, we reset the current hunk to be undecided. Makes sense
+The code you posted above uses 10000 as the threshold, not 1000:
 
->  	memset(hunk + 1, 0, (splittable_into - 1) * sizeof(*hunk));
->  
->  	header = &hunk->header;
-> @@ -1054,7 +1055,7 @@ next_hunk_line:
->  
->  		hunk++;
->  		hunk->splittable_into = 1;
-> -		hunk->use = hunk[-1].use;
-> +		hunk->use = UNDECIDED_HUNK;
+10000 < nr && abs(diff) < nr / 64) || abs(diff) < nr / 1024)
 
-Here each of the new hunks are explicitly set to be undecided. Since we
-always override the initial hunk to be undecided, I think the new hunks
-would already be set undecided as well. I don't think it hurts to be
-explicit though.
+10000 is between 2^14 and 2^13. This means that the last 13 to 14
+bisection steps likely don't benefit from the "way more aggressive"
+criteria of 3% vs 0.1%. I know that the last steps are the fastest as
+there are fewer commits to take into account, but still it seems to me
+that we could make all the steps (except the last 5 or so because then
+the criteria change likely doesn't change anything) benefit.
 
--Justin
+You say that we cannot rely on integer division truncation, but when
+comparing integers, we could be careful enough so that there is no
+difference between comparing them to a truncated number versus
+comparing them to the same number not truncated. So I think we could
+be able to rely on integer division.
 
->  		header = &hunk->header;
->  
->  		header->old_count = header->new_count = context_line_count;
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index b8a05d95f3f..760f3d0d30f 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -1230,4 +1230,14 @@ test_expect_success 'hunk splitting works with diff.suppressBlankEmpty' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'splitting previous hunk marks split hunks as undecided' '
-> +	test_write_lines a " " b c d e f g h i j k >file &&
-> +	git add file &&
-> +	test_write_lines x " " b y d e f g h i j x >file &&
-> +	test_write_lines n K s n y q | git add -p file &&
-> +	git cat-file blob :file >actual &&
-> +	test_write_lines a " " b y d e f g h i j k >expect &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
-> -- 
-> gitgitgadget
-> 
-> 
+So maybe just something like:
+
+criteria =3D user_priority_is_bisect_speed ? 64 : 1024;
+if (abs(diff) <=3D nr / criteria)
+     return 1;
+
+Thanks for working on this.
