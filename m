@@ -1,79 +1,78 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60D41FDE04
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 07:47:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D900A1E2848
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 07:47:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740124061; cv=none; b=qBpMVubxPX2EqFvXEZXAh9UnZ3mMFf1c109kVhThYz8W5ToS7ugU4go7QlzGA1jeRduOjG9ZihzVtGXvkuWvixjDQvZESN0T5pyfuB/EQVjxO1IluGQMmTITCWI8xCR65yL2LRX7Tg5Eqlo2pKL2k/uDq6rMkc7i0lijYiZAHqU=
+	t=1740124061; cv=none; b=E5z4fd6YA3EkTq4x95lqOi6hYIjEZTIWLlNpTppX+CtrlFGUUyyIKVcM+XpSNerrtdkqYj73HT2barMivc49haSXnb+zML6xt7htfGw6YqrNg8ta2geqa/YW9XFpGUtBIp8cCJRRWKn5QXefJnuwtejJ+bF/RSJGWrcNTXGxcdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1740124061; c=relaxed/simple;
-	bh=Pa93WXVYY4CkupYsrG7kr9TMwjZQ3Vq6vZ8BXIAbwYc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nUvXAZZhpLxs4l+qvEIiQRwTV93OfWf0iSnK5crdIAH9+6ynID9vCZcBPdyEC38aNlpTOCZpytJqxbC/ykuM8rWKvB4fV8bh8lOcrIY/9teA06Yp/AxCElvo13Owz/xxzeYoeLF081t7Ccd7HJXX6HV5dKOvkjeTmP8diLxuWuk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PVZZaPZH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=miwdQLyM; arc=none smtp.client-ip=202.12.124.151
+	bh=JdnqqcZlmNtdRFlu4EJqlfnYnHKFmckzR36bO0N3FZc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jmpLJwpj9AYsPAkh+h6tVPO0i/jpwt+4UEcQ+HwEADBFYfSy2nhPVMPZB9s1iwADWJNS6OOBVYn8J+XamI31wFTzs98a9H6Un13+ciZsQqB4v9KOmO6vwiv0A2eJTmlCVqc/zkZ4jlaoOV+SQLmEo/fEulsET1/7afbclIL6Wp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VFGROCbC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EcaWoXrZ; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PVZZaPZH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="miwdQLyM"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VFGROCbC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EcaWoXrZ"
 Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id C2D621140181
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 02:47:38 -0500 (EST)
+	by mailfout.stl.internal (Postfix) with ESMTP id B47F01140182
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 02:47:36 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Fri, 21 Feb 2025 02:47:38 -0500
+  by phl-compute-05.internal (MEProxy); Fri, 21 Feb 2025 02:47:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1740124058;
-	 x=1740210458; bh=dOu8Ye2MpwNrcTN5mRrTU1PEsBEOvjj2b2jtKZClRRI=; b=
-	PVZZaPZH+FgcrAwp8jJnrxWdX1KwdF4NptFzxOrH7TjCxlYHK/plINsjg2v77ug7
-	1IdDEJ/3//6ATrbbxuiZ+nSuZSdedfwUfJhx04f7Plw6TXLcuqBe1deIdodOL88s
-	dXAZrS59EILRBWNHDIQZMnEEyu8V3xIlNoaeJ8D82SGkOeafC92vxN80xagaYryt
-	bwC2oOVT5ATgbCF2snPouxdjuP4YWSIpddmUlMwqfDqvwYdqaXKQFrGGb8SvGJrn
-	puT7MAqAYTjW8Aew1mx+rcUiQ8z7ABOw3jW7qJKbJJ7zg0SHDO6KxwXCtVNBSqsU
-	Yx2am7Aolg/VoKkV4XyALw==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1740124056; x=1740210456; bh=5iwoIFW8fS
+	WStPqSHKLqDrtOuzHBNUvVXLF7v6SJ4C8=; b=VFGROCbCKn4sWkk7cf+vW/rglY
+	HK0HUQ1dTCR2sHBHmvA6e+aqxMQUED9OAwOG2sKKjPIoHuYZDIGX9vEmJpqth6N7
+	MrBRolsQruAt5tR99mvOykrimIxd7ZzCWsY+VX80wnlHBy7zsXYLAPaVnmONpJHD
+	Z4buchyej+0WE2U8RjvQQz7dBwyWGim4lYQLM8lqyTF9NuH/7Tv/7iG/R1WS9NMw
+	6upHqdVvcgDAHVkGJLwPuNuXd4fiYuw3Qgkt4QL7vq/9sfYWSmobbf5ByCf4FSe1
+	s082GvIx2wyS0ei3r+5RWmyesxtoppG/mdpyXibwQml36OXy5zCypJyIdK7A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740124058; x=
-	1740210458; bh=dOu8Ye2MpwNrcTN5mRrTU1PEsBEOvjj2b2jtKZClRRI=; b=m
-	iwdQLyMXkgwvXhDuz0oPW0z2i+I+KuAEyE8+154Ql48u+QLg6aPC7KM4aK2PqYXA
-	Ex2wXL49PkLOlsVTHfWXSXg2U6lDq6DpCytkYgv4KlMSKPB/xSzSgfz1ZLgb/Qx9
-	zNJOOSDLVs5zDemQmxnNUSm41Nh1LmsF7OHGmj0dJtZfJxOmDXTWSSBIq2sctFRX
-	zlgGReED1KHz+cN0/WJmzOY5AYjgdh0Vof03YugqwFXLKcsLGOJkmLAkVQQvIH8P
-	C2+s25D/Yg9of4EIkiuDbtr+seViorS8OomxJgWteL5EAxDcJSJ7hRkbmERefY+f
-	2F1I40cCh9/uOld+g+GOg==
-X-ME-Sender: <xms:mi-4Z61b22iLq3DAvjXzQBrwyoH7oLebibBRW_XIrTcdaw6yHF4nGA>
-    <xme:mi-4Z9GSNYv3-VP5pZt9AARDwP0tWsP9x0anbU8SlBw2sBRocJnTA9L9Z_jt3-iLe
-    7cX0mWiZ9IlfwHeeA>
-X-ME-Received: <xmr:mi-4Zy6hw_VMaROTEhaMN3hj5LYl-gCTl5HnfL4AcxbCHqlLX3oKSMFUIwRsdCGmo0_XMkfWf7utseuCfQWl_DrvKOjGuOEWnkH6rjxURtzLwg>
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1740124056; x=1740210456; bh=5iwoIFW8fSWStPqSHKLqDrtOuzHB
+	NUvVXLF7v6SJ4C8=; b=EcaWoXrZqjb4/JoLfdH8ccDdgLjMZAVwlBIPS0OTcGpD
+	upoyRUwNBWDTIIWCWVs+ahFbdpvDHcssfQY87iHhnRtoN0jRRv/orkTkcrUwHAxm
+	tdP0Qrl/U6l4M5HU2EkcdKQkvaEwvifPIm8Jd9el95rWkllx7+cGekxhW2z8kfZp
+	cDT4qjfExR7ksihNmgEeUr2bq2mLGAnDue9bk1rDvFyRi4EJ8cdTTecAXk/+EYXJ
+	e1vjnypWWfkMbdlWs2HvdcmhpifrqPQiKmaucayAN2/Pbxyv8JP0T27cbXA+tanS
+	OTYx80FrSkVL7zWArKPBvbb5paX/fA0DV41Z1ftPyA==
+X-ME-Sender: <xms:mC-4Z2txup5JdUTy3JktuB3-OBRRDIo9Z5rXekzulf_iEt6yHYVgwQ>
+    <xme:mC-4Z7eI4rd6VeJ3LaJowo2ZvsjnXoFKOtYYZjYPu__9M8cVVgipXcP1c_8qvgasS
+    chlzoonvzVNUpyzEA>
+X-ME-Received: <xmr:mC-4Zxz4XITsqctTUbL-xHp_AYuNBbh0OchwwzElogptvMr1PjUPs6WVj_yvgHXNBVEVFdQVYxAsRftI3HSMClwtwSme-uBhq5uuFZh-L3eQuQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeileegjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephfffuf
-    ggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeffueeiud
-    ejvdekheeuvdekfeffiedvueelteekudehjeetkeegvddugfdtgfeileenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopedupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:mi-4Z71gZiaV1RNODWrliJIxZuFwywQovkrOlRFdPKQ_s91Eqq1mNQ>
-    <xmx:mi-4Z9HCAKVL9h6vkOLNu4hsPjBnHQXnrjm3EjcB9GnAHPu1FDUGyQ>
-    <xmx:mi-4Z09V7Ueqg2XjhzNosv97ekqnXHH4wniI6xMtYBMI3PqpzPwG1g>
-    <xmx:mi-4ZyneI3TlV5jBvYv9F399CNSocIQKzH2YZBfE-JN5HgAS8wOPbA>
-    <xmx:mi-4Z7Pm7wKOGf8hM60dzLkVOCBz_Ajes3bgPjgVlYrjlZhdbyb6kHwk>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffuff
+    fkgggtgffvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
+    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeefueekkeetue
+    fgveejjeefheefgfekteefkeffgffgvedtieevleehffffieekheenucffohhmrghinhep
+    ghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:mC-4ZxM4Mil3v23CTZymaVtYKDnQz_kDuE8xDlC9jaOISktE5_gZQA>
+    <xmx:mC-4Z2-2ihADd4MMzKyf6XnztFKGQilg2aY7hyx43CuZ1DGp3npOFQ>
+    <xmx:mC-4Z5UDMpwYN1kFwV9XMeEC8Y105mtlgb-hY8yWThWU0UavvUXJHw>
+    <xmx:mC-4Z_f1fGawwWj_C4umeDYcGQJxqkj6Z1wO7uUkHFPzqaHqoJSrvg>
+    <xmx:mC-4Z8kSY4MPuU4lU0slQ0dBsH_wn7JmKc5In11WOuoDkGUdV4F7VXjU>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 21 Feb 2025 02:47:37 -0500 (EST)
+ <git@vger.kernel.org>; Fri, 21 Feb 2025 02:47:35 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6db65258 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 79a0c629 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 21 Feb 2025 07:47:34 +0000 (UTC)
+	Fri, 21 Feb 2025 07:47:31 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 21 Feb 2025 08:47:29 +0100
-Subject: [PATCH 4/9] builtin/cat-file: support "blob:limit=" objects filter
+Subject: [PATCH 0/9] builtin/cat-file: allow filtering objects in batch
+ mode
+Date: Fri, 21 Feb 2025 08:47:25 +0100
+Message-Id: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,131 +80,122 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250221-pks-cat-file-object-type-filter-v1-4-0852530888e2@pks.im>
-References: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
-In-Reply-To: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAI0vuGcC/x2NwQqDMBAFf0X27MIm6KH+ivRg41O3ioYklIr47
+ 0aPM4eZgyKCIlJTHBTw06jbmsGUBbmpW0ew9pnJiq3FWmE/R3Zd4kEX8Pb5wiVOu8ctEgK/TCV
+ O0NeAoVzxAYP+n0P7Ps8LHCjJrXEAAAA=
+X-Change-ID: 20250220-pks-cat-file-object-type-filter-9140c0ed5ee1
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Implement support for the "blob:limit=" filter in git-cat-file(1), which
-causes us to omit all blobs that are bigger than a certain size.
+Hi,
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+at GitLab, we sometimes have the need to list all objects regardless of
+their reachability. We use git-cat-file(1) with `--batch-all-objects` to
+do this, and typically this is quite a good fit. In some cases though,
+we only want to list objects of a specific type, where we then basically
+have the following pipeline:
+
+    git cat-file --batch-all-objects --batch-check='%(objecttype) %(objectname)' |
+    grep '^commit ' |
+    cut -d' ' -f2 |
+    git cat-file --batch
+
+This works okayish in medium-sized repositories, but once you reach a
+certain size this isn't really an option anymore. In the Chromium
+repository for example [1] simply listing all objects in the first
+invocation of git-cat-file(1) takes around 80 to 100 seconds. The
+workload is completely I/O-bottlenecked: my machine reads at ~500MB/s,
+and the packfile is 50GB in size, which matches the 100 seconds that I
+observe.
+
+This series addresses the issue by introducing object filters into
+git-cat-file(1). These object filters use the exact same syntax as the
+filters we have in git-rev-list(1), but only a subset of them is
+supported because not all filters can be computed by git-cat-file(1).
+Supported are "blob:none", "blob:limit=" as well as "object:type=".
+
+The filters alone don't really help though: we still have to scan
+through the whole packfile in order to compute the packfiles. While we
+are able to shed a bit of CPU time because we can stop emitting some of
+the objects, we're still I/O-bottlenecked.
+
+The second part of the series thus expands the filters so that they can
+make use of bitmap indices for some of the filters, if available. This
+allows us to efficiently answer the question where to find all objects
+of a specific type, and thus we can avoid scanning through the packfile
+and instead directly look up relevant objects, leading to a significant
+speedup:
+
+    Benchmark 1: git cat-file --batch-check --batch-all-objects --unordered --buffer --no-objects-filter
+      Time (mean ± σ):     82.806 s ±  6.363 s    [User: 30.956 s, System: 8.264 s]
+      Range (min … max):   73.936 s … 89.690 s    10 runs
+
+    Benchmark 2: git cat-file --batch-check --batch-all-objects --unordered --buffer --objects-filter=object:type=tag
+      Time (mean ± σ):      20.8 ms ±   1.3 ms    [User: 6.1 ms, System: 14.5 ms]
+      Range (min … max):    18.2 ms …  23.6 ms    127 runs
+
+    Benchmark 3: git cat-file --batch-check --batch-all-objects --unordered --buffer --objects-filter=object:type=commit
+      Time (mean ± σ):      1.551 s ±  0.008 s    [User: 1.401 s, System: 0.147 s]
+      Range (min … max):    1.541 s …  1.566 s    10 runs
+
+    Benchmark 4: git cat-file --batch-check --batch-all-objects --unordered --buffer --objects-filter=object:type=tree
+      Time (mean ± σ):     11.169 s ±  0.046 s    [User: 10.076 s, System: 1.063 s]
+      Range (min … max):   11.114 s … 11.245 s    10 runs
+
+    Benchmark 5: git cat-file --batch-check --batch-all-objects --unordered --buffer --objects-filter=object:type=blob
+      Time (mean ± σ):     67.342 s ±  3.368 s    [User: 20.318 s, System: 7.787 s]
+      Range (min … max):   62.836 s … 73.618 s    10 runs
+
+    Benchmark 6: git cat-file --batch-check --batch-all-objects --unordered --buffer --objects-filter=blob:none
+      Time (mean ± σ):     13.032 s ±  0.072 s    [User: 11.638 s, System: 1.368 s]
+      Range (min … max):   12.960 s … 13.199 s    10 runs
+
+    Summary
+      git cat-file --batch-check --batch-all-objects --unordered --buffer --objects-filter=object:type=tag
+       74.75 ± 4.61 times faster than git cat-file --batch-check --batch-all-objects --unordered --buffer --objects-filter=object:type=commit
+      538.17 ± 33.17 times faster than git cat-file --batch-check --batch-all-objects --unordered --buffer --objects-filter=object:type=tree
+      627.98 ± 38.77 times faster than git cat-file --batch-check --batch-all-objects --unordered --buffer --objects-filter=blob:none
+     3244.93 ± 257.23 times faster than git cat-file --batch-check --batch-all-objects --unordered --buffer --objects-filter=object:type=blob
+     3990.07 ± 392.72 times faster than git cat-file --batch-check --batch-all-objects --unordered --buffer --no-objects-filter
+
+We now directly scale with the number of objects of a specific type
+contained in the packfile instead of scaling with the overall number of
+objects. It's quite fun to see how the math plays out: if you sum up the
+times for each of the types you arrive at the time for the unfiltered
+case.
+
+Thanks!
+
+Patrick
+
+[1]: https://github.com/chromium/chromium.git
+
 ---
- Documentation/git-cat-file.adoc |  5 +++++
- builtin/cat-file.c              | 11 ++++++++++-
- t/t1006-cat-file.sh             | 18 +++++++++++++++---
- 3 files changed, 30 insertions(+), 4 deletions(-)
+Patrick Steinhardt (9):
+      builtin/cat-file: rename variable that tracks usage
+      builtin/cat-file: wire up an option to filter objects
+      builtin/cat-file: support "blob:none" objects filter
+      builtin/cat-file: support "blob:limit=" objects filter
+      builtin/cat-file: support "object:type=" objects filter
+      pack-bitmap: expose function to iterate over bitmapped objects
+      pack-bitmap: introduce function to check whether a pack is bitmapped
+      builtin/cat-file: deduplicate logic to iterate over all objects
+      builtin/cat-file: use bitmaps to efficiently filter by object type
 
-diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
-index c11952d9eca..8c474418b52 100644
---- a/Documentation/git-cat-file.adoc
-+++ b/Documentation/git-cat-file.adoc
-@@ -88,6 +88,11 @@ OPTIONS
- 	one of the following:
- +
- The form '--filter=blob:none' omits all blobs.
-++
-+The form '--filter=blob:limit=<n>[kmg]' omits blobs of size at least n
-+bytes or units.  n may be zero.  The suffixes k, m, and g can be used
-+to name units in KiB, MiB, or GiB.  For example, 'blob:limit=1k'
-+is the same as 'blob:limit=1024'.
- 
- --path=<path>::
- 	For use with `--textconv` or `--filters`, to allow specifying an object
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 8e5572ba43e..f57bf65cb03 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -473,8 +473,11 @@ static void batch_object_write(const char *obj_name,
- 		int ret;
- 
- 		if (use_mailmap ||
--		    opt->objects_filter.choice == LOFC_BLOB_NONE)
-+		    opt->objects_filter.choice == LOFC_BLOB_NONE ||
-+		    opt->objects_filter.choice == LOFC_BLOB_LIMIT)
- 			data->info.typep = &data->type;
-+		if (opt->objects_filter.choice == LOFC_BLOB_LIMIT)
-+			data->info.sizep = &data->size;
- 
- 		if (pack)
- 			ret = packed_object_info(the_repository, pack, offset,
-@@ -497,6 +500,11 @@ static void batch_object_write(const char *obj_name,
- 			if (data->type == OBJ_BLOB)
- 				return;
- 			break;
-+		case LOFC_BLOB_LIMIT:
-+			if (data->type == OBJ_BLOB &&
-+			    data->size >= opt->objects_filter.blob_limit_value)
-+				return;
-+			break;
- 		default:
- 			BUG("unsupported objects filter");
- 		}
-@@ -1038,6 +1046,7 @@ int cmd_cat_file(int argc,
- 	case LOFC_DISABLED:
- 		break;
- 	case LOFC_BLOB_NONE:
-+	case LOFC_BLOB_LIMIT:
- 		if (!batch.enabled)
- 			usage(_("objects filter only supported in batch mode"));
- 		break;
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 97533225982..86c53e01b2f 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -1356,11 +1356,12 @@ test_expect_success PERL '--batch-command info is unbuffered by default' '
- test_expect_success 'setup for objects filter' '
- 	git init repo &&
- 	(
--		# Seed the repository with three different sets of objects:
-+		# Seed the repository with four different sets of objects:
- 		#
- 		#   - The first set is fully packed and has a bitmap.
- 		#   - The second set is packed, but has no bitmap.
- 		#   - The third set is loose.
-+		#   - The fourth set is loose and contains big objects.
- 		#
- 		# This ensures that we cover all these types as expected.
- 		cd repo &&
-@@ -1368,7 +1369,14 @@ test_expect_success 'setup for objects filter' '
- 		git repack -Adb &&
- 		test_commit second &&
- 		git repack -d &&
--		test_commit third
-+		test_commit third &&
-+
-+		for n in 1000 10000
-+		do
-+			printf "%"$n"s" X >large.$n || return 1
-+		done &&
-+		git add large.* &&
-+		git commit -m fourth
- 	)
- '
- 
-@@ -1380,7 +1388,7 @@ test_expect_success 'objects filter with unknown option' '
- 	test_cmp expect err
- '
- 
--for option in blob:limit=1 object:type=tag sparse:oid=1234 tree:1 sparse:path=x
-+for option in object:type=tag sparse:oid=1234 tree:1 sparse:path=x
- do
- 	test_expect_success "objects filter with unsupported option $option" '
- 		case "$option" in
-@@ -1413,5 +1421,9 @@ test_objects_filter () {
- }
- 
- test_objects_filter "blob:none"
-+test_objects_filter "blob:limit=1"
-+test_objects_filter "blob:limit=500"
-+test_objects_filter "blob:limit=1000"
-+test_objects_filter "blob:limit=1g"
- 
- test_done
+ Documentation/git-cat-file.adoc |  16 +++
+ builtin/cat-file.c              | 225 +++++++++++++++++++++++++++++-----------
+ builtin/pack-objects.c          |   3 +-
+ builtin/rev-list.c              |   3 +-
+ pack-bitmap.c                   |  80 +++++++++-----
+ pack-bitmap.h                   |  19 +++-
+ reachable.c                     |   3 +-
+ t/t1006-cat-file.sh             |  77 ++++++++++++++
+ 8 files changed, 339 insertions(+), 87 deletions(-)
 
--- 
-2.48.1.683.gf705b3209c.dirty
+
+---
+base-commit: a554262210b4a2ee6fa2d594e1f09f5830888c56
+change-id: 20250220-pks-cat-file-object-type-filter-9140c0ed5ee1
 
