@@ -1,90 +1,89 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF981DC9B0
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 17:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AE51EF090
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 17:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740158971; cv=none; b=NrC9YBQC0HbZWpcpra8spPjvBEio1xnsLLFn0Q5cj5cts1J8D9pjrCsc5UCmgg9KnVrvhaCd9aXwygY1BdP++wparxD/VlqxoCPlK8Fd29kIV1iS+AthqiWj8HOC/GvBfBB514pBDKOSebhg8hk68I3ea5JkkmDcwu6iM+rSuuc=
+	t=1740160079; cv=none; b=Yw4P4UOg5F0wxWeVgyvWtPx9JAu6764l3m/ADxPR7/Pbjm/KG0O5GCLCCw4T7B0jFEoBGi2znwmbsD2ziicrCfU65DVfG0GciPvu7Voq57Vriwi6PSycngun1d/htjMT9dLq0CtxXQbzXo6wPKxGIcWl72KwK4SuDALGy9LnWcM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740158971; c=relaxed/simple;
-	bh=VgtsbzgZrDGto/frf0v+p0uRgtRdvP/NpFc9NXIA8GM=;
+	s=arc-20240116; t=1740160079; c=relaxed/simple;
+	bh=x5+vgaZgj42JF9Iz89NIlAiNdMCrF97nNkUORG7MOno=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Jsxu2hVBocYtu7H5H8bJT21IphBsnZnVq4gONOQGVeJtgJ/BRhhQpibTn1lDZ6DMqE9+l03+KsJuaM/jJDDBXD9JT9zOaIni4nQKXY0VuYul6EgeIP6Gnn1dowUrCnm2ZfAFAvy7qa5HSErOB9yOGHK1MsmDnVxQmUb/OhiGwmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X4Tw72W0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=c+pRKU7C; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=Ix62d98iM0u4klaEXs2gBZBp1G4NJRVRycbkHg1segZ0XBpvyoh5NC7uAZ7dG6JAFa4IKot4iJs7+0PdM/+rnO7LvEm9qaQBWxnzsfkFG+vvHk7cL3WTW34Ip7/xsI+VPtncXvnTu5mvSFudLWBsrYpuInc7t2QaWoaMXKHJWOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rJSinrqf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eNp1SGG2; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X4Tw72W0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="c+pRKU7C"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E1FDD254016A;
-	Fri, 21 Feb 2025 12:29:27 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rJSinrqf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eNp1SGG2"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3CCE2254013A;
+	Fri, 21 Feb 2025 12:47:56 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 21 Feb 2025 12:29:28 -0500
+  by phl-compute-04.internal (MEProxy); Fri, 21 Feb 2025 12:47:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1740158967;
-	 x=1740245367; bh=UG6A9f5TdPwgWI/Xl1VeUr0M3RAtdgelGaEFDpBTLzs=; b=
-	X4Tw72W00hBo3zh4rqAmVuvTM2ljJ9YZMjXClbVeK+pdvpKfUR73D9czcWjo8cSd
-	rZvIVBejo/PjId7ykJ8980i9HOWkT2fT+o2pS3ySvh7WqsjgeYvDZVglf7BdsECu
-	k7Wad88BfZ+c2JYOpJSstCSTQPYwFhSeFSLNPzCpWQoy2hqXrDWzbFzOiBfF6acm
-	G1UfFVeKDRXkfhVnttNOO91rbLTjuJPU26YAkvItjG713Dm6yUSpEdzt3Y+Q3tpp
-	qQO23hguI64j7d+T+tvcTTwFHxXR1lBVms3EZLjvg2F4MFYXtIv7rDZ3s0KqfV8P
-	M409+YZDPyRdAzk8BG929Q==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740160076; x=1740246476; bh=TFOpSKLH0L
+	qLkBIw6EY01xey0TQsuJFq1MCzCSPLpAI=; b=rJSinrqflr5NTjX51UeqW3DQ4N
+	woO3gGG/zoSW3A22Zot8V8xnF33zlHOi6ZIauIGyNLFnYAaANoV64fdcbsFFNfli
+	oB198ybCJTatLmO7JtcFZ3SQvZIQe4W0LaNQ8iwEF5UXr46+d9MH0a6H6UDWojtW
+	+m8m/G93VZvMOMquxKhY30jjBb1w9f5ujfYvmJXvmvLYd4lPBa6qt9CQo560s5oY
+	PRTDQc8prrVJuNKboQi0AnTZpLo/qylYU5jTd2Rxhzx9PHC+F2YIUMPcsh47Bt9+
+	w9IHpAY5LrRvHB6r5v0NKs+ZInIEiZNOYLz3nLfmWQY5XMk/QJLKGMsYa+4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740158967; x=
-	1740245367; bh=UG6A9f5TdPwgWI/Xl1VeUr0M3RAtdgelGaEFDpBTLzs=; b=c
-	+pRKU7C7N+QGMwmnJtxMIeRbyauZnKQMaSOUPl4X3hLXMcx4QRiPA2lPqN4ZfOeW
-	zCiWOd+4I0vnOq2Ir9qBDDM3m8iA1T07rePX8tncYk5OhUl8BKJ5My5JO+koNeGX
-	Y+B8n1ieB1cPXLteA7mUZ9iq90vemvk7QBy3r/3AzQYcNxg+aOfbNp7rpvRrE0ax
-	zrvWySJlpk0Ik5rzojq+Zqkhe7fpklEum6VsfGECMNmpRsi2lXB5eZCewzMKBKOg
-	hPoBvkLTBL3D6b47UdSJjNlrpmZlzAp7jT3DhqkHUFrOwJWdVm/76EqmNRwYamkC
-	x0c7MUEpLsf7eqp+klMgg==
-X-ME-Sender: <xms:97e4Z-l6CRpmmpYOoKWZMFYkWyERL-8HRKr9tzH2q5MBMsisMuRjTQ>
-    <xme:97e4Z13HOD8M35arbVEexhII36RmBB7VLTPDWSFjFvmk_wQDVuw1oI19RphWlX-d1
-    A3LaGFy8_BfX4_YHA>
-X-ME-Received: <xmr:97e4Z8rIZlWkok2zuNs3-DJyNMXUl5lbDPVHPxMf9439KqB2QPO3-teR0rVYlZXNceQqugyMDVbEHMf5O_EIX5ZmoLgFqkcezvpsf88>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejtdeivdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740160076; x=1740246476; bh=TFOpSKLH0LqLkBIw6EY01xey0TQsuJFq1MC
+	zCSPLpAI=; b=eNp1SGG2IpLb5ux3hPxcyHMR+QN2Dk5UGAZ1ncYOy3V721bkFGm
+	vvf+yqckHV/nWCiKoULBo2KOVfNuLXIVI9bOAZUjZAaevucmcAzDZLV09NaY4lFp
+	EUeoWLZ4wHJwPDbtO5O4w32OkYWGdo014bgSMl5SIPHHZkwk0c7Gpu9szmD+IAk3
+	6aiPO57W5pNN8AmEzhy3wnK31uAEu7Z7XWCLmDCd+bKClUhUnn9jJc2kOtmQhlSZ
+	KjCqjlfWya9X0N6pyWK3YvkR0UJCP+KwtKyp2XIURB79kXpCq5AhkCPtaH8Kk5TX
+	v5OYse6QHYhg/2llBEwOxMIassnRYfof/0g==
+X-ME-Sender: <xms:S7y4Z9xACPWK9T8Zrl226aov0DzdNkmTDV6GWCZiEhH2goRwyh0GWA>
+    <xme:S7y4Z9Rhj5nt6FwnkUCOAzFs0eyoGWaJ8MATj1oJeozbiEHaWh854Se6RTckYjImr
+    b07hsepCmPjsSL6pg>
+X-ME-Received: <xmr:S7y4Z3V3wTL3jtNvbSy2QhbHUGL-hMHFE_W7szgQ5zpM67Lmy4csAVf3kgD81MTZrwK5WuOL_O3stEMxF5r0TXWPHtsdtNxGmxYJrMs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejtdeihecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuhdrkhhlvghinh
-    gvqdhkohgvnhhighessggrhihlihgsrhgvrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpd
-    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:97e4ZylmREA0LNYKcrNsQmRTpF1eZ01bm9REQHvu9xc78DnmE8RH8Q>
-    <xmx:97e4Z80Z-Mgc4_RS5Gwlkp7Tl7nSpfg9-g88hk99J2U3uXGCFLHR9A>
-    <xmx:97e4Z5vGs4ieP7b-v005LoldfslOwbpT4zKvg-uoOiQ0rTs2EwdmpA>
-    <xmx:97e4Z4VjfKxA3gRO4RTQPk7GfrlAn0JtsbPgz79CZnvkuz6nGVWuOQ>
-    <xmx:97e4Zw9PqCrCUUqbHbv99t4tAJ5BpTAH7i9cGFoDdm5oT-jsM_ydcsKw>
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirg
+    hnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtph
+    htthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehurdhk
+    lhgvihhnvgdqkhhovghnihhgsegsrgihlhhisghrvgdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:S7y4Z_hmckgPeXYMd13XM3XaUxHThxFVW95OYQ1IPovpmVGAtb15MA>
+    <xmx:S7y4Z_BrHNpwdK3PJSVfcxfgshgjJaiQtaIqrx2bTt70G85D8WrDYw>
+    <xmx:S7y4Z4IxOokzGwnA_VBefog6WgDP3Z7bbxYCkBfQMCgNsyD9mw4a2Q>
+    <xmx:S7y4Z-Bxt4gu4i8dsfKdo3_w-WAuKh0J04m0CWSiX3wSja7pm7BfIw>
+    <xmx:TLy4Zx2Vt9agcsUAgxNg_ig2Tr2bO_CbT2BCaoBPt7xIszL1pcEHyb4R>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Feb 2025 12:29:26 -0500 (EST)
+ 21 Feb 2025 12:47:55 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>
+ <ben.knoble@gmail.com>,  Uwe =?utf-8?Q?Kleine-K=C3=B6nig?=
+ <u.kleine-koenig@baylibre.com>
 Subject: Re: first bisection step takes quite a while
-In-Reply-To: <4hx5uvjy7mzntb5zp6o4dg3ut44i46bthyfuera3lnbpbcvrey@kbo3ejype7ae>
-	("Uwe =?utf-8?Q?Kleine-K=C3=B6nig=22's?= message of "Fri, 21 Feb 2025
- 10:28:24 +0100")
+In-Reply-To: <CAP8UFD3XVgJCc2Qa3wWZA54fg38jcpyiDtQOPNc8UQT9uL3vWg@mail.gmail.com>
+	(Christian Couder's message of "Fri, 21 Feb 2025 10:15:09 +0100")
 References: <arrp2ye3kid76pwghguu5z4jkpv7xsskzdsjunbfkgmwejgby5@qh4phxwzenyp>
 	<CALnO6CACJTKasKT9rX9w4_r9q0DPOPZhGnHt8f65oo6Q=8NxEg@mail.gmail.com>
 	<xmqqikp4ctoh.fsf@gitster.g> <xmqqa5agcbx6.fsf@gitster.g>
-	<4hx5uvjy7mzntb5zp6o4dg3ut44i46bthyfuera3lnbpbcvrey@kbo3ejype7ae>
-Date: Fri, 21 Feb 2025 09:29:25 -0800
-Message-ID: <xmqqo6yvb40a.fsf@gitster.g>
+	<CAP8UFD3XVgJCc2Qa3wWZA54fg38jcpyiDtQOPNc8UQT9uL3vWg@mail.gmail.com>
+Date: Fri, 21 Feb 2025 09:47:54 -0800
+Message-ID: <xmqqcyfbb35h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,48 +91,81 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Uwe Kleine-König <u.kleine-koenig@baylibre.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> Hello Junio,
+> Yeah, it seems to me that in practice this is a bit like bisecting on
+> the first parents first. It would be nice if we had added an option to
+> bisect on the first parents first, so that we could compare your
+> improvement and that option.
+
+Unless you are talking about something entirely different, I am
+afraid you are confused.  We added first-parent bisection in mid
+2020.
+
+And the first-parent bisection does make things easy, by making it
+totally unnecessary to call the "truly stupid" count_distance() at
+all.  We can pretend as if we have a single-strand-of-pearls, give
+the "good" end of the history "1" as its weight, its direct
+descendant (and there is only one direct descendant when we are
+doing first-parent bisection, since there always is only one active
+"bad" end of the range in our bisection session) "2" as its weight,
+and so on.  The commit that gets N/2 weight is the midway and we
+need O(N) computation.
+
+Unfortunatly Uwe's original problem description was not about
+first-parent bisection being slow.
+
+>>  * The "this is good enough" logic currently allows us to be within
+>>    0.1% of the real halfway point.  Until the candidate set becomes
+>>    small enough, we could loosen the criteria to allow larger, say
+>>    3%, slack.  This code is written but not enabled (with "0 &&").
 >
-> On Thu, Feb 20, 2025 at 05:40:53PM -0800, Junio C Hamano wrote:
->> Comments?
->
-> It's long time ago that I looked into the git source code and I guess
-> many things have changed since then.
+> If we want to do this, I think we could loosen the criteria even if
+> the candidate set is small. Weights are integers so when the number of
+> candidates is around 33 or less, a 3% criteria will mean an exact
+> match. Then the last 5 steps or so (as 2^5 = 32) would still be
+> performed in the same way (with an exact match).
 
-;-)  Apparently not much has changed around this area.  I was amazed
-how things haven't changed around the code since I wrote it in 2007
-with "the clever trick" to improve what Linus called "truly stupid"
-algorithm.  No, I didn't improve the stupid algorithm.  The clever
-trick was to reduce the need to call it.
+The above follows the same reasoning why we chose "division by 1024"
+in the first place.  The illustration patch postulates that we could
+be way more aggressive than 0.1% while the set is large by dividing
+64, without wanting to loosen the criteria near the end of the
+bisection session when the remaining set is reasonably small like
+1000 commits.  So we cannot rely on integer division truncating.
 
-> Anyhow, here comes my thought about how finding a bisection point could
-> work.
->
-> Pick the middle commit of `git rev-list --topo-order $bad ^$allgood`.
-> Lets assume this are 10000 commits. Check the weight of commit[5000].
-> Depending on how much the weight is off from 5000 make a bigger or a
-> smaller step up or down to find the next commit to check. So a scaled
-> bisection on the topo-order commit list. I think that doesn't
-> necessarily finds a best bisection point, but I havn't thought about
-> that a lot.
+>>  * After computing the weight for a merge in "honest and stupid"
+>>    way, we know what other commits in the set it can reach.  If the
+>>    weight we computed is way smaller than the half the number of
+>>    commits in the set, that means these commits we can reach from
+>>    the merge we are looking at would score even lower.  We could
+>>    mark them as not-viable before clearing the list to check next
+>>    merge with "honest and stupid" way.  Again, this code is written
+>>    but not enabled.
+>> ...
 
-Since the name of the game is to find "a" good enough point in the
-earlier part of a huge bisection session, that certainly is good way
-to think about the problem space.  The commit[] array you have may
-not be a linear single-strand-of-pearls history, and a naïve
-bisection would not work well in such a case, so we have to be a bit
-more careful here.
+> About #2, I think it could be worth implementing as an option if it is
+> effective in some cases, but the criteria should be loosened even if
+> the candidate set is small. The amount of code to implement it is very
+> small and it's possible that, for some users, having to sometimes
+> perform one more step of testing is not a big deal, compared to
+> bisecting speed.
 
-The code I touched in the illustration needs to either find a merge
-commit that is really good enough and leave early, or if there is no
-such merge commit, compute how many other commits in the range each
-and every merge commit in the range that can be the ancestor of 
-the best non-merge commit on a single-strand-of-pearls history.
+The reason why I think #2 would not be effective is quite different,
+but I'd not go into that, as your conclusion is the same ;-)
+
+> About #3, I think that implementing an option to bisect on the first
+> parents first is likely more useful than implementing it.
+
+Sorry, but is very much orthogonal to the issue at hand.  We already
+have the first-parent bisection.
+
+The last optimization is all about how to reduce needless calls to
+count_distance() by rejecting merge commits that can never be an
+ancestor that a single-strand-of-pearls history from a non-merge
+commit with the best "score" could reach.  And it is relevant only
+if we want to improve performance of non-first-parent bisection.
 
 Thanks.
 
