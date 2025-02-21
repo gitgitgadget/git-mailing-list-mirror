@@ -1,131 +1,212 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC2D1F755B
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 18:40:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250F61F2365
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 19:05:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740163220; cv=none; b=bKnzeDKsMP31SRgtwDUhv/kJIBbpLHyozlHsWqXxJyJOMBvDGCTxXdcZfXq4q1UaJvOKB+1Zi1cHLn4dDu0XBzb9dbfGyE3a3tngKQaml5CC+lR2ASGYZPzZZRA+Pt4QqToEZNG+u+tFVjKLWoZtAIQ4WTnMUpNqJCKTx7W7j9Q=
+	t=1740164717; cv=none; b=BT1OU8ZSG+wvOVI0/oirB1N4Hnxg0Ad31vmjlL/x6GggxV+RwH/KHn5uz9S5DR3hmFs4atrsizyno2aC4A4DfutFy5dYQjFeTyhYtyWUtLo0u/1qXy7moqvdiatDRBdWYPqZdm68y8ke5hhOS4sCww2D0D+q4BfsleR042vW1hI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740163220; c=relaxed/simple;
-	bh=R0Km0p8QHzdkXRB4mh9MXq7LC41D4zLQype5U3SldP4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nXpHK4dXaBCo2jwkfYbIBIwpLHeCUpQm4LSbyDupWiMttCXaa4H9f/GBJh1HjytjwgCGDAE+3WjskYoIdXXGMNaXkigfbkHVWQxLdwTWXBH6RzemkBwnVVXIFsK8SoD3PfXAAy4XEL3lfLqRu3IwG26ApqK4YX+qxsyMBiFg47s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=omwons8p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nLjswUOh; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740164717; c=relaxed/simple;
+	bh=p0V40tBW1Ihcb4Ahx+sbWAZCOC/u26vbQeBAXgi2HyA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=iJQk7H04TimJUZRxoYPeSDnyFo2tUxSP59VmXcI3zGugryo++V7+k16sIopTGn8L9o0vk+m8jMr38FYSUt0V9a0q3pQb9dIQMlYwUTP2N4gvuYbzbz6c6aRHsyND6QYmefbuT7wyBM6Nnb56PlVLncd1JOfqGzRvgqyh/mteC98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L4OmRIs0; arc=none smtp.client-ip=209.85.160.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="omwons8p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nLjswUOh"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 014E9114012F;
-	Fri, 21 Feb 2025 13:40:16 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 21 Feb 2025 13:40:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740163216; x=1740249616; bh=1gHfM2cA2o
-	W4itn2/eccY9sgbYvKlkdTCTDm8d6mjPo=; b=omwons8p3XOCosRoBL3fvBkQYu
-	hsOzLOcDvE6tl+fgeu49p/b0iBKQ0bxSkrw9YZ+jmXGioxRrR+UaMFyjVIbuBcQn
-	T2yDUAQurWnubFsJUHTIaLNEqETXsxuOUmEK/TBArUMOeHtkn3aEJx5tYxh8cwJo
-	+L8QBO9hxprO4VC5QF9kcE87vIu0ZBvm/RaSkMBqYn019vqQweXSaGDsjBWtH7Hp
-	uLGC5tq3MRpobq8R4Et5fpJdNOgXj+4aRdntifpFBFLV0mjcyZnpFd6We/Qy0hl6
-	f4xn/3+uyNqNwPSLXKaqMjk03fffy76LnuqvqE1QnMx+UnaUau5CEgao197w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740163216; x=1740249616; bh=1gHfM2cA2oW4itn2/eccY9sgbYvKlkdTCTD
-	m8d6mjPo=; b=nLjswUOhRKlomJ7dQLRzwKIA0VGUB4CmOawQlQ1ZbUgb3mSIJjD
-	WfU84yvCaf2g3VgpAEBah2BcMtjuyzsmtKLTWj8HGHzCkIKC2Isb5TPZTFI1zrdp
-	0wsNwneIYnaBbnSUyYKC2eHjKqhlkMa9HEpSv/EXmwbMPWCIPlxO9qYHlMkS0thN
-	Njnnmjqw0a+zPF8wvFgXmSvSq5S0keL/P4gYRTKHla91RNg8hWYuuX/S6JFo7v8Z
-	2YhkS4AjECKPIdABmFZm+j07++eFA2nHRi2VW9Ny/fFuFk4YtYvBRhvqWIQHTbfk
-	bfpmpYOf6wrMErJFdQS12gEhwQ/0a2uxVgA==
-X-ME-Sender: <xms:kMi4ZyTjTxCUXDkiWqAFPHYokS2jUet1TmO7HPYldl4JqgPJAYhbAw>
-    <xme:kMi4Z3wqPJ18LS_e-p_QdSIvu9_kIomuCY00hZSH_d0uEv06f5VcdE7h56YQS7_Bk
-    -UMpDW0H2QyBiLPjA>
-X-ME-Received: <xmr:kMi4Z_3WeaqFB0vZQDobpxVgSmz1rgqrGBG40vz_0eX9uiHddsgIHIan-mdPs7k_jtbYOsPmsxf6eQA4K4eq5ffqi3dN80aYYxuwZlI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejtdejjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopedutddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhu
-    nhhshhhinhgvtghordgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehf
-    rghsthhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtoh
-    hothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhi
-    ughgvgdrtghomh
-X-ME-Proxy: <xmx:kMi4Z-BDJ-na6HYS70SuBf4zJi2916tUCs8RAsWSfcyHD1BZVnvkuw>
-    <xmx:kMi4Z7jqdps8SjQE3kiCkQ_Rmgf7gkuz3fmU6w7040l1Klh2EMTBOA>
-    <xmx:kMi4Z6rcCXsKQdnsdtB4zfOEo5m1t5-y101VkUgTTa46bsQmHqHGjA>
-    <xmx:kMi4Z-hByYoFaKmnbuliBUodp7mPJcjhEHtbDTo-B2hbCXi1UTYfbw>
-    <xmx:kMi4ZwabzVJnr4uI08zIhxFtZBpsQv3QovD59udganbZq-AMJxEGDPY0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Feb 2025 13:40:15 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
-  Taylor Blau <me@ttaylorr.com>,  Eric Sunshine <sunshine@sunshineco.com>,
-  Karthik Nayak <karthik.188@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  "Randall S . Becker"
- <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v5 0/3] Introduce a "promisor-remote" capability
-In-Reply-To: <Z7g6eOmgRyP-BEcZ@pks.im> (Patrick Steinhardt's message of "Fri,
-	21 Feb 2025 09:34:00 +0100")
-References: <20250127151701.2321341-1-christian.couder@gmail.com>
-	<20250218113204.2847463-1-christian.couder@gmail.com>
-	<Z7g6eOmgRyP-BEcZ@pks.im>
-Date: Fri, 21 Feb 2025 10:40:14 -0800
-Message-ID: <xmqqikp39m5t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L4OmRIs0"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-46c8474d8f6so22129841cf.3
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 11:05:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740164715; x=1740769515; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zLZKjp+PNhxzeXgxPXQvWq4wK79noyUQrKZQZ0boRnw=;
+        b=L4OmRIs0Q7QV/xyXCkAe6uVN208jzXZOey5y2cd3mu8nzgT+0583Plr09uXVnDZbzF
+         RJvvy0leeBBgiZpEC8DJIRUsgr/nPB5wP/m+gZq8EGI9Y9emeXtXPrS7R1Ur3MS1d8OY
+         7W6tC4gDCQ32RHdCVjHjwHsNLZxWef4VMFNEwyOLJvUxOugl1gkzH+A9gkFUubGAmypp
+         Q+whLGfY9PVxzw+WRdBAZbnu8wTsKRpHKq4S6j8WEx2EziFvGwi8KCEKbnPf4/CQkaBI
+         beI/8IaX7N0YlDQOinJelagAvZsjoS7FzFlTMwdrunWLpBF5fBkK/LGLOzWL/8sOcJzh
+         2x9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740164715; x=1740769515;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zLZKjp+PNhxzeXgxPXQvWq4wK79noyUQrKZQZ0boRnw=;
+        b=VQ7A0pkNx/qsai1KaLmjOL9r2mLI3sTT6K97IMTJqAWiYjhDLsNY3h+plC6UCu5ztc
+         q4/ngtv7B7s5PQ5W9qe6dQOe0B7K1qHCT8Aj/xlomcfiOQdO/w0/HRZzD8GNsJRRXQeP
+         WYF3OASFraV/dh3Hi2p3Xz2WI+rCVpVkJx8S5EsE2Mu99HJtpP7YL2THJtIxcdeHLuv9
+         iubvoB6Lpsp2JKgy7hmqFi8Chf40MM2VAdS57d+CdQ/k7MxZeonur98UMoz8FsRJxPY8
+         FfrYsMHFliC1PuYzPioqVurOO4G32YGFTfJyrMcedb96MFVyhkG+2morKMoKOHcpiUoE
+         eZOg==
+X-Gm-Message-State: AOJu0Yz+uxM2NSPbalwuMh7oBnZmcw19o7WJl898K0W3h3D+qDIUoAp8
+	hZQt8TqdBrXUyi+ALbhApsscOcF2xf+k+X7lgycUu3iOrjoUbDuNlEWvM8wOzhM=
+X-Gm-Gg: ASbGncvAz4jz9oYcaBPgb8/fUyC6jag6wiNxuQ2yUxIEr6/U86dYJFO6pnUg5GibU8N
+	zdO4Vh3IPlI/0QnIebMBo9AEFGtpJGX6BDbXwM5KTUbeOvqAf7VSCfDmScVSDY/QwAN07fL0vcz
+	rJI1WIw/mq9bCTsugl/OFXFG4IQXjAA+XWiaMlibNC5+vI7LaVBucNsenlfGtFZFDoDNewzrzkQ
+	KPbYI7OS2AD/PGzHKV7e0qHg+naPRXft529NbLNLqBrXcY0eIJQK0H+cx05FbT+32BhhNbAVsea
+	qp7YoiBqAm6hlaU+gGK8V4NX1/LqeSCcjIeIMTOZWx/W2HOamcDV
+X-Google-Smtp-Source: AGHT+IFLKlEmuajISoU1Uqd5r+Ms6OQh6Ku3YDitaFUWhX7vq7aoINWVpIl60NQLKx786uDHDGOLSQ==
+X-Received: by 2002:ac8:5994:0:b0:471:83ac:98ba with SMTP id d75a77b69052e-472228ac8d8mr69057231cf.5.1740164714670;
+        Fri, 21 Feb 2025 11:05:14 -0800 (PST)
+Received: from localhost.localdomain ([70.49.151.101])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4720b1fe010sm32945661cf.60.2025.02.21.11.05.13
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 21 Feb 2025 11:05:14 -0800 (PST)
+From: Eric Ju <eric.peijian@gmail.com>
+To: git@vger.kernel.org
+Cc: calvinwan@google.com,
+	jonathantanmy@google.com,
+	chriscool@tuxfamily.org,
+	eric.peijian@gmail.com,
+	karthik.188@gmail.com,
+	toon@iotcl.com,
+	jltobler@gmail.com
+Subject: [PATCH v11 0/8] cat-file: add remote-object-info to batch-command
+Date: Fri, 21 Feb 2025 14:04:41 -0500
+Message-ID: <20250221190451.12536-1-eric.peijian@gmail.com>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20240628190503.67389-1-eric.peijian@gmail.com>
+References: <20240628190503.67389-1-eric.peijian@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+This patch series is a continuation of Calvin Wan’s (calvinwan@google.com)
+patch series [PATCH v5 0/6] cat-file: add --batch-command remote-object-info
+command at [1].
 
-> I'm fine with this version of the patch series. There are a couple of
-> features that we probably want to have eventually:
->
->   - Persisting announced promisors. As far as I understand, we don't yet
->     write them into the client-side configuration of the repository at
->     all.
->
->   - Promisor remote agility. When the set of announced promisors
->     changes, we should optionally update the set of promisors connected
->     to that remote on the client-side.
->
->   - Authentication. In case the promisor remote requires authentication
->     we'll somehow need to communicate the credentials to the client.
->
-> All of these feel like topics that can be implemented incrementally once
-> the foundation has landed, so I don't think they have to be implemented
-> as part of the patch series here. I also don't see anything obvious that
-> would block any of these features with the current design.
+Sometimes it is beneficial to retrieve information about an object without
+having to download it completely. The server logic for retrieving size has
+already been implemented and merged in "a2ba162cda (object-info: support for
+retrieving object info, 2021-04-20)"[2]. This patch series implement the client
+option for it.
 
-All of them smell like with grave security implications to me.
+This patch series add the `remote-object-info` command to
+`cat-file --batch-command`. This command allows the client to make an
+object-info command request to a server that supports protocol v2.
 
-I am happy to see none of them are included in this round, as
-getting the details of them right would take a lot of time and
-effort; it is great to have the fundamentals first without having to
-worry about them.
+If the server uses protocol v2 but does not support the object-info capability,
+`cat-file --batch-command` will die.
 
-> Thanks for working on this!
+If a user attempts to use `remote-object-info` with protocol v1,,
+`cat-file --batch-command` will die.
 
-Likewise.
+Currently, only the size (%(objectsize)) is supported in this implementation.
+The type (%(objecttype)) is not included in this patch series, as it is not yet
+supported on the server side either. The plan is to implement the necessary
+logic for both the server and client in a subsequent series.
+
+The default format for remote-object-info is set to %(objectname) %(objectsize).
+Once %(objecttype) is supported, the default format will be unified accordingly.
+
+If the batch command format includes unsupported fields such as %(objecttype),
+%(objectsize:disk), or %(deltabase), the command will terminate with an error.
+
+Changes since V10
+================
+- Add a check on command input to prevent overflow.
+- Add other checks to prevent potential abuse.
+
+Calvin Wan (4):
+  fetch-pack: refactor packet writing
+  fetch-pack: move fetch initialization
+  serve: advertise object-info feature
+  transport: add client support for object-info
+
+Eric Ju (4):
+  git-compat-util: add strtoul_ul() with error handling
+  cat-file: add declaration of variable i inside its for loop
+  t1006: split test utility functions into new "lib-cat-file.sh"
+  cat-file: add remote-object-info to batch-command
+
+ Documentation/git-cat-file.adoc        |  24 +-
+ Makefile                               |   1 +
+ builtin/cat-file.c                     | 125 ++++-
+ connect.c                              |  34 ++
+ connect.h                              |   8 +
+ fetch-object-info.c                    |  85 ++++
+ fetch-object-info.h                    |  22 +
+ fetch-pack.c                           |  51 +-
+ fetch-pack.h                           |   2 +
+ git-compat-util.h                      |  20 +
+ object-file.c                          |  11 +
+ object-store-ll.h                      |   3 +
+ serve.c                                |   4 +-
+ t/lib-cat-file.sh                      |  16 +
+ t/t1006-cat-file.sh                    |  13 +-
+ t/t1017-cat-file-remote-object-info.sh | 664 +++++++++++++++++++++++++
+ transport-helper.c                     |  11 +-
+ transport.c                            |  28 +-
+ transport.h                            |  11 +
+ 19 files changed, 1065 insertions(+), 68 deletions(-)
+ create mode 100644 fetch-object-info.c
+ create mode 100644 fetch-object-info.h
+ create mode 100644 t/lib-cat-file.sh
+ create mode 100755 t/t1017-cat-file-remote-object-info.sh
+
+Range-diff against v10:
+1:  a4a5aefa3e = 1:  814c53b402 git-compat-util: add strtoul_ul() with error handling
+2:  c67e79804e = 2:  04f41100c4 cat-file: add declaration of variable i inside its for loop
+3:  7f0b824714 = 3:  3af67e6648 t1006: split test utility functions into new "lib-cat-file.sh"
+4:  0d22d6af6e = 4:  cb1088e436 fetch-pack: refactor packet writing
+5:  34c34c7464 = 5:  614daac4bb fetch-pack: move fetch initialization
+6:  54dd237c45 = 6:  4bc403fa2c serve: advertise object-info feature
+7:  90a3d987d5 ! 7:  adae08d5a8 transport: add client support for object-info
+    @@ transport.c: static int fetch_refs_via_pack(struct transport *transport,
+      	args.reject_shallow_remote = transport->smart_options->reject_shallow;
+     +	args.object_info = transport->smart_options->object_info;
+     +
+    -+	if (transport->smart_options && transport->smart_options->object_info
+    ++	if (transport->smart_options->object_info
+     +	    && transport->smart_options->object_info_oids->nr > 0) {
+     +		struct packet_reader reader;
+     +		struct object_info_args obj_info_args = { 0 };
+8:  9d932c2cb2 ! 8:  975d39cb6a cat-file: add remote-object-info to batch-command
+    @@ builtin/cat-file.c
+     +#include "alias.h"
+     +#include "remote.h"
+     +#include "transport.h"
+    ++
+    ++/* Maximum length for a remote URL. While no universal standard exists,
+    ++ * 8K is assumed to be a reasonable limit.
+    ++ */
+    ++#define MAX_REMOTE_URL_LEN (8*1024)
+    ++/* Maximum number of objects allowed in a single remote-object-info request. */
+    ++#define MAX_ALLOWED_OBJ_LIMIT 10000
+    ++/* Maximum input size permitted for the remote-object-info command. */
+    ++#define MAX_REMOTE_OBJ_INFO_LINE (MAX_REMOTE_URL_LEN + MAX_ALLOWED_OBJ_LIMIT * (GIT_MAX_HEXSZ + 1))
+      
+      enum batch_mode {
+      	BATCH_MODE_CONTENTS,
+    @@ builtin/cat-file.c: static void parse_cmd_info(struct batch_options *opt,
+     +{
+     +	int count;
+     +	const char **argv;
+    ++	char *line_to_split;
+    ++
+    ++	if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
+    ++		die(_("remote-object-info command input overflow "
+    ++			"(no more than %d objects are allowed)"),
+    ++			MAX_ALLOWED_OBJ_LIMIT);
+     +
+    -+	char *line_to_split = xstrdup_or_null(line);
+    ++	line_to_split = xstrdup(line);
+     +	count = split_cmdline(line_to_split, &argv);
+    ++	if (count < 0)
+    ++		die(_("split remote-object-info command"));
+    ++
+     +	if (get_remote_info(opt, count, argv))
+     +		goto cleanup;
+     +
+-- 
+2.48.1
+
