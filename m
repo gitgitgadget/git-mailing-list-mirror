@@ -1,82 +1,115 @@
-Received: from smtpout.4.mo533.mail-out.ovh.net (4.mo533.mail-out.ovh.net [46.105.32.238])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCDD8632E
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 15:35:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.32.238
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B915433DE
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 16:06:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740152125; cv=none; b=j4GBgFjjIgLJNKurM13c1W9urJD7WljoN/4XCZqJ4P0lm6zbs3tNsYIRQHNrYXRiGUcgshR2MxsoUE+/Nf4sOEolanzRMQjVV10jmuWRPJthAK1YkhCQeweUBEjIgBcKolXlDvAVR5dPS86v0BTDeKc6gyv6HFwk4Mcu1nOF2do=
+	t=1740153974; cv=none; b=DsXeFRTflSbd5r29ormvnnVK3HrluX1ufBWh1f8buxxWSkL9psU1FM9iyTcCDKSFY3wRlMQTTPBqZNzFHvOPqPwfX6UVjQInm5QAKch65ZS+P2TzA4vpZeffN5nQ//XDhDoU70daxie0PHsVh6jKCfAAH5r9ZyJ0dU5I5P7cuyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740152125; c=relaxed/simple;
-	bh=z9ZVeAO1xMtfl0QdW8eVoWHFw2NHrUDgM0Qvlla0hsc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a3iZg+lXM+KTejHB9EF5pbxHD8KZ3YvHlrCHsb1MwdBnBxuA6RwU5wo3i8idDvdcYBuEozNVC7Pn3zrhdWER90hsxBlbpDNpeiYBQe4mlOgTM8P5OF/XUEGn1whnXP/7eyRl/3DKSeWxPfJoq0aHigAC+TSZ2u5s+YGBPdxEhPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jwilk.net; spf=pass smtp.mailfrom=jwilk.net; dkim=pass (2048-bit key) header.d=jwilk.net header.i=@jwilk.net header.b=fyY8vwLf; arc=none smtp.client-ip=46.105.32.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jwilk.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jwilk.net
+	s=arc-20240116; t=1740153974; c=relaxed/simple;
+	bh=d55X1DfB7v/TUJpFa5rRTY78p2OmJZRzrx28SJRLH0k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=vC2IeBdcBovTfFpub4rW0wnxEj2/VMUgXOhlPnDstuLUK9pO/Fsvlmd0ETsHaT4j4tIGlKQPQtEoLTGC3VK51oRzVM4/sCjrrZR3uAvfY7HekCbPPnVCGPel7a8pPp363uC6ROF8rBzMjvKDSpXsk2EijXwVrCYv9Qg59ZitMdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Ff9W6LJK; arc=none smtp.client-ip=209.85.160.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=jwilk.net header.i=@jwilk.net header.b="fyY8vwLf"
-Received: from director2.derp.mail-out.ovh.net (director2.derp.mail-out.ovh.net [79.137.60.36])
-	by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4YzvB11XBxz1VXd;
-	Fri, 21 Feb 2025 15:26:49 +0000 (UTC)
-Received: from director2.derp.mail-out.ovh.net (director2.derp.mail-out.ovh.net. [127.0.0.1])
-        by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
-        for <ben.knoble@gmail.com>; Fri, 21 Feb 2025 15:26:49 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u1.ea.mail.ovh.net (unknown [10.109.139.175])
-	by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4YzvB10YMpzyBk;
-	Fri, 21 Feb 2025 15:26:49 +0000 (UTC)
-Received: from jwilk.net (unknown [10.1.6.5])
-	by mta11.priv.ovhmail-u1.ea.mail.ovh.net (Postfix) with ESMTPSA id 56494263781;
-	Fri, 21 Feb 2025 15:26:47 +0000 (UTC)
-Authentication-Results:garm.ovh; auth=pass (GARM-102R004d51660f7-b556-4f0d-8b8b-46ecbf1b005d,
-                    3833C9059EBAADF9D952CF52123B9565D109EC87) smtp.auth=jwilk@jwilk.net
-X-OVh-ClientIp:31.0.176.20
-Date: Fri, 21 Feb 2025 16:26:44 +0100
-From: Jakub Wilk <jwilk@jwilk.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Robert Coup <robert.coup@koordinates.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	"Randall S. Becker" <randall.becker@nexbridge.ca>
-Subject: Re: [PATCH v4 5/5] remote: announce removal of "branches/" and
- "remotes/"
-Message-ID: <20250221152644.o5ni6vn6rncvmaq6@jwilk.net>
-References: <20250122-pks-remote-branches-deprecation-v4-0-5cbf5b28afd5@pks.im>
- <20250122-pks-remote-branches-deprecation-v4-5-5cbf5b28afd5@pks.im>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Ff9W6LJK"
+Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-472098e6e75so300781cf.1
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 08:06:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1740153972; x=1740758772; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Pl6O0W0MVy8NErFOAUdnwXE37UtfmuR7p13sFMk+msI=;
+        b=Ff9W6LJKKmAlwNg1+ZC2ltpLahcU2Dvb1k6Z4EHqzY2Fj1g0+8RC7seKY7vRXMUUbK
+         g/XrhXkxHyWCbC3azvUoNvHVabibdYA5qWbm8RL1nTfQEThJ0BoUrPENJq0AOpV2gaOk
+         rw1OE4AIjn7aSy8B5ySSWioElTXRt/F7EU7FobOtFIIGA+Ftodl+N90+RrlaadL5opcA
+         N28YVBzFmmDumtWTCuKiD3Yl4rNW5iP7XUen6iNtXH6HsZL8YquGlQM43o/VFzzxVH0q
+         xxpgmclz/BaQqTvhuqmc7KESlDIFJAMsZmqZdmqfXHj6ONRNG5oc+C1l7/eYCusS31TE
+         n6uA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740153972; x=1740758772;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Pl6O0W0MVy8NErFOAUdnwXE37UtfmuR7p13sFMk+msI=;
+        b=hWpvdzKWZgLSAOcO0cl1yOwBIjJAsIxu6g9SI/1A32RtF07vuGwiCYWEvX8BNbFr42
+         NKN4kkhda4xCfCscqNp0va1IL5iy6adSGkaDdwIkjodjzDTBActC6eeG+JnG14LDwmu6
+         c9M1YpqGmquvcsYiIziUJTq/MnFgATk9JnBy4gBcphpJJVD1xcPBdp+llQ7BVdn+BU/l
+         yKYtdCAlknb/P63+oW8m6AulmSFG9UVuCOT4M1xem5Llq4cP+0WpSmRZInNRFKZ/sfQI
+         avVzsYJ/Ik+7inbv+ojdLp7ZvlVMHnABe0S695rYFNgiwHuFl3YtyxQKxiPwSwWXChLk
+         7BCQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVczRPmsEefhhXUsVWyATzH8NG64/GZXMNKBY9uQw5/ccaMDMgt+udxhxbUjo6mVgR13kc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzaIorTz4CsbemlLc7M1Ojm2wamSAtvoyVUnrw8AfmkFhHebz+x
+	39G3+pMI7PTSiqF/IKFuq2Pyk0WYMaYtsWs+YJs/COWbW1heT6HBkOQe9xfo91ksAiAEOZTdAF2
+	AjjMyicgShzZfKjGi3G28gLggchcXbGgsI9xm
+X-Gm-Gg: ASbGncu3M0xdUJ4bc2m0r3x8n2cR/oYzDbDsUIUrGWUZb+CHqotCsNi/HFG71zHdeDD
+	H8Gg398vcL+9fSQLzZTmQU1JYB8H8Gi7dXt4mILGYqa4xa+draK7fN2iglwdheI1xyMTaH5kicv
+	Cb5GhdMw38Ni6l12WsLP6AzM0m7701eQ/+9MJ9KQ==
+X-Google-Smtp-Source: AGHT+IG6o1vbJC+aQhihNYxTaG5UoR116oEoyhGi3q20MIeT9VOquoE8TPHPkmfbrUzb6j+kqXeflRCFJIts9t8XTqE=
+X-Received: by 2002:a05:622a:609:b0:471:ead2:1171 with SMTP id
+ d75a77b69052e-472250fae22mr3044281cf.27.1740153971633; Fri, 21 Feb 2025
+ 08:06:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20250122-pks-remote-branches-deprecation-v4-5-5cbf5b28afd5@pks.im>
-X-Ovh-Tracer-Id: 11184971152236162299
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejtdefjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpefggffgffdtieekleegjeffteegfffggfekueehfeeuudfhhedthffgffejgedvteenucfkphepuddvjedrtddrtddruddpfedurddtrddujeeirddvtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepjhifihhlkhesjhifihhlkhdrnhgvthdpnhgspghrtghpthhtohepjedprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehrohgsvghrthdrtghouhhpsehkohhorhguihhnrghtvghsrdgtohhmpdhrtghpthhtoheprhgrnhgurghllhdrsggvtghkvghrsehnvgigsghrihgughgvrdgtrgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
- drohhrghdpoffvtefjohhsthepmhhoheeffegmpdhmohguvgepshhmthhpohhuth
-DKIM-Signature: a=rsa-sha256; bh=UK99AHy1sGQr3Ps/JuT1xLsLxCqT/NQBMoBAIBc+BMI=;
- c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
- t=1740151609; v=1;
- b=fyY8vwLfyOr3cHW1PUuA6A75MxdusmTAFZohCnPBDXkLHhQk0vBs67yG82v7o/FJLL2vHMg6
- hQRls/Kc0fvzxGUl6rzjKeLt2CyXeMGX6VVmr3GzXCTdhCRW9ngWSKTyB+wFboI9YrOd6dqRGCz
- fm4WHlIxta79Ekc8FWF9oJ1gcz1C8jH7xh42qliMFFtFLQITG5WUsINRmAb/Cm95oTuoLsHDAj9
- eOw6Ke+6UH1Z6X8BsljZzSWmtkrcvdQrxzcDW/YKLdeemQjnRjBVR35m1hlAE14SEfpfqk+nYYt
- W8AfjdftlaqyZkMligYFLO1MoGAo5m3vLUFJFhSeeGEsg==
+References: <CAOW_YOkX8K=7i7w9c5oH5Cfia0kCzwC3=ok5E=eUwYgpcOKTRQ@mail.gmail.com>
+ <Z7fGQalzCg_Fx-ub@tapette.crustytoothpaste.net> <20250221-intrepid-furry-wapiti-eebff0@lemur>
+In-Reply-To: <20250221-intrepid-furry-wapiti-eebff0@lemur>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Fri, 21 Feb 2025 08:05:59 -0800
+X-Gm-Features: AWEUYZlqsvctl5zBNHJG3Z-VMVbYzrJGAATlwvud8tac1K_A27mJSwpQOBDeiFU
+Message-ID: <CAJoAoZmsLu8DukvMugU6z6C=gKFP=dwDhZAT=_jE6h+dO9V55A@mail.gmail.com>
+Subject: Re: Deleting first commits; maintaining last commits
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Jamenson Espindula <jafesp@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-* Patrick Steinhardt <ps@pks.im>, 2025-01-22 12:31:
->+As our documentation mentions, these directories are not to be found in modern
->+repositories at all and most users aren't even aware of these mechanisms. They
+On Fri, Feb 21, 2025 at 7:18=E2=80=AFAM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Fri, Feb 21, 2025 at 12:18:09AM +0000, brian m. carlson wrote:
+> > > My Git repository on GitHub <https://github.com/espindula/br-blfs> ha=
+s
+> > > about 23,500 commits. However, there are several old (before Feb, 28
+> > > 2022) commits I would like to delete and maintain the newer ones
+> > > (after Feb, 28 2022). So, Is there any Git command (or combined
+> > > commands) I could use?
+> >
+> > No, Git doesn't offer such a thing.  Due to the use of cryptographic
+> > hashes used, it would be impossible to verify the integrity of the
+> > repository if it could just be truncated like that.  In addition, the
+> > goal of Git as a version control system is to track history, not to
+> > destroy it.
+> >
+> > However, if the concern is size and not something else (like removing
+> > personal information), then you could use a shallow clone to just
+> > download a certain number of revisions and work on that.  The full
+> > history would remain on the server, and you could still push newer
+> > changes, but the size on your local machine would be smaller.  If you
+> > need more history, you could use a partial clone instead if you're
+> > willing to be online to work.
+>
+> Another approach is to create a new repository and use a graft/replacemen=
+t
+> commit to indicate that history continues in a different repository, righ=
+t? I
+> do sometimes wish this was a bit easier/more accessible to perform, becau=
+se
+> that would allow creating "epochs" for very large repos. Unfortunately,
+> shallow clones tend to be very heavy on the server-side.
 
-This isn't accurate. The "branches/" directory used to be part of the 
-default template until very recently, so it's found all over the place 
-(although most likely empty).
+For hosts which support it - which I believe includes GitHub - partial
+clone is generally easier on the server and a little bit less
+bug-prone than shallow clone.
 
-I'd say: "... these directories are unlikely to be used in modern 
-repositories and ..."
-
--- 
-Jakub Wilk
+>
+> -K
+>
