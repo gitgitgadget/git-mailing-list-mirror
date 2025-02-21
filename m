@@ -1,164 +1,132 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A00BF50F
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 12:01:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE6B7080D
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 14:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740139302; cv=none; b=hyrtzej8M7Vn8VrnZ7oTJLnAwWoKZAN10gWsCbJpB3P1J2QqJdVKeIAbiXlY9IUOMKeXlEJiKIpwXzHhMRatxldmx/E6HeHo07JjNbhHZalf3OLGsMR+qbtIVl8eJz3FUY4qs1bzZ5ey2ij8aKna5SAGl03VZMH2XQiDnPvpD+g=
+	t=1740149311; cv=none; b=QTI6GIOHYAbI/nlCqoM1SX8l4XnbrwaRqv3l5ChLAfnhNB/erxqZQ04yzl+5Z7WpJ7PK7N0vc5ZHtDdESztcLog6v/PT3rIx9oBzAShQilVLXBvyhQWgMH5fO+1koo5VwMgr+XYW06N6hyUK7CYg2PM5nbjQPSMOdYV7WFS0iZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740139302; c=relaxed/simple;
-	bh=vaW7JLIlw6SBJris12a1squOJ9KTR/F9IWYWhLX2yYs=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=O5PwsOzknsfaM966dM7hNUAAyfsH9L+SEOVpSsCrcgQ/9oB3nNQkTwnHDKMGJdxpb4Ty6JQBsND65oCsupEmsworxuGct0dL7bzaLip6OcR7lA/BtbjzTuf6bi2yLdV3Bbco/0kXodGOIGZL61jTh+L3m5mbbdf5+zRmhUJ1+9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lDVOQ3wo; arc=none smtp.client-ip=209.85.221.50
+	s=arc-20240116; t=1740149311; c=relaxed/simple;
+	bh=1pgm6xw0ukTcUgQzqv8UAVQMy62nJKuWk3q/QzK9+QE=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ijffFdaEv9sy9Dh4oiVmM+l0PHG6by+lIyVMM1gbCFP7KMVo0UT4QpCRE6WzwU1DdMPui4VquZIAEmGOWoGSSZFdL+XOyzoGU2551qIZ30HA+aWCnpxVYGaP9gdg5KgyFVKDSX7JcuXHbQDmGJ2Zk8IUyfn2FJptS2icIntAvOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kzOflY0S; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lDVOQ3wo"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38f2f783e4dso1700380f8f.3
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 04:01:40 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kzOflY0S"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-aaedd529ba1so267964866b.1
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 06:48:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740139298; x=1740744098; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7oW81gowL95dycHx+vcoXaHjvcVjAFDo5LXONVIeN2M=;
-        b=lDVOQ3woDkbcwjx92axT0Mkug4gqDxp8/Q4fNpVjFluoiCWTCnx3sdrBG0qhGOF4qt
-         LfEx5olkISemewfmzKMoPxFrZ2k0Yb71ac6ypMxkTz/Ldk4W0AC+kk19GbKhpFP67hP1
-         SDnqp/YjpWKQ5zeSLJwdWN66a7jS2OlurUzlYXwGlIbvc/BMqd3GjjXl0ARlZ8HPAgj5
-         DJqieKiRGaZ+r8Vt3CHAgYEo7qeK1KeVPcDSTGJAWBZnIoOjupy/hDip2sgWxnC1e8NK
-         5VrV6yd3IZPPMm+I/M91GJDVO+SPfM4DRX1l4wombVN3GqJi5OwYHClM0huPMeKdwl9M
-         DU0A==
+        d=gmail.com; s=20230601; t=1740149308; x=1740754108; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/1Xh5uGUaqUTiOBdxlSkOo++7pcxuhkxkryZrsZOlpw=;
+        b=kzOflY0SREXpyc1LB5dXy5tZY2Lttx49WXFbqDTJPcO9TfMcZf4kmQH7iGIo7CFpSa
+         ZLzM2KCxogFQWtodwTujktQBXmt4LgBY+oJWVOvOAFI+95tsyA0opgotFTekaf02qK1/
+         Z5igWZquNKc2WwubcMDACRS3WsghxodQMCrizabT3NcKZO5VTZYs5V0ibWWi7tD5darQ
+         Xpjb+1amQuyhmJ8THJWRyPiAzwCMQdjAuGlTtGSVXNyz64V09LIHGo3eoPmqHrASXcE9
+         83Kbwe/ZuZqXj4BPCFYZf3BAFm4sBN33f8GzEg0+h5/JXoBMU8qC3ZFqzkhFk4el1pa5
+         cCUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740139298; x=1740744098;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7oW81gowL95dycHx+vcoXaHjvcVjAFDo5LXONVIeN2M=;
-        b=U95fq5qyvwK80ClodQ8PC0AHCrP5HHclscA9dNuRX/W2293YzpyF2RZ8w89fHAHjK4
-         Vp9icFLF5QtCzTmpg5uZFdkSXF3HRIAEzOMQk8ska/1pBUEUiSX80IT41BXCRdgJ67YI
-         YiTDR7dcEEy44n74bykf+L64lDErc5s7YcgbkCSqhB8ZyK0q85vsd8V98mmoStZ5T7iK
-         sDu9Pqk0i/CcBz2T4K7FcX2KzcwDQ1KcRlKu7iOP97rSol6xrXTdOwgD+XFQmde9YrMm
-         Pf9DlMFDyU95bUtFQsCoPMcVcpLU4s/PeFi5n7YpedrE5HEibkjSutWA/1hH7s2uPF2m
-         rZlQ==
-X-Gm-Message-State: AOJu0YzgAI4Uf65J0s9FWkEjfYIL2cWJyYccV+3reE9u9hbYL6qzIjne
-	rpG784q9ASxSVp6VndwEzpaUTX7JEPTpXj8OM78a9cBtTQ6MRCz2DhLxyA==
-X-Gm-Gg: ASbGncu/DIcEhlghfATdsggAkOsIvh3hYqn4wArA2NxAKEWF2DNhGeo6xiyZysprKBK
-	F6HQlySfL3TYVTG+AePoLGCLFk4oKkLOAjuOlLAfjbFY7Wp6gKj5Qhe70Y/gatXdSLJHOTtwxXx
-	LfAhNEi+CICNy8t+25qmYHKKpLdOSPUlhqb6CaacyPCS2+ZkTyzOsvlKzeFu8NilDpT3QUNywU2
-	Vs5XiHb+wMocu+hJWAGezKPL2J4TvRSD376y53aGonRUxpBTQRDWAm3G+nSITqrp5LLYyO6SZ+o
-	rdRURNow6j0SdHLBocaTqguBkKQ=
-X-Google-Smtp-Source: AGHT+IFmGsCcSsulr6yIN1KZ41Pi+zBxengOJvjgEMeN480Un72MUVZbbYcn0fzhjRrnlcn0R7l+Xw==
-X-Received: by 2002:a5d:6daa:0:b0:38f:28cb:4d35 with SMTP id ffacd0b85a97d-38f6e95b175mr2616201f8f.13.1740139297708;
-        Fri, 21 Feb 2025 04:01:37 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-439b02ce65dsm15395345e9.1.2025.02.21.04.01.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Feb 2025 04:01:37 -0800 (PST)
-Message-Id: <pull.1864.git.1740139296483.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 21 Feb 2025 12:01:36 +0000
-Subject: [PATCH] compat/mingw: rename the symlink, not the target
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1740149308; x=1740754108;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/1Xh5uGUaqUTiOBdxlSkOo++7pcxuhkxkryZrsZOlpw=;
+        b=bKcPA4+vEtVp+BC8c4uf/GXqdRaaoo0gVfKPcnmkBceBIfRNDsa03tauULg/j3e+Ha
+         6zf3jwLljilpulEXftXB2SjconSmF1DyguVrr4McWzp0ZKL2BRtjMaOcoOQupoeFV0Sb
+         9ZXXDkJme29fYrsSd9yqZ4CEH6hdDRtdKqAmo6ychs9aHMxxfgr37A4w2n74DnycyzeU
+         4nu3hiOXyHT1s/FM8uYjc8Zvr1okDgLuDXI4GSjWyOOVmuxqtTip0uUkXUDfpmIoF4yZ
+         3+WS9zwZYk5LdXaELV+M5V/UEKNzf2XKJqdwR20AW//HThcVS2+Qw+W9EqXBKMWm3qL9
+         1PQA==
+X-Forwarded-Encrypted: i=1; AJvYcCXF9zl0zbCT7w1RUjYUG6U6HemJXVuGDUa6Z9iKk7I9x4If9PQ+o1ZrXSTzCW96cgkwTHQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwRSHg7/YZPje8M7v5KAmVsL3WNhSESSthjVMbDQVDmXM4BVky7
+	xn76OPq5pX9Wv4x/yUJGFIjDyDUv1QgAZ74uRL0/9BZ6CySJJpQ3V+l8fdEyFPY=
+X-Gm-Gg: ASbGnctLfxby5ZnVMeq4HWyjzC2XLWtJ/udgtlCaIpLERTV2zQd6M/FPwPFuxQiB4Fj
+	dztp8TwdzZsdOovIlG/tbaG/8JKZ6TsBD+oi0BVI8ppJkNUBgbxtNHEVvF+VNlVO6W/VTcHklsS
+	qu/pNxAhH0t/+cKs1VDIojGN8SkGasAgEX/DZ/3QaaKZXXyMMOoqpLZOzxNo6Yn7yHTj8oInWe6
+	+lb9d2B2qk6n/iwzLRqm9WibrB049nel8dy+OajEJEoP6U9JkMKjF86ZPNg1mDX4X74y9XIj5aT
+	n2DBFxy8/8c+k1uLkVwqkHJKOQlGkF266XpZWjUBfdtyyIUmUvLg4SyKIvyNhoROF2yAlFfAAox
+	TK5n7
+X-Google-Smtp-Source: AGHT+IHN9zpO8im8NN4xNhe6Smh4iovozZpzBVeUEojFUztaXL9/c4J02RMP/m+bdD2630WrIWngVg==
+X-Received: by 2002:a05:6402:388c:b0:5e0:7cc4:ec57 with SMTP id 4fb4d7f45d1cf-5e0b7266ba5mr6467864a12.31.1740149307594;
+        Fri, 21 Feb 2025 06:48:27 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece1c418bsm14258260a12.24.2025.02.21.06.48.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 21 Feb 2025 06:48:27 -0800 (PST)
+Message-ID: <2d60f5ae-7985-4400-a4d1-0931dac0653e@gmail.com>
+Date: Fri, 21 Feb 2025 14:48:26 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Eliah Kagan <eliah.kagan@gmail.com>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 4/5] t/unit-tests: convert oidtree test to use clar
+To: Seyi Kuforiji <kuforiji98@gmail.com>, git@vger.kernel.org
+Cc: ps@pks.im, phillip.wood@dunelm.org.uk
+References: <20250220082959.10854-1-kuforiji98@gmail.com>
+ <20250220082959.10854-5-kuforiji98@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20250220082959.10854-5-kuforiji98@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Eliah Kagan <eliah.kagan@gmail.com>
+Hi Seyi
 
-Since 183ea3e [1], a new technique is used on Windows to rename files,
-where supported. The first step of this technique is to open the file
-with `CreateFileW`. At that time, `FILE_ATTRIBUTE_NORMAL` was passed as
-the value of the `dwFlagsAndAttributes` argument. In b30404df [2], this
-was improved by passing `FILE_FLAG_BACKUP_SEMANTICS`, to support
-directories as well as regular files.
+On 20/02/2025 08:29, Seyi Kuforiji wrote:
+> Adapt oidtree test script to clar framework by using clar assertions
+> where necessary. `cl_parse_any_oid` handles the necessary checks needed
+> for the test to run smoothly.
+> 
+> Introduce 'test_oidtree__initialize` handles the to set up of the global
+> oidtree variable and `test_oidtree__cleanup` frees the oidtree when all
+> tests are completed.
+> 
+> This streamlines the test suite, making individual tests self-contained
+> and reducing redundant code.
 
-However, neither value of `dwFlagsAndAttributes` is sufficient to open
-a symbolic link with the correct semantics to rename it. Symlinks on
-Windows are reparse points. Attempting to open a reparse point with
-`CreateFileW` dereferences the reparse point and opens the target
-instead, unless `FILE_FLAG_OPEN_REPARSE_POINT` is included in
-`dwFlagsAndAttributes`. This is documented for that flag and in the
-"Symbolic Link Behavior" section of the `CreateFileW` docs [3].
+My comments on the commit message for the last patch apply here as well.
 
-This produces a regression where attempting to rename a symlink on
-Windows renames its target to the intended new name and location of the
-symlink. For example, if `symlink` points to `file`, then running
+> -	if (!check_int(get_oid_arbitrary_hex(hex_iter->expected_hexes.v[hex_iter->i],
+> -					     &expected), ==, 0))
+> -		; /* the data is bogus and cannot be used */
+> -	else if (!check(oideq(oid, &expected)))
+> -		test_msg("expected: %s\n       got: %s\n     query: %s",
+> -			 oid_to_hex(&expected), oid_to_hex(oid), hex_iter->query);
+> +	cl_assert(hex_iter->i < hex_iter->expected_hexes.nr);
+>   
+> +	cl_parse_any_oid(hex_iter->expected_hexes.v[hex_iter->i],
+> +			 &expected);
 
-    git mv symlink symlink-renamed
+using cl_parse_any_oid() means that it is safe to dispense with the 
+check on the return value because we now do that check in cl_parse_oid().
 
-leaves `symlink` in place and unchanged, but renames `file` to
-`symlink-renamed` [4].
+> +	cl_assert_equal_s(oid_to_hex(oid), oid_to_hex(&expected));
 
-This regression is detectable by existing tests in `t7001-mv.sh`, but
-the tests must be run by a Windows user with the ability to create
-symlinks, and the `ln -s` command used to create the initial symlink
-must also be able to create a real symlink (such as by setting the
-`MSYS` environment variable to `winsymlinks:nativestrict`). Then
-these two tests fail if the regression is present, and pass otherwise:
+This is nice - we'll get a message containing the two oid's if they 
+don't match. We should use the same trick in patch 2.
 
-    38 - git mv should overwrite file with a symlink
-    39 - check moved symlink
+As with the last patch we now bail out after the first error, we should 
+mention that in the commit message.
 
-Let's fix this, so that renaming a symlink again renames the symlink
-itself and leaves the target unchanged, by passing
+> -	if (!check_int(hex_iter.i, ==, hex_iter.expected_hexes.nr))
+> -		test_msg("error: could not find some 'object_id's for query ('%s')", query);
+> +	cl_assert_equal_i(hex_iter.i, hex_iter.expected_hexes.nr);
 
-    FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT
+Using cl_failf() here would enable us to keep the message so that if the 
+test fails we can see which query it was that failed.
 
-as the `dwFlagsAndAttributes` argument. This is sufficient (and safe)
-because including `FILE_FLAG_OPEN_REPARSE_POINT` causes no harm even
-when used to open a file or directory that is not a reparse point. In
-that case, as noted in [3], this flag is simply ignored.
+Apart from that last point this is looking good
 
-[1]: https://github.com/git-for-windows/git/commit/183ea3eabf81822506d2cd3aa1dc0727099ebccd
-[2]: https://github.com/git-for-windows/git/commit/b30404dfc04a4b087b630aea4ab88a51cd3a7459
-[3]: https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
-[4]: https://github.com/git-for-windows/git/issues/5436
+Best Wishes
 
-Signed-off-by: Eliah Kagan <eliah.kagan@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    compat/mingw: rename the symlink, not the target
-    
-    This contribution just came in as a Git for Windows Pull Request.
-    
-    Granted, I have not yet managed to find time to upstream support for
-    symbolic links (it is in the pipeline:
-    https://github.com/dscho/git/tree/support-symlinks-on-windows), but this
-    patch still should be in upstream Git because there are other ways to
-    create symbolic links than by using Git.
+Phillip
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1864%2Fdscho%2Ffix-renaming-symlinks-on-windows-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1864/dscho/fix-renaming-symlinks-on-windows-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1864
-
- compat/mingw.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 1d5b211b548..f524c54d06d 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -2278,7 +2278,9 @@ repeat:
- 
- 		old_handle = CreateFileW(wpold, DELETE,
- 					 FILE_SHARE_WRITE | FILE_SHARE_READ | FILE_SHARE_DELETE,
--					 NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
-+					 NULL, OPEN_EXISTING,
-+					 FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT,
-+					 NULL);
- 		if (old_handle == INVALID_HANDLE_VALUE) {
- 			errno = err_win_to_posix(GetLastError());
- 			return -1;
-
-base-commit: b838bf1938926a7a900166136d995d86f8a00e24
--- 
-gitgitgadget
