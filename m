@@ -1,180 +1,133 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5771A253F0E
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 21:42:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4358717CA17
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 21:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740174157; cv=none; b=BYWYLfjP91WAeo+sXhNyQv2kAhMzlLH2mqnsyzzy+W4job3cLy1GZqquWSsFNqvo7PZo1S4H8OLv6k0wmvz8wY1of1J57R5z/PpV+6YP+q7ibwj8LCjRDaoSc5QBG8Bw3v+npHyy3GLIMy/4ubtPrchMytQczpXrCswkQPyirMo=
+	t=1740174621; cv=none; b=PtnEpIkWhuQX41CmD/jzXjKldEC75+DlO1/90JS4jLrXO5+t5b95UomRS7tGyRgnFw+Ymqaby/Jw9TWKJOzZkwZdUC941LkeCFWKwQcbDOxDmKcfxvLOMuFrnABCf8V7VO4lM+63JcQOTsAs/Wd8xrTml5gaTxr3Las7SXnUrQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740174157; c=relaxed/simple;
-	bh=QVtcYxtw1lyGbGcFNROmN8GtUEzYXceavSB6hFPPjjg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RaCKawLCAA/TVo2nype317qtRgENQqYV4+D98N5CEJ8MdIvszdu8dDqmk8DmTR6Ebvcl7Rkl13vaKIWPR97BKbjxklk6ugL5Wx5Tk+0VmTop2tf7zUxvpGgIpAH5oxtFldkL6gcdKW18bpAaprmVECEVWlIOeqZpnHEVK2u3luo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UeLUCU3g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q54nOw++; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740174621; c=relaxed/simple;
+	bh=Oer7DiWTTne/lXlK+BOnm5zBzbtraGURLiorQpDTEqk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UzTHrW1pCHFetoUqeHk61kVPXov2I95+G+F11GfR7T/u2IAusMk8BiaoFj0KrAL47JW8JmG70qejrmyq4yBgZiLm4FT23VQ5djECN9Vj4VGQ8Fu22SqzGEEJdeL/KfD5Y6hmEqfYiNL9fz+2oqSH8CqyqWE+jBaw5fdjruPPplI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ljpb9QqY; arc=none smtp.client-ip=209.85.166.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UeLUCU3g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q54nOw++"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 84898254010E;
-	Fri, 21 Feb 2025 16:42:34 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Fri, 21 Feb 2025 16:42:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740174154; x=1740260554; bh=xQWGfAShuI
-	1Y/GKp/HifoVbR2tP4dUp4c/M8uJ0whCA=; b=UeLUCU3gMAMW1l2I2zAd3bizJD
-	i2FyKsddMhICLvhWfjdpdAEAzn9z+fQwtMpmtRK/OO9lH6AkGxxU7jUVHGUtJX8d
-	+LbLRul9tVJzbVqO96SxJw91kqX7kYyML+Gy3pyEiU/XWG8FAHNxYh23oZxuco8X
-	r2TVEBo9yLJJYhflhTj8Pq12LymnxFC3CYH73gzttueMAxDRt/HMqxVr87WoNBoG
-	DueNNJXRuHV2fX+y4e5XSYWvx5zMH62//DEcC/4MzUxqpMpsMG7m4PqNctMFedST
-	iQ0WWtuIop8THq2z2o3D5sx9WRe4oLYAXhNB/oVwk9ZIzS+VeJLEr0A6XCJA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740174154; x=1740260554; bh=xQWGfAShuI1Y/GKp/HifoVbR2tP4dUp4c/M
-	8uJ0whCA=; b=Q54nOw++VfE3UhtIPVHP++TidFtfp/yBvM2PpOFVuQBBaGA0YOz
-	jOjHALcTLKficQTYYT/S2cpxi2XXsfbs4Nl5picU+dViD6XuxKMTRgO2xITX3y2c
-	vWIdR5JStCYAsrbhMMiJ0sY5vYxNU/ooNxhf3gjMNU78ot4E9KUVvAAQXJEiMioV
-	SBOsKJOemDt3TjLxFWUtkURp2KjIgnkLZrVYA22VwUEA6qyswlzbrtR/wLB1EcdH
-	ZbO1Utxd6X9Q+VK6KYaTcuaYWZEhaJQVyEuH1s9eRct838g/hSDUHHEZIfjMHQAd
-	1SgURaJTFUYr2B6KehdNtABqrLnJz9fgbSQ==
-X-ME-Sender: <xms:SfO4Z-Ci2LaXtuyDszjO-RigWg67fDFafTRoWPss-tDbzkki7HBNJg>
-    <xme:SfO4Z4i1CCsGGjDaFKCpJmDfVZj--09_IAlpHJIDk6cD4FDSsO_EJKFbi4C4RF5VL
-    TBAmV6cCZ0ioNksAg>
-X-ME-Received: <xmr:SfO4ZxnTjWYY626BkNT9TK084PXNfxrRSE3HAvNnotCyjiEM-WSG-0VIe_K2q0aZ2vEW3Sl_12DK207h9j5a9NSU_-ckgGRCDkzzc5I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejudduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdroh
-    hrghdruhhkpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:SfO4Z8zD-qODbV6TppyKut19uoIKplT1an6XxUrzz_4QaVPJQdnlZw>
-    <xmx:SfO4ZzRqAsKuJ_Q5Lp336esY3O1i7P_x3VC3l2DgaTQkS25f4QI6dw>
-    <xmx:SfO4Z3aMSEdkBIqHLqvlRf0rSu30nbGymUJtVQwwIRmjUZNXL78ykw>
-    <xmx:SfO4Z8Rje8shUZv-W47aDm41zwhONVc3lC5BhqQuI68zaMNebSZ2Ag>
-    <xmx:SvO4ZxMnJFofsg9cGMStDurRbNNSwUyUPacJNHEULdKH5nFRcL3wFKaN>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Feb 2025 16:42:33 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 2/2] add-patch: update hunk splitability after editing
-In-Reply-To: <35ef0ee2b9925748ae3b6b6ac68e79c71782e5cf.1740149837.git.gitgitgadget@gmail.com>
-	(Phillip Wood via GitGitGadget's message of "Fri, 21 Feb 2025 14:57:17
-	+0000")
-References: <pull.1863.git.1740149837.gitgitgadget@gmail.com>
-	<35ef0ee2b9925748ae3b6b6ac68e79c71782e5cf.1740149837.git.gitgitgadget@gmail.com>
-Date: Fri, 21 Feb 2025 13:42:32 -0800
-Message-ID: <xmqqwmdj7z5j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ljpb9QqY"
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3d0465a8d34so19791805ab.0
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 13:50:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740174618; x=1740779418; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rkVdNJbuTKqX+WAVqFC1UcEJCTGe2IJp9TgKLXAKnV4=;
+        b=ljpb9QqYTn5u4Mn9deiJxcrGME22/j2P+/NPJQ5R9L3I8cYxLdNdpYmmj/HF8hPw8Z
+         aWLET8UF74NnGqEnsqGD+1fcc9t8rbXAwgEvf5YrbyW3bLNC3I54WN6bRWDrxIoorZ0j
+         OkpJ7H3JuIK9SuyvBdt+yKpoGEwzkcR9pBQSk1d5E86UmT4U60ZpH7tTlgGHI0YDyPGc
+         Y9WW1NseApRgvETyRK7C67UY4kGJFk+skUJpw1fwrz8Ynvr6a9VMYBHCfi5SbvNSXbDa
+         fcu5mqnpSG+DNsz6NIsRFGEbpX2pRbVvP+Tuys3juOs+2v0jH8o4rP6klsrtJaIkDg7s
+         0rSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740174618; x=1740779418;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rkVdNJbuTKqX+WAVqFC1UcEJCTGe2IJp9TgKLXAKnV4=;
+        b=GRa8XamtW5xoCJsDlvsu1DuxW+qYqKIxHLNs4bwgxhWehQjZpAItDvtwsNmyyZuPDr
+         mOaREekpVtJ5wz09TGioelGzXPDOX8yxRYsSMmjBEGo74igH9uhf7h59fh6Nsf2blwpL
+         kfB6EyaKV4C5pFzFIXV9mRydXfGiCZSaEs8CsWj64Oc8BHVdI83tA4pkjHPIhNw3ArQd
+         T7bu8zPDikzB1dXSGWcqexx5cXPbBHT9ItsGYTgrUB7ggVCzFgRTPZQrpuLsNBeQKz4L
+         QzuEUs3fGYGb9dOGM6LCzU6FlMkz4PMwLEjsaia4KEpQ949BvJAMaBMqWXFtyVswNCI/
+         ycug==
+X-Forwarded-Encrypted: i=1; AJvYcCWfCx/90UKe+DmQc0rFtdgiizSnDgf3PhStRM7TaIts7s+pCNNQawGB4xuAjJQ9VSFHBsk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzgcRN2MAXmJNSi9ijHGHCNCVBGQ+Xdq5sB+pD4wFRSICmAtYL9
+	xHOKS6bbdtG2MjEFESKXGih17VLDH4+jQ9rAnOA3rJJ0DZ5KutND13pSrgivGOPgkmCRIrRyt4z
+	hJdWmjn59tkG9aAa25zW+R6YJLlk=
+X-Gm-Gg: ASbGncsqhTvf/yLKWhDmuXR4LNXkRWMwVCGVb/O9g0/c9ECAc5NeljJM/x77rhDDr3/
+	Ls7Bd7EPosU4c/QRUDFEw0IfEXpyjWBiB3aaXLSygP+RmTrC3ZpPZOsflEIoGMG5FFmq2lzIa1a
+	Jl1SUyWZ+ZfVVeBPSwSwq+2HX/F9lKtUMX5i2suqdG
+X-Google-Smtp-Source: AGHT+IEpe1dB5uWcJuZPyedXQaHxseg6rKmXJlsWAE3udrNxe2po8CWuRi3F8Ayat3050NZqSJT4FAS6cLwO3F6UOFg=
+X-Received: by 2002:a05:6e02:12e8:b0:3d2:aa73:7b65 with SMTP id
+ e9e14a558f8ab-3d2cae699b6mr48807545ab.6.1740174618259; Fri, 21 Feb 2025
+ 13:50:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAOW_YOkX8K=7i7w9c5oH5Cfia0kCzwC3=ok5E=eUwYgpcOKTRQ@mail.gmail.com>
+ <Z7fGQalzCg_Fx-ub@tapette.crustytoothpaste.net> <20250221-intrepid-furry-wapiti-eebff0@lemur>
+In-Reply-To: <20250221-intrepid-furry-wapiti-eebff0@lemur>
+From: Elijah Newren <newren@gmail.com>
+Date: Fri, 21 Feb 2025 13:50:06 -0800
+X-Gm-Features: AWEUYZnBevswXuNwI2bopic8-1sbYgbhGfH2r5BAUUDRA19gGWSZ02Mpup-bMMM
+Message-ID: <CABPp-BG7eLXtHk-r3svmaipOrMjM8oOEUEJ9CRjBUjUQjKC6sA@mail.gmail.com>
+Subject: Re: Deleting first commits; maintaining last commits
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Jamenson Espindula <jafesp@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On Fri, Feb 21, 2025 at 7:18=E2=80=AFAM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
 >
-> When the users edits a hunk if they change deletion lines to context
-> lines or vice versa then the number of hunks that the edited hunk can be
-> split into may differ from the unedited hunk and so we need to update
-> hunk->splittable_into. In practice users are unlikely to hit this bug as
-> it is doubtful that a user who has edited a hunk will split it
-> afterwards.
-
-Heh, when I did the original "add -i/-p", I said "it is doubtful
-that a user who has selected a hunk will split it afterwards" ;-)
-
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  add-patch.c                | 12 +++++++++++-
->  t/t3701-add-interactive.sh | 21 +++++++++++++++++++++
->  2 files changed, 32 insertions(+), 1 deletion(-)
+> On Fri, Feb 21, 2025 at 12:18:09AM +0000, brian m. carlson wrote:
+> > > My Git repository on GitHub <https://github.com/espindula/br-blfs> ha=
+s
+> > > about 23,500 commits. However, there are several old (before Feb, 28
+> > > 2022) commits I would like to delete and maintain the newer ones
+> > > (after Feb, 28 2022). So, Is there any Git command (or combined
+> > > commands) I could use?
+> >
+> > No, Git doesn't offer such a thing.  Due to the use of cryptographic
+> > hashes used, it would be impossible to verify the integrity of the
+> > repository if it could just be truncated like that.  In addition, the
+> > goal of Git as a version control system is to track history, not to
+> > destroy it.
+> >
+> > However, if the concern is size and not something else (like removing
+> > personal information), then you could use a shallow clone to just
+> > download a certain number of revisions and work on that.  The full
+> > history would remain on the server, and you could still push newer
+> > changes, but the size on your local machine would be smaller.  If you
+> > need more history, you could use a partial clone instead if you're
+> > willing to be online to work.
 >
-> diff --git a/add-patch.c b/add-patch.c
-> index f44f98275cc..982745373df 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -1182,19 +1182,29 @@ static ssize_t recount_edited_hunk(struct add_p_state *s, struct hunk *hunk,
->  {
->  	struct hunk_header *header = &hunk->header;
->  	size_t i;
-> +	char ch, marker = ' ';
->  
-> +	hunk->splittable_into = 0;
->  	header->old_count = header->new_count = 0;
->  	for (i = hunk->start; i < hunk->end; ) {
-> -		switch(normalize_marker(&s->plain.buf[i])) {
-> +		ch = normalize_marker(&s->plain.buf[i]);
-> +		switch (ch) {
->  		case '-':
->  			header->old_count++;
-> +			if (marker == ' ')
-> +				hunk->splittable_into++;
-> +			marker = ch;
->  			break;
->  		case '+':
->  			header->new_count++;
-> +			if (marker == ' ')
-> +				hunk->splittable_into++;
-> +			marker = ch;
->  			break;
->  		case ' ':
->  			header->old_count++;
->  			header->new_count++;
-> +			marker = ch;
->  			break;
->  		}
+> Another approach is to create a new repository and use a graft/replacemen=
+t
+> commit to indicate that history continues in a different repository, righ=
+t? I
+> do sometimes wish this was a bit easier/more accessible to perform, becau=
+se
+> that would allow creating "epochs" for very large repos. Unfortunately,
+> shallow clones tend to be very heavy on the server-side.
 
-OK.
+I'm totally in support of the "friends don't let friends use
+shallow-clones" point of view, even if I've had rather less success
+than I would have liked at promoting it.  But throwing shade at
+shallow clones is just an impulse, not the real reason I'm responding
+here.
 
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 760f3d0d30f..cb81bfe64c8 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -1240,4 +1240,25 @@ test_expect_success 'splitting previous hunk marks split hunks as undecided' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'splitting edited hunk' '
-> +	# Before the first hunk is edited it can be split into two
-> +	# hunks, after editing it can be split into three hunks.
-> +
-> +	write_script fake-editor.sh <<-\EOF &&
-> +	sed "s/^ c/-c/" "$1" >"$1.tmp" &&
-> +	mv "$1.tmp" "$1"
-> +	EOF
-> +
-> +	test_write_lines a b c d e f g h i j k l m n>file &&
-> +	git add file &&
-> +	test_write_lines A b c d E f g h i j k l M n >file &&
+Yes, if you're willing to rewrite history, invalidating all hashes and
+rewriting the recent-enough-ones-that-you-still-want-to-keep, you can
+go that route too.  In fact, doing so is as easy as creating a replace
+ref graft (or grafts) which make the oldest commit(s) you want to keep
+look parentless, and then rewriting history to make that graft
+permanent and remove the graft.  (Afterwards, you can make a separate
+graft from that new root commit to the original real commit if you
+want.)
 
-Missing SP before ">file" on the earlier line.
-
-> +	(
-> +		test_set_editor "$(pwd)/fake-editor.sh" &&
-> +		test_write_lines e K s j y n y q | git add -p file
-> +	) &&
-> +	git cat-file blob :file >actual &&
-> +	test_write_lines a b d e f g h i j k l M n >expect &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_done
+It turns out this is an example from user filed issues that comes up
+occasionally in git-filter-repo.  While it's an example I documented
+with the commands to run, just so I can link to it if it's asked
+again, I really don't like the strategy of destroying history,
+especially since most users who ask for this kind of capability
+(Konstantin, you're a notable exception here) don't understand the
+points that brian brought up in his first paragraph.  And I make sure
+to say as much right before I provide the example in my docs.  But,
+yes, this is a possibility for those that don't mind destroying
+history.
