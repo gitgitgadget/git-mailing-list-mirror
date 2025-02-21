@@ -1,115 +1,131 @@
-Received: from mail-qt1-f170.google.com (mail-qt1-f170.google.com [209.85.160.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B915433DE
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 16:06:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B04824BD0E
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 17:11:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740153974; cv=none; b=DsXeFRTflSbd5r29ormvnnVK3HrluX1ufBWh1f8buxxWSkL9psU1FM9iyTcCDKSFY3wRlMQTTPBqZNzFHvOPqPwfX6UVjQInm5QAKch65ZS+P2TzA4vpZeffN5nQ//XDhDoU70daxie0PHsVh6jKCfAAH5r9ZyJ0dU5I5P7cuyk=
+	t=1740157880; cv=none; b=pxEbk9xuyuN2Tp4/w01jQfld+nU+vK7As9LAR2IRsyP+HkpfFyzYPGZ/EWrgLhphIj8fcD0iyyRidb1r25z3BYJ3xNKvGT3eh1BpN2tzAbnpVWtu7aOs/gXIV5wrvvuq91iNYddxEdbiJJidFTCe+7XP+gl+P3SGuFbkIn40JL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740153974; c=relaxed/simple;
-	bh=d55X1DfB7v/TUJpFa5rRTY78p2OmJZRzrx28SJRLH0k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vC2IeBdcBovTfFpub4rW0wnxEj2/VMUgXOhlPnDstuLUK9pO/Fsvlmd0ETsHaT4j4tIGlKQPQtEoLTGC3VK51oRzVM4/sCjrrZR3uAvfY7HekCbPPnVCGPel7a8pPp363uC6ROF8rBzMjvKDSpXsk2EijXwVrCYv9Qg59ZitMdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Ff9W6LJK; arc=none smtp.client-ip=209.85.160.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1740157880; c=relaxed/simple;
+	bh=9+KeJ8BR+xyhxUHu/SR1UypqaNfegT3V9uX9ynMXbDg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rw/AopExga9JPocrQ0ZxLY1VLQObFzagk1Cvm9Q7S6Lri4wCchTLoQKf+rv+cZyqltwVHrOhH+bof+suf31Y2ks20E/Hu6j6YsM5fIYOf9WqezW9+x8mhGWnKuvr7fwP0ZoHCPx7ImomIbac2ZM4Tc8PFiyoln4FRua/lXCzuE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eHKmfF8t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FWuVS7Hh; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Ff9W6LJK"
-Received: by mail-qt1-f170.google.com with SMTP id d75a77b69052e-472098e6e75so300781cf.1
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 08:06:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1740153972; x=1740758772; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Pl6O0W0MVy8NErFOAUdnwXE37UtfmuR7p13sFMk+msI=;
-        b=Ff9W6LJKKmAlwNg1+ZC2ltpLahcU2Dvb1k6Z4EHqzY2Fj1g0+8RC7seKY7vRXMUUbK
-         g/XrhXkxHyWCbC3azvUoNvHVabibdYA5qWbm8RL1nTfQEThJ0BoUrPENJq0AOpV2gaOk
-         rw1OE4AIjn7aSy8B5ySSWioElTXRt/F7EU7FobOtFIIGA+Ftodl+N90+RrlaadL5opcA
-         N28YVBzFmmDumtWTCuKiD3Yl4rNW5iP7XUen6iNtXH6HsZL8YquGlQM43o/VFzzxVH0q
-         xxpgmclz/BaQqTvhuqmc7KESlDIFJAMsZmqZdmqfXHj6ONRNG5oc+C1l7/eYCusS31TE
-         n6uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740153972; x=1740758772;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Pl6O0W0MVy8NErFOAUdnwXE37UtfmuR7p13sFMk+msI=;
-        b=hWpvdzKWZgLSAOcO0cl1yOwBIjJAsIxu6g9SI/1A32RtF07vuGwiCYWEvX8BNbFr42
-         NKN4kkhda4xCfCscqNp0va1IL5iy6adSGkaDdwIkjodjzDTBActC6eeG+JnG14LDwmu6
-         c9M1YpqGmquvcsYiIziUJTq/MnFgATk9JnBy4gBcphpJJVD1xcPBdp+llQ7BVdn+BU/l
-         yKYtdCAlknb/P63+oW8m6AulmSFG9UVuCOT4M1xem5Llq4cP+0WpSmRZInNRFKZ/sfQI
-         avVzsYJ/Ik+7inbv+ojdLp7ZvlVMHnABe0S695rYFNgiwHuFl3YtyxQKxiPwSwWXChLk
-         7BCQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVczRPmsEefhhXUsVWyATzH8NG64/GZXMNKBY9uQw5/ccaMDMgt+udxhxbUjo6mVgR13kc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzaIorTz4CsbemlLc7M1Ojm2wamSAtvoyVUnrw8AfmkFhHebz+x
-	39G3+pMI7PTSiqF/IKFuq2Pyk0WYMaYtsWs+YJs/COWbW1heT6HBkOQe9xfo91ksAiAEOZTdAF2
-	AjjMyicgShzZfKjGi3G28gLggchcXbGgsI9xm
-X-Gm-Gg: ASbGncu3M0xdUJ4bc2m0r3x8n2cR/oYzDbDsUIUrGWUZb+CHqotCsNi/HFG71zHdeDD
-	H8Gg398vcL+9fSQLzZTmQU1JYB8H8Gi7dXt4mILGYqa4xa+draK7fN2iglwdheI1xyMTaH5kicv
-	Cb5GhdMw38Ni6l12WsLP6AzM0m7701eQ/+9MJ9KQ==
-X-Google-Smtp-Source: AGHT+IG6o1vbJC+aQhihNYxTaG5UoR116oEoyhGi3q20MIeT9VOquoE8TPHPkmfbrUzb6j+kqXeflRCFJIts9t8XTqE=
-X-Received: by 2002:a05:622a:609:b0:471:ead2:1171 with SMTP id
- d75a77b69052e-472250fae22mr3044281cf.27.1740153971633; Fri, 21 Feb 2025
- 08:06:11 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eHKmfF8t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FWuVS7Hh"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 556941140095;
+	Fri, 21 Feb 2025 12:11:15 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 21 Feb 2025 12:11:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740157875; x=1740244275; bh=zR0wXy7oQe
+	Y09cna58f/4figtVrjoKnzY9xCwDNv5CU=; b=eHKmfF8tU0gcRzY7PRffEQ101W
+	J7HK8JhGyDolFxIQQhamYxETB6bbpsTVawlt+0fbTpENodXvU34wfRYz9Np1FcQs
+	DdSPZTnIHxwOJnv7SbipuY1CPbzjqE0XWxAFM6KPfGMy0lKpIc1sBRaeJenKRStW
+	LBVU2wrELNwCsAFUr5dJ4HKxJvPxVnLRKfn8a0yHJdS9H5zDVt2IBsuVJoqZap0y
+	zYKSMCUe8hXMBog3DsZfmwYII1VENngGMd0rUen9EV2HIUKObli7FYdTVv3TIs0j
+	RjTSUJIHq57OUd1SoPn1T3RrgZc9DGyd2G+1YvZe4M3Oap/5/rnsJ+gIM35w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740157875; x=1740244275; bh=zR0wXy7oQeY09cna58f/4figtVrjoKnzY9x
+	CwDNv5CU=; b=FWuVS7Hhus5chfXVyQ4J4TcL+dTCs7PYtnWJQXka43UxMN1v6/n
+	2CUn+vxNzTn8Ij6jQfuTD+7gLTFjIYdl5y9z5SC1IEmasCeAqXDpp0k/DG+TYdlg
+	LGBEuWY6IC9WUFupO5g2jmV8zv7Zv1s+XdlptBaI/oj5llsGCp7Cv5w4vsGeK1dA
+	IJGxPIMhQ8tUPm/ysJk1qWZQPpBKdxdJssDNuMZcDPvaYmQni0i0tdjf13M79Ks8
+	ShZvIUBwfslnbXBtj0MowVU2zWL6LLRoSAOt6edLKA3kZb4rRARFyRewKrBH1T21
+	+1K8FTMwPGlWXKMZGJIGFY8Ei/G5y9Lzy7g==
+X-ME-Sender: <xms:srO4Z_QplKoCproC90J5TS6GQPgtw5VJeeV50jyb3jU5oa8rJAE6UA>
+    <xme:srO4ZwwxrUsfYlu1sW4XP7AsTMvpRzCANMrKISFH-b93bFkjfOhu05MT-yVZm3UX9
+    3E_4s1eck0OUFc6dg>
+X-ME-Received: <xmr:srO4Z00CP2kWKUNW-PodxQRM9hA4iQO5AdkY_Dr7XyeI_oI3qdlBxDUqwnYqfwLDD4ii1sARFsDpLGuvdxk4SjCXkCIQUhghOT4Lrsg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejtdehlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjvghllhihrdiihh
+    grohdrgedvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:srO4Z_CUxJWR52mSVvaPkwAqIqroQ9zlTzBFzuYesMEularcoxaShQ>
+    <xmx:srO4Z4jOBgyKiwMPaH6rmw5pW-qV5G0nC6AG59kHNyEoifYTkzgwNw>
+    <xmx:srO4Zzq8uhKPelbER9uuSEs9vM8kZTp2XvMfR6oMeA41XLahMVaFxg>
+    <xmx:srO4ZzjSswII_J8Pstma8SjIKilz0jmjFA9hZJJEyfdzkgTXj9DJWQ>
+    <xmx:s7O4ZzX076XU0D1hOWi5SAFtYa8RPi2O6IIsuta1rSHiBHhsTdffCw8K>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 21 Feb 2025 12:11:14 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Zejun Zhao <jelly.zhao.42@gmail.com>
+Cc: git@vger.kernel.org,  newren@gmail.com,  ps@pks.im,  karthik.188@gmail.com
+Subject: Re: [GSOC][PATCH] apply: address -Wsign-comparison warnings
+In-Reply-To: <20250221063705.15539-1-jelly.zhao.42@gmail.com> (Zejun Zhao's
+	message of "Fri, 21 Feb 2025 06:37:05 +0000")
+References: <xmqqpljfxhvp.fsf@gitster.g>
+	<20250221063705.15539-1-jelly.zhao.42@gmail.com>
+Date: Fri, 21 Feb 2025 09:11:13 -0800
+Message-ID: <xmqq34g7cjf2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOW_YOkX8K=7i7w9c5oH5Cfia0kCzwC3=ok5E=eUwYgpcOKTRQ@mail.gmail.com>
- <Z7fGQalzCg_Fx-ub@tapette.crustytoothpaste.net> <20250221-intrepid-furry-wapiti-eebff0@lemur>
-In-Reply-To: <20250221-intrepid-furry-wapiti-eebff0@lemur>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Fri, 21 Feb 2025 08:05:59 -0800
-X-Gm-Features: AWEUYZlqsvctl5zBNHJG3Z-VMVbYzrJGAATlwvud8tac1K_A27mJSwpQOBDeiFU
-Message-ID: <CAJoAoZmsLu8DukvMugU6z6C=gKFP=dwDhZAT=_jE6h+dO9V55A@mail.gmail.com>
-Subject: Re: Deleting first commits; maintaining last commits
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Jamenson Espindula <jafesp@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, Feb 21, 2025 at 7:18=E2=80=AFAM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
->
-> On Fri, Feb 21, 2025 at 12:18:09AM +0000, brian m. carlson wrote:
-> > > My Git repository on GitHub <https://github.com/espindula/br-blfs> ha=
-s
-> > > about 23,500 commits. However, there are several old (before Feb, 28
-> > > 2022) commits I would like to delete and maintain the newer ones
-> > > (after Feb, 28 2022). So, Is there any Git command (or combined
-> > > commands) I could use?
-> >
-> > No, Git doesn't offer such a thing.  Due to the use of cryptographic
-> > hashes used, it would be impossible to verify the integrity of the
-> > repository if it could just be truncated like that.  In addition, the
-> > goal of Git as a version control system is to track history, not to
-> > destroy it.
-> >
-> > However, if the concern is size and not something else (like removing
-> > personal information), then you could use a shallow clone to just
-> > download a certain number of revisions and work on that.  The full
-> > history would remain on the server, and you could still push newer
-> > changes, but the size on your local machine would be smaller.  If you
-> > need more history, you could use a partial clone instead if you're
-> > willing to be online to work.
->
-> Another approach is to create a new repository and use a graft/replacemen=
-t
-> commit to indicate that history continues in a different repository, righ=
-t? I
-> do sometimes wish this was a bit easier/more accessible to perform, becau=
-se
-> that would allow creating "epochs" for very large repos. Unfortunately,
-> shallow clones tend to be very heavy on the server-side.
+Zejun Zhao <jelly.zhao.42@gmail.com> writes:
 
-For hosts which support it - which I believe includes GitHub - partial
-clone is generally easier on the server and a little bit less
-bug-prone than shallow clone.
+> On Tue, Feb 18 2025 09:49:46 -0800, Junio C Hamano wrote,
+>> Doesn't it mean that a change that makes these line-number
+>> variables to size_t is wrong?  Of course the change is not made to
+>> break the code but may be to please some code paths in other parts
+>> of the system that wants these line-number variables that are
+>> currently "int" to compare or assign without range-checking with
+>> "size_t" quantity or variable,
+>
+> Sorry but I don't think the change here is wrong. These line-number variables 
+> are used as unsigned integers (compared with unsigned, used to index arrays, 
+> ...).
 
->
-> -K
->
+I thought that we made it "int" not "unsigned" as functions that
+compute these line numbers needed to signal an error "oh the input
+is not a valid line number" and one of the most natural ways in C to
+do so was to return a negative values from them.  Isn't that what is
+happening?
+
+For that kind of use, the storage (i.e. variables and structure
+members) does not have to be signed as long as we check the error
+returns from these functions (and I think we do), but then compilers
+may give you needress warnings when you do assign such a value
+returned from the function to the final storage after checking the
+validity of the value.  You may use casts but that is trading clean
+code for clean compilation without complaint from needless warnings.
+
+Or you can make the storage also signed and we do not have to worry
+about squelching the warnings with ugly casts.  When we know we are
+not handling patches with a billion of lines, losing half the range
+by going signed is rather a no-brainer choice between the two.
+
+I do not see any good justification, even if we buy "the final
+storage should be unsigned, since we always check before assignment"
+(which I am not too opposed to), for using size_t instead of
+platform natural integer (be it signed or unsigned) for the line
+numbers, though.
+
+Thanks.
+
