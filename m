@@ -1,188 +1,191 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E7A1E9B07
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 10:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B362E1E9B01
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 11:45:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740134021; cv=none; b=tVYVoZnA0Pfvf9UNdZvFqpYx3b+m9ZsAjb2DG0bSzoJUy5neVt8u+HeZQ8qJdu1hU/OvY8Gf9VuvRsI8ovsL7s35XlFk7HeLREtf1ogNtmVIdazIAqty3GGShOfiRzvhp0pJVdPYYZh1NNBE3QcpjEp9+aQAhgk7tDUO4te6qp0=
+	t=1740138346; cv=none; b=V1VthvMZeAQ+Ne++STjQFil7NidbzvoZXZFuZ4HFVKZ3wgLs0ZvayFQx0xraHMygLlWEBmMl3+KULT9u2RKP1ZkJAg1MN9IEuUhELLapNKYU037QVCFI6KCsksR2Sxukt3cHYAZngNCGzO0rPdYjhfCKJtmOG7FCLUKnh2pZNPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740134021; c=relaxed/simple;
-	bh=E9qvfsVcrTS8YuqVybv4P/tV4rK66NP5mJfPDLY9ZRE=;
+	s=arc-20240116; t=1740138346; c=relaxed/simple;
+	bh=wnU+DqjVvoZrcUb0vyqtZa6JxPHHXDqi5ysoi/Oomc0=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hcXxP1HSYXz+tb9Ujt43UHJqW+9TNiboWcTDewDtt0ZDjw5bJyunW8yqKMSN9bqDItmSOKJAYobEf5PtUeYQlX5s+dCbbiCade7vYOahxPumiRlRWiXz4gB5qig2LgSu6bYRkjNkWHIt9E9ESCpoVZidiIVeRY2L6hY59jarZeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OG/YBooQ; arc=none smtp.client-ip=209.85.217.50
+	 To:Cc:Content-Type; b=JJdRqSb22oP3MblmVrQaveYdmaMBU0dcj19LBfWNLtyAFB4UpA5+HbZA72p/VtOQWHF7luxVHegW/bwbogvnCXrpMMJs9374DKBCZtCDgAEYmpX6LVFSAfFvCmn0BXprE+D3boHEGWxd4OC4HmyeSYGlsb55Okps+OadfFDZ/J8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SoReJK+Q; arc=none smtp.client-ip=209.85.217.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OG/YBooQ"
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4b68cb2abacso583060137.3
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 02:33:39 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SoReJK+Q"
+Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-4bd367926easo631073137.3
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 03:45:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740134019; x=1740738819; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740138343; x=1740743143; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=HaWs27qvwE8wcso+ezZFz+OFcsLapSa8kBhtgMrD8SU=;
-        b=OG/YBooQagjMk0MxIgaOI77QItThpM90EFmC1NX7rFQub4WU0SNyaWVqqu+H5mrxyu
-         NZOhPUBGtbwlpKgRjyfp3wWAOd4+MaSk9WyGDywpmHBdbFqUSyi3+rAkOwGVowa4l96K
-         FB745ordqG/ciqzd1JUKgNOQV9LFJNZkleWjwE5g/7QhxOuNrwp44xtFnrUv+TFW9y0P
-         Mkq7dFQZr6thuZi+DvPwaIHubZfGPnifhMKzgLsvTHiVvY0C+HttdSLgh4VpELX/3HEC
-         gJbkV6+9orM9CBRT83UyT0GGXrVi6WUwnfM4pV5CbePmB0YqQYI1PQ71usKiyBZKL5cq
-         +AzA==
+        bh=D8OCxg5qsuda3UhwEYL/hgStgEiHtJkhsiHlsSTAv9s=;
+        b=SoReJK+QbMWmyELMQm6EM0ncWZah/0vS0CNP97LmE7hBB3oBorWBeBk3ZvA/aLvSKT
+         XBP3lpKeexbBeVme7o62L1Ad5mnbJmQ9Donkq5cd2Qjy8RyZVQondGLBJWMHZKqTpDym
+         gPzPpD70rxXyAmPnpj0EywzllSsqZCd8o9iVBP6bg25u958wAuasW5IB9C/ZJranx/2e
+         9otHmwRuuvLFM13HO3sGUdEjAy97t6CldEmVgkZHXsHhPxyostt42hOCa3+s3zhDDJ9u
+         p1hIfad6C7P65dIcbk9XdEgrbpG/EU7Mu5HmSekPdHkYdxSfRcDbd7jgMcb4ppGmhBWU
+         my5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740134019; x=1740738819;
+        d=1e100.net; s=20230601; t=1740138343; x=1740743143;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HaWs27qvwE8wcso+ezZFz+OFcsLapSa8kBhtgMrD8SU=;
-        b=CVbFTf3szHQ7yTPo0LZBvq7UZgmMji0woY2hOzUfTYnPqfrGo6SKZlj8xNytrElQB5
-         2zfg+flZ4B7fJu7Jcxy7w72eMPqjvO0R1U8MaX416iFZinzc+n5UBjynZaUpBFmctH8N
-         czVf7kuUKZtQAOvsfaJ2vzZ2uW0ad+lg0s9QbelOsPLcr9FL2b69SXpMYj1Ar1iZtHjv
-         XUn28cil6D09gPHaOjaCf1/41pEvJjEJbifSVcd3ETD02I6Hh6QhAuyzj4SDdAtLFZbk
-         8Mfd0tmS5CkTxrdABTQLH+b0LNx3Z/3jz1vYHvYW+umujwpUoNdgcowyZp7J9KIfpWJK
-         ePtA==
-X-Gm-Message-State: AOJu0YyMxDXZhDxsCCj89hX1tPLi/HN9J68XRtLYsciguwN3ls4Kxvua
-	sIGLsCX86gXH6XmiQNXegLmwkRaziktQK1DGQEqwKnjNCfKloetI+HAtLroprUT2PbJx2W4f4Sh
-	Ge8Yy1jlJwgpTKOt2j00Zvdo74zQ=
-X-Gm-Gg: ASbGncuviPTAgroiAjmA98K53BkezyqYnMptrRvxQT6dYBZkARuhnMYHds4of9UV99A
-	YUHg9dD1WtXcrYk4W8RR+rxdpEUhhRz4SLCU0fEPBXpmgacMVMt2t4q/574Ck/9K/7Fl0p4ijBx
-	rF4xoUl5QJ+OyfXGDifocI7scvSZOZsOdtZJ+TWOb1sg==
-X-Google-Smtp-Source: AGHT+IFjdEDW/XRuguvzo1EQjCiC8QC2XenIQC6Xp8uzUEbxJtrRTc54DdwsvaxtLTEkbYeURAIsDgmRwZrtveMNldg=
-X-Received: by 2002:a05:6102:3585:b0:4bb:d7f0:6e65 with SMTP id
- ada2fe7eead31-4bfc004d0e5mr1729126137.2.1740134018801; Fri, 21 Feb 2025
- 02:33:38 -0800 (PST)
+        bh=D8OCxg5qsuda3UhwEYL/hgStgEiHtJkhsiHlsSTAv9s=;
+        b=Q13WuWVeZf75On/HHdfxUWoX5zadLEJ5JM2yeLCCzRtpaEPkb0+cWC98TUDNQ51F5C
+         IPF+939ANga606u0FU+045md5Uw7wnXecIqSavmIYJc7aeM/2yzHnTEO5kFSp2BN2vsP
+         h2gFSFcZ9q6jGyC+4OPGlQeUWODoBaLYMTSb/c14LSU5RaVRBKiRLx9GFvlyyi+leyqx
+         PNPFV75HTt6PljHEqNMCCrhYh3oz/ZB+bjzQeyjaNmufsWo5CfaJsnYDWpZbTo5AVJGM
+         sf6ngJ1Lv9xNOB2jauXV3f1LQeL0GcdKTvNucpsdX2u1n7LQcmgLYqvu7GzYPW1cyPPb
+         QUOw==
+X-Gm-Message-State: AOJu0YwWDHhK0zMgHFZU2S/zkaZ5urXVYI1bQqg8htDVA3BGdMCXLJz7
+	dAWzdmtfZiSGcKqE7rzRzfbbJ3+dX8jCkjltSony27fJ8XabfvN5z+9eDOcF29vIAl5TqLwj0BA
+	aI0RgQvze2ZzZCOtSVEFSqBjGIvi14+WZ
+X-Gm-Gg: ASbGncv1rQw/o+EEsQC9tS9z/Z7l9GdJoAtrtiefCED3MqNT8JWQSYXl2+s7ceeM2F9
+	pIisIudaiOUgElxzx1Yzz8MGz6dhytVAc0eL+1dkHWkTzdC1gYZBtgP2iBaUyqbxi7wjigU++co
+	q9sfz0tUP9oSWEizOJV8Tgh7eYJdtsLoCKN6LWOp+Mlw==
+X-Google-Smtp-Source: AGHT+IHQ/0RFvTwTA1jjY5JjS1sd58ZFD3O1CaZ3b6akLJ06efpRNH3l/COJXOD8HOzDoq36TazeAiFjYQKwrW6hxI4=
+X-Received: by 2002:a05:6102:e09:b0:4bb:c490:7d6c with SMTP id
+ ada2fe7eead31-4bfc008992fmr1647529137.9.1740138343519; Fri, 21 Feb 2025
+ 03:45:43 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 21 Feb 2025 05:33:38 -0500
+ HTTPREST; Fri, 21 Feb 2025 05:45:42 -0600
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z6YxA4BlhNwbeYk-@pks.im>
+In-Reply-To: <Z6YxB6qL8WQFZyWW@pks.im>
 References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
- <20250207-245-partially-atomic-ref-updates-v1-5-e6a3690ff23a@gmail.com> <Z6YxA4BlhNwbeYk-@pks.im>
+ <20250207-245-partially-atomic-ref-updates-v1-6-e6a3690ff23a@gmail.com> <Z6YxB6qL8WQFZyWW@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 21 Feb 2025 05:33:38 -0500
-X-Gm-Features: AWEUYZmlLaDvAWvlCTAvvuXz3XQ27wPcaSNucRqWToNjqUbMSCrahfmGzA2SgDI
-Message-ID: <CAOLa=ZQG7UOiYf94jXJwm5SC69hwXCpv2HRCXxMCOUONnzKaUA@mail.gmail.com>
-Subject: Re: [PATCH 5/6] refs: implement partial reference transaction support
+Date: Fri, 21 Feb 2025 05:45:42 -0600
+X-Gm-Features: AWEUYZkxudabeJkFe7QoYPfu4KevB74EnLe5DigEMd_tsCi-_LnxdhQ5d4RnRi0
+Message-ID: <CAOLa=ZT_PVwD0=hFEEqxutFyrQRiz3f4iB8019Sax7_nEwrJfw@mail.gmail.com>
+Subject: Re: [PATCH 6/6] update-ref: add --allow-partial flag for stdin mode
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="0000000000000d81e8062ea48669"
+Content-Type: multipart/mixed; boundary="000000000000d3782f062ea587b7"
 
---0000000000000d81e8062ea48669
+--000000000000d3782f062ea587b7
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Fri, Feb 07, 2025 at 08:34:40AM +0100, Karthik Nayak wrote:
->> Git's reference transactions are all-or-nothing: either all updates
->> succeed, or none do. While this atomic behavior is generally desirable,
->> it can be suboptimal when using the reftable backend, where batching
->> multiple reference updates into a single transaction is more efficient
->> than performing them sequentially.
+> On Fri, Feb 07, 2025 at 08:34:41AM +0100, Karthik Nayak wrote:
+>> diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
+>> index 9e6935d38d031b4890135e0cce36fffcc349ac1d..529d3c15404cdc13216219fba6f56dde91f4909c 100644
+>> --- a/Documentation/git-update-ref.txt
+>> +++ b/Documentation/git-update-ref.txt
+>> @@ -8,7 +8,7 @@ git-update-ref - Update the object name stored in a ref safely
+>>  SYNOPSIS
+>>  --------
+>>  [verse]
+>> -'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] | [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z])
+>> +'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] | [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z] [--allow-partial])
 >
-> In fact it's even inefficient for the "files" backend. The whole
-> machinery around creating a new transaction, preparing it, committing it
-> and then cleaning up its state does bring a bunch of overhead with it.
-> But true, for the "reftable" backend it's way more impactful.
+> I think it's time that we start to split this line into multiple lines :)
 >
->> diff --git a/refs.c b/refs.c
->> index b420a120102b3793168598b885bba68e4f5f5f03..75dbd84acbc41658d4b8b6b5e7763c04e78d0061 100644
->> --- a/refs.c
->> +++ b/refs.c
->> @@ -1211,6 +1212,14 @@ void ref_transaction_free(struct ref_transaction *transaction)
->>  	free(transaction);
+
+Yes, indeed, will do.
+
+>> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
+>> index 4d35bdc4b4b57937112e6c4c9740420b1f1771e5..83dcb7d8d73f423226c36b61374c86c6b29ec756 100644
+>> --- a/builtin/update-ref.c
+>> +++ b/builtin/update-ref.c
+>> @@ -562,6 +563,30 @@ static void parse_cmd_abort(struct ref_transaction *transaction,
+>>  	report_ok("abort");
 >>  }
 >>
->> +void ref_transaction_add_rejection(struct ref_transaction *transaction,
->> +				   size_t update_idx, struct strbuf *err)
->
-> "add" to me sounds like you're adding a new thingy to the transaction,
-> but you rather update something. How about `ref_update_set_rejected()`
-> or `ref_transacton_set_rejected()`?
->
-
-Fair enough, I've changed it to `ref_transacton_set_rejected()`.
-
+>> +static void print_rejected_refs(const char *refname,
+>> +				const struct object_id *old_oid,
+>> +				const struct object_id *new_oid,
+>> +				const char *old_target,
+>> +				const char *new_target,
+>> +				const struct strbuf *reason,
+>> +				void *cb_data UNUSED)
 >> +{
->> +	struct ref_update *update = transaction->updates[update_idx];
+>> +	struct strbuf sb = STRBUF_INIT;
+>> +	char space = ' ';
+>> +
+>> +	if (!line_termination)
+>> +		space = line_termination;
+>> +
+>> +	strbuf_addf(&sb, "rejected%c%s%c%s%c%c%s%c%s%c", space,
 >
-> Do we want to `BUG()` in case `update_idx >= transaction->nr`?
->
-
-Good point, let me add that in.
-
->> +	update->rejected = 1;
->> +	strbuf_addbuf(&update->rejection_err, err);
->> +}
->
-> Do we really need a string as rejection error? I'd expect that the set
-> of failures that lead to rejection should be rather limited, which means
-> that we could use an enum instead. This would unify the errors across
-> backends and also allows us to figure out the root cause of rejection in
-> other subsystems.
->
-> If we introduced an enum, we could eventually even iterate a bit on the
-> mechanism and rather trivially tell the backends which kind of failures
-> are acceptable. As an example, a conflicting ref update may for example
-> be ignored and not cause failure, a conflicting path name might cause
-> failure.
+> Whew, that's a lot of placeholders.
 >
 
-That's a good point, This also allows us to eventually extend the flag
-to do something like you mentioned where `--allow-partial=all` would
-skip all errors. But one could optimize to also say
-`--allow-partial=name_conflict,old_value` to only skip errors due to
-refname conflicts and invalid/incorrect old_value.
+True. More prone to errors too.
 
-I'll add another commit to introduce and add 'enum transaction_error'
-and build around it.
+>> @@ -723,7 +754,8 @@ int cmd_update_ref(int argc,
+>>  	const char *refname, *oldval;
+>>  	struct object_id oid, oldoid;
+>>  	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0;
+>> -	int create_reflog = 0;
+>> +	int create_reflog = 0, allow_partial = 0;
+>> +
+>>  	struct option options[] = {
+>>  		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
+>>  		OPT_BOOL('d', NULL, &delete, N_("delete the reference")),
+>> @@ -732,6 +764,7 @@ int cmd_update_ref(int argc,
+>>  		OPT_BOOL('z', NULL, &end_null, N_("stdin has NUL-terminated arguments")),
+>>  		OPT_BOOL( 0 , "stdin", &read_stdin, N_("read updates from stdin")),
+>>  		OPT_BOOL( 0 , "create-reflog", &create_reflog, N_("create a reflog")),
+>> +		OPT_BOOL('0', "allow-partial", &allow_partial, N_("allow partial transactions")),
+>
+> You can use `OPT_BIT()` to set a specific bit in a flags field..
+>
 
->> diff --git a/refs/files-backend.c b/refs/files-backend.c
->> index 9fc5454678340dd7c72539bfa0f15ee7eb24b1ff..99ec29164fbd30635125cc2325aab3d300cf906c 100644
->> --- a/refs/files-backend.c
->> +++ b/refs/files-backend.c
->> @@ -2852,8 +2852,18 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+That would be cleaner, will fix.
+
+>> @@ -749,13 +782,19 @@ int cmd_update_ref(int argc,
+>>  	}
 >>
->>  		ret = lock_ref_for_update(refs, update, transaction,
->>  					  head_ref, err);
->> -		if (ret)
->> +		if (ret) {
+>>  	if (read_stdin) {
+>> +		unsigned int flags = 0;
+>> +
+>> +		if (allow_partial)
+>> +			flags |= REF_TRANSACTION_ALLOW_PARTIAL;
+>> +
+>>  		if (delete || argc > 0)
+>>  			usage_with_options(git_update_ref_usage, options);
+>>  		if (end_null)
+>>  			line_termination = '\0';
+>> -		update_refs_stdin();
+>> +		update_refs_stdin(flags);
+>>  		return 0;
+>> -	}
+>> +	} else if (allow_partial)
+>> +		die("--allow-partial can only be used with --stdin");
+>>
+>>  	if (end_null)
+>>  		usage_with_options(git_update_ref_usage, options);
 >
-> I wonder whether we want to accept all failures. Some failures are
-> certainly benign, like for example mismatching expected OIDs or a
-> conflict due to a preexisting ref that blocks the path. But other kinds
-> of failures which are unexpected might be a bit more on the dangerous
-> side to accept, so I think we should be careful here.
->
-
-Fair point. For the current implementation with the enum design
-discussed above. I think it would be best to skip over all user
-oriented errors. But any system errors would actually cease the
-transaction. We can further iterate on this later.
-
-> The same comment also applies to the other backends.
+> The implementation is quite simple, nice.
 >
 > Patrick
 
---0000000000000d81e8062ea48669
+--000000000000d3782f062ea587b7
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 4d756ce569d25226_0.1
+X-Attachment-Id: dc4196442c4d722_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lNFZvQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mLzJUREFDYzZKeWswTjBNOW5vTXZHZmNKc0dSTytaZQppTkxUMk9INFBv
-MDhXV0xON3o1R3R3TnFvM1NzRDZWaTRRT1JyZkZicWJkYi8rcnpORWtGSFhBalZpbGhNbjYvCjZj
-b1BUT2pKWVlXTERCOTdaSTFxeGEzRXhMZ2luRURpZnd0TWE4ekFoMnJJeENwRmYxVVVqck4wckhQ
-NWRpd3kKd0VjaHVuSXRtZEdValpIcnl0RWJsVjcvVkl5aTdVaVNZdTdiRjdXbWlCemZPN0g3WXI0
-Y1Y5OGFaZXlqVE5YcAplbHQ1YTgxd2t2bDc1SjYzWGgrMkpsa2FybHZwbnJ0TVJvOGJOcG5LMktq
-cG9BYUJjeEw5TkFMMXYyZ3NTbUV5ClBqeVpFMWo1QjFxMnVaMzY1SW1hMjVQd2x2N0Fud0hVbDI0
-YUxMRDMzNjJ4djRQVklkbUw1T3ROMnF2dWx2NzQKY3dRMkVnZ1BYN3lsVFFLWFcyMWNmc3V2K3Qz
-YmRLOGlMNzhCaHRQZndPRDFGM2F6RnlNamE2cy9CSmJOSE5vKwpqbjJIdDQ4R082WFJxc3o1aWhk
-OXF6SE1tWTU0dDBnaHNJVlZsTmRJRVFuWnR0cDh1dVFpVW9wK28rT29ZaWhPCmh6a0s3aC9SeWIx
-eFE5MmJuSThnV3ExcU1KUVh4Yk93cGZjeEJ6TT0KPWVoUFAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lNFoyVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNm1FQy85bU1nUFAySlhCTnQ3SksvQ3UxVGh0dVpxZQpaYVVzUVdwMmdI
+UE9BUjBXa3dyMm51NDluMzEvSWZSM0NwWGRJOGx0RHZmQnVDcmk5czBpRUNOa0FtUDVkNno3Cm50
+UDVZREorRXUvWnFTWEgwcGV2eEpaV0NMQ1FiQkhmZGdCK3ZvR3lHQW9CY0NtWVVNczljemlNSVk3
+dVk2NmcKNlRUS1M1a2Rnd0dlSlhLVjNDK1VkMFlWamdaR3pXdWdDOENVNlBnUGR0ZGVZRElOZTRI
+UWVPa2RUSmF3S2RpcQpjdy9qWkQraWhYUkxESEdRQmJXRlNLa213NVhRbjBVclpBT2pyVE5oc3lh
+V1lqdUlVSjQwVUo5endJS0JweDlpClMwSDBLNmVDZmtxOEViYXovY3lhZnYvMkQzRHJsM2JQbDhR
+VnV6RnRVNXoxTmRvWkpHZTNPUFZpcnBQTGh6NEcKUGxDTEZWN1U2YkJDVFp1dEh6QUFSMzRzaStM
+RUpmWXFRV3NkdnFmL25NN2FTYktFdUxGMUs1MUtnalRWcjMxRQpPbEhuT0JUelhPbDZKbVhtZzBi
+YTRibGZxbFl2SlNZeGpqdXVTaVBlUDB6c3ZJalA2S0VWVXVoUmJmbHZZdXFlCjdoczhTRHVBWnB2
+bDZzMGJkUXNDY2N6WUxQQThyRnVRaDdhMFpjQT0KPUpCZEIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000000d81e8062ea48669--
+--000000000000d3782f062ea587b7--
