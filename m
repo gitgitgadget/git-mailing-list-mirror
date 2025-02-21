@@ -1,191 +1,200 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B362E1E9B01
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 11:45:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65916209F4E
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 11:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740138346; cv=none; b=V1VthvMZeAQ+Ne++STjQFil7NidbzvoZXZFuZ4HFVKZ3wgLs0ZvayFQx0xraHMygLlWEBmMl3+KULT9u2RKP1ZkJAg1MN9IEuUhELLapNKYU037QVCFI6KCsksR2Sxukt3cHYAZngNCGzO0rPdYjhfCKJtmOG7FCLUKnh2pZNPY=
+	t=1740138628; cv=none; b=nVoHhVQ8OVoNQV79ak5ts32O9PcyXnAlN0AKUvAoGFBQhrWDza7KBQ5YuTNL1pFmQPLSQ+wqzDAV7ARh7VvLdfAo87EzSIFcNENyISIIwteom10M2HVx9nC2d+qPiPG7d3EN77IKhrS7Zq0t4agolugz09lCbu8HWItDJR2dnYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740138346; c=relaxed/simple;
-	bh=wnU+DqjVvoZrcUb0vyqtZa6JxPHHXDqi5ysoi/Oomc0=;
+	s=arc-20240116; t=1740138628; c=relaxed/simple;
+	bh=IPz4jrJm/bkUzW1VQl/cHlLOmSyNAHD6mHhOX0lva+I=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JJdRqSb22oP3MblmVrQaveYdmaMBU0dcj19LBfWNLtyAFB4UpA5+HbZA72p/VtOQWHF7luxVHegW/bwbogvnCXrpMMJs9374DKBCZtCDgAEYmpX6LVFSAfFvCmn0BXprE+D3boHEGWxd4OC4HmyeSYGlsb55Okps+OadfFDZ/J8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SoReJK+Q; arc=none smtp.client-ip=209.85.217.49
+	 To:Cc:Content-Type; b=WdyO6cJa5Au0DMiioVMuJbXd/BynlM+EN0fzYu31qnlTenINcuFcgTDlIh6zauVqWoLeggcH1k5jM4XlApBD/crnvQAUSve1/9jF68IqZgpUi0TWeBqSq5aLHdgbhtCFLt3ORhKvONKw2CnXGVQNzJlxFsLbgyToQ/QVDM94TWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VHcvBBCr; arc=none smtp.client-ip=209.85.217.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SoReJK+Q"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-4bd367926easo631073137.3
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 03:45:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VHcvBBCr"
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-4b9486a15a0so1866976137.0
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 03:50:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740138343; x=1740743143; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740138625; x=1740743425; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=D8OCxg5qsuda3UhwEYL/hgStgEiHtJkhsiHlsSTAv9s=;
-        b=SoReJK+QbMWmyELMQm6EM0ncWZah/0vS0CNP97LmE7hBB3oBorWBeBk3ZvA/aLvSKT
-         XBP3lpKeexbBeVme7o62L1Ad5mnbJmQ9Donkq5cd2Qjy8RyZVQondGLBJWMHZKqTpDym
-         gPzPpD70rxXyAmPnpj0EywzllSsqZCd8o9iVBP6bg25u958wAuasW5IB9C/ZJranx/2e
-         9otHmwRuuvLFM13HO3sGUdEjAy97t6CldEmVgkZHXsHhPxyostt42hOCa3+s3zhDDJ9u
-         p1hIfad6C7P65dIcbk9XdEgrbpG/EU7Mu5HmSekPdHkYdxSfRcDbd7jgMcb4ppGmhBWU
-         my5g==
+        bh=IPz4jrJm/bkUzW1VQl/cHlLOmSyNAHD6mHhOX0lva+I=;
+        b=VHcvBBCrdKTdsnpRq9V8x1DBevQE6H9QEF2X6XxrX0gFwTbVcizwHsrB7ve3BLOIFJ
+         lymAkvXYAZkWdCj+RyW+ospjA49ecIrxTrrA/7GXuJc0cEP5w0cvONPyZNbzNol2kkbn
+         aUL4g9YohvWOhcQiISQ1lwczvM32ik2ixHDZBwgYWYG+iYYy7lV40t5SAWp9YuTZe7xS
+         B3bKSUZ/r3Yt6zmodB4gjQxPJGwhvTrpTZtrgVh/rDIb1gwrP8XIYWHKyd4iw3U/Qi6f
+         Z5nihNpfzKfGjjG0rhMghbv3Zrz0F5zZRL6XWJ+/eOAj1WQSEUEfgDwZYeLjlholQPOd
+         DiZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740138343; x=1740743143;
+        d=1e100.net; s=20230601; t=1740138625; x=1740743425;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D8OCxg5qsuda3UhwEYL/hgStgEiHtJkhsiHlsSTAv9s=;
-        b=Q13WuWVeZf75On/HHdfxUWoX5zadLEJ5JM2yeLCCzRtpaEPkb0+cWC98TUDNQ51F5C
-         IPF+939ANga606u0FU+045md5Uw7wnXecIqSavmIYJc7aeM/2yzHnTEO5kFSp2BN2vsP
-         h2gFSFcZ9q6jGyC+4OPGlQeUWODoBaLYMTSb/c14LSU5RaVRBKiRLx9GFvlyyi+leyqx
-         PNPFV75HTt6PljHEqNMCCrhYh3oz/ZB+bjzQeyjaNmufsWo5CfaJsnYDWpZbTo5AVJGM
-         sf6ngJ1Lv9xNOB2jauXV3f1LQeL0GcdKTvNucpsdX2u1n7LQcmgLYqvu7GzYPW1cyPPb
-         QUOw==
-X-Gm-Message-State: AOJu0YwWDHhK0zMgHFZU2S/zkaZ5urXVYI1bQqg8htDVA3BGdMCXLJz7
-	dAWzdmtfZiSGcKqE7rzRzfbbJ3+dX8jCkjltSony27fJ8XabfvN5z+9eDOcF29vIAl5TqLwj0BA
-	aI0RgQvze2ZzZCOtSVEFSqBjGIvi14+WZ
-X-Gm-Gg: ASbGncv1rQw/o+EEsQC9tS9z/Z7l9GdJoAtrtiefCED3MqNT8JWQSYXl2+s7ceeM2F9
-	pIisIudaiOUgElxzx1Yzz8MGz6dhytVAc0eL+1dkHWkTzdC1gYZBtgP2iBaUyqbxi7wjigU++co
-	q9sfz0tUP9oSWEizOJV8Tgh7eYJdtsLoCKN6LWOp+Mlw==
-X-Google-Smtp-Source: AGHT+IHQ/0RFvTwTA1jjY5JjS1sd58ZFD3O1CaZ3b6akLJ06efpRNH3l/COJXOD8HOzDoq36TazeAiFjYQKwrW6hxI4=
-X-Received: by 2002:a05:6102:e09:b0:4bb:c490:7d6c with SMTP id
- ada2fe7eead31-4bfc008992fmr1647529137.9.1740138343519; Fri, 21 Feb 2025
- 03:45:43 -0800 (PST)
+        bh=IPz4jrJm/bkUzW1VQl/cHlLOmSyNAHD6mHhOX0lva+I=;
+        b=TS7dvZb/deICTH5gr0K6HETPkAHUrzunAljZOmvnV/7dvVeGW4MIYv934RLfx0RLm5
+         MCxQ+7hh01PMrI1W9zoW4JnOFIuM48Zjksq/ZwMT7kWIdVEnbAtorJIVDYsVednIz4xN
+         fUBUoAjNY9KVKm+qg/K1a0fvL/Zw1nIRWsVEh8pFoEKoFwEyFddGViLKy19zn57R507j
+         W7JRH3RpSVs5OFeps31DN4DVas2oh+soHfaiIIEmWPkeGSVNfjr5zz/JzCnOQDUMsyaT
+         MSrD4u8NDT0c8DWlA4Esjqi6GilqAFQPtedy7y9cm4dZCMKljXmnX0yXAt7QpvjKX+gp
+         Ty+w==
+X-Forwarded-Encrypted: i=1; AJvYcCVt2LCCyzVU5m5+IcWtwIZVoUa/VHdQXLtCCPC49xNUX2LANgRyBFfoxU/DKS2Lb1H35wY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzENNFU4w8h+WN/DbKm60lWeEgv1K2QicC1yCDguWXaJPg9Uupg
+	rTc9tt3ILiGAKXYX61Pyfwoqia+tLr3y7NvCixXypi+oIJGlTb6IgBB5P6HgF/oEPwVLgSX79W4
+	1KsxSoem/fbPo/1BbU0JG1ATaA4dmBE9D
+X-Gm-Gg: ASbGnctlFcr1LDJT/2SghGB+obUm/ei43Ykqms4Pf0NJjz0ofwJvPiTBcnCyP7Um6f9
+	BDBhPskIgXTss+LS1VSfI5OGTaDjSSMDXB4mO1xU045oaJsxsYG143KY6x1yo3BW05EWIuMPlk+
+	KFZAO902GlfCVTRBOSAWMy4RJSR/z0a4wJhmoS912I9g==
+X-Google-Smtp-Source: AGHT+IGCMV3zCV3gudZKYK4xwV+a1hGHsjEJUcLvh4nETgOomgVHtg3KZ0ah6ma0JKaoJpK14umQipRGjULsgr10csw=
+X-Received: by 2002:a05:6102:c8b:b0:4b3:fee3:2820 with SMTP id
+ ada2fe7eead31-4bfc0f8549emr1221947137.9.1740138625187; Fri, 21 Feb 2025
+ 03:50:25 -0800 (PST)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 21 Feb 2025 05:45:42 -0600
+ HTTPREST; Fri, 21 Feb 2025 06:50:23 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <Z6YxB6qL8WQFZyWW@pks.im>
+In-Reply-To: <282b132e-27b0-41b7-8556-cbbdc08081bc@gmail.com>
 References: <20250207-245-partially-atomic-ref-updates-v1-0-e6a3690ff23a@gmail.com>
- <20250207-245-partially-atomic-ref-updates-v1-6-e6a3690ff23a@gmail.com> <Z6YxB6qL8WQFZyWW@pks.im>
+ <4beb0359-763d-425d-b416-ac40bda59e2e@gmail.com> <CAOLa=ZQF0=WgW-2HumRbSp4rUjXikEfecjp5Uxp+zJ+Tun5yzw@mail.gmail.com>
+ <282b132e-27b0-41b7-8556-cbbdc08081bc@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 21 Feb 2025 05:45:42 -0600
-X-Gm-Features: AWEUYZkxudabeJkFe7QoYPfu4KevB74EnLe5DigEMd_tsCi-_LnxdhQ5d4RnRi0
-Message-ID: <CAOLa=ZT_PVwD0=hFEEqxutFyrQRiz3f4iB8019Sax7_nEwrJfw@mail.gmail.com>
-Subject: Re: [PATCH 6/6] update-ref: add --allow-partial flag for stdin mode
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000d3782f062ea587b7"
+Date: Fri, 21 Feb 2025 06:50:23 -0500
+X-Gm-Features: AWEUYZk7oV6RELK8yOd-q_NF8Mcf4fFT1Zd1vJCBM6RbT3rTqg5q8H1K6J6BrVY
+Message-ID: <CAOLa=ZQHMsZK0rmb2MuJYuaR-+1s6CdEQm86caKc_qXMSOKPTw@mail.gmail.com>
+Subject: Re: [PATCH 0/6] refs: introduce support for partial reference transactions
+To: Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk, 
+	git@vger.kernel.org
+Cc: ps@pks.im, jltobler@gmail.com
+Content-Type: multipart/mixed; boundary="0000000000009d607c062ea598f0"
 
---000000000000d3782f062ea587b7
+--0000000000009d607c062ea598f0
 Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On Fri, Feb 07, 2025 at 08:34:41AM +0100, Karthik Nayak wrote:
->> diff --git a/Documentation/git-update-ref.txt b/Documentation/git-update-ref.txt
->> index 9e6935d38d031b4890135e0cce36fffcc349ac1d..529d3c15404cdc13216219fba6f56dde91f4909c 100644
->> --- a/Documentation/git-update-ref.txt
->> +++ b/Documentation/git-update-ref.txt
->> @@ -8,7 +8,7 @@ git-update-ref - Update the object name stored in a ref safely
->>  SYNOPSIS
->>  --------
->>  [verse]
->> -'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] | [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z])
->> +'git update-ref' [-m <reason>] [--no-deref] (-d <ref> [<old-oid>] | [--create-reflog] <ref> <new-oid> [<old-oid>] | --stdin [-z] [--allow-partial])
+> Hi Karthik
 >
-> I think it's time that we start to split this line into multiple lines :)
->
-
-Yes, indeed, will do.
-
->> diff --git a/builtin/update-ref.c b/builtin/update-ref.c
->> index 4d35bdc4b4b57937112e6c4c9740420b1f1771e5..83dcb7d8d73f423226c36b61374c86c6b29ec756 100644
->> --- a/builtin/update-ref.c
->> +++ b/builtin/update-ref.c
->> @@ -562,6 +563,30 @@ static void parse_cmd_abort(struct ref_transaction *transaction,
->>  	report_ok("abort");
->>  }
+> On 12/02/2025 12:34, Karthik Nayak wrote:
+>>> On 07/02/2025 07:34, Karthik Nayak wrote:
+>>>> Git's reference updates are traditionally atomic
+>>>
+>>> I'm nitpicking but the updates aren't actually atomic, if a transaction
+>>> updates two refs then it is possible for another process to see the one
+>>> ref pointing to the new value and the other pointing to the old value.
+>>>
 >>
->> +static void print_rejected_refs(const char *refname,
->> +				const struct object_id *old_oid,
->> +				const struct object_id *new_oid,
->> +				const char *old_target,
->> +				const char *new_target,
->> +				const struct strbuf *reason,
->> +				void *cb_data UNUSED)
->> +{
->> +	struct strbuf sb = STRBUF_INIT;
->> +	char space = ' ';
->> +
->> +	if (!line_termination)
->> +		space = line_termination;
->> +
->> +	strbuf_addf(&sb, "rejected%c%s%c%s%c%c%s%c%s%c", space,
->
-> Whew, that's a lot of placeholders.
->
-
-True. More prone to errors too.
-
->> @@ -723,7 +754,8 @@ int cmd_update_ref(int argc,
->>  	const char *refname, *oldval;
->>  	struct object_id oid, oldoid;
->>  	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0;
->> -	int create_reflog = 0;
->> +	int create_reflog = 0, allow_partial = 0;
->> +
->>  	struct option options[] = {
->>  		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
->>  		OPT_BOOL('d', NULL, &delete, N_("delete the reference")),
->> @@ -732,6 +764,7 @@ int cmd_update_ref(int argc,
->>  		OPT_BOOL('z', NULL, &end_null, N_("stdin has NUL-terminated arguments")),
->>  		OPT_BOOL( 0 , "stdin", &read_stdin, N_("read updates from stdin")),
->>  		OPT_BOOL( 0 , "create-reflog", &create_reflog, N_("create a reflog")),
->> +		OPT_BOOL('0', "allow-partial", &allow_partial, N_("allow partial transactions")),
->
-> You can use `OPT_BIT()` to set a specific bit in a flags field..
->
-
-That would be cleaner, will fix.
-
->> @@ -749,13 +782,19 @@ int cmd_update_ref(int argc,
->>  	}
+>> Good point. This is true in the case of the files backend, since updates
+>> involve locking individual files and during the commit phase, there is a
+>> possibility that one ref is updated while the other is yet to be
+>> (committing of the lock is not global but rather per ref file).
 >>
->>  	if (read_stdin) {
->> +		unsigned int flags = 0;
->> +
->> +		if (allow_partial)
->> +			flags |= REF_TRANSACTION_ALLOW_PARTIAL;
->> +
->>  		if (delete || argc > 0)
->>  			usage_with_options(git_update_ref_usage, options);
->>  		if (end_null)
->>  			line_termination = '\0';
->> -		update_refs_stdin();
->> +		update_refs_stdin(flags);
->>  		return 0;
->> -	}
->> +	} else if (allow_partial)
->> +		die("--allow-partial can only be used with --stdin");
+>> However this is not the case with the reftable backend, there, updates
+>> are written to a new table and committed at the end after locking the
+>> table. So in the reftable backend, this is indeed atomic.
+>
+> Ah, interesting. That explains why batching updates is so much more
+> efficient when using the reftable backend.
+>
+>>>> This series introduces support for partial reference transactions,
+>>>> allowing individual reference updates to fail while letting others
+>>>> proceed.
+>>>
+>>> This sounds like it's abusing ref transactions to implement a
+>>> performance optimization.
 >>
->>  	if (end_null)
->>  		usage_with_options(git_update_ref_usage, options);
+>> I understand where you're coming from. This is definitely a stray from
+>> the regular atomic behavior, that transactions promise. But I would say
+>> this is more of an exception handling for the regular transaction
+>> mechanism and AFAIK this is also something that some of the databases
+>> support (see EXCEPTION in PostgreSQL).
+>>
+>> Overall, we're adding an exception handling support to the existing
+>> transaction interface.
 >
-> The implementation is quite simple, nice.
+> My understanding of exception handling is that if an error occurs then
+> an error handler is called (reading [1] that seems to be what PostgreSQL
+> does as well). Is that what is being proposed here? I thought this
+> series added a flag to ignore errors rather than provide a way to handle
+> them.
 >
-> Patrick
 
---000000000000d3782f062ea587b7
+That is correct, and while the current implementation is to ignore them.
+It does make way for building something like that in the future.
+
+> [1]
+> https://www.postgresql.org/docs/current/plpgsql-control-structures.html#PLPGSQL-ERROR-TRAPPING
+>
+>>> I wonder if it would be better to provide that
+>>> via a different interface than shares the same underling implementation
+>>> as transactions. That would make it clear to someone reading the code
+>>> that individual ref updates can fail without affecting the rest. Burying
+>>> that detail in a flag makes it rather easy to miss.
+>>>
+>>
+>> Thinking this out, having a different interface sound good, but I feel
+>> we'd end up with the same structure as currently presented in this
+>> series. Only other way is to really split the implementation to support
+>> partial transactions as a entity of its own. In that case, we'd end up
+>> with code duplication.
+>>
+>> Do you think you can expand a little more here?
+>
+> I was thinking of a function that took a list of refs to update and made
+> a best effort to update them, ignoring any updates that fail.
+>
+
+Yes, this is what we want too, but in the context of transactions.
+Without transactions, this is already possible to build albeit on the
+user side with some simple scripts.
+
+> My concern with adding a flag to ignore errors in the transaction api is
+> that a partial transaction is a contradiction in terms. I'm also
+> concerned that it seems to be ignoring all errors. I'd be happier if
+> there was someway for the caller to specify which errors to ignore or if
+> the caller could provide a callback to handle any errors. That way a
+> caller could ignore d/f conflicts but still cause the transaction to
+> fail if there was an i/o or could create a reference if it did not exist
+> but leave it unchanged if it did exist.
+>
+
+Yeah, I think this is also something that Patrick raised and something I
+will tackle in the next version of this patch series.
+
+The next version will skip all user oriented errors (errors which can be
+fixed by changing the user input), while still catch system errors (I/O
+, memory ...). I also see how this can be extended to allow users to
+nit-pick which errors they don't care about. But that is something I
+don't plan to tackle for now.
+
+> Best Wishes
+>
+> Phillip
+
+Thanks for your inputs!
+
+--0000000000009d607c062ea598f0
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: dc4196442c4d722_0.1
+X-Attachment-Id: c47a24c9260d8458_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lNFoyVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNm1FQy85bU1nUFAySlhCTnQ3SksvQ3UxVGh0dVpxZQpaYVVzUVdwMmdI
-UE9BUjBXa3dyMm51NDluMzEvSWZSM0NwWGRJOGx0RHZmQnVDcmk5czBpRUNOa0FtUDVkNno3Cm50
-UDVZREorRXUvWnFTWEgwcGV2eEpaV0NMQ1FiQkhmZGdCK3ZvR3lHQW9CY0NtWVVNczljemlNSVk3
-dVk2NmcKNlRUS1M1a2Rnd0dlSlhLVjNDK1VkMFlWamdaR3pXdWdDOENVNlBnUGR0ZGVZRElOZTRI
-UWVPa2RUSmF3S2RpcQpjdy9qWkQraWhYUkxESEdRQmJXRlNLa213NVhRbjBVclpBT2pyVE5oc3lh
-V1lqdUlVSjQwVUo5endJS0JweDlpClMwSDBLNmVDZmtxOEViYXovY3lhZnYvMkQzRHJsM2JQbDhR
-VnV6RnRVNXoxTmRvWkpHZTNPUFZpcnBQTGh6NEcKUGxDTEZWN1U2YkJDVFp1dEh6QUFSMzRzaStM
-RUpmWXFRV3NkdnFmL25NN2FTYktFdUxGMUs1MUtnalRWcjMxRQpPbEhuT0JUelhPbDZKbVhtZzBi
-YTRibGZxbFl2SlNZeGpqdXVTaVBlUDB6c3ZJalA2S0VWVXVoUmJmbHZZdXFlCjdoczhTRHVBWnB2
-bDZzMGJkUXNDY2N6WUxQQThyRnVRaDdhMFpjQT0KPUpCZEIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lNGFINFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mK0dLQy85NzFISC9CQW44Mk54OWxFVzNlVWdYcVluZApGTFNzcWxKZlR3
+VVA5eEhPM0NHdGpUN2ZFSURTTVdBS0pQWWs2U2NxWCs3MSswbjlqYmUvSlRNNGxUM2dFNkZQCm1G
+T1hwWTRSL0tWOTdpVjlqd3oxQVlsWGFKRm5KU0ZVR2ZEVWdsNCtvbmcwU0V6d3FiRlRtSW40eWhX
+WVN0dngKTFMyQktwVHFiVG83by84UUhwZm8rVUpiMFNKWDRiZjYxRE9kY25ib2RsYTZSUlhLZTdx
+ZHdMZnJpcFMvNGI4YQo2eERxaVpBdDUzb3VXeWNkTUplQUtzVTkreU9SOUUyTlJoNFRSaStIUjg3
+ZG9iYkh0VmJEUmMyMlN3elpuSy91CnpnM08wYVRzekJ2MC91eG41ZlFXbnlZVEg2dkJHZEl5VHZY
+Sm5RWXZaT2U0VVFpaEF4U3gzWkpXaytiMGFQYkUKWUpxZnYydVd5c0ZQUVdTcytPVVp1UkJpVnAr
+UFh2N2s0NWlmc05kQnc5aFQzY1Q2SWpqNTZlamNxMms3MVBZRQpza2w3dHNIdkZpamRIQnliTlhk
+NDYyNXZ2UDhNOENqaXJyZ1M1UGFSTVc1SGVXZHRERkJ4aVc1S3RnY1Z2ZVJ1CkRNRXhzb3RNNGZF
+SjB3Snd6QktFNm9qMGdTTEMwSks1Snc1RDhNbz0KPXBVcHUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000d3782f062ea587b7--
+--0000000000009d607c062ea598f0--
