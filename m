@@ -1,133 +1,167 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4358717CA17
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 21:50:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC09202F89
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 21:56:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740174621; cv=none; b=PtnEpIkWhuQX41CmD/jzXjKldEC75+DlO1/90JS4jLrXO5+t5b95UomRS7tGyRgnFw+Ymqaby/Jw9TWKJOzZkwZdUC941LkeCFWKwQcbDOxDmKcfxvLOMuFrnABCf8V7VO4lM+63JcQOTsAs/Wd8xrTml5gaTxr3Las7SXnUrQ8=
+	t=1740174990; cv=none; b=H3yB1K2TDhzoFV3ipzsRylj7hzM6oiz//9+0rB9VfAhxrlpz8OfVasDKJcY7yxXTkSi/xkVI6YuR46lMHR2L6pevmAdOGbr7wPsDylRsu81etTok55Zf1ntlYyrXRbw9ZzT+kUateOS6BuhLIOcRus6m6768WwXHff1u8ledbGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740174621; c=relaxed/simple;
-	bh=Oer7DiWTTne/lXlK+BOnm5zBzbtraGURLiorQpDTEqk=;
+	s=arc-20240116; t=1740174990; c=relaxed/simple;
+	bh=AR7/fVqDSXWA+m+wkW44MYWGG2rD5Sb4Dx/OCIucT/s=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UzTHrW1pCHFetoUqeHk61kVPXov2I95+G+F11GfR7T/u2IAusMk8BiaoFj0KrAL47JW8JmG70qejrmyq4yBgZiLm4FT23VQ5djECN9Vj4VGQ8Fu22SqzGEEJdeL/KfD5Y6hmEqfYiNL9fz+2oqSH8CqyqWE+jBaw5fdjruPPplI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ljpb9QqY; arc=none smtp.client-ip=209.85.166.180
+	 To:Cc:Content-Type; b=KaXE8q2U2Hzz/qhoGOhM0j3+WwVURTX/u8o62qsf6QxQ3w/sPy2FVrf8GCw59ZBdKUKtAV3aDKacZO9ssXLFDV6Kw6MHFaP/alESTJ8HrcTfwUG2gMR/xn2Jqyq4AG2xdf0tJT2tCITZUciW4M7r+EFLn61Ml9WoljY7X0znZB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PWIf6foP; arc=none smtp.client-ip=209.85.166.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ljpb9QqY"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3d0465a8d34so19791805ab.0
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 13:50:18 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PWIf6foP"
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-851c4ee2a37so210027239f.3
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 13:56:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740174618; x=1740779418; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740174988; x=1740779788; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rkVdNJbuTKqX+WAVqFC1UcEJCTGe2IJp9TgKLXAKnV4=;
-        b=ljpb9QqYTn5u4Mn9deiJxcrGME22/j2P+/NPJQ5R9L3I8cYxLdNdpYmmj/HF8hPw8Z
-         aWLET8UF74NnGqEnsqGD+1fcc9t8rbXAwgEvf5YrbyW3bLNC3I54WN6bRWDrxIoorZ0j
-         OkpJ7H3JuIK9SuyvBdt+yKpoGEwzkcR9pBQSk1d5E86UmT4U60ZpH7tTlgGHI0YDyPGc
-         Y9WW1NseApRgvETyRK7C67UY4kGJFk+skUJpw1fwrz8Ynvr6a9VMYBHCfi5SbvNSXbDa
-         fcu5mqnpSG+DNsz6NIsRFGEbpX2pRbVvP+Tuys3juOs+2v0jH8o4rP6klsrtJaIkDg7s
-         0rSQ==
+        bh=2Xkb9gqktiGRck/REnzoa+zrMjeACsWxYBct9eGPY58=;
+        b=PWIf6foPTSg84ZqrTgd4tMJEzZyvchK93vpfkghjBX3KFZNzZYwt31P3oziD29Jr1o
+         u4bZ/Qf/sxn5XpdSYhJs7vLuXLHEQf6jpR9wLGbzr0B6cxbAi7hGMgpP9vSZEACZZwxz
+         YRcVT9wfLL9oA+fq8jf062HfGlymxUwHnNrf5Tpp0lfiA3yI4aEqRRETf7SOwLxRMGwC
+         Y0n5mEoC7VGa7iGo0Pki6DJ0Zp6Y40sOXU9bkWMyliTWw3cFhCgZNo9IgKqsLrrYvUIV
+         9JK9dqWInm2px+qpyE7a3hxa9eQJxcF1fYwBIfgBbelSTK6AgY+UiSDkMaOusfQNCQgH
+         R5WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740174618; x=1740779418;
+        d=1e100.net; s=20230601; t=1740174988; x=1740779788;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rkVdNJbuTKqX+WAVqFC1UcEJCTGe2IJp9TgKLXAKnV4=;
-        b=GRa8XamtW5xoCJsDlvsu1DuxW+qYqKIxHLNs4bwgxhWehQjZpAItDvtwsNmyyZuPDr
-         mOaREekpVtJ5wz09TGioelGzXPDOX8yxRYsSMmjBEGo74igH9uhf7h59fh6Nsf2blwpL
-         kfB6EyaKV4C5pFzFIXV9mRydXfGiCZSaEs8CsWj64Oc8BHVdI83tA4pkjHPIhNw3ArQd
-         T7bu8zPDikzB1dXSGWcqexx5cXPbBHT9ItsGYTgrUB7ggVCzFgRTPZQrpuLsNBeQKz4L
-         QzuEUs3fGYGb9dOGM6LCzU6FlMkz4PMwLEjsaia4KEpQ949BvJAMaBMqWXFtyVswNCI/
-         ycug==
-X-Forwarded-Encrypted: i=1; AJvYcCWfCx/90UKe+DmQc0rFtdgiizSnDgf3PhStRM7TaIts7s+pCNNQawGB4xuAjJQ9VSFHBsk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzgcRN2MAXmJNSi9ijHGHCNCVBGQ+Xdq5sB+pD4wFRSICmAtYL9
-	xHOKS6bbdtG2MjEFESKXGih17VLDH4+jQ9rAnOA3rJJ0DZ5KutND13pSrgivGOPgkmCRIrRyt4z
-	hJdWmjn59tkG9aAa25zW+R6YJLlk=
-X-Gm-Gg: ASbGncsqhTvf/yLKWhDmuXR4LNXkRWMwVCGVb/O9g0/c9ECAc5NeljJM/x77rhDDr3/
-	Ls7Bd7EPosU4c/QRUDFEw0IfEXpyjWBiB3aaXLSygP+RmTrC3ZpPZOsflEIoGMG5FFmq2lzIa1a
-	Jl1SUyWZ+ZfVVeBPSwSwq+2HX/F9lKtUMX5i2suqdG
-X-Google-Smtp-Source: AGHT+IEpe1dB5uWcJuZPyedXQaHxseg6rKmXJlsWAE3udrNxe2po8CWuRi3F8Ayat3050NZqSJT4FAS6cLwO3F6UOFg=
-X-Received: by 2002:a05:6e02:12e8:b0:3d2:aa73:7b65 with SMTP id
- e9e14a558f8ab-3d2cae699b6mr48807545ab.6.1740174618259; Fri, 21 Feb 2025
- 13:50:18 -0800 (PST)
+        bh=2Xkb9gqktiGRck/REnzoa+zrMjeACsWxYBct9eGPY58=;
+        b=U2FnfJuRfGFOEpk0J6+H5Tu+DKJPr8cvJGJeouETVLXmcZDyX2z4utArj2gjW9i8OI
+         404pdGWaoZPqT2PhSiJy9KtgUynJRyWKo+T8Q8dH8dSdPwPH1uFM9WdZ+3T5Vf4dJ77S
+         2CxIRhDh2DLVm4hEqrLuFIpXnNxM4Q0H3+tM+Cv/A5a2kX6NQbNpsHYu1zMbXPKV/3s3
+         213jb+bd1W/NN+PvRgrYW5QhTH+312K8O2uN6SCiawd0g/84mKX93nVHgXux2wMz1hIR
+         6gvJfeYpg8UvdtAHO6t/UeGTo4ii4FOu9vNndKS8+93o0+dhNqDRsCjGMs+aJ4RWOITG
+         ayUQ==
+X-Gm-Message-State: AOJu0Yx1ok9SRTOa1NTctrjSfYnNMxjJ30aR8mm9LHT8mwpDkDqnVcye
+	itXe6rmCVczbIGsFLTQlyDO+5mObiu113KB+mjh9papXia6AkZeHAIz92cjUwhzOyK5BZPTtgdv
+	XYvFkQUzoQWJaOlTSHOdemteH1MUijg==
+X-Gm-Gg: ASbGnctYCn0eu8GdNbDpjOc3z7KrMlECrRI5ZK0zwhE5/uY1PI08NbwYgR7kJUISeeF
+	RqvY0jJCxNbv1eowshx8xPigEl17iy1U0N9racQFJXH7hFKAyvTxHrOY8SnWVKyLbb47fWR/der
+	9WWOHJwEgvzJotfdYM/WrBWi4qnS3QApjDGpK6HdUz
+X-Google-Smtp-Source: AGHT+IHTSwsreNhanEoES9unOEj1kUckIkO15QL4W33HxAgkp6bFg7nRKf5P2JBqtOPU7Y9ylUvQahaJadkD9fI3aDE=
+X-Received: by 2002:a05:6e02:1a4d:b0:3d1:a75e:65f6 with SMTP id
+ e9e14a558f8ab-3d2caeeaed0mr59554385ab.18.1740174988055; Fri, 21 Feb 2025
+ 13:56:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAOW_YOkX8K=7i7w9c5oH5Cfia0kCzwC3=ok5E=eUwYgpcOKTRQ@mail.gmail.com>
- <Z7fGQalzCg_Fx-ub@tapette.crustytoothpaste.net> <20250221-intrepid-furry-wapiti-eebff0@lemur>
-In-Reply-To: <20250221-intrepid-furry-wapiti-eebff0@lemur>
+References: <20250220151207.3248-1-lucasseikioshiro@gmail.com>
+In-Reply-To: <20250220151207.3248-1-lucasseikioshiro@gmail.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Fri, 21 Feb 2025 13:50:06 -0800
-X-Gm-Features: AWEUYZnBevswXuNwI2bopic8-1sbYgbhGfH2r5BAUUDRA19gGWSZ02Mpup-bMMM
-Message-ID: <CABPp-BG7eLXtHk-r3svmaipOrMjM8oOEUEJ9CRjBUjUQjKC6sA@mail.gmail.com>
-Subject: Re: Deleting first commits; maintaining last commits
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Jamenson Espindula <jafesp@gmail.com>, git@vger.kernel.org
+Date: Fri, 21 Feb 2025 13:56:17 -0800
+X-Gm-Features: AWEUYZngfkFgDgAxz6u8jVTWBderlzqoHmF0Sd5-JJhpn3tC0t_JaHaVqMCaCQ4
+Message-ID: <CABPp-BEDhJJW6+9SgRQKWmKGBANV8cmem1FXtrFKmYgmY7Ud8Q@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v2] merge-strategies.adoc: detail submodule merge
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 21, 2025 at 7:18=E2=80=AFAM Konstantin Ryabitsev
-<konstantin@linuxfoundation.org> wrote:
+Hi,
+
+On Thu, Feb 20, 2025 at 7:12=E2=80=AFAM Lucas Seiki Oshiro
+<lucasseikioshiro@gmail.com> wrote:
 >
-> On Fri, Feb 21, 2025 at 12:18:09AM +0000, brian m. carlson wrote:
-> > > My Git repository on GitHub <https://github.com/espindula/br-blfs> ha=
-s
-> > > about 23,500 commits. However, there are several old (before Feb, 28
-> > > 2022) commits I would like to delete and maintain the newer ones
-> > > (after Feb, 28 2022). So, Is there any Git command (or combined
-> > > commands) I could use?
-> >
-> > No, Git doesn't offer such a thing.  Due to the use of cryptographic
-> > hashes used, it would be impossible to verify the integrity of the
-> > repository if it could just be truncated like that.  In addition, the
-> > goal of Git as a version control system is to track history, not to
-> > destroy it.
-> >
-> > However, if the concern is size and not something else (like removing
-> > personal information), then you could use a shallow clone to just
-> > download a certain number of revisions and work on that.  The full
-> > history would remain on the server, and you could still push newer
-> > changes, but the size on your local machine would be smaller.  If you
-> > need more history, you could use a partial clone instead if you're
-> > willing to be online to work.
+> Submodule merges are, in general, similar to other merges based on oid
+> three-way-merge. When a conflict happens, however, Git has two special
+> cases (introduced in 68d03e4a6e44) on handling the conflict before
+> yielding it to the user. From the merge-ort and merge-recursive sources:
 >
-> Another approach is to create a new repository and use a graft/replacemen=
+> - "Case #1: a is contained in b or vice versa": both strategies try to
+> perform a fast-forward in the submodules if the commit referred by the
+> conflicted submodule is descendant of another;
+>
+> - "Case #2: There are one or more merges that contain a and b in the
+> submodule.  If there is only one, then present it as a suggestion to the
+> user, but leave it marked unmerged so the user needs to confirm the
+> resolution."
+>
+> Add a small paragraph on merge-strategies.adoc describing this behavior.
+>
+> Helped-by: Elijah Newren <newren@gmail.com>
+> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> ---
+>
+> This v2 changes the documentation text to a clearer explanation (as
+> suggested in the v1 review), and changes its location to
+> merge-strategies.adoc instead of git-merge.adoc.
+>
+> This content is duplicated as this works for both `ort` and `recursive`
+> strategies.
+>
+>  Documentation/merge-strategies.adoc | 15 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/Documentation/merge-strategies.adoc b/Documentation/merge-st=
+rategies.adoc
+> index 5fc54ec060..a7fca249e2 100644
+> --- a/Documentation/merge-strategies.adoc
+> +++ b/Documentation/merge-strategies.adoc
+> @@ -21,6 +21,13 @@ ort::
+>         ("Ostensibly Recursive's Twin") and came from the fact that it
+>         was written as a replacement for the previous default
+>         algorithm, `recursive`.
+> +
+> +        In the case where the path is a submodule, if the submodule comm=
+it
+> +        used on one side of the merge is a descendant of the submodule
+> +        commit used on the other side of the merge, Git attempts to
+> +        fast-forward to the descendant. Otherwise, Git will treat this c=
+ase
+> +        as a conflict, suggesting as a resolution a submodule commit tha=
 t
-> commit to indicate that history continues in a different repository, righ=
-t? I
-> do sometimes wish this was a bit easier/more accessible to perform, becau=
-se
-> that would allow creating "epochs" for very large repos. Unfortunately,
-> shallow clones tend to be very heavy on the server-side.
+> +        is descendant of the conflicting ones, if one exists.
+>  +
+>  The 'ort' strategy can take the following options:
+>
+> @@ -95,6 +102,13 @@ recursive::
+>         renames.  It does not make use of detected copies.  This was
+>         the default strategy for resolving two heads from Git v0.99.9k
+>         until v2.33.0.
+> +
+> +        In the case where the path is a submodule, if the submodule comm=
+it
+> +        used on one side of the merge is a descendant of the submodule
+> +        commit used on the other side of the merge, Git attempts to
+> +        fast-forward to the descendant. Otherwise, Git will treat this c=
+ase
+> +        as a conflict, suggesting as a resolution a submodule commit tha=
+t
+> +        is descendant of the conflicting ones, if one exists.
+>  +
+>  The 'recursive' strategy takes the same options as 'ort'.  However,
+>  there are three additional options that 'ort' ignores (not documented
+> --
+> 2.39.5 (Apple Git-154)
 
-I'm totally in support of the "friends don't let friends use
-shallow-clones" point of view, even if I've had rather less success
-than I would have liked at promoting it.  But throwing shade at
-shallow clones is just an impulse, not the real reason I'm responding
-here.
+So, seeing it here, I note that these are meant a bit more as
+high-level overviews of the algorithms.  I pushed you away from
+including this in git-merge.adoc because while that manual page does
+dive into merge resolution details, that manual page is specific to
+merge.  The information here pertains to merge as well as cherry-pick,
+rebase, revert, replay, merge-tree, etc.
 
-Yes, if you're willing to rewrite history, invalidating all hashes and
-rewriting the recent-enough-ones-that-you-still-want-to-keep, you can
-go that route too.  In fact, doing so is as easy as creating a replace
-ref graft (or grafts) which make the oldest commit(s) you want to keep
-look parentless, and then rewriting history to make that graft
-permanent and remove the graft.  (Afterwards, you can make a separate
-graft from that new root commit to the original real commit if you
-want.)
+We don't seem to have a place that is general for all
+merge-machinery-using commands, and which also dives into details
+about how merges are resolved.
 
-It turns out this is an example from user filed issues that comes up
-occasionally in git-filter-repo.  While it's an example I documented
-with the commands to run, just so I can link to it if it's asked
-again, I really don't like the strategy of destroying history,
-especially since most users who ask for this kind of capability
-(Konstantin, you're a notable exception here) don't understand the
-points that brian brought up in his first paragraph.  And I make sure
-to say as much right before I provide the example in my docs.  But,
-yes, this is a possibility for those that don't mind destroying
-history.
+I don't have a good solution.  I think it's probably fine to include
+here in merge-strategies.adoc, even if it feels suboptimal and icky,
+since any other current solution would be as well.  But I would be
+interested in the opinions of other reviewers on this point and
+whether they see a good solution (short of completely overhauling all
+merge-related documentation for any merge-using-command, which might
+be a viable strategy but shouldn't hold up a small patch like this).
