@@ -1,65 +1,65 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE6B7080D
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 14:48:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BBD1D9688
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 14:50:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740149311; cv=none; b=QTI6GIOHYAbI/nlCqoM1SX8l4XnbrwaRqv3l5ChLAfnhNB/erxqZQ04yzl+5Z7WpJ7PK7N0vc5ZHtDdESztcLog6v/PT3rIx9oBzAShQilVLXBvyhQWgMH5fO+1koo5VwMgr+XYW06N6hyUK7CYg2PM5nbjQPSMOdYV7WFS0iZU=
+	t=1740149455; cv=none; b=QGWrF6lRBS+niyKbsLN2VmGpBxtGeKwiJ4mF0luHoQDiA4B1VTkXMpJU0h4ZOVf9fvWg+uw9zKM+Qg8L5FZkqec7T9GTI2DUxGjrOhRCZF5qrdvpfzoX+e9y0odbz9Uxs7X10VMLUQAVDW/KEUPWb1JKivXBt+UmQke0aGNNU7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740149311; c=relaxed/simple;
-	bh=1pgm6xw0ukTcUgQzqv8UAVQMy62nJKuWk3q/QzK9+QE=;
+	s=arc-20240116; t=1740149455; c=relaxed/simple;
+	bh=CBJ5eWBERrpt8rM0sLTGdr+kL3yGnGgV6UHednkvZEU=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ijffFdaEv9sy9Dh4oiVmM+l0PHG6by+lIyVMM1gbCFP7KMVo0UT4QpCRE6WzwU1DdMPui4VquZIAEmGOWoGSSZFdL+XOyzoGU2551qIZ30HA+aWCnpxVYGaP9gdg5KgyFVKDSX7JcuXHbQDmGJ2Zk8IUyfn2FJptS2icIntAvOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kzOflY0S; arc=none smtp.client-ip=209.85.218.53
+	 In-Reply-To:Content-Type; b=damam5egEMyAMURjFpKD2HCBCenw24or+RO8+OIYsaM3MeQgXkrQmx4e+vtMYSvvBiIenYqcONgmYF38ZCNnxT7Hy9+/Ai4aVp0q2PH2o0SdX/exW8ysPTunFAkWsLaXsnwJrQ7uzg4XXRHwxST6n3dJADhWSlt//ZmLSnYv6zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JdjrgrVI; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kzOflY0S"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-aaedd529ba1so267964866b.1
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 06:48:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JdjrgrVI"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-5ded6c31344so3094737a12.1
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 06:50:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740149308; x=1740754108; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740149452; x=1740754252; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/1Xh5uGUaqUTiOBdxlSkOo++7pcxuhkxkryZrsZOlpw=;
-        b=kzOflY0SREXpyc1LB5dXy5tZY2Lttx49WXFbqDTJPcO9TfMcZf4kmQH7iGIo7CFpSa
-         ZLzM2KCxogFQWtodwTujktQBXmt4LgBY+oJWVOvOAFI+95tsyA0opgotFTekaf02qK1/
-         Z5igWZquNKc2WwubcMDACRS3WsghxodQMCrizabT3NcKZO5VTZYs5V0ibWWi7tD5darQ
-         Xpjb+1amQuyhmJ8THJWRyPiAzwCMQdjAuGlTtGSVXNyz64V09LIHGo3eoPmqHrASXcE9
-         83Kbwe/ZuZqXj4BPCFYZf3BAFm4sBN33f8GzEg0+h5/JXoBMU8qC3ZFqzkhFk4el1pa5
-         cCUQ==
+        bh=bSi96ct+rc7BrATXJV/uP214bhYegeh0FsQhASxGpoE=;
+        b=JdjrgrVIpyG8bhuDzJAlm3Zbe0HmQH6/9DYj7u0E0Wqj2pY/bws1GIGohVAXNtmfpb
+         TK+EeC2Shm2Q2S7nPaFJsWZUG6smXyseqWEY7etmVwAr1yivz1fIlL70uD0EsH5ajIAK
+         N0s4/LcBp07uLwEEHYn0dipNj2sYlZUf6vkz8axQIBlnWbbl6tnMUWCX3EAHOUfeVPwo
+         KyOSEcoxoxEwijJlnONspOZ63MPfhvEyEXDcwQlbwAaKczRP4k8ca5oyNkrdfws7ED2F
+         uc8Y9VIaIit2VluFaYcfNG6zfcyYPJU3R6oFI2IPIoEWRe/dXhmdiKFAVpxoGjEJls5O
+         cUbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740149308; x=1740754108;
+        d=1e100.net; s=20230601; t=1740149452; x=1740754252;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/1Xh5uGUaqUTiOBdxlSkOo++7pcxuhkxkryZrsZOlpw=;
-        b=bKcPA4+vEtVp+BC8c4uf/GXqdRaaoo0gVfKPcnmkBceBIfRNDsa03tauULg/j3e+Ha
-         6zf3jwLljilpulEXftXB2SjconSmF1DyguVrr4McWzp0ZKL2BRtjMaOcoOQupoeFV0Sb
-         9ZXXDkJme29fYrsSd9yqZ4CEH6hdDRtdKqAmo6ychs9aHMxxfgr37A4w2n74DnycyzeU
-         4nu3hiOXyHT1s/FM8uYjc8Zvr1okDgLuDXI4GSjWyOOVmuxqtTip0uUkXUDfpmIoF4yZ
-         3+WS9zwZYk5LdXaELV+M5V/UEKNzf2XKJqdwR20AW//HThcVS2+Qw+W9EqXBKMWm3qL9
-         1PQA==
-X-Forwarded-Encrypted: i=1; AJvYcCXF9zl0zbCT7w1RUjYUG6U6HemJXVuGDUa6Z9iKk7I9x4If9PQ+o1ZrXSTzCW96cgkwTHQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRSHg7/YZPje8M7v5KAmVsL3WNhSESSthjVMbDQVDmXM4BVky7
-	xn76OPq5pX9Wv4x/yUJGFIjDyDUv1QgAZ74uRL0/9BZ6CySJJpQ3V+l8fdEyFPY=
-X-Gm-Gg: ASbGnctLfxby5ZnVMeq4HWyjzC2XLWtJ/udgtlCaIpLERTV2zQd6M/FPwPFuxQiB4Fj
-	dztp8TwdzZsdOovIlG/tbaG/8JKZ6TsBD+oi0BVI8ppJkNUBgbxtNHEVvF+VNlVO6W/VTcHklsS
-	qu/pNxAhH0t/+cKs1VDIojGN8SkGasAgEX/DZ/3QaaKZXXyMMOoqpLZOzxNo6Yn7yHTj8oInWe6
-	+lb9d2B2qk6n/iwzLRqm9WibrB049nel8dy+OajEJEoP6U9JkMKjF86ZPNg1mDX4X74y9XIj5aT
-	n2DBFxy8/8c+k1uLkVwqkHJKOQlGkF266XpZWjUBfdtyyIUmUvLg4SyKIvyNhoROF2yAlFfAAox
-	TK5n7
-X-Google-Smtp-Source: AGHT+IHN9zpO8im8NN4xNhe6Smh4iovozZpzBVeUEojFUztaXL9/c4J02RMP/m+bdD2630WrIWngVg==
-X-Received: by 2002:a05:6402:388c:b0:5e0:7cc4:ec57 with SMTP id 4fb4d7f45d1cf-5e0b7266ba5mr6467864a12.31.1740149307594;
-        Fri, 21 Feb 2025 06:48:27 -0800 (PST)
+        bh=bSi96ct+rc7BrATXJV/uP214bhYegeh0FsQhASxGpoE=;
+        b=q3rCNmWAXkfjG4S43ZC3dMz9dutDKNORrEqjMPCdFDMX4jHIYdZjbatWVMYNoN1knh
+         4kTvNWp54fB1vT3+oUU8pd3wDSe2JunaFn2CozEeUJLxPfD7Imn/+/tn7CptzEmwYRBu
+         yhAwe7EK+Vo/Mt88yteqFJhMfGNOK5tSNXyDIbb7jrvpgplGCIwTFSuQnP8qOxrSr19t
+         E9ljmNu+aWc9GtV96nvHZquq9nqJPpkscXAyUsEQDa7sLM+90oF2V5udmUif4PYILGoa
+         A/dL6wisnhstyBNfWx9cxxDuM9as1sV00I55M23b5J6E0vz5eR93wKfiGOBoIXmXeCUN
+         0l4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXGNIQUoEV0FaIRgghqqntAFHza74i8TbYVALaCON9Stet+oTCr8iD3CejQdmRB7L1lIAI=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzzj50gUSH9z4ZNspLyLmiMKkZGb1017BRbWxShH59Zu2KmHpkB
+	RCNlbHt1XdOJG+jR8UK/TDZRGQwEl6t7UcnKyP7iDsPszghm2wbi
+X-Gm-Gg: ASbGncsqwQBp0sqWeM88VAz2sfiVzwXXYbxB4NTFy1x4BmB1QBLcivz4mhpSmXJYPGx
+	Elx682lK0pv/MT5XQQH5+Ep8M+/5EDiojKTRqx70mOItZ+r2yCf1Kfv3WEk86qYNiRbb5ZPny1f
+	5l6EQxFbOgbm6VZheHfk0HBjsgFYus37Ssp4pJxlPIOfZiahxOiEU4SGdDg4HRW4a5ubdcPC9um
+	iG8X/paYcrJx6PvMfoSTF9qptbgmabAM214ZRnpg6LmPuSsYZ6d1/pq54G3ChZAPa4101PsNIPX
+	63J9aDP6FzNhHKDDraAGhhSgs/rTEYNJuQz+UG7ze2Hr5z6n6/0b5bVjK708HGcCjMvLv2+Cacj
+	M2IXG
+X-Google-Smtp-Source: AGHT+IHoCKLEwWQM9hHxWyjM9AoT0peDJ5slTfENMPgtBzAO10N3nRgj5syh32wgdz+acYB1pcN1Ng==
+X-Received: by 2002:a05:6402:430a:b0:5e0:8c55:50d with SMTP id 4fb4d7f45d1cf-5e0b7107111mr7009848a12.14.1740149452317;
+        Fri, 21 Feb 2025 06:50:52 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece1c418bsm14258260a12.24.2025.02.21.06.48.26
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abb8209a2cbsm1190418666b.133.2025.02.21.06.50.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 21 Feb 2025 06:48:27 -0800 (PST)
-Message-ID: <2d60f5ae-7985-4400-a4d1-0931dac0653e@gmail.com>
-Date: Fri, 21 Feb 2025 14:48:26 +0000
+        Fri, 21 Feb 2025 06:50:52 -0800 (PST)
+Message-ID: <cf6c2567-2aae-4539-bc39-0cb9efd310cc@gmail.com>
+Date: Fri, 21 Feb 2025 14:50:51 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,62 +69,41 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 4/5] t/unit-tests: convert oidtree test to use clar
+Subject: Re: [PATCH 1/5] t/unit-tests: implement oid helper functions in
+ unit-tests.{c,h}
 To: Seyi Kuforiji <kuforiji98@gmail.com>, git@vger.kernel.org
 Cc: ps@pks.im, phillip.wood@dunelm.org.uk
 References: <20250220082959.10854-1-kuforiji98@gmail.com>
- <20250220082959.10854-5-kuforiji98@gmail.com>
+ <20250220082959.10854-2-kuforiji98@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20250220082959.10854-5-kuforiji98@gmail.com>
+In-Reply-To: <20250220082959.10854-2-kuforiji98@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Seyi
 
 On 20/02/2025 08:29, Seyi Kuforiji wrote:
-> Adapt oidtree test script to clar framework by using clar assertions
-> where necessary. `cl_parse_any_oid` handles the necessary checks needed
-> for the test to run smoothly.
-> 
-> Introduce 'test_oidtree__initialize` handles the to set up of the global
-> oidtree variable and `test_oidtree__cleanup` frees the oidtree when all
-> tests are completed.
-> 
-> This streamlines the test suite, making individual tests self-contained
-> and reducing redundant code.
 
-My comments on the commit message for the last patch apply here as well.
+> +static void cl_parse_oid(const char *hex, struct object_id *oid,
+> +				       const struct git_hash_algo *algop)
+> +{
+> +	int ret;
+> +	size_t sz = strlen(hex);
+> +	struct strbuf buf = STRBUF_INIT;
+> +
+> +	cl_assert(sz <= algop->hexsz);
+> +
+> +	strbuf_add(&buf, hex, sz);
+> +	strbuf_addchars(&buf, '0', algop->hexsz - sz);
+> +
+> +	ret = get_oid_hex_algop(buf.buf, oid, algop);
+> +	cl_assert_equal_i(ret, 0);
 
-> -	if (!check_int(get_oid_arbitrary_hex(hex_iter->expected_hexes.v[hex_iter->i],
-> -					     &expected), ==, 0))
-> -		; /* the data is bogus and cannot be used */
-> -	else if (!check(oideq(oid, &expected)))
-> -		test_msg("expected: %s\n       got: %s\n     query: %s",
-> -			 oid_to_hex(&expected), oid_to_hex(oid), hex_iter->query);
-> +	cl_assert(hex_iter->i < hex_iter->expected_hexes.nr);
->   
-> +	cl_parse_any_oid(hex_iter->expected_hexes.v[hex_iter->i],
-> +			 &expected);
+These last two lines would be better written as
 
-using cl_parse_any_oid() means that it is safe to dispense with the 
-check on the return value because we now do that check in cl_parse_oid().
+	cl_assert_equal_i(get_oid_hex_algop(buf.buf, oid, algop), 0);
 
-> +	cl_assert_equal_s(oid_to_hex(oid), oid_to_hex(&expected));
-
-This is nice - we'll get a message containing the two oid's if they 
-don't match. We should use the same trick in patch 2.
-
-As with the last patch we now bail out after the first error, we should 
-mention that in the commit message.
-
-> -	if (!check_int(hex_iter.i, ==, hex_iter.expected_hexes.nr))
-> -		test_msg("error: could not find some 'object_id's for query ('%s')", query);
-> +	cl_assert_equal_i(hex_iter.i, hex_iter.expected_hexes.nr);
-
-Using cl_failf() here would enable us to keep the message so that if the 
-test fails we can see which query it was that failed.
-
-Apart from that last point this is looking good
+So that if it fails the message shows which function was being called
 
 Best Wishes
 
