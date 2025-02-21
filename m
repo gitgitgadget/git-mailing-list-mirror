@@ -1,187 +1,218 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F860201012
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 08:44:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD5E201035
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 08:48:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740127449; cv=none; b=hUR4ivejsfHnai1iT9OKeXMIt2MZhVT1N8I+968cYhq7V9SMJXoX/JyLWQbBRaKNGbetk2Ak2XNZy1YrUCit4BBPCpXLThzCb8OWV6TGgErXxju2UdmbFqJe/9SdjXl3RD6BnsRHooEprym4QWhVguFYEdgo9YS7Q3Cdlp+Hz7Y=
+	t=1740127707; cv=none; b=mqi3HFapdXFF/GIQwHJZxD37WeEoJKxx5gfERXFKG+Wobil/5l+X2YzBCaxfLaLS7Ty66g0ADiNu3RKaL5mxygeDMNh10PR3sVCYAw9kD2U7zJg0Yzf7w+XycjKXhg381FgYcAYHS2iEvpKu4dQtntPfu9HQ8CfIt50szZRQxUQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740127449; c=relaxed/simple;
-	bh=ZyYLXiw8IbqWCcVV9Z9OMaGJIpD8ZG+N7B2O9dVgP5M=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NkYgADDPKjAXVWoH9AHImQRH/MWapE8B9pu0r13einJHbD67zulnmHiS2yIV1ZMw3y4nHbEyRWo8ZH1cpX5Zy7H1LGj9E5iWx7i7DM3dxoy97x2p7wdpKsc7+ZJ2h63DUAUqJ6QUhh5Bhi1zhlEqONTe7qT8xNlLrIt+l+zt7w4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OsbPAfKZ; arc=none smtp.client-ip=209.85.222.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740127707; c=relaxed/simple;
+	bh=mDLkiWEPSaBKPpEEcPzpVD3QaH9cqOEZdiugQ4xHGYQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SKZhaJ60efJHgX370pTjbDSaTSH187anCpYo8FekJ+M0oWaHyuyhb4WOX69RhkxhamCxCxbXygACqB4H/8vV8SmqOZjsZrpNKwl6ScEKGxg43T5JGaGVpv4MLPdCQmxLXLSzwMpAcFt/oO0/zKs3ipeEdY+h6fcCshGLBgr+k/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D8RIrC/q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xdOx0VkH; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OsbPAfKZ"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-86718c2c3b9so456844241.2
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 00:44:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740127446; x=1740732246; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VXAuJQ9mJJphuhqzIq2C38ogitYSA7rrsuT9jJ+U1QI=;
-        b=OsbPAfKZmsM6FtN0USB74vvNKIDGHDTKhhBOkr4fCQu+VUMCNkkJmcMbNKJLZ49xx9
-         q86Z2s6sItSjBwPfdy7W6qBL+Rwn5Jw9StuxjUWt5RfZlN2fwGUgQgDBXMOfWhSoV5aK
-         sNQyWJwIEP5gpuLUSs9WxBUC20I+Bu/aed8AUNMeMdBkIWahk9iwEqxIkrw7yfGeQ5Iy
-         +K89iyRxTohiRnHMj3uuijuxvrk3koUfOeHyQHeWNzcOHB/RT1OCg4sPnbPwHZztXJFy
-         qC72KPHmks4q4hZtDft0zKrSnK+BkjPVkHXc8jmOa7xffK6qYfZePWoJEbbtoqaIj6O3
-         VMtA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740127446; x=1740732246;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VXAuJQ9mJJphuhqzIq2C38ogitYSA7rrsuT9jJ+U1QI=;
-        b=WBkB58rZesF9k+VtXv519fjvy/f8umtJ3r053NFaoiSc6GLp803ifbvtySFH7Vmm5B
-         h/FU5CadXhXvqS1zlyQUuf0Yc0XGRyjCajm74SCMNQlQeCljknNVGOKV+vnJH36+XCsG
-         rUupnPD/IltpoMvZIDKlQkBBEkEmnT1gWEtAwVImM+7XwiowWLLZO4B4ggJ48oHXoW8p
-         C0+sdlhZy2kJqJodSwVBoZBw+XApvw4ZmC8ykLiap7Qgmt3mURd9azIm1T/YLhRs9AiW
-         NoMs1C0kH4iMiHLnKxNzMERzLLdFTOaP67KiyJKZdN5qqjkwdQFNEoMDH1llxwNrbvVE
-         qY2Q==
-X-Gm-Message-State: AOJu0YzyNM76lc1OPVyMQcs06RlcDxkWRzAVNPBAmvWen0HPnjzJzdkF
-	NHcNh0knQDCMhzDJhS+K4BNbhMiJgKMRPV5qi4sRW2C5qwWXqqA+KRWSpWua+CLqVHx7CWTyuWd
-	T8Hi9+xOxmMDwe5ChXk2aRsAfuIY3vsYJ
-X-Gm-Gg: ASbGncsTkkZswEUInGxQcSj7yRMOfpWHJTEzNwVmJEsaC9lvMvBaeQQMqKcp4Zsclto
-	kv3O0lfIPeAd/yHbKeDFomhfJTF8my6ZoDH76ZBbTzsoCS/fN+leSxF/1PMiVa4nxYF+vKVj0p4
-	V3uf7nWObEmrSSur1U4CmjeCHdNGGq7LSHl9++WLwExw==
-X-Google-Smtp-Source: AGHT+IH91BorRNuupZ8p57SojWORyG5j/paJiInVY/7mHIGXDTU85+Gx80fb5hVJwhL8Uqc/OEODUS8i8ipeQtuP3bw=
-X-Received: by 2002:a05:6102:26c7:b0:4bb:cf25:c5a7 with SMTP id
- ada2fe7eead31-4bfc0086c7bmr1549782137.7.1740127446437; Fri, 21 Feb 2025
- 00:44:06 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 21 Feb 2025 02:44:05 -0600
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqikp4eji8.fsf@gitster.g>
-References: <20250207-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v1-1-7d40f3b4e30b@gmail.com>
- <20250220095614.62042-1-karthik.188@gmail.com> <xmqqikp4eji8.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D8RIrC/q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xdOx0VkH"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DEFA62540244;
+	Fri, 21 Feb 2025 03:48:24 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 21 Feb 2025 03:48:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1740127704;
+	 x=1740214104; bh=k7NMV3AnzN60QLzyOB7XFLEuFciI/ufacxErXAevr6A=; b=
+	D8RIrC/q1vdiQAseU7BvZajmc/OI4ygTgPvfi2WZde71bU/vgG8FFL7YMU9DrOcN
+	lFaBykZ9wuVV4dTlBLLNqc0DcZYYR3eK+tD6Vw2oRJLKdNA8c2FyCoNBAHeS1hcG
+	N+I6D6KX1ODg8Q8O/0bANrVToj2IIBos6oJe4uFQSjfR7kOAiKNPsq+A+JTAG1yM
+	FLyL/KI7nIKtIu7664Gy6+z7cMFQ8o5aG7rFRg/saxKZGJHjIbHXikRqHqR47Pzy
+	sD9H8WtPzBv3LdV7Jp9Ucyu2WzOZDV0jEU3wHUX6EH2sUN3jM+7oHqr1r080mzEK
+	SsSNDm1aH91yfPRAxdsTdQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740127704; x=
+	1740214104; bh=k7NMV3AnzN60QLzyOB7XFLEuFciI/ufacxErXAevr6A=; b=x
+	dOx0VkHQ3SzT+p3391gv8wQu/iTYKCfR4jNU64TgYGg8KiHm3uoTkWv6Nn90G25O
+	1anAvtYgpf8TTZXOUP3BCVyZPO040+rVJ2ItYMGfY5IZ1+ZIjy3uFwUKbGIkaWJF
+	/JtfmUyygIirPSxofCsNT5V7bv4mwWYUwMu3SIzLdMxr/tpbhpCO/AIpmtuBVzm7
+	9oy6zx2Ob8YLdBNNy0i1tmNBDY0BRAb4mdHiRUPawBxYneY1IzsevPXW1Tw8yvfs
+	4y6a8qy+bSwiWJjjtOLArhPV/1ZtVVyjnvQqmCp+AWjZEPsxiyCgK4+rWONS1Rmh
+	Iu6z2yq39sJGCNk7O+33w==
+X-ME-Sender: <xms:2D24Z6S8VZozVoVfwbCVGYaASI7psyGqzC-ePr23gD6vMZmwcLnqhQ>
+    <xme:2D24Z_zFIiWB9lY5PPh8HIjFx-4u2oxOCufDT2q2mUmBdFJ1wzXg4JpdpClST-jaj
+    TfPAMp1umvUy7Oykw>
+X-ME-Received: <xmr:2D24Z30MXxFcemhK1hlEtoa3zCwDzCoMCPqdHd_RqIhbwbm9kX5trK3cgcJ9sTtJrxvwFvAOlQxOoQRDdmfl3KHVzUHWw02FVuVmie9KZwjeew>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeileehlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpedvfeejie
+    dtteelheeiteekveeftdefvdehkedvveetffdvveevjeejleegtedvgfenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnrghs
+    rghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:2D24Z2AL0Pi18twJAj1UFlwCj69LGLggwf8FTpS2OOc8aayJ0AK33g>
+    <xmx:2D24ZzjckNPYF_W-vcCxPGGcBr08Sl-j0r49i0c-iU6bCtqwjNAF2g>
+    <xmx:2D24ZyqwDk-lOaBXLPBWQ2835F6Kx5C9mU8FwvJBdCE3WUyBHusTfA>
+    <xmx:2D24Z2hP3CDSdtwF2NHmqmxVPoeob2LKQA9nKtYptMzhpRxlQZ-9wQ>
+    <xmx:2D24Z2s4VpceNyvXU6KbRqDx_AQmnAwlX0nDW0WsuDVZKiEKsNG0kxBM>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 21 Feb 2025 03:48:23 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 332e26e9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 21 Feb 2025 08:48:20 +0000 (UTC)
+Date: Fri, 21 Feb 2025 09:48:16 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Emily Shaffer <nasamuffin@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: Continuous Benchmarking
+Message-ID: <Z7g90CMEiy-skRKK@pks.im>
+References: <Z6CSc_vyGkn-ozUH@pks.im>
+ <CAJoAoZmJAM--FVmhxs_0sL1A8yrLwNBFULPDYFgV=AtFhn67+g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 21 Feb 2025 02:44:05 -0600
-X-Gm-Features: AWEUYZne0J3_obbUd34xdlhaX3jP5yCz7IgA-1VOKOIGX3Yfa9OmupmRxCRDqZk
-Message-ID: <CAOLa=ZSL-X_8s6vcDiWBp8G3+M8GGGA1wBRtNqqThyq94YS16w@mail.gmail.com>
-Subject: Re: [PATCH v4] builtin/refs: add '--no-reflog' flag to drop reflogs
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, toon@iotcl.com
-Content-Type: multipart/mixed; boundary="0000000000004f34f7062ea2fea0"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJoAoZmJAM--FVmhxs_0sL1A8yrLwNBFULPDYFgV=AtFhn67+g@mail.gmail.com>
 
---0000000000004f34f7062ea2fea0
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Feb 05, 2025 at 03:14:21PM -0800, Emily Shaffer wrote:
+> On Mon, Feb 3, 2025 at 1:55 AM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > Hi,
+> >
+> > due to a couple performance regressions that we have hit over the last
+> > couple Git releases at GitLab, we have started to set up an effort to
+> > implement continuous benchmarking for the Git project. The intent is to
+> > have regular (daily) benchmarking runs against Git's `master` and `next`
+> > branches to be able to spot any performance regressions before they make
+> > it into the next release.
+> >
+> > I have started with a relatively simple setup:
+> >
+> >   - I have started collection benchmarks that I myself do regularly [1].
+> >     These benchmarks are built on hyperfine and are thus not part of the
+> >     Git repository itself.
+> >
+> >   - GitLab CI runs on a nightly basis, executing a subset of these
+> >     benchmarks [2].
+> >
+> >   - Results are uploaded with a hyperfine adaptor to Bencher and are
+> >     summarized in dashboards.
+> >
+> > This at least gives us some visibility in severe performance outliers,
+> > whether these are improvements or regressions. Some statistics are
+> > applied on this data to automatically generate alerts when things are
+> > significantly changing.
+> >
+> > The setup is of course not perfect. It's built on top of CI jobs, which
+> > are by their very nature not really performing consistent. The scripts
+> > are hosted outside of Git. And I'm the only one running this.
+> 
+> For the CI "noisy neighbors" problem at least, it could be an option
+> to try to host in GCE (or some other compute that isn't shared). I
+> asked around a little inside Google and it seems like it's possible,
+> I'll keep pushing on it and see just how hard it would be. I'd even be
+> happy to trade on-push runs with noisy neighbors for nightly runs with
+> no neighbors, which makes it not really a CI thing - guess I will find
+> out if that's easier or harder for us to implement. :)
 
-FJunio C Hamano <gitster@pobox.com> writes:
+That would be awesome.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> The 'git-refs(1)' migrate subcommand, which transfers repositories
->> between reference backends, currently migrates reflogs by default as of
->> 246cebe320 (refs: add support for migrating reflogs, 2024-12-16).
->
-> "transfer" is a curious verb to use here, as it almost exclusively
-> is used in the context of fetch-and-push object transfer over the
-> wire.
->
-> 	The "git refs migrate" subcommand converts the backend used
-> 	for ref storage.  It always migrates reflog data as well as
-> 	refs.  Allow it to optionally discard reflog data.  This is
-> 	useful because ...
->
-> or something?
->
+> > So I wonder whether there is a wider interest in the Git community to
+> > have this infrastructure part of the Git project itself. This may
+> > include steps like the following:
+> >
+> >   - Extending our performance tests we have in "t/perf" to cover more
+> >     benchmarks.
+> 
+> Folks may be aware that our biggest (in terms of scale) internal
+> customer at Google is Android project. They are the ones who complain
+> to me and my team the most about performance; they are also open to
+> setting up nightly performance regression test. Would it be appealing
+> to get reports from such a test upstream? I think it's more compelling
+> to our customer team if we run it against the closed-source Android
+> repo, which means the Git project doesn't get to see as much about the
+> shape and content of the repos the performance tests are running
+> against, but we might be able to publish info about the shape without
+> the contents. Would that be useful? What would help to know (# of
+> commits, size of largest object, distribution of object size, # of
+> branches, size of worktree...?) If not having the specifics of the
+> repo-under-test is a dealbreaker we could explore running performance
+> tests in public with Android Open Source Project as the
+> repo-under-test instead, but it's much more manageable than full
+> Android.
 
-Sure, I'll modify it to something along these lines :)
+The biggest question is whether such regression reports would be
+actionable by the Git community. I often found performance issues to be
+very specific to the repository at hand, and reconstructing the exact
+situation tends to be extremely tedious or completely infeasible. I run
+into the situation way too often where customers come knock at my door
+with a performance issue, but don't want to provide the underlying data.
+More often than not I end up not being able to reproduce, so I have to
+push back on such reports.
 
->>  builtin/refs.c          |  3 +++
->>  refs.c                  |  8 +++++---
->>  refs.h                  |  5 ++++-
->>  t/t1460-refs-migrate.sh | 28 ++++++++++++++++++++++++----
->>  4 files changed, 36 insertions(+), 8 deletions(-)
->
-> I notice there is something missing.
->
+Ideally, any report should be accompanied by a trivial reproducer that
+any developer can execute on their local machine.
 
-For a minute I thought I broke something here, but I'm assuming you mean
-the lack of documentation.
+> Maybe in the long term it would be even better to have some toy
+> repo-under-test, like "sample repo with massive object store", "sample
+> repo with massive history", etc. to help us pinpoint which ways we're
+> scaling well and which ways we aren't. But having a ready made
+> repo-under-test, and a team who's got a very large stake in Git
+> performing well with it (so they can invest their time in setting up
+> tests), might be a good enough place to start.
 
->
->> diff --git a/builtin/refs.c b/builtin/refs.c
->> index a29f195834..c459507d51 100644
->> --- a/builtin/refs.c
->> +++ b/builtin/refs.c
->> ...
->> +		OPT_BIT(0, "no-reflog", &flags,
->> +			N_("drop reflogs entirely during the migration"),
->> +			REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG),
->
-> This is somewhat ugly, but parseopt API is nice enough to hide the
-> "--no-no-reflog" nonsense from the end users, so this is OK.
->
-> I think we are almost there but lack documentation updates?
->
+That would be great. I guess this wouldn't be a single repository, but a
+set of repositories that have different kinds of characteristics.
 
-Yeah, this was a total miss. Thanks for pointing out. Will add it in.
+> >   - Writing an adaptor that is able to upload the data generated from
+> >     our perf scripts to Bencher.
+> >
+> >   - Setting up proper infrastructure to do the benchmarking. We may for
+> >     now also continue to use GitLab CI, but as said they are quite noisy
+> >     overall. Dedicated servers would help here.
+> >
+> >   - Sending alerts to the Git mailing list.
+> 
+> Yeah, I'd love to see reports coming to Git mailing list, or at least
+> bad news reports (maybe we don't need "everything ran great!" every
+> night, but would appreciate "last night the performance suite ran 50%
+> slower than last-6-months average"). That seems the easiest to
+> integrate with the way the project runs now, and I think we are used
+> to list noise :)
 
->
->  Documentation/git-refs.txt | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
->
-> diff --git c/Documentation/git-refs.txt w/Documentation/git-refs.txt
-> index 9829984b0a..bb50d6f888 100644
-> --- c/Documentation/git-refs.txt
-> +++ w/Documentation/git-refs.txt
-> @@ -8,9 +8,9 @@ git-refs - Low-level access to refs
->
->  SYNOPSIS
->  --------
-> -[verse]
-> -'git refs migrate' --ref-format=<format> [--dry-run]
-> -'git refs verify' [--strict] [--verbose]
-> +[synopsis]
+Oh, totally, I certainly don't think there's any benefit in reporting
+anything when there is no information. Right now there still are semi-
+frequent outliers where an alert is generated only because of a flake,
+not a real performance regression. But my hope would be that we can
+address this issue once we address the noisy neighbour problem.
 
-I see '[synopsis]' being called out in 'Documentation/CodingGuidelines',
-but nothing about '[verse]'.
+> > I'm happy to hear your thoughts on this. Any ideas are welcome,
+> > including "we're not interested at all". In that case, we'd simply
+> > continue to maintain the setup ourselves at GitLab.
+> 
+> In general, though, yes! I am very interested! Google had trouble with
+> performance regressions over the last 3 months or so, I'd love to see
+> the community noticing it more. I think in general we have a sense
+> that performance matters, during code review, but aren't always sure
+> where it matters most, and a regular performance test that anybody can
+> see the results of would help a lot.
 
-> +git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
-> +git refs verify [--strict] [--verbose]
->
->  DESCRIPTION
->  -----------
-> @@ -43,6 +43,11 @@ include::ref-storage-format.txt[]
->  	can be used to double check that the migration works as expected before
->  	performing the actual migration.
->
-> +--reflog::
-> +--no-reflog::
-> +	Choose between migrating the reflog data to the new backend,
-> +	and discarding them.  The default is "--reflog" to migrate.
-> +
->  The following options are specific to 'git refs verify':
->
->  --strict::
+Thanks for your input!
 
-Will add this in! Thanks for the review.
-
---0000000000004f34f7062ea2fea0
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 571f016908fb58ef_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1lNFBOTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOHZiQy8wVHF1VDhsaEJxRmJZa3NaWFRpb0ttRnQvbApuTjRhWTQvaU9X
-M0FzaC84STE4eTREazA3RUxXKzlYQWo0aHVUdCtON1lkM1lITXlnSnVNRFg5WEJSYXFuN1BkCm1O
-blE4dHhhL1RoVTZocHhMbFV3ajExOHU1WmVTQzBLTnJaUTIxbG82YzNXRCtLT0dkRzZSWHVjTGVt
-Z1RIaFIKTitqc3pTemNvUUIzK0FhUUF3K1pKUWhkSExYOVQvM1ZEYXVqUk05aTBocEpHL0FxcEdm
-NWNxYzdvWERPT0l3Zwo1UFBmakdIQmtpWGN2N1ZGNTBMUHZUUjZUV3R1Y0d0RzNxWFoyV1Z4N0pG
-ZnRMOERud3dyak1la3FlVDNrRE1kCmQ3S0J2WlMxcG15WUNYZVd5N1dYV29TSHRoVzlkdFlRSmFn
-NDloci9sakhWZlZUVGVXSGw0citWeEp2NkcvNHoKT3FFYUlZbzkyNStRaEhzTERBNkkyanFXbGhI
-L1djOVA5dzZaMEgrd2x5SCtuVHJrejRzZEZFN01jaU5lWVJDagpRUit5MThRV0xMelZXUURzRE5Z
-dCtoaXFpTis1UHlRY1pwa2E0UFB5bHFFemZUZ01NY2xrUVFtRlJwTVZJdkFIClBkVTNJYndjTStw
-bnJaWjR6TzZIZVRpbitoaWFGbk5meFNsRkdyTT0KPW9OcGEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004f34f7062ea2fea0--
+Patrick
