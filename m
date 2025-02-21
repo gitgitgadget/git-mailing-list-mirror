@@ -1,164 +1,124 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54FE41FC7FD
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 09:15:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FC5B2036E3
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 09:28:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740129326; cv=none; b=UKdHaooAxmMGEz+crGCdShdp3GTv2dHRFwu5OxHBRIu4SoZHUHV81hRFEullBjDRnePgJT09XFIhc2151LkERENbyByV1tY25IPgKxsTK+v5KRATkxzDjYsA1wvQ5IhtWQVzC/Js1Py7YBqWZWfOyJlVLJzssXQ+z8cZvUwwDbM=
+	t=1740130111; cv=none; b=qlZj5sEPt+swAN3brDn3JIK8A8gUQdmiooSRW5k3KxNJt2+sil6Ls8Nwbp2Sgiq7HsWKmn1W2Mdn3vxzPqAHOPPFzXgvgVaQMk4EjiuXRVZwkCYaFgUyCd/9Kn/4rV5sOy0IZrzJOPfB4AQovyfJl4HV+KdeXkojUhbYxvsYPPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740129326; c=relaxed/simple;
-	bh=g7dR+5j5BepgBUXZtJLEH1wIvKhWOGk5q3XN4Iwc76s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=owsbJ2NHiCQFXFY9FaBrke+zkhLT2pUpR+Ror/Wdv+0leqEemdqoGcbdUxA0UehXuTRmBieQzROw80h0WO7C6L0gIEftEC2MLgt4BB4bTCfiLa8kwKamSYqnU74KTKpJvmCsS2/GwPyBONJIJqY9De74Uu/g69PEusBnJerdEJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iDXL4iAc; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740130111; c=relaxed/simple;
+	bh=tgu8W5xkDvM0V2H1CwB39WL6B50Uzy4ADj6kQhAwB0s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iQWhL1U0x3j2TR5cnSJr4zOElgkYH8ULvO78Jba4Qf5sqFibDtBWwx8C1CaVP9HC/g9oahdO8/Xj7C108tD2W61tW7fS+6tG56KeKKGGz5BCG8cWZJORH5PRl1/NnccDxO9vOioJzASarv5i3Ur7vcyUJhYKGrBgDAplfI5E7yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=l+PEANQP; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iDXL4iAc"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5e02eba02e8so2514500a12.0
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 01:15:23 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="l+PEANQP"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so12620335e9.3
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 01:28:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740129322; x=1740734122; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wG5GmDSkdnCyJQkxE8nUCt4amCFG95/ejbjMbRp+LGg=;
-        b=iDXL4iAcxavO3848Dp3tllFTQlmWwcdWtaLoRSsyBNi+i8sM2uf6V2qNy6nXfONBAO
-         3w5uip8oMMSLC7uXONM5DO3oO7scyvgcHsoBuKgsHkn2ntjyo71OdiY9pWtzBfsSCwIq
-         xcJWxmBEpNK+/zRlzvofrvdK/9ahBAp7c4jO2nI/qxbb74983jKMXSLcIfE5nrw5TQV5
-         gA9zn6YnPMWcxxh2FsMYsZoHgaRpuUMjpYW6wzCzyVH9V59QRgLCIu7ld6RvB+CIyyqg
-         zReTtRBEqfB0767oeOqftsXfg+R4vNUXGRQG2C2wdhQ8oqNAGp+8nT9XVDFbLwRT/Dfw
-         2WQw==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1740130106; x=1740734906; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tgu8W5xkDvM0V2H1CwB39WL6B50Uzy4ADj6kQhAwB0s=;
+        b=l+PEANQPOXJqQ5FXr4oBMu0e694hiL+MH/+FbRW+j3gb7+9bbn2015PFw2etm5gErI
+         siEWQoL+3SGvMQXBE0oGdQ5o0dKHKyuwLwq8VsJPl4rHYiE1Mg2FwLZu8ZfoNB6pqyQf
+         AiVnQP8disX7qlFltckc0YKRqm2gDKTVm5GnX7KhBCYOC+pk+wTZB8hegigA0AGkkhMp
+         hfxqHqmbSa7Rk/lymA7r1Xi0CszY/NYE2zgCICtSYMPWKS7f8JiMKZzzSAAP96S+3Ofk
+         ibuk1bORAKDHlJKJh9YYX3VHxCE5ANIp9bxLF9Xcj9x28qmaIllq0lCmopQiphNwwvfI
+         Ai3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740129322; x=1740734122;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wG5GmDSkdnCyJQkxE8nUCt4amCFG95/ejbjMbRp+LGg=;
-        b=SlZnX3gO9ssNEKQdiUttqzdw4vJyCml4Tzr8N6l3bFUrWDlJcWj51RdCWf5yb+bDz3
-         smXLfPKyjnn2F+ujOGFw5NyUhpchUSd7ib1b+PnHzdbq6onuYrwlRYqehnYFsfx2NED1
-         7ap/vGka3CVguwENkCNgclaI2xgK9FLm79TXwu8Zr65hXuDHjy68cSQ9YA9l+g2HUmZz
-         XlUi0VwFmNcW1ciOyJUseFj8zqtML2LClDqTvT4EK3gXt+ASHiazMoGvWDLfqpfpQ3T6
-         6zspX4HIjKmcRvmljiXO6m8nXHYl+Emm7euABJ5EuF821fh3doNNxarKksQmDZI076Vl
-         MWqA==
-X-Gm-Message-State: AOJu0YzFQXXYyySt1Dw+N4ViYYex+079DCkRDSRn+cOd8ddlX63/NAtj
-	G2utRZpIa4JeIvElIzYpLnxMM6jpQ1FmXvQd8olWdSBmP1EcxCKoU/MTXn2/vw8YpODQEwNMeXX
-	KLLynmjybJrRCxIWyA+CCsws27NJHzU8D
-X-Gm-Gg: ASbGncsGo5ir4dIYHo+Br90wEZ8ppZDRJj4II+EpIAmWkUfTc7BGwyIneSnLH3WoSBn
-	EePpDMNMNGiKoe2pSNRszSzv/+LrRm6jPdgt/hS6A4PFkDMqv6Q8X9bS22ocXmhERjc2Bge1qhl
-	WBCkkmp/17+A==
-X-Google-Smtp-Source: AGHT+IH8zFyNoPE6ui8mvTP3wtny/EWb2Uj4YH2q7XGwuVNQpudnbZ4LdquGAaHuhg55gJjlRLkjNzDeFtWCY05tsn8=
-X-Received: by 2002:a05:6402:50c7:b0:5dc:cc02:5d25 with SMTP id
- 4fb4d7f45d1cf-5e0b70d5729mr1971600a12.11.1740129322363; Fri, 21 Feb 2025
- 01:15:22 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740130106; x=1740734906;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tgu8W5xkDvM0V2H1CwB39WL6B50Uzy4ADj6kQhAwB0s=;
+        b=PMKeID+I3t1SIsYMPf5mVwU/j7W0iFi+NBf95m5bAdVo6uU3VbVZvSkjwKufP+nhT6
+         EiLeay2cLw7kNDIesUTjwxRbXY4BaimpiPa/xWajHx7jv/pYfs6i5PE45YWqUKcFgMNe
+         SJ494rSeKR56qjGmdxeuByzqaEy0GheVKdVsS8SLSULOhvorq6wn5Ewij56MrmRSpPvi
+         mvKZMp0BgzBGUAEWcL+RxkdkqYijre4/PhCiDLm0VSmanf1MtLXEYvMNodkJD4hu8aIE
+         giYem/K9TZC7Ztjg3zI3GO11F89BmnMiPzGDXnCgGL89UP49SejbaiuApPfWyq19LsxO
+         6WBQ==
+X-Gm-Message-State: AOJu0YzM6k5l4AWvOE6Sb7GQsJf32Ka4uStjOdQheEOCYFUuNECjCxiW
+	k4Dao/WvtQOsK56YpSRcx/YyJX2nu7XI3gpeOVrFhKuzOKLp0GK5hd3g0DiXqPg=
+X-Gm-Gg: ASbGncsydH2KEHI66GGPe7vkfldJzaM3q5Kbr9Y0E6P3Y9RvP/Q0/0b9jA1ioVfu4aW
+	wTte5RwH1KT5xDqeUmTg5o7eNZafJkiRu5SE1+gg+Vs9eXxCTrwsjjMeGIkJfelvHe8mXQ4FaYx
+	FsVC7NfN+IPNa5wQivDhDZEUu16AoYPFHcPNWYMAo8elI6KknKZ8smZ/RlM3KtV0c4jkKT8dhY/
+	6BQ03aeJyqFh1CM375P7wf7gS231PKsUv5SC5noCJSr+DPW5o1gUGNkSkKW+KXqM+RvHpVAI6k8
+	xW8iCze0oxbzhlSc96ouvecV8K6KZh/Dxqbuotiudn7iY3FswQMPWdrhIaJQnjh+o4s4
+X-Google-Smtp-Source: AGHT+IEXrwOZgNkXl2E5x4EgN0Mu0NSdb+5neZ5bv8lHeAOr+aaxwdSulqjLUD8trAxej4N1Sg+OpA==
+X-Received: by 2002:a05:600c:4f43:b0:439:9a40:aa16 with SMTP id 5b1f17b1804b1-439b5aa80e4mr2594445e9.16.1740130106323;
+        Fri, 21 Feb 2025 01:28:26 -0800 (PST)
+Received: from localhost (p200300f65f083b0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f08:3b04::1b9])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-439b02ce735sm11541285e9.3.2025.02.21.01.28.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Feb 2025 01:28:25 -0800 (PST)
+Date: Fri, 21 Feb 2025 10:28:24 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: Re: first bisection step takes quite a while
+Message-ID: <4hx5uvjy7mzntb5zp6o4dg3ut44i46bthyfuera3lnbpbcvrey@kbo3ejype7ae>
+References: <arrp2ye3kid76pwghguu5z4jkpv7xsskzdsjunbfkgmwejgby5@qh4phxwzenyp>
+ <CALnO6CACJTKasKT9rX9w4_r9q0DPOPZhGnHt8f65oo6Q=8NxEg@mail.gmail.com>
+ <xmqqikp4ctoh.fsf@gitster.g>
+ <xmqqa5agcbx6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <arrp2ye3kid76pwghguu5z4jkpv7xsskzdsjunbfkgmwejgby5@qh4phxwzenyp>
- <CALnO6CACJTKasKT9rX9w4_r9q0DPOPZhGnHt8f65oo6Q=8NxEg@mail.gmail.com>
- <xmqqikp4ctoh.fsf@gitster.g> <xmqqa5agcbx6.fsf@gitster.g>
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qzemjgiz7kkv4vpl"
+Content-Disposition: inline
 In-Reply-To: <xmqqa5agcbx6.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 21 Feb 2025 10:15:09 +0100
-X-Gm-Features: AWEUYZnSV4dunAdzbCm9eqpdD90ftathMfMCeQHImT4by8ezbQMJaKzBBXLFyTc
-Message-ID: <CAP8UFD3XVgJCc2Qa3wWZA54fg38jcpyiDtQOPNc8UQT9uL3vWg@mail.gmail.com>
+
+
+--qzemjgiz7kkv4vpl
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Subject: Re: first bisection step takes quite a while
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	"D. Ben Knoble" <ben.knoble@gmail.com>, =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
 
-On Fri, Feb 21, 2025 at 2:41=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Hello Junio,
 
-> So, here is something that _could_ be the beginning of a patch, but
-> just to illustrate what I tried.
->
->  * In do_find_bisection(), we try each commit on the incoming commit
->    list (which is sorted the way rev-list emits, probably reversed)
->    and count how many commits in the set each merge commit can reach
->    (which is called "weight") in the "honest and stupid" way.  I try
->    to collect these merges in a linear array, and try from the
->    middle to older and newer.  As the loop to compute weight for
->    merges have an early-exit clause that says "oh, this is good
->    enough", this may improve our odds to find a good enough merge
->    early.
+On Thu, Feb 20, 2025 at 05:40:53PM -0800, Junio C Hamano wrote:
+> Comments?
 
-Yeah, it seems to me that in practice this is a bit like bisecting on
-the first parents first. It would be nice if we had added an option to
-bisect on the first parents first, so that we could compare your
-improvement and that option.
+It's long time ago that I looked into the git source code and I guess
+many things have changed since then.
 
->  * The "this is good enough" logic currently allows us to be within
->    0.1% of the real halfway point.  Until the candidate set becomes
->    small enough, we could loosen the criteria to allow larger, say
->    3%, slack.  This code is written but not enabled (with "0 &&").
+Anyhow, here comes my thought about how finding a bisection point could
+work.
 
-If we want to do this, I think we could loosen the criteria even if
-the candidate set is small. Weights are integers so when the number of
-candidates is around 33 or less, a 3% criteria will mean an exact
-match. Then the last 5 steps or so (as 2^5 =3D 32) would still be
-performed in the same way (with an exact match).
+Pick the middle commit of `git rev-list --topo-order $bad ^$allgood`.
+Lets assume this are 10000 commits. Check the weight of commit[5000].
+Depending on how much the weight is off from 5000 make a bigger or a
+smaller step up or down to find the next commit to check. So a scaled
+bisection on the topo-order commit list. I think that doesn't
+necessarily finds a best bisection point, but I havn't thought about
+that a lot.
 
->  * After computing the weight for a merge in "honest and stupid"
->    way, we know what other commits in the set it can reach.  If the
->    weight we computed is way smaller than the half the number of
->    commits in the set, that means these commits we can reach from
->    the merge we are looking at would score even lower.  We could
->    mark them as not-viable before clearing the list to check next
->    merge with "honest and stupid" way.  Again, this code is written
->    but not enabled.
->
-> So, in short, I have three ideas, and with the first one (that
-> is the most straightforward and least error prone) alone, it seems
-> that we gain significant speedup.
->
-> The current code took ~20 minutes for me and its result is
->
-> $ git bisect start --no-checkout 09fbf3d5020 96d8eab5d0a1
-> Bisecting: 581164 revisions left to test after this (roughly 19 steps)
-> [2c71ab4bb465c79a4687cc2fd5012e470aebdb1f] Merge branch 'for-upstre...
->
-> There are 1144459 commits in the range, and the point chosen by
-> bisection can reach 563294 of them.  563294*2 =3D=3D 1126588, so we are
-> 1144459 - 1126588 =3D 17871 commits away from the theoretical halfway.
->
-> With the "let's try from the midway merges" approach without
-> changing anything else, I get a different commit (because the
-> original algorithm is taking "good enough" early exit), and it took
-> about 30 seconds.
->
-> $ git bisect start --no-checkout 09fbf3d5020 96d8eab5d0a1
-> Bisecting: 572238 revisions left to test after this (roughly 19 steps)
-> [eafdca4d7010a0e019aaaace3dd71b432a69b54c] Merge tag 'staging-4.18-...
->
-> The size of the original range is the same, of course, 1144459
-> commits, and the point chosen by bisection reaches 572220 of them.
-> Since 572220*2 =3D 1144440, we are 1144459 - 1144440 =3D 19 commits from
-> the theoretical halfway.
->
-> My current thinking is that the heuristics #1 (which is enabled in
-> my experiment and in the following patch) is good enough, #2
-> (loosening the "good enough" threshold) is probably not very
-> effective, and #3 (discard ones that are closer to the good end than
-> a merge that is known to be not viable) might be interesting to
-> pursue further but probably tricky to get right.
+Best regards
+Uwe
 
-I agree that #1 is probably good enough.
+--qzemjgiz7kkv4vpl
+Content-Type: application/pgp-signature; name="signature.asc"
 
-About #2, I think it could be worth implementing as an option if it is
-effective in some cases, but the criteria should be loosened even if
-the candidate set is small. The amount of code to implement it is very
-small and it's possible that, for some users, having to sometimes
-perform one more step of testing is not a big deal, compared to
-bisecting speed.
+-----BEGIN PGP SIGNATURE-----
 
-About #3, I think that implementing an option to bisect on the first
-parents first is likely more useful than implementing it.
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAme4RzYACgkQj4D7WH0S
+/k707QgAobK3G273XBcs6qniH+/ySCAA+tMCetqMaRx1RwDFENeCwdMz1c9O6TWt
+rKHYNAvqx6Y3UdMtxo7Yq+S4PwK6SClJORaix8Aq6gD+ipalDSTkjnv8RZz4l0C+
+4ERUVgmPacyWiAfGq7R92ZFU/mjr/s39ebIx0kFFURr75qqp7u5ywON8xvu6zyNJ
+3GktySvi8do1KKUSo6cxtS7vM1Va8yEFo79bW7bpIJR19lGmh8HkBMNoTlJ+Zvft
+1kZ0J7N0t7fQ4drIpr8lXWcrs1iZ2If+/N4772cinMZ2yfsrj/nyrfQH6VfBgSwm
+usVBbtN61YGH0rbH9Opo5tirYwuP/w==
+=7T2i
+-----END PGP SIGNATURE-----
 
-Thanks.
+--qzemjgiz7kkv4vpl--
