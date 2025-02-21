@@ -1,168 +1,123 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 178D92010E5
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 08:16:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF121FE470
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 08:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740125810; cv=none; b=h6cV/rtIJoKWSaOjgTC9nqSkNJDO1hdwrtneXqXFHlYCwXrzu7wRdMhJwYrS4esEyTdg2mIYMYUAHAdZxWtdJ9e0hB+tR4y+DgJR9P67c7rlAj8vJ96yeVEALdiyQKGJyoP8E73s7hS2SYLYwrMTWVKazklo8NvPNfwUevP+Vn4=
+	t=1740126848; cv=none; b=CLYYYZepcDVGbaYi4RmSCOzsrC6lDZTniVmh5Gq4VsCVQsSgoQ/kYw70Y439zUGsnpKPGR8JCwhQm1cc1nPFEHUA3QuwLe0xwl5iJTwrKUv+Hke3//I9IU1AO72B2y61eppZdUxuQlwmN9jf/ZtGeOzWLP1cqbKjDN8Zzc11HGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740125810; c=relaxed/simple;
-	bh=weJUJ3fPuJU9DLeRP0j6W3tRrrskH48SbMl4m5cAnhg=;
+	s=arc-20240116; t=1740126848; c=relaxed/simple;
+	bh=kAy+RUajzbofCLOV5NAhL7PBrHMDkTQE/1z3diOj6LQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EmGBmlNFJ7pysUzQhWVypzaN1abedLwzqrG9Y+5TwWxrKFx4BXfJiJyOlc39i9r+ZhzKovKzcfiMlOYa+yctIduJO5v5uJD06w3aAT2Bvzxu2JW/RKV8C3kvy/s+dqZjfZws3X/03EldyELw3iQUCaBaWD8lV0/+cE/xrtHWV7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QNYB9Bbs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uykmNX56; arc=none smtp.client-ip=202.12.124.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=kQZEsmBHtjGhOTG/My+MvS2LNt8x6cO0C2jEItTL67ZSIWguweprLqGG1k/c02mnItH8VgU6qYRD3hcKSUhfXPTrbr2J+oZb20npxNZr6DxV5R89OmbAHn/vrw/vDOyhZ2iekYcIaIu8qNL5YruVt5IKSF4f5fI8HXh/qDFqXUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SxFQtqJi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=21WDrS6k; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QNYB9Bbs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uykmNX56"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2B0E1114013A;
-	Fri, 21 Feb 2025 03:16:48 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 21 Feb 2025 03:16:48 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SxFQtqJi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="21WDrS6k"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DE95D254020D;
+	Fri, 21 Feb 2025 03:34:04 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Fri, 21 Feb 2025 03:34:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1740125808;
-	 x=1740212208; bh=Y+3vYtdSMjoe+06f0Ccq0R+75EluMylVjwGbBmm2Hj4=; b=
-	QNYB9BbszPL7iDT5b3SYrUcfPNpz63GRAzxOr1aiGER3x94/4RkFP9BasHncDXy9
-	NIrWOMTOfzkTlEfTQLUU/LTjkzDTZafr5KDPK1oK1pL6mJeSMlmCigSVDL2BmE5J
-	Y2viOr6KSJquwo49jhJ9uIpiUTKUPvXIZjPrQODntwsgLLESBaBkMUDt4Cw9L3uP
-	m63WqIwnSkyyrOkLifT+5nF5XIm/p8zWfgIVpFh8KO2SAMZUcGMMwcT0brb5lc4z
-	rrKJqnCch9vqnCcNg5Ac/fo8K2MOtPKoqUV/T6QM5KxDS2kkU4fO2pOEccVelOVq
-	0z5WWLhz2FjxUaGZr+eXPw==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1740126844; x=1740213244; bh=kAy+RUajzb
+	ofCLOV5NAhL7PBrHMDkTQE/1z3diOj6LQ=; b=SxFQtqJiIh/UMwat0zPU5T1Giw
+	9qZ74R91h4pz52yb8/kI0effOMoRIRY1/j/B6DmM+iG/eP6EiyNV+1BWvj4q4Jg5
+	192aTyOkvIh9thm8zlLvljvqTff1GVVoZC5IEqsaYFHGJQq2MhMSID6XOOfEDqAl
+	w0GI7/e8UOWSP24hAKYgQdmgof0hb2EZjFq4//re35B4YoxkFj1w71fsglJg+Kty
+	oKI5O5OZLp1SgBAaoYWmPgvdXwww1N9uc57egW8QonYBrpFZEpaKzETrcCVEusm9
+	f01vrvXT8qfrLxasT5ZMU2l2BmX7wPRyBs9HVgj5uppPGf5F3tpa3MhS3ljA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740125808; x=
-	1740212208; bh=Y+3vYtdSMjoe+06f0Ccq0R+75EluMylVjwGbBmm2Hj4=; b=u
-	ykmNX566UvgxxIIRrki1YLN7Noz867aMpJNW4jMVMvHmcbi45MunxoUK+RqWoyLp
-	ZbZwxWxdBKBPnF6km5/69weLe9djruEeR51igExk8UxbJNIrhA1CYvs8XuL1mglZ
-	QnM0bsgypgkCZHBSPWm6D34SnkSa2A1gElDglC9CrXnzSblrLCarS1gwcbRbUJOT
-	FTiXDFqNwWCAzC/pIM35cFJlIBcmgilvHSY066OBoZGw0+3PMFMBVyLQfIaT8FFb
-	1TEpHtAUq0fxB251pMUT7TseuWhDOZxLxCP6irE/Bikyp7SRgWhEA8GGVoLUjIM1
-	T3ggAWWNO+l3w1x6n0Szg==
-X-ME-Sender: <xms:bza4Z5z_WBfWWUfqz1nEdnynC3wladsohC86xYtcfBoxBo-kWog0Nw>
-    <xme:bza4Z5QZURrr062Siamx3Wp_B8VYWOzQP3SEKumw73iWhX3N3mp-ZgWUEEWpyj_i1
-    7LBJoUX0tyZ9NyqQg>
-X-ME-Received: <xmr:bza4ZzU0U_UhV1LD60CYGZSgQY364LoZaMzaRLvC46Wq0dGLinUO-HOU9EcM9-UO0BVcocK5yfdkoTPtF6Wg1oVi3uKhnc87L3nbqJoZCfxFfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeileehfecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740126844; x=1740213244; bh=kAy+RUajzbofCLOV5NAhL7PBrHMDkTQE/1z
+	3diOj6LQ=; b=21WDrS6kxs1beZVBA/x58SAIEqb+l24u+1sl2hoBqDi93hA9xBu
+	2C3Z+WmGYVopvW5b8lFd1xcZee4NyJUzyGAQi+hwCAvVglSnmek46OqsdJjmXYDa
+	6m3Ix41EKWole1nDlF09JtcgQlIjDDDWRxA1KLhSwdLnRjXRhMuMieI5aBwnml6T
+	8VyR2kQc1jSazIKauK5x6OQucrpaYvBUN4tCOmhJobdR6ZfmUUD34iSZ8AtamTvj
+	ml0yqz08G1kVKVCzggkKyVjN37IX31lPWqz9Uhe4YfZy/zdyiM02hjUa+5drtCPx
+	QvynI/97vCCI0nGUiE1JUMSlaNHeSkjD5Aw==
+X-ME-Sender: <xms:ezq4Z5qfFhh_e7CusG35L1LbBpDC06LC_XYDWY-scdcGlHY0lzQXzg>
+    <xme:ezq4Z7ps9IoMOvsKOJJDeAjZ-2X7L6aCd6gD-0kmAaNQC3zy4nVR1hyXKeMIKEj21
+    r1FtCuggfzIHI2A9g>
+X-ME-Received: <xmr:ezq4Z2O_mUI3LwQmerEWeeGdD5bpLwAQVMSUj3YYpC81dkhZr_1IN6Vb7Alq0wPigk0dyIljMvEIwYPzpeIHpOQQ1U80zUp2RWPQZ5dXMlXHZQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeileehjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddt
-    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepteehffdvtdeltedtteeuueekudegteetuddtgeeu
-    ueekteehfeeuvedviedttdevnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
-    ihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepohhsshhmrghnsegt
-    vghnughiohdrshgvpdhrtghpthhtohephhgrnhihrghnghdrthhonhihsegshihtvggurg
-    hntggvrdgtohhm
-X-ME-Proxy: <xmx:bza4Z7hEFJHo32Aep_rLLHPjx654utBiFSG422G3G4Bq7fV0iv5crQ>
-    <xmx:bza4Z7BWQiHYLCFXGh-ngU1U8Ermc3NWQjGnsQxM4tBLeRnwCnU1dQ>
-    <xmx:bza4Z0KlR87hBuNxAF5f-O__GkAW6FJ-a5uHqE5e1ntgqoQw0pbDjg>
-    <xmx:bza4Z6A6cDpyTA9ICdFAK3EvOqI5_RCmNwYXHfJkD_8HFoXEYxLP1A>
-    <xmx:bza4ZyOxEt18clF1ZXBzy7UVrwmE478HhGBDVBwH4-hylnSKxgKWOgkW>
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedutddpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtph
+    htthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhhs
+    sggvtghkvghrsehnvgigsghrihgughgvrdgtohhmpdhrtghpthhtoheptghhrhhishhtih
+    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgt
+    phhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprh
+    gtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
+X-ME-Proxy: <xmx:ezq4Z07bkAvTOSVIelArxw2gRp1RMODdGUhC3MP9NTJZcX2hLsMITw>
+    <xmx:ezq4Z4444R162IfyXOUcvV1Fs-4y2Msfx58azb_XyVEIk9DVWpV8PA>
+    <xmx:ezq4Z8hEg9l5f3wZVXAoYLnD6hekz_wtGVjPiuW0EzJS12F4ww1_bg>
+    <xmx:ezq4Z66Krde36wwiBvUWuzX5-UuOpGrIotNSetF8zEHGL8uJkrHE2w>
+    <xmx:fDq4Z1wKX8lL7_W_YKo03CiZTUUV4P1htURPPMizkRUDlTepndsn7tXv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Feb 2025 03:16:46 -0500 (EST)
+ 21 Feb 2025 03:34:01 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5e5676af (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 21 Feb 2025 08:16:44 +0000 (UTC)
-Date: Fri, 21 Feb 2025 09:16:40 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e9471ef7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 21 Feb 2025 08:33:59 +0000 (UTC)
+Date: Fri, 21 Feb 2025 09:33:55 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Pierre Ossman <ossman@cendio.se>
-Cc: Han Young <hanyang.tony@bytedance.com>, git@vger.kernel.org
-Subject: Re: [External] git keeps recreating packs, exploding backup
- increments
-Message-ID: <Z7g2aEpEboL5mvRa@pks.im>
-References: <1524b9a5-6f8b-4537-ba6b-bdfdd4b1bdcb@cendio.se>
- <CAG1j3zGmA30w545+-6qFV6x+3HvM+fueYH-rv-_gaSTpZStMHg@mail.gmail.com>
- <ba212d4e-32c5-472a-8604-2a2653bde17c@cendio.se>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Taylor Blau <me@ttaylorr.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	"Randall S . Becker" <rsbecker@nexbridge.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 3/3] doc: add technical design doc for large object
+ promisors
+Message-ID: <Z7g6c8dS_Ttt-T9r@pks.im>
+References: <20250127151701.2321341-1-christian.couder@gmail.com>
+ <20250218113204.2847463-1-christian.couder@gmail.com>
+ <20250218113204.2847463-4-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ba212d4e-32c5-472a-8604-2a2653bde17c@cendio.se>
+In-Reply-To: <20250218113204.2847463-4-christian.couder@gmail.com>
 
-On Thu, Feb 20, 2025 at 09:26:38AM +0100, Pierre Ossman wrote:
-> On 20/02/2025 04:03, Han Young wrote:
-> > On Wed, Feb 19, 2025 at 5:58 PM Pierre Ossman <ossman@cendio.se> wrote:
-> > > We tried gc.bigPackThreshold in the hope it would force it to reuse
-> > > packs better. But all we got instead was duplication. It still creates
-> > > new packs with everything. It just stopped removing the old ones.
-> > 
-> > Is the repo partially cloned? git-repack will always pack promisor
-> > packs even if it's a keep pack. This patch would fix it
-> > https://lore.kernel.org/git/2728513.vuYhMxLoTh@mintaka.ncbr.muni.cz/
-> > 
-> 
-> Yes, the big offender is often partially cloned. So that could be part of
-> it, thanks.
-> 
-> But we're seeing it in other repositories as well. E.g. I have a long-lived
-> TigerVNC repository where the biggest pack file is just one week old. In
-> that case, it's merely 21 MiB, so it's not a practical issue. But it does
-> show that git keeps replacing it.
-> 
-> Anything I/we can do to shed more light on the issue?
+On Tue, Feb 18, 2025 at 12:32:04PM +0100, Christian Couder wrote:
+> diff --git a/Documentation/technical/large-object-promisors.txt b/Documentation/technical/large-object-promisors.txt
+> new file mode 100644
+> index 0000000000..ebbbd7c18f
+> --- /dev/null
+> +++ b/Documentation/technical/large-object-promisors.txt
+> @@ -0,0 +1,656 @@
+> +In other words, the goal of this document is not to talk about all the
+> +possible ways to optimize how Git could handle large blobs, but to
+> +describe how a LOP based solution can already work well and alleviate
+> +a number of current issues in the context of Git clients and servers
+> +sharing Git objects.
+> +
+> +Even if LOPs are used not very efficiently, they can still be useful
+> +and worth using in some cases because, as we will see in more details
 
-Well, one of the interesting things to learn would be how often you end
-up updating those repositories. You have discovered "gc.autoPackLimit"
-already, which determines when exactly Git is going to repack existing
-packfiles into one, and mentioned that it doesn't seem to help you. But
-whether it does or doesn't help really depends on how frequently you
-gain new packfiles in the impacted repositories.
-
-When you have fast-moving repositories and developers fetch several
-times per day, then it is quite likely that they accumulate multiple new
-packfiles per day. And thus, it's not all that unexpected that you will
-have to repack the whole repository rather regularly. If so, this is
-working as designed. You can tune the parameters for how often Git will
-do an all-into-one repack, but also have to keep in mind that the more
-packfiles there are, the less efficient Git will in general be.
-
-That being said, there is an alternative: Git nowadays doesn't use
-git-gc(1) anymore to perform auto-maintenance, but instead it invokes
-git-maintenance(1). And that command allows the user to pick what tasks
-should be performed. By default it uses git-gc(1) under the hood indeed,
-but you also ask it to not do so and instead use an alternative
-mechanism to pack your objects.
-
-The alternative would be the "incremental-repack" task. This task does
-not use git-gc(1) with its incremental/all-into-one repack split, but it
-instead uses git-multi-pack-index(1). git-maintenance(1) tweaks the
-`--batch-size` parameter of `git multi-pack-index repack` so that it
-typically doesn't have to repack the one large packfile, but combines at
-least two smaller ones. I use a mechanism like that, which I've
-configured as follows:
-
-    [maintenance "commit-graph"]
-        enabled = true
-    [maintenance "gc"]
-        enabled = false
-    [maintenance "incremental-repack"]
-        enabled = true
-    [maintenance "loose-objects"]
-        enabled = true
-    [maintenance "pack-refs"]
-        enabled = true
-
-I think this strategy still isn't quite optimal, as nowadays we should
-probably make use of `git repack --geometric` instead of manually
-computing batch sizes. This would ensure that the packfiles present in
-the repository form a geometric sequence regarding their size, so you
-end up repacking the biggest packfile very infrequently. Such a task has
-not been implemented yet, but it shouldn't be all that hard to do,
-either.
+s/because//
 
 Patrick
