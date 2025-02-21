@@ -1,144 +1,82 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpout.4.mo533.mail-out.ovh.net (4.mo533.mail-out.ovh.net [46.105.32.238])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E957F1CA9C
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 15:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCDD8632E
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 15:35:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.32.238
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740152098; cv=none; b=RKejJHPGdbVpjC5PLYFr583Jx6uZlErAG1uei9M+WYVgxmCjLieBI16y9aPCqU9VB0uBootnPRkmgUN1SFihajJOhqZUSOTYnVyO255dpznfg1WxWX5X5wFt52Z/3XICCM2xQlOi1IBA/sIILWF+Y3lSZ+LTdjo29X0xj86tr5E=
+	t=1740152125; cv=none; b=j4GBgFjjIgLJNKurM13c1W9urJD7WljoN/4XCZqJ4P0lm6zbs3tNsYIRQHNrYXRiGUcgshR2MxsoUE+/Nf4sOEolanzRMQjVV10jmuWRPJthAK1YkhCQeweUBEjIgBcKolXlDvAVR5dPS86v0BTDeKc6gyv6HFwk4Mcu1nOF2do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740152098; c=relaxed/simple;
-	bh=EBbZmugs48wJSYVsGhPapdZii4gw43RqF9qkp2+WDBA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IiZzbYa2C0fKyIm9gX1XqACKS5fQx2OrT0XQS653r+tIdMZS+ebuoJWIfJsTiJAZkZgrCfRvmutRdXaoOptLCy1My8lv6m/C9PoRB9LAZA71EsVuBYkerGmDP9fHv43/ofVWKh/Iwp29GcH4vtAnelf1IJ6iTy6/reZWgc+Bwfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NMJ11TQ9; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740152125; c=relaxed/simple;
+	bh=z9ZVeAO1xMtfl0QdW8eVoWHFw2NHrUDgM0Qvlla0hsc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=a3iZg+lXM+KTejHB9EF5pbxHD8KZ3YvHlrCHsb1MwdBnBxuA6RwU5wo3i8idDvdcYBuEozNVC7Pn3zrhdWER90hsxBlbpDNpeiYBQe4mlOgTM8P5OF/XUEGn1whnXP/7eyRl/3DKSeWxPfJoq0aHigAC+TSZ2u5s+YGBPdxEhPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jwilk.net; spf=pass smtp.mailfrom=jwilk.net; dkim=pass (2048-bit key) header.d=jwilk.net header.i=@jwilk.net header.b=fyY8vwLf; arc=none smtp.client-ip=46.105.32.238
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=jwilk.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=jwilk.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NMJ11TQ9"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6fb7c373416so18314837b3.0
-        for <git@vger.kernel.org>; Fri, 21 Feb 2025 07:34:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740152096; x=1740756896; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3dN4PRFaC0L+RXUf+7MRpsDmXaLfQmbWjwuZWhIXWCM=;
-        b=NMJ11TQ968nataaVyvX8KWdX+aqs79xnPuHiepbm+67zjsjLaTNItRv74ebh43XaN1
-         PXSQSoq5s9pxU6WuNR0CfmmkjnDptUfyGfzSU7YFyPnPeG++Nr220olxrUpUGRfcU9Bi
-         aLgRFYkD9X8KfGIOQ5MVOqkMcZWt56n8V2/9uV9KJY0VTmpHjG7TZPbS6regADlREKTW
-         wG21/WsqNm4LhYdKklxkmGLu4ROQOmtk8o7jU7ml0kPIQIDqOPV4lKhFkowSatnQezrb
-         0pY809DI3tc654Wn+SFv7gXpmyfMpbrvTx23JwkVTmFyYUoW3rXn6yRj5reD7eK8RGF1
-         holg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740152096; x=1740756896;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3dN4PRFaC0L+RXUf+7MRpsDmXaLfQmbWjwuZWhIXWCM=;
-        b=t41Sqk43vXq4TVkfUdhZ4M701U1jVuUqViNAAc9ObbEVEaqd6ZevAl8cG/g3TBCB25
-         B3TunfzOqlnF5djC720finDBbdRgemVDnF3G2hq7otlr8QlkAOaik3WJxZavqfmKHUDs
-         Zn1aFV6Uw61Playt6ZNqZZB/RuJE9tM3By3SMD2nuSgA6vU3nzCjejL/EpileyKqEID8
-         4hfHJuBRH83iDaELWexqMCDQmQzEzR03I9+gxBRQ9zA6p4yIXTGJa0tr6CFnr9CEBk4Y
-         o6AH0bKveFg/91EdKlba4TPWKtSuVA7rtZDWHSu7n3SRB1t7gESo4UjEtfwuIoRvIzo+
-         X/kQ==
-X-Gm-Message-State: AOJu0YxL4v2DpNo+yOT+rDipkZLOs86dtqD6jzX6TRB1dysnPvL2ispq
-	1mMVLQXepiKFjQQCY9WaAzzyAOLG8GORW1Wp6aLvf5qZ/lOlDyVszST1PtK866Yk2NGwg4KFXLk
-	FmtAbUvwb5g1YQj2S5veNokU6HNw=
-X-Gm-Gg: ASbGncvMCcoeS3XsbbndSPBEpMpSTY8aEnAXrKhC8KHMZARqRvZTrVH/Tll7RvwyfST
-	Ci6/4nSvSsLjfLceFIHYsi0kOE2YvQq4/uQIVV0NHg8dbPRC4yGtAw6HIuFY9h4Vm31aTZpdUme
-	DNKD0qMRg=
-X-Google-Smtp-Source: AGHT+IGT9IoLDXXt5sezJ01MCzwZvsJaGjbKadsYlM12p3U+Kev6XDXdk+BkNLzxzsuSfVgELMOQbcHao6GgyTBJmkw=
-X-Received: by 2002:a05:690c:498b:b0:6f9:753a:519a with SMTP id
- 00721157ae682-6fbcc25e721mr31709767b3.17.1740152095663; Fri, 21 Feb 2025
- 07:34:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=jwilk.net header.i=@jwilk.net header.b="fyY8vwLf"
+Received: from director2.derp.mail-out.ovh.net (director2.derp.mail-out.ovh.net [79.137.60.36])
+	by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4YzvB11XBxz1VXd;
+	Fri, 21 Feb 2025 15:26:49 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net (director2.derp.mail-out.ovh.net. [127.0.0.1])
+        by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+        for <ben.knoble@gmail.com>; Fri, 21 Feb 2025 15:26:49 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u1.ea.mail.ovh.net (unknown [10.109.139.175])
+	by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4YzvB10YMpzyBk;
+	Fri, 21 Feb 2025 15:26:49 +0000 (UTC)
+Received: from jwilk.net (unknown [10.1.6.5])
+	by mta11.priv.ovhmail-u1.ea.mail.ovh.net (Postfix) with ESMTPSA id 56494263781;
+	Fri, 21 Feb 2025 15:26:47 +0000 (UTC)
+Authentication-Results:garm.ovh; auth=pass (GARM-102R004d51660f7-b556-4f0d-8b8b-46ecbf1b005d,
+                    3833C9059EBAADF9D952CF52123B9565D109EC87) smtp.auth=jwilk@jwilk.net
+X-OVh-ClientIp:31.0.176.20
+Date: Fri, 21 Feb 2025 16:26:44 +0100
+From: Jakub Wilk <jwilk@jwilk.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Robert Coup <robert.coup@koordinates.com>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	"Randall S. Becker" <randall.becker@nexbridge.ca>
+Subject: Re: [PATCH v4 5/5] remote: announce removal of "branches/" and
+ "remotes/"
+Message-ID: <20250221152644.o5ni6vn6rncvmaq6@jwilk.net>
+References: <20250122-pks-remote-branches-deprecation-v4-0-5cbf5b28afd5@pks.im>
+ <20250122-pks-remote-branches-deprecation-v4-5-5cbf5b28afd5@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
- <20250114021502.41499-1-eric.peijian@gmail.com> <20250114021502.41499-9-eric.peijian@gmail.com>
- <20250201020321.GA4081169@coredump.intra.peff.net>
-In-Reply-To: <20250201020321.GA4081169@coredump.intra.peff.net>
-From: Peijian Ju <eric.peijian@gmail.com>
-Date: Fri, 21 Feb 2025 10:34:44 -0500
-X-Gm-Features: AWEUYZl8gXiU8l_Ol2Slrj9S_wI2i6z_kNME2sIrWI7L-btO5mn0Yt6qXHVoU10
-Message-ID: <CAN2LT1AFA8AG58NNVvW2nvWR27qisPXDzSTR-tUycWGi96kcaw@mail.gmail.com>
-Subject: Re: [PATCH v10 8/8] cat-file: add remote-object-info to batch-command
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, calvinwan@google.com, jonathantanmy@google.com, 
-	chriscool@tuxfamily.org, karthik.188@gmail.com, toon@iotcl.com, 
-	jltobler@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20250122-pks-remote-branches-deprecation-v4-5-5cbf5b28afd5@pks.im>
+X-Ovh-Tracer-Id: 11184971152236162299
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejtdefjecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeflrghkuhgsucghihhlkhcuoehjfihilhhksehjfihilhhkrdhnvghtqeenucggtffrrghtthgvrhhnpefggffgffdtieekleegjeffteegfffggfekueehfeeuudfhhedthffgffejgedvteenucfkphepuddvjedrtddrtddruddpfedurddtrddujeeirddvtdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepjhifihhlkhesjhifihhlkhdrnhgvthdpnhgspghrtghpthhtohepjedprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehrohgsvghrthdrtghouhhpsehkohhorhguihhnrghtvghsrdgtohhmpdhrtghpthhtoheprhgrnhgurghllhdrsggvtghkvghrsehnvgigsghrihgughgvrdgtrgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+ drohhrghdpoffvtefjohhsthepmhhoheeffegmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=UK99AHy1sGQr3Ps/JuT1xLsLxCqT/NQBMoBAIBc+BMI=;
+ c=relaxed/relaxed; d=jwilk.net; h=From; s=ovhmo917968-selector1;
+ t=1740151609; v=1;
+ b=fyY8vwLfyOr3cHW1PUuA6A75MxdusmTAFZohCnPBDXkLHhQk0vBs67yG82v7o/FJLL2vHMg6
+ hQRls/Kc0fvzxGUl6rzjKeLt2CyXeMGX6VVmr3GzXCTdhCRW9ngWSKTyB+wFboI9YrOd6dqRGCz
+ fm4WHlIxta79Ekc8FWF9oJ1gcz1C8jH7xh42qliMFFtFLQITG5WUsINRmAb/Cm95oTuoLsHDAj9
+ eOw6Ke+6UH1Z6X8BsljZzSWmtkrcvdQrxzcDW/YKLdeemQjnRjBVR35m1hlAE14SEfpfqk+nYYt
+ W8AfjdftlaqyZkMligYFLO1MoGAo5m3vLUFJFhSeeGEsg==
 
-On Fri, Jan 31, 2025 at 9:03=E2=80=AFPM Jeff King <peff@peff.net> wrote:
->
-> On Mon, Jan 13, 2025 at 09:15:00PM -0500, Eric Ju wrote:
->
-> > +static void parse_cmd_remote_object_info(struct batch_options *opt,
-> > +                                      const char *line, struct strbuf =
-*output,
-> > +                                      struct expand_data *data)
-> > +{
-> > +     int count;
-> > +     const char **argv;
-> > +
-> > +     char *line_to_split =3D xstrdup_or_null(line);
-> > +     count =3D split_cmdline(line_to_split, &argv);
-> > +     if (get_remote_info(opt, count, argv))
-> > +             goto cleanup;
->
-> Coverity complains that split_cmdline() can return a negative value when
-> the input is malformed, which we then feed to get_remote_info(). If I
-> understand correctly (from my very brief glance at the series), that
-> string would be under the control of the untrusted client?
->
-> I _think_ an attacker can't do anything too bad here, since
-> get_remote_info() also takes a signed int, and so iterating from 0 will
-> just find no entries. But probably we should explicitly check for error
-> and bail.
->
+* Patrick Steinhardt <ps@pks.im>, 2025-01-22 12:31:
+>+As our documentation mentions, these directories are not to be found in modern
+>+repositories at all and most users aren't even aware of these mechanisms. They
 
-An explicit check is added to make sure if a negative value is returned, we
-will error and bail.
+This isn't accurate. The "branches/" directory used to be part of the 
+default template until very recently, so it's found all over the place 
+(although most likely empty).
 
-> While just looking at this code from a security perspective, two other
-> things occur to me:
->
->   1. Calling xstrdup_or_null() implies that "line" may be NULL, which
->      would make "line_to_split" also NULL. But I think split_cmdline()
->      would segfault in that case. Should it just be xstrdup()?
->
+I'd say: "... these directories are unlikely to be used in modern 
+repositories and ..."
 
-Thank you. Revised to use xstrdup() in v11.
-
->   2. Are there any bounds on the size of "line"? E.g., is it coming in
->      as a single pkt, or can it be arbitrarily large if an attacker
->      wants (it looks like maybe the latter, since it comes from a strbuf
->      in batch_objects_command(), but I didn't look at how network data
->      gets passed in to that). At any rate, I think we ran into problems
->      before with split_cmdline() and integer overflow, since it returns
->      an int (CVE-2022-39260). I thought we fixed it by rejecting long
->      lines in git-shell, but it looks like we also hardened
->      split_cmdline() in 0ca6ead81e (alias.c: reject too-long cmdline
->      strings in split_cmdline(), 2022-09-28).
->
->      So we are maybe OK, but I wonder if we should punt on absurd lines.
->      Related, can an attacker just flood input into that strbuf, making
->      it grow forever and waste memory? That's just a simple resource
->      attack, but we have tried to avoid those elsewhere in upload-pack,
->      etc.
->
-
-Thank you. Adding a check in v11 for the length of `lines`. Please let
-me know if something like this makes sense:
-
-if (strlen(line) >=3D INT_MAX) {
-        die(_("remote-object-info command input overflow"));
-}
-
-
-> -Peff
+-- 
+Jakub Wilk
