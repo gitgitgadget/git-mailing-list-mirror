@@ -1,136 +1,187 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659351FE470
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 08:36:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F860201012
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 08:44:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740126971; cv=none; b=ue8p8FFNW5H/UJOWPfW7r0MlD2jkP+KzylTCaDIN3V+9yglOq0lDoMSmZRg9/Q+AI/q3Q5Ej88i9rTL6f4nYJj9xDc4gRHjNQoQn9lGLEnZrddMcbnDjD9svuw0TEB9GpYmuZqItLkrXzjsSW4HOlvrZI0+WBF5L7GElYgyyFz8=
+	t=1740127449; cv=none; b=hUR4ivejsfHnai1iT9OKeXMIt2MZhVT1N8I+968cYhq7V9SMJXoX/JyLWQbBRaKNGbetk2Ak2XNZy1YrUCit4BBPCpXLThzCb8OWV6TGgErXxju2UdmbFqJe/9SdjXl3RD6BnsRHooEprym4QWhVguFYEdgo9YS7Q3Cdlp+Hz7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740126971; c=relaxed/simple;
-	bh=BKCH0q34jHMrt/DjfgqfikmXrDou03Y+agxilhX+vM0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IURfqwo5nVFVb6d8k+tbb1H9BQoBcqbiAs9U9jOGa6jXOmasOicVhIL7nURYlW3mubEVDslkOQSuFY8Wptgr/ZP2lshNwjHtn0kwrvWtoCuCGm7BSMZLx2sv0nHerwt2MrEzIWl8UVfQUiZAaVpknciAxrUo/Y8kYqS3XkgxdaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RDPpUeV5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jfijmHlE; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1740127449; c=relaxed/simple;
+	bh=ZyYLXiw8IbqWCcVV9Z9OMaGJIpD8ZG+N7B2O9dVgP5M=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NkYgADDPKjAXVWoH9AHImQRH/MWapE8B9pu0r13einJHbD67zulnmHiS2yIV1ZMw3y4nHbEyRWo8ZH1cpX5Zy7H1LGj9E5iWx7i7DM3dxoy97x2p7wdpKsc7+ZJ2h63DUAUqJ6QUhh5Bhi1zhlEqONTe7qT8xNlLrIt+l+zt7w4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OsbPAfKZ; arc=none smtp.client-ip=209.85.222.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RDPpUeV5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jfijmHlE"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5436D254024F;
-	Fri, 21 Feb 2025 03:36:08 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 21 Feb 2025 03:36:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740126968; x=1740213368; bh=/7oLn8kFPe
-	3vOcgYl0hO4ibCZ6Pht+CdpSGKQqpyxSY=; b=RDPpUeV5mXwP9kMOndEKw604Tu
-	r7rUBBiPvxw0TUq2EFmhzqq5k2ECHWH0dKaJ4TWdFnjObI0wZpqTCUDxGDdo5MNM
-	qYcONrHVxst2R09m2nEkIDYhgkAXENdK6KR4v0U30LJwLkXqLkAxMWB36BlhlfO8
-	yCI/rsOjmmclCM1vevPT1WmB/hQ5aVeoF2eN9kHMQHb1yx5HsOkGnHWFePUnkE2l
-	rakwyPHlHGElEEviUiDR4K1tfVAmw+6n9EZVpa+VnAngizefjaNU1LE15NtBU1s+
-	pOxdRhQuG5IH/KFUQfHLOAhBTbi4DU6Qz8URhLlk+R9XqtdIj9eoZRZyyEUA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740126968; x=1740213368; bh=/7oLn8kFPe3vOcgYl0hO4ibCZ6Pht+CdpSG
-	KQqpyxSY=; b=jfijmHlEH/ZFpne1XIdhVbzYcM0ute/MF/iIcogilSI5LleU8hj
-	XpHM6m+f4EgcdmQzmiAXzQGV0tqGXAyaC03ASd9aWFNQPhjyl7YztedS/A3RqiVq
-	l3Q3rbI7OTW3FAZwl3+lMtZs1D+OUa/8zujOeD7I/1ZJW0r1riP2oJEj2s+o4bsx
-	hsmlFN8USuf9mNuzzHNBxygoaZV+YrMFvx5E8siMHGO6I1PJZHesNyb51CT5wYZM
-	tYQV//cJwUzmxsBzYNSlfXLPfiaWHpElVyWJCd/6NNJ6pdZHQ/lFcCgJZzjT0x88
-	voWNXoKDjD7JXt8nGsWudcqOhzk9dXxfKIA==
-X-ME-Sender: <xms:9zq4ZzoJWvJMsSG8P3Mlgy3_7VDqNwb9RkVlUHLNC1Shx-G4gTTNiA>
-    <xme:9zq4Z9olDionMq_C51fr3Az8lxRlp83uUIStiuS_U0vLeHNgASONSJl3sISUEzQRy
-    NgLx0xXHt8u4RMz3g>
-X-ME-Received: <xmr:9zq4ZwNSYIY9nB7dY5lL6hE6LD9YO83me_W3KwDudLCxED7xr9RTbG9JVjRCSsqV8WSe2vZijTxQHxnP8tZzrVFsKUWOtZqGP2qfMW3LHCXHMw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeileehjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsrghn
-    uggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpd
-    hrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:9zq4Z24JWTrRNKbFKsWIxQtLBTh0ihqmfcydBafwIoyfgWRXMQIavw>
-    <xmx:-Dq4Zy6cDSiHlFAgA5Ly_g8bW6S91gM8A-Y12ipt8dXlGSLp9N7AWw>
-    <xmx:-Dq4Z-hva6edWYNJDlmugAcXSlbcj6paHYpXPhEZYgeitRn7y6bvqQ>
-    <xmx:-Dq4Z06nxptu2iMs5BSqIddUeJsp2x1W9jU4GjApolZW16LCthdANw>
-    <xmx:-Dq4Z5baFKNMNOHtN_R3bhMnYSnoJNlI-_x18ZqCpks3RnveyYdRNTXS>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Feb 2025 03:36:06 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9da7557b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 21 Feb 2025 08:36:05 +0000 (UTC)
-Date: Fri, 21 Feb 2025 09:36:04 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, shejialuo <shejialuo@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 02/16] object-name: allow skipping ambiguity checks in
- `get_oid()` family
-Message-ID: <Z7g69C7Y-CXIUrRn@pks.im>
-References: <20250219-pks-update-ref-optimization-v2-0-e696e7220b22@pks.im>
- <20250219-pks-update-ref-optimization-v2-2-e696e7220b22@pks.im>
- <20250221080003.GD1988395@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OsbPAfKZ"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-86718c2c3b9so456844241.2
+        for <git@vger.kernel.org>; Fri, 21 Feb 2025 00:44:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740127446; x=1740732246; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VXAuJQ9mJJphuhqzIq2C38ogitYSA7rrsuT9jJ+U1QI=;
+        b=OsbPAfKZmsM6FtN0USB74vvNKIDGHDTKhhBOkr4fCQu+VUMCNkkJmcMbNKJLZ49xx9
+         q86Z2s6sItSjBwPfdy7W6qBL+Rwn5Jw9StuxjUWt5RfZlN2fwGUgQgDBXMOfWhSoV5aK
+         sNQyWJwIEP5gpuLUSs9WxBUC20I+Bu/aed8AUNMeMdBkIWahk9iwEqxIkrw7yfGeQ5Iy
+         +K89iyRxTohiRnHMj3uuijuxvrk3koUfOeHyQHeWNzcOHB/RT1OCg4sPnbPwHZztXJFy
+         qC72KPHmks4q4hZtDft0zKrSnK+BkjPVkHXc8jmOa7xffK6qYfZePWoJEbbtoqaIj6O3
+         VMtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740127446; x=1740732246;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=VXAuJQ9mJJphuhqzIq2C38ogitYSA7rrsuT9jJ+U1QI=;
+        b=WBkB58rZesF9k+VtXv519fjvy/f8umtJ3r053NFaoiSc6GLp803ifbvtySFH7Vmm5B
+         h/FU5CadXhXvqS1zlyQUuf0Yc0XGRyjCajm74SCMNQlQeCljknNVGOKV+vnJH36+XCsG
+         rUupnPD/IltpoMvZIDKlQkBBEkEmnT1gWEtAwVImM+7XwiowWLLZO4B4ggJ48oHXoW8p
+         C0+sdlhZy2kJqJodSwVBoZBw+XApvw4ZmC8ykLiap7Qgmt3mURd9azIm1T/YLhRs9AiW
+         NoMs1C0kH4iMiHLnKxNzMERzLLdFTOaP67KiyJKZdN5qqjkwdQFNEoMDH1llxwNrbvVE
+         qY2Q==
+X-Gm-Message-State: AOJu0YzyNM76lc1OPVyMQcs06RlcDxkWRzAVNPBAmvWen0HPnjzJzdkF
+	NHcNh0knQDCMhzDJhS+K4BNbhMiJgKMRPV5qi4sRW2C5qwWXqqA+KRWSpWua+CLqVHx7CWTyuWd
+	T8Hi9+xOxmMDwe5ChXk2aRsAfuIY3vsYJ
+X-Gm-Gg: ASbGncsTkkZswEUInGxQcSj7yRMOfpWHJTEzNwVmJEsaC9lvMvBaeQQMqKcp4Zsclto
+	kv3O0lfIPeAd/yHbKeDFomhfJTF8my6ZoDH76ZBbTzsoCS/fN+leSxF/1PMiVa4nxYF+vKVj0p4
+	V3uf7nWObEmrSSur1U4CmjeCHdNGGq7LSHl9++WLwExw==
+X-Google-Smtp-Source: AGHT+IH91BorRNuupZ8p57SojWORyG5j/paJiInVY/7mHIGXDTU85+Gx80fb5hVJwhL8Uqc/OEODUS8i8ipeQtuP3bw=
+X-Received: by 2002:a05:6102:26c7:b0:4bb:cf25:c5a7 with SMTP id
+ ada2fe7eead31-4bfc0086c7bmr1549782137.7.1740127446437; Fri, 21 Feb 2025
+ 00:44:06 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 21 Feb 2025 02:44:05 -0600
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqikp4eji8.fsf@gitster.g>
+References: <20250207-477-refs-migrate-add-a-flag-to-ignore-reflogs-during-migration-v1-1-7d40f3b4e30b@gmail.com>
+ <20250220095614.62042-1-karthik.188@gmail.com> <xmqqikp4eji8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250221080003.GD1988395@coredump.intra.peff.net>
+Date: Fri, 21 Feb 2025 02:44:05 -0600
+X-Gm-Features: AWEUYZne0J3_obbUd34xdlhaX3jP5yCz7IgA-1VOKOIGX3Yfa9OmupmRxCRDqZk
+Message-ID: <CAOLa=ZSL-X_8s6vcDiWBp8G3+M8GGGA1wBRtNqqThyq94YS16w@mail.gmail.com>
+Subject: Re: [PATCH v4] builtin/refs: add '--no-reflog' flag to drop reflogs
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, toon@iotcl.com
+Content-Type: multipart/mixed; boundary="0000000000004f34f7062ea2fea0"
 
-On Fri, Feb 21, 2025 at 03:00:03AM -0500, Jeff King wrote:
-> On Wed, Feb 19, 2025 at 02:23:29PM +0100, Patrick Steinhardt wrote:
-> 
-> > When reading an object ID via `get_oid_basic()` or any of its related
-> > functions we perform a check whether the object ID is ambiguous, which
-> > can be the case when a reference with the same name exists. While the
-> > check is generally helpful, there are cases where it only adds to the
-> > runtime overhead without providing much of a benefit.
-> > 
-> > Add a new flag that allows us to disable the check. The flag will be
-> > used in a subsequent commit.
-> 
-> If we are going to switch to this and get rid of the global
-> warn_on_object_refname_ambiguity flag, I could see it being worth it.
-> 
-> But when I looked into doing that, it did not make much sense (there are
-> too many code paths that share the same get_oid calls, and you'd have to
-> plumb the flags through the stack).
-> 
-> So if we are going to leave the global flag anyway, and if your patch 3
-> is just changing all of update-ref to pass the per-call flag in every
-> call, why don't we just skip this new mechanism and have update-ref
-> unset the warn_on_object_refname_ambiguity flag?
-> 
-> That makes patch 3 a one-liner, and patches 1 and 2 can go away.
-> 
-> -Peff
-> 
-> PS Sorry, I haven't looked carefully at the rest of the series. I've
->    been moving houses and am way back-logged on Git stuff, so don't
->    count on me reviewing it anytime soon.
+--0000000000004f34f7062ea2fea0
+Content-Type: text/plain; charset="UTF-8"
 
-Spoiler alert: I do have a patch series locally that gets rid of the
-global variable completely, and that series builds on top of the new
-flag I'm introducing here. So I'd prefer to keep it so that we can
-eventually have less callsites that rely on global state.
+FJunio C Hamano <gitster@pobox.com> writes:
 
-Patrick
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> The 'git-refs(1)' migrate subcommand, which transfers repositories
+>> between reference backends, currently migrates reflogs by default as of
+>> 246cebe320 (refs: add support for migrating reflogs, 2024-12-16).
+>
+> "transfer" is a curious verb to use here, as it almost exclusively
+> is used in the context of fetch-and-push object transfer over the
+> wire.
+>
+> 	The "git refs migrate" subcommand converts the backend used
+> 	for ref storage.  It always migrates reflog data as well as
+> 	refs.  Allow it to optionally discard reflog data.  This is
+> 	useful because ...
+>
+> or something?
+>
+
+Sure, I'll modify it to something along these lines :)
+
+>>  builtin/refs.c          |  3 +++
+>>  refs.c                  |  8 +++++---
+>>  refs.h                  |  5 ++++-
+>>  t/t1460-refs-migrate.sh | 28 ++++++++++++++++++++++++----
+>>  4 files changed, 36 insertions(+), 8 deletions(-)
+>
+> I notice there is something missing.
+>
+
+For a minute I thought I broke something here, but I'm assuming you mean
+the lack of documentation.
+
+>
+>> diff --git a/builtin/refs.c b/builtin/refs.c
+>> index a29f195834..c459507d51 100644
+>> --- a/builtin/refs.c
+>> +++ b/builtin/refs.c
+>> ...
+>> +		OPT_BIT(0, "no-reflog", &flags,
+>> +			N_("drop reflogs entirely during the migration"),
+>> +			REPO_MIGRATE_REF_STORAGE_FORMAT_SKIP_REFLOG),
+>
+> This is somewhat ugly, but parseopt API is nice enough to hide the
+> "--no-no-reflog" nonsense from the end users, so this is OK.
+>
+> I think we are almost there but lack documentation updates?
+>
+
+Yeah, this was a total miss. Thanks for pointing out. Will add it in.
+
+>
+>  Documentation/git-refs.txt | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
+>
+> diff --git c/Documentation/git-refs.txt w/Documentation/git-refs.txt
+> index 9829984b0a..bb50d6f888 100644
+> --- c/Documentation/git-refs.txt
+> +++ w/Documentation/git-refs.txt
+> @@ -8,9 +8,9 @@ git-refs - Low-level access to refs
+>
+>  SYNOPSIS
+>  --------
+> -[verse]
+> -'git refs migrate' --ref-format=<format> [--dry-run]
+> -'git refs verify' [--strict] [--verbose]
+> +[synopsis]
+
+I see '[synopsis]' being called out in 'Documentation/CodingGuidelines',
+but nothing about '[verse]'.
+
+> +git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
+> +git refs verify [--strict] [--verbose]
+>
+>  DESCRIPTION
+>  -----------
+> @@ -43,6 +43,11 @@ include::ref-storage-format.txt[]
+>  	can be used to double check that the migration works as expected before
+>  	performing the actual migration.
+>
+> +--reflog::
+> +--no-reflog::
+> +	Choose between migrating the reflog data to the new backend,
+> +	and discarding them.  The default is "--reflog" to migrate.
+> +
+>  The following options are specific to 'git refs verify':
+>
+>  --strict::
+
+Will add this in! Thanks for the review.
+
+--0000000000004f34f7062ea2fea0
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 571f016908fb58ef_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1lNFBOTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOHZiQy8wVHF1VDhsaEJxRmJZa3NaWFRpb0ttRnQvbApuTjRhWTQvaU9X
+M0FzaC84STE4eTREazA3RUxXKzlYQWo0aHVUdCtON1lkM1lITXlnSnVNRFg5WEJSYXFuN1BkCm1O
+blE4dHhhL1RoVTZocHhMbFV3ajExOHU1WmVTQzBLTnJaUTIxbG82YzNXRCtLT0dkRzZSWHVjTGVt
+Z1RIaFIKTitqc3pTemNvUUIzK0FhUUF3K1pKUWhkSExYOVQvM1ZEYXVqUk05aTBocEpHL0FxcEdm
+NWNxYzdvWERPT0l3Zwo1UFBmakdIQmtpWGN2N1ZGNTBMUHZUUjZUV3R1Y0d0RzNxWFoyV1Z4N0pG
+ZnRMOERud3dyak1la3FlVDNrRE1kCmQ3S0J2WlMxcG15WUNYZVd5N1dYV29TSHRoVzlkdFlRSmFn
+NDloci9sakhWZlZUVGVXSGw0citWeEp2NkcvNHoKT3FFYUlZbzkyNStRaEhzTERBNkkyanFXbGhI
+L1djOVA5dzZaMEgrd2x5SCtuVHJrejRzZEZFN01jaU5lWVJDagpRUit5MThRV0xMelZXUURzRE5Z
+dCtoaXFpTis1UHlRY1pwa2E0UFB5bHFFemZUZ01NY2xrUVFtRlJwTVZJdkFIClBkVTNJYndjTStw
+bnJaWjR6TzZIZVRpbitoaWFGbk5meFNsRkdyTT0KPW9OcGEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000004f34f7062ea2fea0--
