@@ -1,67 +1,67 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9D42066C3
-	for <git@vger.kernel.org>; Fri, 21 Feb 2025 14:57:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF99205514
+	for <git@vger.kernel.org>; Fri, 21 Feb 2025 14:57:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740149843; cv=none; b=Yj4EaZyiX9E/0xRG7k33JLE1cKT9+LxHfLBIdbghT3ZCJSWhU6VQm2+y//e49QBrZSyQOwDBgsJNijU9JK39Hr0jTr5YSaUJMgf2E0K7IHqYRALJTSNCgZH7PDjI7A9eSZ8KksmGSKvfilzn94rtvGBj58xjdN27qEYNxqPLx+0=
+	t=1740149844; cv=none; b=sOVrYth2F31BYTkpkrvLCeZpJPGyAkxferFGUf/Mtky32f9zWsrdX73ZsEdBhsJERHRqc4aBgondyr1WYnrBvT2H44lM4BCt2Ia72HDJ335+p1EjGYNJ8mvzcgYBZt/rnEoRkvdajc57ZcEz/5ic16ZhYyES+WwHpV2vZCd92FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740149843; c=relaxed/simple;
-	bh=rvesfyF5ALThksiXFhqWz9CLihsK5WKzzUZNT69bql8=;
+	s=arc-20240116; t=1740149844; c=relaxed/simple;
+	bh=AZUPztYyQ4clpNBRu9KqyPcTramRjqVFiF2Wd//bXmg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=EzYSfRWPRxHeL424NLsm8cO9hgGgJcRoBLptPZPMEEAkl0UkOG7SUPdHABQMni4YVK7yodtSakqqNbWNxEtkHodU1TKVBKEiy8FzhExxjvZArXpL86umamlaZKZoAhvHH/BznXqVPhZBZcfDPeouVnba4Grf3xbxWjBWSln0LZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DHnngmh3; arc=none smtp.client-ip=209.85.218.41
+	 MIME-Version:To:Cc; b=DDGtOeK9AhlKamH57lgrUkGlq6EZr1ST3LZITNWaCzCBccU4UUnxC8BQ18pIxecP7/IDRb24quMoUZivBg0ENGQMFwBTWtcBid1zt5LbkiUDBuPHCA8R08s5LSnsckVrqGYnNf815F/RhS8gvfTaPisOYvtaclBTdsbMEbJorDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cGXERUhC; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DHnngmh3"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-abb7f539c35so432838466b.1
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cGXERUhC"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5e05780509dso3157375a12.2
         for <git@vger.kernel.org>; Fri, 21 Feb 2025 06:57:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1740149840; x=1740754640; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5BYAz7zWuBokToXe1zgtDZ2ht3Qyz0ZzSHLM1mj5x2Y=;
-        b=DHnngmh3QcJACBBp5F0wN1LOjV5TNH30tMZj0l+rGl0AhAeGhC96re7ELvsoPX/F/y
-         jZsOuCNKl3pRh0S1ZUZTKkM/MVpsB2ZtDkiCW+7/5xh75+epFePu74862mfVUieRk06E
-         LSVzsKluIv7TJG6tpUdodsrLuobWIsyx14g5GdyuYIpkJcQ0V4Lnz9AOUqq1lbnzca67
-         AcVHOlubrF4CVXGNHaZaVa9twwWiUsTBI1uaG8KdSASFgPyLMSn44o55aib6huUpGped
-         K9+uAYQIDp7eiH31XWq4/HMoD6U97/tNc2ZeM1hBR040yuDfLoKTptj8zm2VksS28vI7
-         JFGA==
+        bh=GfgBAo0vfxEZARFaZc98GyLRH69WKdvTWalJX1aK/78=;
+        b=cGXERUhCyHn/9TXAQt89AZL/MpsyFqCcfAr8nSqjnrEgcgd9qaOBukOw+CLfmEO2zR
+         PYQjov7P2gkktUDUaUO2V7hfxxNV2mCyeGY32Z0m2ysbxC2UbTG9SmaUDtqJqf36Udwe
+         DzSABzoyR0uX4sN0dT5D0gc91hWNTtMDHRUgcg24nnOlBypP0h5/d4lg1rs5gVEbKmD9
+         NpB872yNW6+9mb9p2MLTXXjnWnnfxOoO94wtB4Tuk7Elhw8wfLC4uF/tuzJfqfnUVJs7
+         hY6604rZj24aSeitiVx3w4aK8H2q6bc0b/B6s3y3iPFU/tglGBB5P5vsT8QMYELtaqRM
+         hhkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1740149840; x=1740754640;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5BYAz7zWuBokToXe1zgtDZ2ht3Qyz0ZzSHLM1mj5x2Y=;
-        b=apcPxKAGt7bXUWxiHSqv2G1tfrl3LJyqEMAE3ZYKp1lul2dnXMN/xmAVdOeFXHgHAo
-         t2fGO6WkI+ydg5H5usj9gXO8BJk2Vv0+1PNkJ6Nq9JQ8eC5sgEzKftljBJIpiIEZCmzg
-         2ai+83TEbV0bs666cKvRYr0mNwGI4MF8tKdDLY1X7EsU+MN04cD9ajrK8hMDL1UWL4rr
-         Cf5+4TJ/jTI3niFH56qxkSCTpkTguDpcolrSPkJg3Eh4N4ka+1Nv765IPsedZPCi6zTp
-         hDdUy7cqnI0xHYk3hB6LTlyHdajtMRGa6yRtZYWyylGF/fsa6z5pE6w7xVzOYou82m66
-         e9Ag==
-X-Gm-Message-State: AOJu0YwVB+QlI/lwTYvVkbphOUDoPwssDxMBI9hKSS3WxUaYi9rktdlm
-	oKces8gsCzj+kZ02/TT92pscuD4WrY5EhQ3pIKuQrHEP/VyzGod4v/kE9Q==
-X-Gm-Gg: ASbGncsaUhHeqaq5gZaqxxNA2tiXxbKzmxNbeEoKbHeGUvAFrpqV2wh0wEZVXyqtgEK
-	7T1p0D/iIPsnv+k9vJHYNVo6NFrc+690eH5DaWOvi5HQsloM/NUlJI9D+gWYKfHEPAqJMMxzQFr
-	skkfY957En8JUrqg/r9nBbsSxhle3BZ850P+Z5sTNpogO3aF+p1yvevJe7l/gDPBfTyzv4GgK+d
-	/lWmA9WMuUO6O1E4mjYu9ZzFLYnEu+s2mC3/Y0AYwSmr3QCx0Xdk21B9DZXYvZ1/xzzFj/ipgXM
-	nG6OxA9KxNp7Y6ggXuNlagB7l8k=
-X-Google-Smtp-Source: AGHT+IEO6gLMXLzFSjD5+UeGiluFWoj/mZ+XXkQUyNjRVYDH66IAPKM25n1ZMXlqNeeQRG8aDedkXg==
-X-Received: by 2002:a17:906:318b:b0:abb:eec3:391b with SMTP id a640c23a62f3a-abc09c0a677mr355588666b.36.1740149839514;
-        Fri, 21 Feb 2025 06:57:19 -0800 (PST)
+        bh=GfgBAo0vfxEZARFaZc98GyLRH69WKdvTWalJX1aK/78=;
+        b=bv/f9cRPU4TpfZYMmvuM5lOISncQFE008ThKuiFYOJT5eIpY9lu1Ur4uv7LEPiIA46
+         kFcomJzJ+pINdlAI9Kng1MNK2i086QFP/quWQ9FFQcYtzdYHfDjreKrx426dZXpi9r1V
+         5h3QFDtI6NJxA0xbqc2EFUXgqrwvqbFfJeEF+xIWJnS9L6r0ERWVgjFN2RxJUlb3D/So
+         DOWXKjtJE+XbjGeVyD3Kf17soK7mQe0Tb0eZpJdQmpk+Pr4TjFnlU72bSQ8YpYqzCIEy
+         vSukPvui2PVWoSxFbiFTLx70zW0m3p9c6Yw1hSyW7O3T61TsPE8gv046DNMG4u/2G4Td
+         oXEA==
+X-Gm-Message-State: AOJu0Yyvunwr7SLOBfecVq+6B2fbQqPPT+bcDRjEYFeQhXboGwxIb0nX
+	d2ckXiyjWjdQXlgZu4ztiYUqww/HkFknSExya6YWAvylAOgvM9ywYNGIpg==
+X-Gm-Gg: ASbGncvDy/hYhmMDMggj0vCU0RZVrO0cUDgzeKXqwtNFH0FxsrthG8ra0basSohkyZH
+	SIXuP/f+2EYpCFcnuI6l66FBfKVW2AEwzx5q+c5opSdMOLu305apTe3c6cq45W9ftgaNmzDXggx
+	bOUMYUtewyXEZG5gJj8Gnwy9T1hXoQ0i3eKEyvKL+JqtQuZ6HEVoV3/X8axTye4xtAdgddaN2rp
+	/c5JzEeBRWznt7g9rQLCm1Rx/yccei0Kk03DwuPkfhlnMJm/fYm1mARUrvz19z1WYGBbJKAOeca
+	c5ap0p6nM1rvLpPvVEgsk64HSA8=
+X-Google-Smtp-Source: AGHT+IEE9MNTDhsdXWQMG9Js3cce1dvydBNg4TDt5gD/QrPDwcoVll7gE6a+54/Ka34ySPlOWqd/FQ==
+X-Received: by 2002:a05:6402:1d4b:b0:5e0:36c0:7b00 with SMTP id 4fb4d7f45d1cf-5e0b7257b92mr3339024a12.31.1740149840197;
+        Fri, 21 Feb 2025 06:57:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aba53232254sm1648020466b.27.2025.02.21.06.57.19
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5dece1b4f70sm13775842a12.12.2025.02.21.06.57.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 21 Feb 2025 06:57:19 -0800 (PST)
-Message-Id: <43a0592a462cf68bcfdc54373da2319431c3c1ca.1740149837.git.gitgitgadget@gmail.com>
+Message-Id: <35ef0ee2b9925748ae3b6b6ac68e79c71782e5cf.1740149837.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1863.git.1740149837.gitgitgadget@gmail.com>
 References: <pull.1863.git.1740149837.gitgitgadget@gmail.com>
 From: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 21 Feb 2025 14:57:16 +0000
-Subject: [PATCH 1/2] add -p: mark split hunks as undecided
+Date: Fri, 21 Feb 2025 14:57:17 +0000
+Subject: [PATCH 2/2] add-patch: update hunk splitability after editing
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,61 +77,83 @@ Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-When a hunk is split each of the new hunks inherits whether it is
-selected or not from the original hunk. This means that if a selected
-hunk is split all of the new hunks are selected and the user is not asked
-whether or not they want to select the new hunks. This is unfortunate as
-the user is presumably splitting the original hunk because they only
-want to select some sub-set of it. Fix this by marking all the new hunks
-as "undecided" so that we prompt the user to decide whether to select
-them or not.
+When the users edits a hunk if they change deletion lines to context
+lines or vice versa then the number of hunks that the edited hunk can be
+split into may differ from the unedited hunk and so we need to update
+hunk->splittable_into. In practice users are unlikely to hit this bug as
+it is doubtful that a user who has edited a hunk will split it
+afterwards.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- add-patch.c                |  3 ++-
- t/t3701-add-interactive.sh | 10 ++++++++++
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ add-patch.c                | 12 +++++++++++-
+ t/t3701-add-interactive.sh | 21 +++++++++++++++++++++
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
 diff --git a/add-patch.c b/add-patch.c
-index 95c67d8c80c..f44f98275cc 100644
+index f44f98275cc..982745373df 100644
 --- a/add-patch.c
 +++ b/add-patch.c
-@@ -953,6 +953,7 @@ static int split_hunk(struct add_p_state *s, struct file_diff *file_diff,
- 			* sizeof(*hunk));
- 	hunk = file_diff->hunk + hunk_index;
- 	hunk->splittable_into = 1;
-+	hunk->use = UNDECIDED_HUNK;
- 	memset(hunk + 1, 0, (splittable_into - 1) * sizeof(*hunk));
+@@ -1182,19 +1182,29 @@ static ssize_t recount_edited_hunk(struct add_p_state *s, struct hunk *hunk,
+ {
+ 	struct hunk_header *header = &hunk->header;
+ 	size_t i;
++	char ch, marker = ' ';
  
- 	header = &hunk->header;
-@@ -1054,7 +1055,7 @@ next_hunk_line:
++	hunk->splittable_into = 0;
+ 	header->old_count = header->new_count = 0;
+ 	for (i = hunk->start; i < hunk->end; ) {
+-		switch(normalize_marker(&s->plain.buf[i])) {
++		ch = normalize_marker(&s->plain.buf[i]);
++		switch (ch) {
+ 		case '-':
+ 			header->old_count++;
++			if (marker == ' ')
++				hunk->splittable_into++;
++			marker = ch;
+ 			break;
+ 		case '+':
+ 			header->new_count++;
++			if (marker == ' ')
++				hunk->splittable_into++;
++			marker = ch;
+ 			break;
+ 		case ' ':
+ 			header->old_count++;
+ 			header->new_count++;
++			marker = ch;
+ 			break;
+ 		}
  
- 		hunk++;
- 		hunk->splittable_into = 1;
--		hunk->use = hunk[-1].use;
-+		hunk->use = UNDECIDED_HUNK;
- 		header = &hunk->header;
- 
- 		header->old_count = header->new_count = context_line_count;
 diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index b8a05d95f3f..760f3d0d30f 100755
+index 760f3d0d30f..cb81bfe64c8 100755
 --- a/t/t3701-add-interactive.sh
 +++ b/t/t3701-add-interactive.sh
-@@ -1230,4 +1230,14 @@ test_expect_success 'hunk splitting works with diff.suppressBlankEmpty' '
+@@ -1240,4 +1240,25 @@ test_expect_success 'splitting previous hunk marks split hunks as undecided' '
  	test_cmp expect actual
  '
  
-+test_expect_success 'splitting previous hunk marks split hunks as undecided' '
-+	test_write_lines a " " b c d e f g h i j k >file &&
++test_expect_success 'splitting edited hunk' '
++	# Before the first hunk is edited it can be split into two
++	# hunks, after editing it can be split into three hunks.
++
++	write_script fake-editor.sh <<-\EOF &&
++	sed "s/^ c/-c/" "$1" >"$1.tmp" &&
++	mv "$1.tmp" "$1"
++	EOF
++
++	test_write_lines a b c d e f g h i j k l m n>file &&
 +	git add file &&
-+	test_write_lines x " " b y d e f g h i j x >file &&
-+	test_write_lines n K s n y q | git add -p file &&
++	test_write_lines A b c d E f g h i j k l M n >file &&
++	(
++		test_set_editor "$(pwd)/fake-editor.sh" &&
++		test_write_lines e K s j y n y q | git add -p file
++	) &&
 +	git cat-file blob :file >actual &&
-+	test_write_lines a " " b y d e f g h i j k >expect &&
++	test_write_lines a b d e f g h i j k l M n >expect &&
 +	test_cmp expect actual
 +'
 +
  test_done
 -- 
 gitgitgadget
-
