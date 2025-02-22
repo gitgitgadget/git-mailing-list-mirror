@@ -1,94 +1,83 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737151E489
-	for <git@vger.kernel.org>; Sat, 22 Feb 2025 02:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9651E5701
+	for <git@vger.kernel.org>; Sat, 22 Feb 2025 02:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740190551; cv=none; b=udgu1etN6+vQhcruMPygScMw3cg2mdtzoRCYmdvjFcZlCK1JqcZifVbg6g0l1rHpcxjkc0JDQlDnrA0ptnuWirbhwTd1pzsh0ZoJySWS8HtRZoWsqygsCT2bya51mATFxJqCqExRFecoJGWRpVLXGU8eEPJjsxzZDODA7Dc0QOQ=
+	t=1740191213; cv=none; b=eipYGkAieINDab0skkLueKUsX3M6R5UMgLKhltNEm4kI1q8uT00I9+4LLnfAdwoRZN03bDhYBlK04NmNSlrx2fI0vQZGwpFj4JhPngw/yVoK8TkpGzuWroJsTyjIxIok7JVu4C4golRGfKhUsahjOtai9Q5DZrpt4beGn1YQUR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740190551; c=relaxed/simple;
-	bh=BPvWVO7vAWyXIC6u9L0UHq+vXheOfKFAAlkp53o5OAA=;
+	s=arc-20240116; t=1740191213; c=relaxed/simple;
+	bh=7oX4cn/50BcE5XfTOjxG8ZS9i9N0UHUYm9MG3bPlqiI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pv/wlVZTk9F15PqurpxGqesTceYRyKHrydxfQ1zGi/snmy3yyqrgIvMJ731Jd5OnAuI0eQEENwfZglnNVvbEXsm09MJvec6dX1hAtZq6PzbV5mrLWBkj4W+4oFXULLCT1arJAMFvq3vrlmELq6KDi9RGJdTOnQ6SAW7OpWgw2Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y+kW/KxU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S1oI2aFZ; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=StuBpymG2aew4h/hXl2edtrHQiEgEtikzCYs18ts5K/u//UzEdtyZluUeeycMCZR9J44EnmPnaRhr7UWbbuCkEpIm9+CX4kb90BqglkSvF4kizJvvE3x2wkWbUmw6zvMZ+8a8r4ZsMu+su3SAeVS2fwaKEdRpBqgLP7u6nR8HLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=03v9938j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RSS3b8pZ; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y+kW/KxU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S1oI2aFZ"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5E8E413809AB;
-	Fri, 21 Feb 2025 21:15:48 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 21 Feb 2025 21:15:48 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="03v9938j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RSS3b8pZ"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id C73A113809AB;
+	Fri, 21 Feb 2025 21:26:49 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Fri, 21 Feb 2025 21:26:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1740190548;
-	 x=1740276948; bh=QgWQknxkWBj78zrEl42ZVbVceLSvF2pFDx+2UkX7tXA=; b=
-	Y+kW/KxU/IAQ4woYF3xGnPxSCOm93zQBWserQQt5aQiI7aAFyfa7rsVN3WPT30oh
-	R3iT7PcGr5ehspaamDDQUAgMSMgY8rn+2NiHhBN1ADnuKbI9OZ0OZmcO0cT7SzUw
-	9iDULqKvoBa9XVTeY15zDkarGzD6XKA4PuhBrPsGWb42RROvAD+ccricH+rnNmIc
-	sJkNscoI/j4ifaSAgqicRTLlYolM/50PCrT2h2i+e2CY7O1MZhyEPq12KrtZlO6w
-	QCTAGkrcMCfKtn05exRa+/HZvNIlNWFj6VktgoT7jdLcvkX/b4IiA4sct1MWT06V
-	GgIC5Ob7xv5Eadnm77odNA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740191209; x=1740277609; bh=Xbi/uNrM0J
+	GDfW1aTau2lQpvXTkw1QT6dMMUp7niWWk=; b=03v9938jXtLemzpbFqSUOg4msE
+	xb6NySEbdA47+A3B4/po+Hb/FpCb0nyR2Zy42LlMSmPDKXV3t6/LgcxL9FMp4QN4
+	zj+jsgRbf1UQEhwy0CjjCEHjtNdohHYPBPSWb/V23lIZiYCW/Wo6Q0EaJyb6L+Z/
+	YqWw5aD/RbdPb/U4IjPxAtreAmepCv3brA4/kJPSQ8MfUnk3COHDQEGnXnMB+EZ+
+	DC/wdzzhBmwD+YdvZhhtr/XQypgTtvbMqJ8aLn7iM9adjlWwmaBrJgtq4+Jka/Q1
+	s2DQjgutabpVdHCMunSdUSruraG4vlrJKYThsSxHRjtGJ81KSI9xFQ3TA0rA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740190548; x=
-	1740276948; bh=QgWQknxkWBj78zrEl42ZVbVceLSvF2pFDx+2UkX7tXA=; b=S
-	1oI2aFZIPO+YNy7JL5Kx58sfWmOd5RYwAxwDePpixDXBWrumsqPQ18m9uzWrkb5t
-	XYyO+nAAFyPsIU8+2EcHAemTWDMCNOhEXeXaRiqII0Wl/nKDZAMe2YcvnJ6crTEf
-	kPDtU8ULL64rdPc0rJ9fqed6Mz9QD5LXY02Bc+j/lZi0vTV3y7wgCyaWYCgQ0Npo
-	KgNVle3mIcltubZnsMy1WgXLYHFCmd+V4K/pA9/3ZFVYuZhlmBg27UNDZtpdN6ZB
-	JoKlvqFc2s6yKFApWRRZtFrnQZwDetEzltSmlvnIt5yihmQDaryIEhbs6MDdfRG6
-	qqKH+pAnWCzcENtRefPLA==
-X-ME-Sender: <xms:VDO5Z0LStv0SaHbiTm7zaQ4pAhiz26N9wEeLDYc2fLquu03y5PA1kw>
-    <xme:VDO5Z0LujKAZGA09sHMouWTLND2dtvmDeB7o5FJeWigqI2ArpTXQ2dczkkIlTaOyD
-    t2oHgg2bur97kYOFg>
-X-ME-Received: <xmr:VDO5Z0sWSdJwGN9VBrRMhLUVQ2f5BgnWxjhWjoJDnwTA4nZ1cKbMYX2-uaNu75nEVHPcG-KrLgQ9WNmX3KYEGO4uE4kLuxeXDWjNHYg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejudeiiecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740191209; x=1740277609; bh=Xbi/uNrM0JGDfW1aTau2lQpvXTkw1QT6dMM
+	Up7niWWk=; b=RSS3b8pZw09/uo8PRw90N7fbKJmQ8DR4IHNNJfxLpwrNdLsh6ol
+	cq0LsXDym1ItGmD9Ingv/ISi6yns/W9BwhJXspNczr2lqImHdVAAwM2KlwPsqze1
+	8G3c+xK2XbYDIWT6helBcFV7cuJ4Np8Qp306iEEPu7A7/mnO71J6KRDfApxx32yf
+	V4dMcP4ZOoSfPk8CNjgeePL7JffjoepeGWfvu8OtDMFhQviyvqEUsOY6afMD//D6
+	HOfbttX200uxZwAIxsRfBMZWcjOdNlbCNs2D755TzxCF5adbI4Aji5mgnBzX72pS
+	lWou0s92hTEMoZR8EPgRmmwNKicvvQ/BFqg==
+X-ME-Sender: <xms:6TW5Z6FKYV-gvys5zJzl64TgYnjYRnwe8UVZAXfSiC-3Ptt88ewqLg>
+    <xme:6TW5Z7WI27dcuSfjG7H46sQLZx1M9bHge_QbFhZaVGtcFFCD_0AuQbYjEmrJYuI5q
+    fbXc8JvQAhiqUjAGw>
+X-ME-Received: <xmr:6TW5Z0IriHmbKPm0aU5XlWDbM5Ru0ICJE5XIs14sLYiMwr1h_maF5RKOJWz0MvvkcEabniUJfGtJ72oxQvlI1grW7Oc6pVPBRwdtOZk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejudeilecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
-    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtih
-    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtg
-    hpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuhdr
-    khhlvghinhgvqdhkohgvnhhighessggrhihlihgsrhgvrdgtohhmpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:VDO5ZxZMLQ9UwtpW8BAH01YGB_zW2G_OI46nbqxxGrr5wCNKVgruyw>
-    <xmx:VDO5Z7btMJ2QRv7Ux064C-57_wiTTLmUJINnve0E03b_H-EbEJU7AQ>
-    <xmx:VDO5Z9BWFVypF2-ryyBfc0hhWSUGziV1SGLuQ-DM6ZFe2oY8qFEgYg>
-    <xmx:VDO5ZxZocjuz5UhKhmA_Ks4Y0SEPXf5yYL_VCATXLnDFM8uT1EBysg>
-    <xmx:VDO5ZwNMZYqQkHQe8u054OKBGFWSTtJht-F7BTkC5WVMkvlNxpItDZIO>
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
+    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
+    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepjhgrtghosgdrvgdrkhgvlhhlvghrsehinhhtvghlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:6TW5Z0Ejk3f5dBv4yAgTu3ItihFsr2uUz2xfAkJ3NUHIBGfzHxbbSg>
+    <xmx:6TW5ZwUtgjWzQD21ySdaEUftNdvUiWXRDV3Aqj8-CdmQSkRlzTb7vQ>
+    <xmx:6TW5Z3NFYhQrPrs-4pTHoYhefRvXMecj5UZ8OtPkib7e94lIcuCI1Q>
+    <xmx:6TW5Z3113ioORhZ_cx9f4eYxyfy7UbL3SSIcvU9Onu9kn7cOvErdpg>
+    <xmx:6TW5Z-xWqKTtvGE5k8IOnevsnEwhJFs-2S44rRzIKvxbyxyQiwr6HnGE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Feb 2025 21:15:47 -0500 (EST)
+ 21 Feb 2025 21:26:49 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  Uwe =?utf-8?Q?Kleine-K=C3=B6nig?=
- <u.kleine-koenig@baylibre.com>
-Subject: Re: first bisection step takes quite a while
-In-Reply-To: <CAP8UFD0xsZWDnH9kLJ4eWfzq4nvAm+qMHcdbZSf0d4-yPG9+5g@mail.gmail.com>
-	(Christian Couder's message of "Sat, 22 Feb 2025 00:06:56 +0100")
-References: <arrp2ye3kid76pwghguu5z4jkpv7xsskzdsjunbfkgmwejgby5@qh4phxwzenyp>
-	<CALnO6CACJTKasKT9rX9w4_r9q0DPOPZhGnHt8f65oo6Q=8NxEg@mail.gmail.com>
-	<xmqqikp4ctoh.fsf@gitster.g> <xmqqa5agcbx6.fsf@gitster.g>
-	<CAP8UFD3XVgJCc2Qa3wWZA54fg38jcpyiDtQOPNc8UQT9uL3vWg@mail.gmail.com>
-	<xmqqcyfbb35h.fsf@gitster.g>
-	<CAP8UFD3EpwK3edfBfqRWmcncRFG--Q-yHR=K1wZnDHJs56ZipA@mail.gmail.com>
-	<CAP8UFD0xsZWDnH9kLJ4eWfzq4nvAm+qMHcdbZSf0d4-yPG9+5g@mail.gmail.com>
-Date: Fri, 21 Feb 2025 18:15:46 -0800
-Message-ID: <xmqqldty912l.fsf@gitster.g>
+To: Jacob Keller <jacob.e.keller@intel.com>
+Cc: git <git@vger.kernel.org>,  Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v2] mailmap: fix check-mailmap with full mailmap line
+In-Reply-To: <20250221-jk-fix-sendemail-mailinfo-v2-1-9aca7dc05dbb@gmail.com>
+	(Jacob Keller's message of "Fri, 21 Feb 2025 15:47:58 -0800")
+References: <20250221-jk-fix-sendemail-mailinfo-v2-1-9aca7dc05dbb@gmail.com>
+Date: Fri, 21 Feb 2025 18:26:48 -0800
+Message-ID: <xmqqh64m90k7.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,49 +85,89 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Christian Couder <christian.couder@gmail.com> writes:
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> On Fri, Feb 21, 2025 at 9:24 PM Christian Couder
-> <christian.couder@gmail.com> wrote:
->>
->> On Fri, Feb 21, 2025 at 6:47 PM Junio C Hamano <gitster@pobox.com> wrote:
+> From: Jacob Keller <jacob.keller@gmail.com>
 >
->> > >>  * The "this is good enough" logic currently allows us to be within
->> > >>    0.1% of the real halfway point.  Until the candidate set becomes
->> > >>    small enough, we could loosen the criteria to allow larger, say
->> > >>    3%, slack.  This code is written but not enabled (with "0 &&").
->> >
->> > The above follows the same reasoning why we chose "division by 1024"
->> > in the first place.  The illustration patch postulates that we could
->> > be way more aggressive than 0.1% while the set is large by dividing
->> > 64, without wanting to loosen the criteria near the end of the
->> > bisection session when the remaining set is reasonably small like
->> > 1000 commits.  So we cannot rely on integer division truncating.
->>
->> The code you posted above uses 10000 as the threshold, not 1000:
->>
->> 10000 < nr && abs(diff) < nr / 64) || abs(diff) < nr / 1024)
+> I recently had reported to me a crash from a coworker using the recently
+> added sendemail mailmap support:
 >
-> Also if "division by 1024" means within 0.1% of the real halfway
-> point, then division by 64 means 0.1 * 1024 / 64 = 1.6 % not 3%.
+>   3724814 Segmentation fault      (core dumped) git check-mailmap "bugs@company.xx"
+>
+> This appears to happen because of the NULL pointer name passed into
+> map_user(). Fix this by passing "" instead of NULL so that we have a
+> valid pointer.
+>
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> Changes in v2:
+> - Just fix the NULL pointer dereference, leave mailmap resolution as-is
+> - Link to v1: https://lore.kernel.org/r/20250213-jk-fix-sendemail-mailinfo-v1-1-c0b06c215f21@gmail.com
+> ---
+>  builtin/check-mailmap.c |  2 +-
+>  t/t4203-mailmap.sh      | 12 ++++++++++++
+>  2 files changed, 13 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/check-mailmap.c b/builtin/check-mailmap.c
+> index df00b5ee13adb87881b8c1e92cac256e6ad319d1..be2cebe12152e38d3bb8cf12948823c8d710bdda 100644
+> --- a/builtin/check-mailmap.c
+> +++ b/builtin/check-mailmap.c
+> @@ -35,7 +35,7 @@ static void check_mailmap(struct string_list *mailmap, const char *contact)
+>  		mail = ident.mail_begin;
+>  		maillen = ident.mail_end - ident.mail_begin;
+>  	} else {
+> -		name = NULL;
+> +		name = "";
+>  		namelen = 0;
+>  		mail = contact;
+>  		maillen = strlen(contact);
 
-Heh, I suck at arithmetic (but that is why I have you guys around
-for correction ;-).
+OK.  I audited all users of map_user(), and everybody else
+(including the other side of the if/else we see here) follows the
+pattern to point name and mail into an "ident" instance, which would
+never be NULL.  The way an "ident" instance signals that there is no
+name is to have the name_begin and name_end members point at the same
+byte.
 
-The current code makes sure that we do not punt with an inexact
-result below nr for which nr/1024 is truncated away.  The overly
-loose cutoff that uses nr/64 needs to stop kicking in way before
-that happens to make sure we do not affect correctness with the
-change to optimize, and that is the only reason why 10000 was
-arbitrary chosen.  The threashold could have been set at 5000, or
-100000.
+So this change obviously is a good thing to do.
 
-Exact numbers do not matter as much as the real issue, i.e.,
-limiting the possible damage to correctness from the change near the
-end of a bisect session.
+The callee, map_user() does assume both email and name pointers
+point at valid strings, passes them to lookup_prefix(), and have
+them receive what a mailmap_info instance records.  We may want
+to document the calling convention a bit better, but that is
+obviously outside the scope of this immediate fix.
 
-Thanks.
+Thanks.  Will queue.
 
+
+> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> index 24214919312777b76e4d3b2b784bcb953583750a..4a6242ff99b59ea1a46eb14ca812c94e5e620162 100755
+> --- a/t/t4203-mailmap.sh
+> +++ b/t/t4203-mailmap.sh
+> @@ -113,6 +113,18 @@ test_expect_success 'check-mailmap --stdin simple address: no mapping' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'check-mailmap name and address: mapping' '
+> +	test_when_finished "rm .mailmap" &&
+> +	cat >.mailmap <<-EOF &&
+> +	Bug Reports <bugs-new@company.xx> Bugs <bugs@company.xx>
+> +	EOF
+> +	cat >expect <<-EOF &&
+> +	<bugs@company.xx>
+> +	EOF
+> +	git check-mailmap "bugs@company.xx" >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'No mailmap' '
+>  	cat >expect <<-EOF &&
+>  	$GIT_AUTHOR_NAME (1):
+>
+> ---
+> base-commit: b838bf1938926a7a900166136d995d86f8a00e24
+> change-id: 20250213-jk-fix-sendemail-mailinfo-32f027b1b9e7
+>
+> Best regards,
