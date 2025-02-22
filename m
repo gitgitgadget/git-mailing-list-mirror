@@ -1,65 +1,85 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A771FFC69
-	for <git@vger.kernel.org>; Sat, 22 Feb 2025 07:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57163224
+	for <git@vger.kernel.org>; Sat, 22 Feb 2025 15:01:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740208860; cv=none; b=W5p9OYWkJ8PujAoAzDDq877NsBbgfw2STRcVQlQcZ057Dw6uh9bDgD05eG03ufG3CNCGmWIbmszRmDee4bF7KZrBihowdXzfPO40wt1W7bVXcqFQMR/+U7elalcqm/5jECnrU4lndVYSweqEHzf4f+oqEFCNEZNhTHYup8nfof4=
+	t=1740236495; cv=none; b=l6P8WIXl0MJkfGCe0DtNrCpb4MWz7NZ82Vq9RW8oDPPIanrlGjXfEbsT4c1kDxnCAe9y2fk7FvmFSK9IkWlgTmN2JdgEMpGQTMT8ZCMIJzCasuGk/JUJdwbAPADxiLhK68avwgzJs7yCfHVODigbawb/xhxnsiKuC40/njFNTDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740208860; c=relaxed/simple;
-	bh=g1ek1/0xUve6dkA4L+aX2OXGYgkM7ZDLdgyNn7AK69w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jUPAGFya/5UQjSdkPwxLMkwK6Sk840QQA/v7dL32rqH2ZgCE/i/TAzjD681pqhNn5S5la5nlmsCkS3I3+oIE0pcYIi0g6FZqQjVkBa6RftolHkj6htX3OBLHZN5cBjk2EkD7OfXq5d02uQ1v+WfnNPR54UalqI7M5HbR2dgLVks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VeheV7kS; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1740236495; c=relaxed/simple;
+	bh=RfYP5WISnmvFBXWNuEx1HemsFnk8GOmc8nBGB8fQtwU=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=jDgknZ3h/PAFKZmLgDT/E8uWJVe7m4vJFdRD+Ii4qm86dGWXBY+N14gtBavGImYnFwM0+s2wjUzlU7TPKST1uz81tVfLM2iF+M6bRPd0fOxoYsF5hj1XhFp2c+zLTnXHTrajE6b06sn00Hf/6/79BF77Slqg4GXAog6qZdPWOqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kPKU/waW; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VeheV7kS"
-Received: (qmail 17237 invoked by uid 109); 22 Feb 2025 07:20:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=g1ek1/0xUve6dkA4L+aX2OXGYgkM7ZDLdgyNn7AK69w=; b=VeheV7kSg1rhhEIp9CPH5h+WiOo1HEIph8pFR4xNV1sFKhL8sKOnu6HRf8PKIexOzUE/zUNhDVGrc8jR14xzdwY4TKe4gPAEuS1brNARmTnrMNs+V0GC2xCBqxKgoyexPp6IAcMM1PDDxAJ5vP9VZiSM4fS5l0NUPmVSHnuIbBcC12KrWP3cDoxVOanULiko8509F0vGcjnCC/53tLkIU+0h5aeGEVBjRRw6yrGS8vJgh1gb7XFvu3wRrOVxKDkuyIqYh3yyvnV7e/W4phovDvySby9S99Y24j41uvi6yspLvRgnT6z+duj4x76n95/6W01/cvJxB5B7fNGcP4BB+Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 22 Feb 2025 07:20:50 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15203 invoked by uid 111); 22 Feb 2025 07:20:48 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 22 Feb 2025 02:20:48 -0500
-Authentication-Results: peff.net; auth=none
-Date: Sat, 22 Feb 2025 02:20:48 -0500
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	shejialuo <shejialuo@gmail.com>
-Subject: Re: [PATCH v2 11/16] rerere: let `rerere_path()` write paths into a
- caller-provided buffer
-Message-ID: <20250222072048.GA3096947@coredump.intra.peff.net>
-References: <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
- <20250207-b4-pks-path-drop-the-repository-v2-11-13cad3c11b8a@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kPKU/waW"
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e46ebe19368so2495856276.0
+        for <git@vger.kernel.org>; Sat, 22 Feb 2025 07:01:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740236492; x=1740841292; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=RAQblaPvihd1ZKS/S2cLBqaJ6MG7oo4PhXY6Y+0IFN8=;
+        b=kPKU/waWnCekE4tc4J94wCM6H/VFc5yQ7HlTx/bVPOEg+sUXPCo4MppivZLgaWKsJn
+         5Lt1ArItLpDGtBsjsrXEU8m1dQb6ZPsXaseRjFGdwzlrsds0guQI98B1It4jg7GtKVlI
+         eaLgfQmZGKeUVRLk6N8oOD2rJNjLvljqOtWX3uUAPf1qG3mC2B3FDS5MM+gp7n+/2XvY
+         K52RXas9KEwYjn6fl6UJW8UKkwXUtNpqg8T6vxM70pMxmVL/Q0STljU3XqSG6MYIFF+/
+         6kdLu38tXBVm6Z8PwDECPgZbDUJQokw+lQQF/i5CqU6EU3+vOOaP8rQtkuGQR9Ap4Shw
+         CuSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740236492; x=1740841292;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RAQblaPvihd1ZKS/S2cLBqaJ6MG7oo4PhXY6Y+0IFN8=;
+        b=Diq9J8BoT4M5pQf70W54RHiQ6NhlsdcLiJOyoPkWNrLH+n0Sg9JDLwdP577EmtnIYz
+         kCMnh/mTPAG4scaUFJ2xOlq+2HH3abESWvFrkoLD6IiBwT7H8zHqqXMmzQ8zAjJ5XHlP
+         oHvsKEjx6hx4xht2Mt9etG/ul/llPgDAjM19NkX4oe8Eg0e1/S6nSXMbAKC7n4vTO6me
+         VT70hvh1ZUsgLzUP3gafWy39IIYQeG9XIsg+qzOi6WcwXom5NBburxq9XWjwnbcjjUsL
+         jxWNCbsb677XcTSZrNfE/JHRowRoXRqusF+8MQfKvK1IRltAIKIuBu6t5oW8qmSuoJhk
+         yLmg==
+X-Gm-Message-State: AOJu0YxlnMXhOEzr253ACpFgaJ8ClplnxHVxCb3uvJfkLaewoiXJZp8C
+	1n8r5P/NVJDc9U+lTZQQKNQvD2Y/tfAh/Smx7uH6T30dY2keXD8XF8hpJDN/fFH2NIzQC6dOaJB
+	wG7/esCWAJ08WkvNvHwG3glwPGpXrrZvP
+X-Gm-Gg: ASbGncv8UAR7OFizYvM8qnKXM9ORg1rSalbJnOND5SOMhQsRTNAAqgVCwKlh2V/5657
+	2RBtC44JBJNN3QMo0OyZOBaVHG8UXh6Gziz8oezVJg9snbNcbTPgJie4+cRxB6vKwhy8E7dJFv/
+	rw+0vr40g=
+X-Google-Smtp-Source: AGHT+IH6lp/PDzvmiW8uGgBkHHVyJuR3dRhRYfhk9856Xsklq5fyO/EWaDVvNdW9a0Oyx1LfMpI9kcKpe8qCOnUFnYA=
+X-Received: by 2002:a05:6902:1026:b0:e5d:fd9c:f4b with SMTP id
+ 3f1490d57ef6-e5e8afea2f3mr4561643276.21.1740236492304; Sat, 22 Feb 2025
+ 07:01:32 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250207-b4-pks-path-drop-the-repository-v2-11-13cad3c11b8a@pks.im>
+From: John Giorshev <john.giorshev1@gmail.com>
+Date: Sat, 22 Feb 2025 10:01:22 -0500
+X-Gm-Features: AWEUYZky8vP_cIaQef1uT_eKq9RZMfZiIEWZTBRUY_JA9Dq5-g2ZcL01V0gFLE8
+Message-ID: <CADJmAEiE=9Ar8CJFRWeN9f0i7TVDOF7VcV+4f-UaPw0m6Frh6w@mail.gmail.com>
+Subject: git client erroneously downloads files when --filter=blob:none and
+ filtering unsupported
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Feb 07, 2025 at 12:03:36PM +0100, Patrick Steinhardt wrote:
+The git client, in my opinion, erroneously downloads files when
+--filter=blob:none is specified and the server does not support
+filtering. I created a related question on this before coming here:
 
->  static timestamp_t rerere_last_used_at(struct rerere_id *id)
->  {
-> +	struct strbuf buf = STRBUF_INIT;
->  	struct stat st;
-> +	int ret;
-> +
-> +	ret = stat(rerere_path(&buf, id, "postimage"), &st) ? (time_t) 0 : st.st_mtime;
->  
-> -	return stat(rerere_path(id, "postimage"), &st) ? (time_t) 0 : st.st_mtime;
-> +	strbuf_release(&buf);
-> +	return ret;
->  }
+https://stackoverflow.com/q/79413099/15534181
 
-This "int ret" should surely be a timestamp_t, no?
+Instead of giving a warning, it should instead error and exit. From a
+user perspective, when I request "don't pull down the file contents"
+and it does it anyway under some circumstances, this is unexpected. In
+my case it caused performance degradations on a repo scanner.
 
--Peff
+I propose something like this:
+
+https://github.com/jagprog5/git/commit/c4bd8c9640c1491dc6e23acf31fa0230485b68b1
+
+This is not backwards compatible. My question is, how best should this
+be handled?  Is this breaking change ok? Or should there instead be a
+new CLI arg or config which enabled this new behaviour. Looking for
+advice, thanks.
