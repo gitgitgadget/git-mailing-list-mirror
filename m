@@ -1,91 +1,89 @@
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
+Received: from mail-pj1-f67.google.com (mail-pj1-f67.google.com [209.85.216.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8890A335BA
-	for <git@vger.kernel.org>; Sun, 23 Feb 2025 10:29:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6A9A95C
+	for <git@vger.kernel.org>; Sun, 23 Feb 2025 17:37:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.67
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740306594; cv=none; b=AHO2zUxA33L0QrwsvNRHTz+tYcaQPugki88+ydVHsDc48NM80KyC9fO8+vh0yEIq6PoYo3Xr6X1Z7n34gcU5vCocLr6XV1pv38PcM50Wdc+bTYOlGuUJEq3IBytnx/tgVWs7sZ926UE4fiaTYfJf+WPuRxAnjkUs4ZIfxphe1i4=
+	t=1740332232; cv=none; b=mQ9eNyz6whbNBWu72k1VuXyejdTTfPt+fZLpiKqfdkpsXC2qJhCmr195/8EVz/6kBP5FkZDqGLEqHpKNLjJUG7OGNZV7P1B7SN2BuQCpZV3Uwm14cMI4X2Z+5FwnSBMmox6O8VUGrPjjDiToOf9IYeMFn2L44ldJ167pNcQ7hLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740306594; c=relaxed/simple;
-	bh=+3SJ1L2+gtwSbDAvmh7dLc3x7jJ95ttgzPCWeTTvNv8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=WDw/91R+xPDEWWOr3ZFpTSLS1wG72ktvOJYfnrX9ZxmpJf/zh4fDVzMypLj/wv3sTuaAVY71IdkZizghptreJ5JWPFReMO1qUX1WtWe2fZRWysbcP7jQ9G5nIK5/OPfObz47dzg/F6GNRdXi63Ab1d7DbijEaLi7NjrgyMjXn3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mYWv2Obx; arc=none smtp.client-ip=209.85.208.178
+	s=arc-20240116; t=1740332232; c=relaxed/simple;
+	bh=RSnNvKwx1cdPZAxunBxSWDw/jGmzwRdH7qei40cADkM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=JSXaqoRlqbUUcPk9j1tU0JCNpRf3g3oT6L3Z3XzNTg9fJOregA7HoBD6HbmBGMWaAiYyOxPJpgekC8cU8xwAKKKT08LgdxP1jTw1rA/qOWXdmiZqLzqk59YXqB9AMgp/IrdiiuqQlFM/q1IJJBexwbSwmQVskYss8lEiSYEHuUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CiG7eAa3; arc=none smtp.client-ip=209.85.216.67
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mYWv2Obx"
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-3078fb1fa28so27346381fa.3
-        for <git@vger.kernel.org>; Sun, 23 Feb 2025 02:29:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CiG7eAa3"
+Received: by mail-pj1-f67.google.com with SMTP id 98e67ed59e1d1-2fc0bd358ccso7537690a91.2
+        for <git@vger.kernel.org>; Sun, 23 Feb 2025 09:37:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740306590; x=1740911390; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+3SJ1L2+gtwSbDAvmh7dLc3x7jJ95ttgzPCWeTTvNv8=;
-        b=mYWv2ObxgREuXOGgwtgoKWJEQcmHEJo652YLPrDW/y/zY4f64X8zTZJA80Yrpc08/J
-         O9hkpRGiGN4+qdP89iDpxZ3Q3haPwzxkLJ+Dl3DIo5TdTopVxu3l57mE8iOi2FFgKv51
-         uzdN0sNM7yu7liwP6vndn8ZWA9s1dvUbSwi2wmm0Y3ci7FvvIp2KAYF/y0/b42J7J0oK
-         SzTsMtDQrQdCWoc8ySGC02g6rn0XmSSHCoB+mHtCfkVvpJLXT+I50c4Ze5ixgAs2XUsG
-         ZJ5WM2vGESEZiGxkvUnsaoNCZWJjbBks2Bq7LZROgfEDNv+fR68aY0QXrjY7dhzaU+Ov
-         soMA==
+        d=gmail.com; s=20230601; t=1740332230; x=1740937030; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=07xx3+J+c9MsNr6SmtYgKkpnDEVju31YMKAaKHaId60=;
+        b=CiG7eAa3SKa8gCY3vN/J+56ZChqEUCgngGxVI9sw8jGvuvstN7LGZIoiqqJR3fRVhw
+         2gHpRFm7Zr8hqF0jVxXs9RPVYeGp4KK00/Bm6LMR2U02W0JSKO3bO98G7fpbnP08fV0v
+         8h9uiRAtaUKBo/MzRUKamHHQhN6/RWw0RLQPCU57umSBU1JPp7Zf0vrvpjuEu6n7K7RC
+         pEPNnMWoJpj/dfgXFZRgqZb1Ba1BtzS2fe3tHuRW3JywVHhN7tdUuUmCmW5O4P5vAZ8m
+         N6PYZVoDcUFheJMPGfHRuCfmfou0Vss0CN4aVXS427FXgnw51HjkrNLV5MNIHl1JdJBP
+         JNZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740306590; x=1740911390;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+3SJ1L2+gtwSbDAvmh7dLc3x7jJ95ttgzPCWeTTvNv8=;
-        b=fRWqwAP78xjxvevrTcqkyyCTvp2UFYMjUcLgjxU1Ct1hMq2khQWA2I2hi7EEm0Eihd
-         g2w5U5xNRXyFYG3A3aRWY7cEQDxHQEF3ctkSi8uM/muBuytq9nb8EDZHcRANXIQ375/z
-         d6Rht0PGCiSVBFCokEh/rOlfZApJBHGiedkObCUHTH5me8LdKy6c6/YTyj92yJ2B/pxO
-         VC14GcgXR3fonmk1Vn2Nko+T2uHS1J0T1x9m2vWPhF7cqyAEasbLQcet1eTL2UoLJ1Le
-         NNhKENDH+a9xI+FQuf+NtW29e+TIRcrm/1niYAntPy1EmS1r+vaLuAjfTbOt/1vimjqa
-         YuCg==
-X-Gm-Message-State: AOJu0YxlyYW/VmWX4xFNAoyaYjvwDj2d87SuqawgmcE++ZX93TsIvTUW
-	ZfvX3ugrXQYuC77TGYUfSoyEFAwolYP4UR6YtYp1l4++upfjNW32UotpdM2kwJa2KlbcrMrFYL1
-	FnESLYNxmYSp8l3oO8OddPWva/3C7PeuEVnA=
-X-Gm-Gg: ASbGnct/OszJiAQWLSwol722HwX2dmjPXv/EK6MDd0osNo8xBWN+ejomA+RF6ivh+KL
-	Vny+qImSXuzcCSxWIH0fdFrDOR0XkTVRB96FHbXxlXe7D9kjwdCbVNzOasFAyI3XW+cGHVgP7sW
-	3aDYTj
-X-Google-Smtp-Source: AGHT+IFqciOBayOigRC1aapgtZ17zGskt1Hl/oKMvODYjiOI3Hzu12fSb5uE6r7cqqJ7VUpt4QRLoKu8hhGOUZCR5dI=
-X-Received: by 2002:a2e:80d8:0:b0:307:e6a5:ed57 with SMTP id
- 38308e7fff4ca-30a5b18ae3dmr27786001fa.13.1740306589342; Sun, 23 Feb 2025
- 02:29:49 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740332230; x=1740937030;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=07xx3+J+c9MsNr6SmtYgKkpnDEVju31YMKAaKHaId60=;
+        b=mqEHT2dIMtZl8d2MOyK3VC5d0s76kolXmj1w/qZSlJLWELqSkn6q5yztTqkjCtrUuw
+         R+Q6Ze2APFl9hz2iYqP/hoeRWSQ69frF7kq2P2c2Ye7DY5eMbtYCHoAU1O4uRyVZ9buw
+         9zOjIkdkR3rMM9GWxldh4jvfF1XxUIcXvjZZQhpsYOHcqWEUWn49BN5pLFYryT2rgRhe
+         JsZ43Bn8heQLYXBxaRhdUU82BmSFc8bGWxiKw90xjP/Wn8ezz27cOZRHlsMx4Xa1dNGi
+         qDCXY+ZnvXSOXgaLHRpLNtnnv0qJuhrYC1pY7OIe2XZ1IOjIsLIH0pC1cbqf5ipG32Gu
+         R8tw==
+X-Gm-Message-State: AOJu0YwNcrb0KpjbRGB3dO0oVBtioyAutKIlOpn/mMkuyVrs8qWUdV72
+	SIzxAESoqJThVU90KVDkUXqqNjP7gt6IyH7M+tFEZtJgy25TN8LJ
+X-Gm-Gg: ASbGnct13jNm3HQUd09QrAkFq1xfDkxuXGFCekLQ2wLaPWx4Qxi+hgmFzFv05RNmOgC
+	ExOdJl4/2mrq+2snxQCALAJDxIPex2vPibXZjCkTZZtD3ZsmmkOPIxtyj7Xuk0dq/2ucA4k3yQK
+	eGKvZSJhqADPZvMUqcbNt7L9XESIU9yxcgjNumazx3XV3difEXTcNl/uwnVdJTnp+WWD+d+hCKv
+	OkZ6bt/oZzVvs6/Ra8fkbuvx1KRsxOmI5j2IKC2YZjepkMQerWINRqHlcoipua5c3bXRs8gyJnw
+	xh/K3pKY1ABgtnQ1vduJXjqqhU6Be5NGDk8pcHYdrppz1O4VGqQoD0CRTg==
+X-Google-Smtp-Source: AGHT+IHQvUpCjY6AD/s2uEc25pSi9xV+C9z96/z/eiH+8mwFUarUj2hq+TdZmVaKDEA28fZJBa1UyQ==
+X-Received: by 2002:a05:6a21:33a4:b0:1ee:ef0b:7bf7 with SMTP id adf61e73a8af0-1eef3cd4693mr18067538637.19.1740332229934;
+        Sun, 23 Feb 2025 09:37:09 -0800 (PST)
+Received: from Ubuntu-ROG-Strix-G512LV.. ([2406:da1e:bcc:8000:7a73:581c:1722:8d2c])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7326b5ef448sm15158280b3a.173.2025.02.23.09.37.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 23 Feb 2025 09:37:09 -0800 (PST)
+From: Zejun Zhao <jelly.zhao.42@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	jelly.zhao.42@gmail.com,
+	karthik.188@gmail.com,
+	newren@gmail.com,
+	ps@pks.im
+Subject: Re: [GSOC][PATCH] apply: address -Wsign-comparison warnings
+Date: Sun, 23 Feb 2025 17:36:28 +0000
+Message-ID: <20250223173629.16489-1-jelly.zhao.42@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <xmqq34g7cjf2.fsf@gitster.g>
+References: <xmqq34g7cjf2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Devste Devste <devstemail@gmail.com>
-Date: Sun, 23 Feb 2025 11:29:38 +0100
-X-Gm-Features: AWEUYZnm_9RQiYQV75Y5AFvqFv1B0or7PccJnxNs-9UKO5ElnRBNpULNOSuUbck
-Message-ID: <CANM0SV2XOTQ2Mna1B_sX0EF0ffohcrexh1EO5d4G0=sqdmxQtA@mail.gmail.com>
-Subject: Diff rename detection performance issues
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-I have a merge commit that includes 2 modified (!) files:
-hello/foo/stubs/example.php
-hello/world.php
+Thank you for clarifying. Now I can see the concern on whether the whole bunch 
+of things worth it; it's a trade-off between cleanness and robustness of the 
+codebase and it's very common due to some coding conventions (e.g. error 
+handling) in C. Maybe in this case we should just leave the working code work.
 
-I want to only get the changes introduced by the merge commit and
-exclude any changes in /foo/stubs/:
-git diff -l0 --name-status --find-renames "$sha"^'!' -- ':!*/foo/stubs/*'
+Now I'd like to ask for your advice on this issue, which I may be supposed to 
+do before sending any actual patches, should I push forward this patchset 
+further or pick another microproject?
 
-Git takes more than 4 minutes to generate this diff, since
-hello/foo/stubs/example.php is a huge file.
-When using --no-renames (instead of --find-renames) it's much, much faster.
-And without the example.php file, the diff takes less than 1 second
-instead of 4+ minutes.
-
-Funnily enough, when I have a merge commit that contains only that 1
-excluded file, it's the same behavior.
-
-1) if there's only a single file in a commit, why does --find-renames
-cause a slowdown? There's nothing that could have been renamed in that
-case (probably the same for --find-copies)
-
-2) could rename detection be "delayed" to only run/check if there are
-actually additions/deletions (and possibly only check those)? If a
-commit only contains modifications (unlike in a really, really 0.0001%
-edge case) but no additions+deletions it's extremely unlikely that
-there's a rename, so detection could be skipped altogether?
+Thanks.
