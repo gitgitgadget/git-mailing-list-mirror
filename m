@@ -1,90 +1,88 @@
-Received: from mailgate02.uberspace.is (mailgate02.uberspace.is [185.26.156.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53AB202F8C
-	for <git@vger.kernel.org>; Sat, 22 Feb 2025 23:00:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.26.156.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D354F5223
+	for <git@vger.kernel.org>; Sun, 23 Feb 2025 01:55:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740265215; cv=none; b=r5yJ1eIAtwt9rPfJRfspV1uI0ZWHmCudd/b5/OcMP9prUu7twfxpD4muRVu7IDTuXwPQTbsEy5GBEDsIqQgEKfrs9RtdkzWTkW/BoRw3sskq46kHsc0/q6RkS5dcw3lySM8Cw/rZF78/CrENIOjdTuULh6EmG4KXxOrvVYkyG48=
+	t=1740275714; cv=none; b=NAXQ+CGamApfZ/tpeU3fwb9/gorU/foxPiptyMZw4Sb5EhnddqSoGxaPcCGEr6aPNJVjxuRGGZB0b/SKGiWMNqiZ75D1g6VQyiEf62VN72SMYXsjRVUwigQMhrY/eAPKo5hBOk5clvI55EFSrjP/ysGbOaVU+st16WlLXspovXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740265215; c=relaxed/simple;
-	bh=fobgdi24CfeR2IKl2pXLmqZ4lNCbcrd3csdnkJzMU0Q=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=BGOzOBVUopXxiCwM6FuxqFMobTKAHIGTTQrEbXtek6bmWW8w7VDXw+BI/psdi4lIIjpd7w0nTIoh4YfSTIAYV3h+404Xs7TyBMe168lhWaaVku7BCWtTfX7LgWATS0EkfTlzLE2XqRPD2Wp3j+wz43wcnc0nSR6fo4sDYkVnb6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=uxp.de; spf=pass smtp.mailfrom=uxp.de; dkim=permerror (0-bit key) header.d=uxp.de header.i=@uxp.de header.b=rMDsCbSz; arc=none smtp.client-ip=185.26.156.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=uxp.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uxp.de
+	s=arc-20240116; t=1740275714; c=relaxed/simple;
+	bh=D+iTOhrIPCThdQdcSXXuIdZVGae8zvd0+UUQdJdDbkM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GD2pHp6loAEdgSrkLjdps94HcQr8l+niR6VCjeSEl7Rmz/gQOP6N3hMTM8+OG7PI6E4T786s4sxWQqZc9lIuKFWpARdHSsOwjXiL7NaZ+BoUE/J/veH+cceUITEFmi3vrNq8knDkzPUlWXUnHw3xIv5Bql/rAQ37bVV6y4ti13g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=wY8GeLlJ; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=permerror (0-bit key) header.d=uxp.de header.i=@uxp.de header.b="rMDsCbSz"
-Received: from himalia.uberspace.de (himalia.uberspace.de [185.26.156.126])
-	by mailgate02.uberspace.is (Postfix) with ESMTPS id B950717F904
-	for <git@vger.kernel.org>; Sat, 22 Feb 2025 23:50:25 +0100 (CET)
-Received: (qmail 6911 invoked by uid 988); 22 Feb 2025 22:50:25 -0000
-Authentication-Results: himalia.uberspace.de;
-	auth=pass (login)
-Received: from unknown (HELO unkown) (::1)
-	by himalia.uberspace.de (Haraka/3.0.1) with ESMTPSA; Sat, 22 Feb 2025 23:50:25 +0100
-Message-ID: <e650f4e4-e267-4f1f-bb3a-c71b1fe0b276@uxp.de>
-Date: Sat, 22 Feb 2025 22:50:25 +0000
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="wY8GeLlJ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1740275704;
+	bh=D+iTOhrIPCThdQdcSXXuIdZVGae8zvd0+UUQdJdDbkM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=wY8GeLlJqh9qWlAbQNY7mRzaOlRFq1UkwJCcdzwcoukQlNLLfHLWbHJq7H3SQxZUU
+	 a9q9caeP75rGxXIoFmh4L+1j5WZRIl19xNoXG53vySek/bVvlHVLoyzbmrMTJnVZN1
+	 qRPixJW0EaSY4uIDgyylWlJPTo6uqmOr8XRJB1MX2dXQcht9jRdIbfSB4FWHYz+DRl
+	 99YTGiGuMLEpGkdCwgrpsF/7SW55H9k7pY6wP+MJ5OuPEcFyloNDmYF3GQ+TdjnYiF
+	 roawgo0jywzqN1QD3JR7yX2RpCt2uU3gs/HlkOf10LmSDGaOhdVXW/Dl3Mb6rTxUxL
+	 r/LfIm++FxqbqRMYifqUjPHLM+SKXh85Cv6W6JVkPdUcS1u8XMBdQP5kBWPC63eer6
+	 O0XWbJP5x6Txm0eaXrDXePn0AmfSwYr8yEm0tDoT+yGhBaXPfYd2qsbhwCPhMeTk7X
+	 aTtxrhzcNQCrjm7Gegt+Zms6tJ+bN90SYpjecbwkhWynAMhJzcz
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 9DE3E20005;
+	Sun, 23 Feb 2025 01:55:04 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 0/1] Fix netrc usage with WebDAV-based HTTP protocol
+Date: Sun, 23 Feb 2025 01:53:30 +0000
+Message-ID: <20250223015331.588161-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.48.0.rc1.219.gb6b6757d772
+In-Reply-To: <Z7UPYY24uk7lLzeP@tapette.crustytoothpaste.net>
+References: <Z7UPYY24uk7lLzeP@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Content-Language: en-US
-From: Markus Gerstel <2025@uxp.de>
-Subject: 'git gc auto' didn't trigger on large reflog
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: /
-X-Rspamd-Report: BAYES_HAM(-0.114041) MIME_GOOD(-0.1)
-X-Rspamd-Score: -0.214041
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-	d=uxp.de; s=uberspace;
-	h=from:to:subject:date;
-	bh=fobgdi24CfeR2IKl2pXLmqZ4lNCbcrd3csdnkJzMU0Q=;
-	b=rMDsCbSzdai0oH2l7n9zZUWqEJ0bCFTALgzEuQdXf85yRwzF/m+ToTuf/HXrWbYCm1QJ7BOije
-	FZItRUwyr2lzhfyVOxMvQOXwrHuTozvOLoEpMoz1qcgzni5zZpZdaou6SrU+Eu1rMfK8aCQND3ip
-	TCEyGx2Us5wF3VJKbw2I0LwfRcPJaLIoNAKgZ8JV5TAaUmYhxMUIUGVVuU3aEoocEPEYUnepOIqt
-	r2denoOfruTFIay06oHPTcBl0mvgY16mHaXLUWGmYqJ68IDlPr8KA3+aVbXSxc8/Scp3BNUjUhXs
-	xd4cHADOXS5CxXC74CM5amVDQ1kQpvX7WEdgG5hSAQhxv3iO1Qf7fmfpHCDed8lF4hAhHn3uAb2A
-	bjbGzVB4bQiUxz910rx3tkkL0IcO+IAJwaK//qGRBnfPZXRxLUDBDqnGIPCYFXKiWygyGK2CiLKh
-	jrlub3icVAJAk8vAQN/MjxNqDHVMIkcCuur+IKjZqwurcH7Rf/iMvKJM21+nTBfZnBn2QxxuhpEq
-	W96jozE0Ue/Jy9zCt+JdBIVFGudEQaltzQOoYH4FukmB+Q9/mxTu3l+F+G69egRCKL1yiq23hqlk
-	Ut2GuArf0G2XtN2qfcHQu0YyPESxxw1JwybnAqDtkbgjWEb6yekjZAHjVip+JSZT/pPIdavmXlO5
-	A=
 
-Hi everyone,
+For a long time, we've enabled the automatic usage of netrc if the user
+doesn't provide any credentials.  Unfortunately, in 2.46, this broke for
+the WebDAV-based HTTP protocol, which this series fixes.
 
-I was looking on a machine that does not normally get any attention. On 
-this machine a daily cronjob has been running
+In looking at this issue, I discovered that we have (before this series)
+zero tests for the netrc functionality and zero documentation for it,
+which obviously is suboptimal.  In this series, I am adding one test,
+which is for this particular bug.
 
-     git checkout -q master && git fetch && git reset --hard 
-origin/master && git gc --auto
+However, I think we need to either decide that we're going to support
+this as a fully-fledged feature and add documentation and sufficient
+tests, or remove it, since it's not reasonable to have undocumented,
+untested features that people rely on.  Our HTTP code is quite subtle
+and complex and we can't expect future developers not to break things in
+this state[0].  I will note, as an argument in favour of removal, that
+we have git-credential-netrc helper in contrib that users can enable if
+they want to retain this functionality, and we could even ship it by
+default without much difficulty.  For those reasons, I am not planning
+to add more tests and documentation here, but of course I welcome
+interested parties to do so.
 
-for 6 years. The git directory now contains a .git/logs/HEAD file of 
-180MB with 823921 lines.
+[0] Personally, I had some vague knowledge this feature existed and I
+feel like I'm reasonably familiar with the HTTP code, and I still
+accidentally introduced a bug, so that doesn't bode well for
+contributors who are less familiar with it.
 
-The repo config contains
+brian m. carlson (1):
+  http: allow using netrc for WebDAV-based HTTP protocol
 
-[core]
-         repositoryformatversion = 0
-         filemode = true
-         bare = false
-         logallrefupdates = true
-
-and the system git version is 2.36.6.
-
-I can't change the git version -or install my own one- so I can't tell 
-if this has been fixed since.
-A manual git gc fixed everything, so I amended the cronjob to just do 
-that instead.
-
-I was just slightly surprised (and amused) because I expected 'git gc 
---auto' to pick this up, so I thought I'd share this with you.
-
-Thanks
-
--Markus
+ http.c                      |  3 +--
+ t/t5540-http-push-webdav.sh | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 2 deletions(-)
 
