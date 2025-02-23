@@ -1,120 +1,106 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D351B28F4
-	for <git@vger.kernel.org>; Sun, 23 Feb 2025 01:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4022F28F4
+	for <git@vger.kernel.org>; Sun, 23 Feb 2025 08:25:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740275715; cv=none; b=CbKx0/RFHrZJoYrmw2LVE5N+LNs6znFCoiKTgAg5PL03dAH2uIwZkPpzfasmS6BqCW+JADyAbaGQqfwiOWzeybTcgRYYwZklPHQGv0OWt+Wm1NVNh4Kp90/4tcx+2qPcwfG8KChXrON5GKdIQvsDbv5o03vGGVGZ5MUpDpOlYig=
+	t=1740299160; cv=none; b=u7rlz1o8tARO4jRockcgS/uCOrN1LS1huTZ5e+oDrx4wbux44tzsDbvB3qeWFZ/LAbNwWoCN9XnR4+36BIzQNl0yMrkG0UPDGxJh5IBpvJrtntnO8b3cb45GppY+1BAFek0wpPYaNiNXyH+q93m1MXLANIHSnkoxx4FkyfoBVLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740275715; c=relaxed/simple;
-	bh=o1ffVx6xjGLp4x3KzgJ8Bmf5CznHEAFkpN4PGA8lGoU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AjoLXE5xHNwP5HxL2wDib8gCUoDl+6qoHQuMm6/VTBAMYZE1FZSOn1gl2v97DWyvKAhxbb/Q/AScd9XhtMWuDEYdiYFCn0WWh6O/SXr/dbNqkghecun2dsbOTO5Z59yco3kHcJNkWUYLtSsJEh9rHZLr+3qXvrWcqvd6+2xPN9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Wj/32zT8; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1740299160; c=relaxed/simple;
+	bh=UO07SwiH3sxHD3FUAdxX9bblIaX6f6Veb17CnmLxboo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UYeUh9f9PQf48zY7Syy6FxufSzJfb03RGN+Xwwzqb2tSLAGWMrxIouHXuqmqm+TEiWVkwiHJ+eYE5MJM5s2SqewEOr9pvM9iUJaaB9H7rpeC0973FbfHBwMFO+a6OZlYX/zv67CjDdtuahiFds/82CYXI5D577EptRxo234Tbtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=HCPvdPlG; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Wj/32zT8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1740275704;
-	bh=o1ffVx6xjGLp4x3KzgJ8Bmf5CznHEAFkpN4PGA8lGoU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=Wj/32zT8ZK1jBdtC7Ef4Pj9194CCRJr8zsrNC4SwIxmp6PR9vSxqURCuhEAMGldKn
-	 sVQoAAq4s9ia4mMim80MiLU0nLJ/BcpirGGQ7o8DpmAILBmUD7J1iJ31aR/wDchAQw
-	 ouiveBuXZuzHmMYLowPbcS3Bs2VMrlD9X1HMjsu8hL5kwjljU6G5XleyFqxWpAWBDl
-	 ZRK8eSBycsBSP/R+memal5LT6axYUSZHKzYJmLhFA7IMAqu9QRe2zx4yepcwp0gRSf
-	 T09wdyFMAmnJr4QyEaH96UfA7ZDpsIBa9WDm2vsWKUy4oKKqCBkm1iva2vg/hpjZJJ
-	 YOBaPkDeFHWlOChhsvZn1o9tMXbmJryV51nG9tgoZc8rJL807B8NDbpGndlj5IW1iY
-	 Ohj08d+p76tDSuE97C1W3qi4Eh/zP5JyokGi53liAGvwEfMLDv/rKrso01IHiBta0E
-	 yoDIqKjQFht+74/VYJCIUaEDfWYVx6tGR196Y40yUd7ap8yGJQX
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id ABB0F2448F;
-	Sun, 23 Feb 2025 01:55:04 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Peter Georg <peter.georg@physik.uni-regensburg.de>
-Subject: [PATCH 1/1] http: allow using netrc for WebDAV-based HTTP protocol
-Date: Sun, 23 Feb 2025 01:53:31 +0000
-Message-ID: <20250223015331.588161-2-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.48.0.rc1.219.gb6b6757d772
-In-Reply-To: <20250223015331.588161-1-sandals@crustytoothpaste.net>
-References: <Z7UPYY24uk7lLzeP@tapette.crustytoothpaste.net>
- <20250223015331.588161-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="HCPvdPlG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1740299155; x=1740903955; i=l.s.r@web.de;
+	bh=23HJXL7l02vGN7+A6+YGTvwysjgZHqf9PoTQ3xoy/1s=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=HCPvdPlGyWxp6rRj09cIcufkSFB0X3qjoVcKopa7d5p6Rf9+aBzBk2PsZ7Xvn6c/
+	 Y8ogr9ZMTtL4y45gxFu/Np67sLtiD8TdGZMjWzYYCd6OqDtQpRcYL6RkE+sQLcSdB
+	 c48K7OSYUfDlPTmDWA9X2iNuPUb2jDG8lCgqHhYn+WypN6BJMKuy3TWTwyP/iT3wu
+	 qHBYzpkBXSfnUSAC+RPhg4xJBoLnlpjBonn7w+He5CP+CbnY+p6cA7f9pie+Jn1RG
+	 QiVnaYIRVCG5AJ7mCJSYjrA7tIYyl7pPxlCxdd4F6sRyPgCn6Oto23aFYqFFRjAnx
+	 0P78mZH3A88Wn9ppfw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.28.180]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1M2gkf-1tkjbI09j5-001xkb; Sun, 23
+ Feb 2025 09:25:55 +0100
+Message-ID: <a5be80b2-bcc0-400d-8f83-f537a71d83a4@web.de>
+Date: Sun, 23 Feb 2025 09:25:54 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] commit: avoid parent list buildup in
+ clear_commit_marks_many()
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Git List <git@vger.kernel.org>
+References: <16a7b572-0a3d-4707-9034-0dac69ea99ac@web.de>
+ <Z6xIPowXnL-awm6g@pks.im> <69909785-7f7a-4164-bdcb-bed61d006cc8@web.de>
+ <Z7LYI4tqGZzZ2Vaw@pks.im>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <Z7LYI4tqGZzZ2Vaw@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:f4EIlJepM7M96ZfrQwgn5fcT2ocuKjCLTVq5BOm1CwRA4y5XqTk
+ 72e8JwyfiPDvKggXCKc6MNrHFANFvMrNVjycMesx4n2x45I4gfAjypyv8gDtG8djR4bH7m5
+ 7Z+bxhn1TDNZxFr67i8jjx1QVm238hxW9oo94EymqkK+62SoxTSfz/rWnq9W1CbR64CEbaz
+ JBBUljaYhZ6mvBOf65OuA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:Ccy722oZLaA=;Stk/jGGhRaaithgeZjhTYywpp+U
+ kMFq1pp4R5W1lcw6s/5BOSBXIxRi9xOZwNqaAHXPEA+8A0bdYs22Zb+sDiAZ14fZbr/84ia3o
+ cbY7Ari2bJevRB1KQmb00wOh3H6c+U9Ho3WzbxWwYbimeKEhLF41M1pjQNrF2rGCts39p0Bgx
+ sNM884i2jSoDm0kLFvVQV7ZpfWbdM1Bw8bsEE/lbQcXar0SunAM6LZ0LCa1V9wRjXBdpaKLs9
+ V9xlrnLi8wUEZAT32aTK2bS4zqi1XqxfeU7OWC9rXXDiM/B3H8b7SUVpMiw8PDNvwd/J/CuX7
+ Be9Y/MM2Lp0CK+/Mt7rt+f/mXPpJW3XSj4sZosHGfQAPKzkN6XzyFO+33A5SzLxMbSA3eySAP
+ MYk7WRVHOiav+Z9wnLxdFpcos/IzgBExZyQ3WXtkqgRCWlZrzrXLLOg0AFY9jAxExSXSTMFJ1
+ CrorbzfaDkM0zWdhT5fUYMQhE9ixtFWitB3kHEYtiL7llxaq8xHmXCiJcvZAX6i2FuApRFWxO
+ 2qX2UiwA+c2Rp3WfF/m87oh4XMYYiR7zTiY8tj+ceQXA4mI5qmFKzDrAoR15W+kE3ICwJ443F
+ e9PuaPT9MO1m9qECP0yzFp/p7P3KCNCvsmzT0CqjTOBKlFTD0KUnCh2ad4x+s73tnFyfpQZYG
+ cdQuKbc/JgzsjFAuvsgXIsfdpq3g6TEmYlnk36laWc7zkL6E637PAazKLXyC/RqbBQUn0HCfY
+ 5GIVCn6Jx52EHV2ZimwqlRNPGMlwJC120lYgxtSO+iRHW9S8bg73Y6ZobJEzb6FUWa9S/T/M9
+ YzdXr/4XRbTVsDvSsnICILryymCzjtAaCDAx4hXQVpOgJ+AGzLVA9vyExLHMr5G2YCY+vqAD6
+ AG64TETvQXSQvc7ea1r+wMIDYol5O1e//dEZlpNhw3OtMaxl5Dn/NjDTK/25kSQP67Z9HxdW2
+ 1U02Es1HwnHq9YHBPBALwrFpt1roQ/dDQdqWuzdhym66K3FvvBImOAok8f70dNiIFJl3tjHqx
+ uyHh17r372fgbf43sukgwj3/ROlgzGX5fnm/fpHsP+7niqmgU8oC/tVBe6ieAxenaSz8bpR5F
+ 4cvyHGD+fIZtyiXkwJLs7udkJbdoH4tBqKVLv28JAKwqPM6Pp9RYUPmJcvoKWGyWBqpejGFZP
+ oYwgf7mRiUhwqVbbwZGqHyLitzposXb810VXext/LRec0XhexgkEMQXlDMAJKCi6soQ/XVW/h
+ rNYdDw765A/idsAnbe9nolHTQKE9dM1O32vY7aY2mcrZUC5rGd3g1EDD3bZ5+Ya36gBYda5xQ
+ fHeDYCSn2iTK6E1IWEpyK1OCmWYPf5jwiVI130MXduLKLAQkbvFb9ivdspYw6VGSchalBz5KV
+ PynJfKNOKXNAAYRuw+DZnGZtRDS3t7/kvwxcecQHn2aRiXI0fb0uzs8rIZ
 
-For an extended period of time, we've enabled libcurl's netrc
-functionality, which will read credentials from the netrc file if none
-are provided.  Unfortunately, we have also not documented this fact or
-written any tests for it, but people have come to rely on it.
+Am 17.02.25 um 07:33 schrieb Patrick Steinhardt:
+> On Thu, Feb 13, 2025 at 10:38:51PM +0100, Ren=C3=A9 Scharfe wrote:
+>> Am 12.02.25 um 08:05 schrieb Patrick Steinhardt:
+>>
+>> Well, the maximum list length for clear_commit_marks_many() calls with
+>> nr > 1 in the test suite goes from 12 in t6600 to 4 with the patch.  No=
+t
+>> that exciting.  The question to me is: Why pile up parents in the list
+>> when we can clean them earlier with no downside?  Or is there any?
+>
+> If it really is without downsides then yes, it's a nice improvement. I
+> was mostly wondering whether you're fixing something where the old way
+> of doing things performs _significantly_ worse and where the change
+> could lead to a user-visible improvement. Like, requiring us to store
+> orders of magnitudes less commits at the same time.
 
-In 610cbc1dfb ("http: allow authenticating proactively", 2024-07-10), we
-accidentally broke the ability of users to use the netrc file for the
-WebDAV-based HTTP protocol.  Notably, it works on the initial request
-but does not work on subsequent requests, which causes failures because
-that version of the protocol will necessarily make multiple requests.
+You could construct pathological cases, e.g., cleaning lots of disjoint
+histories, but I don't expect any dramatic impact to real usage of the
+function.  It's just a small improvement.
 
-This happens because curl_empty_auth_enabled never returns -1, only 0 or
-1, and so if http.proactiveAuth is not enabled, the username and
-password are always set to empty credentials, which prevents libcurl's
-fallback to netrc from working.  However, in other cases, the server
-continues to get a 401 response and the credential helper is invoked,
-which is the normal behavior, so this was not noticed earlier.
+Ren=C3=A9
 
-To fix this, change the condition to check for enabling empty auth and
-also not having proactive auth enabled, which should result in the
-username and password not being set to a single colon in the typical
-case, and thus the netrc file being used.
-
-Reported-by: Peter Georg <peter.georg@physik.uni-regensburg.de>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- http.c                      |  3 +--
- t/t5540-http-push-webdav.sh | 10 ++++++++++
- 2 files changed, 11 insertions(+), 2 deletions(-)
-
-diff --git a/http.c b/http.c
-index f4504133e8..0c9a872809 100644
---- a/http.c
-+++ b/http.c
-@@ -598,8 +598,7 @@ static void init_curl_http_auth(CURL *result)
- {
- 	if ((!http_auth.username || !*http_auth.username) &&
- 	    (!http_auth.credential || !*http_auth.credential)) {
--		int empty_auth = curl_empty_auth_enabled();
--		if ((empty_auth != -1 && !always_auth_proactively()) || empty_auth == 1) {
-+		if (!always_auth_proactively() && curl_empty_auth_enabled()) {
- 			curl_easy_setopt(result, CURLOPT_USERPWD, ":");
- 			return;
- 		} else if (!always_auth_proactively()) {
-diff --git a/t/t5540-http-push-webdav.sh b/t/t5540-http-push-webdav.sh
-index 37db3dec0c..3fa05ff185 100755
---- a/t/t5540-http-push-webdav.sh
-+++ b/t/t5540-http-push-webdav.sh
-@@ -201,4 +201,14 @@ test_expect_failure 'push to password-protected repository (no user in URL)' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'push to password-protected repository (netrc)' '
-+	test_commit pw-netrc &&
-+	echo "default login user@host password pass@host" >"$HOME/.netrc" &&
-+	GIT_TRACE=1 GIT_CURL_VERBOSE=1 git push "$HTTPD_URL/auth/dumb/test_repo.git" HEAD &&
-+	git rev-parse --verify HEAD >expect &&
-+	git --git-dir="$HTTPD_DOCUMENT_ROOT_PATH/auth/dumb/test_repo.git" \
-+		rev-parse --verify HEAD >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
