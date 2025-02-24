@@ -1,61 +1,61 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26863155744
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 14:28:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F0C1624D3
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 14:28:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740407292; cv=none; b=nMem4/wJH5Wln2nceU5tktALTKl91TCy0NznldDTbfmACeRv1YTgPrQZE4XbfuBN9YA/KjDFoPwg4spK3OBRDLc/oLKRHIQjf3P6jf2hihSMImkP0ZNzfTHBZoY1De9Pc7Ok6eKdvWBpVyHCpRwfDVEinrcyjzN+9DSqE6JF8uk=
+	t=1740407292; cv=none; b=INSiHYy+z4d4NqBshLM468P0ghUiJyz6i35u27CZn4rBnUolZCEkpKqT5C5wvXYevbG4LblwzLuKf3rcBBSQNs1vJZT9IclSQq8aRLG5cc9ad2L0B8dFcEMuf97cnGwMg5UAzWE+3nuoxEyC2mNNB6yIF0O8xDd2Njwmcgt4PVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1740407292; c=relaxed/simple;
-	bh=ZwYf9WRMbuhixf6mmu2X4cIH9wFgzlEcIwR9UpzxuDY=;
+	bh=0obbN3ADOZ6mqzLpV0JzABa/dElqDd1yVN6h/cGMOvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cKL15GBUFEICRCfJP8SEA+1WGJLxMfxKsJE30Ls8Gt2oxPSX5ByLb3xnDFx6CPrshOJz+5heZWAL4pnY3nWdeLkqOCddi1oEYSb+ZrOXnYOUXGezWBKq3CI3yycFyKkPrTazojz++NjV87gaLFCy+9h41kr6ICTrsVvq6yuJ8Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YVu027EP; arc=none smtp.client-ip=209.85.221.43
+	 MIME-Version; b=KA5ltejjueVVhnJn/OuTR6LaBMXFdJw/FN7pEtTxUyuHaDWMh4cBsfoq77LuKXEuTBKFCnDMhOtlEdtBQNj8qceus8U+ygmr7bo41hnLGQVQahlz3GyvSfSnWyO3MfiNz1zetTWJS3bmW7oAVjLC9e2kGVNdSklDZJcySMgx3Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U5ILWm5R; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YVu027EP"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-38f406e9f80so4184615f8f.2
-        for <git@vger.kernel.org>; Mon, 24 Feb 2025 06:28:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U5ILWm5R"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-38f325ddbc2so3304527f8f.1
+        for <git@vger.kernel.org>; Mon, 24 Feb 2025 06:28:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740407287; x=1741012087; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740407288; x=1741012088; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3invKOWKedbzAlOHRv9VeZd4UNgPGa0WBPllbGXrrHw=;
-        b=YVu027EPz+Nt0fyoBhcZLwV+QNT7PFz1J+Bi1cCyjyf15M31KXUnEhyRDBIHRr9lmX
-         V2FoZ5ga9hepzrll4yKE1MwDig41a1xlI/4uCgIsPJ+sCdTHUSE/D6FOym7dmq2vWPb+
-         uav3cEwATgY53Fegs5E3/IcORLLKzYxQTt/3mOlX3g8bQ2kwmJig4KVUhHyT5LHtmCJb
-         q6tw/7NBIh26cB2nHsko32IBj1qvFx4bIePjffQ1dgOSM/My+9m4lHyLgIiIhajPkg9I
-         WiDQ6zETAfMsSWVLOBvo27r3Nul71UxdYv9iK7rTYHCsu+PELtQTTWxEQBgQXepX0RUH
-         zZXw==
+        bh=32+I3UefI6ZtOoJRbviGG8HXb04GXibeUata31nYEqU=;
+        b=U5ILWm5Rk5iqbMzUtGpoiD0JD1zZej0S7gi7Uqpt1uIZTFM9OpfT5tZBt2w5SZizYV
+         o5tiAv/r/+LA+CQMinOMdFyDvjmmv5rTpcIL27oD8xD0dM4xsyIFao+5stp8qJ62H3ln
+         fi5Bpe5BGsVN8nVeSBb8fmS6prU6rlAcnmrSez/GWJxUaGBkNNirgQfBz63ZdJi9IF6O
+         olB0sY7bLVeXNE0WHv9W9mBvdAJMFdsF9BvMz4UyJxJgD6ONjQxmmhCrPjYqPBi9wATO
+         ahPCPHmVYrC97NbvrfiO6RH7BKrsCgtdZiRj/e79bz2YNGmQ1LpJYag/Uwe1wte1ScyS
+         twXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740407287; x=1741012087;
+        d=1e100.net; s=20230601; t=1740407288; x=1741012088;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3invKOWKedbzAlOHRv9VeZd4UNgPGa0WBPllbGXrrHw=;
-        b=EfMkN3mbAOCXPaVL30aNwTMiCUBXGAPGVG5mZqPLmaD6tINA+fxu8IZXc/XiKTAAd5
-         U3aoBMzN1akpg0WrJd356rt+wbaK9z6GP6xlkGMhBAC1mFOYIl5FrK+JNlbVq20aORdP
-         YGaLMBA0PDhEpQfvgqjkC5EtBIEVb5u/XADZYyIbls+kElnuWdSyCW5FvBbFMKuHi0J5
-         L6VdKLiR5l4h37CluGEgu7WzdBTZfnVM7FiUqUOMq+kScARQBNJRRL8yeGV4rcji+BB4
-         uWVod+otkF3KFziq3DTmE2x7VLVHZzi8TMxWcJt9HRpa4dP+Nzw9JrYa6dIqKnfWwGdS
-         0New==
-X-Gm-Message-State: AOJu0Yz6Y62MQ5WPLufbE9hma0GbgUmtG0cRrPsUOTh25Qq2bC3MR7XO
-	CKWhmfpV214VfHLgsuYc1yi+EU+9H10n2s50K7+F+zypy1pE8s/4eUkuZg==
-X-Gm-Gg: ASbGncu4zeK80Y0XID+ay/KK/2YArawdkOncM63amxHRphvCVh08JjlluhXW9Df30MO
-	vdrfgcero0KosRTmeEly7Oq7g30VPmY6c5Igme7ShOKZ44tfB1AHB9oUH+twtwDqQRlMDxynwLX
-	b00I970W3hYOOLxCIcFEJZp3l/NFcFFw/ADsvBRJjzXcJrG/qbOYQPvrTCyg0mhlux0iyinIPto
-	gU8V0r9ppozAxc9Bmnuuojma+gfbdplI7G4oRy8Cs9BUhm1S66qE1xavyH/VE1HDcHLqsUaqSd6
-	BvZQJ5CJoWmUHW2WJO9aHOFq+6dx2ayVkpMKReXV/hDOpwKmVlX0Ms76a9Sh
-X-Google-Smtp-Source: AGHT+IGSrZVDm2WZez5cMsxwgUkjRqmO3bHYcI4d2TMscK+wVdUPkBUzLT073KOlccGg98huqVYeEA==
-X-Received: by 2002:a5d:64eb:0:b0:38f:4acd:975c with SMTP id ffacd0b85a97d-38f6e97a27dmr12593830f8f.27.1740407287299;
-        Mon, 24 Feb 2025 06:28:07 -0800 (PST)
+        bh=32+I3UefI6ZtOoJRbviGG8HXb04GXibeUata31nYEqU=;
+        b=D5LVKMdwxAfCW1nTOUC8s7hVakLCfHvf6bv2VbI+HQptGJLUaVdkD0neiIt4jZTrof
+         CiBM0/tv6VkdSzih4U+3UYU5AdG00vXpK1ZdvQmV/x9059Wf5Y4kJ1Dn6fWbJBDE9nIj
+         EOHHa7wxQdoJJKc4Ic7CDnaIchf3DAz+S5F0mXwLUxTqfJs6ZszuRAPXQDXXmxuVg6Kk
+         0BydbhIgaNEFPIAAVKFKfsXxb7CUx8aB82lrpI6Y77fAHWk/7AI8O0MssAMgKbV4F1tt
+         nnZXG2B93dCjTPnflqhk8+kkJyGHcrJWxL08rZ+98zbBlEHaea/YuleVzxDzYFOBhvJ5
+         zQWg==
+X-Gm-Message-State: AOJu0YzCXkPDPr9i8bbE7of+15R1GjZlB2mJCAh8iodmtFUKLNDzGYlx
+	knCoV+VoZSpvQu6z4YhtW/PSmdNETnKW7o6POEhEPI0skTJI7mY2Ijx+gw==
+X-Gm-Gg: ASbGncuXGq3RJSgthqUMFBCQFII79HwDblqc37sqzybzzYiHt6Aruuq+Bt5nHad7kEx
+	6LSEsKILwULTYbvAkHYVunQ+lM2QtQmnPfC6Eba1iMeVCKuk1yofHFJO2aNDV7l3OiPfAdMvKMn
+	feSB0xmiGjnaoQHpf9xfMIgj28+4MKY4ia/7f9McIJ637KpfHeEVlT6hWC+VRgtDSyncoGSqrAW
+	4BAfr2UuInxGsm4DqJci9LQbvLa3c+0vJ8vFFRru/EAOubV2CUXmdzKGj7oSn9rJWJd8xWDPkmo
+	cCB0Ket/0wPoD6bLCATKXICIQZ/zbLZXRdMd5aAStP23PYJeAqnf6PauxaTt
+X-Google-Smtp-Source: AGHT+IEcHSjggb7+rqEVsTwwW4IS7+Gt/eqtP0PbgSPhEupkq+DG5oM/l0b2cgChWcfzd3FU1ny04Q==
+X-Received: by 2002:a5d:5f50:0:b0:38d:dfdc:52b6 with SMTP id ffacd0b85a97d-38f7082601cmr9210989f8f.37.1740407288288;
+        Mon, 24 Feb 2025 06:28:08 -0800 (PST)
 Received: from christian-Precision-5550.lan ([2001:861:2420:9770:29b9:ffdd:d750:1ffc])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259d58f3sm31713125f8f.73.2025.02.24.06.28.05
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-38f259d58f3sm31713125f8f.73.2025.02.24.06.28.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2025 06:28:05 -0800 (PST)
+        Mon, 24 Feb 2025 06:28:07 -0800 (PST)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -69,9 +69,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Luke Shumaker <lukeshu@datawire.io>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v5 3/6] fast-export: rename --signed-tags='warn' to 'warn-verbatim'
-Date: Mon, 24 Feb 2025 15:27:41 +0100
-Message-ID: <20250224142744.279643-4-christian.couder@gmail.com>
+Subject: [PATCH v5 4/6] git-fast-export.txt: clarify why 'verbatim' may not be a good idea
+Date: Mon, 24 Feb 2025 15:27:42 +0100
+Message-ID: <20250224142744.279643-5-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.48.1.401.g48e0d4203c
 In-Reply-To: <20250224142744.279643-1-christian.couder@gmail.com>
 References: <20210430232537.1131641-1-lukeshu@lukeshu.com>
@@ -86,113 +86,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Luke Shumaker <lukeshu@datawire.io>
 
-The --signed-tags= option takes one of five arguments specifying how to
-handle signed tags during export.  Among these arguments, 'strip' is to
-'warn-strip' as 'verbatim' is to 'warn' (the unmentioned argument is
-'abort', which stops the fast-export process entirely).  That is,
-signatures are either stripped or copied verbatim while exporting, with
-or without a warning.
-
-Match the pattern and rename 'warn' to 'warn-verbatim' to make it clear
-that it instructs fast-export to copy signatures verbatim.
-
-To maintain backwards compatibility, 'warn' is still recognized as
-deprecated synonym of 'warn-verbatim'.
-
 Signed-off-by: Luke Shumaker <lukeshu@datawire.io>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-fast-export.adoc |  6 +++---
- builtin/fast-export.c              |  8 ++++----
- t/t9350-fast-export.sh             | 18 ++++++++++++++++++
- 3 files changed, 25 insertions(+), 7 deletions(-)
+ Documentation/git-fast-export.adoc | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-fast-export.adoc b/Documentation/git-fast-export.adoc
-index 752e4b9b01..ab9a315fa9 100644
+index ab9a315fa9..1b19f17b78 100644
 --- a/Documentation/git-fast-export.adoc
 +++ b/Documentation/git-fast-export.adoc
-@@ -27,7 +27,7 @@ OPTIONS
- 	Insert 'progress' statements every <n> objects, to be shown by
- 	'git fast-import' during import.
+@@ -29,15 +29,19 @@ OPTIONS
  
----signed-tags=(verbatim|warn|warn-strip|strip|abort)::
-+--signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)::
+ --signed-tags=(verbatim|warn-verbatim|warn-strip|strip|abort)::
  	Specify how to handle signed tags.  Since any transformation
- 	after the export can change the tag names (which can also happen
- 	when excluding revisions) the signatures will not match.
-@@ -36,8 +36,8 @@ When asking to 'abort' (which is the default), this program will die
+-	after the export can change the tag names (which can also happen
+-	when excluding revisions) the signatures will not match.
++	after the export (or during the export, such as excluding
++	revisions) can change the hashes being signed, the signatures
++	may become invalid.
+ +
+ When asking to 'abort' (which is the default), this program will die
  when encountering a signed tag.  With 'strip', the tags will silently
  be made unsigned, with 'warn-strip' they will be made unsigned but a
  warning will be displayed, with 'verbatim', they will be silently
--exported and with 'warn', they will be exported, but you will see a
--warning.
-+exported and with 'warn-verbatim' (or 'warn', a deprecated synonym),
-+they will be exported, but you will see a warning.
+ exported and with 'warn-verbatim' (or 'warn', a deprecated synonym),
+-they will be exported, but you will see a warning.
++they will be exported, but you will see a warning.  'verbatim' and
++'warn-verbatim' should only be used if you know that no
++transformation affecting tags will be performed, or if you do not
++care that the resulting tag will have an invalid signature.
  
  --tag-of-filtered-object=(abort|drop|rewrite)::
  	Specify how to handle tags whose tagged object is filtered out.
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 2bf787191a..2de2adc30e 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -36,7 +36,7 @@ static const char *fast_export_usage[] = {
- };
- 
- static int progress;
--static enum signed_tag_mode { SIGNED_TAG_ABORT, VERBATIM, WARN, WARN_STRIP, STRIP } signed_tag_mode = SIGNED_TAG_ABORT;
-+static enum signed_tag_mode { SIGNED_TAG_ABORT, VERBATIM, WARN_VERBATIM, WARN_STRIP, STRIP } signed_tag_mode = SIGNED_TAG_ABORT;
- static enum tag_of_filtered_mode { TAG_FILTERING_ABORT, DROP, REWRITE } tag_of_filtered_mode = TAG_FILTERING_ABORT;
- static enum reencode_mode { REENCODE_ABORT, REENCODE_YES, REENCODE_NO } reencode_mode = REENCODE_ABORT;
- static int fake_missing_tagger;
-@@ -62,8 +62,8 @@ static int parse_opt_signed_tag_mode(const struct option *opt,
- 		*val = SIGNED_TAG_ABORT;
- 	else if (!strcmp(arg, "verbatim") || !strcmp(arg, "ignore"))
- 		*val = VERBATIM;
--	else if (!strcmp(arg, "warn"))
--		*val = WARN;
-+	else if (!strcmp(arg, "warn-verbatim") || !strcmp(arg, "warn"))
-+		*val = WARN_VERBATIM;
- 	else if (!strcmp(arg, "warn-strip"))
- 		*val = WARN_STRIP;
- 	else if (!strcmp(arg, "strip"))
-@@ -833,7 +833,7 @@ static void handle_tag(const char *name, struct tag *tag)
- 				die("encountered signed tag %s; use "
- 				    "--signed-tags=<mode> to handle it",
- 				    oid_to_hex(&tag->object.oid));
--			case WARN:
-+			case WARN_VERBATIM:
- 				warning("exporting signed tag %s",
- 					oid_to_hex(&tag->object.oid));
- 				/* fallthru */
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 40427883ec..cc110727fb 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -253,6 +253,24 @@ test_expect_success 'signed-tags=verbatim' '
- 
- '
- 
-+test_expect_success 'signed-tags=warn-verbatim' '
-+
-+	git fast-export --signed-tags=warn-verbatim sign-your-name >output 2>err &&
-+	grep PGP output &&
-+	test -s err
-+
-+'
-+
-+# 'warn' is a backward-compatibility alias for 'warn-verbatim'; test
-+# that it keeps working.
-+test_expect_success 'signed-tags=warn' '
-+
-+	git fast-export --signed-tags=warn sign-your-name >output 2>err &&
-+	grep PGP output &&
-+	test -s err
-+
-+'
-+
- test_expect_success 'signed-tags=strip' '
- 
- 	git fast-export --signed-tags=strip sign-your-name > output &&
 -- 
 2.48.1.401.g48e0d4203c
 
