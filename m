@@ -1,112 +1,118 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.134])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB162571D9
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 14:16:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.134
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D24EF9F8
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 14:27:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740406607; cv=none; b=m0MUYaiaUcVF6oQ2qoIIPTIE3ACjfhWOgVI6pMtgK8DNpAElTcS/kpqKX/bZ1OXrR9oMX9+TJQEFZROxlqoxLN8bs1aaG4QthSMIl4NmUZ7CzXKVp1JnDyIBhMIceP0rG18mb41jymg2nEJ3G57F/Yw8bDvsGSaJ6nUO/Oo5sGs=
+	t=1740407269; cv=none; b=XYjT1MedOisLKfuBTMvTF2XqBdbFw3RxF1hLUUxqjGyszAEyRi+hBlrN9kiUOWMTPiruUlRtZdwFriKyHrMI6eM6ymjK4ru2USL7HxK6Y59UIX9AXegvl5UGown9pvJszT3Vh2iNYDj8LdoqHgskwkQWs2PQd0sHIiQHtS83K60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740406607; c=relaxed/simple;
-	bh=CjHujqEkSB0MWXS834xG2phmeSFgUpilRSNsCCXZDb0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IMI6UX2/DoFaCoeVg9Vb/PQXupYuPNAplbvd7wxLGO/E40ZpoG8kP1PqZZWqY9WhRoL7LsWC/1fXMa8zgL4PkBSNGcHzHYE5gvTs/YhhlD+ToI3EQQXyPg4QTAtvze7X3AovHijXssNTnAYrBXhadXzcidahZK4dlXisJy7wEIk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com; spf=pass smtp.mailfrom=anselmschueler.com; arc=none smtp.client-ip=212.227.126.134
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=anselmschueler.com
-Received: from [192.168.178.87] ([91.64.142.246]) by mrelayeu.kundenserver.de
- (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1MacjC-1tBqVw3JQA-00izJq; Mon, 24 Feb 2025 15:11:26 +0100
-Message-ID: <5f312413-0b7d-4bcb-b180-57857afa3898@anselmschueler.com>
-Date: Mon, 24 Feb 2025 15:11:26 +0100
+	s=arc-20240116; t=1740407269; c=relaxed/simple;
+	bh=ZnNfB75q8bCg4WyTOnohqaD7xTNAfUMkmNRKAwiYY6c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VRsRkkbsNRFvyyuzofXjG01SlYV6RGWjKWQhYxectdb/2Do0mygaEmQZAHifl/PSmj4F9wCZNSg9+Odlu98H9XQF14MnCdFB4bP0ApMdqnqR01xyX2XdymVHi/22OM6AYq2ne0KAbdI/ucCwmfJT6OdnmXCSLhjCvJhy4CLCJY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yk6oTGSp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5vqRWcY4; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yk6oTGSp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5vqRWcY4"
+Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
+	by mailfout.phl.internal (Postfix) with ESMTP id 569C51380C16;
+	Mon, 24 Feb 2025 09:27:45 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-13.internal (MEProxy); Mon, 24 Feb 2025 09:27:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740407265; x=1740493665; bh=93OiloWish
+	XNfta3PgRbxxEVZwVFdnvAjY1+L9SO7k4=; b=Yk6oTGSpNQ42lfiLYVoTDls/iL
+	4UPkwRHj+YFmWUhknlE6MObVrgtDWIOoF3ZBHBmJHBZR7vawHc6PBAbqGN/J17nD
+	hBM6uJlnQikJCNMQN6xwHw6HFG/B4qLOE/aRSBA4JYDg4YeLvc/Y+3uRplYnIAG4
+	bOXWU20bwKmXnxSLPoPdGpm6CHN5vC/UuQEEBufhRm4897MrgM146Eiq3SGqcMhy
+	k1acdUe0TVbvE/55MKelq+7ANYoKm+4h8uQCXpqQYNtvch8qroxxC4MMI9JIAV+n
+	p2nHmpG1uXVLzdUqOq6OXVRgkgiEfuFJUiAyPJMuS6Ti83DI4Z0DQpNbYYag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740407265; x=1740493665; bh=93OiloWishXNfta3PgRbxxEVZwVFdnvAjY1
+	+L9SO7k4=; b=5vqRWcY47J4mjBL9BFImY5qOdG6rBfRcNWIEW/tXEd2FuRxb79H
+	2dGpyyH8ay83iX8rJ4UxvXvSDcERvDKkFXlND+W08k5Bke/85XMmHw5JGnwalRZM
+	IfjVAEKfOA/jtRwQQUeTSEZYY1LtHURlPx8EGZVpXYO6Kfchfao7hGG23MQ3DGK9
+	+Fm+X8BDSS6yZhi0yXFGOIVMfLBy+Ok3v8vtBdoPBbOq8MShstuocSxyulvPQxzK
+	5/hoetPASMTI8cD3rofONjMb02/YFCAj9oSWWSaB9HnUdp4XsnnNMpTtYIj1ZBes
+	HinSz7kDWr/gN7Mh4vYtuQOHpAYQ0Te+oVg==
+X-ME-Sender: <xms:4IG8Z1viYuiJjyTMTU-E28P8FZzEWcBJpJGhd-lGjnpXKSXYranEsw>
+    <xme:4IG8Z-c-UqfRc8yz6cGRcIHSjw9syNZiZ2Cu_XwtwJgVA_AtjXKPFmKC1qLpRDa8L
+    AITuLdesx8Lv9MYAw>
+X-ME-Received: <xmr:4IG8Z4yq3Gh0MY4joD1t4qB7zHUUNGj8-0YgmKYx0rzXkLLvl251kIxO9QD6rPxMUZtwRMf6K42nhVeCIf5y4fTx6BE4IhrMObtcItQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejledtvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughr
+    pefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevuc
+    fjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgv
+    rhhnpeejgeefieefiefgueetfeevtdefudekkeekhedvueeuiefggfduleetjedvfeeike
+    enucffohhmrghinhepfihorhguphhrvghsshdrtghomhenucevlhhushhtvghrufhiiigv
+    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtoh
+    hmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehj
+    vghllhihrdiihhgrohdrgedvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:4IG8Z8PRIc1ApJIiOuzdvSbby5auIHMI6RgV2RpLajKzH4DBzI-1fw>
+    <xmx:4IG8Z19G42-rZPb5ZP27Z3pb4aDsEoU7Z_uvuEuEm06yPxMk9klB1w>
+    <xmx:4IG8Z8XseJe-hAZvhUVZK0qD8wBIUtIPF8dx10Dgp5IbhZgOYHcWow>
+    <xmx:4IG8Z2dfb7HQb8FlImn8C6BRyQ1SExRKjqtCIAZFyJ8iWR_6L479lA>
+    <xmx:4YG8Z1yUiSPogV50dZV-6Ad9WDVb3PbpLO_TJAOk4a0Gbyx85QuyluEK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 24 Feb 2025 09:27:44 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Zejun Zhao <jelly.zhao.42@gmail.com>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com,  newren@gmail.com,  ps@pks.im
+Subject: Re: [GSOC][PATCH] apply: address -Wsign-comparison warnings
+In-Reply-To: <20250223173629.16489-1-jelly.zhao.42@gmail.com> (Zejun Zhao's
+	message of "Sun, 23 Feb 2025 17:36:28 +0000")
+References: <xmqq34g7cjf2.fsf@gitster.g>
+	<20250223173629.16489-1-jelly.zhao.42@gmail.com>
+Date: Mon, 24 Feb 2025 06:27:42 -0800
+Message-ID: <xmqqv7sz76zl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Possible bug: Empty magic word list in pathspec is handled
- differently in short vs. long form
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <216a7288-b599-4333-ba62-10665d6a94d8@anselmschueler.com>
- <xmqqr03tg8q1.fsf@gitster.g>
-Content-Language: en-US, de-DE
-From: =?UTF-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>
-In-Reply-To: <xmqqr03tg8q1.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:MPD+arrBKWDab4mbiVZRY3/fhdni9T17JK6KbDj68Kd5jBFyT3n
- 0JT78uvvc8tcHl2CYoAzpr1i4UXnc0BrquFXZER6qdHZmVml9belQHClRYdC/NDC0yd0dub
- vPaJg/b0bvDmwIqW1zClt6WKvmcof0m8iNO9mGIzAZmeFDJjwY8tE2a1+gv9dBZmKbS+VR3
- XQWLtqOqId/3sxf7BLCXA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:3kPyH8qOxlo=;w+jo/6t15sDjnxwjq1QrT3Drzbw
- roA1TAPe+P+wF889/Codi0Qq7yJZZsxLvuzBt+G4Ly6hzv3qEa9pCEv23TmiGAVh8O/5SeIJB
- JKrvPwwsVY150hQPGbR7tjMqp4qVLhfIR84Wi4s1ArpoIBmo0UQDiXtTWbzcDYEWY4YNCd5D2
- dQIlq0bzutznYYXpnPT7b+99nig5FYxbzzMdGVbi3HsmvWqQbuycilYemDuYg59BW7losf8T3
- XPs5uyFWMOfDyn4Jm7dyh2/ERh0rRYTjyUbqq2L7C004iWUbTXMT4QxZyrA305GBSY5jbJ5i9
- +St9eBxcEAmcBKBLIqSzRi813JqalP7k2ySL9D0KO38Cey9C0Zhaq6hlQex+YyMONVkhuGfR0
- xOq3Fv8C298wlIs2rXgn3aN0zXaz5auuo8ze1UreSbcaIH68Ag2mEQyPr0T3/YQiuUKA8vsHA
- zQq8tpE+Ou3hisYaR18O3j7ClmfAFB+UvnXjLcP+DWwTNETqGPCXvbleiFYDcrJKNeZiczYQr
- 05b2EfGul7sjE90pvFb5D+lmh+uE1pQt50l3HKorbNqZHxJJ7h6w8LzWCdgEzaxLwjlHThZxJ
- +zqD4zjZXPrZjK/lJn/li5rLd33xlaVNGh69n9E7MSFlH4iEoXISJl4E1DyJeYWoHzp6relFa
- t6L0JSryLEblkWzm6wEn4sZGQf3u5ZjWl2LuOE4BEntBCbwK1ATkf74ZpeUow7CxNe6yS52pr
- zbT9Cp09whDhptekQPXFqYPQVcqOAwAPJSIvcSGeH8PYUbUI5NYSjg+YM9HkpGzoo/I1ij/E1
- 9H4FAvfmqj5ysIk9Dptea67ilKBzGl6gNgu82C2IzFbVx7RZlmlvWq6Fu0uuDqwQbVSQ/xg+X
- oOlXYetNXLn6J8CXN9/650zCEWSMILSmBnSSnv7OBoRnNJ9G/1VVa1/swQZFyvko+iIdeBRSN
- hoHzAyJPnZQCBio+vOUnQrfuJYQHtph4fD0ueukkxLU7Xdp0H3tIBl8M4dhWtU/IiRUTIeihI
- f35Lb9lMNg74wSlh4RHN3clT9UvtMRMuax65ycCJpAAQhFeJpCik6xXJZOSZorxuW5Sv1Fh9R
- U028tg5exktTEKTKF9OApECxug/AhsFHI4obFIsQ9xlgkEszME9m+NnLkWJw/vBsYznQH2yh+
- BxdNZIw8/ww5jHljX6zQiv96kTV3wwgD0sSrnGlE/GX+fqy39Bi4+2MrA59Vpf138fgsqOISH
- GfXAmhjyv0UggmXOZZK+jAaeFDJeouN2GnK6Kmh1qz++4GIj0LnoDEsyCsbuT/G88WtFTJjbf
- dQibEzwJLpWjwvwtL8EptJq1hBFp13gZPG3ikjjYgwEQV3KORGfxocINFaPbmqrMt7k9gFioC
- AvUv/y3egDJp+Fcw==
+Content-Type: text/plain
 
-Thank you and Lucas Oshiro <lucasseikioshiro@gmail.com> for the 
-clarification
+Zejun Zhao <jelly.zhao.42@gmail.com> writes:
 
-On 19/02/2025 18:11, Junio C Hamano wrote:
-> Anselm Schüler <mail@anselmschueler.com> writes:
->
->> ﻿If you run git diff for a pathspec with an empty magic word/symbol
->> list in short form (prefixed by ::) and in long form (prefixed by
->> :():), you get different results.
-> The short form is prefixed by a ":" and optionally ends by a ":",
-> but the optional termination may not be required when there is no
-> ambiguity (e.g. ":/!path" is "from the top, not matching "path", as
-> "p" cannot be a magic signature; ":/:!path" is "from the top,
-> matching "!path", as the set of magic signatures ends with the
-> second disambiguating colon).
->
-> The long form is prefixed by a ":(" and ends by a ")".
->
->
->> Here’s an example use of git that illustrates this:
->>
->> ~☭ mkdir gittest
->> ~☭ y gittest/
->> ~/gittest☭ git init
->> Initialized empty Git repository in /home/anselmschueler/gittest/.git/
->> ~/gittest (b0)☭ uuidgen >file
->> ~/gittest (b0)☭ git add file && git commit -m "$(read)"
->> read> initial commit
->> [b0 (root-commit) cd3bd43] initial commit
->>   1 file changed, 1 insertion(+)
->>   create mode 100644 file
->> ~/gittest (b0)☭ uuidgen >file
->> ~/gittest (b0)☭ git diff -- "::file"
->>
->> file
->> ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
->>
->> ───┐
->> 1: │
->> ───┘
->> 66d18ffa-1128-42a5-8d4e-f9d75eb86b92
->> 9acea2b5-50a6-4f87-ae1a-64019a93e55e
->> ~/gittest (b0)☭ git diff -- ":():file"
->> ~/gittest (b0)☭
-> Doesn't ":():file" ask for a match for the pattern ":file", with a
-> leading colon?
+> Now I'd like to ask for your advice on this issue, which I may be supposed to 
+> do before sending any actual patches, should I push forward this patchset 
+> further or pick another microproject?
+
+It really depends on what "this patchset" you mean.
+
+I do think that there are still places in our code base where we
+truncate size_t values that we eventually use for allocation by
+mistakenly mix arithmetic with smaller type, and I do think it is
+worth finding and fixing them.  So a patch that fixes a code path
+with such an issue would still be a nice thing to do.  If there such
+a change (I do not offhand recall) in the 6 patches from you, that
+part of the series may want to be resurrected; but I do not think
+changing "int" for line numbers to "size_t" is one of such changes.
+
+If you mean "find anything that -Wsign-compare warns about and
+squelch the warning by using widest type common among the quantities
+involved in the expression the compiler warns about", I do not think
+it is a good idea [*1*].
+
+
+[Reference]
+
+*1* https://staticthinking.wordpress.com/2023/07/25/wsign-compare-is-garbage/
