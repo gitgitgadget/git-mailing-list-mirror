@@ -1,83 +1,82 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BBF254856
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 16:43:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720762192F6
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 16:46:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740415409; cv=none; b=c22dJQ4wQiTjqcSeTKkE3cHxh4BUm4JDMoqgEnbtJgBo4leZ8b3pNrcDjmTzMoZLn7XRPKndkSf/SuBlON7lwxYNfC7oOkxmQLgF0Vky7Dkpy445tfhTzTeduLih9QubOZd0Go4URIPOLZFyTUQC3zninxg8D0SkG5j+HY+pfX4=
+	t=1740415594; cv=none; b=t6leniz73gtHtPN3VId8lEL1GH7sEGUEA6z2BqD0LUGi8HW4xKSGIOiek21PN7oHMXGbOE6l2aXDFTlKmQBv3O/7iLAauIbZ7O1Q8kBindP2r6I1d7wc9bqy1N4JVppECSWZ+7lNVdlUh9JGXWjJDcpkBhXq9Tr2CL4o0kuqdLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740415409; c=relaxed/simple;
-	bh=OTWwIwSk54VM/BvvjxfWn5e/mTeHf3Y6SUFesuLDXVw=;
+	s=arc-20240116; t=1740415594; c=relaxed/simple;
+	bh=yRmxRTXO0kr0yBw//Khev7qvzu/Qb2jSFT3uYx6th38=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=exOg1MgrMlB8O6hvOrlSBT01IxRggmYP+V98wQrpHmx4MC/XynK8/r1IcLca0oDDmn3ukynTnkDnuRz+fXsM+uq/aAm/DAsKEDg5wL8v+OsstFLcZsMhIN1Ab9MPLVpU9Jw1tDWm/OLMPYCD/e0Oy9uLiDDYMIbeLbriEqt/Deg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gHxrDwYY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EHEATpnW; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=I7YiqFzsCaJaL4x0fWcnUOUTx4qaEPlo0+jKyqkx4Nq/jb/Pk4Os2Lk44SgdILvknlQKCfPuyqFb3Wb+/rgn24/zlGQjcHmk6HQUaxvdyWm5oWC0nQKrbMcRdrLqHbbUJ7GDfUffax8mMNZarWkeCrSBqPymdUhPNDdLj0uph/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ppO9afRw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JoACbOPN; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gHxrDwYY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EHEATpnW"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 24AB51380A2F;
-	Mon, 24 Feb 2025 11:43:26 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ppO9afRw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JoACbOPN"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7E45B11401FB;
+	Mon, 24 Feb 2025 11:46:31 -0500 (EST)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Mon, 24 Feb 2025 11:43:26 -0500
+  by phl-compute-09.internal (MEProxy); Mon, 24 Feb 2025 11:46:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740415406; x=1740501806; bh=bVNcQsGNLb
-	7nQ0Ez9dnuAzPLdGzIsXhqEW0xFO/7YiY=; b=gHxrDwYYa+0N9jnEYY8A2Br0CL
-	P5VX/OJ/5RP4UyiA6sJiqBERQ/bsQBFBCCIPMVvHo6wICCT219PLKBkvqA+pET15
-	EgicDXWIkEVdAaYc2hvtS1RkAdMMyTNjMjEuSTWhyj+bO9hi8r4SqLDLKaDaxP1C
-	UtD57BQC66pMiu1oKj+D8d7/btHPdNmzcQGsFIl+m6lJLn+6841pKtESWM1KY4wb
-	SF4MA7xmUftkY+B/CMj30wJGpvUCrmHDYwp7U+VkEcFL2PCOeCHUL9dXsE0cpLMG
-	FWLMXZOfQkp8wY13COrbZ6xDSFbkii6d+dpCT6mUbuvzTmQKP5y8HIZZlwZw==
+	:subject:to:to; s=fm3; t=1740415591; x=1740501991; bh=BSATK+yACg
+	qA9pMzlMHHGEiVJI4GyAs7FC8Icwrtb8k=; b=ppO9afRwNE4YUA6p33TGf9QGI5
+	68RbpaAzRJ9jcLS5sJ4St1qbf84llFW4hEs6zShb40UDLKURUHuMQ2CI0t6c65bX
+	NVs/e8oDpylWypVmVgr8u9cSa7tAVZBeSmVRYGawc/mhpYee6Px5KboU7QlA3Sw+
+	muIHfJ8KxmFkph28cI/UIUx2c+xWFJMiuqi+UrXKCu4BO85MTTwV0Y7kDH9m0z3Z
+	6RcNexwbGiwOFzwXOFLsrmk6btlkxagYm4SMKFyUCWXHi17ssIr8B/P/tQR1JiiG
+	EL2JlAfv8JUTb7Y2B9WOg4wfUTadm2CZd85xvp+f8632f1/VsHOnwKr6R9PQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740415406; x=1740501806; bh=bVNcQsGNLb7nQ0Ez9dnuAzPLdGzIsXhqEW0
-	xFO/7YiY=; b=EHEATpnWCbVbLocig8G3s+yVeSb6/iHCAxhbSZeLZqK1M7IMaws
-	PEjOK+94js4kk3Dbe158feMfkVALmuZA7xMw6JESx6Bqw2uFbp0OV8sggC5ZVgJS
-	buaxjzKOep2mPsZ5bVB83MSPK8A5yNXLuxyGxqtSn18uNjS9CwWLK5SAs1vNAmz1
-	NvJ5em5RihFhqaYoC+WvaLCucYbniUBzkpZ7pueg0lm1eSR+XBrRMxJbBe6T2soj
-	4vbmWKpKUoCsNIll6iBxVLsrggJHR/oZPNGtheYFLd9Mn6b7K+6C+NJ0+7/WgamC
-	RiAfBrvn4V8kWAvKXV79/TBWLWh9cy6Bt6Q==
-X-ME-Sender: <xms:raG8Z-YBNR4Vdmd_CVUu-Wng1mi-jgxMrrKrY4sYVjvVps9LQe0s9w>
-    <xme:raG8ZxaPRPiwe4QiNLwbfTOFdyBVP6LNRMuK91Ty3oaw0GSZyNCCgMukC9tu8K9LZ
-    wL36RfI2SX27W3djQ>
-X-ME-Received: <xmr:raG8Z48IZ0HRCY-ILPCC2LnXzeYhC8LGGz-h59m0RcG_hVnEtFjIkLfkshaEKUVdXYyVglTQeAOjWDM3cFL0wFAleqVZTV1VddotGww>
+	1740415591; x=1740501991; bh=BSATK+yACgqA9pMzlMHHGEiVJI4GyAs7FC8
+	Icwrtb8k=; b=JoACbOPN4Fp9OrhLYx/+4coUcUIIlhVp31D6x+WrIwbyMR9DNII
+	FVXbUjEccsbdI7/3WGnVTJRsqEd8sJgJMh6c76uTBLuKD+Yc4rxkUgu6/VXb0NJT
+	9yi1iAHzeJ4ahi6GOLhESyKrn8F+lyqPN24OP1+e9ZOZC3JDCD7jRB74eh6zG6wF
+	2+gHM9JRvroAD8Nuxc9+jfL/sfxl4JZdas42kmd3Q0Buz1wwvbNMy2RO7pMTpSQ1
+	2b5vqIkQN4dtAK+tPzj2HJhdAelW5al5IQAld0Q3YO3IGOsAkG4+6502V9vd51sP
+	eG16exYunJZPO3MBL+CB+i9sAgkandluHqA==
+X-ME-Sender: <xms:Z6K8Zz7gAeeaKiQHV6ceGmtaSmvO3eEHTxq_BlB3U0CrZWflt0WCvg>
+    <xme:Z6K8Z45KYtBdz5v80btYTWMR9_LIh7T-f6DP3FLVGXNlD4Bu6n4-ILMrPOPVj0TZN
+    ywhhGyQuRkBqpmw8g>
+X-ME-Received: <xmr:Z6K8Z6eqHd_apmOtI3i1LgLuL3DIkq0ahEFPXhKcPw3p1XLkhFF6bcLBHM0vmYhuvRZXGo4g0zXAnk-XvIJ3Bueo2tLNs2HEGhaIYFk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejleeftdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepvddtvdehsehugihprdguvgdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:raG8ZwqLRpUSAessS9H6UuP8R2k22tCLxTRWpy0Tfn4mt3vA44X1yA>
-    <xmx:raG8Z5rzbwUKn1Xw4p_soj7s3SlOZh3rB3xu3I8HS5lH4HQCBWZL-w>
-    <xmx:raG8Z-SwZYQ70E4TdGJkxVN5j1EzKfYyFIBDnKJg0lQyN1ODTcS9Rg>
-    <xmx:raG8Z5q6BvkBVBal8CJXR0triMEkq9MDY-_O-Uh0sJNkIPyS3tLTbA>
-    <xmx:rqG8Z6lC9zpnLHfdg5JTRPmMBqiHVlPydCQUerk3QaFup5IwtgJ84IQc>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
+    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
+    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvg
+    htpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Z6K8Z0Ifyw-dZ6GCEH4hUj9GNHA25u9O6vdaXK-aTg-_gjqeHTkmAg>
+    <xmx:Z6K8Z3JfrYAxX5maH-XiHdoKKL5xQIZNz5e9eee96vMlQl_vIIWyfg>
+    <xmx:Z6K8Z9yrkOerm4vc0hVpXCDxEGlwYoG02axr2q0GB5lkRuxo6feBQQ>
+    <xmx:Z6K8ZzJmbjwFEjjcGoQ2a4gSbehwGiPNshCZnKTsoBR_AP3flVNEWA>
+    <xmx:Z6K8Z_0w2BRZN3KX0ulQFaE-Ksyzq_GgpVqOKvIDAzw4BGA4N-n8SItd>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Feb 2025 11:43:25 -0500 (EST)
+ 24 Feb 2025 11:46:30 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Markus Gerstel <2025@uxp.de>,  git@vger.kernel.org
-Subject: Re: 'git gc auto' didn't trigger on large reflog
-In-Reply-To: <Z7xQey4S0ewT5rs7@pks.im> (Patrick Steinhardt's message of "Mon,
-	24 Feb 2025 11:56:59 +0100")
-References: <e650f4e4-e267-4f1f-bb3a-c71b1fe0b276@uxp.de>
-	<Z7xQey4S0ewT5rs7@pks.im>
-Date: Mon, 24 Feb 2025 08:43:23 -0800
-Message-ID: <xmqqeczn70pg.fsf@gitster.g>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>
+Subject: Re: [PATCH 0/1] Fix netrc usage with WebDAV-based HTTP protocol
+In-Reply-To: <20250223015331.588161-1-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Sun, 23 Feb 2025 01:53:30 +0000")
+References: <Z7UPYY24uk7lLzeP@tapette.crustytoothpaste.net>
+	<20250223015331.588161-1-sandals@crustytoothpaste.net>
+Date: Mon, 24 Feb 2025 08:46:29 -0800
+Message-ID: <xmqqa5ab70ka.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,24 +86,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> It's a bit funny, but whether or not `git gc --auto` does anything
-> solely depends on the state of the object database.
+> However, I think we need to either decide that we're going to support
+> this as a fully-fledged feature and add documentation and sufficient
+> tests, or remove it, since it's not reasonable to have undocumented,
+> untested features that people rely on.
 
-I guess after adding "auto", we haven't been careful enough to
-update the triggering condition as we added new kinds of "garbage"
-to collect?  Should we make an exhausitive and authoritative list of
-gc tasks, document them, and make sure "--auto" pays attention?
+Does "this" refer to "use of netrc in HTTP code paths", or "HTTP
+walker"?  I am kind of surprised that anybody is still using the
+latter, regardless of where the credential is locally stored.
 
-Other than objects (packing loose ones, pruning unreferenced loose
-ones or packing them into cruft packs), we seem to check reflog,
-worktree, and rerere database.
+> I will note, as an argument in favour of removal, that we have
+> git-credential-netrc helper in contrib that users can enable if
+> they want to retain this functionality, and we could even ship it
+> by default without much difficulty.
 
-I do not think there is a readily usable API to query how much stale
-data is in reflogs that are more than N seconds old, without which
-"gc --auto" cannot make decisions.  I am reasonably sure rerere API
-does not give you such data, either.  I have no idea about the
-triggering condition of "worktree prune".
+I am fine with the approach.
 
-
+Thanks.
