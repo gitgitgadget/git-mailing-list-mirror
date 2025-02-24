@@ -1,230 +1,104 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A91C24EF6E
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 20:46:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9488C1F419C
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 22:10:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740429971; cv=none; b=Msb2QNysKwjsE+L9+CXGIF6yn66DITM4ZmWuCac45ACdl4XsLOsyGLLAQepUymqhLDLx6N79ieqEh2QFdfqE6XIUx2Gg28lgJt6lCTdW1bWkMYwV2HYLVax3yohnRMpGCHLhmV+W5X/k/CMgOVaULWHfIze6tO5ZzMsb1N7msnQ=
+	t=1740435004; cv=none; b=co4CanvFO76QlUg0vLWKfxThwNJcNiKfY3WhqMOi9uFIBKABRyF3DvukR4SwhSiYZFaFBOZ4mXaSOpdgzRXrrmZQhbEr/APkFA9U7N8idI8IbVDG/OuMvtZpEpOPC8qojh43S7aaX/1uKwxGzHYVJhaJjdNxmYZMvGyGlgdyXjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740429971; c=relaxed/simple;
-	bh=rsoSZwcBUGybVVMPPm4urgbkpza5TylLInoce+dpebY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=QN3yiyJlJ6livMj7xBtczGi/zbTvL7ICIYzfGjknMdWUT327qzG5PZxKgElyr0MsyKij1gkJTmXMDIkt+aTTcO0q3m6pIjPtugGJlpgriZ5HbpNThx9dygIRk23bC06N/yW9Hd7R/zPGx4vPnzJtiUAwBsiRfs/i3i5JLT1VWgA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=as9dm1c9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RDzHWLAA; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740435004; c=relaxed/simple;
+	bh=UcOJMnjgVhbX2i3GOhjgPkTUuYmaoOu6xH6kt8g15bA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PdHxKo9uxuQEtQgZ5gcbRVFmq78lO6iTGlbJBrmqDktsb/icFDIHxx1nTauH1q77dP+dPAMzCIGTYIuucTM/vaFw3M2PZqbSrx7q4UW8EX9cUBkuCK9E06fSAtRNpb2sdb0+QjXy/QBOBXeCpvT1c836rpfqAGR/VeksOmis8QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZRKihqVB; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="as9dm1c9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RDzHWLAA"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 062B52540171;
-	Mon, 24 Feb 2025 15:46:06 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 24 Feb 2025 15:46:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740429966; x=1740516366; bh=VaK+6hPjaY
-	XEZkPVB4OZdc97djLCgdAc0ajcQzAlx3s=; b=as9dm1c9EJHVEj7iiyvyjgSVcQ
-	yTFqk38QBfB88buxowQyiAOjkuLK6FcADqQNXjpK5cLaqYcxJe/plyo7RUtwRmtU
-	8L0sBZtL8/5sDvnQBsQrEMuk4eaPSgoPfKdsAcYVM+Qzc5Ienmgm0KFT0CldkD7U
-	lgitdOTKqkydLUYu7OoSQtgQLEYKFrKQ/GU6Jdqj5sYqpgl6mnMbNVkIHDtK5rIj
-	62BuAW7+W25dfuiVCvmBOFJx3v+tzzyg/R4ridx4kbx7+fZKNY40AA4dGqgS+D1y
-	zSdgw76TgxNfsmPJWRNYoHQubAYy+PtMqGRxmhZBgdG+OZJzGKPZo2iUq1zw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740429966; x=1740516366; bh=VaK+6hPjaYXEZkPVB4OZdc97djLCgdAc0aj
-	cQzAlx3s=; b=RDzHWLAA/aW6ar6ytz/A2gReKzNqDFFQ1JAzrFyF+3xmyYKkWsX
-	HDIBB2TA0n7RDJwSdoq3zAb3r4lUAf2/iKuR6zSajX+7lQ9+8x8KjMwL0uNNgrJM
-	xFw/RhztKBtC9+3AZjJkzzhHfLCn1NJ4KEhio2Co1QBOGpjXIGWtkLaPiyqjkigX
-	XTzOR/fIyk4pdPvXBYKLZNEWVc+Old+gHXcRx8X1DujyO4ZuulceTc6e1QZCvGZc
-	G3pT3duX86nNxOUSbFZZcuWpkWW8tzrsTsLVE2PGqh5wbHJuAkwvAhjwbWv6WRiu
-	WyasT2uNRCN5/IEJIi1FFm/kYOZNmUoYwUA==
-X-ME-Sender: <xms:jdq8Z3-i07RBRCqGWiuvItJAExTfMEOpp-n1v3A2vfAzwp2QF7aFNg>
-    <xme:jdq8ZztmJFk6bClGNYnPs2DTLRSLuxCk4IN88xdJ3tRuC-6SGmu585Ux0s4YgrEO1
-    CD5ufhpdS4dlHGJcg>
-X-ME-Received: <xmr:jdq8Z1DhHAjGprpA8Ue0oWAHd8yUcsultct89_xm7cbyDK9bJq4So-74jpa3tpz6n4FHjsAEWCiBOKDOh15K4L0ub0ermgLshwP-eds>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejleejkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
-    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepvghrihgtrdhpvghijhhirghnsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtrghlvhhi
-    nhifrghnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehjohhnrghthhgrnhhtrghnmh
-    ihsehgohhoghhlvgdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgr
-    mhhilhihrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehjlhht
-    ohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:jdq8Zzc7XcHA0HlAZSHJksH78v9i-OdZUZfXpMCdU8_MHo9Ee9Frmw>
-    <xmx:jdq8Z8Nk3ZwJw9f6fpdJrGBtvn1L8h8Za9R-dAmbqzfSfX6iP5306A>
-    <xmx:jdq8Z1m1dTE-v0uuuGhiREP34tQie_kk3pXuwuuFhij5FedyHnp6sA>
-    <xmx:jdq8Z2u-tZ6I5kJnwg0mPmyKn-HRt6s57BwhpcpMcgDQdzJKHfXK9A>
-    <xmx:jtq8Z7qXI2VXMAzAehgmFGenJwole5UAPcl77OaiyqHl0kFb-kx4qc3O>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Feb 2025 15:46:05 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Ju <eric.peijian@gmail.com>
-Cc: git@vger.kernel.org,  calvinwan@google.com,  jonathantanmy@google.com,
-  chriscool@tuxfamily.org,  karthik.188@gmail.com,  toon@iotcl.com,
-  jltobler@gmail.com
-Subject: Re: [PATCH v11 8/8] cat-file: add remote-object-info to batch-command
-In-Reply-To: <20250221190451.12536-9-eric.peijian@gmail.com> (Eric Ju's
-	message of "Fri, 21 Feb 2025 14:04:49 -0500")
-References: <20240628190503.67389-1-eric.peijian@gmail.com>
-	<20250221190451.12536-1-eric.peijian@gmail.com>
-	<20250221190451.12536-9-eric.peijian@gmail.com>
-Date: Mon, 24 Feb 2025 12:46:03 -0800
-Message-ID: <xmqqo6yr3wc4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZRKihqVB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1740434993;
+	bh=UcOJMnjgVhbX2i3GOhjgPkTUuYmaoOu6xH6kt8g15bA=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=ZRKihqVBxsWEORYlog6CuJn5yqlasm7+y3SzaQsaZUG90v/mEqVfPoJz7DX5cQqjz
+	 1OHLAmguGGLGoite0K9lfXLrrICoFjv1GbgrX3qnofxESioMFdy5aWKy7FTVy1yZmC
+	 MvfgHFKOAiIGYCFAajqMXF7Hcn3rt/Pt4NQCLf8zOCGiCV0pnuBAXJlZtOyG5827P9
+	 tsz2MSEpesIupCpS/Q7qe/Iei32BklQOCBSkDEw3Xpb8YLsk6S+g0UMRtJah9X/hyk
+	 60toL7djdjQGyaaINqU93Fso/3P19UcBhOa+xvqz3W3V3tcFzic5UV7s51Yiqa50dd
+	 7NiV88GqC0ck1BLbcZkasPwTJiA+Jrld/yYxuRhQz/AtxVt71rT6xMBnVQj8hPm81x
+	 idivZruQNx1deMtj0Mjfz7ePwQxwzDGZYba49lWualSWZOc6aVM9IZ6Lk+AJv+Tik8
+	 51VGrGqfTbdW/F+gJ8syo4RXkmRAyUVfeJxdOI3a99QWCHxvMFD
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id BF0C62008B;
+	Mon, 24 Feb 2025 22:09:53 +0000 (UTC)
+Date: Mon, 24 Feb 2025 22:09:52 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Fix netrc usage with WebDAV-based HTTP protocol
+Message-ID: <Z7zuMBVrnX_pLE0K@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <Z7UPYY24uk7lLzeP@tapette.crustytoothpaste.net>
+ <20250223015331.588161-1-sandals@crustytoothpaste.net>
+ <xmqqa5ab70ka.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Eric Ju <eric.peijian@gmail.com> writes:
-
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 69ea642dc6..47fd2a777b 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -27,6 +27,18 @@
->  #include "promisor-remote.h"
->  #include "mailmap.h"
->  #include "write-or-die.h"
-> +#include "alias.h"
-> +#include "remote.h"
-> +#include "transport.h"
-> +
-> +/* Maximum length for a remote URL. While no universal standard exists,
-> + * 8K is assumed to be a reasonable limit.
-> + */
-
-Style.  Our multi-line comment begins with slash-asterisk and ends
-with asterisk-slash both on their own line without anything else.
-
-> +#define MAX_REMOTE_URL_LEN (8*1024)
-
-Here and ...
-
-> +/* Maximum number of objects allowed in a single remote-object-info request. */
-> +#define MAX_ALLOWED_OBJ_LIMIT 10000
-
-... here, please have a blank line.
-
-> +/* Maximum input size permitted for the remote-object-info command. */
-> +#define MAX_REMOTE_OBJ_INFO_LINE (MAX_REMOTE_URL_LEN + MAX_ALLOWED_OBJ_LIMIT * (GIT_MAX_HEXSZ + 1))
-
-This is an overly long line.
-
-> @@ -579,6 +593,61 @@ static void batch_one_object(const char *obj_name,
->  	object_context_release(&ctx);
->  }
->  
-> +static int get_remote_info(struct batch_options *opt, int argc, const char **argv)
-> +{
-> +	int retval = 0;
-> +	struct remote *remote = NULL;
-> +	struct object_id oid;
-> +	struct string_list object_info_options = STRING_LIST_INIT_NODUP;
-> +	static struct transport *gtransport;
-> +
-> +	/*
-> +	 * Change the format to "%(objectname) %(objectsize)" when
-> +	 * remote-object-info command is used. Once we start supporting objecttype
-> +	 * the default format should change to DEFAULT_FORMAT.
-> +	*/
-
-Style.  Closing asterisk-slash aligns with the asterisk on the
-previous line.
-
-> +	if (!opt->format)
-> +		opt->format = "%(objectname) %(objectsize)";
-> +
-> +	remote = remote_get(argv[0]);
-> +	if (!remote)
-> +		die(_("must supply valid remote when using remote-object-info"));
-> +
-> +	oid_array_clear(&object_info_oids);
-> +	for (size_t i = 1; i < argc; i++) {
-
-Pointless mixing of "size_t" and "int".  We have declared "int
-argc", which is perfectly a sensible type, since we know that the
-value of it would not exceed MAX_ALLOWED_OBJ_LIMIT, which is 10000.
-
-> +		if (get_oid_hex(argv[i], &oid))
-> +			die(_("Not a valid object name %s"), argv[i]);
-> +		oid_array_append(&object_info_oids, &oid);
-> +	}
-> +	if (!object_info_oids.nr)
-> +		die(_("remote-object-info requires objects"));
-> +
-> +	gtransport = transport_get(remote, NULL);
-> +	if (gtransport->smart_options) {
-> +		CALLOC_ARRAY(remote_object_info, object_info_oids.nr);
-> +		gtransport->smart_options->object_info = 1;
-> +		gtransport->smart_options->object_info_oids = &object_info_oids;
-> +
-> +		/* 'objectsize' is the only option currently supported */
-> +		if (!strstr(opt->format, "%(objectsize)"))
-> +			die(_("%s is currently not supported with remote-object-info"), opt->format);
-> +
-> +		string_list_append(&object_info_options, "size");
-> +
-> +		if (object_info_options.nr > 0) {
-> +			gtransport->smart_options->object_info_options = &object_info_options;
-> +			gtransport->smart_options->object_info_data = remote_object_info;
-> +			retval = transport_fetch_refs(gtransport, NULL);
-> +		}
-> +	} else {
-> +		retval = -1;
-> +	}
-
-Minor style nit, but when everything else is equal, writing the side
-of smaller body first would make it easier to follow if/else, i.e.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="WceEeUdIA+Dc2Cxr"
+Content-Disposition: inline
+In-Reply-To: <xmqqa5ab70ka.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-	gtransport = transport_get(remote, NULL);
-	if (!gtransport->smart_options) {
-        	/* error */
-		retval = -1;
-	} else {
-		... a lot of real code here ...
-	}
+--WceEeUdIA+Dc2Cxr
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +static void parse_cmd_remote_object_info(struct batch_options *opt,
-> +					 const char *line, struct strbuf *output,
-> +					 struct expand_data *data)
-> +{
-> +	int count;
-> +	const char **argv;
-> +	char *line_to_split;
-> +
-> +	if (strlen(line) >= MAX_REMOTE_OBJ_INFO_LINE)
-> +		die(_("remote-object-info command input overflow "
-> +			"(no more than %d objects are allowed)"),
-> +			MAX_ALLOWED_OBJ_LIMIT);
+On 2025-02-24 at 16:46:29, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > However, I think we need to either decide that we're going to support
+> > this as a fully-fledged feature and add documentation and sufficient
+> > tests, or remove it, since it's not reasonable to have undocumented,
+> > untested features that people rely on.
+>=20
+> Does "this" refer to "use of netrc in HTTP code paths", or "HTTP
+> walker"?  I am kind of surprised that anybody is still using the
+> latter, regardless of where the credential is locally stored.
 
-Nobody guarantees this user gave a request for more than 10000
-objects; after all it may have been an overly long URL that busted
-the line length limit, no?
+It refers to netrc in HTTP code paths.
 
-> +	line_to_split = xstrdup(line);
-> +	count = split_cmdline(line_to_split, &argv);
-> +	if (count < 0)
-> +		die(_("split remote-object-info command"));
+There are definitely people using the WebDAV-based HTTP protocol still,
+but after reading the comment in the code that implies that we don't
+read packed-refs, I'm less and less inclined to say that's a good idea.
+It's probably going to die pretty quickly when we move to reftable,
+though, since that protocol only works with the files backend.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-Here, the code could check if count busts MAX_ALLOWED_OBJ_LIMIT, but
-it doesn't.
+--WceEeUdIA+Dc2Cxr
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ7zuMAAKCRB8DEliiIei
+gemtAP4mZiWTA5Lj/nvnqAYDdSQoTKD+1N4KGCp1r6y2rk8yTgEA+0V/6CZfyDUd
+euf6eZCgdGTP2DpWBWuyBFSqG4kODgI=
+=MOyd
+-----END PGP SIGNATURE-----
+
+--WceEeUdIA+Dc2Cxr--
