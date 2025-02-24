@@ -1,131 +1,100 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCF4206F38
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 22:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE00614A4E9
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 23:10:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740437439; cv=none; b=KclStXTXBFVp8Yhp1aGyIOwhxKXnvLMCBD2rnI3VHBb8/Q41i/ZY9BxPqCfq7SV8Q952n0wR/8zGoVjDVOPAU6kq1IH6kBRhriTcoV69GnosXm2Ebh90tavNISF8oymZ+lt8CWtlLjS60vhg+q/Ae/Z9ig1wHh5vn30IMVZJv6Q=
+	t=1740438630; cv=none; b=iALsIIO99arTF01nogsLaSCARG4qM+/Rp0mdv5D/RVuM+Am4vEZvdsivRFCXj7W1MCowvINxK3wmJv68beuhXvkUwwBDkFgqI7gvIgeRuz/W7rOET/go473xfG1L912lBV9ladkOoX/Sym7uCW/XG7IfQ73NItvumXhtmT2I8PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740437439; c=relaxed/simple;
-	bh=s9wH2HhKX0QmXUuHZHef3T4BYVP3dYAb5RrhqNgyQ6g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tlWrXalRTMZAB5kirUDujlaUZruMpg+auKmGkrONxFYCRX58/hDOgRuauf0GTZLnW3ktBOhjZ/wsNePiGhFnvMGj6A7LA+7ymVTZTApvZH14hM1jJ3Nu6xgAKQy6Tqk7RQWVPsz8ZeGbxZK5n3RRAvw/Yiyp+V2GW7wp3YFeW3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XM5stVvk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oybJsFZU; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740438630; c=relaxed/simple;
+	bh=8ihbhuDVye3jl3AvIhLaf5nUPTdovIxQb4Q4l3NaI/I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YCEKykGpIb61T0/uR5kjB4v40DUMyktn7oV3BiCh1q8uikbfzD5Ux23CzKLOar1q0OgF/s2iaJg0bDqrjVrRiyfW68C6vIdGIRpyEkI+7YQOL8OvBu7JUcxdEoui7lPIOmWMOhMQ6HipABQkbPX/+ctJ/obToWj86boZXm2xCj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fvsW2dPw; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XM5stVvk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oybJsFZU"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2CED511400A4;
-	Mon, 24 Feb 2025 17:50:34 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Mon, 24 Feb 2025 17:50:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740437434; x=1740523834; bh=2zDvWiz06E
-	Yo9hAZs7RAWDNtgkNDdNGcIoJOUIDKW04=; b=XM5stVvkjMsCztl/ZCnZUEQBJG
-	EJUOFmI7I08qcAi0Sz++QrWmoYeGBIUMGhpmQBb3/tNx0xQ1NUbeAXJhbB5SHHt3
-	RKWXqWaj9gmIQDy0kMNJ16QT+12jMpy6FwbVzUUrzWS8+TYsiA6pmFodCMR/nDAd
-	JYXc/auyYkZ0W/AK71Y+xIy6fsoTqQVSqAmxgDwre+5aA10FfxI/406g1wnIW4CB
-	T0PX3Wqwf1tgUXaiauTLRhXXChV3nSAOWF1GdGN5sRAInjZSa4kqV4c6Pi6tWeZd
-	GHGtc8lTUgJfo0trNxGJuFx0AHZ48QwAvsXGnQr07ZUUWU4jxF1mtEyAVE/g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740437434; x=1740523834; bh=2zDvWiz06EYo9hAZs7RAWDNtgkNDdNGcIoJ
-	OUIDKW04=; b=oybJsFZUe+eFtmnvashregI7rF95gBLqTb0v7UG6EAirzxk1yKc
-	6CihWxVjuOkcQJ/y0g7iM38+S8vF3NzDpnUXfQ8CbwXd9DK0bo1Y8XOK/WcKLP6K
-	7t5kSsotnBf34t3BKRp/DbTarAldCC8itwB8hdC3mpN+VeAJhJZENp/mz02gUXpc
-	MDbf2VLnS1+kg/SPND3I0jU7BqI+naOIRF3RbdAo3dyh7Yyo/YmZ7PaX5EFkup6t
-	/oKyXR+okyNXyBVH5IQTB+ijT03joLgBI31Ai/C1wNQfXp3mbM9Bf/fg54vbWhGA
-	+XTKxqpqakA+VAKWQdOwYuRhoquBDsJdWBQ==
-X-ME-Sender: <xms:ufe8Z8sTkgXzOiaX4P174wEJEbYUSbJmnTnfYjUHRzRan6-EC9xFQA>
-    <xme:ufe8Z5frFC7jifcblYQtTi0q-A_VxwBD4QMdXJeXmfAK0lpPBiIJSaiY3aEeW1nqq
-    _dQSPlj_y9YubSvFw>
-X-ME-Received: <xmr:ufe8Z3xRJoN-ofbO6hsoL90n5Rs4W6rC3O2PQBXtdYhPTl-ycxcYwa8NvibWdjUbjLKRxOQ18L6RXXGD_278X0GX36pRyKznElaureM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdektddtfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
-    hfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ufe8Z_OFuS8hAFMvRoecKFSdkOuWChxsShPQ2JNKT13pDXj53PN67Q>
-    <xmx:ufe8Z88ennKvAo3x9yqzA-fHCHIAqj36FaZFKD7_z7e7k8gf-9dU3A>
-    <xmx:ufe8Z3W0u0YkU1xCmcw2zk0hSnkA3SOVN7mKhz-Ut12ZombZAOG7_g>
-    <xmx:ufe8Z1eFhgYjE7nO2q7OU6zsxWAz4F7ZbSSgYqnys8pWR0c_esrjdA>
-    <xmx:uve8Z8wBqFF32vglEHlCpdWK0Mc0pfPZUxB5c_o9OnfmHQbetfPnlzQV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Feb 2025 17:50:33 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Karthik Nayak
- <karthik.188@gmail.com>,  shejialuo <shejialuo@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fvsW2dPw"
+Received: (qmail 21150 invoked by uid 109); 24 Feb 2025 23:10:27 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=8ihbhuDVye3jl3AvIhLaf5nUPTdovIxQb4Q4l3NaI/I=; b=fvsW2dPw6yAVLEOAoLfHldi0pglbTb+evRuqp5KZMd1SmpqJPmD/14iRz5YAFrTjuNTVg5u/FAdUxvIemC6iLyxHQSMiWZSvfRcSwUQI1l5VX/+XtgjjFNPWp0FfYQ+pIDgN1nUNOd0TmlwNFXOHp3uifaqskC8edUVbjqkwiUUnhSBNWfcBnVHzBSz4tqTkf/7hjvf9iC7nSxEYCK0q2sunI10to/FxGydbUT5Dqnfc2VMgrljxAqALwIuW3yxisR2nz4Ugh9nvZnnWKHAUZf8Yas4+qVeD7bpE9m6emYewve9jhL4+PqrD2Mjfmjtvm/Fesqt+Ia/4H+H65VGRNA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Feb 2025 23:10:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30188 invoked by uid 111); 24 Feb 2025 23:10:25 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Feb 2025 18:10:25 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 24 Feb 2025 18:10:24 -0500
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	shejialuo <shejialuo@gmail.com>
 Subject: Re: [PATCH v2 11/16] rerere: let `rerere_path()` write paths into a
  caller-provided buffer
-In-Reply-To: <20250224221914.GA193356@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 24 Feb 2025 17:19:14 -0500")
+Message-ID: <20250224231024.GA729825@coredump.intra.peff.net>
 References: <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
-	<20250207-b4-pks-path-drop-the-repository-v2-11-13cad3c11b8a@pks.im>
-	<20250222072048.GA3096947@coredump.intra.peff.net>
-	<xmqqr03n7218.fsf@gitster.g>
-	<20250224221914.GA193356@coredump.intra.peff.net>
-Date: Mon, 24 Feb 2025 14:50:32 -0800
-Message-ID: <xmqqh64j3qkn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250207-b4-pks-path-drop-the-repository-v2-11-13cad3c11b8a@pks.im>
+ <20250222072048.GA3096947@coredump.intra.peff.net>
+ <xmqqr03n7218.fsf@gitster.g>
+ <20250224221914.GA193356@coredump.intra.peff.net>
+ <xmqqh64j3qkn.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqh64j3qkn.fsf@gitster.g>
 
-Jeff King <peff@peff.net> writes:
+On Mon, Feb 24, 2025 at 02:50:32PM -0800, Junio C Hamano wrote:
 
-> One side note: using timestamp_t here should get us the same behavior
-> that the original had before this patch. But I'm not sure the original
-> was entirely correct. st_mtime is a time_t, so we are assuming the
-> implicit cast is OK. Our timestamp_t tries to be at least as long as
-> time_t, so I think we are OK for the future. For very old timestamps, it
-> is probably wrong (since time_t is usually signed, and timestamp_t is
-> not yet).
->
-> It's mostly academic, though, unless your filesystem has rerere files
-> before 1970. So I think we can probably just ignore it (and I do still
-> hope eventually to support negative values with timestamp_t).
+> I do not think timestamp_t is appropriate for rerere records,
+> actually.  The reason why we have timestamp_t is for things like the
+> author dates that can be arbitrarily and deliberately set to any
+> historical times, e.g. long before the committer was born.
+> 
+> Unlike that, the timestamps we are dealing with with rerere records
+> are the times on the filesystem when these rerere records were
+> created and/or used so whatever stat() gives us for st_mtime
+> (i.e. time_t) is a lot more appropriate.
+> 
+> I'd probably leave a #leftoverbits here; we should vet our use of
+> timestamp_t to see if we are not overusing the type.  Roughly, the
+> timestamps we may record in the commit and the tag objects should be
+> timestamp_t, but the time we get from the filesystem and only
+> compared with another timestamp the same way should use appropriate
+> system-defined type, which is likely to be time_t, as not everybody
+> may have struct timespec, and file expiration should not need
+> nanoseconds precision.
 
-True.
+Yes, I was going to suggest using time_t (or even timespec) consistently
+here, but...I think it is a little trickier than that.
 
-I do not think timestamp_t is appropriate for rerere records,
-actually.  The reason why we have timestamp_t is for things like the
-author dates that can be arbitrarily and deliberately set to any
-historical times, e.g. long before the committer was born.
+We will compare these mtimes not just with themselves, but with a cutoff
+time that we get from the user, via repo_config_get_expiry_in_days().
+And that's parsing lots of formats into a timestamp_t. So either we need
+a parallel universe of functions that operate on time_t (to use for
+things we expect to only interact with filesystem times), or at some
+point we have to interact between time_t and timestamp_t.
 
-Unlike that, the timestamps we are dealing with with rerere records
-are the times on the filesystem when these rerere records were
-created and/or used so whatever stat() gives us for st_mtime
-(i.e. time_t) is a lot more appropriate.
+I hope you'll agree that that the "parallel universe" direction is too
+gross to contemplate. ;)
 
-I'd probably leave a #leftoverbits here; we should vet our use of
-timestamp_t to see if we are not overusing the type.  Roughly, the
-timestamps we may record in the commit and the tag objects should be
-timestamp_t, but the time we get from the filesystem and only
-compared with another timestamp the same way should use appropriate
-system-defined type, which is likely to be time_t, as not everybody
-may have struct timespec, and file expiration should not need
-nanoseconds precision.
+So the only question is how and when to convert from time_t to
+timestamp_t. I think our general strategy for when has been "as soon as
+possible" which makes sense to me (most of the code only has to deal
+with our one type). So I think doing it right after the stat() here
+makes sense.
 
-Thanks.
+The "how" should probably not be "do an implicit cast". We have checks
+for overflow, etc, in gm_time_t(), though I'm not sure what the error
+handling should be for a case like this (that function just calls die(),
+which might not be ideal).
+
+All of which is to say it might be a bit more than a #leftoverbits.
+
+-Peff
