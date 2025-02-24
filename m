@@ -1,116 +1,125 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0D7264A92
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 17:50:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B9B113B298
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 17:56:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740419441; cv=none; b=HAIup6s/4T+P7HqgXKl3pV0uz8PetonzCVuua/Yzz2s7SQOxGLnjEnjQ634+84/G47B9lYCswXWUGdCnJLBCZ/+8B4knBSE0Pdx+ELJbwl9oP40VmPwMvW01AscUUHE6PBNIr7e+Wpl39bL3P7bnOg1mdca4wbDW9s0yQ6rIB70=
+	t=1740419768; cv=none; b=gHrksxaeC+8Su0LGWq9IhXCE5uKo1d+xjWVgYRECTDF3aFDs2EjrYPtVy3uoqCIVrlkesnel0/s9Ji8A69a8VGaLjQs9FQhlhuslmAdfY2uSRDdPXkJWvJu3A4TRqGEXH11RYJunwzu7isXrjUkyW3oKLRHTQxmVesu+E9bmvA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740419441; c=relaxed/simple;
-	bh=pIA86w2ta6QRnUu+/uQ8sAN5w9STQ3erxxTvfek1v8A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WR5kGWN3jzsr5zwOZKSQAdyGUrfmt8W+G0ay1xifQg8bQYOIFYzQg0T9xXDsVZ0a6XKLm34JEZwwq/wQLuSuelzXw73kZDB7PaTsdPwYtoxhjGJh6ZUnWYGuhd8DOQwAA+ynLtYN6ZobNV5t9rlB2MVrUKxMCIKv8hMItXrgNZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=clQdQyDa; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740419768; c=relaxed/simple;
+	bh=AkyuaNlUuPJd1vD9OgvtnG9XDgymbTtDdMt4wAfb+i0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=huso9X08K01bXC5Ebx+xpHnD7YXB09ziuPlGIHWdrgS604/yWejulNOxXaBpso4sRH/hw59mSkc9x7cHujnr/e8U/JSSW5ZCwCHSzaROA75Yg8oI+GxXEocb2ssNIXhn304xxL5XCtXSn9F+9hYeR3po8LcnSO7CekfPwFD3nQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AQKFbUJ6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gq2OT86R; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="clQdQyDa"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-abb79af88afso867921366b.1
-        for <git@vger.kernel.org>; Mon, 24 Feb 2025 09:50:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740419438; x=1741024238; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=W8uEd6tpBoIeoK68NwSqpbu1NSQ9y5QOHMXTKGKqeZo=;
-        b=clQdQyDaHuRg1lnE7JCAY6oTm23t2byoNncr6ZB67N9als2GWqTd32t8KiYiarhCNN
-         mVYvQRULDWBwzujeDQQ8xQ2l5laAL0SdzPuJG4bGbFJg/zTeRtYDyN/k/XLfeTIwZRP9
-         WkT8c0Qf6UYX7o2qVSBzG+ZkMSoAz951YxBt8ebfxq2eLRVlinsuAN67wvatZQYr6K8t
-         S+bOFXG6JJzffB6vJUygIjxYwhtJGZ0n5NnzUSWzc21JqGvFMGmZKuRxpImobnHOiAhN
-         R9VWbtlyihKVVC7y2gracMZteKCjAvtL8BX98BSYcuQOdSTeGrYskOH3MQoFQ/WXZyzh
-         gLwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740419438; x=1741024238;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=W8uEd6tpBoIeoK68NwSqpbu1NSQ9y5QOHMXTKGKqeZo=;
-        b=crTLrFC3KyGrXfPB/k90uCdfQQICBV6dIa5pvKg+OH4jMTmy6O+yyUj9IxYwBqDmBv
-         UQloKhZCfNyA+Rzdm30wBfjMYO3/+e6tgK14bEex9RsY4EC615j2FMqtUFENj5Ij5K+y
-         vcn7aKDYKGWbmSARkVkO+zUBeO5g6eFB/E7Ca7pGs/dBtHL52oJ6iLsdTEEBrbdRKO9G
-         mIDFCR4KDbUKaDHP+Udkxda2HnAQO0MkEdU+E9VLtgazhfEO/FgzdiTbqed76hTGlw7j
-         3kU20qD69M+v3XsolVY9aiQDYuK8NUHIhAyJLM7df+aBvD3oAsqmkX3ehimRs2GyXBBL
-         7wbg==
-X-Forwarded-Encrypted: i=1; AJvYcCXL2mvfOHZ5h8uQCQGgXGgoW8jXy8Rx0SNLGVKwa6GFHc+00RRJLc1UWVsWguvqFLBibVY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMZD4unur8x6spHfY+n4hiKOwf40olqBjW77OwtFmlrC4/Opem
-	R+nb6s4enL8lLbKWss7G3ya8ihvv92RkCmgQGM7utKpdZveDpUTh3ZgIc6xc/JmZrWp5FHvTWa+
-	T8C3vONTKMQPlEzMY+yxcAPHM8GSDAj5pzEU=
-X-Gm-Gg: ASbGncvkwjXBz0HPNeSMZTmny2NIAE6iUzCaACixeHVX7Q68xA0GKrm6xZ36TX+fFLt
-	94oTP27dIMtqiSin4dIXMi0LYdqTbB2Tw+hVMni+zh4I6MOjJtm7elpFhANo3KqwvEkcdqlShpR
-	6nolNAvNj8L8Dpkfnmc/4inACQ5KJGYG4s+cUTqFM=
-X-Google-Smtp-Source: AGHT+IHPJuWKpfUY3NP29Qv4XDdE1choOK47wVoApzEvyYROF17aiKRX6Mm2L66EL5Sb/J43EXSg1T8dfjGtOykQfkk=
-X-Received: by 2002:a17:907:728a:b0:aba:608d:4a22 with SMTP id
- a640c23a62f3a-abc09a09707mr1465373066b.21.1740419437589; Mon, 24 Feb 2025
- 09:50:37 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AQKFbUJ6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gq2OT86R"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 026C11380EBA;
+	Mon, 24 Feb 2025 12:56:01 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Mon, 24 Feb 2025 12:56:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740419760; x=1740506160; bh=qWmi2aPFLt
+	Dz+mnGl/9oaoDE4s4ExmyZvcWagIPVxa4=; b=AQKFbUJ62p4HiO62shBIuOIxVk
+	nBBBRifhlQXzvotaw524eLnFEvc9pkPXaw+zK9iqnGQ7kbQYhb+wB/Dyuyt4Izjx
+	HwfU0whbk0+tzNeWD3wStaNf7XtyGkWYSVwlSKCF86mPiPTyrWYZR5OgJk7MmyKw
+	TTR2J6BKu0JdfzqZ/ZEJ8LIplOdD690nTppNhc6UbTZEox2cpgdNS6k8hxmS2GhP
+	5+iCfmL5TaCor2tadVTTgF+Dc6bEaGfw7mXVd8Z0Khcyg3HK7Dnb9qXwMhin4Q7E
+	K78naqhTh+H3PTGohfyWcyien4fUIml1O2KTkA5dZtffCgPb56O1/bk2Q20A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740419760; x=1740506160; bh=qWmi2aPFLtDz+mnGl/9oaoDE4s4ExmyZvcW
+	agIPVxa4=; b=Gq2OT86RZLTwD+aetpfIW83bKj2LzoGfLN8/ibaqVJtGOPL48Su
+	bbzpEXban9JmFgznl5N0wWyKf9+xicBBwsJJWvP+kV5SSzs9QNVDGIft393jQW0T
+	7H+gPwQXqPhAQa9akDNhsHaf+7y3S8z5bQ/k8BL4tJkz1+58TjhZKZdxvsUb2Ody
+	tpY2LJASzUUe4Q+SaMCinDG8oyEa+Jeqjj+m2VBVOwd8BEVCi6xxt2lmyf1i5RSP
+	UaOHQvI21eAhhE/RIoI+hTb0OXGqu13cjlPgZd+lCZzCok5fQDA5LUgn/gLHtqVN
+	WquN7Ln53zYyl3eBpva0xm7xzEXuMQvh69w==
+X-ME-Sender: <xms:r7K8Z4KhXBWk-ttrKbCQkMd2iC1yYN6w_1eo9JNi50Y98oYtbgsScA>
+    <xme:r7K8Z4KsWTkt2OxeLzFYdBOjUWzSOnUpam4MV1kdXu_5nWLPzy-NZxM7XLabZo2TF
+    Pr44aF67S3WALumMQ>
+X-ME-Received: <xmr:r7K8Z4uXY7eFD9lVSsAQ9jBzHyObtfI-lruVWHz96xBYvYpLlbGEykdPXiUENATF5OJFO1N5ksijAwwrEYGlKI2I9LZNzifp-NtiFYA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejleegfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkuhhfohhrihhjih
+    elkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlih
+    hprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:r7K8Z1bUlRKJLOTP7smH2N9aM2mlFaqaUEe-3G71nVO21dP4qj5OZg>
+    <xmx:r7K8Z_ZwHBZz8YhMQc--KjOidFe7OpWxRO6nPHtBc3IOf51A2NtWXg>
+    <xmx:r7K8ZxC5R--GvZFvt7COXwcXPiZyy_l_nOKZ9RxRtibZb0v64s73EQ>
+    <xmx:r7K8Z1a9Kz_gVH_OA187enjwrm_h4Jnpo3mtYTBKuxgW8Y0E81GDVg>
+    <xmx:sLK8Z6z1modk_HeQoy4JBH7N4txWMUPsg-5YqF2Fx2Ju0ZtzVxQ1JHq7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 24 Feb 2025 12:55:59 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Seyi Kuforiji <kuforiji98@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 1/4] t/unit-tests: implement clar specific oid helper
+ functions
+In-Reply-To: <20250224152704.70289-2-kuforiji98@gmail.com> (Seyi Kuforiji's
+	message of "Mon, 24 Feb 2025 16:27:01 +0100")
+References: <20250220082959.10854-1-kuforiji98@gmail.com>
+	<20250224152704.70289-1-kuforiji98@gmail.com>
+	<20250224152704.70289-2-kuforiji98@gmail.com>
+Date: Mon, 24 Feb 2025 09:55:58 -0800
+Message-ID: <xmqqwmdf5is1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANM0SV2XOTQ2Mna1B_sX0EF0ffohcrexh1EO5d4G0=sqdmxQtA@mail.gmail.com>
- <CABPp-BHObCVqxWuBLgeiWghy5gM8-f_qjwYFdBL+=j1bwtPg_A@mail.gmail.com>
-In-Reply-To: <CABPp-BHObCVqxWuBLgeiWghy5gM8-f_qjwYFdBL+=j1bwtPg_A@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 24 Feb 2025 12:50:26 -0500
-X-Gm-Features: AWEUYZnK0MT4BunQyMj4mpcWBajnj1DtePquymY3FhiRuOzr97xo4nlnRlbj6oI
-Message-ID: <CALnO6CDpEfugTReF3j_3jefaDg2-YtMB-2XrKg07wD4cofHK7g@mail.gmail.com>
-Subject: Re: Diff rename detection performance issues
-To: Elijah Newren <newren@gmail.com>
-Cc: Devste Devste <devstemail@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Feb 24, 2025 at 11:31=E2=80=AFAM Elijah Newren <newren@gmail.com> w=
-rote:
->
-> On Sun, Feb 23, 2025 at 2:30=E2=80=AFAM Devste Devste <devstemail@gmail.c=
-om> wrote:
-[snip]
-> > Funnily enough, when I have a merge commit that contains only that 1
-> > excluded file, it's the same behavior.
-> >
-> > 1) if there's only a single file in a commit, why does --find-renames
-> > cause a slowdown? There's nothing that could have been renamed in that
-> > case (probably the same for --find-copies)
->
-> I'm not sure what this has to do with the above; you seem to have
-> switched tracks.  If you have a commit whose toplevel tree has exactly
-> 1 file, and you're diffing it against some other commit with an
-> unspecified number of files, [snip]
+Seyi Kuforiji <kuforiji98@gmail.com> writes:
 
-I'm only mentioning this in the vein of Elijah's requests for
-clarification: the wording "only a single file in a commit" is
-something I often see from newcomers who don't yet understand that a
-commit points to a tree of the entire repo, but the diff between a
-commit and it's parent might show only one modified file. (Sometimes I
-think we experts encourage this when we refer to that diff as the
-commit [1], [2].)
+> -static int get_oid_arbitrary_hex_algop(const char *hex, struct object_id *oid,
+> +static void cl_parse_oid(const char *hex, struct object_id *oid,
+>  				       const struct git_hash_algo *algop)
+>  {
+>  	int ret;
+>  	size_t sz = strlen(hex);
+>  	struct strbuf buf = STRBUF_INIT;
+>  
+> -	if (!check(sz <= algop->hexsz)) {
+> -		test_msg("BUG: hex string (%s) bigger than maximum allowed (%lu)",
+> -			 hex, (unsigned long)algop->hexsz);
+> -		return -1;
+> -	}
+> +	cl_assert(sz <= algop->hexsz);
+>  
+>  	strbuf_add(&buf, hex, sz);
+>  	strbuf_addchars(&buf, '0', algop->hexsz - sz);
+>  
+> -	ret = get_oid_hex_algop(buf.buf, oid, algop);
+> -	if (!check_int(ret, ==, 0))
+> -		test_msg("BUG: invalid hex input (%s) provided", hex);
+> +	cl_assert_equal_i(get_oid_hex_algop(buf.buf, oid, algop), 0);
+>  
+>  	strbuf_release(&buf);
+> -	return ret;
+>  }
 
-Now, Devste's posted commands indicate they may have more Git
-experience and didn't fall to this trap, so Elijah's interpretation of
-"a commit whose toplevel tree has exactly 1 file" is perfectly
-reasonable=E2=80=94but we'd probably all like to know a bit more to confirm=
-. I
-originally read "if there's only a single file in the commit" (with my
-newcomer lenses on) as "if I only changed one file before commiting."
-This is also partly based on a (mis)read of "a merge commit that
-contains only that 1 excluded file" (perhaps OP meant "modified").
+As you are not returning "ret" and making the function void, you
+made "int ret" an unused variable that needs removing.
 
-[1]: https://jvns.ca/blog/2023/11/01/confusing-git-terminology/#commit
-[2]: https://jvns.ca/blog/2024/01/05/do-we-think-of-git-commits-as-diffs--s=
-napshots--or-histories/
-
---=20
-D. Ben Knoble
+Thanks.
