@@ -1,72 +1,72 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F43F824A3
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 14:49:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EF92571CB
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 15:09:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740408550; cv=none; b=MHpJ8RewA0zBKNjRktFl2Cl755hrdJBp5czkqBWHUltfR6EjkbmNRnVKMqjG1r3ss9WELpwHpKUi5LfEXftiPXcBm/q4r0ePoWbrH0PEUU6QpyFomtFIQMoeH8TbyidVmBjpAwuT8kaZmHwI3FtKKbeCLtZ7OQ1CQ+VrrYCUz8A=
+	t=1740409768; cv=none; b=mqEk9m/N4lFrHfuRhB5tlETRTJfY09R425yvzmTqIuWosm239dIbcvb9aq2p0Pe3N/E/DZ8EhmKDIQOm22pL79NKa24+BKeUo9pkkgqf34RHNEhzIJ3z0eHjl9g5bnPB0n49RjX7kQUFhvB/ZKPlYqw6AJM5tVhbVGuS2mYH2xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740408550; c=relaxed/simple;
-	bh=iZv2wKu5D2qTgMa1He2rMqoyZEqUBS6HnHr90cHeBXQ=;
+	s=arc-20240116; t=1740409768; c=relaxed/simple;
+	bh=Mnx0NjJAwn7rE/GnnubF67FZimg4UXzz450XvMfSAMc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Um/P4RKQe3sJXYrdPxtwWr4DRPCpVwtSsNt3kMgLa4JsRJ+WEMYAXwEQHvcZhBG6SZYqIjDDUhrgJhYRn0i5tIEC/awkmSKrHv4eHu+bNvSQEay1LSnUCSZADApVBysL1gr8L92iDYy0OiUdqW4GiByo1iL6XyYfysutvmq+eaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mQfWNESi; arc=none smtp.client-ip=209.85.214.170
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cm8WAWeoJn68PUCEJ6WQ6NeJ8EtjFGU9mYogDdl61E2UJb/t/FEmaZkH1Svgs0Z92fHmdt7ezFR7UOtlhRQgIllV62q4phs21TduMr48Go7Pm+Hw/490gyW0S/mG/b27yFXM8sZVsQdl+9sFCEDOCPkC3wxT8IrgSepE4Ewl/XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i9t0Qnj5; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mQfWNESi"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-220d398bea9so70359065ad.3
-        for <git@vger.kernel.org>; Mon, 24 Feb 2025 06:49:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i9t0Qnj5"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-219f8263ae0so94352375ad.0
+        for <git@vger.kernel.org>; Mon, 24 Feb 2025 07:09:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740408548; x=1741013348; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740409766; x=1741014566; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PoAuzVE+1AnxRu2S96ynCj9TvFW4rDbugBw9L0HhHgA=;
-        b=mQfWNESiuMmB+MDYDj1dteEmkTncDJP705qXUc8fnhcIJ1jnmL/LHLxD5vg9xs0q/A
-         j9FPnwb8B/B95dLmK/zoznbZ7giGqIYBKKHpbR+NEQbSsZKuPzvLW68OYUkB+cHd4mtl
-         IedNzLvm5Y+nb7ZqEG92xadimJ6AhpDXCDcatDSP+Pjb3YHZszM9x3kWuRfsOrvpthdl
-         3TRzpxKjQQe8CtmZKki3q5zKIUF9xzgmmraaE6ADyJLRDjijzW5THjTfRx1M0i+A37Cr
-         3WhuY7H9tiZE/8MYfLYPo+k1kXZxYtTae50BFh7QalpZdJ0cVZt8nhQ58BkODJs4LCir
-         YJIw==
+        bh=TwImsbLIGn1zWY/C4YJMHVOfqeqyPLwqJwBV0JS+ZDc=;
+        b=i9t0Qnj50sE28w1B90B5o6+sjcGC4Xg+yItmAoRN2cWag9OjbHF/LB3IsY6CWwt+iL
+         RT/JL53ZOQY8ltvS40r0p5FxBeqREt6/BPbi9BVSu3qcLlv2JSXbfQWC0a/7UayCxXWV
+         L8jwFtcJoOYJNL0Tg318Ktt0Abz1zPsCYD9ZiX97s3/Ga/aKQDw4cN499mXYjOlsTJq0
+         QN5wG/xxSufWwisbSpvrV64sWVqIzqdVtjo90uDH9RJFSlM8Jimo1TT5B5f+AO4dtFhZ
+         EwkyweBWRgH92NtYAvI5DurDiUgzxfbfWR0eADxcl0zx/2wdMLBUc3f1EKPey3bxvU/X
+         exuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740408548; x=1741013348;
+        d=1e100.net; s=20230601; t=1740409766; x=1741014566;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PoAuzVE+1AnxRu2S96ynCj9TvFW4rDbugBw9L0HhHgA=;
-        b=KnA72PCLdqO5/GuUfjZtrNRxMElDGV/S/ZzBLEYywiq3U28j8ieH0r4lvUXqCpZHW7
-         /9aPzf58Xt9FQ+BprjN8Rc+RatfxUW+xeXxiuMYXE5bOQVg9PJ4AXpxEXnpeH3Z0QANz
-         /uuNmcr/IDVEwlH69iFPdSIsTz8ggnLXou5dhJDhmOX1lLIIBZW50YIa63HfUFN170Xv
-         TmnFFS0EpXoUljgW0QhsZ+o+SNRiuT17UoAtcZyp5Pc+BwtAKXcizH+b61tcgyRyQG7A
-         Z6FSt7NkAAn7Fi4D58t6K4Xv4ILiiIo6yWBMVlysblLoPiaw9a5yxxLBGKFukkjsE/AJ
-         A/YA==
-X-Gm-Message-State: AOJu0YxIJcrcFfV9XikdEnXjEyvCLBeSbnmpos4KhGmm6Kl1QxEySoaZ
-	4kFu3ggyso7Gmlhymr1pRtd1yprtw84hKBZ/LEbTNmB08sHKlLd9tj3pDA==
-X-Gm-Gg: ASbGncuDshua/eEz1gn4yj3nJTr55U1liqL4I3IolpvQpZwrnyWULmuPkgARAYcRSi5
-	V8plfA4YcYNALqcp2uQEESkkiaGqeizxvYUf2MIFfE0WjGXaQj8ykXyt+4HgcuVlGroDSKJfm8M
-	BjSIt837vLExPBoOD3lIaawNWcFrAHsJpaUXndxQeMZs67zUH+qnVifZhTCOKBp8EkoWpFMmwBU
-	LzNrXwf+oYkkzdRkWwdTqRJ+1pU5IzEVFr2fyc8vI4wPauGvjm5lBA8SHUznV5M2D5F9cFxyXIj
-	JdRx9CjhZvrhnBkQcxX5qQ==
-X-Google-Smtp-Source: AGHT+IG15P0OsBhmCOFFMdlgPhN0GjJBRyUSEyoDu4u60q5hqdJ0w4q2l4WRyTgdnvbP3WysK5PFKg==
-X-Received: by 2002:a05:6a00:188b:b0:732:2923:b71a with SMTP id d2e1a72fcca58-73426d727fdmr20625388b3a.19.1740408548388;
-        Mon, 24 Feb 2025 06:49:08 -0800 (PST)
+        bh=TwImsbLIGn1zWY/C4YJMHVOfqeqyPLwqJwBV0JS+ZDc=;
+        b=GkMkCGnuNCEXtFP4IBr8J8vnX85VOG7oSBadjxApAasTTBHZUMdnI9h+mPNRYMNT9l
+         DIqtpo5mPqdRZqmRqX5K4qgdK0vMH1k8o/fmvhsSIdyJ41dVoTq1/5xNMsU01GDoAMNX
+         dIyRg4L/Oe/Pg8glYsPigj/G8r3Gpk9h6Cn3Q41ULrfeBhw/Zv35YE2KjYOyig3As3NZ
+         lFWSESH9M0k5cf0jI2jghDI0HaMAPiqxrQncqxjfQ3FzV1u9DcKW6rH3kyKFGfuJI3Nv
+         b5+cTlOAMzC4mCsBzrBOTDhhHwbjjq7XJoozI03A2o1ugljkW93k88mdTeKuUh8yM2Dr
+         f2Xw==
+X-Gm-Message-State: AOJu0YyV4u/OgqoEDJg0Zx7SU1kQZDW6gL3RUdH3Yp2YlGvFsln3ms4B
+	1fDDFLcLDq1bc+gqBwa5a0lXJ6hui8SGrwMWaiGYl1oTA/Pg016A
+X-Gm-Gg: ASbGncsTEnwawa5JiSuR5UgZTEfch6GrAvZdFsRV4X4UnbodPs56bPAYzCCkXQWd5tz
+	zinXZINeZgtQWq3UobObXPG3UeW8idIEBc1MpiV+Cj1rMd/EmEFRFb4bVsUB2UpCJRXzJzV67Gg
+	FUYfocO1i6HntCPZuaRBd0kDhlfo09SE1ONEx1XvvW2TM0Eda19KU5yhTMR3ddAVzFLaRPvgwNx
+	h3TdSA5JHuhJDbFDJBwOSXCM5bVxqEbj8F5phEvAvX9yJs+0QDWBrZF5vcxKtX2pVCUGNPhO5Ka
+	mHhPOxPEPOMVu9jOM77X7A==
+X-Google-Smtp-Source: AGHT+IFeKJOpuHymOAym3wdpShOLRz8mMLiw2rHRb653bnB1WPmM+WHpHIozWvAQXW+ZuqkAR9zlsg==
+X-Received: by 2002:a17:902:ce88:b0:21f:4c8b:c511 with SMTP id d9443c01a7336-221a1191b71mr209835015ad.33.1740409765831;
+        Mon, 24 Feb 2025 07:09:25 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7327a324673sm14882966b3a.23.2025.02.24.06.49.07
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-220d536455esm182514945ad.74.2025.02.24.07.09.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2025 06:49:07 -0800 (PST)
-Date: Mon, 24 Feb 2025 22:49:14 +0800
+        Mon, 24 Feb 2025 07:09:25 -0800 (PST)
+Date: Mon, 24 Feb 2025 23:09:32 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 13/16] refs/iterator: implement seeking for ref-cache
- iterators
-Message-ID: <Z7yG6q44rBccInPt@ArchLinux>
+Subject: Re: [PATCH v2 14/16] refs/iterator: implement seeking for
+ `packed-ref` iterators
+Message-ID: <Z7yLrKVxCF5qb7gP@ArchLinux>
 References: <20250219-pks-update-ref-optimization-v2-0-e696e7220b22@pks.im>
- <20250219-pks-update-ref-optimization-v2-13-e696e7220b22@pks.im>
+ <20250219-pks-update-ref-optimization-v2-14-e696e7220b22@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,139 +75,171 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250219-pks-update-ref-optimization-v2-13-e696e7220b22@pks.im>
+In-Reply-To: <20250219-pks-update-ref-optimization-v2-14-e696e7220b22@pks.im>
 
-On Wed, Feb 19, 2025 at 02:23:40PM +0100, Patrick Steinhardt wrote:
-> Implement seeking of ref-cache iterators. This is done by splitting most
-> of the logic to seek iterators out of `cache_ref_iterator_begin()` and
-> putting it into `cache_ref_iterator_seek()` so that we can reuse the
-> logic.
+On Wed, Feb 19, 2025 at 02:23:41PM +0100, Patrick Steinhardt wrote:
+> Implement seeking of `packed-ref` iterators. The implementation is again
+> straight forward, except that we cannot continue to use the prefix
+> iterator as we would otherwise not be able to reseek the iterator
+> anymore in case one first asks for an empty and then for a non-empty
+> prefix. Instead, we open-code the logic to in `advance()`.
 > 
-> Note that we cannot use the optimization anymore where we return an
-> empty ref iterator when there aren't any references, as otherwise it
-> wouldn't be possible to reseek the iterator to a different prefix that
-> may exist. This shouldn't be much of a performance corncern though as we
-> now start to bail out early in case `advance()` sees that there are no
-> more directories to be searched.
-> 
-
-Bit: corncern/concern. Don't worth a reroll.
-
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
->  refs/ref-cache.c | 74 ++++++++++++++++++++++++++++++++++++--------------------
->  1 file changed, 48 insertions(+), 26 deletions(-)
+>  refs/packed-backend.c | 62 +++++++++++++++++++++++++++++++++------------------
+>  1 file changed, 40 insertions(+), 22 deletions(-)
 > 
-> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-> index 6457e02c1ea..b54547d71ee 100644
-> --- a/refs/ref-cache.c
-> +++ b/refs/ref-cache.c
-> @@ -362,9 +362,7 @@ struct cache_ref_iterator {
->  	struct ref_iterator base;
+> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> index 38a1956d1a8..71a38acfedc 100644
+> --- a/refs/packed-backend.c
+> +++ b/refs/packed-backend.c
+> @@ -819,6 +819,8 @@ struct packed_ref_iterator {
 >  
->  	/*
-> -	 * The number of levels currently on the stack. This is always
-> -	 * at least 1, because when it becomes zero the iteration is
-> -	 * ended and this struct is freed.
-> +	 * The number of levels currently on the stack.
->  	 */
-
-So, this value could be zero? We want to use this to optimize because
-that we don't return the empty ref iterator any more.
-
->  	size_t levels_nr;
+>  	struct snapshot *snapshot;
 >  
-> @@ -389,6 +387,9 @@ struct cache_ref_iterator {
->  	struct cache_ref_iterator_level *levels;
->  
->  	struct repository *repo;
-> +	struct ref_cache *cache;
+> +	char *prefix;
 > +
-> +	int prime_dir;
-
-The reason why we needs to add these two states is that when using
-`cache_ref_iterator_begin`, we need to pass `ref_cache` and
-`prime_dir`. So, we need to store the state when reusing the ref
-iterator.
-
+>  	/* The current position in the snapshot's buffer: */
+>  	const char *pos;
+>  
+> @@ -841,11 +843,9 @@ struct packed_ref_iterator {
 >  };
 >  
->  static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
-> @@ -396,6 +397,9 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
->  	struct cache_ref_iterator *iter =
->  		(struct cache_ref_iterator *)ref_iterator;
+>  /*
+> - * Move the iterator to the next record in the snapshot, without
+> - * respect for whether the record is actually required by the current
+> - * iteration. Adjust the fields in `iter` and return `ITER_OK` or
+> - * `ITER_DONE`. This function does not free the iterator in the case
+> - * of `ITER_DONE`.
+> + * Move the iterator to the next record in the snapshot. Adjust the fields in
+> + * `iter` and return `ITER_OK` or `ITER_DONE`. This function does not free the
+> + * iterator in the case of `ITER_DONE`.
+>   */
+>  static int next_record(struct packed_ref_iterator *iter)
+>  {
+> @@ -942,6 +942,9 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
+>  	int ok;
 >  
-> +	if (!iter->levels_nr)
-> +		return ITER_DONE;
+>  	while ((ok = next_record(iter)) == ITER_OK) {
+> +		const char *refname = iter->base.refname;
+> +		const char *prefix = iter->prefix;
 > +
+>  		if (iter->flags & DO_FOR_EACH_PER_WORKTREE_ONLY &&
+>  		    !is_per_worktree_ref(iter->base.refname))
+>  			continue;
+> @@ -951,12 +954,41 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
+>  					    &iter->oid, iter->flags))
+>  			continue;
+>  
+> +		while (prefix && *prefix) {
+> +			if (*refname < *prefix)
+> +				BUG("packed-refs backend yielded reference preceding its prefix");
+> +			else if (*refname > *prefix)
+> +				return ITER_DONE;
+> +			prefix++;
+> +			refname++;
+> +		}
 
-Ok, we will check whether the cache ref iterator is exhausted.
+Although I cannot understand the code, I want to ask a question here, we
+we need to do this in `advance`? Should we check this for
+`packed_ref_iterator_seek` or in the `next_record` function?
 
->  	while (1) {
->  		struct cache_ref_iterator_level *level =
->  			&iter->levels[iter->levels_nr - 1];
-> @@ -444,6 +448,40 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
+Before we introduce `seek`, we don't need this logic. I somehow think we
+should do this in `packed_ref_iterator_seek`.
+
+> +
+>  		return ITER_OK;
 >  	}
+>  
+>  	return ok;
 >  }
 >  
-> +static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
-> +				   const char *prefix)
+> +static int packed_ref_iterator_seek(struct ref_iterator *ref_iterator,
+> +				    const char *prefix)
 > +{
-> +	struct cache_ref_iterator *iter =
-> +		(struct cache_ref_iterator *)ref_iterator;
-> +	struct ref_dir *dir;
+> +	struct packed_ref_iterator *iter =
+> +		(struct packed_ref_iterator *)ref_iterator;
+> +	const char *start;
 > +
-> +	dir = get_ref_dir(iter->cache->root);
 > +	if (prefix && *prefix)
-> +		dir = find_containing_dir(dir, prefix);
+> +		start = find_reference_location(iter->snapshot, prefix, 0);
+> +	else
+> +		start = iter->snapshot->start;
 > +
-> +	if (dir) {
-> +		struct cache_ref_iterator_level *level;
-> +
-> +		if (iter->prime_dir)
-> +			prime_ref_dir(dir, prefix);
-> +		iter->levels_nr = 1;
-> +		level = &iter->levels[0];
-> +		level->index = -1;
-> +		level->dir = dir;
-> +
-> +		if (prefix && *prefix) {
-> +			iter->prefix = xstrdup(prefix);
-
-Should we free the original `iter->prefix` before we assign the new
-`prefix`? I have seen this pattern in previous patch. If the caller
-calls this function multiple times, there would be memory leak.
-
-> +			level->prefix_state = PREFIX_WITHIN_DIR;
-> +		} else {
-> +			level->prefix_state = PREFIX_CONTAINS_DIR;
-> +		}
-> +	} else {
-> +		iter->levels_nr = 0;
-> +	}
-
-When we cannot find the dir, we set the `iter->levels_nr = 0`. Could we
-first check
-
-    if (!dir) {
-	iter->levels_nr = 0;
-	return 0;
-    }
-
-And thus we could avoid indentation. However, it seems that we always
-return 0. So, maybe we should not change.
-
+> +	free(iter->prefix);
+> +	iter->prefix = xstrdup_or_null(prefix);
+> +	iter->pos = start;
+> +	iter->eof = iter->snapshot->eof;
 > +
 > +	return 0;
-
-I know your motivation that you want to normally return the ref iterator
-thus we can reuse later. The original behavior is that we return an
-empty ref iterator but empty ref iterator cannot be reused. So, we will
-always get the cache ref iterator. If the level is 0, we still have a
-valid cache ref iterator. Make sense.
-
 > +}
 > +
+>  static int packed_ref_iterator_peel(struct ref_iterator *ref_iterator,
+>  				   struct object_id *peeled)
+>  {
+> @@ -979,11 +1011,13 @@ static void packed_ref_iterator_release(struct ref_iterator *ref_iterator)
+>  		(struct packed_ref_iterator *)ref_iterator;
+>  	strbuf_release(&iter->refname_buf);
+>  	free(iter->jump);
+> +	free(iter->prefix);
+>  	release_snapshot(iter->snapshot);
+>  }
+>  
+>  static struct ref_iterator_vtable packed_ref_iterator_vtable = {
+>  	.advance = packed_ref_iterator_advance,
+> +	.seek = packed_ref_iterator_seek,
+>  	.peel = packed_ref_iterator_peel,
+>  	.release = packed_ref_iterator_release,
+>  };
+> @@ -1097,7 +1131,6 @@ static struct ref_iterator *packed_ref_iterator_begin(
+>  {
+>  	struct packed_ref_store *refs;
+>  	struct snapshot *snapshot;
+> -	const char *start;
+>  	struct packed_ref_iterator *iter;
+>  	struct ref_iterator *ref_iterator;
+>  	unsigned int required_flags = REF_STORE_READ;
+> @@ -1113,14 +1146,6 @@ static struct ref_iterator *packed_ref_iterator_begin(
+>  	 */
+>  	snapshot = get_snapshot(refs);
+>  
+> -	if (prefix && *prefix)
+> -		start = find_reference_location(snapshot, prefix, 0);
+> -	else
+> -		start = snapshot->start;
+> -
+> -	if (start == snapshot->eof)
+> -		return empty_ref_iterator_begin();
+> -
+
+So, we don't return empty ref iterator. This is the same motivation like
+the previous patch.
+
+>  	CALLOC_ARRAY(iter, 1);
+>  	ref_iterator = &iter->base;
+>  	base_ref_iterator_init(ref_iterator, &packed_ref_iterator_vtable);
+> @@ -1130,19 +1155,12 @@ static struct ref_iterator *packed_ref_iterator_begin(
+>  
+>  	iter->snapshot = snapshot;
+>  	acquire_snapshot(snapshot);
+> -
+> -	iter->pos = start;
+> -	iter->eof = snapshot->eof;
+>  	strbuf_init(&iter->refname_buf, 0);
+> -
+>  	iter->base.oid = &iter->oid;
+> -
+>  	iter->repo = ref_store->repo;
+>  	iter->flags = flags;
+>  
+> -	if (prefix && *prefix)
+> -		/* Stop iteration after we've gone *past* prefix: */
+> -		ref_iterator = prefix_ref_iterator_begin(ref_iterator, prefix, 0);
+> +	packed_ref_iterator_seek(&iter->base, prefix);
+
+Why don't we check the return value here? Actually, in the previous
+patch, `cache_ref_iterator_seek` will always return 0, but you still
+check. I have thought that you just want to be more defensive.
 
 Thanks,
 Jialuo
