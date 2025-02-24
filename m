@@ -1,165 +1,112 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.134])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B381A29A
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 14:00:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB162571D9
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 14:16:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.134
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740405626; cv=none; b=Wue9P+kgY4RsKBrtHQb12B7sPZPnjMCwIa5fUfo3J/p0G7B9bvtyPrajP6gS3naRzCskgzYzcEZCHrBkagt9n3F8fsEQ7GbI4gIrXyBTPptYi8S719usfrHh4o/U6rG1+WyeY20EChYTfjU9VcIzBR3naQ4tQtvAUmWq7fUU7IM=
+	t=1740406607; cv=none; b=m0MUYaiaUcVF6oQ2qoIIPTIE3ACjfhWOgVI6pMtgK8DNpAElTcS/kpqKX/bZ1OXrR9oMX9+TJQEFZROxlqoxLN8bs1aaG4QthSMIl4NmUZ7CzXKVp1JnDyIBhMIceP0rG18mb41jymg2nEJ3G57F/Yw8bDvsGSaJ6nUO/Oo5sGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740405626; c=relaxed/simple;
-	bh=aP6B9zroCy67XLXgI3Xq9tQ9OQL9pH7iThpMz8cwDkA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iod9EsY0U1rD3pJA9ClGIKH8btjms7VmF65mTQXtp4b/KnH3kVdQoknIztRYwXQJoDOGWAmwkp3M/G85BlQnjKODkWCkcg6QaOMNBbPIJ646tObrL+rbVj1ycKFk5ljSr+I0bSd8I4cVtuWRjoU4FCAC1tvRkcVEv4fjmi6CK/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PbELie3w; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PbELie3w"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2212a930001so5978055ad.0
-        for <git@vger.kernel.org>; Mon, 24 Feb 2025 06:00:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740405625; x=1741010425; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=orTso0HuKCvLOSMUuiytV/+jq7FK56ZlasiaCQDYYZw=;
-        b=PbELie3wtfuaNLEXYDEe1ejheFrg/bZZ5clKoAJcqherim6sqJU/VemOTX23Ao9Nfc
-         85eMK9pVPZ3Bp4qOgdSz2w2knhrN0dC0nzIdM568MS/mqL0lKjP5AGwySzWNFPYP9ijR
-         V+y3cyH7ZRqKH4R3qC/hlX65VeP5lsyPPs6MIXsrUOiXd+I1maT8Ft4+RO31/sP7vFXz
-         7eQcusJYPoyXLbym86g0hiuA4iVRP1AlcuyG9XDwq/iIiUhJOFF12PlEw13mZuXGEhrc
-         2Rx7mRib6DpPZftVq3++sKWT6pSFG1fTZu0w7DHqvzy3ZXGsxOPM0xANfDt8D4y1tKO0
-         3xWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740405625; x=1741010425;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=orTso0HuKCvLOSMUuiytV/+jq7FK56ZlasiaCQDYYZw=;
-        b=o38KRVoFX4impO26ZZU9VjIugGalBEEBcxMOKeOyHnJVtPXeZ6rsVIi18kBOq+UKcv
-         aaYhrFgJ8q0cmJI8hRxQzvF9rJO5HkCWmZDI8hd7p4kxwUeqAXK2IHBx0ECyK7KWGjo6
-         w+QnUV2WY9cgQTWakPXpUGjCi6oXCZe4G+NFZWJu+HKMIG3y8H9NHxlMFnERsRVW0GO0
-         C0IW2Vxv9fskOQsIK2BTc0L4rj5p3woUN9VrjZEMFdBUlAN9ZweqrB19u37NCa+XLRQd
-         cFtm5EW0EuMQeShP+R9eAMkN0qZR8iFEUWv8cVD2xURVGvoMGKjmaWOhojahNJY+PXMN
-         ajSg==
-X-Gm-Message-State: AOJu0Yx14R2dW0ShsLZWtcibA0UXh2zKg9N9ieZfNBGAE099sLNCoMEG
-	W63j3STT+5sDLifAhui9bm+8kC6HzK1f45Fx9hQSphR4mTkXnDOn
-X-Gm-Gg: ASbGnctVB5HZ/beZ9X66WR9/EkfHRpMdhfQ9CE/kcgcXn0UI9rzX0vYN1tlh+/4B4AZ
-	Srhx00XvqxbIPZcYidmPsDj/Kho/bAk3PQtxbuKMxVhPUvxZQzTfNsO0lVA4m0u7z8OM6UvRljn
-	tzkc7uzpKV4ek46xn0cALFE07C6+6GqQavvDX0m+eur8oYTwh/JmXiIKO9ZG5pTOyA4AXafTAo6
-	FCQMX7jYW/Q30ZQBFpixURzvTJJ+Yi3gW552BvnjDQIg3bFjdsxytjjtSbuijsdchUfSTrRPmsO
-	q1aW5DTdRBj4pUhmXsT6dQ==
-X-Google-Smtp-Source: AGHT+IHgQyD5II81l+uhipXpM7Gas9/ICMH+/EWD6SUBb7qoQ6Rx/qlgZm1wW+HAGnS1CzYggdStww==
-X-Received: by 2002:a17:902:e74c:b0:220:ff3f:6cba with SMTP id d9443c01a7336-221a1142769mr228912105ad.38.1740405622081;
-        Mon, 24 Feb 2025 06:00:22 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-73413894baesm8513181b3a.153.2025.02.24.06.00.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2025 06:00:21 -0800 (PST)
-Date: Mon, 24 Feb 2025 22:00:28 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 12/16] refs/iterator: implement seeking for reftable
- iterators
-Message-ID: <Z7x7fDiW0iN7qGIg@ArchLinux>
-References: <20250219-pks-update-ref-optimization-v2-0-e696e7220b22@pks.im>
- <20250219-pks-update-ref-optimization-v2-12-e696e7220b22@pks.im>
+	s=arc-20240116; t=1740406607; c=relaxed/simple;
+	bh=CjHujqEkSB0MWXS834xG2phmeSFgUpilRSNsCCXZDb0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IMI6UX2/DoFaCoeVg9Vb/PQXupYuPNAplbvd7wxLGO/E40ZpoG8kP1PqZZWqY9WhRoL7LsWC/1fXMa8zgL4PkBSNGcHzHYE5gvTs/YhhlD+ToI3EQQXyPg4QTAtvze7X3AovHijXssNTnAYrBXhadXzcidahZK4dlXisJy7wEIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com; spf=pass smtp.mailfrom=anselmschueler.com; arc=none smtp.client-ip=212.227.126.134
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=anselmschueler.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=anselmschueler.com
+Received: from [192.168.178.87] ([91.64.142.246]) by mrelayeu.kundenserver.de
+ (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1MacjC-1tBqVw3JQA-00izJq; Mon, 24 Feb 2025 15:11:26 +0100
+Message-ID: <5f312413-0b7d-4bcb-b180-57857afa3898@anselmschueler.com>
+Date: Mon, 24 Feb 2025 15:11:26 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250219-pks-update-ref-optimization-v2-12-e696e7220b22@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: Possible bug: Empty magic word list in pathspec is handled
+ differently in short vs. long form
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <216a7288-b599-4333-ba62-10665d6a94d8@anselmschueler.com>
+ <xmqqr03tg8q1.fsf@gitster.g>
+Content-Language: en-US, de-DE
+From: =?UTF-8?Q?Anselm_Sch=C3=BCler?= <mail@anselmschueler.com>
+In-Reply-To: <xmqqr03tg8q1.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:MPD+arrBKWDab4mbiVZRY3/fhdni9T17JK6KbDj68Kd5jBFyT3n
+ 0JT78uvvc8tcHl2CYoAzpr1i4UXnc0BrquFXZER6qdHZmVml9belQHClRYdC/NDC0yd0dub
+ vPaJg/b0bvDmwIqW1zClt6WKvmcof0m8iNO9mGIzAZmeFDJjwY8tE2a1+gv9dBZmKbS+VR3
+ XQWLtqOqId/3sxf7BLCXA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:3kPyH8qOxlo=;w+jo/6t15sDjnxwjq1QrT3Drzbw
+ roA1TAPe+P+wF889/Codi0Qq7yJZZsxLvuzBt+G4Ly6hzv3qEa9pCEv23TmiGAVh8O/5SeIJB
+ JKrvPwwsVY150hQPGbR7tjMqp4qVLhfIR84Wi4s1ArpoIBmo0UQDiXtTWbzcDYEWY4YNCd5D2
+ dQIlq0bzutznYYXpnPT7b+99nig5FYxbzzMdGVbi3HsmvWqQbuycilYemDuYg59BW7losf8T3
+ XPs5uyFWMOfDyn4Jm7dyh2/ERh0rRYTjyUbqq2L7C004iWUbTXMT4QxZyrA305GBSY5jbJ5i9
+ +St9eBxcEAmcBKBLIqSzRi813JqalP7k2ySL9D0KO38Cey9C0Zhaq6hlQex+YyMONVkhuGfR0
+ xOq3Fv8C298wlIs2rXgn3aN0zXaz5auuo8ze1UreSbcaIH68Ag2mEQyPr0T3/YQiuUKA8vsHA
+ zQq8tpE+Ou3hisYaR18O3j7ClmfAFB+UvnXjLcP+DWwTNETqGPCXvbleiFYDcrJKNeZiczYQr
+ 05b2EfGul7sjE90pvFb5D+lmh+uE1pQt50l3HKorbNqZHxJJ7h6w8LzWCdgEzaxLwjlHThZxJ
+ +zqD4zjZXPrZjK/lJn/li5rLd33xlaVNGh69n9E7MSFlH4iEoXISJl4E1DyJeYWoHzp6relFa
+ t6L0JSryLEblkWzm6wEn4sZGQf3u5ZjWl2LuOE4BEntBCbwK1ATkf74ZpeUow7CxNe6yS52pr
+ zbT9Cp09whDhptekQPXFqYPQVcqOAwAPJSIvcSGeH8PYUbUI5NYSjg+YM9HkpGzoo/I1ij/E1
+ 9H4FAvfmqj5ysIk9Dptea67ilKBzGl6gNgu82C2IzFbVx7RZlmlvWq6Fu0uuDqwQbVSQ/xg+X
+ oOlXYetNXLn6J8CXN9/650zCEWSMILSmBnSSnv7OBoRnNJ9G/1VVa1/swQZFyvko+iIdeBRSN
+ hoHzAyJPnZQCBio+vOUnQrfuJYQHtph4fD0ueukkxLU7Xdp0H3tIBl8M4dhWtU/IiRUTIeihI
+ f35Lb9lMNg74wSlh4RHN3clT9UvtMRMuax65ycCJpAAQhFeJpCik6xXJZOSZorxuW5Sv1Fh9R
+ U028tg5exktTEKTKF9OApECxug/AhsFHI4obFIsQ9xlgkEszME9m+NnLkWJw/vBsYznQH2yh+
+ BxdNZIw8/ww5jHljX6zQiv96kTV3wwgD0sSrnGlE/GX+fqy39Bi4+2MrA59Vpf138fgsqOISH
+ GfXAmhjyv0UggmXOZZK+jAaeFDJeouN2GnK6Kmh1qz++4GIj0LnoDEsyCsbuT/G88WtFTJjbf
+ dQibEzwJLpWjwvwtL8EptJq1hBFp13gZPG3ikjjYgwEQV3KORGfxocINFaPbmqrMt7k9gFioC
+ AvUv/y3egDJp+Fcw==
 
-On Wed, Feb 19, 2025 at 02:23:39PM +0100, Patrick Steinhardt wrote:
-> Implement seeking of reftable iterators. As the low-level reftable
-> iterators already support seeking this change is straight-forward. Two
-> notes though:
-> 
->   - We do not support seeking on reflog iterators.
-> 
->   - We start to check whether `reftable_stack_init_ref_iterator()` is
->     successful.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  refs/reftable-backend.c | 35 ++++++++++++++++++++++++++++++-----
->  1 file changed, 30 insertions(+), 5 deletions(-)
-> 
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index 06543f79c64..b0c09f34433 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -547,7 +547,7 @@ struct reftable_ref_iterator {
->  	struct reftable_ref_record ref;
->  	struct object_id oid;
->  
-> -	const char *prefix;
-> +	char *prefix;
->  	size_t prefix_len;
->  	char **exclude_patterns;
->  	size_t exclude_patterns_index;
-> @@ -718,6 +718,20 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
->  	return ITER_OK;
->  }
->  
-> +static int reftable_ref_iterator_seek(struct ref_iterator *ref_iterator,
-> +				      const char *prefix)
-> +{
-> +	struct reftable_ref_iterator *iter =
-> +		(struct reftable_ref_iterator *)ref_iterator;
-> +
-> +	free(iter->prefix);
-> +	iter->prefix = xstrdup_or_null(prefix);
-> +	iter->prefix_len = prefix ? strlen(prefix) : 0;
-> +	iter->err = reftable_iterator_seek_ref(&iter->iter, prefix);
+Thank you and Lucas Oshiro <lucasseikioshiro@gmail.com> for the 
+clarification
 
-Should we rename this function `reftable_iterator_seek_ref` by the way?
-It is a little strange that we have two functions which are so similar:
-
-1. reftable_ref_iterator_seek
-2. reftable_iterator_seek_ref
-
-However, don't worth a reroll.
-
-> +
-> +	return iter->err;
-> +}
-> +
->  static int reftable_ref_iterator_peel(struct ref_iterator *ref_iterator,
->  				      struct object_id *peeled)
->  {
-> @@ -744,10 +758,12 @@ static void reftable_ref_iterator_release(struct ref_iterator *ref_iterator)
->  			free(iter->exclude_patterns[i]);
->  		free(iter->exclude_patterns);
->  	}
-> +	free(iter->prefix);
->  }
->  
->  static struct ref_iterator_vtable reftable_ref_iterator_vtable = {
->  	.advance = reftable_ref_iterator_advance,
-> +	.seek = reftable_ref_iterator_seek,
->  	.peel = reftable_ref_iterator_peel,
->  	.release = reftable_ref_iterator_release,
->  };
-> @@ -806,8 +822,6 @@ static struct reftable_ref_iterator *ref_iterator_for_stack(struct reftable_ref_
->  
->  	iter = xcalloc(1, sizeof(*iter));
->  	base_ref_iterator_init(&iter->base, &reftable_ref_iterator_vtable);
-> -	iter->prefix = prefix;
-> -	iter->prefix_len = prefix ? strlen(prefix) : 0;
-
-We don't assign `iter->prefix` and `iter->prefix_len` here. This is
-because we want to use the new defined function
-`reftable_ref_iterator_seek`. In the fist glance, I am worried that
-"iter->prefix" might not be `NULL`. However, because we use `xcalloc`,
-"iter->prefix" would be `NULL` by default.
-
-Thanks,
-Jialuo
+On 19/02/2025 18:11, Junio C Hamano wrote:
+> Anselm Schüler <mail@anselmschueler.com> writes:
+>
+>> ﻿If you run git diff for a pathspec with an empty magic word/symbol
+>> list in short form (prefixed by ::) and in long form (prefixed by
+>> :():), you get different results.
+> The short form is prefixed by a ":" and optionally ends by a ":",
+> but the optional termination may not be required when there is no
+> ambiguity (e.g. ":/!path" is "from the top, not matching "path", as
+> "p" cannot be a magic signature; ":/:!path" is "from the top,
+> matching "!path", as the set of magic signatures ends with the
+> second disambiguating colon).
+>
+> The long form is prefixed by a ":(" and ends by a ")".
+>
+>
+>> Here’s an example use of git that illustrates this:
+>>
+>> ~☭ mkdir gittest
+>> ~☭ y gittest/
+>> ~/gittest☭ git init
+>> Initialized empty Git repository in /home/anselmschueler/gittest/.git/
+>> ~/gittest (b0)☭ uuidgen >file
+>> ~/gittest (b0)☭ git add file && git commit -m "$(read)"
+>> read> initial commit
+>> [b0 (root-commit) cd3bd43] initial commit
+>>   1 file changed, 1 insertion(+)
+>>   create mode 100644 file
+>> ~/gittest (b0)☭ uuidgen >file
+>> ~/gittest (b0)☭ git diff -- "::file"
+>>
+>> file
+>> ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+>>
+>> ───┐
+>> 1: │
+>> ───┘
+>> 66d18ffa-1128-42a5-8d4e-f9d75eb86b92
+>> 9acea2b5-50a6-4f87-ae1a-64019a93e55e
+>> ~/gittest (b0)☭ git diff -- ":():file"
+>> ~/gittest (b0)☭
+> Doesn't ":():file" ask for a match for the pattern ":file", with a
+> leading colon?
