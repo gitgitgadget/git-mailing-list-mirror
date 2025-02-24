@@ -1,90 +1,101 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail.cendio.se (mail.cendio.se [193.12.253.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0C01E491B
-	for <git@vger.kernel.org>; Sun, 23 Feb 2025 20:56:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E63F243364
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 09:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.12.253.120
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740344199; cv=none; b=rg80W09YbGgPTQYWzyqKKXeY37hVoN2OcPo9pfc2HET51R1RpO6JUmvvskj6H3NctyJL1qZoa3QsuQ8PKWxHe/bn5S4V2d8dT6FBzx225/GiPogwvlYTmjh2ylk62vKvjnOKbqJvUCiNC/MTEgsQEMiDklyHs0idpqP0KHhrCWM=
+	t=1740388235; cv=none; b=Vs0bi32TrwhscYT5XPKvHoaNOZjWG5Y+fhHzVyoLfAmbeL1aGmRRhLC0QEkHXWDjW7l5O30YcYbT+IzaDXhVrmhnhcB4tBoHGpl/8lP7HDLekShke0XGnkX0zc9eW4ITFUrD8aJZ0PGksZOuN+bpJt8dBKk/kkNJtSXb9BGaTw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740344199; c=relaxed/simple;
-	bh=rtSkvmQReUV9/GmfAkdWIzj7NM0EBWRjyU7nXFBXHOc=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=DdC5IZJQL6ZO3s6Twam1G2CKszfkTksvvgLXl8WxuoXmwD7ZruwedKxgOtVlSRwA6Q67tsJrpaZCQDWHJXceRL5FvUpAPeokTDaNU6fp8rrs/HqUHzziFssPq4Gn1tycadRVxKLRtUdZC+tqzYJf+ysCjJB2HQC0a4ZRQ9j5aGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XPQ17MA0; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740388235; c=relaxed/simple;
+	bh=k0jSSuQRtViPtuvqk7JljIdGtHWQINwQPYkS+IqPmJM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=t9xryBzhizh720sU+QZNLT/olpL71QTzm32AsBgyoWUU47EZFRbXr52JMs6P7GqIiHSJB3QhGKHIsLb+tugtRhiLYzCmOFAkJrkiaNHJwT9iWeVjO3Zgf46wuoYSBFC+OMMPYtQt5x0oaRGlksk9HpAI+eVk6U93ZdiRdS9VFsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cendio.se; spf=pass smtp.mailfrom=cendio.se; dkim=pass (2048-bit key) header.d=cendio.se header.i=@cendio.se header.b=5BtQjIpI; arc=none smtp.client-ip=193.12.253.120
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=cendio.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cendio.se
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XPQ17MA0"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6fb6c36ba25so31727227b3.1
-        for <git@vger.kernel.org>; Sun, 23 Feb 2025 12:56:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740344196; x=1740948996; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=rtSkvmQReUV9/GmfAkdWIzj7NM0EBWRjyU7nXFBXHOc=;
-        b=XPQ17MA0zwl0MRZE5TSyyc7UjIFuV3wkS6muKofxqSr+hUpp0X4vtRDhSIykDW+lpD
-         xiGI2rgRxCf/2PshM5CP5U8zlaqhXqoxqa7JTti2MZldCYJZ513sgmMziUq5R94KLeqz
-         ErXry0C5tHZKhnlikJdDbP8E5eiELuSZGQBnFu2dbbs0ZJTtSht30EUPKd+P1Auw4ERc
-         TdDdgk+OvE2u0nL2ikJrNqWuz8K3em0z6+o2xDdwFyyA6W9fD/mLO0oYxhgjxDr+A6/X
-         X1+mQmo94Ty19Ap7TaTLcgkIiFP4WFt/jMNkhEEwgYeZcXYSbQTwYhBBcoRgu2xEWqHa
-         sJlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740344196; x=1740948996;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rtSkvmQReUV9/GmfAkdWIzj7NM0EBWRjyU7nXFBXHOc=;
-        b=eJbbM0K/tcvfSUa+3rNKRDc0jkjcQC2bT0niAmNY/UvocrYSOIN6HRL4yxD0b9AxBd
-         xrASRGkzGaEtgN2k8wSzEqHuci9jwZV5BYGq7MZc/moVJFN7OlogHDiT+vmrQDnC5Yok
-         DBve/rDcyTl2NTGCyJnziifz1ZsDkquZmQ4hoOp2oTGOoAqOJ7bkpvt/CpwQVSzqwtfT
-         INqjFHcUSuv8IRyu+P6fXSi68ZkG0ZhantlO+J+gwHtQQNCzX98HJb+Siin1vXq6raLK
-         +Fw+DcmzQIS8sM1vUN/r1MHKlUAE31ePkFBJ0385cflquysJjjY0IN1RfgbopJxjsjVl
-         vUYg==
-X-Gm-Message-State: AOJu0Yz8H0ya8j42QRGcHCO6WXW0qlX6Qhzbcb3iucPQwGp1rLvUH3FF
-	i6SxUcjhq4X7HzzyaPU5uxbpNRVoHJCtD2F2Z+fyuOZVJB0inB21j/TyXCmD2HyFiSgrAGQ+m0w
-	XVcfL8HDK/TSFMxc6eh9ji8AJeJaicqcLkx8=
-X-Gm-Gg: ASbGncsL97IiQ6hiN4UrAeaEor1YfNHw9IYXwZ4TqvmEJhWwHeAg6XNUkIeW67NBQqX
-	FWHE04YXH52lNYCZYdOiKwfpLN8/cBfEnsyU8qZlMfZFMDP3tIIMlk0B318dYMy6KWEjZDnli17
-	tdfbdiKr0=
-X-Google-Smtp-Source: AGHT+IE7mZjFsixBY4p30nfjUHzIWiFz0kbg8gxynQCWj4dTYTnRJU4fXmrDlUnlad1raJ6GkwqNjS07LCXWD2jtB5U=
-X-Received: by 2002:a05:690c:a98:b0:6fa:fd85:a2b6 with SMTP id
- 00721157ae682-6fbcbe0cc2cmr85687077b3.13.1740344196431; Sun, 23 Feb 2025
- 12:56:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=cendio.se header.i=@cendio.se header.b="5BtQjIpI"
+Received: from [IPV6:2a00:801:107:4700:e2be:3ff:fe9d:f27] (unknown [IPv6:2a00:801:107:4700:e2be:3ff:fe9d:f27])
+	by mail.cendio.se (Postfix) with ESMTPSA id AE120183613C;
+	Mon, 24 Feb 2025 10:10:23 +0100 (CET)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.cendio.se AE120183613C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cendio.se;
+	s=20250112; t=1740388223;
+	bh=xQQuG62EfXaOpZGkufjzIDELyNx2R0u7bML7jDKFvcM=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=5BtQjIpIOQ1Wc6C6fL+5NPagG+2QZLivcWwO+pWMixpvZfNHK3NedeDd1UlmUrBFN
+	 KZhOli+QY10st7xBjWmTYkCrJDLioAZ5yE0EbHApN/67pqe/DUCnyYYG93PAdODmmd
+	 2/RQ74EyVfnAGtrgKxMIhH4PMFqTNbtoSA1FIC3RwVwuwdM6jzyZkQaWQpR5/suLRF
+	 rgvcKt0XcVQUIwpuWE4uXIjmw+y5fsh7YvFUBFN3IrsIDhSVnRrPxeuuIiq0gcL+T3
+	 BcEVeF15IsQvFN80NjPLTwBhiJpsmnAN57BXWO1Pu0SE5IAMVWMzDOF2NmGml6ynXk
+	 kf47fj074q5Cw==
+Message-ID: <b0b1007c-34a6-4e3f-9982-cfe617affe1a@cendio.se>
+Date: Mon, 24 Feb 2025 10:10:23 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Ruggero <giurrero@gmail.com>
-Date: Sun, 23 Feb 2025 21:56:25 +0100
-X-Gm-Features: AWEUYZkpX7nnsyBj7rc5qPre_HisPDy04Sm9aWg05UKgiTx9owU-oK9-IfudbhA
-Message-ID: <CAFXmTzjQuZn_b-nQHkYo7KHs9__gc1ctoLx0KioTcPEkqak+9w@mail.gmail.com>
-Subject: [PATCH] doc: fix typo in it.po
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [External] git keeps recreating packs, exploding backup
+ increments
+Content-Language: en-US
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Han Young <hanyang.tony@bytedance.com>, git@vger.kernel.org
+References: <1524b9a5-6f8b-4537-ba6b-bdfdd4b1bdcb@cendio.se>
+ <CAG1j3zGmA30w545+-6qFV6x+3HvM+fueYH-rv-_gaSTpZStMHg@mail.gmail.com>
+ <ba212d4e-32c5-472a-8604-2a2653bde17c@cendio.se> <Z7g2aEpEboL5mvRa@pks.im>
+From: Pierre Ossman <ossman@cendio.se>
+Organization: Cendio AB
+In-Reply-To: <Z7g2aEpEboL5mvRa@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-This patch corrects a minor typographical error in the Italian
-translation file (it.po).
+On 21/02/2025 09:16, Patrick Steinhardt wrote:
+>>
+>> Anything I/we can do to shed more light on the issue?
+> 
+> Well, one of the interesting things to learn would be how often you end
+> up updating those repositories. You have discovered "gc.autoPackLimit"
+> already, which determines when exactly Git is going to repack existing
+> packfiles into one, and mentioned that it doesn't seem to help you. But
+> whether it does or doesn't help really depends on how frequently you
+> gain new packfiles in the impacted repositories.
+> 
+> When you have fast-moving repositories and developers fetch several
+> times per day, then it is quite likely that they accumulate multiple new
+> packfiles per day. And thus, it's not all that unexpected that you will
+> have to repack the whole repository rather regularly. If so, this is
+> working as designed. You can tune the parameters for how often Git will
+> do an all-into-one repack, but also have to keep in mind that the more
+> packfiles there are, the less efficient Git will in general be.
+> 
 
-Signed-off-by: Ruggero Turra <giurrero@gmail.com>
+I don't think the most problematic repo should be moving that fast. But 
+I might be wrong. We've reverted all settings to default, and we'll try 
+to keep an eye on what happens to the pack files to gain more understanding.
 
+> That being said, there is an alternative: Git nowadays doesn't use
+> git-gc(1) anymore to perform auto-maintenance, but instead it invokes
+> git-maintenance(1). And that command allows the user to pick what tasks
+> should be performed. By default it uses git-gc(1) under the hood indeed,
+> but you also ask it to not do so and instead use an alternative
+> mechanism to pack your objects.
+> 
 
----
- po/it.po | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks. This is definitely something we can try. We'll observe the 
+system for now, to establish a new baseline. Then we'll try some of 
+these settings and see how it affect things.
 
-diff --git a/po/it.po b/po/it.po
-index c4af156c80..e43f0fea5e 100644
---- a/po/it.po
-+++ b/po/it.po
-@@ -17602,7 +17602,7 @@ msgstr "Controllo la ridenominazione di '%s' in '%s'\n"
+Regards,
+-- 
+Pierre Ossman           Software Development
+Cendio AB               https://cendio.com
+Teknikringen 8          https://twitter.com/ThinLinc
+583 30 Linköping        https://facebook.com/ThinLinc
+Phone: +46-13-214600
 
- #: builtin/mv.c:185
- msgid "bad source"
--msgstr "sourgente errata"
-+msgstr "sorgente errata"
-
- #: builtin/mv.c:188
- msgid "can not move directory into itself"
---
-2.48.1
+A: Because it messes up the order in which people normally read text.
+Q: Why is top-posting such a bad thing?
