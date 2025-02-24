@@ -1,124 +1,118 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8CC262D37
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 17:27:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B3825B699
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 17:31:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740418051; cv=none; b=mBxTckPm5xQBjNDwDTDcnwdzKFlBfN37K6FUZ2ue8hayw3kqA2qJ7RXkl5Hu33q8UcFvXw4jfeB5cIXB/udBFxBRU1NpU/5xoszA3alU6iZFHlKScYITrFxg7EdBSakORTn36R6TZzkfngoH4ZlQH+NuSBB03K0FNxo++k+hfgI=
+	t=1740418309; cv=none; b=kQJeUj8cWLOKDjW9BnTB7+/Khp7/z6inAa2sjkS3VCWCxSlgKa7wt9aMnR8o157xgkku+hxRaozgAfd4/jJfct/4sUq1PfYpi2urrKkQilxWak8KV9lYlYXJZNKioP70sIjWDZnkI9/1ClclwGjEH17xQI1sCMHIV9vTd251Ktc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740418051; c=relaxed/simple;
-	bh=idXsI828nDVYLuatkvB63NYvsnZwRSy+ar8QYZ2tn5I=;
+	s=arc-20240116; t=1740418309; c=relaxed/simple;
+	bh=+O5VjkD1o68vIZG6cTt8kEqv/u1Erw6XqZKHhc7pilg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KqxkpVCuete0+d9mlCTxLyp/xwgrWbnWWJkMEfAYFnKeXt4g8/RPGEJkjC6SFnltEa8ybZzskkWtLBznfqDizXf17quHo9jNgZHBmLI4wUW8nhLckCukQ4/nthajCDScuz1UT8V0gaCi/FIPImBZQPuZRaE/YYfaBCYufjlApjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VkEWHKkJ; arc=none smtp.client-ip=209.85.218.54
+	 To:Cc:Content-Type; b=aIQJMvO3zHiRMNbbIpYaZ7tjQc+T51Yevg7lGZlHfZDbXsrqgrY6pp6Nz9Uee+hoLVIYWfQxhjyM84qMxc81cmzv+NLr2xmfqQAD76m+ElLiLkF7jl+VkOhs37wiMtZU4yeEu4I1Xzc54kZJtPPcL47SYhGyjdaWPeGZBfcZp0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=We3Fp4y/; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VkEWHKkJ"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ab771575040so988608466b.1
-        for <git@vger.kernel.org>; Mon, 24 Feb 2025 09:27:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="We3Fp4y/"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-abb90c20baeso605778566b.1
+        for <git@vger.kernel.org>; Mon, 24 Feb 2025 09:31:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740418048; x=1741022848; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740418306; x=1741023106; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Cmq/5k7aBGu1nGAJA7eGZqPkDMp0IkA3DuILaDIcsnE=;
-        b=VkEWHKkJvt87ZI7V8wM70ljjevokccbfljRO6MniQzm4BtfwUI0/ie2Zw3KYT0SJ8B
-         b3IJitWlI96MLMKWFOPsvRzU4A5yR+J00EhB82A7LcUOEx03NFzjdugy0g+ABN99urCi
-         W9+Cu+HLAa7vuLriFHMeUnjDq3+4oc/7yL6SeIumDmLKDigiPk6xI+vukGT/0TnFwF6/
-         8/RqqcD9/vtwAlda7+SfgqPnvIC3ccHmcdVIvFBab9/zBQsIxzFv/qCcjTyCG+6vHY+Y
-         HTrsluiZFuu8N0OZAYTv6F9m53Cq6DIQ4MoHxlQNjr3rSJbADF/v0GEycUBPfC3uKz5F
-         czxg==
+        bh=YJn+PlMubmRchwcX2IMJcqGbrqXt4T19vODiu+trCSA=;
+        b=We3Fp4y/chUuTzI0bwxaNUAcC6hWlJZP6lTaMlpP2HM33hiabALfbx1M+iZASTVFg3
+         yq05cE3mZ3VEJJilwsaPv7LluiaF1e41m78bwFhM45u3zdnUWdZmSzz2RRm1TwryBQxA
+         QSD4rk7ncc1eQMoTeECultx0Tigd/uflgI57JUR8nD1iFzE4SBQlFIodENAAP8pheyBG
+         xnssY+RdmjYeO6dCA1uq245HQXH7z/gsPrpSb+84MmBxxnv1+3wBWWQEVHntD3aewpZf
+         CODQEKsmQjf4dDusMHZjg3LbZIsW7Twwdro5z32tUfuRuRji6eYyfazc4O6QKtKg6HEU
+         kL2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740418048; x=1741022848;
+        d=1e100.net; s=20230601; t=1740418306; x=1741023106;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Cmq/5k7aBGu1nGAJA7eGZqPkDMp0IkA3DuILaDIcsnE=;
-        b=dqwgRAMrNA42ImxFyBYEqRW8qPB/Z9UcAMyIgmuR3sskKJa95NVuy5GU8w9Z1psQaE
-         ZGOp3dUDVX6SWLV+vP7GulF0p7EOl9GGqKHReCh7Nu2uDZLtfK+TGBMdBX2mWjiKENFI
-         sTzwm9ZHB2K5wsPk6kHqb6IVEXye4leTFxa1uUUUyN1Rko/tksuyC0DysYLfJIxDuAhP
-         J1bBnFLh7nNfyA1JTAr++62rJDTt/5mSbYqGNfwhmYxQVBrcNl80J7dJ4vpa7qtVdkBW
-         P2HYeHYTQsR7/2o2wTA6Sl34rVJ5VyLKh3UuuskzqFSxdU6i0xHv42StOgKNvQ0RE1oE
-         50AQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXzuM/5PAShUDbhKErDCNxfT8UiKav8D0bHukH1HlDQ+VAspdHTERWK3DJGsj0cwGnluw8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyI/ccuq6iPzIG4SlSEYoVeytSlLPRgT7Ac7ksCFNANvXCpziE3
-	uN9c4ZxZOJH1N3ujNq1qCHvQIrti/LPoOpsfqV5Op2ulS6CBULIYC0la82hpy9FQeiSNz3ZJrkV
-	MKCWZ2Sp3rhB+4rKimOWSqWEg3Fc=
-X-Gm-Gg: ASbGnctywEGgAT11j0TngwjpID1CoIymEXSGnZ0dIHJw8k7Jl98+5kFoyZmq4W9vpPo
-	jjfu47eHCLt3bSm4YnXjo31JDbV2l9LZWfCDLranjJn1sLXyOKdWALytlSajmQ1bmyXGzwmKM1c
-	tXF73BHXqeUIeXONj8F2XZri4WMACAjvkmQBxzPv8=
-X-Google-Smtp-Source: AGHT+IGbI7mE490Qk0R2KvDBmY31xbk4jhsEXxOUN9GhAFgDuvGHzZP0xStRoWtimYvA9y7Gw1uBkggTKRf5RGUQ5VQ=
-X-Received: by 2002:a17:907:9989:b0:ab7:d66f:c872 with SMTP id
- a640c23a62f3a-abc0b037870mr1205731966b.19.1740418047815; Mon, 24 Feb 2025
- 09:27:27 -0800 (PST)
+        bh=YJn+PlMubmRchwcX2IMJcqGbrqXt4T19vODiu+trCSA=;
+        b=ANXBifXCVUoxSsrgOHewxLr+PEq/QZ8HSBdswGlkapXsM2HglWUAjwv987cepYWaTD
+         y3ho9dEPvgSfk5qMgQlTHfwtOARlFi7bhkVVJ8iY0alz3mE9fuoaywbjCGXBL4HmoLcM
+         CQCNdHO19e56aSvjiUk0PmRGpQ1qbw6fuT+rQlPjDZYmshlV2/mgYg0ck17J9dw6P3h9
+         Z4+iNDr72uSJHxGHIDEwSFV+P/307dyLbO3HCV5HMwW3PnQXt1JUPic6B86tJYyKdUjO
+         6/TPjuzQ2YjOurkeBF/jL7Y+t0jcdR3jRTNF+Zm/XW5FCq8hfDxQFEbQLlCy/Sh+7rU8
+         aCDQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUgwexyaM7NyY8LrbYDFCrEb/LW3kMNa4Fz28PcDZMEEFnxzNoXMAZmhfz92X1K7/uDIm8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw67nxHwaT30BVIKJ/jCutXYHqph1fU+GafjLDA0wwLN4cxMqv5
+	5tHVL1e6ddi+TVrRwbbBNAKf4JDNJJY7ggvqjSPWaVXaAydiaJZ/5z411cPPH3Ofi6gJUPQd96f
+	Ra7FQ8yH04nLL2ONk/tZXYz7ixk0=
+X-Gm-Gg: ASbGncsT/Dovzc5HC90O/Oi1wUmPFQvSuInm056Rcp+2J6HIPERV5NSMqwzOSVYrhZg
+	QGAn80C9ua4Ed1W6TradoGibedTa+JMFH4pqg2OjkOH5YnO5tmsP7n2HUvVaKeW54P1eAs47KzP
+	8t5ZYvfC2uLs7GigpGcavX7QfZNwyVDzEz/c1URxY=
+X-Google-Smtp-Source: AGHT+IGqPAYDWd52JTsP0UCf/D1go+KBhcPn9hdhVVFJZZvntCApYDE3Qj9+adGK7jdTV8Ca0YAffBUQvXsxDOAaR4s=
+X-Received: by 2002:a17:906:594f:b0:abe:cba1:2432 with SMTP id
+ a640c23a62f3a-abecba127e4mr123370066b.49.1740418306151; Mon, 24 Feb 2025
+ 09:31:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <arrp2ye3kid76pwghguu5z4jkpv7xsskzdsjunbfkgmwejgby5@qh4phxwzenyp>
- <CALnO6CACJTKasKT9rX9w4_r9q0DPOPZhGnHt8f65oo6Q=8NxEg@mail.gmail.com>
- <xmqqikp4ctoh.fsf@gitster.g> <xmqqa5agcbx6.fsf@gitster.g> <CAP8UFD3XVgJCc2Qa3wWZA54fg38jcpyiDtQOPNc8UQT9uL3vWg@mail.gmail.com>
- <xmqqcyfbb35h.fsf@gitster.g> <CAP8UFD3EpwK3edfBfqRWmcncRFG--Q-yHR=K1wZnDHJs56ZipA@mail.gmail.com>
-In-Reply-To: <CAP8UFD3EpwK3edfBfqRWmcncRFG--Q-yHR=K1wZnDHJs56ZipA@mail.gmail.com>
+References: <20250220151207.3248-1-lucasseikioshiro@gmail.com>
+ <70b76a89-00a4-4ba6-92f2-4fb46981317d@free.fr> <xmqqy0xz9nno.fsf@gitster.g>
+ <0256f214-795d-42a4-8319-4ba79777face@gmail.com> <xmqqa5ad8vzf.fsf@gitster.g>
+In-Reply-To: <xmqqa5ad8vzf.fsf@gitster.g>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 24 Feb 2025 12:27:15 -0500
-X-Gm-Features: AWEUYZkX347l48DT62j7-kFjftWffSbHrwca-_vd2TGPC9d3pNCzB77G46yJSXI
-Message-ID: <CALnO6CCoD8iRENU+OkCAkKGhiHPVtACZMojAsJbo8=cDYLC_eQ@mail.gmail.com>
-Subject: Re: first bisection step takes quite a while
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
-	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Date: Mon, 24 Feb 2025 12:31:34 -0500
+X-Gm-Features: AWEUYZmn2cn1rSAj9phWGRQlmyYkkD173Td4WKXLzbMeUQOdruNIbQNkTEf5QHQ
+Message-ID: <CALnO6CC+7fPjD5f_LZ1PFavdpKqAjMDmrFL8azwatYpS=+pODg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v2] merge-strategies.adoc: detail submodule merge
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Feb 21, 2025 at 3:25=E2=80=AFPM Christian Couder
-<christian.couder@gmail.com> wrote:
+On Sat, Feb 22, 2025 at 5:18=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> On Fri, Feb 21, 2025 at 6:47=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> >
-> > Christian Couder <christian.couder@gmail.com> writes:
-> >
-> > > Yeah, it seems to me that in practice this is a bit like bisecting on
-> > > the first parents first. It would be nice if we had added an option t=
-o
-> > > bisect on the first parents first, so that we could compare your
-> > > improvement and that option.
-> >
-> > Unless you are talking about something entirely different, I am
-> > afraid you are confused.  We added first-parent bisection in mid
-> > 2020.
+> Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 >
-> Yeah, I know that. But I don't think there is a mode which performs
-> first-parent bisection first and then continues bisecting normally (so
-> not only on the first parents). That's why I called it an option that
-> does "first parents first" and not just "first parent".
+> >> And of course a 6-line paragraph is not large enough to put in a
+> >> separate file to be included.
+> >
+> > I'm a newbie here, so I can't have a strong opinion on what's
+> > the best solution for managing those files. But, given that:
+> >
+> > 1. `ort` will sometime replace `recursive`
+> > 2. the last change in the content of this document was in
+> >    f5a3c5e637, three years ago, basically copying the content
+> >    from `recursive` to `ort`
+> >
+> > it looks like to me that creating another file only for this
+> > paragraph would harder to maintain than that duplication.
+> >
+> > I mean, if eventually `recursive` is replaced by `ort`, one
+> > will need to remember to move this paragraph to
+> > `merge-strategies`, as it will be used only in the `ort`
+> > documentation. On the other hand, given that this document
+> > haven't changed since the introduction of `ort`, this
+> > duplication doesn't seem to me that will be hard to be
+> > managed.
+>
+> A relatively easy way out would be to have the full warning in the
+> 'ort' section, and then only add only something like
+>
+>         For a path that is a submodule, the same caution as 'ort'
+>         applies to this strategy.
+>
+> to the 'recursive' section.
 
-This was also how I read your original reply, and I think it would be
-a nice addition. It automates something I've done a few times when
-bisecting in large repos where the good reference is far away in terms
-of commits, and where automated build+test (bisect run) can be slow.
+Indeed, that seems preferable to me (based on a similar conversation
+about a different documentation change in another project [1]).
 
-Essentially
-1. bisect with --first-parent to find a bad merge M
-2. bisect between M^1 and M^@ (maybe this is the set M^-2, if I'm
-reading "git help revisions" correctly?)
-
-with the idea that (1) is fast but coarse (but also helps skip
-unrelated, potentially bad commits in the merge parents) and (2) is
-fine-grained but still fast because the set of commits is hopefully
-small.
-
-(Most readers know the previous justification, I expect, but I figured
-I would spell it out.)
-
-> Thanks for working on this.
-
-Seconded!
+[1]: https://github.com/racket/racket/pull/5144#issuecomment-2563172012
 
 --=20
 D. Ben Knoble
