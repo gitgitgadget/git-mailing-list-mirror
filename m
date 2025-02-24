@@ -1,104 +1,94 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9488C1F419C
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 22:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490785383
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 22:19:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740435004; cv=none; b=co4CanvFO76QlUg0vLWKfxThwNJcNiKfY3WhqMOi9uFIBKABRyF3DvukR4SwhSiYZFaFBOZ4mXaSOpdgzRXrrmZQhbEr/APkFA9U7N8idI8IbVDG/OuMvtZpEpOPC8qojh43S7aaX/1uKwxGzHYVJhaJjdNxmYZMvGyGlgdyXjQ=
+	t=1740435565; cv=none; b=d9/qfzuyuLk8QqgQ0EINWJ5AMu5w1jldkfv6g5R1Iy2UKbHr0KTV78DgQXAWi7TuDv711pcYyJyq7NKNt0R4Ik8a6HlHOj+QPBy+dRrO4bd/klcj6wRB3/og24A15oNcVbxo8MJ4DUI+LH3QRJ5Z+7Bt7JF+jr/LfhUYPuoCZuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740435004; c=relaxed/simple;
-	bh=UcOJMnjgVhbX2i3GOhjgPkTUuYmaoOu6xH6kt8g15bA=;
+	s=arc-20240116; t=1740435565; c=relaxed/simple;
+	bh=foH5iU6oUT7/UAd6Y/kvyHSAvVCq4ffHNAWZJgtH0sg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PdHxKo9uxuQEtQgZ5gcbRVFmq78lO6iTGlbJBrmqDktsb/icFDIHxx1nTauH1q77dP+dPAMzCIGTYIuucTM/vaFw3M2PZqbSrx7q4UW8EX9cUBkuCK9E06fSAtRNpb2sdb0+QjXy/QBOBXeCpvT1c836rpfqAGR/VeksOmis8QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZRKihqVB; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=INamNWYd5TvxYpTr1ani8VukgYa7BafhCQtqZBGGIN0ixQc4aNCJ5F0Aob5tnf97kzLd0pF+XPTGG/Fxl0X5OcVboBKuLw1AnTwsBOEEzV79xPmX//HM9OkM/JvNHKLkAHVumu7W0crZ3DpsP1/5E7VP9W0CkhPQC48N2SXmha8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=RvXGxio4; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZRKihqVB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1740434993;
-	bh=UcOJMnjgVhbX2i3GOhjgPkTUuYmaoOu6xH6kt8g15bA=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=ZRKihqVBxsWEORYlog6CuJn5yqlasm7+y3SzaQsaZUG90v/mEqVfPoJz7DX5cQqjz
-	 1OHLAmguGGLGoite0K9lfXLrrICoFjv1GbgrX3qnofxESioMFdy5aWKy7FTVy1yZmC
-	 MvfgHFKOAiIGYCFAajqMXF7Hcn3rt/Pt4NQCLf8zOCGiCV0pnuBAXJlZtOyG5827P9
-	 tsz2MSEpesIupCpS/Q7qe/Iei32BklQOCBSkDEw3Xpb8YLsk6S+g0UMRtJah9X/hyk
-	 60toL7djdjQGyaaINqU93Fso/3P19UcBhOa+xvqz3W3V3tcFzic5UV7s51Yiqa50dd
-	 7NiV88GqC0ck1BLbcZkasPwTJiA+Jrld/yYxuRhQz/AtxVt71rT6xMBnVQj8hPm81x
-	 idivZruQNx1deMtj0Mjfz7ePwQxwzDGZYba49lWualSWZOc6aVM9IZ6Lk+AJv+Tik8
-	 51VGrGqfTbdW/F+gJ8syo4RXkmRAyUVfeJxdOI3a99QWCHxvMFD
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:49c7:e12c:a55a:81cc])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id BF0C62008B;
-	Mon, 24 Feb 2025 22:09:53 +0000 (UTC)
-Date: Mon, 24 Feb 2025 22:09:52 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="RvXGxio4"
+Received: (qmail 20585 invoked by uid 109); 24 Feb 2025 22:19:16 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=foH5iU6oUT7/UAd6Y/kvyHSAvVCq4ffHNAWZJgtH0sg=; b=RvXGxio4YUhWtOBrPWKJRcSCfk3Zfi3Z/TBhNfMj8TWpOkXes3qb/pyddZzEldGFiBWdCE3FZHQxH6LUgmnDJBnXooQpBocVDfVFGp/hefOHw2HcqqLdjkgzbklhD0xfEv7MOt44fsNw9FGMSGaG/uOAR8nOeoQicKDrQ5ZSagZXNQdIw9Vr6dVC6rTYoOrKud4OZLce1DNO3cVw6ePp/KJCMqoHCJHcbB0Y50fpK7n379Gm08c1qdUmtXsHHUlT0aV86LqEf9mGV5e+XV1geRzhquwhGpInIxeqZULHc8EXQ1yAEnQceQhphXzfSdzSP10EofV77knmFkt2ESBfrQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Feb 2025 22:19:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29570 invoked by uid 111); 24 Feb 2025 22:19:15 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Feb 2025 17:19:15 -0500
+Authentication-Results: peff.net; auth=none
+Date: Mon, 24 Feb 2025 17:19:14 -0500
+From: Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Fix netrc usage with WebDAV-based HTTP protocol
-Message-ID: <Z7zuMBVrnX_pLE0K@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <Z7UPYY24uk7lLzeP@tapette.crustytoothpaste.net>
- <20250223015331.588161-1-sandals@crustytoothpaste.net>
- <xmqqa5ab70ka.fsf@gitster.g>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	shejialuo <shejialuo@gmail.com>
+Subject: Re: [PATCH v2 11/16] rerere: let `rerere_path()` write paths into a
+ caller-provided buffer
+Message-ID: <20250224221914.GA193356@coredump.intra.peff.net>
+References: <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
+ <20250207-b4-pks-path-drop-the-repository-v2-11-13cad3c11b8a@pks.im>
+ <20250222072048.GA3096947@coredump.intra.peff.net>
+ <xmqqr03n7218.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WceEeUdIA+Dc2Cxr"
-Content-Disposition: inline
-In-Reply-To: <xmqqa5ab70ka.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---WceEeUdIA+Dc2Cxr
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqr03n7218.fsf@gitster.g>
 
-On 2025-02-24 at 16:46:29, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> > However, I think we need to either decide that we're going to support
-> > this as a fully-fledged feature and add documentation and sufficient
-> > tests, or remove it, since it's not reasonable to have undocumented,
-> > untested features that people rely on.
->=20
-> Does "this" refer to "use of netrc in HTTP code paths", or "HTTP
-> walker"?  I am kind of surprised that anybody is still using the
-> latter, regardless of where the credential is locally stored.
+On Mon, Feb 24, 2025 at 08:14:43AM -0800, Junio C Hamano wrote:
 
-It refers to netrc in HTTP code paths.
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Fri, Feb 07, 2025 at 12:03:36PM +0100, Patrick Steinhardt wrote:
+> >
+> >>  static timestamp_t rerere_last_used_at(struct rerere_id *id)
+> >>  {
+> >> +	struct strbuf buf = STRBUF_INIT;
+> >>  	struct stat st;
+> >> +	int ret;
+> >> +
+> >> +	ret = stat(rerere_path(&buf, id, "postimage"), &st) ? (time_t) 0 : st.st_mtime;
+> >>  
+> >> -	return stat(rerere_path(id, "postimage"), &st) ? (time_t) 0 : st.st_mtime;
+> >> +	strbuf_release(&buf);
+> >> +	return ret;
+> >>  }
+> >
+> > This "int ret" should surely be a timestamp_t, no?
+> >
+> > -Peff
+> 
+> Indeeeeeed.  Thanks for a careful reading.
 
-There are definitely people using the WebDAV-based HTTP protocol still,
-but after reading the comment in the code that implies that we don't
-read packed-refs, I'm less and less inclined to say that's a good idea.
-It's probably going to die pretty quickly when we move to reftable,
-though, since that protocol only works with the files backend.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
+Less reading, and more merge resolution. ;) (I had a similar series to
+Patrick's that was half-done from a few months ago).
 
---WceEeUdIA+Dc2Cxr
-Content-Type: application/pgp-signature; name="signature.asc"
+I see you added a fixup! to the topic. Note that rerere_created_at()
+needs the same treatment, too.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
+One side note: using timestamp_t here should get us the same behavior
+that the original had before this patch. But I'm not sure the original
+was entirely correct. st_mtime is a time_t, so we are assuming the
+implicit cast is OK. Our timestamp_t tries to be at least as long as
+time_t, so I think we are OK for the future. For very old timestamps, it
+is probably wrong (since time_t is usually signed, and timestamp_t is
+not yet).
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ7zuMAAKCRB8DEliiIei
-gemtAP4mZiWTA5Lj/nvnqAYDdSQoTKD+1N4KGCp1r6y2rk8yTgEA+0V/6CZfyDUd
-euf6eZCgdGTP2DpWBWuyBFSqG4kODgI=
-=MOyd
------END PGP SIGNATURE-----
+It's mostly academic, though, unless your filesystem has rerere files
+before 1970. So I think we can probably just ignore it (and I do still
+hope eventually to support negative values with timestamp_t).
 
---WceEeUdIA+Dc2Cxr--
+-Peff
