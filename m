@@ -1,127 +1,124 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75984264A76
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 17:01:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8CC262D37
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 17:27:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740416489; cv=none; b=R4DXdxAmEJfcz/CREWjKmxQX4J+YJhR70D9Cb3/bQTM1iG6mVSH3xPTBEgK+E1p1eduvWThgMT2RcYIAjAGCY62dQQQh5Puxh9RqGFRUPq0i8cMLau05nqARUuV4PW1KmUuark/WWd2BlC93kvwOFC1l5IWdohjGdPN5GhBkTgI=
+	t=1740418051; cv=none; b=mBxTckPm5xQBjNDwDTDcnwdzKFlBfN37K6FUZ2ue8hayw3kqA2qJ7RXkl5Hu33q8UcFvXw4jfeB5cIXB/udBFxBRU1NpU/5xoszA3alU6iZFHlKScYITrFxg7EdBSakORTn36R6TZzkfngoH4ZlQH+NuSBB03K0FNxo++k+hfgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740416489; c=relaxed/simple;
-	bh=kJxNOSHgVYHp1OSfG/twea8qBm/grMDj1qzZz1B4GIA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Z5qy/uKcCTYHaAnlTyYdewhYYr/QlSPjyWfbmJ28Gz2yw3NH+yA3pRAtEareiMkyfrY9NxF+Gj2rbYsIfG5yC7HBjjZx1kuFnKhNppgdUYrKj7Cf7eNiUFyNk2Bn4KPsGzbwTeG4IX1AncdItuJwn1GAKhSliY+/YRRyThlBTNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XOMKuTLW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xGyZhrrO; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740418051; c=relaxed/simple;
+	bh=idXsI828nDVYLuatkvB63NYvsnZwRSy+ar8QYZ2tn5I=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KqxkpVCuete0+d9mlCTxLyp/xwgrWbnWWJkMEfAYFnKeXt4g8/RPGEJkjC6SFnltEa8ybZzskkWtLBznfqDizXf17quHo9jNgZHBmLI4wUW8nhLckCukQ4/nthajCDScuz1UT8V0gaCi/FIPImBZQPuZRaE/YYfaBCYufjlApjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VkEWHKkJ; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XOMKuTLW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xGyZhrrO"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 511011380F0D;
-	Mon, 24 Feb 2025 12:01:26 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 24 Feb 2025 12:01:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740416486; x=1740502886; bh=KK7a7PsrTa
-	nvV08qxvpvSBB0wolp9y580+Wk7zDhK1U=; b=XOMKuTLWuty57q4+YY5otKCfcM
-	kk9Kp64PHeMv7XD3PyTAWnUdTvAvQTMzxYRCSZtuBbwQ5LaPHDJnUIY24nxPz8hX
-	JPXssfofezT1//7X0YB9YhTt7ldzP62tpWHATlPhirx7XbeZXNh4tP5uDpn2FjLY
-	h2sMXRgPtws2rLSXi+SxV1IInvLa2RMJHS9PXtwJGVdKIl+Yr3qs3Kdus6LM1m8g
-	9F+2AE3wyRONeH26ZY5LByWCEpSp6EaURLHbPa+8bSvei1uOxB4ljM5h1ewELQSL
-	4NKoXs+iy+fMHbmNSHWo7eb3BoSg4HWxgIe7ggVu4ChWzuv9qupb10JIOc9A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740416486; x=1740502886; bh=KK7a7PsrTanvV08qxvpvSBB0wolp9y580+W
-	k7zDhK1U=; b=xGyZhrrOdw6Osg57qU8TCdKrrODqyqlGqKn/BGTUCSkCzUUvBTd
-	ufJCHVT02vzaTHy39/Dh882d/XcSFAk9zAcKx9FVBrUuezkMPOcCHG5WVJ49c8OY
-	Qjx22OendBRvUT6tSMEmO3ZVnjAlsJafTjftsLqkvISS1gTJXbExqJ2Z/sExKz87
-	dms8DUFObupGUjQi6oHYGRUxadQHcwogXVLYfKYUea5lLJw+N6RCBOlPblTD8zMT
-	f5I9zmuKnVhhpVn5g1Ex8ZsopNaa0kr7+pZcgsRRYdW0do2ZZWBuw2NE853lxpFO
-	bK/AZUn9UKEr6beiDTySGQa4rTeVqLDDuJw==
-X-ME-Sender: <xms:5aW8ZwFjeolIuZiTS3YaeJmRdNlDdPMihyV1uASisHtj1LUj90VKGw>
-    <xme:5aW8Z5Up8egc0F2wvdYPTRtX0jtl3QIcKaqwbRMjxmDJxT5OPQZBhcSBqiBi7epAL
-    xaA-ulC51PTqqiFbQ>
-X-ME-Received: <xmr:5aW8Z6LqxlzzzWIGanSEwnsvnk-S0A64E8oDNza8sCW8LcfDS1Bkoiqp8yFlupBF2tr_p5I7tjBgzVU083UdpHysqpSra3Bhq6nwQsg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejleeffecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtih
-    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
-    eplhhukhgvshhhuheslhhukhgvshhhuhdrtghomhdprhgtphhtthhopehnvgifrhgvnhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
-    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrh
-    hushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:5aW8ZyHfukWcVVPUm-UINCjDgf0OTkn9CooHx5Ru3aGCByMYj71mbg>
-    <xmx:5aW8Z2VruCGdTT95JU9wG2CZqlgOneOalHP456dfdIPlNnMB_W_Eww>
-    <xmx:5aW8Z1MUBSTLWX8DD1xf1lMO5VtaC6j-mrRo27AkNnFffCM9iqP_0Q>
-    <xmx:5aW8Z93KjQ9VFHqefJOpmR2d3NwzrjG0yFMwwTyXgQxzAm1Y5gXWlQ>
-    <xmx:5qW8Z9PhpMPJZKLANnBTSkiSDSkRLxWuOMc8mlPnasCHRVM4LYT-YFlH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Feb 2025 12:01:24 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Luke Shumaker
- <lukeshu@lukeshu.com>,  Elijah Newren <newren@gmail.com>,  Jeff King
- <peff@peff.net>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-  Taylor Blau <me@ttaylorr.com>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v5 0/6] fast-export, fast-import: add support for
- signed-commits
-In-Reply-To: <20250224142744.279643-1-christian.couder@gmail.com> (Christian
-	Couder's message of "Mon, 24 Feb 2025 15:27:38 +0100")
-References: <20210430232537.1131641-1-lukeshu@lukeshu.com>
-	<20250224142744.279643-1-christian.couder@gmail.com>
-Date: Mon, 24 Feb 2025 09:01:23 -0800
-Message-ID: <xmqq1pvn6zvg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VkEWHKkJ"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ab771575040so988608466b.1
+        for <git@vger.kernel.org>; Mon, 24 Feb 2025 09:27:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740418048; x=1741022848; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Cmq/5k7aBGu1nGAJA7eGZqPkDMp0IkA3DuILaDIcsnE=;
+        b=VkEWHKkJvt87ZI7V8wM70ljjevokccbfljRO6MniQzm4BtfwUI0/ie2Zw3KYT0SJ8B
+         b3IJitWlI96MLMKWFOPsvRzU4A5yR+J00EhB82A7LcUOEx03NFzjdugy0g+ABN99urCi
+         W9+Cu+HLAa7vuLriFHMeUnjDq3+4oc/7yL6SeIumDmLKDigiPk6xI+vukGT/0TnFwF6/
+         8/RqqcD9/vtwAlda7+SfgqPnvIC3ccHmcdVIvFBab9/zBQsIxzFv/qCcjTyCG+6vHY+Y
+         HTrsluiZFuu8N0OZAYTv6F9m53Cq6DIQ4MoHxlQNjr3rSJbADF/v0GEycUBPfC3uKz5F
+         czxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740418048; x=1741022848;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Cmq/5k7aBGu1nGAJA7eGZqPkDMp0IkA3DuILaDIcsnE=;
+        b=dqwgRAMrNA42ImxFyBYEqRW8qPB/Z9UcAMyIgmuR3sskKJa95NVuy5GU8w9Z1psQaE
+         ZGOp3dUDVX6SWLV+vP7GulF0p7EOl9GGqKHReCh7Nu2uDZLtfK+TGBMdBX2mWjiKENFI
+         sTzwm9ZHB2K5wsPk6kHqb6IVEXye4leTFxa1uUUUyN1Rko/tksuyC0DysYLfJIxDuAhP
+         J1bBnFLh7nNfyA1JTAr++62rJDTt/5mSbYqGNfwhmYxQVBrcNl80J7dJ4vpa7qtVdkBW
+         P2HYeHYTQsR7/2o2wTA6Sl34rVJ5VyLKh3UuuskzqFSxdU6i0xHv42StOgKNvQ0RE1oE
+         50AQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXzuM/5PAShUDbhKErDCNxfT8UiKav8D0bHukH1HlDQ+VAspdHTERWK3DJGsj0cwGnluw8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyI/ccuq6iPzIG4SlSEYoVeytSlLPRgT7Ac7ksCFNANvXCpziE3
+	uN9c4ZxZOJH1N3ujNq1qCHvQIrti/LPoOpsfqV5Op2ulS6CBULIYC0la82hpy9FQeiSNz3ZJrkV
+	MKCWZ2Sp3rhB+4rKimOWSqWEg3Fc=
+X-Gm-Gg: ASbGnctywEGgAT11j0TngwjpID1CoIymEXSGnZ0dIHJw8k7Jl98+5kFoyZmq4W9vpPo
+	jjfu47eHCLt3bSm4YnXjo31JDbV2l9LZWfCDLranjJn1sLXyOKdWALytlSajmQ1bmyXGzwmKM1c
+	tXF73BHXqeUIeXONj8F2XZri4WMACAjvkmQBxzPv8=
+X-Google-Smtp-Source: AGHT+IGbI7mE490Qk0R2KvDBmY31xbk4jhsEXxOUN9GhAFgDuvGHzZP0xStRoWtimYvA9y7Gw1uBkggTKRf5RGUQ5VQ=
+X-Received: by 2002:a17:907:9989:b0:ab7:d66f:c872 with SMTP id
+ a640c23a62f3a-abc0b037870mr1205731966b.19.1740418047815; Mon, 24 Feb 2025
+ 09:27:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <arrp2ye3kid76pwghguu5z4jkpv7xsskzdsjunbfkgmwejgby5@qh4phxwzenyp>
+ <CALnO6CACJTKasKT9rX9w4_r9q0DPOPZhGnHt8f65oo6Q=8NxEg@mail.gmail.com>
+ <xmqqikp4ctoh.fsf@gitster.g> <xmqqa5agcbx6.fsf@gitster.g> <CAP8UFD3XVgJCc2Qa3wWZA54fg38jcpyiDtQOPNc8UQT9uL3vWg@mail.gmail.com>
+ <xmqqcyfbb35h.fsf@gitster.g> <CAP8UFD3EpwK3edfBfqRWmcncRFG--Q-yHR=K1wZnDHJs56ZipA@mail.gmail.com>
+In-Reply-To: <CAP8UFD3EpwK3edfBfqRWmcncRFG--Q-yHR=K1wZnDHJs56ZipA@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Mon, 24 Feb 2025 12:27:15 -0500
+X-Gm-Features: AWEUYZkX347l48DT62j7-kFjftWffSbHrwca-_vd2TGPC9d3pNCzB77G46yJSXI
+Message-ID: <CALnO6CCoD8iRENU+OkCAkKGhiHPVtACZMojAsJbo8=cDYLC_eQ@mail.gmail.com>
+Subject: Re: first bisection step takes quite a while
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Jeff King <peff@peff.net>, 
+	=?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
-
-> Luke Shumaker sent the first 4 versions of this series in April 2021,
-> but it looks like he stopped before it got merged. Let's finish
-> polishing it.
-
-Nice to see an old topic resurrected.
-
-> fast-export has an existing --signed-tags= option that controls how to
-> handle tag signatures.  However, there is no equivalent for commit
-> signatures; it just silently strips the signature out of the commit
-> (analogously to --signed-tags=strip).
+On Fri, Feb 21, 2025 at 3:25=E2=80=AFPM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> So implement a --signed-commits= flag in fast-export, and implement
-> the receiving side of it in fast-import.
+> On Fri, Feb 21, 2025 at 6:47=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+> wrote:
+> >
+> > Christian Couder <christian.couder@gmail.com> writes:
+> >
+> > > Yeah, it seems to me that in practice this is a bit like bisecting on
+> > > the first parents first. It would be nice if we had added an option t=
+o
+> > > bisect on the first parents first, so that we could compare your
+> > > improvement and that option.
+> >
+> > Unless you are talking about something entirely different, I am
+> > afraid you are confused.  We added first-parent bisection in mid
+> > 2020.
+>
+> Yeah, I know that. But I don't think there is a mode which performs
+> first-parent bisection first and then continues bisecting normally (so
+> not only on the first parents). That's why I called it an option that
+> does "first parents first" and not just "first parent".
 
-Nice.
+This was also how I read your original reply, and I think it would be
+a nice addition. It automates something I've done a few times when
+bisecting in large repos where the good reference is far away in terms
+of commits, and where automated build+test (bisect run) can be slow.
 
-I haven't thought about this topic obviously for a looooong time,
-but I wonder we may want to have an option, which is independent
-from these --signed-tags/--signed-commits options addressed here,
-that allows the person who performed the import to attest to the
-result by adding their own signature on tags and commits, whether
-these tags and commits were originally signed or not.
+Essentially
+1. bisect with --first-parent to find a bad merge M
+2. bisect between M^1 and M^@ (maybe this is the set M^-2, if I'm
+reading "git help revisions" correctly?)
 
-Obviously totally independent, orthogonal, and outside of the scope
-of this topic.
+with the idea that (1) is fast but coarse (but also helps skip
+unrelated, potentially bad commits in the merge parents) and (2) is
+fine-grained but still fast because the set of commits is hopefully
+small.
 
-Thanks.
+(Most readers know the previous justification, I expect, but I figured
+I would spell it out.)
+
+> Thanks for working on this.
+
+Seconded!
+
+--=20
+D. Ben Knoble
