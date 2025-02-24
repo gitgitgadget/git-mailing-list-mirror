@@ -1,100 +1,112 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE00614A4E9
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 23:10:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F75206F18
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 23:14:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740438630; cv=none; b=iALsIIO99arTF01nogsLaSCARG4qM+/Rp0mdv5D/RVuM+Am4vEZvdsivRFCXj7W1MCowvINxK3wmJv68beuhXvkUwwBDkFgqI7gvIgeRuz/W7rOET/go473xfG1L912lBV9ladkOoX/Sym7uCW/XG7IfQ73NItvumXhtmT2I8PQ=
+	t=1740438879; cv=none; b=GTlryuKkCZuq/lqbsxUuglK6+ZngGA072+wJKLklSi3bD05SmE5fAEPNmA5rrhPT2n10GLaqu9JYiqKgiNAvDUvnn8WIvUvFRdj6q2+VXMJQ1imj1HUrwjPnTbcFAJDevO9o6JciUEkcIJyTly7JKhde/WZspytIivymZq85wzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740438630; c=relaxed/simple;
-	bh=8ihbhuDVye3jl3AvIhLaf5nUPTdovIxQb4Q4l3NaI/I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YCEKykGpIb61T0/uR5kjB4v40DUMyktn7oV3BiCh1q8uikbfzD5Ux23CzKLOar1q0OgF/s2iaJg0bDqrjVrRiyfW68C6vIdGIRpyEkI+7YQOL8OvBu7JUcxdEoui7lPIOmWMOhMQ6HipABQkbPX/+ctJ/obToWj86boZXm2xCj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fvsW2dPw; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1740438879; c=relaxed/simple;
+	bh=3KiJGYTkTHRYRMToisOYcdMqI1OgX2f5lU+xKOuKy+4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HlbkFdbBqVh4hXplWDOJWjnV8YlfnZ1wY5/BgfrWirwiQI5NgK+Yl2actaWEytg07Qhzcp/4MIp6E35iY+mv51U7YREqpXMmLomi4RE7qySBw5ylRux13cnl4jMYrru7eRqSB4bwVqYyc1Y5om4HeNuFvYYf0UAj+tjl8oMA9Wo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YFUBroYT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lcFKEKHk; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fvsW2dPw"
-Received: (qmail 21150 invoked by uid 109); 24 Feb 2025 23:10:27 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=8ihbhuDVye3jl3AvIhLaf5nUPTdovIxQb4Q4l3NaI/I=; b=fvsW2dPw6yAVLEOAoLfHldi0pglbTb+evRuqp5KZMd1SmpqJPmD/14iRz5YAFrTjuNTVg5u/FAdUxvIemC6iLyxHQSMiWZSvfRcSwUQI1l5VX/+XtgjjFNPWp0FfYQ+pIDgN1nUNOd0TmlwNFXOHp3uifaqskC8edUVbjqkwiUUnhSBNWfcBnVHzBSz4tqTkf/7hjvf9iC7nSxEYCK0q2sunI10to/FxGydbUT5Dqnfc2VMgrljxAqALwIuW3yxisR2nz4Ugh9nvZnnWKHAUZf8Yas4+qVeD7bpE9m6emYewve9jhL4+PqrD2Mjfmjtvm/Fesqt+Ia/4H+H65VGRNA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Feb 2025 23:10:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30188 invoked by uid 111); 24 Feb 2025 23:10:25 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Feb 2025 18:10:25 -0500
-Authentication-Results: peff.net; auth=none
-Date: Mon, 24 Feb 2025 18:10:24 -0500
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>,
-	shejialuo <shejialuo@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YFUBroYT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lcFKEKHk"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 726F7254018F;
+	Mon, 24 Feb 2025 18:14:36 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Mon, 24 Feb 2025 18:14:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740438876; x=1740525276; bh=3KiJGYTkTH
+	RYRMToisOYcdMqI1OgX2f5lU+xKOuKy+4=; b=YFUBroYTZy6u/+kI/A8MSNXUHo
+	w13OeipgrLbs09xBPm3/jP8BI8v8kYR5o1mVJZ5AKQeYVAx2EG/+8jCUjZlL1Yuq
+	WOmTSncP+XZqyC5QQ9zBu221fmyIfRTvKzX6eEP4h4cA1vXHd+xkti34DKDAhylN
+	QU9hkbeVa8i1K2kZ8QQ6XkiXhCqlAAhypouBxVTUnAxmLXjfuob+fXoPfShk3gPe
+	IzmParOKqUJBT6JVjkVkVqU3lBdRjGkjU9UO77hDB/+oJPrYLJtUusI4bV1cHL60
+	JTuFMourCCkP+qi4LQh+6/VqPTg1JMtwb+tZ1lSY1Hld6QirQtqgXPbntc/w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740438876; x=1740525276; bh=3KiJGYTkTHRYRMToisOYcdMqI1OgX2f5lU+
+	xKOuKy+4=; b=lcFKEKHkYRKDOVQ0QlOSa2LvrdUXPjbLLdrmlzcT1VkNYvqgXE7
+	InEOr+hvWZF0uXBGr0DBtcTT+8BD982P5TX7aHDF+SmyZZs9yGCahCViG/LrXkQG
+	WCXX7CeoDIxbaOqDmrUfGGQdWz8ixSCb5UMrnj8+WE5q6FhAhEDqtzsefG8wOHUa
+	ZYwhOpaK6xoMLMpqFmL4OQGHlTz/dTlkJZJjTo2P0hMhkjeJ0aPCTGhLO+KE/CpJ
+	7pQ1/AE0NBehJYZybvWVmgzMUSDM0gSTftNz7EWLhC2UKJo8HMiBDW6r4JtkkSO+
+	/6dXNgD2mOYDzoNd+QyxTYPehbIorxDVvCQ==
+X-ME-Sender: <xms:XP28ZwfeXAN_nr99Tah7jsm-Vag-5LVhb9ZCnbT_MZUKvqynzSFKsA>
+    <xme:XP28ZyPvbua5qQ5LhefLTVg2aw7mpFvHnYpvCjTeTMA-ih226sH7yx7ovnjWvKTV2
+    XpXq9L6Ime-xy94vg>
+X-ME-Received: <xmr:XP28ZxicuY11gMoM-50evmSrEPQA4tzWU2cV3k36l2t90jMzMw1a6_18BTYR6eipm4iVoz9bwLcmXkf9XQbJmvTRAe8X8ARPxB3tpHw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdektddtkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfh
+    hfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesgh
+    hmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:XP28Z19ySBWxctvSik2vvot1r7MoWfgk48CMixn804PspmOZY_xMaQ>
+    <xmx:XP28Z8vQcTRvEtf-rMIe2nfYGIS5ZbU2fw3bK_nuh6C7r5wPZICNwQ>
+    <xmx:XP28Z8HkFpz6SDDNxttgYcbBDd_FEnyTFvXCQy3PjnWqgu_rRif3-w>
+    <xmx:XP28Z7NdzrkJp1mntPqVR4cLyRxFchfDkLfCM29v3eyo4vWdaCxX1g>
+    <xmx:XP28ZwjT6XpVOArgMcxBdXKnhBs39IMf226NuTqMgDaXGvf5Akza2qcd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 24 Feb 2025 18:14:35 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>,  shejialuo <shejialuo@gmail.com>
 Subject: Re: [PATCH v2 11/16] rerere: let `rerere_path()` write paths into a
  caller-provided buffer
-Message-ID: <20250224231024.GA729825@coredump.intra.peff.net>
+In-Reply-To: <20250224231024.GA729825@coredump.intra.peff.net> (Jeff King's
+	message of "Mon, 24 Feb 2025 18:10:24 -0500")
 References: <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
- <20250207-b4-pks-path-drop-the-repository-v2-11-13cad3c11b8a@pks.im>
- <20250222072048.GA3096947@coredump.intra.peff.net>
- <xmqqr03n7218.fsf@gitster.g>
- <20250224221914.GA193356@coredump.intra.peff.net>
- <xmqqh64j3qkn.fsf@gitster.g>
+	<20250207-b4-pks-path-drop-the-repository-v2-11-13cad3c11b8a@pks.im>
+	<20250222072048.GA3096947@coredump.intra.peff.net>
+	<xmqqr03n7218.fsf@gitster.g>
+	<20250224221914.GA193356@coredump.intra.peff.net>
+	<xmqqh64j3qkn.fsf@gitster.g>
+	<20250224231024.GA729825@coredump.intra.peff.net>
+Date: Mon, 24 Feb 2025 15:14:34 -0800
+Message-ID: <xmqqcyf73pgl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqh64j3qkn.fsf@gitster.g>
+Content-Type: text/plain
 
-On Mon, Feb 24, 2025 at 02:50:32PM -0800, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> I do not think timestamp_t is appropriate for rerere records,
-> actually.  The reason why we have timestamp_t is for things like the
-> author dates that can be arbitrarily and deliberately set to any
-> historical times, e.g. long before the committer was born.
-> 
-> Unlike that, the timestamps we are dealing with with rerere records
-> are the times on the filesystem when these rerere records were
-> created and/or used so whatever stat() gives us for st_mtime
-> (i.e. time_t) is a lot more appropriate.
-> 
-> I'd probably leave a #leftoverbits here; we should vet our use of
-> timestamp_t to see if we are not overusing the type.  Roughly, the
-> timestamps we may record in the commit and the tag objects should be
-> timestamp_t, but the time we get from the filesystem and only
-> compared with another timestamp the same way should use appropriate
-> system-defined type, which is likely to be time_t, as not everybody
-> may have struct timespec, and file expiration should not need
-> nanoseconds precision.
+> So the only question is how and when to convert from time_t to
+> timestamp_t. I think our general strategy for when has been "as soon as
+> possible" which makes sense to me (most of the code only has to deal
+> with our one type). So I think doing it right after the stat() here
+> makes sense.
 
-Yes, I was going to suggest using time_t (or even timespec) consistently
-here, but...I think it is a little trickier than that.
+OK.
 
-We will compare these mtimes not just with themselves, but with a cutoff
-time that we get from the user, via repo_config_get_expiry_in_days().
-And that's parsing lots of formats into a timestamp_t. So either we need
-a parallel universe of functions that operate on time_t (to use for
-things we expect to only interact with filesystem times), or at some
-point we have to interact between time_t and timestamp_t.
+> All of which is to say it might be a bit more than a #leftoverbits.
 
-I hope you'll agree that that the "parallel universe" direction is too
-gross to contemplate. ;)
+OK.
 
-So the only question is how and when to convert from time_t to
-timestamp_t. I think our general strategy for when has been "as soon as
-possible" which makes sense to me (most of the code only has to deal
-with our one type). So I think doing it right after the stat() here
-makes sense.
-
-The "how" should probably not be "do an implicit cast". We have checks
-for overflow, etc, in gm_time_t(), though I'm not sure what the error
-handling should be for a case like this (that function just calls die(),
-which might not be ideal).
-
-All of which is to say it might be a bit more than a #leftoverbits.
-
--Peff
+Thanks for a dose of sanity.
