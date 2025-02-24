@@ -1,118 +1,116 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B3825B699
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 17:31:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0D7264A92
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 17:50:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740418309; cv=none; b=kQJeUj8cWLOKDjW9BnTB7+/Khp7/z6inAa2sjkS3VCWCxSlgKa7wt9aMnR8o157xgkku+hxRaozgAfd4/jJfct/4sUq1PfYpi2urrKkQilxWak8KV9lYlYXJZNKioP70sIjWDZnkI9/1ClclwGjEH17xQI1sCMHIV9vTd251Ktc=
+	t=1740419441; cv=none; b=HAIup6s/4T+P7HqgXKl3pV0uz8PetonzCVuua/Yzz2s7SQOxGLnjEnjQ634+84/G47B9lYCswXWUGdCnJLBCZ/+8B4knBSE0Pdx+ELJbwl9oP40VmPwMvW01AscUUHE6PBNIr7e+Wpl39bL3P7bnOg1mdca4wbDW9s0yQ6rIB70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740418309; c=relaxed/simple;
-	bh=+O5VjkD1o68vIZG6cTt8kEqv/u1Erw6XqZKHhc7pilg=;
+	s=arc-20240116; t=1740419441; c=relaxed/simple;
+	bh=pIA86w2ta6QRnUu+/uQ8sAN5w9STQ3erxxTvfek1v8A=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=aIQJMvO3zHiRMNbbIpYaZ7tjQc+T51Yevg7lGZlHfZDbXsrqgrY6pp6Nz9Uee+hoLVIYWfQxhjyM84qMxc81cmzv+NLr2xmfqQAD76m+ElLiLkF7jl+VkOhs37wiMtZU4yeEu4I1Xzc54kZJtPPcL47SYhGyjdaWPeGZBfcZp0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=We3Fp4y/; arc=none smtp.client-ip=209.85.218.47
+	 To:Cc:Content-Type; b=WR5kGWN3jzsr5zwOZKSQAdyGUrfmt8W+G0ay1xifQg8bQYOIFYzQg0T9xXDsVZ0a6XKLm34JEZwwq/wQLuSuelzXw73kZDB7PaTsdPwYtoxhjGJh6ZUnWYGuhd8DOQwAA+ynLtYN6ZobNV5t9rlB2MVrUKxMCIKv8hMItXrgNZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=clQdQyDa; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="We3Fp4y/"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-abb90c20baeso605778566b.1
-        for <git@vger.kernel.org>; Mon, 24 Feb 2025 09:31:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="clQdQyDa"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-abb79af88afso867921366b.1
+        for <git@vger.kernel.org>; Mon, 24 Feb 2025 09:50:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740418306; x=1741023106; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740419438; x=1741024238; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YJn+PlMubmRchwcX2IMJcqGbrqXt4T19vODiu+trCSA=;
-        b=We3Fp4y/chUuTzI0bwxaNUAcC6hWlJZP6lTaMlpP2HM33hiabALfbx1M+iZASTVFg3
-         yq05cE3mZ3VEJJilwsaPv7LluiaF1e41m78bwFhM45u3zdnUWdZmSzz2RRm1TwryBQxA
-         QSD4rk7ncc1eQMoTeECultx0Tigd/uflgI57JUR8nD1iFzE4SBQlFIodENAAP8pheyBG
-         xnssY+RdmjYeO6dCA1uq245HQXH7z/gsPrpSb+84MmBxxnv1+3wBWWQEVHntD3aewpZf
-         CODQEKsmQjf4dDusMHZjg3LbZIsW7Twwdro5z32tUfuRuRji6eYyfazc4O6QKtKg6HEU
-         kL2Q==
+        bh=W8uEd6tpBoIeoK68NwSqpbu1NSQ9y5QOHMXTKGKqeZo=;
+        b=clQdQyDaHuRg1lnE7JCAY6oTm23t2byoNncr6ZB67N9als2GWqTd32t8KiYiarhCNN
+         mVYvQRULDWBwzujeDQQ8xQ2l5laAL0SdzPuJG4bGbFJg/zTeRtYDyN/k/XLfeTIwZRP9
+         WkT8c0Qf6UYX7o2qVSBzG+ZkMSoAz951YxBt8ebfxq2eLRVlinsuAN67wvatZQYr6K8t
+         S+bOFXG6JJzffB6vJUygIjxYwhtJGZ0n5NnzUSWzc21JqGvFMGmZKuRxpImobnHOiAhN
+         R9VWbtlyihKVVC7y2gracMZteKCjAvtL8BX98BSYcuQOdSTeGrYskOH3MQoFQ/WXZyzh
+         gLwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740418306; x=1741023106;
+        d=1e100.net; s=20230601; t=1740419438; x=1741024238;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=YJn+PlMubmRchwcX2IMJcqGbrqXt4T19vODiu+trCSA=;
-        b=ANXBifXCVUoxSsrgOHewxLr+PEq/QZ8HSBdswGlkapXsM2HglWUAjwv987cepYWaTD
-         y3ho9dEPvgSfk5qMgQlTHfwtOARlFi7bhkVVJ8iY0alz3mE9fuoaywbjCGXBL4HmoLcM
-         CQCNdHO19e56aSvjiUk0PmRGpQ1qbw6fuT+rQlPjDZYmshlV2/mgYg0ck17J9dw6P3h9
-         Z4+iNDr72uSJHxGHIDEwSFV+P/307dyLbO3HCV5HMwW3PnQXt1JUPic6B86tJYyKdUjO
-         6/TPjuzQ2YjOurkeBF/jL7Y+t0jcdR3jRTNF+Zm/XW5FCq8hfDxQFEbQLlCy/Sh+7rU8
-         aCDQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUgwexyaM7NyY8LrbYDFCrEb/LW3kMNa4Fz28PcDZMEEFnxzNoXMAZmhfz92X1K7/uDIm8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw67nxHwaT30BVIKJ/jCutXYHqph1fU+GafjLDA0wwLN4cxMqv5
-	5tHVL1e6ddi+TVrRwbbBNAKf4JDNJJY7ggvqjSPWaVXaAydiaJZ/5z411cPPH3Ofi6gJUPQd96f
-	Ra7FQ8yH04nLL2ONk/tZXYz7ixk0=
-X-Gm-Gg: ASbGncsT/Dovzc5HC90O/Oi1wUmPFQvSuInm056Rcp+2J6HIPERV5NSMqwzOSVYrhZg
-	QGAn80C9ua4Ed1W6TradoGibedTa+JMFH4pqg2OjkOH5YnO5tmsP7n2HUvVaKeW54P1eAs47KzP
-	8t5ZYvfC2uLs7GigpGcavX7QfZNwyVDzEz/c1URxY=
-X-Google-Smtp-Source: AGHT+IGqPAYDWd52JTsP0UCf/D1go+KBhcPn9hdhVVFJZZvntCApYDE3Qj9+adGK7jdTV8Ca0YAffBUQvXsxDOAaR4s=
-X-Received: by 2002:a17:906:594f:b0:abe:cba1:2432 with SMTP id
- a640c23a62f3a-abecba127e4mr123370066b.49.1740418306151; Mon, 24 Feb 2025
- 09:31:46 -0800 (PST)
+        bh=W8uEd6tpBoIeoK68NwSqpbu1NSQ9y5QOHMXTKGKqeZo=;
+        b=crTLrFC3KyGrXfPB/k90uCdfQQICBV6dIa5pvKg+OH4jMTmy6O+yyUj9IxYwBqDmBv
+         UQloKhZCfNyA+Rzdm30wBfjMYO3/+e6tgK14bEex9RsY4EC615j2FMqtUFENj5Ij5K+y
+         vcn7aKDYKGWbmSARkVkO+zUBeO5g6eFB/E7Ca7pGs/dBtHL52oJ6iLsdTEEBrbdRKO9G
+         mIDFCR4KDbUKaDHP+Udkxda2HnAQO0MkEdU+E9VLtgazhfEO/FgzdiTbqed76hTGlw7j
+         3kU20qD69M+v3XsolVY9aiQDYuK8NUHIhAyJLM7df+aBvD3oAsqmkX3ehimRs2GyXBBL
+         7wbg==
+X-Forwarded-Encrypted: i=1; AJvYcCXL2mvfOHZ5h8uQCQGgXGgoW8jXy8Rx0SNLGVKwa6GFHc+00RRJLc1UWVsWguvqFLBibVY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzMZD4unur8x6spHfY+n4hiKOwf40olqBjW77OwtFmlrC4/Opem
+	R+nb6s4enL8lLbKWss7G3ya8ihvv92RkCmgQGM7utKpdZveDpUTh3ZgIc6xc/JmZrWp5FHvTWa+
+	T8C3vONTKMQPlEzMY+yxcAPHM8GSDAj5pzEU=
+X-Gm-Gg: ASbGncvkwjXBz0HPNeSMZTmny2NIAE6iUzCaACixeHVX7Q68xA0GKrm6xZ36TX+fFLt
+	94oTP27dIMtqiSin4dIXMi0LYdqTbB2Tw+hVMni+zh4I6MOjJtm7elpFhANo3KqwvEkcdqlShpR
+	6nolNAvNj8L8Dpkfnmc/4inACQ5KJGYG4s+cUTqFM=
+X-Google-Smtp-Source: AGHT+IHPJuWKpfUY3NP29Qv4XDdE1choOK47wVoApzEvyYROF17aiKRX6Mm2L66EL5Sb/J43EXSg1T8dfjGtOykQfkk=
+X-Received: by 2002:a17:907:728a:b0:aba:608d:4a22 with SMTP id
+ a640c23a62f3a-abc09a09707mr1465373066b.21.1740419437589; Mon, 24 Feb 2025
+ 09:50:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250220151207.3248-1-lucasseikioshiro@gmail.com>
- <70b76a89-00a4-4ba6-92f2-4fb46981317d@free.fr> <xmqqy0xz9nno.fsf@gitster.g>
- <0256f214-795d-42a4-8319-4ba79777face@gmail.com> <xmqqa5ad8vzf.fsf@gitster.g>
-In-Reply-To: <xmqqa5ad8vzf.fsf@gitster.g>
+References: <CANM0SV2XOTQ2Mna1B_sX0EF0ffohcrexh1EO5d4G0=sqdmxQtA@mail.gmail.com>
+ <CABPp-BHObCVqxWuBLgeiWghy5gM8-f_qjwYFdBL+=j1bwtPg_A@mail.gmail.com>
+In-Reply-To: <CABPp-BHObCVqxWuBLgeiWghy5gM8-f_qjwYFdBL+=j1bwtPg_A@mail.gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Mon, 24 Feb 2025 12:31:34 -0500
-X-Gm-Features: AWEUYZmn2cn1rSAj9phWGRQlmyYkkD173Td4WKXLzbMeUQOdruNIbQNkTEf5QHQ
-Message-ID: <CALnO6CC+7fPjD5f_LZ1PFavdpKqAjMDmrFL8azwatYpS=+pODg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v2] merge-strategies.adoc: detail submodule merge
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>, 
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Date: Mon, 24 Feb 2025 12:50:26 -0500
+X-Gm-Features: AWEUYZnK0MT4BunQyMj4mpcWBajnj1DtePquymY3FhiRuOzr97xo4nlnRlbj6oI
+Message-ID: <CALnO6CDpEfugTReF3j_3jefaDg2-YtMB-2XrKg07wD4cofHK7g@mail.gmail.com>
+Subject: Re: Diff rename detection performance issues
+To: Elijah Newren <newren@gmail.com>
+Cc: Devste Devste <devstemail@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Feb 22, 2025 at 5:18=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Mon, Feb 24, 2025 at 11:31=E2=80=AFAM Elijah Newren <newren@gmail.com> w=
+rote:
 >
-> Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
->
-> >> And of course a 6-line paragraph is not large enough to put in a
-> >> separate file to be included.
+> On Sun, Feb 23, 2025 at 2:30=E2=80=AFAM Devste Devste <devstemail@gmail.c=
+om> wrote:
+[snip]
+> > Funnily enough, when I have a merge commit that contains only that 1
+> > excluded file, it's the same behavior.
 > >
-> > I'm a newbie here, so I can't have a strong opinion on what's
-> > the best solution for managing those files. But, given that:
-> >
-> > 1. `ort` will sometime replace `recursive`
-> > 2. the last change in the content of this document was in
-> >    f5a3c5e637, three years ago, basically copying the content
-> >    from `recursive` to `ort`
-> >
-> > it looks like to me that creating another file only for this
-> > paragraph would harder to maintain than that duplication.
-> >
-> > I mean, if eventually `recursive` is replaced by `ort`, one
-> > will need to remember to move this paragraph to
-> > `merge-strategies`, as it will be used only in the `ort`
-> > documentation. On the other hand, given that this document
-> > haven't changed since the introduction of `ort`, this
-> > duplication doesn't seem to me that will be hard to be
-> > managed.
+> > 1) if there's only a single file in a commit, why does --find-renames
+> > cause a slowdown? There's nothing that could have been renamed in that
+> > case (probably the same for --find-copies)
 >
-> A relatively easy way out would be to have the full warning in the
-> 'ort' section, and then only add only something like
->
->         For a path that is a submodule, the same caution as 'ort'
->         applies to this strategy.
->
-> to the 'recursive' section.
+> I'm not sure what this has to do with the above; you seem to have
+> switched tracks.  If you have a commit whose toplevel tree has exactly
+> 1 file, and you're diffing it against some other commit with an
+> unspecified number of files, [snip]
 
-Indeed, that seems preferable to me (based on a similar conversation
-about a different documentation change in another project [1]).
+I'm only mentioning this in the vein of Elijah's requests for
+clarification: the wording "only a single file in a commit" is
+something I often see from newcomers who don't yet understand that a
+commit points to a tree of the entire repo, but the diff between a
+commit and it's parent might show only one modified file. (Sometimes I
+think we experts encourage this when we refer to that diff as the
+commit [1], [2].)
 
-[1]: https://github.com/racket/racket/pull/5144#issuecomment-2563172012
+Now, Devste's posted commands indicate they may have more Git
+experience and didn't fall to this trap, so Elijah's interpretation of
+"a commit whose toplevel tree has exactly 1 file" is perfectly
+reasonable=E2=80=94but we'd probably all like to know a bit more to confirm=
+. I
+originally read "if there's only a single file in the commit" (with my
+newcomer lenses on) as "if I only changed one file before commiting."
+This is also partly based on a (mis)read of "a merge commit that
+contains only that 1 excluded file" (perhaps OP meant "modified").
+
+[1]: https://jvns.ca/blog/2023/11/01/confusing-git-terminology/#commit
+[2]: https://jvns.ca/blog/2024/01/05/do-we-think-of-git-commits-as-diffs--s=
+napshots--or-histories/
 
 --=20
 D. Ben Knoble
