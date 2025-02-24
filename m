@@ -1,82 +1,92 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971EC157465
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 16:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75984264A76
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 17:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740416005; cv=none; b=QKSt0eWJxeHX3NTs5zIecQmlweoYMigi5yIeZjfFUSR8T2toNjKuhMMLgGrMTte4UFR0TJCe/CnExtqKZSMqosBWiUTxy537lbmEhDiI0W132ENIeTZKaK2Z4X50SosB+VL+MONI7nt3FUFhk789Mu6KSkzPn30qpK8EjejyYW0=
+	t=1740416489; cv=none; b=R4DXdxAmEJfcz/CREWjKmxQX4J+YJhR70D9Cb3/bQTM1iG6mVSH3xPTBEgK+E1p1eduvWThgMT2RcYIAjAGCY62dQQQh5Puxh9RqGFRUPq0i8cMLau05nqARUuV4PW1KmUuark/WWd2BlC93kvwOFC1l5IWdohjGdPN5GhBkTgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740416005; c=relaxed/simple;
-	bh=U7KrPqVuQXt6i2gwyASj6nA5CKZ00GtDuDPLfqbbvOo=;
+	s=arc-20240116; t=1740416489; c=relaxed/simple;
+	bh=kJxNOSHgVYHp1OSfG/twea8qBm/grMDj1qzZz1B4GIA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IS2ocp2xXst+Ioa4PkGICuuuSIC/I7r+n58YVrS62F2ApefHgo1jVn4Q5ILPZK/CSXvo540ij0Cv4+dyhTGtfacV6ZTc7ReVdK8bfM2I1uIrotsGKMZ9LPqfbLtkiXLk1RrJ8FySi3n+EXsp5V7YRGi3wdbteIuVZtcljh6A7rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uuUvZQ+7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zi6VArxw; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=Z5qy/uKcCTYHaAnlTyYdewhYYr/QlSPjyWfbmJ28Gz2yw3NH+yA3pRAtEareiMkyfrY9NxF+Gj2rbYsIfG5yC7HBjjZx1kuFnKhNppgdUYrKj7Cf7eNiUFyNk2Bn4KPsGzbwTeG4IX1AncdItuJwn1GAKhSliY+/YRRyThlBTNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XOMKuTLW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xGyZhrrO; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uuUvZQ+7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zi6VArxw"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 968F813800F6;
-	Mon, 24 Feb 2025 11:53:22 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 24 Feb 2025 11:53:22 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XOMKuTLW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xGyZhrrO"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 511011380F0D;
+	Mon, 24 Feb 2025 12:01:26 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Mon, 24 Feb 2025 12:01:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740416002; x=1740502402; bh=oWvuMkWqVU
-	v4OXztqv0RV/Fn2NfWyiDgLuf5C7sSfY8=; b=uuUvZQ+7G+wm7JmKbNF9neARe9
-	sP11UeixodNbNeJcgn07ncQJcP8/IlWbbtzo8SlclDwk8kHBnYlzlbqfw/YxjPS7
-	qzpGDfV+I3Fzc4+HcYLYXBbRZleOOhOFeSy8EPFi5hw6XsN+e9iIKcUiQFl4z8VP
-	C34caYBb5S4JyQJSLFLUD6FjABAjNwcQJYUpCcaYJLza5nVht5z1f0sD27hJNTag
-	xAz2sOdrSCcJ0BjiuIYBGMie4esYSfQdIj/Rdu3lBa0i0PIOLMaappIFAnqDucz2
-	wiFi/XAi+LiZpyyINysN9y90ACiyqJtp1jqEhRawdGptN5jlR47lIP1F0Mhw==
+	:subject:to:to; s=fm3; t=1740416486; x=1740502886; bh=KK7a7PsrTa
+	nvV08qxvpvSBB0wolp9y580+Wk7zDhK1U=; b=XOMKuTLWuty57q4+YY5otKCfcM
+	kk9Kp64PHeMv7XD3PyTAWnUdTvAvQTMzxYRCSZtuBbwQ5LaPHDJnUIY24nxPz8hX
+	JPXssfofezT1//7X0YB9YhTt7ldzP62tpWHATlPhirx7XbeZXNh4tP5uDpn2FjLY
+	h2sMXRgPtws2rLSXi+SxV1IInvLa2RMJHS9PXtwJGVdKIl+Yr3qs3Kdus6LM1m8g
+	9F+2AE3wyRONeH26ZY5LByWCEpSp6EaURLHbPa+8bSvei1uOxB4ljM5h1ewELQSL
+	4NKoXs+iy+fMHbmNSHWo7eb3BoSg4HWxgIe7ggVu4ChWzuv9qupb10JIOc9A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740416002; x=1740502402; bh=oWvuMkWqVUv4OXztqv0RV/Fn2NfWyiDgLuf
-	5C7sSfY8=; b=zi6VArxwpDO6zuTkbRhq0ruDga50dt4C0XJCgz7h2pThQ6sgIlM
-	5zst9ARW7pu5PosCa9EEC1lyNcCJvolBAGk8vWHY1k92B90qKXCID+hxY2JPZvTr
-	7v/K9gF2JnmTrcI/9tjVF2giLcHcf45HCauw/+PBw7k+6gw+2kGB4e3NmHV0uhVp
-	938TFCwRyoXdui4R8nvhP8/c/WvqkqrTZLeRqh6x/f6VRKy9MqfaJ7GdlsYK6cEH
-	hr8X98vMj6rVLT4PSGiNFVrvAXkQrVlcfC3YedMk7APInMxHpbuE0R4n5MAFReCU
-	syZB9Dh7DOH2Ldfnqve92ltDqex1KBe64nQ==
-X-ME-Sender: <xms:AaS8Z5ZKcrzXQnbfUkOC0hVnASqeP4HoHET7-Km3khTB0pHp4TcBUA>
-    <xme:AaS8Zwai6gnf_YjCbco_vjqnFrSbSYmkjbRhHSYqFIoIwzyfquRdSepht76O8Vhm5
-    DklO8Eey8X64KvnLQ>
-X-ME-Received: <xmr:AaS8Z7-4YI8eUsz5T3ISPbTTH76WQgOALGsl_7y_rDJxzYni2XYbop7vmZCpcPGIyzzsw9tAXsNBV1iwuuxrFywhJ5_9MyAvHMMyyoA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejleefvdcutefuodetggdotefrod
+	1740416486; x=1740502886; bh=KK7a7PsrTanvV08qxvpvSBB0wolp9y580+W
+	k7zDhK1U=; b=xGyZhrrOdw6Osg57qU8TCdKrrODqyqlGqKn/BGTUCSkCzUUvBTd
+	ufJCHVT02vzaTHy39/Dh882d/XcSFAk9zAcKx9FVBrUuezkMPOcCHG5WVJ49c8OY
+	Qjx22OendBRvUT6tSMEmO3ZVnjAlsJafTjftsLqkvISS1gTJXbExqJ2Z/sExKz87
+	dms8DUFObupGUjQi6oHYGRUxadQHcwogXVLYfKYUea5lLJw+N6RCBOlPblTD8zMT
+	f5I9zmuKnVhhpVn5g1Ex8ZsopNaa0kr7+pZcgsRRYdW0do2ZZWBuw2NE853lxpFO
+	bK/AZUn9UKEr6beiDTySGQa4rTeVqLDDuJw==
+X-ME-Sender: <xms:5aW8ZwFjeolIuZiTS3YaeJmRdNlDdPMihyV1uASisHtj1LUj90VKGw>
+    <xme:5aW8Z5Up8egc0F2wvdYPTRtX0jtl3QIcKaqwbRMjxmDJxT5OPQZBhcSBqiBi7epAL
+    xaA-ulC51PTqqiFbQ>
+X-ME-Received: <xmr:5aW8Z6LqxlzzzWIGanSEwnsvnk-S0A64E8oDNza8sCW8LcfDS1Bkoiqp8yFlupBF2tr_p5I7tjBgzVU083UdpHysqpSra3Bhq6nwQsg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdejleeffecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
-    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepiihhihihohhurdhjgiesrghlihgsrggsrgdqihhntgdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
-    uhhrrhgvrhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:AqS8Z3qvISnfEDJED9bwV1RIOdSxpRBE59nK2wVMoJSyeT0jOz4xXg>
-    <xmx:AqS8Z0oXu5OIxi6Est5ME8u1wwzqMj0rQRfFhy-C_T9tTSCIL18r6g>
-    <xmx:AqS8Z9QCtCIbK6YGfL95Ph7gg3e7nFgp5pGoGssfAlCsSkzDLunnew>
-    <xmx:AqS8Z8o9PWc3CO8NUSJT0tos2GP6bHIXz74Wn11tCs2jA4HMO3ercg>
-    <xmx:AqS8Z9n7aBFAt5boTz3CrF6sqfBqqNoIAXuGspWTIJ1-Fe39LeW8059c>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeduuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtih
+    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
+    eplhhukhgvshhhuheslhhukhgvshhhuhdrtghomhdprhgtphhtthhopehnvgifrhgvnhes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
+    htohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthht
+    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrh
+    hushhthihtohhothhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:5aW8ZyHfukWcVVPUm-UINCjDgf0OTkn9CooHx5Ru3aGCByMYj71mbg>
+    <xmx:5aW8Z2VruCGdTT95JU9wG2CZqlgOneOalHP456dfdIPlNnMB_W_Eww>
+    <xmx:5aW8Z1MUBSTLWX8DD1xf1lMO5VtaC6j-mrRo27AkNnFffCM9iqP_0Q>
+    <xmx:5aW8Z93KjQ9VFHqefJOpmR2d3NwzrjG0yFMwwTyXgQxzAm1Y5gXWlQ>
+    <xmx:5qW8Z9PhpMPJZKLANnBTSkiSDSkRLxWuOMc8mlPnasCHRVM4LYT-YFlH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Feb 2025 11:53:21 -0500 (EST)
+ 24 Feb 2025 12:01:24 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Cc: git@vger.kernel.org, Ruggero <giurrero@gmail.com>
-Subject: Re: [PATCH] doc: fix typo in it.po
-In-Reply-To: <CAFXmTzjQuZn_b-nQHkYo7KHs9__gc1ctoLx0KioTcPEkqak+9w@mail.gmail.com>
-	(Ruggero's message of "Sun, 23 Feb 2025 21:56:25 +0100")
-References: <CAFXmTzjQuZn_b-nQHkYo7KHs9__gc1ctoLx0KioTcPEkqak+9w@mail.gmail.com>
-Date: Mon, 24 Feb 2025 08:53:20 -0800
-Message-ID: <xmqq5xkz708v.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Luke Shumaker
+ <lukeshu@lukeshu.com>,  Elijah Newren <newren@gmail.com>,  Jeff King
+ <peff@peff.net>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  Taylor Blau <me@ttaylorr.com>,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v5 0/6] fast-export, fast-import: add support for
+ signed-commits
+In-Reply-To: <20250224142744.279643-1-christian.couder@gmail.com> (Christian
+	Couder's message of "Mon, 24 Feb 2025 15:27:38 +0100")
+References: <20210430232537.1131641-1-lukeshu@lukeshu.com>
+	<20250224142744.279643-1-christian.couder@gmail.com>
+Date: Mon, 24 Feb 2025 09:01:23 -0800
+Message-ID: <xmqq1pvn6zvg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,37 +96,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Ruggero <giurrero@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> This patch corrects a minor typographical error in the Italian
-> translation file (it.po).
+> Luke Shumaker sent the first 4 versions of this series in April 2021,
+> but it looks like he stopped before it got merged. Let's finish
+> polishing it.
+
+Nice to see an old topic resurrected.
+
+> fast-export has an existing --signed-tags= option that controls how to
+> handle tag signatures.  However, there is no equivalent for commit
+> signatures; it just silently strips the signature out of the commit
+> (analogously to --signed-tags=strip).
 >
-> Signed-off-by: Ruggero Turra <giurrero@gmail.com>
+> So implement a --signed-commits= flag in fast-export, and implement
+> the receiving side of it in fast-import.
 
-Jiang, should I take this directly to my tree, or do you prefer to
-take care of this as part of the upcoming 2.49 updates?
+Nice.
+
+I haven't thought about this topic obviously for a looooong time,
+but I wonder we may want to have an option, which is independent
+from these --signed-tags/--signed-commits options addressed here,
+that allows the person who performed the import to attest to the
+result by adding their own signature on tags and commits, whether
+these tags and commits were originally signed or not.
+
+Obviously totally independent, orthogonal, and outside of the scope
+of this topic.
 
 Thanks.
-
-
->
->
-> ---
->  po/it.po | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/po/it.po b/po/it.po
-> index c4af156c80..e43f0fea5e 100644
-> --- a/po/it.po
-> +++ b/po/it.po
-> @@ -17602,7 +17602,7 @@ msgstr "Controllo la ridenominazione di '%s' in '%s'\n"
->
->  #: builtin/mv.c:185
->  msgid "bad source"
-> -msgstr "sourgente errata"
-> +msgstr "sorgente errata"
->
->  #: builtin/mv.c:188
->  msgid "can not move directory into itself"
-> --
-> 2.48.1
