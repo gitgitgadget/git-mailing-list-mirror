@@ -1,72 +1,72 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322A9802
-	for <git@vger.kernel.org>; Mon, 24 Feb 2025 13:08:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6F25248865
+	for <git@vger.kernel.org>; Mon, 24 Feb 2025 13:37:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740402515; cv=none; b=ht01potnH1IiexrgAn3RnhqZX0+9UPuJa1wpzKHxh6motUjpi4leY4A6Z/CFalO8I8yw4wpqjy6YW8GGte2VNX62R1BlA43s6TsGaeABZWyyrxZnq7ae70lKKfmDyXvISllABRAIgDTDyzzdTr8cGSPn8+0rtu3vWNPYOxi6xrc=
+	t=1740404254; cv=none; b=pg64a3Udv4e1b1HdHixWla0cz7OUeUo4zrqZ2fQxLN+N5961zMU+/v8fO3JThemWlxvsJw1rdsmTcmHD0wLDNc3HheszMbZ62pRHA0p8qisYlEUaPJa/K/lfQq1RzeJGMDHdwv7m3TWue+aq31bjujHmBfPjZ3gEtoU/HMMuQi8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740402515; c=relaxed/simple;
-	bh=cxKkNFS/Opb+x28D6Q2JGgTPUWkYB0yuB7LU/o1JdjM=;
+	s=arc-20240116; t=1740404254; c=relaxed/simple;
+	bh=FgRLGl6l7p1baqq69NXhEnVh3K675DRVpMNACrMT1sE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ru/dQjVi4lcsaRd0FnuiZ9L19o2QzGzQKlUni5RQ2wMN+WL+a11VOkWwb2/tQv2U/YazoQimBtNCxbeFwPA53hnkdwr8xYhU8bWhayTYT6CrWRfsaYY40tW8OXy7Q8OUvMCZNDZizu9+7UnvukYdNRNUrksMVuL3XCd1hHv3huE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FaTI1y63; arc=none smtp.client-ip=209.85.214.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=hnUkOm5nXoqzXq5HYLhLTHpbpreXkjcL8dWMEbx2x7ko6xT5YTvNPBjZIF9ASXkvT0EaKF2rbbGRShRHSQ+XEFzSLV7RWmT9TMWDGUDv6AGU8BU+i4wGucwFUjetiIIXM6+V31T01VTEdBNw34RR9RNN8l/S9jARdNfLwb+pJKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ka4TejOv; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FaTI1y63"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2212a930001so3435535ad.0
-        for <git@vger.kernel.org>; Mon, 24 Feb 2025 05:08:34 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ka4TejOv"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-220c665ef4cso74474875ad.3
+        for <git@vger.kernel.org>; Mon, 24 Feb 2025 05:37:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740402514; x=1741007314; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740404250; x=1741009050; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZrWw5G9dT5tJhs4+LobY/LtQwR3opsFMZvW6R5TBtJs=;
-        b=FaTI1y63BQPrWzfDrtA/xZy6vvMs54GL4bKGHG9lW2uiliakit8rcXSn4CARFP+mhy
-         idvFy0m3KbuLYf5CMqY2bkRFA7udlml4nWGNWtcBZZSaLxn8+1CT/w3vvJC1jmJ2vyYH
-         JHvKPHTnvS4cabFsdcK9ebrSSnVtQzSH+7qCQ1kWaCzcYMxAEA4EOAdwWgDNLJ4HnxWE
-         u/L1chrUFVrZ5VNbkTNgY0/RrUBqFjlMCz8sH59oDccGSsgMwqowQPlL/6NfHwQKx/rm
-         h4l1dSsDe1HM+bXCUl/85c7GtUen45DLlGiwJXqzZyPAJ0okMaCEEFKA7WraO3J8zIfe
-         Fpug==
+        bh=mRCFlPuLaCrlHyA010fUJADxuDVAPqAxejK8cQBwSyo=;
+        b=ka4TejOvNzsCYpBs+1FWKCCzyLbAwo4aXwrrE7aHxmPGd6oHvb+tzqwC7trhv5yTzy
+         tXokbq4yGA1EiLEyLkL+Gvm8Bd2mBIih3ydOkdVee3ECTsRTo7DV2VU1uFU+AqmkH74e
+         EaThNRdPOcsK+QcvO5e9smNNxP8QEGtCrFrggWhuXy/GjJA2R9gcJMkAEQxLCfb0wIcO
+         KBxcqN82K+Tp5VU+m6YBSf4lwvH3yNZz2jAv5S3vsb71mC24bJKp6p9ds2SHMJQJfYix
+         UrwM1G6+SUZO700F7Lh66koyXuzJKVfyHD0EA7EnH/E9xImSE1GpyQAP6ktUbNU5WZx+
+         vKqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740402514; x=1741007314;
+        d=1e100.net; s=20230601; t=1740404250; x=1741009050;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZrWw5G9dT5tJhs4+LobY/LtQwR3opsFMZvW6R5TBtJs=;
-        b=d3z5mPJdZm4jg+3JlueSqf3riMQBZ2RCaba1+i9Hw+WcxUlfJK9z2ZITZ3ZKb4Tc6r
-         6CKKwNujiRd56bOJyktoI3kUfIIeoGn6N8C0SxwZ6Y4sDZ8IqlntqGc4hX58tpmmjlHI
-         11cNsVQIMywsFO1j6Hg/3oU8HYqUJ7Soa4EQrYukQYDaYog06JeP7cTK43fpitOtknWG
-         aJsvSk5OcL/meWWDr8gCW6Czwe7hSU+N6b9rxZA4NVsKQ+y9OP1/MCANWrko21cYCHiE
-         EYFHvIcPbtfTQMcnSm4h25rEPf5m+JFEs3PBGAG6+ByqYJ2ZWYX6g60Eqf5qA0tZP66F
-         /RYQ==
-X-Gm-Message-State: AOJu0Yyla/RfcGvQlD84s8QXUh81LHf2unxmPpuSkFbkg7XxapwyiSyp
-	ZmW2RWdgvSq2Uv5M57m5WsiXISMeb0CNV9mLFZhlb4ZY/Ofc0etC
-X-Gm-Gg: ASbGncuPZp8hTDlwbX4WDyVMhlXpJWVc1jZA3zp7u3rMnqITenBwkQwJfkNHSk2g4nH
-	KkPjxuq+jwyM5gMOXsMnhqQuMPtwRvMEUxgHDrGTDuXZu9EHOkLLG5qrObAXUmmyXoheDcSfcVL
-	CiD1u8fcsRUSxwgYSbbGoQl45Ntl+tZUFKU03yU3PPBLvKsyMKAcHsfckfrn44ApbPKiQQ5B26d
-	neT6e42zBjTi2oTRZAlreFw/IM/uuQGW754Gf1mGVyqrp5Dv7ssrtT45s4qvOnrH3HktEjOQgrN
-	OM+kIcYW5K8MOxpGrr7TOw==
-X-Google-Smtp-Source: AGHT+IFQzp5xYS7a9RT3S98nwupTjz5eZYnc/K23Wai6ajtD7Q/GUnCqqVCtwqopnXMqoSS5xVVYJQ==
-X-Received: by 2002:a17:902:eccb:b0:220:ea90:1925 with SMTP id d9443c01a7336-221a1148e99mr234709845ad.35.1740402513569;
-        Mon, 24 Feb 2025 05:08:33 -0800 (PST)
+        bh=mRCFlPuLaCrlHyA010fUJADxuDVAPqAxejK8cQBwSyo=;
+        b=b48Uym2EJebmNJh5Zy2akTYduAkPheAYGsc8XW4sZIkiJFIsVBx5YTZpl3B4V6ebX7
+         bELPjNtYjVHjCccoTmnLr+PDo3a0boLe3QoqLQU6+zjLByDFn50foh+8mOK79+BZldMu
+         PH9Gt5gc4jkpvujerWeBrVm5nBet1SH2MS8DB3JdlV2Fjb3PX3DdSZ+nUReY75E66zw0
+         BMNEAQbFJ8KmBm3uaalS8fZUuJcVZukopI7OJk5X3ujqF9iMe5EmFGndEQ/agd5Qi3M5
+         68Oojf69cIRg3GCj+t2QHu81vxVtNQZJ2EtFAWA39opaTSVABrEo+50i51rQm1HYNBe7
+         cNrg==
+X-Gm-Message-State: AOJu0YytaqB7xbGsYuoheeP/xak1H1Yw2mliKFAwEA95bVU0kHAZs+7U
+	0VT/RLSJ8I/aKgDy1rm0ZcT6QCwv0NR9FCzVlqE9jXd18rcqvdIW
+X-Gm-Gg: ASbGncsFrIkOlAnaMyUtWFm+ldUgsnZPGUEKomuWugiX8aNKnqODYoNtuCpTTSnAYfQ
+	sjOd/gh+WPFhEHgoGNLCy1R+jUIDSnJabQsi8kEPoADtO9gSXbQx360zxCnjojM9WAWNY0PpgHK
+	+2om1R4F9dmpE35pXqBDxibXB95QJRDsDWXf63T25/w4I78q3X6UAKzbgSA16txypvYazfxZg1f
+	M/i3YRFJG/+9G8roeFO1w++vqOj3U+YL3mtrhAL1rKzp/rWDDc0nCq9kc6GfUKRaTalTiGT6uKf
+	SlvESBPaZTj0EEEN1oVG5w==
+X-Google-Smtp-Source: AGHT+IFwv/AhbDRitzrxTSlGerI/x+coHND7odQW2VAdh9ogA/FzvIGSs5ccUlkOQHW6VdK1aBR+CA==
+X-Received: by 2002:a05:6a20:2591:b0:1ee:b8bc:3d2e with SMTP id adf61e73a8af0-1eef3c55d28mr26592921637.8.1740404249850;
+        Mon, 24 Feb 2025 05:37:29 -0800 (PST)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-2211eafd20dsm130873185ad.182.2025.02.24.05.08.32
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-add286bc8e8sm16691860a12.39.2025.02.24.05.37.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Feb 2025 05:08:32 -0800 (PST)
-Date: Mon, 24 Feb 2025 21:08:40 +0800
+        Mon, 24 Feb 2025 05:37:29 -0800 (PST)
+Date: Mon, 24 Feb 2025 21:37:36 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 10/16] refs/iterator: provide infrastructure to
- re-seek iterators
-Message-ID: <Z7xvWPjHjppNp167@ArchLinux>
+Subject: Re: [PATCH v2 11/16] refs/iterator: implement seeking for merged
+ iterators
+Message-ID: <Z7x2IEdRP4fzdXMo@ArchLinux>
 References: <20250219-pks-update-ref-optimization-v2-0-e696e7220b22@pks.im>
- <20250219-pks-update-ref-optimization-v2-10-e696e7220b22@pks.im>
+ <20250219-pks-update-ref-optimization-v2-11-e696e7220b22@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,110 +75,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250219-pks-update-ref-optimization-v2-10-e696e7220b22@pks.im>
+In-Reply-To: <20250219-pks-update-ref-optimization-v2-11-e696e7220b22@pks.im>
 
-On Wed, Feb 19, 2025 at 02:23:37PM +0100, Patrick Steinhardt wrote:
-> Reftable iterators need to be scrapped after they have either been
-> exhausted or aren't useful to the caller anymore, and it is explicitly
-> not possible to reuse them for iterations. But enabling for reuse of
-> iterators may allow us to tune them by reusing internal state of an
-> iterator. The reftable iterators for example can already be reused
-> internally, but we're not able to expose this to any users outside of
-> the reftable backend.
+On Wed, Feb 19, 2025 at 02:23:38PM +0100, Patrick Steinhardt wrote:
+> Implement seeking on merged iterators. The implementation is rather
+> straight forward, with the only exception that we must not deallocate
+> the underlying iterators once they have been exhausted.
 > 
-
-Out of curiosity, is there any benefits for reusing iterators for files
-backend?
-
-> Introduce a new `.seek` function in the ref iterator vtable that allows
-> callers to re-seek an iterator. It is expected to be functionally the
-
-It's a bit strange that we use "re-seek". I think we just want to see an
-iterator. Isn't it? Don't worth a reroll.
-
-> same as calling `refs_ref_iterator_begin()` with a different (or the
-> same) prefix.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  refs/iterator.c | 38 +++++++++++++++++++++++++++++---------
+>  1 file changed, 29 insertions(+), 9 deletions(-)
 > 
-> Implement the callback for trivial cases. The other iterators will be
-> implemented in subsequent commits.
-> 
+> diff --git a/refs/iterator.c b/refs/iterator.c
+> index 757b105261a..63608ef9907 100644
+> --- a/refs/iterator.c
+> +++ b/refs/iterator.c
+> @@ -96,7 +96,8 @@ int is_empty_ref_iterator(struct ref_iterator *ref_iterator)
+>  struct merge_ref_iterator {
+>  	struct ref_iterator base;
+>  
+> -	struct ref_iterator *iter0, *iter1;
+> +	struct ref_iterator *iter0, *iter0_owned;
+> +	struct ref_iterator *iter1, *iter1_owned;
+
+We would always free `iter0_owned` and `iter1_owned`. That's the reason
+why in the below code, we could drop `ref_iterator_free`. Make sense.
 
 [snip]
 
-> @@ -368,6 +381,16 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
->  	return ok;
->  }
->  
-> +static int prefix_ref_iterator_seek(struct ref_iterator *ref_iterator,
-> +				    const char *prefix)
+> +static int merge_ref_iterator_seek(struct ref_iterator *ref_iterator,
+> +				   const char *prefix)
 > +{
-> +	struct prefix_ref_iterator *iter =
-> +		(struct prefix_ref_iterator *)ref_iterator;
-> +	free(iter->prefix);
+> +	struct merge_ref_iterator *iter =
+> +		(struct merge_ref_iterator *)ref_iterator;
+> +	int ret;
+> +
+> +	iter->current = NULL;
+> +	iter->iter0 = iter->iter0_owned;
+> +	iter->iter1 = iter->iter1_owned;
+> +
+> +	ret = ref_iterator_seek(iter->iter0, prefix);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = ref_iterator_seek(iter->iter1, prefix);
+> +	if (ret < 0)
+> +		return ret;
 
-Here, we need to free the "iter->prefix". We don't know whether the
-caller would call `prefix_ref_iterator_seek` many times for the same ref
-iterator. So, we need to restore the state/context.
+We could simply use a single `if` statement to handle this. Is the
+reason why we design this is that we want to return the exact error code
+for each case?
 
-I want to ask a question here, why don't we care about "trim" parameter
-which is declared in the "prefix_ref_iterator_begin"? From my
-understanding, we may want to reuse "trim" state in the original state.
-So, when we want to reuse iterator, we only consider about the "prefix"
-but leave the other stats the same. Is my understanding correct?
-
-> +	iter->prefix = xstrdup_or_null(prefix);
-> +	return ref_iterator_seek(iter->iter0, prefix);
+> +
+> +	return 0;
 > +}
 > +
+>  static int merge_ref_iterator_peel(struct ref_iterator *ref_iterator,
+>  				   struct object_id *peeled)
+>  {
+> @@ -242,12 +261,13 @@ static void merge_ref_iterator_release(struct ref_iterator *ref_iterator)
+>  {
+>  	struct merge_ref_iterator *iter =
+>  		(struct merge_ref_iterator *)ref_iterator;
+> -	ref_iterator_free(iter->iter0);
+> -	ref_iterator_free(iter->iter1);
+> +	ref_iterator_free(iter->iter0_owned);
+> +	ref_iterator_free(iter->iter1_owned);
 
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> index 74e2c03cef1..3f6d43110b7 100644
-> --- a/refs/refs-internal.h
-> +++ b/refs/refs-internal.h
-> @@ -327,6 +327,21 @@ struct ref_iterator {
->   */
->  int ref_iterator_advance(struct ref_iterator *ref_iterator);
+We free the internal pointer but not the pointer exposed to the caller.
+Make sense.
+
+>  }
 >  
-> +/*
-> + * Seek the iterator to the first reference with the given prefix.
-> + * The prefix is matched as a literal string, without regard for path
-> + * separators. If prefix is NULL or the empty string, seek the iterator to the
-> + * first reference again.
-> + *
-> + * This function is expected to behave as if a new ref iterator with the same
-> + * prefix had been created, but allows reuse of iterators and thus may allow
-> + * the backend to optimize.
-
-I somehow think we may emphasis that we want to reuse some internal
-states of the ref iterator except the prefix. However, I am not sure.
-Just think about this.
-
-> + *
-> + * Returns 0 on success, a negative error code otherwise.
-> + */
-> +int ref_iterator_seek(struct ref_iterator *ref_iterator,
-> +		      const char *prefix);
-> +
->  /*
->   * If possible, peel the reference currently being viewed by the
->   * iterator. Return 0 on success.
-> @@ -445,6 +460,13 @@ void base_ref_iterator_init(struct ref_iterator *iter,
->   */
->  typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
+>  static struct ref_iterator_vtable merge_ref_iterator_vtable = {
+>  	.advance = merge_ref_iterator_advance,
+> +	.seek = merge_ref_iterator_seek,
+>  	.peel = merge_ref_iterator_peel,
+>  	.release = merge_ref_iterator_release,
+>  };
+> @@ -268,8 +288,8 @@ struct ref_iterator *merge_ref_iterator_begin(
+>  	 */
 >  
-> +/*
-> + * Seek the iterator to the first reference matching the given prefix. Should
+>  	base_ref_iterator_init(ref_iterator, &merge_ref_iterator_vtable);
+> -	iter->iter0 = iter0;
+> -	iter->iter1 = iter1;
+> +	iter->iter0 = iter->iter0_owned = iter0;
+> +	iter->iter1 = iter->iter1_owned = iter1;
 
-Maybe which should?
-
-> + * behave the same as if a new iterator was created with the same prefix.
-> + */
-
-This statement makes me a little confused. I think there are something
-difference between `seek` and `begin`? For prefix ref iterator, we will
-pass "trim" when calling `begin`, but for seeking, we don't care about
-"trim". Although the prefix maybe the same, but the internal state may
-be different.
+OK, we would assign `iter0` to `iter0_owned` and `iter1` to `iter1_owned`.
 
 Thanks,
 Jialuo
