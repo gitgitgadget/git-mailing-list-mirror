@@ -1,37 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7A3257437
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 06:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E50257422
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 06:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740464908; cv=none; b=Oz/WCAdFIhHZu6H+TDlMw6bzoKezh5yNxdDaBsQIOXCrh8iPibu8nI6/xFmCXzqse7KJ2NGW79foRu7dB/IF/sBaxC+YAscAXXCqP01Xmxat2ACGHiAvIqMIWdiT+2FPYdDs+i+HHE7hXeWsdLdHUT1vQrLVPyrtjJtXwim1SX4=
+	t=1740464944; cv=none; b=g6Rdj100Mxci/xJyv4nZYUpkJpQNu+dgXcFM9Wa67HFrhhwHwe4XlA5yNnl9KMQHQRPQtc2fPaDYY+SdcsCdVl38f+mcNr6Pr2sfZLNNsWdyXKIbSkXPqKPvnZ9vDbsSLUObQFku1xGY0GuDaoxQqWMc8MDho3w+4y8pY/UP1a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740464908; c=relaxed/simple;
-	bh=a3+CFjYIABbUrhwimUaUcdaaSZ1z4vwFkMCNIxb3Jy4=;
+	s=arc-20240116; t=1740464944; c=relaxed/simple;
+	bh=s1akJXVmihyq7Ut+m85y2/lZ6g3Y0TiPxOG1hBp6UpU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rjP8ai97hJ2j6FinH+Lb7CCKpK05xrOXcQdzPbI+wE8LxwQzYALXoiQ857H7DRaikvRDYLRAhVluBSC9/+RQqWQYPdzmK13naNJShKMqMbGpHl9WZjEsFmJ7xnUIh4p3M/6Vsmoj3tSfiV6e58hLnrg6SdHfQ1tB5lIR9UPoIuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OgzCTUQF; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=gsgdK8+hGiEDU+yD8e259evUN51TX8l98GbSwhAI3gFuZT3xapPclBejKGbG0Nf7OEb/nwnVCgjQGYZjfBXvTIOnaQ4rGu7mIyS/JuDexX1Ko8qZk3txcX+8iqhu0UOfQ2fVog0ts9mB8t8L5bSuOzj3HylikUUvpnmCxWe0GG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TMI/moOJ; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OgzCTUQF"
-Received: (qmail 24560 invoked by uid 109); 25 Feb 2025 06:28:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=a3+CFjYIABbUrhwimUaUcdaaSZ1z4vwFkMCNIxb3Jy4=; b=OgzCTUQFe7Xhre+C9RIvBUsfrRolbRgl3i6K4Qx1iCi366DKMuCeQ8tgv6wOO3c2DRLGteK/ZH6Bb69JAqjnIgl92ybzLUhEn3PUy44mjUAuc6wqCMCfbkHQGrgpKV+Byy0loIRTCOSC5EuMbPTSCl4aNb9Jxo8fL7yME3k04acMhJQDbF3fB4n2dZmJmGhZOtFSMNzNzils/JSUGKIh169jHBkxdW2pIXpOJw6KU/Z02fWOQxPV82xfB4g0gtFVjzzq9gbHpao2Fb4/LJLidHOj+BjVWxo4bhcU2ebpVI5FHC32G3y/hxlqFCsLkbW/I+qsQs6bTxW6b/+w7hC/ew==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TMI/moOJ"
+Received: (qmail 24570 invoked by uid 109); 25 Feb 2025 06:29:02 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=s1akJXVmihyq7Ut+m85y2/lZ6g3Y0TiPxOG1hBp6UpU=; b=TMI/moOJYzxPe+LKBqYa1qhmv+fjAzJIQMUj9kRkoax8KiBiH2+uGwQ0isLr01qG1l9OjVJjdJ1BooirEEbqeXyIgb66j0f3H0KpC2FpazRsFHljkwXGDU6tUbj1dCYYgeUZAZTMy4wRxI++F2xCsLt/+LcU8lMUOecTRlQ9CWoLPbL7yJE+PE8ZgLONpQPdMA0H3lzGM8xx/K0z0AH0jX6D59m1s6zp+1tHpNrOnBC/hJIBqq3lIsJPH4KBlEdE3Q/M9XwxiVAenfL9LwXaAXjeXDhdlQ++Xgp+pLBBIUYT1TJXj/l3LgmvQAaWYM58SvBJ7T+B+QLlIMNahw21jA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Feb 2025 06:28:25 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 25 Feb 2025 06:29:02 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2672 invoked by uid 111); 25 Feb 2025 06:28:24 -0000
+Received: (qmail 2692 invoked by uid 111); 25 Feb 2025 06:29:01 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Feb 2025 01:28:24 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 25 Feb 2025 01:29:01 -0500
 Authentication-Results: peff.net; auth=none
-Date: Tue, 25 Feb 2025 01:28:24 -0500
+Date: Tue, 25 Feb 2025 01:29:00 -0500
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
 Cc: Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 01/10] loose_object_info(): BUG() on inflating content with
- unknown type
-Message-ID: <20250225062824.GA1293961@coredump.intra.peff.net>
+Subject: [PATCH 02/10] unpack_loose_header(): simplify next_out assignment
+Message-ID: <20250225062900.GB1293961@coredump.intra.peff.net>
 References: <20250225062518.GA1293854@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -43,89 +42,63 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20250225062518.GA1293854@coredump.intra.peff.net>
 
-After unpack_loose_header() returns, it will have inflated not only the
-object header, but possibly some bytes of the object content. When we
-call unpack_loose_rest() to extract the actual content, it finds those
-extra bytes by skipping past the header's terminating NUL in the buffer.
-Like this:
+When using OBJECT_INFO_ALLOW_UNKNOWN_TYPE to unpack a header that
+doesn't fit into our initial 32-byte buffer, we loop over calls
+git_inflate(), feeding it our buffer to the "next_out" pointer each
+time. As the code is written, we reset next_out after each inflate call
+(and after reading the output), ready for the next loop.
 
-  int bytes = strlen(buffer) + 1;
-  n = stream->total_out - bytes;
-  ...
-  memcpy(buf, (char *) buffer + bytes, n);
+This isn't wrong, but there are a few advantages to setting up
+"next_out" right before each inflate call, rather than after:
 
-This won't work with the OBJECT_INFO_ALLOW_UNKNOWN_TYPE flag, as there
-we allow a header of arbitrary size. We put into a strbuf, but feed only
-the final 32-byte chunk we read to unpack_loose_rest(). In that case
-stream->total_out may unexpectedly large, and thus our "n" will be
-large, causing an out-of-bounds read (we do check it against our
-allocated buffer size, which prevents an out-of-bounds write).
+  1. It drops a few duplicated lines of code.
 
-Probably this could be made to work by feeding the strbuf to
-unpack_loose_rest(), along with adjusting some types (e.g., "bytes"
-would need to be a size_t, since it is no longer operating on a 32-byte
-buffer).
+  2. It makes it obvious that we always feed a fresh buffer on each call
+     (and thus can never see Z_BUF_ERROR due to due to a lack of output
+     space).
 
-But I don't think it's possible to actually trigger this in practice.
-The only caller who passes ALLOW_UNKNOWN_TYPE is cat-file, which only
-allows it with the "-t" and "-s" options (neither of which access the
-content). There is one way you can _almost_ trigger it: the oid compat
-routines (i.e., accessing sha1 via sha256 names and vice versa) will
-convert objects on the fly (which requires access to the content) using
-the same flags that were passed in. So in theory this:
-
-  t='some very large type field that causes an extra inflate call'
-  sha1_oid=$(git hash-object -w -t "$t" file)
-  sha256_oid=$(git rev-parse --output-object-format=sha256 $sha1_oid)
-  git cat-file --allow-unknown-type -s $sha256_oid
-
-would try to access the content. But it doesn't work, because using
-compat objects requires an entry in the .git/objects/loose-object-idx
-file, and we don't generate such an entry for non-standard types (see
-the "compat" section of write_object_file_literally()).
-
-If we use "t=blob" instead, then it does access the compat object, but
-it doesn't trigger the problem (because "blob" is a standard short type
-name, and it fits in the initial 32-byte buffer).
-
-So given that this is almost a memory error bug, I think it's worth
-addressing. But because we can't actually trigger the situation, I'm
-hesitant to try a fix that we can't run. Instead let's document the
-restriction and protect ourselves from the out-of-bounds read by adding
-a BUG() check.
+  3. After we exit the loop, we'll leave stream->next_out pointing to
+     the end of the fetched data (this is how zlib callers find out how
+     much data is in the buffer). This doesn't matter in practice, since
+     nobody looks at it again. But it's probably the least-surprising
+     thing to do, as it matches how next_out is left when the whole
+     thing fits in the initial 32-byte buffer (and we don't enter the
+     loop at all).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
-I found this because I was tracing the code path after
-unpack_loose_header() returns to verify some assumptions in the other
-patches.
+Not strictly necessary, but I think it makes some of the reasoning in
+patch 4 easier.
 
-It really makes me wonder if this "unknown type" stuff has any value
-at all. You can create an object with any type using "hash-object
---literally -t". And you can ask about its type and size. But you can
-never retrieve the object content! Nor can you pack it or transfer it,
-since packs use a numeric type field.
-
-This code was added ~2015, but I don't think anybody built more on top
-of it. I wonder if we should just consider it a failed experiment and
-rip out the support.
-
- object-file.c | 2 ++
- 1 file changed, 2 insertions(+)
+ object-file.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/object-file.c b/object-file.c
-index 00c3a4b910..45b251ba04 100644
+index 45b251ba04..0fd42981fb 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1580,6 +1580,8 @@ static int loose_object_info(struct repository *r,
+@@ -1385,18 +1385,17 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
+ 	 * reading the stream.
+ 	 */
+ 	strbuf_add(header, buffer, stream->next_out - (unsigned char *)buffer);
+-	stream->next_out = buffer;
+-	stream->avail_out = bufsiz;
  
- 		if (!oi->contentp)
- 			break;
-+		if (hdrbuf.len)
-+			BUG("unpacking content with unknown types not yet supported");
- 		*oi->contentp = unpack_loose_rest(&stream, hdr, *oi->sizep, oid);
- 		if (*oi->contentp)
- 			goto cleanup;
+ 	do {
++		stream->next_out = buffer;
++		stream->avail_out = bufsiz;
++
+ 		obj_read_unlock();
+ 		status = git_inflate(stream, 0);
+ 		obj_read_lock();
+ 		strbuf_add(header, buffer, stream->next_out - (unsigned char *)buffer);
+ 		if (memchr(buffer, '\0', stream->next_out - (unsigned char *)buffer))
+ 			return 0;
+-		stream->next_out = buffer;
+-		stream->avail_out = bufsiz;
+ 	} while (status != Z_STREAM_END);
+ 	return ULHR_TOO_LONG;
+ }
 -- 
 2.48.1.709.gf47ae731ff
 
