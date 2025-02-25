@@ -1,131 +1,114 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00D91FC7D5
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 12:33:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA30266EF4
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 12:53:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740486841; cv=none; b=HmGAwRN6ZIn1nL98mNaCKrlbaA5mRF8WOP3NO/VPVe3nz2B+uptErxTDNs0OLHs86JW7BPFSK7V2iO/cLHSScFG7yhkQg9hnVOWlH4ovTLsVhfTBK8O5cCgXY2CXjG2p+PP7ItOs18ftf+f8yNtFUW47M+9WrHmC3n4rgafZHMo=
+	t=1740488014; cv=none; b=oV0xfANfHczUqJEoxWiVLllduLkxM3sTi2DjTqrBtIn/VcjSnyt/06Xje4GGio8wViXhdoqFIvcl/TT3sXryMBHw6SAx9QtbAFsLWfNt57WiYrCt0abrDhew3/C5XfWenvUSrEfyKbmuVQyCwTg7nuLp/U1TbZ+0z/ut2el4x0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740486841; c=relaxed/simple;
-	bh=tlXexNhMEqwlOYDNd+w8n3DSe4TrJQAIS9fSDRlPv6k=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l1el9aTrxrFzRA6YPmd4v+l+7+atKJ2jH/DtICmwpW1nS+Ad7s/PHL2N+YNvL/R6EeMjhxHjJXFf1c28u3nwMuERGPZETBXwb/qcMivoG7cNJ1VG66XhgMOFYFmGqcZznhAPTx3h86BKhPOw4beD6dLpgrunTvBA+zUv3YkP73Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A9eFdgyu; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740488014; c=relaxed/simple;
+	bh=6w3VGmCi403XYusU3ObMucQAGvJEORTd9az5al0pYU0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FfwjWjt0Q526NAPN17BVF+RokOlEt2ZAFVkjmQ29xyUZ0AUVwxUUaZh0dzA/6h2SL/vz3jJ9rNcvf8XmV9zsLXgpLLzkggQqvnILi18GOKYcRf5OjCYKvaJLsXzXsCePVJ0axutw+gWLfxlTMDCALSv5EM1+kgs8uQbyG0cGpiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V00+gmpa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F6bj3ZyT; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A9eFdgyu"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-221057b6ac4so104841695ad.2
-        for <git@vger.kernel.org>; Tue, 25 Feb 2025 04:33:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740486839; x=1741091639; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gTXa2K9xGk9lk/UzQYar52lCJhXF6TdqqbcgNK5d2QM=;
-        b=A9eFdgyuAZngZE0ipcj2jGhHiBHQB0jeZC6UTvAzj5UctELiwx5FFzrvfy1GETnl6p
-         sxoejmrC2EsSYvOfiXu9/hpbCt5NJW5zafLXsFwRWa/3iVy1yHH6ByO3WEb5GTCDRTDr
-         lE4xPf7fot9d1ewfWtN3m/+dwGgZxp2ixl9AdAIXWegHsLpwG7XUD60Sdx/zg2iyHxs+
-         A/peQ6d9goM/sfIgGkTxkYgKUDXmyCJjSzpa08iFYrszGPHJt+MOpxGqFmNrfFMLdLnv
-         DtQesS87sosLXpRxdwJj69kgaOuOTjWGbtjMLlfsXk0OPy8GRIi3T/UmXJNbdbQRRcFO
-         /H7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740486839; x=1741091639;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gTXa2K9xGk9lk/UzQYar52lCJhXF6TdqqbcgNK5d2QM=;
-        b=sFDq6mgNwB3CqMVRCgTB6z5fIU+QzWyhLlCdTv9W/C3dDOupeqrwDtci4yaQ8mqDIu
-         Lg/lNakJiDASNlez72SHy9YjnenW2clnzlClsY0VLEOLzrsx1alvTISfQGNgL5zC7PeK
-         Fketf458hNtDhho1Ec8j9jVjxOkmOe6o13D2qJsY3J+H2c1F9NSbrbMWjENp3QnrCDnn
-         tfI7blm5/8CYTdtq4J6+2H1x34HMFd/KoBYF2jhLysmEbj5bDAPKyp8baoZFLHrx8SV+
-         X3mSpFgLBAQOp9C2DzbPcIw4OI6E0r3v6enLS/LAMPSmx/F8h9kHeaeXocQ3vrWo4MDR
-         lCFg==
-X-Gm-Message-State: AOJu0YxtUSH+eGo0iIltPU/EJbRF3IJYa8KG+DEK3dD0Kcw+gp158D0+
-	RJJT7HcDHjPNiIXoFauCrYs3Q5eB/5chY+xPJIRvVQVwynZR6QkZ
-X-Gm-Gg: ASbGncvcXtd6PCHB9q+CMIcXUaKa7uTIKrX2LTJM5kDC68Ovg8bgd4+TrzXGUEfVcJl
-	KXLkQ6f/fj+N/jsqOogThN8OMc4UBcAQBPQAKEwcQTnOIPGC4MM+mHu2Wy7z/FeOHdmdoj7X3IH
-	iy7JeCS9S7UUv2AT2aQdSNVghQVIHMPvb5sQkteWQw2oV5TJejR/BpFww5QpitzWP3dJNA6Plxz
-	m9wQ79kZ9R+EDVhzDUWe4KWiIlWYdovMk8JSWKfhiazh+SXSH2c53fxwRZEGgzYQ2kenAjytyFx
-	PszNTFL33GJt0yBaufiMAw==
-X-Google-Smtp-Source: AGHT+IHep3qr3Pu/S/69Z2hge3am03Pw9Cn946HZk1tKfw3SZfbgBofjD37Mss0diM+c92qMu9iFog==
-X-Received: by 2002:a17:902:da8f:b0:220:fe50:5b44 with SMTP id d9443c01a7336-221a1103431mr299864045ad.31.1740486838989;
-        Tue, 25 Feb 2025 04:33:58 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-2230a0009dcsm12954225ad.49.2025.02.25.04.33.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 04:33:58 -0800 (PST)
-Date: Tue, 25 Feb 2025 20:34:06 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v5 4/8] packed-backend: add "packed-refs" header
- consistency check
-Message-ID: <Z724vnaRqmPAGByt@ArchLinux>
-References: <Z7NU5fZfc8vfSvZ0@ArchLinux>
- <Z7NVdhM61rhjAHtW@ArchLinux>
- <Z71-1xa_o39IAo6A@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V00+gmpa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F6bj3ZyT"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BE05F25400A5;
+	Tue, 25 Feb 2025 07:53:30 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Tue, 25 Feb 2025 07:53:30 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740488010; x=1740574410; bh=0jTp+AGI0j
+	aEiyjTPy2PH/aCF6zmDfdvKmnXb4KElX4=; b=V00+gmpaQSxjfJlASehO1mtq20
+	EBwrKR6O3Y9YEce/JD2hFoovpfh1ctilkqPhDWZx2JBO5tI+BVCo+N/mLi7QUJA+
+	rjBktwlESNZdopW9UUc36REs8MIFCf85QtWQTEYKIT1U7N3U97EEkWF6bivmpftk
+	xjd749hj6uKXruytbObmE68j8fXkbUHQxRtXBiVOn8TPelLCVrRnPM5XKvR3yLXI
+	LODpDD06rjAODoh+Pag7PHchwj1Nc5Pe6hkuZkD1IajVXQoc5RyV0HtSPxM9jMuG
+	w4faOB6+5nJvVxgLdWl9lgyQl6t4zKSEcA4O9IeAtcE2DEOns2WM+5T85alA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740488010; x=1740574410; bh=0jTp+AGI0jaEiyjTPy2PH/aCF6zmDfdvKmn
+	Xb4KElX4=; b=F6bj3ZyTL1hVyou3Q/XAWFkkfePnRt6GzvOSX2bdp2YptIQb4VJ
+	5Z4GMVW24ygdpwHV9pXHni0H9PcwWn3yG+pwJ0ol3wBaEoUh4jWKcK3qNnvfpI0V
+	rniHhl/03i3oPKYWW8Wt0K/zelUtJDlzlFZgYOJimFj+rznybOWBnOrQOuFQArIP
+	w/WrGUPHcLaGL/NzK4okBx2y2LJrynZ5a3SL7vlXcpYWUN8SvA1QPfIJ4bCifSCE
+	y59MXesUxD2/HTYxvRvMyjG02sytN9P7c2X1IiMToKpypLilOctlOcajzhskuHsm
+	bo/i3Si0cTVO0LjNVIX+PqJDvvbQexnJweQ==
+X-ME-Sender: <xms:Sr29ZyB1fO7Pk8NPB7fqe2rPebVoatIn2oQtGE-dbe-6rscQJ7WFEQ>
+    <xme:Sr29Z8i6rl1vfk9E3AcXiRYZWHEgSeK-NfLm4OUcMFjjRS9I9t6U6o2_JWufGe061
+    LZyPiNV130HnnTccg>
+X-ME-Received: <xmr:Sr29Z1mP9XZVpWnvEUIaw6zWpKhIYbaD2awt-PKDy1riY_clBoxqKPyYs2b7eX8wSwG6TUpTtFPJ8tM3qx1UQfQpgwD8zue-TT8g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekudejhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughr
+    pefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevuc
+    fjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgv
+    rhhnpeegueehleevveelffekgeehvdfhveefkeduudejheehgeekteeuteeufefgudehfe
+    enucffohhmrghinhepghhithhhuhgsrdhiohenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjvghllhih
+    rdiihhgrohdrgedvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Sr29ZwxrR97xDtJm0xBpmW8CnpGzhBYjWi_BqJkZJUkAa6Z5tWd6iw>
+    <xmx:Sr29Z3Qg6SHX_zw7rJadDxe2phzAdHVfVeG8c23m5UvhelpxTGShsQ>
+    <xmx:Sr29Z7alQecJq8BKYqZSkfMq3sf2QyjANmhByoMMqYj37143BL-4Sw>
+    <xmx:Sr29ZwSkOnxYYmoAsHrxvV0Xs9sLs06uhd2YKJEslHCGlejXbGRRqQ>
+    <xmx:Sr29Z2FicUS8jnK5GaTUUjpxiH6ePd5q9Dat51i4AMu4HyLd-Tdayt4I>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Feb 2025 07:53:30 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Zejun Zhao <jelly.zhao.42@gmail.com>
+Cc: git@vger.kernel.org,  karthik.188@gmail.com,  newren@gmail.com,  ps@pks.im
+Subject: Re: [GSOC][PATCH] apply: address -Wsign-comparison warnings
+In-Reply-To: <20250225032444.9901-1-jelly.zhao.42@gmail.com> (Zejun Zhao's
+	message of "Tue, 25 Feb 2025 03:24:44 +0000")
+References: <xmqqv7sz76zl.fsf@gitster.g>
+	<20250225032444.9901-1-jelly.zhao.42@gmail.com>
+Date: Tue, 25 Feb 2025 04:53:28 -0800
+Message-ID: <xmqqseo2kwxj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z71-1xa_o39IAo6A@pks.im>
+Content-Type: text/plain
 
-On Tue, Feb 25, 2025 at 09:27:03AM +0100, Patrick Steinhardt wrote:
-> On Mon, Feb 17, 2025 at 11:27:50PM +0800, shejialuo wrote:
-> > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> > index 8140a31d07..09eb3886c3 100644
-> > --- a/refs/packed-backend.c
-> > +++ b/refs/packed-backend.c
-> > @@ -694,7 +694,7 @@ static struct snapshot *create_snapshot(struct packed_ref_store *refs)
-> >  
-> >  		tmp = xmemdupz(snapshot->buf, eol - snapshot->buf);
-> >  
-> > -		if (!skip_prefix(tmp, "# pack-refs with:", (const char **)&p))
-> > +		if (!skip_prefix(tmp, "# pack-refs with: ", (const char **)&p))
-> >  			die_invalid_line(refs->path,
-> >  					 snapshot->buf,
-> >  					 snapshot->eof - snapshot->buf);
-> 
-> I know that Junio pointed out that we should check for a trailing space
-> after the colon. But do we really feel comfortable to tighten the check
-> like this now? If there was any broken writer of the format that does
-> not include the whitespace we'd now be unable to parse their output.
-> 
-> I scanned through a couple of third-party clients:
-> 
->   - libgit2 is fine and always writes the space. It also expects the
->     whitespace to exist.
-> 
->   - JGit does not expect the header to have a trailing space, but
->     expects the "peeled" capability to have a leading space, which is
->     mostly equivalent because that capability is typically the first one
->     we write. It always writes the space.
-> 
->   - gitoxide expects the space to exist and writes it.
-> 
->   - go-git doesn't even seem to care about the header? Dunno, maybe I
->     was just not able to locate the relevant code.
+Zejun Zhao <jelly.zhao.42@gmail.com> writes:
 
-I have searched the code. The go-git implement "git pack-refs" in
-`PackRefs`. go-git never writes header for "packed-refs" file.
+> Thank you for explaining. I'll separate the desired changes from this patch to 
+> another since the topic will be different.
+>
+> By the way, should we remove the idea from the microproject list now that we 
+> may not want it?
 
-Thanks for this wonderful suggestion.
+It is not like we do not want it, I think.
 
-> 
-> So yes, we should be fine, and the fact that other implementations
-> expect the space to exist indicates that being more thorough here is a
-> good thing. It might be a good idea though to split out this change into
-> a separate commit and then provide more reasoning _why_ it is fine,
-> including the above info about alternate implementations.
-> 
-
-Yes, I agree that we should split out this change. Let me do this.
-
-> Patrick
+If you read https://git.github.io/SoC-2025-Microprojects/ (the first
+entry) carefully, it does not say "find anything that -Wsign-compare
+warns about and squelch the warning by using widest type common
+among the quantities involved in the expression the compiler warns
+about" at all.  Most specifically, it does *not* tell you to achieve
+it "by using widest type".  You would squelch the warning using the
+most appropriate type, which may not be the widest one.  In the case
+we discussed in this thread, it was line number whose type was the
+platform natural integer, but mixed up with other size_t things that
+caused the compiler warning.  Blindly using size_t to squelch it may
+not be what we want, but that does not mean we do not want to
+squelch it by doing something else (like, by not bringing "size_t"
+quantity into the picture).
