@@ -1,84 +1,83 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D55B269CEC
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 11:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769F2267B0D
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 11:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740481694; cv=none; b=EzKPd05RLK1/v9Zs3sF+Fa2woiSXIDwM+Fx24S0BKHkA3YL4nZ3gdUukKmHcCjKy4PxjD/ILm6Gg30k/VtYu2i3hxHLcuxHO8pW6cKumRpSldSHAlSM2+Waai24pJs0lEcsAwkTrebsvbqox5DsP5PPSe49A16W2y/byqKnx6sA=
+	t=1740483753; cv=none; b=eqUi+inI+Y5K/l5DYoyFH1uSvtuoe4M0Peo84oOMiLsMyqFuaj5cqVxMiMHU6SGPRoc2YSMk+yL8UcIhEnuMmhaxlLKQB2sB9PDT5bzM5akOdxUD6olLvQ2n6M76iAb0+amUPNnNkgv1Wtvk0oZd1XpgrfyFM9+UPuI7lfsIOdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740481694; c=relaxed/simple;
-	bh=kcv33ozEIYI6culQmK7m+0udo8wC52YDUdeDPjR9AeA=;
+	s=arc-20240116; t=1740483753; c=relaxed/simple;
+	bh=VaCWNUi5y/wh8wiVnZo0h7bxXRyr6V+GiUdiI3NUhnE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DdvlYfkmFbzf/YxuSIymPG2PezE03U8F3X16bgYTB6W1zM6gwD3Am6ND2R771KEQ+ro0BnNoAMefPmIbgN+WcgjE8lFWF5K6eO6+iH/55Q8fwlH1Pwu9SpAQykrQ6mWnbrNJT1c1B9g5sMBrAPACPqV5pnbsDG2PGTDDCA3QtQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KPOu6vXA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a8n5TyLj; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=CEqy9xr/q/KH62bP7hPhQ3BVebdRaKjjijIRQrDym/18k5quAwXwv2sLp4x7Fm7qIumqDrhc9A01nYYPAKz9/zkn5ICDU9zWCcWKufv0lnVbqRziRLr0dW7BEdxp8s8ufg9VRDTqUL0za1aAQmQUPrcQRQ6XCd/rVBmrcRWF8IA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F4AgQNSV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wCUYueNc; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KPOu6vXA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a8n5TyLj"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 431B8114010F;
-	Tue, 25 Feb 2025 06:08:11 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F4AgQNSV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wCUYueNc"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8552511400E2;
+	Tue, 25 Feb 2025 06:42:30 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Tue, 25 Feb 2025 06:08:11 -0500
+  by phl-compute-11.internal (MEProxy); Tue, 25 Feb 2025 06:42:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740481691; x=1740568091; bh=7xKp3DAZRW
-	o0q6/j/Lj2v7Qf3wABsNB1MoF0RnnG0Zw=; b=KPOu6vXA7gdzK1BwG5KbMlq+JZ
-	ixlrJ1sEQsfMorV2REmiWDI2sr8hXzOjqEsmGX8VztYQybpgyo3JL49r+MJJHidr
-	LV7pz5khsQfwVdki6gS1AzZ6n+zeI3FWacM8LctTTEVPp5z2YdHa1A4AvCLmZvHI
-	IZA+8fkbu/s7vFlxFImKMgDF60DLtEHa5zCiKYB0rZ7i8Q6XVS7STE8n8XCP9qMY
-	Ou7vGDz8SzyNBrrisK2JQSr84nsnPWEKmgvHDN0IMfrUeRRXTp+o4EZTnHMW8vv9
-	vIXFcsd0kFCj6HBSURoMG7+0Pq4LmS0n2lVpxjVf3GBjiPTrTPpuRJQSKm5g==
+	:subject:to:to; s=fm1; t=1740483750; x=1740570150; bh=/YWlloh47U
+	siuIgCVjXuv0nO+GDhDT6sFxjB2qAK0Ys=; b=F4AgQNSVXOS309m6widu9B8Icp
+	DxOkY+oUfpsLcj0EP08YzwFz64fOHqxoW7lFEQ+3V03E0XVxzjxY5TEq1X2HoEHq
+	uK4EeLIRE3XHqJjiQlqIgkLJ3EzUowhiLNgWUmqmEz9WoBsNKMGfL48aTY9/Ys8T
+	5UGkwHIShU5HXAdGEGFpfYBc0FWrVbwNaRyACjnINBeDlY1V0CEOmAdvQXvj/gx0
+	zNV+TBJTjufPOBHhbwkO2rAfDgp7oVuZqZerDxjugZMih9n6MFULca7GFtk01Idn
+	TA+CY3zDlWGnETi+WULZM8y1bJCkhmQCeDeZUuBpl/0jV6QAeZZzluSYt4yg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740481691; x=1740568091; bh=7xKp3DAZRWo0q6/j/Lj2v7Qf3wABsNB1MoF
-	0RnnG0Zw=; b=a8n5TyLjHMAepFD/VZlUSKdtjmjwUYBAy9472gtI6jMsQLA/JY8
-	B17gy7oc8O+GNVAnuhuCBpSClc/xcn9p+tKOizivUu/VsLZFaunylGTUgM3yzTLq
-	PCkiheErmdojh/4jEzsNPWw3lsjBzTYAbSUKcUoik7NX4fMTDVpgdaE5Q2PvNqhR
-	fgZDfBV9EHZ1UpviVZdsHv0EA1r8RMzJwSzmI64Ejf6ECGiYDnKd546r9Wq1DFxC
-	K1Deot1FKPgz2W7tlApakk63B/WFOrOYxEYUQIqalTD+iKzQbb2RWfNRrPXDXUhh
-	DA5l++BLMoqguBcwy3VXiF3K86Gbj3wuHKg==
-X-ME-Sender: <xms:mqS9Z1vA7uJXp_uJFoeHGTyhlj8WME9sudGPK7EVBcNL80JNExl9QQ>
-    <xme:mqS9Z-fEU6ZeQcMCameu36zOH8ezn29gkftUe2lCymo520FzpRu-f30QkuXw2RZUG
-    f96WOrYe5gwRow4cQ>
-X-ME-Received: <xmr:mqS9Z4y45uLT9P_YntlbbRcx_wSCNZF4xOHT5UYXE2WvOR8xPyPP_9hj-7oSZITeViwfQ-6iXENFP1fARC1et6GqbW1QgcPvEL-jEla63JwOSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekudehgecutefuodetggdotefrod
+	1740483750; x=1740570150; bh=/YWlloh47UsiuIgCVjXuv0nO+GDhDT6sFxj
+	B2qAK0Ys=; b=wCUYueNcuCpf0UcLbVdjSqBcRYbm0nolsrBv/cfvJ8Bru8zrUIK
+	jsGU6pVedBEmLt04YqAVXze3m4dqZgfxbskt/dzQUh38fguoUIkLGWyT2Npsyd69
+	2krDQ5Lv9rTqPKs12FlRTy4Wr0ZE4r2fAVx5VM/De8vqnIciw1748UgawZltHJEe
+	3GXtFDF+AKhq1CnbPSmthHz7YN/FcUjZEM1gxRv6THAI1zxSpOzWATs0aWmx84L7
+	AZYxEis+ZjQrDAcJJkWbBnYGFKrumooQnnujRYDxz13ewUxdJQ62BqXcXUGzCfI5
+	Sr3T8N9yLFLZV3yxHj6G0RiI0Ke14TXhp0w==
+X-ME-Sender: <xms:pqy9Z5bBCf-QIfgwBobuNMmS_JcjJ5RdBV7p8CMlq-fG7DxYDKgtJQ>
+    <xme:pqy9ZwZNUi2imU8coOO4o6v2JRKiROe2nFz9Px2e0TjALSqGc7LAYaYb2w9gHaVPl
+    Q4l9R83zD9SqgrGkw>
+X-ME-Received: <xmr:pqy9Z7-HJmoYjfbT967cGcz0KxOvsg-BVK9ICSt5xJ4RlfDI1U6upeTHQdwDGOaDzsys8a9Us8Ey_-0DEPbx1AUf0r8CxCN_P6rNwX66sgm0Uw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekudeiudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougduvdefsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:mqS9Z8PH_bMmFLw5VV3bUn8StM0ZI8RBQUf0tINKknetTA2m3xEjWA>
-    <xmx:mqS9Z18EjyKPwjhnXtma-tUs6FMDo-_mCwUN0vnO0zzsbx40BrCttw>
-    <xmx:mqS9Z8XSTB8y28io67D8dDVFTl_UWuEw9SDqbmNvbEOQPWvVH4Dq4g>
-    <xmx:mqS9Z2dNTO8ZVYlXdpat07yNdDBL5ltRhofEAFRhMYP3X4zJvccJGg>
-    <xmx:m6S9ZxaCvbqGsAEEJ8wSI9JY0oPY4KsrRIZIhUOA41QkckQ3KiuC1lZ_>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
+    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhf
+    sehpvghffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:pqy9Z3rSVNtDtYOJxpkCXDvW8uBttRWKgv1hnaqWUYJGZfaj6VGI_g>
+    <xmx:pqy9Z0r-8qhQkALdIAxuGhL6xam9F4MNDG-kHUs1CD3AdG_ttHnfTA>
+    <xmx:pqy9Z9RdC1mgb71C_8NDaDm8hfBu3eS7pi4pxuta9MCB9XCSIoUT4A>
+    <xmx:pqy9Z8r8MOqg1I4NMAZRK86o0PBGMKPUEVwYBTkbL4SGxFQtS51Dxg>
+    <xmx:pqy9Z_UpCqvoPTXez87dUNt78yDHjBtqed7J-YTM3rVJe91hkr12Ym8o>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Feb 2025 06:08:09 -0500 (EST)
+ 25 Feb 2025 06:42:29 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 9e2648ea (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Feb 2025 11:08:09 +0000 (UTC)
-Date: Tue, 25 Feb 2025 12:08:08 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e899b1da (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Feb 2025 11:42:27 +0000 (UTC)
+Date: Tue, 25 Feb 2025 12:42:22 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, jltobler@gmail.com, phillip.wood123@gmail.com
-Subject: Re: [PATCH v2 5/7] refs: introduce enum-based transaction error types
-Message-ID: <Z72kmFUARRSukMBe@pks.im>
-References: <20250225-245-partially-atomic-ref-updates-v2-0-cfa3236895d7@gmail.com>
- <20250225-245-partially-atomic-ref-updates-v2-5-cfa3236895d7@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 01/10] loose_object_info(): BUG() on inflating content
+ with unknown type
+Message-ID: <Z72sns9I-zq_KoNr@pks.im>
+References: <20250225062518.GA1293854@coredump.intra.peff.net>
+ <20250225062824.GA1293961@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,94 +86,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250225-245-partially-atomic-ref-updates-v2-5-cfa3236895d7@gmail.com>
+In-Reply-To: <20250225062824.GA1293961@coredump.intra.peff.net>
 
-On Tue, Feb 25, 2025 at 10:29:08AM +0100, Karthik Nayak wrote:
-> diff --git a/refs.h b/refs.h
-> index b14ba1f9ff..8e9ead174c 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -16,6 +16,31 @@ struct worktree;
->  enum ref_storage_format ref_storage_format_by_name(const char *name);
->  const char *ref_storage_format_to_name(enum ref_storage_format ref_storage_format);
+On Tue, Feb 25, 2025 at 01:28:24AM -0500, Jeff King wrote:
+> After unpack_loose_header() returns, it will have inflated not only the
+> object header, but possibly some bytes of the object content. When we
+> call unpack_loose_rest() to extract the actual content, it finds those
+> extra bytes by skipping past the header's terminating NUL in the buffer.
+> Like this:
+> 
+>   int bytes = strlen(buffer) + 1;
+>   n = stream->total_out - bytes;
+>   ...
+>   memcpy(buf, (char *) buffer + bytes, n);
+> 
+> This won't work with the OBJECT_INFO_ALLOW_UNKNOWN_TYPE flag, as there
+> we allow a header of arbitrary size. We put into a strbuf, but feed only
+
+s/into/it &/
+
+> the final 32-byte chunk we read to unpack_loose_rest(). In that case
+> stream->total_out may unexpectedly large, and thus our "n" will be
+
+s/may/& be/
+
+> large, causing an out-of-bounds read (we do check it against our
+> allocated buffer size, which prevents an out-of-bounds write).
+> 
+> Probably this could be made to work by feeding the strbuf to
+> unpack_loose_rest(), along with adjusting some types (e.g., "bytes"
+> would need to be a size_t, since it is no longer operating on a 32-byte
+> buffer).
+
+I was a bit confused initially as I was thinking in terms of `size_t`
+and `uint32_t` as I misread 32-byte for 32-bit, which is an immediate
+shortcut that my brain took because 32 bit is something you read all the
+time. I don't really have a great idea for how to introduce the byte
+chunk better though to avoid this.
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> I found this because I was tracing the code path after
+> unpack_loose_header() returns to verify some assumptions in the other
+> patches.
+> 
+> It really makes me wonder if this "unknown type" stuff has any value
+> at all. You can create an object with any type using "hash-object
+> --literally -t". And you can ask about its type and size. But you can
+> never retrieve the object content! Nor can you pack it or transfer it,
+> since packs use a numeric type field.
+> 
+> This code was added ~2015, but I don't think anybody built more on top
+> of it. I wonder if we should just consider it a failed experiment and
+> rip out the support.
+
+I certainly do not know and cannot think of any usecase for this. I also
+expect that a repository with unknown object types is a recipe for weird
+edge cases in case they are being read somehow.
+
+I guess we'll know a bit more when this patch series lands? In case
+nobody complains it is another indicator that unknown object types
+aren't being used out there in the wild.
+
+>  object-file.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/object-file.c b/object-file.c
+> index 00c3a4b910..45b251ba04 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1580,6 +1580,8 @@ static int loose_object_info(struct repository *r,
 >  
-> +/*
-> + * enum transaction_error represents the following return codes:
-> + * TRANSACTION_OK: success code.
-> + * TRANSACTION_GENERIC_ERROR error_code: default error code.
-> + * TRANSACTION_NAME_CONFLICT error_code: ref name conflict like A vs A/B.
-> + * TRANSACTION_CREATE_EXISTS error_code: ref to be created already exists.
-> + * TRANSACTION_NONEXISTENT_REF error_code: ref expected but doesn't exist.
-> + * TRANSACTION_INCORRECT_OLD_VALUE error_code: provided old_oid or old_target of
-> + * reference doesn't match actual.
-> + * TRANSACTION_INVALID_NEW_VALUE error_code: provided new_oid or new_target is
-> + * invalid.
-> + * TRANSACTION_EXPECTED_SYMREF error_code: expected ref to be symref, but is a
-> + * regular ref.
-> + */
-> +enum transaction_error {
-> +	TRANSACTION_OK = 0,
-> +	TRANSACTION_GENERIC_ERROR = -1,
-> +	TRANSACTION_NAME_CONFLICT = -2,
-> +	TRANSACTION_CREATE_EXISTS = -3,
-> +	TRANSACTION_NONEXISTENT_REF = -4,
-> +	TRANSACTION_INCORRECT_OLD_VALUE = -5,
-> +	TRANSACTION_INVALID_NEW_VALUE = -6,
-> +	TRANSACTION_EXPECTED_SYMREF = -7,
-> +};
+>  		if (!oi->contentp)
+>  			break;
+> +		if (hdrbuf.len)
+> +			BUG("unpacking content with unknown types not yet supported");
+>  		*oi->contentp = unpack_loose_rest(&stream, hdr, *oi->sizep, oid);
+>  		if (*oi->contentp)
+>  			goto cleanup;
 
-Nit: how about we name this `ref_transaction_error` and adapt the the
-enum values accordingly? We may eventually also introduce similar errors
-for the object database, so it may make sense to have the errors be
-specific. Doing both the enum and changing the name might be a bit hard
-to review, so we could also rename in a preparatory commit. Or we just
-punt on it for now and do it once it becomes necessary, that would also
-be fine with me.
-
-I also wonder whether we really want to introduce `TRANSACTION_OK`. It's
-always a bit of a mouthful, and in many cases one ends up with a mixture
-of `ret < 0`, `ret != TRANSACTION_OK` and `ret != 0`, which may lead to
-confusion. Continuing to use `0` for the successful case should be fine.
-
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index 3247871574..75e1ebf67d 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1672,7 +1676,8 @@ static int packed_transaction_prepare(struct ref_store *ref_store,
->  		data->own_lock = 1;
->  	}
->  
-> -	if (write_with_updates(refs, &transaction->refnames, err))
-> +	ret = write_with_updates(refs, &transaction->refnames, err);
-> +	if (ret)
->  		goto failure;
->  
->  	transaction->state = REF_TRANSACTION_PREPARED;
-
-Do we also want to change the local variable declaration of `int ret` to
-use the new type?
-
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index 2c1e2995de..e1fd9c2de2 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -1255,11 +1255,12 @@ static int prepare_single_update(struct reftable_ref_store *refs,
->  					   "but is a regular ref"),
->  				    ref_update_original_update_refname(u),
->  				    u->old_target);
-> -			return -1;
-> +			return TRANSACTION_EXPECTED_SYMREF;
->  		}
->  
-> -		if (ref_update_check_old_target(referent->buf, u, err)) {
-> -			return -1;
-> +		ret = ref_update_check_old_target(referent->buf, u, err);
-> +		if (ret) {
-> +			return ret;
->  		}
->  	} else if ((u->flags & REF_HAVE_OLD) && !oideq(&current_oid, &u->old_oid)) {
->  		if (is_null_oid(&u->old_oid)) {
-
-Nit: superfluous braces that we could remove while at it.
+Okay. I was wondering whether we still need `hdrbuf`, but we of course
+do in order to continue reading the type and length itself. The only
+thing we restrict is reading the contents of such objects.
 
 Patrick
