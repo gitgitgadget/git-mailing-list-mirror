@@ -1,128 +1,95 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-wr1-f68.google.com (mail-wr1-f68.google.com [209.85.221.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA196267B1A
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 12:07:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92200267B86
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 12:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740485239; cv=none; b=rXw3+6Y/tsiZh6tvPpeAYvEj9KIyj0+qWg8vypcP+BDquNQI2bo281+DpXZq1WZgczHfHtRJ0BmlJQzVmQmjprdOpvSt8HnI+URs/KzAGNYUPlrK0fs17lFblJkvdWmxwobrUeh9VZacpNjn2wwbLoFyvQOTBzLa2f0mUhdwj8Q=
+	t=1740486520; cv=none; b=ntwX02f8DaOLlDGJLQosEWM498T6oDkjnXaQLt+94T3FDVtXgy6QslJ+iOwBMHG2XyNjx3cMLLgynBmHB3Hl+ht8DCLkpdk31stEkordKyfyMVAD2CTa4Z7XSh9xcsA9Vij68GYHD29tByAHcnIhZYlF4WLx91QREgTJBxqamCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740485239; c=relaxed/simple;
-	bh=E2+mf/cx7Ysqaexr/KuWdpSmWMtyMjWm831KgVRmfvY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IZbqsjVtbfb1JVlTW7W8knoHuAp2HAXfysPtaDTwOUQ61BXE32E9vqUXF2+74xZ+zW5HWj0cqQXQDtx3EWJ65MUafPeLjaUZOpdne9gbCD0t4oRIMRGRwRJKyXmYKqgkZyQ6vsEVRcaYt5WTy8dSnB3NbFCju8owzUcz9oO3Avs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y7bE4FBr; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740486520; c=relaxed/simple;
+	bh=Y98Ikb0ZjI3CwHBoiSuldyniNl6TVIxaXL6sz4y5a6w=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=MRuWMRLHGjJ3DucPzQcxfqvr3gui26aWJp3ktRJkAE9n20laggCEbKIcVpdeHyJuipgmHcr4oxWlU5SLMq+TuW8Tlz+UFUO/4N4lx+w0DPBrEmB4pDnrL4/TOjnG2vN2N6qeoTnDFaXRBBHpXZz6GfCaKO5NufAtzLWCzIS9N+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mavit.org.uk; spf=pass smtp.mailfrom=mavit.org.uk; dkim=pass (1024-bit key) header.d=mavit.org.uk header.i=@mavit.org.uk header.b=Zrz6hAg7; arc=none smtp.client-ip=209.85.221.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mavit.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mavit.org.uk
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y7bE4FBr"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-220dc3831e3so100422905ad.0
-        for <git@vger.kernel.org>; Tue, 25 Feb 2025 04:07:17 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=mavit.org.uk header.i=@mavit.org.uk header.b="Zrz6hAg7"
+Received: by mail-wr1-f68.google.com with SMTP id ffacd0b85a97d-38f73e6ed7fso1974902f8f.0
+        for <git@vger.kernel.org>; Tue, 25 Feb 2025 04:28:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740485237; x=1741090037; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eEKMHkBa2dixSaNeqtf2qfjTOjfezSM91iSIe7zcWB0=;
-        b=Y7bE4FBr8abQwqrwQ3yYzmo7r7OEm9UELtJK2VHg5OWRpBmNqVAZaI14EMOZlSXZyR
-         5+Nq5yc3WSlYNHa+grAcqBcItGwUGUE9k4FfmmrL7gZXjM2fw7vllkhiWFtDHKX5d6bk
-         HubZQHzUCH/1hAuWNr4I4ZBpFrFECv5i3Vs1KJomnWcFcomfuhHjIvDvoTz5oWpQkhzs
-         c51L0sNaCegfZJCnkphdZ+UnamxIHa8mjp48WNh//y8Qmmq7ZbJ8aR/BLnPO2zGiCHod
-         +A6jBc8Qz5wIKiHmxBsRcxwf3UBB2uyIe4NyydFzHwXHp08o5tzEoDg2UPv8hWI0vFY2
-         VHDA==
+        d=mavit.org.uk; s=google; t=1740486515; x=1741091315; darn=vger.kernel.org;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dVbDFTgerYdJ9zavV5+DyrAvH+QaiMBhmMRGRcfJEao=;
+        b=Zrz6hAg7A4q6XFyK06J7SydjhbMzrs9DpRigObCVRpFmBLQNw+KKKlnTtEVnTgsYeF
+         Bj9HGNfpfsukmOcscgy38YBZlHSMX5XnFHlC7Z4qAzfv52+YD4L0GhyhDCxaWKKkEucx
+         HDbWFJtLDFDuG/eskdyEnyDVNFmXxGJRg0Jm8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740485237; x=1741090037;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eEKMHkBa2dixSaNeqtf2qfjTOjfezSM91iSIe7zcWB0=;
-        b=mBDWh67t1Y7YkPjYMqR/pdV4hnlyeCF0a4JtseAHepB9JWtVwWNNRe7ymmET0I1h7h
-         75LvE8+aQx91M/s3FIaYiukp1ZqEuDfATTbmY/HsBvQOGWlFL471zPHBlGlAsgyFKVx8
-         DjYnqIDbhHIOaDTzioit+iqayvKsySk9jQL7FKL7d0SgKwwg3J8rVXDRP75hDKT06ic7
-         eVRODfBUDHHZz3U/hTN5RqrR+A7WIP2VvwFpJxpt/WjQyqluszIPVWZyBklg2Kmn8xXZ
-         wKgPg9UkJK8M7tWYne6I7jdIfG6fXiuFmTzOvLCMfkmlWw8JTAmP4qqbu2gKxRUhw3l3
-         i7Iw==
-X-Gm-Message-State: AOJu0YwnMvWU9jwvKeE8+x5zs/KOOiDa1+/szzp0aI+4B3c1BuXLMxtp
-	FdjpjVEWwcCBMOfrHv4rYW2F2y75zabuYv2wDGjcGQyOfIh/Dz1N
-X-Gm-Gg: ASbGncvVysHOhWgIiRITWiPpu4TzFbqFJPY0VV8medszA3k3+LpigCM5NhaAygUyWQC
-	tF/ljJO2mFdX7NjE7sBNJxCoDuJvH7W5PFkATK8yiNpRGKM3V5oiqOrzdbiRNVBfY1i2sc+LCrn
-	5aG4CgjP/ceNbxr8sxdPukh/v2+R1LVDsED+RTvTIxoLgzI8uA4o8mjXEPn9nu7mB7a7fD4VfwK
-	Xned1EraABIO3QCWbp8fM4iXPuMMzMxpobyQ42dv7Vk5jWBsVr1X808d8clrRbYqpumOz2sHTqc
-	rGVxi5BfYEQbWqNbcUbYvg==
-X-Google-Smtp-Source: AGHT+IHUA5xTV3yktwXTlbyj23G5s5n3LWXVU2/ZtO6QH056m6TOCReIEy2nwUiTEespVBE/kDXtGg==
-X-Received: by 2002:a17:902:eccb:b0:220:ff82:1c60 with SMTP id d9443c01a7336-2218c3f4367mr361503335ad.14.1740485237030;
-        Tue, 25 Feb 2025 04:07:17 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-2230a0b0e2dsm12526745ad.245.2025.02.25.04.07.16
+        d=1e100.net; s=20230601; t=1740486515; x=1741091315;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dVbDFTgerYdJ9zavV5+DyrAvH+QaiMBhmMRGRcfJEao=;
+        b=GydBtkYcKv5dVMA8JBcK1qn91Tq/nyrt3bLY7bzmntB7Nf3x8xCOwEno+OTDOmkRC3
+         xJMa7WC5fZ2jUIcPyKhp3Co9ncBpljv83Zy7WvZhaPzwB+hlJYqNV1G5Y3BozeeXsXnZ
+         XLrM8Gte2LykWUKN1YkI93X2NpfnZaudtyF/wRuuiillC/Fy83zmt9nzZjRvCqa2iGlD
+         Dvb4Bmu0tZtaAjIR+RdxdEVNdHyAvOKEojLX+P42cKLLPInbyhYdtwyntN/Gzu09o5Mj
+         zdRsgqWSLFV5bmewizvLJSyXGcagnLN/81hhNrHLJ/uxKpmcuM4YLojBKfZkfpOTHCsC
+         v8/Q==
+X-Gm-Message-State: AOJu0YyxOfB96xd9HZiIqfUzs7NYvME/60sXnOHB09eCfzIWxS3QUOa+
+	DC7911pXLfuuUiT4QOTjROyXZWLo00yQlZ2NX86/NHNY1seO7DTY3Q3ulAaRjg==
+X-Gm-Gg: ASbGncvvuzRaW7jcnBzj3hlAfB25jb8nbiswYo+OzM60oJKx0r0CgxhvaRhEtBdDXN7
+	PqhjBTQzp3Oi4JKqVukZdaVw8naVsRZJLmON306c55KshWIHv+vwLqaz5IvCIp09JnXxVwAzh43
+	bcO544jBUbSoscc1W0D5mNRVfTLfq7XxKDIvj6bI1j8v9nX2Yi3VF1sbseShZQwvZTSEVLrKgFY
+	ZZE/1HJf3GKoYxlF87g0ufRgkpIlT3EwNrweriCJQVt6axdQVIiTU2GZugLPc5/K+avstRErT2v
+	XOvc4oGHmOFGok+98YDVXccbzv0NC0hy9xXCE2KBm4KyR4GlOe0z9vHzY/W+vGPX1uBqKRv7MKP
+	QrdLPfnuIlmOBnqsA2H8TNevleobqUfXv9Wsu
+X-Google-Smtp-Source: AGHT+IFhPi+SKEGizA6Edql8Bx4MzzqGXfhjIH2sk+2p8fWrAQJWNw3DkX/ZwzxEqG45qw42UhW0rw==
+X-Received: by 2002:a5d:64ec:0:b0:38f:277a:4eb3 with SMTP id ffacd0b85a97d-38f6e74f38amr12618985f8f.8.1740486514671;
+        Tue, 25 Feb 2025 04:28:34 -0800 (PST)
+Received: from froglet.home.mavit.org.uk (dudl-14-b2-v4wan-165812-cust3365.vm31.cable.virginm.net. [82.34.125.38])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390cd86ca9csm2126480f8f.22.2025.02.25.04.28.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 04:07:16 -0800 (PST)
-Date: Tue, 25 Feb 2025 20:07:24 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 14/16] refs/iterator: implement seeking for
- `packed-ref` iterators
-Message-ID: <Z72yfF1samLJeSZd@ArchLinux>
-References: <20250219-pks-update-ref-optimization-v2-0-e696e7220b22@pks.im>
- <20250219-pks-update-ref-optimization-v2-14-e696e7220b22@pks.im>
- <Z7yLrKVxCF5qb7gP@ArchLinux>
- <Z71zyrai9f9dPZRK@pks.im>
+        Tue, 25 Feb 2025 04:28:34 -0800 (PST)
+Received: from froglet.home.mavit.org.uk (localhost [127.0.0.1])
+	by froglet.home.mavit.org.uk (8.18.1/8.17.1) with ESMTPS id 51PCSX58034512
+	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+	Tue, 25 Feb 2025 12:28:33 GMT
+Received: from localhost (mavit@localhost)
+	by froglet.home.mavit.org.uk (8.18.1/8.18.1/Submit) with ESMTP id 51PCSW1p034509;
+	Tue, 25 Feb 2025 12:28:32 GMT
+X-Authentication-Warning: froglet.home.mavit.org.uk: mavit owned process doing -bs
+Date: Tue, 25 Feb 2025 12:28:32 +0000 (GMT)
+From: Peter Oliver <p.d.oliver@mavit.org.uk>
+To: Junio C Hamano <gitster@pobox.com>
+cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 0/2] Fix Meson Perl version check
+In-Reply-To: <xmqq8qq3kqyk.fsf@gitster.g>
+Message-ID: <ac54ce2d-a00d-4e9d-2c79-fa6b8de4aba4@mavit.org.uk>
+References: <Z5c4OzzHWOo30Hu6@pks.im> <20250218153043.63535-1-git@mavit.org.uk> <xmqq8qq3kqyk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z71zyrai9f9dPZRK@pks.im>
+Content-Type: multipart/mixed; boundary="-1463811584-680861954-1740486513=:4342"
 
-On Tue, Feb 25, 2025 at 08:39:54AM +0100, Patrick Steinhardt wrote:
-> On Mon, Feb 24, 2025 at 11:09:32PM +0800, shejialuo wrote:
-> > On Wed, Feb 19, 2025 at 02:23:41PM +0100, Patrick Steinhardt wrote:
-> > > Implement seeking of `packed-ref` iterators. The implementation is again
-> > > straight forward, except that we cannot continue to use the prefix
-> > > iterator as we would otherwise not be able to reseek the iterator
-> > > anymore in case one first asks for an empty and then for a non-empty
-> > > prefix. Instead, we open-code the logic to in `advance()`.
-> > > 
-> > > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > > ---
-> > >  refs/packed-backend.c | 62 +++++++++++++++++++++++++++++++++------------------
-> > >  1 file changed, 40 insertions(+), 22 deletions(-)
-> > > 
-> > > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> > > index 38a1956d1a8..71a38acfedc 100644
-> > > --- a/refs/packed-backend.c
-> > > +++ b/refs/packed-backend.c
-> > > @@ -951,12 +954,41 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
-> > >  					    &iter->oid, iter->flags))
-> > >  			continue;
-> > >  
-> > > +		while (prefix && *prefix) {
-> > > +			if (*refname < *prefix)
-> > > +				BUG("packed-refs backend yielded reference preceding its prefix");
-> > > +			else if (*refname > *prefix)
-> > > +				return ITER_DONE;
-> > > +			prefix++;
-> > > +			refname++;
-> > > +		}
-> > 
-> > Although I cannot understand the code, I want to ask a question here, we
-> > we need to do this in `advance`? Should we check this for
-> > `packed_ref_iterator_seek` or in the `next_record` function?
-> > 
-> > Before we introduce `seek`, we don't need this logic. I somehow think we
-> > should do this in `packed_ref_iterator_seek`.
-> 
-> We cannot do this in `packed_ref_iterator_seek()` because we need to do
-> it for every single record that we yield from the iterator. We _could_
-> do it in `next_record()`, but that function is rather complex already
-> and really only cares about yielding the next record. On the other hand,
-> `advance()` already knows to skip certain entries, so putting the logic
-> in there to also handle termination feels like a natural fit to me.
-> 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thanks for the detailed explanation.
+---1463811584-680861954-1740486513=:4342
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Tue, 18 Feb 2025, Junio C Hamano wrote:
+
+> I wasn't involved in the review of the previous rounds (so it was a
+> bit of surprise for me to be listed on the To: line)
+
+Apologies if that wasn’t the correct process.  I am not a regular contributor, and was trying to follow the process described at https://git-scm.com/docs/SubmittingPatches#_choosing_your_reviewers, “After the list reached a consensus…”.
+
+-- 
+Peter Oliver
+---1463811584-680861954-1740486513=:4342--
