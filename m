@@ -1,251 +1,382 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E1326868B
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 13:22:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABF121ABCA
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 14:53:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740489738; cv=none; b=W40VqnbgfnOnnRhbEu5MIV72Mfwyn2rDsn/2GCw96HgYx/ngZYHNX4bn8sPuAqmuwLhigcuKE3PBFq0e+qyJ55Ap/3e98d+9tgu/DzPvUXtT0KW5uvdJAhTQehtHenlVO7GfyU4raVSKX/NUN1koKuXSDi/i+MQfJ6ceJIkw/z4=
+	t=1740495220; cv=none; b=IOxEVcjdaRNmIM7ZhbOLHYCLbaYwSp/A9OhQWZ47M0zQ3Jlp4cy8jSGkSYWyrOSXWO4EFh3a8B1kNqEFn0hSWoD4cQzWhO8qLGU/B4kgpu0AAwM+9zoGS0qqsS3cZMzu+rbt8/fIsiRYNubFQDtvAtGabXE+x8mvASwih+70dr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740489738; c=relaxed/simple;
-	bh=wPaIqmLHwWRvrbBUYCny4tdq5axRNe06u08RN96g8oI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g31ztEN9q5JX849ua5Sb8EBWCDnRY2SsaY8YUlgbXG59WrFVS/+4nI4xIsTIJyZjfvIwQozEwjRltStTTfzuvsE1SjV1ntKvrFfmKOXRNoUZw6XJ5pvjSH5HvipaKf8lwZXyARBLLYKXisP37lqgeroJ2qqgLiwsrkXo6SGSohM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QVFEpe30; arc=none smtp.client-ip=209.85.214.173
+	s=arc-20240116; t=1740495220; c=relaxed/simple;
+	bh=hZETOX8neiQ+XawDtJko9CNlCphBMwEmjp322NudOnA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=nOFek6xLzbEhwctFIjHOB/XrfKO0AH6XG6mffRPOBh6KRckZ5gg2mtTTbKY++bhpl8orkLa6frjw3ng0VmtCAAElcP4EiOErCSzwtD0i00ziOTULf5cBPPznHJxjh2Y2Blxgz3HB8YHgrqH6uBLXj5ST3sqJBjZq1KAog+r6tvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J5FrqUF/; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QVFEpe30"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-220dc3831e3so102038295ad.0
-        for <git@vger.kernel.org>; Tue, 25 Feb 2025 05:22:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J5FrqUF/"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-439846bc7eeso36180855e9.3
+        for <git@vger.kernel.org>; Tue, 25 Feb 2025 06:53:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740489735; x=1741094535; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZdXrc7vhpoU7P9lSCnZihSpFpzQm1O5gdN7HPnT6JKs=;
-        b=QVFEpe30RrX05YNK5L0zZpP2U+Dz4/rDgtH2Y8jU21aPZeB8wKwD2nlCXVXsiWrt8M
-         9osmLqjeZDtpYU+wY/terwT5NOIUUf7tDsUwS2f/YIo1p0eMzSa1+AFI2Br/Fj47L6MZ
-         C/YZn8uET3MU7tCmbSNMCW0Gf6sP47iH74R/gcgcYy8ph8r99gIIvHwZw5r+orcgjCH1
-         NwZh21fR1ViuHbr9nWA9KEXA4/3S4fYN8ixqICdhkJSkSpRooMUbz8uAsn5W2RQKTfru
-         NUdMYT4Z0daF9X2GQTZ1App82hrArl+fwDuxSNkfD3CX0N9E76jWo64v61TMOzHsZefi
-         spKw==
+        d=gmail.com; s=20230601; t=1740495216; x=1741100016; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qCdWtLA4rmXKG3GubRSqb/RpPEh4X0ghQ/RApow8T3A=;
+        b=J5FrqUF/962B3amNaO5JBN364MFhIKk1N2SDDL2wB1uNY3D6YjyzD6rzGdW1KYIn77
+         UJrST8iXXgywx5i9SR4ko1y+6X3ikQYEYrMIBiLVmBtoDLUhrxNleK4LqKt8GuSdqo2S
+         gMk47rtYh2LOiZ0W7R7vAMLP9J01BvoZhcR0uqoosNrbOpyTERNvUjiDlCqumzBQjdkS
+         lmEx6F3wosiS2zTlqSBLbLqunhwo9mWeOw8/TQuTFTbhT7CzMrlqh3aUV2UOn8TOH7Ek
+         R7bt5tCmDt3r9w3jW8iS/6nqRrc4gP3aLy2XznSemFy/TvZhhc2FxhtONSPBHGhEX9lU
+         zfNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740489735; x=1741094535;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZdXrc7vhpoU7P9lSCnZihSpFpzQm1O5gdN7HPnT6JKs=;
-        b=YJ66aoG8F7RQT7/4kFXFZw1MtCQAPELqseYDUPzBcKsLOTNqMtXLdbV5hSsfrIwxzB
-         alFj7JOc6i0Lbc4PULCp7jrpvVtj9oGFfJC5V9BF4SM3nR9C3HIXLiag0YgCXdt13yGv
-         N9ev4I/ioIaF+ClUuMkWG5xf6V4G4kcoUoi1xFI2b8L+DzrsnK6rnxrWEAKSiFBSh8G6
-         i8Op7elFy9qExGweXh2ohuX473U2Pimx8Ptt57TybdAwRT+uUqW/IdWogEF/qfYUep7x
-         rXkMIVTwtGWS/9Eixu8sytdn4t9nvb4uDZj3b9bGjBhFy8x4NP9jEmYVxorTsNuxNLSF
-         kyOA==
-X-Gm-Message-State: AOJu0Yx/SR0JutcH2fNqwV/y58XOjBn53L5TBzUOMiRFqafWJmbkgFXN
-	OBfZh9yl+u0n55TSzMlD3rm9zlHFrl072ZnGUjm/RXGO4Se+SOCQveHKmQ==
-X-Gm-Gg: ASbGncsmyI6HViT8AS6m4JqxCE2thERUTTaXny8qoWkHmwaQwYknDMAAtth/zYzTtrn
-	BVJQgrOwQMCf3UWiSwyqXmDFb0Is2IbTwUuKO98nbqnc6G+4LXfEYKHg17Td8eTOeqbN1J5dLU+
-	p3RiBh7fns/J0T073fd31jkamVC4jDneuLf7tZmcRGUAREX6wpWFgndGlCA8wMgvIMfEENYmC2U
-	jWfU3CuZzxruszYqxVXtv2ypkb+RJqFMS0HCxVU8Igao5sIN1ZvsEBDktQl0ub3XZwCuH8XyJ1N
-	BZFt4fgpV5UxmTDocuJKvA==
-X-Google-Smtp-Source: AGHT+IG1TC6g2AdaMBxDMsS1XHjpSGF3bpq+5YCLl1TZtv1Mk1HULTSeFXvTmQFAQ5Ocb45SlwWQKg==
-X-Received: by 2002:a05:6a00:991:b0:732:6276:b46c with SMTP id d2e1a72fcca58-73425a1fab8mr29216580b3a.0.1740489734951;
-        Tue, 25 Feb 2025 05:22:14 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7347a6f7c1csm1462874b3a.49.2025.02.25.05.22.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 05:22:14 -0800 (PST)
-Date: Tue, 25 Feb 2025 21:22:22 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v6 9/9] builtin/fsck: add `git refs verify` child process
-Message-ID: <Z73EDq-xCm1GO28-@ArchLinux>
-References: <Z73DTwr9RicKMINe@ArchLinux>
+        d=1e100.net; s=20230601; t=1740495216; x=1741100016;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qCdWtLA4rmXKG3GubRSqb/RpPEh4X0ghQ/RApow8T3A=;
+        b=c+axx2qvw+BIA4AhoEiAt8bzUcImBv+nLhZHea2+/KLUSkTDWDj2jJNkcCcfIDWZwL
+         8QVr/KMd50EvcW79PykTX7ThXzzhb1Z2q0ENVela6JblKdBYmkkw3UdmGSEwl5kn+ivc
+         DoyA7Rhpp3I4GoV6fdF8Xpr7ywb1GCqAaU2Rgl3V0YBs2ZIZwxtlHR5YoED7lO44Hj93
+         f/pvVxf361pOEgQ/HGDyNoe//k7bn18NEFz+Cf3EHXeI/c8cLq3G1FGDaiItJpTWpOPL
+         pbCD1naMafN4iGavsyFZuAhgcqCMHHgBDpE2XQ45dGPL0KFZRIhhNpWCio9dgJ4VXqU/
+         D8Jw==
+X-Forwarded-Encrypted: i=1; AJvYcCWtFil46xCLaWVpvOY4GjEGwSKsfusvSLDThUPPTq50o2XjVzXrhQg4gB6uksP40qFqB40=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyDpTV3323PuB7cAcH5OT9tDMBiejOfSEv6LvMnXFaCTAKNq19E
+	QWKgkLssXwfgEex4zr2WthA+GuvJHQr666T4C7sGE9fq4mCMhL3K
+X-Gm-Gg: ASbGncv/3Q7vXjP9D24+oxtN4kT6DUUav5Qot83xq6sDfPvxpQ4QAar4nEV6ujrIEsu
+	1UnrjPnryFbIPYNJnhyRIFda6NGcABXy7e4k4leCeEVvBlJ1UCHa60fmgCdGL9vTu5P8KUBwr3w
+	RrlkhUIQcHCFtevtl/vYLWiPspEGU4gTesYeuGMdUiX7cZ5au47hqRhUfY7prxI+wMzjpMPekHn
+	Ymgbz+eQCYRnj4y3Of6ST460PZECAv5XgqpDPNnHA1za2E1muMcvw7oXttgOUqA3jtWLOVX9tDW
+	fu3OezhTuTQ8FwIAv8aCjNtX8ZLNA8cvZD0IS6qYG4OsCwMX2z97NsOGggYMQXQOoOFUYcv2R05
+	xiE6/
+X-Google-Smtp-Source: AGHT+IGpIlgBC6a7NcuR9p2pQJBJufIPVcj9BXXj3sh3uIwtkornhcHO0KCPFA0C8v+VkuSevdhXWw==
+X-Received: by 2002:a5d:64e2:0:b0:38f:2856:7d96 with SMTP id ffacd0b85a97d-38f6e754b76mr13936617f8f.1.1740495216294;
+        Tue, 25 Feb 2025 06:53:36 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390cd86d69bsm2536782f8f.40.2025.02.25.06.53.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Feb 2025 06:53:35 -0800 (PST)
+Message-ID: <98b4c9e7-4034-4692-bc86-f6b905dcc5aa@gmail.com>
+Date: Tue, 25 Feb 2025 14:53:27 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z73DTwr9RicKMINe@ArchLinux>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 0/6] fast-export, fast-import: add support for
+ signed-commits
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Luke Shumaker <lukeshu@lukeshu.com>, Elijah Newren <newren@gmail.com>,
+ Jeff King <peff@peff.net>, Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Taylor Blau <me@ttaylorr.com>,
+ "brian m . carlson" <sandals@crustytoothpaste.net>,
+ Eric Sunshine <sunshine@sunshineco.com>
+References: <20210430232537.1131641-1-lukeshu@lukeshu.com>
+ <20250224142744.279643-1-christian.couder@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <20250224142744.279643-1-christian.couder@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-At now, we have already implemented the ref consistency checks for both
-"files-backend" and "packed-backend". Although we would check some
-redundant things, it won't cause trouble. So, let's integrate it into
-the "git-fsck(1)" command to get feedback from the users. And also by
-calling "git refs verify" in "git-fsck(1)", we make sure that the new
-added checks don't break.
+Hi Christian
 
-Introduce a new function "fsck_refs" that initializes and runs a child
-process to execute the "git refs verify" command. In order to provide
-the user interface create a progress which makes the total task be 1.
-It's hard to know how many loose refs we will check now. We might
-improve this later.
+I've only glanced over this series, but I did notice a memory leak
 
-Then, introduce the option to allow the user to disable checking ref
-database consistency. Put this function in the very first execution
-sequence of "git-fsck(1)" due to that we don't want the existing code of
-"git-fsck(1)" which would implicitly check the consistency of refs to
-die the program.
+On 24/02/2025 14:27, Christian Couder wrote:
+> 
+>       + * The returned string has had the ' ' line continuation markers
+>      -+ * removed, and points to staticly allocated memory (not to memory
+>      ++ * removed, and points to statically allocated memory (not to memory
 
-Last, update the test to exercise the code.
+This corrects the spelling but the changes below remove the static 
+buffer so the user is now responsible for freeing the returned string. 
+That means this comment is wrong and I don't see any corresponding 
+changes to the callers to free the memory.
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- Documentation/git-fsck.adoc |  7 ++++++-
- builtin/fsck.c              | 33 ++++++++++++++++++++++++++++++-
- t/t0602-reffiles-fsck.sh    | 39 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 77 insertions(+), 2 deletions(-)
+>       + * within 'msg'), so it is only valid until the next call to
+>       + * find_commit_multiline_header.
+>       + *
+>      @@ builtin/fast-export.c: static void anonymize_ident_line(const char **beg, const
+>       +						const char *key,
+>       +						const char **end)
+>       +{
+>      -+	static struct strbuf val = STRBUF_INIT;
+>      ++	struct strbuf val = STRBUF_INIT;
+>       +	const char *bol, *eol;
+>       +	size_t len;
+>       +
+>      -+	strbuf_reset(&val);
+>      -+
+>       +	bol = find_commit_header(msg, key, &len);
+>       +	if (!bol)
+>       +		return NULL;
+>      @@ builtin/fast-export.c: static void anonymize_ident_line(const char **beg, const
+>       +	}
+>       +
+>       +	*end = eol;
+>      -+	return val.buf;
+>      ++	return strbuf_detach(&val, NULL);
+>       +}
 
-diff --git a/Documentation/git-fsck.adoc b/Documentation/git-fsck.adoc
-index 8f32800a83..11203ba925 100644
---- a/Documentation/git-fsck.adoc
-+++ b/Documentation/git-fsck.adoc
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
- 	 [--[no-]full] [--strict] [--verbose] [--lost-found]
- 	 [--[no-]dangling] [--[no-]progress] [--connectivity-only]
--	 [--[no-]name-objects] [<object>...]
-+	 [--[no-]name-objects] [--[no-]references] [<object>...]
- 
- DESCRIPTION
- -----------
-@@ -104,6 +104,11 @@ care about this output and want to speed it up further.
- 	progress status even if the standard error stream is not
- 	directed to a terminal.
- 
-+--[no-]references::
-+	Control whether to check the references database consistency
-+	via 'git refs verify'. See linkgit:git-refs[1] for details.
-+	The default is to check the references database.
-+
- CONFIGURATION
- -------------
- 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 7a4dcb0716..f4f395cfbd 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -50,6 +50,7 @@ static int verbose;
- static int show_progress = -1;
- static int show_dangling = 1;
- static int name_objects;
-+static int check_references = 1;
- #define ERROR_OBJECT 01
- #define ERROR_REACHABLE 02
- #define ERROR_PACK 04
-@@ -905,11 +906,37 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
- 	return res;
- }
- 
-+static void fsck_refs(struct repository *r)
-+{
-+	struct child_process refs_verify = CHILD_PROCESS_INIT;
-+	struct progress *progress = NULL;
-+
-+	if (show_progress)
-+		progress = start_progress(r, _("Checking ref database"), 1);
-+
-+	if (verbose)
-+		fprintf_ln(stderr, _("Checking ref database"));
-+
-+	child_process_init(&refs_verify);
-+	refs_verify.git_cmd = 1;
-+	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
-+	if (verbose)
-+		strvec_push(&refs_verify.args, "--verbose");
-+	if (check_strict)
-+		strvec_push(&refs_verify.args, "--strict");
-+
-+	if (run_command(&refs_verify))
-+		errors_found |= ERROR_REFS;
-+
-+	display_progress(progress, 1);
-+	stop_progress(&progress);
-+}
-+
- static char const * const fsck_usage[] = {
- 	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
- 	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
- 	   "         [--[no-]dangling] [--[no-]progress] [--connectivity-only]\n"
--	   "         [--[no-]name-objects] [<object>...]"),
-+	   "         [--[no-]name-objects] [--[no-]references] [<object>...]"),
- 	NULL
- };
- 
-@@ -928,6 +955,7 @@ static struct option fsck_opts[] = {
- 				N_("write dangling objects in .git/lost-found")),
- 	OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
- 	OPT_BOOL(0, "name-objects", &name_objects, N_("show verbose names for reachable objects")),
-+	OPT_BOOL(0, "references", &check_references, N_("check reference database consistency")),
- 	OPT_END(),
- };
- 
-@@ -970,6 +998,9 @@ int cmd_fsck(int argc,
- 	git_config(git_fsck_config, &fsck_obj_options);
- 	prepare_repo_settings(the_repository);
- 
-+	if (check_references)
-+		fsck_refs(the_repository);
-+
- 	if (connectivity_only) {
- 		for_each_loose_object(mark_loose_for_connectivity, NULL, 0);
- 		for_each_packed_object(the_repository,
-diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index 28dc8dcddc..42e8a84739 100755
---- a/t/t0602-reffiles-fsck.sh
-+++ b/t/t0602-reffiles-fsck.sh
-@@ -822,4 +822,43 @@ test_expect_success 'packed-ref without sorted trait should not be checked' '
- 	)
- '
- 
-+test_expect_success '--[no-]references option should apply to fsck' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	branch_dir_prefix=.git/refs/heads &&
-+	(
-+		cd repo &&
-+		test_commit default &&
-+		for trailing_content in " garbage" "    more garbage"
-+		do
-+			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
-+			git fsck 2>err &&
-+			cat >expect <<-EOF &&
-+			warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
-+			EOF
-+			rm $branch_dir_prefix/branch-garbage &&
-+			test_cmp expect err || return 1
-+		done &&
-+
-+		for trailing_content in " garbage" "    more garbage"
-+		do
-+			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
-+			git fsck --references 2>err &&
-+			cat >expect <<-EOF &&
-+			warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
-+			EOF
-+			rm $branch_dir_prefix/branch-garbage &&
-+			test_cmp expect err || return 1
-+		done &&
-+
-+		for trailing_content in " garbage" "    more garbage"
-+		do
-+			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
-+			git fsck --no-references 2>err &&
-+			rm $branch_dir_prefix/branch-garbage &&
-+			test_must_be_empty err || return 1
-+		done
-+	)
-+'
-+
- test_done
--- 
-2.48.1
+Best Wishes
+
+Phillip
+
+>      - static char *reencode_message(const char *in_msg,
+>      - 			      const char *in_encoding, size_t in_encoding_len)
+>      + static void handle_commit(struct commit *commit, struct rev_info *rev,
+>      + 			  struct string_list *paths_of_changed_objects)
+>        {
+>       @@ builtin/fast-export.c: static void handle_commit(struct commit *commit, struct rev_info *rev,
+>        	const char *author, *author_end, *committer, *committer_end;
+>      - 	const char *encoding;
+>      + 	const char *encoding = NULL;
+>        	size_t encoding_len;
+>      -+	const char *signature_alg = NULL, *signature;
+>      ++	const char *signature_alg = NULL, *signature = NULL;
+>        	const char *message;
+>        	char *reencoded = NULL;
+>        	struct commit_list *p;
+>       @@ builtin/fast-export.c: static void handle_commit(struct commit *commit, struct rev_info *rev,
+>      - 	committer++;
+>        	commit_buffer_cursor = committer_end = strchrnul(committer, '\n');
+>        
+>      --	/* find_commit_header() gets a `+ 1` because
+>      + 	/*
+>      +-	 * find_commit_header() gets a `+ 1` because
+>       -	 * commit_buffer_cursor points at the trailing "\n" at the end
+>       -	 * of the previous line, but find_commit_header() wants a
+>      -+	/* find_commit_header() and find_commit_multiline_header() get
+>      ++	 * find_commit_header() and find_commit_multiline_header() get
+>       +	 * a `+ 1` because commit_buffer_cursor points at the trailing
+>       +	 * "\n" at the end of the previous line, but they want a
+>      - 	 * pointer to the beginning of the next line. */
+>      + 	 * pointer to the beginning of the next line.
+>      + 	 */
+>       +
+>      - 	encoding = find_commit_header(commit_buffer_cursor + 1, "encoding", &encoding_len);
+>      - 	if (encoding)
+>      - 		commit_buffer_cursor = encoding + encoding_len;
+>      + 	if (*commit_buffer_cursor == '\n') {
+>      + 		encoding = find_commit_header(commit_buffer_cursor + 1, "encoding", &encoding_len);
+>      + 		if (encoding)
+>      + 			commit_buffer_cursor = encoding + encoding_len;
+>      + 	}
+>        
+>      -+	if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig", &commit_buffer_cursor)))
+>      -+		signature_alg = "sha1";
+>      -+	else if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
+>      -+		signature_alg = "sha256";
+>      ++	if (*commit_buffer_cursor == '\n') {
+>      ++		if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig", &commit_buffer_cursor)))
+>      ++			signature_alg = "sha1";
+>      ++		else if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
+>      ++			signature_alg = "sha256";
+>      ++	}
+>       +
+>        	message = strstr(commit_buffer_cursor, "\n\n");
+>        	if (message)
+>      @@ builtin/fast-export.c: static void handle_commit(struct commit *commit, struct r
+>        	printf("%.*s\n%.*s\n",
+>        	       (int)(author_end - author), author,
+>        	       (int)(committer_end - committer), committer);
+>      -+	if (signature)
+>      -+		switch(signed_commit_mode) {
+>      ++	if (signature) {
+>      ++		switch (signed_commit_mode) {
+>       +		case SIGN_ABORT:
+>       +			die("encountered signed commit %s; use "
+>       +			    "--signed-commits=<mode> to handle it",
+>      @@ builtin/fast-export.c: static void handle_commit(struct commit *commit, struct r
+>       +		case SIGN_STRIP:
+>       +			break;
+>       +		}
+>      ++		free((char *)signature);
+>      ++	}
+>        	if (!reencoded && encoding)
+>        		printf("encoding %.*s\n", (int)encoding_len, encoding);
+>        	printf("data %u\n%s",
+>       @@ builtin/fast-export.c: static void handle_tag(const char *name, struct tag *tag)
+>        					       "\n-----BEGIN PGP SIGNATURE-----\n");
+>        		if (signature)
+>      - 			switch(signed_tag_mode) {
+>      + 			switch (signed_tag_mode) {
+>       -			case SIGNED_TAG_ABORT:
+>       +			case SIGN_ABORT:
+>        				die("encountered signed tag %s; use "
+>      @@ builtin/fast-export.c: static void handle_tag(const char *name, struct tag *tag)
+>        				message_size = signature + 1 - message;
+>        				break;
+>        			}
+>      -@@ builtin/fast-export.c: static int parse_opt_anonymize_map(const struct option *opt,
+>      -
+>      - int cmd_fast_export(int argc, const char **argv, const char *prefix)
+>      +@@ builtin/fast-export.c: int cmd_fast_export(int argc,
+>      + 		    const char *prefix,
+>      + 		    struct repository *repo UNUSED)
+>        {
+>       +	const char *env_signed_commits_noabort;
+>        	struct rev_info revs;
+>      - 	struct object_array commits = OBJECT_ARRAY_INIT;
+>        	struct commit *commit;
+>      -@@ builtin/fast-export.c: int cmd_fast_export(int argc, const char **argv, const char *prefix)
+>      + 	char *export_filename = NULL,
+>      +@@ builtin/fast-export.c: int cmd_fast_export(int argc,
+>        			    N_("show progress after <n> objects")),
+>        		OPT_CALLBACK(0, "signed-tags", &signed_tag_mode, N_("mode"),
+>        			     N_("select handling of signed tags"),
+>      @@ builtin/fast-export.c: int cmd_fast_export(int argc, const char **argv, const ch
+>        		OPT_CALLBACK(0, "tag-of-filtered-object", &tag_of_filtered_mode, N_("mode"),
+>        			     N_("select handling of tags that tag filtered objects"),
+>        			     parse_opt_tag_of_filtered_mode),
+>      -@@ builtin/fast-export.c: int cmd_fast_export(int argc, const char **argv, const char *prefix)
+>      +@@ builtin/fast-export.c: int cmd_fast_export(int argc,
+>        	if (argc == 1)
+>        		usage_with_options (fast_export_usage, options);
+>        
+>      @@ builtin/fast-import.c: static void parse_new_commit(const char *arg)
+>       +			strbuf_addstr(&new_data, "gpgsig-sha256 ");
+>       +		else
+>       +			die("Expected gpgsig algorithm sha1 or sha256, got %s", sig_alg);
+>      -+		string_list_split_in_place(&siglines, sig.buf, '\n', -1);
+>      ++		string_list_split_in_place(&siglines, sig.buf, "\n", -1);
+>       +		strbuf_add_separated_string_list(&new_data, "\n ", &siglines);
+>       +		strbuf_addch(&new_data, '\n');
+>       +	}
+>      @@ t/t9350-fast-export.sh: test_expect_success 'signed-tags=warn-strip' '
+>       +	# between the two.
+>       +	test_config i18n.commitEncoding ISO-8859-1 &&
+>       +	git checkout -f -b commit-signing main &&
+>      -+	echo Sign your name > file-sign &&
+>      ++	echo Sign your name >file-sign &&
+>       +	git add file-sign &&
+>       +	git commit -S -m "signed commit" &&
+>       +	COMMIT_SIGNING=$(git rev-parse --verify commit-signing)
+>      @@ t/t9350-fast-export.sh: test_expect_success 'signed-tags=warn-strip' '
+>       +
+>       +test_expect_success GPG 'signed-commits default' '
+>       +
+>      -+	unset FAST_EXPORT_SIGNED_COMMITS_NOABORT &&
+>      ++	sane_unset FAST_EXPORT_SIGNED_COMMITS_NOABORT &&
+>       +	test_must_fail git fast-export --reencode=no commit-signing &&
+>       +
+>       +	FAST_EXPORT_SIGNED_COMMITS_NOABORT=1 git fast-export --reencode=no commit-signing >output 2>err &&
+>       +	! grep ^gpgsig output &&
+>       +	grep "^encoding ISO-8859-1" output &&
+>       +	test -s err &&
+>      -+	sed "s/commit-signing/commit-strip-signing/" output |
+>      -+		(cd new &&
+>      -+		 git fast-import &&
+>      -+		 test $COMMIT_SIGNING != $(git rev-parse --verify refs/heads/commit-strip-signing))
+>      ++	sed "s/commit-signing/commit-strip-signing/" output | (
+>      ++		cd new &&
+>      ++		git fast-import &&
+>      ++		STRIPPED=$(git rev-parse --verify refs/heads/commit-strip-signing) &&
+>      ++		test $COMMIT_SIGNING != $STRIPPED
+>      ++	)
+>       +
+>       +'
+>       +
+>      @@ t/t9350-fast-export.sh: test_expect_success 'signed-tags=warn-strip' '
+>       +	git fast-export --signed-commits=verbatim --reencode=no commit-signing >output &&
+>       +	grep "^gpgsig sha" output &&
+>       +	grep "encoding ISO-8859-1" output &&
+>      -+	(cd new &&
+>      -+	 git fast-import &&
+>      -+	 test $COMMIT_SIGNING = $(git rev-parse --verify refs/heads/commit-signing)) <output
+>      ++	(
+>      ++		cd new &&
+>      ++		git fast-import &&
+>      ++		STRIPPED=$(git rev-parse --verify refs/heads/commit-signing) &&
+>      ++		test $COMMIT_SIGNING = $STRIPPED
+>      ++	) <output
+>       +
+>       +'
+>       +
+>      @@ t/t9350-fast-export.sh: test_expect_success 'signed-tags=warn-strip' '
+>       +	grep "^gpgsig sha" output &&
+>       +	grep "encoding ISO-8859-1" output &&
+>       +	test -s err &&
+>      -+	(cd new &&
+>      -+	 git fast-import &&
+>      -+	 test $COMMIT_SIGNING = $(git rev-parse --verify refs/heads/commit-signing)) <output
+>      ++	(
+>      ++		cd new &&
+>      ++		git fast-import &&
+>      ++		STRIPPED=$(git rev-parse --verify refs/heads/commit-signing) &&
+>      ++		test $COMMIT_SIGNING = $STRIPPED
+>      ++	) <output
+>       +
+>       +'
+>       +
+>      @@ t/t9350-fast-export.sh: test_expect_success 'signed-tags=warn-strip' '
+>       +	git fast-export --signed-commits=strip --reencode=no commit-signing >output &&
+>       +	! grep ^gpgsig output &&
+>       +	grep "^encoding ISO-8859-1" output &&
+>      -+	sed "s/commit-signing/commit-strip-signing/" output |
+>      -+		(cd new &&
+>      -+		 git fast-import &&
+>      -+		 test $COMMIT_SIGNING != $(git rev-parse --verify refs/heads/commit-strip-signing))
+>      ++	sed "s/commit-signing/commit-strip-signing/" output | (
+>      ++		cd new &&
+>      ++		git fast-import &&
+>      ++		STRIPPED=$(git rev-parse --verify refs/heads/commit-strip-signing) &&
+>      ++		test $COMMIT_SIGNING != $STRIPPED
+>      ++	)
+>       +
+>       +'
+>       +
+>      @@ t/t9350-fast-export.sh: test_expect_success 'signed-tags=warn-strip' '
+>       +	! grep ^gpgsig output &&
+>       +	grep "^encoding ISO-8859-1" output &&
+>       +	test -s err &&
+>      -+	sed "s/commit-signing/commit-strip-signing/" output |
+>      -+		(cd new &&
+>      -+		 git fast-import &&
+>      -+		 test $COMMIT_SIGNING != $(git rev-parse --verify refs/heads/commit-strip-signing))
+>      ++	sed "s/commit-signing/commit-strip-signing/" output | (
+>      ++		cd new &&
+>      ++		git fast-import &&
+>      ++		STRIPPED=$(git rev-parse --verify refs/heads/commit-strip-signing) &&
+>      ++		test $COMMIT_SIGNING != $STRIPPED
+>      ++	)
+>       +
+>       +'
+>       +
+>        test_expect_success 'setup submodule' '
+>        
+>      + 	test_config_global protocol.file.allow always &&
+>        	git checkout -f main &&
+>      -+	{ git update-ref -d refs/heads/commit-signing || true; } &&
+>      ++	test_might_fail git update-ref -d refs/heads/commit-signing &&
+>        	mkdir sub &&
+>        	(
+>        		cd sub &&
+> 
+> 
+> Christian Couder (1):
+>    fast-export: fix missing whitespace after switch
+> 
+> Luke Shumaker (5):
+>    git-fast-import.adoc: add missing LF in the BNF
+>    fast-export: rename --signed-tags='warn' to 'warn-verbatim'
+>    git-fast-export.txt: clarify why 'verbatim' may not be a good idea
+>    fast-export: do not modify memory from get_commit_buffer
+>    fast-export, fast-import: add support for signed-commits
+> 
+>   Documentation/git-fast-export.adoc |  25 +++-
+>   Documentation/git-fast-import.adoc |  20 ++-
+>   builtin/fast-export.c              | 189 +++++++++++++++++++++--------
+>   builtin/fast-import.c              |  23 ++++
+>   t/t9350-fast-export.sh             | 116 ++++++++++++++++++
+>   5 files changed, 317 insertions(+), 56 deletions(-)
+> 
 
