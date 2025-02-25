@@ -1,84 +1,84 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA58A263886
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 08:56:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368D0263C9E
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 08:56:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740473770; cv=none; b=ngE+HtYCycnJXR3gBtgpyQIHukIsXBhdmcLstDIiBYCSnNITjepB3i8U1m5iuoySjK11hKM/3I5sqyWxhHNpfJ8UenLmR76GesXng8aJ/r5I3WrKPNPiztnIvks5S+lw9ieWnHPKs8TYXaWQepettIEgdlMnY6JGYMOKo1hOTOs=
+	t=1740473772; cv=none; b=aQqRjWOwl5dPieiR+LEfageSY9qtDjtXTSuuH+cdAndUXlsDlyoELc+FMUK/MIM8F6csHsjemrLoyPdbKrNOYort0znIm3ySYacnT4Be75Z7DFjfi96ue5mAbVMj5zSqI9fdpcVdUK6NmvEeBHOi/KeFrGPTeMCWnG5+LUcEbiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740473770; c=relaxed/simple;
-	bh=DWF/hlQLvJwOUtGOy7XvVvAfrlp4qBhn/8d2diuDvdQ=;
+	s=arc-20240116; t=1740473772; c=relaxed/simple;
+	bh=5kOgx3i+PcR7fBiy5x6j0oXS8vRYhnvh5F3OTXIL13I=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=cB+HFK716N6Pvv9bs7OHHGMe/tvtMx2/IsGhf2Ho7F8jE3AhJ7j1TdNIvksGe++Bw0I6sYNM4G1n++ZJiA7v3Mj6toHenUxYtrL93Lmwjban66mELcirukmmEzeX8yS4Uk3FFhDLpwz9tgGgpAOaF/TyVSi3+JOx/ZbQWYA0kxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dXPh5cQ4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sF9S90Q7; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=U7O/s008uvYsGcbqh1jEzGktuBj6z8ELD3buzEyOIxMEHr8fl3A+jl6bA9EfPlns6pIJcYs0GJOuOWI2JamJ/xxvYDad3Yho92Ca/vQrHhb7Sdofrlof7keyUVCjuAjLOiLZPg713mmTlHG3OwNFgVFc5utGp3OI5HHQFzeaYkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gKqgtki2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X1j6Q6kI; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dXPh5cQ4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sF9S90Q7"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9F0DC114018E;
-	Tue, 25 Feb 2025 03:56:07 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 25 Feb 2025 03:56:08 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gKqgtki2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X1j6Q6kI"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CAB012540175;
+	Tue, 25 Feb 2025 03:56:08 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Tue, 25 Feb 2025 03:56:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1740473767;
-	 x=1740560167; bh=V2hYn8hPRi4PRIbMCQMxe8dtw/GwKodOAx+ZrfpcqPg=; b=
-	dXPh5cQ4kb2cVYd2gvhguxMCdSB4B46aVosVD9IhGKJUDQYQm/KNu2M4WNef3AD+
-	/vzbk4PVIJRFaLU1Tsf64usliazJxwc8WweqsgsqbyX4Kda3ouWBSxmCckDn2JyU
-	QIKjxb2oBRGssSTmPowFLe9Bu1mgmsI8sMn18swOL1HGeyU7QnrnQ5aR+BJe1qFg
-	fPmc8e9AzBRxazkppftT1/8THPYp1xC4J2gGSplIrWnhvISRl6ZHecVxbpTvAOO7
-	exaDyQS3TLFOuWopWu9tH9PoZAMXi7wBUfQcef4UznXwdXyCLmcSZ9BbIZ4+r4ps
-	buKbgRFjqYMrpnq20QLONg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1740473768;
+	 x=1740560168; bh=oj4Vcr+ljcz7ft0h+7Rb+BaVJG8I37p7JvxMZ2r83K8=; b=
+	gKqgtki24sXoMSHz53pjuO279kyrprUeFL8dMy6soBfueq0xObixSuo/7k7wl7Wh
+	/mFv96H5oZhUXllUjwCqVLPLrbPC6bLDggEOZoRRxP3D3T9HvElR55YfyZTjMqSC
+	1KtrSrhQJ273L9p5vdVhVezQVeHMlNfM4XbPG6A9ABVoi6dxNltReI8E9Svj2zUU
+	ah/TyDlRNAxr0phmworH0npvgpsJZjso6A7SlR3hDNwg0AmFihT/3dxltsVwiiEU
+	owUCCYWG+xgUNbtvfmlLFpTKM5FhddEQyuRH2TaJhBvuZ4E9m27Gul9OYi03FwMm
+	P1iNkbHH8loGalz9O01ZyA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740473767; x=
-	1740560167; bh=V2hYn8hPRi4PRIbMCQMxe8dtw/GwKodOAx+ZrfpcqPg=; b=s
-	F9S90Q7Vjsq/enRZRmqOebqMymTLcxPa5Xerh5HIlIEJPpbKqwIHSI7B62Ni/Avo
-	mIt4/wlqHQ5RxmcxZiFsJVenzAQM02bBS7GblINPPU4m0OhlfhYFjpco1w1WZ8Xt
-	IvLUn5gIxfiFIUUA0Dao92+7LjM27vldw6Q0UyZAuFDCXysO5QaexPDOeunkELny
-	ZYA3Gt3rJpNn89GGUf7n2SVKCih4U1csLF4/7rls8TGYew5IBJdrfYPX7sgWaXZ5
-	qxKGol+f5g07w/wdEqRy6Uhg2HYW1183wdWoyRUo59rMQcUKwoRSMfGJUuFxlyn3
-	2qLhaTOpEr76OeKVjvRsA==
-X-ME-Sender: <xms:p4W9Z5LI8GLzqtQFYnkBmTDmoA3WnsN-qaX55lDFJ9irbCk4Yu5qww>
-    <xme:p4W9Z1KuRj9jcnLMljJiTQihi0Tz21waEVxV-KeL1mhInM7pyN4tE1SWRM7EvGt7b
-    wfr6XQzw6dyeTel3w>
-X-ME-Received: <xmr:p4W9Zxs9rjhWf6FPwC0caXz0bOWNc0ljV6m6vsP7L7cCrfS4x1b6nYOQQtffSxvoTnvIL5J4zRUIBsz32jG9yy-035dQfMeOnx02xm1-miRqew>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekuddvjecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740473768; x=
+	1740560168; bh=oj4Vcr+ljcz7ft0h+7Rb+BaVJG8I37p7JvxMZ2r83K8=; b=X
+	1j6Q6kIYkRvS712P2+ndZlG1nBZRRio3qDuD3VNNS0v2T+zLrI/aVexDe+fp6Smb
+	USXSMchl0w+Ic/WPDKOxtCDFGwvH53W+oz9MhkgJwEN7GymDx2A0eU1iN2mNkNYl
+	4O0eSzYihIjrN1gZF1RUmcM0SBcMrtmAfHcHWXpeZnDIdHEm9G9KlmtTdSkomCGu
+	zAtduTMej0tKg3boydjnZpBcPfRc/m4a0oekWAisjVheXjSaDlcnFIX2z6HoUaIJ
+	9VzT2d9EUbie9d7Sxa6uwDiGY1JwvLlMEqGnUY6lX1NFLEgFpsiIqOUFkwYiJi39
+	52TFTW0RADk0hU1COc6zA==
+X-ME-Sender: <xms:qIW9Z20Yq2Qyn3xebuPm2Q0dv81RJCtomkkykFNYTFpsKI-ZXIyUSg>
+    <xme:qIW9Z5FwPeeMY55pU-4-xk2W5U4BPM9Az1oHZ6tOGavrPWPQ24VG-XiDzk_VhuBOz
+    _wFoiLv88snmNCB4w>
+X-ME-Received: <xmr:qIW9Z-6LVyOcSXyhqjBg6si3e848l0HSgZVldVtINUR3-iX4xMYWNCweCFoiteqfQobcSEWCVDIIcOzK0Au8-bbHdxm7d0_cXskOzpa9sRMWFA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekuddvkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthekredtredt
+    hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
     jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepfefhueegleehfeejkedtffehvdfhvdetfefgtddu
-    ffduveevteegueeutdekhfegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
+    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggv
     pehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
-    hopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:p4W9Z6ay3bAelLWHWocf8icNifuTblptNKVqrCD5S7UpZh3Ear1tcQ>
-    <xmx:p4W9Zwb5MV6tdH_4iGQQgQ3rabArzHoCvi-HLVJM9u_Tki14sioiSg>
-    <xmx:p4W9Z-AHcUdnItqk2kWKsXj-JQOTQf9sf2ElmtqJnxsKC_8YW3QZBg>
-    <xmx:p4W9Z-YrUe0VZWoFtfJvgYfln4l73tIChAoFQjQ7EmQpgVHwytjJGQ>
-    <xmx:p4W9Zw5x4E0Yc9w-0MLYqvtKQXUdQQJ04GjmH1BTNdWNYzis28nBUpES>
+    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphht
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhgvjhhirghluhhosehg
+    mhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhi
+    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:qIW9Z33USVxzZd5Qg2VtWcVja5iIlVxWGJFSKHW6_pS8KMshdGQ_2g>
+    <xmx:qIW9Z5GL1yVeuwSCteOwdHt3RF65vjTr0k1vHptTiToKPVxlbLAFBQ>
+    <xmx:qIW9Zw9PvayRznhk-eF2N80ttDZBcwWDMlWKDnzBhYfAoL9ecs3ruQ>
+    <xmx:qIW9Z-m0E_i3d-vTNglkkvxLO3Q7tHyUEaZJWha2F801PtlNiDIsdw>
+    <xmx:qIW9Zw1BmIVdskP9r5EBLmjk2a09jRgPd93NVto7n5b0tEOYwUZhLnQp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Feb 2025 03:56:05 -0500 (EST)
+ 25 Feb 2025 03:56:07 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id a1569010 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Feb 2025 08:56:03 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id f067772d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Feb 2025 08:56:05 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 25 Feb 2025 09:55:54 +0100
-Subject: [PATCH v3 08/16] refs: stop re-verifying common prefixes for
- availability
+Date: Tue, 25 Feb 2025 09:55:56 +0100
+Subject: [PATCH v3 10/16] refs/iterator: provide infrastructure to re-seek
+ iterators
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,8 +86,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250225-pks-update-ref-optimization-v3-8-77c3687cda75@pks.im>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250225-pks-update-ref-optimization-v3-10-77c3687cda75@pks.im>
 References: <20250225-pks-update-ref-optimization-v3-0-77c3687cda75@pks.im>
 In-Reply-To: <20250225-pks-update-ref-optimization-v3-0-77c3687cda75@pks.im>
 To: git@vger.kernel.org
@@ -97,134 +97,175 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  shejialuo <shejialuo@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-One of the checks done by `refs_verify_refnames_available()` is whether
-any of the prefixes of a reference already exists. For example, given a
-reference "refs/heads/main", we'd check whether "refs/heads" or "refs"
-already exist, and if so we'd abort the transaction.
+Reftable iterators need to be scrapped after they have either been
+exhausted or aren't useful to the caller anymore, and it is explicitly
+not possible to reuse them for iterations. But enabling for reuse of
+iterators may allow us to tune them by reusing internal state of an
+iterator. The reftable iterators for example can already be reused
+internally, but we're not able to expose this to any users outside of
+the reftable backend.
 
-When updating multiple references at once, this check is performed for
-each of the references individually. Consequently, because references
-tend to have common prefixes like "refs/heads/" or refs/tags/", we
-evaluate the availability of these prefixes repeatedly. Naturally this
-is a waste of compute, as the availability of those prefixes should in
-general not change in the middle of a transaction. And if it would,
-backends would notice at a later point in time.
+Introduce a new `.seek` function in the ref iterator vtable that allows
+callers to seek an iterator multiple times. It is expected to be
+functionally the same as calling `refs_ref_iterator_begin()` with a
+different (or the same) prefix.
 
-Optimize this pattern by storing prefixes in a `strset` so that we can
-trivially track those prefixes that we have already checked. This leads
-to a significant speedup with the "reftable" backend when creating many
-references that all share a common prefix:
+Note that it is not possible to adjust parameters other than the seeked
+prefix for now, so exclude patterns, trimmed prefixes and flags will
+remain unchanged. We do not have a usecase for changing these parameters
+right now, but if we ever find one we can adapt accordingly.
 
-    Benchmark 1: update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD~)
-      Time (mean ± σ):      63.1 ms ±   1.8 ms    [User: 41.0 ms, System: 21.6 ms]
-      Range (min … max):    60.6 ms …  69.5 ms    38 runs
-
-    Benchmark 2: update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD)
-      Time (mean ± σ):      40.0 ms ±   1.3 ms    [User: 29.3 ms, System: 10.3 ms]
-      Range (min … max):    38.1 ms …  47.3 ms    61 runs
-
-    Summary
-      update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD) ran
-        1.58 ± 0.07 times faster than update-ref: create many refs (refformat = reftable, preexisting = 100000, new = 10000, revision = HEAD~)
-
-For the "files" backend we see an improvement, but a much smaller one:
-
-    Benchmark 1: update-ref: create many refs (refformat = files, preexisting = 100000, new = 10000, revision = HEAD~)
-      Time (mean ± σ):     395.8 ms ±   5.3 ms    [User: 63.6 ms, System: 330.5 ms]
-      Range (min … max):   387.0 ms … 404.6 ms    10 runs
-
-    Benchmark 2: update-ref: create many refs (refformat = files, preexisting = 100000, new = 10000, revision = HEAD)
-      Time (mean ± σ):     386.0 ms ±   4.0 ms    [User: 51.5 ms, System: 332.8 ms]
-      Range (min … max):   380.8 ms … 392.6 ms    10 runs
-
-    Summary
-      update-ref: create many refs (refformat = files, preexisting = 100000, new = 10000, revision = HEAD) ran
-        1.03 ± 0.02 times faster than update-ref: create many refs (refformat = files, preexisting = 100000, new = 10000, revision = HEAD~)
-
-This change also leads to a modest improvement when writing references
-with "initial" semantics, for example when migrating references. The
-following benchmarks are migrating 1m references from the "reftable" to
-the "files" backend:
-
-    Benchmark 1: migrate reftable:files (refcount = 1000000, revision = HEAD~)
-      Time (mean ± σ):     836.6 ms ±   5.6 ms    [User: 645.2 ms, System: 185.2 ms]
-      Range (min … max):   829.6 ms … 845.9 ms    10 runs
-
-    Benchmark 2: migrate reftable:files (refcount = 1000000, revision = HEAD)
-      Time (mean ± σ):     759.8 ms ±   5.1 ms    [User: 574.9 ms, System: 178.9 ms]
-      Range (min … max):   753.1 ms … 768.8 ms    10 runs
-
-    Summary
-      migrate reftable:files (refcount = 1000000, revision = HEAD) ran
-        1.10 ± 0.01 times faster than migrate reftable:files (refcount = 1000000, revision = HEAD~)
-
-And vice versa:
-
-    Benchmark 1: migrate files:reftable (refcount = 1000000, revision = HEAD~)
-      Time (mean ± σ):     870.7 ms ±   5.7 ms    [User: 735.2 ms, System: 127.4 ms]
-      Range (min … max):   861.6 ms … 883.2 ms    10 runs
-
-    Benchmark 2: migrate files:reftable (refcount = 1000000, revision = HEAD)
-      Time (mean ± σ):     799.1 ms ±   8.5 ms    [User: 661.1 ms, System: 130.2 ms]
-      Range (min … max):   787.5 ms … 812.6 ms    10 runs
-
-    Summary
-      migrate files:reftable (refcount = 1000000, revision = HEAD) ran
-        1.09 ± 0.01 times faster than migrate files:reftable (refcount = 1000000, revision = HEAD~)
-
-The impact here is significantly smaller given that we don't perform any
-reference reads with "initial" semantics, so the speedup only comes from
-us doing less string list lookups.
+Implement the callback for trivial cases. The other iterators will be
+implemented in subsequent commits.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ refs/debug.c         | 11 +++++++++++
+ refs/iterator.c      | 24 ++++++++++++++++++++++++
+ refs/refs-internal.h | 24 ++++++++++++++++++++++++
+ 3 files changed, 59 insertions(+)
 
-diff --git a/refs.c b/refs.c
-index 5a9b0f2fa1e..eaf41421f50 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2476,6 +2476,7 @@ int refs_verify_refnames_available(struct ref_store *refs,
- {
- 	struct strbuf dirname = STRBUF_INIT;
- 	struct strbuf referent = STRBUF_INIT;
-+	struct strset dirnames;
- 	int ret = -1;
- 
- 	/*
-@@ -2485,6 +2486,8 @@ int refs_verify_refnames_available(struct ref_store *refs,
- 
- 	assert(err);
- 
-+	strset_init(&dirnames);
-+
- 	for (size_t i = 0; i < refnames->nr; i++) {
- 		const char *refname = refnames->items[i].string;
- 		const char *extra_refname;
-@@ -2514,6 +2517,14 @@ int refs_verify_refnames_available(struct ref_store *refs,
- 			if (skip && string_list_has_string(skip, dirname.buf))
- 				continue;
- 
-+			/*
-+			 * If we've already seen the directory we don't need to
-+			 * process it again. Skip it to avoid checking checking
-+			 * common prefixes like "refs/heads/" repeatedly.
-+			 */
-+			if (!strset_add(&dirnames, dirname.buf))
-+				continue;
-+
- 			if (!initial_transaction &&
- 			    !refs_read_raw_ref(refs, dirname.buf, &oid, &referent,
- 					       &type, &ignore_errno)) {
-@@ -2574,6 +2585,7 @@ int refs_verify_refnames_available(struct ref_store *refs,
- cleanup:
- 	strbuf_release(&referent);
- 	strbuf_release(&dirname);
-+	strset_clear(&dirnames);
- 	return ret;
+diff --git a/refs/debug.c b/refs/debug.c
+index a9786da4ba1..5390fa9c187 100644
+--- a/refs/debug.c
++++ b/refs/debug.c
+@@ -169,6 +169,16 @@ static int debug_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	return res;
  }
  
++static int debug_ref_iterator_seek(struct ref_iterator *ref_iterator,
++				   const char *prefix)
++{
++	struct debug_ref_iterator *diter =
++		(struct debug_ref_iterator *)ref_iterator;
++	int res = diter->iter->vtable->seek(diter->iter, prefix);
++	trace_printf_key(&trace_refs, "iterator_seek: %s: %d\n", prefix ? prefix : "", res);
++	return res;
++}
++
+ static int debug_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 				   struct object_id *peeled)
+ {
+@@ -189,6 +199,7 @@ static void debug_ref_iterator_release(struct ref_iterator *ref_iterator)
+ 
+ static struct ref_iterator_vtable debug_ref_iterator_vtable = {
+ 	.advance = debug_ref_iterator_advance,
++	.seek = debug_ref_iterator_seek,
+ 	.peel = debug_ref_iterator_peel,
+ 	.release = debug_ref_iterator_release,
+ };
+diff --git a/refs/iterator.c b/refs/iterator.c
+index aaeff270437..757b105261a 100644
+--- a/refs/iterator.c
++++ b/refs/iterator.c
+@@ -15,6 +15,12 @@ int ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	return ref_iterator->vtable->advance(ref_iterator);
+ }
+ 
++int ref_iterator_seek(struct ref_iterator *ref_iterator,
++		      const char *prefix)
++{
++	return ref_iterator->vtable->seek(ref_iterator, prefix);
++}
++
+ int ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 		      struct object_id *peeled)
+ {
+@@ -50,6 +56,12 @@ static int empty_ref_iterator_advance(struct ref_iterator *ref_iterator UNUSED)
+ 	return ITER_DONE;
+ }
+ 
++static int empty_ref_iterator_seek(struct ref_iterator *ref_iterator UNUSED,
++				   const char *prefix UNUSED)
++{
++	return 0;
++}
++
+ static int empty_ref_iterator_peel(struct ref_iterator *ref_iterator UNUSED,
+ 				   struct object_id *peeled UNUSED)
+ {
+@@ -62,6 +74,7 @@ static void empty_ref_iterator_release(struct ref_iterator *ref_iterator UNUSED)
+ 
+ static struct ref_iterator_vtable empty_ref_iterator_vtable = {
+ 	.advance = empty_ref_iterator_advance,
++	.seek = empty_ref_iterator_seek,
+ 	.peel = empty_ref_iterator_peel,
+ 	.release = empty_ref_iterator_release,
+ };
+@@ -368,6 +381,16 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	return ok;
+ }
+ 
++static int prefix_ref_iterator_seek(struct ref_iterator *ref_iterator,
++				    const char *prefix)
++{
++	struct prefix_ref_iterator *iter =
++		(struct prefix_ref_iterator *)ref_iterator;
++	free(iter->prefix);
++	iter->prefix = xstrdup_or_null(prefix);
++	return ref_iterator_seek(iter->iter0, prefix);
++}
++
+ static int prefix_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 				    struct object_id *peeled)
+ {
+@@ -387,6 +410,7 @@ static void prefix_ref_iterator_release(struct ref_iterator *ref_iterator)
+ 
+ static struct ref_iterator_vtable prefix_ref_iterator_vtable = {
+ 	.advance = prefix_ref_iterator_advance,
++	.seek = prefix_ref_iterator_seek,
+ 	.peel = prefix_ref_iterator_peel,
+ 	.release = prefix_ref_iterator_release,
+ };
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index 74e2c03cef1..8f18274a165 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -327,6 +327,22 @@ struct ref_iterator {
+  */
+ int ref_iterator_advance(struct ref_iterator *ref_iterator);
+ 
++/*
++ * Seek the iterator to the first reference with the given prefix.
++ * The prefix is matched as a literal string, without regard for path
++ * separators. If prefix is NULL or the empty string, seek the iterator to the
++ * first reference again.
++ *
++ * This function is expected to behave as if a new ref iterator with the same
++ * prefix had been created, but allows reuse of iterators and thus may allow
++ * the backend to optimize. Parameters other than the prefix that have been
++ * passed when creating the iterator will remain unchanged.
++ *
++ * Returns 0 on success, a negative error code otherwise.
++ */
++int ref_iterator_seek(struct ref_iterator *ref_iterator,
++		      const char *prefix);
++
+ /*
+  * If possible, peel the reference currently being viewed by the
+  * iterator. Return 0 on success.
+@@ -445,6 +461,13 @@ void base_ref_iterator_init(struct ref_iterator *iter,
+  */
+ typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
+ 
++/*
++ * Seek the iterator to the first reference matching the given prefix. Should
++ * behave the same as if a new iterator was created with the same prefix.
++ */
++typedef int ref_iterator_seek_fn(struct ref_iterator *ref_iterator,
++				 const char *prefix);
++
+ /*
+  * Peels the current ref, returning 0 for success or -1 for failure.
+  */
+@@ -459,6 +482,7 @@ typedef void ref_iterator_release_fn(struct ref_iterator *ref_iterator);
+ 
+ struct ref_iterator_vtable {
+ 	ref_iterator_advance_fn *advance;
++	ref_iterator_seek_fn *seek;
+ 	ref_iterator_peel_fn *peel;
+ 	ref_iterator_release_fn *release;
+ };
 
 -- 
 2.48.1.683.gf705b3209c.dirty
