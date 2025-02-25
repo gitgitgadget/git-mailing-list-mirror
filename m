@@ -1,134 +1,135 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9A718DB03
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 16:19:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A67A18F2FB
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 16:25:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740500377; cv=none; b=lJwt71IFjc+AmOf8a4ES4BX66SL4K3bohl4H+GCuXbZPLKdsjcySsFZGj37AzFb/yQKK6Dkusg6dNg3M41xcReRLWHwO9QdconE6rTtUYGIjHYBhCpjcyufN8ZO3xDzelWlQ38skBAg7cz9MxxV9rTYeWupoatsY95EINQCw2DQ=
+	t=1740500730; cv=none; b=FLC9mKDbN8MLwoM75WQXI9AIvDhe49QGqfBQaryZBfdN//VK6IAFeV1pUAtgHDi7/3f0MCcLf/r0+rBjjMVCF+aR7DHKMEWypJr/uMbRX+SQUtOrzfwwIgYWjgJ/DYueOGApAhm6PL2vPW94ZTPZgkvxjK+Kv50QIBJZGIpUpfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740500377; c=relaxed/simple;
-	bh=25zGZuWbhnsVoXOdirIyGHdAdNrCA3grxXZo4ItofHo=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=QUUoRkL9CWCVno+VwB3+xlVAuJ3RVTVGyLfEGxEHvponP314Nq7TrXLEz1+XUYtHbG/U51IuzncgETv80uPcb1MlJChMdxElgBejKjd+F8Y5jSJrk7TNpj+0kfnA5u6JpU8DVxkdoeF/kfW+dtu4Nx6WKeZeoY4olexxmON+Dns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M9MqfWcW; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740500730; c=relaxed/simple;
+	bh=bJVt9OTt+UbeJph4i4bjjlgIPAZnU09wYtr5hDeNZ38=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kdgM9NNgIO+xJH6G0ckQM9JHKopXPfB/5JoCFEMMCFCAgqZbuOrrQ1c3s5zb6Ssx9gBwRwpG2p9V26/zcW1qyR1likR/mTmZduIE+C8qE8noI6Q7Iy5mNkE99EDP4roYRpN9fcyr1LEAlI0lLVsNTpNMg3hVeu82LICxzK0M2e8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RTdEaUJ0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=1uljteQp; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M9MqfWcW"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-220c92c857aso98672355ad.0
-        for <git@vger.kernel.org>; Tue, 25 Feb 2025 08:19:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740500375; x=1741105175; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rVr/027L4S/DUbjAMVVWuZmIS0EGuvnOuXKtGPuCE9E=;
-        b=M9MqfWcWgBXi57L3tjspmJoBIf/LqQYOX4iz0m6haqBSChZVEdxjg9LthdF7P1JObq
-         fo8LjqvQBh5Cf+lrhuX5fJPWPF4wRVRG+2AUyxIljky7VMhnCxqiuih+34aGwrffg4oM
-         NUyIiAz+8uxTN/KLWrGYZbYeBKNbux0r1WUePT5Bo5tItzq1fJQ5PTHTTRxtMzL3F+C2
-         3mkA8OHGuzVXUMH3++CTASgvj9JPk1FToofbqD0kzDPmwE5Gcd9oa+7CWdGK3rCw074X
-         LzUqFMlbyqwBLBEdX8MGOPIL0JaNEax5jPv9Z33Shh0auSSZVsztH9PfTB8xaZrvFcOx
-         lzwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740500375; x=1741105175;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rVr/027L4S/DUbjAMVVWuZmIS0EGuvnOuXKtGPuCE9E=;
-        b=ZiOEPaj9/tsQ3mjMzw1ncErLMS7xuN5dXGIJGS2tQdDhTi9Kk7tT5K3AOspjH46Tar
-         MzBwANo9/WWMONpqz2Myk5JKZS8Uuw1b60z0Yw0oPvXDg13mv3Hxc1rLra7gSAuLjwQL
-         N0P0A9tfp0T6148NuzSMv/09lxOEqFFsmbhlLsH/9bsrTNwfgJcU9vGQUrOiWA7hV1v5
-         zjgFRsURh5NChYVeVTylWz223jLcfM3M26xHvdDkuLQ2tzgSIL5LO+bljun7nOS/CMDs
-         GZ6iqo/bYPbtynDGbZYCZ39OIqbUUhf0+IP4h3FgQwd4PhFz2FlmprlOb/x6C1Y3uhxJ
-         q7ww==
-X-Gm-Message-State: AOJu0YzLAOhjFEzLKYVgikA22XHgqrwwbUqimNlDM0axinRnUTwwvgSc
-	IcWPkPdUFLLw5KOtTKKWnc1I52I8BOMQ3BD3YorDSth8vwA8bAtE8dTkcQ==
-X-Gm-Gg: ASbGncsF4ScQigVn/odkToYW+0LKYaPyv3pSJ146axo/trJ2fG8JpHLI2bndK/xkaTV
-	9XpCHn1feJGDhLg7Y5P40QJcLY9x87mA0EigrLEUoECKPrasEg71GIbU7RIbIBQK9qGrQFE+QeN
-	yuxWNyo3EjOlIFtH7lfTOwTOK+x2WFRna832/sFPiqjzk61f7+508jICN5BR+DkJreUEy4l0idu
-	RPmtfF/l59TYjIPBPVupNbHDwhhV2Cau65fHnOMMCjlCdTuNcTSTiXzMfC+GeM68qATMoFvSC+4
-	xrIrx5qcQnQHSEwGmvphMuumhIdz2jHIaQlE92h2HD1f3gMftFT6mOA21MIHwL1fqg==
-X-Google-Smtp-Source: AGHT+IFwPBBN02hYDbQXuek+7pUA5z6Fl8wDrEnR7bJwZP48j9Wg4ic3x6XiSkvxxv2ZXkh12/eMaQ==
-X-Received: by 2002:a17:902:cec4:b0:21f:53a5:19e0 with SMTP id d9443c01a7336-2218c3f435bmr380861875ad.12.1740500374716;
-        Tue, 25 Feb 2025 08:19:34 -0800 (PST)
-Received: from localhost.localdomain ([2804:14c:32:8834:3146:eeee:59fe:57ff])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2230a01fbeasm16121605ad.86.2025.02.25.08.19.32
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 25 Feb 2025 08:19:34 -0800 (PST)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>
-Subject: [GSoC][PATCH v3] merge-strategies.adoc: detail submodule merge
-Date: Tue, 25 Feb 2025 13:18:00 -0300
-Message-Id: <20250225161800.8268-1-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RTdEaUJ0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="1uljteQp"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B628A25401C0;
+	Tue, 25 Feb 2025 11:25:26 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 25 Feb 2025 11:25:27 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1740500726;
+	 x=1740587126; bh=Xok4nPZ519Oi1aMMdL8QyB4EKypMRipfWPkd7rrZns4=; b=
+	RTdEaUJ0T/W/rj/OqxKxXbRDEGpsQeud1CUVTSwKkM10MEpGnl92GVrMIG2VTbzM
+	OETs741TSkavAYulzq7Af+BCjXsmtGbbhhEsdluYldYgSC50SYwQVDU68iqDIS/i
+	0kBstbo4zH4cPNS6qigY4ihWhT9OG0SCry40F59QYcHnx78Npy0HBLtGhLPZOy7h
+	YhxvJ3nDiHnRIHWQ7PFON693n3l5f2MeIqpoP5env9bHKh0L7plaj/n+xNasO5sK
+	Q/O5XNPmY+s96zjwpQyBU99h/54v2Fc71/nAL9uW5U37FWvYYguIUqp+u7poDF9Z
+	gdw4/AZDdGzITzU5pQpCHA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740500726; x=
+	1740587126; bh=Xok4nPZ519Oi1aMMdL8QyB4EKypMRipfWPkd7rrZns4=; b=1
+	uljteQpNwIUUAJMHZ7jevHr+/8gKrpdc9i8XSle/k08U/jf5vDvgFgsAFsNYSbCu
+	Pzr67W1FG4iY34isQklxvUkADA4e9q1YWGWMldCZRcnCT+2qxjs1WdSiewp8vbMC
+	suIRwn/JiKviYTav907pJcfPXDs0xEYLmw1tYDQcJXhtwjyG1YCNuz2MSIEB6wA1
+	qKONzlFyVdTEDp/PULa0CqXmROpo7hgRmfrGHoYQlOb6rdvXw21uLDm10ONwtHem
+	K17kaOGtgInh85vwlbioZOa6aOSdoIomllDnNwXP3JAzhcwAaAh1TxCDjVNdxWGp
+	Y+jNs93GJWVWkRlPEOqVA==
+X-ME-Sender: <xms:9e69Z7xTbPljyA1sWskLEMZkUPGOjoZImjaSqUig2mpwSPpv01B4KA>
+    <xme:9e69ZzSroAcz9wroneh1BU1tg-xEHKTgyBGoPM2RjEoU2iMG67wzVzZ_Xv8VwZyIG
+    tjq16MiJ8JFIBV_TA>
+X-ME-Received: <xmr:9e69Z1X1iXzguyCtY4XkRqwMscPji_BQswxg7dGDihgZVf3dOlM0TB-EooUbw2ykIxn4v_e6Ms6mZX5wMMneXZXTitU4N2yiSWUc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekvddujecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
+    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
+    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepudefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnh
+    esghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehluhhkvghshhhusehl
+    uhhkvghshhhurdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtph
+    htthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphht
+    thhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestg
+    hruhhsthihthhoohhthhhprghsthgvrdhnvght
+X-ME-Proxy: <xmx:9e69Z1g_Zx6hKiujmvb35sOt-hY-OmN7713a1RjilUTK0ussPw9RRg>
+    <xmx:9e69Z9DMQqZBMg7_p2cvM6nVhEBWKQsdbwmCtP_gIxehUZaispT8Rg>
+    <xmx:9e69Z-KwGn_ggJNagtqaP_6y2MRYzUFostxFdEPCpKgf4rPf8mbiug>
+    <xmx:9e69Z8DtPZgLlcUZZMRsl4WExxPgcn5znZ0KUEEdKwlFomB5WTrriA>
+    <xmx:9u69Z1wCNzYB3n7oupLOnkEx07HWpBYoKXiKTWxmwuSI6uRZjJ19duJx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Feb 2025 11:25:25 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Christian Couder <christian.couder@gmail.com>,  Git Mailing List
+ <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,  Luke Shumaker
+ <lukeshu@lukeshu.com>,  Jeff King <peff@peff.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Taylor Blau <me@ttaylorr.com>,  "brian m .
+ carlson" <sandals@crustytoothpaste.net>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Luke Shumaker <lukeshu@datawire.io>,
+  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 6/6] fast-export, fast-import: add support for
+ signed-commits
+In-Reply-To: <CABPp-BErRqke5DH7c3+u19iw1U5JgWYB=xcUwrE3NObf=EYz1Q@mail.gmail.com>
+	(Elijah Newren's message of "Mon, 24 Feb 2025 23:35:00 -0800")
+References: <20210430232537.1131641-1-lukeshu@lukeshu.com>
+	<20250224142744.279643-1-christian.couder@gmail.com>
+	<20250224142744.279643-7-christian.couder@gmail.com>
+	<CABPp-BErRqke5DH7c3+u19iw1U5JgWYB=xcUwrE3NObf=EYz1Q@mail.gmail.com>
+Date: Tue, 25 Feb 2025 08:25:24 -0800
+Message-ID: <xmqqmseakn4b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Submodule merges are, in general, similar to other merges based on oid
-three-way-merge. When a conflict happens, however, Git has two special
-cases (introduced in 68d03e4a6e44) on handling the conflict before
-yielding it to the user. From the merge-ort and merge-recursive sources:
+Elijah Newren <newren@gmail.com> writes:
 
-- "Case #1: a is contained in b or vice versa": both strategies try to
-perform a fast-forward in the submodules if the commit referred by the
-conflicted submodule is descendant of another;
+> On Mon, Feb 24, 2025 at 6:28 AM Christian Couder
+> <christian.couder@gmail.com> wrote:
+> [...snip...]
+>> diff --git a/Documentation/git-fast-export.adoc b/Documentation/git-fast-export.adoc
+>> index 1b19f17b78..8750dd150b 100644
+>> --- a/Documentation/git-fast-export.adoc
+>> +++ b/Documentation/git-fast-export.adoc
+>> @@ -43,6 +43,17 @@ they will be exported, but you will see a warning.  'verbatim' and
+>>  transformation affecting tags will be performed, or if you do not
+>>  care that the resulting tag will have an invalid signature.
+>>
+>> +--signed-commits=(verbatim|warn-verbatim|warn-strip|strip|abort)::
+>> +       Specify how to handle signed commits.  Behaves exactly as
+>> +       '--signed-tags', but for commits.
+>
+> Should this also explicitly call out that the default is abort?  Yes,
+> I know that...
 
-- "Case #2: There are one or more merges that contain a and b in the
-submodule.  If there is only one, then present it as a suggestion to the
-user, but leave it marked unmerged so the user needs to confirm the
-resolution."
+Thanks.  We all tend to assume that readers know more than they
+actually are reasonably expected to know.
 
-Add a small paragraph on merge-strategies.adoc describing this behavior.
+I would have of course expected that any sensible designer would
+pick 'abort' as the default, but I didn't know what we actually
+chose without looking at the code ;-)  
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Helped-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
+It would make sense to spell it out.
 
-This v3 keeps the same content as the previous v2. However, it uses the
-proper way to declare paragraphs inside explanations and replaces the
-duplicated paragraph in `recursive` strategy by a small paragraph
-telling that it behaves the same way as `ort` when merging submodules.
-
- Documentation/merge-strategies.adoc | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/Documentation/merge-strategies.adoc b/Documentation/merge-strategies.adoc
-index 5fc54ec060..9c30f1c900 100644
---- a/Documentation/merge-strategies.adoc
-+++ b/Documentation/merge-strategies.adoc
-@@ -22,6 +22,13 @@ ort::
- 	was written as a replacement for the previous default
- 	algorithm, `recursive`.
- +
-+In the case where the path is a submodule, if the submodule commit used on
-+one side of the merge is a descendant of the submodule commit used on the
-+other side of the merge, Git attempts to fast-forward to the
-+descendant. Otherwise, Git will treat this case as a conflict, suggesting
-+as a resolution a submodule commit that is descendant of the conflicting
-+ones, if one exists.
-++
- The 'ort' strategy can take the following options:
- 
- ours;;
-@@ -95,6 +102,10 @@ recursive::
- 	renames.  It does not make use of detected copies.  This was
- 	the default strategy for resolving two heads from Git v0.99.9k
- 	until v2.33.0.
-+
-++
-+For a path that is a submodule, the same caution as 'ort' applies to this
-+strategy.
- +
- The 'recursive' strategy takes the same options as 'ort'.  However,
- there are three additional options that 'ort' ignores (not documented
--- 
-2.39.5 (Apple Git-154)
-
+Thanks.
