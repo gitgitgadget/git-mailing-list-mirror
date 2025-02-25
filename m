@@ -1,66 +1,66 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB84C78F35
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 14:57:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DCE21ABC6
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 14:59:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740495478; cv=none; b=huGO/zwfszYXKMt6ByJYVJBH2yNdFytEcorb16+JFv0A7beTfsIdgTuJwhNn16Blb1oIRUOUOJshcGwximtlnFoxCwN8/vO5gxUG8OqtjdQLC+4ybBVgM+Ejy28ecpUXGvO9ntEr1Ia2mCH1Zh9a/y0IuBSqAk5cRJmntQuJD4M=
+	t=1740495560; cv=none; b=HQyyzgihpX9ygWDYd9Wv5LhqFWX197Ps8Y09WecxYISlTmApe7odKZ2lvJsyAAD+SxwAC3N3K0EyPXmpKUOT2S0v+48XW9MotMRhj/o91qKqHe4KD7DFDcjZCrey1ri+dBhtspQLVDhGHxrUa7dmsIxZoAAR4WMbRCNDcpeNcf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740495478; c=relaxed/simple;
-	bh=Yh6awPbcRm1IzuauFWz9djXxqHf8y7HGf67B6QIkiHA=;
+	s=arc-20240116; t=1740495560; c=relaxed/simple;
+	bh=9ldNpVrj+M/8YDkFCPOGaVOJR6ef7zuD+9Tr9jtEhqk=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=MxD81B8QVzn33eRKkijxTeaRKI5YKk1To2F68BDRhqsxiYkJUmbfrYgoPwKjFwKe8citkX1WSlRSJqM5fybmzym76wvG3R0tc+nHosKfKSu9ThtNzrVrWBeI7v+cy2s9cGZwSR9uke6Rl4Ao2QcK6gavDHF1G/xdwVDiXaD21uA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Cd+doJL1; arc=none smtp.client-ip=209.85.221.44
+	 In-Reply-To:Content-Type; b=aOIKHezpsRhXseJs1GwW4hVvbg0QxqrV2FKf2cferb1nMWRZ3fTgHOsB++8LzKhy2KvMQ0WA/35w/FYl+M+aluuyXj6ZI87+Q0Q/JqehkjhjcEzCAHKX0u8XOU5hR09c10IUN/w1sx1GTC5h1RJffs7m8V9AFZJE1oZ527RlvRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g+34+a1n; arc=none smtp.client-ip=209.85.221.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Cd+doJL1"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-38f325dd9e6so2990651f8f.1
-        for <git@vger.kernel.org>; Tue, 25 Feb 2025 06:57:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+34+a1n"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-38f378498c9so5629387f8f.1
+        for <git@vger.kernel.org>; Tue, 25 Feb 2025 06:59:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740495475; x=1741100275; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740495556; x=1741100356; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:reply-to:content-language
          :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=35ku0qrs8tEYBMr16IQnHgGEyb8NJIQo2GYDs4f0Cgs=;
-        b=Cd+doJL1JykG35C0euMkCPWSzUFLILyEs94UKbADLdGYwsMuuSwsnJZKXqjCMHo0lt
-         gVIbkNtizZ/F6lltohp8YaQBxH6GCFHilZGJ+e3GhiTzR9xnX4f+cqvZGbQUJc24GiYn
-         lEEdq4BC2G3vKNUWDBDAwsPZxtivMZlWVwVlP33s0Zyr7KWHyl1MSqbSj1AlI/cr97QC
-         JmNs4u3BSVnp7SHE8QCOD6o/a9F+h1putwVrRMmL1VXFX/eSWzlWdRqOVbr4cTgjl6C0
-         Efl7/WK9zLXs/NrsYub0Ju6qFsDYI6IFjbFi3xy/jaOBRqW7WOUEJO5zBZ8SNPQopFRB
-         ZvBw==
+        bh=CUQRBWbOoLlhqrOpb+s8Lw0YyHFouQX23GmUFOUjkfA=;
+        b=g+34+a1nKgmGPU09e6yjhmdGX9Jbq31b7mYT1qHbnmrUdsqfEqLJ+p4jKjnp6L2XvS
+         tjhsXN7JshDhh9zbDyokfq07Q4Qm4hIUyvBhY4+joKyY/VFwh1jJNmlokwHkWEID6x9J
+         ZUpjXxWyXv6V0MHa/BXfLDnQjvmYyZS9mEXlbnFw+QQl7JexOVLTlQUtQLBuRR3eDjni
+         m1H1KWcgU/Mn8HddDvFUMJ20Li2ZNE5eI6KHp8EAJvTdG60bLYimQodDOmweefzx2bIi
+         2zvbKSOtbMeyMO65v9RE4VqXZAkAC6lMWncmWo+Ob6mg9x0rlwtv+plK1aG1A9k4ckwN
+         ZKXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740495475; x=1741100275;
+        d=1e100.net; s=20230601; t=1740495556; x=1741100356;
         h=content-transfer-encoding:in-reply-to:reply-to:content-language
          :references:cc:to:subject:from:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=35ku0qrs8tEYBMr16IQnHgGEyb8NJIQo2GYDs4f0Cgs=;
-        b=Z4VoDFylUW1/Ak/iSR9hoWrSS1nhefChS0suiCXxOwmCoZCQUu8sdRUsZWyWOpiDhe
-         Fww/ssghSuOS4YDB6k2CKANXYvuW7qaWw0HRIhGRdIHmuHC5PzXkbNDMm5Uvr5f+Q971
-         SZPE5rM9JlZ0IrH3Q8kqw+cFKUP7a6VHmZk3pOr1AAsLX3aP3rtQZxgSSLqDByJIC5fn
-         RxOthTANwfYwmEWgQd2FJrTyxBSVUIrRanvthnP9Gl6STsTKW/MO4ejaKHM0o/ATegI9
-         d2mW2Qq5EcjG8fsQe89B61msn76nXuajKHm1iHNUlzp/2YtcSkjpBEz7zV6fAtadPeNv
-         a3pg==
-X-Forwarded-Encrypted: i=1; AJvYcCXXN7N3xvBkHaY2jrNrExBeCYM9nTq03vvsXvQ/tNzde9SP07fa3Ry4FTH1j5Bu+FC8+Fw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxPsQmNFUhiroCLC3VSkI3VF+2K8ZF1lfxdQT47pgAHVIgLDm7w
-	zL+a4LQGOSTKI7gcldhr1nZxGC60GGc+fv+Lm7sTUdt2QMMeCRcK
-X-Gm-Gg: ASbGncs8uibhswOtN6Qqa1nmmg5kyIaqiRPArCI+abBUKlQZh6Cj7aWpm1JmAKhALin
-	eIF7OeQHfSNrfmF23XGHe0u7jI05krMdgvXV6a0gNgx4GbDhb98yjVAT3AAFMa0fflFXaVrSn44
-	7tLV0+eC4GragGQRZUcrFD+UxfmQuLvacCLMGJZee2cSwR7YJhD0Xw18hq08Xz/7mb9T3FELp60
-	3JPs6lOYhj5ruU6QHTzPY2Smft2YXLFbE3r1DVA8MAoGYyUW6s8rv6zExDGuSmkBS1LPXBBVrsy
-	Tcfg41na5WCsbQBmgpCz9nREeKcY03mK3qoe/og2aLfDaj3YGLICj8DJSNU8Iw4iy439xvsAASn
-	e56UK
-X-Google-Smtp-Source: AGHT+IEVmsJIxAbxm6KauuNWkMwn2X8N7MPUTtlqkMSCdu72fjmUyN1QLz4gWFN/+h5lZs89bFf/xg==
-X-Received: by 2002:a05:6000:1ac7:b0:38f:48ee:ddc2 with SMTP id ffacd0b85a97d-38f6f0b238amr11946222f8f.37.1740495475078;
-        Tue, 25 Feb 2025 06:57:55 -0800 (PST)
+        bh=CUQRBWbOoLlhqrOpb+s8Lw0YyHFouQX23GmUFOUjkfA=;
+        b=q0UPZTe6xMMcMNUBA0Qk1yKEXOp7KHifs2NzUbwEniS2sqAt6VPFiZgMQyX1CVepa4
+         iizQRzGB6gl6Oxt1kIsX5GUODUPvl9YaA6NS/OkJMQFkXhmDVI2pmL0K0L9KbwcViGH3
+         p7Fn1yR4sErS3MC6YSfMiD3RdM8mtZp2s0/NX0Nb7wXwXWAJUKhnkFiwQwolfyCnVWJB
+         rfYyCKQGiTo2F7qtEnyrD1Zxl7VG+SJEEMrDBFKSJFVdcdwATF+4rwKYK0M7h58ylT4l
+         YQOQypQqZPTy9NK4v0hy4T0gU+UpaiAMh9sozoMoqgc1IEX2JclAW0xKezoXQs3pP7vg
+         FrUQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWCD8gVZQOiD8TXe1XlvDiII9JO5r95VyP1rMXEa3tnyiBFsKPmpdMBe74QFsI7cVZhqj4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxHioWrZpp8EmT+eH6wMMEotW8Zse6iTEIPeroB4RqFNmoZSXf
+	5SFGyWAhIegt3uAWO0BTza+midoQdQ5b/YOOZKs0NYZakYrq9m5U
+X-Gm-Gg: ASbGncshRT5zr4xYPe4xUhB62WfFgTxT/EPvnW2IxGrolldpuPWm+STVofH16GSiW/0
+	kAsnIvLAycp4xHbDRWEwQmNFWal4kkg5PD1CUu39/Z8DBXx0Z06Icw6rSNMcf1RE8+1uytrAWS6
+	ZOy+y/bLtppfg2UjGf8RrXLveC8FqglvJx2B64rzHYkWZqC8RTcEwXggZnwnwHzCOY+uvPL/68i
+	kFaTR4ZO+ZnfSa/ylxMCvnriqfdyzwwDvKiZHPamUYnivgsUU0MdMykDrl2iKqRA5hLajaYqpfO
+	7+TlnPC9BX6vZfZmr7lS9fX7o+XprzzEy7stp0uDOEk2fpHedRA/1+fEpBSZvCMqf12LkcmGeN9
+	IbnsF
+X-Google-Smtp-Source: AGHT+IH7n75cfpOK7xEOdiqswimybSd7Y2omOqhO02cAMKM5bMPyxKNMfoSL3iuH9OmLFhz6J9notw==
+X-Received: by 2002:a5d:5109:0:b0:38f:2073:14a7 with SMTP id ffacd0b85a97d-390cc63bf61mr2711487f8f.47.1740495556229;
+        Tue, 25 Feb 2025 06:59:16 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390cd8fcfc6sm2571634f8f.94.2025.02.25.06.57.54
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43ab15476f0sm29076635e9.23.2025.02.25.06.59.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Feb 2025 06:57:54 -0800 (PST)
-Message-ID: <2755fb78-d587-4ad9-b22f-b60dfa752d7a@gmail.com>
-Date: Tue, 25 Feb 2025 14:57:47 +0000
+        Tue, 25 Feb 2025 06:59:15 -0800 (PST)
+Message-ID: <ceda422e-8c8e-4a1d-aaab-9a7a2fc009dd@gmail.com>
+Date: Tue, 25 Feb 2025 14:59:14 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,330 +69,424 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 6/7] refs: implement partial reference transaction
- support
+Subject: Re: [PATCH v2 7/7] update-ref: add --allow-partial flag for stdin
+ mode
 To: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
 Cc: ps@pks.im, jltobler@gmail.com, phillip.wood123@gmail.com
 References: <20250225-245-partially-atomic-ref-updates-v2-0-cfa3236895d7@gmail.com>
- <20250225-245-partially-atomic-ref-updates-v2-6-cfa3236895d7@gmail.com>
+ <20250225-245-partially-atomic-ref-updates-v2-7-cfa3236895d7@gmail.com>
 Content-Language: en-US
 Reply-To: phillip.wood@dunelm.org.uk
-In-Reply-To: <20250225-245-partially-atomic-ref-updates-v2-6-cfa3236895d7@gmail.com>
+In-Reply-To: <20250225-245-partially-atomic-ref-updates-v2-7-cfa3236895d7@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi Karthik
 
 On 25/02/2025 09:29, Karthik Nayak wrote:
-> Git's reference transactions are all-or-nothing: either all updates
-> succeed, or none do. While this atomic behavior is generally desirable,
-> it can be suboptimal especially when using the reftable backend, where
-> batching multiple reference updates into a single transaction is more
-> efficient than performing them sequentially.
+> When updating multiple references through stdin, Git's update-ref
+> command normally aborts the entire transaction if any single update
+> fails. While this atomic behavior prevents partial updates by default,
+> there are cases where applying successful updates while reporting
+> failures is desirable.
 > 
-> Introduce partial transaction support with a new flag,
-> 'REF_TRANSACTION_ALLOW_PARTIAL'. When enabled, this flag allows
-> individual reference updates that would typically cause the entire
-> transaction to fail due to non-system-related errors to be marked as
-> rejected while permitting other updates to proceed. Non-system-related
-> errors include issues caused by user-provided input values, whereas
-> system-related errors, such as I/O failures or memory issues, continue
-> to result in a full transaction failure. This approach enhances
-> flexibility while preserving transactional integrity where necessary.
-> 
-> The implementation introduces several key components:
-> 
->    - Add 'rejection_err' field to struct `ref_update` to track failed
->      updates with failure reason.
-> 
->    - Modify reference backends (files, packed, reftable) to handle
->      partial transactions by using `ref_transaction_set_rejected()`
->      instead of failing the entire transaction when
->      `REF_TRANSACTION_ALLOW_PARTIAL` is set.
-> 
->    - Add `ref_transaction_for_each_rejected_update()` to let callers
->      examine which updates were rejected and why.
+> Add a new `--allow-partial` flag that allows the transaction to continue
+> even when individual reference updates fail. This flag can only be used
+> in `--stdin` mode and builds upon the partial transaction support added
+> to the refs subsystem.
 
-I think this is a much better design. I wonder if we want to signal to 
-the caller of ref_transaction_commit() that there were ignored errors 
-rather than forcing them to call ref_transaction_for_each_rejected() to 
-find that out. Another possibility would be to call the callback from 
-ref_transaction_commit() but that would mean changing the signature of 
-ref_transaction_begin() to take the callback and user data when 
-REF_TRANSACTION_ALLOW_PARTIAL is passed.
+As '--stdin' allows a single instance of "git update-ref" to create more 
+than one transaction perhaps we should instead allow the caller to 
+specify which transactions they want to allow to fail by passing an 
+argument to "start", similar to how we support "no-deref" with "update"
+
+> following format:
+> 
+>    rejected SP (<old-oid> | <old-target>) SP (<new-oid> | <new-target>) SP <rejection-reason> LF
+> 
+> or with `-z`:
+> 
+>    rejected NUL (<old-oid> | <old-target>) NUL (<new-oid> | <new-target>) NUL <rejection-reason> NUL
+
+What's the reason for the different output with '-z'? In the list of 
+options '-z' is documented as only applying to the input stream. Looking 
+at the code the existing messages generated by report_ok() are all 
+printed to stdout with a LF terminator.
+
+> +static void print_rejected_refs(const char *refname,
+> +				const struct object_id *old_oid,
+> +				const struct object_id *new_oid,
+> +				const char *old_target,
+> +				const char *new_target,
+> +				enum transaction_error err,
+> +				void *cb_data UNUSED)
+> +{
+> +	struct strbuf sb = STRBUF_INIT;
+> +	char space = ' ';
+> +	const char *reason = "";
+> +
+> +	switch (err) {
+> +	case TRANSACTION_NAME_CONFLICT:
+> +		reason = _("refname conflict");
+> +		break;
+> +	case TRANSACTION_CREATE_EXISTS:
+> +		reason = _("reference already exists");
+> +		break;
+> +	case TRANSACTION_NONEXISTENT_REF:
+> +		reason = _("reference does not exist");
+> +		break;
+> +	case TRANSACTION_INCORRECT_OLD_VALUE:
+> +		reason = _("incorrect old value provided");
+> +		break;
+> +	case TRANSACTION_INVALID_NEW_VALUE:
+> +		reason = _("invalid new value provided");
+> +		break;
+> +	case TRANSACTION_EXPECTED_SYMREF:
+> +		reason = _("expected symref but found regular ref");
+> +		break;
+> +	default:
+> +		reason = _("unkown failure");
+> +	}
+
+I agree with Patrick that these messages should not be translated.
+
+> +	if (!line_termination)
+> +		space = line_termination;
+> +
+> +	strbuf_addf(&sb, "rejected%c%s%c%s%c%c%s%c%s%c", space,
+> +		    refname, space, new_oid ? oid_to_hex(new_oid) : new_target,
+> +		    space, space, old_oid ? oid_to_hex(old_oid) : old_target,
+> +		    space, reason, line_termination);
+> +
+> +	fwrite(sb.buf, sb.len, 1, stdout);
+> +	strbuf_release(&sb);
+> +	fflush(stdout);
+
+There is no need to flush after each line, we'll flush all the error 
+messages when we call report_ok() in parse_cmd_commit() or when the 
+program exits. The caller has no way to know how many error messages 
+there are to read so flushing each one individually does not help the 
+reader avoid deadlocks.
+
+> +}
+> +
+>   static void parse_cmd_commit(struct ref_transaction *transaction,
+>   			     const char *next, const char *end UNUSED)
+>   {
+> @@ -573,6 +622,10 @@ static void parse_cmd_commit(struct ref_transaction *transaction,
+>   		die("commit: extra input: %s", next);
+>   	if (ref_transaction_commit(transaction, &error))
+>   		die("commit: %s", error.buf);
+> +
+> +	ref_transaction_for_each_rejected_update(transaction,
+> +						 print_rejected_refs, NULL);
+> +
+>   	report_ok("commit");
+
+This is good, the caller knows to stop reading when they see "commit: ok"
+
 
 Best Wishes
 
 Phillip
 
-> This foundational change enables partial transaction support throughout
-> the reference subsystem. The next commit will expose this capability to
-> users by adding a `--allow-partial` flag to 'git-update-ref(1)',
-> providing both a user-facing feature and a testable implementation.
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->   refs.c                  | 31 +++++++++++++++++++++++++++++++
->   refs.h                  | 22 ++++++++++++++++++++++
->   refs/files-backend.c    | 12 +++++++++++-
->   refs/packed-backend.c   | 30 ++++++++++++++++++++++++++++--
->   refs/refs-internal.h    | 13 +++++++++++++
->   refs/reftable-backend.c | 12 +++++++++++-
->   6 files changed, 116 insertions(+), 4 deletions(-)
-> 
-> diff --git a/refs.c b/refs.c
-> index f989a46a5a..243c09c368 100644
-> --- a/refs.c
-> +++ b/refs.c
-> @@ -1211,6 +1211,15 @@ void ref_transaction_free(struct ref_transaction *transaction)
->   	free(transaction);
+>   	ref_transaction_free(transaction);
 >   }
->   
-> +void ref_transaction_set_rejected(struct ref_transaction *transaction,
-> +				  size_t update_idx,
-> +				  enum transaction_error err)
-> +{
-> +	if (update_idx >= transaction->nr)
-> +		BUG("trying to set rejection on invalid update index");
-> +	transaction->updates[update_idx]->rejection_err = err;
-> +}
-> +
->   struct ref_update *ref_transaction_add_update(
->   		struct ref_transaction *transaction,
->   		const char *refname, unsigned int flags,
-> @@ -1236,6 +1245,7 @@ struct ref_update *ref_transaction_add_update(
->   	transaction->updates[transaction->nr++] = update;
->   
->   	update->flags = flags;
-> +	update->rejection_err = TRANSACTION_OK;
->   
->   	update->new_target = xstrdup_or_null(new_target);
->   	update->old_target = xstrdup_or_null(old_target);
-> @@ -2726,6 +2736,27 @@ void ref_transaction_for_each_queued_update(struct ref_transaction *transaction,
->   	}
->   }
->   
-> +void ref_transaction_for_each_rejected_update(struct ref_transaction *transaction,
-> +					      ref_transaction_for_each_rejected_update_fn cb,
-> +					      void *cb_data)
-> +{
-> +	if (!(transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL))
-> +		return;
-> +
-> +	for (size_t i = 0; i < transaction->nr; i++) {
-> +		struct ref_update *update = transaction->updates[i];
-> +
-> +		if (!update->rejection_err)
-> +			continue;
-> +
-> +		cb(update->refname,
-> +		   (update->flags & REF_HAVE_OLD) ? &update->old_oid : NULL,
-> +		   (update->flags & REF_HAVE_NEW) ? &update->new_oid : NULL,
-> +		   update->old_target, update->new_target,
-> +		   update->rejection_err, cb_data);
-> +	}
-> +}
-> +
->   int refs_delete_refs(struct ref_store *refs, const char *logmsg,
->   		     struct string_list *refnames, unsigned int flags)
->   {
-> diff --git a/refs.h b/refs.h
-> index 8e9ead174c..e4a6a8218f 100644
-> --- a/refs.h
-> +++ b/refs.h
-> @@ -675,6 +675,13 @@ enum ref_transaction_flag {
->   	 * either be absent or null_oid.
->   	 */
->   	REF_TRANSACTION_FLAG_INITIAL = (1 << 0),
-> +
-> +	/*
-> +	 * The transaction mechanism by default fails all updates if any conflict
-> +	 * is detected. This flag allows transactions to partially apply updates
-> +	 * while rejecting updates which do not match the expected state.
-> +	 */
-> +	REF_TRANSACTION_ALLOW_PARTIAL = (1 << 1),
+> @@ -609,7 +662,7 @@ static const struct parse_cmd {
+>   	{ "commit",        parse_cmd_commit,        0, UPDATE_REFS_CLOSED },
 >   };
 >   
->   /*
-> @@ -905,6 +912,21 @@ void ref_transaction_for_each_queued_update(struct ref_transaction *transaction,
->   					    ref_transaction_for_each_queued_update_fn cb,
->   					    void *cb_data);
->   
-> +/*
-> + * Execute the given callback function for each of the reference updates which
-> + * have been rejected in the given transaction.
-> + */
-> +typedef void ref_transaction_for_each_rejected_update_fn(const char *refname,
-> +							 const struct object_id *old_oid,
-> +							 const struct object_id *new_oid,
-> +							 const char *old_target,
-> +							 const char *new_target,
-> +							 enum transaction_error err,
-> +							 void *cb_data);
-> +void ref_transaction_for_each_rejected_update(struct ref_transaction *transaction,
-> +					      ref_transaction_for_each_rejected_update_fn cb,
-> +					      void *cb_data);
-> +
->   /*
->    * Free `*transaction` and all associated data.
->    */
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index 3b0adf8bb2..d0a53c9ace 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2851,8 +2851,18 @@ static int files_transaction_prepare(struct ref_store *ref_store,
->   		ret = lock_ref_for_update(refs, update, transaction,
->   					  head_ref, &refnames_to_check,
->   					  err);
-> -		if (ret)
-> +		if (ret) {
-> +			if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL &&
-> +			    ret != TRANSACTION_GENERIC_ERROR) {
-> +				ref_transaction_set_rejected(transaction, i, ret);
-> +
-> +				strbuf_setlen(err, 0);
-> +				ret = TRANSACTION_OK;
-> +
-> +				continue;
-> +			}
->   			goto cleanup;
-> +		}
->   
->   		if (update->flags & REF_DELETING &&
->   		    !(update->flags & REF_LOG_ONLY) &&
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index 75e1ebf67d..0857204213 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1324,10 +1324,11 @@ static int packed_ref_store_remove_on_disk(struct ref_store *ref_store,
->    * remain locked when it is done.
->    */
->   static enum transaction_error write_with_updates(struct packed_ref_store *refs,
-> -						 struct string_list *updates,
-> +						 struct ref_transaction *transaction,
->   						 struct strbuf *err)
+> -static void update_refs_stdin(void)
+> +static void update_refs_stdin(unsigned int flags)
 >   {
->   	enum transaction_error ret = TRANSACTION_GENERIC_ERROR;
-> +	struct string_list *updates = &transaction->refnames;
->   	struct ref_iterator *iter = NULL;
->   	size_t i;
->   	int ok;
-> @@ -1408,6 +1409,14 @@ static enum transaction_error write_with_updates(struct packed_ref_store *refs,
->   						    "reference already exists",
->   						    update->refname);
->   					ret = TRANSACTION_CREATE_EXISTS;
-> +
-> +					if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL) {
-> +						ref_transaction_set_rejected(transaction, i, ret);
-> +						strbuf_setlen(err, 0);
-> +						ret = 0;
-> +						continue;
-> +					}
-> +
->   					goto error;
->   				} else if (!oideq(&update->old_oid, iter->oid)) {
->   					strbuf_addf(err, "cannot update ref '%s': "
-> @@ -1416,6 +1425,14 @@ static enum transaction_error write_with_updates(struct packed_ref_store *refs,
->   						    oid_to_hex(iter->oid),
->   						    oid_to_hex(&update->old_oid));
->   					ret = TRANSACTION_INCORRECT_OLD_VALUE;
-> +
-> +					if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL) {
-> +						ref_transaction_set_rejected(transaction, i, ret);
-> +						strbuf_setlen(err, 0);
-> +						ret = 0;
-> +						continue;
-> +					}
-> +
->   					goto error;
->   				}
->   			}
-> @@ -1453,6 +1470,14 @@ static enum transaction_error write_with_updates(struct packed_ref_store *refs,
->   					    update->refname,
->   					    oid_to_hex(&update->old_oid));
->   				return TRANSACTION_NONEXISTENT_REF;
-> +
-> +				if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL) {
-> +					ref_transaction_set_rejected(transaction, i, ret);
-> +					strbuf_setlen(err, 0);
-> +					ret = 0;
-> +					continue;
-> +				}
-> +
->   				goto error;
->   			}
->   		}
-> @@ -1518,6 +1543,7 @@ static enum transaction_error write_with_updates(struct packed_ref_store *refs,
->   write_error:
->   	strbuf_addf(err, "error writing to %s: %s",
->   		    get_tempfile_path(refs->tempfile), strerror(errno));
-> +	ret = TRANSACTION_GENERIC_ERROR;
+>   	struct strbuf input = STRBUF_INIT, err = STRBUF_INIT;
+>   	enum update_refs_state state = UPDATE_REFS_OPEN;
+> @@ -617,7 +670,7 @@ static void update_refs_stdin(void)
+>   	int i, j;
 >   
->   error:
->   	ref_iterator_free(iter);
-> @@ -1676,7 +1702,7 @@ static int packed_transaction_prepare(struct ref_store *ref_store,
->   		data->own_lock = 1;
->   	}
+>   	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
+> -						  0, &err);
+> +						  flags, &err);
+>   	if (!transaction)
+>   		die("%s", err.buf);
 >   
-> -	ret = write_with_updates(refs, &transaction->refnames, err);
-> +	ret = write_with_updates(refs, transaction, err);
->   	if (ret)
->   		goto failure;
+> @@ -685,7 +738,7 @@ static void update_refs_stdin(void)
+>   			 */
+>   			state = cmd->state;
+>   			transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
+> -								  0, &err);
+> +								  flags, &err);
+>   			if (!transaction)
+>   				die("%s", err.buf);
 >   
-> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-> index c97045fbed..7196f2d880 100644
-> --- a/refs/refs-internal.h
-> +++ b/refs/refs-internal.h
-> @@ -123,6 +123,11 @@ struct ref_update {
->   	 */
->   	uint64_t index;
->   
-> +	/*
-> +	 * Used in partial transactions to mark if a given update was rejected.
-> +	 */
-> +	enum transaction_error rejection_err;
+> @@ -701,6 +754,8 @@ static void update_refs_stdin(void)
+>   		/* Commit by default if no transaction was requested. */
+>   		if (ref_transaction_commit(transaction, &err))
+>   			die("%s", err.buf);
+> +		ref_transaction_for_each_rejected_update(transaction,
+> +						 print_rejected_refs, NULL);
+>   		ref_transaction_free(transaction);
+>   		break;
+>   	case UPDATE_REFS_STARTED:
+> @@ -726,7 +781,9 @@ int cmd_update_ref(int argc,
+>   	const char *refname, *oldval;
+>   	struct object_id oid, oldoid;
+>   	int delete = 0, no_deref = 0, read_stdin = 0, end_null = 0;
+> -	int create_reflog = 0;
+> +	int create_reflog = 0, allow_partial = 0;
+> +	unsigned int flags = 0;
 > +
->   	/*
->   	 * If this ref_update was split off of a symref update via
->   	 * split_symref_update(), then this member points at that
-> @@ -142,6 +147,14 @@ int refs_read_raw_ref(struct ref_store *ref_store, const char *refname,
->   		      struct object_id *oid, struct strbuf *referent,
->   		      unsigned int *type, int *failure_errno);
+>   	struct option options[] = {
+>   		OPT_STRING( 'm', NULL, &msg, N_("reason"), N_("reason of the update")),
+>   		OPT_BOOL('d', NULL, &delete, N_("delete the reference")),
+> @@ -735,6 +792,8 @@ int cmd_update_ref(int argc,
+>   		OPT_BOOL('z', NULL, &end_null, N_("stdin has NUL-terminated arguments")),
+>   		OPT_BOOL( 0 , "stdin", &read_stdin, N_("read updates from stdin")),
+>   		OPT_BOOL( 0 , "create-reflog", &create_reflog, N_("create a reflog")),
+> +		OPT_BIT('0', "allow-partial", &flags, N_("allow partial transactions"),
+> +			REF_TRANSACTION_ALLOW_PARTIAL),
+>   		OPT_END(),
+>   	};
 >   
-> +/*
-> + * Mark a given update as rejected with a given reason. To be used in conjuction
-> + * with the `REF_TRANSACTION_ALLOW_PARTIAL` flag to allow partial transactions.
-> + */
-> +void ref_transaction_set_rejected(struct ref_transaction *transaction,
-> +				  size_t update_idx,
-> +				  enum transaction_error err);
-> +
->   /*
->    * Add a ref_update with the specified properties to transaction, and
->    * return a pointer to the new object. This function does not verify
-> diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-> index e1fd9c2de2..83cf8d582b 100644
-> --- a/refs/reftable-backend.c
-> +++ b/refs/reftable-backend.c
-> @@ -1374,8 +1374,18 @@ static int reftable_be_transaction_prepare(struct ref_store *ref_store,
->   					    transaction->updates[i],
->   					    &refnames_to_check, head_type,
->   					    &head_referent, &referent, err);
-> -		if (ret)
-> +		if (ret) {
-> +			if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL &&
-> +			    ret != TRANSACTION_GENERIC_ERROR) {
-> +				ref_transaction_set_rejected(transaction, i, ret);
-> +
-> +				strbuf_setlen(err, 0);
-> +				ret = TRANSACTION_OK;
-> +
-> +				continue;
-> +			}
->   			goto done;
-> +		}
->   	}
+> @@ -756,9 +815,10 @@ int cmd_update_ref(int argc,
+>   			usage_with_options(git_update_ref_usage, options);
+>   		if (end_null)
+>   			line_termination = '\0';
+> -		update_refs_stdin();
+> +		update_refs_stdin(flags);
+>   		return 0;
+> -	}
+> +	} else if (allow_partial)
+> +		die("--allow-partial can only be used with --stdin");
 >   
->   	string_list_sort(&refnames_to_check);
+>   	if (end_null)
+>   		usage_with_options(git_update_ref_usage, options);
+> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+> index 29045aad43..fb9442982e 100755
+> --- a/t/t1400-update-ref.sh
+> +++ b/t/t1400-update-ref.sh
+> @@ -2066,6 +2066,222 @@ do
+>   		grep "$(git rev-parse $a) $(git rev-parse $a)" actual
+>   	'
+>   
+> +	test_expect_success "stdin $type allow-partial" '
+> +		git init repo &&
+> +		test_when_finished "rm -fr repo" &&
+> +		(
+> +			cd repo &&
+> +			test_commit commit &&
+> +			head=$(git rev-parse HEAD) &&
+> +
+> +			format_command $type "update refs/heads/ref1" "$head" "$Z" >stdin &&
+> +			format_command $type "update refs/heads/ref2" "$head" "$Z" >>stdin &&
+> +			git update-ref $type --stdin --allow-partial <stdin &&
+> +			echo $head >expect &&
+> +			git rev-parse refs/heads/ref1 >actual &&
+> +			test_cmp expect actual &&
+> +			git rev-parse refs/heads/ref2 >actual &&
+> +			test_cmp expect actual
+> +		)
+> +	'
+> +
+> +	test_expect_success "stdin $type allow-partial with invalid new_oid" '
+> +		git init repo &&
+> +		test_when_finished "rm -fr repo" &&
+> +		(
+> +			cd repo &&
+> +			test_commit one &&
+> +			old_head=$(git rev-parse HEAD) &&
+> +			test_commit two &&
+> +			head=$(git rev-parse HEAD) &&
+> +			git update-ref refs/heads/ref1 $head &&
+> +			git update-ref refs/heads/ref2 $head &&
+> +
+> +			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
+> +			format_command $type "update refs/heads/ref2" "$(test_oid 001)" "$head" >>stdin &&
+> +			git update-ref $type --stdin --allow-partial <stdin >stdout &&
+> +			echo $old_head >expect &&
+> +			git rev-parse refs/heads/ref1 >actual &&
+> +			test_cmp expect actual &&
+> +			echo $head >expect &&
+> +			git rev-parse refs/heads/ref2 >actual &&
+> +			test_cmp expect actual &&
+> +			test_grep -q "invalid new value provided" stdout
+> +		)
+> +	'
+> +
+> +	test_expect_success "stdin $type allow-partial with non-commit new_oid" '
+> +		git init repo &&
+> +		test_when_finished "rm -fr repo" &&
+> +		(
+> +			cd repo &&
+> +			test_commit one &&
+> +			old_head=$(git rev-parse HEAD) &&
+> +			test_commit two &&
+> +			head=$(git rev-parse HEAD) &&
+> +			head_tree=$(git rev-parse HEAD^{tree}) &&
+> +			git update-ref refs/heads/ref1 $head &&
+> +			git update-ref refs/heads/ref2 $head &&
+> +
+> +			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
+> +			format_command $type "update refs/heads/ref2" "$head_tree" "$head" >>stdin &&
+> +			git update-ref $type --stdin --allow-partial <stdin >stdout &&
+> +			echo $old_head >expect &&
+> +			git rev-parse refs/heads/ref1 >actual &&
+> +			test_cmp expect actual &&
+> +			echo $head >expect &&
+> +			git rev-parse refs/heads/ref2 >actual &&
+> +			test_cmp expect actual &&
+> +			test_grep -q "invalid new value provided" stdout
+> +		)
+> +	'
+> +
+> +	test_expect_success "stdin $type allow-partial with non-existent ref" '
+> +		git init repo &&
+> +		test_when_finished "rm -fr repo" &&
+> +		(
+> +			cd repo &&
+> +			test_commit one &&
+> +			old_head=$(git rev-parse HEAD) &&
+> +			test_commit two &&
+> +			head=$(git rev-parse HEAD) &&
+> +			git update-ref refs/heads/ref1 $head &&
+> +
+> +			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
+> +			format_command $type "update refs/heads/ref2" "$old_head" "$head" >>stdin &&
+> +			git update-ref $type --stdin --allow-partial <stdin >stdout &&
+> +			echo $old_head >expect &&
+> +			git rev-parse refs/heads/ref1 >actual &&
+> +			test_cmp expect actual &&
+> +			test_must_fail git rev-parse refs/heads/ref2 &&
+> +			test_grep -q "reference does not exist" stdout
+> +		)
+> +	'
+> +
+> +	test_expect_success "stdin $type allow-partial with dangling symref" '
+> +		git init repo &&
+> +		test_when_finished "rm -fr repo" &&
+> +		(
+> +			cd repo &&
+> +			test_commit one &&
+> +			old_head=$(git rev-parse HEAD) &&
+> +			test_commit two &&
+> +			head=$(git rev-parse HEAD) &&
+> +			git update-ref refs/heads/ref1 $head &&
+> +			git symbolic-ref refs/heads/ref2 refs/heads/nonexistent &&
+> +
+> +			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
+> +			format_command $type "update refs/heads/ref2" "$old_head" "$head" >>stdin &&
+> +			git update-ref $type --no-deref --stdin --allow-partial <stdin >stdout &&
+> +			echo $old_head >expect &&
+> +			git rev-parse refs/heads/ref1 >actual &&
+> +			test_cmp expect actual &&
+> +			echo $head >expect &&
+> +			test_must_fail git rev-parse refs/heads/ref2 &&
+> +			test_grep -q "reference does not exist" stdout
+> +		)
+> +	'
+> +
+> +	test_expect_success "stdin $type allow-partial with regular ref as symref" '
+> +		git init repo &&
+> +		test_when_finished "rm -fr repo" &&
+> +		(
+> +			cd repo &&
+> +			test_commit one &&
+> +			old_head=$(git rev-parse HEAD) &&
+> +			test_commit two &&
+> +			head=$(git rev-parse HEAD) &&
+> +			git update-ref refs/heads/ref1 $head &&
+> +			git update-ref refs/heads/ref2 $head &&
+> +
+> +			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
+> +			format_command $type "symref-update refs/heads/ref2" "$old_head" "ref" "refs/heads/nonexistent" >>stdin &&
+> +			git update-ref $type --no-deref --stdin --allow-partial <stdin >stdout &&
+> +			echo $old_head >expect &&
+> +			git rev-parse refs/heads/ref1 >actual &&
+> +			test_cmp expect actual &&
+> +			echo $head >expect &&
+> +			echo $head >expect &&
+> +			git rev-parse refs/heads/ref2 >actual &&
+> +			test_cmp expect actual &&
+> +			test_grep -q "expected symref but found regular ref" stdout
+> +		)
+> +	'
+> +
+> +	test_expect_success "stdin $type allow-partial with invalid old_oid" '
+> +		git init repo &&
+> +		test_when_finished "rm -fr repo" &&
+> +		(
+> +			cd repo &&
+> +			test_commit one &&
+> +			old_head=$(git rev-parse HEAD) &&
+> +			test_commit two &&
+> +			head=$(git rev-parse HEAD) &&
+> +			git update-ref refs/heads/ref1 $head &&
+> +			git update-ref refs/heads/ref2 $head &&
+> +
+> +			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
+> +			format_command $type "update refs/heads/ref2" "$old_head" "$Z" >>stdin &&
+> +			git update-ref $type --stdin --allow-partial <stdin >stdout &&
+> +			echo $old_head >expect &&
+> +			git rev-parse refs/heads/ref1 >actual &&
+> +			test_cmp expect actual &&
+> +			echo $head >expect &&
+> +			git rev-parse refs/heads/ref2 >actual &&
+> +			test_cmp expect actual &&
+> +			test_grep -q "reference already exists" stdout
+> +		)
+> +	'
+> +
+> +	test_expect_success "stdin $type allow-partial with incorrect old oid" '
+> +		git init repo &&
+> +		test_when_finished "rm -fr repo" &&
+> +		(
+> +			cd repo &&
+> +			test_commit one &&
+> +			old_head=$(git rev-parse HEAD) &&
+> +			test_commit two &&
+> +			head=$(git rev-parse HEAD) &&
+> +			git update-ref refs/heads/ref1 $head &&
+> +			git update-ref refs/heads/ref2 $head &&
+> +
+> +			format_command $type "update refs/heads/ref1" "$old_head" "$head" >stdin &&
+> +			format_command $type "update refs/heads/ref2" "$head" "$old_head" >>stdin &&
+> +			git update-ref $type --stdin --allow-partial <stdin >stdout &&
+> +			echo $old_head >expect &&
+> +			git rev-parse refs/heads/ref1 >actual &&
+> +			test_cmp expect actual &&
+> +			echo $head >expect &&
+> +			git rev-parse refs/heads/ref2 >actual &&
+> +			test_cmp expect actual &&
+> +			test_grep -q "incorrect old value provided" stdout
+> +		)
+> +	'
+> +
+> +	# F/D conflicts on the files backend are resolved on an individual
+> +	# update level since refs are stored as files. On the reftable backend
+> +	# this check is batched to optimize for performance, so failures cannot
+> +	# be isolated to a single update.
+> +	test_expect_success REFFILES "stdin $type allow-partial refname conflict" '
+> +		git init repo &&
+> +		test_when_finished "rm -fr repo" &&
+> +		(
+> +			cd repo &&
+> +			test_commit one &&
+> +			old_head=$(git rev-parse HEAD) &&
+> +			test_commit two &&
+> +			head=$(git rev-parse HEAD) &&
+> +			git update-ref refs/heads/ref/foo $head &&
+> +
+> +			format_command $type "update refs/heads/ref/foo" "$old_head" "$head" >stdin &&
+> +			format_command $type "update refs/heads/ref" "$old_head" "" >>stdin &&
+> +			git update-ref $type --stdin --allow-partial <stdin >stdout &&
+> +			echo $old_head >expect &&
+> +			git rev-parse refs/heads/ref/foo >actual &&
+> +			test_cmp expect actual &&
+> +			test_grep -q "refname conflict" stdout
+> +		)
+> +	'
+>   done
+>   
+>   test_expect_success 'update-ref should also create reflog for HEAD' '
 > 
 
