@@ -1,69 +1,69 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE1C9264A92
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 10:12:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8483F264A92
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 10:12:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740478373; cv=none; b=aWYLBNz6Ffu+NS8mvwgjev5vCiAXiuDCtsYaQrQeLPE26X2hWu0K8Yfl4UPFV2Ozuk4x5Dxmm2fkXgF2XwynAvxKaMvP6UUczLAwExB3iBQYvvsMXEtn5VRJRZvyHbKJEH+ypkE95bR5VLpvMFBd6rDUZA7jqPj6JH223Z+YzvA=
+	t=1740478378; cv=none; b=C19zH4WbZLSaA0NAyf7+FAoeysPggmYVwHdfRf0n2A6Dmgz8rGLcMwzy5QgFWnYb/8Pf1JdIQLhXdy77rsxc0ocRMgReYUDiHmdIWwxlI/I7x0gYQG1G+9V0cmn+eQChoj/Ei+bQS7GyTzXLpF3hfZdYlhVR97Z5JE5H4TE3M14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740478373; c=relaxed/simple;
-	bh=A01EJzzZiByvriqE51xBYmWYBxsYKlH+ASS/hzAjoro=;
+	s=arc-20240116; t=1740478378; c=relaxed/simple;
+	bh=2I3Sxy0+gRaej2+g2kj7a9a7YacCAzgqKhviw2Gw+iw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFywVngbrWQgiKHn7JusSPwg32zfAl1TmZ79nwMEu0UtZJUROQ9b8MBhjbgk+Ja1x1rTKb5fza79CfSQ/cxpSfP25u+aRNSr2Fqp0R+WSUKlVg0cj9cpzIn5GZyCqblF1m7UYkXAkGpm15ud6xJeb0zO8N3cQZV8PQbI2bohrP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lss8mzFq; arc=none smtp.client-ip=209.85.208.46
+	 MIME-Version; b=BTIoFqljz2qKBXIMFVezY+LbZNQEPMU5qk0tAXzGFa07/Sb80J9VEx0ycYRBEJEkFFqE//K0Dh2uxwm2CqI7XMcBsOZO6vnvIHtwOxayHmvShd4I8kp7gEhhkemnaw1q+5zZTgVMLv5TM7ng9BGlnJIuHrLrvu50vCx0Za8b7gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d6vWv5a1; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lss8mzFq"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5ded1395213so9074516a12.2
-        for <git@vger.kernel.org>; Tue, 25 Feb 2025 02:12:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d6vWv5a1"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-abbac134a19so827838266b.0
+        for <git@vger.kernel.org>; Tue, 25 Feb 2025 02:12:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740478370; x=1741083170; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740478375; x=1741083175; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WO1c+28Pbxy1nqeTNAkDEuYLGqNpuqYXvjNj66FccDg=;
-        b=lss8mzFqdBE9hoEpRh3hh/afISVsaKQJfUyP4FhO04s2oRLdb2w4H1yMaWhsVGE20/
-         oHO0bfwKaY2FuusZtCKKBkoHI1Sru8/q0wrQitxKAGyWrKkIep3fGgZbD39vRwipTGOF
-         3WzEzt+F3Fk4hKZjZEiJIbAfYsZHrMhJZ1J3GhpO9rnzaxGpuiG70FIZgEfqSNmPou2S
-         zqH+Fm6ccJx7QZuUq4gqvzRmizzMXW5+2O8iCxHM4o2HanKR3ec2wNcobhJ5FZvp0JtV
-         2/T1R1Tu5r/fMiQsMUY98r4cgwp7VSKRHjnqsAC4Ye4mOhqibjrsB0jiO1+sgTOOPDO0
-         Rr2Q==
+        bh=52pGapUxpqKwFzQKL/kANoHc4ZzG6RaXxnCvaVWUCvI=;
+        b=d6vWv5a1xtMgBNoiNueBRVdgWbGD2Fy5oLnFDQoVx+LVzz9+2LiSF5hfb87eSy6MK3
+         OzjlLJWKxtzbkM9SWOeQd5tZue7gE3mh/3a7HQOzTN2n9Ag2jLQhtWsUjAffq4pGuFzJ
+         RyyJ9UxAPVvyFOZs6RbINg0xi0XhgvceQt4W20uTrfTWD/q2XLrWfzTgmWg0SO+5eUQN
+         bgx3qkgovgW45Byyqly7SnIDs+yZUSHZsAORlXMr8wQFeVE7Bm8ipKtoBHfJbPErd4Tq
+         YkfZc7bWYkazCATyXjJ1Z+XQamDm8LFIvvbQNjJEKedzK24XbCegOOB64ioE6X/INzus
+         6c0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740478370; x=1741083170;
+        d=1e100.net; s=20230601; t=1740478375; x=1741083175;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WO1c+28Pbxy1nqeTNAkDEuYLGqNpuqYXvjNj66FccDg=;
-        b=XxkjYhR5xcgelKLQEkGR3b+OwLTA86M60VcSeKxRsw2fdAQErkBmy4jY1EnNB4E+il
-         mTFR3UkMmRUFwLxSJT+GsaxXDlsa5livOwqNJYd9/ELhgjlWadf8KvRRHy+qn2Da752k
-         uzhv6gYGV62vx8lKsgtLZb6M3Ie638XcN8l99css8d3tjvv9sXQnwd5alWXDHlHEj+uS
-         TsM+qCyJ/cTBkkKomSfIkUsAZLp3nUDHpbSs7Eu/ZlcSY4NdjCGBKNroH6svvtg8WGO5
-         +XoPIDKEL+tokXrt4J8hhiJ8iMDi+IUJeIxK9g2ly9k2YP7QkyR9TCxw2WLvTx/t5XID
-         ynVw==
-X-Gm-Message-State: AOJu0YyvfNgaSE9plWWULzuK5HuqOoEe7hLTz1eqGRVASh8c+AYEul2h
-	NYzOiQMUKFkjGda0ASGgjyJWwWg0LRI5H5cTqlJvmgsZbbIHqIUD6cQCVQlRkO1h0g==
-X-Gm-Gg: ASbGncvR97qn+8wia7NZTrYtvEUKwtRA07JEC6s5VdKr8PuFLBXK0BnZr2+GBwD2S6i
-	rlxl9u2kACYR45mgyJPylhe3fFQU+3PJZooAbZjk7BTZocz6OyQ8wblZByDK1uSAc+Cx4XcbsCS
-	r+LTHZ3T254mSJncekP4b2SiPKU37TmaeCSXwWRO2fbEbHxmaMM3BVrws1NKMi0olFYOWWgt1hz
-	+YIadj5yxXuJsSP71LhBGXCxqH7vMqvcj1jdV3HWjBlEmFQFWWLSK2qLAmePNsGrgFk7/pKKdT7
-	QYA55tWd2cH5DaLJVuklTpvMvdbjS7dXtdk38dQ=
-X-Google-Smtp-Source: AGHT+IFtx2nmPXwjrzziCZG+pNlacdoJvWpnMJsgxFSK9Pe7Os1tzKEKi7S2xBHnlX5YLYpFq1tPlQ==
-X-Received: by 2002:a17:907:1ca4:b0:ab6:d575:9540 with SMTP id a640c23a62f3a-abed1076c86mr272828666b.50.1740478369412;
-        Tue, 25 Feb 2025 02:12:49 -0800 (PST)
+        bh=52pGapUxpqKwFzQKL/kANoHc4ZzG6RaXxnCvaVWUCvI=;
+        b=iab9vwubz91xml1JXaVDzMdigl3+ay+JDsV4BkAMt+tEpEBH7+oYl7133Ji8EoTEAH
+         5lMO/j8mJEUEigzMcS6o/9RwY97QHpTJUXni82WJ2g3vfShuHs9kX8Ht1PkoLKt2NJAd
+         tuqAP8QbBv1uDWzBHDyH4IrjmpWCkkzEXVdrlNsZcXWMPuBHLj4q65O71Tlnx9XMFN9j
+         0AA0a+ZWp9v58d+bN20JjTOsHwnSyC/sXF43Z7U4mPhvomUKFivi2zoFJuP//XIdLIdi
+         yJWb2hKXzwcq/arkYe3taQbQBckC5XWAZ3cCGEyNdBiQZ/7uqAU5K5QmYhOyUVTq1ZNo
+         o4xg==
+X-Gm-Message-State: AOJu0YxIjUrvD5NLjuvqz5WlBkuV7qH/9OT9cZr12B21BfJf7oB6z+PF
+	jWedca0+38K450ho6knKS+vfoSMUsn8QaQ0Oe8WZmdIC419BtJQwSArpOG/aDg6xAw==
+X-Gm-Gg: ASbGnct9rPcvFK+kd5YD8qYFNOBywEXf5auRh4Kb3mSE+tGQ0IJHAGN/GHrLfUvLVOU
+	H6DvlH/vISCRd3CygKS49NtTJwudQt9s30sDjVsgO+DFpaHoJNg2zPpn8IXtUBuu4OpojdXSagD
+	nWcWooTkajgAtEuhF/FvdRsLnUFrTeiVANthBtHg+6WaM1PUFQubhuUN8WGFh2O2hQOsTc1gfE+
+	y79Sycx/u4vkGJ/iCigFd0rByCM9JdOjXoYsiOlGuNCWiW1Klvf/U6ygsydOBvInCX3JH18gfAH
+	IHG2v4BW/wXMJlEseYHgP5KoGMRjoP9jHtoPj/8=
+X-Google-Smtp-Source: AGHT+IFATHcYBdOe9dw6ifx1KGl2fWPCBDYrgoWIp5sRGTUpP1za6SEK/7TEsZWss9ZUpsAGtfdGbA==
+X-Received: by 2002:a17:906:809:b0:abe:dc92:817c with SMTP id a640c23a62f3a-abedc928304mr123760466b.51.1740478374493;
+        Tue, 25 Feb 2025 02:12:54 -0800 (PST)
 Received: from localhost.localdomain ([41.217.53.197])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abed20b7513sm115120566b.177.2025.02.25.02.12.47
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abed20b7513sm115120566b.177.2025.02.25.02.12.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 02:12:48 -0800 (PST)
+        Tue, 25 Feb 2025 02:12:54 -0800 (PST)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood@dunelm.org.uk,
 	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH v3 2/4] t/unit-tests: convert oid-array test to use clar test framework
-Date: Tue, 25 Feb 2025 11:10:42 +0100
-Message-ID: <20250225101044.84210-3-kuforiji98@gmail.com>
+Subject: [PATCH v3 3/4] t/unit-tests: convert oidmap test to use clar test framework
+Date: Tue, 25 Feb 2025 11:10:43 +0100
+Message-ID: <20250225101044.84210-4-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.47.0.86.g15030f9556
 In-Reply-To: <20250225101044.84210-1-kuforiji98@gmail.com>
 References: <20250224152704.70289-1-kuforiji98@gmail.com>
@@ -76,250 +76,294 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adapt oid-array test script to clar framework by using clar assertions
-where necessary. Remove descriptions from macros to reduce
-redundancy, and move test input arrays to global scope for reuse across
-multiple test functions. Introduce `test_oid_array__initialize()` to
-explicitly initialize the hash algorithm.
+Adapt oidmap test script to clar framework by using clar assertions
+where necessary. `cl_parse_any_oid()` ensures the hash algorithm is set
+before parsing. This prevents issues from an uninitialized or invalid
+hash algorithm.
 
-These changes streamline the test suite, making individual tests
-self-contained and reducing redundant code.
+Introduce 'test_oidmap__initialize` handles the to set up of the global
+oidmap map with predefined key-value pairs, and `test_oidmap__cleanup`
+frees the oidmap and its entries when all tests are completed.
+
+The test loops through all entries to detect multiple errors. With this
+change, it stops at the first error encountered, making it easier to
+address it.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- Makefile                                      |   2 +-
- t/meson.build                                 |   2 +-
- t/unit-tests/{t-oid-array.c => u-oid-array.c} | 125 +++++++++---------
- 3 files changed, 66 insertions(+), 63 deletions(-)
- rename t/unit-tests/{t-oid-array.c => u-oid-array.c} (34%)
+ Makefile                                |   2 +-
+ t/meson.build                           |   2 +-
+ t/unit-tests/{t-oidmap.c => u-oidmap.c} | 153 +++++++++---------------
+ 3 files changed, 56 insertions(+), 101 deletions(-)
+ rename t/unit-tests/{t-oidmap.c => u-oidmap.c} (32%)
 
 diff --git a/Makefile b/Makefile
-index 81799488f0..c9b0320fcb 100644
+index c9b0320fcb..e4e85e6007 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1356,6 +1356,7 @@ CLAR_TEST_SUITES += u-example-decorate
- CLAR_TEST_SUITES += u-hash
+@@ -1357,6 +1357,7 @@ CLAR_TEST_SUITES += u-hash
  CLAR_TEST_SUITES += u-hashmap
  CLAR_TEST_SUITES += u-mem-pool
-+CLAR_TEST_SUITES += u-oid-array
+ CLAR_TEST_SUITES += u-oid-array
++CLAR_TEST_SUITES += u-oidmap
  CLAR_TEST_SUITES += u-prio-queue
  CLAR_TEST_SUITES += u-reftable-tree
  CLAR_TEST_SUITES += u-strbuf
-@@ -1367,7 +1368,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
+@@ -1368,7 +1369,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
  
--UNIT_TEST_PROGRAMS += t-oid-array
- UNIT_TEST_PROGRAMS += t-oidmap
+-UNIT_TEST_PROGRAMS += t-oidmap
  UNIT_TEST_PROGRAMS += t-oidtree
  UNIT_TEST_PROGRAMS += t-reftable-basics
+ UNIT_TEST_PROGRAMS += t-reftable-block
 diff --git a/t/meson.build b/t/meson.build
-index 862cf1cfd4..1b17a53acc 100644
+index 1b17a53acc..d5b83cdb72 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -4,6 +4,7 @@ clar_test_suites = [
-   'unit-tests/u-hash.c',
+@@ -5,6 +5,7 @@ clar_test_suites = [
    'unit-tests/u-hashmap.c',
    'unit-tests/u-mem-pool.c',
-+  'unit-tests/u-oid-array.c',
+   'unit-tests/u-oid-array.c',
++  'unit-tests/u-oidmap.c',
    'unit-tests/u-prio-queue.c',
    'unit-tests/u-reftable-tree.c',
    'unit-tests/u-strbuf.c',
-@@ -49,7 +50,6 @@ clar_unit_tests = executable('unit-tests',
+@@ -50,7 +51,6 @@ clar_unit_tests = executable('unit-tests',
  test('unit-tests', clar_unit_tests)
  
  unit_test_programs = [
--  'unit-tests/t-oid-array.c',
-   'unit-tests/t-oidmap.c',
+-  'unit-tests/t-oidmap.c',
    'unit-tests/t-oidtree.c',
    'unit-tests/t-reftable-basics.c',
-diff --git a/t/unit-tests/t-oid-array.c b/t/unit-tests/u-oid-array.c
-similarity index 34%
-rename from t/unit-tests/t-oid-array.c
-rename to t/unit-tests/u-oid-array.c
-index 45b59a2a51..e48a433f21 100644
---- a/t/unit-tests/t-oid-array.c
-+++ b/t/unit-tests/u-oid-array.c
-@@ -1,22 +1,19 @@
- #define USE_THE_REPOSITORY_VARIABLE
- 
+   'unit-tests/t-reftable-block.c',
+diff --git a/t/unit-tests/t-oidmap.c b/t/unit-tests/u-oidmap.c
+similarity index 32%
+rename from t/unit-tests/t-oidmap.c
+rename to t/unit-tests/u-oidmap.c
+index b22e52d08b..dc805b7e3c 100644
+--- a/t/unit-tests/t-oidmap.c
++++ b/t/unit-tests/u-oidmap.c
+@@ -1,4 +1,4 @@
 -#include "test-lib.h"
 +#include "unit-test.h"
  #include "lib-oid.h"
- #include "oid-array.h"
- #include "hex.h"
+ #include "oidmap.h"
+ #include "hash.h"
+@@ -18,102 +18,85 @@ static const char *const key_val[][2] = { { "11", "one" },
+ 					  { "22", "two" },
+ 					  { "33", "three" } };
  
--static int fill_array(struct oid_array *array, const char *hexes[], size_t n)
-+static void fill_array(struct oid_array *array, const char *hexes[], size_t n)
+-static void setup(void (*f)(struct oidmap *map))
++static struct oidmap map;
++
++void test_oidmap__initialize(void)
  {
- 	for (size_t i = 0; i < n; i++) {
+-	struct oidmap map = OIDMAP_INIT;
+-	int ret = 0;
++	oidmap_init(&map, 0);
+ 
+ 	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++){
+ 		struct test_entry *entry;
+ 
+ 		FLEX_ALLOC_STR(entry, name, key_val[i][1]);
+-		if ((ret = get_oid_arbitrary_hex(key_val[i][0], &entry->entry.oid))) {
+-			free(entry);
+-			break;
+-		}
+-		entry = oidmap_put(&map, entry);
+-		if (!check(entry == NULL))
+-			free(entry);
++		cl_parse_any_oid(key_val[i][0], &entry->entry.oid);
++		cl_assert(oidmap_put(&map, entry) == NULL);
+ 	}
++}
+ 
+-	if (!ret)
+-		f(&map);
++void test_oidmap__cleanup(void)
++{
+ 	oidmap_free(&map, 1);
+ }
+ 
+-static void t_replace(struct oidmap *map)
++void test_oidmap__replace(void)
+ {
+ 	struct test_entry *entry, *prev;
+ 
+ 	FLEX_ALLOC_STR(entry, name, "un");
+-	if (get_oid_arbitrary_hex("11", &entry->entry.oid))
+-		return;
+-	prev = oidmap_put(map, entry);
+-	if (!check(prev != NULL))
+-		return;
+-	check_str(prev->name, "one");
++	cl_parse_any_oid("11", &entry->entry.oid);
++	prev = oidmap_put(&map, entry);
++	cl_assert(prev != NULL);
++	cl_assert_equal_s(prev->name, "one");
+ 	free(prev);
+ 
+ 	FLEX_ALLOC_STR(entry, name, "deux");
+-	if (get_oid_arbitrary_hex("22", &entry->entry.oid))
+-		return;
+-	prev = oidmap_put(map, entry);
+-	if (!check(prev != NULL))
+-		return;
+-	check_str(prev->name, "two");
++	cl_parse_any_oid("22", &entry->entry.oid);
++	prev = oidmap_put(&map, entry);
++	cl_assert(prev != NULL);
++	cl_assert_equal_s(prev->name, "two");
+ 	free(prev);
+ }
+ 
+-static void t_get(struct oidmap *map)
++void test_oidmap__get(void)
+ {
+ 	struct test_entry *entry;
+ 	struct object_id oid;
+ 
+-	if (get_oid_arbitrary_hex("22", &oid))
+-		return;
+-	entry = oidmap_get(map, &oid);
+-	if (!check(entry != NULL))
+-		return;
+-	check_str(entry->name, "two");
+-
+-	if (get_oid_arbitrary_hex("44", &oid))
+-		return;
+-	check(oidmap_get(map, &oid) == NULL);
+-
+-	if (get_oid_arbitrary_hex("11", &oid))
+-		return;
+-	entry = oidmap_get(map, &oid);
+-	if (!check(entry != NULL))
+-		return;
+-	check_str(entry->name, "one");
++	cl_parse_any_oid("22", &oid);
++	entry = oidmap_get(&map, &oid);
++	cl_assert(entry != NULL);
++	cl_assert_equal_s(entry->name, "two");
++
++	cl_parse_any_oid("44", &oid);
++	cl_assert(oidmap_get(&map, &oid) == NULL);
++
++	cl_parse_any_oid("11", &oid);
++	entry = oidmap_get(&map, &oid);
++	cl_assert(entry != NULL);
++	cl_assert_equal_s(entry->name, "one");
+ }
+ 
+-static void t_remove(struct oidmap *map)
++void test_oidmap__remove(void)
+ {
+ 	struct test_entry *entry;
+ 	struct object_id oid;
+ 
+-	if (get_oid_arbitrary_hex("11", &oid))
+-		return;
+-	entry = oidmap_remove(map, &oid);
+-	if (!check(entry != NULL))
+-		return;
+-	check_str(entry->name, "one");
+-	check(oidmap_get(map, &oid) == NULL);
++	cl_parse_any_oid("11", &oid);
++	entry = oidmap_remove(&map, &oid);
++	cl_assert(entry != NULL);
++	cl_assert_equal_s(entry->name, "one");
++	cl_assert(oidmap_get(&map, &oid) == NULL);
+ 	free(entry);
+ 
+-	if (get_oid_arbitrary_hex("22", &oid))
+-		return;
+-	entry = oidmap_remove(map, &oid);
+-	if (!check(entry != NULL))
+-		return;
+-	check_str(entry->name, "two");
+-	check(oidmap_get(map, &oid) == NULL);
++	cl_parse_any_oid("22", &oid);
++	entry = oidmap_remove(&map, &oid);
++	cl_assert(entry != NULL);
++	cl_assert_equal_s(entry->name, "two");
++	cl_assert(oidmap_get(&map, &oid) == NULL);
+ 	free(entry);
+ 
+-	if (get_oid_arbitrary_hex("44", &oid))
+-		return;
+-	check(oidmap_remove(map, &oid) == NULL);
++	cl_parse_any_oid("44", &oid);
++	cl_assert(oidmap_remove(&map, &oid) == NULL);
+ }
+ 
+ static int key_val_contains(struct test_entry *entry, char seen[])
+@@ -121,8 +104,7 @@ static int key_val_contains(struct test_entry *entry, char seen[])
+ 	for (size_t i = 0; i < ARRAY_SIZE(key_val); i++) {
  		struct object_id oid;
  
--		if (!check_int(get_oid_arbitrary_hex(hexes[i], &oid), ==, 0))
+-		if (get_oid_arbitrary_hex(key_val[i][0], &oid))
 -			return -1;
-+		cl_parse_any_oid(hexes[i], &oid);
- 		oid_array_append(array, &oid);
++		cl_parse_any_oid(key_val[i][0], &oid);
+ 
+ 		if (oideq(&entry->entry.oid, &oid)) {
+ 			if (seen[i])
+@@ -134,48 +116,21 @@ static int key_val_contains(struct test_entry *entry, char seen[])
+ 	return 1;
+ }
+ 
+-static void t_iterate(struct oidmap *map)
++void test_oidmap__iterate(void)
+ {
+ 	struct oidmap_iter iter;
+ 	struct test_entry *entry;
+ 	char seen[ARRAY_SIZE(key_val)] = { 0 };
+ 	int count = 0;
+ 
+-	oidmap_iter_init(map, &iter);
++	oidmap_iter_init(&map, &iter);
+ 	while ((entry = oidmap_iter_next(&iter))) {
+-		int ret;
+-		if (!check_int((ret = key_val_contains(entry, seen)), ==, 0)) {
+-			switch (ret) {
+-			case -1:
+-				break; /* error message handled by get_oid_arbitrary_hex() */
+-			case 1:
+-				test_msg("obtained entry was not given in the input\n"
+-					 "  name: %s\n   oid: %s\n",
+-					 entry->name, oid_to_hex(&entry->entry.oid));
+-				break;
+-			case 2:
+-				test_msg("duplicate entry detected\n"
+-					 "  name: %s\n   oid: %s\n",
+-					 entry->name, oid_to_hex(&entry->entry.oid));
+-				break;
+-			default:
+-				test_msg("BUG: invalid return value (%d) from key_val_contains()",
+-					 ret);
+-				break;
+-			}
+-		} else {
+-			count++;
++		if (key_val_contains(entry, seen) != 0) {
++			cl_failf("Unexpected entry: name = %s, oid = %s",
++				 entry->name, oid_to_hex(&entry->entry.oid));
+ 		}
++		count++;
  	}
--	if (!check_uint(array->nr, ==, n))
--		return -1;
--	return 0;
-+	cl_assert_equal_i(array->nr, n);
- }
- 
- static int add_to_oid_array(const struct object_id *oid, void *data)
-@@ -34,30 +31,22 @@ static void t_enumeration(const char **input_args, size_t input_sz,
- 			 actual = OID_ARRAY_INIT;
- 	size_t i;
- 
--	if (fill_array(&input, input_args, input_sz))
--		return;
--	if (fill_array(&expect, expect_args, expect_sz))
--		return;
-+	fill_array(&input, input_args, input_sz);
-+	fill_array(&expect, expect_args, expect_sz);
- 
- 	oid_array_for_each_unique(&input, add_to_oid_array, &actual);
--	if (!check_uint(actual.nr, ==, expect.nr))
--		return;
+-	check_int(count, ==, ARRAY_SIZE(key_val));
+-	check_int(hashmap_get_size(&map->map), ==, ARRAY_SIZE(key_val));
+-}
 -
--	for (i = 0; i < actual.nr; i++) {
--		if (!check(oideq(&actual.oid[i], &expect.oid[i])))
--			test_msg("expected: %s\n       got: %s\n     index: %" PRIuMAX,
--				 oid_to_hex(&expect.oid[i]), oid_to_hex(&actual.oid[i]),
--				 (uintmax_t)i);
--	}
-+	cl_assert_equal_i(actual.nr, expect.nr);
-+
-+	for (i = 0; i < actual.nr; i++)
-+		cl_assert(oideq(&actual.oid[i], &expect.oid[i]));
- 
- 	oid_array_clear(&actual);
- 	oid_array_clear(&input);
- 	oid_array_clear(&expect);
- }
- 
--#define TEST_ENUMERATION(input, expect, desc)                                     \
--	TEST(t_enumeration(input, ARRAY_SIZE(input), expect, ARRAY_SIZE(expect)), \
--			   desc " works")
-+#define TEST_ENUMERATION(input, expect)                                     \
-+	t_enumeration(input, ARRAY_SIZE(input), expect, ARRAY_SIZE(expect));
- 
- static void t_lookup(const char **input_hexes, size_t n, const char *query_hex,
- 		     int lower_bound, int upper_bound)
-@@ -66,61 +55,75 @@ static void t_lookup(const char **input_hexes, size_t n, const char *query_hex,
- 	struct object_id oid_query;
- 	int ret;
- 
--	if (!check_int(get_oid_arbitrary_hex(query_hex, &oid_query), ==, 0))
--		return;
--	if (fill_array(&array, input_hexes, n))
--		return;
-+	cl_parse_any_oid(query_hex, &oid_query);
-+	fill_array(&array, input_hexes, n);
- 	ret = oid_array_lookup(&array, &oid_query);
- 
--	if (!check_int(ret, <=, upper_bound) ||
--	    !check_int(ret, >=, lower_bound))
--		test_msg("oid query for lookup: %s", oid_to_hex(&oid_query));
-+	cl_assert(ret <= upper_bound);
-+	cl_assert(ret >= lower_bound);
- 
- 	oid_array_clear(&array);
- }
- 
--#define TEST_LOOKUP(input_hexes, query, lower_bound, upper_bound, desc) \
--	TEST(t_lookup(input_hexes, ARRAY_SIZE(input_hexes), query,      \
--		      lower_bound, upper_bound),                        \
--	     desc " works")
-+#define TEST_LOOKUP(input_hexes, query, lower_bound, upper_bound) \
-+	t_lookup(input_hexes, ARRAY_SIZE(input_hexes), query,      \
-+		      lower_bound, upper_bound);
- 
--static void setup(void)
-+void test_oid_array__initialize(void)
- {
- 	/* The hash algo is used by oid_array_lookup() internally */
--	int algo = init_hash_algo();
--	if (check_int(algo, !=, GIT_HASH_UNKNOWN))
--		repo_set_hash_algo(the_repository, algo);
-+	int algo = cl_setup_hash_algo();
-+	repo_set_hash_algo(the_repository, algo);
- }
- 
 -int cmd_main(int argc UNUSED, const char **argv UNUSED)
-+static const char *arr_input[] = { "88", "44", "aa", "55" };
-+static const char *arr_input_dup[] = { "88", "44", "aa", "55",
-+				       "88", "44", "aa", "55",
-+				       "88", "44", "aa", "55" };
-+static const char *res_sorted[] = { "44", "55", "88", "aa" };
-+
-+void test_oid_array__enumerate_unique(void)
- {
--	const char *arr_input[] = { "88", "44", "aa", "55" };
--	const char *arr_input_dup[] = { "88", "44", "aa", "55",
--					"88", "44", "aa", "55",
--					"88", "44", "aa", "55" };
--	const char *res_sorted[] = { "44", "55", "88", "aa" };
--	const char *nearly_55;
-+	TEST_ENUMERATION(arr_input, res_sorted);
-+}
-+
-+void test_oid_array__enumerate_duplicate(void)
-+{
-+	TEST_ENUMERATION(arr_input_dup, res_sorted);
-+}
-+
-+void test_oid_array__lookup(void)
-+{
-+	TEST_LOOKUP(arr_input, "55", 1, 1);
-+}
- 
--	if (!TEST(setup(), "setup"))
--		test_skip_all("hash algo initialization failed");
-+void test_oid_array__lookup_non_existent(void)
-+{
-+	TEST_LOOKUP(arr_input, "33", INT_MIN, -1);
-+}
-+
-+void test_oid_array__lookup_duplicates(void)
-+{
-+	TEST_LOOKUP(arr_input_dup, "55", 3, 5);
-+}
- 
--	TEST_ENUMERATION(arr_input, res_sorted, "ordered enumeration");
--	TEST_ENUMERATION(arr_input_dup, res_sorted,
--			 "ordered enumeration with duplicate suppression");
-+void test_oid_array__lookup_non_existent_dup(void)
-+{
-+	TEST_LOOKUP(arr_input_dup, "66", INT_MIN, -1);
-+}
- 
--	TEST_LOOKUP(arr_input, "55", 1, 1, "lookup");
--	TEST_LOOKUP(arr_input, "33", INT_MIN, -1, "lookup non-existent entry");
--	TEST_LOOKUP(arr_input_dup, "55", 3, 5, "lookup with duplicates");
--	TEST_LOOKUP(arr_input_dup, "66", INT_MIN, -1,
--		    "lookup non-existent entry with duplicates");
-+void test_oid_array__lookup_almost_dup(void)
-+{
-+	const char *nearly_55;
- 
--	nearly_55 = init_hash_algo() == GIT_HASH_SHA1 ?
-+	nearly_55 = cl_setup_hash_algo() == GIT_HASH_SHA1 ?
- 			"5500000000000000000000000000000000000001" :
- 			"5500000000000000000000000000000000000000000000000000000000000001";
--	TEST_LOOKUP(((const char *[]){ "55", nearly_55 }), "55", 0, 0,
--		    "lookup with almost duplicate values");
--	TEST_LOOKUP(((const char *[]){ "55", "55" }), "55", 0, 1,
--		    "lookup with single duplicate value");
- 
+-{
+-	TEST(setup(t_replace), "replace works");
+-	TEST(setup(t_get), "get works");
+-	TEST(setup(t_remove), "remove works");
+-	TEST(setup(t_iterate), "iterate works");
 -	return test_done();
-+	TEST_LOOKUP(((const char *[]){ "55", nearly_55 }), "55", 0, 0);
-+}
-+
-+void test_oid_array__lookup_single_dup(void)
-+{
-+	TEST_LOOKUP(((const char *[]){ "55", "55" }), "55", 0, 1);
++	cl_assert_equal_i(count, ARRAY_SIZE(key_val));
++	cl_assert_equal_i(hashmap_get_size(&map.map), ARRAY_SIZE(key_val));
  }
 -- 
 2.47.0.86.g15030f9556
