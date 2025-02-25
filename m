@@ -1,54 +1,54 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7F5194A6B
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 17:06:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAFE2745E
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 17:44:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740503204; cv=none; b=WMRlA0Lp3H799KqB5umTmPnbrBdX4olzkSMAdQNyIYR374V7uo9DVPZaB3YC+2fEC3ZytPXW+PAPPannOXsiCZzri+p3eY5H33dlutF/t92EJpdd31Z2R3Xs/Pnau+gmv9N9zvlh+iDixrt8U/9EKCx606Lqaex4hf4aBvqD6Jw=
+	t=1740505459; cv=none; b=VhwoPq3qUrpbWua+7TXy9/9uFd815PTixTF/2m/8pr+gbjyf6AHNsSJkyWiPfcSgpbWaIQH58f+EelBxJPgJHEj6eD9EBmRLmGTF3ekh3RhfsQsA8Q1xeU/WlsQ8BOhVFUy7F5EIas6HNuRRp8sJKhE6Jev7w1a5nvf8gQme8gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740503204; c=relaxed/simple;
-	bh=4i5v7gLlt+xQf/aBTCPr2fMZT68Kn+Cx/mRI61g1sug=;
+	s=arc-20240116; t=1740505459; c=relaxed/simple;
+	bh=JyAAYPobQLtepZKnib7JBDdrXlhWRIhALQlDvEMIKWQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q8GyKDIgQC39j2vfAq/3u6VKmZeCJfQU8d6kY/665JE+gDCDTJS+Un8vYMpvppaqQ5xkYj7k4SWLUXGqX6Q/Z5PgcwqYez8m4zvnAzcW6r0Ej9AknUxYBJ8GhhS1bjIdeU/W6f2yb48HP+VAQJiIVdVpN1zJvbht3kUwJeGFCRM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hec2zr0r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f2G9ffX1; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=W3Z9GVHVgj1Vv+GX+mwIoA+/DaMsZ1yfIdVE9vDttlXJ043tEgpynweCh5a4I0JKaQ3uY3jCSMMbptPK5XnWtPfPep9gKrrGuU4V36gBS2b9FPXlOo4KpBdt3HSESwHi+mRL9hgL+wZu/+5kKLTqOnPEatj7YTHLmBmpahxh3kM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jJ44WVXE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ln1HD9kX; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hec2zr0r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f2G9ffX1"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E791D25400DC;
-	Tue, 25 Feb 2025 12:06:41 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 25 Feb 2025 12:06:42 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jJ44WVXE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ln1HD9kX"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id E808711400CC;
+	Tue, 25 Feb 2025 12:44:14 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 25 Feb 2025 12:44:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740503201; x=1740589601; bh=VQH10HiGcT
-	Qp0veSI/jxAjI1Guk+wIpbmqv71BYGWic=; b=Hec2zr0rHr/5EsWSbuPlpm0mFn
-	N3D4Bs2EgtjRZHe1uw2QCLKQ/2AO3XqOZ80IPk/ItsLDo8UWqRUY2gQ4i/G7CauV
-	E8NrqXav3l2FWVkkgT74NrqO3H0aA2r4kt5WFZ1zw0xnZNVR43C9UrCgqfxnyBo/
-	xRDXWndXtw58BqPPUnk1VFfbQPlfn0p7Yiyv2a43teXT+n+2hakv8/UZ8il+a8yL
-	ukYtiSh2i/24l8h4pXj9zPBxMi/vwGp5+tjnW0xlbr4UD8UnQf1GToaGxdHwV5Je
-	mRlQZ/v1KUUJRu9rpaeihQo5XjUKYsBU2z5Ku4k7etj+ETjz0T36Tapb5Y1w==
+	:subject:to:to; s=fm3; t=1740505454; x=1740591854; bh=DgVQSqlzld
+	EzQE6qhWyz4FiMbg22XowM/i4xPkAxF4o=; b=jJ44WVXEZRNILCa2MRFnh7Kntk
+	wBZPjRkgiC8jWzycjzqKPYZz9SF92DepyU2N+atnHgYy03LWK3qRRp0t8BH63y2s
+	/F2yFMxuMKuDm83PMGXQ+0q52pvDr8K1fMZQtdW6w42xEfKbk5Rba6rHEmmwolqs
+	NoRhh4oZG0PGsYqEIxtTWXM6kFEiMGVNE4XDMFVVsamjxb1hbMI8saihg4lG3LJw
+	vyBI9j/pCSj/q+ysnM2DnZ1OjOoua8QabZc4cjaDUfB1+tLJvM2ocRfjYFZbhrFL
+	/BTD5pFfBUpM0EDVhdkyetLdjQZdrXmY/BKi1S5DS4Tlb5I0N0r8L1NPMwDw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740503201; x=1740589601; bh=VQH10HiGcTQp0veSI/jxAjI1Guk+wIpbmqv
-	71BYGWic=; b=f2G9ffX1ut3LVnCku1Hlp9esp7ffecySmcua+XLG676OoOKlovQ
-	du4WqeHab9AsS8Rv8zUlJjqi2k8awDrjuQzlS1nwalU9FOSAoPl3AImyO2R2jVAk
-	rL5OCR1SDy82gTy1qRS3gAtb1c3vmFvNJhpS73GAX6X9vJyd+7dWypZKza2wdERZ
-	VajybKlJxxrNDEqzCzZeDErHI2PJAuzxlttrzW7hy9rmferIHtO5LVtEyYpmVoVd
-	ytILGTUhr1XdFoyw9VFGCQ+CZh2mOdLnD0OFQ34fMh20M1uuOmCQ158oaEEaLs3Y
-	T2Tx0Q/dzKNyE8DR+TsDyghDhD7c1fqtRsQ==
-X-ME-Sender: <xms:ofi9Z-bRZQgVepzGp8hYlK2BBuGIoVdPu_WpwVF4Fb-1UqRw39FZ0w>
-    <xme:ofi9ZxYf7Ul6BHl2ZxCZ7GlL_9R7CwBmbxvp_SHm_gXFTyLHwI-PlVkm4ZC2QMcoV
-    Gt-v7hWH2dVTlETYA>
-X-ME-Received: <xmr:ofi9Z49YjDen3KYbEiY4ZF7Ve_INN3nln8SsXyBtPr5xRDiQXV1RFt0MfOasJtfO1hdP81vXPTQaJ7i0sNOHSO99OMVqg7eHfGS->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekvddvhecutefuodetggdotefrod
+	1740505454; x=1740591854; bh=DgVQSqlzldEzQE6qhWyz4FiMbg22XowM/i4
+	xPkAxF4o=; b=ln1HD9kXzYqnFeq9uOmIVVmWSeaHyhp8meW/Nd6EkJ9kABnm2G3
+	RE8vOCIXLowJJFcQwnsi5pUf2grHFSdflq56RQCrzcBsn96GLDRiiEKyqIawRKgU
+	udjjT+DL00uyrt4DbepTVUBs4hsCCDoiVZz5cfABZh8CYhlgx+FGcy6xsI89YsxB
+	v+K+zFdBz040giPAvYWUJhWyuLHw41sD0F5kwvK1dbZR+ieYgfw5TnRjdm35qH8I
+	Qj60fcXuD0XXZ1CfHcosYPM6+X/DCKRj1fUn5LLAPm1+2+mgtgOL1fSa27GSL57k
+	uQZvorASu+qO/GxJDJZ8386dWEHGQjCmN6A==
+X-ME-Sender: <xms:bgG-Zx1-WWFHvcxuVeCfu5WKlUmF9IZfQ9lGz8sT6SzqPqwSmpfsNA>
+    <xme:bgG-Z4HcGotvk7k63jEWUdmrxAQZ3i-5F7X1D11nz2XLS2K4nkqCfhGCDiIUekx2C
+    Ucn-qKAB3bs4ob6VA>
+X-ME-Received: <xmr:bgG-Zx4h2HhbGLscbBKEt4flG7WRqWX3lZpV3eAehnQPIqgMFeL-lZCsFGequBQ4iR1Wi0XWvEPWRnV0nX6tWCbgu5rZH3K6lffH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekvdeffecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,26 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekvddvhecutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ofi9ZwqbCalbO5LKWjG77nbvzBiKASRR7zX_4CLpsx6fmwB735LhiA>
-    <xmx:ofi9Z5rD3W_XTZnmdVzrRdaazkxN3to_m7RvbQyOHL-uLeokHX1KKw>
-    <xmx:ofi9Z-RABz4iko22bjW9i8X5I_MtNGB6XFKUcJ8pooeEaomCKIBePA>
-    <xmx:ofi9Z5oKMeobJ00ZFhz7qwMk10FN2cjOeXzvemSfhhvuZ5g1FrRCMQ>
-    <xmx:ofi9ZwVf2WKYrOixWx54jHU-BkwWq117qTqCN6wF61Xj2oWnGoMwYyTT>
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhirghluh
+    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikh
+    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehmhhgrghhgvghrsegrlhhumhdr
+    mhhithdrvgguuhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:bgG-Z-15UnJedg1IruTszdN2ZQR5vXTSprDsBum5mWHcEY_Wf4lBXA>
+    <xmx:bgG-Z0GcaO_QigIdrfmcdQgxfF-JY_ZzrPqyMfWXyGL5czceqBglxg>
+    <xmx:bgG-Z_-Jv9aZZJxsiCpBlE4D5MmJlfdh0CK2TEhVQGjkwZH0y8KT8w>
+    <xmx:bgG-ZxltOlFPwsr7qCgx4bHHvFMP8T46pOvRB9z7C4Gu4ocvmSaSxQ>
+    <xmx:bgG-Z56kRhuXuYuIcYna07ObC-Z6oHn9qAPUH__7TINyY5UipyzrC6YT>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Feb 2025 12:06:41 -0500 (EST)
+ 25 Feb 2025 12:44:14 -0500 (EST)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Feb 2025, #07; Mon, 24)
-In-Reply-To: <Z71ns00inrW0rZN8@pks.im> (Patrick Steinhardt's message of "Tue,
-	25 Feb 2025 07:48:19 +0100")
-References: <xmqq1pvm4u6c.fsf@gitster.g> <Z71ns00inrW0rZN8@pks.im>
-Date: Tue, 25 Feb 2025 09:06:40 -0800
-Message-ID: <xmqq5xkykl7j.fsf@gitster.g>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v6 3/9] packed-backend: check whether the "packed-refs"
+ is regular file
+In-Reply-To: <Z73D3PdEFk_nciH7@ArchLinux> (shejialuo@gmail.com's message of
+	"Tue, 25 Feb 2025 21:21:32 +0800")
+References: <Z73DTwr9RicKMINe@ArchLinux> <Z73D3PdEFk_nciH7@ArchLinux>
+Date: Tue, 25 Feb 2025 09:44:12 -0800
+Message-ID: <xmqq1pvlly1f.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,65 +89,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+shejialuo <shejialuo@gmail.com> writes:
 
-> On Mon, Feb 24, 2025 at 06:47:23PM -0800, Junio C Hamano wrote:
->> * ps/meson-contrib-bits (2025-02-20) 10 commits
->>  - ci: exercise credential helpers
->>  - ci: fix propagating UTF-8 test locale in musl-based Meson job
->>  - meson: wire up static analysis via Coccinelle
->>  - meson: wire up git-contacts(1)
->>  - meson: wire up credential helpers
->>  - contrib/credential: fix compilation of "osxkeychain" helper
->>  - contrib/credential: fix compiling "libsecret" helper
->>  - contrib/credential: fix compilation of wincred helper with MSVC
->>  - contrib/credential: fix "netrc" tests with out-of-tree builds
->>  - GIT-BUILD-OPTIONS: propagate project's source directory
->> 
->>  Update meson-based build procedure to cover contrib/ and other
->>  places as well.
->> 
->>  Expecting a reroll.
->>  source: <20250218-b4-pks-meson-contrib-v1-0-c3edd292beb8@pks.im>
+> Although "git-fsck(1)" and "packed-backend.c" will check some
+> consistency and correctness of "packed-refs" file, they never check the
+> filetype of the "packed-refs". Let's verify that the "packed-refs" has
+> the expected filetype, confirming it is created by "git pack-refs"
+> command.
 >
-> v2 of this patch series hasn't yet received any comments that require a
-> reroll, unless I've missed something.
+> Use "lstat" to check the file mode. If we cannot check the file status
+> due to there is no such file this is OK because there is a possibility
+> that there is no "packed-refs" in the repo.
 
-I misread the exchange between you and Ramsay; I am fine with the
-decision to leave the sparse and the hdr-check outside this series,
-for some future follow-up work.  Let me mark it for 'next'.
+Can this be done _after_ the open_nofollow() check you had in the
+previous round noticed a problem?  Even though we are trying to
+notice and find problems in the given repository, it is generally
+a good idea to optimize for the more common case (i.e. the file is a
+regular one and not a symbolic link or directory or anything funny).
+Something along the lines of
 
->> * ps/path-sans-the-repository (2025-02-24) 17 commits
->>  - fixup! rerere: let `rerere_path()` write paths into a caller-provided buffer
->>  - path: adjust last remaining users of `the_repository`
->>  - environment: move access to "core.sharedRepository" into repo settings
->>  - environment: move access to "core.hooksPath" into repo settings
->>  - repo-settings: introduce function to clear struct
->>  - path: drop `git_path()` in favor of `repo_git_path()`
->>  - rerere: let `rerere_path()` write paths into a caller-provided buffer
->>  - path: drop `git_common_path()` in favor of `repo_common_path()`
->>  - worktree: return allocated string from `get_worktree_git_dir()`
->>  - path: drop `git_path_buf()` in favor of `repo_git_path_replace()`
->>  - path: drop `git_pathdup()` in favor of `repo_git_path()`
->>  - path: drop unused `strbuf_git_path()` function
->>  - path: refactor `repo_submodule_path()` family of functions
->>  - submodule: refactor `submodule_to_gitdir()` to accept a repo
->>  - path: refactor `repo_worktree_path()` family of functions
->>  - path: refactor `repo_git_path()` family of functions
->>  - path: refactor `repo_common_path()` family of functions
->> 
->>  The path.[ch] API takes an explicit repository parameter passed
->>  throughout the callchain, instead of relying on the_repository
->>  singleton instance.
->> 
->>  Will merge to 'next'?
->>  source: <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
->
-> The fixup commit looks good to me, so I'll refrain from sending a v3
-> only to roll the fix into the series.
+	fd = open_nofollow(...);
+	if (fd < 0) {
+		lstat() to inspect the details
+	} else if (fstat(fd, &st) < 0) {
+		... cannot tell what we opened ...
+	} else if (!S_ISREG(st.st_mode)) {
+		... we opened something funny ...
+	} else {
+		... the thing is a regular file as expected ...
+	}
 
-OK.  I read them over before saying "'next'?" and still missed what
-Peff spotted, so I have no confidence in my reviews over these
-patches, which is a bit of a problem for me.
+perhaps?
 
-Thanks.
