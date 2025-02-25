@@ -1,107 +1,78 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f50.google.com (mail-qv1-f50.google.com [209.85.219.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E0A19DF4D
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 18:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8979919F130
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 19:00:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740507632; cv=none; b=G2uUMREJqlhCJb7qM5blSqbW4uVar3v6jIlmUg+lyrNXPcCd2Ou9m9BvZrYT+RKJoHuVPXbnPGr2VXO8mA3gJz2qhPL7299WsRQjh1GQrsBcNzrcJbmsa6YsgRN/n0hj3ivWZv95U0YTg7kbt6sxwx/o01jSXDeHQByJtp20csU=
+	t=1740510021; cv=none; b=pAtEUXdVc2ogXePqkCAE8cVmtRlDOw4iXMeqt3lP6JFYQtlXnRjpprQ98P7ATWIdo9xX2ng5ICxiDS/6mm+9sNAMfFU1ci/Z75fHQrdOfvtRN9DOf/QGPO3DcYy5XXXp+tbJ30Z6Gw+GenrFcdE6Tl4jdKgG8dET9Rq9CkiKEjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740507632; c=relaxed/simple;
-	bh=nVN3khmxvWcg5eI3L9NPlT3YdecUK9m0p6ecd9C5yCA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=P+Lq36Awx0KTUHIIEgtuDSC7dLZon+mdKT+o5gK+ss7ULTn9B52CyjjJ/3k9Fq3IkbinT6Dn45z0v81gpsAk8VsGeZw1ui41VpnJ9YurDF9gSnrFIvY/uKKO9TfEmraoZS/3w5O02WcnjnjfreKuIIUtku5tGsgCJ7Ub960DB4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PhYZ8p1Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YiESL03y; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PhYZ8p1Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YiESL03y"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4E08A13814FA;
-	Tue, 25 Feb 2025 13:20:30 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 25 Feb 2025 13:20:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1740507630;
-	 x=1740594030; bh=yw3fQekZE0Ed3nNZXZwZQ0EXi3DuJQLeHRZ+Le6fbAg=; b=
-	PhYZ8p1QIGz04xKUuJvhVaCJp3r2KOo5UxTWPZ5zliYvbfqd5CIWlUY12bxdKQRD
-	pwterJyYS3NHGmQQxJyHjTINvpIqWYWrdjMK5gDa/LPzse9HolK6sRQJqg7UY63y
-	VfDojqJvjjfF0rU1sb4K0U/XudFC+KM7ZXZA1IhL6gRXmY/Eq+C/dCPEK3pScrn+
-	+xB+9q3iqMEMmlIzpXqsplV+txPOVurJ6j5LqiAxFwEPG2uWSLQ6kMsaOElA2iZ6
-	AFvJZ3LGOFDF93vSSrftMa74Fi4InLqDikobI2xudjbDlEBM0jkCGaJF45Wq7AKp
-	xxVJs5vBxZ6mK7egTUpBXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740507630; x=
-	1740594030; bh=yw3fQekZE0Ed3nNZXZwZQ0EXi3DuJQLeHRZ+Le6fbAg=; b=Y
-	iESL03yUXlO1hGktmcvI2TM2b+z/SXJhSAalh3sDUQaXPt6JmesZEuZlcCVR/dkI
-	N0Jsq0NzrUyexa+WGN9vqWfjumEibWJx6e0zf7QpuT2xJQ2o17jcceI0svc0Lk1V
-	wfxqE4Kz2b0mBM6BfGwLDZalskaCXZd/CVi8cDUzU02n5rrjt3OQi/oaGqqK8jDp
-	wkAUXhk5QiZsFuE+12SJr+6uUAY15a1VWY3VGskrjVf7I1gk9TzRXM2Kz8Q2P1g1
-	aYGyQ7ZZ0RpPGPDDQYDL8dsjCGZrbnNCs/qom5YHs1N1lAsgu8WPIpjkt/738hR/
-	qHkLx63RBKOULAmADdE9Q==
-X-ME-Sender: <xms:7Qm-ZzeRn4V5Wrml_XbD6au00QesmFKVSN0HYcMcxlHEmvnrNY4_KQ>
-    <xme:7Qm-Z5NaEhpzoXKDEjxCAlksKOK3dzA9kepWIMlRBbwHt5YMPCOoCNsk2YDJHd3nr
-    Rhi-Xknk0BZ73z8dQ>
-X-ME-Received: <xmr:7Qm-Z8j6FIiYOg8Y3x1_E10ZndoNnYpp2D7wSNuhaaIIybZvVkno-02T-PTcDuO0mhf7NhNHODKYul9e4roW-hpAyvDV7_rN9I9s>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekvdegudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
-    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepvdfhgeeihedttdefheejieegffeiteeu
-    geeljeeukeeuheduudeifeelhfehtdetnecuffhomhgrihhnpehgihhtqdhstghmrdgtoh
-    hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhi
-    thhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmh
-    htphhouhhtpdhrtghpthhtohepphdrugdrohhlihhvvghrsehmrghvihhtrdhorhhgrdhu
-    khdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:7gm-Z0_jga_goxNJcZYUb-mCkNEUXBgvwM_e1AW4GIKuUtgi5sR-Ew>
-    <xmx:7gm-Z_uGnreVkFJQ1ugNz5bhq8-dQ2ak0Dfad37wygOwPIJxNboGqw>
-    <xmx:7gm-ZzGXDzYCWI9NYnq81E9NxxrF9SEXBveKH2OC8pkw6asIBerkGQ>
-    <xmx:7gm-Z2P3Qlgcjg1u-8ilfeidxzoNdkUGR8ORn52fVYJ5KW_lcgmCdA>
-    <xmx:7gm-Z_JRp9Wl8lcDNNl1zKnn1ZlsrbM9jaz5qooS_EcuzG4VyjyeDIaT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Feb 2025 13:20:29 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Peter Oliver <p.d.oliver@mavit.org.uk>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] Fix Meson Perl version check
-In-Reply-To: <ac54ce2d-a00d-4e9d-2c79-fa6b8de4aba4@mavit.org.uk> (Peter
-	Oliver's message of "Tue, 25 Feb 2025 12:28:32 +0000 (GMT)")
-References: <Z5c4OzzHWOo30Hu6@pks.im>
-	<20250218153043.63535-1-git@mavit.org.uk> <xmqq8qq3kqyk.fsf@gitster.g>
-	<ac54ce2d-a00d-4e9d-2c79-fa6b8de4aba4@mavit.org.uk>
-Date: Tue, 25 Feb 2025 10:20:28 -0800
-Message-ID: <xmqqmse9khsj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1740510021; c=relaxed/simple;
+	bh=iKeMlbqfCF7U1viVGcUr0coAarnBXzFFG/CmlP8x19s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XDNewKLW2cghUsmJlkXnVBGMm4dcANb8q7umfYlqe13SR6Fvo0Cd3zyuqBK9pM69yYVkwYUik7jhu033d3If8YpbgRC9J21k3D3vndwTEUp9L22F3aviAWaROSMhviOZivlBNp/VUD3fgMqk/kpbHKBtQ2IpagUH6Uj50WS6BHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f50.google.com with SMTP id 6a1803df08f44-6e657ea2e6fso6824166d6.1
+        for <git@vger.kernel.org>; Tue, 25 Feb 2025 11:00:19 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740510018; x=1741114818;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CK7IcVxUVkJVk0Vzz26mOAA5bpI1qKM/icwKutlmf8Q=;
+        b=FCDUY9fiF1qTZtCpRg6AkibWSksjep00Yuy/9eBo3Sjtu6Kl9q8Hi0xbxtxPf1V6lu
+         Ptw4f8shlTMf8rZy3S3BZLccp6EmnG9U5hY16RWkaVHmADUR0+D5LB6uXeXi6U5nTj6g
+         EHzzhiTcgiPpl/8/S3nDqKjI5Erb2RTC/LVNzbiKJqbOSeFt2kcMb/VA88DPHHiBewgs
+         1RoSwVqBHO4bUy9YXuhk6rvVahLCXPqKb+X5aeIXxZKcVh0Cr0bCiXDucb/BzGrYx050
+         2IZ1VA+SgxV7MWZnZH1GD13DteDyC5Q810Lo+j6/f6h/dEHxhbEGL2UbJhuXIIcIvZUl
+         8mVg==
+X-Forwarded-Encrypted: i=1; AJvYcCVDQ3oRdcRinlb/qfwm4Z8swiU/Ug014gTJua1VKurWHCL7XW6TL1RAblKLJQmFqUnsY9Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwMOJqk6wiLGwfFtg63AOVXfI4BnsqAg6PumbP8bFEiepJ/Zcl7
+	+ctPbUyI2v2hMTvCvWUiKJAups4u5TgGxz/AyfeuQ4UQ+I4kQMfZYAu3dz7soBiAQq5NMdT0OFZ
+	/ce83YKi/9isJHbVc9PJ/D50nrSnzZHTu
+X-Gm-Gg: ASbGncuMepH3pMWrhtZcAl3Vmexagk/WGsDZvDQoaxOwCG2WXhAn5nvDEWQU3tFCXkL
+	U7nie6NPqIYdRroZpZ1zmMDp/AINhlQzcfP7lrZTlI2n5ER+DeQLLFG+vbi/LaEtccBxCqNTw+Q
+	Kqoi9O7KOfPKSfz0m+tNtxYF8srb0LGtTCb7uRPmJp
+X-Google-Smtp-Source: AGHT+IFROvF6j4LF02qsN6TTMPsWgpCp8jNPKwsLw6owjJDOjvitovkW0XnLfN0UKkORsMZXop8pkp2AC+73tpRswgw=
+X-Received: by 2002:a05:6214:262d:b0:6e6:6a6c:79fb with SMTP id
+ 6a1803df08f44-6e6ae5ff006mr93473426d6.0.1740510017508; Tue, 25 Feb 2025
+ 11:00:17 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20250225062518.GA1293854@coredump.intra.peff.net>
+ <20250225062958.GD1293961@coredump.intra.peff.net> <Z72sp639o8rxG1Qf@pks.im>
+In-Reply-To: <Z72sp639o8rxG1Qf@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 25 Feb 2025 14:00:05 -0500
+X-Gm-Features: AQ5f1JrlMMpf8zLPcNfnHRnV0myxj_xR15W2791KB2UXgCBXc2qTWxrg0hfsySc
+Message-ID: <CAPig+cSq89192SvKQRcPqDTnBEkVtLyrVMPmU989c5gwkO1tUw@mail.gmail.com>
+Subject: Re: [PATCH 04/10] unpack_loose_header(): fix infinite loop on broken
+ zlib input
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Peter Oliver <p.d.oliver@mavit.org.uk> writes:
-
-> On Tue, 18 Feb 2025, Junio C Hamano wrote:
+On Tue, Feb 25, 2025 at 6:46=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> On Tue, Feb 25, 2025 at 01:29:58AM -0500, Jeff King wrote:
+> > +     mv "$objpath" obj.bak &&
+> > +     test_when_finished 'mv obj.bak "$objpath"' &&
 >
->> I wasn't involved in the review of the previous rounds (so it was a
->> bit of surprise for me to be listed on the To: line)
->
-> Apologies if that wasn’t the correct process.  I am not a regular
-> contributor, and was trying to follow the process described at
-> https://git-scm.com/docs/SubmittingPatches#_choosing_your_reviewers,
-> “After the list reached a consensus…”.
+> The order should probably be reversed here, as we nowadays tend to first
+> queue the cleanup before doing the actual work. Not that it really
+> matters in this case.
 
-No apology needed.  Thanks for the update.
+I'd say this case is fine as-is since that particular cleanup *only*
+makes sense if `mv` succeeded. Moreover, if these statements were to
+be reversed, we'd need to take extra precaution (using `||:`, for
+instance) against pointless failure of the cleanup code itself; i.e.:
 
+    test_when_finished 'mv obj.bak "$objpath" ||:' &&
+    mv "$objpath" obj.bak &&
