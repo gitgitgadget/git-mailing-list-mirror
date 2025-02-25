@@ -1,114 +1,188 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA30266EF4
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 12:53:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F05269816
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 13:19:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740488014; cv=none; b=oV0xfANfHczUqJEoxWiVLllduLkxM3sTi2DjTqrBtIn/VcjSnyt/06Xje4GGio8wViXhdoqFIvcl/TT3sXryMBHw6SAx9QtbAFsLWfNt57WiYrCt0abrDhew3/C5XfWenvUSrEfyKbmuVQyCwTg7nuLp/U1TbZ+0z/ut2el4x0M=
+	t=1740489546; cv=none; b=Hczl9/vHNFfZDftejaP0MgYeH2aISFCaQwVttUQGRF2TsQyhqQQBovyQgdDVae2WiaGzmoTX7kGBrtWBy/o6DZJWJq0h7PJzsvUKb2y1MUCDxnd/ob/DJuOupx8nza6mNp+whVgyv1YxQ70eFUC6sRWVZHvMoN58GDLge/Y22no=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740488014; c=relaxed/simple;
-	bh=6w3VGmCi403XYusU3ObMucQAGvJEORTd9az5al0pYU0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FfwjWjt0Q526NAPN17BVF+RokOlEt2ZAFVkjmQ29xyUZ0AUVwxUUaZh0dzA/6h2SL/vz3jJ9rNcvf8XmV9zsLXgpLLzkggQqvnILi18GOKYcRf5OjCYKvaJLsXzXsCePVJ0axutw+gWLfxlTMDCALSv5EM1+kgs8uQbyG0cGpiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V00+gmpa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F6bj3ZyT; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740489546; c=relaxed/simple;
+	bh=pxIwqEs5FBpLRpZJHsGB+bEu6aNizd23MxS6muxzWBk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MT7ZZd3jAEwtrsldryjcYXCSvRjS5LG6OKhmeLy9GHayrtsHjLmMLoSvY7eVxsAROMCgRbJjS+GWkx7TKej0Xl+VeCqzwacYujiBaMe4aXsMM6D8VfZ5jF9lj2SFRoCXHysPWPVaM6YsFex6ZfDg+wou9nUwueHWQRgrbHemxVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VzQyKXAX; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V00+gmpa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F6bj3ZyT"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BE05F25400A5;
-	Tue, 25 Feb 2025 07:53:30 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 25 Feb 2025 07:53:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740488010; x=1740574410; bh=0jTp+AGI0j
-	aEiyjTPy2PH/aCF6zmDfdvKmnXb4KElX4=; b=V00+gmpaQSxjfJlASehO1mtq20
-	EBwrKR6O3Y9YEce/JD2hFoovpfh1ctilkqPhDWZx2JBO5tI+BVCo+N/mLi7QUJA+
-	rjBktwlESNZdopW9UUc36REs8MIFCf85QtWQTEYKIT1U7N3U97EEkWF6bivmpftk
-	xjd749hj6uKXruytbObmE68j8fXkbUHQxRtXBiVOn8TPelLCVrRnPM5XKvR3yLXI
-	LODpDD06rjAODoh+Pag7PHchwj1Nc5Pe6hkuZkD1IajVXQoc5RyV0HtSPxM9jMuG
-	w4faOB6+5nJvVxgLdWl9lgyQl6t4zKSEcA4O9IeAtcE2DEOns2WM+5T85alA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740488010; x=1740574410; bh=0jTp+AGI0jaEiyjTPy2PH/aCF6zmDfdvKmn
-	Xb4KElX4=; b=F6bj3ZyTL1hVyou3Q/XAWFkkfePnRt6GzvOSX2bdp2YptIQb4VJ
-	5Z4GMVW24ygdpwHV9pXHni0H9PcwWn3yG+pwJ0ol3wBaEoUh4jWKcK3qNnvfpI0V
-	rniHhl/03i3oPKYWW8Wt0K/zelUtJDlzlFZgYOJimFj+rznybOWBnOrQOuFQArIP
-	w/WrGUPHcLaGL/NzK4okBx2y2LJrynZ5a3SL7vlXcpYWUN8SvA1QPfIJ4bCifSCE
-	y59MXesUxD2/HTYxvRvMyjG02sytN9P7c2X1IiMToKpypLilOctlOcajzhskuHsm
-	bo/i3Si0cTVO0LjNVIX+PqJDvvbQexnJweQ==
-X-ME-Sender: <xms:Sr29ZyB1fO7Pk8NPB7fqe2rPebVoatIn2oQtGE-dbe-6rscQJ7WFEQ>
-    <xme:Sr29Z8i6rl1vfk9E3AcXiRYZWHEgSeK-NfLm4OUcMFjjRS9I9t6U6o2_JWufGe061
-    LZyPiNV130HnnTccg>
-X-ME-Received: <xmr:Sr29Z1mP9XZVpWnvEUIaw6zWpKhIYbaD2awt-PKDy1riY_clBoxqKPyYs2b7eX8wSwG6TUpTtFPJ8tM3qx1UQfQpgwD8zue-TT8g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekudejhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughr
-    pefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevuc
-    fjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgv
-    rhhnpeegueehleevveelffekgeehvdfhveefkeduudejheehgeekteeuteeufefgudehfe
-    enucffohhmrghinhepghhithhhuhgsrdhiohenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjvghllhih
-    rdiihhgrohdrgedvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Sr29ZwxrR97xDtJm0xBpmW8CnpGzhBYjWi_BqJkZJUkAa6Z5tWd6iw>
-    <xmx:Sr29Z3Qg6SHX_zw7rJadDxe2phzAdHVfVeG8c23m5UvhelpxTGShsQ>
-    <xmx:Sr29Z7alQecJq8BKYqZSkfMq3sf2QyjANmhByoMMqYj37143BL-4Sw>
-    <xmx:Sr29ZwSkOnxYYmoAsHrxvV0Xs9sLs06uhd2YKJEslHCGlejXbGRRqQ>
-    <xmx:Sr29Z2FicUS8jnK5GaTUUjpxiH6ePd5q9Dat51i4AMu4HyLd-Tdayt4I>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Feb 2025 07:53:30 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Zejun Zhao <jelly.zhao.42@gmail.com>
-Cc: git@vger.kernel.org,  karthik.188@gmail.com,  newren@gmail.com,  ps@pks.im
-Subject: Re: [GSOC][PATCH] apply: address -Wsign-comparison warnings
-In-Reply-To: <20250225032444.9901-1-jelly.zhao.42@gmail.com> (Zejun Zhao's
-	message of "Tue, 25 Feb 2025 03:24:44 +0000")
-References: <xmqqv7sz76zl.fsf@gitster.g>
-	<20250225032444.9901-1-jelly.zhao.42@gmail.com>
-Date: Tue, 25 Feb 2025 04:53:28 -0800
-Message-ID: <xmqqseo2kwxj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VzQyKXAX"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-220dc3831e3so101954975ad.0
+        for <git@vger.kernel.org>; Tue, 25 Feb 2025 05:19:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740489543; x=1741094343; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tSt4ej6rRVg9qGNkJQYQ32QCXadTLhsG9HF5V5rT5gU=;
+        b=VzQyKXAXhvxj0I+G9mVbZXtW2H3+dKrg4gnNJZN6NV7mWPRqgAIoDfR8I++UGBlB8/
+         YpP1aWemIzp8lVKNibaMc5+xrhpGAMa27Wt66gkT2Y4UnoCyjWzSJ3bB5/i/Chj7Gk4l
+         BjNaOjl8HsF8mlGDa1mDOAyyAIh1jiGLZOZi+6sKQCwBdJ6fvyWpevcIn5P+8pyj7auh
+         AFiYqJ3UvlJ/hzgUgrZt54exbkcMp9N6YBSt9Ly0dx38HdHh+129vQZk1MVolwmVYpU3
+         QZLtL0uNupaYYvd6zFJO17M5H9GCfBWPuwDyShxLgUyXXXxN8ZNrXU2McCxwtt7TUxvX
+         qedA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740489543; x=1741094343;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tSt4ej6rRVg9qGNkJQYQ32QCXadTLhsG9HF5V5rT5gU=;
+        b=n8ZkK8cWPWvqgFjoBeN0t1GY9bV//dJBr1K2JnGxTwDxWI0xHn8DiwUb7N1ZmXAkhC
+         V9hMfwLM47I6u555lG8EFBGaJt/5OhT+V8UdGRn6ewDIfnDfFk1WBXaX9XEk6WfUCECk
+         Dvr5kOxySPpp83/A+GQKGQlnPgqNBhMwzQQGNbg25U1wEYAxdDJtONuRoN/eRHVaN2Ev
+         k00XxQI5qvSvgEfkZVYNsGNCZFiwirG7sNyrxIdGMsFrn/D3jF+b1jsvoIzwTEQescGA
+         vwM7vV6Nc4IgC6bf08jfmiC58v+EwEruHjKNLE2HvjI4DNzUX3cQisDhm5E9bIV4HG9W
+         imhw==
+X-Gm-Message-State: AOJu0YzNN3WDpYWtDUC0hWXj6eD2S9GpVswmDIzcBPH7bBpKxonE/LTL
+	1X03MeY71WI7eXflt+WD1G1qr8ehS0peYrVNfYVyNnwNKi1pRNqPlc/8hg==
+X-Gm-Gg: ASbGnctp87iAmcJNBgtQSN7XpzQ77S31SQmz2wcM8FPd7TDdkjRTDpHsRivLJ6qhreT
+	EmPWw8IMx4gD3Gg4L8/Ci9YNNmg3n0aaLoAT/JvxwlIunJqHQMzpR5q1J4hpt8B9qnrS0C9/uag
+	VytDLgLd10zZML/cdPiESi/Wor5qWJz8o2Oj9yE/w5goD+kIZGDgAOOU4J+S7JO9OY6dQPcLKmW
+	1q9JtWN8RfgudOkIF7iARb4/XM9w+upLPvBMW2NadQ/y8FVrFCdsWcFwE3QqS36DXPVq8Iyqkbw
+	7+kgk62sye9I2esFYAOeeA==
+X-Google-Smtp-Source: AGHT+IHQYIfC++qvnfz7+EfaIFtki47FtDmvhheYkqHNWLsCD/UxbS8/pOm+INbR8/4MA13AV/WQsw==
+X-Received: by 2002:a17:902:c411:b0:221:2d4b:b4c6 with SMTP id d9443c01a7336-2218c5576c9mr317320915ad.17.1740489543217;
+        Tue, 25 Feb 2025 05:19:03 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-2230a000995sm13708215ad.46.2025.02.25.05.19.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Feb 2025 05:19:02 -0800 (PST)
+Date: Tue, 25 Feb 2025 21:19:11 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Subject: [PATCH v6 0/9] add more ref consistency checks
+Message-ID: <Z73DTwr9RicKMINe@ArchLinux>
+References: <Z7NU5fZfc8vfSvZ0@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z7NU5fZfc8vfSvZ0@ArchLinux>
 
-Zejun Zhao <jelly.zhao.42@gmail.com> writes:
+Hi All:
 
-> Thank you for explaining. I'll separate the desired changes from this patch to 
-> another since the topic will be different.
->
-> By the way, should we remove the idea from the microproject list now that we 
-> may not want it?
+This changes enhances the following things (v6-changed):
 
-It is not like we do not want it, I think.
+1. [PATCH v6 2/9]: enhance the comment.
+2. [PATCH v6 3/9]: use '' to quote the file in the print message.
+2. [PATCH v6 4/9]: a new commit message to explain why we can tighten
+the rule.
 
-If you read https://git.github.io/SoC-2025-Microprojects/ (the first
-entry) carefully, it does not say "find anything that -Wsign-compare
-warns about and squelch the warning by using widest type common
-among the quantities involved in the expression the compiler warns
-about" at all.  Most specifically, it does *not* tell you to achieve
-it "by using widest type".  You would squelch the warning using the
-most appropriate type, which may not be the widest one.  In the case
-we discussed in this thread, it was line number whose type was the
-platform natural integer, but mixed up with other size_t things that
-caused the compiler warning.  Blindly using size_t to squelch it may
-not be what we want, but that does not mean we do not want to
-squelch it by doing something else (like, by not bringing "size_t"
-quantity into the picture).
+Thanks,
+Jialuo
+
+---
+
+This series mainly does the following things:
+
+1. Fix subshell issues
+2. Add ref checks for packed-backend.
+   1. Check whether the filetype of "packed-refs" is correct.
+   2. Check whether the syntax of "packed-refs" is correct by using the
+      rules from "packed-backend.c::create_snapshot" and
+      "packed-backend.c::next_record".
+   3. Check whether the pointed object exists and whether the
+      "packed-refs" file is sorted.
+3. Call "git refs verify" for "git-fsck(1)".
+
+shejialuo (9):
+  t0602: use subshell to ensure working directory unchanged
+  builtin/refs: get worktrees without reading head information
+  packed-backend: check whether the "packed-refs" is regular file
+  packed-backend: check if header starts with "# pack-refs with: "
+  packed-backend: add "packed-refs" header consistency check
+  packed-backend: check whether the refname contains NUL characters
+  packed-backend: add "packed-refs" entry consistency check
+  packed-backend: check whether the "packed-refs" is sorted
+  builtin/fsck: add `git refs verify` child process
+
+ Documentation/fsck-msgids.adoc |   14 +
+ Documentation/git-fsck.adoc    |    7 +-
+ builtin/fsck.c                 |   33 +-
+ builtin/refs.c                 |    2 +-
+ fsck.h                         |    4 +
+ refs/packed-backend.c          |  369 +++++++++-
+ t/t0602-reffiles-fsck.sh       | 1205 +++++++++++++++++++-------------
+ worktree.c                     |    5 +
+ worktree.h                     |    8 +
+ 9 files changed, 1162 insertions(+), 485 deletions(-)
+
+Range-diff against v5:
+ 1:  b3952d80a2 =  1:  b3952d80a2 t0602: use subshell to ensure working directory unchanged
+ 2:  3695586f58 !  2:  fa5ce20bb7 builtin/refs: get worktrees without reading head information
+    @@ worktree.h: struct worktree {
+     +/*
+     + * Like `get_worktrees`, but does not read HEAD. Skip reading HEAD allows to
+     + * get the worktree without worrying about failures pertaining to parsing
+    -+ * the HEAD ref. This is useful when we want to check the ref db consistency.
+    ++ * the HEAD ref. This is useful in contexts where it is assumed that the
+    ++ * refdb may not be in a consistent state.
+     + */
+     +struct worktree **get_worktrees_without_reading_head(void);
+     +
+ 3:  cbaae00e8b !  3:  787645a700 packed-backend: check whether the "packed-refs" is regular file
+    @@ refs/packed-backend.c: static struct ref_iterator *packed_reflog_iterator_begin(
+     +		 */
+     +		if (errno == ENOENT)
+     +			goto cleanup;
+    -+		ret = error_errno(_("unable to stat %s"), refs->path);
+    ++		ret = error_errno(_("unable to stat '%s'"), refs->path);
+     +		goto cleanup;
+     +	}
+     +
+ -:  ---------- >  4:  f097e0f093 packed-backend: check if header starts with "# pack-refs with: "
+ 4:  b9ce8734ac !  5:  a589a38b68 packed-backend: add "packed-refs" header consistency check
+    @@ Commit message
+     
+         In "packed-backend.c::create_snapshot", if there is a header (the line
+         which starts with '#'), we will check whether the line starts with "#
+    -    pack-refs with:". Before we port this check into "packed_fsck", let's
+    -    fix "create_snapshot" to check the prefix "# packed-ref with: " instead
+    -    of "# packed-ref with:" due to that we will always write a single
+    -    trailing space after the colon.
+    -
+    -    However, we need to consider other situations and discuss whether we
+    -    need to add checks.
+    +    pack-refs with: ". However, we need to consider other situations and
+    +    discuss whether we need to add checks.
+     
+         1. If the header does not exist, we should not report an error to the
+            user. This is because in older Git version, we never write header in
+    @@ fsck.h: enum fsck_msg_type {
+      	FUNC(ZERO_PADDED_DATE, ERROR) \
+     
+      ## refs/packed-backend.c ##
+    -@@ refs/packed-backend.c: static struct snapshot *create_snapshot(struct packed_ref_store *refs)
+    - 
+    - 		tmp = xmemdupz(snapshot->buf, eol - snapshot->buf);
+    - 
+    --		if (!skip_prefix(tmp, "# pack-refs with:", (const char **)&p))
+    -+		if (!skip_prefix(tmp, "# pack-refs with: ", (const char **)&p))
+    - 			die_invalid_line(refs->path,
+    - 					 snapshot->buf,
+    - 					 snapshot->eof - snapshot->buf);
+     @@ refs/packed-backend.c: static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
+      	return empty_ref_iterator_begin();
+      }
+ 5:  9f638b3adf =  6:  7255c2b597 packed-backend: check whether the refname contains NUL characters
+ 6:  2c5395bdd0 =  7:  7794a2ebfd packed-backend: add "packed-refs" entry consistency check
+ 7:  648404c60d =  8:  2a9138b14d packed-backend: check whether the "packed-refs" is sorted
+ 8:  4dbbacf44b =  9:  ccde32491f builtin/fsck: add `git refs verify` child process
+-- 
+2.48.1
+
