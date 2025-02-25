@@ -1,123 +1,138 @@
-Received: from mail-il1-f176.google.com (mail-il1-f176.google.com [209.85.166.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA96C1F60A
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 07:36:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8266433B3
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 07:39:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740469006; cv=none; b=vBtBJiiXT8sY2WXKaDlVJU3TphFNF+BMQbSQSamhWtqUgAzsw5B1V9X/FBtblz6K141S4+C65OLGoXQEe0CsZhKNizwaFC1pwzhWur6xrD73RyyIFoN5YwoMPaNZCGSMdaREh1/kba4zfAjBeOLvh5hXOHgWwcQ89p2H7PfgLLU=
+	t=1740469191; cv=none; b=rwv3G7zmDrMqwcEOJ77s3jqzevQ1+wfVLisUxyZfeKydwBTDEWzGiM6QJRCJJ0hx8eFa8U6MlmemzI7BjrMVSmrHYHPy4IzetekM+Hz34tuW+BIPCYiUsdnIgyaZ7x5wddA2POfFPUM4sw8NaDzczYEU0U0tfAjQcSxSqYEKpo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740469006; c=relaxed/simple;
-	bh=nOeSbh60/Me6W30k54bnze940VSTqWoTvCqVX//d2AE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eXabe1VAVvueFEisgnR61z3eSkf/1jIdlseSkbPcE2FptdmH0cbBzeHE3SiocC/HWxw0mPRYlrzx8WipKhyORxn3qTHOqe+UmxaQnnwGE1GSLhX5ZFxaMLFj3mu5dre6arli/vzaK8d11VDT63+g0Xmo49rCAKYZlLMENQNnt9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N7SN1y1N; arc=none smtp.client-ip=209.85.166.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740469191; c=relaxed/simple;
+	bh=WPlVcbX7Of9SuzW/ZBetSRP3Wpcy7TVQ0l02xtbHhYg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FdKhtSTFclkNjkYz3wzuiHR4AdBuJEKBRTCd+NwAnp/MdxE8BYksOthw5DHXK89gRT6F9TmcRMPHMg8oGpxFmwk/hKOYZt3P1WboWVleuI8OtbyEvtYGlExUBFW0JBeKJ3pb2Icwq8+x7LJRv08Mp6Qygrm+2OR2z35rC+D9+MY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DNe3eyXS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uIBjxHTj; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N7SN1y1N"
-Received: by mail-il1-f176.google.com with SMTP id e9e14a558f8ab-3cfc8772469so16654715ab.3
-        for <git@vger.kernel.org>; Mon, 24 Feb 2025 23:36:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740469004; x=1741073804; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WQcl2+Mb809REerAQG9lIBCTXKXELhovC3DI5/sYD8Q=;
-        b=N7SN1y1NbC/n3vvV4DDkrR+1OqlKKUn46CD8UNYWMnjMC2Pw31m4b1gfa6fvVdlP0I
-         ONkeKHmoG4sPCYyhj/zXkvNaXDHiKzzFLmMNqtxWano45hjfgKG5YfySrcTYinkG+WjU
-         hRFSABVGiOP3v7y99LrHHYpfWC9VCpdOgMNgoEklvXLMIpaiKNzS+ZJyyhIdj/DlD7cY
-         aiHGhJmzhWnNcjaLCpESxJR+8DcS+ioLrrwbqYpqBTt9JYZR1WvYVXgYcT3gpS2ZFIKw
-         SvP4Mzi3W6mwWe6rYLmdGxouzWydvSvhBAiMurhKwnGvhNr5xJ6Wus5G17SXFGuiM7Ui
-         Si/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740469004; x=1741073804;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WQcl2+Mb809REerAQG9lIBCTXKXELhovC3DI5/sYD8Q=;
-        b=lSZEypdit0KoOhx86gopo/riUPZ/oLpaweeSfPF+9uRBBGIzoMoWQqUNdOANM0mZ7d
-         dCTVZQO1cnB2SNdeDJuyZ1FrJemX1W2s097GRCeXU7kBpLx0x6rLU1H+tdmnTva+tZUN
-         BuqL4f1Ii7EVgqhuptc9KVN1R6wgU8BeFp2pv2WhawwhrRQgBVEyeqWYTvOIfgdZ9/Yj
-         yRfyN2JVa1xh5ZF+3cN8gRMui0OTO/T3RXdDCm6k2SY/EF3pvPpGkCGHQUx+B0oZ8FO+
-         QTgK31vX0GUoBmMyvlG9VXtn+e7bOMm5x7WUJgqM0cAw4F9JqMldnxzd3fIkz4VCqsPU
-         zyxA==
-X-Gm-Message-State: AOJu0Ywh4yHJjySRuymhsw8ZRzDHbRO0yO9FqrGYPB7VqTKmcULq46Q6
-	HoEs+B6Pb3cFBHoG1AldmP0WEFXFwOCiwBDipTs38Qq5wju3stcTr9gIEKXEr121f6KLwH+bnQk
-	z/RhG3Bku76I5BEi6suDTn5Pdiw4=
-X-Gm-Gg: ASbGncvNwSxHaYjDvp3nhJ4V5vjDWZi2i8GKI942mt/q+OsWa/zvnAneLpCQk6+2m35
-	X+FBRUGlqHEltAdZNX6oFNbZDQhp8RB/UBL10VO2zoQupc4+WU4jVTJ/I0Y134JcAZElWTGBYSo
-	g0Lln201hLNZhQyCaXjVeksH7MJlw/0/V+i3LDrzc=
-X-Google-Smtp-Source: AGHT+IFNEEOdx2YMv+9a4BzgFIMxJ5D/Qgz8qHFAUF+rNzz/qsM/atR3zNDxrNnV/jjm2fh7S3pjtYhq1BcTHmazLmo=
-X-Received: by 2002:a05:6e02:1a2a:b0:3d2:6768:c4fa with SMTP id
- e9e14a558f8ab-3d2caf0980emr181064045ab.21.1740469004005; Mon, 24 Feb 2025
- 23:36:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DNe3eyXS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uIBjxHTj"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9F2CD1140171;
+	Tue, 25 Feb 2025 02:39:48 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Tue, 25 Feb 2025 02:39:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1740469188; x=1740555588; bh=ccpjmiV0/c
+	fmk/qlj9j73MQqo3IWMykurEWYmoDzxXU=; b=DNe3eyXS9iUQmf54X/jp3kSF04
+	zdd6ReBhS771ARuqNegogbBmPyEfTvq26voqBReU+Cydnw7P8SPUz4Vn7J0hJ5No
+	8I0FXRwosoSc5uDQdjJZ7ggZZVuyns9VksEyrDZiMN33I+DMkGcv5RIhGhEYqYTW
+	02gaouLiZcjXw93Mg31n18havHq1G5960ej9kZ7RFR5muC2DD2koVCt3b8JmY+pn
+	lKWUUqkVOo3/gIcgpOAh8N1r72isIqQTE6pIHz88VdFsGL3Ut/rAhjUMOmNEmivf
+	uhaOcur9WhZm5KeeFCrZ5Fh1fUskniJlQtN+gvc+6Ez2giWV87If5k/q5/aQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740469188; x=1740555588; bh=ccpjmiV0/cfmk/qlj9j73MQqo3IWMykurEW
+	YmoDzxXU=; b=uIBjxHTjSFQrXnVrrLGvw+P6qqx7oj2+cAY3t3AbnFYLIieS/td
+	g2pwpNAfM0SEcMKNimTUffPNME0m+uYApuODrfp5LGCRqIvmGR/fdfcdhefgL0LA
+	G+egPbd0dAbx1Gr+rqU0SGNEzZHQeSX+B/GvGzHdtuqcEpBpmJp7lm9he24fjhGt
+	uQYhbR9FkeW3RY65ICybc1rvLXrhej01vqZu+7sbTwnruJfjqGnQcM3+1JS21plM
+	JBCePQvZBj8xwYzcmTGMv+8yBgb0+MulTLStjgjEZv17yyoU3BxSn12qCMd6H9ao
+	k1deIpsyxT1Mhe4TGsAvHgUObjFHpyVo03g==
+X-ME-Sender: <xms:xHO9Z71qRBpKYtfGUlIc6zUvMQUYS7PXs9LW5QYvkNRkuaA3SOxz2A>
+    <xme:xHO9Z6FcOTsMP-LsvBtD_yFtMRW9ehcdvYg_gAGx8O-66igbYu-o_Ez2AQj8RJCl6
+    KwZqLo7qjzY1lWD2Q>
+X-ME-Received: <xmr:xHO9Z75ucbpCHy8Cd50kEtbKuutQvUkQenka6wnwGen_lNUQL2NnB1kBMpZSC9H7_9yvVymwl3_A5u5iUBlP9SUlG-Xy_vY98B0dWHnfI72NIg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekudduvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggr
+    lhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
+    hpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrgh
+X-ME-Proxy: <xmx:xHO9Zw1H1mtxa4LL1rZzDzuXeVevXAp2Q3DyhF8hM24NdV1pwng3ow>
+    <xmx:xHO9Z-GyUXD1nqApWRmMCfbPlO_-M85mavLbwfnDkSlpND6Z4fU9Yw>
+    <xmx:xHO9Zx_s0b8aIB3G96udQfx2H9yvVJVl0xAC48mpw0qOYimLwDOKbA>
+    <xmx:xHO9Z7n0tkeILM_ufG_9MZVdj0-jOo86WMr-qG-XQTfdgcS394EWsA>
+    <xmx:xHO9Zx1Rp8eObVAqL1PYv6ma37ngH3FADlEQqjhnt2RvfCb8VRusGsVl>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Feb 2025 02:39:46 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 75f833d1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Feb 2025 07:39:46 +0000 (UTC)
+Date: Tue, 25 Feb 2025 08:39:44 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 11/16] refs/iterator: implement seeking for merged
+ iterators
+Message-ID: <Z71zwGNcKaX7mGAl@pks.im>
+References: <20250219-pks-update-ref-optimization-v2-0-e696e7220b22@pks.im>
+ <20250219-pks-update-ref-optimization-v2-11-e696e7220b22@pks.im>
+ <Z7x2IEdRP4fzdXMo@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20210430232537.1131641-1-lukeshu@lukeshu.com> <20250224142744.279643-1-christian.couder@gmail.com>
- <20250224142744.279643-7-christian.couder@gmail.com>
-In-Reply-To: <20250224142744.279643-7-christian.couder@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 24 Feb 2025 23:35:00 -0800
-X-Gm-Features: AWEUYZk2jNc9QaYUcFr91bYDRVnB7zbclqGkSy0K4ST9BboiQs39FGXKhAM5fZU
-Message-ID: <CABPp-BErRqke5DH7c3+u19iw1U5JgWYB=xcUwrE3NObf=EYz1Q@mail.gmail.com>
-Subject: Re: [PATCH v5 6/6] fast-export, fast-import: add support for signed-commits
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
-	Patrick Steinhardt <ps@pks.im>, Luke Shumaker <lukeshu@lukeshu.com>, Jeff King <peff@peff.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Taylor Blau <me@ttaylorr.com>, 
-	"brian m . carlson" <sandals@crustytoothpaste.net>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Luke Shumaker <lukeshu@datawire.io>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z7x2IEdRP4fzdXMo@ArchLinux>
 
-On Mon, Feb 24, 2025 at 6:28=E2=80=AFAM Christian Couder
-<christian.couder@gmail.com> wrote:
-[...snip...]
-> diff --git a/Documentation/git-fast-export.adoc b/Documentation/git-fast-=
-export.adoc
-> index 1b19f17b78..8750dd150b 100644
-> --- a/Documentation/git-fast-export.adoc
-> +++ b/Documentation/git-fast-export.adoc
-> @@ -43,6 +43,17 @@ they will be exported, but you will see a warning.  'v=
-erbatim' and
->  transformation affecting tags will be performed, or if you do not
->  care that the resulting tag will have an invalid signature.
->
-> +--signed-commits=3D(verbatim|warn-verbatim|warn-strip|strip|abort)::
-> +       Specify how to handle signed commits.  Behaves exactly as
-> +       '--signed-tags', but for commits.
+On Mon, Feb 24, 2025 at 09:37:36PM +0800, shejialuo wrote:
+> On Wed, Feb 19, 2025 at 02:23:38PM +0100, Patrick Steinhardt wrote:
+> > diff --git a/refs/iterator.c b/refs/iterator.c
+> > index 757b105261a..63608ef9907 100644
+> > --- a/refs/iterator.c
+> > +++ b/refs/iterator.c
+> > @@ -96,7 +96,8 @@ int is_empty_ref_iterator(struct ref_iterator *ref_iterator)
+> > +static int merge_ref_iterator_seek(struct ref_iterator *ref_iterator,
+> > +				   const char *prefix)
+> > +{
+> > +	struct merge_ref_iterator *iter =
+> > +		(struct merge_ref_iterator *)ref_iterator;
+> > +	int ret;
+> > +
+> > +	iter->current = NULL;
+> > +	iter->iter0 = iter->iter0_owned;
+> > +	iter->iter1 = iter->iter1_owned;
+> > +
+> > +	ret = ref_iterator_seek(iter->iter0, prefix);
+> > +	if (ret < 0)
+> > +		return ret;
+> > +
+> > +	ret = ref_iterator_seek(iter->iter1, prefix);
+> > +	if (ret < 0)
+> > +		return ret;
+> 
+> We could simply use a single `if` statement to handle this. Is the
+> reason why we design this is that we want to return the exact error code
+> for each case?
 
-Should this also explicitly call out that the default is abort?  Yes,
-I know that...
+Yup, I don't want to loose the error code. We could write this as:
 
-> ++
-> +Earlier versions this command that did not have '--signed-commits'
-> +behaved as if '--signed-commits=3Dstrip'.  As an escape hatch for users
-> +of tools that call 'git fast-export' but do not yet support
-> +'--signed-commits', you may set the environment variable
-> +'FAST_EXPORT_SIGNED_COMMITS_NOABORT=3D1' in order to change the default
-> +from 'abort' to 'warn-strip'.
+    if ((ret = ref_iterator_seek(iter->iter0, prefix)) < 0 ||
+        (ret = ref_iterator_seek(iter->iter0, prefix)) < 0)
+            return ret;
 
-...this paragraph implies abort is the default, but I imagine we
-eventually drop this paragraph, but
-it'd still be useful to have the default called out.
+But assigning to variables in conditions is not something we typically
+do in the Git codebase.
 
-[...snip...]
-
-> @@ -611,6 +615,44 @@ static void anonymize_ident_line(const char **beg, c=
-onst char **end)
->         *end =3D out->buf + out->len;
->  }
->
-> +/*
-> + * find_commit_multiline_header is similar to find_commit_header,
-> + * except that it handles multi-line headers, rathar than simply
-
-s/rathar/rather/
-
-[...snip...]
+Patrick
