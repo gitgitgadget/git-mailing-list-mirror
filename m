@@ -1,55 +1,55 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6231264A85
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 08:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D8D263886
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 08:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740473773; cv=none; b=m//V28/ecxvRTEWWMDd5EA3ezS+kqPKX4bZIPtz9ubw8wjUKTTn1u6D1QDXUKe5JyCjsow5LfetE3EogC3xjkLSrfG8TWB+9i6Ogt35tBjfkcEugkNTwuL3/DlYoNABVlgmor1+aKN0tNXp0cWWvAonLF8ZWk9mUH9wR7G/wK3o=
+	t=1740473774; cv=none; b=M50HnAqUKO4uADG84/U0ISElL5XkLPNswDISjuk58pMSpM1oyfs70dFkqnBwKTfUHiFD3pVA7YwPZ+rjC1VeFLBWBQTpZcTjh7TxHuqsJhhUgob11LHV+r02reaOYu6bmPF3W+Ok6I3dOHDyJv8Hdjn9yXPo5J+KNT1L4Ib1lHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740473773; c=relaxed/simple;
-	bh=txu1IjfbZPni2Fra5Gc3NMvE3WmrtIj8rxYQzMXzP8s=;
+	s=arc-20240116; t=1740473774; c=relaxed/simple;
+	bh=/0IFBjka5RSKHN0lmTDzuZsfqgESV5sXl0oGulLXHZI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=fiaRTcDf/SrbxOZbt2QjLBwbnER17/D8b99B0lQc/r2dY/jOJ4K7+hPVYNp+BNzp0jE8kJx00rLkQh+rVV0E+6XI71xLHiZVJRmD6+UJeOh3nayckS93ggeykZ7s2WTtEpcVBRip//MB40YQB5o8KMutUc+TXA9AS/yS5Sxv76g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dWTnXAnV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=zxOiWcy9; arc=none smtp.client-ip=202.12.124.154
+	 In-Reply-To:To:Cc; b=n1ho0iqA6qZcAE9K4gfRdWjyHU9BpQ8yVs2ZrXERbj7gQmVfG/uuugXgURov6uMYK9+32r3xCe7fwEatXCavBrfJs9Ksh34MJtegZDOfN++3v6kHH59+MvSWxhU+L21zfVvTM7KIdLBcOyV/4NOxtExF+NkXXLQPOaxYajV5qbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=R3NJwl+7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wdPs7a4d; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dWTnXAnV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="zxOiWcy9"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 93DF42540172;
-	Tue, 25 Feb 2025 03:56:10 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 25 Feb 2025 03:56:11 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="R3NJwl+7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wdPs7a4d"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4BFA72540170;
+	Tue, 25 Feb 2025 03:56:11 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Tue, 25 Feb 2025 03:56:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1740473770;
-	 x=1740560170; bh=i3iYXsudXN18OtJXYMxjz0oLv0rXxHPKTgBwEaDgrUs=; b=
-	dWTnXAnVQHV/cmQEBaKPRlWvg1MUWnQ83lEX2BktgtphRKaAFHqO5/utV4yNPQjc
-	RxX4cHcFCflEBpEQe5x7898RlR2AAJ9JUZw3OGDZa0ZE+bglfIQYNlZUDGuVyltC
-	3WutZ+1NWbJTQrByviMownLGsFYBmS8XRbnObZNlGOcM7DtYJX2HhPtkor+0wbnA
-	AaDum0nEWQpnm94w/x5i05RhdvNqEz1HHcD4Ud9/8a5EaSTwN1VCFj9DvSBDu9xP
-	/1o29BbiL4yAmw4GhjvOXyNlvfGlV6mh+mgT73Sf/bIwsUuWO07k21ZNRmJzbuhU
-	lHHwdwTZbL8Qw5k4VZXUZg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1740473771;
+	 x=1740560171; bh=VfvnvaeRNnx9p7EKMFVlxRCbr6h/1hEIn5aWI/k40SY=; b=
+	R3NJwl+7rQeC9PLoIejVh5nUGd+tt7y5MP3Cx+0PyCM9RatueDTwF1lOEMsrfGA8
+	DaNpZX2comd85+hHvrzGkpl99qhFmMalCx6tPQx7zUpkt6FiHzsUquuoqwnZEzit
+	Z7Len1yPFlXo7eTiVG/Rg3tYxjef3zFVJrFlh5VOOhoJcw+ciVyXnFthdLm1Fncs
+	yvUMw0dCO59bPxoEqSq6d/9iAhIyEtQ3rXNY4w1Unm5rYUfT4rzmelNgX7bu0PJC
+	JQ8gv8FBWa8njReday+b/udZP7vkpOBLqmrqzLnuMrDI4Apo/F4+zjEonlscWRyh
+	QyrW8FKaO8H1LLkuQRuiTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740473770; x=
-	1740560170; bh=i3iYXsudXN18OtJXYMxjz0oLv0rXxHPKTgBwEaDgrUs=; b=z
-	xOiWcy9bwMsPCU3OqjiKhmxYRk59oiflA1HIgqiS1r3QQJpu5dGcUgNVrZpTJeM6
-	YRr3PTYG3t6WyTipMYq2kbxAFZBK679z7v9rQQgA44VKSp1hmucc9irx7a1cI4zi
-	UEg0ycPz2nKgWhBzFQY93wqJUfakgbRrMPamGBgWXEP37WIa0j7Vd1DVAGNED9Ls
-	DOP/PWHWNr3V+V/Cpqh8mmeOUDrzD3Cj01eoZ4vm7LYffqv8uJx+w+R06SfM56Yz
-	ccTY86luK5YfoYTRn14eQ2ZssyPClc6UEsUxqrzrLCnpb6Pxo89ZbhSM50h7RXq7
-	XWt+w7puqY2LFSt5ovGLQ==
-X-ME-Sender: <xms:qoW9Z3bE8AsV9v8NmdnHWUq0MAi8EUWQnCZnaghWGLvhHwHOGGGt9A>
-    <xme:qoW9Z2bGwx6K4cmiyunTsK3LQ3Tby6j6Sd84SVRWXJmNO9Pu-OyY5kFyYIqDf2MEZ
-    ffrzbNIZNu2CnC0eA>
-X-ME-Received: <xmr:qoW9Z591A08tWVYqzBhTrklf73cMpfYpzIzAVq5nF-UTgqvpinXdzn14FO0lmr5qB8kO5WVzBAJ9Yj2qtm03ik1Cg71N_mpMhO1p_IG1omT9bQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740473771; x=
+	1740560171; bh=VfvnvaeRNnx9p7EKMFVlxRCbr6h/1hEIn5aWI/k40SY=; b=w
+	dPs7a4dbVBOSSZltSiuisgkn62xFw1F+5/H8DbsJtdZJXmRl/EL7krInYL2bDzDD
+	7bk2r/UZNoZQfm3Qu6u9pgo9fA2WuYxLUBuOXZOiei+kaYhJFrTe9cebCXruSurU
+	+P0bprcbLF2ixuGc7ykqMpa8G6NgK8+cM5q9Q3PNRaEdStu7fPJZ0XO3hUkYlRjp
+	9TT6a8imDC+KTmIOYMyUK7j2ONBiprL3bZjgAECBKzgGJ0Ft1BDQ2VzRDDQfdyUp
+	9nTJNfne+R5gzAImMH57jiZZ925IiSSzNoPnZggwyuCfxmPZCbVlzsUZ4LVhwg1k
+	Xt9KIWC9lh+wWEkoxYbPA==
+X-ME-Sender: <xms:qoW9Z2vJTHtCfSoxJiBtKu537yMGxDp1HzleI5KyZhyi7TklkhAxLA>
+    <xme:qoW9Z7cAQj2vGfJfDJZ2A39unOfbl_O1w2sPJ2quYyLFAMCRgLjCVNzCrbYOmHTFk
+    cZYUlKWnk_-0XOyVA>
+X-ME-Received: <xmr:qoW9ZxwQ07MXjtDgpiWGm1iPdoklQvJ3PxmFeC8NlOG7UyA4F2Z_v9vUb321g9fR3DGX8dvJJvnHrfvsufFsxtfhV79QpfRE6f6tofdFhB6Vrw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekuddvkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -58,26 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekuddvkecutefuodetgg
     himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
     heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhi
-    drohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhs
-    thihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvthdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:qoW9Z9panVXrrkkVsOeo1IANgTwFmDOwS6VV26Ap2yzCPX-xezw-9g>
-    <xmx:qoW9ZypP29xG1dSHAfCi91-OkVXS1Oqyr8TRpauTLrMZ1Zcr048xsA>
-    <xmx:qoW9ZzQNH_qyKSDmEQta0ZPsz306MOWAciTAxism8z_EVe1REv_e2g>
-    <xmx:qoW9Z6roohsTdEBwlCgAyorXkkEF25QSZ67-4XTQXmoT3_78bQ3lLw>
-    <xmx:qoW9ZyK242-DJYU0mZEV-EXqGJBrNiwdPX4a2b9sKOSs2csSYTDXobmb>
+    pehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhgvjhhirghluh
+    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
+    phhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprh
+    gtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhg
+X-ME-Proxy: <xmx:qoW9ZxNwCpiWCL3KE2seWB1KbgFSR8--oDEzXEBkqL0al72CoKIqIw>
+    <xmx:qoW9Z2-O6iS_irRqSnCaXXmcoWfR-VuS3YPN9syHnMDJqWNzsYfABg>
+    <xmx:qoW9Z5X7EIU-RI3UGN5kFLE3_khsIjSgrn4i8lUZ314BfAs59VcUJQ>
+    <xmx:qoW9Z_eNPIAIElPzvoXI3iG3UYq0pmPhNnhBNLym_Uw365_3kuSqtw>
+    <xmx:qoW9Z7MmGfeIlraHvRlIXvKnSu07VzqpMvRq-defR1dnT9ZZpad-pWhg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Feb 2025 03:56:08 -0500 (EST)
+ 25 Feb 2025 03:56:09 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 5a2e0304 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Feb 2025 08:56:07 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id b9e7c1fa (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Feb 2025 08:56:08 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 25 Feb 2025 09:55:58 +0100
-Subject: [PATCH v3 12/16] refs/iterator: implement seeking for reftable
+Date: Tue, 25 Feb 2025 09:55:59 +0100
+Subject: [PATCH v3 13/16] refs/iterator: implement seeking for ref-cache
  iterators
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250225-pks-update-ref-optimization-v3-12-77c3687cda75@pks.im>
+Message-Id: <20250225-pks-update-ref-optimization-v3-13-77c3687cda75@pks.im>
 References: <20250225-pks-update-ref-optimization-v3-0-77c3687cda75@pks.im>
 In-Reply-To: <20250225-pks-update-ref-optimization-v3-0-77c3687cda75@pks.im>
 To: git@vger.kernel.org
@@ -97,116 +97,170 @@ Cc: Karthik Nayak <karthik.188@gmail.com>,
  shejialuo <shejialuo@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-Implement seeking of reftable iterators. As the low-level reftable
-iterators already support seeking this change is straight-forward. Two
-notes though:
+Implement seeking of ref-cache iterators. This is done by splitting most
+of the logic to seek iterators out of `cache_ref_iterator_begin()` and
+putting it into `cache_ref_iterator_seek()` so that we can reuse the
+logic.
 
-  - We do not support seeking on reflog iterators. It is unclear what
-    seeking would even look like in this context, as you typically would
-    want to seek to a specific entry in the reflog for a specific ref.
-    There is not currently a usecase for this, but if there ever is we
-    can implement seeking in the future.
-
-  - We start to check whether `reftable_stack_init_ref_iterator()` is
-    successful.
+Note that we cannot use the optimization anymore where we return an
+empty ref iterator when there aren't any references, as otherwise it
+wouldn't be possible to reseek the iterator to a different prefix that
+may exist. This shouldn't be much of a performance concern though as we
+now start to bail out early in case `advance()` sees that there are no
+more directories to be searched.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- refs/reftable-backend.c | 35 ++++++++++++++++++++++++++++++-----
- 1 file changed, 30 insertions(+), 5 deletions(-)
+ refs/ref-cache.c | 79 ++++++++++++++++++++++++++++++++++++--------------------
+ 1 file changed, 51 insertions(+), 28 deletions(-)
 
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 06543f79c64..b0c09f34433 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -547,7 +547,7 @@ struct reftable_ref_iterator {
- 	struct reftable_ref_record ref;
- 	struct object_id oid;
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 6457e02c1ea..c1f1bab1d50 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -362,9 +362,7 @@ struct cache_ref_iterator {
+ 	struct ref_iterator base;
  
+ 	/*
+-	 * The number of levels currently on the stack. This is always
+-	 * at least 1, because when it becomes zero the iteration is
+-	 * ended and this struct is freed.
++	 * The number of levels currently on the stack.
+ 	 */
+ 	size_t levels_nr;
+ 
+@@ -376,7 +374,7 @@ struct cache_ref_iterator {
+ 	 * The prefix is matched textually, without regard for path
+ 	 * component boundaries.
+ 	 */
 -	const char *prefix;
 +	char *prefix;
- 	size_t prefix_len;
- 	char **exclude_patterns;
- 	size_t exclude_patterns_index;
-@@ -718,6 +718,20 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 	return ITER_OK;
- }
  
-+static int reftable_ref_iterator_seek(struct ref_iterator *ref_iterator,
-+				      const char *prefix)
-+{
-+	struct reftable_ref_iterator *iter =
-+		(struct reftable_ref_iterator *)ref_iterator;
+ 	/*
+ 	 * A stack of levels. levels[0] is the uppermost level that is
+@@ -389,6 +387,9 @@ struct cache_ref_iterator {
+ 	struct cache_ref_iterator_level *levels;
+ 
+ 	struct repository *repo;
++	struct ref_cache *cache;
 +
-+	free(iter->prefix);
-+	iter->prefix = xstrdup_or_null(prefix);
-+	iter->prefix_len = prefix ? strlen(prefix) : 0;
-+	iter->err = reftable_iterator_seek_ref(&iter->iter, prefix);
++	int prime_dir;
+ };
+ 
+ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
+@@ -396,6 +397,9 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
+ 	struct cache_ref_iterator *iter =
+ 		(struct cache_ref_iterator *)ref_iterator;
+ 
++	if (!iter->levels_nr)
++		return ITER_DONE;
 +
-+	return iter->err;
-+}
-+
- static int reftable_ref_iterator_peel(struct ref_iterator *ref_iterator,
- 				      struct object_id *peeled)
- {
-@@ -744,10 +758,12 @@ static void reftable_ref_iterator_release(struct ref_iterator *ref_iterator)
- 			free(iter->exclude_patterns[i]);
- 		free(iter->exclude_patterns);
+ 	while (1) {
+ 		struct cache_ref_iterator_level *level =
+ 			&iter->levels[iter->levels_nr - 1];
+@@ -444,6 +448,41 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
  	}
-+	free(iter->prefix);
  }
  
- static struct ref_iterator_vtable reftable_ref_iterator_vtable = {
- 	.advance = reftable_ref_iterator_advance,
-+	.seek = reftable_ref_iterator_seek,
- 	.peel = reftable_ref_iterator_peel,
- 	.release = reftable_ref_iterator_release,
- };
-@@ -806,8 +822,6 @@ static struct reftable_ref_iterator *ref_iterator_for_stack(struct reftable_ref_
- 
- 	iter = xcalloc(1, sizeof(*iter));
- 	base_ref_iterator_init(&iter->base, &reftable_ref_iterator_vtable);
--	iter->prefix = prefix;
--	iter->prefix_len = prefix ? strlen(prefix) : 0;
- 	iter->base.oid = &iter->oid;
- 	iter->flags = flags;
- 	iter->refs = refs;
-@@ -821,8 +835,11 @@ static struct reftable_ref_iterator *ref_iterator_for_stack(struct reftable_ref_
- 	if (ret)
- 		goto done;
- 
--	reftable_stack_init_ref_iterator(stack, &iter->iter);
--	ret = reftable_iterator_seek_ref(&iter->iter, prefix);
-+	ret = reftable_stack_init_ref_iterator(stack, &iter->iter);
-+	if (ret)
-+		goto done;
-+
-+	ret = reftable_ref_iterator_seek(&iter->base, prefix);
- 	if (ret)
- 		goto done;
- 
-@@ -2015,6 +2032,13 @@ static int reftable_reflog_iterator_advance(struct ref_iterator *ref_iterator)
- 	return ITER_OK;
- }
- 
-+static int reftable_reflog_iterator_seek(struct ref_iterator *ref_iterator UNUSED,
-+					 const char *prefix UNUSED)
++static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
++				   const char *prefix)
 +{
-+	BUG("reftable reflog iterator cannot be seeked");
-+	return -1;
++	struct cache_ref_iterator *iter =
++		(struct cache_ref_iterator *)ref_iterator;
++	struct cache_ref_iterator_level *level;
++	struct ref_dir *dir;
++
++	dir = get_ref_dir(iter->cache->root);
++	if (prefix && *prefix)
++		dir = find_containing_dir(dir, prefix);
++	if (!dir) {
++		iter->levels_nr = 0;
++		return 0;
++	}
++
++	if (iter->prime_dir)
++		prime_ref_dir(dir, prefix);
++	iter->levels_nr = 1;
++	level = &iter->levels[0];
++	level->index = -1;
++	level->dir = dir;
++
++	if (prefix && *prefix) {
++		free(iter->prefix);
++		iter->prefix = xstrdup(prefix);
++		level->prefix_state = PREFIX_WITHIN_DIR;
++	} else {
++		FREE_AND_NULL(iter->prefix);
++		level->prefix_state = PREFIX_CONTAINS_DIR;
++	}
++
++	return 0;
 +}
 +
- static int reftable_reflog_iterator_peel(struct ref_iterator *ref_iterator UNUSED,
- 					 struct object_id *peeled UNUSED)
+ static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
+ 				   struct object_id *peeled)
  {
-@@ -2033,6 +2057,7 @@ static void reftable_reflog_iterator_release(struct ref_iterator *ref_iterator)
+@@ -456,12 +495,13 @@ static void cache_ref_iterator_release(struct ref_iterator *ref_iterator)
+ {
+ 	struct cache_ref_iterator *iter =
+ 		(struct cache_ref_iterator *)ref_iterator;
+-	free((char *)iter->prefix);
++	free(iter->prefix);
+ 	free(iter->levels);
+ }
  
- static struct ref_iterator_vtable reftable_reflog_iterator_vtable = {
- 	.advance = reftable_reflog_iterator_advance,
-+	.seek = reftable_reflog_iterator_seek,
- 	.peel = reftable_reflog_iterator_peel,
- 	.release = reftable_reflog_iterator_release,
+ static struct ref_iterator_vtable cache_ref_iterator_vtable = {
+ 	.advance = cache_ref_iterator_advance,
++	.seek = cache_ref_iterator_seek,
+ 	.peel = cache_ref_iterator_peel,
+ 	.release = cache_ref_iterator_release,
  };
+@@ -471,39 +511,22 @@ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
+ 					      struct repository *repo,
+ 					      int prime_dir)
+ {
+-	struct ref_dir *dir;
+ 	struct cache_ref_iterator *iter;
+ 	struct ref_iterator *ref_iterator;
+-	struct cache_ref_iterator_level *level;
+-
+-	dir = get_ref_dir(cache->root);
+-	if (prefix && *prefix)
+-		dir = find_containing_dir(dir, prefix);
+-	if (!dir)
+-		/* There's nothing to iterate over. */
+-		return empty_ref_iterator_begin();
+-
+-	if (prime_dir)
+-		prime_ref_dir(dir, prefix);
+ 
+ 	CALLOC_ARRAY(iter, 1);
+ 	ref_iterator = &iter->base;
+ 	base_ref_iterator_init(ref_iterator, &cache_ref_iterator_vtable);
+ 	ALLOC_GROW(iter->levels, 10, iter->levels_alloc);
+ 
+-	iter->levels_nr = 1;
+-	level = &iter->levels[0];
+-	level->index = -1;
+-	level->dir = dir;
++	iter->repo = repo;
++	iter->cache = cache;
++	iter->prime_dir = prime_dir;
+ 
+-	if (prefix && *prefix) {
+-		iter->prefix = xstrdup(prefix);
+-		level->prefix_state = PREFIX_WITHIN_DIR;
+-	} else {
+-		level->prefix_state = PREFIX_CONTAINS_DIR;
++	if (cache_ref_iterator_seek(&iter->base, prefix) < 0) {
++		ref_iterator_free(&iter->base);
++		return NULL;
+ 	}
+ 
+-	iter->repo = repo;
+-
+ 	return ref_iterator;
+ }
 
 -- 
 2.48.1.683.gf705b3209c.dirty
