@@ -1,127 +1,113 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2F22580D7
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 06:59:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB391624D7
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 07:14:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740466765; cv=none; b=Ns5Zyi7ohbhkN19ZtWDilCjCfqh551jV9+64yO74MECKC77PEfOT4J65iAYQrUJX3YwwUhRRwZlwLm6QhPPiTjLxzkeJ2cZP6v0AlY48i97VUspkRFizR7dkPAV/hfzYdbCunCkURdhabltfonFks8+TWUVTOD8wtF6Sbs5NLxI=
+	t=1740467689; cv=none; b=u1xuKwXpJPN+5YChpaCzJ34GBzXOZe/HdFACcNCdatyD2jgunQ7fO+8vCcTy8t/H7SZ2pKEa5mfPBHMp/P1BXxxU87Z4AWioo3NXtojuWoF6XvyYSjo0v8INFJ9jh0yJWXxCbGI+1tiycollKFrbpshhpnjkQOuDZ3Ql/zJBUqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740466765; c=relaxed/simple;
-	bh=k+vkHx8ve+kecABgGQSsAp8cwCGcUYY0Xl5QYHw0f64=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LxPfj6HoqoUDbuaVDcETCEC8azls5oL0zH+IRinkG2Q8R5oD1kreYun1UUQqkTl4k44Og+4ZwVGw92dtufH2G0vekEtoH/Ru6u2+uVxbfMMWWIj+AdgkJKu1NEjHwavlDZnHy5BRUUPM4KeFSsuXI5wglDL2LoywiqlUPFhR66g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=amTPSfnI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3yx3tFzo; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1740467689; c=relaxed/simple;
+	bh=lIoRwmAKLg0B4IQujjvZw0LmLEe9NAL8WNkjDKnYYEA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uQnYsRzaTeZQlyXWBS7tkmEk5PAWS4aA2nIzOl6YRytzUYS5WRYWkiMsH6jrK7pqWNljfRROgq79zJRdcgETS+15irTR4iyO/TBVU8lXvcVpIqx7sFicwe9q7uzQgwrsTaOIh0Ol1l3Wgv7ZD7c7muzVZgv46ouLt8oJq43KxmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m+U9Jcv4; arc=none smtp.client-ip=209.85.128.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="amTPSfnI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3yx3tFzo"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8D4181140158;
-	Tue, 25 Feb 2025 01:59:22 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 25 Feb 2025 01:59:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740466762; x=1740553162; bh=yba99+Aqq4
-	DsKJ+PBuCBMt/3ZEzCgKygbSt3DJNVu5o=; b=amTPSfnIneBD90nkbB90T81HJF
-	2NC5znhGdZPg8ecHdrWks98lbG8RnXEwfv9RaQy0A14KqyeYhLONhG2K4mi8ZwRJ
-	KNeADPjHs48zeBmZWbobas9xwE6i2FpqPxo2xaIjXzCfqP50MHf5ST7cmXWPrjel
-	mwSNfscl275ZTzcSMX9phl8pUc89DzzGloMRysZlt7mYzeJzxhVgs3erLgilcn9w
-	KZfdsEvELStr+dnCKZTV+/lA0+ymdbAaf9UCFRMldY87fqr5bMdkqlECXc6ec0RZ
-	C2CidXMzP3HWbMPIU3nMBB6T/qM+l+x+eTocXQoC2WIOaZoR1D6SNqj0Rtow==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740466762; x=1740553162; bh=yba99+Aqq4DsKJ+PBuCBMt/3ZEzCgKygbSt
-	3DJNVu5o=; b=3yx3tFzoOrBgmSr9+ZAMA0aWBDMBUvhmgo6upwrMll3HOiy/G+o
-	fv6uUhx1goH4+VGjbIzFIBlMalIFds93L8vKI1VY6nLxo3VsjCOzp0LK4s9VYyXO
-	8VsWCE+lVNz00Vz9NNbGnmMtGDOr/+c6TpCMwHSgj5WjW3LUX3xP80iyCzesC5hI
-	R57uDkYpYHl0N5JyXwKklhAss90ZujIdWRyJDxeFchPVnh51Rp68coGgGHYB702R
-	nB+Icrp/Y7Md2dnMvrS2/CtAFqgSWVp+FUqP4fPLBco4c0+S3kr9z0WNwj/x2ndK
-	am9F9CGFJxcVEjwnhurO7AK2p+0xHlcB61w==
-X-ME-Sender: <xms:Smq9Z1wNS9yIKQ7anFEv6cNM1iQxiwtqf6dtImBOc2RbYc46XplaOA>
-    <xme:Smq9Z1R0u5qaWz4ZnXAlYyAy13TGA8_ft5ZjmHOeSdMdi75ckeZoJG5hfX2dcIm19
-    1d37u_ElUHPf06pjA>
-X-ME-Received: <xmr:Smq9Z_VXJFlxFCeC3VVEjFZd32PZlt1g0FdYgpdB0KeOsImSa21tsR5ysStAd8iR7lUhxlyWvbeOjfU2Qae9VBcAqjaoFIZqNKEqIEZNfhuB0w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekuddtfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
-X-ME-Proxy: <xmx:Smq9Z3j9PmxzM5qrxUBbjpGIyfxqfb8ocH4EUy6phgiT9x6LicNZBw>
-    <xmx:Smq9Z3CAb6XbL_S5dyfsz_A3utyC0xVXOwB9SX2OCxdBTndjTddV8Q>
-    <xmx:Smq9ZwLsBKbe2WCRNczu_2VSxWakrlmY9lcevL5yraMLNVMedgWbRw>
-    <xmx:Smq9Z2Dal9zDKgXb3JHpka1muvUVl-YMQiCVaTWAfEPKlPw5gfus2Q>
-    <xmx:Smq9Z-MPKrWYYMWbQosRhuu0cZFn893ajm3WruGMbAxoCHOmHyR7l4D2>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Feb 2025 01:59:21 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id aadd62c9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Feb 2025 06:59:19 +0000 (UTC)
-Date: Tue, 25 Feb 2025 07:59:14 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: [PATCH 6/9] pack-bitmap: expose function to iterate over
- bitmapped objects
-Message-ID: <Z71qQvlqtoOwDabu@pks.im>
-References: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
- <20250221-pks-cat-file-object-type-filter-v1-6-0852530888e2@pks.im>
- <xmqqseo35ic8.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m+U9Jcv4"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6ef60e500d7so42477997b3.0
+        for <git@vger.kernel.org>; Mon, 24 Feb 2025 23:14:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740467687; x=1741072487; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=AeNzv6bQSxTFyzq4y0rURX1K8IEy08h/27T8+MRtiVs=;
+        b=m+U9Jcv4gzWmJcHv/QsZJWJmbtwKzR4USabGXaMpD++rjcpgf+Dpfx4YoUhiaCUZQX
+         4kkbkZokZVsA+baDIlrnoUpZBdpNtKDB4vkotzyQlfFFar5VJkCnzmupJ/8dGdfJ//kw
+         ZHddqQTvN1l/70PsbNHVmJ1I+Ae+zOyOMpoTjOPchZqNBkOZCVbAaSvKZknJFcE9xJuj
+         oJeVzOHZ7F6ehO/z/dCZZAMPgFmEIp4g+IdJZ4A+xTHdlsSIofPLwAK/P1brVWfiTFyt
+         GZUebjYZ0kuP81gVRCaUXo/3nq1LMskpHEL0NNCeKz49QfDxoPLfKxAxi6mUDJJbll75
+         ogYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740467687; x=1741072487;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AeNzv6bQSxTFyzq4y0rURX1K8IEy08h/27T8+MRtiVs=;
+        b=nmfLjhx4rmKOnNeDvOecGFe/IpSZ/dKoBX2IhTK+JAvHCiScBo5vq+nbJzx23j2+Gq
+         WZ/zCjrhfiRiX8zCToluQoxuu6Irv+jesAAb0NqS8Gafxnbrn9CsG8HOmAPUKopB2foR
+         PIg/VfQUOmMrrqniRGBVBM7CZN0MXEOTiowd78OTCpQJCr7uyPcklSERXOiEth/qOTxD
+         r+p9HkkMC07IY3070KL3pRGOlVJkL/qp59cCHqqlmuu6KEnrgT8AvP2HuLNAUzJZ/h6C
+         99hIqJKPCyqtroUcdq60ebDKfiPj+C9hbsv3tZA/TmJLgHxwgLkVPh6Eu1t8sz/uuNH9
+         O4xQ==
+X-Gm-Message-State: AOJu0YzCZHXfknUH8FPnjoStytlWNW/SI/5VK8z7+FUkpQxNFxsZ6lkL
+	JKfHu/Z45JesdfH9/1O0Covdl64jSs3bPsJOwPFpqBeXyxo6tSQW40B10zVBXq44CDzUBNfGZAk
+	9QvH4GrSusQYp8eSDUApVksEl0cutv++c8j2y5Q==
+X-Gm-Gg: ASbGnculmN4gbuZ9hysyz828BggZyLIbYwr8ISDFy0o9MfQW3TM/snvZwfXiYAVUYg6
+	/ugGFGUJHaGctzSxppZfHgaEi37iS7ECvYIK/1hjgsZ9vNrcFYPfFsegbiyyAUe8ogi4HPgoZFe
+	WWtKbsEcE=
+X-Google-Smtp-Source: AGHT+IE9yWYBd0JxCxkHT4/KrWkFLBSYRNCdRfWCR09fa3TFFGPBrl7pBpvPAVRWheKndzdiGyp4gHvFwUHcVx+gmKc=
+X-Received: by 2002:a05:690c:6807:b0:6f9:3dd2:7941 with SMTP id
+ 00721157ae682-6fbcc861104mr136421327b3.38.1740467686772; Mon, 24 Feb 2025
+ 23:14:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqseo35ic8.fsf@gitster.g>
+References: <20250220082959.10854-1-kuforiji98@gmail.com> <20250224152704.70289-1-kuforiji98@gmail.com>
+ <20250224152704.70289-2-kuforiji98@gmail.com> <xmqqwmdf5is1.fsf@gitster.g>
+In-Reply-To: <xmqqwmdf5is1.fsf@gitster.g>
+From: Seyi Chamber <kuforiji98@gmail.com>
+Date: Tue, 25 Feb 2025 08:14:35 +0100
+X-Gm-Features: AWEUYZn75zzT9GNStb0Fws3tz5T6yKZxyAawDs-d1mO23gA6wF9inpyH3QqWa7c
+Message-ID: <CAGedMteOTewr9=m6=5NztLA_cDiuq=uEt-A26rFWRCmEw0=_UA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/4] t/unit-tests: implement clar specific oid helper functions
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, phillip.wood@dunelm.org.uk
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Feb 24, 2025 at 10:05:27AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Expose a function that allows the caller to iterate over all bitmapped
-> > objects of a specific type. This mechanism allows us to use the object
-> > type-specific bitmaps to enumerate all objects of that type without
-> > having to scan through a complete packfile.
+On Mon, 24 Feb 2025 at 18:56, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Seyi Kuforiji <kuforiji98@gmail.com> writes:
+>
+> > -static int get_oid_arbitrary_hex_algop(const char *hex, struct object_id *oid,
+> > +static void cl_parse_oid(const char *hex, struct object_id *oid,
+> >                                      const struct git_hash_algo *algop)
+> >  {
+> >       int ret;
+> >       size_t sz = strlen(hex);
+> >       struct strbuf buf = STRBUF_INIT;
 > >
-> > This functionality will be used in a subsequent commit.
+> > -     if (!check(sz <= algop->hexsz)) {
+> > -             test_msg("BUG: hex string (%s) bigger than maximum allowed (%lu)",
+> > -                      hex, (unsigned long)algop->hexsz);
+> > -             return -1;
+> > -     }
+> > +     cl_assert(sz <= algop->hexsz);
 > >
-> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > ---
-> >  builtin/pack-objects.c |  3 ++-
-> >  builtin/rev-list.c     |  3 ++-
-> >  pack-bitmap.c          | 65 +++++++++++++++++++++++++++++++-------------------
-> >  pack-bitmap.h          | 12 +++++++++-
-> >  reachable.c            |  3 ++-
-> >  5 files changed, 57 insertions(+), 29 deletions(-)
-> 
-> After 2189649b (pack-bitmap.c: keep track of each layer's type
-> bitmaps, 2024-11-19) added <type>_all bitmaps to the bitmap_index
-> struct, this step would need some adjustment, I am afraid.
+> >       strbuf_add(&buf, hex, sz);
+> >       strbuf_addchars(&buf, '0', algop->hexsz - sz);
+> >
+> > -     ret = get_oid_hex_algop(buf.buf, oid, algop);
+> > -     if (!check_int(ret, ==, 0))
+> > -             test_msg("BUG: invalid hex input (%s) provided", hex);
+> > +     cl_assert_equal_i(get_oid_hex_algop(buf.buf, oid, algop), 0);
+> >
+> >       strbuf_release(&buf);
+> > -     return ret;
+> >  }
+>
+> As you are not returning "ret" and making the function void, you
+> made "int ret" an unused variable that needs removing.
+>
+> Thanks.
 
-Hm, does it? I understand that this commit only makes the bitmaps
-accessible individually per bitmapped packfile, but the bitmap indices
-part of `struct bitmap_index` would continue to be the union of all of
-those bitmaps. Oh, but that changes in the subsequent commits indeed,
-where we start to use an `ewah_or_iterator`.
+Hi Junio,
 
-I see that Taylor's series has been sitting in an unreviewed state for a
-couple months already. I can review it with the hope of moving it
-forward and can then pull it in as a dependency of this series. But I'll
-wait for him to chime in first to see whether anything changed about its
-current state.
+Do I send in a new patch series addressing this?
 
-Patrick
+Thanks,
+Seyi
