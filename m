@@ -1,53 +1,53 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF58825A34D
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 07:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F6F25B672
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 07:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740469197; cv=none; b=aS6OJG4D4LGP/CFoZzHltHxy8ZihObgNRA4fiO0z1SuXFbwg0l3fco2wFimxkBfo0bfJg3NpFaIwGXCtrv+WaaBPhsS/+Ghv3fZqGwbGEAe5yMNElEPOj94MBImQvndK6HfsRrBZCrPK3eHAQm+LiQK2gpB0Sln7aBHR/OkQqfk=
+	t=1740469200; cv=none; b=nktToL3S3kf3FbhmLK3v3vXtWRmhJ+HGMQ4ybzPtYkBEBpXiLUqKwVHJ7ofcE9Ad/EHKaz88ohmo1gsp8y3aHqZrYRgtwjtM6/QUOBXqetBhbYOb7IZJa+l3DhkXyfFPdDiVesa7qe/RmnUT5B1YmPOjBxjNcENlb7GNZsGlp30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740469197; c=relaxed/simple;
-	bh=y6Q8IlsokhCjvIvr2NRUpi2M2RwB7+EB9xcCx0hgm1U=;
+	s=arc-20240116; t=1740469200; c=relaxed/simple;
+	bh=IHZfy5+HrXJ62WMdwpPdOYg0tIl2/YrPUd2jZwuBqmY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gZLKAqqsWunFpb8rbAiLadeUlQjgjZciCx3S7CKhYI7TMaavkbzFdBnKQoHR9YhZnHgGXNNw1Id3cvs06a/GMXHQwEeJdnM7+dz11/tdMP8Mtjw1v6fmPLQWwWzdLbITH6BjsRPZkpqwjOc7RRmt9Af4Be2ntFlIn+L1u/brqHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JLxLlbii; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FzmGNTNh; arc=none smtp.client-ip=202.12.124.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=VCOXfFG2n7DwXNzHcyI9vQgPjJ56yiid6bQmotANFq9XSGR86RCMrNPTsiVxRFwd9BgzGHYrncFrR5B2gwaFI3q1OXLFefwT7p7IUTtigQV5stCA7MV5Pws22e3/0LjihX0ucMMXQ93+c/Qt7tdUUDuvzleRQo/mc+Z9L2xL/34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U7rMmMT+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=6j3tJ1Vu; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JLxLlbii";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FzmGNTNh"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BBDC225400B8;
-	Tue, 25 Feb 2025 02:39:54 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U7rMmMT+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="6j3tJ1Vu"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B40E32540135;
+	Tue, 25 Feb 2025 02:39:57 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Tue, 25 Feb 2025 02:39:54 -0500
+  by phl-compute-11.internal (MEProxy); Tue, 25 Feb 2025 02:39:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740469194; x=1740555594; bh=R52VnMyIuN
-	w14dOS9I26g4WtDI+xoxWLn4LNtpvZ4PY=; b=JLxLlbiiE4o3Qnhg3L36EF8Oei
-	Fnct0GlAUUgNnQJS2xK4ajzC2ytCkUFtzQ3fUHXAG2d2eTPxgbJ5gF7xYimmEHSj
-	18lp+eQRT4T9ahLRF5RYcMLckTrkaR0iCwW2I8qlXzIVcvr7u7v8Vyt9VZ2SkB/Y
-	TNOF2txqGXhU8le0tyzV4PcZELGa/YfbJmNHb/KcWQ2KBoIzxmS27o8O5z5gxFb6
-	SQ9m8hSTOtxbsrNYYpv8xcUf26rZp0yPj7ZUzuz+roKRXykcvb9UQqEocxD+GwSC
-	BaA7AKsMyxmWyRXoOO3WaDMmdZs9IpF9YQZ1YDqFSvh+hQQyLoBTTRDKGQVw==
+	:subject:to:to; s=fm1; t=1740469197; x=1740555597; bh=8kpd+pvn/O
+	y0UpYaubmHBr0O5XwfCa/Y07WXJ9ZEeZQ=; b=U7rMmMT+pHKPTBlViVxCGX4MLZ
+	sLpt4PAz2w+u0/ZNfjuwAXBpKI3v7a+0WUOc4cOfEU7rczszjSC7Siur0Jmpipiy
+	80Q2W80+w14mECIJL984VluAhDO4z78q+g8W49mp2Hx6Mp5lUse5URJWCWxyhv9w
+	nJS6nX+fsS64b9QyDYhdUnrd91ziaKlcoiA31L00TmR71CO6IS1BMYwfHQX9GYuU
+	TrOuM+j82tVTK50Lcisw9tcfLrE6RmO4gDcKSBGKigpC+vU+yFKywvquX8jFr1oE
+	iRiCLDnagQHcVxILjrF9iFvIbYM4X1d7pBdsU2FgB5sHKNWdjaROIgo2YFwQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740469194; x=1740555594; bh=R52VnMyIuNw14dOS9I26g4WtDI+xoxWLn4L
-	NtpvZ4PY=; b=FzmGNTNh6qolMmshuQ4TdAAX50FEQUCCwtznClNiEHL9WF9OYbN
-	pe8/KgahbDtKDfCcudYPC48x+HPA42IrVPfsH2ro0RPGer9EZCWq0uNercVwhQYP
-	gE01pia0q7y2w55WmtSTce8ZFQ/++UaqbvpsCHODkMvJgnZ7ay8KWBIQxbuGHwQs
-	8IDwK9ldgVGeBFQf2vAKbtJjPqtllVv9B5hNW1Fmi1NEFQ3S4QMOC4R7Zx/0HwwZ
-	pcIdxElJDXmJlhwTJSMahh+GPSmWcmMIWAwx2fmwsIGsDEscQ9tSNm6vj5ocTrBv
-	fjSP3V5j4KW+ZD0snL+397p5SwJQUeLorDQ==
-X-ME-Sender: <xms:ynO9ZxbKKdT3ZDEaht3JEARkTtoEs5Z3Szmc9VRSnEgtQdXpy8Y00g>
-    <xme:ynO9Z4brmIk-rN9Vf61l-J3amA-EpLkU9CEG-rxp5nCDw9hbaPneGhqHq66PnT1KE
-    jzNFkV5Fs1jqTnuRg>
-X-ME-Received: <xmr:ynO9Zz8En0QAJvCfPzl7YyvpDDd11CTCy0xDYyr7Cp24Qm3PhH11SvbssFucBNaQ23Z501Dwpf-sQwrtTvobRA3zoaNu2GAvnqqyadwPC2UUNw>
+	1740469197; x=1740555597; bh=8kpd+pvn/Oy0UpYaubmHBr0O5XwfCa/Y07W
+	XJ9ZEeZQ=; b=6j3tJ1VuARGpVLryc/Fmy87V/uHj8C9rIF/Zmtrrp9wbT3fi5U8
+	ZF8cCBhVXFsVRdNo+jrR5JphSjPr5C0S50soHtcu0F1G7SentFN1cJqK0YRip7oG
+	Qrj1QoWcYBq+9eZt9IDvvXVRuPqwXxDhtyIjU/lBBd2kOlAZ7UDf/tZkBLttdZLC
+	kS4skusNTQtZ5up8vTKWoVMv0u63370O7chU1gG/JnxEXZ4wu4p3uQaD/EzZtnOA
+	V4oq2F+NkvwIFQzTC63dp0RAmxIR247ADxIGpivAj0Amk1JjHzSM0wfITYyuN36Z
+	mrwqoVQQUY/yRKEvcLfxtFrJWLqxXZcKPPA==
+X-ME-Sender: <xms:zXO9ZzrwJCz-j7dCNnj8fi1d0hKG4_D56jn3XPuNDzDgcOJgsMGoaA>
+    <xme:zXO9Z9qA_AT1UIhnT7S557UL4X3wWvaLn31kAM4y9T2boXI_vSBuPB_Czk8_UQBoa
+    DK3PrTGOYgEnAaQIA>
+X-ME-Received: <xmr:zXO9ZwMRn8eHZHhk4jzrwhCgdyNvRX_M4QcENCjZtjkSRxpCgVin5YuUJ6gH9rAxRCHHEeNdf4R0n9VoZyterNhJ9kUF8c2Upht5xQuOQeWlpA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekudduvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -57,35 +57,35 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekudduvdcutefuodetgg
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvgep
     shhmthhpohhuthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrd
-    horhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvg
-    hjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhu
-    shhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehpvghffhesphgvfhhfrd
-    hnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ynO9Z_rUfOaZ96pz0hganzXDbnOpktVepgNS-qkVNm94z2ryEh5YEA>
-    <xmx:ynO9Z8oOO6kJmPExK05CDLEBFH-q0oomMHy_01vYygPTJFr6k05Zpg>
-    <xmx:ynO9Z1RkjWzN7N4M_RDQF0Ex-vrMNYCHfo5WQmh6-T8-8kZUv3MbqQ>
-    <xmx:ynO9Z0rBZAjNTBnqlWUCqAxzYQGFHYamCD5XmL7arEVRfBU7-yr-dQ>
-    <xmx:ynO9Z0JjzAyCZjMHTTqK9men3XHmimdGHZtr3QoU-8Ai-SmTGNPUrEtv>
+    horhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
+    rdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehkrg
+    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:zXO9Z25cqnULGPEzG5tPu2DtE3PjvSv3Q_uSndeJWPq79cQ9tCmXzQ>
+    <xmx:zXO9Zy7zP_412V-lHWRjNayDtOSPis_i_cBuGrsR09hTIdTeVvRMOg>
+    <xmx:zXO9Z-h6BEnI4DBUH789u9bG9-QafNNIwgIDzsQ0C-BeaPaZJKBJiw>
+    <xmx:zXO9Z05W0g30E24eEl7MTrdt7ZeVZ6PK0CVp2oDZ7d9QhRB-uAbQfA>
+    <xmx:zXO9Z5b1T1LsuME9VyncMPcReU_UG_RaYgLtCLgesxYR30qmJoxvgwDT>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Feb 2025 02:39:53 -0500 (EST)
+ 25 Feb 2025 02:39:56 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id d9c745eb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 25 Feb 2025 07:39:52 +0000 (UTC)
-Date: Tue, 25 Feb 2025 08:39:51 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id e66dfd12 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Feb 2025 07:39:55 +0000 (UTC)
+Date: Tue, 25 Feb 2025 08:39:54 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
 	"brian m. carlson" <sandals@crustytoothpaste.net>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 13/16] refs/iterator: implement seeking for ref-cache
- iterators
-Message-ID: <Z71zxwWA3VzM82Gr@pks.im>
+Subject: Re: [PATCH v2 14/16] refs/iterator: implement seeking for
+ `packed-ref` iterators
+Message-ID: <Z71zyrai9f9dPZRK@pks.im>
 References: <20250219-pks-update-ref-optimization-v2-0-e696e7220b22@pks.im>
- <20250219-pks-update-ref-optimization-v2-13-e696e7220b22@pks.im>
- <Z7yG6q44rBccInPt@ArchLinux>
+ <20250219-pks-update-ref-optimization-v2-14-e696e7220b22@pks.im>
+ <Z7yLrKVxCF5qb7gP@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,84 +94,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z7yG6q44rBccInPt@ArchLinux>
+In-Reply-To: <Z7yLrKVxCF5qb7gP@ArchLinux>
 
-On Mon, Feb 24, 2025 at 10:49:14PM +0800, shejialuo wrote:
-> On Wed, Feb 19, 2025 at 02:23:40PM +0100, Patrick Steinhardt wrote:
-> > diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-> > index 6457e02c1ea..b54547d71ee 100644
-> > --- a/refs/ref-cache.c
-> > +++ b/refs/ref-cache.c
-> > @@ -362,9 +362,7 @@ struct cache_ref_iterator {
-> >  	struct ref_iterator base;
+On Mon, Feb 24, 2025 at 11:09:32PM +0800, shejialuo wrote:
+> On Wed, Feb 19, 2025 at 02:23:41PM +0100, Patrick Steinhardt wrote:
+> > Implement seeking of `packed-ref` iterators. The implementation is again
+> > straight forward, except that we cannot continue to use the prefix
+> > iterator as we would otherwise not be able to reseek the iterator
+> > anymore in case one first asks for an empty and then for a non-empty
+> > prefix. Instead, we open-code the logic to in `advance()`.
+> > 
+> > Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> > ---
+> >  refs/packed-backend.c | 62 +++++++++++++++++++++++++++++++++------------------
+> >  1 file changed, 40 insertions(+), 22 deletions(-)
+> > 
+> > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+> > index 38a1956d1a8..71a38acfedc 100644
+> > --- a/refs/packed-backend.c
+> > +++ b/refs/packed-backend.c
+> > @@ -951,12 +954,41 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
+> >  					    &iter->oid, iter->flags))
+> >  			continue;
 > >  
-> >  	/*
-> > -	 * The number of levels currently on the stack. This is always
-> > -	 * at least 1, because when it becomes zero the iteration is
-> > -	 * ended and this struct is freed.
-> > +	 * The number of levels currently on the stack.
-> >  	 */
-> 
-> So, this value could be zero? We want to use this to optimize because
-> that we don't return the empty ref iterator any more.
-
-Now it can, yes. Before it couldn't as we returned an empty iterator in
-that case, but we cannot do anymore because you cannot re-seek an empty
-iterator.
-
-> > @@ -444,6 +448,40 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
-> >  	}
-> >  }
-> >  
-> > +static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
-> > +				   const char *prefix)
-> > +{
-> > +	struct cache_ref_iterator *iter =
-> > +		(struct cache_ref_iterator *)ref_iterator;
-> > +	struct ref_dir *dir;
-> > +
-> > +	dir = get_ref_dir(iter->cache->root);
-> > +	if (prefix && *prefix)
-> > +		dir = find_containing_dir(dir, prefix);
-> > +
-> > +	if (dir) {
-> > +		struct cache_ref_iterator_level *level;
-> > +
-> > +		if (iter->prime_dir)
-> > +			prime_ref_dir(dir, prefix);
-> > +		iter->levels_nr = 1;
-> > +		level = &iter->levels[0];
-> > +		level->index = -1;
-> > +		level->dir = dir;
-> > +
-> > +		if (prefix && *prefix) {
-> > +			iter->prefix = xstrdup(prefix);
-> 
-> Should we free the original `iter->prefix` before we assign the new
-> `prefix`? I have seen this pattern in previous patch. If the caller
-> calls this function multiple times, there would be memory leak.
-
-Oh, good catch, yes.
-
-> > +			level->prefix_state = PREFIX_WITHIN_DIR;
-> > +		} else {
-> > +			level->prefix_state = PREFIX_CONTAINS_DIR;
+> > +		while (prefix && *prefix) {
+> > +			if (*refname < *prefix)
+> > +				BUG("packed-refs backend yielded reference preceding its prefix");
+> > +			else if (*refname > *prefix)
+> > +				return ITER_DONE;
+> > +			prefix++;
+> > +			refname++;
 > > +		}
-> > +	} else {
-> > +		iter->levels_nr = 0;
-> > +	}
 > 
-> When we cannot find the dir, we set the `iter->levels_nr = 0`. Could we
-> first check
+> Although I cannot understand the code, I want to ask a question here, we
+> we need to do this in `advance`? Should we check this for
+> `packed_ref_iterator_seek` or in the `next_record` function?
 > 
->     if (!dir) {
-> 	iter->levels_nr = 0;
-> 	return 0;
->     }
-> 
-> And thus we could avoid indentation. However, it seems that we always
-> return 0. So, maybe we should not change.
+> Before we introduce `seek`, we don't need this logic. I somehow think we
+> should do this in `packed_ref_iterator_seek`.
 
-Good idea.
+We cannot do this in `packed_ref_iterator_seek()` because we need to do
+it for every single record that we yield from the iterator. We _could_
+do it in `next_record()`, but that function is rather complex already
+and really only cares about yielding the next record. On the other hand,
+`advance()` already knows to skip certain entries, so putting the logic
+in there to also handle termination feels like a natural fit to me.
+
+> > @@ -1130,19 +1155,12 @@ static struct ref_iterator *packed_ref_iterator_begin(
+> >  
+> >  	iter->snapshot = snapshot;
+> >  	acquire_snapshot(snapshot);
+> > -
+> > -	iter->pos = start;
+> > -	iter->eof = snapshot->eof;
+> >  	strbuf_init(&iter->refname_buf, 0);
+> > -
+> >  	iter->base.oid = &iter->oid;
+> > -
+> >  	iter->repo = ref_store->repo;
+> >  	iter->flags = flags;
+> >  
+> > -	if (prefix && *prefix)
+> > -		/* Stop iteration after we've gone *past* prefix: */
+> > -		ref_iterator = prefix_ref_iterator_begin(ref_iterator, prefix, 0);
+> > +	packed_ref_iterator_seek(&iter->base, prefix);
+> 
+> Why don't we check the return value here? Actually, in the previous
+> patch, `cache_ref_iterator_seek` will always return 0, but you still
+> check. I have thought that you just want to be more defensive.
+
+Yeah, let's have the check over here, as well.
 
 Patrick
