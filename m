@@ -1,281 +1,142 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483AC25EF8A
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 10:13:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1F526989A
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 11:08:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740478383; cv=none; b=sHN8En3/zmJnVpwfGcSt4S5NIS3tLRTOfJTOm4CZWYrGpE3Bj/+7OukvBB8dw1g7NXCBSey+bVhKJl5stok86+7Qq84x0qnapFgSB1FR6HljMlvOfH8J+/dtYeNhT/C5Wt50D2Kj2Hait0MhJtDdVjJQ6SWqHPUlnjAWs2hAKUU=
+	t=1740481689; cv=none; b=g+OMIqu6UdjA+VPgLl3tFz2qRoCJEwkojviUcNYc1h9R7nyepUs2Qq37pM0PU7bFRcWnHnStWIQQ4CZwDR8B4+Mzg+Gzcut811ayOfbEqCbqa4Em8mV42mNDR8H8tgmP/ZVq4HPG8BQ4GKDsUZ28ZTAtNlHQW1dyGVRO95MDNNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740478383; c=relaxed/simple;
-	bh=Jy8UAsmv0M9Ianz70QW37WeM/FMtgRFue80XQrAXUSY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MoCM5Xh6Bd+h3x+Nzp1OfhJ1VHMk3eV485jTWMLtMg5vfC90xBfzCtVTTWj2GTZkS522dUKKqk6CITMIdiTK/9m4Kaxi2IiD5LBQcQ77tDdtI2Z2PRexoqED3cnuWjOEwko/ptvzghgQX4yMVhYj3QO9tir0WjzZrKmmVML4470=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KK3chy4P; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740481689; c=relaxed/simple;
+	bh=K+a73lHekCm1D4Yb8CXh22D9HPMqDukjI2wxQl6/wt0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=aERBPNjZs+LYy1CluWc360Zayph0AIxr+9MYOmts0dF57m7nZ19wdHaTwD6I5n6mpQ3aOqR/dYUXB4vTb0FRQiZjjwYEjykBeSav4CpPja5GK2BbyRn6QnQhl0k6JIiNk8PRsyfSyHGs38Fah/zhfH7V7+S1Y5ZHTy+ruzqw41E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MLApMAb0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TvbHpFpB; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KK3chy4P"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-abbdc4a0b5aso992183266b.0
-        for <git@vger.kernel.org>; Tue, 25 Feb 2025 02:13:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740478379; x=1741083179; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0NgQ/SeUGRi4k7g9nIO1t+BNpYgEGEVWcRY2g0N2lSM=;
-        b=KK3chy4PhEu3vwjTW7ki+YkUE7LcPht0eBbPylk/UKbT5ifNNV5Rr0jK5mCp2gjA/G
-         O+Qg7IlyeStzE6PEAUu3iT2I9zo/xSRjLtHkn4AZPR50wpM9+p36z48Ga/I6LM4y0BeR
-         9YnjbaHRDGCbPO+CeTl9XRAD42IHQUNyCY3N17oVBLcPP98ohQlSvP7u/8iySi4CdC/m
-         S6wUGapumbZ4qwwA/U4P9AVzJgvQAZNIuNPO/Xu4/mZ/QSiboGnJk6HUbOD3UJl0tyrU
-         VO+Azu4OWFOAM4W+Vek9Zvm1zVqePL6JkToy0+bxM28x8XG7UDGoA3CWxRPakDkGmdh5
-         ItIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740478379; x=1741083179;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0NgQ/SeUGRi4k7g9nIO1t+BNpYgEGEVWcRY2g0N2lSM=;
-        b=g6B9nEYN4RRU5/3WbGtjGfB9zHMZRgJqbCx9OvFPGQy0E5/X/fLTfdE2KQwK0GZK7B
-         JT5mjTGYC9a874JXL5v51Y7pXXHlQ3UQDE0Mt1Ai0CZb3VDwJUjzIS3Gjjp8ktZhdEnP
-         1qPChlUpI0z4sfThZRqsY1dEtGnEIkLcT8t6AsNrSHLtKqIAPwuZ4RNftJUoI46A17Lm
-         dA/nee9PUr468jBvMk5OqNb6YGju/bpswgmjBamS0Tl73SRsfQ/PmvHxebtDlvQKa/Mx
-         xz9/9ndBLf7ifiIAY4YOtx7nQWlbTz3Ns+/mX4n59gL00kCIx227Iss04DzGxbz4bNyw
-         Ss6g==
-X-Gm-Message-State: AOJu0Yxu0oIVrkziS6bZy3qaBRl9guAoIRINdNzviy9Ysq9SiN8/JRGk
-	9+/ArBHFwmmuT7ZhvZifdSOoPkLPWrIiL+CAko1pNwXtQCZOsOQX/ILE4yjwyg6rWA==
-X-Gm-Gg: ASbGncsvnkPABkMTn+VFIiMxoY7KK97b7CGw5URkVPzFnjR9gI3QF7ZhbPO8f8SsNTU
-	zO0C7SBrvuxtM4LmGdskG1Fb3Br76jffOvNot2wDDc4/NRQ07CQ9IKs5NtkXLvSstKFDk4AUZuw
-	4X4SUzE8GGQNsf7dIBvni1Rx7RW5icwkRE8yaVXvn13XtQm0f+xK+u9+r/I7Mkbw1aXL3MgO9X3
-	iD89aD/IBiRBbUnLgEYg2UjXZ/ceJAXJFTbavAFE9NTtn09Pc+LIeaJMoSVG1qjQUYj+5EeCzv4
-	dDabmGhtMUdOVCiPBtKMObSs4OnS6fxLIGmi5Nw=
-X-Google-Smtp-Source: AGHT+IGBJyyrF2oHUL2dDXXghi4jo3qtU+U9XVP6PpcQULVQhvzhd+4812Yy+7L5DzWt8pJaB/pYCg==
-X-Received: by 2002:a17:907:a317:b0:ab7:46c4:a7be with SMTP id a640c23a62f3a-abbeda28000mr1874241766b.2.1740478379164;
-        Tue, 25 Feb 2025 02:12:59 -0800 (PST)
-Received: from localhost.localdomain ([41.217.53.197])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-abed20b7513sm115120566b.177.2025.02.25.02.12.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 02:12:58 -0800 (PST)
-From: Seyi Kuforiji <kuforiji98@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	phillip.wood@dunelm.org.uk,
-	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH v3 4/4] t/unit-tests: convert oidtree test to use clar test framework
-Date: Tue, 25 Feb 2025 11:10:44 +0100
-Message-ID: <20250225101044.84210-5-kuforiji98@gmail.com>
-X-Mailer: git-send-email 2.47.0.86.g15030f9556
-In-Reply-To: <20250225101044.84210-1-kuforiji98@gmail.com>
-References: <20250224152704.70289-1-kuforiji98@gmail.com>
- <20250225101044.84210-1-kuforiji98@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MLApMAb0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TvbHpFpB"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 034C8114011E;
+	Tue, 25 Feb 2025 06:08:05 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Tue, 25 Feb 2025 06:08:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1740481685; x=1740568085; bh=3EikLttYzU
+	bEToLbxqXbdv8oxaOpXUWgipY1A229x6k=; b=MLApMAb0fs5djhYPpClbel5DlY
+	6HQXo39nXqvuNlcxpZR+b5yIFWhHbL/pW3ZU2OXUxd+A4YfLqoikDcQFFLaTOTtO
+	S/n/zoqBaqMji6BfJ0RWdTbezqhRT5fRbmug4dBb719L/VXqmMZk06QLbq4whYvG
+	Fp4y3n+FGykgqbPQlVOzYJtSVjgdv49qz88xm0zEZI99vNPtIuDQNcogKxgmXltv
+	RqaYLV1AztZ5b+T4mF/9yCTmoYkz44hn8Zv2PyWDFMuPxZsnLvVVpjrc8fU50VKs
+	m+aLg2aziyljeVxeVHFDcYB0KK1g/egp8DPdgPr1Jbf2I2DA9R0oZZl2Apsg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740481685; x=1740568085; bh=3EikLttYzUbEToLbxqXbdv8oxaOpXUWgipY
+	1A229x6k=; b=TvbHpFpBVzsK7DIeh9M8apRINt6pSm2FXHgyW7WemFhknREH/cq
+	wEU9P3k5En0w1fXDCjVy8XlI+yUyoBaEbjA+YW5894gqciHniD4q/MxwUWUqwStq
+	M7NI8az5GumajG9sKK5wHXOqEFarg1YDK539X0A/kFXx2EIQSHIHTZvjmFd53kYy
+	l+Qv9FNoFXqkMVscJ8Bu88cv90+CMdAjL4f7EQKAfIbzQ5uvQbBtKMyU7Hb91fuq
+	o7Ip1Bu8ZH8ltDXGfSZ0HVRTKq6DXZGw3FkIwclulBuYuuRmaiwOwryV6qI5eZAB
+	LdSxThOTbp4x6y9n1srEL2A7woyD9DI61Gw==
+X-ME-Sender: <xms:laS9Zy9f4vdzLOQOSXnSigr6GuXalv4GpH4RZDRrPOVUudsneX1rYQ>
+    <xme:laS9ZyvdMLYigV9b826ixxPwmzgZ1-iIPvV-JwV8hANV1kUcwVGAaPq0QFLlAeHWn
+    dEitBfMirssGavJxg>
+X-ME-Received: <xmr:laS9Z4Alh56QTkwv9XMrfrFg64qCLxrngsrZzCrFqrUSBwKddNo-B00WK_yDd9cgYfiBaqS5zERVhrUjm6bqwtVVCM1CPokhsFRpBl88gFTmhQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekudehgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgt
+    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrth
+    hhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:laS9Z6djH8LT_YtVh6MEp0FEw2YFjjpwwqg-J4W6AOTQOX1SxoL8nA>
+    <xmx:laS9Z3M8HcfK0OT6NqjgQc3PSa7czWTPTPMgSA90FblCvd--YWBVFg>
+    <xmx:laS9Z0mrrAA04SLkLBTKY2DTMs7TyigKIrqiaJ04mE3sgTmnbyEmFg>
+    <xmx:laS9Z5sVUhNjRhVf_40i64ObXRob1SZW5JfyFpuzaKL3ixSPX6wX3w>
+    <xmx:laS9Z8qcWDIjAET9CzGmZYxmG1StY5ocC-bsJ24dRf6CjQyBhRtL-5cH>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 25 Feb 2025 06:08:04 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6a6cf109 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 25 Feb 2025 11:08:02 +0000 (UTC)
+Date: Tue, 25 Feb 2025 12:07:57 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, phillip.wood123@gmail.com
+Subject: Re: [PATCH v2 6/7] refs: implement partial reference transaction
+ support
+Message-ID: <Z72kjTRDNOM6iFkY@pks.im>
+References: <20250225-245-partially-atomic-ref-updates-v2-0-cfa3236895d7@gmail.com>
+ <20250225-245-partially-atomic-ref-updates-v2-6-cfa3236895d7@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250225-245-partially-atomic-ref-updates-v2-6-cfa3236895d7@gmail.com>
 
-Adapt oidtree test script to clar framework by using clar assertions
-where necessary. `cl_parse_any_oid()` ensures the hash algorithm is set
-before parsing. This prevents issues from an uninitialized or invalid
-hash algorithm.
+On Tue, Feb 25, 2025 at 10:29:09AM +0100, Karthik Nayak wrote:
+> diff --git a/refs.c b/refs.c
+> index f989a46a5a..243c09c368 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2726,6 +2736,27 @@ void ref_transaction_for_each_queued_update(struct ref_transaction *transaction,
+>  	}
+>  }
+>  
+> +void ref_transaction_for_each_rejected_update(struct ref_transaction *transaction,
+> +					      ref_transaction_for_each_rejected_update_fn cb,
+> +					      void *cb_data)
+> +{
+> +	if (!(transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL))
+> +		return;
+> +
+> +	for (size_t i = 0; i < transaction->nr; i++) {
+> +		struct ref_update *update = transaction->updates[i];
+> +
+> +		if (!update->rejection_err)
+> +			continue;
 
-Introduce 'test_oidtree__initialize` handles the to set up of the global
-oidtree variable and `test_oidtree__cleanup` frees the oidtree when all
-tests are completed.
+This kind of proves my point that `TRANSACTION_OK` is pointless and
+leads to a mixture of using and not using the enum :)
 
-With this change, `check_each` stops at the first error encountered,
-making it easier to address it.
+> diff --git a/refs/files-backend.c b/refs/files-backend.c
+> index 3b0adf8bb2..d0a53c9ace 100644
+> --- a/refs/files-backend.c
+> +++ b/refs/files-backend.c
+> @@ -2851,8 +2851,18 @@ static int files_transaction_prepare(struct ref_store *ref_store,
+>  		ret = lock_ref_for_update(refs, update, transaction,
+>  					  head_ref, &refnames_to_check,
+>  					  err);
+> -		if (ret)
+> +		if (ret) {
+> +			if (transaction->flags & REF_TRANSACTION_ALLOW_PARTIAL &&
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
----
- Makefile                                  |  2 +-
- t/meson.build                             |  2 +-
- t/unit-tests/{t-oidtree.c => u-oidtree.c} | 79 +++++++++--------------
- 3 files changed, 34 insertions(+), 49 deletions(-)
- rename t/unit-tests/{t-oidtree.c => u-oidtree.c} (45%)
+Hm. If the error values were defined as a bitfield we could refactor
+this to not be a flag, but have a `transaction->accepted_rejections`
+instead that allows the caller to ask for only a subset of rejections to
+be accepted.
 
-diff --git a/Makefile b/Makefile
-index e4e85e6007..2b134efc70 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1358,6 +1358,7 @@ CLAR_TEST_SUITES += u-hashmap
- CLAR_TEST_SUITES += u-mem-pool
- CLAR_TEST_SUITES += u-oid-array
- CLAR_TEST_SUITES += u-oidmap
-+CLAR_TEST_SUITES += u-oidtree
- CLAR_TEST_SUITES += u-prio-queue
- CLAR_TEST_SUITES += u-reftable-tree
- CLAR_TEST_SUITES += u-strbuf
-@@ -1369,7 +1370,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
- CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
- CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
- 
--UNIT_TEST_PROGRAMS += t-oidtree
- UNIT_TEST_PROGRAMS += t-reftable-basics
- UNIT_TEST_PROGRAMS += t-reftable-block
- UNIT_TEST_PROGRAMS += t-reftable-merged
-diff --git a/t/meson.build b/t/meson.build
-index d5b83cdb72..91699917ff 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -6,6 +6,7 @@ clar_test_suites = [
-   'unit-tests/u-mem-pool.c',
-   'unit-tests/u-oid-array.c',
-   'unit-tests/u-oidmap.c',
-+  'unit-tests/u-oidtree.c',
-   'unit-tests/u-prio-queue.c',
-   'unit-tests/u-reftable-tree.c',
-   'unit-tests/u-strbuf.c',
-@@ -51,7 +52,6 @@ clar_unit_tests = executable('unit-tests',
- test('unit-tests', clar_unit_tests)
- 
- unit_test_programs = [
--  'unit-tests/t-oidtree.c',
-   'unit-tests/t-reftable-basics.c',
-   'unit-tests/t-reftable-block.c',
-   'unit-tests/t-reftable-merged.c',
-diff --git a/t/unit-tests/t-oidtree.c b/t/unit-tests/u-oidtree.c
-similarity index 45%
-rename from t/unit-tests/t-oidtree.c
-rename to t/unit-tests/u-oidtree.c
-index a38754b066..e6eede2740 100644
---- a/t/unit-tests/t-oidtree.c
-+++ b/t/unit-tests/u-oidtree.c
-@@ -1,10 +1,12 @@
--#include "test-lib.h"
-+#include "unit-test.h"
- #include "lib-oid.h"
- #include "oidtree.h"
- #include "hash.h"
- #include "hex.h"
- #include "strvec.h"
- 
-+static struct oidtree ot;
-+
- #define FILL_TREE(tree, ...)                                       \
- 	do {                                                       \
- 		const char *hexes[] = { __VA_ARGS__ };             \
-@@ -16,8 +18,7 @@ static int fill_tree_loc(struct oidtree *ot, const char *hexes[], size_t n)
- {
- 	for (size_t i = 0; i < n; i++) {
- 		struct object_id oid;
--		if (!check_int(get_oid_arbitrary_hex(hexes[i], &oid), ==, 0))
--			return -1;
-+		cl_parse_any_oid(hexes[i], &oid);
- 		oidtree_insert(ot, &oid);
- 	}
- 	return 0;
-@@ -27,10 +28,8 @@ static void check_contains(struct oidtree *ot, const char *hex, int expected)
- {
- 	struct object_id oid;
- 
--	if (!check_int(get_oid_arbitrary_hex(hex, &oid), ==, 0))
--		return;
--	if (!check_int(oidtree_contains(ot, &oid), ==, expected))
--		test_msg("oid: %s", oid_to_hex(&oid));
-+	cl_parse_any_oid(hex, &oid);
-+	cl_assert_equal_i(oidtree_contains(ot, &oid), expected);
- }
- 
- struct expected_hex_iter {
-@@ -44,19 +43,11 @@ static enum cb_next check_each_cb(const struct object_id *oid, void *data)
- 	struct expected_hex_iter *hex_iter = data;
- 	struct object_id expected;
- 
--	if (!check_int(hex_iter->i, <, hex_iter->expected_hexes.nr)) {
--		test_msg("error: extraneous callback for query: ('%s'), object_id: ('%s')",
--			 hex_iter->query, oid_to_hex(oid));
--		return CB_BREAK;
--	}
--
--	if (!check_int(get_oid_arbitrary_hex(hex_iter->expected_hexes.v[hex_iter->i],
--					     &expected), ==, 0))
--		; /* the data is bogus and cannot be used */
--	else if (!check(oideq(oid, &expected)))
--		test_msg("expected: %s\n       got: %s\n     query: %s",
--			 oid_to_hex(&expected), oid_to_hex(oid), hex_iter->query);
-+	cl_assert(hex_iter->i < hex_iter->expected_hexes.nr);
- 
-+	cl_parse_any_oid(hex_iter->expected_hexes.v[hex_iter->i],
-+			 &expected);
-+	cl_assert_equal_s(oid_to_hex(oid), oid_to_hex(&expected));
- 	hex_iter->i += 1;
- 	return CB_CONTINUE;
- }
-@@ -75,48 +66,42 @@ static void check_each(struct oidtree *ot, const char *query, ...)
- 		strvec_push(&hex_iter.expected_hexes, arg);
- 	va_end(hex_args);
- 
--	if (!check_int(get_oid_arbitrary_hex(query, &oid), ==, 0))
--		return;
-+	cl_parse_any_oid(query, &oid);
- 	oidtree_each(ot, &oid, strlen(query), check_each_cb, &hex_iter);
- 
--	if (!check_int(hex_iter.i, ==, hex_iter.expected_hexes.nr))
--		test_msg("error: could not find some 'object_id's for query ('%s')", query);
-+	if (hex_iter.i != hex_iter.expected_hexes.nr)
-+		cl_failf("error: could not find some 'object_id's for query ('%s')", query);
-+
- 	strvec_clear(&hex_iter.expected_hexes);
- }
- 
--static void setup(void (*f)(struct oidtree *ot))
-+void test_oidtree__initialize(void)
- {
--	struct oidtree ot;
--
- 	oidtree_init(&ot);
--	f(&ot);
--	oidtree_clear(&ot);
- }
- 
--static void t_contains(struct oidtree *ot)
-+void test_oidtree__cleanup(void)
- {
--	FILL_TREE(ot, "444", "1", "2", "3", "4", "5", "a", "b", "c", "d", "e");
--	check_contains(ot, "44", 0);
--	check_contains(ot, "441", 0);
--	check_contains(ot, "440", 0);
--	check_contains(ot, "444", 1);
--	check_contains(ot, "4440", 1);
--	check_contains(ot, "4444", 0);
-+	oidtree_clear(&ot);
- }
- 
--static void t_each(struct oidtree *ot)
-+void test_oidtree__contains(void)
- {
--	FILL_TREE(ot, "f", "9", "8", "123", "321", "320", "a", "b", "c", "d", "e");
--	check_each(ot, "12300", "123", NULL);
--	check_each(ot, "3211", NULL); /* should not reach callback */
--	check_each(ot, "3210", "321", NULL);
--	check_each(ot, "32100", "321", NULL);
--	check_each(ot, "32", "320", "321", NULL);
-+	FILL_TREE(&ot, "444", "1", "2", "3", "4", "5", "a", "b", "c", "d", "e");
-+	check_contains(&ot, "44", 0);
-+	check_contains(&ot, "441", 0);
-+	check_contains(&ot, "440", 0);
-+	check_contains(&ot, "444", 1);
-+	check_contains(&ot, "4440", 1);
-+	check_contains(&ot, "4444", 0);
- }
- 
--int cmd_main(int argc UNUSED, const char **argv UNUSED)
-+void test_oidtree__each(void)
- {
--	TEST(setup(t_contains), "oidtree insert and contains works");
--	TEST(setup(t_each), "oidtree each works");
--	return test_done();
-+	FILL_TREE(&ot, "f", "9", "8", "123", "321", "320", "a", "b", "c", "d", "e");
-+	check_each(&ot, "12300", "123", NULL);
-+	check_each(&ot, "3211", NULL); /* should not reach callback */
-+	check_each(&ot, "3210", "321", NULL);
-+	check_each(&ot, "32100", "321", NULL);
-+	check_each(&ot, "32", "320", "321", NULL);
- }
--- 
-2.47.0.86.g15030f9556
+I'm not quite sure whether it is a good idea, but the logic to handle
+all of that could be self-contained in `ref_transaction_set_rejected()`:
+if it returned an error code itself, it would swallow any errors in case
+the transaction allows a given error, and bubble up the error again in
+case the error is not allowed. The function could use a rename in that
+case though, e.g. `ref_transaction_maybe_set_rejected()`.
 
+Patrick
