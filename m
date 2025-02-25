@@ -1,188 +1,206 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81F05269816
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 13:19:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01117269894
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 13:19:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740489546; cv=none; b=Hczl9/vHNFfZDftejaP0MgYeH2aISFCaQwVttUQGRF2TsQyhqQQBovyQgdDVae2WiaGzmoTX7kGBrtWBy/o6DZJWJq0h7PJzsvUKb2y1MUCDxnd/ob/DJuOupx8nza6mNp+whVgyv1YxQ70eFUC6sRWVZHvMoN58GDLge/Y22no=
+	t=1740489590; cv=none; b=nHdgSs6wlyINz+7ZQgwWoPYn/kkLMXalXRlA9W/E84mUyC9p1jQv0xRHTSr+gj199BuCVYX4iUi45oXkxt9r4WR/4004dyTLYlL8LA9ATOoFOeNMXYId1aMu4Y4AWAED74kc0ASIV8iebvVikwew4wlkMeXmrNkzyMGlvWHAk6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740489546; c=relaxed/simple;
-	bh=pxIwqEs5FBpLRpZJHsGB+bEu6aNizd23MxS6muxzWBk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MT7ZZd3jAEwtrsldryjcYXCSvRjS5LG6OKhmeLy9GHayrtsHjLmMLoSvY7eVxsAROMCgRbJjS+GWkx7TKej0Xl+VeCqzwacYujiBaMe4aXsMM6D8VfZ5jF9lj2SFRoCXHysPWPVaM6YsFex6ZfDg+wou9nUwueHWQRgrbHemxVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VzQyKXAX; arc=none smtp.client-ip=209.85.214.172
+	s=arc-20240116; t=1740489590; c=relaxed/simple;
+	bh=7BRc4AyglW4/ojpL6ykaC+hwM6mK9jbPRpINdi2WXyQ=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=D61iXVp6ULVoBtTttyGRN1mV66VSd7o+c8GDmGlbs2KTzrD9v4+XhaqWfAqvgfh8yzMZtTY3XFAvLZVbEyXSu3J29Tu3sTkNeY5vGL0OfWXGjnGrBIr7+r/L1RSoGACobkb6bYRehdkbg1FcZOCBwm+pJ1Gkm0bCNicCnppNCcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IlqurDdx; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VzQyKXAX"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-220dc3831e3so101954975ad.0
-        for <git@vger.kernel.org>; Tue, 25 Feb 2025 05:19:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IlqurDdx"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-38f3486062eso4733909f8f.0
+        for <git@vger.kernel.org>; Tue, 25 Feb 2025 05:19:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740489543; x=1741094343; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=tSt4ej6rRVg9qGNkJQYQ32QCXadTLhsG9HF5V5rT5gU=;
-        b=VzQyKXAXhvxj0I+G9mVbZXtW2H3+dKrg4gnNJZN6NV7mWPRqgAIoDfR8I++UGBlB8/
-         YpP1aWemIzp8lVKNibaMc5+xrhpGAMa27Wt66gkT2Y4UnoCyjWzSJ3bB5/i/Chj7Gk4l
-         BjNaOjl8HsF8mlGDa1mDOAyyAIh1jiGLZOZi+6sKQCwBdJ6fvyWpevcIn5P+8pyj7auh
-         AFiYqJ3UvlJ/hzgUgrZt54exbkcMp9N6YBSt9Ly0dx38HdHh+129vQZk1MVolwmVYpU3
-         QZLtL0uNupaYYvd6zFJO17M5H9GCfBWPuwDyShxLgUyXXXxN8ZNrXU2McCxwtt7TUxvX
-         qedA==
+        d=gmail.com; s=20230601; t=1740489587; x=1741094387; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DwTiHxIw9owNT//9eBTymg/lNbuST8/1NN+5tvDdnvc=;
+        b=IlqurDdxWrA5HpFb2R2NYatXsUdvE+KBdRXgMft/Das6UaOrGOBOdIIfTrOUkdDEo0
+         tk8EoC1hMWrhAsAgSz0e3oqwrxSUBVMNdV9+dCE3P4flpd2OMFuh5OKf/g9CtxOzUy5x
+         fjhjD1ep/BVwwfzrm6DZZLEjlwqKM8NVNqIHtwJktYvkcua6RZkwLAtpCseGSGIM0zdg
+         NKWslbxas23/ZHrlclHvoNBwL1526aKY7SJfzfxiiNhjqbKfkuXvlNgERyktYqvYz6xi
+         44joskucnr7unETPh+VN5yx+fGVZ+Cpz9jn3RWyfybrHA/m4xg087sFeUUncKuXvbpAR
+         WwzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740489543; x=1741094343;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tSt4ej6rRVg9qGNkJQYQ32QCXadTLhsG9HF5V5rT5gU=;
-        b=n8ZkK8cWPWvqgFjoBeN0t1GY9bV//dJBr1K2JnGxTwDxWI0xHn8DiwUb7N1ZmXAkhC
-         V9hMfwLM47I6u555lG8EFBGaJt/5OhT+V8UdGRn6ewDIfnDfFk1WBXaX9XEk6WfUCECk
-         Dvr5kOxySPpp83/A+GQKGQlnPgqNBhMwzQQGNbg25U1wEYAxdDJtONuRoN/eRHVaN2Ev
-         k00XxQI5qvSvgEfkZVYNsGNCZFiwirG7sNyrxIdGMsFrn/D3jF+b1jsvoIzwTEQescGA
-         vwM7vV6Nc4IgC6bf08jfmiC58v+EwEruHjKNLE2HvjI4DNzUX3cQisDhm5E9bIV4HG9W
-         imhw==
-X-Gm-Message-State: AOJu0YzNN3WDpYWtDUC0hWXj6eD2S9GpVswmDIzcBPH7bBpKxonE/LTL
-	1X03MeY71WI7eXflt+WD1G1qr8ehS0peYrVNfYVyNnwNKi1pRNqPlc/8hg==
-X-Gm-Gg: ASbGnctp87iAmcJNBgtQSN7XpzQ77S31SQmz2wcM8FPd7TDdkjRTDpHsRivLJ6qhreT
-	EmPWw8IMx4gD3Gg4L8/Ci9YNNmg3n0aaLoAT/JvxwlIunJqHQMzpR5q1J4hpt8B9qnrS0C9/uag
-	VytDLgLd10zZML/cdPiESi/Wor5qWJz8o2Oj9yE/w5goD+kIZGDgAOOU4J+S7JO9OY6dQPcLKmW
-	1q9JtWN8RfgudOkIF7iARb4/XM9w+upLPvBMW2NadQ/y8FVrFCdsWcFwE3QqS36DXPVq8Iyqkbw
-	7+kgk62sye9I2esFYAOeeA==
-X-Google-Smtp-Source: AGHT+IHQYIfC++qvnfz7+EfaIFtki47FtDmvhheYkqHNWLsCD/UxbS8/pOm+INbR8/4MA13AV/WQsw==
-X-Received: by 2002:a17:902:c411:b0:221:2d4b:b4c6 with SMTP id d9443c01a7336-2218c5576c9mr317320915ad.17.1740489543217;
-        Tue, 25 Feb 2025 05:19:03 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-2230a000995sm13708215ad.46.2025.02.25.05.19.02
+        d=1e100.net; s=20230601; t=1740489587; x=1741094387;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DwTiHxIw9owNT//9eBTymg/lNbuST8/1NN+5tvDdnvc=;
+        b=FkjRbDonxirjV/PmOlA6bkmbt2GZ83SkgPSOwXJ3+Ks+RlDPv43atpNl3QynKAnaTX
+         Gv9TgAuRvfVW4SUtTDOMLIXLjKPlM1qZ20md5OsJCHubltCZ3OChA4WOzU05kU4izvYZ
+         1/nKL+mCOFrswLie9TRSu3SZkELQy3/JoQLWNFCEaLtV9VHgXdnFVApwZkvZ1ZZ8Pogh
+         8f6tqnLo/Kh/UZsejsO5mOjA9b5jtGuDjN0E4in1zfVqrWWsC91ZEgkC0HR20ieTWfI3
+         MJX4oCXoBZC+MwHUNpWhYYgKCyj6xO3Pgv5SBITM3m3LnOaQ+hB7Ew3ek+0D2gC7+thN
+         gDwQ==
+X-Gm-Message-State: AOJu0YytAPtVJQ8az5p3mzXH48VMcc/Y3yhYxQrroAbkMUgRsNEX3TYe
+	uY3e46hqfBsVYvoRvu/pPC6p89HGrvNx3XfX48lFAEcEWHzL9vZ2rLkTlA==
+X-Gm-Gg: ASbGnctGQUPvXNnduwePnFWQwe+4IgBoOB9bgs9DDMAK9XmnWS1k/YjCCbKoEQ5jKr1
+	rMRoTXGk9A2RijNoI3p+gUSTVL75S7T2RyR7IBlGOu+376LS0z4mt8A1QnNHDR/1e0101CIEj+j
+	1UU/2StqvoPJfHk2gnBK3LT9rcewPd6J/a5mN+9nZKljlPP5db6+OhvRniljRq4bwcemZrmb93f
+	gvNPDbGuHKD3aiMAngSHDNfNc3eoCsWbTswmQsdymsvWXNyGT0pOVnY10dB/IWh5lBda+yY/fQL
+	/L1kgiic1cj9Q7IaQKV+gxtgcUI=
+X-Google-Smtp-Source: AGHT+IHdDLA6LkNLueA5uxJPwtFzOoBM1Eqot6a6KS254pGbtvBl6qCd1zcny5wcE5TPQUfaup3z7g==
+X-Received: by 2002:a05:6000:1fa3:b0:38d:d223:f8e6 with SMTP id ffacd0b85a97d-38f7d1ff3c6mr10259982f8f.0.1740489586585;
+        Tue, 25 Feb 2025 05:19:46 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390cd8e7121sm2286665f8f.61.2025.02.25.05.19.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Feb 2025 05:19:02 -0800 (PST)
-Date: Tue, 25 Feb 2025 21:19:11 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v6 0/9] add more ref consistency checks
-Message-ID: <Z73DTwr9RicKMINe@ArchLinux>
-References: <Z7NU5fZfc8vfSvZ0@ArchLinux>
+        Tue, 25 Feb 2025 05:19:46 -0800 (PST)
+Message-Id: <pull.1897.git.git.1740489585344.gitgitgadget@gmail.com>
+From: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 25 Feb 2025 13:19:45 +0000
+Subject: [PATCH] bundle-uri: copy all bundle references ino the refs/bundle
+ space
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z7NU5fZfc8vfSvZ0@ArchLinux>
+To: git@vger.kernel.org
+Cc: Scott Chacon <schacon@gmail.com>,
+    Scott Chacon <schacon@gmail.com>
 
-Hi All:
+From: Scott Chacon <schacon@gmail.com>
 
-This changes enhances the following things (v6-changed):
+When downloading bundles via the bundle-uri functionality, we only copy the
+references from refs/heads into the refs/bundle space. I'm not sure why this
+refspec is hardcoded to be so limited, but it makes the ref negotiation on
+the subsequent fetch suboptimal, since it won't use objects that are
+referenced outside of the current heads of the bundled repository.
 
-1. [PATCH v6 2/9]: enhance the comment.
-2. [PATCH v6 3/9]: use '' to quote the file in the print message.
-2. [PATCH v6 4/9]: a new commit message to explain why we can tighten
-the rule.
+This change to copy everything in refs/ in the bundle to refs/bundles/
+significantly helps the subsequent fetch, since nearly all the references
+are now included in the negotiation.
 
-Thanks,
-Jialuo
-
+Signed-off-by: Scott Chacon <schacon@gmail.com>
 ---
+    bundle-uri: copy all bundle references ino the refs/bundle space
+    
+    This patch probably isn't meant for inclusion, but I wanted to see if
+    I'm crazy here or missing something.
+    
+    It appears that the bundle-uri functionality has an issue with ref
+    negotiation. I hit this because I assumed all the objects I bundled
+    would be seen in the negotiation, but since only references under
+    refs/heads are copied to refs/bundles, they are the only ones that are
+    seen for negotiation, so it's quite inefficient.
+    
+    I did several experiments trying to create a bundle where the subsequent
+    fetch was almost a no-op and it was frustratingly impossible and it took
+    me a while to figure out why it kept trying to get tons of other
+    objects.
+    
+    Furthermore, when I bundled just a tag (thinking it would have most
+    reachable objects) it completely failed to work because there were no
+    refs/heads/ available for negotiation - so it downloaded a huge file and
+    then still started from scratch on the fetch.
+    
+    However, if I copy all the refs in the bundle, it makes a big
+    difference.
+    
+    Here are some benchmarks from the gitlab oss repo.
+    
+    A normal clone pulls down 3,005,985 objects:
+    
+    ❯  time git clone https://gitlab.com/gitlab-org/gitlab-foss.git gl5
+    Cloning into 'gl5'...
+    remote: Enumerating objects: 3005985, done.
+    remote: Counting objects: 100% (314617/314617), done.
+    remote: Compressing objects: 100% (64278/64278), done.
+    remote: Total 3005985 (delta 244429), reused 311002 (delta 241404), pack-reused 2691368 (from 1)
+    Receiving objects: 100% (3005985/3005985), 1.35 GiB | 23.91 MiB/s, done.
+    Resolving deltas: 100% (2361484/2361484), done.
+    Updating files: 100% (59972/59972), done.
+    (*) 162.93s user 37.94s system 128% cpu 2:36.49 total
+    
+    
+    Then, I tried to bundle everything from a fresh clone, including all the
+    refs.
+    
+     ❯  git bundle create gitlab-base.bundle --all
+    
+    
+    This creates a 1.4G bundle, which I uploaded to a CDN and cloned again
+    with the bundle-uri:
+    
+    ❯  time git clone --bundle-uri=https://[cdn]/bundle/gitlab-base.bundle https://gitlab.com/gitlab-org/gitlab-foss.git gl4
+    Cloning into 'gl4'...
+    remote: Enumerating objects: 1092703, done.
+    remote: Counting objects: 100% (973405/973405), done.
+    remote: Compressing objects: 100% (385827/385827), done.
+    remote: Total 959773 (delta 710976), reused 766809 (delta 554276), pack-reused 0 (from 0)
+    Receiving objects: 100% (959773/959773), 366.94 MiB | 20.87 MiB/s, done.
+    Resolving deltas: 100% (710976/710976), completed with 9081 local objects.
+    Checking objects: 100% (4194304/4194304), done.
+    Checking connectivity: 959668, done.
+    Updating files: 100% (59972/59972), done.
+    (*) 181.98s user 40.23s system 110% cpu 3:20.89 total
+    
+    
+    Which is better from an "objects from the server" perspective, but still
+    has to download 959,773 objects, so 32% of the total. But it also takes
+    quite a lot longer, because it's redownloading most of those objects for
+    a second time.
+    
+    If I apply this patch where I change the refspec for the bundle ref copy
+    from refs/heads/ to just refs/ and clone with this patched version, it's
+    much better:
+    
+    ❯  time ./git clone --bundle-uri=https://[cdn]/bundle/gitlab-base.bundle https://gitlab.com/gitlab-org/gitlab-foss.git gl3
+    Cloning into 'gl3'...
+    remote: Enumerating objects: 65538, done.
+    remote: Counting objects: 100% (56054/56054), done.
+    remote: Compressing objects: 100% (28950/28950), done.
+    remote: Total 43877 (delta 27401), reused 25170 (delta 13546), pack-reused 0 (from 0)
+    Receiving objects: 100% (43877/43877), 40.42 MiB | 22.27 MiB/s, done.
+    Resolving deltas: 100% (27401/27401), completed with 8564 local objects.
+    Updating files: 100% (59972/59972), done.
+    (*) 143.45s user 29.33s system 124% cpu 2:19.27 total
+    
+    
+    Now I'm only getting an extra 43k objects, so 1% of the original total,
+    and the entire operation is a bit faster as well.
+    
+    I'm not sure if there is a downside here, it seems clearly how you would
+    want the negotiation to go. It ends up with way more refs under
+    refs/bundle (now there is refs/bundle/origin/master, etc) but that's
+    being polluted by the head refs anyhow, right?
+    
+    Is this a reasonable change?
 
-This series mainly does the following things:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1897%2Fschacon%2Fsc-more-bundle-refs-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1897/schacon/sc-more-bundle-refs-v1
+Pull-Request: https://github.com/git/git/pull/1897
 
-1. Fix subshell issues
-2. Add ref checks for packed-backend.
-   1. Check whether the filetype of "packed-refs" is correct.
-   2. Check whether the syntax of "packed-refs" is correct by using the
-      rules from "packed-backend.c::create_snapshot" and
-      "packed-backend.c::next_record".
-   3. Check whether the pointed object exists and whether the
-      "packed-refs" file is sorted.
-3. Call "git refs verify" for "git-fsck(1)".
+ bundle-uri.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-shejialuo (9):
-  t0602: use subshell to ensure working directory unchanged
-  builtin/refs: get worktrees without reading head information
-  packed-backend: check whether the "packed-refs" is regular file
-  packed-backend: check if header starts with "# pack-refs with: "
-  packed-backend: add "packed-refs" header consistency check
-  packed-backend: check whether the refname contains NUL characters
-  packed-backend: add "packed-refs" entry consistency check
-  packed-backend: check whether the "packed-refs" is sorted
-  builtin/fsck: add `git refs verify` child process
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 744257c49c1..3371d56f4ce 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -403,7 +403,7 @@ static int unbundle_from_file(struct repository *r, const char *file)
+ 		const char *branch_name;
+ 		int has_old;
+ 
+-		if (!skip_prefix(refname->string, "refs/heads/", &branch_name))
++		if (!skip_prefix(refname->string, "refs/", &branch_name))
+ 			continue;
+ 
+ 		strbuf_setlen(&bundle_ref, bundle_prefix_len);
 
- Documentation/fsck-msgids.adoc |   14 +
- Documentation/git-fsck.adoc    |    7 +-
- builtin/fsck.c                 |   33 +-
- builtin/refs.c                 |    2 +-
- fsck.h                         |    4 +
- refs/packed-backend.c          |  369 +++++++++-
- t/t0602-reffiles-fsck.sh       | 1205 +++++++++++++++++++-------------
- worktree.c                     |    5 +
- worktree.h                     |    8 +
- 9 files changed, 1162 insertions(+), 485 deletions(-)
-
-Range-diff against v5:
- 1:  b3952d80a2 =  1:  b3952d80a2 t0602: use subshell to ensure working directory unchanged
- 2:  3695586f58 !  2:  fa5ce20bb7 builtin/refs: get worktrees without reading head information
-    @@ worktree.h: struct worktree {
-     +/*
-     + * Like `get_worktrees`, but does not read HEAD. Skip reading HEAD allows to
-     + * get the worktree without worrying about failures pertaining to parsing
-    -+ * the HEAD ref. This is useful when we want to check the ref db consistency.
-    ++ * the HEAD ref. This is useful in contexts where it is assumed that the
-    ++ * refdb may not be in a consistent state.
-     + */
-     +struct worktree **get_worktrees_without_reading_head(void);
-     +
- 3:  cbaae00e8b !  3:  787645a700 packed-backend: check whether the "packed-refs" is regular file
-    @@ refs/packed-backend.c: static struct ref_iterator *packed_reflog_iterator_begin(
-     +		 */
-     +		if (errno == ENOENT)
-     +			goto cleanup;
-    -+		ret = error_errno(_("unable to stat %s"), refs->path);
-    ++		ret = error_errno(_("unable to stat '%s'"), refs->path);
-     +		goto cleanup;
-     +	}
-     +
- -:  ---------- >  4:  f097e0f093 packed-backend: check if header starts with "# pack-refs with: "
- 4:  b9ce8734ac !  5:  a589a38b68 packed-backend: add "packed-refs" header consistency check
-    @@ Commit message
-     
-         In "packed-backend.c::create_snapshot", if there is a header (the line
-         which starts with '#'), we will check whether the line starts with "#
-    -    pack-refs with:". Before we port this check into "packed_fsck", let's
-    -    fix "create_snapshot" to check the prefix "# packed-ref with: " instead
-    -    of "# packed-ref with:" due to that we will always write a single
-    -    trailing space after the colon.
-    -
-    -    However, we need to consider other situations and discuss whether we
-    -    need to add checks.
-    +    pack-refs with: ". However, we need to consider other situations and
-    +    discuss whether we need to add checks.
-     
-         1. If the header does not exist, we should not report an error to the
-            user. This is because in older Git version, we never write header in
-    @@ fsck.h: enum fsck_msg_type {
-      	FUNC(ZERO_PADDED_DATE, ERROR) \
-     
-      ## refs/packed-backend.c ##
-    -@@ refs/packed-backend.c: static struct snapshot *create_snapshot(struct packed_ref_store *refs)
-    - 
-    - 		tmp = xmemdupz(snapshot->buf, eol - snapshot->buf);
-    - 
-    --		if (!skip_prefix(tmp, "# pack-refs with:", (const char **)&p))
-    -+		if (!skip_prefix(tmp, "# pack-refs with: ", (const char **)&p))
-    - 			die_invalid_line(refs->path,
-    - 					 snapshot->buf,
-    - 					 snapshot->eof - snapshot->buf);
-     @@ refs/packed-backend.c: static struct ref_iterator *packed_reflog_iterator_begin(struct ref_store *ref_s
-      	return empty_ref_iterator_begin();
-      }
- 5:  9f638b3adf =  6:  7255c2b597 packed-backend: check whether the refname contains NUL characters
- 6:  2c5395bdd0 =  7:  7794a2ebfd packed-backend: add "packed-refs" entry consistency check
- 7:  648404c60d =  8:  2a9138b14d packed-backend: check whether the "packed-refs" is sorted
- 8:  4dbbacf44b =  9:  ccde32491f builtin/fsck: add `git refs verify` child process
+base-commit: 2d2a71ce85026edcc40f469678a1035df0dfcf57
 -- 
-2.48.1
-
+gitgitgadget
