@@ -1,113 +1,113 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB391624D7
-	for <git@vger.kernel.org>; Tue, 25 Feb 2025 07:14:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08DC2571CD
+	for <git@vger.kernel.org>; Tue, 25 Feb 2025 07:35:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740467689; cv=none; b=u1xuKwXpJPN+5YChpaCzJ34GBzXOZe/HdFACcNCdatyD2jgunQ7fO+8vCcTy8t/H7SZ2pKEa5mfPBHMp/P1BXxxU87Z4AWioo3NXtojuWoF6XvyYSjo0v8INFJ9jh0yJWXxCbGI+1tiycollKFrbpshhpnjkQOuDZ3Ql/zJBUqA=
+	t=1740468912; cv=none; b=b7zxDtusvuGOjieMCbotcWV1T0syTsQxz5nRbbKErYOQom1BC48LyByZyBNWLIbMBbGvKLKhWAIBHT1Ek6oWlYViKiXqYMabNVVTcDPLE7D78kqiZQ6aNMO6GKwn+JiQC1XwcMlLnyqJZTHVpMOOyerJMNyzQByuGTJA1rXUcJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740467689; c=relaxed/simple;
-	bh=lIoRwmAKLg0B4IQujjvZw0LmLEe9NAL8WNkjDKnYYEA=;
+	s=arc-20240116; t=1740468912; c=relaxed/simple;
+	bh=BwSvuWV5RBH3uX13edEO05c182NQD7/OldTEDk+fDwA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=uQnYsRzaTeZQlyXWBS7tkmEk5PAWS4aA2nIzOl6YRytzUYS5WRYWkiMsH6jrK7pqWNljfRROgq79zJRdcgETS+15irTR4iyO/TBVU8lXvcVpIqx7sFicwe9q7uzQgwrsTaOIh0Ol1l3Wgv7ZD7c7muzVZgv46ouLt8oJq43KxmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m+U9Jcv4; arc=none smtp.client-ip=209.85.128.175
+	 To:Cc:Content-Type; b=RlE8toJekYkw62mRQGlHgQwXop6gu/BqPtjm9pVrtZNOdKKiFOjXKOHRTyq2WrX379ym8cwPbINIVq1gZWW7K3gQcMiYNP4dFP5ODg6LqEqASW7Y51wsNSrFfcxaPFURHQZ0vjFoOtdsCV8vWZloPB6dmIqWzwt06zyAuSYRzkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GZv83WiV; arc=none smtp.client-ip=209.85.166.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m+U9Jcv4"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-6ef60e500d7so42477997b3.0
-        for <git@vger.kernel.org>; Mon, 24 Feb 2025 23:14:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GZv83WiV"
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-855bd88ee2cso145335639f.0
+        for <git@vger.kernel.org>; Mon, 24 Feb 2025 23:35:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740467687; x=1741072487; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=AeNzv6bQSxTFyzq4y0rURX1K8IEy08h/27T8+MRtiVs=;
-        b=m+U9Jcv4gzWmJcHv/QsZJWJmbtwKzR4USabGXaMpD++rjcpgf+Dpfx4YoUhiaCUZQX
-         4kkbkZokZVsA+baDIlrnoUpZBdpNtKDB4vkotzyQlfFFar5VJkCnzmupJ/8dGdfJ//kw
-         ZHddqQTvN1l/70PsbNHVmJ1I+Ae+zOyOMpoTjOPchZqNBkOZCVbAaSvKZknJFcE9xJuj
-         oJeVzOHZ7F6ehO/z/dCZZAMPgFmEIp4g+IdJZ4A+xTHdlsSIofPLwAK/P1brVWfiTFyt
-         GZUebjYZ0kuP81gVRCaUXo/3nq1LMskpHEL0NNCeKz49QfDxoPLfKxAxi6mUDJJbll75
-         ogYA==
+        d=gmail.com; s=20230601; t=1740468909; x=1741073709; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uY3i47SgVgqjXUx9YQGVrdsXAL3jKkVvLJSWAai5J8g=;
+        b=GZv83WiVuUKEwY/sEZKZ9UncNuQWSI2XRqDSxkkMJOF5Btt/Ax90FHJQQgcl8J1j3l
+         OxtIf9SxEDhvrRUhuVY8FKRV6FO1nSOOk+dbIH4+1LkFfV8MZ1ytmoZ+u5nyo/S25DKD
+         1VDaxzU3XioAfIVxrHaDXkHVhgSk7wc3dRMthmQs+pLYrIRvCWhG6u3JGiBLVbsl+fFV
+         rauLQiQhCOGYtQUOUB6xP/hEO+CW6PLiafr+xH9YrMm6WZgkXh+4QOK2criJH+WbmtnW
+         TZxGSdT+1/go+f9L2Qbl0WO63pEJNnI50JpxC+oUknhO1IT6HHwr5d6FVIJ/xDylwOGW
+         lK6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740467687; x=1741072487;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AeNzv6bQSxTFyzq4y0rURX1K8IEy08h/27T8+MRtiVs=;
-        b=nmfLjhx4rmKOnNeDvOecGFe/IpSZ/dKoBX2IhTK+JAvHCiScBo5vq+nbJzx23j2+Gq
-         WZ/zCjrhfiRiX8zCToluQoxuu6Irv+jesAAb0NqS8Gafxnbrn9CsG8HOmAPUKopB2foR
-         PIg/VfQUOmMrrqniRGBVBM7CZN0MXEOTiowd78OTCpQJCr7uyPcklSERXOiEth/qOTxD
-         r+p9HkkMC07IY3070KL3pRGOlVJkL/qp59cCHqqlmuu6KEnrgT8AvP2HuLNAUzJZ/h6C
-         99hIqJKPCyqtroUcdq60ebDKfiPj+C9hbsv3tZA/TmJLgHxwgLkVPh6Eu1t8sz/uuNH9
-         O4xQ==
-X-Gm-Message-State: AOJu0YzCZHXfknUH8FPnjoStytlWNW/SI/5VK8z7+FUkpQxNFxsZ6lkL
-	JKfHu/Z45JesdfH9/1O0Covdl64jSs3bPsJOwPFpqBeXyxo6tSQW40B10zVBXq44CDzUBNfGZAk
-	9QvH4GrSusQYp8eSDUApVksEl0cutv++c8j2y5Q==
-X-Gm-Gg: ASbGnculmN4gbuZ9hysyz828BggZyLIbYwr8ISDFy0o9MfQW3TM/snvZwfXiYAVUYg6
-	/ugGFGUJHaGctzSxppZfHgaEi37iS7ECvYIK/1hjgsZ9vNrcFYPfFsegbiyyAUe8ogi4HPgoZFe
-	WWtKbsEcE=
-X-Google-Smtp-Source: AGHT+IE9yWYBd0JxCxkHT4/KrWkFLBSYRNCdRfWCR09fa3TFFGPBrl7pBpvPAVRWheKndzdiGyp4gHvFwUHcVx+gmKc=
-X-Received: by 2002:a05:690c:6807:b0:6f9:3dd2:7941 with SMTP id
- 00721157ae682-6fbcc861104mr136421327b3.38.1740467686772; Mon, 24 Feb 2025
- 23:14:46 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740468909; x=1741073709;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uY3i47SgVgqjXUx9YQGVrdsXAL3jKkVvLJSWAai5J8g=;
+        b=J7IWD/z46r6tefUhl8sOybFEUr600DI3MYGZzF8tt8Clea98IC3T5Dp8hXLmjiOXH8
+         otdRrT3SBICx7MyP0BMvuzxPdt76jD6TYIz0V8RfpGSGdG99BxcdO8FxIU5FRxpLCV7a
+         5dgO1yT4TQjUlD3QMskSLUp0CCVxHM8DCsxFKeVc6MJbieNlfnYcL/qcrdKWPu66bnr/
+         XRBc6ECHL6aHAyT5V98CN2Ffb9aO0fsPYfYU+MtgPBNTK63YKs4Dom9jVoW8PkJnXtjI
+         o3Bygg7mt+qowIdP1fuMHKU6/iomqkOjY6H0i+2lOr5cxsQ7fhuzNB2Ud83aZil2eQFX
+         wFFA==
+X-Forwarded-Encrypted: i=1; AJvYcCWQt+ehOT68AvsFhDI5/dUpsXmU0fJVijIHTFLrhC+t58R0QHLznulHeotKJoK9pv/aYR0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvPTvxLd8DmEARlFrrOfxHJ/v6i0zBA1EO1d9aiGvv4RyV9U8w
+	OCYuoyTSHfTYoKwSYSHz4L/OU0XowfhLI27wq4e9LHbgcNErbgIdUymrssGy3D2U8+xPiDmOgvE
+	MinoXC0pbYsbSj6rtB3konG2EH8s=
+X-Gm-Gg: ASbGncvodts3WfkKEV/NU2X3rUJryy9OYVU7ucRoKGQ9ojX0aGic1LkoERy9BxQhFBU
+	zIdOWlk9QSetLeqyWaCWJlBgIj+ZilfO/bWz3LLQwMOIrROp0hr9ccbv3LkcdjvMh3VGSoVR2zP
+	RebIPYg+2hosfp1yNi7f+exoY9srrrruH6DU4sG/k=
+X-Google-Smtp-Source: AGHT+IHEsUwazW/FOG1aIBc/vn0Uk2q+9L4rFOoEexbf8LKqVlmPrcwu54aQXML0hZt8evuWE7zZtMsVsNHSMANsZ9Q=
+X-Received: by 2002:a05:6e02:1785:b0:3d1:4b97:4f2d with SMTP id
+ e9e14a558f8ab-3d2cb429f66mr144553695ab.5.1740468909301; Mon, 24 Feb 2025
+ 23:35:09 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250220082959.10854-1-kuforiji98@gmail.com> <20250224152704.70289-1-kuforiji98@gmail.com>
- <20250224152704.70289-2-kuforiji98@gmail.com> <xmqqwmdf5is1.fsf@gitster.g>
-In-Reply-To: <xmqqwmdf5is1.fsf@gitster.g>
-From: Seyi Chamber <kuforiji98@gmail.com>
-Date: Tue, 25 Feb 2025 08:14:35 +0100
-X-Gm-Features: AWEUYZn75zzT9GNStb0Fws3tz5T6yKZxyAawDs-d1mO23gA6wF9inpyH3QqWa7c
-Message-ID: <CAGedMteOTewr9=m6=5NztLA_cDiuq=uEt-A26rFWRCmEw0=_UA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] t/unit-tests: implement clar specific oid helper functions
+References: <20210430232537.1131641-1-lukeshu@lukeshu.com> <20250224142744.279643-1-christian.couder@gmail.com>
+ <xmqq1pvn6zvg.fsf@gitster.g>
+In-Reply-To: <xmqq1pvn6zvg.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 24 Feb 2025 23:35:00 -0800
+X-Gm-Features: AWEUYZkPjf2sNSGRw3dRwv_s1GxlpaTcGVX2E9yMHQYqyr0vEcrgnAMgJJLgYMw
+Message-ID: <CABPp-BHOvCWd6mMg0WdR4O5TfZS7TWtRCQCYPLnGpo5+jNHy5w@mail.gmail.com>
+Subject: Re: [PATCH v5 0/6] fast-export, fast-import: add support for signed-commits
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, phillip.wood@dunelm.org.uk
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Luke Shumaker <lukeshu@lukeshu.com>, Jeff King <peff@peff.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Taylor Blau <me@ttaylorr.com>, 
+	"brian m . carlson" <sandals@crustytoothpaste.net>, Eric Sunshine <sunshine@sunshineco.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 24 Feb 2025 at 18:56, Junio C Hamano <gitster@pobox.com> wrote:
+On Mon, Feb 24, 2025 at 9:01=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Seyi Kuforiji <kuforiji98@gmail.com> writes:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
-> > -static int get_oid_arbitrary_hex_algop(const char *hex, struct object_id *oid,
-> > +static void cl_parse_oid(const char *hex, struct object_id *oid,
-> >                                      const struct git_hash_algo *algop)
-> >  {
-> >       int ret;
-> >       size_t sz = strlen(hex);
-> >       struct strbuf buf = STRBUF_INIT;
-> >
-> > -     if (!check(sz <= algop->hexsz)) {
-> > -             test_msg("BUG: hex string (%s) bigger than maximum allowed (%lu)",
-> > -                      hex, (unsigned long)algop->hexsz);
-> > -             return -1;
-> > -     }
-> > +     cl_assert(sz <= algop->hexsz);
-> >
-> >       strbuf_add(&buf, hex, sz);
-> >       strbuf_addchars(&buf, '0', algop->hexsz - sz);
-> >
-> > -     ret = get_oid_hex_algop(buf.buf, oid, algop);
-> > -     if (!check_int(ret, ==, 0))
-> > -             test_msg("BUG: invalid hex input (%s) provided", hex);
-> > +     cl_assert_equal_i(get_oid_hex_algop(buf.buf, oid, algop), 0);
-> >
-> >       strbuf_release(&buf);
-> > -     return ret;
-> >  }
+> > Luke Shumaker sent the first 4 versions of this series in April 2021,
+> > but it looks like he stopped before it got merged. Let's finish
+> > polishing it.
 >
-> As you are not returning "ret" and making the function void, you
-> made "int ret" an unused variable that needs removing.
+> Nice to see an old topic resurrected.
 >
-> Thanks.
+> > fast-export has an existing --signed-tags=3D option that controls how t=
+o
+> > handle tag signatures.  However, there is no equivalent for commit
+> > signatures; it just silently strips the signature out of the commit
+> > (analogously to --signed-tags=3Dstrip).
+> >
+> > So implement a --signed-commits=3D flag in fast-export, and implement
+> > the receiving side of it in fast-import.
+>
+> Nice.
+>
+> I haven't thought about this topic obviously for a looooong time,
+> but I wonder we may want to have an option, which is independent
+> from these --signed-tags/--signed-commits options addressed here,
+> that allows the person who performed the import to attest to the
+> result by adding their own signature on tags and commits, whether
+> these tags and commits were originally signed or not.
 
-Hi Junio,
+For what it's worth, this has been requested multiple times of
+git-filter-repo, so there is some desire for this feature.
 
-Do I send in a new patch series addressing this?
+> Obviously totally independent, orthogonal, and outside of the scope
+> of this topic.
 
-Thanks,
-Seyi
+Agreed.
