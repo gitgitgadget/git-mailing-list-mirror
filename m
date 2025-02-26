@@ -1,586 +1,421 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 153FF154BF0
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 01:06:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E097333F7
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 01:44:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740531971; cv=none; b=iViD7mX5owNwtFDUujZ/PsIdN4IvmhZblL2n1rXDK3+LFlDv6RIRpi0fZaYaDEaRJTzHmZiqOwNQwtLdXfTI/bIfYHFJoeJdwCIg6x3L9Wfsri46MtNhUDuQcRdX/7PYZcpbMDMCRVr76/0/o2Ymp89mrbbML9CCFwORCSkgdcY=
+	t=1740534261; cv=none; b=Z4Lplpn/BEJKX2Ac3yHDqi4EbJT00MxadqDmI6LrZUcD6iKc+PcujHnX6/10eN4Wzh/o1yEm6TdKKS3WHhBEdEJnsOYDfiOzvNlEBfvGvVdxf0tNA8/B4jvuLoTL4DCp1SstrmmRYmYpqu+9kHUptIdNIA/lnRzKOSXvV4nCFYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740531971; c=relaxed/simple;
-	bh=d6JaGuYw/RUJr8rRjq0OlhAidOeD4vdqxNRfvWT9xcg=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=s5+AgBRLsCwtZaRzXLVunRAEgkZ555E+bZrlSx0YBghgNEi0AK4VNjnXFsW0KIFA+zG2Ey0IYmae+z7wKpdFFDw5I6oIg5tzXTosj9RwwEz5JrTB+GZeb1SFSMrS0RjUjLcocWizkx3cV4zBDJrTaNB+bU2P8KUzcOA3UgWHXRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EAPbhhqX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=4FItPsIW; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740534261; c=relaxed/simple;
+	bh=FsF8KWmfhlcVgUTfKMWMLxSiRennDvDSlXCo52OFAug=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=sU/is9QKol7mHwSoD47eAwXCq0PsGo6rpN/DUPfU9NspZpUF1DCLh1lv9wWYpzfvV3/Rc9UjCpqpY+wzol+K2M35AtSEQcI7zuxEqMtt/dU3De/LLzZO3TFMlyFzbml/bdpBMcUuqaUHOkuTVgiCQvmQG8ksX24dQLZQzIEEqEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OW3wpW0v; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EAPbhhqX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="4FItPsIW"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 03CDC2540208;
-	Tue, 25 Feb 2025 20:06:06 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Tue, 25 Feb 2025 20:06:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1740531966; x=1740618366; bh=uMyPtXqv4FVvqg/uRYKUfND7RFC91FSW
-	CIv94mbHnyc=; b=EAPbhhqXoSKGDUb1XXXwwVL5Y3IFsNa5TrDr/3sU3Zd+l3V0
-	mQec6J25H5EW8d5Xs18fVmd3hE1QovnzT+wkKbRNbgs9IYDkAAVMgE4uwJ/uGWup
-	2IszCI85MCtwRRQhtjz+h3A/pUJed1j9LW3A6VmrG7l4UU9TKFQACNxKpAMGQpeQ
-	cOjiFvfJEDMVwn/EUONU8Esx2RtYena+z6eh5FZFiMO4ADRb4uBKyyP9wJB7wts2
-	n7uIXyL4AffqyyoS/waB/YhG6hnAl+RSGE8vWwVyDPsnLxxi6MR9K1yXAe3n3PDL
-	8fu95h7P9omPUxR6wLfTH9TsJdiLtCrPIpVJnw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740531966; x=
-	1740618366; bh=uMyPtXqv4FVvqg/uRYKUfND7RFC91FSWCIv94mbHnyc=; b=4
-	FItPsIW/SE0HRR2ILo299p8MWzHwuuff32CIIFE3JJ/pqOA9J9jUxnDrJVdUkaKL
-	SmMfydykP26XPKhZaNgfe622h3pCT4w1l/sUAJ0Sr6y4IdKrWCUfreBNl6psW84y
-	4ywfCE+lWsi2KhSyuvKkXonwTf8dsJA4DI7MbNoBGO/wUmPUGOgtJay1hbBBGVav
-	r+GYo4vQYlXyVSF5TnonDpLKpOTU2nIlFKNHfNL4sVvRGjQNgytGUiaUPQJiikSZ
-	XZahsQ2gKUj0pk+D3Z813d9DH+7TSJ4CMAXKcxwTD9K2UHeLsRI8A0KnWisXKIYj
-	q8nQOH6AHDk1ljO+zzPHA==
-X-ME-Sender: <xms:_mi-Z6zCZ8xh8NhrSx8c5JyNhgMgWm584sgkITFb_32hzCzjWCeUyQ>
-    <xme:_mi-Z2SHmieqksG71JxupNw6M5xJLMC-JQTpgMToa0j7Aszg9vQCij8GMaCcJR6VD
-    qDPGVgkGUfoNIxzJg>
-X-ME-Received: <xmr:_mi-Z8XV_zEo3xH993nBs0DdqH-9hbR5_GfeHy8RUT7K_tnHV7FzV8I2kg4koLbO6R57f5ehtyDoDUynR2hQ28g87d0qJBK2yvk1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekfedvvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvuf
-    ffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcu
-    oehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedttddvff
-    eljeevhfejiefglefffeejgfefgeejleehkeffgeeivdekvdekieeludenucffohhmrghi
-    nhepkhgvrhhnvghlrdhorhhgpdhorhdrtgiipdhgohhoghhlvghsohhurhgtvgdrtghomh
-    dpghhithhhuhgsrdgtohhmpdhgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigv
-    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtoh
-    hmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhifnheslhifnhdrnh
-    gvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_mi-ZwhvfFBzffNPJRWwOhIFnXYUy2Mc6EB5CcZbjz3uaptpGY5jvg>
-    <xmx:_mi-Z8A6YJhXqQ-IIPqHRYeuva8T9O2jShYrDpAqV-0zPGfUUIUeVg>
-    <xmx:_mi-ZxIgqH-L-18j-B59fsg2sDMf4x7rk7ywQCGjV2ep7VV-iVnPXg>
-    <xmx:_mi-ZzBlmwaWKSIwnTmnfuLcr-hnhUaYFgQVhBUO07_WBaLBJMx6kA>
-    <xmx:_mi-Z_O12ZYrKGUPJvw6RvDZbmNlFFBqWoOtSnW6NgtU0Wlpe7yilG7X>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Feb 2025 20:06:06 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Feb 2025, #08; Tue, 25)
-X-master-at: 5a526e5e18ddb9a7dfc5a2967d21d6154df64a4f
-X-next-at: 4e5a29be8250487b387ff3b254e30b2320407821
-Date: Tue, 25 Feb 2025 17:06:04 -0800
-Message-ID: <xmqqzfi9h5vn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OW3wpW0v"
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e608b2698fcso329927276.1
+        for <git@vger.kernel.org>; Tue, 25 Feb 2025 17:44:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740534258; x=1741139058; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Es4BHwvEspzw6pOb9Bf1cz0oiM6bC2TYoYf1J1ZCvZc=;
+        b=OW3wpW0vtvdRa6ewBlAB8vx/HqN5Ai1IflbyNeCPo/jW6Xrb46ZL5A5DRN8p8d5L4J
+         LYNSz4ETNGhSac/lp1BTdFu12wtXAVfp0wNycIQdqj9aLRS43Af5QMoPtvZdjCL5qnKC
+         I9XEME53OwiKIXM+LtkN0xtgZTiiKukJnk2eVP1Hk2JOSyo3HCV5HDs2u4kcZl3vy9ew
+         QbAZ9s+s0hHM5UOlim6Q0q45/apSuROqJM1vePxP1fMcO9KdE8ftEi/kpFlHz/00PxZq
+         UNyOmqOhfYkVW/RPCxuneQmkGLYRAThlAt0v+zqsyGMzGr+MCRtKgLV7ZomSYYEAd2V+
+         jlKw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740534258; x=1741139058;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Es4BHwvEspzw6pOb9Bf1cz0oiM6bC2TYoYf1J1ZCvZc=;
+        b=syYNvwAm0pjp+opBLCoICXV6oMiALzQ22kwZN40Z+wxxYXv3KMh36A7uhY5jWoDFZe
+         WHh9AyiaJrG8bdy1qZAVr6x0fBXPa1dV/0sXacxYJ5n3MMt7bEyy4WjUVShsOQxgjY19
+         JXQocNz58ZNSVe2O8Zf/vUL6PlaYXZ+IUkeDfWfWHvGc+cLRsJPQ6ieUwTfwlokOvIJh
+         tt74ztFHA1fFonZG3GyyfiD9qluiooSXxvh5LHb94BKSjU25akSkPQHDwHCT/f1OrZvd
+         q+UkstwHzZnH7n5+ay38SnqMBL/31ThkilX3P+JXi+tN+KujQy6E5cT84xyzKLuVhQ8B
+         avtA==
+X-Gm-Message-State: AOJu0Yyhs3LHTv8/3ms7OfUumHX+1ujxlj4ho8yJ3vKiyS8xW9E0aOOg
+	hqjiteGyfl5GiPosRnLByaHRRpnxS9LX/iSuscvWwucjsxx1gz7phM1kR+/otkLL/NHztnT7x1m
+	Du7X8cyzu7LdqsUdOdMs9t08bPiK4HeJu
+X-Gm-Gg: ASbGnctvU5M4cKUkN2arxccFTaCP/X3bbBC8K4Wv/S8C6S93mnwuimS11tL65scL26i
+	aohYzNUu1OFZyjn5LS2lJFnvgID007cHCYd3SogPuT+v+k4e8byn2fon347GCQqlAs0kVI46RAB
+	UvoOHXoMRz
+X-Google-Smtp-Source: AGHT+IHd0CAZ2qi45m/V53erx0R5wtqTaFaTuSVcZ5dhXK7OYTsqittFKqr6Z2ajiLu4Mh1aGWxgDy1Q06fZ4fcTTkQ=
+X-Received: by 2002:a05:6902:2283:b0:e60:88c3:a54b with SMTP id
+ 3f1490d57ef6-e6088c3a816mr1727209276.47.1740534258465; Tue, 25 Feb 2025
+ 17:44:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* ad/set-default-target-in-makefiles (2025-02-18) 1 commit
-  (merged to 'next' on 2025-02-19 at 21d81b4f09)
- + Makefile: set default goals in makefiles
-
- Correct the default target in Documentation/Makefile, and
- future-proof all Makefiles from similar breakages by declaring the
- default target (which happens to be "all") upfront.
- 
- source: <20250215211904.41883-1-adam@dinwoodie.org>
-
-
-* bc/diff-reject-empty-arg-to-pickaxe (2025-02-18) 1 commit
-  (merged to 'next' on 2025-02-19 at 85d8a43baa)
- + diff: don't crash with empty argument to -G or -S
-
- The -G/-S options to the "diff" family of commands caused us to hit
- a BUG() when they get no values; they have been corrected.
- 
- source: <20250217175759.1576684-1-sandals@crustytoothpaste.net>
-
-
-* da/xdiff-w-sign-compare-workaround (2025-02-12) 6 commits
-  (merged to 'next' on 2025-02-18 at 4af44766d5)
- + xdiff: avoid signed vs. unsigned comparisons in xutils.c
- + xdiff: avoid signed vs. unsigned comparisons in xpatience.c
- + xdiff: avoid signed vs. unsigned comparisons in xhistogram.c
- + xdiff: avoid signed vs. unsigned comparisons in xemit.c
- + xdiff: avoid signed vs. unsigned comparisons in xdiffi.c
- + xdiff: move sign comparison warning guard into each file
-
- Noises from "-Wsign-compare" in the borrowed xdiff code has been
- squelched.
- 
- source: <20250212060418.1645241-6-davvid@gmail.com>
-
-
-* mh/doc-commit-title-not-subject (2025-02-18) 1 commit
-  (merged to 'next' on 2025-02-19 at ee145da188)
- + doc: use 'title' consistently
-
- The documentation of "git commit" and "git rebase" now refer to
- commit titles as such, not "subject".
- 
- source: <pull.1893.v2.git.git.1739739761445.gitgitgadget@gmail.com>
-
-
-* ms/rename-match-name-with-pattern (2025-02-18) 1 commit
-  (merged to 'next' on 2025-02-19 at 717d13af36)
- + refspec: clarify function naming and documentation
-
- Code renaming.
- 
- source: <20250215084539.73799-1-meetsoni3017@gmail.com>
-
-
-* po/meson-perl-fix (2025-02-19) 2 commits
-  (merged to 'next' on 2025-02-19 at 168d449ef4)
- + meson: fix Perl version check for Meson versions before 1.7.0
- + meson: bump minimum required Perl version to 5.26.0
-
- Upgrade the minimum Perl version enforced by meson-based build to
- match what Makefile-based build uses.
- 
- source: <20250218153043.63535-1-git@mavit.org.uk>
-
-
-* pw/merge-tree-stdin-deadlock-fix (2025-02-18) 5 commits
-  (merged to 'next' on 2025-02-19 at ebc3ae6ffc)
- + merge-tree: fix link formatting in html docs
- + merge-tree: improve docs for --stdin
- + merge-tree: only use basic merge config
- + merge-tree: remove redundant code
- + merge-tree --stdin: flush stdout to avoid deadlock
-
- "git merge-tree --stdin" has been improved (including a workaround
- for a deadlock).
- 
- source: <pull.1862.v2.git.1739895879.gitgitgadget@gmail.com>
-
-
-* tb/new-make-fix (2025-02-13) 1 commit
-  (merged to 'next' on 2025-02-18 at 8fd74ceeed)
- + Makefile: remove accidental recipe prefix in conditional
-
- Workaround the overly picky HT/SP rule in newer GNU Make.
- 
- source: <a79e9e9f50410721d85747b03559d55be98bca20.1739478347.git.me@ttaylorr.com>
-
---------------------------------------------------
-[New Topics]
-
-* jc/3.0-branches-remotes-update (2025-02-25) 1 commit
- - BreakingChanges: clarify branches/ and remotes/
-
- source: <xmqqcyf5io61.fsf@gitster.g>
-
-
-* jk/zlib-inflate-fixes (2025-02-25) 10 commits
- - unpack_loose_rest(): rewrite return handling for clarity
- - unpack_loose_rest(): simplify error handling
- - unpack_loose_rest(): never clean up zstream
- - unpack_loose_rest(): avoid numeric comparison of zlib status
- - unpack_loose_header(): avoid numeric comparison of zlib status
- - git_inflate(): skip zlib_post_call() sanity check on Z_NEED_DICT
- - unpack_loose_header(): fix infinite loop on broken zlib input
- - unpack_loose_header(): report headers without NUL as "bad"
- - unpack_loose_header(): simplify next_out assignment
- - loose_object_info(): BUG() on inflating content with unknown type
-
- source: <20250225062518.GA1293854@coredump.intra.peff.net>
-
---------------------------------------------------
-[Cooking]
-
-* ek/mingw-rename-symlink (2025-02-21) 1 commit
-  (merged to 'next' on 2025-02-24 at 8a9f3a5cdc)
- + compat/mingw: rename the symlink, not the target
-
- Symlink renaming fix.
-
- Will merge to 'master'.
- source: <pull.1864.git.1740139296483.gitgitgadget@gmail.com>
-
-
-* jk/check-mailmap-wo-name-fix (2025-02-21) 1 commit
-  (merged to 'next' on 2025-02-25 at d6d4e05ad1)
- + mailmap: fix check-mailmap with full mailmap line
-
- "git check-mailmap" segfault fix.
-
- Will merge to 'master'.
- source: <20250221-jk-fix-sendemail-mailinfo-v2-1-9aca7dc05dbb@gmail.com>
-
-
-* bc/http-push-auth-netrc-fix (2025-02-24) 1 commit
- - http: allow using netrc for WebDAV-based HTTP protocol
-
- The netrc support (via the cURL library) for the HTTP transport has
- been re-enabled.
-
- Will merge to 'next'.
- source: <20250223015331.588161-2-sandals@crustytoothpaste.net>
-
-
-* cc/signed-fast-export-import (2025-02-24) 6 commits
- - fast-export, fast-import: add support for signed-commits
- - fast-export: do not modify memory from get_commit_buffer
- - git-fast-export.txt: clarify why 'verbatim' may not be a good idea
- - fast-export: rename --signed-tags='warn' to 'warn-verbatim'
- - fast-export: fix missing whitespace after switch
- - git-fast-import.adoc: add missing LF in the BNF
-
- "git fast-export | git fast-import" learns to deal with commit and
- tag objects with embedded signatures a bit better.
-
- Needs review.
- source: <20250224142744.279643-1-christian.couder@gmail.com>
-
-
-* dk/test-aggregate-results-paste-fix (2025-02-24) 1 commit
- - t/aggregate-results: fix paste(1) invocation
-
- The use of "paste" command for aggregating the test results have
- been corrected.
-
- Will merge to 'next'.
- source: <20250224192724.7625-1-ben.knoble+github@gmail.com>
-
-
-* rs/clear-commit-marks-optim (2025-02-24) 1 commit
- - commit: avoid parent list buildup in clear_commit_marks_many()
-
- A micro-optimization.
-
- Will merge to 'next'.
- source: <2bd2d71f-0ee6-405f-bec8-368406ca53c8@web.de>
-
-
-* sk/unit-test-oid (2025-02-25) 4 commits
- - t/unit-tests: convert oidtree test to use clar test framework
- - t/unit-tests: convert oidmap test to use clar test framework
- - t/unit-tests: convert oid-array test to use clar test framework
- - t/unit-tests: implement clar specific oid helper functions
-
- Convert a few unit tests to the clar framework.
-
- Comments?
- source: <20250225101044.84210-1-kuforiji98@gmail.com>
-
-
-* ps/meson-contrib-bits (2025-02-20) 10 commits
- - ci: exercise credential helpers
- - ci: fix propagating UTF-8 test locale in musl-based Meson job
- - meson: wire up static analysis via Coccinelle
- - meson: wire up git-contacts(1)
- - meson: wire up credential helpers
- - contrib/credential: fix compilation of "osxkeychain" helper
- - contrib/credential: fix compiling "libsecret" helper
- - contrib/credential: fix compilation of wincred helper with MSVC
- - contrib/credential: fix "netrc" tests with out-of-tree builds
- - GIT-BUILD-OPTIONS: propagate project's source directory
-
- Update meson-based build procedure to cover contrib/ and other
- places as well.
-
- Expecting a reroll.
- source: <20250218-b4-pks-meson-contrib-v1-0-c3edd292beb8@pks.im>
-
-
-* ms/merge-recursive-string-list-micro-optimization (2025-02-13) 1 commit
- - merge-recursive: optimize time complexity for process_renames
-
- source: <20250214044129.15282-1-meetsoni3017@gmail.com>
-
-
-* pb/doc-follow-remote-head (2025-02-14) 2 commits
- - config/remote.txt: improve wording for 'remote.<name>.followRemoteHEAD'
- - config/remote.txt: reunite 'severOption' description paragraphs
-
- source: <pull.1894.git.git.1739554578.gitgitgadget@gmail.com>
-
-
-* jt/diff-pairs (2025-02-12) 4 commits
- - builtin/diff-pairs: allow explicit diff queue flush
- - builtin: introduce diff-pairs command
- - diff: return diff_filepair from diff queue helpers
- - Merge branch 'bc/doc-adoc-not-txt' into jt/diff-pairs
-
- A post-processing filter for "diff --raw" output has been
- introduced.
-
- Needs review (and most likely a bit more polish).
- source: <20250212041825.2455031-1-jltobler@gmail.com>
-
-
-* kn/ref-migrate-skip-reflog (2025-02-21) 1 commit
-  (merged to 'next' on 2025-02-25 at c402e09d08)
- + builtin/refs: add '--no-reflog' flag to drop reflogs
-
- "git refs migrate" can optionally be told not to migrate the reflog.
-
- Will merge to 'master'.
- source: <20250221100423.91075-1-karthik.188@gmail.com>
-
-
-* ps/path-sans-the-repository (2025-02-24) 17 commits
- - fixup! rerere: let `rerere_path()` write paths into a caller-provided buffer
- - path: adjust last remaining users of `the_repository`
- - environment: move access to "core.sharedRepository" into repo settings
- - environment: move access to "core.hooksPath" into repo settings
- - repo-settings: introduce function to clear struct
- - path: drop `git_path()` in favor of `repo_git_path()`
- - rerere: let `rerere_path()` write paths into a caller-provided buffer
- - path: drop `git_common_path()` in favor of `repo_common_path()`
- - worktree: return allocated string from `get_worktree_git_dir()`
- - path: drop `git_path_buf()` in favor of `repo_git_path_replace()`
- - path: drop `git_pathdup()` in favor of `repo_git_path()`
- - path: drop unused `strbuf_git_path()` function
- - path: refactor `repo_submodule_path()` family of functions
- - submodule: refactor `submodule_to_gitdir()` to accept a repo
- - path: refactor `repo_worktree_path()` family of functions
- - path: refactor `repo_git_path()` family of functions
- - path: refactor `repo_common_path()` family of functions
-
- The path.[ch] API takes an explicit repository parameter passed
- throughout the callchain, instead of relying on the_repository
- singleton instance.
-
- Will merge to 'next'?
- source: <20250207-b4-pks-path-drop-the-repository-v2-0-13cad3c11b8a@pks.im>
-
-
-* pw/rebase-i-ff-empty-commit (2025-02-11) 1 commit
-  (merged to 'next' on 2025-02-25 at 63db268d47)
- + rebase -i: reword empty commit after fast-forward
-
- "git rebase -i" failed to allow rewording an empty commit that has
- been fast-forwarded.
-
- Will merge to 'master'.
- source: <pull.1860.v2.git.1739289549299.gitgitgadget@gmail.com>
-
-
-* ib/diff-S-G-with-longhand (2025-02-12) 10 commits
- - diff: docs: Use --patch-{grep,modifies} over -G/-S
- - diff: --pickaxe-{all,regex} help: Add --patch-{grep,modifies}
- - diff: test: Use --patch-{grep,modifies} over -G/-S
- - completion: Support --patch-{grep,modifies}
- - diff: --patch-{grep,modifies} arg names for -G and -S
- - docs: gitdiffcore: -G and -S: Use regex/string placeholders
- - diff: short help: Add -G and --pickaxe-grep
- - diff: short help: Correct -S description
- - diff: -G description: Correct copy/paste error
- - t/t4209-log-pickaxe: Naming typo: -G takes a regex
-
- The commands in the "diff" family learned longhands for "-S" and
- "-G" options.
-
- The core part looked mostly good.
- source: <20250212032657.1807939-1-illia.bobyr@gmail.com>
-
-
-* ps/reftable-windows-unlink-fix (2025-02-18) 2 commits
- - reftable: ignore file-in-use errors when unlink(3p) fails on Windows
- - Merge branch 'ps/reftable-sans-compat-util' into ps/reftable-windows-unlink-fix
- (this branch uses ps/reftable-sans-compat-util.)
-
- Portability fix.
-
- Waiting for the base topic to settle.
- source: <20250206-b4-pks-reftable-win32-in-use-errors-v2-1-56985a4f6186@pks.im>
-
-
-* ps/build-meson-fixes-0130 (2025-01-30) 14 commits
-  (merged to 'next' on 2025-02-24 at 6cd5b60792)
- + gitlab-ci: restrict maximum number of link jobs on Windows
- + meson: consistently use custom program paths to resolve programs
- + meson: fix overwritten `git` variable
- + meson: prevent finding sed(1) in a loop
- + meson: improve handling of `sane_tool_path` option
- + meson: improve PATH handling
- + meson: drop separate version library
- + meson: stop linking libcurl into all executables
- + meson: introduce `libgit_curl` dependency
- + meson: simplify use of the common-main library
- + meson: inline the static 'git' library
- + meson: fix OpenSSL fallback when not explicitly required
- + meson: fix exec path with enabled runtime prefix
- + Merge branch 'ps/build-meson-fixes' into ps/build-meson-fixes-0130
-
- Assorted fixes and improvements to the build procedure based on
- meson.
-
- On hold.
- Breaks all the "win+Meson test" CI jobs.
- cf. <xmqqo6ypiz9w.fsf@gitster.g>
- source: <20250130-b4-pks-meson-improvements-v2-0-2f05581ffb44@pks.im>
-
-
-* ps/reftable-sans-compat-util (2025-02-18) 18 commits
- - Makefile: skip reftable library for Coccinelle
- - reftable: decouple from Git codebase by pulling in "compat/posix.h"
- - git-compat-util.h: split out POSIX-emulating bits
- - compat/mingw: split out POSIX-related bits
- - reftable/basics: introduce `REFTABLE_UNUSED` annotation
- - reftable/basics: stop using `SWAP()` macro
- - reftable/stack: stop using `sleep_millisec()`
- - reftable/system: introduce `reftable_rand()`
- - reftable/reader: stop using `ARRAY_SIZE()` macro
- - reftable/basics: provide wrappers for big endian conversion
- - reftable/basics: stop using `st_mult()` in array allocators
- - reftable: stop using `BUG()` in trivial cases
- - reftable/record: don't `BUG()` in `reftable_record_cmp()`
- - reftable/record: stop using `BUG()` in `reftable_record_init()`
- - reftable/record: stop using `COPY_ARRAY()`
- - reftable/blocksource: stop using `xmmap()`
- - reftable/stack: stop using `write_in_full()`
- - reftable/stack: stop using `read_in_full()`
- (this branch is used by ps/reftable-windows-unlink-fix.)
-
- Make the code in reftable library less reliant on the service
- routines it used to borrow from Git proper, to make it easier to
- use by external users of the library.
-
- Waiting for Acks, especially for Windows bits?
- source: <20250218-pks-reftable-drop-git-compat-util-v6-0-8c1f39fb4c02@pks.im>
-
-
-* sj/ref-consistency-checks-more (2025-02-25) 9 commits
- - builtin/fsck: add `git refs verify` child process
- - packed-backend: check whether the "packed-refs" is sorted
- - packed-backend: add "packed-refs" entry consistency check
- - packed-backend: check whether the refname contains NUL characters
- - packed-backend: add "packed-refs" header consistency check
- - packed-backend: check if header starts with "# pack-refs with: "
- - packed-backend: check whether the "packed-refs" is regular file
- - builtin/refs: get worktrees without reading head information
- - t0602: use subshell to ensure working directory unchanged
-
- "git fsck" becomes more careful when checking the refs.
-
- Comments?
- source: <Z73DTwr9RicKMINe@ArchLinux>
-
-
-* ua/os-version-capability (2025-02-19) 6 commits
-  (merged to 'next' on 2025-02-24 at 89ad48db14)
- + agent: advertise OS name via agent capability
- + t5701: add setup test to remove side-effect dependency
- + version: extend get_uname_info() to hide system details
- + version: refactor get_uname_info()
- + version: refactor redact_non_printables()
- + version: replace manual ASCII checks with isprint() for clarity
-
- The value of "uname -s" is by default sent over the wire as a new
- capability, with an opt-out for privacy-concious folks.
-
- Will merge to 'master'.
- source: <20250215155130.1756934-1-usmanakinyemi202@gmail.com>
-
-
-* jc/doc-attr-tree (2024-12-14) 1 commit
- - doc: give attr.tree a bit more visibility
-
- Make sure that "git --attr-source=X", GIT_ATTR_SOURCE, and
- attr.tree configuration variables appear at the same places in the
- documentation.
-
- On hold.
- cf. <20241216111112.GA2201417@coredump.intra.peff.net>
- source: <xmqq5xnladwi.fsf@gitster.g>
-
-
-* cc/lop-remote (2025-02-18) 3 commits
- - doc: add technical design doc for large object promisors
- - promisor-remote: check advertised name or URL
- - Add 'promisor-remote' capability to protocol v2
-
- Large-object promisor protocol extension.
-
- Comments?
- source: <20250218113204.2847463-1-christian.couder@gmail.com>
-
-
-* tb/incremental-midx-part-2 (2024-11-20) 15 commits
- - midx: implement writing incremental MIDX bitmaps
- - pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
- - pack-bitmap.c: keep track of each layer's type bitmaps
- - ewah: implement `struct ewah_or_iterator`
- - pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
- - pack-bitmap.c: compute disk-usage with incremental MIDXs
- - pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
- - pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
- - pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
- - pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
- - pack-bitmap.c: open and store incremental bitmap layers
- - pack-revindex: prepare for incremental MIDX bitmaps
- - Documentation: describe incremental MIDX bitmaps
- - Merge branch 'tb/pseudo-merge-bitmap-fixes' into tb/incremental-midx-part-2
- - Merge branch 'tb/incremental-midx-part-1' into tb/incremental-midx-part-2
-
- Incrementally updating multi-pack index files.
-
- Needs review.
- source: <cover.1732054032.git.me@ttaylorr.com>
-
-
-* ej/cat-file-remote-object-info (2025-02-24) 8 commits
- - cat-file: add remote-object-info to batch-command
- - transport: add client support for object-info
- - serve: advertise object-info feature
- - fetch-pack: move fetch initialization
- - fetch-pack: refactor packet writing
- - t1006: split test utility functions into new "lib-cat-file.sh"
- - cat-file: add declaration of variable i inside its for loop
- - git-compat-util: add strtoul_ul() with error handling
-
- "git cat-file --batch" and friends can optionally ask a remote
- server about objects it does not have.
- source: <20250221190451.12536-1-eric.peijian@gmail.com>
+From: Clement Moyroud <clement.moyroud@gmail.com>
+Date: Tue, 25 Feb 2025 17:43:41 -0800
+X-Gm-Features: AQ5f1JrhRSJjBTM-XJJwV9DFksxcoQESts6XePteZ9rm3FkGrXmStTmBS1g-OZ8
+Message-ID: <CABXAcUxHp3LnyqR=NM0coh6wG-1uy4GB3FdeZEg8mPHu-vt0bQ@mail.gmail.com>
+Subject: 'git rev-list' commit ordering issue
+To: Git List <git@vger.kernel.org>
+Content-Type: multipart/mixed; boundary="000000000000323732062f01b628"
+
+--000000000000323732062f01b628
+Content-Type: text/plain; charset="UTF-8"
+
+Hello,
+
+I've come across an issue with `git rev-list --no-walk=sorted` commit
+ordering when
+two commits have the exact same commit date. In that case, `git rev-list` will
+leave the two commits in the original order, preventing automated
+cherry-picking.
+
+To reproduce starting from the attached repo archive created with `git
+bugreport`:
+git rev-list --reverse HEAD | git rev-list --no-walk=sorted --stdin
+
+You'll see that the order of the two middle commits is incorrect and
+does not match
+the order returned by `git rev-list HEAD`
+
+Since both commits have the same commit date, `git rev-list` should use another
+criterion to do the sorting - namely, use the parent/child topology.
+
+If there are better ways to sort such a list, let me know. This is a much
+simplified test case. In our real-world application, we start from a subset
+of commits that we want to cherry-pick from a branch, for the purpose
+of creating
+a customer-specific patch build. For the automated cherry-pick to work, we need
+to have these commits sorted in topological order. I do not see an option to
+`git rev-list` that only sorts the commits in stdin topologically - the
+`--no-walk` option only does date-based sorting.
+
+Below is the system info gathered by `git bugreport`.
+
+Take care,
+
+Clement
+
+
+[System Info]
+git version:
+git version 2.48.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 7.87.0
+OpenSSL: OpenSSL 1.0.1e-fips 11 Feb 2013
+zlib: 1.2.3
+uname: Linux 4.18.0-553.33.1.el8_10.x86_64 #1 SMP Thu Dec 19 14:28:01
+UTC 2024 x86_64
+compiler info: gnuc: 6.2
+libc info: glibc: 2.28
+$SHELL (typically, interactive shell): /bin/zsh
+
+
+[Enabled Hooks]
+
+--000000000000323732062f01b628
+Content-Type: application/x-zip-compressed; 
+	name="git-diagnostics-2025-02-25-1422.zip"
+Content-Disposition: attachment; 
+	filename="git-diagnostics-2025-02-25-1422.zip"
+Content-Transfer-Encoding: base64
+Content-ID: <f_m7l90pk20>
+X-Attachment-Id: f_m7l90pk20
+
+UEsDBAoAAAAIAM5yWVogtXRV+wAAAGkBAAAPAAkAZGlhZ25vc3RpY3MubG9nVVQFAAGlQr5njY+9
+bsMwDIR3PQW3tINlyTESQ1taoF0KFGgeIJBl2SagiIYop2mevurf3olH8g6H75FC8C5jnGBAO0Xi
+jA4wjiTEhBkuPjFShEa2ndTCLauBa7c77VoRCRydz8VkmcmhzX6Ad8wz5BkZ+hXDIBhvnsYqUJwM
+dH/r1zjl78PsQ6gWm2cDdY+x5lkE7N2agoG97PZSidfFx+PxxcCvAC2V1L4acWHQGp58D43SW3Er
+SVO+jdyKN78QY6b0AYmodNUF58Q2Dj1da2eLNfmKk6t/ICqmlMXhYjHYPnjgxToPhXzzn+DGQKtl
+28AzPsDdmdaYYQx2YlBXrZS6F59QSwMECgAAAAAAznJZWhIE+doaAAAAGgAAAA8ACQBwYWNrcy1s
+b2NhbC50eHRVVAUAAaVCvmdDb250ZW50cyBvZiAuZ2l0L29iamVjdHM6ClBLAwQKAAAACADOclla
+QGTaNocAAAA2AQAAEQAJAG9iamVjdHMtbG9jYWwudHh0VVQFAAGlQr5nZc87DsIwDAbgvafwBUpI
+gFbKJVi6I+eFglIsxR7g9lRQsdiLpU/2b/kaHjkKpNq3Rv0NLCgMhTqYe5Ub4zMFepmIrYaeR+7R
+RFrXKiNTF3PYhgx9Q9gPZQYPv3JQass8hPQnu5M9K3JOUZ4UTXrxFBXhUV+cNen4CypaSLB5sA4a
+EWfYP/0AUEsDBAoAAAAIAM5yWVo3iwcfPwAAAEkAAAAQAAkALmdpdC9kZXNjcmlwdGlvblVUBQAB
+pUK+ZwvNy0vMTU1RKEotyC/OLMkvqrRWSE3JLFEoycgsVkjLzElVUE9JLU4uyiwoyczPU1coyVcA
+6QDKpyJp0uMCAFBLAwQKAAAACADOcllaNzUAwU8AAABcAAAACwAJAC5naXQvY29uZmlnVVQFAAGl
+Qr5nNcrBDYAgDAXQM0zhCC7gJMZDlV9DUixpwcTtxYPHl7z1UMMWg6Gq56b2sFqhdsM86zUt0xwD
+Z0HRhKFmHTHsZB+YxIdETxIxcK+JGvxvL1BLAwQKAAAAAADOcllaMyk77BYAAAAWAAAACQAJAC5n
+aXQvSEVBRFVUBQABpUK+Z3JlZjogcmVmcy9oZWFkcy90cnVuawpQSwMECgAAAAgAznJZWp25HPh+
+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
+AAAKAAAACADOcllaNzUAwU8AAABcAAAACwAJAAAAAAABAAAAAAC2AgAALmdpdC9jb25maWdVVAUA
+AaVCvmdQSwECAAAKAAAAAADOcllaMyk77BYAAAAWAAAACQAJAAAAAAABAAAAAAA3AwAALmdpdC9I
+RUFEVVQFAAGlQr5nUEsBAgAACgAAAAgAznJZWp25HPh+AAAAiQAAAAoACQAAAAAAAAAAAAAAfQMA
+AC5naXQvaW5kZXhVVAUAAaVCvmdQSwECAAAKAAAAAADOclla4HEZNQIAAAACAAAAEwAJAAAAAAAB
+AAAAAAAsBAAALmdpdC9DT01NSVRfRURJVE1TR1VUBQABpUK+Z1BLAQIAAAoAAAAAAM5yWVoAAAAA
+AAAAAAAAAAANAAkAAAAAAAEAAAAAAGgEAAAuZ2l0L01FUkdFX1JSVVQFAAGlQr5nUEsBAhcDCgAA
+AAgAznJZWoVP+AkXAQAA3gEAACAACQAAAAAAAQAAAO2BnAQAAC5naXQvaG9va3MvYXBwbHlwYXRj
+aC1tc2cuc2FtcGxlVVQFAAGlQr5nUEsBAhcDCgAAAAgAznJZWun4yhD3AQAAgAMAABwACQAAAAAA
+AQAAAO2B+gUAAC5naXQvaG9va3MvY29tbWl0LW1zZy5zYW1wbGVVVAUAAaVCvmdQSwECFwMKAAAA
+CADOclla73w8eRYHAAB2EgAAJAAJAAAAAAABAAAA7YE0CAAALmdpdC9ob29rcy9mc21vbml0b3It
+d2F0Y2htYW4uc2FtcGxlVVQFAAGlQr5nUEsBAhcDCgAAAAgAznJZWpoM98CKAAAAvQAAAB0ACQAA
+AAAAAQAAAO2BlQ8AAC5naXQvaG9va3MvcG9zdC11cGRhdGUuc2FtcGxlVVQFAAGlQr5nUEsBAhcD
+CgAAAAgAznJZWs/ATAIJAQAAqAEAACAACQAAAAAAAQAAAO2BYxAAAC5naXQvaG9va3MvcHJlLWFw
+cGx5cGF0Y2guc2FtcGxlVVQFAAGlQr5nUEsBAhcDCgAAAAgAznJZWq5QDhuLAwAAcQYAABwACQAA
+AAAAAQAAAO2BsxEAAC5naXQvaG9va3MvcHJlLWNvbW1pdC5zYW1wbGVVVAUAAaVCvmdQSwECFwMK
+AAAACADOcllaRD/zXv8AAACgAQAAIgAJAAAAAAABAAAA7YGBFQAALmdpdC9ob29rcy9wcmUtbWVy
+Z2UtY29tbWl0LnNhbXBsZVVUBQABpUK+Z1BLAQIXAwoAAAAIAM5yWVrtEzYw6AIAANQFAAAkAAkA
+AAAAAAEAAADtgckWAAAuZ2l0L2hvb2tzL3ByZXBhcmUtY29tbWl0LW1zZy5zYW1wbGVVVAUAAaVC
+vmdQSwECFwMKAAAACADOcllaDw8K+b0CAABeBQAAGgAJAAAAAAABAAAA7YH8GQAALmdpdC9ob29r
+cy9wcmUtcHVzaC5zYW1wbGVVVAUAAaVCvmdQSwECFwMKAAAACADOcllahOxYUd8HAAAiEwAAHAAJ
+AAAAAAABAAAA7YH6HAAALmdpdC9ob29rcy9wcmUtcmViYXNlLnNhbXBsZVVUBQABpUK+Z1BLAQIX
+AwoAAAAIAM5yWVqSxPiWSQEAACACAAAdAAkAAAAAAAEAAADtgRwlAAAuZ2l0L2hvb2tzL3ByZS1y
+ZWNlaXZlLnNhbXBsZVVUBQABpUK+Z1BLAQIXAwoAAAAIAM5yWVrTBgjw5gQAAN8KAAAiAAkAAAAA
+AAEAAADtgakmAAAuZ2l0L2hvb2tzL3B1c2gtdG8tY2hlY2tvdXQuc2FtcGxlVVQFAAGlQr5nUEsB
+AhcDCgAAAAgAznJZWk7dnkvPAwAABAkAACQACQAAAAAAAQAAAO2B2CsAAC5naXQvaG9va3Mvc2Vu
+ZGVtYWlsLXZhbGlkYXRlLnNhbXBsZVVUBQABpUK+Z1BLAQIXAwoAAAAIAM5yWVrZ8PwGlQQAAEIO
+AAAYAAkAAAAAAAEAAADtgfIvAAAuZ2l0L2hvb2tzL3VwZGF0ZS5zYW1wbGVVVAUAAaVCvmdQSwEC
+AAAKAAAACADOclladz3NIa0AAADwAAAAEQAJAAAAAAABAAAAAADGNAAALmdpdC9pbmZvL2V4Y2x1
+ZGVVVAUAAaVCvmdQSwECAAAKAAAACADOcllaHkv5JuAAAAB2AgAADgAJAAAAAAABAAAAAACrNQAA
+LmdpdC9sb2dzL0hFQURVVAUAAaVCvmdQSwECAAAKAAAACADOcllaHkv5JuAAAAB2AgAAGgAJAAAA
+AAABAAAAAADANgAALmdpdC9sb2dzL3JlZnMvaGVhZHMvdHJ1bmtVVAUAAaVCvmdQSwUGAAAAABoA
+GgD8BwAA4TcAAAAA
+--000000000000323732062f01b628--
