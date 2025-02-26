@@ -1,122 +1,121 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9F225FA20
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 23:30:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8322620C6
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 23:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740612638; cv=none; b=Jq8UftoDjGG/kEgcHqY4ciBIftpkgxE3OkYQGJYtB51QO68MvOhjrgmmosRe50JzJ59NGer6iV1Xou3kgOTMamCeZ/6oKPLnkCl9mBNZ0B6NhO0fr89b8x0XTXmPnD4SQOlK08RCBvs1Zge8+gw+mGURZay6ovDbePSukjIZygg=
+	t=1740612983; cv=none; b=smLtviHB4cH6LOgdbTMB2YGvlqOR6U3IClb1jAhDby9jQ0st5PpZ4KnyJpqfpH8iy1DPkHaOMbFn8uGRfc3KicxKwNuDUGF92AVWBbzp4/l7eFjwqwsZd24fAdNKioipHrdqg/Y45WN/Nj0P1e5PEPMNAko2KZpTLIBt3/UlDu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740612638; c=relaxed/simple;
-	bh=uLqFuwS5+jLqcXwiy2W6dK6/xXcJDxU55ZYBasgZe9s=;
-	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=gAso0OrYipcDVLWFA8aPja23TFRgc+MnxadVUsA/CM4ZU3fyJW3hkEuExXPaySxpqQaE2vHbpuoeJ/qGwYSdm4nRvaRMccXVt4J1ItdKgUb7taXpJw4CSSOGhKqu5HDvGrk9/PX+yf8ezDsGv9D2CrH3BZAK3zmhZmHg7A6hINQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=kp7T9lpg; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1740612983; c=relaxed/simple;
+	bh=w0EfLjPbjhHrLtss3LbKMS+jWxajP5lmvfJDtMFkOQc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=o4WiKFFKv6cQiBpNxE75I2f5H6GA8DIyCX3rf/b6A1UnMM7D9pR834QMqf/55JhaC+vHOlf0JpsIhMb0/Whr+7FVNCRgx5my0ndc7706VMZn6RSF79J5lwq+b1VtrjtuSgpWZyVkBqShtNtrP472Hj0oS9xwYRhQ2hTdwS1I6/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=1QdRxN7D; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="kp7T9lpg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1740612633; x=1741217433;
-	i=johannes.schindelin@gmx.de;
-	bh=rY/D+OquLC2C2O0NMqlbxdC1+bd61bgjX98uiQabZfE=;
-	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
-	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
-	 message-id:mime-version:reply-to:subject:to;
-	b=kp7T9lpguZ8Zf6Rt2Zpo3l6wCva6Li0NiPpLibnjWwcPjdp4P5dZ7fVnHGbhWBzQ
-	 0cs5lMrC3oyCSUH8SvjFerBvOH4VzLzSyi8p+Uzjqt2hC7bIXouTH+g1e5d6xADQn
-	 01XC/+PoPOjjhXCJrBIxX4CrXqGNYHYMQvqNJwEINKmVxseMgBkPGtiaQEXHrrDlH
-	 qrBzUreLLQVQ8LWto9PtFWyRJEiqG7xkkpaSpFXnwCqLtuFixAStLhP6BrScb6tD3
-	 TEBpAaerFWq8rqN+sWsp0Q1qwPaB47G/NMB0u6HBZEaiG+wLI1Y8ck9iQWTplPbPK
-	 Yf015K8V42Q+VpNFmA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.213.254]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MgNct-1t5b7O2EYx-00mAdP; Thu, 27
- Feb 2025 00:30:33 +0100
-Date: Thu, 27 Feb 2025 00:30:33 +0100 (CET)
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git-for-windows@googlegroups.com, git@vger.kernel.org, 
-    git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git for Windows 2.49.0-rc0
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="1QdRxN7D"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1740612973;
+	bh=w0EfLjPbjhHrLtss3LbKMS+jWxajP5lmvfJDtMFkOQc=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=1QdRxN7D7YG3kTgGJ1iay3TA5g3Po+jaHo7AjsIZCX1v8jRFemxVu98Sfv5RwSfvJ
+	 aSPvql8qIkHoIbmyodsuMi5YL7KYTmMfwPki7kJdnDe6RgwcmRG4htc8VSUHdscyJI
+	 8X9+wp4uFiDWji1tUPaMkcOCbI0Lqom4sdxjrQRYlcaOpUq6p0HQJVPgy2Y3fkVBbI
+	 k3dY5/o+DdvK5/2L1f0ftIAr6UDXSagk+isnSOr1h/xk2eKH4PT+hfNeLHJ2ZZyidA
+	 h3iisp53VsCcJ3ewEZGU9XvODn9NDpG46m4XNcFUxkMk8oeaXa/KyiSxa8fu4ndLSe
+	 td3CBLLGdBVGkFO7HxqQEQ4Ks6cQaQztCv8dGLQnHjcIwp3snFWJJSQON5lWB6DVU1
+	 q9G9MNQgP60r8DEWv96ltrSO6UNPztr0vh9nWoma3iEWIMP1Q+aX1a0KHeiknVMrBx
+	 DyXNt8oFMgV07JEnTj3+6bo26/6XouKGavf/in4W5nRzLfLZdrg
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f900:8f49:f307:5d4e:79ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id EF3B1200B3;
+	Wed, 26 Feb 2025 23:36:13 +0000 (UTC)
+Date: Wed, 26 Feb 2025 23:36:12 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Yaakov Smith <Yaakov.Smith@wisetechglobal.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: \b character escapes in CLI usage
+Message-ID: <Z7-lbGnlzGbhrHZN@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>,
+	Yaakov Smith <Yaakov.Smith@wisetechglobal.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <SYBPR01MB579278DD5EC6E13CA9A213FDE2C32@SYBPR01MB5792.ausprd01.prod.outlook.com>
+ <20250226073822.GA21138@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Message-ID: <1N33ET-1tJMWa2VAL-00yrx3@mail.gmx.net>
-X-Provags-ID: V03:K1:cBEufmNjepMZJIcBY2cQzYNv4zkAlsKbbr9xRb0bSIBXa1gTKmi
- LeloBYoauR2SgHOGOU0qTqVtyLw9DARoT042nM34idUViyAppk7mw5YcXpBf/LNUonnrUZA
- dC3NUIacc0aMAveBtXXLs2wL/xHQT6bEJlCdmPyRufhkB3yMoP1Ltf5qninuiOY+A8N2Bjq
- 6IfqBBSF/oVNmLjlFQ4fA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:jC1WrqysLr8=;Yn5sDPYgxRQPKyDTdzJt+PNYrRP
- ulFaO13PXzurCUqci24Z1OegGH4j441n65xHDgpvdGvKzN0hwwFGYl/GByKfkc584Phu7+54m
- yuZZnV703J3WKnyRb1nReqxHE8lu8mIvFIsyKC/JMSezTxmKFQEpUbALwHrssF2ec3qZgemkx
- w34Y7chylPJ2aDqaQbe1iD4k8CrJyckN2vlko1WxLawwUkiF0hWA752cScos9oZKMraemTsO9
- CJY1DO3kXC3u0IuD9UsbYatxNCtUD/0YRLATqaQJK0QNsUA41BFFZ4ISFrdMTJGIhpfB+Bixj
- GkD1WEVETKZzLkGD9JQPwE7sMZSpWyxsbp47VMMFJd2djKMKk52N10SIXXE1Epiyt7YtkmevP
- zCxmIwYJ/jpXlOtE8++M7Q25qUIJ53jELXGeSFCDrXafp2+Gr+2IDWTwgwG01D3kL+BofiMbm
- XZWFDH+rGSRmMZ1M9R393njfXhEia2Gsm339Nrru+9r2Sj8V18ePzRKla/0Od00Ci0M+4Q6qW
- UgN+fdEu684AIkWGEobC6QhIUC9Yhrs+kzE50nxRvFwCyQpoqPXqJPZosmeDttN8CsXnRwbbX
- cC+Wi26M+9C1ucDwV/inaASkYvClS11+EWI7xNk0WFZgc0c+g2H06MN8F9ju3rVxjPiSgT7hF
- gG902aGi/3ExDAN1rH6vYtFSYrgC25zmc/nVNwkQ6kthfIzB2GaGHKJvifo3YVm4qMAjfWBZ5
- sD9jKxAeRTTbtJZfBODG/m18AwGjqX3bV4PXjtfJIpa3ockv4fFEiz0xEIKmzcUO6E4Ytmq/b
- 2oAMGA1dzlvTecgWO/+hKNxcm9shNKQ9K/kkspj6NDvyAlp2tjIJobHSiLFW0nkb5xHIrcT9p
- Qv81WJVagu/Gto6necP1KzkW0w7x9wLZDhZX1P7FDM0b8gkzbKE+XYk4KMHNJ57BkVFsx/o8K
- x9o+OyVBcDK4XTFdIm7QvfDD4gxkfPRGiDB5C+P3EeOJLpeG2iObnZpiXzM8YpDvUFyPxzrJI
- vYSQJK8q+32T+8NWOgBAXsvZcYUOZAQoGt6EcqMh7anq5OzYIzObel4Nf7ksDY7dOACCwu+Lq
- 4b4us2l68dPS4Ne/gr6tZ4CBzdymqTzXV3A8Ynf6YBz++6pXvcav+DvRdAc+7kM+O79hnmFFu
- VgOkXphVjC3avLKYgeuw7S1mNNIC+fi0E5ymSi1cT/mBmOZ2TKYzFZ7zVe9uQnUFq5keUyhSa
- lqefOB0FMi50i6zWyls8QvMMlzLCYXJ2K9Re8m7apk0eN/LQ/E5Cb8o1af9qfNlxEp9/fupX+
- EFHW1QOlQh4OR/u2zM4rVBhtgPAOibyFiodxco5qxrqJKSYHFVuQMzl68XCSqv0I9U1qYWNLh
- kW0R0o5Qjm+nVP8m2ekjzCdR/JIKnUEKeGmkrOCvFsnydzKphJIzQNEcHzU5137FC/sho3aR1
- 91sjru8kAdC2fN8vKiPQn5617fH0qvgJMtwHvfFV3jhwxEBnJ
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="I6Zs/9rtSI0RD6QT"
+Content-Disposition: inline
+In-Reply-To: <20250226073822.GA21138@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Dear Git users,
 
-I hereby announce that Git for Windows 2.49.0-rc0 is available from:
+--I6Zs/9rtSI0RD6QT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    https://github.com/git-for-windows/git/releases/tag/v2.49.0-rc0.windows.1
+On 2025-02-26 at 07:38:22, Jeff King wrote:
+> On Tue, Feb 25, 2025 at 11:44:33PM +0000, Yaakov Smith wrote:
+> > When using "git config --list" however, this is emitted in its raw form=
+at, and can be used to mask or hide an actual (probably invalid) value:
+> >=20
+> > $ cat .git/config
+> > [core]
+> >         somevalue =3D "true\b\b\b\bfalse"
+> > $ git config --local --list
+> > core.somevalue=3Dfalse
+>=20
+> But here, the point of "git config" is to show the output. If we
+> sanitized it (especially in a lossy way like we do for error messages),
+> then any program reading the output would not see the real data.
 
-Changes since Git for Windows v2.48.1 (February 13th 2025)
+Yes, I should point out that, among other programs, Git LFS reads this
+output.  Changing the output format would break those programs.
 
-Due to persistent maintenance challenges and the community's limited
-engagement and usage, git svn support in Git for Windows will be phased
-out over the next few months.
+> > Should "git config" be smarter here and print something other than a
+> > literal backspace to the terminal, like "git fetch" does?
+>=20
+> So I would say no here, in general.
 
-Git for Windows v2.48.1 was the last version to ship with the i686
-("32-bit") variant of the installer, portable Git and archive. Only
-32-bit MinGit will be built for future versions, until April 2029.
+I agree this is the right choice in general.  I wonder if we might want
+some sort of human-readable output option that might escape these that
+users could use.  The output might still be machine-readable, but it
+might be easier to parse than the current format, which has some tricky
+edge cases when a config value contains newlines.
 
-New Features
+We already have precedent for this in core.quotePath and could easily
+use similar logic here.  That format, while using octal, which I find
+ugly and hard to read, does have the pleasant side effect that it works
+correctly with POSIX printf(1) (which I'm sure was intentional), unlike
+hex escapes.
+--=20
+brian m. carlson (they/them or he/him)
+Toronto, Ontario, CA
 
-  * Comes with Git v2.49.0-rc0.
-  * Comes with OpenSSH v9.9.P2.
-  * Comes with PCRE2 v10.45.
-  * The previously-experimental --full-name-hash option has been
-    accepted into upstream Git as --name-hash-version=2 and is no
-    longer experimental.
-  * The git backfill command has been accepted into upstream Git; Its
-    --batch-size=<n> option has been renamed to --min-batch-size=<n>,
-    though.
+--I6Zs/9rtSI0RD6QT
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Bug Fixes
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.46 (GNU/Linux)
 
-  * A change in upstream Git v2.48.0 broke renaming symlinks, which was
-    fixed.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ7+lbAAKCRB8DEliiIei
+geaeAQDGdtjI6RnvBq3ArzT0knmVq5rNIbNLhW93sN/dsCiLqgD/QVJRvwMNbDXw
+7ek8x/DjqNyxx4AQZX+XKyhMMmLgvgI=
+=DtrT
+-----END PGP SIGNATURE-----
 
-Git-2.49.0-rc0-64-bit.exe | 34c6210d4366e4a9134a614539efb4b567dbacb14f8593171f5343a08c455c5b
-Git-2.49.0-rc0-arm64.exe | 68b9e2b955bc662976f24b83cb8bd92e704487c3a95c2f4b729b83480225a3c8
-PortableGit-2.49.0-rc0-64-bit.7z.exe | 3fb9bc5317a8df797e87e07f3f6ff107c31681ad258269f8bd3bb08a75e1c63d
-PortableGit-2.49.0-rc0-arm64.7z.exe | 4b286b58954aa57ce11cf0228c674fd74b79ddbd75fd416cb6c172591d845444
-MinGit-2.49.0-rc0-64-bit.zip | 5748562cda2c68530e1ecb56d45811ce944671c0828c597c2589347757bc3018
-MinGit-2.49.0-rc0-arm64.zip | a4b437d77bfc832a952271dab564724c7ba834ce4c8971f055451909c62a45d7
-MinGit-2.49.0-rc0-32-bit.zip | 2ded30540bc852c21dc46ef9ef3214d89f6f7cba66372b9e57f14f543a5f97b8
-MinGit-2.49.0-rc0-busybox-64-bit.zip | 3e2c82c648a29cca1a82abff2f93354aaad1162aa7988fd49c497246cc9abe66
-MinGit-2.49.0-rc0-busybox-32-bit.zip | 6890dfbe5254217f238efe2fc2e4b67144330a7f230e2f7e90af1dc08483e49c
-Git-2.49.0-rc0-64-bit.tar.bz2 | 78852ed65b05b3867db9979548430209540fdea1e88a5786a35e76f5a53bc837
-Git-2.49.0-rc0-arm64.tar.bz2 | 6be844bfdbe833888d640cb73b2dc9b8de231dd3c66949b98f9487f2a38aabc8
-
-Ciao,
-Johannes
+--I6Zs/9rtSI0RD6QT--
