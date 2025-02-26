@@ -1,117 +1,115 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A3C21CC79
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 16:29:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434F0221701
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 16:38:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740587358; cv=none; b=c3xReq6518bfo+yM2aqMs7wjWJrdOgC69B4xOp5/9wZD7YzP/79/Iym8tmdQ8TLtRyZINGDMH6aT6i8sF826+8j7SR2TtpoqVbhgRd6hfvCk8sDzTzi4AG2hGJ1EcO2uE3xbqYt3NzCxb1ju8mjYji3eSfITScdccekJL9H1hqM=
+	t=1740587909; cv=none; b=AAJyXLtQtFbqoKu/9fC01zpzU+UgVQNzu0OCNI3X/xB0Q+D0s8q1t7MW8dI33V99u8fUIZE94eAFZhvdtG/yNey14QdTs2/nDsP3JJ8+yhtK6O+q6WiKcyxQBl5ZgNjnggLupv1Y2hchQQb/Is1MAHHjAh64uSCGwQNYfi9Dx94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740587358; c=relaxed/simple;
-	bh=4A6diP16T5WMpUpB02a42WYzmTPFu6U21fOpl773fFg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r2D4W+QqFW6A9IrhK3koFpyydd9zocjO9f/8k1zFhoNxY5/FM049soUnqYIJh5PMtPhnGj3XGHFozzdqnoUm7EgMoZXNBTTDm8iivpDIMIdnCnpFDtE5/Eo98TDzgjMit0H7E+if50GPX46qqsnJW7pnKcTmhft3OP0CRXWy1IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AiUF+8yJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=3azwP89r; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1740587909; c=relaxed/simple;
+	bh=NUJCieU83Aqe3lJta7IBhx6P+xKrbMaNrTy0UCodeCs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OwjyXRRgP/1EIWyyrOBEm/b+Nazi4hFN4h/HtB1Fwm+gWlyQLTAKz2RcRhblqOppNdq7zCAjiNbCWYb7ZPaRMzX2WOPHSrRzDSK7X7aE6sLQnlA4YoY0EjaNrn67T8m53cDKnQ3R3Wv4Jg0CKXRrz9Nc13InbseFdAR0ON2piyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Y3sOFdez; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AiUF+8yJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="3azwP89r"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 41BDC11401A8;
-	Wed, 26 Feb 2025 11:29:14 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Wed, 26 Feb 2025 11:29:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740587354; x=1740673754; bh=nmy7QYZqLc
-	Y1q9LVmxNlT86o5I+Gel4g/PDaBrCNxUY=; b=AiUF+8yJ4VnlEtBKXuohamv9Lw
-	/Q6Em34UD2VYQgnoe87TO5LVwpdA9kP9gmGRTxOXnpjONtDYDI1nAuI60H7qWcwC
-	uf1P2a0qyIVRmWFK7nXqgn48Bx3uooxumTB8X8aONrYwtV4iXOI/bDHBc8xQBjPO
-	V14XhMmxwtoJOHb5RrsBhVYN4C4ue+hz7ukrFvAA+UHYeYBUe53d9thtjqlHaFzR
-	5rWuYMMuBtAz9SXzUIAtmDU55e7QclQMRHxr3nGgIv+iftLfjtEwCIObcZ9MoVXP
-	45VANBaDQPcoigfqNwuM0FjatvH1Ox/gpQRms14zMWCW4uhm0Og+ksVNs6Pg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740587354; x=1740673754; bh=nmy7QYZqLcY1q9LVmxNlT86o5I+Gel4g/PD
-	aBrCNxUY=; b=3azwP89rYxXiah0RLI0EQB2I+09zk76mMM3/T2iPClwsGcfX/ks
-	JlDio7qJShiY778Q8ICBhUty1p1QUiMWKyGIaKCfUz1yEo/3mDTBfXvY8R09eeAN
-	e1YKbWtU5rDxTJ/LDJARtjaxrlUULeUhML4k+h8bZ3da//uByn4g6O5Bm8y6SUEG
-	YrjADANZr5fNBo+vclmJj0GtmGEIA7LSEwZasde8l1o24zlkT68T8cKqVMXKx0mU
-	gAiv3lwUziBau9RFqTYfYnMPu+3N4BmONRkHvKs4Ab3Yo1LUBVBrrDJn+MXdTJPB
-	7ySIKTYfkoDRWa32gNgsOX1e3oqeAEO/NQw==
-X-ME-Sender: <xms:WUG_Z8PPvw8lexrgm3NptnUubYkQ9fZ9utXEZnQBtWxbErfAyW0l_w>
-    <xme:WUG_Zy_EDvNAGCRTQDEh8YuqALUm4p_A4NlkBgqYgRh1e48cFN5px3CsvOYUIH1sP
-    IPrrcvH2_dilFj9SA>
-X-ME-Received: <xmr:WUG_ZzQaQFb2mEZCHo3R1CiVrEBfDRvZE3yDoY9ZUctuDFnKi5pH16WRKBln4eYe5fOpRw5I4rfXM4h5_gFN0XaLUJXAQ3B7c6tc9QbgQuKXIaJc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekhedtjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvefhfeeftd
-    etleeugfdtuefgtdekuefgleektdehgeeikeduudeuveeghedukeffnecuffhomhgrihhn
-    pehgihhtlhgrsgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:WUG_Z0tMqdXDJNAqUEzfgzxRwBIIhJ3_ErDDWd2ET73XfxmofE5_zg>
-    <xmx:WkG_Z0eiCK8yJ_V1TG_GCRF4Av7PJya5t4_9EGbp5G35aOWuExLL6Q>
-    <xmx:WkG_Z41-0_QbhiG_ZB4_jFlQC16L-oJXAf_2cIPPR-XAMT9M8oornA>
-    <xmx:WkG_Z48hWaSd6aDoJdw2kuBSYm7lR2MAFYdP3YItjO3iEmWfIC0YyA>
-    <xmx:WkG_Z1oR9TaGnuA7xdM7uVffHWbCkZj5ulc5KCcvzcZq8Yy_v2kLZdKr>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Feb 2025 11:29:13 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id e8686c0d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 26 Feb 2025 16:29:09 +0000 (UTC)
-Date: Wed, 26 Feb 2025 17:29:09 +0100
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: win+Meson test failures due to ps/build-meson-fixes-0130 topic?
-Message-ID: <Z79BVcFMdCpgbKqM@pks.im>
-References: <xmqqo6ypiz9w.fsf@gitster.g>
- <Z76qYgV7B2eUJHiP@pks.im>
- <Z77EJRJwPDGUglLk@pks.im>
- <xmqqh64gg0pu.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Y3sOFdez"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2f44353649aso120543a91.0
+        for <git@vger.kernel.org>; Wed, 26 Feb 2025 08:38:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1740587907; x=1741192707; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t8yk4sojixDreAFuLA9isFZXqeeqKuMuTeVb7jORHJg=;
+        b=Y3sOFdezh1cic7GWJDqDPxrUIo2zIWLLE8dVrPOJXn6ffyf4pqn3JqM6BvsE+Y915J
+         7r2ruMJzTJ8xQFxflSXX8UpWqyt7G4JY3m6S4jbwuxCSffcHvpHSYv57mW12BW3BXRY3
+         CH8bAON4TsF7BtxU8wpzJqxNx1wGtOvmjy9rn9Q/Rdj9pXGoB5YAtAyrHhzHZ8HskxBK
+         refqpitJ74mK3RooW4ATOqsN72dtK3CePISMenZYnuXcC8+70FasKCY3OytF5EXvurQW
+         LxuraPN7gscQNAD4IiRACVI9eFNZyib9AixZ4kj1kHlVWA2sSKpbojcjeYvni3z+e+vP
+         TCDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740587907; x=1741192707;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t8yk4sojixDreAFuLA9isFZXqeeqKuMuTeVb7jORHJg=;
+        b=Ia852vCqhfhT31LYJ6pZaG2T2zM1VMQTmpMkiDL2T8YUctRGP7OymKhHBaqFAdMso9
+         urHlhGpIr+zidPPVmf+b/tzaIibKbN9FHmMw3x+dCWpcSYriuDFtzEWGFV3oXQ5fiC9A
+         TBoLP1n1kbB/EBsRLozBvbuE2ilLY4o35YryKEqLWRRhz3DEuZhjnAy5FmO1iuLmaiqy
+         8TXzExvJEZxZpcCcNI+pa7SoBx5Y2HSN5+ftOaU1c5nNyFPot6IKn8haWWs8i+lvK1Ga
+         TNzbyEfMv1m4UoAAG8bXJcQYQZsJzUX+eJpb29bNUGft7mF8chwecEHYl1Z/g13KqMZf
+         j0zw==
+X-Forwarded-Encrypted: i=1; AJvYcCVdGbZZEmHlyTRsyCk78uwJ9LZTWyx1Ye/2PRJph4LscuQZRWdjX6RaHb36cpRcCdS7l8E=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwcIDsUTk/aNFLixTSF/kbJOSN1Vtus4TxwHYZR/L/q/2yr3BDi
+	gMZeL2sWSuvJiiCK0z69F7jeX6gDVNBpL9cWJPIv4CKgI0eWDR47LnEyKDJbfFJ59pGNvJila2v
+	s7rsLvsY8jCIwtiFZdzXmNW7hWjXGIg+WNGGm
+X-Gm-Gg: ASbGncv3WdT6di/MQu6cZbcuO9K2amnAcQuCk2IzEZ5K6r2CG5i8+RPCWL3xfZpRS+N
+	R1+V+zKiEd//dgI2uPT1a/F4vK7D0FF+UlUU7GeXET8gkRTRdsRFx1kiDRzVIe0pQhusGo2trW5
+	O3bmtszyvyrWb8JU01w5jmhpCgoB+pzHloOMbOdQ==
+X-Google-Smtp-Source: AGHT+IHZ/hTw1THO/IctXv2lBTlJo0yV2OdNCaCxbXaDdgvnUlozAqpZMQ2jrqMTA5q7QT3da8XUo0cEaqmhy84mwRY=
+X-Received: by 2002:a17:90b:5106:b0:2fa:a58a:4c5f with SMTP id
+ 98e67ed59e1d1-2fce7b1f6a4mr35745759a91.29.1740587907371; Wed, 26 Feb 2025
+ 08:38:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqh64gg0pu.fsf@gitster.g>
+References: <SYBPR01MB579278DD5EC6E13CA9A213FDE2C32@SYBPR01MB5792.ausprd01.prod.outlook.com>
+ <20250226073822.GA21138@coredump.intra.peff.net> <20250226080902.GA29996@coredump.intra.peff.net>
+In-Reply-To: <20250226080902.GA29996@coredump.intra.peff.net>
+From: Kyle Lippincott <spectral@google.com>
+Date: Wed, 26 Feb 2025 08:38:15 -0800
+X-Gm-Features: AQ5f1JpBv4GNDKWacG5Jbo2i9oSCYD_akxDMcssJwCvYAx_ZOXgAHByG_gEv-L8
+Message-ID: <CAO_smVjC=CWeAEjZjr9PPuBTkyYus59o_J9hfnpJCB-AsBE0HA@mail.gmail.com>
+Subject: Re: \b character escapes in CLI usage
+To: Jeff King <peff@peff.net>
+Cc: Yaakov Smith <Yaakov.Smith@wisetechglobal.com>, 
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 26, 2025 at 07:55:09AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Okay, the issue was in 163a3e97ac1 (meson: simplify use of the
-> > common-main library, 2025-01-30). In that commit we stopped using the
-> > common-main dependency for a couple of binaries, including
-> > git-remote-https and others. What I didn't realize though is that this
-> > also made us not use the linker arguments anymore, but those are
-> > required on Windows when linking an executable.
-> >
-> > I've kicked off CI jobs on GitHub to verify that the revised version of
-> > this patch series works alright. Once those tests pass I'll send another
-> > version of this patch series.
-> 
-> Thanks.  What is a bit more worrying is that you earlier said your
-> other CI didn't notice anything funny.  Is the reason for the
-> non-breakage also known (like: the two CI jobs build things
-> differently)?
+On Wed, Feb 26, 2025 at 12:09=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Feb 26, 2025 at 02:38:23AM -0500, Jeff King wrote:
+>
+> > I wonder if we should consider adding "U" to the default $LESS variable
+> > we set.
+>
+> Having tried this for 5 minutes, the answer is a resounding "no". It
+> also treats tabs as control characters, making source code diffs rather
+> ugly. ;)
+>
+> In modern versions of less you can get around it with:
+>
+>   LESS=3D"-U --proc-tab"
+>
+> or:
+>
+>   LESS=3D"--PROC-BACKSPACE"
+>
+> but those are new in less 632, from the last year or two. So I don't
+> think we can rely on it in our default variable, but people with recent
+> versions of less should consider setting it.
 
-Oh, yeah, I forgot to mention that detail: the jobs failed, but the
-failure wasn't reported (see e.g. [1]). It's a bug in the CI setup
-itself. I'll send a patch series tomorrow to fix that.
+From another issue (https://github.com/gwsw/less/issues/557) I learned
+you can do this:
 
-Patrick
+LESSKEY_CONTENT=3D'#env;#version>=3D632 LESS=3D${LESS} --PROC-BACKSPACE'
 
-[1]: https://gitlab.com/gitlab-org/git/-/jobs/8996075448
+I haven't tested it yet, but that might be a decent solution? I don't
+know how composable those are; e.g. if you wanted both
+--PROC-BACKSPACE on >=3D632 and --no-poll on >=3D670, I'm *assuming* you
+can do that, but I don't know what the syntax looks like.
+
+>
+> Looks like it was added for exactly this case:
+>
+>   https://github.com/gwsw/less/issues/335
+>
+> -Peff
+>
