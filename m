@@ -1,101 +1,107 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E63221DA6;
-	Wed, 26 Feb 2025 19:09:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CFE626BDAF
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 22:06:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740596998; cv=none; b=owO9EceigBbMO5lUtEzqTfjOY06k8qo7Rpl3QeBaQRFoR3LB7vbD0B8ahOGkOfAsV/qD/Lr5PjqQaNEir3B6BBoEkfabdV0Rvtj8Z6oCo1NQG30tarXqfDItiEzS6SPTUbKK9HJpTWTwxl6firW+D1l01NAuJydrO3rr2XbLF60=
+	t=1740607595; cv=none; b=P3HS/FESIQJGdVTo8Df01ZgvqgUQdGtrtJuY590jOM7Bv1ieYvOmVMpsCcZn3tvP7zypbVWNpRDluMpJ7EysrAI7z+bc6XN9VpGJSFb5pDy+8F7jUAFZa+UIonHk5HvV/66FZsHqcgpiS71BzraIZ/bgnZUX2wbUnLvj3Eoa7zQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740596998; c=relaxed/simple;
-	bh=joCuhhOYS2Sn9Aaa0t4iV6f8I+xKpxEsgbXvDhwqOsg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=b28KbZe6pmGh3d3D3P7idL2nc0AB/3s4xXWAaIXr7EWT6pJESBD3ACvblwnNl2H3NaKLcxiN24QtbT0ha/kUIe7v4VLHePdwqccIh14KDeo9q8nEroxs9K4ahyJf8fLTs88At/tPq74ooRpQYYhPRfTW9PcQfayIT2R9yDk0MGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mEyb2Nnz; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740607595; c=relaxed/simple;
+	bh=qHanT5Ato2YL/KetZPfjBvjlCHgfSSrPrqVqGutMKMw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e50qypdAvUD1icvqFKYUn3Q1SbobdC29TCq6Q9zjmcz/v41i9U/KPho1ODLN50fAPRihnCmYoVeOMPAKhg8mSO4r21Gt29GsJ0YRUUKfz1YxgwrrtlDHrQ3OGy9iv7AbKdGOVl/r8pTiQHZpeVwiJSlpsKKjEmlI/c51N2tctCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=L+WpBIgM; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mEyb2Nnz"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-abee50621ecso17153066b.0;
-        Wed, 26 Feb 2025 11:09:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740596995; x=1741201795; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7kJCzq0wYyRIYa5yNPxR2YOHZUPtvvyvn3GQSUif21c=;
-        b=mEyb2NnzozQgftyOftQTGIqsMI/yi+mLEZBwm/AlcqdGHaTeJWy+yItmQ8A8ymPu35
-         vqRB2Dnt/yaHBzDJCBfNaINC2TQ8XfAeAPABSJsctQVDSopbFrGuB/cz/chISca9kGh7
-         pNFkHyr8sypbVfp0ekuf5nWBhW8cISE5KK4TkfV3uushOnAF1TlVGY7uJ77J9xjpvIl/
-         mmlDZE6s23kFdnDw/L2g4t696iKKqpPmDaIZHqhugIeqOLIC5AokHvHEWXvBALXuB7ad
-         JV+UMatB+NlhD/H6BPHCN2+DMu4FE8dl43HaKDPFtMedIBeAycNf6h5jdSTQ8OzoBdKL
-         48Fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740596995; x=1741201795;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7kJCzq0wYyRIYa5yNPxR2YOHZUPtvvyvn3GQSUif21c=;
-        b=cxSIXtfVjINseWVbv+aNllXz/njL33N09Uo3B8bxotXsqkQAjrUZ+L/lIY5qqlAWUc
-         FvDMKOfF6Tz+IhUJwISky/eT9jxQIMKjp6zyTpVnH0T5g8Mc8FuSQp0qVfLE9nCyGhbU
-         aMq5yN4qLkJ0v+2GeNtKlho/IVzHOq1jROwe98zc0+spgwBq2p3bltpksFqy0k/Oh3ZU
-         rXZd8AwzaOt8n6Uh3koPg8igYduhjzGvwPdKVRVSuBkp76pa1wVSB6+PiPPBH+rD8Ixp
-         Mf9/ZTMoGDNgHW3tdzszm+HMmdlIrHa0NwCSRihZU6+FmBKk4Obj7DlGoTMgli8EFt8y
-         b8Rw==
-X-Forwarded-Encrypted: i=1; AJvYcCXY9ORepgBRaNda6/EGZ/7OqvTv4xAtw8s2lvfoKWp8V1JdeJs+fRCiVD2LVj/6nA9Q9yyvIdq/NbHXfxQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzISru8akfgXuLYKB10Cw58d5ZD6Eypt9PLJNrU4gGnbyV6Bf+1
-	sRg20mscOyxk1Zm97IGw3tvWeAKPSp9X1mKOfVgKyL2VEQj0QLuoTtP/AFGtigJy5e/4EPDQH8H
-	7QcE81Sw7nY/Axm8AT/spzB7VjC5nkmUG
-X-Gm-Gg: ASbGnct+1RT5SrIvcjv2TCe8tvLQB2RxECBmgf+IdUJd3x8l5C8ksAga4097qGX/7jK
-	vbQFviFPaWWnGHMbFnp3E0wrA391qclbcQsWZheRpSA8FZuviswwClGja3nPDHvXSq2HWxykgLR
-	P1iohuSuv7g+F8q9GlvD1KNSAg4VePXFjmKCt4W0o=
-X-Google-Smtp-Source: AGHT+IE1aKKUq2MGlrPUmRUm3ES2LJ/+73dK5u7I0GUnLtrE2yxhDfB/Kmdc99o4UNeUiXRpDgWD3Vc0qO1IjpjcXbw=
-X-Received: by 2002:a17:907:7758:b0:abe:c031:eea2 with SMTP id
- a640c23a62f3a-abeeee6fe73mr526160266b.24.1740596994987; Wed, 26 Feb 2025
- 11:09:54 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="L+WpBIgM"
+Received: (qmail 12922 invoked by uid 109); 26 Feb 2025 22:06:31 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=qHanT5Ato2YL/KetZPfjBvjlCHgfSSrPrqVqGutMKMw=; b=L+WpBIgMi5eRG+ZuvyuE9/CUHvFZdZpm9bx9/+S1txTw40dMPiMW+MMp8a4+1q2suCRDjaGZXujVkDvY7tYCMWQwrQBRkBRMTUWfbbYURrCwD8fUaQ+U3uZQwaKtozsk/7BjT14dBGnJrtBJICQqd6lbkEsr2i367CfJlnCBqAi1VO6QpEJlejlDaXBWxHdsPhbwegvhrst+6uxbn706LveA34ijkmkNjXFVybFuTh0RnEbAIRYCHvFeMEJOKg7S2GNcv+qnnS1XT0lnFFUajMHXndyPDdfxbowrfNOlQJU/6qfOYXlsta9J9G7l0F2kRDai68YepowO0FsTiuh4UQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 26 Feb 2025 22:06:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32281 invoked by uid 111); 26 Feb 2025 22:06:28 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Feb 2025 17:06:28 -0500
+Authentication-Results: peff.net; auth=none
+Date: Wed, 26 Feb 2025 17:06:28 -0500
+From: Jeff King <peff@peff.net>
+To: Kyle Lippincott <spectral@google.com>
+Cc: Yaakov Smith <Yaakov.Smith@wisetechglobal.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: \b character escapes in CLI usage
+Message-ID: <20250226220628.GA600528@coredump.intra.peff.net>
+References: <SYBPR01MB579278DD5EC6E13CA9A213FDE2C32@SYBPR01MB5792.ausprd01.prod.outlook.com>
+ <20250226073822.GA21138@coredump.intra.peff.net>
+ <20250226080902.GA29996@coredump.intra.peff.net>
+ <CAO_smVjC=CWeAEjZjr9PPuBTkyYus59o_J9hfnpJCB-AsBE0HA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqzfi8bljk.fsf@gitster.g>
-In-Reply-To: <xmqqzfi8bljk.fsf@gitster.g>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Wed, 26 Feb 2025 14:09:43 -0500
-X-Gm-Features: AQ5f1JoEzY-EhdgY0PERm5MDEz6GcHVj28u_85d8OzgIw_25ZHctgSyl6wVX3es
-Message-ID: <CALnO6CA5tw9DNo9U8Fu95Y27DBiRaRDsz75MHwm64iW0TBkxDw@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.49.0-rc0
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>, 
-	git-packagers@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAO_smVjC=CWeAEjZjr9PPuBTkyYus59o_J9hfnpJCB-AsBE0HA@mail.gmail.com>
 
-On Wed, Feb 26, 2025 at 1:36=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Git v2.49 Release Notes (draft)
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D
->
-> UI, Workflows & Features
-> ------------------------
->
-[snip]
->
->  * "[help] autocorrect =3D 1" used to be a way to say "please wait for
+On Wed, Feb 26, 2025 at 08:38:15AM -0800, Kyle Lippincott wrote:
 
-Slight nit: we appear slightly inconsistent in the way RelNotes refers
-to config vars. Compare
+> > In modern versions of less you can get around it with:
+> >
+> >   LESS="-U --proc-tab"
+> >
+> > or:
+> >
+> >   LESS="--PROC-BACKSPACE"
+> >
+> > but those are new in less 632, from the last year or two. So I don't
+> > think we can rely on it in our default variable, but people with recent
+> > versions of less should consider setting it.
+> 
+> From another issue (https://github.com/gwsw/less/issues/557) I learned
+> you can do this:
+> 
+> LESSKEY_CONTENT='#env;#version>=632 LESS=${LESS} --PROC-BACKSPACE'
+> 
+> I haven't tested it yet, but that might be a decent solution? I don't
+> know how composable those are; e.g. if you wanted both
+> --PROC-BACKSPACE on >=632 and --no-poll on >=670, I'm *assuming* you
+> can do that, but I don't know what the syntax looks like.
 
-    rg '\W\[\w+\] \w' Documentation/RelNotes
-with
-    rg '[[:alpha:]]+\.[[:alpha:]]+' Documentation/RelNotes
+Thanks for the pointer, I didn't know about that. I think it is fully
+composable, as the "#version" conditional just applies to one line. So:
 
-It seems "help.autocorrect" style is _usually_ preferred, but there
-are a handful of "[section] key" style. (I don't have a preference,
-just something I noticed.)
+  LESSKEY_CONTENT='#env;#version>=632 LESS=${LESS} --PROC-BACKSPACE;#version >=670 LESS=${LESS} --no-poll'
 
---=20
-D. Ben Knoble
+However, I couldn't get even the basic version to work. Turns out that
+LESSKEY_CONTENT was added in 645, and I'm running 643 from Debian
+unstable).
+
+So it kind-of works for our case if we make 645 the minimum (and don't
+help versions between 632 and 645 at all). I think we could get even
+hackier to support old versions like:
+
+  # probably would be $prefix/share/git/lesskey in a real install
+  fn=/tmp/lesskey
+  {
+	echo "#env"
+	echo "#version >= 632 LESS=${LESS} --PROC-BACKSPACE"
+  } >"$fn"
+
+  # This works back to less 582. Before that we have to compile it to a
+  # binary format with "lesskey" and point to it with $LESSKEY.
+  LESSKEYIN=$fn git log
+
+I guess we'd also need to put more details into setup_pager_env(). Right
+now its logic is just "do not set $FOO if $FOO is already set". But we'd
+probably want rules like "if $LESS is set, do not try to override it
+with $LESSKEY_CONTENT".
+
+I'm inclined to punt on it for a while. People can set up $LESS
+themselves based on what they have available, and once these features
+have been around for a while, we might then consider adding them to our
+defaults.
+
+-Peff
