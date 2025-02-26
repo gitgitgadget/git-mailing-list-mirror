@@ -1,158 +1,112 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213E025D8EF
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 22:31:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D7E25CC85;
+	Wed, 26 Feb 2025 22:38:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740609080; cv=none; b=Ip6avlzg0lEuRAayva+00RcOI+lbN3WyMPWsWFTJw9I1MXxIJg3nrG79YE2kmwdVrUH0tGb/JSsCAkKGoc7XFlFgN+SFO5izqVBFdByegpUj1jJvEp6XNBZwc5yq5RSMDAncSnP0GTRLWLs5yv0D8CWtdyMrVTE16PL83VIz/QI=
+	t=1740609495; cv=none; b=MVZerUBI+Dsz6dwsRiwWdDLrdJIfEcOuaBrOaSM9+yQJTo0KYfFPCaCrvi8irTRPxF83UDjVgqchD9WjglU8/E1e/5+C8coOiUnJquKJa4dhfH04vW92551npmMIPxi+nc2whuKy8V9HEVCuMPl7qoYUG7U0R8E/w4HRh+8LmlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740609080; c=relaxed/simple;
-	bh=G6j7oezvSscfDjH5Tq5ELmyv6O/ekdENp3KK5h1YcOM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FU1ODA4NF/VFgtezOXDuwG+86653wYIp0VFA0yZbMnlBlKpUCcuFpqFHspYRLrp7B/jcMxPc6jtszg6kJYLF5hZsUAzIipLDuZ17CuQ0C9kU/fAH6VLakYtiVsfgCuhElxJ2O88asTuWFGaisR3InqnvwMkdXKphOQ2gZfL5hZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fFOOZ/Kx; arc=none smtp.client-ip=209.85.219.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740609495; c=relaxed/simple;
+	bh=Db98LTqH8jszRgpa67m0NYmQtp7oqUzEwRQjHmNgjTk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G2V/3a+uwYJW74tPVcPhhzjJh6uCPDjO+UFgMvB379f5eVSgGuoyTKFiVcPVUpN7OGYWPC27ebYkKkVllRjvaLC5cBUgve+yurG96kIaFt9PwXsKg3wi2gKkZODcKm0cpWneAwBGLO2n8LVSUx29015GF/zXlw4Pe/ejkVzHt2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KF19JGhs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=7Hcrrdfp; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fFOOZ/Kx"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e549be93d5eso305525276.1
-        for <git@vger.kernel.org>; Wed, 26 Feb 2025 14:31:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740609078; x=1741213878; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G6j7oezvSscfDjH5Tq5ELmyv6O/ekdENp3KK5h1YcOM=;
-        b=fFOOZ/KxUtXLPLrXfxIbxIneH+SAZPY4b8SCmFuE16OZi27l0LvRGx+62CN5W1SAhd
-         InmUQZyhe+B6GSTy7uuGV1omrZauIQ19FVJBmPEkxoeXwm6bvWaHbkPIu+stv+W5KXc1
-         wN6lSWNobL8E4daT1zpAGyfMKc5xWFHYjCj8CUwIaPAq1P+R3UolSZGsQeLiHloYaZDr
-         yxog46ldqDRSl8vPueJZMEf4zl4o5hze722NLAtHQge18e/SNi8nIkQtUcKAmTvZjZ7/
-         MEybvI/A/hp8KcrerXYvMtU9OBNqQZGuarESJecxKBqnKVM0rJKJXM2IbccGnSREJMaR
-         EtFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740609078; x=1741213878;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G6j7oezvSscfDjH5Tq5ELmyv6O/ekdENp3KK5h1YcOM=;
-        b=xTCIm0ai7SFUV5X6QS4A8Q9NvZajjxt5ptAkcSOd72lB1hhu5HOINyjtRBZF3KDj9E
-         l7NmHkHDAkcw67fXyu/c0MGuv1EQeRkyz+2ApWjrojG7d7AfgbEf7nl2d4XJANeK0lvb
-         U9vr0p8lEhfZbavCx2Zew4nMpGe1gV0DsZNObtHW0xx/7FaJsEi/1H5kXtwKMOyABqU0
-         rH26z7uNa7B5J2t0fBTyE9goQN7fhFtUuKJf18emJ/0jKWjyHSlN5X5wy6EKJ8m+tPuO
-         I4kz4TOq+bXKXX9A2NfAQgUe2RLLlDaQtefpa7lWfdMOTRVF6GEcgd8E1yatAkGDwoKP
-         +cuA==
-X-Gm-Message-State: AOJu0YxjaH+KqOcBtxEdaiCbDOCNLYNcGxIZNu9+6w/1APUzZkrJQDr5
-	EcR0iW73Ijt+BJ017A3PAKbSx3Ry+9BWgbwZkK35L5E/8UjwjfOK1P6dLXjQ77l29eWTiIfHyqh
-	8BsCMEmYpi3Y63QAF9RMUyygSASg=
-X-Gm-Gg: ASbGnctZIslYb6sPHBnrC4XhdDLvbV2S26COaQGN8WNUm0PgukFoIvnCqd8ZzWfsGGB
-	xd1C1XHplrf57fYtS3lAzodk+sH1DnDyYCBZjpkMDAqg+QUe93Ta+u4XuyrD7wxtIQ0J5lJSvVQ
-	2cLprjpw==
-X-Google-Smtp-Source: AGHT+IH9vbMMVtmm47BoJbccJaLHPPaooMwaVYCYfLQzYycvxcM/lBr/SlHJcHbB+5zdgDQII4Rwe1ZTvU+lu4UvcnE=
-X-Received: by 2002:a05:6902:200f:b0:e5d:cc41:75d with SMTP id
- 3f1490d57ef6-e607a4fde0emr8236746276.26.1740609077962; Wed, 26 Feb 2025
- 14:31:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KF19JGhs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="7Hcrrdfp"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 576A213800F3;
+	Wed, 26 Feb 2025 17:38:12 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Wed, 26 Feb 2025 17:38:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740609492; x=1740695892; bh=8jeNcdAnrq
+	Wk+vSPdJdCmOaMfIzJZpxOKWi8SuZ5KO0=; b=KF19JGhsJlH3a2SDPv5eAxRvhb
+	k7cvok85X37wos8bEf6CI/iHsc3GIS+ja/sFVlPNYqw8sKAm3cNXLTFjgKbYnIVZ
+	gExLPtmPqurPB5RJunsYPcn72eyfsbpB+LMRrWonURbaXoo8Z6ZKewgGsMY21x7+
+	XqSVn+7ZWD0UMm+s/BDleeLs51lNL1H0rRSBEdhHVRaUqObk/CpUTHVCV0GrRHNi
+	nz+8ohFzsgmsWqq1gQMVyvdj1LAknHCaV2NkZT0j+tOpTWGDD635JHGXEbWJMpFH
+	kxk1OaraKH52qBV1iqavApSODFecOB5od5e4Gi9iq9w+wm+gqEUuJecjmk+A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740609492; x=1740695892; bh=8jeNcdAnrqWk+vSPdJdCmOaMfIzJZpxOKWi
+	8SuZ5KO0=; b=7Hcrrdfp3vQVEX5bJoUSrFhgbhe2LG8SjUrJOf20Ug85y9ZaH6H
+	SvZ+KorAR+y2VdIWv+OFcErsDVtdE+eRyzEaoFRsr+1nXcEonHg6jiHFXlfnSuwt
+	rnRSzILivxfJEu1kh5ApjzlbbGEP7xJHLwiZGsFrcSWRFP9+b6FVOHlCxrRuaund
+	7x8CkcEz8joGbKSk29KCy5wurStT9Iy/Fg3zx7xQvG8axsuS+ZIN1tSmLbAH1eXH
+	D9Q4uxrzr9C9iwoXaiVt2h+9kOG0WmMeh+yjK58GlSg/OlVxAXKMDRcFmJyFdtFg
+	xpU6aPMQlikfoIrTEjEC6ed243SMSx65iVA==
+X-ME-Sender: <xms:1Je_Z0fv-5_fCC0Emq9_ebNwkTh_TuofeVM5knPvNj45pfFrgDv55Q>
+    <xme:1Je_Z2PHqOYEZrGit31V5qpDyisreeH__lu1G1MOXF5uGcAtvWNRazTCjFaerjieC
+    nZCmfJeOn-kxflhZw>
+X-ME-Received: <xmr:1Je_Z1gvpHnmN31ctsO8kcTYEkGCNKuIBML2QOY5WXY-CBPJU98XskqjXaR_ujauQTVTUR1Hq7NBcr_LGuERAxYsKRfENd6FhCh1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekheektdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosg
+    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepghhithdqphgrtghkrghgvghrshesghhoohhglhgvghhr
+    ohhuphhsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:1Je_Z5-kdIdvDZ_BrppncdbGFpGvAkur6KE7ASVGzTnbGJ3Ei3Jnmg>
+    <xmx:1Je_Zwu2aFmrD9k9mBpTLIdaQc3EoQV5r72SKe6j5DtVfcTLEUaWfA>
+    <xmx:1Je_ZwEBLgJyTEjy6NFgQ3EbY94slp1ZvRS3nGXnECTJMCAR3d1AfA>
+    <xmx:1Je_Z_PkBoCZszyJ3k08M5mJ5I-0_52ES8c2XDXBAxpIbTPFvcddOg>
+    <xmx:1Je_Z6UjdHcAuaixaLKzZdnjYoKlb31YXXIxkXqP-g2h76kEmxlTjA77>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 26 Feb 2025 17:38:11 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org,  Linux Kernel <linux-kernel@vger.kernel.org>,
+  git-packagers@googlegroups.com
+Subject: Re: [ANNOUNCE] Git v2.49.0-rc0
+In-Reply-To: <CALnO6CA5tw9DNo9U8Fu95Y27DBiRaRDsz75MHwm64iW0TBkxDw@mail.gmail.com>
+	(D. Ben Knoble's message of "Wed, 26 Feb 2025 14:09:43 -0500")
+References: <xmqqzfi8bljk.fsf@gitster.g>
+	<CALnO6CA5tw9DNo9U8Fu95Y27DBiRaRDsz75MHwm64iW0TBkxDw@mail.gmail.com>
+Date: Wed, 26 Feb 2025 14:38:10 -0800
+Message-ID: <xmqqzfi89vsd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CABXAcUxHp3LnyqR=NM0coh6wG-1uy4GB3FdeZEg8mPHu-vt0bQ@mail.gmail.com>
- <CALnO6CA2j60gpPhUjxOY6_q5WdU7MHoL1GLDN_AVwWVNx_JddQ@mail.gmail.com>
-In-Reply-To: <CALnO6CA2j60gpPhUjxOY6_q5WdU7MHoL1GLDN_AVwWVNx_JddQ@mail.gmail.com>
-From: Clement Moyroud <clement.moyroud@gmail.com>
-Date: Wed, 26 Feb 2025 14:30:41 -0800
-X-Gm-Features: AQ5f1JqjtxgmDJz9JZXEaWrg-XHbLFhtDLdWrKOZtXFiSCguMvliEckJW7JzJ7U
-Message-ID: <CABXAcUwHd2Rr8iOZ7F2k5DGiBNH87pwG3oyRWLrP40=MgD91-w@mail.gmail.com>
-Subject: Re: 'git rev-list' commit ordering issue
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Feb 26, 2025 at 10:58=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.co=
-m> wrote:
->
-> On Tue, Feb 25, 2025 at 8:44=E2=80=AFPM Clement Moyroud
-> <clement.moyroud@gmail.com> wrote:
-> >
-> > Hello,
-> >
-> > I've come across an issue with `git rev-list --no-walk=3Dsorted` commit
-> > ordering when
-> > two commits have the exact same commit date. In that case, `git rev-lis=
-t` will
-> > leave the two commits in the original order, preventing automated
-> > cherry-picking.
-> >
-> > To reproduce starting from the attached repo archive created with `git
-> > bugreport`:
-> > git rev-list --reverse HEAD | git rev-list --no-walk=3Dsorted --stdin
-> >
-> > You'll see that the order of the two middle commits is incorrect and
-> > does not match
-> > the order returned by `git rev-list HEAD`
-> >
-> > Since both commits have the same commit date, `git rev-list` should use=
- another
-> > criterion to do the sorting - namely, use the parent/child topology.
-> >
-> > If there are better ways to sort such a list, let me know. This is a mu=
-ch
-> > simplified test case. In our real-world application, we start from a su=
-bset
-> > of commits that we want to cherry-pick from a branch, for the purpose
-> > of creating
-> > a customer-specific patch build. For the automated cherry-pick to work,=
- we need
-> > to have these commits sorted in topological order. I do not see an opti=
-on to
-> > `git rev-list` that only sorts the commits in stdin topologically - the
-> > `--no-walk` option only does date-based sorting.
->
-> Is `--topo-order` of no help here?
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+> [snip]
+>>
+>>  * "[help] autocorrect = 1" used to be a way to say "please wait for
+> ...
+> It seems "help.autocorrect" style is _usually_ preferred, but there
+> are a handful of "[section] key" style. (I don't have a preference,
+> just something I noticed.)
 
-Unfortunately no, because it'll look at the ancestors. I get more
-commits (400k+ extra
-commits in my real world case) than I have on stdin:
-$ git log -1 --pretty=3D%H 2025.2 | git rev-list --stdin --topo-order --cou=
-nt
-417776
+But you cannot write "help.autocorrect=1" and claim that it is
+correct.  Your configuration file does not spell it that way, your
+command line to "git config" command would not take it.
 
---
-Clement
+The more awkward "in the conifguration file it looks that way" needs
+to be used when I need to write the variable with values.
 
->
-> >
-> > Below is the system info gathered by `git bugreport`.
-> >
-> > Take care,
-> >
-> > Clement
-> >
-> >
-> > [System Info]
-> > git version:
-> > git version 2.48.1
-> > cpu: x86_64
-> > no commit associated with this build
-> > sizeof-long: 8
-> > sizeof-size_t: 8
-> > shell-path: /bin/sh
-> > libcurl: 7.87.0
-> > OpenSSL: OpenSSL 1.0.1e-fips 11 Feb 2013
-> > zlib: 1.2.3
-> > uname: Linux 4.18.0-553.33.1.el8_10.x86_64 #1 SMP Thu Dec 19 14:28:01
-> > UTC 2024 x86_64
-> > compiler info: gnuc: 6.2
-> > libc info: glibc: 2.28
-> > $SHELL (typically, interactive shell): /bin/zsh
-> >
-> >
-> > [Enabled Hooks]
->
->
->
-> --
-> D. Ben Knoble
+Alternatively, I could say "setting help.autocorrect to 1 used to
+be....".
+
+Thanks.
+
