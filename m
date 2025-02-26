@@ -1,251 +1,148 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A6784A2B
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 13:50:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18D719CD0B
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 14:40:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740577858; cv=none; b=TtlgwSYF/GO+768g7j1Qa8S8i3kmL1RLvMiAUfBDWsSJvoC3+Oor/T0FLdhL0KkehcX53UTz31afjpqYjbXwTE11YBveKsfiUnR5HRO/Ej7zX/pw6nzb5Rotp9YkYBCguRdmP2mNxDuBa+v+xN9HiVx68aDYIAAYm6mtDcjYcvI=
+	t=1740580850; cv=none; b=K4/qXDdmdgvvRF7n3x1H6q8EHSSb6RpDxmaW2q9maaCMzjobi6OQ2xYaDHx15VUUKgiuJeVAwYIk0g+k2Jc+Xr1GDyXohzOR61LdiiTfU43qBd4i6WONwDMbQjjsW0cMHLyWOwDcC5neIuXX+azKei1LJhOdTvB55QFCRrbQoGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740577858; c=relaxed/simple;
-	bh=+aHq/0mhg3mqmhS9d2qjcyWfrd49Ck2gOcmj77QlhX4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IFBkDMtT5Ganxe+LOZq+yIyDSQEM1g0+GNE4dUEPLTrBoaHf7BLQs9q4TlazNAvL/E4gfgDOG3lNywN+c1uCk6m9nCkY56ox/2krP1HUEhhQHBdqIhJp17LECCBTsmp3DK0BvFOsl6S1ED0fw2//W02kJSBr5WRRTw7VD7Xz2WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=inpA9tXs; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1740580850; c=relaxed/simple;
+	bh=nGVfF6gC9v+bWbZnTt6cqGNz9jg/uleUK4sKvHcuYZM=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=EVzskwA7h7CPae/8u3mN6jDW7x9AwgnPpieHoyGy23i2twf6/E9kBBk8/OE1ksFriO89YJn4ryoTzYv4d4eipZn2u8kjDJGthlbV80jQGTS2+E7yHd5aU0ph1mpv+dp762KrE2kRskPB4mNXTrYq/Zqeb0pu1yUBCNUo5kMizIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TY4WP09U; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="inpA9tXs"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22100006bc8so120017935ad.0
-        for <git@vger.kernel.org>; Wed, 26 Feb 2025 05:50:56 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TY4WP09U"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so47487985e9.3
+        for <git@vger.kernel.org>; Wed, 26 Feb 2025 06:40:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740577856; x=1741182656; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=P97hX1r72VErTTUpW28u0qQ0ZvGnJob0r/Tm2EjItaM=;
-        b=inpA9tXsu9T2iwbqtM9iTiUiuis5AzySKnN5rGhebY45s7wGAhFZUyzCCpKd+oDKPq
-         +HfaQBfUeFYoU4ub1qtSdEsf/fk5PaYhpJny/EPMH4aA8ruTwJFYTUbTdTUoK+uwoMRB
-         gC6NUdUaIIYCL1de6De2N3jBWNIokti8P4iNhHlOMLMA8DhIxPdlJJIfapT7KyKlFERT
-         eaCq6Wd5jdo64S44qKJ6lBqefhGwf1hlISz9XPaGHVAjSgXJDBl8pmHfQPJyrYwJC/u8
-         D7aYuTqtmYIHlfFzvhWpWb5ez/QWXOYx7IQFaAZWmfgIWbfUNqy6yayEZowjyLo2hZT5
-         9PYg==
+        d=gmail.com; s=20230601; t=1740580847; x=1741185647; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wZWDe2i8XgvCiWaozA/5h3okrNdWZMRLsnaLvqWwGbk=;
+        b=TY4WP09U4Dzs5OHANBJuSwOn7ck5Bm+EgWAJouaYhxKY83gg8Q4DZFwCfbl3E7D4av
+         AmJ1WyTFN16ggY1j3B/bpi6w+fE3E2az8gPP8/75+vbZDQGkJ1JdRzfY7CxlN0isWMwh
+         VgRauZdtUc8pSeb072Ttyuw+Vz6Fynf9+WoRZvY/2Ur/nc2Ry++5d/Vh/F00EDN5RO5d
+         +JE2ZJO3Hl6n+e/hZ43Mr+581TWIXfY6ofNk2Ze/SX3cjgHNIwT1UbTKgdD9ZzGYooQA
+         bWOTdV7jiRGm4tBDNJRNPnWwpSC6E4XeP3dnRuvikwShdxBVZD/boG8odhV3ycxO6OwJ
+         +pHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740577856; x=1741182656;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P97hX1r72VErTTUpW28u0qQ0ZvGnJob0r/Tm2EjItaM=;
-        b=LsCIETrs2vZW4/NVwbdKGx3aTyvs8A+jHaRHyoku45iAGr7nrzGpGLlsQWS3ayWqoN
-         RDPBT6Ekft20NhdTcEoh+53DA+HQnar9Gka8v6xEVjXe/ysa63ehlLGp/K3xYxQCTB0j
-         Ckd/GBZuO025EgWmzj3IK2IjvzoGCG+dWwK1Hutrdg7GDwAqE9ZbS8BIcBx/jbYzULxd
-         /H5Jn5LYuUgPKSADkfxvwEuxxONrNVkJIUjmoLON4KtupbOb6geC9Jjk6TIApAXgSXPV
-         6R5Jk44Aq0JmqQa2jBOfoC1HQlEa4MadLQPho8BYwoOY4GvDC9OROR9BBalT4h8Wu4zC
-         m9JQ==
-X-Gm-Message-State: AOJu0YwK+BRdcyVaTpNpikzDtsUBoMmvYolrrgIoPtWGEiPXTA2+SG5Q
-	pxQ9Wt4wnZE9Rnc7qtLlvRDNn7cSiXnzzHsSX5w4QtygX3h351MUM+/CZA==
-X-Gm-Gg: ASbGncs5O067JM4z/XDmSh52EwYQNIMGfK5liFGIzzxRXP6j7j1XL415LGJlOh4P0Nq
-	LAmEGvnZ+Mc5ffsgjyYjiBh9CWKW6E6TrTRDhr0nbbeRLN4ytRrXRc+WHDjVQsrGBQzOcsCQKMX
-	lB3DFQuszTcAcyudGyWBcVey4CIi0NJgK53xtGwUC6wKULFYfqQas1ay+tNe2pDB9y3AAy8aJSb
-	Onh4balV+WfyMKrRmXez8blZB2bVa2A294q2S78CpX3wsvCvIennklQjFxqNohq+x2jhUzAC7f9
-	H5j3u/vD3e818D7e4jroXw==
-X-Google-Smtp-Source: AGHT+IEMa6omrjFcmrkBSZj8yIOt0zYRIssC7Skv6Xt9FxQN0bRmMTqFGKTeDxAdv1E+dNGR/Uq8ZQ==
-X-Received: by 2002:a05:6a00:1ad4:b0:732:5c88:990 with SMTP id d2e1a72fcca58-7347918c4e9mr9514893b3a.17.1740577855882;
-        Wed, 26 Feb 2025 05:50:55 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-aeda7f8453csm3111061a12.28.2025.02.26.05.50.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 05:50:55 -0800 (PST)
-Date: Wed, 26 Feb 2025 21:51:04 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: [PATCH v7 9/9] builtin/fsck: add `git refs verify` child process
-Message-ID: <Z78cSA6qOF5KaATM@ArchLinux>
-References: <Z78bmBSrDR20GY6g@ArchLinux>
+        d=1e100.net; s=20230601; t=1740580847; x=1741185647;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wZWDe2i8XgvCiWaozA/5h3okrNdWZMRLsnaLvqWwGbk=;
+        b=xG/YLQYKxGT1shJjH/vwdkBOMqy+QL9ge3+4/4lQXYON2Kf8UJff/PWgY6F21d5PMT
+         sFW3uyO6hlUkKLslW9tKhZK/svJJSD4NWvjaMvp5p6/sYsIvyfuZewhjW81gmM6ZpTpe
+         HAb9mqqeTW/YLkD3ayWXifaNqFwG7xtm8Gasl6xL+Q7DnG5SYgITjt9eiowEFVVjNKqV
+         TisBqngJ+PEMlZJVJMvBW2g9Hxs3PYXfSwYqSQSQ58klh03WdGgf0VbYljH8JbkPUmVK
+         qofgK1VdGLWQrcog0TdA1Wd9m6ZhW1eTx5X+r6ewRLumeKWF/MKX7rkcNvS2cwIl4A3T
+         253A==
+X-Gm-Message-State: AOJu0YzISDTMOm8R18mpOmJGgrn2iAKecsTxwzNyDS7lut8y6xoFGXAK
+	drLoJpR3AiFUeiREs1IsNdupbkiCAdsYu/ql6jl2BfdICZyLu+M0
+X-Gm-Gg: ASbGncsREPCB0Xchsu7WqUoMLn9iQV9kIBSbuxDo7QHTyMiyuHopQWGhLG4Xo0IVE1v
+	amMfFAX55PiBzzIog2Nkw0AxOWOBdhK79LDKkTGvfFjWKCYvAF83mA/0IhM50642VfzBTQUV9W3
+	ZvPYZHlXv6oBD+hgJ8NwYFjR3XCwqhk36YtymH9qZNTy33fa/FtDNZnz5iBom3MuoGohe84cjcH
+	a5shfSzlp5iBttTwt4wJ8oAqbJBFrYKVGysAQSppCY8ZC4dP3OIMoxjOrq7FcA7zf6A7yHnH7N4
+	Ett3eqsWMqGUPs8jZkqBbzHQtWGS5sKwtKMrRI9Ukufljse1xmqy62ETkN9PSpqDBhGUVwwq682
+	E8X8i
+X-Google-Smtp-Source: AGHT+IHNxYnUoxJB0QR+/bEXPJpXh9Od7saD7N7aL50Gfs4Gzb4R5dYEzQvCHkXAjDgDSarYerGhLg==
+X-Received: by 2002:a5d:694d:0:b0:38f:5014:22d with SMTP id ffacd0b85a97d-38f6e97a02cmr12049067f8f.30.1740580846667;
+        Wed, 26 Feb 2025 06:40:46 -0800 (PST)
+Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43aba5710f6sm25064955e9.29.2025.02.26.06.40.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Feb 2025 06:40:45 -0800 (PST)
+Message-ID: <618d4a61-7480-46b7-8563-221264290ed1@gmail.com>
+Date: Wed, 26 Feb 2025 14:40:43 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z78bmBSrDR20GY6g@ArchLinux>
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/2] add -p: mark split hunks as undecided
+To: Junio C Hamano <gitster@pobox.com>,
+ Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
+References: <pull.1863.git.1740149837.gitgitgadget@gmail.com>
+ <43a0592a462cf68bcfdc54373da2319431c3c1ca.1740149837.git.gitgitgadget@gmail.com>
+ <xmqq34g79e8k.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqq34g79e8k.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-At now, we have already implemented the ref consistency checks for both
-"files-backend" and "packed-backend". Although we would check some
-redundant things, it won't cause trouble. So, let's integrate it into
-the "git-fsck(1)" command to get feedback from the users. And also by
-calling "git refs verify" in "git-fsck(1)", we make sure that the new
-added checks don't break.
+Hi Junio and Justin
 
-Introduce a new function "fsck_refs" that initializes and runs a child
-process to execute the "git refs verify" command. In order to provide
-the user interface create a progress which makes the total task be 1.
-It's hard to know how many loose refs we will check now. We might
-improve this later.
+[I'm replying to both of you via Junio's email as you both raised the 
+same question]
 
-Then, introduce the option to allow the user to disable checking ref
-database consistency. Put this function in the very first execution
-sequence of "git-fsck(1)" due to that we don't want the existing code of
-"git-fsck(1)" which would implicitly check the consistency of refs to
-die the program.
+On 21/02/2025 21:31, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> When a hunk is split each of the new hunks inherits whether it is
+>> selected or not from the original hunk. This means that if a selected
+>> hunk is split all of the new hunks are selected and the user is not asked
+>> whether or not they want to select the new hunks. This is unfortunate as
+>> the user is presumably splitting the original hunk because they only
+>> want to select some sub-set of it. Fix this by marking all the new hunks
+>> as "undecided" so that we prompt the user to decide whether to select
+>> them or not.
+> 
+> Good.  I am very sure that the design of the current behaviour goes
+> back to the very original version of "add -p" with hunk splitting I
+> invented; I simply never considered a workflow where people may
+> first select and say "oops, let me take it back and redo it".  What
+> I am getting at is that I do not think the current behaviour is
+> something I designed it to be with too much thought, and debeting if
+> it makes sense or it would be better to force them to be undecided
+> is probably a good thing to do now.
+> 
+> Having said that, I have one small concern about forcing them to be
+> undecided.  This now allows it to
+> 
+>   1. Add the whole hunk
+>   2. Go back (with K) to that already chosen hunk
+>   3. Split
+> 
+> and makes the resulting minihunks more obvious, as you do not have
+> to use the uppercase J/K to visit them.
+> 
+> But if one is very used to do this intentionally (as opposed to
+> "oops, let me take it back"), this would be a usability regression.
+> "Ah, here is a big hunk with 10 changes, most of which I like, but
+> one of the lines I do not want to include" in which case I may do
+> the "Add the hunk to grab 10 changes, visit that decided-to-be-used
+> hunk, split, and then visit the one minihunk that I want to eject
+> and say 'n'".  This makes the workflow simpler and more stupid by
+> requiring the 9 minihunks to be chosen individually after splitting.
 
-Last, update the test to exercise the code.
+If the user wants to deselect the 10th mini-hunk then they have to wade 
+through them all with or without this patch. If they want to deselect an 
+earlier one then they will now have to do more work.
 
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- Documentation/git-fsck.adoc |  7 ++++++-
- builtin/fsck.c              | 33 ++++++++++++++++++++++++++++++-
- t/t0602-reffiles-fsck.sh    | 39 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 77 insertions(+), 2 deletions(-)
+Currently after a selected hunk is split we always prompt the user to 
+make a decision on the first mini-hunk even though it is marked as 
+selected when it is split. This seems inconsistent and confused me when 
+I first tried splitting a selected hunk which is why I wrote this patch. 
+I can see that in some circumstances this patch does make more work for 
+the user, but I do think it makes it easier to understand what happens 
+when hunk is split.
 
-diff --git a/Documentation/git-fsck.adoc b/Documentation/git-fsck.adoc
-index 8f32800a83..11203ba925 100644
---- a/Documentation/git-fsck.adoc
-+++ b/Documentation/git-fsck.adoc
-@@ -12,7 +12,7 @@ SYNOPSIS
- 'git fsck' [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]
- 	 [--[no-]full] [--strict] [--verbose] [--lost-found]
- 	 [--[no-]dangling] [--[no-]progress] [--connectivity-only]
--	 [--[no-]name-objects] [<object>...]
-+	 [--[no-]name-objects] [--[no-]references] [<object>...]
- 
- DESCRIPTION
- -----------
-@@ -104,6 +104,11 @@ care about this output and want to speed it up further.
- 	progress status even if the standard error stream is not
- 	directed to a terminal.
- 
-+--[no-]references::
-+	Control whether to check the references database consistency
-+	via 'git refs verify'. See linkgit:git-refs[1] for details.
-+	The default is to check the references database.
-+
- CONFIGURATION
- -------------
- 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 7a4dcb0716..f4f395cfbd 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -50,6 +50,7 @@ static int verbose;
- static int show_progress = -1;
- static int show_dangling = 1;
- static int name_objects;
-+static int check_references = 1;
- #define ERROR_OBJECT 01
- #define ERROR_REACHABLE 02
- #define ERROR_PACK 04
-@@ -905,11 +906,37 @@ static int check_pack_rev_indexes(struct repository *r, int show_progress)
- 	return res;
- }
- 
-+static void fsck_refs(struct repository *r)
-+{
-+	struct child_process refs_verify = CHILD_PROCESS_INIT;
-+	struct progress *progress = NULL;
-+
-+	if (show_progress)
-+		progress = start_progress(r, _("Checking ref database"), 1);
-+
-+	if (verbose)
-+		fprintf_ln(stderr, _("Checking ref database"));
-+
-+	child_process_init(&refs_verify);
-+	refs_verify.git_cmd = 1;
-+	strvec_pushl(&refs_verify.args, "refs", "verify", NULL);
-+	if (verbose)
-+		strvec_push(&refs_verify.args, "--verbose");
-+	if (check_strict)
-+		strvec_push(&refs_verify.args, "--strict");
-+
-+	if (run_command(&refs_verify))
-+		errors_found |= ERROR_REFS;
-+
-+	display_progress(progress, 1);
-+	stop_progress(&progress);
-+}
-+
- static char const * const fsck_usage[] = {
- 	N_("git fsck [--tags] [--root] [--unreachable] [--cache] [--no-reflogs]\n"
- 	   "         [--[no-]full] [--strict] [--verbose] [--lost-found]\n"
- 	   "         [--[no-]dangling] [--[no-]progress] [--connectivity-only]\n"
--	   "         [--[no-]name-objects] [<object>...]"),
-+	   "         [--[no-]name-objects] [--[no-]references] [<object>...]"),
- 	NULL
- };
- 
-@@ -928,6 +955,7 @@ static struct option fsck_opts[] = {
- 				N_("write dangling objects in .git/lost-found")),
- 	OPT_BOOL(0, "progress", &show_progress, N_("show progress")),
- 	OPT_BOOL(0, "name-objects", &name_objects, N_("show verbose names for reachable objects")),
-+	OPT_BOOL(0, "references", &check_references, N_("check reference database consistency")),
- 	OPT_END(),
- };
- 
-@@ -970,6 +998,9 @@ int cmd_fsck(int argc,
- 	git_config(git_fsck_config, &fsck_obj_options);
- 	prepare_repo_settings(the_repository);
- 
-+	if (check_references)
-+		fsck_refs(the_repository);
-+
- 	if (connectivity_only) {
- 		for_each_loose_object(mark_loose_for_connectivity, NULL, 0);
- 		for_each_packed_object(the_repository,
-diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index 767e2bd4a0..9d1dc2144c 100755
---- a/t/t0602-reffiles-fsck.sh
-+++ b/t/t0602-reffiles-fsck.sh
-@@ -830,4 +830,43 @@ test_expect_success 'packed-ref without sorted trait should not be checked' '
- 	)
- '
- 
-+test_expect_success '--[no-]references option should apply to fsck' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	branch_dir_prefix=.git/refs/heads &&
-+	(
-+		cd repo &&
-+		test_commit default &&
-+		for trailing_content in " garbage" "    more garbage"
-+		do
-+			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
-+			git fsck 2>err &&
-+			cat >expect <<-EOF &&
-+			warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
-+			EOF
-+			rm $branch_dir_prefix/branch-garbage &&
-+			test_cmp expect err || return 1
-+		done &&
-+
-+		for trailing_content in " garbage" "    more garbage"
-+		do
-+			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
-+			git fsck --references 2>err &&
-+			cat >expect <<-EOF &&
-+			warning: refs/heads/branch-garbage: trailingRefContent: has trailing garbage: '\''$trailing_content'\''
-+			EOF
-+			rm $branch_dir_prefix/branch-garbage &&
-+			test_cmp expect err || return 1
-+		done &&
-+
-+		for trailing_content in " garbage" "    more garbage"
-+		do
-+			printf "%s" "$(git rev-parse HEAD)$trailing_content" >$branch_dir_prefix/branch-garbage &&
-+			git fsck --no-references 2>err &&
-+			rm $branch_dir_prefix/branch-garbage &&
-+			test_must_be_empty err || return 1
-+		done
-+	)
-+'
-+
- test_done
--- 
-2.48.1
+Best Wishes
+
+Phillip
+
+> So, I dunno.
 
