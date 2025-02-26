@@ -1,64 +1,64 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18D719CD0B
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 14:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A41218AB4
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 14:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740580850; cv=none; b=K4/qXDdmdgvvRF7n3x1H6q8EHSSb6RpDxmaW2q9maaCMzjobi6OQ2xYaDHx15VUUKgiuJeVAwYIk0g+k2Jc+Xr1GDyXohzOR61LdiiTfU43qBd4i6WONwDMbQjjsW0cMHLyWOwDcC5neIuXX+azKei1LJhOdTvB55QFCRrbQoGs=
+	t=1740581280; cv=none; b=CpqxUynAnm83wbFynGNXSS6Yt0BgW9fIBHic1/S8qtW+NyoFXAJnh0mbH76WaHtYvsSswTkdoMtNXtXDcBdtrg+LrCqBqbH8ac0A4d6e2GqRJB6BEt0wXWbamIi0Czl1QAjCFZfYXOK1RFeD+4xr69d2FceV6GaMzutZRrD/CKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740580850; c=relaxed/simple;
-	bh=nGVfF6gC9v+bWbZnTt6cqGNz9jg/uleUK4sKvHcuYZM=;
+	s=arc-20240116; t=1740581280; c=relaxed/simple;
+	bh=an9Fcu3on4k3FlQnSyCQ8pAra/tDSg0pNAkU8vvclUw=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=EVzskwA7h7CPae/8u3mN6jDW7x9AwgnPpieHoyGy23i2twf6/E9kBBk8/OE1ksFriO89YJn4ryoTzYv4d4eipZn2u8kjDJGthlbV80jQGTS2+E7yHd5aU0ph1mpv+dp762KrE2kRskPB4mNXTrYq/Zqeb0pu1yUBCNUo5kMizIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TY4WP09U; arc=none smtp.client-ip=209.85.128.53
+	 In-Reply-To:Content-Type; b=Nfw/lwRTI/Mn5SRvvK7X1kyPQ1nm5oUH652EpErt9oRzdm/EXCpeRzWyjgJTJ0tqOWzoMGuXVWYs++mWQLLoNY1D+FG8vZs0dxcEjq+gv7m2SpSLS1mv+8orXPPrkrUSTbZ5rJpEF7Z7PlezwEvIsAEls/UeLNsXzczm/jRYBeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZRhlO7xZ; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TY4WP09U"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4393dc02b78so47487985e9.3
-        for <git@vger.kernel.org>; Wed, 26 Feb 2025 06:40:48 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZRhlO7xZ"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43948021a45so60577595e9.1
+        for <git@vger.kernel.org>; Wed, 26 Feb 2025 06:47:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740580847; x=1741185647; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740581277; x=1741186077; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wZWDe2i8XgvCiWaozA/5h3okrNdWZMRLsnaLvqWwGbk=;
-        b=TY4WP09U4Dzs5OHANBJuSwOn7ck5Bm+EgWAJouaYhxKY83gg8Q4DZFwCfbl3E7D4av
-         AmJ1WyTFN16ggY1j3B/bpi6w+fE3E2az8gPP8/75+vbZDQGkJ1JdRzfY7CxlN0isWMwh
-         VgRauZdtUc8pSeb072Ttyuw+Vz6Fynf9+WoRZvY/2Ur/nc2Ry++5d/Vh/F00EDN5RO5d
-         +JE2ZJO3Hl6n+e/hZ43Mr+581TWIXfY6ofNk2Ze/SX3cjgHNIwT1UbTKgdD9ZzGYooQA
-         bWOTdV7jiRGm4tBDNJRNPnWwpSC6E4XeP3dnRuvikwShdxBVZD/boG8odhV3ycxO6OwJ
-         +pHQ==
+        bh=QSPZw8HgM4OqUCCxVfNb62sh2ptfb91sLxzxjj6C3/o=;
+        b=ZRhlO7xZ1/wAQyfQev8X+qswlwxq/aHvKDYmj+9jXJIgiS0vchlyxObuVifownb5lX
+         PovSIrRCr0AtoJIv4vKrMvDQJ/HYB/YwMV7KDt34Jx7NyplQNfiawbUZb5DTKRGcwfxz
+         eKBPiTB1WKehLc58zIlw/XjrCMCDaXv14UDtTPFlYD8pvALNwJFi3x9XclUddZegkfwC
+         xh09jIFD9ahwCakq+Yd7VR6z0D3FM8Me5l5XRSYJaMIMgT8Ve6MBV7Y+7dK5Tjnu6cDv
+         Yomo6zDG69hSAjtj96lICoX3f0k3o7curoQcsXb7NmquoD2cyJT3Xq5ZPg4X8/Mue1Ai
+         /LXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740580847; x=1741185647;
+        d=1e100.net; s=20230601; t=1740581277; x=1741186077;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wZWDe2i8XgvCiWaozA/5h3okrNdWZMRLsnaLvqWwGbk=;
-        b=xG/YLQYKxGT1shJjH/vwdkBOMqy+QL9ge3+4/4lQXYON2Kf8UJff/PWgY6F21d5PMT
-         sFW3uyO6hlUkKLslW9tKhZK/svJJSD4NWvjaMvp5p6/sYsIvyfuZewhjW81gmM6ZpTpe
-         HAb9mqqeTW/YLkD3ayWXifaNqFwG7xtm8Gasl6xL+Q7DnG5SYgITjt9eiowEFVVjNKqV
-         TisBqngJ+PEMlZJVJMvBW2g9Hxs3PYXfSwYqSQSQ58klh03WdGgf0VbYljH8JbkPUmVK
-         qofgK1VdGLWQrcog0TdA1Wd9m6ZhW1eTx5X+r6ewRLumeKWF/MKX7rkcNvS2cwIl4A3T
-         253A==
-X-Gm-Message-State: AOJu0YzISDTMOm8R18mpOmJGgrn2iAKecsTxwzNyDS7lut8y6xoFGXAK
-	drLoJpR3AiFUeiREs1IsNdupbkiCAdsYu/ql6jl2BfdICZyLu+M0
-X-Gm-Gg: ASbGncsREPCB0Xchsu7WqUoMLn9iQV9kIBSbuxDo7QHTyMiyuHopQWGhLG4Xo0IVE1v
-	amMfFAX55PiBzzIog2Nkw0AxOWOBdhK79LDKkTGvfFjWKCYvAF83mA/0IhM50642VfzBTQUV9W3
-	ZvPYZHlXv6oBD+hgJ8NwYFjR3XCwqhk36YtymH9qZNTy33fa/FtDNZnz5iBom3MuoGohe84cjcH
-	a5shfSzlp5iBttTwt4wJ8oAqbJBFrYKVGysAQSppCY8ZC4dP3OIMoxjOrq7FcA7zf6A7yHnH7N4
-	Ett3eqsWMqGUPs8jZkqBbzHQtWGS5sKwtKMrRI9Ukufljse1xmqy62ETkN9PSpqDBhGUVwwq682
-	E8X8i
-X-Google-Smtp-Source: AGHT+IHNxYnUoxJB0QR+/bEXPJpXh9Od7saD7N7aL50Gfs4Gzb4R5dYEzQvCHkXAjDgDSarYerGhLg==
-X-Received: by 2002:a5d:694d:0:b0:38f:5014:22d with SMTP id ffacd0b85a97d-38f6e97a02cmr12049067f8f.30.1740580846667;
-        Wed, 26 Feb 2025 06:40:46 -0800 (PST)
+        bh=QSPZw8HgM4OqUCCxVfNb62sh2ptfb91sLxzxjj6C3/o=;
+        b=VBxuUwbotqmmm28Ep/hqqIgnr7C20vqP89WaeUQG6AH+veCJgv1gSkz8+K0/3EwlVX
+         9RahFuswmXqWsr5u496+2bSc672PmgInxLd/GCKKwFIIFpYnlCC274v6G6Bv0eaedlM1
+         oeL4VkEIpJx4TNhPggK8vzwBdiw6Nxn9md25jUExbPx2wkCbGayYUYKAhQGxCaypXIBw
+         HWjNNsA4bSRQdLsXlJb4xvHcWjPyPjrnSBfLi44w3DcQQC0w0GvaVtz7W4VRCkys3E9X
+         D+97Q+Uih6vjZQrxTIqm6Bcm46UH5hx5lxt/dkcrnBTfRAWZ2xJHA06kn2RVY5MlhOao
+         B3Bw==
+X-Gm-Message-State: AOJu0YyhiZQrXT2PVJXmth3eqzp0CMUlCTlrEa4QgsliPMY0iuIzGWwy
+	3JdVL45H2HSHUoTEGsJY+D0so59m8VDyd+0TnMLiwCxBqIYH16pa
+X-Gm-Gg: ASbGncuh4Lcp8n0gOHIemp+dFn27N6WvBqhBQTrg56wWJSqGTWfZQSrie/9DxUXovUK
+	SitBqp1HpYwz5QeoRIId3fa7Q1sgjgLWGZHh4mWLkat5LH50pyIi9jc6Z1idpiu1Bixb/hjzM4c
+	/pPr5nutAdzcYRsry2aoZRCy6DJynpXGmwbB1wEKiqWMXejBNkdtA/CgY8Aq71tRYMaNQWeJkLE
+	mEs2wST3q+HMy84g8pZjcICS8F/q+QogT9cZLwA7s+V9Ve/pgTGZ9MQ7xVuWivlnhkTEoywSxI3
+	M5T+qoyxlvOSp33eILD3iIbBxe++B6r6yHc8sEki5c3G3VKyDbdRNM6kuFiY9X9cjNI/NaqO3qm
+	9Daiq
+X-Google-Smtp-Source: AGHT+IE6QLZfcoJzZOWoQy2cGaql3VcbqQNSSKUVoSEneDb8RiwdG268bgCxuwjSE3Hbz62Gxsy3ng==
+X-Received: by 2002:a05:600c:3b83:b0:43a:9ef6:77ec with SMTP id 5b1f17b1804b1-43ab901d646mr32006365e9.23.1740581276728;
+        Wed, 26 Feb 2025 06:47:56 -0800 (PST)
 Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-43aba5710f6sm25064955e9.29.2025.02.26.06.40.44
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390cd86cafdsm5833285f8f.28.2025.02.26.06.47.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Feb 2025 06:40:45 -0800 (PST)
-Message-ID: <618d4a61-7480-46b7-8563-221264290ed1@gmail.com>
-Date: Wed, 26 Feb 2025 14:40:43 +0000
+        Wed, 26 Feb 2025 06:47:56 -0800 (PST)
+Message-ID: <00ef7191-1593-454e-ba45-8223726bb37d@gmail.com>
+Date: Wed, 26 Feb 2025 14:47:54 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,83 +66,102 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
+From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] add -p: mark split hunks as undecided
-To: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+Subject: Re: [PATCH v2 2/3] builtin: introduce diff-pairs command
+To: Justin Tobler <jltobler@gmail.com>, phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, peff@peff.net, Patrick Steinhardt <ps@pks.im>,
  Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1863.git.1740149837.gitgitgadget@gmail.com>
- <43a0592a462cf68bcfdc54373da2319431c3c1ca.1740149837.git.gitgitgadget@gmail.com>
- <xmqq34g79e8k.fsf@gitster.g>
+References: <20241213042312.2890841-1-jltobler@gmail.com>
+ <20250212041825.2455031-1-jltobler@gmail.com>
+ <20250212041825.2455031-3-jltobler@gmail.com>
+ <d6d4230e-7b80-4eec-b218-37717ae2e298@gmail.com>
+ <wv5ziveuff7iellcmjcki372m5vp6nmltyls43e4wzslcqymog@gwczuaucpkke>
 Content-Language: en-US
-In-Reply-To: <xmqq34g79e8k.fsf@gitster.g>
+In-Reply-To: <wv5ziveuff7iellcmjcki372m5vp6nmltyls43e4wzslcqymog@gwczuaucpkke>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Junio and Justin
+Hi Justin
 
-[I'm replying to both of you via Junio's email as you both raised the 
-same question]
-
-On 21/02/2025 21:31, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+On 19/02/2025 20:51, Justin Tobler wrote:
+> On 25/02/17 02:38PM, Phillip Wood wrote:
+>> Hi Justin
+>>> +	const char * const usage[] = {
+>>> +		N_("git diff-pairs [diff-options]"),
 >>
->> When a hunk is split each of the new hunks inherits whether it is
->> selected or not from the original hunk. This means that if a selected
->> hunk is split all of the new hunks are selected and the user is not asked
->> whether or not they want to select the new hunks. This is unfortunate as
->> the user is presumably splitting the original hunk because they only
->> want to select some sub-set of it. Fix this by marking all the new hunks
->> as "undecided" so that we prompt the user to decide whether to select
->> them or not.
+>> Normally the option summary printed by "git foo -h" is generated by the
+>> option parser. In this case we don't define any options and use
+>> setup_revisions() instead so we need to provide the option summary
+>> ourselves. Looking at diff-files.c we can add
+>>
+>> 	"\n"
+>> 	COMMON_DIFF_OPTIONS_HELP;
+>>
+>> to do that.
 > 
-> Good.  I am very sure that the design of the current behaviour goes
-> back to the very original version of "add -p" with hunk splitting I
-> invented; I simply never considered a workflow where people may
-> first select and say "oops, let me take it back and redo it".  What
-> I am getting at is that I do not think the current behaviour is
-> something I designed it to be with too much thought, and debeting if
-> it makes sense or it would be better to force them to be undecided
-> is probably a good thing to do now.
-> 
-> Having said that, I have one small concern about forcing them to be
-> undecided.  This now allows it to
-> 
->   1. Add the whole hunk
->   2. Go back (with K) to that already chosen hunk
->   3. Split
-> 
-> and makes the resulting minihunks more obvious, as you do not have
-> to use the uppercase J/K to visit them.
-> 
-> But if one is very used to do this intentionally (as opposed to
-> "oops, let me take it back"), this would be a usability regression.
-> "Ah, here is a big hunk with 10 changes, most of which I like, but
-> one of the lines I do not want to include" in which case I may do
-> the "Add the hunk to grab 10 changes, visit that decided-to-be-used
-> hunk, split, and then visit the one minihunk that I want to eject
-> and say 'n'".  This makes the workflow simpler and more stupid by
-> requiring the 9 minihunks to be chosen individually after splitting.
+> Would this be preferable even if git-diff-pairs doesn't support all of
+> the common diff options?
 
-If the user wants to deselect the 10th mini-hunk then they have to wade 
-through them all with or without this patch. If they want to deselect an 
-earlier one then they will now have to do more work.
-
-Currently after a selected hunk is split we always prompt the user to 
-make a decision on the first mini-hunk even though it is marked as 
-selected when it is split. This seems inconsistent and confused me when 
-I first tried splitting a selected hunk which is why I wrote this patch. 
-I can see that in some circumstances this patch does make more work for 
-the user, but I do think it makes it easier to understand what happens 
-when hunk is split.
+Which options are you thinking about here? I might have missed something 
+don't think that help text includes anything that's not in 
+diff-options.adoc that we include in diff-pairs.adoc. If there are 
+options in the documentation that we don't support then that is a problem.
 
 Best Wishes
 
 Phillip
 
-> So, I dunno.
+
+>>> +	argc = setup_revisions(argc, argv, &revs, NULL);
+>>
+>> I think we should check that there are no options left on the commandline
+>> after setup_revisions() returns
+> 
+> Good call, will do in the next version.
+> 
+>>> +	/* Don't allow pathspecs at all. */
+>>> +	if (revs.prune_data.nr)
+>>> +		usage_with_options(usage, options);
+>>
+>> It is not just pathspecs that we want to reject but all revision related
+>> options. Looking at diff-files.c we can do
+>>
+>> 	if (rev.pending.nr ||
+>> 	    rev.min_age != -1 || rev.max_age != -1 ||
+>> 	    rev.max_count != -1)
+>> 		usage_with_option(usage, options);
+>>
+>> To catch some of that but it still accepts things like "--first-parent",
+>> "--merges" and "--ancestry-path". We may just have to live with that as I
+>> don't think it is worth expanding a huge amount of effort to prevent them.
+> 
+> Yes, we should also reject revision as well as pathspec arguments. Will
+> update.
+> 
+>>> +	if (!revs.diffopt.output_format)
+>>> +		revs.diffopt.output_format = DIFF_FORMAT_RAW;
+>>
+>> This matches the other diff plumbing commands but I'm not sure it is the
+>> most helpful default for a command that is supposed to transform raw diffs
+>> into another format. Maybe we should default to DIFF_FORMAT_PATCH?
+> 
+> As you mentioned, defaulting to DIFF_FORMAT_RAW isn't the most useful
+> behavior. I agree that it makes more sense to use DIFF_FORMAT_PATCH as
+> the default. Will update in the next version.
+> 
+>>> +test_expect_success 'split input across multiple diff-pairs' '
+>>
+>> This needs a PERL prerequisite I think. I'm a bit unsure what this test adds
+>> compared to the others.
+> 
+> This test demonstrates that the raw diff input can be split across
+> separate git-diff-pairs(1) processes and still produce equivilant
+> output which is one of the main usecases for the command. That being
+> said, this test isn't really exercising different behavior of
+> git-diff-pairs(1) itself, so maybe it would be best to drop it.
+> 
+> Thanks for the review :)
+> 
+> -Justin
 
