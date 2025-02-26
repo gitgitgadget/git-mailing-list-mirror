@@ -1,81 +1,103 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5E422A4DA
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 17:53:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D99C231A57
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 18:04:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740592399; cv=none; b=hbWOMNSwZTxc4gWwFuFx6soD1DxIcCr3XzH7Gpl0LBO8xoJV8sjeIyMlE+2cdBXUEqMg3lvM77+wz6RdtRiw513Mo94KS2+ZfTffpi8n1tK9AEXbgx/X49sztvdtUdkn+BQtNM4DB54l9VeAvHoa9l8K1XWQBOnHj4yOiBch70s=
+	t=1740593083; cv=none; b=j9IebVPkOSAGEr5+tdXOdzqt/zSKje11zGB4nVOSr3AjVWb+iboHE/USCGiJGUjO+StqtqOdvYds5IfkPPwSyxcQN+OfWkexcIJw3VR8f/q3OgstAQ0g1mJvLQGo5inG31NC+Kr3XfkYWxg5asSGvZVw0FYdTLlN6Cjp42pawEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740592399; c=relaxed/simple;
-	bh=k2mrrX+qkZfV3gPExVRlfYOtCCF024o+yFX3j+ZDO7c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IQlg9z9VnTdegsX6xbwb/BMiXTWVGiaoXV9yaSTmf/ETfelo7aJBXFVcVzXudH7hTIVHvDHD4XOPUqbQl0EzMQcwXfZQar75n8+fltSJa4B+rxRH8u0ERDwH1TBUwdGwr+d6wsw23QtpQEegfFCw0PLJfMZbSPHq5NdcAinwnHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=GjxVe3Wx; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1740593083; c=relaxed/simple;
+	bh=J68aEhSGIbDY2VZfw3CWLqeB4s/resjk65AIP8qMuDQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=txI9mxQBoBaK4ejgJoc5gIcbItzbIO4HqpCBT9nenc3Yz/PXpNXhQLWbEAPgEaY5VawwYkZxQMMKlrC7hC6YrN3rFBbuTU70uez6FLPBcuDvRRILubwo0/OeaV8uB0cZv46jr/8Xb1E2Xj4IXrkV3SWskJ3moDzgyvs0F0ElE3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ys1sDteg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IlNKRICG; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="GjxVe3Wx"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id nLXotXd4dSSpfnLXptpWMI; Wed, 26 Feb 2025 17:50:06 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1740592206; bh=BslwToHmgSLquoWY13Z41M/motjB4DTmA9mGuZ1bMlc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=GjxVe3WxpN0gb3ma1POPP6vmfj48CDci/IY8Sp89I4BCvcHqnN+K1R8I0bbKc8nyx
-	 lxBdA7H7zcykEnVR/Z3wnmtDbrx1j+HysfFk04hxp7U5jjXUvBRBdWvLtre4wwrQye
-	 hDIPcPcTR62zcw1fyQ1AgiFkhpnr6AweBvmlEZB5dCZEI7s0FMXVS/WlZx8mDTLn6J
-	 UWm1mqRusgCOUdCNz739RMhk8ncRsCq0GcYWe23fiQqWkWpu3Yk/MXQqbS4b/hB8/z
-	 PWO+uWBV14+87xgFNXdmGJr317bCRavObe9qaW5TDpRIniF5+v1Gcybr5WLazxRNxq
-	 ICMwOqcQFBWzg==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=V9re0vni c=1 sm=1 tr=0 ts=67bf544e
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=3FqUGxySjS5IqXxmh6MA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <543e1914-d05c-4053-916d-e8286edecf50@ramsayjones.plus.com>
-Date: Wed, 26 Feb 2025 17:50:04 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ys1sDteg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IlNKRICG"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 04F06114013F;
+	Wed, 26 Feb 2025 13:04:38 -0500 (EST)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 26 Feb 2025 13:04:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740593078; x=1740679478; bh=J68aEhSGIb
+	DY2VZfw3CWLqeB4s/resjk65AIP8qMuDQ=; b=ys1sDteg0jbewvVGqwK9ClnnFl
+	SVd3E1A5g3yQC4jTpCzf8SU0FBZR+WetCzfAMe6/vyXSqy8n38h5LFrZcRhiyGkO
+	XifKRL31pzofIKt6ZmkPc/0EoGXdJh0PToi/0+P9fR803iD0hGHGT9y94KGqkBlv
+	Fb7cotrn1eE+ceMJ7rzBAIrXPkxGbqvnlRjdzkUVZ1CsD1+c2Vr/44rAIhWNT2ZU
+	b3I3E8Am5/hBWaavsQNTds1h2M9q2wzOfW8CreTouvkFM+AyVTQSMSVBWx6hbB2F
+	Mnpy3RPKoPTmsD2XDLwHT+weuJyovv2RPIgKsNiE0YaVsJDvGTsm/yBpwN5g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740593078; x=1740679478; bh=J68aEhSGIbDY2VZfw3CWLqeB4s/resjk65A
+	IP8qMuDQ=; b=IlNKRICGDSwXdk/U3mDRdZCtmkf1ASlq6/7jTxWfE0nspHrl/Oj
+	/QQTQMmgq2o5uAD16w7lVrSqiuvI62255HQVWxicfY+m4LFBgw5vlCzJaNp+BaIp
+	lQcZqOed9EUypCjqVkNwEqA73b6FAiUumHChUC+Zvu6Jp08KZLTNEV429IKfc17F
+	znWYd6x/IHo9sIichxxyxFCy95sumQTPuxj2Q+7g/tplCOis5f+mh5nS1vXjBxVX
+	HHBAoI+eEaoT5v169etfITFNZ9kTL5PeCmbYSub+XiQBdXcLqA0B8l3XojPKVEEn
+	O5L8PALtC1fUHxGecC3Kq2J9+CTZvB12Z0g==
+X-ME-Sender: <xms:tVe_Zx-p_c2G8zEzWKTLNvEmVVnqRKezcJO68jg1-2mqeRnkk0y1mQ>
+    <xme:tVe_Z1v4fK1UMDGYOB05QPIszqlgZpQz5s6sd-gkdUGqbhHinVMqO8U3-aK3TCnce
+    0FgeM090KnBhYC-zQ>
+X-ME-Received: <xmr:tVe_Z_DYm_pPiKWE77ra10hyrDUt0azX4LkO6r9Sk9vpm1A_qvJ2smiBoRA4KHRFcvALWmw2e0bI-ZkjbD_Ooo_ePcs1LSqCfc3n>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekhedvhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddv
+    feesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:tVe_Z1dqZhuhLgBhyJEsQ9Xe3Wd4yhLwvSfCuY1OWSZWZJ6jC88BCg>
+    <xmx:tVe_Z2M1nWSKFld_yR9j7yUxGwcu-9M_V6b4kBuAoJZp7dcpYgQ68w>
+    <xmx:tVe_Z3lJEaeb3zo_caDhooEG4g6xn_DMNb4w5fJpGJRdPt75yRXdKg>
+    <xmx:tVe_ZwuQiMadaUTw96aNY0hYg7Rsl--HdvUovQHYPqOwU3_6plsHDg>
+    <xmx:tVe_ZyCUMzZK-4CLLQ6_2Bn4ACb6p-9059bcZfTmBXYBVThHuoGRIXJS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 26 Feb 2025 13:04:37 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com,
+  phillip.wood123@gmail.com
+Subject: Re: [PATCH v3 1/3] diff: return diff_filepair from diff queue helpers
+In-Reply-To: <20250225233925.1345086-2-jltobler@gmail.com> (Justin Tobler's
+	message of "Tue, 25 Feb 2025 17:39:23 -0600")
+References: <20250212041825.2455031-1-jltobler@gmail.com>
+	<20250225233925.1345086-1-jltobler@gmail.com>
+	<20250225233925.1345086-2-jltobler@gmail.com>
+Date: Wed, 26 Feb 2025 10:04:35 -0800
+Message-ID: <xmqq1pvkeg5o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] builtin/maintenance: introduce "reflog-expire" task
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Markus Gerstel <2025@uxp.de>, Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee <stolee@gmail.com>
-References: <20250226-pks-maintenance-reflog-expire-v1-0-a1204a814952@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <20250226-pks-maintenance-reflog-expire-v1-0-a1204a814952@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfMm9ynZ0dmVHobhtx5EEMo4oSy8mocL95Fas7J59/dk4WNtzQ68ZvVEb2j2edN5sNl8/+wdAm4BaIiG9DQaUG5cstC1Lz0RwgZQUOixAfTkpc+X8GWjq
- bxwD3ZDVObhUOD8LAw+e0sBwTCrEZRmW94k7DdWPCmV/V+Uqw/FSNmWwm5KXJqfy+Z/tfnMxud579FKRlZkwmcG/fuh4PS8MJHI=
+Content-Type: text/plain
 
+Justin Tobler <jltobler@gmail.com> writes:
 
+> separate functions are implemented instead.
 
-On 26/02/2025 15:24, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this patch series introduces a new "reflog-expire" task to
-> git-maintenance(1). This task is designed to plug a gap when the "gc"
-> task is disabled, as there is no way to expire reflog entries in that
-> case.
-> 
-> This patch series has been inspired by the discussion at [1]. I consider
-> it to be another step into the direction of replacing git-gc(1) and
-> allowing for more flexible maintenance strategies overall. Next steps
+It would have been more assuring to explicitly say that the original
+functions that discarded the newly created filepair after adding
+them to the queue are reimplemented as thin wrappers, which is the
+right thing to do and which is exactly what happens in this patch.
 
-Hmm, I don't know what you have in mind, but just as a data-point, I have
-never used, and have no inclination to use, git-maintenance. However, I do
-use git-gc extensively: at least once (times the number of repos fetched
-which have changes) per day, pretty much every day! :)
-
-ATB,
-Ramsay Jones
-
-
+Looking good.
