@@ -1,121 +1,106 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8322620C6
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 23:36:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F125425D91D
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 23:55:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740612983; cv=none; b=smLtviHB4cH6LOgdbTMB2YGvlqOR6U3IClb1jAhDby9jQ0st5PpZ4KnyJpqfpH8iy1DPkHaOMbFn8uGRfc3KicxKwNuDUGF92AVWBbzp4/l7eFjwqwsZd24fAdNKioipHrdqg/Y45WN/Nj0P1e5PEPMNAko2KZpTLIBt3/UlDu0=
+	t=1740614115; cv=none; b=O+2yx1+ZnTSlHdBAOrN/GTeQvzXVhTM/0m69y3rXVwlcAkHIIUq+zXLggfs0ktcxqaD4Khc1vHPoNnC1QFvufUhmV+1k8iUlnRCXSuTxCLTlSUSXNEAFoQra+mLDnOyn6VCER1TC4IK20oGWhgywW6oyM78ChDRHHq+yJJu16SQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740612983; c=relaxed/simple;
-	bh=w0EfLjPbjhHrLtss3LbKMS+jWxajP5lmvfJDtMFkOQc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o4WiKFFKv6cQiBpNxE75I2f5H6GA8DIyCX3rf/b6A1UnMM7D9pR834QMqf/55JhaC+vHOlf0JpsIhMb0/Whr+7FVNCRgx5my0ndc7706VMZn6RSF79J5lwq+b1VtrjtuSgpWZyVkBqShtNtrP472Hj0oS9xwYRhQ2hTdwS1I6/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=1QdRxN7D; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1740614115; c=relaxed/simple;
+	bh=DXSiiiMe57SDwe2FmfvxMNGvPPTz01psLrtGwQ5A+gc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aNrxq/6KesQDmlHltncgrnQhiYiue05YaScrxLilpYfAx+aHKnEw44+3EFO8i+R/Rcw5End9Z9HVjaCWO5nkTX3MuaIYXDXnCadZ4/VZ8RZTVMssn+sNMmOD5znbymSBkbSryYgAF0IVGH2JTUejh65Ui5sUcIkwlr75fVIBkZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xivrCmNB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IMU4ZlBF; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="1QdRxN7D"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1740612973;
-	bh=w0EfLjPbjhHrLtss3LbKMS+jWxajP5lmvfJDtMFkOQc=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=1QdRxN7D7YG3kTgGJ1iay3TA5g3Po+jaHo7AjsIZCX1v8jRFemxVu98Sfv5RwSfvJ
-	 aSPvql8qIkHoIbmyodsuMi5YL7KYTmMfwPki7kJdnDe6RgwcmRG4htc8VSUHdscyJI
-	 8X9+wp4uFiDWji1tUPaMkcOCbI0Lqom4sdxjrQRYlcaOpUq6p0HQJVPgy2Y3fkVBbI
-	 k3dY5/o+DdvK5/2L1f0ftIAr6UDXSagk+isnSOr1h/xk2eKH4PT+hfNeLHJ2ZZyidA
-	 h3iisp53VsCcJ3ewEZGU9XvODn9NDpG46m4XNcFUxkMk8oeaXa/KyiSxa8fu4ndLSe
-	 td3CBLLGdBVGkFO7HxqQEQ4Ks6cQaQztCv8dGLQnHjcIwp3snFWJJSQON5lWB6DVU1
-	 q9G9MNQgP60r8DEWv96ltrSO6UNPztr0vh9nWoma3iEWIMP1Q+aX1a0KHeiknVMrBx
-	 DyXNt8oFMgV07JEnTj3+6bo26/6XouKGavf/in4W5nRzLfLZdrg
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f900:8f49:f307:5d4e:79ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id EF3B1200B3;
-	Wed, 26 Feb 2025 23:36:13 +0000 (UTC)
-Date: Wed, 26 Feb 2025 23:36:12 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: Yaakov Smith <Yaakov.Smith@wisetechglobal.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xivrCmNB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IMU4ZlBF"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id D01BC13814F2;
+	Wed, 26 Feb 2025 18:55:11 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 26 Feb 2025 18:55:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740614111; x=1740700511; bh=MpF7l0Z7Rd
+	tyxaIgS/rEoo6cSCCcm40+aIoxCfNIMWI=; b=xivrCmNBhYN8XJOhZdtT3VUXpg
+	28TT27Iw2jyz/wP21whC2VLqYqhvib3iYh72wd/GM7DKiExf2+fDkyWS5cuOPHsO
+	8bZJBP6lh9CvcAYzqn9uMHy21DetK/bXf2KPnVwjHLfmGPqFDRv00p3LtxxbWSw1
+	zSonXZ65cqYz8HD91fl4xsF69sYhumjWd57YnXbHmA1av6apUcAhxpyeiW2n7njt
+	87L5dVpofEWRlOgspu5e+vjmmbuATtrVgLeYpIUNAJ0DvxNwD2IS1ZJVlc4+hoSY
+	/4vmJu419QJzNcnLVZpGg5ftVlidUfW5wQunZgmm3HT1ZLZyqxMX2/xptCXg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740614111; x=1740700511; bh=MpF7l0Z7RdtyxaIgS/rEoo6cSCCcm40+aIo
+	xCfNIMWI=; b=IMU4ZlBFsxwGtGZJmuNW21UWh4uIzg5UahHZFP1piHgToyvnR0G
+	HHoQ1bo5Rh+ieHqnpTwMNxXna+rcyUG0vIjDsCTyuA59bvRRSuJUkLP9j+2NXBnu
+	6w+lQTvhVnSKw4DsqOGcN84WsUT7p3BTthzq0+ENBjfDRbosr1/WetWMOVroP7X0
+	IS1/3+b4VA7U3yw7iu8E6gdteIPTMMhq8KaDBInR8WreFNPAo1SPfJo5nAUFUMzR
+	9/hqI+gS8YiBFsKTT4ydHByvKpppES+j697fExKMtXF9F1Pl4PFLB8rUMZxMIjUq
+	veJ56IpUMWkrXm3Vjd7n/7l3HPy9KEOcPFQ==
+X-ME-Sender: <xms:36m_Zydy-lAM71dGss62iNWolDoz2w0qCoZX4raVCFRVm2Wv7FcgHg>
+    <xme:36m_Z8PAG9NoeVXppm9XBtZNbSFoeJc3vRdwtO5ZMlUQr87l0ScdU_BQCS93yrCi3
+    37grLD8pl1a4DAc1A>
+X-ME-Received: <xmr:36m_ZzidJJfVvtgHn3DAcbEmeGBuE0V7BBlgvqPCyqYR1RYPNGJ6-bbTYW5KTpD-uswc25r1lSUE93PG3NOEKZSJ4vF785XoYADp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekheelhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
+    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
+    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
+    rdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopeihrg
+    grkhhovhdrshhmihhthhesfihishgvthgvtghhghhlohgsrghlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:36m_Z_-sWgTW-OE0kmTB-r3Z9cRcu4U4SjoEHclqfQ_KiKMzUYYeOw>
+    <xmx:36m_Z-uGYCvr5HlmJLHtQnR_4_-9QhMDMZqfLwIpOWitNRwFNwdSHw>
+    <xmx:36m_Z2Ew29xxhmj6gf0BpF81YvQeMSPyy8IZpUUuuzLAaetASogtXg>
+    <xmx:36m_Z9NQ1CBt-bGhh0qvahkAHmJoXT2T6IHllOnd6GyqVnDkkUeQWw>
+    <xmx:36m_ZwW-SRu717ak2w5KGBEtshc3E5RYSbbsVicfGKXn87KdMCsTlT9f>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 26 Feb 2025 18:55:11 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Jeff King <peff@peff.net>,  Yaakov Smith
+ <Yaakov.Smith@wisetechglobal.com>,  "git@vger.kernel.org"
+ <git@vger.kernel.org>
 Subject: Re: \b character escapes in CLI usage
-Message-ID: <Z7-lbGnlzGbhrHZN@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>,
-	Yaakov Smith <Yaakov.Smith@wisetechglobal.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <Z7-lbGnlzGbhrHZN@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Wed, 26 Feb 2025 23:36:12 +0000")
 References: <SYBPR01MB579278DD5EC6E13CA9A213FDE2C32@SYBPR01MB5792.ausprd01.prod.outlook.com>
- <20250226073822.GA21138@coredump.intra.peff.net>
+	<20250226073822.GA21138@coredump.intra.peff.net>
+	<Z7-lbGnlzGbhrHZN@tapette.crustytoothpaste.net>
+Date: Wed, 26 Feb 2025 15:55:09 -0800
+Message-ID: <xmqqtt8g9s82.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="I6Zs/9rtSI0RD6QT"
-Content-Disposition: inline
-In-Reply-To: <20250226073822.GA21138@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---I6Zs/9rtSI0RD6QT
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> We already have precedent for this in core.quotePath and could easily
+> use similar logic here.  That format, while using octal, which I find
+> ugly and hard to read, does have the pleasant side effect that it works
+> correctly with POSIX printf(1) (which I'm sure was intentional), unlike
+> hex escapes.
 
-On 2025-02-26 at 07:38:22, Jeff King wrote:
-> On Tue, Feb 25, 2025 at 11:44:33PM +0000, Yaakov Smith wrote:
-> > When using "git config --list" however, this is emitted in its raw form=
-at, and can be used to mask or hide an actual (probably invalid) value:
-> >=20
-> > $ cat .git/config
-> > [core]
-> >         somevalue =3D "true\b\b\b\bfalse"
-> > $ git config --local --list
-> > core.somevalue=3Dfalse
->=20
-> But here, the point of "git config" is to show the output. If we
-> sanitized it (especially in a lossy way like we do for error messages),
-> then any program reading the output would not see the real data.
+It was intended to be "the normal C quoting":
 
-Yes, I should point out that, among other programs, Git LFS reads this
-output.  Changing the output format would break those programs.
+https://lore.kernel.org/git/87ek6s0w34.fsf@penguin.cs.ucla.edu/
 
-> > Should "git config" be smarter here and print something other than a
-> > literal backspace to the terminal, like "git fetch" does?
->=20
-> So I would say no here, in general.
-
-I agree this is the right choice in general.  I wonder if we might want
-some sort of human-readable output option that might escape these that
-users could use.  The output might still be machine-readable, but it
-might be easier to parse than the current format, which has some tricky
-edge cases when a config value contains newlines.
-
-We already have precedent for this in core.quotePath and could easily
-use similar logic here.  That format, while using octal, which I find
-ugly and hard to read, does have the pleasant side effect that it works
-correctly with POSIX printf(1) (which I'm sure was intentional), unlike
-hex escapes.
---=20
-brian m. carlson (they/them or he/him)
-Toronto, Ontario, CA
-
---I6Zs/9rtSI0RD6QT
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.46 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCZ7+lbAAKCRB8DEliiIei
-geaeAQDGdtjI6RnvBq3ArzT0knmVq5rNIbNLhW93sN/dsCiLqgD/QVJRvwMNbDXw
-7ek8x/DjqNyxx4AQZX+XKyhMMmLgvgI=
-=DtrT
------END PGP SIGNATURE-----
-
---I6Zs/9rtSI0RD6QT--
