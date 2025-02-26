@@ -1,105 +1,142 @@
-Received: from out-175.mta0.migadu.com (out-175.mta0.migadu.com [91.218.175.175])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5A722157A
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 15:23:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F1435968
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 15:24:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740583405; cv=none; b=otvrMzElHVhE2+qStJw4yj1PUS9RejYx4slxUT8jTXYamvXnClNH07JossPkfQeE7to+smKxeebndoo4Y6qNSF/UbhYggWhdietxkzoh/wmUMfPFraCdzUxVDoYBRuvU6wwUgebv8zrIjlCWBYMPI0GdXXx3yF/ccOvgMYMV71k=
+	t=1740583481; cv=none; b=pjhMGmCHMcNWi8cmcN3Fe1sbDqUxm08lN1CRSjh1D41cvVN55TznNvmeXeYbg3V3W80DIhZckZHNM1NFinw1QXyvr/z77Na3IbX+q/qtjX2mht5VAOdnOGosQK6gPQUpBtJ4dR+xZsHeZvjRQM24YXeQZI7k5Qk4iKpBc871I/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740583405; c=relaxed/simple;
-	bh=3Am+LKylMtvt1ZRh+s/m6cl322POkD0gsm/vztb3t1c=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uXZP2UREfmmYPPKPmfwXfEaeVJkbjvpp9maEPsJ/xUNfsnJTbWY18a0ZmgWezWOaElIDeaKhwN66AE6jS3uVI6qOe+kDivdMRPFLebmwIbY54EGhqeSOfrX4/BqQVS5V8ydayUa2fR/HgdRHNxv39BGPPn95dAxPTFKFRVW9y+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=rWUu9yA6; arc=none smtp.client-ip=91.218.175.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1740583481; c=relaxed/simple;
+	bh=LK8MEyPgijVUPzkzf2xTYpQa7NtLQNF5lRwzftE7LQk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=atpljtdz3jg42dd7MdRUumZh7ilKv+ZUOLH9PKWOwfUg6cczop1+kNZmgSQTioOJMQ5GzlVEjNUQg0IlzGvAStbd/Hodhs62Q1mzARO8AiHXBH1evy7DQstHwWgCegIE99JefT+mEhf8NoHrfIuX/0getsamqA1BabHK6BE8mAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dh0FwQPJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iOZgN1/z; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="rWUu9yA6"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1740583401;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=UzhIg5qidMv5mlk4wvaCv9xjQZ8HtvAtU5rP7CC39Ow=;
-	b=rWUu9yA6OYG6uCDbtmcjVoxt4grEAa4QLah0lqFDFKNxJdFCrXnG9SVLr+g2H3oJWbt56G
-	Fkx/X7XEqmHJ5K1jMM5gLb3iNkCxjj18a718VCaQU/RvKC0tWUdscJJNbekm1AURTGW/SK
-	uGYoup1ZE5rJLbh0TXLL710s0FPNHeE=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 5/9] builtin/cat-file: support "object:type=" objects
- filter
-In-Reply-To: <20250221-pks-cat-file-object-type-filter-v1-5-0852530888e2@pks.im>
-References: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
- <20250221-pks-cat-file-object-type-filter-v1-5-0852530888e2@pks.im>
-Date: Wed, 26 Feb 2025 16:23:12 +0100
-Message-ID: <871pvkraqn.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dh0FwQPJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iOZgN1/z"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1E90B11401C5;
+	Wed, 26 Feb 2025 10:24:38 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Wed, 26 Feb 2025 10:24:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm1; t=1740583477; x=1740669877; bh=JfbGGt0UTZ
+	bYsdagcz67bYeStIEoHnuQkyn053MwG98=; b=dh0FwQPJa4Z6RyzLZLpVPuQfhX
+	fX/8FllyebveEqzpuUMTGLF4o8EGCOu+olHEwZ2b9lgaLX5grbiTMzp+C/o+gq2L
+	dUvP5xjOTuuvo3CZCZkYgDSEkzrM7Z9QKkGVIkvCq4y5Eh58wxVZ7CxIecmtjIZq
+	4XpOVcYbS2hl2v1B5Ur496SbboFygRYcbJOYT0miQVP1OGD8J4gYtqAc+JmTFCg1
+	a6FYMlwuXSMLbMghd+N9gCyJ9HRv5x+vCcDg3x8Zin/NV2NIO22/0Xgx98kT13F7
+	id4t/wZdUdtIdC1up4VVp1t1k+jrueTIbw3xAfkUOl+oyuzU1+Now4GIunag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1740583477; x=1740669877; bh=JfbGGt0UTZbYsdagcz67bYeStIEo
+	HnuQkyn053MwG98=; b=iOZgN1/zNoDq8JTgDvb0/vqxsVu3VmwkbyIpaLRorkl1
+	oxzGwMK7V4QKbJjUpb0NCtgzxKYHV9FaUDh4P9yPc9PP/WlL/N8lqR3Q59OUHUlu
+	LlZ44oW+TWAjzLx06ZxoA+dJ3h/lYZsMD2OekgsQJVrTsXz7XZeop3+X0KAWEHof
+	pR6gQWUagIioD1WG8DR4SF8mtJk2OZz7IBXZ41ct+l/PaBUhwNs8uUO5wPsy2jBe
+	c/nkmomYa0HjfbwZVleF6gEtOiLDAhsOqI7A0wl5Ue/4hWLQ/m3NsC4TNm5k2IFx
+	oDPoKvBrUovzsKVY6+wYtWHBHBSD01Q9m/gXwNehOw==
+X-ME-Sender: <xms:NTK_ZyTbbrYOrNu3ho3EiNgzr7CDZR5kZLbeooLG4xkmu5Y6aAFQCw>
+    <xme:NTK_Z3zCO8tFZacFzRTtxWcd2-Ygh_0vuUSjMwcTw-imw8C1jDaw1zCHwpiajJI6g
+    xB5yXq3UJUoELV7lw>
+X-ME-Received: <xmr:NTK_Z_2O3QJ2BHExJAVevA9MzpMJ36Edo-brkgTUfFYzwxU6EHjRC99e5soCFbTanq31dy7SG0Eb3pPK5J5cs9rfpxdpayqmYZIaiWzrSAIWshIm>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekgeelfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhufffkfggtgfgvfevofesthejredtredtjeen
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveeugeektdetieegjeeuheeuudfgveelfeevheeuhefg
+    teffffevhfeuhfeukeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopedvtddvhees
+    uhigphdruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:NTK_Z-Cb7MJTc-CRC84FoP0v7bPM-gxoyobZblBl5rGe00BMN8uTYQ>
+    <xmx:NTK_Z7hijcGTqt0tYHkz16BzkRyPBY8KPA3cwmTwO6QeI_p0Mla3BQ>
+    <xmx:NTK_Z6r0aoK8HhlI7BwdVwXjRiqu841fJf2d-HYOvi4lnIufB6hB0Q>
+    <xmx:NTK_Z-h5sAqvX86h8kxLmQwLZX3cnR_utOwRAN5SMd8_5ykq_eAdCA>
+    <xmx:NTK_Z7dd8AffkXcUGuNAu-sxg9bmX75L2s5G2nKywYQ5zMbs1EzbHMt5>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 26 Feb 2025 10:24:36 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id 6f65b366 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 26 Feb 2025 15:24:32 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/6] builtin/maintenance: introduce "reflog-expire" task
+Date: Wed, 26 Feb 2025 16:24:25 +0100
+Message-Id: <20250226-pks-maintenance-reflog-expire-v1-0-a1204a814952@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACkyv2cC/x3MQQqDMBBG4avIrB3IhBqhVyldhPTXDrVjSKQI4
+ t0bXH48eAdVFEWle3dQwU+rrtYgfUfpHW0G66uZvPOD8z5w/lT+RrUNFi2BC6ZlnRl71gIOkoL
+ cxI2DRGqP3LLu1//xPM8/OIeyem8AAAA=
+X-Change-ID: 20250226-pks-maintenance-reflog-expire-61c61410751a
+To: git@vger.kernel.org
+Cc: Markus Gerstel <2025@uxp.de>, Junio C Hamano <gitster@pobox.com>, 
+ Derrick Stolee <stolee@gmail.com>
+X-Mailer: b4 0.14.2
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi,
 
-> Implement support for the "object:type=" filter in git-cat-file(1),
-> which causes us to omit all objects that don't match the provided object
-> type.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  Documentation/git-cat-file.adoc | 3 +++
->  builtin/cat-file.c              | 8 +++++++-
->  t/t1006-cat-file.sh             | 6 +++++-
->  3 files changed, 15 insertions(+), 2 deletions(-)
->
-> diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
-> index 8c474418b52..540d9dffdf9 100644
-> --- a/Documentation/git-cat-file.adoc
-> +++ b/Documentation/git-cat-file.adoc
-> @@ -93,6 +93,9 @@ The form '--filter=blob:limit=<n>[kmg]' omits blobs of size at least n
->  bytes or units.  n may be zero.  The suffixes k, m, and g can be used
->  to name units in KiB, MiB, or GiB.  For example, 'blob:limit=1k'
->  is the same as 'blob:limit=1024'.
-> ++
-> +The form '--filter=object:type=(tag|commit|tree|blob)' omits all objects
-> +which are not of the requested type.
->  
->  --path=<path>::
->  	For use with `--textconv` or `--filters`, to allow specifying an object
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index f57bf65cb03..b374c2bb104 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -474,7 +474,8 @@ static void batch_object_write(const char *obj_name,
->  
->  		if (use_mailmap ||
->  		    opt->objects_filter.choice == LOFC_BLOB_NONE ||
-> -		    opt->objects_filter.choice == LOFC_BLOB_LIMIT)
-> +		    opt->objects_filter.choice == LOFC_BLOB_LIMIT ||
-> +		    opt->objects_filter.choice == LOFC_OBJECT_TYPE)
->  			data->info.typep = &data->type;
->  		if (opt->objects_filter.choice == LOFC_BLOB_LIMIT)
->  			data->info.sizep = &data->size;
-> @@ -505,6 +506,10 @@ static void batch_object_write(const char *obj_name,
->  			    data->size >= opt->objects_filter.blob_limit_value)
->  				return;
->  			break;
-> +		case LOFC_OBJECT_TYPE:
-> +			if (data->type != opt->objects_filter.object_type)
-> +				return;
-> +			break;
->  		default:
->  			BUG("unsupported objects filter");
+this patch series introduces a new "reflog-expire" task to
+git-maintenance(1). This task is designed to plug a gap when the "gc"
+task is disabled, as there is no way to expire reflog entries in that
+case.
 
-I see we don't support LOFC_COMBINE, so we won't be supporting repeating
-the --filter= option, is this intentional? Should we support that too? I
-feel it would make sense from the start, unless there are good reasons
-not to?
+This patch series has been inspired by the discussion at [1]. I consider
+it to be another step into the direction of replacing git-gc(1) and
+allowing for more flexible maintenance strategies overall. Next steps
+could be:
 
--- 
-Toon
+  1. Enable the "reflog-expire" task by default when using the
+     "incremental" strategy. and then we might eventually switch over
+     the
+
+  2. Use "incremental" strategy when "features.experimental" is enabled.
+
+  3. Switch over the default strategy to "incremental" after a couple of
+     releases.
+
+Thanks!
+
+Patrick
+
+[1]: <e650f4e4-e267-4f1f-bb3a-c71b1fe0b276@uxp.de>
+
+---
+Patrick Steinhardt (6):
+      reflog: rename `cmd_reflog_expire_cb` to `reflog_expire_options`
+      builtin/reflog: stop storing default reflog expiry dates globally
+      builtin/reflog: stop storing per-reflog expiry dates globally
+      builtin/reflog: make functions regarding `reflog_expire_options` public
+      builtin/gc: split out function to expire reflog entries
+      builtin/maintenance: introduce "reflog-expire" task
+
+ Documentation/config/maintenance.adoc |   9 ++
+ Documentation/git-maintenance.adoc    |   4 +
+ builtin/gc.c                          |  72 +++++++++++++---
+ builtin/reflog.c                      | 153 ++++------------------------------
+ reflog.c                              | 137 ++++++++++++++++++++++++++----
+ reflog.h                              |  35 +++++++-
+ t/t7900-maintenance.sh                |  18 ++++
+ 7 files changed, 263 insertions(+), 165 deletions(-)
+
+
+---
+base-commit: 5a526e5e18ddb9a7dfc5a2967d21d6154df64a4f
+change-id: 20250226-pks-maintenance-reflog-expire-61c61410751a
+
