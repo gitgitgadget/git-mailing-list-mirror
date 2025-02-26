@@ -1,126 +1,139 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7D4226D05
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 08:22:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12E2F258CFB
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 09:15:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740558156; cv=none; b=KYk4aaxD3KROlPzuThukoEBC2c5kIvXkEeAzO1glPQdh28UAKk8hhhY1DiH1uQLOP1wPpaeiQkJ6kq5hdvcStVqfd5k4mnsYaDvBjK1xbBIt9jCov1OvCW5CR1t484ETDRtnPYW6hHJJgcxInyJPi8MilILVWRQQxjcL95UfaVQ=
+	t=1740561358; cv=none; b=HUj6ivbpkByLQS3vhfxDAdENxT+f5FdZIO2LH4A5alq1AL26WtQfivl/QxrzfYDy15eiMyl8WTU3ePPk2ZuhZoArGt4GPPR9FUpcesxvYOPJHDqSWLDmk/rYOyZQj7cPGlvNCFB5BNpXEzl4QYrLPSeCcAnOK7M5SlTAMZskAQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740558156; c=relaxed/simple;
-	bh=Rl2na3Pqv7EXZard22xaHsugrA5cdjKwnWOAFq+Kmw4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EpeZo8QWiJ3GDUXZE/jzR/7dfmpAa+ScnzEgN/NDlQ0NyaTjrxh+Fx0/WkpxSdzW0/rKvoIsrUNEbYBrmBIUbO5pvqAV/xo8xQkCUKkUv4aqcn0QgutJHZERxOMImMKxG/6EMs4PcDkvAu1vZn9Aulbbt+KaAB5XMst+IsOa19M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mrr7jXxa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Di0Ccwca; arc=none smtp.client-ip=103.168.172.149
+	s=arc-20240116; t=1740561358; c=relaxed/simple;
+	bh=aKMXKLJlumINy7rBoIBN8Rx2wM8ZNH+HsoVyaW1IynE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dXfJHq8Ab7I+wPyAWLjjDFlIk4LfsC1xAlQwCUrBd85/YCf1+3aBe7LyKpTqP4nRLKqE21Q8085L7Nb3CO6XAvvwO+SHk/h6Zc1O615T8OsmmKGU9VZwd+7wFeoUgiosoEPiOhCbrl6/3/yx1jE4BMhWpBjk7VVhgz5mLxSrR2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cNeKIdyu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NwGzIOQ7; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mrr7jXxa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Di0Ccwca"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 57CA11380EFB;
-	Wed, 26 Feb 2025 03:22:34 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cNeKIdyu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NwGzIOQ7"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id F3E941380F14;
+	Wed, 26 Feb 2025 04:15:54 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 26 Feb 2025 03:22:34 -0500
+  by phl-compute-09.internal (MEProxy); Wed, 26 Feb 2025 04:15:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1740558154;
-	 x=1740644554; bh=C5xRuNfP18o+s0ktLiSCSqGklNYrugPf0hb97EzPRb0=; b=
-	mrr7jXxaCnIfb+KsJEXtYeX7+ziTPva/HLdR6dw0Uqv36eSjqmplfjCASUXRVYMI
-	VPHiEIk6aAFWztb0MIy6vIE9dCKpKTKn7Bm3k1YsWcMqZf794TR9ZS+S1yE139Nx
-	y3lf2yKPAic3vXJsNfQwz2aEVXoOanJ5IkdVm4HRoOkNsKJIpijzxernF7z60SD7
-	vnI6OMTFrPJuUUdkMzsHYuKgtj1XUYFRcz9drWe+JMXKyQCkuTikyHxHokQHATrM
-	+TQaYaT6u1C/oOpdokile0MQOsD36qqGcg6t1jYL6tc2jHItO3K2YNm8xxQLDSOp
-	MMwIfwHI56O15p5eNuiG+w==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1740561354; x=1740647754; bh=4CC9FChdCy
+	C2stwFzccPIx33bvz0x3GB0Az3kFzHZGM=; b=cNeKIdyu0TctbP3maPCQJiVWC0
+	syy3Sxa7KyZPxrMcXOO2yxNQpcPx83uy96+4cMMzswvsyrk+FrL5MPun+3oFmzBB
+	P6FX5b5QhERTbdCvJKDrebgyUB2mE7I0qAOpSyDfrOojk3suBuUIfyq09GnIaV4Z
+	Y9GXQnLdA+28vijX3ope41kq5yp31yCBY7OX3+bNmgBN47poxiED7816juWk2Qpd
+	PSvUoR1oZFKks/qV5eLBito/Sc16WNIoXEJFA3701jbOnsw8JbDgD2UjBy/hnHpL
+	UymUGx/Zjmh2G73FHYrC8ypO+6oLr5KAmkL8XuZxnAP4T0lfh7mkBruteRgg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740558154; x=
-	1740644554; bh=C5xRuNfP18o+s0ktLiSCSqGklNYrugPf0hb97EzPRb0=; b=D
-	i0CcwcalIWP6RZcaTWhAK7CNck2Dw/9VCET+ifvh4TJKTfEE53cG9S+6d5UqU1GD
-	tWhT95mQxlJlrp7SlV/2uDZolePU1AnCUW6DLc5g8fvRHNexTvcBcIO/tbrOtVK4
-	cMzQXG/4xdDKSM/8zWP+xhm8vOD1ofHKhgNGwG0UScyePp6AgsAcsaQ53HV2WIIM
-	GOEXugkT5UK9wyIgkPwI+r64x7+6OQVPrLX910jWClxdzcp9zyEoLoUHeL2Si/lB
-	Ovc6euOWGTbrJRijooZoKorjzP5sEsnRhr0dHf9qHnvheeKAoIE4020w5PCfAqq+
-	RlzG29YHdxR93akB018dQ==
-X-ME-Sender: <xms:Ss--Z90G6uUd1xWjV3ZLdYdmxH7EJhcIXRSpWeRHwPuhLgIHRg08yQ>
-    <xme:Ss--Z0GWgWiNoz9MjWPenb-zx_woH8Bb62JlP6a3TaGHLf33Per6x0bZEcisXrIst
-    pMkKMbUOzhRTxCLXQ>
-X-ME-Received: <xmr:Ss--Z963d8X0MxOGqz1Z_LOJ3hydxNvrjDCCU1XWCat9-UfjiIT19EDLRSmwHuHmJF7aG_FAyvgF99xhkW6j9POKJ3eZFmzVIN_FVVQ5Lzdef4db>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekgedtlecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740561354; x=1740647754; bh=4CC9FChdCyC2stwFzccPIx33bvz0x3GB0Az
+	3kFzHZGM=; b=NwGzIOQ7o5ZkWz1Ru4daozuflEOJF7DooruFcnw22X6FibmQoxA
+	T2QL/FxEjZNXPbJxexGa1QmFMmN0glIBBmoZpdvLnEtI52SOOF+AQxHaJZos1ovQ
+	TP3iIi+YX2sPqJ1VG/G2wp+0BCd6BEVUbo8Wol/Z8LVtvo0rJn1mR1uhJDkJlQk3
+	5SWqlR5O6rsPnhpOXIVvuoSnWE8+V1NsuaqkCWCyMJXKIDTLvwblbnF7JTWWT3Ek
+	kD5nKhLnTsMd4+Z9QcATVYX5+i3KcqoZB/FjKsJ7syMQL+xC7qJWz3pR70+oJw7S
+	UxpeHqo1C5cV+skovGD3yT5An+OLSGgnpaA==
+X-ME-Sender: <xms:ytu-Z6VvJ0YVz_OviUkXihjeDEC5TWvMlDevfj5PTYHzc93KD0x94g>
+    <xme:ytu-Z2njKpceBzY_FXQz1MO1Jtbmmg0ra7jNi-kQRR6iyXY5j-FFsRrrBiBFS__oc
+    rE7oaNdLeWn0ucerQ>
+X-ME-Received: <xmr:ytu-Z-aBv498dHurNsS6Z0IA2-rukijoBULzvc1fOZrnv4VZ2ReX61HaekWNWd8sz66JIapjB5l7LFhkEPonySCiNZ6hQ5Em3u3NaYBlpxufKuRT>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekgedvtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffkfhgjvfevofesthejredtredt
-    jeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkedu
-    heejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehjlhhtohgslhgv
-    rhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhg
-X-ME-Proxy: <xmx:Ss--Z60ptuyd3obWkm1FqDYjqUMb8IhTpLfbmQKcGVHUZhoNRSsKyA>
-    <xmx:Ss--ZwHxwCC_ROiI9ygjwisAomRg8VRuuy6KfH2O8xGMlhF7q84ygg>
-    <xmx:Ss--Z78fgNYxhnAY9idscQzMY5tmr_48sFfnxKjitdmuRA3RueDMjw>
-    <xmx:Ss--Z9mvxMmY8IKnEinLc2eTfH1Q-1_3LRCDA8QyRiTIhwZq-ZcLlA>
-    <xmx:Ss--Z8gA4bF5Ox1ttzy7iQiVj9f2sokCuiy6IK-4RBQPFFjV0_NAPlsI>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
+    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
+    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhf
+    sehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ytu-ZxVfKrwSWe0LMWDjLxXmbHsFCPsx49jQQmclcZUq7qixh9Y9Lg>
+    <xmx:ytu-Z0keF0kaA3T7n-3SHwjm77GcNC9qFcUb3iq_mRaccYyaFFHA9Q>
+    <xmx:ytu-Z2cXQJ6hVef3iq94jVdZPLhmThWU5U4auq-XzrJlj14VVrkZlw>
+    <xmx:ytu-Z2ES4k3PptTBTXDRXmue4Irt7MIsrXOuMG8iNc8eQOSPjmR3dg>
+    <xmx:ytu-Z-hiV3XWTzox_6WwtJ_7v6EUn9b5qL2Na4JlrHDHJ-7DHZd103pp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Feb 2025 03:22:33 -0500 (EST)
+ 26 Feb 2025 04:15:53 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id ba663d6b (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 26 Feb 2025 08:22:31 +0000 (UTC)
+	by vm-mail (OpenSMTPD) with ESMTPSA id 3e14ad0e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Wed, 26 Feb 2025 09:15:51 +0000 (UTC)
+Date: Wed, 26 Feb 2025 10:15:50 +0100
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 26 Feb 2025 09:22:23 +0100
-Subject: [PATCH v3 13/13] gitlab-ci: restrict maximum number of link jobs
- on Windows
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: win+Meson test failures due to ps/build-meson-fixes-0130 topic?
+Message-ID: <Z77bxuad7pFsz7ow@pks.im>
+References: <xmqqo6ypiz9w.fsf@gitster.g>
+ <Z76qYgV7B2eUJHiP@pks.im>
+ <Z77EJRJwPDGUglLk@pks.im>
+ <20250226074653.GA27455@coredump.intra.peff.net>
+ <20250226082002.GA30633@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250226-b4-pks-meson-improvements-v3-13-60c77cf673ae@pks.im>
-References: <20250226-b4-pks-meson-improvements-v3-0-60c77cf673ae@pks.im>
-In-Reply-To: <20250226-b4-pks-meson-improvements-v3-0-60c77cf673ae@pks.im>
-To: git@vger.kernel.org
-Cc: Justin Tobler <jltobler@gmail.com>, Toon Claes <toon@iotcl.com>, 
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250226082002.GA30633@coredump.intra.peff.net>
 
-The hosted Windows runners on GitLab.com only have 7.5GB of RAM. Given
-that "link.exe" provided by Microsoft Visual Studio is multi-threaded by
-itself already and thus quite memory hungry this can quickly lead to
-memory starvation, out-of-memory situations and thus failed CI jobs.
+On Wed, Feb 26, 2025 at 03:20:02AM -0500, Jeff King wrote:
+> On Wed, Feb 26, 2025 at 02:46:53AM -0500, Jeff King wrote:
+> 
+> > I'd imagine that if I did a complete "rm -rf build && meson setup build"
+> > it would work. But it's pretty lousy to have to do that preemptively
+> > during a bisection.
+> 
+> Looks like this runs even deeper. On my Linux machine:
+> 
+>   $ git checkout origin/next
+>   $ meson setup build
+>   [...ok...]
+>   $ meson compile -C build
+>   [...ok...]
+> 
+>   $ git checkout origin/master
+>   $ meson compile -C build
+>   [...]
+>   ../meson.build:215:35: ERROR: The `!=` operator of array does not accept objects of type str ()
+>   FAILED: build.ninja
+>   /usr/bin/meson --internal regenerate /home/peff/compile/git .
+>   ninja: error: rebuilding 'build.ninja': subcommand failed
+> 
+>   $ rm -rf build
+>   $ meson setup build
+>   $ meson compile -C build
+>   [...ok again...]
+> 
+> I'm hoping you can tell me I'm holding it wrong, and there's some way to
+> do an incremental build when crossing these sorts of boundaries (without
+> blowing away all of the build products).
+> 
+> I do at least use ccache which makes the "rm -rf" case a little less
+> painful.
 
-Fix the issue by limiting the number of concurrent linker jobs. The same
-issue hasn't been observed on GitHub Actions yet, probably because it
-got more than twice the amount of RAM with 16GB.
+You're not holding it wrong. The problem is that this patch series
+introduces a backwards-incompatible change to the "sane_tools_path"
+option as it changes it from a string to an array, which makes Meson
+hiccup. Once Meson is not considered to be experimental anymore we
+should refrain from changing option types going forward, but until then
+I consider it to be okayish to break things like this.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- .gitlab-ci.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+From my point of view we can treat Meson as stable as soon as Git v2.49
+is out. So from thereon, I will make sure to not include backwards
+incompatible changes anymore.
 
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 4976e18a050..7e1cecc6a70 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -169,7 +169,7 @@ build:msvc-meson:
-   extends: .msvc-meson
-   stage: build
-   script:
--    - meson setup build -Dperl=disabled
-+    - meson setup build -Dperl=disabled -Dbackend_max_links=1
-     - meson compile -C build
-   artifacts:
-     paths:
-
--- 
-2.48.1.741.g8a9f3a5cdc.dirty
-
+Patrick
