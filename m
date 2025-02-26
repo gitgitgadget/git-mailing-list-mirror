@@ -1,83 +1,72 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA542153F0
-	for <git@vger.kernel.org>; Wed, 26 Feb 2025 11:39:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DFC221719
+	for <git@vger.kernel.org>; Wed, 26 Feb 2025 12:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740569987; cv=none; b=lMWJWERRse74oO9Dy38QdhyypcU7ArFzbbNNkel9QkgkQ6YxyWxB7EQ7if0jskE+LO8JDeW8olwit6Ywbik0O3Ep8QTKl36Bz7gRfeTaeF3McPppBDz17XNI3LNl7s5/XNidTP7xTSXhvmSqoNBFRuZlaPHlK8ri3o8dw9swiko=
+	t=1740571535; cv=none; b=D8CnWXRoe96uSGvYjEa54kelMJGLU4hoYw5nTZ4O8Syj58Nx6xyIQMRLXVnRF6yJMqCleDq8iYvGMLDbzvq9QkpHav8k1ljc+wAnjq0M4Pnpv+lJxME9qCwpEeC8Q6QJUtgjjvPWHODTZMlmhBpaAMhHzyw8nBdji9wzsMGBYcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740569987; c=relaxed/simple;
-	bh=k0aKgx5+KPeeAPqSMKdbuSoi934R7IVZsjdSKfP4zqk=;
+	s=arc-20240116; t=1740571535; c=relaxed/simple;
+	bh=En76N5/1sH/pDaf2E23siJu9dZayUzDr3ZISFt7RUto=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LEacGXriwI+5JN44x95VHuUaiI8sUQXYoRJheFvS4zXAPJsEH4jKzCncheLd26rXYrIC4vO/1eSKIVrbR1Id7c3/aeswTfMAnh1TPY6V6lxbVbD6sk9d47dnHB8mnz3LKn8eKngH/CXdQdhWHPHfe2eFuN1eBzvQHQph7K21IHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DfIbI8oY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tUkqaqBp; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=lfmNS6q+HXma1N5gVNNASKFCmpZzDNkmGy/qYbq6219hs3a8Yj12l/iEuAybwtZ4XuataZW6Q0/zPS1a3CCXK/12B9kNTN/E2lVNQEu5oQZDNgVCSCqZSdlWHn1esIC6I4x28/G84vtxnKMpUqtGTKLG6l9VMCqHISvmVbG8UzA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cG14WMNj; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DfIbI8oY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tUkqaqBp"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9B78A1140190;
-	Wed, 26 Feb 2025 06:39:43 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Wed, 26 Feb 2025 06:39:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740569983; x=1740656383; bh=/GBOLMC8xi
-	zigznxs34CgyciF33w7qflOY0b8IK6kGs=; b=DfIbI8oYvHrzOXI1axhsB9k22B
-	5N2LCgQB27VqG+YspWbMeWxibhen00YufOnLLz6/S9QEPcfYPf3lzLwY7G+pZ12n
-	9wGtuHoiIHxGzuB/8vNL8yplUkTeu1II84EP8+j5zk5dtO63RK8wR0CgQh/faF9B
-	EFDr0Qe49C/gnYUlaNmu2pFPM/x6NnMuXuqhOvpgHfl3MPKnuk3hUxeX+JcbbOGp
-	IxkWCUBwQF+vVvetOxY3P2LZGOvU15Xs4PvNPOs9TmCKTwlrdPt8w4eRWRMwHnWp
-	tJ+RPuLRNBYlsxaRSBsiWEkoTQikKCKhJCYJz58YrydAfu3zeDbvMoz/ZAFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740569983; x=1740656383; bh=/GBOLMC8xizigznxs34CgyciF33w7qflOY0
-	b8IK6kGs=; b=tUkqaqBpJyA3KWISwxho5ETga0ZYjQnWGugPjhEhgNGU6L7kKAd
-	v73c/ZFXZceFg9dy8Cbrn3e9juE9MvwkCnThK4k6QLv+zZ7Muv0sn1p8YrGMTQ+P
-	N/9t7s6YxNvSLYKygJJK2yROQzWZWN3WhLGOP/skqnqIsProgI6Vz+s0JZ6QfkKE
-	vdU9nQttDBnuAkA8IRaoWbqqnhdnx2UwQ2bnDhZNctt1SY4iGSw7tsYz14dmS6wV
-	eRO+yj1Oqn+8JBpSpSmNfhRNVr0PQapmhfmsQ88IvZsMHebjAtFcLKmTSaHns1pd
-	lYvp+IXeJQFflJM9u+qAPGJa65gdYnz0+8w==
-X-ME-Sender: <xms:f_2-Z6U_fqe6A5Xu6CDxvuemoiACpPFVlStW_AurGSeFoIBObzepag>
-    <xme:f_2-Z2lzAch1hGJ2MtQLpbJ__hYaQjpY5dqXGqHYfCEHcg6re596kmJFZl6PTvzIp
-    O42spWr13wJjfZmnA>
-X-ME-Received: <xmr:f_2-Z-bReuBNvDlNX2ws2CffOMHHPTs3MsL92S9wQFu23uIEcpua-NG3zBOsU25N95Dubxz3j-YfFYfrhgHGKVptuCTQ5okPagSzf6Y8p36zVhqW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekgeegkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvf
-    evuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhf
-    eitdeludeigfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmpdhrtghpthhtohepvddtvdehsehugihprdguvg
-X-ME-Proxy: <xmx:f_2-ZxVvyyUQ_1NlQeMITYRA8uiFTYv8AwH-nQgZ7tswbzDXl9alLg>
-    <xmx:f_2-Z0nuCreh1vBCPOJNErdHDv3Csc25vZ4m93821nESm1I6-xG6Jg>
-    <xmx:f_2-Z2en7zuvlaR3cgEE4MMQqLmNbf5Dp-Js3mJ3pa9QPegk3fOFkg>
-    <xmx:f_2-Z2FiAu26IcCtYDegNVslzF2-kdbHtq74WcSAkX7lKajOtuerHQ>
-    <xmx:f_2-Z-jyaKNCtoQaWYI0pjGZ-qnpftKrXpGPECkpLet946zigvcIwQsH>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Feb 2025 06:39:42 -0500 (EST)
-Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id c316e359 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Wed, 26 Feb 2025 11:39:39 +0000 (UTC)
-Date: Wed, 26 Feb 2025 12:39:35 +0100
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cG14WMNj"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-220bff984a0so142292425ad.3
+        for <git@vger.kernel.org>; Wed, 26 Feb 2025 04:05:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740571533; x=1741176333; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=AhJtmo9kilV3uBYTAW/009sthd9xxS2ITz2H+ZYNoIY=;
+        b=cG14WMNjpQ1v4wc2qWdD8bLPOSDhaYuiCXuPN2u5w7f06btkKMzL/HpL94xutrJ5z4
+         uVfFcAQGI6JVVGa6TBp9yjRvCmNaRGgdED3mIczpzI9WsdtYqsdw3D013OYYR+UNHKet
+         JnP/hvYBuSO2LFO7yqcfLfZdo0nidOOtBSqSoqsvoPnS1HcYKk0mJypoQM022cAH8U6j
+         mxHPZge6+yNDpk+8XQkcDUqaBRDEJHJRJrWp7rxgisNoCxnzdITTvWWKirxZWu9DwWUl
+         yweMDghdKROQsaKvvu0eeQQ26vhR+6AYp1XNZwwD/KQ8sY6WcxtK0W1nghzHy0h+5Zi1
+         FxLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740571533; x=1741176333;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AhJtmo9kilV3uBYTAW/009sthd9xxS2ITz2H+ZYNoIY=;
+        b=iqhUkMICCo28dZEU4UI9+70zpJIdSG7GMp266pxdSNf3r7DhJPiFzlLanqPTIahBEu
+         ezb8frbkQ9IWS6ddjMETUCNUATt991G2xjqm9soZIeR0rWDOJ7T7QRN3pLIzHUir6fTg
+         AZny2BmS3/SBB0ovZMYS0LLYogr4U1p83vbimZyMP9hh23s6VEcULUuhzM82PdycF7eW
+         0MS7/Pbn7IgWEJeLw38zZpDj1jNdmEYkIP/KS+61Qfdo/CS2TOlmvQmiUYCsCmzD+MeX
+         +P+QguPfQNnC2VqStGzEorB5DP4YcoUQ/ypAj6CCSquEHfw18x6l7Hu3M61NJj2W51WZ
+         Yx8g==
+X-Gm-Message-State: AOJu0YyNiJ/NXDQRyLCfmFHZ3ot2Vr7GJx/41NxkJPjmeeKwAgJcTdPw
+	hGqjY+qP03bgYAWajaDxFQIDLLgM3EZ85DPvMEe4BCcqzwJw7iWgDW7Bdg==
+X-Gm-Gg: ASbGncuEy5HuPbvbe06W7LWUZ3KQ8OShTUJ/LEOEmEnufAd1TMN+J6TkO/k2xuF6dBH
+	3WFZPMMmLKrqDF1KFUonYw08j5GQr6KobisL9bZJDDdYZ39RWq2l9cloZ5hDT41gfJkY4SJLmxb
+	HaBgLiRFv5HSWrzfvK2GWxdqQh6FY3nkzyS6cyb3nqyLIQrk59H4oRPXv5/5crQbwvSwIZ0ZkmL
+	Iv8aEvRnJjKedzTmgrkW8VyqYDqyEm5dqONJ8nMKq1T7+3IJvf0b2zOEz8bPXmvnMB5OXhMwLPh
+	XV5zku+/2wAf2tnCkJHJ5tEmv5ZO0tdu4BQU1vKQ
+X-Google-Smtp-Source: AGHT+IHPlDG/uU7m+MbBWeUk5VzY+SHIqNGrPB63XQuRkY7AkbntYYd3PxYSMg+uCFzNb9jFumFYAg==
+X-Received: by 2002:a05:6a00:3392:b0:732:6248:ff73 with SMTP id d2e1a72fcca58-734790a7db0mr11162054b3a.3.1740571531145;
+        Wed, 26 Feb 2025 04:05:31 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7347a81eb02sm3349638b3a.131.2025.02.26.04.05.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Feb 2025 04:05:30 -0800 (PST)
+Date: Wed, 26 Feb 2025 20:05:39 +0800
+From: shejialuo <shejialuo@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Markus Gerstel <2025@uxp.de>, git@vger.kernel.org
-Subject: Re: 'git gc auto' didn't trigger on large reflog
-Message-ID: <Z779d7SnW5j8XcOb@pks.im>
-References: <e650f4e4-e267-4f1f-bb3a-c71b1fe0b276@uxp.de>
- <Z7xQey4S0ewT5rs7@pks.im>
- <xmqqeczn70pg.fsf@gitster.g>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v6 3/9] packed-backend: check whether the "packed-refs"
+ is regular file
+Message-ID: <Z78Dk1WDdqnuPQhX@ArchLinux>
+References: <Z73DTwr9RicKMINe@ArchLinux>
+ <Z73D3PdEFk_nciH7@ArchLinux>
+ <xmqq1pvlly1f.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,54 +75,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqeczn70pg.fsf@gitster.g>
+In-Reply-To: <xmqq1pvlly1f.fsf@gitster.g>
 
-On Mon, Feb 24, 2025 at 08:43:23AM -0800, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Feb 25, 2025 at 09:44:12AM -0800, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
 > 
-> > It's a bit funny, but whether or not `git gc --auto` does anything
-> > solely depends on the state of the object database.
+> > Although "git-fsck(1)" and "packed-backend.c" will check some
+> > consistency and correctness of "packed-refs" file, they never check the
+> > filetype of the "packed-refs". Let's verify that the "packed-refs" has
+> > the expected filetype, confirming it is created by "git pack-refs"
+> > command.
+> >
+> > Use "lstat" to check the file mode. If we cannot check the file status
+> > due to there is no such file this is OK because there is a possibility
+> > that there is no "packed-refs" in the repo.
 > 
-> I guess after adding "auto", we haven't been careful enough to
-> update the triggering condition as we added new kinds of "garbage"
-> to collect?  Should we make an exhausitive and authoritative list of
-> gc tasks, document them, and make sure "--auto" pays attention?
-
-Maybe. But maybe a better solution would be to build this into
-git-maintenance(1) instead, which is a lot more fine-grained. It already
-has properly defined subtasks, and each of these subtasks has an
-optional callback function that makes it only run as-needed.
-
-So from my perspective we should:
-
-  - Expand git-maintenance(1) to gain a new task for expiring reflogs.
-
-  - Adapt it to not use git-gc(1) anymore, but instead use the specific
-    subtasks.
-
-It also allows us to iterate a lot more on the actual tasks run by the
-command and make them configurable. It would for example allow us to
-eventually enable incremental repacking via multi-pack indices or
-geometric repacking.
-
-> Other than objects (packing loose ones, pruning unreferenced loose
-> ones or packing them into cruft packs), we seem to check reflog,
-> worktree, and rerere database.
+> Can this be done _after_ the open_nofollow() check you had in the
+> previous round noticed a problem?  Even though we are trying to
+> notice and find problems in the given repository, it is generally
+> a good idea to optimize for the more common case (i.e. the file is a
+> regular one and not a symbolic link or directory or anything funny).
+> Something along the lines of
 > 
-> I do not think there is a readily usable API to query how much stale
-> data is in reflogs that are more than N seconds old, without which
-> "gc --auto" cannot make decisions.  I am reasonably sure rerere API
-> does not give you such data, either.  I have no idea about the
-> triggering condition of "worktree prune".
+> 	fd = open_nofollow(...);
+> 	if (fd < 0) {
+> 		lstat() to inspect the details
+> 	} else if (fstat(fd, &st) < 0) {
+> 		... cannot tell what we opened ...
+> 	} else if (!S_ISREG(st.st_mode)) {
+> 		... we opened something funny ...
+> 	} else {
+> 		... the thing is a regular file as expected ...
+> 	}
+> 
 
-No, there isn't, and computing it is also potentially expensive. You
-basically have to iterate through each reflog and then also iterate
-through all of its reflog entries to figure out whether anything needs
-cleaning or not.
+Good idea, by using this way, the code would be more clean. I will
+improve this in the next version.
 
-But probably we can come up with clever heuristics instead that don't
-require us to be this thorough. We could for example just read the
-"HEAD" reflog and figure out whether it contains reflog entries that
-would be pruned.
-
-Patrick
+> perhaps?
