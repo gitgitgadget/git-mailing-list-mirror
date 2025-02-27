@@ -1,128 +1,149 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241B01D5CD3
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 17:55:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67AC1BD9D0
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 17:56:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740678906; cv=none; b=EKLa3kIzHC/BO45mG9hw17ro/cp+vHvl+Wc+O30Ci4lASJizn8bF38R+pFKVcq1vT2f3k68On8vSLXcqX+YKL2GmjFruAGU0JKhTrEbufdAYnsBVw4bm8AgGq3uPkNGZCLgC3/DYpOaAlorpUayeq0OIaedqLMo03tLaD6vnZSY=
+	t=1740678978; cv=none; b=h07aB5PQbi2S790goaeYC25MB0q5QA9T9/GToL7Os6gybNilSe4Y3YblyjoR9hJJkgRED0IMHPU/lo4R7ZxDb3tf5/7CUIOAugXnsAp7dVJaEMeW4qYZuiAUwtn5P2e8ql3PfQikeGPvCAqnHNgCl95prE4vHx62ZahIINHpaig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740678906; c=relaxed/simple;
-	bh=hXC+F3GrwK7S+6x7pIgBqqNYJa6aREzus7gDS/orD0g=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=CBkBoqRDsuYvxiNQlQ9ABQcswESJoqonmJ2NuyoFqlaVn1w4nj6wHM+67cO+GZtjmY4cfbp68LYHhkmimc2fp71ZoP5hYVl2gXy+7deEcDvWhnYObNH1fSAE8sJ0KDqwWn1ILmoihnMQf4l5RIBVpBskV0KkhXutLCyVlzePHoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jAPoSpkd; arc=none smtp.client-ip=209.85.216.53
+	s=arc-20240116; t=1740678978; c=relaxed/simple;
+	bh=JgskVnlZ4oR6IL9LJk3feOrcjAIAsg0RDiuf2QQJtDg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Zd9WkkEVhvLsxDKvXN/90ilGEzmXdCDdUgvwoM+acW3LxhebX3bFRET6WVRCEqTVUwGtydXFUynUAqL54/EmGyHblnB92mFBz1DJl3+8TYxBGDBY+xs2NIz+oAgoKBbN5Sr9KJmolVhJkdohovuC3IWIgGu5WjR2kLvHb9i5Y9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bCiYiuJN; arc=none smtp.client-ip=209.85.221.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jAPoSpkd"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2feae68f835so1239951a91.2
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 09:55:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bCiYiuJN"
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-51eb1a6954cso518741e0c.0
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 09:56:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740678902; x=1741283702; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mq3C5Z/8Q8ZYRKIczpDNwzlvuoZe6XRld6/fqUZb1yc=;
-        b=jAPoSpkd3gBer1TGT4x0pjusGoCLnOR7OVqDT3eYT+gGPquAapaiOSQSP6ePLrot7s
-         Ltcr46QjTn/zXpBPtYgY1DstjGkQS719MqGWx+eZt+7SXOGLUL587XPxXPlWrRRq8kCx
-         K3dC5VSID1uhKuFyCA3qOR96kM3e957EtkKDxuEXutV+t2O5oyYvew16Gv+7voWApz/8
-         XHPB9mvYG+RH+Oy92ELwnNnzt3bCLW4q7ftTxEOm2eABMfW7J600SzTBJD3PomHdrPOa
-         2SmHh32cE0sEhtd4SsVJrojYqEXDJIDFUp9flUvUI2/m5T3h63ZuhcEPt924dwvPtyWJ
-         EYEg==
+        d=gmail.com; s=20230601; t=1740678973; x=1741283773; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dL/VLfzg1w0nbUYKgUMvrlValcDFOdfQDqlQz8iBjjI=;
+        b=bCiYiuJNKWR2+NxfR4LMTXjYb/96WGA0mblpiGIjDwUGGLxvnO2JptltkRhHeUU4/5
+         ZnWz3wJVR3m6HfAvXqwgiffCXyxMq7wFzrI6O8t49EdZtX/vO0hUMVGPfcFLk+7N/oxJ
+         wiNr5Y1Sd+YgeBkOq9FPu1KnmdFCh1MDs6ds3y+dyxUFs7b34AvMgrunGbHlpLNXCIRN
+         NtVQlEQ0ZF35hz/SsdGqCOp4EYLQArX7QDfgbyLBjuwmVwXh72U3zQbA9EDzStGj3vNX
+         5amO6YwhaO31CYYsdMHpuJ8byDz76W5l+LJpd7bPfz06UYF67w2bRFHU0JPZPL9Ha8v5
+         s4wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740678902; x=1741283702;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mq3C5Z/8Q8ZYRKIczpDNwzlvuoZe6XRld6/fqUZb1yc=;
-        b=p4SkgEwyXmujexyeMsRFoDPgFrnCDLo5kHT+z0+Q65jPoOsYjdBX8ahaYliHAjyco/
-         fjabXo57uiXGFCYh89w3xFkLIQNn1RD4aC6eV8Pku8yZHB6WJwuizf/7TMtne52i/q18
-         04kN8eNDCRyA3a6ZE3E5oJ3pFYRNYaECEr+XZVGnE8vZI8pxti8CGmlhDxUUC3p6l+qI
-         oREz9iud/0h2hGpAUsm1nuaf4+9zCkmXZlD3Uen9kd2HGb7DzU86cDhEfvTKwPPwQtnQ
-         2aXTpFpP+7XIqhKYA/SjtNQouZEkNPUo/DCTBdXZiTaQnLqO9R/AloUehcS/O+93NWsv
-         ANcw==
-X-Gm-Message-State: AOJu0YwgO48L1VqhXRBVD39poGUtRXBO1j/sbrBqQlsqAfAPt+9fR8ww
-	61R2O9pkUeKXLfDmZzHQBMGH6IThbbsdpsKCVMWHELcAoI0KVxs0OH3IeoZr
-X-Gm-Gg: ASbGncviyNb3LhdX28MHmZ9m6ty0dSdyuAwjFScc7ktPo+jPgYE9R/k3ew6pD3Z6jq/
-	TgSw2sxzw4/0SIXDOR9uZJZb5C6wZ/0gKG0WLKEx9zEQoGkPCiyHpgeEJlk6EWmZGM94rmuP5mX
-	KABnd0qd133mixp5vl0KPODBbqcYmTeU/YmtOUvtgBwtjwbd8bly/ACS5zjmmcBtckUDMg1mG83
-	B95kpbFDhG136KT33j7VPWsRsmnNIvmBMHI6xXxjBAm7Qc3Nm/j7l0hm33pxaPvxkzPc0CnhWi2
-	zFPLrfsBEi91kjqYkE3kzN2g1pAU6nFtV+MTaUzbF3xCYazVLAo=
-X-Google-Smtp-Source: AGHT+IG4BwobqFOl/qeCuaX6MKEOt2k3wge+Mimet6BiE++/wNzVazW3cUTdyuMfgcsPfS0GdbrMLg==
-X-Received: by 2002:a17:90b:5745:b0:2ee:8430:b831 with SMTP id 98e67ed59e1d1-2febab2eaffmr378425a91.2.1740678901936;
-        Thu, 27 Feb 2025 09:55:01 -0800 (PST)
-Received: from archlinux.plaksha.edu.in ([182.75.25.162])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2fea6753137sm1977801a91.6.2025.02.27.09.54.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 09:55:01 -0800 (PST)
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-To: git@vger.kernel.org,
-	christian.couder@gmail.com
-Cc: ps@pks.im,
-	shejialuo@gmail.com,
-	johncai86@gmail.com,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC PATCH] config: teach `repo_config()` to allow `repo` to be NULL
-Date: Thu, 27 Feb 2025 23:24:34 +0530
-Message-ID: <20250227175456.1129840-1-usmanakinyemi202@gmail.com>
-X-Mailer: git-send-email 2.48.1
+        d=1e100.net; s=20230601; t=1740678973; x=1741283773;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dL/VLfzg1w0nbUYKgUMvrlValcDFOdfQDqlQz8iBjjI=;
+        b=Im0GBjX9Wb/SEy6n8ZjZJQ4hSqcp+12miH/R+mvr2Zlmftdjkuh6KcyPsB5A2DW68s
+         4KU5VtsftI+6BMJ3BriKwjRc+yv1pUpKTKDlQC5G0pKOBs5fT7gSaNoEaqOxMEzgS7Zh
+         +1sYIlF/jJiHUcZcXTEziorxf+ELiEdrgk2uf9ey17kJslqsWkPdjLxnFCs2tUt43KOq
+         Jqvp7FalL/grQBGhxlNeK+2Lh7uj12LSG/dbHtXy1hYKarPzySDbfdjNdDBuZvx6fIYm
+         iQJeeqSFwKk0G7sYlPSZB2HOAbb6dsSWllbR3N84aLiDHpmH3h/UpcjH6ayt6ubql3oX
+         IbzA==
+X-Forwarded-Encrypted: i=1; AJvYcCXJkHYlXH62SZqr/gFAKHV/YWmYfATJ6co8ZiTSXuUgyKq2fv7g+CwP/q5UXFFzsOKyK9s=@vger.kernel.org
+X-Gm-Message-State: AOJu0YylGevsssnRWVlI324Past5FXqOagw5gU4ZqWvZU989zkel0Q5O
+	Ofw8aYiNjU1aPhY3aPJoxQvcQKKzhFhrl525J6LkMLQR+s0h+6nnrnkeX9O/jfkxowkS30SWM4n
+	qVHX3TcCbvu4uqVcKlKj12diL+HA=
+X-Gm-Gg: ASbGncs2aGy81mXPX9zNITg3YvxmDSXijGfycWNYpbrsT230xzGv2hKWG485RA2F/Kx
+	ScGJnweGOREwXBB3NCwi7L9hBXnU+8wduyEZXX4Rhmp0v+ZHOWIocpwZi+aXYMfncxr39X2ja6g
+	PlMAg07OM=
+X-Google-Smtp-Source: AGHT+IEmqOmOGrHJahGglX0VPGCJKgPpuRqf36SZ+vSBhivQghshYBx1OxeRSUOPTV0Crd4j4V+6pEm+M+Ca20c6Qbk=
+X-Received: by 2002:a05:6102:512b:b0:4bb:ba51:7d54 with SMTP id
+ ada2fe7eead31-4c0448b1c82mr315132137.6.1740678973573; Thu, 27 Feb 2025
+ 09:56:13 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250214230210.1460111-1-usmanakinyemi202@gmail.com>
+ <20250219203349.787173-1-usmanakinyemi202@gmail.com> <20250219203349.787173-3-usmanakinyemi202@gmail.com>
+ <xmqq34g8ei5x.fsf@gitster.g>
+In-Reply-To: <xmqq34g8ei5x.fsf@gitster.g>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Thu, 27 Feb 2025 23:26:02 +0530
+X-Gm-Features: AQ5f1Jqb-XZqW41UB_9S0BtvXxcSLkHjCSQVyf_bqb0Qy17naTdFSemVSyPo--o
+Message-ID: <CAPSxiM-bOcqEbVNAYxh0oPXKceN7YSrCU_37e7mXAbxwpq3QNQ@mail.gmail.com>
+Subject: Re: [PATCH v2 02/12] builtin/verify-tag: stop using `the_repository`
+To: Junio C Hamano <gitster@pobox.com>
+Cc: christian.couder@gmail.com, git@vger.kernel.org, me@ttaylorr.com, 
+	chriscool@tuxfamily.org, johncai86@gmail.com, ps@pks.im, shejialuo@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The `repo` value can be NULL if a builtin command is run outside
-any repository. The current implementation of `repo_config()` will
-fail if `repo` is NULL.
+On Thu, Feb 20, 2025 at 9:13=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+>
+Hi Junio.
+> > @@ -23,7 +22,7 @@ static const char * const verify_tag_usage[] =3D {
+> >  int cmd_verify_tag(int argc,
+> >                  const char **argv,
+> >                  const char *prefix,
+> > -                struct repository *repo UNUSED)
+> > +                struct repository *repo)
+> >  {
+> >       int i =3D 1, verbose =3D 0, had_error =3D 0;
+> >       unsigned flags =3D 0;
+> > @@ -50,13 +49,13 @@ int cmd_verify_tag(int argc,
+> >               flags |=3D GPG_VERIFY_OMIT_STATUS;
+> >       }
+> >
+> > -     git_config(git_default_config, NULL);
+> > +     repo_config(repo, git_default_config, NULL);
+>
+> I seriously think that it is a horrible idea (but the previous step
+> of this series is hardly the first one that commits the same sin) to
+> move git_config() down only to deal with "repo might be NULL if run
+> outside a repository".  We should stop making such changes, and we
+> should revert the changes we already made along that line, to solve
+> it differently.
+>
+Yeah, I agree with this after going through your comment on the other
+patch. We should look for a better solution.
 
-If the `repo` is NULL the `repo_config()` can ignore the repository
-configuration but it should read the other configuration sources like
-the system-side configuration instead of failing.
+> Wouldn't it work much better if we teach repo_config() to allow repo
+> to be NULL to signal that we are outside any repository, and behave
+> the same way the current git_config() works when called outside a
+> repository?  Even though the function is called repo_config(), it is
+> *NOT* limited to read from $GIT_DIR/config but does read from the
+> usual "repository configuration trumps per-user configuration which
+> trumps system-side configuration" cascade, so it is natural to skip
+> the repository configuration when called outside any repository but
+> read the other configuration sources, which should be what happens
+> when git_config() is called from outside the repository, no?
+Yeah, I was studying the config.c and config.h files to understand better
+how all these functions work.
 
-Teach the `repo_config()` to allow `repo` to be NULL by calling the
-`read_very_early_config()` which read config but only enumerate system
-and global settings.
+The git_config() when called outside the repository, uses the global
+the_repository
+variable basically called the repo_config(). It does not necessarily
+handle any situation
+when the repo was NULL. It always uses the global the_repository variable.
+I do not think we want to handle the repo_config() the same as the point of
+all these are to reduce/remove the use of the_repository global variable.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Mentored-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- config.c | 4 ++++
- config.h | 3 +++
- 2 files changed, 7 insertions(+)
+While going through the config.c I saw the read_very_early_config()
+which read the config
+from the system and global settings and does not require any repo
+variable. I think, to teach
+the repo_config() to allow NULL value, we could call the
+read_very_early_config() whenever
+the repo is NULL as we know, this happens outside the repository. I
+sent a rfc patch for this
+and it can viewed here :-
+https://public-inbox.org/git/20250227175456.1129840-1-usmanakinyemi202@gmai=
+l.com/T/#u
 
-diff --git a/config.c b/config.c
-index 36f76fafe5..c5181fd23b 100644
---- a/config.c
-+++ b/config.c
-@@ -2526,6 +2526,10 @@ void repo_config_clear(struct repository *repo)
- 
- void repo_config(struct repository *repo, config_fn_t fn, void *data)
- {
-+	if (!repo) {
-+		read_very_early_config(fn, data);
-+		return;
-+	}
- 	git_config_check_init(repo);
- 	configset_iter(repo->config, fn, data);
- }
-diff --git a/config.h b/config.h
-index 5c730c4f89..1e5b22dfc4 100644
---- a/config.h
-+++ b/config.h
-@@ -219,6 +219,9 @@ void read_very_early_config(config_fn_t cb, void *data);
-  * repo-specific one; by overwriting, the higher-priority repo-specific
-  * value is left at the end).
-  *
-+ * In cases where the repository variable is NULL, repo_config() will
-+ * call read_early_config().
-+ *
-  * Unlike git_config_from_file(), this function respects includes.
-  */
- void repo_config(struct repository *r, config_fn_t fn, void *);
--- 
-2.48.1
+Another approach which I was thinking about is having a local
+repository variable inside
+the repo_config() whenever the repo variable passed to it is NULL.
 
+What do you think ?
+
+Thanks.
+>
