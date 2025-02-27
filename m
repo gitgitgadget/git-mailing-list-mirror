@@ -1,128 +1,105 @@
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10D425D911
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 19:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DD41AF0C9;
+	Thu, 27 Feb 2025 20:55:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740684512; cv=none; b=E1DMKPAXoaUJYN+Kdf22fRf8QuA/LqpVXCyIHzZC9h/PqBCIs8vVEZldCCXJ5/VpTLpAinEnHLmCNGWtVfR3P4GqXFNGy/PydZ15Wq8ZG7FV9i4F4tROOpQB6VNWKxbZ7Ahfi3Cn2Rb8FsxsWUqhqELq/uhXV45qp9OQImoOGmw=
+	t=1740689759; cv=none; b=Ch6nkkG96lpfY9i7IUrCs7TF35N3NXtTDAd5v/W7taIeexP9YbQa+yMqiFdAZOwoYhD4cRYI9EIz3oz6IUL75GH6mrl9xCs/Bn7XduCBexvgVGqt3XR8ETcSnqh2YOIY7D8gT11mtiaSXB/yHWoqKCjM+pC/DOJI3qwmxlNXTc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740684512; c=relaxed/simple;
-	bh=X33yoy2uWEARdDMyXepo0ZF8QQE0VLZX3JKS/HKt0fs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QxygXuaEYmeyBwI8yPWQAol5rFm/MeYf3RWSpQwN3yeBHoHk0+ywzDufvpPciWXB4JXkOd199K7X56Ar2bblj7M8E97au0K/5w30pq7p1An/BvKZdoWDC9H9Y99yfgabbRsBMlXQW+YEZpgo1pNkRYGVicD0uNDDKPg1H9voGRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EfNBk4WO; arc=none smtp.client-ip=209.85.166.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740689759; c=relaxed/simple;
+	bh=F/i/isJ6O2bGeyBqx6CHsiqDYU0svHd0SD4mP0ZIFLA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Vz3JBkGjfV1ntM5pE8RQI/be7W+aZ5JmKsmDrIn+ddOMGpkhe3fOspFr3h9NLrJWkebYYEo1hsyDfx8xktCDP8geXcQVHbL+ockcC+BFwZD121tRKbaViWLVO0pKuDecWkl//0ZEfhRJBkN4npiGKa7XxHAW26vtHuD28Ze6mQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KKsjRBXz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nn4gtP3/; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EfNBk4WO"
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3d2acdea3acso4117055ab.0
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 11:28:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740684510; x=1741289310; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Nm8uZb74X/wKVPb1wvtTS+53rxd1f4w+XjbAL+iIsIY=;
-        b=EfNBk4WOdcQT56Wvp0iq3dwALdvvNpU2KZRdM8XSHAU2oJ53nGQ0liUZ5rUoCTmyMi
-         dEcNmQyvFzzOH5MWMl+nWXGjtyGZUvVxpCrgC8fZvje9FvLKh22rH2VvI4XqCnoNkA7G
-         S8wEnedkP4oAE6iMbVbz5AOzjPB7tbMJrYMQc5/CD4wIFVR1O/3FdSocA1r1iD3qU+6L
-         cwK7PuYjsg18f2N39zsSeWQBETarZcn234JJ3uluBMUkIcifb7ISPBoJViHQYWSu3r88
-         V6o2EbEsNfYhlZWzX7t7xRuWPTSxdStCzLnsnSOowjX+YK/YELPWcQt6atQB7r7MxeFV
-         nkIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740684510; x=1741289310;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Nm8uZb74X/wKVPb1wvtTS+53rxd1f4w+XjbAL+iIsIY=;
-        b=icPzSTkM4p6jc7QA1EKbab1FLVO0PGmK4uaiPoHD4WjdBzLIXvXofqrfHx4gC/ys9a
-         bYMi6CDsbxFjzILdTiQk7faDj6qEX0IDlvQpWkwRk/qFso8f/h+H012ewB+sZIn37f0O
-         FcRI2cIVayiHOvgv7KsnUFrpK+xdrE/mWQYqKvYByymKI0oId11aMOfi/2c7fJ7kmRuR
-         FfKjV/UCaDha+uoch0UCpkt32rPFr9SWxvhUH9+E+vt5kQjHq3qeYiVtZLR3wTNYPv9s
-         YeRdg/HN9xEq1zFaKxuDLBUVFbACaJBYG/54enIWcUIZpNoBvUdXL19UU14PyB9+zHA3
-         XpAg==
-X-Gm-Message-State: AOJu0YwMS+OYX9P/5SufIs70bOdkphFq7khx0UBvYrHfl5djmO5IVf5n
-	MXOH/gDT8xp9lmoLsIHmOr+9PlNNVB/8JhjG/NWQN7/lvOdNW1M6PPOILCi7bJWsUx5q9UB/HlZ
-	7h5b4e2TDtKpa+uDBfmHldoyyk80=
-X-Gm-Gg: ASbGncsBmxKo2PJU8j1CnV7w9tG/OxeIA9svInTn+uOnLA8mlZ0nOn/KqfEzSUg7Gf5
-	e/RPLSNuImWTSZ8kxuBHy3M0ZCJ1VKmRi9wJDxF3SY/NV9HAhrKu0r0lh06vwjx/Yl0iQKAS10U
-	jGTimpI2A6aKIiXOVWlzo/n9rqldV+qhNa9O5j8611
-X-Google-Smtp-Source: AGHT+IEHYgjw+xoBK4t4C6aD9jFT8ahObdpj60zxK5JM/VTjDaWnyM0o//v2vO6I6zXswwy417RxBZ98fdKmbsC0kcw=
-X-Received: by 2002:a05:6e02:214e:b0:3d3:e470:6d5 with SMTP id
- e9e14a558f8ab-3d3e6e70825mr5159455ab.13.1740684509939; Thu, 27 Feb 2025
- 11:28:29 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KKsjRBXz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nn4gtP3/"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F3CD425401CA;
+	Thu, 27 Feb 2025 15:55:55 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 27 Feb 2025 15:55:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740689755; x=1740776155; bh=6/UIZ1sw3J
+	8SGxSjdI7WfUROI/5uL6NXwzjBHBjt9bs=; b=KKsjRBXz5elLkRwBK+40mtr59I
+	OsL6a8h4ChPAFxWs3rQIjzHXgzxcgBNpzS95M1tZfp3rAO9pir7Te4YSwAB3po8C
+	yhdBPa79yry02XhohtbIYx0KGpAtNUoImeVPiCL+KmuC0nff5FwL7bbCmT2ZItRZ
+	plu9onEhA11rtIg1uqaiN1o9GFmJzWbCbf3gREGhYCMSIVmI/Op3XrUNeMTRlW5x
+	VyWCNPprRovQ4XmcSHi/gUfbXcS59eipXHEolcSoHOs/a1YxpBiWVxVihIn8HwTH
+	C7khfiXjpbHNliVAfgqg0UChjRb9nZLtIptXAT5vs/LijufSFEM8KcRrD5bg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740689755; x=1740776155; bh=6/UIZ1sw3J8SGxSjdI7WfUROI/5uL6NXwzj
+	BHBjt9bs=; b=Nn4gtP3/BLE9sWUJQ7INEGRwDESOxjnhCymy2UXbaJiAVzguqlD
+	LPxPTabfnkwkvA3EMt5ZYLeOpEEVbLM5YFxxhCwKvMbt9CxiwcgcNyqya1MifcLc
+	Whx8pOP0fMoVgoOnCz+9hLJ/hYn4xL+qOsoITmffEu9RolV303CQGmtlVfeGPknv
+	AgQ446svISx1ud75WNRdUtnDINvRczp4bt26B+SWwxH826rpwh57zAOEuwIKDWPh
+	y24fyNobg8kbascnhYRs4LZRj26yaEtOPmQMcA7g0+Eh/TSnhRdoZVWO8ilodf63
+	XXi4ShjtTGfz0chi71WtOz1AEF8cam1ILrg==
+X-ME-Sender: <xms:W9HAZ--3jVvlNWvr-ppRYXSaU5RT0XQg3mB1lmEjq89wY4PoIKq_Gw>
+    <xme:W9HAZ-sm4mgGZVqzIxhm6q5jLdA8LOGIhunkLr4SogIXFRIQBIYs-UGkqSe2AKTCT
+    ALxvfB5EoVMSZwdsg>
+X-ME-Received: <xmr:W9HAZ0AMRnlODzAWQA7so3fwOrQnUSP8_FGQm7-ALKK2P8X29OAqRzf_bj1D_UYW5EM69mzanuVGuT8SJG23SIUm9aAMTQPI032U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekkeegkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehrshgsvggtkhgvrh
+    esnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepghhithdqphgrtghkrghgvghrshesghhoohhglhgv
+    ghhrohhuphhsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:W9HAZ2cjuKHNEanUUpnYWlNzsVzKrSHatXxLN6koM8ZSaSM2b_x7PQ>
+    <xmx:W9HAZzNhbXyJ2oBTwVWLci-o6XAKKT95m43Btxi2HtrxaDY1U-5O7A>
+    <xmx:W9HAZwnR0JXQN6KUkH09FZ8OesWwbxAcjzBdrUUw3N5HWHyZp45AWA>
+    <xmx:W9HAZ1uooFoGU8UDmx2bJOopjA5Gt_7tJt5QbcUcdgh1k2uEczmsBA>
+    <xmx:W9HAZ-3nIdGIwqvFq5ymyoup_dlc_N1ltPlaQ5U20pRcPqlqSsCvjnca>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 27 Feb 2025 15:55:55 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: <rsbecker@nexbridge.com>
+Cc: <git@vger.kernel.org>,  "'Linux Kernel'" <linux-kernel@vger.kernel.org>,
+  <git-packagers@googlegroups.com>
+Subject: Re: [ANNOUNCE] Git v2.49.0-rc0
+In-Reply-To: <028c01db8949$ce664b70$6b32e250$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Thu, 27 Feb 2025 13:59:56
+	-0500")
+References: <xmqqzfi8bljk.fsf@gitster.g>
+	<028c01db8949$ce664b70$6b32e250$@nexbridge.com>
+Date: Thu, 27 Feb 2025 12:55:53 -0800
+Message-ID: <xmqq7c5b6rae.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1740680964.git.me@ttaylorr.com>
-In-Reply-To: <cover.1740680964.git.me@ttaylorr.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Thu, 27 Feb 2025 11:28:18 -0800
-X-Gm-Features: AQ5f1JoLp95sFfYjHAcirz4IoUwGCHDc4sY7edXBVzS3UjQE1NE5aRO2OcPK5V4
-Message-ID: <CABPp-BEK3T28iqDFxbMHa7GVrythYs+ze7wCZ5Q-LDjOmquiVQ@mail.gmail.com>
-Subject: Re: [PATCH 0/2] pack-objects: freshen objects with multi-cruft packs
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Feb 27, 2025 at 10:29=E2=80=AFAM Taylor Blau <me@ttaylorr.com> wrot=
-e:
->
-> This short series contains a fix for a bug I noticed while rolling out
-> multi-cruft packs (via 'git repack --max-cruft-size') within GitHub's
-> infrastructure.
->
-> The series is structured as follows:
->
->  - The first patch simplifies how 'repack' aggregates cruft packs
->    together when their size is below the '--max-cruft-size' or
->    '--max-pack-size' threshold. This simplification changes behavior
->    slightly, but not in a meaningful way. It occurred to me while
->    writing the second patch.
->
->  - The second patch describes and fixes the main bug. The gist here is
->    that objects which are (a) unreachable, (b) exist in a cruft pack
->    being retained, and (c) were freshened to have a more recent mtime
->    than any existing cruft copy are unable to be freshened.
->
-> The fix pursued in the second patch changes the rules around when we
-> want to retain an object via builtin/pack-objects.c::want_found_object()
-> when at least one cruft pack will survive the repack.
->
-> Previously the rule was to discard any object which appears in any
-> surviving pack, regardless of mtime. The rule now is to only discard an
-> object if it appears in either (a) a non-cruft pack which will survive
-> the repack, or (b) a cruft pack whose mtime for that object is older
-> than the one we are trying to pack.
+<rsbecker@nexbridge.com> writes:
 
-I think in (b) you got the meaning reversed, and instead mean s/older
-than/at least as new as/ ?
+> On February 26, 2025 1:37 PM, Junio C Hamano wrote:
+>>An early preview release Git v2.49.0-rc0 is now available for testing at the usual
+>>places.  It is comprised of 326 non-merge commits since v2.48.0, contributed by 65
+>>people, 15 of which are new faces [*].
+>
+> Looks good on NonStop x86. Built/tested with OpenSSL 3.4 and 3.0. We might build with 3.5 if it comes out in the 2.49.0 cycle.
+>
+> Thanks,
+> Randall
 
-> I think that this is the right behavior, but admittedly putting this
-> series together hurt my brain trying to think through all of the cases.
-> I'm fairly confident in the testing here as I remember it being fairly
-> exhaustive of all interesting cases. But I'd appreciate a sanity check
-> from others that they too are convinced this is the right approach.
->
-> Thanks in advance for your review!
->
-> Taylor Blau (2):
->   builtin/repack.c: simplify cruft pack aggregation
->   builtin/pack-objects.c: freshen objects from existing cruft packs
->
->  builtin/pack-objects.c  | 118 ++++++++++++++++++++++++++++++++++------
->  builtin/repack.c        |  38 +------------
->  packfile.c              |   3 +-
->  packfile.h              |   2 +
->  t/t7704-repack-cruft.sh | 106 ++++++++++++++++++++++--------------
->  5 files changed, 171 insertions(+), 96 deletions(-)
-
-Code changes look good to me, but I had some wording suggestions in a
-few places for commit messages and comments.  (Sorry for missing some
-of those in my preliminary review before you sent this series to the
-list.)
+Thanks.
