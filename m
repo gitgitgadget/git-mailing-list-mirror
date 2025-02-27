@@ -1,367 +1,220 @@
-Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E298270024
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 09:35:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5518222617F
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 09:51:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740648930; cv=none; b=e5mZ8KIsyYrIg+KBgF7nAH0BTzzk5zx+/0shJxcsuvmpGQo5ZrojQ3w4T+jJQ3S3YOfs4GiDjFR17HJGIclg+p00h34RufgyWtew5chjP+TUryVMV8llzNdMPkU4CygvaH+JP66tn4lwjAjiFAIgSg+T8ebHmKLS89vyInEfEW8=
+	t=1740649895; cv=none; b=FUQv0FgIVGrI4/WTlSybZVAbNnmALdg11j7h8Lub6qYh8j+QUypVo4PYS0BOkiCT1fZsmXsn/t+PqN0Ol4iH077Z5kwvgKgTWtMxDToIA6JceB7mJXnKzcJDwHQ0NyEfZASReVEKHjWyBEBO7bKYphlbGZns1G090rNmqnsIUu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740648930; c=relaxed/simple;
-	bh=hrhAnqwMbWLiOomm1mJ74tEDYbzKD6NDpeEvihTj708=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OXMrOI53WgxMlUKKNTMeO0TBOfKFGxlcTSJsRLRF7GICWPPtakNTLmEeif95/y0YpGXwoSc7yIk9yusc9LRnznfI39IR8mWkYLdIE7lqGovrrkOlBFT4gu+EMBBnKz/rJoOL8tD3ZRxyIX5vtODjL4qa9rHXhObiK51oejNNJEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HWtjDzwI; arc=none smtp.client-ip=209.85.222.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740649895; c=relaxed/simple;
+	bh=4n0oLODj9hTx7uiYjhIU3FuczleVT/ZJeTYOuTkoYdA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=RpVq7FdY8bNx8k6AvfGDn9Up5RYUzmiXMsd6rChfOYi4EH3piPMygmyvWbmViqjoUm8DYF+AdDxwupxb9cUJLIFkZe6ysAP6DYr3zIwvtjgPezqIeqnS00zaDmAtKAnrs8RO10zXF1BieH/l6/Yano5tIULvJNfFEEvM0ZAfMIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=island.io; spf=pass smtp.mailfrom=island.io; dkim=pass (2048-bit key) header.d=island.io header.i=@island.io header.b=XZY8fHlr; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=island.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=island.io
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HWtjDzwI"
-Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-86714f41f5bso314391241.3
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 01:35:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=island.io header.i=@island.io header.b="XZY8fHlr"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5e0505275b7so1033868a12.3
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 01:51:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740648927; x=1741253727; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=QBkw3kDBiu+1ZFiiAAFORSURJvf2+QvWrG5p/CvUX0c=;
-        b=HWtjDzwIJdoRxvLu95A3IQDpfW6FIcyZebneGpHgI/GUMTyOHVXHNjw+KwwZbJ7Auq
-         5aJh+hzSfLlYYin7woPfIPN0TH++/9LjASTNSb5U/IS5Pn3uosdBFGr1Q/hHpbbuDWVl
-         UmJ0RtR66WZ0xNGzwfpt1/Av2VXjYIbzfiOroz4TLmUKylwcd09cPw/11m+o7icUQLxK
-         9U1OIpp9zY+3RUC+KTKdrZMPnAcXXS9KkZR62KMPLNg3jmzzrBnDo0deCdTRNfr45/Gy
-         LMVStD4DXd7g5SpbjUkBS5KoK0eNurHryNx0H2aey79MQGSSwY0tBqJGsb5eDDfxV88B
-         L3kQ==
+        d=island.io; s=google; t=1740649889; x=1741254689; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=4n0oLODj9hTx7uiYjhIU3FuczleVT/ZJeTYOuTkoYdA=;
+        b=XZY8fHlr6cWFtPRbqzUq54lQZqhx/9PqUUiSz7kDw1vINRl6F7GW4u8sCXwuFTn5f9
+         x6PcIw+tBaXWh2D7MFzx3PvIu0elNqVjZMa7v+t6agKxcZ96Rfu2JxdEeqLAjmnIdjIM
+         Q66ml6xhwRp9UHz+OAMCRVexJ+SfV4UungK2xPcMdanh3dn69k0zw6e1Js7oGcYDC+2k
+         UDAdqzYkcGTBi7Lo45TrfkTDgDzbekle/oDpI/jcwDez1WMs6D4QtxhtpN0tvHOLnA90
+         /rOSCxUd8cfUxCwTRrtg5xGHRUmMUsWb8bF3RI3aUREH9SnUDbqW5Xzbozpd0G6+jDy1
+         0zEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740648927; x=1741253727;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QBkw3kDBiu+1ZFiiAAFORSURJvf2+QvWrG5p/CvUX0c=;
-        b=YVecufc9b/7A6c27Otkk7WVqT59YWEmNGQJ9tX8Ke9AGqqVnQxcHUjoUP45+GYLaUa
-         PSZZkCJZ8Qakn637lMYNQFgl5rBuNudB65aPtth5Qc4M6hRhr+MXIobO2C6iikCUe5JM
-         KLNN3Urj86yWlaYtN2gBPlE94C0NCdyjTfADdP8+KBbkypIpVR/O/rcsrWbY/4mUcci8
-         Elone8wTDuIGtSaAczzr3RGEOe9BCkZuHXAsb9yz35Q0V+1dk6TQNgjjiJSrmpSZHRiQ
-         +gfHcJ+pTaXHqmdLaBVPdpFecJJVjCsEzY5ALQ/2p6T/9NehcRKASXmXXSgLw3k5ZG0W
-         Hukg==
-X-Forwarded-Encrypted: i=1; AJvYcCXvs8KUUHAe8cOf+PKqOX+H5fSGICW+9m+RlwK6J6+Jy9gLQDlP2HnkBs+TJ9uevvAskXU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvEyHaVWdy4ZtNfD7AX4pBznLf6SlDzBqDzDtQZuKK0gdWNEK/
-	MEceW5Ro1HA/wtby1jAXpE9FDvUI3/jrfaYu9wfzWhax17shAi9cchre9uqfSe1GQFNAvod+wFo
-	EvqqI9hi7L8prCmSGXOhUWatSD5ZDkO/6
-X-Gm-Gg: ASbGncv610aE2G9XOd9TEspTH6/enfExjbmF7AFxlLjUheqg7ECylNb94BLqmyuqHso
-	xT4Gx/3leNrDWF/vxmnUytBtHAXXOJHRyE7tJJ9S7fMDj8XQSj0HVM8zUDzeJ+W+ME4ID/zLzEB
-	rLRzEMsh1O1p6u3M0rPOYTAKZF7leYpjOQwu7HiT8W
-X-Google-Smtp-Source: AGHT+IHonlnPKOKkFf9OrFw3IT8GybYEdY15B0PWKmmJq0B2EM2R0uwOjyTgJ1aGkPdS0AHNvRpqDVD/Il43qmQAaxQ=
-X-Received: by 2002:a05:6102:3f4b:b0:4bb:c24b:b64c with SMTP id
- ada2fe7eead31-4c01e2c80f4mr3167882137.16.1740648927254; Thu, 27 Feb 2025
- 01:35:27 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 27 Feb 2025 01:35:26 -0800
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250225233925.1345086-3-jltobler@gmail.com>
-References: <20250212041825.2455031-1-jltobler@gmail.com> <20250225233925.1345086-1-jltobler@gmail.com>
- <20250225233925.1345086-3-jltobler@gmail.com>
+        d=1e100.net; s=20230601; t=1740649889; x=1741254689;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4n0oLODj9hTx7uiYjhIU3FuczleVT/ZJeTYOuTkoYdA=;
+        b=ZidQkLhUEldLm9fjkTDkuBL5brzqadRFqrbHi607J5mbYBmhnQJeswggvV3TXHXFkP
+         R/cNnjKpnsMWWpKvLoccvxFzaCJ3yAlaOCp2nngQ5gtaQupkpm5fhVz3Wtpy6qzkA2ya
+         BxjS10aAiY8V26BKZwG4uQh4Ov+l+cytG8+MSEbP6/CUOhDZAu5Zf/ZJOzXxxwjuPQuf
+         W1Tb8A40wcJdvuhGxZjb6vYpcU3TbmtQfO0K7QLXVP9yyy0qfQBX38jNcDoP3ciDE0dD
+         6kiGMk19Uc6j0TLJigqETooGvRUG8EaiCZrZFMrfDn7ZvPPDOuK9NGixxEn9z2CG8jA+
+         UL0A==
+X-Gm-Message-State: AOJu0YwO51FiLldZ9QruKenDJC7OBQfJ36gxZ4Y89rqQA1setxllWPUW
+	DKUCrOFs4by4j0sBc7THHReWopbrcEaM3PmBcwDNonLRrrdkqEdUerNypEcKwSeMw9Gy5OskP1s
+	fkiIKV09INFvKOXpZyhEXdvS2n4QX7z49xFmTfVkRVHKxb6zYmCpAuA==
+X-Gm-Gg: ASbGncuczDaBMV5wquleP6+uriySZb3S4DH0C+RVibOxHQhqHR8t/0ZCvl2WJ5NHd2e
+	ZJ+5YXPrYxyYBDWsZu0V78Zf71i6Lp+45DDjKo7ma00C3CWHzE4bH1BSrzHkbptVPFXMHazCBZx
+	HMUIoM0C14
+X-Google-Smtp-Source: AGHT+IFGzdV3bO6lmtbM/BmgCjjCHHnf8U0nll+yfasXEoJgEPzT1dKTU3G5TueXFD/mLaICfbvkRlGUpGDZe40hyOs=
+X-Received: by 2002:a17:906:3190:b0:ab7:be81:8944 with SMTP id
+ a640c23a62f3a-abeeed58126mr718470266b.6.1740649889226; Thu, 27 Feb 2025
+ 01:51:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 27 Feb 2025 01:35:26 -0800
-X-Gm-Features: AQ5f1JpObcsRJalbFL_d_umjCVix9STyAhzkex-7OSuwFt0yn0uNB4cygBjm6lI
-Message-ID: <CAOLa=ZS6yqquxAL_vCUf0FRrMbA6OLeY1VjqMv=pnxAo_17zLA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] builtin: introduce diff-pairs command
-To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im, phillip.wood123@gmail.com, Jeff King <peff@peff.net>
-Content-Type: multipart/mixed; boundary="000000000000fcf8e1062f1c6847"
-
---000000000000fcf8e1062f1c6847
+From: Nikita Leshenko <nikita@island.io>
+Date: Thu, 27 Feb 2025 11:51:17 +0200
+X-Gm-Features: AQ5f1JoNtqDrTgCKFKjpAyt3xEQqELtDT3KPhzCmBF443wjU3QwpIOgn6iDqF7I
+Message-ID: <CAEXts1sWBK0HY9PdvsGqq-nxbi0qdkodBV3CNEZ567ji02ZojA@mail.gmail.com>
+Subject: git-am doesn't compute intermediate hashes when patch applies cleanly
+To: git@vger.kernel.org, Nikita Leshenko <nikita@leshenko.net>
 Content-Type: text/plain; charset="UTF-8"
 
-Justin Tobler <jltobler@gmail.com> writes:
+Hi,
+(Git 2.48.1)
+Imagine this scenario:
+* I have a patch file with two commit, A and B that both touch the same file F.
+* The patch file has hashes on the files (for --3way)
+* I apply the patches with --3way
+* A applies cleanly (even though the file is different)
+* B requires a 3way merge
 
-> Through git-diff(1), a single diff can be generated from a pair of blob
-> revisions directly. Unfortunately, there is not a mechanism to compute
-> batches of specific file pair diffs in a single process. Such a feature
-> is particularly useful on the server-side where diffing between a large
-> set of changes is not feasible all at once due to timeout concerns.
->
-> To facilitate this, introduce git-diff-pairs(1) which acts as a backend
-> passing its NUL-terminated raw diff format input from stdin through diff
-> machinery to produce various forms of output such as patch or raw.
->
-> The raw format was originally designed as an interchange format and
-> represents the contents of the diff_queue_diff list making it possible
-> to break the diff pipeline into separate stages. For example,
-> git-diff-tree(1) can be used as a frontend to compute file pairs to
-> queue and feed its raw output to git-diff-pairs(1) to compute patches.
-> With this, batches of diffs can be progessively generated without having
+Now, because A applies cleanly, no fake ancestor was created for F.
+Then, when B fails to apply cleanly, the patch file for F contains
+unknown sha1 hash and the 3way merge fails.
+In other words, because Git didn't build fake ancestors for A it lost
+the opportunity to learn about hashes that are relevant for B.
 
-s/progessively/progressively
+Is there a way to "force" using a 3-way merge for all commits, even
+when a patch applies cleanly?
 
-> to recompute rename detection or retrieve object context. Something like
-> the following:
->
-> 	git diff-tree -r -z -M $old $new |
-> 	git diff-pairs -p -z
->
-> should generate the same output as `git diff-tree -p -M`. Furthermore,
-> each line of raw diff formatted input can also be individually fed to a
-> separate git-diff-pairs(1) process and still produce the same output.
->
-> Based-on-patch-by: Jeff King <peff@peff.net>
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
+Here's a bash script to reproduce the issue:
 
-[snip]
+---- START OF SCRIPT ----
+#!/bin/bash
 
-> diff --git a/builtin/diff-pairs.c b/builtin/diff-pairs.c
-> new file mode 100644
-> index 0000000000..9472b10461
-> --- /dev/null
-> +++ b/builtin/diff-pairs.c
-> @@ -0,0 +1,193 @@
-> +#include "builtin.h"
-> +#include "commit.h"
-> +#include "config.h"
-> +#include "diff.h"
-> +#include "diffcore.h"
-> +#include "gettext.h"
-> +#include "hex.h"
-> +#include "object.h"
-> +#include "parse-options.h"
-> +#include "revision.h"
-> +#include "strbuf.h"
-> +
+set -e
 
-Nit: I could also compile without some of these headers, do we still
-need them all?
+echo
+echo ====================================
+echo "GENERATE PATCH"
+echo ====================================
+echo
 
-    diff --git a/builtin/diff-pairs.c b/builtin/diff-pairs.c
-    index 86e59a7e3a..1aea2ee726 100644
-    --- a/builtin/diff-pairs.c
-    +++ b/builtin/diff-pairs.c
-    @@ -1,14 +1,9 @@
-     #include "builtin.h"
-    -#include "commit.h"
-     #include "config.h"
-    -#include "diff.h"
-     #include "diffcore.h"
-    -#include "gettext.h"
-     #include "hex.h"
-    -#include "object.h"
-     #include "parse-options.h"
-     #include "revision.h"
-    -#include "strbuf.h"
+rm -rf src_repo
+git -c init.defaultBranch=bug init src_repo
+cd src_repo
 
-     static unsigned parse_mode_or_die(const char *mode, const char **endp)
-     {
+printf "1\n2\n3\n4\n5\n6\n7\n8\n9" > file
+git add file
+git commit -m base
 
-> +static unsigned parse_mode_or_die(const char *mode, const char **endp)
-> +{
-> +	uint16_t ret;
-> +
-> +	*endp = parse_mode(mode, &ret);
-> +	if (!*endp)
-> +		die(_("unable to parse mode: %s"), mode);
-> +	return ret;
-> +}
-> +
-> +static void parse_oid_or_die(const char *p, struct object_id *oid,
-> +			     const char **endp, const struct git_hash_algo *algop)
->
+printf "11\n2\n3\n4\n5\n6\n7\n8\n9" > file
+git commit -am first
+printf "11\n2\n3\n4\n5\n66\n7\n8\n9" > file
+git commit -am second
 
-Nit: without double checking, I couldn't tell what 'p' was, can we
-rename the variables here to be consistent with `parse_oid_hex_algop()`?
+git format-patch -2 --stdout > test.patch
+cd ..
 
-> +{
-> +	if (parse_oid_hex_algop(p, oid, endp, algop) || *(*endp)++ != ' ')
-> +		die(_("unable to parse object id: %s"), p);
-> +}
-> +
-> +static void flush_diff_queue(struct diff_options *options)
-> +{
-> +	/*
-> +	 * If rename detection is not requested, use rename information from the
-> +	 * raw diff formatted input. Setting found_follow ensures diffcore_std()
-> +	 * does not mess with rename information already present in queued
-> +	 * filepairs.
-> +	 */
-> +	if (!options->detect_rename)
-> +		options->found_follow = 1;
-> +	diffcore_std(options);
-> +	diff_flush(options);
-> +}
-> +
-> +int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
-> +		   struct repository *repo)
-> +{
-> +	struct strbuf path_dst = STRBUF_INIT;
-> +	struct strbuf path = STRBUF_INIT;
-> +	struct strbuf meta = STRBUF_INIT;
-> +	struct rev_info revs;
-> +	int ret;
-> +
-> +	const char * const usage[] = {
-> +		N_("git diff-pairs -z [<diff-options>]"),
-> +		NULL
-> +	};
-> +	struct option options[] = {
-> +		OPT_END()
-> +	};
-> +	struct option *parseopts = add_diff_options(options, &revs.diffopt);
-> +
-> +	show_usage_with_options_if_asked(argc, argv, usage, parseopts);
-> +
-> +	repo_init_revisions(repo, &revs, prefix);
-> +	repo_config(repo, git_diff_basic_config, NULL);
-> +	revs.disable_stdin = 1;
-> +	revs.abbrev = 0;
-> +	revs.diff = 1;
-> +
-> +	if (setup_revisions(argc, argv, &revs, NULL) > 1)
-> +		usage_with_options(usage, parseopts);
-> +
-> +	/*
-> +	 * With the -z option, both command input and raw output are
-> +	 * NUL-delimited (this mode does not effect patch output). At present
-> +	 * only NUL-delimited raw diff formatted input is supported.
-> +	 */
-> +	if (revs.diffopt.line_termination) {
-> +		error(_("working without -z is not supported"));
-> +		usage_with_options(usage, parseopts);
-> +	}
-> +
-> +	if (revs.prune_data.nr) {
-> +		error(_("pathspec arguments not supported"));
-> +		usage_with_options(usage, parseopts);
-> +	}
-> +
-> +	if (revs.pending.nr || revs.max_count != -1 ||
-> +	    revs.min_age != (timestamp_t)-1 ||
-> +	    revs.max_age != (timestamp_t)-1) {
-> +		error(_("revision arguments not allowed"));
-> +		usage_with_options(usage, parseopts);
-> +	}
-> +
-> +	if (!revs.diffopt.output_format)
-> +		revs.diffopt.output_format = DIFF_FORMAT_PATCH;
-> +
-> +	while (1) {
-> +		struct object_id oid_a, oid_b;
-> +		struct diff_filepair *pair;
-> +		unsigned mode_a, mode_b;
-> +		const char *p;
-> +		char status;
-> +
-> +		if (strbuf_getline_nul(&meta, stdin) == EOF)
-> +			break;
-> +
-> +		p = meta.buf;
-> +		if (*p != ':')
-> +			die(_("invalid raw diff input"));
-> +		p++;
-> +
-> +		mode_a = parse_mode_or_die(p, &p);
-> +		mode_b = parse_mode_or_die(p, &p);
-> +
-> +		if (S_ISDIR(mode_a) || S_ISDIR(mode_b))
-> +			die(_("tree objects not supported"));
-> +
-> +		parse_oid_or_die(p, &oid_a, &p, repo->hash_algo);
-> +		parse_oid_or_die(p, &oid_b, &p, repo->hash_algo);
-> +
-> +		status = *p++;
-> +
-> +		if (strbuf_getline_nul(&path, stdin) == EOF)
-> +			die(_("got EOF while reading path"));
-> +
-> +		switch (status) {
-> +		case DIFF_STATUS_ADDED:
-> +			pair = diff_queue_addremove(&diff_queued_diff,
-> +						    &revs.diffopt, '+', mode_b,
-> +						    &oid_b, 1, path.buf, 0);
-> +			if (pair)
-> +				pair->status = status;
-> +			break;
-> +
-> +		case DIFF_STATUS_DELETED:
-> +			pair = diff_queue_addremove(&diff_queued_diff,
-> +						    &revs.diffopt, '-', mode_a,
-> +						    &oid_a, 1, path.buf, 0);
-> +			if (pair)
-> +				pair->status = status;
-> +			break;
-> +
-> +		case DIFF_STATUS_TYPE_CHANGED:
-> +		case DIFF_STATUS_MODIFIED:
-> +			pair = diff_queue_change(&diff_queued_diff, &revs.diffopt,
-> +						 mode_a, mode_b, &oid_a, &oid_b,
-> +						 1, 1, path.buf, 0, 0);
-> +			if (pair)
-> +				pair->status = status;
-> +			break;
-> +
-> +		case DIFF_STATUS_RENAMED:
-> +		case DIFF_STATUS_COPIED:
-> +			{
+echo
+echo ====================================
+echo "SANITY TEST"
+echo " - apply to indentical file in another repository"
+echo ====================================
+echo
 
-style: The general rule followed is to open the braces in the same line
-as the case statement. So `case DIFF_STATUS_COPIED: {`
+rm -rf sanity_repo
+git -c init.defaultBranch=bug init sanity_repo
+cd sanity_repo
 
-> +				struct diff_filespec *a, *b;
-> +				unsigned int score;
-> +
-> +				if (strbuf_getline_nul(&path_dst, stdin) == EOF)
-> +					die(_("got EOF while reading destination path"));
-> +
-> +				a = alloc_filespec(path.buf);
-> +				b = alloc_filespec(path_dst.buf);
-> +				fill_filespec(a, &oid_a, 1, mode_a);
-> +				fill_filespec(b, &oid_b, 1, mode_b);
-> +
-> +				pair = diff_queue(&diff_queued_diff, a, b);
-> +
-> +				if (strtoul_ui(p, 10, &score))
-> +					die(_("unable to parse rename/copy score: %s"), p);
-> +
-> +				pair->score = score * MAX_SCORE / 100;
-> +				pair->status = status;
-> +				pair->renamed_pair = 1;
-> +			}
-> +			break;
-> +
-> +		default:
-> +			die(_("unknown diff status: %c"), status);
-> +		}
-> +	}
-> +
-> +	flush_diff_queue(&revs.diffopt);
-> +	ret = diff_result_code(&revs);
-> +
-> +	strbuf_release(&path_dst);
-> +	strbuf_release(&path);
-> +	strbuf_release(&meta);
-> +	release_revisions(&revs);
-> +	FREE_AND_NULL(parseopts);
-> +
-> +	return ret;
-> +}
+printf "1\n2\n3\n4\n5\n6\n7\n8\n9" > file
+git add file
+git commit -m "identical content"
 
-[snip]
+git am --3way --keep-cr ../src_repo/test.patch
+cd ..
 
---000000000000fcf8e1062f1c6847
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 1000dca58c809895_0.1
+echo
+echo ====================================
+echo "GOOD 3-WAY TEST"
+echo " - apply to modified file in another repository"
+echo " - have the original file in the repository as well, so that
+sha1 is present"
+echo " - change the file so that the first commit fails to apply cleanly"
+echo " - this will force a 3-way merge and the intermediate sha1 will
+be created"
+echo " - the second commit will fail to apply cleanly"
+echo " - this will force a 3-way merge and the intermediate sha1 will
+be used to create an ancestor"
+echo ====================================
+echo
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1mQU1kb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN29FQy80d2YrM1c1a2wydm5Yd1pmRTBEdVp1dTFoWgpmVkRCanJwaldQ
-QTRMcmJGeU83MW84K3FmV2VaanFPS3hnUkdPTE9VVGxUb1Bja1RnbHM3NEVNdE84MzJIaVdVCklZ
-ejhJY0EycGxmQmRXdmVHUXp3VXpQUVZ5S29VL0NuWFQrN3gwMmdQMW9DL1ByUzB0amRCK1kxNWRS
-R3lqZEwKRnR5N3RDcVErTVg2NUJSOWk5Q1hwUHFucnQzM0ZkY1BwdHJjcURPL29scHR2QzNZWTlE
-cUQ4OXZyRDRBYXBrdwpWVWFkRTVONC93d21maFpXSzVUMldpNi85NXlMSTk2ZDRMbllGbVdJajcz
-dGdZcktRTHhTRVFxQWpOZE4rYzZ1ClJsRG1iZnFEQXRaRVJYY3VQTkVJbFJPdXpTbkhCR1M0d3Vp
-MVBsdXdtZzRwanZJRlBNV3FFbHZxcVRwUys0RjUKbHZidG9sRDRNOFZpR2JYQjQ0OUs3UzdGNEFs
-bzUxQXpzZUVUcENDRmlPVGJaS0cvZmhCY3dmMGt3SDVRbm5SKwpXUkM2bVZnK3JqZ29VOEhlVTl0
-WWloc0VXWTV3NVVXeUVEY0tnb0RtdldVUFMzRTM1Qzlia2FJOXFORXdrd0pZCmxyYlZKd3JKSjFL
-YzVLVjJwRXZtZ2F3K3V2SUZlZkNmZ3grRzUxbz0KPUZnVkgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000fcf8e1062f1c6847--
+rm -rf good_repo
+git -c init.defaultBranch=bug init good_repo
+cd good_repo
+
+printf "1\n2\n3\n4\n5\n6\n7\n8\n9" > file
+git add file
+git commit -m "identical content"
+
+printf "1\n2\n3\n4XXX\n5\n6\n7\n8\n9" > file
+git commit -am "change in hunk"
+
+git am --3way --keep-cr ../src_repo/test.patch
+cd ..
+
+echo
+echo ====================================
+echo "BAD 3-WAY TEST"
+echo " - apply to modified file in another repository"
+echo " - have the original file in the repository as well, so that
+sha1 is present"
+echo " - change the file so that the first commit does apply cleanly
+but the hashes are different now"
+echo " - no 3-way merge was performed so the intermediate sha1 is missing"
+echo " - the second commit will fail to apply cleanly"
+echo " - this will force a 3-way merge and the git will complain about
+intermediate sha1 error"
+echo ====================================
+echo
+
+rm -rf bad_repo
+git -c init.defaultBranch=bug init bad_repo
+cd bad_repo
+
+printf "1\n2\n3\n4\n5\n6\n7\n8\n9" > file
+git add file
+git commit -m "identical content"
+
+printf "1\n2\n3\n4\n5\n6\n7\n8\n9XXX" > file
+git commit -am "change outside of hunk"
+
+git am --3way --keep-cr ../src_repo/test.patch || echo FAILED!!!
+
+cd ..
+
+echo
+echo ====================================
+echo "WORKAROUND 3-WAY ISSUE"
+echo " - demonstrate the patch can in theory be applied"
+echo " - start with the same report as bad_repo"
+echo " - first apply the patch to the original commit to reconstruct
+intermediate hashes"
+echo " - then apply to the latest commit, now it succeeds"
+echo ====================================
+echo
+
+rm -rf workaround_repo
+git -c init.defaultBranch=bug init workaround_repo
+cd workaround_repo
+
+printf "1\n2\n3\n4\n5\n6\n7\n8\n9" > file
+git add file
+git commit -m "identical content"
+
+printf "1\n2\n3\n4\n5\n6\n7\n8\n9XXX" > file
+git commit -am "change outside of hunk"
+
+git checkout @~
+git am --3way --keep-cr ../src_repo/test.patch
+git checkout bug
+
+git am --3way --keep-cr ../src_repo/test.patch
+
+cd ..
+
+---- END OF SCRIPT ----
