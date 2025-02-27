@@ -1,138 +1,82 @@
-Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0011A1624C3
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 03:26:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B076C13777E
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 07:24:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740626813; cv=none; b=WM6jUyIC1wa9pndt718rzvs/YB311sxLDLbuSHWEzYm2nE8l8D6RrEl12LGbfjkLf3ZY5lW21z8t7s83WNUL0Bmp4zxNdSzrV1l6P2XDNJh3mrJyeNSytvlVRta08icBCuMx6rn+Otal49X8JJBV70Tv3wlszjSiVfxe2TalB0M=
+	t=1740641061; cv=none; b=nqps6f8f0kjKOUAaGV8L56w4L04sve1rykzX+vHaEdci6sC/oTQ+x2bc+togso3SokPtabgHCJnBXOc+xtIIatwfsEwaIg5LsP0XPWubUCufWQlR2NjRUD2QRDbyWFFyD25mpc8TbSiemDyi7DKlin0dRVzMSMdrWfyUVlDwTqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740626813; c=relaxed/simple;
-	bh=PnKryQO7fJl5C/g1i6BdevQF3fE8VMw2W73XpUiDXEY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BhAO6j/cETAW0cL+V6AOzBgYqgcso2MaIbLRenKMAvMWvwyyN81aS5+MrH9inS156URP6dUTMBTVuQrYgzplQs0fgr2uxhpBBev37azBJU27UyjHPvt0nX97y8ThHOUV7qyAdiznhCbUAqDL4Hoxjx9gkEqn+zmDIR3wOYX/lEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A3vUiKNz; arc=none smtp.client-ip=209.85.166.42
+	s=arc-20240116; t=1740641061; c=relaxed/simple;
+	bh=XAsWzvfYrN/NM/KPiRpPpGogv5F7onk9GXWxa6JsUBw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=t6lnhK+hH+p6zr5KAEqteRBii8U1OflQddIm9yBtj8hkPAs5UeAzp9zdh8UCZkGRW8P6cvN/7VaLsK63N1DiDuNYu9e34vtSrtW9+PF8FlBh0D1397dgL0419y3yl2KrGH3iX0vRVtBLqeJ67nb/T8AG35gpsLMNYkjnSEg/8PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O1CN8uyV; arc=none smtp.client-ip=209.85.160.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A3vUiKNz"
-Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-8560dea3ceeso13502639f.2
-        for <git@vger.kernel.org>; Wed, 26 Feb 2025 19:26:51 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O1CN8uyV"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-2a88c7fabdeso528364fac.1
+        for <git@vger.kernel.org>; Wed, 26 Feb 2025 23:24:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740626811; x=1741231611; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ImzYN/7S6ULgh8EDwD8wC4DXO/re/woy0yEa9E594Ig=;
-        b=A3vUiKNzhuQLmcTRpsrQ/T17Ypih5T62AJpMclG5h87P7aLxtGRT3QbdlqcuPDwkqz
-         P6Q6b9iMThNvgOiqBIqb35oYVxu/QAqN+S4UZg1WsdeVrtKJxEaZpAc8jezgqs3Zu3/p
-         x9ftU+udpI3avMP0x8zCYkxkHp4MDMKYqjionbRmQUdSkjCL10vMZDCOKKi++X9GmFnL
-         DVORZK+seHebjuryoBHuECrdaZI5koMRct6Rpg5SJRAdryg/Npi6QdMM+i06bnJxzPB2
-         Mhw615e7wze18Hk8Q3usZ3U0HqVTPofHSjK0f0qwLpx2OOHL7PUf1q3ALX8OBIO4p8TS
-         bZ1A==
+        d=gmail.com; s=20230601; t=1740641058; x=1741245858; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=XAsWzvfYrN/NM/KPiRpPpGogv5F7onk9GXWxa6JsUBw=;
+        b=O1CN8uyVfQC1dyYbZoZG80YSbZxwBTt79Hpm7s+opMxsDxgqJQH6+gtjS+1E2AnlA9
+         4QxMypqZubtFeg+wb01eScfXuU0ZISBDoGIi/5d2vI+H05GgRpRiDRT+S3iCaxu5ByZx
+         ttGCCrMw/Dh6g4Jc6Tp2cIIM4yGnPMpgnb1otVZUgrmi4GeynmScMe3NJG8NZFze2x0P
+         JIW7wPYpwJLs9KKgfvRCUMg2ml+T2Hr2CiZsE4EnFDyEaL5+Sg1fyIbeKM5OqzCFTL24
+         e4uztV6cDL+9DiyCnM+MzTQvXg4KX+uS4jogvJM25isfuE0nATufKJDTRWhENLrnZC81
+         e/4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740626811; x=1741231611;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ImzYN/7S6ULgh8EDwD8wC4DXO/re/woy0yEa9E594Ig=;
-        b=Jbw6/Au8amULDtm6lgUlHm/xoSFI+X3LAeCqJmXCZQq1y+hpgswtQ1QGvReb5pi7Cw
-         Aebw6VXEjTeuaCwSiRCSz2Nv51V1wnqcBxR1R4ogyjR9Cz25rs2m0XShHvVkB+aqrVwZ
-         8AaQWgddB0Xmfe0/LfDsUtQR8ucXHfDl+2fYzEDGKUNIPbhrP0+7PuWqP9PUGYK4H7Fm
-         KHMJgVfhuGAYjC7LIhhFlTWJHjGRY85xq0XvFRnWrWJvW5ez9YVeBrbyZIq77eA1uzk8
-         nY0qONO963hXXzmdufRkh/beyR99C40SqC2S0dMd5HgL6cTI5Yc1yilmvonBSidabuOD
-         mFYw==
-X-Gm-Message-State: AOJu0YwwEoDhiKCPQqmUAOz8TlX857jidHwml/mlTpfu6CyQTrkcpzpe
-	YE9CtnirqH8imbQaDN8NEyKtY247s+9DanJWb9j/G7njwutxNwUWZsawCrbbzutNEpjO8CxDiek
-	+0A1D6U4mV0yjvezL3CNoRjRkmE9Hpw==
-X-Gm-Gg: ASbGnctRmcT0B4rj3KtJMZV8Fkz51k1VGvyvhcstH/6PshMW6RvyJUPPKP7S/rhEytQ
-	cFwxrHszSlt8AUquf0jw7o9lKBMG9zJki2nlxm+5Tk5PaRhrmPgRj7sKISdix7BppmVY941Lccm
-	y4ngfmU0bCflLMu8snkZFewocMpulYwodVKyFiG2k0
-X-Google-Smtp-Source: AGHT+IF0Tn28mpwWcfZYTCn+mHfOfPKYyxnUEKqobAfFsPO/VzKn7HUTN4kL2QV7n7XD/CGD0ZBOnw1pEFntZCeMY94=
-X-Received: by 2002:a05:6602:2dc3:b0:855:7837:ab12 with SMTP id
- ca18e2360f4ac-857acc6402fmr556215039f.3.1740626810915; Wed, 26 Feb 2025
- 19:26:50 -0800 (PST)
+        d=1e100.net; s=20230601; t=1740641058; x=1741245858;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XAsWzvfYrN/NM/KPiRpPpGogv5F7onk9GXWxa6JsUBw=;
+        b=w2bmsdfdv4qsN1hGIogcufbISakZMEdGhadIDBntc/YmJcnUwWl9xAs0eUdVlciTTX
+         yGfq2Ce9dkSbLqxqoDln0WV3oMF4bXyQ3jeLdRlMkHbORx4TNRMKsohfnWhozPSS9Zha
+         pHd0xZqDS1mQ/rJVyUoBjLMtuHo61DLrCubkneQFser4KwZ5ncSqbGX27vToMJqr62/r
+         MnyNqsnnYap5qXiHXmmYHoY2lSXAWW3Ih4tcwvKvW0gRwpaVDZ43zYJJLwFRLLkzqARD
+         v9zhgglFvZDYUZudzmJNSVW8kr815cZCWXLGUaP+E+Xs7LMtqfLRbg4OvyS+rP5gAIyu
+         7f5Q==
+X-Gm-Message-State: AOJu0YyvkOvFaMm4U0tzv0Pzkva6t3p7KnizWmLmo8EuAH7vZkcrwJ2L
+	2H3IQY2Gc+suiqFtBIJujXoYmZAASOrcu4Z02jYMhWgmqPYf0y/6ks/IqQTK3NZdrivMDcB1gzE
+	lnMdEY/GeF8s5M9wJ9DuoQHYJHh9j1teNo5/LDAGB
+X-Gm-Gg: ASbGncv6T15PBbncVVNfK/J/MA4VdB/JfcGP52sxgJl3JT+McVB0AqcOG0dQ7FRGJH3
+	EhgecM3A7XNtPXQP2bvzywmt+e7TDblZMuYpjvhsIW9yIL/siP/ZLjwEzeD0pJoUtkSoz5RlDdk
+	FVPV4aq/A=
+X-Google-Smtp-Source: AGHT+IGffkQJzbaAJOcJljXSbseCqfizCmw8N22eq+DGVc7VhlLheP+NH55ou/0sVls6Rx+hcpOxVoWrqCqUMqpW47c=
+X-Received: by 2002:a05:6871:6a5:b0:2bc:9915:aeaa with SMTP id
+ 586e51a60fabf-2bd514e6553mr17814555fac.5.1740641058284; Wed, 26 Feb 2025
+ 23:24:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250227014406.20527-1-lucasseikioshiro@gmail.com>
-In-Reply-To: <20250227014406.20527-1-lucasseikioshiro@gmail.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 26 Feb 2025 19:26:39 -0800
-X-Gm-Features: AQ5f1JqUgzi1qbT7gVZve16S3uUlMbG3_MDqOXkqHptQzuzjqcRYmuKZWypQM_s
-Message-ID: <CABPp-BGA530spgVtsU2UO7GyVXL2x=R_80n02pMiPCVA+1SgBg@mail.gmail.com>
-Subject: Re: [GSoC][PATCH v4] merge-strategies.adoc: detail submodule merge
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+From: SURA <surak8806@gmail.com>
+Date: Thu, 27 Feb 2025 15:24:07 +0800
+X-Gm-Features: AQ5f1JofDsZB-SYxZdt5N2gvsckSk2_0iWfbIl5u4HBWtUCaTMwmb9GZWF_kWTM
+Message-ID: <CAD6AYr-ZC32VNfUfMB63H-rQRfTdV=VQfBm67i2mG+6GDCNxkQ@mail.gmail.com>
+Subject: The transfer.hideRefs of the upload-pack process does not work properly
+To: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 26, 2025 at 5:44=E2=80=AFPM Lucas Seiki Oshiro
-<lucasseikioshiro@gmail.com> wrote:
->
-> Submodule merges are, in general, similar to other merges based on oid
-> three-way-merge. When a conflict happens, however, Git has two special
-> cases (introduced in 68d03e4a6e44) on handling the conflict before
-> yielding it to the user. From the merge-ort and merge-recursive sources:
->
-> - "Case #1: a is contained in b or vice versa": both strategies try to
-> perform a fast-forward in the submodules if the commit referred by the
-> conflicted submodule is descendant of another;
->
-> - "Case #2: There are one or more merges that contain a and b in the
-> submodule.  If there is only one, then present it as a suggestion to the
-> user, but leave it marked unmerged so the user needs to confirm the
-> resolution."
->
-> Add a small paragraph on merge-strategies.adoc describing this behavior.
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-> ---
->
-> Just removing an extra blank line from v3.
->
-> Documentation/merge-strategies.adoc | 10 ++++++++++
->  1 file changed, 10 insertions(+)
->
-> diff --git a/Documentation/merge-strategies.adoc b/Documentation/merge-st=
-rategies.adoc
-> index 5fc54ec060..c8d81bcda6 100644
-> --- a/Documentation/merge-strategies.adoc
-> +++ b/Documentation/merge-strategies.adoc
-> @@ -22,6 +22,13 @@ ort::
->         was written as a replacement for the previous default
->         algorithm, `recursive`.
->  +
-> +In the case where the path is a submodule, if the submodule commit used =
-on
-> +one side of the merge is a descendant of the submodule commit used on th=
-e
-> +other side of the merge, Git attempts to fast-forward to the
-> +descendant. Otherwise, Git will treat this case as a conflict, suggestin=
-g
-> +as a resolution a submodule commit that is descendant of the conflicting
-> +ones, if one exists.
-> ++
->  The 'ort' strategy can take the following options:
->
->  ours;;
-> @@ -96,6 +103,9 @@ recursive::
->         the default strategy for resolving two heads from Git v0.99.9k
->         until v2.33.0.
->  +
-> +For a path that is a submodule, the same caution as 'ort' applies to thi=
-s
-> +strategy.
-> ++
->  The 'recursive' strategy takes the same options as 'ort'.  However,
->  there are three additional options that 'ort' ignores (not documented
->  above) that are potentially useful with the 'recursive' strategy:
-> --
-> 2.39.5 (Apple Git-154)
+Hello everyone
 
-Looks good to me; thanks!
+OS: Linux Mint 22
+git version: v2.48.1
+
+I found that packed refs are excluded by the transfer.hideRefs front
+match, while loose refs use full match (when transfer.hideRefs ends
+with '/', it is prefix match, which is normal)
+
+When the server uses git, after setting transfer.hideRefs, the
+references that the client can see before and after server repo gc are
+different
+
+It seems that 59c35fa accidentally damaged upload-pack when optimizing
+git for-each-ref
+
+It seems that there is no simple fix except rolling back this commit?
