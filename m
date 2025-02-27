@@ -1,110 +1,145 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAC7276D15
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 23:32:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB28B276D1B
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 23:33:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740699158; cv=none; b=EvwGd0lgwGgkn2t3mxkdH7f2+vYM+JN79snigL2FdUUvO3/Gmod5WBMzLBAXp+GDPWhsukSn1LJYVAp9CdQUiY7KiGwoMYL2pCQDj4nB1VWi2aVtXeIl0x4qLtoYSf2plK3EF06eryj+e9il8wvQsXTRh74YrwgNsmCPpZPZyjg=
+	t=1740699229; cv=none; b=nY21H/2zy0Q7ZRnoJy9LhiMSOlASFf4nj4kMvJs9CQ/dofGCuwqypW5/JP5tO8xSWFc/6svXRYqH8FUUDbXoLdQG3h+0VP4iGycbnATVw2z1kAJCDaGQjIQ22IpKoBkLXDDgfQOxpW7Mijyg+aKVaEQGLImUeTbQCbZOZ4bT1s0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740699158; c=relaxed/simple;
-	bh=jvIK9MFuNEZH12Ngs+VlBd68vFgOFojHSgggC2WUkRA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=G1cgC63+QklsOazn54ZEniNf0O0V6fy/MGgZQV1cs/+0SRfJT1eSPcgXClyiK8UXf9z1HeYwyTIkFiwVwllzIzqoBZQmLR0OWwebButDLPbr0MsDvF1fePsK4trSY/1exsLEpXzWO2FC3K3wNIinw0omrNR7OoSDx7KTcRNz5ec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KjRDCry1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dqbMk6Kc; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740699229; c=relaxed/simple;
+	bh=1r5Dt5wVC1RxDdPVQmZEiZllHC/y3wlo3fuFSDxKxxk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qC/nXoNKrYoqEDrfAEFkqlP2C8FtRW0hL/0qwQYkct/ykOuHfirG+Xmq499RTkCB8dHFoN61pBbB1EYFZgW9MCwwc8c0p/ZuYfIiI5DDXtGufocFxWPFE0HH1p19PrtUsFS+PllREy8aeRxvRBTvvMA7tYh3ZTkpolyUyCD/7pQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=tfdfk6ej; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KjRDCry1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dqbMk6Kc"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B0F12540131;
-	Thu, 27 Feb 2025 18:32:35 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 27 Feb 2025 18:32:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740699154; x=1740785554; bh=dkL7nraFCo
-	WJCFpagIrfEXNoGK+MKtxKgfxR2Gs/RkQ=; b=KjRDCry1P5yRv3cDRPqBw3/Xqx
-	jUn4CIdE6HDkC3PyGFlhZMcQ+oZX4DPMrT3vzO5y6iETm74xyy3EODB+PH+xkD/3
-	GQSO4MlyThOwgMem/1+2YttOVKloz2Q0PwufzHT8JdlI2ocADYmrmY8Mi0puRRUs
-	n7oUmaBQaSEwY9DcmJo4fkBIyV/AMWV+I62/494+jPB4h0RP3hw3I+RL3q7FSc6S
-	M7AcKDcMOkQq6iIRrFoHzo4tGtcXuC0qF8x/MEZSliZFzaUl3w6jeGxu7yMIyxHH
-	yggTo+VNi8jZxERMVrqJJLtSdidg85gW/u6o02vaXti5jCwxlOSxrCS0BJ5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740699154; x=1740785554; bh=dkL7nraFCoWJCFpagIrfEXNoGK+MKtxKgfx
-	R2Gs/RkQ=; b=dqbMk6Kcsu69qzuHJa7FzECVBquM/hOaX7uRAvGNsyzcqIMBrS8
-	yk+sOPftzdDZkSZctdUPNEFPdhSFWwTxlQUEBwdujZQigyzh+1LMkixaEMT+LJVg
-	ynmto65qVhE814bWi682+0L0AnkAKKoCSN0W3UYdL/EyWR/i0ZvWqjtflnXACjO5
-	S1NidsvJ6QWWcQp8gTqNzyTNbRg+WSsHU75IgO3neQG1aJtAqUYs/ANi+NOMfs10
-	VQcdzeViY1aPV57ka8wm7BXd008ScrTm9H4AzzTibxWpwe1pbYehqdqEvt+qB90x
-	b+I/jJzZVTjOjKmWzFd/WJFRe4IitvbRZ9g==
-X-ME-Sender: <xms:EvbAZ_Y8SqsJ_yZOOyXigszi_yDtposBIQlUDpn4q6GRbk0ACLv2JA>
-    <xme:EvbAZ-YUH3CGRs-FrOS6EC7Zl47EmdRsUtG-ktasA5T8rBWB_VSR8XTDU_uH6RX_b
-    uGHbvHKx7bb0q1J9A>
-X-ME-Received: <xmr:EvbAZx_ialkZaYl-SHFCRFpjJVuTV7xrLdUmiLe6mMYBfIayR-MEt-UwcS_hGHiyaOIH_870Ftwskr-NGlaryUSOhcFvKVFQMEDu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekkeekudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlh
-    horhhrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomh
-X-ME-Proxy: <xmx:EvbAZ1qNIbUZ1bmWtOoF-4XFHhpZHZ7PJhKBk84vMVt6puMJhMEuuw>
-    <xmx:EvbAZ6rPg9uSAEYe6eHV2-YOHkHU0QEu3-d350vO1skdmo9o1haltA>
-    <xmx:EvbAZ7TDUEEoVEXPcBp1qQ30sJczjgHdeSjQux0rSHufz6lRArHxuA>
-    <xmx:EvbAZyqdxFMyoGHFIRo3YCZKroxfX26hAMhYinCji5eugX621dug0w>
-    <xmx:EvbAZznn-Av6v8GRzV-8YKe9kZfsiIyaB0Yfo2QNEYVa-3ODYXVADNcS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Feb 2025 18:32:34 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH 6/9] pack-bitmap: expose function to iterate over
- bitmapped objects
-In-Reply-To: <Z8Dz6EkIpr/g3vuY@nand.local> (Taylor Blau's message of "Thu, 27
-	Feb 2025 18:23:20 -0500")
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="tfdfk6ej"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6fcd8090fe7so12470747b3.2
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 15:33:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740699226; x=1741304026; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=XAm0+wmrjklB5VJPc0NVTyd0jWLWjghzurHC4GxyZWU=;
+        b=tfdfk6ejc7SBs05lYWjJ6tOpTgZxjqR/M7/RLf/GSmILr8IlqJ+rdcagiYXLZ49c4L
+         uFsslfd6qWo0BZeZ+mBQQTYS+6eZzrLBqrYKXdBRZgFxgeG9mAdMaRdtYZhA6coc3nB9
+         xCpSOfNEyW2JcOEj8UBXMM/xMYNJbBzbcAsiIW6Mx0LkeSkqkCzJD/fmP1kWJgIz2RH0
+         m0E+0QAzjQhxgd8+M52WBmRATJ96jFG45MbvIlbzhWEtTPffO5wt4lhyX587GtcuzPPG
+         OqadZwtM8RiU6utSie64HFgrq8k5z75hOndsAVuWvYCmAwyrSzoeS8gVijWdr+aC61+u
+         2y7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740699226; x=1741304026;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XAm0+wmrjklB5VJPc0NVTyd0jWLWjghzurHC4GxyZWU=;
+        b=N0wqu1AYviI4WsGmtza6d1TTBzCMR8zFTodQBDzH0lsRRkX5QRkXw5/gzk47Q5JV/K
+         cw2f8G8TPNO2ADN1DIbCRlYDRuB+TSyqvhWirh22vTQBTudQ/B3Z6yD95p9zOd7Pibxg
+         ydyJYiawFeHkMVG7TIe0D7fwVARICSidG26uFUiIhud5B6BbUbz4GOyx3jyBwy5aZ0gv
+         tmnyqPUPCwchaLAfrSqgVc+yVwHSo7O57x3j3/cpusJVVsbAY+S+H8jABBQbuDRVXnnR
+         1BrTxSuMEOgqI4m0ebMCTJih4saJSoNLpvQnyc18faOlQBhg4krO/VvRTLjhUhi1aX5V
+         WjmA==
+X-Gm-Message-State: AOJu0Yz3C3KQdSL1IM8kKOViyvD4rXjC7WjVUyEV9/AokC8HC1QFfhNN
+	ca6rEng/VtOFVw+owG03RJwko/clWACI1QtJWKdkyyMBEDxAoGpjEsFe/FG9qRU=
+X-Gm-Gg: ASbGnct9PBGDLaOg3KouFgQ5kk/IqPm8nO+LG0JqWR7P1Ri4vpoQrEnc92y5Id1di4Y
+	zSn2jfQHmNeo61An63I/gj4sOgqWxYjBZIRG71wOsaRCmctWNBKIkAGgpoYFSQU5pEWA0t7guRT
+	ShLOrIakUe2fnL/55E1ybBWdRFxAnvFLH2i3DGx2wqYTwLdJYPST5GxPabnyYJNOfLKs4AyaSgd
+	w1Eya8wECztucYWMmKI9zsmZN4IpVOomAmyrt6wjDFNpgohy27VBdynPhHKhrM1O/v+O0SgQUZ4
+	Ezw/Hhg5B+VH5qGYpHq+hTkucomZWtUPT5490gJIZxVJhWIe0bCE1jyaa0NS4B/IvEBg2tAqDw=
+	=
+X-Google-Smtp-Source: AGHT+IHG0PqywawFdtxAFYS4Kw8kMy6XwaVUrR6jx0MhhwVFGmleea1HH51tGeaxM//Hh4GNR+B8LQ==
+X-Received: by 2002:a05:690c:905:b0:6ef:64e8:c708 with SMTP id 00721157ae682-6fd4a019cdcmr19867677b3.17.1740699226592;
+        Thu, 27 Feb 2025 15:33:46 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3ca445a7sm4967747b3.37.2025.02.27.15.33.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2025 15:33:46 -0800 (PST)
+Date: Thu, 27 Feb 2025 18:33:45 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 7/9] pack-bitmap: introduce function to check whether a
+ pack is bitmapped
+Message-ID: <Z8D2WUZIu041l0WZ@nand.local>
 References: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
-	<20250221-pks-cat-file-object-type-filter-v1-6-0852530888e2@pks.im>
-	<xmqqseo35ic8.fsf@gitster.g> <Z8Dz6EkIpr/g3vuY@nand.local>
-Date: Thu, 27 Feb 2025 15:32:32 -0800
-Message-ID: <xmqqo6yn55gv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250221-pks-cat-file-object-type-filter-v1-7-0852530888e2@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250221-pks-cat-file-object-type-filter-v1-7-0852530888e2@pks.im>
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Fri, Feb 21, 2025 at 08:47:32AM +0100, Patrick Steinhardt wrote:
+> Introduce a function that allows us to verify whether a pack is
+> bitmapped or not. This functionality will be used in a subsequent
+> commit.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  pack-bitmap.c | 15 +++++++++++++++
+>  pack-bitmap.h |  7 +++++++
+>  2 files changed, 22 insertions(+)
+>
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index fc92e0aae65..3cbe5bfe909 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -658,6 +658,21 @@ struct bitmap_index *prepare_midx_bitmap_git(struct multi_pack_index *midx)
+>  	return NULL;
+>  }
+>
+> +int bitmap_index_contains_pack(struct bitmap_index *bitmap, struct packed_git *pack)
+> +{
+> +	if (bitmap->pack)
+> +		return bitmap->pack == pack;
 
-> It looks like the aim here is to introduce a function which executes a
-> callback for each object of some type in a bitmap. That's a thin wrapper
-> over the ewah_iterator, but it's not clear why we need a wrapper around
-> that function since it is internal to pack-bitmap.c. Likewise, this is a
-> performance critical area, so I am not sure I'm in favor of adding a
-> function pointer to a hot path which executes once per object for some
-> object type.
+The bitmap_is_midx() function should be useful here. I don't think what
+you wrote is wrong per-se, but that function is supposed to "hide" what
+exactly constitutes a pack versus multi-pack bitmap.
 
-It internally introduced ewah_for_type(), giving the "struct
-bitmap_index" object an abstraction that callers can ask for the
-bitmap for any type the caller wants.  Before the <type>_all bitmaps
-were introduced, there were one ewah-bitmap per type, so it made
-sense for a caller to ask "Now, for this bitmap_index, give me the
-ewah-bitmap for commits", but with "commits_all" added to the
-bitmap_index object, it is no longer clear to me what the answer to
-that question should be.
+> +	if (!bitmap->midx->chunk_bitmapped_packs)
+> +		return 0;
 
+What is the purpose of this check? The BTMP chunk was a relatively
+recent addition, but it came long after multi-pack bitmaps were first
+introduced. The BTMP chunk is necessary for multi-pack reuse, since it
+indicates what sections of the bitmap's object order correspond to what
+packs.
+
+With or without a BTMP chunk in the MIDX, a multi-pack bitmap is assumed
+to cover all of the packs in that MIDx. So I think the above check is at
+best not helpful, and at worst will return incorrect results for
+pre-BTMP MIDXs.
+
+> +	for (size_t i = 0; i < bitmap->midx->num_packs; i++)
+> +		if (bitmap->midx->packs[i] == pack)
+> +			return 1;
+
+This part looks good to me. If you end up pulling in the incremental
+MIDX bitmaps series in as a dependency of this one, this will have to be
+rewritten something like:
+
+    for (; bitmap; bitmap = bitmap->base) {
+      if (bitmap_is_midx(bitmap)) {
+        for (size_t i = 0; i < bitmap->midx->num_packs; i++) {
+          if (bitmap->midx->packs[i] == pack)
+            return 1;
+        }
+      } else if (bitmap->pack == pack) {
+        return 1;
+      }
+    }
+    return 0;
+
+Without pulling in that series as a dependency of this one, I think the
+function would just contain the body of the above 'for' loop, but not
+the loop itself.
+
+Thanks,
+Taylor
