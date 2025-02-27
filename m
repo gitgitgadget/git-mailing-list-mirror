@@ -1,121 +1,159 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA2121884A
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 22:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF8A227424C
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 22:39:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740695955; cv=none; b=TO8LUH8ejzjYL6tYAXzO51xfplU1IsrRztkXQmRfSewwLtF1TZi5cDln2eF2QOPvCjDjJkeMpHfu6yTs2+jnDhKBDDwWQBP3QV0MvNDNiIbOdykMJqVuF69KO1YZn++QSgjQgdzxMMj+8/YKZa1TLhSNwyIU9Nx3e+nWfaJJxVU=
+	t=1740695980; cv=none; b=IJYxZnfN/DZxYxhD46allv1F+t29FblCtbRnYHEwFpt4E17f68z0VjVe0q8XVwaDPUxtEAIXreT7Xp9F/xgw96JRvPIXtCGGtZloxPSyoDeXMRy5cSwRYZa68h25btmtJPY3Mrn//0NNzjrZI4YWJwSHLw+j5Gz8gdq1WaKqCkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740695955; c=relaxed/simple;
-	bh=E2PKmIXNS+xoLXs7ePcwBLRVKHZSDDIqdMvik7PgrHg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gtphgJ3/15epv64FfjNuwyWpLUbr+XT6aKLaN1mouy5KcuFTXDNxEUSUrH1nNJQuOXQYkZsw89xzkYy8R6IwQFxfMipTqNAp4ZSNEdu7K/BcmzyoL3ZGa1QyqBQePpviJDzSMMRd0hS51yfdMZsm3Y33U18TcH0wlzY7MoVUWv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I/XjsfJS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VCfL+K0n; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740695980; c=relaxed/simple;
+	bh=UG6yJIs/D2ibKaas9FtYYTnV0KD+JBnoSX70lOPUWFA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eYpj8pyRopCDKNm59n39ihQIpzE3aiiWlwazmoIMNqwUlW/YJObmpCiwHMTIlA9mnBeLlpvO/IZBlyF+MnnDFF4P4v9saj8uu2pnZC7SuHjESDxoqfPBJH88fmWXt84N/HBXnHfwfDblesy9IA4KtC/osPs6rJTdruLwqryH2fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZYlgr1Ol; arc=none smtp.client-ip=209.85.161.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I/XjsfJS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VCfL+K0n"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A96222540131;
-	Thu, 27 Feb 2025 17:39:11 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 27 Feb 2025 17:39:11 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740695951; x=1740782351; bh=ZlZROxnhIt
-	y9vZHAnLFLnWNHKZ1NkI69FOMydm1YpkU=; b=I/XjsfJSprm9uUM9At9+Iphtal
-	fIAqLusrFKb67sirxeDrFT79mMgWJPkyLpBAUPdBXa00yF7hCQEN7VtnBeyyNxaT
-	oBTkTRDkEbvcA3jvWgUbPt30fSPrOC0I29OaKpVNcp9QAVRE7maf3lTUnBEt0W5x
-	aaC5K88e2hnAO/1ZaFlJfrWy4kgbFIxSl1YrixjlMTTSUdZ7LGgUd/xfqpmIzKho
-	kIeTlHBKM7IfFyf74IZBC3R6a5XlhG11frwCmgZzYzF1f+Wvl+5UmcZ8L2vyFl2R
-	tb3PMuuc7kJL6QXZ03oceWAhgJoAhstF4HNOVUFEKg9Ebk24i5TtnHGQpRJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740695951; x=1740782351; bh=ZlZROxnhIty9vZHAnLFLnWNHKZ1NkI69FOM
-	ydm1YpkU=; b=VCfL+K0ntMOal8Ms+RNxPiqFZiBG1ZpFLFvbo6Znl8evXdTuO1s
-	fe7sWzUPLRVOF85nL/PdddIm2pogImnKl0WU270fcmkqjwkQ+jiZbg4xHz1P0BQW
-	A6CtJA/JzkCWIRmXA3BValJAMBRKqBRY6KT7IP+Er+1igTR1mOmMOfwLumGbt2Je
-	3zfIMlI4setHj7QkOZgL2X0ydDtf7xjaIONpDsBlpLc/HTlXyugwbzM5REP9mvfh
-	EU/gb527seYOIaHcDYXeTDdRBKC5JU7X2DWK4cKI7JBzVDYM3BWqfA7/JmK7CXkm
-	TYmx/AfjaX2LLdTrVDRWqiI4Erp5MhX7mXQ==
-X-ME-Sender: <xms:j-nAZ80eg9FUEdg-GEq_asVEscwU-sUBYEZ5Cpy9-dVHaedzQt93ng>
-    <xme:j-nAZ3FncnWQs0wEc43I3OiyoE8t9Iqfc9W7R1ORFuTj12HliVkDX2UwrK5iMKB27
-    FXd8_bUeIo-Fwb2ng>
-X-ME-Received: <xmr:j-nAZ07pMRzW9qFqtTIBkwLn4phUuZBKU-lzdB6iNcL3Nk-R3nRg16J9Erjmo4BtjIm9Tx77fpvX2EN-zxER8Muao6rWxVB4WhY1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekkeejtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehushhmrghnrghkih
-    hnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhsthhirghn
-    rdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
-    phhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtoh
-    epjhhohhhntggrihekieesghhmrghilhdrtghomhdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:j-nAZ13Wp9UpJxP_n7U0fuNaXSLIQoI2dpDOzWBgBudpPUwKtFsTbg>
-    <xmx:j-nAZ_GXDUP4uhpI9PapjKX2uB1rfnJX-j0ODrVs5QQ8yuNDXTaOuQ>
-    <xmx:j-nAZ-_TXlSoCD2txrWij0eG7f-rLvaEVWQuCeHmH_75WYIBg77JXw>
-    <xmx:j-nAZ0mIujOqeT6xYsGpmxsE4Ngy3yDcRiFMz9aY4sW-vctb2PmEJg>
-    <xmx:j-nAZ2BIg65cY0HsTfykNJ-6DEMuAR61A_J4H11lylsMoG5hZfH9t8y1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Feb 2025 17:39:10 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: christian.couder@gmail.com,  git@vger.kernel.org,  me@ttaylorr.com,
-  chriscool@tuxfamily.org,  johncai86@gmail.com,  ps@pks.im,
-  shejialuo@gmail.com
-Subject: Re: [PATCH v2 02/12] builtin/verify-tag: stop using `the_repository`
-In-Reply-To: <CAPSxiM-bOcqEbVNAYxh0oPXKceN7YSrCU_37e7mXAbxwpq3QNQ@mail.gmail.com>
-	(Usman Akinyemi's message of "Thu, 27 Feb 2025 23:26:02 +0530")
-References: <20250214230210.1460111-1-usmanakinyemi202@gmail.com>
-	<20250219203349.787173-1-usmanakinyemi202@gmail.com>
-	<20250219203349.787173-3-usmanakinyemi202@gmail.com>
-	<xmqq34g8ei5x.fsf@gitster.g>
-	<CAPSxiM-bOcqEbVNAYxh0oPXKceN7YSrCU_37e7mXAbxwpq3QNQ@mail.gmail.com>
-Date: Thu, 27 Feb 2025 14:39:09 -0800
-Message-ID: <xmqqsenz57xu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZYlgr1Ol"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-5f4d935084aso1064520eaf.2
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 14:39:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740695977; x=1741300777; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=zm0sTSzqh4FNSX2IgH+4Xoc1qkmXHlEtKbZWVk1EUTA=;
+        b=ZYlgr1OlkyI1QsIiYAgJt7zj4VVQQ0uihfve9sEb13OWxEL+IBjby5xQ9OBMrfCa70
+         DxASuoMpt7ED2B522TSGzoul64wlzvWujr9tUxCLhYd7+DlStf2z7G5VN1GUMoot0MRp
+         31NzoOPV8SGukCyGhWyE1iOql9OLPa5RxKSgZS89BclvmU6B8CG5CnK7SY7qP2R2nGi5
+         JqVb6/AuspnlDBg2CxnR+ERDBTZzI68lale2rSqGXOf774nvLxN+pfCldc86R0tpH3BV
+         yFtoL+Hl9VXi356Hzr98ru7Kl+bX+WqRlS0a2JGlm3IM5iatjYnDbiW0Pb+DvgWt0hE5
+         0I+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740695977; x=1741300777;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zm0sTSzqh4FNSX2IgH+4Xoc1qkmXHlEtKbZWVk1EUTA=;
+        b=Ikygt14h4sKDfEkCQHtqF5ddEhjabe5VwJmXs9sS8m4RhYAIlJeQbFN+BZN7D3q57L
+         DbxgHYoFjxnagztPyeyk/Yu4dNRNLXjq8MeGPgFFgNSMclWfAnMxdlIYhCk59Uw9c6IL
+         CMIpDMzH2v7rSC7QQsl952ln/zqcj9zZ+2V73R+9mOG+iF47qmlYYU8TLpFIkJpxGHP7
+         GqsnWpyLXFhTKsslrx7hOjoIYf9npbQmxqnZyalIyWjIFRfl+7V8vFRry/5OxFbMKJU8
+         hE64t4SpbSROvBld0+wPNnPSwXVetzMtEWFcTMDh5zxClq5NujqHPUAf8W6Jn1ws6t6j
+         iOfA==
+X-Gm-Message-State: AOJu0YyEOBZlmuf4JULy9sPXrFNiO8utJWu7YgOe5zuj/nDCTT6GC0H3
+	z/ewSEF0W5odhqBIgadecmH/WxYu/kTkh4ynMas2sYr6hItn7aJv
+X-Gm-Gg: ASbGnct1kApgx5AYy5AgV5bEfmmsE6mvCZzE5ZDAhq4h1PMLKc6vIJ6cVoXc3wWFbbT
+	eIa3pZUX4GC+cwQs6fe8Q0ug0SovcFVNysHpprku5V+mNkudIEbIM0ASoQr573Ajjx29jSNbFph
+	g1z/z1PYAv/NXKxw5qer+C2bDmCeiW1Xf42hrMqPSDpYHnKza73R9LpOzOYesxI7y84510o/6tG
+	RevfoxQADPR4RdS14NqrjuI2jrfETft4coxNPCbtOkdMUXt2NyCqkNpelDPqjRCIzy+SPe6FDQh
+	WDZSxBOhifrdiTub1h8=
+X-Google-Smtp-Source: AGHT+IGJ/AMAiuOz0yBgoKy2O11yhF9zKj43MyzBJlM46CzE8sQUfCy0EpThDpWLc98UrWYqm0qRFg==
+X-Received: by 2002:a05:6870:b292:b0:29d:c85f:bc8c with SMTP id 586e51a60fabf-2c1788059efmr619933fac.36.1740695977618;
+        Thu, 27 Feb 2025 14:39:37 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2c15c446bcdsm465671fac.47.2025.02.27.14.39.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2025 14:39:36 -0800 (PST)
+Date: Thu, 27 Feb 2025 16:36:21 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, phillip.wood123@gmail.com, 
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 2/3] builtin: introduce diff-pairs command
+Message-ID: <z5mea66lqrhcjm2da5qyg7e4n3wvxsilhtta45qie5m6hub5o4@ftdgftsmaeul>
+References: <20250212041825.2455031-1-jltobler@gmail.com>
+ <20250225233925.1345086-1-jltobler@gmail.com>
+ <20250225233925.1345086-3-jltobler@gmail.com>
+ <CAOLa=ZS6yqquxAL_vCUf0FRrMbA6OLeY1VjqMv=pnxAo_17zLA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZS6yqquxAL_vCUf0FRrMbA6OLeY1VjqMv=pnxAo_17zLA@mail.gmail.com>
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+On 25/02/27 01:35AM, Karthik Nayak wrote:
+> > diff --git a/builtin/diff-pairs.c b/builtin/diff-pairs.c
+> > new file mode 100644
+> > index 0000000000..9472b10461
+> > --- /dev/null
+> > +++ b/builtin/diff-pairs.c
+> > @@ -0,0 +1,193 @@
+> > +#include "builtin.h"
+> > +#include "commit.h"
+> > +#include "config.h"
+> > +#include "diff.h"
+> > +#include "diffcore.h"
+> > +#include "gettext.h"
+> > +#include "hex.h"
+> > +#include "object.h"
+> > +#include "parse-options.h"
+> > +#include "revision.h"
+> > +#include "strbuf.h"
+> > +
+> 
+> Nit: I could also compile without some of these headers, do we still
+> need them all?
+> 
+>     diff --git a/builtin/diff-pairs.c b/builtin/diff-pairs.c
+>     index 86e59a7e3a..1aea2ee726 100644
+>     --- a/builtin/diff-pairs.c
+>     +++ b/builtin/diff-pairs.c
+>     @@ -1,14 +1,9 @@
+>      #include "builtin.h"
+>     -#include "commit.h"
 
-> While going through the config.c I saw the
-> read_very_early_config() which read the config from the system and
-> global settings and does not require any repo variable. I think,
-> to teach the repo_config() to allow NULL value, we could call the
-> read_very_early_config() whenever the repo is NULL as we know,
-> this happens outside the repository.
+Looks like this one is unneeded. Will remove
 
-Yeah, when I wrote the message you were responding to, I noticed
-that do_git_config_sequence() is prepared to take NULL as repo (even
-though it is a bit clunky interface; you need to futz with members
-of the opts structure like opts->ignore_repo to have the code ignore
-repo that is NULL).  So a caller that calls config_with_options() with
-no config_source and no repo should be a good candidate to reuse.
+>      #include "config.h"
+>     -#include "diff.h"
+>      #include "diffcore.h"
+>     -#include "gettext.h"
+>      #include "hex.h"
+>     -#include "object.h"
+>      #include "parse-options.h"
+>      #include "revision.h"
+>     -#include "strbuf.h"
 
-As we positively know that we are not in a repository in our case,
-using read_very_early_config() when repo is NULL sounds like a
-sensible thing to do, I would think.
+The others are directly referenced. I think it would be preferable to
+explicitly state them instead of relying on them being included
+transitively.
 
-Thanks.
+> 
+>      static unsigned parse_mode_or_die(const char *mode, const char **endp)
+>      {
+> 
+> > +static unsigned parse_mode_or_die(const char *mode, const char **endp)
+> > +{
+> > +	uint16_t ret;
+> > +
+> > +	*endp = parse_mode(mode, &ret);
+> > +	if (!*endp)
+> > +		die(_("unable to parse mode: %s"), mode);
+> > +	return ret;
+> > +}
+> > +
+> > +static void parse_oid_or_die(const char *p, struct object_id *oid,
+> > +			     const char **endp, const struct git_hash_algo *algop)
+> >
+> 
+> Nit: without double checking, I couldn't tell what 'p' was, can we
+> rename the variables here to be consistent with `parse_oid_hex_algop()`?
 
+Will update
 
+> > +		case DIFF_STATUS_RENAMED:
+> > +		case DIFF_STATUS_COPIED:
+> > +			{
+> 
+> style: The general rule followed is to open the braces in the same line
+> as the case statement. So `case DIFF_STATUS_COPIED: {`
+
+Will fix in the next version.
+
+Thanks
+-Justin
