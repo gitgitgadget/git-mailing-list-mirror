@@ -1,112 +1,112 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAF41B042A
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 16:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5161B4F04
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 16:57:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740673609; cv=none; b=BQaBy+g7MzsD67ZuCshOxJqJT5hMmzmqgfvc7ABNOOp4uDThs2vz/50YIqyuJZFWIFsbdEPTGA2q3sRW2TMUWKvvh0npX7JYqnzzv/N9/rBXD/IfeIO28mCtb4n25X17R4GZiZ2FvJMPuq1MBmYawrIj/qN3e1GMPHJKIwhFmMg=
+	t=1740675436; cv=none; b=c0ht074BV5hgEoCUPvRf7UPmT/YGgzUI6hRoNf4WgXmXtwrG9JeRC6g95uQczELJWnZHNjOvy9gGPw9DIMhUXUMbkJTWv/j2at35GxlXHR/Eyimm5pdTI8NAzEesBAmv9RT81xffv3+RRk+A3Hm/9hMZ8H79BhWk06EsZzcuVg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740673609; c=relaxed/simple;
-	bh=ho9SdRPvjg27B4Pbgq4RrBDW3uvsXFIV8F6dsgx22lw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=TM1sr8yNOs2ufRLzP0rGDIutz9OXR4BPOAjOSIyJrzAZXYzkXsxBZMyneS2aNtJ5qY4NVZ2VHFrlqS93iu/P6w+VQ/uCEvHmHzOqizZoYF76nRwQPU5fMrFsRbLcz/knyyJrm5hdXmmdOC/3PPJ3r77XD5Z2d8lfgDioZfV6hbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SpKv/htX; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740675436; c=relaxed/simple;
+	bh=UHTW7hLbCN9KlQFgOvR9TKaI2f/DSAbHVALvX5fQ/pY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AziDXKSxyYWyBqJE5JMJzO0IwdA4sCZYkcZHm++mCgTlvEKuHSCOMQHabiKkcxxzY6WE8Oh5OKV6ReMRtdw9w9Z+Kdn6YdafkUllhVRL9ZIeFeDBFalNOm5S6MIfffafpp+/0mPREm1Ln4G2cUfIakOLd7IoBZxfA4/PZEUNn5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EaLkuEmD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5ufLEPan; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SpKv/htX"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-38f378498c9so1155878f8f.1
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 08:26:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740673606; x=1741278406; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hmswuyNyhY2pgi5jPaSji+nDZzuOCQcy/lWpucSZAko=;
-        b=SpKv/htXnFvLNtTBpZE9pt9NuCNJx2/c8Exq+KTJI1KvHdGYOKwTJ45WuLN+m6x9Qg
-         znQIZ3LAePWgH2RIoC53eikZJG/7sQcLMjBaZaKa3hJWE99DXJxnWRys+y2x2rIi7JqM
-         oN+u599+3QAoKHswoRqboxsvrG3G5l+e+neX2kybJB/XpkfSvXwASGWEO8+fbTs3h7Y4
-         anUBEDpJlYTSCq2Zu4hB6TJS2xtBrGzY3pTni1pvfRIN0IgvAtRsRnKYvHJoWI2yMSv1
-         XuOEhm36YMGWutj/JrfwluQROOZbVSyyJ/c55BVEtIOw57URA4pQ3uTokf18dc07GzyC
-         tulA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740673606; x=1741278406;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hmswuyNyhY2pgi5jPaSji+nDZzuOCQcy/lWpucSZAko=;
-        b=M9tI9gxP8ygtfFvvNO67L7bi9oSojs4R/o6ffgWm9BzsNEr8RIAJGM7YcWvJsr3MCA
-         tcccdnj7Hm3aSc6+Vmo0R4PcEnhIW6UPB92eMNsjQXNmDD+9mMW7fp2ZUzWzhTjhxxDT
-         Hlh3hNIinAJQk/es5Ssw4F8WZ1XGRNkBM/oNqyEHjTPXsNAutV1K5M33wyKnm3yCFWMA
-         22OkgT5L+ELYCLYg3aXHHqwgjIFN9Mbw1F5P2nOOUC9ZxQzTTm8ZicNeuMRgz/lgvJ45
-         BMzUPYi1sSK+iQiVDC8wVH/c1aRSYskPm/IUTcycooOAj1Z/boPViAZ6tNUrm8Vwh+Cw
-         7cdw==
-X-Forwarded-Encrypted: i=1; AJvYcCUn7gRVz0AkdrOF77og1lfHS19W9bcs3wp8ddvbCzZayg//hk/fHJA1xirjWesvN0JdISE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWygi8SmYrM9z0JZ3ANY44OrzY0Uqk3b91HFS1sUCFiDSC0JAV
-	wlloXMcy2J8N0Zec4JjwemoMZp7cEmEAH+790z2UpRBrVMAn41YhemihXthTijE=
-X-Gm-Gg: ASbGncv9h8fXmaQ408yt1jTZoDvL3rZ1W/OtJE1407VFzwUUlgQmvS5MsbUcHP/k54A
-	2KuHh58ohyVfNqRHE5wV8VkRNChNSMr58OAOLSlX5Nxv/SGU4fxzp0Y1SCu1JipYZOIuVW3ZO3T
-	iy8hZiyEbknW2+h88coEfeJN0Hk6Xjl8zN6E4SrKzp2r+NZiE0BCTUSzrProiR4RUouHHLijK6/
-	+dNhtqm6pRgHi+T7GjLW43ShhjTuHwoZJPmPCqqo0Rlh6NzfKfKFyPHEMWP9AKFukmask0leHCP
-	OwJRrVD9A9dhYawEZOhuDwerNXgeg4pYI5gjBpViNMyw/psVfjBNHclvGXHz17YJK0PdFzKA4jD
-	dPFVq
-X-Google-Smtp-Source: AGHT+IF5bjo60XT7SdSY7m5bE0C26qmB35LLibOrmtPdYb/koEfD3KrhDxA0xg3athuI3yLI1tYW4A==
-X-Received: by 2002:a05:6000:1549:b0:38d:df29:e14f with SMTP id ffacd0b85a97d-390cc631b46mr14374208f8f.43.1740673605950;
-        Thu, 27 Feb 2025 08:26:45 -0800 (PST)
-Received: from ?IPV6:2a0a:ef40:700:a501:27ae:70ed:9eda:7f80? ([2a0a:ef40:700:a501:27ae:70ed:9eda:7f80])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-390e47a5b96sm2551734f8f.29.2025.02.27.08.26.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 27 Feb 2025 08:26:45 -0800 (PST)
-Message-ID: <f455db00-2064-4c2f-be2e-6c5970843f03@gmail.com>
-Date: Thu, 27 Feb 2025 16:26:44 +0000
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EaLkuEmD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5ufLEPan"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id 96E7F13826E8;
+	Thu, 27 Feb 2025 11:57:13 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Thu, 27 Feb 2025 11:57:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740675433; x=1740761833; bh=ZbSdlehstV
+	Tp4H9jXdDaTDCsF8/aj4k6y+7ynLtAvvE=; b=EaLkuEmDfJV9VJ/Oh2wAgZMc5j
+	q2l94ap/Uca5mq/bHv565RHFvjifsuUpvQuHdbLblqA+gfz2csTSYrtcoTKrL7UT
+	0jSA04yE7hxze5kgsaZce3AoO9iSbzRdyzu44EJ630IUCeoV/Hl8PhtsZx1CixkW
+	6We7sdmOYNnidLhXLcEJ3UHlHmHsn51zLHzAmfCdP5IMhtVyp7c+BmO0wBkRtgW1
+	h4GxI+RIkpCGZz5lZBjjla2EpkTzylv8CHWx9mUhKvnXnx8KvYtrQlveWZ+SCbnL
+	+1GTT8oKha7ZIfq8+4wsyuurWUhRMliBezkdes0LE3ikxf1ch/T5uiQmq9cg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740675433; x=1740761833; bh=ZbSdlehstVTp4H9jXdDaTDCsF8/aj4k6y+7
+	ynLtAvvE=; b=5ufLEPanDZnLhphaxyjVG5YnNvW04I13aYtaM7r4d0uOORHfDh8
+	6z/eNfZOwdz7SfkZlavUpsQJQew1/ezsUncTfBnBviclWIFHLAjt8ZzyeQSs+AW0
+	h1OppYRT/r2xX2SertgPTwsrf5oE5YTesdt2rHcVcZsHtS9sINa/2z3QMHpeLekb
+	C6R11lZ+r31ZryqrQYX3KTG9CHaz1Qi2ZR80FF3rTMFODjwDUwhFouWE2w+drYog
+	VWrGGJp96X96Un+0TWUXZxeeVaCyAdnRmP2VZcuihqzC7kkxjsfJEo+g2ef/+8Iy
+	E2Rlgqo7u3ONjjYIERvYgwC5S8eaFrdhZOQ==
+X-ME-Sender: <xms:aZnAZ5Gi44REsQwEuAOXtSzBF6QyM0SbIkn8yoib1G-FrELs0fwcmg>
+    <xme:aZnAZ-WZnPyjsIb7No9xKLBa8hlsR1LOiqs6WhkFoM-SyZg_YCVUMJGmH84oILKjq
+    H-VxPs5gYdfzbw17w>
+X-ME-Received: <xmr:aZnAZ7Kcba1Jtnd-uzwRiGcTKpbOeQuFGxreWU_M3krj47IgtXmhbScQjJPIhhpOEnLgdNNpLFj58-DM6boz1YOi1abgEOxtSIWx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekkedttdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgvjhhirghluh
+    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikh
+    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehmhhgrghhgvghrsegrlhhumhdr
+    mhhithdrvgguuhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:aZnAZ_EPb2cDK7MkEWc-xBXp_aleBDUpPsM4GaJz_5xY3TMJW8kReg>
+    <xmx:aZnAZ_UTDL-ALMW9s23cPa4GqRFbWrHZwpDTqLJ3q7n1SGuKwBzwAg>
+    <xmx:aZnAZ6M51Y5kk1s3S92Q3IW81fOA6iHUWTAh3qcfEAr5QXYZlI8bow>
+    <xmx:aZnAZ-2Nc1GFmFzwARYOmqI51ckhHZMesK-yAhof61eW0cNXEmdqfg>
+    <xmx:aZnAZxLOMjrjAVBKh_F104svaOYtv3nCkbFOOxkHb4qsQK7JLpkdJAbX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 27 Feb 2025 11:57:12 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Karthik Nayak
+ <karthik.188@gmail.com>,  Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v7 3/9] packed-backend: check whether the "packed-refs"
+ is regular file
+In-Reply-To: <Z7-4XRCVvLjFCFR8@ArchLinux> (shejialuo@gmail.com's message of
+	"Thu, 27 Feb 2025 08:57:01 +0800")
+References: <Z78bmBSrDR20GY6g@ArchLinux> <Z78cAU69IUSDgpuD@ArchLinux>
+	<xmqq5xkwd042.fsf@gitster.g> <Z7-4XRCVvLjFCFR8@ArchLinux>
+Date: Thu, 27 Feb 2025 08:57:11 -0800
+Message-ID: <xmqqeczj9vh4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: \b character escapes in CLI usage
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Jeff King <peff@peff.net>, Yaakov Smith <Yaakov.Smith@wisetechglobal.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-References: <SYBPR01MB579278DD5EC6E13CA9A213FDE2C32@SYBPR01MB5792.ausprd01.prod.outlook.com>
- <20250226073822.GA21138@coredump.intra.peff.net>
- <Z7-lbGnlzGbhrHZN@tapette.crustytoothpaste.net>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <Z7-lbGnlzGbhrHZN@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 26/02/2025 23:36, brian m. carlson wrote:
-> On 2025-02-26 at 07:38:22, Jeff King wrote:
->> On Tue, Feb 25, 2025 at 11:44:33PM +0000, Yaakov Smith wrote:
->>> 
->>> Should "git config" be smarter here and print something other than a
->>> literal backspace to the terminal, like "git fetch" does?
->>
->> So I would say no here, in general.
-> 
-> I agree this is the right choice in general.  I wonder if we might want
-> some sort of human-readable output option that might escape these that
-> users could use.  The output might still be machine-readable, but it
-> might be easier to parse than the current format, which has some tricky
-> edge cases when a config value contains newlines.
+shejialuo <shejialuo@gmail.com> writes:
 
-We have '-z' to avoid that ambiguity. I agree that having an option to 
-provide a human-readable output would be a nice addition.
+> You are right. Actually, I just want to avoid assigning the `fd` to -1.
 
-Best Wishes
+Why not?
 
-Phillip
+Between leaving it uninitialized and explicitly initializing it to
+signal that it is invalid, the only difference is that you can
+programmatically check if fd is invalid and refrain from calling
+close(fd), for example, with the latter, while with the former you
+cannot.
 
-> We already have precedent for this in core.quotePath and could easily
-> use similar logic here.  That format, while using octal, which I find
-> ugly and hard to read, does have the pleasant side effect that it works
-> correctly with POSIX printf(1) (which I'm sure was intentional), unlike
-> hex escapes.
+> However, I didn't realize that I would initialize the strbuf later.
+> After waking up, I have suddenly realized this problem.
 
+Given that initialized-but-never-used strbuf does not hold any
+acquired resources, the current code at the end of the series is
+still OK.  So there is technically nothing to fix.  I'll take a
+reroll if you later send one, but as I said, I do not think it is
+necessary to reroll only to add fd=-1 initialization.
