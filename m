@@ -1,90 +1,84 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6177231A30
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 14:10:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5E625E452
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 14:54:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740665432; cv=none; b=mCjcz+ntz+rFdoe+CKHEvgRHt76IR+ZGSN8VAiqZQS7koMiP2+NKwP9JqDSlP9IK3lgvMM6jhVKWRXaCyqIJ2H0IdRCPBNyrdqHoI2N6tcXVeAKP/fKugHpr9yxArJ29d7t61SVr5xCTB40guwCZC/GmdqKpDnC7sMi/rj9r+CQ=
+	t=1740668099; cv=none; b=AK4jN/JMUzRBnxq5Fm/0idXOn1spPBf/wZ2kYzb0KccpWR8U6uKco4SKY9ghSY+TfinjHxilvfZYJsVzDaKdStxMjT/bOV9ojCHa/oBvMNHHBtz5r9RlYOIeGubwyAz89Ch4shMGnYvZZOi6OWL1/JOKTFeZx+H3Dx+piC0vQa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740665432; c=relaxed/simple;
-	bh=OJ0qGkYZHaGa7V9PrdP4Qaik9Bc3H2Z6H9z9fpjmLZk=;
+	s=arc-20240116; t=1740668099; c=relaxed/simple;
+	bh=G+rZNNj5ooDEWweSc+gFuJeYFf5YjFIQNc3hEi944Co=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TpLlo3PUgQ7omEPxg9MPygKE0OwpmzapEklzbxYtbzuF6oKOrzYe85IgaZpnE7q3p67TWmTnG/DPirY1ARxMy3SpFW4tBYvgBX2gQzcQ3VEUAFDczrUJ6FAshz9Tol7rzjAwhavYDvBlV7rqWgdrNM1DQ8bogZgRQ0xyCepM6vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OmixJTcd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mRm3b5Cy; arc=none smtp.client-ip=103.168.172.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=kQLnDoGfB94/vtfbBlmpvCxTRRDWlPVRJ3Xn4UTPx26GSVngEX/ExtLxPVs9BA8imwjV2KURg2NFIILB8gGuJek4kYzoxCpg2HRGe3cZfr2InWjas81fbsIvoVLmxowRcINZZGZDWoGURFJkztALFJ3asETGeD+g5/c9aUM0fdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pw8/b7lw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QJQzWI5H; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OmixJTcd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mRm3b5Cy"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CBAAB1140B7F;
-	Thu, 27 Feb 2025 09:10:29 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pw8/b7lw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QJQzWI5H"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id DA8D71382775;
+	Thu, 27 Feb 2025 09:54:55 -0500 (EST)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Thu, 27 Feb 2025 09:10:29 -0500
+  by phl-compute-07.internal (MEProxy); Thu, 27 Feb 2025 09:54:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740665429; x=1740751829; bh=pBTRJew53p
-	zt88LD8h1dDeDr6Gz+mjAa9IbIYLJmiyA=; b=OmixJTcdHs2AT8aschVjQyv3dd
-	I11VKH73kyV39CzOAaueEM3owzJZMCm/Ikv/ZY7UBDxkAA2gMQUksBajxikV6nnQ
-	tgfkDcoCPDjBs1L9NWhVEFkbgwGhCozUtLCZZq/+6zUnGF/q0pdHsBRjDqtdc4qL
-	Ie6+WFUbf7epq3lYjwqCDCXOBy0SMZUojmJRpfWutde3nFuAVnNm9dXRBB7Sx6Yp
-	n+F33vHs8UASURK73sJzZC8pWRh+3jJZyfszEOo/w+p3fNCje8LsOfFVvIOHJMJ5
-	B/6x6qLX7/wJ959jXFkpnVveUWq+tYPr7G0+MIn7g4qAlIVo9d3wZHBLqHsA==
+	:subject:to:to; s=fm1; t=1740668095; x=1740754495; bh=fOFqP3G7i5
+	ByesAxa/AtK4ZbW/7kVyujXYOb02hCgYs=; b=pw8/b7lw4xhcLsSMRM4GQ3NIAG
+	+qH/Rxw3if7rSnY+AXdsTlIeafhLP32SrpPBrXG85u5mVG9/hNpqQ7PLX2edhUlm
+	vmXHStG94PxjLHwLMlMH3XxLZw/U2WgIzn40uSOxsYgGJs/Oxf42EDRi7FpK3Tii
+	jiclYO4SgmSS1a0V+7/dHbun1Zs0MdfQJb2S07jLSVAOe4IflWhz5eTfE6mL+pur
+	o7V3XJCctQFbkBQOyDaLbXBm03OgHEYq2HTvyq8qzK9dxoWRZVIIHEBk9DLUOChc
+	DIoP4ufimn43gke4BMgGmb11mcgIC1BRBXa/SbsPVqD572S72Feycrhu1qBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740665429; x=1740751829; bh=pBTRJew53pzt88LD8h1dDeDr6Gz+mjAa9Ib
-	IYLJmiyA=; b=mRm3b5Cylo0Oefd65GprVzw257qSTXOIB4JHw65HOZ5Pv6Whwbp
-	NpnUnOlzWMu34L7WguOIlCGxe1dhobfYU2bcF+pEwwnQU3zuaZ36YsuYC9A95S66
-	QgWdFNU6X3T+miQQcVJK+S3G+jFwmBSriujNTM2WN+/c6uQgbEYxZgcU+/16KAat
-	AsH0K9qPzh4BQKeq1AIPsITj4ueFfHk9bdgGTYFJzGUjNQPFiEggG6drCtbokYXh
-	/AjmDB4qK0mhh4CEtd+M4V1sfUUi3HkreriSbN2NmgcwKS9y1hrWX2Gcep8+q9QD
-	ARheq3BOPveEC7ic2khf6TCfcDeEXeIOQ2g==
-X-ME-Sender: <xms:VXLAZ9egayGUi525ZkbdSK8QGTj8jSNIQoIdQiC5lbu6h56E9g5_Og>
-    <xme:VXLAZ7PBfu2QqcnajwuSOxJuJCcYfjEakF163Z6tp8xj0iO_erk0hsqttgC6tsMJl
-    o6iOiq7bxXS3YVMMQ>
-X-ME-Received: <xmr:VXLAZ2ijY8PhZDTqgoo06_IwpBXNblepLNlTwTtsVtR6OHMqkPWdNMOOMDVm_efSosqXKXZ1HP6jVE6lf5raG-gwLpJcfOwcIHfDd6j_5QSW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekjeeijecutefuodetggdotefrod
+	1740668095; x=1740754495; bh=fOFqP3G7i5ByesAxa/AtK4ZbW/7kVyujXYO
+	b02hCgYs=; b=QJQzWI5HWH9e1HX8Xx4Y6VYzEiBR87svxbs+gUmSHi76DefRl9h
+	TBojbuRhaLKwoUXJeZ78NU8bt888NDfUiRvmrdYu0W8K1ZEz+xTgYYuMfNHq3dY3
+	lZHJghieufJxdHmvHWD5z7+d8a86xon94PoQld+FgFe/5rwooxUQLBBr0+dgviKx
+	uCT0QPxNJI6Kc+UQry63zUmWgJoeP2S4kgHhbB+DXRT/xkTn2VTHtZ4u0+7GoonA
+	uQGhk29IGX3DdtuVEo6PUHq/jPoSrVsKom+hkNJfRVXZ+QZVophx0NWCWISMI1Ii
+	GxPURGMcRmbduRdTEUQTC+1/ItZO7xYbywA==
+X-ME-Sender: <xms:v3zAZw7MllYy7bsirEkqHPwcmoheA6INMFJsg2qCBRQmYYDbZzRjyg>
+    <xme:v3zAZx6SZ-KkN6tAyBCMVXLBivK5615sXoZr-nvRkYl93En4-d_zR352ta7-18Cxp
+    VQ4GzQWdK2wPBsQ2g>
+X-ME-Received: <xmr:v3zAZ_eCaCI_mHRceJWbgfz1IzG1srTbkMWWoxcj_1zC4O0tNdvjz-Q4t-3nRJPNR0wOb2y_BJCviUrUICic-lw9RYYTmMg8oNrCCcwwayfC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekjeejhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
-    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtg
-    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehm
-    hhgrghhgvghrsegrlhhumhdrmhhithdrvgguuhdprhgtphhtthhopehshhgvjhhirghluh
-    hosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:VXLAZ29v_86fjU3LbVnoOayMOFViw0KDSgvJw2gVbsXhz30tpipqFw>
-    <xmx:VXLAZ5vwd9loJI5v-sfgHa-rK9qZfEQ3sElmI0a9FIwcC65INircWA>
-    <xmx:VXLAZ1FQBxTwq78rWd_33QHQ4ingyWi2SP_X59Wvnmcz2ugNV4cnYA>
-    <xmx:VXLAZwOKj9QKTjw0zA8VeMWE9WzJuzBhnYh05Z85rhChC3JzGCe5kw>
-    <xmx:VXLAZ3X1TcsvUAcVQIbDymuiBvqsgr8WpnsaTJMaN9rcozoT1-RWkVpE>
+    hmqeenucggtffrrghtthgvrhhnpefhiefgvdffvddtuefhlefgleehgfefveeuteffudfg
+    heetgfevlefhueeuveeuvdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
+    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
+    hithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhrrgeltdejsehhohhtmhgrih
+    hlrdgtohhm
+X-ME-Proxy: <xmx:v3zAZ1IZwb4_OtDjGDf2ZKKe2Y7BDwsavbl1Mo4XA9ln-_eJeMSMfQ>
+    <xmx:v3zAZ0I402S-qPe3zT_HZekgXN8zWy5rkBzUcFfBmEN2j0z5izhmMA>
+    <xmx:v3zAZ2zcOEwQPs-Q1XyHAExRUpzHcaj9FZI0b--yH_Ka0RP38sA2nw>
+    <xmx:v3zAZ4JzbNiq7pWimMaL3TIQogJvdoWP9aoJI7OipeL7UXVjSDcbZA>
+    <xmx:v3zAZ43jf_lNhvygFM1hj68m5qLzhwOyDSN1ZcQp8ip9-5rEFBzqEhO1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Feb 2025 09:10:28 -0500 (EST)
+ 27 Feb 2025 09:54:54 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 2756b4a8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 27 Feb 2025 14:10:26 +0000 (UTC)
-Date: Thu, 27 Feb 2025 15:10:25 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id b6bdd71e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Thu, 27 Feb 2025 14:54:52 +0000 (UTC)
+Date: Thu, 27 Feb 2025 15:54:51 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v7 3/9] packed-backend: check whether the "packed-refs"
- is regular file
-Message-ID: <Z8ByUakK-YNyfwuL@pks.im>
-References: <Z78bmBSrDR20GY6g@ArchLinux>
- <Z78cAU69IUSDgpuD@ArchLinux>
- <xmqq5xkwd042.fsf@gitster.g>
- <Z7-4XRCVvLjFCFR8@ArchLinux>
+To: SURA via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, SURA <sura907@hotmail.com>
+Subject: Re: [PATCH] upload-pack: no longer use hidden-refs as
+ exclude_patterns
+Message-ID: <Z8B8u_d37IFOpSln@pks.im>
+References: <pull.1866.git.1740660371583.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,48 +87,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Z7-4XRCVvLjFCFR8@ArchLinux>
+In-Reply-To: <pull.1866.git.1740660371583.gitgitgadget@gmail.com>
 
-On Thu, Feb 27, 2025 at 08:57:01AM +0800, shejialuo wrote:
-> On Wed, Feb 26, 2025 at 10:36:29AM -0800, Junio C Hamano wrote:
-> > shejialuo <shejialuo@gmail.com> writes:
-> > 
-> > > +static int packed_fsck(struct ref_store *ref_store,
-> > > +		       struct fsck_options *o,
-> > >  		       struct worktree *wt)
-> > >  {
-> > > +	struct packed_ref_store *refs = packed_downcast(ref_store,
-> > > +							REF_STORE_READ, "fsck");
-> > > +	struct stat st;
-> > > +	int ret = 0;
-> > > +	int fd;
-> > >  
-> > >  	if (!is_main_worktree(wt))
-> > >  		return 0;
-> > 
-> > I do not think it is worth a reroll only to improve this one, but
-> > for future reference, initializing "fd = -1" and jumping to cleanup
-> > here instead of "return 0" would future-proof the code better.  This
-> > is especially so, given that in a few patches later, we would add a
-> > strbuf that is initialized before this "we do not do anything
-> > outside the primary worktree" short-cut, and many "goto cleanup"s we
-> > see in this patch below would jump to cleanup to strbuf_release() on
-> > that initialized but unused strbuf.  Jumping there with negative fd
-> > to cleanup that already avoids close(fd) for negative fd would be
-> > like jumping there with initialized but unused strbuf.  Having a
-> > single exit point ("cleanup:" label) would help future evolution of
-> > the code, by making it easier to add more resource-acquriing code to
-> > this function in the future.
-> > 
+On Thu, Feb 27, 2025 at 12:46:11PM +0000, SURA via GitGitGadget wrote:
+> From: SURA <sura907@hotmail.com>
 > 
-> You are right. Actually, I just want to avoid assigning the `fd` to -1.
-> However, I didn't realize that I would initialize the strbuf later.
-> After waking up, I have suddenly realized this problem.
+> Signed-off-by: SURA <sura907@hotmail.com>
+> ---
+>     upload-pack: No longer use hidden-refs as exclude_patterns
 > 
-> If other reviewers don't have any comments for this new version, I will
-> send out a reroll. We have already iterated many times, if we could make
-> it better, why not?
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1866%2FSURA907%2Fmaster-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1866/SURA907/master-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1866
+> 
+>  upload-pack.c | 15 +++------------
+>  1 file changed, 3 insertions(+), 12 deletions(-)
+> 
+> diff --git a/upload-pack.c b/upload-pack.c
+> index 728b2477fcc..9ae42a463a3 100644
+> --- a/upload-pack.c
+> +++ b/upload-pack.c
+> @@ -609,21 +609,12 @@ static int allow_hidden_refs(enum allow_uor allow_uor)
+>  static void for_each_namespaced_ref_1(each_ref_fn fn,
+>  				      struct upload_pack_data *data)
+>  {
+> -	const char **excludes = NULL;
+>  	/*
+> -	 * If `data->allow_uor` allows fetching hidden refs, we need to
+> -	 * mark all references (including hidden ones), to check in
+> -	 * `is_our_ref()` below.
+> -	 *
+> -	 * Otherwise, we only care about whether each reference's object
+> -	 * has the OUR_REF bit set or not, so do not need to visit
+> -	 * hidden references.
+> +	 * config transfer.hideRefs of upload-pack is diffient from arg exclude of for-each-ref,
+> +	 * We should not set exclude_patterns here
+>  	 */
+> -	if (allow_hidden_refs(data->allow_uor))
+> -		excludes = hidden_refs_to_excludes(&data->hidden_refs);
+> -
+>  	refs_for_each_namespaced_ref(get_main_ref_store(the_repository),
+> -				     excludes, fn, data);
+> +				     NULL, fn, data);
+>  }
 
-I don't have anything else to add to this version, thanks!
+This message is missing any context _why_ we want to do this. For
+background: setting up these exclude patterns for hidden references is
+quite an important performance optimization in large repositories, so
+disabling it just like that is not an option without a good reason to do
+so.
+
+So what is the issue that you see and why is this fix the solution for
+that issue?
 
 Patrick
