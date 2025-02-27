@@ -1,176 +1,138 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7EB6184540
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 01:58:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0011A1624C3
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 03:26:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740621491; cv=none; b=rJXVgYD9131+ZKJspSJ3O8wJQh2/tnZ67j+CfmNKa9U8d9prJD/jqVk+0io15+dx5Agn4T+gzScMLonOrr/VvIcnOA0Q3gBA+pOK2OOptwZCf4OYulmcduJFz+3T2CG3GXwsOC6JWwqzkrQRycIKXNLsJJw4gSMZoxISoGvuBJ0=
+	t=1740626813; cv=none; b=WM6jUyIC1wa9pndt718rzvs/YB311sxLDLbuSHWEzYm2nE8l8D6RrEl12LGbfjkLf3ZY5lW21z8t7s83WNUL0Bmp4zxNdSzrV1l6P2XDNJh3mrJyeNSytvlVRta08icBCuMx6rn+Otal49X8JJBV70Tv3wlszjSiVfxe2TalB0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740621491; c=relaxed/simple;
-	bh=zcdvLcdb+zT3vH3uphQYee6QTi3kCRf9iq0mrbpOfL0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZFLesGLntD4d/2Wj48v9L+t0M4N4La4e9Kc5VdbnUhj64Lw9lsobE61qEalGtLgKBfjqzh63x457Evs0HhGAFPH4kzQyqftJ1ijoIaMWZ5OcT5/vga4H+FdR1J8DOjeYS5HhKtNkivdXKBrs3yfaswsCdp7Q1DlShcFv+ppTrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BVwyX+Md; arc=none smtp.client-ip=209.85.128.180
+	s=arc-20240116; t=1740626813; c=relaxed/simple;
+	bh=PnKryQO7fJl5C/g1i6BdevQF3fE8VMw2W73XpUiDXEY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BhAO6j/cETAW0cL+V6AOzBgYqgcso2MaIbLRenKMAvMWvwyyN81aS5+MrH9inS156URP6dUTMBTVuQrYgzplQs0fgr2uxhpBBev37azBJU27UyjHPvt0nX97y8ThHOUV7qyAdiznhCbUAqDL4Hoxjx9gkEqn+zmDIR3wOYX/lEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A3vUiKNz; arc=none smtp.client-ip=209.85.166.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BVwyX+Md"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6fd2fca1cebso3402497b3.0
-        for <git@vger.kernel.org>; Wed, 26 Feb 2025 17:58:09 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A3vUiKNz"
+Received: by mail-io1-f42.google.com with SMTP id ca18e2360f4ac-8560dea3ceeso13502639f.2
+        for <git@vger.kernel.org>; Wed, 26 Feb 2025 19:26:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740621488; x=1741226288; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1740626811; x=1741231611; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j+EKPLXfdeVQcctEZ0RZTV6jrvv1Hw0hXlS3njHW68k=;
-        b=BVwyX+MdrvINFUmVMOSVVRHsvxMBkrpRoPfBtf1FctuJWeIbTsfV9h/aAW+RDvEXFm
-         lmAPHOdLfBI85ZspvGyyQoKBFbS/QT8/OP7jyEkEpBumZghVZ15yIMJuvGegZfUjNNdy
-         kNTi7k3P/jhd6siy3dy4eCysUYxPRz0OZyPlZp4R4edYRFUSlukb1IAyxVbbkWmnghXm
-         m2yVw7jhcPZURz4+69iJaGt7urfc1a5NpJhrTwadE4FCUBfLXavVacwKThNZzSn3t17D
-         JCpGSsjn9e1eyeSAPANps3ZbxgkhAvO9pIchLM9JuHGYVn9MgQpypHycnFATNWQ2dv/D
-         tqww==
+        bh=ImzYN/7S6ULgh8EDwD8wC4DXO/re/woy0yEa9E594Ig=;
+        b=A3vUiKNzhuQLmcTRpsrQ/T17Ypih5T62AJpMclG5h87P7aLxtGRT3QbdlqcuPDwkqz
+         P6Q6b9iMThNvgOiqBIqb35oYVxu/QAqN+S4UZg1WsdeVrtKJxEaZpAc8jezgqs3Zu3/p
+         x9ftU+udpI3avMP0x8zCYkxkHp4MDMKYqjionbRmQUdSkjCL10vMZDCOKKi++X9GmFnL
+         DVORZK+seHebjuryoBHuECrdaZI5koMRct6Rpg5SJRAdryg/Npi6QdMM+i06bnJxzPB2
+         Mhw615e7wze18Hk8Q3usZ3U0HqVTPofHSjK0f0qwLpx2OOHL7PUf1q3ALX8OBIO4p8TS
+         bZ1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740621488; x=1741226288;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1740626811; x=1741231611;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=j+EKPLXfdeVQcctEZ0RZTV6jrvv1Hw0hXlS3njHW68k=;
-        b=bvAWQNYTp5XR6nMrXH1cEZU9EMSOMdKTiqs85xMEoJlohcyimM7BGfsC3qS/ptG1wV
-         5SowWRB18OfEIaK66kei+6NTt18pR7O6TR34HnH2L+8k8g9H1suUVXWR0CVkkE3Ym54m
-         m7MssrXq0kTE/CBenVBOGoiIpVpMhMcXVoIEkFZi08HHSyyfJITRnOA5UF1mO49+KoTR
-         srBZ5dAovjArEJss7aSJ5vJNQi+gC7inrMGTs48jyy/G/aPfRsr+C24jy/EaJtouj0Yx
-         D/WpeD5Qxpg5IwENe8GCwoeJv1cOabOVGE9/1fXlgDhdbLRLRD6uWOGpWlJzPqD9I11X
-         Gwxg==
-X-Gm-Message-State: AOJu0YzMBo9l06Akf80bd1AUW7HiQYghTT1oAL95Y1hbn8RYoMaaQttm
-	2xYZ2qjretadmFR9SEB8tEO4XLvlFVoprVtufpCB57DQfC70U1L5QbNvHw==
-X-Gm-Gg: ASbGnctznUp1YcVxS0W5byLv3p11I+GhjI1JNdwsAffxUpHAgXnZ3GkeFDp+9bereJN
-	8Wld8qKMuV880NMfl2TYumGUQ/aazUapsE2b8jZa3PXz3XwXsAoPrW9bE5q8vqCBUTweeGI3IhM
-	FzkXFaTh2upaFvnIE5S7p8nmXawFfWJovrsBQJWrQp8PAYo5aVrksAa7jtyY6Cu0mMfrh4IfSqG
-	JzSOSqklnEIBlX15nYFVsakgcu4hJHVQFNCRYqLtR9EkXHzVakq+6albU6TXYe6mhcICne+vaRB
-	J6CcFPMF2kbBvIFBN4RE6p9p88ZvssuFuxdU2RgMOcSfHEJY85ykc6ua7USdVgUrWdFX6o6Gh/x
-	D6O+ENEXMdJ7X
-X-Google-Smtp-Source: AGHT+IHV21OlKLaG5iys5JFnjbCTkIQpt6ujDcWElazI/xXbCKWN+QFA3mluoZCQZajAMjIIoayzyQ==
-X-Received: by 2002:a05:690c:3585:b0:6fb:9389:3cde with SMTP id 00721157ae682-6fd109aad0cmr87278537b3.3.1740621488302;
-        Wed, 26 Feb 2025 17:58:08 -0800 (PST)
-Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-6fd3ca0e6e3sm794107b3.16.2025.02.26.17.58.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 17:58:08 -0800 (PST)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Git List <git@vger.kernel.org>,
-	Git l10n discussion group <git-l10n@googlegroups.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Mikel Forcada <mikel.forcada@gmail.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Emir SARI <bitigchi@me.com>,
-	Arkadii Yakovets <ark@cho.red>,
-	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
-	Teng Long <dyroneteng@gmail.com>,
-	Yi-Jyun Pan <pan93412@gmail.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>
-Subject: [L10N] Kickoff for Git 2.49.0
-Date: Wed, 26 Feb 2025 20:57:59 -0500
-Message-ID: <20250227015804.100880-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <y>
-References: <y>
+        bh=ImzYN/7S6ULgh8EDwD8wC4DXO/re/woy0yEa9E594Ig=;
+        b=Jbw6/Au8amULDtm6lgUlHm/xoSFI+X3LAeCqJmXCZQq1y+hpgswtQ1QGvReb5pi7Cw
+         Aebw6VXEjTeuaCwSiRCSz2Nv51V1wnqcBxR1R4ogyjR9Cz25rs2m0XShHvVkB+aqrVwZ
+         8AaQWgddB0Xmfe0/LfDsUtQR8ucXHfDl+2fYzEDGKUNIPbhrP0+7PuWqP9PUGYK4H7Fm
+         KHMJgVfhuGAYjC7LIhhFlTWJHjGRY85xq0XvFRnWrWJvW5ez9YVeBrbyZIq77eA1uzk8
+         nY0qONO963hXXzmdufRkh/beyR99C40SqC2S0dMd5HgL6cTI5Yc1yilmvonBSidabuOD
+         mFYw==
+X-Gm-Message-State: AOJu0YwwEoDhiKCPQqmUAOz8TlX857jidHwml/mlTpfu6CyQTrkcpzpe
+	YE9CtnirqH8imbQaDN8NEyKtY247s+9DanJWb9j/G7njwutxNwUWZsawCrbbzutNEpjO8CxDiek
+	+0A1D6U4mV0yjvezL3CNoRjRkmE9Hpw==
+X-Gm-Gg: ASbGnctRmcT0B4rj3KtJMZV8Fkz51k1VGvyvhcstH/6PshMW6RvyJUPPKP7S/rhEytQ
+	cFwxrHszSlt8AUquf0jw7o9lKBMG9zJki2nlxm+5Tk5PaRhrmPgRj7sKISdix7BppmVY941Lccm
+	y4ngfmU0bCflLMu8snkZFewocMpulYwodVKyFiG2k0
+X-Google-Smtp-Source: AGHT+IF0Tn28mpwWcfZYTCn+mHfOfPKYyxnUEKqobAfFsPO/VzKn7HUTN4kL2QV7n7XD/CGD0ZBOnw1pEFntZCeMY94=
+X-Received: by 2002:a05:6602:2dc3:b0:855:7837:ab12 with SMTP id
+ ca18e2360f4ac-857acc6402fmr556215039f.3.1740626810915; Wed, 26 Feb 2025
+ 19:26:50 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250227014406.20527-1-lucasseikioshiro@gmail.com>
+In-Reply-To: <20250227014406.20527-1-lucasseikioshiro@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 26 Feb 2025 19:26:39 -0800
+X-Gm-Features: AQ5f1JqUgzi1qbT7gVZve16S3uUlMbG3_MDqOXkqHptQzuzjqcRYmuKZWypQM_s
+Message-ID: <CABPp-BGA530spgVtsU2UO7GyVXL2x=R_80n02pMiPCVA+1SgBg@mail.gmail.com>
+Subject: Re: [GSoC][PATCH v4] merge-strategies.adoc: detail submodule merge
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Wed, Feb 26, 2025 at 5:44=E2=80=AFPM Lucas Seiki Oshiro
+<lucasseikioshiro@gmail.com> wrote:
+>
+> Submodule merges are, in general, similar to other merges based on oid
+> three-way-merge. When a conflict happens, however, Git has two special
+> cases (introduced in 68d03e4a6e44) on handling the conflict before
+> yielding it to the user. From the merge-ort and merge-recursive sources:
+>
+> - "Case #1: a is contained in b or vice versa": both strategies try to
+> perform a fast-forward in the submodules if the commit referred by the
+> conflicted submodule is descendant of another;
+>
+> - "Case #2: There are one or more merges that contain a and b in the
+> submodule.  If there is only one, then present it as a suggestion to the
+> user, but leave it marked unmerged so the user needs to confirm the
+> resolution."
+>
+> Add a small paragraph on merge-strategies.adoc describing this behavior.
+>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Elijah Newren <newren@gmail.com>
+> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> ---
+>
+> Just removing an extra blank line from v3.
+>
+> Documentation/merge-strategies.adoc | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+>
+> diff --git a/Documentation/merge-strategies.adoc b/Documentation/merge-st=
+rategies.adoc
+> index 5fc54ec060..c8d81bcda6 100644
+> --- a/Documentation/merge-strategies.adoc
+> +++ b/Documentation/merge-strategies.adoc
+> @@ -22,6 +22,13 @@ ort::
+>         was written as a replacement for the previous default
+>         algorithm, `recursive`.
+>  +
+> +In the case where the path is a submodule, if the submodule commit used =
+on
+> +one side of the merge is a descendant of the submodule commit used on th=
+e
+> +other side of the merge, Git attempts to fast-forward to the
+> +descendant. Otherwise, Git will treat this case as a conflict, suggestin=
+g
+> +as a resolution a submodule commit that is descendant of the conflicting
+> +ones, if one exists.
+> ++
+>  The 'ort' strategy can take the following options:
+>
+>  ours;;
+> @@ -96,6 +103,9 @@ recursive::
+>         the default strategy for resolving two heads from Git v0.99.9k
+>         until v2.33.0.
+>  +
+> +For a path that is a submodule, the same caution as 'ort' applies to thi=
+s
+> +strategy.
+> ++
+>  The 'recursive' strategy takes the same options as 'ort'.  However,
+>  there are three additional options that 'ort' ignores (not documented
+>  above) that are potentially useful with the 'recursive' strategy:
+> --
+> 2.39.5 (Apple Git-154)
 
-Git 2.49.0-rc0 has been released, and it's time to start a new round of
-git l10n.  This time there are 35 updated messages need to be translated
-since the last release. Please send your pull request to the l10n
-coordinator's repository below before this update window closes on
-Thu, 13 Mar 2025.
-
-    https://github.com/git-l10n/git-po/
-
-The following description of our l10n workflow is from the "po/README.md"
-file.
-
-
-## The "po/git.pot" file is a generated file, no longer in the repository
-
-The l10n coordinator does not need to generate the "po/git.pot" file every
-time to start a new l10n workflow, and there is no "po/git.pot" file at all.
-
-Everyone can generate the "po/git.pot" file with the command below:
-
-    make po/git.pot
-
-But we can also forget about it. By updating our corresponding "po/XX.po"
-file, the "po/git.pot" file is automatically generated.
-
-
-## Update the "po/XX.po" file, and start to translate
-
-Before updating the "po/XX.po" file, l10n contributors should pull the latest
-commits from the master branch of "git.git". E.g.:
-
-    git pull --rebase git@github.com:git/git.git master
-
-Then update the cooresponding "po/XX.po" file using the following command:
-
-    make po-update PO_FILE=po/XX.po
-
-Translate the uptodate "po/XX.po" file, and create a new commit.
-
-
-## Refine your commits, send pull requests
-
-In the "po/XX.po" file, there are location lines in comments like below:
-
-    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
-    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
-    #: builtin/rebase.c:1671
-
-These comments with file locations are useful for l10n contributors to locate
-the context easily during translation. But these file locations introduce a
-lot of noise and will consume a lot of repository storage. Therefore, we
-should remove these file locations from the "po/XX.po" file.
-
-To remove file locations in the "po/XX.po" file, you can use one of the
-following two ways, but don't switch back and forth.
-
- * Keep the filenames, only remove locations (need gettext 0.19 and above):
-
-        msgcat --add-location=file po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
- * Remove both filenames and locations:
-
-        msgcat --no-location po/XX.po >po/XX.po.new
-        mv po/XX.po.new po/XX.po
-
-After squashing trivial commits and removing file locations in the "po/XX.po"
-file, send pull request to the l10n coordinator's repository below:
-
-    https://github.com/git-l10n/git-po/
-
-
-## Resolve errors found by the l10n CI pipeline for the pull request
-
-A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
-help git l10n coordinator and git l10n contributors to check the conventions
-of git l10n contributions, and it is also used in GitHub actions as l10n CI
-pipeline to validate each pull request in the "git-l10n/git-po" repository.
-Please fix the issues found by the helper program.
-
-
-** Please note: The update window will close on Thu, 13 Mar 2025. **
-
-
---
-Jiang Xin
+Looks good to me; thanks!
