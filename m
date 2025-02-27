@@ -1,107 +1,120 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21E3127002C
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 00:03:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FED45945
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 00:56:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740614600; cv=none; b=fuwYkXeFS7eguvtrXOgubbASnKeKyT2cugNovZLHT3RA28Co/kO1ixzOkkeYRoKgMSUHmZR60dRt7h8ilk2thHyVQdm9lY3bniGUxx7b+Vxtq7aEu8zBoG+latMWBjhcZLWilmNbnCwtPb+aGZ9za/OyOv6846q4chw7A6y3hqQ=
+	t=1740617814; cv=none; b=GpP/zaArHPxO9hdRDV7mglZ8WvKpZ8B2uI9glJYxVuL5l2XZX8iYBr/7LV+1yD2JOOW0lwIJ4Dgx8mawWQn69gLmrumkH7IXMQiZn7mDgZvINSJ2zK97xU6cIfjqZe83p/4jt5HQ1ZQ/NoXZElKXR7NKqMLuQUiGmKHYvnsydfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740614600; c=relaxed/simple;
-	bh=hhswwE/3Tx6+XdZWg7MDl+VOSZ+cLlojrT0hzBeuhDE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o7D+57Q+QhoqM+vLjQPFLO+tP4OnD05Lf6qyBGq/qj67KeMYxUsm6EWsH4VGlOUKbdxvCVpnS8aFn3cu0cmbIP+zoXzxaYJ6xkI64AKvuiZ8wewV0X70qTJjMqOoWTmtfrsJ1n2DrJ3twD+eK3rLpNfnqQH/SD9m1IFOlkfSPcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qiDET2Vc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=8MEPWT0v; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740617814; c=relaxed/simple;
+	bh=UfayfJ/KMQ30uaPBxpWWk01TQBkcNMZcpetkw7iEnuE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mLUZSD3mX12b0GdW7+AiwH+35vjbg9fVtx6j/W7UJEli0xYH/uGJgRaV+AH2VokFPfpuBlZwgzl2xZtiQy54v/GtcAi2DeAU8NPJ8wpx1s2hARyAYHT+uGUOMeZAcxRe3QORmF3x/AIBDjpMNW7hjRtLOXNPdOVZsEdCAiOsKJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gQgCxNQN; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qiDET2Vc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="8MEPWT0v"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 116141381137;
-	Wed, 26 Feb 2025 19:03:16 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 26 Feb 2025 19:03:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740614596; x=1740700996; bh=EtSlCwbtGA
-	pDqdAWAbwt2bPs87XzCwwPo6Yg+0rggIs=; b=qiDET2VcdB3VvhrzkJsDpFf0un
-	IEVYpVss2kXZK7nDtojDIEhh2Wq1n5DOJatuj5iFPOEgt3iy9kBZuLhgCxTfoFx2
-	iFpBimp8FrwnysBAx4/FD+v4mWYHXYg2QyM+O7J9Vp21n1VhRw6tvLdzu6pZtRW6
-	G4GPdF99tXFmzDo95T1x9YQMK2Bh7ZxHydeUdaS6HNunyLnUUc+hAqPSso1cUPWX
-	31quNxjk1tE86Q9E+cDspX0ApwAgt449Ka0nGkepP+1v/Cu7efVwAnem9Pc+eHTP
-	pYpA+RpJv0+SiFxc9ij//tD4RwEIVy0lnOdeWEbxEqO91gw9apc/8TocpEmA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740614596; x=1740700996; bh=EtSlCwbtGApDqdAWAbwt2bPs87XzCwwPo6Y
-	g+0rggIs=; b=8MEPWT0vyQUu+ujmVrz34QpNW6SNNdLs1qNOGLNXEZacBzKa2vY
-	ft336KN0BYUlnWXUG8mZ4Wsn2ptTRoUc9Abpp36hAO8rWEGl7sWzI5tsjfaQ3PSL
-	p5v6qELjLbhsgydu1KRock3dy+2m3fP4/cyfWShPyyOGjbN2HJOXlax0fabSh0Ya
-	siEOQYYkibvFVg7SyJPkdxRBTrWgyZ8ikoAumFY4jMhwfgCRjk44ObRLwZed3/A7
-	E39hsGt6BIT2lPh7Uh8dj2p2DRiG20lmH8lkh7feSlPQz63gikDgQ6YUihlr0HPw
-	YaPQHYmB03uV7i1i4S7vZo4E4nC4lz71mig==
-X-ME-Sender: <xms:w6u_Z1S8l3HctJKiINkVnULR9d3E55JQK2fnzDgeYyEUXC0oAEXyQA>
-    <xme:w6u_Z-zDNG4QWaoKU481Z1Q14HVdYB0lwKSuii6C0daJ91Anep1yYTiOI8Fkh-hg3
-    idYk5y2mHAjsmpD3g>
-X-ME-Received: <xmr:w6u_Z63LbZHlVlL0Z2y2sc36WeSFBT5Q-nPzOIzMf2L2HmfaNrtDbZ2AASbtirnXe2hr2DnBSywRYFHcnijKJWbas__izcDG0KGT>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekheeljecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhsse
-    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehpvghffhesphgv
-    fhhfrdhnvghtpdhrtghpthhtohephigrrghkohhvrdhsmhhithhhseifihhsvghtvggthh
-    hglhhosggrlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:w6u_Z9CSHJ931ZKi3MPTuroq01nASB5BMwUVj-odVi2h0DcDdFVGxw>
-    <xmx:w6u_Z-gmFV_aCk7SE0PgGfCmMY0VaZLNmWawMYzOdYi49XV7qQ--ag>
-    <xmx:w6u_ZxqdvAvnZD_asGe9_3NJHGLUG8P7uwCa_XX2BQM-_Jt_Sf76Tg>
-    <xmx:w6u_Z5jRCUdCrIW0IM0udYs7kmW3HxsAFriUD_u9cxNTxu6rvBLXKQ>
-    <xmx:xKu_ZwaL2ELmWgd9sOsQHSHh69squuEsoAocm5cOTUgQmCa4bvhDJuZ6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 26 Feb 2025 19:03:15 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Jeff King <peff@peff.net>,  Yaakov Smith
- <Yaakov.Smith@wisetechglobal.com>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: \b character escapes in CLI usage
-In-Reply-To: <Z7-lbGnlzGbhrHZN@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Wed, 26 Feb 2025 23:36:12 +0000")
-References: <SYBPR01MB579278DD5EC6E13CA9A213FDE2C32@SYBPR01MB5792.ausprd01.prod.outlook.com>
-	<20250226073822.GA21138@coredump.intra.peff.net>
-	<Z7-lbGnlzGbhrHZN@tapette.crustytoothpaste.net>
-Date: Wed, 26 Feb 2025 16:03:14 -0800
-Message-ID: <xmqqplj49rul.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQgCxNQN"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2234daaf269so7579445ad.3
+        for <git@vger.kernel.org>; Wed, 26 Feb 2025 16:56:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740617812; x=1741222612; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2pWt8MljxK29pkaPYlMXYEt2VqH1XuLL9yt7i7xRcmI=;
+        b=gQgCxNQNNbqoZZNPUxCC1KKqwctxVjEshYiExYrzMUriPFxmzKg+oobCCkZfKIWeCe
+         Dttt/huys7TlMkyyzmQjpJgwmsjXUxVrMEYiOgdQ+3uwRKreV4b8ZxB0gP6vxX6e+5gD
+         BbCot48YyDD/OqfeSdeC0kTJaFJRMiSDfscUZ/W7PSoNEdcGfvoF8irQdTaqSVKHFZ0a
+         2wueLZ1l9YrGMrwRs5G7dcocOikg7ntH8o2Wg8irZU23uvfVrFpqNNfKK5UwgliyYlRt
+         4OW9tesXYuQi729nwGKX9HUKoIHkSsJv3C/mHa1aTtxpZLhYqtTS4IiqXt/hs8/IlhnK
+         u2PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740617812; x=1741222612;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2pWt8MljxK29pkaPYlMXYEt2VqH1XuLL9yt7i7xRcmI=;
+        b=lFmO3b9VQFfuTSsdkP/YMR5t23+NJNYzxOLjRBUjkjn8TlC6esO6Kl2TdEwkQ47V7u
+         I603MNga44KuKICTZkCi+NtnjT51+0DdezshkeCVSmA2yVnbOsrawP6s9Rg8FPPcDuh4
+         2nxwHJyyGbIHogukbbsNwfizaTgJWtkrdq96nKOP6a2N+WziiDoLma34IBN4d5arzMEr
+         C/wrn/Kmiibc0Csfc4PU9tyhrc88eG0i7OWs9JfQLedOwsulObRwf/42AyrIFdsff2bo
+         7114Hvzdns0IWMhXGZ5vpvfT1ZMkEN0hMCUTWLBCJx7hEjcM2dcljIu2nI90q6dfI4SD
+         Q7wQ==
+X-Gm-Message-State: AOJu0YxLdH90AyDR0LkqiLQvYFTOMhzaqlRgHjkt6ndCQWsMt24FSUVo
+	Zn1CxPY1oK0V9mKFd00VpNmVmeyHACoGFqCWE4bEZkEEzgniBdzL3jXmLA==
+X-Gm-Gg: ASbGnctRa9S7PgDD+FY95QG5UP8kUhx56M9qZmFBYCXJVfliD058tTI9ESBl+rkEma1
+	Px52WJh9GCrrz/zylWJg9CRG/bVj+EQ3F7LI9hKnqN64WL4K8ZmcUmJUs/fmg5t1QUufB1bVWJU
+	d1e0hwV/fg48J3Pe90aXn+XhSpPTLp5TTyaNCCtjAmubJx6ZujMEX9YNDvUujicvhqhdg3ih3vf
+	inFO6h46nivr7EizcKWokZJgG/YgXFmbaz5dTsvHE30hiAzqLx+LqZ+xxVomgP3z9zxUGt6Cvyy
+	g9oYBPD85HuwexRYSFYCyQ==
+X-Google-Smtp-Source: AGHT+IFZuxbh/QtUV4qKOjz14UGEd9mtvCl9XemO0iPCs1UZ5OKXTkOb10pQ1vFLmGfAX1FR8cpJPg==
+X-Received: by 2002:a17:903:2f88:b0:21f:3abc:b9e8 with SMTP id d9443c01a7336-22307e70152mr157038395ad.43.1740617812340;
+        Wed, 26 Feb 2025 16:56:52 -0800 (PST)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-223504e1976sm2657235ad.184.2025.02.26.16.56.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Feb 2025 16:56:51 -0800 (PST)
+Date: Thu, 27 Feb 2025 08:57:01 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [PATCH v7 3/9] packed-backend: check whether the "packed-refs"
+ is regular file
+Message-ID: <Z7-4XRCVvLjFCFR8@ArchLinux>
+References: <Z78bmBSrDR20GY6g@ArchLinux>
+ <Z78cAU69IUSDgpuD@ArchLinux>
+ <xmqq5xkwd042.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5xkwd042.fsf@gitster.g>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Wed, Feb 26, 2025 at 10:36:29AM -0800, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
+> 
+> > +static int packed_fsck(struct ref_store *ref_store,
+> > +		       struct fsck_options *o,
+> >  		       struct worktree *wt)
+> >  {
+> > +	struct packed_ref_store *refs = packed_downcast(ref_store,
+> > +							REF_STORE_READ, "fsck");
+> > +	struct stat st;
+> > +	int ret = 0;
+> > +	int fd;
+> >  
+> >  	if (!is_main_worktree(wt))
+> >  		return 0;
+> 
+> I do not think it is worth a reroll only to improve this one, but
+> for future reference, initializing "fd = -1" and jumping to cleanup
+> here instead of "return 0" would future-proof the code better.  This
+> is especially so, given that in a few patches later, we would add a
+> strbuf that is initialized before this "we do not do anything
+> outside the primary worktree" short-cut, and many "goto cleanup"s we
+> see in this patch below would jump to cleanup to strbuf_release() on
+> that initialized but unused strbuf.  Jumping there with negative fd
+> to cleanup that already avoids close(fd) for negative fd would be
+> like jumping there with initialized but unused strbuf.  Having a
+> single exit point ("cleanup:" label) would help future evolution of
+> the code, by making it easier to add more resource-acquriing code to
+> this function in the future.
+> 
 
-> I agree this is the right choice in general.  I wonder if we might want
-> some sort of human-readable output option that might escape these that
-> users could use.
-> The output might still be machine-readable, ...
+You are right. Actually, I just want to avoid assigning the `fd` to -1.
+However, I didn't realize that I would initialize the strbuf later.
+After waking up, I have suddenly realized this problem.
 
-I wonder if isatty(1) is a good way to say "ah, we are not captured
-in 'foo=$(git blah)' and not feeding somebody in 'git blah |
-somebody', so we do not have to worry about being machine readable".
-If that is a reliable way to tell that we could butcher our output
-for the sake of keeping the terminal state sane, we then can always
-do the C-quote escaping, or even information losing '?' redaction.
+If other reviewers don't have any comments for this new version, I will
+send out a reroll. We have already iterated many times, if we could make
+it better, why not?
 
+Thanks,
+Jialuo
