@@ -1,72 +1,72 @@
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7D927781F
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 22:53:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B43277811
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 23:03:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740696800; cv=none; b=W7tCcAE8+p5BpQ8dXOepw5rAnNxRKZwtxzH+cQQP35fPPJEw9szm4DJqaQtOCjqMvsoUm50sHRuC553PDcZr0bMUMMOQXwsWRbDx6Ouf6a9qGTV7KSbzOk6BayxF6bGxbkZpBvxwecYouLWG/A7p9ShF7fif875ypyA7MdIxeC8=
+	t=1740697394; cv=none; b=Dab87pHBeMUFEaJbMuRppD8Wr56M4wxQTyCtw3zHSMRM25vOBGfwHSLdjj+87CM6zs41u8RY1XqBY/URi9n8jvJ52AoscuOa0PctRxXqbg60Gr/kZ7OBogvXHJ6pYqqKomy5LhxcyAdc9AoBg0e72dXFc6zYfU9BpdLvh+aYGeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740696800; c=relaxed/simple;
-	bh=lo0eN/Zc7GwgKyh0DwMhuMgTaXpeL3O4quXf35p0EqE=;
+	s=arc-20240116; t=1740697394; c=relaxed/simple;
+	bh=S5ZIaHbn/1lKPC/cRK86HP4hXDL5p6EQ+cfHOuQQrlA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PY6vaYVLKMKDIlBgKZaOxsdHKJsF0Kfc60rE4DRKkEuukTP9tKuafAGL8+0gxuEpEKhUOqVQBUPiguSLhstf35IMErL80sKxHj7vZuxADd3yfTig8cIFc6wNtQy+DWuN5ni1/JodycI1gI1agYrEAuVDdZqRXj62GJ+kqK6QPMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Ytgw27/F; arc=none smtp.client-ip=209.85.219.182
+	 Content-Type:Content-Disposition:In-Reply-To; b=SoXvaRmcfyUQj8CSLVWIceHESFjBvxJQHY5bxJP39fouWTY7/41a9r/Tut0dln6UysAutPIL+TRI239lseobrvNwLI+dCVm1ZZzopq3O/leclxyZsYuG/BK9ms+rsOQ4SoICHgxmcYBd3kdhirc8BoCshk/BspLFbUhW9JrJQb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=OqzW1zdY; arc=none smtp.client-ip=209.85.219.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Ytgw27/F"
-Received: by mail-yb1-f182.google.com with SMTP id 3f1490d57ef6-e609cff9927so956938276.3
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 14:53:17 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="OqzW1zdY"
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e545c1e8a15so1864076276.1
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 15:03:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740696796; x=1741301596; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740697392; x=1741302192; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9mnu8ez3JE/9ERVOtgW6qZexSLhk5y7MxF/kxiGvMTM=;
-        b=Ytgw27/FhhxYFZUCH+hsm3dT8VhSkf90M8A6Xcj/fywlZqhVh4KkgcKinhQ+1ZDgHJ
-         sPrgUPMI9OwYg0VXows0zGd04CrQFktv9y7vGqFvOBTIP0bt73ERSBKXKiv2Pqpcv5J8
-         F2Ep7pSaBpmuvTSmaOzH6/feA+TEnpNVwFCgGdypt3MS16y92CD/yTDRf3JpL5FUiD+X
-         wMOuKExEqKbutlsqM7V7ka2iM6pFihKAlHmr3IWBEXKFywxyC5iKBPoNXxHQDk53GKKs
-         nROE/KE5ZlPvvX+nFnXLwh81qa6I4Ek4RbPPetetL9r1IXRDgDyGVsFH2R0M2Z2HgKbL
-         5XoQ==
+        bh=23/4tx8id9TgvKutn01F/r+Zgd0OJojlp+9Jyh5cBXE=;
+        b=OqzW1zdYXIk/7Jj1E9DXia5QiiIsDv/rmfWT2AWfYrmzdUmU7sc7TtzsQ+9bkrI8vL
+         4pUCLeRxHp5Xt7ueKGN4qV/elSPEp3r6mUny0S9F2yQh3Tj0qOWXacUBxORct3nrxkdA
+         3xXk1/RrQJUhevEXiXL6mHFtfGPvFAG7DqK8l1NNYpCGUI8j292yeZK+kAqbfzkKEZZu
+         YuNphTm4N55KPj8lQCR1lYkdhpbeghpkz9fsEqWr7bWGf0Omj6u4ecGGtPMYUKDweJZN
+         EfK7DUDAqaM+fvfg1PsmNNyWbWf31YFbmHNU9nxsKNkV1qQugfH0But7DIwm+ZenDAdo
+         MiSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740696796; x=1741301596;
+        d=1e100.net; s=20230601; t=1740697392; x=1741302192;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9mnu8ez3JE/9ERVOtgW6qZexSLhk5y7MxF/kxiGvMTM=;
-        b=LxYFIW1oiffGKcss9/Y1gdEtpD0BwF+7Cig0xAxxBs3hI7ERX/SfiQl0k5/kASb+s8
-         70tJpE/sxg4dtSxTdEqQuXHL+iodq5W6L5tWaerhmaOg7jYUTpMPZXUCEynW53jbc4b6
-         vL6X0/BKnV7sH5PKRmadh1lpyWiLwef3Aom9xrJD+KF66Gj7nOiZep51XKW7/WiQd7fU
-         x7wZhCNW29dL2rbVbOxxsAVnRJ5Sf9UYSp4BPwoW/pbdc42Puh3XAcIZi19RcrTBHKoD
-         vpU307qC2uClfcE5SulglLMBf+NN9ZFc7/QAsaiqMjMJIgKkNoUsKtfhJ5bdlMp0Uv68
-         4aXg==
-X-Gm-Message-State: AOJu0YxDP/tCL73UihFGDy8qXtN0q6Rk32jq0s43Fwi11i9DHzIMo4I2
-	Zb5BYHb5aO5GAyz0ErIOYN44tkQ9MyKz646Elphc36zSAhjhk6/cP3IGBffbJmN9c3nQLTQ12re
-	0
-X-Gm-Gg: ASbGncuaH9vBMrYe8fBQzfMy6N0k5ByT55oMf0KE6a2a9AB9SrSHwedM4QHG0LmTmPa
-	hkaq/cBu9dsFgyYx518+swzl7+jduXnAvw/bxEx/VBCRx4Lob5C9UvtUpZx19iRG2BG2SW7EtfT
-	YQnwWXuvuLde9UbRaTz/bmJU6GuDgMGcvD4yOFNxQQ5FQwzXHfQ6RZ/pywoPeEnVdJ7c4bPhJ8d
-	Fz4ulVeHiUSMtQKw562d3xvKOLMR6EXBSteMbMJdPAJoOfpCnXv5V4PM3dsrSH+ZIapJOylc2Hr
-	0rInlt7tdPqNAaKOdIUxjawzNUNEnY+P9+1t8DB51UwE4a5U3n52aRm0eD8nrQv1Bp+3xuVkIQ=
+        bh=23/4tx8id9TgvKutn01F/r+Zgd0OJojlp+9Jyh5cBXE=;
+        b=Nkhf99J54A6zmE9WsCqKsxi33ELDcTEGcPlDXVNAeWZogc2Mp6ptCOtZMuwVTwqbtw
+         EK6ybG12G+AH8a40X/ZGZ4sOrYsWSJ6C1xGBf7qdLU8OTM7HDxuLk+c17yzmVWMCkUPx
+         n/Us3voVPrjOEWROvm9rEmO427FteUcwF1E4/WgJxoDXv5++jFq+EESVOaW+2WDsyUMH
+         f+mhW40MUoeXWQs9ZV1a8nlzU9YOrsB5wHxs2XcZjIZyFY/SmFSYV+L0cBwmtngQxyEi
+         +yB5cXJ6TGIxnpcjF+pJjsK/nj+MwVehrQuj1yb9/sShQStHlxjAYbJ+RoxGlQDVsHx9
+         YFew==
+X-Gm-Message-State: AOJu0YzOycAl5YQayZ0ueDEoPpj+wy8hLYLQASJZe+S5LnSnU51TVkf9
+	N2XU1O4V9uiNlszY34lcLbBFiPxnD5YeukWO/F2jQNa64cSC/p0io8BT7br4wBA=
+X-Gm-Gg: ASbGncsz6QBCHsp4ImpABB6npt7v8jNWFe/L99DVWCLn9CFBP1vY3U5CywQ/sbYcmM3
+	MDN0sU6j9wzELL9hs2/uWRBSouoWpt+T3NFARwCydVoemdrnUYOjp0/Oc1w0kQdKn/jjOfWcSTE
+	xiv1DclQJ/6zHMDBO40ZSNaa6YcX8JHBJb5qj/zBG1yJdNgJvbPsmVCZtrHWgeyWB8sMd8NWjau
+	gYuIj85la/LQZMTNMO0tyZCkK4TvQaRa6K571oGLcKtTOgsYMDfdkxE7svA8dnuND0QfVBuKY7U
+	uCt05bX0dCVFudhH8AJaTTEZliaYm9QwCrPlL6/RTdZIN5d8wYS60hmnx4lj8Rk3n7dEfiSftA=
 	=
-X-Google-Smtp-Source: AGHT+IHtaz6LlEmjXXJ3PJ+NCX+6siDO16ZQJXdai8KELG2PR8UhPMxk/d7TsGohdcAhAAxdqQi82g==
-X-Received: by 2002:a05:6902:2190:b0:e60:a93f:2a86 with SMTP id 3f1490d57ef6-e60b2f2e7a7mr1232327276.42.1740696796543;
-        Thu, 27 Feb 2025 14:53:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEvoKaxTb4P04MeB72HN5CXSFOHMCOEMVQTQ9zkW0zDB1NjvpOSqidLwfvEICxNGusw1GwmYQ==
+X-Received: by 2002:a05:6902:320c:b0:e5b:1805:36be with SMTP id 3f1490d57ef6-e60b2e91c81mr1170999276.6.1740697391692;
+        Thu, 27 Feb 2025 15:03:11 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e60b557d2f7sm31786276.1.2025.02.27.14.53.16
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e60a3a1fddesm707269276.2.2025.02.27.15.03.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 14:53:16 -0800 (PST)
-Date: Thu, 27 Feb 2025 17:53:15 -0500
+        Thu, 27 Feb 2025 15:03:11 -0800 (PST)
+Date: Thu, 27 Feb 2025 18:03:10 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Elijah Newren <newren@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] builtin/repack.c: simplify cruft pack aggregation
-Message-ID: <Z8Ds206MUMQzqGB6@nand.local>
+Subject: Re: [PATCH 2/2] builtin/pack-objects.c: freshen objects from
+ existing cruft packs
+Message-ID: <Z8DvLkWys6KaQNJl@nand.local>
 References: <cover.1740680964.git.me@ttaylorr.com>
- <8564f98259727225391edcb5ab3b47dd53f00e48.1740680964.git.me@ttaylorr.com>
- <CABPp-BE9=WUv1typWB7JB4HvP04Q_Bh6h23D=LzcpsAsggQ+7A@mail.gmail.com>
+ <c0c926adde2b7c8f4b53b7a274d5b8c040f77e62.1740680964.git.me@ttaylorr.com>
+ <CABPp-BGv6J307nTo1sUgAnE+7ZnueSPm4CJLb10wBGQGaPPDWA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,43 +75,114 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABPp-BE9=WUv1typWB7JB4HvP04Q_Bh6h23D=LzcpsAsggQ+7A@mail.gmail.com>
+In-Reply-To: <CABPp-BGv6J307nTo1sUgAnE+7ZnueSPm4CJLb10wBGQGaPPDWA@mail.gmail.com>
 
-On Thu, Feb 27, 2025 at 11:23:02AM -0800, Elijah Newren wrote:
-> > The original idea behind this approach was that smaller cruft packs
-> > would get combined together until the sum of their sizes was no larger
-> > than the given max pack size.
+On Thu, Feb 27, 2025 at 11:26:32AM -0800, Elijah Newren wrote:
+> > However, this process breaks down when we attempt to freshen an object
+> > packed in an earlier cruft pack that is larger than the threshold and
+> > thus will survive the repack.
+>
+> ...packed in an earlier cruft pack, and that cruft pack is larger than
+> the threshold...
+>
+> (Otherwise, it's unclear whether you are talking about the object or
+> the cruft pack it is in being larger than the threshold.)
+
+Good suggestion, thanks!
+
+> > When this is the case, it is impossible to freshen objects in cruft
+> > pack(s) which are larger than the threshold. This is because we avoid
+> > writing them in the new cruft pack entirely, for a couple of reasons.
+>
+> ...freshen objects in cruft packs when those cruft packs are larger
+> than the threshold...
+>
+> Again, just to clarify what thing is "larger".
+
+Likewise, this makes sense as well, and I applied it in my local copy.
+
+> Also, this paragraph while fine on its own is slightly unclear whether
+> you are discussing pre-patch or post-patch state, which when reading
+> the next two items causes some double takes.  Perhaps just spell it
+> out slightly clearer here that for the next two enumerated items you
+> are discussing the existing state previous to your changes?
+
+I adjusted the paragraph before this one to make it a little clearer.
+Instead of saying "However, [...]", I rewrote it as "Prior to this
+patch, however, [...]".
+
+> >  - exists in a non-cruft pack that we are retaining, regardless of that
+> >    pack's mtime, or
 > >
-> > There is a much simpler way to achieve this, however, which is to simply
-> > combine *all* cruft packs which are smaller than the threshold,
-> > regardless of what their sum is. With '--max-pack-size', 'pack-objects'
-> > will split out the resulting pack into individual pack(s) if necessary
-> > to ensure that the written pack(s) are each no larger than the provided
-> > threshold.
+> >  - exists in a cruft pack with an mtime more recent than the copy we are
+> >    debating whether or not to pack, in which case freshening would be
+> >    redundant.
 >
-> That doesn't really "achieve this" though, unless the antecedent of
-> "this" isn't what was described in the previous paragraph but
-> something elsewhere.  I suspect your actual meaning was something
-> along the lines of "There is a much simpler way to combine cruft
-> packs, however, which..." ?
+> s/more recent than/at least as recent as/ ?
 
-Great suggestion, thanks. I swapped out "achieve this" for your
-recommendation.
+Thanks for the careful read, and yes, the comparison here is a >= rather
+than a strict >, and that difference is worth being precise about.
 
-> > This yields a slight behavior change, which is reflected in the removed
-> > test. Previous to this change, we would aggregate smaller cruft packs
-> > first, whereas now we will opportunistically combine as many cruft packs
-> > as possible. As as result, that test is no longer relevant, and can be
-> > deleted.
+> >
+> > To do this, keep track of whether or not we have any cruft packs in our
+> > in-core kept list with a new 'ignore_packed_keep_in_core_has_cruft'
+> > flag. When we end up in this new special case, we replace a call to
+> > 'has_object_kept_pack()' to 'want_cruft_object_mtime()', and only
+> > reject objects when we have a copy in an existing cruft pack with a more
+> > recent mtime (in which case "freshening" would be redundant).
 >
-> I like the idea, since it sounds like it should be simpler...
+> Again, s/a more recent/at least as recent/ ?
 
-Heh. I don't know why I wrote it the way it was originally. I wrote the
-second patch in this series first, and when I was trying to explain how
-multi-cruft pack aggregation works I paused and then wrote what is now
-the first patch.
+I like this suggestion, but I think the wording ends up a little awkward
+if applied as-is. I turned this sentence into:
 
-Hindsight is 20/20, I suppose ;-).
+  [...], and only reject objects when we have a copy in an existing
+  cruft pack with at least as recent an mtime as our candidate (in which
+  case "freshening" would be redundant).
+
+Let me know what you think!
+> > +test_expect_success '--max-cruft-size with freshened objects (previously cruft)' '
+> > +       git init max-cruft-size-threshold &&
+> > +       (
+> > +               cd max-cruft-size-threshold &&
+> > +
+> > +               test_commit base &&
+> > +               foo="$(generate_random_blob foo $((2*1024*1024)))" &&
+> > +               bar="$(generate_random_blob bar $((2*1024*1024)))" &&
+> > +               baz="$(generate_random_blob baz $((2*1024*1024)))" &&
+> > +
+> > +               test-tool chmtime --get -100000 \
+> > +                       "$objdir/$(test_oid_to_path "$foo")" >foo.old &&
+> > +               test-tool chmtime --get -100000 \
+> > +                       "$objdir/$(test_oid_to_path "$bar")" >bar.old &&
+> > +               test-tool chmtime --get -100000 \
+> > +                       "$objdir/$(test_oid_to_path "$baz")" >baz.old &&
+> > +
+> > +               git repack --cruft -d &&
+> > +
+> > +               # Make a packed copy of object $foo with a more recent
+> > +               # mtime.
+>
+> s/$foo/foo/ ?
+
+Eh. $foo holds the OID of that blob, so "foo" on its own doesn't really
+mean anything (even though the implicit meaning is clear from context).
+I think changing it is fine (leaving it alone is equally fine in my
+mind, but I don't feel strongly about it).
+
+> > +               foo="$(generate_random_blob foo $((2*1024*1024)))" &&
+>
+> I thought this was creating a completely different foo, which would
+> defeat the point of the test.  It might be worth adding a comment that
+> because generate_random_blob uses a very simplistic and repeatable
+> random character generator with the first argument as the seed, that
+> this will regenerate the same loose object as above for foo.
+
+I think the part of the comment which reads "packed copy of" makes it
+clear-ish that we're creating an identical copy, but it doesn't hurt to
+be more explicit here.
+
+Thanks for the careful read!
 
 Thanks,
 Taylor
