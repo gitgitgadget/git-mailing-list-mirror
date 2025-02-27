@@ -1,75 +1,71 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A68D276D23
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 23:39:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC111AA1E4
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 23:48:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740699587; cv=none; b=BTVs0dOspQILBSv8vOBGUrgYipNKTHZ2F+OPNt6OeybiYSSgGeqLlV/ZqDZppfXz69KecGCk3EQnZlCNQOAGp9jO7UP58dnmxFNEgEAqHzmtdFVrgNS6u8vfGMQHsXFoP0Y/l+OyW/vEDPvgwcW7MMllAjcCcawkhN61Ef9hUG0=
+	t=1740700106; cv=none; b=XjynOK/zgnapTArC5CW9NO7jefBR7lp/MRuMqDhFDC0kf0lGaVsNv22MIuKTOZ+efTLtBGSDMWE4tB/IfWlBJ3uUp3Sia9iOkpnGLdLkl/gLSmHPFuPekllWyFuq/GKaSXPr4iCIHckNE/t9Bm4C7KXJtB3RRnJsW24lEAcYwo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740699587; c=relaxed/simple;
-	bh=qlRzJ8+xLA0D6LZnDSkY0b1VTsLm45qSPQ/au+xNDMo=;
+	s=arc-20240116; t=1740700106; c=relaxed/simple;
+	bh=fTX+sbkePiIZSI56i36QPc5ELMwrHSOmSUvkH3iecGA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bbRcqrQej6XkPZCNfChYgEeUVnWmURdJ8HhE+H8fJ/vIfr3FHJO0rVUvlTaP2A/nKix2ooSqLd3eAfqyBsEKX6ZJ8rU+Bb1Bq5DXq7YnDHHwpo7KpJQ02jkYpwgh02z7ltBbiAexG0G9KbnwHO3qOdjv2wca+FLRB6rCm4safc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=boGBzwWq; arc=none smtp.client-ip=209.85.128.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=YnbgOdUtUr259PFpvVDEm1i/obP59wNlqqlA7KCg+D7tf5G4KRiy4mS2G+P2sBf2cZosxb8iBaA4VXIdTagfPJOB04f3uDc7D0t8sqdJJEGNVIsiJqtAZVhN1HwqQxuGjpfkJVrTEnw+B5mI3R5Bf6JnysD/nWnaC8qXoYIUIHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=jxlrCi0l; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="boGBzwWq"
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-6f679788fd1so12055667b3.2
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 15:39:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="jxlrCi0l"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6f754678c29so14930457b3.0
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 15:48:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740699584; x=1741304384; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740700104; x=1741304904; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=D1xXStYBLWPjeYGiyXjDGvEkwab0+NSUT2Q0igcfcw8=;
-        b=boGBzwWq0j2XiBqxnpvhdr6iBaouXULaz8iIkvodMpSlaRo323bYjiTVYDRDYBE/PR
-         5wsZI0Kyq5ZQPLP5g8+vS5JHZDUozZkRxeE5dhEdJYpSUnFIUqHQU7vyNrIwz829rRUq
-         dgSdhp87Z7CQINmpCORUp7gAuIDpaOIKL7T4VLcqL1/NIBnu/XwO7JS7q8Z6cupCvnjQ
-         Aj2XnF+gerS4yDzieMMl47EB++AStDhnMMsNONkzHMK5KIf9hwafDbKOQp9zAcEkPefJ
-         jzgLVypCtAg92htq+bcbsb6gi2Do6AB8vqu53/SUNvBQi4j7X57717vKxG+TAQzn9zC4
-         TzPA==
+        bh=Y0z9WoCkb/0QO6hzyi17lCiEmiNiH7qAKgDAZ5eTX+s=;
+        b=jxlrCi0lFvtTE3nD9VtsnE04zshJqpXyfFSnABx5GE8ZL8rQyJ9da7XlopdyoI5IQy
+         u1FZwt49mPP8dBMxJM8RvSrqsX5OkPtZxR7gT0LH2LY47R+XJ/5TaMzDL4CiLFj5TsAO
+         0C7BEnA0FiAGL/TlHVx8bXxP6nKcMWx0frLAICzTwgQDDKR53TCOfY2tnYgqCJGT1rVI
+         i3bqA5RG86Na1k3Gt0/QeGkA17PquGC20TkHntsKGGtzbKwjFrhibInEHUnIcMulpeiO
+         MsreRO1ZiTcj7jfOd2zHTJKuCejDV1YHeXgWaCSpHIg1uYoGc8LV3iIRNN9rYmNCQc9r
+         DxnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740699584; x=1741304384;
+        d=1e100.net; s=20230601; t=1740700104; x=1741304904;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=D1xXStYBLWPjeYGiyXjDGvEkwab0+NSUT2Q0igcfcw8=;
-        b=GFqfURR2S1N6Sfve60wvkHst1bOAr9qgBMD3gaHMHe/M5o37Of1f0/oVbUGpVO3cuU
-         HamO8l71drmB2qLVxlqPU3Xmk0B+icoGUfS/EKtYEqQcV5hIuTDabv7tbidVLLkchFw0
-         /I+n9xE/F5p6Kbny7up9DQfjemQBmXl2fXBV+xBuD/Zru427mhQYAgCNQyUwgcEln83w
-         pZzW9vN5hdNaE/pVOJfZyxW9JA64XcpHlQNeB1g+PqYK9dk8mvC8mcx/TazutkTdwuVS
-         OxPXV2YbtuaiPwDt08UQ8zHQzceXAsVYH/yvrIdc9DLioi8gttFxLHK7OSsMRuC/Jb70
-         gSLA==
-X-Forwarded-Encrypted: i=1; AJvYcCX0QKUnqivzbxDZpoHIq8QrKjVeaeYpwnBh0OyC5Xl1w4SoNl55X74jJtrOznC1+51S7TE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxNdZas2v3NgscW2CP8zFxz3lysHfo3EvHLmWuj5iVf4UZPM75D
-	s21UKQVwcwckQse3yHZhk6LlEaWiJvLdR75PrBx275Es3bBFEXZAbqE9XuoYMWpQBPoMsuuyiYE
-	D
-X-Gm-Gg: ASbGncv7Km3TRcyoKGWM/5gwipQqIiSsQQsGLDJt5wa7Cvb8LPcOGq88YX+SwR4y5FP
-	wXOBfH2Nrt3kWeJKgCM0K+qLaemicSxhiWTSJZNhFGIngDbSN2rZGgaXpXhJ97JXpEifcVAo0az
-	w8NVxbkAPE02gmxozrtkj9T6PwClML8KsVGW0JUGlA4P72AsTZwFEJbwB6rfAJojatFqUwbeGZ7
-	Av/Esjnv2ba/fh72YrB+cAE2DRIKLZWmOoKgU4aXoMlnlo/+GnTu7Y/Lp3qERj5JOmPfKVE1gSS
-	8xBNrH4M1AWHOCshkxol8IuNZgS33mZs/UvIBhKm0KCjuAjJhFuJQlbMYtcdWHxYdlpOsHB9LA=
+        bh=Y0z9WoCkb/0QO6hzyi17lCiEmiNiH7qAKgDAZ5eTX+s=;
+        b=Sk8DGakgaWIB1DDTEJmzI7GaYbaPQjG+AJQpCRnpjBLUr9MS07g2SpQdFFKve5M36l
+         ZTdry1hDq7gEkDI2o1VCeZTL/rXVO/mRT+mfmLf8w8xUad9/b0MJbbZPXzs/9sGAQ/ml
+         K4cvIv69BANHeFZQ1uQSoJ78Ia4rN+U8VJ2St8O1qA3BF7oex9TDyOMziVfu5XiZHHGU
+         FHN5YgvLFokYfeef98pJ58UGw0sKJg8TCdctfrJWAUQQdGXn+ZlVlfVc2+BAjlGgEq+h
+         g+lbbyRKTOrTZCeAfYVdvIx0ng0TKCGrcKk3ZKek1qBIvTtp4bN8R8uOhHJkmgTnc1G+
+         qvGQ==
+X-Gm-Message-State: AOJu0YyaSmrFJk5ZW4jtf1lqahP3ow4l0Yn1SqHZpxZR8OgKtkDPybH6
+	kPysZ3sDrbeBQ9FuA4i46Ai7Nm6aSrCpLitzdD2UhYIh1/D63wLxnNEuTwCvKrPxOue5PNK6mhQ
+	y
+X-Gm-Gg: ASbGncv0xU8d6i3VTuAqeRoGLo4UnuXpn3iVU+5u+diOBfiCBei4CleM40Zo2O0RusB
+	dk6gOpz6Oh6V62oRxIZUpdrEa44soCY1Jf6ZfpdUfSHv52oDFhEoeMmqeh0BiCJdmnUK9w3UysQ
+	LLioqbQY6UgeVwkFvYrN0QugFkZRU3r/TBPGkzFkepEs6HaczRe43BLGDE11+FeTKrCteMkbt6o
+	5QsuD5q1k0MRQ7eec8eX1VaBPSAzp3KZ2aWjQBzZxfRqcfb3Lo7hC6xadJj/dUKISNFoewcGCdJ
+	BbVXzDAanX6YJS4d8DlELI19Ybop/hLhoaCRm79FZdLo64m8JFuj3q34CRoa8dEGs+upf7XfmQ=
 	=
-X-Google-Smtp-Source: AGHT+IHjTOzzbaKWPIC3Ds2zlsHsK+0ziYWV+gVLdTWJYjObpmZfxP87n4Butb0rmO2tlhk4o2Xy+A==
-X-Received: by 2002:a05:690c:3686:b0:6f9:b0a6:6a15 with SMTP id 00721157ae682-6fd4a102c24mr21934117b3.38.1740699583971;
-        Thu, 27 Feb 2025 15:39:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH+w6Oj+Cd505s4ulWFtn7y/Tt0fqodT8VGkjlOAp1ywUU8noBxu8GyA3nKKUc/BVp/R6Ppsw==
+X-Received: by 2002:a05:690c:6186:b0:6fb:b3c1:b97b with SMTP id 00721157ae682-6fd4a03af66mr21446247b3.4.1740700104242;
+        Thu, 27 Feb 2025 15:48:24 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3ca4796bsm5041637b3.50.2025.02.27.15.39.43
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3ca633d6sm5017747b3.54.2025.02.27.15.48.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 15:39:43 -0800 (PST)
-Date: Thu, 27 Feb 2025 18:39:42 -0500
+        Thu, 27 Feb 2025 15:48:23 -0800 (PST)
+Date: Thu, 27 Feb 2025 18:48:22 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 6/9] pack-bitmap: expose function to iterate over
- bitmapped objects
-Message-ID: <Z8D3vsnwuKO05KaK@nand.local>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 9/9] builtin/cat-file: use bitmaps to efficiently filter
+ by object type
+Message-ID: <Z8D5xiAVmWOUJJ1v@nand.local>
 References: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
- <20250221-pks-cat-file-object-type-filter-v1-6-0852530888e2@pks.im>
- <xmqqseo35ic8.fsf@gitster.g>
- <Z8Dz6EkIpr/g3vuY@nand.local>
- <xmqqo6yn55gv.fsf@gitster.g>
+ <20250221-pks-cat-file-object-type-filter-v1-9-0852530888e2@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,33 +74,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqo6yn55gv.fsf@gitster.g>
+In-Reply-To: <20250221-pks-cat-file-object-type-filter-v1-9-0852530888e2@pks.im>
 
-On Thu, Feb 27, 2025 at 03:32:32PM -0800, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > It looks like the aim here is to introduce a function which executes a
-> > callback for each object of some type in a bitmap. That's a thin wrapper
-> > over the ewah_iterator, but it's not clear why we need a wrapper around
-> > that function since it is internal to pack-bitmap.c. Likewise, this is a
-> > performance critical area, so I am not sure I'm in favor of adding a
-> > function pointer to a hot path which executes once per object for some
-> > object type.
->
-> It internally introduced ewah_for_type(), giving the "struct
-> bitmap_index" object an abstraction that callers can ask for the
-> bitmap for any type the caller wants.  Before the <type>_all bitmaps
-> were introduced, there were one ewah-bitmap per type, so it made
-> sense for a caller to ask "Now, for this bitmap_index, give me the
-> ewah-bitmap for commits", but with "commits_all" added to the
-> bitmap_index object, it is no longer clear to me what the answer to
-> that question should be.
+On Fri, Feb 21, 2025 at 08:47:34AM +0100, Patrick Steinhardt wrote:
+> @@ -813,9 +827,40 @@ static void batch_each_object(for_each_object_fn callback,
+>  		.callback = callback,
+>  		.payload = _payload,
+>  	};
+> +	struct bitmap_index *bitmap = prepare_bitmap_git(the_repository);
+> +
+>  	for_each_loose_object(batch_one_object_loose, &payload, 0);
+> -	for_each_packed_object(the_repository, batch_one_object_packed,
+> -			       &payload, flags);
+> +
+> +	if (bitmap &&
+> +	    (opt->objects_filter.choice == LOFC_OBJECT_TYPE ||
+> +	     opt->objects_filter.choice == LOFC_BLOB_NONE)) {
 
-I think these are orthogonal. (FWIW, I think the correct answer would be
-"commits_all" in that world, but that is definitely out of scope for
-Patrick's immediate concern). In any event, I see that later on in the
-series it is important for callers to enumerate bitmapped objects of a
-certain type. So having a callback to do that makes sense.
+Makes sense. I think there is one more case here that we could handle,
+which is
+
+    opt->objects_filter.choice == LOFC_TREE_DEPTH && opt->objects_filter.depth == 0
+
+where we'd just want to show commits.
+
+I am scratching my head on if there is a convenient way to unify this
+logic with pack-bitmap.c::filter_bitmap(). I think there is, but there
+are a couple of wrinkles:
+
+  - filter_bitmap() is really designed to work with a whole 'struct
+    bitmap', and doesn't know how to deal with an ewah_iterator.
+
+  - traverse_bitmap_commit_list() is designed to provide a way for
+    callers to iterate over the set of objects reachable for some
+    rev-list query.
+
+    There we *do* have good facilities for iterating over an
+    ewah_iterator, which is what you'd want. But that function really
+    wants to have performed a bitmap walk first (see the
+    "assert(bitmap_git->result)" call at the beginning of that
+    function).
+
+The new pieces of batch_each_object() introduced in this patch are
+tantalizingly close to much of the existing logic in pack-bitmap.c. I
+think there is a way to unify them by introducing a way to traverse over
+the bitmap as a whole as if bitmap_git->result were the all-1s bitmap.
 
 Thanks,
 Taylor
