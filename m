@@ -1,136 +1,110 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1CF276D02
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 23:26:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAC7276D15
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 23:32:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740698795; cv=none; b=NmMDetyRFYYalNdeTI4MBhrt5q7trzBzFeR8KZDhksNvxwD6803WJ6ezuNP3relUY5KUOUvdvXMiM2qmr45yoc0r8RWNY5W7mEEOmR1gfPVxw/F1KkUy2qQMdd5zUDdDbwzNLiLkhje9s6iUHMuQTojcQHUhuSU8nPYIsIUbfcU=
+	t=1740699158; cv=none; b=EvwGd0lgwGgkn2t3mxkdH7f2+vYM+JN79snigL2FdUUvO3/Gmod5WBMzLBAXp+GDPWhsukSn1LJYVAp9CdQUiY7KiGwoMYL2pCQDj4nB1VWi2aVtXeIl0x4qLtoYSf2plK3EF06eryj+e9il8wvQsXTRh74YrwgNsmCPpZPZyjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740698795; c=relaxed/simple;
-	bh=84wxY3F/+K5cqyuDmgmNMaeFp3rTaejvVARNXJxGFk8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nybixleA+FaZYg6pqr4y44ivTZ010fR+b6KGicqyfj6iIy+jiBuaVJY8S5n9CxP9EQujm7/ZM3Zzuv4EqeM9c6mrErQXAv7VH0Jbe0MJzsoptBKRcb49D/TlriYVYD2PTbZFAl9V3yyrmXaTBl0dkU261LHhf7j8PxRqo8SJUsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=g+BMom3Q; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1740699158; c=relaxed/simple;
+	bh=jvIK9MFuNEZH12Ngs+VlBd68vFgOFojHSgggC2WUkRA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=G1cgC63+QklsOazn54ZEniNf0O0V6fy/MGgZQV1cs/+0SRfJT1eSPcgXClyiK8UXf9z1HeYwyTIkFiwVwllzIzqoBZQmLR0OWwebButDLPbr0MsDvF1fePsK4trSY/1exsLEpXzWO2FC3K3wNIinw0omrNR7OoSDx7KTcRNz5ec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KjRDCry1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dqbMk6Kc; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="g+BMom3Q"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6fb2a0e4125so10096887b3.1
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 15:26:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740698793; x=1741303593; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jSXWXhodvUIatArYlDC4DIn+doepUc7QkTKhvsbttzg=;
-        b=g+BMom3QF1UpfrwNcnX051oCrYsb1qpv4j2bj48u+qwSwbWI4gcbQFPlWVDAJiFIsC
-         YDvi7LLoxarQJJ6AwqO1Fc0nKja+8yfaRBa0wsRFqAxjqzXRis9Jyu6uqWAnaDcVtJgW
-         rDin57oCFBTSZZ//v0Y24YlwAy5Sg+WrtdUq8QuvCKH1yPIiJyNDFEZs9s9/7wuJFyzK
-         dZGpZuN/JpRpVF7/EK53ocpYqtGffX0oK2imMQR0HeZSNxd1+Z9X7k00mcYfRhZrcKum
-         wMHHaS0eMqnL9nxVAzfUB4mCJnx0J4o9P9fyXOmx5Pz1V6K/11mYEi8ksfqD/Zc8BHFt
-         1giQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740698793; x=1741303593;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jSXWXhodvUIatArYlDC4DIn+doepUc7QkTKhvsbttzg=;
-        b=uNkG5Lvb6nirVU40hNXLYIGyVlCZtrjF7IPGIZwWhfRgNdV3FUMP2+MNO7Xygw1bzu
-         1bwb5/KAnH0o04SM0J394l1tmtThBCVKJVE79tCCP3mF99RoLjOcdBP/lDZLgyBInucP
-         XtJx1YnI44+gIVRnIQYXnmErlEYCMfDmCpXDMHJDXsbN2oe7j3doPNyTFUibFVXPnYbD
-         MsecjtSVbq5QprI/4uNkgnFQ23NaDdc8oSH4hjwdalGmH980cI6nNroowpHnD8LcOINj
-         VtmyBnG/dZ/JPAeSPcKeh5Z3T5gWdppXlUlreOg7vhNf1ztIDzZbpUqpPxrh+niOaRGE
-         oABw==
-X-Forwarded-Encrypted: i=1; AJvYcCXIxVJUQHSPMMb/5IuetQKOfnToITTk01z0nelR6jxMIvR3lWiOnBqUaa9leLAsKc431Bs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyCBlSZ/xtflyuXri0bNMjN9YedujsGn7NMquTkKAcQ7oDjMk9Y
-	WeA5xey+UjHIX0wDkQz1fmeNoi+8M98kdvrLQ5BUxLYEP+QGXv2FSNZh+K+5rs9jHnFdqzCSGM/
-	k
-X-Gm-Gg: ASbGncudpLUZc177wpjlkRius5PV2skCIv1iqMrLKU4Qwzom/Cg6mAsFBv/BQor5+v7
-	l7mMn5OxmY58WYY0dkO9v09bCeIn8qll7adcHKDGb4fwwjFcE4FM6lbh4VfwD9ZnzgkbfisaafC
-	BtQKb/fwuTF2gdKP980pBpGVjl0TQbkHewYGM0DDWKXj6kfB8T/49ZuSwd5O6CbXOKEUVcLGVwG
-	JmYWQFDARKxzHthf6NZlv1hfKi3lXXDtR3QiuNQ0bRAxXV/8JsO/PNo1Dttq3xIUpioNYjlIUjn
-	og+Lvtee2OWAm/DnuxLh5eId+03U8Gh1lQJhqqK9Ts93b9BsH4ZFjpTqxWTu6v4JAKnEU9xUKA=
-	=
-X-Google-Smtp-Source: AGHT+IFkBr5qhd+PCVgInRGYFjz+Ob2aZcc3mKy85wMBkbgXjPkiCqP8AjHWUKN8qcYGQ8e8taC9mQ==
-X-Received: by 2002:a05:690c:4d86:b0:6fd:3dd1:7619 with SMTP id 00721157ae682-6fd49ea11c6mr22922777b3.0.1740698792814;
-        Thu, 27 Feb 2025 15:26:32 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3ca4798dsm4976707b3.48.2025.02.27.15.26.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 15:26:32 -0800 (PST)
-Date: Thu, 27 Feb 2025 18:26:31 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KjRDCry1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dqbMk6Kc"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B0F12540131;
+	Thu, 27 Feb 2025 18:32:35 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Thu, 27 Feb 2025 18:32:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740699154; x=1740785554; bh=dkL7nraFCo
+	WJCFpagIrfEXNoGK+MKtxKgfxR2Gs/RkQ=; b=KjRDCry1P5yRv3cDRPqBw3/Xqx
+	jUn4CIdE6HDkC3PyGFlhZMcQ+oZX4DPMrT3vzO5y6iETm74xyy3EODB+PH+xkD/3
+	GQSO4MlyThOwgMem/1+2YttOVKloz2Q0PwufzHT8JdlI2ocADYmrmY8Mi0puRRUs
+	n7oUmaBQaSEwY9DcmJo4fkBIyV/AMWV+I62/494+jPB4h0RP3hw3I+RL3q7FSc6S
+	M7AcKDcMOkQq6iIRrFoHzo4tGtcXuC0qF8x/MEZSliZFzaUl3w6jeGxu7yMIyxHH
+	yggTo+VNi8jZxERMVrqJJLtSdidg85gW/u6o02vaXti5jCwxlOSxrCS0BJ5A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740699154; x=1740785554; bh=dkL7nraFCoWJCFpagIrfEXNoGK+MKtxKgfx
+	R2Gs/RkQ=; b=dqbMk6Kcsu69qzuHJa7FzECVBquM/hOaX7uRAvGNsyzcqIMBrS8
+	yk+sOPftzdDZkSZctdUPNEFPdhSFWwTxlQUEBwdujZQigyzh+1LMkixaEMT+LJVg
+	ynmto65qVhE814bWi682+0L0AnkAKKoCSN0W3UYdL/EyWR/i0ZvWqjtflnXACjO5
+	S1NidsvJ6QWWcQp8gTqNzyTNbRg+WSsHU75IgO3neQG1aJtAqUYs/ANi+NOMfs10
+	VQcdzeViY1aPV57ka8wm7BXd008ScrTm9H4AzzTibxWpwe1pbYehqdqEvt+qB90x
+	b+I/jJzZVTjOjKmWzFd/WJFRe4IitvbRZ9g==
+X-ME-Sender: <xms:EvbAZ_Y8SqsJ_yZOOyXigszi_yDtposBIQlUDpn4q6GRbk0ACLv2JA>
+    <xme:EvbAZ-YUH3CGRs-FrOS6EC7Zl47EmdRsUtG-ktasA5T8rBWB_VSR8XTDU_uH6RX_b
+    uGHbvHKx7bb0q1J9A>
+X-ME-Received: <xmr:EvbAZx_ialkZaYl-SHFCRFpjJVuTV7xrLdUmiLe6mMYBfIayR-MEt-UwcS_hGHiyaOIH_870Ftwskr-NGlaryUSOhcFvKVFQMEDu>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekkeekudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlh
+    horhhrrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:EvbAZ1qNIbUZ1bmWtOoF-4XFHhpZHZ7PJhKBk84vMVt6puMJhMEuuw>
+    <xmx:EvbAZ6rPg9uSAEYe6eHV2-YOHkHU0QEu3-d350vO1skdmo9o1haltA>
+    <xmx:EvbAZ7TDUEEoVEXPcBp1qQ30sJczjgHdeSjQux0rSHufz6lRArHxuA>
+    <xmx:EvbAZyqdxFMyoGHFIRo3YCZKroxfX26hAMhYinCji5eugX621dug0w>
+    <xmx:EvbAZznn-Av6v8GRzV-8YKe9kZfsiIyaB0Yfo2QNEYVa-3ODYXVADNcS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 27 Feb 2025 18:32:34 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
 Subject: Re: [PATCH 6/9] pack-bitmap: expose function to iterate over
  bitmapped objects
-Message-ID: <Z8D0p8oKEmMqmzrJ@nand.local>
+In-Reply-To: <Z8Dz6EkIpr/g3vuY@nand.local> (Taylor Blau's message of "Thu, 27
+	Feb 2025 18:23:20 -0500")
 References: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
- <20250221-pks-cat-file-object-type-filter-v1-6-0852530888e2@pks.im>
- <xmqqseo35ic8.fsf@gitster.g>
- <Z71qQvlqtoOwDabu@pks.im>
+	<20250221-pks-cat-file-object-type-filter-v1-6-0852530888e2@pks.im>
+	<xmqqseo35ic8.fsf@gitster.g> <Z8Dz6EkIpr/g3vuY@nand.local>
+Date: Thu, 27 Feb 2025 15:32:32 -0800
+Message-ID: <xmqqo6yn55gv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Z71qQvlqtoOwDabu@pks.im>
+Content-Type: text/plain
 
-On Tue, Feb 25, 2025 at 07:59:14AM +0100, Patrick Steinhardt wrote:
-> On Mon, Feb 24, 2025 at 10:05:27AM -0800, Junio C Hamano wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> >
-> > > Expose a function that allows the caller to iterate over all bitmapped
-> > > objects of a specific type. This mechanism allows us to use the object
-> > > type-specific bitmaps to enumerate all objects of that type without
-> > > having to scan through a complete packfile.
-> > >
-> > > This functionality will be used in a subsequent commit.
-> > >
-> > > Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> > > ---
-> > >  builtin/pack-objects.c |  3 ++-
-> > >  builtin/rev-list.c     |  3 ++-
-> > >  pack-bitmap.c          | 65 +++++++++++++++++++++++++++++++-------------------
-> > >  pack-bitmap.h          | 12 +++++++++-
-> > >  reachable.c            |  3 ++-
-> > >  5 files changed, 57 insertions(+), 29 deletions(-)
-> >
-> > After 2189649b (pack-bitmap.c: keep track of each layer's type
-> > bitmaps, 2024-11-19) added <type>_all bitmaps to the bitmap_index
-> > struct, this step would need some adjustment, I am afraid.
->
-> Hm, does it? I understand that this commit only makes the bitmaps
-> accessible individually per bitmapped packfile, but the bitmap indices
-> part of `struct bitmap_index` would continue to be the union of all of
-> those bitmaps. Oh, but that changes in the subsequent commits indeed,
-> where we start to use an `ewah_or_iterator`.
+Taylor Blau <me@ttaylorr.com> writes:
 
-That's right; the ewah_or_iterator is the mechanism by which we can
-combine multiple "layers" of the bitmaps into a single iterator.
+> It looks like the aim here is to introduce a function which executes a
+> callback for each object of some type in a bitmap. That's a thin wrapper
+> over the ewah_iterator, but it's not clear why we need a wrapper around
+> that function since it is internal to pack-bitmap.c. Likewise, this is a
+> performance critical area, so I am not sure I'm in favor of adding a
+> function pointer to a hot path which executes once per object for some
+> object type.
 
-(As an aside, that was not the first approach I pursued. Initially the
-caller was supposed to chase the 'next' pointer of each bitmap and
-enumerate through whatever type iterator they're interested in at each
-layer. But that was too error-prone, since you have to remember and
-update the offset into the pseudo-pack order across multiple layers.)
+It internally introduced ewah_for_type(), giving the "struct
+bitmap_index" object an abstraction that callers can ask for the
+bitmap for any type the caller wants.  Before the <type>_all bitmaps
+were introduced, there were one ewah-bitmap per type, so it made
+sense for a caller to ask "Now, for this bitmap_index, give me the
+ewah-bitmap for commits", but with "commits_all" added to the
+bitmap_index object, it is no longer clear to me what the answer to
+that question should be.
 
-> I see that Taylor's series has been sitting in an unreviewed state for a
-> couple months already. I can review it with the hope of moving it
-> forward and can then pull it in as a dependency of this series. But I'll
-> wait for him to chime in first to see whether anything changed about its
-> current state.
-
-It would be great to get some review from you on that series. I know
-that it has been on Peff's (CC'd) radar for a while, but that he has
-likewise had a few off-list things to deal with lately as well.
-
-I am still not sold on introducing a callback here, though, and would
-much rather see callers interact with the iterator directly.
-
-Thanks,
-Taylor
