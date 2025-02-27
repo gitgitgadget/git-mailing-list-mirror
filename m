@@ -1,188 +1,207 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B43277811
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 23:03:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4894B26E96F
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 23:03:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740697394; cv=none; b=Dab87pHBeMUFEaJbMuRppD8Wr56M4wxQTyCtw3zHSMRM25vOBGfwHSLdjj+87CM6zs41u8RY1XqBY/URi9n8jvJ52AoscuOa0PctRxXqbg60Gr/kZ7OBogvXHJ6pYqqKomy5LhxcyAdc9AoBg0e72dXFc6zYfU9BpdLvh+aYGeU=
+	t=1740697409; cv=none; b=lzEJM3Ca9qckgG5GVUnu9igZaYsmQ91aYR0z9u7nOe9IqQPDslstMQcA7YRRgHq9F7ip8q28D0S26GszmYuuMI3KLdd4NCu5+4W26QjXnzqZtigKS66D4foRhj6u+GS1FVwzUpSvzD5MWJZfjetly5zEG0Omz+BYxAgFcjfwxoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740697394; c=relaxed/simple;
-	bh=S5ZIaHbn/1lKPC/cRK86HP4hXDL5p6EQ+cfHOuQQrlA=;
+	s=arc-20240116; t=1740697409; c=relaxed/simple;
+	bh=/JL0HhCTLm544ff14rj78Hwm/3r1nwiOcBr3O9JcPB4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SoXvaRmcfyUQj8CSLVWIceHESFjBvxJQHY5bxJP39fouWTY7/41a9r/Tut0dln6UysAutPIL+TRI239lseobrvNwLI+dCVm1ZZzopq3O/leclxyZsYuG/BK9ms+rsOQ4SoICHgxmcYBd3kdhirc8BoCshk/BspLFbUhW9JrJQb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=OqzW1zdY; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=bJSxy8olWZ85cogD7vayea9++Z4VPUB29hgZzKsSbdzHXHoCpR8890+S6POgrj6Lwyp59aj2GDZYXCfaFh2nGEZ4G7Pb6DnOn66tfkgsVZwEXVyk0ha10b0xBGgHQ/bkxoo1aYFnt0muUCUC2kee2Ci2E00kSFhtiptYGNV3L+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O3eThmde; arc=none smtp.client-ip=209.85.160.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="OqzW1zdY"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e545c1e8a15so1864076276.1
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 15:03:12 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O3eThmde"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-2a9ef75a20dso1383760fac.2
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 15:03:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740697392; x=1741302192; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740697407; x=1741302207; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=23/4tx8id9TgvKutn01F/r+Zgd0OJojlp+9Jyh5cBXE=;
-        b=OqzW1zdYXIk/7Jj1E9DXia5QiiIsDv/rmfWT2AWfYrmzdUmU7sc7TtzsQ+9bkrI8vL
-         4pUCLeRxHp5Xt7ueKGN4qV/elSPEp3r6mUny0S9F2yQh3Tj0qOWXacUBxORct3nrxkdA
-         3xXk1/RrQJUhevEXiXL6mHFtfGPvFAG7DqK8l1NNYpCGUI8j292yeZK+kAqbfzkKEZZu
-         YuNphTm4N55KPj8lQCR1lYkdhpbeghpkz9fsEqWr7bWGf0Omj6u4ecGGtPMYUKDweJZN
-         EfK7DUDAqaM+fvfg1PsmNNyWbWf31YFbmHNU9nxsKNkV1qQugfH0But7DIwm+ZenDAdo
-         MiSA==
+        bh=eqM72DJ1LwP7d8XcQCdwgGO+l7FRoY9LnmMAflbKfdY=;
+        b=O3eThmdeqlO5zeldqkHF+W2TUVFaW7R2ZadNyP/UM6NRadHys1nT17K4nPLqPztd5p
+         sowKmfPrJUKrkz9fXML71RHsf6lm2potAjEzVzQ0N4099dVeFC7A+yurNoehZnLGNvyC
+         2Lx9HhdoGPoErhhwc8dk7qQ3ldlHlt5RRKUbk+HscVkVWCu2am9g1Ht/3yKi9tn01Yr+
+         H6GHwcodt53YDJa5N+uAhPhwGnXrIwrcgEheMgP+Th0m2Ro9PsJQkkxlpsNfkFccs/6y
+         P6Zomy0N79D5IYJ/AgtDkiF/bwLR18A1rXs+iMAlzaEi/ytHZPJkPSxnxyG9OrTWiN8N
+         tj3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740697392; x=1741302192;
+        d=1e100.net; s=20230601; t=1740697407; x=1741302207;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=23/4tx8id9TgvKutn01F/r+Zgd0OJojlp+9Jyh5cBXE=;
-        b=Nkhf99J54A6zmE9WsCqKsxi33ELDcTEGcPlDXVNAeWZogc2Mp6ptCOtZMuwVTwqbtw
-         EK6ybG12G+AH8a40X/ZGZ4sOrYsWSJ6C1xGBf7qdLU8OTM7HDxuLk+c17yzmVWMCkUPx
-         n/Us3voVPrjOEWROvm9rEmO427FteUcwF1E4/WgJxoDXv5++jFq+EESVOaW+2WDsyUMH
-         f+mhW40MUoeXWQs9ZV1a8nlzU9YOrsB5wHxs2XcZjIZyFY/SmFSYV+L0cBwmtngQxyEi
-         +yB5cXJ6TGIxnpcjF+pJjsK/nj+MwVehrQuj1yb9/sShQStHlxjAYbJ+RoxGlQDVsHx9
-         YFew==
-X-Gm-Message-State: AOJu0YzOycAl5YQayZ0ueDEoPpj+wy8hLYLQASJZe+S5LnSnU51TVkf9
-	N2XU1O4V9uiNlszY34lcLbBFiPxnD5YeukWO/F2jQNa64cSC/p0io8BT7br4wBA=
-X-Gm-Gg: ASbGncsz6QBCHsp4ImpABB6npt7v8jNWFe/L99DVWCLn9CFBP1vY3U5CywQ/sbYcmM3
-	MDN0sU6j9wzELL9hs2/uWRBSouoWpt+T3NFARwCydVoemdrnUYOjp0/Oc1w0kQdKn/jjOfWcSTE
-	xiv1DclQJ/6zHMDBO40ZSNaa6YcX8JHBJb5qj/zBG1yJdNgJvbPsmVCZtrHWgeyWB8sMd8NWjau
-	gYuIj85la/LQZMTNMO0tyZCkK4TvQaRa6K571oGLcKtTOgsYMDfdkxE7svA8dnuND0QfVBuKY7U
-	uCt05bX0dCVFudhH8AJaTTEZliaYm9QwCrPlL6/RTdZIN5d8wYS60hmnx4lj8Rk3n7dEfiSftA=
-	=
-X-Google-Smtp-Source: AGHT+IEvoKaxTb4P04MeB72HN5CXSFOHMCOEMVQTQ9zkW0zDB1NjvpOSqidLwfvEICxNGusw1GwmYQ==
-X-Received: by 2002:a05:6902:320c:b0:e5b:1805:36be with SMTP id 3f1490d57ef6-e60b2e91c81mr1170999276.6.1740697391692;
-        Thu, 27 Feb 2025 15:03:11 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e60a3a1fddesm707269276.2.2025.02.27.15.03.11
+        bh=eqM72DJ1LwP7d8XcQCdwgGO+l7FRoY9LnmMAflbKfdY=;
+        b=pM0rs+cYR/epYnX/TrzSn6Kir73BsLBlYfxc30GkTO0dp1ccpkFI/bYHYlp0VQBQBk
+         yeKiFRmu+wk9I0PmAqY1PTOpv+NSucIpDlS2SwevRbzgtR47NSkiCNFQjkvukhau0vvb
+         qAo8HukKB4AZg6xUFNlbuHNbtUJbbnE817K3eW+RYgX3GJgx1c+6WqK2BBQyG5U663R0
+         6KcOWsd9b7P8WHrxvoHK06cnmbh0UJ1GlO8kW3e0DoMQQbID5F1RGrjjmWFQm6sQYy6+
+         3TRD5cvvecNxVzuHmMf+PwSiFEv4jk1fRRAkIoNciJxZepYqbzwa3n1mtdgeDo+PsQ2J
+         EGxQ==
+X-Gm-Message-State: AOJu0YwQwg7eFDdDAWSopqCz2GikcRcGKYWu8hQYU2o/K1xMX58e5jbB
+	qjTcRs2mJRKzRCCDE92+RSSVUyPTWtVJrbf6hJObXQyh0Xxk32xVBGJWfsB4
+X-Gm-Gg: ASbGncuklOIq2egpakP5w+jrP9BGgYXVL1AS5ZuASv+aApSwq4GZPt7pFdc6Mi5u86V
+	bjurHwVQztUGS3mWknN06PbkZ7Q35u6UXjwwrOO4Q81RrVOI83Xga5UO0ypHfh4CV4iVsw30h2i
+	ZSUbWc7YXhp0YbnuZm3j7SB5gyVW6eLHO8gwxqZZjI6g7Y6VEoBAm4+B4XCep3Uti33wAxRNFtE
+	tMbp1N8GMlyS7//isju4A6sVoC3jlReh7ZWr8p3f7u/w8Blykl37urv77E4xlsJNcA5yHAkocZ5
+	vuaxxRMmMEwcGfQ1L+U=
+X-Google-Smtp-Source: AGHT+IF4GfSMadSILpJaslSlRWOQ+GPs7f8xe7g4NfKCP3Nb3DU6+qUuB7tLSboWuSbUHw9DYxQZbA==
+X-Received: by 2002:a05:6870:ae8b:b0:2b8:e4be:fd2 with SMTP id 586e51a60fabf-2c177e7a05amr659279fac.0.1740697407285;
+        Thu, 27 Feb 2025 15:03:27 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2c15c125362sm478537fac.17.2025.02.27.15.03.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 15:03:11 -0800 (PST)
-Date: Thu, 27 Feb 2025 18:03:10 -0500
-From: Taylor Blau <me@ttaylorr.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thu, 27 Feb 2025 15:03:26 -0800 (PST)
+Date: Thu, 27 Feb 2025 17:00:10 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, karthik.188@gmail.com, phillip.wood123@gmail.com, 
 	Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] builtin/pack-objects.c: freshen objects from
- existing cruft packs
-Message-ID: <Z8DvLkWys6KaQNJl@nand.local>
-References: <cover.1740680964.git.me@ttaylorr.com>
- <c0c926adde2b7c8f4b53b7a274d5b8c040f77e62.1740680964.git.me@ttaylorr.com>
- <CABPp-BGv6J307nTo1sUgAnE+7ZnueSPm4CJLb10wBGQGaPPDWA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] builtin: introduce diff-pairs command
+Message-ID: <qnd5cou3mhareqvxhndgwkomn7t3kwdn3xd55wqn6vidly33uk@5yq4cv2yfnbh>
+References: <20250212041825.2455031-1-jltobler@gmail.com>
+ <20250225233925.1345086-1-jltobler@gmail.com>
+ <20250225233925.1345086-3-jltobler@gmail.com>
+ <Z8Bg5EAArZVGPaAc@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CABPp-BGv6J307nTo1sUgAnE+7ZnueSPm4CJLb10wBGQGaPPDWA@mail.gmail.com>
+In-Reply-To: <Z8Bg5EAArZVGPaAc@pks.im>
 
-On Thu, Feb 27, 2025 at 11:26:32AM -0800, Elijah Newren wrote:
-> > However, this process breaks down when we attempt to freshen an object
-> > packed in an earlier cruft pack that is larger than the threshold and
-> > thus will survive the repack.
->
-> ...packed in an earlier cruft pack, and that cruft pack is larger than
-> the threshold...
->
-> (Otherwise, it's unclear whether you are talking about the object or
-> the cruft pack it is in being larger than the threshold.)
+On 25/02/27 01:56PM, Patrick Steinhardt wrote:
+> > +static void flush_diff_queue(struct diff_options *options)
+> > +{
+> > +	/*
+> > +	 * If rename detection is not requested, use rename information from the
+> > +	 * raw diff formatted input. Setting found_follow ensures diffcore_std()
+> > +	 * does not mess with rename information already present in queued
+> > +	 * filepairs.
+> > +	 */
+> > +	if (!options->detect_rename)
+> > +		options->found_follow = 1;
+> 
+> It's a bit weird that we set this over here. Shouldn't we have set it up
+> in the main function already?
 
-Good suggestion, thanks!
+Everytime diffcore_std() is invoked found_follow gets reset. This was
+included here to ensure the correct value is always set.
 
-> > When this is the case, it is impossible to freshen objects in cruft
-> > pack(s) which are larger than the threshold. This is because we avoid
-> > writing them in the new cruft pack entirely, for a couple of reasons.
->
-> ...freshen objects in cruft packs when those cruft packs are larger
-> than the threshold...
->
-> Again, just to clarify what thing is "larger".
+In the next version I am going to move away from using found_follow in
+favor of a new diff_options field to avoid some of this awkwardness
+altogether.
 
-Likewise, this makes sense as well, and I applied it in my local copy.
-
-> Also, this paragraph while fine on its own is slightly unclear whether
-> you are discussing pre-patch or post-patch state, which when reading
-> the next two items causes some double takes.  Perhaps just spell it
-> out slightly clearer here that for the next two enumerated items you
-> are discussing the existing state previous to your changes?
-
-I adjusted the paragraph before this one to make it a little clearer.
-Instead of saying "However, [...]", I rewrote it as "Prior to this
-patch, however, [...]".
-
-> >  - exists in a non-cruft pack that we are retaining, regardless of that
-> >    pack's mtime, or
-> >
-> >  - exists in a cruft pack with an mtime more recent than the copy we are
-> >    debating whether or not to pack, in which case freshening would be
-> >    redundant.
->
-> s/more recent than/at least as recent as/ ?
-
-Thanks for the careful read, and yes, the comparison here is a >= rather
-than a strict >, and that difference is worth being precise about.
-
-> >
-> > To do this, keep track of whether or not we have any cruft packs in our
-> > in-core kept list with a new 'ignore_packed_keep_in_core_has_cruft'
-> > flag. When we end up in this new special case, we replace a call to
-> > 'has_object_kept_pack()' to 'want_cruft_object_mtime()', and only
-> > reject objects when we have a copy in an existing cruft pack with a more
-> > recent mtime (in which case "freshening" would be redundant).
->
-> Again, s/a more recent/at least as recent/ ?
-
-I like this suggestion, but I think the wording ends up a little awkward
-if applied as-is. I turned this sentence into:
-
-  [...], and only reject objects when we have a copy in an existing
-  cruft pack with at least as recent an mtime as our candidate (in which
-  case "freshening" would be redundant).
-
-Let me know what you think!
-> > +test_expect_success '--max-cruft-size with freshened objects (previously cruft)' '
-> > +       git init max-cruft-size-threshold &&
-> > +       (
-> > +               cd max-cruft-size-threshold &&
+> > +	diffcore_std(options);
+> > +	diff_flush(options);
+> > +}
 > > +
-> > +               test_commit base &&
-> > +               foo="$(generate_random_blob foo $((2*1024*1024)))" &&
-> > +               bar="$(generate_random_blob bar $((2*1024*1024)))" &&
-> > +               baz="$(generate_random_blob baz $((2*1024*1024)))" &&
+> > +int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
+> > +		   struct repository *repo)
+> > +{
+> > +	struct strbuf path_dst = STRBUF_INIT;
+> > +	struct strbuf path = STRBUF_INIT;
+> > +	struct strbuf meta = STRBUF_INIT;
+> > +	struct rev_info revs;
+> > +	int ret;
 > > +
-> > +               test-tool chmtime --get -100000 \
-> > +                       "$objdir/$(test_oid_to_path "$foo")" >foo.old &&
-> > +               test-tool chmtime --get -100000 \
-> > +                       "$objdir/$(test_oid_to_path "$bar")" >bar.old &&
-> > +               test-tool chmtime --get -100000 \
-> > +                       "$objdir/$(test_oid_to_path "$baz")" >baz.old &&
+> > +	const char * const usage[] = {
+> > +		N_("git diff-pairs -z [<diff-options>]"),
+> > +		NULL
+> > +	};
+> > +	struct option options[] = {
+> > +		OPT_END()
+> > +	};
+> > +	struct option *parseopts = add_diff_options(options, &revs.diffopt);
 > > +
-> > +               git repack --cruft -d &&
+> > +	show_usage_with_options_if_asked(argc, argv, usage, parseopts);
+> 
+> Don't we also have to call `parse_options()` even though we don't have
+> our own options yet? Or is this all handled by `setup_revisions()`?
+
+In the current implementation, the diff options that get appended are
+only really used so that the usage message prints with the diff option
+info. It still relies on setup_revisions() to actually parse the
+options. Since there are not any real options that need parsing,
+parse_options() was not invoked.
+
+This is fairly confusing though. I plan to instead parse the diff
+options upfront with parse_options(). The diff options parsing through
+setup_revisions() becomes effectively a no-op. I think this makes more
+sense to read and still lets us print the common diff options is the
+usage message.
+
+> > +	repo_init_revisions(repo, &revs, prefix);
+> > +	repo_config(repo, git_diff_basic_config, NULL);
+> > +	revs.disable_stdin = 1;
+> > +	revs.abbrev = 0;
+> > +	revs.diff = 1;
 > > +
-> > +               # Make a packed copy of object $foo with a more recent
-> > +               # mtime.
->
-> s/$foo/foo/ ?
+> > +	if (setup_revisions(argc, argv, &revs, NULL) > 1)
+> > +		usage_with_options(usage, parseopts);
+> 
+> I think it's discouraged nowadays to use `usage_with_options()` as it
+> generates a ton of noise while hiding the actual error message. It is
+> instead recommended to directly call `usage()` with an error message.
+> 
+> In this case here we would say e.g. `usage(_("unrecognized argument:
+> %s"), argv[0])`, in the cases below we'd use the error messages you
+> already have.
 
-Eh. $foo holds the OID of that blob, so "foo" on its own doesn't really
-mean anything (even though the implicit meaning is clear from context).
-I think changing it is fine (leaving it alone is equally fine in my
-mind, but I don't feel strongly about it).
+Good to know. I'll avoid printing the usage options message in all these
+failure scenarios in favor of what you suggested.
 
-> > +               foo="$(generate_random_blob foo $((2*1024*1024)))" &&
->
-> I thought this was creating a completely different foo, which would
-> defeat the point of the test.  It might be worth adding a comment that
-> because generate_random_blob uses a very simplistic and repeatable
-> random character generator with the first argument as the seed, that
-> this will regenerate the same loose object as above for foo.
+> > +	if (!revs.diffopt.output_format)
+> > +		revs.diffopt.output_format = DIFF_FORMAT_PATCH;
+> 
+> Instead of setting this conditionally, can we already set it up as a
+> default before calling `setup_revisions()`?
 
-I think the part of the comment which reads "packed copy of" makes it
-clear-ish that we're creating an identical copy, but it doesn't hurt to
-be more explicit here.
+The diff output format is set via OPT_BITOP() and thus can have multiple
+values at the same time. For example:
 
-Thanks for the careful read!
+  $ git diff-tree --raw --patch HEAD
 
-Thanks,
-Taylor
+will render both patch and raw output. If we unconditionally set
+DIFF_FORMAT_PATCH, it will always be included in the output which is not
+what we want. We only want to set DIFF_FORMAT_PATCH if there is still no
+value after all options parsing has occurred.
+
+> > +	while (1) {
+> > +		struct object_id oid_a, oid_b;
+> > +		struct diff_filepair *pair;
+> > +		unsigned mode_a, mode_b;
+> > +		const char *p;
+> > +		char status;
+> > +
+> > +		if (strbuf_getline_nul(&meta, stdin) == EOF)
+> > +			break;
+> > +
+> > +		p = meta.buf;
+> > +		if (*p != ':')
+> > +			die(_("invalid raw diff input"));
+> > +		p++;
+> > +
+> > +		mode_a = parse_mode_or_die(p, &p);
+> > +		mode_b = parse_mode_or_die(p, &p);
+> > +
+> > +		if (S_ISDIR(mode_a) || S_ISDIR(mode_b))
+> > +			die(_("tree objects not supported"));
+> 
+> I assume submodules aren't supported either, are they? If so, do we also
+> have to check for `S_ISGITLINK()`? It would be nice to have a test for
+> them.
+
+Submodules should actually be supported as I believe all the info
+present in the raw formatted input should be enough to properly display
+patch output. I'll add a submodule to the existing test setup to
+validate.
+
+Thanks
+-Justin
