@@ -1,120 +1,114 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FED45945
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 00:56:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1F61B4152
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 01:23:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740617814; cv=none; b=GpP/zaArHPxO9hdRDV7mglZ8WvKpZ8B2uI9glJYxVuL5l2XZX8iYBr/7LV+1yD2JOOW0lwIJ4Dgx8mawWQn69gLmrumkH7IXMQiZn7mDgZvINSJ2zK97xU6cIfjqZe83p/4jt5HQ1ZQ/NoXZElKXR7NKqMLuQUiGmKHYvnsydfE=
+	t=1740619401; cv=none; b=mHkXoQF1Je+id6hiY4dp95Cs5g7GnnJszlkuv9UUR32c+FYf1CiK95zBHtzA4ovNY/mXeHWG5z5nWBPRRCm4cx5gRPeq2bZH5phHEDGwH6v8kj5pI4fh/1QZd3Ow+Zzr8UHwZVow8jmkqntU1Ib/7m8rZokgtgl2kSzYjYFxEvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740617814; c=relaxed/simple;
-	bh=UfayfJ/KMQ30uaPBxpWWk01TQBkcNMZcpetkw7iEnuE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mLUZSD3mX12b0GdW7+AiwH+35vjbg9fVtx6j/W7UJEli0xYH/uGJgRaV+AH2VokFPfpuBlZwgzl2xZtiQy54v/GtcAi2DeAU8NPJ8wpx1s2hARyAYHT+uGUOMeZAcxRe3QORmF3x/AIBDjpMNW7hjRtLOXNPdOVZsEdCAiOsKJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gQgCxNQN; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740619401; c=relaxed/simple;
+	bh=DjN4OWmO42Hq8eqhsrllVyiwv0NIeYJ5ismJt6B3llI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=swKb0pzLsRaDwlxsNlXJwJw4+/GKV0z/V6ULpmThLk/PIr7DS37o8d2tC7e98Tvpgxya8R5aSEKOaSf31L7ykhu9FuO7ah+VzkR/nlNiaYrZ596h0mZCVL7z00G82Qzjd8IjfG5gdQV/AjjHKhc07LsgMJHIICXG4yI3czSGfZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D9LTu9hB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lqcZPmdG; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gQgCxNQN"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2234daaf269so7579445ad.3
-        for <git@vger.kernel.org>; Wed, 26 Feb 2025 16:56:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740617812; x=1741222612; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2pWt8MljxK29pkaPYlMXYEt2VqH1XuLL9yt7i7xRcmI=;
-        b=gQgCxNQNNbqoZZNPUxCC1KKqwctxVjEshYiExYrzMUriPFxmzKg+oobCCkZfKIWeCe
-         Dttt/huys7TlMkyyzmQjpJgwmsjXUxVrMEYiOgdQ+3uwRKreV4b8ZxB0gP6vxX6e+5gD
-         BbCot48YyDD/OqfeSdeC0kTJaFJRMiSDfscUZ/W7PSoNEdcGfvoF8irQdTaqSVKHFZ0a
-         2wueLZ1l9YrGMrwRs5G7dcocOikg7ntH8o2Wg8irZU23uvfVrFpqNNfKK5UwgliyYlRt
-         4OW9tesXYuQi729nwGKX9HUKoIHkSsJv3C/mHa1aTtxpZLhYqtTS4IiqXt/hs8/IlhnK
-         u2PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740617812; x=1741222612;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2pWt8MljxK29pkaPYlMXYEt2VqH1XuLL9yt7i7xRcmI=;
-        b=lFmO3b9VQFfuTSsdkP/YMR5t23+NJNYzxOLjRBUjkjn8TlC6esO6Kl2TdEwkQ47V7u
-         I603MNga44KuKICTZkCi+NtnjT51+0DdezshkeCVSmA2yVnbOsrawP6s9Rg8FPPcDuh4
-         2nxwHJyyGbIHogukbbsNwfizaTgJWtkrdq96nKOP6a2N+WziiDoLma34IBN4d5arzMEr
-         C/wrn/Kmiibc0Csfc4PU9tyhrc88eG0i7OWs9JfQLedOwsulObRwf/42AyrIFdsff2bo
-         7114Hvzdns0IWMhXGZ5vpvfT1ZMkEN0hMCUTWLBCJx7hEjcM2dcljIu2nI90q6dfI4SD
-         Q7wQ==
-X-Gm-Message-State: AOJu0YxLdH90AyDR0LkqiLQvYFTOMhzaqlRgHjkt6ndCQWsMt24FSUVo
-	Zn1CxPY1oK0V9mKFd00VpNmVmeyHACoGFqCWE4bEZkEEzgniBdzL3jXmLA==
-X-Gm-Gg: ASbGnctRa9S7PgDD+FY95QG5UP8kUhx56M9qZmFBYCXJVfliD058tTI9ESBl+rkEma1
-	Px52WJh9GCrrz/zylWJg9CRG/bVj+EQ3F7LI9hKnqN64WL4K8ZmcUmJUs/fmg5t1QUufB1bVWJU
-	d1e0hwV/fg48J3Pe90aXn+XhSpPTLp5TTyaNCCtjAmubJx6ZujMEX9YNDvUujicvhqhdg3ih3vf
-	inFO6h46nivr7EizcKWokZJgG/YgXFmbaz5dTsvHE30hiAzqLx+LqZ+xxVomgP3z9zxUGt6Cvyy
-	g9oYBPD85HuwexRYSFYCyQ==
-X-Google-Smtp-Source: AGHT+IFZuxbh/QtUV4qKOjz14UGEd9mtvCl9XemO0iPCs1UZ5OKXTkOb10pQ1vFLmGfAX1FR8cpJPg==
-X-Received: by 2002:a17:903:2f88:b0:21f:3abc:b9e8 with SMTP id d9443c01a7336-22307e70152mr157038395ad.43.1740617812340;
-        Wed, 26 Feb 2025 16:56:52 -0800 (PST)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-223504e1976sm2657235ad.184.2025.02.26.16.56.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Feb 2025 16:56:51 -0800 (PST)
-Date: Thu, 27 Feb 2025 08:57:01 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [PATCH v7 3/9] packed-backend: check whether the "packed-refs"
- is regular file
-Message-ID: <Z7-4XRCVvLjFCFR8@ArchLinux>
-References: <Z78bmBSrDR20GY6g@ArchLinux>
- <Z78cAU69IUSDgpuD@ArchLinux>
- <xmqq5xkwd042.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D9LTu9hB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lqcZPmdG"
+Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0199D1381532;
+	Wed, 26 Feb 2025 20:23:13 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-13.internal (MEProxy); Wed, 26 Feb 2025 20:23:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740619392; x=1740705792; bh=repgC7omI0
+	44EZ4QTQRS7xHhfVCZob6G4Csvzu+Ljss=; b=D9LTu9hBNkxE2qC2ixWUWjdeLO
+	pCcfxtE48BPifWkI2wzRge5d5i9iQ+QlyAT/MZy+OR01n5lb2g93yPXS9blyjCtX
+	+IesLIzB3TogwDfwl+NosbXUoIuQiC8hyPbMkrjTcvs5NCx3fPhLLsieR03IobT9
+	UgkpZ4nFtsykObDc/gUai3bjZyBLWq7Ml7PmqpNSPM09nCuHxtjiFiKEaajoR1Bd
+	GXuQo6ETtXNQLH+fR7/2UoiEV4V4iuS0UmgO5hOX8p3H35cJlNie84hM128EI6Sf
+	WaVSKPQheLdP86RrYq8zGcnmtKk8F8MKlXqC78LlBLwY5jYR3S1Miwcn+wHw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740619392; x=1740705792; bh=repgC7omI044EZ4QTQRS7xHhfVCZob6G4Cs
+	vzu+Ljss=; b=lqcZPmdGkIXQ6QtRh932Ozbb4KFqIK3wBoOQWUMd3uAiBEIF2hJ
+	VnF5OIDMvrGkWfkUaxW9AiGKJ+3dxKFWf0ipojKarAruLMk31aUWSzvBjgydYd6t
+	HM09yAIJzTSSltzFpuCZxYfO9pl/jIYvWEf7w2SoySjWDCiXWHzMfOey3WNjitnq
+	LjSbHso1lfM4JLEyU8HD6HiiHzjMfk7Qa+gQjkk4TJtiI0+yMALs8kRUYMXN7vPK
+	C6EIGUTIVT5jl+b/EwfiXL0+WmpZ5Uy37+GrkdttSx3QN79t0bx4FlRZDOxADJ39
+	m6aasdSx2sBnQl5I/7Py0patII3rM/iShxA==
+X-ME-Sender: <xms:gL6_Zx0fyCLkqyRks7LPqsj970FdB63tSO828dbH-zxa1ghXd0kspg>
+    <xme:gL6_Z4Fp27c38pjS4HttzsV8yZK48D6GhOPrI5MMPdQj_bbkatmeLjVtrIrnJjwVc
+    MRrHvboRC7F0YmPhw>
+X-ME-Received: <xmr:gL6_Zx4qgoFAXv7miNMqYrzO8C79LwciKpL53w6G7dH1j-CfTOgWRwGO_MNiiQQrPspVAEpQMfY3c5zZy44vpUjYLntBDTipHCet>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekiedugecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pedvtddvheesuhigphdruggvpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:gL6_Z-1OzjJ19f1aIxsDE5tu6VpNBQJ7P-3WL7YvT80Yz7tm9-INkw>
+    <xmx:gL6_Z0FNgIEj_y3-i1VLI6gH5YcCd8rzMRGwO6MdNJeGrzTEzCIyRA>
+    <xmx:gL6_Z__m23_BhkghKdfWrb-bfWdkI0DxIiGz0vLkNXb2539cnKLjvw>
+    <xmx:gL6_ZxkG3IlFbhYkpGVk4D3kSOvt1H9_71IWSGaYcu1Sl1jf9PCRnA>
+    <xmx:gL6_Z5McDW_Fmo6lAGVcDgX0DUUOcAIPEScH1J_42m2K_gaAQFlm2x-S>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 26 Feb 2025 20:23:12 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Markus Gerstel <2025@uxp.de>,  Derrick Stolee
+ <stolee@gmail.com>
+Subject: Re: [PATCH 0/6] builtin/maintenance: introduce "reflog-expire" task
+In-Reply-To: <20250226-pks-maintenance-reflog-expire-v1-0-a1204a814952@pks.im>
+	(Patrick Steinhardt's message of "Wed, 26 Feb 2025 16:24:25 +0100")
+References: <20250226-pks-maintenance-reflog-expire-v1-0-a1204a814952@pks.im>
+Date: Wed, 26 Feb 2025 17:23:10 -0800
+Message-ID: <xmqqikow9o5d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5xkwd042.fsf@gitster.g>
+Content-Type: text/plain
 
-On Wed, Feb 26, 2025 at 10:36:29AM -0800, Junio C Hamano wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > +static int packed_fsck(struct ref_store *ref_store,
-> > +		       struct fsck_options *o,
-> >  		       struct worktree *wt)
-> >  {
-> > +	struct packed_ref_store *refs = packed_downcast(ref_store,
-> > +							REF_STORE_READ, "fsck");
-> > +	struct stat st;
-> > +	int ret = 0;
-> > +	int fd;
-> >  
-> >  	if (!is_main_worktree(wt))
-> >  		return 0;
-> 
-> I do not think it is worth a reroll only to improve this one, but
-> for future reference, initializing "fd = -1" and jumping to cleanup
-> here instead of "return 0" would future-proof the code better.  This
-> is especially so, given that in a few patches later, we would add a
-> strbuf that is initialized before this "we do not do anything
-> outside the primary worktree" short-cut, and many "goto cleanup"s we
-> see in this patch below would jump to cleanup to strbuf_release() on
-> that initialized but unused strbuf.  Jumping there with negative fd
-> to cleanup that already avoids close(fd) for negative fd would be
-> like jumping there with initialized but unused strbuf.  Having a
-> single exit point ("cleanup:" label) would help future evolution of
-> the code, by making it easier to add more resource-acquriing code to
-> this function in the future.
-> 
+Patrick Steinhardt <ps@pks.im> writes:
 
-You are right. Actually, I just want to avoid assigning the `fd` to -1.
-However, I didn't realize that I would initialize the strbuf later.
-After waking up, I have suddenly realized this problem.
+> this patch series introduces a new "reflog-expire" task to
+> git-maintenance(1). This task is designed to plug a gap when the "gc"
+> task is disabled, as there is no way to expire reflog entries in that
+> case.
 
-If other reviewers don't have any comments for this new version, I will
-send out a reroll. We have already iterated many times, if we could make
-it better, why not?
+I think in the longer run, "maintenance" users should be able to
+treat the single ball of wax "gc" task as a mere short-hand to
+invoke a set of often used maintenance tasks, and we would want to
+break down the component tasks grouped in it and make them
+independently available.  This is a good step along that journey.
 
-Thanks,
-Jialuo
+Are there other things that the "gc" task covers that are not
+available elsewhere?  "git gc --help" suggests there are things
+related to pruning (unused?) worktrees and stale rerere database
+entries.
+
+Another thing, how much control do we want to cede to the end users
+the choice of tasks and order of running them?  When you are
+expiring stale reflog entries and repacking the object database to
+discard unreachable objects, it would only make sense to do them in
+the order I just said.  We could leave it up to the end users, but
+that may be doing disservice to them.
+
