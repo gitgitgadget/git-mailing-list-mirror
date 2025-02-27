@@ -1,143 +1,99 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C5E1B4155
-	for <git@vger.kernel.org>; Thu, 27 Feb 2025 21:15:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6E618FC84
+	for <git@vger.kernel.org>; Thu, 27 Feb 2025 22:07:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740690936; cv=none; b=Ilwe3s0dLqQxMdFjI9hSTIMlc8RUraxiCxW1CZCd+WyrS+rMrlxFus4LmCLOD+zA3D5DA1YKkPvV0HL9gP8FV3MYo2Dg6zeNQM+oako93b+jdt7lKw4o2UsyHKvMJX5/hUYF2TI80jIhvaaSEk8yekldAkN2FbPUUlznZLO/n+g=
+	t=1740694066; cv=none; b=f6tH67KMNU27h/x3zNdZQHgeINaIM9yazQ77ALpT0CTtNDETKwkp6DrbFXmjqo9MlhwCh2v5sJR+gpJKvpai51WcVXifqJ0Xwxs0VyOQzv/Gyp14huKrr0o1z58UMKfbFWYXtUjcTT87a+mo/BsUnTyeEMzdrNfQWdlq89A2F+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740690936; c=relaxed/simple;
-	bh=okRnHEsotOu3cxdeBTUELHQe973fRyxBr5g9fKqjSHw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B0AMGCLe0Sa5rSLGhj8L48wCj+ChrFz8o/jW/vT6tPnwamJv9/Rr6jmNz+sTuf5A5FBo2jY0tQnzo8BIWOQ7qaK2K0zY/IwKbN6reL+LlpJ85SRPd4WN/iMPereg/fSZmt7NyfL5QG3hESCFxquczau0Io8cWAoucXSzn1JGtWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aSnd2Hwq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uf6fjBrK; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740694066; c=relaxed/simple;
+	bh=NwiXaxmteM96Tp9fxo6bIRGyS5OHZ90DHvn+jMp9EPc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jjsq8XzKqiywZ0vYmFAyDlWq6AlPAOTfUmBWVNMvRpMPMKPp09ucfFQz7GI9ZbDsJT9GEjExOOHd3nRtejzhaGdnydYWSUtdNj485TYeWP2S2XMyIQXefP4rZ/kqY7VCGnnGWshoEN+DOLVPbOxa5Ne/1VIJqZAnYHEtXg46obs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k+fTWyg+; arc=none smtp.client-ip=209.85.160.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aSnd2Hwq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uf6fjBrK"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 933F42540170;
-	Thu, 27 Feb 2025 16:15:33 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 27 Feb 2025 16:15:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740690933; x=1740777333; bh=5z2oIbVbOF
-	kZUYMHt0qGEcoYh8hLuEljUI5IoBmfmOY=; b=aSnd2Hwq/6XH+xhYs9UhJqFaJh
-	Jc9xkwSmL7HJ6AB32emk8nSYHBSZT7d3v3dfx0fI4zTRZ0pIwGrpcVbazFKJptQD
-	ZJfQnhcb2HUmSwoVysgL2+T+gPgdMhRr7gjKF+McQZIcvhPTbpm+8a3AVOmWR8/J
-	m3TiywKk94SaK7EUJ3WdVAqmw5q2D+uX0u0H3d4fdA3UYUKX/DGCw5Fq7xUKcfoL
-	x7ADNHDxgqwLxPXRbU0QU4fwjJ3O7JU8oEAGwMCswDu69q66evOoMXQKe3kq22uq
-	cYfIWPRkqvmxz/URZaB/7PO/nJQxy1yOs+UxnNQ88kwK9GOr+ez8t4AHNZYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740690933; x=1740777333; bh=5z2oIbVbOFkZUYMHt0qGEcoYh8hLuEljUI5
-	IoBmfmOY=; b=uf6fjBrKskhHjpBavDyzXUS1zXO9wNoZ98P/eKlfecAxLaGMJ5e
-	N8Li00BR7JELZmuIrFRqK4fLXANG5aAE/9DHQQzn63H11JbH8kyqRChkdXWeAd+W
-	Qm1P6yQ3E0Km1RyyzRPGN3BlOHZVEAmN2NKMd270BoJyqzIYk3byubi/qGL9c6WE
-	LOzqe/yEG3QmhEr4tgtljn0rySDRXHjYT8Lm2ViaJ1/nw6ZXIWb9j7/m23NPLpK5
-	VlzH8Qt+LOPo+h1Zf3Dh+jG+4524g/BRJkCdJPe2a6HM7xPz1sGJMUIoYrhZOyyt
-	5CwT/B63jLSdJrjEAqsxjIsDKfTByTU5owA==
-X-ME-Sender: <xms:9dXAZ2u_dTGe78rRKOAkkLHIuvZBs9xQnJ9tbYEj-ARgfy15ymk0-Q>
-    <xme:9dXAZ7e-tmFJMIrJHUdH6JR7A258wXQ69i0Kdk9bxBU5FnHrc8_AOCl8qV3saFH4H
-    s66owRtmJHRKil_DA>
-X-ME-Received: <xmr:9dXAZxz2O0Q0_sgq6S0Cql4iqq7NOwwsQupyyAWqzFoV7AuTM4Yworj6jVP83uzDGvxroNZBP96M9fa-DpIRikfdnjAeUJE8-CIh>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekkeehvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
-    hmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:9dXAZxNeWFvMbTv587SPQfJGlkFK7zvVhDTXeIcCOZ5OQb0nYitOUA>
-    <xmx:9dXAZ2_k7Lhca6S4Ai8MvDG01xutu4GUZ0n2FYt0xvCNX0rcGMQETg>
-    <xmx:9dXAZ5WZU-sWqDrotJKWvEOfhEoeMsEyPK76VzEXa6iWTINMLOnOoA>
-    <xmx:9dXAZ_fTjYwpC3xKjjV6O6kcvEj6xnC0Qgw6ryBk2kysqetD_YvEtw>
-    <xmx:9dXAZ6ZKk5XKTNWz90P9bjq_XCwtL4UjRgwgXNCl8XwGX94nStn0p706>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 27 Feb 2025 16:15:32 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] ident: stop assuming that `gw_gecos` is writable
-In-Reply-To: <045c11dc1d51690eed4dc07da26dcace612f786c.1740671049.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Thu, 27 Feb 2025
-	15:44:08 +0000")
-References: <pull.1867.git.1740671049.gitgitgadget@gmail.com>
-	<045c11dc1d51690eed4dc07da26dcace612f786c.1740671049.git.gitgitgadget@gmail.com>
-Date: Thu, 27 Feb 2025 13:15:31 -0800
-Message-ID: <xmqqwmdb5bt8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k+fTWyg+"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-2bcceee7b41so424692fac.2
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 14:07:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740694063; x=1741298863; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=jSopgVt82L/XQ2JMg10fnIcxaS76YafQx6+dM1i+4rU=;
+        b=k+fTWyg+gRhuhoa5Ougj5y7Si/DeNOiI5eD8ELYaRdSgPZlEVPU9325Keyz5di7EBr
+         zg+dyA8a8g4QZzWj0PZ0AEkFLss14/KWNb61RUKUrlumsvl4hOcG5ZBpJsKQWwJ1KLMe
+         mRJwdMhIiU7ZuxmFXA1q0VHq2MOSDbEOB4YrlzV9gAqSX0LtP91Uh7VzK3oO1GLyHs3p
+         xzF7UCqVMNkXeJlXlyuBqrya/OO3xYwxqwfvDXJ4GXKUQj/EWb/UcHSNQfVFEZjCn3Rc
+         GU8pP4/b6OQWN5YfDp4zvGdgN+L99BJXh3r/YFw9C9G49TvizSgPAx7fYq9oVBiaZGcz
+         tl9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740694063; x=1741298863;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jSopgVt82L/XQ2JMg10fnIcxaS76YafQx6+dM1i+4rU=;
+        b=Me2bhYdk0QeN3i7D+AdArtIzdyYfaTNVaRIT45t+02jxTuEqTdRj5v9t6VhBcxtVM7
+         0qggXSREcVmw1OWYBQhEvocCk9vMH1z3spF2j9ACYudxFeo3i9M359QKE4OCWlV1JCQd
+         hCKrp7sy+oVlIH8YWl7b+oa0f7XLfKM9BhcBJ9AqK+RBLTbX7iKo9FmGlgjGFGg53hOU
+         jrgd3PltpOPeKNEEo/jIWpczxOhhpS5R8CAzUENfSPaRV1GZf38UTTYXRu3rLDujK6tj
+         I2BUb1cHgMuo7n0Cy5EsWAdpwFGHRbIcoIfWJrsRdYlwBdSaDvJch8V3/zkEl1VX4Qgp
+         fSTw==
+X-Gm-Message-State: AOJu0YzGH3m7UwVDT5mXdg2DbNPHLXBQpyGOsolF0d8ulCzjLTcApzSI
+	Y7kePKs5pHVSzxzf1YpdGG1ZEr31xv/dGZ9A3POso8gHKkL5Ut6my06yGA==
+X-Gm-Gg: ASbGncvd7KPnTyf+JPlAotFApfn35PT4tyeDl2Zk1fxmM8J5XhoMiZwFxNkeRaqRub8
+	ekgoYl8bWXJ8VP3Xy7eDKeYSMQGNVPP9+rSvPXUUydxLvrh5DcQnUFFLs6Tx3yFxNUxQit0uc/t
+	QSueKVnri/rQuHersnk1SzKOsk1nj9Lf9pgnF3obGlYLzXLLmxbL8CIq/MZMV0WkdnqHd/NJJdG
+	AChppX4HmtHcf11GSMRwN4sqbXBXFiKi/dg1UixvsE1oPDwhs4uShiAFEc13mh4NrWhKBzL24r5
+	VqNHjO/dk+DlX3how0g=
+X-Google-Smtp-Source: AGHT+IE3gNam1dSco6riusgpDBpjR5oftuuccsGU6dSWkvv9VgVlaxdaQ+9I6uKB22z7c5mH0qtkug==
+X-Received: by 2002:a05:6871:79a2:b0:296:c3cf:39ed with SMTP id 586e51a60fabf-2c1787ba82emr521567fac.38.1740694063646;
+        Thu, 27 Feb 2025 14:07:43 -0800 (PST)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-728afd7694fsm409366a34.50.2025.02.27.14.07.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Feb 2025 14:07:43 -0800 (PST)
+Date: Thu, 27 Feb 2025 16:04:27 -0600
+From: Justin Tobler <jltobler@gmail.com>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com
+Subject: Re: [PATCH v3 0/3] batch blob diff generation
+Message-ID: <b3a4lco523aodf3oqctf33utcp6372b3qp6sgekeb4dx2wbtya@huxwtr4vw5md>
+References: <20250212041825.2455031-1-jltobler@gmail.com>
+ <20250225233925.1345086-1-jltobler@gmail.com>
+ <1e41249a-5241-4cd8-8a6a-3c9163fb0ea0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1e41249a-5241-4cd8-8a6a-3c9163fb0ea0@gmail.com>
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On 25/02/26 02:58PM, phillip.wood123@gmail.com wrote:
+> I also think we might want to massage the output in the tests so that we're
+> not running test_cmp on files containing NUL bytes. Using
+> 
+>     git diff-tree -z ... | tr '\0' Q >actual
+> 
+> would get rid of the NULs but does not improve the readability of the raw
+> diffs that much as everything is still on a single line. Using '\n' instead
+> of 'Q' would give us mulit-line output but we would lose confidence that the
+> original output was actually NUL terminated.
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In 590e081dea7c (ident: add NO_GECOS_IN_PWENT for systems without
-> pw_gecos in struct passwd, 2011-05-19), code was introduced to iterate
-> over the `gw_gecos` field; The loop variable is of type `char *`, which
-> assumes that `gw_gecos` is writable.
->
-> However, it is not necessarily writable (and it is a bad idea to have it
-> writable in the first place), so let's switch the loop variable type to
-> `const char *`.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  ident.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+Is the underlying motivation here to provide more feedback if a test
+fails? I somewhat have a preference for the test to be validating the
+output as it is actually expected. As you mentioned, getting rid of the
+NUL bytes wouldn't help with readability much and we probably wouldn't
+want to replace with `\n`, so maybe a simple "Binary files expect and
+actual differ" would be the most straightforward.
 
-Can we have a bit more details here (not in the commit but after the
-three-dash line, meant for context) why the change from 2011 needs a
-"hotfix" today?  Has something in the build environment change?  An
-updated header file has changed definition for "struct passwd", or
-something silly like that?  Even though POSIX.1 does not define
-gecos in its struct passwd in <pwd.h>, other string members like
-pw_name and pw_dir are writable, which I found funny, and makes me
-puzzled why this code from 2011 needs a hotfix all of the sudden.
+If this is the preferred way to handle it, I can adapt in a followup
+version though. :)
 
-> diff --git a/ident.c b/ident.c
-> index caf41fb2a98..967895d8850 100644
-> --- a/ident.c
-> +++ b/ident.c
-> @@ -59,7 +59,7 @@ static struct passwd *xgetpwuid_self(int *is_bogus)
->  
->  static void copy_gecos(const struct passwd *w, struct strbuf *name)
->  {
-> -	char *src;
-> +	const char *src;
->  
->  	/* Traditionally GECOS field had office phone numbers etc, separated
->  	 * with commas.  Also & stands for capitalized form of the login name.
-
-The patch text itself looks perfectly fine, so I am not opposed to
-its eventual application.  Even though we do declare "src" as
-non-const, we only use it to read from it, so declaring it as const
-pointer is perfectly fine and more appropriate.
-
-But I do not see any urgency relative to Git 2.48.0 (or Git 2.48.1
-for that matter) to mark this as "hotfix" implying that it should be
-included in 2.49-rc1 in either the patch or the proposed commit log
-message.
-
-Thanks.
+Thanks for the review!
+-Justin
