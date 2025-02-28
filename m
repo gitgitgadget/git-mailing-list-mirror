@@ -1,120 +1,165 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DFB277008
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 18:47:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C024E270EC9
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 20:09:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740768452; cv=none; b=GFu8qNEeQ59rlwiUxFn9RuMn2XUAThk/1wiuAm/hW+c63tDlWSFHd+2bbW0BCyXqanS2wjk+C5XQSbMVnS+6KEMUKsMeHpQ8kX/j83P0oC4vvk7uLRigH2CuuCQXTl3igCk7+6dzvS9KepRK8hSslpUS47y29oRXNwOsRgwBMv0=
+	t=1740773342; cv=none; b=RJJ+rFJQg4fENg7spmD8Z9GnfsYjS0U/982zjepAoZ9JVPXS5vgLkVbE8jXPY1NUxvh9u+hBdIwkARzJ0KzG0tPZE1GW/grj4eaH3KV++DAlruVGJ3BGh5xs6ZJrasisw3ZN3J2pWKcEeFrrnitOd8XdgwrXILMM+IYDaL7G+BY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740768452; c=relaxed/simple;
-	bh=RrPB6Bz5Is6HCkbhtKQoDqjTtspOH9VaiePZbtsBF0Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EdREeBHA5nC34lkdgLZQ0zXTVJYUNJy3dlfRxaJfbfrIauvExUq7m7XeHOAmTLG1lBal9C7zkn3HJq0g8SLwmM3CP2itWghHObA56BKqzvpkWj6HuP+ZgYw3bocrua9jsLbgSfLLVkws3STHx/1/aFQ+gBJwtT1Oy7vKt3R7CnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D7ewTT6H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oQF9Hvqr; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740773342; c=relaxed/simple;
+	bh=G8p23v9FcG731XA5WbFunlZhqdvTk+sqa2WzP/Ny0Qk=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=f+QVFmJiwLDhsIi1XjjmWHvOsJh6bm64ZPlF9ny9Hzjt1A8xmXB9TwT4omu1rqGCPzZAl76QQ4eSY8/9twahknecTZs6n2c76OJKIR0fCQ9ZpMQxwvkrb1XTXbqQVznT0TkTkl9UK5OQWYWWDJQZDwNyEIjTwx4EIYuR/m0nEDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=XvQJMB88; arc=none smtp.client-ip=209.85.219.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D7ewTT6H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oQF9Hvqr"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 400742540148;
-	Fri, 28 Feb 2025 13:47:29 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Fri, 28 Feb 2025 13:47:29 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740768449; x=1740854849; bh=hrcVQ0Kiu4
-	NzSaSWSvArk5RVQGo6KewIkWCA0+moOA4=; b=D7ewTT6HhmhdCyLQ2wnn7MExMB
-	3eX1WrkcFF3V82kKlpOWictVIddk12YoBwSwkSzjBuML4cbj6Bd5AWvu53CchtuM
-	ndvnikX1jJKqzTvY/e8PYRGHmsGVKddy2T6BiIXKKYmnbaLZ+aIlnSc/9I8nGUcH
-	jsrDkYRQG0e1G6z2RU9m4x+ILhhKZ5XdJ9N5qLHLjzlkgHETjdoOMYmAgy304mh7
-	ezqZxfS6A37Dw4BLtqdCcrx+LzQAi54yrii274TkVc184UjPgaa3hKc91K4chcMI
-	Vgf+CGMgcC0qGv+uJUmIG6IEmr+W473dAOrlgptmg9aiG7b+/p4FQuT/86mA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740768449; x=1740854849; bh=hrcVQ0Kiu4NzSaSWSvArk5RVQGo6KewIkWC
-	A0+moOA4=; b=oQF9HvqrkvbuDr+UQ/uLCa1SPlwg0q10/FoFU4QrfVhodhQO2Ja
-	VPjapuLtiXRk/2d6bMVWVy+LLOFG2P6ivTXnk/Ue5TG80ytultsvDLxzB7PChMqw
-	eUmp842fBy1LVAiVqQKumKbN6PigctPXPVsqZnBWKBesq2b7592TGMQdDIUOhpk5
-	Usf0y+ks9xqx4mxemSltlmvgXc/s/R6JSEo/gfvQufaupdlsmIQ5bJXnYgBHohJV
-	lfcVfGLpRo7R0V1JprRJO543rIEjhYouS2dulyWHLoCQBQ0HoTpCfHb+fQic0P5s
-	V9qtTebhILevvFLR5g0ARxID5Zsb8E9hEPg==
-X-ME-Sender: <xms:wATCZ7nD9IcuGyQUUUsJb6s2TeS7GkKo0Lveax7qQq5-mg7FfKN3hQ>
-    <xme:wATCZ-2nke94_gIXWuxceA5Vh-bW_cqATa8iRJR5vAZJfbcin5uylh29keH8W_kat
-    kn8xirKwDhvx2ixJA>
-X-ME-Received: <xmr:wATCZxrGvynf5svExfHoyUcg5_jz_O8-PN_ib59g3FwUBUNs-VWrzkLkimrcDCslqndgBizacJ5WnfepmIp-FNat6tJIF7fgzhe2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeludduhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughr
-    pefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevuc
-    fjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgv
-    rhhnpeffvdevhfdttedvueelhfevkeehhfdvteehheevvdevgeevkeeuheefgedukedvie
-    enucffohhmrghinhepthhinhihuhhrlhdrtghomhenucevlhhushhtvghrufhiiigvpedt
-    necurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtmhii
-    sehpohgsohigrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgurghlshes
-    tghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:wATCZzkhfoNApThZDffhxQKp4Lr7e9qKicrSPpQTUE15NzAxCKHZIw>
-    <xmx:wATCZ50fXZmpjw6OhOTbfN9DdL8VcFjGXETTurCloyvArLp14Rncvw>
-    <xmx:wATCZysgsMITntw7K9kl3GXiFfdu-WYZ9tvdOL0SkUih9lw47Attjg>
-    <xmx:wATCZ9XlJYaDFz0t5fV55LHOnjygN8N4BlLyDZu11hIgVOpztiMHrg>
-    <xmx:wQTCZx8dMlzxLn21pvkzSFnIBexQyDGiiBTGL05goCaDP8T2hsLG6_Fn>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Feb 2025 13:47:28 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Todd Zullinger <tmz@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  "brian m.
- carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH 2/3] contrib/contacts: rename .txt to .adoc
-In-Reply-To: <Z8HAv5I1hoNiQYoa@teonanacatl.net> (Todd Zullinger's message of
-	"Fri, 28 Feb 2025 08:57:19 -0500")
-References: <20250228034713.203461-1-tmz@pobox.com>
-	<20250228034713.203461-3-tmz@pobox.com> <Z8FwIqnYYPk5bV7O@pks.im>
-	<Z8HAv5I1hoNiQYoa@teonanacatl.net>
-Date: Fri, 28 Feb 2025 10:47:27 -0800
-Message-ID: <xmqq1pvh3o00.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="XvQJMB88"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e461015fbd4so1843328276.2
+        for <git@vger.kernel.org>; Fri, 28 Feb 2025 12:09:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740773339; x=1741378139; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kAQD/SgUPnbq4JnxSCNJ6aBMtydELh/EamcTLtouQNk=;
+        b=XvQJMB88/JAi3/d+Fx6uoG5nE1t/fm5H7DgkzV6PizFsb4QZRMngAp9rsHfwN9iJEu
+         +UdOjFq+gF728U9jOOjHwAcYC14yAt3gQBlxUtWN8r/YjPLqw4ubAQF2koiTofxkm8Xa
+         5BTJo8mmjf25PzBgqffSv5RobNdBtJ7HfBHLGdKgMkvU0WWxMYaPjcafPGz2vvD5TTIm
+         rITpSbgwEQ2OF/1dETn3/G42xfE/gaxLAYbdu2Yds/xmMba22Jv5Y5fnMqgvTH36Md3g
+         dm09w5lLsmVaZUM8iLSFajqpj8QzEQuQiIK3GEX3PknBgCg1HBechMmxuMzsduGEGI3M
+         CwGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740773339; x=1741378139;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kAQD/SgUPnbq4JnxSCNJ6aBMtydELh/EamcTLtouQNk=;
+        b=Ye0pRmixmxPbGzo+3EsEPJuvQ+eqbGqOev70cIV08SdYCKBw/OSVNmMHML4UXDUv7c
+         XsvliKp2FZgc+u8Nb+lhl4mGkCVy+x4tRretAWGRhA3oh/2chgHGSqUR4dNzBcrx3K9M
+         oaFJLokogxSY/PxKISy8RLwmM1RAiJdwz746cZMyPE+TFUeJfueCakwkDZEpsDIuBsWY
+         BrZut7qAIxd3JDLV3QXuED6hEBlEqIzk8a/4yPeOlJzDRN8mmjj5CJrCzQptXNwTzINZ
+         pxfkOrw/P1C/t8m/4EPe6HIRTFnGb/pqwk87NYzuWE8tp0ixRGrKGmVST5f4ILFuehjx
+         l4mQ==
+X-Gm-Message-State: AOJu0YxVSnx9pn32nt0PDyloyNnJqFXy+OADy+xqGk6HKD2Syf3ypC8y
+	6dDEzmy4K4nmsAEf5IRIv79s3JgsGrSuEUGaiykOVQcJUoNjbxKPS/XfGL+79TmIHMxxobu7kjl
+	n
+X-Gm-Gg: ASbGncvu8W0DvomliVLt4esKNCxybKveOjyaBGF02EAoab3sM4ShUmydw/Iaop9aIqz
+	4cOaNOMDqa/zjxcfaCC3XyXvR6GTc4WStOxbnzfspt+2zR2I4tKhs338yFMKR+62B121p/CJH2+
+	uImoDpxGOX/yUX4yPLnt1GuLr8lhR0XeApvhYzxCS6DsS9+qd2DQ31Bn/895beFZs0f0cde9kDP
+	TZeC7sDJ9/2Dj/W/q1LE6FvArBcQ985bkLPENKlxD8dcKRubfbV7jont5vfWQ4Mm2H9FsdVeHb8
+	cNiTNbKCcHcTNUChqBegmpGAM3aD/pJmDxQphVtM5cnIEE9QGWAhXEWNlVhZ4+OJzf2V+fclyA=
+	=
+X-Google-Smtp-Source: AGHT+IED+xcW5ZK7DxQHKm8qsfVwpsTl4fcWfVp0iX+r6ZsyfImzu5UeUr2I+F7x1ti7IHBXY+BrXg==
+X-Received: by 2002:a05:6902:2001:b0:e60:79c0:5089 with SMTP id 3f1490d57ef6-e60b2e860c6mr6179904276.10.1740773338959;
+        Fri, 28 Feb 2025 12:08:58 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e60a3a41ab9sm1289840276.27.2025.02.28.12.08.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Feb 2025 12:08:58 -0800 (PST)
+Date: Fri, 28 Feb 2025 15:08:57 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, "\\ Junio C Hamano" <gitster@pobox.com>,
+	"\\ Elijah Newren" <newren@gmail.com>
+Subject: GIT-BUILD-OPTIONS can override manual invocations
+Message-ID: <Z8IX2bMJe+V80idE@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Todd Zullinger <tmz@pobox.com> writes:
+In 4638e8806e (Makefile: use common template for GIT-BUILD-OPTIONS,
+2024-12-06), the project's Makefile changed how it writes the
+GIT-BUILD-OPTIONS script. Prior to 4638e8806e, the Makefile would write
+the file itself, but post-4638e8806e it fills out a template
+("GIT-BUILD-OPTIONS.in") with the appropriate values.
 
-> Since this is only in next and the first patch of the series
-> targets a "breakage" in 2.49.0-rc0, should I split the
-> latter commits into a separate series based on next or is
-> ef18273a2d9 likely to be merged into master before 2.49.0?
+This has an interesting side effect when running e.g. the t/perf or
+t/interop suites. If I do:
 
-ef18273a (Merge branch 'ps/meson-contrib-bits' into next,
-2025-02-27) WILL NEVER be merged into master in any timeframe.
-Doing so will pull all the other merge commits on 'next' into
-'master'.
+    make && make -C t/perf GIT_PERF_MAKE_OPTS='NO_EXPAT=1'
 
-According to tinyurl.com/gitcal, we plan to tag -rc1 on Mar 4th and
--rc2 on Mar 10th.  The topic ps/meson-contrib-bits will have spent 7
-calendar days in 'next' before we tag -rc2, so unless people find
-issues with the topic while in 'next', it is expected to land before
-the 10th.
+, then we will still try and build with the libexpat headers!
 
-Creating a merge of ps/meson-contrib-bits topic into the 'master'
-(you do this yourself locally), and building your series on that
-merge commit (and you send these patches to the list, saying that
-they are based on such a merge in the cover letter) would be the
-most appropriate in this case, I think.
+For example, I removed the libexpat headers from my system, and ran the
+above to get the following output:
 
-Thanks.
+    $ find /usr/include -name expat.h | wc -l
+    0
 
+    $ make && make -C t/perf GIT_PERF_MAKE_OPTS='NO_EXPAT=1'
+    [...]
+    http-push.c:28:10: fatal error: expat.h: No such file or directory
+       28 | #include <expat.h>
+          |          ^~~~~~~~~
 
+This is AFAICT fallout from a change in 4638e8806e where instead of
+*not* writing e.g. GIT_PERF_MAKE_OPTS into the GIT-BUILD-OPTIONS file,
+we now write it with an empty value. So when we run 'make -C t/perf'
+with a non-empty GIT_PERF_MAKE_OPTS, t/perf/run will source
+GIT-BUILD-OPTIONS, and override the value of GIT_PERF_MAKE_OPTS we
+specified.
+
+Interestingly, 4638e8806e works around a similar issue in test-lib.sh
+where it stores the value of $TEST_OUTPUT_DIRECTORY in a temporary
+variable, and restores it after sourcing GIT-BUILD-OPTIONS if
+$TEST_OUTPUT_DIRECTORY is still empty. I think even this is subtly
+broken if your $TEST_OUTPUT_DIRECTORY is set to different non-empty
+values between GIT-BUILD-OPTIONS and when test-lib.sh is executed.
+
+I noticed this along with Elijah while merging v2.48.1 into GitHub's
+private fork since our CI suite runs the t/interop tests with a custom
+GIT_INTEROP_MAKE_OPTS.
+
+We could partially fix this in the same way as we do for
+TEST_OUTPUT_DIRECTORY, but I think that this isn't quite correct, and it
+makes me uneasy knowing that there are other places we might face
+similar issues. AFAICT, 4638e8806e has the potential to disrupt scripts
+that use any of the following variables:
+
+  - FSMONITOR_DAEMON_BACKEND
+  - FSMONITOR_OS_SETTINGS
+  - GIT_INTEROP_MAKE_OPTS
+  - GIT_PERF_LARGE_REPO
+  - GIT_PERF_MAKE_COMMAND
+  - GIT_PERF_MAKE_OPTS
+  - GIT_PERF_REPEAT_COUNT
+  - GIT_PERF_REPO
+  - GIT_TEST_CMP
+  - GIT_TEST_CMP_USE_COPIED_CONTEXT
+  - GIT_TEST_INDEX_VERSION
+  - GIT_TEST_OPTS
+  - GIT_TEST_PERL_FATAL_WARNINGS
+  - GIT_TEST_UTF8_LOCALE
+  - TEST_OUTPUT_DIRECTORY
+
+So I think a more robust fix might look like only filling out those
+lines in the GIT-BUILD-OPTIONS template when they are non-empty, similar
+to the pre-4638e8806e behavior. Something like:
+
+--- 8< ---
+diff --git a/Makefile b/Makefile
+index 97e8385b66..35e5571d8e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3145,6 +3145,7 @@ endif
+ # and the first level quoting from the shell that runs "echo".
+ GIT-BUILD-OPTIONS: FORCE
+ 	@sed \
++		$(if $(GIT_PERF_REPO),, -e "/^GIT_PERF_REPO=/d") \
+ 		-e "s!@BROKEN_PATH_FIX@!\'$(BROKEN_PATH_FIX)\'!" \
+ 		-e "s|@DIFF@|\'$(DIFF)\'|" \
+ 		-e "s|@FSMONITOR_DAEMON_BACKEND@|\'$(FSMONITOR_DAEMON_BACKEND)\'|" \
+--- >8 ---
+
+, and similar could work for the Makefile, but I'm not sure what
+the Meson equivalent would be, or if this is even a good idea or not.
+
+Thoughts?
+
+Thanks,
+Taylor
