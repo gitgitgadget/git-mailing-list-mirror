@@ -1,125 +1,164 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C0A1EF398
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 15:31:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFC31EF36E
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 16:05:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740756719; cv=none; b=dPboXN5HP/3KY/xZw0o69OFt0+caaW69R8znju0ILwD1P709nn7MD74VTgO8REmUpS9iGwYJa9cJZfLduVvVFg3QlC70KYgmcfp6NIBer8gTRAb5EoonRvJ9CyNsKCSaEwj2p/n1UHaeTgE8ZkHxMiOqn+wo84F7zdCqOrgfkkA=
+	t=1740758758; cv=none; b=m6CWmh7zoaE+7OGJk0qUhF+0wsrc5D1JaWYULNrguAFSQMIVq7sfMkKlU+qOFQbeaoOpOAO8AjPnrjOaYHjB5DTLhk4CfYqwQgk1ReiiQxjZrRqFAY25LieLWtfiqvA3hh4bjOZ3okxr0R1+xoHTpFM6/4kWcjvZTcq1lNkQf5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740756719; c=relaxed/simple;
-	bh=onQZJkxZtLp3CmI4MgxPV1GowmDHfh+E3ejwKavBOdU=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=f/fJWdQLOY/sgmALK8/FpB1pfAZ5u4M3IwGFphC1GYP32pfslltKlQN1FX2cU4h39cwVqgFpbLov1plmwu1nZu84E7S8y6KfTCiQg3JpHb3c9f1k9eijWmr13Y21ysgr+4RlnGlMvI2Kei0M4L8MU2I66LPBWmhhDQPmJ6wu8BA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Tvb56ZYh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pztETSs1; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1740758758; c=relaxed/simple;
+	bh=s84LlCFYe5M8j63MR0kUVN2a1yCSf3D97rYxb1MxWyU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gbJ4Byxn2DC+fBReNHSbWVnbKJbRk+vjOoSYQDwx2zYJLbnKyyCSbXHKzsE95i22vd+3TsbdJptZC0dDApXcIch2bJU0wF9UEOo26NK+pVHjmvD4hF79LKdGRFWqd2ma3m0IIGPhgskxxQQrRFujca1s2fYcL7ndTXY04NcIIAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gHbEHM1M; arc=none smtp.client-ip=209.85.128.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Tvb56ZYh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pztETSs1"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id BD03625400AD;
-	Fri, 28 Feb 2025 10:31:56 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Fri, 28 Feb 2025 10:31:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1740756716; x=1740843116; bh=0g4GhEZD2aS4y53eJO1YLPNuu7vHb+Zx
-	5ekLUk+VyYY=; b=Tvb56ZYhB1xDSeOPB0C2OKteI9/j9UWt9YKM6kXjUjwc5ZoA
-	pTNB7FeWGTgu7d3oHSCpm/vHj0q8XadOMwhO7a6Hkg4y4i0MVC5oCGG1zwrYhyZW
-	6t6b15afGkP9ei/sZq3m6k/HzJ5KG8bbvor5uBGbIAb6ssJ6+8JnqrVlEXQ7PE8s
-	THDseUmPZFPvRApslh25HO27rQ6VKygXz5R2UYkZPX70E1mcK/6eRj5hsNsKypag
-	NwrxsSR5ym7gM7eSHCj7qgRO8OYwNhkoHKDsMdvv5cuJyGovrvkVour2ET0bf6j0
-	LMaR0N9zlz8xAEaVcp1bEgcRfc/EYfN+tt8NvQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1740756716; x=
-	1740843116; bh=0g4GhEZD2aS4y53eJO1YLPNuu7vHb+Zx5ekLUk+VyYY=; b=p
-	ztETSs17QMJdcLud7vWidOfckwym6UyXYT/NxG5fYvqnW/5oE8NHH57toLE8HBPt
-	72I8d6qgFc9YtABYmZysQdWeAYoS5Pvb6EFzCFbkRLirreY8oqsl+u3h46FOMsX3
-	N+YFmlni2T9VFTurdh3SBB4WglxftewUnOIMJrPmdZneQh+U9CX7gTb4wJPntqbg
-	53BrKuEKLfWoLAGDGBcaAy9BKA9t2j6DkzKMmXVMypLCQuVWL8rb9ZsHjpJKDGKt
-	HTrjUekVoTIIImw5+tL+NjagLfnQJqYX41qVqyF2IFXNuEeoLVirW8XSroh6w+r+
-	9V+1uunujxkvbY19ii6vA==
-X-ME-Sender: <xms:7NbBZ8jA38P6_jFi5nj-mr5iOZ5MmkYBFZS9Xzc8uXAEyJ8dTCg3zQ>
-    <xme:7NbBZ1Dhzt3qMmbdYVKxnKdnWDtyoQ9s51LKPNplOXFCEXOngcMiEwzxA8Moo4WcZ
-    JX03DSMKSRQA2k95g>
-X-ME-Received: <xmr:7NbBZ0EnpFz36N4SixdPV8sQx5pIGlSRM-tNcwASdSj6ePkunEWvgBKdBk6YYRMqZG9C7W8t1N9dXPPdinsRXFl4hsBemuS7foQgCBKS6YzZvWdWHAv->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeltdejhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfggtggusehttdertddttddvnecu
-    hfhrohhmpefvohguugcukghulhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtohhmqe
-    enucggtffrrghtthgvrhhnpeffudejfeeiueevieejtdeuiedvfeeukeefffdtudelleff
-    hfeilefgudejieeikeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehtmhiisehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:7NbBZ9SI-L_CnPyfKBD3TWvZxn-dImYoCOfg9JkVamd-XUjzWqt3xA>
-    <xmx:7NbBZ5x-dD_zsTBf3niJkvxo17HWfeQcanOr3Y-2mbNyLa8mpzxsqg>
-    <xmx:7NbBZ76sEC9qj7z0K5Zgl11_rLNC3rCKjHJA84cf5sLA_JfBl8JZbA>
-    <xmx:7NbBZ2zSEXvN3Isetgkk_iN2uRSGh95x92ij4itIfPCliQ-pWoXnqw>
-    <xmx:7NbBZ09D_nXX8SJOLZKyCUHjikciAK1eZksn2PVWHJZgVbyGyd_BsM2R>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Feb 2025 10:31:56 -0500 (EST)
-Date: Fri, 28 Feb 2025 10:31:54 -0500
-From: Todd Zullinger <tmz@pobox.com>
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>
-Subject: t/t5620-backfill failure on s390x
-Message-ID: <Z8HW6petWuMRWSXf@teonanacatl.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gHbEHM1M"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-6f768e9be1aso33090227b3.0
+        for <git@vger.kernel.org>; Fri, 28 Feb 2025 08:05:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1740758756; x=1741363556; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bHjIpeEHyIE8xNwmF0TOCgAFZbgMhlPBNHgyOGE8tTI=;
+        b=gHbEHM1MvXH7zuDLVse0XFjQa8SPaHC4QWhIhQ4eCpULDwXpu3ca5M2XEJNzSXmrh4
+         mXCgKFqnerPqKg6b62q0Bs1bjt9czPWCdNgqtPn7XDycPQsonuadTy1FMgKE5dz5K9XV
+         sxJkFdKcB8+unj7W32vHZkqvH20u6uW5ftAD73BBAwdKhBZx3Kwyx5BdtpaMDaFZXCUd
+         vkWPpB1qfYDFkGDGpZ85i+TUyePOppPwsPUhdn8bUrwov6/Bphcdh9yV3tnWRg+pm8Nh
+         M7YTD3xzkYFxNspQNWjJj+6hPwRTfr3iGzIUHza0qNaAHdP++gFIryS/xIysU8LJImvD
+         XccA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1740758756; x=1741363556;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bHjIpeEHyIE8xNwmF0TOCgAFZbgMhlPBNHgyOGE8tTI=;
+        b=xR1/9+ez0oZ/4BWapt1h7u4chPo15qNyBBN45VfBtD20nHGo4gj96GtnlwCMKA+/h3
+         oxofWy7eIGZiUpqWkn1kW2EMM0ovlKQ8WsOATWvzzTBNWML0crUZJGM1HgYVj7D4mt6I
+         m3OQXszdrVzLH28k3h88PlYW5kpmsdCLozZb0RdIwyxz+/gWb1o6lsIJ25IaUz60WfpB
+         B+nTdYzMyBe21r0qVp3B6eUaFySFdz4Zk/Qba7mkKsK4qEbjAZnbZa0zcXv9Z/ZdFsg2
+         UMziVOWjzgXK8otKSIdFF0rWBO14THqYEYF+rOb79p3Mai9+WtbaWH2IkjMQrsoKkcK2
+         8InQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXzbQ7cEGqHHvYoBnPo/DMKMF9HU0/YLgyN5Byh5oqyC77HM05HlyzkYl6YFWBs8YpLvKk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YycxGz3J6nVlV322kXOhTDFlnjwTudM3tKuIVjTJMYgQKBTINcy
+	nRvluDlfiXPI1EaPsVMDy7VUZbkZdrJwyLpScMw9OktXv4XhshUGUKyVLSE7F7Pbr3Y5+gLq/xo
+	8DssztrJS1hGliCntlZMLRYkLkRw=
+X-Gm-Gg: ASbGncuwD2vJreEJeWYRUEVTiMH95GDREipuR7JIXsXLS1orddOyn2bVqQUD/1echn1
+	tXDytIAmjPYqmn/fI6N7pcXPxbJsNjWAIVMuOXOM+7OMSsBmINcN9kcKSqDLmrbCNH+EYep+z5h
+	3hW1LLGb+EeaDxQ+3lSg0Grto9S10=
+X-Google-Smtp-Source: AGHT+IFOuvDifMsYn54t+9nbzNvaqrtJQA2v3/OKb1yFqnMMPHLzaIfR0WWR7kgQ+YAQmClirNW06tt2dhQW28kcAAg=
+X-Received: by 2002:a05:690c:4588:b0:6f9:5a36:577d with SMTP id
+ 00721157ae682-6fd394bcb05mr112188967b3.9.1740758756177; Fri, 28 Feb 2025
+ 08:05:56 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <CABXAcUxHp3LnyqR=NM0coh6wG-1uy4GB3FdeZEg8mPHu-vt0bQ@mail.gmail.com>
+ <CALnO6CA2j60gpPhUjxOY6_q5WdU7MHoL1GLDN_AVwWVNx_JddQ@mail.gmail.com>
+ <CABXAcUwHd2Rr8iOZ7F2k5DGiBNH87pwG3oyRWLrP40=MgD91-w@mail.gmail.com> <d7b1416d-d201-400e-a0eb-b9e526f740ab@gmail.com>
+In-Reply-To: <d7b1416d-d201-400e-a0eb-b9e526f740ab@gmail.com>
+From: Clement Moyroud <clement.moyroud@gmail.com>
+Date: Fri, 28 Feb 2025 08:05:20 -0800
+X-Gm-Features: AQ5f1JovsaS9zlUUH4_nL3oLL0SMOcfAltbS_TNLMicL2nlBTeLTNGcltSYZGBA
+Message-ID: <CABXAcUyWu3zi_iXrSoc1ymZCYtE5u4+JybJp2TiCCJA18T-4CQ@mail.gmail.com>
+Subject: Re: 'git rev-list' commit ordering issue
+To: phillip.wood@dunelm.org.uk
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Fri, Feb 28, 2025 at 2:59=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> Hi Clement
+>
+> On 26/02/2025 22:30, Clement Moyroud wrote:
+> > On Wed, Feb 26, 2025 at 10:58=E2=80=AFAM D. Ben Knoble <ben.knoble@gmai=
+l.com> wrote:
+>  >
+> >> Is `--topo-order` of no help here?
+> >
+> > Unfortunately no, because it'll look at the ancestors. I get more
+> > commits (400k+ extra
+> > commits in my real world case) than I have on stdin:
+> > $ git log -1 --pretty=3D%H 2025.2 | git rev-list --stdin --topo-order -=
+-count
+> > 417776
+>
+> This seems to have lost "--no-walk".
+>
+>      ... | git rev-list --stdin --topo-order --no-walk
+>
+> should list only the commits passed on stdin in topographic order I think=
+.
+>
+> Best Wishes
+>
+> Phillip
+>
 
-I see a new (and consistent) failure in 2.49.0-rc0 for
-t5620.4 'do partial clone 2, backfill min batch size' on
-s390x:
+Hi Philip,
 
-expecting success of 5620.4 'do partial clone 2, backfill min batch size':
-        git clone --no-checkout --filter=blob:none      \
-                --single-branch --branch=main           \
-                "file://$(pwd)/srv.bare" backfill2 &&
-        GIT_TRACE2_EVENT="$(pwd)/batch-trace" git \
-                -C backfill2 backfill --min-batch-size=20 &&
-        # Batches were used
-        test_trace2_data promisor fetch_count 20 <batch-trace >matches &&
-        test_line_count = 2 matches &&
-        test_trace2_data promisor fetch_count 8 <batch-trace &&
-        # No more missing objects!
-        git -C backfill2 rev-list --quiet --objects --missing=print HEAD >revs2 &&
-        test_line_count = 0 revs2
-+++ pwd
-++ git clone --no-checkout --filter=blob:none --single-branch --branch=main 'file:///tmp/git-t.sYdo/trash directory.t5620-backfill/srv.bare' backfill2
-Cloning into 'backfill2'...
-+++ pwd
-++ GIT_TRACE2_EVENT='/tmp/git-t.sYdo/trash directory.t5620-backfill/batch-trace'
-++ git -C backfill2 backfill --min-batch-size=20
-++ test_trace2_data promisor fetch_count 20
-++ grep -e '"category":"promisor","key":"fetch_count","value":"20"'
-error: last command exited with $?=1
-not ok 4 - do partial clone 2, backfill min batch size
+I wish that were the case :) Per the docs:
+| If the argument unsorted is given, the commits are shown in the order the=
+y
+| were given on the command line. Otherwise (if sorted or no argument was
+| given), the commits are shown in reverse chronological order by commit ti=
+me.
 
-I don't know enough about the backfill command to even guess
-what's wrong, but hopefully this is helpful to those who are
-more familiar with it.  (Stolee, party of 1? ;)
+As soon as you specify --no-walk, topological ordering is disabled. I
+_think_ it's
+because it will instruct `rev-list` not to look at the ancestors. It
+looks like a new
+in-between option is needed, where topological ordering is used when the da=
+tes
+match.
 
-I don't have shell access to the s390x host, but can run the
-test suite with additional debugging if needed.  I have the
-test-results directory from the build as well.
+Cheers,
 
-Thanks,
+Clement
 
--- 
-Todd
+> > --
+> > Clement
+> >
+> >>
+> >>>
+> >>> Below is the system info gathered by `git bugreport`.
+> >>>
+> >>> Take care,
+> >>>
+> >>> Clement
+> >>>
+> >>>
+> >>> [System Info]
+> >>> git version:
+> >>> git version 2.48.1
+> >>> cpu: x86_64
+> >>> no commit associated with this build
+> >>> sizeof-long: 8
+> >>> sizeof-size_t: 8
+> >>> shell-path: /bin/sh
+> >>> libcurl: 7.87.0
+> >>> OpenSSL: OpenSSL 1.0.1e-fips 11 Feb 2013
+> >>> zlib: 1.2.3
+> >>> uname: Linux 4.18.0-553.33.1.el8_10.x86_64 #1 SMP Thu Dec 19 14:28:01
+> >>> UTC 2024 x86_64
+> >>> compiler info: gnuc: 6.2
+> >>> libc info: glibc: 2.28
+> >>> $SHELL (typically, interactive shell): /bin/zsh
+> >>>
+> >>>
+> >>> [Enabled Hooks]
+> >>
+> >>
+> >>
+> >> --
+> >> D. Ben Knoble
+> >
+>
