@@ -1,167 +1,194 @@
-Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC581C28E
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 00:29:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D393D276D36
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 00:31:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740702574; cv=none; b=VyIVIBj2xQ7F3qJsg85SEG2Zowq0TLoXlvDqgbdpMVeywmvCkbqFj+DFzzONzOTXBNoIjt/9p1RJhF7bXFH7mzbmV0Cek/3qivioGgWhItPMAkK5s3oJqQWqa3D8SevRTCerMtv5HfQ2ecUZTO7Cq5tSer/nQ6KV9OBbxG0VXRc=
+	t=1740702665; cv=none; b=K7ftmlWdqP/bts55rgxgbJ+q7RV2iDHA0yL8flzJ/1upXLy1ib9azAF5Gk9x5JlOUVwAy6lGsjVQzjuV5F0Ve7oR/bSjdVR4Bbxlzjc0lQGmRcsTEKAR4XUuTb+R6AHGdf2aX5QjyMYvNXLCbL9qk04eUllBDjeW+WbmbWFBjZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740702574; c=relaxed/simple;
-	bh=KEZV1icyrmHYj4EV1oi0M7cx1QcoY59oT7aPcmcCbuo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=osK5Wk8FM5i7gPVqvl6EhvnOA05kqOPTJ0cX2BCMAI4IMg0qMVfNmfSJg4FoMW3TXhKrWWcnggIXqGutkJNrJfkjfIpu50d39mrnu9Jv9Pf9UhSAvJnnsQ9U7tU/pT8d+YSzx5IK65kNBA2dc5AGPqyMGbG2aqoFyxNVFmrqxIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KDVsTnSE; arc=none smtp.client-ip=209.85.167.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740702665; c=relaxed/simple;
+	bh=f4LUZ2lmyk/gD6oZccNrq7mvhSX0fFlWyP0k4jmOFvo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ivFsNwE4NR3wtiSv9FY17f6olXitlZVOfcR2ioiIstqEjboJIq/WRufTgLg2mYIkPQmWilEObUegjh5T6iIhhmrnxq4EYkg/17Exg0Ry81rGYOPhGAZyX42sg3JM+b5g/X55HuroXppkoo+Tm1Nmd6BeHUjzUm+5CRAach4ehxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=lN5cLl6h; arc=none smtp.client-ip=209.85.219.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KDVsTnSE"
-Received: by mail-oi1-f169.google.com with SMTP id 5614622812f47-3f40ad1574fso1110728b6e.0
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 16:29:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="lN5cLl6h"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e461015fbd4so1147313276.2
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 16:31:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740702570; x=1741307370; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Lto5EhTwM8PkUAcfRGno8jETCVoQ4AsaBwSJVDV5jKE=;
-        b=KDVsTnSEruniyN/Rp12NfXyEuqlKoglnTtI0L7cuMzZglwyaIlujifolf5DbSa7tJR
-         qq9tu6s8Ya6YhMN46DIghcpwE6Bxe+RXuAwDB4RMkJzRuNzCFHTVjMI+GaI57yWOZIgP
-         khDKCymi1pEOYAF+wU8n84C3qos2+ZSspzHRDp8U1n3Iya0XcEQjgcVwYa2cGm5WD7XZ
-         wUkepdaYqlbePNZ3RswOmO1m/Nz57ewWlNFRUl4k8olFXizP6xjSROaQxW1K+qZqRopd
-         OhYIummbFUzv2wP/EpFEg8mVjt8WIO5QLBDXyaXAKwYuJb3nJ1lRjvak9P4jShgJL/82
-         qVTA==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740702663; x=1741307463; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CgVz5UBcT4r+c/03hhVkzYr5yqz6qtHW/qs7XHvLt6I=;
+        b=lN5cLl6hT8jFeMnyYFvZJnsfzyKjUJvOgB4kmCvc+Iq5J8arsHtb4z1Xi10OtCNf9M
+         wWZBldw9GeZ8m3r7mjnehMc8y6rGD5wr0B5xyCnO/oSt83ee9jFsQ1IxCHoGd4QfbR8t
+         IugfKRdHWqHwVS7AKIkbaXuZxiwNpy8ze0XZb1JBJyMT3VZF8tWJDjuqxKA1JVWBDXxM
+         Bsi10ENaUHV6hxYdOQwGYYK/gJNHZEf5+A9017EZ0Pg2GMclhIlVLDut8G88PLONKojg
+         0bL2zEhxKlDSOi4NRFaoKeAg4JlbFkHiqQJPa74qxGuurGw+SZGCpjPYoteZnUO/pXiU
+         5/mA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740702570; x=1741307370;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Lto5EhTwM8PkUAcfRGno8jETCVoQ4AsaBwSJVDV5jKE=;
-        b=OiTBCN5eIrItSMBTBGSlrvm6Wa8WofrfIzQXN+bupwIGY+UgfWB22orIJynrgBFmlO
-         AkOHL3bzK8L2llloKLvX7p7h0B9Lb0B3ZPss16vVFZThkxaTAary/IK1ob9ONC0Xl9dp
-         dHnjPb32oTIpXYCj1mERbcsmfda1DGKxGMWgAVijG4RmbmVdkwP3K1H+NtVcd8H3SX9N
-         Uezu5SbdM5NWj2fLzDXMCsEjeIf7ussgHXEurjfPZg5Kpm2qUcoHWThSRHpzncOpnAy1
-         g+glrMcSMGcJgd//XjERlMRG43sV3FXjVutbjsa2OjFOnO//UE+19egyuc9IQzGnwfkL
-         oBWw==
-X-Gm-Message-State: AOJu0Yy+T+MvqjhMDDtnb3mWFRuiikVZi/KZt1Wk2SnYQyO/JzRsmDTg
-	9w3p1CTG8gxWuU0gQUh3ny+WPyWJoyX1koeIrx/g68NQ/mEi4F5SUou6+X7t
-X-Gm-Gg: ASbGnctzkHRTl6yaSJWx+4flRGQpJUljo2aJX55s/EKIHpssZoufpLIhl3QG04j9dCz
-	7UiWWkp/wIEpUNhTQ0u8ofNLd5nhM4ghGgSTki4O3N1N84Y0lXRM4VtF+DN1OuX8mRL0g/Vr1vg
-	Kmxd1hYlC2/Q2mcF/rPX2S85q6KmWZGugyGHBOEKWepHlT1RicgcxlUl7jgAA7HNj3+D3LvbZ9t
-	p9rYIR4ktIEWBk2xnZM1YAWFmUDts4CexGH22DU6wBQJqNRLLgn0RaBQHxtir/d03ijZKVvRgr1
-	IrxPXEF5A88d+lWOp3e1lqwMqmMOMNb2RA==
-X-Google-Smtp-Source: AGHT+IH9bnXG/ad6+tZ1akIwVb9EXpl2vsRRlBF23BiJkQGRRpLnBOmtzU2icNggnyBqRcBv3qfeGQ==
-X-Received: by 2002:a05:6808:640f:b0:3f3:dd2f:6a9b with SMTP id 5614622812f47-3f5585f4d02mr775122b6e.30.1740702570382;
-        Thu, 27 Feb 2025 16:29:30 -0800 (PST)
-Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5feaab9c8f9sm456509eaf.19.2025.02.27.16.29.29
+        d=1e100.net; s=20230601; t=1740702663; x=1741307463;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CgVz5UBcT4r+c/03hhVkzYr5yqz6qtHW/qs7XHvLt6I=;
+        b=szg1qHYO4cfuAO6XsFmhitOucEcop/rk0fFtf1E6UHD+PYP8z5cU9U1KpMPEnGoDXq
+         h16Y8wws+Ya4K+XydXIh2MrEmYpQZDfbLbLqJD6WZ1775CWzECJorXxwMdYsXRVfaYF4
+         bMbOYhu7+HY9X5Cji32f8jUF3cZ0soR9qOS0bWb/W3dIBW8IEXYwtCXLPBGB4P3m/unP
+         wrczZh3dYIhZt6upa9deoClJvBPQA7gqLHRrNKqvFGHkjbASXuJlkNO2Y+GJC4rvpQ9K
+         SWzI0CQhN3XFpt2yXLgI4gpLaTWo/eRWDa3wcj25SwSPpVcKML1IDUcUF5iCjhApp97l
+         P8aw==
+X-Forwarded-Encrypted: i=1; AJvYcCUKxtkRs3RaCk9+CsN9v2nd7jV7vpFMQWnhsd2ivkqwKQPVs3evEju3NobeKnzGZi3cTro=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzqG5SkiAHEIqSLD6kbTmXwcXJV3PCJWl4ZD7YvaIf+XTjLqp2C
+	yDt62CWKx4CuqWZ7bcsYXCDhRZOyz/p7vwXxBpFIXEGVOhAKkkTTMhtg5hz8AXM=
+X-Gm-Gg: ASbGnctYd/FcngDIxJoZhjtdWtSo0lm2gVKwortxDurty1wOLaLmvWH7UCoC5CbIXJW
+	Ii3IHmhBvIBqMY7BJT+tmaaHA5OtKpHg4pTE6r+LGCE0t4igcGqRtREfKaSyoNYj9JgXOww85aQ
+	7XHHBWczkOFYfobo7piksXfVEx26h9GP9mJCuL4iuNc5o2257U3a4k2et+N4sfe5CAm7/zGFJ/N
+	cOJhZErrybJJhuSjAAJWotzv5cVJSMPRnMDCwAjZcCowf1uFKlpyf3h5N8CngOZUQI6K3FeOsWT
+	3G/LqCG5HlCFkeRcW88Em//T8gMmrVR2Y/QWD9GsrGWudUjkuKkInR7diSb/3NxLbp16FiJWfg=
+	=
+X-Google-Smtp-Source: AGHT+IHxkYq5kYIXELWPrKD1MC1c3zhThSPy1v/xXkjRMTUhoA6KfSsYq+WfsUD5pDFQdMrV88skAA==
+X-Received: by 2002:a05:6902:1ac9:b0:e60:b077:ed4a with SMTP id 3f1490d57ef6-e60b2e860bamr1388234276.6.1740702662679;
+        Thu, 27 Feb 2025 16:31:02 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e60a3aa4ce0sm741830276.35.2025.02.27.16.31.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 16:29:29 -0800 (PST)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	karthik.188@gmail.com,
-	phillip.wood123@gmail.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 4/4] builtin/diff-pairs: allow explicit diff queue flush
-Date: Thu, 27 Feb 2025 18:26:04 -0600
-Message-ID: <20250228002604.3859939-5-jltobler@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250228002604.3859939-1-jltobler@gmail.com>
-References: <20250225233925.1345086-1-jltobler@gmail.com>
- <20250228002604.3859939-1-jltobler@gmail.com>
+        Thu, 27 Feb 2025 16:31:02 -0800 (PST)
+Date: Thu, 27 Feb 2025 19:31:01 -0500
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+Subject: Re: [PATCH 05/10] git_inflate(): skip zlib_post_call() sanity check
+ on Z_NEED_DICT
+Message-ID: <Z8EDxd3f/U+EdoLO@nand.local>
+References: <20250225062518.GA1293854@coredump.intra.peff.net>
+ <20250225063026.GE1293961@coredump.intra.peff.net>
+ <xmqqr03kg7mb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqr03kg7mb.fsf@gitster.g>
 
-The diffs queued from git-diff-pairs(1) are flushed when stdin is
-closed. To enable greater flexibility, allow control over when the diff
-queue is flushed by writing a single NUL byte on stdin between input
-file pairs. Diff output between flushes is separated by a single NUL
-byte.
+On Wed, Feb 26, 2025 at 05:26:04AM -0800, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+>
+> > But these do not correspond when we see Z_NEED_DICT! Zlib consumes the
+> > bytes from the input buffer but it does not increment total_in. And so
+> > we hit the BUG("total_in mismatch") call.
+> >
+> > There are a few options here:
+> >
+> >   - We could ditch that BUG() check. It is making too many assumptions
+> >     about how zlib updates these values. But it does have value in most
+> >     cases as a sanity check on the values we're copying.
+> >
+> >   - We could skip the zlib_post_call() entirely when we see Z_NEED_DICT.
+> >     We know that it's hard error for us, so we should just send the
+> >     status up the stack and let the caller bail.
+> >
+> >     The downside is that if we ever did want to support dictionaries,
+> >     we couldn't (the git_zstream will be out of sync, since we never
+> >     copied its values back from the z_stream).
+> >
+> >   - We could continue to call zlib_post_call(), but skip just that BUG()
+> >     check if the status is Z_NEED_DICT. This keeps git_inflate() as a
+> >     thin wrapper around inflate(), and would let us later support
+> >     dictionaries for some calls if we wanted to.
+> >
+> > This patch uses the third approach. It seems like the least-surprising
+> > thing to keep git_inflate() a close to inflate() as possible. And while
+> > it makes the diff a bit larger (since we have to pass the status down to
+> > to the zlib_post_call() function), it's a static local function, and
+> > every caller by definition will have just made a zlib call (and so will
+> > have a status integer).
+>
+> Ouch.  I am not sure if I would have made the choice you guys made
+> if I were writing this fix, but that is mostly because I do not
+> anticipate that we would ever support NEED_DICT and the other two
+> options seem simpler, and certainly not because I have any concrete
+> reason to oppose the third approach.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- Documentation/git-diff-pairs.adoc |  4 ++++
- builtin/diff-pairs.c              | 14 ++++++++++++++
- t/t4070-diff-pairs.sh             |  9 +++++++++
- 3 files changed, 27 insertions(+)
+It's been a few weeks since I last looked at this patch, but I have a
+vague recollection that we chose the second approach while discussing
+this together.
 
-diff --git a/Documentation/git-diff-pairs.adoc b/Documentation/git-diff-pairs.adoc
-index e31f2e2fbb..f99fcd1ead 100644
---- a/Documentation/git-diff-pairs.adoc
-+++ b/Documentation/git-diff-pairs.adoc
-@@ -17,6 +17,10 @@ in the NUL-terminated raw output format as generated by commands such as `git
- diff-tree -z -r --raw`. By default, the outputted diffs are computed and shown
- in the patch format when stdin closes.
- 
-+A single NUL byte may be written to stdin between raw input lines to compute
-+file pair diffs up to that point instead of waiting for stdin to close. A NUL
-+byte is also written to the output to delimit between these batches of diffs.
-+
- Usage of this command enables the traditional diff pipeline to be broken up
- into separate stages where `diff-pairs` acts as the output phase. Other
- commands, such as `diff-tree`, may serve as a frontend to compute the raw
-diff --git a/builtin/diff-pairs.c b/builtin/diff-pairs.c
-index 5a993b7c9d..2939d4af1d 100644
---- a/builtin/diff-pairs.c
-+++ b/builtin/diff-pairs.c
-@@ -57,6 +57,7 @@ int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
- 	show_usage_with_options_if_asked(argc, argv, usagestr, parseopts);
- 
- 	repo_config(repo, git_diff_basic_config, NULL);
-+	revs.diffopt.no_free = 1;
- 	revs.disable_stdin = 1;
- 	revs.abbrev = 0;
- 	revs.diff = 1;
-@@ -108,6 +109,18 @@ int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
- 			break;
- 
- 		p = meta.buf;
-+		if (!*p) {
-+			diffcore_std(&revs.diffopt);
-+			diff_flush(&revs.diffopt);
-+			/*
-+			 * When the diff queue is explicitly flushed, append a
-+			 * NUL byte to separate batches of diffs.
-+			 */
-+			fputc('\0', revs.diffopt.file);
-+			fflush(revs.diffopt.file);
-+			continue;
-+		}
-+
- 		if (*p != ':')
- 			die(_("invalid raw diff input"));
- 		p++;
-@@ -181,6 +194,7 @@ int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
- 		}
- 	}
- 
-+	revs.diffopt.no_free = 0;
- 	diffcore_std(&revs.diffopt);
- 	diff_flush(&revs.diffopt);
- 	ret = diff_result_code(&revs);
-diff --git a/t/t4070-diff-pairs.sh b/t/t4070-diff-pairs.sh
-index 8f17e55c7d..c5e9972b2d 100755
---- a/t/t4070-diff-pairs.sh
-+++ b/t/t4070-diff-pairs.sh
-@@ -78,4 +78,13 @@ test_expect_success 'diff-pairs does not support pathspec arguments' '
- 	test_cmp expect err
- '
- 
-+test_expect_success 'diff-pairs explicit queue flush' '
-+	git diff-tree -r -M -C -C -z base new >expect &&
-+	printf "\0" >>expect &&
-+	git diff-tree -r -M -C -C -z base new >>expect &&
-+
-+	git diff-pairs --raw -z <expect >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-2.48.1
+And indeed, looking at the copy I have from that session, it looks like
+we did
 
+--- 8< ---
+diff --git a/git-zlib.c b/git-zlib.c
+index 651dd9e07c..265d3074e1 100644
+--- a/git-zlib.c
++++ b/git-zlib.c
+@@ -122,6 +122,8 @@ int git_inflate(git_zstream *strm, int flush)
+                                 ? 0 : flush);
+                if (status == Z_MEM_ERROR)
+                        die("inflate: out of memory");
++               if (status == Z_NEED_DICT)
++                       break;
+                zlib_post_call(strm);
+
+                /*
+--- >8 ---
+
+I actually have a vague preference towards that approach, since I too do
+not anticipate that we'd ever need/want to support Z_NEED_DICT (and if
+we did, we could always change from option (2) to (3) later on).
+Likewise, the resulting diff is considerably smaller by line count,
+though on the other hand this diff is not all that more complicated
+overall.
+
+I don't have a strong enough preference to suggest you make any changes
+here, but I thought I'd mention it nonetheless.
+
+> > +test_expect_success 'object reading handles zlib dictionary' - <<\EOT
+> > +	echo 'content that will be recompressed' >file &&
+> > +	blob=$(git hash-object -w file) &&
+> > +	objpath=.git/objects/$(test_oid_to_path "$blob") &&
+> > +
+> > +	# Recompress a loose object using a precomputed zlib dictionary.
+> > +	# This was originally done with:
+> > +	#
+> > +	#  perl -MCompress::Raw::Zlib -e '
+> > +	#    binmode STDIN;
+> > +	#    binmode STDOUT;
+> > +	#    my $data = do { local $/; <STDIN> };
+> > +	#    my $in = new Compress::Raw::Zlib::Inflate;
+> > +	#    my $de = new Compress::Raw::Zlib::Deflate(
+> > +	#      -Dictionary => "anything"
+> > +	#    );
+> > +	#    $in->inflate($data, $raw);
+> > +	#    $de->deflate($raw, $out);
+> > +	#    print $out;
+> > +	#  ' <obj.bak >$objpath
+> > +	#
+> > +	# but we do not want to require the perl module for all test runs (nor
+> > +	# carry a custom t/helper program that uses zlib features we don't
+> > +	# otherwise care about).
+> > +	mv "$objpath" obj.bak &&
+> > +	test_when_finished 'mv obj.bak "$objpath"' &&
+> > +	printf '\170\273\017\112\003\143' >$objpath &&
+> > +
+> > +	test_must_fail git cat-file blob $blob 2>err &&
+> > +	test_grep 'error: inflate: needs dictionary' err
+> > +EOT
+> > +
+>
+> Wheee.  I guess an ugly and down-to-bit-sequence test is much better
+> than having no test at all ;-)
+
+As a fun aside, Peff wrote this Perl script (unsurprisingly, I strongly
+dislike writing Perl), and amazingly it worked the first try when we
+were still hypothesizing about what this bug would look like. It was
+quite the surprise to both of us, I think, that it worked so well.
+
+Thanks,
+Taylor
