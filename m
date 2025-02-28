@@ -1,73 +1,74 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com [209.85.161.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956231C01
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 00:29:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC5E2595
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 00:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740702568; cv=none; b=tmg4vTDx5wz2E1xiwdVqSxiaJx1w4JIylaDeu558dfO3xTpaXKFtPQgSDzvmYjHuwhhDdlZy+wmF3IkSEANDNUcHHkrldryf7bX1kn6cffHBDMdln/X+peEUdDTpi2+ZXCcDgsrBcvQTDFNOToMUOlW27wEI2fFwx2soZf1LAQI=
+	t=1740702569; cv=none; b=OMJUkfAsxW2VwaGvnwmlXfpDnV5mpuJVhbv5FHTyiyN6av6d1NBwSt5JPGaNDRbsH0HpAp9MvxB2IH47juJZvjtm6jBY8t78upxAN1q9fEtSkiy7qE1+xUnDQTFW5Wf9MwVYcJMJM0LSeZG6Genmq4C87yF/szYimK66ShYtBbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740702568; c=relaxed/simple;
-	bh=1/zZmz5HHwXxg6cPYx72f/WKYG89sQ/6XrLQoJaw7x0=;
+	s=arc-20240116; t=1740702569; c=relaxed/simple;
+	bh=1J2x39s0XLh1sCWMM94XZ9BOn905I2s5UyrOQYTlPWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VOtw0L0NK1J6saIFqsi576Viw1n9D0TB9YGYSmiShCLUihxCqeAcT7nJYzwlhT9M2XYZKsdVDXjC/2lg4cuURyOalZaVoohsReCtk/aelfFMW1q6ue8Cc99lOqE09qR4G7xhjGyC0Nd6VDnf1BMmUp+wzlShLAWWUIont/07BfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ksFCSMoZ; arc=none smtp.client-ip=209.85.167.174
+	 MIME-Version; b=ti2+fbm/Sx2/S/xZ8TTmL7TrebmB8jOugyix4/TMa66MSpx3m55aRLfC8eXZyEV5OVCm3znZkK+LMIKRICxNTe2Wwfk0te0qIrZ+MFNrFHfAtDMPNk4K7rIcmJZYS2uROGl7QABgZ5Zx02ywVrvh3a6oV9sDfpXO6FNYUYvpOmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pf0Q0pWI; arc=none smtp.client-ip=209.85.161.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ksFCSMoZ"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3f3d1280f3dso490483b6e.2
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 16:29:26 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pf0Q0pWI"
+Received: by mail-oo1-f49.google.com with SMTP id 006d021491bc7-5fcd56c34a1so868457eaf.0
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 16:29:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740702565; x=1741307365; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1740702566; x=1741307366; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7ySjvnKQoNGb2kUzsQipw/3c8Shp1GSQjAHZPXct3Eo=;
-        b=ksFCSMoZu3blr0Eyv3HADCfAS/sBd0iu1e+WJH92jpKFQ32ZSFvaiBuOl+bX8tofSH
-         abc6YtWf/FFMkwbRKMNB80MHZu3yRzyFjfvxjTK5lm4iTFhSngpla/g7h8228b9FUrCG
-         6OJYj4cnzxBxi5nhimjefIW3Ky1g8GNGHpImYf5ulF3CwxB7C0ktdY0k+fhVUURZLH3B
-         7IvNjf0857SCaATsRyGi8AtJKpFrC+nnXWHAvOK/vbQQKsapHaUbEcusIucyCxRGBsDJ
-         xnYgQAnDdI43EhXXfxL/zbM5KmagIlSifuYm1Os/9pg5JyQUY2HzET69Zy1hoVkgIMvR
-         ikTA==
+        bh=L2S1IpkDcboFUmNqoGg63vclsReOu00DdzecLlPSqMs=;
+        b=Pf0Q0pWIDgOa5jc84zn4C7nRcAZt32SgIbRwG6pYZzvP29e50SGqReGR2hM6pFN0XV
+         zj9buX46Er3Xrp50zfCv/ZkowshULlekFPUjFqT1gi6fylUapLrHhCkuhjM4N1hAZf1Z
+         zAqTKZkNMsNOiXXbkxnG91ltMZI1/906GoazQpmT3OhQrozCg2quB1T3Kb0Iz50fPopR
+         K5TpNk2BU+EjoJRRMonR78ueTDBjlH1dEIwo2bLAAEEtPQ81VzMxjAXHR5iUwbPH91zK
+         Iduzfai2Q+cUxDVYGnNCEPmy82um5KzkwHP4FjBmAJ1LdpiNPtNQZZB7LY4+1rM4buaF
+         OpQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740702565; x=1741307365;
+        d=1e100.net; s=20230601; t=1740702566; x=1741307366;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7ySjvnKQoNGb2kUzsQipw/3c8Shp1GSQjAHZPXct3Eo=;
-        b=b21XEZ7ReoUHdREPxCUWVwYa9tsCv/LrVcDz3LUxvPLQUqcq10t2EYVb2qHs5O2ouy
-         7Cj+OvB7hSQPTZZLQat5jnG6kLfOzsMvPYX9uA+fLxDaRaBklzBvzIBZY79hsM2N6VoK
-         p1bSvwhwt4pApmOdqtpLhQnbY1jNNRuk2+xQmidSy1J3UwW9XoY32ec+qvILCEXw3VzX
-         /3uw05vwlyYxExKwyhwtZ45p14LaUoACF2XtwW8UgDQWspumrD5eR4E4XoSFi4C1/6rs
-         Sp6+NTCcXc12lE6i9cQFh1mWg79gtbhGwqwIgSL1jfNWpLlExYJwNJYfPKg0Wv7EUXBA
-         Tfjw==
-X-Gm-Message-State: AOJu0YxHgcRMYUM3eTSuRzcAIR3BLLgOIep/E8KFWuNck9VSLYDPtm+s
-	DUYqP8z7gIsmcj3e5lTP7KYMV9Gl6OdQ/gT7r58jUVYaqVfhmhHwi+DMRZrB
-X-Gm-Gg: ASbGncvlgd9PGMBpN3ZC4hW2XGGye0ABWjT0EfzyVN5ngn5QT46OWk+nmCzQFFusMOb
-	yX6z0y0lO3bNMACAvsZi4XBGQdav8kjwane6q2mcImH+r6C53a28FFPF8Pb62XIdnHqsu0V7rk4
-	9/znGmQxUk2SpXk+/sH5xLfE8GVMsMcoX21ywSyY7c+v8GYmDA6+1tk7lTwKJnWKjQ+TKCXfZ9s
-	EIkWcut58ItbMi/NWKov7DO5MeREw96wnSdQcuryr46ZMssljAenRA8kwolF8fc6lUCbBTHmeUl
-	Ad+pgqfJkcL49buros7fUB5eZhFlRVcsRQ==
-X-Google-Smtp-Source: AGHT+IGt2Z0G+z0z9cVYE6Hucx7yvQP3b82gZV+VGWaUYqYtSqSOoagZ8wx0l/rQbiTI0pGK0ycWDQ==
-X-Received: by 2002:a05:6808:2e96:b0:3f4:435:cb0e with SMTP id 5614622812f47-3f558517273mr1155370b6e.9.1740702564959;
-        Thu, 27 Feb 2025 16:29:24 -0800 (PST)
+        bh=L2S1IpkDcboFUmNqoGg63vclsReOu00DdzecLlPSqMs=;
+        b=ha0LFyNKa7gI/9uatfVr8U8o7F42bF+5DMZc6sVPCWV3FxUFSsJE6p9eoYYDoZxtQf
+         ckUi7OtXkoE9d5vrugnf69xhpvMygdn4YNOAfXXfZ8AXgwnTfsb/ZeUUaVaCmpyi4vJo
+         XouKZeTnb4Qh8gJDDIvgMoXGcebQ1/FGpkbIvwAp3ZOwKSopstOFYaviZ0xhfnX4r2fg
+         DQsdfQyPtsQbB8IYNS/vn2PWXlg/vhzwL+IOcwYQugZ8Z0jz2KNxjMZVz377unHaUZr6
+         wkNNljUX83MbR1JA0GRMAp6YbJJA2IaFuNLHHk7B6QbLz7b9zxlelKA4c/Ca0+ZUnjE/
+         t+mQ==
+X-Gm-Message-State: AOJu0Yz+9iNhQLf8Sr4EV3a+E/dZWIvLicFsPd7/mKXMlsSobaNnty8H
+	dvHU7NTjXu2/AXt+1CHZBOTHC9oktG7v01TImTalJZTo+IoxbytLfkNOCTAE
+X-Gm-Gg: ASbGncumHVRhTK9bLSMhW8bLOaDiFwh/nbmn1p9B76sKCiRLuC/lT44ISysn3ucUQth
+	uEOMd7OyF5aFiB5JY6qDy7SMM6drdVmExr5aptw71Q4rrPDjmN+JhjDv7lR7YhByDlKYKQFnbnX
+	sgQY16mu7nWPV0OLy0RvLiBncRwxfDJDGIrKS6u4BQ0bLEFho7mWmpHrlaJp4SiymyDMcRDF0Or
+	scpg543+rBgrmv1SXG/2cQSbjJvWxwXOTVeRgJbls0tIRFxFbIEud0oXs5QFS15uPKC2yAZatqR
+	y3J7/dLdR/hrw0feHbJLtLX2xtVKKTmCtA==
+X-Google-Smtp-Source: AGHT+IHcuh5lT37zPVYPH18xah0ZMgW3AQRpzM2VrQDAESi1XK/M2OlbD7XtCudaChNy926AufR1MA==
+X-Received: by 2002:a05:6820:270a:b0:5fc:fb1a:2b92 with SMTP id 006d021491bc7-5feb361493fmr645898eaf.6.1740702566322;
+        Thu, 27 Feb 2025 16:29:26 -0800 (PST)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5feaab9c8f9sm456509eaf.19.2025.02.27.16.29.24
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-5feaab9c8f9sm456509eaf.19.2025.02.27.16.29.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 16:29:24 -0800 (PST)
+        Thu, 27 Feb 2025 16:29:25 -0800 (PST)
 From: Justin Tobler <jltobler@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	karthik.188@gmail.com,
 	phillip.wood123@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH v4 0/4] batch blob diff generation
-Date: Thu, 27 Feb 2025 18:26:00 -0600
-Message-ID: <20250228002604.3859939-1-jltobler@gmail.com>
+Subject: [PATCH v4 1/4] diff: return diff_filepair from diff queue helpers
+Date: Thu, 27 Feb 2025 18:26:01 -0600
+Message-ID: <20250228002604.3859939-2-jltobler@gmail.com>
 X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250225233925.1345086-1-jltobler@gmail.com>
+In-Reply-To: <20250228002604.3859939-1-jltobler@gmail.com>
 References: <20250225233925.1345086-1-jltobler@gmail.com>
+ <20250228002604.3859939-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,452 +77,198 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Through git-diff(1) it is possible to generate a diff directly between
-two blobs. This is particularly useful when the pre-image and post-image
-blobs are known and we only care about the diff between them.
-Unfortunately, if a user has a batch of known blob pairs to compute
-diffs for, there is currently not a way to do so via a single Git
-process.
+The `diff_addremove()` and `diff_change()` functions set up and queue
+diffs, but do not return the `diff_filepair` added to the queue. In a
+subsequent commit, modifications to `diff_filepair` need to occur in
+certain cases after being queued.
 
-To enable support for batch diffs of multiple blob pairs, this series
-introduces a new diff plumbing command git-diff-pairs(1) based on a
-previous patch series submitted by Peff[1]. This command uses
-NUL-delimited raw diffs as its source of input to control exactly which
-filepairs are diffed. The advantage of using the raw diff format is that
-it already has diff status type and object context information embedded
-in each line making it more efficient to generate diffs with as we can
-avoid having to peel revisions to get some the same info.
+Since the existing `diff_addremove()` and `diff_change()` are also used
+for callbacks in `diff_options` as types `add_remove_fn_t` and
+`change_fn_t`, modifying the existing function signatures requires
+further changes. The diff options for pruning use `file_add_remove()`
+and `file_change()` where file pairs do not even get queued. Thus,
+separate functions are implemented instead.
 
-For example:
+Split out the queuing operations into `diff_queue_addremove()` and
+`diff_queue_change()` which also return a handle to the queued
+`diff_filepair`. Both `diff_addremove()` and `diff_change()` are
+reimplemented as thin wrappers around the new functions.
 
-    git diff-tree -r -z -M $old $new |
-    git diff-pairs -p -z
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
+ diff.c | 70 +++++++++++++++++++++++++++++++++++++++++-----------------
+ diff.h | 25 +++++++++++++++++++++
+ 2 files changed, 75 insertions(+), 20 deletions(-)
 
-Here the output of git-diff-tree(1) is fed to git-diff-pairs(1) to
-generate the same output that would be expected from `git diff-tree -p
--M`. While by itself not particularly useful, this means it is possible
-to split git-diff-tree(1) output across multiple git-diff-pairs(1)
-processes. Such a feature is useful on the server-side where diffs
-bewteen a large set of changes may not be feasible all at once due to
-timeout concerns.
-
-This command can be viewed as a backend tool that exposes Git's diff
-machinery. In its current form, the frontend that generates the raw diff
-lines used as input is expected to most of the heavy lifting (ie.
-pathspec limiting, tree object expansion).
-
-This series is structured as follows:
-
-    - Patch 1 adds some new helper functions to get access to the queued
-      `diff_filepair` after `diff_queue()` is invoked.
-
-    - Patch 2 adds a new diff_options field that can be used to disable
-      diff filepair status resolution. This prevents rename/copy
-      statuses set from stdin from being altered when `diffcore_std()`
-      is invoked.
-
-    - Patch 3 introduces the new git-diff-pairs(1) plumbing command.
-
-    - Patch 4 allows git-diff-pairs(1) to immediately compute diffs
-      queued on stdin when a NUL-byte is written after a raw input line
-      instead of waiting for stdin to close.
-
-Changes since V3:
-
-    - Instead of relying on found_follow to prevent `diffcore_std()`
-      from mutating diff filepair statuses, a new `diff_options` field,
-      `skip_resolving_statuses` is introduced to achieve the same result
-      in a more specific manner.
-
-    - Parsing of diff options is now handled directly instead of going
-      through `setup_revisions()`. This is done to so the diff options
-      can be appended to the usage options and printed in the usage
-      message.
-
-    - Swapped to using `strbuf_getwholeline()` during stdin parsing to
-      make the line termiantor more configurable in the future.
-
-    - Stopped printing the usage message on errors to avoid masking the
-      underlying error message.
-
-    - Added test setup to exercise submodule change diffs.
-
-    - Other small minor cleanups.
-
-Changes since V2:
-
-    - Pathspecs are not supported and thus rejected when provided as
-      arguments. It should be possible in a future series to add support
-      though.
-
-    - Tree objects present in `diff-pairs` input are rejected. Support
-      for tree objects could be added in the future, but for now they
-      are rejected to enable to future support in a backwards compatible
-      manner.
-
-    - The -z option is required by git-diff-pairs(1). The NUL-delimited
-      raw diff format is the only accepted form of input. Consequently,
-      NUL-delimited output is the only option in the `--raw` mode.
-
-    - git-diff-pairs(1) defaults to patch output instead of raw output.
-      This better fits the intended usecase of the command.
-
-    - A NUL-byte is now always used as the delimiter between batches of
-      file pair diffs when queued diffs are explicitly computed by
-      writing a NUL-byte on stdin.
-
-    - Several other small cleanups and fixes along with documentation
-      changes.
-
-Changes since V1:
-
-    - Changed from git-diff-blob(1) to git-diff-pairs(1) based on a
-      previously submitted series.
-
-    - Instead of each line containing a pair of blob revisions, the raw
-      diff format is used as input which already has diff status and
-      object context embedded.
-
--Justin
-
-[1]: <20161201204042.6yslbyrg7l6ghhww@sigill.intra.peff.net>
-
-Justin Tobler (4):
-  diff: return diff_filepair from diff queue helpers
-  diff: add option to skip resolving diff statuses
-  builtin: introduce diff-pairs command
-  builtin/diff-pairs: allow explicit diff queue flush
-
- .gitignore                        |   1 +
- Documentation/git-diff-pairs.adoc |  60 +++++++++
- Documentation/meson.build         |   1 +
- Makefile                          |   1 +
- builtin.h                         |   1 +
- builtin/diff-pairs.c              | 209 ++++++++++++++++++++++++++++++
- command-list.txt                  |   1 +
- diff.c                            |  72 +++++++---
- diff.h                            |  33 +++++
- git.c                             |   1 +
- meson.build                       |   1 +
- t/meson.build                     |   1 +
- t/t4070-diff-pairs.sh             |  90 +++++++++++++
- 13 files changed, 451 insertions(+), 21 deletions(-)
- create mode 100644 Documentation/git-diff-pairs.adoc
- create mode 100644 builtin/diff-pairs.c
- create mode 100755 t/t4070-diff-pairs.sh
-
-Range-diff against v3:
-1:  d19b164914 ! 1:  b2e5486442 diff: return diff_filepair from diff queue helpers
-    @@ Commit message
-     
-         Split out the queuing operations into `diff_queue_addremove()` and
-         `diff_queue_change()` which also return a handle to the queued
-    -    `diff_filepair`.
-    +    `diff_filepair`. Both `diff_addremove()` and `diff_change()` are
-    +    reimplemented as thin wrappers around the new functions.
-     
-         Signed-off-by: Justin Tobler <jltobler@gmail.com>
-     
--:  ---------- > 2:  31d80d99ae diff: add option to skip resolving diff statuses
-2:  991aaea3a9 ! 3:  3722c02112 builtin: introduce diff-pairs command
-    @@ Commit message
-         machinery to produce various forms of output such as patch or raw.
-     
-         The raw format was originally designed as an interchange format and
-    -    represents the contents of the diff_queue_diff list making it possible
-    +    represents the contents of the diff_queued_diff list making it possible
-         to break the diff pipeline into separate stages. For example,
-         git-diff-tree(1) can be used as a frontend to compute file pairs to
-         queue and feed its raw output to git-diff-pairs(1) to compute patches.
-    -    With this, batches of diffs can be progessively generated without having
-    -    to recompute rename detection or retrieve object context. Something like
-    +    With this, batches of diffs can be progressively generated without
-    +    having to recompute renames or retrieve object context. Something like
-         the following:
-     
-                 git diff-tree -r -z -M $old $new |
-    @@ builtin.h: int cmd_diagnose(int argc, const char **argv, const char *prefix, str
-      ## builtin/diff-pairs.c (new) ##
-     @@
-     +#include "builtin.h"
-    -+#include "commit.h"
-     +#include "config.h"
-     +#include "diff.h"
-     +#include "diffcore.h"
-     +#include "gettext.h"
-    ++#include "hash.h"
-     +#include "hex.h"
-     +#include "object.h"
-     +#include "parse-options.h"
-     +#include "revision.h"
-     +#include "strbuf.h"
-     +
-    -+static unsigned parse_mode_or_die(const char *mode, const char **endp)
-    ++static unsigned parse_mode_or_die(const char *mode, const char **end)
-     +{
-     +	uint16_t ret;
-     +
-    -+	*endp = parse_mode(mode, &ret);
-    -+	if (!*endp)
-    ++	*end = parse_mode(mode, &ret);
-    ++	if (!*end)
-     +		die(_("unable to parse mode: %s"), mode);
-     +	return ret;
-     +}
-     +
-    -+static void parse_oid_or_die(const char *p, struct object_id *oid,
-    -+			     const char **endp, const struct git_hash_algo *algop)
-    ++static void parse_oid_or_die(const char *hex, struct object_id *oid,
-    ++			     const char **end, const struct git_hash_algo *algop)
-     +{
-    -+	if (parse_oid_hex_algop(p, oid, endp, algop) || *(*endp)++ != ' ')
-    -+		die(_("unable to parse object id: %s"), p);
-    -+}
-    -+
-    -+static void flush_diff_queue(struct diff_options *options)
-    -+{
-    -+	/*
-    -+	 * If rename detection is not requested, use rename information from the
-    -+	 * raw diff formatted input. Setting found_follow ensures diffcore_std()
-    -+	 * does not mess with rename information already present in queued
-    -+	 * filepairs.
-    -+	 */
-    -+	if (!options->detect_rename)
-    -+		options->found_follow = 1;
-    -+	diffcore_std(options);
-    -+	diff_flush(options);
-    ++	if (parse_oid_hex_algop(hex, oid, end, algop) || *(*end)++ != ' ')
-    ++		die(_("unable to parse object id: %s"), hex);
-     +}
-     +
-     +int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
-    @@ builtin/diff-pairs.c (new)
-     +	struct strbuf path_dst = STRBUF_INIT;
-     +	struct strbuf path = STRBUF_INIT;
-     +	struct strbuf meta = STRBUF_INIT;
-    ++	struct option *parseopts;
-     +	struct rev_info revs;
-    ++	int line_term = '\0';
-     +	int ret;
-     +
-    -+	const char * const usage[] = {
-    ++	const char * const usagestr[] = {
-     +		N_("git diff-pairs -z [<diff-options>]"),
-     +		NULL
-     +	};
-     +	struct option options[] = {
-     +		OPT_END()
-     +	};
-    -+	struct option *parseopts = add_diff_options(options, &revs.diffopt);
-    -+
-    -+	show_usage_with_options_if_asked(argc, argv, usage, parseopts);
-     +
-     +	repo_init_revisions(repo, &revs, prefix);
-    ++
-    ++	/*
-    ++	 * Diff options are usually parsed implicitly as part of
-    ++	 * setup_revisions(). Explicitly handle parsing to ensure options are
-    ++	 * printed in the usage message.
-    ++	 */
-    ++	parseopts = add_diff_options(options, &revs.diffopt);
-    ++	show_usage_with_options_if_asked(argc, argv, usagestr, parseopts);
-    ++
-     +	repo_config(repo, git_diff_basic_config, NULL);
-     +	revs.disable_stdin = 1;
-     +	revs.abbrev = 0;
-     +	revs.diff = 1;
-     +
-    ++	argc = parse_options(argc, argv, prefix, parseopts, usagestr,
-    ++			     PARSE_OPT_KEEP_UNKNOWN_OPT |
-    ++			     PARSE_OPT_KEEP_DASHDASH |
-    ++			     PARSE_OPT_KEEP_ARGV0);
-    ++
-     +	if (setup_revisions(argc, argv, &revs, NULL) > 1)
-    -+		usage_with_options(usage, parseopts);
-    ++		usagef(_("unrecognized argument: %s"), argv[0]);
-     +
-     +	/*
-     +	 * With the -z option, both command input and raw output are
-    -+	 * NUL-delimited (this mode does not effect patch output). At present
-    ++	 * NUL-delimited (this mode does not affect patch output). At present
-     +	 * only NUL-delimited raw diff formatted input is supported.
-     +	 */
-    -+	if (revs.diffopt.line_termination) {
-    -+		error(_("working without -z is not supported"));
-    -+		usage_with_options(usage, parseopts);
-    -+	}
-    ++	if (revs.diffopt.line_termination)
-    ++		usage(_("working without -z is not supported"));
-     +
-    -+	if (revs.prune_data.nr) {
-    -+		error(_("pathspec arguments not supported"));
-    -+		usage_with_options(usage, parseopts);
-    -+	}
-    ++	if (revs.prune_data.nr)
-    ++		usage(_("pathspec arguments not supported"));
-     +
-     +	if (revs.pending.nr || revs.max_count != -1 ||
-     +	    revs.min_age != (timestamp_t)-1 ||
-    -+	    revs.max_age != (timestamp_t)-1) {
-    -+		error(_("revision arguments not allowed"));
-    -+		usage_with_options(usage, parseopts);
-    -+	}
-    ++	    revs.max_age != (timestamp_t)-1)
-    ++		usage(_("revision arguments not allowed"));
-     +
-     +	if (!revs.diffopt.output_format)
-     +		revs.diffopt.output_format = DIFF_FORMAT_PATCH;
-     +
-    ++	/*
-    ++	 * If rename detection is not requested, use rename information from the
-    ++	 * raw diff formatted input. Setting skip_resolving_statuses ensures
-    ++	 * diffcore_std() does not mess with rename information already present
-    ++	 * in queued filepairs.
-    ++	 */
-    ++	if (!revs.diffopt.detect_rename)
-    ++		revs.diffopt.skip_resolving_statuses = 1;
-    ++
-     +	while (1) {
-     +		struct object_id oid_a, oid_b;
-     +		struct diff_filepair *pair;
-    @@ builtin/diff-pairs.c (new)
-     +		const char *p;
-     +		char status;
-     +
-    -+		if (strbuf_getline_nul(&meta, stdin) == EOF)
-    ++		if (strbuf_getwholeline(&meta, stdin, line_term) == EOF)
-     +			break;
-     +
-     +		p = meta.buf;
-    @@ builtin/diff-pairs.c (new)
-     +
-     +		status = *p++;
-     +
-    -+		if (strbuf_getline_nul(&path, stdin) == EOF)
-    ++		if (strbuf_getwholeline(&path, stdin, line_term) == EOF)
-     +			die(_("got EOF while reading path"));
-     +
-     +		switch (status) {
-    @@ builtin/diff-pairs.c (new)
-     +			break;
-     +
-     +		case DIFF_STATUS_RENAMED:
-    -+		case DIFF_STATUS_COPIED:
-    -+			{
-    ++		case DIFF_STATUS_COPIED: {
-     +				struct diff_filespec *a, *b;
-     +				unsigned int score;
-     +
-    -+				if (strbuf_getline_nul(&path_dst, stdin) == EOF)
-    ++				if (strbuf_getwholeline(&path_dst, stdin, line_term) == EOF)
-     +					die(_("got EOF while reading destination path"));
-     +
-     +				a = alloc_filespec(path.buf);
-    @@ builtin/diff-pairs.c (new)
-     +		}
-     +	}
-     +
-    -+	flush_diff_queue(&revs.diffopt);
-    ++	diffcore_std(&revs.diffopt);
-    ++	diff_flush(&revs.diffopt);
-     +	ret = diff_result_code(&revs);
-     +
-     +	strbuf_release(&path_dst);
-    @@ t/t4070-diff-pairs.sh (new)
-     +. ./test-lib.sh
-     +
-     +# This creates a diff with added, modified, deleted, renamed, copied, and
-    -+# typechange entries. That includes one in a subdirectory for non-recursive
-    -+# tests, and both exact and inexact similarity scores.
-    ++# typechange entries. This includes a submodule to test submodule diff support.
-     +test_expect_success 'setup' '
-    ++	test_config_global protocol.file.allow always &&
-    ++	test_create_repo sub &&
-    ++	test_commit -C sub initial &&
-    ++
-    ++	test_create_repo main &&
-    ++	cd main &&
-     +	echo to-be-gone >deleted &&
-     +	echo original >modified &&
-     +	echo now-a-file >symlink &&
-    @@ t/t4070-diff-pairs.sh (new)
-     +	git commit -m base &&
-     +	git tag base &&
-     +
-    ++	git submodule add ../sub &&
-     +	echo now-here >added &&
-     +	echo new >modified &&
-     +	rm deleted &&
-    @@ t/t4070-diff-pairs.sh (new)
-     +
-     +test_expect_success 'diff-pairs recreates --raw' '
-     +	git diff-tree -r -M -C -C -z base new >expect &&
-    -+	git diff-tree -r -M -C -C -z base new |
-    -+	git diff-pairs --raw -z >actual &&
-    ++	git diff-pairs --raw -z >actual <expect &&
-     +	test_cmp expect actual
-     +'
-     +
-    @@ t/t4070-diff-pairs.sh (new)
-     +	git diff-tree -r base new |
-     +	test_must_fail git diff-pairs >out 2>err &&
-     +
-    ++	echo "usage: working without -z is not supported" >expect &&
-     +	test_must_be_empty out &&
-    -+	grep "error: working without -z is not supported" err
-    ++	test_cmp expect err
-     +'
-     +
-     +test_expect_success 'diff-pairs does not support tree objects as input' '
-    @@ t/t4070-diff-pairs.sh (new)
-     +	git diff-tree -r -z base new |
-     +	test_must_fail git diff-pairs -z -- new >out 2>err &&
-     +
-    ++	echo "usage: pathspec arguments not supported" >expect &&
-     +	test_must_be_empty out &&
-    -+	grep "error: pathspec arguments not supported" err
-    ++	test_cmp expect err
-     +'
-     +
-     +test_done
-3:  26c1c80b66 ! 4:  a4809cbd80 builtin/diff-pairs: allow explicit diff queue flush
-    @@ Documentation/git-diff-pairs.adoc: in the NUL-terminated raw output format as ge
-     
-      ## builtin/diff-pairs.c ##
-     @@ builtin/diff-pairs.c: int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
-    + 	show_usage_with_options_if_asked(argc, argv, usagestr, parseopts);
-      
-    - 	repo_init_revisions(repo, &revs, prefix);
-      	repo_config(repo, git_diff_basic_config, NULL);
-     +	revs.diffopt.no_free = 1;
-      	revs.disable_stdin = 1;
-    @@ builtin/diff-pairs.c: int cmd_diff_pairs(int argc, const char **argv, const char
-      
-      		p = meta.buf;
-     +		if (!*p) {
-    -+			flush_diff_queue(&revs.diffopt);
-    ++			diffcore_std(&revs.diffopt);
-    ++			diff_flush(&revs.diffopt);
-     +			/*
-     +			 * When the diff queue is explicitly flushed, append a
-     +			 * NUL byte to separate batches of diffs.
-    @@ builtin/diff-pairs.c: int cmd_diff_pairs(int argc, const char **argv, const char
-      	}
-      
-     +	revs.diffopt.no_free = 0;
-    - 	flush_diff_queue(&revs.diffopt);
-    + 	diffcore_std(&revs.diffopt);
-    + 	diff_flush(&revs.diffopt);
-      	ret = diff_result_code(&revs);
-    - 
-     
-      ## t/t4070-diff-pairs.sh ##
-     @@ t/t4070-diff-pairs.sh: test_expect_success 'diff-pairs does not support pathspec arguments' '
-    - 	grep "error: pathspec arguments not supported" err
-    + 	test_cmp expect err
-      '
-      
-     +test_expect_success 'diff-pairs explicit queue flush' '
+diff --git a/diff.c b/diff.c
+index 019fb893a7..b5a779f997 100644
+--- a/diff.c
++++ b/diff.c
+@@ -7157,16 +7157,19 @@ void compute_diffstat(struct diff_options *options,
+ 	options->found_changes = !!diffstat->nr;
+ }
+ 
+-void diff_addremove(struct diff_options *options,
+-		    int addremove, unsigned mode,
+-		    const struct object_id *oid,
+-		    int oid_valid,
+-		    const char *concatpath, unsigned dirty_submodule)
++struct diff_filepair *diff_queue_addremove(struct diff_queue_struct *queue,
++					   struct diff_options *options,
++					   int addremove, unsigned mode,
++					   const struct object_id *oid,
++					   int oid_valid,
++					   const char *concatpath,
++					   unsigned dirty_submodule)
+ {
+ 	struct diff_filespec *one, *two;
++	struct diff_filepair *pair;
+ 
+ 	if (S_ISGITLINK(mode) && is_submodule_ignored(concatpath, options))
+-		return;
++		return NULL;
+ 
+ 	/* This may look odd, but it is a preparation for
+ 	 * feeding "there are unchanged files which should
+@@ -7186,7 +7189,7 @@ void diff_addremove(struct diff_options *options,
+ 
+ 	if (options->prefix &&
+ 	    strncmp(concatpath, options->prefix, options->prefix_length))
+-		return;
++		return NULL;
+ 
+ 	one = alloc_filespec(concatpath);
+ 	two = alloc_filespec(concatpath);
+@@ -7198,25 +7201,29 @@ void diff_addremove(struct diff_options *options,
+ 		two->dirty_submodule = dirty_submodule;
+ 	}
+ 
+-	diff_queue(&diff_queued_diff, one, two);
++	pair = diff_queue(queue, one, two);
+ 	if (!options->flags.diff_from_contents)
+ 		options->flags.has_changes = 1;
++
++	return pair;
+ }
+ 
+-void diff_change(struct diff_options *options,
+-		 unsigned old_mode, unsigned new_mode,
+-		 const struct object_id *old_oid,
+-		 const struct object_id *new_oid,
+-		 int old_oid_valid, int new_oid_valid,
+-		 const char *concatpath,
+-		 unsigned old_dirty_submodule, unsigned new_dirty_submodule)
++struct diff_filepair *diff_queue_change(struct diff_queue_struct *queue,
++					struct diff_options *options,
++					unsigned old_mode, unsigned new_mode,
++					const struct object_id *old_oid,
++					const struct object_id *new_oid,
++					int old_oid_valid, int new_oid_valid,
++					const char *concatpath,
++					unsigned old_dirty_submodule,
++					unsigned new_dirty_submodule)
+ {
+ 	struct diff_filespec *one, *two;
+ 	struct diff_filepair *p;
+ 
+ 	if (S_ISGITLINK(old_mode) && S_ISGITLINK(new_mode) &&
+ 	    is_submodule_ignored(concatpath, options))
+-		return;
++		return NULL;
+ 
+ 	if (options->flags.reverse_diff) {
+ 		SWAP(old_mode, new_mode);
+@@ -7227,7 +7234,7 @@ void diff_change(struct diff_options *options,
+ 
+ 	if (options->prefix &&
+ 	    strncmp(concatpath, options->prefix, options->prefix_length))
+-		return;
++		return NULL;
+ 
+ 	one = alloc_filespec(concatpath);
+ 	two = alloc_filespec(concatpath);
+@@ -7235,19 +7242,42 @@ void diff_change(struct diff_options *options,
+ 	fill_filespec(two, new_oid, new_oid_valid, new_mode);
+ 	one->dirty_submodule = old_dirty_submodule;
+ 	two->dirty_submodule = new_dirty_submodule;
+-	p = diff_queue(&diff_queued_diff, one, two);
++	p = diff_queue(queue, one, two);
+ 
+ 	if (options->flags.diff_from_contents)
+-		return;
++		return p;
+ 
+ 	if (options->flags.quick && options->skip_stat_unmatch &&
+ 	    !diff_filespec_check_stat_unmatch(options->repo, p)) {
+ 		diff_free_filespec_data(p->one);
+ 		diff_free_filespec_data(p->two);
+-		return;
++		return p;
+ 	}
+ 
+ 	options->flags.has_changes = 1;
++
++	return p;
++}
++
++void diff_addremove(struct diff_options *options, int addremove, unsigned mode,
++		    const struct object_id *oid, int oid_valid,
++		    const char *concatpath, unsigned dirty_submodule)
++{
++	diff_queue_addremove(&diff_queued_diff, options, addremove, mode, oid,
++			     oid_valid, concatpath, dirty_submodule);
++}
++
++void diff_change(struct diff_options *options,
++		 unsigned old_mode, unsigned new_mode,
++		 const struct object_id *old_oid,
++		 const struct object_id *new_oid,
++		 int old_oid_valid, int new_oid_valid,
++		 const char *concatpath,
++		 unsigned old_dirty_submodule, unsigned new_dirty_submodule)
++{
++	diff_queue_change(&diff_queued_diff, options, old_mode, new_mode,
++			  old_oid, new_oid, old_oid_valid, new_oid_valid,
++			  concatpath, old_dirty_submodule, new_dirty_submodule);
+ }
+ 
+ struct diff_filepair *diff_unmerge(struct diff_options *options, const char *path)
+diff --git a/diff.h b/diff.h
+index 0a566f5531..63afa17e84 100644
+--- a/diff.h
++++ b/diff.h
+@@ -508,6 +508,31 @@ void diff_set_default_prefix(struct diff_options *options);
+ 
+ int diff_can_quit_early(struct diff_options *);
+ 
++/*
++ * Stages changes in the provided diff queue for file additions and deletions.
++ * If a file pair gets queued, it is returned.
++ */
++struct diff_filepair *diff_queue_addremove(struct diff_queue_struct *queue,
++					   struct diff_options *,
++					   int addremove, unsigned mode,
++					   const struct object_id *oid,
++					   int oid_valid, const char *fullpath,
++					   unsigned dirty_submodule);
++
++/*
++ * Stages changes in the provided diff queue for file modifications.
++ * If a file pair gets queued, it is returned.
++ */
++struct diff_filepair *diff_queue_change(struct diff_queue_struct *queue,
++					struct diff_options *,
++					unsigned mode1, unsigned mode2,
++					const struct object_id *old_oid,
++					const struct object_id *new_oid,
++					int old_oid_valid, int new_oid_valid,
++					const char *fullpath,
++					unsigned dirty_submodule1,
++					unsigned dirty_submodule2);
++
+ void diff_addremove(struct diff_options *,
+ 		    int addremove,
+ 		    unsigned mode,
 -- 
 2.48.1
 
