@@ -1,54 +1,54 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DB0266F0F
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 10:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB2825B696
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 10:01:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740736888; cv=none; b=KdUGywrYGK//w+eHhlLs6v+c77GLuHfPUWxwD6sIKwvSAmyJti5LEDL5yxu9s5c92nQ57IucY5elwd1eVbAVRrfMo/zY4pqC6m+fWI/bvklOOIDj+osDUeLQHDS7tF1rcja9VMg96oYSHl1KwfpLu8LbN17+E2mo951Rkl2a/xY=
+	t=1740736892; cv=none; b=F0sGGB/oPNZtHIegV2igMcGp4HLFwUKdnzLB9UOb1dl4/S9WMV8GI3pj2p7RA2jrpoSfbhzW2aXEhmN6QIFpSVXqlX0dog8PoJ00Lzd7oX3Ck3sJT4FvcJJ79dSsj4Blg0jJI+P6tRFGYZtqahTBOolyna/W3mWRzSb46BjfbT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740736888; c=relaxed/simple;
-	bh=wfGnR5ANUQaumsUU6/gGyg+YjbSU4yQZPhVuzA4OODA=;
+	s=arc-20240116; t=1740736892; c=relaxed/simple;
+	bh=Dn2Xw38QeWy4N7TMhBJjmu288DKBlQ7oTqeXWmJvb+A=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=f2Vp+ogzFCbmuvMdDj65ufuO/694ar6SEyIkrpTnJwMS6tdsLfAP7W9YzCFPbeW3SLjoVmlU200SJezU1SqGkYl70mVfMB2bMuxSEVMXFfFKsRoikMdtq4LNbKxtakfh+VKggHyEquZFllAPof+NjhcCmw2zsZJCZuIp8Fzajlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IL/Q9Jg6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GUUhCLC1; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=bLN/JuPVStFDCQkbhJVlkwirnFFT8xKyoeVXgNdmvE775EcB/Mm1lcyi27wQA6ooXRC+TiabYtep5HFm4fClf2zZ2zoy8/tZ2ZSvh6TlwBmpBv57oGqEsQFnxrVqKDuYZhZSkVxaqqBbp20WJUieVgZLWjAp6bGggKVheqd6k30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eVQwtaTD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=5mwPb/mg; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IL/Q9Jg6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GUUhCLC1"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DC82B11400F6;
-	Fri, 28 Feb 2025 05:01:25 -0500 (EST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eVQwtaTD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="5mwPb/mg"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 395561140142;
+	Fri, 28 Feb 2025 05:01:29 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Fri, 28 Feb 2025 05:01:25 -0500
+  by phl-compute-09.internal (MEProxy); Fri, 28 Feb 2025 05:01:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740736885; x=1740823285; bh=IMfPyGCdbz
-	vjw0OcmJ/Ylyr9px2j+u057eGx3Ltj1uk=; b=IL/Q9Jg6VcZ0V3Op6tejg6eFuO
-	OQKFb8rL6skzxbNM+a3yAK7P1wVgNVqHfDcpqe1qi1/l/8hNeQLJh8OjpSy2QM9f
-	MU8uJKYOkr0RgrppsA9bgCOPRZwoPWL4Sqht0NNHbWyUH8JYPnmqeh52u3o3zaLU
-	PLSQ3aTdZ/vM5wrJsJSJt4wCkxI7VbCHjPKIjy4mBAlhbmuY6w4tGb9irSVjEXcK
-	hL52qphjuDh5kRcrdt893CE9UgKvcj4Xd/k8BF4PJGBmeYgk62CvEr02VNIANNJy
-	9TULo5kiN6Bf+g+CvT+m4Ain11KNl5Ao029qgDvPUJsgqjwSU1aZa+8C5Uyg==
+	:subject:to:to; s=fm1; t=1740736889; x=1740823289; bh=DBSJotKyPQ
+	KpCEZQFliR1Xxv5p2ApaxJf6HdjpcXNZs=; b=eVQwtaTDidcfm4P2vLNLqUD3Er
+	4e+af6lNsJiQ/zu/Y7sb59LEITk2xsgvWm6aPPGtJ/VCl2XM/C1t1+felxo3P2sA
+	DTYAMf6Cd0UDfLxqaO5qVep6sO8HtHzBSFKApKnuRO0Vm5YIywHwltV6zsQndkuq
+	4fZdJao5khlYmTNVZhj4KsBnwNRQzHn2yZS2KUSVWiRY+FXFpO80CmraDKahi0il
+	j5AEADO4CS/bpyUMMYZrnxsC55iPfgoBebt9LKWavofK6dTdOQbnZu8MoobU5xlq
+	BSSUoorXoarsVKkppxoGik5EqAs0WuFGRJZzHZNTWt2GkPH0J/TvFweRZRTQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740736885; x=1740823285; bh=IMfPyGCdbzvjw0OcmJ/Ylyr9px2j+u057eG
-	x3Ltj1uk=; b=GUUhCLC1ZbXr+jRvQL3yZlYkmHK3/k2NsWh5xPjA1BtF7sa4qRN
-	wOSotEtb8AnQ8mdCHz2xu8x+eWcpsEeLzxprNF1xReAAnZFveObVNvbNcr6B4snW
-	te2uV5AiNoj2lVmTDFJZqYPwo3RfX4mdLg+A7zISQ1nesgxpzOyxAdCLzrFHekQx
-	RSX5Ep5ZYb8XPFBHQs0w19RzmRe9mzdrpfPXOYUmK1waiRMzizS+gVYSfqidILIf
-	doJEFEjmI6eZsSRL9Sk+zVZwteDfim1V/BJm/IUzG/xi/ynsxF43+/tQm0oVGlwq
-	pshKY70IDXG6cEjZTNvRT07S+hiAXYLlX/w==
-X-ME-Sender: <xms:dYnBZxCMOPjmF06TEKmWHDvIAZr0hceKKVhGMtNU_Q1HKn23G3QUyQ>
-    <xme:dYnBZ_geoMSCCDHe5Y8qTTEmSVQapdp8ubsZeKV1pGqHbJBOYgQFJYHcnrVCBEtPP
-    ggSI4Ra0jhfMo29yQ>
-X-ME-Received: <xmr:dYnBZ8lXACh8HTQYOAYBD_DjQECB2TkxltJvXIFSzatzjrRVQMUo1pCcz7Pt7i1ylFJkNJMt30HBFug6w6rc85-ZDL9il09q7MDjjRnjC0GkD_as>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeltddtlecutefuodetggdotefrod
+	1740736889; x=1740823289; bh=DBSJotKyPQKpCEZQFliR1Xxv5p2ApaxJf6H
+	djpcXNZs=; b=5mwPb/mgNT71p3Ti+TSaSlWJQP99QJjbSkpZTDduyUysnee6YxR
+	JH5dldI+g2WETW6vh0Z7+078v7wC/EUMuuMnxb8kJqMg8Ku+ISeYZt6Ypcgx2hDz
+	R07T/LmERnYBRtH5rlOl5Wxy0IVFQGCaOA9ORgFbjOx17ZsUG6soMHyPb8qt38Yg
+	XBy9vrWWGs80kUK7nPhhJc59YX5ycC8WDm81VgC9olQe61V0Ukn8L9TtJhIjUwqi
+	PIkKK/rtXl5L7nmzOeE00Wc1Av2plopDdLZgCxrDhTxaFC4ZQrsz4rH+jJ+PRJSP
+	p74vrIf11OWSvF6AOByflfg/lFjLnf5t/mA==
+X-ME-Sender: <xms:eYnBZ5CepZwIUpqIKpCusYxcAcHLnDIaQ4yCm5cW1P-EnRTqJeElTA>
+    <xme:eYnBZ3j_r9PHPa-d5-HgcecITxFSmNZvplafyWMkJ2_GJftYh5UvNDn3FIVfHAFLQ
+    99c7-v45gB2xm7k6g>
+X-ME-Received: <xmr:eYnBZ0nudcueJ3LEf-3wCDhVMiWolTp1vLVEOa-w-SLmN4-g3tQXVpwL0KEjggPliH0gyk-RQATGk2shyBpaTrlK_NWWXLsh7HNGgMVUmpJzg5jG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeltddutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
@@ -56,32 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeltddtlecutefuodetgg
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpth
-    htohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:dYnBZ7xiM9cb-XGxM2UtVKi2kEWp8CFHEVPywpXfILNmq1-Cgmfjvg>
-    <xmx:dYnBZ2S2KRWXeDXvg05LvS3tUD1kZrL2DGmHgWw5GFKIX6-B6HHm6Q>
-    <xmx:dYnBZ-Yct9lGXIvUmQHxTG9D982DBI5HA8AVVE7ky7OMYOd9-SnCUQ>
-    <xmx:dYnBZ3SDk8H1nW3wvam_Plmp-cQRPAVVOzpDac9yzzFujn3VqSTdXA>
-    <xmx:dYnBZzIXxqPdU3Q8BEXbTYzMV10granWd-5DYZc5XlM4LGI-2SZQmv-d>
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhf
+    sehpvghffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:eYnBZzx3e9PK_hG20bjQ6vc0iZu-B2TDW90hiyfW9yNAaGgdG1Hs8A>
+    <xmx:eYnBZ-RwRSiZfzYlmD-3uZT3A_cVxGh_EyDVpZTNxOPxaNRfe_cWsQ>
+    <xmx:eYnBZ2aFFNSsZD3MxZomfbFhxFgWomUtnUzgLNM_b86tXsxFZ0y3tw>
+    <xmx:eYnBZ_QBPJ170JwqABYRFdHbfb_s_3kBspjX7eu6fLQTmOzZwI1owg>
+    <xmx:eYnBZ7IDOvrsn7VqY53xOQIfId76ifnVT6R-74s_JMux1palCN5a2gK0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Feb 2025 05:01:24 -0500 (EST)
+ 28 Feb 2025 05:01:28 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id 6e087448 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 28 Feb 2025 10:01:24 +0000 (UTC)
-Date: Fri, 28 Feb 2025 11:01:23 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id 7f84dae7 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 28 Feb 2025 10:01:27 +0000 (UTC)
+Date: Fri, 28 Feb 2025 11:01:26 +0100
 From: Patrick Steinhardt <ps@pks.im>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 06/13] pack-bitmap.c: support bitmap pack-reuse with
- incremental MIDXs
-Message-ID: <Z8GJc6iDqueVgc67@pks.im>
+Subject: Re: [PATCH v3 07/13] pack-bitmap.c: teach `rev-list --test-bitmap`
+ about incremental MIDXs
+Message-ID: <Z8GJdv5FwDP_k1et@pks.im>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1732054032.git.me@ttaylorr.com>
- <c8401fa0fbdbf1fe1422cb3105aab2cb8058f331.1732054032.git.me@ttaylorr.com>
+ <17ab23dd76dce076275873e96991acd2f2b2a994.1732054032.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,30 +90,89 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <c8401fa0fbdbf1fe1422cb3105aab2cb8058f331.1732054032.git.me@ttaylorr.com>
+In-Reply-To: <17ab23dd76dce076275873e96991acd2f2b2a994.1732054032.git.me@ttaylorr.com>
 
-On Tue, Nov 19, 2024 at 05:07:35PM -0500, Taylor Blau wrote:
+On Tue, Nov 19, 2024 at 05:07:38PM -0500, Taylor Blau wrote:
 > diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index c2c824347a6..1dddb242434 100644
+> index 1dddb242434..02864a0e1f7 100644
 > --- a/pack-bitmap.c
 > +++ b/pack-bitmap.c
-> @@ -2347,14 +2348,18 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
->  		uint32_t pack_int_id;
+> @@ -2564,13 +2584,57 @@ static void test_show_commit(struct commit *commit, void *data)
+>  	display_progress(tdata->prg, ++tdata->seen);
+>  }
 >  
->  		if (bitmap_is_midx(bitmap_git)) {
-> +			struct multi_pack_index *m = bitmap_git->midx;
->  			uint32_t preferred_pack_pos;
->  
-> -			if (midx_preferred_pack(bitmap_git->midx, &preferred_pack_pos) < 0) {
-> +			while (m->base_midx)
-> +				m = m->base_midx;
+> +static uint32_t bitmap_total_entry_count(struct bitmap_index *bitmap_git)
+> +{
+> +	uint32_t total = 0;
+> +	do {
+> +		total = st_add(total, bitmap_git->entry_count);
+> +		bitmap_git = bitmap_git->base;
+> +	} while (bitmap_git);
 > +
-> +			if (midx_preferred_pack(m, &preferred_pack_pos) < 0) {
->  				warning(_("unable to compute preferred pack, disabling pack-reuse"));
->  				return;
->  			}
+> +	return total;
+> +}
+> +
+> +static void prepare_bitmap_test_data(struct bitmap_test_data *tdata,
+> +				     struct bitmap_index *bitmap_git)
 
-Instead of completely disabling preferred packs, should we maybe fall
-back to the preferred pack of the next-higher layer?
+Nit: according to our style guide this should be called
+`bitmap_test_data_prepare()`.
+
+> +{
+> +	memset(tdata, 0, sizeof(struct bitmap_test_data));
+> +
+> +	tdata->bitmap_git = bitmap_git;
+> +	tdata->base = bitmap_new();
+> +	tdata->commits = ewah_to_bitmap(bitmap_git->commits);
+> +	tdata->trees = ewah_to_bitmap(bitmap_git->trees);
+> +	tdata->blobs = ewah_to_bitmap(bitmap_git->blobs);
+> +	tdata->tags = ewah_to_bitmap(bitmap_git->tags);
+> +
+> +	if (bitmap_git->base) {
+> +		CALLOC_ARRAY(tdata->base_tdata, 1);
+> +		prepare_bitmap_test_data(tdata->base_tdata, bitmap_git->base);
+> +	}
+> +}
+> +
+> +static void free_bitmap_test_data(struct bitmap_test_data *tdata)
+
+Same nit here, this should be called `bitmap_test_data_free()`. In fact,
+it should be called `bitmap_test_data_release()`, because we don't free
+`tadata` itself.
+
+> @@ -2579,17 +2643,26 @@ void test_bitmap_walk(struct rev_info *revs)
+>  	if (revs->pending.nr != 1)
+>  		die(_("you must specify exactly one commit to test"));
+>  
+> -	fprintf_ln(stderr, "Bitmap v%d test (%d entries%s)",
+> +	fprintf_ln(stderr, "Bitmap v%d test (%d entries%s, %d total)",
+>  		bitmap_git->version,
+>  		bitmap_git->entry_count,
+> -		bitmap_git->table_lookup ? "" : " loaded");
+> +		bitmap_git->table_lookup ? "" : " loaded",
+> +		bitmap_total_entry_count(bitmap_git));
+>  
+>  	root = revs->pending.objects[0].item;
+> -	bm = bitmap_for_commit(bitmap_git, (struct commit *)root);
+> +	bm = find_bitmap_for_commit(bitmap_git, (struct commit *)root, &found);
+>  
+>  	if (bm) {
+>  		fprintf_ln(stderr, "Found bitmap for '%s'. %d bits / %08x checksum",
+> -			oid_to_hex(&root->oid), (int)bm->bit_size, ewah_checksum(bm));
+> +			oid_to_hex(&root->oid),
+> +			(int)bm->bit_size, ewah_checksum(bm));
+> +
+> +		if (bitmap_is_midx(found))
+> +			fprintf_ln(stderr, "Located via MIDX '%s'.",
+> +				   hash_to_hex(get_midx_checksum(found->midx)));
+> +		else
+> +			fprintf_ln(stderr, "Located via pack '%s'.",
+> +				   hash_to_hex(found->pack->hash));
+>  
+>  		result = ewah_to_bitmap(bm);
+>  	}
+
+I'm a bit surprised that this doesn't result in any changes required in
+our tests.
 
 Patrick
