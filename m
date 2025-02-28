@@ -1,116 +1,172 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1B926B2D5
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 14:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C1C1EF385
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 15:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740752147; cv=none; b=BJ2aD/nOJuOgjdfXkmJ1bE+fsd0Gi5oU2bFvz2WqMJme+CQFYD4Z2Y4BMOGEEH/yyiP6ASFFHFSX/mPqHbdJelVmaaIDHF7orT2MmJw1fm2I1J2vPxSu+ThiMk4TloXnvuG3fvDQQy/sejqAR+zGuZEWKEj3LQnMFxbdvcfOIkM=
+	t=1740756375; cv=none; b=M5sRY8j0ibAkE84EpsoEXpX4Ohq1CHfskAAunOC+bvDXs/dQRAgJxuQJ0TbhgZtp5hoz7elfs53u5MKjZySkwRNQ1OvIZUYu4yjEWC8pKgG+MCUo+Dd7nMS4nZJpGMS7msiDzp/mlpZHKVl5JY08YoXWvQ8y52ko6NpQju1qTFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740752147; c=relaxed/simple;
-	bh=7tjVfRM26J8fj+PWtpn6mp/xy5QIyDKMU9VBL4u6bqQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KToQ0q+vKLt4AvTHmo92ZLR2tShzFcXug37lAi+M/iIl57E84MZTpO1kqn/uhWmTHNqN4Mp88DyyxDwd47auvsFKDPOiJEj6TZhdN8o/iYwHGgzCBjF/GkmFrskvNGuUI2AQeZ9AwI7VT6fxpM3ghLAfJOywk8maqsqgvd0IDVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zsjZykNl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eEsdbZYV; arc=none smtp.client-ip=103.168.172.150
+	s=arc-20240116; t=1740756375; c=relaxed/simple;
+	bh=1dfEJ8d2imnUwhxLa2+4ZBO5wTFEmX07mcQdFnawe6c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oEHP01WbgvowRssfSEQnJ8eXV3qJ+mEHN2N0RxRKTSBMF4OMWolipRpJiNczcfG7uy4o3EKDxeMV9nPbi2CsuYtKlMTpW7JEPvlPL0p/0A+4eLE2ge7WnOSFZ8KEPlfhj+WNOu9WpznFOkxV1wMBlpOpxqHzYsbguwJoFgjyedU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S447GZ88; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KdlV+iZq; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zsjZykNl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eEsdbZYV"
-Received: from phl-compute-13.internal (phl-compute-13.phl.internal [10.202.2.53])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8219E13827C9;
-	Fri, 28 Feb 2025 09:15:44 -0500 (EST)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-13.internal (MEProxy); Fri, 28 Feb 2025 09:15:44 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S447GZ88";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KdlV+iZq"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B8462540131;
+	Fri, 28 Feb 2025 10:26:12 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Fri, 28 Feb 2025 10:26:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1740752144; x=1740838544; bh=Pd4HEvxJ2G
-	A47Z7dirjdhMhinooO5NAnakyaj7hFt2E=; b=zsjZykNlhqZdCt2C7CP6voklkh
-	+XKVEz09egwlRNW4maxkqBU8Jb7tgKByl32vyYMELv6z8MsS+1bgBEYdmUFQWoiH
-	M15Sn/L1LfOHxpsHBH06jl1Q/0JW7XfQ2cUvXc6CT9gOvT11Z8ZgO2UV7N/zbYjp
-	ufuT4+1Bw7ZpPYYWYMwlWCA2Ky8pzznBw4dboKGo+dkkaOqndKzDT9znC3kSAoZp
-	m1iqkopMfxyVRe23dOSue7NWXSzo4MADU5GVaOSNUIc8qxpOaoE//FUwiW7rPJN4
-	ZGl62sGhFuDq1mhYmsVYTjcLPqoBikI/MGY81R4AHVns/dGYw6qnzHf/zaIg==
+	:subject:to:to; s=fm3; t=1740756371; x=1740842771; bh=01OPBQszZE
+	Al+Z4w2DxA5DowFRIoxvus498nx5kRW3M=; b=S447GZ88kQ4PXcunYDoY7qCM0A
+	owqL1zvCa910jH2U3ZnJLSCWXOT14Psajg1yAYKLYimjnnXOp0wXfES+TkWUvrFf
+	0RpuzQ+LVjBe+gn3V0PhlvaDzYJh1HN3takczL7uS6L06AGjX5diD5iJbydupJql
+	5HN8E6McWi5BXCaSS8Xi307g0RpRZDnWcaRKIEq86mYoaFmgu6kIBjF2mkHgNwF4
+	def0F0m2K4CgShF0hyUheZ6V/aZ0mqXwa/ai9kLcacB7xxNPNmMirCBf9UQTHpwo
+	buL2FX7AigvhcXy75pb3O60NiUgMXo/6tw18U5s1OwwMy8qJA09njgx2oIEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740752144; x=1740838544; bh=Pd4HEvxJ2GA47Z7dirjdhMhinooO5NAnaky
-	aj7hFt2E=; b=eEsdbZYVx05vJHFoXTeXWdfLS76dQ1Gr7FRosnMzIG+TAEvsRC3
-	iZOuw2radaJOqkczfhwCRdYp69TiIzLsUujd3aXrFh5Sr8qxx85lJwBS0kIoeWBj
-	O1l+hfRzobvyUdTBo5Ik90ruYsDocCYWpsvX4AKnEjRJoK/fyIb+ZP5VQC8harfu
-	GsucFQsKXjtcLalI6QAKZfaaxERQg8+xJJ+29zwXLuMswLyrkxN6gNsP1WnOQjk1
-	/E1Aj1Od9U7K7UIKF9ZaNiF/7lVkX0yJeQ4i2Jccd4nLlVQRfLxwxXYRbh7681aJ
-	UBiopGIJWgJOFNqvbwCg7bQ8aUqfXIjPbDg==
-X-ME-Sender: <xms:EMXBZ81J5N6SOOz4LR6bfGSgMQ8JtzCv8HclTzJAs5dVd7C7-mILVg>
-    <xme:EMXBZ3G2cxhpAvEGflYBuFttZRjP4GFZ8a6UqmgCqU5ZZKHyPbrOk_HvJ7fg7EfG5
-    9CZxlqdu0W1-zP24w>
-X-ME-Received: <xmr:EMXBZ06MuoR7o70lFtBQ1M7zOfLnc39dAY73yXt-w-w-g5uROQ9eHam_z9kslhrQvpFKGMtkkbTC-DS2Mz-DpR7rnZ0BTmwiSn5w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeltdeitdcutefuodetggdotefrod
+	1740756371; x=1740842771; bh=01OPBQszZEAl+Z4w2DxA5DowFRIoxvus498
+	nx5kRW3M=; b=KdlV+iZqNHJkcN2SFlCxXxzhdbPbvqM6BM7nL4lELMJIEq9fCO3
+	uxc/h6CPd/30dWYjWpCUt+0n5aL6kXqCPTGRuyx3DpGVI8Q0sU/BoT1ctYPOS8F+
+	gI41IuPLkjQfgm7z1lehWxP4NF4C9PXNosLH3Tv9nNAonjurPgSADaFX8/Mo4N/+
+	D2bAXSLnB7aVRfXECRKRZO2symzkKe3HY0eowuHj0UG5dYwDDF18IBodBpIGFtHR
+	k0k9rXvA67s/BhZCiN/0vyMdPcJI8ahl6fOngf9wvB2mFDzmoK8GcDT6FY67gB5o
+	nNGNBLQw+2mLeQWbbY5LW7PZSPpp102wpaw==
+X-ME-Sender: <xms:k9XBZxKDjo6HzdhDLR60y0sTkNBGAXXdIAZIu1CsCm652qJdJx4ypg>
+    <xme:k9XBZ9IW_nQlanYmmYVXU0NDh68xsQfL9rfwEr-15mx3rcb4qrHHn7cMkBYN1PfVc
+    poo14MTIszHALbfMQ>
+X-ME-Received: <xmr:k9XBZ5u7qDVVNBGOK4abtbUpv9ubTzWDxHnr9R9zhhpajFM_Mi1getSn8jBDC8SnzHNHBgxBosifonzb4UI7rBp9phtDHj-wI_xWyQr6YeDj8EDoF9Ek>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeltdejgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
-    hmpdhrtghpthhtohepghhithesghhruhgsihigrdgvuhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:EMXBZ109R16exnrtgyfAwy53wsGgdp9Ujoq7asSf9J4tPewC98tGHw>
-    <xmx:EMXBZ_FydpknVC8qE-bDOPil9301P0IwAzOMseRWwm8KuUs3DTwDBw>
-    <xmx:EMXBZ-8SxjcCBlC1y3GsOvodvnhQfp1fUdbPjIgaqWmf05Ozrm-V-Q>
-    <xmx:EMXBZ0lbSt1A3Oz2CQcokl3WhszVUcXMAZRwAU8asGVMvph1eAxSkA>
-    <xmx:EMXBZziqxpIN1leb_nnherqe58HogWN17knJAYYah7FW-LsNtp6_qKsf>
-Feedback-ID: if26b431b:Fastmail
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefvohguugcukghulhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtoh
+    hmqeenucggtffrrghtthgvrhhnpeejffeljedtgfffleeuveeiuedvteekvedvgeefffdv
+    keetgfetfffhueekheeuleenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluh
+    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepthhmiiesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehfihhvvgdv
+    fedutddtfeesghhmrghilhdrtghomhdprhgtphhtthhopegvsghivgguvghrmhesgihmih
+    hsshhiohhnrdgtohhm
+X-ME-Proxy: <xmx:k9XBZyaPLBOpID2f0paPFNgHQMlsHoUnlC6AaehaTrDqJmYdZh7RiA>
+    <xmx:k9XBZ4bb4Fn-g-WfoQqPgR9sd0NSDfznitnSnCyT5rqM2Om0a1CUCw>
+    <xmx:k9XBZ2B4Zl69BHfYn279i_Tp-itmKraspHw6zSWGLIQuUJFWM_uryQ>
+    <xmx:k9XBZ2YS5ezgeLLQllgvqZFmeuOKPR8IhmsWhPerlVAohPDDoQGtoQ>
+    <xmx:k9XBZwGKgbvElXLDeAbaLKNMhhdVRGA2Bmb2O0qqKvfWfPU2P6cc3nDx>
+Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Feb 2025 09:15:43 -0500 (EST)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Michael J Gruber <git@grubix.eu>,  git@vger.kernel.org
-Subject: Re: [BUG/WIP PATCH] unit-tests: use clean test environment
-In-Reply-To: <Z8GVAjwZWOM7c2fR@pks.im> (Patrick Steinhardt's message of "Fri,
-	28 Feb 2025 11:50:42 +0100")
-References: <e3be6705d103ccbc165d0fd3b9b7c818d14001e9.1740516033.git.git@grubix.eu>
-	<Z8GVAjwZWOM7c2fR@pks.im>
-Date: Fri, 28 Feb 2025 06:15:42 -0800
-Message-ID: <xmqqseny40kx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 28 Feb 2025 10:26:11 -0500 (EST)
+Date: Fri, 28 Feb 2025 10:26:10 -0500
+From: Todd Zullinger <tmz@pobox.com>
+To: git@vger.kernel.org
+Cc: Kousik Sanagavarapu <five231003@gmail.com>,
+	"Eric W . Biederman" <ebiederm@xmission.com>
+Subject: Re: [PATCH 0/2] t/lib-gpg: ensure GNUPGHOME is created as needed
+Message-ID: <Z8HVkqqD054QGPIE@teonanacatl.net>
+References: <20240703153738.916469-1-tmz@pobox.com>
+ <ZoV8b2RvYxLOotSJ@teonanacatl.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZoV8b2RvYxLOotSJ@teonanacatl.net>
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi,
 
-> This to me is the biggest issue with the chosen approach. It would be
-> great if we could find a way to sanitize the environment in the unit
-> test executable directly instead of forcing users to run the unit tests
-> via the provided script.
+I'm following up to an old thread because this test breakage
+remains.
 
-True.  What the end-to-end tests do is to have a central place (in
-test-lib.sh if I recall correctly) to ensure a sane environment and
-have everybody run that before their own code.  In theory we should
-be able to do the same in C (otherwise we wouldn't rewriting things
-done in scripts to the language ;-)).
+I've intended to dig into it further over the past few
+months but have not managed to spend enough time to work out
+the root of the problem.
 
-> I suspect that most environment variables shouldn't matter (for now), so
-> overall the duplication may be acceptable:
->
->   - We need to unset a couple of variables, but we can probably reuse
->     logic `git rev-parse --local-env-vars`.
->
->   - We need to ask Git to not read the configuration, which we can do by
->     setting a couple of envvars. This should be manageable.
+I hope that someone more familiar with these tests (or
+perhaps someone with fresh eyes) will spot the problem.
 
-"Provide a controlled environment where Git pretends this is the
-$HOME and that is the $AUTHOR_NAME and so on" is much more
-preferrable than "Tell it not to read", no?
+I wrote:
+> I wrote:
+>> 92 of the 202 tests in t1016-compatObjectFormat.sh are skipped due to
+>> the GNUPGHOME directory missing, e.g.:
+>> 
+>>     ok 5 # SKIP create a sha1 signed commit (missing GPG2)
+>>     ok 6 # SKIP create a sha1 signed tag (missing GPG2)
+>>     ok 8 # SKIP create another sha1 signed tag (missing GPG2)
+>>     ok 9 # SKIP merge the sha1 branches together (missing GPG2)
+>> 
+>> With these changes, they are all run (successfully). :)
+>> 
+>> I presume that they have been skipped in the Github CI runs as well,
+>> but I don't know that the logs show enough detail to confirm that.
+> 
+> D'oh!  I spoke too soon.  I'd run the test suite on several
+> different rpm-based hosts (Fedora 39 and Rocky 9).  Waiting
+> for the Github actions to run is what I should have done.
+> 
+> A number of these fail, e.g.:
+> 
+> https://github.com/tmzullinger/git/actions/runs/9780387020/job/27001952643#step:4:1871
+> 
+>     Error: failed: t1016.173 Verify commit signedcommit4's sha1 oid
+>     failure: t1016.173 Verify commit signedcommit4's sha1 oid 
+> 	    git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha1 &&
+> 	    test_cmp ${name}_sha1 ${name}_sha1_expected
+>       
+>       + git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 5d70155cc40e4c16515c89ad0b11d8c691436fc4a4d3ca246669a4c21f07e454
+>       + test_cmp signedcommit4_sha1 signedcommit4_sha1_expected
+>       + test 2 -ne 2
+>       + eval diff -u "$@"
+>       + diff -u signedcommit4_sha1 signedcommit4_sha1_expected
+>       --- signedcommit4_sha1	2024-07-03 15:11:05.597537579 +0000
+>       +++ signedcommit4_sha1_expected	2024-07-03 15:11:05.553537766 +0000
+>       @@ -1 +1 @@
+>       -9179ccc5b15588bc3a45c5cc75bdec380f8ccb86
+>       +c6c46f92bc2cfda57ad6bf7981fa654825376b24
+>       error: last command exited with $?=1
+>       not ok 173 - Verify commit signedcommit4's sha1 oid
+>       #	
+>       #		git --git-dir=repo-sha256/.git rev-parse --output-object-format=sha1 ${sha256_oid} > ${name}_sha1 &&
+>       #		test_cmp ${name}_sha1 ${name}_sha1_expected
+>       #	
+> 
+> This seems like it's just exposing a pre-existing failure,
+> as I can't imagine how creating GNUPGHOME would cause the
+> actual and expected SHA's to differ. :)
+> 
+> Perhaps the intended gpg wrapper script which sets
+> `--faked-system-time` isn't being used?
+> 
+> I'm not sure why that would differ in the Github actions
+> from my local builds, but I don't know what else differs in
+> the Ubuntu images and/or environment used by the actions.
 
-Thanks.
+I have run a good number of builds with the patches applied
+and t1016-compatObjectFormat regularly fails for all of the
+tests which use the GPG2 prereq.  A recent Github CI run is
+here:
+
+    https://github.com/tmzullinger/git/actions/runs/13570544425
+
+I think this test flakiness should be fixed so that we can
+apply the patch to fix the GPG2 prereq.  As it is, we're
+skipping _all_ of the tests which require GPG2.
+
+Cheers,
+
+-- 
+Todd
