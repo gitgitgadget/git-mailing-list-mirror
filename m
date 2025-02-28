@@ -1,87 +1,86 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9480248863
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 08:29:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC8E253343
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 08:35:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740731377; cv=none; b=f9owUZ1zwJCfeJA+NirsXaCNr2R03XFFUUJ7dIDAGZwG4h6DimJu3951TIGlu3h1hdkt/JMp7qhLXF40asWmatQSuMbknBjZevGuNz90y/MDp2pZ0hH1PqaUj4NcGBaArMKByjw9W1K7ZVeFCeR6lI+w1sejtNR9t/+0BwYzavg=
+	t=1740731707; cv=none; b=evIeRhJkQGooa4ssNuM4SEPgS9xxyL0nC3yaqA+mJm/tuAlOWfULuUTF+qcMIV3/Y/ebWwUo+tPigcNGNlIPKTCtt/aYACrmBp5ZFBoqR60hVJCnrAiXMaSmwNPmCJHItvJAHnGCipb6lak5aJhFI9pYpicGI4H4uEsd/U68sGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740731377; c=relaxed/simple;
-	bh=LLAn3VkXD6N93gBkxyb2pFUDfxc8G7hcJ4c9Q6xT4UU=;
+	s=arc-20240116; t=1740731707; c=relaxed/simple;
+	bh=0/7hbae4HOZYnTwmOfugPF0/wtqneP53nYSRKMs5MYc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=urgf2KsqTRS9YKr/hxrbQrjkt1bCSWdNnm2CyULRIrpcDyDUtIAiQT9yAw7O+TMFd5rUvPjr7Qw+MrLCWzOSWfgg3Vof3pJr5B1Rb4YWr55/HMjEijiyKSL0IAkYLJkFBcMd5hoLWlPKML6+3CsPzzRcr9mdMHJTGlkrCCMwFRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pbxHS+9u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=axI2mUEv; arc=none smtp.client-ip=103.168.172.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=MlfFKDqq4HO6RZxjXLvVfJSZRehyDHKGB0ZwrPD3RkrTMOq0xCAUxfi0XWH24IDpt4AVM8PC5ez2NTod6eGyyL0MZgU0vaG7LiiLO77molGrd4wx98IS5Rm6c/9d+xUdSh76PPya7hlN1+6goOviUqFQ9gdKgQa1m0sTFaE64Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Tx6Tut7G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sjCaj5+x; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pbxHS+9u";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="axI2mUEv"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id BC791138274E;
-	Fri, 28 Feb 2025 03:29:34 -0500 (EST)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 28 Feb 2025 03:29:34 -0500
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Tx6Tut7G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sjCaj5+x"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 9079411403E3;
+	Fri, 28 Feb 2025 03:35:04 -0500 (EST)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 28 Feb 2025 03:35:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1740731374; x=1740817774; bh=Jxn1F5kYoR
-	lttYa/i7VLNWcC3IGdUXYqWqY+gFiUl4Q=; b=pbxHS+9uiRwj8htRJihSvArvzk
-	74a/tWunrly7XU0NI09DswKIdXXqNbamES5/nUO9I2M3eMWyaYjLoGCO4zMb6NOt
-	3hybVfshkvIqfQ+LCH82Os4ikTJPOE7fL0TvcRk6ffkxCbe9///Y67GP59Ncjth3
-	r72Ojy6HHva+plMHVRDkH4aWRTobffVi1bNg3aMswISDGvYlqXx/NrX6ztEnlhWS
-	rthqcsabXNnHUWcegSd88NiRDnzwMNo+AXOxiaHkO8SAuESEth6yQrAv4kApDVQZ
-	UndeIggP1LbKMHS43Jbdblpp8EjnNxReDRQ/3ae490LivAKHmQPTg9bluY5Q==
+	:subject:to:to; s=fm1; t=1740731704; x=1740818104; bh=ueMdjF/Lct
+	pE+njJQobYMLYkCjDkZjAMaHVLRWltC/4=; b=Tx6Tut7GqtE9RCRhOjLj+ccc3i
+	He8ue34ESSuqcUTckefmd9dSw6JRkYSUDZDTHGP/P203lwU1e53g4Y/mFGeIstXD
+	1HudYy4vyPnu4GhUqXzxY7TL6FCDUQJ/hzSTUXEBAVtY9xhJfSwV0wOvQRvwSQff
+	GkIQPhFrpH4BbeqSmMjNcz82tFjsDM9RnWQYO8AeSuI9cSlAVMg0f2wr9OVQkzsm
+	zAeK7CV+KPUYrxwWokr9+eh11NL8TodlQ6n4OoGvxuPbJzfKz56g4kizcfBk0kJj
+	PbnDliMjF+fQaaMrug+9dAh5onD6/hrEElIm1fF2vOZLnGChmbEZ6XO6f2zw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1740731374; x=1740817774; bh=Jxn1F5kYoRlttYa/i7VLNWcC3IGdUXYqWqY
-	+gFiUl4Q=; b=axI2mUEvLByRU6dqvNG0pWjPY/DSLUcdf3KLEdK67E5LaC9Xfqy
-	6ZW5QqUAiO0ZKbdbI/TvqPqWIBL6WtUal3LcPPTNHZ4kjPiY5GoKhm4902eOKXlL
-	LPkx135rkh52UmslKp+U0VsH5132NwnOX7xaGK3Yuts7IwwXtv8+rVTsYK7wqpVg
-	vdjn9pLFEvSiWpB1jZKwrYuPurgIV+nK08JUCEwQ2MRp8ib67qHoF34ESjSiZaRM
-	algSqJeO2KnJvOID4n80WXurr8CKtG4TCV0aViLKKx2N3JhH47P81NtWWRQ/BjFU
-	1parw33GLYHA21lWSmdTTmipuIyNjLGYBtA==
-X-ME-Sender: <xms:7nPBZ720yK0snuug84YAptljff19Qr6F5kfukfvYdsphrEIyDeidhA>
-    <xme:7nPBZ6HeCB2W2gOPQP-nNMD1r8JbN-HHjtyQVWmopU_RZdExziU_C8KKaoZMZeXGz
-    oClkKVCzEchQHWf6w>
-X-ME-Received: <xmr:7nPBZ77IlyadNLrCsECGTl75LjA8l8_ofTssxKDUcAZgac09JsY16F41BdmOCO4JVlZvIwAzQYHomQfFgHkkxXf87JuMtz8y--2o9mD_B6ui548M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekleeltdcutefuodetggdotefrod
+	1740731704; x=1740818104; bh=ueMdjF/LctpE+njJQobYMLYkCjDkZjAMaHV
+	LRWltC/4=; b=sjCaj5+xydDR+eI2wlHTJSipTyKznirW3U1pDtwwg6Ej47wiXOJ
+	8ZohGBQ89ZPKEWFvdPmoCKZE0p31TFUEkkRUZ5IaoT8NSFyifcbdsWRYamRwkvbx
+	eMGD8AGhvxXJ9T2aHUjnkniVODvJnH1a5HlwVf5hwvQkTw9oCC0+hu56w39cd6pe
+	6As/o4UnJurCn7JX5i070EEyaxaIXslSZB5U34DEZVRX7q18F4L5MT33CuV7nKuX
+	zouCRsCpeKWnyPfw34Jocb233Q3ajizIKhMESsE1sUFINHyzlllV6T0QXHhUrEUp
+	qiHV/KADcRCzDhbs4UAkbzDZSlP8dBvACfg==
+X-ME-Sender: <xms:OHXBZ3mHtGr9N1fxXeFgfkdd94ui4EKwfXfaf7XbOz--3zgvkXaydA>
+    <xme:OHXBZ62AFroxeJaln006ObQT-tBKzHVu6Hj5_CXgQ0R-7rO1kETrsb_sHnEyXUY0C
+    vtEtfvmVtY4aBRtiQ>
+X-ME-Received: <xmr:OHXBZ9qPDBAD2bIxRJDyz8CU3AUbUj0uPCYZ7t8Txfwf4u-Z2PZ7484JqDY2Kzxt4AO0IcjXRo0w7emb5jluDG_QlYYJBFN7gYHXd2xa3Z2Omela>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekleeludcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
     gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
-    epjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdr
-    tghomh
-X-ME-Proxy: <xmx:7nPBZw2ZBuW88o_44BdKBTeKgJqtOYqY01lBx2yfNG3R7lP2upY96A>
-    <xmx:7nPBZ-GckAtNSYJo2xhwF1BX-P-PF3zAM9Dce3P2GZdRpyB3Ae9SZw>
-    <xmx:7nPBZx-O1xd08PVNoLBQGmpI3rlXflr_go80YC7FekDLyOyo9ImJ1g>
-    <xmx:7nPBZ7nuqCkmUrozLgmxOc3ITJ1mccbrstJNmjhpjATFXNnRtDxFqw>
-    <xmx:7nPBZ7NMDX-qEeVMco4QyzcErRucIcKuh2vJRSfyOWIAZQk-Qdfve7z_>
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsthho
+    lhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopedvtddvheesuhigphdruggv
+X-ME-Proxy: <xmx:OHXBZ_mHcgwvXXg8RhXPpdQQGEskwg9617CazYOlwtF12woLNPEF5g>
+    <xmx:OHXBZ11fvbaWwaOy11xzHf5KDz28vHvMxiFg8JwonKnMMEygtcLx2A>
+    <xmx:OHXBZ-vE8QJj53R07pbq4nVobi8aZbnEWsKhm7NenAYEMEcpMQYehw>
+    <xmx:OHXBZ5WLHT18RpQRi2JWIGS7DLvjwiYDmFlNlIWThG7R3pCLMHz3Xg>
+    <xmx:OHXBZwQY-0b1XNiQ4qRF3kpSD3e9JtxR1aXAauB451JwQ1DQ7e3TnQJv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Feb 2025 03:29:33 -0500 (EST)
+ 28 Feb 2025 03:35:03 -0500 (EST)
 Received: 
-	by vm-mail (OpenSMTPD) with ESMTPSA id f7f91e79 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 28 Feb 2025 08:29:33 +0000 (UTC)
-Date: Fri, 28 Feb 2025 09:29:32 +0100
+	by vm-mail (OpenSMTPD) with ESMTPSA id c00f2884 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 28 Feb 2025 08:35:01 +0000 (UTC)
+Date: Fri, 28 Feb 2025 09:35:00 +0100
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, phillip.wood123@gmail.com,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 3/4] builtin: introduce diff-pairs command
-Message-ID: <Z8Fz7CQimWgzrvz7@pks.im>
-References: <20250225233925.1345086-1-jltobler@gmail.com>
- <20250228002604.3859939-1-jltobler@gmail.com>
- <20250228002604.3859939-4-jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Markus Gerstel <2025@uxp.de>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 0/6] builtin/maintenance: introduce "reflog-expire" task
+Message-ID: <Z8F1NDvWgx1S3eze@pks.im>
+References: <20250226-pks-maintenance-reflog-expire-v1-0-a1204a814952@pks.im>
+ <xmqqikow9o5d.fsf@gitster.g>
+ <Z8Auzjw29t91tEuq@pks.im>
+ <xmqq8qpr9v9e.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,93 +89,41 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250228002604.3859939-4-jltobler@gmail.com>
+In-Reply-To: <xmqq8qpr9v9e.fsf@gitster.g>
 
-On Thu, Feb 27, 2025 at 06:26:03PM -0600, Justin Tobler wrote:
-> diff --git a/builtin/diff-pairs.c b/builtin/diff-pairs.c
-> new file mode 100644
-> index 0000000000..5a993b7c9d
-> --- /dev/null
-> +++ b/builtin/diff-pairs.c
-[snip]
-> +int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
-> +		   struct repository *repo)
-> +{
-> +	struct strbuf path_dst = STRBUF_INIT;
-> +	struct strbuf path = STRBUF_INIT;
-> +	struct strbuf meta = STRBUF_INIT;
-> +	struct option *parseopts;
-> +	struct rev_info revs;
-> +	int line_term = '\0';
-> +	int ret;
-> +
-> +	const char * const usagestr[] = {
-> +		N_("git diff-pairs -z [<diff-options>]"),
-> +		NULL
-> +	};
-
-We tend to call these `builtin_*_usage`, so in your case it would be
-`builtin_diff_pairs_usage`.
-
-> +	struct option options[] = {
-> +		OPT_END()
-> +	};
-> +
-> +	repo_init_revisions(repo, &revs, prefix);
-> +
-> +	/*
-> +	 * Diff options are usually parsed implicitly as part of
-> +	 * setup_revisions(). Explicitly handle parsing to ensure options are
-> +	 * printed in the usage message.
-> +	 */
-> +	parseopts = add_diff_options(options, &revs.diffopt);
-> +	show_usage_with_options_if_asked(argc, argv, usagestr, parseopts);
-> +
-> +	repo_config(repo, git_diff_basic_config, NULL);
-> +	revs.disable_stdin = 1;
-> +	revs.abbrev = 0;
-> +	revs.diff = 1;
-> +
-> +	argc = parse_options(argc, argv, prefix, parseopts, usagestr,
-> +			     PARSE_OPT_KEEP_UNKNOWN_OPT |
-> +			     PARSE_OPT_KEEP_DASHDASH |
-> +			     PARSE_OPT_KEEP_ARGV0);
+On Thu, Feb 27, 2025 at 09:01:49AM -0800, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> +	if (setup_revisions(argc, argv, &revs, NULL) > 1)
-> +		usagef(_("unrecognized argument: %s"), argv[0]);
+> > On Wed, Feb 26, 2025 at 05:23:10PM -0800, Junio C Hamano wrote:
+> >> Patrick Steinhardt <ps@pks.im> writes:
+> >> 
+> >> > this patch series introduces a new "reflog-expire" task to
+> >> > git-maintenance(1). This task is designed to plug a gap when the "gc"
+> >> > task is disabled, as there is no way to expire reflog entries in that
+> >> > case.
+> >> 
+> >> I think in the longer run, "maintenance" users should be able to
+> >> treat the single ball of wax "gc" task as a mere short-hand to
+> >> invoke a set of often used maintenance tasks, and we would want to
+> >> break down the component tasks grouped in it and make them
+> >> independently available.  This is a good step along that journey.
+> >> 
+> >> Are there other things that the "gc" task covers that are not
+> >> available elsewhere?  "git gc --help" suggests there are things
+> >> related to pruning (unused?) worktrees and stale rerere database
+> >> entries.
+> >
+> > These are more gaps indeed. I'm happy to work on them once this patch
+> > series has landed. I don't know about any other gaps.
+> 
+> Or maybe leave breadcrumbs and invite others to help advance the
+> cause?  If we know we have achieved consensus that it is a good
+> direction to go in, that is (we already saw a mention that indicates
+> that there are populations of us who do not care too much about
+> extending maintenance but are familiar with gc).
 
-Okay, we now use `parse_options()` to parse stuff for us, and
-`setup_revisions()` only really does the setup for us as we know that
-all relevant diff options should've already been parsed for us. This
-looks much nicer to me.
-
-I wonder though: we keep unknown options when calling `parse_options()`
-and then end up passing them to `setup_revisions()`. But are there even
-any options handled by `setup_revisions()` that would make sense in our
-context? And if not, shouldn't we rather make `parse_options()` die in
-case it sees unknown options?
-
-If there are, we should probably document this because it isn't obvious
-to me.
-
-> diff --git a/t/t4070-diff-pairs.sh b/t/t4070-diff-pairs.sh
-> new file mode 100755
-> index 0000000000..8f17e55c7d
-> --- /dev/null
-> +++ b/t/t4070-diff-pairs.sh
-> @@ -0,0 +1,81 @@
-> +#!/bin/sh
-> +
-> +test_description='basic diff-pairs tests'
-> +. ./test-lib.sh
-> +
-> +# This creates a diff with added, modified, deleted, renamed, copied, and
-> +# typechange entries. This includes a submodule to test submodule diff support.
-> +test_expect_success 'setup' '
-> +	test_config_global protocol.file.allow always &&
-> +	test_create_repo sub &&
-
-Use of `test_create_repo ()` is deprecated, as it is merely a wrapper
-around git-init(1).
+Oh, sure, I wouldn't mind at all if somebody else picked this up. The
+question to me is where to leave the breadcrumb, other than having it in
+this thread.
 
 Patrick
