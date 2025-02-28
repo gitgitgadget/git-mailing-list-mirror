@@ -1,177 +1,147 @@
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7045317B4EC
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 17:30:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E921F09BF
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 17:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740763814; cv=none; b=QYXxJtwPinyakKf4dXhP6Egzjpg8k3Sl04WIOd9/onIAdaTgUpXelxUc9eVAENeol2MYO3kpK9gSACss+PrPRUFFTDNWw0CBzzBBqsdnG+68NdIr1DNem8jP3tc7M78H0bLhNcIPKH3mjO9H9dHNNOQbuq79Qvhqqh6NePdGJ18=
+	t=1740764670; cv=none; b=VkKSJlUU2eAqh0jnKWf40Hj97oHTFvZE0iosEAVRUE0WKGquSSYpHwO9XI30ngR+0GP5ALjkkvRSI0gLQwhNNidt9RbdyjxUxoXi4hFkp030sUn95en3Q/FmVhghPW9RzposloTkHy0s+GYUY5JuH9MYqKaLYsdpWkF3XcB8sH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740763814; c=relaxed/simple;
-	bh=rhyabXoOSMyNDbWTxvZRpIaFE9HVg1rQORCWi12dNlc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UJ2VTVGbo31j98Pi8GyC4RNtVn/dP2SW12q+DeyN1z9Pi7Ze5zCDzWETVdBM12cvU8TO1ecyJnkk9rd2cUpSnOTPqifLxFmdlGVAl6Li607+EOEf3dW2+IxK+Q1HkUjJyaiTLx/9pSGIR0LNDrnYz5/Bv73O8iMvba141Mkvtbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UeHUSFgD; arc=none smtp.client-ip=209.85.160.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740764670; c=relaxed/simple;
+	bh=JFvOm6wv35b8bOasvcEoLA3xyif1qI3QWICjQ5noCDk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=madOHZfAeTjEdWifdBThVdCkUGfVFQI1g+wAjR56EF5d/2Ee2KHjguvpfQZtgEGWgKkEQJpBmUSF9e2osmL0DQGQkbie42FCeLAQ+RTuKPwzHsfhOkwHEc5zdnXPIpdQtXScatarRp+Kx0TdBISO7iIaIabZ23dPuA4kv1gnK24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hxklCVVE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cCgAsUob; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UeHUSFgD"
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-2b38896c534so1265053fac.0
-        for <git@vger.kernel.org>; Fri, 28 Feb 2025 09:30:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740763811; x=1741368611; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=b0IwaOY5Z2ZakE/VTw2uSEoqqX36eUmqqfNpPNDpc8o=;
-        b=UeHUSFgDDrule5GJmrBS87HT9ncPvxE3eYb+bLWNWA5yYs9Eis3wY3ic/sYcgxqjq7
-         4j0BcmyqNm+MkoQO8cRw7ohiIwZq3VzoHQ06taU6GWPy/HP3IEiFwmXUQSNJ98+nV7rO
-         NjMEr6FRS/gAW3UVDY3KS7JPOLToj2hxjr3mBdHjLL/93zjq9XGAXN4EjYcWQmZDTGLn
-         WmXoxpMNZUPeP8EtnVlrDsppl6+pB6cD93Dsxfaoe73lFceqlvEiqkl1OpJgJ0nYQHJu
-         LKsrzCV1y3jTap4HEsDcmFgwvqAuiF4Yf4kSbsBlUazsz6XlvVBj9a54D+1AtX9oGuQd
-         SEGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740763811; x=1741368611;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=b0IwaOY5Z2ZakE/VTw2uSEoqqX36eUmqqfNpPNDpc8o=;
-        b=GBgE+q7+1qQNKTMTXg8+vMKwSKkSQZWckW9R/+LbyGsJpxGUzvdPT2vzktySio0ID4
-         J054HFTpZ+3iesrsmoAxL6strOcaOVGmvZPIGI8w4/guoHQce2nM3a/kWBt7x4I4tp98
-         I0PugIqW7JPNSvOIL/1g37UL+cXWvNWjSSgG/uAXaF8IBld+ogFZ7U8VWWWdai8Krj9e
-         kynBxSapGnEvbt43IFIXUQCinA3Ia3n/no0ucCEdeSIaifm02y87MfHoXk9ltgTvSaZr
-         imUt2vxY/8bCOjkWfcTeLO3ZvSZsO/eWHxgOve+XDMzWdxPBQ+j9lmptSTDgGAUOzw6+
-         GoNg==
-X-Gm-Message-State: AOJu0YwjjiLOXGjXT1RoGI2l+ubh721EStKSVAvAsYLlStLV9iLbyutb
-	vbCJSjaq4FfnnWtp7zIPuQqn7kgZKwR6HUuXk2Lqqy36XYp0OUHzK2JuDqkc
-X-Gm-Gg: ASbGncti0LR2gDQHsqAobGRmNGbHRiE4ByzuJ4w0R0XSVj/yHlqM+u0n00nnBoXTr90
-	0SKszLVQWwVCuALXft6kclFlAhEkTArmQIJOKg1IzCFTQ/z4OzmVVQ/niOWrVie30bd6QS/4Ng7
-	o4TfTDta1+cM/12rGQrYhmODyX9pRlE7uMI0tcE30O4MFNLad+NZm1Xsi3ogs9R/IUD0Nh1SZay
-	G+Mh/ByEsAFyGDzq3jXZqPKCtyxF4fcZpBvpANqTklzUSxa9LDvgmiuZFuLhg2YbE9gSKa9qg0J
-	bezs527PA7Ad19u311I=
-X-Google-Smtp-Source: AGHT+IEHTECXLZRDcOIcri04eqhd7jOdHdSHcPknD4NaviHJgwd6wNUDfZDggbYLJVE2mhsk1Ry1DA==
-X-Received: by 2002:a05:6870:8090:b0:2a3:dca5:cae8 with SMTP id 586e51a60fabf-2c17866dc1amr2762329fac.34.1740763811415;
-        Fri, 28 Feb 2025 09:30:11 -0800 (PST)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2c15c19bbe9sm788293fac.21.2025.02.28.09.30.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2025 09:30:10 -0800 (PST)
-Date: Fri, 28 Feb 2025 11:26:54 -0600
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hxklCVVE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cCgAsUob"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id ECEDB1381DC1;
+	Fri, 28 Feb 2025 12:44:26 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 28 Feb 2025 12:44:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740764666; x=1740851066; bh=2aaCjXHbzF
+	ra6HWGaZps5yGsUka6GUYumDoLsIepvyI=; b=hxklCVVEaQSqnXeAN/lRaz/aJn
+	q8D72Imnz4GrFOwRBoeLbd57Iza2nYVKr0tvWaKbyH6+LSp6sSMCewX99D77StVC
+	lNt0X+3x03YFpEBT7U71MBIle7iE3Q5lw4rmQam2K8UE2XgNErtuNVnmIbLaXHeC
+	mTF00vOCk7F+Meknt07Eo8qQGKqa4kM4DP1G4Bebi+AhlSk9Ez0dmIJPdhWMSAZ9
+	dEEulYi8iLHVePXd7KbQwfSg6h2PCg9xbxxQUslaogXtXgXFPqKZ07+bmOmpMip7
+	U3dV5XZZHADJSxOKimUCqg7BGNi3rc2qj8f2bd3jKa2PCDashUWHF5azUylw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740764666; x=1740851066; bh=2aaCjXHbzFra6HWGaZps5yGsUka6GUYumDo
+	LsIepvyI=; b=cCgAsUobyBratsap71xgK5mxzJtvnjQc5Y4xjSaRbpY8b0IlqtM
+	Rz+VPGOwb++drZhjSdN2TRDWo/+MYYdkiTa0T4yZku74Cne+EuOpTq2GUm/owskS
+	G5KfUgLgXhG6cPBi1HwcBq3ol7uKRqOlqenJXtmWpOsdQGHc9kGO9myokvmFn+XC
+	+oo+ndRwiUNAkbEHgGZxnYeULl56lvPR8JuIvhpbvwdmcmBfBeiTp9/n17lgg1CB
+	rN2zWQS2m48bUJA4UTxAYzKnZgglSlfo6hlmt63A7YQu6fGGHtsZqqDPs0uf3xGw
+	rCD0e9QS3M0ehjLyxpl4uRzCf8/+8rP2Y/w==
+X-ME-Sender: <xms:-vXBZ0YT1JI9WYR2XyQlLmF8QtiHoQWNIim9WeyFrUdbak3hpjoo2A>
+    <xme:-vXBZ_Y0G85U1ZM089Xp4W4Pk-Max1eIprCX51W3j8NaDgacAP9WnVJkJuIsO6Xy2
+    s3DNMLLzF-bbiBtIw>
+X-ME-Received: <xmr:-vXBZ-_oUlHRkGjPgQGLq7zr9aGsf1YKbmXq5u-rFWL9KwLFV6s0CZJNKN5v3r8UrQJCx8kcNNedvhTtKKHbE2P6JAU6oRqEI-Hg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeluddtvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrih
+    hmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:-vXBZ-pTy2Anq0lt3zqR9UshlWah3rPoKYw0nS47LoJrnR5ZaeGcXA>
+    <xmx:-vXBZ_q68mdKhRmmqeLRYMYH12ddVvylJ_ExDKNOJD3sN0uP2OUMcQ>
+    <xmx:-vXBZ8TUtAFiseINGSUi5kvXNi51KkN0HiGOVlGYbAF91K7UjDByXg>
+    <xmx:-vXBZ_pAdMA8Vdc2WgMhXS3DRLV1ikdqjQcd0No6Qw0PvIOJ_RXPxA>
+    <xmx:-vXBZwCh4D92PqaouGmwWy2bejg6_wYbExZvzU_id52ey9WPoZ-VO33l>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 28 Feb 2025 12:44:26 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, phillip.wood123@gmail.com, 
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v4 3/4] builtin: introduce diff-pairs command
-Message-ID: <yb3d32awwgdv4yp2ma6udqn5w46stemptje2ykdkgwfeqxrwac@zn7ifcssc36u>
-References: <20250225233925.1345086-1-jltobler@gmail.com>
- <20250228002604.3859939-1-jltobler@gmail.com>
- <20250228002604.3859939-4-jltobler@gmail.com>
- <Z8Fz7CQimWgzrvz7@pks.im>
+Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 2/9] builtin/cat-file: wire up an option to filter objects
+In-Reply-To: <Z8GVKLee75GDG2S4@pks.im> (Patrick Steinhardt's message of "Fri,
+	28 Feb 2025 11:51:20 +0100")
+References: <20250221-pks-cat-file-object-type-filter-v1-0-0852530888e2@pks.im>
+	<20250221-pks-cat-file-object-type-filter-v1-2-0852530888e2@pks.im>
+	<874j0graug.fsf@iotcl.com> <Z8GVKLee75GDG2S4@pks.im>
+Date: Fri, 28 Feb 2025 09:44:24 -0800
+Message-ID: <xmqqikou2ccn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Z8Fz7CQimWgzrvz7@pks.im>
+Content-Type: text/plain
 
-On 25/02/28 09:29AM, Patrick Steinhardt wrote:
-> On Thu, Feb 27, 2025 at 06:26:03PM -0600, Justin Tobler wrote:
-> > diff --git a/builtin/diff-pairs.c b/builtin/diff-pairs.c
-> > new file mode 100644
-> > index 0000000000..5a993b7c9d
-> > --- /dev/null
-> > +++ b/builtin/diff-pairs.c
-> [snip]
-> > +int cmd_diff_pairs(int argc, const char **argv, const char *prefix,
-> > +		   struct repository *repo)
-> > +{
-> > +	struct strbuf path_dst = STRBUF_INIT;
-> > +	struct strbuf path = STRBUF_INIT;
-> > +	struct strbuf meta = STRBUF_INIT;
-> > +	struct option *parseopts;
-> > +	struct rev_info revs;
-> > +	int line_term = '\0';
-> > +	int ret;
-> > +
-> > +	const char * const usagestr[] = {
-> > +		N_("git diff-pairs -z [<diff-options>]"),
-> > +		NULL
-> > +	};
-> 
-> We tend to call these `builtin_*_usage`, so in your case it would be
-> `builtin_diff_pairs_usage`.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Good to know, will adapt in a followup version.
+>> > Note that we don't use the same `--filter=` name fo the option as we use
+>> > in git-rev-list(1). We already have `--filters`, and having both
+>> > `--filter=` and `--filters` would be quite confusing. Instead, the new
+>> > option is called `--objects-filter`.
+>> 
+>> I'm not sure I agree. I would rather have consistency in various
+>> commands. Because `--filters` doesn't accept an argument, so I would say
+>> having both `--filters` and `--filter=` is fine. I see in various places
+>> we already use `OPT_PARSE_LIST_OBJECTS_FILTER` which defines the option
+>> as `--filter=`, so it's pretty standard for several commands. I'd
+>> prefer git-cat-file(1) to follow that as well. But that's my 2 cents.
+>
+> I'll wait for a third party to chime in as a tie breaker here :) I'm not
+> feeling overly strong about it, but still think that it's just too easy
+> to get wrong when those options are so extremely similarly named.
 
-> 
-> > +	struct option options[] = {
-> > +		OPT_END()
-> > +	};
-> > +
-> > +	repo_init_revisions(repo, &revs, prefix);
-> > +
-> > +	/*
-> > +	 * Diff options are usually parsed implicitly as part of
-> > +	 * setup_revisions(). Explicitly handle parsing to ensure options are
-> > +	 * printed in the usage message.
-> > +	 */
-> > +	parseopts = add_diff_options(options, &revs.diffopt);
-> > +	show_usage_with_options_if_asked(argc, argv, usagestr, parseopts);
-> > +
-> > +	repo_config(repo, git_diff_basic_config, NULL);
-> > +	revs.disable_stdin = 1;
-> > +	revs.abbrev = 0;
-> > +	revs.diff = 1;
-> > +
-> > +	argc = parse_options(argc, argv, prefix, parseopts, usagestr,
-> > +			     PARSE_OPT_KEEP_UNKNOWN_OPT |
-> > +			     PARSE_OPT_KEEP_DASHDASH |
-> > +			     PARSE_OPT_KEEP_ARGV0);
-> > 
-> > +	if (setup_revisions(argc, argv, &revs, NULL) > 1)
-> > +		usagef(_("unrecognized argument: %s"), argv[0]);
-> 
-> Okay, we now use `parse_options()` to parse stuff for us, and
-> `setup_revisions()` only really does the setup for us as we know that
-> all relevant diff options should've already been parsed for us. This
-> looks much nicer to me.
-> 
-> I wonder though: we keep unknown options when calling `parse_options()`
-> and then end up passing them to `setup_revisions()`. But are there even
-> any options handled by `setup_revisions()` that would make sense in our
-> context? And if not, shouldn't we rather make `parse_options()` die in
-> case it sees unknown options?
+$ git grep '^[^a-z]*--filter' Documentation/
+Documentation/config/gc.adoc:	`--filter=<filter-spec>` option of linkgit:git-repack[1].
+Documentation/git-cat-file.adoc:--filters::
+Documentation/git-cat-file.adoc:	`--filters`.
+Documentation/git-clone.adoc:	  [--filter=<filter-spec>] [--also-filter-submodules]] [--] <repository>
+Documentation/git-clone.adoc:`--filter=<filter-spec>`::
+Documentation/git-clone.adoc:	`--filter=blob:limit=<size>` will filter out all blobs of size
+Documentation/git-pack-objects.adoc:--filter=<filter-spec>::
+Documentation/git-repack.adoc:--filter=<filter-spec>::
+Documentation/git-repack.adoc:--filter-to=<dir>::
+Documentation/rev-list-options.adoc:--filter=<filter-spec>::
+Documentation/rev-list-options.adoc:--filter-provided-objects::
+Documentation/rev-list-options.adoc:--filter-print-omitted::
 
-Good catch, there should not be any actaully needed options left for
-`setup_revisions()` to parse as they should all be handled by
-`parse_options()`. I'll remove the `PARSE_OPT_KEEP_UNKNOWN_OPT` flag.
+The above does makes it look that whoever called their invention
+"--filters" when they added it to "cat-file" wasn't paying attention
+to make things consistent, but that is not the case.  The word
+"filter" in the context of existing feature set of "cat-file" has
+ALWAYS refered to the act of applying the "smudge" filter chain to
+externalize an internal "clean" blob object contents for the working
+tree representation.  We should thank that somebody for not using
+and squatting on a shorter and sweeter "--filter" ;-)
 
-> If there are, we should probably document this because it isn't obvious
-> to me.
-> 
-> > diff --git a/t/t4070-diff-pairs.sh b/t/t4070-diff-pairs.sh
-> > new file mode 100755
-> > index 0000000000..8f17e55c7d
-> > --- /dev/null
-> > +++ b/t/t4070-diff-pairs.sh
-> > @@ -0,0 +1,81 @@
-> > +#!/bin/sh
-> > +
-> > +test_description='basic diff-pairs tests'
-> > +. ./test-lib.sh
-> > +
-> > +# This creates a diff with added, modified, deleted, renamed, copied, and
-> > +# typechange entries. This includes a submodule to test submodule diff support.
-> > +test_expect_success 'setup' '
-> > +	test_config_global protocol.file.allow always &&
-> > +	test_create_repo sub &&
-> 
-> Use of `test_create_repo ()` is deprecated, as it is merely a wrapper
-> around git-init(1).
+"cat-file" should call the feature "--filter=<filter-spec>" like
+everybody else does, or the feature should not be added to
+"cat-file" at all.  Unless we are willing to rename "--filter="
+options for _all_ existing commands to "--object-filter=", that is.
 
-Good to know! I'll swap to using git-init(1) instead.
+In retrospect, such a longer and more explicit name may have been
+nicer.  But given that all users of the "--filter=<filter-spec>" are
+about object transfer, it is understandable that we didn't invoke
+deliberate redundancy when naming the option.  Historically,
+"cat-file" has always been "give me the contents of the object I
+name", and never about "I may ask about many objects but do not
+answer requests for objects chosen by these criteria", so it also is
+understandable that we didn't redundantly say "--contents-filter",
+too.
 
-Thanks
--Justin
+Am I third-party enough?
