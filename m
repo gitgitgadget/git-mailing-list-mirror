@@ -1,72 +1,73 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1731C5F18
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 23:26:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894FF1DED6C
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 23:39:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740785210; cv=none; b=R8yyvQJzm1WviM0Fbj/8HWIbq5rL4Ri46W3WvR+EwGgYyXFSiHWv2G4CFVQaG2t/DuH5EZqz9iSVaox/mLy1Q8mZqSF9a+V3/DUxmzzEH5yszOudc2TwzVguztMjBz5MSoFxq14LJxorWIYOKFqo3igjP8TwhqIuKla8+GvGaJc=
+	t=1740785952; cv=none; b=ZASgiKck5lEkTC0iYiN+fbUDxYlAcqnwIFHfWPQ0p2qk8K2MIqzFTqNFT7eYzhirmYwKj4qRoCRjpNQXAlTJcmG3G3tawRA+wIjZzbzqH1l9dj+1tRJElhnJLltTsVD7tYLgUg73H6PRfoOzHmYwN9XUYm8o2VxJVGLk7XBL60Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740785210; c=relaxed/simple;
-	bh=oNT46T19CbrG0yyLU3bB1tVL4IPlSwmsKd0clbIz5pk=;
+	s=arc-20240116; t=1740785952; c=relaxed/simple;
+	bh=5pp/nR2GFv/vNfi9RPLWo/YxS5dnOgz8h5jLEU4J46Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dWL6pL/VDyMAEcYUdbb782KV7RSmgULdH/LuG9U9jYjlvFuh0pEBDUGz4x5VXvSVw8DNTOlXIWJHQLccGOQwDU5bmiZVVJqDLI6UJa/RCqQqO+tOK27EKcIO90N4JSLFN2Op7/dsr43vblLv8lEOxAdzyr6XGxOmPuthLO1F1+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=hkI3hw3P; arc=none smtp.client-ip=209.85.128.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=kPBs17/sZASDdb00BFXySVkTjaSp7DSTA27PTkpGK506mfDBZpbYTLcet4flbVdRjRIN+1aPUI70MwcCFotUh6BSSZXOVHRupz0OwOzVhRh5XWWwiMQmtOwkgXzcgbpxxc6VgiZ+3EFCKeoL+XP1wCof5irC3bzLM6qwX/1kmRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=v4DntNGw; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="hkI3hw3P"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6f6ca9a3425so24581817b3.2
-        for <git@vger.kernel.org>; Fri, 28 Feb 2025 15:26:47 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="v4DntNGw"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6f6c90b51c3so24698997b3.2
+        for <git@vger.kernel.org>; Fri, 28 Feb 2025 15:39:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740785207; x=1741390007; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740785949; x=1741390749; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=w1jJcSsahDHZB3GQoaFoWFVJ+0g8cEW2Q26lP2IAkLs=;
-        b=hkI3hw3P2yb1yWRtcyDRakqtMRAeZZt7V+9Tbo6pUh2q4bkyTHK0LZe7RojH4iJ7kQ
-         YKU+fq8qDzcOnBxO+ZesDyYzeZ0yhPWjYGxPiR9bCDnN7ylq3dZcQNKOpO2YiRpZ49+G
-         i9+DPwoz7eir5pZ1zTX1SOsGZ/aR2dp8WEPMHJpqAoURjhweC5lSxan0r4t4KRjg54ug
-         fRExUSWtScV5eGMYa7m8tQmXlPirx8iRs60xzoUOTB0GhsV9G+0R5P9cLMkrxegjDEbo
-         7fHqnJjmjSXusrPmxZItefUrhsC4ErVaXIx1qvonws9NTbjozeVc3Xwoke97ZeioJyJN
-         Y/pQ==
+        bh=bkdvmcoWNBCaNDByV1YdMhIZ4wLs2SfMZAEHqFvHjHI=;
+        b=v4DntNGwUTslczT/aRrS2JT/b5CIWfj6DCAIoTCPZXkdBBxg4/zXiggAJvuni7OUJi
+         XLhs5H6MTGeZl3eS4oAXUQsXg4nIHPTj43VMPKSYYOVYHPkQ5LYAPInDins937mtMHxZ
+         XuvRH1HZgupTqhHyS05DaeoE3OY/lLy3EKO0RLkoTJp+hcfsFDnByFShH+uLrhhRoHjn
+         fXKx8x4kknUpuFcoOfnP+BsPl6YKqPHziQncFfsLAbF7SvbV05P7uBIBYOAB09UKf28x
+         0+KCugN6REcTbfuP8gF7bAzMB9nhDfAXCQFIuRTQGvA3nQaLDZjzVbPQTh4X9FzjhiBV
+         fT2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740785207; x=1741390007;
+        d=1e100.net; s=20230601; t=1740785949; x=1741390749;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=w1jJcSsahDHZB3GQoaFoWFVJ+0g8cEW2Q26lP2IAkLs=;
-        b=w7ywuWOkqyAfh2AYQ8AGRDDCFqpKMuNvF6+U2mEEQaHZVfrCoTrIbfs/WYdtgokm8z
-         uaPUJE60jc6hwUOQkBd98b20JIbKS/kHGn+P0WA4FfqqZMG1XXitjYrWK8oQMqd6HsKo
-         Dl6iS6LMzSW0g17vzWhydtISTN42fMahRGiM/UYc0XSxzHFWo8YQeFvVkH/lDpmq6I5e
-         kAwUl/5rQ8Y3+HIQITvUBS6EgsKeJk+8yzq0a7EDdPmv+0Ex1xoBpLaQ9/oInAHkoi7d
-         PzIkAgPxwhhtL5VQcX0/UBWvMohF55h3qJ13iCQ6t+wPrgoBEZounT1E3oXBDK9Ahv8k
-         LUcw==
-X-Gm-Message-State: AOJu0Yxpy6s1EZE9jhpQ+4IPiwTA5I5iSt4pZcfD7olPAiVwgBqG8hX5
-	msgo9gB2C8QAUfX+GuoIR3QGJQrmT5XpBwnbWeZf2vHfQo6GgDlhvj5vaWhrET4=
-X-Gm-Gg: ASbGncs+UrO+doyAxKLjOuYxuWpmUgF6wEfUjSJyZ6WA7QxAnPqni60dRWGZIW9+K9N
-	ctdPybhoHQL2pQUHbSBPrEih+7EBRkgPNbAMthVIK+JnmePWst/2PQSv9N9eC+bJWuzJNyKpI5K
-	VekVuQSpjSzDUSExOkS31ufGht9m3MHSDcBS4LiAvx/M0JXGC5GyvqgSl/1uGi/oEmG8EVNRMEc
-	m3f1B7jITEaMTjZUGQwXO48sAZLp9fIuv/yN2smbaA7nS9A3s2umgl2MQh2IGGWjBbbMGIymxef
-	jwtT0H/5lhHJ00uZN7IKAVVrZB3myowaLir+l3yYSMHEPEzdDV9/JVL/cFx+Z9QzpCIyMLFcIOu
-	ow45AiuUq+wN7jNDM
-X-Google-Smtp-Source: AGHT+IGixan0/M43q43w6OWUq6n1GVHJUPpPmlIC8ELNQZo+nkGraePsY7u7j+XZUZHCHR0txpKRpQ==
-X-Received: by 2002:a05:690c:4a06:b0:6ef:94db:b208 with SMTP id 00721157ae682-6fd4a12a1c0mr75429967b3.24.1740785206776;
-        Fri, 28 Feb 2025 15:26:46 -0800 (PST)
+        bh=bkdvmcoWNBCaNDByV1YdMhIZ4wLs2SfMZAEHqFvHjHI=;
+        b=Eb4BD38MErjlfthzw/aFpb0Xob+siekJuuACQMlJ209KN9cAF8Tib2JDivI57fJJ90
+         64iC29CcVAZeSrkUlUJULeNpW/jxJEQaRGj84Bdd9Sr4R2iqS6GjcIO4o+HqS4Hnmp9K
+         MbtiIHysl5VDsmHIMHFlITNnQ+9W/dDC1PMkPrQDCWtyMsbWc0LJ8+02B1hEriIFOyyy
+         pXRclBbXtMqrEKG/Jw/OWXzgGu9Bw/hSlJXJHo72rr7AHQy0nf5iTtJcwdZAXvtKF2hv
+         kTxH3jPRfVhODkFvwedmZdWwT6lC3XeAUT9PcsLobvIxEO4a55C/rty2jJHuCZ5s8f4K
+         Ik4w==
+X-Gm-Message-State: AOJu0YwDqdELpl7egepYTw+2gIE9FJErnj6O3uT7ZSq+RE6niC8hsZeB
+	t2c0X0IH9v1ty4QZ0ygZYFMCb5na8QZLlRm9RcU3LBmRVlXR4SL9CEKnJYCAKW4=
+X-Gm-Gg: ASbGncuv4Q+eI3MZK+H8lndWezUfEFIIs5QsUhNV7Y3HCsnvCR/tLN9n8uYh5y+RBYL
+	R04CK5oShtc/22Ecs1l0aQAMjAJKV7FnqnFteu3T4z3WWeU9+aUlzPW3SjBtGOHamzwqX/nky3W
+	uf8PiVtTDtL4WE3O5x0spoonCABmygmPk251TgSRzzvVab3p1ndnYMmega8EWqd+1/ZWxeMD575
+	bNHfrt6kS5sykmSP+I6Iu0mvqe53svZSFZZHaJzv2PGuLcM2T5OlT0/8E9Ko1c1AB0B0IHWhg+5
+	horcYqWtycAiOtMkWREQ9DkqdoLBUVWREmV7zjXH7kf1Qrq6gJDniqzDGhcojev2fm1TIjWdkV8
+	++KiDFyLY8VB+eekS
+X-Google-Smtp-Source: AGHT+IECdLRT9y7AFOT5oyzl1gvHLrqd8uJTOi8uaSXOwSyPoifvVGUZTyzvJTqGYQ67eMxvyACiKg==
+X-Received: by 2002:a05:690c:6203:b0:6f9:97f7:a5c3 with SMTP id 00721157ae682-6fd4a0932admr72180427b3.18.1740785949312;
+        Fri, 28 Feb 2025 15:39:09 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3ca0eff2sm9479897b3.20.2025.02.28.15.26.46
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3ca0f4adsm9444217b3.19.2025.02.28.15.39.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2025 15:26:46 -0800 (PST)
-Date: Fri, 28 Feb 2025 18:26:45 -0500
+        Fri, 28 Feb 2025 15:39:09 -0800 (PST)
+Date: Fri, 28 Feb 2025 18:39:07 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 01/13] Documentation: describe incremental MIDX bitmaps
-Message-ID: <Z8JGNQZolfs7fm65@nand.local>
+Subject: Re: [PATCH v3 02/13] pack-revindex: prepare for incremental MIDX
+ bitmaps
+Message-ID: <Z8JJG5EX1MUtGvss@nand.local>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1732054032.git.me@ttaylorr.com>
- <caed2c6ec3483f028f59777bba40480e2661ca80.1732054032.git.me@ttaylorr.com>
- <Z8GJYMbXMZqI5fUL@pks.im>
+ <b902513f43697e94976c1baf5598222fe2e3b847.1732054032.git.me@ttaylorr.com>
+ <Z8GJaFPMQtslEEt3@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,132 +76,93 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z8GJYMbXMZqI5fUL@pks.im>
+In-Reply-To: <Z8GJaFPMQtslEEt3@pks.im>
 
-On Fri, Feb 28, 2025 at 11:01:04AM +0100, Patrick Steinhardt wrote:
-> On Tue, Nov 19, 2024 at 05:07:19PM -0500, Taylor Blau wrote:
-> > diff --git a/Documentation/technical/multi-pack-index.txt b/Documentation/technical/multi-pack-index.txt
-> > index cc063b30bea..a063262c360 100644
-> > --- a/Documentation/technical/multi-pack-index.txt
-> > +++ b/Documentation/technical/multi-pack-index.txt
-> > @@ -164,6 +164,70 @@ objects_nr($H2) + objects_nr($H1) + i
-> >  (in the C implementation, this is often computed as `i +
-> >  m->num_objects_in_base`).
+On Fri, Feb 28, 2025 at 11:01:12AM +0100, Patrick Steinhardt wrote:
+> On Tue, Nov 19, 2024 at 05:07:22PM -0500, Taylor Blau wrote:
+> > diff --git a/pack-bitmap.c b/pack-bitmap.c
+> > index 4fa9dfc771a..bba9c6a905a 100644
+> > --- a/pack-bitmap.c
+> > +++ b/pack-bitmap.c
+> > @@ -170,6 +170,15 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
+> >  	return read_bitmap(index->map, index->map_size, &index->map_pos);
+> >  }
 > >
-> > +=== Pseudo-pack order for incremental MIDXs
-> > +
-> > +The original implementation of multi-pack reachability bitmaps defined
-> > +the pseudo-pack order in linkgit:gitformat-pack[5] (see the section
-> > +titled "multi-pack-index reverse indexes") roughly as follows:
-> > +
-> > +____
-> > +In short, a MIDX's pseudo-pack is the de-duplicated concatenation of
-> > +objects in packs stored by the MIDX, laid out in pack order, and the
-> > +packs arranged in MIDX order (with the preferred pack coming first).
-> > +____
-> > +
-> > +In the incremental MIDX design, we extend this definition to include
-> > +objects from multiple layers of the MIDX chain. The pseudo-pack order
-> > +for incremental MIDXs is determined by concatenating the pseudo-pack
-> > +ordering for each layer of the MIDX chain in order. Formally two objects
-> > +`o1` and `o2` are compared as follows:
-> > +
-> > +1. If `o1` appears in an earlier layer of the MIDX chain than `o2`, then
-> > +  `o1` is considered less than `o2`.
+> > +static uint32_t bitmap_non_extended_bits(struct bitmap_index *index)
+> > +{
+> > +	if (index->midx) {
+> > +		struct multi_pack_index *m = index->midx;
+> > +		return m->num_objects + m->num_objects_in_base;
+> > +	}
+> > +	return index->pack->num_objects;
+> > +}
+> >
+> >  static uint32_t bitmap_num_objects(struct bitmap_index *index)
+> >  {
+> >  	if (index->midx)
 >
-> Just as a refresher for myself: what is the consequence of an object
-> `o1` sorting earlier than `o2`? In the case where those refer to
-> different objects it is only used to establish the pseudo-pack order so
-> that we know how to interpret the bitmaps. But in the case where those
-> two objects refer to the same underlying object, e.g. because the object
-> is contained in two packs, it also impacts which of both objects would
-> be preferred e.g. during a clone, right?
-
-Great question -- the pseudo-pack order here is how we translate the set
-of objects in a MIDX into their corresponding bit positions in the
-bitmap.
-
-So if "o1" sorts ahead of "o2", that means that "o1" will appear in an
-earlier bit position than "o2". But note that we're talking about
-objects in a MIDX chain here, comprised of objects from each MIDX'd layer of
-that chain. So by that point the duplicates have already been filtered
-out, since:
-
-  - The MIDX only stores one copy of an object in any given MIDX, and
-
-  - The incremental MIDX design avoids putting objects from earlier
-    layers in later ones.
-
-I tried to get at this a few lines up with "[...] a MIDX's pseudo-pack
-is the de-duplicated concatenation of [...]" to make clear that o1 != o2
-here. But let me know if you think I should clarify or emphasize that
-point further.
-
-> > +2. Otherwise, if `o1` and `o2` appear in the same MIDX layer, and that
-> > +  MIDX layer has no base, then If one of `pack(o1)` and `pack(o2)` is
+> Okay, despite counting our own objects, we also need to account for any
+> objects that the MIDX layer that we depend on may refer to. I assume
+> that this is basically recursive, and that the base itself would also
+> account for its next layer, if any.
 >
-> s/If/if
+> What is interesting to see after this commit is what callsites remain
+> for `bitmap_num_objects()`. Most of them are converted, but some still
+> exist:
+>
+>   - `load_bitmap_header()`, where we use it to determine the size of the
+>     hash cache. Makes sense.
+>
+>   - `pseudo_merge_bitmap_for_commit()`, where we use it to compute the
+>     merged bitmap of a specific commit. This one feels weird to me, I
+>     would have expected to use `bitmap_non_extended_bits()` here.
+
+Great question. The reason is that this function determines a bitmap
+which identifies the parents of a given commit, and that bitmap is
+compared against the set of pseudo-merge commits we know about in a
+given layer to determine whether or not we have a matching pseudo-merge.
+
+I left a comment to that effect nearby since this is far from obvious
+(including to me -- I had to take a few minutes to remember how all of
+this works!).
+
+>   - `filter_bitmap_blob_limit()`, where we seem to filter through the
+>     bitmap of the current layer. I _think_ it makes sense to retain.
+>
+>   - `create_bitmap_mapping()`, which feels like it should be converted?
+
+I *think* that this is OK because we are only remapping one layer at a
+time, but I'll have to double check. I'd do so now, but I'm trying to
+respond as much as I can before my week is over ;-).
+
+> It would be nice to document in the commit message why those functions
+> don't need to be converted to help guide the reader a bit.
+
+The conversions here are case-by-case, so I lean towards documenting any
+non-obvious ones inline with a brief comment (like the adjustment I made
+above for pseudo_merge_bitmap_for_commit()).
+
+> > @@ -491,7 +499,8 @@ static int midx_pack_order_cmp(const void *va, const void *vb)
+> >  	const struct midx_pack_key *key = va;
+> >  	struct multi_pack_index *midx = key->midx;
+> >
+> > -	uint32_t versus = pack_pos_to_midx(midx, (uint32_t*)vb - (const uint32_t *)midx->revindex_data);
+> > +	size_t pos = (uint32_t*)vb - (const uint32_t *)midx->revindex_data;
+>
+> Micronit: missing space between `uint32_t` and `*`.
 
 Great catch, thanks!
 
-> > +  preferred and the other is not, then the preferred one sorts first. If
-> > +  there is a base layer (i.e. the MIDX layer is not the first layer in
-> > +  the chain), then if `pack(o1)` appears earlier in that MIDX layer's
-> > +  pack order, than `o1` is less than `o2`. Likewise if `pack(o2)`
-> > +  appears earlier, than the opposite is true.
+> > +	uint32_t versus = pack_pos_to_midx(midx, pos + midx->num_objects_in_base);
+> >  	uint32_t versus_pack = nth_midxed_pack_int_id(midx, versus);
+> >  	off_t versus_offset;
+> >
 >
-> Another question for my own understanding: why is it relevant whether we
-> have a base or not? I would have expected that the case where the
-> objects appear in two different layers is already covered by (1), so
-> from thereon we only need to care about two objects existing in the same
-> layer.
+> Okay, the calculation to calculate the position is basically the same,
+> but we now also offset the position by the number of objects in
+> preceding layers. Makes sense.
 
-Good question. Throughout this design I'm trying to get rid of the
-concept of a "preferred" pack with respect to the MIDX. Before
-multi-pack reuse existed, the idea behind having a preferred pack was
-that it was a way to indicate which pack we should prioritize for
-pack-reuse.
-
-But now that we can reuse objects from any pack stored in a MIDX, the
-concept of a preferred pack doesn't need to exist. It still makes some
-sense (if you want to use single-pack reuse for some reason, etc.) but
-I'm trying to push us away from it.
-
-So to answer your question of "why does it matter if there is a base
-or not?" the reason is that this series treats the preferred pack as a
-property of the chain instead of the individual layers. And the
-mention of it here is to differentiate between how we compare packs in
-the base (favoring the preferred pack) versus subsequent layers
-(reflecting the pack order within that layer).
-
-> > +3. Otherwise, `o1` and `o2` appear in the same pack, and thus in the
-> > +  same MIDX layer. Sort `o1` and `o2` by their offset within their
-> > +  containing packfile.
-> > +
-> > +=== Reachability bitmaps and incremental MIDXs
-> > +
-> > +Each layer of an incremental MIDX chain may have its objects (and the
-> > +objects from any previous layer in the same MIDX chain) represented in
-> > +its own `*.bitmap` file.
-> > +
-> > +The structure of a `*.bitmap` file belonging to an incremental MIDX
-> > +chain is identical to that of a non-incremental MIDX bitmap, or a
-> > +classic single-pack bitmap. Since objects are added to the end of the
-> > +incremental MIDX's pseudo-pack order (see: above), it is possible to
-> > +extend a bitmap when appending to the end of a MIDX chain.
-> > +
-> > +(Note: it is possible likewise to compress a contiguous sequence of MIDX
-> > +incremental layers, and their `*.bitmap`(s) into a single layer and
-> > +`*.bitmap`, but this is not yet implemented.)
->
-> Fair. What do we currently do in this context? Do we just keep on
-> appending layer after layer?
-
-That's right. At this point in the project we only know how to append
-layers and compress the whole chain into a single layer. But
-fundamentally it is possible to compress any contiguous sub-sequence of
-the chain into a single layer, and part three of this project will do
-just that.
+Exactly.
 
 Thanks,
 Taylor
