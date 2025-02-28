@@ -1,134 +1,113 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FDA23F39A
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 22:42:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6449F1C5F18
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 23:21:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740782580; cv=none; b=WHnp/rig3pa6Oa3FeJKYda3yHeOKDk3loNUHx/d58y+KI7S+mT/pzaQLumC/stmwmBQdv9kfBBMRIp1tIaUNzOCJsvRQ1lltKBtaCS1NnlQI7sNxmW9D/e6xJ3svJw14Ygf1xsJ3yTJVFXkv7IcgnRxTBIi7d/zoI6Dbe/qJ7Dw=
+	t=1740784898; cv=none; b=BsU5L1QWdU6ypNr65/0OAGGc8pBMEptFEH6osm9eZ0EgXX5nbQA2+yRC3VzcYoqZvNvQAuSA4+ESCJT1UdkBLdvXxAgKL52SgBsvVlWrOIPBX7n2JwmhEaYImDL0ltgtvE7PZsg4rBykCLwpEfnEzpyf8FH5AJ82G3LMs+nQ7VY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740782580; c=relaxed/simple;
-	bh=LjAkiD9L7JNV841zD2Ehqk7RrGltXHwDVA43CFVuWlU=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=ahWIhYCJv7YEnI5jqJyaTP4TGF0zWSR06o47p7v6825K2XecQFDovVO9B3JtzzRPeMh8MY/BWvl2Dn1DyCKeHBAuJ0KmA1CJNPjdL3gUC1zatnA4ov+4l+Xa7aq7kGU82ZJ2jQ4J8DH+ZeQS8C6EeWOddsIrP3zXEbeRuWjyyJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=29v7DyM1; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1740784898; c=relaxed/simple;
+	bh=7Smp6cYl7FI/FJmYZi2+A9GfvlResocch+38P7o4bLo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Cuv1uJ9cQMpfwdms4vzEElyik1UOMm8w0Cp6WMvjje16KIlzVaR+C16Ri35qEZgqSu0EqathvyMiXjtHrgYVTouTBttFFzMNZR9HnFsVUl9ASLQYHP1u1MOs9jfThDAp2e9rMZQf3tkJbySSkdFXjjkP3zsho+4IVZFbc891lJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d9ka5ACG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pvOCEnkx; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="29v7DyM1"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-471fa3b19bcso87751cf.0
-        for <git@vger.kernel.org>; Fri, 28 Feb 2025 14:42:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1740782576; x=1741387376; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=LjAkiD9L7JNV841zD2Ehqk7RrGltXHwDVA43CFVuWlU=;
-        b=29v7DyM1toxLeflENuCDmL8VuNwvUR1OEPlcjDO1HEkVAUKFBwig12XcC6ZoqioUnt
-         E86yB1FBxKZsrcO3finQ1O5ootrSO5V8ET2MF4z/bK8Vx2wep2nNvWIcl0Wtyiq7O0dy
-         ZyJO9obT3nFZXyJ0jUa4dl8+q7NfSt/DF6P6ZGCqLfPwY4w+XB7MQ5F7F6yGVQCK9Hcf
-         HKFKx+UxMqep+/hgQBxpfGGugp5QSS7zoXowktNgpwE95KJAl5YQadhqx2gmkbEBteZ4
-         mOXEiWgFvZ4fNhXoNFGYe2lnRCDSJhIMujICSMN1ZXJ86XA/0dE97zKDzWEqs9G96PuD
-         mdog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740782576; x=1741387376;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LjAkiD9L7JNV841zD2Ehqk7RrGltXHwDVA43CFVuWlU=;
-        b=sZP1FRHNBmurP0n7ZzGnfbsqRuEjY17iho4QgTtz7dmViNodjRTnc/WXKawZ5ekUSd
-         66S3ggqyohdTqJBCPAfrGue9AzbjTnWdyy+c5+0Eoo8FGygi5ASuDtfJ985GkYdLsez/
-         TvVxfb1xEsOcuyyQHk1k5LWuHOPAMJRHf4vq79i5m9ypV5JtSG/Nvl5sxg4oo8cAnSQR
-         ugz+P3P3xzUro3D+kAqwUR7b44O8/09UKwqeH2k7j9/H1QXlSTShmPR+JHgqbYE9/mqC
-         +N7RAEDmRnwApuKRuvnoH+XCqw9BEu2jaFOkmq/B/Y6rDjQci0s4KPp/+cMi/0LIzgcG
-         0nbA==
-X-Gm-Message-State: AOJu0YyJgnHexwuRtVpFgZnCFJYPihedMrBUUEr0nQRBH6XVFeWtDPc7
-	J2EIFrkI8UVtmJGbhFPq09nYG76ERKznwlcx1Ey9UCHZO0QLnmqNU4vF2iLX47+cwZQmWTt1MM7
-	bumdzpgI8XNuMOsJVl6cyjmlk82X3b3wvw3kXv2ohNo4ctOiVewyt
-X-Gm-Gg: ASbGncu9WooRKE1JQlRE+l+6pXh8/D7/CuYbfoKLu3rVOsZjGpOCoeQNY/0iHfKsgDO
-	HK+lQ/dXenC2guiUigNJvp4y0To4VF0wvvC3DtAlkK6UkB9dfok7hqKQ3jFqI+gxP+KG8PAKnUU
-	BqAmM2vB9SWu/fS4DmQIQTEcoF9ggfuAlKUf0MnBCc+bBz1VxqCHTZt21l
-X-Google-Smtp-Source: AGHT+IGxn5OQY4lHFgFH9Bf3t7mjE2UrUPFAz5UrJJVKuQLmyiCmRPjmG1EKl516siZ6ORigvDhbiM5gAzRXZKM5IVc=
-X-Received: by 2002:a05:622a:1b89:b0:467:84a1:df08 with SMTP id
- d75a77b69052e-474cd62546emr172451cf.23.1740782575603; Fri, 28 Feb 2025
- 14:42:55 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d9ka5ACG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pvOCEnkx"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 42E1225400EE;
+	Fri, 28 Feb 2025 18:21:35 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 28 Feb 2025 18:21:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1740784895; x=1740871295; bh=X03JHSoVZK
+	BnG3fxHY1IBlHN0DXZX+5iDyAlCeozlxc=; b=d9ka5ACGhDcXTMuU73LYYn84YP
+	rp0pWjnwCc8cSONDqAPVYaE0hVAAXL2aP3uvOmPvqlLIu/Lbntt/e48wcPhIOA6m
+	zyalqHw346CV5clYveOkGwZJRGPJ72mRb11WqHrs/RthHFm/Zdhiw2LY+8yg4If0
+	0brFm3dEp2HTzKbtlFcgN4O17rGcSw8u91ftNRN+sXllic1BrBH+WQFfe7bPzZrA
+	FqBJgqD7C/lV7HrkXjUXPdMMqrh+N0N8U/acrilo0JQCMYMIcYsMm/2ddfOC8PVn
+	QWIdItKiA0YVhhwj1F67msnEGAgSfnahJ4g7Aoqa02NXMOUk+W4FoHYt0x4A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740784895; x=1740871295; bh=X03JHSoVZKBnG3fxHY1IBlHN0DXZX+5iDyA
+	lCeozlxc=; b=pvOCEnkxklgTJ9Qag5Zrd8p7qDHxWvSlz1s0+ocKjzsYIniy+sR
+	wmiWi+1lgHtjN5/Ts7o7ith7dg0eyLMk7i93EC23xmpCf06de5PiNPZoj2lj/Bp4
+	qlUretzceCt1t6W3Y+cj0ceVvJXI9Ne1CztDVYAKuOxkaPh2n/ZVdSXg/JOY3xsF
+	//goWqXfFj8sV6S7L/jMIEqVyftK/xvrYfhwKEWMEy5DhTgX6eQ3ndeEjV6n/3RJ
+	Rx4QcwCnHMcsnrYZs682go0dCU4oyf0DEDRe50b0khFFu2VZG08VIxZiszThOheJ
+	hb0vDNGygor3avbpGNi6SJ39pLcgS0E66HQ==
+X-ME-Sender: <xms:_kTCZ2Krow2tfWgbA7oSo-biQftyIYHlVSVonvqbGsvguH4z3vyy8w>
+    <xme:_kTCZ-Ig-BwI7YelUknyJjgwybou5SOyuQvuN2zyTWewM2an8Njyv6GJoVIKl_DPz
+    9VaMG30-tdN9fD9cw>
+X-ME-Received: <xmr:_kTCZ2tk6YbecCNl6fF_r6_6AKsB9bZiHgBpUNBh_loFjxJu6266gksM7zBNnD7p4xn92dNvdoaZpxIAfRtFuK3YEBhpBUkvi9kk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeludejtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnrghsrghmuhhffh
+    hinhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehgihhtqdhmvghnthhorhhinhhgsehgohhoghhlvghgrh
+    houhhpshdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhn
+    sehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:_kTCZ7ZPH8O590uCRMLZV17n7x_SbpYk-RR1nHKhEMs9ZN07ECsiHg>
+    <xmx:_kTCZ9Y4_sFNHC-QxErRV_0q1Atic4BlSqQUQb8GmesntTy2ZGkGLg>
+    <xmx:_kTCZ3ATfXrKrTebvZhKxbOCgBhs0W4CYz5gBtuoS-EkuCJuI0CVWg>
+    <xmx:_kTCZzZ4lQTsllr4lO8WsdOJy-cEJiCoQxTfhDLAB3bMHwpybcI7Vw>
+    <xmx:_0TCZwyTKQP5lcMbDYreaXjN5PlwXnXx2r5EFcm0RJiuyPeR2y5_wHOK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 28 Feb 2025 18:21:34 -0500 (EST)
+From: Junio C Hamano <gitster@pobox.com>
+To: Emily Shaffer <nasamuffin@google.com>
+Cc: Git List <git@vger.kernel.org>,  git-mentoring
+ <git-mentoring@googlegroups.com>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>
+Subject: Re: git-mentoring Google group replacement?
+In-Reply-To: <CAJoAoZnk88ZFZFdEtUxMnUa1OZiXYOgcw8DSbB+A0LzyCPFugg@mail.gmail.com>
+	(Emily Shaffer's message of "Fri, 28 Feb 2025 14:42:43 -0800")
+References: <CAJoAoZnk88ZFZFdEtUxMnUa1OZiXYOgcw8DSbB+A0LzyCPFugg@mail.gmail.com>
+Date: Fri, 28 Feb 2025 15:21:33 -0800
+Message-ID: <xmqqcyf11wqq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Fri, 28 Feb 2025 14:42:43 -0800
-X-Gm-Features: AQ5f1JqQqlYhhaWa916NX-sIL0DG4poOJTfEFuScrNX2F6XBQCcMnhZsvhigwhM
-Message-ID: <CAJoAoZnk88ZFZFdEtUxMnUa1OZiXYOgcw8DSbB+A0LzyCPFugg@mail.gmail.com>
-Subject: git-mentoring Google group replacement?
-To: Git List <git@vger.kernel.org>
-Cc: git-mentoring <git-mentoring@googlegroups.com>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi all,
+Emily Shaffer <nasamuffin@google.com> writes:
 
-For a few years we've had this git-mentoring@googlegroups.com list,
-with the intention to give new or aspiring contributors a lower-stress
-place to ask for guidance when they're just getting started in the
-project.
+> Thoughts? Alternate suggestions? I'd also be happy to host a list with
+> some other service, but I don't have any personal experience on which
+> services are good to use or not.
 
-The list has very very low activity. I think we get a newbie asking
-for help once or twice a year, and they do get responses right away as
-far as I can see; but we much more often get spam, spam, and more
-spam. We also tend to get spurious content violation reporting - from
-bots I guess, or maybe trolls - and these lead to legitimate
-conversations being deleted from the archive. This happened a couple
-weeks ago and we lost all conversations but 2. There doesn't appear to
-be any way in Google Groups to appeal these decisions - the
-notification email that was sent to the list owners simply suggests
-that we...get a lawyer?[1] We had a similar takedown last year or so,
-and I tried to escalate using Google's internal ticketing for
-employees, and didn't get very far there either.
+I am perfectly fine to close the unusable list, and suggest folks to
+redirect to discord or other services.  If the discord channel is
+already found to be useful by those new folks who have been helped
+there, that would be excellent, and then the question would become
 
-Because it's not possible for us to push back on these takedowns, I
-think it's time for us to seek an alternative and shut down the Google
-Groups list.
+ - what other avenues to ask for help, other than this list, are
+   there that community members are willing to support by visiting
+   there frequently and help out?  can we compile a list?  I am
+   perfectly fine we start with a list with one entry in it.
 
-Dscho proposed shutting down the Google Groups and having people ask
-in the Discord chat instead. I think it's reasonable; we've had a few
-newbies asking for contribution advice there and they get answers just
-as quickly, and we get a bit more moderation control. Discord is still
-not scrapable by web crawlers (which is one thing that was appealing
-to us about a closed Google Group). It does require account creation
-to post, but of course we still have git@vger, which does not; this
-mentoring-specific channel/list is supposed to just be an alternative
-for the especially shy.
+ - where do we want to advertise such a list?
+   Documentation/Contributing?  todo:MaintNotes (aka "A note from
+   the Maintainer")?
 
-Thoughts? Alternate suggestions? I'd also be happy to host a list with
-some other service, but I don't have any personal experience on which
-services are good to use or not.
+ - how would we maintain such a list to keep it up-to-date?
 
- - Emily
-
-1: Here's a sample of the takedown message from Feb 16, 2025; because
-the content was down, the link helpfully does not point to any actual
-content. I have no idea which mail was actually taken down, because
-there's not a good way to translate from Groups URL to Message-Id as
-far as I can tell.
-
-Hello emilyshaffer@google.com,
-
-We're letting you know that we've permanently removed the content at
-https://groups.google.com/d/msg/git-mentoring/mPiraiIITXI/cdsNx2elAgAJ
-
-Why did this happen?
-
-An external report flagged the content for illegal content or policy
-violations. As a result, our legal content and policy standards team
-removed the content for the following reason: unwanted content.
-
-Learn more
-
-You can learn more about our content policies and enforcement at our
-help center.
-
-What you can do next
-
-You may have the option to pursue your claims in court. If you have
-legal questions or wish to examine legal options that may be available
-to you, you may want to consult with your own legal counsel.
