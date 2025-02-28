@@ -1,73 +1,74 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894FF1DED6C
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 23:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD1823F380
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 23:49:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740785952; cv=none; b=ZASgiKck5lEkTC0iYiN+fbUDxYlAcqnwIFHfWPQ0p2qk8K2MIqzFTqNFT7eYzhirmYwKj4qRoCRjpNQXAlTJcmG3G3tawRA+wIjZzbzqH1l9dj+1tRJElhnJLltTsVD7tYLgUg73H6PRfoOzHmYwN9XUYm8o2VxJVGLk7XBL60Q=
+	t=1740786548; cv=none; b=VWOcddzNIJ3Exxb1/INIFAXZMBypoXU/ca+aYpDvHbAkLfl0KqDOKvP3UMvT0Da4xB681GfE7jyQVwTf4tqiJnI8c9RYOJ7mFWIilSW56WKqC/2bX5TdMjmq7tLzokXO9eHVqZ6FmG0O6n9/TgcW2MU1P1UIMzCGi5EcJk3J4cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740785952; c=relaxed/simple;
-	bh=5pp/nR2GFv/vNfi9RPLWo/YxS5dnOgz8h5jLEU4J46Q=;
+	s=arc-20240116; t=1740786548; c=relaxed/simple;
+	bh=9OuwTW1shC7qkERpfWL/LA1iwN7xZsT7jzbSQIuEr3k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kPBs17/sZASDdb00BFXySVkTjaSp7DSTA27PTkpGK506mfDBZpbYTLcet4flbVdRjRIN+1aPUI70MwcCFotUh6BSSZXOVHRupz0OwOzVhRh5XWWwiMQmtOwkgXzcgbpxxc6VgiZ+3EFCKeoL+XP1wCof5irC3bzLM6qwX/1kmRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=v4DntNGw; arc=none smtp.client-ip=209.85.128.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=qtG6olecboKGm8zu9zkdkEcMx+8Z61skCQfnuZWer1rFDxQuIxkeJj9QV/9BI0euBsPV/nBtAgBBLViY9lNfsX00WLBoRKAvvukInAa5HWlXDz39fBIMmX1/S34ajJY4JP9SEUdnkH7UJ8PqGSr6ffhU+hCk8pfzbVjIHzGsYVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=G8DH6czO; arc=none smtp.client-ip=209.85.128.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="v4DntNGw"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6f6c90b51c3so24698997b3.2
-        for <git@vger.kernel.org>; Fri, 28 Feb 2025 15:39:10 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="G8DH6czO"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-6fd47dfe76cso17854407b3.3
+        for <git@vger.kernel.org>; Fri, 28 Feb 2025 15:49:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740785949; x=1741390749; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740786545; x=1741391345; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bkdvmcoWNBCaNDByV1YdMhIZ4wLs2SfMZAEHqFvHjHI=;
-        b=v4DntNGwUTslczT/aRrS2JT/b5CIWfj6DCAIoTCPZXkdBBxg4/zXiggAJvuni7OUJi
-         XLhs5H6MTGeZl3eS4oAXUQsXg4nIHPTj43VMPKSYYOVYHPkQ5LYAPInDins937mtMHxZ
-         XuvRH1HZgupTqhHyS05DaeoE3OY/lLy3EKO0RLkoTJp+hcfsFDnByFShH+uLrhhRoHjn
-         fXKx8x4kknUpuFcoOfnP+BsPl6YKqPHziQncFfsLAbF7SvbV05P7uBIBYOAB09UKf28x
-         0+KCugN6REcTbfuP8gF7bAzMB9nhDfAXCQFIuRTQGvA3nQaLDZjzVbPQTh4X9FzjhiBV
-         fT2w==
+        bh=tX1vD0RkceXWJO+zyJ4XPxwenYuMUbw1gzPULGA8NSo=;
+        b=G8DH6czOwm/C75UPfkJ5HA91fbLnTxIaXQedQQjQVAJ1FEozgNmvQ4Bfq5CPvNW139
+         roHKz+ilKCQ6EZnEP3ue/p9hg98uEi4om4mefn+LxVWY11Mo4KVnO5u7p5cXBJWbufEL
+         I4hniJVl3L5mjCsg09GLWeaeAhL19q46AUy8vWq5ixIbGop9qdWPRfQ9FjjcigcJhjda
+         EpKKVY/WDLWnjJGA0NWN0HVWRqTN+AGldy/RXU9RrePhIrlLrnKE7iEkEjWYsHJ5Dkpi
+         H+l8KaiwJlJQbKcJfaZb2oS7splyPGUpDLRzhUu9oDxJ4oFonpiwLwS+hoDsITVdRJlA
+         B9XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740785949; x=1741390749;
+        d=1e100.net; s=20230601; t=1740786545; x=1741391345;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bkdvmcoWNBCaNDByV1YdMhIZ4wLs2SfMZAEHqFvHjHI=;
-        b=Eb4BD38MErjlfthzw/aFpb0Xob+siekJuuACQMlJ209KN9cAF8Tib2JDivI57fJJ90
-         64iC29CcVAZeSrkUlUJULeNpW/jxJEQaRGj84Bdd9Sr4R2iqS6GjcIO4o+HqS4Hnmp9K
-         MbtiIHysl5VDsmHIMHFlITNnQ+9W/dDC1PMkPrQDCWtyMsbWc0LJ8+02B1hEriIFOyyy
-         pXRclBbXtMqrEKG/Jw/OWXzgGu9Bw/hSlJXJHo72rr7AHQy0nf5iTtJcwdZAXvtKF2hv
-         kTxH3jPRfVhODkFvwedmZdWwT6lC3XeAUT9PcsLobvIxEO4a55C/rty2jJHuCZ5s8f4K
-         Ik4w==
-X-Gm-Message-State: AOJu0YwDqdELpl7egepYTw+2gIE9FJErnj6O3uT7ZSq+RE6niC8hsZeB
-	t2c0X0IH9v1ty4QZ0ygZYFMCb5na8QZLlRm9RcU3LBmRVlXR4SL9CEKnJYCAKW4=
-X-Gm-Gg: ASbGncuv4Q+eI3MZK+H8lndWezUfEFIIs5QsUhNV7Y3HCsnvCR/tLN9n8uYh5y+RBYL
-	R04CK5oShtc/22Ecs1l0aQAMjAJKV7FnqnFteu3T4z3WWeU9+aUlzPW3SjBtGOHamzwqX/nky3W
-	uf8PiVtTDtL4WE3O5x0spoonCABmygmPk251TgSRzzvVab3p1ndnYMmega8EWqd+1/ZWxeMD575
-	bNHfrt6kS5sykmSP+I6Iu0mvqe53svZSFZZHaJzv2PGuLcM2T5OlT0/8E9Ko1c1AB0B0IHWhg+5
-	horcYqWtycAiOtMkWREQ9DkqdoLBUVWREmV7zjXH7kf1Qrq6gJDniqzDGhcojev2fm1TIjWdkV8
-	++KiDFyLY8VB+eekS
-X-Google-Smtp-Source: AGHT+IECdLRT9y7AFOT5oyzl1gvHLrqd8uJTOi8uaSXOwSyPoifvVGUZTyzvJTqGYQ67eMxvyACiKg==
-X-Received: by 2002:a05:690c:6203:b0:6f9:97f7:a5c3 with SMTP id 00721157ae682-6fd4a0932admr72180427b3.18.1740785949312;
-        Fri, 28 Feb 2025 15:39:09 -0800 (PST)
+        bh=tX1vD0RkceXWJO+zyJ4XPxwenYuMUbw1gzPULGA8NSo=;
+        b=lPivvrhSxgkXSGM+TeaMT9DzK8XL7AzdPwGl39PkMrr8BS7E1WV/xIddyhEeP1LLRf
+         V6ERO7Poae0xz5iXqR871moLdi012R5yOWahCO6ek8KrSMX15dGRLSZqoPCr0eFSu74H
+         lhzE1B/RFc18PWinsSimCcaB+jUG15W5O9JqbZwstWd0uN1YsQCEW4oPla3JyyBrwnGe
+         gJ4E+w0ui+GxmjEVKlwwydXC1Kev1aJxaudSZqD36+qp7VGvCtF8+614YA7sh5Vx0BCd
+         oZ7K8z37+rJBqE/WbD1FjmvY+GCykfGh6RUSpYIB0ToNpo5LRjSOOli9mgeqWpmxwzvL
+         a7qQ==
+X-Gm-Message-State: AOJu0YxBXyJvOlpabed5AcDgPeWQfQlo9BsAf2mnyw0a7xFvIrPZory1
+	hOvc5P8e0+s8Qv1svNH/s+aW6yyZV2Vgg+/lt++a16iHhsYQLd32SXvH0oryGIfv4iXbd5jnjXd
+	d
+X-Gm-Gg: ASbGnctmpa7LLbbFYYiHBrISnqiGC+ov4Qv4StIMIuM6rr7l6d6sdfdCFKTH8Sstr4g
+	hy567mBaRRmHgaasbm7fleyJ3DPeTKJ+lCpBXvbzKcY/maJpbYYX1rSbPDKgZ7AxMbsaBLqxpxu
+	hcKvDlXxlDmRaJPBzKpl04h/6Es6dhyqRhhp52qmUw9B7jxRTy8DePueSBd+MF5eszJrrKlorxA
+	qTpLhkSBaU5R8bm25JuMCUwrG9ZvTnVVmSrfLjjmY2dfzst+774f7TMOZ/oIrJbaBWBI/7FoRv5
+	ysEfZbGXaPya7NJOdMjgWY0ahqdPeT24dNYQ/uYavLLJA3Tjn9seF7Jlzg2SrmRGNcRuNk7e7un
+	Pb3MO6U6gm0/770zN
+X-Google-Smtp-Source: AGHT+IE0tzKYiTp95Apzk5rqMFrnbAG6xcd1408p5/cwP0BRjP60i2uXoLSwmqo344tq2F7a6Xl4PA==
+X-Received: by 2002:a05:690c:3387:b0:6f7:ae31:fdf with SMTP id 00721157ae682-6fd4a067df4mr64046357b3.12.1740786545300;
+        Fri, 28 Feb 2025 15:49:05 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3ca0f4adsm9444217b3.19.2025.02.28.15.39.08
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3ca633casm9502207b3.53.2025.02.28.15.49.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2025 15:39:09 -0800 (PST)
-Date: Fri, 28 Feb 2025 18:39:07 -0500
+        Fri, 28 Feb 2025 15:49:05 -0800 (PST)
+Date: Fri, 28 Feb 2025 18:49:03 -0500
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 02/13] pack-revindex: prepare for incremental MIDX
- bitmaps
-Message-ID: <Z8JJG5EX1MUtGvss@nand.local>
+Subject: Re: [PATCH v3 03/13] pack-bitmap.c: open and store incremental
+ bitmap layers
+Message-ID: <Z8JLbxBQh7XUpplz@nand.local>
 References: <cover.1723755667.git.me@ttaylorr.com>
  <cover.1732054032.git.me@ttaylorr.com>
- <b902513f43697e94976c1baf5598222fe2e3b847.1732054032.git.me@ttaylorr.com>
- <Z8GJaFPMQtslEEt3@pks.im>
+ <5b5d625cbe02560a20c12b7dd20aeda4979017bb.1732054032.git.me@ttaylorr.com>
+ <Z8GJbOoY9Z3VMSEM@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,93 +77,84 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Z8GJaFPMQtslEEt3@pks.im>
+In-Reply-To: <Z8GJbOoY9Z3VMSEM@pks.im>
 
-On Fri, Feb 28, 2025 at 11:01:12AM +0100, Patrick Steinhardt wrote:
-> On Tue, Nov 19, 2024 at 05:07:22PM -0500, Taylor Blau wrote:
+On Fri, Feb 28, 2025 at 11:01:16AM +0100, Patrick Steinhardt wrote:
+> On Tue, Nov 19, 2024 at 05:07:26PM -0500, Taylor Blau wrote:
+> > Prepare the pack-bitmap machinery to work with incremental MIDXs by
+> > adding a new "base" field to keep track of the bitmap index associated
+> > with the previous MIDX layer.
+> >
+> > The changes in this commit are mostly boilerplate to open the correct
+> > bitmap(s), add them to the chain bitmap layers along the "base" pointer,
+>
+> s/bitmap layers/of &/
+>
 > > diff --git a/pack-bitmap.c b/pack-bitmap.c
-> > index 4fa9dfc771a..bba9c6a905a 100644
+> > index bba9c6a905a..41675a69f68 100644
 > > --- a/pack-bitmap.c
 > > +++ b/pack-bitmap.c
-> > @@ -170,6 +170,15 @@ static struct ewah_bitmap *read_bitmap_1(struct bitmap_index *index)
-> >  	return read_bitmap(index->map, index->map_size, &index->map_pos);
-> >  }
+> > @@ -54,6 +54,13 @@ struct bitmap_index {
+> >  	struct packed_git *pack;
+> >  	struct multi_pack_index *midx;
 > >
-> > +static uint32_t bitmap_non_extended_bits(struct bitmap_index *index)
-> > +{
-> > +	if (index->midx) {
-> > +		struct multi_pack_index *m = index->midx;
-> > +		return m->num_objects + m->num_objects_in_base;
-> > +	}
-> > +	return index->pack->num_objects;
-> > +}
-> >
-> >  static uint32_t bitmap_num_objects(struct bitmap_index *index)
+> > +	/*
+> > +	 * If using a multi-pack index chain, 'base' points to the
+> > +	 * bitmap index corresponding to this bitmap's midx->base_midx.
+> > +	 */
+> > +	struct bitmap_index *base;
+> > +	uint32_t base_nr;
+> > +
+>
+> It would be nice to point out that `base_nr` is not 0-indexed, but
+> 1-indexed, which is rather uncommon. Is there any particular reason why
+> you made it 1-indexed?
+
+Hah, I have no idea! If I remember correctly, it's because it makes it
+(slightly) more convenient to do:
+
+    ewah_or_iterator_init(it, bitmap_git->commits_all,
+                          bitmap_git->base_nr);
+
+, instead of incrementing 'base_nr' by 1 to determine the number of
+sub-iterators to allocate.
+
+So I think there are a couple of options here. Short of doing nothing,
+we could:
+
+ 1. Rename 'base_nr' to 'layers_nr' which would make it clearer that the
+    count includes the current layer, thus making it 1-indexed.
+
+ 2. Leave 'base_nr' named as-is, but make it 0-indexed, and have callers add
+    1 when they need to know the number of layers.
+
+I prefer the explicitness of (2), which is how I adjusted things
+locally. But if you prefer (1) or some yet-unknown (3), I'm happy to
+adjust it further!
+
+> > @@ -397,10 +409,17 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
 > >  {
-> >  	if (index->midx)
->
-> Okay, despite counting our own objects, we also need to account for any
-> objects that the MIDX layer that we depend on may refer to. I assume
-> that this is basically recursive, and that the base itself would also
-> account for its next layer, if any.
->
-> What is interesting to see after this commit is what callsites remain
-> for `bitmap_num_objects()`. Most of them are converted, but some still
-> exist:
->
->   - `load_bitmap_header()`, where we use it to determine the size of the
->     hash cache. Makes sense.
->
->   - `pseudo_merge_bitmap_for_commit()`, where we use it to compute the
->     merged bitmap of a specific commit. This one feels weird to me, I
->     would have expected to use `bitmap_non_extended_bits()` here.
-
-Great question. The reason is that this function determines a bitmap
-which identifies the parents of a given commit, and that bitmap is
-compared against the set of pseudo-merge commits we know about in a
-given layer to determine whether or not we have a matching pseudo-merge.
-
-I left a comment to that effect nearby since this is far from obvious
-(including to me -- I had to take a few minutes to remember how all of
-this works!).
-
->   - `filter_bitmap_blob_limit()`, where we seem to filter through the
->     bitmap of the current layer. I _think_ it makes sense to retain.
->
->   - `create_bitmap_mapping()`, which feels like it should be converted?
-
-I *think* that this is OK because we are only remapping one layer at a
-time, but I'll have to double check. I'd do so now, but I'm trying to
-respond as much as I can before my week is over ;-).
-
-> It would be nice to document in the commit message why those functions
-> don't need to be converted to help guide the reader a bit.
-
-The conversions here are case-by-case, so I lean towards documenting any
-non-obvious ones inline with a brief comment (like the adjustment I made
-above for pseudo_merge_bitmap_for_commit()).
-
-> > @@ -491,7 +499,8 @@ static int midx_pack_order_cmp(const void *va, const void *vb)
-> >  	const struct midx_pack_key *key = va;
-> >  	struct multi_pack_index *midx = key->midx;
+> >  	struct stat st;
+> >  	char *bitmap_name = midx_bitmap_filename(midx);
+> > -	int fd = git_open(bitmap_name);
+> > +	int fd;
+> >  	uint32_t i, preferred_pack;
+> >  	struct packed_git *preferred;
 > >
-> > -	uint32_t versus = pack_pos_to_midx(midx, (uint32_t*)vb - (const uint32_t *)midx->revindex_data);
-> > +	size_t pos = (uint32_t*)vb - (const uint32_t *)midx->revindex_data;
+> > +	fd = git_open(bitmap_name);
+> > +	if (fd < 0 && errno == ENOENT) {
+> > +		FREE_AND_NULL(bitmap_name);
+> > +		bitmap_name = midx_bitmap_filename(midx);
+> > +		fd = git_open(bitmap_name);
+> > +	}
+> > +
 >
-> Micronit: missing space between `uint32_t` and `*`.
+> Wait, this looks weird to me. `bitmap_name` already contains the result
+> of `midx_bitmap_filename()`, so you're essentially retrying the exact
+> same operation as before?
 
-Great catch, thanks!
-
-> > +	uint32_t versus = pack_pos_to_midx(midx, pos + midx->num_objects_in_base);
-> >  	uint32_t versus_pack = nth_midxed_pack_int_id(midx, versus);
-> >  	off_t versus_offset;
-> >
->
-> Okay, the calculation to calculate the position is basically the same,
-> but we now also offset the position by the number of objects in
-> preceding layers. Makes sense.
-
-Exactly.
+Hmm. I have no idea, but you're exactly right. I dropped it from my
+local copy.
 
 Thanks,
 Taylor
