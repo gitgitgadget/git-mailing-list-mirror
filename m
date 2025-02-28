@@ -1,73 +1,70 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CE123CB
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 00:16:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB3917E0
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 00:18:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740701793; cv=none; b=jG2WlAeXswxdWHTFN4F83qie3WbcI8307P6OpmzsN+Ln4Fi1xpFI0kZNIROqPCht7/+7AjqIHIa7M2/BvsrBZiCfj9CPB6xqOA8NtACwJwOOVAPUtjsnXkUTGMuc27CBoa67lBZrF3IR0pN7e02nEE+rvIZ9uV7I1iHtg7IDqE8=
+	t=1740701933; cv=none; b=rYA5U9S5JTeG8NRhQzyN6T1TlLDZkNxLg+K9DUHUZdi9bJmfumuBExVm1wrF3dMuX4yX0lgrmuFIrtWD9qUPnOYZExDRleEg2eSvejpiHRBd3aJ8OkSiN9kKw51yDKscShq3weJnWR/utP83JPe7Qf3IrvVz5FVch1M3gEbMPhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740701793; c=relaxed/simple;
-	bh=lz97alHdbbI1BDB9Ho/OKeQfrkAAcmgu3jvdobfq3gM=;
+	s=arc-20240116; t=1740701933; c=relaxed/simple;
+	bh=Anwo5+uJEwX+ypQygZW6JGvhbD6+YyOIyFLTuDqOes0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rRSgwaaxDuoCdvqZxVzlq+GmprdR7VvUYHABFfEb06X4xXso94uPyK0WFIdNZjJC33nPEK5dz/YaATT61N6+P83Zy/PZ0Tk1BilqN9ALXgMfojhalyLJ8tfxSKXB4c25QSBBEUxH83K6IPXeSfB8A5RobNjbg78bJWw4kwCL728=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=tdiX2avC; arc=none smtp.client-ip=209.85.128.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=BD9Um3Sase07aAKfiR/zz3TS1WRSr2WrE/7mcZ/ATZugYKNf/k0H3pO7tzCGyUhKFDP1dzAS+U6MV54KSAVLIAd48S9XoDpvXyDrZRGgK9s8g1ycZyWiSoAekyl8l46Ddg176/Zv+m/kpSNxQI3nAxXKuhSiLp4PjZ0O2RMiINU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=oZ5a8CCN; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="tdiX2avC"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-6fb7d64908fso14770727b3.3
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 16:16:31 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="oZ5a8CCN"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e545c1e8a15so1920792276.1
+        for <git@vger.kernel.org>; Thu, 27 Feb 2025 16:18:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740701790; x=1741306590; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1740701931; x=1741306731; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UfT8NQRWuFSQRqFyUQgunbhZMgPVKndOr6OeCisGz50=;
-        b=tdiX2avCLjwWTfwkUYrTweKgTlSEQGekdz2/+g5bDOWbOk3woEOIrqFTwScsp3CRZm
-         umdcuKXLhU3cdIPhn0sYPX8LizYEUohBrg1FmVzdb9uygnq2X70AXNjFtGh7vfy8igYe
-         e6l14oODX+nR21cJ8Xi9EXqhvIcXG0STPgr81f6+XEqeu76vHNdoVVjQ+nGokJm6oFLl
-         LIefN4qNQRsICW6gvtQsLtSSYEcHijbIXvyIYceLPiy2ZYfznh52XKmxCcf+LxXGJSyL
-         e7r5mTyzVCxsEbwnNOw6DhQ2BCHAV52MXOYL7vWM9POtTg5iPybMwnZLqaI5vO94hnRH
-         xvmw==
+        bh=nT16hUyvqvn691hFYDWsVlK6ztj521ayTcy0CYeWjR8=;
+        b=oZ5a8CCNkIZtDIAsclibByKwnGRhfaXF3VQSaI/4IBJA2UAtXvkkqsGdH9oUZw+T9H
+         0xTeKU+a51xcy//EFPT4ra6cyvdwlxc+as+r8dyFhekIFEZebLRn1ovmFSxfu7UNO3NK
+         JMp1fMSgrDeN/Es6kkTFzZAeQJMc7DHv/GiExE/bcw0c/FgXyno6SqGGybiBb0TFtZ/o
+         CF6Hf8dXw04iPfSnlSXki57xAi8BkE6qgNZEXqsWPSJDr+SsG8zz1DE0gAC4tIqgMNSh
+         4y/PAfPkKJdWV0I6iEZIRSO+catsdMuzxTyZSqHT9JVzlztEw60PF5Z4JfFfLbC4ew99
+         fRCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740701790; x=1741306590;
+        d=1e100.net; s=20230601; t=1740701931; x=1741306731;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UfT8NQRWuFSQRqFyUQgunbhZMgPVKndOr6OeCisGz50=;
-        b=Zq6DFUUN29qXtJaHXNSYmyyIv/THKN5KB4E2ISepYUEXWQcCH1/S/rIXsYJLt3uvfX
-         K1nlBHC681FKKr4+9m6qy8RytqKYCrpWB5f8JLGTl3tLl8dKLkzu/ovEP3zaOHHueeJS
-         Eq6QiyJYORicu+JiORuIp5pu2W4H4LPDuHbVh0gsRl4aDW9h73PLMR2M7H43bo+dso0r
-         lCp34nc+XhtW7l6hApg52AJkgqss/aOfr2dz3DvJygydenSV7GdsVKoWfwpzuz+FW8tV
-         XOeJ+4pFxAr/l9L01eWTPBzfXABM77yxPGK4bhyma9D6GKqCjQIuB4ZSQkSSL3hFZbv2
-         1tUw==
-X-Forwarded-Encrypted: i=1; AJvYcCWjYTYs8Uc+UX73/BoJA5hchg1UskaAapZUO0Z2L1PixKnEyEidYht5WBDr/5cZhn140Yo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwIjfRHzw2JrWq73/06u0YVzxpaC0YDqNSDG8riN+regHLZcPfY
-	t3nxU6JXXwjhNolGwdNPStm2hw4DyIO8SvOD+0l97bPJ3l0lcTZ4fwIuleauJExYLE943xfa2la
-	c
-X-Gm-Gg: ASbGncufU63bUa98Dqpjg1KlV028KWSnMsOK6mTgKce/QF3B+/DXM/sQnnUeNBPnKip
-	OVjto6UsG3CU9rluKfNJW8dR5YnhK3OmETtVpJz6zHoScwmJQ4PsQeFbzFsHfhnPDgqCpTbg3Ep
-	kdKnnIs1wM0b8GdiN8VPBMuWIq6/2ZW/TPiQYrFlidcoA0JkaQkY0tBteSt5m6MKusZBYfS1UBY
-	ncvyC8NuzDQqnipXvdKV9RD5zEXuiNg4QAAnUKJS9bGVKE6YjnXvKs0APiPLfD5g9NbsGXQyjdQ
-	zgyNZ9nEgzfvx6oJsMskZDDqzq2uYV4tyaR7wDTC0rKvfseQ7CkgxxsEscgF/1ti+5+If5okNA=
+        bh=nT16hUyvqvn691hFYDWsVlK6ztj521ayTcy0CYeWjR8=;
+        b=oPZrU+TrIi5GQDd8q8VfZnMyefqx0ERpFXP6ZRxXws2DGIgZjPeEsyGXeJQMTLsP+A
+         H5FcQwana9XYt1WYDLFA24ZesXwcPAeAT6sjap2dLSDNd3zntS7nJRK1eSIRJAaZmRxx
+         9C3IH4JuNtvJpnhABhev4lAYqi64OlBxWwlkFPBRpZ7QwRyk0H/MAtHWdIE7C6scpIof
+         xmgqH7NeVxMv/sB+D0Gd/RKei2Zhi81lvnkO2KfXH5em+EELRxNcWnxeMPzCw5iayO0q
+         6XQ7rUmJ8gWbxhM+Ii7IgLQAGTfNqIPSXqH8VJB3tdHodQDq21lm+6P0396yEq47Cl37
+         ty9w==
+X-Gm-Message-State: AOJu0YycYp4AdL2RdQ46eSbFz+LVhbuPiul5Y5orIb4ZkrVh7CbDjtDo
+	LjPbhXvhaE6/AmMs12YyyKBcOZNAgT8F2RFNvUHfoYIJw81W32Q02v//mkfKk8uAGXI9x01+wfC
+	j
+X-Gm-Gg: ASbGncu3ggSqQLKE9dx96hQFtUPJAOFegBcAPf0NelO+dKQ4qtKdvoeJCLrBUHxvyzd
+	7f5SF+b4pbo1v+9Ur7vyKT7yoNGux/x0GMtUnTjnq8Ze526p5BRE/PSETSdAZpzrEnrt6L8NhJw
+	AWFa5ZXPJFjMeyr8PlFQVeWRlI+xLZwBaANNFTjX5OlkF9tboIz6PjW8jY1p+X9Tbog/GF51TQI
+	SXyh25h9RQTpRTh0DgfSA9/M/nBg8PjNH6tj2NpA+0JVY+ibxzBjxZU54WXHvFDawGf63pypIGN
+	qgoxPA1KE7ibHRS7Gggx6SGnRN4z10ryp9Z5/N0lVrTJJWWSTL6CeYMyN8Lu7xccRLNPkNyOEg=
 	=
-X-Google-Smtp-Source: AGHT+IFskHTC4r4+4Nl0E+6nGEYsgyA7C7QJgRb6NdQC12AKWwO8q0pIqwva4tF9oGU1xhPaxi5SGw==
-X-Received: by 2002:a05:690c:7487:b0:6f9:8b50:bac7 with SMTP id 00721157ae682-6fd4a13748cmr17951517b3.29.1740701790253;
-        Thu, 27 Feb 2025 16:16:30 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHACjUhitnrAzPg9SUVfM8g4O41eP6kNwM8H+thKc1zZmd5cvScq9X1HaKAoc7svFBAgNrhNg==
+X-Received: by 2002:a05:6902:230b:b0:e60:b004:3427 with SMTP id 3f1490d57ef6-e60b2f157e5mr1235757276.31.1740701931172;
+        Thu, 27 Feb 2025 16:18:51 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-6fd3ca6a886sm5142147b3.64.2025.02.27.16.16.29
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e60a3ab082dsm754626276.47.2025.02.27.16.18.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Feb 2025 16:16:29 -0800 (PST)
-Date: Thu, 27 Feb 2025 19:16:28 -0500
+        Thu, 27 Feb 2025 16:18:50 -0800 (PST)
+Date: Thu, 27 Feb 2025 19:18:49 -0500
 From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH 01/10] loose_object_info(): BUG() on inflating content
- with unknown type
-Message-ID: <Z8EAXIHB4dVYS9t/@nand.local>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/10] unpack_loose_header(): simplify next_out assignment
+Message-ID: <Z8EA6SGpwiV5pv7J@nand.local>
 References: <20250225062518.GA1293854@coredump.intra.peff.net>
- <20250225062824.GA1293961@coredump.intra.peff.net>
- <xmqqv7sxh3xv.fsf@gitster.g>
+ <20250225062900.GB1293961@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,33 +73,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqv7sxh3xv.fsf@gitster.g>
+In-Reply-To: <20250225062900.GB1293961@coredump.intra.peff.net>
 
-On Tue, Feb 25, 2025 at 05:47:56PM -0800, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+On Tue, Feb 25, 2025 at 01:29:00AM -0500, Jeff King wrote:
+> When using OBJECT_INFO_ALLOW_UNKNOWN_TYPE to unpack a header that
+> doesn't fit into our initial 32-byte buffer, we loop over calls
+> git_inflate(), feeding it our buffer to the "next_out" pointer each
+> time. As the code is written, we reset next_out after each inflate call
+> (and after reading the output), ready for the next loop.
 >
-> > It really makes me wonder if this "unknown type" stuff has any value
-> > at all. You can create an object with any type using "hash-object
-> > --literally -t". And you can ask about its type and size. But you can
-> > never retrieve the object content! Nor can you pack it or transfer it,
-> > since packs use a numeric type field.
+> This isn't wrong, but there are a few advantages to setting up
+> "next_out" right before each inflate call, rather than after:
 >
-> Correct.  IIRC, the "--literally" support was mostly for debugging,
-> and as you noticed, is very much limited because it can only create
-> funny objects that are loose.  And the debugging was not really about
-> adding more object types, but was more about "what would our code do
-> when we see an object that is corrupt whose type we do not recognise".
+>   1. It drops a few duplicated lines of code.
 >
-> I personally think the "--literally" should not survive the Git 3.0
-> boundary.
+>   2. It makes it obvious that we always feed a fresh buffer on each call
+>      (and thus can never see Z_BUF_ERROR due to due to a lack of output
+>      space).
+>
+>   3. After we exit the loop, we'll leave stream->next_out pointing to
+>      the end of the fetched data (this is how zlib callers find out how
+>      much data is in the buffer). This doesn't matter in practice, since
+>      nobody looks at it again. But it's probably the least-surprising
+>      thing to do, as it matches how next_out is left when the whole
+>      thing fits in the initial 32-byte buffer (and we don't enter the
+>      loop at all).
 
-It is quite useful for testing intentionally broken objects, like
-commits with malformed author/committer lines, or trees with
-out-of-order entries, etc.
+Thanks for calling (3) out. There is definitely a subtle behavior change
+there, but having the context that it doesn't matter in practice is
+useful in judging whether or not the refactoring is OK.
 
-Perhaps we could replace that with a test helper that is only accessible
-within the test suite that acts like "hash-object --literally" and
-remove "--literally" from the plumbing interface? I dunno.
+In any event, I agree that this is a much cleaner read, and recall
+thinking something along the same lines as (1) when we were working on
+this together.
 
 Thanks,
 Taylor
