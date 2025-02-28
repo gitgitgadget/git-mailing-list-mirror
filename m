@@ -1,77 +1,143 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784A41C3F04
-	for <git@vger.kernel.org>; Fri, 28 Feb 2025 06:41:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F8B748F
+	for <git@vger.kernel.org>; Fri, 28 Feb 2025 07:02:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740724902; cv=none; b=imdpvuRi90RiHRHmoOlugC1sajX2usRiRDDvRNQ4SQt93asg1ulQA532ZAFWiTomUN54w9dmJRkudrpt3k7iu8A9DqQY1VlFBSxz40041f0vrh8kL9cFY1zv/FwMl/jGePr1u6+phoAIkLY2e9uelA7WUhH4si+DDRmtCWOLnA8=
+	t=1740726147; cv=none; b=byVPiMjBnGqs8erXDZgJEbElkNbjo+vR+qTvG9Uw2kxVovNx/6pS3Mokl97q1SGxG2w+F3WhCu3ey+CEGRDVnujDxT0J3VBi30BM6/8s4Ulu4kE8r7pHgKtsEQWnJq9Mb3cwSof7bET8SaWaB+Z+w0CekT4onCeX1TAszYQ4bnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740724902; c=relaxed/simple;
-	bh=rg2IfFTtfpa3vv2n2rlUkoEJFM4az69z3AFfFimoLSk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=j6yofL0cIyNJwwFttbY5EcX77wdfm500ZegVR+qZasHYPxTq8JB51thcaUeb8+gL6RLgzFCjrGI+rS4Z+u8XglJGogjSuFW+MJTSmLy57ReMBh6GakwrgM+Ol+azAZZpTILUbuToIke5B037mhlNtC4Nkjg9lYx0tX08HIQruhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OcTpZ39f; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1740726147; c=relaxed/simple;
+	bh=o1dKaS25/EoKwzRXaUx/mA5/rG4HsPDEqzhoHG7kFEo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YWa7l6J1BPHQrKv/+9NDBDQUMMf/AIBYR3PYQqCoqerqVWQlUHWJiruYYP1iyhRBPBpSrEdG+hOfe2cV0PqWyfdPLjjw9iRuJgsPVxtaLxvMyrTKhlx23SBPnK7TVE8j9buYX9peI9CwjnqKMGG4GqZenKX2DJAWRkEqFXwNA50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cd3MWPs1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=p495l1Dh; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OcTpZ39f"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-abb892fe379so255210966b.0
-        for <git@vger.kernel.org>; Thu, 27 Feb 2025 22:41:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1740724897; x=1741329697; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rg2IfFTtfpa3vv2n2rlUkoEJFM4az69z3AFfFimoLSk=;
-        b=OcTpZ39f0I01sv2QAiBMV6g5+lIR7AaEE4kh3UkYUIuK/XI8zfpno5EfTcpOJO9y5z
-         tmAJlglhunmLm1X/8pzFjbsGitljIgK7p9/vDAWuuFE+/sVQHmNSwB2XVjF069wyJjWH
-         9vxeDOC3RV7Q4oC8oqSestBMfxV+zwsMSxhf/VAEF0NJmQn+GEqKWUlYZfksGsziRG9g
-         WX8TkniU31sUSFHkPDlY+3266a/+RpVkPwO1ziw8GG1ClZugQpRCPuPHxxk3AJbE8Q2y
-         /mLWcGRY0lgTB0JOH4tYQ5RGpZ5QGaPXf/THGIF3a2gTRl6pMfnqfLPWzg8oncxGeEol
-         Y8mA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740724897; x=1741329697;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rg2IfFTtfpa3vv2n2rlUkoEJFM4az69z3AFfFimoLSk=;
-        b=lqvD2cc55CO2WRqIiUXO8TjhToG35AqQ7s57CwIsCKPZqBx+7/mJ8ctjJ5z0UlcIhL
-         pjdb6Tx1IPAH1ieDYUfLlLJOXZxbrOU9rdz6XBlqqfV/azsa21yMIPsVJu8nRHJCTZxS
-         kiJjWDqzekIeLxImn2sSqAme4jpZcnligoVNhglj29hDMIVDgr6ttm6xwqxK4pLLTTcZ
-         YitzU8S3lexA5VNli6U6pXvRJohlOjOy45/kYfrk1ZBOkfxUpGNsFUvdKRR6ef8tsYyO
-         oSRE+MrCPDVaEcLNsDAZADTyXVsU1lGcc6NZn5tSfmaiRdtbEAhdv4GlwWPnYrKarTR1
-         llZA==
-X-Gm-Message-State: AOJu0YyOWHQSj028Sj16bf5kSicvKgZz093CoH3cuyS0Um8AMC/21/ib
-	8ajH1dsiOdb7w9N/6XSTAZ8mbSkVC7XJgdjxxMH7KPDdJe3QWdGz+4ab2KMUUxvj5IIPJokx2XG
-	RBSG7v3wTOnxPsKInbIu8u8rsEAsPPA==
-X-Gm-Gg: ASbGncu0v7ypPLSDMSTd+yBCuF2kwqqvpg9cjgGdL6SoeWCvrcmXL+ACXLM++T17nUc
-	iC72JsfT9KLJtM/G54Ijqfu3NGgyf1gg/swlt82CJl1qPoacYisN4Gffc2oSxGcJbK/ikpbfjcf
-	FqZX2HmUUDA/FYNqedX4yoj48UBMOZkFGnWWs+pnBV
-X-Google-Smtp-Source: AGHT+IHE6M/CBNuZlV3MDFewHVGUrdAKXbqpURF5UsIUbHQGuxzr8j75KitoOrtVXRncSLLW9c04GdFCs97QqKp2AIU=
-X-Received: by 2002:a05:6402:4316:b0:5dc:9589:9f64 with SMTP id
- 4fb4d7f45d1cf-5e4d6ad8c0dmr4242929a12.13.1740724896940; Thu, 27 Feb 2025
- 22:41:36 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cd3MWPs1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="p495l1Dh"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 3573F11403CB;
+	Fri, 28 Feb 2025 02:02:24 -0500 (EST)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 28 Feb 2025 02:02:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1740726144; x=1740812544; bh=fsmX4HN1x/
+	muMtCYai774JlLaklT8lHEMaNAqjuCkxk=; b=cd3MWPs1wxCAaSFee7PzfvV7cZ
+	yVY3lwPXwwrvMt14oAF5SuwWXd/dthkP8T26UrKBoa9i+k0IqIFset85WjQ/9zsk
+	0Wl2kDN7r724toq5ki+mQ3SD+2/cGKRstKJ0c7Hfyq5arRTbybGhXvG0sqySVGjE
+	fY6VWBy/6h2zoPy8nGU/vaB4TyoC2DXpqqq95lJAastr3ZTSBb4M1TYqbE8C6CeW
+	nZd81mIPmq2PojUzpwrh55yhpR2K+QrxB0OBH4m1TG9MIPvlns+44jD3kG7jhOOI
+	bNlhop41OBAQc5dHR7u8QRDb6Ag8hRYepeXw65Fkov2RHmX1w25ajGn8Aw1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1740726144; x=1740812544; bh=fsmX4HN1x/muMtCYai774JlLaklT8lHEMaN
+	AqjuCkxk=; b=p495l1Dhe2WdldJOBoSA2gxZFX9XAOwnX5myPQZTVYrq6sJXP7c
+	42e7+8fY2I48PHl2Fa9kNeRW5CfuMHVFyOwKQtpxNSBo/tdxWi7s2gDaR3zVsqPi
+	RUiuCUjaEKS60S+tn5LVkI16lqWGIF1j7agqh7WSTSBva4K6uOjkHVw8pWoT5GdX
+	CRXt1L38mQFLtsKT51ErxWiJupYGHjfAY3SS62SCF/18C4HRf0g0lH+sCe1a0B9B
+	C87/+gpC0PmePgblGAJa8SfHBCMtBliIXF5pSjDW1cXhaUj8u/fgExhOJ59fNV3i
+	rvD15k+wxqZAI3eV7UYV3h8Oj8kJx1xSWuA==
+X-ME-Sender: <xms:gF_BZyO9G1WWTa4hkEPfoCiP-WjlBlhgl7tQA_Tv51Tgio2yR4p0iA>
+    <xme:gF_BZw8W9ybELnooA9qcWW2y_KERK2E9P3MG21ouoB1mIyKKvkRjFN9O98E4fRcIH
+    g713jHe-RNfDuf9OA>
+X-ME-Received: <xmr:gF_BZ5Q2OuQBF62INVO6ildQRoPLnjZkNXdSMOvCP6CGCkJq7c7PyVdDtGSNfZnbIzyuZB-cEZyGHH6jkeDl6AOkKfNYWTiChttRJ5FYf6pJHayD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdekleejfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddv
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeu
+    gedugffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepthhgseguvggsihgrnhdrohhrgh
+X-ME-Proxy: <xmx:gF_BZyuhJWfAJqNZPSpyUWF_wT6vTqGfZ4R7Ky0Gc9M-jlQNF59Z_Q>
+    <xmx:gF_BZ6cFutNhPGPgabqrn1kIfZuhnuAcSJH85UsMwzpKO4mdA2719g>
+    <xmx:gF_BZ20OI9CJSwXA279SD_QOHjDe8xsVvkKgeqMbrJvdUouecsd_BQ>
+    <xmx:gF_BZ--j_GLQfX6FNxoQyo8h1-3tOKRj2vwi1ufnG7Q-OWYbSr5wnQ>
+    <xmx:gF_BZ7qAaxvdbKrs115-H-GcKhDQfR7Z5LKCQ3bgsqV0tV5berkpkYCr>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 28 Feb 2025 02:02:23 -0500 (EST)
+Received: 
+	by vm-mail (OpenSMTPD) with ESMTPSA id ac722f6d (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 28 Feb 2025 07:02:21 +0000 (UTC)
+Date: Fri, 28 Feb 2025 08:02:16 +0100
+From: Patrick Steinhardt <ps@pks.im>
+To: Thorsten Glaser <tg@debian.org>
+Cc: git@vger.kernel.org
+Subject: Re: gitweb.js build mistake
+Message-ID: <Z8FfeEDHZocWHKeM@pks.im>
+References: <070641d0-730c-7d92-af4a-9157dc1edd3d@debian.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP8UFD2NSvRJo4XUmuWFVfqN-XF4_Qiqu2VncEdWVi00qSLNaA@mail.gmail.com>
-In-Reply-To: <CAP8UFD2NSvRJo4XUmuWFVfqN-XF4_Qiqu2VncEdWVi00qSLNaA@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 28 Feb 2025 07:41:25 +0100
-X-Gm-Features: AQ5f1Jp8jOL_JOsHgF8jGOjrPLX626YnDZ7L3ju1yyRhqeyLBnqscQe15pjLOvA
-Message-ID: <CAP8UFD3M7cO8umjeT8ih9j_h9NaCzttqSo0UYDoFL8p5=qpmqQ@mail.gmail.com>
-Subject: Re: Draft of Git Rev News edition 120
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Olga Pilipenco <olga.pilipenco@shopify.com>, Chris Torek <chris.torek@gmail.com>, 
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <070641d0-730c-7d92-af4a-9157dc1edd3d@debian.org>
 
-Sorry for the typo in the subject. It is edition "120" not "1ZO".
+On Fri, Feb 28, 2025 at 06:34:43AM +0100, Thorsten Glaser wrote:
+> From ed9863971d37ed53628a5871a4a569ccd6287f53 Mon Sep 17 00:00:00 2001
+> From: mirabilos <tg@debian.org>
+> Date: Fri, 28 Feb 2025 05:33:10 +0000
+> Subject: [PATCH] Unbreak content of gitweb.js
+> 
+> The former $^ adds all prerequisites, including the
+> (proper) new dependency on the generator script.
+
+The commit message could use a bit of polishing. How about the
+following:
+
+    gitweb: fix generation of "gitweb.js"
+
+    In 19d8fe7da65 (Makefile: extract script to generate gitweb.js,
+    2024-12-06) we have extracted the logic to build "gitweb.js" into a
+    separate script. As part of that the rules that builds the script
+    has gained a new dependency on that script.
+
+    This refactoring is broken though because we use "$^" to determine
+    the set of JavaScript files that need to be concatenated, and this
+    implicit variable now also contains the build script itself. As a
+    result, the build script ends up ni the generated "gitweb.js" file,
+    which is wrong.
+
+    Fix the issue by explicitly only passing the JavaScript files.
+
+> Signed-off-by: mirabilos <tg@debian.org>
+
+We typically require plain names instead of aliases in the SOB.
+
+> ---
+>  gitweb/Makefile | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/gitweb/Makefile b/gitweb/Makefile
+> index d5748e9359..2a8f97cef8 100644
+> --- a/gitweb/Makefile
+> +++ b/gitweb/Makefile
+> @@ -118,7 +118,7 @@ $(MAK_DIR_GITWEB)gitweb.cgi: $(MAK_DIR_GITWEB)gitweb.perl
+>  $(MAK_DIR_GITWEB)static/gitweb.js: $(MAK_DIR_GITWEB)generate-gitweb-js.sh
+>  $(MAK_DIR_GITWEB)static/gitweb.js: $(addprefix $(MAK_DIR_GITWEB),$(GITWEB_JSLIB_FILES))
+>  	$(QUIET_GEN)$(RM) $@ $@+ && \
+> -	$(MAK_DIR_GITWEB)generate-gitweb-js.sh $@+ $^ && \
+> +	$(MAK_DIR_GITWEB)generate-gitweb-js.sh $@+ $(addprefix $(MAK_DIR_GITWEB),$(GITWEB_JSLIB_FILES)) && \
+>  	mv $@+ $@
+
+We could avoid repetition by filtering out any files that we don't care
+about, like so:
+
+    $(filter %.js,$^)
+
+In any case, thanks for discovering and fixing this issue!
+
+Patrick
